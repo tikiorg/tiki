@@ -129,7 +129,7 @@ if (empty($_REQUEST["page"])) {
 //	So, actual max page name length is 160 - 2 = 158
 //	Strip excess characters (silently) and proceed.
 $max_pagename_length = 158;
-if(strlen($_REQUEST["page"]) > $max_pagename_length) {
+if (strlen($_REQUEST["page"]) > $max_pagename_length) {
 	$_REQUEST["page"] = substr($_REQUEST["page"], 0, $max_pagename_length);
 }
 

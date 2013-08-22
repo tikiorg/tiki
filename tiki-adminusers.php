@@ -765,7 +765,7 @@ if ($tsAjax || !$tsOn) {
 		!empty($_REQUEST['filterNotValidated']),
 		!empty($_REQUEST['filterNeverLoggedIn'])
 	);
-} elseif($tsOn) {
+} elseif ($tsOn) {
 	$users['cant'] = $userlib->count_users('');
 	$users['data'] = $users['cant'] > 0 ? true : false;
 	//delete anonymous out of group list used for dropdown

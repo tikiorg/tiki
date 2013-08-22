@@ -18,7 +18,12 @@ foreach ($total_log as $row) {
 }
 if ($join_log['Joined Room']) {
 	foreach ($join_log['Joined Room'] as $room => $member) {
-		$users[$room] = array_map(function ($i) {return $i['user']; }, $member);
+		$users[$room] = array_map(
+			function ($i) {
+				return $i['user'];
+			},
+			$member
+		);
 		$user_count[$room] = $bigbluebuttonlib->getAttendees($room, true);
 		if (isset($user_count[$room])) {
 			foreach ($user_count[$room] as $user_room) {

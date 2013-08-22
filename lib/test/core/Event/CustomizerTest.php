@@ -52,18 +52,24 @@ class Tiki_Event_CustomizerTest extends PHPUnit_Framework_TestCase
 		$this->manager->bind('custom.event', array($this, 'callbackAdd'));
 
 		$customizer = new Tiki_Event_Customizer;
-		$customizer->addRule('tiki.trackeritem.save', '(event-trigger custom.event 
+		$customizer->addRule(
+			'tiki.trackeritem.save',
+			'(event-trigger custom.event
 			(map
 				(amount (add args.a args.b))
 				(test args.c)
-			))');
+			))'
+		);
 		$customizer->bind($this->manager, $this->runner);
 
-		$this->manager->trigger('tiki.trackeritem.save', array(
-			'a' => 2,
-			'b' => 3,
-			'c' => 4,
-		));
+		$this->manager->trigger(
+			'tiki.trackeritem.save',
+			array(
+				'a' => 2,
+				'b' => 3,
+				'c' => 4,
+			)
+		);
 
 		$this->assertEquals(5, $this->called);
 	}
@@ -110,24 +116,32 @@ class Tiki_Event_CustomizerTest extends PHPUnit_Framework_TestCase
 
 		$customizer = new Tiki_Event_Customizer;
 		$customizer->addRule('custom.event', '(event-record event args)');
-		$customizer->addRule('tiki.trackeritem.save', '(event-trigger custom.event 
+		$customizer->addRule(
+			'tiki.trackeritem.save',
+			'(event-trigger custom.event
 			(map
 				(amount (add args.a args.b))
 				(test args.c)
-			))');
+			))'
+		);
 		$customizer->bind($this->manager, $this->runner);
 
-		$this->manager->trigger('tiki.trackeritem.save', array(
-			'a' => 2,
-			'b' => 3,
-			'c' => 4,
-		));
+		$this->manager->trigger(
+			'tiki.trackeritem.save',
+			array(
+				'a' => 2,
+				'b' => 3,
+				'c' => 4,
+			)
+		);
 
 		$this->assertEquals('custom.event', $this->lastEvent);
-		$this->assertEquals(array(
-			'amount' => 5,
-			'test' => 4,
-		), $this->lastArguments);
+		$this->assertEquals(
+			array(
+				'amount' => 5,
+				'test' => 4,
+			), $this->lastArguments
+		);
 	}
 
 	function callbackAdd($arguments)

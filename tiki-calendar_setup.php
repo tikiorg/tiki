@@ -50,8 +50,8 @@ $focusDay = TikiLib::date_format("%d", $focusdate);
 $focusMonth = TikiLib::date_format("%m", $focusdate);
 $focusYear = TikiLib::date_format("%Y", $focusdate);
 // Validate input
-if(intval($focusDay) <= 0 || !is_numeric($focusDay) || 
-	intval($focusMonth) <= 0 || !is_numeric($focusDay) || 
+if (intval($focusDay) <= 0 || !is_numeric($focusDay) ||
+	intval($focusMonth) <= 0 || !is_numeric($focusDay) ||
 	intval($focusYear) <= 0 || !is_numeric($focusDay)) {
 	$smarty->assign('msg', tra('Invalid date format'));
 	$smarty->display('error.tpl');

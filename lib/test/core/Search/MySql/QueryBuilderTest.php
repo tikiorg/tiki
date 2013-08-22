@@ -27,9 +27,11 @@ class Search_MySql_QueryBuilderTest extends PHPUnit_Framework_TestCase
 		$expr = new Token('Hello', 'plaintext', 'contents', 1.5);
 
 		$this->assertEquals("MATCH (`contents`) AGAINST ('Hello' IN BOOLEAN MODE)", $this->builder->build($expr));
-		$this->assertEquals(array(
-			array('field' => 'contents', 'type' => 'fulltext'),
-		), $this->builder->getRequiredIndexes($expr));
+		$this->assertEquals(
+			array(
+				array('field' => 'contents', 'type' => 'fulltext'),
+			), $this->builder->getRequiredIndexes($expr)
+		);
 	}
 
 	function testSimplePhrase()
@@ -37,9 +39,11 @@ class Search_MySql_QueryBuilderTest extends PHPUnit_Framework_TestCase
 		$expr = new Token('Hello World', 'plaintext', 'contents', 1.5);
 
 		$this->assertEquals("MATCH (`contents`) AGAINST ('\\\"Hello World\\\"' IN BOOLEAN MODE)", $this->builder->build($expr));
-		$this->assertEquals(array(
-			array('field' => 'contents', 'type' => 'fulltext'),
-		), $this->builder->getRequiredIndexes($expr));
+		$this->assertEquals(
+			array(
+				array('field' => 'contents', 'type' => 'fulltext'),
+			), $this->builder->getRequiredIndexes($expr)
+		);
 	}
 
 	function testQueryWithSinglePart()
@@ -51,9 +55,11 @@ class Search_MySql_QueryBuilderTest extends PHPUnit_Framework_TestCase
 		);
 
 		$this->assertEquals("MATCH (`contents`) AGAINST ('Hello' IN BOOLEAN MODE)", $this->builder->build($expr));
-		$this->assertEquals(array(
-			array('field' => 'contents', 'type' => 'fulltext'),
-		), $this->builder->getRequiredIndexes($expr));
+		$this->assertEquals(
+			array(
+				array('field' => 'contents', 'type' => 'fulltext'),
+			), $this->builder->getRequiredIndexes($expr)
+		);
 	}
 
 	function testBuildOrQuery()
@@ -66,9 +72,11 @@ class Search_MySql_QueryBuilderTest extends PHPUnit_Framework_TestCase
 		);
 
 		$this->assertEquals("MATCH (`contents`) AGAINST ('(Hello World)' IN BOOLEAN MODE)", $this->builder->build($expr));
-		$this->assertEquals(array(
-			array('field' => 'contents', 'type' => 'fulltext'),
-		), $this->builder->getRequiredIndexes($expr));
+		$this->assertEquals(
+			array(
+				array('field' => 'contents', 'type' => 'fulltext'),
+			), $this->builder->getRequiredIndexes($expr)
+		);
 	}
 
 	function testAndQuery()
@@ -81,9 +89,11 @@ class Search_MySql_QueryBuilderTest extends PHPUnit_Framework_TestCase
 		);
 
 		$this->assertEquals("MATCH (`contents`) AGAINST ('(+Hello +World)' IN BOOLEAN MODE)", $this->builder->build($expr));
-		$this->assertEquals(array(
-			array('field' => 'contents', 'type' => 'fulltext'),
-		), $this->builder->getRequiredIndexes($expr));
+		$this->assertEquals(
+			array(
+				array('field' => 'contents', 'type' => 'fulltext'),
+			), $this->builder->getRequiredIndexes($expr)
+		);
 	}
 
 	function testNotBuild()
@@ -93,9 +103,11 @@ class Search_MySql_QueryBuilderTest extends PHPUnit_Framework_TestCase
 		);
 
 		$this->assertEquals("NOT (MATCH (`contents`) AGAINST ('Hello' IN BOOLEAN MODE))", $this->builder->build($expr));
-		$this->assertEquals(array(
-			array('field' => 'contents', 'type' => 'fulltext'),
-		), $this->builder->getRequiredIndexes($expr));
+		$this->assertEquals(
+			array(
+				array('field' => 'contents', 'type' => 'fulltext'),
+			), $this->builder->getRequiredIndexes($expr)
+		);
 	}
 
 	function testFlattenNot()
@@ -109,9 +121,11 @@ class Search_MySql_QueryBuilderTest extends PHPUnit_Framework_TestCase
 		);
 
 		$this->assertEquals("MATCH (`contents`) AGAINST ('(-Hello -World +Test)' IN BOOLEAN MODE)", $this->builder->build($expr));
-		$this->assertEquals(array(
-			array('field' => 'contents', 'type' => 'fulltext'),
-		), $this->builder->getRequiredIndexes($expr));
+		$this->assertEquals(
+			array(
+				array('field' => 'contents', 'type' => 'fulltext'),
+			), $this->builder->getRequiredIndexes($expr)
+		);
 	}
 
 	function testBuildOrQueryDifferentField()
@@ -124,10 +138,12 @@ class Search_MySql_QueryBuilderTest extends PHPUnit_Framework_TestCase
 		);
 
 		$this->assertEquals("(MATCH (`foobar`) AGAINST ('Hello' IN BOOLEAN MODE) OR MATCH (`baz`) AGAINST ('World' IN BOOLEAN MODE))", $this->builder->build($expr));
-		$this->assertEquals(array(
-			array('field' => 'foobar', 'type' => 'fulltext'),
-			array('field' => 'baz', 'type' => 'fulltext'),
-		), $this->builder->getRequiredIndexes($expr));
+		$this->assertEquals(
+			array(
+				array('field' => 'foobar', 'type' => 'fulltext'),
+				array('field' => 'baz', 'type' => 'fulltext'),
+			), $this->builder->getRequiredIndexes($expr)
+		);
 	}
 
 	function testAndQueryDifferentField()
@@ -140,10 +156,12 @@ class Search_MySql_QueryBuilderTest extends PHPUnit_Framework_TestCase
 		);
 
 		$this->assertEquals("(MATCH (`foobar`) AGAINST ('Hello' IN BOOLEAN MODE) AND MATCH (`baz`) AGAINST ('World' IN BOOLEAN MODE))", $this->builder->build($expr));
-		$this->assertEquals(array(
-			array('field' => 'foobar', 'type' => 'fulltext'),
-			array('field' => 'baz', 'type' => 'fulltext'),
-		), $this->builder->getRequiredIndexes($expr));
+		$this->assertEquals(
+			array(
+				array('field' => 'foobar', 'type' => 'fulltext'),
+				array('field' => 'baz', 'type' => 'fulltext'),
+			), $this->builder->getRequiredIndexes($expr)
+		);
 	}
 
 	function testNotBuildNotIdentifier()
@@ -153,9 +171,11 @@ class Search_MySql_QueryBuilderTest extends PHPUnit_Framework_TestCase
 		);
 
 		$this->assertEquals("NOT (`object_id` = 'Hello')", $this->builder->build($expr));
-		$this->assertEquals(array(
-			array('field' => 'object_id', 'type' => 'index'),
-		), $this->builder->getRequiredIndexes($expr));
+		$this->assertEquals(
+			array(
+				array('field' => 'object_id', 'type' => 'index'),
+			), $this->builder->getRequiredIndexes($expr)
+		);
 	}
 
 	function testFlattenNotDifferentField()
@@ -169,9 +189,11 @@ class Search_MySql_QueryBuilderTest extends PHPUnit_Framework_TestCase
 		);
 
 		$this->assertEquals("MATCH (`contents`) AGAINST ('(-Hello -World +Test)' IN BOOLEAN MODE)", $this->builder->build($expr));
-		$this->assertEquals(array(
-			array('field' => 'contents', 'type' => 'fulltext'),
-		), $this->builder->getRequiredIndexes($expr));
+		$this->assertEquals(
+			array(
+				array('field' => 'contents', 'type' => 'fulltext'),
+			), $this->builder->getRequiredIndexes($expr)
+		);
 	}
 
 	function testFilterWithIdentifier()
@@ -179,9 +201,11 @@ class Search_MySql_QueryBuilderTest extends PHPUnit_Framework_TestCase
 		$expr = new Token('Some entry', 'identifier', 'username', 1.5);
 
 		$this->assertEquals("`username` = 'Some entry'", $this->builder->build($expr));
-		$this->assertEquals(array(
-			array('field' => 'username', 'type' => 'index'),
-		), $this->builder->getRequiredIndexes($expr));
+		$this->assertEquals(
+			array(
+				array('field' => 'username', 'type' => 'index'),
+			), $this->builder->getRequiredIndexes($expr)
+		);
 	}
 
 	function testRangeFilter()
@@ -189,9 +213,11 @@ class Search_MySql_QueryBuilderTest extends PHPUnit_Framework_TestCase
 		$expr = new Range('Hello', 'World', 'plaintext', 'title', 1.5);
 
 		$this->assertEquals("`title` BETWEEN 'Hello' AND 'World'", $this->builder->build($expr));
-		$this->assertEquals(array(
-			array('field' => 'title', 'type' => 'index'),
-		), $this->builder->getRequiredIndexes($expr));
+		$this->assertEquals(
+			array(
+				array('field' => 'title', 'type' => 'index'),
+			), $this->builder->getRequiredIndexes($expr)
+		);
 	}
 
 	function testInitialMatchFilter()
@@ -199,9 +225,11 @@ class Search_MySql_QueryBuilderTest extends PHPUnit_Framework_TestCase
 		$expr = new Initial('Hello', 'plaintext', 'title', 1.5);
 
 		$this->assertEquals("`title` LIKE 'Hello%'", $this->builder->build($expr));
-		$this->assertEquals(array(
-			array('field' => 'title', 'type' => 'index'),
-		), $this->builder->getRequiredIndexes($expr));
+		$this->assertEquals(
+			array(
+				array('field' => 'title', 'type' => 'index'),
+			), $this->builder->getRequiredIndexes($expr)
+		);
 	}
 
 	function testNestedOr()
@@ -219,9 +247,11 @@ class Search_MySql_QueryBuilderTest extends PHPUnit_Framework_TestCase
 		);
 
 		$this->assertEquals("MATCH (`contents`) AGAINST ('((Hello World) Test)' IN BOOLEAN MODE)", $this->builder->build($expr));
-		$this->assertEquals(array(
-			array('field' => 'contents', 'type' => 'fulltext'),
-		), $this->builder->getRequiredIndexes($expr));
+		$this->assertEquals(
+			array(
+				array('field' => 'contents', 'type' => 'fulltext'),
+			), $this->builder->getRequiredIndexes($expr)
+		);
 	}
 
 	function testNestedAnd()
@@ -245,9 +275,11 @@ class Search_MySql_QueryBuilderTest extends PHPUnit_Framework_TestCase
 		);
 
 		$this->assertEquals("MATCH (`contents`) AGAINST ('(+(Hello World) +(+Hello +World) +Test)' IN BOOLEAN MODE)", $this->builder->build($expr));
-		$this->assertEquals(array(
-			array('field' => 'contents', 'type' => 'fulltext'),
-		), $this->builder->getRequiredIndexes($expr));
+		$this->assertEquals(
+			array(
+					array('field' => 'contents', 'type' => 'fulltext'),
+			), $this->builder->getRequiredIndexes($expr)
+		);
 	}
 
 	function testInvertNotOnlyMatchStatements()
@@ -260,9 +292,11 @@ class Search_MySql_QueryBuilderTest extends PHPUnit_Framework_TestCase
 		);
 
 		$this->assertEquals("NOT MATCH (`contents`) AGAINST ('(Hello World)' IN BOOLEAN MODE)", $this->builder->build($expr));
-		$this->assertEquals(array(
-			array('field' => 'contents', 'type' => 'fulltext'),
-		), $this->builder->getRequiredIndexes($expr));
+		$this->assertEquals(
+			array(
+				array('field' => 'contents', 'type' => 'fulltext'),
+			), $this->builder->getRequiredIndexes($expr)
+		);
 	}
 
 	function testOrNot()
@@ -275,32 +309,41 @@ class Search_MySql_QueryBuilderTest extends PHPUnit_Framework_TestCase
 		);
 
 		$this->assertEquals("(NOT (MATCH (`contents`) AGAINST ('Hello' IN BOOLEAN MODE)) OR MATCH (`contents`) AGAINST ('World' IN BOOLEAN MODE))", $this->builder->build($expr));
-		$this->assertEquals(array(
-			array('field' => 'contents', 'type' => 'fulltext'),
-		), $this->builder->getRequiredIndexes($expr));
+		$this->assertEquals(
+			array(
+				array('field' => 'contents', 'type' => 'fulltext'),
+			), $this->builder->getRequiredIndexes($expr)
+		);
 	}
 
 	function testEmptyAnd()
 	{
-		$expr = new AndX(array(
-		));
+		$expr = new AndX(
+			array()
+		);
 
 		$this->assertEquals("", $this->builder->build($expr));
-		$this->assertEquals(array(
-		), $this->builder->getRequiredIndexes($expr));
+		$this->assertEquals(
+			array(
+			), $this->builder->getRequiredIndexes($expr)
+		);
 	}
 
 	function testEmptyAndPart()
 	{
-		$expr = new AndX(array(
-			new Token('Hello', 'identifier', 'object_id', 1.5),
-			new AndX(array()),
-		));
+		$expr = new AndX(
+			array(
+				new Token('Hello', 'identifier', 'object_id', 1.5),
+				new AndX(array()),
+			)
+		);
 
 		$this->assertEquals("(`object_id` = 'Hello')", $this->builder->build($expr));
-		$this->assertEquals(array(
-			array('field' => 'object_id', 'type' => 'index'),
-		), $this->builder->getRequiredIndexes($expr));
+		$this->assertEquals(
+			array(
+				array('field' => 'object_id', 'type' => 'index'),
+			), $this->builder->getRequiredIndexes($expr)
+		);
 	}
 }
 

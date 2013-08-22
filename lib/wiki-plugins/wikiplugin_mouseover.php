@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2013 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -14,8 +14,8 @@ function wikiplugin_mouseover_info()
 	foreach ($jqprefs['jquery_effect']['options'] as $k => $v) {
 		$jqfx[] = array('text' => $v, 'value' => $k);
 	}
-	
-	
+
+
 	return array(
 		'name' => tra('Mouseover'),
 		'documentation' => 'PluginMouseover',
@@ -87,8 +87,8 @@ function wikiplugin_mouseover_info()
 				'advanced' => true,
 				'default' => 'y',
 				'options' => array(
-					array('text' => '', 'value' => ''), 
-					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => '', 'value' => ''),
+					array('text' => tra('Yes'), 'value' => 'y'),
 					array('text' => tra('No'), 'value' => 'n')
 				)
 			),
@@ -100,8 +100,8 @@ function wikiplugin_mouseover_info()
 				'default' => 'y',
 				'advanced' => true,
 				'options' => array(
-					array('text' => '', 'value' => ''), 
-					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => '', 'value' => ''),
+					array('text' => tra('Yes'), 'value' => 'y'),
 					array('text' => tra('No'), 'value' => 'n')
 				)
 			),
@@ -136,12 +136,12 @@ function wikiplugin_mouseover_info()
 				'filter' => 'alpha',
 				'default' => '',
 				'options' => array(
-					array('text' => '', 'value' => ''), 
-					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => '', 'value' => ''),
+					array('text' => tra('Yes'), 'value' => 'y'),
 					array('text' => tra('No'), 'value' => 'n')
 				),
 				'advanced' => true,
-			),				
+			),
 			'padding' => array(
 				'required' => false,
 				'name' => tra('Padding'),
@@ -162,9 +162,9 @@ function wikiplugin_mouseover_info()
 				'required' => false,
 				'name' => tra('Effect Speed'),
 				'options' => array(
-					array('text' => tra('Normal'), 'value' => ''), 
-					array('text' => tra('Fast'), 'value' => 'fast'), 
-					array('text' => tra('Slow'), 'value' => 'slow'), 
+					array('text' => tra('Normal'), 'value' => ''),
+					array('text' => tra('Fast'), 'value' => 'fast'),
+					array('text' => tra('Slow'), 'value' => 'slow'),
 				),
 				'description' => tra('Set the speed of the animation.'),
 				'filter' => 'alpha',
@@ -223,7 +223,7 @@ function wikiplugin_mouseover( $data, $params )
 	}
 
 	$text = trim($text);
-	
+
 	if (empty($text)) {
 		if ($params['parselabel'] == 'y') {
 			return $label;
@@ -236,7 +236,7 @@ function wikiplugin_mouseover( $data, $params )
 		$options = array('is_html' => 0);
 		if (containsStringHTML($text)) {
 			$options = array('is_html' => 1);
-		} 
+		}
 		$text = $tikilib->parse_data($text, $options);
 	}
 	if ( $params['parselabel'] == 'y' ) {
@@ -249,7 +249,7 @@ function wikiplugin_mouseover( $data, $params )
 	$url = htmlentities($url, ENT_QUOTES, 'UTF-8');
 
 	global $headerlib;
-	
+
 	if ($closeDelay && $sticky) {
 		$closeDelayStr = "setTimeout(function() {hideJQ('#$id', '$effect', '$speed')}, ".($closeDelay * 1000).");";
 	} else {
@@ -267,18 +267,18 @@ function wikiplugin_mouseover( $data, $params )
 		$js .= "\$('#$id-link').mouseout(function(event) { setTimeout(function() {hideJQ('#$id', '$effect', '$speed')}, ".($closeDelay * 1000)."); });";
 	}
 	$headerlib->add_jq_onready($js);
-	
+
 	$bgcolor   =  isset($params['bgcolor'])   ? ("background-color: " . $params['bgcolor'] . ';') : '';
 	$textcolor =  isset($params['textcolor']) ? ("color:" . $params['textcolor'] . ';') : '';
 	$class     = !isset( $params['class'] )   ? 'class="plugin-mouseover"' : 'class="plugin-mouseover '.$params['class'].'"';
-	
+
 	$html = "~np~<$tag id=\"$id-link\" href=\"$url\">$label</$tag>".
 		"<span id=\"$id\" $class style=\"width: {$width}px; " . (isset($params['height']) ? "height: {$height}px; " : "") ."{$bgcolor} {$textcolor} {$padding} \">$text</span>~/np~";
 
 	return $html;
 }
 
-function containsStringHTML($str) 
+function containsStringHTML($str)
 {
-	return preg_match ('/<[^>]*>/', $str) == 1;	
+	return preg_match('/<[^>]*>/', $str) == 1;
 }

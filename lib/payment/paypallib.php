@@ -49,7 +49,7 @@ class PaypalLib extends TikiDb_Bridge
 		// Skip duplicate translactions
 		foreach ( $payment_info['payments'] as $payment ) {
 			if ( $payment['type'] == 'paypal' ) {
-				if ( $payment['details']['txn_id'] == $ipn_data['txn_id'] ) { 
+				if ( $payment['details']['txn_id'] == $ipn_data['txn_id'] ) {
 					return false;
 				}
 			}
@@ -64,7 +64,8 @@ class PaypalLib extends TikiDb_Bridge
 	 * @param string $lang	tiki language value
 	 * @return string		locale
 	 */
-	function localeMap ($lang) {
+	function localeMap ($lang)
+	{
 
 		$langMap = array(
 			'ar' => 'en_AE',		// Arabic = United Arab Emirates - English ok?

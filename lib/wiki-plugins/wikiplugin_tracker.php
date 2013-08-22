@@ -1370,7 +1370,7 @@ function wikiplugin_tracker($data, $params)
 						case 'b':	// Currency
 							if (empty($f['options_array']) || (isset($f['options_array']['0']) && strlen($f['options_array']['0']) == 0)) {
 								// Use default
-								//	Pending: Unable to locate the object to check to determine the default (in the tracker field definitions). Hardcode true. Arild 
+								//	Pending: Unable to locate the object to check to determine the default (in the tracker field definitions). Hardcode true. Arild
 								$isTextOnSameRow = true;
 							} else {
 								$isTextOnSameRow = (intval($f['options_array']['0']) == 0) ? false : true;
@@ -1378,10 +1378,10 @@ function wikiplugin_tracker($data, $params)
 							break;
 						case 'a':	// Text area
 							$isTextOnSameRow = true;
-							if(isset($f['options_array']['8'])) {
+							if (isset($f['options_array']['8'])) {
 								if (empty($f['options_array']) || (isset($f['options_array']['8']) && strlen($f['options_array']['8']) == 0)) {
 									// Use default
-									//	Pending: Unable to locate the object to check to determine the default (in the tracker field definitions). Hardcode true. Arild 
+									//	Pending: Unable to locate the object to check to determine the default (in the tracker field definitions). Hardcode true. Arild
 									$isTextOnSameRow = true;
 								} else {
 									$isTextOnSameRow = (intval($f['options_array']['8']) == 0) ? false : true;

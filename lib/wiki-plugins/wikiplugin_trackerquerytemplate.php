@@ -121,7 +121,7 @@ function wikiplugin_trackerquerytemplate($data, $params)
 		$itemIds = $params['itemids'];
 		unset($params['itemids']);
 		$newData = '';
-		foreach($itemIds as $itemId) {
+		foreach ($itemIds as $itemId) {
 			if (!empty($itemId)) {
 				$params['itemid'] = $itemId;
 				$newData .= wikiplugin_trackerquerytemplate($data, $params);

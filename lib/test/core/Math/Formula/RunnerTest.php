@@ -163,19 +163,23 @@ class Math_Formula_RunnerTest extends TikiTestCase
 	function testIf()
 	{
 		$this->runner->setFormula('(if condition then else)');
-		$this->runner->setVariables(array(
-			'condition' => 1,
-			'then' => 123,
-			'else' => 456,
-		));
+		$this->runner->setVariables(
+			array(
+				'condition' => 1,
+				'then' => 123,
+				'else' => 456,
+			)
+		);
 
 		$this->assertEquals(123, $this->runner->evaluate());
 
-		$this->runner->setVariables(array(
-			'condition' => 0,
-			'then' => 123,
-			'else' => 456,
-		));
+		$this->runner->setVariables(
+			array(
+				'condition' => 0,
+				'then' => 123,
+				'else' => 456,
+			)
+		);
 
 		$this->assertEquals(456, $this->runner->evaluate());
 	}
@@ -183,17 +187,21 @@ class Math_Formula_RunnerTest extends TikiTestCase
 	function testIfWithoutElse()
 	{
 		$this->runner->setFormula('(if condition then)');
-		$this->runner->setVariables(array(
-			'condition' => 1,
-			'then' => 123,
-		));
+		$this->runner->setVariables(
+			array(
+				'condition' => 1,
+				'then' => 123,
+			)
+		);
 
 		$this->assertEquals(123, $this->runner->evaluate());
 
-		$this->runner->setVariables(array(
-			'condition' => 0,
-			'then' => 123,
-		));
+		$this->runner->setVariables(
+			array(
+				'condition' => 0,
+				'then' => 123,
+			)
+		);
 
 		$this->assertEquals(0, $this->runner->evaluate());
 	}
