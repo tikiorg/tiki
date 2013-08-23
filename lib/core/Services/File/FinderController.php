@@ -196,15 +196,10 @@ class Services_File_FinderController
 		}
 
 		if ($isgal) {
-			//$objectType = 'file gallery';
-			$galleryId = $id;
+			$perms = TikiLib::lib('tiki')->get_perm_object($id, 'file gallery', TikiLib::lib('filegal')->get_file_gallery_info($id));
 		} else {
-			$objectType = 'file';
-			// Seems individual file perms aren't set so use the gallery ones
-			$galleryId = $this->parentIds['files'][$id];
+			$perms = TikiLib::lib('tiki')->get_perm_object($id, 'file', TikiLib::lib('filegal')->get_file($id));
 		}
-
-		$perms = TikiLib::lib('tiki')->get_perm_object($galleryId, 'file gallery', TikiLib::lib('filegal')->get_file_gallery_info($galleryId));
 
 		switch($attr) {
 			case 'read':
