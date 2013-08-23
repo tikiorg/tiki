@@ -206,7 +206,6 @@ class elFinderVolumeTikiFiles extends elFinderVolumeDriver
 			), $smarty);
 			$perms = TikiLib::lib('tiki')->get_perm_object($id, 'file gallery', $info);
 		} else {
-			$perms = TikiLib::lib('tiki')->get_perm_object($id, 'file');
 			$info = $this->filegallib->get_file($id);
 			$allowed = array('fileId', 'galleryId', 'name', 'description', 'created', 'filename', 'filesize',
 				'filetype', 'user', 'author', 'hits', 'maxhits', 'votes', 'points', 'metadata',
@@ -224,6 +223,7 @@ class elFinderVolumeTikiFiles extends elFinderVolumeDriver
 				'type' => $type,
 				'title' => $info['name'],
 			), $smarty);
+			$perms = TikiLib::lib('tiki')->get_perm_object($id, 'file', $info);
 		}
 
 		if ($perms['tiki_p_download_files'] === 'y') {
