@@ -443,6 +443,7 @@ class WikiLib extends TikiLib
 
 		if ($prefs['wysiwyg_inline_editing'] === 'y' && getCookie('wysiwyg_inline_edit', "preview", false)) {
 			$parse_options['ck_editor'] = true;
+			$parse_options['suppress_icons'] = true;
 		}
 
 		$wiki_cache = ($prefs['feature_wiki_icache'] == 'y' && !is_null($info['wiki_cache'])) ? $info['wiki_cache'] : $prefs['wiki_cache'];
