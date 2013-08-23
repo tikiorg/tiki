@@ -135,7 +135,7 @@ function wikiplugin_youtube($data, $params)
 		$params['movie']= str_replace('/', '', $youTubeShortURL['path']);
 	}
 
-	if (preg_match('/http(?:s)?:\/\/(?:\w+\.)?youtube\.com\/watch\?v=(\w+)/', $params['movie'], $matches) ) {
+	if (preg_match('/http(?:s)?:\/\/(?:\w+\.)?youtube\.com\/watch\?v=([\w-_]+)/', $params['movie'], $matches) ) {
 		$params['movie'] = $matches[1];
 	} elseif (preg_match('/^(\w+)$/', $params['movie'], $matches)){
 		$params['movie'] = $params['movie'];
