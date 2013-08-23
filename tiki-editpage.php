@@ -953,6 +953,12 @@ if (isset($_REQUEST["preview"])) {
 
 $smarty->assign_by_ref('parsed', $parsed);
 
+// If using the wiki text editor, set the (output) page format to non-html.
+if ($_SESSION['wysiwyg'] === 'n') {
+	$is_html = false;
+}
+
+
 /**
  * @param $obj
  * @param $parts
