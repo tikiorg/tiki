@@ -4459,6 +4459,12 @@ a.cke_button span.cke_icon {
 	opacity: .7;
 }
 
+.unsavedChangesInEditor 
+{
+    border: 1px solid;
+    border-color: Red;
+}
+
 div.tiki_plugin { width: 100%; }
 
 /* Auto TOC */
