@@ -84,6 +84,7 @@
 					<fieldset>
 						<legend>{tr}Auto TOC options{/tr}</legend>
 							{preference name=wiki_inline_auto_toc}
+							{preference name=wiki_inline_toc_pos}
 					</fieldset>
 				</div>
 

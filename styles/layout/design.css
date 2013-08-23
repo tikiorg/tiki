@@ -4481,7 +4481,6 @@ div#outerToc {
 }
 div#outerToc-static 
 {
-    float: right;
     border: 1px solid;
     border-collapse: collapse;
 	padding:5px;

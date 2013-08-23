@@ -693,10 +693,29 @@ if(!empty($currPage) &&
 		}
 		// Add Auto TOC if enabled
 		if ($isAutoTocActive) {
+			// Enable Auto TOC
 			$headerlib->add_jsfile('lib/jquery_tiki/autoToc.js');
+			
+			// Show/Hide the static inline TOC
 			$isAddInlineToc = isset($prefs['wiki_inline_auto_toc']) ? $prefs['wiki_inline_auto_toc'] === 'y' : false;
 			if ($isAddInlineToc) {
+				// Enable static, inline TOC
 				$headerlib->add_css('div#outerToc-static {display: block;}');
+
+				// Postion TOC top/left/right
+				$tocPos = !empty($prefs['wiki_inline_toc_pos']) ? $prefs['wiki_inline_toc_pos'] : 'right';
+				switch(strtolower($tocPos)) {
+				case 'top':
+					$headerlib->add_css('div#outerToc-static {border: 0px;}');
+					break;
+				case 'left':
+					$headerlib->add_css('div#outerToc-static {float: left;}');
+					break;
+				case 'right':
+				default:
+					$headerlib->add_css('div#outerToc-static {float: right;}');
+					break;
+				}
 			} else {
 				$headerlib->add_css('div#outerToc-static {display: none;}');
 			}
