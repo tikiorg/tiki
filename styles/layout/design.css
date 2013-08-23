@@ -2732,7 +2732,7 @@ input {
 	display: block;
 }
 
-.ui-button, .ui-button:hover {
+button.ui-button, button.ui-button:hover {
     padding: 0;
 }
 
