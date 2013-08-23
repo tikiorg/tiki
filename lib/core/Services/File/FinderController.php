@@ -10,6 +10,7 @@ include_once "vendor_extra/elfinder/php/elFinder.class.php";
 include_once "vendor_extra/elfinder/php/elFinderVolumeDriver.class.php";
 
 include_once 'lib/jquery_tiki/elfinder/elFinderVolumeTikiFiles.class.php';
+include_once 'lib/jquery_tiki/elfinder/tikiElFinder.php';
 
 class Services_File_FinderController
 {
@@ -142,7 +143,7 @@ class Services_File_FinderController
 		}
 */
 		// run elFinder
-		$elFinder = new elFinder($opts);
+		$elFinder = new tikiElFinder($opts);
 		$connector = new elFinderConnector($elFinder);
 
 		if ($input->cmd->text() === 'tikiFileFromHash') {	// intercept tiki only commands

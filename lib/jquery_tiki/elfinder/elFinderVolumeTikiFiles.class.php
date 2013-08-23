@@ -181,6 +181,40 @@ class elFinderVolumeTikiFiles extends elFinderVolumeDriver
    		return false;
 	}
 
+	// initially from https://github.com/Studio-42/elFinder/wiki/Adding-file-description-to-Properties-dialog
+	// adapted to send back tiki id's and syntax etc
+
+	public function info($target, $newdesc = '')
+	{
+		$path = $this->decode($target);
+		$id = $this->pathToId($path);
+		$isGal = ($target{0} !== 'f');
+
+		if ($isGal) {
+			$info = $this->filegallib->get_file_gallery_info($id);
+			$perms = TikiLib::lib('tiki')->get_perm_object($id, 'file gallery', $info);
+		} else {
+			$perms = TikiLib::lib('tiki')->get_perm_object($id, 'file');
+			$info = $this->filegallib->get_file($id);
+		}
+
+		if ($perms['tiki_p_download_files'] === 'y') {
+			$description = $info['description'];
+
+			if ($newdesc && $perms['tiki_p_edit_gallery_file'] === 'y') {
+				$info['description'] = $newdesc;
+				if ($isGal) {
+					$this->filegallib->replace_file_gallery($info);
+				} else {
+					$this->filegallib->replace_file($info);
+				}
+			} else {
+				return $info;
+			}
+		}
+		return '';
+	}
+
 
 	/*********************************************************************/
 	/*                               FS API                              */
