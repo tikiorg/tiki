@@ -2996,7 +2996,15 @@ class FileGalLib extends TikiLib
 		return $res;
 	}
 
-	// convert markup to be inserted onclick - replace: %fileId%, %name%, %description% etc
+	/**
+	 * convert markup to be inserted onclick - replace: %fileId%, %name%, %description% etc
+	 * also will convert attributes, e.g. %tiki.content.url% will be replaced with the remote url
+	 *
+	 * @param $syntax string	template syntax
+	 * @param $file array		file info
+	 * @return string			wiki syntax for that file
+	 */
+
 	private function process_fgal_syntax($syntax, $file)
 	{
 		$replace_keys = array('fileId', 'name', 'filename', 'description', 'hits', 'author', 'filesize', 'filetype');
@@ -3004,6 +3012,10 @@ class FileGalLib extends TikiLib
 			if (isset($file[$k])) {
 				$syntax = preg_replace("/%$k%/", $file[$k], $syntax);
 			}
+		}
+		$attributes = TikiLib::lib('attribute')->get_attributes('file', $file['fileId']);
+		foreach ($attributes as $k => $v) {
+			$syntax = preg_replace("/%$k%/", $v, $syntax);
 		}
 		return $syntax;
 	}
