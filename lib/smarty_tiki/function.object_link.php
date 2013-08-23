@@ -118,7 +118,11 @@ function smarty_function_object_link_default( $smarty, $object, $title = null, $
 	$metadata = TikiLib::lib('object')->get_metadata($type, $object, $classList);
 	$class = ' class="' . implode(' ', $classList) . '"';
 
-	$html = '<a href="' . $base_url . $escapedHref . '"' . $class . $titleAttribute . $metadata . '>' . $escapedText . '</a>';
+	if (strpos($escapedHref, '://') === false) {
+		$html = '<a href="' . $base_url . $escapedHref . '"' . $class . $titleAttribute . $metadata . '>' . $escapedText . '</a>';
+	} else {
+		$html = '<a href="' . $escapedHref . '"' . $class . $titleAttribute . $metadata . '>' . $escapedText . '</a>';
+	}
 
 	$attributelib = TikiLib::lib('attribute');
 	$attributes = $attributelib->get_attributes($type, $object);
