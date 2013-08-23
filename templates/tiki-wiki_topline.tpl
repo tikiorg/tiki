@@ -56,8 +56,9 @@
 														$("#wysiwyg_inline_edit img").attr("src", src.replace("page.png", "page_lightning.png"));
 													}
 												} else {
-													disableWyiswygInlineEditing();
-													$("#wysiwyg_inline_edit img").attr("src", src.replace("page_lightning.png", "page.png"));
+													if (disableWyiswygInlineEditing()) {
+														$("#wysiwyg_inline_edit img").attr("src", src.replace("page_lightning.png", "page.png"));
+													}
 												}
 												return false;
 											});
