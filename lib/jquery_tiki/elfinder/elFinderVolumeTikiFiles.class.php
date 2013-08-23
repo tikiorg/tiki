@@ -195,8 +195,10 @@ class elFinderVolumeTikiFiles extends elFinderVolumeDriver
 		if ($isGal) {
 			$info = $this->filegallib->get_file_gallery($id);
 			$allowed = array('galleryId', 'name', 'type', 'description', 'created', 'visible',
-				'lastModif', 'user', 'hits', 'votes', 'public', 'icon_field', 'link', 'wiki_syntax'
+				'lastModif', 'user', 'hits', 'votes', 'public', 'icon_field'
 			);
+			// clever way of filtering by keys from http://stackoverflow.com/questions/4260086
+			$info = array_intersect_key($info, array_flip($allowed));
 			$info['link'] = smarty_function_object_link(array(
 				'id' => $info['galleryId'],
 				'type' => 'file gallery',
@@ -208,8 +210,9 @@ class elFinderVolumeTikiFiles extends elFinderVolumeDriver
 			$info = $this->filegallib->get_file($id);
 			$allowed = array('fileId', 'galleryId', 'name', 'description', 'created', 'filename', 'filesize',
 				'filetype', 'user', 'author', 'hits', 'maxhits', 'votes', 'points', 'metadata',
-				'lastModif', 'lastModifUser', 'lockedby', 'comment', 'archiveId', 'link', 'wiki_syntax'
+				'lastModif', 'lastModifUser', 'lockedby', 'comment', 'archiveId'
 			);
+			$info = array_intersect_key($info, array_flip($allowed));
 			$info['wiki_syntax'] = $this->filegallib->getWikiSyntax($info['galleryId'], $info);
 			if (in_array($info['filetype'], array('image/jpeg', 'image/gif', 'image/png'))) {
 				$type = 'display';
@@ -222,16 +225,29 @@ class elFinderVolumeTikiFiles extends elFinderVolumeDriver
 				'title' => $info['name'],
 			), $smarty);
 		}
-		$info = array_intersect_key($info, array_flip($allowed));
 
 		if ($perms['tiki_p_download_files'] === 'y') {
+			global $user;
 
 			if ($newdesc && $perms['tiki_p_edit_gallery_file'] === 'y') {
-				$info['description'] = $newdesc;
 				if ($isGal) {
-					$this->filegallib->replace_file_gallery($info);
+					$result = $this->fileGalleriesTable->update(
+						array(
+							'description' => $newdesc,
+							'lastModifUser' => $user,
+							'lastModif' => TikiLib::lib('tiki')->now,
+						),
+						array('galleryId' => $id)
+					);
 				} else {
-					$this->filegallib->replace_file($info);
+					$result = $this->filesTable->update(
+						array(
+							'description' => $newdesc,
+							'lastModifUser' => $user,
+							'lastModif' => TikiLib::lib('tiki')->now,
+						),
+						array('fileId' => $id)
+					);
 				}
 			}
 			return array_filter($info);
