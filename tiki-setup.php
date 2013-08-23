@@ -327,7 +327,7 @@ if ( isset($prefs['javascript_cdn']) && $prefs['javascript_cdn'] == 'google' ) {
 }
 
 if ( $prefs['fgal_elfinder_feature'] === 'y' ) {
-	$str = 'min';	// use 'full' for debugging
+	$str = $prefs['tiki_minify_javascript'] === 'y' ? 'min' : 'full';
 	$headerlib->add_jsfile('vendor_extra/elfinder/js/elfinder.' . $str . '.js')
 			->add_cssfile('vendor_extra/elfinder/css/elfinder.' . $str . '.css')
 			->add_jsfile('lib/jquery_tiki/elfinder/tiki-elfinder.js');
