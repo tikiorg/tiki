@@ -188,18 +188,43 @@ class elFinderVolumeTikiFiles extends elFinderVolumeDriver
 	{
 		$path = $this->decode($target);
 		$id = $this->pathToId($path);
-		$isGal = ($target{0} !== 'f');
+		$isGal = ($path{0} !== 'f');
+		$smarty = TikiLib::lib('smarty');
+		$smarty->loadPlugin('smarty_function_object_link');
 
 		if ($isGal) {
-			$info = $this->filegallib->get_file_gallery_info($id);
+			$info = $this->filegallib->get_file_gallery($id);
+			$allowed = array('galleryId', 'name', 'type', 'description', 'created', 'visible',
+				'lastModif', 'user', 'hits', 'votes', 'public', 'icon_field', 'link', 'wiki_syntax'
+			);
+			$info['link'] = smarty_function_object_link(array(
+				'id' => $info['galleryId'],
+				'type' => 'file gallery',
+				'title' => $info['name'],
+			), $smarty);
 			$perms = TikiLib::lib('tiki')->get_perm_object($id, 'file gallery', $info);
 		} else {
 			$perms = TikiLib::lib('tiki')->get_perm_object($id, 'file');
 			$info = $this->filegallib->get_file($id);
+			$allowed = array('fileId', 'galleryId', 'name', 'description', 'created', 'filename', 'filesize',
+				'filetype', 'user', 'author', 'hits', 'maxhits', 'votes', 'points', 'metadata',
+				'lastModif', 'lastModifUser', 'lockedby', 'comment', 'archiveId', 'link', 'wiki_syntax'
+			);
+			$info['wiki_syntax'] = $this->filegallib->getWikiSyntax($info['galleryId'], $info);
+			if (in_array($info['filetype'], array('image/jpeg', 'image/gif', 'image/png'))) {
+				$type = 'display';
+			} else {
+				$type = 'file';
+			}
+			$info['link'] = smarty_function_object_link(array(
+				'id' => $info['fileId'],
+				'type' => $type,
+				'title' => $info['name'],
+			), $smarty);
 		}
+		$info = array_intersect_key($info, array_flip($allowed));
 
 		if ($perms['tiki_p_download_files'] === 'y') {
-			$description = $info['description'];
 
 			if ($newdesc && $perms['tiki_p_edit_gallery_file'] === 'y') {
 				$info['description'] = $newdesc;
@@ -208,9 +233,8 @@ class elFinderVolumeTikiFiles extends elFinderVolumeDriver
 				} else {
 					$this->filegallib->replace_file($info);
 				}
-			} else {
-				return $info;
 			}
+			return array_filter($info);
 		}
 		return '';
 	}
