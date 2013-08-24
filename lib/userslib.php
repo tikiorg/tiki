@@ -4775,6 +4775,15 @@ class UsersLib extends TikiLib
 				'scope' => 'object',
 			),
 			array(
+				'name' => 'tiki_p_edit_inline',
+				'description' => tra('Can inline edit pages'),
+				'level' => 'registered',
+				'type' => 'wiki',
+				'admin' => false,
+				'prefs' => array('feature_wiki'),
+				'scope' => 'object',
+			),
+			array(
 				'name' => 'tiki_p_wiki_view_history',
 				'description' => tra('Can view wiki history'),
 				'level' => 'basic',

@@ -47,6 +47,8 @@
 										{/jq}
 										<a title="{tr}View edit icons{/tr}" href="#" id="wiki_plugin_edit_view">{icon _id='wiki_plugin_edit_view' title="{tr}View edit icons{/tr}"}</a>
 									{/if}
+								{/if}
+								{if ($tiki_p_edit eq 'y' or $tiki_p_edit_inline eq 'y' or $page|lower eq 'sandbox') and $beingEdited ne 'y' and $machine_translate_to_lang eq ''}
 									{if $prefs.wysiwyg_inline_editing eq 'y'}
 										{jq}
 											$("#wysiwyg_inline_edit").click( function () {

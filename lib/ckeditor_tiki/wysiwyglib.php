@@ -20,8 +20,11 @@ class WYSIWYGLib
 		// Validate user permissions
 		$tikilib = TikiLib::lib('tiki');
 		if (!$tikilib->user_has_perm_on_object($user, $pageName, 'wiki page', 'edit')) {
-			// User has no permission
-			return;
+			// Check if the user has inline edit permissions
+			if (!$tikilib->user_has_perm_on_object($user, $pageName, 'wiki page', 'edit_inline')) {
+				// User has no permission
+				return;
+			}
 		}
 
 		// If the page uses flagged revisions, check if the page can be edited.
