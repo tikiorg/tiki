@@ -4203,29 +4203,25 @@ form.simple textarea.export {
 }
 
 /* $.fn.modal */
-.mask {
-	position:absolute;
-	z-index:999;
-	background-color:#FFFFFF;
-	display:none;
-}
-
-.boxes, .boxes * {
-	z-index: 2147483646;
-}
-
-.boxes .dialog {
-	position:absolute;
-	width: auto;
-	height: auto;
-	font-weight: bold;
-	z-index: 2147483647;
+.modal {
+	position: absolute;
 	text-align: center;
 }
-
-.boxes img {
-	z-index: 2147483647;
+.modal .mask {
+	position: absolute;
+	background-color: #fff;
+	display: none;
+	width: 100%;
+	height: auto;
 }
+
+.modal .dialog {
+	position:absolute;
+	top: 50%;
+	left: 50%;
+	font-weight: bold;
+}
+/* end $.fn.modal */
 
 .structuremenu .menuSection {
 	margin-left: 6px;
