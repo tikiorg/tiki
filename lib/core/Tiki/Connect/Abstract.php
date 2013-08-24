@@ -72,6 +72,21 @@ abstract class Tiki_Connect_Abstract
 		'lang_bing_api_client_id',
 		'lang_bing_api_client_secret',
 		'connect_guid',
+		'lang_google_api_key',
+		'socialnetworks_twitter_consumer_key',
+		'socialnetworks_twitter_consumer_secret',
+		'socialnetworks_facebook_application_secr',
+		'socialnetworks_facebook_application_id',
+		'socialnetworks_bitly_login',
+		'socialnetworks_bitly_key',
+		'watershed_fme_key',
+		'zotero_client_key',
+		'zotero_client_secret',
+		'zotero_group_id',
+		'vimeo_consumer_key',
+		'vimeo_consumer_secret',
+		'vimeo_access_token',
+		'vimeo_access_token_secret',
 	);
 
 	// preferences that we should ask to collect
