@@ -1188,7 +1188,7 @@ if (
 			$description,
 			$minor,
 			$pageLang,
-			$is_html,
+			isset($_REQUEST['allowhtml']) ? $_REQUEST['allowhtml'] : $is_html,
 			$hash,
 			null,
 			$_REQUEST['wysiwyg'],
