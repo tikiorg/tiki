@@ -198,7 +198,7 @@ if ($prefs['wysiwyg_inline_editing'] == 'y' && $page &&
 }
 
 // Process page display options
-processPageDisplayOptions();
+$wikilib->processPageDisplayOptions();
 
 #Propagate the fullscreen parameter to templates
 if ( isset($_REQUEST['fullscreen']) ) {
@@ -742,74 +742,3 @@ function make_sure_machine_translation_is_enabled()
 	}
 }
 
-// Page display options
-//////////////////////////
-function processPageDisplayOptions() 
-{
-	global	$prefs, $headerlib;
-	
-	$currPage = isset($_REQUEST['page']) ? $_REQUEST['page'] : '';
-	if (!empty($currPage) &&
-		(strstr($_SERVER["SCRIPT_NAME"], "tiki-editpage.php") === false) &&
-		(strstr($_SERVER["SCRIPT_NAME"], 'tiki-pagehistory.php') === false)) {
-
-		// Determine the auto TOC setting
-		$isAutoTocActive = isset($prefs['wiki_auto_toc']) ? $prefs['wiki_auto_toc'] === 'y' : false;
-		if ($isAutoTocActive) {
-			$wikilib = TikiLib::lib('wiki');
-			$isPageAutoToc = $wikilib->get_page_auto_toc($currPage);
-			if ($isPageAutoToc != 0) {
-				// Use page specific setting
-				$isAutoTocActive = $isPageAutoToc > 0 ? true : false;
-			}
-			// Add Auto TOC if enabled
-			if ($isAutoTocActive) {
-				// Enable Auto TOC
-				$headerlib->add_jsfile('lib/jquery_tiki/autoToc.js');
-
-				// Show/Hide the static inline TOC
-				$isAddInlineToc = isset($prefs['wiki_inline_auto_toc']) ? $prefs['wiki_inline_auto_toc'] === 'y' : false;
-				if ($isAddInlineToc) {
-					// Enable static, inline TOC
-					$headerlib->add_css('div#outerToc-static {display: block;}');
-
-					// Postion TOC top/left/right
-					$tocPos = !empty($prefs['wiki_inline_toc_pos']) ? $prefs['wiki_inline_toc_pos'] : 'right';
-					switch(strtolower($tocPos)) {
-						case 'top':
-							$headerlib->add_css('div#outerToc-static {border: 0px;}');
-							break;
-						case 'left':
-							$headerlib->add_css('div#outerToc-static {float: left;}');
-							break;
-						case 'right':
-						default:
-							$headerlib->add_css('div#outerToc-static {float: right;}');
-							break;
-					}
-				} else {
-					$headerlib->add_css('div#outerToc-static {display: none;}');
-				}
-			}
-		}
-
-		// Hide title per page
-		$isHideTitlePerPage = isset($prefs['wiki_page_hide_title']) ? $prefs['wiki_page_hide_title'] === 'y' : false;
-		if ($isHideTitlePerPage) {
-			$isHideTitle = false;
-			if (!empty($currPage)) {
-				$wikilib = TikiLib::lib('wiki');
-				$isPageHideTitle = $wikilib->get_page_hide_title($currPage);
-				if ($isPageHideTitle != 0) {
-					// Use page specific setting
-					$isHideTitle = $isPageHideTitle < 0 ? true : false;
-				}
-			}
-			if ($isHideTitle) {
-				$headerlib->add_css('.pagetitle {display: none;}');
-				$headerlib->add_css('.titletop {display: none;}');
-			}
-		}
-	}
-}
-//////////////////////////
