@@ -129,17 +129,8 @@ function wikiplugin_youtube($data, $params)
 
 	$scheme = $tikilib->httpScheme();
 
-	//Verify if URL is YouTube Short URL
-	$youTubeShortURL = parse_url($params['movie']);
-	if ($youTubeShortURL['host'] == 'youtu.be') {
-		$params['movie']= str_replace('/', '', $youTubeShortURL['path']);
-	}
-
-	if (preg_match('/http(?:s)?:\/\/(?:\w+\.)?youtube\.com\/watch\?v=([\w-_]+)/', $params['movie'], $matches) ) {
-		$params['movie'] = $matches[1];
-	} elseif (preg_match('/^([\w-_]+)$/', $params['movie'], $matches)){
-		$params['movie'] = $params['movie'];
-	} else {
+	$sYoutubeId  = getYoutubeId($params['movie']);
+	if (empty($sYoutubeId)) {
 		return '^' . tra('Invalid YouTube URL provided');
 	}
 
@@ -178,4 +169,30 @@ function wikiplugin_youtube($data, $params)
 	$iframe = ('<iframe src="'.$params['movie'].'" frameborder="0" width="'.$params['width'].'" height="'.$params['height'].'"></iframe>');
 
 	return '~np~' . $iframe . '~/np~';
+}
+
+function getYoutubeId( $sYoutubeUrl)
+{
+	$aParsedUrl = parse_url($sYoutubeUrl);
+	if ($aParsedUrl !== false && !empty($aParsedUrl['host'])) {
+		if (	$aParsedUrl['host'] !== 'youtube.com'
+			&& $aParsedUrl['host'] !== 'www.youtube.com'
+			&& $aParsedUrl['host'] !== 'youtu.be'
+			&& $aParsedUrl['host'] !== 'www.youtu.be') {
+			return false;
+		}
+		if ($aParsedUrl['host'] === 'youtu.be') {
+			$sYoutubeId= str_replace('/', '', $aParsedUrl['path']);
+			return $sYoutubeId;
+		}
+		if ( $aParsedUrl['host'] === 'youtube.com' || $aParsedUrl['host'] === 'www.youtube.com' ) {
+			parse_str(parse_url($sYoutubeUrl, PHP_URL_QUERY), $aQueryString);
+			return $aQueryString["v"];
+		}
+	} elseif (preg_match('/^([\w-_]+)$/', $sYoutubeUrl, $matches)){
+		$sYoutubeId = $sYoutubeUrl;
+	} else {
+		return false;
+	}
+	return $sYoutubeId;
 }
