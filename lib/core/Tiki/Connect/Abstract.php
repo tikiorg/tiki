@@ -16,9 +16,9 @@ abstract class Tiki_Connect_Abstract
 		'recaptcha_pubkey',
 		'recaptcha_privkey',
 		'registerPasscode',
-		'partnerId',
-		'secret',
-		'adminSecret',
+		'kaltura_partnerId',
+		'kaltura_secret',
+		'kaltura_adminSecret',
 		'socialnetworks_twitter_consumer_key',
 		'socialnetworks_twitter_consumer_secret',
 		'zotero_client_key',
@@ -66,6 +66,12 @@ abstract class Tiki_Connect_Abstract
 		'auth_phpbb_dbuser',
 		'auth_phpbb_dbpasswd',
 		'auth_phpbb_dbname',
+		'bigbluebutton_server_location',
+		'bigbluebutton_server_salt',
+		'internal_site_hash',
+		'lang_bing_api_client_id',
+		'lang_bing_api_client_secret',
+		'connect_guid',
 	);
 
 	// preferences that we should ask to collect
@@ -88,6 +94,7 @@ abstract class Tiki_Connect_Abstract
 		'sitesubtitle',
 		'sitetitle',
 		't_use_dir',
+		'multidomain_config',
 	);
 
 	protected $connectTable = null;
