@@ -1,4 +1,4 @@
-{if  !empty($smarty.request.diff_style) or !empty($diff_style)}
+{if (!empty($smarty.request.diff_style) or !empty($diff_style)) and $old and $new}
 	{if !isset($translation_mode) or $translation_mode ne 'y'}
 		<h2>{tr}Comparing version {$old.version} with version {$new.version}{/tr}</h2>		
 	{/if}
