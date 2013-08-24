@@ -137,7 +137,7 @@ function wikiplugin_youtube($data, $params)
 
 	if (preg_match('/http(?:s)?:\/\/(?:\w+\.)?youtube\.com\/watch\?v=([\w-_]+)/', $params['movie'], $matches) ) {
 		$params['movie'] = $matches[1];
-	} elseif (preg_match('/^(\w+)$/', $params['movie'], $matches)){
+	} elseif (preg_match('/^([\w-_]+)$/', $params['movie'], $matches)){
 		$params['movie'] = $params['movie'];
 	} else {
 		return '^' . tra('Invalid YouTube URL provided');
