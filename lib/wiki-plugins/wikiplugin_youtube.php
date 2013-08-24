@@ -117,15 +117,12 @@ function wikiplugin_youtube($data, $params)
 
 	$scheme = $tikilib->httpScheme();
 
-	if (preg_match('/http(?:s)?:\/\/(?:\w+\.)?youtube\.com\/watch\?v=(\w+)/', $params['movie'], $matches) ) {
-		$params['movie'] = $matches[1];
-	} elseif (preg_match('/^(\w+)$/', $params['movie'], $matches)){
-		$params['movie'] = $params['movie'];
-	} else {
+	$sYoutubeId  = getYoutubeId($params['movie']);
+	if (empty($sYoutubeId)) {
 		return '^' . tra('Invalid YouTube URL provided');
 	}
 
-	$params['movie'] = $scheme . '://www.youtube.com/v/' . $params['movie'] . '?';
+	$params['movie'] = $scheme . '://www.youtube.com/v/' . $sYoutubeId . '?';
 	// backward compatibility
 	if ($params['allowFullScreen'] == 'y') {
 		$params['allowFullScreen'] = 'true';
@@ -152,4 +149,30 @@ function wikiplugin_youtube($data, $params)
 		return tra('Missing parameter movie to the Youtube plugin');
 	}
 	return '~np~' . $code . '~/np~';
+}
+
+function getYoutubeId( $sYoutubeUrl)
+{
+	$aParsedUrl = parse_url($sYoutubeUrl);
+	if ($aParsedUrl !== false && !empty($aParsedUrl['host'])) {
+		if (	$aParsedUrl['host'] !== 'youtube.com'
+			&& $aParsedUrl['host'] !== 'www.youtube.com'
+			&& $aParsedUrl['host'] !== 'youtu.be'
+			&& $aParsedUrl['host'] !== 'www.youtu.be') {
+			return false;
+		}
+		if ($aParsedUrl['host'] === 'youtu.be') {
+			$sYoutubeId= str_replace('/', '', $aParsedUrl['path']);
+			return $sYoutubeId;
+		}
+		if ( $aParsedUrl['host'] === 'youtube.com' || $aParsedUrl['host'] === 'www.youtube.com' ) {
+			parse_str(parse_url($sYoutubeUrl, PHP_URL_QUERY), $aQueryString);
+			return $aQueryString["v"];
+		}
+	} elseif (preg_match('/^([\w-_]+)$/', $sYoutubeUrl, $matches)){
+		$sYoutubeId = $sYoutubeUrl;
+	} else {
+		return false;
+	}
+	return $sYoutubeId;
 }
