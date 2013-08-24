@@ -16,16 +16,16 @@ class WYSIWYGLib
 	function setupInlineEditor($pageName)
 	{
 		global $tikiroot, $prefs, $user;
-		
+
 		// Validate user permissions
 		$tikilib = TikiLib::lib('tiki');
-		if(!$tikilib->user_has_perm_on_object($user,$pageName,'wiki page','edit')) {
+		if (!$tikilib->user_has_perm_on_object($user, $pageName, 'wiki page', 'edit')) {
 			// User has no permission
 			return;
 		}
 
 		// If the page uses flagged revisions, check if the page can be edited.
-		//	Inline edit sessions can cross page boundaries, thus the page attempts to start in inline edit mode 
+		//	Inline edit sessions can cross page boundaries, thus the page attempts to start in inline edit mode
 		if ($prefs['flaggedrev_approval'] == 'y') {
 			$flaggedrevisionlib = TikiLib::lib('flaggedrevision');
 			if ($flaggedrevisionlib->page_requires_approval($pageName)) {
@@ -36,7 +36,7 @@ class WYSIWYGLib
 			}
 		}
 
-		if( !empty(self::$ckEditor) ) {
+		if ( !empty(self::$ckEditor) ) {
 			// Inline editor is already initialized
 			return;
 		}
@@ -46,8 +46,7 @@ class WYSIWYGLib
 
 		$headerlib->add_js_config('window.CKEDITOR_BASEPATH = "'. $tikiroot . 'vendor/ckeditor/ckeditor/";')
 			->add_jsfile('vendor/ckeditor/ckeditor/ckeditor.js', 0, true)
-			->add_js('window.CKEDITOR.config._TikiRoot = "'.$tikiroot.'";', 1)
-			;
+			->add_js('window.CKEDITOR.config._TikiRoot = "'.$tikiroot.'";', 1);
 
 		// Inline editing config
 		$skin = $prefs['wysiwyg_toolbar_skin'] != 'default' ? $prefs['wysiwyg_toolbar_skin'] : 'moono';
@@ -55,7 +54,7 @@ class WYSIWYGLib
 		// the toolbar TODO refactor as duplicated from below
 		$smarty = TikiLib::lib('smarty');
 
-		$info = $tikilib->get_page_info($pageName, false);	// Don't load page data. 
+		$info = $tikilib->get_page_info($pageName, false);	// Don't load page data.
 		$params = array(
 			'_wysiwyg' => 'y',
 			'area_id' => 'page-data',
@@ -77,7 +76,7 @@ class WYSIWYGLib
 
 		$headerlib->add_jsfile('lib/ckeditor_tiki/tiki-ckeditor.js')
 			->add_js(
-			'// --- config settings for the inlinesave plugin ---
+				'// --- config settings for the inlinesave plugin ---
 window.CKEDITOR.config.extraPlugins = "";
 window.CKEDITOR.config.extraPlugins += (window.CKEDITOR.config.extraPlugins ? ",inlinesave" : "inlinesave" );
 window.CKEDITOR.plugins.addExternal( "inlinesave", "'.$tikiroot.'lib/ckeditor_tiki/plugins/inlinesave/");
@@ -95,7 +94,8 @@ window.CKEDITOR.disableAutoInline = true;
 window.CKEDITOR.config.toolbar = ' .$cktools.';
 //window.CKEDITOR.config.format_tags = "' . $ckeformattags . '";
 
-');
+'
+);
 		$headerlib->add_jsfile('lib/ckeditor_tiki/tikilink_dialog.js');
 		$headerlib->add_js(
 			'//window.CKEDITOR.config.extraPlugins += (window.CKEDITOR.config.extraPlugins ? ",tikiplugin" : "tikiplugin" );

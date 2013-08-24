@@ -1,9 +1,9 @@
 <?php
 // (c) Copyright 2002-2013 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: wikiplugin_youtube.php 46682 2013-07-15 03:44:44Z pascalstjean $
+// $Id$
 
 function wikiplugin_webdocviewer_info()
 {
@@ -12,7 +12,7 @@ function wikiplugin_webdocviewer_info()
 		'documentation' => 'PluginWebDocViewer',
 		'description' => tra('Display files found in a gallery or from a URL in an embedded document viewer'),
 		'prefs' => array( 'wikiplugin_webdocviewer' ),
-		'tags' => array( 'basic' ),		
+		'tags' => array( 'basic' ),
 		'params' => array(
 			'fileId' => array(
 				'required' => false,
@@ -46,26 +46,26 @@ function wikiplugin_webdocviewer($data, $params)
 {
 	global $tikilib;
 	global $tikipath, $tikiroot;
-	
+
  	$plugininfo = wikiplugin_webdocviewer_info();
  	foreach ($plugininfo['params'] as $key => $param) {
  		$default["$key"] = $param['default'];
  	}
 	$params = array_merge($default, $params);
-	
-	
-	if(isset($params['fileId'])){
+
+
+	if (isset($params['fileId'])) {
 		$url = $_SERVER['HTTP_HOST'].$tikiroot.'tiki-download_file.php?fileId='.$params['fileId'];
-	} else if(isset($params['url'])){
+	} elseif (isset($params['url'])) {
 		$url = $params['url'];
 	}
-	
-	if(isset($url)){
+
+	if (isset($url)) {
 		$iframe = ('<iframe src="http://docs.google.com/viewer?embedded=true&url='.$url.'" width="'.$params['width'].'" height="'.$params['height'].'" style="border: none;"></iframe>');
 		return '~np~' . $iframe . '~/np~';
-	} else { 
+	} else {
 		return '~np~'. tra('No FileId or URL has been set'). '~/np~';
 	}
-		
-	
+
+
 }

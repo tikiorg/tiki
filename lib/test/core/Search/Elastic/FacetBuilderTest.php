@@ -21,32 +21,40 @@ class Search_Elastic_FacetBuilderTest extends PHPUnit_Framework_TestCase
 
 	function testBuildSingleFacet()
 	{
-		$this->assertEquals(array(
-			'facets' => array(
-				'categories' => array(
-					'terms' => array('field' => 'categories'),
+		$this->assertEquals(
+			array(
+				'facets' => array(
+					'categories' => array(
+						'terms' => array('field' => 'categories'),
+					),
 				),
-			),
-		), $this->builder->build(array(
-			new Search_Query_Facet_Term('categories'),
-		)));
+			), $this->builder->build(
+				array(
+					new Search_Query_Facet_Term('categories'),
+				)
+			)
+		);
 	}
 
 	function testBuildMultipleFacets()
 	{
-		$this->assertEquals(array(
-			'facets' => array(
-				'categories' => array(
-					'terms' => array('field' => 'categories'),
+		$this->assertEquals(
+			array(
+				'facets' => array(
+					'categories' => array(
+						'terms' => array('field' => 'categories'),
+					),
+					'deep_categories' => array(
+						'terms' => array('field' => 'deep_categories'),
+					),
 				),
-				'deep_categories' => array(
-					'terms' => array('field' => 'deep_categories'),
-				),
-			),
-		), $this->builder->build(array(
-			new Search_Query_Facet_Term('categories'),
-			new Search_Query_Facet_Term('deep_categories'),
-		)));
+			), $this->builder->build(
+				array(
+					new Search_Query_Facet_Term('categories'),
+					new Search_Query_Facet_Term('deep_categories'),
+				)
+			)
+		);
 	}
 }
 

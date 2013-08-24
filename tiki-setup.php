@@ -597,7 +597,6 @@ if ($prefs['ajax_inline_edit'] == 'y') {
 	$headerlib->add_jsfile('lib/jquery_tiki/inline_edit.js');
 }
 
-
 if (true) {
 	// Before being clever and moving this close to where you think it's needed (again),
 	// consider there are more places that you think.
@@ -678,16 +677,16 @@ if ($prefs['openpgp_gpg_pgpmimemail'] == 'y') {
 // Page display options
 //////////////////////////
 $currPage = isset($_REQUEST['page']) ? $_REQUEST['page'] : '';
-if(!empty($currPage) && 
-	(strstr($_SERVER["SCRIPT_NAME"], "tiki-editpage.php") === false) && 
+if (!empty($currPage) &&
+	(strstr($_SERVER["SCRIPT_NAME"], "tiki-editpage.php") === false) &&
 	(strstr($_SERVER["SCRIPT_NAME"], 'tiki-pagehistory.php') === false)) {
 
 	// Determine the auto TOC setting
 	$isAutoTocActive = isset($prefs['wiki_auto_toc']) ? $prefs['wiki_auto_toc'] === 'y' : false;
-	if($isAutoTocActive) {
+	if ($isAutoTocActive) {
 		$wikilib = TikiLib::lib('wiki');
 		$isPageAutoToc = $wikilib->get_page_auto_toc($currPage);
-		if($isPageAutoToc != 0) {
+		if ($isPageAutoToc != 0) {
 			// Use page specific setting
 			$isAutoTocActive = $isPageAutoToc > 0 ? true : false;
 		}
@@ -695,7 +694,7 @@ if(!empty($currPage) &&
 		if ($isAutoTocActive) {
 			// Enable Auto TOC
 			$headerlib->add_jsfile('lib/jquery_tiki/autoToc.js');
-			
+
 			// Show/Hide the static inline TOC
 			$isAddInlineToc = isset($prefs['wiki_inline_auto_toc']) ? $prefs['wiki_inline_auto_toc'] === 'y' : false;
 			if ($isAddInlineToc) {
@@ -726,10 +725,10 @@ if(!empty($currPage) &&
 	$isHideTitlePerPage = isset($prefs['wiki_page_hide_title']) ? $prefs['wiki_page_hide_title'] === 'y' : false;
 	if ($isHideTitlePerPage) {
 		$isHideTitle = false;
-		if(!empty($currPage)) {
+		if (!empty($currPage)) {
 			$wikilib = TikiLib::lib('wiki');
 			$isPageHideTitle = $wikilib->get_page_hide_title($currPage);
-			if($isPageHideTitle != 0) {
+			if ($isPageHideTitle != 0) {
 				// Use page specific setting
 				$isHideTitle = $isPageHideTitle < 0 ? true : false;
 			}

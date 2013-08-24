@@ -3,7 +3,7 @@
 //
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: BulkIncrementalUpdateTest.php 45866 2013-05-06 20:30:16Z lphuberdeau $
+// $Id$
 
 class Search_Elastic_TypeAnalyzerTest extends Search_Index_TypeAnalyzerTest
 {

@@ -1251,7 +1251,7 @@ class ToolbarDialog extends Toolbar
 				"window.dialogData[$this->index] = " . json_encode($this->list) . ";",
 				1 + $this->index
 			);
-			$this->setupCKEditorTool($this->getSyntax( $areaId ), $this->wysiwyg, $this->label, $this->icon);
+			$this->setupCKEditorTool($this->getSyntax($areaId), $this->wysiwyg, $this->label, $this->icon);
 		}
 		return $this->wysiwyg;
 	} // }}}
@@ -1392,17 +1392,19 @@ class ToolbarFileGallery extends Toolbar
 			$smarty->loadPlugin('smarty_function_filegal_manager_url');
 			return 'openFgalsWindow(\''.htmlentities(smarty_function_filegal_manager_url(array('area_id'=>$areaId), $smarty)).'\', true);';
 		} else {
-			TikiLib::lib('header')->add_jq_onready('window.handleFinderInsertAt = function (file, elfinder, area_id) {
-	$.getJSON($.service("file_finder", "finder"), { cmd: "tikiFileFromHash", hash: file.hash },
-		function (data) {
-			window.insertAt(area_id, data.wiki_syntax);
-			$(window).data("elFinderDialog").dialog("close");
-			$($(window).data("elFinderDialog")).remove();
-			$(window).data("elFinderDialog", null);
-			return false;
-		}
-	);
-};');
+			TikiLib::lib('header')->add_jq_onready(
+				'window.handleFinderInsertAt = function (file, elfinder, area_id) {
+					$.getJSON($.service("file_finder", "finder"), { cmd: "tikiFileFromHash", hash: file.hash },
+						function (data) {
+							window.insertAt(area_id, data.wiki_syntax);
+							$(window).data("elFinderDialog").dialog("close");
+							$($(window).data("elFinderDialog")).remove();
+							$(window).data("elFinderDialog", null);
+							return false;
+						}
+					);
+				};'
+			);
 			return 'openElFinderDialog(
 				this,
 				{

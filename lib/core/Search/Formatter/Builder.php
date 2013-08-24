@@ -3,7 +3,7 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: wikiplugin_list.php 44375 2012-12-21 18:39:49Z lphuberdeau $
+// $Id$
 
 class Search_Formatter_Builder
 {

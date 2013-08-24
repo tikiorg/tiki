@@ -11,7 +11,8 @@
  * Controller for various editing based services, wiki/html conversion, preview, inline editing etc
  *
  */
-class Services_Edit_Controller {
+class Services_Edit_Controller
+{
 
 	function setUp()
 	{
@@ -57,14 +58,15 @@ class Services_Edit_Controller {
 		}
 
 		$edit_comment = tra('Inline editor update');
-		$res = TikiLib::lib('tiki')->update_page($pageName, $edit_data, $edit_comment, $user,  $_SERVER['REMOTE_ADDR']);
+		$res = TikiLib::lib('tiki')->update_page($pageName, $edit_data, $edit_comment, $user, $_SERVER['REMOTE_ADDR']);
 
 		return array(
 			'data' => $res,
 		);
 	}
 
-	function action_preview($input) {
+	function action_preview($input)
+	{
 
 		global $user, $prefs, $tikiroot;
 		$tikilib = TikiLib::lib('tiki');
@@ -153,7 +155,8 @@ class Services_Edit_Controller {
 				$parsed = $data;
 
 			} else {					// popup window
-				TikiLib::lib('header')->add_js('
+				TikiLib::lib('header')->add_js(
+					'
 function get_new_preview() {
 	$("body").css("opacity", 0.6);
 	location.reload(true);
@@ -176,7 +179,8 @@ $(window).load(function(){
 					$data .= $parserlib->parse_data(
 						$editlib->partialParseWysiwygToWiki(
 							TikiLib::lib('autosave')->get_autosave($input->editor_id->text(), $input->autoSaveId->text())
-						), $options);
+						), $options
+					);
 				} else {
 					if ($autoSaveIdParts[1] == 'wiki_page') {
 						$canBeRefreshed = false;

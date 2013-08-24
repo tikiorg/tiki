@@ -444,13 +444,15 @@ class Search_Elastic_QueryBuilderTest extends PHPUnit_Framework_TestCase
 	function testMoreLikeThisQuery()
 	{
 		$builder = new QueryBuilder;
-		$builder->setDocumentReader(function ($type, $object) {
-			return array(
-				'object_type' => $type,
-				'object_id' => $object,
-				'contents' => 'hello world',
-			);
-		});
+		$builder->setDocumentReader(
+			function ($type, $object) {
+				return array(
+					'object_type' => $type,
+					'object_id' => $object,
+					'contents' => 'hello world',
+				);
+			}
+		);
 
 		$query = $builder->build(
 			new AndX(
@@ -460,62 +462,69 @@ class Search_Elastic_QueryBuilderTest extends PHPUnit_Framework_TestCase
 			)
 		);
 
-		$this->assertEquals(array(
-			'more_like_this' => array(
-				'fields' => array('contents'),
-				'like_text' => 'hello world',
-				'boost' => 1.0,
+		$this->assertEquals(
+			array(
+				'more_like_this' => array(
+					'fields' => array('contents'),
+					'like_text' => 'hello world',
+					'boost' => 1.0,
+				),
 			),
-		), $query['query']);
+			$query['query']
+		);
 	}
 
 	function testMoreLikeThisThroughAbstraction()
 	{
 		$builder = new QueryBuilder;
-		$builder->setDocumentReader(function ($type, $object) {
-			return array(
-				'object_type' => $type,
-				'object_id' => $object,
-				'contents' => 'hello world',
-			);
-		});
+		$builder->setDocumentReader(
+			function ($type, $object) {
+				return array(
+					'object_type' => $type,
+					'object_id' => $object,
+					'contents' => 'hello world',
+				);
+			}
+		);
 
 		$q = new Search_Query;
 		$q->filterSimilar('wiki page', 'A');
 
 		$query = $builder->build($q->getExpr());
 
-		$this->assertEquals(array(
-			'bool' => array(
-				'must' => array(
-					array(
-						'more_like_this' => array(
-							'fields' => array('contents'),
-							'like_text' => 'hello world',
-							'boost' => 1.0,
+		$this->assertEquals(
+			array(
+				'bool' => array(
+					'must' => array(
+						array(
+							'more_like_this' => array(
+								'fields' => array('contents'),
+								'like_text' => 'hello world',
+								'boost' => 1.0,
+							),
 						),
 					),
-				),
-				'must_not' => array(
-					array(
-						'bool' => array(
-							'must' => array(
-								array(
-									"match" => array(
-										"object_type" => array("query" => "wiki page"),
+					'must_not' => array(
+						array(
+							'bool' => array(
+								'must' => array(
+									array(
+										"match" => array(
+											"object_type" => array("query" => "wiki page"),
+										),
 									),
-								),
-								array(
-									"match" => array(
-										"object_id" => array("query" => "A"),
+									array(
+										"match" => array(
+											"object_id" => array("query" => "A"),
+										),
 									),
 								),
 							),
 						),
 					),
 				),
-			),
-		), $query['query']);
+			), $query['query']
+		);
 	}
 }
 
