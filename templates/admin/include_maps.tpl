@@ -20,6 +20,8 @@
 		{preference name=geo_always_load_openlayers}
 
 		{preference name=gmap_key}
+
+		{preference name=geo_zoom_to_found_location}
 	</fieldset>
 	
 	<fieldset class="admin">			

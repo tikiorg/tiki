@@ -80,6 +80,12 @@ function prefs_geo_list()
 			'type' => 'flag',
 			'default' => 'n',
 		),
+		'geo_zoom_to_found_location' => array(
+			'name' => tr('Zoom to found location'),
+			'description' => tr('Zoom to street level when finding a searched location'),
+			'type' => 'flag',
+			'default' => 'n',
+		),
 	);
 }
 

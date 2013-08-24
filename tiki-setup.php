@@ -340,8 +340,10 @@ if ( $prefs['fgal_elfinder_feature'] === 'y' ) {
 }
 
 $headerlib->add_jsfile('lib/jquery_tiki/tiki-jquery.js');
-$isZoomToFoundLocation = '0';	// 0 keeps the current world-view for results from "search for location". 1 zooms. MISSING OPTION
+
+$isZoomToFoundLocation = isset($prefs['geo_zoom_to_found_location']) ? ($prefs['geo_zoom_to_found_location'] === 'y' ? '1' : '0') : '0';
 $headerlib->add_js('var isZoomToFoundLocation = '.$isZoomToFoundLocation.';');	// Set the zoom option after searching for a location
+
 $headerlib->add_jsfile('lib/jquery_tiki/tiki-maps.js');
 $headerlib->add_jsfile('vendor/jquery/plugins/jquery-json/jquery.json-2.4.js');
 
