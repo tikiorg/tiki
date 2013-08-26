@@ -64,6 +64,7 @@ class Services_ActivityStream_Controller
 		}
 
 		return array(
+			'autoScroll' => $request->autoscroll->int(),
 			'pageNumber' => $page,
 			'nextPossible' => $builder->isNextPossible(),
 			'stream' => $encoded,

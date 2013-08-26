@@ -20,6 +20,16 @@ function wikiplugin_activitystream_info()
 		'icon' => 'img/icons/text_list_bullets.png',
 		'tags' => array('advanced'),
 		'params' => array(
+			'auto' => array(
+				'name' => tr('Auto-Scroll'),
+				'description' => tr('Automatically load next page of results when scrolling down.'),
+				'default' => 0,
+				'filter' => 'int',
+				'options' => array(
+					array('value' => 0, 'text' => tr('Off')),
+					array('value' => 1, 'text' => tr('On')),
+				),
+			),
 		),
 	);
 }
@@ -32,6 +42,7 @@ function wikiplugin_activitystream($data, $params)
 
 	$servicelib = TikiLib::lib('service');
 	return $servicelib->render('activitystream', 'render', array(
+		'autoscroll' => isset($params['auto']) && $params['auto'],
 		'stream' => $encoded,
 	));
 }
