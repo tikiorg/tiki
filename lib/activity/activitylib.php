@@ -39,8 +39,15 @@ class ActivityLib
 		);
 	}
 
+	/**
+	 * @throws Math_Formula_Exception
+	 */
 	function replaceRule($id, array $data)
 	{
+		$testRunner = $this->getRunner(new Tiki_Event_Manager);
+		$testRunner->setFormula($data['rule']);
+		$testRunner->inspect();
+
 		return $this->rulesTable()->insertOrUpdate(
 			$data,
 			array(
@@ -109,8 +116,20 @@ class ActivityLib
 
 	function bindCustomEvents(Tiki_Event_Manager $manager)
 	{
+		$runner = $this->getRunner($manager);
+		$customizer = new Tiki_Event_Customizer;
+
+		foreach ($this->getRules() as $rule) {
+			$customizer->addRule($rule['eventType'], $rule['rule']);
+		}
+
+		$customizer->bind($manager, $runner);
+	}
+
+	private function getRunner($manager)
+	{
 		$self = $this;
-		$runner = new Math_Formula_Runner(
+		return new Math_Formula_Runner(
 			array(
 				function ($verb) use ($manager, $self) {
 					switch ($verb) {
@@ -126,14 +145,6 @@ class ActivityLib
 				'Tiki_Event_Function_' => '',
 			)
 		);
-
-		$customizer = new Tiki_Event_Customizer;
-
-		foreach ($this->getRules() as $rule) {
-			$customizer->addRule($rule['eventType'], $rule['rule']);
-		}
-
-		$customizer->bind($manager, $runner);
 	}
 
 	function getActivityList()

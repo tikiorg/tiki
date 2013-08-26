@@ -52,14 +52,15 @@ class Services_ActivityStream_ManageController
 
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			$event = $request->event->attribute_type();
-			$id = $this->lib->replaceRule(
+			$id = $this->replaceRule(
 				$id,
 				array(
 					'rule' => "(event-sample (str $event) event args)",
 					'ruleType' => 'sample',
 					'notes' => $request->notes->text(),
 					'eventType' => $event,
-				)
+				),
+				'event'
 			);
 		}
 
@@ -76,14 +77,15 @@ class Services_ActivityStream_ManageController
 		$id = $request->ruleId->int();
 
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-			$id = $this->lib->replaceRule(
+			$id = $this->replaceRule(
 				$id,
 				array(
 					'rule' => '(event-record event args)',
 					'ruleType' => 'record',
 					'notes' => $request->notes->text(),
 					'eventType' => $request->event->attribute_type(),
-				)
+				),
+				'notes'
 			);
 		}
 
@@ -102,7 +104,7 @@ class Services_ActivityStream_ManageController
 			$targetEvent = $request->targetEvent->attribute_type();
 			$customArguments = $request->parameters->text();
 
-			$id = $this->lib->replaceRule(
+			$id = $this->replaceRule(
 				$id,
 				array(
 					'rule' => "
@@ -113,7 +115,8 @@ $customArguments
 					'ruleType' => 'tracker_filter',
 					'notes' => $request->notes->text(),
 					'eventType' => $request->sourceEvent->attribute_type(),
-				)
+				),
+				'parameters'
 			);
 		}
 
@@ -148,14 +151,15 @@ $customArguments
 		$id = $request->ruleId->int();
 
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-			$id = $this->lib->replaceRule(
+			$id = $this->replaceRule(
 				$id,
 				array(
 					'rule' => $request->rule->text(),
 					'ruleType' => 'advanced',
 					'notes' => $request->notes->text(),
 					'eventType' => $request->event->attribute_type(),
-				)
+				),
+				'rule'
 			);
 		}
 
@@ -163,6 +167,17 @@ $customArguments
 			'rule' => $this->getRule($id),
 			'eventTypes' => $this->getEventTypes(),
 		);
+	}
+
+	private function replaceRule($id, array $data, $ruleField)
+	{
+		try {
+			$id = $this->lib->replaceRule($id, $data);
+
+			return $id;
+		} catch (Math_Formula_Exception $e) {
+			throw new Services_Exception_FieldError($ruleField, $e->getMessage());
+		}
 	}
 
 	private function getRuleTypes()
