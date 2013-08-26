@@ -66,15 +66,18 @@ class Search_Elastic_QueryBuilder
 				}, $childNodes
 			);
 
-			$inner = array_filter($inner, function ($part) use (& $not) {
-				// Only merge in the single-part NOT
-				if (isset($part['bool']['must_not']) && count($part['bool']) == 1) {
-					$not = array_merge($not, $part['bool']['must_not']);
-					return false;
-				} else {
-					return true;
+			$inner = array_filter(
+				$inner,
+				function ($part) use (& $not) {
+					// Only merge in the single-part NOT
+					if (isset($part['bool']['must_not']) && count($part['bool']) == 1) {
+						$not = array_merge($not, $part['bool']['must_not']);
+						return false;
+					} else {
+						return true;
+					}
 				}
-			});
+			);
 			$inner = $this->flatten($inner, 'must');
 			if (count($inner) == 1 && isset($inner[0]['bool'])) {
 				$base = $inner[0]['bool'];
@@ -89,10 +92,12 @@ class Search_Elastic_QueryBuilder
 				);
 			} else {
 				return array(
-					'bool' => array_filter(array(
-						'must' => $inner,
-						'must_not' => $not,
-					)),
+					'bool' => array_filter(
+						array(
+							'must' => $inner,
+							'must_not' => $not,
+						)
+					),
 				);
 			}
 		} elseif ($node instanceof NotX) {

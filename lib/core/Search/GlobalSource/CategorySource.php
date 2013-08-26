@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2013 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -76,7 +76,7 @@ class Search_GlobalSource_CategorySource implements Search_GlobalSource_Interfac
 
 		$categories = $this->categlib->get_object_categories($objectType, $objectId, -1, false);
 
-		// For forum posts, and 
+		// For forum posts, and
 		if (isset($data['parent_object_id'], $data['parent_object_type'])) {
 			$objectType = is_object($data['parent_object_type']) ? $data['parent_object_type']->getValue() : $data['parent_object_type'];
 			$objectId = is_object($data['parent_object_id']) ? $data['parent_object_id']->getValue() : $data['parent_object_id'];
@@ -99,12 +99,18 @@ class Search_GlobalSource_CategorySource implements Search_GlobalSource_Interfac
 
 		$self = $this;
 		foreach ($this->categlib->getCustomFacets() as $rootId) {
-			$filtered = array_filter($categories, function ($category) use ($self, $rootId) {
-				return $category != $rootId && $self->hasParent($category, $rootId);
-			});
-			$deepfiltered = array_filter($deepcategories, function ($category) use ($self, $rootId) {
-				return $category != $rootId && $self->hasParent($category, $rootId);
-			});
+			$filtered = array_filter(
+				$categories,
+				function ($category) use ($self, $rootId) {
+					return $category != $rootId && $self->hasParent($category, $rootId);
+				}
+			);
+			$deepfiltered = array_filter(
+				$deepcategories,
+				function ($category) use ($self, $rootId) {
+					return $category != $rootId && $self->hasParent($category, $rootId);
+				}
+			);
 
 			$out["categories_under_{$rootId}"] = $typeFactory->multivalue($filtered);
 			$out["deep_categories_under_{$rootId}"] = $typeFactory->multivalue($deepfiltered);

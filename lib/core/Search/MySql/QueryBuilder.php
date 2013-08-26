@@ -98,11 +98,13 @@ class Search_MySql_QueryBuilder
 	private function getFields($node)
 	{
 		$fields = array();
-		$node->walk(function ($node) use (& $fields) {
-			if (method_exists($node, 'getField')) {
-				$fields[$node->getField()] = true;
+		$node->walk(
+			function ($node) use (& $fields) {
+				if (method_exists($node, 'getField')) {
+					$fields[$node->getField()] = true;
+				}
 			}
-		});
+		);
 
 		return array_keys($fields);
 	}
@@ -110,18 +112,20 @@ class Search_MySql_QueryBuilder
 	private function isFullText($node)
 	{
 		$fullText = true;
-		$node->walk(function ($node) use (& $fullText) {
-			if ($fullText && method_exists($node, 'getType')) {
-				$type = $node->getType();
-				if ($type != 'sortable' && $type != 'wikitext' && $type != 'plaintext' && $type != 'multivalue') {
-					$fullText = false;
+		$node->walk(
+			function ($node) use (& $fullText) {
+				if ($fullText && method_exists($node, 'getType')) {
+					$type = $node->getType();
+					if ($type != 'sortable' && $type != 'wikitext' && $type != 'plaintext' && $type != 'multivalue') {
+						$fullText = false;
+					}
 				}
 			}
-		});
+		);
 
 		return $fullText;
 	}
-	
+
 	private function getQuoted($node, $suffix = '')
 	{
 		$string = $node->getValue($this->factory)->getValue();

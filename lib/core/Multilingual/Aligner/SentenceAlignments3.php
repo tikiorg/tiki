@@ -1,13 +1,13 @@
 <?php
 // (c) Copyright 2002-2013 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 /*
  * Class used to store aligned bilingual sentences for two different
- * linguistic versions of a same document. For example, English 
+ * linguistic versions of a same document. For example, English
  * sentences with their corresponding French sentences.
  */
 include_once "SentenceSegmentor.php";
@@ -26,7 +26,7 @@ class Multilingual_Aligner_SentenceAlignments
 			$this->alignment_table[$lng1_sentence] = $lng2_sentence;
 		} else if ($lng2 == $this->l1) {
 			$this->alignment_table[$lng2_sentence] = $lng1_sentence;
-		}	
+		}
 	}
 
 	//this function returns an array of sentences /**not applicable now
@@ -35,7 +35,7 @@ class Multilingual_Aligner_SentenceAlignments
 		echo "in getSentenceInOtherLanguage<br/>";
 		$segmentor = new Multilingual_Aligner_SentenceSegmentor();
 
-		if ($source_lng == $this->l1) 
+		if ($source_lng == $this->l1)
 			$k = 1;
 		else if ($source_lng == $this->l2)
 			$k = 0;
@@ -51,7 +51,7 @@ class Multilingual_Aligner_SentenceAlignments
 
 				if (strcmp(trim($sentences[0]), trim($source_lng_sentence))==0) {
 					$found = 1;
-					for ($j=1,$l=1; $j<count($sentences); $l++) {
+					for ($j=1,$l=1, $countSentences = count($sentences); $j<$countSentences; $l++) {
 						$flag = 0;
 						if (($l +$index) >= count($sentence_array)) {
 							$found = 0;
@@ -77,7 +77,7 @@ class Multilingual_Aligner_SentenceAlignments
 				$sentences = $segmentor->segment(trim($val));
 				if (strcmp(trim($sentences[0]), trim($source_lng_sentence)) == 0) {
 					$found = 1;
-					for ($j=$i+1, $l=1; $j<count($sentences); $l++) {
+					for ($j=$i+1, $l=1, $countSentences = count($sentences); $j<$countSentences; $l++) {
 						$flag = 0;
 						if (($l +$index) >= count($sentence_array)) {
 							$found = 0;
@@ -120,7 +120,7 @@ class Multilingual_Aligner_SentenceAlignments
 				$sent_ind = 0;
 				$sentences = $segmentor->segment(trim($key));
 
-				for ($j=0; $j<count($sentences); $j++) {
+				for ($j=0, $countSentences = count($sentences); $j<$countSentences; $j++) {
 					$sentences[$j] = trim($sentences[$j]);
 				}
 				echo "another sentence<br/>";
@@ -181,7 +181,7 @@ class Multilingual_Aligner_SentenceAlignments
 						}
 						continue;
 
-					} else if (($c = $this->strpos_function($temp2, $temp1)) != -1 && $c == 0) {		
+					} else if (($c = $this->strpos_function($temp2, $temp1)) != -1 && $c == 0) {
 
 						$found = 1;
 
@@ -249,7 +249,7 @@ class Multilingual_Aligner_SentenceAlignments
 				$sent_ind = 0;
 				$sentences = $segmentor->segment(trim($val));
 
-				for ($j=0; $j<count($sentences); $j++) {
+				for ($j=0, $countSentences = count($sentences); $j<$countSentences; $j++) {
 					$sentences[$j] = trim($sentences[$j]);
 				}
 
@@ -368,7 +368,7 @@ class Multilingual_Aligner_SentenceAlignments
 	}
 
 	public function strpos_function($string, $pat)
-	{ 
+	{
 		if (strlen($string)==0 && strlen($pat)==0)
 			return 0;
 		else if (strlen($string)==0 ||strlen($pat)==0)

@@ -388,14 +388,14 @@ class TrackerLib extends TikiLib
 		$query .= " and ttif.`value` LIKE ?";
 
 		$result = $this->fetchAll($query, array((int) $trackerId, (int)$fieldId, $value));
-		
+
 		$itemIds = array();
-		foreach($result as $row) {
+		foreach ($result as $row) {
 			$itemIds[] = $row['itemId'];
 		}
 		return $itemIds;
 	}
-	
+
 	public function get_item_id($trackerId,$fieldId,$value,$partial = false)
 	{
 		$query = "select ttif.`itemId` from `tiki_tracker_items` tti, `tiki_tracker_fields` ttf, `tiki_tracker_item_fields` ttif ";
@@ -1415,10 +1415,12 @@ class TrackerLib extends TikiLib
 			if ($status != $oldStatus) {
 				$this->change_status(array($itemId), $status);
 			} else {
-				$this->update_items(array($itemId), array(
-					'lastModif' => $tikilib->now,
-					'lastModifBy' => $user,
-				));
+				$this->update_items(
+					array($itemId), array(
+						'lastModif' => $tikilib->now,
+						'lastModifBy' => $user,
+					)
+				);
 			}
 
 			$version = $this->last_log_version($itemId) + 1;
@@ -3007,7 +3009,7 @@ class TrackerLib extends TikiLib
 			$result = json_decode($result, true);
 			if (isset($result[$prefs['language']])) {
 				return $result[$prefs['language']];
-			} elseif(is_array($result)) {
+			} elseif (is_array($result)) {
 				return reset($result);
 			}
 		}
@@ -3758,11 +3760,13 @@ class TrackerLib extends TikiLib
 			$toUpdate = array_merge($toUpdate, $child);
 		}
 
-		$this->update_items($toUpdate, array(
-			'status' => $status,
-			'lastModif' => $tikilib->now,
-			'lastModifBy' => $user,
-		));
+		$this->update_items(
+			$toUpdate, array(
+				'status' => $status,
+				'lastModif' => $tikilib->now,
+				'lastModifBy' => $user,
+			)
+		);
 	}
 
 	private function update_items(array $toUpdate, array $fields)

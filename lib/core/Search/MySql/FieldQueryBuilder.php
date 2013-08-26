@@ -17,51 +17,55 @@ class Search_MySql_FieldQueryBuilder
 	function build(Search_Expr_Interface $expr, Search_Type_Factory_Interface $factory)
 	{
 		$invert = false;
-		$string = $expr->walk(function ($node, $childNodes) use ($factory, & $invert) {
-			if ($node instanceof Token) {
-				$string = $node->getValue($factory)->getValue();
-				if (false === strpos($string, ' ')) {
-					return $string;
-				} else {
-					return '"' . $string . '"';
-				}
-			} elseif ($node instanceof OrX) {
-				foreach ($childNodes as $node) {
-					if ($node{0} == '-') {
-						throw new Search_MySql_QueryException('Semantic impossible to express.');
+		$string = $expr->walk(
+			function ($node, $childNodes) use ($factory, & $invert) {
+				if ($node instanceof Token) {
+					$string = $node->getValue($factory)->getValue();
+					if (false === strpos($string, ' ')) {
+						return $string;
+					} else {
+						return '"' . $string . '"';
 					}
-				}
-				return (count($childNodes) == 1)
-					? reset($childNodes)
-					: '(' . implode(' ', $childNodes) . ')';
-			} elseif ($node instanceof AndX) {
-				$negatives = 0;
-				foreach ($childNodes as $node) {
-					if ($node{0} == '-') {
-						$negatives++;
+				} elseif ($node instanceof OrX) {
+					foreach ($childNodes as $node) {
+						if ($node{0} == '-') {
+							throw new Search_MySql_QueryException('Semantic impossible to express.');
+						}
 					}
-				}
-
-				// When all the conditions are negative, the index will score 0 (bad)
-				if ($negatives == count($childNodes)) {
-					$childNodes = array_map(function ($node) {
-						return substr($node, 1);
-					}, $childNodes);
-					$invert = true;
-
 					return (count($childNodes) == 1)
 						? reset($childNodes)
 						: '(' . implode(' ', $childNodes) . ')';
+				} elseif ($node instanceof AndX) {
+					$negatives = 0;
+					foreach ($childNodes as $node) {
+						if ($node{0} == '-') {
+							$negatives++;
+						}
+					}
+
+					// When all the conditions are negative, the index will score 0 (bad)
+					if ($negatives == count($childNodes)) {
+						$childNodes = array_map(
+							function ($node) {
+								return substr($node, 1);
+							}, $childNodes
+						);
+						$invert = true;
+
+						return (count($childNodes) == 1)
+							? reset($childNodes)
+							: '(' . implode(' ', $childNodes) . ')';
+					}
+					return (count($childNodes) == 1)
+						? reset($childNodes)
+						: '(+' . implode(' +', $childNodes) . ')';
+				} elseif ($node instanceof NotX) {
+					return '-' . reset($childNodes);
+				} else {
+					throw new Search_MySql_QueryException('Expression not supported: ' . get_class($node));
 				}
-				return (count($childNodes) == 1)
-					? reset($childNodes)
-					: '(+' . implode(' +', $childNodes) . ')';
-			} elseif ($node instanceof NotX) {
-				return '-' . reset($childNodes);
-			} else {
-				throw new Search_MySql_QueryException('Expression not supported: ' . get_class($node));
 			}
-		});
+		);
 		$this->invert = $invert;
 
 		$string = str_replace('+-', '-', $string);

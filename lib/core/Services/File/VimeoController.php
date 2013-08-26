@@ -18,11 +18,15 @@ class Services_File_VimeoController
 	function action_authorize()
 	{
 		$servicelib = TikiLib::lib('service');
-		TikiLib::lib('access')->redirect($servicelib->getUrl(array(
-			'controller' => 'oauth',
-			'action' => 'request',
-			'provider' => 'vimeo',
-		)));
+		TikiLib::lib('access')->redirect(
+			$servicelib->getUrl(
+				array(
+					'controller' => 'oauth',
+					'action' => 'request',
+					'provider' => 'vimeo',
+				)
+			)
+		);
 	}
 
 	function action_upload($input)

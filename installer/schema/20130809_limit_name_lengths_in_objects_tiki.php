@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2013 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -35,23 +35,23 @@ This script fixes existing records by
 function upgrade_20130809_limit_name_lengths_in_objects_tiki($installer)
 {
 	$max_pagename_length = 160;
-	
+
 	// Fix tiki_objects
 	///////////////////////////
-	
+
 	// Find all records with long pagenames
 	$query = 'SELECT objectId, itemId, name, href FROM tiki_objects where type = "wiki page" and  length(itemId) > ?';
 	$results = $installer->query($query, array($max_pagename_length));
-	if($results) {
+	if ($results) {
 		$newValues = array();
-		while ($row = $results->fetchRow())  {
+		while ($row = $results->fetchRow()) {
 			// Update the page name
-			$itemId = substr($row['itemId'],0,$max_pagename_length);
-			$name = substr($row['name'],0,$max_pagename_length);
+			$itemId = substr($row['itemId'], 0, $max_pagename_length);
+			$name = substr($row['name'], 0, $max_pagename_length);
 			// Update the URL
 			$href = "tiki-index.php?page=".urlencode($itemId);
 			$objectId = intval($row['objectId']);
-			
+
 			// Build the query parameters
 			$newValues[] = array($itemId, $name, $href, $objectId);
 		}
@@ -61,5 +61,5 @@ function upgrade_20130809_limit_name_lengths_in_objects_tiki($installer)
 		foreach ($newValues as $newVal) {
 			$installer->query($query, $newVal);
 		}
-	}	
+	}
 }
