@@ -28,8 +28,12 @@ class Tiki_Event_Customizer_Executor implements Tiki_Event_EdgeProvider
 		));
 
 		foreach ($rules as $rule) {
-			$runner->setFormula($rule);
-			$runner->evaluate();
+			try {
+				$runner->setFormula($rule);
+				$runner->evaluate();
+			} catch (Math_Formula_Exception $e) {
+				// Skip errors
+			}
 		}
 	}
 
