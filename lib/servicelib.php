@@ -23,6 +23,11 @@ class ServiceLib
 		return $this->getBroker()->internal($controller, $action, $request);
 	}
 
+	function render($controller, $action, $request = array())
+	{
+		return $this->getBroker()->internalRender($controller, $action, $request);
+	}
+
 	function getUrl($params)
 	{
 		global $prefs;
@@ -50,6 +55,7 @@ class ServiceLib
 	private function getControllerMap()
 	{
 		return array(
+			'activitystream' => 'Services_ActivityStream_Controller',
 			'auth_source' => 'Services_AuthSource_Controller',
 			'autosave' => 'Services_AutoSave_Controller',
 			'bigbluebutton' => 'Services_BigBlueButton_Controller',

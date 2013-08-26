@@ -252,5 +252,10 @@ class Search_Query_WikiBuilder
 			$this->boost *= max(1, intval($value));
 		}
 	}
+
+	function isNextPossible()
+	{
+		return $this->boost == 1;
+	}
 }
 

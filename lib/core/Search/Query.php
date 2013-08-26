@@ -205,6 +205,16 @@ class Search_Query implements Search_Query_Interface
 		}
 	}
 
+	/**
+	 * Affects the range from a numeric value
+	 * @param $pageNumber int Page number from 1 to n
+	 */
+	function setPage($pageNumber)
+	{
+		$pageNumber = max(1, (int) $pageNumber);
+		$this->setRange(($pageNumber - 1) * $this->count);
+	}
+
 	function setWeightCalculator(Search_Query_WeightCalculator_Interface $calculator)
 	{
 		$this->weightCalculator = $calculator;

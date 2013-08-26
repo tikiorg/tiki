@@ -1559,6 +1559,7 @@ if ( \$('#$id') ) {
 		// Handle pre- and no-parse sections and plugins
 		$preparsed = array('data'=>array(),'key'=>array());
 		$noparsed = array('data'=>array(),'key'=>array());
+		$this->strip_unparsed_block($data, $noparsed);
 		if (!$this->option['noparseplugins'] || $this->option['stripplugins']) {
 			$this->parse_first($data, $preparsed, $noparsed);
 			$this->parse_wiki_argvariable($data);

@@ -13,6 +13,7 @@ function wikiplugin_activitystream_info()
 		'description' => tra('Generates a feed or activity stream based on the recorded events in the system.'),
 		'prefs' => array('wikiplugin_activitystream', 'activity_custom_events'),
 		'default' => 'y',
+		'format' => 'html',
 		'body' => tra('List configuration information'),
 		'filter' => 'wikicontent',
 		'profile_reference' => 'search_plugin_content',
@@ -25,45 +26,13 @@ function wikiplugin_activitystream_info()
 
 function wikiplugin_activitystream($data, $params)
 {
-	$unifiedsearchlib = TikiLib::lib('unifiedsearch');
+	$encoded = Tiki_Security::get()->encode(array(
+		'body' => $data,
+	));
 
-	$alternate = null;
-	$output = null;
-
-	$query = new Search_Query;
-	$unifiedsearchlib->initQuery($query);
-	$query->filterType('activity');
-
-	$matches = WikiParser_PluginMatcher::match($data);
-
-	$builder = new Search_Query_WikiBuilder($query);
-	$builder->enableAggregate();
-	$builder->apply($matches);
-
-	$query->setOrder('modification_date_desc');
-
-	if (! $index = $unifiedsearchlib->getIndex()) {
-		return '';
-	}
-
-	$result = $query->search($index);
-
-	$paginationArguments = $builder->getPaginationArguments();
-
-	$resultBuilder = new Search_ResultSet_WikiBuilder($result);
-	$resultBuilder->setPaginationArguments($paginationArguments);
-	$resultBuilder->apply($matches);
-
-	try {
-		$plugin = new Search_Formatter_Plugin_SmartyTemplate('templates/activity/activitystream.tpl');
-		$plugin->setFields(array('like_list' => true));
-		$formatter = new Search_Formatter($plugin);
-		$formatter->setDataSource($unifiedsearchlib->getDataSource());
-		$out = $formatter->format($result);
-
-		return $out;
-	} catch (SmartyException $e) {
-		return WikiParser_PluginOutput::userError($e->getMessage());
-	}
+	$servicelib = TikiLib::lib('service');
+	return $servicelib->render('activitystream', 'render', array(
+		'stream' => $encoded,
+	));
 }
 

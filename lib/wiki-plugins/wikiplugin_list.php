@@ -26,9 +26,6 @@ function wikiplugin_list($data, $params)
 {
 	$unifiedsearchlib = TikiLib::lib('unifiedsearch');
 
-	$alternate = null;
-	$output = null;
-
 	$query = new Search_Query;
 	$unifiedsearchlib->initQuery($query);
 
