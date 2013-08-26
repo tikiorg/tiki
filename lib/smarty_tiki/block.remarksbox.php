@@ -43,14 +43,17 @@ function smarty_block_remarksbox($params, $content, $smarty, &$repeat)
 	if ( $repeat ) return '';
 	$instance++;
 
-	$params = array_merge(array(
-		'type' => 'tip',
-		'title' => '',
-		'close' => 'y',
-		'width' => '',
-		'highlight' => 'n',
-		'icon' => '',
-	), $params);
+	$params = array_merge(
+		array(
+			'type' => 'tip',
+			'title' => '',
+			'close' => 'y',
+			'width' => '',
+			'highlight' => 'n',
+			'icon' => '',
+		),
+		$params
+	);
 
 	if ($params['highlight'] === 'y') {
 		$params['highlight'] = ' highlight';
@@ -86,7 +89,8 @@ function smarty_block_remarksbox($params, $content, $smarty, &$repeat)
 	}
 
 	if ($params['close']) {
-		TikiLib::lib('header')->add_jq_onready('
+		TikiLib::lib('header')->add_jq_onready(
+			'
 		$("#' . $md5 . ' .rbox-close").click( function () {
 			if (/*getCookie("rbox") ||*/ confirm("' . tra('Do you want to permanently hide this remarks box? (can actually be reset on User Preferences screen (tiki-user_preferences.php))') . '")) {
 				$("#' . $md5 . '").fadeOut();
@@ -94,7 +98,8 @@ function smarty_block_remarksbox($params, $content, $smarty, &$repeat)
 			}
 			return false;
 		});
-		');
+		'
+		);
 	}
 
 	$smarty->assign('rbox_guid', $md5);

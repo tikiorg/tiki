@@ -189,7 +189,7 @@ function getYoutubeId( $sYoutubeUrl)
 			parse_str(parse_url($sYoutubeUrl, PHP_URL_QUERY), $aQueryString);
 			return $aQueryString["v"];
 		}
-	} elseif (preg_match('/^([\w-_]+)$/', $sYoutubeUrl, $matches)){
+	} elseif (preg_match('/^([\w-_]+)$/', $sYoutubeUrl, $matches)) {
 		$sYoutubeId = $sYoutubeUrl;
 	} else {
 		return false;

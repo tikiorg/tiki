@@ -197,23 +197,25 @@ class TikiDb_LegacyErrorHandler implements TikiDb_ErrorHandler
 
 $initializer = new TikiDb_Initializer;
 $initializer->setPreferredConnector($api_tiki);
-$initializer->setInitializeCallback(function ($db) {
-	global $db_table_prefix, $common_users_table_prefix, $db_tiki;
+$initializer->setInitializeCallback(
+	function ($db) {
+		global $db_table_prefix, $common_users_table_prefix, $db_tiki;
 
-	$db->setServerType($db_tiki);
+		$db->setServerType($db_tiki);
 
-	if (! defined('TIKI_CONSOLE')) {
-		$db->setErrorHandler(new TikiDb_LegacyErrorHandler);
+		if (! defined('TIKI_CONSOLE')) {
+			$db->setErrorHandler(new TikiDb_LegacyErrorHandler);
+		}
+
+		if ( isset( $db_table_prefix ) ) {
+			$db->setTablePrefix($db_table_prefix);
+		}
+
+		if ( isset( $common_users_table_prefix ) ) {
+			$db->setUsersTablePrefix($common_users_table_prefix);
+		}
 	}
-
-	if ( isset( $db_table_prefix ) ) {
-		$db->setTablePrefix($db_table_prefix);
-	}
-
-	if ( isset( $common_users_table_prefix ) ) {
-		$db->setUsersTablePrefix($common_users_table_prefix);
-	}
-});
+);
 
 try {
 	$db = $initializer->getConnection($credentials['primary']);

@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2013 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -26,19 +26,19 @@ class RankLib extends TikiLib
 	{
 		global $user, $prefs;
 		$pagesAdded = array();
-		
+
 		$bindvals = array();
 		$mid = '';
 		if ($categ) {
 			$mid .= " INNER JOIN (`tiki_objects` as tob, `tiki_category_objects` as tco) ON (tp.`pageName` = tob.`itemId` and tob.`objectId` = tco.`catObjectId`) WHERE tob.`type` = 'wiki page' AND (tco.`categId` = ?";
-			$bindvals[] = $categ[0]; 	
+			$bindvals[] = $categ[0];
 			//FIXME
 			for ($i = 1, $icount_categ = count($categ); $i < $icount_categ; $i++) {
 				$mid .= " OR tco.`categId` = " . $categ[$i];
 			}
 			$mid .= ")";
 		}
-		
+
 		$query = "select distinct tp.`pageName`, tp.`hits`, tp.`lang`, tp.`page_id` from `tiki_pages` tp $mid order by `hits` desc";
 
 		$result = $this->query($query, $bindvals);
@@ -54,20 +54,20 @@ class RankLib extends TikiLib
 					global $multilinguallib; include_once('lib/multilingual/multilinguallib.php');
 					if ($multilinguallib->useBestLanguage()) {
 						$bestLangPageId = $multilinguallib->selectLangObj('wiki page', $res['page_id'], null, 'tiki_p_view');
-						if ($res['page_id'] != $bestLangPageId) {							
+						if ($res['page_id'] != $bestLangPageId) {
 							$res['pageName'] = $this->get_page_name_from_id($bestLangPageId);
 						}
 					}
-				}		
+				}
 				if ($prefs['feature_best_language'] != 'y' || !$res['lang'] || empty($pagesAdded) || !in_array($res['pageName'], $pagesAdded)) {
 					$aux['name'] = $res['pageName'];
 					$aux['hits'] = $res['hits'];
 					$aux['href'] = 'tiki-index.php?page=' . urlencode($res['pageName']);
-					if ($disableBestLang == true) $aux['href'] .= '&amp;bl=n'; 	
+					if ($disableBestLang == true) $aux['href'] .= '&amp;bl=n';
 					$ret[] = $aux;
 					$pagesAdded[] = $res['pageName'];
 					++$count;
-				}				
+				}
 			}
 		}
 
@@ -97,15 +97,15 @@ class RankLib extends TikiLib
 		if ($categ) {
 			$mid .= " INNER JOIN (`tiki_objects` as tob, `tiki_category_objects` as tco) ON (tp.`pageName` = tob.`itemId` and tob.`objectId` = tco.`catObjectId`) WHERE tob.`type` = 'wiki page' AND (tco.`categId` = ?";
 		//FIXME
-			$bindvals[] = $categ[0]; 	
+			$bindvals[] = $categ[0];
 			for ($i = 1, $icount_categ = count($categ); $i < $icount_categ; $i++) {
 				$mid .= " OR tco.`categId` = " . $categ[$i];
 			}
 			$mid .= ")";
 		}
-		
+
 		$query = "select tp.`pageName`, tp.`pageRank` from `tiki_pages` tp $mid order by `pageRank` desc";
-		
+
 		$result = $this->query($query, $bindvals);
 		$ret = array();
 		$count = 0;
@@ -134,19 +134,19 @@ class RankLib extends TikiLib
     function wiki_ranking_last_pages($limit, $categ=array())
 	{
 		global $user, $prefs;
-		
+
 		$bindvals = array();
 		$mid = '';
 		if ($categ) {
 			$mid .= " INNER JOIN (`tiki_objects` as tob, `tiki_category_objects` as tco) ON (tp.`pageName` = tob.`itemId` and tob.`objectId` = tco.`catObjectId`) WHERE tob.`type` = 'wiki page' AND (tco.`categId` = ?";
 			//FIXME
-			$bindvals[] = $categ[0]; 	
+			$bindvals[] = $categ[0];
 			for ($i = 1, $icount_categ = count($categ); $i < $icount_categ; $i++) {
 				$mid .= " OR tco.`categId` = " . $categ[$i];
 			}
 			$mid .= ")";
 		}
-		
+
 		$query = "select tp.`pageName`, tp.`lastModif`, tp.`hits` from `tiki_pages` tp $mid order by `lastModif` desc";
 
 		$result = $this->query($query, $bindvals);
@@ -187,7 +187,7 @@ class RankLib extends TikiLib
 		global $user;
 		if (is_array($forumId)) {
 			$bindvars = $forumId;
-			$mid = ' and a.`object` in ('.implode(',',array_fill(0,count($forumId),'?')).')';
+			$mid = ' and a.`object` in ('.implode(',', array_fill(0, count($forumId), '?')).')';
 		} elseif (!empty($forumId)) {
 			$bindvars=array((int) $forumId);
 			$mid = ' and a.`object`=?';
@@ -201,7 +201,7 @@ class RankLib extends TikiLib
 			`tiki_comments` a,`tiki_forums` tf where
 			`objectType` = 'forum' and
 			`parentId`=0 $mid order by `commentDate` desc";
-/*} else {	
+/*} else {
 $query = "select a.*, tf.*, max(b.`commentDate`) as `lastPost` from
 `tiki_comments` a left join `tiki_comments` b on b.`parentId`=a.`threadId` right join `tiki_forums` tf on "
 .$this->cast("tf.`forumId`","string")." = a.`object`".
@@ -212,7 +212,7 @@ $query = "select a.*, tf.*, max(b.`commentDate`) as `lastPost` from
 		$count = 0;
 		while (($res = $result->fetchRow()) && $count < $limit) {
 			if ($this->user_has_perm_on_object($user, $res['object'], 'forum', 'tiki_p_forum_read')) {
-				if($mid == '') { // no forumId selected
+				if ($mid == '') { // no forumId selected
 					$aux['name'] = $res['name'] . ': ' . $res['title']; //forum name plus topic
 				} else { // forumId selected
 					$aux['name'] = $res['title']; // omit forum name
@@ -352,7 +352,7 @@ $query = "select a.*, tf.*, max(b.`commentDate`) as `lastPost` from
 		$ret = array();
 		$count = 0;
 		foreach ($result['data'] as $res) {
-			$aux['name'] = $res['name'];				
+			$aux['name'] = $res['name'];
 			$aux['hits'] = $res['hits'];
 			$aux['href'] = 'tiki-view_forum.php?forumId=' . $res['forumId'];
 			$ret[] = $aux;
@@ -375,7 +375,7 @@ $query = "select a.*, tf.*, max(b.`commentDate`) as `lastPost` from
 		$ret = array();
 		$count = 0;
 		foreach ($result['data'] as $res) {
-			$aux['name'] = $res['name'];				
+			$aux['name'] = $res['name'];
 			$aux['hits'] = $res['hits'];
 			$aux['href'] = 'tiki-view_forum.php?forumId=' . $res['forumId'];
 			$ret[] = $aux;
@@ -681,17 +681,17 @@ $query = "select a.*, tf.*, max(b.`commentDate`) as `lastPost` from
     function wiki_ranking_top_authors($limit, $categ=array())
 	{
 		global $user;
-		
+
 		$bindvals = array();
 		$mid = '';
 		if ($categ) {
-			$mid .= " INNER JOIN (`tiki_objects` as tob, `tiki_category_objects` as tco) ON (tp.`pageName` = tob.`itemId` and tob.`objectId` = tco.`catObjectId`) 
-				WHERE tob.`type` = 'wiki page' 
+			$mid .= " INNER JOIN (`tiki_objects` as tob, `tiki_category_objects` as tco) ON (tp.`pageName` = tob.`itemId` and tob.`objectId` = tco.`catObjectId`)
+				WHERE tob.`type` = 'wiki page'
 				AND (tco.`categId` = ?"
 			;
-			
+
 			//FIXME
-			$bindvals[] = $categ[0]; 	
+			$bindvals[] = $categ[0];
 			for ($i = 1, $icount_categ = count($categ); $i < $icount_categ; $i++) {
 				$mid .= " OR tco.`categId` = " . $categ[$i];
 			}

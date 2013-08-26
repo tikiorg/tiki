@@ -188,8 +188,8 @@ $smarty->assign_by_ref('page', $page);
 
 // Inline Ckeditor editor
 if ($prefs['wysiwyg_inline_editing'] == 'y' && $page &&
-		(	($tikilib->user_has_perm_on_object($user, $_REQUEST['page'],'wiki page','edit')) ||
-			($tikilib->user_has_perm_on_object($user, $_REQUEST['page'],'wiki page','edit_inline')) )) {
+		(	($tikilib->user_has_perm_on_object($user, $_REQUEST['page'], 'wiki page', 'edit')) ||
+			($tikilib->user_has_perm_on_object($user, $_REQUEST['page'], 'wiki page', 'edit_inline')) )) {
 
 	TikiLib::lib('wysiwyg')->setUpInlineEditor($_REQUEST['page']);		// init ckeditor
 

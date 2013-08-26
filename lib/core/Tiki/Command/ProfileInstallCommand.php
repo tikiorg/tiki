@@ -36,8 +36,7 @@ class ProfileInstallCommand extends Command
 				null,
 				InputOption::VALUE_NONE,
 				'Re-apply profiles when already applied.'
-			)
-			;
+			);
 	}
 
 	protected function execute(InputInterface $input, OutputInterface $output)

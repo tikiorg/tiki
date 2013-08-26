@@ -61,8 +61,10 @@ class Table_Code_Manager extends Table_Code_Abstract
 			}
 		}
 		//put sections together into final overall code
-		self::$code['main'] = $this->iterate(self::$code['main'], $this->nt . '$(\'table#' . $this->id
-			. '\').tablesorter({', $this->nt . '})', '', '');
+		self::$code['main'] = $this->iterate(
+			self::$code['main'], $this->nt . '$(\'table#' . $this->id
+			. '\').tablesorter({', $this->nt . '})', '', ''
+		);
 		if (empty(self::$code['pager'])) {
 			self::$code['main'] .= ';';
 		}

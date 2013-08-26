@@ -1437,7 +1437,8 @@ class ArtLib extends TikiLib
 	 * @param bool $check_heading	use heading or (default) body
 	 * @return bool
 	 */
-	function is_html($article, $check_heading = false) {
+	function is_html($article, $check_heading = false)
+	{
 		global $prefs;
 
 		$text = $check_heading ? $article['heading'] : $article['body'];

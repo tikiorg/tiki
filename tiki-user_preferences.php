@@ -3,7 +3,7 @@
  * @package tikiwiki
  */
 // (c) Copyright 2002-2013 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -251,11 +251,13 @@ if ($prefs['feature_userPreferences'] == 'y' && isset($_REQUEST["new_prefs"])) {
 		$userlib->interSendUserInfo($prefs['interlist'][$prefs['feature_intertiki_mymaster']], $userwatch);
 	}
 
-	TikiLib::events()->trigger('tiki.user.update', array(
-		'type' => 'user',
-		'object' => $userwatch,
-		'user' => $GLOBALS['user'],
-	));
+	TikiLib::events()->trigger(
+		'tiki.user.update', array(
+			'type' => 'user',
+			'object' => $userwatch,
+			'user' => $GLOBALS['user'],
+		)
+	);
 }
 if ($prefs['auth_method'] == 'ldap' && $user == 'admin' && $prefs['ldap_skip_admin'] == 'y') {
 	$change_password = 'y';
@@ -321,7 +323,7 @@ if (isset($_REQUEST['deleteaccount']) && $tiki_p_delete_account == 'y') {
 	   header("Location: $base_url");
    }
    die();
-} 
+}
 
 $location = array(
 	'lat' => (float) $tikilib->get_user_preference($userwatch, 'lat', ''),

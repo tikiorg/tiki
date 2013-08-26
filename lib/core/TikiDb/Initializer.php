@@ -28,10 +28,10 @@ class TikiDb_Initializer
 
 	function getConnection(array $credentials)
 	{
-		if( $connector = $this->getInitializer($this->preferred)) {
+		if ( $connector = $this->getInitializer($this->preferred)) {
 			return $this->initialize($connector, $credentials);
 		}
-		
+
 		foreach (array_keys($this->connectors) as $name) {
 			if ($connector = $this->getInitializer($name)) {
 				return $this->initialize($connector, $credentials);

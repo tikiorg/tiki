@@ -137,7 +137,8 @@ $("input[name=ins_' . $this->getOption('filterFieldIdHere') . '], select[name=in
 
 	}
 
-	public function renderInnerOutput($context = array()) {
+	public function renderInnerOutput($context = array())
+	{
 
 		$definition = Tracker_Definition::get($this->getOption('trackerId'));
 		$field = $definition->getField($this->getOption('listFieldIdThere'));

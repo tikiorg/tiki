@@ -1028,9 +1028,12 @@ class WikiLib extends TikiLib
 						$plugins[] = $pinfo;
 					}
 				}
-				usort($plugins, function($ar1, $ar2){
-					return strcasecmp($ar1['title'], $ar2['title']);		// sort by translated name
-				});
+				usort(
+					$plugins,
+					function($ar1, $ar2){
+						return strcasecmp($ar1['title'], $ar2['title']);		// sort by translated name
+					}
+				);
 				$cachelib->cacheItem($cachetag, serialize($plugins));
 			}
 			array_walk_recursive(
@@ -1257,7 +1260,7 @@ class WikiLib extends TikiLib
 	/*
 	*	get_page_auto_toc
 	*	Get the auto generated TOC setting for the page
-	*	@return 
+	*	@return
 	*		+1 page_auto_toc is explicitly set to true
 	*		0  page_auto_toc is not set for page. Use global setting
 	*		-1 page_auto_toc is explicitly set to false
@@ -1267,7 +1270,7 @@ class WikiLib extends TikiLib
 		$attributes = TikiLib::lib('attribute')->get_attributes('wiki page', $pageName);
 		$rc = 0;
 		if (!isset($attributes['tiki.wiki.autotoc'])) {
-			return 0; 
+			return 0;
 		}
 		$value = intval($attributes['tiki.wiki.autotoc']);
 		if($value > 0)
@@ -1286,7 +1289,7 @@ class WikiLib extends TikiLib
 	/*
 	*	get_page_hide_title
 	*	Allow the title to be hidden for individual wiki pages
-	*	@return 
+	*	@return
 	*		+1 page_hide_title is explicitly set to true
 	*		0  page_hide_title is not set for page. Use global setting
 	*		-1 page_hide_title is explicitly set to false
@@ -1296,7 +1299,7 @@ class WikiLib extends TikiLib
 		$attributes = TikiLib::lib('attribute')->get_attributes('wiki page', $pageName);
 		$rc = 0;
 		if (!isset($attributes['tiki.wiki.page_hide_title'])) {
-			return 0; 
+			return 0;
 		}
 		$value = intval($attributes['tiki.wiki.page_hide_title']);
 		if($value > 0)
@@ -1397,13 +1400,13 @@ class WikiLib extends TikiLib
 
 		return array();
 	}
-	
+
 	// Page display options
 	//////////////////////////
-	public function processPageDisplayOptions() 
+	public function processPageDisplayOptions()
 	{
 		global	$prefs, $headerlib;
-		
+
 		$currPage = isset($_REQUEST['page']) ? $_REQUEST['page'] : '';
 		if (!empty($currPage) &&
 			(strstr($_SERVER["SCRIPT_NAME"], "tiki-editpage.php") === false) &&

@@ -29,7 +29,7 @@ $opcode_stats = array(
 
 if ( function_exists('apc_sma_info') && ini_get('apc.enabled') ) {
 
-	if( $_REQUEST['apc_clear']) {
+	if ( $_REQUEST['apc_clear']) {
 		check_ticket('admin-inc-performance');
 		apc_clear_cache();
 		apc_clear_cache('user');

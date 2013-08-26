@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2013 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -70,7 +70,7 @@ abstract class TikiDb
 			if (empty($res)) {
 				return $res;
 			}
-		
+
 			return reset($res);
 		}
 
@@ -82,7 +82,7 @@ abstract class TikiDb
 		$result = $this->query($query, $values, $numrows, $offset, $reporterrors);
 
 		$rows = array();
-		
+
 		if ($result) {
 			while ($row = $result->fetchRow()) {
 				$rows[] = $row;
@@ -222,7 +222,7 @@ abstract class TikiDb
 		$sort_mode=implode(',', $sorts);
 		return $sort_mode;
 	} // }}}
-	
+
 	function getQuery() // {{{
 	{
 		return $this->savedQuery;
@@ -296,21 +296,21 @@ abstract class TikiDb
 	function getEngines()
 	{
 		static $engines = array();
-		if(empty($engines)) {
+		if (empty($engines)) {
 			$result = $this->query('show engines');
 			if ($result) {
 				while ($res = $result->fetchRow()) {
 					$engines[] = $res['Engine'];
-				}		
-			}		
+				}
+			}
 		}
 		return $engines;
 	}
-	
+
 	/**
 	 * Check if InnoDB is an avaible engine
 	 * @return true if the InnoDB engine is available
-	 */ 
+	 */
 	function hasInnoDB()
 	{
 		$engines = $this->getEngines();
@@ -326,11 +326,11 @@ abstract class TikiDb
 	 * Detect the engine used in the current schema.
 	 * Assumes that all tables use the same table engine
 	 * @return string identifying the current engine, or an empty string if not installed
-	 */ 
+	 */
 	function getCurrentEngine()
 	{
 		static $engine = '';
-		if(empty($engine)) {
+		if (empty($engine)) {
 			$result = $this->query('SHOW TABLE STATUS LIKE ?', 'tiki_schema');
 			if ($result) {
 				$res = $result->fetchRow();
@@ -343,11 +343,11 @@ abstract class TikiDb
 	/**
 	 * Determine if MySQL fulltext search is supported by the current DB engine
 	 * Assumes that all tables use the same table engine.
-	 * Fulltext search is assumed supported if 
+	 * Fulltext search is assumed supported if
 	 * 1) engine = MyISAM
 	 * 2) engine = InnoDB and MySQL version >= 5.6
 	 * @return true if it is supported, otherwise false
-	 */ 
+	 */
 	function isMySQLFulltextSearchSupported()
 	{
 		$currentEngine = $this->getCurrentEngine();
@@ -368,11 +368,11 @@ abstract class TikiDb
 	/**
 	 * Read the MySQL version string.
 	 * @return version string
-	 */ 
+	 */
 	function getMySQLVersion()
 	{
 		static $version = '';
-		if(empty($version)) {
+		if (empty($version)) {
 			$result = $this->query('select version() as Version');
 			if ($result) {
 				$res = $result->fetchRow();
@@ -384,7 +384,7 @@ abstract class TikiDb
 	/**
 	 * Read the MySQL version number, e.g. 5.5
 	 * @return version float
-	 */ 
+	 */
 	function getMySQLVersionNr()
 	{
 		$versionNr = 0.0;

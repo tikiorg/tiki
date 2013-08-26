@@ -116,7 +116,7 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 							'exact' => tr('Exact Match'),
 							'partial' => tr('Field here is part of field there'),
 							'domain' => tr('Match domain, used for URL fields'),
-							'crossSelect' => tr('Cross select. Load all matching items in the remote tracker'),	
+							'crossSelect' => tr('Cross select. Load all matching items in the remote tracker'),
 						),
 						'legacy_index' => 10,
 					),
@@ -285,7 +285,7 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 		//	When selecting a value another item link can provide the relation, then the cross link can point to several records having the same linked value.
 		//	Example Contact and Report links to a Company. Report also links to Contact. When selecting Contact, Only Contacts in the same company as the Report is linked to, should be made visible.
 		//	When 'crossSelect' is enabled
-		//		1) The dropdown list is no longer disabled (else disabled) 
+		//		1) The dropdown list is no longer disabled (else disabled)
 		//		2) All rows in the remote tracker matching the criterea are displayed in the dropdown list (else only 1 row is displayed)
 		$method = $this->getOption('preSelectFieldMethod');
 		if ($method == 'crossSelect') {
@@ -294,11 +294,11 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 			$data['crossSelect'] = 'n';
 		}
 
-		// Prepare for 'crossSelect' 		
+		// Prepare for 'crossSelect'
 		$linkValue = false;		// Value which links the tracker items
-		if ($data['crossSelect'] === 'y') {		
+		if ($data['crossSelect'] === 'y') {
 			// Check if itemId is set / used.
-			// If not, it must be set here 
+			// If not, it must be set here
 			$itemData = $this->getItemData();
 			if (empty($itemData['itemId'])) {
 				if (!empty($_REQUEST['itemId'])) {
@@ -307,7 +307,7 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 			} else {
 				$linkValue = $itemData['itemId'];
 			}
-		}		
+		}
 
 		if ($preselection = $this->getPreselection($linkValue)) {
 			$data['preselection'] = $preselection;
@@ -317,7 +317,7 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 
 		$data['filter'] = $this->buildFilter();
 
-		if ($data['crossSelect'] === 'y') {	
+		if ($data['crossSelect'] === 'y') {
 			$fullList = $data['list'];
 			if (!empty($preselection) && is_array($preselection)) {
 				$data['remoteData'] = array_intersect_key($fullList, array_flip($preselection));
@@ -450,7 +450,7 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 		$parts = array();
 
 		if ($fields = $this->getDisplayFieldsListArray()) {
-			foreach($fields as $fieldId) {
+			foreach ($fields as $fieldId) {
 				if (isset($item[$fieldId])) {
 					$parts[] = $item[$fieldId];
 				}

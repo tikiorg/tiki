@@ -44,13 +44,15 @@ $ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
 
 $initializer = new TikiDb_Initializer;
 $initializer->setPreferredConnector($api_tiki);
-$db = $initializer->getConnection(array(
-	'host' => $host_tiki,
-	'user' => $user_tiki,
-	'pass' => $pass_tiki,
-	'dbs' => $dbs_tiki,
-	'charset' => $client_charset,
-));
+$db = $initializer->getConnection(
+	array(
+		'host' => $host_tiki,
+		'user' => $user_tiki,
+		'pass' => $pass_tiki,
+		'dbs' => $dbs_tiki,
+		'charset' => $client_charset,
+	)
+);
 
 if (! $db) {
 	die("\nUnable to connect to the database\n\n");

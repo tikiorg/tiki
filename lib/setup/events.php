@@ -31,10 +31,13 @@ function tiki_setup_events()
 					global $prefs;
 					if ($prefix == substr($args['object'], 0, strlen($prefix))) {
 						$user = substr($args['object'], strlen($prefix));
-						$events->trigger('tiki.user.update', array(
-							'type' => 'user',
-							'object' => $user,
-						));
+						$events->trigger(
+							'tiki.user.update',
+							array(
+								'type' => 'user',
+								'object' => $user,
+							)
+						);
 					}
 				}
 			);

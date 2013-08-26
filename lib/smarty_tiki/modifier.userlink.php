@@ -35,9 +35,12 @@ function smarty_modifier_userlink($other_user, $class='link', $idletime='not_set
 	if (is_array($other_user)) {
 
 		if (count($other_user) > 1) {
-			$other_user = array_map(function ($username) use ($class, $idletime, $popup) {
-				return smarty_modifier_userlink($username, $class, $idletime, '', 0, $popup);
-			}, $other_user);
+			$other_user = array_map(
+				function ($username) use ($class, $idletime, $popup) {
+					return smarty_modifier_userlink($username, $class, $idletime, '', 0, $popup);
+				},
+				$other_user
+			);
 
 			$last = array_pop($other_user);
 			return tr('%0 and %1', implode(', ', $other_user), $last);

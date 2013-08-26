@@ -36,9 +36,13 @@ $access->check_permission(array('tiki_p_admin_modules'));
 $auto_query_args = array('show_hidden_modules');
 
 if (!empty($prefs['module_file'])) {
-	$access->display_error('',
-		tr('Module file in use. You need to edit %0 to configure your modules.',
-			$tiki_p_admin === 'y' ? $prefs['module_file'] : basename($prefs['module_file'])));
+	$access->display_error(
+		'',
+		tr(
+			'Module file in use. You need to edit %0 to configure your modules.',
+			$tiki_p_admin === 'y' ? $prefs['module_file'] : basename($prefs['module_file'])
+		)
+	);
 }
 
 

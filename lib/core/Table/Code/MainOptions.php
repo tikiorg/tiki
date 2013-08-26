@@ -116,7 +116,7 @@ class Table_Code_MainOptions extends Table_Code_Manager
 				if (!empty($info['dir'])) {
 					if ($info['dir'] === 'asc') {
 						$sl[] = $col . ',' . '0';
-					} elseif($info['dir'] === 'desc') {
+					} elseif ($info['dir'] === 'desc') {
 						$sl[] = $col . ',' . '1';
 					}
 				}

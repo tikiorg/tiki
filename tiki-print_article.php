@@ -3,7 +3,7 @@
  * @package tikiwiki
  */
 // (c) Copyright 2002-2013 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -61,10 +61,15 @@ if (isset($_REQUEST["articleId"])) {
 	$body = $article_data["body"];
 	$heading = $article_data["heading"];
 	$smarty->assign('parsed_body', $tikilib->parse_data($body, array('is_html' => $artlib->is_html($article_data))));
-	$smarty->assign('parsed_heading', $tikilib->parse_data($heading, array(
-			'min_one_paragraph' => true,
-			'is_html' => $artlib->is_html($article_data, true),
-		))
+	$smarty->assign(
+		'parsed_heading',
+		$tikilib->parse_data(
+			$heading,
+			array(
+				'min_one_paragraph' => true,
+				'is_html' => $artlib->is_html($article_data, true),
+			)
+		)
 	);
 }
 ask_ticket('print-article');

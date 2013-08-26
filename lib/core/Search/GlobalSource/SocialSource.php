@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2013 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -74,9 +74,12 @@ class Search_GlobalSource_SocialSource implements Search_GlobalSource_Interface
 
 		if (! isset($localCache[$user])) {
 			$list = $this->sociallib->listFollowers($user);
-			$localCache[$user] = array_map(function ($entry) {
-				return $entry['user'];
-			}, $list);
+			$localCache[$user] = array_map(
+				function ($entry) {
+					return $entry['user'];
+				},
+				$list
+			);
 		}
 
 		return $localCache[$user];

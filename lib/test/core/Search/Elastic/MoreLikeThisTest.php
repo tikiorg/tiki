@@ -56,11 +56,13 @@ class Search_Elastic_MoreLikeThisTest extends PHPUnit_Framework_TestCase
 			);
 		}
 
-		$source = new Search_ContentSource_Static($data, array(
-			'object_type' => 'identifier',
-			'object_id' => 'identifier',
-			'wiki_content' => 'plaintext',
-		));
+		$source = new Search_ContentSource_Static(
+			$data, array(
+				'object_type' => 'identifier',
+				'object_id' => 'identifier',
+				'wiki_content' => 'plaintext',
+			)
+		);
 
 		$this->indexer = new Search_Indexer($index);
 		$this->indexer->addContentSource('wiki page', $source);
@@ -72,7 +74,7 @@ class Search_Elastic_MoreLikeThisTest extends PHPUnit_Framework_TestCase
 	{
 		$query = new Search_Query;
 		$query->filterSimilar('wiki page', 12);
-		
+
 		$results = $query->search($this->index);
 
 		$this->assertGreaterThan(0, count($results));
@@ -82,7 +84,7 @@ class Search_Elastic_MoreLikeThisTest extends PHPUnit_Framework_TestCase
 	{
 		$query = new Search_Query;
 		$query->filterSimilar('wiki page', 'X');
-		
+
 		$results = $query->search($this->index);
 
 		$this->assertCount(0, $results);

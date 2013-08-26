@@ -75,13 +75,15 @@ function wikiplugin_sign($data, $params, $offset)
 	$smarty->loadPlugin('smarty_function_icon');
 	$icon = smarty_function_icon(array('_id' => 'text_signature', 'title' => '', 'class' => 'wp-sign-icon'), $smarty);
 
-	TikiLib::lib('header')-> add_jq_onready('
+	TikiLib::lib('header')-> add_jq_onready(
+		'
 	$(".wp-sign-icon").mouseenter(function () {
 		$(this).next(".wp-sign").fadeIn("fast");
 	}).mouseleave(function () {
 		var $this = $(this);
 		setTimeout(function () {$this.next(".wp-sign").fadeOut();}, 1000);
-	});');
+	});'
+	);
 
 	return $icon . $tip;
 }

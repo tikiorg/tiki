@@ -51,13 +51,15 @@ class Search_Query_Facet_Term implements Search_Query_Facet_Interface
 
 	function setRenderMap(array $map)
 	{
-		return $this->setRenderCallback(function ($value) use ($map) {
-			if (isset($map[$value])) {
-				return $map[$value];
-			} else {
-				return $value;
+		return $this->setRenderCallback(
+			function ($value) use ($map) {
+				if (isset($map[$value])) {
+					return $map[$value];
+				} else {
+					return $value;
+				}
 			}
-		});
+		);
 	}
 
 	function render($value)

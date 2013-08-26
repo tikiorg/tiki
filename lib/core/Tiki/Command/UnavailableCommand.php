@@ -27,8 +27,7 @@ class UnavailableCommand extends Command
     protected function configure()
     {
         $this
-            ->setDescription('Command not available')
-        ;
+            ->setDescription('Command not available');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)

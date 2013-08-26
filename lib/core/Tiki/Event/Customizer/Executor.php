@@ -21,11 +21,13 @@ class Tiki_Event_Customizer_Executor implements Tiki_Event_EdgeProvider
 		$rules = $this->ruleSet->getRules();
 		$runner = $this->runner;
 
-		$runner->setVariables(array(
-			'args' => $arguments,
-			'event' => $eventName,
-			'priority' => $priority,
-		));
+		$runner->setVariables(
+			array(
+				'args' => $arguments,
+				'event' => $eventName,
+				'priority' => $priority,
+			)
+		);
 
 		foreach ($rules as $rule) {
 			try {

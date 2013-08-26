@@ -93,7 +93,8 @@ class Services_File_FinderController
 		// 'startPath' not functioning with multiple roots as yet (https://github.com/Studio-42/elFinder/issues/351)
 		// so work around it for now with startRoot
 
-		$opts['roots'][] = array_merge(		// normal file gals
+		$opts['roots'][] = array_merge(
+			// normal file gals
 			array(
 				'path' => $prefs['fgal_root_id'],		// should be a function?
 			),

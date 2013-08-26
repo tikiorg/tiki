@@ -51,7 +51,7 @@ $smarty->assign(
 
 if (isset($_REQUEST['templateId']) && $_REQUEST['templateId'] > 0) {
 	global $templateslib; require_once 'lib/templates/templateslib.php';
-	$template_data = $templateslib->get_template($_REQUEST['templateId'],$prefs['language']);
+	$template_data = $templateslib->get_template($_REQUEST['templateId'], $prefs['language']);
 	$_REQUEST['preview'] = 1;
 	$_REQUEST['body'] = $template_data['content'];
 	if ($templateslib->template_is_in_section($_REQUEST['templateId'], 'wiki_html')) {
@@ -94,7 +94,7 @@ $smarty->assign('edit_data', 'n');
 
 if (isset($_REQUEST['templateId']) && $_REQUEST['templateId'] > 0) {
 	global $templateslib; require_once 'lib/templates/templateslib.php';
-	$template_data = $templateslib->get_template($_REQUEST['templateId'],$prefs['language']);
+	$template_data = $templateslib->get_template($_REQUEST['templateId'], $prefs['language']);
 	$_REQUEST['preview'] = 1;
 	$_REQUEST['body'] = $template_data['content'];
 }

@@ -40,12 +40,18 @@ class Search_Elastic_FacetTest extends PHPUnit_Framework_TestCase
 		$result = $query->search($this->index);
 		$values = $result->getFacet($facet);
 
-		$this->assertEquals(new Search_ResultSet_FacetFilter($facet, array(
-			array('value' => 1, 'count' => 3),
-			array('value' => 2, 'count' => 2),
-			array('value' => 'orphan', 'count' => 1),
-			array('value' => 3, 'count' => 1),
-		)), $values);
+		$this->assertEquals(
+			new Search_ResultSet_FacetFilter(
+				$facet,
+				array(
+					array('value' => 1, 'count' => 3),
+					array('value' => 2, 'count' => 2),
+					array('value' => 'orphan', 'count' => 1),
+					array('value' => 3, 'count' => 1),
+				)
+			),
+			$values
+		);
 	}
 
 	protected function populate($index)

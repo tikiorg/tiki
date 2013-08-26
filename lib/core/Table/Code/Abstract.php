@@ -62,7 +62,9 @@ class Table_Code_Abstract
 	/**
 	 * Used by classes extending this class to set the code for the section handled by the extended class
 	 */
-	public function setCode() {}
+	public function setCode()
+	{
+	}
 
 	/**
 	 * Utility to generate lines of code within a section
@@ -83,7 +85,7 @@ class Table_Code_Abstract
 		$ret = '';
 		if ($c > 0) {
 			$ret .= $start;
-			foreach($data as $value) {
+			foreach ($data as $value) {
 				$i++;
 				$ret .= $before . $value . $after;
 				if ($i < $c) {

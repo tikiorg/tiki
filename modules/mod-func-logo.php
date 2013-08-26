@@ -78,15 +78,17 @@ function module_logo($mod_reference, & $module_params)
 {
 	global $prefs;
 
-	$module_params = array_merge(array(
-		'src'          => $prefs['sitelogo_src'],
-		'bgcolor'      => $prefs['sitelogo_bgcolor'],
-		'title_attr'   => $prefs['sitelogo_title'],
-		'alt_attr'     => $prefs['sitelogo_alt'],
-		'link'         => './',
-		'sitetitle'    => $prefs['sitetitle'],
-		'sitesubtitle' => $prefs['sitesubtitle'],
-		'class_image'  => 'sitelogo',
-		'class_titles' => 'sitetitles',
-	), $module_params);
+	$module_params = array_merge(
+		array(
+			'src'          => $prefs['sitelogo_src'],
+			'bgcolor'      => $prefs['sitelogo_bgcolor'],
+			'title_attr'   => $prefs['sitelogo_title'],
+			'alt_attr'     => $prefs['sitelogo_alt'],
+			'link'         => './',
+			'sitetitle'    => $prefs['sitetitle'],
+			'sitesubtitle' => $prefs['sitesubtitle'],
+			'class_image'  => 'sitelogo',
+			'class_titles' => 'sitetitles',
+		), $module_params
+	);
 }

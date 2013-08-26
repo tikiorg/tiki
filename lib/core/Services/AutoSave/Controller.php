@@ -50,7 +50,7 @@ class Services_AutoSave_Controller
 		if ($this->checkReferrer($referer)) {
 			include_once 'lib/ajax/autosave.php';
 			$data = $input->data->none();
-			$res = TikiLib::lib('autosave')->auto_save($input->editor_id->text(), $data,$referer);
+			$res = TikiLib::lib('autosave')->auto_save($input->editor_id->text(), $data, $referer);
 		}
 
 		return array(

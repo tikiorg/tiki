@@ -89,13 +89,11 @@ class Cachelib
 			$this->erase_dir_content("temp/cache/$tikidomain");
 			$this->erase_dir_content("modules/cache/$tikidomain");
 
-//***************** bugfix: deleting banner*.* files
-                        $banner=glob("temp/banner*.*");
-			array_map('unlink',$banner);
+			$banner=glob("temp/banner*.*");
+			array_map('unlink', $banner);
 
 			$banner=glob("temp/TMPIMG*");
-			array_map('unlink',$banner);
-//*****************
+			array_map('unlink', $banner);
 
 			$this->flush_opcode_cache();
 			$prefs = $this->flush_memcache();

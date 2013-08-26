@@ -235,8 +235,3 @@ function checkmyfile_exists($filename)
 
 <?php
 pagebottom();
-?>
-<?php /*<!--
-</body>
-</html>
--->*/?>

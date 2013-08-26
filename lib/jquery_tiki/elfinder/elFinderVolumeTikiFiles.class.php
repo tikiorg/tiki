@@ -199,11 +199,13 @@ class elFinderVolumeTikiFiles extends elFinderVolumeDriver
 			);
 			// clever way of filtering by keys from http://stackoverflow.com/questions/4260086
 			$info = array_intersect_key($info, array_flip($allowed));
-			$info['link'] = smarty_function_object_link(array(
-				'id' => $info['galleryId'],
-				'type' => 'file gallery',
-				'title' => $info['name'],
-			), $smarty);
+			$info['link'] = smarty_function_object_link(
+				array(
+					'id' => $info['galleryId'],
+					'type' => 'file gallery',
+					'title' => $info['name'],
+				), $smarty
+			);
 			$perms = TikiLib::lib('tiki')->get_perm_object($id, 'file gallery', $info);
 		} else {
 			$info = $this->filegallib->get_file($id);
@@ -218,11 +220,13 @@ class elFinderVolumeTikiFiles extends elFinderVolumeDriver
 			} else {
 				$type = 'file';
 			}
-			$info['link'] = smarty_function_object_link(array(
-				'id' => $info['fileId'],
-				'type' => $type,
-				'title' => $info['name'],
-			), $smarty);
+			$info['link'] = smarty_function_object_link(
+				array(
+					'id' => $info['fileId'],
+					'type' => $type,
+					'title' => $info['name'],
+				), $smarty
+			);
 			$perms = TikiLib::lib('tiki')->get_perm_object($id, 'file', $info);
 		}
 

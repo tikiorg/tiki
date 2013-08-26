@@ -69,7 +69,12 @@ if (count($filter)) {
 				$appendTitle = $res['object_type'] === 'article' || $res['object_type'] === 'blog' || $res['object_type'] === 'bogpost';
 				$res['url'] = smarty_modifier_sefurl($res['object_id'], $res['object_type'], '', '', $appendTitle ? 'y' : 'n', $res['title']);
 			}
-			$res = array_filter($res, function ($v) { return !is_null($v); });	// strip out null values
+			$res = array_filter(
+				$res,
+				function ($v) {
+					return !is_null($v);
+				}
+			);	// strip out null values
 		}
 		$access->output_serialized(
 			$results,
@@ -96,9 +101,11 @@ if (count($filter)) {
 		}
 		if (!$isCached) {
 			$results = tiki_searchindex_get_results($filter, $offset, $maxRecords);
-			$facets = array_map(function ($facet) {
-				return $facet->getName();
-			}, $results->getFacets());
+			$facets = array_map(
+				function ($facet) {
+					return $facet->getName();
+				}, $results->getFacets()
+			);
 			$dataSource = $unifiedsearchlib->getDataSource('formatting');
 
 			$plugin = new Search_Formatter_Plugin_SmartyTemplate(realpath('templates/searchresults-plain.tpl'));
@@ -157,7 +164,7 @@ if ($prefs['search_use_facets'] == 'y') {
 function tiki_searchindex_get_results($filter, $offset, $maxRecords)
 {
 	global $prefs;
-	
+
 	$unifiedsearchlib = TikiLib::lib('unifiedsearch');
 	$query = $unifiedsearchlib->buildQuery($filter);
 	$query->setRange($offset, $maxRecords);

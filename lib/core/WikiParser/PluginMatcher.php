@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2013 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -31,15 +31,19 @@ class WikiParser_PluginMatcher implements Iterator, Countable
 	public function __clone()
 	{
 		$new = $this;
-		$this->starts = array_map(function ($match) use ($new) {
-			$match->changeMatcher($new);
-			return clone $match;
-		}, $this->starts);
+		$this->starts = array_map(
+			function ($match) use ($new) {
+				$match->changeMatcher($new);
+				return clone $match;
+			}, $this->starts
+		);
 
-		$this->ends = array_map(function ($match) use ($new) {
-			$match->changeMatcher($new);
-			return clone $match;
-		}, $this->ends);
+		$this->ends = array_map(
+			function ($match) use ($new) {
+				$match->changeMatcher($new);
+				return clone $match;
+			}, $this->ends
+		);
 	}
 
 	private function getSubMatcher($start, $end)
@@ -249,7 +253,7 @@ class WikiParser_PluginMatcher implements Iterator, Countable
 		$end = $match->getEnd();
 
 		$sizeDiff = - ($end - $start - strlen($string));
-		$this->text = substr_replace($this->text, $string, $start, $end - $start); 
+		$this->text = substr_replace($this->text, $string, $start, $end - $start);
 
 		$this->removeRanges($start, $end);
 		$this->offsetRanges($end, $sizeDiff);
@@ -307,7 +311,7 @@ class WikiParser_PluginMatcher implements Iterator, Countable
 			unset($this->ranges[$key]);
 		}
 	}
-	
+
 	private function offsetRanges($end, $sizeDiff)
 	{
 		foreach ($this->ranges as & $range) {

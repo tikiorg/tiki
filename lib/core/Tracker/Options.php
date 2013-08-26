@@ -85,7 +85,7 @@ class Tracker_Options
 				$values = explode(',', $input->$key->none());
 				$filter = TikiFilter::get($filter);
 				$values = array_map(array($filter, 'filter'), $values);
-				
+
 				$options->setParam($key, $values);
 			} elseif (isset($info['separator'])) {
 				$input->replaceFilter($key, $filter);
@@ -128,7 +128,7 @@ class Tracker_Options
 	{
 		if (isset($this->data[$key])) {
 			return $this->data[$key];
-		} elseif($default === false && $def = $this->getParamDefinition($key)) {
+		} elseif ($default === false && $def = $this->getParamDefinition($key)) {
 			if (isset($def['default'])) {
 				return $def['default'];
 			} elseif ($default === false && isset($def['separator'])) {
@@ -182,7 +182,7 @@ class Tracker_Options
 				$out[] = $v;
 			}
 		}
-		
+
 		return $out;
 	}
 
