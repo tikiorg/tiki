@@ -147,14 +147,15 @@ function check_searchindex($data, $options)
 		displayError("--sircrit needs to be bigger than --sirwarn");
 	}
 	$iCurrentEpoch = date('U');
+	$iDiffEpoch = $iCurrentEpoch - $data['SearchIndexRebuildLast'];
 	if (empty($data['SearchIndexRebuildLast'])) {
 		update_err_state(3, "Search Index never built");
 	} elseif ($data['SearchIndexRebuildLast'] < ($iCurrentEpoch - $crit)) {
-		update_err_state(1, "Search Index older than $crit sec");
+		update_err_state(1, "Search Index older than $crit sec|time=".$iDiffEpoch."s;;;0");
 	} elseif ($data['SearchIndexRebuildLast'] < ($iCurrentEpoch - $warn)) {
-		update_err_state(1, "Search Index older than $warn sec");
+		update_err_state(1, "Search Index older than $warn sec|time=".$iDiffEpoch."s;;;0");
 	} elseif ($data['SearchIndexRebuildLast'] > ($iCurrentEpoch - $warn)) {
-		update_err_state(0, "Search Index is fresh");
+		update_err_state(0, "Search Index is fresh|time=".$iDiffEpoch."s;;;0");
 	} else {
 		update_err_state(3, "Search index state unknown");
 	}
