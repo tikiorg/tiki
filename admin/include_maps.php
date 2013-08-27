@@ -53,3 +53,7 @@ if (isset($_REQUEST["ogr2ogr"])) {
 	}
 }
 $smarty->assign('map_error', $map_error);
+
+if (isset($_REQUEST['geo_zoomlevel_to_found_location'])) {
+	$tikilib->set_preference('geo_zoomlevel_to_found_location', $_REQUEST['geo_zoomlevel_to_found_location']);
+}

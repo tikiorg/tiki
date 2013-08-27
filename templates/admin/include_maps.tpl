@@ -21,7 +21,18 @@
 
 		{preference name=gmap_key}
 
-		{preference name=geo_zoom_to_found_location}
+		<div class="adminoptionbox">
+			<div class="adminoptionlabel"><label for="geo_zoomlevel_to_found_location">{tr}Zoom level to searched location:{/tr}</label> 
+			<select name="geo_zoomlevel_to_found_location" id="geo_zoomlevel_to_found_location">
+			  <option value="street"{if $prefs.geo_zoomlevel_to_found_location eq 'street'} selected="selected"{/if}>{tr}Street level{/tr}</option>
+			  <option value="town"{if $prefs.geo_zoomlevel_to_found_location eq 'town'} selected="selected"{/if}>{tr}Town level{/tr}</option>
+			  <option value="region"{if $prefs.geo_zoomlevel_to_found_location eq 'region'} selected="selected"{/if}>{tr}Region level{/tr}</option>
+			  <option value="country"{if $prefs.geo_zoomlevel_to_found_location eq 'country'} selected="selected"{/if}>{tr}Country level{/tr}</option>
+			  <option value="continent"{if $prefs.geo_zoomlevel_to_found_location eq 'continent'} selected="selected"{/if}>{tr}Continent level{/tr}</option>
+			  <option value="world"{if $prefs.geo_zoomlevel_to_found_location eq 'world'} selected="selected"{/if}>{tr}World{/tr}</option>
+			</select> 
+			</div>
+		</div>
 	</fieldset>
 	
 	<fieldset class="admin">			
