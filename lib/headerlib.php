@@ -747,6 +747,19 @@ class HeaderLib
 			'print' => array(),
 		);
 
+		$pushFile = function ($section, $file) use (& $files) {
+			global $prefs;
+			$files[$section][] = $file;
+
+			if ($prefs['feature_bidi'] == 'y') {
+				$rtl = str_replace('.css', '', $file) . '-rtl.css';
+
+				if (file_exists($rtl)) {
+					$files[$section][] = $rtl;
+				}
+			}
+		};
+
 		foreach ($this->cssfiles as $x=>$cssf) {
 			foreach ($cssf as $cf) {
 				if (!empty($tikidomain) && is_file("styles/$tikidomain/$style_base/$cf")) {
@@ -756,10 +769,10 @@ class HeaderLib
 				}
 				$cfprint = str_replace('.css', '', $cf) . '-print.css';
 				if (!file_exists($tikipath . $cfprint)) {
-					$files['default'][] = $cf;
+					$pushFile('default', $cf);
 				} else {
-					$files['screen'][] = $cf;
-					$files['print'][] = $cfprint;
+					$pushFile('screen', $cf);
+					$pushFile('print', $cfprint);
 				}
 			}
 		}
