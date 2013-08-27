@@ -84,7 +84,7 @@ function prefs_geo_list()
 			'name' => tr('Zoom to found location'),
 			'description' => tr('Zoom to street level when finding a searched location'),
 			'type' => 'flag',
-			'default' => 'n',
+			'default' => 'y',
 		),
 	);
 }
