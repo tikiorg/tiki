@@ -14,6 +14,9 @@
 	<label>
 		{tr}New Event{/tr}
 		<input type="text" name="targetEvent" value="{$targetEvent|escape}"/>
+		<div class="description">
+			{tr}All event names are required to have at least 3 components.{/tr}
+		</div>
 	</label>
 	<label>
 		{tr}Tracker{/tr}

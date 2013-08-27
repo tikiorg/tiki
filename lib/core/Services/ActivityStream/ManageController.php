@@ -104,6 +104,10 @@ class Services_ActivityStream_ManageController
 			$targetEvent = $request->targetEvent->attribute_type();
 			$customArguments = $request->parameters->text();
 
+			if (! $targetEvent) {
+				throw new Services_Exception_MissingValue('targetEvent');
+			}
+
 			$id = $this->replaceRule(
 				$id,
 				array(

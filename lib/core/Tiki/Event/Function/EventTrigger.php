@@ -19,8 +19,16 @@ class Tiki_Event_Function_EventTrigger extends Math_Formula_Function
 		$arguments = array();
 		$eventName = $element[0];
 
+		if (! is_string($eventName)) {
+			$this->error(tr('Event name may be empty or invalid.'));
+		}
+
 		if ($element[1]) {
 			$arguments = $this->evaluateChild($element[1]);
+
+			if (! is_array($arguments)) {
+				$this->error(tr('Arguments are expected to be a value map.'));
+			}
 		}
 
 		$this->manager->trigger($eventName, $arguments);
