@@ -2599,20 +2599,18 @@ class TrackerLib extends TikiLib
 			return;
 		}
 		$key = "tracker.$trackerId.$itemId";
-		$olrate = $this->get_user_vote($key, $user);
-		if ($tiki_p_tracker_revote_ratings != 'y' && ($olrate !== null && $olrate !== false)) {
+		$olrate = $this->get_user_vote($key, $user) ?: 0;
+		$allow_revote = $tiki_p_tracker_revote_ratings == 'y';
+		$count = $itemFields->fetchCount(array('itemId' => (int) $itemId, 'fieldId' => (int) $fieldId));
+		$tikilib = TikiLib::lib('tiki');
+		if (! $tikilib->register_user_vote($user, $key, $new_rate, array(), $allow_revote)) {
 			return;
 		}
-		$count = $itemFields->fetchCount(array('itemId' => (int) $itemId, 'fieldId' => (int) $fieldId));
-		$this->register_user_vote($user, $key, $new_rate, array(), true);
+
 		if (!$count) {
 			$itemFields->insert(array('value' => (int) $new_rate, 'itemId' => (int) $itemId, 'fieldId' => (int) $fieldId));
 			return $new_rate;
 		} else {
-			if ($olrate === null) {
-				$olrate = 0;
-			}
-
 			$conditions = array(
 				'itemId' => (int) $itemId,
 				'fieldId' => (int) $fieldId,
@@ -2644,11 +2642,10 @@ class TrackerLib extends TikiLib
 			return;
 		}
 		$key = "tracker.$trackerId.$itemId.".$field['fieldId'];
-		if ($tiki_p_tracker_revote_ratings != 'y' && (($v = $this->get_user_vote($key, $user)) !== null && $v !== false)) {
-			return;
-		}
 
-		$result = $this->register_user_vote($user, $key, $userValue, array(), true);
+		$allow_revote = $tiki_p_tracker_revote_ratings == 'y';
+		$tikilib = TikiLib::lib('tiki');
+		$result = $tikilib->register_user_vote($user, $key, $userValue, array(), $allow_revote);
 
 		$votings = $this->table('tiki_user_votings');
 		$data = $votings->fetchRow(array('count' => $votings->count(), 'total' => $votings->sum('optionId')), array('id' => $key));
