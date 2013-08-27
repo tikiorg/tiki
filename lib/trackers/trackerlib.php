@@ -2609,7 +2609,7 @@ class TrackerLib extends TikiLib
 
 		if (!$count) {
 			$itemFields->insert(array('value' => (int) $new_rate, 'itemId' => (int) $itemId, 'fieldId' => (int) $fieldId));
-			return $new_rate;
+			$outValue = $new_rate;
 		} else {
 			$conditions = array(
 				'itemId' => (int) $itemId,
@@ -2617,12 +2617,21 @@ class TrackerLib extends TikiLib
 			);
 
 			$val = $itemFields->fetchOne('value', $conditions);
-			$newval = $val - $olrate + $new_rate;
+			$outValue = $val - $olrate + $new_rate;
 
-			$itemFields->update(array('value' => $newval), $conditions);
-
-			return $newval;
+			$itemFields->update(array('value' => $outValue), $conditions);
 		}
+
+		TikiLib::events()->trigger('tiki.trackeritem.rating', array(
+			'type' => 'trackeritem',
+			'object' => (int) $itemId,
+			'trackerId' => (int) $trackerId,
+			'fieldId' => (int) $fieldId,
+			'user' => $user,
+			'rating' => $new_rate, // User's selected value, not the stored one
+		));
+
+		return $outValue;
 	}
 
 	public function replace_star($userValue, $trackerId, $itemId, &$field, $user, $updateField=true)
@@ -2653,11 +2662,17 @@ class TrackerLib extends TikiLib
 		$field['my_rate'] = $userValue;
 		$field['voteavg'] = $field['value'] = $data['total'] / $field['numvotes'];
 
-		if ($prefs['feature_search'] === 'y' && $prefs['unified_incremental_update'] === 'y') {
-			$unifiedsearchlib = TikiLib::lib('unifiedsearch');
-			$unifiedsearchlib->invalidateObject('trackeritem', $itemId);
-			$unifiedsearchlib->processUpdateQueue();
+		if ($result) {
+			TikiLib::events()->trigger('tiki.trackeritem.rating', array(
+				'type' => 'trackeritem',
+				'object' => $itemId,
+				'trackerId' => $trackerId,
+				'fieldId' => $field['fieldId'],
+				'user' => $user,
+				'rating' => $userValue,
+			));
 		}
+
 		return $result;
 	}
 

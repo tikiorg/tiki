@@ -139,6 +139,7 @@ function tiki_setup_events()
 	$events->bind('tiki.wiki.save', 'tiki.save');
 	$events->bind('tiki.wiki.view', 'tiki.view');
 
+	$events->bind('tiki.trackeritem.rating', 'tiki.trackeritem.update');
 	$events->bind('tiki.trackeritem.update', 'tiki.trackeritem.save');
 	$events->bind('tiki.trackeritem.create', 'tiki.trackeritem.save');
 	$events->bind('tiki.trackeritem.save', 'tiki.save');
