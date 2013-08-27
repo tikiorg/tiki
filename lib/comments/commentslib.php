@@ -2332,7 +2332,11 @@ class Comments extends TikiLib
 			return;
 		}
 
-		$href .= $object . "&amp;threadId=$threadId&amp;comzone=show#threadId$threadId";
+		if ($type == 'trackeritem') {
+			$href .= $object . "&threadId=$threadId&cookietab=2#threadId$threadId";
+		} else {
+			$href .= $object . "&amp;threadId=$threadId&amp;comzone=show#threadId$threadId";
+		}
 
 		return $href;
 	}
