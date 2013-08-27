@@ -277,11 +277,12 @@ class Tracker_field_Image extends Tracker_Field_File
 
 	function getImageFilename($name, $itemId, $fieldId)
 	{
+		$ext = pathinfo($name, PATHINFO_EXTENSION);
+		if (! in_array($ext, array('png', 'gif', 'jpg', 'jpeg'))) {
+			$ext = 'jpg';
+		}
+
 		do {
-			$ext = pathinfo($name, PATHINFO_EXTENSION);
-			if (! in_array($ext, array('png', 'gif', 'jpg', 'jpeg'))) {
-				$ext = 'jpg';
-			}
 			$name = md5(uniqid("$name.$itemId.$fieldId"));
 			$name .= '.'.$ext;
 		} while (file_exists("img/trackers/$name"));
