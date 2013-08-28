@@ -90,9 +90,9 @@ create()
 		svn up
 	fi
 
-	chown -R ctrl.www-data $INSTANCE_DIR
+	chown -R $TIM_USER.$TIM_GROUP $INSTANCE_DIR
 	cd $INSTANCE_DIR
-	sh setup.sh -u ctrl -g www-data -n fix
+	sh setup.sh -u $TIM_USER -g $TIM_GROUP -n fix
 
 	mysql -e "CREATE DATABASE $DB;"
 	mysql -e "GRANT ALL ON $DB.* TO tiki@localhost IDENTIFIED BY 'password';"
@@ -111,7 +111,7 @@ create()
 //\$system_configuration_identifier = 'staging';
 EOF
 
-	chown ctrl.www-data $INSTANCE_DIR/db/local.php
+	chown $TIM_USER.$TIM_GROUP $INSTANCE_DIR/db/local.php
 
 	if [[ -f $INSTANCE_DIR/installer/shell.php ]]
 	then
