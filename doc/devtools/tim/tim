@@ -143,8 +143,13 @@ info()
 				VERSIONSLIST=$(ls *.tar.gz | sed -e 's/\.tar\.gz//' | sort -V -r | uniq)
 				echo "LIST: "${VERSIONSLIST}
 				;;
+			diskspace)
+				echo "INFO: Disk partitions occupation"
+				# Remove those which are not actually partitions
+				df -h | grep -v '^tmpfs' | grep -v '^rootfs' | grep -v '^udev'
+				;;
 			*)
-				echo echo "Sub command unknown/forbidden"
+				echo "ERROR: Sub command unknown/forbidden. Valid sub commands are: versions diskspace"
 				;;
 		esac
 	else
