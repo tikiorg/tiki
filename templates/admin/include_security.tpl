@@ -20,6 +20,14 @@
 {tabset}
 
 		{tab name="{tr}General Security{/tr}"}
+			{if $mysqlSSL === true}
+				<div class="mysqlsslstatus">{tr}MySQL SSL connection is active{/tr}</div>
+			{else}
+				<div class="mysqlsslstatus">{tr}MySQL connection is not encrypted{/tr}
+				To activate SSL, copy the keyfiles (.pem) til db/cert folder.<br>
+				The files must end on "-key.pem", "-cert.pem", "-ca.pem"
+				</div>
+			{/if}
 			{preference name=smarty_security}
 			<div class="adminoptionboxchild" id="smarty_security_childcontainer">	
 				{preference name=smarty_security_functions}

@@ -406,4 +406,17 @@ abstract class TikiDb
 
 		return $list;
 	}
+	
+	/*
+	*	isMySQLConnSSL
+	*	Check if MySQL is using an SSL connection
+	*	@return true if MySQL uses SSL. Otherwise false;
+	*/
+	function isMySQLConnSSL() 
+	{
+		$result = $this->query('show status like "Ssl_cipher"');
+		$ret = $result->fetchRow();
+		$cypher = $ret['Value'];
+		return !empty($cypher);
+	}
 }

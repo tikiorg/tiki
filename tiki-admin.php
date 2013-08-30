@@ -684,6 +684,9 @@ foreach ($icons as &$icon) {
 	$icon = array_merge(array( 'disabled' => false, 'description' => '', 'icon' => 'img/icons/large/green_question48x48.png'), $icon);
 }
 
+$isSSL = $tikilib->isMySQLConnSSL();
+$smarty->assign('mysqlSSL', $isSSL);
+
 $smarty->assign('icons', $icons);
 
 $smarty->assign_by_ref('tikifeedback', $tikifeedback);

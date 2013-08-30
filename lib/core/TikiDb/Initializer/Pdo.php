@@ -40,7 +40,10 @@ class TikiDb_Initializer_Pdo
 
 			unset( $charset_query );
 		}
-
+		
+		// Setup SSL, if activated
+		$this->setupSSL($pdo_options);
+				
 		$dbTiki = new PDO("mysql:$db_hoststring;dbname={$credentials['dbs']}", $credentials['user'], $credentials['pass'], $pdo_options);
 
 		$dbTiki->setAttribute(PDO::ATTR_CASE, PDO::CASE_NATURAL);
@@ -54,6 +57,42 @@ class TikiDb_Initializer_Pdo
 		}
 
 		return $db;
+	}
+	
+	function setupSSL(&$pdo_options)
+	{
+		global $tikiroot, $tikipath;
+		
+		$certroot = $tikiroot.'db/cert/';
+		$fileroot = $tikipath.'db/cert/';
+
+		// Look for the key files in the certroot
+		//	Client key ends with: -key.pem
+		//  Client cert ends with -cert.pem
+		//  CA cert ends with -ca.pem
+		// It is assumed that the folder only contains 1 set of keys
+		foreach (glob($fileroot."*.pem") as $filename) {
+			if (strpos($filename, '-key.pem') !== false) {
+				$clientKey = basename($filename);
+				continue;
+			} 
+			if (strpos($filename, '-cert.pem') !== false) {
+				$clientCert = basename($filename);
+				continue;
+			} 
+			if (strpos($filename, '-ca.pem') !== false) {
+				$caCert = basename($filename);
+				continue;
+			}
+		}
+
+		// Activate SSL, if the key files are found
+		$isSSL = !empty($clientKey) && !empty($clientCert) && !empty($caCert);
+		if ($isSSL) {		
+			$pdo_options[PDO::MYSQL_ATTR_SSL_KEY] =  $certroot.$clientKey;
+			$pdo_options[PDO::MYSQL_ATTR_SSL_CERT] =  $certroot.$clientCert;
+			$pdo_options[PDO::MYSQL_ATTR_SSL_CA] =  $certroot.$caCert;
+		}
 	}
 }
 
