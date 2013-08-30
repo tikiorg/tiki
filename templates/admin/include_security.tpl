@@ -21,9 +21,9 @@
 
 		{tab name="{tr}General Security{/tr}"}
 			{if $mysqlSSL === true}
-				<div class="mysqlsslstatus">{tr}MySQL SSL connection is active{/tr}</div>
+				<div class="mysqlsslstatus"><img src="img/icons/lock.png"/> {tr}MySQL SSL connection is active{/tr}</div>
 			{else}
-				<div class="mysqlsslstatus">{tr}MySQL connection is not encrypted{/tr}
+				<div class="mysqlsslstatus"><img src="img/icons/lock_open.png"/> {tr}MySQL connection is not encrypted{/tr}<br>
 				To activate SSL, copy the keyfiles (.pem) til db/cert folder.<br>
 				The files must end on "-key.pem", "-cert.pem", "-ca.pem"
 				</div>
