@@ -121,10 +121,24 @@ EOF
 		mysql $DB < $INSTANCE_DIR/db/tiki.sql
 	fi
 
+	# Create info.txt file with data useful to developpers
+	INFOTEXT=$INSTANCE_DIR/info.txt
+	echo "Extra steps special to show instances"
+	echo "Creating file http://${SUBDOMAIN}.show.tikiwiki.org/info.txt"
+	echo "This Tiki instance was created on the Tiki show community website" > ${INFOTEXT}
+	echo "Creation date: `date -u +%Y-%m-%d_%H-%M-%S`" >> ${INFOTEXT}
+	echo "Version: ${SVNTAG}" >> ${INFOTEXT}
+	echo "SVN info" >> ${INFOTEXT}
+	svn info >> ${INFOTEXT}
+	echo "Related to Wish: http://dev.tiki.org/item${ID}" >> ${INFOTEXT}
+	echo -n "Wish was created by user " >> ${INFOTEXT}
+	if [[ "${TUSER}" != "user" ]]; then echo -n "'${TUSER}'"; fi >> ${INFOTEXT}
+	echo " http://dev.tiki.org/user${TUSERID}" >> ${INFOTEXT}
+
 	/bin/rm $LOCKSDIR/lock_${TUSERID}_${ID} || (echo "FAIL: Failed to suppress lock file $LOCKSDIR/lock_${TUSERID}_${ID}"; exit 1)
 }
 
 echo "CREATION START - watch ${SUBDOMAIN}.show.tikiwiki.org "
 create
-echo "CREATION END - results in <a href='http://${SUBDOMAIN}.show.tikiwiki.org/install_log.txt'>http://${SUBDOMAIN}.show.tikiwiki.org/install_log.txt</a> (available after a delay)"
+echo "CREATION END - results in http://${SUBDOMAIN}.show.tikiwiki.org/install_log.txt (available after a delay)"
 exit 0
