@@ -101,6 +101,7 @@ class RelationLib extends TikiDb_Bridge
 					)
 				);
 			}
+			return $id;
 		} else {
 			return 0;
 		}
