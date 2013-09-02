@@ -8,11 +8,11 @@
 function wikiplugin_kaltura_info()
 {
 	global $prefs;
+	$players = array();
 	if ($prefs['feature_kaltura'] === 'y') {
 		$kalturaadminlib = TikiLib::lib('kalturaadmin');
 
 		$playerList = $kalturaadminlib->getPlayersUiConfs();
-		$players = array();
 		foreach ($playerList as $pl) {
 			$players[] = array('value' => $pl['id'], 'text' => tra($pl['name']));
 		}
