@@ -450,6 +450,10 @@ h3.box-title .moduletitle em {
     overflow: hidden;
 }
 
+.box-menu .box ol li, .box ul li  {
+    overflow: visible;
+}
+
 .box-switch_lang {
     text-align: center !important;
 }
