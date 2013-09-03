@@ -305,6 +305,7 @@
 			<fieldset>
 				<legend>{tr}Vimeo{/tr}</legend>
 				{preference name=vimeo_upload}
+				{preference name=vimeo_delete}
 				<div class="adminoptionboxchild" id="vimeo_upload_childcontainer">
 					{preference name=vimeo_default_gallery}
 					{preference name=vimeo_consumer_key}

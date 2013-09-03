@@ -16,6 +16,15 @@ function prefs_vimeo_list()
 			'type' => 'flag',
 			'default' => 'n',
 		),
+		'vimeo_delete' => array(
+			'name' => tr('Vimeo Delete'),
+			'description' => tr('Causes videos uploaded to the Vimeo service via File Galleries to be deleted when the Tiki file is deleted.'),
+			'help' => 'Vimeo',
+			'dependencies' => array('vimeo_upload'),
+			'type' => 'flag',
+			'default' => 'n',
+			'warning' => tra('Permanently removes videos from the registered vimeo.com account.'),
+		),
 		'vimeo_consumer_key' => array(
 			'name' => tr('Vimeo Consumer Key'),
 			'description' => tr('API Consumer Key'),

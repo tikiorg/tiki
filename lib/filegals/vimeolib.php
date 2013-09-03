@@ -80,6 +80,17 @@ class VimeoLib
 		);
 	}
 
+	function deleteVideo($videoId)
+	{
+		$data = $this->callMethod(
+			'vimeo.videos.delete',
+			array(
+				'video_id' => $videoId,
+			)
+		);
+		return $data;
+	}
+
 	private function callMethod($method, array $arguments = array())
 	{
 		$response = $this->oauth->do_request(

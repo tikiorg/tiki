@@ -203,6 +203,20 @@ class FileGalLib extends TikiLib
 		}
 		$fileId = $fileInfo['fileId'];
 
+		if ($prefs['vimeo_upload'] === 'y' && $prefs['vimeo_delete'] === 'y' && $fileInfo['filetype'] === 'video/vimeo') {
+			$attributes = TikiLib::lib('attribute')->get_attributes('file', $fileId);
+			if($url = $attributes['tiki.content.url']) {
+				$video_id = substr($url, strrpos($url, '/') + 1);	// not ideal, but video_id not stored elsewhere (yet)
+				$result = TikiLib::lib('vimeo')->deleteVideo($video_id);
+				if ($result['stat'] != 'ok') {
+					$errMsg = tra($result['err']['msg']) . tra($result['err']['expl']);
+					TikiLib::lib('errorreport')->report($errMsg);
+					return false;
+				}
+			}
+
+		}
+
 		$savedir = $this->get_gallery_save_dir($fileInfo['galleryId'], $galInfo);
 
 		$this->deleteBacklinks(null, $fileId);
