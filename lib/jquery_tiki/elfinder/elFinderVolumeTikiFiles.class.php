@@ -864,10 +864,12 @@ class elFinderVolumeTikiFiles extends elFinderVolumeDriver
 	 **/
 	protected function _unlink($path)
 	{
-		$galleryId = $this->options['accessControlData']['parentIds']['files'][$this->pathToId($path)];
+		$fileId = $this->pathToId($path);
+		$galleryId = $this->options['accessControlData']['parentIds']['files'][$fileId];
 		$perms = TikiLib::lib('tiki')->get_perm_object($galleryId, 'file gallery', TikiLib::lib('filegal')->get_file_gallery_info($galleryId));
 		if ($perms['tiki_p_remove_files'] === 'y') {
-			return $this->filegallib->remove_file(array('fileId' => $this->pathToId($path)));
+			$fileInfo = TikiLib::lib('filegal')->get_file_info($fileId, false, false);
+			return $this->filegallib->remove_file($fileInfo);
 		} else {
 			return false;
 		}
