@@ -99,6 +99,10 @@ class Services_File_VimeoController
 		$chunks = $vimeolib->verifyChunks($ticket);
 		$completeInfo = $vimeolib->complete($ticket, $filename);
 
+		$video = '';
+		$url = '';
+		$fileId = 0;
+
 		if ($completeInfo['stat'] !== 'ok') {
 			$errMsg = tra($completeInfo['err']['msg']);				// get_strings TODO?
 			if ($tiki_p_admin === 'y') {
