@@ -447,11 +447,10 @@ h3.box-title .moduletitle em {
 	line-height: 135%;
 	height: 28px;
 	font-size: .95em;
-    overflow: hidden;
 }
 
-.box-menu .box ol li, .box ul li  {
-    overflow: visible;
+.box-articles ol li, .box-articles ul li {
+    overflow: hidden;
 }
 
 .box-switch_lang {
