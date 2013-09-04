@@ -414,9 +414,35 @@ abstract class TikiDb
 	*/
 	function isMySQLConnSSL() 
 	{
+		if(!$this->haveMySQLSSL()) {
+			return false;
+		}
 		$result = $this->query('show status like "Ssl_cipher"');
 		$ret = $result->fetchRow();
 		$cypher = $ret['Value'];
 		return !empty($cypher);
+	}
+	
+	/*
+	*	Check if the MySQL installation has SSL activated
+	*	@return true is SSL is supported and activated on the current MySQL server
+	*/
+	function haveMySQLSSL()
+	{
+		$result = $this->query('show variables like "have_ssl"');
+		$ret = $result->fetchRow();
+		if (empty($ret)) {
+			$result = $this->query('show variables like "have_openssl"');
+			$ret = $result->fetchRow();
+		}
+		if (!isset($ret)) {
+			return false;
+		}
+		$ssl = $ret['Value'];
+		if (empty($ssl)) {
+			return false;
+		} else {
+			return $ssl == 'YES';
+		}
 	}
 }
