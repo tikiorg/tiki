@@ -42,6 +42,10 @@ body > .fixedwidth {
 	width: 98%;
 }
 
+#role_main {
+    min-height: 80ex;
+}
+
 /* general #fixedwidth wrapper when fixed width is off */
 
 /*body > .fixed_width > .fixedwidth {
