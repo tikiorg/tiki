@@ -14,7 +14,11 @@ class Search_Formatter_ValueFormatter_Trackerrender extends Search_Formatter_Val
 	function __construct($arguments)
 	{
 		if (isset($arguments['list_mode']) && $arguments['list_mode'] !== 'n') {
-			$this->list_mode = 'y';
+			if ($arguments['list_mode'] == 'csv') {
+				$this->list_mode = 'csv';
+			} else {
+				$this->list_mode = 'y';
+			}
 		}
 
 		if (isset($arguments['editable']) && in_array($arguments['editable'], array('block', 'inline'))) {
