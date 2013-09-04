@@ -38,7 +38,7 @@ class Search_GlobalSource_SocialSource implements Search_GlobalSource_Interface
 			$groups = array_merge($groups, $this->userlib->get_user_groups_inclusion($user));
 			$userfollowers = $this->getFollowers($user);
 			if (is_array($userfollowers)) {
-				$followers += $this->getFollowers($user);
+				$followers = array_merge($followers, $userfollowers);	
 			}
 		}
 
