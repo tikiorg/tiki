@@ -695,7 +695,7 @@ class TrackerLib extends TikiLib
 		}
 	}
 
-	public function concat_item_from_fieldslist($trackerId,$itemId,$fieldsId,$status='o',$separator=' ')
+	public function concat_item_from_fieldslist($trackerId,$itemId,$fieldsId,$status='o',$separator=' ',$list_mode='')
 	{
 		$res='';
 		if (is_string($fieldsId)) {
@@ -710,7 +710,7 @@ class TrackerLib extends TikiLib
 			if ($k > 0) {
 				$res .= $separator;
 			}
-			$res .= trim($this->field_render_value(array('field' => $myfield, 'process' => 'y')));
+			$res .= trim($this->field_render_value(array('field' => $myfield, 'process' => 'y', 'list_mode' => $list_mode)));
 		}
 		return $res;
 	}
@@ -4706,7 +4706,7 @@ class TrackerLib extends TikiLib
 			$fieldId = $field['fieldId'];
 			unset($context['item']);
 			unset($context['field']);
-			if (!isset($context['list_mode'])) {
+			if (empty($context['list_mode'])) {
 				$context['list_mode'] = 'n';
 			}
 			$r = $handler->renderOutput($context);

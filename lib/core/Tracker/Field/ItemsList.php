@@ -106,7 +106,7 @@ class Tracker_Field_ItemsList extends Tracker_Field_Abstract
 			$items = $this->getItemIds();
 		}
 
-		$list = $this->getItemLabels($items);
+		$list = $this->getItemLabels($items, $context);
 
 		if ($context['list_mode'] === 'csv') {
 			return implode('%%%', $list);
@@ -194,7 +194,7 @@ class Tracker_Field_ItemsList extends Tracker_Field_Abstract
 		return $items;
 	}
 
-	private function getItemLabels($items)
+	private function getItemLabels($items, $context = array('list_mode' => ''))
 	{
 		$displayFields = $this->getOption('displayFieldIdThere');
 		$trackerId = (int) $this->getOption('trackerId');
@@ -209,7 +209,7 @@ class Tracker_Field_ItemsList extends Tracker_Field_Abstract
 		$trklib = TikiLib::lib('trk');
 		foreach ($items as $itemId) {
 			if ($displayFields) {
-				$list[$itemId] = $trklib->concat_item_from_fieldslist($trackerId, $itemId, $displayFields, $status, ' ');
+				$list[$itemId] = $trklib->concat_item_from_fieldslist($trackerId, $itemId, $displayFields, $status, ' ', $context['list_mode']);
 			} else {
 				$list[$itemId] = $trklib->get_isMain_value($trackerId, $itemId);
 			}
