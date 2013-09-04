@@ -83,6 +83,17 @@ function wikiplugin_customsearch_info()
 				'filter' => 'digits',
 				'default' => '1',
 			),
+			'requireinput' => array(
+				'required' => false,
+				'name' => tra('Require non-empty search text'),
+				'description' => tra('Require first input field to be filled for search to trigger'),
+				'options' => array(
+					array('text' => tra('Yes'), 'value' => '1'),
+					array('text' => tra('No'), 'value' => '0'),
+				),
+				'filter' => 'digits',
+				'default' => '0',
+			),
 		),
 	);
 }
@@ -183,6 +194,7 @@ function wikiplugin_customsearch($data, $params)
 		'results' => empty($params['destdiv']) ? "#customsearch_{$id}_results" : "#{$params['destdiv']}",
 		'autosearchdelay' => isset($params['autosearchdelay']) ? max(1500, (int) $params['autosearchdelay']) : 0,
 		'searchonload' => (int) $params['searchonload'],
+		'requireinput' => (bool) $params['requireinput'],
 	);
 
 	/**
@@ -237,6 +249,9 @@ var customsearch = {
 
 		if (that.options.autosearchdelay) {
 			that.auto = delayedExecutor(that.options.autosearchdelay, function () {
+				if (that.options.requireinput && !$('#customsearch_$id').find('input.searchFormBlockChildText:first').val()) {
+					return false;
+				}
 				that.load();
 			});
 		}
@@ -246,6 +261,10 @@ $('#customsearch_$id').click(function() {
 	customsearch.offset = 0;
 });
 $('#customsearch_$id').submit(function() {
+	if (customsearch.options.requireinput && !$(this).find('input.searchFormBlockChildText:first').val()) {
+		alert(tr('Please enter a search query'));
+		return false;
+	}
 	customsearch.load();
 	return false;
 });
