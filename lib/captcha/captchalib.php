@@ -126,14 +126,27 @@ class Captcha
 	 */
 	function render()
 	{
-		return $this->captcha->render();
+		global $access;
+		if ($access->is_xml_http_request()) {
+			$params = json_encode($this->captcha->getService()->getOptions());
+			$id = 1;
+			TikiLib::lib('header')->add_jsfile('http://www.google.com/recaptcha/api/js/recaptcha_ajax.js')
+				->add_js('
+Recaptcha.create("' . $this->captcha->getPubKey() . '",
+	"captcha' . $id . '",' . $params . '
+  );
+', 100);
+			return '<div id="captcha' . $id . '"></div>';
+		} else {
+			return $this->captcha->render();
+		}
 	}
 
 	/**
 	 * Validate user input for the captcha
 	 *
+	 * @param array $input
 	 * @return bool true or false
-	 *
 	 */
 	function validate($input = null)
 	{
