@@ -74,6 +74,10 @@ body.fixed_width .fixedwidth .fixedwidth {
 	margin-right: 30px;
 }
 
+#role_main {
+    min-height: 80ex;
+}
+
 .button {
 	display: inline-block;
 }
