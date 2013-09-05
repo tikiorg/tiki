@@ -1755,6 +1755,8 @@ body.filegal_popup #tiki-center {
 	margin: 0 1em 0.5em .5em;
 	display: block;
 	float: left;
+	width: auto;
+	min-width: 20%;
 }
 
 .multiselect img {
