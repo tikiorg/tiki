@@ -75,7 +75,7 @@ body.fixed_width .fixedwidth .fixedwidth {
 }
 
 #role_main {
-    min-height: 80ex;
+    min-height: 40em;
 }
 
 .button {
