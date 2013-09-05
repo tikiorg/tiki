@@ -65,7 +65,12 @@
 					$(".vimeo_upload").trigger("vimeo_uploaded", [data]);
 				}
 				$form.modal();
-			}, 'json');
+			}, 'json')
+			.error(function (e) {
+				alert(tr("An error occurred uploading your video.") + "\n" + e.statusText + " (" + e.status + ")");
+				$form.modal();
+				$(".vimeo_upload").trigger("vimeo_uploaded", [{}]);	// get vimeo_uploaded to close the dialog
+			});
 		}
 	});
 {/jq}
