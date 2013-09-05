@@ -59,6 +59,7 @@ function prefs_global_list($partial = false)
 		'wikiHomePage' => array(
 			'name' => tra('Wiki Home page'),
 			'description' => tra('Landing page used for the wiki when no page is specified. The page will be created if it does not exist.'),
+			'keywords' => 'homepage',
 			'type' => 'text',
 			'size' => 20,
 			'default' => 'HomePage',
