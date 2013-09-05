@@ -115,8 +115,12 @@ function wikiplugin_vimeo($data, $params)
 		foreach ($fileIds as $fileId) {
 		$attributelib = TikiLib::lib('attribute');
 			$attributes = $attributelib->get_attributes('file', $fileId);
-			$params['vimeo'] = $attributes['tiki.content.url'];
-			$out .=  wikiplugin_flash($data, $params);
+			if (!empty($attributes['tiki.content.url'])) {
+				$params['vimeo'] = $attributes['tiki.content.url'];
+				$out .= wikiplugin_flash($data, $params);
+			} else {
+				TikiLib::lib('errorreport')->report(tr('Vimeo video not found for file #%0', $fileId));
+			}
 		}
 
 		return $out;
