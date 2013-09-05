@@ -1721,6 +1721,7 @@ body.filegal_popup #tiki-center {
 	padding: 0;
 	height: auto;
 	overflow: visible;
+	border: 1px solid transparent;
 }
 
 .multiselect table {
@@ -1774,6 +1775,34 @@ body.filegal_popup #tiki-center {
 	padding: 0;
 	border: 1px solid transparent;
 	background: #fff;
+}
+
+.multiselect .odd {
+	color: #000;
+	background: #f4f6f7;
+}
+
+.multiselect .odd:hover {
+	background: #fff7e6;
+}
+
+.multiselect .even {
+	color: #000;
+	background: #e7e9ea;
+}
+
+.multiselect .even:hover {
+	background: #f0f2f3;
+}
+
+.multiselect div.odd,
+.multiselect div.even {
+	border: 1px solid #80b1e2;
+}
+
+.multiselect:hover,
+.multiselect .selection:hover {
+	border: 1px solid #80b1e2;
 }
 
 /***** Categories, Tags *****/
@@ -3555,34 +3584,6 @@ p.norecords {
 }
 
 /***** Trackers (etc.) *****/
-
-.multiselect .odd {
-	color: #000;
-	background: #f4f6f7;
-}
-
-.multiselect .odd:hover {
-	background: #fff7e6;
-}
-
-.multiselect .even {
-	color: #000;
-	background: #e7e9ea;
-}
-
-.multiselect .even:hover {
-	background: #f0f2f3;
-}
-
-.multiselect div.odd,
-.multiselect div.even {
-	border: 1px solid #80b1e2;
-}
-
-.multiselect:hover,
-.multiselect .selection:hover {
-	border: 1px solid #80b1e2;
-}
 
 /***** Categories, Tags *****/
 
