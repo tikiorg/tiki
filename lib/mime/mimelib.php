@@ -40,7 +40,7 @@ class MimeLib
     function from_content($filename, $content)
 	{
 		if ($type = $this->physical_check_from_content($content)) {
-			return $this->handle_physical_exceptions($type, $filename);
+			return $this->handle_physical_exceptions($type, $filename, $content);
 		}
 
 		return $this->from_file_extension($filename);
@@ -58,10 +58,13 @@ class MimeLib
     /**
      * @param $type
      * @param $filename
+     * @param $content
      * @return string
      */
-    private function handle_physical_exceptions($type, $filename)
+    private function handle_physical_exceptions($type, $filename, $content = '')
 	{
+		global $prefs;
+
 		if ($type === 'application/zip') {
 			$extension = $this->get_extension($filename);
 
@@ -70,6 +73,10 @@ class MimeLib
 			}
 		} else if ($type === 'text/html' && $this->get_extension($filename) == 'svg') {
 			$type = 'image/svg+xml';
+		} else if ($type === 'text/html' && $prefs['vimeo_upload'] === 'y' && is_numeric($filename)) {
+			if (strpos($content, 'vimeo.com') !== false) {
+				$type = 'video/vimeo';
+			}
 		}
 
 		return $type;

@@ -557,7 +557,12 @@
 			<h3>{tr}Upload from URL{/tr}</h3>
 			<p>
 				<input type="hidden" name="galleryId" value="{$galleryId|escape}">
-				<label>{tr}URL:{/tr} <input type="url" name="url" placeholder="http://"></label>
+				<label>{tr}URL:{/tr} <input type="url" name="url" placeholder="http://" size="40"></label>
+				{if $prefs.vimeo_upload eq 'y'}
+					<label>{tr}Reference:{/tr}
+						<input type="checkbox" name="reference" value="1" class="tips" title="{tr}Upload from URL{/tr}|{tr}Keeps a reference to the remote file{/tr}">
+					</label>
+				{/if}
 				<input type="submit" value="{tr}Add{/tr}">
 			</p>
 			<div class="result"></div>
@@ -575,11 +580,14 @@
 						$(form.url).val('');
 					},
 					complete: function () {
-						$('input', form).attr('disabled', 0);
+						$('input', form).prop('disabled', false);
+					},
+					error: function (e) {
+						alert(tr("A remote file upload error occurred:") + "\n\"" + e.statusText + "\" (" + e.status + ")");
 					}
 				});
 
-				$('input', this).attr('disabled', 1);
+				$('input', this).prop('disabled', true);
 				return false;
 			});
 		{/jq}
