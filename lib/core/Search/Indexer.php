@@ -62,6 +62,8 @@ class Search_Indexer
 		$this->log('Starting optimization');
 		$this->searchIndex->optimize();
 		$this->log('Finished optimization');
+		$this->log('Rebuilding prefs index');
+		TikiLib::lib('prefs')->rebuildIndex();
 		$this->log('Finished rebuild');
 		return $stat;
 	}
