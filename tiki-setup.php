@@ -247,7 +247,7 @@ if ($prefs['feature_wysiwyg'] == 'y') {
 
 
 if ($prefs['feature_antibot'] == 'y' && is_null($user)) {
-	TikiLib::lib('header')->add_jsfile('http://www.google.com/recaptcha/api/js/recaptcha_ajax.js');
+	TikiLib::lib('header')->add_jsfile('https://www.google.com/recaptcha/api/js/recaptcha_ajax.js');
 	require_once('lib/captcha/captchalib.php');
 	$smarty->assign_by_ref('captchalib', $captchalib);
 }
