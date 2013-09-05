@@ -1387,7 +1387,7 @@ class NlLib extends TikiLib
 				}
 				// Browsers needs a certain amount of data, for each flush, to display something
 				print str_repeat(' ', 4096) . "\n";
-				print '<div class="confirmation">' . tra("Sending to") . "'<b>$email</b>': <font color=";
+				print '<div class="confirmation">' . tra("Sending to") . " '<b>$email</b>': <font color=";
 			}
 
 			try {
