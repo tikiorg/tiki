@@ -46,6 +46,7 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 						'options' => array(
 							'' => tr('Links'),
 							'img' => tr('Images'),
+							'googleviewer' => tr('Google Viewer'),
 						),
 						'legacy_index' => 3,
 					),
@@ -261,6 +262,28 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 					include_once('lib/wiki-plugins/wikiplugin_vimeo.php');
 					$ret = wikiplugin_vimeo('', $params);
 
+				} else if ($this->getOption('displayMode') == 'googleviewer') {
+					if ($prefs['auth_token_access'] != 'y') {
+						$ret = tra('Token access needs to be enabled for Google viewer to be used');
+					} else {
+						$files = array();
+						foreach ($this->getConfiguration('files') as $fileId => $file) {
+							global $base_url, $tikiroot;
+							$googleurl = "http://docs.google.com/viewer?url=";
+							$fileurl = urlencode($base_url . "tiki-download_file.php?fileId=" . $fileId);
+							require_once 'lib/auth/tokens.php';
+							$tokenlib = AuthTokens::build($prefs);
+							$token = $tokenlib->createToken($tikiroot . "tiki-download_file.php",
+								array('fileId' => $fileId), array('Registered'), array('timeout' => 60, 'hits' => 1));
+							$fileurl .= urlencode("&TOKEN=" . $token);
+							$url = $googleurl . $fileurl . '&embedded=true';
+							$title = $file['name'];
+							$files[] = array('url' => $url, 'title' => $title, 'id' => $fileId);
+						}
+						$smarty = TikiLib::lib('smarty');
+						$smarty->assign('files', $files);
+						$ret = $smarty->fetch('trackeroutput/files_googleviewer.tpl');
+					}
 				}
 				$ret = preg_replace('/~\/?np~/', '', $ret);
 			} else {
