@@ -6000,7 +6000,7 @@ class TikiLib extends TikiDb_Bridge
 			}
 		}
 		closedir($h);
-		sort($flags);
+		natcasesort($flags);
 
 		if ( $with_names ) {
 			$ret = array();
