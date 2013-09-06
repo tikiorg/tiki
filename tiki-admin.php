@@ -684,8 +684,11 @@ foreach ($icons as &$icon) {
 	$icon = array_merge(array( 'disabled' => false, 'description' => '', 'icon' => 'img/icons/large/green_question48x48.png'), $icon);
 }
 
+// SSL setup
 $isSSL = $tikilib->isMySQLConnSSL();
 $smarty->assign('mysqlSSL', $isSSL);
+$haveMySQLSSL = $tikilib->haveMySQLSSL();
+$smarty->assign('haveMySQLSSL', $haveMySQLSSL);
 
 $smarty->assign('icons', $icons);
 
