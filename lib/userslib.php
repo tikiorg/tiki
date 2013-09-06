@@ -5171,7 +5171,7 @@ class UsersLib extends TikiLib
 			array(
 				'name' => 'tiki_p_tell_a_friend',
 				'description' => tra('Can send a link to a friend'),
-				'level' => 'Basic',
+				'level' => 'basic',
 				'type' => 'tiki',
 				'admin' => false,
 				'prefs' => array('feature_tell_a_friend'),
