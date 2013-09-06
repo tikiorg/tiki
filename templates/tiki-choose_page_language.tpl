@@ -1,5 +1,5 @@
 <h1>{tr}Please choose the language for this page:{/tr}</h1>
-<div class="cbox-data">
+<div class="cbox-data" style="overflow: visible;">
 	<p>
 		<strong>{tr _0=$page|escape}Page: "%0"{/tr}</strong>
 	</p>
