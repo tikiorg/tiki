@@ -20,7 +20,7 @@ class Search_Indexer
 
 	public function __construct(Search_Index_Interface $searchIndex, $logWriter = null)
 	{
-		if (! $logWriter instanceof Zend_Log_Writer_Interface) {
+		if (! $logWriter instanceof Zend_Log_Writer_Abstract) {
 			$logWriter = new Zend_Log_Writer_Null();
 		}
 		$logWriter->setFormatter(new Zend_Log_Formatter_Simple(Zend_Log_Formatter_Simple::DEFAULT_FORMAT . ' [%memoryUsage% bytes]' . PHP_EOL));
