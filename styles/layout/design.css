@@ -2137,6 +2137,13 @@ table.treetable tr.expanded span.indenter a {
   background-image: url(../../img/toggle-collapse-dark.png);
 }
 
+table.treetable.objectperms td.added {
+	background-color: #dfd;
+}
+
+table.treetable.objectperms td.removed {
+	background-color: #fdd;
+}
 
 /* tree browser */
 
