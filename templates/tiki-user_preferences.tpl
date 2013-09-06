@@ -95,7 +95,6 @@
 						<option value="Other" {if $user_prefs.country eq "Other"}selected="selected"{/if}>
 							{tr}Other{/tr}
 						</option>
-						{sortlinks}
 						{section name=ix loop=$flags}
 							{if $flags[ix] ne "Other"}
 								<option value="{$flags[ix]|escape}" {if $user_prefs.country eq $flags[ix]}selected="selected"{/if}>
@@ -103,7 +102,6 @@
 								</option>
 							{/if}
 						{/section}
-						{/sortlinks}
 					</select>
 				</td>
 			</tr>

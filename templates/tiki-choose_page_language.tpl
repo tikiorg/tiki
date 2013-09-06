@@ -5,7 +5,7 @@
 {/block}
 
 {block name=content}
-<div class="cbox-data">
+<div class="cbox-data" style="overflow: visible;">
 	<p>
 		<strong>{tr _0=$page|escape}Page: "%0"{/tr}</strong>
 	</p>
