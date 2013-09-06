@@ -63,6 +63,10 @@ class TikiDb_Initializer_Pdo
 	{
 		global $tikiroot, $tikipath;
 		
+		if (!extension_loaded('openssl')) {
+			return;
+		}
+		
 		$certroot = $tikiroot.'db/cert/';
 		$fileroot = $tikipath.'db/cert/';
 
