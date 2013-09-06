@@ -73,7 +73,6 @@ class Tiki_Profile_Object
 
 	function setValue( $value ) // {{{
 	{
-		global $tikilib;
 		$this->id = $value;
 
 		$named = 'y';
