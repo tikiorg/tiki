@@ -1894,7 +1894,7 @@ class UsersLib extends TikiLib
 			$ret[] = $g['groupName'];
 		}
 		return $ret;
-        }
+	}
 
 	function get_groups($offset = 0, $maxRecords = -1, $sort_mode = 'groupName_asc', $find = '', $initial = '', $details="y", $inGroups='', $userChoice='')
 	{

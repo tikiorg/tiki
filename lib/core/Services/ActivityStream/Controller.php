@@ -55,7 +55,11 @@ class Services_ActivityStream_Controller
 
 		try {
 			$plugin = new Search_Formatter_Plugin_SmartyTemplate('templates/activity/activitystream.tpl');
-			$plugin->setFields(array('like_list' => true));
+			$plugin->setFields(array(
+				'like_list' => true,
+				'user_groups' => true,
+				'contributors' => true,
+			));
 			$formatter = new Search_Formatter($plugin);
 			$formatter->setDataSource($this->lib->getDataSource());
 			$out = $formatter->format($result);

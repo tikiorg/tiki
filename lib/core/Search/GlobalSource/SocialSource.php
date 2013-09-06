@@ -54,18 +54,25 @@ class Search_GlobalSource_SocialSource implements Search_GlobalSource_Interface
 	{
 		$users = array();
 		if (isset($data['contributors'])) {
-			if ($data['contributors'] instanceof Search_Type_MultivalueText) {
-				$users = $data['contributors']->getRawValue();
-			} else {
-				$users = $data['contributors']->getValue();
-			}
+			$users = $this->read($data['contributors']);
 		}
 
 		if (isset($data['user'])) {
-			$users[] = $data['user']->getValue();
+			$users[] = $this->read($data['user']);
 		}
 
 		return $users;
+	}
+
+	private function read($value)
+	{
+		if (! $value instanceof Search_Type_Interface) {
+			return $value;
+		} elseif ($value instanceof Search_Type_MultivalueText) {
+			return $value->getRawValue();
+		} else {
+			return $value->getValue();
+		}
 	}
 
 	private function getFollowers($user)
