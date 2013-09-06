@@ -429,20 +429,25 @@ abstract class TikiDb
 	*/
 	function haveMySQLSSL()
 	{
-		$result = $this->query('show variables like "have_ssl"');
-		$ret = $result->fetchRow();
-		if (empty($ret)) {
-			$result = $this->query('show variables like "have_openssl"');
+		static $haveMySQLSSL = null;
+		
+		if (!isset($haveMySQLSSL)) {
+			$result = $this->query('show variables like "have_ssl"');
 			$ret = $result->fetchRow();
+			if (empty($ret)) {
+				$result = $this->query('show variables like "have_openssl"');
+				$ret = $result->fetchRow();
+			}
+			if (!isset($ret)) {
+				$haveMySQLSSL = false;
+			}
+			$ssl = $ret['Value'];
+			if (empty($ssl)) {
+				$haveMySQLSSL = false;
+			} else {
+				$haveMySQLSSL = $ssl == 'YES';
+			}
 		}
-		if (!isset($ret)) {
-			return false;
-		}
-		$ssl = $ret['Value'];
-		if (empty($ssl)) {
-			return false;
-		} else {
-			return $ssl == 'YES';
-		}
+		return $haveMySQLSSL;
 	}
 }

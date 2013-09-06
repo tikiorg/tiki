@@ -685,10 +685,14 @@ foreach ($icons as &$icon) {
 }
 
 // SSL setup
-$isSSL = $tikilib->isMySQLConnSSL();
-$smarty->assign('mysqlSSL', $isSSL);
 $haveMySQLSSL = $tikilib->haveMySQLSSL();
 $smarty->assign('haveMySQLSSL', $haveMySQLSSL);
+if ($haveMySQLSSL) {
+	$isSSL = $tikilib->isMySQLConnSSL();
+} else {
+	$isSSL = false;
+}
+$smarty->assign('mysqlSSL', $isSSL);
 
 $smarty->assign('icons', $icons);
 
