@@ -21,15 +21,20 @@
 
 		{tab name="{tr}General Security{/tr}"}
 			
+			<div class="adminoptionboxchild" id="smarty_security_childcontainer">	
 			{if $haveMySQLSSL}
 				{if $mysqlSSL === true}
 					<p class="mysqlsslstatus"><img src="img/icons/lock.png" style="outline:lightgreen solid thin"/> {tr}MySQL SSL connection is active{/tr}</p>
 				{else}
-					<p class="mysqlsslstatus"><img src="img/icons/lock_open.png" /> {tr}MySQL connection is not encrypted{/tr}<br>
+					<p class="mysqlsslstatus"><img src="img/icons/lock_open.png"  style="outline:pink solid thin"/> {tr}MySQL connection is not encrypted{/tr}<br>
 					{tr}To activate SSL, copy the keyfiles (.pem) til db/cert folder. The filenames must end with "-key.pem", "-cert.pem", "-ca.pem"{/tr}
 					</p>
 				{/if}
+			{else}
+				<p><img src="img/icons/lock_gray.png" style="outline:pink solid thin"/> {tr}MySQL Server does not have SSL activated{/tr}
+				</p>
 			{/if}
+			</div>
 			{preference name=smarty_security}
 			<div class="adminoptionboxchild" id="smarty_security_childcontainer">	
 				{preference name=smarty_security_functions}
