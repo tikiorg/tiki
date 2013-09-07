@@ -257,10 +257,6 @@ html > body #col3[id] {
 	text-transform: uppercase;
 }
 
-.siteloginbar_poppedup {
-	display: none !important;
-}
-
 #topbar_modules .module.box-login_box:hover {
 	background-color: #6d9e26;
 	color: #FFFFFF !important;
