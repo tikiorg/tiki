@@ -23,6 +23,7 @@ class Tiki_Version_Checker
 	function check($callback)
 	{
 		$upgrades = array();
+		$branchupdate = null;
 
 		$content = call_user_func($callback, "http://tiki.org/{$this->cycle}.cycle");
 		$versions = $this->getSupportedVersions($content);
@@ -30,12 +31,13 @@ class Tiki_Version_Checker
 		if ($supported = $this->findSupportedInBranch($versions)) {
 			if ($supported->isUpgradeTo($this->version)) {
 				$upgrades[] = new Tiki_Version_Upgrade($this->version, $supported, true);
+				$branchupdate = $supported;
 			}
 		}
 
 		$max = $this->getLatestVersion($versions);
 
-		if ($max->isUpgradeTo($this->version)) {
+		if ($max !== $branchupdate && $max->isUpgradeTo($this->version)) {
 			$upgrades[] = new Tiki_Version_Upgrade($supported ?: $this->version, $max, $supported === false);
 		}
 
