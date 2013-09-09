@@ -268,8 +268,13 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 					} else {
 						$files = array();
 						foreach ($this->getConfiguration('files') as $fileId => $file) {
-							global $base_url, $tikiroot;
-							$googleurl = "http://docs.google.com/viewer?url=";
+							global $base_url, $tikiroot, $https_mode;
+							if ($https_mode) {
+								$scheme = 'https';
+							} else {
+								$scheme = 'http';
+							}
+							$googleurl = $scheme . "://docs.google.com/viewer?url=";
 							$fileurl = urlencode($base_url . "tiki-download_file.php?fileId=" . $fileId);
 							require_once 'lib/auth/tokens.php';
 							$tokenlib = AuthTokens::build($prefs);
