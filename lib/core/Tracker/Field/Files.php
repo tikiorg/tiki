@@ -288,7 +288,7 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 							require_once 'lib/auth/tokens.php';
 							$tokenlib = AuthTokens::build($prefs);
 							$token = $tokenlib->createToken($tikiroot . "tiki-download_file.php",
-								array('fileId' => $fileId), array('Registered'), array('timeout' => 60, 'hits' => 1));
+								array('fileId' => $fileId), array('Registered'), array('timeout' => 300, 'hits' => 3));
 							$fileurl .= urlencode("&TOKEN=" . $token);
 							$url = $googleurl . $fileurl . '&embedded=true';
 							$title = $file['name'];
