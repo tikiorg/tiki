@@ -21,6 +21,18 @@ function module_search_morelikethis_info()
 		'description' => tra('Uses the unified search to provide similar documents.'),
 		'prefs' => array('feature_search'),
 		'params' => array(
+			'typefilters' => array(
+				'required' => false,
+				'name' => tra('Object Type Filters'),
+				'description' => tra('Comma separated types to allow.'),
+				'filter' => 'text',
+			),
+			'textfilters' => array(
+				'required' => false,
+				'name' => tra('Text Search Filters'),
+				'description' => tra('Comma separated text search filters to use. Use = to separate field and value.'),
+				'filter' => 'text',
+			),
 		),
 		'common_params' => array('nonums', 'rows')
 	);
@@ -34,12 +46,35 @@ function module_search_morelikethis($mod_reference, $module_params)
 {
 	global $smarty;
 
+	$textfilters = array();
+	$typefilters = array();
+	if (!empty($module_params['textfilters'])) {
+		$filters = explode(",", $module_params['textfilters']);
+		$filters = array_map('trim', $filters);
+		foreach($filters as $f) {
+			$exploded = explode("=", $f);
+			if (!empty($exploded[1]) && !empty($exploded[0])) {
+				$textfilters[$exploded[0]] = $exploded[1];
+			}
+		}
+	}
+	if (!empty($module_params['typefilters'])) {
+		$typefilters = explode(",", $module_params['typefilters']);
+		$typefilters = array_map('trim', $typefilters);
+	}
+
 	if ($object = current_object()) {
 		$unifiedsearchlib = TikiLib::lib('unifiedsearch');
 
 		$query = $unifiedsearchlib->buildQuery(array());
 		$query->filterSimilar($object['type'], $object['object']);
 		$query->setRange(0, $mod_reference['rows']);
+		foreach ($textfilters as $k => $v) { 
+			$query->filterContent($v, $k);
+		}
+		if (!empty($typefilters)) {
+			$query->filterType($typefilters);
+		}
 
 		try {
 			$morelikethis = $query->search($unifiedsearchlib->getIndex());
