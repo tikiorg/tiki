@@ -30,7 +30,7 @@ class Tiki_Version_Upgrade
 				$parts[] = tr('A major upgrade to %0 is required.', (string) $this->new);
 			}
 		} else {
-			$parts[] = tr('Version %0 is still supported. However, a major upgrade to 9.0 is available.', (string) $this->old, (string) $this->new);
+			$parts[] = tr('Version %0 is still supported. However, a major upgrade to %1 is available.', (string) $this->old, (string) $this->new);
 		}
 
 		return implode(' ', $parts);
