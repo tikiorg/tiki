@@ -1396,10 +1396,10 @@ class ToolbarFileGallery extends Toolbar
 				'window.handleFinderInsertAt = function (file, elfinder, area_id) {
 					$.getJSON($.service("file_finder", "finder"), { cmd: "tikiFileFromHash", hash: file.hash },
 						function (data) {
-							window.insertAt(area_id, data.wiki_syntax);
 							$(window).data("elFinderDialog").dialog("close");
 							$($(window).data("elFinderDialog")).remove();
 							$(window).data("elFinderDialog", null);
+							window.insertAt(area_id, data.wiki_syntax);
 							return false;
 						}
 					);
