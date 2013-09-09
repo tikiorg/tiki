@@ -47,6 +47,7 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 							'' => tr('Links'),
 							'img' => tr('Images'),
 							'googleviewer' => tr('Google Viewer'),
+							'moodlescorm' => tr('Moodle Scorm Viewer'),
 						),
 						'legacy_index' => 3,
 					),
@@ -261,6 +262,14 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 
 					include_once('lib/wiki-plugins/wikiplugin_vimeo.php');
 					$ret = wikiplugin_vimeo('', $params);
+
+				} else if ($this->getOption('displayMode') == 'moodlescorm') {
+
+					include_once('lib/wiki-plugins/wikiplugin_playscorm.php');
+					foreach ($this->getConfiguration('files') as $fileId => $file) {
+						$params['fileId'] = $fileId;
+						$ret .= wikiplugin_playscorm('', $params);
+					}
 
 				} else if ($this->getOption('displayMode') == 'googleviewer') {
 					if ($prefs['auth_token_access'] != 'y') {
