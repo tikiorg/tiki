@@ -232,11 +232,11 @@ class RegistrationLib extends TikiLib
 
 	/**
 	 *  Check registration datas
-	 *  @param $registration datas of registration (login, pass, email, etc.)
-	 *  @returns ?
+	 * @param $registration array of registration (login, pass, email, etc.)
+	 * @param bool $from_intertiki
+	 * @return array (of errors)
 	 */
-	/*private*/
-	public function local_check_registration($registration, $from_intertiki = false)
+	private function local_check_registration($registration, $from_intertiki = false)
 	{
 		global $_SESSION, $prefs, $userlib, $captchalib;
 
@@ -338,8 +338,12 @@ class RegistrationLib extends TikiLib
 		return $errors;
 	}
 
-	/*private*/
-	public function register_new_user_local($registration, $from_intertiki)
+	/**
+	 * @param $registration
+	 * @param $from_intertiki
+	 * @return string
+	 */
+	private function register_new_user_local($registration, $from_intertiki)
 	{
 		global $_SESSION, $tikilib, $logslib, $userlib, $notificationlib, $prefs, $smarty;
 
@@ -458,8 +462,12 @@ class RegistrationLib extends TikiLib
 		return $result;
 	}
 
-	/*private*/
-	public function register_new_user_to_intertiki($registration, $from_intertiki)
+	/**
+	 * @param $registration array
+	 * @param $from_intertiki bool
+	 * @return mixed|RegistrationError
+	 */
+	private function register_new_user_to_intertiki($registration, $from_intertiki)
 	{
 		global $prefs;
 
@@ -496,12 +504,11 @@ class RegistrationLib extends TikiLib
 	}
 
 	/**
-	 *  Check registration datas
-	 *  @param $registration datas of registration (login, pass, email, etc.)
-	 *  @returns : Object RegistrationError if error
-	 *             string with message if ok
+	 *  Check registration data
+	 * @param $registration array of registration (login, pass, email, etc.)
+	 * @param $from_intertiki bool
+	 * @return array|string RegistrationError if error, string with message if ok
 	 */
-	/*public*/
 	public function register_new_user($registration, $from_intertiki=false)
 	{
 		global $prefs, $tikilib;
@@ -570,8 +577,7 @@ class RegistrationLib extends TikiLib
 		return $result;
 	}
 
-	/*private*/
-	public function init_registration_prefs()
+	private function init_registration_prefs()
 	{
 		global $userlib, $prefs;
 
