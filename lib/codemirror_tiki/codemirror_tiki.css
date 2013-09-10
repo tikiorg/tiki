@@ -29,6 +29,7 @@
 	top: 0px ! important;
 	left: 0px ! important;
 	position: fixed;
+	background-color: gray;
 }
 
 .noScroll
