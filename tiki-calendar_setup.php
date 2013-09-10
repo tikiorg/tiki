@@ -53,6 +53,7 @@ $focusYear = TikiLib::date_format("%Y", $focusdate);
 if(intval($focusDay) <= 0 || !is_numeric($focusDay) || 
 	intval($focusMonth) <= 0 || !is_numeric($focusDay) || 
 	intval($focusYear) <= 0 || !is_numeric($focusDay)) {
+		$_SESSION['CalendarFocusDate'] = $tikilib->now;
 		$smarty->assign('msg', tra('Invalid date format'));
 		$smarty->display('error.tpl');
 		die;
