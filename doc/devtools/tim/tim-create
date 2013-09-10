@@ -20,7 +20,7 @@ OPTIONS:
    -u      username on Tiki.org 
    -U      userid on Tiki.org 
    -t      SVN Tag (Tiki version)
-   -p      Subdirectory path
+   -P      Subdirectory path
 EOF
 }
 
@@ -121,19 +121,35 @@ EOF
 		mysql $DB < $INSTANCE_DIR/db/tiki.sql
 	fi
 
+	#########################################
+	# Start custom changes for show instances
+	echo "Starting extra steps special to show instances. Anything done below is not part of a standard Tiki installation."
+
+	# Collect data useful to developpers in infotext
+	if [[ "${TUSER}" != "user" ]]; then FRIENDLYUSERNAME="${TUSER}"; fi
+	read -r -d '' infotext <<EOT
+This Tiki instance was created on the Tiki show community website
+Creation date: `date -u +%Y-%m-%d_%H-%M-%S`
+Version: ${SVNTAG}
+Related to Wish: http://dev.tiki.org/item${ID}
+Wish was created by user ${FRIENDLYUSERNAME}http://dev.tiki.org/user${TUSERID}
+Created as http://${SUBDOMAIN}.show.tikiwiki.org/
+Installation log: http://${SUBDOMAIN}.show.tikiwiki.org/install_log.txt
+This information is also kept here: http://${SUBDOMAIN}.show.tikiwiki.org/info.txt
+
+SVN info
+`svn info`
+EOT
+
 	# Create info.txt file with data useful to developpers
-	INFOTEXT=$INSTANCE_DIR/info.txt
-	echo "Extra steps special to show instances"
-	echo "Creating file http://${SUBDOMAIN}.show.tikiwiki.org/info.txt"
-	echo "This Tiki instance was created on the Tiki show community website" > ${INFOTEXT}
-	echo "Creation date: `date -u +%Y-%m-%d_%H-%M-%S`" >> ${INFOTEXT}
-	echo "Version: ${SVNTAG}" >> ${INFOTEXT}
-	echo "SVN info" >> ${INFOTEXT}
-	svn info >> ${INFOTEXT}
-	echo "Related to Wish: http://dev.tiki.org/item${ID}" >> ${INFOTEXT}
-	echo -n "Wish was created by user " >> ${INFOTEXT}
-	if [[ "${TUSER}" != "user" ]]; then echo -n "'${TUSER}'"; fi >> ${INFOTEXT}
-	echo " http://dev.tiki.org/user${TUSERID}" >> ${INFOTEXT}
+	echo "Creating file http://${SUBDOMAIN}.show.tikiwiki.org/info.txt with extra info for developpers"
+	INFOFILE=$INSTANCE_DIR/info.txt
+	echo "$infotext" > ${INFOFILE}
+	# Inject data useful to developpers as remarksbox on top of homepage
+	echo "Inserting extra info for developpers in a box at the beginning of homepage"
+	mysql $DB <<EOQ
+UPDATE tiki_pages SET data=CONCAT('{REMARKSBOX(type="information" title="Show community server" close="y")}${infotext}{REMARKSBOX} ',data) WHERE page_id=1;
+EOQ
 
 	/bin/rm $LOCKSDIR/lock_${TUSERID}_${ID} || (echo "FAIL: Failed to suppress lock file $LOCKSDIR/lock_${TUSERID}_${ID}"; exit 1)
 }
