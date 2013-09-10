@@ -73,5 +73,158 @@ class Services_User_Controller
 
 		return array('result' => json_encode($result));
 	}
+
+	/**
+	 * Show user info popup
+	 *
+	 * @param $input JitFilter (username)
+	 * @return array
+	 */
+	function action_info($input) {
+		global $prefs, $user;
+
+		$userlib = TikiLib::lib('user');
+		$tikilib = TikiLib::lib('tiki');
+		$sociallib = TikiLib::lib('social');
+
+		$result = array(
+			'fullname' => '',
+			'gender' => '',
+			'starHtml' => '',
+			'country' => '',
+			'distance' => '',
+			'email' => '',
+			'lastSeen' => '',
+			'avatarHtml' => '',
+			'error' => '',
+		);
+
+		if ($prefs['feature_community_mouseover'] == 'y' &&
+				$userlib->get_user_preference($user, 'show_mouseover_user_info', 'y') == 'y') {
+
+			$other_user = $input->username->email();
+			$result['other_user'] = $other_user;
+
+			if ($userlib->user_exists($other_user) &&
+					($tikilib->get_user_preference($other_user, 'user_information', 'public') === 'public' || $user == $other_user)) {
+
+				$info = $userlib->get_user_info($other_user);
+
+				if ($prefs['feature_friends'] === 'y') {
+
+					$friendship = array();
+
+					if ($prefs['social_network_type'] === 'friend') {
+
+						$friend = $this->isFriend($sociallib->listFriends($user), $other_user);
+						if ($friend) {
+							$friendship[] = array('type' => 'friend', 'label' => tra('Friend'));
+						}
+					} else {
+						$follower = $this->isFriend($sociallib->listFollowers($user), $other_user);
+						$following = $this->isFriend($sociallib->listFollowers($other_user), $user);
+
+						if ($follower) {
+							$friendship[] = array('type' => 'follower', 'label' => tra('Following you'));
+						}
+						if ($following) {
+							$friendship[] = array('type' => 'following', 'label' => tra('You are following'));
+						}
+					}
+					$incoming = $this->isFriend($sociallib->listIncomingRequests($user), $other_user);
+					if ($incoming) {
+						$friendship[] = array('type' => 'incoming', 'label' => tra('Awaiting your approval'));
+					}
+					$outgoing = $this->isFriend($sociallib->listOutgoingRequests($user), $other_user);
+					if ($outgoing) {
+						$friendship[] = array('type' => 'outgoing', 'label' => tra('Waiting for approval'));
+					}
+
+					$result['friendship'] = $friendship;
+				}
+
+				if ($prefs['feature_community_mouseover_name'] == 'y') {
+					$result['fullname'] = $userlib->clean_user($other_user);
+				} else {
+					$result['fullname'] = $other_user;
+				}
+
+				if ($prefs['feature_community_mouseover_gender'] == 'y' && $prefs['feature_community_gender'] == 'y') {
+					$result['gender'] = $userlib->get_user_preference($other_user, 'gender');
+					if ($result['gender'] == tr('Hidden')) {
+						$result['gender'] = '';
+					}
+				}
+
+				if ($prefs['feature_score'] == 'y') {
+					if ($prefs['feature_community_mouseover_score'] == 'y' &&
+							!empty($info['score']) && $other_user !== 'admin' && $other_user !== 'system' && $other_user !== 'Anonymous') {
+						$result['starHtml'] = $tikilib->get_star($info['score']);
+					} else {
+						$result['starHtml'] = '';
+					}
+				}
+
+				if ($prefs['feature_community_mouseover_country'] == 'y') {
+					$result['country'] = $tikilib->get_user_preference($other_user, 'country', '');
+					if ($result['country'] == tr('Other')) {
+						$result['country'] = '';
+					}
+				}
+
+				if ($prefs['feature_community_mouseover_distance'] == 'y') {
+					$distance = TikiLib::lib('userprefs')->get_userdistance($other_user, $user);
+					if ($distance) {
+						$result['distance'] = $distance . ' '.tra('km');
+					}
+				}
+
+				if ($prefs['feature_community_mouseover_email'] == 'y') {
+					$email_isPublic = $tikilib->get_user_preference($other_user, 'email is public');
+					if ($email_isPublic != 'n') {
+						include_once ('lib/userprefs/scrambleEmail.php');
+						$result['email'] = scrambleEmail($info['email'], $email_isPublic);
+					} elseif ($friend) {
+						$result['email'] = $info['email'];
+					}
+				}
+
+				if ($prefs['feature_community_mouseover_lastlogin'] == 'y') {
+					$result['lastSeenDt'] = $info['lastLogin'];
+				}
+
+
+				if ($prefs['feature_community_mouseover_picture'] == 'y') {
+					$result['avatarHtml'] = $tikilib->get_user_avatar($other_user);
+				}
+			}
+
+		} else {
+			$result['error'] = tra("You cannot see this user's data.");
+			if ($user) {
+				$result['error'] .= '<br>' .
+					tra('You need to set your own info to be shown on mouseover.') . '<br>' .
+					'<a href="tiki-user_preferences.php?cookietab=2">' . tra('Click here') . '</a>';
+			} else {
+				$result['error'] .= '<br>' . tra('You need to log in.');
+			}
+		}
+
+		return $result;
+	}
+
+	/**
+	 * @param $userlist array 'user' => username
+	 * @param $user string
+	 * @return bool
+	 */
+	private function isFriend($userlist, $user) {
+		foreach($userlist as $v) {
+			if (isset($v['user']) && $v['user'] === $user) {
+				return true;
+			}
+		}
+		return false;
+	}
 }
 

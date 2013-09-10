@@ -4495,5 +4495,47 @@ div#outerToc-static
 	margin:5px;
 }
 
+/* Friendship / Community  */
+
+.user-info {
+	font-size: .9em;
+	padding-bottom: 2em;
+}
+
+.user-info p {
+	margin-left: 50px;
+}
+
+.user-info .avatar {
+	float: left;
+	margin-right: .3em;
+}
+
+.user-info .gender,
+.user-info .email,
+.user-info .lastseen {
+	display: block;
+	clear: right;
+}
+
+.user-info .distance {
+	margin-left: 1em;
+}
+
+.user-info .friendship {
+	list-style: none;
+	margin: 0 1em 0 50px;
+	padding: 0;
+}
+
+.user-info .friendship li {
+	float: left;
+	margin-right: 1em;
+}
+
+.user-info .friendship li span {
+	padding-right: .5em;
+}
+
 
 /* End of file */
