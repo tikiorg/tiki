@@ -2567,8 +2567,6 @@ div.aclabel, span.aclabel, label.aclabel {
 	top: 0 !important;
 	left: 0 !important;
 	position: fixed !important;
-	top: expression(eval(document.body.scrollTop + 15) + "px");
-	/*left: expression(eval(document.body.scrollLeft) + "px");*/
 	background-color: gray;
 }
 .TextArea-fullscreen #editwiki_toolbar {

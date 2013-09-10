@@ -128,4 +128,9 @@ img.flipmodimage {
     zoom: 1;
 }
 
+.CodeMirror-fullscreen,
+.TextArea-fullscreen {
+	top: expression(eval(document.body.scrollTop + 15) + "px");
+}
+
 /* End of file */

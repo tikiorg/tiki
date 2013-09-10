@@ -29,9 +29,6 @@
 	top: 0px ! important;
 	left: 0px ! important;
 	position: fixed;
-	top: expression(eval(document.body.scrollTop + 15) + "px");
-	/*left: expression(eval(document.body.scrollLeft) + "px");*/
-	background-color: gray;
 }
 
 .noScroll
