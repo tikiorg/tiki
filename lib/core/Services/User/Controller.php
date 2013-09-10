@@ -48,8 +48,7 @@ class Services_User_Controller
 		$antibotcode = $input->antibotcode->string();
 		$email = $input->email->string();
 
-		include_once('lib/registration/registrationlib.php');
-		$regResult = $registrationlib->register_new_user(
+		$regResult =  TikiLib::lib('registration')->register_new_user(
 			array(
 				'name' => $name,
 				'pass' => $pass,
