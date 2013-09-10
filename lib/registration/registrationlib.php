@@ -198,39 +198,6 @@ class RegistrationLib extends TikiLib
 	}
 
 	/**
-	 *  Create a new user in the database on user registration
-	 *  @access private
-	 *  @returns true on success, false to halt event proporgation
-	 */
-	public function create_user()
-	{
-		global $_REQUEST, $_SERVER, $email_valid, $prefs;
-		global $customfields, $userlib, $tikilib, $Debug;
-
-		if ($Debug) {
-			print '::create_user';
-		}
-
-		if ($email_valid != 'no') {
-			if ($prefs['validateUsers'] == 'y') {
-				$apass = md5($tikilib->genPass());
-				$userlib->add_user($_REQUEST['name'], $apass, $_REQUEST['email'], $_REQUEST['pass']);
-			} else {
-				$userlib->add_user($_REQUEST['name'], $_REQUEST['pass'], $_REQUEST['email'], '');
-			}
-
-			// Custom fields
-			foreach ($customfields as $custpref => $prefvalue) {
-				if ($customfields[$custpref]['show']) {
-					//print $_REQUEST[$customfields[$custpref]['prefName']];
-					$tikilib->set_user_preference($_REQUEST['name'], $customfields[$custpref]['prefName'], $_REQUEST[$customfields[$custpref]['prefName']]);
-				}
-			}
-		}
-		return true;
-	}
-
-	/**
 	 *  Check registration datas
 	 * @param $registration array of registration (login, pass, email, etc.)
 	 * @param bool $from_intertiki
