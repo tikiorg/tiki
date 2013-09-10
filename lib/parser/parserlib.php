@@ -953,6 +953,11 @@ if ( \$('#$id') ) {
 			$trklib = TikiLib::lib('trk');
 			$trklib->replace_pretty_tracker_refs($args);
 		}
+		foreach ($args as $arg) {
+			if (substr($arg, 0, 4) == '{$f_') {
+				return $name . ': ' . tra('Plugin cannot be executed because pretty tracker references are not replaced. Please use smarty wikiplugin tag instead.');
+			}
+		}
 
 		//This is the class name for new simplified plugin system, if object does exist, it will use it, if not it uses old plugins
 		$classExists = false;
