@@ -1,4 +1,4 @@
-<div class="friend-container">
+<div class="friend-container" data-controller="social" data-action="list_friends">
 <ul class="friend-list">
 	{foreach from=$friends item=friend}
 		<li class="clear">
