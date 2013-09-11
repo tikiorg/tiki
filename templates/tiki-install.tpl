@@ -615,24 +615,24 @@
 <div align="left" style="margin-top:1em;">
 <fieldset>
 	<legend>{tr}Wiki editor setup{/tr}</legend>
-	Use wysiwyg <input type="checkbox" name="useWysiwyg" checked="checked" />
+	{tr}Use wysiwyg{/tr} <input type="checkbox" name="useWysiwyg" checked="checked" />
 	<table style="border:0px">
 	<tr>
 	<td>
-	<input type="radio" name="editorType" value="wiki" checked="checked"/> Compatible</td><td> Use wiki syntax for saved pages.<br>
-		This is the most compatible with Tiki functionality and the most stable editor mode.<br>
-		Limits some Wysiwyg operations.<br>
+	<input type="radio" name="editorType" value="wiki" checked="checked"/> {tr}Compatible{/tr}</td><td> {tr}Use wiki syntax for saved pages{/tr}.<br>
+		{tr}This is the most compatible with Tiki functionality and the most stable editor mode{/tr}.<br>
+		{tr}Limits some Wysiwyg operations{/tr}.<br>
 	</td>
 	</tr>
 	<tr>
-	<td><input type="radio" name="editorType" value="html" /> Full Wysiwyg</td><td>Use html syntax for saved pages.<br>
-		Enables the full Wysiwyg HTML editor.<br>
-		Has best compatability with inline editing but loses many wiki related features.<br>
+	<td><input type="radio" name="editorType" value="html" /> {tr}Full Wysiwyg{/tr}</td><td>{tr}Use html syntax for saved pages{/tr}.<br>
+		{tr}Enables the full Wysiwyg HTML editor{/tr}.<br>
+		{tr}Has best compatability with inline editing but loses many wiki related features{/tr}.<br>
 	</td>
 	</tr>
 	</table>
-	<input type="checkbox" name="editorType" value="inline" /> Use inline editing (experimental)<br>
-	Inline editing let's the user edit pages without any form of context switch. The editor is embedded in the wiki page.<br>
+	<input type="checkbox" name="editorType" value="inline" /> {tr}Use inline editing (experimental){/tr}<br>
+	{tr}Inline editing let's the user edit pages without any form of context switch{/tr}. {tr}The editor is embedded in the wiki page{/tr}.<br>
 </fieldset>
 <br>
 <span style="color:red">This is a dummy panel added for evaluation of Wysiwyg setup during installation.<br>
