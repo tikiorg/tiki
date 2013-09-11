@@ -93,7 +93,11 @@ if (isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_na
 	}
 	
 	/* redirect to prevent re-submit on page reload */
-	header('Location: tiki-pick_avatar.php');
+	if ($tiki_p_admin == 'y' && $user !== $userwatch) {
+		header('Location: tiki-pick_avatar.php?view_user=' . $userwatch);
+	} else {
+		header('Location: tiki-pick_avatar.php');
+	}
 	exit;
 }
 
