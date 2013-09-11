@@ -152,7 +152,9 @@ class Smarty_Tiki extends Smarty
 			$this->error_reporting = E_ALL ^ E_NOTICE;
 		}
 		$this->setCompileDir(realpath("templates_c"));
-		$this->_file_perms = (int) $prefs['smarty_cache_perms'];
+		if (!empty($prefs['smarty_cache_perms'])) {
+			$this->_file_perms = (int) $prefs['smarty_cache_perms'];
+		}
 	}
 
 	/**
