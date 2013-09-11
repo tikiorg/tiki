@@ -627,7 +627,7 @@
 	<tr>
 	<td><input type="radio" name="editorType" value="html" /> Full Wysiwyg</td><td>Use html syntax for saved pages.<br>
 		Enables the full Wysiwyg HTML editor.<br>
-		Has best compatability with inline editing.<br>
+		Has best compatability with inline editing but loses many wiki related features.<br>
 	</td>
 	</tr>
 	</table>
