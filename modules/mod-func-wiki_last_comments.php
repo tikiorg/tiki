@@ -123,21 +123,6 @@ function module_wiki_last_comments($mod_reference, $module_params)
 				}
 				if ($tikilib->user_has_perm_on_object($user, $res['object'], $res['type'], $perm)) {
 					$res['title'] = TikiLib::lib('comments')->process_comment_title($res, $params['commentlength']);
-					if ($params['avatars'] === 'y') {
-						$res['avatar'] = $tikilib->get_user_avatar($res['userName'], 'right');
-						$res['avatar'] = preg_replace('/(:?width|height)=[\'"]?\d+[\'"]?/', '', $res['avatar']);
-						$m = null;
-						preg_match('/style=[\'"]?([^\'^"]*)[\'"]?/', $res['avatar'], $m);
-						if ($m) {
-							$m = $m[1];
-							$res['avatar'] = preg_replace('/style=[\'"]?[^\'^"]*[\'"]?/', '', $res['avatar']);
-						} else {
-							$m = '';
-						}
-						$res['avatar'] = str_replace('<img ', '<img style="max-height: 3ex;vertical-align: top;' . $m . '" ', $res['avatar']);
-					} else {
-						$res['avatar'] = '';
-					}
 					$ret[] = $res;
 				}
 			}
