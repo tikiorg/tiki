@@ -235,6 +235,14 @@ class Services_User_Controller
 				if ($prefs['feature_community_mouseover_picture'] == 'y') {
 					$result['avatarHtml'] = $tikilib->get_user_avatar($other_user);
 				}
+
+				// should have a new pref?
+				$theirGroups = TikiLib::lib('user')->get_user_groups($other_user);
+				$myGroups = TikiLib::lib('user')->get_user_groups($user);
+				$choiceGroups = TikiLib::lib('user')->get_groups_userchoice();
+				$sharedGroups = array_intersect($theirGroups, $myGroups, $choiceGroups);
+
+				$result['shared_groups'] = implode(', ', $sharedGroups);
 			}
 
 		} else {
