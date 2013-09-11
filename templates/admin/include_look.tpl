@@ -320,6 +320,7 @@
 
 			{preference name=log_tpl}
 			{preference name=smarty_compilation}
+			{preference name=smarty_cache_perms}
 			{preference name=categories_used_in_tpl}
 
 			{preference name=feature_html_head_base_tag}

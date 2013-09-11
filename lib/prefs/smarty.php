@@ -57,5 +57,15 @@ function prefs_smarty_list()
 			),
 			'default' => 'modified',
 		),
+		'smarty_cache_perms' => array(
+			'name' => tra('Smarty cache permissions'),
+			'description' => tra('Permissions smarty writes to templates_c with.'),
+			'type' => 'list',
+			'options' => array(
+				0644 => tra('User writable (0644)'),
+				0664 => tra('User & group writable (0664)'),
+			),
+			'default' => 0644,
+		),
 	);
 }
