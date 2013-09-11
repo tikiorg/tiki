@@ -615,31 +615,25 @@
 <div align="left" style="margin-top:1em;">
 <fieldset>
 	<legend>{tr}Wiki editor setup{/tr}</legend>
-	{tr}Use Wysiwyg{/tr} <input type="checkbox" name="useWysiwyg" checked="checked" />
+	{tr}Use Wysiwyg{/tr} <input type="checkbox" name="useWysiwyg" {if isset($useWysiwyg) AND $useWysiwyg eq 'y'}checked="checked"{/if} />
 	<table style="border:0px">
 	<tr>
 	<td>
-	<input type="radio" name="editorType" value="wiki" checked="checked"/> {tr}Compatible{/tr}</td><td> {tr}Use wiki syntax for saved pages{/tr}.<br>
+	<input type="radio" name="editorType" value="wiki" {if empty($editorType) || $editorType eq 'wiki'}checked="checked"{/if} /> {tr}Compatible{/tr}</td><td> {tr}Use wiki syntax for saved pages{/tr}.<br>
 		{tr}This is the most compatible with Tiki functionality and the most stable editor mode{/tr}.<br>
 		{tr}Limits some Wysiwyg operations{/tr}.<br>
 	</td>
 	</tr>
 	<tr>
-	<td><input type="radio" name="editorType" value="html" /> {tr}Full Wysiwyg{/tr}</td><td>{tr}Use html syntax for saved pages{/tr}.<br>
+	<td><input type="radio" name="editorType" value="html" {if $editorType eq 'html'}checked="checked"{/if} /> {tr}Full Wysiwyg{/tr}</td><td>{tr}Use html syntax for saved pages{/tr}.<br>
 		{tr}Has best compatibility with inline editing, but loses some wiki related features{/tr}.<br>
 		{tr}Enables the full Wysiwyg editor{/tr}.<br>
 	</td>
 	</tr>
 	</table>
-	<input type="checkbox" name="editorType" value="inline" /> {tr}Use inline editing{/tr} <img src="img/icons/error.png" alt="{tr}Experimental{/tr}" title="{tr}Experimental{/tr}" /><br>
+	<input type="checkbox" name="useInlineEditing" {if isset($useInlineEditing) AND $useInlineEditing eq 'y'}checked="checked"{/if} /> {tr}Use inline editing{/tr} <img src="img/icons/error.png" alt="{tr}Experimental{/tr}" title="{tr}Experimental{/tr}" /><br>
 	{tr}Inline editing lets the user edit pages without a context switch{/tr}. {tr}The editor is embedded in the wiki page{/tr}.<br>
 </fieldset>
-<br>
-<span style="color:red">This is a dummy panel added for evaluation of Wysiwyg setup during installation.<br>
-Please voice your opinion on the dev-list.
-<br>
-<br>THE ACTUAL SETTINGS ARE NOT UPDATED.</span>
-<br>
 <br>
 <div align="center" style="margin-top:1em;">
 {if $multi}		<input type="hidden" name="multi" value="{$multi}">{/if}
@@ -818,7 +812,7 @@ Please voice your opinion on the dev-list.
 					<li>{if $install_step eq '4'}<strong>{elseif $dbcon eq 'y' or isset($smarty.post.scratch) or isset($smarty.post.update)}<a href="tiki-install.php?install_step=4{if $multi}&amp;multi={$multi}{/if}{if $lang}&amp;lang={$lang}{/if}" title="{if $tikidb_created}{tr}Install/Upgrade{/tr}{else}{tr}Install{/tr}{/if}">{/if}{if $tikidb_created}<em>{tr}Install/Upgrade{/tr}</em>{else}{tr}Install{/tr}{/if}{if $install_step eq '4'}</strong>{elseif ($dbcon eq 'y') or (isset($smarty.post.scratch)) or (isset($smarty.post.update))}</a>{/if}</li>
 					<li>{if $install_step eq '5'}<strong>{elseif $tikidb_is20}<a href="tiki-install.php?install_step=5{if $multi}&amp;multi={$multi}{/if}{if $lang}&amp;lang={$lang}{/if}" title="{if isset($smarty.post.update)}{tr}Review the Upgrade{/tr}{else}{tr}Review the Installation{/tr}{/if}">{/if}{if isset($smarty.post.update)}{tr}Review the Upgrade{/tr}{else}{tr}Review the Installation{/tr}{/if}{if $install_step eq '5'}</strong>{elseif $tikidb_is20}</a>{/if}</li>
 					<li>{if $install_step eq '6'}<strong>{elseif $tikidb_is20 and !isset($smarty.post.update)}<a href="tiki-install.php?install_step=6{if $multi}&amp;multi={$multi}{/if}{if $lang}&amp;lang={$lang}{/if}" title="{tr}Configure the General Settings{/tr}">{/if}{tr}Configure the General Settings{/tr}{if $install_step eq '6'}</strong>{elseif $tikidb_is20 and !isset($smarty.post.update)}</a>{/if}</li>
-					<li>{if $install_step eq '7'}<strong>{elseif $tikidb_is20}<a href="tiki-install.php?install_step=7{if $multi}&amp;multi={$multi}{/if}{if $lang}&amp;lang={$lang}{/if}" title="{tr}Set up your Wiki environment{/tr}">{/if}{tr}Set up your Wiki environment{/tr}{if $install_step eq '7'}</strong>{elseif $tikidb_is20}</a>{/if}</li>
+					<li>{if $install_step eq '7'}<strong>{elseif $tikidb_is20 and !isset($smarty.post.update)}<a href="tiki-install.php?install_step=7{if $multi}&amp;multi={$multi}{/if}{if $lang}&amp;lang={$lang}{/if}" title="{tr}Set up your Wiki environment{/tr}">{/if}{tr}Set up your Wiki environment{/tr}{if $install_step eq '7'}</strong>{elseif $tikidb_is20}</a>{/if}</li>
 					<li>{if $install_step eq '8'}<strong>{elseif $tikidb_is20}<a href="tiki-install.php?install_step=8{if $multi}&amp;multi={$multi}{/if}{if $lang}&amp;lang={$lang}{/if}" title="{tr}Enter Your Tiki{/tr}">{/if}{tr}Enter Your Tiki{/tr}{if $install_step eq '8'}</strong>{elseif $tikidb_is20}</a>{/if}</li>
 				</ol>
 				</div>
