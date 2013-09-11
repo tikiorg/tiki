@@ -609,9 +609,9 @@
 </form>
 
 {elseif $install_step eq '7'}
-<h1>{tr}Setup your environment{/tr}</h1>
+<h1>{tr}Set up your environment{/tr}</h1>
 <form action="tiki-install.php" method="post">
-<div style="float:left; width:60px"><img src="img/icons/large/icon-configuration48x48.png" alt="{tr}Setup your environment{/tr}"></div>
+<div style="float:left; width:60px"><img src="img/icons/large/icon-configuration48x48.png" alt="{tr}Set up your environment{/tr}"></div>
 <div align="left" style="margin-top:1em;">
 <fieldset>
 	<legend>{tr}Wiki editor setup{/tr}</legend>
@@ -645,7 +645,7 @@ Please voice your opinion on the dev-list.
 {if $lang}		<input type="hidden" name="lang" value="{$lang}">{/if}
 	<input type="hidden" name="install_step" value="8">
 	<input type="hidden" name="install_type" value="{$install_type}">
-	<input type="hidden" name="setup_environment" value="y">
+	<input type="hidden" name="set_up_environment" value="y">
 	<input type="submit" value=" {tr}Continue{/tr} ">
 </div>
 </form>
@@ -816,7 +816,7 @@ Please voice your opinion on the dev-list.
 					<li>{if $install_step eq '4'}<strong>{elseif $dbcon eq 'y' or isset($smarty.post.scratch) or isset($smarty.post.update)}<a href="tiki-install.php?install_step=4{if $multi}&amp;multi={$multi}{/if}{if $lang}&amp;lang={$lang}{/if}" title="{if $tikidb_created}{tr}Install/Upgrade{/tr}{else}{tr}Install{/tr}{/if}">{/if}{if $tikidb_created}<em>{tr}Install/Upgrade{/tr}</em>{else}{tr}Install{/tr}{/if}{if $install_step eq '4'}</strong>{elseif ($dbcon eq 'y') or (isset($smarty.post.scratch)) or (isset($smarty.post.update))}</a>{/if}</li>
 					<li>{if $install_step eq '5'}<strong>{elseif $tikidb_is20}<a href="tiki-install.php?install_step=5{if $multi}&amp;multi={$multi}{/if}{if $lang}&amp;lang={$lang}{/if}" title="{if isset($smarty.post.update)}{tr}Review the Upgrade{/tr}{else}{tr}Review the Installation{/tr}{/if}">{/if}{if isset($smarty.post.update)}{tr}Review the Upgrade{/tr}{else}{tr}Review the Installation{/tr}{/if}{if $install_step eq '5'}</strong>{elseif $tikidb_is20}</a>{/if}</li>
 					<li>{if $install_step eq '6'}<strong>{elseif $tikidb_is20 and !isset($smarty.post.update)}<a href="tiki-install.php?install_step=6{if $multi}&amp;multi={$multi}{/if}{if $lang}&amp;lang={$lang}{/if}" title="{tr}Configure the General Settings{/tr}">{/if}{tr}Configure the General Settings{/tr}{if $install_step eq '6'}</strong>{elseif $tikidb_is20 and !isset($smarty.post.update)}</a>{/if}</li>
-					<li>{if $install_step eq '7'}<strong>{elseif $tikidb_is20}<a href="tiki-install.php?install_step=7{if $multi}&amp;multi={$multi}{/if}{if $lang}&amp;lang={$lang}{/if}" title="{tr}Setup your environment{/tr}">{/if}{tr}Setup your environment{/tr}{if $install_step eq '7'}</strong>{elseif $tikidb_is20}</a>{/if}</li>
+					<li>{if $install_step eq '7'}<strong>{elseif $tikidb_is20}<a href="tiki-install.php?install_step=7{if $multi}&amp;multi={$multi}{/if}{if $lang}&amp;lang={$lang}{/if}" title="{tr}Set up your environment{/tr}">{/if}{tr}Set up your environment{/tr}{if $install_step eq '7'}</strong>{elseif $tikidb_is20}</a>{/if}</li>
 					<li>{if $install_step eq '8'}<strong>{elseif $tikidb_is20}<a href="tiki-install.php?install_step=8{if $multi}&amp;multi={$multi}{/if}{if $lang}&amp;lang={$lang}{/if}" title="{tr}Enter Your Tiki{/tr}">{/if}{tr}Enter Your Tiki{/tr}{if $install_step eq '8'}</strong>{elseif $tikidb_is20}</a>{/if}</li>
 				</ol>
 				</div>
