@@ -2644,7 +2644,7 @@ class TrackerLib extends TikiLib
 			return;
 		}
 		if ($userValue != 'NULL' && !isset($field['rating_options']) && !in_array($userValue, $field['options_array'])) {
-			// backward compatability with trackerlist rating which does not have rating options
+			// backward compatibility with trackerlist rating which does not have rating options
 			return;
 		}
 		if ($tiki_p_tracker_vote_ratings != 'y') {
