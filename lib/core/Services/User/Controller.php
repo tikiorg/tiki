@@ -97,6 +97,7 @@ class Services_User_Controller
 			'lastSeen' => '',
 			'avatarHtml' => '',
 			'error' => '',
+			'shared_groups' => '',
 		);
 
 		if ($prefs['feature_community_mouseover'] == 'y' &&
