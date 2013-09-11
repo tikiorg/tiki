@@ -110,6 +110,8 @@ class Services_User_Controller
 
 				$info = $userlib->get_user_info($other_user);
 
+				$result['add_friend_button'] = '';	// can befriend yourself
+
 				if ($prefs['feature_friends'] === 'y') {
 
 					$friendship = array();
@@ -118,29 +120,65 @@ class Services_User_Controller
 
 						$friend = $this->isFriend($sociallib->listFriends($user), $other_user);
 						if ($friend) {
-							$friendship[] = array('type' => 'friend', 'label' => tra('Friend'));
+							$friendship[] = array(
+								'type' => 'friend',
+								'label' => tra('Friend'),
+								'remove' => tra('Remove Friend'),
+							);
+						} else {
+							$result['add_friend_button'] = tra('Add Friend');
 						}
 					} else {
 						$follower = $this->isFriend($sociallib->listFollowers($user), $other_user);
 						$following = $this->isFriend($sociallib->listFollowers($other_user), $user);
 
 						if ($follower) {
-							$friendship[] = array('type' => 'follower', 'label' => tra('Following you'));
+							$friendship[] = array(
+								'type' => 'follower',
+								'label' => tra('Following you'),
+							);
+							if ($prefs['social_network_type'] === 'follow_approval') {
+								$friendship[count($friendship) - 1]['remove'] = tra('Remove Follower');
+							}
 						}
 						if ($following) {
-							$friendship[] = array('type' => 'following', 'label' => tra('You are following'));
+							$friendship[] = array(
+								'type' => 'following',
+								'label' => tra('You are following'),
+								'remove' => tra('Stop Following'),
+							);
+						} else {
+							$result['add_friend_button'] = tra('Follow');
 						}
 					}
 					$incoming = $this->isFriend($sociallib->listIncomingRequests($user), $other_user);
 					if ($incoming) {
-						$friendship[] = array('type' => 'incoming', 'label' => tra('Awaiting your approval'));
+						$friendship[] = array(
+							'type' => 'incoming',
+							'label' => tra('Awaiting your approval'),
+							'remove' => tra('Refuse Request'),
+							'add' => tra('Accept &amp; Add'),
+						);
+						if ($prefs['social_network_type'] === 'follow_approval') {
+							$friendship[count($friendship) - 1]['approve'] = tra('Accept Request');
+						}
+						$result['add_friend_button'] = '';
 					}
 					$outgoing = $this->isFriend($sociallib->listOutgoingRequests($user), $other_user);
 					if ($outgoing) {
-						$friendship[] = array('type' => 'outgoing', 'label' => tra('Waiting for approval'));
+						$friendship[] = array(
+							'type' => 'outgoing',
+							'label' => tra('Waiting for approval'),
+							'remove' => tra('Cancel Request'),
+						);
+						$result['add_friend_button'] = '';
 					}
 
 					$result['friendship'] = $friendship;
+
+					if ($user === $other_user) {
+						$result['add_friend_button'] = '';
+					}
 				}
 
 				if ($prefs['feature_community_mouseover_name'] == 'y') {
@@ -184,8 +222,8 @@ class Services_User_Controller
 					if ($email_isPublic != 'n') {
 						include_once ('lib/userprefs/scrambleEmail.php');
 						$result['email'] = scrambleEmail($info['email'], $email_isPublic);
-					} elseif ($friend) {
-						$result['email'] = $info['email'];
+					//} elseif ($friend) {
+					//	$result['email'] = $info['email']; // should friends see each other's emails whatever the settings? I doubt it (jb)
 					}
 				}
 
