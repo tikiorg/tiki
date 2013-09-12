@@ -388,7 +388,7 @@ set_permission_data() {
 
 set_permission_data_suphp_workaround() {
 	# this is quick 'n dirty
-	# 600/601 does not work with .scc and images, as observed on Debian Wheezy
+	# 600/601 does not work with .css and images, as observed on Debian Wheezy
 	#
 	# first: classic paranoia-suphp
 	COMMAND="paranoia-suphp"
