@@ -386,8 +386,28 @@ set_permission_data() {
 	done
 }
 
-set_permission_data_suphp_workaround() {
+set_permission_data_workaround_general() {
 	# this is quick 'n dirty
+	${CHMOD} -R o+r ./
+	${FIND} . -name "*.php" -exec ${CHMOD} o-r {} \;
+	${FIND} . -type d -exec ${CHMOD} o-r {} \;
+}
+
+set_permission_data_workaround_sbox() {
+	# 500 might not work with .css and images, not yet observed
+	#
+	# first: classic sbox
+	COMMAND="sbox"
+	permission_via_php_check
+	#
+	# second: fix permissions of none-PHP files , really quick 'n dirty
+	set_permission_data_workaround_general
+	#
+	# reset $COMMAND , not really necessary
+	COMMAND="sboxworkaround"
+}
+
+set_permission_data_workaround_suphp() {
 	# 600/601 does not work with .css and images, as observed on Debian Wheezy
 	#
 	# first: classic paranoia-suphp
@@ -395,12 +415,10 @@ set_permission_data_suphp_workaround() {
 	permission_via_php_check
 	#
 	# second: fix permissions of none-PHP files , really quick 'n dirty
-	${CHMOD} -R o+r ./
-	${FIND} . -name "*.php" -exec ${CHMOD} o-r {} \;
-	${FIND} . -type d -exec ${CHMOD} o-r {} \;
+	set_permission_data_workaround_general
 	#
 	# reset $COMMAND , not really necessary
-	COMMAND="workaround"
+	COMMAND="suphpworkaround"
 }
 
 yet_unused_permission_default() {
@@ -776,13 +794,15 @@ tiki_setup_default_menu() {
  c run composer and exit (recommended to be done first)
 
  f fix (classic default)                 o open (classic option)
+ S clear screen
 
  predefined Tiki Permission Check models:
  ----------------------------------------
 
- 1 paranoia                              2 paranoia-suphp
-                                         w suphp workaround
- 3 sbox                                  4 mixed
+ 1 paranoia
+ 2 paranoia-suphp                        w suphp workaround
+ 3 sbox                                  W sbox workaround
+ 4 mixed
  5 worry                                 6 moreworry
  7 pain                                  8 morepain
  9 risky                                 a insane
@@ -873,7 +893,8 @@ tiki_setup_default() {
 			8)	WHAT='x'; COMMAND="morepain" ; permission_via_php_check ;;
 			9)	WHAT='x'; COMMAND="risky" ; permission_via_php_check ;;
 			a)	WHAT='x'; COMMAND="insane" ; permission_via_php_check ;;
-			w)	WHAT='x'; COMMAND="workaround" ; set_permission_data_suphp_workaround ;;
+			w)	WHAT='x'; COMMAND="suphpworkaround" ; set_permission_data_workaround_suphp ;;
+			W)	WHAT='x'; COMMAND="sboxworkaround" ; set_permission_data_workaround_sbox ;;
 			S)	WHAT='x'; clear ;;
 			f)	WHAT='x'; command_fix ;;
 			o)	WHAT='x'; command_open ;;
@@ -894,50 +915,52 @@ tiki_setup_default() {
 case ${COMMAND} in
 	# free defined
 	# default is used if no parameter at command line is given
-	default)	tiki_setup_default ;;
-	fix)		command_fix ;;
-	menu)		tiki_setup_default ;;
-	nothing)	command_nothing ;;
-	open)		command_open ;;
+	default)		tiki_setup_default ;;
+	fix)			command_fix ;;
+	menu)			tiki_setup_default ;;
+	nothing)		command_nothing ;;
+	open)			command_open ;;
 	# Tiki Permission Check (via PHP)
-	insane)		permission_via_php_check ;;
-	mixed)		permission_via_php_check ;;
-	morepain)	permission_via_php_check ;;
-	moreworry)	permission_via_php_check ;;
-	pain)		permission_via_php_check ;;
-	paranoia)	permission_via_php_check ;;
-	paranoia-suphp)	permission_via_php_check ;;
-	php)		permission_via_php_check ;;
-	risky)		permission_via_php_check ;;
-	sbox)		permission_via_php_check ;;
-	worry)		permission_via_php_check ;;
+	insane)			permission_via_php_check ;;
+	mixed)			permission_via_php_check ;;
+	morepain)		permission_via_php_check ;;
+	moreworry)		permission_via_php_check ;;
+	pain)			permission_via_php_check ;;
+	paranoia)		permission_via_php_check ;;
+	paranoia-suphp)		permission_via_php_check ;;
+	php)			permission_via_php_check ;;
+	risky)			permission_via_php_check ;;
+	sbox)			permission_via_php_check ;;
+	sboxworkaround)		set_permission_data_workaround_sbox ;;
+	suphpworkaround)	set_permission_data_workaround_suphp ;;
+	worry)			permission_via_php_check ;;
 	# plain chmod
-	gmr)		set_group_minus_read ;;
-	gmw)		set_group_minus_write ;;
-	gmx)		set_group_minus_execute ;;
-	gpr)		set_group_plus_read ;;
-	gpw)		set_group_plus_write ;;
-	gpx)		set_group_plus_execute ;;
-	omr)		set_other_minus_read ;;
-	omw)		set_other_minus_write ;;
-	omx)		set_other_minus_execute ;;
-	opr)		set_other_plus_read ;;
-	opw)		set_other_plus_write ;;
-	opx)		set_other_plus_execute ;;
-	umw)		set_user_minus_write ;;
-	upr)		set_user_plus_read ;;
-	upw)		set_user_plus_write ;;
-	upx)		set_user_plus_execute ;;
+	gmr)			set_group_minus_read ;;
+	gmw)			set_group_minus_write ;;
+	gmx)			set_group_minus_execute ;;
+	gpr)			set_group_plus_read ;;
+	gpw)			set_group_plus_write ;;
+	gpx)			set_group_plus_execute ;;
+	omr)			set_other_minus_read ;;
+	omw)			set_other_minus_write ;;
+	omx)			set_other_minus_execute ;;
+	opr)			set_other_plus_read ;;
+	opw)			set_other_plus_write ;;
+	opx)			set_other_plus_execute ;;
+	umw)			set_user_minus_write ;;
+	upr)			set_user_plus_read ;;
+	upw)			set_user_plus_write ;;
+	upx)			set_user_plus_execute ;;
 	# special chmod
-	sdgmw)		special_dirs_set_group_minus_write ;;
-	sdgpw)		special_dirs_set_group_plus_write ;;
-	sdomw)		special_dirs_set_other_minus_write ;;
-	sdopw)		special_dirs_set_other_plus_write ;;
-	sdumw)		special_dirs_set_user_minus_write ;;
-	sdupw)		special_dirs_set_user_plus_write ;;
-	foo)		echo foo ;;
-	#*)		echo ${HINT_FOR_USER} ;;
-	*)		hint_for_users ;;
+	sdgmw)			special_dirs_set_group_minus_write ;;
+	sdgpw)			special_dirs_set_group_plus_write ;;
+	sdomw)			special_dirs_set_other_minus_write ;;
+	sdopw)			special_dirs_set_other_plus_write ;;
+	sdumw)			special_dirs_set_user_minus_write ;;
+	sdupw)			special_dirs_set_user_plus_write ;;
+	foo)			echo foo ;;
+	#*)			echo ${HINT_FOR_USER} ;;
+	*)			hint_for_users ;;
 esac
 
 exit 0
