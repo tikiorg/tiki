@@ -32,6 +32,7 @@ function wikiplugin_list($data, $params)
 	$matches = WikiParser_PluginMatcher::match($data);
 
 	$builder = new Search_Query_WikiBuilder($query);
+	$builder->enableAggregate();
 	$builder->apply($matches);
 
 	if (!empty($_REQUEST['sort_mode'])) {
@@ -45,6 +46,11 @@ function wikiplugin_list($data, $params)
 	$result = $query->search($index);
 
 	$paginationArguments = $builder->getPaginationArguments();
+
+	$resultBuilder = new Search_ResultSet_WikiBuilder($result);
+	$resultBuilder->setPaginationArguments($paginationArguments);
+	$resultBuilder->apply($matches);
+
 	$builder = new Search_Formatter_Builder;
 	$builder->setPaginationArguments($paginationArguments);
 	$builder->apply($matches);
