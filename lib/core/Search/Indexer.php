@@ -39,6 +39,12 @@ class Search_Indexer
 		$this->globalSources[] = $globalSource;
 	}
 
+	public function clearSources()
+	{
+		$this->contentSources = array();
+		$this->globalSources = array();
+	}
+
 	public function addContentFilter(Zend_Filter_Interface $filter)
 	{
 		$this->contentFilters[] = $filter;
@@ -97,7 +103,7 @@ class Search_Indexer
 		return count($data);
 	}
 
-	function getDocuments($objectType, $objectId)
+	public function getDocuments($objectType, $objectId)
 	{
 		$out = array();
 

@@ -3675,7 +3675,11 @@ class FileGalLib extends TikiLib
 			$data = null;
 		}
 
-		return $this->insert_file($gal_info['galleryId'], $name, '', $name, $data, $size, $type, $asuser, $fhash, '');
+		$tx = $this->begin();
+		$ret = $this->insert_file($gal_info['galleryId'], $name, '', $name, $data, $size, $type, $asuser, $fhash, '');
+		$tx->commit();
+
+		return $ret;
 	}
 
 	function update_single_file($gal_info, $name, $size, $type, $data, $id, $asuser = null)
@@ -3690,7 +3694,11 @@ class FileGalLib extends TikiLib
 
 		$didFileReplace = true;
 
-		return $this->replace_file($id, $name, '', $name, $data, $size, $type, $asuser, $fhash, '', $gal_info, $didFileReplace);
+		$tx = $this->begin();
+		$ret = $this->replace_file($id, $name, '', $name, $data, $size, $type, $asuser, $fhash, '', $gal_info, $didFileReplace);
+		$tx->commit();
+
+		return $ret;
 	}
 
 	private function convert_from_data($gal_info, & $fhash, $data)

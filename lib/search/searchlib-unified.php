@@ -56,6 +56,7 @@ class UnifiedSearchLib
 		$access->preventRedirect(true);
 
 		if (count($toProcess)) {
+			$indexer = null;
 			try {
 				$indexer = $this->buildIndexer($this->getIndex());
 				$indexer->update($toProcess);
@@ -69,6 +70,10 @@ class UnifiedSearchLib
 					tr('Search index could not be updated. The site is misconfigured. Contact an administrator.') .
 					'<br />' . $e->getMessage()
 				);
+			}
+
+			if ($indexer) {
+				$indexer->clearSources();
 			}
 		}
 
@@ -181,6 +186,7 @@ class UnifiedSearchLib
 		$access->preventRedirect(true);
 
 		$stat = array();
+		$indexer = null;
 		try {
 			$index = new Search_Index_TypeAnalysisDecorator($index);
 			$indexer = $this->buildIndexer($index, $loggit);
@@ -202,7 +208,11 @@ class UnifiedSearchLib
 		$access->preventRedirect(false);
 
 		// Force destruction to clear locks
-		unset($indexer);
+		if ($indexer) {
+			$indexer->clearSources();
+			unset($indexer);
+		}
+
 		unset($index);
 
 		$oldIndex = null;
