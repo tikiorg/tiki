@@ -386,6 +386,23 @@ set_permission_data() {
 	done
 }
 
+set_permission_data_suphp_workaround() {
+	# this is quick 'n dirty
+	# 600/601 does not work with .scc and images, as observed on Debian Wheezy
+	#
+	# first: classic paranoia-suphp
+	COMMAND="paranoia-suphp"
+	permission_via_php_check
+	#
+	# second: fix permissions of none-PHP files , really quick 'n dirty
+	${CHMOD} -R o+r ./
+	${FIND} . -name "*.php" -exec ${CHMOD} o-r {} \;
+	${FIND} . -type d -exec ${CHMOD} o-r {} \;
+	#
+	# reset $COMMAND , not really necessary
+	COMMAND="workaround"
+}
+
 yet_unused_permission_default() {
 	${CHMOD} -fR u=rwX,go=rX .
 }
@@ -756,18 +773,21 @@ tiki_setup_default_menu() {
  Tiki setup.sh - your options
  ============================
 
+ c run composer and exit (recommended to be done first)
+
  f fix (classic default)                 o open (classic option)
 
  predefined Tiki Permission Check models:
  ----------------------------------------
 
  1 paranoia                              2 paranoia-suphp
+                                         w suphp workaround
  3 sbox                                  4 mixed
  5 worry                                 6 moreworry
  7 pain                                  8 morepain
  9 risky                                 a insane
 
- q quit                                  x exit and run composer
+ q quit                                  x exit
 
 There are some other commands recommended for advanced users only.
 More documentation about this: http://doc.tiki.org/Permission+Check
@@ -777,7 +797,8 @@ EOF
 
 tiki_setup_default() {
 	dummy=foo
-	WHAT='f'
+	#WHAT='f' # old default
+	WHAT='c' # composer is recommended
 	while true
 	do
 		tiki_setup_default_menu
@@ -800,13 +821,16 @@ tiki_setup_default() {
 			8)	WHAT='x'; COMMAND="morepain" ; permission_via_php_check ;;
 			9)	WHAT='x'; COMMAND="risky" ; permission_via_php_check ;;
 			a)	WHAT='x'; COMMAND="insane" ; permission_via_php_check ;;
+			w)	WHAT='x'; COMMAND="workaround" ; set_permission_data_suphp_workaround ;;
 			c)	WHAT='x'; clear ;;
 			f)	WHAT='x'; command_fix ;;
 			o)	WHAT='x'; command_open ;;
+			c)	WHAT='f'; composer ;;
+			C)	WHAT='f'; composer ;;
 			q)	exit ;;
 			Q)	exit ;;
-			x)	composer ;;
-			X)	composer ;;
+			x)	exit ;;
+			X)	exit ;;
 			*)	WHAT='x'; echo 'no such command' ;;
 		esac
 	done
