@@ -120,7 +120,7 @@ hint_for_users() {
 	${CAT} <<EOF
 Type 'fix', 'nothing' or 'open' as command argument.
 If you used Tiki Permission Check via PHP, you know which of the following commands will probably work:
-insane mixed morepain moreworry pain paranoia paranoia-suphp risky sbox worry
+insane mixed morepain moreworry pain paranoia paranoia-suphp workaround risky sbox worry
 
 There are some other commands recommended for advanced users only.
 More documentation about this: http://doc.tiki.org/Permission+Check
@@ -795,47 +795,6 @@ More documentation about this: http://doc.tiki.org/Permission+Check
 EOF
 }
 
-tiki_setup_default() {
-	dummy=foo
-	#WHAT='f' # old default
-	WHAT='c' # composer is recommended
-	while true
-	do
-		tiki_setup_default_menu
-		echo -n "Your choice [${WHAT}]? "
-		read INPUT
-		if [ -z ${INPUT} ] ; then
-			DUMMY=foo
-		else
-			WHAT=${INPUT}
-		fi
-		case ${WHAT} in
-			0)	WHAT='x'; COMMAND="php" ; permission_via_php_check ;;
-			1)	WHAT='x'; COMMAND="paranoia" ; permission_via_php_check ;;
-			2)	WHAT='x'; COMMAND="paranoia-suphp" ; permission_via_php_check ;;
-			3)	WHAT='x'; COMMAND="sbox" ; permission_via_php_check ;;
-			4)	WHAT='x'; COMMAND="mixed" ; permission_via_php_check ;;
-			5)	WHAT='x'; COMMAND="worry" ; permission_via_php_check ;;
-			6)	WHAT='x'; COMMAND="moreworry" ; permission_via_php_check ;;
-			7)	WHAT='x'; COMMAND="pain" ; permission_via_php_check ;;
-			8)	WHAT='x'; COMMAND="morepain" ; permission_via_php_check ;;
-			9)	WHAT='x'; COMMAND="risky" ; permission_via_php_check ;;
-			a)	WHAT='x'; COMMAND="insane" ; permission_via_php_check ;;
-			w)	WHAT='x'; COMMAND="workaround" ; set_permission_data_suphp_workaround ;;
-			c)	WHAT='x'; clear ;;
-			f)	WHAT='x'; command_fix ;;
-			o)	WHAT='x'; command_open ;;
-			c)	WHAT='f'; composer ;;
-			C)	WHAT='f'; composer ;;
-			q)	exit ;;
-			Q)	exit ;;
-			x)	exit ;;
-			X)	exit ;;
-			*)	WHAT='x'; echo 'no such command' ;;
-		esac
-	done
-}
-
 # Set-up and execute composer to obtain dependencies
 exists()
 {
@@ -888,11 +847,53 @@ composer()
 	exit
 }
 
+tiki_setup_default() {
+	dummy=foo
+	#WHAT='f' # old default
+	WHAT='c' # composer is recommended
+	while true
+	do
+		tiki_setup_default_menu
+		echo -n "Your choice [${WHAT}]? "
+		read INPUT
+		if [ -z ${INPUT} ] ; then
+			DUMMY=foo
+		else
+			WHAT=${INPUT}
+		fi
+		case ${WHAT} in
+			0)	WHAT='x'; COMMAND="php" ; permission_via_php_check ;;
+			1)	WHAT='x'; COMMAND="paranoia" ; permission_via_php_check ;;
+			2)	WHAT='x'; COMMAND="paranoia-suphp" ; permission_via_php_check ;;
+			3)	WHAT='x'; COMMAND="sbox" ; permission_via_php_check ;;
+			4)	WHAT='x'; COMMAND="mixed" ; permission_via_php_check ;;
+			5)	WHAT='x'; COMMAND="worry" ; permission_via_php_check ;;
+			6)	WHAT='x'; COMMAND="moreworry" ; permission_via_php_check ;;
+			7)	WHAT='x'; COMMAND="pain" ; permission_via_php_check ;;
+			8)	WHAT='x'; COMMAND="morepain" ; permission_via_php_check ;;
+			9)	WHAT='x'; COMMAND="risky" ; permission_via_php_check ;;
+			a)	WHAT='x'; COMMAND="insane" ; permission_via_php_check ;;
+			w)	WHAT='x'; COMMAND="workaround" ; set_permission_data_suphp_workaround ;;
+			S)	WHAT='x'; clear ;;
+			f)	WHAT='x'; command_fix ;;
+			o)	WHAT='x'; command_open ;;
+			c)	WHAT='f'; composer ;;
+			C)	WHAT='f'; composer ;;
+			q)	exit ;;
+			Q)	exit ;;
+			x)	exit ;;
+			X)	exit ;;
+			*)	WHAT='x'; echo 'no such command' ;;
+		esac
+	done
+}
+
 # part 5 - main program
 # ---------------------
 
 case ${COMMAND} in
 	# free defined
+	# default is used if no parameter at command line is given
 	default)	tiki_setup_default ;;
 	fix)		command_fix ;;
 	menu)		tiki_setup_default ;;
