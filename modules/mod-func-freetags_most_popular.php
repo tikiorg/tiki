@@ -56,8 +56,7 @@ function module_freetags_most_popular_info()
 			'objectId' => array(
 				'required' => false,
 				'name' => tra('BlogId'),
-				'description' => tra('Blog Id if only blog posts selected'),
-				'filter' => 'int',
+				'description' => tra('Blog Id if only blog posts selected. More than one blog can be provided, separated by colon. Example: 1:5'),
 				'default' => null,
 				'profile_reference' => 'blog',
 			),
