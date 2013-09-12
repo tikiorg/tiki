@@ -4169,6 +4169,8 @@ form.simple label.error {
 }
 
 .tracker-item-files {
+	column-count: 2;
+	column-gap: 30px; 
 	-moz-column-count: 2;
 	-moz-column-gap: 30px;
 	-webkit-column-count: 2;
@@ -4326,6 +4328,7 @@ form.simple textarea.export {
 	padding: 1px;
 	border-radius: 5px;
 	-moz-border-radius: 5px;
+	border-radius: 5px;
 	background: #eee;
 	max-width: 30px;
 	white-space: nowrap;
