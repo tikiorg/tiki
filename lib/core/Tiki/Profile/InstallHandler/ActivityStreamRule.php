@@ -82,7 +82,7 @@ class Tiki_Profile_InstallHandler_ActivityStreamRule extends Tiki_Profile_Instal
 				array(
 					'event_type' => $data['eventType'],
 					'rule_type' => $data['ruleType'],
-					'rule' => $data['rule'],
+					'rule' => self::exportRule($writer, $data['rule']),
 					'notes' => $data['notes'],
 				)
 			);
@@ -90,5 +90,29 @@ class Tiki_Profile_InstallHandler_ActivityStreamRule extends Tiki_Profile_Instal
 		} else {
 			return false;
 		}
+	}
+
+	private static function exportRule($writer, $string)
+	{
+		// Convert (equals args.trackerId X)
+		// Convert (not-equals args.trackerId X)
+		// Where trackerId  -> tracker
+		//       tracker_id -> tracker
+		//       tracker    -> tracker
+		//       blog_id    -> blog
+		//       ...
+		$string = preg_replace_callback('/\((?<OP>(?:not-)?equals) args\.(?<KEY>[^\s]+)\s(?<ID>[\d]+)\)/', function ($matches) use ($writer) {
+			$key = $matches['KEY'];
+			if (substr($key, -2) == 'Id') {
+				$key = substr($key, 0, -2);
+			} elseif (substr($key, -3) == '_id') {
+				$key = substr($key, 0, -3);
+			}
+
+			$id = $writer->getReference($key, $matches['ID']);
+			return "({$matches['OP']} args.{$matches['KEY']} {$id})";
+		}, $string);
+
+		return $string;
 	}
 }
