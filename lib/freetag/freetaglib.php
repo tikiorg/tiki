@@ -984,6 +984,7 @@ class FreetagLib extends ObjectLib
 	function get_most_popular_tags($user = '', $offset = 0, $maxRecords = 25, $type=null, $objectId=null, $tsort_mode='tag_asc')
 	{
 
+		$objectIds = explode(':',$objectId);
 		$join = '';
 		$mid = ''; $mid2 = '';
 		$bindvals = array();
@@ -994,9 +995,19 @@ class FreetagLib extends ObjectLib
 			$bindvals[] = $type;
 			if (!empty($objectId)) {
 				$join .= ' LEFT JOIN `tiki_blog_posts` tbp on (tob.`itemId` = tbp.`postId`)';
-				$mid .= ' AND tbp.`blogId` = ?';
-				$mid2 .= ' AND tbp.`blogId` = ?';
-				$bindvals[] = $objectId;
+				if (count($objectIds) == 1) {
+					$mid .= ' AND tbp.`blogId` = ?';
+					$mid2 .= ' AND tbp.`blogId` = ?';
+					$bindvals[] = intval($objectId);
+				} else {	// There is more than one blog Id
+					$multimid = array();
+					foreach ( $objectIds as $objId ) {
+						$multimid[] = ' tbp.`blogId` = ? ';
+						$bindvals[] = intval($objId);
+					}
+					$mid .= ' AND ( ' . implode( ' OR ', $multimid ) . ' ) ';
+					$mid2 .= ' AND ( ' . implode( ' OR ', $multimid ) . ' ) ';
+				}
 			}
 		}
 		$query = 'SELECT COUNT(*) as count'
