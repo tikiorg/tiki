@@ -146,7 +146,7 @@ class PerspectiveLib
 
 		if ( $info = $result->fetchRow() ) {
 			$perms = Perms::get(array( 'type' => 'perspective', 'object' => $perspectiveId ));
-			if ( $perms->view_perspective ) {
+			if ( $perms->perspective_view ) {
 				$info['preferences'] = $this->get_preferences($perspectiveId);
 				$this->write_permissions($info, $perms);
 
