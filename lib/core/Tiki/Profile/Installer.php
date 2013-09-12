@@ -44,6 +44,8 @@ class Tiki_Profile_Installer
 		'sheet' => 'Tiki_Profile_InstallHandler_Sheet',
 		'rating_config' => 'Tiki_Profile_InstallHandler_RatingConfig',
 		'area_binding' => 'Tiki_Profile_InstallHandler_AreaBinding',
+		'activity_stream_rule' => 'Tiki_Profile_InstallHandler_ActivityStreamRule',
+		'activity_rule_set' => 'Tiki_Profile_InstallHandler_ActivityRuleSet',
 	);
 
 	private static $typeMap = array(

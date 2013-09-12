@@ -79,6 +79,8 @@ if (is_file($local_php) && ! $installer->requiresUpdate()) {
 }
 
 if (file_exists('profiles/info.ini')) {
+	$console->add(new Tiki\Command\ProfileExport\ActivityRuleSet);
+	$console->add(new Tiki\Command\ProfileExport\ActivityStreamRule);
 	$console->add(new Tiki\Command\ProfileExport\AllModules);
 	$console->add(new Tiki\Command\ProfileExport\Category);
 	$console->add(new Tiki\Command\ProfileExport\Forum);

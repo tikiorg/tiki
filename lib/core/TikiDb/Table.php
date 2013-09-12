@@ -269,6 +269,15 @@ class TikiDb_Table
 		}
 	}
 
+	function notIn(array $values, $caseSensitive = false)
+	{
+		if (empty($values)) {
+			return $this->expr('1=0', array());
+		} else {
+			return $this->expr(($caseSensitive ? 'BINARY ' : '') . '$$ NOT IN(' . rtrim(str_repeat('?, ', count($values)), ', ') . ')', $values);
+		}
+	}
+
 	function findIn($value, array $fields)
 	{
 		$expr = $this->like("%$value%");

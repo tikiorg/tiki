@@ -65,6 +65,16 @@ class ActivityLib
 		);
 	}
 
+	function preserveRules(array $ids)
+	{
+		$table = $this->rulesTable();
+		return $table->deleteMultiple(
+			array(
+				'ruleId' => $table->notIn($ids),
+			)
+		);
+	}
+
 	function recordEvent($event, $arguments)
 	{
 		$mapping = $this->getMapping();
