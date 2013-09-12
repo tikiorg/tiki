@@ -5391,6 +5391,8 @@ class TikiLib extends TikiDb_Bridge
 		foreach ($sty as &$s) {
 			if (in_array($s, array('mobile', '960_gs'))) {
 				$s = '';
+			} elseif (substr($s, -4) == '-rtl' || substr($s, -6) == '-print') {
+				$s = '';
 			} else {
 				$s .= '.css';	// add the .css back onto the end of the style names
 			}
