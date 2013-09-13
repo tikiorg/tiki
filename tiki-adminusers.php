@@ -779,7 +779,7 @@ if ($tsAjax || !$tsOn) {
 			 'total' => $users['cant'],
 			 'filters' => array(
 				 'columns' => array(
-					 5 => array(
+					 6 => array(
 						 'options' => $ts_groups
 				 	)
 				)
