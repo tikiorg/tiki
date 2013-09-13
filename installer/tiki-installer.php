@@ -810,12 +810,6 @@ if ($dbcon) {
 		$smarty->assign('admin_email', get_admin_email());
 		$smarty->assign('upgradefix', (empty($dbversion_tiki) || $dbversion_tiki[0] < 4) ? 'y' : 'n');
 	}
-	if ($install_step == '7' && $has_tiki_db) {
-		update_preferences($prefs);
-		$smarty->assign('useWysiwyg', isset($prefs['feature_wysiwyg']) && $prefs['feature_wysiwyg'] === 'y' ? 'y' : 'n');
-		$smarty->assign('useInlineEditing', isset($prefs['wysiwyg_inline_editing']) && $prefs['wysiwyg_inline_editing'] === 'y' ? 'y'  : 'n');
-		$smarty->assign('editorType', isset($prefs['wysiwyg_htmltowiki']) && $prefs['wysiwyg_htmltowiki'] === 'y' ? 'wiki' : 'html');
-	}
 	$smarty->assign('tikidb_is20', has_tiki_db_20());
 }
 
@@ -1036,41 +1030,6 @@ if ( isset($_REQUEST['general_settings']) && $_REQUEST['general_settings'] == 'y
 		$ret = fix_disable_accounts();
 	}
 
-}
-
-
-// write Wiki Environment settings
-if ( isset($_REQUEST['set_up_environment']) && $_REQUEST['set_up_environment'] == 'y' ) {
-	$useWysiwyg = ( isset($_REQUEST['useWysiwyg']) && $_REQUEST['useWysiwyg'] == 'on' ) ? 'y' : 'n';
-	$editorType = $_REQUEST['editorType'];
-	$useInlineEditing = ( isset($_REQUEST['useInlineEditing']) && $_REQUEST['useInlineEditing'] == 'on' ) ? 'y' : 'n';
-
-	$wysisygPrefs = array(
-		'feature_wysiwyg' => $useWysiwyg,
-		'wysiwyg_inline_editing' => $useInlineEditing
-	);
-	switch ($editorType) {
-		case 'html':
-			$wysisygPrefs['wysiwyg_htmltowiki'] = 'n';
-			break;
-		
-		case 'wiki':
-		default:
-			$wysisygPrefs['wysiwyg_htmltowiki'] = 'y';
-			break;
-	}
-
-	$installer->query(
-		"DELETE FROM `tiki_preferences` WHERE `name` IN " .
-		"('feature_wysiwyg', 'wysiwyg_inline_editing', 'wysiwyg_htmltowiki')"
-		);
-
-	$query = "INSERT INTO `tiki_preferences` (`name`, `value`) VALUES"
-		. " ('feature_wysiwyg', ?),"
-		. " ('wysiwyg_inline_editing', ?),"
-		. " ('wysiwyg_htmltowiki', ?)";
-
-	$installer->query($query, array($wysisygPrefs['feature_wysiwyg'], $wysisygPrefs['wysiwyg_inline_editing'], $wysisygPrefs['wysiwyg_htmltowiki']));
 }
 
 
