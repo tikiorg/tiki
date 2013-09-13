@@ -25,7 +25,7 @@ function smarty_modifier_avatarize($user, $float = '')
 	global $userlib;
 	global $prefs;
 	$avatar = $tikilib->get_user_avatar($user, $float);
-	if ( $avatar != '' && $tikilib->get_user_preference($user, 'user_information', 'public') == 'public' ) {
+	if ( $avatar != '' && $tikilib->get_user_preference($user, 'user_information', 'public') == 'public' || $prefs['feature_friends'] == 'y' ) {
 		$id = $userlib->get_user_id($user);
 		$realn = $userlib->clean_user($user);
 		include_once('tiki-sefurl.php');
@@ -33,7 +33,7 @@ function smarty_modifier_avatarize($user, $float = '')
 		$url = filter_out_sefurl($url);	
 		$extra = '';
 		if ($prefs['feature_community_mouseover'] == 'y' &&
-					$tikilib->get_user_preference($user, 'show_mouseover_user_info', 'y') === 'y') {
+					$tikilib->get_user_preference($user, 'show_mouseover_user_info', 'y') === 'y' || $prefs['feature_friends'] == 'y') {
 			$rel = TikiLib::lib('service')->getUrl(array(
 								'controller' => 'user',
 								'action' => 'info',
