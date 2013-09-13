@@ -155,6 +155,11 @@ abstract class Table_Settings_Abstract
 	 */
 	protected $ts = null;
 	/**
+	 * Used by table classes extending this class to manipulate user-specific settings
+	 * @var null
+	 */
+	protected $us = null;
+	/**
 	 * Final code settings
 	 * @var
 	 */
@@ -170,14 +175,21 @@ abstract class Table_Settings_Abstract
 		//translate default text
 		$this->translateDefault();
 
+		$this->setUserSettings($settings);
+
+		//override any table settings with user settings
+		$this->ts = $this->overrideSettings($this->ts, $this->us);
+
 		//get table-specific settings
 		$ts = $this->getTableSettings();
+		$ts['sort']['columns'] = array_values($ts['sort']['columns']);
+		$ts['filters']['columns'] = array_values($ts['filters']['columns']);
 
 		//override generic defaults with any table-specific defaults
-		$this->overrideSettings($this->default, $ts);
+		$this->s = $this->overrideSettings($this->default, $ts);
 
-		//now override any settings with user settings
-		$this->overrideSettings($this->s, $settings);
+		//set placeholders for filters
+		$this->setPlaceholders();
 
 		//create id's for any buttons based on table id
 		$this->setIds();
@@ -222,8 +234,17 @@ abstract class Table_Settings_Abstract
 	 */
 	protected function getTableSettings()
 	{
-
 		return $this->ts;
+	}
+
+	/**
+	 * Get user-specific settings
+	 *
+	 * @return null
+	 */
+	protected function setUserSettings($settings)
+	{
+		$this->us = $settings;
 	}
 
 	/**
@@ -236,19 +257,28 @@ abstract class Table_Settings_Abstract
 	private function overrideSettings($default, $settings)
 	{
 		if (is_array($default) && is_array($settings)) {
-			$this->s = array_replace_recursive($default, $settings);
-			if (isset($this->s['filters']['columns'])) {
-				foreach ($this->s['filters']['columns'] as $col => $filterinfo) {
-					$ft = $filterinfo['type'];
-					//add default placeholder text
-					if (isset($this->defaultFilters[$ft])) {
-						$this->s['filters']['columns'][$col] =
-							array_replace_recursive($this->defaultFilters[$ft], $filterinfo);
-					}
+			$ret = array_replace_recursive($default, $settings);
+		} elseif (is_array($settings)) {
+			$ret = $settings;
+		} elseif (is_array($default)) {
+			$ret = $default;
+		}
+		return $ret;
+	}
+
+	/**
+	 * Set placeholders for filters
+	 */
+	private function setPlaceholders() {
+		if (isset($this->s['filters']['columns'])) {
+			foreach ($this->s['filters']['columns'] as $col => $filterinfo) {
+				$ft = $filterinfo['type'];
+				//add default placeholder text
+				if (isset($this->defaultFilters[$ft])) {
+					$this->s['filters']['columns'][$col] =
+						array_replace_recursive($this->defaultFilters[$ft], $filterinfo);
 				}
 			}
-		} elseif (is_array($default)) {
-			$this->s = $default;
 		}
 	}
 
