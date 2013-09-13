@@ -101,13 +101,13 @@ class Services_User_Controller
 		);
 
 		if ($prefs['feature_community_mouseover'] == 'y' &&
-				$userlib->get_user_preference($user, 'show_mouseover_user_info', 'y') == 'y') {
+				$userlib->get_user_preference($user, 'show_mouseover_user_info', 'y') == 'y' || $prefs['feature_friends'] == 'y') {
 
 			$other_user = $input->username->email();
 			$result['other_user'] = $other_user;
 
 			if ($userlib->user_exists($other_user) &&
-					($tikilib->get_user_preference($other_user, 'user_information', 'public') === 'public' || $user == $other_user)) {
+					($tikilib->get_user_preference($other_user, 'user_information', 'public') === 'public' || $user == $other_user || $prefs['feature_friends'] == 'y')) {
 
 				$info = $userlib->get_user_info($other_user);
 
