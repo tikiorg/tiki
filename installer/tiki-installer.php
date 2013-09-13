@@ -807,6 +807,8 @@ if ($dbcon) {
 
 	if ($install_step == '6' && $has_tiki_db) {
 		update_preferences($prefs);
+		require_once('tiki-setup.php'); 
+                $installer->updateProfiles();
 		$smarty->assign('admin_email', get_admin_email());
 		$smarty->assign('upgradefix', (empty($dbversion_tiki) || $dbversion_tiki[0] < 4) ? 'y' : 'n');
 	}
