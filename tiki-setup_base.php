@@ -76,6 +76,7 @@ if ($tikilib->query("SHOW TABLES LIKE 'tiki_preferences'")->numRows() == 0) {
 	exit;
 }
 $tikilib->get_preferences($needed_prefs, true, true);
+global $systemConfiguration;
 $prefs = $systemConfiguration->preference->toArray() + $prefs;
 
 // IIS always sets the $_SERVER['HTTPS'] value (on|off)
