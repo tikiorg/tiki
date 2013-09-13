@@ -156,7 +156,6 @@
 					{preference name=feature_community_mouseover_name}
 					{preference name=feature_community_mouseover_gender}
 					{preference name=feature_community_mouseover_picture}
-					{preference name=feature_community_mouseover_friends}
 					{preference name=feature_community_mouseover_score}
 					{preference name=feature_community_mouseover_country}
 					{preference name=feature_community_mouseover_email}

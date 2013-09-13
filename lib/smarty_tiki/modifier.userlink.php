@@ -117,14 +117,12 @@ function smarty_modifier_userlink($other_user, $class='link', $idletime='not_set
 					$content .= tra($gender) . '<br />';
 				}
 			}
-			if ($prefs['feature_community_mouseover_friends'] == 'y' && $prefs['feature_friends'] == 'y') {
+			if ($prefs['feature_friends'] == 'y') {
 				$content .= '<img src="img/icons/ico_friend.gif" />&nbsp;';
 				$content .= $tikilib->get_friends_count($other_user) . '&nbsp;&nbsp;&nbsp;';
 			}
 			if ($prefs['feature_community_mouseover_score'] == 'y' && $star) {
 				$content .= $star . $info['score'];
-			}
-			if (($prefs['feature_community_mouseover_score'] == 'y' || $prefs['feature_community_mouseover_friends'] == 'y') && $star) {
 				$content .= '<br />';
 			}
 
