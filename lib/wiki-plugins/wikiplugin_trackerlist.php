@@ -1628,24 +1628,27 @@ function wikiplugin_trackerlist($data, $params)
 			}
 			// End Optimization
 
-			//fetch tracker items
-			$items = $trklib->list_items(
-				$trackerId,
-				$tr_offset,
-				$max,
-				$tr_sort_mode,
-				$passfields,
-				(!empty($calendarfielddate) ? null : $filterfield),
-				$filtervalue,
-				$tr_status,
-				$tr_initial,
-				$exactvalue,
-				$filter,
-				$allfields,
-				$skip_status_perm_check
-			);
+			if ($tsAjax || !$tsOn) {
+				//fetch tracker items
+				$items = $trklib->list_items(
+					$trackerId,
+					$tr_offset,
+					$max,
+					$tr_sort_mode,
+					$passfields,
+					(!empty($calendarfielddate) ? null : $filterfield),
+					$filtervalue,
+					$tr_status,
+					$tr_initial,
+					$exactvalue,
+					$filter,
+					$allfields,
+					$skip_status_perm_check
+				);
 			/*** tablesorter ***/
-			if ($tsOn && !$tsAjax) {
+			} elseif($tsOn) {
+				$trkritems = $tikilib->table('tiki_tracker_items');
+				$itemcount = $trkritems->fetchCount(array('trackerId' => $iTRACKERLIST));
 				$ts = new Table_Plugin;
 				$ts->setSettings(
 					'trackerlist_' . $iTRACKERLIST, $sortable,
@@ -1655,11 +1658,11 @@ function wikiplugin_trackerlist($data, $params)
 					isset($tsfilteroptions) ? $tsfilteroptions : null,
 					isset($tspaginate) ? $tspaginate : null,
 					$GLOBALS['requestUri'],
-					$items['cant']
+					$itemcount
 				);
-				unset($items);
 				//loads the jquery tablesorter code
 				if (is_array($ts->settings)) {
+					$ts->settings['ajax']['offset'] = 'tr_offset' . $iTRACKERLIST;
 					Table_Factory::build('pluginTrackerlist', $ts->settings);
 				}
 			}
