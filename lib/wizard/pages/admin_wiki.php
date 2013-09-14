@@ -39,9 +39,14 @@ class AdminWizardWiki extends Wizard
 		if ( isset( $_REQUEST['lm_preference'] ) ) {
 			$changes = $prefslib->applyChanges((array) $_REQUEST['lm_preference'], $_REQUEST);
 		}
-		
+
+		// If Auto TOC is selected, also set the inline Toc
+		if ($tikilib->get_preference('wiki_auto_toc')) {
+			$tikilib->set_preference('wiki_inline_auto_toc', 'y');
+		}
+
 		// Check if namespace indicator should be hidden
-		if (isset($_REQUEST['hideNamespaceIndicators']) && $_REQUEST['hideNamespaceIndicators'] == 'on') {
+		if ($tikilib->get_preference('namespace_enabled')) {
 			
 			// Hide in structure path
 			$tikilib->set_preference('namespace_indicator_in_structure', 'n');
