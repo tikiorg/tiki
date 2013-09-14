@@ -8,10 +8,11 @@
 <fieldset>
 	<legend>{tr}Admin Wizard{/tr}</legend>
 	<p class="wizard_page_title">
-	Welcome to the Tiki Admin Wizard.
+	{tr}Welcome to the Tiki Admin Wizard{/tr}.<br>
+	{tr}To learn more about this Tiki release{/tr}. {tr}Go to{/tr} <a href="http://doc.tiki.org/tiki12">Tiki 12</a>.
 	</p>
 	<p>
-	If you don't want this wizard to open next time you (or another admin) log in, <u>uncheck "Show on login"</u> below.
+	{tr}If you don't want this wizard to open next time you (or another admin) log in, uncheck "Show on login" below{/tr}.
 	</p>
 	See also <a href="tiki-admin.php" target="_blank">Admin panel</a>
 </fieldset>
