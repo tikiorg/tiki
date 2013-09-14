@@ -2,6 +2,7 @@
 
 {title}{tr}Admin Wizard{/tr}{/title}
 
+<form action="tiki-wizard_admin.php" method="post">
 <div id="wizardBody"> 
 {include file="{$wizardBody}"}
 </div>

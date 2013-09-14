@@ -1,8 +1,6 @@
 {* $Id$ *}
 
 <h1>{tr}Set up your wiki editor{/tr}</h1>
-<form action="tiki-wizard_admin.php" method="post">
-
 <div style="float:left; width:60px"><img src="img/icons/large/icon-configuration48x48.png" alt="{tr}Set up your Wiki environment{/tr}"></div>
 {tr}If you disable Wysiwyg, only the wiki text editor will be available{/tr}.
 <div align="left" style="margin-top:1em;">
