@@ -47,6 +47,10 @@ $pages[3] = new AdminWizardWiki();
 require_once('lib/wizard/pages/admin_files.php'); 
 $pages[4] = new AdminWizardFiles();
 
+require_once('lib/wizard/pages/admin_profiles.php'); 
+$pages[5] = new AdminWizardProfiles();
+
+
 /////////////////////////////////////
 // END Wizard page section
 /////////////////////////////////////
@@ -62,6 +66,9 @@ if (isset($_REQUEST['wizard_step'])) {
 	$pages[$stepNr]->onContinue();
 	if (count($pages) > $stepNr+1) {
 		$stepNr += 1;
+		if (count($pages) == $stepNr+1) {
+			$smarty->assign('lastWizardPage', 'y');
+		}
 		$pages[$stepNr]->onSetupPage($homepageUrl);
 	} else {
 		// Return to homepage, when we get to the end
