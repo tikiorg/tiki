@@ -116,7 +116,7 @@
 		{tab name="{tr}General Settings{/tr}"}
 			<fieldset>
 				<legend>{tr}Admin Wizard{/tr}</legend>
-				<a href="tiki-wizard_admin.php?url=tiki-admin.php?page=general#content2">Open Admin Wizard</a>
+				<img src="img/icons/config2.gif" /> <a href="tiki-wizard_admin.php?url=tiki-admin.php?page=general#content2">Open Admin Wizard</a>
 				{preference name=wizard_admin_hide_on_login}
 			</fieldset>
 			<fieldset>
