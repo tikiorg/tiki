@@ -4,7 +4,7 @@
 <form action="tiki-wizard_admin.php" method="post">
 
 <div style="float:left; width:60px"><img src="img/icons/large/icon-configuration48x48.png" alt="{tr}Set up your Wiki environment{/tr}"></div>
-If you disable Wysiwyg, only the wiki text editor will be available.
+{tr}If you disable Wysiwyg, only the wiki text editor will be available{/tr}.
 <div align="left" style="margin-top:1em;">
 <fieldset>
 	<legend>{tr}Wiki editor setup{/tr}</legend>
@@ -29,7 +29,7 @@ If you disable Wysiwyg, only the wiki text editor will be available.
 	<input type="checkbox" name="useInlineEditing" {if isset($useInlineEditing) AND $useInlineEditing eq 'y'}checked="checked"{/if} /> {tr}Use inline editing{/tr} <img src="img/icons/error.png" alt="{tr}Experimental{/tr}" title="{tr}Experimental{/tr}" /><br>
 	{tr}Inline editing lets the user edit pages without a context switch{/tr}. {tr}The editor is embedded in the wiki page{/tr}.<br>
 	<br>
-	See also <a href="tiki-admin.php?page=wysiwyg" target="_blank">Wysiwyg admin panel</a>
+	{tr}See also{/tr} <a href="tiki-admin.php?page=wysiwyg" target="_blank">{tr}Wysiwyg admin panel{/tr}</a>
 </fieldset>
 <br>
 </div>
