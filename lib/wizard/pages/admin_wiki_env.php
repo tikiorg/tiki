@@ -42,7 +42,7 @@ class AdminWizardWikiEnv extends Wizard
 			$editorType = $_REQUEST['editorType'];
 			$useInlineEditing = ( isset($_REQUEST['useInlineEditing']) && $_REQUEST['useInlineEditing'] == 'on' ) ? 'y' : 'n';
 
-			$wizardlib->setupWikiEnvironment($useWysiwyg, $editorType, $useInlineEditing);	
+			$wizardlib->setupEditor($useWysiwyg, $editorType, $useInlineEditing);	
 		}
 	}
 }

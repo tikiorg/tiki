@@ -50,7 +50,7 @@ if (isset($_REQUEST['wizard_step'])) {
 		$stepNr += 1;
 		$pages[$stepNr]->onSetupPage($homepageUrl);
 	} else {
-		// Return to homepage, if we get here
+		// Return to homepage, when we get to the end
 		header('Location: '.$homepageUrl);
 		exit;
 	}
@@ -58,8 +58,7 @@ if (isset($_REQUEST['wizard_step'])) {
 	$pages[0]->onSetupPage($homepageUrl);
 }
 
-$hideOnLogin = $tikilib->get_preference('wizard_admin_hide_on_login');
-$showOnLogin = $hideOnLogin !== 'y';
+$showOnLogin = $tikilib->get_preference('wizard_admin_hide_on_login') !== 'y';
 $smarty->assign('showOnLogin', $showOnLogin);
 
 $smarty->assign('wizard_step', $stepNr);

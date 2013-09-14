@@ -13,23 +13,30 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
 
 class WizardLib extends TikiLib
 {
-	public function onLogin($user, $homePageUrl)
+	public function onLogin($user, $homePageUrl, $force = false)
 	{
 		global $base_url, $userlib, $tikilib;
 		
-		// Check the userstatus
-		$isAdmin = $userlib->user_has_permission($user, 'tiki_p_admin');
+		$openWizard = false;
 		
-		// Check if the wizard should be opened
-		$hideOnLogin = $tikilib->get_preference('wizard_admin_hide_on_login');
-		if(empty($hideOnLogin)) {
-			$hideOnLogin = 'n';
+		if ($force) {
+			// Force opening of the wizard
+			// Needed for fresh-/re-installs, when admin is an anonymous user at check time
+			$openWizard = true;
+			
+		} else {
+			// Check the user status
+			$isAdmin = $userlib->user_has_permission($user, 'tiki_p_admin');
+		
+			// Check if the wizard should be opened
+			$activeLoginWizard = $tikilib->get_preference('wizard_admin_hide_on_login') !== 'y';
+			if ($isAdmin && $activeLoginWizard) {
+				$openWizard = true;
+			}
 		}
-		$activeLoginWizard = $hideOnLogin !== 'y';
 		
-		if ($isAdmin && $activeLoginWizard) {
+		if ($openWizard) {	
 			// User is an admin
-		
 			// Start the admin wizard
 			$url = $base_url.'tiki-wizard_admin.php?url=' . $homePageUrl;
 			header('Location: '.$url);
@@ -37,13 +44,12 @@ class WizardLib extends TikiLib
 			
 		} else {
 			// A regular user
-			
 			// New User wizard is not implemented
 		}
 	}
 	
 	
-	public function setupWikiEnvironment($useWysiwyg, $editorType, $useInlineEditing)
+	public function setupEditor($useWysiwyg, $editorType, $useInlineEditing)
 	{
 		$tikilib = TikiLib::lib('tiki');
 		

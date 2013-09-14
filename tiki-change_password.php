@@ -82,6 +82,15 @@ if (isset($_REQUEST["change"])) {
 	// Login the user and display Home page
 	$_SESSION["$user_cookie_site"] = $_REQUEST["user"];
 	$logslib->add_log('login', 'logged from change_password', $_REQUEST['user'], '', '', $tikilib->now);
+	
+	// Check if a wizard should be run.
+	// If a wizard is run, it will return to the $url location when it has completed. Thus no code after $wizardlib->onLogin will be executed
+	require_once('lib/wizard/wizardlib.php');
+	$wizardlib = new WizardLib();
+	$force = $_REQUEST["user"] == 'admin';
+	$wizardlib->onLogin($user, $prefs['tikiIndex'], $force);
+	
+	// Go to homepage
 	header('Location: '.$prefs['tikiIndex']);
 }
 ask_ticket('change-password');
