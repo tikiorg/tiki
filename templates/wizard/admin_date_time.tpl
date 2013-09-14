@@ -11,9 +11,7 @@
 	{preference name=server_timezone}
 	<br>
 	{preference name=users_prefs_display_timezone}
-	<br>
 	{preference name=display_field_order}
-	<br>
 	{preference name=users_prefs_display_12hr_clock}
 	<br>
 	<br>
