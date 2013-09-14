@@ -51,6 +51,21 @@ class AdminWizardWiki extends Wizard
 			// Hide in structure path
 			$tikilib->set_preference('namespace_indicator_in_structure', 'n');
 		}
+		
+		// jCapture
+		$isJCapture = $tikilib->get_preference('feature_jcapture') === 'y';
+		if ($isJCapture) {
+			
+			// Set the root file gallery to store captures
+			if (intval($tikilib->get_preference('fgal_for_jcapture')) == 0) {
+				$tikilib->set_preference('fgal_for_jcapture', '1');
+			}
+			
+			// Set token access if not enabled
+			if ($tikilib->get_preference('auth_token_access') !== 'y') {
+				$tikilib->set_preference('auth_token_access', 'y');
+			}
+		}		
 	}
 	
 	private function isNamespaceIndicatorsHidden() 
