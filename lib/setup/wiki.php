@@ -79,53 +79,7 @@ if (strstr($_SERVER['SCRIPT_NAME'], 'tiki-index.php')
 										'&repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2';
 
 		// Default HomePage content
-		$homePageContent = "{GROUP(groups=Admins)}\n";
-		$homePageContent .= '!' . tr('Thank you for installing Tiki.') . "\n\n";
-		$homePageContent .= tr('The entire Tiki Community would like to thank you and help you get introduced to Tiki.') . "\n\n";
-		$homePageContent .= '!' . tr('How To Get Started') . "\n";
-		$homePageContent .= tr('Tiki has more than 1000 features and settings.') . "\n\n";
-		$homePageContent .= tr('This allows you to create both very simple and complex websites.') . "\n\n";
-		$homePageContent .= tr('We understand that so many features might seem overwhelming at first. This is why we offer you two different ways to __Get Started__ with Tiki.') . "\n\n";
-		$homePageContent .= "{DIV(width=\"48%\",float=\"right\")}\n";
-		$homePageContent .= '-=' . tr('Manual Setup using Admin Panel') . "=-\n";
-		$homePageContent .= '!![tiki-admin.php|' . tr('Get Started using Admin Panel') . "]\n";
-		$homePageContent .= '__' . tr('Who Should Use This') . "__\n";
-		$homePageContent .= '*' . tr('You are familiar with software Admin Panels') . "\n";
-		$homePageContent .= '*' . tr('You enjoy exploring and playing with many options') . "\n";
-		$homePageContent .= '*' . tr('You already know Tiki') . "\n\n";
-		$homePageContent .= "{DIV}{DIV(width=\"48%\",float=\"left\")}\n";
-		$homePageContent .= '-=' . tr('Easy Setup using Profiles') . "=-\n";
-		$homePageContent .= '!![' . $profilesLink . '|' . tr('Get Started using Profiles') . "]\n";
-		$homePageContent .= '__' . tr('Who Should Use This') . "__\n";
-		$homePageContent .= '*' . tr('You want to get started quickly') . "\n";
-		$homePageContent .= '*' . tr("You don't feel like learning the Admin Panel right away") . "\n";
-		$homePageContent .= '*' . tr("You want to quickly test out some of Tiki's Features") . "\n\n";
-		$homePageContent .= '!!' . tr('Featured Profiles') . "\n\n";
-		$homePageContent .= tr('__Collaborative Community__ ([%0|apply profile now])', $profilesLink) . "\n";
-		$homePageContent .= tr('Setup to help subject experts and enthusiasts work together to build a Knowledge Base') . "\n";
-		$homePageContent .= '*' . tr('Wiki Editing') . "\n";
-		$homePageContent .= '*' . tr('Personal Member Spaces'). "\n";
-		$homePageContent .= '*' . tr('Forums') . "\n";
-		$homePageContent .= '*'. tr('Blogs') . "\n\n";
-		$homePageContent .= tr('__Personal Blog and Profile__ ([%0|apply profile now])', $profilesLink) . "\n";
-		$homePageContent .= tr('Setup with many cool features to help you integrate the Social Web and establish a strong presence in the Blogosphere') . "\n";
-		$homePageContent .= '*' . tr('Blog (Full set of blog related features)') . "\n";
-		$homePageContent .= '*' . tr('Image Gallery') . "\n";
-		$homePageContent .= '*' . tr('RSS Integration') . "\n";
-		$homePageContent .= '*' . tr('Video Log') . "\n\n";
-		$homePageContent .= tr('__Company Intranet__ ([%0|apply profile now])', $profilesLink) . "\n";
-		$homePageContent .= tr('Setup for a Corporate Intranet of a typical medium-sized business.') . "\n";
-		$homePageContent .= '*' . tr('Company News Articles') . "\n";
-		$homePageContent .= '*' . tr('Executive Blog') . "\n";
-		$homePageContent .= '*' . tr('File Repository & Management') . "\n";
-		$homePageContent .= '*' . tr('Collaborative Wiki') . "\n\n";
-		$homePageContent .= tr('__Small Organization Web Presence__ ([%0|apply profile now])', $profilesLink) . "\n";
-		$homePageContent .= tr('Setup for a Web Presence of a typical small business or non-profit.') . "\n";
-		$homePageContent .= '*' . tr('Company News & Updates') . "\n";
-		$homePageContent .= '*' . tr("Highlight Company's Products and Services") . "\n";
-		$homePageContent .= '*' . tr('File Gallery (great for Media Kit)'). "\n";
-		$homePageContent .= '*' . tr('Contact Form') . "\n\n";
-		$homePageContent .= "{DIV}{ELSE}\n\n";
+		$homePageContent = '';
 		$homePageContent .= '!' . tr('Congratulations') . "\n";
 		$homePageContent .= tr('This is the default homepage for your Tiki. If you are seeing this page, your installation was successful.') . "\n\n";
 		$homePageContent .= tr('You can change this page after logging in. Please review the [http://doc.tiki.org/wiki+syntax|wiki syntax] for editing details.') . "\n\n\n";
@@ -141,7 +95,6 @@ if (strstr($_SERVER['SCRIPT_NAME'], 'tiki-index.php')
 		$homePageContent .= '*' . tr('[http://info.tiki.org/Learn+More|Learn more about Tiki].') . "\n";
 		$homePageContent .= '*' . tr('[http://info.tiki.org/Help+Others|Get help], including the [http://doc.tiki.org|official documentation] and [http://tiki.org/forums|support forums].') . "\n";
 		$homePageContent .= '*' . tr('[http://info.tiki.org/Join+the+community|Join the Tiki community].') . "\n";
-		$homePageContent .= '{GROUP}';
 
 		$tikilib->create_page(
 			$_REQUEST['page'],
