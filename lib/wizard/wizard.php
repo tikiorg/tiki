@@ -15,7 +15,7 @@ abstract class Wizard
 	
 	function onContinue () {
 		// Save the user selection for showing the wizard on login or not
-		$showOnLogin = ( isset($_REQUEST['ShowOnLogin']) && $_REQUEST['ShowOnLogin'] == 'on' ) ? 'y' : 'n';
+		$showOnLogin = ( isset($_REQUEST['showOnLogin']) && $_REQUEST['showOnLogin'] == 'on' ) ? 'y' : 'n';
 
 		require_once('lib/wizard/wizardlib.php');
 		$wizardlib = new WizardLib();
