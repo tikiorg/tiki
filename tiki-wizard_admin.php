@@ -13,6 +13,9 @@ require 'tiki-setup.php';
 require_once('lib/wizard/wizardlib.php');
 $wizardlib = new WizardLib();
 
+$accesslib = TikiLib::lib('access');
+$accesslib->check_permission('tiki_p_admin');
+
 if (!isset($_REQUEST['url'])) {
 	$smarty->assign('msg', tra("No return URL specified"));
 	$smarty->display("error.tpl");
@@ -29,13 +32,15 @@ $pages = array();
 require_once('lib/wizard/pages/admin_wizard.php'); 
 $pages[0] = new AdminWizard();
 
-require_once('lib/wizard/pages/admin_wiki_env.php'); 
-$pages[1] = new AdminWizardWikiEnv();
+require_once('lib/wizard/pages/admin_date_time.php'); 
+$pages[1] = new AdminWizardDateTime();
+
+require_once('lib/wizard/pages/admin_editor.php'); 
+$pages[2] = new AdminWizardWikiEnv();
 
 /////////////////////////////////////
 // END Wizard page section
 /////////////////////////////////////
-
 
 
 // Assign the return URL
