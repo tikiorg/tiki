@@ -36,7 +36,7 @@ require_once('lib/wizard/pages/admin_date_time.php');
 $pages[1] = new AdminWizardDateTime();
 
 require_once('lib/wizard/pages/admin_editor.php'); 
-$pages[2] = new AdminWizardWikiEnv();
+$pages[2] = new AdminWizardEditor();
 
 /////////////////////////////////////
 // END Wizard page section

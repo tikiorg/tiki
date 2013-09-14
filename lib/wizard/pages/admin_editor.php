@@ -10,7 +10,7 @@ require_once('lib/wizard/wizard.php');
 /**
  * Set up the wysiwyg editor, including inline editing
  */
-class AdminWizardWikiEnv extends Wizard 
+class AdminWizardEditor extends Wizard 
 {
 	function onSetupPage ($homepageUrl) 
 	{
@@ -25,7 +25,7 @@ class AdminWizardWikiEnv extends Wizard
 		$smarty->assign('editorType', isset($prefs['wysiwyg_htmltowiki']) && $prefs['wysiwyg_htmltowiki'] === 'y' ? 'wiki' : 'html');
 
 		// Assign the page temaplte
-		$wizardTemplate = 'wizard/admin_wiki_env.tpl';
+		$wizardTemplate = 'wizard/admin_editor.tpl';
 		$smarty->assign('wizardBody', $wizardTemplate);
 	}
 
