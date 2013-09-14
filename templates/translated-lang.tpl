@@ -87,9 +87,9 @@
 					</a>
 				{/if}{/capture}
 				{if !empty($smarty.capture.default)}{* Only display the header if there's content *}
-					<h1>
+					<div>
 						{icon _id=world_edit title="{tr}Maintenance{/tr}"} {tr}Maintenance{/tr}
-					</h1>
+					</div>
 					{$smarty.capture.default}
 				{/if}				
 			</li>
