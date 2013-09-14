@@ -49,14 +49,11 @@ class WizardLib extends TikiLib
 	}
 	
 	
-	public function setupEditor($useWysiwyg, $editorType, $useInlineEditing)
+	public function setupEditor($editorType) // ($useWysiwyg, $editorType, $useInlineEditing)
 	{
 		$tikilib = TikiLib::lib('tiki');
 		
-		$wysisygPrefs = array(
-			'feature_wysiwyg' => $useWysiwyg,
-			'wysiwyg_inline_editing' => $useInlineEditing
-		);
+		$wysisygPrefs = array();
 		switch ($editorType) {
 			case 'html':
 				$wysisygPrefs['wysiwyg_htmltowiki'] = 'n';
@@ -67,9 +64,6 @@ class WizardLib extends TikiLib
 				$wysisygPrefs['wysiwyg_htmltowiki'] = 'y';
 				break;
 		}
-
-		$tikilib->set_preference('feature_wysiwyg', $wysisygPrefs['feature_wysiwyg']);
-		$tikilib->set_preference('wysiwyg_inline_editing', $wysisygPrefs['wysiwyg_inline_editing']);
 		$tikilib->set_preference('wysiwyg_htmltowiki', $wysisygPrefs['wysiwyg_htmltowiki']);
 	}
 	

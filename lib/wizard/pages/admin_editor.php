@@ -38,11 +38,16 @@ class AdminWizardEditor extends Wizard
 		
 		// write Wiki Environment settings
 		if ( isset($_REQUEST['set_up_environment']) && $_REQUEST['set_up_environment'] == 'y' ) {
-			$useWysiwyg = ( isset($_REQUEST['useWysiwyg']) && $_REQUEST['useWysiwyg'] == 'on' ) ? 'y' : 'n';
-			$editorType = $_REQUEST['editorType'];
-			$useInlineEditing = ( isset($_REQUEST['useInlineEditing']) && $_REQUEST['useInlineEditing'] == 'on' ) ? 'y' : 'n';
 
-			$wizardlib->setupEditor($useWysiwyg, $editorType, $useInlineEditing);	
+			// Commit new preferences
+			if ( isset( $_REQUEST['lm_preference'] ) ) {
+				$prefslib = TikiLib::lib('prefs');
+				$changes = $prefslib->applyChanges((array) $_REQUEST['lm_preference'], $_REQUEST);
+			}
+			
+			$editorType = $_REQUEST['editorType'];
+
+			$wizardlib->setupEditor($editorType);	
 		}
 	}
 }

@@ -6,9 +6,7 @@
 <div align="left" style="margin-top:1em;">
 <fieldset>
 	<legend>{tr}Wiki editor setup{/tr}</legend>
-	<p>
-	{tr}Use Wysiwyg{/tr} <input type="checkbox" name="useWysiwyg" {if isset($useWysiwyg) AND $useWysiwyg eq 'y'}checked="checked"{/if} />
-	</p>
+	{preference name=feature_wysiwyg}
 	<table style="border:0px">
 	<tr>
 	<td>
@@ -24,7 +22,8 @@
 	</td>
 	</tr>
 	</table>
-	<input type="checkbox" name="useInlineEditing" {if isset($useInlineEditing) AND $useInlineEditing eq 'y'}checked="checked"{/if} /> {tr}Use inline editing{/tr} <img src="img/icons/error.png" alt="{tr}Experimental{/tr}" title="{tr}Experimental{/tr}" /><br>
+
+	{preference name=wysiwyg_inline_editing}
 	{tr}Inline editing lets the user edit pages without a context switch{/tr}. {tr}The editor is embedded in the wiki page{/tr}.<br>
 	<br>
 	{tr}See also{/tr} <a href="tiki-admin.php?page=wysiwyg" target="_blank">{tr}Wysiwyg admin panel{/tr}</a>
