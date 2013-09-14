@@ -4490,12 +4490,15 @@ div#outerToc {
 	padding:5px;
 	margin:5px;
 }
-div#outerToc-static 
-{
+
+div#outerToc-static {
     border: 1px solid;
     border-collapse: collapse;
-	padding:5px;
-	margin:5px;
+	padding: 5px;
+	margin: 5px;
+}
+div#outerToc-static ul {
+	padding-left: 1em;
 }
 
 /* Friendship / Community  */
