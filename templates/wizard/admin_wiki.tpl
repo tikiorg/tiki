@@ -8,13 +8,9 @@
 <fieldset>
 	<legend>{tr}Auto TOC{/tr}</legend>
 	{preference name=wiki_auto_toc}
-	<div class="adminoptionbox clearfix" id="wiki_auto_toc_childcontainer">
-		<fieldset>
-			<legend>{tr}Auto TOC options{/tr}</legend>
-				{preference name=wiki_inline_auto_toc}
-				{preference name=wiki_inline_toc_pos}
-		</fieldset>
-	</div>
+	<br>
+	{preference name=wiki_inline_auto_toc}
+	{preference name=wiki_inline_toc_pos}
 	<br>
 	<br>
 	{tr}See also{/tr} <a href="tiki-admin.php?page=wiki&alt=Wiki#content1" target="_blank">{tr}Wiki admin panel{/tr}</a>
@@ -23,6 +19,7 @@
 <fieldset>
 	<legend>{tr}Namespaces{/tr}</legend>
 	{preference name=namespace_enabled}
+	<br>
 	{preference name=namespace_separator}
 	<input type="checkbox" name="hideNamespaceIndicators" {if isset($hideNamespaceIndicators)}checked="checked"{/if} /> {tr}Hide namespace indicators when listing pages.{/tr}
 	<br>
