@@ -13,6 +13,7 @@ function prefs_wizard_list()
             'description' => tra(''),
 			'type' => 'flag',
 			'default' => 'n',
+			'tags' => array('basic'),
 		),
 	);			
 }
