@@ -1,13 +1,16 @@
 {* $Id$ *}
 
-<h1>{tr}Set up your Wiki environment{/tr}</h1>
+<h1>{tr}Set up your wiki editor{/tr}</h1>
 <form action="tiki-wizard_admin.php" method="post">
 
 <div style="float:left; width:60px"><img src="img/icons/large/icon-configuration48x48.png" alt="{tr}Set up your Wiki environment{/tr}"></div>
+If you disable Wysiwyg, only the wiki text editor will be available.
 <div align="left" style="margin-top:1em;">
 <fieldset>
 	<legend>{tr}Wiki editor setup{/tr}</legend>
+	<p>
 	{tr}Use Wysiwyg{/tr} <input type="checkbox" name="useWysiwyg" {if isset($useWysiwyg) AND $useWysiwyg eq 'y'}checked="checked"{/if} />
+	</p>
 	<table style="border:0px">
 	<tr>
 	<td>
