@@ -1063,6 +1063,16 @@ if ($connection || !$standalone) {
 		);
 	}
 
+	// MySQL SSL 
+	$haveMySQLSSL = $tikilib->haveMySQLSSL();
+	$smarty->assign('haveMySQLSSL', $haveMySQLSSL);
+	if ($haveMySQLSSL) {
+		$isSSL = $tikilib->isMySQLConnSSL();
+	} else {
+		$isSSL = false;
+	}
+	$smarty->assign('mysqlSSL', $isSSL);
+
 	// MySQL Variables
 	$query = "SHOW VARIABLES;";
 	$result = query($query, $connection);
