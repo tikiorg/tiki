@@ -1,4 +1,4 @@
-{* $Id *}
+{* $Id$ *}
 
 <h1>{tr}Set up Files and File Gallery{/tr}</h1>
 
