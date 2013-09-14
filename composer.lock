@@ -732,6 +732,12 @@
                 "url": "http://smarty-php.googlecode.com/svn",
                 "reference": "/tags/v3.1.14/@4752"
             },
+            "dist": {
+                "type": "zip",
+                "url": "https://composer.tiki.org/dist/smarty-smarty-v3.1.14-a8f22b.zip",
+                "reference": "v3.1.14",
+                "shasum": "69a262b46a1821222eb3ba5847b46ac335457205"
+            },
             "require": {
                 "php": ">=5.2"
             },
