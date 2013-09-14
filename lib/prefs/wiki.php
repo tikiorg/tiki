@@ -707,6 +707,7 @@ function prefs_wiki_list($partial = false)
 			'name' => tr('Wiki auto-toc'),
 			'description' => tr('Automatic Table of Contents generation for wiki pages.'),
 			'type' => 'flag',
+			'help' => 'Auto TOC',
 			'default' => 'n',
 		),
 		'wiki_inline_auto_toc' => array(
