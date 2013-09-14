@@ -8,13 +8,18 @@
 <fieldset>
 	<legend>{tr}Admin Wizard{/tr}</legend>
 	<p class="wizard_page_title">
-	{tr}Welcome to the Tiki Admin Wizard{/tr}.<br>
+	<b>{tr}Welcome to the Tiki Admin Wizard{/tr}</b>.<br>
 	{tr}To learn more about this Tiki release{/tr}. {tr}Go to{/tr} <a href="http://doc.tiki.org/tiki12">Tiki 12</a>.
 	</p>
 	<p>
 	{tr}If you don't want this wizard to open next time you (or another admin) log in, uncheck "Show on login" below{/tr}.
 	</p>
 	See also <a href="tiki-admin.php" target="_blank">Admin panel</a>
+</fieldset>
+<br>
+<fieldset>
+<legend>{tr}Server Fitness{/tr}</legend>
+	To check if your server meets the requirements for running Tiki please visit <a href="tiki-check.php" target="_blank">Tiki Server Compatibility Check</a>.
 </fieldset>
 <br>
 </div>
