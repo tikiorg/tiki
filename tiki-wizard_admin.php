@@ -10,6 +10,9 @@
 
 require 'tiki-setup.php';
 
+require_once('lib/headerlib.php');
+$headerlib->add_cssfile('css/admin.css');
+
 require_once('lib/wizard/wizardlib.php');
 $wizardlib = new WizardLib();
 
@@ -37,6 +40,9 @@ $pages[1] = new AdminWizardDateTime();
 
 require_once('lib/wizard/pages/admin_editor.php'); 
 $pages[2] = new AdminWizardEditor();
+
+require_once('lib/wizard/pages/admin_wiki.php'); 
+$pages[3] = new AdminWizardWiki();
 
 /////////////////////////////////////
 // END Wizard page section
