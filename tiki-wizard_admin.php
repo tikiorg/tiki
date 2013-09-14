@@ -44,6 +44,9 @@ $pages[2] = new AdminWizardEditor();
 require_once('lib/wizard/pages/admin_wiki.php'); 
 $pages[3] = new AdminWizardWiki();
 
+require_once('lib/wizard/pages/admin_files.php'); 
+$pages[4] = new AdminWizardFiles();
+
 /////////////////////////////////////
 // END Wizard page section
 /////////////////////////////////////
