@@ -14,9 +14,6 @@
 	<p>
 	If you don't want this wizard to open next time you (or another admin) log in, <u>uncheck "Show on login"</u> below.
 	</p>
-	<p>
-	Your changes are saved, when you press "Continue".
-	</p>
 	See also <a href="tiki-admin.php" target="_blank">Admin panel</a>
 </fieldset>
 <br>

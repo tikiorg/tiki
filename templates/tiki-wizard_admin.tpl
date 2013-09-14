@@ -19,7 +19,7 @@
 	<input type="hidden" name="wizard_step" value="{$wizard_step}">
 	<input type="button" name="Cancel" value="{tr}Cancel{/tr}" onclick="window.location='{$homepageUrl}'" />
 	&nbsp;&nbsp;&nbsp;
-	<input type="submit" name="continue" value="{tr}Continue{/tr}" />
+	<input type="submit" name="continue" value="{tr}Save and Continue{/tr}" />
 	</td>
 </tr>
 </table>
