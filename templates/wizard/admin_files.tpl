@@ -8,7 +8,7 @@
 <fieldset>
 	<legend>{tr}File Gallery storage{/tr}</legend>
 	{preference name='fgal_use_db'}
-	If stored in a directory, you need specify the path ...
+	{tr}If stored in a directory, you need specify the path ...{/tr}
 	{preference name='fgal_use_dir'}
 	<br>
 	{tr}See also{/tr} <a href="tiki-admin.php?page=fgal#content1" target="_blank">{tr}File Gallery admin panel{/tr}</a>
@@ -17,7 +17,7 @@
 <fieldset>
 	<legend>{tr}Attachment storage{/tr}</legend>
 	{preference name=feature_wiki_attachments}
-	If attachments are enabled ...
+	{tr}If attachments are enabled ...{/tr}
 	{preference name=w_use_db}
 	{preference name=w_use_dir}
 	<br>
