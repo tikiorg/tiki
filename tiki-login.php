@@ -442,7 +442,7 @@ if (defined('SID') && SID != '')
 $url.= ((strpos($url, '?') === false) ? '?' : '&') . SID;
 
 // Check if a wizard should be run.
-// If a wizard it run will return to the $url location, when it has completed. Thus no code after $wizardlib->onLogin will be executed
+// If a wizard is run, it will return to the $url location when it has completed. Thus no code after $wizardlib->onLogin will be executed
 require_once('lib/wizard/wizardlib.php');
 $wizardlib = new WizardLib();
 $wizardlib->onLogin($user, $url);
