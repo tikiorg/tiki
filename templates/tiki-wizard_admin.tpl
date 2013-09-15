@@ -10,7 +10,7 @@
 <table style="width:100%">
 <tr> 
 <td style="text-align:left">
-	<input type="checkbox" name="showOnLogin" {if isset($showOnLogin) AND $showOnLogin eq true}checked="checked"{/if} /> Show on login
+	<input type="checkbox" name="showOnLogin" {if isset($showOnLogin) AND $showOnLogin eq true}checked="checked"{/if} /> {tr}Show on login{/tr}
 	</td>
 <td style="text-align:left">
 	&nbsp;</td>
