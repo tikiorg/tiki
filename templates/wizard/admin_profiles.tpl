@@ -11,7 +11,7 @@
 	<table style="width:100%">
 	<tr>
 	<td style="width:48%">
-	<b>Collaborative Community</b> (<a href="http://l5/tikitrunk/tiki-admin.php?profile=&categories%5B%5D=11.x&categories%5B%5D=Featured+profiles&repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2">apply profile now</a>)
+	<b>Collaborative Community</b> (<a href="tiki-admin.php?profile=&categories%5B%5D=12.x&categories%5B%5D=Featured+profiles&repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2">apply profile now</a>)
 	<br>
 Setup to help subject experts and enthusiasts work together to build a Knowledge Base
 	<ul>
@@ -25,7 +25,7 @@ Setup to help subject experts and enthusiasts work together to build a Knowledge
 	&nbsp;
 	</td>
 	<td style="width:48%">
-	<b>Company Intranet</b> (<a href="http://l5/tikitrunk/tiki-admin.php?profile=&categories%5B%5D=11.x&categories%5B%5D=Featured+profiles&repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2">apply profile now</a>)
+	<b>Company Intranet</b> (<a href="tiki-admin.php?profile=&categories%5B%5D=12.x&categories%5B%5D=Featured+profiles&repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2">apply profile now</a>)
 	<br>
 Setup for a Corporate Intranet of a typical medium-sized business. 
 	<ul>
@@ -38,7 +38,7 @@ Setup for a Corporate Intranet of a typical medium-sized business.
 	</tr>
 	<tr>
 	<td style="width:48%">
-	<b>Personal Blog and Profile</b>  (<a href="http://l5/tikitrunk/tiki-admin.php?profile=&categories%5B%5D=11.x&categories%5B%5D=Featured+profiles&repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2">apply profile now</a>)
+	<b>Personal Blog and Profile</b>  (<a href="tiki-admin.php?profile=&categories%5B%5D=12.x&categories%5B%5D=Featured+profiles&repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2">apply profile now</a>)
 	<br>
 Setup with many cool features to help you integrate the Social Web and establish a strong presence in the Blogosphere 
 	<ul>
@@ -52,7 +52,7 @@ Setup with many cool features to help you integrate the Social Web and establish
 	&nbsp;
 	</td>
 	<td style="width:48%">
-	<b>Small Organization Web Presence</b> (<a href="http://l5/tikitrunk/tiki-admin.php?profile=&categories%5B%5D=11.x&categories%5B%5D=Featured+profiles&repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2">apply profile now</a>)
+	<b>Small Organization Web Presence</b> (<a href="tiki-admin.php?profile=&categories%5B%5D=12.x&categories%5B%5D=Featured+profiles&repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2">apply profile now</a>)
 	<br>
 Setup for a Web Presence of a typical small business or non-profit. 
 	<ul>
@@ -65,7 +65,7 @@ Setup for a Web Presence of a typical small business or non-profit.
 	</tr>
 	</table>
 	<br>
-	{tr}See also{/tr} <a href="http://l5/tikitrunk/tiki-admin.php?page=profiles&alt=Profiles" target="_blank">{tr}Profiles admin panel{/tr}</a>
+	{tr}See also{/tr} <a href="tiki-admin.php?page=profiles&alt=Profiles" target="_blank">{tr}Profiles admin panel{/tr}</a>
 </fieldset>
 <br>
 </div>
