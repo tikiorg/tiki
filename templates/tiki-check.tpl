@@ -47,8 +47,8 @@
 	</p>
 {/if}
 
-<h2>MySQL crashed Tables</h2>
-{remarksbox type="note" title="{tr}Be careful{/tr}"}The following list is just a very quick look at SHOW TABLE STATUS that tells you, if tables have been marked as crashed. If you are experiencing database problems you should still run CHECK TABLE or myisamchk to make sure.{/remarksbox}
+<h2>{tr}MySQL crashed Tables{/tr}</h2>
+{remarksbox type="note" title="{tr}Be careful{/tr}"}{tr}The following list is just a very quick look at SHOW TABLE STATUS that tells you, if tables have been marked as crashed. If you are experiencing database problems you should still run CHECK TABLE or myisamchk to make sure{/tr}.{/remarksbox}
 <table class="normal">
 	<tr>
 		<th>{tr}Table{/tr}</th>
@@ -65,8 +65,8 @@
 	{/foreach}
 </table>
 
-<h2>Test sending e-mails</h2>
-To test if your installation is capable of sending emails please visit the <a href="tiki-install.php">Tiki Installer</a>.
+<h2>{tr}Test sending e-mails{/tr}</h2>
+{tr}To test if your installation is capable of sending emails please visit the <a href="tiki-install.php">Tiki Installer</a>{/tr}.
 
 <h2>{tr}Server Information{/tr}</h2>
 <table class="normal">
@@ -119,8 +119,8 @@ To test if your installation is capable of sending emails please visit the <a hr
 	{/foreach}
 </table>
 
-<h2>Special directories</h2>
-To backup these directories go to <a href="tiki-admin_system.php">Admin->Tiki Cache/SysAdmin</a>.
+<h2>{tr}Special directories{/tr}</h2>
+{tr}To backup these directories go to <a href="tiki-admin_system.php">Admin->Tiki Cache/SysAdmin</a>{/tr}.
 {if count($dirs)}
 	<table class="normal">
 		<tr>
@@ -141,9 +141,9 @@ To backup these directories go to <a href="tiki-admin_system.php">Admin->Tiki Ca
 				</td>
 				<td>
 					{if $dirsWritable[$k]}
-						Directory is writeable.
+						{tr}Directory is writeable{/tr}.
 					{else}
-						Directory is not writeable!
+						{tr}Directory is not writeable!{/tr}
 					{/if}
 				</td>
 			</tr>
@@ -263,7 +263,7 @@ To backup these directories go to <a href="tiki-admin_system.php">Admin->Tiki Ca
 </table>
 
 <h2>{tr}PHP Security properties{/tr}</h2>
-To check the file integrity of your Tiki installation, go to <a href="tiki-admin_security.php">Admin->Security</a>.
+{tr}To check the file integrity of your Tiki installation, go to <a href="tiki-admin_security.php">Admin->Security</a>{/tr}.
 <table class="normal">
 	<tr>
 		<th>{tr}Property{/tr}</th>
@@ -315,4 +315,4 @@ To check the file integrity of your Tiki installation, go to <a href="tiki-admin
 </table>
 
 <h2>{tr}PHP Info{/tr}</h2>
-For more detailed information about your PHP installation see <a href="tiki-phpinfo.php">Admin->phpinfo</a>.
+{tr}For more detailed information about your PHP installation see <a href="tiki-phpinfo.php">Admin->phpinfo</a>{/tr}.
