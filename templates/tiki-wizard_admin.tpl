@@ -18,7 +18,7 @@
 	<input type="hidden" name="set_up_environment" value="y">
 	<input type="hidden" name="url" value="{$homepageUrl}">
 	<input type="hidden" name="wizard_step" value="{$wizard_step}">
-	<input type="button" name="Cancel" value="{tr}Cancel{/tr}" onclick="window.location='{$homepageUrl}'" />
+	<input type="reset" name="cancel" value="{tr}Cancel{/tr}" onclick="window.location='{$homepageUrl}'" />
 	&nbsp;&nbsp;&nbsp;
 	<input type="submit" name="continue" value="{if isset($lastWizardPage)}{tr}Finish{/tr}{else}{tr}Save and Continue{/tr}{/if}" />
 	</td>
