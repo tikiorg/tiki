@@ -31,7 +31,7 @@
 	{/if}
 
 	<div class="submit">
-		<input type="submit" value="{tr}Search{/tr}"/>
+		<input type="submit" class="btn btn-default" value="{tr}Search{/tr}"/>
 		<input type="hidden" name="save_query" value="{$moduleId|escape}"/>
 	</div>
 	<div class="results">

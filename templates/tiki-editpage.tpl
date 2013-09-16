@@ -134,7 +134,7 @@
 			<option value="inlinediff"{if isset($diff_style) && $diff_style eq "inlinediff"} selected="selected"{/if} >{tr}text{/tr}</option>			  
 			<option value="inlinediff-full"{if isset($diff_style) && $diff_style eq "inlinediff-full"} selected="selected"{/if} >{tr}text full{/tr}</option>			  
 		</select>
-		<input type="submit" class="wikiaction tips" title="{tr}Edit wiki page{/tr}|{tr}Change the style used to display differences to be translated.{/tr}" name="preview" value="{tr}Change diff styles{/tr}" onclick="needToConfirm=false;">
+		<input type="submit" class="wikiaction tips btn btn-default" title="{tr}Edit wiki page{/tr}|{tr}Change the style used to display differences to be translated.{/tr}" name="preview" value="{tr}Change diff styles{/tr}" onclick="needToConfirm=false;">
 	{/if}
 	
 	{if $page_ref_id}<input type="hidden" name="page_ref_id" value="{$page_ref_id}">{/if}
@@ -164,7 +164,7 @@
 						{/remarksbox}
 					{/if}
 						<p>{tr}Page name:{/tr} <input type="text" name="page" value="{$page|escape}">
-							<input type="submit" name="rename" value="{tr}Rename{/tr}">
+							<input type="submit" class="btn btn-default" name="rename" value="{tr}Rename{/tr}">
 						</p>
 				{else}
 					<input type="hidden" name="page" value="{$page|escape}"> 
@@ -299,7 +299,7 @@ $("input[name=allowhtml]").change(function() {
 								<fieldset>
 									<legend>{tr}Import HTML:{/tr}</legend>
 									<input class="wikiedit" type="text" id="suck_url" name="suck_url" value="{$suck_url|escape}">&nbsp;
-									<input type="submit" class="wikiaction" name="do_suck" value="{tr}Import{/tr}" onclick="needToConfirm=false;">&nbsp;
+									<input type="submit" class="wikiaction btn btn-default" name="do_suck" value="{tr}Import{/tr}" onclick="needToConfirm=false;">&nbsp;
 									<label><input type="checkbox" name="parsehtml" {if $parsehtml eq 'y'}checked="checked"{/if}>&nbsp;
 									{tr}Try to convert HTML to wiki{/tr}. </label>
 								</fieldset>
@@ -325,7 +325,7 @@ $("input[name=allowhtml]").change(function() {
 										<input type="hidden" id="page2" name="page2" value="{$page}">
 										<input name="userfile2" type="file" id="attach-upload">
 										 <label>{tr}Comment:{/tr}<input type="text" name="attach_comment" maxlength="250" id="attach-comment"></label>
-										<input type="submit" class="wikiaction" name="attach" value="{tr}Attach{/tr}" onclick="javascript:needToConfirm=false;insertImgFile('editwiki','userfile2','hasAlreadyInserted2','file', 'page2', 'attach_comment'); return true;">
+										<input type="submit" class="wikiaction btn btn-default" name="attach" value="{tr}Attach{/tr}" onclick="javascript:needToConfirm=false;insertImgFile('editwiki','userfile2','hasAlreadyInserted2','file', 'page2', 'attach_comment'); return true;">
 									</fieldset>
 								{/if}
 	

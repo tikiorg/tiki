@@ -34,7 +34,7 @@
   <tr>
     <td >&nbsp;</td>
     <td >
-      <input type="submit" name="save" value="{tr}Save{/tr}">
+      <input type="submit" class="btn btn-default" name="save" value="{tr}Save{/tr}">
       {* set your changes and save 'em *}
     </td>
   </tr>
@@ -53,7 +53,7 @@
 <td>{tr}Filter{/tr}</td>
 <td>
 <input type="text" name="filter" value="{$filter|escape}">
-<input type="submit" name="filteruseq" value="{tr}Filter{/tr}">
+<input type="submit" class="btn btn-default" name="filteruseq" value="{tr}Filter{/tr}">
 </td>
 </tr>
 <tr>
@@ -70,7 +70,7 @@
 <tr>
 <td>&nbsp;</td>
 <td>
-<input type="submit" name="useq" value="{tr}Use{/tr}">
+<input type="submit" class="btn btn-default" name="useq" value="{tr}Use{/tr}">
 </td>
 </tr>
 </table>

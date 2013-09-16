@@ -9,7 +9,7 @@
 			<input type="hidden" name="do" value="{$do|escape}">
 			<input type="hidden" name="threadId" value="{$threadId|escape}">
 			<input type="hidden" name="confirm" value="1">
-			<input type="submit" value="{tr}Confirm{/tr}">
+			<input type="submit" class="btn btn-default" value="{tr}Confirm{/tr}">
 		</p>
 	</form>
 {/if}

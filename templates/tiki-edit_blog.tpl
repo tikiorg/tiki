@@ -174,8 +174,8 @@
     {/tab}
   {/tabset}
   {if $prefs.feature_blog_heading eq 'y' and $tiki_p_edit_templates eq 'y'}
-    <input type="submit" class="wikiaction" name="preview" value="{tr}Heading preview{/tr}">
+    <input type="submit" class="wikiaction btn btn-defaul" name="preview" value="{tr}Heading preview{/tr}">
   {/if}
-  <input type="submit" class="wikiaction" name="save" value="{tr}Save{/tr}">
+  <input type="submit" class="wikiaction btn btn-default" name="save" value="{tr}Save{/tr}">
 </form>
 <br>

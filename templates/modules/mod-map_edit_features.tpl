@@ -9,7 +9,7 @@
 			{foreach from=$edit_features.hiddenInput key=f item=v}
 				<input id="{$f|escape}" type="hidden" name="forced~{$f|escape}" value="{$v|escape}"/>
 			{/foreach}
-			<input type="submit" name="create" value="{tr}Create{/tr}"/>
+			<input type="submit" class="btn btn-default" name="create" value="{tr}Create{/tr}"/>
 		</div>
 	</form>
 	{jq}

@@ -24,7 +24,7 @@
 				{/foreach}
 		</select>
 	  </div>
-	  <div style="float:left;"><input type="submit" name="filter" value="{tr}Filter{/tr}"></div>
+	  <div style="float:left;"><input type="submit" class="btn btn-default" name="filter" value="{tr}Filter{/tr}"></div>
 	  </div>
 </form>
 
@@ -64,7 +64,7 @@
 						<div style="float:left">
 						{icon _id='cross' _tag='input_image' _confirm="{tr}Delete the selected permissions?{/tr}" name='delsel' alt="{tr}Delete the selected permissions{/tr}"}
 							 <br>						
-							 <input type="text" name="toGroup"><input type="submit" name="dupsel" value="{tr}Duplicate the selected permissions on this group{/tr}">
+							 <input type="text" name="toGroup"><input type="submit" class="btn btn-default" name="dupsel" value="{tr}Duplicate the selected permissions on this group{/tr}">
 	  					</div>
 					{/if}
 					</form>
@@ -110,7 +110,7 @@
 						<div style="float:left">
 							 {icon _id='cross' _tag='input_image' _confirm="{tr}Delete the selected permissions?{/tr}" name='delsel' alt="{tr}Delete the selected permissions{/tr}" style='vertical-align: middle;'}
 							 <br>						
-							 <input type="text" name="toGroup"><input type="submit" name="dupsel" value="{tr}Duplicate the selected permissions on this group{/tr}">
+							 <input type="text" name="toGroup"><input type="submit" class="btn btn-default" name="dupsel" value="{tr}Duplicate the selected permissions on this group{/tr}">
 						</div>
 					{/if}
 					</form>

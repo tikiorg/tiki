@@ -21,7 +21,7 @@
           </select>
         </label>
  
-        <input type="submit" class="wikiaction" name="search" value="{tr}Go{/tr}"/>
+        <input type="submit" class="wikiaction btn btn-default" name="search" value="{tr}Go{/tr}"/>
 
       </form>
       <!--[if IE]><br class="clear" style="height: 1px !important" /><![endif]-->

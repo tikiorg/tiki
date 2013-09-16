@@ -13,7 +13,7 @@
 <form action="tiki-admin.php?page=category" method="post">
 	<input type="hidden" name="categorysetup" />
 	<div class="input_submit_container clear" style="text-align: right;">
-		<input type="submit" value="{tr}Change preferences{/tr}" />
+		<input type="submit" class="btn btn-default" value="{tr}Change preferences{/tr}" />
 	</div>
 
 	<fieldset class="admin">
@@ -90,6 +90,6 @@
 	</fieldset>
 
 	<div class="input_submit_container clear" style="text-align: center;">
-		<input type="submit" value="{tr}Change preferences{/tr}" />
+		<input type="submit" class="btn btn-default" value="{tr}Change preferences{/tr}" />
 	</div>
 </form>

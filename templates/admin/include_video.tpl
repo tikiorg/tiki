@@ -9,7 +9,7 @@
 {button _text="{tr}Add New Media{/tr}" href="tiki-kaltura_upload.php"}
 
 <div class="heading input_submit_container" style="text-align: right">
-	<input type="submit" name="video" value="{tr}Change preferences{/tr}" />
+	<input type="submit" class="btn btn-default" name="video" value="{tr}Change preferences{/tr}" />
 </div>
 <fieldset class="admin">
 
@@ -61,7 +61,7 @@
 
 <br>
 
-<div align="center" style="padding:1em;"><input type="submit" name="video" value="{tr}Change preferences{/tr}" /></div>
+<div align="center" style="padding:1em;"><input type="submit" class="btn btn-default" name="video" value="{tr}Change preferences{/tr}" /></div>
 </form>
 {/tab}
 {tab name="{tr}Ustream Watershed{/tr}"}
@@ -112,6 +112,6 @@
 	{preference name=watershed_fme_key}
 </fieldset>
 
-<div align="center" style="padding:1em;"><input type="submit" name="video" value="{tr}Change preferences{/tr}" /></div>
+<div align="center" style="padding:1em;"><input type="submit" class="btn btn-default" name="video" value="{tr}Change preferences{/tr}" /></div>
 {/tab}
 {/tabset}

@@ -2,7 +2,7 @@
 
 <form action="tiki-admin.php?page=trackers" method="post">
 	<div class="heading input_submit_container" style="text-align: right">
-		<input type="submit" name="trkset" value="{tr}Change preferences{/tr}" />
+		<input type="submit" class="btn btn-default" name="trkset" value="{tr}Change preferences{/tr}" />
 	</div>
 {tabset}
 	{tab name="{tr}Settings{/tr}"}
@@ -90,7 +90,7 @@
 	{/tab}
 {/tabset}
 	<div class="heading input_submit_container" style="text-align: center">
-		<input type="submit" name="trkset" value="{tr}Change preferences{/tr}" />
+		<input type="submit" class="btn btn-default" name="trkset" value="{tr}Change preferences{/tr}" />
 	</div>
 </form>
 
@@ -101,7 +101,7 @@
 {if $attachements}
       <form action="tiki-admin.php?page=trackers" method="post">
         <input type="text" name="find" value="{$find|escape}" />
-        <input type="submit" name="action" value="{tr}Find{/tr}" />
+        <input type="submit" class="btn btn-default" name="action" value="{tr}Find{/tr}" />
       </form>
 {/if}
       {cycle values="odd,even" print=false}
@@ -165,13 +165,13 @@
         <td>
           <form action="tiki-admin.php?page=trackers" method="post">
             <input type="hidden" name="all2db" value="1" />
-            <input type="submit" name="action" value="{tr}Change all to db{/tr}" />
+            <input type="submit" class="btn btn-default" name="action" value="{tr}Change all to db{/tr}" />
           </form>
         </td>
         <td>
           <form action="tiki-admin.php?page=trackers" method="post">
             <input type="hidden" name="all2file" value="1" />
-            <input type="submit" name="action" value="{tr}Change all to file{/tr}" />
+            <input type="submit" class="btn btn-default" name="action" value="{tr}Change all to file{/tr}" />
           </form>
         </td>
       </tr>

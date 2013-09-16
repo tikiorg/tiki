@@ -15,7 +15,7 @@
 <table class="formcolor">
 <tr><td>{tr}Option:{/tr}</td><td><textarea name="optionText" rows="5" cols="40">{$optionText|escape}</textarea></td></tr>
 <tr><td>{tr}Points:{/tr}</td><td><input type="text" name="points" value="{$points|escape}"></td></tr>
-<tr><td >&nbsp;</td><td><input type="submit" name="save" value="{tr}Save{/tr}"></td></tr>
+<tr><td >&nbsp;</td><td><input type="submit" class="btn btn-default" name="save" value="{tr}Save{/tr}"></td></tr>
 </table>
 </form>
 

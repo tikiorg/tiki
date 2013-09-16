@@ -49,7 +49,7 @@
 
 <form method="post" action="{$smarty.server.REQUEST_URI|escape}">
 <input type="hidden" name="referer" value="{$referer|escape}">
-<div style="float: left; margin-right: 10px;"><input type="submit" name="assign" value="{tr}Apply{/tr}"></div>
+<div style="float: left; margin-right: 10px;"><input type="submit" class="btn btn-default" name="assign" value="{tr}Apply{/tr}"></div>
 {if $isTop ne 'y'}
 	<p>{tr}Groups watching:{/tr} {$group_watches|@count}</p>
 {else}
@@ -98,5 +98,5 @@
 		{/if}
 	{/foreach}
 </table>
-	<p><div style="float: left; margin-right: 10px;"><input type="submit" name="assign" value="{tr}Apply{/tr}"></div></p>
+	<p><div style="float: left; margin-right: 10px;"><input type="submit" class="btn btn-default" name="assign" value="{tr}Apply{/tr}"></div></p>
 </form>

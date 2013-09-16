@@ -15,7 +15,7 @@
 		{/section}
 	
   </select>
-  <input type="submit" name="go" value="{tr}Go{/tr}">
+  <input type="submit" class="btn btn-default" name="go" value="{tr}Go{/tr}">
 </form>
 {* Dislay a form to add or edit a site *}
 <h2>{if $siteId}{tr}Edit a site{/tr}{else}{tr}Add a Site{/tr}{/if}</h2>
@@ -71,7 +71,7 @@
     </tr>
     <tr>
       <td>&nbsp;</td>
-      <td><input type="submit" name="save" value="{tr}Save{/tr}"></td>
+      <td><input type="submit" class="btn btn-default" name="save" value="{tr}Save{/tr}"></td>
     </tr>
   </table>
 </form>
@@ -122,7 +122,7 @@
   </table>
   {if $items}
   {tr}Perform action with selected:{/tr}
-  <input type="submit" name="groupdel" value=" {tr}Delete{/tr} ">
+  <input type="submit" class="btn btn-default" name="groupdel" value=" {tr}Delete{/tr} ">
   {/if}
 </form>
 {pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links} 

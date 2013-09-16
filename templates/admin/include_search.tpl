@@ -16,7 +16,7 @@
 <form action="tiki-admin.php?page=search" method="post">
 	<input type="hidden" name="searchprefs" />
 	<div class="heading input_submit_container" style="text-align: right">
-		<input type="submit" value="{tr}Change preferences{/tr}" />
+		<input type="submit" class="btn btn-default" value="{tr}Change preferences{/tr}" />
 	</div>
 
 	{tabset name=admin_search}
@@ -196,6 +196,6 @@ $("#log-rebuild").click(function(){
 
 	{/tabset}
 	<div class="heading input_submit_container" style="text-align: right">
-		<input type="submit" value="{tr}Change preferences{/tr}" />
+		<input type="submit" class="btn btn-default" value="{tr}Change preferences{/tr}" />
 	</div>
 </form>

@@ -36,7 +36,7 @@
 			{else}
 				<input type="checkbox" name="add_child"> {tr}Child{/tr}
 			{/if}      
-			<input type="submit" name="insert_into_struct" value="{tr}Add Page{/tr}">
+			<input type="submit" class="btn btn-default" name="insert_into_struct" value="{tr}Add Page{/tr}">
 		</div>
 	</form>
 	</div>

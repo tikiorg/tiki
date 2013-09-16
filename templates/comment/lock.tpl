@@ -5,7 +5,7 @@
 			<input type="hidden" name="type" value="{$type|escape}"/>
 			<input type="hidden" name="objectId" value="{$objectId|escape}"/>
 			<input type="hidden" name="confirm" value="1"/>
-			<input type="submit" value="{tr}Confirm{/tr}"/>
+			<input type="submit" class="btn btn-default" value="{tr}Confirm{/tr}"/>
 		</p>
 	</form>
 {/if}

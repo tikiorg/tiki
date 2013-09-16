@@ -351,7 +351,7 @@
 		{include file='categorize.tpl' notable='y'}<br>
 		<hr class="clear">
 		<div id="page_bar">
-			<input name="upload" type="submit" value="{tr}Save{/tr}">
+			<input name="upload" type="submit" class="btn btn-default" value="{tr}Save{/tr}">
 		</div>
 	{elseif $prefs.javascript_enabled neq 'y'}
 		{$upload_str}
@@ -359,14 +359,14 @@
 		{include file='categorize.tpl' notable='y'}<br>
 		<hr class="clear">
 		<div id="page_bar">
-			<input type="submit" name="upload" value="{tr}Upload{/tr}">
+			<input type="submit" class="btn btn-default" name="upload" value="{tr}Upload{/tr}">
 		</div>
 	{/if}
 </form>
 
 {if !$editFileId}
 	<div id="page_bar">
-		<input type="submit"
+		<input type="submit" class="btn btn-default"
 			{if $prefs.fgal_upload_progressbar eq 'n'}
 				onClick="upload_files(); return false"
 			{elseif $prefs.fgal_upload_progressbar eq 'ajax_flash'}
@@ -379,9 +379,9 @@
 		>
 		<hr class="clear">
 		{if $prefs.fgal_upload_progressbar eq 'ajax_flash'}
-			<input type="submit" id="btnCancel" style="display:none" value="{tr}Cancel Upload{/tr}" onclick="return false">
+			<input type="submit" id="btnCancel" class="btn btn-default" style="display:none" value="{tr}Cancel Upload{/tr}" onclick="return false">
 		{elseif $simpleMode neq 'y'}
-			<input type="submit" onclick="javascript:add_upload_file('multiple_upload'); return false" value="{tr}Add Another File{/tr}">
+			<input type="submit" class="btn btn-default" onclick="javascript:add_upload_file('multiple_upload'); return false" value="{tr}Add Another File{/tr}">
 		{/if}
 	</div>
 {/if}
@@ -563,7 +563,7 @@
 						<input type="checkbox" name="reference" value="1" class="tips" title="{tr}Upload from URL{/tr}|{tr}Keeps a reference to the remote file{/tr}">
 					</label>
 				{/if}
-				<input type="submit" value="{tr}Add{/tr}">
+				<input type="submit" class="btn btn-default" value="{tr}Add{/tr}">
 			</p>
 			<div class="result"></div>
 		</form>

@@ -22,7 +22,7 @@
 			<tr>
 				<td>&nbsp;</td>
 				<td>
-					<input type="submit" name="replace" value="{tr}Save{/tr}">
+					<input type="submit" class="btn btn-default" name="replace" value="{tr}Save{/tr}">
 				</td>
 			</tr>
 		</table>
@@ -83,7 +83,7 @@
 		<tr class="{cycle}">
 			<td>&nbsp;</td>
 			<td>
-				<input type="submit" name="setting" value="{tr}Save{/tr}">
+				<input type="submit" class="btn btn-default" name="setting" value="{tr}Save{/tr}">
 			</td>
 		</tr>
 	</table>
@@ -107,7 +107,7 @@
 		<tr>
 			<td>&nbsp;</td>
 			<td>
-				<input type="submit" name="add" value="{tr}Add{/tr}">
+				<input type="submit" class="btn btn-default" name="add" value="{tr}Add{/tr}">
 			</td>
 		</tr>
 	</table>

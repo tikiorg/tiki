@@ -65,7 +65,7 @@
 					{tr}Or, create a new zone:{/tr}
 					<br>
 					<input type="text" name="zoneName" size="10">
-					<input type="submit" name="create_zone" value="{tr}Create{/tr}">
+					<input type="submit" class="btn btn-default" name="create_zone" value="{tr}Create{/tr}">
 				</td>
 			</tr>
 		</table>
@@ -254,7 +254,7 @@
 		</table>
 	</div>
 
-	<input type="submit" name="save" value="{tr}Save the Banner{/tr}">
+	<input type="submit" class="btn btn-default" name="save" value="{tr}Save the Banner{/tr}">
 </form>
 
 {if $zones}

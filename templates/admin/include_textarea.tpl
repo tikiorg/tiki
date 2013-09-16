@@ -4,7 +4,7 @@
 
 <form action="tiki-admin.php?page=textarea" method="post">
 	<div class="heading input_submit_container" style="text-align: right">
-		<input type="submit" name="textareasetup" value="{tr}Change preferences{/tr}" />
+		<input type="submit" class="btn btn-default" name="textareasetup" value="{tr}Change preferences{/tr}" />
 	</div>
 	
 	{tabset name="admin_textarea"}
@@ -248,8 +248,8 @@ if (window.location.href.indexOf('plugin_alias_new=true') > -1) {
 						<a href="tiki-admin.php?page=textarea&amp;plugin_alias={$name|escape}">{$name|escape}</a>
 					{/foreach}
 					<div align="center">
-						<input type="submit" name="enable" value="{tr}Enable Plugins{/tr}"/>
-						<input type="submit" name="delete" value="{tr}Delete Plugins{/tr}"/>
+						<input type="submit" class="btn btn-default" name="enable" value="{tr}Enable Plugins{/tr}"/>
+						<input type="submit" class="btn btn-warning" name="delete" value="{tr}Delete Plugins{/tr}"/>
 					</div>
 					{remarksbox type="tip" title="{tr}Tip{/tr}"}
 						{tr}Click on the plugin name to edit it.{/tr} {tr}Click on the + icon to add a new one.{/tr}
@@ -478,7 +478,7 @@ $('#pluginalias_simple_new').hide();
 		{/tab}
 	{/tabset}
 	<div class="heading input_submit_container" style="text-align: right">
-		<input type="submit" name="textareasetup" value="{tr}Change preferences{/tr}" />
+		<input type="submit" class="btn btn-default" name="textareasetup" value="{tr}Change preferences{/tr}" />
 	</div>
 </form>
 

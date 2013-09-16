@@ -11,7 +11,7 @@
 			<input type="hidden" name="trackerId" value="{$tracker_input.trackerId|escape}"/>
 			<input type="hidden" name="controller" value="tracker"/>
 			<input type="hidden" name="action" value="insert_item"/>
-			<input type="submit" name="create" value="{$tracker_input.submit|escape}"/>
+			<input type="submit" name="create" value="{$tracker_input.submit|escape}" class="btn btn-default" />
 			{foreach from=$tracker_input.hiddenInput key=f item=v}
 				<input id="{$f|escape}" type="hidden" name="forced~{$f|escape}" value="{$v|escape}"/>
 			{/foreach}
@@ -94,7 +94,7 @@
 					modeManager.addMode({name: newMode = "{{$tpl_module_title}}", controls: [control, new OpenLayers.Control.NavToolbar()]});
 				}
 
-				button = $('<input type="submit"/>')
+				button = $('<input type="submit" class="btn btn-default" />')
 					.val($(':submit', form).val())
 					.button()
 					.click(function () {

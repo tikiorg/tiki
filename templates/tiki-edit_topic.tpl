@@ -23,6 +23,6 @@
     </td>
 </tr>
 <tr><td>{tr}Notification Email{/tr}</td><td><input type="text" name="email" value="{$email|escape}">&nbsp;<a href="tiki-admin_notifications.php" title="{tr}Admin notifications{/tr}">{icon _id='wrench' alt="{tr}Admin notifications{/tr}"}</a></td></tr>
-<tr><td>&nbsp;</td><td><input type="submit" name="edittopic" value="{tr}Edit{/tr}"></td></tr>
+<tr><td>&nbsp;</td><td><input type="submit" class="btn btn-default" name="edittopic" value="{tr}Edit{/tr}"></td></tr>
 </table>
 </form>

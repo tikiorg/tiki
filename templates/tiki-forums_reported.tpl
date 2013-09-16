@@ -16,7 +16,7 @@
 <td>
 	<small>{tr}Find{/tr}</small>
 	<input size="8" type="text" name="find" value="{$find|escape}">
-	<input type="submit" name="filter" value="{tr}Filter{/tr}">
+	<input type="submit" class="btn btn-default" name="filter" value="{tr}Filter{/tr}">
 </td>
 </tr>
 </table>	
@@ -56,7 +56,7 @@
 {/section}
 </table>
 {if $items}
-{tr}Perfom action with checked:{/tr} <input type="submit" name="del" value=" {tr}Un-report{/tr} ">
+{tr}Perfom action with checked:{/tr} <input type="submit" class="btn btn-warning" name="del" value=" {tr}Un-report{/tr} ">
 {/if}
 
 </form>

@@ -355,7 +355,7 @@ function delete_ref(ref_id){
 						{/section}
 					</select>
 					<br>
-					<input class="wikiaction" type="submit" value="{tr}Use{/tr}" id="u_lib" name="u_lib">
+					<input class="wikiaction btn btn-default" type="submit" value="{tr}Use{/tr}" id="u_lib" name="u_lib">
 					<br><span id="u_lib_status"></span>
 				{/if}
 			{/if}
@@ -429,13 +429,13 @@ function delete_ref(ref_id){
 					<tr>
 						<td colspan="2">
 							<div id="e_btns">
-								<input class="wikiaction" type="submit" value="Save" id="e_submit" name="e_submit">
-								<input class="wikiaction" type="reset" value="Cancel" id="e_cancel" name="e_cancel">
+								<input class="wikiaction btn btn-default" type="submit" value="Save" id="e_submit" name="e_submit">
+								<input class="wikiaction btn btn-warning" type="reset" value="Cancel" id="e_cancel" name="e_cancel">
 								<span id="e_status" style="margin: 0 0 0 10px;"></span>
 							</div>
 							<div id="a_btns">
-								<input class="wikiaction" type="submit" value="{tr}Add{/tr}" id="a_submit" name="a_submit">
-								<input class="wikiaction" type="reset" value="{tr}Cancel{/tr}" id="a_cancel" name="a_cancel">
+								<input class="wikiaction btn btn-default" type="submit" value="{tr}Add{/tr}" id="a_submit" name="a_submit">
+								<input class="wikiaction btn btn-warning" type="reset" value="{tr}Cancel{/tr}" id="a_cancel" name="a_cancel">
 								<span id="a_status" style="margin: 0 0 0 10px;"></span>
 							</div>
 						</td>

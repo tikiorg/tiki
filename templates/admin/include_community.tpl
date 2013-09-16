@@ -8,7 +8,7 @@
 
 <form action="tiki-admin.php?page=community" method="post">
 	<div class="input_submit_container clear" style="text-align: right;">
-		<input type="submit" value="{tr}Change preferences{/tr}" />
+		<input type="submit" class="btn btn-default" value="{tr}Change preferences{/tr}" />
 	</div>
 
 	{tabset name="admin_community"}
@@ -229,6 +229,6 @@
 		{/tab}
 	{/tabset}
 	<div class="input_submit_container clear" style="text-align: center;">
-		<input type="submit" value="{tr}Change preferences{/tr}" />
+		<input type="submit" class="btn btn-default" value="{tr}Change preferences{/tr}" />
 	</div>
 </form>

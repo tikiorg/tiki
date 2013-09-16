@@ -31,6 +31,6 @@
    		  <label>{tr}Description:{/tr} <input type="text" name="description[]" maxlength="250"></label>
 		  <br>
 		  <input size="16" name="userfile[]" type="file">
-          <input type="submit" name="upload" value="{tr}Upload{/tr}">
+          <input type="submit" class="btn btn-default" name="upload" value="{tr}Upload{/tr}">
 	</form>
 {/if}

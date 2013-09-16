@@ -9,6 +9,6 @@
 		<textarea name="content">{$content|escape}</textarea>
 	</label>
 	<div class="submit">
-		<input type="submit" value="{tr}Set{/tr}"/>
+		<input type="submit" class="btn btn-default" value="{tr}Set{/tr}"/>
 	</div>
 </form>

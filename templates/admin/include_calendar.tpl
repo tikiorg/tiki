@@ -4,7 +4,7 @@
 
 <form action="tiki-admin.php?page=calendar" method="post">
 	<div class="input_submit_container clear" style="text-align: right;">
-		<input type="submit" name="calprefs" value="{tr}Change settings{/tr}" />
+		<input type="submit" class="btn btn-default" name="calprefs" value="{tr}Change settings{/tr}" />
 	</div>
 
 	<fieldset class="admin">
@@ -85,7 +85,7 @@
 		{preference name=calendar_watch_editor}
 	</fieldset>
 	<div class="input_submit_container clear" style="text-align: center;">
-		<input type="submit" name="calprefs" value="{tr}Change settings{/tr}" />
+		<input type="submit" class="btn btn-default" name="calprefs" value="{tr}Change settings{/tr}" />
 	</div>
 </form>
 

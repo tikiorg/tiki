@@ -35,7 +35,7 @@
       <option value="all">{tr}in entire directory{/tr}</option>
       <option value="cat">{tr}in current directory category{/tr}</option>
     </select>
-    <input type="submit" value="{tr}Search{/tr}">
+    <input type="submit" class="btn btn-default" value="{tr}Search{/tr}">
   </form>
 </div>
 {/if}
@@ -95,7 +95,7 @@
       <option value="lastModif_desc" {if $sort_mode eq 'lastModif_desc'}selected="selected"{/if}>{tr}Last updated (desc){/tr}</option>
       <option value="lastModif_asc" {if $sort_mode eq 'lastModif_asc'}selected="selected"{/if}>{tr}Last updated (asc){/tr}</option>
     </select>
-    <input type="submit" name="xx" value="{tr}sort{/tr}">
+    <input type="submit" class="btn btn-default" name="xx" value="{tr}sort{/tr}">
   </form>
   </div>
   {section name=ix loop=$items}

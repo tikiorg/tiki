@@ -18,7 +18,7 @@
             <li>{$printnamestructures[ix]}</li>
           {/section}
         </ul>
-        <input type="submit" name="print" value="{tr}Print{/tr}">
+        <input type="submit" class="btn btn-default" name="print" value="{tr}Print{/tr}">
       </form>
 
       {if $pdf_export eq 'y'}
@@ -26,12 +26,12 @@
           <input type="hidden" name="printstructures" value="{$form_printstructures|escape}">
           <input type="hidden" name="find" value="{$find|escape}">
           <input type="hidden" name="display" value="pdf">
-          <input type="submit" name="print" value="{tr}PDF{/tr}">
+          <input type="submit" class="btn btn-default" name="print" value="{tr}PDF{/tr}">
       </form>
       {/if}
 
       <form action="tiki-print_pages.php" method="post">
-        <input type="submit" name="clearstructures" value="{tr}Clear{/tr}">
+        <input type="submit" class="btn btn-default" name="clearstructures" value="{tr}Clear{/tr}">
       </form>
     {/if}
 
@@ -77,11 +77,11 @@
 		<td style="vertical-align:middle" width="20%">
 			<div class="mini">
 {if $pages}
-			<p><input type="submit" name="addpage" title="{tr}Add Page{/tr}" value="{tr}Add Page{/tr} &gt;"></p>
+			<p><input type="submit" class="btn btn-default" name="addpage" title="{tr}Add Page{/tr}" value="{tr}Add Page{/tr} &gt;"></p>
 {/if}
 {if $printpages}
-			<p><input type="submit" name="removepage" title="{tr}Remove Page{/tr}" value="&lt; {tr}Remove Page{/tr}"></p>
-			<p><input type="submit" name="clearpages" title="{tr}Clear{/tr}" value="{tr}Clear{/tr}"></p>
+			<p><input type="submit" class="btn btn-warning" name="removepage" title="{tr}Remove Page{/tr}" value="&lt; {tr}Remove Page{/tr}"></p>
+			<p><input type="submit" class="btn btn-default" name="clearpages" title="{tr}Clear{/tr}" value="{tr}Clear{/tr}"></p>
 {/if}
 			</div>
 			
@@ -103,13 +103,13 @@
 <div style="float:right;margin-right:20%;">
     <form method="get" action="tiki-print_multi_pages.php">
       <input type="hidden" name="printpages" value="{$form_printpages|escape}">
-      <input type="submit" name="print" title="{tr}Print{/tr}" value="{tr}Print{/tr}">
+      <input type="submit" class="btn btn-default" name="print" title="{tr}Print{/tr}" value="{tr}Print{/tr}">
     </form>
     {if $pdf_export eq 'y'}
     <form method="get" action="tiki-print_multi_pages.php">
       <input type="hidden" name="display" value="pdf">
       <input type="hidden" name="printpages" value="{$form_printpages|escape}">
-      <input type="submit" name="print" title="{tr}PDF{/tr}" value="{tr}PDF{/tr}">
+      <input type="submit" class="btn btn-default" name="print" title="{tr}PDF{/tr}" value="{tr}PDF{/tr}">
     </form>
     {/if}
 </div>
@@ -132,7 +132,7 @@
         <option value="" disabled="disabled">{tr}No structures{/tr}</option>
       {/section}
     </select>
-    <p class="mini"><input type="submit" name="addstructurepages" value="{tr}Add Pages from Structures{/tr}"></p>
+    <p class="mini"><input type="submit" class="btn btn-default" name="addstructurepages" value="{tr}Add Pages from Structures{/tr}"></p>
 		</td>
 		<td width="20%"></td>
 		<td width="40%"></td>		

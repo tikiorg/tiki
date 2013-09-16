@@ -66,8 +66,8 @@
 </td>
 </tr>
 <tr>
-	<td><input type="submit" name="ical" value="{tr}Export calendars iCal{/tr}"></td>
-	<td><input type="submit" name="csv" value="{tr}Export calendars CSV{/tr}"></td>
+	<td><input type="submit" class="btn btn-default" name="ical" value="{tr}Export calendars iCal{/tr}"></td>
+	<td><input type="submit" class="btn btn-default" name="csv" value="{tr}Export calendars CSV{/tr}"></td>
 </tr>
 </table>
 </form>

@@ -12,7 +12,7 @@
 			<input type="hidden" name="filegals_manager" {if isset($filegals_manager)}value="{$filegals_manager}"{/if}>
 
 			<div class="input_submit_container" style="text-align: right">
-				<input type="submit" value="{tr}Save{/tr}" name="edit">
+				<input type="submit" class="btn btn-default" value="{tr}Save{/tr}" name="edit">
 				&nbsp;
 				<input type="checkbox" name="viewitem" checked="checked"> {tr}View inserted gallery{/tr}
 			</div>
@@ -293,7 +293,7 @@ $('#fgal_template').change( function() {
 					</table>
 				{/tab}
 			{/tabset}
-			<input type="submit" value="{tr}Save{/tr}" name="edit">
+			<input type="submit" class="btn btn-default" value="{tr}Save{/tr}" name="edit">
 		</form>
 	</div>
 	<br>

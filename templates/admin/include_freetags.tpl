@@ -1,6 +1,6 @@
 <form action="tiki-admin.php?page=freetags" method="post">
 	<div class="heading input_submit_container" style="text-align: right">
-		<input type="submit" value="{tr}Change preferences{/tr}" />
+		<input type="submit" class="btn btn-default" value="{tr}Change preferences{/tr}" />
 	</div>
 	{tabset name="admin_freetags"}
 		{tab name="{tr}General Settings{/tr}"}
@@ -58,7 +58,7 @@
 				<div class="adminoptionbox">
 					<div class="adminoptionlabel">
 						<div align="center">
-							<input type="submit" value="{tr}Cleanup unused tags{/tr}" name="cleanup" />
+							<input type="submit" class="btn btn-default" value="{tr}Cleanup unused tags{/tr}" name="cleanup" />
 						</div>
 					</div>
 				</div>
@@ -103,6 +103,6 @@
 		{/if}
 	{/tabset}
 	<div class="heading input_submit_container" style="text-align: center">
-		<input type="submit" value="{tr}Change preferences{/tr}" />
+		<input type="submit" class="btn btn-default" value="{tr}Change preferences{/tr}" />
 	</div>
 </form>

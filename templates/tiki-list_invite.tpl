@@ -23,7 +23,7 @@
 		<input type="checkbox" name="only_pending"{if $only_pending eq 'y'} checked="checked"{/if}>
 	</label>
 	<br>
-	<input type="submit" name="filter" value="{tr}Filter{/tr}">
+	<input type="submit" class="btn btn-default" name="filter" value="{tr}Filter{/tr}">
 	</form>
 </div>
 

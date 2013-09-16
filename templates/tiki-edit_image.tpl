@@ -29,7 +29,7 @@
 {include file='categorize.tpl'}
 <tr><td>{tr}Upload from disk to change the image:{/tr}</td><td>{$filename}<br><input name="userfile" type="file">
 </td></tr>
-<tr><td>&nbsp;</td><td><input type="submit" name="editimage" value="{tr}Save{/tr}">&nbsp;&nbsp;<input type="submit" name="editimage_andgonext" value="{tr}Save and Go Next{/tr}">&nbsp;&nbsp;<a class="link" href="tiki-browse_image.php?imageId={$imageId}">{tr}Cancel Edit{/tr}</a></td></tr>
+<tr><td>&nbsp;</td><td><input type="submit" class="btn btn-default" name="editimage" value="{tr}Save{/tr}">&nbsp;&nbsp;<input type="submit" name="editimage_andgonext" value="{tr}Save and Go Next{/tr}">&nbsp;&nbsp;<a class="link" href="tiki-browse_image.php?imageId={$imageId}">{tr}Cancel Edit{/tr}</a></td></tr>
 </table>
 </form>
 <br>
@@ -64,7 +64,7 @@
 				      <option value="{$galleries[idx].id|escape}" {if $galleries[idx].id eq $galleryId}selected="selected"{/if}>{$galleries[idx].name}</option>
 				    {/section}
 					</select>
-					<input type="submit" name="move_image" value="{tr}Move{/tr}">
+					<input type="submit" class="btn btn-default" name="move_image" value="{tr}Move{/tr}">
 			  </form>
 			</td>
 		</tr>

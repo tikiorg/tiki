@@ -367,7 +367,7 @@
 								</select>
 							</div>
 							<div class="floatright input_submit_container">
-								<input type="submit" name="send" value="{tr}Send{/tr}">
+								<input type="submit" class="btn btn-default" name="send" value="{tr}Send{/tr}">
 							</div>
 						</div>
 						<div class="clearfix">

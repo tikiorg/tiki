@@ -27,7 +27,7 @@
     {else}
     <input type="hidden" name="msgId" value="">
     {/if}
-    <input type="submit" name="delete" value="{tr}Delete{/tr}">
+    <input type="submit" class="btn btn-warning" name="delete" value="{tr}Delete{/tr}">
     </form>
   </td>
   <td>
@@ -43,7 +43,7 @@
     <input type="hidden" name="subject" value="{tr}Re:{/tr} {$msg.subject|escape}">
     <input type="hidden" name="body" value="{$msg.body|quoted:$quote_format:$msg.user_from|escape}">
     <input type="hidden" name="replyto_hash" value="{$msg.hash}">
-    <input type="submit" name="reply" value="{tr}Reply{/tr}">
+    <input type="submit" class="btn btn-default" name="reply" value="{tr}Reply{/tr}">
     </form>
   </td>
   <td>
@@ -60,7 +60,7 @@
     <input type="hidden" name="subject" value="{tr}Re:{/tr} {$msg.subject|escape}">
     <input type="hidden" name="body" value="{$msg.body|quoted:$quote_format:$msg.user_from|escape}">
     <input type="hidden" name="replyto_hash" value="{$msg.hash}">
-    <input type="submit" name="replyall" value="{tr}replyall{/tr}">
+    <input type="submit" class="btn btn-default" name="replyall" value="{tr}replyall{/tr}">
     </form>
   </td></tr>
   </table>

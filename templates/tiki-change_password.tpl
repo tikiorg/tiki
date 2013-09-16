@@ -90,7 +90,7 @@
 {/if}
 <tr>
   <td>&nbsp;</td>
-  <td><input type="submit" name="change" value="{tr}Change{/tr}" onclick="return match_pass();"><span id="validate"></span></td>
+  <td><input type="submit" class="btn btn-default" name="change" value="{tr}Change{/tr}" onclick="return match_pass();"><span id="validate"></span></td>
 </tr>
 </table>
 </fieldset>

@@ -91,7 +91,7 @@
 			<tr>
 				<td>&nbsp;</td>
 				<td>
-					<input type="submit" name="send" value="{tr}Send{/tr}">
+					<input type="submit" class="btn btn-default" name="send" value="{tr}Send{/tr}">
 					<input type="checkbox" name="replytome" id="replytome">
 					<label for="replytome">
 						{tr}Reply-to my email{/tr}

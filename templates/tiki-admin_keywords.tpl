@@ -20,7 +20,7 @@
 					</tr>
 					<tr>
 						<td></td>
-						<td><input type="submit" name="save_keywords" value="{tr}Save{/tr}"></td>
+						<td><input type="submit" class="btn btn-default" name="save_keywords" value="{tr}Save{/tr}"></td>
 					</tr>
 				</tbody>
 			</table>
@@ -32,7 +32,7 @@
 <form method="get" action="tiki-admin_keywords.php">
 	<label for="q">{tr}Search by page:{/tr}</label>
 	<input type="text" name="q" value="{if $smarty.request.q}{$smarty.request.q|escape}{/if}">
-	<input type="submit" name="search" value="{tr}Go{/tr}">
+	<input type="submit" class="btn btn-default" name="search" value="{tr}Go{/tr}">
 </form>
 {if $search_on}
 	<div style="font-weight:bold;">{$search_cant|escape} {tr}results found!{/tr}</div>

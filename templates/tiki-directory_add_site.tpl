@@ -89,7 +89,7 @@
 				{/if}
       	   <tr>
 					<td>&nbsp;</td>
-					<td><input type="submit" name="save" value="{tr}Save{/tr}"></td>
+					<td><input type="submit" class="btn btn-default" name="save" value="{tr}Save{/tr}"></td>
 				</tr>
 			</table>
 		</form>

@@ -1,6 +1,6 @@
 <form action="tiki-admin.php?page=webmail" method="post">
 	<div class="heading input_submit_container" style="text-align: right">
-		<input type="submit" name="webmail" value="{tr}Change preferences{/tr}" />
+		<input type="submit" class="btn btn-default" name="webmail" value="{tr}Change preferences{/tr}" />
 	</div>
 	
 	<fieldset class="admin">
@@ -16,6 +16,6 @@
 		{preference name=webmail_quick_flags}
 	</fieldset>
 	<div class="heading input_submit_container" style="text-align: center">
-		<input type="submit" name="webmail" value="{tr}Change preferences{/tr}" />
+		<input type="submit" class="btn btn-default" name="webmail" value="{tr}Change preferences{/tr}" />
 	</div>
 </form>

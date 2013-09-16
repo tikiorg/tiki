@@ -164,7 +164,7 @@
 				<tr>
 					<td>&nbsp;</td>
 					<td>
-						<input type="submit" name="upload" value="{tr}Upload{/tr}">
+						<input type="submit" class="btn btn-default" name="upload" value="{tr}Upload{/tr}">
 					</td>
 				</tr>
 			</table>

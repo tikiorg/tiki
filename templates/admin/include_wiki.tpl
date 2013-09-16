@@ -31,7 +31,7 @@
 
 <form action="tiki-admin.php?page=wiki" method="post">
 	<div class="heading input_submit_container" style="text-align: right">
-		<input type="submit" name="wikisetprefs" value="{tr}Change preferences{/tr}" />
+		<input type="submit" class="btn btn-default" name="wikisetprefs" value="{tr}Change preferences{/tr}" />
 	</div>
 
 	{tabset name="admin_wiki"}
@@ -157,7 +157,7 @@
 					<div class="adminoptionlabel">
 						<label for="tagname">{tr}Tag for current wiki:{/tr}</label>
 						<input maxlength="20" size="20" type="text" name="tagname" id="tagname" />
-						<input type="submit" name="createtag" value="{tr}Create{/tr}" />
+						<input type="submit" class="btn btn-default" name="createtag" value="{tr}Create{/tr}" />
 					</div>
 				</div>
 				<div class="adminoptionbox clearfix">
@@ -170,7 +170,7 @@
 								<option value=''>{tr}None{/tr}</option>
 							{/section}
 						</select>
-						<input type="submit" name="restoretag" value="{tr}Restore{/tr}"{if $tags|@count eq '0'} disabled="disabled"{/if} />
+						<input type="submit" class="btn btn-default" name="restoretag" value="{tr}Restore{/tr}"{if $tags|@count eq '0'} disabled="disabled"{/if} />
 					</div>
 				</div>
 				<div class="adminoptionbox clearfix">
@@ -183,7 +183,7 @@
 								<option value=''>{tr}None{/tr}</option>
 							{/section}
 						</select>
-						<input type="submit" name="removetag" value="{tr}Remove{/tr}"{if $tags|@count eq '0'} disabled="disabled"{/if} />
+						<input type="submit" class="btn btn-default" name="removetag" value="{tr}Remove{/tr}"{if $tags|@count eq '0'} disabled="disabled"{/if} />
 					</div>
 				</div>
 
@@ -445,6 +445,6 @@
 {/tabset}
 
 <div class="heading input_submit_container" style="text-align: center">
-	<input type="submit" name="wikisetprefs" value="{tr}Change preferences{/tr}" />
+	<input type="submit" class="btn btn-default" name="wikisetprefs" value="{tr}Change preferences{/tr}" />
 </div>
 </form>

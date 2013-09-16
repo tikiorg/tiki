@@ -11,6 +11,6 @@
 		<input type="text" name="subtract_quantity" value="0" size="4">
 		<br>
 	{/if}
-	<input type="submit" value="{tr}Apply{/tr}">
+	<input type="submit" class="btn btn-default" value="{tr}Apply{/tr}">
 </form>
 

@@ -1,6 +1,6 @@
 <form action="tiki-admin.php?page=maps" method="post">
 	<div class="heading input_submit_container" style="text-align: right">
-		<input type="submit" name="mapsset" value="{tr}Change preferences{/tr}" />
+		<input type="submit" class="btn btn-default" name="mapsset" value="{tr}Change preferences{/tr}" />
 	</div>
 	<fieldset class="admin">
 		<legend>{tr}Settings{/tr}</legend>
@@ -53,8 +53,8 @@
 		</div>			
 		
 		<div class="heading input_submit_container" style="text-align: center">
-			<input type="submit" name="mapsset" value="{tr}Change preferences{/tr}" />
-			<input type="submit" name="mapuser" value="{tr}Generate User Map{/tr}" />
+			<input type="submit" class="btn btn-default" name="mapsset" value="{tr}Change preferences{/tr}" />
+			<input type="submit" class="btn btn-default" name="mapuser" value="{tr}Generate User Map{/tr}" />
 		</div>
 	</fieldset>
 </form>

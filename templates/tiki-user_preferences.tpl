@@ -194,7 +194,7 @@
 				<td><span class="description">{$userinfo.lastLogin|tiki_long_datetime}</span></td>
 			</tr>
 			<td colspan="2" class="input_submit_container">
-				<input type="submit" name="new_prefs"  value="{tr}Save changes{/tr}">
+				<input type="submit" class="btn btn-default" name="new_prefs"  value="{tr}Save changes{/tr}">
 			</td>
 		</table>
 	{/tab}
@@ -548,7 +548,7 @@
 
 		<tr>
 			<td colspan="2" class="input_submit_container">
-				<input type="submit" name="new_prefs" value="{tr}Save changes{/tr}">
+				<input type="submit" class="btn btn-default" name="new_prefs" value="{tr}Save changes{/tr}">
 			</td>
 		</tr>
 		</table>
@@ -600,7 +600,7 @@
 
 				<tr>
 					<td colspan="2" class="input_submit_container">
-						<input type="submit" name="chgadmin" value="{tr}Save changes{/tr}">
+						<input type="submit" class="btn btn-default" name="chgadmin" value="{tr}Save changes{/tr}">
 					</td>
 				</tr>
 			</table>
@@ -623,7 +623,7 @@
 				</tr>
 				<tr>
 					<td colspan="2" class="input_submit_container">
-						<input type="submit" name="deleteaccount" value="{if !empty($userwatch)}{tr}Delete the account:{/tr} {$userwatch|escape}{else}{tr}Delete my account{/tr}{/if}">
+						<input type="submit" class="btn btn-default" name="deleteaccount" value="{if !empty($userwatch)}{tr}Delete the account:{/tr} {$userwatch|escape}{else}{tr}Delete my account{/tr}{/if}">
 					</td>
 				</tr>
 			</table>

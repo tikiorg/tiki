@@ -33,7 +33,7 @@
 		</tr>
 		<tr>
 			<td>&nbsp;</td>
-			<td><input type="submit" name="save" value="{tr}Save{/tr}"></td>
+			<td><input type="submit" class="btn btn-default" name="save" value="{tr}Save{/tr}"></td>
 		</tr>
 	</table>
 </form>
@@ -44,7 +44,7 @@
 <form action="tiki-usermenu.php" method="post">
 	<table class="normal">
 		<tr>
-			<th><input type="submit" name="delete" value="x " title="{tr}Delete Selected{/tr}"></th>
+			<th><input type="submit" class="btn btn-warning" name="delete" value="x " title="{tr}Delete Selected{/tr}"></th>
 			<th><a href="tiki-usermenu.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'position_desc'}position_asc{else}position_desc{/if}">{tr}Pos{/tr}</a></th>
 			<th><a href="tiki-usermenu.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}Name{/tr}</a></th>
 			<th><a href="tiki-usermenu.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'url_desc'}url_asc{else}url_desc{/if}">{tr}URL{/tr}</a></th>

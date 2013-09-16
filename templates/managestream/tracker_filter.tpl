@@ -32,6 +32,6 @@
 	</label>
 	<div class="submit">
 		<input type="hidden" name="ruleId" value="{$rule.ruleId|escape}"/>
-		<input type="submit" value="{tr}Save Rule{/tr}"/>
+		<input type="submit" class="btn btn-default" value="{tr}Save Rule{/tr}"/>
 	</div>
 </form>

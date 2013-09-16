@@ -44,7 +44,7 @@
 			</fieldset>
 
 			<p>
-				{tr}Once you have selected at least two, click:{/tr} <input type="submit" value="{tr}Select{/tr}"> {tr}and then, click the "New/Edit" tab which will appear above.{/tr}
+				{tr}Once you have selected at least two, click:{/tr} <input type="submit" class="btn btn-default" value="{tr}Select{/tr}"> {tr}and then, click the "New/Edit" tab which will appear above.{/tr}
 			</p>
 		</form>
 		{jq}
@@ -166,7 +166,7 @@
 				{/foreach}
 			</fieldset>
 			<p>
-				<input type="submit" value="{tr}Save{/tr}">
+				<input type="submit" class="btn btn-default" value="{tr}Save{/tr}">
 			</p>
 		</form>
 	{/tab}
@@ -232,7 +232,7 @@
 					{/foreach}
 				</fieldset>
 				<p>
-					<input type="submit" value="{tr}Add{/tr}">
+					<input type="submit" class="btn btn-default" value="{tr}Add{/tr}">
 				</p>
 			</form>
 		{/tab}

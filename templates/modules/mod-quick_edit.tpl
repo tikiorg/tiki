@@ -31,7 +31,7 @@
 				</label>
 			</div>
 		{/if}
-		<input type="submit" name="qedit" value="{$submit|escape}" />
+		<input type="submit" class="btn btn-default" name="qedit" value="{$submit|escape}" />
 	</div>
 </form>
 {if $prefs.javascript_enabled eq 'y' and $prefs.feature_jquery_autocomplete eq 'y'}

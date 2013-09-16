@@ -35,10 +35,10 @@
 		<option value="portrait">{tr}Portrait{/tr}</option>
 	</select>
 {if $haspdflib}
-	<input type="submit" name="renderer" value="PDF">
+	<input type="submit" class="btn btn-default" name="renderer" value="PDF">
 {/if}
 {if $hasps}
-	<input type="submit" name="renderer" value="PS">
+	<input type="submit" class="btn btn-default" name="renderer" value="PS">
 {/if}
 </div>
 {/if}
@@ -46,8 +46,8 @@
 <div>
 	<input type="text" name="width" value="500" size="4">
 	<input type="text" name="height" value="400" size="4">
-	<input type="submit" name="renderer" value="PNG">
-	<input type="submit" name="renderer" value="JPEG">
+	<input type="submit" class="btn btn-default" name="renderer" value="PNG">
+	<input type="submit" class="btn btn-default" name="renderer" value="JPEG">
 </div>
 {/if}
 </form>
@@ -154,7 +154,7 @@ function _renValRad( name )
 	</tr>
 {/section}
 	<tr>
-		<td colspan="2"><input type="submit" value="{tr}Show{/tr}" class="button"></td>
+		<td colspan="2"><input type="submit" class="btn btn-default" value="{tr}Show{/tr}" class="button"></td>
 	</tr>
 </table>
 <div class="tiki_sheet">

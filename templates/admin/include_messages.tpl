@@ -2,7 +2,7 @@
 
 <form action="tiki-admin.php?page=messages" method="post" name="messages">
 	<div class="heading input_submit_container" style="text-align: right">
-		<input type="submit" name="messagesprefs" value="{tr}Change preferences{/tr}" />
+		<input type="submit" class="btn btn-default" name="messagesprefs" value="{tr}Change preferences{/tr}" />
 	</div>
 
 	<fieldset class="admin">
@@ -23,6 +23,6 @@
 
 	</fieldset>
 	<div class="heading input_submit_container" style="text-align: center">
-		<input type="submit" name="messagesprefs" value="{tr}Change preferences{/tr}" />
+		<input type="submit" class="btn btn-default" name="messagesprefs" value="{tr}Change preferences{/tr}" />
 	</div>
 </form>

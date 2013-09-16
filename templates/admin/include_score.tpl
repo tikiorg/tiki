@@ -2,7 +2,7 @@
 
 <form action="tiki-admin.php?page=score" method="post">
 	<div class="heading input_submit_container" style="text-align: right">
-		<input type="submit" name="scoreevents" value="{tr}Save{/tr}" />
+		<input type="submit" class="btn btn-default" name="scoreevents" value="{tr}Save{/tr}" />
 	</div>
 
 <fieldset class="admin">
@@ -51,6 +51,6 @@
 </table>
 </fieldset>
 	<div class="heading input_submit_container" style="text-align: center">
-		<input type="submit" name="scoreevents" value="{tr}Save{/tr}" />
+		<input type="submit" class="btn btn-default" name="scoreevents" value="{tr}Save{/tr}" />
 	</div>
 </form>

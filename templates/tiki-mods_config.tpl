@@ -23,7 +23,7 @@
       <tr>
         <td>&nbsp;</td>
         <td>
-          <input type="submit" name="go" value="configure">
+          <input type="submit" class="btn btn-default" name="go" value="configure">
         </td>
       </tr>
     </table>

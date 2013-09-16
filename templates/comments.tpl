@@ -47,12 +47,12 @@
 										{/if}
 									{/section}
 								</select>
-								<input type="submit" name="movesel" value="{tr}Move{/tr}">
+								<input type="submit" class="btn btn-default" name="movesel" value="{tr}Move{/tr}">
 							</span>
 						{/if}
 
 						<span class="action">
-							<input type="submit" name="delsel" value="{tr}Delete Selected{/tr}">
+							<input type="submit" class="btn btn-default" name="delsel" value="{tr}Delete Selected{/tr}">
 						</span>
 					</div>
 				</div>
@@ -111,7 +111,7 @@
 								<label for="comments-search">{tr}Search:{/tr}</label>
 								<input type="text" size="7" name="comments_commentFind" id="comments-search" value="{$comments_commentFind|escape}">
 
-								<input type="submit" name="comments_setOptions" value="{tr}Set{/tr}">
+								<input type="submit" class="btn btn-default" name="comments_setOptions" value="{tr}Set{/tr}">
 							</span>
 						</div>
 					</div>
@@ -288,11 +288,11 @@
 						</td>
 
 						<td>
-							<input type="submit" id="comments_postComment" name="comments_postComment" value="{tr}Post{/tr}" onclick="needToConfirm=false;">
+							<input type="submit" class="btn btn-default" id="comments_postComment" name="comments_postComment" value="{tr}Post{/tr}" onclick="needToConfirm=false;">
 							{if !empty($user) && $prefs.feature_comments_post_as_anonymous eq 'y'}
-								<input type="submit" name="comments_postComment_anonymous" value="{tr}Post as Anonymous{/tr}" onclick="needToConfirm=false;">
+								<input type="submit" class="btn btn-default" name="comments_postComment_anonymous" value="{tr}Post as Anonymous{/tr}" onclick="needToConfirm=false;">
 							{/if}
-							<input type="submit" name="comments_previewComment" id="comments_previewComment" value="{tr}Preview{/tr}"
+							<input type="submit" class="btn btn-default" name="comments_previewComment" id="comments_previewComment" value="{tr}Preview{/tr}"
 							{if ( isset($can_attach_file) && $can_attach_file eq 'y' ) or empty($user)}{strip}
 								{assign var='file_preview_warning' value="{tr}Please note that the preview does not keep the attached file which you will have to choose before posting.{/tr}"}
 								onclick="
@@ -301,7 +301,7 @@
 								{/if}
 								"
 							{/strip}{else} onclick="needToConfirm=false;"{/if}>
-							<input type="submit" name="comments_cancelComment" value="{tr}Cancel{/tr}" onclick="hide('{$postclass}'); return false">
+							<input type="submit" class="btn btn-default" name="comments_cancelComment" value="{tr}Cancel{/tr}" onclick="hide('{$postclass}'); return false">
 						</td>
 					</tr>
 				</table>

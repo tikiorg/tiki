@@ -17,7 +17,7 @@
 					<td class="findtable">
 						<form method="get" action="tiki-forums.php">
 							<input type="text" name="find" value="{$find|escape}">
-							<input type="submit" value="{tr}Search by name{/tr}" name="search">
+							<input type="submit" class="btn btn-default" value="{tr}Search by name{/tr}" name="search">
 							<input type="hidden" name="sort_mode" value="{$sort_mode|escape}">
 						</form>
 					</td>
@@ -29,7 +29,7 @@
 							<input name="highlight" size="30" type="text">
 							<input type="hidden" name="where" value="forums">
 							<input type="hidden" name="filter~type" value="forum post">
-							<input type="submit" class="wikiaction" name="search" value="{tr}Search in content{/tr}">
+							<input type="submit" class="wikiaction btn btn-default" name="search" value="{tr}Search in content{/tr}">
 						</form>
 					</td>
 				{/if}

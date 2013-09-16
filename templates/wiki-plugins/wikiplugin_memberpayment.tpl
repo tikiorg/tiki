@@ -34,7 +34,7 @@
 			{tr}{$periodslabel}{/tr}
 			<input type="text" name="wp_member_periods" value="1">
 		{/if}
-		<input type="submit" value="{tr}Continue{/tr}">
+		<input type="submit" class="btn btn-default" value="{tr}Continue{/tr}">
 	</p>
 	{jq}
 		$('#user{{$wp_member_offset|escape}}').tiki("autocomplete", "username", {multiple: true, multipleSeparator: "|"});

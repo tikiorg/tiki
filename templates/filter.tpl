@@ -95,7 +95,7 @@
 			<input type="hidden" name="filter~language_unspecified" value="1">
 		{/if}
 	{/if}
-	<input type="submit" value="{tr}Search{/tr}">
+	<input type="submit" class="btn btn-default" value="{tr}Search{/tr}">
 </form>
 {jq}
 	$('.filter:not(.init)').addClass('init').each(function () {

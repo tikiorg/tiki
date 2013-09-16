@@ -34,7 +34,7 @@
 					<option value="remove_fields">{tr}Remove Selected{/tr}</option>
 					<option value="export_fields">{tr}Export Selected{/tr}</option>
 				</select>
-				<input type="submit" name="submit" value="{tr}Go{/tr}">
+				<input type="submit" class="btn btn-default" name="submit" value="{tr}Go{/tr}">
 				<input type="hidden" name="trackerId" value="{$trackerId|escape}">
 				<input type="hidden" name="confirm" value="0">
 			</div>
@@ -42,7 +42,7 @@
 
 		<form class="add-field" method="post" action="{service controller=tracker action=add_field}">
 			<input type="hidden" name="trackerId" value="{$trackerId|escape}">
-			<input type="submit" value="{tr}Add Field{/tr}">
+			<input type="submit" class="btn btn-default" value="{tr}Add Field{/tr}">
 		</form>
 		{jq}
 			var trackerId = {{$trackerId|escape}};
@@ -137,7 +137,7 @@
 
 			<div class="submit">
 				<input type="hidden" name="trackerId" value="{$trackerId|escape}">
-				<input type="submit" value="{tr}Import{/tr}">
+				<input type="submit" class="btn btn-default" value="{tr}Import{/tr}">
 			</div>
 		</form>
 	{/tab}

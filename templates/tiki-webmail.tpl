@@ -282,8 +282,8 @@
 							<tr>
 								<td>&nbsp;</td>
 								<td colspan="3">
-									<input type="submit" name="new_acc" value="{if $accountId eq ''}{tr}Add{/tr}{else}{tr}Update{/tr}{/if}">
-									<input type="submit" name="cancel_acc" value="{tr}Cancel{/tr}">
+									<input type="submit" class="btn btn-default" name="new_acc" value="{if $accountId eq ''}{tr}Add{/tr}{else}{tr}Update{/tr}{/if}">
+									<input type="submit" class="btn btn-default" name="cancel_acc" value="{tr}Cancel{/tr}">
 								</td>
 							</tr>
 						</table>
@@ -334,7 +334,7 @@
 		<input type="hidden" name="quickFlag" value="">
 		<input type="hidden" name="quickFlagMsg" value="">
 		<input type="hidden" name="locSection" value="mailbox">
-		<input type="submit" name="delete" value="{tr}Delete{/tr}">
+		<input type="submit" class="btn btn-warning" name="delete" value="{tr}Delete{/tr}">
 		<input type="hidden" name="start" value="{$start|escape}">
 		<select name="action">
 			<option value="flag">{tr}Mark as flagged{/tr}</option>
@@ -342,7 +342,7 @@
 			<option value="read">{tr}Mark as read{/tr}</option>
 			<option value="unread">{tr}Mark as unread{/tr}</option>
 		</select>
-		<input type="submit" name="operate" value="{tr}Mark{/tr}">
+		<input type="submit" class="btn btn-default" name="operate" value="{tr}Mark{/tr}">
 		<br>
 		<br>
 		<table class="normal webmail_list">
@@ -404,7 +404,7 @@
 		<tr>
 			<td>
 				<form method="post" action="tiki-webmail.php">
-					<input type="submit" name="delete_one" value="{tr}Delete{/tr}">
+					<input type="submit" class="btn btn-warning" name="delete_one" value="{tr}Delete{/tr}">
 					{if $next}
 						<input type="hidden" name="locSection" value="read">
 						<input type="hidden" name="msgid" value="{$next|escape}">
@@ -417,7 +417,7 @@
 			<td>
 				<form method="post" action="tiki-webmail.php">
 					<input type="hidden" name="locSection" value="compose">
-					<input type="submit" name="reply" value="{tr}Reply{/tr}">
+					<input type="submit" class="btn btn-default" name="reply" value="{tr}Reply{/tr}">
 					<input type="hidden" name="realmsgid" value="{$realmsgid|escape}">
 					<input type="hidden" name="to" value="{$headers.replyto|escape}">
 					<input type="hidden" name="subject" value="Re:{$headers.subject}">
@@ -427,7 +427,7 @@
 			<td>
 				<form method="post" action="tiki-webmail.php">
 					<input type="hidden" name="locSection" value="compose">
-					<input type="submit" name="replyall" value="{tr}Reply To All{/tr}">
+					<input type="submit" class="btn btn-default" name="replyall" value="{tr}Reply To All{/tr}">
 					<input type="hidden" name="to" value="{$headers.replyto|escape}">
 					<input type="hidden" name="realmsgid" value="{$realmsgid|escape}">
 					<input type="hidden" name="cc" value="{$headers.replycc|escape}">
@@ -437,7 +437,7 @@
 			</td>
 			<td>
 				<form method="post" action="tiki-webmail.php">
-					<input type="submit" name="reply" value="{tr}Forward{/tr}">
+					<input type="submit" class="btn btn-default" name="reply" value="{tr}Forward{/tr}">
 					<input type="hidden" name="locSection" value="compose">
 					<input type="hidden" name="to" value="">
 					<input type="hidden" name="cc" value="">
@@ -540,7 +540,7 @@
 				<input type="hidden" name="attach1type" value="{$attach1type|escape}">
 				<input type="hidden" name="attach2type" value="{$attach2type|escape}">
 				<input type="hidden" name="attach3type" value="{$attach3type|escape}">
-				<input type="submit" name="send" value="{tr}Send{/tr}">
+				<input type="submit" class="btn btn-default" name="send" value="{tr}Send{/tr}">
 				<table class="formcolor">
 					<tr>
 						<td>
@@ -581,7 +581,7 @@
 							{if $attach3}
 								({$attach3})
 							{/if}
-							<input type="submit" name="attach" value="{tr}Add{/tr}">
+							<input type="submit" class="btn btn-default" name="attach" value="{tr}Add{/tr}">
 						</td>
 					</tr>
 					<tr>
@@ -636,7 +636,7 @@
 						<tr>
 							<td>&nbsp;</td>
 							<td>
-								<input type="submit" name="add_contacts" value="{tr}Add Contacts{/tr}">
+								<input type="submit" class="btn btn-default" name="add_contacts" value="{tr}Add Contacts{/tr}">
 							</td>
 						</tr>
 					</table>
@@ -664,7 +664,7 @@
 				{if $attach1}
 					<tr>
 						<td>{tr}Attachment 1{/tr}</td>
-						<td>{$attach1} <input type="submit" name="remove_attach1" value="{tr}Remove{/tr}"></td>
+						<td>{$attach1} <input type="submit" class="btn btn-default" name="remove_attach1" value="{tr}Remove{/tr}"></td>
 					</tr>
 				{else}
 					<tr>
@@ -679,7 +679,7 @@
 					<tr>
 						<td>{tr}Attachment 2{/tr}</td>
 						<td>
-							{$attach2} <input type="submit" name="remove_attach2" value="{tr}Remove{/tr}">
+							{$attach2} <input type="submit" class="btn btn-warning" name="remove_attach2" value="{tr}Remove{/tr}">
 						</td>
 					</tr>
 				{else}
@@ -696,7 +696,7 @@
 					<tr>
 						<td>{tr}Attachment 3{/tr}</td>
 						<td>
-							{$attach3} <input type="submit" name="remove_attach3" value="{tr}Remove{/tr}">
+							{$attach3} <input type="submit" class="btn btn-warning"name="remove_attach3" value="{tr}Remove{/tr}">
 						</td>
 					</tr>
 				{else}
@@ -710,7 +710,7 @@
 				<tr>
 					<td>&nbsp;</td>
 					<td>
-						<input type="submit" name="attached" value="{tr}Done{/tr}">
+						<input type="submit" class="btn btn-default" name="attached" value="{tr}Done{/tr}">
 					</td>
 				</tr>
 			</table>

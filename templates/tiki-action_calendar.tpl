@@ -31,7 +31,7 @@
 <label for="tikical_{$ki}" class="Cal{$ki}"> = {$vi.label}</label></div>
 {/if}
 {/foreach}
-<div class="calinput"><input type="submit" name="refresh" value="{tr}Refresh{/tr}"></div>
+<div class="calinput"><input type="submit" class="btn btn-default" name="refresh" value="{tr}Refresh{/tr}"></div>
 </form>
 
 {include file='tiki-calendar_nav.tpl'}

@@ -6,7 +6,7 @@
 
 <form class="admin" method="post" action="tiki-admin.php?page=sefurl">
 	<div class="heading input_submit_container" style="text-align: right;">
-		<input type="submit" name="save" value="{tr}Change preferences{/tr}" />
+		<input type="submit" class="btn btn-default" name="save" value="{tr}Change preferences{/tr}" />
 	</div>
 	
 	<fieldset class="admin">
@@ -77,6 +77,6 @@
 		{preference name=feature_canonical_url}
 	</fieldset>
 	<div class="heading input_submit_container" style="text-align: center;padding:1em;">
-		<input type="submit" name="save" value="{tr}Change preferences{/tr}" />
+		<input type="submit" class="btn btn-default" name="save" value="{tr}Change preferences{/tr}" />
 	</div>
 </form>

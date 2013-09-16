@@ -11,6 +11,6 @@
 		<input type="hidden" name="source" value="{$source|escape}">
 		<input type="hidden" name="target" value="{$target|escape}">
 		<input type="hidden" name="confirm" value="1">
-		<input type="submit" value="{tr}Confirm{/tr}">
+		<input type="submit" class="btn btn-default" value="{tr}Confirm{/tr}">
 	</p>
 </form>

@@ -5,7 +5,7 @@
 {/if}
 <form method="post">
 	<label>{tr}Tracker name:{/tr}<input type="text" name="trackerhelp_name" class="trackername"{if isset($smarty.session.trackerhelp_name)} value="{$smarty.session.trackerhelp_name|escape}"{/if} /></label>
-	<label><input type="submit" name="trackerhelp" value="{tr}Go{/tr}" /></label>
+	<label><input type="submit" class="btn btn-default" name="trackerhelp" value="{tr}Go{/tr}" /></label>
 </form>
 
 {if !empty($smarty.session.trackerhelp_text)}

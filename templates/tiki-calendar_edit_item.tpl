@@ -64,7 +64,7 @@
 					{if $edit}
 						{if $prefs.javascript_enabled eq 'n'}
 							{$calendar.name|escape}<br>{tr}or{/tr}&nbsp;
-							<input type="submit" name="changeCal" value="{tr}Go to{/tr}">
+							<input type="submit" class="btn btn-default" name="changeCal" value="{tr}Go to{/tr}">
 						{/if}
 						<select name="save[calendarId]" id="calid" onchange="javascript:needToConfirm=false;document.getElementById('editcalitem').submit();">
 							{foreach item=it key=itid from=$listcals}
@@ -1041,7 +1041,7 @@
 								<form action="tiki-calendar_edit_item.php" method="post">
 									<input type ="hidden" name="viewcalitemId" value="{$id}">
 									<input type="text" name="guests">{help desc="{tr}Format:{/tr} {tr}Participant names separated by comma{/tr}" url='calendar'}
-									<input type="submit" name="add_guest" value="Add guests">
+									<input type="submit" class="btn btn-default" name="add_guest" value="Add guests">
 								</form>
 							{/if}
 						{/if}
@@ -1094,16 +1094,16 @@
 				{/if}
 				<tr>
 					<td>
-						<input type="submit" name="preview" value="{tr}Preview{/tr}" onclick="needToConfirm=false;">
+						<input type="submit" class="btn btn-default" name="preview" value="{tr}Preview{/tr}" onclick="needToConfirm=false;">
 						&nbsp;
-						<input type="submit" name="act" value="{tr}Save{/tr}" onclick="needToConfirm=false;">
+						<input type="submit" class="btn btn-default" name="act" value="{tr}Save{/tr}" onclick="needToConfirm=false;">
 						{if $id}
 							&nbsp;
-							<input type="submit" onclick="needToConfirm=false;document.location='tiki-calendar_edit_item.php?calitemId={$id}&amp;delete=y';return false;" value="{tr}Delete event{/tr}">
+							<input type="submit" class="btn btn-default" onclick="needToConfirm=false;document.location='tiki-calendar_edit_item.php?calitemId={$id}&amp;delete=y';return false;" value="{tr}Delete event{/tr}">
 						{/if}
 						{if $recurrence.id}
 							&nbsp;
-							<input type="submit" onclick="needToConfirm=false;document.location='tiki-calendar_edit_item.php?recurrenceId={$recurrence.id}&amp;delete=y';return false;" value="{tr}Delete Recurrent events{/tr}">
+							<input type="submit" class="btn btn-default" onclick="needToConfirm=false;document.location='tiki-calendar_edit_item.php?recurrenceId={$recurrence.id}&amp;delete=y';return false;" value="{tr}Delete Recurrent events{/tr}">
 						{/if}
 						&nbsp;
 						{if $prefs.calendar_fullcalendar eq 'y'}
@@ -1113,7 +1113,7 @@
 						{/if}
 						&nbsp;
 						&nbsp;
-						<input type="submit" onclick="needToConfirm=false;document.location='{$referer|escape:'html'}';return false;" value="{tr}Cancel{/tr}">
+						<input type="submit" class="btn btn-default" onclick="needToConfirm=false;document.location='{$referer|escape:'html'}';return false;" value="{tr}Cancel{/tr}">
 					</td>
 				</tr>
 			</table>

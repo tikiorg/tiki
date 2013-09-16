@@ -301,13 +301,13 @@
 				<tr>
 					<td>&nbsp;</td>
 					<td>
-						<input type="submit" name="save" value="{tr}Save{/tr}">
+						<input type="submit" class="btn btn-default" name="save" value="{tr}Save{/tr}">
 					</td>
 				</tr>
 			</table>
 			<br>
 			{if $calendarId ne 0}{$name|escape} : {/if}
-			{tr}Delete events older than:{/tr} <input type="text" name="days" value="0"> {tr}days{/tr} <input type="submit" name="clean" value="{tr}Delete{/tr}">
+			{tr}Delete events older than:{/tr} <input type="text" name="days" value="0"> {tr}days{/tr} <input type="submit" class="btn btn-default" name="clean" value="{tr}Delete{/tr}">
 		</form>
 	{/tab}
 {/tabset}

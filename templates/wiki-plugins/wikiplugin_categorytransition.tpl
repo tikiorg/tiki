@@ -38,6 +38,6 @@
 				$(this.href.substr(this.href.lastIndexOf('#'))).toggle('fast');
 			} );
 	{/literal}{/jq}
-	<div><input type="submit" value="{tr}Apply{/tr}"></div>
+	<div><input type="submit" class="btn btn-default" value="{tr}Apply{/tr}"></div>
 </form>
 

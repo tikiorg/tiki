@@ -116,7 +116,7 @@
 		{$edit_info}
 		<input type="hidden" name="action" value="edit">
 		<input type="hidden" name="{$entryType}Id" value="{$videoInfo->id}">
-		<input name="update" type="submit" value="{tr}Save{/tr}">
+		<input name="update" type="submit" class="btn btn-default" value="{tr}Save{/tr}">
 	</form>
 	</div>
 	{elseif $kmode eq 'view'}

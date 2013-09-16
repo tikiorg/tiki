@@ -72,7 +72,7 @@
 		{/tabset}
 	</div>
 	{if $can_apply}
-		<input type="submit" value="{tr}Apply{/tr}">
+		<input type="submit" class="btn btn-default" value="{tr}Apply{/tr}">
 	{/if}
 </form>
 {jq}

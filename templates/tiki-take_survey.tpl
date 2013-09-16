@@ -88,5 +88,5 @@
       {/if}
     </div>
   {/section}
-<input type="submit" value="{tr}Send Answers{/tr}" name="ans">
+<input type="submit" class="btn btn-default" value="{tr}Send Answers{/tr}" name="ans">
 </form>

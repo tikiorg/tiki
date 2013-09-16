@@ -87,7 +87,7 @@ Configure how your mailed-in wiki pages are to be linked / organized.
 		</tr>
 	{/if}
 	</table>
-	<input type="submit" value="Save" />
+	<input type="submit" class="btn btn-default" value="Save" />
 	</form>
 {else}
 	<p>

@@ -133,7 +133,7 @@
 						<option value="delete">{tr}Delete{/tr}</option>
 						<option value="delete_with_page">{tr}Delete with the pages{/tr}</option>
 					</select>
-					<input type="submit" name="act" value="{tr}OK{/tr}">
+					<input type="submit" class="btn btn-default" name="act" value="{tr}OK{/tr}">
 				</form>
 			</div>
 		{/if}
@@ -164,7 +164,7 @@
 					<tr>
 						<td>&nbsp;</td>
 						<td colspan="2">
-							<input type="submit" value="{tr}Create New Structure{/tr}" name="create">
+							<input type="submit" class="btn btn-default" value="{tr}Create New Structure{/tr}" name="create">
 						</td>
 					</tr>
 				</table>

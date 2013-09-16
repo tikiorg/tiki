@@ -155,7 +155,7 @@ function update_button_install() {
 	<form method="get" action="tiki-mods.php">
 		{tr}Find{/tr}
 		<input type="text" name="find" value="{$find|escape}">
-		<input type="submit" name="f" value="{tr}Find{/tr}">
+		<input type="submit" class="btn btn-default" name="f" value="{tr}Find{/tr}">
 		{tr}in{/tr} <select name="type" onchange="this.form.submit();">
 			<option value="">{tr}all types{/tr}</option>
 			{foreach key=it item=i from=$types}

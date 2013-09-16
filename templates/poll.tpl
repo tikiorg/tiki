@@ -36,7 +36,7 @@
 							{/foreach}
 						</table>
 						<div align="center">
-							<input type="submit" name="pollVote" value="{tr}vote{/tr}" style="border:1px solid #666666;font-size:.8em;">
+							<input type="submit" class="btn btn-default" name="pollVote" value="{tr}vote{/tr}" style="border:1px solid #666666;font-size:.8em;">
 						</div>
 					</form>
 				{/foreach}

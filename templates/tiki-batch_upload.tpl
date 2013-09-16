@@ -55,7 +55,7 @@
 {/if}
 {/section}
 </select>
-&nbsp;&nbsp;&nbsp;&nbsp; <input type="submit" name="batch_upload" value="{tr}Process{/tr}">
+&nbsp;&nbsp;&nbsp;&nbsp; <input type="submit" class="btn btn-default" name="batch_upload" value="{tr}Process{/tr}">
 </form>
 <br>
 

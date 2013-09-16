@@ -44,7 +44,7 @@
 <div class="navbar">
 	<form action="tiki-admin_banning.php" method="post">
 	<input type="hidden" name="export" value="y">
-		<input type="submit" name="csv" value="{tr}Export as CSV{/tr}" class="button">
+		<input type="submit" class="btn btn-default" name="csv" value="{tr}Export as CSV{/tr}" class="button">
 		{button _text="{tr}Import as CSV{/tr}" href="#Import_rules_as_CSV" class="button"}
 	</form>
 </div>
@@ -161,7 +161,7 @@
 		<tr>
 			<td>&nbsp;</td>
 			<td>
-				<input type="submit" name="save" value="{tr}Save{/tr}">
+				<input type="submit" class="btn btn-default" name="save" value="{tr}Save{/tr}">
 			</td>
 		</tr>
 	</table>
@@ -182,7 +182,7 @@
         	<input type="checkbox" name="import_as_new">
         	{tr}Import as new rules{/tr}
         </label>
-        <input type="submit" name="import" value="{tr}import{/tr}">
+        <input type="submit" class="btn btn-default" name="import" value="{tr}import{/tr}">
       </td>
     </tr>
   </table>
@@ -203,7 +203,7 @@
 	<input type="hidden" name="sort_mode" value="{$sort_mode|escape}">
 	<table class="normal">
 		<tr>
-			<th><input type="submit" name="del" value="{tr}x{/tr} "></th>
+			<th><input type="submit" class="btn btn-warning" name="del" value="{tr}x{/tr} "></th>
 			<th>{tr}Title{/tr}</th>
 			<th>{tr}User/IP{/tr}</th>
 			<th>{tr}Sections{/tr}</th>

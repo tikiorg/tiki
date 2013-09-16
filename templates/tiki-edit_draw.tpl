@@ -25,7 +25,7 @@
 				<button id="drawBack">{tr}Back{/tr}</button>
 				<button id="drawFullscreen">{tr}Toggle Fullscreen{/tr}</button>
 			{else}
-				<input type="submit" style="display: none;" value="{tr}Save{/tr}">
+				<input type="submit" class="btn btn-default" style="display: none;" value="{tr}Save{/tr}">
 			{/if}
 		</div>
 	</div>

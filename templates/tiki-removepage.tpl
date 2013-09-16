@@ -11,5 +11,5 @@
   <input type="hidden" name="page" value="{$page|escape}">
   <input type="hidden" name="version" value="{$version|escape}">
   <input type="hidden" name="historyId" value="{$historyId|escape}">
-  <input type="submit" name="remove" value="{tr}Remove{/tr}">
+  <input type="submit" class="btn btn-warning" name="remove" value="{tr}Remove{/tr}">
 </form>

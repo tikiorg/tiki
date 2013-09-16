@@ -46,7 +46,7 @@
 				<input type="checkbox" name="always_email" value="1"{if $report_preferences.always_email eq 1 OR $report_preferences eq false} checked="checked"{/if}> {tr}Send me an email also if nothing happened{/tr}
 			</div>
 			
-			<p><input type="submit" name="submit" value=" {tr}Apply{/tr} "></p>
+			<p><input type="submit" name="submit" class="btn btn-default" value=" {tr}Apply{/tr} "></p>
 		</form>
 	{/tab}
 	{/if}
@@ -94,7 +94,7 @@
 	</tr>
 	{/if}
 	<tr><td>&nbsp;</td>
-	<td><input type="submit" name="add" value="{tr}Add{/tr}"></td>
+	<td><input type="submit" class="btn btn-default" name="add" value="{tr}Add{/tr}"></td>
 	</tr>
 	</table>
 	</form>
@@ -184,7 +184,7 @@
 	{/foreach}
 </table>
 {if $watches}
-	{tr}Perform action with checked:{/tr} <input type="submit" name="delete" value="{tr}Delete{/tr}">
+	{tr}Perform action with checked:{/tr} <input type="submit" class="btn btn-warning" name="delete" value="{tr}Delete{/tr}">
 {/if}
 </form>
 {/tab}
@@ -201,7 +201,7 @@
 		<p><input type="checkbox" name="user_calendar_watch_editor" value="true" {if $user_calendar_watch_editor eq 'y'}checked{/if}> {tr}Calendar{/tr}</p>
 		<p><input type="checkbox" name="user_comment_watch_editor" value="true" {if $user_comment_watch_editor eq 'y'}checked{/if}> {tr}Comment{/tr}</p>
 
-		<p><input type="submit" name="submit" value=" {tr}Apply{/tr} "></p>
+		<p><input type="submit" class="btn btn-default" name="submit" value=" {tr}Apply{/tr} "></p>
 	</form>
 {/tab}
 {/tabset}

@@ -96,7 +96,7 @@
 				<option value="remove_groups" >{tr}Remove{/tr}</option>
 			</select>
 		</label>
-		<input type="submit" value="{tr}OK{/tr}">
+		<input type="submit" class="btn btn-default" value="{tr}OK{/tr}">
 	</p>
 	</form>
 	{pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}
@@ -354,12 +354,12 @@ $("#userstracker").change(function () {
 						&nbsp;
 						<input type="hidden" name="olgroup" value="{$group|escape}">
 					</td>
-					<td><input type="submit" name="save" value="{tr}Save{/tr}"></td>
+					<td><input type="submit" class="btn btn-default" name="save" value="{tr}Save{/tr}"></td>
 				</tr>
 			{else}
 				<tr>
 					<td >&nbsp;</td>
-					<td><input type="submit" name="newgroup" value="{tr}Add{/tr}"></td>
+					<td><input type="submit" class="btn btn-default" name="newgroup" value="{tr}Add{/tr}"></td>
 				</tr>
 			{/if}
 		</table>
@@ -422,7 +422,7 @@ $("#userstracker").change(function () {
 				<option value="unassign">{tr}Unassign{/tr}</option>
 			</select>
 		</label>
-		<input type="submit" name="unassign_members" value="{tr}OK{/tr}">
+		<input type="submit" class="btn btn-default" name="unassign_members" value="{tr}OK{/tr}">
 		</form>
 		{/if}
 
@@ -459,8 +459,8 @@ $("#userstracker").change(function () {
 							<option>{$iuser|escape}</option>
 						{/foreach}
 					</select>
-					<input type="submit" name="adduser" value="{tr}Add to group{/tr}">
-					<input type="submit" name="banuser" value="{tr}Ban user from group{/tr}">
+					<input type="submit" class="btn btn-default" name="adduser" value="{tr}Add to group{/tr}">
+					<input type="submit" class="btn btn-default" name="banuser" value="{tr}Ban user from group{/tr}">
 				</p>
 			</form>
 		{/if}
@@ -504,7 +504,7 @@ $("#userstracker").change(function () {
 				</tr>
 				<tr>
 					<td class="auto"></td>
-					<td class="auto"><input type="submit" name="export" value="{tr}Export{/tr}"></td>
+					<td class="auto"><input type="submit" class="btn btn-default" name="export" value="{tr}Export{/tr}"></td>
 				</tr>
 			</table>
 
@@ -522,7 +522,7 @@ $("#userstracker").change(function () {
 				</tr>
 				<tr>
 					<td class="auto"></td>
-					<td class="auto"><input type="submit" name="import" value="{tr}Import{/tr}"></td>
+					<td class="auto"><input type="submit" class="btn btn-default" name="import" value="{tr}Import{/tr}"></td>
 				</tr>
 			</table>
 		</form>

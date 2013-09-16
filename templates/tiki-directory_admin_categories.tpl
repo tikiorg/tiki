@@ -16,7 +16,7 @@
 {/section}
 
   </select>
-  <input type="submit" name="go" value="{tr}Go{/tr}">
+  <input type="submit" class="btn btn-default" name="go" value="{tr}Go{/tr}">
 </form>
 {* Dislay a form to add or edit a category *} <br>
 {if $categId eq 0}
@@ -82,7 +82,7 @@
     {include file='categorize.tpl'}
     <tr>
       <td>&nbsp;</td>
-      <td><input type="submit" name="save" value="{tr}Save{/tr}">
+      <td><input class="btn btn-default" type="submit" name="save" value="{tr}Save{/tr}">
     </tr>
   </table>
 </form>

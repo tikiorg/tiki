@@ -54,11 +54,11 @@
 					<p>
 					<input type="hidden" name="plugin_fingerprint" value="{$plugin_fingerprint|escape}">
 					{if $plugin_preview}
-						<input type="submit" name="plugin_preview" value="{tr}Preview{/tr}">
+						<input type="submit" class="btn btn-default" name="plugin_preview" value="{tr}Preview{/tr}">
 					{/if}
 					{if $plugin_approve}
-						<input type="submit" name="plugin_accept" value="{tr}Approve{/tr}">
-						<input type="submit" name="plugin_reject" value="{tr}Reject{/tr}">
+						<input type="submit" class="btn btn-default" name="plugin_accept" value="{tr}Approve{/tr}">
+						<input type="submit" class="btn btn-warning" name="plugin_reject" value="{tr}Reject{/tr}">
 					{/if}
 					</p>
 				</form>

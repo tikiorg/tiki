@@ -48,7 +48,7 @@
 	<h2>{tr}Directories to save{/tr}</h2>
 	<form  method="post" action="{$smarty.server.PHP_SELF|escape}">
 		<p><label>{tr}Full Path to the Zip File:{/tr}<input type="text" name="zipPath" value="{$zipPath|escape}"></label>
-		<input type="submit" name="zip" value="{tr}Generate a zip of those directories{/tr}"></p>
+		<input type="submit" class="btn btn-default" name="zip" value="{tr}Generate a zip of those directories{/tr}"></p>
 		{if $zipPath}
 			<div class="simplebox highlight">{tr _0=$zipPath}A zip has been written to %0{/tr}</div>
 		{/if}

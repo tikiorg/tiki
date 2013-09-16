@@ -3,7 +3,7 @@
 	<form method="post" class="simple no-ajax" action="{service controller=tracker action=dump_items trackerId=$trackerId}">
 		<p>{tr}Produce a CSV with basic formatting.{/tr}</p>
 		<div {*class="submit"*}>
-			<input type="submit" value="{tr}Export{/tr}">
+			<input type="submit" class="btn btn-default" value="{tr}Export{/tr}">
 		</div>
 	</form>
 	<h4>{tr}Export Tracker Items{/tr}</h4>
@@ -88,7 +88,7 @@
 			<input type="number" name="recordsOffset" value="1">
 		</label>
 		<div{* class="submit"*}>
-			<input type="submit" value="{tr}Export{/tr}">
+			<input type="submit" class="btn btn-default" value="{tr}Export{/tr}">
 		</div>
 	</form>
 	{if isset($export)}
@@ -108,7 +108,7 @@
 			<p>{tr}For example: $profileobject:field_ref${/tr}</p>
 		{/remarksbox}
 		<div class="submit">
-			<input type="submit" value="{tr}Export Profile{/tr}">
+			<input type="submit" class="btn btn-default" value="{tr}Export Profile{/tr}">
 		</div>
 	</form>
 	{/if}

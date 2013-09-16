@@ -14,11 +14,11 @@
 		<div>
 			{tr}Name:{/tr} 
 			<input type="text" name="bbb_name">
-			<input type="submit" value="{tr}Join{/tr}">
+			<input type="submit" class="btn btn-default" value="{tr}Join{/tr}">
 		</div>
 	{else}
 		<div>
-			<input type="submit" class="button" value="{tr}Join{/tr}">
+			<input type="submit" class="button btn btn-default" value="{tr}Join{/tr}">
 		</div>
 	{/if}
 

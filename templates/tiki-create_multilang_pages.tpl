@@ -60,6 +60,6 @@
 	
 	<P></P>
 	
-	<input type="submit" id="create_multilang_pages_submit_button" value="{tr}Create pages{/tr}">
+	<input type="submit" class="btn btn-default" id="create_multilang_pages_submit_button" value="{tr}Create pages{/tr}">
 
 </form>

@@ -53,7 +53,7 @@
 					{tr}days{/tr}
 				</fieldset>
 				
-				<p><input type="submit" name="request" value="{tr}Request{/tr}"></p>
+				<p><input type="submit" class="btn btn-default" name="request" value="{tr}Request{/tr}"></p>
 			</form>
 		{/tab}
 	{/permission}

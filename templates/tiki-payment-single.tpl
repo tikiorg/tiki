@@ -114,7 +114,7 @@
 						<form action="{query _type='relative'}" method="post">
 							<input type="hidden" name="invoice" value="{$payment_info.paymentRequestId|escape}">
 							<input type="hidden" name="cookietab" value="1">
-							<input type="submit" value="{tr}Refresh page{/tr}">
+							<input type="submit" class="btn btn-default" value="{tr}Refresh page{/tr}">
 						</form>
 						{remarksbox title="{tr}Payment info{/tr}" type="info"}
 							{$ccresult}<br>
@@ -124,7 +124,7 @@
 						<form action="{query _type='relative'}" method="post">
 							<input type="hidden" name="invoice" value="{$payment_info.paymentRequestId|escape}">
 							<input type="hidden" name="cclite_payment_amount" value="{$payment_info.amount_remaining|escape}">
-							<input type="submit" value="{tr}Trade with Cclite{/tr}">
+							<input type="submit" class="btn btn-default" value="{tr}Trade with Cclite{/tr}">
 						</form>
 						{if (!empty($ccresult) or !empty($ccresult2))}
 							{remarksbox title="{tr}Payment problem{/tr}" type="info"}
@@ -156,7 +156,7 @@
 								<td colspan="4">
 									<input type="hidden" name="invoice" value="{$payment_info.paymentRequestId|escape}">
 									<input type="hidden" name="tiki_credit_amount" value="{$payment_info.amount_remaining|escape}">
-									<input type="submit" name="tiki_credit_pay" value="{tr}Pay with Tiki User Credits{/tr}">
+									<input type="submit" class="btn btn-default" name="tiki_credit_pay" value="{tr}Pay with Tiki User Credits{/tr}">
 								</td>
 							</tr>
 						</table>
@@ -206,7 +206,7 @@
                         </p>
 						<p>
 							<input type="hidden" name="returnurl" value="{$payment_info.returnurl|escape}">
-							<input type="submit" value="{tr}Enter payment{/tr}">
+							<input type="submit" class="btn btn-default" value="{tr}Enter payment{/tr}">
 							<input type="hidden" name="invoice" value="{$payment_info.paymentRequestId|escape}">
 						</p>
 					</fieldset>

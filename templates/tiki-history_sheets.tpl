@@ -62,7 +62,7 @@
 					<th>{tr}Actions{/tr}</th>
 					<th colspan="2">
 						<input type="hidden" name="sheetId" id="sheetId" value="{$sheetId}">
-						<input type="submit" id="compareSheetsSubmit" value="compare" return false;">
+						<input type="submit" id="compareSheetsSubmit" class="btn btn-default" value="compare" return false;">
 					</th>
 				</tr>
 				{section name=revision_date loop=$history}

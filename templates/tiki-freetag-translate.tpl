@@ -87,7 +87,7 @@
 	{/foreach}
 		<tr>
 			<td colspan="{if in_array('',$languageList)}{($languageList|@count) - 1}{else}{$languageList|@count}{/if}">
-				<input type="submit" name="save" value="{tr}Save{/tr}">
+				<input type="submit" class="btn btn-default" name="save" value="{tr}Save{/tr}">
 			</td>
 		</tr>
 	</tbody>
@@ -99,7 +99,7 @@
 	<option value="{$lang.value}"{if in_array($lang.value, $languageList)} selected="selected"{/if}>{$lang.name}</option>
 {/foreach}
 </select>
-<input type="submit" value="{tr}Select{/tr}">
+<input type="submit" class="btn btn-default" value="{tr}Select{/tr}">
 </div>
 </form>
 

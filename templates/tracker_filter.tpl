@@ -111,7 +111,7 @@
 			</td>
 			{if isset($filter_button) && $filter_button eq 'y'}
 				<td>
-					<input id="filterbutton" type="submit" name="filter" value="{tr}Filter{/tr}" style="display:{if $filterfield}inline{else}none{/if}">
+					<input id="filterbutton" type="submit" class="btn btn-default" name="filter" value="{tr}Filter{/tr}" style="display:{if $filterfield}inline{else}none{/if}">
 				</td>
 			{/if}
 		</tr>

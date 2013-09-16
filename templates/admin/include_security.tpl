@@ -13,7 +13,7 @@
 
 <form class="admin" id="security" name="security" action="tiki-admin.php?page=security" method="post">
 	<div class="heading input_submit_container" style="text-align: right">
-		<input type="submit" name="security" value="{tr}Apply{/tr}" />
+		<input type="submit" class="btn btn-default" name="security" value="{tr}Apply{/tr}" />
 		<input type="reset" name="securityreset" value="{tr}Reset{/tr}" />
 	</div>
 
@@ -166,6 +166,6 @@
 {/tabset}	
 	
 	<div class="input_submit_container" style="margin-top: 5px; text-align: center">
-		<input type="submit" name="security" value="{tr}Apply{/tr}" />
+		<input type="submit" class="btn btn-default" name="security" value="{tr}Apply{/tr}" />
 	</div>
 </form>

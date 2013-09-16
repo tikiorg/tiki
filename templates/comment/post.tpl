@@ -29,7 +29,7 @@
 				{assign var='showmandatory' value='y'}
 				{include file='antibot.tpl'}
 			{/if}
-			<input type="submit" class="clearfix comment-post" value="{tr}Post{/tr}"/>
+			<input type="submit" class="clearfix comment-postclass btn btn-default" value="{tr}Post{/tr}"/>
 		</fieldset>
 	</form>
 {/if}

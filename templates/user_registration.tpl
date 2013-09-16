@@ -67,7 +67,7 @@
 					{if $merged_prefs.feature_antibot eq 'y'}{include file='antibot.tpl' td_style='formcolor'}{/if}
 					<tr class="registerSubmitTr">
 						<td>&nbsp;</td>
-						<td><input class="registerSubmit" type="submit" name="register" value="{tr}Register{/tr}"></td>
+						<td><input class="registerSubmit" type="submit" class="btn btn-default" name="register" value="{tr}Register{/tr}"></td>
 					</tr>
 				</table>
 			</form>

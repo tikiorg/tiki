@@ -22,7 +22,7 @@
 			{tr}Filter{/tr}
 		</div>
 		<div class="cbox-data">
-			{tr}Filter:{/tr}<input type="text" name="find" value="{$find|escape}"><input type="submit" name="filter" value="{tr}Filter{/tr}"><br>
+			{tr}Filter:{/tr}<input type="text" name="find" value="{$find|escape}"><input type="submit" class="btn btn-default" name="filter" value="{tr}Filter{/tr}"><br>
 		</div>
 	</div>
 	
@@ -46,8 +46,8 @@
 						<option value="{$pages[ix].pageName|escape}">{$pages[ix].pageName|escape}</option>
 					{/section}
 				</select>
-				<input type="submit" name="addpage" value="{tr}Add Page{/tr}">
-				<input type="submit" name="clearpages" value="{tr}Clear{/tr}">
+				<input type="submit" class="btn btn-default" name="addpage" value="{tr}Add Page{/tr}">
+				<input type="submit" class="btn btn-default" name="clearpages" value="{tr}Clear{/tr}">
 			</div>
 		</div>
 
@@ -71,8 +71,8 @@
 							<option value="{$struct.page_ref_id|escape}">{$struct.pageName|escape}{if $struct.page_alias} (alias: {$struct.page_alias}){/if}</option>
 						{/foreach}
 					</select>
-					<input type="submit" name="addstructure" value="{tr}Add Structure{/tr}">
-					<input type="submit" name="clearstructures" value="{tr}Clear{/tr}">
+					<input type="submit" class="btn btn-default" name="addstructure" value="{tr}Add Structure{/tr}">
+					<input type="submit" class="btn btn-default" name="clearstructures" value="{tr}Clear{/tr}">
 				</div>
 			</div>
 		{/if}
@@ -98,8 +98,8 @@
 						<option value="{$articles[ix].articleId|escape}">{$articles[ix].articleId}: {$articles[ix].title|escape}</option>
 					{/section}
 				</select>
-				<input type="submit" name="addarticle" value="{tr}Add Article{/tr}">
-				<input type="submit" name="cleararticles" value="{tr}Clear{/tr}">
+				<input type="submit" class="btn btn-default" name="addarticle" value="{tr}Add Article{/tr}">
+				<input type="submit" class="btn btn-default" name="cleararticles" value="{tr}Clear{/tr}">
 			</div>
 		</div>
 	{/if}
@@ -145,7 +145,7 @@
 					<td><input type="checkbox" name="dbg"{if $dbg eq 'on'} checked="checked"{/if}></td>
 				</tr>
 				<tr>
-					<td align="center" colspan="2"><input type="submit" name="send" value="{tr}Send{/tr}"></td>
+					<td align="center" colspan="2"><input type="submit" class="btn btn-default" name="send" value="{tr}Send{/tr}"></td>
 				</tr>
 			</table>
 		</div>

@@ -6,7 +6,7 @@
 <form action="tiki-admin.php?page=module" method="post">
 	<input type="hidden" name="modulesetup" />
 	<div class="heading input_submit_container" style="text-align: right">
-		<input type="submit" value="{tr}Change preferences{/tr}" />
+		<input type="submit" class="btn btn-default" value="{tr}Change preferences{/tr}" />
 	</div>
 	<fieldset>
 		<legend>{tr}{$crumbs[$crumb]->description}{/tr}{help crumb=$crumbs[$crumb]}</legend>
@@ -39,6 +39,6 @@
 		{/remarksbox}
 	</fieldset>
 	<div class="heading input_submit_container" style="text-align: center">
-		<input type="submit" value="{tr}Change preferences{/tr}" />
+		<input type="submit" class="btn btn-default" value="{tr}Change preferences{/tr}" />
 	</div>
 </form>

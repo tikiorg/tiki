@@ -14,7 +14,7 @@
 					<option {if $smarty.section.rt_val.index eq $max_rating}selected{/if}>{$smarty.section.rt_val.index}</option>
 				{/section}
 			</select>
-			<input type="submit" value="{tr}Go{/tr}">
+			<input type="submit" class="btn btn-default" value="{tr}Go{/tr}">
 		</form>
 	{/if}
 	{modules_list list=$modArticles nonums=$nonums}

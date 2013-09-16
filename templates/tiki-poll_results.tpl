@@ -53,7 +53,7 @@
 	</label>		
 {/if}
 <br>
-<input type="submit" name="search" value="{tr}Find{/tr}">
+<input type="submit" class="btn btn-default" name="search" value="{tr}Find{/tr}">
 </form>
 
 {section name=x loop=$poll_info_arr}
@@ -90,7 +90,7 @@
    <td class="findtable">
    <form method="get" action="tiki-poll_results.php">
      <input type="text" name="find" value="{$find|escape}">
-     <input type="submit" value="{tr}Find{/tr}" name="search">
+     <input type="submit" class="btn btn-default" value="{tr}Find{/tr}" name="search">
      <input type="hidden" name="sort_mode" value="{$sort_mode|escape}">
 	 <input type="hidden" name="pollId" value="{$pollId|escape}">
 	 <input type="hidden" name="list" value="y">

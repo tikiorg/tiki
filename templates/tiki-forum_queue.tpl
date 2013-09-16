@@ -87,10 +87,10 @@
 <tr>
 	<td>&nbsp;</td>
 	<td>
-		<input type="submit" name="save" value="{tr}Save{/tr}">
-		<input type="submit" name="saveapp" value="{tr}Save and Approve{/tr}">
-		<input type="submit" name="remove" value="{tr}Remove{/tr}">
-		<input type="submit" name="topicize" value="{tr}convert to topic{/tr}">
+		<input type="submit" class="btn btn-default" name="save" value="{tr}Save{/tr}">
+		<input type="submit" class="btn btn-default" name="saveapp" value="{tr}Save and Approve{/tr}">
+		<input type="submit" class="btn btn-warning" name="remove" value="{tr}Remove{/tr}">
+		<input type="submit" class="btn btn-default" name="topicize" value="{tr}convert to topic{/tr}">
 	</td>
 </tr>
 </table>
@@ -110,7 +110,7 @@
 <td>
 	<small>{tr}Find{/tr}</small>
 	<input size="8" type="text" name="find" value="{$find|escape}">
-	<input type="submit" name="filter" value="{tr}Filter{/tr}">
+	<input type="submit" class="btn btn-default" name="filter" value="{tr}Filter{/tr}">
 </td>
 </tr>
 </table>	
@@ -174,8 +174,8 @@
 {if $items}
 <br>
 {tr}Perform action with checked:{/tr} 
-		<input type="submit" name="rej" value="{tr}Reject{/tr}">
-		<input type="submit" name="app" value="{tr}Approve{/tr}">
+		<input type="submit" class="btn btn-default" name="rej" value="{tr}Reject{/tr}">
+		<input type="submit" class="btn btn-default" name="app" value="{tr}Approve{/tr}">
 {/if}
 </form>
 {* END OF LISTING *}

@@ -144,7 +144,7 @@
 					{include file='categorize.tpl'}
 					{include file='freetag.tpl'}
 					<tr><td>{tr}Other users can upload images to this gallery:{/tr}</td><td><input type="checkbox" name="public" {if $public eq 'y'}checked="checked"{/if}></td></tr>
-					<tr><td>&nbsp;</td><td><input type="submit" value="{tr}Save{/tr}" name="edit"></td></tr>
+					<tr><td>&nbsp;</td><td><input type="submit" class="btn btn-default" value="{tr}Save{/tr}" name="edit"></td></tr>
 				</table>
 			</form>
 		</div>
@@ -177,7 +177,7 @@
 						{/if}
 					{/foreach*}
 				</select>
-				<input type="submit" value="{tr}Filter{/tr}">
+				<input type="submit" class="btn btn-default" value="{tr}Filter{/tr}">
 			</form>
 		</div>
 	{/if}

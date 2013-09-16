@@ -5,7 +5,7 @@
 
 <form method="post" action="tiki-admin.php?page=forums">
 	<div class="heading input_submit_container" style="text-align: right">
-		<input type="submit" value="{tr}Change preferences{/tr}" />
+		<input type="submit" class="btn btn-default" value="{tr}Change preferences{/tr}" />
 	</div>
 
 	{tabset name="admin_forums"}
@@ -82,6 +82,6 @@
 		{/tab}
 	{/tabset}
 	<div class="heading input_submit_container" style="text-align: center">
-		<input type="submit" value="{tr}Change preferences{/tr}" />
+		<input type="submit" class="btn btn-default" value="{tr}Change preferences{/tr}" />
 	</div>
 </form>

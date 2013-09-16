@@ -36,7 +36,7 @@
 			</table>
 	</fieldset>
 	<div>
-		<input type="submit" name="show" value="{tr}Show contributions{/tr}">
+		<input type="submit" class="btn btn-default" name="show" value="{tr}Show contributions{/tr}">
 		{button href="tiki-index.php?page=$page" _text="{tr}View page{/tr}"}
 	</div>
 </form>

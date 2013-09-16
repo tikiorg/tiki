@@ -136,10 +136,10 @@
 					<option value="move_marked_to_trash">{tr}Trash{/tr}</option>
 					<option value="remove_marked_from_trash">{tr}Undo Trash{/tr}</option>
 				</select>
-				<input type="submit" name="update_tasks" value="{tr}Go{/tr}" style="vertical-align:bottom;">
+				<input type="submit" class="btn btn-default" name="update_tasks" value="{tr}Go{/tr}" style="vertical-align:bottom;">
 			</td>
 			<td colspan="3" style="text-align:right;">
-				<input type="submit" name="update_percentage" value="{tr}Go{/tr}" style="vertical-align:bottom;">
+				<input type="submit" class="btn btn-default" name="update_percentage" value="{tr}Go{/tr}" style="vertical-align:bottom;">
 				{icon _id='arrow_turn_down_left' title="{tr}Go{/tr}" alt="{tr}Go{/tr}" style="margin-bottom:8px; margin-right:8px"}
 			</td>
 		</tr>
@@ -162,7 +162,7 @@
 		</tr>
 		<tr>
 			<td colspan="6" style="text-align:center;">
-				<input type="submit" name="reload" value="{tr}Reload{/tr}">
+				<input type="submit" class="btn btn-default" name="reload" value="{tr}Reload{/tr}">
 			</td>
 		</tr>
 	</table>

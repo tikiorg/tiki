@@ -28,7 +28,7 @@
 		</select></p>
 		<p id="ws_postbody">{tr}Parameters (%name%):{/tr}<textarea name="postbody">{$postbody|escape}</textarea></p>
 		<p id="ws_operation" style="display: none;">{tr}Operation:{/tr}<input type="text" name="operation" size="30" value="{$operation|escape}" /></p>
- 		<p><input type="submit" name="parse" value="{tr}Lookup{/tr}"/></p>
+ 		<p><input type="submit" class="btn btn-default" name="parse" value="{tr}Lookup{/tr}"/></p>
 	{/if}
 	{if $url}
 		<h3>{tr}Parameters{/tr}</h3>
@@ -47,7 +47,7 @@
 			{/if}
 			<tr>
 				<td colspan="2">
-					<input type="submit" name="test" value="{tr}Test Input{/tr}" />
+					<input type="submit" class="btn btn-default" name="test" value="{tr}Test Input{/tr}" />
 				</td>
 			</tr>
 		</table>
@@ -88,7 +88,7 @@
 				<tr>
 					<th>
 						{$template.engine|escape}/{$template.output|escape}
-						<input type="submit" name="add[{$number}]" value="{tr}Add{/tr}"/>
+						<input type="submit" class="btn btn-default" name="add[{$number}]" value="{tr}Add{/tr}"/>
 					</th>
 					<td><pre>{$template.content|escape}</pre></td>
 				</tr>
@@ -102,7 +102,7 @@
 			<p>{tr}Register this web service. It will be possible to register the templates afterwards. Service name must only contain letters.{/tr}</p>
 			<p>
 				<input type="text" name="new_name" />
-				<input type="submit" name="register" value="{tr}Register Service{/tr}" />
+				<input type="submit" class="btn btn-default" name="register" value="{tr}Register Service{/tr}" />
 			</p>
 		{else}
 			<h3>{tr}Registered Templates{/tr}</h3>
@@ -116,12 +116,12 @@
 				{foreach from=$storedTemplates item=template}
 					<tr>
 						<td>
-							<input type="submit" name="loadtemplate" value="{$template->name|escape}"/>
+							<input type="submit" class="btn btn-default" name="loadtemplate" value="{$template->name|escape}"/>
 							<a href="tiki-admin.php?page=webservices&amp;name={$storedName|escape}&amp;delete={$template->name|escape}">{icon _id='cross'}</a>
 						</td>
 						<td>{$template->engine|escape}</td>
 						<td>{$template->output|escape}</td>
-						<td><input type="submit" name="preview" value="{$template->name|escape}"/></td>
+						<td><input type="submit" class="btn btn-default" name="preview" value="{$template->name|escape}"/></td>
 					</tr>
 					<tr><td colspan="4"><pre>{$template->content|escape}</pre></td></tr>
 					{if $preview eq $template->name}
@@ -134,7 +134,7 @@
 					<td><input type="text" name="nt_output" value="{$nt_output|escape}"/></td>
 				</tr>
 				<tr><td colspan="4"><textarea name="nt_content" rows="10">{$nt_content|escape}</textarea></td></tr>
-				<tr><td colspan="4"><input type="submit" name="create_template" value="{tr}Register Template{/tr}"/></td></tr>
+				<tr><td colspan="4"><input type="submit" class="btn btn-default" name="create_template" value="{tr}Register Template{/tr}"/></td></tr>
 			</table>
 		{/if}
 	{/if}

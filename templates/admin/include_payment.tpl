@@ -2,7 +2,7 @@
 <form action="tiki-admin.php?page=payment" method="post">
 	<div class="navbar">
 		{button href="tiki-payment.php" _text="{tr}Payments{/tr}"}
-		<input type="submit" name="paymentprefs" value="{tr}Change settings{/tr}" style="float:right;" />
+		<input type="submit" class="btn btn-default" name="paymentprefs" value="{tr}Change settings{/tr}" style="float:right;" />
 	</div>
 	{if $prefs.payment_feature neq "y"}
 		<fieldset class="admin">
@@ -169,6 +169,6 @@
 		{/tab}
 	{/tabset}
 	<div class="heading input_submit_container" style="text-align: center">
-		<input type="submit" name="paymentprefs" value="{tr}Change settings{/tr}" />
+		<input type="submit" class="btn btn-default" name="paymentprefs" value="{tr}Change settings{/tr}" />
 	</div>
 </form>

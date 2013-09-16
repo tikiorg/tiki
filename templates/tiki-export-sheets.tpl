@@ -60,6 +60,6 @@
 		{/section}
 		</select>
 		<br>
-		<input type="submit" value="{tr}Export{/tr}">
+		<input type="submit" class="btn btn-default" value="{tr}Export{/tr}">
 	</form>
 {/if}

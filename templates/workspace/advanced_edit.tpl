@@ -11,6 +11,6 @@
 	</label>
 	{textarea syntax='tiki' codemirror='true'}{$definition}{/textarea}
 	<div class="submit">
-		<input type="submit" value="{tr}Save{/tr}">
+		<input type="submit" class="btn btn-default" value="{tr}Save{/tr}">
 	</div>
 </form>

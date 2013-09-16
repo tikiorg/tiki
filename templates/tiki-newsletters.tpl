@@ -69,7 +69,7 @@
 				<tr>
 					<td class="even">&nbsp;</td>
 					<td class="even">
-						<input type="submit" name="subscribe" value="{tr}Subscribe to this Newsletter{/tr}">
+						<input type="submit" class="btn btn-default" name="subscribe" value="{tr}Subscribe to this Newsletter{/tr}">
 					</td>
 				</tr>
 			{/if}

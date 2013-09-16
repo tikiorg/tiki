@@ -23,9 +23,9 @@
 		{/if}
 		<div>
 			{if $list}
-				<input type="submit" value="{tr}Clone{/tr}">
+				<input type="submit" class="btn btn-default" value="{tr}Clone{/tr}">
 			{else}
-				<input type="submit" value="{tr}Search for trackers to clone{/tr}">
+				<input type="submit" class="btn btn-default" value="{tr}Search for trackers to clone{/tr}">
 			{/if}
 		</div>
 	</form>

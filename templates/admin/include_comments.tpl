@@ -7,7 +7,7 @@
 
 <form action="tiki-admin.php?page=comments" method="post">
 	<div class="heading input_submit_container" style="text-align: right">
-		<input type="submit" name="commentssetprefs" value="{tr}Change preferences{/tr}" />
+		<input type="submit" class="btn btn-default" name="commentssetprefs" value="{tr}Change preferences{/tr}" />
 	</div>
 
 	{tabset name="admin_wiki"}
@@ -88,6 +88,6 @@
 {/tabset}
 
 <div class="heading input_submit_container" style="text-align: center">
-	<input type="submit" name="commentssetprefs" value="{tr}Change preferences{/tr}" />
+	<input type="submit" class="btn btn-default" name="commentssetprefs" value="{tr}Change preferences{/tr}" />
 </div>
 </form>

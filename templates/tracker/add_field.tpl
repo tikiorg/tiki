@@ -56,8 +56,8 @@
 		</div>
 	</label>
 	<div>
-		<input type="submit" name="submit" value="{tr}Add Field{/tr}">
-		<input type="submit" name="submit_and_edit" value="{tr}Add Field &amp; Edit Advanced Options{/tr}">
+		<input type="submit" class="btn btn-default" name="submit" value="{tr}Add Field{/tr}">
+		<input type="submit" class="btn btn-default" name="submit_and_edit" value="{tr}Add Field &amp; Edit Advanced Options{/tr}">
 		<input type="hidden" name="trackerId" value="{$trackerId|escape}">
 		<input type="hidden" name="next" value="close">
 	</div>

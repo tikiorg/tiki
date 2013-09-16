@@ -145,7 +145,7 @@ var account='';
 	 			</tr>
         	</table>
 		</fieldset>
-		<input type="submit" name="book" id="book" value="{tr}Book{/tr}">
+		<input type="submit" class="btn btn-default" name="book" id="book" value="{tr}Book{/tr}">
 		{button href="tiki-accounting.php?bookId=$bookId" _text="{tr}Back to book page{/tr}"}
 	</form>
 </div>

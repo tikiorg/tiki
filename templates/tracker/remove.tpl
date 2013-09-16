@@ -4,7 +4,7 @@
 		<div class="submit">
 			<input type="hidden" name="confirm" value="1">
 			<input type="hidden" name="trackerId" value="{$trackerId|escape}">
-			<input type="submit" value="{tr}Remove{/tr}">
+			<input type="submit" class="btn btn-default" value="{tr}Remove{/tr}">
 		</div>
 	</form>
 {else}

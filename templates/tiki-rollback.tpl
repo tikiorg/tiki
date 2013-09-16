@@ -1,7 +1,7 @@
 {title}{tr}Rollback page{/tr} {$page} {tr}to version{/tr} {$version}{/title}
 
 <form action="tiki-rollback.php?page={$page|escape:url}&amp;version={$version|escape}&amp;rollback=y" method="post">
-  <input type="submit" name="rollback" value="{tr}Rollback{/tr}">
+  <input type="submit" class="btn btn-default" name="rollback" value="{tr}Rollback{/tr}">
   <input type="hidden"  name="page" value="{$page|escape}">
   <input type="hidden" name="version" value="{$version|escape}">
 </form>
@@ -10,7 +10,7 @@
   <div align="center">
     <input type="hidden"  name="page" value="{$page|escape}">
     <input type="hidden" name="version" value="{$version|escape}">
-    <input type="submit" name="rollback" value="{tr}Rollback{/tr}">
+    <input type="submit" class="btn btn-default" name="rollback" value="{tr}Rollback{/tr}">
   </div>
 </form>
 

@@ -228,17 +228,17 @@
 {/if}
 
 <label class="findsubmit">
-	<input type="submit" name="search" value="{tr}Go{/tr}">
+	<input type="submit" class="btn btn-default" name="search" value="{tr}Go{/tr}">
 	{if $find ne ''}
 		<span class="button">
 			<a href="{$smarty.server.PHP_SELF}?{query find='' type='' types='' topic='' lang='' langOrphan='' exact_match='' categId='' maxRecords='' find_from_Month='' find_from_Day='' find_from_Year='' find_to_Month='' find_to_Day='' find_to_Year=''}" title="{tr}Clear Filter{/tr}">{tr}Clear Filter{/tr}</a>
 		</span>
 	{/if}
 	{if (isset($gmapbuttons) && $gmapbuttons) and (isset($mapview) && $mapview)}
-		<input type="submit" name="searchlist" value="{tr}List View{/tr}">
+		<input class="btn btn-default" type="submit" name="searchlist" value="{tr}List View{/tr}">
 		<input type="hidden" name="mapview" value="y">
 	{elseif (isset($gmapbuttons) && $gmapbuttons)}
-		<input type="submit" name="searchmap" value="{tr}Map View{/tr}">
+		<input type="submit" class="btn btn-default" name="searchmap" value="{tr}Map View{/tr}">
 		<input type="hidden" name="mapview" value="n">
 	{/if}
 </label>

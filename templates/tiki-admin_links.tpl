@@ -57,6 +57,6 @@
 			</select>
 			</td>
 		</tr>
-		<tr><td>&nbsp;</td><td><input type="submit" name="add" value="{tr}Save{/tr}"></td></tr>
+		<tr><td>&nbsp;</td><td><input type="submit" class="btn btn-default" name="add" value="{tr}Save{/tr}"></td></tr>
 	</table>
 </form>

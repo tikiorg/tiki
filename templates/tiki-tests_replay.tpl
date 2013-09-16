@@ -19,7 +19,7 @@
 <input type="checkbox" name="show_post" value="y" {if $show_post eq 'y'} checked="checked"{/if}>{tr}Show POST Data{/tr}<br>
 <input type="checkbox" name="current_session" value="y" {if $current_session eq 'y'} checked="checked"{/if}>{tr}Use Current Session/Log out{/tr}<br>
 <input type="hidden" name="filename" value="{$filename}">
-<center><input type="submit" name="action" value="{tr}Replay{/tr}"></center>
+<center><input type="submit" class="btn btn-default" name="action" value="{tr}Replay{/tr}"></center>
 </form>
 </fieldset>
 {if is_array($result) and sizeof($result) gt 0}

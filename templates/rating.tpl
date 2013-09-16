@@ -13,7 +13,7 @@
 		{/foreach}
 	{/if}
 	<input type="hidden" name="rating_prev[{$rating_type|escape}][{$rating_id|escape}]" value="{$current_rating|escape}">
-	<input type="submit" value="{tr}Rate{/tr}">
+	<input type="submit" class="btn btn-default" value="{tr}Rate{/tr}">
 
 	{if $tiki_p_wiki_admin_ratings eq 'y' or $tiki_p_admin eq 'y'}
 		{rating_result id=$rating_id type=$rating_type}

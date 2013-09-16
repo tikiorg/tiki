@@ -6,7 +6,7 @@
 		<div>{$rule.notes|escape}</div>
 		<pre>{$rule.rule|escape}</pre>
 		<div class="submit">
-			<input type="submit" value="{tr}Delete{/tr}"/>
+			<input type="submit" class="btn btn-default" value="{tr}Delete{/tr}"/>
 			<input type="hidden" name="ruleId" value="{$rule.ruleId|escape}"/>
 		</div>
 	</form>

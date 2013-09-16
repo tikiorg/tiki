@@ -32,7 +32,7 @@
 	<div class="trackerlistsort">
 		<form method="post">
 			{include file='tracker_sort_input.tpl'}
-			<input type="submit" name="sort" value="{tr}Sort{/tr}">
+			<input type="submit" class="btn btn-default" name="sort" value="{tr}Sort{/tr}">
 		</form>
 	</div>
 {/if}
@@ -156,7 +156,7 @@ the section loop so that the vars are not replaced by nested pretty tracker exec
 			{if $checkbox.tpl}{include file="$checkbox.tpl"}{/if}
 			{if !empty($checkbox.submit) and !empty($checkbox.title)}
 				<br>
-				<input type="submit" name="{$checkbox.submit}" value="{tr}{$checkbox.title}{/tr}">
+				<input type="submit" class="btn btn-default" name="{$checkbox.submit}" value="{tr}{$checkbox.title}{/tr}">
 			{/if}
 			</form>
 		{/if}

@@ -97,7 +97,7 @@ if (jqueryTiki.tooltips) {
 						<legend>{tr}Return to Main User{/tr}</legend>
 						<input type="hidden" name="su" value="revert" />
 						<input type="hidden" name="username" value="auto" />
-						<div style="text-align: center"><button type="submit" name="actsu">{tr}Switch{/tr}</button></div>
+						<div style="text-align: center"><button type="submit" class="btn btn-default" name="actsu">{tr}Switch{/tr}</button></div>
 					</fieldset>
 				</form>
 			{elseif $tiki_p_admin eq 'y'}
@@ -110,7 +110,7 @@ if (jqueryTiki.tooltips) {
 							{help url="Switch+User" desc="{tr}Help{/tr}" desc="{tr}Switch User:{/tr}{tr}Enter user name and click 'Switch'.<br>Useful for testing permissions.{/tr}"}
 						{/if}
 						<input type="text" name="username" id="login-switchuser_{$module_logo_instance}" size="{if empty($module_params.input_size)}15{else}{$module_params.input_size}{/if}" />
-						<div style="text-align: center"><button type="submit" name="actsu">{tr}Switch{/tr}</button></div>
+						<div style="text-align: center"><button type="submit" class="btn btn-default" name="actsu">{tr}Switch{/tr}</button></div>
 						{autocomplete element="#login-switchuser_"|cat:$module_logo_instance type="username"}
 					</fieldset>
 				</form>
@@ -140,7 +140,7 @@ if (jqueryTiki.tooltips) {
 				{/foreach}
 				</select>
 				<input type="hidden" name="action" value="select"/>
-				<input type="submit" value="{tr}Go{/tr}"/>
+				<input type="submit" class="btn btn-default" value="{tr}Go{/tr}"/>
 			</fieldset>
 		</form>
 		{/if}
@@ -311,7 +311,7 @@ function doChallengeResponse() {
 		<fieldset>
 			<legend>{tr}OpenID Log in{/tr}</legend>
 			<input class="openid_url" type="text" name="openid_url"/>
-			<input type="submit" value="{tr}Go{/tr}"/>
+			<input type="submit" class="btn btn-default" value="{tr}Go{/tr}"/>
 			<a class="linkmodule tikihelp" target="_blank" href="http://doc.tiki.org/OpenID">{tr}What is OpenID?{/tr}</a>
 		</fieldset>
 	</form>

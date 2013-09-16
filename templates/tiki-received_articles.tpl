@@ -149,9 +149,9 @@
 			<tr>
 				<td>&nbsp;</td>
 				<td>
-					<input type="submit" name="preview" value="{tr}Preview{/tr}">
+					<input type="submit" class="btn btn-default" name="preview" value="{tr}Preview{/tr}">
 					&nbsp;
-					<input type="submit" name="save" value="{tr}Save{/tr}">
+					<input type="submit" class="btn btn-default" name="save" value="{tr}Save{/tr}">
 				</td>
 			</tr>
 			<tr>
@@ -163,7 +163,7 @@
 							<option value="{$topics[t].topicId|escape}" {if $topic eq $topics[t].topicId}selected="selected"{/if}>{$topics[t].name}</option>
 						{/section}
 					</select>
-					<input type="submit" name="accept" value="{tr}Accept{/tr}">
+					<input type="submit" class="btn btn-default" name="accept" value="{tr}Accept{/tr}">
 				</td>
 			</tr>
 		</table>

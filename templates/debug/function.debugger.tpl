@@ -19,7 +19,7 @@
   <tr>
     <td class="formcolor"></td>
     <td class="formcolor">
-      <input type="submit" name="exec" value="{tr}exec{/tr}"> &nbsp;&nbsp;&nbsp;&nbsp;
+      <input type="submit" class="btn btn-default" name="exec" value="{tr}exec{/tr}"> &nbsp;&nbsp;&nbsp;&nbsp;
       <small>{tr}Type <code>help</code> to get list of available commands{/tr}</small>
     </td>
   </tr>

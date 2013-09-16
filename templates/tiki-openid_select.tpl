@@ -14,6 +14,6 @@
 		{/foreach}
 
 		<input type="hidden" name="action" value="select">
-		<input type="submit" value="{tr}Select{/tr}">
+		<input type="submit" class="btn btn-default" value="{tr}Select{/tr}">
 	</fieldset>
 </form>

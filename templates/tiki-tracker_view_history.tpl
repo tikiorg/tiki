@@ -13,7 +13,7 @@
 	 <form method="post">
 	 <label class="findtitle">{tr}Version{/tr}<input type="text" name="version" value="{if !empty($filter.version)}{$filter.version|escape}{/if}"></label>
 	 <label class="findtitle">{tr}Field ID{/tr}<input type="text" name="fieldId" value="{if !empty($fieldId)}{$fieldId|escape}{/if}"></label>
-	 <input type="submit" name="Filter" value="{tr}Filter{/tr}">
+	 <input type="submit" class="btn btn-default" name="Filter" value="{tr}Filter{/tr}">
 	 </form>
 </div>
 <br/>

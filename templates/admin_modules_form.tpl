@@ -129,8 +129,8 @@
 				</div>
 			{/if}
 		<div class="input_submit_container">
-			<input type="submit" name="preview" value="{tr}Preview{/tr}" onclick="needToConfirm=false;">
-			<input type="submit" name="assign" value="{tr}Assign{/tr}" onclick="needToConfirm=false;">
+			<input type="submit" class="btn btn-default" name="preview" value="{tr}Preview{/tr}" onclick="needToConfirm=false;">
+			<input type="submit" class="btn btn-default" name="assign" value="{tr}Assign{/tr}" onclick="needToConfirm=false;">
 		</div>
 	{/if}
 </div>

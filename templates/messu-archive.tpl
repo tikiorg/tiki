@@ -41,7 +41,7 @@
 	</select>
 	<label for="mess-mailcont">{tr}Containing:{/tr}</label>
 	<input type="text" name="find" id="mess-mailcont" value="{$find|escape}">
-	<input type="submit" name="filter" value="{tr}Filter{/tr}">
+	<input type="submit" class="btn btn-default" name="filter" value="{tr}Filter{/tr}">
 </form>
 <br>
 
@@ -52,8 +52,8 @@
 	<input type="hidden" name="flag" value="{$flag|escape}">
 	<input type="hidden" name="flagval" value="{$flagval|escape}">
 	<input type="hidden" name="priority" value="{$priority|escape}">
-	<input type="submit" name="delete" value="{tr}Delete{/tr}">
-	<input type="submit" name="download" value="{tr}Download{/tr}">
+	<input type="submit" class="btn btn-warning" name="delete" value="{tr}Delete{/tr}">
+	<input type="submit" class="btn btn-default" name="download" value="{tr}Download{/tr}">
 {jq notonready=true}
 var CHECKBOX_LIST = [{{section name=user loop=$items}'msg[{$items[user].msgId}]'{if not $smarty.section.user.last},{/if}{/section}}];
 {/jq}

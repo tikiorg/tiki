@@ -2,7 +2,7 @@
 
 <form method="post" action="tiki-admin.php?page=polls">
 	<div class="heading input_submit_container" style="text-align: right">
-		<input type="submit" name="calprefs" value="{tr}Change settings{/tr}" />
+		<input type="submit" class="btn btn-default" name="calprefs" value="{tr}Change settings{/tr}" />
 	</div>
 
 	{tabset name="admin_wiki"}
@@ -43,6 +43,6 @@
 		{/tab}
 	{/tabset}	
 	<div class="heading input_submit_container" style="text-align: center">
-		<input type="submit" name="calprefs" value="{tr}Change settings{/tr}" />
+		<input type="submit" class="btn btn-default" name="calprefs" value="{tr}Change settings{/tr}" />
 	</div>
 </form>

@@ -18,7 +18,7 @@
 		<input type="hidden" name="cookie_consent_checkbox" value="1">
 	{/if}
 	{if $prefs.javascript_enabled neq 'y'}
-			<input type="submit" name="cookie_consent_button" value="{tr}{$prefs.cookie_consent_button}{/tr}">
+			<input type="submit" class="btn btn-default" name="cookie_consent_button" value="{tr}{$prefs.cookie_consent_button}{/tr}">
 		</form>
 	{else}
 		{button _text=$prefs.cookie_consent_button|tr_if _id='cookie_consent_button'}

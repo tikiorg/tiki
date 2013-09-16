@@ -2,7 +2,7 @@
 
 <form action="tiki-admin.php?page=directory" method="post">
 	<div class="input_submit_container clear" style="text-align: right;">
-		<input type="submit" name="directory" value="{tr}Change preferences{/tr}" />
+		<input type="submit" class="btn btn-default" name="directory" value="{tr}Change preferences{/tr}" />
 	</div>
 	
 	<fieldset class="admin">
@@ -20,6 +20,6 @@
 		{preference name=directory_open_links}
 	</fieldset>
 	<div class="input_submit_container clear" style="text-align: center;">
-		<input type="submit" name="directory" value="{tr}Change preferences{/tr}" />
+		<input type="submit" class="btn btn-default" name="directory" value="{tr}Change preferences{/tr}" />
 	</div>
 </form>

@@ -7,7 +7,7 @@
 
 <form action="tiki-admin.php?page=wysiwyg" method="post">
 	<div class="heading input_submit_container" style="text-align: right">
-		<input type="submit" name="wysiwygfeatures" value="{tr}Change preferences{/tr}" />
+		<input type="submit" class="btn btn-default" name="wysiwygfeatures" value="{tr}Change preferences{/tr}" />
 	</div>
 	{if $prefs.wysiwyg_htmltowiki neq 'y'}
 		{remarksbox type="warning" title="{tr}Page links{/tr}"}{tr}Note that if the SEFURL feature is on, page links created using wysiwyg might not be automatically updated when pages are renamed. This is addressed through the "Use Wiki syntax in WYSIWYG" feature.{/tr}{/remarksbox}
@@ -53,7 +53,7 @@
 	</fieldset>
 
 	<div class="heading input_submit_container" style="text-align: center">
-		<input type="submit" name="wysiwygfeatures" value="{tr}Change preferences{/tr}" />
+		<input type="submit" class="btn btn-default" name="wysiwygfeatures" value="{tr}Change preferences{/tr}" />
 	</div>
 </form>
 

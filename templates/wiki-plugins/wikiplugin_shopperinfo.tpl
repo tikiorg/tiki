@@ -4,6 +4,6 @@
 	{$values[v].label|escape}: <input type="text" size="20" name="{$values[v].name}" value="{$values[v].current}">
 	<br>
 	{/section}
-	<input type="submit" name="shopperinfo" value="{tr}Submit{/tr}">
+	<input type="submit" class="btn btn-default" name="shopperinfo" value="{tr}Submit{/tr}">
 </form>
 

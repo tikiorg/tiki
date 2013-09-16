@@ -65,7 +65,7 @@
 		<tr>
 			<td>&nbsp;</td>
 			<td>
-				<input type="submit" name="save" value="{tr}Save{/tr}">
+				<input type="submit" class="btn btn-default" name="save" value="{tr}Save{/tr}">
 			</td>
 		</tr>	
 	</table>
@@ -77,7 +77,7 @@
 		<tr>
 			<td>{tr}Upload file:{/tr}</td>
 			<td><input type="hidden" name="MAX_FILE_SIZE" value="10000000000000">
-				<input size="16" name="userfile1" type="file"><input type="submit" name="import" value="{tr}import{/tr}">
+				<input size="16" name="userfile1" type="file"><input type="submit" class="btn btn-default" name="import" value="{tr}import{/tr}">
 			</td>
 		</tr>
 	</table>
@@ -98,7 +98,7 @@
 		<tr>
 			<td>&nbsp;</td>
 			<td>
-				<input type="submit" name="addtopic" value="{tr}Add Topic{/tr}">
+				<input type="submit" class="btn btn-default" name="addtopic" value="{tr}Add Topic{/tr}">
 			</td>
 		</tr>
 	</table>

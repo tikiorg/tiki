@@ -26,7 +26,7 @@
 
 <form action="tiki-admin.php?page=fgal" method="post">
 	<div class="heading input_submit_container" style="text-align: right">
-		<input type="submit" name="filegalhandlers" value="{tr}Change preferences{/tr}" />
+		<input type="submit" class="btn btn-default" name="filegalhandlers" value="{tr}Change preferences{/tr}" />
 	</div>
 
 	{tabset name="fgal_admin"}
@@ -90,7 +90,7 @@
 
 				{preference name='fgal_fix_mime_type'}
 				<div class="adminoptionboxchild" id="fgal_fix_mime_type_childcontainer">
-				<input type="submit" name="updateMime" id="updateMime" value="{tr}Update mime of all non archived octet-stream files{/tr}" />
+				<input type="submit" class="btn btn-default" name="updateMime" id="updateMime" value="{tr}Update mime of all non archived octet-stream files{/tr}" />
 				</div>
 
 				{preference name='fgal_upload_from_source'}
@@ -259,7 +259,7 @@
 				<div class="adminoptionbox">
 					<div class="adminoptionlabel">
 						<div align="center">
-							<input type="submit" name="filegalredosearch" value="{tr}Reindex all files for search{/tr}"/>
+							<input type="submit" class="btn btn-default" name="filegalredosearch" value="{tr}Reindex all files for search{/tr}"/>
 						</div>
 					</div>
 				</div>
@@ -319,6 +319,6 @@
 	{/tabset}
 
 	<div class="input_submit_container clear" style="text-align: center">
-		<input type="submit" name="filegalhandlers" value="{tr}Change preferences{/tr}" />
+		<input type="submit" class="btn btn-default" name="filegalhandlers" value="{tr}Change preferences{/tr}" />
 	</div>
 </form>

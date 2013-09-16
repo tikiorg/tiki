@@ -22,7 +22,7 @@
 				<input type="hidden" name="replyto_hash" value="{$replyto_hash|escape}">
 				<input type="hidden" name="subject" value="{$subject|escape}">
 				<input type="hidden" name="body" value="{$body|escape}">
-				<input type="submit" name="send" value="{tr}Please Confirm{/tr}">
+				<input type="submit" class="btn btn-default" name="send" value="{tr}Please Confirm{/tr}">
 			</form>
 		{/if}
 	</div>
@@ -77,7 +77,7 @@
 		<table class="normal" >
 			<tr>
 				<td style="text-align: center;">
-					<textarea rows="20" cols="80" name="body">{$body|escape}</textarea><br><input type="submit" name="preview" value="{tr}Send{/tr}">
+					<textarea rows="20" cols="80" name="body">{$body|escape}</textarea><br><input type="submit" class="btn btn-default" name="preview" value="{tr}Send{/tr}">
 				</td>
 			</tr>
 		</table>

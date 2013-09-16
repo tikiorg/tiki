@@ -12,7 +12,7 @@
 {if $prefs.feature_antibot eq 'y' && $user eq ''}
 <table>{include file="antibot.tpl"}</table>
 {/if}
-<input type="submit" name="Add" value="{tr}Add{/tr}" />
+<input type="submit" class="btn btn-default" name="Add" value="{tr}Add{/tr}" />
 {help url="Tags" desc="{tr}Put tags separated by spaces. For tags with more than one word, use no spaces and put words together or enclose them with double quotes{/tr}"}
 </form>
 {jq}

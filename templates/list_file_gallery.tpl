@@ -161,7 +161,7 @@
 									</option>
 								{/section}
 							</select>
-							<input type="submit" name="permsel" value="{tr}Assign{/tr}">
+							<input class="btn btn-default" type="submit" name="permsel" value="{tr}Assign{/tr}">
 						</div>
 					{/if}
 					<br style="clear:both"/>

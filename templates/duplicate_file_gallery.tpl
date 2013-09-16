@@ -56,7 +56,7 @@
 			<tr>
 				<td></td>
 				<td>
-					<input type="submit" name="duplicate" value="{tr}Duplicate{/tr}">
+					<input type="submit" class="btn btn-default" name="duplicate" value="{tr}Duplicate{/tr}">
 				</td>
 			</tr>
 		</table>

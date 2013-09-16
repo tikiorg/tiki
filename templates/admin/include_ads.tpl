@@ -5,7 +5,7 @@
 
 <form action="tiki-admin.php?page=ads" onreset="return(confirm("{tr}Cancel Edit{/tr}"))" class="admin" method="post">
 	<div class="heading input_submit_container" style="text-align: right">
-		<input type="submit" value="{tr}Change preferences{/tr}">
+		<input type="submit" class="btn btn-default" value="{tr}Change preferences{/tr}">
 	</div>
 	<input type="hidden" name="adssetup">
 	
@@ -33,6 +33,6 @@
 	</fieldset>
 
 	<div class="input_submit_container clear" style="text-align: center">
-		<input type="submit" value="{tr}Change preferences{/tr}">
+		<input type="submit" class="btn btn-default" value="{tr}Change preferences{/tr}">
 	</div>
 </form>

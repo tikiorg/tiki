@@ -52,7 +52,7 @@
 				</label>
 			</div>
 		{/if}
-		<input class="submit button" type="submit" name="quickedit" value="{tr}Create Page{/tr}">
+		<input class="btn btn-default" type="submit" name="quickedit" value="{tr}Create Page{/tr}">
 	</form>
 </div>
 		{/tab}

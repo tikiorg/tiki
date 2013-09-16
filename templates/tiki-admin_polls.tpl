@@ -77,7 +77,7 @@
 				</tr>
 				<tr>
 					<td>&nbsp;</td>
-					<td><input type="submit" name="save" value="{tr}Save{/tr}"></td>
+					<td><input type="submit" class="btn btn-default" name="save" value="{tr}Save{/tr}"></td>
 				</tr>
 			</table>
 		</form>
@@ -184,7 +184,7 @@
 				</tr>
 				<tr>
 					<td></td>
-					<td><input type="submit" name="addPoll" value="{tr}Add{/tr}"></td>
+					<td><input type="submit" class="btn btn-default" name="addPoll" value="{tr}Add{/tr}"></td>
 				</tr>
 			</table>
 		</form>

@@ -19,7 +19,7 @@
 		<table class="normal">
 			<tr>
 				<th style="text-align:center;">
-					<input type="submit" name="delete" value="{tr}x{/tr} ">
+					<input type="submit" class="btn btn-default" name="delete" value="{tr}x{/tr} ">
 				</th>
 				<th>
 					<a href="tiki-notepad_list.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}Name{/tr}</a>
@@ -65,7 +65,7 @@
 			{/section}
 			<tr>
 				<td colspan="4">
-					<input type="submit" name="merge" value="{tr}Merge selected notes into{/tr}">
+					<input type="submit" class="btn btn-default" name="merge" value="{tr}Merge selected notes into{/tr}">
 					<input type="text" name="merge_name" size="20">
 				</td>
 			</tr>
@@ -83,7 +83,7 @@
 			<td>
 				<input type="hidden" name="MAX_FILE_SIZE" value="10000000000000">
 				<input size="16" name="userfile1" type="file">
-				<input style="font-size:9px;" type="submit" name="upload" value="{tr}Upload{/tr}">
+				<input type="submit" class="btn btn-default" name="upload" value="{tr}Upload{/tr}">
 			</td>
 		</tr>
 	</table>

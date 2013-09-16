@@ -4,7 +4,7 @@
 
 <form action="tiki-admin.php?page=metatags" method="post">
 	<div class="heading input_submit_container" style="text-align: right">
-		<input type="submit" name="metatags" value="{tr}Change preferences{/tr}" />
+		<input type="submit" class="btn btn-default" name="metatags" value="{tr}Change preferences{/tr}" />
 	</div>
 {tabset name="admin_metatags"}
 	{tab name="{tr}Meta tags{/tr}"}
@@ -46,6 +46,6 @@
 	{/tab}
 {/tabset}
 	<div class="heading input_submit_container" style="text-align: center">
-		<input type="submit" name="metatags" value="{tr}Change preferences{/tr}" />
+		<input type="submit" class="btn btn-default" name="metatags" value="{tr}Change preferences{/tr}" />
 	</div>
 </form>

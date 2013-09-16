@@ -372,7 +372,7 @@
 			<tr>
 				<td></td>
 				<td>
-					<input type="submit" class="button" name="send" value="{tr}Share{/tr}">
+					<input type="submit" class="button btn btn-default" name="send" value="{tr}Share{/tr}">
 					{if $share_access}
 						<input type="hidden" name="share_access" value="1">
 					{/if}

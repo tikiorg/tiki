@@ -16,7 +16,7 @@
 </tr>
 <tr>
   <td>&nbsp;</td>
-  <td><input type="submit" name="import" value="{tr}import{/tr}"></td>
+  <td><input type="submit" class="btn btn-default" name="import" value="{tr}import{/tr}"></td>
 </tr>
 </table>
 </form>

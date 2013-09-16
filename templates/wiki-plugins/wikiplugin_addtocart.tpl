@@ -36,7 +36,7 @@
 		</tr>
 		{/if}
 	</table>
-	<input type="submit" value="{$add_label|escape}" class="addProductToCartSubmit">
+	<input type="submit" class="btn btn-default" value="{$add_label|escape}" class="addProductToCartSubmit">
 	{if $exchangeorderitemid && $exchangetoproductid}
 		<input type="hidden" value="{$exchangeorderitemid|escape}" name="exchangeorderitemid">
 		<input type="hidden" value="{$exchangetoproductid|escape}" name="exchangetoproductid">

@@ -43,7 +43,7 @@
 					</table>
 				</td>
 				<td align="right">
-					<input type="submit" name="editcopyright" value="{tr}Edit{/tr}">
+					<input type="submit" class="btn btn-default" name="editcopyright" value="{tr}Edit{/tr}">
 					<br>
 					<a title="{tr}Delete{/tr}" href="copyrights.php?page={$page|escape:"url"}&amp;action=delete&amp;copyrightId={$copyrights[i].copyrightId}" >{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
 					<a href="copyrights.php?page={$page|escape:"url"}&amp;action=up&amp;copyrightId={$copyrights[i].copyrightId}">{icon _id='resultset_up'}</a>
@@ -90,7 +90,7 @@
 						</tr>
 						<tr>
 							<td>
-								<input type="submit" name="addcopyright" value="{tr}Add{/tr}">
+								<input type="submit" class="btn btn-default" name="addcopyright" value="{tr}Add{/tr}">
 							</td>
 						</tr>
 					</table>

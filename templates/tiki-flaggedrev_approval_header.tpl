@@ -21,7 +21,7 @@
 						{/if}
 						<div class="submit">
 							<input type="hidden" name="revision" value="{$revision_displayed|escape}">
-							<input type="submit" name="approve" value="{tr}Approve current revision{/tr}">
+							<input type="submit" class="btn btn-default" name="approve" value="{tr}Approve current revision{/tr}">
 						</div>
 					</form>
 				{/if}

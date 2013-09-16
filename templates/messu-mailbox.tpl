@@ -40,7 +40,7 @@
 	</select>
 	<label for="mess-mailcont">{tr}Containing:{/tr}</label>
 	<input type="text" name="find" id="mess-mailcont" value="{$find|escape}">
-	<input type="submit" name="filter" value="{tr}Filter{/tr}">
+	<input type="submit" class="btn btn-default" name="filter" value="{tr}Filter{/tr}">
 </form>
 <br>
 
@@ -87,16 +87,16 @@ var CHECKBOX_LIST = [{{section name=user loop=$items}'msg[{$items[user].msgId}]'
 	</table>
 	{if $items}
 		<p>{tr}Perform action with checked:{/tr}
-		<input type="submit" name="delete" value="{tr}Delete{/tr}">
-		<input type="submit" name="archive" value="{tr}Archive{/tr}">
-		<input type="submit" name="download" value="{tr}Download{/tr}">
+		<input type="submit" class="btn btn-warning" name="delete" value="{tr}Delete{/tr}">
+		<input type="submit" class="btn btn-default" name="archive" value="{tr}Archive{/tr}">
+		<input type="submit" class="btn btn-default" name="download" value="{tr}Download{/tr}">
 		<select name="action">
 			<option value="isRead_y">{tr}Mark as read{/tr}</option>
 			<option value="isRead_n">{tr}Mark as unread{/tr}</option>
 			<option value="isFlagged_y">{tr}Mark as flagged{/tr}</option>
 			<option value="isFlagged_n">{tr}Mark as unflagged{/tr}</option>
 		</select>
-		<input type="submit" name="mark" value="{tr}Mark{/tr}">
+		<input type="submit" class="btn btn-default" name="mark" value="{tr}Mark{/tr}">
 		</p>
 	{/if}
 </form>

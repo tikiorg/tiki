@@ -112,7 +112,7 @@
 					<option value="delsel_x">{tr}Delete{/tr}</option>
 				{/if}
 			</select>
-			<input type="submit" name="batchaction" value="{tr}OK{/tr}">
+			<input type="submit" class="btn btn-default" name="batchaction" value="{tr}OK{/tr}">
 		</div>
 	{/if}
 </form>
@@ -505,7 +505,7 @@
 			{/if}
 			<tr>
 				<td>&nbsp;</td>
-				<td><input type="submit" name="save" value="{tr}Save{/tr}"></td>
+				<td><input type="submit" class="btn btn-default" name="save" value="{tr}Save{/tr}"></td>
 			</tr>
 		</table>
 	</form>
@@ -542,7 +542,7 @@
 			</tr>
 			<tr>
 				<td></td>
-				<td><input type="submit" name="duplicate" value="{tr}Duplicate{/tr}"></td>
+				<td><input type="submit" class="btn btn-default" name="duplicate" value="{tr}Duplicate{/tr}"></td>
 			</tr>
 		</table>
 	</form>

@@ -125,7 +125,7 @@
 									{if $tiki_p_approve_submission eq 'y'}<option value="approve_subs" >{tr}Approve{/tr}</option>{/if}
 								</select>
 							</label>
-							<input type="submit" value="{tr}Ok{/tr}">
+							<input type="submit" class="btn btn-default" value="{tr}Ok{/tr}">
 						</p>
 					{/if}
 				</td>

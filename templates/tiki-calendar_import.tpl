@@ -29,7 +29,7 @@
       </td>
       <td>
         <input type="file" name="fileCSV" size="50">
-        <input type="submit" name="import" value="{tr}import{/tr}">
+        <input type="submit" class="btn btn-default" name="import" value="{tr}import{/tr}">
       </td>
     </tr>
   </table>

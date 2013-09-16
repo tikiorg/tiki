@@ -59,7 +59,7 @@
     <td><textarea name="description" rows="4" title="{tr}Human-readable text description of repository{/tr}">{$description|escape}</textarea></td>
   </tr><tr>
     <td></td>
-    <td><input type="submit" name="save" value="{tr}Save{/tr}"></td>
+    <td><input type="submit" class="btn btn-default" name="save" value="{tr}Save{/tr}"></td>
   </tr>
 </table>
 </form>

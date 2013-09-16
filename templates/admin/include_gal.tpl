@@ -15,7 +15,7 @@
 	<legend>{tr}Home Gallery{/tr}</legend>
 	<form action="tiki-admin.php?page=gal" method="post">
 		{preference name=home_gallery}
-		<input type="submit" name="galset" value="{tr}OK{/tr}" />
+		<input type="submit" class="btn btn-default" name="galset" value="{tr}OK{/tr}" />
 	</form>
 </fieldset>
 
@@ -166,7 +166,7 @@
 			</tr>
 			<tr>
 				<td colspan="2" class="input_submit_container">
-					<input type="submit" name="galfeatures" value="{tr}Set features{/tr}" />
+					<input type="submit" class="btn btn-default" name="galfeatures" value="{tr}Set features{/tr}" />
 				</td>
 			</tr>
 		</table>
@@ -183,7 +183,7 @@
 					<input type="hidden" name="rmvorphimg" value="1" />
 				</td>
 				<td>
-					<input type="submit" name="button" value="{tr}Remove{/tr}" />
+					<input type="submit" class="btn btn-default" name="button" value="{tr}Remove{/tr}" />
 				</td>
 			</tr>
 		</table>
@@ -214,7 +214,7 @@
 					</select>
 				</td>
 				<td>
-					<input type="submit" name="button" value="{tr}Move{/tr}" />
+					<input type="submit" class="btn btn-default" name="button" value="{tr}Move{/tr}" />
 				</td>
 			</tr>
 			{if $prefs.gal_use_db eq 'n'}
@@ -224,7 +224,7 @@
 					<td>
 					<input type="text" name="gal_use_dir" value="{$prefs.gal_use_dir|escape}" size="50" />
 				<td>
-				<input type="submit" name="button" value="{tr}Move{/tr}" /></td></tr>
+				<input type="submit" class="btn btn-default" name="button" value="{tr}Move{/tr}" /></td></tr>
 			{/if}
 			{if isset($movedimgs) and $movedimgs}
 				<tr>
@@ -272,7 +272,7 @@
 				<td><input type="checkbox" name="gal_list_visits" {if $prefs.gal_list_visits eq 'y'}checked="checked"{/if} /></td>
 			</tr>
 			<tr>
-				<td colspan="2" class="input_submit_container"><input type="submit" name="imagegallistprefs" value="{tr}Change configuration{/tr}" /></td>
+				<td colspan="2" class="input_submit_container"><input type="submit" class="btn btn-default" name="imagegallistprefs" value="{tr}Change configuration{/tr}" /></td>
 			</tr>
 		</table>	
 	</form>	
@@ -299,7 +299,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td colspan="2" class="input_submit_container"><input type="submit" name="imagegalcomprefs" value="{tr}Change settings{/tr}" /></td>
+				<td colspan="2" class="input_submit_container"><input type="submit" class="btn btn-default" name="imagegalcomprefs" value="{tr}Change settings{/tr}" /></td>
 			</tr>
 		</table>
 	</form>

@@ -4,7 +4,7 @@
 		<legend>{tr}Activate the feature{/tr}</legend>
 		{preference name=feature_semantic visible="always"}
 		{preference name=feature_backlinks}
-		<div class="input_submit_container center"><input type="submit" name="semantic" value="{tr}Change preferences{/tr}" /></div>
+		<div class="input_submit_container center"><input type="submit" class="btn btn-default" name="semantic" value="{tr}Change preferences{/tr}" /></div>
 	</fieldset>
 </form>
 <table width="100%">
@@ -32,9 +32,9 @@
 				{/foreach}
 			</table>
 			<p>
-				<input type="submit" name="list" value="{tr}Show Usage{/tr}"/>
-				<input type="submit" name="remove" value="{tr}Delete{/tr}"/>
-				<input type="submit" name="removeclean" value="{tr}Delete &amp; Unreference{/tr}"/>
+				<input type="submit" class="btn btn-default" name="list" value="{tr}Show Usage{/tr}"/>
+				<input type="submit" class="btn btn-warning" name="remove" value="{tr}Delete{/tr}"/>
+				<input type="submit" class="btn btn-warning" name="removeclean" value="{tr}Delete &amp; Unreference{/tr}"/>
 			</p>
 			</form>
 
@@ -60,7 +60,7 @@
 				</div>
 				<div>
 					<input type="hidden" name="token" value="{$selected_token|escape}"/>
-					<input type="submit" name="save" value="{tr}Save{/tr}"/>
+					<input type="submit" class="btn btn-default" name="save" value="{tr}Save{/tr}"/>
 				</div>
 			</form>
 			{/if}
@@ -80,10 +80,10 @@
 							<div>
 								<input type="hidden" name="select[]" value="{$token|escape}"/>
 								<input type="hidden" name="token" value="{$token|escape}"/>
-								<input type="submit" name="list" value="{tr}Show Usage{/tr}"/>
-								<input type="submit" name="create" value="{tr}Create{/tr}"/>
-								<input type="submit" name="rename" value="{tr}Fix{/tr}"/>
-								<input type="submit" name="clean" value="{tr}Remove{/tr}"/>
+								<input type="submit" name="list" value="{tr}Show Usage{/tr}" class="btn btn-default" />
+								<input type="submit" name="create" value="{tr}Create{/tr}" class="btn btn-default" />
+								<input type="submit" name="rename" value="{tr}Fix{/tr}" class="btn btn-default" />
+								<input type="submit" name="clean" value="{tr}Remove{/tr}" class="btn btn-default" />
 							</div>
 						</form>
 					</td>
@@ -98,7 +98,7 @@
 				</div>
 				<div>
 					<input type="hidden" name="oldName" value="{$rename|escape}"/>
-					<input type="submit" name="save" value="{tr}Fix{/tr}"/>
+					<input type="submit" class="btn btn-default" name="save" value="{tr}Fix{/tr}"/>
 				</div>
 			</form>
 			{/if}

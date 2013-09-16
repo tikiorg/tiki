@@ -23,7 +23,7 @@
 
 			<tr>
 				<td></td>
-				<td><input type="submit" name="attach" value={if $attach_file}"{tr}Edit{/tr}"{else}"{tr}Attach{/tr}"{/if}></td>
+				<td><input type="submit" class="btn btn-default" name="attach" value={if $attach_file}"{tr}Edit{/tr}"{else}"{tr}Attach{/tr}"{/if}></td>
 			</tr>
 		</table>
 	</form>

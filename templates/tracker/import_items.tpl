@@ -53,6 +53,6 @@
 	</label>
 	<div class="submit">
 		<input type="hidden" name="trackerId" value="{$trackerId|escape}">
-		<input type="submit" value="{tr}Import{/tr}">
+		<input type="submit" class="btn btn-default" value="{tr}Import{/tr}">
 	</div>
 </form>

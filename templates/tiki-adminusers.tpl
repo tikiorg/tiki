@@ -74,7 +74,7 @@
 				<tr>
 					<td><label for="find">{tr}Find{/tr}</label></td>
 					<td><input type="text" id="find" name="find" value="{$find|escape}"></td>
-					<td><input type="submit" value="{tr}Find{/tr}" name="search"></td>
+					<td><input type="submit" class="btn btn-default" value="{tr}Find{/tr}" name="search"></td>
 					<td><label for="numrows">{tr}Number of displayed rows{/tr}</label></td>
 					<td><input type="text" size="4" id="numrows" name="numrows" value="{$numrows|escape}"></td>
 				</tr>
@@ -281,7 +281,7 @@
 										{/if}
 									</select>
 									</label>
-									<input type="submit" value="{tr}OK{/tr}">
+									<input type="submit" class="btn btn-default" value="{tr}OK{/tr}">
 								{elseif $group_management_mode eq 'y'}
 									<select name="group_management">
 										<option value="add">{tr}Assign selected to{/tr}</option>
@@ -297,7 +297,7 @@
 										{/section}
 									</select></label>
 									<br>
-									<input type="submit" value="{tr}OK{/tr}">
+									<input type="submit" class="btn btn-default" value="{tr}OK{/tr}">
 									{if $prefs.jquery_ui_chosen neq 'y'}{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Use Ctrl+Click to select multiple options{/tr}{/remarksbox}{/if}
 								{elseif $set_default_groups_mode eq 'y'}
 									<label>{tr}Set the default group of the selected users to:{/tr}
@@ -310,7 +310,7 @@
 										{/section}
 									</select></label>
 									<br>
-									<input type="submit" value="{tr}OK{/tr}">
+									<input type="submit" class="btn btn-default" value="{tr}OK{/tr}">
 									<input type="hidden" name="set_default_groups" value="{$set_default_groups_mode}">
 								{elseif $email_mode eq 'y'}
 									<label>{tr}Template wiki page{/tr}
@@ -318,7 +318,7 @@
 									<br>
 									<label>{tr}bcc{/tr}
 									<input type="text" name="bcc"></label>
-									<input type="submit" value="{tr}OK{/tr}">
+									<input type="submit" class="btn btn-default" value="{tr}OK{/tr}">
 									<input type="hidden" name="emailChecked" value="{$email_mode}">
 								{/if}
 							</p>
@@ -531,9 +531,9 @@
 						{if isset($userinfo.userId) && $userinfo.userId}
 							<input type="hidden" name="user" value="{$userinfo.userId|escape}">
 							<input type="hidden" name="edituser" value="1">
-							<input type="submit" name="save" value="{tr}Save{/tr}">
+							<input type="submit" class="btn btn-default" name="save" value="{tr}Save{/tr}">
 						{else}
-							<input type="submit" name="newuser" value="{tr}Add{/tr}">
+							<input type="submit" class="btn btn-default" name="newuser" value="{tr}Add{/tr}">
 						{/if}
 					</td>
 				</tr>
@@ -590,7 +590,7 @@
 			<tr>
 				<td>&nbsp;</td>
 				<td>
-					<input type="submit" name="batch" value="{tr}Add{/tr}">
+					<input type="submit" class="btn btn-default" name="batch" value="{tr}Add{/tr}">
 				</td>
 			</tr>
 		</table>

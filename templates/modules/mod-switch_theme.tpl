@@ -32,7 +32,7 @@
 			</select>
 		{/if}
 		<noscript>
-			<button type="submit">{tr}Switch{/tr}</button>
+			<button type="submit" class="btn btn-default">{tr}Switch{/tr}</button>
 		</noscript>
 	</form>
 {/tikimodule}

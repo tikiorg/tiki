@@ -25,7 +25,7 @@
 {elseif $tiki_p_admin eq 'y'}
 	<form class="labelColumns" method="post" action="tiki-admin.php">
 		{preference name=tracker_field_computed}
-		<input type="submit" value="{tr}Enable{/tr}">
+		<input type="submit" class="btn btn-default" value="{tr}Enable{/tr}">
 	</form>
 {else}
 	{tr}Administrator intervention required.{/tr}

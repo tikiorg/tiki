@@ -342,9 +342,9 @@
 						{if empty($user)}
 							{tr}Enter your name:{/tr}&nbsp;<input type="text" maxlength="50" size="12" id="anonymous_name" name="anonymous_name">
 						{/if}
-						<input type="submit" name="comments_postComment" value="{tr}Post{/tr}" {if empty($user)}onclick="setCookie('anonymous_name',document.getElementById('anonymous_name').value);needToConfirm=false;"{/if}>
-						<input type="submit" name="comments_previewComment" value="{tr}Preview{/tr}" {if empty($user)}onclick="setCookie('anonymous_name',document.getElementById('anonymous_name').value);needToConfirm=false;"{/if}>
-						<input type="submit" name="comments_postCancel" value="{tr}Cancel{/tr}" {if $comment_preview neq 'y'}onclick="hide('forumpost');window.location='#header';return false;"{/if}>
+						<input type="submit" class="btn btn-default" name="comments_postComment" value="{tr}Post{/tr}" {if empty($user)}onclick="setCookie('anonymous_name',document.getElementById('anonymous_name').value);needToConfirm=false;"{/if}>
+						<input type="submit" class="btn btn-default" name="comments_previewComment" value="{tr}Preview{/tr}" {if empty($user)}onclick="setCookie('anonymous_name',document.getElementById('anonymous_name').value);needToConfirm=false;"{/if}>
+						<input type="submit" class="btn btn-default" name="comments_postCancel" value="{tr}Cancel{/tr}" {if $comment_preview neq 'y'}onclick="hide('forumpost');window.location='#header';return false;"{/if}>
 					</td>
 				</tr>
 			</table>
@@ -373,7 +373,7 @@
 				<input name="highlight" size="30" type="text">
 				<input type="hidden" name="where" value="forums">
 				<input type="hidden" name="forumId" value="{$forum_info.forumId}">
-				<input type="submit" class="wikiaction" name="search" value="{tr}Find{/tr}">
+				<input type="submit" class="wikiaction btn btn-default" name="search" value="{tr}Find{/tr}">
 		</form>
 	</div>
 {/if}
@@ -433,7 +433,7 @@
 								{/if}
 							{/section}
 						</select>
-						<input type="submit" name="mergesel" value="{tr}Merge{/tr}">
+						<input type="submit" class="btn btn-default" name="mergesel" value="{tr}Merge{/tr}">
 					</td>
 				</tr>
 			{/if}
@@ -772,7 +772,7 @@
 				<tr>
 					<td>&nbsp;</td>
 					<td>
-						<input type="submit" id="filter_submit" value="{tr}Filter{/tr}">
+						<input type="submit" class="btn btn-default" id="filter_submit" value="{tr}Filter{/tr}">
 					</td>
 				</tr>
 				</table>

@@ -404,7 +404,7 @@
 		//-->
 	</script>
 	<noscript>
-		<input type="submit" value="{tr}OK{/tr}">
+		<input type="submit" class="btn btn-default" value="{tr}OK{/tr}">
 	</noscript>
 {/if}
 

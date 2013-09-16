@@ -19,6 +19,6 @@
 	{/foreach}
 	<div class="submit_row">
 		<input type="hidden" name="datachannel_execution" value="{$datachannel_execution|escape}">
-		<input type="submit" value="{tr}{$button_label}{/tr}">
+		<input type="submit" class="btn btn-default" value="{tr}{$button_label}{/tr}">
 	</div>
 </form>

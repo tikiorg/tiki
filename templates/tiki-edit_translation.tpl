@@ -75,7 +75,7 @@
 			<br>
 			{include file="categorize.tpl" notable=y}
 		{/if}
-		<p align="center"><input type="submit" value="{tr}Create translation{/tr}"></p>
+		<p align="center"><input type="submit" class="btn btn-default" value="{tr}Create translation{/tr}"></p>
 		<textarea name="edit" style="display:none">{$translate_message}{$pagedata|escape:'htmlall':'UTF-8'}</textarea>
 	</fieldset>
 </form>
@@ -131,7 +131,7 @@ function validate_translation_request() {
 	</select>
 	<input type="hidden" name="id" value="{$id}">
 	<input type="hidden" name="type" value="{$type}">
-	<input type="submit" name="switch" value="{tr}Change Language{/tr}">
+	<input type="submit" class="btn btn-default" name="switch" value="{tr}Change Language{/tr}">
 </div>
 </form>
 
@@ -150,7 +150,7 @@ function validate_translation_request() {
 			</select>
 			<input type="hidden" name="id" value="{$id}">
 			<input type="hidden" name="type" value="{$type|escape}">
-			<input type="submit" value="{tr}Set Current Page's Language{/tr}">
+			<input type="submit" class="btn btn-default" value="{tr}Set Current Page's Language{/tr}">
 		</p>
 	</form>
 {/if}

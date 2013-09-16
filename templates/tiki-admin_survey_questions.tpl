@@ -50,7 +50,7 @@
 			</td>
 		</tr>
 		<tr><td>{tr}Options (if apply):{/tr}</td><td><input type="text" name="options" value="{$info.options|escape}" size="80"></td></tr>
-		<tr><td >&nbsp;</td><td><input type="submit" name="save" value="{tr}Save{/tr}"></td></tr>
+		<tr><td >&nbsp;</td><td><input type="submit" class="btn btn-default" name="save" value="{tr}Save{/tr}"></td></tr>
 	</table>
 </form>
 <h2>{tr}Questions{/tr}</h2>

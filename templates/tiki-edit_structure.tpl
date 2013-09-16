@@ -77,7 +77,7 @@
 	<input type="hidden" name="page_ref_id" value="{$structure_id}">
 	<label for="pageAlias">{tr}Alias:{/tr}</label>
 	<input type="text" name="pageAlias" id="pageAlias" value="{$topPageAlias}">
-	<small><input type="submit" name="create" value="{tr}Update{/tr}"></small>
+	<small><input type="submit" class="btn btn-default" name="create" value="{tr}Update{/tr}"></small>
 </form>
 <div class="structure-container">
 	{$nodelist}
@@ -102,7 +102,7 @@
 					</ul>
 					<label for="find_objects" style="display: inline-block;">{tr}Find:{/tr}</label>
 					<input type="text" name="find_objects" id="find_objects" value="{$find_objects|escape}">
-					<input type="submit" value="{tr}Filter{/tr}" name="search_objects">
+					<input type="submit" class="btn btn-default" value="{tr}Filter{/tr}" name="search_objects">
 					{autocomplete element='#find_objects' type='pagename'}
 
 					{if $prefs.feature_categories eq 'y'}
@@ -126,7 +126,7 @@
 			<table class="normal">
 			{include file='categorize.tpl'}
 			</table>
-			<input type="submit" name="recategorize" value="{tr}Update{/tr}">
+			<input type="submit" class="btn btn-default" name="recategorize" value="{tr}Update{/tr}">
 			&nbsp;&nbsp;{tr}Remove existing categories from ALL pages before recategorizing:{/tr} <input type="checkbox"
 																										 name="cat_override">
 		</form>
@@ -153,7 +153,7 @@
 			<div class="floatleft"><input type="radio" id="begin2" name="begin" value="0" {if $structures|@count eq '1'}disabled="disabled"{/if}></div>
 			<hr>
 			<div class="floatleft input_submit_container">
-				<input type="submit" name="move_to" value="{tr}Move{/tr}" {if $structures|@count eq '1'} disabled="disabled"{/if}>
+				<input type="submit" class="btn btn-default" name="move_to" value="{tr}Move{/tr}" {if $structures|@count eq '1'} disabled="disabled"{/if}>
 			</div>
 		</form>
 	</div>
@@ -166,7 +166,7 @@
 						<label for="name">{tr}Create Page:{/tr}</label>
 						<input type="text" name="name" id="name">
 						{autocomplete element='#name' type='pagename'}
-						<input type="submit" name="create" value="{tr}Update{/tr}">
+						<input type="submit" class="btn btn-default" name="create" value="{tr}Update{/tr}">
 					</td>
 				</tr>
 			</table>

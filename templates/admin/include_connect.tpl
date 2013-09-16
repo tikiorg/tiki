@@ -102,7 +102,7 @@
 			</fieldset>
 
 			<div class="heading input_submit_container" style="text-align: center;">
-				<input type="submit" name="connectprefs" value="{tr}Change preferences{/tr}" />
+				<input type="submit" class="btn btn-default" name="connectprefs" value="{tr}Change preferences{/tr}" />
 			</div>
 		</form>
 	{/tab}
@@ -111,7 +111,7 @@
 			<h2>{tr}Recent connections{/tr}</h2>
 			<form class="admin" name="cserver_form" action="tiki-admin.php?page=connect" method="post">
 				<input name="cserver_search" type="text" value="{$cserver_search_text}" />
-				<input name="cserver" type="submit" value="{tr}Search{/tr}" />
+				<input name="cserver" type="submit" class="btn btn-default" value="{tr}Search{/tr}" />
 				{button cserver="rebuild" _auto_args="cserver,page" _text="{tr}Rebuild Index{/tr}" _title="{tr}Rebuild received connections index{/tr}"}
 				{if !empty($connect_stats)}
 					<span>{tr _0=$connect_stats.received _1=$connect_stats.guids}<strong>Server stats:</strong> %0 reports received from %1 Tikis{/tr}</span>

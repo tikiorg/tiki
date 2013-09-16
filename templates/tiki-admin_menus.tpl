@@ -137,7 +137,7 @@
 			<tr>
 				<td>&nbsp;</td>
 				<td>
-					<input type="submit" name="save" value="{tr}Save{/tr}">
+					<input type="submit" class="btn btn-default" name="save" value="{tr}Save{/tr}">
 					{if $prefs.menus_items_icons neq 'y'}
 						<input type="hidden" name="use_items_icons" value="{$info.use_items_icons}">
 					{/if}

@@ -33,7 +33,7 @@
 		{/foreach}
 		<tr>
 			<td></td>
-			<td colspan="2" align="right"><input type="submit" name="update" value="{tr}Update{/tr}"></td>
+			<td colspan="2" align="right"><input type="submit" class="btn btn-default" name="update" value="{tr}Update{/tr}"></td>
 		</tr>
 	</table>
 	</form>
@@ -50,10 +50,10 @@
 					<br>
 				{/if}
 				{if $gift_certificate_redeem_code}
-					<input type="submit" name="remove_gift_certificate" value="{tr}Remove Gift Certificate{/tr}">
+					<input type="submit" class="btn btn-warning" name="remove_gift_certificate" value="{tr}Remove Gift Certificate{/tr}">
 				{else}
 					Code: <input type="text" name="gift_certificate_redeem_code" style="width: 70px;">
-					<input type="submit" name="add_gift_certificate" value="{tr}Add Gift Certificate{/tr}">
+					<input type="submit" class="btn btn-default" name="add_gift_certificate" value="{tr}Add Gift Certificate{/tr}">
 				{/if}
 				<br>
 				<br>
@@ -61,7 +61,7 @@
 			
 			<p>{tr}Total:{/tr} <strong>{$cart_total|escape} {$prefs.payment_currency|escape}</strong></p>
 			
-			<input type="submit" name="checkout" value="{tr}Check-out{/tr}">
+			<input type="submit" class="btn btn-default" name="checkout" value="{tr}Check-out{/tr}">
 		</p>
 	</form>
 {else}

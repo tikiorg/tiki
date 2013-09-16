@@ -45,7 +45,7 @@
 						</tr>
 						<tr>
 							<td align="center" colspan="2">
-								<input type="submit" name="{$sections[ix].name|escape}_layout" value="{tr}Set features{/tr}">
+								<input type="submit" class="btn btn-default" name="{$sections[ix].name|escape}_layout" value="{tr}Set features{/tr}">
 							</td>
 						</tr>
 					</table>

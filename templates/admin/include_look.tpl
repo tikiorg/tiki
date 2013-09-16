@@ -1,7 +1,7 @@
 {* $Id$ *}
 <form action="tiki-admin.php?page=look" id="look" name="look" class="labelColumns" onreset="return(confirm("{tr}Cancel Edit{/tr}"))" class="admin" method="post">
 	<div class="heading input_submit_container" style="text-align: right">
-		<input type="submit" name="looksetup" value="{tr}Apply{/tr}" />
+		<input type="submit" class="btn btn-default" name="looksetup" value="{tr}Apply{/tr}" />
 		<input type="reset" name="looksetupreset" value="{tr}Reset{/tr}" />
 	</div>
 
@@ -23,7 +23,7 @@
 					{preference name=style_admin_option}
 
 					{if $prefs.javascript_enabled eq 'n' or $prefs.feature_jquery eq 'n'}
-						<input type="submit" name="changestyle" value="{tr}Go{/tr}" />
+						<input type="submit" class="btn btn-default" name="changestyle" value="{tr}Go{/tr}" />
 					{/if}
 				</div>
 			</div>
@@ -193,8 +193,8 @@
 						<div  class="adminoptionboxchild" id="themegenerator_feature_childcontainer">
 
 							<input type="text" name="tg_edit_theme_name" value="{$tg_edit_theme_name|escape}"{if !empty($prefs.themegenerator_theme)} style="display:none;"{/if} />
-							<input type="submit" name="tg_new_theme" value="{tr}New{/tr}"{if !empty($prefs.themegenerator_theme)} style="display:none;"{/if} />
-							<input type="submit" name="tg_delete_theme" value="{tr}Delete{/tr}"{if empty($prefs.themegenerator_theme)} style="display:none;"{/if} />
+							<input type="submit" class="btn btn-default" name="tg_new_theme" value="{tr}New{/tr}"{if !empty($prefs.themegenerator_theme)} style="display:none;"{/if} />
+							<input type="submit" class="btn btn-default" name="tg_delete_theme" value="{tr}Delete{/tr}"{if empty($prefs.themegenerator_theme)} style="display:none;"{/if} />
 							{jq}$("select[name=themegenerator_theme]").change(function(){
 	if ($(this)[0].selectedIndex === 0) {
 		$("input[name=tg_edit_theme_name]").keyup(function(e){
@@ -217,7 +217,7 @@
 							<div id="themegenerator_container">
 								{include file="themegen.tpl"}
 								<div class="input_submit_container clear" style="text-align: center">
-									<input type="submit" name="tg_preview" value="{tr}Preview Theme{/tr}">
+									<input type="submit" class="btn btn-default" name="tg_preview" value="{tr}Preview Theme{/tr}">
 								</div>
 							</div>
 							{if $prefs.themegenerator_feature eq 'y'}
@@ -329,6 +329,6 @@
 	{/tabset}
 
 	<div class="input_submit_container clear" style="text-align: center">
-		<input type="submit" name="looksetup" value="{tr}Apply{/tr}" />
+		<input type="submit" class="btn btn-default" name="looksetup" value="{tr}Apply{/tr}" />
 	</div>
 </form>

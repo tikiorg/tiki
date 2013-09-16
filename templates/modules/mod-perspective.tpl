@@ -10,7 +10,7 @@
 				{/foreach}
 			</select>
 			<noscript>
-				<input type="submit" value="{tr}Go{/tr}"/>
+				<input type="submit" class="btn btn-default" value="{tr}Go{/tr}"/>
 			</noscript>
 		</form>
 		{if $tiki_p_perspective_admin eq 'y'}

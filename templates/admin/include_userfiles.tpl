@@ -1,6 +1,6 @@
 <form action="tiki-admin.php?page=userfiles" method="post">
 	<div class="heading input_submit_container" style="text-align: right">
-		<input type="submit" name="userfilesprefs" value="{tr}Change preferences{/tr}" />
+		<input type="submit" class="btn btn-default" name="userfilesprefs" value="{tr}Change preferences{/tr}" />
 	</div>
 
 	<fieldset class="admin">
@@ -42,6 +42,6 @@
 		{/if}
 	</fieldset>
 	<div class="heading input_submit_container" style="text-align: center">
- 		<input type="submit" name="userfilesprefs" value="{tr}Change preferences{/tr}" />
+ 		<input type="submit" class="btn btn-default" name="userfilesprefs" value="{tr}Change preferences{/tr}" />
 	</div>
 </form>

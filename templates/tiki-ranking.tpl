@@ -15,7 +15,7 @@
 	</select>
 
 	{if $categIdstr}<input type="hidden" name="categId" value="{$categIdstr}">{/if}
-	<input type="submit" name="selrank" value="{tr}View{/tr}">
+	<input type="submit" class="btn btn-default" name="selrank" value="{tr}View{/tr}">
 </form>
 
 {cycle values="odd,even" print=false}

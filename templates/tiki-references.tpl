@@ -69,7 +69,7 @@ jQuery(document).ready(function(){
 						</tr>
 					</table>
 				<td align="right">
-					<input type="submit" name="editreference" value="{tr}Save{/tr}" style="color:#ffffff!important;" id="save_{$references[i].ref_id|escape}" disabled="disabled">
+					<input type="submit" class="btn btn-default" name="editreference" value="{tr}Save{/tr}" style="color:#ffffff!important;" id="save_{$references[i].ref_id|escape}" disabled="disabled">
 					<a title="{tr}Delete{/tr}" href="tiki-references.php?action=delete&amp;referenceId={$references[i].ref_id}" >{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
 				</form>
 			</td>
@@ -128,7 +128,7 @@ jQuery(document).ready(function(){
 						</tr>
 						<tr>
 							<td colspan="2">
-								<input type="submit" name="addreference" value="{tr}Add{/tr}">
+								<input type="submit" class="btn btn-default" name="addreference" value="{tr}Add{/tr}">
 							</td>
 						</tr>
 					</table>

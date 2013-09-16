@@ -44,7 +44,7 @@ Supporting Documentation: <input name="question_upload_{$questions[ix].questionI
 {/if}
 </div>  
 {/section}
-<input type="submit" value="{tr}Send Answers{/tr}" name="ans">
+<input type="submit" class="btn btn-default" value="{tr}Send Answers{/tr}" name="ans">
 {/if}
 {if $ans eq 'y'}
 {tr}Result:{/tr}
