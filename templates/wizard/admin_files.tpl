@@ -17,7 +17,8 @@
 <fieldset>
 	<legend>{tr}Attachment storage{/tr}</legend>
 	{preference name=feature_wiki_attachments}
-	{tr}If attachments are enabled ...{/tr}
+	{preference name=feature_use_fgal_for_wiki_attachments}
+	{tr}If attachments are enabled and you did NOT choose the option 'Use file galleries for wiki attachments' ...{/tr}
 	{preference name=w_use_db}
 	{preference name=w_use_dir}
 	<br>
