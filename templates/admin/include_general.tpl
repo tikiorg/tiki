@@ -15,7 +15,7 @@
 		{tab name="{tr}General Preferences{/tr}"}
 			<fieldset>
 				<legend>{tr}Server Fitness{/tr}</legend>
-				To check if your server meets the requirements for running Tiki please visit <a href="tiki-check.php">Tiki Server Compatibility Check</a>.
+				{tr}To check if your server meets the requirements for running Tiki please visit <a href="tiki-check.php">Tiki Server Compatibility Check</a>{/tr}.
 			</fieldset>
 
 			<fieldset>
@@ -116,7 +116,7 @@
 		{tab name="{tr}General Settings{/tr}"}
 			<fieldset>
 				<legend>{tr}Admin Wizard{/tr}</legend>
-				<img src="img/icons/config2.gif" /> <a href="tiki-wizard_admin.php?url=tiki-admin.php?page=general#content2">Open Admin Wizard</a>
+				<img src="img/icons/config2.gif" /> <a href="tiki-wizard_admin.php?url=tiki-admin.php?page=general#content2">{tr}Open Admin Wizard{/tr}</a>
 				{preference name=wizard_admin_hide_on_login}
 			</fieldset>
 			<fieldset>
