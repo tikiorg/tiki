@@ -7,13 +7,11 @@
 <div align="left" style="margin-top:1em;">
 <fieldset>
 	<legend>{tr}Date and Time setup{/tr}</legend>
-	<br>
 	{preference name=server_timezone}
-	<br>
 	{preference name=users_prefs_display_timezone}
+	<br>
 	{preference name=display_field_order}
 	{preference name=users_prefs_display_12hr_clock}
-	<br>
 	<br>
 	{tr}See also{/tr} <a href="tiki-admin.php?page=general&alt=General#content4" target="_blank">{tr}Date and Time admin panel{/tr}</a>
 </fieldset>
