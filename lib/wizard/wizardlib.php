@@ -15,7 +15,7 @@ class WizardLib extends TikiLib
 {
 	public function onLogin($user, $homePageUrl, $force = false)
 	{
-		global $base_url, $userlib, $tikilib;
+		global $base_url, $userlib;
 		
 		$openWizard = false;
 		
@@ -29,7 +29,7 @@ class WizardLib extends TikiLib
 			$isAdmin = $userlib->user_has_permission($user, 'tiki_p_admin');
 		
 			// Check if the wizard should be opened
-			$activeLoginWizard = $tikilib->get_preference('wizard_admin_hide_on_login') !== 'y';
+			$activeLoginWizard = $this->get_preference('wizard_admin_hide_on_login') !== 'y';
 			if ($isAdmin && $activeLoginWizard) {
 				$openWizard = true;
 			}
@@ -51,8 +51,6 @@ class WizardLib extends TikiLib
 	
 	public function setupEditor($editorType) // ($useWysiwyg, $editorType, $useInlineEditing)
 	{
-		$tikilib = TikiLib::lib('tiki');
-		
 		$wysisygPrefs = array();
 		switch ($editorType) {
 			case 'html':
@@ -64,13 +62,12 @@ class WizardLib extends TikiLib
 				$wysisygPrefs['wysiwyg_htmltowiki'] = 'y';
 				break;
 		}
-		$tikilib->set_preference('wysiwyg_htmltowiki', $wysisygPrefs['wysiwyg_htmltowiki']);
+		$this->set_preference('wysiwyg_htmltowiki', $wysisygPrefs['wysiwyg_htmltowiki']);
 	}
 	
 	public function showOnLogin($showOnLogin)
 	{
-		$tikilib = TikiLib::lib('tiki');
 		$hide = $showOnLogin === 'y' ? 'n' : 'y';
-		$tikilib->set_preference('wizard_admin_hide_on_login', $hide);
+		$this->set_preference('wizard_admin_hide_on_login', $hide);
 	}
 }
