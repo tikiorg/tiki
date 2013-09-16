@@ -4,6 +4,7 @@
 	<input type="checkbox" name="showOnLogin" {if isset($showOnLogin) AND $showOnLogin eq true}checked="checked"{/if} /> {tr}Show on login{/tr}
 	</td>
 <td style="text-align:left">
+	{if !isset($firstWizardPage)}<input type="submit" class="btn btn-default" name="back" value="{tr}Back{/tr}" />{/if}
 	&nbsp;</td>
 <td style="text-align:right">
 	<input type="hidden" name="url" value="{$homepageUrl}">

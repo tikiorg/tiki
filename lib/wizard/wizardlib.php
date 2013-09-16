@@ -81,6 +81,14 @@ class WizardLib extends TikiLib
 		} else {
 			$stepNr = intval($_REQUEST['wizard_step']);
 		}
+
+		$stepBack = false;
+		if (isset($_REQUEST['back'])) {
+			// Discard changes on page
+			//	Go to previous page
+			$stepNr -= 1;
+			$stepBack = true;
+		}
 		
 		// Validate the specified stepNr
 		if (($stepNr < 0) || ($stepNr >= count($pages))) {
@@ -89,7 +97,7 @@ class WizardLib extends TikiLib
 			die;
 		}
 		
-		if (!$isFirstStep || ($isUserStep && $stepNr > 0)) {
+		if (!$stepBack && !$isFirstStep || ($isUserStep && $stepNr > 0)) {
 			$pages[$stepNr]->onContinue();
 			if (count($pages) > $stepNr+1) {
 				$stepNr += 1;
@@ -103,7 +111,10 @@ class WizardLib extends TikiLib
 				exit;
 			}
 		} else {
-			$pages[0]->onSetupPage($homepageUrl);
+			$pages[$stepNr]->onSetupPage($homepageUrl);
+			if ($stepNr == 0) {
+				$smarty->assign('firstWizardPage', 'y');
+			}
 		}
 
 		$showOnLogin = $this->get_preference('wizard_admin_hide_on_login') !== 'y';
