@@ -1,5 +1,5 @@
 {* $Id$ *}
-{title help="Server+Check"}{tr}Server Check{/tr}{/title}
+{title help="Server Check"}{tr}Server Check{/tr}{/title}
 
 <h2>{tr}MySQL or MariaDB Database Properties{/tr}</h2>
 <table class="normal">
