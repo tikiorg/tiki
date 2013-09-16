@@ -48,6 +48,52 @@ class WizardLib extends TikiLib
 		}
 	}
 	
+	/*
+	*	Wizard's page stepping logic
+	*/
+	public function showPages($pages)
+	{
+		global	$smarty;
+		
+		if (!isset($_REQUEST['url'])) {
+			$smarty->assign('msg', tra("No return URL specified"));
+			$smarty->display("error.tpl");
+			die;
+		}
+		if (empty($pages)) {
+			$smarty->assign('msg', tra("No wizard pages specified"));
+			$smarty->display("error.tpl");
+			die;
+		}
+		
+		// Assign the return URL
+		$homepageUrl = $_REQUEST['url'];
+		$smarty->assign('homepageUrl', $homepageUrl);
+
+		$stepNr = intval($_REQUEST['wizard_step']);
+		if (isset($_REQUEST['wizard_step'])) {
+
+			$pages[$stepNr]->onContinue();
+			if (count($pages) > $stepNr+1) {
+				$stepNr += 1;
+				if (count($pages) == $stepNr+1) {
+					$smarty->assign('lastWizardPage', 'y');
+				}
+				$pages[$stepNr]->onSetupPage($homepageUrl);
+			} else {
+				// Return to homepage, when we get to the end
+				header('Location: '.$homepageUrl);
+				exit;
+			}
+		} else {
+			$pages[0]->onSetupPage($homepageUrl);
+		}
+
+		$showOnLogin = $this->get_preference('wizard_admin_hide_on_login') !== 'y';
+		$smarty->assign('showOnLogin', $showOnLogin);
+
+		$smarty->assign('wizard_step', $stepNr);
+	}
 	
 	public function setupEditor($editorType) // ($useWysiwyg, $editorType, $useInlineEditing)
 	{

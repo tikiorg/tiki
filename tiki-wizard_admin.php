@@ -16,17 +16,8 @@ $headerlib->add_cssfile('css/admin.css');
 // Hide the display of the preference dependencies in the wizard
 $headerlib->add_css('.pref_dependency{display:none !important;}');
 
-require_once('lib/wizard/wizardlib.php');
-$wizardlib = new WizardLib();
-
 $accesslib = TikiLib::lib('access');
 $accesslib->check_permission('tiki_p_admin');
-
-if (!isset($_REQUEST['url'])) {
-	$smarty->assign('msg', tra("No return URL specified"));
-	$smarty->display("error.tpl");
-	die;
-}
 
 // Create the template instances
 $pages = array();
@@ -59,33 +50,11 @@ $pages[5] = new AdminWizardProfiles();
 /////////////////////////////////////
 
 
-// Assign the return URL
-$homepageUrl = $_REQUEST['url'];
-$smarty->assign('homepageUrl', $homepageUrl);
+// Step the wizard pages
+require_once('lib/wizard/wizardlib.php');
+$wizardlib = new WizardLib();
+$wizardlib->showPages($pages);
 
-$stepNr = intval($_REQUEST['wizard_step']);
-if (isset($_REQUEST['wizard_step'])) {
-
-	$pages[$stepNr]->onContinue();
-	if (count($pages) > $stepNr+1) {
-		$stepNr += 1;
-		if (count($pages) == $stepNr+1) {
-			$smarty->assign('lastWizardPage', 'y');
-		}
-		$pages[$stepNr]->onSetupPage($homepageUrl);
-	} else {
-		// Return to homepage, when we get to the end
-		header('Location: '.$homepageUrl);
-		exit;
-	}
-} else {
-	$pages[0]->onSetupPage($homepageUrl);
-}
-
-$showOnLogin = $tikilib->get_preference('wizard_admin_hide_on_login') !== 'y';
-$smarty->assign('showOnLogin', $showOnLogin);
-
-$smarty->assign('wizard_step', $stepNr);
 
 // disallow robots to index page:
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
