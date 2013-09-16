@@ -6,7 +6,6 @@
 <td style="text-align:left">
 	&nbsp;</td>
 <td style="text-align:right">
-	<input type="hidden" name="set_up_environment" value="y">
 	<input type="hidden" name="url" value="{$homepageUrl}">
 	<input type="hidden" name="wizard_step" value="{$wizard_step}">
 	<input type="reset" name="cancel" value="{tr}Cancel{/tr}" onclick="window.location='{$homepageUrl}'" />

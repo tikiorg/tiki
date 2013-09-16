@@ -37,15 +37,19 @@ class WizardLib extends TikiLib
 		
 		if ($openWizard) {	
 			// User is an admin
-			// Start the admin wizard
-			$url = $base_url.'tiki-wizard_admin.php?url=' . $homePageUrl;
-			header('Location: '.$url);
-			exit;
-			
+			$this->startAdminWizard($homePageUrl,0);
 		} else {
 			// A regular user
 			// New User wizard is not implemented
 		}
+	}
+	
+	public function startAdminWizard($homePageUrl, $stepNr=0)
+	{
+		// Start the admin wizard
+		$url = $base_url.'tiki-wizard_admin.php?&stepNr=' . $stepNr . '&url=' . rawurlencode($homePageUrl);
+		header('Location: '.$url);
+		exit;
 	}
 	
 	/*
@@ -70,9 +74,22 @@ class WizardLib extends TikiLib
 		$homepageUrl = $_REQUEST['url'];
 		$smarty->assign('homepageUrl', $homepageUrl);
 
-		$stepNr = intval($_REQUEST['wizard_step']);
-		if (isset($_REQUEST['wizard_step'])) {
-
+		$isFirstStep = !isset($_REQUEST['wizard_step']);
+		$isUserStep = isset($_REQUEST['stepNr']);	// User defined step nr
+		if ($isUserStep) {
+			$stepNr = intval($_REQUEST['stepNr']);
+		} else {
+			$stepNr = intval($_REQUEST['wizard_step']);
+		}
+		
+		// Validate the specified stepNr
+		if (($stepNr < 0) || ($stepNr >= count($pages))) {
+			$smarty->assign('msg', tra("Invalid wizard stepNr specified"));
+			$smarty->display("error.tpl");
+			die;
+		}
+		
+		if (!$isFirstStep || ($isUserStep && $stepNr > 0)) {
 			$pages[$stepNr]->onContinue();
 			if (count($pages) > $stepNr+1) {
 				$stepNr += 1;

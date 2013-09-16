@@ -39,18 +39,14 @@ class AdminWizardEditor extends Wizard
 		// Run the parent first
 		parent::onContinue();
 		
-		// write Wiki Environment settings
-		if ( isset($_REQUEST['set_up_environment']) && $_REQUEST['set_up_environment'] == 'y' ) {
-
-			// Commit new preferences
-			if ( isset( $_REQUEST['lm_preference'] ) ) {
-				$prefslib = TikiLib::lib('prefs');
-				$changes = $prefslib->applyChanges((array) $_REQUEST['lm_preference'], $_REQUEST);
-			}
-			
-			$editorType = $_REQUEST['editorType'];
-
-			$wizardlib->setupEditor($editorType);	
+		// Commit new preferences
+		if ( isset( $_REQUEST['lm_preference'] ) ) {
+			$prefslib = TikiLib::lib('prefs');
+			$changes = $prefslib->applyChanges((array) $_REQUEST['lm_preference'], $_REQUEST);
 		}
+			
+		$editorType = $_REQUEST['editorType'];
+
+		$wizardlib->setupEditor($editorType);	
 	}
 }
