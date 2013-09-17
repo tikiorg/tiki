@@ -82,7 +82,7 @@
 {if $channels}
 	{include file='find.tpl'}
 {/if}
-<table class="normal">
+<table class="table normal">
 	<tr>
 		<th>
 			<a href="tiki-admin_html_pages.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}Name{/tr}</a>

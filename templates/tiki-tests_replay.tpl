@@ -25,7 +25,7 @@
 {if is_array($result) and sizeof($result) gt 0}
 <fieldset>
 <legend>{tr}Results{/tr}</legend>
-<table class="normal" width="100%">
+<table class="table normal" width="100%">
 {foreach from=$result item=r}
 	<tr>
 		<th style="width:10%">{tr}Request:{/tr}&nbsp;{$r.method}</th><td>{$r.url}</td>
@@ -41,7 +41,7 @@
 		{/foreach}
 	{/if}
 	<tr><td colspan="4">
-	<table class="normal" width="100%">
+	<table class="table normal" width="100%">
 	{if $show_tidy}
 		<tr><th colspan="2">{tr}Tidy Results{/tr}&nbsp;{tr}Reference{/tr}</th><th colspan="2">{tr}Tidy Results{/tr}&nbsp;{tr}Replay{/tr}</th></tr>
  		<tr><td colspan="2" style="width:50%"><pre>{$r.ref_error_msg|escape:"html"}</pre></td>

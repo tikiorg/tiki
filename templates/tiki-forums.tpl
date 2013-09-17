@@ -37,7 +37,7 @@
 		</table>
 	{/if}
 {/if}
-<table class="normal">
+<table class="table normal">
 	<tr>
 		{assign var=numbercol value=1}
 		<th>{self_link _sort_arg='sort_mode' _sort_field='name'}{tr}Name{/tr}{/self_link}</th>

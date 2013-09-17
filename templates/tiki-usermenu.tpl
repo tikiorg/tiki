@@ -42,7 +42,7 @@
 {include file='find.tpl'}
 
 <form action="tiki-usermenu.php" method="post">
-	<table class="normal">
+	<table class="table normal">
 		<tr>
 			<th><input type="submit" class="btn btn-warning" name="delete" value="x " title="{tr}Delete Selected{/tr}"></th>
 			<th><a href="tiki-usermenu.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'position_desc'}position_asc{else}position_desc{/if}">{tr}Pos{/tr}</a></th>

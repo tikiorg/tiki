@@ -16,7 +16,7 @@
 	</fieldset>
 	<fieldset>
 		<legend>{tr}Version{/tr}</legend>
-		  <table class="normal">
+		  <table class="table normal">
 			<tr>
 			  <th>{tr}Version{/tr}</th>
 			  <th>{tr}Date{/tr}</th>

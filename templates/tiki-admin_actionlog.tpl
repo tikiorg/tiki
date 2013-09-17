@@ -188,7 +188,7 @@
 			{tr}Records:{/tr} {$cant}
 			<form name="checkboxes_on" method="post" action="tiki-admin_actionlog.php">
 			{query _type='form_input'}
-			<table class="normal">
+			<table class="table normal">
 				<tr>
 					<th>
 						{select_all checkbox_names='checked[]'}
@@ -320,7 +320,7 @@
 				{if $startDate}<input type="hidden" name="startDate" value="{$startDate}">{/if}
 				{if $endDate}<input type="hidden" name="endDate" value="{$endDate}">{/if}
 				{$action.action} / {$action.objectType} / {$action.object} 
-				<table class="normal">
+				<table class="table normal">
 					{if $prefs.feature_contribution eq 'y'}
 						{include file='contribution.tpl' section=$action.objectType}
 					{/if}
@@ -366,7 +366,7 @@
 		<i>{tr}Volumes are equally distributed on each contributors/author{/tr}</i>
 
  		{if $showLogin eq 'y' and $logTimes|@count ne 0}
-			<table class="normal">
+			<table class="table normal">
 				<caption>{tr}Log in{/tr}</caption>
 				<tr>
 					{if $selectedUsers|@count gt 0}<th>{tr}User{/tr}</th>{/if}
@@ -390,7 +390,7 @@
 		{/if}
 
 		{if $showCateg eq 'y' and $volCateg|@count ne 0 and $tiki_p_admin eq 'y'}
-			<table class="normal">
+			<table class="table normal">
 				<caption>{tr}Volume per category{/tr}</caption>
 				<tr>
 					<th>{tr}Category{/tr}</th>
@@ -414,7 +414,7 @@
 		{/if}
 
 		{if $showCateg eq 'y' and $volUserCateg|@count ne 0}
-			<table class="normal">
+			<table class="table normal">
 				<caption>{tr}Volume per category and per user{/tr}</caption>
 				<tr>
 					<th>{tr}Category{/tr}</th>
@@ -440,7 +440,7 @@
 		{/if}
 
 		{if $userActions|@count ne 0}
-			<table class="normal">
+			<table class="table normal">
 				<caption>{tr}Number of actions per user{/tr}</caption>
 				<tr>
 					<th>{tr}User{/tr}</th>
@@ -462,7 +462,7 @@
 		{/if}
 
 		{if $objectActions|@count ne 0}
-			<table class="normal">
+			<table class="table normal">
 				<caption>{tr}Number of actions per object{/tr}</caption>
 				<tr>
 					<th>{tr}Object{/tr}</th>
@@ -486,7 +486,7 @@
 		{/if}
     
 		{if $showbigbluebutton eq 'y' and $stay_in_big_Times|@count ne 0}
-			<table class="normal">
+			<table class="table normal">
 				<caption>{tr}Bigbluebutton{/tr}</caption>
 				<tr>
 					<th>{tr}User{/tr}</th>
@@ -520,7 +520,7 @@
 		{/if}
 		
 		{if $showCateg eq 'y' and $tiki_p_admin eq 'y'}
-			<table class="normal">
+			<table class="table normal">
 				<caption>{tr}Number of actions per category{/tr}</caption>
 				<tr>
 					<th>{tr}Category{/tr}</th>
@@ -541,7 +541,7 @@
 		{/if}
 
 		{if $showCateg eq 'y' && $statUserCateg|@count ne 0}
-			<table class="normal">
+			<table class="table normal">
 				<caption>{tr}Number of actions per category and per user{/tr}</caption>
 				<tr>
 					<th>{tr}Category{/tr}</th>

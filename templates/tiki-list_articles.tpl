@@ -24,7 +24,7 @@
 <form name="checkform" method="get" action="{$smarty.server.PHP_SELF}">
 	<input type="hidden" name="maxRecords" value="{$maxRecords|escape}">
 	{assign var=numbercol value=1}
-	<table class="normal">
+	<table class="table normal">
 		<tr>
 			<th class="auto">
 				{if $listpages}

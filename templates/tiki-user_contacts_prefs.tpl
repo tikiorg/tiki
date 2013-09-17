@@ -35,7 +35,7 @@
 		<div class="cbox">
 			<div class="cbox-data">
 				<form method='post' action='tiki-user_contacts_prefs.php'>
-					<table class="normal">
+					<table class="table normal">
 						<tr>
 							<th colspan="2">{tr}Order{/tr}</th>
 							<th>{tr}Field{/tr}</th>

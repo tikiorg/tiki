@@ -184,7 +184,7 @@
   ||  $tiki_p_post_comments  == 'y'
   ||  $tiki_p_edit_comments  == 'y')}
   <div id="page-bar" class="clearfix">
-		<span class="button"><a id="comment-toggle" href="{service controller=comment action=list type="image gallery" objectId=$galleryId}#comment-container">{tr}Comments{/tr}</a></span>
+		<span class="button btn-default"><a id="comment-toggle" href="{service controller=comment action=list type="image gallery" objectId=$galleryId}#comment-container">{tr}Comments{/tr}</a></span>
 		{jq}
 			$('#comment-toggle').comment_toggle();
 		{/jq}
@@ -192,7 +192,7 @@
   <div id="comment-container"></div>
 {/if}
 
-<table class="normal noslideshow">
+<table class="table normal noslideshow">
 	<tr>
 		<td class="even" colspan="2" style="border:0px; font-size:x-small">
 			{tr}You can view this gallery's configured image (first, random, etc.) in your browser using:{/tr}

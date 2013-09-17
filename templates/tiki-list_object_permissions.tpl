@@ -44,7 +44,7 @@
 					<div class="tabs-1">
 					<form method="post">
 					{foreach from=$filterGroup item=f}<input type="hidden" name="filterGroup[]" value="{$f|escape}">{/foreach}
-					<table class="normal">
+					<table class="table normal">
 					<tr>
 						<th class="checkbox">{select_all checkbox_names='groupPerm[]'}</th>
 						<th>{tr}Group{/tr}</th>
@@ -76,7 +76,7 @@
 					{remarksbox}{tr}If an object is not listed in this section nor in the Category Permissions section, then only the global permissions apply to it.{/tr}{/remarksbox}
 					<form method="post">
 					{foreach from=$filterGroup item=f}<input type="hidden" name="filterGroup[]" value="{$f|escape}">{/foreach}
-					<table class="normal">
+					<table class="table normal">
 					<tr>
 						<th class="checkbox">{select_all checkbox_names='objectPerm[]'}</th>
 						<th>{tr}Object{/tr}</th>
@@ -121,7 +121,7 @@
 					<div class="tabs-3">
 					{remarksbox}{tr}If an object is not listed in this section nor in the Object Permissions section, then only the global permissions apply to it.{/tr}{/remarksbox}
 					<form method="post">
-					<table class="normal">
+					<table class="table normal">
 					<tr>
 						<th>{tr}Object{/tr}</th>
 						<th>{tr}Group{/tr}</th>

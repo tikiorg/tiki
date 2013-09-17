@@ -4,7 +4,7 @@
 
 {pagination_links cant=$files_number offset=$offset step=$files_per_page}{/pagination_links}
 
-<table class="normal" style="clear: both;">
+<table class="table normal" style="clear: both;">
 <tr>
 	<th>{tr}File Name{/tr}</th>
 	<th>{tr}Actions{/tr}</th>

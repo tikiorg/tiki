@@ -137,7 +137,7 @@
 					<legend style="font-style: italic">{tr}Pay With Tiki Credits{/tr}</legend>
 					<form action="{query _type='relative'}" method="post">
 						{tr}Pay with Tiki User Credits:{/tr}
-						<table class="normal">
+						<table class="table normal">
 							<tr>
 								<th>{tr}Credit type{/tr}</th>
 								<th>{tr}Credits left{/tr}</th>

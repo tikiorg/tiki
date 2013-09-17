@@ -59,7 +59,7 @@
 			<span class="highlight">{tr}The highlight pages already exist.{/tr}</span> {tr}Please, change the name if you want the page to be uploaded.{/tr}
 		</p>
 	{/if}
-	<table class="normal">
+	<table class="table normal">
 		<tr>
 			<th>
 				<a href="tiki-received_pages.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'receivedPageId_desc'}receivedPageId_asc{else}receivedPageId_desc{/if}">{tr}ID{/tr}</a>
@@ -113,7 +113,7 @@
 	</p>
 {/if}
 <form action="tiki-received_pages.php" method="post">
-	<table class="normal">
+	<table class="table normal">
 		<tr>
 			<th>&nbsp;</th>
 			<th>

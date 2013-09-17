@@ -53,7 +53,7 @@
 
 {include file='find.tpl'}
 
-<table class="normal">
+<table class="table normal">
 	<tr>
 		<th>
 			<a href="tiki-edit_quiz_results.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'fromPoints_desc'}fromPoints_asc{else}fromPoints_desc{/if}">{tr}From Points{/tr}</a>

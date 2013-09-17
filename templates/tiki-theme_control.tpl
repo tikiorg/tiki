@@ -60,7 +60,7 @@
 {include file='find.tpl'}
 
 <form action="tiki-theme_control.php" method="post">
-	<table class="normal">
+	<table class="table normal">
 		<tr>
 			<th><input type="submit" class="btn btn-default" name="delete" value="{tr}Del{/tr}"></th>
 			<th>

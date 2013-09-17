@@ -175,7 +175,7 @@ function update_button_install() {
 		{tr}No mods found.{/tr}
 	{/if}
 	
-	<table cellspacing="0" cellpadding="2" border="0" class="normal">
+	<table cellspacing="0" cellpadding="2" border="0" class="table normal">
 		{foreach key=type item=i from=$display}
 			<tr><td colspan="{if $prefs.feature_mods_provider eq 'y'}3{else}2{/if}">
 				{assign var=thistype value=$type|escape:"url"}

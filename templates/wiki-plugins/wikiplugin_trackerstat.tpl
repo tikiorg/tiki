@@ -1,5 +1,5 @@
 {* $Id$ *}
-<table class="normal wikiplugin_trackerstat">
+<table class="table normal wikiplugin_trackerstat">
 {cycle values="even,odd" print=false}
 {section name=istat loop=$stats}
 <tr><th colspan="{if $show_bar eq 'y' and $show_percent eq 'y' and $show_count eq 'y'}4{elseif $show_bar eq 'y' and $show_percent eq 'y' and $show_count eq 'n'}3{elseif $show_bar eq 'y' and $show_percent eq 'n' and $show_count eq 'y'}3{elseif $show_bar eq 'n' and $show_percent eq 'y' and $show_count eq 'y'}3{elseif $show_bar eq 'n' and $show_percent eq 'n' and $show_count eq 'y'}2{elseif $show_bar eq 'n' and $show_percent eq 'y' and $show_count eq 'n'}2{elseif $show_bar eq 'y' and $show_percent eq 'n' and $show_count eq 'n'}2{else}1{/if}">{$stats[istat].name|escape}</th>

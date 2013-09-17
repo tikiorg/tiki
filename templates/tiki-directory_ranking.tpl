@@ -7,7 +7,7 @@
 
 {* Display the list of categories (items) using pagination *}
 {* Links to edit, remove, browse the categories *}
-<table class="normal">
+<table class="table normal">
   <tr>
     <th><a href="tiki-directory_ranking.php?parent={$parent}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}Name{/tr}</a></th>
     <th><a href="tiki-directory_ranking.php?parent={$parent}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'url_desc'}url_asc{else}url_desc{/if}">{tr}Url{/tr}</a></th>

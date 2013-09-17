@@ -123,7 +123,7 @@
 			<input type="hidden" name="page_ref_id" value="{$page_ref_id}">
 
 			<h3>{tr}Categorize all pages in structure together:{/tr}</h3>
-			<table class="normal">
+			<table class="table normal">
 			{include file='categorize.tpl'}
 			</table>
 			<input type="submit" class="btn btn-default" name="recategorize" value="{tr}Update{/tr}">

@@ -29,7 +29,7 @@
 {/if}
 
 <form action="#">
-	<table class="normal">
+	<table class="table normal">
 		{assign var=numbercol value=8}
 		<tr>
 			{if $channels}

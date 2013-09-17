@@ -16,7 +16,7 @@
   <body style="background-color: white">
   {/literal}
   	{if $isOperator}
-	<table class="normal" >
+	<table class="table normal" >
 		<tr>
 			<th>{tr}Operator:{/tr} {$user}</th>
 			<th>{tr}Status:{/tr} <b>{tr}{$status}{/tr}</b></th>
@@ -40,7 +40,7 @@
 			sound();
 		</script>
     {/if}
-	<table id='reqs' class="normal">
+	<table id='reqs' class="table normal">
 		<tr>
 			<th>{tr}User{/tr}</th>
 			<th>{tr}Reason{/tr}</th>

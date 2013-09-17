@@ -77,7 +77,7 @@
 
 {initials_filter_links}
 
-<table class="normal">
+<table class="table normal">
 	<tr>
 		{assign var=numbercol value=4}
 		<th>

@@ -32,7 +32,7 @@ function tf_export_submit(fm) {
 <input type="hidden" name="trackerId" value="{$trackerId}">
 <input type="hidden" name="iTrackerFilter" value="{$iTrackerFilter}">
 {if !empty($count_item)}<input type="hidden" name="count_item" value="{$count_item}">{/if}
-<table class="normal">
+<table class="table normal">
 {if isset($line) && $line eq 'y'}<tr>{/if}
 {cycle values="even,odd" print=false}
 {foreach from=$filters item=filter}

@@ -1,4 +1,4 @@
-<table cellpadding="0" cellspacing="0" border="0" class="normal">
+<table cellpadding="0" cellspacing="0" border="0" class="table normal">
 	<tr>
 		<th style="width:20%"><a href="{$myurl}?sort_mode={if $sort_mode eq 'start_desc'}start_asc{else}start_desc{/if}">{tr}Start{/tr}</a></th>
 		<th style="width:20%"><a href="{$myurl}?sort_mode={if $sort_mode eq 'end_desc'}end_asc{else}end_desc{/if}">{tr}End{/tr}</a></th>

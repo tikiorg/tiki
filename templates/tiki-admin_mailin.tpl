@@ -1,7 +1,7 @@
 {* $Id$ *}
 {title help="Webmail"}{tr}Mail-in accounts{/tr}{/title}
 
-<table class="normal" style="text-align:center">
+<table class="table normal" style="text-align:center">
   <tr>
     <th>
       {tr}Action{/tr}

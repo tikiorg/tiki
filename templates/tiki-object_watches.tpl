@@ -55,7 +55,7 @@
 {else}
 	<p>&nbsp;</p>
 {/if}
-<table class="normal">
+<table class="table normal">
 	<tr>
 		{if !empty($cat) && !empty($desc)}
 			<th>{tr}Groups{/tr}</th>

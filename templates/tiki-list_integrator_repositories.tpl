@@ -11,7 +11,7 @@
 
 {* Table with list of repositories (if array is not empty) *}
 {if count($repositories) gt 0}
-<table class="normal" id="integrator-repositories">
+<table class="table normal" id="integrator-repositories">
   <tr>
     <th>{tr}Name{/tr}</th>
     <th>{tr}Description{/tr}</th>

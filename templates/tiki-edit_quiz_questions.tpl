@@ -81,7 +81,7 @@
 <h2>{tr}Questions{/tr}</h2>
 {include file='find.tpl'}
 
-<table class="normal">
+<table class="table normal">
 	<tr>
 		<th>
 			<a href="tiki-edit_quiz_questions.php?quizId={$quizId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'questionId_desc'}questionId_asc{else}questionId_desc{/if}">{tr}ID{/tr}</a>

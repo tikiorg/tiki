@@ -7,7 +7,7 @@
   {include file='find.tpl'}
 {/if}
 
-<table class="normal">
+<table class="table normal">
 	<tr>
 		<th>
 			<a href="tiki-list_faqs.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'title_desc'}title_asc{else}title_desc{/if}">{tr}Title{/tr}</a>

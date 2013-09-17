@@ -2,7 +2,7 @@
 
 {include file='find.tpl'}
 
-<table class="normal">
+<table class="table normal">
 <tr>
 <th>{self_link _sort_arg='sort_mode' _sort_field='title' title="{tr}Title{/tr}"}{tr}Title{/tr}{/self_link}</th>
 <th>{self_link _sort_arg='sort_mode' _sort_field='publishDate' title="{tr}Published{/tr}"}{tr}Published{/tr}{/self_link}</th>

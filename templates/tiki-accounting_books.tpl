@@ -11,7 +11,7 @@
 {tabset}
 {tab name="{tr}My books{/tr}"}
 <div id="booklist">
-	<table class="normal">
+	<table class="table normal">
 		<tr>
 			<th>{tr}Id{/tr}</th>
 			<th>{tr}Name{/tr}</th>

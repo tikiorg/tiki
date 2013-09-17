@@ -6,7 +6,7 @@
 
 {include file='find.tpl' autocomplete="username"}
 
-<table bgcolor="#ffffff" class="normal">
+<table bgcolor="#ffffff" class="table normal">
 	<tr>
 		<th><a href="tiki-list_users.php?offset={$offset}&amp;find={$find}&amp;sort_mode={if $sort_mode eq 'login_desc'}login_asc{else}login_desc{/if}" class="userlistheading" style="color: White;">{tr}User{/tr}</a>&nbsp;</th>
 		{if $prefs.feature_community_list_name eq 'y' and $prefs.user_show_realnames neq 'y'}

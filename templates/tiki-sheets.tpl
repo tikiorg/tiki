@@ -14,7 +14,7 @@
   {include file='find.tpl'}
 {/if}
 
-<table class="normal">
+<table class="table normal">
 	<tr>
 		<th>{self_link _sort_arg='sort_mode' _sort_field='title'}{tr}Title{/tr}{/self_link}</th>
 		<th>{self_link _sort_arg='sort_mode' _sort_field='description'}{tr}Description{/tr}{/self_link}</th>

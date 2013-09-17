@@ -10,7 +10,7 @@
 {include file='find.tpl' find_show_num_rows='y'}
 <form name="checkform" method="get" action="{$smarty.server.PHP_SELF}">
 	<input type="hidden" name="maxRecords" value="{$maxRecords|escape}">
-	<table class="normal">
+	<table class="table normal">
 		{assign var=numbercol value=0}
 		<tr>
 			{if $tiki_p_remove_submission eq 'y' or $tiki_p_approve_submission eq 'y'}

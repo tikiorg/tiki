@@ -340,7 +340,7 @@
 	 	&rarr; {html_select_date time=$endDate prefix="endDate_" start_year=$start_year end_year=$end_year day_value_format="%02d" field_order=$prefs.display_field_order}
 		<input type="submit" class="btn btn-default" name="modify" value="{tr}Filter{/tr}">
 	</form>
-	<table class="normal">
+	<table class="table normal">
 		<tr>
 			<th>{tr}Object{/tr}</th>
 			<th>{tr}Section{/tr}</th>
@@ -359,7 +359,7 @@
 
 {if $best_objects_stats_lastweek}
 	<h2 id="best_objects_stats_lastweek">{tr}Most viewed objects in the last 7 days{/tr}</h2>
-	<table class="normal">
+	<table class="table normal">
 		<tr>
 			<th>{tr}Object{/tr}</th>
 			<th>{tr}Section{/tr}</th>

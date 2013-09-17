@@ -2,7 +2,7 @@
 {tabset}
 	{tab name="{tr}List{/tr}"}
 		<a href="tiki-switch_perspective.php">{tr}Return to default perspective{/tr}</a>
-		<table class="normal">
+		<table class="table normal">
 			<tr>
 				<th>{tr}Perspective{/tr}</th>
 				<th>{tr}Actions{/tr}</th>

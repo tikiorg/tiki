@@ -12,7 +12,7 @@
 
 {include file='find.tpl'}
 
-<table class="normal">
+<table class="table normal">
 <tr>
 <th><a href="tiki-survey_stats.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}Survey{/tr}</a></th>
 <th><a href="tiki-survey_stats.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'taken_desc'}taken_asc{else}taken_desc{/if}">{tr}taken{/tr}</a></th>

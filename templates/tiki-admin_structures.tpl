@@ -72,7 +72,7 @@
 		{/if}
 		<br>
 		<form>
-			<table class="normal">
+			<table class="table normal">
 				<tr>
 					{if $tiki_p_admin eq 'y'}<th width="15">{select_all checkbox_names='action[]'}</th>{/if}
 					<th>{tr}Structure ID{/tr}</th>

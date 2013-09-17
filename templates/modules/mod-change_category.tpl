@@ -16,7 +16,7 @@
 
 		{if $detailed eq 'y'}
 			{cycle values="odd,even" print=false}
-			<table class="normal">
+			<table class="table normal">
 				{foreach key=k item=i from=$modcatlist}
 					{if $i.incat eq 'y'}
 						<tr>

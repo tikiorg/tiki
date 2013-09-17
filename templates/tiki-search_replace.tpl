@@ -30,7 +30,7 @@
 {/if}
 <form action="tiki-search_replace.php" method="post">
 {if isset($results)}
-	<table class="normal">
+	<table class="table normal">
 	<tr>
 		<td style="text-align: right">
 			{select_all checkbox_names='checked[]'}

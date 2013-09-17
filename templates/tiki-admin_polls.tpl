@@ -87,7 +87,7 @@
 		{if $channels or ($find ne '')}
 			{include file='find.tpl'}
 		{/if}
-		<table class="normal">
+		<table class="table normal">
 			{assign var=numbercol value=8}
 			<tr>
 				<th>{self_link _sort_arg='sort_mode' _sort_field='pollId' title="{tr}ID{/tr}"}{tr}ID{/tr}{/self_link}</th>

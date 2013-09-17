@@ -8,7 +8,7 @@
 {/if}
 {tabset}
 {tab name="{tr}List{/tr}"}
-	<table class="normal">
+	<table class="table normal">
 	<tr>
 		<th>{tr}Code{/tr}</th>
 		<th>{tr}Value{/tr}</th>

@@ -20,7 +20,7 @@
 
 {cycle values="odd,even" print=false}
 {section name=ix loop=$rankings}
-	<table class="normal">
+	<table class="table normal">
 		<tr>
 			<th>{tr}Rank{/tr}</th>
 			<th>{$rankings[ix].title}</th>

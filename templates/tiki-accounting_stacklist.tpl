@@ -1,7 +1,7 @@
 {* $Id$ *}
 <a class="icon" href="tiki-accounting_export.php?action=print&what=stack&bookId={$bookId}" target="new">{icon _id="printer" alt="{tr}printable version{/tr}"}</a>
 <a class="icon" href="tiki-accounting_export.php?action=settings&what=stack&bookId={$bookId}">{icon _id="table" alt="{tr}export table{/tr}"}</a>
-<table class="normal">
+<table class="table normal">
  <tr>
   <th rowspan="2">{tr}Id{/tr}</th>
   <th rowspan="2">{tr}Date{/tr}</th>

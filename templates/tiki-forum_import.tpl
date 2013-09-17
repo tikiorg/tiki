@@ -165,7 +165,7 @@ End hiding of unfinished section... *}
 	<input type="hidden" name="prefix" value="{$fi_prefix}">
 	<input type="hidden" name="server" value="{$server}">
 
-	<table class="normal">
+	<table class="table normal">
 	<tr>
 	<th>Select</th>
 	<th>Forum Name</th>
@@ -189,7 +189,7 @@ End hiding of unfinished section... *}
 <div class="cbox">
 <div class="cbox-title">{tr}Which Forum Do You Wish to Import this Into?{/tr}</div>
 <div class="cbox-data">
-	<table class="normal">
+	<table class="table normal">
 	<tr>
 	<th>Select</th>
 	<th>Forum Name</th>

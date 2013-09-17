@@ -30,7 +30,7 @@
 </form>
 
 <h2>{tr}DSN{/tr}</h2>
-<table class="normal">
+<table class="table normal">
 	<tr>
 		<th>
 			<a href="tiki-admin_dsn.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}Name{/tr}</a>

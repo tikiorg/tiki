@@ -104,7 +104,7 @@
 		</form>
 		{if count($suggested) != 0}
 			<br>
-			<table class="normal">
+			<table class="table normal">
 				<tr>
 					<th>{tr}Suggested questions{/tr}</th>
 				</tr>

@@ -2,7 +2,7 @@
 	{if !isset($translation_mode) or $translation_mode ne 'y'}
 		<h2>{tr}Comparing version {$old.version} with version {$new.version}{/tr}</h2>		
 	{/if}
-	<table class="normal diff">
+	<table class="table normal diff">
 	{if isset($translation_mode) and $translation_mode eq 'n'}
 		<tr>
 			<th colspan="2"><b>{tr}Version:{/tr} <a href="tiki-pagehistory.php?page={$page|escape:"url"}&amp;preview={$old.version}" title="{tr}View{/tr}">{$old.version}</a>{if $old.version == $info.version} ({tr}Current{/tr}){/if}</b></th>

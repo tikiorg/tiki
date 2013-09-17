@@ -17,7 +17,7 @@
 
 <!-- begin table for stats data -->
 
-<table class="normal">
+<table class="table normal">
 <tr>
 <th>
 <!-- sort user -->
@@ -71,7 +71,7 @@ Set the names of the table headings to reflect the names of the db
 {tr}Question:{/tr}
 <a class="link" href="tiki-edit_quiz_questions.php?quizId={$quizId.questionId}">{$questions[ix].question|escape}<br></a>
 
-<table class="normal">
+<table class="table normal">
 <!-- begin header data for table -->
 
 {* I'd like to have every table heading sorted for immediate analysis

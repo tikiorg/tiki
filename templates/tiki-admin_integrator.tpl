@@ -67,7 +67,7 @@
 <h2>{tr}Available Repositories{/tr}</h2>
 
 {* Table with list of repositories *}
-<table class="normal" border=1 id="integrator-repositories">
+<table class="table normal" border=1 id="integrator-repositories">
   <tr>
     <th rowspan="2">{tr}Name{/tr}</th>
     <th>{tr}Path{/tr}</th>

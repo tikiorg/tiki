@@ -14,7 +14,7 @@
 {cycle values="even,odd" print=false}
 		
 		{listfilter selectors='#plugins_list tr.odd,#plugins_list tr.even'} 
-		<table class="normal" id="plugins_list">
+		<table class="table normal" id="plugins_list">
 			<tr>
 				<th>{select_all checkbox_names='clear[]'}</th>
 				<th>{tr}Plugin{/tr} </th>

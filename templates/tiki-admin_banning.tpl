@@ -201,7 +201,7 @@
 	<input type="hidden" name="offset" value="{$offset|escape}">
 	<input type="hidden" name="find" value="{$find|escape}">
 	<input type="hidden" name="sort_mode" value="{$sort_mode|escape}">
-	<table class="normal">
+	<table class="table normal">
 		<tr>
 			<th><input type="submit" class="btn btn-warning" name="del" value="{tr}x{/tr} "></th>
 			<th>{tr}Title{/tr}</th>

@@ -55,7 +55,7 @@
 
 <h2>{tr}Assigned sections{/tr}</h2>
 <form action="tiki-theme_control_sections.php" method="post">
-	<table class="normal">
+	<table class="table normal">
 		<tr>
 			<th><input type="submit" class="btn btn-warning" name="delete" value="{tr}Del{/tr}"></th>
 			<th>

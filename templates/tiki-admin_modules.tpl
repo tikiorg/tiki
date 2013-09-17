@@ -59,7 +59,7 @@
 		{foreach from=$module_zone_list key=zone_initial item=zone_info}
 			{tab name=$zone_info.name|capitalize}
 				<div id="{$zone_info.id}_modules">
-					<table class="normal" id="assigned_zone_{$zone_initial}">
+					<table class="table normal" id="assigned_zone_{$zone_initial}">
 						<tr>
 							<th>{tr}Name{/tr}</th>
 							<th>{tr}Order{/tr}</th>
@@ -142,7 +142,7 @@
 		</legend>
 	{/if}
 	<h2>{tr}Custom Modules{/tr}</h2>
-	<table class="normal">
+	<table class="table normal">
 		<tr>
 			<th>{tr}Name{/tr}</th>
 			<th>{tr}Title{/tr}</th>

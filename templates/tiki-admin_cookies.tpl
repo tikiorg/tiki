@@ -55,7 +55,7 @@
 	{include file='find.tpl'}
 {/if}
 
-<table class="normal">
+<table class="table normal">
 	<tr>
 		<th>
 			<a href="tiki-admin_cookies.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'cookieId_desc'}cookieId_asc{else}cookieId_desc{/if}">{tr}ID{/tr}</a>

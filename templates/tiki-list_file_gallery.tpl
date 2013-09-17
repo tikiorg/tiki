@@ -309,7 +309,7 @@ window.handleFinderFile = function (file, elfinder) {
 		|| $tiki_p_edit_comments == 'y')}
 
 		<div id="page-bar" class="clearfix">
-			<span class="button">
+			<span class="button btn-default">
 				<a id="comment-toggle" href="{service controller=comment action=list type="file gallery" objectId=$galleryId}#comment-container">
 					{tr}Comments{/tr}
 				</a>

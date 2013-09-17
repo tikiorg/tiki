@@ -7,7 +7,7 @@
 </div>
 
 <h2>{tr}List of featured links{/tr}</h2>
-<table class="normal">
+<table class="table normal">
 	<tr>
 		<th>{tr}URL{/tr}</th>
 		<th>{tr}Title{/tr}</th>

@@ -11,7 +11,7 @@
 
 {include file='find.tpl' find_show_num_rows='y'}
 
-<table class="normal">
+<table class="table normal">
 	<tr>
 		<th>{self_link _sort_arg='sort_mode' _sort_field='created'}{tr}Created{/tr}{/self_link}</th>
 		<th>{self_link _sort_arg='sort_mode' _sort_field='sql1'}{tr}Query{/tr}{/self_link}</th>

@@ -175,7 +175,7 @@
 		{include file='find.tpl'}
 	{/if}
 
-	<table class="normal">
+	<table class="table normal">
 		<tr>
 			<th>
 				<a href="tiki-received_articles.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'receivedArticleId_desc'}receivedArticleId_asc{else}receivedArticleId_desc{/if}">{tr}ID{/tr}</a>

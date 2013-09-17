@@ -4,7 +4,7 @@
 {tabset name="tabs_admtokens"}
 	{tab name="{tr}List tokens{/tr}"}
 		<h2>{tr}List tokens{/tr}</h2>
-		<table class="normal">
+		<table class="table normal">
 			<tr>
 				<th>{tr}Id{/tr}</th>
 				<th>{tr}Entry{/tr}</th>

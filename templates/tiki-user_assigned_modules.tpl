@@ -26,7 +26,7 @@
 		<!-- left column -->
 		{if $prefs.feature_left_column ne 'n' || count($modules_l) > 0}
 			<td>
-				<table  class="normal">
+				<table  class="table normal">
 					<tr>
 						<th>{tr}#{/tr}</th>
 						<th>{tr}Name{/tr}</th>
@@ -57,7 +57,7 @@
 		<!-- right column -->
 		{if $prefs.feature_right_column ne 'n' || count($modules_r) > 0}
 			<td >
-				<table  class="normal">
+				<table  class="table normal">
 					<tr>
 						<th>{tr}#{/tr}</th>
 						<th>{tr}Name{/tr}</th>

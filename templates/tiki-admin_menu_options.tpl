@@ -26,7 +26,7 @@
 					<input type="hidden" name="sort_mode" value="{$sort_mode|escape}">
 					<input type="hidden" name="menuId" value="{$menuId}">
 					<input type="hidden" name="offset" value="{$offset}">
-					<table class="normal">
+					<table class="table normal">
 						{assign var=numbercol value=0}
 						<tr>
 							<th>
@@ -112,7 +112,7 @@
 	{$editname = "{tr}Edit menu option{/tr}"}
 {/if}
 {tab name=$editname}
-	<table class="normal">
+	<table class="table normal">
 		<tr>
 			<td valign="top" class="odd">
 				<h2>{$editname}</h2>

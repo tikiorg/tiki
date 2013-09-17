@@ -96,7 +96,7 @@
 			{if $items|@count ge '1'}
 				{* ------- list headings --- *}
 				<form name="checkform" method="post" action="{$smarty.server.PHP_SELF}">
-					<table class="normal">
+					<table class="table normal">
 						<tr>
 							{if $tracker_info.showStatus eq 'y' or ($tracker_info.showStatusAdminOnly eq 'y' and $tiki_p_admin_trackers eq 'y')}
 								<th class="auto" style="width:20px;"></th>

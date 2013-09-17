@@ -17,7 +17,7 @@
 	 </form>
 </div>
 <br/>
-<table class="normal">
+<table class="table normal">
 <tr>
 	<th>{tr}Version{/tr}</th>
 	<th>{tr}Date{/tr}</th>

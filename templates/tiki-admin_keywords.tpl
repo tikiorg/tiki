@@ -39,7 +39,7 @@
 {/if}
 <br class="clear"/>
 {if $existing_keywords}
-	<table class="normal">
+	<table class="table normal">
 		<tbody>	
 			<tr>
 				<th>{tr}Page{/tr}</th>

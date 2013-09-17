@@ -36,7 +36,7 @@
 </tr>
 </table>
 </form>
-<table class="normal">
+<table class="table normal">
 <tr>
 <th><a href="tiki-live_support_transcripts.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'chat_started_desc'}chat_started_asc{else}chat_started_desc{/if}">{tr}started{/tr}</a></th>
 <th><a href="tiki-live_support_transcripts.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'tiki_user_desc'}tiki_user_asc{else}tiki_user_desc{/if}">{tr}Username{/tr}</a></th>
@@ -62,7 +62,7 @@
 
 {if $smarty.request.view}
 <h3>{tr}Transcript{/tr}</h3>
-<table class="normal">
+<table class="table normal">
 {section name=ix loop=$events}
 <tr>
 	<td  class="odd">

@@ -146,7 +146,7 @@
 <div class="cattree">{$tree}</div>
 <div class="catobj">
 	{if $cant_pages > 0}
-		<table class="normal">
+		<table class="table normal">
 			<tr>
 				<th>
 					{tr}Name{/tr}

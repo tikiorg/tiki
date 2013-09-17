@@ -90,7 +90,7 @@
 				<input type="hidden" name="find_objects" value="{$find_objects|escape}">
 			</form>
 		{/if}
-		<table class="normal">
+		<table class="table normal">
 			<tr>
 				<th>&nbsp;</th>
 				<th>

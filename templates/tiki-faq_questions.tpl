@@ -85,7 +85,7 @@
   {include file='find.tpl'}
 {/if}
 
-<table class="normal">
+<table class="table normal">
 <tr>
 <th>
 <a href="tiki-faq_questions.php?faqId={$faqId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'questionId_desc'}questionId_asc{else}questionId_desc{/if}">{tr}ID{/tr}</a>
@@ -114,7 +114,7 @@
 {if count($suggested) > 0}
 
 <h2>{tr}Suggested questions{/tr}</h2>
-<table class="normal">
+<table class="table normal">
 <tr>
   <th>{tr}Question{/tr}</th>
   <th>{tr}Answer{/tr}</th>

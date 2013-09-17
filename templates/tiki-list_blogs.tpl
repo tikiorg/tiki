@@ -12,7 +12,7 @@
   {include file='find.tpl'}
 {/if}
 
-<table class="normal">
+<table class="table normal">
 {assign var=numbercol value=0}
 <tr>
 {if $prefs.blog_list_title eq 'y' or $prefs.blog_list_description eq 'y'}

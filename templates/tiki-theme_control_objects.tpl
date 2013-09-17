@@ -65,7 +65,7 @@
 
 <form action="tiki-theme_control_objects.php" method="post">
 	<input type="hidden" name="type" value="{$type|escape}">
-	<table class="normal">
+	<table class="table normal">
 		<tr>
 			<th><input type="submit" class="btn btn-default" name="delete" value="{tr}Del{/tr}"></th>
 			<th>

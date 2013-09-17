@@ -25,7 +25,7 @@
 {/if}
 {if count($online_operators) > 0}
 <h2>{tr}Online operators{/tr}</h2>
-<table class="normal">
+<table class="table normal">
 	<tr>
 		<th style="text-align:center;">	
 		{tr}Operator{/tr}
@@ -72,7 +72,7 @@
 {if count($offline_operators) > 0}
 <h2>{tr}Offline operators{/tr}</h2>
 {cycle values='odd,even' print=false}
-<table class="normal">
+<table class="table normal">
 	<tr>
 		<th style="text-align:center;">	
 		{tr}Operator{/tr}

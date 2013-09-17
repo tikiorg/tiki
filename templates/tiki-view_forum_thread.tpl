@@ -127,7 +127,7 @@
 
 {if isset($view_atts) and $view_atts eq 'y'}
 <h2 id="attachments">{tr}Attachments{/tr}</h2>
-<table class="normal">
+<table class="table normal">
 	<tr>
 		<th>{tr}Type{/tr}</th>
 		<th>{tr}Filename{/tr}</th>

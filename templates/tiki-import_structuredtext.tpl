@@ -22,7 +22,7 @@
 </form>
 <br><br>
 {if $result eq 'y'}
-<table class="normal">
+<table class="table normal">
 <tr>
   <th>{tr}page{/tr}</th>
   <th>{tr}excerpt{/tr}</th>

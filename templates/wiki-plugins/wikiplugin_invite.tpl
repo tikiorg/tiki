@@ -8,7 +8,7 @@
 {/if}
 
 <form method="post">
-<table class="normal invite">
+<table class="table normal invite">
 <tr>
 	<td>
 		<label for="email">{tr}Email address the person you want to invite{/tr}</label>

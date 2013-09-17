@@ -37,7 +37,7 @@
 
 {if $showall eq 'y'}
 <h2>{if $user eq $userwatch}{tr}Pick avatar from the library{/tr}{else}{tr}Pick user Avatar{/tr}{/if} <a href="tiki-pick_avatar.php?showall=n">{tr}Hide all{/tr}</a> {$numav} {tr}icons{/tr}</h2>
-<div class="normal">
+<div class="table normal">
 {section name=im loop=$avatars}
 <a href="tiki-pick_avatar.php?showall=n&amp;avatar={$avatars[im]|escape:"url"}&amp;uselib=use"><img src="{$avatars[im]}" alt=''></a>
 {/section}
@@ -101,7 +101,7 @@ function subavt() {
 
 {/if}
 
-<div class="normal">
+<div class="table normal">
 <form enctype="multipart/form-data" action="tiki-pick_avatar.php" method="post">
 <fieldset>
 <legend><strong>{tr}Upload your own avatar{/tr}</strong></legend>

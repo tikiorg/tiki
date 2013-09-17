@@ -3,7 +3,7 @@
 {if !empty($userGroups)}
 <h3>{tr}Groups you are in{/tr}</h3>
 {cycle values="odd,even" print=false}
-<table class="normal">
+<table class="table normal">
 {foreach from=$userGroups key=gr item=type}
 	<tr class="{cycle}">
 	<td>
@@ -46,7 +46,7 @@
 {elseif $showsubscribe ne 'n' && !empty($possibleGroups) && $subscribestyle eq 'table'}
 <h3{if !empty($userGroups)} style="margin-top: 15px;"{/if}>{tr}Groups you can join{/tr}</h3>
 <form method="post">
-<table class="normal">
+<table class="table normal">
 {foreach from=$possibleGroups item=gr}
 	<tr>
 	<td class="{cycle}">

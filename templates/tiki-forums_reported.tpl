@@ -30,7 +30,7 @@
 <input type="hidden" name="offset" value="{$offset|escape}">
 <input type="hidden" name="sort_mode" value="{$sort_mode|escape}">
 <input type="hidden" name="find" value="{$find|escape}">
-<table class="normal">
+<table class="table normal">
 <tr>
 {if $items}
 <th></th>

@@ -90,7 +90,7 @@
 			return false;
 		} );
 		{/jq}
-		<table class="normal">
+		<table class="table normal">
 			<thead>
 				<tr>
 					<th>{tr}Label{/tr}</th>
@@ -173,7 +173,7 @@
 
 	{if $selected_transition}
 		{tab name="{tr}Guards{/tr}"}
-			<table class="normal">
+			<table class="table normal">
 				<thead>
 					<tr>
 						<th>{tr}Type{/tr}</th>

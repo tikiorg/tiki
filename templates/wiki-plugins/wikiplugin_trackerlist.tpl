@@ -57,7 +57,7 @@
 <div class='trackercontainer' style='height: 250px ! important;'>
 {/if}
 		<div id="trackerlist_{$iTRACKERLIST}" {if $tsOn}style="visibility:hidden"{/if}>
-			<table class="normal wikiplugin_trackerlist" id="trackerlist_{$iTRACKERLIST}"
+			<table class="table normal wikiplugin_trackerlist" id="trackerlist_{$iTRACKERLIST}"
 	{if isset($displaysheet) && $displaysheet eq 'true'}title="{$tracker_info.name}" readonly="true"{/if}
 	{if isset($tableassheet) && $tableassheet eq 'true'}title="{tr}Tracker - {/tr}{$tracker_info.name}" readonly="true"{/if}
 	>

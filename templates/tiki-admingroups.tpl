@@ -32,7 +32,7 @@
 	{/if}
 
 	<form name="checkform" method="post" action="{$smarty.server.PHP_SELF}">
-	<table class="normal">
+	<table class="table normal">
 		<tr>
 			<th style="width: 20px;">{select_all checkbox_names='checked[]'}</th>
 			<th>{self_link _sort_arg='sort_mode' _sort_field='id'}{tr}ID{/tr}{/self_link}</th>
@@ -389,7 +389,7 @@ $("#userstracker").change(function () {
 		<h2>{tr}Members List:{/tr} {$groupname|escape}</h2>
 		<form name="checkform" method="post" action="{$smarty.server.PHP_SELF}">
 		<input type="hidden" name="group" value="{$group|escape}">
-		<table class="normal">
+		<table class="table normal">
 			<tr>
 				<th class="auto">{if $memberslist}{select_all checkbox_names='members[]'}{/if}</th>
 				<th>{self_link _sort_arg='sort_mode_member' _sort_field='login'}{tr}User{/tr}{/self_link}</th>
@@ -431,7 +431,7 @@ $("#userstracker").change(function () {
 		<div class="box">{$membersCount} {tr}users in group{/tr} {$groupname|escape}</div>
 
 		<h2>{tr}Banned members List:{/tr} {$groupname|escape}</h2>
-		<table class="normal">
+		<table class="table normal">
 			<tr>
 				<th>{tr}User{/tr}</th>
 				<th>{tr}Action{/tr}</th>

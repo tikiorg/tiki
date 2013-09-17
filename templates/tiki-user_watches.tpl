@@ -143,7 +143,7 @@
 </form>
 <br>
 <form action="tiki-user_watches.php" method="post">
-<table class="normal">
+<table class="table normal">
 	<tr>
 		{if $watches}
 			<th style="text-align:center;"></th>

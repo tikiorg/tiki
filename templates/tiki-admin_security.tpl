@@ -6,7 +6,7 @@
 {/remarksbox}
 
 <h2>{tr}Tiki settings{/tr}</h2>
-<table class="normal">
+<table class="table normal">
 	<tr>
 		<th>{tr}Tiki variable{/tr}</th>
 		<th>{tr}Setting{/tr}</th>
@@ -51,7 +51,7 @@
 </div>
 {if $filecheck}
 	{cycle values="even,odd" print=false}
-	<table class="normal">
+	<table class="table normal">
 		<tr>
 			<th colspan="2">{tr}File checks{/tr}</th>
 		</tr>
@@ -80,7 +80,7 @@
 
 
 {if $permcheck}
-	<table class="normal">
+	<table class="table normal">
 		<tr>
 			<th rowspan="2">{tr}Filename{/tr}</th>
 			<th rowspan="2">{tr}type{/tr}</th>

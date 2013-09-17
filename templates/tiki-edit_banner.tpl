@@ -260,7 +260,7 @@
 {if $zones}
 	<div align="left" class="simplebox">
 		<h2>{tr}Remove Zones (you lose entered info for the banner){/tr}</h2>
-		<table class="normal">
+		<table class="table normal">
 			<tr>
 				<th>{tr}Name{/tr}</th>
 				<th>{tr}Action{/tr}</th>

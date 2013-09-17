@@ -35,7 +35,7 @@
 <br>
 <br><br>   
 	<!--this table is a duplicate of the one in tiki-browse_image.tpl-->  
-	<table class="normal noslideshow">
+	<table class="table normal noslideshow">
 		<tr><td class="odd">{tr}Image Name:{/tr}</td><td class="odd">{$name}</td></tr>
 		<tr><td class="even">{tr}Created:{/tr}</td><td class="even">{$created|tiki_long_datetime}</td></tr>
 		<tr><td class="odd">{tr}Image size:{/tr}</td><td class="odd">{$xsize}x{$ysize}</td></tr>
@@ -71,7 +71,7 @@
 		{/if}
 	</table>
 	<br><br>    
-	<table class="normal noslideshow" style="font-size:small">
+	<table class="table normal noslideshow" style="font-size:small">
 		<tr>
 			<td class="even" style="border-bottom:0px" colspan="2">
 				{tr}Include the image in a tiki page using the following syntax:{/tr}

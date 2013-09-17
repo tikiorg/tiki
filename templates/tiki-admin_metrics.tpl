@@ -12,7 +12,7 @@
 </div>
 
 <h2>{tr}Metrics{/tr}</h2>
-<table class="normal" id="metrics">
+<table class="table normal" id="metrics">
 	<tr class="first">
 		<th>{tr}Name{/tr}</th>
 		<th>{tr}Range{/tr}</th>
@@ -41,7 +41,7 @@
 </table>
 
 <h2>{tr}Tabs{/tr}</h2>
-<table class="normal" id="tabs">
+<table class="table normal" id="tabs">
 	<tr class="first">
 		<th>{tr}Name{/tr}</th>
 		<th>{tr}Weight{/tr}</th>
@@ -65,7 +65,7 @@
 </table>
 
 <h2>{tr}Assigned Metrics{/tr}</h2>
-<table class="normal" id="assigned_metrics">
+<table class="table normal" id="assigned_metrics">
 	<tr class="first">
 		<th>{tr}Metric Name{/tr}</th>
 		<th>{tr}Tab Name{/tr}</th>

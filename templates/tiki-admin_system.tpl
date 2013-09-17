@@ -7,7 +7,7 @@
 
 <h2>{tr}Clear cached content{/tr}</h2>
 {cycle values="even,odd" print=false}
-<table class="normal">
+<table class="table normal">
 	<tr>
 		<th>{tr}Directory to clear{/tr}</th>
 		<th>{tr}Files{/tr}/{tr}Size{/tr}</th>

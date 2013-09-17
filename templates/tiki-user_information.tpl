@@ -199,7 +199,7 @@
 
 		{if $user_pages|@count > 0}
 			<h3>{tr}Wiki Pages{/tr}</h3>
-			<div class="normal">
+			<div class="table normal">
 				{cycle values="even,odd" print=false}
 				{section name=ix loop=$user_pages}
 					<div>
@@ -214,7 +214,7 @@
 		{/if}
 		{if $user_galleries|@count > 0}
 			<h3>{tr}Image Galleries{/tr}</h3>
-			<div class="normal">
+			<div class="table normal">
 				{cycle values="even,odd" print=false}
 				{section name=ix loop=$user_galleries}
 					<div>
@@ -229,7 +229,7 @@
 		{/if}
 		{if $user_blogs|@count > 0}
 			<h3>{tr}Blogs{/tr}</h3>
-			<div class="normal">
+			<div class="table normal">
 				{cycle values="even,odd" print=false}
 				{section name=ix loop=$user_blogs}
 					<div>
@@ -245,7 +245,7 @@
 		{if $user_blog_posts|@count > 0}
 		<h3>{tr}Blogs Posts{/tr}</h3>
 
-		<div class="normal">
+		<div class="table normal">
 			{section name=ix loop=$user_blog_posts}
 				<div>
 					<div class="{cycle}">
@@ -258,7 +258,7 @@
 			{/if}
 			{if $user_articles|@count > 0}
 				<h3>{tr}Articles{/tr}</h3>
-				<div class="normal">
+				<div class="table normal">
 					{cycle values="even,odd" print=false}
 					{section name=ix loop=$user_articles}
 						<div>
@@ -273,7 +273,7 @@
 			{/if}
 			{if $user_forum_comments|@count > 0}
 				<h3>{tr}Forum comments{/tr}</h3>
-				<div class="normal">
+				<div class="table normal">
 					{cycle values="even,odd" print=false}
 					{section name=ix loop=$user_forum_comments}
 						<div>
@@ -288,7 +288,7 @@
 			{/if}
 			{if $user_forum_topics|@count > 0}
 				<h3>{tr}Forum topics{/tr}</h3>
-				<div class="normal">
+				<div class="table normal">
 					{cycle values="even,odd" print=false}
 					{section name=ix loop=$user_forum_topics}
 						<div>
@@ -303,7 +303,7 @@
 			{/if}
 			{if $user_items|@count > 0}
 				<h3>{tr}User Items{/tr}</h3>
-				<div class="normal">
+				<div class="table normal">
 					{cycle values="even,odd" print=false}
 					{section name=ix loop=$user_items}
 						<div>
@@ -352,7 +352,7 @@
 					<input type="hidden" name="to" value="{$userwatch|escape}">
 					<input type="hidden" name="view_user" value="{$userwatch|escape}">
 
-					<div class="normalnoborder">
+					<div class="table normalnoborder">
 						<p>{tr}The following message will be sent to user{/tr} {$userinfo.login|userlink}&hellip;</p>
 
 						<div class="clearfix">

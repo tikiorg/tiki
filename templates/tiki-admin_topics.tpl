@@ -27,7 +27,7 @@
 </form>
 
 <h2>{tr}Topics{/tr}</h2>
-<table class="normal">
+<table class="table normal">
 	<tr>
 		<th>{tr}ID{/tr}</th>
 		<th>{tr}Name{/tr}</th>

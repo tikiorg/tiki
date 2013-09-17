@@ -28,7 +28,7 @@ function test_xpath(index) {
 </fieldset>
 <fieldset>
 <legend>{tr}Recorded Links{/tr}</legend>
-<table class="normal" width="100%">
+<table class="table normal" width="100%">
 {foreach from=$result item=r name=url}
 	<tr>
 		<th style="width:10%">{tr}Request:{/tr}&nbsp;{$r.method}</td><td>{$r.url}</th>
@@ -50,7 +50,7 @@ function test_xpath(index) {
 	{if $show_tidy}
 	<tr><th colspan="4">{tr}Tidy Results{/tr}</th></tr>
 	<tr><td colspan="2">
-	<table class="normal" width="100%">
+	<table class="table normal" width="100%">
  		<tr><td colspan="2" width="50%"><pre>{$r.ref_error_msg|escape:"html"}</pre></td>
 		</tr>
 	</table>

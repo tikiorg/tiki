@@ -4,7 +4,7 @@
 {include file='tiki-page_contribution_form.tpl'}
 {if $showstatistics==1}
 <h2>{tr}Statistics{/tr}</h2>
-<table class="normal">
+<table class="table normal">
  <tr>
   <th rowspan="2">{tr}Author{/tr}</th>
   <th colspan="4">{tr}Words{/tr}</th>

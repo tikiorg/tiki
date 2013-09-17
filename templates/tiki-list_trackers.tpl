@@ -18,7 +18,7 @@
 		{/if}
 	{/if}
 
-	<table class="normal">
+	<table class="table normal">
 		<tr>
 			<th>{self_link _sort_arg='sort_mode' _sort_field='trackerId'}{tr}Id{/tr}{/self_link}</th>
 			<th>{self_link _sort_arg='sort_mode' _sort_field='name'}{tr}Name{/tr}{/self_link}</th>

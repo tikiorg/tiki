@@ -80,7 +80,7 @@
   {include file='find.tpl' find_show_num_rows='y'}
 {/if}
 <form method="get" action="tiki-admin_notifications.php">
-	<table class="normal">
+	<table class="table normal">
 		<tr>
 			<th>
 				{if $channels}
@@ -141,7 +141,7 @@
 
 {if !empty($trackers)}
 	<h2>{tr}Trackers Outbound Emails{/tr}</h2>
-	<table class="normal">
+	<table class="table normal">
 		{section name=ix loop=$trackers}
 			<tr class="{cycle}">
 				<td><a href="tiki-list_trackers.php?trackerId={$trackers[ix].trackerId}">{$trackers[ix].value|escape}</a></td>
@@ -152,7 +152,7 @@
 
 {if !empty($forums)}
 	<h2>{tr}Forums Outbound Emails{/tr}</h2>
-	<table class="normal">
+	<table class="table normal">
 		{section name=ix loop=$forums}
 			<tr class="{cycle}">
 				<td><a href="tiki-admin_forums.php?forumId={$forums[ix].forumId}">{$forums[ix].outbound_address|escape}</a><br/></td>

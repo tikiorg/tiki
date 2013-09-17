@@ -1,6 +1,6 @@
 {* $Id$ *}
 {if $cant > 0}
-<table class="normal">
+<table class="table normal">
 	<tr>
 		<th width="100">&nbsp;</th>
 		<th width="150"><a href="tiki-list_kaltura_entries.php?list={$entryType}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq '-name'}asc_name{else}desc_name{/if}">{tr}Name{/tr}</a></th>

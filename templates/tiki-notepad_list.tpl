@@ -16,7 +16,7 @@
 {if count($channels) > 0 or $find ne ''}
 	{include file='find.tpl'}
 	<form action="tiki-notepad_list.php" method="post">
-		<table class="normal">
+		<table class="table normal">
 			<tr>
 				<th style="text-align:center;">
 					<input type="submit" class="btn btn-default" name="delete" value="{tr}x{/tr} ">

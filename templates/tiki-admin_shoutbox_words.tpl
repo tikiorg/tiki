@@ -21,7 +21,7 @@
 
 {include file='find.tpl'}
 
-<table class="normal">
+<table class="table normal">
 	<tr>
 		<th>
 			<a href="tiki-admin_shoutbox_words.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'word_desc'}word_asc{else}word_desc{/if}">{tr}Word{/tr}</a>

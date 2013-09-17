@@ -17,7 +17,7 @@
 
 {include file='find.tpl'}
 
-<table class="normal">
+<table class="table normal">
 	<tr>
 		<th>
 			{self_link _sort_arg='sort_mode' _sort_field='quizId'}{tr}ID{/tr}{/self_link}

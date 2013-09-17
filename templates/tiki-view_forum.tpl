@@ -384,7 +384,7 @@
 	<input type="hidden" name="comments_threshold" value="{$comments_threshold|escape}">
 	<input type="hidden" name="thread_sort_mode" value="{$thread_sort_mode|escape}">
 	<input type="hidden" name="forumId" value="{$forumId|escape}">
-	<table class="normal">
+	<table class="table normal">
 		{if $tiki_p_admin_forum eq 'y'}
 			<tr>
 				<th colspan='18'>{tr}Moderator Actions{/tr}</th>
@@ -637,7 +637,7 @@
 {if $forum_info.forum_last_n > 0 && count($last_comments)}
 	{* Last n titles *}
 	{cycle values="odd,even" print=false}
-	<table class="normal">
+	<table class="table normal">
 		<tr>
 			<th>{tr}Last{/tr} {$forum_info.forum_last_n} {tr}posts in this forum{/tr}</th>
 		</tr>

@@ -16,7 +16,7 @@
         </div>
         <div class="cbox-data">
           
-          <table class="normal">
+          <table class="table normal">
             <tr>
               <th>
                 <a href="tiki-my_tiki.php?sort_mode={if $sort_mode eq 'pageName_desc'}pageName_asc{else}pageName_desc{/if}">{tr}Page{/tr}</a>
@@ -65,7 +65,7 @@
           {if $userwatch eq $user}{tr}My galleries{/tr}{else}{tr}User Galleries{/tr}{/if}
         </div>
         <div class="cbox-data">
-          <table class="normal">
+          <table class="table normal">
             <tr>
               <th>{tr}Gallery{/tr}</th>
               <th style="width:50px">{tr}Actions{/tr}</th>
@@ -97,7 +97,7 @@
           {if $userwatch eq $user}{tr}My Articles{/tr}{else}{tr}User Articles{/tr}{/if}
         </div>
         <div class="cbox-data">
-          <table class="normal">
+          <table class="table normal">
             <tr>
               <th>{tr}Article{/tr}</th>
               <th style="width:50px">{tr}Actions{/tr}</th>
@@ -129,7 +129,7 @@
           {if $userwatch eq $user}{tr}My User Items{/tr}{else}{tr}User Items{/tr}{/if}
         </div>
         <div class="cbox-data">
-          <table class="normal">
+          <table class="table normal">
             <tr>
               <th>{tr}Item{/tr}</th>
               <th>{tr}Tracker{/tr}</th>
@@ -160,7 +160,7 @@
       <div class="cbox">
         <div class="cbox-title">{tr}Unread Messages{/tr}</div>
         <div class="cbox-data">
-          <table class="normal">
+          <table class="table normal">
             <tr>
               <th>{tr}Subject{/tr}</th>
               <th>{tr}From{/tr}</th>
@@ -194,7 +194,7 @@
           {if $userwatch eq $user}{tr}My tasks{/tr}{else}{tr}My Tasks{/tr}{/if}
         </div>
         <div class="cbox-data">
-          <table class="normal">
+          <table class="table normal">
             <tr>
               <th>{tr}Tasks{/tr}</th>
             </tr>
@@ -220,7 +220,7 @@
           {if $userwatch eq $user}{tr}My forum topics{/tr}{else}{tr}User forum topics{/tr}{/if}
         </div>
         <div class="cbox-data">
-          <table class="normal">
+          <table class="table normal">
             <tr>
               <th>{tr}Forum topics{/tr}</th>              
               <th>{tr}Date of post{/tr}</th>              
@@ -250,7 +250,7 @@
           {if $userwatch eq $user}{tr}My forum replies{/tr}{else}{tr}User forum replies{/tr}{/if}
         </div>
         <div class="cbox-data">
-          <table class="normal">
+          <table class="table normal">
             <tr>
               <th>{tr}Forum replies{/tr}</th>              
               <th>{tr}Date of post{/tr}</th>              
@@ -280,7 +280,7 @@
           {if $userwatch eq $user}{tr}My blogs{/tr}{else}{tr}User Blogs{/tr}{/if}
         </div>
         <div class="cbox-data">
-          <table class="normal">
+          <table class="table normal">
             <tr>
               <th>{tr}Blogs{/tr}</th>
               <th style="width:50px">{tr}Actions{/tr}</th>
@@ -307,7 +307,7 @@
           {if $userwatch eq $user}{tr}My blog Posts{/tr}{else}{tr}User Blog Posts{/tr}{/if}
         </div>
         <div class="cbox-data">
-          <table class="normal">
+          <table class="table normal">
             <tr>
               <th>{tr}Blog Posts{/tr}</th>
               <th style="width:50px">{tr}Actions{/tr}</th>

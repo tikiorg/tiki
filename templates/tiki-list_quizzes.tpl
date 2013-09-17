@@ -14,7 +14,7 @@
 	{include file='find.tpl'}
 {/if}
 
-<table class="normal">
+<table class="table normal">
 	<tr>
 		{assign var=numbercol value=1}
 		<th>

@@ -111,7 +111,7 @@
 <h2>{tr}Rules List{/tr}</h2>
 
 {* Table with list of repositories *}
-<table class="normal" id="integrator_rules">
+<table class="table normal" id="integrator_rules">
   <tr>
     <th rowspan="2"><span title="{tr}Rule order{/tr}">#</span></th>
     <th>{tr}Search{/tr}</th>

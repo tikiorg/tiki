@@ -114,7 +114,7 @@
 </form>
 
 <h2>{tr}List of contributions{/tr}</h2>
-<table class="normal">
+<table class="table normal">
 	<tr>
 		<th>{tr}Name{/tr}</th>
 		<th>{tr}Description{/tr}</th>

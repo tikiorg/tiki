@@ -4,7 +4,7 @@
 
 {if $parentId>0}[<a class="link" href="tiki-user_bookmarks.php">{tr}top{/tr}</a>] {/if}{tr}Current folder:{/tr} {$path}<br>
 <h2>{tr}Folders{/tr}</h2>
-<table class="normal">
+<table class="table normal">
 	<tr>
 		<th>{tr}Name{/tr}</th>
 		<th>{tr}Action{/tr}</th>
@@ -30,7 +30,7 @@
 </table>
 
 <h2>{tr}Bookmarks{/tr}</h2>
-<table class="normal">
+<table class="table normal">
 	<tr>
 		<th>{tr}Name{/tr}</th>
 		<th>{tr}Url{/tr}</th>

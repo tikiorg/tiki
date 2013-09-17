@@ -9,7 +9,7 @@
 {tabset name="admin_menus"}
 	{tab name="{tr}Menus{/tr}"}
 		{include file='find.tpl'}
-		<table class="normal">
+		<table class="table normal">
 			<tr>
 				<th>{self_link _sort_arg='sort_mode' _sort_field='menuId'}{tr}ID{/tr}{/self_link}</th>
 				<th>{self_link _sort_arg='sort_mode' _sort_field='name'}{tr}Name{/tr}{/self_link}</th>

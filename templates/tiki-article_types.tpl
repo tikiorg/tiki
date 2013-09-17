@@ -7,7 +7,7 @@
 		{section name=user loop=$types}
 			<h3>{tr}{$types[user].type|escape}{/tr}</h3>
 			<a class="link" href="tiki-view_articles.php?type={$types[user].type|escape:url}">{tr}View articles with this type{/tr}</a>
-			<table class="normal">
+			<table class="table normal">
 				<tr>
 					<th>{tr}Articles{/tr}</th>
 					<th>{tr}Author rating{/tr}</th>
@@ -104,7 +104,7 @@
 			</tr>
 		</table>
 		{if $prefs.article_custom_attributes eq 'y'}
-			<table class="normal">
+			<table class="table normal">
 				<tr>
 					<th>{tr}Custom attribute{/tr}</th>
 					<th>{tr}Action{/tr}</th>
