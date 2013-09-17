@@ -443,9 +443,12 @@ $url.= ((strpos($url, '?') === false) ? '?' : '&') . SID;
 
 // Check if a wizard should be run.
 // If a wizard is run, it will return to the $url location when it has completed. Thus no code after $wizardlib->onLogin will be executed
-require_once('lib/wizard/wizardlib.php');
-$wizardlib = new WizardLib();
-$wizardlib->onLogin($user, $url);
+// The user must be actually logged in before onLogin is called. If $isdue is set, then: "Note that the user is not logged in he's just validated to change his password"
+if (!$isdue) {
+	require_once('lib/wizard/wizardlib.php');
+	$wizardlib = new WizardLib();
+	$wizardlib->onLogin($user, $url);
+}
 
 header('Location: ' . $url);
 exit;
