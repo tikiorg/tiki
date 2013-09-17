@@ -9,8 +9,16 @@ abstract class Wizard
 {
 	protected $returnUrl;
 	
+	/**
+	 * This is method onSetupPage
+	 *
+	 * @param mixed $homepageUrl This is a description
+	 * @return bool true if page should be shown. If false, the wizard will skip the page
+	 *
+	 */	
 	function onSetupPage ($homepageUrl) {
 		$this->returnUrl = $homepageUrl;
+		return true;
 	}
 	
 	function onContinue () {

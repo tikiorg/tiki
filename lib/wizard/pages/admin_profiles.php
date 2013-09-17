@@ -22,6 +22,8 @@ class AdminWizardProfiles extends Wizard
 		// Assign the page temaplte
 		$wizardTemplate = 'wizard/admin_profiles.tpl';
 		$smarty->assign('wizardBody', $wizardTemplate);
+		
+		return true;		
 	}
 
 	function onContinue () 

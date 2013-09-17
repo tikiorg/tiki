@@ -98,23 +98,55 @@ class WizardLib extends TikiLib
 		}
 		
 		if (!$stepBack && !$isFirstStep || ($isUserStep && $stepNr > 0)) {
+			
+			// Commit the step just completed
 			$pages[$stepNr]->onContinue();
-			if (count($pages) > $stepNr+1) {
-				$stepNr += 1;
-				if (count($pages) == $stepNr+1) {
-					$smarty->assign('lastWizardPage', 'y');
+			
+			// Loop until the next displayed wizard page
+			//	Return when all pages have been processed.
+			do {
+				$next = true;
+				if (count($pages) > $stepNr+1) {
+					$stepNr += 1;
+					if (count($pages) == $stepNr+1) {
+						$smarty->assign('lastWizardPage', 'y');
+					}
+					
+					// If onSetupPage returns true, processing should continue
+					$show = $pages[$stepNr]->onSetupPage($homepageUrl);
+					
+					// Do not show page, if it doesn't return a boolean
+					if ($show === true) {
+						$next = false;
+						break;
+					}
+					
+				} else {
+					// Return to homepage, when we get to the end
+					header('Location: '.$homepageUrl);
+					exit;
 				}
-				$pages[$stepNr]->onSetupPage($homepageUrl);
-			} else {
-				// Return to homepage, when we get to the end
-				header('Location: '.$homepageUrl);
-				exit;
-			}
+			} while ($next);
 		} else {
-			$pages[$stepNr]->onSetupPage($homepageUrl);
-			if ($stepNr == 0) {
-				$smarty->assign('firstWizardPage', 'y');
-			}
+			// For directly accessed wizard pages scroll back, when not displayed
+			do {
+				$next = true;
+				$show = $pages[$stepNr]->onSetupPage($homepageUrl);
+
+				// Do not show page, if it doesn't return a boolean
+				if ($show === true) {
+					$next = false;
+				}
+
+				if ($stepNr == 0) {
+					$smarty->assign('firstWizardPage', 'y');
+					$next = false;
+				} elseif ($show === false) {
+					// Step back			
+					$stepNr -= 1;
+				}
+				
+			} while ($next);
 		}
 
 		$showOnLogin = $this->get_preference('wizard_admin_hide_on_login') !== 'y';

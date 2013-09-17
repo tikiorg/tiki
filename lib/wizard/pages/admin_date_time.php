@@ -22,6 +22,8 @@ class AdminWizardDateTime extends Wizard
 		// Assign the page temaplte
 		$wizardTemplate = 'wizard/admin_date_time.tpl';
 		$smarty->assign('wizardBody', $wizardTemplate);
+		
+		return true;
 	}
 
 	function onContinue () 
