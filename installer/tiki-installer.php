@@ -17,6 +17,7 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 require_once('tiki-filter-base.php');
 
 // Define and load Smarty components
+global $prefs;
 $prefs = array();
 $prefs['smarty_notice_reporting'] = 'n';
 $prefs['smarty_compilation'] = 'always';
@@ -46,12 +47,9 @@ $dbTiki = false;
 $commands = array();
 @ini_set('magic_quotes_runtime', 0);
 
-// Initialize $prefs and force some values for the installer
-$prefs = array(
-	// tra() should not use $tikilib because this lib is not available in every steps of the installer
-	//  and because we want to be sure that translations of the installer are the original ones, even for an upgrade
-	'lang_use_db' => 'n'
-);
+// tra() should not use $tikilib because this lib is not available in every steps of the installer
+//  and because we want to be sure that translations of the installer are the original ones, even for an upgrade
+$prefs['lang_use_db'] = 'n';
 
 // Which step of the installer
 if (empty($_REQUEST['install_step'])) {
@@ -807,8 +805,6 @@ if ($dbcon) {
 
 	if ($install_step == '6' && $has_tiki_db) {
 		update_preferences($prefs);
-		require_once('tiki-setup.php'); 
-                $installer->updateProfiles();
 		$smarty->assign('admin_email', get_admin_email());
 		$smarty->assign('upgradefix', (empty($dbversion_tiki) || $dbversion_tiki[0] < 4) ? 'y' : 'n');
 	}

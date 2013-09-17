@@ -55,7 +55,7 @@ class PreferencesLib
 				$source = $prefs;
 			}
 
-			$value = $source[$name];
+			$value = isset($source[$name]) ? $source[$name] : null;
 			if ( !empty($value) && is_string($value) && ($value{0} == ':' || (strlen($value) > 1 && $value{1} == ':')) && false !== $unserialized = unserialize($value) ) {
 				$value = $unserialized;
 			}
@@ -77,10 +77,10 @@ class PreferencesLib
 
 			$info['notes'] = array();
 
-			$info['raw'] = $source[$name];
+			$info['raw'] = isset($source[$name]) ? $source[$name] : null;
 			$info['id'] = 'pref-' . ++$id;
 
-			if ( !empty( $info['help'] ) && $prefs['feature_help'] == 'y' ) {
+			if ( !empty($info['help']) && isset($prefs['feature_help']) && $prefs['feature_help'] == 'y' ) {
 				if ( preg_match('/^https?:/i', $info['help']) ) {
 					$info['helpurl'] = $info['help'];
 				} else {
@@ -191,7 +191,7 @@ class PreferencesLib
 				$info['popup_html'] .= '</div></div>';
 			}
 
-			if ($prefs['connect_feature'] === 'y') {
+			if (isset($prefs['connect_feature']) && $prefs['connect_feature'] === 'y') {
 				$connectlib = TikiLib::lib('connect');
 				$currentVote = $connectlib->getVote($info['preference']);
 

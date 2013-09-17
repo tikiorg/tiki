@@ -134,7 +134,7 @@ class TikiLib extends TikiDb_Bridge
 				global $ratinglib; require_once 'lib/rating/ratinglib.php';
 				return self::$libraries[$name] = $ratinglib;
 			case 'header':
-				global $headerlib;
+				global $headerlib; require_once 'lib/headerlib.php';
 				return self::$libraries[$name] = $headerlib;
 			case 'flaggedrevision':
 				global $flaggedrevisionlib; require_once 'lib/wiki/flaggedrevisionlib.php';

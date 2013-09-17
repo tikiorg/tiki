@@ -50,7 +50,8 @@ function smarty_function_icon($params, $smarty)
 	}
 
 	$serialized_params = serialize(array_merge($params, array($current_style, $current_style_option, isset($_SERVER['HTTPS']))));
-	$cache_key = 'icons_' . $prefs['language'] . '_' . md5($serialized_params);
+	$language = isset($prefs['language']) ? $prefs['language'] : 'en';
+	$cache_key = 'icons_' . $language . '_' . md5($serialized_params);
 	if ( $cached = $cachelib->getCached($cache_key) ) {
 		return $cached;
 	}
@@ -198,8 +199,8 @@ function smarty_function_icon($params, $smarty)
 			}
 		}
 
-		global $headerlib;
-		if (!empty($params['file'])) {
+		$headerlib = TikiLib::lib('header');
+		if (!empty($params['file']) && $headerlib) {
 			$params['file'] = $headerlib->convert_cdn($params['file']);
 		}
 

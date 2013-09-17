@@ -12,7 +12,7 @@ function prefs_feature_list($partial = false)
 
 	$catree = array('-1' => tra('None'));
 
-	if (! $partial && $prefs['feature_categories'] == 'y') {
+	if (! $partial && isset($prefs['feature_categories']) && $prefs['feature_categories'] == 'y') {
 		global $categlib;
 
 		include_once ('lib/categories/categlib.php');
@@ -1197,7 +1197,7 @@ function prefs_feature_list($partial = false)
 			'name' => tra('Protect email against spam'),
             'description' => tra('protect email against spam submissions'),
 			'help' => 'Spam+protection',
-			'warning' => ! $partial && $prefs['feature_wysiwyg'] === 'y' ? tra('Protect email against spam currently does not operate in pages edited in WYSIWYG mode (Tiki 6.1)') : '',
+			'warning' => tra('Protect email against spam currently does not operate in pages edited in WYSIWYG mode (Tiki 6.1)'),
 			'type' => 'flag',
 			'default' => 'y',
 		),

@@ -111,18 +111,10 @@ class Installer extends TikiDb_Bridge
 		}
 	} // }}}
 
-	function updateProfiles() // {{{
-	{
-		$patches = $this->patches;
-		foreach ($patches as $patch) {
-			$this->installPatch($patch, false, true);
-		}	
-	} // }}}
-
     /**
      * @param $patch
      */
-    function installPatch( $patch, $sql_exec = true, $profile_exec = false ) // {{{
+    function installPatch( $patch ) // {{{
 	{
 		if ( ! in_array($patch, $this->patches) ) {
 			return;
@@ -136,9 +128,7 @@ class Installer extends TikiDb_Bridge
 		$post = "post_$patch";
 		$standalone = "upgrade_$patch";
 
-		// Note: profile execution is done later on second execution after all others are done
-
-		if ( $sql_exec && file_exists($script) ) {
+		if ( file_exists($script) ) {
 			require $script;
 		}
 
@@ -151,23 +141,22 @@ class Installer extends TikiDb_Bridge
 		if ( function_exists($standalone) ) {
 			$standalone($this);
 		} else {
-			if ( $sql_exec && function_exists($pre) ) {
+			if ( function_exists($pre) ) {
 				$pre( $this );
 			}
 	
-			if ($profile_exec && file_exists($profile)) {
+			if (file_exists($profile)) {
 				$status = $this->applyProfile($profile);
-			} elseif ($sql_exec && file_exists($schema)) {
+			} else {
 				$status = $this->runFile($schema);
 			}
 	
-			if ( $sql_exec && function_exists($post) ) {
+			if ( function_exists($post) ) {
 				$post( $this );
 			}
 		}
 
-		if ((!isset($status) || $status) && (!file_exists($profile) || $profile_exec)) {
-			// Do not marked as installed until profile if any is installed
+		if (!isset($status) || $status ) {
 			$this->installed[] = $patch;
 			$this->recordPatch($patch);
 		}
@@ -293,7 +282,9 @@ class Installer extends TikiDb_Bridge
 		foreach ( $files as $file ) {
 			$filename = basename($file);
 			$patch = substr($filename, 0, -4);
-			$this->patches[] = $patch;
+			if (!in_array($patch, $this->patches)) {
+				$this->patches[] = $patch;
+			}
 		}
 
 		$installed = array();
@@ -312,7 +303,7 @@ class Installer extends TikiDb_Bridge
 			$this->failures = array();
 		}
 
-		$this->patches = array_diff(array_unique($this->patches), $installed);
+		$this->patches = array_diff($this->patches, $installed);
 
 		sort($this->patches);
 	} // }}}

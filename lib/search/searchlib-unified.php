@@ -41,6 +41,11 @@ class UnifiedSearchLib
      */
     function processUpdateQueue($count = 10)
 	{
+		global $prefs;
+		if (! isset($prefs['unified_engine'])) {
+			return;
+		}
+
 		if ($this->batchToken) {
 			return;
 		}
