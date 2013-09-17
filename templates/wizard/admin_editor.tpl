@@ -8,10 +8,11 @@
 	<legend>{tr}Wiki editor setup{/tr}</legend>
 	{tr}Editor mode:{/tr}
 	{preference name=feature_wysiwyg}
+	{tr}Select your preferred editor mode{/tr} ...
 	<table style="border:0px;padding-left:20px">
 	<tr>
 	<td>
-	<input type="radio" name="editorType" value="wiki" {if empty($editorType) || $editorType eq 'wiki'}checked="checked"{/if} /> {tr}Compatible{/tr}</td><td> {tr}Use wiki syntax for saved pages{/tr}.<br>
+	<input type="radio" name="editorType" value="wiki" {if empty($editorType) || $editorType eq 'wiki'}checked="checked"{/if} /> {tr}Compatible Wiki mode{/tr}</td><td> {tr}Use wiki syntax for saved pages{/tr}.<br>
 		{tr}This is the most compatible with Tiki functionality and the most stable editor mode{/tr}.<br>
 		{tr}Limits some Wysiwyg operations{/tr}.<br>
 	</td>
@@ -23,7 +24,7 @@
 	</td>
 	</tr>
 	<tr>
-	<td><input type="radio" name="editorType" value="html" {if $editorType eq 'html'}checked="checked"{/if} /> {tr}Saving HTML{/tr}</td><td>{tr}Use html syntax for saved pages{/tr}.<br>
+	<td><input type="radio" name="editorType" value="html" {if $editorType eq 'html'}checked="checked"{/if} /> {tr}HTML mode{/tr}</td><td>{tr}Use html syntax for saved pages{/tr}.<br>
 		{tr}Has best compatibility with inline editing, but loses some wiki related features{/tr}.<br>
 		{tr}You have to enable the full Wysiwyg editor{/tr}.<br>
 	</td>
