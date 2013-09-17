@@ -11,7 +11,7 @@
 	<b>{tr}Welcome to the Tiki Admin Wizard{/tr}</b>.<br>
 	{tr}To learn more about this Tiki release, go to{/tr} <a href="http://doc.tiki.org/tiki12">Tiki 12</a>.
 	</p>
-	<p><u>{tr}This wizard is intended used to configure new Tiki installation{/tr}</u>.<br>
+	<p>{tr}This wizard is intended used to configure new Tiki installations{/tr}.<br>
 	{tr}It may when saving a wizard page, automatically set options in the background, which are required (or assumed wanted) to activate the selected featured{/tr}.
 	{tr}This may overwrite custom option settings{/tr}
 	</p>
