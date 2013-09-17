@@ -680,7 +680,7 @@ function prefs_feature_list($partial = false)
 			'tags' => array('experimental'),
 		),
 		'feature_wysiwyg' => array(
-			'name' => tra('Wysiwyg editor'),
+			'name' => tra('Full Wysiwyg editor'),
 			'description' => tra('WYSIWYG is an acronym for What You See Is What You Get. Uses CKEditor.'),
 			'help' => 'Wysiwyg',
 			'type' => 'flag',

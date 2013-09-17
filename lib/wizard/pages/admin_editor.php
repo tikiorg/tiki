@@ -21,7 +21,6 @@ class AdminWizardEditor extends Wizard
 		
 		// Setup initial wizard screen
 		$smarty->assign('useHighlighter', isset($prefs['feature_syntax_highlighter']) && $prefs['feature_syntax_highlighter'] === 'y' ? 'y' : 'n');
-		$smarty->assign('highlighterTheme', isset($prefs['feature_syntax_highlighter_theme']) && $prefs['feature_syntax_highlighter_theme'] === 'default' ? 'default' : 'off');
 		$smarty->assign('useWysiwyg', isset($prefs['feature_wysiwyg']) && $prefs['feature_wysiwyg'] === 'y' ? 'y' : 'n');
 		$smarty->assign('useWysiwygDefault', isset($prefs['wysiwyg_default']) && $prefs['wysiwyg_default'] === 'y' ? 'y' : 'n');
 		$smarty->assign('useInlineEditing', isset($prefs['wysiwyg_inline_editing']) && $prefs['wysiwyg_inline_editing'] === 'y' ? 'y'  : 'n');

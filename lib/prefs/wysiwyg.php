@@ -10,7 +10,7 @@ function prefs_wysiwyg_list()
 	
 	return array(
 		'wysiwyg_optional' => array(
-			'name' => tra('Wysiwyg Editor is optional'),
+			'name' => tra('Full Wysiwyg Editor is optional'),
 			'type' => 'flag',
 			'dependencies' => array(
 				'feature_wysiwyg',
@@ -18,7 +18,7 @@ function prefs_wysiwyg_list()
 			'default' => 'y',
 		),
 		'wysiwyg_default' => array(
-			'name' => tra('Wysiwyg Editor is displayed by default'),
+			'name' => tra('Full Wysiwyg Editor is displayed by default'),
 			'type' => 'flag',
 			'dependencies' => array(
 				'wysiwyg_optional',
@@ -54,7 +54,7 @@ function prefs_wysiwyg_list()
 			'tags' => array('experimental'),
 		),
 		'wysiwyg_toolbar_skin' => array(
-			'name' => tra('Wysiwyg editor skin'),
+			'name' => tra('Full Wysiwyg editor skin'),
 			'type' => 'list',
 			'options' => array(
 				'moono' => tra('Moono (Default)'),
