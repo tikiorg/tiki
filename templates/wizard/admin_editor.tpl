@@ -14,7 +14,7 @@
 	<td>
 	<input type="radio" name="editorType" value="wiki" {if empty($editorType) || $editorType eq 'wiki'}checked="checked"{/if} /> {tr}Compatible Wiki mode{/tr}</td><td> {tr}Use wiki syntax for saved pages{/tr}.<br>
 		{tr}This is the most compatible with Tiki functionality and the most stable editor mode{/tr}.<br>
-		{tr}Limits some Wysiwyg operations{/tr}.<br>
+		{tr}Tools and functions in the editor toolbar will be limited{/tr}.<br>
 	</td>
 	</tr>
 	<tr>
@@ -26,19 +26,21 @@
 	<tr>
 	<td><input type="radio" name="editorType" value="html" {if $editorType eq 'html'}checked="checked"{/if} /> {tr}HTML mode{/tr}</td><td>{tr}Use html syntax for saved pages{/tr}.<br>
 		{tr}Has best compatibility with inline editing, but loses some wiki related features{/tr}.<br>
-		{tr}You have to enable the full Wysiwyg editor{/tr}.<br>
+		{tr}Lost features include:{/tr} {tr}SlideShow{/tr}.<br>
+		{tr}Full editor toolbar{/tr}.<br>
 	</td>
 	</tr>
 	<tr>
 	<td></td><td>
 	{preference name=wysiwyg_optional}
 	{tr}If wysiwyg is optional, the wiki text editor is also available. Otherwise only the Wysiwyg editor is used{/tr}.<br>
-	{tr}Please note that switching between html and wiki formats can cause problems for some pages{/tr}.
+	{tr}Switching between html and wiki formats can cause problems for some pages{/tr}.
 	</td>
 	</tr>
 	</table>
 	{preference name=wysiwyg_inline_editing}
 	{tr}Inline editing lets the user edit pages without a context switch{/tr}. {tr}The editor is embedded in the wiki page{/tr}.<br>
+	{tr}When used on pages in wiki format, a conversion from HTML to Wiki format is required.{/tr}<br>
 	<br>
 	{tr}See also{/tr} <a href="tiki-admin.php?page=wysiwyg" target="_blank">{tr}Wysiwyg admin panel{/tr}</a>
 </fieldset>
