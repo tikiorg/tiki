@@ -3,7 +3,7 @@
 <form class="admin" id="performance" name="performance" action="tiki-admin.php?page=rating" method="post">
 	<div class="heading input_submit_container" style="text-align: right">
 		<input type="submit" class="btn btn-default" value="{tr}Apply{/tr}" />
-		<input type="reset" value="{tr}Reset{/tr}" />
+		<input type="reset" class="btn btn-warning" value="{tr}Reset{/tr}" />
 	</div>
 
 	<fieldset>

@@ -5,7 +5,7 @@
 <form class="admin" id="performance" name="performance" action="tiki-admin.php?page=performance" method="post">
 	<div class="heading input_submit_container" style="text-align: right">
 		<input type="submit" class="btn btn-default" name="performance" value="{tr}Apply{/tr}" />
-		<input type="reset" name="performancereset" value="{tr}Reset{/tr}" />
+		<input type="reset" class="btn btn-warning" name="performancereset" value="{tr}Reset{/tr}" />
 	</div>
 {tabset}
 
