@@ -233,18 +233,20 @@ class ParserLib extends TikiDb_Bridge
 	 * @param $noparsed array	output array
 	 */
 
-	function plugins_remove(&$data, &$noparsed)
+	function plugins_remove(&$data, &$noparsed, $removeCb = null)
 	{
 		$tikilib = TikiLib::lib('tiki');
 
 		$matches = WikiParser_PluginMatcher::match($data);		// find the plugins
 
 		foreach ($matches as $match) {							// each plugin
-			$plugin = (string) $match;
-			$key = '§'.md5($tikilib->genPass()).'§';				// by replace whole plugin with a guid
+			if (! $removeCb || $removeCb($match)) {
+				$plugin = (string) $match;
+				$key = '§'.md5($tikilib->genPass()).'§';				// by replace whole plugin with a guid
 
-			$noparsed['key'][] = $key;
-			$noparsed['data'][] = $plugin;
+				$noparsed['key'][] = $key;
+				$noparsed['data'][] = $plugin;
+			}
 		}
 		$data = isset($noparsed['data']) ? str_replace($noparsed['data'], $noparsed['key'], $data) : $data;
 	}
