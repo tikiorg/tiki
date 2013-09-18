@@ -41,11 +41,14 @@ $pages[3] = new AdminWizardEditor();
 require_once('lib/wizard/pages/admin_wiki.php'); 
 $pages[4] = new AdminWizardWiki();
 
+require_once('lib/wizard/pages/admin_auto_toc.php'); 
+$pages[5] = new AdminWizardAutoTOC();
+
 require_once('lib/wizard/pages/admin_files.php'); 
-$pages[5] = new AdminWizardFiles();
+$pages[6] = new AdminWizardFiles();
 
 require_once('lib/wizard/pages/admin_profiles.php'); 
-$pages[6] = new AdminWizardProfiles();
+$pages[7] = new AdminWizardProfiles();
 
 
 /////////////////////////////////////
