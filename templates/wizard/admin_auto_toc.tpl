@@ -9,5 +9,7 @@
 		{preference name=wiki_inline_auto_toc}
 		The Auto TOC setting can be toogled per page, in the page properties.
 		{preference name=wiki_inline_toc_pos}
+		<br>
+		{tr}See also{/tr} <a href="http://doc.tiki.org/tiki-index.php?page=Auto+TOC" target="_blank">{tr}Auto TOC{/tr} @ doc.tiki.org</a>
 </fieldset>
 </div>
