@@ -47,11 +47,14 @@ $pages[5] = new AdminWizardAutoTOC();
 require_once('lib/wizard/pages/admin_namespace.php'); 
 $pages[6] = new AdminWizardNamespace();
 
+require_once('lib/wizard/pages/admin_jcapture.php'); 
+$pages[7] = new AdminWizardJCapture();
+
 require_once('lib/wizard/pages/admin_files.php'); 
-$pages[7] = new AdminWizardFiles();
+$pages[8] = new AdminWizardFiles();
 
 require_once('lib/wizard/pages/admin_profiles.php'); 
-$pages[8] = new AdminWizardProfiles();
+$pages[9] = new AdminWizardProfiles();
 
 
 /////////////////////////////////////
