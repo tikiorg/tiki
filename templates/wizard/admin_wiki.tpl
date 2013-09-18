@@ -14,7 +14,6 @@
 <br>
 	{tr}Enable using the same wiki page name in different contexts{/tr}.
 	{preference name=namespace_enabled}
-	{preference name=namespace_separator}
 	{tr}See also{/tr} <a href="tiki-admin.php?page=wiki&alt=Wiki#content2" target="_blank">{tr}Wiki admin feature panel{/tr}</a>
 <br>
 <br>

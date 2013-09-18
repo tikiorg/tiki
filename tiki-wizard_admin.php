@@ -44,11 +44,14 @@ $pages[4] = new AdminWizardWiki();
 require_once('lib/wizard/pages/admin_auto_toc.php'); 
 $pages[5] = new AdminWizardAutoTOC();
 
+require_once('lib/wizard/pages/admin_namespace.php'); 
+$pages[6] = new AdminWizardNamespace();
+
 require_once('lib/wizard/pages/admin_files.php'); 
-$pages[6] = new AdminWizardFiles();
+$pages[7] = new AdminWizardFiles();
 
 require_once('lib/wizard/pages/admin_profiles.php'); 
-$pages[7] = new AdminWizardProfiles();
+$pages[8] = new AdminWizardProfiles();
 
 
 /////////////////////////////////////
