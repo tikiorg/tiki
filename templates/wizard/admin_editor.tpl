@@ -6,6 +6,7 @@
 <div align="left" style="margin-top:1em;">
 <fieldset>
 	<legend>{tr}Wiki editor setup{/tr}</legend>
+	<img src="img/icons/large/wysiwyg.png" style="float:right" />
 	{tr}Editor mode:{/tr}
 	{preference name=feature_wysiwyg}
 	{tr}Select your preferred editor mode{/tr} ...
