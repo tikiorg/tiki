@@ -25,8 +25,15 @@ abstract class Wizard
 		// Save the user selection for showing the wizard on login or not
 		$showOnLogin = ( isset($_REQUEST['showOnLogin']) && $_REQUEST['showOnLogin'] == 'on' ) ? 'y' : 'n';
 
+		// Mark the login mode for the wizard
 		require_once('lib/wizard/wizardlib.php');
 		$wizardlib = new WizardLib();
 		$wizardlib->showOnLogin($showOnLogin);	
+		
+		// Commit any preferences on the page
+		if ( isset( $_REQUEST['lm_preference'] ) ) {
+			$prefslib = TikiLib::lib('prefs');
+			$changes = $prefslib->applyChanges((array) $_REQUEST['lm_preference'], $_REQUEST);
+		}		
 	}
 }

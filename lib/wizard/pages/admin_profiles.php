@@ -28,8 +28,6 @@ class AdminWizardProfiles extends Wizard
 
 	function onContinue () 
 	{
-		global $wizardlib;
-
 		// Run the parent first
 		parent::onContinue();
 	}

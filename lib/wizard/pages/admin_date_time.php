@@ -28,15 +28,7 @@ class AdminWizardDateTime extends Wizard
 
 	function onContinue () 
 	{
-		global $wizardlib; 
-		$prefslib = TikiLib::lib('prefs');
-
 		// Run the parent first
 		parent::onContinue();
-		
-		// Commit new preferences
-		if ( isset( $_REQUEST['lm_preference'] ) ) {
-			$changes = $prefslib->applyChanges((array) $_REQUEST['lm_preference'], $_REQUEST);
-		}
 	}
 }

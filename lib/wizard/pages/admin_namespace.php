@@ -37,11 +37,5 @@ class AdminWizardNamespace extends Wizard
 	{
 		// Run the parent first
 		parent::onContinue();
-		
-		// Commit new preferences
-		if ( isset( $_REQUEST['lm_preference'] ) ) {
-			$prefslib = TikiLib::lib('prefs');
-			$changes = $prefslib->applyChanges((array) $_REQUEST['lm_preference'], $_REQUEST);
-		}			
 	}
 }
