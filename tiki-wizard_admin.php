@@ -53,8 +53,12 @@ $pages[7] = new AdminWizardJCapture();
 require_once('lib/wizard/pages/admin_files.php'); 
 $pages[8] = new AdminWizardFiles();
 
+require_once('lib/wizard/pages/admin_files_storage.php'); 
+$pages[9] = new AdminWizardFileStorage();
+
+
 require_once('lib/wizard/pages/admin_profiles.php'); 
-$pages[9] = new AdminWizardProfiles();
+$pages[10] = new AdminWizardProfiles();
 
 
 /////////////////////////////////////
