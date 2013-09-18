@@ -82,7 +82,7 @@ if ($prefs['javascript_enabled'] == 'y') {	// we have JavaScript
 	}
 
 	// setup timezone array
-	$tz = array_keys(DateTimeZone::listAbbreviations());
+	$tz = TikiDate::getTimezoneAbbreviations();
 	$headerlib->add_js(
 		'
 function inArray(item, array) {
