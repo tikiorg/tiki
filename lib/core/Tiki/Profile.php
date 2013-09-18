@@ -230,6 +230,12 @@ class Tiki_Profile
 		$path = rtrim($path, '/');
 		$ymlPath = "$path/$name.yml";
 
+		// Make paths to the local install relative
+		$tikiRoot = realpath(__DIR__ . '/../../../') . '/';
+		if (strpos($path, $tikiRoot) === 0) {
+			$path = substr($path, strlen($tikiRoot));
+		}
+
 		$profile = new self;
 		$profile->domain = "file://$path";
 		$profile->profile = $name;
