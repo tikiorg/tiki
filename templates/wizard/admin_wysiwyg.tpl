@@ -7,7 +7,7 @@
 <fieldset>
 	<legend>{tr}Wiki editor setup{/tr}</legend>
 	<img src="img/icons/large/wysiwyg.png" style="float:right" />
-	{tr}Wysiwyg mode:{/tr}
+	{tr}Select the Wysiwyg editor mode{/tr}
 	<table style="border:0px;padding-left:20px">
 	<tr>
 	<td>
