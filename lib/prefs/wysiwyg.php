@@ -86,6 +86,7 @@ function prefs_wysiwyg_list()
 			'type' => 'flag',
 			'default' => 'n',
 			'dependencies' => array(
+				'feature_wysiwyg',
 			),
 			'tags' => array('experimental'),
 			'warning' => tra('experimental'),

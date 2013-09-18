@@ -16,7 +16,6 @@
 	<fieldset class="admin">
 		<legend>{tr}Activate the feature{/tr}</legend>
 		{preference name=feature_wysiwyg visible="always"}
-		{preference name=wysiwyg_inline_editing}
 		{preference name=wikiplugin_wysiwyg}
 	</fieldset>
 
@@ -33,6 +32,7 @@
 			{preference name=wysiwyg_wiki_semi_parsed}
 			{preference name=wysiwyg_htmltowiki}
 		</div>
+		{preference name=wysiwyg_inline_editing}
 		{preference name=wysiwyg_toolbar_skin}
 		{preference name="wysiwyg_fonts"}
 
