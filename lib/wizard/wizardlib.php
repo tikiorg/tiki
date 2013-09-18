@@ -48,8 +48,8 @@ class WizardLib extends TikiLib
 	{
 		// Start the admin wizard
 		$url = $base_url.'tiki-wizard_admin.php?&stepNr=' . $stepNr . '&url=' . rawurlencode($homePageUrl);
-		header('Location: '.$url);
-		exit;
+		$accesslib = TikiLib::lib('access');
+		$accesslib->redirect($url);
 	}
 	
 	/*
@@ -123,8 +123,8 @@ class WizardLib extends TikiLib
 					
 				} else {
 					// Return to homepage, when we get to the end
-					header('Location: '.$homepageUrl);
-					exit;
+					$accesslib = TikiLib::lib('access');
+					$accesslib->redirect($homepageUrl);
 				}
 			} while ($next);
 		} else {
