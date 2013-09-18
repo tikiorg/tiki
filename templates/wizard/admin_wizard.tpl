@@ -7,6 +7,7 @@
 <div align="left" style="margin-top:1em;">
 <fieldset>
 	<legend>{tr}Admin Wizard{/tr}</legend>
+	<img src="img/tiki/tikilogo.png" style="float:right" />	
 	<p class="wizard_page_title">
 	<b>{tr}Welcome to the Tiki Admin Wizard{/tr}</b>.<br>
 	{tr}To learn more about this Tiki release, go to{/tr} <a href="http://doc.tiki.org/tiki12">Tiki 12</a>.

@@ -7,6 +7,7 @@
 <div align="left" style="margin-top:1em;">
 <fieldset>
 	<legend>{tr}Date and Time setup{/tr}</legend>
+	<img src="img/icons/large/icon-configuration.png" style="float:right" />	
 	{preference name=server_timezone}
 	{preference name=users_prefs_display_timezone}
 	<br>

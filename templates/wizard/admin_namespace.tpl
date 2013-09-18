@@ -13,6 +13,7 @@
 {preference name=namespace_indicator_in_structure}
 <fieldset>
 	<legend>{tr}Settings that may be affected by the namespace separator{/tr}{help url="Watch"}</legend>
+	<img src="img/icons/large/wikipages.png" style="float:right" />	
 
 	{tr}To use :: as a separator, you should also use ::: as the wiki center tag syntax{/tr}.<br/>
 	{tr}Note: a conversion of :: to ::: for existing pages must be done manually{/tr}

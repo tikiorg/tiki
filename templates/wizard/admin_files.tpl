@@ -7,6 +7,7 @@
 <div align="left" style="margin-top:1em;">
 <fieldset>
 	<legend>{tr}File Gallery{/tr}</legend>
+	<img src="img/icons/large/file-manager.png" style="float:right" />	
 	{preference name='fgal_use_db'}
 	<br>
 	{tr}See also{/tr} <a href="tiki-admin.php?page=fgal#content1" target="_blank">{tr}File Gallery admin panel{/tr}</a>
@@ -14,6 +15,7 @@
 <br>
 <fieldset>
 	<legend>{tr}Wiki Attachments{/tr}</legend>
+	<img src="img/icons/large/wikipages.png" style="float:right" />	
 	{preference name=feature_wiki_attachments}
 	{preference name=feature_use_fgal_for_wiki_attachments}
 	<br>
