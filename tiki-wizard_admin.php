@@ -32,17 +32,20 @@ $pages[0] = new AdminWizard();
 require_once('lib/wizard/pages/admin_date_time.php'); 
 $pages[1] = new AdminWizardDateTime();
 
+require_once('lib/wizard/pages/admin_language.php'); 
+$pages[2] = new AdminWizardLanguage();
+
 require_once('lib/wizard/pages/admin_editor.php'); 
-$pages[2] = new AdminWizardEditor();
+$pages[3] = new AdminWizardEditor();
 
 require_once('lib/wizard/pages/admin_wiki.php'); 
-$pages[3] = new AdminWizardWiki();
+$pages[4] = new AdminWizardWiki();
 
 require_once('lib/wizard/pages/admin_files.php'); 
-$pages[4] = new AdminWizardFiles();
+$pages[5] = new AdminWizardFiles();
 
 require_once('lib/wizard/pages/admin_profiles.php'); 
-$pages[5] = new AdminWizardProfiles();
+$pages[6] = new AdminWizardProfiles();
 
 
 /////////////////////////////////////
