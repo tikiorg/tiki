@@ -21,7 +21,7 @@ class AdminWizardNamespace extends Wizard
 		
 		$showPage = false;
 
-		// Show if Auto TOC is selected
+		// Show if option is selected
 		if ($prefs['namespace_enabled'] === 'y') {
 			$showPage = true;
 		}
