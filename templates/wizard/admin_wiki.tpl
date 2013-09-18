@@ -12,7 +12,7 @@
 	{tr}See also{/tr} <a href="tiki-admin.php?page=wiki&alt=Wiki#content1" target="_blank">{tr}Wiki admin panel{/tr}</a>
 <br>
 <br>
-	{tr}Enable using the same wiki page name in different contexts{/tr}.
+	{tr}Enable using the same wiki page name in different contexts{/tr}. {tr}E.g. ns1:_:MyPage and ns2:_:MyPage{/tr}.
 	{preference name=namespace_enabled}
 	{tr}See also{/tr} <a href="tiki-admin.php?page=wiki&alt=Wiki#content2" target="_blank">{tr}Wiki admin feature panel{/tr}</a>
 <br>
