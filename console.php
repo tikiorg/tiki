@@ -53,15 +53,16 @@ if (is_file($local_php)) {
 }
 
 $installer = $installer = new Installer;
+$isInstalled = $installer->isInstalled();
 
-if (is_file($local_php)) {
+if ($isInstalled) {
 	require_once 'tiki-setup.php';
 	$console->add(new Tiki\Command\CacheClearCommand);
 } else {
 	$console->add(new Tiki\Command\UnavailableCommand('cache:clear'));
 }
 
-if (is_file($local_php) && ! $installer->requiresUpdate()) {
+if ($isInstalled && ! $installer->requiresUpdate()) {
 	require_once 'tiki-setup.php';
 	$console->add(new Tiki\Command\IndexRebuildCommand);
 	$console->add(new Tiki\Command\IndexOptimizeCommand);

@@ -331,6 +331,11 @@ class Installer extends TikiDb_Bridge
 		return in_array($tableName, $list);
 	} // }}}
 
+	function isInstalled() // {{{
+	{
+		return $this->tableExists('tiki_preferences');
+	} // }}}
+
     /**
      * @return bool
      */
@@ -349,6 +354,7 @@ class Installer extends TikiDb_Bridge
 		}
 
 		$direct = __DIR__ . '/../db/custom_tiki.sql';
+		$fetch = null;
 		$check = null;
 
 		if (isset($ini['source.type'])) {
@@ -367,6 +373,10 @@ class Installer extends TikiDb_Bridge
 
 		if (is_readable($direct)) {
 			return $direct;
+		}
+
+		if (! $fetch) {
+			return;
 		}
 
 		$cacheFile = __DIR__ . '/../temp/cache/sql' . md5($fetch);
