@@ -49,7 +49,7 @@
 									{/if}
 								{/if}
 								{if ($tiki_p_edit eq 'y' or $tiki_p_edit_inline eq 'y' or $page|lower eq 'sandbox') and $beingEdited ne 'y' and $machine_translate_to_lang eq ''}
-									{if $prefs.wysiwyg_inline_editing eq 'y'}
+									{if $prefs.wysiwyg_inline_editing eq 'y' and $prefs.feature_wysiwyg eq 'y'}
 										{jq}
 											$("#wysiwyg_inline_edit").click( function () {
 												var src = $("#wysiwyg_inline_edit img").attr("src");
