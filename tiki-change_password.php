@@ -91,7 +91,8 @@ if (isset($_REQUEST["change"])) {
 	$wizardlib->onLogin($user, $prefs['tikiIndex'], $force);
 	
 	// Go to homepage
-	header('Location: '.$prefs['tikiIndex']);
+	$accesslib = TikiLib::lib('access');
+	$accesslib->redirect($prefs['tikiIndex']);
 }
 ask_ticket('change-password');
 
