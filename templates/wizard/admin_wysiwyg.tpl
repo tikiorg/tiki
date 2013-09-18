@@ -1,15 +1,13 @@
 {* $Id$ *}
 
-<h1>{tr}Set up your wiki editor{/tr}</h1>
-<div style="float:left; width:60px"><img src="img/icons/large/icon-configuration48x48.png" alt="{tr}Set up your Wiki environment{/tr}"></div>
+<h1>{tr}Set up your Wysiwyg editor{/tr}</h1>
+<div style="float:left; width:60px"><img src="img/icons/large/icon-configuration48x48.png" alt="{tr}Set up your Wysiwyg environment{/tr}"></div>
 {tr}You can choose to use by default the 'Compatible' Wiki text editor (the traditional one), OR a Wysiwyg editor ('Full' and/or 'Inline'){/tr}. {tr}If you don't choose any of the 'Full' or 'Inline' Wysiwyg editors, only the wiki text editor will be available{/tr}.
 <div align="left" style="margin-top:1em;">
 <fieldset>
 	<legend>{tr}Wiki editor setup{/tr}</legend>
 	<img src="img/icons/large/wysiwyg.png" style="float:right" />
-	{tr}Editor mode:{/tr}
-	{preference name=feature_wysiwyg}
-	{tr}Select your preferred editor mode{/tr} ...
+	{tr}Wysiwyg mode:{/tr}
 	<table style="border:0px;padding-left:20px">
 	<tr>
 	<td>

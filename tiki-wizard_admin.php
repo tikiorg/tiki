@@ -35,8 +35,11 @@ $pages[] = new AdminWizardDateTime();
 require_once('lib/wizard/pages/admin_language.php'); 
 $pages[] = new AdminWizardLanguage();
 
-require_once('lib/wizard/pages/admin_editor.php'); 
-$pages[] = new AdminWizardEditor();
+require_once('lib/wizard/pages/admin_editor_type.php'); 
+$pages[] = new AdminWizardEditorType();
+
+require_once('lib/wizard/pages/admin_wysiwyg.php'); 
+$pages[] = new AdminWizardWysiwyg();
 
 require_once('lib/wizard/pages/admin_wiki.php'); 
 $pages[] = new AdminWizardWiki();

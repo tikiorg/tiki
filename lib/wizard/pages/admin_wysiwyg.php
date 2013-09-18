@@ -10,7 +10,7 @@ require_once('lib/wizard/wizard.php');
 /**
  * Set up the wysiwyg editor, including inline editing
  */
-class AdminWizardEditor extends Wizard 
+class AdminWizardWysiwyg extends Wizard 
 {
 	function onSetupPage ($homepageUrl) 
 	{
@@ -18,6 +18,12 @@ class AdminWizardEditor extends Wizard
 
 		// Run the parent first
 		parent::onSetupPage($homepageUrl);
+		
+		// Show if option is selected
+		if ($prefs['feature_wysiwyg'] !== 'y') {
+			return false;
+		}
+
 		
 		// Setup initial wizard screen
 		$smarty->assign('useHighlighter', isset($prefs['feature_syntax_highlighter']) && $prefs['feature_syntax_highlighter'] === 'y' ? 'y' : 'n');
@@ -27,7 +33,7 @@ class AdminWizardEditor extends Wizard
 		$smarty->assign('editorType', isset($prefs['wysiwyg_htmltowiki']) && $prefs['wysiwyg_htmltowiki'] === 'y' ? 'wiki' : 'html');
 
 		// Assign the page temaplte
-		$wizardTemplate = 'wizard/admin_editor.tpl';
+		$wizardTemplate = 'wizard/admin_wysiwyg.tpl';
 		$smarty->assign('wizardBody', $wizardTemplate);
 		
 		return true;		
