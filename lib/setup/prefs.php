@@ -20,6 +20,7 @@ if (basename($_SERVER['SCRIPT_NAME']) == basename(__FILE__)) {
 
 // Prefs for which we want to use the site value (they will be prefixed with 'site_')
 // ( this is also used in tikilib, not only when reloading prefs )
+global $user_overrider_prefs;
 $user_overrider_prefs = array(
 				'language',
 				'style',
