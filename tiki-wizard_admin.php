@@ -27,38 +27,37 @@ $pages = array();
 /////////////////////////////////////
 
 require_once('lib/wizard/pages/admin_wizard.php'); 
-$pages[0] = new AdminWizard();
+$pages[] = new AdminWizard();
 
 require_once('lib/wizard/pages/admin_date_time.php'); 
-$pages[1] = new AdminWizardDateTime();
+$pages[] = new AdminWizardDateTime();
 
 require_once('lib/wizard/pages/admin_language.php'); 
-$pages[2] = new AdminWizardLanguage();
+$pages[] = new AdminWizardLanguage();
 
 require_once('lib/wizard/pages/admin_editor.php'); 
-$pages[3] = new AdminWizardEditor();
+$pages[] = new AdminWizardEditor();
 
 require_once('lib/wizard/pages/admin_wiki.php'); 
-$pages[4] = new AdminWizardWiki();
+$pages[] = new AdminWizardWiki();
 
 require_once('lib/wizard/pages/admin_auto_toc.php'); 
-$pages[5] = new AdminWizardAutoTOC();
+$pages[] = new AdminWizardAutoTOC();
 
 require_once('lib/wizard/pages/admin_namespace.php'); 
-$pages[6] = new AdminWizardNamespace();
+$pages[] = new AdminWizardNamespace();
 
 require_once('lib/wizard/pages/admin_jcapture.php'); 
-$pages[7] = new AdminWizardJCapture();
+$pages[] = new AdminWizardJCapture();
 
 require_once('lib/wizard/pages/admin_files.php'); 
-$pages[8] = new AdminWizardFiles();
+$pages[] = new AdminWizardFiles();
 
 require_once('lib/wizard/pages/admin_files_storage.php'); 
-$pages[9] = new AdminWizardFileStorage();
-
+$pages[] = new AdminWizardFileStorage();
 
 require_once('lib/wizard/pages/admin_profiles.php'); 
-$pages[10] = new AdminWizardProfiles();
+$pages[] = new AdminWizardProfiles();
 
 
 /////////////////////////////////////
