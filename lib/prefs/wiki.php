@@ -714,7 +714,7 @@ function prefs_wiki_list($partial = false)
 			'name' => tr('Add inline auto-toc'),
 			'description' => tr('Automatically add an inline Table of Contents for wiki pages.'),
 			'type' => 'flag',
-			'default' => 'n',
+			'default' => 'y',
 			'dependencies' => array(
 				'wiki_auto_toc',
 			),
