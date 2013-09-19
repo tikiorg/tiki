@@ -69,10 +69,25 @@ class WizardLib extends TikiLib
 			$smarty->display("error.tpl");
 			die;
 		}
-		
+
 		// Assign the return URL
 		$homepageUrl = $_REQUEST['url'];
 		$smarty->assign('homepageUrl', $homepageUrl);
+
+
+		// User pressed "Close". 
+		//	Save the "Show on login" setting, and no other preferences
+		if (isset($_REQUEST['close'])) {
+			
+			// Save "Show on login" setting
+			$showOnLogin = ( isset($_REQUEST['showOnLogin']) && $_REQUEST['showOnLogin'] == 'on' ) ? 'y' : 'n';
+			$this->showOnLogin($showOnLogin);
+			
+			//	Then exit, by returning the specified URL
+			$accesslib = TikiLib::lib('access');
+			$accesslib->redirect($homepageUrl);
+		}
+
 
 		$isFirstStep = !isset($_REQUEST['wizard_step']);
 		$isUserStep = isset($_REQUEST['stepNr']);	// User defined step nr
