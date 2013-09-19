@@ -13,6 +13,21 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
 
 class WizardLib extends TikiLib
 {
+	/**
+	 * onLogin is the collection point for all login events, which may run a wizard.
+	 * All triggers at login time, must call this function.
+	 * 
+	 * The function will not return, if the wizard is run.
+	 * Instead it will redirect to the specified homePageUrl
+	 * 
+	 * Use the start functions, e.g. startAdminWizard, to start the wizard manually, not this function
+	 *
+	 * @param mixed $user The logged in user
+	 * @param mixed $homePageUrl The return URL
+	 * @param mixed $force Force the opening of the wizard
+	 * @return none
+	 *
+	 */
 	public function onLogin($user, $homePageUrl, $force = false)
 	{
 		global $base_url, $userlib;
@@ -44,6 +59,15 @@ class WizardLib extends TikiLib
 		}
 	}
 	
+	/**
+	 *	startAdminWizard - Manually start the admin wizard
+	 *	Can also be started by going to: tiki-wizard_admin.php?url=tiki-admin.php?page=general#content2
+	 *	The url value, is where the wizard should return, when it's done
+	 * 
+	 *  @param	$homePageUrl	The url to return to, when the wizard is done
+	 *  @param	$stepNr			Which step in the wizard to go to. Default = 0
+	 *  @return		This function doesn't return
+	 */
 	public function startAdminWizard($homePageUrl, $stepNr=0)
 	{
 		// Start the admin wizard
@@ -52,8 +76,10 @@ class WizardLib extends TikiLib
 		$accesslib->redirect($url);
 	}
 	
-	/*
+	/**
 	*	Wizard's page stepping logic
+	*	Every page added must be a subclass of the Wizard class
+	*	@param	array	of Wizard pages
 	*/
 	public function showPages($pages)
 	{
@@ -168,22 +194,6 @@ class WizardLib extends TikiLib
 		$smarty->assign('showOnLogin', $showOnLogin);
 
 		$smarty->assign('wizard_step', $stepNr);
-	}
-	
-	public function setupEditor($editorType) // ($useWysiwyg, $editorType, $useInlineEditing)
-	{
-		$wysisygPrefs = array();
-		switch ($editorType) {
-			case 'html':
-				$wysisygPrefs['wysiwyg_htmltowiki'] = 'n';
-				break;
-			
-			case 'wiki':
-			default:
-				$wysisygPrefs['wysiwyg_htmltowiki'] = 'y';
-				break;
-		}
-		$this->set_preference('wysiwyg_htmltowiki', $wysisygPrefs['wysiwyg_htmltowiki']);
 	}
 	
 	public function showOnLogin($showOnLogin)

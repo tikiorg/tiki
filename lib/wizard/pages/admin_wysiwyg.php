@@ -53,6 +53,7 @@ class AdminWizardWysiwyg extends Wizard
 				//	The setting is presented under HTML mode, and the user can change it there.
 				//	Unaware that it affects the wiki mode also, where it is safe to switch between wysiwyg and text mode.
 				$tikilib->set_preference('wysiwyg_optional', 'y');
+				$tikilib->set_preference('wysiwyg_htmltowiki', 'y');	// Use wiki syntax
 				break;
 			
 			case 'html':
@@ -60,9 +61,8 @@ class AdminWizardWysiwyg extends Wizard
 				//	The setting is presented under WIKI mode, and the user can change it there. 
 				//	Unaware that it affects the HTML mode also, where Wysiwyg always should be the default.
 				$tikilib->set_preference('wysiwyg_default', 'y');
+				$tikilib->set_preference('wysiwyg_htmltowiki', 'n');	// No not use wiki syntax
 				break;
 		}
-					
-		$wizardlib->setupEditor($editorType);	
 	}
 }
