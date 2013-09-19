@@ -30,6 +30,7 @@ SEARCHPATH="/bin /usr/bin /sbin /usr/sbin /usr/local/bin /usr/local/sbin /opt/bi
 USE_CASES_FILE="usecases.bin"
 USE_CASES_PATH=${PERMISSIONCHECK_DIR}
 USE_CASES_NAME=${USE_CASES_PATH}/${USE_CASES_FILE}
+DEFAULT_WHAT='c'
 
 define_path() {
 # define PATH for executable mode
@@ -882,22 +883,22 @@ tiki_setup_default() {
 			WHAT=${INPUT}
 		fi
 		case ${WHAT} in
-			0)	WHAT='x'; COMMAND="php" ; permission_via_php_check ;;
-			1)	WHAT='x'; COMMAND="paranoia" ; permission_via_php_check ;;
-			2)	WHAT='x'; COMMAND="paranoia-suphp" ; permission_via_php_check ;;
-			3)	WHAT='x'; COMMAND="sbox" ; permission_via_php_check ;;
-			4)	WHAT='x'; COMMAND="mixed" ; permission_via_php_check ;;
-			5)	WHAT='x'; COMMAND="worry" ; permission_via_php_check ;;
-			6)	WHAT='x'; COMMAND="moreworry" ; permission_via_php_check ;;
-			7)	WHAT='x'; COMMAND="pain" ; permission_via_php_check ;;
-			8)	WHAT='x'; COMMAND="morepain" ; permission_via_php_check ;;
-			9)	WHAT='x'; COMMAND="risky" ; permission_via_php_check ;;
-			a)	WHAT='x'; COMMAND="insane" ; permission_via_php_check ;;
-			w)	WHAT='x'; COMMAND="suphpworkaround" ; set_permission_data_workaround_suphp ;;
-			W)	WHAT='x'; COMMAND="sboxworkaround" ; set_permission_data_workaround_sbox ;;
-			S)	WHAT='x'; clear ;;
-			f)	WHAT='x'; command_fix ;;
-			o)	WHAT='x'; command_open ;;
+			0)	WHAT=${DEFAULT_WHAT} ; COMMAND="php" ; permission_via_php_check ;;
+			1)	WHAT=${DEFAULT_WHAT} ; COMMAND="paranoia" ; permission_via_php_check ;;
+			2)	WHAT=${DEFAULT_WHAT} ; COMMAND="paranoia-suphp" ; permission_via_php_check ;;
+			3)	WHAT=${DEFAULT_WHAT} ; COMMAND="sbox" ; permission_via_php_check ;;
+			4)	WHAT=${DEFAULT_WHAT} ; COMMAND="mixed" ; permission_via_php_check ;;
+			5)	WHAT=${DEFAULT_WHAT} ; COMMAND="worry" ; permission_via_php_check ;;
+			6)	WHAT=${DEFAULT_WHAT} ; COMMAND="moreworry" ; permission_via_php_check ;;
+			7)	WHAT=${DEFAULT_WHAT} ; COMMAND="pain" ; permission_via_php_check ;;
+			8)	WHAT=${DEFAULT_WHAT} ; COMMAND="morepain" ; permission_via_php_check ;;
+			9)	WHAT=${DEFAULT_WHAT} ; COMMAND="risky" ; permission_via_php_check ;;
+			a)	WHAT=${DEFAULT_WHAT} ; COMMAND="insane" ; permission_via_php_check ;;
+			w)	WHAT=${DEFAULT_WHAT} ; COMMAND="suphpworkaround" ; set_permission_data_workaround_suphp ;;
+			W)	WHAT=${DEFAULT_WHAT} ; COMMAND="sboxworkaround" ; set_permission_data_workaround_sbox ;;
+			S)	WHAT=${DEFAULT_WHAT} ; clear ;;
+			f)	WHAT=${DEFAULT_WHAT} ; command_fix ;;
+			o)	WHAT=${DEFAULT_WHAT} ; command_open ;;
 			c)	WHAT='f'; composer ;;
 			C)	WHAT='f'; composer ;;
 			q)	exit ;;
