@@ -13,10 +13,12 @@
 	{tr}To learn more about this Tiki release, go to{/tr} <a href="http://doc.tiki.org/tiki12">Tiki 12</a>.
 	</p>
 	<p>
+	If you are a new user, it is recommended to use the Admin Wizard. Press "Start" to begin the wizard<br>
+	However, if you are an experienced used and don't want the Admin Wizard ... <br>
 	<input type="submit" class="btn btn-default" name="skip" value="{tr}Skip wizard and don't show again{/tr}" />
 	</p>
 	<p>
-	{tr}If you don't want this wizard to open next time you (or another admin) log in, uncheck "Show on login" above{/tr}.
+	{tr}If you don't want this wizard to open next time you (or another admin) log in, you can uncheck the "Show on login" above from this and any other wizard page{/tr}.
 	</p>
 	{tr}See also{/tr} <a href="tiki-admin.php" target="_blank">{tr}Admin panel{/tr}</a>
 </fieldset>
