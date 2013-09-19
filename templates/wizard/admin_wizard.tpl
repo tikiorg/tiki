@@ -13,7 +13,7 @@
 	{tr}To learn more about this Tiki release, go to{/tr} <a href="http://doc.tiki.org/tiki12">Tiki 12</a>.
 	</p>
 	<p>
-	<input type="submit" class="btn btn-default" name="close" value="{tr}Use the Tiki default settings{/tr}" />
+	<input type="submit" class="btn btn-default" name="skip" value="{tr}Skip wizard and don't show again{/tr}" />
 	</p>
 	<p>
 	{tr}If you don't want this wizard to open next time you (or another admin) log in, uncheck "Show on login" above{/tr}.
