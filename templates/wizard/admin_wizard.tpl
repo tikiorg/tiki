@@ -12,12 +12,11 @@
 	<b>{tr}Welcome to the Tiki Admin Wizard{/tr}</b>.<br>
 	{tr}To learn more about this Tiki release, go to{/tr} <a href="http://doc.tiki.org/tiki12">Tiki 12</a>.
 	</p>
-	<p>{tr}This wizard is intended used to configure new Tiki installations{/tr}.<br>
-	{tr}It may when saving a wizard page, automatically set options in the background, which are required (or assumed wanted) to activate the selected featured{/tr}.
-	{tr}This may overwrite custom option settings{/tr}
+	<p>
+	<input type="submit" class="btn btn-default" name="close" value="{tr}Use the Tiki default settings{/tr}" />
 	</p>
 	<p>
-	{tr}If you don't want this wizard to open next time you (or another admin) log in, uncheck "Show on login" below{/tr}.
+	{tr}If you don't want this wizard to open next time you (or another admin) log in, uncheck "Show on login" above{/tr}.
 	</p>
 	{tr}See also{/tr} <a href="tiki-admin.php" target="_blank">{tr}Admin panel{/tr}</a>
 </fieldset>
