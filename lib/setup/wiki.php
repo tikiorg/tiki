@@ -130,8 +130,8 @@ if (strstr($_SERVER['SCRIPT_NAME'], 'tiki-index.php')
 			$homePageLang,
 			$is_html,	// is_html
 			null,
-			'n',
-			$is_html ? 'y' : 'n'	// wysiwyg
+			$is_html ? 'y' : 'n',	// wysiwyg,
+			''
 		);
 
 		unset($homePageContent, $homePageLang);
