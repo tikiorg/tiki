@@ -23,8 +23,8 @@ class WizardLib extends TikiLib
 	 * Use the start functions, e.g. startAdminWizard, to start the wizard manually, not this function
 	 *
 	 * @param mixed $user The logged in user
-	 * @param mixed $homePageUrl The return URL
-	 * @param mixed $force Force the opening of the wizard
+	 * @param string $homePageUrl The return URL
+	 * @param bool $force Force the opening of the admin wizard
 	 * @return none
 	 *
 	 */
@@ -37,7 +37,7 @@ class WizardLib extends TikiLib
 
 		// Check if a Login Wizard should be displayed		
 		$activeLoginWizard = $this->get_preference('wizard_admin_hide_on_login') !== 'y';
-		if ($isAdmin && ($force || $activeLoginWizard)) {	
+		if ($force || ($isAdmin && $activeLoginWizard)) {	
 			
 			// User is an admin. Show Admin Wizard
 			$this->startAdminWizard($homePageUrl,0);
