@@ -115,11 +115,6 @@
 
 		{tab name="{tr}General Settings{/tr}"}
 			<fieldset>
-				<legend>{tr}Admin Wizard{/tr}</legend>
-				<img src="img/icons/config2.gif" /> <a href="tiki-wizard_admin.php?url=tiki-admin.php?page=general#content2">{tr}Open Admin Wizard{/tr}</a>
-				{preference name=wizard_admin_hide_on_login}
-			</fieldset>
-			<fieldset>
 				<legend>{tr}Server{/tr}</legend>
 				{preference name=tmpDir}
 				{preference name=use_proxy}
