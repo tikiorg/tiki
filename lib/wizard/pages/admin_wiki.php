@@ -19,9 +19,6 @@ class AdminWizardWiki extends Wizard
 		// Run the parent first
 		parent::onSetupPage($homepageUrl);
 
-		$hideNamespaceIndicators = $this->isNamespaceIndicatorsHidden();
-		$smarty->assign('hideNamespaceIndicators', $hideNamespaceIndicators);
-
 		// Assign the page temaplte
 		$wizardTemplate = 'wizard/admin_wiki.tpl';
 		$smarty->assign('wizardBody', $wizardTemplate);
@@ -36,39 +33,6 @@ class AdminWizardWiki extends Wizard
 		// Run the parent first
 		parent::onContinue();
 		
-		// If Auto TOC is selected, also set the inline Toc
-		if ($tikilib->get_preference('wiki_auto_toc')) {
-			$tikilib->set_preference('wiki_inline_auto_toc', 'y');
-		}
-
-		// Check if namespace indicator should be hidden
-		if ($tikilib->get_preference('namespace_enabled')) {
-			
-			// Hide in structure path
-			$tikilib->set_preference('namespace_indicator_in_structure', 'n');
-		}
-		
-		// jCapture
-		$isJCapture = $tikilib->get_preference('feature_jcapture') === 'y';
-		if ($isJCapture) {
-			
-			// Set the root file gallery to store captures
-			if (intval($tikilib->get_preference('fgal_for_jcapture')) == 0) {
-				$tikilib->set_preference('fgal_for_jcapture', '1');
-			}
-			
-			// Set token access if not enabled
-			if ($tikilib->get_preference('auth_token_access') !== 'y') {
-				$tikilib->set_preference('auth_token_access', 'y');
-			}
-		}		
-	}
-	
-	private function isNamespaceIndicatorsHidden() 
-	{
-		global $tikilib; 
-		
-		$hideInStructure = $tikilib->get_preference('namespace_indicator_in_structure');
-		return $hideInStructure === 'y';
+		// Configure detail preferences in own page
 	}
 }

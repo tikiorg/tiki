@@ -21,7 +21,7 @@ class AdminWizardJCapture extends Wizard
 		
 		$showPage = false;
 
-		// Show if Auto TOC is selected
+		// Show if option is selected
 		if ($prefs['feature_jcapture'] === 'y') {
 			$showPage = true;
 		}
@@ -35,7 +35,19 @@ class AdminWizardJCapture extends Wizard
 
 	function onContinue () 
 	{
+		global	$tikilib;
+		
 		// Run the parent first
 		parent::onContinue();
+		
+		// Set the jcapture file gallery to the file gallery root, unless it is already set
+		if (intval($tikilib->get_preference('fgal_for_jcapture')) == 0) {
+			$tikilib->set_preference('fgal_for_jcapture', '1');
+		}
+			
+		// Set token access if not enabled
+		if ($tikilib->get_preference('auth_token_access') !== 'y') {
+			$tikilib->set_preference('auth_token_access', 'y');
+		}
 	}
 }
