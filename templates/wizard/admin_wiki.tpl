@@ -18,7 +18,9 @@
 	{tr}See also{/tr} <a href="tiki-admin.php?page=wiki&alt=Wiki#content2" target="_blank">{tr}Wiki admin feature panel{/tr}</a>
 <br>
 <br>
-	{tr}jCapture enables recording of screen capture or screen casts (video), directly into the wiki page. Look for the <img src="img/icons/camera.png" /> icon in the editor toolbar. Requires Java{/tr}.
+	{tr}jCapture enables recording of screen capture or screen casts (video), directly into the wiki page. Look for the <img src="img/icons/camera.png" /> icon in the editor toolbar{/tr}.<br> 
+	{tr}Requires Java{/tr}. <a href="https://www.java.com/verify/" target="_blank">Verify your Java installation</a>.<br>
+	
 	{preference name=feature_jcapture}
 	{tr}See also{/tr} <a href="tiki-admin.php?page=features&alt=Features" target="_blank">{tr}Features admin panel{/tr}</a>
 	
