@@ -32,27 +32,16 @@ class WizardLib extends TikiLib
 	{
 		global $base_url, $userlib;
 		
-		$openWizard = false;
-		
-		if ($force) {
-			// Force opening of the wizard
-			// Needed for fresh-/re-installs, when admin is an anonymous user at check time
-			$openWizard = true;
+		// Check the user status
+		$isAdmin = $userlib->user_has_permission($user, 'tiki_p_admin');
+
+		// Check if a Login Wizard should be displayed		
+		$activeLoginWizard = $this->get_preference('wizard_admin_hide_on_login') !== 'y';
+		if ($isAdmin && ($force || $activeLoginWizard)) {	
 			
-		} else {
-			// Check the user status
-			$isAdmin = $userlib->user_has_permission($user, 'tiki_p_admin');
-		
-			// Check if the wizard should be opened
-			$activeLoginWizard = $this->get_preference('wizard_admin_hide_on_login') !== 'y';
-			if ($isAdmin && $activeLoginWizard) {
-				$openWizard = true;
-			}
-		}
-		
-		if ($openWizard) {	
-			// User is an admin
+			// User is an admin. Show Admin Wizard
 			$this->startAdminWizard($homePageUrl,0);
+			
 		} else {
 			// A regular user
 			// New User wizard is not implemented
@@ -70,6 +59,8 @@ class WizardLib extends TikiLib
 	 */
 	public function startAdminWizard($homePageUrl, $stepNr=0)
 	{
+		global $base_url;
+		
 		// Start the admin wizard
 		$url = $base_url.'tiki-wizard_admin.php?&stepNr=' . $stepNr . '&url=' . rawurlencode($homePageUrl);
 		$accesslib = TikiLib::lib('access');
