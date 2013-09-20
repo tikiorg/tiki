@@ -132,7 +132,7 @@ class WizardLib extends TikiLib
 		if (!$stepBack && !$isFirstStep || ($isUserStep && $stepNr > 0)) {
 			
 			// Commit the step just completed
-			$pages[$stepNr]->onContinue();
+			$pages[$stepNr]->onContinue($homepageUrl);
 			
 			// Loop until the next displayed wizard page
 			//	Return when all pages have been processed.

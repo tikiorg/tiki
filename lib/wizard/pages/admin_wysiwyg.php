@@ -39,12 +39,12 @@ class AdminWizardWysiwyg extends Wizard
 		return true;		
 	}
 
-	function onContinue () 
+	function onContinue ($homepageUrl) 
 	{
 		global $wizardlib, $tikilib;
 
 		// Run the parent first
-		parent::onContinue();
+		parent::onContinue($homepageUrl);
 		
 		$editorType = $_REQUEST['editorType'];
 		switch ($editorType) {

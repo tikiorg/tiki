@@ -33,12 +33,12 @@ class AdminWizardJCapture extends Wizard
 		return $showPage;
 	}
 
-	function onContinue () 
+	function onContinue ($homepageUrl) 
 	{
 		global	$tikilib;
 		
 		// Run the parent first
-		parent::onContinue();
+		parent::onContinue($homepageUrl);
 		
 		// Set the jcapture file gallery to the file gallery root, unless it is already set
 		if (intval($tikilib->get_preference('fgal_for_jcapture')) == 0) {

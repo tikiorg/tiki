@@ -26,12 +26,12 @@ class AdminWizardWiki extends Wizard
 		return true;		
 	}
 
-	public function onContinue () 
+	public function onContinue ($homepageUrl) 
 	{
 		global $tikilib; 
 
 		// Run the parent first
-		parent::onContinue();
+		parent::onContinue($homepageUrl);
 		
 		// Configure detail preferences in own page
 	}

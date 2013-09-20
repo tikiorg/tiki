@@ -18,8 +18,6 @@
  */
 abstract class Wizard 
 {
-	protected $returnUrl;
-	
 	/**
 	 * This is method onSetupPage
 	 *
@@ -28,16 +26,16 @@ abstract class Wizard
 	 *
 	 */	
 	function onSetupPage ($homepageUrl) {
-		$this->returnUrl = $homepageUrl;
 		return true;
 	}
 	
 	/**
 	 * onContinue processes the settings on the wizard page.
+	 * @param string $homepageUrl The url to return to, when the wizard is complete
 	 * @return none
 	 *
 	 */	
-	function onContinue () {
+	function onContinue ($homepageUrl) {
 		// Save the user selection for showing the wizard on login or not
 		$showOnLogin = ( isset($_REQUEST['showOnLogin']) && $_REQUEST['showOnLogin'] == 'on' ) ? 'y' : 'n';
 

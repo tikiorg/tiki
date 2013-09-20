@@ -26,9 +26,9 @@ class AdminWizardProfiles extends Wizard
 		return true;		
 	}
 
-	function onContinue () 
+	function onContinue ($homepageUrl) 
 	{
 		// Run the parent first
-		parent::onContinue();
+		parent::onContinue($homepageUrl);
 	}
 }
