@@ -2,7 +2,7 @@
 
 <h1>{tr}Set up your Wysiwyg editor{/tr}</h1>
 <div style="float:left; width:60px"><img src="img/icons/large/icon-configuration48x48.png" alt="{tr}Set up your Wysiwyg environment{/tr}"></div>
-{tr}You can choose to use by default the 'Compatible' Wiki text editor (the traditional one), OR a Wysiwyg editor ('Full' and/or 'Inline'){/tr}. {tr}If you don't choose any of the 'Full' or 'Inline' Wysiwyg editors, only the wiki text editor will be available{/tr}.
+{tr}You can choose to use by default the 'Compatible' Wiki mode (content in saved in wiki syntax), or the HTML mode{/tr}.
 <div align="left" style="margin-top:1em;">
 <fieldset>
 	<legend>{tr}Wiki editor setup{/tr}</legend>

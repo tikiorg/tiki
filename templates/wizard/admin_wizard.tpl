@@ -10,11 +10,11 @@
 	<img src="img/tiki/tikilogo.png" style="float:right" />	
 	<p class="wizard_page_title">
 	<b>{tr}Welcome to the Tiki Admin Wizard{/tr}</b>.<br>
-	{tr}To learn more about this Tiki release, go to{/tr} <a href="http://doc.tiki.org/tiki12">Tiki 12</a>.
+	{tr}To learn more about this Tiki release, go to <a href="http://doc.tiki.org/tiki12">Tiki 12</a>{/tr}.
 	</p>
 	<p>
-	If you are a new user, it is recommended to use the Admin Wizard. Press "Start" to begin the wizard<br>
-	However, if you are an experienced used and don't want the Admin Wizard ... <br>
+	{tr}If you are a new user, it is recommended to use the Admin Wizard. Press "Start" to begin the wizard{/tr}.<br>
+	{tr}However, if you are an experienced user and don't want the Admin Wizard ...{/tr} <br>
 	<input type="submit" class="btn btn-default" name="skip" value="{tr}Skip wizard and don't show again{/tr}" />
 	</p>
 	<p>

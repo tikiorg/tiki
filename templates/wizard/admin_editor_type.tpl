@@ -18,7 +18,7 @@
 	</tr>
 	<tr>
 	<td><input type="radio" name="editorType" value="wysiwyg" {if $editorType eq 'wysiwyg'}checked="checked"{/if} /> {tr}Wysiwyg{/tr}</td><td>{tr}Use a What You See Is What You Get (Wysiwyg) editor{/tr}.<br>
-		{tr}Preferred by many. Visual interface {/tr}.<br>
+		{tr}Preferred by many. Visual interface{/tr}.<br>
 	</td>
 	</tr>
 	</table>

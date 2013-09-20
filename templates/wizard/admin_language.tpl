@@ -7,7 +7,7 @@
 <fieldset>
 	<legend>{tr}Language{/tr}</legend>
 
-	This is just some dummy text	
+	{tr}This is just some dummy text{/tr}	
 
 </fieldset>
 

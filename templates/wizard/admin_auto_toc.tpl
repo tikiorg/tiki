@@ -8,7 +8,7 @@
 	<legend>{tr}Auto TOC options{/tr}</legend>
 		<img src="img/icons/large/wikipages.png" style="float:right" />	
 		{preference name=wiki_inline_auto_toc}
-		The Auto TOC setting can be toogled per page, in the page properties.
+		{tr}The Auto TOC setting can be toogled per page, in the page properties{/tr}.
 		{preference name=wiki_inline_toc_pos}
 		<br>
 		{tr}See also{/tr} <a href="http://doc.tiki.org/tiki-index.php?page=Auto+TOC" target="_blank">{tr}Auto TOC{/tr} @ doc.tiki.org</a>

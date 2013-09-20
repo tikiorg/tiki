@@ -19,7 +19,7 @@
 	{tr}Note: a conversion of :: to ::: for existing pages must be done manually{/tr}
 	{preference name=feature_use_three_colon_centertag}
 
-	{tr}If the page name display stripper conflicts with the namespace separator, the namespace is used and the page name display is not stripped.{/tr}
+	{tr}If the page name display stripper conflicts with the namespace separator, the namespace is used and the page name display is not stripped{/tr}.
 	{preference name=wiki_pagename_strip}
 	<br>
 	{tr}See also{/tr} <a href="http://doc.tiki.org/Namespaces" target="_blank">{tr}Namespaces{/tr} @ doc.tiki.org</a>

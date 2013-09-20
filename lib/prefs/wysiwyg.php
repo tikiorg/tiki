@@ -81,7 +81,7 @@ function prefs_wysiwyg_list()
 		),
 		'wysiwyg_inline_editing' => array(
 			'name' => tra('Inline Wysiwyg editor'),
-			'description' => tra('Seemless inline editing. Uses CKEditor4.'),
+			'description' => tra('Seamless inline editing. Uses CKEditor4.'),
 			'help' => 'Wiki Inline Editing', 
 			'type' => 'flag',
 			'default' => 'n',
