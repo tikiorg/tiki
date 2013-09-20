@@ -74,117 +74,123 @@ class WizardLib extends TikiLib
 	*/
 	public function showPages($pages)
 	{
-		global	$smarty;
+		global	$smarty, $base_url;
 		
-		if (!isset($_REQUEST['url'])) {
-			$smarty->assign('msg', tra("No return URL specified"));
-			$smarty->display("error.tpl");
-			die;
-		}
-		if (empty($pages)) {
-			$smarty->assign('msg', tra("No wizard pages specified"));
-			$smarty->display("error.tpl");
-			die;
-		}
+		try {
+			if (!isset($_REQUEST['url'])) {
+				// User the base url as the return URL
+				$_REQUEST['url'] = $base_url;
+				// throw new Exception(tra("No return URL specified"));
+			}
+			if (empty($pages)) {
+				// Nothing to do
+				return;
+				// throw new Exception(tra("No wizard pages specified"));
+			}
 
-		// Assign the return URL
-		$homepageUrl = $_REQUEST['url'];
-		$smarty->assign('homepageUrl', $homepageUrl);
+			// Assign the return URL
+			$homepageUrl = $_REQUEST['url'];
+			$smarty->assign('homepageUrl', $homepageUrl);
 
 
-		// User pressed "Close". 
-		//	Save the "Show on login" setting, and no other preferences
-		if (isset($_REQUEST['close'])) {
+			// User pressed "Close". 
+			//	Save the "Show on login" setting, and no other preferences
+			if (isset($_REQUEST['close'])) {
 			
-			// Save "Show on login" setting
-			$showOnLogin = ( isset($_REQUEST['showOnLogin']) && $_REQUEST['showOnLogin'] == 'on' ) ? 'y' : 'n';
-			$this->showOnLogin($showOnLogin);
+				// Save "Show on login" setting
+				$showOnLogin = ( isset($_REQUEST['showOnLogin']) && $_REQUEST['showOnLogin'] == 'on' ) ? 'y' : 'n';
+				$this->showOnLogin($showOnLogin);
 			
-			//	Then exit, by returning the specified URL
-			$accesslib = TikiLib::lib('access');
-			$accesslib->redirect($homepageUrl);
-		}
+				//	Then exit, by returning the specified URL
+				$accesslib = TikiLib::lib('access');
+				$accesslib->redirect($homepageUrl);
+			}
 
 
-		$isFirstStep = !isset($_REQUEST['wizard_step']);
-		$isUserStep = isset($_REQUEST['stepNr']);	// User defined step nr
-		if ($isUserStep) {
-			$stepNr = intval($_REQUEST['stepNr']);
-		} else {
-			$stepNr = intval($_REQUEST['wizard_step']);
-		}
+			$isFirstStep = !isset($_REQUEST['wizard_step']);
+			$isUserStep = isset($_REQUEST['stepNr']);	// User defined step nr
+			if ($isUserStep) {
+				$stepNr = intval($_REQUEST['stepNr']);
+			} else {
+				$stepNr = intval($_REQUEST['wizard_step']);
+			}
 
-		$stepBack = false;
-		if (isset($_REQUEST['back'])) {
-			// Discard changes on page
-			//	Go to previous page
-			$stepNr -= 1;
-			$stepBack = true;
-		}
+			$stepBack = false;
+			if (isset($_REQUEST['back'])) {
+				// Discard changes on page
+				//	Go to previous page
+				$stepNr -= 1;
+				$stepBack = true;
+			}
 		
-		// Validate the specified stepNr
-		if (($stepNr < 0) || ($stepNr >= count($pages))) {
-			$smarty->assign('msg', tra("Invalid wizard stepNr specified"));
-			$smarty->display("error.tpl");
-			die;
-		}
+			// Validate the specified stepNr
+			if (($stepNr < 0) || ($stepNr >= count($pages))) {
+				throw new Exception(tra("Invalid wizard stepNr specified"));
+			}
 		
-		if (!$stepBack && !$isFirstStep || ($isUserStep && $stepNr > 0)) {
+			if (!$stepBack && !$isFirstStep || ($isUserStep && $stepNr > 0)) {
 			
-			// Commit the step just completed
-			$pages[$stepNr]->onContinue($homepageUrl);
+				// Commit the step just completed
+				$pages[$stepNr]->onContinue($homepageUrl);
 			
-			// Loop until the next displayed wizard page
-			//	Return when all pages have been processed.
-			do {
-				$next = true;
-				if (count($pages) > $stepNr+1) {
-					$stepNr += 1;
-					if (count($pages) == $stepNr+1) {
-						$smarty->assign('lastWizardPage', 'y');
+				// Loop until the next displayed wizard page
+				//	Return when all pages have been processed.
+				do {
+					$next = true;
+					if (count($pages) > $stepNr+1) {
+						$stepNr += 1;
+						if (count($pages) == $stepNr+1) {
+							$smarty->assign('lastWizardPage', 'y');
+						}
+					
+						// If onSetupPage returns true, processing should continue
+						$show = $pages[$stepNr]->onSetupPage($homepageUrl);
+					
+						// Do not show page, if it doesn't return a boolean
+						if ($show === true) {
+							$next = false;
+							break;
+						}
+					
+					} else {
+						// Return to homepage, when we get to the end
+						$accesslib = TikiLib::lib('access');
+						$accesslib->redirect($homepageUrl);
 					}
-					
-					// If onSetupPage returns true, processing should continue
+				} while ($next);
+			} else {
+				// For directly accessed wizard pages scroll back, when not displayed
+				do {
+					$next = true;
 					$show = $pages[$stepNr]->onSetupPage($homepageUrl);
-					
+
 					// Do not show page, if it doesn't return a boolean
 					if ($show === true) {
 						$next = false;
-						break;
 					}
-					
-				} else {
-					// Return to homepage, when we get to the end
-					$accesslib = TikiLib::lib('access');
-					$accesslib->redirect($homepageUrl);
-				}
-			} while ($next);
-		} else {
-			// For directly accessed wizard pages scroll back, when not displayed
-			do {
-				$next = true;
-				$show = $pages[$stepNr]->onSetupPage($homepageUrl);
 
-				// Do not show page, if it doesn't return a boolean
-				if ($show === true) {
-					$next = false;
-				}
-
-				if ($stepNr == 0) {
-					$smarty->assign('firstWizardPage', 'y');
-					$next = false;
-				} elseif ($show === false) {
-					// Step back			
-					$stepNr -= 1;
-				}
+					if ($stepNr == 0) {
+						$smarty->assign('firstWizardPage', 'y');
+						$next = false;
+					} elseif ($show === false) {
+						// Step back			
+						$stepNr -= 1;
+					}
 				
-			} while ($next);
+				} while ($next);
+			}
+
+			$showOnLogin = $this->get_preference('wizard_admin_hide_on_login') !== 'y';
+			$smarty->assign('showOnLogin', $showOnLogin);
+
+			$smarty->assign('wizard_step', $stepNr);
+			
+		} catch (Exception $e) {
+			$error = $e->getMessage();
+			$smarty->assign('msg', $error);
+			$smarty->display("error.tpl");
+			die;
 		}
-
-		$showOnLogin = $this->get_preference('wizard_admin_hide_on_login') !== 'y';
-		$smarty->assign('showOnLogin', $showOnLogin);
-
-		$smarty->assign('wizard_step', $stepNr);
 	}
 	
 	public function showOnLogin($showOnLogin)
