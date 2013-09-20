@@ -85,8 +85,7 @@ if (isset($_REQUEST["change"])) {
 	
 	// Check if a wizard should be run.
 	// If a wizard is run, it will return to the $url location when it has completed. Thus no code after $wizardlib->onLogin will be executed
-	require_once('lib/wizard/wizardlib.php');
-	$wizardlib = new WizardLib();
+	$wizardlib = TikiLib::lib('wizard');
 	$force = $_REQUEST["user"] == 'admin';
 	$wizardlib->onLogin($user, $prefs['tikiIndex'], $force);
 	

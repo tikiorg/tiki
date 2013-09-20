@@ -31,8 +31,7 @@ class AdminWizard extends Wizard
 		// Run the parent first
 		parent::onContinue($homepageUrl);
 		
-		require_once('lib/wizard/wizardlib.php');
-		$wizardlib = new WizardLib();
+		$wizardlib = TikiLib::lib('wizard');
 
 		// User selected to skip the wizard and hide it on login
 		//	Save the "Show on login" setting, and no other preferences

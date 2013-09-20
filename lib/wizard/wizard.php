@@ -40,8 +40,7 @@ abstract class Wizard
 		$showOnLogin = ( isset($_REQUEST['showOnLogin']) && $_REQUEST['showOnLogin'] == 'on' ) ? 'y' : 'n';
 
 		// Mark the login mode for the wizard
-		require_once('lib/wizard/wizardlib.php');
-		$wizardlib = new WizardLib();
+		$wizardlib = TikiLib::lib('wizard');
 		$wizardlib->showOnLogin($showOnLogin);	
 		
 		// Commit any preferences on the page

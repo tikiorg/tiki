@@ -69,8 +69,7 @@ $pages[] = new AdminWizardProfiles();
 
 
 // Step the wizard pages
-require_once('lib/wizard/wizardlib.php');
-$wizardlib = new WizardLib();
+$wizardlib = TikiLib::lib('wizard');
 $wizardlib->showPages($pages);
 
 
