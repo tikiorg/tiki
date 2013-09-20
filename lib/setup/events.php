@@ -169,6 +169,8 @@ function tiki_setup_events()
 	$events->bind('tiki.social.like.remove', 'tiki.social.save');
 	$events->bind('tiki.social.favorite.add', 'tiki.social.save');
 	$events->bind('tiki.social.favorite.remove', 'tiki.social.save');
+	$events->bind('tiki.social.relation.add', 'tiki.social.save');
+	$events->bind('tiki.social.relation.remove', 'tiki.social.save');
 }
 
 function tiki_save_refresh_index($args)
