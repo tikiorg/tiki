@@ -1,3 +1,4 @@
+#!/usr/bin/php
 <?php
 // (c) Copyright 2002-2013 by authors of the Tiki Wiki CMS Groupware Project
 //
@@ -94,6 +95,12 @@ if (file_exists('profiles/info.ini')) {
 	$console->add(new Tiki\Command\ProfileExport\WikiPage);
 
 	$console->add(new Tiki\Command\ProfileExport\Finalize);
+}
+
+if (is_file('db/redact/local.php') && ($site == 'redact') ) {
+	$console->add(new Tiki\Command\RedactDBCommand);
+} else {
+	$console->add(new Tiki\Command\UnavailableCommand('database:redact'));
 }
 
 $console->run();
