@@ -2664,7 +2664,7 @@ function prefs_feature_list($partial = false)
 			'type' => 'flag',
 			'help' => 'Syntax+Highlighter',
 			'keywords' => 'Code Mirror Syntax Highlighter',
-			'default' => 'n',
+			'default' => 'y',
 		),
 		'feature_syntax_highlighter_theme' => array(
 			'name' => tra('Syntax Highlighter (CodeMirror) Theme'),
@@ -2687,7 +2687,7 @@ function prefs_feature_list($partial = false)
 				"lesser-dark" => "lesser-dark",
 				"xq-dark" => "xq-dark",
 			),
-			'default' => 'default',
+			'default' => 'off',
 		),
 		'feature_jison_wiki_parser' => array(
 			'name' => tra('Jison Wiki Parser'),
