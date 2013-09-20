@@ -56,6 +56,12 @@ class Services_User_FavoriteController
 		$relations = $this->action_list($input);
 		$relationId = $this->getCurrentRelation($relations, $user, $type, $object);
 
+		if ($type == 'trackeritem') {
+			$parentobject = TikiLib::lib('trk')->get_tracker_for_item($object);
+		} else {
+			$parentobject = 'not implemented';
+		}
+
 		if ($target) {
 			if (! $relationId) {
 				$relationId = $relationlib->add_relation('tiki.user.favorite', 'user', $user, $type, $object);
@@ -68,6 +74,7 @@ class Services_User_FavoriteController
 					array(
 						'type' => $type,
 						'object' => $object,
+						'parentobject' => $parentobject,
 						'user' => $user,
 					)
 				);
@@ -81,6 +88,7 @@ class Services_User_FavoriteController
 					array(
 						'type' => $type,
 						'object' => $object,
+						'parentobject' => $parentobject,
 						'user' => $user,
 					)
 				);
