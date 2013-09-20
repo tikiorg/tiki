@@ -77,6 +77,10 @@ class ActivityLib
 
 	function recordEvent($event, $arguments)
 	{
+		if (!$event) {
+			return; // prevent false recording of test runs
+		}
+
 		$mapping = $this->getMapping();
 		$unknown = array_diff_key($arguments, $mapping);
 
