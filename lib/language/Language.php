@@ -107,4 +107,38 @@ class Language extends TikiDb_Bridge
 
 		return strtr($string, $removePHPslashes);
 	}
+	
+	/**
+	 * isLanguageRTL
+	 * Determine if a language is an RTL language
+	 *
+	 * @param mixed $langCode Language code to check, e.g. "en"
+	 * @return bool true if the language is RTL, otherwise false
+	 *
+	 */	
+	public static function isLanguageRTL ($langCode)
+	{
+		switch ($langCode)
+		{
+			case 'ar':
+			case 'fa':
+			case 'he':
+			case 'ku':
+			case 'ug':
+				return true;
+		}
+		return false;
+	}	
+	
+	
+	/**
+	 * isRTL
+	 * Determine if the current language is RTL
+	 * @return bool true if the language is RTL, otherwise false
+	*/
+	public static function isRTL()
+	{
+		global $prefs;
+		return self::isLanguageRTL($prefs['language']);
+	}
 }
