@@ -38,6 +38,9 @@ $pages[] = new AdminWizardLanguage();
 require_once('lib/wizard/pages/admin_editor_type.php'); 
 $pages[] = new AdminWizardEditorType();
 
+require_once('lib/wizard/pages/admin_text_area.php'); 
+$pages[] = new AdminWizardTextArea();
+
 require_once('lib/wizard/pages/admin_wysiwyg.php'); 
 $pages[] = new AdminWizardWysiwyg();
 
