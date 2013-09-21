@@ -18,7 +18,6 @@
 	</tr>
 	<tr>
 	<td></td><td>
-	{preference name=feature_syntax_highlighter}
 	{preference name=wysiwyg_default}
 	</td>
 	</tr>
