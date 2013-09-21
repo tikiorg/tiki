@@ -71,6 +71,9 @@ $pages[] = new AdminWizardAdvanced();
 require_once('lib/wizard/pages/admin_namespace.php'); 
 $pages[] = new AdminWizardNamespace();
 
+require_once('lib/wizard/pages/admin_look_and_feel.php'); 
+$pages[] = new AdminWizardLookAndFeel();
+
 require_once('lib/wizard/pages/admin_profiles.php'); 
 $pages[] = new AdminWizardProfiles();
 
