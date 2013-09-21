@@ -26,6 +26,10 @@ class AdminWizardNamespace extends Wizard
 			$showPage = true;
 		}
 		
+		// Only show "hide namespace in structures" option, if structures are active
+		$isStructures = isset($prefs['feature_wiki_structure']) && $prefs['feature_wiki_structure'] === 'y' ? true : false;
+		$smarty->assign('isStructures', $isStructures);
+		
 		// Assign the page tempalte
 		$wizardTemplate = 'wizard/admin_namespace.tpl';
 		$smarty->assign('wizardBody', $wizardTemplate);

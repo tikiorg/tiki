@@ -17,7 +17,6 @@
 			{preference name=feature_wiki_no_inherit_perms_structure}
 			{preference name=wiki_structure_bar_position}
 			{preference name=wikiplugin_toc}
-			{preference name=namespace_indicator_in_structure}
 		<br>
 		{tr}See also{/tr} <a href="https://doc.tiki.org/Structures" target="_blank">{tr}Structures{/tr} @ doc.tiki.org</a>
 </fieldset>

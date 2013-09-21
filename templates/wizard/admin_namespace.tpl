@@ -10,7 +10,9 @@
 <li>{tr}conflict with wiki syntax tagging{/tr}</li>
 </ul>
 {preference name=namespace_separator}
+{if isset($isStructures) and $isStructures eq true}
 {preference name=namespace_indicator_in_structure}
+{/if}
 <fieldset>
 	<legend>{tr}Settings that may be affected by the namespace separator{/tr}{help url="Watch"}</legend>
 	<img src="img/icons/large/wikipages.png" style="float:right" />	
