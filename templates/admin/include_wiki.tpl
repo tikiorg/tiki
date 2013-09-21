@@ -272,6 +272,7 @@
 			{preference name=feature_create_webhelp}
 			{preference name=feature_wiki_structure_drilldownmenu}
 			{preference name=page_n_times_in_a_structure}
+			{preference name=feature_listorphanStructure}
 			{preference name=feature_wiki_no_inherit_perms_structure}
 			{preference name=wiki_structure_bar_position}
 			{preference name=wikiplugin_toc}
