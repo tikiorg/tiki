@@ -78,7 +78,7 @@
 		<label>{tr}Configuration search:{/tr} <input type="text" name="lm_criteria" value="{$lm_criteria|escape}"></label>
 		<input type="submit" value="{tr}Search{/tr}" {if $indexNeedsRebuilding} class="tips" title="{tr}Configuration search{/tr}|{tr}Note: The search index needs rebuilding, this will take a few minutes.{/tr}"{/if} />
 		<input type="hidden" name="filters">
-		<span style="float:right"><img src="img/icons/config2.gif" /> <a href="tiki-wizard_admin.php?url=tiki-admin.php">{tr}Open Admin Wizard{/tr}</a></span>
+		<span style="float:right"><img src="img/icons/wizard16x16.png" /> <a href="tiki-wizard_admin.php?url=tiki-admin.php">{tr}Open Admin Wizard{/tr}</a></span>
 	</p>
 </form>
 {if $lm_error}
