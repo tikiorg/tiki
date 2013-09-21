@@ -7,7 +7,7 @@
 <div align="left" style="margin-top:1em;">
 <fieldset>
 	<legend>{tr}Workspaces{/tr}</legend>
-	<img src="img/icons/large/areas48x48.png" style="float:right" />	
+	<img src="img/icons/large/areas48x48.png" style="float:right" width="32px" />	
 	{preference name=workspace_ui}
 	{tr}See also{/tr} <a href="https://doc.tiki.org/Workspaces UI" target="_blank">{tr}Workspaces UI in doc.tiki.org{/tr}</a>
 </fieldset>
