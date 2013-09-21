@@ -38,20 +38,17 @@ $pages[] = new AdminWizardLanguage();
 require_once('lib/wizard/pages/admin_editor_type.php'); 
 $pages[] = new AdminWizardEditorType();
 
-require_once('lib/wizard/pages/admin_text_area.php'); 
-$pages[] = new AdminWizardTextArea();
-
 require_once('lib/wizard/pages/admin_wysiwyg.php'); 
 $pages[] = new AdminWizardWysiwyg();
+
+require_once('lib/wizard/pages/admin_text_area.php'); 
+$pages[] = new AdminWizardTextArea();
 
 require_once('lib/wizard/pages/admin_wiki.php'); 
 $pages[] = new AdminWizardWiki();
 
 require_once('lib/wizard/pages/admin_auto_toc.php'); 
 $pages[] = new AdminWizardAutoTOC();
-
-require_once('lib/wizard/pages/admin_namespace.php'); 
-$pages[] = new AdminWizardNamespace();
 
 require_once('lib/wizard/pages/admin_jcapture.php'); 
 $pages[] = new AdminWizardJCapture();
@@ -61,6 +58,9 @@ $pages[] = new AdminWizardFiles();
 
 require_once('lib/wizard/pages/admin_files_storage.php'); 
 $pages[] = new AdminWizardFileStorage();
+
+require_once('lib/wizard/pages/admin_namespace.php'); 
+$pages[] = new AdminWizardNamespace();
 
 require_once('lib/wizard/pages/admin_profiles.php'); 
 $pages[] = new AdminWizardProfiles();
