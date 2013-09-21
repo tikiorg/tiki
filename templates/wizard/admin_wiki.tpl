@@ -18,7 +18,7 @@
 	{tr}See also{/tr} <a href="https://doc.tiki.org/Category" target="_blank">{tr}Category{/tr} @ doc.tiki.org</a>
 <br>
 <br>
-	{tr}Structures allow grouping many wiki pages together with a few extra options{/tr}.
+	{tr}Structures allow grouping many wiki pages together with several extra options{/tr}.
 	{preference name=feature_wiki_structure}
 	{tr}See also{/tr} <a href="tiki-admin.php?page=wiki&cookietab=2" target="_blank">{tr}Wiki admin feature panel{/tr}</a>
 <br>
