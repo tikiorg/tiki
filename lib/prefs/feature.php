@@ -2272,7 +2272,7 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_wiki_multiprint' => array(
 			'name' => tra('MultiPrint'),
-            'description' => tra('permit printing of multiple Wiki pages'),
+            'description' => tra('Permit printing of multiple Wiki pages as well as entire structures of wiki pages in a single html'),
 			'type' => 'flag',
 			'default' => 'n',
 		),
