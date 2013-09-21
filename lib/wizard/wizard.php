@@ -19,6 +19,18 @@
 abstract class Wizard 
 {
 	/**
+	 * isEditable
+	 *	Answer if any preferences or other settings are changed by the wizard page.
+	 *	If it is editable, the wizard will prompt to Save the page (Save and Continue). Otherwise the "Next" is shown
+	 * @return bool		true if the page alters preferences or other settings
+	 *
+	 */	
+	function isEditable ()
+	{
+		return false;
+	}
+	
+	/**
 	 * This is method onSetupPage
 	 *
 	 * @param string $homepageUrl The url to return to, when the wizard is complete

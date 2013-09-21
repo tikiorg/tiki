@@ -141,6 +141,9 @@ class WizardLib extends TikiLib
 						$stepNr += 1;
 						if (count($pages) == $stepNr+1) {
 							$smarty->assign('lastWizardPage', 'y');
+						} else {
+							$isEditable = $pages[$stepNr]->isEditable();
+							$smarty->assign('isEditable', $isEditable);
 						}
 					
 						// If onSetupPage returns true, processing should continue
@@ -161,6 +164,9 @@ class WizardLib extends TikiLib
 			} else {
 				// For directly accessed wizard pages scroll back, when not displayed
 				do {
+					$isEditable = $pages[$stepNr]->isEditable();
+					$smarty->assign('isEditable', $isEditable);
+
 					$next = true;
 					$show = $pages[$stepNr]->onSetupPage($homepageUrl);
 

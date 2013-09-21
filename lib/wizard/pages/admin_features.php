@@ -12,6 +12,11 @@ require_once('lib/wizard/wizard.php');
  */
 class AdminWizardFeatures extends Wizard 
 {
+	function isEditable ()
+	{
+		return true;
+	}
+	
 	function onSetupPage ($homepageUrl) 
 	{
 		global	$smarty, $prefs;

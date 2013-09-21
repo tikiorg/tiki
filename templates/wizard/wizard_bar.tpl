@@ -14,7 +14,7 @@
 <td style="text-align:right">
 	<input type="hidden" name="url" value="{$homepageUrl}">
 	<input type="hidden" name="wizard_step" value="{$wizard_step}">
-	<input type="submit" class="btn btn-default" name="continue" value="{if isset($lastWizardPage)}{tr}Finish{/tr}{elseif isset($firstWizardPage)}{tr}Start{/tr}{else}{tr}Save and Continue{/tr}{/if}" />
+	<input type="submit" class="btn btn-default" name="continue" value="{if isset($lastWizardPage)}{tr}Finish{/tr}{elseif isset($firstWizardPage)}{tr}Start{/tr}{else}{tr}{if $isEditable eq true}Save and Continue{else}Next{/if}{/tr}{/if}" />
 	</td>
 </tr>
 </table>

@@ -12,6 +12,11 @@ require_once('lib/wizard/wizard.php');
  */
 class AdminWizardLookAndFeel extends Wizard 
 {
+	function isEditable ()
+	{
+		return true;
+	}
+	
 	function onSetupPage ($homepageUrl) 
 	{
 		global	$smarty, $prefs, $tikilib;
@@ -27,7 +32,7 @@ class AdminWizardLookAndFeel extends Wizard
 		}
 		$thumbfile = $this->get_thumbnail_file($a_style, $prefs['site_style_option']);
 		if (empty($thumbfile)) {
-			$thumbfile = get_thumbnail_file($a_style);
+			$thumbfile = $this->get_thumbnail_file($a_style);
 		}
 		if (empty($thumbfile)) {
 			$thumbfile = 'img/trans.png';
