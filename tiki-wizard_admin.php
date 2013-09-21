@@ -87,7 +87,7 @@ $pages[] = new AdminWizardProfiles();
 $wizardlib = TikiLib::lib('wizard');
 $wizardlib->showPages($pages, true);
 
-$showOnLogin = $this->get_preference('wizard_admin_hide_on_login') !== 'y';
+$showOnLogin = $wizardlib->get_preference('wizard_admin_hide_on_login') !== 'y';
 $smarty->assign('showOnLogin', $showOnLogin);
 
 
