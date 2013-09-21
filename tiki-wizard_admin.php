@@ -62,6 +62,9 @@ $pages[] = new AdminWizardFiles();
 require_once('lib/wizard/pages/admin_files_storage.php'); 
 $pages[] = new AdminWizardFileStorage();
 
+require_once('lib/wizard/pages/admin_features.php'); 
+$pages[] = new AdminWizardFeatures();
+
 require_once('lib/wizard/pages/admin_advanced.php'); 
 $pages[] = new AdminWizardAdvanced();
 
