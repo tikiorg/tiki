@@ -123,10 +123,41 @@ class RedactDBCommand extends Command
 		$result = $tikilib->query($query);
 
 		// Remove payments
-		$output->writeln('<info>Removing session data.</info>');
+		$output->writeln('<info>Removing payments data.</info>');
 		$query = "TRUNCATE TABLE tiki_payment_received;";
 		$result = $tikilib->query($query);
 		$query = "TRUNCATE TABLE tiki_payment_requests;";
+		$result = $tikilib->query($query);
+
+		// Remove DSN and mailin
+		$output->writeln('<info>Removing DSN and mailin account data.</info>');
+		$query = "TRUNCATE TABLE tiki_dsn;";
+		$result = $tikilib->query($query);
+		$query = "TRUNCATE TABLE tiki_mailin_accounts;";
+		$result = $tikilib->query($query);
+
+		// Remove auth tokens
+		$output->writeln('<info>Removing auth tokens.</info>');
+		$query = "TRUNCATE TABLE tiki_auth_tokens;";
+		$result = $tikilib->query($query);
+
+		// Remove web services
+		$output->writeln('<info>Removing webservices info.</info>');
+		$query = "TRUNCATE TABLE tiki_webservice;";
+		$result = $tikilib->query($query);
+
+		// Remove google, intertiki, ldap and 3rd party data
+		$output->writeln('<info>Removing google, intertiki, ldap and other 3rd party app data.</info>');
+		$query = "DELETE FROM tiki_preferences WHERE " .
+			"name LIKE 'auth_ldap_%' OR " .
+			"name LIKE '%_key' OR " .
+			"name LIKE '%_apikey' OR " .
+			"name LIKE '%secret' OR " .
+			"name LIKE '%_client_id' OR " .
+			"name LIKE '%access_token%' OR " .
+			"name = 'registerPasscode' OR " .
+			"name = 'interlist' OR " .
+			"name LIKE '%intertiki%';";
 		$result = $tikilib->query($query);
 
 		$output->writeln('<comment>Read the disclaimer!</comment>');
