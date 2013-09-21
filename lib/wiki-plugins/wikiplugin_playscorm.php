@@ -34,7 +34,7 @@ function wikiplugin_playscorm_info() {
 				'required' => true,
 				'name' => tra('Moodle Course ID'),
 				'description' => tra('Course ID in Moodle to upload SCORM objects to'),
-				'filter' => int,
+				'filter' => 'int',
 				'default' => '', 
 			),
 			'width' => array(
