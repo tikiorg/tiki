@@ -112,7 +112,7 @@ class WizardLib extends TikiLib
 			if ($isUserStep) {
 				$stepNr = intval($_REQUEST['stepNr']);
 			} else {
-				$stepNr = intval($_REQUEST['wizard_step']);
+				$stepNr = isset($_REQUEST['wizard_step']) ? intval($_REQUEST['wizard_step']) : 0;
 			}
 
 			$stepBack = false;
