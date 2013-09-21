@@ -2,7 +2,8 @@
 
 <table style="width:100%">
 <tr> 
-<td style="text-align:left; width:250px">
+<td style="text-align:left; width:270px">
+	<div style="float:left; width:20px"><img src="img/icons/wizard16x16.png" alt="{tr}Tiki Admin Wizard{/tr}"></div>
 	<input type="checkbox" name="showOnLogin" {if isset($showOnLogin) AND $showOnLogin eq true}checked="checked"{/if} /> {tr}Show on login{/tr}
 	</td>
 <td style="text-align:left">
