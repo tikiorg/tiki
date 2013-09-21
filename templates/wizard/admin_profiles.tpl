@@ -25,6 +25,7 @@
 	&nbsp;
 	</td>
 	<td style="width:48%">
+	<img src="img/icons/large/profiles.png" style="float:right" />	
 	<b>{tr}Company Intranet{/tr}</b> (<a href="tiki-admin.php?profile=&categories%5B%5D=12.x&categories%5B%5D=Featured+profiles&repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2">{tr}apply profile now{/tr}</a>)
 	<br>
 {tr}Setup for a Corporate Intranet of a typical medium-sized business{/tr}. 
