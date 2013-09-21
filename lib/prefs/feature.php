@@ -2184,7 +2184,7 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_wiki_structure' => array(
 			'name' => tra('Structures'),
-            'description' => tra(''),
+            'description' => tra('Structures allow grouping many wiki pages with hierarchy, a common navigation bar and the option to print them all together as a single html'),
 			'type' => 'flag',
 			'help' => 'Structure',
 			'default' => 'n',
