@@ -15,8 +15,6 @@
 <br>
 	{tr}Structures allow grouping many wiki pages with predefined hierarchy, a common navigation bar and the option to print them all together as a book{/tr}.
 	{preference name=feature_wiki_structure}
-	{preference name=feature_wiki_no_inherit_perms_structure}
-	
 	{tr}See also{/tr} <a href="tiki-admin.php?page=wiki&cookietab=2" target="_blank">{tr}Wiki admin feature panel{/tr}</a>
 <br>
 <br>
