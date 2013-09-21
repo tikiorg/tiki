@@ -21,7 +21,6 @@
 		{preference name=feature_calendar}
 		{preference name=feature_newsletters}
 		{preference name=feature_banners}
-		{preference name=feature_categories}
 		{preference name=feature_freetags}
 		{preference name=feature_search_fulltext}
 	</div>

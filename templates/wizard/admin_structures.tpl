@@ -10,7 +10,9 @@
 
 			{preference name=feature_wiki_open_as_structure}
 			{preference name=feature_wiki_make_structure}
-			{preference name=feature_wiki_categorize_structure}
+			{if $isCategories eq true}
+				{preference name=feature_wiki_categorize_structure}
+			{/if}
 			{preference name=feature_wiki_no_inherit_perms_structure}
 			{preference name=feature_listorphanStructure}
 			{preference name=feature_wiki_multiprint}

@@ -22,6 +22,10 @@ class AdminWizardStructures extends Wizard
 		// Only show the page if the option is selected		
 		$showPage = isset($prefs['feature_wiki_structure']) && $prefs['feature_wiki_structure'] === 'y' ? true : false;
 		
+		$isCategories = isset($prefs['feature_categories']) && $prefs['feature_categories'] === 'y' ? true : false;
+		$smarty->assign('isCategories', $isCategories);
+		
+		
 		// Assign the page tempalte
 		$wizardTemplate = 'wizard/admin_structures.tpl';
 		$smarty->assign('wizardBody', $wizardTemplate);
