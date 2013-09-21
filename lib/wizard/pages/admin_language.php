@@ -19,16 +19,8 @@ class AdminWizardLanguage extends Wizard
 		// Run the parent first
 		parent::onSetupPage($homepageUrl);
 		
-		$showPage = false;
+		$showPage = true;
 
-		// Trigger this page, only if Hebrew is selected. ...only for test purposes
-		$language = $prefs['language'];
-		if (isset($language)) {
-			if ($language == 'he') {
-				$showPage = true;
-			}
-		}
-		
 		// Assign the page tempalte
 		$wizardTemplate = 'wizard/admin_language.tpl';
 		$smarty->assign('wizardBody', $wizardTemplate);

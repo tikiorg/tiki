@@ -7,7 +7,10 @@
 <fieldset>
 	<legend>{tr}Language{/tr}</legend>
 
-	{tr}This is just some dummy text{/tr}	
+	{preference name=language}
+	<br>
+	{preference name=feature_multilingual visible="always"}
+	{preference name=lang_use_db}
 
 </fieldset>
 
