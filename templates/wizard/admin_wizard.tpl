@@ -20,6 +20,7 @@
 	<p>
 	{tr}If you don't want this wizard to open next time you (or another admin) log in, you can uncheck the "Show on login" above from this and any other wizard page{/tr}.
 	</p>
+	<b>Tiki version {$tiki_version}</b><br>
 	{tr}See also{/tr} <a href="tiki-admin.php" target="_blank">{tr}Admin panel{/tr}</a>
 </fieldset>
 <br>
