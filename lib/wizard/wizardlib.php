@@ -43,8 +43,11 @@ class WizardLib extends TikiLib
 			$this->startAdminWizard($homePageUrl,0);
 			
 		} else {
-			// A regular user
-			// New User wizard is not implemented
+			// Do not activate the user wizard (yet)
+			// $show = false;
+			// if ($show) {
+			//	$this->startUserWizard($homePageUrl,0);
+			// }
 		}
 	}
 	
@@ -68,11 +71,33 @@ class WizardLib extends TikiLib
 	}
 	
 	/**
+	 *	startUserWizard - Manually start the user wizard
+	 *	Can also be started by going to: tiki-wizard_user.php?url=tiki-index.php?page=Hello
+	 *	The url value, is where the wizard should return, when it's done
+	 * 
+	 *  @param	$homePageUrl	The url to return to, when the wizard is done
+	 *  @param	$stepNr			Which step in the wizard to go to. Default = 0
+	 *  @return		This function doesn't return
+	 */
+	public function startUserWizard($homePageUrl, $stepNr=0)
+	{
+		global $base_url;
+		
+		// Start the admin wizard
+		$url = $base_url.'tiki-wizard_user.php?&stepNr=' . $stepNr . '&url=' . rawurlencode($homePageUrl);
+		$accesslib = TikiLib::lib('access');
+		$accesslib->redirect($url);
+	}	
+	
+	
+	/**
 	*	Wizard's page stepping logic
 	*	Every page added must be a subclass of the Wizard class
-	*	@param	array	of Wizard pages
+	*	If the admin wizard is run the "showOnLogin" is processed. Otherwize not
+	*	@param	array	$pages	Array of Wizard pages
+	*	@param  bool	$adminWizard Flag if the wizard is a login/admin wizard. Default = false
 	*/
-	public function showPages($pages)
+	public function showPages($pages, $adminWizard=false)
 	{
 		global	$smarty, $base_url;
 		
@@ -96,16 +121,17 @@ class WizardLib extends TikiLib
 			// User pressed "Close". 
 			//	Save the "Show on login" setting, and no other preferences
 			if (isset($_REQUEST['close'])) {
-			
-				// Save "Show on login" setting
-				$showOnLogin = ( isset($_REQUEST['showOnLogin']) && $_REQUEST['showOnLogin'] == 'on' ) ? 'y' : 'n';
-				$this->showOnLogin($showOnLogin);
-			
+
+				if ($adminWizard) {
+					// Save "Show on login" setting
+					$showOnLogin = ( isset($_REQUEST['showOnLogin']) && $_REQUEST['showOnLogin'] == 'on' ) ? 'y' : 'n';
+					$this->showOnLogin($showOnLogin);
+				}
+
 				//	Then exit, by returning the specified URL
 				$accesslib = TikiLib::lib('access');
 				$accesslib->redirect($homepageUrl);
 			}
-
 
 			$isFirstStep = !isset($_REQUEST['wizard_step']);
 			$isUserStep = isset($_REQUEST['stepNr']);	// User defined step nr
@@ -185,9 +211,6 @@ class WizardLib extends TikiLib
 				
 				} while ($next);
 			}
-
-			$showOnLogin = $this->get_preference('wizard_admin_hide_on_login') !== 'y';
-			$smarty->assign('showOnLogin', $showOnLogin);
 
 			$smarty->assign('wizard_step', $stepNr);
 			

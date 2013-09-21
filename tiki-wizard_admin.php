@@ -85,7 +85,10 @@ $pages[] = new AdminWizardProfiles();
 
 // Step the wizard pages
 $wizardlib = TikiLib::lib('wizard');
-$wizardlib->showPages($pages);
+$wizardlib->showPages($pages, true);
+
+$showOnLogin = $this->get_preference('wizard_admin_hide_on_login') !== 'y';
+$smarty->assign('showOnLogin', $showOnLogin);
 
 
 // disallow robots to index page:

@@ -56,9 +56,11 @@ abstract class Wizard
 		$wizardlib->showOnLogin($showOnLogin);	
 		
 		// Commit any preferences on the page
-		if ( isset( $_REQUEST['lm_preference'] ) ) {
-			$prefslib = TikiLib::lib('prefs');
-			$changes = $prefslib->applyChanges((array) $_REQUEST['lm_preference'], $_REQUEST);
-		}		
+		if ($this->isEditable()) {
+			if ( isset( $_REQUEST['lm_preference'] ) ) {
+				$prefslib = TikiLib::lib('prefs');
+				$changes = $prefslib->applyChanges((array) $_REQUEST['lm_preference'], $_REQUEST);
+			}		
+		}
 	}
 }
