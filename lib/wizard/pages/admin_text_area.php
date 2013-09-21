@@ -19,11 +19,18 @@ class AdminWizardTextArea extends Wizard
 		// Run the parent first
 		parent::onSetupPage($homepageUrl);
 
+		// Only show page, when wiki format is used
+		$showPage = true;
+		if ((isset($prefs['feature_wysiwyg']) && $prefs['feature_wysiwyg'] === 'y') &&
+			(!isset($prefs['wysiwyg_htmltowiki']) || $prefs['wysiwyg_htmltowiki'] === 'n')) {
+			$showPage = false;
+		}
+
 		// Assign the page temaplte
 		$wizardTemplate = 'wizard/admin_text_area.tpl';
 		$smarty->assign('wizardBody', $wizardTemplate);
 		
-		return true;		
+		return $showPage;		
 	}
 
 	public function onContinue ($homepageUrl) 
