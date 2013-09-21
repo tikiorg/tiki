@@ -59,6 +59,9 @@ $pages[] = new AdminWizardFiles();
 require_once('lib/wizard/pages/admin_files_storage.php'); 
 $pages[] = new AdminWizardFileStorage();
 
+require_once('lib/wizard/pages/admin_advanced.php'); 
+$pages[] = new AdminWizardAdvanced();
+
 require_once('lib/wizard/pages/admin_namespace.php'); 
 $pages[] = new AdminWizardNamespace();
 
