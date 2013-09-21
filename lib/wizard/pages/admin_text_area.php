@@ -26,6 +26,11 @@ class AdminWizardTextArea extends Wizard
 			$showPage = false;
 		}
 
+		// Hide Codemirror for RTL languages, since it doesn't work
+		require_once('lib/language/Language.php');
+		$isRTL = Language::isRTL();
+		$smarty->assign('isRTL', $isRTL);
+
 		// Assign the page temaplte
 		$wizardTemplate = 'wizard/admin_text_area.tpl';
 		$smarty->assign('wizardBody', $wizardTemplate);

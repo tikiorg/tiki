@@ -9,8 +9,11 @@
 	<legend>{tr}General settings{/tr}</legend>
 	<img src="img/icons/large/editing48x48.png" style="float:right" width="32px"/>	
 	{preference name=feature_fullscreen}
-	{preference name=feature_syntax_highlighter}
-	{preference name=feature_syntax_highlighter_theme}
+	{if $isRTL eq false}
+		{* Disable Codemirror for RTL languages. It doesn't work. *}
+		{preference name=feature_syntax_highlighter}
+		{preference name=feature_syntax_highlighter_theme}
+	{/if}
 	{tr}See also{/tr} <a href="tiki-admin.php?page=textarea&alt=Editing+and+Plugins#content1" target="_blank">{tr}Editing and plugins admin panel{/tr}</a>
 </fieldset>
 <fieldset>
