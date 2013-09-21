@@ -3,7 +3,7 @@
 <h1>{tr}Set up some advanced options{/tr}</h1>
 
 <div style="float:left; width:60px"><img src="img/icons/large/icon-configuration48x48.png" alt="{tr}Set up Workspaces & Areas{/tr}"></div>
-{tr}If you are an experience tiki site administrator, you might like to know and maybe even try some of these advanced features below. They might be very useful for you, for instance, if you plan to periodically create a similar set of Tiki objects for different groups of users with a similar set permissions each time{/tr}.
+{tr}If you are an experienced tiki site administrator, you might like to know and maybe even try some of these advanced features below. They might be very useful for you, for instance, if you plan to periodically create a similar set of Tiki objects for different groups of users with a similar set permissions each time{/tr}.
 <div align="left" style="margin-top:1em;">
 <fieldset>
 	<legend>{tr}Workspaces{/tr}</legend>
