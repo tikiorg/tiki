@@ -8,13 +8,16 @@
 <fieldset>
 	<legend>{tr}General settings{/tr}</legend>
 	{preference name=feature_fullscreen}
-	{if $isRTL eq false}
+	{preference name=wiki_edit_icons_toggle}
+	{if $isRTL eq false and $isHtmlMode neq true}
 		{* Disable Codemirror for RTL languages. It doesn't work. *}
 		{preference name=feature_syntax_highlighter}
 		{preference name=feature_syntax_highlighter_theme}
 	{/if}
 	{tr}See also{/tr} <a href="tiki-admin.php?page=textarea&alt=Editing+and+Plugins#content1" target="_blank">{tr}Editing and plugins admin panel{/tr}</a>
 </fieldset>
+
+{if $isHtmlMode neq true}
 <fieldset>
 	<legend>{tr}Plugin preferences{/tr}</legend>
 	<img src="img/icons/large/plugins.png" style="float:right" />	
@@ -28,5 +31,5 @@
 	{tr}See also{/tr} <a href="tiki-admin.php?page=textarea&alt=Editing+and+Plugins#content2" target="_blank">{tr}Editing and plugins admin panel{/tr}</a>
 	
 </fieldset>
-
+{/if}
 </div>

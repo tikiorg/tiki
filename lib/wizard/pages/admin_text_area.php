@@ -24,11 +24,14 @@ class AdminWizardTextArea extends Wizard
 		// Run the parent first
 		parent::onSetupPage($homepageUrl);
 
-		// Only show page, when wiki format is used
 		$showPage = true;
+
+		// Only show page, when wiki format is used
 		if ((isset($prefs['feature_wysiwyg']) && $prefs['feature_wysiwyg'] === 'y') &&
 			(!isset($prefs['wysiwyg_htmltowiki']) || $prefs['wysiwyg_htmltowiki'] === 'n')) {
-			$showPage = false;
+			$smarty->assign('isHtmlMode', true);
+		} else  {
+			$smarty->assign('isHtmlMode', false);
 		}
 
 		// Hide Codemirror for RTL languages, since it doesn't work
