@@ -156,6 +156,12 @@ class Services_File_Controller
 	{
 		$galleryId = $input->galleryId->int() ?: $this->defaultGalleryId;
 
+		// Patch for uninitialized utilities.
+		//	The real problem is that setup is not called
+		if ($this->utilities == null) {
+			$this->utilities = new Services_File_Utilities;
+		}
+		
 		return $this->utilities->checkTargetGallery($galleryId);
 	}
 }
