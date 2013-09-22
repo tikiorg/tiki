@@ -14697,7 +14697,7 @@ $lang = array(
 "Set up your file gallery and attachments" => "Posa a punt les teves galeries d'arxius i adjunts",
 "Wiki Attachments" => "Adjunts a pàgines Wiki",
 "jCapture setup" => "Posada a punt de jCapture",
-"When activating jCapture, token access is also activated. It is required to use jCapture" => "Quan s'activa jCapture, l'accés per tokens també s'activa. És requerit per a emprar jCapture",
+"When activating jCapture <img src=\"img/icons/camera.png\" />, token access is also activated. It is required to use jCapture" => "Quan s'activa jCapture <img src=\"img/icons/camera.png\" />, l'accés per tokens també s'activa. És requerit per a emprar jCapture",
 "Learn more about <a href=\"https://doc.tiki.org/Token%20Access\" target=\"_blank\">Token Access at doc.tiki.org</a>" => "Pots aprendre més sobre <a href=\"https://doc.tiki.org/Token%20Access\" target=\"_blank\">Accés per Tokens a doc.tiki.org</a>",
 "By default all capture files will be placed in the root folder of the file gallery. You may want to dedicate a different folder to the capture files" => "Per omissió tots els arxius capturats es posaran a la carpeta arrel de les galeries d'arxius. Potser vols dedicar una carpeta diferent on desar els arxius capturats",
 "Set up language" => "Posa a punt l'idioma",
