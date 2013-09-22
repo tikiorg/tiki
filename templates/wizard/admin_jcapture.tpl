@@ -14,6 +14,11 @@
 {preference name=fgal_for_jcapture}
 PENDING: It should be possible to create and assign a dedicated file gallery folder for jcapture recorded files.
 </p>
+<p>
+{preference name=feature_draw}
+Enable drawing directly on captured images from your web page.
+</p>
+{tr}See also{/tr} <a href="http://doc.tiki.org/Screencast" target="_blank">{tr}Screencast{/tr} @ doc.tiki.org</a>
 
 
 </div>
