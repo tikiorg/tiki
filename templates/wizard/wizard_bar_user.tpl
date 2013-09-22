@@ -3,7 +3,7 @@
 <table style="width:100%">
 <tr> 
 <td style="text-align:left; width:270px">
-	<div style="float:left; width:20px"><img src="img/icons/wizard16x16.png" alt="{tr}Tiki User Wizard{/tr}"></div>
+	<div style="float:left; width:20px"><img src="img/icons/wizard16x16.png" alt="{tr}Tiki User Wizard{/tr}" /></div>
 	</td>
 <td style="text-align:left">
 	<input type="submit" class="btn btn-warning" name="close" value="{tr}Close{/tr}" />

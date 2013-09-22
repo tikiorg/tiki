@@ -2,7 +2,7 @@
 
 <h1>{tr}jCapture setup{/tr}</h1>
 
-<div style="float:left; width:60px"><img src="img/icons/large/gnome-camera-video-48.png" alt="{tr}jCapture setup{/tr}"></div>
+<div style="float:left; width:60px"><img src="img/icons/large/gnome-camera-video-48.png" alt="{tr}jCapture setup{/tr}" /></div>
 <div align="left" style="margin-top:1em;">
 <p>
 {tr}When activating jCapture <img src="img/icons/camera.png" />, token access is also activated. It is required to use jCapture.{/tr}<br>

@@ -3,7 +3,7 @@
 <h1>{tr}Set up Date and Time{/tr}</h1>
 
 {tr}Set up your time-zone and how dates and times are displayed{/tr}
-<div style="float:left; width:60px"><img src="img/icons/large/icon-configuration48x48.png" alt="{tr}Set up your Date and Time{/tr}"></div>
+<div style="float:left; width:60px"><img src="img/icons/large/icon-configuration48x48.png" alt="{tr}Set up your Date and Time{/tr}" /></div>
 <div align="left" style="margin-top:1em;">
 <fieldset>
 	<legend>{tr}Date and Time setup{/tr}</legend>

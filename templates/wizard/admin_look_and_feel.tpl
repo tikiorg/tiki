@@ -1,7 +1,7 @@
 {* $Id$ *}
 
 <h1>{tr}Set up Look & Feel{/tr}</h1>
-<div style="float:left; width:60px"><img src="img/icons/large/gnome-settings-background48x48.png" alt="{tr}Set up Look & Feel{/tr}"></div>
+<div style="float:left; width:60px"><img src="img/icons/large/gnome-settings-background48x48.png" alt="{tr}Set up Look & Feel{/tr}" /></div>
 {tr}Configure the Tiki theme and other look & feel preferences{/tr}.
 <div align="left" style="margin-top:1em;">
 <fieldset>

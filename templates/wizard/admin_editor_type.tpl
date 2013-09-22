@@ -3,7 +3,7 @@
 <h1>{tr}Select editor type{/tr}</h1>
 
 {tr}Select editor type{/tr}
-<div style="float:left; width:60px"><img src="img/icons/large/icon-configuration48x48.png" alt="{tr}Select editor type{/tr}"></div>
+<div style="float:left; width:60px"><img src="img/icons/large/icon-configuration48x48.png" alt="{tr}Select editor type{/tr}" /></div>
 <div align="left" style="margin-top:1em;">
 <fieldset>
 	<legend>{tr}Editor type{/tr}</legend>

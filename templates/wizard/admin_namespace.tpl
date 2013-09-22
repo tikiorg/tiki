@@ -2,7 +2,7 @@
 
 <h1>{tr}Namespace setup{/tr}</h1>
 
-<div style="float:left; width:60px"><img src="img/icons/large/icon-configuration48x48.png" alt="{tr}Namespace setup{/tr}"></div>
+<div style="float:left; width:60px"><img src="img/icons/large/icon-configuration48x48.png" alt="{tr}Namespace setup{/tr}" /></div>
 <div align="left" style="margin-top:1em;">
 {tr}The namespace separator should not{/tr}
 <ul>
