@@ -33,8 +33,15 @@ class AdminWizardFiles extends Wizard
 
 	function onContinue ($homepageUrl) 
 	{
+		global $tikilib, $prefs;
+		
 		// Run the parent first
 		parent::onContinue($homepageUrl);
+		
+		// If ElFinder is selected, also activate jQuery UI
+		if ($prefs['fgal_elfinder_feature'] === 'y') {
+			$tikilib->set_preference('feature_jquery_ui', 'y');
+		}
 	}
 }
 

@@ -293,9 +293,10 @@ function prefs_fgal_list()
 		),
 		'fgal_elfinder_feature' => array(
 			'name' => tra('Use elFinder UI'),
-			'description' => tra('Modern file manager'),
+			'description' => tra('Modern file manager, with drag and drop capability'),
 			'type' => 'flag',
 			'default' => 'n',
+			'help' => 'elFinder',
 			'warning' => tra('Experimental'),
 			'tags' => array('experimental'),
 			'dependencies' => array('feature_jquery_ui'),

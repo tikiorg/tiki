@@ -7,8 +7,12 @@
 <div align="left" style="margin-top:1em;">
 <fieldset>
 	<legend>{tr}File Gallery{/tr}</legend>
-	{preference name='fgal_use_db'}
+	{preference name='fgal_elfinder_feature'}
+	{tr}Modern file manager, with drag and drop capability{/tr}. {tr}Depends on jQuery UI, which will be activated, if ElFinder is used{/tr}.<br>
+	{tr}Please note that this feature is still tagged as experimental{/tr}.<br>
+	{tr}See also{/tr} <a href="http://doc.tiki.org/elFinder" target="_blank">{tr}ElFinder{/tr} @ doc.tiki.org</a><br>
 	<br>
+	{preference name='fgal_use_db'}
 	{tr}See also{/tr} <a href="tiki-admin.php?page=fgal#content1" target="_blank">{tr}File Gallery admin panel{/tr}</a>
 </fieldset>
 <br>
