@@ -38,9 +38,15 @@ class AdminWizardFiles extends Wizard
 		// Run the parent first
 		parent::onContinue($homepageUrl);
 		
-		// If ElFinder is selected, also activate jQuery UI
+		// If ElFinder is selected, set additional preferences
 		if ($prefs['fgal_elfinder_feature'] === 'y') {
+			
+			// jQuery UI
 			$tikilib->set_preference('feature_jquery_ui', 'y');
+			
+			// Set ElFinder view as the default File Gallery view
+			$tikilib->set_preference('fgal_default_view', 'finder');
+			
 		}
 	}
 }
