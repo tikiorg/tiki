@@ -6,16 +6,32 @@
 <div align="left" style="margin-top:1em;">
 <fieldset>
 	<legend>{tr}Structures options{/tr}</legend>
-
-			{preference name=feature_wiki_open_as_structure}
-			{preference name=feature_wiki_make_structure}
-			{if $isCategories eq true}
-				{preference name=feature_wiki_categorize_structure}
-			{/if}
-			{preference name=feature_wiki_no_inherit_perms_structure}
-			{preference name=feature_listorphanStructure}
-			{preference name=feature_wiki_multiprint}
+		<table>
+		<tr>
+		<td style="width:50%">
+		{preference name=feature_wiki_open_as_structure}
+		Opens the structure heading for structure pages, even if no "structure" parameter is given in the URL.<br>
 		<br>
+		{preference name=feature_wiki_make_structure}
+		<br>
+		{if $isCategories eq true}
+			{preference name=feature_wiki_categorize_structure}
+			Categorize all new structure pages as the root page.<br>
+		{/if}
+		</td>
+		<td>
+		{preference name=feature_wiki_multiprint}
+		Print a structure as a book.<br>
+		<br>
+		{preference name=feature_listorphanStructure}
+		<br>
+		{preference name=feature_wiki_no_inherit_perms_structure}
+		Normally pages will inherit object permissions from their parent page. However, object permissions override category permissions. 
+		So, if you are relying on category permissions in structures, you may want to consider this setting.<br>
+		<br>
+		</td>
+		</tr>
+		</table>
 		{tr}See also{/tr} <a href="https://doc.tiki.org/Structures" target="_blank">{tr}Structures{/tr} @ doc.tiki.org</a>
 </fieldset>
 </div>
