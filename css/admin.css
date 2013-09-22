@@ -511,3 +511,10 @@ a.admbox.off img {
 }
 
 /* end profiles */
+
+/* Admin wizard */
+
+.adminWizardLink {
+    float:right
+}
+/* end Admin WIzard */
