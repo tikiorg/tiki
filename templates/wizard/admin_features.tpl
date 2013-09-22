@@ -8,7 +8,9 @@
 
 <fieldset>
 	<legend>{tr}Main Tiki features{/tr}</legend>
-	<img src="img/icons/large/boot.png" style="float:right" />	
+	<table style="width:100%">
+	<tr>
+	<td style="width:95%">
 		{* preference name=feature_wiki *}
 		{* preference name=feature_file_galleries *}
 	<div class="admin clearfix featurelist">
@@ -24,6 +26,12 @@
 		{preference name=feature_freetags}
 		{preference name=feature_search_fulltext}
 	</div>
+	</td>
+	<td style="width:5%">
+	<img src="img/icons/large/boot.png" style="float:right" />	
+	</td>
+	</tr>
+	</table>
 	<br>
 	{tr}Tiki has many more features{/tr}.
 	{tr}See also{/tr} <a href="http://doc.tiki.org/Global+Features" target="_blank">{tr}Global Features{/tr} @ doc.tiki.org</a>
@@ -35,6 +43,10 @@
 	<div class="admin clearfix featurelist">
 		{preference name=feature_user_watches}
 		{preference name=feature_group_watches}
+		{preference name=feature_daily_report_watches}
+		<div class="adminoptionboxchild" id="feature_daily_report_watches_childcontainer">
+			{preference name=dailyreports_enabled_for_new_users}
+		</div>
 		{if $isMultiLanguage eq true}
 			{preference name=feature_user_watches_translations}
 			{preference name=feature_user_watches_languages}
