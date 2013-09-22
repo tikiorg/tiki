@@ -14,8 +14,10 @@
 			<div class="adminoptionbox">
 				{preference name=style}
 				{preference name=style_option}
-
-				{preference name=site_layout}
+				{preference name=feature_fixed_width}
+				<div class="adminoptionboxchild" id="feature_fixed_width_childcontainer">
+					{preference name=layout_fixed_width}
+				</div>
 
 				{if $prefs.javascript_enabled eq 'n' or $prefs.feature_jquery eq 'n'}
 					<input type="submit" class="btn btn-default" name="changestyle" value="{tr}Go{/tr}" />
