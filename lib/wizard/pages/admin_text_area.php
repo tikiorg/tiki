@@ -26,7 +26,7 @@ class AdminWizardTextArea extends Wizard
 
 		$showPage = true;
 
-		// Only show page, when wiki format is used
+		// Mark that Wysiwyg HTML mode is used
 		if ((isset($prefs['feature_wysiwyg']) && $prefs['feature_wysiwyg'] === 'y') &&
 			(!isset($prefs['wysiwyg_htmltowiki']) || $prefs['wysiwyg_htmltowiki'] === 'n')) {
 			$smarty->assign('isHtmlMode', true);
