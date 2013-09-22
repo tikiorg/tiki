@@ -50,6 +50,9 @@ $pages[] = new AdminWizardWiki();
 require_once('lib/wizard/pages/admin_auto_toc.php'); 
 $pages[] = new AdminWizardAutoTOC();
 
+require_once('lib/wizard/pages/admin_category.php'); 
+$pages[] = new AdminWizardCategory();
+
 require_once('lib/wizard/pages/admin_structures.php'); 
 $pages[] = new AdminWizardStructures();
 
