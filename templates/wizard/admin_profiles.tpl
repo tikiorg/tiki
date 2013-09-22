@@ -3,7 +3,7 @@
 <h1>{tr}Initialize Tiki{/tr}</h1>
 
 {tr}Initialize Tiki using a profile{/tr}.
-<div style="float:left; width:60px"><img src="img/icons/large/icon-configuration48x48.png" alt="{tr}Initialize Tiki{/tr}"></div>
+<div style="float:left; width:60px"><img src="img/icons/large/profiles48x48.png" alt="{tr}Initialize Tiki{/tr}"></div>
 {tr}This is an optional step, which can initialize Tiki as an application, e.g. a blog.{/tr}
 <div align="left" style="margin-top:1em;">
 <fieldset>
@@ -25,7 +25,6 @@
 	&nbsp;
 	</td>
 	<td style="width:48%">
-	<img src="img/icons/large/profiles.png" style="float:right" />	
 	<b>{tr}Company Intranet{/tr}</b> (<a href="tiki-admin.php?profile=&categories%5B%5D=12.x&categories%5B%5D=Featured+profiles&repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2">{tr}apply profile now{/tr}</a>)
 	<br>
 {tr}Setup for a Corporate Intranet of a typical medium-sized business{/tr}. 

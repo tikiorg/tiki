@@ -3,11 +3,10 @@
 <h1>{tr}Set up Wiki environment{/tr}</h1>
 
 {tr}Set up your Wiki environment{/tr}
-<div style="float:left; width:60px"><img src="img/icons/large/icon-configuration48x48.png" alt="{tr}Set up your Wiki environment{/tr}"></div>
+<div style="float:left; width:60px"><img src="img/icons/large/wikipages48x48.png" alt="{tr}Set up your Wiki environment{/tr}"></div>
 <div align="left" style="margin-top:1em;">
 <fieldset>
 	<legend>{tr}Wiki environment{/tr}</legend>
-	<img src="img/icons/large/wikipages.png" style="float:right" />	
 	{tr}Auto TOC will automatically generate 2 Table Of Contents, One in the wiki page and one floating when scrolling down the page. Enable fast(!) header navigation{/tr}. 
 	{preference name=wiki_auto_toc}
 	{tr}See also{/tr} <a href="tiki-admin.php?page=wiki&alt=Wiki#content1" target="_blank">{tr}Wiki admin panel{/tr}</a>

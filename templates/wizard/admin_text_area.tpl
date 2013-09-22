@@ -3,11 +3,10 @@
 <h1>{tr}Set up your Text Area{/tr}</h1>
 
 {tr}Set up your text area environment (Editing and Plugins){/tr}
-<div style="float:left; width:60px"><img src="img/icons/large/icon-configuration48x48.png" alt="{tr}Set up your Text Area{/tr}"></div>
+<div style="float:left; width:60px"><img src="img/icons/large/editing48x48.png" alt="{tr}Set up your Text Area{/tr}"></div>
 <div align="left" style="margin-top:1em;">
 <fieldset>
 	<legend>{tr}General settings{/tr}</legend>
-	<img src="img/icons/large/editing48x48.png" style="float:right" width="32px"/>	
 	{preference name=feature_fullscreen}
 	{if $isRTL eq false}
 		{* Disable Codemirror for RTL languages. It doesn't work. *}
@@ -18,6 +17,7 @@
 </fieldset>
 <fieldset>
 	<legend>{tr}Plugin preferences{/tr}</legend>
+	<img src="img/icons/large/plugins.png" style="float:right" />	
 	{preference name=wikipluginprefs_pending_notification}
 	<b>{tr}Some recommended plugins{/tr}:</b><br> 
 	{preference name=wikiplugin_convene}

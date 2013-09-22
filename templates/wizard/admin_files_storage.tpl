@@ -2,7 +2,7 @@
 
 <h1>{tr}File storage setup{/tr}</h1>
 
-<div style="float:left; width:60px"><img src="img/icons/large/icon-configuration48x48.png" alt="{tr}File storage setup{/tr}"></div>
+<div style="float:left; width:60px"><img src="img/icons/large/file-manager48x48.png" alt="{tr}File storage setup{/tr}"></div>
 <div align="left" style="margin-top:1em;">
 <p>
 
@@ -10,7 +10,6 @@
 <div>
 <fieldset>
 	<legend>{tr}File Gallery storage{/tr}</legend>
-	<img src="img/icons/large/file-manager.png" style="float:right" />	
 	{preference name='fgal_use_dir'}
 </fieldset>
 </div>
