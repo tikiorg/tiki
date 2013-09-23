@@ -1,4 +1,4 @@
-{* $Id: admin_advanced.tpl 47627 2013-09-21 18:00:36Z xavidp $ *}
+{* $Id$ *}
 
 <h1>{tr}Set up your User & Community features{/tr}</h1>
 
