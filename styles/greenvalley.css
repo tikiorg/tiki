@@ -189,6 +189,10 @@ ul.siteloginbar_poppedup {
 
 /****** Top Bar, Menus, Links ******/
 
+#main #tiki-top .cssmenu_horiz li.menuSection a {
+	padding-right: 30px;
+}
+
 #topbar_modules {
 	height: 35px;
     font-size: 0.9em;
@@ -898,10 +902,15 @@ select#viewSwitcher {
 
 /** Phonebook **/
 .phonebook {
-    width: 680px;
     margin: 1em auto;
+    padding: 0 .6em;
     background: url('greenvalley/phonebook_ltr.jpg') no-repeat;
-    min-height: 800px;
+    min-height: 820px;
+    text-shadow: none;
+}
+
+.phonebook label {
+	color: #000;
 }
 
 .phonebook .normal {
@@ -910,7 +919,6 @@ select#viewSwitcher {
     margin-top: 10px;
     margin-bottom: 10px;
 }
-
 .phonebook_listing {
     width: 100%;
 }
@@ -942,7 +950,11 @@ select#viewSwitcher {
     font-size: 120%;
 }
 
-.phonebook .mini {padding-top:0.6em;}
+.phonebook .mini {
+	padding-top: 350px;
+	padding-bottom: 10px;
+}
+
 .phonebook p {display:none;}
 
 /* Business tracker */
@@ -1051,4 +1063,3 @@ select#viewSwitcher {
     clear:both;
 }
 /* End of File */
-
