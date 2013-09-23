@@ -151,11 +151,11 @@ class RedactDBCommand extends Command
 		$output->writeln('<info>Removing google, intertiki, ldap and other 3rd party app data.</info>');
 		$query = "DELETE FROM tiki_preferences WHERE " .
 			"name LIKE 'auth_ldap_%' OR " .
-			"name LIKE '%_key' OR " .
-			"name LIKE '%_apikey' OR " .
+			"name LIKE '%key' OR " .
 			"name LIKE '%secret' OR " .
 			"name LIKE '%secr' OR " .
-			"name LIKE '%_client_id' OR " .
+			"name LIKE '%client_id' OR " .
+			"name LIKE '%application_id' OR " .
 			"name LIKE '%access_token%' OR " .
 			"name LIKE '%salt' OR " .
 			"name = 'registerPasscode' OR " .
