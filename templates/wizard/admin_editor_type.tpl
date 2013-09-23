@@ -25,8 +25,6 @@
 	</td>
 	</tr>
 	</table>
-
-	
+	<br>
 </fieldset>
-
 </div>
