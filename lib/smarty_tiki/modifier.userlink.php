@@ -118,8 +118,9 @@ function smarty_modifier_userlink($other_user, $class='link', $idletime='not_set
 				}
 			}
 			if ($prefs['feature_friends'] == 'y') {
-				$content .= '<img src="img/icons/ico_friend.gif" />&nbsp;';
-				$content .= $tikilib->get_friends_count($other_user) . '&nbsp;&nbsp;&nbsp;';
+			 	// This code no longer works, new code coming	
+				//$content .= '<img src="img/icons/ico_friend.gif" />&nbsp;';
+				//$content .= $tikilib->get_friends_count($other_user) . '&nbsp;&nbsp;&nbsp;';
 			}
 			if ($prefs['feature_community_mouseover_score'] == 'y' && $star) {
 				$content .= $star . $info['score'];
