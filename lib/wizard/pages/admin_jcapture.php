@@ -58,7 +58,7 @@ class AdminWizardJCapture extends Wizard
 		parent::onContinue($homepageUrl);
 		
 		// Set the specified gallery name
-		$jcaptureFileGalleryName = $_REQUEST['jcaptureFileGalleryName'];
+		$jcaptureFileGalleryName = isset($_REQUEST['jcaptureFileGalleryName']) ? $_REQUEST['jcaptureFileGalleryName'] : '';
 		if (!empty($jcaptureFileGalleryName)) {
 			$filegalib = TikiLib::lib('filegal');
 
