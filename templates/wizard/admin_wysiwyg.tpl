@@ -9,7 +9,7 @@
 	{tr}Select the Wysiwyg editor mode{/tr}
 	<table style="border:0px;padding-left:20px">
 	<tr>
-	<td>
+	<td width="30%">
 	<input type="radio" name="editorType" value="wiki" {if empty($editorType) || $editorType eq 'wiki'}checked="checked"{/if} /> {tr}Compatible Wiki mode{/tr}</td><td> {tr}Use wiki syntax for saved pages{/tr}.<br>
 		{tr}This is the most compatible with Tiki functionality and the most stable editor mode{/tr}.<br>
 		{tr}Tools and functions in the editor toolbar will be limited{/tr}.<br>
@@ -22,8 +22,7 @@
 	</tr>
 	<tr>
 	<td><input type="radio" name="editorType" value="html" {if $editorType eq 'html'}checked="checked"{/if} /> {tr}HTML mode{/tr}</td><td>{tr}Use html syntax for saved pages{/tr}.<br>
-		{tr}Has best compatibility with inline editing, but loses some wiki related features{/tr}.<br>
-		{tr}Lost features include:{/tr} {tr}Problems with SEFURL{/tr}, {tr}SlideShow{/tr}.<br>
+		{tr}Has best compatibility with inline editing{/tr}. {tr}Loses some wiki related features, such as SlideShow, and has some problems with SEFURL{/tr}.<br>
 		{tr}Full editor toolbar{/tr}.<br>
 	</td>
 	</tr>
