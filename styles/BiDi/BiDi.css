@@ -9,38 +9,27 @@
  * turning them into right text-alignments.
 */
 
-/* >>>>> IMPORTANT NOTICE <<<<<
- * BiDi is set by default to work with the defaul theme of Tiki, FiveAlive Blueberry
- * Test and finalisation have been also done on the Greenvalley theme.
- * This theme is LeftToRight and RightToLeft. Image styles (background: url)
- * are given has example so it make easy for you to understand how to customise.
- * Change them so it fit your website graphic chart. Bsfez
+/* Notice : BiDi layout modifications are general and try to address to all the themes. 
+ * BiDi is set by default to work with the default theme of Tiki, FiveAlive Blueberry.
+ * BiDi file is read only and used when RTL (Right To Left) language is detected.
+ * It is located at "/styles/BiDi/".
+ */
+ 
+ /* RTL Theme specifics CSS files.
+  * From Tiki12 theme specific RTL stylesheet can be
+  * applied. Place the -rtl.css file within the same directory
+  * of your theme so you'll have "/styles/mytheme.css" and "/styles/mytheme-rtl.css"
+  * Common use is to place graphics within your theme elements. "/styles/mytheme/"
+  * This is experimental and we keep improving as we plan to integrate bootstrap soon.
+  * Any help will be appreciated (please contact). Team : Bsfez/yonixxx.
  */
 
-/* Notice : BiDi layout modifications are general and try to address to all the themes.
- * BiDi files are read and used when RTL (Right To Left) language is detected.
- * They are located at "/styles/BiDi/" and consist today in BiDi.css only.
- * This is a very hard task (if not impossible) as each theme got specificity.
- * However it is possible to help as much as we can the Admin and Webmasters
- * who would like to use Tiki in an RTL environment or using multilingual feature.
- * The idea is have for each theme a specific BiDi adding for each theme a "rtl"
- * folder to be used for graphics and .css files.
- * This is experimental and will improve with time.
- * Any help will be appreciated (please contact). Team : Bsfez/yonixxx.
- */
-
-/* Import RTL Theme specifics CSS files. */
-/*@import url("../greenvalley/rtl/greenvalley_BiDi.css");*/
-
-/* The following address mainly to fivealive, option blueberry theme which is the
- * default theme for a brand new installation. The theme specific should be set as
- * Explained above.
- */
+/***** XHTML Elements (body tag here, others follow Layout) *****/
 
 /* Hebrew and Arabic characters display smaller than latin characters */
 /* set here a different font size for RTL only - Note that latin char will look bigger than hebrew if mixed (numbers) */
 body {
-    font: 93% !important;
+    font: 102% !important;
 }
 
 /***** Layout *****/
@@ -255,7 +244,7 @@ ul.sf-shadow ul {background-image:none}
 .cssmenu_horiz li.sfHover ul,
 .cssmenu_vert li:hover ul,
 .cssmenu_vert li.sfHover ul {
-    left: auto; right: -1em;
+	left: auto; right: 0;
 }
 
 /* menulevel2 adjustment */
@@ -326,10 +315,6 @@ div.tabstoggle {
 }
 
 /***** Article *****/
-/* Force the width of articles when using one col only - Could require editing depending the theme you are using */
-.articleheadingtext {
-    min-width: 640px;
-}
 
 .articletitle {
     text-align: right !important;
