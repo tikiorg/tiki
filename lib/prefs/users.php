@@ -71,7 +71,8 @@ function prefs_users_list()
 			'default' => 'n',
 		),
 		'users_prefs_show_mouseover_user_info' => array(
-			'name' => tra("Show user's info on mouseover"),
+			'name' => tra("Pre-set show user's info on mouseover"),
+			'description' => tra("Set new users to show their user's info on mouseover"),
 			'type' => 'flag',
 			'dependencies' => array(
 				'feature_community_mouseover',

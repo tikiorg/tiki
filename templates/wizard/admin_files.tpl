@@ -2,14 +2,13 @@
 
 <h1>{tr}Set up Files and File Gallery{/tr}</h1>
 
-{tr}Set up your file gallery and attachments{/tr}
-<div style="float:left; width:60px"><img src="img/icons/large/file-manager48x48.png" alt="{tr}Set up your Wiki environment{/tr}" /></div>
+{tr}Set up your file gallery and attachments{/tr}. {tr}Choose to store them either in the database or in files on disk, among other options{/tr}.
+<div style="float:left; width:60px"><img src="img/icons/large/file-manager48x48.png" alt="{tr}Set up Files and File Gallery{/tr}" /></div>
 <div align="left" style="margin-top:1em;">
 <fieldset>
 	<legend>{tr}File Gallery{/tr}</legend>
 	{preference name='fgal_elfinder_feature'}
-	{tr}Modern file manager, with drag and drop capability{/tr}. {tr}Depends on jQuery UI, which will be activated, if ElFinder is used{/tr}.<br>
-	{tr}Please note that this feature is still tagged as experimental{/tr}.<br>
+	{tr}Depends on jQuery UI, which will be activated, if ElFinder is used{/tr}.<br>
 	{tr}See also{/tr} <a href="http://doc.tiki.org/elFinder" target="_blank">{tr}ElFinder{/tr} @ doc.tiki.org</a><br>
 	<br>
 	{preference name='fgal_use_db'}

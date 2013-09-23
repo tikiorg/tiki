@@ -75,7 +75,7 @@ function prefs_wiki_list($partial = false)
 		),
 		'wiki_pagename_strip' => array(
 			'name' => tra('Page name display stripper'),
-			'description' => tra('Character to use as a delimiter in the page name. The portion of the name after this character will not be displayed.'),
+			'description' => tra('Character to use as a delimiter in the page name. The portion of the name after this character will not be displayed. If the page name display stripper conflicts with the namespace separator, the namespace is used and the page name display is not stripped'),
 			'type' => 'text',
 			'size' => 5,
 			'default' => '',
@@ -705,14 +705,14 @@ function prefs_wiki_list($partial = false)
 		),
 		'wiki_auto_toc' => array(
 			'name' => tr('Wiki auto-toc'),
-			'description' => tr('Automatic Table of Contents generation for wiki pages.'),
+			'description' => tr('Automatic Table of Contents generation for wiki pages. It will automatically generate 2 Table Of Contents: one in the wiki page and one floating when scrolling down the page. Enable fast(!) header navigation.'),
 			'type' => 'flag',
 			'help' => 'Auto TOC',
 			'default' => 'n',
 		),
 		'wiki_inline_auto_toc' => array(
 			'name' => tr('Add inline auto-toc'),
-			'description' => tr('Automatically add an inline Table of Contents for wiki pages.'),
+			'description' => tr('Automatically add an inline Table of Contents for wiki pages. This setting can be toogled per page, in the page properties'),
 			'type' => 'flag',
 			'default' => 'y',
 			'dependencies' => array(

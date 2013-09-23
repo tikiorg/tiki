@@ -244,7 +244,7 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_categories' => array(
 			'name' => tra('Category'),
-			'description' => tra('Global category system. Items of different types (wiki pages, articles, tracker items, etc) can be added to one or many categories. Categories can have permissions.'),
+			'description' => tra('Global content category system. Items of different types (wiki pages, articles, tracker items, etc) can be added to one or many content categories. Categories can have permissions, so that content access can be controlled, and e.g. only granted to a certain group'),
 			'help' => 'Category',
 			'type' => 'flag',
 			'default' => 'n',
@@ -2199,25 +2199,25 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_wiki_open_as_structure' => array(
 			'name' => tra('Open page as structure'),
-			'description' => tra('Opens the structure heading for structure pages, even if no "structure" parameter is given in the URL'),
+            'description' => tra('Opens the structure heading for structure pages, even if no structure parameter is given in the URL'),
 			'type' => 'flag',
 			'default' => 'n',
 		),
 		'feature_wiki_make_structure' => array(
 			'name' => tra('Make structure from page'),
-            'description' => tra(''),
+            'description' => tra('Show a button below each wiki page to allow converting it from a simple wiki page into the root page of a new structure'),
 			'type' => 'flag',
 			'default' => 'n',
 		),
 		'feature_wiki_categorize_structure' => array(
 			'name' => tra('Categorize structure pages together'),
-            'description' => tra('group structured pages under the same category'),
+            'description' => tra('Group new pages in the structure under the same category as the root page of that structure'),
 			'type' => 'flag',
 			'default' => 'n',
 		),
 		'feature_wiki_no_inherit_perms_structure' => array(
 			'name' => tra('Disable inherited direct object permissions'),
-            'description' => tra('Disable inheritance of direct object permissions when adding pages from a structure'),
+            'description' => tra('Normally pages will inherit object permissions from their parent page. However, object permissions override category permissions. So, if you are relying on category permissions in structures, you may want to consider this setting, in order to disable inheritance of direct object permissions when adding pages from a structure'),
 			'type' => 'flag',
 			'default' => 'n',
 		),
@@ -2272,7 +2272,7 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_wiki_multiprint' => array(
 			'name' => tra('MultiPrint'),
-            'description' => tra('Permit printing of multiple Wiki pages as well as entire structures of wiki pages in a single html'),
+            'description' => tra('Permit printing of multiple Wiki pages as well as entire structures of wiki pages as a book in a single html'),
 			'type' => 'flag',
 			'default' => 'n',
 		),
@@ -2285,7 +2285,7 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_listorphanStructure' => array(
 			'name' => tra('Pages not in structure'),
-            'description' => tra('list pages not in structure'),
+            'description' => tra('List pages not in structure'),
 			'type' => 'flag',
 			'default' => 'n',
 		),
@@ -2466,7 +2466,8 @@ function prefs_feature_list($partial = false)
 			'default' => 'n',
 		),
 		'feature_community_mouseover' => array(
-			'name' => tra("Show user's information on mouseover"),
+			'name' => tra("Allow showing user's information on mouseover"),
+			'description' => tra('Site feature to allow showing user\'s information on mouseover'),
 			'type' => 'flag',
 			'help' => 'User+Preferences',
 			'hint' => tra("Requires user's information to be public"),
@@ -2762,7 +2763,7 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_jcapture' => array(
 			'name' => tra('jCapture Screencast'),
-            'description' => tra('Use jCapture applet to create screencasts and capture screenshots.'),
+            'description' => tra('Use jCapture applet to create screencasts and capture screenshots, store them in a file gallery and show them directly into the wiki page'),
 			'type' => 'flag',
 			'help' => 'jCapture',
 			'default' => 'n',				// include UI lib for more effects

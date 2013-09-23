@@ -3,25 +3,28 @@
 <h1>{tr}Namespace setup{/tr}</h1>
 
 <div style="float:left; width:60px"><img src="img/icons/large/icon-configuration48x48.png" alt="{tr}Namespace setup{/tr}" /></div>
-<div align="left" style="margin-top:1em;">
+<div align="left" style="margin-top:1em;padding-left:60px;">
 {tr}The namespace separator should not{/tr}
 <ul>
 <li>{tr}contain any of the characters not allowed in wiki page names, typically{/tr} /?#[]@$&+;=&lt;&gt;</li>
 <li>{tr}conflict with wiki syntax tagging{/tr}</li>
 </ul>
-{preference name=namespace_separator}
-{if isset($isStructures) and $isStructures eq true}
-{preference name=namespace_indicator_in_structure}
-{/if}
+</div>
+<div align="left" style="margin-top:1em;">
 <fieldset>
-	<legend>{tr}Settings that may be affected by the namespace separator{/tr}{help url="Watch"}</legend>
+	<legend>{tr}Namespace settings{/tr}{help url="Namespaces"}</legend>
+	{preference name=namespace_separator}
+	{if isset($isStructures) and $isStructures eq true}
+		{preference name=namespace_indicator_in_structure}
+	{/if}
+	<br/>
+	<b>{tr}Settings that may be affected by the namespace separator{/tr}:</b><br/>
 	<img src="img/icons/large/wikipages.png" style="float:right" />	
 
 	{tr}To use :: as a separator, you should also use ::: as the wiki center tag syntax{/tr}.<br/>
 	{tr}Note: a conversion of :: to ::: for existing pages must be done manually{/tr}
 	{preference name=feature_use_three_colon_centertag}
 
-	{tr}If the page name display stripper conflicts with the namespace separator, the namespace is used and the page name display is not stripped{/tr}.
 	{preference name=wiki_pagename_strip}
 	<br>
 	{tr}See also{/tr} <a href="http://doc.tiki.org/Namespaces" target="_blank">{tr}Namespaces{/tr} @ doc.tiki.org</a>
