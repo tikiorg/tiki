@@ -11,8 +11,14 @@
 </p>
 <fieldset>
 	<legend>{tr}jCapture options and related features{/tr}</legend>
-	{preference name=fgal_for_jcapture}
-	PENDING: It should be possible to create and assign a dedicated file gallery folder for jcapture recorded files.
+	jCapture stores the capture files in the file gallery.<br>
+	Gallery name: 
+	{if empty($jcaptureFileGalleryName)}
+		<input type="text" name="jcaptureFileGalleryName" value="{$jcaptureFileGalleryName}" /><br>
+		It will be created under the gallery root. If the gallery already exists, jCapture will use that gallery.
+	{else}
+		{$jcaptureFileGalleryName}
+	{/if}
 	<br>
 	<br>
 
