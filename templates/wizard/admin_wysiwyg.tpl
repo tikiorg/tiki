@@ -30,8 +30,6 @@
 	<tr>
 	<td></td><td>
 	{preference name=wysiwyg_optional}
-	{tr}If wysiwyg is optional, the wiki text editor is also available. Otherwise only the Wysiwyg editor is used{/tr}.<br>
-	{tr}Switching between html and wiki formats can cause problems for some pages{/tr}.
 	</td>
 	</tr>
 	</table>

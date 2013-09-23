@@ -12,6 +12,7 @@ function prefs_wysiwyg_list()
 		'wysiwyg_optional' => array(
 			'name' => tra('Full Wysiwyg Editor is optional'),
 			'type' => 'flag',
+			'description' => tra('If wysiwyg is optional, the wiki text editor is also available. Otherwise only the Wysiwyg editor is used.').' '.tra('Switching between html and wiki formats can cause problems for some pages.'),
 			'dependencies' => array(
 				'feature_wysiwyg',
 			),
@@ -19,6 +20,7 @@ function prefs_wysiwyg_list()
 		),
 		'wysiwyg_default' => array(
 			'name' => tra('Full Wysiwyg Editor is displayed by default'),
+			'description' => tra('If both the Wysiwyg editor and the text editor is available, the Wysiwyg editor is used by default, e.g when creating new pages'),
 			'type' => 'flag',
 			'dependencies' => array(
 				'wysiwyg_optional',
