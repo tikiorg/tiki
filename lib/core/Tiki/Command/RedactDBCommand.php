@@ -97,9 +97,13 @@ class RedactDBCommand extends Command
 		for ($i = 2; $i <= $num; $i++) {
 			$query = "UPDATE `users_users` SET `email` = ?, `login` = ?, `hash`=md5( ? ) WHERE `userId` = ?";
 			$bindvars = array("user$i@example.com", "user$i", "pass$i", $i);
-			$query = $tikilib->query($query, $bindvars);
+			$result = $tikilib->query($query, $bindvars);
 			// TODO : Update user avatars
 		}
+		$query = "UPDATE `users_users` SET `provpass` = '';";
+		$result = $tikilib->query($query);		
+		$query = "UPDATE `users_users` SET `password` = '';";
+		$result = $tikilib->query($query);
 
 		// Remove user web-mail accounts
 		$output->writeln('<info>Removing user mail accounts.</info>');
