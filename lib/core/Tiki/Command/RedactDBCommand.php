@@ -57,6 +57,7 @@ class RedactDBCommand extends Command
 				AND table_name <> 'users_users'
 				AND table_schema = '$dbs_tiki';";
 		$result = $tikilib->query($query);
+		$ret = array();
 		while ($res = $result->fetchRow()) {
 			$ret[] = $res;
 		}
@@ -76,8 +77,8 @@ class RedactDBCommand extends Command
 				AND table_name <> 'users_users'
 				AND table_schema = '$dbs_tiki';";
 		$result = $tikilib->query($query);
+		$ret = array();	
 		while ($res = $result->fetchRow()) {
-			unset($ret);
 			$ret[] = $res;
 		}
 		foreach ($ret as $table) {
@@ -89,7 +90,7 @@ class RedactDBCommand extends Command
 		}
 
 		// Final user pseudonymisation in users_users
-		$query = "SELECT count(userId) FROM users_users;";
+		$query = "SELECT MAX(userId) FROM users_users;";
 		$result = $tikilib->query($query);
 		$res = $result->fetchRow();
 		$num = (int)$res['count(userId)'];
@@ -153,8 +154,10 @@ class RedactDBCommand extends Command
 			"name LIKE '%_key' OR " .
 			"name LIKE '%_apikey' OR " .
 			"name LIKE '%secret' OR " .
+			"name LIKE '%secr' OR " .
 			"name LIKE '%_client_id' OR " .
 			"name LIKE '%access_token%' OR " .
+			"name LIKE '%salt' OR " .
 			"name = 'registerPasscode' OR " .
 			"name = 'interlist' OR " .
 			"name LIKE '%intertiki%';";
