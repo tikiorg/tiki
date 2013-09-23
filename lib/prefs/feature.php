@@ -2199,7 +2199,7 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_wiki_open_as_structure' => array(
 			'name' => tra('Open page as structure'),
-            'description' => tra(''),
+			'description' => tra('Opens the structure heading for structure pages, even if no "structure" parameter is given in the URL'),
 			'type' => 'flag',
 			'default' => 'n',
 		),
