@@ -17,7 +17,7 @@
 		<input type="text" name="jcaptureFileGalleryName" value="{$jcaptureFileGalleryName}" /><br>
 		{tr}It will be created under the gallery root. If the gallery already exists, jCapture will use that gallery{/tr}.
 	{else}
-		{$jcaptureFileGalleryName}
+		<b>{$jcaptureFileGalleryName}</b>
 	{/if}
 	<br>
 	<br>
