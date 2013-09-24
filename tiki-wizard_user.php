@@ -19,20 +19,26 @@ $accesslib->check_user($user);
 $pages = array();
 
 /////////////////////////////////////
-// BEGIN Wizard page section
+// BEGIN User Wizard page section
 /////////////////////////////////////
 
-require_once('lib/wizard/pages/user_dummy1.php'); 
-$pages[] = new UserWizardDummy1();
+require_once('lib/wizard/pages/user_wizard.php'); 
+$pages[] = new UserWizard();
 
-require_once('lib/wizard/pages/user_dummy2.php'); 
-$pages[] = new UserWizardDummy2();
+require_once('lib/wizard/pages/user_preferences_info.php'); 
+$pages[] = new UserWizardPreferencesInfo();
 
-require_once('lib/wizard/pages/user_dummy3.php'); 
-$pages[] = new UserWizardDummy3();
+require_once('lib/wizard/pages/user_preferences_params.php'); 
+$pages[] = new UserWizardPreferencesParams();
+
+require_once('lib/wizard/pages/user_preferences_reports.php'); 
+$pages[] = new UserWizardPreferencesReports();
+
+require_once('lib/wizard/pages/user_preferences_notifications.php'); 
+$pages[] = new UserWizardPreferencesNotifications();
 
 /////////////////////////////////////
-// END Wizard page section
+// END User Wizard page section
 /////////////////////////////////////
 
 
