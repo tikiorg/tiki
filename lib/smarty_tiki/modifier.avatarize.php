@@ -21,32 +21,10 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
  */
 function smarty_modifier_avatarize($user, $float = '')
 {
-	global $tikilib;
-	global $userlib;
-	global $prefs;
-	$avatar = $tikilib->get_user_avatar($user, $float);
-	if ( $avatar != '' && $tikilib->get_user_preference($user, 'user_information', 'public') == 'public' || $prefs['feature_friends'] == 'y' ) {
-		$id = $userlib->get_user_id($user);
-		$realn = $userlib->clean_user($user);
-		include_once('tiki-sefurl.php');
-		$url = "tiki-user_information.php?userId=$id";
-		$url = filter_out_sefurl($url);	
-		$extra = '';
-		if ($prefs['feature_community_mouseover'] == 'y' &&
-					$tikilib->get_user_preference($user, 'show_mouseover_user_info', 'y') === 'y' || $prefs['feature_friends'] == 'y') {
-			$rel = TikiLib::lib('service')->getUrl(array(
-								'controller' => 'user',
-								'action' => 'info',
-								'username' => $user,
-							));
-			$extra .= ' rel="' . htmlspecialchars($rel, ENT_QUOTES) . '" class="ajaxtips"';
-			$title = tra('User Info');
-		} else if ( $prefs['user_show_realnames'] == 'y' ) {
-			$title = $realn;
-		} else {
-			$title = $user;
-		}
-		$avatar = "<a title=\"" . htmlspecialchars($title, ENT_QUOTES) . "\" href=\"$url\"$extra>".$avatar.'</a>';
+	$avatar = TikiLib::lib('tiki')->get_user_avatar($user, $float);
+	if ( $avatar != '') {
+		$avatar = TikiLib::lib('user')->build_userinfo_tag($user, $avatar);
 	}
 	return $avatar;	
 }
+

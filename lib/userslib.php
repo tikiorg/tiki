@@ -2440,6 +2440,54 @@ class UsersLib extends TikiLib
 		return $this->get_user_info($user, $inclusion, 'userId');
 	}
 
+	/**
+	 * Creates DOM tag for user info with popup or not depending on prefs etc
+	 * @param string $auser		user to find info for (current user if empty)
+	 * @param string $body      content of the anchor tag (user name if empty)
+	 * @return string           HTML anchor tag
+	 */
+	function build_userinfo_tag($auser = '', $body = '')
+	{
+		global $user, $prefs;
+
+		if (!$auser) {
+			$auser = $user;
+		}
+		$realn = $this->clean_user($auser);
+
+		if (!$body) {
+			$body = $realn;
+		}
+
+		if ($this->get_user_preference($auser, 'user_information', 'public') == 'public' || $prefs['feature_friends'] == 'y') {
+			$id = $this->get_user_id($auser);
+			include_once('tiki-sefurl.php');
+			$url = "tiki-user_information.php?userId=$id";
+			$url = filter_out_sefurl($url);
+			$extra = '';
+			if ($prefs['feature_community_mouseover'] == 'y' &&
+				$this->get_user_preference($auser, 'show_mouseover_user_info', 'y') === 'y' || $prefs['feature_friends'] == 'y'
+			) {
+				$rel = TikiLib::lib('service')->getUrl(array(
+					'controller' => 'user',
+					'action' => 'info',
+					'username' => $auser,
+				));
+				$extra .= ' rel="' . htmlspecialchars($rel, ENT_QUOTES) . '" class="ajaxtips"';
+				$title = tra('User Information');
+			} else if ($prefs['user_show_realnames'] == 'y') {
+				$title = $realn;
+			} else {
+				$title = $auser;
+			}
+			$body = "<a title=\"" . htmlspecialchars($title, ENT_QUOTES) . "\" href=\"$url\"$extra>" . $body . '</a>';
+			return $body;
+		}
+		return $body;
+	}
+
+
+
 	// UNRELIABLE. In particular, lastLogin and currentLogin aren't properly maintained due to missing user_details_ cache invalidation
 	// refactoring to use new cachelib instead of global var in memory - batawata 2006-02-07
 	function get_user_details($login, $useCache = true)

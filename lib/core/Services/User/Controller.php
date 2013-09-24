@@ -111,7 +111,7 @@ class Services_User_Controller
 
 				$info = $userlib->get_user_info($other_user);
 
-				$result['add_friend_button'] = '';	// can befriend yourself
+				$result['add_friend_button'] = '';
 
 				if ($prefs['feature_friends'] === 'y') {
 
@@ -178,7 +178,7 @@ class Services_User_Controller
 					$result['friendship'] = $friendship;
 
 					if ($user === $other_user) {
-						$result['add_friend_button'] = '';
+						$result['add_friend_button'] = '';	// can't befriend yourself
 					}
 				}
 
