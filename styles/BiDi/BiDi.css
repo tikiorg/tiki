@@ -463,3 +463,55 @@ table.normal th.auto {
 .toolbars-admin ul#full-list-w.full, .toolbars-admin ul#full-list-p.full, .toolbars-admin ul#full-list-c.full {
     padding-right: 0px;
 }
+
+/***** Admin *****/
+#wizardBody .adminoption {
+    float: right;
+    margin-right: 0;
+    margin-left: 1em;
+}
+
+/*#wizardBody .adminoptionlabel {
+    text-align: right !important;
+}*/
+
+#wizardBody .adminoptionbox {
+    text-align: right !important;
+}
+
+/***** User Wizard *****/
+
+.userWizardIconleft {
+    float:right;
+    margin-left: 10px;
+    margin-right: 0px;
+}
+
+.userWizardIconright {
+    float: left;
+    margin-left: 0px;
+    margin-right: 10px;
+}
+
+/***** Admin Wizard *****/
+#wizardBody .adminWizardIconleft {
+    float:right;
+    margin-left: 10px;
+    margin-right: 0px;
+}
+
+#wizardBody .adminWizardIconright {
+    float:left;
+    margin-right: 10px;
+    margin-left: 0px;
+}
+
+.adminWizardtable {
+    padding-left:0px !important;
+    padding-right:20px;
+}
+
+#wizardBody .adminWizardlookandfell {
+    right: auto;
+    left: .5em;
+}
