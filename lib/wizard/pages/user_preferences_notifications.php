@@ -48,42 +48,42 @@ class UserWizardPreferencesNotifications extends Wizard
 
 	function onContinue ($homepageUrl) 
 	{
-		global $tikilib;
+		global $tikilib, $user;
 		
 		// Run the parent first
 		parent::onContinue($homepageUrl);
 		
-		if (isset($_REQUEST['user_calendar_watch_editor']) && $_REQUEST['user_calendar_watch_editor'] == true) {
+		if (isset($_REQUEST['user_calendar_watch_editor']) && $_REQUEST['user_calendar_watch_editor'] == 'on') {
 			$tikilib->set_user_preference($user, 'user_calendar_watch_editor', 'y');
 		} else {
 			$tikilib->set_user_preference($user, 'user_calendar_watch_editor', 'n');
 		}
 		
-		if (isset($_REQUEST['user_article_watch_editor']) && $_REQUEST['user_article_watch_editor'] == true) {
+		if (isset($_REQUEST['user_article_watch_editor']) && $_REQUEST['user_article_watch_editor'] == 'on') {
 			$tikilib->set_user_preference($user, 'user_article_watch_editor', 'y');
 		} else {
 			$tikilib->set_user_preference($user, 'user_article_watch_editor', 'n');
 		}
 		
-		if (isset($_REQUEST['user_wiki_watch_editor']) && $_REQUEST['user_wiki_watch_editor'] == true) {
+		if (isset($_REQUEST['user_wiki_watch_editor']) && $_REQUEST['user_wiki_watch_editor'] == 'on') {
 			$tikilib->set_user_preference($user, 'user_wiki_watch_editor', 'y');
 		} else {
 			$tikilib->set_user_preference($user, 'user_wiki_watch_editor', 'n');
 		}
 		
-		if (isset($_REQUEST['user_blog_watch_editor']) && $_REQUEST['user_blog_watch_editor'] == true) {
+		if (isset($_REQUEST['user_blog_watch_editor']) && $_REQUEST['user_blog_watch_editor'] == 'on') {
 			$tikilib->set_user_preference($user, 'user_blog_watch_editor', 'y');
 		} else {
 			$tikilib->set_user_preference($user, 'user_blog_watch_editor', 'n');
 		}
 		
-		if (isset($_REQUEST['user_tracker_watch_editor']) && $_REQUEST['user_tracker_watch_editor'] == true) {
+		if (isset($_REQUEST['user_tracker_watch_editor']) && $_REQUEST['user_tracker_watch_editor'] == 'on') {
 			$tikilib->set_user_preference($user, 'user_tracker_watch_editor', 'y');
 		} else {
 			$tikilib->set_user_preference($user, 'user_tracker_watch_editor', 'n');
 		}
 		
-		if (isset($_REQUEST['user_comment_watch_editor']) && $_REQUEST['user_comment_watch_editor'] == true) {
+		if (isset($_REQUEST['user_comment_watch_editor']) && $_REQUEST['user_comment_watch_editor'] == 'on') {
 			$tikilib->set_user_preference($user, 'user_comment_watch_editor', 'y');
 		} else {
 			$tikilib->set_user_preference($user, 'user_comment_watch_editor', 'n');
