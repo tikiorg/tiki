@@ -37,7 +37,7 @@
 				{/if}
 				<a class="linkmodule" href="tiki-user_information.php?view_user={$item.user|escape:"url"}">
 					{if $maxlen > 0}{* 0 is default value for maxlen eq to 'no truncate' *}
-						{$item.user|userlink:'link':'not_set':'':$maxlen}
+						{$item.user|userlink:'userlink':'not_set':'':$maxlen}
 					{else}
 						{$item.user|userlink}
 					{/if}

@@ -2442,11 +2442,12 @@ class UsersLib extends TikiLib
 
 	/**
 	 * Creates DOM tag for user info with popup or not depending on prefs etc
-	 * @param string $auser		user to find info for (current user if empty)
+	 * @param string $auser     user to find info for (current user if empty)
 	 * @param string $body      content of the anchor tag (user name if empty)
+	 * @param string $class		add a class to the a tag (default userlink)
 	 * @return string           HTML anchor tag
 	 */
-	function build_userinfo_tag($auser = '', $body = '')
+	function build_userinfo_tag($auser = '', $body = '', $class = 'userlink')
 	{
 		global $user, $prefs;
 
@@ -2458,6 +2459,7 @@ class UsersLib extends TikiLib
 		if (!$body) {
 			$body = $realn;
 		}
+		$class .= ' ajaxtips';
 
 		if ($this->get_user_preference($auser, 'user_information', 'public') == 'public' || $prefs['feature_friends'] == 'y') {
 			$id = $this->get_user_id($auser);
@@ -2465,22 +2467,26 @@ class UsersLib extends TikiLib
 			$url = "tiki-user_information.php?userId=$id";
 			$url = filter_out_sefurl($url);
 			$extra = '';
-			if ($prefs['feature_community_mouseover'] == 'y' &&
-				$this->get_user_preference($auser, 'show_mouseover_user_info', 'y') === 'y' || $prefs['feature_friends'] == 'y'
-			) {
+			if ($prefs['feature_community_mouseover'] == 'y' && $this->get_user_preference($auser, 'show_mouseover_user_info', 'y') === 'y' ||
+						$prefs['feature_friends'] == 'y') {
+
 				$rel = TikiLib::lib('service')->getUrl(array(
 					'controller' => 'user',
 					'action' => 'info',
 					'username' => $auser,
 				));
-				$extra .= ' rel="' . htmlspecialchars($rel, ENT_QUOTES) . '" class="ajaxtips"';
-				$title = tra('User Information');
+				$extra .= ' rel="' . htmlspecialchars($rel, ENT_QUOTES) . '"';
+				if ($auser === $user) {
+					$title = tra('Your Information');
+				} else {
+					$title = tra('User Information');
+				}
 			} else if ($prefs['user_show_realnames'] == 'y') {
 				$title = $realn;
 			} else {
 				$title = $auser;
 			}
-			$body = "<a title=\"" . htmlspecialchars($title, ENT_QUOTES) . "\" href=\"$url\"$extra>" . $body . '</a>';
+			$body = "<a title=\"" . htmlspecialchars($title, ENT_QUOTES) . "\" href=\"$url\" class=\"$class\"$extra>" . $body . '</a>';
 			return $body;
 		}
 		return $body;
