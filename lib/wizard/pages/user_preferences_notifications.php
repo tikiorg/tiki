@@ -6,6 +6,7 @@
 // $Id$
 
 require_once('lib/wizard/wizard.php');
+require_once('lib/notifications/notificationlib.php');
 include_once ('lib/userprefs/userprefslib.php');
 
 /**
@@ -20,7 +21,7 @@ class UserWizardPreferencesNotifications extends Wizard
 
 	function onSetupPage ($homepageUrl) 
 	{
-		global	$smarty;
+		global	$smarty, $tikilib; 
 
 		// Run the parent first
 		parent::onSetupPage($homepageUrl);
@@ -29,6 +30,14 @@ class UserWizardPreferencesNotifications extends Wizard
 		if ($prefs['feature_user_watches'] === 'y') {
 			$showPage = true;
 		}
+
+		// Setup initial wizard screen
+		$smarty->assign('user_calendar_watch_editor', $tikilib->get_user_preference($user, 'user_calendar_watch_editor'));
+		$smarty->assign('user_article_watch_editor', $tikilib->get_user_preference($user, 'user_article_watch_editor'));
+		$smarty->assign('user_wiki_watch_editor', $tikilib->get_user_preference($user, 'user_wiki_watch_editor'));
+		$smarty->assign('user_blog_watch_editor', $tikilib->get_user_preference($user, 'user_blog_watch_editor'));
+		$smarty->assign('user_tracker_watch_editor', $tikilib->get_user_preference($user, 'user_tracker_watch_editor'));
+		$smarty->assign('user_comment_watch_editor', $tikilib->get_user_preference($user, 'user_comment_watch_editor'));
 
 		// Assign the page template
 		$wizardTemplate = 'wizard/user_preferences_notifications.tpl';
