@@ -54,7 +54,7 @@
 		{if $prefs.vimeo_upload eq 'y' and $field.options_map.displayMode eq 'vimeo'}
 			<legend>{tr}Link to existing Vimeo URL{/tr}</legend>
 			<label>
-				{tr}URL:{/tr} <input class="url" name="url" placeholder="http://vimeo.com/...">
+				{tr}URL:{/tr} <input class="url" name="url" placeholder="http://vimeo.com/..." data-mode="vimeo">
 				<input type="hidden" class="reference" name="reference" value="1">
 			</label>
 		{else}
@@ -202,6 +202,11 @@ if (typeof FileReader !== 'undefined') {
 $url.keypress(function (e) {
 	if (e.which === 13) {
 		var url = $(this).val();
+		if ($(this).data('mode') === 'vimeo' && !url.match(/http[s]?\:\/\/(?:www\.)?vimeo\.com\/\d+/)) {
+			$url.showError(tr('URL should be in the format: https://vimeo.com/nnnnnnn'));
+			e.preventDefault();
+			return false;
+		}
 		$(this).attr('disabled', true).clearError();
 
 		$.ajax({
