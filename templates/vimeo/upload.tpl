@@ -58,6 +58,7 @@
 			if (updata.file.indexOf("C:\\fakepath\\") === 0) {
 				updata.file = updata.file.substr(12);	// webkit fakepath?
 			}
+			$file.val("");	// empty file value so it doesn't get added twice (mainly in webkit)
 			$.post($.service('vimeo', 'complete'), updata, function(data) {
 				$form.modal();
 				if (data.err) {
