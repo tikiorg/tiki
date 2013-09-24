@@ -49,6 +49,22 @@ class RedactDBCommand extends Command
 		$query = "UPDATE `users_users` SET `password`='admin', `hash`= md5('admin') WHERE `login`='admin'";
 		$result = $tikilib->query($query);
 
+		// first get valid prefix
+		$userprefix = 'user_';
+		$userprefixready = false;
+		$userprefixindex = 0;
+		while (!$userprefixready) {
+			$query = "SELECT count(*) FROM users_users WHERE login LIKE '".$userprefix."%';";
+			$result = $tikilib->getOne($query);
+			if ($result > 0) {
+				$userprefixindex++;
+				$userprefix = 'user'.$userprefixindex.'_';
+			} else {
+				$userprefixready = true;
+			}
+		}
+		$output->writeln('<comment>Using user names like '.$userprefix.'123.</comment>');
+
 		// Pseudonymise e-mail
 		$output->writeln('<comment>Pseudonymising user e-mails.</comment>');
 		$query = "	SELECT DISTINCT table_name
@@ -64,9 +80,11 @@ class RedactDBCommand extends Command
 		foreach ($ret as $table) {
 			unset($bindvars);
 			$output->writeln('<info>'.$table['table_name'].'</info>');
-			$query = "UPDATE ".$table['table_name']." t, users_users u SET t.email = CONCAT('user', u.userId, '@example.com') WHERE t.email = u.email AND u.login <> 'admin';";
+			$query = "UPDATE ".$table['table_name']." t, users_users u SET t.email = CONCAT('".$userprefix."', u.userId, '@example.com') WHERE t.email = u.email AND u.login <> 'admin';";
 			$bindvars = array ( $table['table_name'] );
 			$result = $tikilib->query($query, $bindvars);
+			$query = "UPDATE ".$table['table_name']." t SET t.email = 'emailchanged@example.com' WHERE t.email NOT LIKE '".$userprefix."%@example.com';";
+			$result = $tikilib->query($query);
 		}
 
 		// Pseudonymise user name
@@ -84,19 +102,17 @@ class RedactDBCommand extends Command
 		foreach ($ret as $table) {
 			unset($bindvars);
 			$output->writeln('<info>'.$table['table_name'].'</info>');
-			$query = "UPDATE ".$table['table_name']." t, users_users u SET t.user = CONCAT('user', u.userId) WHERE t.user = u.login AND u.login <> 'admin';";
+			$query = "UPDATE ".$table['table_name']." t, users_users u SET t.user = CONCAT('".$userprefix."', u.userId) WHERE t.user = u.login AND u.login <> 'admin';";
 			$bindvars = array ( $table['table_name'] );
 			$result = $tikilib->query($query, $bindvars);
 		}
 
 		// Final user pseudonymisation in users_users
 		$query = "SELECT MAX(userId) FROM users_users;";
-		$result = $tikilib->query($query);
-		$res = $result->fetchRow();
-		$num = (int)$res['count(userId)'];
+		$num = $tikilib->getOne($query);
 		for ($i = 2; $i <= $num; $i++) {
 			$query = "UPDATE `users_users` SET `email` = ?, `login` = ?, `hash`=md5( ? ) WHERE `userId` = ?";
-			$bindvars = array("user$i@example.com", "user$i", "pass$i", $i);
+			$bindvars = array("$userprefix$i@example.com", "$userprefix$i", "pass$i", $i);
 			$result = $tikilib->query($query, $bindvars);
 			// TODO : Update user avatars
 		}
