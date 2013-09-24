@@ -14,7 +14,7 @@ class UserWizardPreferencesReports extends Wizard
 {
 	function isEditable ()
 	{
-		return false;
+		return true;
 	}
 
 	function onSetupPage ($homepageUrl) 

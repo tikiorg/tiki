@@ -41,8 +41,12 @@ class UserWizardPreferencesInfo extends Wizard
 
 		// Make sure user preferences uses https if set
 		if (!$https_mode && isset($https_login) && $https_login == 'required') {
+			/*
+			Do not redirect nor die inside the page handler
 			header('Location: ' . $base_url_https . 'tiki-user_preferences.php');
 			die;
+			*/
+			return false;
 		}
 		
 		if (isset($_REQUEST['userId']) || isset($_REQUEST['view_user'])) {
@@ -50,9 +54,13 @@ class UserWizardPreferencesInfo extends Wizard
 			else $userwatch = $_REQUEST['view_user'];
 			if ($userwatch != $user) {
 				if ($userwatch === false) {
+					/*
+					Do not redirect nor die inside the page handler
 					$smarty->assign('msg', tra("Unknown user"));
 					$smarty->display("error.tpl");
 					die;
+					*/
+					return false;
 				} else {
 					$access->check_permission('tiki_p_admin_users');
 				}
@@ -62,9 +70,13 @@ class UserWizardPreferencesInfo extends Wizard
 				$access->check_permission('tiki_p_admin_users');
 				$userwatch = $_REQUEST["view_user"];
 				if (!$userlib->user_exists($userwatch)) {
+					/*
+					Do not redirect nor die inside the page handler
 					$smarty->assign('msg', tra("Unknown user"));
 					$smarty->display("error.tpl");
 					die;
+					*/
+					return false;
 				}
 			} else {
 				$userwatch = $user;

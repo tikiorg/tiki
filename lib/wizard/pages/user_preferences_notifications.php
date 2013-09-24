@@ -14,7 +14,7 @@ class UserWizardPreferencesNotifications extends Wizard
 {
 	function isEditable ()
 	{
-		return false;
+		return true;
 	}
 
 	function onSetupPage ($homepageUrl) 

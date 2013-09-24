@@ -13,11 +13,14 @@
 	<p class="wizard_page_title">
 	<b>{tr}Welcome to the Tiki User Wizard{/tr}</b>.<br>
 	</p>
+	{*
+	User wizard is not a login wizard. Do not call skip (which should set the hide on login pref
 	<p>
 	{tr}If you are a new user, you are recommended to use the User Wizard. Press "Start" to begin the wizard{/tr}.<br><br>
 	{tr}However, if you are an experienced user and don't want the User Wizard ...{/tr} <br>
 	<input type="submit" class="btn btn-default" name="skip" value="{tr}Skip wizard and don't show again{/tr}" />
 	</p>
+	*}
 	<p>
 	</p>
 	<b>Tiki version {$tiki_version}</b>. {tr}To learn more about this Tiki release, go to <a href="http://doc.tiki.org/tiki12">Tiki 12</a>{/tr}.<br/><br/>	
