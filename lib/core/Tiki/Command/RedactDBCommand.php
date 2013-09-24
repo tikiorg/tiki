@@ -82,7 +82,7 @@ class RedactDBCommand extends Command
 			$output->writeln('<info>'.$table['table_name'].'</info>');
 			$query = "UPDATE ".$table['table_name']." t, users_users u SET t.email = CONCAT('".$userprefix."', u.userId, '@example.com') WHERE t.email = u.email AND u.login <> 'admin';";
 			$result = $tikilib->query($query);
-			$query = "UPDATE ".$table['table_name']." t SET t.email = 'emailchanged@example.com' WHERE t.email NOT LIKE '".$userprefix."%@example.com';";
+			$query = "SET @newnum:=0;UPDATE ".$table['table_name']." t SET t.email = CONCAT('emailchanged', @newnum:=@newnum+1, '@example.com') WHERE t.email NOT LIKE '".$userprefix."%@example.com';";
 			$result = $tikilib->query($query);
 		}
 
