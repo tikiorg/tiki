@@ -2144,8 +2144,8 @@ class UsersLib extends TikiLib
 			$this->query('update `messu_messages` set `user`=? where `user`=?', array($to, $from));
 			$this->query('update `messu_messages` set `user_from`=? where `user_from`=?', array($to, $from));
 			$this->query('update `tiki_newsletter_subscriptions` set `email`=? where `email`=? and `isUser`=?', array($to, $from, 'y'));
-			$this->query('update `tiki_object_relations` set `source_itemId`=? where source_type="user" `source_itemId`=?', array($to, $from));
-			$this->query('update `tiki_object_relations` set `target_itemId`=? where target_type="user" `target_itemId`=?', array($to, $from));
+			$this->query('update `tiki_object_relations` set `source_itemId`=? where source_type="user" and `source_itemId`=?', array($to, $from));
+			$this->query('update `tiki_object_relations` set `target_itemId`=? where target_type="user" and `target_itemId`=?', array($to, $from));
 			$this->query('update `tiki_freetagged_objects` set `user`=? where `user`=?', array($to, $from));
 
 			$this->query(
