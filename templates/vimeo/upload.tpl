@@ -59,12 +59,12 @@
 				updata.file = updata.file.substr(12);	// webkit fakepath?
 			}
 			$.post($.service('vimeo', 'complete'), updata, function(data) {
+				$form.modal();
 				if (data.err) {
 					alert("Upload Error:\n" + data.err);
 				} else {
 					$(".vimeo_upload").trigger("vimeo_uploaded", [data]);
 				}
-				$form.modal();
 			}, 'json')
 			.error(function (e) {
 				alert(tr("An error occurred uploading your video.") + "\n" + e.statusText + " (" + e.status + ")");
