@@ -1,7 +1,7 @@
 {* $Id$ *}
 
 <h1>{tr}User Watches{/tr}: {tr}Notification Preferences{/tr}</h1>
-<div style="float:left; width:60px"><img src="img/icons/large/user.png" alt="{tr}Notification Preferences{/tr}" /></div>
+<div class="adminWizardIconleft"><img src="img/icons/large/user.png" alt="{tr}Notification Preferences{/tr}" /></div>
 {tr}Use "watches" to monitor wiki pages or other objects.{/tr} {tr}Watch new items by clicking the {icon _id=eye} button on specific pages.{/tr}<br/> {tr}Set up here your preferences related to receiving notifications by email about changes in the site{/tr}.
 {if $email_ok eq 'n'}
 	{remarksbox type="warning" title="{tr}Warning{/tr}"}
@@ -10,7 +10,7 @@
 	{/remarksbox}
 {/if}
 
-<div align="left" style="margin-top:1em;">
+<div class="adminWizardContent">
 <fieldset>
 {if $prefs.feature_user_watches eq 'y'}
 	<legend>{tr}Notification Preferences{/tr}</legend>
