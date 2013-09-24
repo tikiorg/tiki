@@ -72,12 +72,12 @@ a.admbox.off img {
 .adminoptionbox {
 /*overall box */
 	padding: 0.5em;
-	text-align: left;
+/*	text-align: left;*/
 }
 	
 .adminoptionbox label, .adminoptionlabel {
 /* text label and text field */
-	text-align: left;
+/*	text-align: left;*/
 }
 
 .adminoptionpopup a {
@@ -515,6 +515,42 @@ a.admbox.off img {
 /* Admin wizard */
 
 .adminWizardLink {
-    float:right
+    float: right;
 }
+
+.adminWizardContent {
+    margin-top: 1em;
+}
+
+.adminWizardContent legend {
+    margin-bottom: 1em;
+    font-weight: bold;
+}
+
+.adminWizardContent fieldset {
+    margin: 1em 0;
+}
+
+.adminWizardIconleft {
+    float: left;
+    margin-right: 10px;
+}
+
+.adminWizardIconright {
+    float: right;
+    margin-left: 10px;
+}
+
+.adminWizardtable {
+    border: 0px;
+    padding-left: 20px;
+}
+
+.adminWizardlookandfell {
+    position: absolute;
+    right: .5em;
+    top: 0.5em;
+}
+
+
 /* end Admin WIzard */
