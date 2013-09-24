@@ -209,7 +209,7 @@ class FileGalLib extends TikiLib
 				$video_id = substr($url, strrpos($url, '/') + 1);	// not ideal, but video_id not stored elsewhere (yet)
 				$result = TikiLib::lib('vimeo')->deleteVideo($video_id);
 				if ($result['stat'] != 'ok') {
-					$errMsg = tra($result['err']['msg']) . tra($result['err']['expl']);
+					$errMsg = tra('Vimeo error:') . ' ' . tra($result['err']['msg']) . '<br>' . tra($result['err']['expl']);
 					TikiLib::lib('errorreport')->report($errMsg);
 					return false;
 				}
