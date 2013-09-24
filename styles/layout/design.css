@@ -4543,5 +4543,29 @@ div#outerToc-static ul {
 	padding-right: .5em;
 }
 
+/* User Wizard */
+
+.userWizardIconleft {
+    float: left;
+    margin-right: 10px;
+}
+
+.userWizardIconright {
+    float: right;
+    margin-left: 10px;
+}
+
+.userWizardContent {
+    margin-top: 1em;
+}
+
+.userWizardContent legend {
+    margin-bottom: 1em;
+    font-weight: bold;
+}
+
+.userWizardContent fieldset {
+    margin: 1em 0;
+}
 
 /* End of file */
