@@ -229,7 +229,7 @@ class Services_User_Controller
 				}
 
 				if ($prefs['feature_community_mouseover_lastlogin'] == 'y') {
-					$result['lastSeenDt'] = $info['lastLogin'];
+					$result['lastSeen'] = $info['currentLogin'] ? $info['currentLogin'] : $info['lastLogin'];
 				}
 
 

@@ -201,7 +201,7 @@ class UserPrefsLib extends TikiLib
 		}
 		if (isset($u1lat) && isset($u1lon) &&isset($u2lat) && isset($u2lon) ) {
 			$distance=$this->distance($u1lat, $u1lon, $u2lat, $u2lon);
-		  return (round($distance, 3));
+		  return (round($distance, 2));
 		} else {
 			return(NULL);
 		}

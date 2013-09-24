@@ -22,7 +22,7 @@
 			{if $email}
 				<span class="email">Email: {$email}</span>
 			{/if}
-			<span class="lastseen"><span>{tr}Last seen{/tr} </span>{$lastSeen|tiki_short_datetime}</span>
+			<span class="lastseen"><span>{tr}Last login:{/tr} </span>{$lastSeen|tiki_short_datetime}</span>
 			{if $shared_groups}
 				<span class="shared-groups">{tr}Shared groups:{/tr}<span> {$shared_groups|escape}</span></span>
 			{/if}
