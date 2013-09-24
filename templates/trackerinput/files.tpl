@@ -51,8 +51,19 @@
 {/if}
 {if $prefs.fgal_upload_from_source eq 'y' and $field.canUpload}
 	<fieldset>
-		<legend>{tr}Upload from URL{/tr}</legend>
-		<label>{tr}URL:{/tr} <input class="url" name="url" placeholder="http://"></label>
+		{if $prefs.vimeo_upload eq 'y' and $field.options_map.displayMode eq 'vimeo'}
+			<legend>{tr}Link to existing Vimeo URL{/tr}</legend>
+			<label>
+				{tr}URL:{/tr} <input class="url" name="url" placeholder="http://vimeo.com/...">
+				<input type="hidden" class="reference" name="reference" value="1">
+			</label>
+		{else}
+			<legend>{tr}Upload from URL{/tr}</legend>
+			<label>
+				{tr}URL:{/tr} <input class="url" name="url" placeholder="http://">
+				<input type="hidden" class="reference" name="reference" value="0">
+			</label>
+		{/if}
 		{tr}Type or paste the URL and press ENTER{/tr}
 	</fieldset>
 {/if}
@@ -199,7 +210,8 @@ $url.keypress(function (e) {
 			dataType: 'json',
 			data: {
 				galleryId: $(this).closest('.files-field').data('galleryid'),
-				url: url
+				url: url,
+				reference: $(this).next('.reference').val()
 			},
 			success: function (data) {
 				var fileId = data.fileId, li = $('<li/>');
