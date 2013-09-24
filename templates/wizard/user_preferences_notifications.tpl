@@ -16,12 +16,17 @@
 	<legend>{tr}Notification Preferences{/tr}</legend>
 		<table class="formcolor">
 				<p>{tr}Send notification when I am the editor{/tr}:</p>
-				{preference name=user_wiki_watch_editor}
-				{preference name=user_article_watch_editor}
-				{preference name=user_blog_watch_editor}
-				{preference name=user_tracker_watch_editor}
-				{preference name=user_calendar_watch_editor}
-				{preference name=user_comment_watch_editor}
+				<form action="tiki-user_notifications.php" method="post">
+					<input type="hidden" name="notification_preferences" value="true">
+					<p><input type="checkbox" name="user_wiki_watch_editor" value="true" {if $user_wiki_watch_editor eq 'y'}checked{/if}> {tr}Wiki{/tr}</p>
+					<p><input type="checkbox" name="user_article_watch_editor" value="true" {if $user_article_watch_editor eq 'y'}checked{/if}> {tr}Article{/tr}</p>
+					<p><input type="checkbox" name="user_blog_watch_editor" value="true" {if $user_blog_watch_editor eq 'y'}checked{/if}> {tr}Blog{/tr}</p>
+					<p><input type="checkbox" name="user_tracker_watch_editor" value="true" {if $user_tracker_watch_editor eq 'y'}checked{/if}> {tr}Tracker{/tr}</p>
+					<p><input type="checkbox" name="user_calendar_watch_editor" value="true" {if $user_calendar_watch_editor eq 'y'}checked{/if}> {tr}Calendar{/tr}</p>
+					<p><input type="checkbox" name="user_comment_watch_editor" value="true" {if $user_comment_watch_editor eq 'y'}checked{/if}> {tr}Comment{/tr}</p>
+			
+					<p><input type="submit" class="btn btn-default" name="submit" value=" {tr}Apply{/tr} "></p>
+				</form>
 		</table>
 {else}
 	{tr}The feature user watches is disabled in this site{/tr}.<br/>
