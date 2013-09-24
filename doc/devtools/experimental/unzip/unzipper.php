@@ -13,7 +13,13 @@
 // global definitions and some functions
 
 $tiki_zip_url["tiki-9.4"] = 'http://sourceforge.net/projects/tikiwiki/files/Tiki_9.x_Herbig_Haro/9.4/tiki-9.4.zip/download';
+$tiki_zip_url["tiki-9.6"] = 'http://sourceforge.net/projects/tikiwiki/files/Tiki_9.x_Herbig_Haro/9.6/tiki-9.6.zip/download';
 $tiki_zip_url["tiki-10.2"] = 'http://sourceforge.net/projects/tikiwiki/files/Tiki_10.x_Sun/10.2/tiki-10.2.zip/download';
+$tiki_zip_url["tiki-10.4"] = 'http://sourceforge.net/projects/tikiwiki/files/Tiki_10.x_Sun/10.4/tiki-10.4.zip/download';
+$tiki_zip_url["tiki-11.0"] = 'http://sourceforge.net/projects/tikiwiki/files/Tiki_11.x_Vega/11.0/tiki-11.0.zip/download';
+//$tiki_zip_url["tiki-."] = '';
+//$tiki_zip_url["tiki-."] = '';
+//$tiki_zip_url["tiki-."] = '';
 //$tiki_zip_url["tiki-."] = '';
 
 function pagebottom()
