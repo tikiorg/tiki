@@ -11,11 +11,11 @@
 </p>
 <fieldset>
 	<legend>{tr}jCapture options and related features{/tr}</legend>
-	jCapture stores the capture files in the file gallery.<br>
-	Gallery name: 
+	{tr}jCapture stores the capture files in the file gallery{/tr}.<br>
+	{tr}Gallery name{/tr}: 
 	{if empty($jcaptureFileGalleryName)}
 		<input type="text" name="jcaptureFileGalleryName" value="{$jcaptureFileGalleryName}" /><br>
-		It will be created under the gallery root. If the gallery already exists, jCapture will use that gallery.
+		{tr}It will be created under the gallery root. If the gallery already exists, jCapture will use that gallery{/tr}.
 	{else}
 		{$jcaptureFileGalleryName}
 	{/if}
