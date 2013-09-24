@@ -33,8 +33,6 @@
 	</tr>
 	</table>
 	{preference name=wysiwyg_inline_editing}
-	{tr}Inline editing lets the user edit pages without a context switch{/tr}. {tr}The editor is embedded in the wiki page{/tr}.<br>
-	{tr}When used on pages in wiki format, a conversion from HTML to Wiki format is required.{/tr}<br>
 	<br>
 	{tr}See also{/tr} <a href="tiki-admin.php?page=wysiwyg" target="_blank">{tr}Wysiwyg admin panel{/tr}</a>
 </fieldset>
