@@ -2,12 +2,12 @@
 
 <h1>{tr}Tiki Admin Wizard{/tr}</h1>
 
-<div style="float:left; width:60px"><img src="img/icons/large/wizard48x48.png" alt="{tr}Tiki Admin Wizard{/tr}" />
+<div class="adminWizardIconleft"><img src="img/icons/large/wizard48x48.png" alt="{tr}Tiki Admin Wizard{/tr}" />
 </div>{tr}The Tiki Wizard Admin help you to quickly configure the major features. Use the Admin Panel to configure the details and features not included in this wizard{/tr}.
-<div align="left" style="margin-top:1em;">
+<div class="adminWizardContent">
 <fieldset>
 	<legend>{tr}Admin Wizard{/tr}</legend>
-	<img src="img/tiki/tikilogo.png" style="float:right" />	
+	<img src="img/tiki/tikilogo.png" class="adminWizardIconright" />
 	<p class="wizard_page_title">
 	<b>{tr}Welcome to the Tiki Admin Wizard{/tr}</b>.<br>
 	{tr}To learn more about this Tiki release, go to <a href="http://doc.tiki.org/tiki12">Tiki 12</a>{/tr}.

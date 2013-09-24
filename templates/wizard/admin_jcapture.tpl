@@ -2,8 +2,8 @@
 
 <h1>{tr}jCapture setup{/tr}</h1>
 
-<div style="float:left; width:60px"><img src="img/icons/large/gnome-camera-video-48.png" alt="{tr}jCapture setup{/tr}" /></div>
-<div align="left" style="margin-top:1em;">
+<div class="adminWizardIconleft"><img src="img/icons/large/gnome-camera-video-48.png" alt="{tr}jCapture setup{/tr}" /></div>
+<div class="adminWizardContent">
 <p>
 {tr}When activating jCapture <img src="img/icons/camera.png" />, token access is also activated. It is required to use jCapture.{/tr}<br>
 {tr}Learn more about <a href="https://doc.tiki.org/Token%20Access" target="_blank">Token Access at doc.tiki.org</a>{/tr}.<br>

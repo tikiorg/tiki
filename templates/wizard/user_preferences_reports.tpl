@@ -1,11 +1,11 @@
 {* $Id$ *}
 
 <h1>{tr}User Watches{/tr}: {tr}Report Preferences{/tr}</h1>
-<div style="float:left; width:60px"><img src="img/icons/large/user.png" alt="{tr}Report Preferences{/tr}" /></div>
+<div class="userWizardIconleft"><img src="img/icons/large/user.png" alt="{tr}Report Preferences{/tr}" /></div>
 {tr}Use "watches" to monitor wiki pages or other objects.{/tr} {tr}Watch new items by clicking the {icon _id=eye} button on specific pages.{/tr}<br/> 
 {tr}Use reports to summarise notifications about objects you are watching{/tr}.
 
-<div align="left" style="margin-top:1em;">
+<div class="userWizardContent">
 <fieldset>
 {if $prefs.feature_daily_report_watches eq 'y'}
 	<legend>{tr}Report Preferences{/tr}</legend>

@@ -3,8 +3,8 @@
 <h1>{tr}Set up your Text Area{/tr}</h1>
 
 {tr}Set up your text area environment (Editing and Plugins){/tr}
-<div style="float:left; width:60px"><img src="img/icons/large/editing48x48.png" alt="{tr}Set up your Text Area{/tr}" /></div>
-<div align="left" style="margin-top:1em;">
+<div class="adminWizardIconleft"><img src="img/icons/large/editing48x48.png" alt="{tr}Set up your Text Area{/tr}" /></div>
+<div class="adminWizardContent">
 <fieldset>
 	<legend>{tr}General settings{/tr}</legend>
 	{preference name=feature_fullscreen}
@@ -20,7 +20,7 @@
 {if $isHtmlMode neq true}
 <fieldset>
 	<legend>{tr}Plugin preferences{/tr}</legend>
-	<img src="img/icons/large/plugins.png" style="float:right" />	
+	<img src="img/icons/large/plugins.png" class="adminWizardIconleft" />
 	{preference name=wikipluginprefs_pending_notification}
 	<b>{tr}Some recommended plugins{/tr}:</b><br> 
 	{preference name=wikiplugin_convene}

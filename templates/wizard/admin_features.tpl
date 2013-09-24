@@ -2,8 +2,8 @@
 
 <h1>{tr}Main features setup{/tr}</h1>
 
-<div style="float:left; width:60px"><img src="img/icons/large/boot48x48.png" alt="{tr}Main features setup{/tr}" /></div>
-<div align="left" style="margin-top:1em;">
+<div class="adminWizardIconleft"><img src="img/icons/large/boot48x48.png" alt="{tr}Main features setup{/tr}" /></div>
+<div class="adminWizardContent">
 {tr}Set up the main Tiki features. The wiki and file gallery features are always enabled.{/tr}<br>
 
 <fieldset>
@@ -30,7 +30,7 @@
 
 <fieldset>
 	<legend>{tr}Watches{/tr}</legend>
-	<img src="img/icons/large/mywatches.gif" style="float:right" />	
+	<img src="img/icons/large/mywatches.gif" class="adminWizardIconright" />
 	{tr}Enable email notifications when changes occur. For user watches each user can choose to be notified. For group watches all members receive an email notification{/tr}
 	<div class="admin clearfix featurelist">
 		{preference name=feature_user_watches}

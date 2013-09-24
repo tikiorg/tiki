@@ -3,9 +3,9 @@
 <h1>{tr}Initialize Tiki{/tr}</h1>
 
 {tr}Initialize Tiki using a profile{/tr}.
-<div style="float:left; width:60px"><img src="img/icons/large/profiles48x48.png" alt="{tr}Initialize Tiki{/tr}" /></div>
+<div class="adminWizardIconleft"><img src="img/icons/large/profiles48x48.png" alt="{tr}Initialize Tiki{/tr}" /></div>
 {tr}This is an optional step, which can initialize Tiki as an application, e.g. a blog.{/tr}
-<div align="left" style="margin-top:1em;">
+<div class="adminWizardContent">
 <fieldset>
 	<legend>{tr}Profiles{/tr}</legend>
 	<table style="width:100%">

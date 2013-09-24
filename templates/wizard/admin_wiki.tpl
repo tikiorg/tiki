@@ -3,8 +3,8 @@
 <h1>{tr}Set up Wiki environment{/tr}</h1>
 
 {tr}Set up your Wiki environment{/tr}
-<div style="float:left; width:60px"><img src="img/icons/large/wikipages48x48.png" alt="{tr}Set up your Wiki environment{/tr}" /></div>
-<div align="left" style="margin-top:1em;">
+<div class="adminWizardIconleft"><img src="img/icons/large/wikipages48x48.png" alt="{tr}Set up your Wiki environment{/tr}" /></div>
+<div class="adminWizardContent">
 <fieldset>
 	<legend>{tr}Wiki environment{/tr}</legend>
 	{preference name=wiki_auto_toc}

@@ -3,11 +3,11 @@
 <h1>{tr}Select editor type{/tr}</h1>
 
 {tr}Select editor type{/tr}
-<div style="float:left; width:60px"><img src="img/icons/large/icon-configuration48x48.png" alt="{tr}Select editor type{/tr}" /></div>
-<div align="left" style="margin-top:1em;">
+<div class="adminWizardIconleft"><img src="img/icons/large/icon-configuration48x48.png" alt="{tr}Select editor type{/tr}" /></div>
+<div class="adminWizardContent">
 <fieldset>
 	<legend>{tr}Select editor type{/tr}</legend>
-	<img src="img/icons/large/wikipages.png" style="float:right" />	
+	<img src="img/icons/large/wikipages.png" class="adminWizardIconright" />
 	<br>
 	<table style="border:0px;padding-left:20px">
 	<tr>

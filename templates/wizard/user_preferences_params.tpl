@@ -1,9 +1,9 @@
 {* $Id$ *}
 
 <h1>{tr}User Preferences{/tr}: {tr}Settings{/tr}</h1>
-<div style="float:left; width:60px"><img src="img/icons/large/user.png" alt="{tr}User Dummy{/tr} 3" /></div>
+<div class="userWizardIconleft"><img src="img/icons/large/user.png" alt="{tr}User Dummy{/tr} 3" /></div>
 {tr}Set up your general settings for your account{/tr}.
-<div align="left" style="margin-top:1em;">
+<div class="userWizardContent">
 {if $prefs.feature_userPreferences eq 'y'}
 <fieldset>
 	<legend>{tr}General settings{/tr}</legend>

@@ -2,9 +2,9 @@
 
 <h1>{tr}Set up your User & Community features{/tr}</h1>
 
-<div style="float:left; width:60px"><img src="img/icons/large/users48x48.png" alt="{tr}Set up your User & Community features{/tr}"></div>
+<div class="adminWizardIconleft"><img src="img/icons/large/users48x48.png" alt="{tr}Set up your User & Community features{/tr}"></div>
 {tr}Use to configure general user & community features and friendship network settings{/tr}.
-<div align="left" style="margin-top:1em;">
+<div class="adminWizardContent">
 <fieldset>
 	<legend>{tr}User Features{/tr}</legend>
 	{preference name=feature_mytiki}

@@ -2,8 +2,8 @@
 
 <h1>{tr}Auto TOC setup{/tr}</h1>
 
-<div style="float:left; width:60px"><img src="img/icons/large/wikipages48x48.png" alt="{tr}Set up the language{/tr}" /></div>
-<div align="left" style="margin-top:1em;">
+<div class="adminWizardIconleft"><img src="img/icons/large/wikipages48x48.png" alt="{tr}Set up the language{/tr}" /></div>
+<div class="adminWizardContent">
 <fieldset>
 	<legend>{tr}Auto TOC options{/tr}</legend>
 		{preference name=wiki_inline_auto_toc}

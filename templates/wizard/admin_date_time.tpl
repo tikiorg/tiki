@@ -3,11 +3,11 @@
 <h1>{tr}Set up Date and Time{/tr}</h1>
 
 {tr}Set up your time-zone and how dates and times are displayed{/tr}
-<div style="float:left; width:60px"><img src="img/icons/large/icon-configuration48x48.png" alt="{tr}Set up your Date and Time{/tr}" /></div>
-<div align="left" style="margin-top:1em;">
+<div class="adminWizardIconleft"><img src="img/icons/large/icon-configuration48x48.png" alt="{tr}Set up your Date and Time{/tr}" /></div>
+<div class="adminWizardContent">
 <fieldset>
 	<legend>{tr}Date and Time setup{/tr}</legend>
-	<img src="img/icons/large/admin.gif" style="float:right" width="32px"/>	
+	<img src="img/icons/large/admin.gif" class="adminWizardIconright"/>
 	{preference name=server_timezone}
 	{preference name=users_prefs_display_timezone}
 	<br>

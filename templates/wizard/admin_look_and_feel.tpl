@@ -1,13 +1,13 @@
 {* $Id$ *}
 
 <h1>{tr}Set up Look & Feel{/tr}</h1>
-<div style="float:left; width:60px"><img src="img/icons/large/gnome-settings-background48x48.png" alt="{tr}Set up Look & Feel{/tr}" /></div>
+<div class="adminWizardIconleft"><img src="img/icons/large/gnome-settings-background48x48.png" alt="{tr}Set up Look & Feel{/tr}" /></div>
 {tr}Configure the Tiki theme and other look & feel preferences{/tr}.
-<div align="left" style="margin-top:1em;">
+<div class="adminWizardContent">
 <fieldset>
 	<legend>{tr}Look & Feel options{/tr}</legend>
 		<div style="position:relative;">
-			<div style="position:absolute;right:.5em;top:0.5em;">
+			<div class="adminWizardlookandfell">
 				<img src="{$thumbfile}" alt="{tr}Theme Screenshot{/tr}" id="style_thumb" width="160px" height="120px">
 			</div>
 

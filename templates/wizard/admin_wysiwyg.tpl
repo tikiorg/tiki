@@ -1,13 +1,13 @@
 {* $Id$ *}
 
 <h1>{tr}Set up your Wysiwyg editor{/tr}</h1>
-<div style="float:left; width:60px"><img src="img/icons/large/wysiwyg48x48.png" alt="{tr}Set up your Wysiwyg environment{/tr}" /></div>
+<div class="adminWizardIconleft"><img src="img/icons/large/wysiwyg48x48.png" alt="{tr}Set up your Wysiwyg environment{/tr}" /></div>
 {tr}You can choose to use by default the 'Compatible' Wiki mode (content in saved in wiki syntax), or the HTML mode{/tr}.
-<div align="left" style="margin-top:1em;">
+<div class="adminWizardContent">
 <fieldset>
 	<legend>{tr}Wiki editor setup{/tr}</legend>
 	{tr}Select the Wysiwyg editor mode{/tr}
-	<table style="border:0px;padding-left:20px">
+	<table class="adminWizardtable">
 	<tr>
 	<td width="30%">
 	<input type="radio" name="editorType" value="wiki" {if empty($editorType) || $editorType eq 'wiki'}checked="checked"{/if} /> {tr}Compatible Wiki mode{/tr}</td><td> {tr}Use wiki syntax for saved pages{/tr}.<br>

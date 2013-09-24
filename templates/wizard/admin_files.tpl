@@ -3,8 +3,8 @@
 <h1>{tr}Set up Files and File Gallery{/tr}</h1>
 
 {tr}Set up your file gallery and attachments{/tr}. {tr}Choose to store them either in the database or in files on disk, among other options{/tr}.
-<div style="float:left; width:60px"><img src="img/icons/large/file-manager48x48.png" alt="{tr}Set up Files and File Gallery{/tr}" /></div>
-<div align="left" style="margin-top:1em;">
+<div class="adminWizardIconleft"><img src="img/icons/large/file-manager48x48.png" alt="{tr}Set up Files and File Gallery{/tr}" /></div>
+<div class="adminWizardContent">
 <fieldset>
 	<legend>{tr}File Gallery{/tr}</legend>
 	{preference name='fgal_elfinder_feature'}
@@ -17,7 +17,7 @@
 <br>
 <fieldset>
 	<legend>{tr}Wiki Attachments{/tr}</legend>
-	<img src="img/icons/large/wikipages.png" style="float:right" />	
+	<img src="img/icons/large/wikipages.png" class="adminWizardIconright" />
 	{preference name=feature_wiki_attachments}
 	{preference name=feature_use_fgal_for_wiki_attachments}
 	<br>

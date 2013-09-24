@@ -2,9 +2,9 @@
 
 <h1>{tr}Set up Categories{/tr}</h1>
 
-<div style="float:left; width:60px"><img src="img/icons/large/categories48x48.png" alt="{tr}Set up Categories{/tr}" /></div>
+<div class="adminWizardIconleft"><img src="img/icons/large/categories48x48.png" alt="{tr}Set up Categories{/tr}" /></div>
 {tr}Global content category system. Items of different types (wiki pages, articles, tracker items, etc) can be added to one or many content categories. Categories can have permissions, so that content access can be controlled, and e.g. only granted to a certain group{/tr}.
-<div align="left" style="margin-top:1em;">
+<div class="adminWizardContent">
 <fieldset>
 	<legend>{tr}Categories{/tr}</legend>
 	<br>

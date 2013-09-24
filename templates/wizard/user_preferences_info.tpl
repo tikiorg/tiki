@@ -1,9 +1,9 @@
 {* $Id$ *}
 
 <h1>{tr}User Preferences{/tr}: {tr}Personal Information{/tr}</h1>
-<div style="float:left; width:60px"><img src="img/icons/large/user.png" alt="{tr}User Preferences{/tr}" /></div>
+<div class="userWizardIconleft"><img src="img/icons/large/user.png" alt="{tr}User Preferences{/tr}" /></div>
 {tr}Set up your basic information as a user on this site{/tr}.
-<div align="left" style="margin-top:1em;">
+<div class="userWizardContent">
 <fieldset>
 {if $prefs.feature_userPreferences eq 'y'}
 	<legend>{tr}Personal Information{/tr}</legend>
