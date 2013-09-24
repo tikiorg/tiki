@@ -97,7 +97,7 @@ class Memcachelib
 	function isEnabled()
 	{
 		global $prefs;
-		if ( $prefs['memcache_enabled'] == 'y' ) {
+		if ( isset($prefs['memcache_enabled']) && $prefs['memcache_enabled'] == 'y' ) {
 			return $this->memcache && $this->getOption('enabled', FALSE);
 		} else {
 			return false;
