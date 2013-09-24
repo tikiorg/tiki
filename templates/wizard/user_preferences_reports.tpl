@@ -16,7 +16,6 @@
 		{/if}
 		
 			<p><input type="checkbox" name="use_daily_reports" value="true" {if $report_preferences != false}checked{/if}> {tr}Use reports{/tr}</p>
-		
 			<p>
 			{tr}Interval in which you want to get the reports{/tr}
 			<select name="interval">

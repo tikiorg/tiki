@@ -47,6 +47,17 @@ class UserWizardPreferencesReports extends Wizard
 	{
 		global $tikilib, $user;
 
+		$reportsManager = Reports_Factory::build('Reports_Manager');
+
+		$interval = filter_input(INPUT_POST, 'interval', FILTER_SANITIZE_STRING);
+		$view = filter_input(INPUT_POST, 'view', FILTER_SANITIZE_STRING);
+		$type = filter_input(INPUT_POST, 'type', FILTER_SANITIZE_STRING);
+		$always_email = filter_input(INPUT_POST, 'always_email', FILTER_SANITIZE_NUMBER_INT);
+		if ($always_email != 1)
+			$always_email = 0;
+		
+		$reportsManager->save($user, $interval, $view, $type, $always_email);
+
 		// Run the parent first
 		parent::onContinue($homepageUrl);
 	}
