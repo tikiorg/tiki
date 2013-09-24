@@ -209,9 +209,11 @@ class FileGalLib extends TikiLib
 				$video_id = substr($url, strrpos($url, '/') + 1);	// not ideal, but video_id not stored elsewhere (yet)
 				$result = TikiLib::lib('vimeo')->deleteVideo($video_id);
 				if ($result['stat'] != 'ok') {
-					$errMsg = tra('Vimeo error:') . ' ' . tra($result['err']['msg']) . '<br>' . tra($result['err']['expl']);
+					$errMsg = tra('Vimeo error:') . ' ' . tra($result['err']['msg']) .
+						'<br>' . tra($result['err']['expl']) .
+						'<br>' . tr('File "%0" removed (id %1) Remote link was: "%2"', $fileInfo['name'], $fileInfo['fileId'], $url);
 					TikiLib::lib('errorreport')->report($errMsg);
-					return false;
+					// just report the error and continue to delete the tiki file for now
 				}
 			}
 
