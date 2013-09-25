@@ -260,12 +260,12 @@
 			{if $prefs.feature_history eq 'y' and $tiki_p_wiki_view_history eq 'y'}
 				<td class="integer">
 					<a class="link" href="tiki-pagehistory.php?page={$listpages[changes].pageName|escape:"url"}">
-						{$listpages[changes].versions}
+						{$listpages[changes].version}
 					</a>
 				</td>
 			{else}
 				<td class="integer">
-					{$listpages[changes].versions}
+					{$listpages[changes].version}
 				</td>
 			{/if}
 		{/if}

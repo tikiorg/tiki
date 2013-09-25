@@ -2064,11 +2064,11 @@ ul.freetagged li {
 
 /* Cluetip - JQuery tooltips
    =cluetipClass: 'default' */
-#cluetip-close {
-	text-align: right;
+.cluetip-close {
+	float: right;
 	margin: 0;
-	padding-right: .5em;
-	background: #fff;
+	padding-right: .1em;
+	background: transparent;
 	color: #900;
 }
 
@@ -2077,9 +2077,17 @@ ul.freetagged li {
 	padding: 0;
 }
 
-#cluetip {
+.cluetip-fullhtml .cluetip-inner {
+	background-image: none;
+	border: none;
+	width: 100%;
+	height: 100%;
+	padding: 0;
+}
+
+.cluetip {
 	display: none;
-	width: auto !important; /* FIXME: to be removed workaround until someone finds why cluetips render with width: 0 now after jQuery upgrade in trunk */
+	width: auto !important; /* cluetip doesn't allow setting of "auto" width in it's parameters, it either ends up with zero or 275px width */
 }
 
 /* fake 'transparent' theme (for ClueTip login box popup) */
@@ -2090,6 +2098,42 @@ ul.freetagged li {
 	background: none;
 	border: none;
 }
+
+/* Cluetip - JQuery tooltips
+   =cluetipClass: 'default' */
+
+.cluetip-default {
+	background: #bed8f1;
+	color: #000;
+}
+
+.cluetip-default #cluetip-outer {
+	background: #bed8f1;
+}
+.cluetip-default h3#cluetip-title {
+	background: #1b3a50;
+	color: #fff;
+	font-weight: bold;
+}
+
+.cluetip-default #cluetip-title a {
+	color: #bed8f1;
+	font-size: 0.95em;
+}
+
+.cluetip-default #cluetip-inner {
+	padding: .9em;
+}
+
+.siteloginbar_poppedup + .cluetip-close {
+	display: inline-block;
+	float: right;
+	margin-top: -7px;
+	margin-right: 20px;
+	padding: .2em .8em;
+}
+
+
 
 /***** New (unsorted) *****/
 
@@ -3841,44 +3885,6 @@ textarea.tshoutbox{
 .mods_update {
 	background:#dcdeac;
 	color: #000;
-}
-
-/* Cluetip - JQuery tooltips
-   =cluetipClass: 'default' */
-
-.cluetip-default {
-	background: #bed8f1;
-	color: #000;
-}
-
-.cluetip-default #cluetip-outer {
-	background: #bed8f1;
-}
-.cluetip-default h3#cluetip-title {
-	background: #1b3a50;
-	color: #fff;
-	font-weight: bold;
-}
-
-.cluetip-default #cluetip-title a {
-	color: #bed8f1;
-	font-size: 0.95em;
-}
-
-.cluetip-default #cluetip-inner {
-	padding: .9em;
-}
-
-.cluetip-close {
-	text-align: right;
-}
-
-.siteloginbar_poppedup + .cluetip-close {
-	display: inline-block;
-	float: right;
-	margin-top: -7px;
-	margin-right: 20px;
-	padding: .2em .8em;
 }
 
 

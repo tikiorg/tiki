@@ -66,6 +66,18 @@ function smarty_function_popup($params, $smarty)
 				break;
 			case 'fullhtml':
 				$options['escapeTitle'] = true;
+				$options['cluetipClass'] = 'fullhtml';
+				break;
+			case 'background':
+				$options['showTitle'] = false;
+				$options['cluetipClass'] = 'fullhtml';
+				if (!empty($params['width'])) {
+					$body = '<div style="background-image:url(' . $value . ');width:' . $params['width'] . 'px;height:100%;">' . $body . '</div>';
+					unset($params['width']);
+					unset($options['width']);
+				} else {
+					$body = '<div style="background-image:url(' . $value . ');width:100%;height:100%;">' . $body . '</div>';
+				}
 				break;
 
 			case 'left':
