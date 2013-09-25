@@ -8,6 +8,15 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
+$inputConfiguration = array(
+	array( 'staticKeyFilters' => array(
+		'user' => 'text',
+		'username' => 'text',
+		'pass' => 'none',
+		'pass2' => 'none',
+		'oldpass' => 'none',
+	) )
+);
 require_once ('tiki-setup.php');
 
 $access->check_feature('change_password');
