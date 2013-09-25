@@ -3292,6 +3292,9 @@ class TikiLib extends TikiDb_Bridge
 	{
 		global $prefs, $tiki_p_wiki_view_ratings;
 
+		$loadCategories = (isset($prefs['wiki_list_categories']) && $prefs['wiki_list_categories'] == 'y') || (isset($prefs['wiki_list_categories_path']) && $prefs['wiki_list_categories_path'] == 'y');
+		$loadCategories = $loadCategories && $forListPages;
+
 		$join_tables = '';
 		$join_bindvars = array();
 		$old_sort_mode = '';
@@ -3503,6 +3506,17 @@ class TikiLib extends TikiDb_Bridge
 					if ($forListPages && $prefs['wiki_list_backlinks'] == 'y')
 						$res['backlinks'] = $links->fetchCount(array('toPage' => $page, 'fromPage' => $links->unlike('objectlink:%')));
 					// backlinks do not include links from non-page objects TODO: full feature allowing this with options
+				}
+
+				if ($loadCategories) {
+					$cats = $categlib->get_object_categories('wiki page', $res['pageName']);
+					$res['categpath'] = array();
+					$res['categname'] = array();
+					foreach ($cats as $cat) {
+						$res['categpath'][] = $cp = $categlib->get_category_path_string($cat);
+						if ($s = strrchr($cp, ':')) $res['categname'][] = substr($s, 1);
+						else $res['categname'][] = $cp;
+					}
 				}
 				$ret[] = $res;
 			}
