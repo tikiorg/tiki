@@ -12,7 +12,7 @@ $inputConfiguration = array(
 	array( 'staticKeyFilters' => array(
 		'user' => 'text',
 		'username' => 'text',
-		'pass' => 'text',
+		'pass' => 'none',
 	) )
 );
 
