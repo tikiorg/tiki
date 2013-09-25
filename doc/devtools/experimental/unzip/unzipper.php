@@ -12,12 +12,19 @@
 <?php
 // global definitions and some functions
 
+// linefeed
+$LF="\n";
+
+// Tiki 9
 $tiki_zip_url["tiki-9.4"] = 'http://sourceforge.net/projects/tikiwiki/files/Tiki_9.x_Herbig_Haro/9.4/tiki-9.4.zip/download';
+$tiki_zip_url["tiki-9.5"] = 'http://sourceforge.net/projects/tikiwiki/files/Tiki_9.x_Herbig_Haro/9.5/tiki-9.5.zip/download';
 $tiki_zip_url["tiki-9.6"] = 'http://sourceforge.net/projects/tikiwiki/files/Tiki_9.x_Herbig_Haro/9.6/tiki-9.6.zip/download';
+// Tiki 10
 $tiki_zip_url["tiki-10.2"] = 'http://sourceforge.net/projects/tikiwiki/files/Tiki_10.x_Sun/10.2/tiki-10.2.zip/download';
+$tiki_zip_url["tiki-10.3"] = 'http://sourceforge.net/projects/tikiwiki/files/Tiki_10.x_Sun/10.3/tiki-10.3.zip/download';
 $tiki_zip_url["tiki-10.4"] = 'http://sourceforge.net/projects/tikiwiki/files/Tiki_10.x_Sun/10.4/tiki-10.4.zip/download';
+// Tiki 11
 $tiki_zip_url["tiki-11.0"] = 'http://sourceforge.net/projects/tikiwiki/files/Tiki_11.x_Vega/11.0/tiki-11.0.zip/download';
-//$tiki_zip_url["tiki-."] = '';
 //$tiki_zip_url["tiki-."] = '';
 //$tiki_zip_url["tiki-."] = '';
 //$tiki_zip_url["tiki-."] = '';
@@ -165,24 +172,33 @@ function checkmyfile_exists($filename)
 			break;
 	}
 	if ($download) {
-		echo "$x to be downloaded from Sourceforge to server\n";
-		$ch = curl_init($download_url);
-		$fp = fopen($download_name, "w");
-		curl_setopt($ch, CURLOPT_FILE, $fp);
-		curl_setopt($ch, CURLOPT_HEADER, 0);
-		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
-		curl_exec($ch);
-	//	$info = curl_getinfo($ch);
-	//	echo $info."\n";
-		curl_close($ch);
-		fclose($fp);
+		if (function_exists(curl_exec)) {
+			echo "$x to be downloaded from Sourceforge to server\n";
+			$ch = curl_init($download_url);
+			$fp = fopen($download_name, "w");
+			curl_setopt($ch, CURLOPT_FILE, $fp);
+			curl_setopt($ch, CURLOPT_HEADER, 0);
+			curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
+			curl_exec($ch);
+		//	$info = curl_getinfo($ch);
+		//	echo $info."\n";
+			curl_close($ch);
+			fclose($fp);
+		} else {
+			echo 'PHP curl_exec not installed';
+		}
 	} else {
 		$dummy = 'foo';
 	}
 ?>
  <p><form method="post">
- <input type="radio" name="choice" value="tiki-9.4.zip"> tiki-9.4.zip<br />
- <input type="radio" name="choice" value="tiki-10.2.zip"> tiki-10.2.zip<br />
+<?php
+	foreach ($tiki_zip_url as $version => $url) {
+		echo ' <input type="radio" name="choice" value="'.$version.'.zip"> '.$version.'.zip<br />'.$LF ;
+	}
+// <input type="radio" name="choice" value="tiki-9.4.zip"> tiki-9.4.zip<br />
+// <input type="radio" name="choice" value="tiki-10.2.zip"> tiki-10.2.zip<br />
+?>
  <br />
  <input type="reset" value="RESET">
  <button name="choose" value="zipfile" type="submit">DOWNLOAD</button></form>
@@ -232,9 +248,14 @@ function checkmyfile_exists($filename)
 	}
 ?>
  <p><form method="post">
- <input type="radio" name="unzip" value="tiki-9.3.zip"> tiki-9.3.zip<br />
- <input type="radio" name="unzip" value="tiki-9.4.zip"> tiki-9.4.zip<br />
- <input type="radio" name="unzip" value="tiki-10.2.zip"> tiki-10.2.zip<br />
+<?php
+	foreach ($tiki_zip_url as $version => $url) {
+		echo ' <input type="radio" name="unzip" value="'.$version.'.zip"> '.$version.'.zip<br />'.$LF ;
+	}
+// <input type="radio" name="unzip" value="tiki-9.3.zip"> tiki-9.3.zip<br />
+// <input type="radio" name="unzip" value="tiki-9.4.zip"> tiki-9.4.zip<br />
+// <input type="radio" name="unzip" value="tiki-10.2.zip"> tiki-10.2.zip<br />
+?>
  <br />
  <input type="reset" value="RESET">
  <button name="unzipper" value="zipfile" type="submit">UNZIP</button></form>
