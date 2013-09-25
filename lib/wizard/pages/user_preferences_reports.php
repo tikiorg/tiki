@@ -47,6 +47,9 @@ class UserWizardPreferencesReports extends Wizard
 	{
 		global $tikilib, $user;
 
+		// Run the parent first
+		parent::onContinue($homepageUrl);
+
 		$reportsManager = Reports_Factory::build('Reports_Manager');
 
 		$interval = filter_input(INPUT_POST, 'interval', FILTER_SANITIZE_STRING);
@@ -57,8 +60,5 @@ class UserWizardPreferencesReports extends Wizard
 			$always_email = 0;
 		
 		$reportsManager->save($user, $interval, $view, $type, $always_email);
-
-		// Run the parent first
-		parent::onContinue($homepageUrl);
 	}
 }

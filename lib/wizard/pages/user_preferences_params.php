@@ -37,8 +37,10 @@ class UserWizardPreferencesParams extends Wizard
 			else $userwatch = $_REQUEST['view_user'];
 			if ($userwatch != $user) {
 				if ($userwatch === false) {
+					/*
 					$smarty->assign('msg', tra("Unknown user"));
 					$smarty->display("error.tpl");
+					*/
 					//die;
 					return false;
 				} else {
@@ -47,11 +49,13 @@ class UserWizardPreferencesParams extends Wizard
 			}
 		} elseif (isset($_REQUEST["view_user"])) {
 			if ($_REQUEST["view_user"] != $user) {
-				$access->check_permission('tiki_p_admin_users');
+				$access->check_permission('tiki_p_admin_users');		// Permission should be checked differently. check_permission will terminate processing, I believe. Arild
 				$userwatch = $_REQUEST["view_user"];
 				if (!$userlib->user_exists($userwatch)) {
+					/*
 					$smarty->assign('msg', tra("Unknown user"));
 					$smarty->display("error.tpl");
+					*/
 					//die;
 					return false;
 				}
@@ -90,8 +94,10 @@ class UserWizardPreferencesParams extends Wizard
 			else $userwatch = $_REQUEST['view_user'];
 			if ($userwatch != $user) {
 				if ($userwatch === false) {
+					/*
 					$smarty->assign('msg', tra("Unknown user"));
 					$smarty->display("error.tpl");
+					*/
 					//die;
 					return false;
 				} else {
@@ -103,8 +109,10 @@ class UserWizardPreferencesParams extends Wizard
 				$access->check_permission('tiki_p_admin_users');
 				$userwatch = $_REQUEST["view_user"];
 				if (!$userlib->user_exists($userwatch)) {
+					/*
 					$smarty->assign('msg', tra("Unknown user"));
 					$smarty->display("error.tpl");
+					*/
 					//die;
 					return false;
 				}
