@@ -882,7 +882,7 @@ h3.box-title {
 .rbox-title {
 	display: inline-block;
 	width: auto;
-	z-index: 1;
+	z-index: 0;
 	position: relative;
 	margin-bottom: -0.33em;
 	padding: 0.35em 0.9em 0.1em;
