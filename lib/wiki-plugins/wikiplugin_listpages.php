@@ -158,7 +158,7 @@ function wikiplugin_listpages_info()
 				'name' => tra('For List Pages'),
 				'description' => 'y|n',
 				'filter' => 'alpha',
-				'default' => '',
+				'default' => 'y',
 				'options' => array(
 					array('text' => '', 'value' => ''), 
 					array('text' => tra('Yes'), 'value' => 'y'), 
@@ -228,7 +228,8 @@ function wikiplugin_listpages($data, $params)
 		'translations'=>null, 
 		'translationOrphan'=>null, 
 		'showCheckbox' => 'y', 
-		'showNumberOfPages' => 'n'
+		'showNumberOfPages' => 'n',
+		'for_list_pages' => 'y',
 	);
 	$params = array_merge($default, $params);
 	extract($params, EXTR_SKIP);
@@ -338,6 +339,25 @@ function wikiplugin_listpages($data, $params)
 		}
 
 		$smarty->assign('wplp_used', $used);
+	}
+
+	if ($prefs['feature_categories'] == 'y') {
+		$categlib = TikiLib::lib('categ');
+
+		if ((isset($prefs['wiki_list_categories']) && $prefs['wiki_list_categories'] == 'y')
+				|| (isset($prefs['wiki_list_categories_path']) && $prefs['wiki_list_categories_path'] == 'y')
+		) {
+			foreach ($listpages['data'] as $i => $check) {
+				$cats = $categlib->get_object_categories('wiki page', $check['pageName']);
+				$listpages['data'][$i]['categpath'] = array();
+				$listpages['data'][$i]['categname'] = array();
+				foreach ($cats as $cat) {
+					$listpages['data'][$i]['categpath'][] = $cp = $categlib->get_category_path_string($cat);
+					if ($s = strrchr($cp, ':')) $listpages['data'][$i]['categname'][] = substr($s, 1);
+					else $listpages['data'][$i]['categname'][] = $cp;
+				}
+			}
+		}
 	}
 
 	$smarty->assign_by_ref('listpages', $listpages['data']);
