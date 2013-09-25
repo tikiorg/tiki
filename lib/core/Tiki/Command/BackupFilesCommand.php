@@ -53,17 +53,13 @@ class BackupFilesCommand extends Command
 			return;
 		}
  
-		$site = $input->getOption('site');
-		if (!$site) { 
-	                require('db/local.php');
-		} else {
-			if (file_exists('db/'.$site.'/local.php')) {
-				require('db/'.$site.'/local.php');
-			} else {
-				$output->writeln('<error>Error: db/'.$site.'/local.php not found.</error>');
-				return;
-			}
+		$local = \TikiInit::getCredentialsFile();
+		if (! is_readable($local)) {
+			$output->writeln('<error>Error: "' . $local . '" not readable.</error>');
+			return;
 		}
+
+		require $local;
 
 		$root = getcwd();
 		if (!$root) {
