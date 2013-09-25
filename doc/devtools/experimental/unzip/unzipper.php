@@ -145,14 +145,21 @@ function checkmyfile_exists($filename)
 <h3>Download Tiki Version</h3>
 
 <?php
+	$download = false;
 	if (isset($_POST['choice'])) {
 		$x = $_POST['choice'];
+		$y = substr($x,0,-4);
+		$download_name = $x;
+		$download_url = $tiki_zip_url[$y];
+		$download = true;
 	} else {
 		$x = 'no choice';
+		$y = 'no choice';
 	//	echo "no choice\n";
 	}
 	//echo "<p>Your Choice: $x</p>\n";
 
+/*
 	switch($x) {
 		case 'tiki-9.4.zip':
 			$download = true;
@@ -171,6 +178,7 @@ function checkmyfile_exists($filename)
 			$download = false;
 			break;
 	}
+*/
 	if ($download) {
 		if (function_exists(curl_exec)) {
 			echo "$x to be downloaded from Sourceforge to server\n";
@@ -209,8 +217,12 @@ function checkmyfile_exists($filename)
 <h3>Unzip Tiki Version</h3>
 
 <?php
+	$unzip = false;
 	if (isset($_POST['unzip'])) {
 		$x = $_POST['unzip'];
+		$unzip_name = $x;
+		$unzip = true;
+/*
 		switch($x) {
 			case 'tiki-9.4.zip':
 				$unzip = true;
@@ -229,12 +241,13 @@ function checkmyfile_exists($filename)
 				$unzip = false;
 				break;
 		}
+*/
 		if ($unzip and (file_exists($unzip_name))) {
 		//	system("unzip $unzip_name");
 			$zip = new ZipArchive;
 			$res = $zip->open("$unzip_name");
 			if ($res === TRUE) {
-			$zip->extractTo('./');
+				$zip->extractTo('./');
 				$zip->close();
 				echo 'unzip ok';
 			} else {
