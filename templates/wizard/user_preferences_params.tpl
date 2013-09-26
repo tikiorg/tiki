@@ -15,7 +15,7 @@
 				{if $userinfo.email}
 					<select name="email_isPublic">
 						{section name=ix loop=$scramblingMethods}
-							<option value="{$scramblingMethods[ix]|escape}" {if $user_prefs.email_isPublic eq $scramblingMethods[ix]}selected="selected"{/if}>
+							<option value="{$scramblingMethods[ix]|escape}" {if $email_isPublic eq $scramblingMethods[ix]}selected="selected"{/if}>
 								{$scramblingEmails[ix]}
 							</option>
 						{/section}
@@ -31,7 +31,7 @@
 			<td>
 				<select name="mailCharset">
 					{section name=ix loop=$mailCharsets}
-						<option value="{$mailCharsets[ix]|escape}" {if $user_prefs.mailCharset eq $mailCharsets[ix]}selected="selected"{/if}>
+						<option value="{$mailCharsets[ix]|escape}" {if $mailCharset eq $mailCharsets[ix]}selected="selected"{/if}>
 							{$mailCharsets[ix]}
 						</option>
 					{/section}
@@ -48,7 +48,7 @@
 						</option>
 						{section name=ix loop=$styles}
 							{if count($prefs.available_styles) == 0 || empty($prefs.available_styles[0]) || in_array($styles[ix], $prefs.available_styles)}
-								<option value="{$styles[ix]|escape}" {if $user_prefs.theme eq $styles[ix]}selected="selected"{/if}>
+								<option value="{$styles[ix]|escape}" {if $theme eq $styles[ix]}selected="selected"{/if}>
 									{$styles[ix]}
 								</option>
 							{/if}
@@ -69,17 +69,17 @@
 					<select name="language">
 						{section name=ix loop=$languages}
 							{if count($prefs.available_languages) == 0 || in_array($languages[ix].value, $prefs.available_languages)}
-								<option value="{$languages[ix].value|escape}" {if $user_prefs.language eq $languages[ix].value}selected="selected"{/if}>
+								<option value="{$languages[ix].value|escape}" {if $language eq $languages[ix].value}selected="selected"{/if}>
 									{$languages[ix].name}
 								</option>
 							{/if}
 						{/section}
-						<option value='' {if !$user_prefs.language}selected="selected"{/if}>
+						<option value='' {if !$language}selected="selected"{/if}>
 							{tr}Site default{/tr}
 						</option>
 					</select>
 					{if $prefs.feature_multilingual eq 'y'}
-					{if $user_prefs.read_language}
+					{if $read_language}
 					<div id="read-lang-div">
 						{else}
 						<a href="javascript:void(0)" onclick="document.getElementById('read-lang-div').style.display='block';this.style.display='none';">
@@ -100,7 +100,7 @@
 								{/section}
 							</select>
 							&nbsp;=&gt;&nbsp;
-							<input id="read-language-input" type="text" name="read_language" value="{$user_prefs.read_language}">
+							<input id="read-language-input" type="text" name="read_language" value="{$read_language}">
 							<br/>&nbsp;
 						</div>
 						{/if}
@@ -112,12 +112,12 @@
 			<td>{tr}Number of visited pages to remember:{/tr}</td>
 			<td>
 				<select name="userbreadCrumb">
-					<option value="1" {if $user_prefs.userbreadCrumb eq 1}selected="selected"{/if}>1</option>
-					<option value="2" {if $user_prefs.userbreadCrumb eq 2}selected="selected"{/if}>2</option>
-					<option value="3" {if $user_prefs.userbreadCrumb eq 3}selected="selected"{/if}>3</option>
-					<option value="4" {if $user_prefs.userbreadCrumb eq 4}selected="selected"{/if}>4</option>
-					<option value="5" {if $user_prefs.userbreadCrumb eq 5}selected="selected"{/if}>5</option>
-					<option value="10" {if $user_prefs.userbreadCrumb eq 10}selected="selected"{/if}>10</option>
+					<option value="1" {if $userbreadCrumb eq 1}selected="selected"{/if}>1</option>
+					<option value="2" {if $userbreadCrumb eq 2}selected="selected"{/if}>2</option>
+					<option value="3" {if $userbreadCrumb eq 3}selected="selected"{/if}>3</option>
+					<option value="4" {if $userbreadCrumb eq 4}selected="selected"{/if}>4</option>
+					<option value="5" {if $userbreadCrumb eq 5}selected="selected"{/if}>5</option>
+					<option value="10" {if $userbreadCrumb eq 10}selected="selected"{/if}>10</option>
 				</select>
 			</td>
 		</tr>
@@ -129,13 +129,13 @@
 						{tr}Detect user time zone if browser allows, otherwise site default{/tr}
 					</option>
 					<option value="Site" style="font-style:italic;border-bottom:1px dashed #666;"
-							{if isset($user_prefs.display_timezone) and $user_prefs.display_timezone eq 'Site'} selected="selected"{/if}>
+							{if isset($display_timezone) and $display_timezone eq 'Site'} selected="selected"{/if}>
 						{tr}Site default{/tr}
 					</option>
 					{foreach key=tz item=tzinfo from=$timezones}
 						{math equation="floor(x / (3600000))" x=$tzinfo.offset assign=offset}
 						{math equation="(x - (y*3600000)) / 60000" y=$offset x=$tzinfo.offset assign=offset_min format="%02d"}
-						<option value="{$tz|escape}"{if isset($user_prefs.display_timezone) and $user_prefs.display_timezone eq $tz} selected="selected"{/if}>
+						<option value="{$tz|escape}"{if isset($display_timezone) and $display_timezone eq $tz} selected="selected"{/if}>
 							{$tz|escape} (UTC{if $offset >= 0}+{/if}{$offset}h{if $offset_min gt 0}{$offset_min}{/if})
 						</option>
 					{/foreach}
@@ -145,7 +145,7 @@
 		<tr>
 			<td>{tr}Use 12-hour clock in time selectors:{/tr}</td>
 			<td>
-				<input type="checkbox" name="display_12hr_clock" {if $user_prefs.display_12hr_clock eq 'y'}checked="checked"{/if}>
+				<input type="checkbox" name="display_12hr_clock" {if $display_12hr_clock eq 'y'}checked="checked"{/if}>
 			</td>
 		</tr>
 		{if $prefs.feature_community_mouseover eq 'y'}
@@ -161,7 +161,7 @@
 			<tr>
 				<td>{tr}Use double-click to edit pages:{/tr}</td>
 				<td>
-					<input type="checkbox" name="user_dbl" {if $user_prefs.user_dbl eq 'y'}checked="checked"{/if}>
+					<input type="checkbox" name="user_dbl" {if $user_dbl eq 'y'}checked="checked"{/if}>
 				</td>
 			</tr>
 		{/if}
@@ -172,61 +172,24 @@
 		<legend>{tr}User Messages{/tr}</legend>
 			<table class="formcolor">
 	
-				<tr>
-					<td>{tr}Messages per page{/tr}</td>
-					<td>
-						<select name="mess_maxRecords">
-							<option value="2" {if $user_prefs.mess_maxRecords eq 2}selected="selected"{/if}>2</option>
-							<option value="5" {if $user_prefs.mess_maxRecords eq 5}selected="selected"{/if}>5</option>
-							<option value="10" {if empty($user_prefs.mess_maxRecords) or $user_prefs.mess_maxRecords eq 10}selected="selected"{/if}>10</option>
-							<option value="20" {if $user_prefs.mess_maxRecords eq 20}selected="selected"{/if}>20</option>
-							<option value="30" {if $user_prefs.mess_maxRecords eq 30}selected="selected"{/if}>30</option>
-							<option value="40" {if $user_prefs.mess_maxRecords eq 40}selected="selected"{/if}>40</option>
-							<option value="50" {if $user_prefs.mess_maxRecords eq 50}selected="selected"{/if}>50</option>
-						</select>
-					</td>
-				</tr>
 				{if $prefs.allowmsg_is_optional eq 'y'}
 					<tr>
 						<td>{tr}Allow messages from other users{/tr}</td>
 						<td>
-							<input type="checkbox" name="allowMsgs" {if $user_prefs.allowMsgs eq 'y'}checked="checked"{/if}>
+							<input type="checkbox" name="allowMsgs" {if $allowMsgs eq 'y'}checked="checked"{/if}>
 						</td>
 					</tr>
 				{/if}
 				<tr>
-					<td>{tr}Notify sender when reading his mail{/tr}</td>
-					<td>
-						<input type="checkbox" name="mess_sendReadStatus" {if $user_prefs.mess_sendReadStatus eq 'y'}checked="checked"{/if}>
-					</td>
-				</tr>
-				<tr>
 					<td>{tr}Send me an email for messages with priority equal or greater than:{/tr}</td>
 					<td>
 						<select name="minPrio">
-							<option value="1" {if $user_prefs.minPrio eq 1}selected="selected"{/if}>1 -{tr}Lowest{/tr}-</option>
-							<option value="2" {if $user_prefs.minPrio eq 2}selected="selected"{/if}>2 -{tr}Low{/tr}-</option>
-							<option value="3" {if $user_prefs.minPrio eq 3}selected="selected"{/if}>3 -{tr}Normal{/tr}-</option>
-							<option value="4" {if $user_prefs.minPrio eq 4}selected="selected"{/if}>4 -{tr}High{/tr}-</option>
-							<option value="5" {if $user_prefs.minPrio eq 5}selected="selected"{/if}>5 -{tr}Very High{/tr}-</option>
-							<option value="6" {if $user_prefs.minPrio eq 6}selected="selected"{/if}>{tr}none{/tr}</option>
-						</select>
-					</td>
-				</tr>
-				<tr>
-					<td>{tr}Auto-archive read messages after x days{/tr}</td>
-					<td>
-						<select name="mess_archiveAfter">
-							<option value="0" {if $user_prefs.mess_archiveAfter eq 0}selected="selected"{/if}>{tr}never{/tr}</option>
-							<option value="1" {if $user_prefs.mess_archiveAfter eq 1}selected="selected"{/if}>1</option>
-							<option value="2" {if $user_prefs.mess_archiveAfter eq 2}selected="selected"{/if}>2</option>
-							<option value="5" {if $user_prefs.mess_archiveAfter eq 5}selected="selected"{/if}>5</option>
-							<option value="10" {if $user_prefs.mess_archiveAfter eq 10}selected="selected"{/if}>10</option>
-							<option value="20" {if $user_prefs.mess_archiveAfter eq 20}selected="selected"{/if}>20</option>
-							<option value="30" {if $user_prefs.mess_archiveAfter eq 30}selected="selected"{/if}>30</option>
-							<option value="40" {if $user_prefs.mess_archiveAfter eq 40}selected="selected"{/if}>40</option>
-							<option value="50" {if $user_prefs.mess_archiveAfter eq 50}selected="selected"{/if}>50</option>
-							<option value="60" {if $user_prefs.mess_archiveAfter eq 60}selected="selected"{/if}>60</option>
+							<option value="1" {if $minPrio eq 1}selected="selected"{/if}>1 -{tr}Lowest{/tr}-</option>
+							<option value="2" {if $minPrio eq 2}selected="selected"{/if}>2 -{tr}Low{/tr}-</option>
+							<option value="3" {if $minPrio eq 3}selected="selected"{/if}>3 -{tr}Normal{/tr}-</option>
+							<option value="4" {if $minPrio eq 4}selected="selected"{/if}>4 -{tr}High{/tr}-</option>
+							<option value="5" {if $minPrio eq 5}selected="selected"{/if}>5 -{tr}Very High{/tr}-</option>
+							<option value="6" {if $minPrio eq 6}selected="selected"{/if}>{tr}none{/tr}</option>
 						</select>
 					</td>
 				</tr>
@@ -242,13 +205,13 @@
 					<td>{tr}Tasks per page{/tr}</td>
 					<td>
 						<select name="tasks_maxRecords">
-							<option value="2" {if $user_prefs.tasks_maxRecords eq 2}selected="selected"{/if}>2</option>
-							<option value="5" {if $user_prefs.tasks_maxRecords eq 5}selected="selected"{/if}>5</option>
-							<option value="10" {if $user_prefs.tasks_maxRecords eq 10}selected="selected"{/if}>10</option>
-							<option value="20" {if $user_prefs.tasks_maxRecords eq 20}selected="selected"{/if}>20</option>
-							<option value="30" {if $user_prefs.tasks_maxRecords eq 30}selected="selected"{/if}>30</option>
-							<option value="40" {if $user_prefs.tasks_maxRecords eq 40}selected="selected"{/if}>40</option>
-							<option value="50" {if $user_prefs.tasks_maxRecords eq 50}selected="selected"{/if}>50</option>
+							<option value="2" {if $tasks_maxRecords eq 2}selected="selected"{/if}>2</option>
+							<option value="5" {if $tasks_maxRecords eq 5}selected="selected"{/if}>5</option>
+							<option value="10" {if $tasks_maxRecords eq 10}selected="selected"{/if}>10</option>
+							<option value="20" {if $tasks_maxRecords eq 20}selected="selected"{/if}>20</option>
+							<option value="30" {if $tasks_maxRecords eq 30}selected="selected"{/if}>30</option>
+							<option value="40" {if $tasks_maxRecords eq 40}selected="selected"{/if}>40</option>
+							<option value="50" {if $tasks_maxRecords eq 50}selected="selected"{/if}>50</option>
 						</select>
 					</td>
 				</tr>
@@ -261,9 +224,9 @@
 
 		{if $prefs.feature_wiki eq 'y'}
 			<tr>
-				<td>{tr}My pages{/tr}</td>
+				<td>{tr}My pages{/tr}:</td>
 				<td>
-					<input type="checkbox" name="mytiki_pages" {if $user_prefs.mytiki_pages eq 'y'}checked="checked"{/if}>
+					<input type="checkbox" name="mytiki_pages" {if $mytiki_pages eq 'y'}checked="checked"{/if}>
 				</td>
 			</tr>
 		{/if}
@@ -272,7 +235,7 @@
 			<tr>
 				<td>{tr}My blogs{/tr}</td>
 				<td>
-					<input type="checkbox" name="mytiki_blogs" {if $user_prefs.mytiki_blogs eq 'y'}checked="checked"{/if}>
+					<input type="checkbox" name="mytiki_blogs" {if $mytiki_blogs eq 'y'}checked="checked"{/if}>
 				</td>
 			</tr>
 		{/if}
@@ -281,7 +244,7 @@
 			<tr>
 				<td>{tr}My galleries{/tr}</td>
 				<td>
-					<input type="checkbox" name="mytiki_gals" {if $user_prefs.mytiki_gals eq 'y'}checked="checked"{/if}>
+					<input type="checkbox" name="mytiki_gals" {if $mytiki_gals eq 'y'}checked="checked"{/if}>
 				</td>
 			</tr>
 		{/if}
@@ -290,7 +253,7 @@
 			<tr>
 				<td>{tr}My messages{/tr}</td>
 				<td>
-					<input type="checkbox" name="mytiki_msgs" {if $user_prefs.mytiki_msgs eq 'y'}checked="checked"{/if}>
+					<input type="checkbox" name="mytiki_msgs" {if $mytiki_msgs eq 'y'}checked="checked"{/if}>
 				</td>
 			</tr>
 		{/if}
@@ -299,7 +262,7 @@
 			<tr>
 				<td>{tr}My tasks{/tr}</td>
 				<td>
-         			<input type="checkbox" name="mytiki_tasks" {if $user_prefs.mytiki_tasks eq 'y'}checked="checked"{/if}>
+         			<input type="checkbox" name="mytiki_tasks" {if $mytiki_tasks eq 'y'}checked="checked"{/if}>
 				</td>
 			</tr>
 		{/if}
@@ -308,13 +271,13 @@
 			<tr>
 				<td>{tr}My forum topics{/tr}</td>
 				<td>
-          			<input type="checkbox" name="mytiki_forum_topics" {if $user_prefs.mytiki_forum_topics eq 'y'}checked="checked"{/if}>
+          			<input type="checkbox" name="mytiki_forum_topics" {if $mytiki_forum_topics eq 'y'}checked="checked"{/if}>
 				</td>
 			</tr>
 			<tr>
 				<td>{tr}My forum replies{/tr}</td>
 				<td>
-          			<input type="checkbox" name="mytiki_forum_replies" {if $user_prefs.mytiki_forum_replies eq 'y'}checked="checked"{/if}>
+          			<input type="checkbox" name="mytiki_forum_replies" {if $mytiki_forum_replies eq 'y'}checked="checked"{/if}>
 				</td>
 			</tr>
 		{/if}
@@ -323,7 +286,7 @@
 			<tr>
 				<td>{tr}My user items{/tr}</td>
 				<td>
-					<input type="checkbox" name="mytiki_items" {if $user_prefs.mytiki_items eq 'y'}checked="checked"{/if}>
+					<input type="checkbox" name="mytiki_items" {if $mytiki_items eq 'y'}checked="checked"{/if}>
 				</td>
 			</tr>
 		{/if}
@@ -332,7 +295,7 @@
 			<tr>
 				<td>{tr}My Articles{/tr}</td>
 				<td>
-					<input type="checkbox" name="mytiki_articles" {if $user_prefs.mytiki_articles eq 'y'}checked="checked"{/if}>
+					<input type="checkbox" name="mytiki_articles" {if $mytiki_articles eq 'y'}checked="checked"{/if}>
 				</td>
 			</tr>
 		{/if}
@@ -343,7 +306,7 @@
 				<td>
 					<select name="mylevel">
 						{foreach key=levn item=lev from=$prefs.userlevels}
-							<option value="{$levn}"{if $user_prefs.mylevel eq $levn} selected="selected"{/if}>{$lev}</option>
+							<option value="{$levn}"{if $mylevel eq $levn} selected="selected"{/if}>{$lev}</option>
 						{/foreach}
 					</select>
 				</td>
