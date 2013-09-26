@@ -54,7 +54,7 @@
 		{if $prefs.vimeo_upload eq 'y' and $field.options_map.displayMode eq 'vimeo'}
 			<legend>{tr}Link to existing Vimeo URL{/tr}</legend>
 			<label>
-				{tr}URL:{/tr} <input class="url" name="url" placeholder="http://vimeo.com/..." data-mode="vimeo">
+				{tr}URL:{/tr} <input class="url vimeourl" name="vimeourl" placeholder="http://vimeo.com/..." data-mode="vimeo">
 				<input type="hidden" class="reference" name="reference" value="1">
 			</label>
 		{else}
@@ -201,22 +201,18 @@ if (typeof FileReader !== 'undefined') {
 
 $url.keypress(function (e) {
 	if (e.which === 13) {
-		var url = $(this).val();
-		if ($(this).data('mode') === 'vimeo' && !url.match(/http[s]?\:\/\/(?:www\.)?vimeo\.com\/\d+/)) {
-			$url.showError(tr('URL should be in the format: https://vimeo.com/nnnnnnn'));
-			e.preventDefault();
-			return false;
-		}
-		$(this).attr('disabled', true).clearError();
+		var $this = $(this);
+		var url = $this.val();
+		$this.attr('disabled', true).clearError();
 
 		$.ajax({
 			type: 'POST',
 			url: $.service('file', 'remote'),
 			dataType: 'json',
 			data: {
-				galleryId: $(this).closest('.files-field').data('galleryid'),
+				galleryId: $this.closest('.files-field').data('galleryid'),
 				url: url,
-				reference: $(this).next('.reference').val()
+				reference: $this.next('.reference').val()
 			},
 			success: function (data) {
 				var fileId = data.fileId, li = $('<li/>');
@@ -228,16 +224,16 @@ $url.keypress(function (e) {
 				li.append($('<label>{{icon _id=cross}}</label>'));
 				li.find('img.icon').click(function () {
 					$field.input_csv('delete', ',', fileId);
-					$(this).closest('li').remove();
+					$this.closest('li').remove();
 				});
 				$files.append(li);
-				$url.val('');
+				$this.val('');
 			},
 			error: function (jqxhr) {
-				$url.showError(jqxhr);
+				$this.showError(jqxhr);
 			},
 			complete: function () {
-				$url.removeAttr('disabled');
+				$this.removeAttr('disabled');
 			}
 		});
 
@@ -362,3 +358,13 @@ handleVimeoFile = function (link, data) {
 };
 });
 {/jq}
+{if $prefs.vimeo_upload eq 'y' and $field.options_map.displayMode eq 'vimeo' and $prefs.feature_jquery_validation eq 'y'}
+	{jq}
+		$.validator.addMethod("isVimeoUrl", function(value, element) {
+		    return this.optional(element) || value.match(/http[s]?\:\/\/(?:www\.)?vimeo\.com\/\d+$/);
+		}, tr("* URL should be in the format: https://vimeo.com/nnnnnnn"));
+		$.validator.addClassRules({
+			vimeourl : { isVimeoUrl : true }
+		});
+	{/jq}
+{/if}
