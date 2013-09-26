@@ -60,7 +60,7 @@ class Validators
 				$validationjs .= $prefix . $field_value['fieldId'] . ': { ';
 				if ($field_value['isMandatory'] == 'y') {
 					if ($field_value['type'] == 'D') {
-						$validationjs .= 'required_in_group: [1, ".group_'.$prefix.$field_value['fieldId'].'"], ';
+						$validationjs .= 'required_in_group: [1, ".group_'.$prefix.$field_value['fieldId'].'", "other"], ';
 					} else if ($field_value['type'] == 'A') {
 						$validationjs .= 'required_tracker_file: [1, ".file_'.$prefix.$field_value['fieldId'].'"], ';
 					} else if ($field_value['type'] == 'f') {	// old style date picker - jq validator rules have to apply to an element name or id
