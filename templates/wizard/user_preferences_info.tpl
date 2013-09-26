@@ -40,7 +40,7 @@
 							{tr}Pick user Avatar{/tr}
 						</a>
 					{else}
-						<a href="tiki-pick_avatar.php{if $userwatch ne $user}?view_user={$userwatch}{/if}" class="link">
+						<a href="tiki-pick_avatar.php{if $userwatch ne $user}?view_user={$userwatch}{/if}" class="link" target="_blank">
 							{tr}Pick user Avatar{/tr}
 						</a>
 					{/if}
