@@ -16,7 +16,7 @@
 			</label>
 		{/foreach}
 
-		<input type="submit" value="{tr}Set as my default{/tr}">
+		<input type="submit" value="{tr}Set as my default{/tr}" class="btn btn-primary btn-xs">
 
 		{if $prefs.connect_feature eq "y"}
 			<label>
