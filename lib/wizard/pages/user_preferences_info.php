@@ -31,39 +31,8 @@ class UserWizardPreferencesInfo extends Wizard
 			$showPage = true;
 		}
 		
-		if (isset($_REQUEST['userId']) || isset($_REQUEST['view_user'])) {
-			if (empty($_REQUEST['view_user'])) $userwatch = $tikilib->get_user_login($_REQUEST['userId']);
-			else $userwatch = $_REQUEST['view_user'];
-			if ($userwatch != $user) {
-				if ($userwatch === false) {
-					/*
-					$smarty->assign('msg', tra("Unknown user"));
-					$smarty->display("error.tpl");
-					*/
-					//die;
-					return false;
-				} else {
-					$access->check_permission('tiki_p_admin_users');
-				}
-			}
-		} elseif (isset($_REQUEST["view_user"])) {
-			if ($_REQUEST["view_user"] != $user) {
-				$access->check_permission('tiki_p_admin_users');		// Permission should be checked differently. check_permission will terminate processing, I believe. Arild
-				$userwatch = $_REQUEST["view_user"];
-				if (!$userlib->user_exists($userwatch)) {
-					/*
-					$smarty->assign('msg', tra("Unknown user"));
-					$smarty->display("error.tpl");
-					*/
-					//die;
-					return false;
-				}
-			} else {
-				$userwatch = $user;
-			}
-		} else {
-			$userwatch = $user;
-		}
+		$userwatch = $user;
+		
 		$userinfo = $userlib->get_user_info($userwatch);
 		$smarty->assign_by_ref('userinfo', $userinfo);
 
