@@ -7909,15 +7909,12 @@ $lang = array(
 // "Reference Tag" => "Reference Tag",
 // "Uses the first result using the specified tag. Useful when the tag mechanism is coerced into creating unique human memorizable keys" => "Uses the first result using the specified tag. Useful when the tag mechanism is coerced into creating unique human memorizable keys",
 // "Append a note to the reference for additional information, like page numbers or other sub-references" => "Append a note to the reference for additional information, like page numbers or other sub-references",
-<<<<<<< .mine
 "Invalid wizard stepNr specified" => "Número de paso inválido del asistente",
-=======
 // "Zotero Reference List" => "Zotero Reference List",
 // "Produces the complete reference list from the Zotero server" => "Produces the complete reference list from the Zotero server",
 // "Provide the list of references with a given tag" => "Provide the list of references with a given tag",
 // "No results obtained. The Zotero citation server may be down" => "No results obtained. The Zotero citation server may be down",
 "Invalid wizard stepNr specified" => "Número de paso inválido del asistente",
->>>>>>> .r47693
 "ERROR: Either the subject or body must be non-empty" => "ERROR: Tanto el tema o el cuerpo no deben estar vacíos",
 // "User %s does not have the permission" => "User %s does not have the permission",
 "The message has been sent to" => "Se ha enviado el mensaje a",
@@ -11609,7 +11606,6 @@ $lang = array(
 "Deactivate" => "Desactivar",
 // "Active - Click to Deactivate" => "Active - Click to Deactivate",
 "Remove with articles" => "Borrar con artículos",
-<<<<<<< .mine
 // "Your sender email is not set. You can set it <a href=\"%0\">here</a>" => "Your sender email is not set. You can set it <a href=\"%0\">here</a>",
 "Preference Filters" => "Filtros de Preferencias",
 "Set as my default" => "Fijar como los míos por omisión",
@@ -11638,8 +11634,6 @@ $lang = array(
 // "features you can use in all text areas, like wiki pages, blogs, articles, forums, etc" => "features you can use in all text areas, like wiki pages, blogs, articles, forums, etc",
 // "External Pages Cache" => "External Pages Cache",
 // "External Wikis" => "External Wikis",
-=======
->>>>>>> .r47693
 "Admin Tracker" => "Admin formulario-bd",
 "Tracker fields" => "Campos de formulario-bd",
 "Mandatory" => "Obligatorio",
@@ -14708,7 +14702,6 @@ $lang = array(
 // "{\$params.label}" => "{\$params.label}",
 "Please login first" => "Por favor, conéctate primero",
 "Toggle display" => "Conmuta la visualización",
-<<<<<<< .mine
 "Set up some advanced options" => "Pon a punto algunas opciones avanzadas",
 "Set up Workspaces & Areas" => "Pon a punto los Espacios de Trabajo y las Áreas",
 "If you are an experienced tiki site administrator, you might like to know and maybe even try some of these advanced features below. They might be very useful for you, for instance, if you plan to periodically create a similar set of Tiki objects for different groups of users with a similar set permissions each time" => "Si eres un administrador experimentado de sitios Tiki , quizás te gustaría saber e incluso probar algunas de estas funciones avanzadas de abajo. Te pueden ser muy útiles , por ejemplo, si creas periódicamente un conjunto similar de objetos Tiki para diferentes grupos de usuarios con conjuntos de permisos similares cada vez",
@@ -14717,7 +14710,6 @@ $lang = array(
 "E.g. ns1:_:MyPage and ns2:_:MyPage" => "Por ejemplo, ns1:_:MiPagina y ns2:_:MiPagina",
 "Workspaces & Areas admin panel" => "Panel de administración de Espacios de trabajo & Áreas",
 "Auto TOC setup" => "Pon a punto el Auto TOC",
-=======
 // "Page approved by %0 on %1" => "Page approved by %0 on %1",
 "Page last modified on %0 by %1" => "Última modificación de la página el %0 por %1",
 "Created by %0" => "Creado/a por %0",
@@ -14733,9 +14725,7 @@ $lang = array(
 "E.g. ns1:_:MyPage and ns2:_:MyPage" => "Por ejemplo, ns1:_:MiPagina y ns2:_:MiPagina",
 "Workspaces & Areas admin panel" => "Panel de administración de Espacios de trabajo & Áreas",
 "Auto TOC setup" => "Pon a punto el Auto TOC",
->>>>>>> .r47693
 // "Set up the language" => "Set up the language",
-<<<<<<< .mine
 "The Auto TOC setting can be toogled per page, in the page properties" => "La configuración de Auto TOC se puede cambiar por página , en la pestaña de propiedades de la página",
 "Auto TOC" => "Tabla de Contenidos Automática ( Auto TOC )",
 // "Set up Categories" => "Set up Categories",
@@ -14796,7 +14786,6 @@ $lang = array(
 "Collaborative Community" => "Comunidad Colaborativa",
 "apply profile now" => "aplica el perfil ahora",
 "Setup to help subject experts and enthusiasts work together to build a Knowledge Base" => "Configuración para ayudar a expertos en el tema y los entusiastas a trabajar juntos para construir una base de conocimiento",
-=======
 "The Auto TOC setting can be toogled per page, in the page properties" => "La configuración de Auto TOC se puede cambiar por página , en la pestaña de propiedades de la página",
 "Auto TOC" => "Tabla de Contenidos Automática ( Auto TOC )",
 // "Set up Categories" => "Set up Categories",
@@ -14857,7 +14846,6 @@ $lang = array(
 "Collaborative Community" => "Comunidad Colaborativa",
 "apply profile now" => "aplica el perfil ahora",
 "Setup to help subject experts and enthusiasts work together to build a Knowledge Base" => "Configuración para ayudar a expertos en el tema y los entusiastas a trabajar juntos para construir una base de conocimiento",
->>>>>>> .r47693
 "Wiki Editing" => "Edición Wiki",
 "Personal Member Spaces" => "Espacios personales de los miembros",
 "Company Intranet" => "Intranet de Empresa",
@@ -15863,11 +15851,8 @@ $lang = array(
 // "TikiTest Replay" => "TikiTest Replay",
 // "The page is empty" => "The page is empty",
 "You do not have permissions to view the maps" => "No tiene permiso para ver los mapas",
-<<<<<<< .mine
 "\t\t\t\tRemove from structure and remove page too" => "Eliminar de la estructura y también eliminar página",
 "\t\t\tRemove only from structure" => "Eliminar solo de la estructura",
 "HomePage" => "Página de inicio",
 "Translate:" => "Traducir:",
-=======
->>>>>>> .r47693
 );
