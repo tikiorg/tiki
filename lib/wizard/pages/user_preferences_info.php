@@ -47,8 +47,6 @@ class UserWizardPreferencesInfo extends Wizard
 		$smarty->assign_by_ref('flags', $flags);
 		$country = $tikilib->get_user_preference($userwatch, 'country', 'Other');
 		$smarty->assign('country', $country);
-		$userbreadCrumb = $tikilib->get_user_preference($userwatch, 'userbreadCrumb', $prefs['site_userbreadCrumb']);
-		$smarty->assign('userbreadCrumb', $userbreadCrumb);
 		$homePage = $tikilib->get_user_preference($userwatch, 'homePage', '');
 		$smarty->assign('homePage', $homePage);
 		$avatar = $tikilib->get_user_avatar($userwatch);
