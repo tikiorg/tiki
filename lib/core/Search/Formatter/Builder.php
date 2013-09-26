@@ -61,7 +61,7 @@ class Search_Formatter_Builder
 
 		$formatter = new Search_Formatter($plugin);
 
-		if ($this->alternateOutput) {
+		if ($this->alternateOutput > '') {
 			$formatter->setAlternateOutput($this->alternateOutput);
 		} else {
 			$formatter->setAlternateOutput('^' . tra('No results for query.') . '^');
