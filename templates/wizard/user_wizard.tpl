@@ -12,18 +12,15 @@
 	<img src="img/icons/large/user.png" class="userWizardIconright" />
 	<p class="wizard_page_title">
 	<b>{tr}Welcome to the Tiki User Wizard{/tr}</b>.<br>
+	{tr}The user wizard will help you set up your personal Tiki preferences.{/tr}
 	</p>
-	{*
-	User wizard is not a login wizard. Do not call skip (which should set the hide on login pref
 	<p>
-	{tr}If you are a new user, you are recommended to use the User Wizard. Press "Start" to begin the wizard{/tr}.<br><br>
-	{tr}However, if you are an experienced user and don't want the User Wizard ...{/tr} <br>
-	<input type="submit" class="btn btn-default" name="skip" value="{tr}Skip wizard and don't show again{/tr}" />
+	{tr}If you don't want to run the wizard, you can close it using the button below, or use the "Close" button on top which is available on all wizard pages.{/tr}<br>
+	<input type="submit" class="btn btn-default" name="close" value="{tr}Close the wizard{/tr}" />
 	</p>
-	*}
 	<p>
-	</p>
 	<b>Tiki version {$tiki_version}</b>. {tr}To learn more about this Tiki release, go to <a href="http://doc.tiki.org/tiki12">Tiki 12</a>{/tr}.<br/><br/>	
 	{tr}See also{/tr} <a href="tiki-user_preferences.php" target="_blank">{tr}User Preferences Panel{/tr}</a>
+	</p>
 </fieldset>
 </div>
