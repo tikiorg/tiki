@@ -24,9 +24,9 @@
 				</td>
 				<td>
 					{if $prefs.auth_ldap_nameattr eq '' || $prefs.auth_method ne 'ldap'}
-						<input type="text" name="realName" value="{$user_prefs.realName|escape}" style="width:20em;font-size:1.1em;">
+						<input type="text" name="realName" value="{$realName|escape}" style="width:20em;font-size:1.1em;">
 					{else}
-						{$user_prefs.realName|escape}
+						{$realName|escape}
 					{/if}
 				</td>
 			</tr>
@@ -51,9 +51,9 @@
 				<tr>
 					<td>{tr}Gender:{/tr}</td>
 					<td>
-						<input type="radio" name="gender" value="Male" {if $user_prefs.gender eq 'Male'}checked="checked"{/if}> {tr}Male{/tr}
-						<input type="radio" name="gender" value="Female" {if $user_prefs.gender eq 'Female'}checked="checked"{/if}> {tr}Female{/tr}
-						<input type="radio" name="gender" value="Hidden" {if $user_prefs.gender ne 'Male' and $user_prefs.gender ne 'Female'}checked="checked"{/if}> {tr}Hidden{/tr}
+						<input type="radio" name="gender" value="Male" {if $gender eq 'Male'}checked="checked"{/if}> {tr}Male{/tr}
+						<input type="radio" name="gender" value="Female" {if $gender eq 'Female'}checked="checked"{/if}> {tr}Female{/tr}
+						<input type="radio" name="gender" value="Hidden" {if $gender ne 'Male' and $gender ne 'Female'}checked="checked"{/if}> {tr}Hidden{/tr}
 					</td>
 				</tr>
 			{/if}
@@ -61,16 +61,16 @@
 			<tr>
 				<td>{tr}Country:{/tr}</td>
 				<td>
-					{if isset($user_prefs.country) && $user_prefs.country != "None" && $user_prefs.country != "Other"}
+					{if isset($country) && $country != "None" && $country != "Other"}
 						{$userinfo.login|countryflag}
 					{/if}
 					<select name="country">
-						<option value="Other" {if $user_prefs.country eq "Other"}selected="selected"{/if}>
+						<option value="Other" {if $country eq "Other"}selected="selected"{/if}>
 							{tr}Other{/tr}
 						</option>
 						{section name=ix loop=$flags}
 							{if $flags[ix] ne "Other"}
-								<option value="{$flags[ix]|escape}" {if $user_prefs.country eq $flags[ix]}selected="selected"{/if}>
+								<option value="{$flags[ix]|escape}" {if $country eq $flags[ix]}selected="selected"{/if}>
 									{tr}{$flags[ix]|stringfix}{/tr}
 								</option>
 							{/if}
@@ -81,7 +81,7 @@
 			<tr>
 				<td>{tr}Homepage URL:{/tr}</td>
 				<td>
-					<input type="text" size="40" name="homePage" value="{$user_prefs.homePage|escape}">
+					<input type="text" size="40" name="homePage" value="{$homePage|escape}">
 				</td>
 			</tr>
 
@@ -143,10 +143,10 @@
 				<td>{tr}User information:{/tr}</td>
 				<td>
 					<select name="user_information">
-						<option value='private' {if $user_prefs.user_information eq 'private'}selected="selected"{/if}>
+						<option value='private' {if $user_information eq 'private'}selected="selected"{/if}>
 							{tr}Private{/tr}
 						</option>
-						<option value='public' {if $user_prefs.user_information eq 'public'}selected="selected"{/if}>
+						<option value='public' {if $user_information eq 'public'}selected="selected"{/if}>
 							{tr}Public{/tr}
 						</option>
 					</select>
