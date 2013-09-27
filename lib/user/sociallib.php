@@ -114,6 +114,10 @@ class SocialLib
 			}
 		}
 
+		require_once('lib/search/refresh-functions.php');
+		refresh_index('user', $user);
+		refresh_index('user', $newFriend);
+
 		$tx->commit();
 
 		return true;
@@ -176,10 +180,14 @@ class SocialLib
 				// Friendship breakups are bidirectional, not follow ones
 				$this->relationlib->remove_relation($followInvert);
 			}
+			refresh_index('user', $user);
+			refresh_index('user', $oldFriend);
 			return true;
 		} elseif ($request || $requestInvert) {
 			$this->relationlib->remove_relation($request);
 			$this->relationlib->remove_relation($requestInvert);
+			refresh_index('user', $user);
+			refresh_index('user', $oldFriend);
 			return true;
 		} else {
 			return false;
