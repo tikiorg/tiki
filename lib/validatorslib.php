@@ -57,7 +57,11 @@ class Validators
 		$validationjs = 'rules: { ';
 		foreach ($fields_data as $field_value) {
 			if ($field_value['validation'] || $field_value['isMandatory'] == 'y') {
-				$validationjs .= $prefix . $field_value['fieldId'] . ': { ';
+				if ($field_value['type'] == 'e' || $field_value['type'] == 'M') {
+					$validationjs .= '"' . $prefix . $field_value['fieldId'] . '[]": { ';
+				} else {
+					$validationjs .= $prefix . $field_value['fieldId'] . ': { ';
+				}
 				if ($field_value['isMandatory'] == 'y') {
 					if ($field_value['type'] == 'D') {
 						$validationjs .= 'required_in_group: [1, ".group_'.$prefix.$field_value['fieldId'].'", "other"], ';
