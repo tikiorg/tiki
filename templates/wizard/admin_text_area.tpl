@@ -20,7 +20,7 @@
 {if $isHtmlMode neq true}
 <fieldset>
 	<legend>{tr}Plugin preferences{/tr}</legend>
-	<img src="img/icons/large/plugins.png" class="adminWizardIconleft" />
+	<img src="img/icons/large/plugins.png" class="adminWizardIconright" />
 	{preference name=wikipluginprefs_pending_notification}
 	<b>{tr}Some recommended plugins{/tr}:</b><br> 
 	{preference name=wikiplugin_convene}
