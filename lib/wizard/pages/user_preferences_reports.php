@@ -50,15 +50,19 @@ class UserWizardPreferencesReports extends Wizard
 		// Run the parent first
 		parent::onContinue($homepageUrl);
 
-		$reportsManager = Reports_Factory::build('Reports_Manager');
+		// Show if option is selected
+		if ($prefs['feature_user_watches'] === 'y' && $prefs['feature_daily_report_watches'] === 'y') {
+			$reportsManager = Reports_Factory::build('Reports_Manager');
+	
+			$interval = filter_input(INPUT_POST, 'interval', FILTER_SANITIZE_STRING);
+			$view = filter_input(INPUT_POST, 'view', FILTER_SANITIZE_STRING);
+			$type = filter_input(INPUT_POST, 'type', FILTER_SANITIZE_STRING);
+			$always_email = filter_input(INPUT_POST, 'always_email', FILTER_SANITIZE_NUMBER_INT);
+			if ($always_email != 1)
+				$always_email = 0;
+			
+			$reportsManager->save($user, $interval, $view, $type, $always_email);
+		}
 
-		$interval = filter_input(INPUT_POST, 'interval', FILTER_SANITIZE_STRING);
-		$view = filter_input(INPUT_POST, 'view', FILTER_SANITIZE_STRING);
-		$type = filter_input(INPUT_POST, 'type', FILTER_SANITIZE_STRING);
-		$always_email = filter_input(INPUT_POST, 'always_email', FILTER_SANITIZE_NUMBER_INT);
-		if ($always_email != 1)
-			$always_email = 0;
-		
-		$reportsManager->save($user, $interval, $view, $type, $always_email);
 	}
 }
