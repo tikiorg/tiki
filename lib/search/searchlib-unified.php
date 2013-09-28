@@ -502,6 +502,8 @@ class UnifiedSearchLib
 			$aggregator->addGlobalSource(new Search_GlobalSource_PermissionSource(Perms::getInstance()));
 			$aggregator->addGlobalSource(new Search_GlobalSource_RelationSource);
 		}
+
+		$aggregator->addGlobalSource(new Search_GlobalSource_TitleInitialSource);
 	}
 
     /**
