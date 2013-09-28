@@ -7,6 +7,9 @@
 
 require_once('lib/language/MergeFiles.php');
 
+use org\bovigo\vfs\vfsStream;
+use org\bovigo\vfs\vfsStreamFile;
+
 class Language_MergeFilesTest extends TikiTestCase
 {
 	protected $obj;

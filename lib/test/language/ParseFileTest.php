@@ -7,6 +7,9 @@
 
 require_once('lib/language/File.php');
 
+use org\bovigo\vfs\vfsStream;
+use org\bovigo\vfs\vfsStreamFile;
+
 class Language_FileTest extends TikiTestCase
 {
 	protected $obj;

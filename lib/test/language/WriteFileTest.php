@@ -8,6 +8,9 @@
 require_once('lib/language/Exception.php');
 require_once('lib/language/WriteFile.php');
 
+use org\bovigo\vfs\vfsStream;
+use org\bovigo\vfs\vfsStreamFile;
+
 class Language_WriteFileTest extends TikiTestCase
 {
 	protected $obj;

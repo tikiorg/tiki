@@ -1,6 +1,6 @@
 <?php
 $db_tiki='mysql';
-$dbversion_tiki='7.0';
+$dbversion_tiki='12.0';
 $host_tiki='localhost';
 $user_tiki='root';
 $pass_tiki='';

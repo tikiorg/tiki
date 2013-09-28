@@ -18,6 +18,9 @@ $paths = array(
 		realpath('../..'),
 		realpath('core'),
 		realpath('../pear'),
+        realpath('../../vendor'),
+        realpath('../../vendor/mikey179/vfsStream/src/main/php'),
+        realpath('../../vendor_extra/pear')
 		);
 
 ini_set('include_path', implode(PATH_SEPARATOR, $paths));
