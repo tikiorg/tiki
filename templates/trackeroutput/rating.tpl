@@ -30,11 +30,7 @@
 				{if ($tiki_p_tracker_vote_ratings eq 'y' && (!isset($field.my_rate) || $field.my_rate === false)) ||
 					($tiki_p_tracker_revote_ratings eq 'y' && isset($field.my_rate) && $field.my_rate !== false)}
 					{capture name=thisvote}{tr}Click to vote for this value:{/tr} {$field.rating_options[i]}{/capture}
-					{if $context.search_render eq 'y'}
-						<a href="{$smarty.server.REQUEST_URI}" onclick="sendVote(this,{$item.itemId},{$field.fieldId},{$field.rating_options[i]});return false;">
-					{else}
-						<a href="{$smarty.server.REQUEST_URI}{if empty($smarty.server.QUERY_STRING)}?{else}&amp;{/if}itemId={$item.itemId}&amp;ins_{$field.fieldId}={$field.rating_options[i]}&amp;vote=y">
-					{/if}
+					<a href="{$smarty.server.REQUEST_URI}" onclick="sendVote(this,{$item.itemId},{$field.fieldId},{$field.rating_options[i]});return false;">
 				{/if}
 				{if $field.numvotes && $field.voteavg >= $field.rating_options[i]}
 					{if $field.mode eq 'radio'}{tr}{$field.labels[i]}{/tr}: {/if}{if $field.mode eq 'radio'}{icon _id='star_grey' alt=$field.rating_options[i] title=$smarty.capture.thisvote}{else}{icon _id='star' alt=$field.rating_options[i] title=$smarty.capture.thisvote}{/if}
@@ -56,11 +52,7 @@
 			{icon _id='help' title=$smarty.capture.stat}
 		{/if}
 		{if $tiki_p_tracker_revote_ratings eq 'y' and  isset($field.my_rate) and in_array($field.my_rate, $field.options_array)}
-			{if $context.search_render eq 'y'}
-				<a href="{$smarty.server.REQUEST_URI}" onclick="sendVote(this,{$item.itemId},{$field.fieldId},'NULL');return false;">x</a>
-			{else}
-				<a href="{$smarty.server.REQUEST_URI}{if empty($smarty.server.QUERY_STRING)}?{else}&amp;{/if}itemId={$item.itemId}&amp;ins_{$field.fieldId}=NULL&amp;vote=y" title="{tr}Click to delete your vote{/tr}">x</a>
-			{/if}
+			<a href="{$smarty.server.REQUEST_URI}" onclick="sendVote(this,{$item.itemId},{$field.fieldId},'NULL');return false;">x</a>
 		{/if}
 		<span>
 	{/if}
