@@ -141,6 +141,7 @@ class Search_ResultSet extends ArrayObject
 			} else {
 				$value = $entry[$field];
 				if (! isset($out[$value])) {
+					$newentry = $entry;
 					$newentry[$field] = array_fill_keys($collect, array());
 					$out[$value] = $newentry;
 				}
