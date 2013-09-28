@@ -24,7 +24,7 @@ class Cachelib
 	{
 		global $prefs;
 
-		if ( TikiLib::lib('memcache')->isEnabled() ) {
+		if ( isset($prefs['memcache_enabled']) && $prefs['memcache_enabled'] == 'y' ) {
 			$this->implementation = new CacheLibMemcache;
 		} else {
 			$this->implementation = new CacheLibFileSystem;
