@@ -24,9 +24,27 @@
 				<a href="{$smarty.server.REQUEST_URI}" onclick="sendVote(this,{$item.itemId},{$field.fieldId},{$field.rating_options[i]});return false;">
 			{/if}
 			{if $field.numvotes && $field.voteavg >= $field.rating_options[i]}
-				{if $field.mode eq 'radio'}{tr}{$field.labels[i]}{/tr}: {/if}{if $field.mode eq 'radio'}{icon _id='star_grey' alt=$field.rating_options[i] title=$smarty.capture.thisvote}{else}{icon _id='star' alt=$field.rating_options[i] title=$smarty.capture.thisvote}{/if}
+				{if $field.mode eq 'radio'}{tr}{$field.labels[i]}{/tr}: {/if}
+				{if $field.mode eq 'radio'}
+					{if $field.my_rate !== false && $field.my_rate == $field.rating_options[i]}
+						{icon _id='star_grey_selected' alt=$field.rating_options[i] title=$smarty.capture.thisvote}
+					{else}
+						{icon _id='star_grey' alt=$field.rating_options[i] title=$smarty.capture.thisvote}
+					{/if}
+				{else}
+					{if $field.my_rate !== false && $field.my_rate == $field.rating_options[i]}
+						{icon _id='star_selected' alt=$field.rating_options[i] title=$smarty.capture.thisvote}
+					{else}
+						{icon _id='star' alt=$field.rating_options[i] title=$smarty.capture.thisvote}
+					{/if}
+				{/if}
 			{else}
-				{if $field.mode eq 'radio'}{tr}{$field.labels[i]}{/tr}: {/if}{icon _id='star_grey' alt=$field.rating_options[i] title=$smarty.capture.thisvote}
+				{if $field.mode eq 'radio'}{tr}{$field.labels[i]}{/tr}: {/if}
+				{if $field.my_rate !== false && $field.my_rate == $field.rating_options[i]}
+					{icon _id='star_grey_selected' alt=$field.rating_options[i] title=$smarty.capture.thisvote}
+				{else}
+					{icon _id='star_grey' alt=$field.rating_options[i] title=$smarty.capture.thisvote}
+				{/if}
 			{/if}
 			{if ($tiki_p_tracker_vote_ratings eq 'y' && (!isset($field.my_rate) || $field.my_rate === false)) ||
 				($tiki_p_tracker_revote_ratings eq 'y' && isset($field.my_rate) && $field.my_rate !== false)}
