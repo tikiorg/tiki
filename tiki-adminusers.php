@@ -746,12 +746,14 @@ if ($tiki_p_admin == 'y') {
 }
 
 //add tablesorter sorting and filtering
-$tsOn	= $prefs['disableJavascript'] == 'n' && $prefs['feature_jquery_tablesorter'] == 'y'
-		&& $prefs['feature_ajax'] == 'y' ? true : false;
+//TODO restore tablesorter once implementation is complete
+/*$tsOn	= $prefs['disableJavascript'] == 'n' && $prefs['feature_jquery_tablesorter'] == 'y'
+		&& $prefs['feature_ajax'] == 'y' ? true : false;*/
+$tsOn = false;
+
 $smarty->assign('ts', $tsOn);
 $tsAjax = isset($_REQUEST['tsAjax']) && $_REQUEST['tsAjax'] ? true : false;
 
-if ($tsAjax || !$tsOn) {
 	$users = $userlib->get_users(
 		$offset,
 		$numrows,
@@ -765,7 +767,7 @@ if ($tsAjax || !$tsOn) {
 		!empty($_REQUEST['filterNotValidated']),
 		!empty($_REQUEST['filterNeverLoggedIn'])
 	);
-} elseif ($tsOn) {
+if ($tsOn && !$tsAjax) {
 	$users['cant'] = $userlib->count_users('');
 	$users['data'] = $users['cant'] > 0 ? true : false;
 	//delete anonymous out of group list used for dropdown
