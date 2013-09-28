@@ -25,7 +25,7 @@
 	</ul>
 {else}{* do menu as before is not flags or words *}
 <form method="get" action="tiki-switch_lang.php" target="_self">
-       <select name="language" size="1" onchange="this.form.submit();" class="btn btn-default dropdown-toggle">
+       <select name="language" size="1" onchange="this.form.submit();" class="form-control">
         {section name=ix loop=$languages}
         <option value="{$languages[ix].value|escape}"
           {if $prefs.language eq $languages[ix].value} selected="selected"{/if}>
