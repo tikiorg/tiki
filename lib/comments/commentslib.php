@@ -2553,11 +2553,17 @@ class Comments extends TikiLib
 					)
 				);
 			} else {
+				if ($comment['objectType'] == 'trackeritem') {
+					$parentobject = TikiLib::lib('trk')->get_tracker_for_item($comment['object']);
+				} else {
+					$parentobject = 'not implemented';
+				}
 				TikiLib::events()->trigger(
 					'tiki.comment.update',
 					array(
 						'type' => $comment['objectType'],
 						'object' => $comment['object'],
+						'parentobject' => $parentobject,
 						'title' => $title,
 						'comment' => $threadId,
 						'user' => $GLOBALS['user'],
@@ -2786,11 +2792,17 @@ class Comments extends TikiLib
 		} else {
 			$finalEvent = $parentId ? 'tiki.comment.reply' : 'tiki.comment.post';
 
+			if ($object[0] == 'trackeritem') {
+				$parentobject = TikiLib::lib('trk')->get_tracker_for_item($object[1]);
+			} else {
+				$parentobject = 'not implemented';
+			}
 			TikiLib::events()->trigger(
 				$finalEvent,
 				array(
 					'type' => $object[0],
 					'object' => $object[1],
+					'parentobject' => $parentobject,
 					'user' => $GLOBALS['user'],
 					'title' => $title,
 					'content' => $data,
