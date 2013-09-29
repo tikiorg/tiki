@@ -39,7 +39,7 @@ class Search_GlobalSource_TitleInitialSource implements Search_GlobalSource_Inte
 		return array();
 	}
 
-	function getData($objectTye, $objectId, Search_Type_Factory_Interface $typeFactory, array $data = array())
+	function getData($objectType, $objectId, Search_Type_Factory_Interface $typeFactory, array $data = array())
 	{
 		$title = empty($data['title']) ? null : $data['title']->getValue();
 		$title = empty($title) ? '0' : $title;
