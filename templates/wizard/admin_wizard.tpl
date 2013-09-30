@@ -16,6 +16,7 @@
 	{tr}If you are a new user, it is recommended to use the Admin Wizard. Press "Start" to begin the wizard{/tr}.
 	{tr}If you don't want to go through detailed setup, use the defaults{/tr}.<br>
 	<input type="submit" class="btn btn-default" name="use-default-prefs" value="{tr}Use default preferences{/tr}" /><br>
+	<br>
 	{tr}However, if you are an experienced user and don't want the Admin Wizard ...{/tr} <br>
 	<input type="submit" class="btn btn-default" name="skip" value="{tr}Skip wizard and don't show again{/tr}" />
 	</p>
