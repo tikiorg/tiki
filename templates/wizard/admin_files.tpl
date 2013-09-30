@@ -2,8 +2,8 @@
 
 <h1>{tr}Set up Files and File Gallery{/tr}</h1>
 
-{tr}Set up your file gallery and attachments{/tr}. {tr}Choose to store them either in the database or in files on disk, among other options{/tr}.
 <div class="adminWizardIconleft"><img src="img/icons/large/file-manager48x48.png" alt="{tr}Set up Files and File Gallery{/tr}" /></div>
+{tr}Set up your file gallery and attachments{/tr}. {tr}Choose to store them either in the database or in files on disk, among other options{/tr}.<br/><br/>
 <div class="adminWizardContent">
 <fieldset>
 	<legend>{tr}File Gallery{/tr}</legend>
