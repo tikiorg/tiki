@@ -18,6 +18,18 @@ class MultilingualLib extends TikiLib
 {
 	public $mtEnabled = 'y';
 
+
+    /*
+     * Create the translation of wiki page $srcPageName.
+     */
+    function createTranslationOfPage($srcPageName, $srcLang, $targPageName, $targLang, $targPageContent)
+    {
+        global $tikilib, $user;
+
+        $tikilib->create_page($targPageName, 0, $targPageContent, null, '', null, $user, '', $targLang);
+        $this->insertTranslation('wiki page', $srcPageName, $srcLang, $targPageName, $targLang);
+    }
+
 	/**
 	 * @brief add an object and its transaltion set into the set of translations of another one
 	 * @param: type = (idem tiki_categ) 'wiki page'...
@@ -1127,6 +1139,50 @@ class MultilingualLib extends TikiLib
 			$bindvars[] = $langs[0];
 		}
 	}
+
+    function translateLinksInPageContent($src_content, $targ_lang)
+    {
+        $targ_content = $src_content;
+
+        $regex_link = '/\(\(([^\)]*?)(\|[^\)]*)*\)\)/';
+
+        preg_match_all($regex_link, $src_content, $src_link_matches, PREG_SET_ORDER);
+
+        $callback =
+            function($match) use ($targ_lang)
+            {
+                /* For some reason, we are not able to use $this in the callback, even if we write
+
+                     use ($this)
+
+                   in the function header. So instead, we just use the global $multilinguallib, which
+                   is actually the same instance as $this.
+                */
+                global $multilinguallib;
+
+
+                $link_src_page = $match[1];
+                $link_targ_page = $multilinguallib->getTranslation('wiki page', $link_src_page, $targ_lang);
+                if (isset($link_targ_page) && $link_targ_page != '')
+                {
+                    $anchor_text = "";
+                    if (count($match) > 2)
+                    {
+                        $anchor_text = $match[2];
+                    }
+                    $a_targ_link= "(($link_targ_page$anchor_text))";
+                }
+                else
+                {
+                    $a_targ_link = "{TranslationOf(src_page=\"$link_src_page\" targ_lang=$targ_lang translated_anchor_text=\"\") /}";
+                }
+                return $a_targ_link;
+            };
+
+        $targ_content = preg_replace_callback($regex_link, $callback, $src_content);
+
+        return $targ_content;
+    }
 
 }
 
