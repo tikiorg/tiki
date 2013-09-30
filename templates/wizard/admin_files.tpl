@@ -14,7 +14,6 @@
 	{preference name='fgal_use_db'}
 	{tr}See also{/tr} <a href="tiki-admin.php?page=fgal#content1" target="_blank">{tr}File Gallery admin panel{/tr}</a>
 </fieldset>
-<br>
 <fieldset>
 	<legend>{tr}Wiki Attachments{/tr}</legend>
 	<img src="img/icons/large/wikipages.png" class="adminWizardIconright" />
@@ -23,5 +22,4 @@
 	<br>
 	{tr}See also{/tr} <a href="tiki-admin.php?page=wiki&alt=Wiki#content2" target="_blank">{tr}File Gallery admin panel{/tr}</a>
 </fieldset>
-<br>
 </div>
