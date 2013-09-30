@@ -26,60 +26,71 @@ $pages = array();
 // BEGIN Wizard page section
 /////////////////////////////////////
 
+// Always show the first page
 require_once('lib/wizard/pages/admin_wizard.php'); 
 $pages[] = new AdminWizard();
 
-require_once('lib/wizard/pages/admin_date_time.php'); 
-$pages[] = new AdminWizardDateTime();
+$useDefaultPrefs = isset($_REQUEST['use-default-prefs']) ? true : false;
+if ($useDefaultPrefs) {
+	
+	// Store the default prefs selection in the wizard bar
+	$smarty->assign('useDefaultPrefs', $useDefaultPrefs);
 
-require_once('lib/wizard/pages/admin_language.php'); 
-$pages[] = new AdminWizardLanguage();
+} else {
 
-require_once('lib/wizard/pages/admin_editor_type.php'); 
-$pages[] = new AdminWizardEditorType();
+	require_once('lib/wizard/pages/admin_date_time.php'); 
+	$pages[] = new AdminWizardDateTime();
 
-require_once('lib/wizard/pages/admin_wysiwyg.php'); 
-$pages[] = new AdminWizardWysiwyg();
+	require_once('lib/wizard/pages/admin_language.php'); 
+	$pages[] = new AdminWizardLanguage();
 
-require_once('lib/wizard/pages/admin_text_area.php'); 
-$pages[] = new AdminWizardTextArea();
+	require_once('lib/wizard/pages/admin_editor_type.php'); 
+	$pages[] = new AdminWizardEditorType();
 
-require_once('lib/wizard/pages/admin_wiki.php'); 
-$pages[] = new AdminWizardWiki();
+	require_once('lib/wizard/pages/admin_wysiwyg.php'); 
+	$pages[] = new AdminWizardWysiwyg();
 
-require_once('lib/wizard/pages/admin_auto_toc.php'); 
-$pages[] = new AdminWizardAutoTOC();
+	require_once('lib/wizard/pages/admin_text_area.php'); 
+	$pages[] = new AdminWizardTextArea();
 
-require_once('lib/wizard/pages/admin_category.php'); 
-$pages[] = new AdminWizardCategory();
+	require_once('lib/wizard/pages/admin_wiki.php'); 
+	$pages[] = new AdminWizardWiki();
 
-require_once('lib/wizard/pages/admin_structures.php'); 
-$pages[] = new AdminWizardStructures();
+	require_once('lib/wizard/pages/admin_auto_toc.php'); 
+	$pages[] = new AdminWizardAutoTOC();
 
-require_once('lib/wizard/pages/admin_jcapture.php'); 
-$pages[] = new AdminWizardJCapture();
+	require_once('lib/wizard/pages/admin_category.php'); 
+	$pages[] = new AdminWizardCategory();
 
-require_once('lib/wizard/pages/admin_files.php'); 
-$pages[] = new AdminWizardFiles();
+	require_once('lib/wizard/pages/admin_structures.php'); 
+	$pages[] = new AdminWizardStructures();
 
-require_once('lib/wizard/pages/admin_files_storage.php'); 
-$pages[] = new AdminWizardFileStorage();
+	require_once('lib/wizard/pages/admin_jcapture.php'); 
+	$pages[] = new AdminWizardJCapture();
 
-require_once('lib/wizard/pages/admin_features.php'); 
-$pages[] = new AdminWizardFeatures();
+	require_once('lib/wizard/pages/admin_files.php'); 
+	$pages[] = new AdminWizardFiles();
 
-require_once('lib/wizard/pages/admin_community.php'); 
-$pages[] = new AdminWizardCommunity();
+	require_once('lib/wizard/pages/admin_files_storage.php'); 
+	$pages[] = new AdminWizardFileStorage();
 
-require_once('lib/wizard/pages/admin_advanced.php'); 
-$pages[] = new AdminWizardAdvanced();
+	require_once('lib/wizard/pages/admin_features.php'); 
+	$pages[] = new AdminWizardFeatures();
 
-require_once('lib/wizard/pages/admin_namespace.php'); 
-$pages[] = new AdminWizardNamespace();
+	require_once('lib/wizard/pages/admin_community.php'); 
+	$pages[] = new AdminWizardCommunity();
 
-require_once('lib/wizard/pages/admin_look_and_feel.php'); 
-$pages[] = new AdminWizardLookAndFeel();
+	require_once('lib/wizard/pages/admin_advanced.php'); 
+	$pages[] = new AdminWizardAdvanced();
 
+	require_once('lib/wizard/pages/admin_namespace.php'); 
+	$pages[] = new AdminWizardNamespace();
+
+	require_once('lib/wizard/pages/admin_look_and_feel.php'); 
+	$pages[] = new AdminWizardLookAndFeel();
+}
+
+// Always show the last, profiles page
 require_once('lib/wizard/pages/admin_profiles.php'); 
 $pages[] = new AdminWizardProfiles();
 

@@ -24,6 +24,12 @@ class AdminWizard extends Wizard
 
 		// Run the parent first
 		parent::onSetupPage($homepageUrl);
+
+		// If the user steps back after having selected, "Use defaults",
+		//	then starts the wizard steps (presses "Start"), the default prefs should no longer be used.
+		if (isset($_REQUEST['use-default-prefs'])) {
+			$smarty->clear_assign('useDefaultPrefs');
+		}
 		
 		// Assign the page temaplte
 		$wizardTemplate = 'wizard/admin_wizard.tpl';
@@ -52,6 +58,5 @@ class AdminWizard extends Wizard
 			$accesslib = TikiLib::lib('access');
 			$accesslib->redirect($homepageUrl);
 		}
-		
 	}
 }
