@@ -17,3 +17,4 @@ start merge for 8.x
 start merge for 9.x
 on the old sf.net repo (just checking)
 test
+check merge for 12.x
