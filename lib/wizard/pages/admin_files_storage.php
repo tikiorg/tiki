@@ -28,6 +28,22 @@ class AdminWizardFileStorage extends Wizard
 
 		// Show if any more specification is needed
 		
+		// ElFinder
+		if ($prefs['fgal_elfinder_feature'] === 'y') {
+			$showPage = true;
+			$smarty->assign('promptElFinder', 'y');
+
+			// Determine the current filegal default view
+			$defView = $prefs['fgal_default_view'];
+			if (isset($defView)) {
+				if ($defView == 'finder') {
+					$smarty->assign('useElFinderAsDefault', true);
+				} else {
+					$smarty->assign('useElFinderAsDefault', false);
+				}
+			}
+		}
+		
 		// File Gallery
 		if ($prefs['fgal_use_db'] !== 'y') {
 			$showPage = true;
@@ -50,7 +66,14 @@ class AdminWizardFileStorage extends Wizard
 
 	function onContinue ($homepageUrl) 
 	{
+		global $tikilib;
+		
 		// Run the parent first
 		parent::onContinue($homepageUrl);
+		
+		if (isset($_REQUEST['useElFinderAsDefault']) && $_REQUEST['useElFinderAsDefault'] === 'on') {
+			// Set ElFinder view as the default File Gallery view
+			$tikilib->set_preference('fgal_default_view', 'finder');
+		}		
 	}
 }

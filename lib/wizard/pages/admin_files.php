@@ -43,10 +43,6 @@ class AdminWizardFiles extends Wizard
 			
 			// jQuery UI
 			$tikilib->set_preference('feature_jquery_ui', 'y');
-			
-			// Set ElFinder view as the default File Gallery view
-			$tikilib->set_preference('fgal_default_view', 'finder');
-			
 		}
 	}
 }
