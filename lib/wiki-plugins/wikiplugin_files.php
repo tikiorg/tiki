@@ -452,7 +452,7 @@ function wikiplugin_files($data, $params)
 			$p_view_file_gallery = $tikilib->user_has_perm_on_object($user, $galId, 'file gallery', 'tiki_p_view_file_gallery') ? 'y' : 'n';
 			if ($p_view_file_gallery != 'y')
 				return;
-			$p_download_files = $tikilib->user_has_perm_on_object($user, $gal, 'file gallery', 'tiki_p_download_files') ? 'y' : 'n';
+			$p_download_files = $tikilib->user_has_perm_on_object($user, $galId, 'file gallery', 'tiki_p_download_files') ? 'y' : 'n';
 			if ($showupload == 'y' && $tikilib->user_has_perm_on_object($user, $galId, 'file gallery', 'tiki_p_upload_files')) {
 				$params['showupload'] = 'y';
 			}
