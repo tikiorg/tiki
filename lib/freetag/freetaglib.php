@@ -206,6 +206,7 @@ class FreetagLib extends ObjectLib
 	{
 
 		global $tiki_p_admin, $user, $smarty, $prefs;
+		$objectIds = explode(':',$objectId);
 		if (!isset($tagArray) || !is_array($tagArray)) {
 			return false;
 		}
@@ -324,7 +325,7 @@ class FreetagLib extends ObjectLib
 			if ($row['type'] == 'blog post') {
 				$bloglib = TikiLib::lib('blog');
 				$post_info = $bloglib->get_post($row['itemId']);
-				if (!empty($objectId) && $objectId != $post_info['blogId']) {
+				if (!empty($objectId) && !in_array($post_info['blogId'],$objectIds) ) {
 				} elseif ($tiki_p_admin == 'y' || $this->user_has_perm_on_object($user, $post_info['blogId'], 'blog', 'tiki_p_read_blog')) {
 					$ok = true;
 				}
