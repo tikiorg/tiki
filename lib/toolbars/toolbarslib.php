@@ -144,6 +144,7 @@ abstract class Toolbar
 					'bidiltr',
 					'bidirtl',
 					'screencapture',
+					'image',
 
 					'sheetsave',	// spreadsheet ones
 					'addrow',
@@ -570,6 +571,8 @@ class ToolbarCkOnly extends Toolbar
 			return new self( 'BidiLtr' );
 		case 'bidirtl':
 			return new self( 'BidiRtl' );
+		case 'image':
+			return new self( 'Image' );
 		}
 	} // }}}
 
@@ -577,6 +580,16 @@ class ToolbarCkOnly extends Toolbar
 	{
 		return null;
 	} // }}}
+
+	function getWysiwygToken($areaId) {
+		if ($this->wysiwyg === 'Image') {	// cke's own image tool
+			global $headerlib,  $smarty, $prefs;
+			// can't do upload the cke way yet
+			$url = 'tiki-list_file_gallery.php?galleryId='.$prefs['home_file_gallery'].'&filegals_manager=fgal_picker';
+			$headerlib->add_js('if (typeof window.CKEDITOR !== "undefined") {window.CKEDITOR.config.filebrowserBrowseUrl = "'.$url.'"}', 5);
+		}
+		return $this->wysiwyg;
+	}
 
 	function getWysiwygWikiToken( $areaId ) // {{{ // wysiwyg_htmltowiki
 	{
@@ -1643,15 +1656,8 @@ class ToolbarWikiplugin extends Toolbar
 	function getWysiwygToken( $areaId, $add_js = true ) // {{{
 	{
 		if (!empty($this->wysiwyg) && $add_js) {
-			if ($this->wysiwyg === 'Image') {	// cke's own image tool overrides this so set it up to use our filegal
-				global $headerlib,  $smarty, $prefs;
-				// can't do upload the cke way yet
-				$url = 'tiki-list_file_gallery.php?galleryId='.$prefs['home_file_gallery'].'&filegals_manager=fgal_picker';
-				$headerlib->add_js('if (typeof window.CKEDITOR !== "undefined") {window.CKEDITOR.config.filebrowserBrowseUrl = "'.$url.'"}', 5);
-			} else {
-				$js = "popup_plugin_form('{$areaId}','{$this->pluginName}');";
-				$this->setupCKEditorTool($js, $this->wysiwyg, $this->label, $this->icon);
-			}
+			$js = "popup_plugin_form('{$areaId}','{$this->pluginName}');";
+			$this->setupCKEditorTool($js, $this->wysiwyg, $this->label, $this->icon);
 		}
 		return $this->wysiwyg;
 	} // }}}
