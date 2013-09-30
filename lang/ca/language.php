@@ -15740,4 +15740,7 @@ $lang = array(
 "Top pages" => "Les pàgines més actives",
 "Last pages" => "Les últimes pàgines",
 "You do not have permissions to view the maps" => "No tens permís per veure els mapes",
+"Too many tries" => "Massa intents",
+"Passwords missing" => "Manca alguna contrasenya",
+"Passwords don\'t match" => "No coincideixen les contrasenyes",
 );
