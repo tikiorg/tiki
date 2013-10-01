@@ -21,7 +21,7 @@ class UserWizardPreferencesNotifications extends Wizard
 
 	function onSetupPage ($homepageUrl) 
 	{
-		global	$user, $smarty, $tikilib; 
+		global	$user, $smarty, $tikilib, $prefs; 
 
 		// Run the parent first
 		parent::onSetupPage($homepageUrl);
@@ -50,7 +50,7 @@ class UserWizardPreferencesNotifications extends Wizard
 
 	function onContinue ($homepageUrl) 
 	{
-		global $tikilib, $user;
+		global $tikilib, $user, $prefs;
 		
 		// Run the parent first
 		parent::onContinue($homepageUrl);

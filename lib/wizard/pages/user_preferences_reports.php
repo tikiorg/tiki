@@ -21,7 +21,7 @@ class UserWizardPreferencesReports extends Wizard
 
 	function onSetupPage ($homepageUrl) 
 	{
-		global	$user, $smarty;
+		global	$user, $smarty, $prefs;
 
 		// Run the parent first
 		parent::onSetupPage($homepageUrl);
@@ -47,7 +47,7 @@ class UserWizardPreferencesReports extends Wizard
 
 	function onContinue ($homepageUrl) 
 	{
-		global $tikilib, $user;
+		global $tikilib, $user, $prefs;
 
 		// Run the parent first
 		parent::onContinue($homepageUrl);

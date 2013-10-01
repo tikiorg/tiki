@@ -181,7 +181,7 @@ class UserWizardPreferencesParams extends Wizard
 
 	function onContinue ($homepageUrl) 
 	{
-		global $tikilib, $user;
+		global $tikilib, $user, $prefs;
 		
 		// Run the parent first
 		parent::onContinue($homepageUrl);
