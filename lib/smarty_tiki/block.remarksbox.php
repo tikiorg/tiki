@@ -51,6 +51,7 @@ function smarty_block_remarksbox($params, $content, $smarty, &$repeat)
 			'width' => '',
 			'highlight' => 'n',
 			'icon' => '',
+			'class' => '',
 		),
 		$params
 	);
@@ -66,8 +67,10 @@ function smarty_block_remarksbox($params, $content, $smarty, &$repeat)
 			$params['icon']='book_open';
 		} else if ($params['type']=='comment') {//get_strings tra('comment')
 			$params['icon']='comments';
-		} else if ($params['type']=='warning' || $params['type'] == 'confirm') {//get_strings tra('warning') tra('confirm')
+		} else if ($params['type']=='warning') {//get_strings tra('warning'))
 			$params['icon']='exclamation';
+		} else if ($params['type'] == 'confirm') {//get_strings tra('confirm')
+			$params['icon']='accept';
 		} else if ($params['type']=='note') {//get_strings tra('note')
 			$params['icon']='information';
 		} else if ($params['type'] == 'errors') {//get_strings tra('errors')
@@ -102,6 +105,23 @@ function smarty_block_remarksbox($params, $content, $smarty, &$repeat)
 		);
 	}
 
+	if ($params['class'] ==='') {
+		if ($params['type']=='tip')
+			$params['class']='panel-default';
+		else if ($params['type']=='comment') 
+			$params['class']='panel-default';
+		else if ($params['type']=='warning')
+			$params['class']='panel-warning';
+		else if ($params['type'] == 'confirm')
+			$params['class']='panel-success';
+		else if ($params['type']=='note')
+			$params['class']='panel-info';
+		else if ($params['type'] == 'errors')
+			$params['class'] = 'panel-danger';
+		else
+			$params['class'] = 'panel-primary';
+	}
+	
 	$smarty->assign('rbox_guid', $md5);
 	$smarty->assign('rbox_params', $params);
 	$smarty->assign('rbox_instance', $instance);
