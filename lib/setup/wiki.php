@@ -94,7 +94,7 @@ if (strstr($_SERVER['SCRIPT_NAME'], 'tiki-index.php')
 			$homePageContent .= "<li>".tr('1) Log in with your newly created password.') . "</li>\n";
 			$homePageContent .= "<li>".tr('2) Manually [tiki-admin.php?page=features|Enable specific Tiki features] that you didn\'t enable with the Admin wizard.') . "</li>\n";
 			$homePageContent .= "<li>".tr('3) Run [tiki-admin.php?page=profiles|Tiki Profiles] to quickly get up and running.') . "</li>\n";
-			$homePageContent .= "<li>".tr('4) Run the [tiki-wizard_user.php|User Wizard]  to set up the main preferences for your user.') . "</li>\n";
+			$homePageContent .= "<li>".tr('4) Run the [tiki-wizard_user.php|User Wizard] to set up the main preferences for your user.') . "</li>\n";
 			$homePageContent .= "</ul>\n\n<br>";
 			$homePageContent .= '<h2><img src=img/icons/help.png alt=\"Help\" /> ' . tr('Need help?') . "</h2>\n";
 			$homePageContent .= tr('For more information:') . "\n<br>";
