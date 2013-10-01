@@ -433,7 +433,65 @@ yet_unused_permission_exceptions() {
 	${CHMOD} o-rwx db/preconfiguration.php
 }
 
-# part 4.2 - several command options as fix, open, ...
+# part 4.2 - composer
+
+# Set-up and execute composer to obtain dependencies
+exists()
+{
+	if type $1 &>/dev/null
+	then
+		return 0
+	else
+		return 1
+	fi
+}
+
+composer()
+{
+	if [ ! -f temp/composer.phar ];
+	then
+		if exists curl;
+		then
+			curl -s https://getcomposer.org/installer | php -- --install-dir=temp
+		else
+			php -r "eval('?>'.file_get_contents('https://getcomposer.org/installer'));" -- --install-dir=temp
+		fi
+	else
+		php temp/composer.phar self-update
+	fi
+
+	if [ ! -f temp/composer.phar ];
+	then
+		echo "We have failed to obtain the composer executable."
+		echo "NB: Maybe you are behing a proxy, just export https_proxy variable and relaunch setup.sh"
+		echo "1) Download it from http://getcomposer.org"
+		echo "2) Store it in temp/"
+		#exit
+		return
+	fi
+
+	N=0
+	if exists php;
+	then
+		until php temp/composer.phar install --prefer-dist
+		do
+			if [ $N -eq 7 ];
+			then
+				#exit
+				return
+			else
+				echo "Composer failed, retrying in 5 seconds, for a few times. Hit Ctrl-C to cancel."
+				sleep 5
+			fi
+			((N++))
+		done
+	fi
+	#exit
+	return
+}
+
+
+# part 4.3 - several command options as fix, open, ...
 
 command_fix() {
 	if [ "$USER" = 'root' ]; then
@@ -816,61 +874,6 @@ There are some other commands recommended for advanced users only.
 More documentation about this: http://doc.tiki.org/Permission+Check
 
 EOF
-}
-
-# Set-up and execute composer to obtain dependencies
-exists()
-{
-	if type $1 &>/dev/null
-	then
-		return 0
-	else
-		return 1
-	fi
-}
-
-composer()
-{
-	if [ ! -f temp/composer.phar ];
-	then
-		if exists curl;
-		then
-			curl -s https://getcomposer.org/installer | php -- --install-dir=temp
-		else
-			php -r "eval('?>'.file_get_contents('https://getcomposer.org/installer'));" -- --install-dir=temp
-		fi
-	else
-		php temp/composer.phar self-update
-	fi
-
-	if [ ! -f temp/composer.phar ];
-	then
-		echo "We have failed to obtain the composer executable."
-		echo "NB: Maybe you are behing a proxy, just export https_proxy variable and relaunch setup.sh"
-		echo "1) Download it from http://getcomposer.org"
-		echo "2) Store it in temp/"
-		#exit
-		return
-	fi
-
-	N=0
-	if exists php;
-	then
-		until php temp/composer.phar install --prefer-dist
-		do
-			if [ $N -eq 7 ];
-			then
-				#exit
-				return
-			else
-				echo "Composer failed, retrying in 5 seconds, for a few times. Hit Ctrl-C to cancel."
-				sleep 5
-			fi
-			((N++))
-		done
-	fi
-	#exit
-	return
 }
 
 tiki_setup_default() {
