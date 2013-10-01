@@ -95,7 +95,9 @@ var handleFiles = function (files) {
 				xhr = jQuery.ajaxSettings.xhr();
 				if (xhr.upload) {
 					xhr.upload.addEventListener('progress', function (e) {
-						li.text(file.name + ' (' + Math.round(e.position / e.total * 100) + '%)');
+						if (e.lengthComputable) {
+							li.text(file.name + ' (' + Math.round(e.loaded / e.total * 100) + '%)');
+						}
 					}, false);
 				}
 				provider = function () {
