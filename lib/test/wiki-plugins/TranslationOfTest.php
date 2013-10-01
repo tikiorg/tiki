@@ -20,10 +20,10 @@ class WikiPlugin_TranslationOfTest extends PHPUnit_Framework_TestCase
 	public function provider()
 	{
 		return array(
-			array('', '<a href="tiki-index.php?page=SomePage">SomePage</a>',
+			array('', '<a href="tiki-index.php?page=SomePage"   class="tips"" data-cluetip-body=\'<a href="tiki-edit_translation.php?page=SomePage#new_translation">Translate this link</a>\' data-cluetip-options=\'{"activation":"mouseover","sticky":true,"mouseOutClose":false,"showTitle":false,"attribute":"data-cluetip-body"}\'>SomePage</a>',
                   array('source_page' => 'SomePage'),
                   "Happy Path Case"),
-            array('', '<a href="tiki-index.php?page=SomePage">UnePage</a>',
+            array('', '<a href="tiki-index.php?page=SomePage"   class="tips"" data-cluetip-body=\'<a href="tiki-edit_translation.php?page=SomePage&translation_name=UnePage#new_translation">Translate this link</a>\' data-cluetip-options=\'{"activation":"mouseover","sticky":true,"mouseOutClose":false,"showTitle":false,"attribute":"data-cluetip-body"}\'>UnePage</a>',
                   array('source_page' => 'SomePage', 'translated_anchor_text' => 'UnePage'),
                   "Case with translated anchor text provided"),
 		);

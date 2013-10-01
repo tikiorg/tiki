@@ -15,6 +15,7 @@
 // WARNING: DO NOT COMMIT WITH TRUE!!!!
 $dieInsteadOfForwardingWithHeader = false;
 
+require_once('lib/debug/Tracer.php');
 
 $inputConfiguration = array(
 	array( 'staticKeyFilters' => array(

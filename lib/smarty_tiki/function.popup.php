@@ -9,7 +9,6 @@
  * Smarty plugin for Tiki using jQuery ClueTip instead of OverLib
  */
 
-
 /**
  * Smarty {popup} function plugin
  *
@@ -34,6 +33,7 @@
 function smarty_function_popup($params, $smarty)
 {
 	$options = array();
+    $options['activation'] = 'mouseover';
 	$body = '';
 	$title = '';
 
@@ -93,9 +93,9 @@ function smarty_function_popup($params, $smarty)
 		}
 	}
 
-	if (empty($title) && empty($body)) {
+    if (empty($title) && empty($body)) {
 		trigger_error("cluetips: attribute 'text' or 'caption' required");
-		return false;
+        return false;
 	}
 
 	$body = preg_replace(array('/\\\\r\n/','/\\\\n/','/\\\\r/', '/\\t/'), '', $body);

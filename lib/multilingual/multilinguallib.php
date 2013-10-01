@@ -5,6 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
+require_once('lib/debug/Tracer.php');
+
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 		header("location: index.php");
@@ -994,7 +996,7 @@ class MultilingualLib extends TikiLib
      */
     function preferredLangsInfo()
 	{
-		global $tikilib;
+		global $tikilib, $tracer;
 
 		// Get IDs of user's preferred languages
 		$userLangIDs = $this->preferredLangs();
@@ -1019,7 +1021,7 @@ class MultilingualLib extends TikiLib
 			}
 		}
 
-		return $userLangsInfo;
+        return $userLangsInfo;
 	}
 
     /**
@@ -1182,6 +1184,35 @@ class MultilingualLib extends TikiLib
         $targ_content = preg_replace_callback($regex_link, $callback, $src_content);
 
         return $targ_content;
+    }
+
+    /**
+     * Determines which language should be used by default for a new translation of a page
+     * See test MultilingualLibTest.test_defaultTargetLanguageForNewTranslation() for
+     * examples of use.
+     */
+    function defaultTargetLanguageForNewTranslation($src_lang, $langs_already_translated, $user_langs)
+    {
+        global $tracer;
+
+        $default_lang = '';
+
+        foreach ($user_langs as $a_user_lang)
+        {
+            if ($a_user_lang == $src_lang)
+            {
+                continue;
+            }
+            $tracer->trace('MultilingualLib.defaultTargetLanguageForNewTranslation', "** Looking at \$a_user_lang=$a_user_lang");
+            if (! in_array($a_user_lang, $langs_already_translated))
+            {
+                $default_lang = $a_user_lang;
+                break;
+            }
+        }
+
+
+        return $default_lang;
     }
 
 }

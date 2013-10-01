@@ -27,7 +27,6 @@ class MultilingualLibTest extends TikiTestCase
         $_SERVER['REQUEST_URI'] = 'phpunit';
         $user = "user_that_can_edit";
 
-
         $page_name = "SomePage";
         $content = "This page is in English.\n" .
                    "It contains links to ((A Page That Is Already Translated)) and ((A Page That Is NOT Already Translated)).";
@@ -104,5 +103,37 @@ class MultilingualLibTest extends TikiTestCase
         );
 
     }
+
+
+    /**
+     * @group multilingual
+     * @dataProvider dataProvider_defaultTargetLanguageForNewTranslation
+     */
+
+    function test_defaultTargetLanguageForNewTranslation($src_lang, $langs_already_translated,
+                                                    $user_langs, $exp_lang, $message)
+    {
+        global $multilinguallib;
+
+        $got_lang = $multilinguallib->defaultTargetLanguageForNewTranslation($src_lang, $langs_already_translated, $user_langs);
+        $this->assertEquals($got_lang, $exp_lang, $message."\nThe default target language was not as expected.");
+
+    }
+
+    function dataProvider_defaultTargetLanguageForNewTranslation()
+    {
+        return array(
+
+            array('en', array('en', 'es'), array('en', 'fr'),
+                  'fr',
+                  "Case Description: There is one language spoken by user, for which there is no translation. Choose that one."),
+
+            array('en', array('en', 'fr', 'es'), array('en', 'fr'),
+                '',
+                "Case Description: Page has already been translated to all the languages that the user speaks. In that case, we don't know which default to pick.")
+
+        );
+    }
+
 
 }

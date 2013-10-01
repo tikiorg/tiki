@@ -15,6 +15,8 @@
 //    doesn't already exist), and tie it to the source language page.
 //
 
+require_once('lib/debug/Tracer.php');
+
 function wikiplugin_translationof_info()
 {
     return array(
@@ -49,6 +51,8 @@ function wikiplugin_translationof_info()
 
 function wikiplugin_translationof($data, $params)
 {
+    global $smarty, $tracer;
+
     extract($params, EXTR_SKIP);
 
     $anchor_text = $source_page;
@@ -57,7 +61,33 @@ function wikiplugin_translationof($data, $params)
         $anchor_text = $translated_anchor_text;
     }
 
-    $html = "<a href=\"tiki-index.php?page=$source_page\">$anchor_text</a>";
+    if (isset($source_page))
+    {
+        $source_page = urlencode($source_page);
+    }
+
+    $translation_name_arg = '';
+    if (isset($translated_anchor_text))
+    {
+        $translated_anchor_text = urlencode($translated_anchor_text);
+        $translation_name_arg = "&translation_name=$translated_anchor_text";
+    }
+
+    if (isset($target_lang))
+    {
+        $target_lang_arg = "&target_lang=$target_lang";
+    }
+    else
+    {
+        $target_lang_arg = '';
+    }
+
+    $link = 'javascript:void(0)';
+    $popup_html = "<a href=\"tiki-edit_translation.php?page=$source_page$target_lang_arg$translation_name_arg#new_translation\">".tr("Translate this link")."</a>";
+    $popup_params = array( 'text'=> $popup_html, 'sticky' => true, 'trigger' => 'mouseover');
+    $smarty->loadPlugin('smarty_function_popup');
+    $mouseover = ' ' . smarty_function_popup($popup_params, $smarty);
+    $html = "<a href=\"tiki-index.php?page=$source_page\" $mouseover>$anchor_text</a>";
 
     return $html;
 }

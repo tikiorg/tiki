@@ -13,6 +13,8 @@ require_once('tiki-setup.php');
 include_once('lib/multilingual/multilinguallib.php');
 include_once('modules/mod-func-translation.php');
 
+require_once('lib/debug/Tracer.php');
+
 execute_module_translation();
 
 $access->check_feature('feature_multilingual');
@@ -105,6 +107,9 @@ if (count($languages) == 1) {
    $smarty->assign('only_one_language_left', 'y');
 }
 
+smarty_assign_default_target_lang($langpage, $_REQUEST['target_lang'], $trads, $prefs['language']);
+smarty_assign_translation_name();
+
 ask_ticket('edit-translation');
 
 // disallow robots to index page:
@@ -129,4 +134,34 @@ function execute_module_translation()
 
 	$out = $modlib->execute_module($module_reference);
 	$smarty->assign('content_of_update_translation_section', $out);
+}
+
+function smarty_assign_default_target_lang($src_lang, $targ_lang_requested, $existing_translations, $user_langs)
+{
+    global $multilinguallib, $smarty, $tracer;
+
+    $default_target_lang = $targ_lang_requested;
+    if (! isset($default_target_lang))
+    {
+
+
+        $collect_lang_callback = function($translation) {return $translation['lang'];};
+        $langs_already_translated = array_map($collect_lang_callback, $existing_translations);
+        $default_target_lang = $multilinguallib->defaultTargetLanguageForNewTranslation($src_lang, $langs_already_translated, $user_langs);
+
+    }
+
+    $smarty->assign('default_target_lang', $default_target_lang);
+}
+
+function smarty_assign_translation_name()
+{
+    global $smarty;
+
+    $translation_name = '';
+    if (isset($_REQUEST['translation_name']))
+    {
+        $translation_name = $_REQUEST['translation_name'];
+    }
+    $smarty->assign('translation_name', $translation_name);
 }
