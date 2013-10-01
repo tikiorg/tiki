@@ -26,9 +26,15 @@ class UserWizardPreferencesParams extends Wizard
 		// Run the parent first
 		parent::onSetupPage($homepageUrl);
 		
+		$showPage = false;
+		
 		// Show if option is selected
 		if ($prefs['feature_userPreferences'] === 'y') {
 			$showPage = true;
+		}
+		
+		if (!$shgowPage) {
+			return false;
 		}
 
 		if (isset($_REQUEST['userId']) || isset($_REQUEST['view_user'])) {

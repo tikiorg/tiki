@@ -26,6 +26,8 @@ class UserWizardPreferencesInfo extends Wizard
 		// Run the parent first
 		parent::onSetupPage($homepageUrl);
 		
+		$showPage = false;
+		
 		// Show if option is selected
 		if ($prefs['feature_userPreferences'] === 'y') {
 			$showPage = true;
@@ -72,7 +74,7 @@ class UserWizardPreferencesInfo extends Wizard
 		$wizardTemplate = 'wizard/user_preferences_info.tpl';
 		$smarty->assign('wizardBody', $wizardTemplate);
 		
-		return true;		
+		return $showPage;		
 	}
 
 	function onContinue ($homepageUrl) 
