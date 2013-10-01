@@ -26,6 +26,8 @@ class UserWizardPreferencesReports extends Wizard
 		// Run the parent first
 		parent::onSetupPage($homepageUrl);
 		
+		$showPage = false;
+		
 		// Show if option is selected
 		if ($prefs['feature_user_watches'] === 'y' && $prefs['feature_daily_report_watches'] === 'y') {
 			$showPage = true;
@@ -40,7 +42,7 @@ class UserWizardPreferencesReports extends Wizard
 		$wizardTemplate = 'wizard/user_preferences_reports.tpl';
 		$smarty->assign('wizardBody', $wizardTemplate);
 		
-		return true;		
+		return $showPage;
 	}
 
 	function onContinue ($homepageUrl) 

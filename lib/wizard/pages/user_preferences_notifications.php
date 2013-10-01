@@ -25,6 +25,8 @@ class UserWizardPreferencesNotifications extends Wizard
 
 		// Run the parent first
 		parent::onSetupPage($homepageUrl);
+
+		$showPage = false;
 		
 		// Show if option is selected
 		if ($prefs['feature_user_watches'] === 'y') {
@@ -43,7 +45,7 @@ class UserWizardPreferencesNotifications extends Wizard
 		$wizardTemplate = 'wizard/user_preferences_notifications.tpl';
 		$smarty->assign('wizardBody', $wizardTemplate);
 		
-		return true;		
+		return $showPage;		
 	}
 
 	function onContinue ($homepageUrl) 
