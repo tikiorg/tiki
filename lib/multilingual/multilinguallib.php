@@ -1176,7 +1176,7 @@ class MultilingualLib extends TikiLib
                 }
                 else
                 {
-                    $a_targ_link = "{TranslationOf(src_page=\"$link_src_page\" targ_lang=$targ_lang translated_anchor_text=\"\") /}";
+                    $a_targ_link = "{TranslationOf(orig_page=\"$link_src_page\" translation_lang=$targ_lang translation_page=\"\") /}";
                 }
                 return $a_targ_link;
             };

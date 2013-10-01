@@ -71,7 +71,7 @@ class MultilingualLibTest extends TikiTestCase
      * @group multilingual
      * @dataProvider dataProvider_translateLinksInPageContent
      */
-    public function test_translateLinksInPageContent2($src_content, $targ_lang, $exp_translated_content, $message)
+    public function test_translateLinksInPageContent($src_content, $targ_lang, $exp_translated_content, $message)
     {
         global $multilinguallib;
 
@@ -92,7 +92,7 @@ class MultilingualLibTest extends TikiTestCase
                   "be replaced by the link of the translation."),
 
             array("((A Page That Is NOT Already Translated))", "fr",
-                  "{TranslationOf(src_page=\"A Page That Is NOT Already Translated\" targ_lang=fr translated_anchor_text=\"\") /}",
+                  "{TranslationOf(orig_page=\"A Page That Is NOT Already Translated\" translation_lang=fr translation_page=\"\") /}",
                   "Case Description: Link to a page that is NOT already translated. The link should be ".
                     "be replaced by a {TranslationOf} plugin."),
 

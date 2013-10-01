@@ -27,19 +27,19 @@ function wikiplugin_translationof_info()
         'body' => tra('[url] or ((wikiname)) or ((inter:interwiki)) (use wiki syntax)'),
         'icon' => 'img/icons/world_link.png',
         'params' => array(
-            'target_lang' => array(
+            'translation_lang' => array(
                 'required' => true,
                 'name' => tra('Target Language'),
                 'description' => tra('Two letter language code of the language in which you want to translate this link, ex: fr'),
                 'default' => '',
             ),
-            'source_page' => array(
+            'orig_page' => array(
                 'required' => true,
                 'name' => tra('Source Page'),
                 'description' => tra('Name of the page from which this link will be translate.'),
                 'default' => '',
             ),
-            'translated_anchor_text' => array(
+            'translation_page' => array(
                 'required' => false,
                 'name' => tra('Anchor Text'),
                 'description' => tra('Anchor for the link, translated to the target language.'),
@@ -55,27 +55,27 @@ function wikiplugin_translationof($data, $params)
 
     extract($params, EXTR_SKIP);
 
-    $anchor_text = $source_page;
-    if (isset($translated_anchor_text) && $translated_anchor_text != '')
+    $anchor_text = $orig_page;
+    if (isset($translation_page) && $translation_page != '')
     {
-        $anchor_text = $translated_anchor_text;
+        $anchor_text = $translation_page;
     }
 
-    if (isset($source_page))
+    if (isset($orig_page))
     {
-        $source_page = urlencode($source_page);
+        $orig_page = urlencode($orig_page);
     }
 
     $translation_name_arg = '';
-    if (isset($translated_anchor_text))
+    if (isset($translation_page))
     {
-        $translated_anchor_text = urlencode($translated_anchor_text);
-        $translation_name_arg = "&translation_name=$translated_anchor_text";
+        $translation_page = urlencode($translation_page);
+        $translation_name_arg = "&translation_name=$translation_page";
     }
 
-    if (isset($target_lang))
+    if (isset($translation_lang))
     {
-        $target_lang_arg = "&target_lang=$target_lang";
+        $translation_lang_arg = "&target_lang=$translation_lang";
     }
     else
     {
@@ -83,11 +83,11 @@ function wikiplugin_translationof($data, $params)
     }
 
     $link = 'javascript:void(0)';
-    $popup_html = "<a href=\"tiki-edit_translation.php?page=$source_page$target_lang_arg$translation_name_arg#new_translation\">".tr("Translate this link")."</a>";
+    $popup_html = "<a href=\"tiki-edit_translation.php?page=$orig_page$target_lang_arg$translation_name_arg#new_translation\">".tr("Translate this link")."</a>";
     $popup_params = array( 'text'=> $popup_html, 'sticky' => true, 'trigger' => 'mouseover');
     $smarty->loadPlugin('smarty_function_popup');
     $mouseover = ' ' . smarty_function_popup($popup_params, $smarty);
-    $html = "<a href=\"tiki-index.php?page=$source_page\" $mouseover>$anchor_text</a>";
+    $html = "<a href=\"tiki-index.php?page=$orig_page\" $mouseover>$anchor_text</a>";
 
     return $html;
 }
