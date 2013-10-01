@@ -867,7 +867,7 @@ composer()
 			((N++))
 		done
 	fi
-	exit
+	#exit
 }
 
 tiki_setup_default() {
