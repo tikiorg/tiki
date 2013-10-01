@@ -31,6 +31,8 @@ USE_CASES_FILE="usecases.bin"
 USE_CASES_PATH=${PERMISSIONCHECK_DIR}
 USE_CASES_NAME=${USE_CASES_PATH}/${USE_CASES_FILE}
 DEFAULT_WHAT='c'
+WHAT_NEXT_AFTER_c='f'
+WHAT_NEXT_AFTER_f='x'
 
 define_path() {
 # define PATH for executable mode
@@ -880,6 +882,7 @@ tiki_setup_default() {
 		if [ -z ${INPUT} ] ; then
 			DUMMY=foo
 		else
+			OLDWHAT=${WHAT}
 			WHAT=${INPUT}
 		fi
 		case ${WHAT} in
@@ -896,11 +899,11 @@ tiki_setup_default() {
 			a)	WHAT=${DEFAULT_WHAT} ; COMMAND="insane" ; permission_via_php_check ;;
 			w)	WHAT=${DEFAULT_WHAT} ; COMMAND="suphpworkaround" ; set_permission_data_workaround_suphp ;;
 			W)	WHAT=${DEFAULT_WHAT} ; COMMAND="sboxworkaround" ; set_permission_data_workaround_sbox ;;
-			S)	WHAT=${DEFAULT_WHAT} ; clear ;;
-			f)	WHAT=${DEFAULT_WHAT} ; command_fix ;;
+			S)	WHAT=${OLDWHAT} ; clear ;;
+			f)	WHAT=$WHAT_NEXT_AFTER_f ; command_fix ;;
 			o)	WHAT=${DEFAULT_WHAT} ; command_open ;;
-			c)	WHAT='f'; composer ;;
-			C)	WHAT='f'; composer ;;
+			c)	WHAT=$WHAT_NEXT_AFTER_c ; composer ;;
+			C)	WHAT=$WHAT_NEXT_AFTER_c ; composer ;;
 			q)	exit ;;
 			Q)	exit ;;
 			x)	exit ;;
