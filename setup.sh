@@ -849,7 +849,8 @@ composer()
 		echo "NB: Maybe you are behing a proxy, just export https_proxy variable and relaunch setup.sh"
 		echo "1) Download it from http://getcomposer.org"
 		echo "2) Store it in temp/"
-		exit
+		#exit
+		return
 	fi
 
 	N=0
@@ -859,7 +860,8 @@ composer()
 		do
 			if [ $N -eq 7 ];
 			then
-				exit
+				#exit
+				return
 			else
 				echo "Composer failed, retrying in 5 seconds, for a few times. Hit Ctrl-C to cancel."
 				sleep 5
@@ -868,6 +870,7 @@ composer()
 		done
 	fi
 	#exit
+	return
 }
 
 tiki_setup_default() {
