@@ -77,7 +77,7 @@ class UserWizardPreferencesInfo extends Wizard
 
 	function onContinue ($homepageUrl) 
 	{
-		global $tikilib, $user;
+		global $tikilib, $user, $prefs;
 		
 		$userwatch = $user;
 		
