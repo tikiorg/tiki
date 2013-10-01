@@ -33,7 +33,7 @@ class UserWizardPreferencesParams extends Wizard
 			$showPage = true;
 		}
 		
-		if (!$shgowPage) {
+		if (!$showPage) {
 			return false;
 		}
 
