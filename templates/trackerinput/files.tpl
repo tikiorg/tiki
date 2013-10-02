@@ -157,9 +157,14 @@ if (typeof FileReader !== 'undefined') {
 		return false;
 	});
 	$fileinput.change(function () {
+		var $clone;
 		if (this.files) {
 			handleFiles(this.files);
 			$(this).val('');
+			$clone = $fileinput.clone(true);
+			$fileinput.replaceWith($clone);
+
+			$fileinput = $clone;
 		}
 	});
 }
