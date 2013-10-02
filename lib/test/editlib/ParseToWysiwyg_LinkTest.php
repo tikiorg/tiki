@@ -9,8 +9,6 @@
  * @group unit
  *
  */
-require_once 'lib/wiki/editlib.php';
-require_once 'lib/admin/adminlib.php';
 
 
 class EditLib_ParseToWysiwyg_LinkTest extends TikiTestCase
@@ -39,6 +37,8 @@ class EditLib_ParseToWysiwyg_LinkTest extends TikiTestCase
 		global $prefs;
 		$prefs['feature_sefurl'] = 'n'; // default
 
+		require_once 'lib/wiki/editlib.php';
+		require_once 'lib/admin/adminlib.php';
 		$this->el = new EditLib();
 
 		chdir($this->dir);

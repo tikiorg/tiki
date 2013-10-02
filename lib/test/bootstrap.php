@@ -112,7 +112,7 @@ $systemConfiguration = new Zend_Config(
 	array('readOnly' => false)
 );
 
-global $user_overrider_prefs;
+global $user_overrider_prefs, $prefs;
 $user_overrider_prefs = array();
 $prefs['language'] = 'en';
 $prefs['site_language'] = 'en';
