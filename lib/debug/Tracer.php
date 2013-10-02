@@ -40,6 +40,14 @@ class Tracer
 	{
 		$this->trace_file_path = $trace_file_path;
 		$this->traces_are_on = $traces_are_on;
+        if (isset($traces_active_ids))
+        {
+            $this->tiki_trace_active_ids = array_merge($traces_active_ids, array());
+        }
+        else
+        {
+            $this->tiki_trace_active_ids = array();
+        }
 		$this->tiki_trace_active_ids = array_merge($traces_active_ids, array());
 		if ($trace_file_path != NULL) {
 			file_put_contents($this->trace_file_path, '');
