@@ -196,7 +196,11 @@ if (typeof FileReader !== 'undefined') {
 	$fileinput.change(function () {
 		if (this.files) {
 			handleFiles(this.files);
-			$(this).val('');
+			$fileinput.val('');
+			$clone = $fileinput.clone(true);
+			$fileinput.replaceWith($clone);
+
+			$fileinput = $clone;
 		}
 	});
 }
