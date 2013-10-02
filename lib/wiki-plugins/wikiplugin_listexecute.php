@@ -33,6 +33,7 @@ function wikiplugin_listexecute($data, $params)
 	$factory->register(
 		array(
 			'change_status' => 'Search_Action_ChangeStatusAction',
+			'delete' => 'Search_Action_Delete',
 			'email' => 'Search_Action_EmailAction',
 			'wiki_approval' => 'Search_Action_WikiApprovalAction',
 			'tracker_item_modify' => 'Search_Action_TrackerItemModify',

@@ -9,7 +9,7 @@
 				{else}
 					{icon _id=sticky alt="{tr}Error{/tr}"}
 				{/if}
-				{object_link type=$entry.object_type id=$entry.object_id}
+				{object_link type=$entry.object_type id=$entry.object_id backuptitle=$entry.title}
 			</li>
 		{/foreach}
 	</ol>

@@ -73,10 +73,10 @@ function smarty_function_object_link( $params, $smarty )
 		break;
 	}
 
-	return $function($smarty, $object, $title, $type, $url);
+	return $function($smarty, $object, $title, $type, $url, $params);
 }
 
-function smarty_function_object_link_default( $smarty, $object, $title = null, $type = 'wiki page', $url = null )
+function smarty_function_object_link_default( $smarty, $object, $title = null, $type = 'wiki page', $url = null, $params = array() )
 {
 	global $base_url;
 
@@ -85,6 +85,10 @@ function smarty_function_object_link_default( $smarty, $object, $title = null, $
 
 	if (empty($title)) {
 		$title = TikiLib::lib('object')->get_title($type, $object);
+	}
+
+	if (empty($title) && ! empty($params['backuptitle'])) {
+		$title = $params['backuptitle'];
 	}
 
 	if (empty($title) && $type == 'freetag') {

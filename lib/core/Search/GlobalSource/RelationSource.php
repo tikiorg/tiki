@@ -18,6 +18,7 @@ class Search_GlobalSource_RelationSource implements Search_GlobalSource_Interfac
 	{
 		return array(
 			'relations',
+			'relation_types',
 		);
 	}
 
@@ -30,18 +31,23 @@ class Search_GlobalSource_RelationSource implements Search_GlobalSource_Interfac
 	{
 		$relations = array();
 
+		$types = array();
+
 		$from = $this->relationlib->get_relations_from($objectType, $objectId);
 		foreach ($from as $rel) {
 			$relations[] = Search_Query_Relation::token($rel['relation'], $rel['type'], $rel['itemId']);
+			$types[] = $rel['relation'];
 		}
 
 		$to = $this->relationlib->get_relations_to($objectType, $objectId);
 		foreach ($to as $rel) {
 			$relations[] = Search_Query_Relation::token($rel['relation'] . '.invert', $rel['type'], $rel['itemId']);
+			$types[] = $rel['relation'] . '.invert';
 		}
 
 		return array(
 			'relations' => $typeFactory->multivalue($relations),
+			'relation_types' => $typeFactory->multivalue(array_unique($types)),
 		);
 	}
 }

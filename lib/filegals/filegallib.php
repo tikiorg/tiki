@@ -248,6 +248,16 @@ class FileGalLib extends TikiLib
 			$logslib->add_action('Removed', $fileId . '/' . $fileInfo['filename'], 'file', '');
 		}
 
+		TikiLib::events()->trigger(
+			'tiki.file.delete',
+			array(
+				'type' => 'file',
+				'object' => $fileId,
+				'galleryId' => $fileInfo['galleryId'],
+				'filetype' => $fileInfo['filetype'],
+			)
+		);
+
 		return true;
 	}
 
