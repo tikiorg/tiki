@@ -1,4 +1,4 @@
-<div class="files-field uninitialized" data-galleryid="{$field.galleryId|escape}" data-firstfile="{$field.firstfile|escape}">
+<div class="files-field uninitialized {if $data.replaceFile}replace{/if}" data-galleryid="{$field.galleryId|escape}" data-firstfile="{$field.firstfile|escape}">
 {if $field.limit}
 	{remarksbox _type=info title="{tr}Attached files limitation{/tr}"}
 		{tr _0=$field.limit}The amount of files that can be attached is limited to <strong>%0</strong>. The latest files will be preserved.{/tr}
@@ -70,12 +70,14 @@
 </div>
 {jq}
 $('.files-field.uninitialized').removeClass('uninitialized').each(function () {
+var $self = $(this);
 var $drop = $('.file-drop', this);
 var $files = $('.current-list', this);
 var $field = $('.input', this);
 var $search = $('.search', this);
 var $url = $('.url', this);
 var $fileinput = $drop.find('input');
+var replaceFile = $(this).is('.replace');
 
 $field.hide();
 
@@ -125,8 +127,12 @@ var handleFiles = function (files) {
 							$(this).closest('li').remove();
 						});
 									
-						if (li.closest('.files-field').data('firstfile') > 0) {	
+						if (replaceFile && $self.data('firstfile') > 0) {	
 							li.prev('li').remove();
+						}
+
+						if (! $self.data('firstfile')) {
+							$self.data('firstfile', fileId);
 						}
 					},
 					error: function (jqxhr) {
@@ -141,8 +147,8 @@ var handleFiles = function (files) {
 						size: file.size,
 						type: file.type,
 						data: data,
-						fileId: li.closest('.files-field').data('firstfile'), 
-						galleryId: li.closest('.files-field').data('galleryid') 
+						fileId: replaceFile ? $self.data('firstfile') : null,
+						galleryId: $self.data('galleryid') 
 					}
 				});
 			};
@@ -216,7 +222,7 @@ $url.keypress(function (e) {
 			url: $.service('file', 'remote'),
 			dataType: 'json',
 			data: {
-				galleryId: $this.closest('.files-field').data('galleryid'),
+				galleryId: $self.data('galleryid'),
 				url: url,
 				reference: $this.next('.reference').val()
 			},

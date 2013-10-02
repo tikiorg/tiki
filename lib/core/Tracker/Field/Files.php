@@ -211,7 +211,9 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 
 	function renderInput($context = array())
 	{
-		return $this->renderTemplate('trackerinput/files.tpl', $context);
+		return $this->renderTemplate('trackerinput/files.tpl', $context, array(
+			'replaceFile' => 'y' == $this->getOption('replace', 'n'),
+		));
 	}
 
 	function renderOutput($context = array())
