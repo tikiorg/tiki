@@ -195,7 +195,7 @@ if ( isset( $_REQUEST['lm_preference'] ) ) {
 				/* Add/Remove the plugin toolbars from the editor */
 				$toolbars = array('wikiplugin_addreference', 'wikiplugin_showreference');
 				$t_action = ($value=='y') ? 'add' : 'remove';
-				$tikilib->saveEditorToolbars($toolbars, 'global', 'add', $t_action);
+				$tikilib->saveEditorToolbars($toolbars, 'global', $t_action);
 			}
 		}
 	}
