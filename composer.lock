@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "f094e325f9b0d179d76523873e4c150f",
+    "hash": "3d93645292f832280994dfaf8f55fbc6",
     "packages": [
         {
             "name": "aFarkas/html5shiv",
@@ -86,45 +86,45 @@
         },
         {
             "name": "ckeditor/ckeditor",
-            "version": "4.2",
+            "version": "4.2.1",
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/ckeditor-ckeditor-4.2.zip",
-                "reference": "4.2",
-                "shasum": "5e43edc8d6d966e2bedd503b38a2ba436572a5d6"
+                "url": "https://composer.tiki.org/dist/ckeditor-ckeditor-4.2.1.zip",
+                "reference": "4.2.1",
+                "shasum": "070fb08677ae2bf2303ec6cca9bdf7672457b001"
             },
             "type": "library"
         },
         {
             "name": "ckeditor/ckeditor/plugins/divarea",
-            "version": "4.2",
+            "version": "4.2.1",
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/ckeditor-ckeditor-plugins-divarea-4.2.zip",
-                "reference": "4.2",
-                "shasum": "27a8745ce0458fe9a0458a1beaeeea6492248e0a"
+                "url": "https://composer.tiki.org/dist/ckeditor-ckeditor-plugins-divarea-4.2.1.zip",
+                "reference": "4.2.1",
+                "shasum": "e7376750b1c2f2533a2e3fdd85ee928b71237160"
             },
             "type": "library"
         },
         {
             "name": "ckeditor/ckeditor/skins/kama",
-            "version": "4.2",
+            "version": "4.2.1",
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/ckeditor-ckeditor-skins-kama-4.2.zip",
-                "reference": "4.2",
-                "shasum": "bf3710f82418d8bec3c99ee41eb18c1e9bd36cd0"
+                "url": "https://composer.tiki.org/dist/ckeditor-ckeditor-skins-kama-4.2.1.zip",
+                "reference": "4.2.1",
+                "shasum": "920d3910780bfe8aa9c458b9037333d4f1132bb5"
             },
             "type": "library"
         },
         {
             "name": "codemirror/codemirror",
-            "version": "2.25",
+            "version": "2.38",
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/codemirror-codemirror-2.25.zip",
-                "reference": "2.25",
-                "shasum": "9e2354bcfa135e1dad7acb82e5ea06483922fcf7"
+                "url": "https://composer.tiki.org/dist/codemirror-codemirror-2.38.zip",
+                "reference": "2.38",
+                "shasum": "74ccedcafedc7ae124fc0ce7fa9a0c7625a32048"
             },
             "type": "library"
         },
@@ -297,23 +297,23 @@
         },
         {
             "name": "jquery/jquery-timepicker-addon",
-            "version": "1.2.2",
+            "version": "1.4",
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/jquery-jquery-timepicker-addon-1.2.2.zip",
-                "reference": "1.2.2",
-                "shasum": "8bd4fd896fc167b1805c532c4789a178b7b17efc"
+                "url": "https://composer.tiki.org/dist/jquery-jquery-timepicker-addon-1.4.zip",
+                "reference": "1.4",
+                "shasum": "c7418133384bc29c9799a2b7f01e83e26a4eaf13"
             },
             "type": "library"
         },
         {
             "name": "jquery/jquery-ui",
-            "version": "1.10.2",
+            "version": "1.10.3",
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/jquery-jquery-ui-1.10.2.zip",
-                "reference": "1.10.2",
-                "shasum": "51f3b9b3a118663796a1869a5396bee816a795ed"
+                "url": "https://composer.tiki.org/dist/jquery-jquery-ui-1.10.3.zip",
+                "reference": "1.10.3",
+                "shasum": "a5d79cc04f528f82468d986c043a29f2f051d155"
             },
             "type": "library"
         },
@@ -330,12 +330,12 @@
         },
         {
             "name": "jquery/jquery-ui-themes",
-            "version": "1.10.2",
+            "version": "1.10.3",
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/jquery-jquery-ui-themes-1.10.2.zip",
-                "reference": "1.10.2",
-                "shasum": "c879d75815da46d00f1800ae868ecaa4aacc34ae"
+                "url": "https://composer.tiki.org/dist/jquery-jquery-ui-themes-1.10.3.zip",
+                "reference": "1.10.3",
+                "shasum": "31705cf3ad9869bafde574f823b869fd75aa0e88"
             },
             "type": "library"
         },
