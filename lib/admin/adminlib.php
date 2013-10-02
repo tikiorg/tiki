@@ -514,4 +514,4 @@ class AdminLib extends TikiLib
 	}
 
 }
-$adminlib = new AdminLib;
+global $adminlib; $adminlib = new AdminLib;
