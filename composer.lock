@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "d8efb959d074ec9664111ffdc71fc75f",
+    "hash": "d87ea7cefacda2089bd3030ef7360100",
     "packages": [
         {
             "name": "aFarkas/html5shiv",
@@ -726,17 +726,17 @@
         },
         {
             "name": "smarty/smarty",
-            "version": "v3.1.14",
+            "version": "v3.1.15",
             "source": {
                 "type": "svn",
                 "url": "http://smarty-php.googlecode.com/svn",
-                "reference": "/tags/v3.1.14/@4752"
+                "reference": "/tags/v3.1.15/@4782"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/smarty-smarty-v3.1.14-a8f22b.zip",
-                "reference": "v3.1.14",
-                "shasum": "69a262b46a1821222eb3ba5847b46ac335457205"
+                "url": "https://composer.tiki.org/dist/smarty-smarty-v3.1.15-60d265.zip",
+                "reference": "v3.1.15",
+                "shasum": "f3b87cfc39818772ac0c401a32f820ec92f38555"
             },
             "require": {
                 "php": ">=5.2"
@@ -772,7 +772,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2013-07-02 16:38:47"
+            "time": "2013-10-01 21:08:54"
         },
         {
             "name": "svg-edit/svg-edit",
