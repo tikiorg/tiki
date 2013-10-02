@@ -21,10 +21,12 @@ class UserWizardPreferencesReports extends Wizard
 
 	function onSetupPage ($homepageUrl) 
 	{
-		global	$user, $smarty;
+		global	$user, $smarty, $prefs;
 
 		// Run the parent first
 		parent::onSetupPage($homepageUrl);
+		
+		$showPage = false;
 		
 		// Show if option is selected
 		if ($prefs['feature_user_watches'] === 'y' && $prefs['feature_daily_report_watches'] === 'y') {
@@ -40,12 +42,12 @@ class UserWizardPreferencesReports extends Wizard
 		$wizardTemplate = 'wizard/user_preferences_reports.tpl';
 		$smarty->assign('wizardBody', $wizardTemplate);
 		
-		return true;		
+		return $showPage;
 	}
 
 	function onContinue ($homepageUrl) 
 	{
-		global $tikilib, $user;
+		global $tikilib, $user, $prefs;
 
 		// Run the parent first
 		parent::onContinue($homepageUrl);

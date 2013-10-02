@@ -21,10 +21,12 @@ class UserWizardPreferencesInfo extends Wizard
 	function onSetupPage ($homepageUrl) 
 	{
 
-		global	$smarty, $userlib, $tikilib, $user;
+		global	$smarty, $userlib, $tikilib, $user, $prefs;
 
 		// Run the parent first
 		parent::onSetupPage($homepageUrl);
+		
+		$showPage = false;
 		
 		// Show if option is selected
 		if ($prefs['feature_userPreferences'] === 'y') {
@@ -72,12 +74,12 @@ class UserWizardPreferencesInfo extends Wizard
 		$wizardTemplate = 'wizard/user_preferences_info.tpl';
 		$smarty->assign('wizardBody', $wizardTemplate);
 		
-		return true;		
+		return $showPage;		
 	}
 
 	function onContinue ($homepageUrl) 
 	{
-		global $tikilib, $user;
+		global $tikilib, $user, $prefs;
 		
 		$userwatch = $user;
 		
