@@ -78,32 +78,6 @@
 							{tr}Site default{/tr}
 						</option>
 					</select>
-					{if $prefs.feature_multilingual eq 'y'}
-					{if $read_language}
-					<div id="read-lang-div">
-						{else}
-						<a href="javascript:void(0)" onclick="document.getElementById('read-lang-div').style.display='block';this.style.display='none';">
-							<br/>
-							{tr}Can you read more languages?{/tr}
-						</a>
-						<br/>&nbsp;
-						<div id="read-lang-div" style="display: none">
-							{/if}
-							{tr}Other languages you can read (select on the left to add to the list on the right):{/tr}
-							<br/>
-							<select name="_blank" onchange="document.getElementById('read-language-input').value+=' '+this.options[this.selectedIndex].value+' '">
-								<option value="">{tr}Select language...{/tr}</option>
-								{section name=ix loop=$languages}
-									<option value="{$languages[ix].value|escape}">
-										{$languages[ix].name}
-									</option>
-								{/section}
-							</select>
-							&nbsp;=&gt;&nbsp;
-							<input id="read-language-input" type="text" name="read_language" value="{$read_language}">
-							<br/>&nbsp;
-						</div>
-						{/if}
 				</td>
 			</tr>
 		{/if}
