@@ -49,6 +49,7 @@ if ( $prefs['feature_wiki_structure'] == 'y' ) {
 include_once('lib/wiki/wikilib.php');
 include_once('lib/stats/statslib.php');
 require_once ('lib/wiki/renderlib.php');
+require_once('lib/debug/Tracer.php');
 
 $auto_query_args = array(
 				'page',

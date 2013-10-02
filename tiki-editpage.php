@@ -107,6 +107,19 @@ function execute_module_translation()
 	$smarty->assign('content_of_update_translation_section', $out);
 }
 
+function possibly_set_pagedata_to_pretranslation_of_source_page()
+{
+    global $smarty, $multilinguallib, $editlib, $tracer;
+
+    if ($editlib->isNewTranslationMode())
+    {
+        $source_page = $_REQUEST['source_page'];
+        $possibly_pretranslated_content = $multilinguallib->partiallyPretranslateContentOfPage($source_page, $_REQUEST['lang']);
+        $smarty->assign('pagedata', $possibly_pretranslated_content);
+    }
+}
+
+
 $access->check_feature('feature_wiki');
 
 if ($editlib->isNewTranslationMode() || $editlib->isUpdateTranslationMode()) {
@@ -1524,6 +1537,8 @@ $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 $smarty->assign('showtags', 'n');
 $smarty->assign('qtnum', '1');
 $smarty->assign('qtcycle', '');
+
+possibly_set_pagedata_to_pretranslation_of_source_page();
 
 if ($need_lang) {
 	$smarty->display('tiki-choose_page_language.tpl');

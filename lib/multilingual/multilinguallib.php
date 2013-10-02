@@ -1176,7 +1176,7 @@ class MultilingualLib extends TikiLib
                 }
                 else
                 {
-                    $a_targ_link = "{TranslationOf(orig_page=\"$link_src_page\" translation_lang=$targ_lang translation_page=\"\") /}";
+                    $a_targ_link = "{TranslationOf(orig_page=\"$link_src_page\" translation_lang=\"$targ_lang\" translation_page=\"\") /}";
                 }
                 return $a_targ_link;
             };
@@ -1184,6 +1184,27 @@ class MultilingualLib extends TikiLib
         $targ_content = preg_replace_callback($regex_link, $callback, $src_content);
 
         return $targ_content;
+    }
+
+    /**
+     * Fetches the content of $source_page, and does some partial pretranslation
+     * of it into $target_lang.
+     *
+     * For now, pre-translation is limited to translating links to pages, but
+     * eventually, we could pretranslate standard terminology captured with
+     * Tiki's Collaborative Multilingual Terminology profile.
+     */
+    function partiallyPretranslateContentOfPage($source_page, $target_lang)
+    {
+        global $tikilib, $tracer;
+
+
+        $orig_page_info = $tikilib->get_page_info($source_page);
+        $orig_page_content = $orig_page_info['data'];
+
+        $pretranslated_content = $this->translateLinksInPageContent($orig_page_content, $target_lang);
+
+        return $pretranslated_content;
     }
 
     /**
@@ -1210,7 +1231,6 @@ class MultilingualLib extends TikiLib
                 break;
             }
         }
-
 
         return $default_lang;
     }

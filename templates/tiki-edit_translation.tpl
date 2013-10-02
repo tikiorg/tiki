@@ -76,7 +76,6 @@
 			{include file="categorize.tpl" notable=y}
 		{/if}
 		<p align="center"><input type="submit" class="btn btn-default" value="{tr}Create translation{/tr}"></p>
-		<textarea name="edit" style="display:none">{$translate_message}{$pagedata|escape:'htmlall':'UTF-8'}</textarea>
 	</fieldset>
 </form>
 {/if}

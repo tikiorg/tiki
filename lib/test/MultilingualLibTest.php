@@ -92,7 +92,7 @@ class MultilingualLibTest extends TikiTestCase
                   "be replaced by the link of the translation."),
 
             array("((A Page That Is NOT Already Translated))", "fr",
-                  "{TranslationOf(orig_page=\"A Page That Is NOT Already Translated\" translation_lang=fr translation_page=\"\") /}",
+                  "{TranslationOf(orig_page=\"A Page That Is NOT Already Translated\" translation_lang=\"fr\" translation_page=\"\") /}",
                   "Case Description: Link to a page that is NOT already translated. The link should be ".
                     "be replaced by a {TranslationOf} plugin."),
 
@@ -104,12 +104,10 @@ class MultilingualLibTest extends TikiTestCase
 
     }
 
-
     /**
      * @group multilingual
      * @dataProvider dataProvider_defaultTargetLanguageForNewTranslation
      */
-
     function test_defaultTargetLanguageForNewTranslation($src_lang, $langs_already_translated,
                                                     $user_langs, $exp_lang, $message)
     {
@@ -132,6 +130,28 @@ class MultilingualLibTest extends TikiTestCase
                 '',
                 "Case Description: Page has already been translated to all the languages that the user speaks. In that case, we don't know which default to pick.")
 
+        );
+    }
+
+    /**
+     * @group multilingual
+     * @dataProvider dataProvider_partiallyPretranslateContentOfPage
+     */
+    function test_partiallyPretranslateContentOfPage($source_page, $targ_lang, $exp_pretranslation, $message)
+    {
+        global $multilinguallib;
+
+        $got_pretranslation = $multilinguallib->partiallyPretranslateContentOfPage($source_page, $targ_lang);
+        $this->assertEquals($got_pretranslation, $exp_pretranslation, "$message\nSource page was not properly pretranslated.");
+    }
+
+    function dataProvider_partiallyPretranslateContentOfPage()
+    {
+        return array(
+            array("SomePage", "fr",
+                  "This page is in English.\n".
+                  "It contains links to ((Une page déjà traduite)) and {TranslationOf(orig_page=\"A Page That Is NOT Already Translated\" translation_lang=\"fr\" translation_page=\"\") /}.",
+                  "Case description: Happy path.")
         );
     }
 
