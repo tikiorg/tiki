@@ -200,6 +200,7 @@ if (typeof FileReader !== 'undefined') {
 		return false;
 	});
 	$fileinput.change(function () {
+		var $clone;
 		if (this.files) {
 			handleFiles(this.files);
 			$fileinput.val('');
