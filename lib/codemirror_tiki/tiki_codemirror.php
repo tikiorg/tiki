@@ -26,7 +26,7 @@ function codemirrorModes($minify = true)
 		foreach (glob('vendor/codemirror/codemirror/mode/*', GLOB_ONLYDIR) as $dir) {
 			foreach (glob($dir.'/*.js') as $jsFile) {
 				$js .= "//" . $jsFile . "\n";
-				$js .= "try{" . @file_get_contents($jsFile) . "}catch(e){}";
+				$js .= "try {\n" . @file_get_contents($jsFile) . "\n} catch (e) { };\n";
 			}
 			foreach (glob($dir.'/*.css') as $cssFile) {
 				$css .= "/*" . $cssFile . "*/\n";
