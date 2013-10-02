@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "396718d61ac8e9e02c663b2e601ac493",
+    "hash": "d8efb959d074ec9664111ffdc71fc75f",
     "packages": [
         {
             "name": "aFarkas/html5shiv",
@@ -418,12 +418,12 @@
         },
         {
             "name": "jquery/plugins/chosen",
-            "version": "0.9.13",
+            "version": "1.0.0",
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/jquery-plugins-chosen-0.9.13.zip",
-                "reference": "0.9.13",
-                "shasum": "4be4071383432cbdd22e3edd46710d638b8c2f0e"
+                "url": "https://composer.tiki.org/dist/jquery-plugins-chosen-1.0.0.zip",
+                "reference": "1.0.0",
+                "shasum": "564d786aa1f9225124e37f4dbf0810c55554df87"
             },
             "type": "library"
         },

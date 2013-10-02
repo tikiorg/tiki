@@ -170,8 +170,6 @@ class UserWizardPreferencesParams extends Wizard
 		}
 		$smarty->assign_by_ref('tikifeedback', $tikifeedback);
 
-
-
 		// Assign the page template
 		$wizardTemplate = 'wizard/user_preferences_params.tpl';
 		$smarty->assign('wizardBody', $wizardTemplate);
@@ -182,7 +180,9 @@ class UserWizardPreferencesParams extends Wizard
 	function onContinue ($homepageUrl) 
 	{
 		global $tikilib, $user, $prefs;
-		
+
+		$userwatch = $user;
+
 		// Run the parent first
 		parent::onContinue($homepageUrl);
 		
