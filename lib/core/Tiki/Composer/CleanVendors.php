@@ -28,6 +28,16 @@ class CleanVendors
 		self::deleteFile(     $vendors . 'jquery/jquery-sheet/jquery-1.5.2.js');
 		self::deleteFile(     $vendors . 'jquery/jquery-sheet/jquery-1.5.2.min.js');
 		self::deleteDirectory($vendors . 'jquery/jquery-sheet/jquery-ui');
+		self::deleteDirectory($vendors . 'jquery/jquery-timepicker-addon/lib');
+		self::deleteDirectory($vendors . 'jquery/jquery-timepicker-addon/src');
+		self::deleteDirectory($vendors . 'jquery/jquery-timepicker-addon/test');
+		self::deleteFile(     $vendors . 'jquery/jquery-timepicker-addon/.gitignore');
+		self::deleteFile(     $vendors . 'jquery/jquery-timepicker-addon/.jshintrc');
+		self::deleteFile(     $vendors . 'jquery/jquery-timepicker-addon/bower.json');
+		self::deleteFile(     $vendors . 'jquery/jquery-timepicker-addon/composer.json');
+		self::deleteFile(     $vendors . 'jquery/jquery-timepicker-addon/Gruntfile.js');
+		self::deleteFile(     $vendors . 'jquery/jquery-timepicker-addon/jquery-ui-timepicker-addon.json');
+		self::deleteFile(     $vendors . 'jquery/jquery-timepicker-addon/package.json');
 		self::deleteDirectory($vendors . 'jquery/jquery-ui-selectmenu/demos');
 		self::deleteDirectory($vendors . 'jquery/jquery-ui-selectmenu/tests');
 		self::deleteDirectory($vendors . 'jquery/jquery-ui/demos');

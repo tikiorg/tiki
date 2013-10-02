@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "4155c61998f1eb193baf7af885a560c2",
+    "hash": "3d93645292f832280994dfaf8f55fbc6",
     "packages": [
         {
             "name": "aFarkas/html5shiv",
@@ -297,23 +297,23 @@
         },
         {
             "name": "jquery/jquery-timepicker-addon",
-            "version": "1.2.2",
+            "version": "1.4",
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/jquery-jquery-timepicker-addon-1.2.2.zip",
-                "reference": "1.2.2",
-                "shasum": "8bd4fd896fc167b1805c532c4789a178b7b17efc"
+                "url": "https://composer.tiki.org/dist/jquery-jquery-timepicker-addon-1.4.zip",
+                "reference": "1.4",
+                "shasum": "c7418133384bc29c9799a2b7f01e83e26a4eaf13"
             },
             "type": "library"
         },
         {
             "name": "jquery/jquery-ui",
-            "version": "1.10.2",
+            "version": "1.10.3",
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/jquery-jquery-ui-1.10.2.zip",
-                "reference": "1.10.2",
-                "shasum": "51f3b9b3a118663796a1869a5396bee816a795ed"
+                "url": "https://composer.tiki.org/dist/jquery-jquery-ui-1.10.3.zip",
+                "reference": "1.10.3",
+                "shasum": "a5d79cc04f528f82468d986c043a29f2f051d155"
             },
             "type": "library"
         },
@@ -330,12 +330,12 @@
         },
         {
             "name": "jquery/jquery-ui-themes",
-            "version": "1.10.2",
+            "version": "1.10.3",
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/jquery-jquery-ui-themes-1.10.2.zip",
-                "reference": "1.10.2",
-                "shasum": "c879d75815da46d00f1800ae868ecaa4aacc34ae"
+                "url": "https://composer.tiki.org/dist/jquery-jquery-ui-themes-1.10.3.zip",
+                "reference": "1.10.3",
+                "shasum": "31705cf3ad9869bafde574f823b869fd75aa0e88"
             },
             "type": "library"
         },

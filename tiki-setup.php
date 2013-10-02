@@ -441,8 +441,8 @@ if ($prefs['mobile_feature'] === 'y' && $prefs['mobile_mode'] === 'y') {
 				.ui-selectmenu-status { line-height: .8em; margin-right: 16px; }'
 			);
 		}
-		$headerlib->add_jsfile('vendor/jquery/jquery-timepicker-addon/jquery-ui-timepicker-addon.js');
-		$headerlib->add_cssfile('vendor/jquery/jquery-timepicker-addon/jquery-ui-timepicker-addon.css');
+		$headerlib->add_jsfile('vendor/jquery/jquery-timepicker-addon/dist/jquery-ui-timepicker-addon.js');
+		$headerlib->add_cssfile('vendor/jquery/jquery-timepicker-addon/dist/jquery-ui-timepicker-addon.css');
 	}
 
 	if ( $prefs['feature_jquery_tooltips'] == 'y' ) {
