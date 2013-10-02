@@ -619,19 +619,20 @@ class ToolbarCkOnly extends Toolbar
 
 	function getIconHtml() // {{{ for admin page
 	{
-		global $headerlib;
+		global $headerlib, $prefs;
 
 		if ((!empty($this->icon) && $this->icon !== 'img/icons/shading.png') || in_array($this->label, array('Autosave'))) {
 			return parent::getIconHtml();
 		}
 
-		$headerlib->add_cssfile('vendor/ckeditor/ckeditor/skins/kama/editor.css');
+		$skin = $prefs['wysiwyg_toolbar_skin'];
+		$headerlib->add_cssfile('vendor/ckeditor/ckeditor/skins/' . $skin . '/editor.css');
 		$cls = strtolower($this->wysiwyg);
 		$headerlib->add_css(
-			'span.cke_skin_kama {border: none;background: none;padding:0;margin:0;}'.
-			'.toolbars-admin .row li.toolbar > span.cke_skin_kama {display: inline-block;}'
+			'span.cke_skin_' . $skin . ' {border: none;background: none;padding:0;margin:0;}'.
+			'.toolbars-admin .row li.toolbar > span.cke_skin_' . $skin . ' {display: inline-block;}'
 		);
-		return '<span class="cke_skin_kama"><a class="cke_button cke_ltr"><span class="cke_button__' . htmlentities($cls, ENT_QUOTES, 'UTF-8') . '_icon"' .
+		return '<span class="cke_skin_' . $skin . '"><a class="cke_button cke_ltr"><span class="cke_button__' . htmlentities($cls, ENT_QUOTES, 'UTF-8') . '_icon"' .
 			' title="' . htmlentities($this->getLabel(), ENT_QUOTES, 'UTF-8') . '">'.
 			'<span class="cke_icon"> </span>'.
 			'</span></a></span>';
