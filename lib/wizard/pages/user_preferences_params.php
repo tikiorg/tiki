@@ -232,7 +232,7 @@ class UserWizardPreferencesParams extends Wizard
 		if (isset($_REQUEST['display_timezone'])) {
 			$tikilib->set_user_preference($userwatch, 'display_timezone', $_REQUEST['display_timezone']);
 		}
-		$tikilib->set_user_preference($userwatch, 'user_information', $_REQUEST['user_information']);
+
 		if (isset($_REQUEST['user_dbl']) && $_REQUEST['user_dbl'] == 'on') {
 			$tikilib->set_user_preference($userwatch, 'user_dbl', 'y');
 		} else {

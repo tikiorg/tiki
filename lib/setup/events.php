@@ -146,6 +146,7 @@ function tiki_setup_events()
 
 	$events->bind('tiki.file.update', 'tiki.file.save');
 	$events->bind('tiki.file.create', 'tiki.file.save');
+	$events->bind('tiki.file.delete', 'tiki.file.save');
 	$events->bind('tiki.file.save', 'tiki.save');
 
 	$events->bind('tiki.forumpost.create', 'tiki.forumpost.save');

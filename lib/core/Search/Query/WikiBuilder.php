@@ -99,6 +99,17 @@ class Search_Query_WikiBuilder
 		$query->filterCategory($value, true);
 	}
 
+	function wpquery_filter_multivalue($query, $value, array $arguments)
+	{
+		if (isset($arguments['field'])) {
+			$fields = explode(',', $arguments['field']);
+		} else {
+			$fields = 'nomatch';
+		}
+
+		$query->filterMultivalue($value, $fields);
+	}
+
 	function wpquery_filter_content($query, $value, array $arguments)
 	{
 		if (isset($arguments['field'])) {
