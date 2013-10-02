@@ -49,6 +49,14 @@ class CleanVendors
 		self::deleteDirectory($vendors . 'jquery/plugins/cluetip/demo');
 		self::deleteDirectory($vendors . 'jquery/plugins/cluetip/test');
 		self::deleteDirectory($vendors . 'jquery/plugins/colorbox/content');
+		self::deleteDirectory($vendors . 'jquery/plugins/superfish/examples');
+		self::deleteDirectory($vendors . 'jquery/plugins/superfish/src');
+		self::deleteDirectory($vendors . 'jquery/plugins/superfish/test');
+		self::deleteFile(     $vendors . 'jquery/plugins/superfish/Gruntfile.coffee');
+		self::deleteFile(     $vendors . 'jquery/plugins/superfish/.gitignore');
+		self::deleteFile(     $vendors . 'jquery/plugins/superfish/bower.json');
+		self::deleteFile(     $vendors . 'jquery/plugins/superfish/package.json');
+		self::deleteFile(     $vendors . 'jquery/plugins/superfish/superfish.jquery.json');
 		self::deleteDirectory($vendors . 'jquery/plugins/tablesorter/docs');
 		self::deleteDirectory($vendors . 'jquery/plugins/tablesorter/testing');
 		self::deleteFile(     $vendors . 'jquery/plugins/tablesorter/test.html');

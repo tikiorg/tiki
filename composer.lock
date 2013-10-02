@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "3d93645292f832280994dfaf8f55fbc6",
+    "hash": "396718d61ac8e9e02c663b2e601ac493",
     "packages": [
         {
             "name": "aFarkas/html5shiv",
@@ -385,12 +385,12 @@
         },
         {
             "name": "jquery/plugins/anythingslider",
-            "version": "1.9.1",
+            "version": "1.9.2",
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/jquery-plugins-anythingslider-1.9.1.zip",
-                "reference": "1.9.1",
-                "shasum": "5314f2a957749de7b7b1518bb4b9d437caaf9afb"
+                "url": "https://composer.tiki.org/dist/jquery-plugins-anythingslider-1.9.2.zip",
+                "reference": "1.9.2",
+                "shasum": "32843785ddb162ff8c8d2e3efec35c4ac939bfe7"
             },
             "type": "library"
         },
@@ -429,23 +429,23 @@
         },
         {
             "name": "jquery/plugins/cluetip",
-            "version": "1.2.8",
+            "version": "1.2.10",
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/jquery-plugins-cluetip-1.2.8.zip",
-                "reference": "1.2.8",
-                "shasum": "cc697a4ec0f3374a6d635d4418673d7d28b2789e"
+                "url": "https://composer.tiki.org/dist/jquery-plugins-cluetip-1.2.10.zip",
+                "reference": "1.2.10",
+                "shasum": "7747a3225edfcf184c8a99b70d87a8918227b5d3"
             },
             "type": "library"
         },
         {
             "name": "jquery/plugins/colorbox",
-            "version": "1.4.14",
+            "version": "1.4.31",
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/jquery-plugins-colorbox-1.4.14.zip",
-                "reference": "1.4.14",
-                "shasum": "94807af360601f18b4a2cfb37d9113bc7e0ac1ee"
+                "url": "https://composer.tiki.org/dist/jquery-plugins-colorbox-1.4.31.zip",
+                "reference": "1.4.31",
+                "shasum": "9a3342ffe31b56d27cc106a48ce5647eb468b672"
             },
             "type": "library"
         },
@@ -594,12 +594,12 @@
         },
         {
             "name": "jquery/plugins/superfish",
-            "version": "1.7.2",
+            "version": "1.7.4",
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/jquery-plugins-superfish-1.7.2.zip",
-                "reference": "1.7.2",
-                "shasum": "f23fa28d6b0c330207b6e8f54d291db23b310899"
+                "url": "https://composer.tiki.org/dist/jquery-plugins-superfish-1.7.4.zip",
+                "reference": "1.7.4",
+                "shasum": "b27e1fb4f51d10830c610d83f1e1392ef308007c"
             },
             "type": "library"
         },
@@ -616,12 +616,12 @@
         },
         {
             "name": "jquery/plugins/treetable",
-            "version": "3.0.1",
+            "version": "3.0.2",
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/jquery-plugins-treetable-3.0.1.zip",
-                "reference": "3.0.1",
-                "shasum": "fb3995745592552d96b3f98ed51da7294f515df8"
+                "url": "https://composer.tiki.org/dist/jquery-plugins-treetable-3.0.2.zip",
+                "reference": "3.0.2",
+                "shasum": "c245ade681e528d650d858dbd2ad4c368f8d0338"
             },
             "type": "library"
         },
