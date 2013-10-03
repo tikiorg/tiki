@@ -11,7 +11,7 @@
 		"ckeditor/ckeditor": "4.2.1",
 		"ckeditor/ckeditor/skins/kama": "4.2.1",
 		"ckeditor/ckeditor/plugins/divarea": "4.2.1",
-		"codemirror/codemirror": "2.38",
+		"codemirror/codemirror": "2.25",
 		"ezyang/htmlpurifier": "4.5.0",
 		"jcapture-applet/jcapture-applet": "dev-master",
 		"jquery/jquery": "1.9.1",
