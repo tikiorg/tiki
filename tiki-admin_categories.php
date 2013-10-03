@@ -11,6 +11,9 @@
 require_once ('tiki-setup.php');
 include_once ('lib/categories/categlib.php');
 
+@ini_set('max_execution_time', 0);	// as pagination is broken and almost every object gets fully loaded on this page
+@ini_set('memory_limit', -1);		// at least try and avoid WSoD on large sites (TODO better still - see r30064)
+
 $access->check_feature('feature_categories');
 // Check for parent category or set to 0 if not present
 if (!empty($_REQUEST['parentId']) && !($info = $categlib->get_category($_REQUEST['parentId']))) {
