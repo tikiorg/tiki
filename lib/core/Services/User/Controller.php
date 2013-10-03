@@ -112,8 +112,9 @@ class Services_User_Controller
 				$info = $userlib->get_user_info($other_user);
 
 				$result['add_friend_button'] = '';
+				$result['friendship'] = array();
 
-				if ($prefs['feature_friends'] === 'y') {
+				if ($prefs['feature_friends'] === 'y' && $user) {
 
 					$friendship = array();
 

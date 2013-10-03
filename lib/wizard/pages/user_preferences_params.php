@@ -21,7 +21,7 @@ class UserWizardPreferencesParams extends Wizard
 
 	function onSetupPage ($homepageUrl) 
 	{
-		global	$smarty, $userlib, $tikilib, $user, $prefs;
+		global	$smarty, $userlib, $tikilib, $user, $prefs, $tiki_p_messages;
 
 		// Run the parent first
 		parent::onSetupPage($homepageUrl);
@@ -179,7 +179,7 @@ class UserWizardPreferencesParams extends Wizard
 
 	function onContinue ($homepageUrl) 
 	{
-		global $tikilib, $user, $prefs;
+		global $tikilib, $user, $prefs, $tiki_p_admin;
 
 		$userwatch = $user;
 

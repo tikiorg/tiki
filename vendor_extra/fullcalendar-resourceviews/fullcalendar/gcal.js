@@ -1,12 +1,7 @@
-/*
- * FullCalendar v1.5.3.4 Google Calendar Plugin
- *
- * Copyright (c) 2011 Adam Shaw
- * Dual licensed under the MIT and GPL licenses, located in
- * MIT-LICENSE.txt and GPL-LICENSE.txt respectively.
- *
- * Date: Wed Jan 23 20:47:52 2013 +0200
- *
+/*!
+ * FullCalendar-Resourceviews v1.6.1.2 Google Calendar Plugin
+ * Docs & License: http://arshaw.com/fullcalendar/, http://tux.fi/~jarnok/fullcalendar-resourceviews
+ * (c) 2013 Adam Shaw, 2013 Jarno Kurlin (Resource Views)
  */
  
 (function($) {
