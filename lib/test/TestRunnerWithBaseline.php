@@ -20,8 +20,6 @@
 
 require_once('lib/debug/Tracer.php');
 
-// nevermind.
-
 class TestRunnerWithBaseline {
 
     private $logname_stem = 'phpunit-log';
