@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "897e3553e6417a61c609e2c9aa201e4f",
+    "hash": "f5e219fa49f5718a2cabc6cd1c540df8",
     "packages": [
         {
             "name": "aFarkas/html5shiv",
@@ -238,12 +238,12 @@
         },
         {
             "name": "jquery/jquery-mobile",
-            "version": "1.3.1",
+            "version": "1.3.2",
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/jquery-jquery-mobile-1.3.1.zip",
-                "reference": "1.3.1",
-                "shasum": "782c19b969f40c2034e9c862cd45df51d664e511"
+                "url": "https://composer.tiki.org/dist/jquery-jquery-mobile-1.3.2.zip",
+                "reference": "1.3.2",
+                "shasum": "40397672e06756864eb8a7aeedc7a1be2ed410ae"
             },
             "type": "library"
         },
