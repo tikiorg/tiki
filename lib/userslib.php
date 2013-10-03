@@ -24,6 +24,7 @@ define('ACCOUNT_WAITING_USER', -9);
 define('USER_AMBIGOUS', -7);
 define('USER_NOT_VALIDATED', -8);
 define('USER_PREVIOUSLY_VALIDATED', -10);
+define('USER_ALREADY_LOGGED', -11);
 
 //added for Auth v1.3 support
 define('AUTH_LOGIN_OK', 0);
