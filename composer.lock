@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "f5e219fa49f5718a2cabc6cd1c540df8",
+    "hash": "ccb839ec3554ed060ca6696ac07fa6e5",
     "packages": [
         {
             "name": "aFarkas/html5shiv",
@@ -216,23 +216,23 @@
         },
         {
             "name": "jquery/jquery",
-            "version": "1.9.1",
+            "version": "1.10.2",
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/jquery-jquery-1.9.1.zip",
-                "reference": "1.9.1",
-                "shasum": "40a2008ac3deb7673bbab767058f41faa5d4bb59"
+                "url": "https://composer.tiki.org/dist/jquery-jquery-1.10.2.zip",
+                "reference": "1.10.2",
+                "shasum": "5543443bdb8dd82298ac7c2e85c72a983e4ef534"
             },
             "type": "library"
         },
         {
             "name": "jquery/jquery-min",
-            "version": "1.9.1",
+            "version": "1.10.2",
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/jquery-jquery-min-1.9.1.zip",
-                "reference": "1.9.1",
-                "shasum": "c681e41f2dd0df711abdd04cc6f96a4fb6af7afb"
+                "url": "https://composer.tiki.org/dist/jquery-jquery-min-1.10.2.zip",
+                "reference": "1.10.2",
+                "shasum": "c22f415473dc48c4b16616e33f312cc9975fed47"
             },
             "type": "library"
         },
@@ -528,23 +528,23 @@
         },
         {
             "name": "jquery/plugins/migrate",
-            "version": "1.1.1",
+            "version": "1.2.1",
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/jquery-plugins-migrate-1.1.1.zip",
-                "reference": "1.1.1",
-                "shasum": "0dd73fc1c5a04867035ee342e910c5b8a187bcb7"
+                "url": "https://composer.tiki.org/dist/jquery-plugins-migrate-1.2.1.zip",
+                "reference": "1.2.1",
+                "shasum": "c6ba0151d386b3579672ddb0339d8f6f81e2739d"
             },
             "type": "library"
         },
         {
             "name": "jquery/plugins/migrate-min",
-            "version": "1.1.1",
+            "version": "1.2.1",
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/jquery-plugins-migrate-min-1.1.1.zip",
-                "reference": "1.1.1",
-                "shasum": "8fbcafbcce24ff95c80cf2940981b1e7f04a39cb"
+                "url": "https://composer.tiki.org/dist/jquery-plugins-migrate-min-1.2.1.zip",
+                "reference": "1.2.1",
+                "shasum": "2d76fd4ab6ae9269ca2efbd9c3f4ecea1c9b9c48"
             },
             "type": "library"
         },
