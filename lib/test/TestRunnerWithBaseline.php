@@ -25,6 +25,7 @@ class TestRunnerWithBaseline {
     private $logname_stem = 'phpunit-log';
     public $action = 'run'; // run|update_baseline
     public $phpunit_options = '';
+    public $diffs;
 
     function run()
     {
@@ -34,43 +35,25 @@ class TestRunnerWithBaseline {
 
         if ($this->help != null) {
             $this->usage();
-        } else if ($this->action == 'run')
-        {
-            $this->run_tests_with_possibly_nonstandard_options();
         }
-        else if ($this->action == 'update_baseline')
-        {
-            $this->run_all_tests_and_save_results_as_baseline();
-        }
-    }
 
-    function run_tests_with_possibly_nonstandard_options()
-    {
-        $this->run_tests($this->phpunit_options);
-
-        if (!file_exists($this->logname_baseline()))
-        {
-            $this->ask_if_want_to_create_baseline();
-        }
-        else
-        {
-            $this->print_diffs_with_baseline();
-        }
-    }
-
-    function run_all_tests_and_save_results_as_baseline()
-    {
         $this->run_tests();
-        $this->save_current_log_as_baseline();
+
+        $this->print_diffs_with_baseline();
+
+        if ($this->action == 'update_baseline')
+        {
+            $this->save_current_log_as_baseline();
+        }
+
     }
 
-    function run_tests($phpunit_options_and_args_string = "")
+    function run_tests()
     {
         global $tracer;
 
-        $cmd_line = "../../vendor/bin/phpunit $phpunit_options_and_args_string --log-json ".$this->logname_current()." .";
+        $cmd_line = "../../vendor/bin/phpunit ".$this->phpunit_options." --log-json ".$this->logname_current()." .";
         system($cmd_line);
-
     }
 
     function print_diffs_with_baseline()
@@ -79,15 +62,25 @@ class TestRunnerWithBaseline {
 
         echo "\n\nChecking for differences with baseline test logs...\n\n";
 
-        $baseline_issues = $this->read_log_file($this->logname_baseline());
+        $baseline_issues;
+        if (file_exists($this->logname_baseline()))
+        {
+            $baseline_issues = $this->read_log_file($this->logname_baseline());
+        }
+        else
+        {
+            echo "=== WARNING: No baseline file exists. Assuming empty baseline.\n\n";
+            $baseline_issues = $this->make_empty_issues_list();
+        }
+
         $current_issues = $this->read_log_file($this->logname_current());
 
-        $diffs = $this->compare_two_test_runs($baseline_issues, $current_issues);
+        $this->diffs = $this->compare_two_test_runs($baseline_issues, $current_issues);
 
-        $nb_failures_introduced = count($diffs['failures_introduced']);
-        $nb_failures_fixed = count($diffs['failures_fixed']);
-        $nb_errors_introduced = count($diffs['errors_introduced']);
-        $nb_errors_fixed = count($diffs['errors_fixed']);
+        $nb_failures_introduced = count($this->diffs['failures_introduced']);
+        $nb_failures_fixed = count($this->diffs['failures_fixed']);
+        $nb_errors_introduced = count($this->diffs['errors_introduced']);
+        $nb_errors_fixed = count($this->diffs['errors_fixed']);
 
         $total_diffs =
             $nb_failures_introduced + $nb_errors_introduced +
@@ -99,7 +92,7 @@ class TestRunnerWithBaseline {
             if ($nb_failures_introduced > 0)
             {
                 echo "\nNb of new FAILURES: $nb_failures_introduced:\n";
-                foreach ($diffs['failures_introduced'] as $an_issue)
+                foreach ($this->diffs['failures_introduced'] as $an_issue)
                 {
                     echo "   $an_issue\n";
                 }
@@ -108,7 +101,7 @@ class TestRunnerWithBaseline {
             if ($nb_errors_introduced > 0)
             {
                 echo "\nNb of new ERRORS: $nb_errors_introduced:\n";
-                foreach ($diffs['errors_introduced'] as $an_issue)
+                foreach ($this->diffs['errors_introduced'] as $an_issue)
                 {
                     echo "   $an_issue\n";
                 }
@@ -118,7 +111,7 @@ class TestRunnerWithBaseline {
             if ($nb_failures_fixed > 0)
             {
                 echo "\nNb of newly FIXED FAILURES: $nb_failures_fixed:\n";
-                foreach ($diffs['failures_fixed'] as $an_issue)
+                foreach ($this->diffs['failures_fixed'] as $an_issue)
                 {
                     echo "   $an_issue\n";
                 }
@@ -128,7 +121,7 @@ class TestRunnerWithBaseline {
             if ($nb_errors_fixed > 0)
             {
                 echo "\nNb of newly FIXED ERRORS: $nb_errors_fixed:\n";
-                foreach ($diffs['errors_fixed'] as $an_issue)
+                foreach ($this->diffs['errors_fixed'] as $an_issue)
                 {
                     echo "   $an_issue\n";
                 }
@@ -264,6 +257,18 @@ class TestRunnerWithBaseline {
 
     function save_current_log_as_baseline()
     {
+        if ($this->total_new_issues_found() > 0)
+        {
+            $answer = $this->prompt_for(
+                                "Some new failures and/or errors were introduced (see above for details).\n\nAre you SURE you want to save the current run as a baseline?\n",
+                                array('y', 'n'));
+            if ($answer == 'n')
+            {
+                echo "\nThe current run was NOT saved as the new baseline.\n";
+                return;
+            }
+        }
+
         echo "\n\nSaving current phpunit log as the baseline.\n";
         copy($this->logname_current(), $this->logname_baseline());
     }
@@ -390,5 +395,23 @@ Options
         }
 
         exit("\n$help");
+    }
+
+    function make_empty_issues_list()
+    {
+        $issues =
+            array('pass' => array(), 'failures' => array(), 'errors' => array());
+
+        return $issues;
+    }
+
+    function total_new_issues_found()
+    {
+        global $tracer;
+        $total = count($this->diffs['errors_introduced']) + count($this->diffs['failures_introduced']);
+
+        $tracer->trace('total_new_issues_found', "** Returning \$total=$total");
+
+        return $total;
     }
 }
