@@ -52,7 +52,16 @@ class TestRunnerWithBaseline {
     {
         global $tracer;
 
-        $cmd_line = "../../vendor/bin/phpunit ".$this->phpunit_options." --log-json ".$this->logname_current()." .";
+        $cmd_line = "../../vendor/bin/phpunit";
+        if ($this->phpunit_options != '')
+        {
+            $cmd_line = "$cmd_line ".$this->phpunit_options;
+        }
+
+        $cmd_line = $cmd_line." --log-json \"".$this->logname_current()."\" .";
+
+        print "\n=======\n === Executing phpunit as: '$cmd_line'\n=======\n\n";
+
         system($cmd_line);
     }
 
