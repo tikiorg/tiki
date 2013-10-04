@@ -97,7 +97,11 @@ class TestRunnerWithBaseline {
 
         if ($total_diffs > 0)
         {
-            echo "\n\nThere were $total_diffs differences with baseline.\n";
+            echo "\n\nThere were $total_diffs differences with baseline.\n
+
+Below is a list of tests that differ from the baseline.
+See above details about each error or failure.
+";
             if ($nb_failures_introduced > 0)
             {
                 echo "\nNb of new FAILURES: $nb_failures_introduced:\n";
