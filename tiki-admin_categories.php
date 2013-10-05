@@ -326,143 +326,155 @@ $treeMaker = new BrowseTreeMaker('categ');
 $smarty->assign('tree', $treeMaker->make_tree(0, $treeNodes));
 
 // ---------------------------------------------------
-if (!isset($_REQUEST["sort_mode"])) {
-	$sort_mode = 'name_asc';
-} else {
-	$sort_mode = $_REQUEST["sort_mode"];
-}
-if (!isset($_REQUEST["offset"])) {
-	$offset = 0;
-} else {
-	$offset = $_REQUEST["offset"];
-}
-$smarty->assign('offset', $offset);
-if (isset($_REQUEST["find"])) {
-	$find = $_REQUEST["find"];
-} else {
-	$find = '';
-}
-$smarty->assign('find', $find);
-if (isset($_REQUEST["find_objects"])) {
-	$find_objects = $_REQUEST["find_objects"];
-} else {
-	$find_objects = '';
-}
+if ($prefs['feature_search'] !== 'y') {	// no unified search
 
-/**
- * @param $max
- * @param $data_key
- * @param null $data
- */
-function admin_categ_assign( &$max, $data_key, $data = null )
-{
-	global $smarty;
+	@ini_set('max_execution_time', 0);	// as pagination is broken and almost every object gets fully loaded on this page
+	@ini_set('memory_limit', -1);		// at least try and avoid WSoD on large sites (TODO better still - see r30064)
 
-	if ( is_null($data) ) {
-		$data = array( 'data' => array(), 'cant' => 0 );
+	if (!isset($_REQUEST["sort_mode"])) {
+		$sort_mode = 'name_asc';
+	} else {
+		$sort_mode = $_REQUEST["sort_mode"];
+	}
+	if (!isset($_REQUEST["offset"])) {
+		$offset = 0;
+	} else {
+		$offset = $_REQUEST["offset"];
+	}
+	$smarty->assign('offset', $offset);
+	if (isset($_REQUEST["find"])) {
+		$find = $_REQUEST["find"];
+	} else {
+		$find = '';
+	}
+	$smarty->assign('find', $find);
+	if (isset($_REQUEST["find_objects"])) {
+		$find_objects = $_REQUEST["find_objects"];
+	} else {
+		$find_objects = '';
 	}
 
-	$smarty->assign($data_key, $data['data']);
-	$smarty->assign('cant_' . $data_key, $data['cant']);
+	/**
+	 * @param $max
+	 * @param $data_key
+	 * @param null $data
+	 */
+	function admin_categ_assign( &$max, $data_key, $data = null )
+	{
+		global $smarty;
 
-	$max = max($max, $data['cant']);
-}
-
-$articles = $galleries = $file_galleries = $forums = $polls = $blogs = $pages = $faqs = $quizzes = $trackers = $directories = $objects = null;
-
-$maxRecords = $prefs['maxRecords'];
-
-$smarty->assign('find_objects', $find_objects);
-$smarty->assign('sort_mode', $sort_mode);
-$smarty->assign('find', $find);
-
-$objects = $categlib->list_category_objects($_REQUEST["parentId"], $offset, $maxRecords, $sort_mode, '', $find, false);
-
-if ( $prefs['feature_galleries'] == 'y' ) {
-	$galleries = $tikilib->list_galleries($offset, -1, 'name_desc', 'admin', $find_objects);
-}
-
-if ( $prefs['feature_file_galleries'] == 'y' ) {
-	include_once ('lib/filegals/filegallib.php');
-	$file_galleries = $filegallib->list_file_galleries($offset, -1, 'name_desc', 'admin', $find_objects, $prefs['fgal_root_id']);
-}
-
-if ( $prefs['feature_forums'] == 'y' ) {
-	$commentslib = TikiLib::lib('comments');
-	$forums = $commentslib->list_forums($offset, -1, 'name_asc', $find_objects);
-}
-
-if ( $prefs['feature_polls'] == 'y' ) {
-	include_once ('lib/polls/polllib.php');
-	$polls = $polllib->list_polls($offset, $maxRecords, 'title_asc', $find_objects);
-}
-
-if ( $prefs['feature_blogs'] == 'y' ) {
-	require_once('lib/blogs/bloglib.php');
-	$blogs = $bloglib->list_blogs($offset, -1, 'title_asc', $find_objects);
-}
-
-if ( $prefs['feature_wiki'] == 'y' ) {
-	$pages = $tikilib->list_pageNames($offset, -1, 'pageName_asc', $find_objects);
-	//TODO for all other object types
-	$pages_not_in_cat = array();
-	foreach ($pages['data'] as $pg) {
-		$found = false;
-		foreach ($objects['data'] as $obj) {
-			if ($obj['type'] == 'wiki page' && $obj['itemId'] == $pg['pageName']) {
-				$found = true;
-				break;
-			} 
+		if ( is_null($data) ) {
+			$data = array( 'data' => array(), 'cant' => 0 );
 		}
-		if (!$found) {
-			$pages_not_in_cat[] = $pg;
-		}
+
+		$smarty->assign($data_key, $data['data']);
+		$smarty->assign('cant_' . $data_key, $data['cant']);
+
+		$max = max($max, $data['cant']);
 	}
-	$pages['cant'] = $pages['cant']- count($pages['data']) + count($pages_not_in_cat);
-	$pages['data'] = $pages_not_in_cat;
+
+	$articles = $galleries = $file_galleries = $forums = $polls = $blogs = $pages = $faqs = $quizzes = $trackers = $directories = $objects = null;
+
+	$maxRecords = $prefs['maxRecords'];
+
+	$smarty->assign('find_objects', $find_objects);
+	$smarty->assign('sort_mode', $sort_mode);
+	$smarty->assign('find', $find);
+
+	$objects = $categlib->list_category_objects($_REQUEST["parentId"], $offset, $maxRecords, $sort_mode, '', $find, false);
+
+	if ( $prefs['feature_galleries'] == 'y' ) {
+		$galleries = $tikilib->list_galleries($offset, -1, 'name_desc', 'admin', $find_objects);
+	}
+
+	if ( $prefs['feature_file_galleries'] == 'y' ) {
+		include_once ('lib/filegals/filegallib.php');
+		$file_galleries = $filegallib->list_file_galleries($offset, -1, 'name_desc', 'admin', $find_objects, $prefs['fgal_root_id']);
+	}
+
+	if ( $prefs['feature_forums'] == 'y' ) {
+		$commentslib = TikiLib::lib('comments');
+		$forums = $commentslib->list_forums($offset, -1, 'name_asc', $find_objects);
+	}
+
+	if ( $prefs['feature_polls'] == 'y' ) {
+		include_once ('lib/polls/polllib.php');
+		$polls = $polllib->list_polls($offset, $maxRecords, 'title_asc', $find_objects);
+	}
+
+	if ( $prefs['feature_blogs'] == 'y' ) {
+		require_once('lib/blogs/bloglib.php');
+		$blogs = $bloglib->list_blogs($offset, -1, 'title_asc', $find_objects);
+	}
+
+	if ( $prefs['feature_wiki'] == 'y' ) {
+		$pages = $tikilib->list_pageNames($offset, -1, 'pageName_asc', $find_objects);
+		//TODO for all other object types
+		$pages_not_in_cat = array();
+		foreach ($pages['data'] as $pg) {
+			$found = false;
+			foreach ($objects['data'] as $obj) {
+				if ($obj['type'] == 'wiki page' && $obj['itemId'] == $pg['pageName']) {
+					$found = true;
+					break;
+				}
+			}
+			if (!$found) {
+				$pages_not_in_cat[] = $pg;
+			}
+		}
+		$pages['cant'] = $pages['cant']- count($pages['data']) + count($pages_not_in_cat);
+		$pages['data'] = $pages_not_in_cat;
+	}
+
+	if ( $prefs['feature_faqs'] == 'y' ) {
+		$faqlib = TikiLib::lib('faq');
+		$faqs = $faqlib->list_faqs($offset, -1, 'title_asc', $find_objects);
+	}
+
+	if ( $prefs['feature_quizzes'] == 'y' ) {
+		$quizzes = TikiLib::lib('quiz')->list_quizzes($offset, -1, 'name_asc', $find_objects);
+	}
+
+	if ( $prefs['feature_trackers'] == 'y' ) {
+		include_once ('lib/trackers/trackerlib.php');
+		$trackers = $trklib->list_trackers($offset, -1, 'name_asc', $find_objects);
+	}
+
+	if ( $prefs['feature_articles'] == 'y' ) {
+		global $artlib; require_once 'lib/articles/artlib.php';
+		$articles = $artlib->list_articles($offset, -1, 'title_asc', $find_objects, '', '', $user, '', '', 'n');
+	}
+
+	if ( $prefs['feature_directory'] == 'y' ) {
+		include_once ('lib/directory/dirlib.php');
+		$directories = $dirlib->dir_list_all_categories($offset, $maxRecords, 'name_asc', $find_objects);
+	}
+
+	$maximum = 0;
+	admin_categ_assign($maximum, 'objects', $objects);
+	admin_categ_assign($maximum, 'galleries', $galleries);
+	admin_categ_assign($maximum, 'file_galleries', $file_galleries);
+	admin_categ_assign($maximum, 'forums', $forums);
+	admin_categ_assign($maximum, 'polls', $polls);
+	admin_categ_assign($maximum, 'blogs', $blogs);
+	admin_categ_assign($maximum, 'pages', $pages);
+	admin_categ_assign($maximum, 'faqs', $faqs);
+	admin_categ_assign($maximum, 'quizzes', $quizzes);
+	admin_categ_assign($maximum, 'trackers', $trackers);
+	admin_categ_assign($maximum, 'articles', $articles);
+	admin_categ_assign($maximum, 'directories', $directories);
+
+	$smarty->assign('maxRecords', $maxRecords);
+	$smarty->assign('offset', $offset);
+	$smarty->assign('maximum', $maximum);
+
+} else {	// unified search
+
+	$objects = $categlib->list_category_objects($_REQUEST["parentId"], $offset, $prefs['maxRecords'], $sort_mode, '', $find, false);
+	$smarty->assign('objects', $objects['data']);
+	$smarty->assign('types', TikiLib::lib('unifiedsearch')->getSupportedTypes());
 }
-
-if ( $prefs['feature_faqs'] == 'y' ) {
-	$faqlib = TikiLib::lib('faq');
-	$faqs = $faqlib->list_faqs($offset, -1, 'title_asc', $find_objects);
-}
-
-if ( $prefs['feature_quizzes'] == 'y' ) {
-	$quizzes = TikiLib::lib('quiz')->list_quizzes($offset, -1, 'name_asc', $find_objects);
-}
-
-if ( $prefs['feature_trackers'] == 'y' ) {
-	include_once ('lib/trackers/trackerlib.php');
-	$trackers = $trklib->list_trackers($offset, -1, 'name_asc', $find_objects);
-}
-
-if ( $prefs['feature_articles'] == 'y' ) {
-	global $artlib; require_once 'lib/articles/artlib.php';
-	$articles = $artlib->list_articles($offset, -1, 'title_asc', $find_objects, '', '', $user, '', '', 'n');
-}
-
-if ( $prefs['feature_directory'] == 'y' ) {
-	include_once ('lib/directory/dirlib.php');
-	$directories = $dirlib->dir_list_all_categories($offset, $maxRecords, 'name_asc', $find_objects);
-}
-
-$maximum = 0;
-admin_categ_assign($maximum, 'objects', $objects);
-admin_categ_assign($maximum, 'galleries', $galleries);
-admin_categ_assign($maximum, 'file_galleries', $file_galleries);
-admin_categ_assign($maximum, 'forums', $forums);
-admin_categ_assign($maximum, 'polls', $polls);
-admin_categ_assign($maximum, 'blogs', $blogs);
-admin_categ_assign($maximum, 'pages', $pages);
-admin_categ_assign($maximum, 'faqs', $faqs);
-admin_categ_assign($maximum, 'quizzes', $quizzes);
-admin_categ_assign($maximum, 'trackers', $trackers);
-admin_categ_assign($maximum, 'articles', $articles);
-admin_categ_assign($maximum, 'directories', $directories);
-
-$smarty->assign('maxRecords', $maxRecords);
-$smarty->assign('offset', $offset);
-$smarty->assign('maximum', $maximum);
 
 ask_ticket('admin-categories');
 if (!empty($errors)) $smarty->assign('errors', $errors);
