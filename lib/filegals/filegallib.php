@@ -955,7 +955,9 @@ class FileGalLib extends TikiLib
 	{
 		$info = $this->get_file_info($fileId, false, false, false);
 
-		return reset(array_filter(array($info['name'], $info['filename'])));
+		$arr = array_filter(array($info['name'], $info['filename']));
+
+		return reset($arr);
 	}
 
 	function get_files_info_from_gallery_id($galleryId, $include_search_data = false, $include_data = false)

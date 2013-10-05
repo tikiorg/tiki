@@ -26,12 +26,15 @@ class UserWizardPreferencesInfo extends Wizard
 		// Run the parent first
 		parent::onSetupPage($homepageUrl);
 		
-		$showPage = false;
+		// Show page always since in case user prefs are not enabled,
+		// a message will be shown to the user reporting that and 
+		// suggesting to request the admin to enable it.
+		$showPage = true;
 		
-		// Show if option is selected
-		if ($prefs['feature_userPreferences'] === 'y') {
-			$showPage = true;
-		}
+		//// Show if option is selected
+		//if ($prefs['feature_userPreferences'] === 'y') {
+			//$showPage = true;
+		//}
 		
 		$userwatch = $user;
 		

@@ -4807,6 +4807,9 @@ class TrackerLib extends TikiLib
 		// Try to find if the tracker is a user tracker, flag update to associated user
 
 		$fields = array_keys($args['values']);
+		if (!$fields) {
+			return;
+		}
 		$table = $this->table('users_groups');
 		$field = $table->fetchOne(
 			'usersFieldId',
