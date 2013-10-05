@@ -182,6 +182,10 @@ if (isset($_REQUEST["removeObject"])) {
 		"objectUrl" => $categorizedObject['href']
 	);
 	$categlib->notify($values);
+
+	// update search index if required
+	require_once 'lib/search/refresh-functions.php';
+	refresh_index($categorizedObject['type'], $categorizedObject['itemId']);
 }
 if (isset($_REQUEST["removeCat"]) && ($info = $categlib->get_category($_REQUEST['removeCat']))) {
 	$access->check_permission('tiki_p_admin_categories', '', 'category', $_REQUEST['removeCat']);
