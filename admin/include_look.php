@@ -111,7 +111,7 @@ $js
 			}
 			optionDropDown.change();
 			if (jqueryTiki.chosen) {
-				optionDropDown.trigger("liszt:updated");
+				optionDropDown.trigger("chosen:updated");
 			}
 		}).change();
 		optionDropDown.change( function() {
