@@ -257,7 +257,7 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 								ajaxLoadingHide();
 								$d.dialog( "close" );
 								if (jqueryTiki.chosen) {
-									$select.trigger("liszt:updated");
+									$select.trigger("chosen:updated");
 								}
 								return;
 							}, "json");

@@ -266,7 +266,7 @@
 						</select>
 						{if $userstrackerid or $prefs.javascript_enabled eq 'y'}
 							<br>
-							<select name="usersfield"{if empty($userstrackerid) and $prefs.javascript_enabled eq 'y'} style="display: none;"{/if}>
+							<select name="usersfield"{if empty($userstrackerid) and $prefs.javascript_enabled eq 'y' and $prefs.jquery_ui_chosen neq 'y'} style="display: none;"{/if}>
 								<option value="0">{tr}choose a field ...{/tr}</option>
 								{section name=ix loop=$usersFields}
 									<option value="{$usersFields[ix].fieldId}"{if $usersFields[ix].fieldId eq $usersfieldid} selected="selected"{/if}>{$usersFields[ix].fieldId} - {$usersFields[ix].name|escape}</option>
@@ -287,7 +287,11 @@ $("#userstracker").change(function () {
 				}
 				$usersfield.append('<option value="' + this.fieldId + '"' + sel + '>' + this.fieldId + ' - ' + this.name + '</option>');
 			});
-			$usersfield.show();
+			if (jqueryTiki.chosen) {
+				$usersfield.trigger("chosen:updated");
+			} else {
+				$usersfield.show();
+			}
 		}
 	});
 });

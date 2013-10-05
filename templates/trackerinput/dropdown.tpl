@@ -36,7 +36,7 @@
 		{jq}
 {{if !isset($field.possibilities[$field.value]) && $field.value}}
 if (!$('select[name="{{$field.ins_id|escape}}"] > [selected]').length) {
-	$('select[name="{{$field.ins_id|escape}}"]').val('{tr}other{/tr}').trigger('liszt:updated');
+	$('select[name="{{$field.ins_id|escape}}"]').val('{tr}other{/tr}').trigger('chosen:updated');
 }
 {{/if}}
 $('select[name="{{$field.ins_id|escape}}"]').change(function() {
@@ -46,7 +46,7 @@ $('select[name="{{$field.ins_id|escape}}"]').change(function() {
 });
 $('input[name="other_{{$field.ins_id|escape}}"]').change(function(){
 	if ($(this).val()) {
-		$('select[name="{{$field.ins_id|escape}}"]').val(tr('other')).trigger('liszt:updated');
+		$('select[name="{{$field.ins_id|escape}}"]').val(tr('other')).trigger('chosen:updated');
 	}
 });
 		{/jq}

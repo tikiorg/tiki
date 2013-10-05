@@ -124,7 +124,7 @@ $("input[name=ins_' . $this->getOption('filterFieldIdHere') . '], select[name=in
 				}
 			}
 			if (jqueryTiki.chosen) {
-				$ddl.trigger("liszt:updated");
+				$ddl.trigger("chosen:updated");
 			}
 			$ddl.trigger("change");
 		}
