@@ -17,7 +17,7 @@
 
 				<div id="template-list">
 				</div>
-				<a class="button service-dialog reload" href="{service controller=workspace action=add_template}">{tr}Add a workspace template{/tr}</a>
+				<a class="button service-dialog reload" href="{service controller=workspace action=add_template}">{tr}Create a workspace template{/tr}</a>
 			</fieldset>
 
 			<fieldset class="admin">
