@@ -61,7 +61,7 @@ class TestRunnerWithBaselineTest extends PHPUnit_Framework_TestCase
                   array(),
                   array(),
                   array('SomeClass::testSomeMethodThatPasses'),
-                  "Case description: No failures nor errors, just a pass."
+                  "Case 0 description: No failures nor errors, just a pass."
               ),
 
               array(
@@ -72,8 +72,7 @@ class TestRunnerWithBaselineTest extends PHPUnit_Framework_TestCase
                   array('SomeClass::testSomeMethodThatFails'),
                   array('SomeOtherClass::testSomeMethodThatRaisesErrors'),
                   array(),
-//                  array(),
-                  "Case description: one failure and one error."
+                  "Case 1 description: one failure and one error."
               ),
 
               array(
@@ -84,7 +83,7 @@ class TestRunnerWithBaselineTest extends PHPUnit_Framework_TestCase
                   array('SomeClass::testSomeMethodThatFails', 'SomeClass::testSomeOtherMethodThatFails'),
                   array(),
                   array(),
-                  "Case description: more than one issue of type failure."
+                  "Case 2 description: more than one issue of type failure."
                 ),
 
               array(
@@ -95,16 +94,20 @@ class TestRunnerWithBaselineTest extends PHPUnit_Framework_TestCase
                   array(),
                   array('SomeClass::testSomeMethodThatRaiseAnError', 'SomeClass::testSomeOtherMethodThatRaisesAnError'),
                   array(),
-                  "Case description: more than one issue of type error."
+                  "Case 3 description: more than one issue of type error."
               ),
 
+              array(
+                array(
+                    array('event' => 'testStart', 'test' => 'SomeClass::testSomeTestThatNeverFinished'),
+                ),
+                array('SomeClass::testSomeTestThatNeverFinished'),
+                array(),
+                array(),
+                "Case 4 description: A test for which a 'testStart' event is issued, but no event is issued for the test results. Assume that this is a failure."
+              ),
 
             );
-
-        function testNevermind()
-        {
-            $this->fail('nevermind');
-        }
     }
 
     /**

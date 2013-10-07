@@ -22,9 +22,12 @@ require_once('lib/debug/Tracer.php');
 
 class TestRunnerWithBaseline {
 
+    private $last_test_started = null;
+
     private $logname_stem = 'phpunit-log';
     public $action = 'run'; // run|update_baseline
     public $phpunit_options = '';
+    public $help = false;
     public $diffs;
 
     function run()
@@ -33,7 +36,7 @@ class TestRunnerWithBaseline {
 
         $this->config_from_cmdline_options();
 
-        if ($this->help != null) {
+        if ($this->help) {
             $this->usage();
         }
 
@@ -184,22 +187,42 @@ See above details about each error or failure.
 
         foreach ($log_data as $log_entry)
         {
-            if (! ((isset($log_entry['event']) && ($log_entry['event'] == 'test'))))
+            $event = '';
+            if (isset($log_entry['event']))
+            {
+                $event = $log_entry['event'];
+            }
+
+            if ($event != 'testStart' && $event != 'test')
             {
                 continue;
             }
 
-            if (!isset($log_entry['test']))
+            $test = '';
+            if (isset($log_entry['test']))
             {
-                continue;
+                $test = $log_entry['test'];
             }
-            $test = $log_entry['test'];
 
-            if(!isset($log_entry['status']))
+            if ($event == 'testStart')
             {
+                $this->last_test_started = $test;
                 continue;
             }
-            $status = $log_entry['status'];
+            else
+            {
+                $this->last_test_started = null;
+            }
+
+            /* For some reason, sometimes an event=test entry does not have
+               a 'status' field.
+               Whenever that happens, it seems to be a sign of an error.
+            */
+            $status = 'fail';
+            if(isset($log_entry['status']))
+            {
+                $status = $log_entry['status'];
+            }
 
             if ($status == 'fail')
             {
@@ -213,8 +236,14 @@ See above details about each error or failure.
             {
                 array_push($issues['pass'], $test);
             }
-
         }
+
+        /* If a test was started by never ended, flag it as a failure */
+        if ($this->last_test_started != null)
+        {
+            if (!in_array($this->last_test_started, $issues['failures'])) {
+                array_push($issues['failures'], $this->last_test_started);
+            }
 
         return $issues;
 
@@ -338,7 +367,7 @@ See above details about each error or failure.
 
         if (isset($options['help']))
         {
-            $this->help = 1;
+            $this->help = true;
         }
 
         if (isset($options['action']))
@@ -356,7 +385,11 @@ See above details about each error or failure.
     {
         global $tracer;
 
-        if ($options['action'] == 'update_baseline' && isset($options['phpuni-options']))
+        $action = '';
+        if (isset($options['action'])) {
+            $action = $options['action'];
+        }
+        if ($action == 'update_baseline' && isset($options['phpunit-options']))
         {
             $this->usage("Cannot specify --phpunit-options with --action=update_baseline.");
         }
