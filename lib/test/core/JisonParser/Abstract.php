@@ -72,11 +72,11 @@ class JisonParser_Abstract extends TikiTestCase
 
 			$this->called++;
 
-			$this->assertEquals($syntax[1], $parsed, $syntaxName, $syntax[0]);
+			$this->assertSyntaxEquals($syntax[1], $parsed, $syntaxName, $syntax[0]);
 		}
 	}
 
-	static function assertEquals($expected, $actual, $syntaxName, $syntax)
+	static function assertSyntaxEquals($expected, $actual, $syntaxName, $syntax)
 	{
 		if ($expected != $actual) {
 			echo "\n\n\n\nFailure on: $syntaxName\n";

@@ -67,7 +67,7 @@ end.
 row 2 cell 1~|~ row 2 cell 2~|~ row 2 cell 3{FANCYTABLE}", "");
 	}
 
-	static function assertEquals($expected, $actual, $syntaxName, $syntax)
+	static function assertSyntaxEquals($expected, $actual, $syntaxName, $syntax)
 	{
 		$parsed = self::$htmlToWikiParser->parse($actual);
 
