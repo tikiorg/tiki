@@ -42,6 +42,18 @@ function module_last_youtube_playlist_videos_info()
 				'default' => 350,
 				'filter' => 'striptags',
 			),
+			'allowFullScreen' => array(
+				'required' => false,
+				'name' => tra('Allow FullScreen'),
+				'description' => tra('Enlarge video to full screen size'),
+				'default' => true,
+				'filter' => 'alpha',
+				'options' => array(
+					array('text' => tra(''), 'value' => ''),
+					array('text' => tra('Yes'), 'value' => 'true'),
+					array('text' => tra('No'), 'value' => 'false'),
+				),
+			),
 			'link_url' => array(
 				'required' => false,
 				'name' => tra('Bottom Link'),
@@ -104,6 +116,12 @@ function module_last_youtube_playlist_videos($mod_reference, $module_params)
 	
 	if (!empty($module_params['id'])) {
 		$id = $module_params['id'];
+		// Catch common error on param values and convert into the right ones
+		if ($params['allowFullScreen'] == 'y') {
+			$params['allowFullScreen'] = 'true';
+		} else if ($params['allowFullScreen'] == 'n') {
+			$params['allowFullScreen'] = 'false';
+		}
 		require_once('lib/wiki-plugins/wikiplugin_youtube.php');
 		if (!empty($module_params['orderby'])) {
 			$orderby = $module_params['orderby'];
@@ -123,6 +141,7 @@ function module_last_youtube_playlist_videos($mod_reference, $module_params)
 			$params = array();
 			$params['width'] = isset($module_params['width']) ? $module_params['width'] : 425;
 			$params['height'] = isset($module_params['height']) ? $module_params['height'] : 350;
+			$params['allowFullScreen'] = isset($module_params['allowFullScreen']) ? $module_params['allowFullScreen'] : true;
 				
 			// Get information from all videos from playlist
 			// Limit to $module_rows first videos if $module_rows is set
