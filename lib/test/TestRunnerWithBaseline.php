@@ -244,6 +244,7 @@ See above details about each error or failure.
             if (!in_array($this->last_test_started, $issues['failures'])) {
                 array_push($issues['failures'], $this->last_test_started);
             }
+        }
 
         return $issues;
 
