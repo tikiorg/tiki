@@ -80,7 +80,7 @@ class TikiImporter
 	 *
 	 * @return array $importFeedback array with the number of pages imported etc
 	 */
-	function import()
+	function import($filePath = null)
 	{
 
 	}
@@ -117,7 +117,7 @@ class TikiImporter
 	 *
 	 * @param array $parsedData data ready to be inserted into Tiki
 	 */
-	function insertData($parsedData)
+	function insertData($parsedData = null)
 	{
 
 	}

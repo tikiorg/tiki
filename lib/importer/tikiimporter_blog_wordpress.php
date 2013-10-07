@@ -115,8 +115,12 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 	 * @return null
 	 * @throws UnexpectedValueException if invalid file mime type
 	 */
-	function import($filePath)
+	function import($filePath = null)
 	{
+        if ($filePath == null)
+        {
+            die("This particular implementation of the method requires an explicity file path.");
+        }
 		if (isset($_FILES['importFile']) && !in_array($_FILES['importFile']['type'], $this->validTypes)) {
 			throw new UnexpectedValueException(tra('Invalid file mime type'));
 		}
@@ -937,9 +941,12 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 	 * Call $this->replaceInternalLinks() and leave the
 	 * rest with the parent method.
 	 *
+     * Note: The $parsedData argument is not used. It's just there to make the signatures
+     *       of insertData() uniform across implementations.
+     *
 	 * @see lib/importer/TikiImporter_Blog#insertData()
 	 */
-	function insertData()
+	function insertData($parsedData = null)
 	{
 		$countData = parent::insertData();
 

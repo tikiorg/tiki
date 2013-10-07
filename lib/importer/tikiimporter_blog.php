@@ -77,7 +77,7 @@ class TikiImporter_Blog extends TikiImporter
 	 *
 	 * @return null
 	 */
-	function import()
+	function import($filePath = null)
 	{
 		$this->setupTiki();
 
@@ -118,7 +118,7 @@ class TikiImporter_Blog extends TikiImporter
 	 *
 	 * @return array $countData stats about the content that has been imported
 	 */
-	function insertData()
+	function insertData($parsedData = null)
 	{
 		$countData = array();
 
