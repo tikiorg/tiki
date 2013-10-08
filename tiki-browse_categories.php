@@ -135,7 +135,7 @@ foreach ($ctall as &$c) {
 unset($c);
 $tree_nodes = array();
 foreach ($ctall as $c) {
-// display correct count of objects depending on permissions, browse in and find filters -- luci Thu 05 Sep 2013 10:15:50 PM UTC
+// display correct count of objects depending on browse in and find filters -- luci Thu 05 Sep 2013 10:15:50 PM UTC
 	$objectcount = $categlib->list_category_objects(
 				$c['categId'], 
 				$offset, 
