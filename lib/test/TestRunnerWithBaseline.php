@@ -28,6 +28,7 @@ class TestRunnerWithBaseline {
     public $action = 'run'; // run|update_baseline
     public $phpunit_options = '';
     public $help = false;
+    public $filter = '';
     public $diffs;
 
     function run()
@@ -56,9 +57,15 @@ class TestRunnerWithBaseline {
         global $tracer;
 
         $cmd_line = "../../vendor/bin/phpunit --verbose";
+
         if ($this->phpunit_options != '')
         {
             $cmd_line = "$cmd_line ".$this->phpunit_options;
+        }
+
+        if ($this->filter != '')
+        {
+            $cmd_line = "$cmd_line --filter ".$this->filter;
         }
 
         $cmd_line = $cmd_line." --log-json \"".$this->logname_current()."\" .";
@@ -363,7 +370,7 @@ See above details about each error or failure.
     {
         global $argv, $tracer;
 
-        $options = getopt('', array('action:', 'phpunit-options:', 'help'));
+        $options = getopt('', array('action:', 'phpunit-options:', 'filter:', 'help'));
         $options = $this->validate_cmdline_options($options);
 
         if (isset($options['help']))
@@ -379,6 +386,11 @@ See above details about each error or failure.
         if (isset($options['phpunit-options']))
         {
             $this->phpunit_options = $options['phpunit-options'];
+        }
+
+        if (isset($options['filter']))
+        {
+            $this->filter = $options['filter'];
         }
     }
 
@@ -404,6 +416,12 @@ See above details about each error or failure.
         {
             $this->usage("You cannot specify '--log-json' option in the '--phpunit-options' option.");
         }
+        if (preg_match('/--filter/', $phpunit_options))
+        {
+            $this->usage("You cannot specify '--filter' option in the '--phpunit-options' option. Instead, the --filter option of $argv[0] directely (i.e., '$argv[0] --filter pattern')");
+        }
+
+
 
         return $options;
     }
@@ -429,6 +447,9 @@ Options
         update_baseline
            Run ALL the tests, and save the list of generated failures
            and errors as the new baseline.
+
+   --filter pattern
+         Only run the test methods whose names match the pattern.
 
    --phpunit-options options (Default: '')
         Command line options to be passed to phpunit.
