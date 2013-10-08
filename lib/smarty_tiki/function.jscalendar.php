@@ -109,6 +109,13 @@ function smarty_function_jscalendar($params, $smarty)
 
 	$html = '<input type="hidden" id="' . $params['id'] . '"' . $name  . ' value="'.$params['date'].'" />';
 	$html .= '<input type="text" id="' . $params['id'] . '_dptxt" value="" />';	// text version of datepicker date
+
+	$display_tz = $tikilib->get_display_timezone();
+	if ( $display_tz == '' ) {
+		$display_tz = 'UTC';
+	}
+	$html .= '<span class="description">' . tra('Time zone') . ': ' . $display_tz . '</span>';
+
 	// TODO use a parsed version of $prefs['short_date_format']
 	// Note: JS timestamp is in milliseconds - php is seconds
 	if (!isset($params['showtime']) || $params['showtime'] === 'n') {
