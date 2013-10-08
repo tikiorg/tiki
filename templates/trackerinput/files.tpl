@@ -26,7 +26,7 @@
 	{if $field.options_map.displayMode eq 'vimeo'}
 		<fieldset>
 			<legend>{tr}Upload files{/tr}</legend>
-			{wikiplugin _name='vimeo' fromFieldId=$field.fieldId|escape fromItemId=$item.itemId|escape}{/wikiplugin}
+			{wikiplugin _name='vimeo' fromFieldId=$field.fieldId|escape fromItemId=$item.itemId|escape galleryId=$field.galleryId|escape}{/wikiplugin}
 		</fieldset>
 	{else}
 		<fieldset id="{$field.ins_id|escape}-drop" class="file-drop">
