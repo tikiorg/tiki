@@ -55,7 +55,7 @@ class TestRunnerWithBaseline {
     {
         global $tracer;
 
-        $cmd_line = "../../vendor/bin/phpunit";
+        $cmd_line = "../../vendor/bin/phpunit --verbose";
         if ($this->phpunit_options != '')
         {
             $cmd_line = "$cmd_line ".$this->phpunit_options;
@@ -395,7 +395,12 @@ See above details about each error or failure.
             $this->usage("Cannot specify --phpunit-options with --action=update_baseline.");
         }
 
-        if (preg_match('/--log-json/', $options['phpunit-options']))
+        $phpunit_options = '';
+        if (isset($options['phpunit-options']))
+        {
+            $phpunit_options = $options['phpunit-options'];
+        }
+        if (preg_match('/--log-json/', $phpunit_options))
         {
             $this->usage("You cannot specify '--log-json' option in the '--phpunit-options' option.");
         }
