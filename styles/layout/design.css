@@ -1580,22 +1580,77 @@ body.tiki_forums .normal {
 }
 
 /* Comments */
-#comzone {
+
+#comment-container {
 	display: none;
-	margin: 5px 0;
+	margin: 0;
 	padding: 0;
 }
 
-#comzoneopen {
-	display: block;
-	margin: 5px 0;
-	padding: 0;
-}
-
-.commentstitle {
+#comment-container h4 {
 	font-weight: bold;
 	font-size: 1.2em;
 }
+
+#comment-container .buttons table {
+	width: 100%;
+}
+
+/* Comments (article, blogs) */
+
+#comment-container ol {
+	list-style: none;
+	margin: 0 0 0 1em;
+	padding: 0;
+}
+
+#comment-container ol ol {
+	margin: 0 0 0 4em;
+}
+
+/* Comment Annotations */
+
+dl.note-list {
+	background: #fff;
+	color: #000;
+	border: solid thin black;
+	margin: .5em;
+}
+
+#note-editor-comment {
+	background: yellow;
+	color: #000;
+	border: #999 1px solid;
+}
+
+.note-editor-text {
+	background: #eee;
+	color: #000;
+}
+
+.note-list .postbody-title {
+	background: #ccc;
+	color: #000;
+}
+
+/* Comments moderation */
+.post-approved-n {
+	border-left: 3px dotted blue;
+}
+
+.post-approved-r {
+	border-left: 3px double red;
+}
+
+.post-approved-r .content * {
+	background: url(../../img/icons/dots.gif);
+}
+
+
+#wikihelp-tab table td {
+	padding: 2px;
+}
+
 
 /* applied mainly to titles : option ? help-inline-level user defined  */
 .simple_comment {
@@ -3545,57 +3600,6 @@ small.description {
 
 /*body.tiki_blogs div*/.author_info {
 	padding: 5px 0px 15px 0px;
-}
-
-/* Comments (article, blogs) */
-
-#comment-container ol {
-	list-style: none;
-	margin: 0;
-	padding: 0;
-}
-
-/* Comment Annotations */
-
-dl.note-list {
-	background: #fff;
-	color: #000;
-	border: solid thin black;
-	margin: .5em;
-}
-
-#note-editor-comment {
-	background: yellow;
-	color: #000;
-	border: #999 1px solid;
-}
-
-.note-editor-text {
-	background: #eee;
-	color: #000;
-}
-
-.note-list .postbody-title {
-	background: #ccc;
-	color: #000;
-}
-
-/* Comments moderation */
-.post-approved-n {
-	border-left: 3px dotted blue;
-}
-
-.post-approved-r {
-	border-left: 3px double red;
-}
-
-.post-approved-r .content * {
-	background: url(../../img/icons/dots.gif);
-}
-
-
-#wikihelp-tab table td {
-	padding: 2px;
 }
 
 /**** Image Galleries ****/

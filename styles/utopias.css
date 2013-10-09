@@ -1022,12 +1022,9 @@ body.tiki_blogs .post .postfooter {
 /* removed - unused so far */
 
 /* Comments */
-#comzone {
-	margin: .5em 0;
-}
 
-#comzoneopen {
-	margin: .5em 0;
+#comment-container ol ol {
+	list-style-image: url("../img/icons/quoteleft.gif");
 }
 
 /**** Image Galleries ****/
