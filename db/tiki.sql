@@ -3216,6 +3216,11 @@ UPDATE tiki_menu_options SET icon = 'stats48x48' WHERE name = 'Stats';
 UPDATE tiki_menu_options SET icon = 'surveys48x48' WHERE name = 'Surveys';
 UPDATE tiki_menu_options SET icon = 'spreadsheet48x48' WHERE name = 'Spreadsheets';
 UPDATE tiki_menu_options SET icon = 'timesheet48x48' WHERE name = 'Timesheet';
+UPDATE tiki_menu_options SET icon = 'usersmap48x48' WHERE name = 'Users Map';
+UPDATE tiki_menu_options SET icon = 'contactus48x48' WHERE name = 'Contact Us';
+UPDATE tiki_menu_options SET icon = 'debug48x48' WHERE name = '(debug)';
+UPDATE tiki_menu_options SET icon = 'kaltura48x48' WHERE name = 'Kaltura Video';
+UPDATE tiki_menu_options SET icon = 'tikicalendar48x48' WHERE name = 'Tiki Calendar';
 UPDATE tiki_menus SET use_items_icons='y' WHERE `menuId`=42;
 
 DROP TABLE IF EXISTS `tiki_plugin_security`;
