@@ -30,6 +30,7 @@
 				{include file='antibot.tpl'}
 			{/if}
 			<input type="submit" class="clearfix comment-postclass btn btn-default" value="{tr}Post{/tr}"/>
+			<div class="button"><a href="#" onclick="$(this).closest('.comment-container, .ui-dialog-content').reload(); return false;">{tr}Cancel{/tr}</a></div>
 		</fieldset>
 	</form>
 {/if}
