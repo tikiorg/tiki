@@ -25,9 +25,11 @@ class Rating_AggregationTest extends TikiTestCase
 
 	function tearDown()
 	{
-		global $user; $user = null;
+		global $testhelpers, $user; $user = null;
 		parent::tearDown();
 		TikiDb::get()->query('DELETE FROM `tiki_user_votings` WHERE `id` LIKE ?', array('test.%'));
+
+        $testhelpers->reset_all();
 	}
 
 	function testGetGlobalSum()

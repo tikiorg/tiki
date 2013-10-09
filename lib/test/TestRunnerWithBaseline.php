@@ -70,7 +70,15 @@ class TestRunnerWithBaseline {
 
         $cmd_line = $cmd_line." --log-json \"".$this->logname_current()."\" .";
 
-        print "\n=======\n === Executing phpunit as: '$cmd_line'\n=======\n\n";
+        print "
+********************************************************************
+*
+* Executing phpunit as:
+*
+*    $cmd_line
+*
+********************************************************************
+";
 
         system($cmd_line);
     }

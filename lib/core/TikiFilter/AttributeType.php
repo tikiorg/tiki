@@ -17,7 +17,7 @@ class TikiFilter_AttributeType implements Zend_Filter_Interface
 		$name = strtolower($name);
 		$name = preg_replace('/[^a-z0-9_\-\.]/', '', $name);
 
-		return $name;
+        return $name;
 	}
 }
 

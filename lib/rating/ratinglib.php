@@ -136,12 +136,11 @@ class RatingLib extends TikiDb_Bridge
 	function record_user_vote( $user, $type, $objectId, $score, $time = null )
 	{
 		global $tikilib, $prefs;
-
 		if ( ! $this->is_valid($type, $score, $objectId) ) {
-			return false;
+            return false;
 		}
 
-		if ( is_null($time) ) {
+        if ( is_null($time) ) {
 			$time = time();
 		}
 

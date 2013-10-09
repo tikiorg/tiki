@@ -1129,7 +1129,7 @@ if ( \$('#$id') ) {
 
 	function process_save_plugins($data, array $context)
 	{
-		$parserlib = TikiLib::lib('parser');
+        $parserlib = TikiLib::lib('parser');
 
 		$argumentParser = new WikiParser_PluginArgumentParser;
 
@@ -1137,7 +1137,7 @@ if ( \$('#$id') ) {
 
 		foreach ($matches as $match) {
 			$plugin_name = $match->getName();
-			$body = $match->getBody();
+            $body = $match->getBody();
 			$arguments = $argumentParser->parse($match->getArguments());
 
 			$dummy_output = '';
@@ -1153,10 +1153,17 @@ if ( \$('#$id') ) {
 						$match->replaceWith($output);
 					}
 				}
+
+                if ($plugin_name == 'translationof')
+                {
+                    $this->add_translationof_relation($data, $arguments, $context['itemId']);
+                }
 			}
 		}
 
-		return $matches->getText();
+        $matches_text = $matches->getText();
+
+        return $matches_text;
 	}
 
 	//*
@@ -3132,5 +3139,18 @@ if ( \$('#$id') ) {
 		$cache_hotwords = $ret;
 		return $ret;
 	}
+
+    /*
+     * When we save a page that contains a TranslationOf plugin, we need to remember
+     * that relation, so we later, when the page referenced by this plugin gets translated,
+     * we can replace the plugin by a proper link to the translation.
+     */
+    public function add_translationof_relation($data, $arguments, $page_being_parsed)
+    {
+        global $relationlib;
+
+        $relationlib->add_relation('tiki.wiki.translationof', 'wiki page', $page_being_parsed, 'wiki page', $arguments['translation_page']);
+
+    }
 }
 

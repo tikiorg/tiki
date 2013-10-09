@@ -17,5 +17,5 @@ require_once (version_compare(PHPUnit_Runner_Version::id(), '3.5.0', '>=')) ? 'P
  
 abstract class TikiTestCase extends PHPUnit_Framework_TestCase
 {
- 	protected $backupGlobals = FALSE;	
+ 	protected $backupGlobals = FALSE;
 }

@@ -3882,7 +3882,8 @@ class TikiLib extends TikiDb_Bridge
 	function get_preference($name, $default = '', $expectArray = false )
 	{
 		global $prefs;
-		$value = isset($prefs[$name]) ? $prefs[$name] : $default;
+
+        $value = isset($prefs[$name]) ? $prefs[$name] : $default;
 
 		if ( empty($value) ) {
 			if ( $expectArray ) {
@@ -4280,7 +4281,9 @@ class TikiLib extends TikiDb_Bridge
 	 **/
 	function create_page($name, $hits, $data, $lastModif, $comment, $user = 'admin', $ip = '0.0.0.0', $description = '', $lang='', $is_html = false, $hash=null, $wysiwyg=NULL, $wiki_authors_style='', $minor=0, $created='')
 	{
-		global $prefs;
+		global $prefs, $tracer;
+
+        $tracer->trace('tikilib.create_page', "** invoked");
 
 		if ( ! $is_html ) {
 			$data = str_replace('<x>', '', $data);
@@ -4302,9 +4305,14 @@ class TikiLib extends TikiDb_Bridge
 		}
 
 		if ($this->page_exists($name))
-			return false;
+        {
+            $tracer->trace('tikilib.create_page', "** Page \$name already exists. Exiting...");
+            return false;
+        }
 
-		$parserlib = TikiLib::lib('parser');
+        $tracer->trace('tikilib.create_page', "** TikiLib::lib...");
+        $parserlib = TikiLib::lib('parser');
+        $tracer->trace('tikilib.create_page', "** invoking process_save_plugins, \$parserlib=".get_class($parserlib));
 		$data = $parserlib->process_save_plugins(
 			$data,
 			array(
@@ -4441,6 +4449,8 @@ class TikiLib extends TikiDb_Bridge
 			$wikilib->wiki_rename_page($name, $temppage, false, $user);
 			$wikilib->wiki_rename_page($temppage, $name, false, $user);
 		}
+
+        $tracer->trace('tikilib.create_page', "** Returning");
 
 		return true;
 	}

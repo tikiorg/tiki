@@ -6,41 +6,44 @@
 // $Id$
 
 require_once('lib/wiki-plugins/wikiplugin_translationof.php');
+require_once('lib/test/TestHelpers.php');
+require_once('lib/attributes/relationlib.php');
 
-class WikiPlugin_TranslationOfTest extends PHPUnit_Framework_TestCase
+class WikiPlugin_TranslationOfTest extends TikiTestCase
 {
-//    public $orig_user;
-//
-//    protected function setUp()
-//    {
-//        global $tikilib, $_SERVER, $user, $prefs, $multilinguallib;
-//
-//        $this->orig_user = $user;
-//
-//        $prefs['site_language'] = 'en';
-//
-//
-//        /* Need to set those global vars to be able to create and delete pages */
-//        $_SERVER['HTTP_HOST'] = 'localhost';
-//        $_SERVER['REQUEST_URI'] = 'phpunit';
-//        $user = "user_that_can_edit";
-//
-//        $page_name = "APageContainingATranslationOfPlugin";
-//        $content = "{TranslationOf(orig_page=\"ChildPage\" translation_page=\"PageEnfant\" target_lang=\"fr\") /}";
-//        $lang = 'en';
-//        $tikilib->create_page($page_name, 0, $content, null, '', null, $user, '', $lang);
-//    }
-//
-//    protected function tearDown()
-//    {
-//        global $tikilib, $user;
-//
-//        $tikilib->remove_all_versions("APageContainingATranslationOfPlugin");
-//
-//        unset($_SERVER['HTTP_HOST']);
-//        unset($_SERVER['REQUEST_URI']);
-//        $user = $this->orig_user;
-//    }
+    public $orig_user;
+
+    private $page_containing_plugin = "PageToBeCreated";
+
+    protected function setUp()
+    {
+        global $tikilib, $_SERVER, $user, $prefs, $multilinguallib;
+
+        $this->orig_user = $user;
+
+        $prefs['site_language'] = 'en';
+
+
+        /* Need to set those global vars to be able to create and delete pages */
+        $_SERVER['HTTP_HOST'] = 'localhost';
+        $_SERVER['REQUEST_URI'] = 'phpunit';
+        $user = "user_that_can_edit";
+
+        /* Remove all translationof relations */
+        //
+
+    }
+
+    protected function tearDown()
+    {
+        global $tikilib, $user, $testhelpers;
+
+        $testhelpers->remove_all_versions($this->page_containing_plugin);
+
+        unset($_SERVER['HTTP_HOST']);
+        unset($_SERVER['REQUEST_URI']);
+        $user = $this->orig_user;
+    }
 
 	/**
 	 * @dataProvider provider
@@ -62,9 +65,27 @@ class WikiPlugin_TranslationOfTest extends PHPUnit_Framework_TestCase
 		);
 	}
 
-//    function test_create_page_that_contains_a_TranslationOf_plugin_creates_an_object_relation()
-//    {
-//        $this->fail('test incomplete');
-//    }
+    public function test_create_page_that_contains_a_TranslationOf_plugin_generates_an_object_relation()
+    {
+        global $testhelpers, $tikilib, $relationlib;
 
+        // Make sure the page doesn't exist to start with.
+        $tikilib->remove_all_versions($this->page_containing_plugin);
+
+        $link_source_page = "SourcePage";
+        $link_target_page = "TargetPage";
+
+        $relation_id = $relationlib->get_relation_id('tiki.wiki.translationof', 'wiki page', $this->page_containing_plugin, 'wiki page', $link_target_page);
+        $this->assertTrue($relation_id == null,
+            "Before creating a page that contains a TranslationOf plugin, there should NOT have been a 'translationof' relation from $this->page_containing_plugin to $link_target_page.");
+
+        $page_containing_plugin_content = "{TranslationOf(orig_page=\"$link_source_page\" translation_page=\"$link_target_page\") /}";
+        $tikilib_class = get_class($tikilib);
+        $tikilib->create_page($this->page_containing_plugin, 0, $page_containing_plugin_content, time(), "");
+
+        $relation_id = $relationlib->get_relation_id('tiki.wiki.translationof', 'wiki page', $this->page_containing_plugin, 'wiki page', $link_target_page);
+        $this->assertTrue($relation_id != null,
+            "After we created a page that contains a TranslationOf plugin, there SHOULD have been a 'translationof' relation from $this->page_containing_plugin to $link_target_page.");
+
+    }
 }
