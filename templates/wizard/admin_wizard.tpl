@@ -3,7 +3,7 @@
 <h1>{tr}Tiki Admin Wizard{/tr}</h1>
 
 <div class="adminWizardIconleft"><img src="img/icons/large/wizard48x48.png" alt="{tr}Tiki Admin Wizard{/tr}" />
-</div>{tr}The Tiki Wizard Admin help you to quickly configure the major features. Use the Admin Panel to configure the details and features not included in this wizard{/tr}.
+</div>{tr}The Tiki Admin Wizard helps you to quickly configure the major features. Use the Admin Panel to configure the details and features not included in this wizard{/tr}.
 <div class="adminWizardContent">
 <fieldset>
 	<legend>{tr}Admin Wizard{/tr}</legend>

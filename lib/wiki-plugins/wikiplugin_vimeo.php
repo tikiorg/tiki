@@ -93,6 +93,13 @@ function wikiplugin_vimeo_info()
 				'default' => 0,
 				'advanced' => true
 			),
+			'galleryId' => array(
+				'required' => false,
+				'name' => tra('Gallery ID'),
+				'description' => tra('Gallery ID to upload to.'),
+				'filter' => 'int',
+				'advanced' => true
+			),
 		),
 	);
 }
@@ -139,7 +146,7 @@ function wikiplugin_vimeo($data, $params)
 
 		// old perms access to get "special" gallery perms to handle user gals etc
 		$perms = TikiLib::lib('tiki')->get_perm_object(
-			$prefs['vimeo_default_gallery'],
+			!empty($params['galleryId']) ? $params['galleryId'] : $prefs['vimeo_default_gallery'],
 			'file gallery',
 			TikiLib::lib('filegal')->get_file_gallery_info($prefs['vimeo_default_gallery']),
 			false
@@ -192,6 +199,7 @@ $(".vimeo.dialog").click(function () {
 		data: {
 			controller: "vimeo",
 			action: "upload"' .
+			(!empty($params['galleryId']) ? ',galleryId:' . $params['galleryId'] : '') .
 			(!empty($params['fromFieldId']) ? ',fieldId:' . $params['fromFieldId'] : '') .
 			(!empty($params['fromItemId']) ? ',itemId:' . $params['fromItemId'] : '') . '
 		},

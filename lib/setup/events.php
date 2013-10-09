@@ -130,7 +130,11 @@ function tiki_setup_events()
 	}
 
 	if ($prefs['activity_custom_events'] == 'y') {
-		TikiLib::lib('activity')->bindCustomEvents($events);
+		try {
+			TikiLib::lib('activity')->bindCustomEvents($events);
+		} catch (Exception $e) {
+			TikiLib::lib('errorreport')->report($e->getMessage());
+		}
 	}
 
 	// Chain events
