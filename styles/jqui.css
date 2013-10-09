@@ -785,6 +785,14 @@ td.calheadhighlight {
 	padding-left:46px;
 }
 
+/* Comments */
+
+#comment-container ol ol {
+	list-style-image: url("../img/icons/quoteleft.gif");
+}
+
+
+
 /***** End New (unsorted) *****/
 
 /***** border radius definitions                   *****
