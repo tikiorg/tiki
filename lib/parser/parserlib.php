@@ -1583,8 +1583,19 @@ if ( \$('#$id') ) {
 			// Replace colors ~~foreground[,background]:text~~
 			// must be done before []as the description may contain color change
 			$parse_color = 1;
+			$temp = $data;
 			while ($parse_color) { // handle nested colors, parse innermost first
-				$data = preg_replace("/~~([^~:,]+)(,([^~:]+))?:([^~]*)(?!~~[^~:,]+(?:,[^~:]+)?:[^~]*~~)~~/Ums", "<span style=\"color:$1; background-color:$3\">$4</span>", $data, -1, $parse_color);
+				$temp = preg_replace("/~~([^~:,]+)(,([^~:]+))?:([^~]*)(?!~~[^~:,]+(?:,[^~:]+)?:[^~]*~~)~~/Ums", "<span style=\"color:$1; background-color:$3\">$4</span>", $temp, -1, $parse_color);
+
+				if (! empty($temp)) {
+					$data = $temp;
+				}
+			}
+
+			// On large pages, the above preg rule can hit a BACKTRACE LIMIT
+			// In case it does, use the simpler color replacement pattern.
+			if (empty($temp)) {
+				$data = preg_replace("/\~\~([^\:\,]+)(,([^\:]+))?:([^~]*)\~\~/Ums", "<span style=\"color:$1; background:$3\">$4</span>", $data);
 			}
 		}
 
