@@ -123,7 +123,7 @@ function tiki_setup_events()
 		$events->bind("tiki.wiki.save", 'tiki_wiki_save_forwardlink');
 	}
 
-	$events->bind('tiki.save', $defer('tiki', 'plugin_post_save_actions'));
+	$events->bind('tiki.save', $defer('tiki', 'object_post_save'));
 
 	if ($prefs['activity_basic_events'] == 'y') {
 		TikiLib::lib('activity')->bindBasicEvents($events);

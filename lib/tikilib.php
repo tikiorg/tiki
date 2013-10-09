@@ -4955,11 +4955,13 @@ class TikiLib extends TikiDb_Bridge
 	 * A plugin save handler is a function defined on the plugin file
 	 * with the following format: wikiplugin_$pluginName_save()
 	 *
+	 * This function is called from object_post_save. Do not call directly.
+	 *
 	 * @param array $context object type and id
 	 * @param array $data
 	 * @return void
 	 */
-	function plugin_post_save_actions( $context, $data = null )
+	private function plugin_post_save_actions( $context, $data = null )
 	{
 		global $prefs;
 		$parserlib = TikiLib::lib('parser');
