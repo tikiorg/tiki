@@ -940,7 +940,7 @@ class TrackerLib extends TikiLib
 	 * listfields = array(fieldId=>array('type'=>, 'name'=>...), ...)
 	 * allfields is only for performance issue - check if one field is a category
 	 */
-	public function list_items($trackerId, $offset=0, $maxRecords=-1, $sort_mode ='' , $listfields='', $filterfield = '', $filtervalue = '', $status = '', $initial = '', $exactvalue = '', $filter='', $allfields=null, $skip_status_perm_check = false)
+	public function list_items($trackerId, $offset=0, $maxRecords=-1, $sort_mode ='' , $listfields='', $filterfield = '', $filtervalue = '', $status = '', $initial = '', $exactvalue = '', $filter='', $allfields=null, $skip_status_perm_check = false, $skip_category_perm_check = false)
 	{
 		//echo '<pre>FILTERFIELD:'; print_r($filterfield); echo '<br />FILTERVALUE:';print_r($filtervalue); echo '<br />EXACTVALUE:'; print_r($exactvalue); echo '<br />STATUS:'; print_r($status); echo '<br />FILTER:'; print_r($filter); /*echo '<br />LISTFIELDS'; print_r($listfields);*/ echo '</pre>';
 		global $prefs;
@@ -952,6 +952,7 @@ class TrackerLib extends TikiLib
 		$corder = '';
 		$trackerId = (int) $trackerId;
 		$numsort = false;
+		$filterfield = (int) $filterfield;
 
 		$mid = ' WHERE tti.`trackerId` = ? ';
 		$bindvars = array($trackerId);
@@ -1220,7 +1221,7 @@ class TrackerLib extends TikiLib
 			$cat_tables = '';
 		}
 
-		$needToCheckCategPerms = $this->need_to_check_categ_perms($allfields);
+		$needToCheckCategPerms = $skip_category_perm_check ? false : $this->need_to_check_categ_perms($allfields);
 		if ( $needToCheckCategPerms) {
 			$categlib = TikiLib::lib('categ');
 			if ( $jail = $categlib->get_jail() ) {
