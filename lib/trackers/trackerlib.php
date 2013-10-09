@@ -1463,14 +1463,6 @@ class TrackerLib extends TikiLib
 			}
 		}
 
-		$trackersync = false;
-		if (!empty($prefs["user_trackersync_trackers"])) {
-			$trackersync_trackers = preg_split('/\s*,\s*/', $prefs["user_trackersync_trackers"]);
-			if (in_array($trackerId, $trackersync_trackers)) {
-				$trackersync = true;
-			}
-		}
-
 		// If this is a user tracker it needs to be detected right here before actual looping of fields happen
 		$trackersync_user = $user;
 		foreach ($ins_fields["data"] as $i => $array) {
@@ -4315,7 +4307,7 @@ class TrackerLib extends TikiLib
 	{
 		global $prefs;
 		if (!empty($prefs["user_trackersync_trackers"])) {
-			$trackersync_trackers = preg_split('/\s*,\s*/', $prefs["user_trackersync_trackers"]);
+			$trackersync_trackers = unserialize($prefs["user_trackersync_trackers"]);
 			return in_array($trackerId, $trackersync_trackers);
 		}
 
