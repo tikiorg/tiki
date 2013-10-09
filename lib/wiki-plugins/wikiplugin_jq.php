@@ -26,7 +26,12 @@ function wikiplugin_jq_info()
 				'required' => false,
 				'name' => tra('No JavaScript'),
 				'description' => tra('Optional markup for when JavaScript is off'),
-			)
+			),
+			'lang' => array(
+				'required' => false,
+				'name' => tra('Language'),
+				'description' => tra('Language to apply JQuery to'),
+			),
 		)
 	);
 }
@@ -41,6 +46,10 @@ function wikiplugin_jq($data, $params)
 		return $nojquery;
 	}
 	$notonready = isset($notonready) ? $notonready : false;
+
+	if (!empty($lang) && $lang != $prefs['language']) {
+		return;
+	}
 
 	// Need to manually decode greater than and less than (not sure if we want to decode all HTML entities
 	$data = str_replace('&lt;', '<', $data);
