@@ -1201,7 +1201,11 @@ function histlib_helper_setup_diff( $page, $oldver, $newver )
 			$old['data'] = strip_tags(preg_replace($search, $replace, $old['data']), '<h1><h2><h3><h4><b><i><u><span>');
 			$new['data'] = strip_tags(preg_replace($search, $replace, $new['data']), '<h1><h2><h3><h4><b><i><u><span>');
 		}
-		if ($_REQUEST["diff_style"] == "htmldiff") {
+		if ($_REQUEST["diff_style"] == "htmldiff" && $old['is_html'] != 1) {
+
+			$parse_options = array('is_html' => ($old['is_html'] == 1), 'noheadinc' => true, 'suppress_icons' => true, 'noparseplugins' => true);
+			$old["data"] = $tikilib->parse_data($old["data"], $parse_options);
+			$new["data"] = $tikilib->parse_data($new["data"], $parse_options);
 
 			$old['data'] = histlib_strip_irrelevant($old['data']);
 			$new['data'] = histlib_strip_irrelevant($new['data']);
