@@ -109,7 +109,7 @@ function diff2($page1, $page2, $type='sidediff')
 				$words=0;
 			}
 		}
-//echo "<pre>";print_r($z);echo "</pre>";
+
 		if ($type == 'unidiff') {
 			require_once('renderer_unified.php');
 			$renderer = new Text_Diff_Renderer_unified($context);
@@ -124,7 +124,7 @@ function diff2($page1, $page2, $type='sidediff')
 			$renderer = new Text_Diff_Renderer_bytes();
 		} else if ($type == 'htmldiff') {
 			require_once('renderer_htmldiff.php');
-			$renderer = new Text_Diff_Renderer_htmldiff(count($page1));
+			$renderer = new Text_Diff_Renderer_htmldiff($context, $words);
 		} else {
 			return "";
 		}
