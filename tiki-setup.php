@@ -425,8 +425,8 @@ if ($prefs['mobile_feature'] === 'y' && $prefs['mobile_mode'] === 'y') {
 			$headerlib->add_jsfile('vendor/jquery/plugins/chosen/chosen.jquery.js');
 			$headerlib->add_cssfile('vendor/jquery/plugins/chosen/chosen.css');
 			$headerlib->add_css(
-				'.chzn-drop, .chzn-results li { z-index: 100; }
-				.chzn-container { min-width: 120px; }'	// z-index not working, but it should
+				'.chosen-drop, .chosen-results li { z-index: 100; }
+				.chosen-container { min-width: 120px; }'	// z-index not working, but it should
 			);
 		}
 		if ( $prefs['jquery_ui_selectmenu'] == 'y' ) {
