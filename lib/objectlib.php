@@ -73,8 +73,7 @@ class ObjectLib extends TikiLib
 
 					case 'faq':
 						{
-							require_once ('lib/faqs/faqlib.php');
-							$info = $faqlib->get_faq($itemId);
+							$info = TikiLib::lib('faq')->get_faq($itemId);
 
 							$description = $info['description'];
 							$name = $info['title'];
@@ -118,7 +117,7 @@ class ObjectLib extends TikiLib
 						break;
 
 					case 'perspective':
-						$perspective = TikiLib::lib('perspective')->get_perspective($itemId);
+						$info = TikiLib::lib('perspective')->get_perspective($itemId);
 						$name = $info['name'];
 						$href = 'tiki-switch_perspective.php?perspective=' . $itemId;
 						break;
