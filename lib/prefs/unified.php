@@ -240,6 +240,15 @@ function prefs_unified_list()
 			'default' => array(),
 			'filter' => 'word',
 		),
+		'unified_add_to_categ_search' => array(
+			'name' => tra('Use Unified Search in Category Admin'),
+			'description' => tra('Use unfied search to find objects to add to categories. Limits types of objects available to those included in the unified index.'),
+			'type' => 'flag',
+			'default' => 'n',
+			'dependencies' => array(
+				'feature_search',
+			),
+		),
 	);
 }
 
