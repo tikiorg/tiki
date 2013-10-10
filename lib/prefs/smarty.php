@@ -46,6 +46,18 @@ function prefs_smarty_list()
 				'smarty_security',
 			),
 		),
+		'smarty_security_dirs' => array(
+			'name' => tr('Extra smarty directories'),
+			'description' => tr('Make additional dirs available as smarty dirs. May be needed for custom icons (clear temp/cache after changing).'),
+			'warning' => tr('There may be security implications. Make sure you know what you are doing.'),
+			'type' => 'text',
+			'separator' => ',',
+			'perspective' => false,
+			'default' => '',
+			'dependencies' => array(
+				'smarty_security',
+			),
+		),
 		'smarty_compilation' => array(
 			'name' => tra('Smarty Compilation'),
 			'description' => tra('Indicates when the template cache should be refreshed.'),
