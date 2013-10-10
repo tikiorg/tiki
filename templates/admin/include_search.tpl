@@ -98,6 +98,7 @@
 					{preference name=unified_cached_formatters}
 
 					{preference name=unified_trackerfield_keys}
+					{preference name=unified_add_to_categ_search}
 
 					<h4>{tr}Index maintenance{/tr}</h4>
 					<ul>

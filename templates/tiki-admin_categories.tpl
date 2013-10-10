@@ -142,7 +142,7 @@
 				
 		{tab name="{tr}Add objects to category{/tr}"}
 			<h2>{tr}Add objects to category:{/tr} <b>{$categ_name|escape}</b></h2>
-			{if $prefs.feature_search eq 'y'}
+			{if $prefs.feature_search eq 'y' and $prefs.unified_add_to_categ_search eq 'y'}
 				<form id="add_object_form" method="post" action="{service controller=category action=categorize}">
 					<label>Types of object
 						<select id="add_object_type">

@@ -326,7 +326,7 @@ $treeMaker = new BrowseTreeMaker('categ');
 $smarty->assign('tree', $treeMaker->make_tree(0, $treeNodes));
 
 // ---------------------------------------------------
-if ($prefs['feature_search'] !== 'y') {	// no unified search
+if ($prefs['feature_search'] !== 'y' || $prefs['unified_add_to_categ_search'] !== 'y') {	// no unified search
 
 	@ini_set('max_execution_time', 0);	// as pagination is broken and almost every object gets fully loaded on this page
 	@ini_set('memory_limit', -1);		// at least try and avoid WSoD on large sites (TODO better still - see r30064)
@@ -473,7 +473,9 @@ if ($prefs['feature_search'] !== 'y') {	// no unified search
 
 	$objects = $categlib->list_category_objects($_REQUEST["parentId"], $offset, $prefs['maxRecords'], $sort_mode, '', $find, false);
 	$smarty->assign('objects', $objects['data']);
-	$smarty->assign('types', TikiLib::lib('unifiedsearch')->getSupportedTypes());
+	$objectlib = TikiLib::lib('object');
+	$supportedTypes = array_intersect(  TikiLib::lib('unifiedsearch')->getSupportedTypes(), $objectlib::get_supported_types());
+	$smarty->assign('types', $supportedTypes);
 }
 
 ask_ticket('admin-categories');
