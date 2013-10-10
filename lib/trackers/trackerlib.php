@@ -2274,10 +2274,17 @@ class TrackerLib extends TikiLib
 			$this->remove_tracker_item($i);
 		}
 
-		require_once('lib/search/refresh-functions.php');
-		refresh_index('trackeritem', $itemId);
-
 		$tx->commit();
+
+		TikiLib::events()->trigger(
+			'tiki.trackeritem.delete',
+			array(
+				'type' => 'trackeritem',
+				'object' => $itemId,
+				'trackerId' => $trackerId,
+				'user' => $GLOBALS['user'],
+			)
+		);
 
 		return true;
 	}
