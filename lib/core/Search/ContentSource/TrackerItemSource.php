@@ -43,6 +43,10 @@ class Search_ContentSource_TrackerItemSource implements Search_ContentSource_Int
 
 		$item = $this->trklib->get_tracker_item($objectId);
 
+		if (empty($item)) {
+			return false;
+		}
+
 		$itemObject = Tracker_Item::fromInfo($item);
 		$permNeeded = $itemObject->getViewPermission();
 

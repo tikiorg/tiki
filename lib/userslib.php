@@ -6665,7 +6665,6 @@ class UsersLib extends TikiLib
 			if (!empty($chosenGroup)) {
 				$smarty->assign_by_ref('chosenGroup', $chosenGroup);
 				if ($prefs['userTracker'] == 'y') {
-					// this cannot work here as the tracker item needs the user to be registered to be created first - FIXME catch 22
 					global $trklib; include_once('lib/trackers/trackerlib.php');
 					$re = $this->get_group_info(isset($chosenGroup)? $chosenGroup: 'Registered');
 					$fields = $trklib->list_tracker_fields(
@@ -6695,7 +6694,11 @@ class UsersLib extends TikiLib
 						'',
 						'',
 						'',
-						$name
+						$name,
+						'',
+						null,
+						true,
+						true
 					);
 
 					if (isset($items['data'][0]))

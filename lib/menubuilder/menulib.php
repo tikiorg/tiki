@@ -98,7 +98,7 @@ class MenuLib extends TikiLib
 	public function reset_app_menu()
 	{
 		$tiki_sql = file_get_contents('db/tiki.sql');
-		preg_match_all('/^INSERT (?:INTO )?`tiki_menu_options` .*$/mi', $tiki_sql, $matches);
+		preg_match_all('/^(?:INSERT|UPDATE) (?:INTO )?`?tiki_menu_options`? .*$/mi', $tiki_sql, $matches);
 
 		if ($matches && count($matches[0])) {
 			$menuoptions = $this->table('tiki_menu_options');
