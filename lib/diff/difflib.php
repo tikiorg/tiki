@@ -132,20 +132,25 @@ function diff2($page1, $page2, $type='sidediff')
 	}
 	return $html;
 }
+
 /* @brief compute the characters differences between a list of lines
  * @param $orig array list lines in the original version
  * @param $final array the same lines in the final version
+ * @param int $words
+ * @param string $function
+ * @return array
  */
 function diffChar($orig, $final, $words=0, $function='character')
 {
+	$glue = strpos($function, 'inline') !== false ? "<br />" : "\n";
 	if ($words) {
-		preg_match_all("/\w+\s+(?=\w)|\w+|\W/", implode("<br />", $orig), $matches);
+		preg_match_all("/\w+\s+(?=\w)|\w+|\W/", implode($glue, $orig), $matches);
 		$line1 = $matches[0];
-		preg_match_all("/\w+\s+(?=\w)|\w+|\W/", implode("<br />", $final), $matches);
+		preg_match_all("/\w+\s+(?=\w)|\w+|\W/", implode($glue, $final), $matches);
 		$line2 = $matches[0];
 	} else {
-		$line1 = preg_split('//', implode("<br />", $orig), -1, PREG_SPLIT_NO_EMPTY);
-		$line2 = preg_split('//', implode("<br />", $final), -1, PREG_SPLIT_NO_EMPTY);
+		$line1 = preg_split('//', implode($glue, $orig), -1, PREG_SPLIT_NO_EMPTY);
+		$line2 = preg_split('//', implode($glue, $final), -1, PREG_SPLIT_NO_EMPTY);
 	}
 	$z = new Text_Diff($line1, $line2);
 	if ($z->isEmpty())
