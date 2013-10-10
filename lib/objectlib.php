@@ -23,6 +23,7 @@ class ObjectLib extends TikiLib
 	 * Handled object types: "article", "blog", "calendar", "directory", "faq",
 	 * "file", "file gallery", "forum", "image gallery", "poll", "quiz", "tracker", "trackeritem" and "wiki page".
 	 *
+	 * Remember to update get_supported_types if this changes
 	 */
 	function add_object($type, $itemId, $checkHandled = TRUE, $description = NULL, $name = NULL, $href = NULL)
 	{
@@ -180,6 +181,31 @@ class ObjectLib extends TikiLib
 		}
 
 		return $objectId;
+	}
+
+	/**
+	 * Returns an array of object types supported (and therefore can be categorised etc)
+	 *
+	 * @return array
+	 */
+	static function get_supported_types() {
+		return array(
+			'article',
+			'blog',
+			'calendar',
+			'directory',
+			'faq',
+			'file',
+			'file gallery',
+			'forum',
+			'image gallery',
+			'perspective',
+			'poll',
+			'quiz',
+			'tracker',
+			'trackeritem',
+			'wiki page',
+		);
 	}
 
 	function insert_object($type, $itemId, $description = '', $name = '', $href = '')
