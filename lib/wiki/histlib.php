@@ -1203,21 +1203,17 @@ function histlib_helper_setup_diff( $page, $oldver, $newver )
 		}
 		if ($_REQUEST["diff_style"] == "htmldiff") {
 
-			$parse_options = array('is_html' => ($old['is_html'] == 1), 'noheadinc' => true, 'suppress_icons' => true);
-			$old["data"] = $tikilib->parse_data($old["data"], $parse_options);
-			$new["data"] = $tikilib->parse_data($new["data"], $parse_options);
-
 			$old['data'] = histlib_strip_irrelevant($old['data']);
 			$new['data'] = histlib_strip_irrelevant($new['data']);
-		} else {
-			# If the user doesn't have permission to view 
-			# source, strip out all tiki-source-based comments
-			global $tiki_p_wiki_view_source;
-			if ($tiki_p_wiki_view_source != 'y') {
-				$old["data"] = preg_replace(';~tc~(.*?)~/tc~;s', '', $old["data"]);
-				$new["data"] = preg_replace(';~tc~(.*?)~/tc~;s', '', $new["data"]);
-			}
 		}
+		# If the user doesn't have permission to view
+		# source, strip out all tiki-source-based comments
+		global $tiki_p_wiki_view_source;
+		if ($tiki_p_wiki_view_source != 'y') {
+			$old["data"] = preg_replace(';~tc~(.*?)~/tc~;s', '', $old["data"]);
+			$new["data"] = preg_replace(';~tc~(.*?)~/tc~;s', '', $new["data"]);
+		}
+
 		$html = diff2($old["data"], $new["data"], $_REQUEST["diff_style"]);
 		$smarty->assign_by_ref('diffdata', $html);
 	}
