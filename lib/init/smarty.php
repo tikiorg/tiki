@@ -72,7 +72,7 @@ class Tiki_Security_Policy extends Smarty_Security
 		//With phpunit and command line these don't exist yet for some reason
 		if (isset($tikilib) && method_exists($tikilib, "get_preference")) {
 			$functions = array_filter($tikilib->get_preference('smarty_security_functions', array(), true));
-			$modifiers = array_filter($tikilib->get_preference('smarty_security_functions', array(), true));
+			$modifiers = array_filter($tikilib->get_preference('smarty_security_modifiers', array(), true));
 
 			$cdns = preg_split('/\s+/', $tikilib->get_preference('tiki_cdn', ''));
 			$cdns_ssl = preg_split('/\s+/', $tikilib->get_preference('tiki_cdn_ssl', ''));
