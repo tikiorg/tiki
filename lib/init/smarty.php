@@ -72,7 +72,8 @@ class Tiki_Security_Policy extends Smarty_Security
 		//With phpunit and command line these don't exist yet for some reason
 		if (isset($tikilib) && method_exists($tikilib, "get_preference")) {
 			$functions = array_filter($tikilib->get_preference('smarty_security_functions', array(), true));
-			$modifiers = array_filter($tikilib->get_preference('smarty_security_functions', array(), true));
+			$modifiers = array_filter($tikilib->get_preference('smarty_security_modifiers', array(), true));
+			$dirs = array_filter($tikilib->get_preference('smarty_security_dirs', array(), true));
 
 			$cdns = preg_split('/\s+/', $tikilib->get_preference('tiki_cdn', ''));
 			$cdns_ssl = preg_split('/\s+/', $tikilib->get_preference('tiki_cdn_ssl', ''));
@@ -87,6 +88,7 @@ class Tiki_Security_Policy extends Smarty_Security
 
 		$this->php_modifiers = array_merge(array( 'nl2br','escape', 'count', 'addslashes', 'ucfirst', 'ucwords', 'urlencode', 'md5', 'implode', 'explode', 'is_array', 'htmlentities', 'var_dump', 'strip_tags', 'json_encode', 'stristr'), $modifiers);
 		$this->php_functions = array_merge(array('isset', 'empty', 'count', 'sizeof', 'in_array', 'is_array', 'time', 'nl2br', 'tra', 'strlen', 'strstr', 'strtolower', 'basename', 'ereg', 'array_key_exists', 'preg_match', 'json_encode', 'stristr', 'is_numeric', 'array', 'zone_is_empty' ), $functions);
+		$this->secure_dir = array_merge($this->secure_dir, $dirs);
 	}
 }
 

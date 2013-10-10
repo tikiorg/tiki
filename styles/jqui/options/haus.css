@@ -82,3 +82,7 @@ input[type="submit"]:hover,
     line-height: 0;
 }
 
+.tabmark a {
+    font-size: 0.85em;
+}
+

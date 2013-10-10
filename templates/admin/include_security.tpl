@@ -39,6 +39,7 @@
 			<div class="adminoptionboxchild" id="smarty_security_childcontainer">	
 				{preference name=smarty_security_functions}
 				{preference name=smarty_security_modifiers}
+				{preference name=smarty_security_dirs}
 			</div>
 			{preference name=feature_purifier}
 			{preference name=feature_htmlpurifier_output}

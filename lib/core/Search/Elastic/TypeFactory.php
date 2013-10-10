@@ -22,7 +22,7 @@ class Search_Elastic_TypeFactory implements Search_Type_Factory_Interface
 		if (is_numeric($value)) {
 			return new Search_Type_PlainText(gmdate(DateTime::W3C, $value));
 		} else {
-			return new Search_Type_PlainText('');
+			return new Search_Type_PlainText(null);
 		}
 	}
 
