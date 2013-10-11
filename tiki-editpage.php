@@ -1014,7 +1014,7 @@ if ($prefs['wiki_mandatory_edit_summary'] === 'y') {
 	$headerlib->add_jq_onready(
 		'$("input[name=save],input[name=minor]").click(function(){
 			if (!$("#comment").val()) {
-				var s = prompt("'.tra('Describe the change you made').'");
+				var s = prompt("'.tra('Describe the change you made').'", "");
 				if (!s) return false;
 				$("#comment").val(s);
 			}
