@@ -28,7 +28,7 @@ class TWVersion
 
 		// Set everything else, including defaults.
 		$this->version 	= '12.0svn';	// needs to have no spaces for releases
-		$this->star	= 'TBA';
+		$this->star	= 'Altair';
 		$this->releases	= array();
 
 		// Check for Subversion or not
@@ -72,7 +72,8 @@ class TWVersion
 				19=>'Acubens',		// 8.x
 				20=>'Herbig Haro',	// 9.x
 				21=>'Sun',			// 10.x
-				22=>'Vega'			// 11.x
+				22=>'Vega',			// 11.x
+				22=>'Altair'		// 12.x
 		);
 	}
 
@@ -195,6 +196,7 @@ class TWVersion
 				'10.4',
 				'11.0beta',
 				'11.0',
+				'12.0alpha',
 			);
 	}
 

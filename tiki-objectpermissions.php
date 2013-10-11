@@ -475,20 +475,24 @@ foreach ( $groupNames as $groupName ) {
 			prop('disabled',\$(this).is(':checked'));
 	}
 
-	\$(this).off('change.indicator').on( 'change.indicator', function() {	// bind click event
+	\$(this).on( 'change', function(e, parent) {	// bind click event
 
 		if (\$(this).is(':checked')) {
 			\$('input[value=\"'+\$(this).val()+'\"]').			// same...
-				filter('$beneficiaries').
-				prop('checked',true).							// check?
-				prop('disabled',true).							// disable
-				change();
+				filter('$beneficiaries').each(function() {
+					$(this).
+						prop('checked',true).					// check?
+						prop('disabled',true).					// disable
+						trigger('change', [this]);
+				});
 		} else {
 			\$('input[value=\"'+\$(this).val()+'\"]').			// same...
-				filter('$beneficiaries').
-				prop('checked',false).							// check?
-				prop('disabled',false).							// disable
-				change();
+				filter('$beneficiaries').each(function() {
+					$(this).
+						prop('checked',false).					// check?
+						prop('disabled',false).					// disable
+						trigger('change', [this]);
+				});
 		}
 	});
 }
