@@ -1,4 +1,4 @@
-<div class="files-field uninitialized {if $data.replaceFile}replace{/if}" data-galleryid="{$field.galleryId|escape}" data-firstfile="{$field.firstfile|escape}">
+<div class="files-field uninitialized {if $data.replaceFile}replace{/if}" data-galleryid="{$field.galleryId|escape}" data-firstfile="{$field.firstfile|escape}" data-filter="{$field.filter|escape}">
 {if $field.limit}
 	{remarksbox _type=info title="{tr}Attached files limitation{/tr}"}
 		{tr _0=$field.limit}The amount of files that can be attached is limited to <strong>%0</strong>. The latest files will be preserved.{/tr}
@@ -263,8 +263,8 @@ $search.keypress(function (e) {
 		$.getJSON('tiki-searchindex.php', {
 			"filter~type": "file",
 			"filter~content": $(this).val(),
-			"filter~filetype": "{{$field.filter|escape}}",
-			"filter~gallery_id": "{{$field.gallerySearch|escape}}"
+			"filter~filetype": $self.data('filter'),
+			"filter~gallery_id": $self.data('galleryid')
 		}, function (data) {
 			$search.removeAttr('disabled').clearError();
 			$.each(data, function () {
