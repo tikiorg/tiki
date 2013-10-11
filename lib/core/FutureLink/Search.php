@@ -6,23 +6,22 @@
 // $Id$
 
 // File name: Search.php
-// Required path: /lib/core/Feed/ForwardLink
+// Required path: /lib/core/Feed/FutureLink
 //
 // Programmer: Robert Plummer
 //
-// Purpose: Locate, highlight, and scroll to requested ForwardLink destination.  Add superscripted ForwardLink
-//          indicators wherever ForwardLinks exist within displayed page.
+// Purpose: Locate, highlight, and scroll to requested FutureLink destination.  Add superscripted ForwardLink
+//          indicators wherever FutureLinks exist within displayed page.
 
-class Feed_ForwardLink_Search
+class FutureLink_Search
 {
-	var $type = "forwardlink";
+	var $type = "futurelink";
 	var $version = 0.1;
 	var $page = '';
 
 	function __construct($page)
 	{
 		$this->page = $page;
-		parent::__construct($page);
 	}
 
 	static function goToNewestWikiRevision($version, &$phrase)
@@ -43,13 +42,14 @@ class Feed_ForwardLink_Search
         $newestRevision = self::findWikiRevision($phrase);
 
 		if ($newestRevision == false) {
+            //TODO: abstract
 			TikiLib::lib("header")->add_jq_onready(
 <<<JQ
 				$('<div />')
 					.html(
-						tr('This can happen if the page you are linking to has changed since you obtained the forwardlink or if the rights to see it are different from what you have set at the moment.') +
+						tr('This can happen if the page you are linking to has changed since you obtained the futurelink or if the rights to see it are different from what you have set at the moment.') +
 						'&nbsp;&nbsp;' +
-						tr('If you are logged in, try logging out and then recreate the forwardlink.')
+						tr('If you are logged in, try logging out and then recreate the futurelink.')
 					)
 					.dialog({
 						title: tr('Phrase not found'),
@@ -71,12 +71,12 @@ JQ
 	static function findWikiRevision($phrase)
 	{
 		global $tikilib;
-
+        //TODO: abstract
 		$phrase = JisonParser_Phraser_Handler::superSanitize($phrase);
 
         // This query will *ALWAYS* fail if the destination page had been created/edited *PRIOR* to applying the 'Simple Wiki Attributes' profile!
         // Just recreate the destination page after having applied the profile in order to load it with the proper attributes.
-		$query = Tracker_Query::tracker('Wiki Attributes')
+		$query = (new Tracker_Query('Wiki Attributes'))
 			->byName()
 			->filterFieldByValueLike('Value', $phrase)
 			->render(false)
@@ -107,9 +107,9 @@ JQ
 	}
 
 
-	static function restoreForwardLinkPhrasesInWikiPage($items, $phrase = "")
+	static function restoreFutureLinkPhrasesInWikiPage($items, $phrase = "")
 	{
-
+        //TODO: abstract
 		global $tikilib, $headerlib, $smarty;
 		$phrase = JisonParser_Phraser_Handler::superSanitize($phrase);
 		$phrases = array();
@@ -121,32 +121,32 @@ JQ
 		}
 
 		foreach ($items as $i => $item) {
-			if (!empty($item->textlink->href)) {
-				if (JisonParser_Phraser_Handler::hasPhrase($parsed, $item->forwardlink->text) != true) {
+			if (!empty($item->pastlink->href)) {
+				if (JisonParser_Phraser_Handler::hasPhrase($parsed, $item->futurelink->text) != true) {
 					continue;
 				}
 
-				$phrases[] = $item->forwardlink->text;
+				$phrases[] = $item->futurelink->text;
 
 				$i = count($phrases) - 1;
 
-				if (JisonParser_Phraser_Handler::superSanitize($phrase) == JisonParser_Phraser_Handler::superSanitize($item->forwardlink->text)) {
+				if (JisonParser_Phraser_Handler::superSanitize($phrase) == JisonParser_Phraser_Handler::superSanitize($item->futurelink->text)) {
 					$phraseMatchIndex = $i;
 				}
 
-				$item->forwardlink->dateLastUpdated = $tikilib->get_short_datetime($item->forwardlink->dateLastUpdated);
-				$item->forwardlink->dateOriginated = $tikilib->get_short_datetime($item->forwardlink->dateOriginated);
-				$item->textlink->dateLastUpdated = $tikilib->get_short_datetime($item->textlink->dateLastUpdated);
-				$item->textlink->dateOriginated = $tikilib->get_short_datetime($item->textlink->dateOriginated);
+				$item->futurelink->dateLastUpdated = $tikilib->get_short_datetime($item->futurelink->dateLastUpdated);
+				$item->futurelink->dateOriginated = $tikilib->get_short_datetime($item->futurelink->dateOriginated);
+				$item->pastlink->dateLastUpdated = $tikilib->get_short_datetime($item->pastlink->dateLastUpdated);
+				$item->pastlink->dateOriginated = $tikilib->get_short_datetime($item->pastlink->dateOriginated);
 
 				$headerlib->add_jq_onready(
-					"var phrase = $('span.forwardlinkMiddle".$i."')
+					"var phrase = $('span.futurelinkMiddle".$i."')
 						.addClass('ui-state-highlight');
 
 					var phraseLink = $('<a><sup>&</sup></a>')
-						.data('metadataHere', " . json_encode($item->forwardlink) . ")
-						.data('metadataThere', " . json_encode($item->textlink) . ")
-						.addClass('forwardlinkA')
+						.data('metadataHere', " . json_encode($item->futurelink) . ")
+						.data('metadataThere', " . json_encode($item->pastlink) . ")
+						.addClass('futurelinkA')
 						.insertBefore(phrase.first());"
 				);
 			}
@@ -155,15 +155,15 @@ JQ
 		$phraser = new JisonParser_Phraser_Handler();
 		$phraser->setCssWordClasses(
 			array(
-				'start'=>'forwardlinkStart',
-				'middle'=>'forwardlinkMiddle',
-				'end'=>'forwardlinkEnd'
+				'start'=>'futurelinkStart',
+				'middle'=>'futurelinkMiddle',
+				'end'=>'futurelinkEnd'
 			)
 		);
 
 		if ($phraseMatchIndex > -1) {
 			$headerlib->add_jq_onready(
-				"var selection = $('span.forwardlinkStart". $phraseMatchIndex.",span.forwardlinkEnd".$phraseMatchIndex."').realHighlight();
+				"var selection = $('span.futurelinkStart". $phraseMatchIndex.",span.futurelinkEnd".$phraseMatchIndex."').realHighlight();
 
 				$('body,html').animate({
 					scrollTop: selection.first().offset().top - 10
@@ -174,7 +174,7 @@ JQ
 		self::restorePhrasesInWikiPage($phraser, $phrases);
 	}
 
-	static function restoreTextLinkPhrasesInWikiPage($items, $phrase = "")
+	static function restorePastLinkPhrasesInWikiPage($items, $phrase = "")
 	{
 		global $tikilib, $headerlib, $smarty;
 		$phrase = JisonParser_Phraser_Handler::superSanitize($phrase);
@@ -187,32 +187,32 @@ JQ
 		}
 
 		foreach ($items as &$item) {
-			if (!empty($item->forwardlink->href)) {
-				if (JisonParser_Phraser_Handler::hasPhrase($parsed, $item->textlink->text) != true) {
+			if (!empty($item->futurelink->href)) {
+				if (JisonParser_Phraser_Handler::hasPhrase($parsed, $item->pastlink->text) != true) {
 					continue;
 				}
 
-				$phrases[] = $item->textlink->text;
+				$phrases[] = $item->pastlink->text;
 
 				$i = count($phrases) - 1;
 
-				if (JisonParser_Phraser_Handler::superSanitize($phrase) == JisonParser_Phraser_Handler::superSanitize($item->textlink->text)) {
+				if (JisonParser_Phraser_Handler::superSanitize($phrase) == JisonParser_Phraser_Handler::superSanitize($item->pastlink->text)) {
 					$phraseMatchIndex = $i;
 				}
 
-				$item->forwardlink->dateLastUpdated = $tikilib->get_short_datetime($item->forwardlink->dateLastUpdated);
-				$item->forwardlink->dateOriginated = $tikilib->get_short_datetime($item->forwardlink->dateOriginated);
-				$item->textlink->dateLastUpdated = $tikilib->get_short_datetime($item->textlink->dateLastUpdated);
-				$item->textlink->dateOriginated = $tikilib->get_short_datetime($item->textlink->dateOriginated);
+				$item->futurelink->dateLastUpdated = $tikilib->get_short_datetime($item->futurelink->dateLastUpdated);
+				$item->futurelink->dateOriginated = $tikilib->get_short_datetime($item->futurelink->dateOriginated);
+				$item->pastlink->dateLastUpdated = $tikilib->get_short_datetime($item->pastlink->dateLastUpdated);
+				$item->pastlink->dateOriginated = $tikilib->get_short_datetime($item->pastlink->dateOriginated);
 
 				$headerlib->add_jq_onready(
-					"var phrase = $('span.textlinkMiddle".$i."')
+					"var phrase = $('span.pastlinkMiddle".$i."')
 						.addClass('ui-state-highlight');
 
 					var phraseLink = $('<a><sup>&</sup></a>')
-						.data('metadataHere', " . json_encode($item->textlink) . ")
-						.data('metadataThere', " . json_encode($item->forwardlink) . ")
-						.addClass('textlinkA')
+						.data('metadataHere', " . json_encode($item->pastlink) . ")
+						.data('metadataThere', " . json_encode($item->futurelink) . ")
+						.addClass('pastlinkA')
 						.insertAfter(phrase.last());"
 				);
 			}
@@ -222,15 +222,15 @@ JQ
 
 		$phraser->setCssWordClasses(
 			array(
-				'start'=>'textlinkStart',
-				'middle'=>'textlinkMiddle',
-				'end'=>'textlinkEnd'
+				'start'=>'pastlinkStart',
+				'middle'=>'pastlinkMiddle',
+				'end'=>'pastlinkEnd'
 			)
 		);
 
 		if ($phraseMatchIndex > -1) {
 			$headerlib->add_jq_onready(
-				"var selection = $('span.textlinkStart".$phraseMatchIndex.",span.textlinkEnd".$phraseMatchIndex."').realHighlight();
+				"var selection = $('span.pastlinkStart".$phraseMatchIndex.",span.pastlinkEnd".$phraseMatchIndex."').realHighlight();
 
 				$('body,html').animate({
 					scrollTop: selection.first().offset().top - 10
@@ -250,16 +250,17 @@ JQ
 			->add_cssfile('lib/jquery_tiki/tablesorter/style.css')
 			->add_jq_onready(
 <<<JQ
-				$('a.forwardlinkA,a.textlinkA')
+				$('a.futurelinkA,a.pastlinkA')
 					.css('cursor', 'pointer')
 					.click(function() {
 						var me = $(this),
 						metadataHere = me.data('metadataHere'),
 						metadataThere = me.data('metadataThere');
 
-						var table = $('<table class="tablesorter" style="width: 100%;"/>');
-						var thead = $('<thead><tr /></thead>').appendTo(table);
-						var tbody = $('<tbody><tr /></tbody>').appendTo(table);
+						var table = $('<table class="tablesorter" style="width: 100%;"/>'),
+						    thead = $('<thead><tr /></thead>').appendTo(table),
+						    tbody = $('<tbody><tr /></tbody>').appendTo(table),
+						    form;
 
 						function a(head, body) {
 							$('<th />').text(head).appendTo(thead.find('tr'));
@@ -273,7 +274,7 @@ JQ
 						a(tr('Date Updated There'), metadataThere.dateLastUpdated);
 						a(tr('Click below to read Citing blocks'), '<input type="submit" value="' + tr('Read') + '" />');
 
-						var form = $('<form method="POST" />')
+						form = $('<form method="POST" />')
 							.attr('action', metadataThere.href)
 							.append($('<input type="hidden" name="phrase" />').val(metadataThere.text))
 							.append(table)

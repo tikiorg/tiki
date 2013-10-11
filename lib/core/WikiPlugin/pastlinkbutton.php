@@ -5,23 +5,23 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-class WikiPlugin_textlinkbutton extends WikiPlugin_HtmlBase
+class WikiPlugin_pastlinkbutton extends WikiPlugin_HtmlBase
 {
-	public $type = 'textlinkbutton';
+	public $type = 'pastlinkbutton';
 	public $documentation = '';
-	public $prefs = array('feature_wiki', 'wikiplugin_textlink', 'feature_forwardlinkprotocol');
+	public $prefs = array('feature_wiki', 'wikiplugin_pastlink', 'feature_futurelinkprotocol');
 	public $filter = 'rawhtml_unsafe';
 	public $icon = 'img/icons/mime/html.png';
 	public $tags = array( 'basic' );
 	public $htmlTagType = 'span';
 	public $htmlAttributes = array(
-		"class" => "textLinkCreationButton"
+		"class" => "pastLinkCreationButton"
 	);
 
 	function __construct()
 	{
-		$this->name = tra('A TextLink Button');
-		$this->description = tra('A TextLink Button');
+		$this->name = tra('A PastLink Button');
+		$this->description = tra('A PastLink Button');
 		$this->body = tra('NA');
 		$this->params = array();
 	}
@@ -31,7 +31,7 @@ class WikiPlugin_textlinkbutton extends WikiPlugin_HtmlBase
 		global $page;
 
 		if (isset($page)) {
-			return '<a href"#" onclick="return false;">' . tr('Create TextLink') . '</a>';
+			return '<a href"#" onclick="return false;">' . tr('Create PastLink') . '</a>';
 		}
 	}
 }

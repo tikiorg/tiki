@@ -13,7 +13,7 @@ require_once("lib/phpseclib_tiki/tikisecure.php");
 
 global $prefs;
 
-if ($prefs['feature_forwardlinkprotocol'] == "y") {
+if ($prefs['feature_futurelinkprotocol'] == "y") {
 	$requester = gethostbyaddr($_SERVER['REMOTE_ADDR']);
 	
 	if (isset($requester)) {

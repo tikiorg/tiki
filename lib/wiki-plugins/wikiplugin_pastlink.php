@@ -5,23 +5,23 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-// File name: wikiplugin_textlink.php
+// File name: wikiplugin_pastlink.php
 // Required path: /lib/wiki-plugins
 //
 // Programmer: Robert Plummer
 //
-// Purpose: Plugin that instantiates a textlink within a page
+// Purpose: Plugin that instantiates a pastlink within a page
 
-function wikiplugin_textlink_info()
+function wikiplugin_pastlink_info()
 {
 	return array(
-		'name' => tra('TextLink'),
-		'documentation' => 'PluginTextlink',
-		'description' => tra('Links your article to a site using forwardlink protocol'),
-        'keywords' => array('forward', 'forwardlink', 'forwardlink-protocol', 'forwardlinkprotocol', 'protocol'),
-		'prefs' => array( 'feature_wiki', 'wikiplugin_textlink', 'feature_forwardlinkprotocol' ),
+		'name' => tra('PastLink'),
+		'documentation' => 'PluginPastLink',
+		'description' => tra('Links your article to a site using futurelink protocol'),
+        'keywords' => array('forward', 'futurelink', 'futurelink-protocol', 'futurelinkprotocol', 'protocol'),
+		'prefs' => array( 'feature_wiki', 'wikiplugin_pastlink', 'feature_futurelinkprotocol' ),
 		'icon' => 'img/icons/link.png',
-		'body' => tra('Text to link to forwardlink'),
+		'body' => tra('Text to link to futurelink'),
 		'params' => array(			
 			'clipboarddata' => array(
 				'required' => true,
@@ -32,7 +32,7 @@ function wikiplugin_textlink_info()
 	);
 }
 
-function wikiplugin_textlink($data, $params)
+function wikiplugin_pastlink($data, $params)
 {
     global $page;
 	
@@ -42,7 +42,7 @@ function wikiplugin_textlink($data, $params)
 
 	if (empty($clipboarddata)) return $data;
 
-	Feed_TextLink::add($clipboarddata, $page, $data);
+	FutureLink_PastUI::add($clipboarddata, $page, $data);
 
     return $data;
 }

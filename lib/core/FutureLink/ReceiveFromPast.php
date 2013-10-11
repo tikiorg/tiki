@@ -6,15 +6,15 @@
 // $Id$
 
 // File name: Receive.php
-// Required path: /lib/core/Feed/ForwardLink
+// Required path: /lib/core/FutureLink
 //
 // Programmer: Robert Plummer
 //
-// Purpose: Verify that incoming URI is requesting a ForwardLink destination on this site and redirect accordingly.
+// Purpose: Verify that incoming URI is requesting a FutureLink destination on this site and redirect accordingly.
 
-Class Feed_ForwardLink_Receive extends Feed_Abstract
+Class FutureLink_ReceiveFromPast extends Feed_Abstract
 {
-	var $type = "forwardlink";
+	var $type = "futurelink";
 	var $isFileGal = false;
 	var $version = 0.1;
 	var $showFailures = false;
@@ -22,15 +22,16 @@ Class Feed_ForwardLink_Receive extends Feed_Abstract
 
 	static function wikiView($args)
 	{
-		if (isset($_POST['protocol'], $_POST['contribution']) == true && $_POST['protocol'] == 'forwardlink') {
+        //TODO: abstract
+		if (isset($_POST['protocol']) && $_POST['protocol'] == 'futurelink' && isset($_POST['metadata'])) {
 			$me = new self($args['object']);
-			$forwardLink = Feed_ForwardLink::forwardLink($args['object']);
+			$futureLink = new FutureLink_FutureUI($args['object']);
 
 			//here we do the confirmation that another wiki is trying to talk with this one
-			$_POST['contribution'] = json_decode($_POST['contribution']);
-			$_POST['contribution']->origin = $_POST['REMOTE_ADDR'];
+			$metadata = json_decode($_POST['metadata']);
+			$metadata->origin = $_POST['REMOTE_ADDR'];
 
-			if ($forwardLink->addItem($_POST['contribution']) == true) {
+			if ($futureLink->addItem($metadata) == true) {
 				$me->response = 'success';
 			} else {
 				$me->response = 'failure';
@@ -40,9 +41,9 @@ Class Feed_ForwardLink_Receive extends Feed_Abstract
 
 			if (
 				$me->response == 'failure' &&
-				$forwardLink == true
+				$futureLink == true
 			) {
-				$feed->reason = $forwardLink->verifications;
+				$feed->reason = $futureLink->verifications;
 			}
 
 			echo json_encode($feed);

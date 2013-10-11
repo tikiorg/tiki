@@ -85,7 +85,7 @@
 				{preference name=feature_html_pages}	
 				
 				{preference name=feature_htmlfeed}
-				{preference name=feature_forwardlinkprotocol}
+				{preference name=feature_futurelinkprotocol}
 
 				{preference name=feature_jcapture}
 				<div class="adminoptionboxchild" id="feature_jcapture_childcontainer">

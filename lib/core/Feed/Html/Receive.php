@@ -12,7 +12,7 @@ class Feed_Html_Receive extends Feed_Abstract
 {
 	public $type = "html_feed";
 	public $href = "";
-	public $verion = "0.1";
+	public $version = "0.1";
 
 	function __construct($href)
 	{

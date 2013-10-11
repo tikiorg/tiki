@@ -113,7 +113,7 @@ class Tracker_Query
 	 */
 	public static function tracker($tracker)
 	{
-		return new self($tracker);
+		return (new Tracker_Query($tracker));
 	}
 
 	/**

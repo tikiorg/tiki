@@ -5,12 +5,11 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-// File name: Send.php
-// Required path: /lib/core/Feed/ForwardLink
+// Required path: /lib/core/Feed
 //
 // Programmer: Robert Plummer
 //
-// Purpose: The base class reused in ForwardLink, TextLink and others
+// Purpose: The base class reused in FutureLink, PastLink and others
 
 abstract class Feed_Abstract
 {
@@ -101,11 +100,13 @@ abstract class Feed_Abstract
 		$contents = json_encode($contents);
 
 		if ($this->isFileGal == true) {
+            //TODO: abstract
 			FileGallery_File::filename($this->name)
 				->setParam('description', '')
 				->replace($contents);
 
 		} else {
+            //TODO: abstract
 			TikiLib::lib("cache")->cacheItem($this->name, $contents, get_class($this));
 		}
 
@@ -153,14 +154,8 @@ abstract class Feed_Abstract
 		$contents = $this->open();
 
 		if (empty($contents)) {
-			$contents = (object)array(
-				'date' => 0,
-				'type' => $this->type,
-				'entry' => array()
-			);
+			$contents = new Feed_Contents($this->type);
 		}
-
-		$item = (object)$item;
 
 		//this allows us to intercept the contents and do things like check the validity of the content being appended to the contents
 		$this->appendToContents($contents, $item);
@@ -175,12 +170,13 @@ abstract class Feed_Abstract
 		global $tikilib;
 		$contents = $this->getContents();
 
-		$feed = (object)array(
-			'version'=> 	$this->version,
-			'encoding'=> 	$this->encoding, //we get this from the above call to open
-			'feed'=> 		$contents,
-			'origin'=> 		(!empty($origin) ? $origin : $tikilib->tikiUrl() . 'tiki-feed.php'),
-			'type'=>		$this->type
+        //TODO: convert to actual object
+		$feed = new Feed_Container(
+			$this->version,
+			$this->encoding, //we get this from the above call to open
+			$contents,
+            (!empty($origin) ? $origin : $tikilib->tikiUrl() . 'tiki-feed.php'),
+			$this->type
 		);
 
 		return $feed;

@@ -118,9 +118,9 @@ function tiki_setup_events()
 		$events->bind('tiki.file.update', $defer('scorm', 'handle_file_update'));
 	}
 
-	if ($prefs['feature_forwardlinkprotocol'] == 'y') {
-		$events->bind("tiki.wiki.view", 'tiki_wiki_view_forwardlink');
-		$events->bind("tiki.wiki.save", 'tiki_wiki_save_forwardlink');
+	if ($prefs['feature_futurelinkprotocol'] == 'y') {
+		$events->bind("tiki.wiki.view", 'tiki_wiki_view_pastlink');
+		$events->bind("tiki.wiki.save", 'tiki_wiki_save_pastlink');
 	}
 
 	$events->bind('tiki.save', $defer('tiki', 'object_post_save'));
@@ -189,16 +189,16 @@ function tiki_save_refresh_index($args)
 }
 
 
-function tiki_wiki_view_forwardlink($args)
+function tiki_wiki_view_pastlink($args)
 {
-	Feed_ForwardLink_Receive::wikiView($args);
-	Feed_ForwardLink_PageLookup::wikiView($args);
-	Feed_ForwardLink::wikiView($args);
-	Feed_TextLink::wikiView($args);
+	FutureLink_ReceiveFromPast::wikiView($args);
+	FutureLink_PageLookup::wikiView($args);
+	FutureLink_FutureUI::wikiView($args);
+	FutureLink_PastUI::wikiView($args);
 }
 
-function tiki_wiki_save_forwardlink($args)
+function tiki_wiki_save_pastlink($args)
 {
-	Feed_ForwardLink::wikiSave($args);
-	Feed_TextLink::wikiSave($args);
+	FutureLink_FutureUI::wikiSave($args);
+	FutureLink_PastUI::wikiSave($args);
 }

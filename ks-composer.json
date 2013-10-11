@@ -39,8 +39,10 @@
 			"Services": "lib/core/",
 			"Tiki": "lib/core/",
 			"TikiDb": "lib/core/",
+            "Type": "lib/core/",
 			"Report": "lib/core/",
 			"Feed": "lib/core/",
+			"FutureLink": "lib/core/",
 			"FileGallery": "lib/core/",
 			"WikiPlugin": "lib/core/",
 			"Zend": "vendor/zendframework/zendframework1/library"

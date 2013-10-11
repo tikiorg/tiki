@@ -5,17 +5,17 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-// File name: ForwardLink.php
+// File name: FutureUI.php
 // Required path: /lib/core/Feed
 //
 // Programmer: Robert Plummer
 //
-// Purpose: Inject ForwardLink UI components into Wiki editing screens.  Managed page's saved attributes per
-//          ForwardLink UI interaction.  Generates and presents ForwardLink text string to user.
+// Purpose: Inject FutureLink UI components into Wiki editing screens.  Managed page's saved attributes per
+//          FutureLink UI interaction.  Generates and presents FutureLink text string to user.
 
-Class Feed_ForwardLink extends Feed_Abstract
+Class FutureLink_FutureUI extends Feed_Abstract
 {
-	var $type = 'forwardlink';
+	var $type = 'futurelink';
 	var $version = 0.1;
 	var $isFileGal = true;
 	var $debug = false;
@@ -29,19 +29,13 @@ Class Feed_ForwardLink extends Feed_Abstract
 	function __construct($page)
 	{
 		$this->page = $page;
-		$this->metadata = Feed_ForwardLink_Metadata::pageForwardLink($page);
+		$this->metadata = FutureLink_MetadataAssembler::pageFutureLink($page);
 		return parent::__construct($page);
-	}
-
-	static function forwardLink($name)
-	{
-		$me = new Feed_ForwardLink($name);
-		return $me;
 	}
 
 	private function getTimeStamp()
 	{
-		//May be used soon for encrypting forwardlinks
+		//May be used soon for encrypting futurelinks
 		if (isset($_REQUEST['action'], $_REQUEST['hash']) && $_REQUEST['action'] == 'timestamp') {
 			$client = new Zend_Http_Client(TikiLib::tikiUrl() . 'tiki-timestamp.php', array('timeout' => 60));
 			$client->setParameterGet('hash', $_REQUEST['hash']);
@@ -62,7 +56,7 @@ Class Feed_ForwardLink extends Feed_Abstract
 		if ($trackerId < 1 && $perms->admin == 'y') {
 			TikiLib::lib('header')->add_jq_onready(
 <<<JQ
-				var addQuestionsButton = $('<span class="button"><a href="tiki-admin.php?profile=Simple+Wiki+Attributes&repository=&page=profiles&list=List">' + tr('Apply Profile "Simple Wiki Attributes" To Add ForwardLink Questions') + '</a></span>')
+				var addQuestionsButton = $('<span class="button"><a href="tiki-admin.php?profile=Simple+Wiki+Attributes&repository=&page=profiles&list=List">' + tr('Apply Profile "Simple Wiki Attributes" To Add FutureLink Questions') + '</a></span>')
 					.appendTo('#page-bar');
 JQ
 			);
@@ -120,7 +114,7 @@ JQ
 						}
 
 						function genericSingleTrackerItemInterface(type, item) {
-							var addButton = $('<span class="button"><a href="tiki-view_tracker.php?trackerId=' + $trackerId + '">' + tr("Edit ForwardLink " + type) + '</a></span>')
+							var addButton = $('<span class="button"><a href="tiki-view_tracker.php?trackerId=' + $trackerId + '">' + tr("Edit FutureLink " + type) + '</a></span>')
 								.click(function() {
 									var box = $('<table style="width: 100%;" />');
 
@@ -140,7 +134,7 @@ JQ
 											frm.find('span.trackerInput:not(.Value').hide();
 
 											var dialogSettings = {
-												title: tr('Editing ForwardLink ' + type),
+												title: tr('Editing FutureLink ' + type),
 												modal: true,
 												buttons: {}
 											};
@@ -177,7 +171,7 @@ JQ
 									});
 
 									box.options = {
-										title: tr("Edit ForwardLink " + type),
+										title: tr("Edit FutureLink " + type),
 											modal: true,
 											buttons: {}
 									};
@@ -240,7 +234,7 @@ JQ
 		TikiLib::lib('header')
 			->add_jq_onready(
 <<<JQ
-				var addQuestionsButton = $('<span class="button"><a href="tiki-view_tracker.php?trackerId=' + $trackerId + '">' + tr("Edit ForwardLink Questions") + '</a></span>')
+				var addQuestionsButton = $('<span class="button"><a href="tiki-view_tracker.php?trackerId=' + $trackerId + '">' + tr("Edit FutureLink Questions") + '</a></span>')
 					.click(function() {
 						var questionBox = $('<table style="width: 100%;" />');
 						var questions = $questions;
@@ -260,7 +254,7 @@ JQ
 								frm.find('span.trackerInput:not(.Value)').hide();
 
 								var dialogSettings = {
-									title: tr('Editing ForwardLink Question: ') + me.parent().parent().text(),
+									title: tr('Editing FutureLink Question: ') + me.parent().parent().text(),
 									modal: true,
 									buttons: {}
 								};
@@ -297,7 +291,7 @@ JQ
 						});
 
 						var questionBoxOptions = {
-							title: tr("Edit ForwardLink Questions"),
+							title: tr("Edit FutureLink Questions"),
 								modal: true,
 								buttons: {}
 						};
@@ -333,11 +327,11 @@ JQ
 			);
 	}
 
-	function createTextLinksInterface()
+	function createPastLinksInterface()
 	{
 		global $tikilib, $headerlib, $prefs, $user;
 
-		$answers = json_encode($this->metadata->raw['answers']);
+		$answers = json_encode($this->metadata->raw->answers);
 
 		$clipboarddata = json_encode($this->metadata->raw);
 
@@ -347,13 +341,13 @@ JQ
 <<<JQ
 			var answers = $answers,
 
-			createTextLinkButton = $('.textLinkCreationButton');
+			createPastLinkButton = $('.pastlinkCreationButton');
 
-			if (!createTextLinkButton.length) {
-				createTextLinkButton = $('<div />')
+			if (!createPastLinkButton.length) {
+				createPastLinkButton = $('<div />')
 					.appendTo('body')
-					.text(tr('Create TextLink'))
-					.addClass('textLinkCreationButton')
+					.text(tr('Create PastLink'))
+					.addClass('pastlinkCreationButton')
 					.css('position', 'fixed')
 					.css('top', '0px')
 					.css('font-size', '10px')
@@ -362,14 +356,14 @@ JQ
 					.button();
 			}
 
-			createTextLinkButton
+			createPastLinkButton
 				.click(function() {
 					$(this).remove();
 					$.notify(tr('Highlight text to be linked'));
 
 					$(document).bind('mousedown', function() {
 						if (me.data('rangyBusy')) return;
-						$('div.textLinkCreate').remove();
+						$('div.pastlinkCreate').remove();
 						$('embed[id*="ZeroClipboard"]').parent().remove();
 					});
 
@@ -377,9 +371,9 @@ JQ
 						if (me.data('rangyBusy')) return;
 						o.text = $.trim(o.text);
 
-						var textLinkCreate = $('<div>' + tr('Accept TextLink') + '</div>')
+						var pastlinkCreate = $('<div>' + tr('Accept PastLink') + '</div>')
 							.button()
-							.addClass('textLinkCreate')
+							.addClass('pastlinkCreate')
 							.css('position', 'absolute')
 							.css('top', o.y + 'px')
 							.css('left', o.x + 'px')
@@ -502,15 +496,15 @@ JQ
 
 									me.data('rangyBusy', true);
 
-									var textLinkCopy = $('<div></div>');
-									var textLinkCopyButton = $('<div>' + tr('Click HERE to Copy to Clipboard') + '</div>')
+									var pastlinkCopy = $('<div></div>');
+									var pastlinkCopyButton = $('<div>' + tr('Click HERE to Copy to Clipboard') + '</div>')
 										.button()
-										.appendTo(textLinkCopy);
-									var textLinkCopyValue = $('<textarea style="width: 100%; height: 80%;"></textarea>')
+										.appendTo(pastlinkCopy);
+									var pastlinkCopyValue = $('<textarea style="width: 100%; height: 80%;"></textarea>')
 										.val(encodeURI(JSON.stringify(clipboarddata)))
-										.appendTo(textLinkCopy);
+										.appendTo(pastlinkCopy);
 
-									textLinkCopy.dialog({
+									pastlinkCopy.dialog({
 										title: tr("Copy text and Metadata"),
 										modal: true,
 										close: function() {
@@ -520,14 +514,14 @@ JQ
 										draggable: false
 									});
 
-									textLinkCopyValue.select().focus();
+									pastlinkCopyValue.select().focus();
 
 									var clip = new ZeroClipboard.Client();
 									clip.setHandCursor( true );
 
 									clip.addEventListener('complete', function(client, text) {
-										textLinkCreate.remove();
-										textLinkCopy.dialog( "close" );
+										pastlinkCreate.remove();
+										pastlinkCopy.dialog( "close" );
 										clip.hide();
 										me.data('rangyBusy', false);
 
@@ -536,9 +530,9 @@ JQ
 										return false;
 									});
 
-									clip.glue( textLinkCopyButton[0] );
+									clip.glue( pastlinkCopyButton[0] );
 
-									clip.setText(textLinkCopyValue.val());
+									clip.setText(pastlinkCopyValue.val());
 
 
 									$('embed[id*="ZeroClipboard"]').parent().css('z-index', '9999999999');
@@ -567,14 +561,14 @@ JQ
 			->add_jsfile('lib/core/JisonParser/Phraser.js')
 			->add_jsfile('vendor/jquery/md5/md5.js');
 
-		$me = new Feed_ForwardLink($page);
+		$me = new FutureLink_FutureUI($page);
 
-		$phrase = (!empty($_REQUEST['phrase']) ? $_REQUEST['phrase'] : '');
-		Feed_ForwardLink_Search::goToNewestWikiRevision($version, $phrase);
-		Feed_ForwardLink_Search::restoreForwardLinkPhrasesInWikiPage($me->getItems(), $phrase);
+		$phrase = (!empty($_POST['phrase']) ? $_POST['phrase'] : '');
+		FutureLink_Search::goToNewestWikiRevision($version, $phrase);
+        FutureLink_Search::restoreFutureLinkPhrasesInWikiPage($me->getItems(), $phrase);
 
 		$me->editInterfaces();
-		$me->createTextLinksInterface();
+		$me->createPastLinksInterface();
 	}
 
 	static function wikiSave($args)
@@ -589,14 +583,14 @@ JQ
 
 		$body = JisonParser_Phraser_Handler::superSanitize($body);
 
-		Tracker_Query::tracker('Wiki Attributes')
+        (new Tracker_Query('Wiki Attributes'))
 			->byName()
 			->replaceItem(
 				array(
 					'Page' => $page,
 					'Attribute' => $version,
 					'Value' => $body,
-					'Type' => 'ForwardLink Revision'
+					'Type' => 'FutureLink Revision'
 				)
 			);
 	}
@@ -615,7 +609,10 @@ JQ
 			}
 		}
 
-		if (count($exists) == $verificationsCount) return true; //If they were not added, but the reason is that they already exist, we show that they were sent successfully
+        //If they were not added, but the reason is that they already exist, we show that they were sent successfully
+		if (count($exists) == $verificationsCount) {
+            return true;
+        }
 
 		return $this->itemsAdded;
 	}
@@ -637,29 +634,29 @@ JQ
 			//lets remove the new entry if it has already been accepted in the past
 			foreach ($contents->entry as &$existingEntry) {
 				if (
-					$existingEntry->textlink->text == $newEntry->textlink->text &&
-					$existingEntry->textlink->href == $newEntry->textlink->href
+					$existingEntry->pastlink->text == $newEntry->pastlink->text &&
+					$existingEntry->pastlink->href == $newEntry->pastlink->href
 				) {
 					$this->verifications[$i]['reason'][] = 'exists';
 					unset($item->feed->entry[$i]);
 				}
 			}
 
-			$revision = Feed_ForwardLink_Search::findWikiRevision($newEntry->forwardlink->text);
+			$revision = FutureLink_Search::findWikiRevision($newEntry->futurelink->text);
 
 			$this->verifications[$i]["hashBy"] = JisonParser_Phraser_Handler::superSanitize(
-				$newEntry->forwardlink->author .
-				$newEntry->forwardlink->authorInstitution .
-				$newEntry->forwardlink->authorProfession
+				$newEntry->futurelink->author .
+				$newEntry->futurelink->authorInstitution .
+				$newEntry->futurelink->authorProfession
 			);
 
 			$this->verifications[$i]['foundRevision'] = $revision;
 
 			$this->verifications[$i]["metadataHere"] = $this->metadata->raw;
 
-			$this->verifications[$i]["phraseThere"] =JisonParser_Phraser_Handler::superSanitize($newEntry->forwardlink->text);
+			$this->verifications[$i]["phraseThere"] =JisonParser_Phraser_Handler::superSanitize($newEntry->futurelink->text);
 			$this->verifications[$i]["hashHere"] = hash_hmac("md5", $this->verifications[$i]["hashBy"], $this->verifications[$i]["phraseThere"]);
-			$this->verifications[$i]["hashThere"] = $newEntry->forwardlink->hash;
+			$this->verifications[$i]["hashThere"] = $newEntry->futurelink->hash;
 			$this->verifications[$i]['exists'] = JisonParser_Phraser_Handler::hasPhrase(
 				$revision['data'],
 				$this->verifications[$i]["phraseThere"]
@@ -670,7 +667,7 @@ JQ
 				unset($item->feed->entry[$i]);
 			}
 
-			if ($newEntry->forwardlink->websiteTitle != $prefs['browsertitle']) {
+			if ($newEntry->futurelink->websiteTitle != $prefs['browsertitle']) {
 				$this->verifications[$i]['reason'][] = 'title';
 				unset($item->feed->entry[$i]);
 			}
@@ -685,8 +682,8 @@ JQ
 				unset($item->feed->entry[$i]);
 			}
 
-			foreach ($newEntry->forwardlink as $key => $value) {
-				if (isset(Feed_ForwardLink_Metadata::$acceptableKeys[$key]) && Feed_ForwardLink_Metadata::$acceptableKeys[$key] == true) {
+			foreach ($newEntry->futurelink as $key => $value) {
+				if (isset(FutureLink_MetadataAssembler::$acceptableKeys[$key]) && FutureLink_MetadataAssembler::$acceptableKeys[$key] == true) {
 					//all clear
 				} else {
 					$this->verifications[$i]['reason'][] = 'metadata_tampering' . ($this->debug == true ? $key : '');
@@ -694,8 +691,8 @@ JQ
 				}
 			}
 
-			foreach ($newEntry->textlink as $key => $value) {
-				if (isset(Feed_ForwardLink_Metadata::$acceptableKeys[$key]) && Feed_ForwardLink_Metadata::$acceptableKeys[$key] == true) {
+			foreach ($newEntry->pastlink as $key => $value) {
+				if (isset(FutureLink_MetadataAssembler::$acceptableKeys[$key]) && FutureLink_MetadataAssembler::$acceptableKeys[$key] == true) {
 					//all clear
 				} else {
 					$this->verifications[$i]['reason'][] = 'metadata_tampering' . ($this->debug == true ? $key : '');
@@ -708,14 +705,14 @@ JQ
 			$this->itemsAdded = true;
 
 			foreach ($item->feed->entry as &$entry) {
-				Tracker_Query::tracker('Wiki Attributes')
+                (new Tracker_Query('Wiki Attributes'))
 					->byName()
 					->replaceItem(
 						array(
 							'Page' => $this->page,
 							'Attribute' => '',
-							'Value' => $entry->forwardlink->text,
-							'Type' => 'ForwardLink Accepted'
+							'Value' => $entry->futurelink->text,
+							'Type' => 'FutureLink Accepted'
 						)
 					);
 			}
