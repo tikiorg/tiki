@@ -29,6 +29,7 @@ class Search_TypeAnalyzerTest extends PHPUnit_Framework_TestCase
 			'standard_field_object' => array('identifier', 'object', 'foobar'),
 			'standard_field_version' => array('identifier', 'version', 'foobar'),
 			'standard_field_user' => array('identifier', 'user', 'foobar'),
+			'wiki_field' => array('wikitext', 'field_wiki', 'foobar'),
 		);
 	}
 
