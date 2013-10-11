@@ -110,7 +110,7 @@ class UserWizardPreferencesParams extends Wizard
 		
 		$mailCharset = $tikilib->get_user_preference($userwatch, 'mailCharset', $prefs['default_mail_charset']);
 		$smarty->assign('mailCharset', $mailCharset);
-		$user_dbl = $tikilib->get_user_preference($userwatch, 'user_dbl', 'y');
+		$user_dbl = $tikilib->get_user_preference($userwatch, 'user_dbl', 'n');
 		$userbreadCrumb = $tikilib->get_user_preference($userwatch, 'userbreadCrumb', $prefs['site_userbreadCrumb']);
 		$smarty->assign('userbreadCrumb', $userbreadCrumb);
 		$smarty->assign('user_dbl', $user_dbl);
