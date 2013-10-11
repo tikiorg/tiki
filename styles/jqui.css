@@ -834,7 +834,8 @@ a.admbox.off,
 .forum_actions,
 .admintoclevel,
 .post .postbody-title,
-.post .author_info {
+.post .author_info,
+#outerToc-static {
 	border-radius: 4px;
 	-moz-border-radius: 4px;
 	-webkit-border-radius: 4px;
