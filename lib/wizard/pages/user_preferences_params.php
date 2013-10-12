@@ -179,7 +179,7 @@ class UserWizardPreferencesParams extends Wizard
 
 	function onContinue ($homepageUrl) 
 	{
-		global $tikilib, $user, $prefs, $tiki_p_admin;
+		global $tikilib, $user, $prefs, $tiki_p_admin, $userlib, $headerlib;
 
 		$userwatch = $user;
 
