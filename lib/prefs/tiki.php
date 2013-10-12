@@ -46,7 +46,7 @@ function prefs_tiki_list()
 		),
 		'tiki_minify_late_js_files' => array(
 			'name' => tra('Minify Late JavaScript'),
-			'description' => tra('Compress extra JavaScript files used in the page after tiki-setup into a seperate file which may vary from page to page.'),
+			'description' => tra('Compress extra JavaScript files used in the page after tiki-setup into a separate file which may vary from page to page.'),
 			'type' => 'flag',
 			'perspective' => false,
 			'default' => 'n',
