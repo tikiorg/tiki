@@ -26,7 +26,7 @@
 	
 	<h4 id="excluding">{tr}Excluding terms{/tr}</h4>
 	<p>{tr}Add a minus sign ( - ) before a term to indicate that the term <em>must not</em> appear in the results.{/tr}&nbsp;
-	{tr}To reduce a term's value without completely excluding it, <a href="#reducing" title="{tr}Reducing a term's value{/tr}">use a tilde</a>.{/tr}&nbsp;
+	{tr}To reduce a term's value without completely excluding it, <a href="#reducing" title="Reducing a term's value">use a tilde</a>.{/tr}&nbsp;
 	{tr}Example: <strong>-wiki forum</strong> will find objects that do not contain <strong>wiki</strong> but contain <strong>forum</strong>{/tr}
 	</p>
 	
@@ -52,7 +52,7 @@
 	<h4 id="reducing">{tr}Reducing a term's value{/tr}</h4>
 	<p>
 		{tr}Add a tilde ( ~ ) before a term to reduce its value indicate to the ranking of the results.{/tr}&nbsp;
-		{tr}Objects that contain the term will appear lower than other objects (unlike the <a href="#excluding" title="{tr}Excluding terms{/tr}">minus sign</a>	which will completely exclude a term).{/tr}&nbsp;
+		{tr}Objects that contain the term will appear lower than other objects (unlike the <a href="#excluding" title="Excluding terms">minus sign</a>	which will completely exclude a term).{/tr}&nbsp;
 		{tr}Example: <strong>+wiki ~forum</strong> will rate an object with only <strong>wiki</strong> higher that an object with <strong>wiki</strong> and  <strong>forum</strong>.{/tr}
 	</p>
 
