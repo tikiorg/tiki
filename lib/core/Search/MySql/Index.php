@@ -110,7 +110,7 @@ class Search_MySql_Index implements Search_Index_Interface
 
 			if ($scoreField) {
 				$str = $this->db->qstr(implode(' ', $words));
-				$selectFields['score'] = $this->table->expr("MATCH(`$scoreField`) AGAINST ($str)");
+				$selectFields['score'] = $this->table->expr("ROUND(MATCH(`$scoreField`) AGAINST ($str),2)");
 			}
 			$count = $this->table->fetchCount($conditions);
 			$entries = $this->table->fetchAll($selectFields, $conditions, $resultCount, $resultStart, $order);
