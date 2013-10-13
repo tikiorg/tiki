@@ -675,19 +675,10 @@ body.tiki_cms h1 a.pagetitle:hover {border-bottom: none}
 /**** Image Galleries ****/
 
 /***** File Galleries *****/
-/*
-.opaque {
-	color: ;
-	background: ;
-	border: ;
-	padding: ;
-}
 
-.opaque .box-title {
-	padding-bottom: ;
-	border-bottom: ;
+.opaque {
+	border-color: #ccc;
 }
-*/
 
 /***** Trackers *****/
 
