@@ -29,29 +29,76 @@ class Table_Code_Other extends Table_Code_Manager
 		$sr = '';
 		//reset sort button
 		$x = array('reset' => '', 'savereset' => '');
-		$s = $this->s['sort'];
+		$s = parent::$s['sort'];
 		$s = isset($s['type']) && $s['type'] !== true && array_key_exists($s['type'], $x) ? $s : false;
 		if ($s) {
 			if ($s['type'] === 'savereset') {
 				$sr = '.trigger(\'saveSortReset\')';
 			}
-			$jq[] = '$(\'button#' . $s['id'] . '\').click(function(){$(\'table#' . $this->id
+			$jq[] = '$(\'button#' . $s['reset']['id'] . '\').click(function(){$(\'' . parent::$tid
 				.'\').trigger(\'sortReset\')' . $sr . ';});';
-			$html[] = '<button id="' . $s['id'] . '" type="button">' . $s['text'] . '</button>';
+			$html[] = '<button id="' . $s['reset']['id'] . '" type="button">' . $s['reset']['text'] . '</button>';
 		}
 
 		//filters
-		if ($this->filters) {
-			$f = $this->s['filters'];
+		if (parent::$filters) {
+			$f = parent::$s['filters'];
 			//reset button
-			if ($this->s['filters']['type'] === 'reset') {
-				$html[] = '<button id="' . $f['id'] . '" type="button">' . $f['text'] . '</button>';
+			if ($f['type'] === 'reset') {
+				$html[] = '<button id="' . $f['reset']['id'] . '" type="button">' . $f['reset']['text'] . '</button>';
+			}
+
+			//external dropdowns
+			if (is_array($f['external'])) {
+				foreach($f['external'] as $key => $info) {
+					$xopt[] = ' value="">' . tra('Select a value');
+					foreach($info['options'] as $label => $val) {
+						$xopt[] = ' value="' . $val . '">' . $label;
+					}
+					$divr[] = $this->iterate(
+						$xopt,
+						'<select id="' . $f['external'][$key]['id'] . '">',
+						'</select>',
+						'<option',
+						'</option>',
+						''
+					);
+					$jq[] = '$(\'#' . $f['external'][$key]['id'] . '\').on(\'change\', function(){'
+						. $this->nt2 . '$(\'' . parent::$tid . '\')'
+						. '.data(\'ext_filter\', \'' . $f['external'][$key]['id'] . '\').trigger(\'update\');'
+						. $this->nt . '});';
+					if ($f['type'] === 'reset') {
+						$reset[] = 'if ($(\'#' . $f['external'][$key]['id'] . '\').prop(\'selectedIndex\') != 0) {';
+						$reset[] = '	$(\'#' . $f['external'][$key]['id'] . ' option\')[0].selected = true;';
+						$reset[] = '	$(\'#' . $f['external'][$key]['id'] . '\').change();';
+						$reset[] = '}';
+					}
+				}
+				if ($f['type'] === 'reset' && count($reset) > 0) {
+					$jq[] = $this->iterate(
+						$reset,
+						'$(\'#' . $f['reset']['id'] . '\').click(function(){',
+						$this->nt . '});',
+						$this->nt2,
+						'',
+						''
+					);
+				}
+				$html[] = $this->iterate(
+					$divr,
+					'<div style="float:right">',
+					'</div>',
+					'',
+					'',
+					''
+				);
 			}
 		}
 
-		$p = $this->s['pager'];
+
+		$p = parent::$s['pager'];
 		//pager controls
-		if ($this->pager) {
+		if (parent::$pager) {
 			$div = array(
 				'Page: <select class="gotoPage"></select>',
 				'<span class="first arrow">mg</span>',
@@ -77,7 +124,7 @@ class Table_Code_Other extends Table_Code_Manager
 			//put all pager controls in a div
 			$html[] = $this->iterate(
 				$div,
-				'<div id="' . $this->s['pagercontrols']['id'] . '" class="tablesorter-pager">',
+				'<div id="' . $p['controls']['id'] . '" class="tablesorter-pager">',
 				'</div>',
 				'',
 				'',
@@ -85,39 +132,20 @@ class Table_Code_Other extends Table_Code_Manager
 			);
 		}
 
-		//TODO - doesn't work with ajax. Don't set tables to 'disable' until fixed. Bug #353 reported at https://github.com/Mottie/tablesorter/issues
-		//disable pager button
-/*		if (isset($p['type']) && $p['type'] == 'disable' && $p['type'] !== true) {
-			$b = array(
-				'var mode = /Disable/.test( $(this).text() );',
-				'$(\'table#' . $this->id . '\').trigger( (mode ? \'disable\' : \'enable\') + \'.pager\');',
-				'$(this).text( (mode ? \'' . $p['text']['enable'] . '\' : \'' . $p['text']['disable'] . '\'));',
-			);
-			$jq[] = $this->iterate($b, '$(\'button#' . $p['id'] . '\').click(function(){',
-				$this->nt . '});', $this->nt2, '', '');
-
-			$b2 = array(
-				'$(\'button#' . $p['id'] . '\').text(\'' . $p['text']['disable'] . '\');'
-			);
-			$jq[] = $this->iterate($b2, '$(\'table#' . $this->id . '\').bind(\'paperChange\', function(){',
-				$this->nt . '});', $this->nt2, '', '');
-			$html[] = '<button id="' . $p['id'] . '" type="button">Disable Pager</button>';
-		}*/
-
 		//add any reset/disable buttons just above the table
 		if (isset($html)) {
 			$allhtml = $this->iterate($html, '', '', '', '', '');
-			array_unshift($jq, '$(\'table#' . $this->id . '\').before(\'' . $allhtml . '\'' . $this->nt . ');');
+			array_unshift($jq, '$(\'' . parent::$tid . '\').before(\'' . $allhtml . '\'' . $this->nt . ');');
 		}
 
 		//bind to ajax event to show processing
-		if ($this->ajax) {
+		if (parent::$ajax) {
 			$bind = array(
 				'if (e.type === \'ajaxSend\') {',
-				'	$(\'table#' . $this->id . ' tbody\').css(\'opacity\', 0.5);',
+				'	$(\'' . parent::$tid . ' tbody\').css(\'opacity\', 0.5);',
 				'}',
 				'if (e.type === \'ajaxComplete\') {',
-				'	$(\'table#' . $this->id . ' tbody\').css(\'opacity\', 1);',
+				'	$(\'' . parent::$tid . ' tbody\').css(\'opacity\', 1);',
 				'}'
 			);
 			$jq[] = $this->iterate(

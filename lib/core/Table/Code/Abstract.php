@@ -22,12 +22,13 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
  */
 class Table_Code_Abstract
 {
-	public $id;
-	protected $s;
-	protected $filters;
-	protected $sort;
-	protected $pager;
-	protected $ajax;
+	public static $id;
+	public static $tid;
+	protected static $s;
+	protected static $filters;
+	protected static $sort;
+	protected static $pager;
+	protected static $ajax;
 	public static $code = '';
 	protected static $level1;
 	protected static $level2;
@@ -46,17 +47,21 @@ class Table_Code_Abstract
 	 */
 	public function __construct($settings)
 	{
-		global $prefs;
-		$this->s = $settings;
-		$this->id = $settings['id'];
+		$class = get_class($this);
+		if ($class == 'Table_Code_Manager') {
+			self::$s = $settings;
+			self::$id = $settings['id'];
+			self::$tid = 'table#' . $settings['id'];
 
-		//overall sort on unless sort type set to false
-		$this->sort = isset($settings['sort']['type']) && $settings['sort']['type'] === false ? false : true;
+			//overall sort on unless sort type set to false
+			self::$sort = isset($settings['sort']['type']) && $settings['sort']['type'] === false ? false : true;
 
-		//filter, pager and ajax off unless type is set and is not false
-		$this->filters = empty($settings['filters']['type']) ? false : true;
-		$this->pager = empty($settings['pager']['type']) ? false : true;
-		$this->ajax = empty($settings['ajax']) || $prefs['feature_ajax'] === 'n'? false : true;
+			//filter, pager and ajax off unless type is set and is not false
+			self::$filters = empty($settings['filters']['type']) ? false : true;
+			self::$pager = empty($settings['pager']['type']) ? false : true;
+			global $prefs;
+			self::$ajax = empty($settings['ajax']) || $prefs['feature_ajax'] === 'n'? false : true;
+		}
 	}
 
 	/**

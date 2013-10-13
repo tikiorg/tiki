@@ -83,10 +83,7 @@ class Table_Settings_Adminusers extends Table_Settings_Abstract
 					'type' => false,		//no filter since $userlib->get_users doesn't have it
 				),
 				4 => array(					//last login
-					'type' => 'dropdown',
-					'options' => array(
-						'Never logged in' => 'filterNeverLoggedIn=on',
-					),
+					'type' => false,
 				),
 				5 => array(					//registered
 					'type' => false,		//no filter since $userlib->get_users doesn't have it
@@ -96,13 +93,19 @@ class Table_Settings_Adminusers extends Table_Settings_Abstract
 					'ajax' => 'filterGroup',
 				),
 				7 => array(					//actions
+					'type' => false,
+				),
+			),
+			'external' => array(
+				0 => array(
 					'type' => 'dropdown',
 					'options' => array(
 						'Email not confirmed' => 'filterEmailNotConfirmed=on',
 						'User not validated' => 'filterNotValidated=on',
+						'Never logged in' => 'filterNeverLoggedIn=on',
 					),
 				),
-			),
+			)
 		),
 		'pager' => array(
 			'type' => true,

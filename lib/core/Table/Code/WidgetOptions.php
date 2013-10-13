@@ -28,39 +28,40 @@ class Table_Code_WidgetOptions extends Table_Code_Manager
 		$wo[] = 'stickyHeaders : \'tablesorter-stickyHeader\'';
 
 		//sort
-		if ($this->sort) {
+		if (parent::$sort) {
 			//row grouping
-			if (!isset($this->s['sort']['group']) || $this->s['sort']['group'] !== false) {
+			if (!isset(parent::$s['sort']['group']) || parent::$s['sort']['group'] !== false) {
 				$wo[] = 'group_collapsible : true';
 				$wo[] = 'group_count : \' ({num})\'';
 			}
 			//saveSort
-			if (isset($this->s['sort']['type']) && strpos($this->s['sort']['type'], 'save') !== false) {
+			if (isset(parent::$s['sort']['type']) && strpos(parent::$s['sort']['type'], 'save') !== false) {
 				$wo[] = 'saveSort : true';
 			}
 		}
 
 		//filter
-		if ($this->filters) {
+		if (parent::$filters) {
 			$wo[] = 'filter_cssFilter : \'tablesorter-filter\'';
+			$wo[] = 'filter_filteredRow : \'filtered\'';
 			$wo[] = 'filter_searchDelay : 300';
 			//server side filtering
-			if (isset($this->s['serverside']) && $this->s['serverside'] === true) {
+			if (isset(parent::$s['serverside']) && parent::$s['serverside'] === true) {
 				$wo[] = 'filter_serversideFiltering : true';
 			}
 			//hide filters
-			if (isset($this->s['filters']['hide']) && $this->s['filters']['hide'] === true) {
+			if (isset(parent::$s['filters']['hide']) && parent::$s['filters']['hide'] === true) {
 				$wo[] = 'filter_hideFilters : true';
 			}
 			//filter reset
-			if (isset($this->s['filters']['type']) && $this->s['filters']['type'] === 'reset') {
-				$wo[] = 'filter_reset : \'button#' . $this->s['filters']['id'] . '\'';
+			if (isset(parent::$s['filters']['type']) && parent::$s['filters']['type'] === 'reset') {
+				$wo[] = 'filter_reset : \'button#' . parent::$s['filters']['reset']['id'] . '\'';
 			}
 			//filter_functions and filter_formatter
-			if (isset($this->s['filters']['columns']) && is_array($this->s['filters']['columns'])) {
+			if (isset(parent::$s['filters']['columns']) && is_array(parent::$s['filters']['columns'])) {
 				$ffunc = '';
 				$fform = '';
-				foreach ($this->s['filters']['columns'] as $col => $info) {
+				foreach (parent::$s['filters']['columns'] as $col => $info) {
 					switch($info['type']) {
 						case 'dropdown' :
 							$o = '';
