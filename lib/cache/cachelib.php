@@ -226,14 +226,14 @@ class Cachelib
 			// Next case is needed to clean also cached data created through mod PluginR
 			if ((isset($prefs['wikiplugin_rr']) && $prefs['wikiplugin_rr'] == 'y') ||
 				(isset($prefs['wikiplugin_r']) && $prefs['wikiplugin_r'] == 'y')) {
-				$extracheck = '.RData';
+				$extracheck = 'RData';
 			} else {
 				$extracheck = '';
 			}
 			while (false !== ($file = readdir($dir))) {
 				if (
 							// .RData case needed to clean also cached data created through mod PluginR
-							( substr($file, 0, 1) == "." &&	$file != $extracheck ) or 
+							( substr($file, 0, 1) == "." &&	substr($file, -5) != $extracheck ) or
 							$file == 'CVS' or 
 							$file == '.svn' or 
 							$file == "index.php" or 
