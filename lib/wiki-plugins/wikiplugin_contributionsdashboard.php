@@ -35,7 +35,7 @@ function wikiplugin_contributionsdashboard_info()
 			'types' => array(
 				'required' => true,
 				'name' => tra('Dashboard Types'),
-				'description' => tra('The type of charts that will be rendered seperated by comma'),
+				'description' => tra('The type of charts that will be rendered separated by comma'),
 				'filter' => 'striptags',
 				'default' => 'trackeritems',
 			),

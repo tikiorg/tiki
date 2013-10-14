@@ -1178,7 +1178,7 @@ class TrackerLib extends TikiLib
 						$bindvars[] = $ev;
 					} else {
 						$mid.= " AND ttif$i.`value`=? ";
-						$bindvars[] = !isset($ev)? $fv: $ev;
+						$bindvars[] = empty($ev)? $fv: $ev;
 					}
 
 				} elseif ( $fv ) {

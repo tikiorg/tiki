@@ -140,7 +140,7 @@ class Search_Elastic_Index implements Search_Index_Interface
 				} else {
 					$data['_highlight'] = '';
 				}
-
+				$data['score'] = round($entry->_score, 2);
 				return $data;
 			}, $hits->hits
 		);

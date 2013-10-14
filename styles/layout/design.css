@@ -2122,7 +2122,7 @@ ul.freetagged li {
 .cluetip-close {
 	float: right;
 	margin: 0;
-	padding-right: .1em;
+	padding: .5em .2em;
 	background: transparent;
 	color: #900;
 }
@@ -2154,6 +2154,9 @@ ul.freetagged li {
 	border: none;
 }
 
+.ui-cluetip-header {
+    font-size: 1.4em;
+}
 /* Cluetip - JQuery tooltips
    =cluetipClass: 'default' */
 
@@ -3622,11 +3625,12 @@ p.norecords {
 }
 
 .opaque .box-title {
-	padding: 3px 3px 0 3px;
+	padding: .5em .5em .2em;
+	font-weight: bold;
 }
 
 .opaque .box-data {
-	padding: 0 3px 3px 3px;
+	padding: .2em .5em;
 }
 
 .thumbinfosothers {

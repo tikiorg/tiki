@@ -32,8 +32,8 @@
 			(<span class="objecttype">{tr}{$result.object_type|escape}{/tr}</span>)
 		{/if}
 
-		{if $prefs.feature_search_show_pertinence eq 'y' && !empty($result.relevance)}
-			<span class="itemrelevance">({tr}Relevance:{/tr} {$result.relevance|escape})</span>
+		{if $prefs.feature_search_show_pertinence eq 'y' and !empty($result.score)}
+			<span class="itemrelevance">({tr}Relevance:{/tr} {$result.score|escape})</span>
 		{/if}
 
 		{if $prefs.feature_search_show_visit_count eq 'y' and $result.visits neq null}

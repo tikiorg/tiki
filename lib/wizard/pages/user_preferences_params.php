@@ -37,39 +37,7 @@ class UserWizardPreferencesParams extends Wizard
 			return false;
 		}
 
-		if (isset($_REQUEST['userId']) || isset($_REQUEST['view_user'])) {
-			if (empty($_REQUEST['view_user'])) $userwatch = $tikilib->get_user_login($_REQUEST['userId']);
-			else $userwatch = $_REQUEST['view_user'];
-			if ($userwatch != $user) {
-				if ($userwatch === false) {
-					/*
-					$smarty->assign('msg', tra("Unknown user"));
-					$smarty->display("error.tpl");
-					*/
-					//die;
-					return false;
-				} else {
-					$access->check_permission('tiki_p_admin_users');
-				}
-			}
-		} elseif (isset($_REQUEST["view_user"])) {
-			if ($_REQUEST["view_user"] != $user) {
-				$access->check_permission('tiki_p_admin_users');		// Permission should be checked differently. check_permission will terminate processing, I believe. Arild
-				$userwatch = $_REQUEST["view_user"];
-				if (!$userlib->user_exists($userwatch)) {
-					/*
-					$smarty->assign('msg', tra("Unknown user"));
-					$smarty->display("error.tpl");
-					*/
-					//die;
-					return false;
-				}
-			} else {
-				$userwatch = $user;
-			}
-		} else {
-			$userwatch = $user;
-		}
+		$userwatch = $user;
 
 		$smarty->assign('userwatch', $userwatch);
 		$smarty->assign('show_mouseover_user_info', isset($prefs['show_mouseover_user_info']) ? $prefs['show_mouseover_user_info'] : $prefs['feature_community_mouseover']);
@@ -179,9 +147,10 @@ class UserWizardPreferencesParams extends Wizard
 
 	function onContinue ($homepageUrl) 
 	{
-		global $tikilib, $user, $prefs, $tiki_p_admin;
+		global $tikilib, $user, $prefs, $tiki_p_admin, $tikidomain;
 
 		$userwatch = $user;
+		$headerlib = TikiLib::lib('header');
 
 		// Run the parent first
 		parent::onContinue($homepageUrl);
@@ -334,7 +303,7 @@ class UserWizardPreferencesParams extends Wizard
 		}
 		if (isset($_REQUEST['tasks_maxRecords'])) $tikilib->set_user_preference($userwatch, 'tasks_maxRecords', $_REQUEST['tasks_maxRecords']);
 		if ($prefs['feature_intertiki'] == 'y' && !empty($prefs['feature_intertiki_mymaster']) && $prefs['feature_intertiki_import_preferences'] == 'y') { //send to the master
-			$userlib->interSendUserInfo($prefs['interlist'][$prefs['feature_intertiki_mymaster']], $userwatch);
+			TikiLib::lib('user')->interSendUserInfo($prefs['interlist'][$prefs['feature_intertiki_mymaster']], $userwatch);
 		}
 		
 

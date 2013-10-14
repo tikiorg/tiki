@@ -202,7 +202,7 @@ class Search_Lucene_Index implements Search_Index_Interface
 
 		$result = array();
 		foreach ($hits as $key => $hit) {
-			$res = array_merge($this->extractValues($hit->getDocument()), array('relevance' => round($hit->score, 2)));
+			$res = array_merge($this->extractValues($hit->getDocument()), array('score' => round($hit->score * 100)));
 
 			$found = false;
 			if (!empty($res['object_id']) && !empty($res['object_type'])) {	// filter out duplicates here

@@ -173,9 +173,9 @@
 	<div class="nohighlight simplebox" style="width:300px">
 		 {tr}Found{/tr} "{$words|escape}" {tr}in{/tr} 
 			{if $where_forum}
-				{tr}{$where|escape}:{/tr} {$where_forum|escape}
+				"{tr}{$where|escape}:{/tr}" {$where_forum|escape}
 			{else}
-				{$cant} {tr}{$where_label|escape}{/tr}
+				{$cant} "{tr}{$where_label|escape}"{/tr}
 			{/if}
 	</div><!--nohighlight-->
 {/if}
