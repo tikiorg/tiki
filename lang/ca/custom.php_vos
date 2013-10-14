@@ -85,6 +85,13 @@ $lang_custom = array(
 "Read more" => "Llegiu més",
 //"Try another code" => "Prova amb un altre codi",
 "Try another code" => "Proveu amb un altre codi",
+"You do not have permission to duplicate this gallery" => "No teniu permís per duplicar aquesta galeria",
+"You do not have permission to edit this banner" => "No teniu permís per editar aquest banner",
+"Please create a category first" => "Si us plau, primer creeu una categoria",
+"You do not have permission to edit this article" => "No teniu permís per editar aquest article",
+"You must specify a directory" => "Heu d'especificar un directori",
+"You must set a home file gallery" => "Heu de configurar una galeria d'arxius d'inici",
+"You must supply all the information, including title and year." => "Heu de facilitar tota la informació, incloent títol i any.",
 );
 $lang = $lang_custom + $lang;
 
