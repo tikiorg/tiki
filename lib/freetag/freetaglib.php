@@ -328,6 +328,8 @@ class FreetagLib extends ObjectLib
 				if (!empty($objectId) && !in_array($post_info['blogId'],$objectIds) ) {
 				} elseif ($tiki_p_admin == 'y' || $this->user_has_perm_on_object($user, $post_info['blogId'], 'blog', 'tiki_p_read_blog')) {
 					$ok = true;
+					$row['parent_object_id'] = $post_info['blogId'];
+					$row['parent_object_type'] = 'blog';
 				}
 			} elseif ($tiki_p_admin == 'y') {
                                 $ok = true;
