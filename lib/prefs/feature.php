@@ -274,13 +274,13 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_search' => array(
 			'name' => tra('Unified Search'),
-			'description' => tra('Enables searching for content on the website, using Tiki-managed index.'),
+			'description' => tra("Also known as 'Advanced Search'. Enables searching for content on the website, using Tiki-managed index."),
 			'help' => 'Search',
 			'type' => 'flag',
 			'default' => 'n',
 			'tags' => array('advanced'),
 			'admin' => 'search',
-			'warning' => tra("Unified Search requires more server processing ressources, and that you properly set the server permissions. Also, it's recommended to set a cron job to periodically rebuild the search index."),	
+			'warning' => tra("Unified Search requires more server processing resources, and that you properly set the server permissions. Also, it's recommended to set a cron job to periodically rebuild the search index."),
 			'module' => 'search',
 			'view' => 'tiki-searchindex.php',
 			'permission' => array(
@@ -1429,7 +1429,7 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_search_fulltext' => array(
 			'name' => tra('MySQL Full-Text Search'),
-			'description' => tra('This search uses the MySQL Full-Text Search feature. The indexation is continuously updated.'),
+			'description' => tra("Also known as 'Basic Search'. This search uses the MySQL Full-Text Search feature. The indexation is continuously updated."),
 			'warning' => tra("InnoDB doesn't support Full-Text Search until 5.6, so if this is your case, use Unified Search."),
 			'type' => 'flag',
 			'help' => 'Search',
