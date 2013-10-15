@@ -674,6 +674,7 @@ TikiLib::events()->trigger(
 );
 
 $smarty->assign('info', $info);
+$smarty->assign('mid', 'tiki-show_page.tpl');
 
 $smarty->display('tiki-show_page.tpl');
 
