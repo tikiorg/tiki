@@ -4175,6 +4175,8 @@ form.simple label.error {
 
 .tracker-item-files li {
 	clear: right;
+	padding-right: 1em;
+	font-size: 0.9em;
 }
 
 .tracker-item-files label {
