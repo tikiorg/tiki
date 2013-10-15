@@ -10,11 +10,13 @@ $access->check_script($_SERVER['SCRIPT_NAME'], basename(__FILE__));
 
 if (is_readable('.svn')) {
 	$svn = array();
-	$fp = fopen('.svn/entries', 'r');
-	for ($i = 0; 10 > $i && $line = fgets($fp, 80); ++$i) {
-		$svn[] = $line;
+	if (is_readable('.svn/entries')) {
+		$fp = fopen('.svn/entries', 'r');
+		for ($i = 0; 10 > $i && $line = fgets($fp, 80); ++$i) {
+			$svn[] = $line;
+		}
+		fclose($fp);
 	}
-	fclose($fp);
 
 	if (count($svn) > 2) {
 		// Standard SVN client
