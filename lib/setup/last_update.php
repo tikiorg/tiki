@@ -8,7 +8,7 @@
 //this script may only be included - so its better to die if called directly.
 $access->check_script($_SERVER['SCRIPT_NAME'], basename(__FILE__));
 
-if (is_readable('.svn/entries')) {
+if (is_readable('.svn')) {
 	$svn = array();
 	$fp = fopen('.svn/entries', 'r');
 	for ($i = 0; 10 > $i && $line = fgets($fp, 80); ++$i) {
