@@ -126,7 +126,7 @@
 		{/section}
 		</h2>
 		<input type="hidden" name="custom_lang" value="{$custom_lang|escape}" />
-		<table class="normal">
+		<table class="table normal">
 		<tr><th>{tr}English{/tr}</th><th>{tr}Translation{/tr}</th></tr>
 		{if !empty($custom_translation)}
 			{foreach from=$custom_translation key=cfrom item=cto}

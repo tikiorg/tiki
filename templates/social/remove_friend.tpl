@@ -5,7 +5,7 @@
 		<p>{tr _0=$friend|userlink}Do you really want to remove %0?{/tr}</p>
 		<div class="submit">
 			<input type="hidden" name="friend" value="{$friend|escape}"/>
-			<input type="submit" value="{tr}Confirm{/tr}"/>
+			<input type="submit" class="btn btn-default" value="{tr}Confirm{/tr}"/>
 		</div>
 	</form>
 {/if}

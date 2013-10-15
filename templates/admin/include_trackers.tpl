@@ -105,7 +105,7 @@
       </form>
 {/if}
       {cycle values="odd,even" print=false}
-      <table class="normal">
+      <table class="table normal">
         <tr>
           <th>
             <a href="tiki-admin.php?page=trackers&amp;sort_mode=user_{if $sort_mode eq 'attId'}asc{else}desc{/if}">{tr}ID{/tr}</a>

@@ -54,7 +54,7 @@
 	{/if}
 	{if $data}
 		<h3>{tr}Response Information{/tr}</h3>
-		<table class="normal">
+		<table class="table normal">
 			<tr>
 				<th>{tr}OIntegrate Version{/tr}</th>
 				<td>{if $response->version}{$response->version|escape}{else}<em>{tr}Not supported{/tr}</em>{/if}

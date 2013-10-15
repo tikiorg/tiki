@@ -118,7 +118,7 @@
 				{/if}
 			</form>
 
-			<table class="normal">
+			<table class="table normal">
 				<tr>
 					<th>{tr}Created{/tr}</th>
 					<th>{tr}Title{/tr}</th>

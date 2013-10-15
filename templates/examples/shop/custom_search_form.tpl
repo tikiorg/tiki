@@ -1,7 +1,7 @@
 {* Currently this needs to be copy and pasted into a wiki page and used as the wiki template for a custom_search plugin *}
 {literal}
 <div class="clearfix cs_topbar">
-	<b>Any text:</b> {input _filter="content" type="text" class="cs_content_input"} {input type="Submit" value="Search"}
+	<b>Any text:</b> {input _filter="content" type="text" class="cs_content_input"} {input type="Submit" class="btn btn-default" value="Search"}
 	Sort by:
 	<select class="cs_sortby" name="cs_sortby">
 		<option value=""></option>

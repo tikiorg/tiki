@@ -114,7 +114,7 @@ pre { padding : 10px; border: 1px solid #666666; background-color: #efefef; }
 .atime, .ctime, .mtime, .date { background-color: #dedede; } 
 .size, .rev, .tag { background-color: #ededed; } 
 </style><script type="text/javascript" src="lib/tiki-js.js"></script></head>
-<body><form action="parse_tiki.php" method="post"><input type="submit" name="action" value="process" /></form>
+<body><form action="parse_tiki.php" method="post"><input type="submit" name="action" class="btn btn-default" value="process" /></form>
 <a href="<?php echo $logfile; ?>">raw report</a>
 <pre>
 <?php

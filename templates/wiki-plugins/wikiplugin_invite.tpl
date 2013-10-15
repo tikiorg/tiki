@@ -39,7 +39,7 @@
 </tr>
 <tr>
 	<td>&nbsp;</td>
-	<td><input type="submit" name="invite" value="{tr}Invite{/tr}"></td>
+	<td><input type="submit" class="btn btn-default" name="invite" value="{tr}Invite{/tr}"></td>
 </tr>
 </table>
 </form>

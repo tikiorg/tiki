@@ -98,7 +98,7 @@ if (isset($_SESSION['accessible'])) {
 							<form method="post" action="' . $_SERVER['REQUEST_URI'] . '">
 								<p><label for="dbuser">Database username</label>: <input type="text" id="dbuser" name="dbuser" /></p>
 								<p><label for="dbpass">Database password</label>: <input type="password" id="dbpass" name="dbpass" /></p>
-								<p><input type="submit" value=" Validate and Continue " /></p>
+								<p><input type="submit" class="btn btn-default" value=" Validate and Continue " /></p>
 							</form>
 							<p>&nbsp;</p>';
 	createPage($title, $content);

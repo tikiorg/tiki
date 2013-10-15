@@ -120,7 +120,7 @@ JQ
 		~np~
 		<form id="newDraw$drawIndex" method="get" action="tiki-edit_draw.php">
 			<p>
-				<input type="submit" name="label" value="$label" class="newSvgButton" />$in
+				<input type="submit" class="btn btn-default" name="label" value="$label" class="newSvgButton" />$in
 				<select name="galleryId">
 					$galHtml
 				</select>

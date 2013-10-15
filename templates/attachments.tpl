@@ -27,7 +27,7 @@
 		{else}
 			{$offsetparam = ''}
 		{/if}
-		<table class="normal">
+		<table class="table normal">
 			<caption> {tr}List of attached files{/tr} </caption>
 			<tr>
 				<th>

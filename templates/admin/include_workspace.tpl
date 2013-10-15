@@ -61,7 +61,7 @@ $('#template-list').load($.service('workspace', 'list_templates'));
 			{/if}
 			<fieldset class="admin">
 				<legend>{tr}Areas{/tr}</legend>
-				<table class="normal">
+				<table class="table normal">
 					<tr>
 						<th>{tr}On{/tr}</th>
 						<th colspan="2">{tr}Category{/tr}</th>

@@ -81,7 +81,7 @@ function wikiplugin_archivebuilder( $data, $params )
 		$label = tra('Download archive');
 		return <<<FORM
 <form method="post" action="">
-	<input type="submit" name="$archive" value="$label" />
+	<input type="submit" class="btn btn-default" name="$archive" value="$label" />
 </form>
 FORM;
 	}

@@ -272,7 +272,7 @@ JQ
 						a(tr('Date Created'), metadataThere.dateOriginated);
 						a(tr('Date Updated Here'), metadataHere.dateLastUpdated);
 						a(tr('Date Updated There'), metadataThere.dateLastUpdated);
-						a(tr('Click below to read Citing blocks'), '<input type="submit" value="' + tr('Read') + '" />');
+						a(tr('Click below to read Citing blocks'), '<input type="submit" class="btn btn-default" value="' + tr('Read') + '" />');
 
 						form = $('<form method="POST" />')
 							.attr('action', metadataThere.href)

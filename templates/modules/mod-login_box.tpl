@@ -256,7 +256,7 @@ function doChallengeResponse() {
 			{/if}
 		{/if}
 		<div style="text-align: center">
-			<input class="button submit" type="submit" name="login" value="{tr}Log in{/tr}" />
+			<input class="btn btn-default button submit" type="submit" name="login" value="{tr}Log in{/tr}" />
 		</div>
 		{if $module_params.show_forgot eq 'y' or $module_params.show_register eq 'y'}
 			<div {if $mode eq 'header'}style="text-align: right; display:inline"{/if}>

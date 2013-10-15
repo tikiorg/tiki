@@ -30,7 +30,7 @@
 {/if}
 
 <h2>{tr}Attachments{/tr}</h2>
-<table class="normal">
+<table class="table normal">
 	<tr>
 		{assign var='nbcols' value=2}
 		<th class="auto">&nbsp;</th>
