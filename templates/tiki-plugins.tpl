@@ -27,7 +27,7 @@
 				<td class="checkbox"><input type="checkbox" name="clear[]" value="{$plugin.fingerprint|escape}" id="{$plugin.fingerprint|escape}"></td>
 				<td class="text"><label for="{$plugin.fingerprint|escape}"><strong>{$plugin.fingerprint|substring:0:20|escape|replace:"-":"</strong> <br>{tr}Signature:{/tr} "}...</label></td>
 				<td class="text">{if $plugin.last_objectType eq 'wiki page'}
-					{tr _0=$plugin.last_objectId|sefurl:'wiki page' _1=$plugin.last_objectId|escape _2=$plugin.fingerprint}Wiki page: <a href="%0#%2" title="{tr}View this page.{/tr}">%1</a>{/tr}
+					{tr _0=$plugin.last_objectId|sefurl:'wiki page' _1=$plugin.last_objectId|escape _2=$plugin.fingerprint}Wiki page: <a href="%0#%2" title="View this page.">%1</a>{/tr}
 					{else}
 					{tr}Unknown{/tr}
 					{/if}
@@ -38,7 +38,7 @@
 					<a href="tiki-plugins.php?approveone={$plugin.fingerprint}">{icon _id='accept' alt="{tr}Approve{/tr}"}</a>
 					<a href="tiki-plugins.php?clearone={$plugin.fingerprint}">{icon _id='delete' alt="{tr}Clear{/tr}"}</a>
 {if $plugin.last_objectType eq 'wiki page'}
-{tr _0=$plugin.last_objectId|sefurl:'wiki page' _1=$plugin.last_objectId|escape _2=$plugin.fingerprint}<a href="%0#%2" title="{tr}View this page.{/tr}">{icon _id='page'}</a>{/tr}	
+{tr _0=$plugin.last_objectId|sefurl:'wiki page' _1=$plugin.last_objectId|escape _2=$plugin.fingerprint}<a href="%0#%2" title="View this page.">{icon _id='page'}</a>{/tr}
 {/if}	
 				</td>
 			</tr>
