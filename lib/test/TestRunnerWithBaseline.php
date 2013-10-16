@@ -22,6 +22,10 @@ require_once('lib/debug/Tracer.php');
 
 class TestRunnerWithBaseline {
 
+    private $baseline_log_fpath;
+    private $current_log_fpath;
+    private $output_fpath;
+
     private $last_test_started = null;
 
     private $logname_stem = 'phpunit-log';
@@ -30,6 +34,13 @@ class TestRunnerWithBaseline {
     public $help = false;
     public $filter = '';
     public $diffs;
+
+    function __construct($baseline_log_fpath = null, $current_log_fpath = null, $output_fpath = null)
+    {
+        $this->baseline_log_fpath = $baseline_log_fpath;
+        $this->current_log_fpath = $current_log_fpath;
+        $this->output_fpath =$output_fpath;
+    }
 
     function run()
     {
@@ -68,9 +79,9 @@ class TestRunnerWithBaseline {
             $cmd_line = "$cmd_line --filter ".$this->filter;
         }
 
-        $cmd_line = $cmd_line." --log-json \"".$this->logname_current()."\" .";
+        $cmd_line = $cmd_line." --log-json \"".$this->logpath_current()."\" .";
 
-        print "
+        $this->do_echo( "
 ********************************************************************
 *
 * Executing phpunit as:
@@ -78,29 +89,40 @@ class TestRunnerWithBaseline {
 *    $cmd_line
 *
 ********************************************************************
-";
+");
 
-        system($cmd_line);
+        if ($this->output_fpath == null)
+        {
+            system($cmd_line);
+        }
+        else
+        {
+            $phpunit_output = array();
+            exec($cmd_line, $phpunit_output);
+            $this->do_echo(implode("\n", $phpunit_output));
+        }
+
+
     }
 
     function print_diffs_with_baseline()
     {
         global $tracer;
 
-        echo "\n\nChecking for differences with baseline test logs...\n\n";
+        $this->do_echo("\n\nChecking for differences with baseline test logs...\n\n");
 
         $baseline_issues;
-        if (file_exists($this->logname_baseline()))
+        if (file_exists($this->logpath_baseline()))
         {
-            $baseline_issues = $this->read_log_file($this->logname_baseline());
+            $baseline_issues = $this->read_log_file($this->logpath_baseline());
         }
         else
         {
-            echo "=== WARNING: No baseline file exists. Assuming empty baseline.\n\n";
+            $this->do_echo("=== WARNING: No baseline file exists. Assuming empty baseline.\n\n");
             $baseline_issues = $this->make_empty_issues_list();
         }
 
-        $current_issues = $this->read_log_file($this->logname_current());
+        $current_issues = $this->read_log_file($this->logpath_current());
 
         $this->diffs = $this->compare_two_test_runs($baseline_issues, $current_issues);
 
@@ -115,67 +137,79 @@ class TestRunnerWithBaseline {
 
         if ($total_diffs > 0)
         {
-            echo "\n\nThere were $total_diffs differences with baseline.\n
+            $this->do_echo("\n\nThere were $total_diffs differences with baseline.\n
 
 Below is a list of tests that differ from the baseline.
 See above details about each error or failure.
-";
+");
             if ($nb_failures_introduced > 0)
             {
-                echo "\nNb of new FAILURES: $nb_failures_introduced:\n";
+                $this->do_echo("\nNb of new FAILURES: $nb_failures_introduced:\n");
                 foreach ($this->diffs['failures_introduced'] as $an_issue)
                 {
-                    echo "   $an_issue\n";
+                    $this->do_echo("   $an_issue\n");
                 }
             }
 
             if ($nb_errors_introduced > 0)
             {
-                echo "\nNb of new ERRORS: $nb_errors_introduced:\n";
+                $this->do_echo("\nNb of new ERRORS: $nb_errors_introduced:\n");
                 foreach ($this->diffs['errors_introduced'] as $an_issue)
                 {
-                    echo "   $an_issue\n";
+                    $this->do_echo("   $an_issue\n");
                 }
 
             }
 
             if ($nb_failures_fixed > 0)
             {
-                echo "\nNb of newly FIXED FAILURES: $nb_failures_fixed:\n";
+                $this->do_echo("\nNb of newly FIXED FAILURES: $nb_failures_fixed:\n");
                 foreach ($this->diffs['failures_fixed'] as $an_issue)
                 {
-                    echo "   $an_issue\n";
+                    $this->do_echo("   $an_issue\n");
                 }
 
             }
 
             if ($nb_errors_fixed > 0)
             {
-                echo "\nNb of newly FIXED ERRORS: $nb_errors_fixed:\n";
+                $this->do_echo("\nNb of newly FIXED ERRORS: $nb_errors_fixed:\n");
                 foreach ($this->diffs['errors_fixed'] as $an_issue)
                 {
-                    echo "   $an_issue\n";
+                    $this->do_echo("   $an_issue\n");
                 }
 
             }
         }
         else
         {
-            echo "\n\nNo differences with baseline run. All is \"normal\".\n\n";
+            $this->do_echo("\n\nNo differences with baseline run. All is \"normal\".\n\n");
         }
 
-        echo "\n\n";
+        $this->do_echo("\n\n");
 
     }
 
-    function logname_current()
+    function logpath_current()
     {
-        return $this->logname_stem.".current.json";
+
+        $path = dirname(__FILE__) . DIRECTORY_SEPARATOR . $this->logname_stem.".current.json";
+        if ($this->current_log_fpath != null)
+        {
+          $path = $this->current_log_fpath;
+        }
+        return $path;
     }
 
-    function logname_baseline()
+    function logpath_baseline()
     {
-        return $this->logname_stem.".baseline.json";
+
+        $path = dirname(__FILE__) . DIRECTORY_SEPARATOR . $this->logname_stem.".baseline.json";
+        if ($this->baseline_log_fpath != null)
+        {
+            $path = $this->baseline_log_fpath;
+        }
+        return $path;
     }
 
     function ask_if_want_to_create_baseline()
@@ -275,6 +309,7 @@ See above details about each error or failure.
         $current_failures = $current_issues['failures'];
         $current_pass = $current_issues['pass'];
         $baseline_failures = $baseline_issues['failures'];
+        $baseline_errors =  $baseline_issues['errors'];
         foreach ($baseline_failures as $a_baseline_failure)
         {
             if (in_array($a_baseline_failure, $current_pass))
@@ -285,7 +320,7 @@ See above details about each error or failure.
 
         foreach ($current_failures as $a_current_failure)
         {
-            if (!in_array($a_current_failure, $baseline_failures))
+            if (!in_array($a_current_failure, $baseline_failures) && !in_array($a_current_failure, $baseline_errors))
             {
                 array_push($diffs['failures_introduced'], $a_current_failure);
             }
@@ -304,7 +339,7 @@ See above details about each error or failure.
 
         foreach ($current_errors as $a_current_error)
         {
-            if (!in_array($a_current_error, $baseline_errors))
+            if (!in_array($a_current_error, $baseline_errors) && !in_array($a_current_error, $baseline_failures))
             {
                 array_push($diffs['errors_introduced'], $a_current_error);
             }
@@ -322,13 +357,13 @@ See above details about each error or failure.
                                 array('y', 'n'));
             if ($answer == 'n')
             {
-                echo "\nThe current run was NOT saved as the new baseline.\n";
+                $this->do_echo("\nThe current run was NOT saved as the new baseline.\n");
                 return;
             }
         }
 
-        echo "\n\nSaving current phpunit log as the baseline.\n";
-        copy($this->logname_current(), $this->logname_baseline());
+        $this->do_echo("\n\nSaving current phpunit log as the baseline.\n");
+        copy($this->logpath_current(), $this->logpath_baseline());
     }
 
     function prompt_for($prompt, $eligible_answers)
@@ -349,7 +384,7 @@ See above details about each error or failure.
             }
         }
 
-        print "\$answer='$answer'\n'";
+        $this->do_echo("\$answer='$answer'\n'");
         return $answer;
     }
 
@@ -494,5 +529,19 @@ Options
         $tracer->trace('total_new_issues_found', "** Returning \$total=$total");
 
         return $total;
+    }
+
+    private function do_echo($message)
+    {
+        if ($this->output_fpath == null)
+        {
+            echo($message);
+        }
+        else
+        {
+            $fh_output = fopen($this->output_fpath, 'a');
+            fwrite($fh_output, $message);
+            fclose($fh_output);
+        }
     }
 }
