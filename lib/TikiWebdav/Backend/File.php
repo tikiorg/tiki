@@ -740,13 +740,13 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 
 		switch ($objectId['type']) {
 			case 'file':
-				return (bool) $filegallib->remove_file($filegallib->get_file($objectId['id']));
+				$filegallib->remove_file($filegallib->get_file($objectId['id']));
 
 			case 'filegal':
-				return (bool) $filegallib->remove_file_gallery($objectId['id']);
+				$filegallib->remove_file_gallery($objectId['id']);
 		}
 
-		return false;
+		return;
 	}
 
 	protected function nodeExists($path)
