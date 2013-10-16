@@ -63,7 +63,8 @@
 		"mikey179/vfsStream": "1.1.0",
         "phpunit/phpunit": "3.7.*",
         "phpunit/dbunit": ">=1.2",
-        "phpunit/phpunit-selenium": ">=1.2"
+        "phpunit/phpunit-selenium": ">=1.2",
+        "ext-php-xml": "*"
 	},
 	"config": {
 		"process-timeout": 5000
