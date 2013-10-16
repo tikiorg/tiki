@@ -116,9 +116,9 @@ function check_bcc($data, $options)
 		$OPCodeStats = get_object_vars($data['OpCodeStats']);
 		$mem_used = $OPCodeStats['memory_used'] * 100;
 		if ($mem_used > $crit) {
-			update_err_state(1, "OpCodeCache: $OPCodeCache $mem_used% mem used");
-		} elseif ($mem_used > $warn) {
 			update_err_state(2, "OpCodeCache: $OPCodeCache $mem_used% mem used");
+		} elseif ($mem_used > $warn) {
+			update_err_state(1, "OpCodeCache: $OPCodeCache $mem_used% mem used");
 		} elseif ($mem_used < $warn) {
 			update_err_state(0, "OpCodeCache: $OPCodeCache $mem_used% mem used");
 		}
