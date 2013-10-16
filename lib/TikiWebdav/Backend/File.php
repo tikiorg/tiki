@@ -578,8 +578,8 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 	private function getContentLength($path)
 	{
 		$contentlength = $this->getProperty($path, 'getcontentlength');
-		print_debug("getContentLength $path". $getcontentlength->contentlength . "\n");
-		return $getcontentlength->contentlength;
+		print_debug("getContentLength $path". $contentlength->contentlength . "\n");
+		return $contentlength->contentlength;
 	}
 
 	protected function getETag($path)
@@ -1094,6 +1094,7 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 					} else {
 						$newPath = '';
 					}
+					global $user;
 
 					$noErrors = (bool) $filegallib->replace_file(
 						$infos['source']['id'],
