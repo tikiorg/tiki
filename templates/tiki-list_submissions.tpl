@@ -7,7 +7,9 @@
 	{/if}
 </div>
 
-{include file='find.tpl' find_show_num_rows='y'}
+{if $listpages or ($find ne '') or ($types ne '') or ($topics ne '') or ($lang ne '') or ($categId ne '')}
+	{include file='find.tpl' find_show_languages='y' find_show_num_rows='y'}
+{/if}
 <form name="checkform" method="get" action="{$smarty.server.PHP_SELF}">
 	<input type="hidden" name="maxRecords" value="{$maxRecords|escape}">
 	<table class="table normal">
@@ -99,10 +101,10 @@
 						<a class="link" href="tiki-edit_submission.php?subId={$listpages[changes].subId}">{icon _id='page_edit'}</a>
 					{/if}
 					{if $tiki_p_approve_submission eq 'y'}
-						<a class="link" href="tiki-list_submissions.php?approve={$listpages[changes].subId}">{icon _id='accept' alt="{tr}Approve{/tr}"}</a>
+						{self_link approve=$listpages[changes].subId}{icon _id='accept' alt="{tr}Approve{/tr}"}{/self_link}
 					{/if}
 					{if $tiki_p_remove_submission eq 'y'}
-						<a class="link" href="tiki-list_submissions.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$listpages[changes].subId}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
+						{self_link remove=$listpages[changes].subId}{icon _id='cross' alt="{tr}Remove{/tr}"}{/self_link}
 					{/if}
 				</td>
 			</tr>

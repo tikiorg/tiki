@@ -164,7 +164,7 @@
 					{/if}
 					{if $tiki_p_remove_article eq 'y'}
 						&nbsp;
-						<a class="link" href="tiki-list_articles.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$listpages[changes].articleId}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
+						{self_link remove=$listpages[changes].articleId}{icon _id='cross' alt="{tr}Remove{/tr}"}{/self_link}
 					{/if}
 				</td>
 			</tr>

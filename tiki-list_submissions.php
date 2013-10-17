@@ -20,7 +20,10 @@ $auto_query_args = array(
 	'offset',
 	'maxRecords',
 	'sort_mode',
-	'find'
+	'find',
+	'type',
+	'topic',
+	'lang',
 );
 if (isset($_REQUEST["remove"])) {
 	$access->check_permission('tiki_p_remove_submission');
@@ -90,7 +93,26 @@ if (isset($_REQUEST["find"])) {
 	$find = '';
 }
 $smarty->assign('find', $find);
-$listpages = $artlib->list_submissions($offset, $maxRecords, $sort_mode, $find, $pdate);
+if (!isset($_REQUEST['topic'])) {
+	$_REQUEST['topic'] = '';
+}
+if (!isset($_REQUEST['type'])) {
+	$_REQUEST['type'] = '';
+}
+if (!isset($_REQUEST['lang'])) {
+	$_REQUEST['lang'] = '';
+}
+$smarty->assign('find_topic', $_REQUEST['topic']);
+$smarty->assign('find_type', $_REQUEST['type']);
+$smarty->assign('find_lang', $_REQUEST['lang']);
+
+$smarty->assign('topics', $artlib->list_topics());
+$smarty->assign('types', $artlib->list_types());
+if ($prefs['feature_multilingual'] == 'y') {
+	$smarty->assign('languages', $tikilib->list_languages(false, 'y'));
+}
+
+$listpages = $artlib->list_submissions($offset, $maxRecords, $sort_mode, $find, $pdate, $_REQUEST['type'], $_REQUEST['topic'], $_REQUEST['lang']);
 $smarty->assign_by_ref('cant_pages', $listpages["cant"]);
 include_once ('tiki-section_options.php');
 $smarty->assign_by_ref('listpages', $listpages["data"]);

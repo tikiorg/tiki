@@ -139,7 +139,7 @@
 	{/tab}
 	{if $articleConfig}
 		{tab name="{tr}Article Generator{/tr}"}
-			<h2>{tr}Article Generator{/tr}</h2>
+			<h2>{tr _0='"'|cat:$articleConfig.feed_name|cat:'"'|escape}Article Generator for %0{/tr}</h2>
 			<p>{tr}The article generator will create a new article for every item read in the RSS feed.{/tr}</p>
 
 			<form method="post" action="">
