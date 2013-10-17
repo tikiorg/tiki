@@ -118,7 +118,7 @@
 					{if $listpages}
 						<p align="left"> {*on the left to have it close to the checkboxes*}
 							{if $tiki_p_remove_submission eq 'y'}
-								{button _text="{tr}Select Duplicates{/tr}" _onclick="checkDuplicateRows(this); return false;"}
+								{button _text="{tr}Select Duplicates{/tr}" _onclick="checkDuplicateRows(this,'td:not(:eq(2))'); return false;"}
 							{/if}
 							<label>{tr}Perform action with checked:{/tr}
 								<select name="submit_mult">
@@ -135,4 +135,4 @@
 		{/if}
 	</table>
 	{pagination_links cant=$cant_pages step=$maxRecords offset=$offset}{/pagination_links}
-<form>
+</form>
