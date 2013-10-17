@@ -78,6 +78,7 @@ class Tracker_Field_ShowTikiOrg extends Tracker_Field_Abstract
 			'canDestroy' => false,
 			'debugoutput' => '',
 			'showurl' => '',
+			'showlogurl' => '',
 			'snapshoturl' => '',
 			'value' => 'none', // this is required to show the field, otherwise it gets hidden if tracker is set to doNotShowEmptyField
 		);
@@ -161,6 +162,7 @@ class Tracker_Field_ShowTikiOrg extends Tracker_Field_Abstract
 			$site = substr($infooutput, $sitepos + 6);
 			$site = substr($site, 0, strpos($site, ' '));
 			$ret['showurl'] = $site;
+			$ret['showlogurl'] = $site . '/info.txt';
 			$ret['snapshoturl'] = $site . '/snapshots/';
 			if ($site) {
 				$ret['value'] = 'active ' . substr($site, 0, strpos($site, '.')); // the 'active' is useful for filtering on

@@ -14,6 +14,16 @@
 <p>Show.tiki.org snapshot creation is in progress... Please monitor <a class="snapshoturl{$field.fieldId}_{$item.itemId}" href="http://{$field.snapshoturl|escape}" target="_blank">http://{$field.snapshoturl|escape}</a> for progress. <strong>Note that if you get a popup asking for a username/password, please just enter "show" and "show".</strong></p> 
 {/remarksbox}
 </div>
+<div class="showresetok{$field.fieldId}_{$item.itemId}" style="display: none;">
+{remarksbox type="info" title="Password reset" close="n"}
+<p>Password reset was successful</p>
+{/remarksbox}
+</div>
+<div class="showresetnok{$field.fieldId}_{$item.itemId}" style="display: none;">
+{remarksbox type="error" title="Password reset" close="n"}
+<p>Password reset failed</p>
+{/remarksbox}
+</div>
 <div class="showdestroy{$field.fieldId}_{$item.itemId}" style="display: none;">
 {remarksbox type="error" title="Show.tiki.org instance destruction in progress" close="n"}
 <p>Show.tiki.org instance destruction is in progress... Please wait...</p>
@@ -40,6 +50,8 @@
 {/remarksbox}
 Version: <select name="svntag">
 <option selected="selected">trunk</option>
+<option>12.x</option>
+<option>12.0alpha</option>
 <option>11.0</option>
 <option>10.4</option>
 <option>10.3</option>
@@ -72,6 +84,7 @@ Version: <select name="svntag">
 <div class="showactive{$field.fieldId}_{$item.itemId}" {if $field.status neq 'ACTIV'}style="display: none;"{/if}>
 {remarksbox type="info" title="Accessing the Tiki instance that demonstrates this bug" close="n"}
 <p>The URL for the show.tiki.org instance that demonstrates this bug is at: <a class="showurl{$field.fieldId}_{$item.itemId}" href="http://{$field.showurl|escape}" target="_blank">http://{$field.showurl|escape}</a>. <strong>Note that if you get a popup asking for a username/password, please just enter "show" and "show". This is different from the initial login and password for a new Tiki which is "admin" and "admin".</strong></p>
+<p>The install log is at <a class="showlogurl{$field.fieldId}_{$item.itemId}" href="http://{$field.showlogurl|escape}" target="_blank">http://{$field.showlogurl|escape}</a></p>
 {/remarksbox}
 {remarksbox type="info" title="Snapshots" close="n"}
 <p>Snapshots are database dumps of the configuration that developers can download for debugging. Once you have reproduced your bug on the show.tiki.org instance, create a snapshot that can then be downloaded by developers for further investigation.</p>
@@ -80,6 +93,7 @@ Version: <select name="svntag">
 {/remarksbox}
 {if $field.canDestroy}
 {button href="#showtikiorg{$field.fieldId}_{$item.itemId}{if isset($context.list_mode)}_view{/if}" _onclick="showtikiorg_process{$field.fieldId}_{$item.itemId}('destroy');"  _text="{tr}Destroy this show.tiki.org instance{/tr}"}
+{button href="#showtikiorg{$field.fieldId}_{$item.itemId}{if isset($context.list_mode)}_view{/if}" _onclick="showtikiorg_process{$field.fieldId}_{$item.itemId}('reset');"  _text="{tr}Reset password to 12345{/tr}"}
 {/if}
 </div>
 
@@ -148,6 +162,7 @@ function showtikiorg_process{{$field.fieldId}}_{{$item.itemId}}(action) {
 				$('.showsnapshot{{$field.fieldId}}_{{$item.itemId}}').hide();
 				$('.showdestroy{{$field.fieldId}}_{{$item.itemId}}').hide();
 				$('.showurl{{$field.fieldId}}_{{$item.itemId}}').attr("href", "http://" + data.showurl).html("http://" + data.showurl);
+				$('.showlogurl{{$field.fieldId}}_{{$item.itemId}}').attr("href", "http://" + data.showlogurl).html("http://" + data.showlogurl);
 				$('.snapshoturl{{$field.fieldId}}_{{$item.itemId}}').attr("href", "http://" + data.snapshoturl).html("http://" + data.snapshoturl);
 				$.modal();
 			} else if (data.status == 'SNAPS') {
@@ -158,6 +173,14 @@ function showtikiorg_process{{$field.fieldId}}_{{$item.itemId}}(action) {
 				$('.showdisconnected{{$field.fieldId}}_{{$item.itemId}}').hide();
 				$('.showsnapshot{{$field.fieldId}}_{{$item.itemId}}').show();
 				$('.showdestroy{{$field.fieldId}}_{{$item.itemId}}').hide();
+				$('.showresetok{{$field.fieldId}}_{{$item.itemId}}').hide();
+				$('.showresetnok{{$field.fieldId}}_{{$item.itemId}}').hide();
+			} else if (data.status == 'RESOK') {
+				$('.showresetok{{$field.fieldId}}_{{$item.itemId}}').show();
+				$('.showresetnok{{$field.fieldId}}_{{$item.itemId}}').hide();
+			} else if (data.status == 'RENOK') {
+				$('.showresetnok{{$field.fieldId}}_{{$item.itemId}}').show();
+				$('.showresetok{{$field.fieldId}}_{{$item.itemId}}').hide();
 			} else if (data.status == 'DESTR') {
 				$('.showactive{{$field.fieldId}}_{{$item.itemId}}').hide();
 				$('.showbuilding{{$field.fieldId}}_{{$item.itemId}}').hide();
@@ -165,6 +188,8 @@ function showtikiorg_process{{$field.fieldId}}_{{$item.itemId}}(action) {
 				$('.showfail{{$field.fieldId}}_{{$item.itemId}}').hide();
 				$('.showdisconnected{{$field.fieldId}}_{{$item.itemId}}').hide();
 				$('.showsnapshot{{$field.fieldId}}_{{$item.itemId}}').hide();
+				$('.showresetnok{{$field.fieldId}}_{{$item.itemId}}').hide();
+				$('.showresetok{{$field.fieldId}}_{{$item.itemId}}').hide();
 				$('.showdestroy{{$field.fieldId}}_{{$item.itemId}}').show();
 				setTimeout("showtikiorg_process{{$field.fieldId}}_{{$item.itemId}}('info')",5000);
 				$.modal(tr('Instance is being destroyed... Please wait...'));
