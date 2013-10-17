@@ -437,7 +437,7 @@ class ArtLib extends TikiLib
 
 		$query = 'select `name` from `tiki_topics` where `topicId` = ?';
 		$topicName = $this->getOne($query, array($topicId));
-		$size = strlen($body);
+		$size = $body ? mb_strlen($body) : mb_strlen($heading);
 
 		if ($articleId) {
 			$oldArticle = $this->get_article($articleId);
