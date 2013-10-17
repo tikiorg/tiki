@@ -305,7 +305,7 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 			} else {
 				$smarty = TikiLib::lib('smarty');
 				$smarty->loadPlugin('smarty_function_object_link');
-				$ret = '<ol>';
+				$ret = '<ol class="tracker-item-files">';
 
 				foreach ($this->getConfiguration('files') as $fileId => $file) {
 					$ret .= '<li>';

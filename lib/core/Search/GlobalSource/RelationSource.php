@@ -29,6 +29,11 @@ class Search_GlobalSource_RelationSource implements Search_GlobalSource_Interfac
 
 	function getData($objectType, $objectId, Search_Type_Factory_Interface $typeFactory, array $data = array())
 	{
+
+		if (isset($data['relations']) || isset($data['relation_types'])) {
+			return array();
+		}
+
 		$relations = array();
 
 		$types = array();

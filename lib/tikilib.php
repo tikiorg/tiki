@@ -6184,7 +6184,7 @@ class TikiLib extends TikiDb_Bridge
 			if (!empty($params['altimg'])) {
 				$alt = '<img src="' . $params['altimg'] . '" width="' . $width . '" height="' . $height . '" alt=\"\" />';
 			} else {
-				$alt = tra('Flash player not available.');
+				$alt = ''; // Must be blank otherwise for a split second before Flash loads you can see any text that is set
 			}
 			unset( $params['movie'], $params['width'], $params['height'], $params['version'], $params['altimg'] );
 			$params = json_encode($params);

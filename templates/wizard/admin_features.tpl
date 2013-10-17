@@ -21,7 +21,7 @@
 		{preference name=feature_newsletters}
 		{preference name=feature_banners}
 		{preference name=feature_freetags}
-		{preference name=feature_search_fulltext}
+
 	</div>
 	<br>
 	{tr}Tiki has many more features{/tr}.
