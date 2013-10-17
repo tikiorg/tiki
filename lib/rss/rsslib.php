@@ -712,6 +712,7 @@ class RSSLib extends TikiDb_Bridge
 				'future_publish' => -1,
 				'categories' => array(),
 				'rating' => 5,
+				'feed_name' => $module['name'],
 				);
 
 		foreach ( $actions as $action ) {
