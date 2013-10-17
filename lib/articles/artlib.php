@@ -1448,7 +1448,7 @@ class ArtLib extends TikiLib
 						preg_match('/(<\/p>|<\/span>|<\/div>|<\/?br>)/', $text));
 	}
 
-	function list_submissions($offset = 0, $maxRecords = -1, $sort_mode = 'publishDate_desc', $find = '', $date = '')
+	function list_submissions($offset = 0, $maxRecords = -1, $sort_mode = 'publishDate_desc', $find = '', $date = '', $type = '', $topicId = '', $lang = '')
 	{
 		if ($find) {
 			$findPattern = '%' . $find . '%';
@@ -1466,6 +1466,24 @@ class ArtLib extends TikiLib
 				$mid = ' where `publishDate` <= ? ';
 			}
 			$bindvars[] = $date;
+		}
+
+		if ($type) {
+			$mid .= $mid ? ' AND ' : ' WHERE ';
+			$mid .= ' `type` = ? ';
+			$bindvars[] = $type;
+		}
+
+		if ($topicId) {
+			$mid .= $mid ? ' AND ' : ' WHERE ';
+			$mid .= ' `topicId` = ? ';
+			$bindvars[] = $topicId;
+		}
+
+		if ($lang) {
+			$mid .= $mid ? ' AND ' : ' WHERE ';
+			$mid .= ' `lang` = ? ';
+			$bindvars[] = $lang;
 		}
 
 		$query = "select * from `tiki_submissions` $mid order by " . $this->convertSortMode($sort_mode);
