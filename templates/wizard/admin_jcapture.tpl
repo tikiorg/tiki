@@ -15,7 +15,7 @@
 	{tr}Gallery name{/tr}: 
 	{if empty($jcaptureFileGalleryName)}
 		<input type="text" name="jcaptureFileGalleryName" value="{$jcaptureFileGalleryName}" /><br>
-		{tr}It will be created under the gallery root. If the gallery already exists, jCapture will use that gallery{/tr}.
+		{tr}If the gallery doesn't exist, it will be created under the gallery root{/tr}.
 	{else}
 		<b>{$jcaptureFileGalleryName}</b>
 	{/if}

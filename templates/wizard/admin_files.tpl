@@ -3,13 +3,13 @@
 <h1>{tr}Set up Files and File Gallery{/tr}</h1>
 
 <div class="adminWizardIconleft"><img src="img/icons/large/file-manager48x48.png" alt="{tr}Set up Files and File Gallery{/tr}" /></div>
-{tr}Set up your file gallery and attachments{/tr}. {tr}Choose to store them either in the database or in files on disk, among other options{/tr}.<br/><br/>
+{tr}Set up the file gallery and attachments{/tr}. {tr}Choose to store them either in the database or in files on disk, among other options{/tr}.<br/><br/>
 <div class="adminWizardContent">
 <fieldset>
 	<legend>{tr}File Gallery{/tr}</legend>
 	{preference name='fgal_elfinder_feature'}
-	{tr}Depends on jQuery UI, which will be activated, if ElFinder is used{/tr}.<br>
-	{tr}See also{/tr} <a href="http://doc.tiki.org/elFinder" target="_blank">{tr}ElFinder{/tr} @ doc.tiki.org</a><br>
+	{tr}Requires jQuery UI, which will be activated if elFinder is used{/tr}.<br>
+	{tr}See also{/tr} <a href="http://doc.tiki.org/elFinder" target="_blank">{tr}elFinder{/tr} @ doc.tiki.org</a><br>
 	<br>
 	{preference name='fgal_use_db'}
 	{tr}See also{/tr} <a href="tiki-admin.php?page=fgal#content1" target="_blank">{tr}File Gallery admin panel{/tr}</a>

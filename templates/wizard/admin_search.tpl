@@ -6,8 +6,8 @@
 {tr}Use to configure the search settings{/tr}.
 {tr}There are two search systems in Tiki: <strong>Basic Search</strong> and <strong>Advanced Search</strong>{/tr}.
 {tr}The Advanced Search uses a different engine and creates a search index, updated either incrementally or based on a cron job configured elsewhere{/tr}.
-{tr}The Advanced Search (with its unified search index) generally provides better results, while it is more demanding on the server{/tr}.
-{tr}If you have issues, simply revert to use only the Basic Search{/tr}.
+{tr}The Advanced Search (with its unified search index) generally provides better results, but is more demanding on the server{/tr}.
+{tr}If you have issues with Advanced Search, simply revert to the Basic Search{/tr}.
 <br/><br/>
 <div class="adminWizardContent">
 <fieldset>

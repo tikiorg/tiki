@@ -2,7 +2,7 @@
 
 <h1>{tr}User Preferences{/tr}: {tr}Personal Information{/tr}</h1>
 <div class="userWizardIconleft"><img src="img/icons/large/user.png" alt="{tr}User Preferences{/tr}" /></div>
-{tr}Set up your basic information as a user on this site{/tr}.<br/><br/><br/>
+{tr}Set up basic information as a user on this site{/tr}.<br/><br/><br/>
 <div class="userWizardContent">
 <fieldset>
 {if $prefs.feature_userPreferences eq 'y'}
