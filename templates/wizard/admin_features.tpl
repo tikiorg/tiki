@@ -31,7 +31,7 @@
 <fieldset>
 	<legend>{tr}Watches{/tr}</legend>
 	<img src="img/icons/large/mywatches.gif" class="adminWizardIconright" />
-	{tr}Enable email notifications when changes occur. For user watches each user can choose to be notified. For group watches all members receive an email notification{/tr}
+	{tr}Enable email notifications when changes occur. For user watches, each user can choose to be notified. For group watches, all members receive an email notification{/tr}
 	<div class="admin clearfix featurelist">
 		{preference name=feature_user_watches}
 		{preference name=feature_group_watches}

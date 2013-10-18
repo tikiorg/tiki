@@ -66,6 +66,7 @@ class Services_ShowTikiOrg_Controller
 			$site = substr($infooutput, $sitepos + 6);
 			$site = substr($site, 0, strpos($site, ' '));
 		 	$ret['showurl'] = $site;
+			$ret['showlogurl'] = $site . '/info.txt';
 			$ret['snapshoturl'] = $site . '/snapshots/';
 			if ($site && $ret['status'] == 'ACTIV') {
 				$value = 'active ' . substr($site, 0, strpos($site, '.')); // the 'active' is useful for filtering on
@@ -81,7 +82,7 @@ class Services_ShowTikiOrg_Controller
 		}
 
 		if (!empty($command)) {
-			if ($command == 'destroy' && !TikiLib::lib('user')->user_has_permission($user, 'tiki_p_admin') && $user != $creator) {
+			if (($command == 'reset' || $command == 'destroy') && !TikiLib::lib('user')->user_has_permission($user, 'tiki_p_admin') && $user != $creator) {
 				throw new Services_Exception_Denied;
 			}
 
@@ -103,6 +104,12 @@ class Services_ShowTikiOrg_Controller
 				$ret['status'] = 'DESTR';
 			} else if ($command == 'create') {
 				$ret['status'] = 'BUILD';
+			} else if ($command == 'reset') {
+				if (strpos('ERROR', $fullstring) !== false) {
+					$ret['status'] = 'RENOK';
+				} else {
+					$ret['status'] = 'RESOK';
+				}
 			}
 		}
 

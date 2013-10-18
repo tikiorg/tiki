@@ -332,8 +332,13 @@
 			{preference name=short_time_format}
 			<em>{tr}Sample:{/tr} {$now|tiki_short_time}</em>
 
-			{preference name=display_field_order}
-			{preference name=users_prefs_display_12hr_clock}
+			<fieldset>
+				<legend>{tr}Date/time selectors{/tr}</legend>
+				{preference name=display_field_order}
+				{preference name=display_start_year}
+				{preference name=display_end_year}
+				{preference name=users_prefs_display_12hr_clock}
+			</fieldset>
 			{preference name=tiki_same_day_time_only}
 			{preference name=wikiplugin_now}
 			{preference name=wikiplugin_countdown}

@@ -9,10 +9,10 @@
 {if isset($promptElFinder) AND $promptElFinder eq 'y'}
 <div>
 <fieldset>
-	<legend>{tr}El Finder{/tr}</legend>
-	<input type="checkbox" name="useElFinderAsDefault" {if !isset($useElFinderAsDefault) or $useElFinderAsDefault eq true}checked='checked'{/if} /> {tr}Set ElFinder as the default file gallery viewer{/tr}.<br>
+	<legend>{tr}el Finder{/tr}</legend>
+	<input type="checkbox" name="useElFinderAsDefault" {if !isset($useElFinderAsDefault) or $useElFinderAsDefault eq true}checked='checked'{/if} /> {tr}Set elFinder as the default file gallery viewer{/tr}.<br>
 	<br>
-	{tr}See also{/tr} <a href="http://doc.tiki.org/elFinder" target="_blank">{tr}ElFinder{/tr} @ doc.tiki.org</a><br>
+	{tr}See also{/tr} <a href="http://doc.tiki.org/elFinder" target="_blank">{tr}elFinder{/tr} @ doc.tiki.org</a><br>
 	<br>
 </fieldset>
 </div>

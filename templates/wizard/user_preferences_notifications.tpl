@@ -3,7 +3,7 @@
 <h1>{tr}User Watches{/tr}: {tr}Notification Preferences{/tr}</h1>
 <div class="userWizardIconleft"><img src="img/icons/large/user.png" alt="{tr}Notification Preferences{/tr}" /></div>
 {tr}Use 'watches' to monitor wiki pages or other objects.{/tr} {tr}Watch new items by clicking the {icon _id=eye} button on specific pages.{/tr}<br/> 
-{tr}Set up here your preferences related to receiving notifications by email about changes in the site{/tr}.<br/><br/><br/>
+{tr}Set up below preferences related to receiving notifications by email about changes in the site{/tr}.<br/><br/><br/>
 
 {if $email_ok eq 'n'}
 	{remarksbox type="warning" title="{tr}Warning{/tr}"}

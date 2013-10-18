@@ -1,10 +1,10 @@
 {* ----- Start year --- *}
 {if isset($field.options_array[1]) and $field.options_array[1] ne ''}
 	{assign var=start value=$field.options_array[1]}
-{elseif isset($prefs.calendar_start_year)}
-	{assign var=start value=$prefs.calendar_start_year}
+{elseif isset($prefs.display_start_year)}
+	{assign var=start value=$prefs.display_start_year}
 {else}
-	{assign var=start value=-4}
+	{assign var=start value='-4'}
 {/if}
 {if $field.year > 0 and $field.year < $start}
 		{assign var=start value=$field.year}
@@ -13,10 +13,10 @@
 {* ----- End year --- *}
 {if isset($field.options_array[2]) and $field.options_array[2] ne ''}
 	{assign var=end value=$field.options_array[2]}
-{elseif isset($prefs.calendar_end_year)}
-	{assign var=end value=$prefs.calendar_end_year}
+{elseif isset($prefs.display_end_year)}
+	{assign var=end value=$prefs.display_end_year}
 {else}
-	{assign var=end value=+4}
+	{assign var=end value='+4'}
 {/if}
 {if $field.year > $end}
 	{assign var=end value=$field.year}
