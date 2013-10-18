@@ -27,7 +27,7 @@
 		<br>
 		{tr}See also{/tr} <a href="tiki-admin.php?page=look&alt=Look+%26+Feel" target="_blank">{tr}Look & Feel admin panel{/tr}</a>
 </fieldset>
-<br>
+
 <fieldset>
 	<legend>{tr}Logo{/tr}</legend>
 	{preference name=sitelogo_src}
@@ -35,7 +35,7 @@
 	{preference name=sitelogo_title}
 	{preference name=sitelogo_alt}
 </fieldset>
-<br>
+
 <fieldset>
 	<legend>{tr}Favicon{/tr}</legend>
 	{preference name=site_favicon}
