@@ -49,7 +49,7 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
  */
 function smarty_function_html_select_date($params, $smarty)
 {
-	global $tikilib; // TIKI
+	global $tikilib, $prefs; // TIKI
 
 	$smarty->loadPlugin('smarty_shared_escape_special_chars');
 	$smarty->loadPlugin('smarty_shared_make_timestamp');
@@ -57,8 +57,8 @@ function smarty_function_html_select_date($params, $smarty)
 
 	/* Default values. */
 	$prefix          = "Date_";
-	$start_year      = strftime("%Y");
-	$end_year        = $start_year;
+	$start_year      = $prefs['display_start_year'];
+	$end_year        = $prefs['display_end_year'];
 	$display_days    = true;
 	$display_months  = true;
 	$display_years   = true;
@@ -97,7 +97,7 @@ function smarty_function_html_select_date($params, $smarty)
 
 	/* Order in which to display the fields.
 		 "D" -> day, "M" -> month, "Y" -> year. */
-	$field_order     = 'MDY';
+	$field_order     = $prefs['display_field_order'];
 
 	/* String printed between the different fields. */
 	$field_separator = "\n";
