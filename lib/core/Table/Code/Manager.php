@@ -38,21 +38,21 @@ class Table_Code_Manager extends Table_Code_Abstract
 	);
 
 	/**
-	 * Call the classes for each section in the order determined by the $sublasses property
+	 * Call the classes for each section in the order determined by the $subclasses property
 	 * and put sections together into final overall jQuery code
 	 */
 	public function setCode()
 	{
 		foreach ($this->subclasses as $key => $val) {
 			if (empty($val)) {
-				$instance = Table_Factory::build($key, $this->s, 'code');
+				$instance = Table_Factory::build($key, parent::$s, 'code');
 				$instance::$level1 = $key;
 				$instance::$level2 = null;
 				$instance->setCode();
 			} elseif (is_array($val)) {
 				foreach ($val as $key2 => $val2) {
 					if (empty($val2)) {
-						$instance = Table_Factory::build($key2, $this->s, 'code');
+						$instance = Table_Factory::build($key2, parent::$s, 'code');
 						$instance::$level1 = $key;
 						$instance::$level2 = $key2;
 						$instance->setCode();
@@ -62,7 +62,7 @@ class Table_Code_Manager extends Table_Code_Abstract
 		}
 		//put sections together into final overall code
 		self::$code['main'] = $this->iterate(
-			self::$code['main'], $this->nt . '$(\'table#' . $this->id
+			self::$code['main'], $this->nt . '$(\''. self::$tid
 			. '\').tablesorter({', $this->nt . '})', '', ''
 		);
 		if (empty(self::$code['pager'])) {
@@ -73,7 +73,7 @@ class Table_Code_Manager extends Table_Code_Abstract
 			$parts .= $section;
 		}
 		//unhide div holding the table
-		$parts .= $this->nt . '$(\'div#' . $this->id . '\').css(\'visibility\', \'visible\');';
+		$parts .= $this->nt . '$(\'div#' . self::$id . '\').css(\'visibility\', \'visible\');';
 
 		self::$code = $parts;
 	}

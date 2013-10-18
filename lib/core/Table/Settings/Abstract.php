@@ -54,6 +54,7 @@ abstract class Table_Settings_Abstract
 		),
 		'filters' => array(
 			'type' => 'reset',						//choices: boolean true, boolean false, reset
+			'external' => false,
 /*			'hide' => false,					//to hide filters. choices: true, false (default)
 			'columns' => array(
 				0 => array(
@@ -83,7 +84,7 @@ abstract class Table_Settings_Abstract
 */
 		),
 /*		'pager' => array(
-			'type' => true,					//choices: true, false, disable
+			'type' => true,					//choices: true, false
 			'max' => 25,
 			'expand' => array(50, 100, 250, 500),
 		),
@@ -126,26 +127,35 @@ abstract class Table_Settings_Abstract
 	 */
 	protected $ids = array(
 		'sort' => array(
-			'id' => '-sortreset',
-			//tra('Reset Sort')
-			'text' => 'Reset Sort',
-		),
-		'filters' => array(
-			'id' => '-filterreset',
-			//tra('Reset Filter')
-			'text' => 'Reset Filter',
-		),
-		'pager' => array(
-			'id' => '-pagerbutton',
-			'text' => array(
-				//tra('Enable Pager')
-				'enable' => 'Enable Pager',
-				//tra('Disable Pager')
-				'disable' => 'Disable Pager',
+			'reset' => array(
+				'id' => '-sortreset',
+				//tra('Reset Sort')
+				'text' => 'Reset Sort',
 			),
 		),
-		'pagercontrols' => array(
-			'id' => '-pager',
+		'filters' => array(
+			'reset' => array(
+				'id' => '-filterreset',
+				//tra('Reset Filter')
+				'text' => 'Reset Filter',
+			),
+			'external' => array(
+				'id' => '-ext',
+			),
+		),
+		'pager' => array(
+			'disable' => array(
+				'id' => '-pagerbutton',
+				'text' => array(
+					//tra('Enable Pager')
+					'enable' => 'Enable Pager',
+					//tra('Disable Pager')
+					'disable' => 'Disable Pager',
+				),
+			),
+			'controls' => array(
+				'id' => '-pager',
+			),
 		),
 	);
 
@@ -182,8 +192,12 @@ abstract class Table_Settings_Abstract
 
 		//get table-specific settings
 		$ts = $this->getTableSettings();
-		$ts['sort']['columns'] = array_values($ts['sort']['columns']);
-		$ts['filters']['columns'] = array_values($ts['filters']['columns']);
+		if (isset($ts['sort']['columns'])) {
+			$ts['sort']['columns'] = array_values($ts['sort']['columns']);
+		}
+		if (isset($ts['filters']['columns'])) {
+			$ts['filters']['columns'] = array_values($ts['filters']['columns']);
+		}
 
 		//override generic defaults with any table-specific defaults
 		$this->s = $this->overrideSettings($this->default, $ts);
@@ -206,14 +220,16 @@ abstract class Table_Settings_Abstract
 	 */
 	private function translateDefault()
 	{
-		foreach ($this->ids as $type => $settings) {
-			if (isset($settings['text'])) {
-				if (is_array($settings['text'])) {
-					foreach ($settings['text'] as $each => $text) {
-						$this->default[$type]['text'][$each] = htmlspecialchars(tra($text));
+		foreach ($this->ids as $type => $elements) {
+			foreach($elements as $element => $info) {
+				if (isset($elements[$element]['text'])) {
+					if (is_array($elements[$element]['text'])) {
+						foreach ($elements[$element]['text'] as $each => $text) {
+							$this->default[$type][$element]['text'][$each] = htmlspecialchars(tra($text));
+						}
+					} else {
+						$this->default[$type][$element]['text'] = htmlspecialchars(tra($elements[$element]['text']));
 					}
-				} else {
-					$this->default[$type]['text'] = htmlspecialchars(tra($settings['text']));
 				}
 			}
 		}
@@ -292,12 +308,25 @@ abstract class Table_Settings_Abstract
 			++$i;
 			$this->s['id'] .= $i;
 		}
-		foreach ($this->ids as $type => $settings) {
-			if ($type === 'pagercontrols' || (isset($this->s[$type]['type'])
+		foreach ($this->ids as $type => $elements) {
+			if (isset($this->s[$type]['type'])
 				&& $this->s[$type]['type'] !== false
-				&& $this->s[$type]['type'] !== 'save'
-				&& !isset($this->s[$type]['id']))) {
-				$this->s[$type]['id'] = $this->s['id'] . htmlspecialchars($settings['id']);
+				&& $this->s[$type]['type'] !== 'save') {
+				foreach($elements as $element => $info) {
+					//for multiple elements
+					if (isset($this->s[$type][$element][0])) {
+						foreach ($this->s[$type][$element] as $key => $info) {
+							if (!isset($this->s[$type][$element][$key]['id'])) {
+								$this->s[$type][$element][$key]['id'] = $this->s['id']
+									. htmlspecialchars($elements[$element]['id'] . $key);
+							}
+						}
+					} elseif ((!isset($this->s[$type][$element]) || (isset($this->s[$type][$element])
+						&& $this->s[$type][$element] !== false)) && !isset($this->s[$type][$element]['id']))
+					{
+						$this->s[$type][$element]['id'] = $this->s['id'] . htmlspecialchars($elements[$element]['id']);
+					}
+				}
 			}
 		}
 	}
