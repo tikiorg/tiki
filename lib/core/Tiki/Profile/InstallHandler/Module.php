@@ -76,7 +76,7 @@ class Tiki_Profile_InstallHandler_Module extends Tiki_Profile_InstallHandler
 		return str_replace('_modules', '', $zone_id);
 	}
 
-	public static function export(Tiki\Profile\Writer $writer, $moduleId)
+	public static function export(Tiki_Profile_Writer $writer, $moduleId)
 	{
 		$modlib = TikiLib::lib('mod');
 

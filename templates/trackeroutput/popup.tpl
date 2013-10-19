@@ -1,9 +1,8 @@
 {capture name=popup}
 	<div class="cbox">
-		<table>
-			{cycle values="odd,even" print=false}
+		<table class="normal item">
 			{foreach from=$popupFields item=field}
-				 <tr class="{cycle}"><th>{$field.name}</th><th>{trackeroutput field=$field item=$popupItem showpopup=n showlinks=n}</th></tr>
+				 <tr><th>{$field.name}</th><td>{trackeroutput field=$field item=$popupItem showpopup=n showlinks=n}</td></tr>
 			{/foreach}
 		</table>
 	</div>
