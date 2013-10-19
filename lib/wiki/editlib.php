@@ -868,8 +868,11 @@ class EditLib
 			if ($c[$i]["type"] == "text") {
 				if ( ! ctype_space($c[$i]["data"]) ) {
 					$add = $c[$i]["data"];
+					$noparsed = array();
+					 TikiLib::lib('parser')->plugins_remove($add, $noparsed);
 					$add = str_replace(array("\r","\n"), '', $add);
 					$add = str_replace('&nbsp;', ' ', $add);
+					TikiLib::lib('parser')->plugins_replace($add, $noparsed, true);
 					$src .= $add;
 				}
 			} elseif ($c[$i]["type"] == "comment") {
