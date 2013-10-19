@@ -952,7 +952,6 @@ class TrackerLib extends TikiLib
 		$corder = '';
 		$trackerId = (int) $trackerId;
 		$numsort = false;
-		$filterfield = (int) $filterfield;
 
 		$mid = ' WHERE tti.`trackerId` = ? ';
 		$bindvars = array($trackerId);
@@ -1030,7 +1029,7 @@ class TrackerLib extends TikiLib
 			} elseif ( ! is_array($filterfield) ) {
 				$fv = $filtervalue;
 				$ev = $exactvalue;
-				$ff = $filterfield;
+				$ff = (int) $filterfield;
 				$nb_filtered_fields = 1;
 			} else {
 				$nb_filtered_fields = count($filterfield);
@@ -1040,9 +1039,9 @@ class TrackerLib extends TikiLib
 			for ($i = 0; $i < $nb_filtered_fields; $i++) {
 				if ( is_array($filterfield) ) {
 					//multiple filter on an exact value or a like value - each value can be simple or an array
-					$ff = $filterfield[$i];
-					$ev = isset($exactvalue[$i])? $exactvalue[$i]:'';
-					$fv = isset($filtervalue[$i])?$filtervalue[$i]:'' ;
+					$ff = (int) $filterfield[$i];
+					$ev = !empty($exactvalue[$i])? $exactvalue[$i]:'';
+					$fv = !empty($filtervalue[$i])?$filtervalue[$i]:'' ;
 				}
 				$filter = $this->get_tracker_field($ff);
 
@@ -1156,7 +1155,7 @@ class TrackerLib extends TikiLib
 						$mid .= " AND ttif{$i}_remote.`value` LIKE ? ";
 						$bindvars[] = $ev ? $ev : "%$fv%";
 					}
-				} elseif (isset($ev)) {
+				} elseif (!empty($ev)) {
 					if (is_array($ev)) {
 						$keys = array_keys($ev);
 						if (in_array((string) $keys[0], array('<', '>'))) {
