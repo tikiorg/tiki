@@ -1,4 +1,4 @@
-{* $Id$ *}<!DOCTYPE html>
+{* $Id: $ *}<!DOCTYPE html>
 {* override for mobile *}<html lang="{if !empty($pageLang)}{$pageLang}{else}{$prefs.language}{/if}"{if !empty($page_id)} id="page_{$page_id}"{/if}>
 	<head>
 		{include file='header.tpl'}
@@ -95,6 +95,7 @@
 										{if $prefs.module_zones_pagetop eq 'fixed' or ($prefs.module_zones_pagetop ne 'n' && ! zone_is_empty('pagetop'))}
 											{modulelist zone=pagetop}
 										{/if}
+{* mobile - rely on icons
 										{if (isset($section) && $section neq 'share') && $prefs.feature_share eq 'y' && $tiki_p_share eq 'y' and (!isset($edit_page) or $edit_page ne 'y' and $prefs.feature_site_send_link ne 'y')}
 											<div class="share">
 												<a title="{tr}Share this page{/tr}" href="tiki-share.php?url={$smarty.server.REQUEST_URI|escape:'url'}">{tr}Share this page{/tr}</a>
@@ -105,12 +106,15 @@
 												<a title="{tr}Email this page{/tr}" href="tiki-tell_a_friend.php?url={$smarty.server.REQUEST_URI|escape:'url'}">{tr}Email this page{/tr}</a>
 											</div>
 										{/if}
+*}
 											{error_report}
 											{if $display_msg}
 												{remarksbox type="note" title="{tr}Notice{/tr}"}{$display_msg|escape}{/remarksbox}
 											{/if}
 											<div id="role_main">
-												{$mid_data}  {* You can modify mid_data using tiki-show_page.tpl *}
+												{block name=title}{/block}
+												{block name=content}{/block}
+												{block name=show_content}{/block}{* Help separate the page content from the whole page. Must be defined at root to work. AB *}
 											</div>
 											{if $prefs.module_zones_pagebottom eq 'fixed' or ($prefs.module_zones_pagebottom ne 'n' && ! zone_is_empty('pagebottom'))}
 												{modulelist zone=pagebottom}
@@ -132,6 +136,7 @@
 							{if $prefs.feature_fullscreen != 'y' or $smarty.session.fullscreen != 'y'}
 								{if  $prefs.feature_right_column eq 'fixed' or ($prefs.feature_right_column ne 'n' && ! zone_is_empty('right') && $show_columns.right_modules ne 'n') or (isset($module_pref_errors) and $module_pref_errors)}
 									<div class="clearfix" id="col3"{if $prefs.feature_right_column eq 'user'} style="display:{if isset($cookie.show_col3) and $cookie.show_col3 ne 'y'} none{else} block{/if}{* mobile *};"{/if}{if $prefs.feature_bidi eq 'y'} dir="rtl"{/if}>
+										{block name=zone_right}
 										{modulelist zone=right class="content modules"}
 										{if $module_pref_errors}
 											<div data-role="collapsible" data-theme="{$prefs.mobile_theme_modules}" data-collapsed="true">
@@ -150,6 +155,7 @@
 												{/remarksbox}
 											</div>
 										{/if}
+										{/block}
 									</div>
 									<br style="clear:both" />
 								{/if}
@@ -203,3 +209,5 @@ if (typeof $.mobile === "undefined") {
 {if !empty($smarty.request.show_smarty_debug)}
 	{debug}
 {/if}
+
+
