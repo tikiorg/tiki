@@ -297,7 +297,7 @@ FORM;
 
 				this.data = data;
 
-				this.save();
+				this.save(true);
 			},
 			addDate: function(date) {
 				if (!date) return;
@@ -339,9 +339,10 @@ FORM;
 				this.data = newData.join('$n');
 				this.save();
 			},
-			save: function() {
+			save: function(reload) {
 				$("#page-data").modal(tr("Loading..."));
 
+				var needReload = reload != undefined;
 				var params = {
 					page: "$page",
 					content: $.trim(this.data),
@@ -355,12 +356,16 @@ FORM;
 				};
 				$.post("tiki-wikiplugin_edit.php", params, function() {
 					$.get($.service("wiki", "get_page", {page: "$page"}), function (data) {
-						if (data) {
-							var newForm = $("#pluginConvene$i", data);
-							$("#pluginConvene$i", "#page-data").replaceWith(newForm);
+						if (needReload) {
+							history.go(0);
+						} else {
+							if (data) {
+								var newForm = $("#pluginConvene$i", data);
+								$("#pluginConvene$i", "#page-data").replaceWith(newForm);
+							}
+							initConvene$i();
+							$("#page-data").modal();
 						}
-						initConvene$i();
-						$("#page-data").modal();
 					});
 
 				});
@@ -431,7 +436,10 @@ FORM;
 
 			$('.conveneDeleteUser$i')
 				.click(function() {
-					convene$i.deleteUser($(this).data("user"));
+					if (confirm(tr("Are you sure you want to remove this user's votes?") + "\\n" +
+							tr("There is no undo"))) {
+						convene$i.deleteUser($(this).data("user"));
+					}
 					return false;
 				});
 
