@@ -1,4 +1,4 @@
-{* $Id: tiki.tpl 45260 2013-03-21 19:41:19Z lphuberdeau $ *}<!DOCTYPE html>
+{* $Id $ *}<!DOCTYPE html>
 <html lang="{if !empty($pageLang)}{$pageLang}{else}{$prefs.language}{/if}"{if !empty($page_id)} id="page_{$page_id}"{/if}>
 <head>
     {include file='header.tpl'}
