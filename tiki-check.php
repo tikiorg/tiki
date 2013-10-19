@@ -334,7 +334,7 @@ if (version_compare(PHP_VERSION, '5.1.0', '<')) {
 	);
 } elseif (version_compare(PHP_VERSION, '5.2.0', '<')) {
 	$php_properties['PHP version'] = array(
-		'fitness' => tra('ugly'),
+		'fitness' => tra('bad'),
 		'setting' => phpversion(),
 		'message' => 'You have a quite old version of PHP. You can run Tiki 6.x LTS but not later versions.'
 	);
@@ -342,7 +342,13 @@ if (version_compare(PHP_VERSION, '5.1.0', '<')) {
 	$php_properties['PHP version'] = array(
 		'fitness' => tra('ugly'),
 		'setting' => phpversion(),
-		'message' => 'You have a somewhat old version of PHP. You can run Tiki 6.x LTS or 9.x LTS but not later versions.'
+		'message' => 'You have an old version of PHP. You can run Tiki 6.x LTS or 9.x LTS but not later versions.'
+	);
+} elseif (version_compare(PHP_VERSION, '5.5.0', '<')) {
+	$php_properties['PHP version'] = array(
+		'fitness' => tra('ugly'),
+		'setting' => phpversion(),
+		'message' => 'You have a somewhat old version of PHP. You can run Tiki 6.x LTS, 9.x LTS or 12.x LTS but not later versions.'
 	);
 } else {
 	$php_properties['PHP version'] = array(
