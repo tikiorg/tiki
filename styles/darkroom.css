@@ -1321,6 +1321,12 @@ textarea.wikiedit {
 	font-size: 1.1em;
 }
 
+.TextArea-fullscreen .actions, .CodeMirror-fullscreen .actions {
+	background: #4e4e4e url(darkroom/button.png) 0 2px repeat-x;
+	color: #b2b2b2;
+	border-top: #666 1px solid;
+}
+
 /* Wiki plugins */
 /* Code plugin  */
 .code {

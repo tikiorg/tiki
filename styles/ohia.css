@@ -658,6 +658,12 @@ h1 a.pagetitle:hover {
 #wikihelp-tab table td {padding: 2px}
 #textarea-toolbar {background: white}
 
+.TextArea-fullscreen .actions, .CodeMirror-fullscreen .actions {
+	background-color: #000;
+	color: #F4F4F4;
+	border-top: #777 1px solid;
+}
+
 /* Wiki plugins */
 
 /* Code plugin  */
