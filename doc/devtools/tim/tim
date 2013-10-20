@@ -21,7 +21,6 @@ OPTIONS:
    -u      username on Tiki.org 
    -U      userid on Tiki.org 
    -t      SVN Tag (Tiki version)
-   -s      subcommand (with command info) (one of: versions)
    -p      admin password (simple passwords only)
    -P      Subdirectory path
 EOF
@@ -37,7 +36,8 @@ do
 		c)
 			# SSH always passes -c, so we catch it
 			# maybe we can use it later
-			COMMAND=$(echo "$OPTARG" | tr A-Z a-z | sed -e 's/[^a-z]//g')
+			COMMAND=$(echo "$OPTARG" | tr A-Z a-z | sed -e 's/[^a-z:]//g' | sed -e 's/:.*//')
+			SUBCOMMAND=$(echo "$OPTARG" | tr A-Z a-z | sed -e 's/[^a-z:]//g' | sed -e 's/.*://')
 			;;
 		i)
 			ID=$(echo "$OPTARG" | sed -e 's/[^0-9]//g')
@@ -54,9 +54,6 @@ do
 			;;
 		p)
 			APASSWORD=$(echo "$OPTARG" | sed -e 's/[^a-zA-Z0-9.]//g')
-			;;
-		s)
-			SUBCOMMAND=$(echo "$OPTARG" | tr A-Z a-z | sed -e 's/[^a-z]//g')
 			;;
 		P)
 			TPATH="$OPTARG"
