@@ -500,7 +500,11 @@ class ToolbarCkOnly extends Toolbar
 
 		switch( $name ) {
 		case 'templates':
-			return new self( 'Templates' );
+			if ($prefs['feature_wiki_templates'] === 'y') {
+				return new self( 'Templates' );
+			} else {
+				return null;
+			}
 		case 'cut':
 			return new self( 'Cut' );
 		case 'copy':
