@@ -10,6 +10,9 @@ if [[ -f /usr/local/etc/tim.conf ]]; then . /usr/local/etc/tim.conf ;fi
 if [[ -f /etc/tim.conf ]]; then . /etc/tim.conf ;fi
 if [[ -f ~/.tim.conf ]]; then . ~/.tim.conf ;fi
 
+# SVN uppable stuff
+BRANCHES="trunk 12.x"
+
 # Set our common variables
 if [[ -z $TUSER ]] || [[ "$TUSER" == "" ]]; then TUSER="user"; fi
 SUBDOMAIN=$TUSER-$TUSERID-$ID

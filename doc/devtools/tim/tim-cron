@@ -9,8 +9,11 @@ setup()
 
 setup
 
-cd $SVN_CACHE/trunk/
-svn up > /dev/null
-touch $SVN_CACHE/trunk.lock
-tar -czf $SVN_CACHE/tmp_trunk.tgz . && mv $SVN_CACHE/tmp_trunk.tgz $SVN_CACHE/trunk.tar.gz
-/bin/rm $SVN_CACHE/trunk.lock
+for BRANCH in $BRANCHES;
+do
+	cd $SVN_CACHE/$BRANCH/
+	svn up > /dev/null
+	touch $SVN_CACHE/$BRANCH.lock
+	tar -czf $SVN_CACHE/tmp_$BRANCH.tgz . && mv $SVN_CACHE/tmp_$BRANCH.tgz $SVN_CACHE/$BRANCH.tar.gz
+	/bin/rm $SVN_CACHE/$BRANCH.lock
+done
