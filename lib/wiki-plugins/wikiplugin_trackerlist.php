@@ -1279,11 +1279,11 @@ function wikiplugin_trackerlist($data, $params)
 							} elseif (preg_match('/(not)?categories\(([0-9]+)\)/', $evs[$i], $matches)) {
 								global $categlib; include_once('lib/categories/categlib.php');
 								if (ctype_digit($matches[2]) && $matches[2] > 0) {
-									$filter = array('identifier'=>$matches[2], 'type'=>'descendants');
+									$cfilter = array('identifier'=>$matches[2], 'type'=>'descendants');
 								} else {
-									$filter = NULL;
+									$cfilter = NULL;
 								}
-								$categs = $categlib->getCategories($filter, true, false);
+								$categs = $categlib->getCategories($cfilter, true, false);
 								$l = array($matches[2]);
 								foreach ($categs as $cat) {
 									$l[] = $cat['categId'];
