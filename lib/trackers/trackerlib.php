@@ -3851,8 +3851,8 @@ class TrackerLib extends TikiLib
 				$f['options_array'] = explode(',', $f['options']);
 				if (ctype_digit($f['options_array'][0]) && $f['options_array'][0] > 0) {
 					$type = (isset($f['options_array'][3]) && $f['options_array'][3] == 1) ? 'descendants' : 'children';
-					$filter = array('identifier'=>$f['options_array'][0], 'type'=>$type);
-					$field_categs = $categlib->getCategories($filter, true, false);
+					$cfilter = array('identifier'=>$f['options_array'][0], 'type'=>$type);
+					$field_categs = $categlib->getCategories($cfilter, true, false);
 				} else {
 					$field_categs = array();
 				}
