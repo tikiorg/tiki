@@ -351,13 +351,24 @@ function _breadcrumb_getTitle($crumbs, $loc)
 		include_once('tiki-sefurl.php');
 		$ret .= '" href="'.filter_out_sefurl($crumbs[$len-1]->url).'">';
 	}
-	if ($prefs['feature_breadcrumbs'] == 'n' && $loc == "admin")
+	if ($prefs['feature_breadcrumbs'] == 'n' && $loc == "admin") {
 		$ret .= tra("Administration:")." ";
+	}
+
+	// Should show alias if in structure
+	$cur_title = $crumbs[$len-1]->title;
+	if ($structure == 'y') {
+		foreach ($structure_path as $crumb){
+			if ($crumb['pageName'] == $cur_title && $crumb['page_alias'] != '') {
+				$cur_title = $crumb['page_alias'];
+			}
+		}
+	}
 	if (!empty($prefs['wiki_pagename_strip'])) {
 		include_once('lib/smarty_tiki/modifier.pagename.php');
-		$ret .= tra(smarty_modifier_pagename($crumbs[$len-1]->title)).'</a>';
+		$ret .= tra(smarty_modifier_pagename($cur_title)).'</a>';
 	} else {
-		$ret .= htmlentities(tra($crumbs[$len-1]->title), ENT_QUOTES, 'UTF-8').'</a>';
+		$ret .= htmlentities(tra($cur_title), ENT_QUOTES, 'UTF-8').'</a>';
 	}
 	$ret .= help_doclink(array('crumb'=>$crumbs[$len-1]));
 	if ( isset($info['flag']) && $info['flag'] == 'L' && $print_page != 'y' ) {

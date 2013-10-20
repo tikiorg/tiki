@@ -688,6 +688,7 @@ a.toolbar {			/* each tool button */
 	background: #fff;
 	border: thin solid #000;
 	color: #000;
+	padding: 4px;
 }
 
 .toolbars-picker.specialchar {	/* colours, smilies etc */
@@ -695,7 +696,7 @@ a.toolbar {			/* each tool button */
 }
 
 .toolbars-picker a {
-	padding: 0;
+	padding: 4px 0 4px 4px;
 	margin: 0;
 	display: inline-block;
 	border: #fff 1px solid;

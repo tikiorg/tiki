@@ -830,7 +830,8 @@ a.admbox.off,
 .admintoclevel,
 .post .postbody-title,
 .post .author_info,
-#outerToc-static {
+#outerToc-static,
+.toolbars-picker {
 	border-radius: 4px;
 	-moz-border-radius: 4px;
 	-webkit-border-radius: 4px;

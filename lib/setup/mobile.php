@@ -42,6 +42,10 @@ if ( !isset($_REQUEST['mobile_mode']) || $_REQUEST['mobile_mode'] === 'y' ) {
 		$prefs['fgal_show_explorer'] = 'n';
 		$prefs['feature_fixed_width'] = 'n';
 		$prefs['fgal_elfinder_feature'] = 'n';
+		$prefs['wiki_auto_toc'] = 'n';
+		$prefs['feature_smileys'] = 'n';
+		$prefs['feature_jcapture'] = 'n';
+		$prefs['site_layout'] = 'mobile';
 
 		$headerlib = TikiLib::lib('header');
 		$headerlib->add_js('function sfHover() {alert("not working?");}', 100);	// try and override the css menu func

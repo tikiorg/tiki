@@ -53,9 +53,6 @@ JS
     }
 	// some defaults
 	$params['_toolbars'] = isset($params['_toolbars']) ? $params['_toolbars'] : 'y';
-	if ($prefs['mobile_feature'] === 'y' && $prefs['mobile_mode'] === 'y') {
-		$params['_toolbars'] = 'n';
-	}
 	if ( $prefs['javascript_enabled'] != 'y') {
 		$params['_toolbars'] = 'n';
 	}

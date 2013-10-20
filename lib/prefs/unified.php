@@ -184,7 +184,7 @@ function prefs_unified_list()
 			'name' => tra('Exclude all plugins'),
 			'description' => tra('If enabled, indexing will exclude all plugins.'),
 			'type' => 'flag',
-			'default' => 'n',
+			'default' => 'y',
 		),
 		'unified_included_plugins' => array(
 			'name' => tra('Except included plugins'),
