@@ -90,9 +90,9 @@ destroy()
 {
 	mysql -e "DROP DATABASE $DB;" && echo "DATABASE $DB suppressed" || echo "ERROR: database $DB not suppressed"
 	rm -r $INSTANCE_DIR && echo "FILES in $INSTANCE_DIR suppressed" || echo "ERROR: FILES in $INSTANCE_DIR not suppressed"
-	if [[ -f $LOCKSDIR/lock_${TUSERID}_${ID} ]] 
+	if [[ -f $INSTANCE_LOCK ]] 
 	then
-		rm $LOCKSDIR/lock_${TUSERID}_${ID} && echo "LOCK file removed" || echo "ERROR: LOCK file could not be removed"
+		rm $INSTANCE_LOCK && echo "LOCK file removed" || echo "ERROR: LOCK file could not be removed"
 	fi
 }
 
@@ -172,7 +172,7 @@ info()
 			elif [[ $(ls -d -1 *-${TUSERID}-${ID} 2>/dev/null | wc -l ) == 1 ]]
 			then 
 				SUBDOMAIN=$(ls -d -1 *-${TUSERID}-${ID})
-				if [[ -e $LOCKSDIR/lock_${TUSERID}_${ID} ]]
+				if [[ -e $INSTANCE_LOCK ]]
 				then
 					echo "STATUS: BUILDING"
 				else
@@ -189,9 +189,9 @@ info()
 				SUBDOMAIN=$(ls -d -1 *-${TUSERID}-${ID})
 				if [[ ! -z $TUSER ]] && [[ -d "$TUSER-$TUSERID-$ID" ]]
 				then
-					if [[ -e $LOCKSDIR/lock_${TUSERID}_${ID} ]]
+					if [[ -e $INSTANCE_LOCK ]]
 					then
-						BEINGBUILT=$(/bin/cat "${LOCKSDIR}/lock_${TUSERID}_${ID}")
+						BEINGBUILT=$(/bin/cat "${INSTANCE_LOCK}")
 						if [[ "${BEINGBUILT}" == "${TUSER}" ]]
 						then
 							echo "STATUS: BUILDING"
@@ -229,7 +229,7 @@ case ${COMMAND} in
 		echo "SITE: ${SUBDOMAIN}.show.tikiwiki.org "
 		echo "LOG: http://${SUBDOMAIN}.show.tikiwiki.org/install_log.txt (available after a delay)"
 		# This is simply too long for synchronous feedback
-		nohup $PREFIX/tim-create -t "$SVNTAG" -u "$TUSER" -U "$TUSERID" -i "$ID" 1>$INSTANCE_DIR/install_log.txt 2>&1 &
+		nohup $PREFIX/tim-create -t "$SVNTAG" -u "$TUSER" -U "$TUSERID" -i "$ID"
 		exit 0
 		;;
 	destroy)

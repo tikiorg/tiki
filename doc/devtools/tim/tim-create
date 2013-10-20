@@ -71,9 +71,9 @@ debug()
 
 create()
 {
-	if [[ -e $LOCKSDIR/lock_${TUSERID}_${ID} ]] ; then echo "FAIL: Lock file already exists. Another install is being performed"; exit 1; fi
+	if [[ -e $INSTANCE_LOCK ]] ; then echo "FAIL: Lock file already exists. Another install is being performed"; exit 1; fi
 	#TODO: remove stale locks
-	echo "${TUSER}" > "${LOCKSDIR}/lock_${TUSERID}_${ID}" || (echo "FAIL: Failed to create lock file ${LOCKSDIR}/lock_${TUSERID}_${ID}"; exit 1)
+	echo "${TUSER}" > "${INSTANCE_LOCK}" || (echo "FAIL: Failed to create lock file ${INSTANCE_LOCK}"; exit 1)
 
 	mkdir $INSTANCE_DIR || echo "FAIL: $INSTANCE_DIR not created"
 
@@ -153,7 +153,7 @@ EOT
 UPDATE tiki_pages SET data=CONCAT('{REMARKSBOX(type="information" title="Show community server" close="y")}${infotext}{REMARKSBOX} ',data) WHERE page_id=1;
 EOQ
 
-	/bin/rm $LOCKSDIR/lock_${TUSERID}_${ID} || (echo "FAIL: Failed to suppress lock file $LOCKSDIR/lock_${TUSERID}_${ID}"; exit 1)
+	/bin/rm $INSTANCE_LOCK || (echo "FAIL: Failed to suppress lock file $INSTANCE_LOCK"; exit 1)
 }
 
 echo "CREATION START - watch ${SUBDOMAIN}.show.tikiwiki.org "
