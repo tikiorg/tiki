@@ -512,9 +512,9 @@ class ToolbarCkOnly extends Toolbar
 		case 'paste':
 			return new self( 'Paste' );
 		case 'pastetext':
-			return new self( 'PasteText' );
+			return null; // new self( 'PasteText' );
 		case 'pasteword':
-			return new self( 'PasteFromWord' );
+			return null; // new self( 'PasteFromWord' );
 		case 'print':
 			return new self( 'Print' );
 		case 'spellcheck':
@@ -577,6 +577,8 @@ class ToolbarCkOnly extends Toolbar
 			return new self( 'BidiRtl' );
 		case 'image':
 			return new self( 'Image' );
+		case 'table':
+			return new self( 'Table' );
 		}
 	} // }}}
 
