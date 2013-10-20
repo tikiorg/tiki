@@ -56,13 +56,13 @@
 # Using ETags will improve the YSlow scores
 FileETag none
 
-# If the site is stable, might be worth setting the expires header on all files for optimization.
-#<IfModule mod_expires.c>
-#	<FilesMatch "\.(js|png|gif|jpg|css|ico)$">
-#		ExpiresActive on
-#		ExpiresDefault "access plus 6 months"
-#	</FilesMatch>
-#</IfModule>
+# Expires headers: If the site is in active development, you may want to comment out this section.
+<IfModule mod_expires.c>
+	<FilesMatch "\.(js|png|gif|jpg|css|ico)$">
+		ExpiresActive on
+		ExpiresDefault "access plus 1 month"
+	</FilesMatch>
+</IfModule>
 
 # if you want to use the Web Server Auth
 #AuthType Basic
