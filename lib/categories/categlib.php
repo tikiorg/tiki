@@ -981,7 +981,7 @@ class CategLib extends ObjectLib
 	// Format a list of objects in the given categories, returning HTML code.
 	function get_categoryobjects($catids,$types="*",$sort='created_desc',$split=true,$sub=false,$and=false, $maxRecords = 500, $filter=null, $displayParameters = array())
 	{
-		global $smarty, $prefs;
+		global $smarty, $prefs, $user;
 
 		$typetokens = array(
 			"article" => "article",
@@ -1072,6 +1072,9 @@ class CategLib extends ObjectLib
 		}
 		$out=$smarty->fetch("categobjects_title.tpl");
 		foreach ($catids as $id) {
+			if (!$this->user_has_perm_on_object($user, $id, 'category', 'tiki_p_view_category')) {
+				continue;
+			} 
 			$titles["$id"] = $this->get_category_name($id);
 			$objectcat = array();
 			$objectcat = $this->list_category_objects($id, $offset, $and? -1: $maxRecords, $sort, $types == '*'? '': $typesallowed, $find, $sub, false, $filter);
