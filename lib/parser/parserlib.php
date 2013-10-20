@@ -93,6 +93,8 @@ class ParserLib extends TikiDb_Bridge
 				'include_plugins' => array(),
 			), empty($option) ? array() : (array) $this->option, (array)$option
 		);
+		$this->option['include_plugins'] = array_map('strtolower', $this->option['include_plugins']);
+		$this->option['exclude_plugins'] = array_map('strtolower', $this->option['exclude_plugins']);
 	}
 
 	function __construct()
@@ -425,12 +427,12 @@ class ParserLib extends TikiDb_Bridge
 			$plugin_parent = isset($plugin_name) ? $plugin_name : false;
 			$plugin_name = $match->getName();
 
-			if ((!isset($this->option['exclude_all_plugins']) || !$this->option['exclude_all_plugins']) && isset($this->option['exclude_plugins']) && in_array($plugin_name, $this->option['exclude_plugins'])) {
+			if (!$this->option['exclude_all_plugins'] && !empty($this->option['exclude_plugins']) && in_array($plugin_name, $this->option['exclude_plugins'])) {
 				$match->replaceWith('');
 				continue;
 			}
 
-			if (isset($this->option['exclude_all_plugins']) && $this->option['exclude_all_plugins'] && (!isset($this->option['include_plugins']) || !in_array($plugin_name, $this->option['include_plugins']))) {
+			if ($this->option['exclude_all_plugins'] && (empty($this->option['include_plugins']) || !in_array($plugin_name, $this->option['include_plugins']))) {
 				$match->replaceWith('');
 				continue;
 			}
