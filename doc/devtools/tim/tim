@@ -128,8 +128,10 @@ reset()
 
 update()
 {
+	echo "UPDATING" > $INSTANCE_LOCK
 	cd $INSTANCE_DIR
 	svn up
+	rm $INSTANCE_LOCK
 }
 
 info()
