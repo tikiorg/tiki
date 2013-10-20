@@ -95,6 +95,12 @@ body {
 	padding: .5em 1em;
 }
 
+/* toolbars */
+
+.helptool-admin {
+	display: none;	/* need jquery-ui dialogs */
+}
+
 /* reduce visual clutter */
 .cachedStatus {
 	display: none;

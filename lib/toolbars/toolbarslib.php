@@ -411,7 +411,7 @@ abstract class Toolbar
 
 	function getSelfLink( $click, $title, $class )
 	{ // {{{
-		global $smarty;
+		global $smarty, $prefs;
 
 		$params = array();
 		$params['_onclick'] = $click . (substr($click, strlen($click)-1) != ';' ? ';' : '') . 'return false;';
@@ -424,7 +424,11 @@ abstract class Toolbar
 			$params['_menu_text'] = 'y';
 			$params['_menu_icon'] = 'y';
 		}
-		return smarty_block_self_link($params, $content, $smarty);
+		if ($prefs['mobile_mode'] !== 'y') {
+			return smarty_block_self_link($params, $content, $smarty);
+		} else {
+			return str_replace('<a ', '<a data-role="button" ', smarty_block_self_link($params, $content, $smarty));
+		}
 	} // }}}
 
 	protected function setupCKEditorTool($js, $name, $label = '', $icon = '')
@@ -895,8 +899,13 @@ class ToolbarPicker extends Toolbar
 
 	public static function fromName( $tagName ) // {{{
 	{
-		global $headerlib, $section;
-		$prefs = array();
+		global $headerlib, $section, $prefs;
+
+		if ($prefs['mobile_mode'] === 'y') {
+			return '';
+		}
+
+		$tool_prefs = array();
 		$styleType = '';
 
 		switch( $tagName ) {
@@ -913,7 +922,7 @@ class ToolbarPicker extends Toolbar
 			$label = tra('Smileys');
 			$icon = tra('img/smiles/icon_smile.gif');
 			$rawList = array( 'biggrin', 'confused', 'cool', 'cry', 'eek', 'evil', 'exclaim', 'frown', 'idea', 'lol', 'mad', 'mrgreen', 'neutral', 'question', 'razz', 'redface', 'rolleyes', 'sad', 'smile', 'surprised', 'twisted', 'wink', 'arrow', 'santa' );
-			$prefs[] = 'feature_smileys';
+			$tool_prefs[] = 'feature_smileys';
 
 			$list = array();
 			global $headerlib;
@@ -994,7 +1003,7 @@ class ToolbarPicker extends Toolbar
 			->setName($tagName)
 			->setStyleType($styleType);
 
-		foreach ( $prefs as $pref ) {
+		foreach ( $tool_prefs as $pref ) {
 			$tag->addRequiredPreference($pref);
 		}
 
@@ -1091,6 +1100,11 @@ class ToolbarDialog extends Toolbar
 	public static function fromName( $tagName ) // {{{
 	{
 		global $prefs;
+
+		if ($prefs['mobile_mode'] === 'y') {
+			return '';
+		}
+
 		$tool_prefs = array();
 
 		switch( $tagName ) {
@@ -2007,7 +2021,11 @@ class ToolbarsList
 
 					if ( !empty($groupHtml) ) {
 						$param = empty($lineBit) ? '' : ' class="toolbar-list"';
-						$lineBit .= "<span$param>$groupHtml</span>";
+						if ($prefs['mobile_mode'] !== 'y') {
+							$lineBit .= "<span$param>$groupHtml</span>";
+						} else {
+							$lineBit .= "<span$param data-role='controlgroup' data-type='horizontal'>$groupHtml</span>";
+						}
 					}
 					if ($bitx == 1) {
 						if (!empty($right)) {
