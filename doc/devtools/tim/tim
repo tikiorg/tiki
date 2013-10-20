@@ -16,7 +16,7 @@ usage: $0 -c <command> -u <user> -t <svn tag> -i <instance id>
 
 OPTIONS:
    -h      Show this message
-   -c      Command (one of: create, destroy, snapshot, debug, info, upgrade, reset)
+   -c      Command (one of: create, destroy, snapshot, debug, info, update, reset)
    -i      id of instance
    -u      username on Tiki.org 
    -U      userid on Tiki.org 
@@ -126,7 +126,7 @@ reset()
 	mysql -e "UPDATE users_users SET password='admin', hash= md5('${APASSWORD}') WHERE login='admin';" $DB_DETECTED && echo "SUCCESS: Admin password reset to ${APASSWORD} in database ${DB_DETECTED}" || echo "ERROR: admin password not reset in database ${DB_DETECTED}"
 }
 
-upgrade()
+update()
 {
 	cd $INSTANCE_DIR
 	svn up
@@ -287,7 +287,7 @@ case ${COMMAND} in
 		# TODO: Show links
 		exit 0
 		;;
-	upgrade)
+	update)
 		if [[ -z $TUSERID ]] || [[ -z $ID ]]
 		then
 			usage
