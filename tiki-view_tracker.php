@@ -447,6 +447,12 @@ if ($my and $writerfield) {
 	$exactvalue = '';
 }
 $smarty->assign('filtervalue', $filtervalue);
+if (is_array($filtervalue)) {
+	foreach ($filtervalue as $fil) {
+		$filtervalueencoded = "&amp;filtervalue[" . rawurlencode($filterfield) . "][]=" . rawurlencode($fil);
+	}
+	$smarty->assign('filtervalueencoded', $filtervalueencoded);
+}
 $smarty->assign('status', $_REQUEST["status"]);
 if (isset($_REQUEST["trackerId"])) {
 	$trackerId = $_REQUEST["trackerId"];
