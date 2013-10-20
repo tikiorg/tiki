@@ -579,6 +579,12 @@ class ToolbarCkOnly extends Toolbar
 			return new self( 'Image' );
 		case 'table':
 			return new self( 'Table' );
+		case 'tikilink':
+			return null; // new self( 'Link' );
+		case 'link':
+			return new self( 'Link' );
+		case 'unlink':
+			return new self( 'Unlink' );
 		}
 	} // }}}
 
