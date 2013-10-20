@@ -49,6 +49,10 @@ h1,h2,h3,h4,h5,h6, #top .pagetitle a {
 	color: #888;
 }
 
+#top_modules .box-login_box {
+	bottom: -6px;
+}
+
 .button a,
 .button a:visited,
 button,
