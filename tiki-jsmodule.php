@@ -16,7 +16,7 @@
  * Cached by language to allow translations
  */
 header('content-type: application/x-javascript');
-header('Expires: ' . gmdate('D, d M Y H:i:s', time()+3600*24*365*10) . ' GMT');
+header('Expires: ' . gmdate('D, d M Y H:i:s', time()+3600*24*30) . ' GMT');
 
 require_once 'tiki-filter-base.php';
 
