@@ -216,22 +216,16 @@ info()
 case ${COMMAND} in
 	create)
 		# TODO: Check INSTANCE_DIR not exists
-		# TODO: Find next ID and use that instead of -i
-		# TODO: Make use of userId (option -U)
 		if [[ -z $TUSERID ]] || [[ -z $SVNTAG ]]
 		then
 			echo "FAIL: Missing parameters"
 			usage
 			exit 1
 		fi
-		if [[ -z $TUSER ]]
-		then
-			TUSER="user"
-		fi
+
 		echo "START: ${COMMAND}"
 		echo "SITE: ${SUBDOMAIN}.show.tikiwiki.org "
 		echo "LOG: http://${SUBDOMAIN}.show.tikiwiki.org/install_log.txt (available after a delay)"
-		mkdir $INSTANCE_DIR || echo "FAIL: $INSTANCE_DIR not created"
 		# This is simply too long for synchronous feedback
 		nohup $PREFIX/tim-create -t "$SVNTAG" -u "$TUSER" -U "$TUSERID" -i "$ID" 1>$INSTANCE_DIR/install_log.txt 2>&1 &
 		exit 0

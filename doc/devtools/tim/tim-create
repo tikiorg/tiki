@@ -75,6 +75,8 @@ create()
 	#TODO: remove stale locks
 	echo "${TUSER}" > "${LOCKSDIR}/lock_${TUSERID}_${ID}" || (echo "FAIL: Failed to create lock file ${LOCKSDIR}/lock_${TUSERID}_${ID}"; exit 1)
 
+	mkdir $INSTANCE_DIR || echo "FAIL: $INSTANCE_DIR not created"
+
 	# Trunk cache gets updated via cron every now and then
 	# we lock it, so we don't install from a broken tarball
 	while [[ -e $SVN_CACHE/$SVNTAG.lock ]];
