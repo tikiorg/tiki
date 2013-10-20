@@ -112,14 +112,14 @@
 						{/jq}
 						{/if}
 
-						<span class="button btn-default">
-							<a id="comment-toggle" href="{service controller=comment action=list type="wiki page" objectId=$page}#comment-container">
+						{*<span class="button btn-default"> mobile *}
+							<a class="btn btn-default" data-role="button" id="comment-toggle" href="{service controller=comment action=list type="wiki page" objectId=$page}#comment-container">
 								{tr}Comments{/tr}
 								{if $count_comments}
 									&nbsp;(<span class="count_comments">{$count_comments}</span>)
 								{/if}
 							</a>
-						</span>
+						{*</span> mobile*}
 						{jq}
 							$('#comment-toggle').comment_toggle();
 						{/jq}

@@ -89,6 +89,12 @@ body {
 	border-bottom-right-radius: 		.6em;
 }
 
+/* popups */
+
+.ui-popup {
+	padding: .5em 1em;
+}
+
 /* reduce visual clutter */
 .cachedStatus {
 	display: none;
