@@ -19,8 +19,17 @@ if [[ -z $TUSER ]] || [[ "$TUSER" == "" ]]; then TUSER="user"; fi
 SUBDOMAIN=$TUSER-$TUSERID-$ID
 DB=${TUSER}_${TUSERID}_${ID}
 INSTANCE_DIR=$WEBROOT/$SUBDOMAIN
+INFOFILE=$INSTANCE_DIR/info.txt
+INSTANCE_LOG="${INSTANCE_DIR}/install_log.txt"
 if [[ -f ${INSTANCE_DIR}/db/local.php ]]; then DB_DETECTED=$(grep "^\$dbs_tiki" ${INSTANCE_DIR}/db/local.php | cut -d"'" -f2| tail -n 1); fi
 INSTANCE_LOCK="${LOCKSDIR}/${SUBDOMAIN}.lock"
+if [[ -f $INSTANCE_LOCK ]]; then INSTANCE_LOCK_REASON=`cat ${INSTANCE_LOCK}`; fi
+
+log()
+{
+	echo
+	echo "== TIM" `date` : "$@"
+}
 
 # Check for maintenance and die
 if [[ -f $TIM_LOCK ]];

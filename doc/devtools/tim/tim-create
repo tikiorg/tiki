@@ -8,6 +8,24 @@ setup()
 		. $MY_PATH/tim-common
 }
 
+#--- onexit() -----------------------------------------------------
+#  @param $1 integer  (optional) Exit status.  If not set, use `$?'
+function onexit() {
+    local exit_status=${1:-$?}
+    if [ $exit_status != 0 ];
+    then
+	log "FAILED INSTALL"
+	echo "FAILED INSTALL" > ${INSTANCE_LOCK}
+    else
+	log "FINISHED SUCCESSFULLY"
+	rm ${INSTANCE_LOCK}
+    fi
+    echo Exiting $0 with exit status: $exit_status
+    exit $exit_status
+}
+
+trap onexit 1 2 3 15 ERR
+
 usage()
 {
 cat << EOF
@@ -71,34 +89,54 @@ debug()
 
 create()
 {
-	if [[ -e $INSTANCE_LOCK ]] ; then echo "FAIL: Lock file already exists. Another install is being performed"; exit 1; fi
+	if [[ -e $INSTANCE_LOCK ]] ; then echo "FAIL: Lock file already exists. Reason: $INSTANCE_LOCK_REASON."; exit 1; fi
 	#TODO: remove stale locks
-	echo "${TUSER}" > "${INSTANCE_LOCK}" || (echo "FAIL: Failed to create lock file ${INSTANCE_LOCK}"; exit 1)
 
-	mkdir $INSTANCE_DIR || echo "FAIL: $INSTANCE_DIR not created"
+	if ! mkdir $INSTANCE_DIR;
+	then
+		echo "FAIL: $INSTANCE_DIR not created"
+		echo "FAILED: mkdir - contact admin" > ${INSTANCE_LOCK}
+		exit 1
+	fi
+
+	echo "CREATE" > "${INSTANCE_LOCK}" || (echo "FAIL: Failed to create lock file ${INSTANCE_LOCK}"; exit 1)
+
+	exec 1>"$INSTANCE_LOG" 2>&1
+
+	log "Starting instance creation"
 
 	# Trunk cache gets updated via cron every now and then
 	# we lock it, so we don't install from a broken tarball
 	while [[ -e $SVN_CACHE/$SVNTAG.lock ]];
 	do
+		log "Waiting for tarball lock"
 		sleep 5
 	done
 
+	log "Unpacking tarball"
 	tar -C $INSTANCE_DIR -xzf $SVN_CACHE/$SVNTAG.tar.gz
 
-	if [[ 'trunk' == "${SVNTAG}" ]]
+	if echo $BRANCHES | grep ${SVNTAG} > /dev/null;
 	then
+		log "SVN upping because this is $SVNTAG"
 		cd $INSTANCE_DIR
 		svn up
 	fi
 
+	log "Chown-ing everything to TIM user and group"
 	chown -R $TIM_USER.$TIM_GROUP $INSTANCE_DIR
+
+	log "Running setup.sh"
 	cd $INSTANCE_DIR
 	sh setup.sh -u $TIM_USER -g $TIM_GROUP -n fix
 
+	log "Creating database"
 	mysql -e "CREATE DATABASE $DB;"
+
+	log "Setting GRANTs on database"
 	mysql -e "GRANT ALL ON $DB.* TO tiki@localhost IDENTIFIED BY 'password';"
 
+	log "Creating local.php"
 	cat > $INSTANCE_DIR/db/local.php <<EOF
 <?php
 \$db_tiki='mysql';
@@ -117,15 +155,17 @@ EOF
 
 	if [[ -f $INSTANCE_DIR/installer/shell.php ]]
 	then
+		log "Running 'php installer/shell.php'"
 		cd $INSTANCE_DIR
 		/usr/bin/php installer/shell.php install
 	else
+		log "Old Tiki - populating database via tiki.sql"
 		mysql $DB < $INSTANCE_DIR/db/tiki.sql
 	fi
 
 	#########################################
 	# Start custom changes for show instances
-	echo "Starting extra steps special to show instances. Anything done below is not part of a standard Tiki installation."
+	log "Starting extra steps special to show instances. Anything done below is not part of a standard Tiki installation."
 
 	# Collect data useful to developpers in infotext
 	if [[ "${TUSER}" != "user" ]]; then FRIENDLYUSERNAME="${TUSER}"; fi
@@ -143,20 +183,15 @@ SVN info
 `svn info`
 EOT
 
-	# Create info.txt file with data useful to developpers
-	echo "Creating file http://${SUBDOMAIN}.show.tikiwiki.org/info.txt with extra info for developpers"
-	INFOFILE=$INSTANCE_DIR/info.txt
+	# Create info.txt file with data useful to developers
+	log "Creating file http://${SUBDOMAIN}.show.tikiwiki.org/info.txt with extra info for developers"
 	echo "$infotext" > ${INFOFILE}
-	# Inject data useful to developpers as remarksbox on top of homepage
-	echo "Inserting extra info for developpers in a box at the beginning of homepage"
+	# Inject data useful to developers as remarksbox on top of homepage
+	log "Inserting extra info for developers in a box at the beginning of homepage"
 	mysql $DB <<EOQ
 UPDATE tiki_pages SET data=CONCAT('{REMARKSBOX(type="information" title="Show community server" close="y")}${infotext}{REMARKSBOX} ',data) WHERE page_id=1;
 EOQ
-
-	/bin/rm $INSTANCE_LOCK || (echo "FAIL: Failed to suppress lock file $INSTANCE_LOCK"; exit 1)
 }
 
-echo "CREATION START - watch ${SUBDOMAIN}.show.tikiwiki.org "
 create
-echo "CREATION END - results in http://${SUBDOMAIN}.show.tikiwiki.org/install_log.txt (available after a delay)"
-exit 0
+onexit

@@ -174,7 +174,7 @@ info()
 				SUBDOMAIN=$(ls -d -1 *-${TUSERID}-${ID})
 				if [[ -e $INSTANCE_LOCK ]]
 				then
-					echo "STATUS: BUILDING"
+					echo "STATUS: $INSTANCE_LOCK_REASON"
 				else
 					echo "STATUS: ACTIVE"
 					grep Version $WEBROOT/$SUBDOMAIN/info.txt | sed -e 's/Version/VERSION/'
@@ -228,8 +228,13 @@ case ${COMMAND} in
 		echo "START: ${COMMAND}"
 		echo "SITE: ${SUBDOMAIN}.show.tikiwiki.org "
 		echo "LOG: http://${SUBDOMAIN}.show.tikiwiki.org/install_log.txt (available after a delay)"
+		if [[ -d $INSTANCE_DIR ]];
+		then
+			echo "FAIL: Instance exists"
+			exit 1
+		fi
 		# This is simply too long for synchronous feedback
-		nohup $PREFIX/tim-create -t "$SVNTAG" -u "$TUSER" -U "$TUSERID" -i "$ID"
+		$PREFIX/tim-create -t "$SVNTAG" -u "$TUSER" -U "$TUSERID" -i "$ID" &
 		exit 0
 		;;
 	destroy)
