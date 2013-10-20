@@ -175,6 +175,7 @@ info()
 					echo "STATUS: BUILDING"
 				else
 					echo "STATUS: ACTIVE"
+					grep Version $WEBROOT/$SUBDOMAIN/info.txt | sed -e 's/Version/VERSION/'
 				fi
 				if [[ ! -z $TUSER ]] && [[ "${SUBDOMAIN}" != "$TUSER-$TUSERID-$ID" ]]
 				then
