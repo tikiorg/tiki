@@ -89,6 +89,10 @@ debug()
 
 create()
 {
+	# tim-create runs as a separate process and doesn't know $COMMAND
+	# we set it manually here to be shown in logs
+	COMMAND="create"
+
 	if [[ -e $INSTANCE_LOCK ]] ; then echo "FAIL: Lock file already exists. Reason: $INSTANCE_LOCK_REASON."; exit 1; fi
 	#TODO: remove stale locks
 
@@ -168,25 +172,8 @@ EOF
 	# Start custom changes for show instances
 	log "Starting extra steps special to show instances. Anything done below is not part of a standard Tiki installation."
 
-	# Collect data useful to developpers in infotext
-	if [[ "${TUSER}" != "user" ]]; then FRIENDLYUSERNAME="${TUSER}"; fi
-	read -r -d '' infotext <<EOT
-This Tiki instance was created on the Tiki show community website
-Creation date: `date -u +%Y-%m-%d_%H-%M-%S`
-Version: ${SVNTAG}
-Related to Wish: http://dev.tiki.org/item${ID}
-Wish was created by user ${FRIENDLYUSERNAME}http://dev.tiki.org/user${TUSERID}
-Created as http://${SUBDOMAIN}.show.tikiwiki.org/
-Installation log: http://${SUBDOMAIN}.show.tikiwiki.org/install_log.txt
-This information is also kept here: http://${SUBDOMAIN}.show.tikiwiki.org/info.txt
+	mk_info
 
-SVN info
-`svn info`
-EOT
-
-	# Create info.txt file with data useful to developers
-	log "Creating file http://${SUBDOMAIN}.show.tikiwiki.org/info.txt with extra info for developers"
-	echo "$infotext" > ${INFOFILE}
 	# Inject data useful to developers as remarksbox on top of homepage
 	log "Inserting extra info for developers in a box at the beginning of homepage"
 	mysql $DB <<EOQ

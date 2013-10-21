@@ -141,6 +141,7 @@ update()
 	svn up
 	log "Running setup.sh"
 	sh setup.sh -u $TIM_USER -g $TIM_GROUP -n fix
+	mk_info
 	rm $INSTANCE_LOCK
 }
 
