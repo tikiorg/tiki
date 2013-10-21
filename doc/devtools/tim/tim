@@ -37,7 +37,9 @@ do
 			# SSH always passes -c, so we catch it
 			# maybe we can use it later
 			COMMAND=$(echo "$OPTARG" | tr A-Z a-z | sed -e 's/[^a-z:]//g' | sed -e 's/:.*//')
-			SUBCOMMAND=$(echo "$OPTARG" | tr A-Z a-z | sed -e 's/[^a-z:]//g' | sed -e 's/.*://')
+			# TODO: Have a regex that does this correctly without the need for the unset hack
+			SUBCOMMAND=$(echo "$OPTARG" | tr A-Z a-z | sed -e 's/[^a-z:]//g' | sed -e 's/[^:]*:\(.*\)/\1/')
+			if [ "$SUBCOMMAND" = "$COMMAND" ]; then unset SUBCOMMAND; fi
 			;;
 		i)
 			ID=$(echo "$OPTARG" | sed -e 's/[^0-9]//g')
