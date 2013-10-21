@@ -387,9 +387,9 @@ if (isset($_REQUEST['preview']) or !empty($errors)) {
 	$smarty->assign('edit_data', 'y');
 
 	if (isset($_REQUEST['allowhtml']) && $_REQUEST['allowhtml'] == 'on') {
-		$body = $_REQUEST['body'];
+		$body = $jitRequest->body->purifier();
 
-		$heading = $_REQUEST['heading'];
+		$heading = $jitRequest->heading->purifier();
 	} else {
 		$body = strip_tags($_REQUEST['body'], '<a><pre><p><img><hr><b><i>');
 
@@ -447,9 +447,9 @@ if (isset($_REQUEST['save']) && empty($errors)) {
 	}
 
 	if (isset($_REQUEST['allowhtml']) && $_REQUEST['allowhtml'] == 'on' || $_SESSION['wysiwyg'] == 'y') {
-		$body = $_REQUEST['body'];
+		$body = $jitRequest->body->purifier();
 
-		$heading = $_REQUEST['heading'];
+		$heading = $jitRequest->heading->purifier();
 	} else {
 		$body = strip_tags($_REQUEST['body'], '<a><pre><p><img><hr><b><i>');
 
