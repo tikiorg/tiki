@@ -101,7 +101,8 @@ create()
 
 	echo "CREATE" > "${INSTANCE_LOCK}" || (echo "FAIL: Failed to create lock file ${INSTANCE_LOCK}"; exit 1)
 
-	exec 1>"$INSTANCE_LOG" 2>&1
+	# Can only be called here because $INSTANCE_DIR needs to exist for $INSTANCE_LOG
+	startlog
 
 	log "Starting instance creation"
 

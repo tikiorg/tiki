@@ -31,6 +31,16 @@ log()
 	echo "== TIM" `date` : "$@"
 }
 
+startlog()
+{
+	exec 1>>"$INSTANCE_LOG" 2>&1
+	echo
+	echo "###########################################################################################"
+	log "TIM command: `echo $COMMAND | tr '[:lower:]' '[:upper:]'`"
+	echo "###########################################################################################"
+	echo
+}
+
 # Check for maintenance and die
 if [[ -f $TIM_LOCK ]];
 then

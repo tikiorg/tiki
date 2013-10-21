@@ -85,8 +85,14 @@ debug()
 
 destroy()
 {
+	startlog
+	log "Dropping database"
 	mysql -e "DROP DATABASE $DB;" && echo "DATABASE $DB suppressed" || echo "ERROR: database $DB not suppressed"
+
+	log "Removing webroot"
 	rm -r $INSTANCE_DIR && echo "FILES in $INSTANCE_DIR suppressed" || echo "ERROR: FILES in $INSTANCE_DIR not suppressed"
+
+	# No use logging after this point as we log into the webroot
 	if [[ -f $INSTANCE_LOCK ]] 
 	then
 		rm $INSTANCE_LOCK && echo "LOCK file removed" || echo "ERROR: LOCK file could not be removed"
@@ -95,6 +101,7 @@ destroy()
 
 reset()
 {
+	startlog
 	# Use detected database name unless there is none, then use expected
 	# If detected and expected don't match, display warning
 	# If none, display error and abort
@@ -125,9 +132,13 @@ reset()
 
 update()
 {
-	echo "UPDATING" > $INSTANCE_LOCK
+	startlog
+	echo "UPDATE" > $INSTANCE_LOCK
 	cd $INSTANCE_DIR
+	log "SVN upping"
 	svn up
+	log "Running setup.sh"
+	sh setup.sh -u $TIM_USER -g $TIM_GROUP -n fix
 	rm $INSTANCE_LOCK
 }
 
