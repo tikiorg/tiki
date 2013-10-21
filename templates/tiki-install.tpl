@@ -572,7 +572,7 @@
 	</fieldset>
 	{if $upgradefix eq 'y'}
 		<fieldset>
-			<legend>{icon _id=error} {tr}Upgrade fix{/tr}</legend>
+			<legend><img src="img/icons/error.png" alt="{tr}error{/tr}" style="vertical-align:middle"> {tr}Upgrade fix{/tr}</legend>
 			<p>{tr}Experiencing problems with the upgrade? Your administrator account lost its privileges? This may occur if you upgraded from a very old version of Tiki.</p>
 			<p>We can fix it! Doing so will:{/tr}</p>
 			<ol>
