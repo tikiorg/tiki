@@ -381,6 +381,7 @@ class RSSLib extends TikiDb_Bridge
 	function remove_rss_module($rssId)
 	{
 		$this->modules->delete(array('rssId' => $rssId,));
+		$this->items->deleteMultiple(array('rssId' => $rssId,));
 
 		return true;
 	}
