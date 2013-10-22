@@ -8,6 +8,13 @@
 $tikifeedback = array();
 $errors = array();
 
+$inputConfiguration = array(
+array( 'staticKeyFilters' => array(
+			'filterEmail' => 'xss',
+			)
+		)
+);
+
 require_once ('tiki-setup.php');
 // temporary patch: tiki_p_admin includes tiki_p_admin_users but if you don't
 // clean the temp/cache each time you sqlupgrade the perms setting is not
@@ -579,11 +586,7 @@ if (isset($_REQUEST['filterGroup'])) {
 $smarty->assign('filterGroup', $filterGroup);
 
 if (isset($_REQUEST['filterEmail'])) {
-	// Direct user input. Validate email address
 	$filterEmail = $_REQUEST['filterEmail'];
-	if (!validate_email($filterEmail)) {
-		$filterEmail = '';
-	}
 } else {
 	$filterEmail = '';
 }
