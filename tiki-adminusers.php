@@ -13,7 +13,13 @@ $errors = array();
 
 $inputConfiguration = array(
 	array( 'staticKeyFilters' => array(
+				'offset' => 'digits',
+				'numrows' => 'digits',
+				'find' => 'text',
 				'filterEmail' => 'xss',
+				'sort_mode' => 'text',
+				'initial' => 'text',
+				'filterGroup' => 'text',		
 			)
 		)
 );

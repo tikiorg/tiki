@@ -151,6 +151,21 @@ class Tracker_Field_ShowTikiOrg extends Tracker_Field_Abstract
 		$infooutput = stream_get_contents($infostream);
 		$ret['debugoutput'] = $infostring . " " . $infooutput;
 
+		if (strpos($infooutput, 'MAINTENANCE: ') !== false) {
+			$maintpos = strpos($infooutput, 'MAINTENANCE: ');
+			$maintreason = substr($infooutput, $maintpos + 13);
+			$maintreason = substr($maintreason, 0, strpos($maintreason, '"'));
+			$ret['maintreason'] = $maintreason;
+			$ret['status'] = 'MAINT';
+			return $ret;
+		}
+
+		$versionpos = strpos($infooutput, 'VERSION: ');
+		$version = substr($infooutput, $versionpos + 9);
+		$version = substr($version, 0, strpos($version, PHP_EOL));
+		$version = trim($version);
+		$ret['version'] = $version;
+
 		$statuspos = strpos($infooutput, 'STATUS: ');
 		$status = substr($infooutput, $statuspos + 8, 5);
 		$status = trim($status);

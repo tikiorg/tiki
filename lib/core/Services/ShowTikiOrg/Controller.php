@@ -55,6 +55,21 @@ class Services_ShowTikiOrg_Controller
 		$infooutput = stream_get_contents($infostream);
 		$ret['debugoutput'] = $infooutput;
 
+		if (strpos($infooutput, 'MAINTENANCE: ') !== false) {
+			$maintpos = strpos($infooutput, 'MAINTENANCE: ');
+			$maintreason = substr($infooutput, $maintpos + 13);
+			$maintreason = substr($maintreason, 0, strpos($maintreason, '"'));
+			$ret['maintreason'] = $maintreason;
+			$ret['status'] = 'MAINT';
+			return $ret;
+		}
+
+		$versionpos = strpos($infooutput, 'VERSION: ');
+		$version = substr($infooutput, $versionpos + 9);
+		$version = substr($version, 0, strpos($version, PHP_EOL));
+		$version = trim($version);
+		$ret['version'] = $version;
+
 		$statuspos = strpos($infooutput, 'STATUS: ');
 		$status = substr($infooutput, $statuspos + 8, 5);
 		$status = trim($status);
@@ -82,7 +97,7 @@ class Services_ShowTikiOrg_Controller
 		}
 
 		if (!empty($command)) {
-			if (($command == 'reset' || $command == 'destroy') && !TikiLib::lib('user')->user_has_permission($user, 'tiki_p_admin') && $user != $creator) {
+			if (($command == 'update' || $command == 'reset' || $command == 'destroy') && !TikiLib::lib('user')->user_has_permission($user, 'tiki_p_admin') && $user != $creator) {
 				throw new Services_Exception_Denied;
 			}
 
@@ -102,7 +117,7 @@ class Services_ShowTikiOrg_Controller
 				$ret['status'] = 'SNAPS';
 			} else if ($command == 'destroy') {
 				$ret['status'] = 'DESTR';
-			} else if ($command == 'create') {
+			} else if ($command == 'create' || $command == 'update') {
 				$ret['status'] = 'BUILD';
 			} else if ($command == 'reset') {
 				if (strpos('ERROR', $fullstring) !== false) {
