@@ -79,7 +79,12 @@ if ($ownspost == 'n' && $ownsblog == 'n' && $tiki_p_blog_admin != 'y' && $post_i
 	$smarty->display("error.tpl");
 	die;
 }
-$post_info['adjacent'] = $bloglib->_get_adjacent_posts($blogId, $post_info['created'], $tiki_p_blog_admin == 'y'? null: $tikilib->now, $user);
+
+$allowprivate = 'n';
+if(($user && $ownsblog == 'y') || $tiki_p_blog_admin == 'y') {
+    $allowprivate = 'y';
+}
+$post_info['adjacent'] = $bloglib->_get_adjacent_posts($blogId, $post_info['created'], $tiki_p_blog_admin == 'y'? null: $tikilib->now, $user, $allowprivate);
 
 if (isset($post_info['priv']) && ($post_info['priv'] == 'y')) {
 	$post_info['title'] .= ' (' . tra("private") . ')';
