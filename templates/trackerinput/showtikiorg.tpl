@@ -34,6 +34,11 @@
 <p>Unable to connect to show.tiki.org. Please let us know of the problem so that we can do something about it. Thanks.</p>
 {/remarksbox}
 </div>
+<div class="showmaint{$field.fieldId}_{$item.itemId}" {if $field.status neq 'MAINT'}style="display: none;"{/if}>
+{remarksbox type="error" title="Show.tiki.org is under maintenance" close="n"}
+<p>Show.tiki.org is currently under maintenance. Sorry for the inconvenience. {$field.maintreason|escape}</p>
+{/remarksbox}
+</div>
 <div class="showfail{$field.fieldId}_{$item.itemId}" {if $field.status neq 'FAIL'}style="display: none;"{/if}>
 {remarksbox type="error" title="Unable to get information from show.tiki.org" close="n"}
 <p>Unable to get information from show.tiki.org. Please let us know of the problem so that we can do something about it. Thanks.</p>
@@ -94,6 +99,7 @@ Version: <select name="svntag">
 {if $field.canDestroy}
 {button href="#showtikiorg{$field.fieldId}_{$item.itemId}{if isset($context.list_mode)}_view{/if}" _onclick="showtikiorg_process{$field.fieldId}_{$item.itemId}('destroy');"  _text="{tr}Destroy this show.tiki.org instance{/tr}"}
 {button href="#showtikiorg{$field.fieldId}_{$item.itemId}{if isset($context.list_mode)}_view{/if}" _onclick="showtikiorg_process{$field.fieldId}_{$item.itemId}('reset');"  _text="{tr}Reset password to 12345{/tr}"}
+<span class="buttonupdate{$field.fieldId}_{$item.itemId}" {if $field.version != 'trunk' && $field.version != '12.x'}style="display: none;"{/if}>{button href="#showtikiorg{$field.fieldId}_{$item.itemId}{if isset($context.list_mode)}_view{/if}" _onclick="showtikiorg_process{$field.fieldId}_{$item.itemId}('update');"  _text="{tr}SVN update{/tr}"}</span>
 {/if}
 </div>
 
@@ -122,14 +128,26 @@ function showtikiorg_process{{$field.fieldId}}_{{$item.itemId}}(action) {
 		success:  function(data) {
 			var debugoutput = data.debugoutput;
 			$('.showdebugoutput{{$field.fieldId}}_{{$item.itemId}}').html(data.debugoutput);
+			if (data.version == '12.x' || data.version == 'trunk') {
+				$('.buttonupdate{{$field.fieldId}}_{{$item.itemId}}').show();
+			}
 			if (data.status == 'DISCO') {
 				$('.showdisconnected{{$field.fieldId}}_{{$item.itemId}}').show();
+				$('.showmaint{{$field.fieldId}}_{{$item.itemId}}').hide();
 				$('.showfail{{$field.fieldId}}_{{$item.itemId}}').hide();
 				$('.showsnapshot{{$field.fieldId}}_{{$item.itemId}}').hide();
 				$('.showdestroy{{$field.fieldId}}_{{$item.itemId}}').hide();	
 				$.modal();
+			} else if (data.status == 'MAINT') {
+				$('.showmaint{{$field.fieldId}}_{{$item.itemId}}').show();
+				$('.showdisconnected{{$field.fieldId}}_{{$item.itemId}}').hide();
+				$('.showfail{{$field.fieldId}}_{{$item.itemId}}').hide();
+				$('.showsnapshot{{$field.fieldId}}_{{$item.itemId}}').hide();
+				$('.showdestroy{{$field.fieldId}}_{{$item.itemId}}').hide();
+				$.modal();
 			} else if (data.status == 'FAIL') {
 				$('.showfail{{$field.fieldId}}_{{$item.itemId}}').show();
+				$('.showmaint{{$field.fieldId}}_{{$item.itemId}}').hide();
 				$('.showdisconnected{{$field.fieldId}}_{{$item.itemId}}').hide();
 				$('.showsnapshot{{$field.fieldId}}_{{$item.itemId}}').hide();
 				$('.showdestroy{{$field.fieldId}}_{{$item.itemId}}').hide();
@@ -140,6 +158,7 @@ function showtikiorg_process{{$field.fieldId}}_{{$item.itemId}}(action) {
 				$('.showactive{{$field.fieldId}}_{{$item.itemId}}').hide();
 				$('.showfail{{$field.fieldId}}_{{$item.itemId}}').hide();
 				$('.showdisconnected{{$field.fieldId}}_{{$item.itemId}}').hide();
+				$('.showmaint{{$field.fieldId}}_{{$item.itemId}}').hide();
 				$('.showsnapshot{{$field.fieldId}}_{{$item.itemId}}').hide();
 				$('.showdestroy{{$field.fieldId}}_{{$item.itemId}}').hide();
 				setTimeout("showtikiorg_process{{$field.fieldId}}_{{$item.itemId}}('info')",5000);
@@ -150,6 +169,7 @@ function showtikiorg_process{{$field.fieldId}}_{{$item.itemId}}(action) {
 				$('.showbuilding{{$field.fieldId}}_{{$item.itemId}}').hide();
 				$('.showfail{{$field.fieldId}}_{{$item.itemId}}').hide();
 				$('.showdisconnected{{$field.fieldId}}_{{$item.itemId}}').hide();
+				$('.showmaint{{$field.fieldId}}_{{$item.itemId}}').hide();
 				$('.showsnapshot{{$field.fieldId}}_{{$item.itemId}}').hide();
 				$('.showdestroy{{$field.fieldId}}_{{$item.itemId}}').hide();
 				$.modal();
@@ -159,6 +179,7 @@ function showtikiorg_process{{$field.fieldId}}_{{$item.itemId}}(action) {
 				$('.shownone{{$field.fieldId}}_{{$item.itemId}}').hide();
 				$('.showfail{{$field.fieldId}}_{{$item.itemId}}').hide();
 				$('.showdisconnected{{$field.fieldId}}_{{$item.itemId}}').hide();
+				$('.showmaint{{$field.fieldId}}_{{$item.itemId}}').hide();
 				$('.showsnapshot{{$field.fieldId}}_{{$item.itemId}}').hide();
 				$('.showdestroy{{$field.fieldId}}_{{$item.itemId}}').hide();
 				$('.showurl{{$field.fieldId}}_{{$item.itemId}}').attr("href", "http://" + data.showurl).html("http://" + data.showurl);
@@ -171,6 +192,7 @@ function showtikiorg_process{{$field.fieldId}}_{{$item.itemId}}(action) {
 				$('.shownone{{$field.fieldId}}_{{$item.itemId}}').hide();
 				$('.showfail{{$field.fieldId}}_{{$item.itemId}}').hide();
 				$('.showdisconnected{{$field.fieldId}}_{{$item.itemId}}').hide();
+				$('.showmaint{{$field.fieldId}}_{{$item.itemId}}').hide();
 				$('.showsnapshot{{$field.fieldId}}_{{$item.itemId}}').show();
 				$('.showdestroy{{$field.fieldId}}_{{$item.itemId}}').hide();
 				$('.showresetok{{$field.fieldId}}_{{$item.itemId}}').hide();
@@ -187,6 +209,7 @@ function showtikiorg_process{{$field.fieldId}}_{{$item.itemId}}(action) {
 				$('.shownone{{$field.fieldId}}_{{$item.itemId}}').hide();
 				$('.showfail{{$field.fieldId}}_{{$item.itemId}}').hide();
 				$('.showdisconnected{{$field.fieldId}}_{{$item.itemId}}').hide();
+				$('.showmaint{{$field.fieldId}}_{{$item.itemId}}').hide();
 				$('.showsnapshot{{$field.fieldId}}_{{$item.itemId}}').hide();
 				$('.showresetnok{{$field.fieldId}}_{{$item.itemId}}').hide();
 				$('.showresetok{{$field.fieldId}}_{{$item.itemId}}').hide();
