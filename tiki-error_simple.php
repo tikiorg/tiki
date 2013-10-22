@@ -5,6 +5,12 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
+require_once ('tiki-setup_base.php');
+if($prefs['site_closed'] != 'y') {
+	header('Location: index.php');
+	exit;
+}
+
 if (!empty($_REQUEST['error'])) {
 	$error = substr($_REQUEST["error"], 0, 256);
 } else {
