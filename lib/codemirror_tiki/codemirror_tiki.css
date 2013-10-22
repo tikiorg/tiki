@@ -58,3 +58,7 @@
 	opacity:0.01;
 	filter:alpha(opacity=1);
 }
+
+.CodeMirror-scroll.cm-s-default {
+	height: auto !important;
+}
