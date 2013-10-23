@@ -39,7 +39,7 @@
 		};
 		var hide = function (selector) {
 			selector.hide();
-			selector.parents('fieldset:not(.tabcontent)').hide();
+			/*selector.parents('fieldset:not(.tabcontent)').hide();*/
 		};
 
 		var filters = [];
