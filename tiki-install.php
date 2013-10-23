@@ -22,8 +22,8 @@ ini_set('display_errors', 1);
 
 // Check that PHP version is sufficient
 
-if (version_compare(PHP_VERSION, '5.5.0', '<')) {
-	$title = 'PHP 5.5 is required';
+if (version_compare(PHP_VERSION, '5.3.0', '<')) {
+	$title = 'PHP 5.3 is required';
 	$content = '<p>Please contact your system administrator ( if you are not the one ;) ). Your version: '.PHP_VERSION.' <br /> <br /> '.'Please also visit <a href="tiki-check.php">Server Check</a>'.'</p>';
 	createPage($title, $content);
 }
