@@ -39,18 +39,7 @@ $credentials = array(
 	'shadow' => false,
 );
 
-// Load connection strings from environment variables, as used by Azure and possibly other hosts
-$connectionString = null;
-foreach (array('MYSQLCONNSTR_Tiki', 'MYSQLCONNSTR_DefaultConnection') as $envVar) {
-	if (isset($_SERVER[$envVar])) {
-		$connectionString = $_SERVER[$envVar];
-		continue;
-	}
-}
-
-if ($connectionString && preg_match('/^Database=(?P<dbs>.+);Data Source=(?P<host>.+);User Id=(?P<user>.+);Password=(?P<pass>.+)$/', $connectionString, $parts)) {
-	$parts['charset'] = $client_charset;
-	$parts['socket'] = null;
+if ($parts = TikiInit::getEnvironmentCredentials()) {
 
 	$credentials['primary'] = $parts;
 	$re = true;

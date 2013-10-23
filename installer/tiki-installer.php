@@ -827,8 +827,7 @@ $smarty->assign('logged', $logged);
 
 // Installation steps
 if (
-	isset($dbTiki)
-	&& is_object($dbTiki)
+	$dbcon
 	&& isset($_SESSION["install-logged-$multi"])
 	&& $_SESSION["install-logged-$multi"] == 'y'
 ) {

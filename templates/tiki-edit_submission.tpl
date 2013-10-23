@@ -94,10 +94,10 @@
 			<td>{tr}Topic{/tr}</td>
 			<td>
 				<select name="topicId">
-					{section name=t loop=$topics}
-						<option value="{$topics[t].topicId|escape}" {if $topicId eq $topics[t].topicId}selected="selected"{/if}>{$topics[t].name|escape}</option>
-					{/section}
 					<option value="" {if $topicId eq 0}selected="selected"{/if}>{tr}None{/tr}</option>
+					{foreach $topics as $topic}
+						<option value="{$topic.topicId|escape}" {if $topicId eq $topic.topicId}selected="selected"{/if}>{$topic.name|escape}</option>
+					{/foreach}
 				</select>
 				{if $tiki_p_admin_cms eq 'y'}
 					<a href="tiki-admin_topics.php" class="link">{tr}Admin Topics{/tr}</a>
