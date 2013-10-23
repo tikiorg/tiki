@@ -51,6 +51,10 @@ class IndexRebuildCommand extends Command
 		$result = $unifiedsearchlib->rebuild($log);
 
 		if ($result) {
+			$output->writeln("Indexation");
+			foreach($result as $key => $val) {
+				$output->writeln("  $key: $val");
+			}
 			$output->writeln('Rebuilding index done');
 		} else {
 			$errlib = \TikiLib::lib('errorreport');
