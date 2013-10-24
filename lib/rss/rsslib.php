@@ -372,7 +372,7 @@ class RSSLib extends TikiDb_Bridge
 
 		if (!$noUpdate) {
 			// Updating is normally required, except for cases where we know it will be updated later (e.g. after article generation is set, so that articles are created immediately)
-			$this->update_feeds(array($rssId), true);
+			$this->refresh_rss_module($rssId);
 		}
 		return $rssId;
 	}

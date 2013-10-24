@@ -99,6 +99,7 @@ if (file_exists('profiles/info.ini')) {
 	$console->add(new Tiki\Command\ProfileExport\Module);
 	$console->add(new Tiki\Command\ProfileExport\Preference);
 	$console->add(new Tiki\Command\ProfileExport\RecentChanges);
+	$console->add(new Tiki\Command\ProfileExport\Rss);
 	$console->add(new Tiki\Command\ProfileExport\Tracker);
 	$console->add(new Tiki\Command\ProfileExport\TrackerField);
 	$console->add(new Tiki\Command\ProfileExport\WikiPage);
