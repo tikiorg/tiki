@@ -42,7 +42,8 @@ class Tiki_Profile_Object
 		$str = '';
 		if ($this->isWellStructured()) {
 			$str .= $this->getType().' ';
-			$str .= '"'.isset($this->data['data']['name']) ? $this->data['data']['name'] : tra('No name').'"';
+			$name = isset($this->data['data']['name']) ? $this->data['data']['name'] : tra('No name');
+			$str .= '"'.$name.'"';
 		} else {
 			$str .= tra('Bad object');
 		}
@@ -51,7 +52,7 @@ class Tiki_Profile_Object
 	
 	function isWellStructured() // {{{
 	{
-		$is =  isset($this->data['type'], $this->data['data']);
+		$is = isset($this->data['type'], $this->data['data']);
 		return $is;
 	} // }}}
 

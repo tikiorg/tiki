@@ -7,9 +7,26 @@
 
 class RatingConfigLib extends TikiDb_Bridge
 {
+	private function config()
+	{
+		return $this->table('tiki_rating_configs');
+	}
+
+	private function obtained()
+	{
+		return $this->table('tiki_rating_obtained');
+	}
+
 	function get_configurations()
 	{
 		return $this->fetchAll('SELECT * FROM `tiki_rating_configs`');
+	}
+
+	function get_configuration( $id )
+	{
+		return $this->config()->fetchFullRow(array(
+			'ratingConfigId' => $id,
+		));
 	}
 
 	function create_configuration( $name )
@@ -74,6 +91,22 @@ class RatingConfigLib extends TikiDb_Bridge
 			'SELECT `type`, `object` FROM `tiki_rating_obtained` WHERE `expire` < UNIX_TIMESTAMP() GROUP BY `type`, `object` ORDER BY `expire`',
 			array(),
 			$max
+		);
+	}
+
+	function preserve_configurations(array $ids)
+	{
+		$config = $this->config();
+		$obtained = $this->obtained();
+		$config->deleteMultiple(
+			array(
+				'ratingConfigId' => $config->notIn($ids),
+			)
+		);
+		$obtained->deleteMultiple(
+			array(
+				'ratingConfigId' => $obtained->notIn($ids),
+			)
 		);
 	}
 }

@@ -576,7 +576,7 @@ class Tiki_Profile
 	{
 		$prefs = array();
 
-		if ( array_key_exists('preferences', $this->data) ) {
+		if ( array_key_exists('preferences', $this->data) && is_array($this->data['preferences']) ) {
 			$prefs = Tiki_Profile::convertLists($this->data['preferences'], array('enable' => 'y', 'disable' => 'n'));
 			$prefs = Tiki_Profile::convertYesNo($prefs);
 		}

@@ -98,6 +98,8 @@ if (file_exists('profiles/info.ini')) {
 	$console->add(new Tiki\Command\ProfileExport\Menu);
 	$console->add(new Tiki\Command\ProfileExport\Module);
 	$console->add(new Tiki\Command\ProfileExport\Preference);
+	$console->add(new Tiki\Command\ProfileExport\RatingConfig);
+	$console->add(new Tiki\Command\ProfileExport\RatingConfigSet);
 	$console->add(new Tiki\Command\ProfileExport\RecentChanges);
 	$console->add(new Tiki\Command\ProfileExport\Rss);
 	$console->add(new Tiki\Command\ProfileExport\Tracker);
