@@ -87,10 +87,15 @@ if ($isInstalled && ! $installer->requiresUpdate()) {
 if (file_exists('profiles/info.ini')) {
 	$console->add(new Tiki\Command\ProfileExport\ActivityRuleSet);
 	$console->add(new Tiki\Command\ProfileExport\ActivityStreamRule);
+	$console->add(new Tiki\Command\ProfileExport\Article);
+	$console->add(new Tiki\Command\ProfileExport\ArticleTopic);
+	$console->add(new Tiki\Command\ProfileExport\ArticleType);
 	$console->add(new Tiki\Command\ProfileExport\AllModules);
 	$console->add(new Tiki\Command\ProfileExport\Category);
+	$console->add(new Tiki\Command\ProfileExport\FileGallery);
 	$console->add(new Tiki\Command\ProfileExport\Forum);
 	$console->add(new Tiki\Command\ProfileExport\IncludeProfile);
+	$console->add(new Tiki\Command\ProfileExport\Menu);
 	$console->add(new Tiki\Command\ProfileExport\Module);
 	$console->add(new Tiki\Command\ProfileExport\Preference);
 	$console->add(new Tiki\Command\ProfileExport\RecentChanges);

@@ -95,17 +95,18 @@ class Tiki_Profile_InstallHandler_FileGallery extends Tiki_Profile_InstallHandle
 
 		$data = array_merge($defaults, $data);
 
-		foreach ( $conversions as $old => $new )
+		foreach ( $conversions as $old => $new ) {
 			if ( array_key_exists($old, $data) ) {
 				$data[$new] = $data[$old];
 				unset( $data[$old] );
 			}
+		}
 
 		unset( $data['galleryId'] );
 		$this->replaceReferences($data);
 
 		if (!empty($data['name'])) {
-			global $filegallib; require_once 'lib/filegals/filegallib.php';
+			$filegallib = TikiLib::lib('filegal');
 			$data['galleryId'] = $filegallib->getGalleryId($data['name'], $data['parentId']);
 		}
 		return $this->data = $data;
@@ -118,6 +119,7 @@ class Tiki_Profile_InstallHandler_FileGallery extends Tiki_Profile_InstallHandle
 			return false;
 		return $this->convertMode($data);
 	}
+
 	private function convertMode($data)
 	{
 		if (!isset($data['mode'])) {
@@ -135,6 +137,7 @@ class Tiki_Profile_InstallHandler_FileGallery extends Tiki_Profile_InstallHandle
 		}
 		return true;
 	}
+
 	function _install()
 	{
 		$filegallib = TikiLib::lib('filegal');
@@ -180,5 +183,81 @@ class Tiki_Profile_InstallHandler_FileGallery extends Tiki_Profile_InstallHandle
 		}
 
 		$filegallib->attach_file_source($fileId, $url, $info);
+	}
+
+	public static function export(Tiki_Profile_Writer $writer, $galId, $withParents = false, $deep = false)
+	{
+		$filegallib = TikiLib::lib('filegal');
+		$info = $filegallib->get_file_gallery_info($galId);
+		$default = $filegallib->default_file_gallery();
+
+		if (! $info) {
+			return false;
+		}
+
+		$out = array(
+			'name' => $info['name'],
+			'visible' => $info['visible'],
+		);
+
+		if ($info['parentId'] > 3) { // up to 3, standard/default galleries
+			$out['parent'] = $writer->getReference('file_gallery', $info['parentId']);
+		} else {
+			$out['parent'] = $info['parentId'];
+		}
+
+		// Include any simple field whose value is different from the default
+		$simple = array('description', 'public', 'type', 'lockable', 'archives', 'quota', 'image_max_size_x', 'image_max_size_y', 'backlinkPerms', 'wiki_syntax', 'sort_mode', 'maxRows', 'max_desc', 'subgal_conf', 'default_view', 'template');
+		foreach ($simple as $field) {
+			if ($info[$field] != $default[$field]) {
+				$out[$field] = $info[$field];
+			}
+		}
+
+		$popup = array();
+		$column = array();
+		foreach ($info as $field => $value) {
+			if (isset($default[$field]) && $value == $default[$field]) {
+				continue; // Skip default values
+			}
+
+			if (substr($field, 0, 5) == 'show_') {
+				$short = substr($field, 5);
+				if ($value == 'a' || $value == 'o') {
+					$popup[] = $short;
+				}
+				if ($value == 'a' || $value == 'y') {
+					$column[] = $short;
+				}
+			}
+		}
+
+		if (! empty($popup)) {
+			$out['popup'] = $popup;
+		}
+
+		if (! empty($column)) {
+			$out['column'] = $column;
+		}
+
+		$writer->addObject('file_gallery', $galId, $out);
+
+		if ($deep) {
+			$table = $filegallib->table('tiki_file_galleries');
+			$children = $table->fetchColumn('galleryId', array(
+				'parentId' => $galId,
+			));
+
+			foreach ($children as $id) {
+				self::export($writer, $id, false, $deep);
+			}
+		}
+
+		if ($withParents && $info['parentId'] > 3) {
+			self::export($writer, $info['parentId'], $withParents, false);
+		}
+
+
+		return true;
 	}
 }
