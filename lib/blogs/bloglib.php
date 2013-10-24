@@ -914,7 +914,7 @@ class BlogLib extends TikiDb_Bridge
 	 * @param int $created when the post was created
 	 * @return array
 	 */
-	function _get_adjacent_posts($blogId, $created, $publishDate = null, $user=null)
+	function _get_adjacent_posts($blogId, $created, $publishDate = null, $user=null, $allowprivate=null)
 	{
 		$res = array();
 
@@ -925,6 +925,7 @@ class BlogLib extends TikiDb_Bridge
 			$bindvars[] = $publishDate;
 			$bindvars[] = $user;
 		}
+		if($allowprivate == 'n') { $next_query .= ' AND `priv` = "n"'; }
 		$next_query .= ' ORDER BY created ASC';
 		$result = $this->fetchAll($next_query, $bindvars, 1);
 		$res['next'] = !empty($result[0]) ? $result[0] : null;
@@ -936,6 +937,7 @@ class BlogLib extends TikiDb_Bridge
 			$bindvars[] = $publishDate;
 			$bindvars[] = $user;
 		}
+		if($allowprivate == 'n') { $prev_query .= ' AND `priv` = "n"'; }
 		$prev_query .= ' ORDER BY created DESC';
 		$result = $this->fetchAll($prev_query, $bindvars, 1);
 		$res['prev'] = !empty($result[0]) ? $result[0] : null;
