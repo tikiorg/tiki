@@ -395,11 +395,11 @@ abstract class TikiDb
 
 	function listTables()
 	{
-		$result = $this->query("show tables");
+		$result = $this->fetchAll("show tables");
 		$list = array();
 
 		if ($result) {
-			while ($row = $result->fetchRow()) {
+			foreach ($result as $row) {
 				$list[] = reset($row);
 			}
 		}
