@@ -56,12 +56,10 @@ class Tiki_Profile_InstallHandler_ArticleType extends Tiki_Profile_InstallHandle
 
 	function _install()
 	{
-		global $artlib;
+		$artlib = TikiLib::lib('art');
 		$data = $this->getData();
 
 		$this->replaceReferences($data);
-
-		require_once 'lib/articles/artlib.php';
 
 		$converter = new Tiki_Profile_ValueMapConverter(array( 'y' => 'on' ));
 
@@ -92,5 +90,47 @@ class Tiki_Profile_InstallHandler_ArticleType extends Tiki_Profile_InstallHandle
 		);
 
 		return $data['name'];
+	}
+
+	public static function export(Tiki_Profile_Writer $writer, $typeName)
+	{
+		$artlib = TikiLib::lib('art');
+		$info = $artlib->get_type($typeName);
+
+		if (! $info) {
+			return false;
+		}
+
+		$out = array(
+			'name' => $info['type'],
+			'allow' => array(),
+			'show' => array(),
+		);
+
+		$map = array(
+			'use_ratings' => 'allow_ratings',
+			'show_pre_publ' => 'show_pre_publication',
+			'heading_only' => 'show_heading_only',
+			'comment_can_rate_article' => 'allow_comments_rating_article',
+			'show_pubdate' => 'show_publication_date',
+			'show_expdate' => 'show_expiration_date',
+			'show_linkto' => 'show_link_to',
+			'creator_edit' => 'allow_creator_edit',
+		);
+
+		foreach ($info as $key => $value) {
+			if (isset($map[$key])) {
+				$key = $map[$key];
+			}
+			if ($value == 'y' && substr($key, 0, 5) == 'show_') {
+				$out['show'][] = substr($key, 5);
+			} elseif ($value == 'y' && substr($key, 0, 6) == 'allow_') {
+				$out['allow'][] = substr($key, 6);
+			}
+		}
+
+		$out = array_filter($out);
+		$writer->addObject('article_type', $info['type'], $out);
+		return true;
 	}
 }
