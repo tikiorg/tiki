@@ -1277,7 +1277,7 @@ class StructLib extends TikiLib
 			++$cant;
 			$options[] = $option;
 			if (!empty($channel['sub'])) {
-				$oSub =  $this->to_menu($channel['sub'], $structure, $sectionLevel+1, $cant+$cumul);
+				$oSub =  $this->to_menu($channel['sub'], $structure, $sectionLevel+1, $cant+$cumul, $params);
 				$cant += $oSub['cant'];
 				$options = array_merge($options, $oSub['data']);
 			}

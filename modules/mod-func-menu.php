@@ -104,4 +104,6 @@ function module_menu($mod_reference, $module_params)
 		}
 	}
 	$smarty->assign('module_type', empty($module_params['css']) || $module_params['css'] === 'y' ? 'cssmenu' : 'menu');
+	$show_namespace = isset($module_params['show_namespace']) ? $module_params['show_namespace'] : 'y';
+	$smarty->assign('show_namespace',$show_namespace);
 }
