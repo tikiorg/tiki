@@ -291,14 +291,10 @@ class Installer extends TikiDb_Bridge
 		$results = false;
 		
 		if ($this->tableExists('tiki_schema')) {
-			$results = $this->query("SELECT patch_name FROM tiki_schema");
+			$installed = $this->table('tiki_schema')->fetchColumn('patch_name', array());
 		}
 		
-		if ( $results ) {
-			while ( $row = $results->fetchRow() ) {
-				$installed[] = reset($row);
-			}
-		} else {
+		if ( empty($installed) ) {
 			// Erase initial error
 			$this->failures = array();
 		}

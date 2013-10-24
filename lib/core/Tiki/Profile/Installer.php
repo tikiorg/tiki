@@ -43,6 +43,7 @@ class Tiki_Profile_Installer
 		'webmail_account' => 'Tiki_Profile_InstallHandler_WebmailAccount',
 		'sheet' => 'Tiki_Profile_InstallHandler_Sheet',
 		'rating_config' => 'Tiki_Profile_InstallHandler_RatingConfig',
+		'rating_config_set' => 'Tiki_Profile_InstallHandler_RatingConfigSet',
 		'area_binding' => 'Tiki_Profile_InstallHandler_AreaBinding',
 		'activity_stream_rule' => 'Tiki_Profile_InstallHandler_ActivityStreamRule',
 		'activity_rule_set' => 'Tiki_Profile_InstallHandler_ActivityRuleSet',
