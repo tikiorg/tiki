@@ -87,6 +87,7 @@ if ($isInstalled && ! $installer->requiresUpdate()) {
 if (file_exists('profiles/info.ini')) {
 	$console->add(new Tiki\Command\ProfileExport\ActivityRuleSet);
 	$console->add(new Tiki\Command\ProfileExport\ActivityStreamRule);
+	$console->add(new Tiki\Command\ProfileExport\Article);
 	$console->add(new Tiki\Command\ProfileExport\ArticleTopic);
 	$console->add(new Tiki\Command\ProfileExport\ArticleType);
 	$console->add(new Tiki\Command\ProfileExport\AllModules);

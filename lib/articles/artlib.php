@@ -1519,7 +1519,6 @@ class ArtLib extends TikiLib
 	function get_article($articleId, $checkPerms = true)
 	{
 		global $user, $prefs;
-		$mid = ' where `tiki_articles`.`type` = `tiki_article_types`.`type` ';
 		$query = "select `tiki_articles`.*,
 								`users_users`.`avatarLibName`,
 								`tiki_article_types`.`use_ratings`,
@@ -1540,8 +1539,10 @@ class ArtLib extends TikiLib
 								`tiki_article_types`.`show_linkto`,
 								`tiki_article_types`.`show_image_caption`,
 								`tiki_article_types`.`creator_edit`
-						from (`tiki_articles`, `tiki_article_types`)
-						left join `users_users` on `tiki_articles`.`author` = `users_users`.`login` $mid and `tiki_articles`.`articleId`=?"
+						from `tiki_articles`
+						inner join `tiki_article_types` ON `tiki_articles`.`type` = `tiki_article_types`.`type`
+						left join `users_users` on `tiki_articles`.`author` = `users_users`.`login` 
+						where `tiki_articles`.`articleId`=?"
 						;
 
 		$result = $this->query($query, array((int)$articleId));
