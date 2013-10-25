@@ -125,7 +125,7 @@ EOF
 	# Start custom changes for show instances
 	echo "Starting extra steps special to show instances. Anything done below is not part of a standard Tiki installation."
 
-	# Collect data useful to developpers in infotext
+	# Collect data useful to developers in infotext
 	if [[ "${TUSER}" != "user" ]]; then FRIENDLYUSERNAME="${TUSER}"; fi
 	read -r -d '' infotext <<EOT
 This Tiki instance was created on the Tiki show community website
@@ -141,12 +141,12 @@ SVN info
 `svn info`
 EOT
 
-	# Create info.txt file with data useful to developpers
-	echo "Creating file http://${SUBDOMAIN}.show.tikiwiki.org/info.txt with extra info for developpers"
+	# Create info.txt file with data useful to developers
+	echo "Creating file http://${SUBDOMAIN}.show.tikiwiki.org/info.txt with extra info for developers"
 	INFOFILE=$INSTANCE_DIR/info.txt
 	echo "$infotext" > ${INFOFILE}
-	# Inject data useful to developpers as remarksbox on top of homepage
-	echo "Inserting extra info for developpers in a box at the beginning of homepage"
+	# Inject data useful to developers as remarksbox on top of homepage
+	echo "Inserting extra info for developers in a box at the beginning of homepage"
 	mysql $DB <<EOQ
 UPDATE tiki_pages SET data=CONCAT('{REMARKSBOX(type="information" title="Show community server" close="y")}${infotext}{REMARKSBOX} ',data) WHERE page_id=1;
 EOQ

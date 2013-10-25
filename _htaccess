@@ -37,7 +37,7 @@
 	deny from all
 </FilesMatch>
 
-# This prevents reading of tags file for developpers who run ctags on their server
+# This prevents reading of tags file for developers who run ctags on their server
 #<Files tags>
 #	order deny,allow
 #	deny from all
