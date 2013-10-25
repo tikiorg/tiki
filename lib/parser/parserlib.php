@@ -1839,7 +1839,7 @@ if ( \$('#$id') ) {
 				if ($prefs['feature_wiki_ext_icon'] == 'y' && !($this->option['suppress_icons'] || $suppress_icons)) {
 					$smarty = TikiLib::lib('smarty');
 					include_once('lib/smarty_tiki/function.icon.php');
-					$ext_icon = smarty_function_icon(array('_id'=>'external_link', 'alt'=>tra('(external link)'), '_class' => 'externallink', '_extension' => 'gif', '_defaultdir' => 'img/icons', 'width' => 15, 'height' => 14), $smarty);
+					$ext_icon = smarty_function_icon(array('_id'=>'external_link', 'alt'=>'', '_class' => 'externallink', '_extension' => 'gif', '_defaultdir' => 'img/icons', 'width' => 15, 'height' => 14), $smarty);
 				}
 				$rel='external';
 				if ($prefs['feature_wiki_ext_rel_nofollow'] == 'y') {
