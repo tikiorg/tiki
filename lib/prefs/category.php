@@ -138,6 +138,13 @@ function prefs_category_list()
 			'separator' => ',',
 			'default' => '',
 		),
+		'category_browse_count_objects' => array(
+			'name' => tra('Show category object count'),
+            'description' => tra('Show object count when browsing cateogries, obeying search and type filters'),
+			'hint' => tra('Can make the categories page slow to load on large sites.'),
+			'type' => 'flag',
+			'default' => 'y',
+		),
 	);
 }
 

@@ -147,6 +147,7 @@
 			{preference name=log_sql}
 			{preference name=log_mail}
 			{preference name=log_tpl}
+			{preference name=category_browse_count_objects}
 			{preference name=error_reporting_level}
 			{remarksbox type="tip" title="{tr}Tip{/tr}"}
 				{tr}Many search options impact performance. Please see <a href="tiki-admin.php?page=search">Search admin panel</a>.{/tr}
