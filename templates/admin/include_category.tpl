@@ -74,7 +74,7 @@
 		{preference name=feature_image_gallery_mandatory_category}
 		{preference name=unified_add_to_categ_search}
 
-		
+
 	</fieldset>
 
 	<fieldset>
@@ -86,8 +86,9 @@
 	</fieldset>
 
 	<fieldset>
-		<legend>{tr}Permissions{/tr}</legend>
+		<legend>{tr}Performance{/tr}</legend>
 		{preference name=feature_search_show_forbidden_cat}
+		{preference name=category_browse_count_objects}
 	</fieldset>
 
 	<div class="input_submit_container clear" style="text-align: center;">
