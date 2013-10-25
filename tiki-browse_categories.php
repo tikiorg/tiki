@@ -138,18 +138,15 @@ foreach ($ctall as $c) {
 // display correct count of objects depending on browse in and find filters -- luci Thu 05 Sep 2013 10:15:50 PM UTC
 	$objectcount = $categlib->list_category_objects(
 				$c['categId'], 
-				$offset, 
-				$maxRecords, 
-				$sort_mode, 
+				0,
+				0,
+				'',
 				$type, 
 				$find, 
 				$deep == 'on', 
 				(!empty($_REQUEST['and'])) ? true : false
 	);
-	$oc = 0;
-	foreach ($objectcount as $oc) {
-		$oc = $oc++;
-	}
+	$countString = '<span class="object-count">' . $objectcount['cant'] . '</span>';
 // end of correct object count -- luci
 	$tree_nodes[] = array(
 		'id' => $c['categId'],
@@ -157,11 +154,10 @@ foreach ($ctall as $c) {
 		'parent' => $c['parentId'],
 		'parentId' => $c['parentId'],
 // the correct object count ($oc) implemented on next line -- luci 
-		'data' => '<span class="object-count">' . $oc . '</span>' . 
+		'data' => $countString .
 							$c['eyes'] . ' <a class="catname" href="tiki-browse_categories.php?parentId=' . $c['categId'] .
 							'&amp;deep=' . $deep . '&amp;type='. urlencode($type) . '">' . htmlspecialchars($c['name']) .'</a> ',
 	);
-	unset($oc); // unset object count for next iteration -- luci
 }
 $res  = '';
 $tm = new BrowseTreeMaker('categ');
