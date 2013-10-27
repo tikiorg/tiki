@@ -10,8 +10,8 @@
 	{preference name=feature_mytiki}
 	{preference name=feature_userPreferences}
 	{preference name=feature_messages}
-
-	{tr}See also{/tr} <a href="tiki-admin.php?page=community&cookietab=1" target="_blank">{tr}Community admin panel{/tr}</a> & <a href="https://doc.tiki.org/Community" target="_blank">{tr}Community in doc.tiki.org{/tr}</a>
+	<br>
+	<em>{tr}See also{/tr} <a href="tiki-admin.php?page=community&cookietab=1" target="_blank">{tr}Community admin panel{/tr}</a> & <a href="https://doc.tiki.org/Community" target="_blank">{tr}Community in doc.tiki.org{/tr}</a></em>
 </fieldset>
 <fieldset>
 	<legend>{tr}Community General Settings{/tr}</legend>

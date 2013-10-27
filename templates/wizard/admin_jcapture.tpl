@@ -11,22 +11,28 @@
 </p>
 <fieldset>
 	<legend>{tr}jCapture options and related features{/tr}</legend>
-	{tr}jCapture stores the capture files in the file gallery{/tr}.<br>
+	{tr}Choose the file gallery that jCapture will use to store its images in{/tr}.<br><br>
 	{tr}Gallery name{/tr}: 
 	{if empty($jcaptureFileGalleryName)}
 		<input type="text" name="jcaptureFileGalleryName" value="{$jcaptureFileGalleryName}" /><br>
-		{tr}If the gallery doesn't exist, it will be created under the gallery root{/tr}.
+		<div class="adminoptionboxchild">
+			<span style="margin-left:44px">{tr}If the gallery doesn't exist, it will be created under the gallery root{/tr}.</span>
+		</div>
 	{else}
-		<b>{$jcaptureFileGalleryName}</b>
+	<div class="adminoptionboxchild">
+		<span style="margin-left:44px"><b>{$jcaptureFileGalleryName}</b></span>
+	</div>
 	{/if}
 	<br>
 	<br>
 
 	{preference name=feature_draw}
-	{tr}Enable drawing directly on captured images from your web page{/tr}
+	<div class="adminoptionboxchild">
+		{tr}Enable drawing directly on captured images from your web page{/tr}
+	</div>
 	<br>
 	<br>
-	{tr}See also{/tr} <a href="http://doc.tiki.org/Screencast" target="_blank">{tr}Screencast{/tr} @ doc.tiki.org</a>
+	<em>{tr}See also{/tr} <a href="http://doc.tiki.org/Screencast" target="_blank">{tr}Screencast{/tr} @ doc.tiki.org</a></em>
 </fieldset>
 
 </div>

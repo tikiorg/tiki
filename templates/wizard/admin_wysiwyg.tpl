@@ -34,7 +34,7 @@
 	</table>
 	{preference name=wysiwyg_inline_editing}
 	<br>
-	{tr}See also{/tr} <a href="tiki-admin.php?page=wysiwyg" target="_blank">{tr}Wysiwyg admin panel{/tr}</a>
+	<em>{tr}See also{/tr} <a href="tiki-admin.php?page=wysiwyg" target="_blank">{tr}Wysiwyg admin panel{/tr}</a></em>
 </fieldset>
 <br>
 </div>

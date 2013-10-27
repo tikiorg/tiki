@@ -25,7 +25,7 @@
 			</div>
 		</div>
 		<br>
-		{tr}See also{/tr} <a href="tiki-admin.php?page=look&alt=Look+%26+Feel" target="_blank">{tr}Look & Feel admin panel{/tr}</a>
+		<em>{tr}See also{/tr} <a href="tiki-admin.php?page=look&alt=Look+%26+Feel" target="_blank">{tr}Look & Feel admin panel{/tr}</a></em>
 </fieldset>
 
 <fieldset>
