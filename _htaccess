@@ -37,7 +37,7 @@
 	deny from all
 </FilesMatch>
 
-# This prevents reading of tags file for developpers who run ctags on their server
+# This prevents reading of tags file for developers who run ctags on their server
 #<Files tags>
 #	order deny,allow
 #	deny from all
@@ -52,6 +52,16 @@
 <IfModule deflate_module>
 	AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css application/x-javascript application/javascript
 </IfModule>
+
+# Persistent connections: Allow multiple requests to be sent over 
+# the same TCP connection. Enable if you serve a lot of static content 
+# but, be aware of the possible disadvantages!
+# http://httpd.apache.org/docs/current/en/mod/core.html#keepalive
+
+# <IfModule mod_headers.c>
+#    Header set Connection Keep-Alive
+# </IfModule>
+
 
 # Using ETags will improve the YSlow scores
 FileETag none

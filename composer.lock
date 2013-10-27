@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "c36a05af849ed8e4a3739f673bc6285b",
+    "hash": "2ddc4e8570af17b3aa2926381319bdb3",
     "packages": [
         {
             "name": "aFarkas/html5shiv",
@@ -605,12 +605,12 @@
         },
         {
             "name": "jquery/plugins/tablesorter",
-            "version": "2.11.1",
+            "version": "2.12.0",
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/jquery-plugins-tablesorter-2.11.1.zip",
-                "reference": "2.11.1",
-                "shasum": "5afd4400997f0bceff4446e2037ecb7e6e4d7413"
+                "url": "https://composer.tiki.org/dist/jquery-plugins-tablesorter-2.12.0.zip",
+                "reference": "2.12.0",
+                "shasum": "01b25b415bf08fbba9e95469d9f3866a8ca71eed"
             },
             "type": "library"
         },
@@ -1288,16 +1288,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "3.7.27",
+            "version": "3.7.28",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "4b024e753e3421837afbcca962c8724c58b39376"
+                "reference": "3b97c8492bcafbabe6b6fbd2ab35f2f04d932a8d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/4b024e753e3421837afbcca962c8724c58b39376",
-                "reference": "4b024e753e3421837afbcca962c8724c58b39376",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/3b97c8492bcafbabe6b6fbd2ab35f2f04d932a8d",
+                "reference": "3b97c8492bcafbabe6b6fbd2ab35f2f04d932a8d",
                 "shasum": ""
             },
             "require": {
@@ -1358,7 +1358,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2013-09-16 03:09:52"
+            "time": "2013-10-17 07:27:40"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
