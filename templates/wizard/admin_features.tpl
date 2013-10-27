@@ -24,17 +24,23 @@
 
 	</div>
 	<br>
-	{tr}Tiki has many more features{/tr}.
-	{tr}See also{/tr} <a href="http://doc.tiki.org/Global+Features" target="_blank">{tr}Global Features{/tr} @ doc.tiki.org</a>
+	<em>{tr}Tiki has many more features{/tr}.
+	{tr}See also{/tr} <a href="http://doc.tiki.org/Global+Features" target="_blank">{tr}Global Features{/tr} @ doc.tiki.org</a></em>
 </fieldset>
 
 <fieldset>
 	<legend>{tr}Watches{/tr}</legend>
 	<img src="img/icons/large/mywatches.gif" class="adminWizardIconright" />
-	{tr}Enable email notifications when changes occur. For user watches, each user can choose to be notified. For group watches, all members receive an email notification{/tr}
+	{tr}Enable email notifications to users when changes in the content of specific items (pages, posts, trackers, etc.) are made{/tr}.
 	<div class="admin clearfix featurelist">
 		{preference name=feature_user_watches}
+		<div class="adminoptionboxchild">
+			{tr}Each user can choose to be notified of changes to specific items.{/tr}
+		</div>
 		{preference name=feature_group_watches}
+		<div class="adminoptionboxchild">
+			{tr}All users in a group can be notified of changes to specific items.{/tr}
+		</div>
 		{preference name=feature_daily_report_watches}
 		<div class="adminoptionboxchild" id="feature_daily_report_watches_childcontainer">
 			{preference name=dailyreports_enabled_for_new_users}
@@ -44,6 +50,6 @@
 			{preference name=feature_user_watches_languages}
 		{/if}
 	</div>
-</fieldset>		
+</fieldset>
 
 </div>

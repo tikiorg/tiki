@@ -2,17 +2,19 @@
 
 <h1>{tr}File storage setup{/tr}</h1>
 
-<div class="adminWizardIconleft"><img src="img/icons/large/file-manager48x48.png" alt="{tr}File storage setup{/tr}" /></div>
+<div class="adminWizardIconleft"><img src="img/icons/large/fileopen48x48.png" alt="{tr}File storage setup{/tr}" /></div>
 <div class="adminWizardContent">
 <p>
 
 {if isset($promptElFinder) AND $promptElFinder eq 'y'}
 <div>
 <fieldset>
-	<legend>{tr}el Finder{/tr}</legend>
-	<input type="checkbox" name="useElFinderAsDefault" {if !isset($useElFinderAsDefault) or $useElFinderAsDefault eq true}checked='checked'{/if} /> {tr}Set elFinder as the default file gallery viewer{/tr}.<br>
-	<br>
-	{tr}See also{/tr} <a href="http://doc.tiki.org/elFinder" target="_blank">{tr}elFinder{/tr} @ doc.tiki.org</a><br>
+	<legend>{tr}elFinder{/tr}</legend>
+	<img src="img/icons/large/file-manager.png" class="adminWizardIconright" />
+	<input type="checkbox" name="useElFinderAsDefault" {if !isset($useElFinderAsDefault) or $useElFinderAsDefault eq true}checked='checked'{/if} /> {tr}Set elFinder as the default file gallery viewer{/tr}.
+	<div class="adminoptionboxchild">
+		{tr}See also{/tr} <a href="http://doc.tiki.org/elFinder" target="_blank">{tr}elFinder{/tr} @ doc.tiki.org</a>
+	</div>
 	<br>
 </fieldset>
 </div>
@@ -21,6 +23,7 @@
 {if isset($promptFileGalleryStorage) AND $promptFileGalleryStorage eq 'y'}
 <div>
 <fieldset>
+	<img src="img/icons/large/file-manager.png" class="adminWizardIconright" />
 	<legend>{tr}File Gallery storage{/tr}</legend>
 	{preference name='fgal_use_dir'}
 </fieldset>
