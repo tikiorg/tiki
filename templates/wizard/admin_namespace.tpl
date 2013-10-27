@@ -27,6 +27,6 @@
 
 	{preference name=wiki_pagename_strip}
 	<br>
-	{tr}See also{/tr} <a href="http://doc.tiki.org/Namespaces" target="_blank">{tr}Namespaces{/tr} @ doc.tiki.org</a>
+	<em>{tr}See also{/tr} <a href="http://doc.tiki.org/Namespaces" target="_blank">{tr}Namespaces{/tr} @ doc.tiki.org</a></em>
 </fieldset>
 </div>

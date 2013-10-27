@@ -15,6 +15,6 @@
 		{preference name=feature_listorphanStructure}
 		{preference name=feature_wiki_no_inherit_perms_structure}
 		<br>
-		{tr}See also{/tr} <a href="https://doc.tiki.org/Structures" target="_blank">{tr}Structures{/tr} @ doc.tiki.org</a>
+		<em>{tr}See also{/tr} <a href="https://doc.tiki.org/Structures" target="_blank">{tr}Structures{/tr} @ doc.tiki.org</a></em>
 </fieldset>
 </div>

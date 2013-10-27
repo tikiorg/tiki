@@ -9,6 +9,6 @@
 		{preference name=wiki_inline_auto_toc}
 		{preference name=wiki_inline_toc_pos}
 		<br>
-		{tr}See also{/tr} <a href="http://doc.tiki.org/tiki-index.php?page=Auto+TOC" target="_blank">{tr}Auto TOC{/tr} @ doc.tiki.org</a>
+		<em>{tr}See also{/tr} <a href="http://doc.tiki.org/tiki-index.php?page=Auto+TOC" target="_blank">{tr}Auto TOC{/tr} @ doc.tiki.org</a></em>
 </fieldset>
 </div>

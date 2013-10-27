@@ -13,7 +13,7 @@
 	{tr}.. or ..{/tr} <a href="tiki-admin_categories.php" target="_blank">{tr}Set up categories here{/tr}</a><br>
 	<br>
 	<br>
-	{tr}See also{/tr} <a href="http://doc.tiki.org/category" target="_blank">{tr}Categories{/tr} @ doc.tiki.org</a>
+	<em>{tr}See also{/tr} <a href="http://doc.tiki.org/category" target="_blank">{tr}Categories{/tr} @ doc.tiki.org</a></em>
 </fieldset>
 <br>
 </div>
