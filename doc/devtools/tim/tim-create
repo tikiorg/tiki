@@ -172,14 +172,36 @@ EOF
 	# Start custom changes for show instances
 	log "Starting extra steps special to show instances. Anything done below is not part of a standard Tiki installation."
 
-	mk_info
+	# Collect data useful to developers in infotext
+	if [[ "${TUSER}" != "user" ]]; then FRIENDLYUSERNAME="${TUSER}"; fi
+	read -r -d '' infotext <<EOT
+This Tiki instance was created on the Tiki show community website
+Creation date: `date -u +%Y-%m-%d_%H-%M-%S`
+Version: ${SVNTAG}
+Related to Wish: http://dev.tiki.org/item${ID}
+Wish was created by user ${FRIENDLYUSERNAME}http://dev.tiki.org/user${TUSERID}
+Created as http://${SUBDOMAIN}.show.tikiwiki.org/
+Installation log: http://${SUBDOMAIN}.show.tikiwiki.org/install_log.txt
+This information is also kept here: http://${SUBDOMAIN}.show.tikiwiki.org/info.txt
 
+SVN info
+`svn info`
+EOT
+
+	# Create info.txt file with data useful to developers
+	echo "Creating file http://${SUBDOMAIN}.show.tikiwiki.org/info.txt with extra info for developers"
+	INFOFILE=$INSTANCE_DIR/info.txt
+	echo "$infotext" > ${INFOFILE}
 	# Inject data useful to developers as remarksbox on top of homepage
-	log "Inserting extra info for developers in a box at the beginning of homepage"
+	echo "Inserting extra info for developers in a box at the beginning of homepage"
 	mysql $DB <<EOQ
 UPDATE tiki_pages SET data=CONCAT('{REMARKSBOX(type="information" title="Show community server" close="y")}${infotext}{REMARKSBOX} ',data) WHERE page_id=1;
 EOQ
+
+	/bin/rm $LOCKSDIR/lock_${TUSERID}_${ID} || (echo "FAIL: Failed to suppress lock file $LOCKSDIR/lock_${TUSERID}_${ID}"; exit 1)
 }
 
+echo "CREATION START - watch ${SUBDOMAIN}.show.tikiwiki.org "
 create
-onexit
+echo "CREATION END - results in http://${SUBDOMAIN}.show.tikiwiki.org/install_log.txt (available after a delay)"
+exit 0

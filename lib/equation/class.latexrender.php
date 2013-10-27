@@ -178,15 +178,15 @@ class LatexRender
      * @returns minimalistic LaTeX document containing the given formula
      */
     function wrap_formula($latex_formula) {
-        $string  = "\documentclass[".$this->_font_size."pt]{".$this->_latexclass."}\n";
-        $string .= "\usepackage[latin1]{inputenc}\n";
-        $string .= "\usepackage{amsmath}\n";
-        $string .= "\usepackage{amsfonts}\n";
-        $string .= "\usepackage{amssymb}\n";
-        $string .= "\pagestyle{empty}\n";
-        $string .= "\begin{document}\n";
-        $string .= "$".$latex_formula."$\n";
-        $string .= "\end{document}\n";
+        $string  = "\\documentclass[".$this->_font_size."pt]{".$this->_latexclass."}\n";
+        $string .= "\\usepackage[latin1]{inputenc}\n";
+        $string .= "\\usepackage{amsmath}\n";
+        $string .= "\\usepackage{amsfonts}\n";
+        $string .= "\\usepackage{amssymb}\n";
+        $string .= "\\pagestyle{empty}\n";
+        $string .= "\\begin{document}\n";
+        $string .= "\$".$latex_formula."\$\n";
+	    $string .= "\\end{document}\n";
 
         return $string;
     }
