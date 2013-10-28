@@ -140,7 +140,7 @@ foreach ($ctall as $c) {
 		$objectcount = $categlib->list_category_objects(
 			$c['categId'],
 			0,
-			0,
+			-1,
 			'',
 			$type,
 			$find,
