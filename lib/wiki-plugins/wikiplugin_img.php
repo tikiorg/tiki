@@ -145,6 +145,7 @@ function wikiplugin_img_info()
 				'options' => array(
 					array('text' => tra('None'), 'value' => ''),
 					array('text' => tra('Yes'), 'value' => 'y', 'description' => tra('Full size image appears when thumbnail is clicked.')),
+					array('text' => tra('Overlay with zoom'), 'value' => 'zoombox', 'description' => tra('Full size image appears with zoom option in a "Colorbox" overlay when thumbnail is clicked.')),
 					array('text' => tra('Overlay'), 'value' => 'box', 'description' => tra('Full size image appears in a "Colorbox" overlay when thumbnail is clicked.')),
 					array('text' => tra('Mouseover'), 'value' => 'mouseover', 'description' => tra('Full size image will pop up while cursor is over the thumbnail (and disappear when not).')),
 					array('text' => tra('Mouseover (Sticky)'), 'value' => 'mousesticky', 'description' => tra('Full size image will pop up once cursor passes over thumbnail and will remain up unless cursor passes over full size popup.')),
@@ -1021,8 +1022,25 @@ function wikiplugin_img( $data, $params )
 				$link = $browse_full_image;
 			}
 		}
-		if ($imgdata['thumb'] == 'box' && empty($imgdata['rel'])) {
+		if (($imgdata['thumb'] == 'box' || $imgdata['thumb'] == 'zoombox') && empty($imgdata['rel'])) {
 			$imgdata['rel'] = 'box';
+		}
+
+		if($imgdata['thumb'] == 'zoombox') {
+			$zoomscript = "$(document).bind('cbox_complete', function(){
+								$('.cboxPhoto').wrap('<span class=\"zoom_container\" style=\"display:inline-block\"></span>')
+								.css('display', 'block')
+								.parent()
+								.zoom({
+									on: 'click'
+								});
+								$('.zoom_container').append('<div class=\"zoomIcon\"></div>');
+								$('.zoomIcon').css('position','relative').css('height','20px').css('width','90px').css('top','-20px')
+									.css('background','white').css('padding','3px').css('font-size','14px')
+									.html('Click to zoom');
+								$('#cboxLoadedContent').css('height', 'auto');
+							});";
+			TikiLib::lib('header')->add_jq_onready($zoomscript);
 		}
 		// Set other link-related attributes
 		// target

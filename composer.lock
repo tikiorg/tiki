@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "2ddc4e8570af17b3aa2926381319bdb3",
+    "hash": "04c5f6468886644a8493e09f92a780a4",
     "packages": [
         {
             "name": "aFarkas/html5shiv",
@@ -622,6 +622,17 @@
                 "url": "https://composer.tiki.org/dist/jquery-plugins-treetable-3.0.2.zip",
                 "reference": "3.0.2",
                 "shasum": "c245ade681e528d650d858dbd2ad4c368f8d0338"
+            },
+            "type": "library"
+        },
+        {
+            "name": "jquery/plugins/zoom",
+            "version": "1.7.10",
+            "dist": {
+                "type": "zip",
+                "url": "https://composer.tiki.org/dist/jquery-plugins-zoom-1.7.10.zip",
+                "reference": "1.7.10",
+                "shasum": "4f2bb52f56bc72f588347ff27c6bf786174ab06a"
             },
             "type": "library"
         },
