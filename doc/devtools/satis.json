@@ -163,6 +163,17 @@
 		{
 			"type": "package",
 			"package": {
+				"name": "codemirror/codemirror",
+				"version": "3.16",
+				"dist": {
+					"url": "http://codemirror.net/codemirror-3.16.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
 				"name": "jarnokurlin/fullcalendar",
 				"version": "1.5.3.4",
 				"dist": {
