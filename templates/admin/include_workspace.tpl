@@ -71,7 +71,7 @@ $('#template-list').load($.service('workspace', 'list_templates'));
 						<th>{tr}Description{/tr}</th>
 					</tr>
 					{cycle values="odd,even" print=false}
-					{if $no_area eq '0'}
+					{if $areas|count}
 						{foreach from=$areas item=area}
 							<tr class="{cycle}{if $area.enabled neq 'y'} disabled{/if}">
 								<td><input type="checkbox" name="enabled[{$area.categId}]"{if $area.enabled eq 'y'} checked="checked"{/if} class="enabledChecks"></td>
@@ -79,7 +79,7 @@ $('#template-list').load($.service('workspace', 'list_templates'));
 								<td>{$area.categName}</td>
 								<td>
 									{foreach from=$area.perspectives item=persp}
-										<a href="tiki-edit_perspective.php?action=edit&id={$persp.perspectiveId}" title="{tr}Edit perspective{/tr} {$persp.name}">{$persp.name}</a>,
+										<a href="tiki-edit_perspective.php?action=edit&id={$persp.perspectiveId}" title="{tr}Edit perspective{/tr} {$persp.name}">{$persp.name}</a>{if not $persp@last},{/if}
 									{/foreach}
 								</td>
 								<td><input type="checkbox" name="exclusive[{$area.categId}]"{if $area.exclusive eq 'y'} checked="checked"{/if}{if $area.enabled neq 'y'} disabled="disabled"{/if} class="otherChecks"></td>
@@ -96,7 +96,7 @@ $(".enabledChecks").click(function() {
 });
 						{/jq}
 					{else}
-						<th class="{cycle}" colspan="4">{tr}No category found in area{/tr}</th>
+						<td class="{cycle}" colspan="7">{tr}No areas found. Click "Update Areas" to populate this list{/tr}</td>
 					{/if}
 				</table>
 			</fieldset>

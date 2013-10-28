@@ -488,6 +488,13 @@ class CategLib extends ObjectLib
 		return $this->filter_object_list($result, $cant, $offset, $maxRecords);
 	}
 
+	/**
+	 * @param array $result		object list
+	 * @param int $cant			size of list
+	 * @param int $offset		start of list
+	 * @param int $maxRecords	size of page - NB: -1 will check perms etc on every object and can be very slow
+	 * @return array
+	 */
 	private function filter_object_list($result, $cant, $offset, $maxRecords)
 	{
 		global $user, $prefs;
@@ -497,14 +504,27 @@ class CategLib extends ObjectLib
 		// Filter based on permissions
 		$contextMap = array( 'type' => 'type', 'object' => 'itemId' );
 		$contextMapMap = array_fill_keys(array_keys($permMap), $contextMap);
-		$result = Perms::mixedFilter(array(), 'type', 'object', $result, $contextMapMap, $permMap);
 
 		if ( $maxRecords == -1 ) {
-			$maxRecords = $cant;
+			$requiredResult = $result;
+		} else {
+			$requiredResult = array_slice($result, $offset, $maxRecords);
 		}
+		$requiredResult = Perms::mixedFilter(array(), 'type', 'object', $requiredResult, $contextMapMap, $permMap);
 
-		// Capture only the required portion
-		$result = array_slice($result, $offset, $maxRecords);
+		if ($maxRecords != -1) {	// if filtered result is less than what's there look for more
+			while (count($requiredResult) < $maxRecords && count($requiredResult) < $cant) {
+				$nextResults = array_slice($result, $maxRecords, $maxRecords - count($requiredResult));
+				$nextResults = Perms::mixedFilter(array(), 'type', 'object', $nextResults, $contextMapMap, $permMap);
+				if (empty($nextResults)) {
+					break;
+				}
+				$requiredResult = array_merge($requiredResult, $nextResults);
+			}
+		} else {
+			$cant = count($requiredResult);
+		}
+		$result = $requiredResult;
 
 		$ret = array();
 		$objs = array();

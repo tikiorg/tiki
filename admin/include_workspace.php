@@ -31,12 +31,6 @@ if ($prefs['feature_areas'] === 'y') {
 
 	// building overview
 	$areas_table = $areaslib->table('tiki_areas');
-	$conditions = array();
-
-	// if count zero, table probably not up-to-date
-	if ($areas_table->fetchCount($conditions) == 0) {
-		$areaslib->update_areas();
-	}
 
 	$result = $areas_table->fetchAll(array('categId', 'perspectives', 'exclusive', 'share_common', 'enabled'), $conditions);
 	$areas = array();
@@ -61,8 +55,6 @@ if ($prefs['feature_areas'] === 'y') {
 		$areas[] = $area;
 	}
 
-	$no_area = (count($areas)) ? 0 : 1;
-	$smarty->assign('no_area', $no_area);
 	$smarty->assign_by_ref('areas', $areas);
 
 }
