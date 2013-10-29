@@ -143,13 +143,13 @@ function wikiplugin_mediaplayer($data, $params)
 		'width' => 200,
 		'height' => 20,
 		'player' => 'player_mp3.swf',
-		'where' => 'http://flash-mp3-player.net/medias/',
+		'where' => 'vendor/player/mp3/template_default/',
 	);
 	$defaults_flv = array(
 		'width' => 320,
 		'height' => 240,
 		'player' => 'player_flv.swf',
-		'where' => 'http://flv-player.net/medias/',
+		'where' => 'vendor/player/flv/template_default/'
 	);
 	$defaults = array(
 		'width' => 320,
@@ -193,6 +193,7 @@ function wikiplugin_mediaplayer($data, $params)
 	if (empty($params['style']) || $params['style'] == 'normal' || !in_array($params['style'], $styles)) {
 		$player = $params['player'];
 	} else {
+		$params['where'] = str_replace('_default', '_'.$params['style'], $params['where']);
 		$player = str_replace('.swf', '_'.$params['style'].'.swf', $params['player']);
 	}
 	$code = '<object type="application/x-shockwave-flash" data="'.$params['where'].$player.'" width="'.$params['width'].'" height="'.$params['height'].'">';

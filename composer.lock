@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "04c5f6468886644a8493e09f92a780a4",
+    "hash": "74da5f83ab59f125400b8fbf6c652c69",
     "packages": [
         {
             "name": "aFarkas/html5shiv",
@@ -712,6 +712,28 @@
                 "x509"
             ],
             "time": "2012-11-20 03:10:22"
+        },
+        {
+            "name": "player/flv",
+            "version": "1.0",
+            "dist": {
+                "type": "zip",
+                "url": "https://composer.tiki.org/dist/player-flv-1.0.zip",
+                "reference": "1.0",
+                "shasum": "adfb2e2e53e5c6f1f90ef64d108546784c163245"
+            },
+            "type": "library"
+        },
+        {
+            "name": "player/mp3",
+            "version": "1.0",
+            "dist": {
+                "type": "zip",
+                "url": "https://composer.tiki.org/dist/player-mp3-1.0.zip",
+                "reference": "1.0",
+                "shasum": "7a6b88d4352d7c5744ff3f7f0ab3eaa1f0803de7"
+            },
+            "type": "library"
         },
         {
             "name": "rangy/rangy",
@@ -1533,7 +1555,7 @@
     "platform": [
 
     ],
-    "platform-dev": [
-
-    ]
+    "platform-dev": {
+        "ext-xml": "*"
+    }
 }
