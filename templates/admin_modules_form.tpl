@@ -3,7 +3,7 @@
 
 			
 <div id="module_params">
-	<div class="cbox-data">
+	<div class="cbox-data showover">
 		<label for="assign_name"><strong>{tr}Module Name{/tr}</strong></label>
 		<select id="assign_name" name="assign_name">
 			<option value=""></option>
@@ -134,3 +134,9 @@
 		</div>
 	{/if}
 </div>
+{jq}
+$('.chosen-drop ul').each(function(){
+	$(this).attr('class', '');
+	$(this).addClass('chosen-results');
+});
+{/jq}
