@@ -44,7 +44,7 @@ class HistLib extends TikiLib
 		// Store the current page in tiki_history before rolling back
 		if (strtolower($page) != 'sandbox') {
 			$info = $this->get_hist_page_info($page);
-			$old_version = $this->get_page_latest_version($page) + 1;
+			$old_version = $info['version'] + 1;
 		    $lastModif = $info["lastModif"];
 		    $user = $info["user"];
 		    $ip = $info["ip"];
@@ -286,20 +286,27 @@ class HistLib extends TikiLib
 
 		return empty($ret)?$ret: $ret[0];
 	}
-	
-	// note that this function returns the latest version in the
-	// history db table, which is one less than the current version 
+
+	/**
+	 * note that this function returns the latest but one version in the
+	 * history db table, which is one less than the current version
+	 *
+	 * @param string $page			page name
+	 * @param string $sort_mode		default version_desc
+	 * @return bool int
+	 */
+
 	function get_page_latest_version($page, $sort_mode='version_desc')
 	{
 
 		$query = "select `version` from `tiki_history` where `pageName`=? order by ".$this->convertSortMode($sort_mode);
-		$result = $this->query($query, array($page), 1);
-		$ret = array();
+		$result = $this->query($query, array($page), 2);
+		$ret = false;
 		
 		if ($res = $result->fetchRow()) {
-			$ret = $res['version'];
-		} else {
-			$ret = FALSE;
+			if ($res = $result->fetchRow()) {
+				$ret = $res['version'];
+			}
 		}
 
 		return $ret;
