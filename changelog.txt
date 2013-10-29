@@ -25,6 +25,40 @@ When possible, it's also nice to indicate what feature is concerned by the chang
 Before 2.0, there was only [MOD] for both [ENH] and [MOD]:
 
 ----------------------------------------------------------------------
+Version 6.13
+<http://tiki.org/ReleaseNotes613>
+------------------
+
+----------------------------------------------
+r47737 | jonnybradley | 2013-09-25 13:58:51 +0200 (Wed, 25 Sep 2013) | 2 lines
+
+Merged from 11.x
+[FIX] update ZeroClipboard to v 1.1.7 [from revision 47730]
+----------------------------------------------
+r47401 | arildb | 2013-09-10 22:21:53 +0200 (Tue, 10 Sep 2013) | 1 line
+
+[bp/r47397][SEC] Do not store bad values in the session. Thanks St?\195?\169phane Casset
+----------------------------------------------
+r47136 | nkoth | 2013-08-18 20:43:47 +0200 (Sun, 18 Aug 2013) | 1 line
+
+[bp/r47132][FIX] Just more filtering
+----------------------------------------------
+r47122 | jyhem | 2013-08-17 17:00:00 +0200 (Sat, 17 Aug 2013) | 1 line
+
+[FIX][bp/r47118] vars should always be escaped
+----------------------------------------------
+r46870 | arildb | 2013-07-26 17:52:25 +0200 (Fri, 26 Jul 2013) | 1 line
+
+[bp/r46608][FIX] order by must handle 1, which is the convertSortMode error return (probably related to r46575)
+----------------------------------------------
+r46829 | arildb | 2013-07-25 12:27:04 +0200 (Thu, 25 Jul 2013) | 1 line
+
+[bp/r46811][SEC] Validate calendar date input. Prevent XSS attack
+----------------------------------------------
+r46816 | jyhem | 2013-07-24 14:49:37 +0200 (Wed, 24 Jul 2013) | 1 line
+
+[FIX][bp/r46812] Cleaner input handling
+----------------------------------------------
 Version 6.12
 <http://tiki.org/ReleaseNotes612>
 ------------------
