@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "74da5f83ab59f125400b8fbf6c652c69",
+    "hash": "ba9d8ccca23b66225d0cf12b7cfff8cd",
     "packages": [
         {
             "name": "aFarkas/html5shiv",
@@ -119,12 +119,12 @@
         },
         {
             "name": "codemirror/codemirror",
-            "version": "2.25",
+            "version": "3.16",
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/codemirror-codemirror-2.25.zip",
-                "reference": "2.25",
-                "shasum": "9e2354bcfa135e1dad7acb82e5ea06483922fcf7"
+                "url": "https://composer.tiki.org/dist/codemirror-codemirror-3.16.zip",
+                "reference": "3.16",
+                "shasum": "db9227726036aa72072a0152bdab7c174f64e582"
             },
             "type": "library"
         },
