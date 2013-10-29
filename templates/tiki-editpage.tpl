@@ -313,6 +313,7 @@ $("input[name=allowhtml]").change(function() {
 									{if $prefs.feature_wiki_export eq 'y' and $tiki_p_export_wiki eq 'y'}
 										<a href="tiki-export_wiki_pages.php?page={$page|escape:"url"}&amp;all=1" class="link">{tr}export all versions{/tr}</a>
 									{/if}
+									<input type="submit" class="wikiaction btn btn-default" name="attach" value="{tr}Attach{/tr}" onclick="javascript:needToConfirm=false;insertImgFile('editwiki','userfile2','hasAlreadyInserted2','file', 'page2', 'attach_comment'); return true;">
 								</fieldset>
 							{/if}
 							
