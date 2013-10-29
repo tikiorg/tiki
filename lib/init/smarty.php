@@ -67,7 +67,7 @@ class Tiki_Security_Policy extends Smarty_Security
 
 		$functions = array();
 		$modifiers = array();
-		$urls = array();
+		$dirs = array();
 		
 		//With phpunit and command line these don't exist yet for some reason
 		if (isset($tikilib) && method_exists($tikilib, "get_preference")) {

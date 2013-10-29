@@ -2,17 +2,17 @@
 {* include file for module edit form - to be called by ajax *}
 
 			
+<div class="module_selector">
+	<label for="assign_name"><strong>{tr}Module Name{/tr}</strong></label>
+	<select id="assign_name" name="assign_name">
+		<option value=""></option>
+		{foreach key=name item=info from=$all_modules_info}
+			<option value="{$name|escape}" {if $assign_name eq $name || $assign_selected eq $name}selected="selected"{/if}>{$info.name}</option>
+		{/foreach}
+	</select>
+	{if isset($assign_info)}<div class="description">{$assign_info.description}{if isset($assign_info.documentation)} {help url=$assign_info.documentation}{/if}</div>{/if}
+</div>
 <div id="module_params">
-	<div class="cbox-data">
-		<label for="assign_name"><strong>{tr}Module Name{/tr}</strong></label>
-		<select id="assign_name" name="assign_name">
-			<option value=""></option>
-			{foreach key=name item=info from=$all_modules_info}
-				<option value="{$name|escape}" {if $assign_name eq $name || $assign_selected eq $name}selected="selected"{/if}>{$info.name}</option>
-			{/foreach}
-		</select>
-		{if isset($assign_info)}<div class="description">{$assign_info.description}{if isset($assign_info.documentation)} {help url=$assign_info.documentation}{/if}</div>{/if}
-	</div>
 	{if !empty($assign_name)}
 		{if isset($assign_info.type) and $assign_info.type eq 'function'}
 			<ul>
@@ -113,7 +113,6 @@
 					</fieldset>
 				{/foreach}
 				{autocomplete element=".pagename" type="pagename" options="multiple: true, multipleSeparator:';'"}
-				{jq}$("#module_params").tabs();{/jq}
 			{else}
 				<div class="admin2cols adminoptionbox clearfix">
 					<div class="q1">
