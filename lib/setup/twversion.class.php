@@ -27,8 +27,8 @@ class TWVersion
 		$this->branch 	= 'stable';
 
 		// Set everything else, including defaults.
-		$this->version 	= '11.1svn';	// needs to have no spaces and use the format X.YabcZ see tikiVersions fn below for examples
-		$this->star	= 'TBA';
+		$this->version 	= '11.1';	// needs to have no spaces and use the format X.YabcZ see tikiVersions fn below for examples
+		$this->star	= 'Vega';
 		$this->releases	= array();
 
 		// Check for Subversion or not
@@ -158,6 +158,7 @@ class TWVersion
 				'6.10',
 				'6.11',
 				'6.12',
+				'6.13',
 				'7.0beta1',
 				'7.0beta2',
 				'7.0RC1',
@@ -186,6 +187,7 @@ class TWVersion
 				'9.4',
 				'9.5',
 				'9.6',
+				'9.7',
 				'10.0alpha',
 				'10.0beta',
 				'10.0',
@@ -193,8 +195,11 @@ class TWVersion
 				'10.2',
 				'10.3',
 				'10.4',
+				'10.5',
 				'11.0beta',
 				'11.0',
+				'11.1',
+				'12.0alpha',
 			);
 	}
 
