@@ -506,19 +506,18 @@ if ( $user
 // Process an undo here
 if ( isset($_REQUEST['undo']) ) {
 	if ( $pageRenderer->canUndo() ) {
-		$access->check_authenticity();
+		$access->check_authenticity(tra('Are you sure you want to undo the last change?'));
 
-		// Remove the last version
-		$wikilib->remove_last_version($page);
-
-		// If page was deleted then re-create
-		if ( ! $tikilib->page_exists($page) ) {
-			$tikilib->create_page($page, 0, '', $tikilib->now, 'Tiki initialization');
+		$historylib = TikiLib::lib('hist');
+		$last = $historylib->get_page_latest_version($page);
+		if ( $last > 1 ) {
+			$historylib->use_version($page, $last);
+			// Restore page information
+			$info = $tikilib->get_page_info($page);
+			$pageRenderer->setInfos($info);
+		} else {
+			TikiLib::lib('errorreport')->report(tra('Nothing to undo'));
 		}
-
-		// Restore page information
-		$info = $tikilib->get_page_info($page);
-		$pageRenderer->setInfos($info);
 	}
 }
 

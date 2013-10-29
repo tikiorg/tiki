@@ -113,7 +113,8 @@
     {jq notonready=true}
 function submitSearch{{$search_mod_usage_counter}}() {
 	var $f = $('#search-module-form{{$search_mod_usage_counter}}');
-	if ($f.attr('page_selected') === $("#search_mod_input_{{$search_mod_usage_counter}}").val()) {
+	if ($f.data('page_selected') === $("#search_mod_input_{{$search_mod_usage_counter}}").val()) {
+		$f.append($('<input name="find">').val($f.data('page_selected')));
 		$f.attr('action', '{{$smod_params.go_action|escape:javascript}}');
 	} else if ($f.attr('action') == "#") {
 		$f.attr('action', '{{$smod_params.search_action|escape:javascript}}');
@@ -127,7 +128,7 @@ function submitSearch{{$search_mod_usage_counter}}() {
     {/jq}
 	{if $smod_params.use_autocomplete eq 'y'}
 		{capture name="selectFn"}select: function(event, item) {ldelim}
-	$('#search-module-form{$search_mod_usage_counter}').attr('page_selected', item.item.value).find("input[name=exact_match]").val("On");
+	$('#search-module-form{$search_mod_usage_counter}').data('page_selected', item.item.value).find("input[name=exact_match]").val("On");
 {rdelim}, open: function(event, item) {ldelim}
 	$(".search_mod_buttons", "#search-module-form{$search_mod_usage_counter}").hide();
 {rdelim}, close: function(event, item) {ldelim}
