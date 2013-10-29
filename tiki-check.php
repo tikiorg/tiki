@@ -1315,8 +1315,8 @@ $fcts = array(
 		),
 		array (
 			'function' => 'proc_open',
-			'risky' => tra('Proc_open is similar to exec.').' '.tra('Tiki does not need it, you may want to disable it.'),
-			'safe' =>  tra('Proc_open is similar to exec.').' '.tra('Tiki does not need it, you are wise to have it disabled.')
+			'risky' => tra('Proc_open is similar to exec.').' '.tra('Tiki does not need it, you may want to disable it. However, Composer may need it (If you are running Tiki from SVN)'),
+			'safe' =>  tra('Proc_open is similar to exec.').' '.tra('Tiki does not need it, you are wise to have it disabled. However, Composer may need it (If you are running Tiki from SVN)')
 		),
 		array (
 			'function' => 'curl_exec',
