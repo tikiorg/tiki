@@ -129,6 +129,8 @@
 					<div class="input_submit_container">
 						<input type="submit" class="btn btn-default" name="preview" value="{tr}Module Options{/tr}" onclick="needToConfirm=false;">
 					</div>
+				{else}
+					{jq}$("#module_params").tabs();{/jq}
 				{/if}
 			</fieldset>
 		</form>

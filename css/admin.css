@@ -386,6 +386,10 @@ a.admbox.off img {
 	background-image: none;
 }
 
+.module_selector {
+	margin: .5em .2em;
+}
+
 /* make empty module zones more "droppable" */
 
 .ui-droppable.modules, .ui-sortable.modules {
