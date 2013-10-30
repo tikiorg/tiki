@@ -132,6 +132,7 @@ if ($tiki_p_admin == 'y' && !empty($_REQUEST['process'])) {
 }
 
 $smarty->assign('queue_count', $queueCount);
+$smarty->assign('engine_info', $unifiedsearchlib->getEngineInfo());
 
 if ($tiki_p_admin == 'y' && isset($_REQUEST['optimize']) && $_REQUEST['optimize'] == 'now') {
 	global $unifiedsearchlib; require_once 'lib/search/searchlib-unified.php';

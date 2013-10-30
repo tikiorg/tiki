@@ -160,6 +160,11 @@ class Search_Elastic_Connection
 		$this->post("/_bulk", $data);
 	}
 
+	function rawApi($path)
+	{
+		return $this->get($path);
+	}
+
 	private function createIndex($index)
 	{
 		try {
