@@ -426,7 +426,8 @@ if ($prefs['mobile_feature'] === 'y' && $prefs['mobile_mode'] === 'y') {
 			$headerlib->add_cssfile('vendor/jquery/plugins/chosen/chosen.css');
 			$headerlib->add_css(
 				'.chosen-container .chosen-drop, .chosen-results li { z-index: 10000; color: #444 }
-				select { font-size: 14px; }'
+select { font-size: 13px; margin-right: 26px; padding: 0 0 0 8px; }
+select[multiple=multiple] { margin: 3px 0 3px 5px; padding: 3px 20px 3px 5px; }'
 			);
 		}
 		if ( $prefs['jquery_ui_selectmenu'] == 'y' ) {
