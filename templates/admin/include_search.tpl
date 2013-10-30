@@ -56,6 +56,15 @@
 					{preference name="allocate_time_unified_rebuild"}
 
 					{preference name="unified_engine"}
+					{if ! empty($engine_info)}
+						<div class="adminoptionboxchild">
+							<ul>
+								{foreach from=$engine_info key=property item=value}
+									<li><strong>{$property|escape}:</strong> {$value|escape}</li>
+								{/foreach}
+							</ul>
+						</div>
+					{/if}
 					<div class="adminoptionboxchild unified_engine_childcontainer lucene">
 						{preference name="unified_lucene_highlight"}
 						{preference name=unified_parse_results}

@@ -548,6 +548,48 @@ class UnifiedSearchLib
 		return new Search_Index_Memory;
 	}
 
+	function getEngineInfo()
+	{
+		global $prefs;
+
+		switch ($prefs['unified_engine']) {
+		case 'elastic':
+			$info = array();
+
+			try {
+				$connection = $this->getElasticConnection();
+				$root = $connection->rawApi('');
+				$info[tr('Client Node')] = $root->name;
+				$info[tr('ElasticSearch Version')] = $root->version->number;
+				$info[tr('Lucene Version')] = $root->version->lucene_version;
+
+				$cluster = $connection->rawApi('/_cluster/health');
+				$info[tr('Cluster Name')] = $cluster->cluster_name;
+				$info[tr('Cluster Status')] = $cluster->status;
+				$info[tr('Cluster Node Count')] = $cluster->number_of_nodes;
+
+				$status = $connection->rawApi('/_status');
+				foreach ($status->indices as $indexName => $data) {
+					if (strpos($indexName, $prefs['unified_elastic_index_prefix']) === 0) {
+						$info[tr('Index %0', $indexName)] = tr('%0 documents, totaling %1', 
+							$data->docs->num_docs, $data->index->primary_size);
+					}
+				}
+
+				$nodes = $connection->rawApi('/_nodes/jvm/stats');
+				foreach ($nodes->nodes as $node) {
+					$info[tr('Node %0', $node->name)] = tr('Using %0, since %1', $node->jvm->mem->heap_used, $node->jvm->uptime);
+				}
+			} catch (Search_Elastic_Exception $e) {
+				$info[tr('Information Missing')] = $e->getMessage();
+			}
+
+			return $info;
+		default:
+			return array();
+		}
+	}
+
 	private function getElasticConnection()
 	{
 		global $prefs;
