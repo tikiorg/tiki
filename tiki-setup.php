@@ -425,7 +425,7 @@ if ($prefs['mobile_feature'] === 'y' && $prefs['mobile_mode'] === 'y') {
 			$headerlib->add_jsfile('vendor/jquery/plugins/chosen/chosen.jquery.js');
 			$headerlib->add_cssfile('vendor/jquery/plugins/chosen/chosen.css');
 			$headerlib->add_css(
-				'.chosen-container .chosen-drop, .chosen-results li { z-index: 100; color: #444 }
+				'.chosen-container .chosen-drop, .chosen-results li { z-index: 10000; color: #444 }
 				select { font-size: 14px; }'
 			);
 		}
