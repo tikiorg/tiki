@@ -17,11 +17,6 @@
 */
 
 /**
-* Includes
-*/
-require_once 'PEAR.php';
-
-/**
 * Syntax definitions
 *
 * Please don't forget to add binary attributes to isBinary() below

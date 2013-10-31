@@ -1550,7 +1550,6 @@ class UsersLib extends TikiLib
 
 
 		// set the Auth options
-		require_once('pear/Auth.php');
 		$a = new Auth('LDAP', $options);
 
 		// check if the login correct

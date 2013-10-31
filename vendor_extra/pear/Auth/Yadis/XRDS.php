@@ -14,11 +14,6 @@
  */
 
 /**
- * Require the XPath implementation.
- */
-require_once 'Auth/Yadis/XML.php';
-
-/**
  * This match mode means a given service must match ALL filters passed
  * to the Auth_Yadis_XRDS::services() call.
  */

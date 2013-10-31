@@ -23,11 +23,6 @@
  */
 
 /**
- * base class
- */
-require_once 'PEAR/Command/Common.php';
-
-/**
  * PEAR commands for login/logout
  *
  * @category   pear
@@ -124,8 +119,6 @@ Run regression tests with PHP\'s regression testing script (run-tests.php).',
         if (isset($options['phpunit']) && isset($options['tapoutput'])) {
             return $this->raiseError('ERROR: cannot use both --phpunit and --tapoutput at the same time');
         }
-        require_once 'PEAR/Common.php';
-        require_once 'System.php';
         $log = new PEAR_Common;
         $log->ui = &$this->ui; // slightly hacky, but it will work
         $tests = array();
@@ -241,7 +234,6 @@ Run regression tests with PHP\'s regression testing script (run-tests.php).',
             $tap = '1..' . $tests_count . "\n";
         }
 
-        require_once 'PEAR/RunTest.php';
         $run = new PEAR_RunTest($log, $options);
         $run->tests_count = $tests_count;
 

@@ -20,10 +20,6 @@
  * @since      File available since Release 1.4.0a1
  */
 /**
- * package.xml abstraction class
- */
-require_once 'PEAR/PackageFile/v1.php';
-/**
  * Parser for package.xml version 1.0
  * @category   pear
  * @package    PEAR

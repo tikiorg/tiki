@@ -23,11 +23,6 @@
  * @since      File available since Release 0.1
  */
 
-/**
- * Used for installation groups in package.xml 2.0 and platform exceptions
- */
-require_once 'OS/Guess.php';
-require_once 'PEAR/Downloader.php';
 
 define('PEAR_INSTALLER_NOBINARY', -240);
 /**
@@ -170,14 +165,6 @@ class PEAR_Installer extends PEAR_Downloader
         }
         if (strtolower($package) == 'pear' && $channel == 'pear.php.net') {
             // to avoid race conditions, include all possible needed files
-            require_once 'PEAR/Task/Common.php';
-            require_once 'PEAR/Task/Replace.php';
-            require_once 'PEAR/Task/Unixeol.php';
-            require_once 'PEAR/Task/Windowseol.php';
-            require_once 'PEAR/PackageFile/v1.php';
-            require_once 'PEAR/PackageFile/v2.php';
-            require_once 'PEAR/PackageFile/Generator/v1.php';
-            require_once 'PEAR/PackageFile/Generator/v2.php';
         }
         $filelist = $this->_registry->packageInfo($package, 'filelist', $channel);
         if ($filelist == null) {
@@ -1429,7 +1416,6 @@ class PEAR_Installer extends PEAR_Downloader
      */
     function _compileSourceFiles($savechannel, &$filelist)
     {
-        require_once 'PEAR/Builder.php';
         $this->log(1, "$this->source_files source files, building");
         $bob = &new PEAR_Builder($this->ui);
         $bob->debug = $this->debug;
@@ -1570,9 +1556,6 @@ class PEAR_Installer extends PEAR_Downloader
         }
         $filelist = $pkg->getFilelist();
         PEAR::staticPushErrorHandling(PEAR_ERROR_RETURN);
-        if (!class_exists('PEAR_Dependency2')) {
-            require_once 'PEAR/Dependency2.php';
-        }
         $depchecker = &new PEAR_Dependency2($this->config, $options, 
             array('channel' => $channel, 'package' => $package),
             PEAR_VALIDATE_UNINSTALLING);

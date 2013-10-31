@@ -23,11 +23,6 @@
  * @since      File available since Release 1.3.0
  */
 
-/**
- * Needed for constants, extending
- */
-require_once 'PEAR/Common.php';
-
 define('PEAR_INSTALLER_OK',       1);
 define('PEAR_INSTALLER_FAILED',   0);
 define('PEAR_INSTALLER_SKIPPED', -1);
@@ -199,9 +194,6 @@ class PEAR_Downloader extends PEAR_Common
         $this->log(1, 'Attempting to discover channel "' . $channel . '"...');
         PEAR::pushErrorHandling(PEAR_ERROR_RETURN);
         $callback = $this->ui ? array(&$this, '_downloadCallback') : null;
-        if (!class_exists('System')) {
-            require_once 'System.php';
-        }
         $a = $this->downloadHttp('http://' . $channel . '/channel.xml', $this->ui,
             System::mktemp(array('-d')), $callback, false);
         PEAR::popErrorHandling();
@@ -209,9 +201,6 @@ class PEAR_Downloader extends PEAR_Common
             return false;
         }
         list($a, $lastmodified) = $a;
-        if (!class_exists('PEAR_ChannelFile')) {
-            require_once 'PEAR/ChannelFile.php';
-        }
         $b = new PEAR_ChannelFile;
         if ($b->fromXmlFile($a)) {
             unlink($a);
@@ -237,9 +226,6 @@ class PEAR_Downloader extends PEAR_Common
      */
     function &newDownloaderPackage(&$t)
     {
-        if (!class_exists('PEAR_Downloader_Package')) {
-            require_once 'PEAR/Downloader/Package.php';
-        }
         $a = &new PEAR_Downloader_Package($t);
         return $a;
     }
@@ -253,9 +239,6 @@ class PEAR_Downloader extends PEAR_Common
      */
     function &getDependency2Object(&$c, $i, $p, $s)
     {
-        if (!class_exists('PEAR_Dependency2')) {
-            require_once 'PEAR/Dependency2.php';
-        }
         $z = &new PEAR_Dependency2($c, $i, $p, $s);
         return $z;
     }
@@ -304,9 +287,6 @@ class PEAR_Downloader extends PEAR_Common
                           !isset($this->_options['offline'])) {
                         $channelschecked[$params[$i]->getChannel()] = true;
                         PEAR::staticPushErrorHandling(PEAR_ERROR_RETURN);
-                        if (!class_exists('System')) {
-                            require_once 'System.php';
-                        }
                         $curchannel = &$this->_registry->getChannel($params[$i]->getChannel());
                         if (PEAR::isError($curchannel)) {
                             PEAR::staticPopErrorHandling();
@@ -685,9 +665,6 @@ class PEAR_Downloader extends PEAR_Common
                     '" is not writeable.  Change download_dir config variable to ' .
                     'a writeable dir to avoid this warning');
             }
-            if (!class_exists('System')) {
-                require_once 'System.php';
-            }
             if (PEAR::isError($downloaddir = System::mktemp('-d'))) {
                 return $downloaddir;
             }
@@ -752,9 +729,6 @@ class PEAR_Downloader extends PEAR_Common
      */
     function &getPackagefileObject(&$c, $d, $t = false)
     {
-        if (!class_exists('PEAR_PackageFile')) {
-            require_once 'PEAR/PackageFile.php';
-        }
         $a = &new PEAR_PackageFile($c, $d, $t);
         return $a;
     }
@@ -836,14 +810,12 @@ class PEAR_Downloader extends PEAR_Common
                 }
             }
             if (isset($url['info']['required']) || $url['compatible']) {
-                require_once 'PEAR/PackageFile/v2.php';
                 $pf = new PEAR_PackageFile_v2;
                 $pf->setRawChannel($parr['channel']);
                 if ($url['compatible']) {
                     $pf->setRawCompatible($url['compatible']);
                 }
             } else {
-                require_once 'PEAR/PackageFile/v1.php';
                 $pf = new PEAR_PackageFile_v1;
             }
             $pf->setRawPackage($url['package']);
@@ -1009,15 +981,9 @@ class PEAR_Downloader extends PEAR_Common
                     'this should never happen');
             }
             if (isset($url['info']['required'])) {
-                if (!class_exists('PEAR_PackageFile_v2')) {
-                    require_once 'PEAR/PackageFile/v2.php';
-                }
                 $pf = new PEAR_PackageFile_v2;
                 $pf->setRawChannel($remotechannel);
             } else {
-                if (!class_exists('PEAR_PackageFile_v1')) {
-                    require_once 'PEAR/PackageFile/v1.php';
-                }
                 $pf = new PEAR_PackageFile_v1;
             }
             $pf->setRawPackage($url['package']);
@@ -1227,9 +1193,6 @@ class PEAR_Downloader extends PEAR_Common
      */
     function sortPackagesForInstall(&$packages)
     {
-        require_once 'Structures/Graph.php';
-        require_once 'Structures/Graph/Node.php';
-        require_once 'Structures/Graph/Manipulator/TopologicalSorter.php';
         $depgraph = new Structures_Graph(true);
         $nodes = array();
         $reg = &$this->config->getRegistry();

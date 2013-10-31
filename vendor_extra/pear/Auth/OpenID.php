@@ -22,13 +22,6 @@
  */
 define('Auth_OpenID_VERSION', '2.2.2');
 
-/**
- * Require the fetcher code.
- */
-require_once "Auth/Yadis/PlainHTTPFetcher.php";
-require_once "Auth/Yadis/ParanoidHTTPFetcher.php";
-require_once "Auth/OpenID/BigMath.php";
-require_once "Auth/OpenID/URINorm.php";
 
 /**
  * Status code returned by the server when the only option is to show

@@ -13,12 +13,6 @@
  * @license http://www.apache.org/licenses/LICENSE-2.0 Apache
  */
 
-/**
- * Interface import
- */
-require_once "Auth/Yadis/HTTPFetcher.php";
-
-require_once "Auth/OpenID.php";
 
 /**
  * A paranoid {@link Auth_Yadis_HTTPFetcher} class which uses CURL

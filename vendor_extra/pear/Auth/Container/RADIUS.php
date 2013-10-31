@@ -23,14 +23,6 @@
  * @since      File available since Release 1.2.0
  */
 
-/**
- * Include Auth_Container base class
- */
-require_once "Auth/Container.php";
-/**
- * Include PEAR Auth_RADIUS package
- */
-require_once "Auth/RADIUS.php";
 
 /**
  * Storage driver for authenticating users against RADIUS servers.

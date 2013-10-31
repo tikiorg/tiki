@@ -7,11 +7,6 @@
  */
 
 /**
- * Require the base class file.
- */
-require_once "Auth/OpenID/SQLStore.php";
-
-/**
  * An SQL store that uses PostgreSQL as its backend.
  *
  * @package OpenID

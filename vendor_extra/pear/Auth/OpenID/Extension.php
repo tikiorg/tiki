@@ -7,11 +7,6 @@
  */
 
 /**
- * Require the Message implementation.
- */
-require_once 'Auth/OpenID/Message.php';
-
-/**
  * A base class for accessing extension request and response data for
  * the OpenID 2 protocol.
  *

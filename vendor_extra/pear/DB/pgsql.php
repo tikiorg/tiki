@@ -26,11 +26,6 @@
  */
 
 /**
- * Obtain the DB_common class so it can be extended from
- */
-require_once 'DB/common.php';
-
-/**
  * The methods PEAR DB uses to interact with PHP's pgsql extension
  * for interacting with PostgreSQL databases
  *

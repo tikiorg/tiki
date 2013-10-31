@@ -688,16 +688,17 @@ function wikiplugin_trackerFilter_get_filters($trackerId=0, $listfields='', &$fo
     			break;
 			case 'r':
 				$opts = array();
-				$handler = $trklib->get_field_handler($field);
-				$add = $handler->getFieldData();
-				$selected = empty($_REQUEST['f_'.$fieldId])? '': $_REQUEST['f_'.$fieldId];
-				$list = !empty($add['listdisplay']) ? 'listdisplay' : 'list';	// use listdisplay for labels if there
-				foreach ($add[$list] as $id => $option) {
-					$opts[] = array(
-						'id' => $id,
-						'name' => $option,
-						'selected' => $selected == $id,
-					);
+				$list = $trklib->list_tracker_field_values($trackerId, $fieldId);
+				$list1 = $trklib->get_all_items($trackerId, $fieldId);
+				foreach ($list1 as $id => $option) {
+					$opt['id'] = $opt['name'] = $option;
+					if (!empty($_REQUEST['f_'.$fieldId]) && ((!is_array($_REQUEST['f_'.$fieldId]) && urldecode($_REQUEST['f_'.$fieldId]) == $option) || (is_array($_REQUEST['f_'.$fieldId]) && in_array($option, $_REQUEST['f_'.$fieldId])))) {
+						$opt['selected'] = 'y';
+						$selected = true;
+					} else {
+						$opt['selected'] = 'n';
+					}
+					$opts[] = $opt;
 				}
     			break;
 

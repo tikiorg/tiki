@@ -23,14 +23,6 @@
  * @since      File available since Release 1.2.3
  */
 
-/**
- * Include Auth_Container base class
- */
-require_once 'Auth/Container.php';
-/**
- * Include PEAR MDB package
- */
-require_once 'MDB.php';
 
 /**
  * Storage driver for fetching login data from a database

@@ -1,4 +1,5 @@
 <form method="post" action="">
+	<button class="listexecute-select-all">{tr}Select All{/tr}</button>
 	<ol>
 		{foreach from=$results item=entry}
 			<li>
@@ -21,3 +22,10 @@
 	</select>
 	<input type="submit" class="btn btn-default" value="{tr}Apply{/tr}">
 </form>
+{jq}
+$('.listexecute-select-all').removeClass('listexecute-select-all')
+	.on('click', function (e) {
+		$(this).closest('form').find(':checkbox:not(:checked)').click();
+		e.preventDefault();
+	});
+{/jq}

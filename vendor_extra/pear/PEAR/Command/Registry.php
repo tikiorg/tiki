@@ -22,11 +22,6 @@
  */
 
 /**
- * base class
- */
-require_once 'PEAR/Command/Common.php';
-
-/**
  * PEAR commands for registry manipulation
  *
  * @category   pear
@@ -259,9 +254,6 @@ installed package.'
             if ($fp) {
                 fclose($fp);
             }
-            if (!class_exists('PEAR_PackageFile')) {
-                require_once 'PEAR/PackageFile.php';
-            }
             $pkg = &new PEAR_PackageFile($this->config, $this->_debug);
             PEAR::staticPushErrorHandling(PEAR_ERROR_RETURN);
             $info = &$pkg->fromAnyFile($params[0], PEAR_VALIDATE_NORMAL);
@@ -423,9 +415,6 @@ installed package.'
         if ((file_exists($params[0]) && is_file($params[0]) && !is_dir($params[0])) || $fp = @fopen($params[0], 'r')) {
             if ($fp) {
                 fclose($fp);
-            }
-            if (!class_exists('PEAR_PackageFile')) {
-                require_once 'PEAR/PackageFile.php';
             }
             $pkg = &new PEAR_PackageFile($this->config, $this->_debug);
             PEAR::staticPushErrorHandling(PEAR_ERROR_RETURN);

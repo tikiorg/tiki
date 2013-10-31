@@ -9,8 +9,6 @@
  * @license http://www.apache.org/licenses/LICENSE-2.0 Apache
  */
 
-require_once 'Auth/Yadis/Misc.php';
-
 // from appendix B of rfc 3986 (http://www.ietf.org/rfc/rfc3986.txt)
 function Auth_OpenID_getURIPattern()
 {

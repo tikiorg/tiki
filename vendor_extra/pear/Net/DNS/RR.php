@@ -20,20 +20,6 @@
  *    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-/* Include files {{{ */
-require_once("Net/DNS/RR/A.php");
-require_once("Net/DNS/RR/AAAA.php");
-require_once("Net/DNS/RR/NS.php");
-require_once("Net/DNS/RR/CNAME.php");
-require_once("Net/DNS/RR/PTR.php");
-require_once("Net/DNS/RR/SOA.php");
-require_once("Net/DNS/RR/MX.php");
-require_once("Net/DNS/RR/TSIG.php");
-require_once("Net/DNS/RR/TXT.php");
-require_once("Net/DNS/RR/HINFO.php");
-require_once("Net/DNS/RR/SRV.php");
-require_once("Net/DNS/RR/NAPTR.php");
-/* }}} */
 /* Net_DNS_RR object definition {{{ */
 /**
  * Resource Record object definition

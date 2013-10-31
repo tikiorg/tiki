@@ -50,11 +50,6 @@
  */
 
 /**
- * uses PEAR's error handling
- */
-require_once 'PEAR.php';
-
-/**
  * resource could not be created
  */
 define('XML_PARSER_ERROR_NO_RESOURCE', 200);

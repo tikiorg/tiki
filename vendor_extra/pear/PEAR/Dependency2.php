@@ -21,11 +21,6 @@
  */
 
 /**
- * Required for the PEAR_VALIDATE_* constants
- */
-require_once 'PEAR/Validate.php';
-
-/**
  * Dependency check for PEAR packages
  *
  * This class handles both version 1.0 and 2.0 dependencies
@@ -85,9 +80,6 @@ class PEAR_Dependency2
                               $state = PEAR_VALIDATE_INSTALLING)
     {
         $this->_config = &$config;
-        if (!class_exists('PEAR_DependencyDB')) {
-            require_once 'PEAR/DependencyDB.php';
-        }
         if (isset($installoptions['packagingroot'])) {
             // make sure depdb is in the right location
             $config->setInstallRoot($installoptions['packagingroot']);
@@ -99,9 +91,6 @@ class PEAR_Dependency2
         }
         $this->_options = $installoptions;
         $this->_state = $state;
-        if (!class_exists('OS_Guess')) {
-            require_once 'OS/Guess.php';
-        }
         $this->_os = new OS_Guess;
         $this->_currentPackage = $package;
     }

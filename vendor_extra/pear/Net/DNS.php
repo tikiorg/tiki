@@ -40,15 +40,6 @@
 * @link       http://pear.php.net/package/Net_DNS
 */
 
-/* Include information {{{ */
-
-    require_once("Net/DNS/Header.php");
-    require_once("Net/DNS/Question.php");
-    require_once("Net/DNS/Packet.php");
-    require_once("Net/DNS/Resolver.php");
-    require_once("Net/DNS/RR.php");
-
-/* }}} */
 /* GLOBAL VARIABLE definitions {{{ */
 
 // Used by the Net_DNS_Resolver object to generate an ID

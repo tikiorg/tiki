@@ -7,11 +7,6 @@
  * @subpackage  Examples
  */
 
-/**
- * require the parser
- */
-require_once '../Parser.php';
-
 class myParser extends XML_Parser
 {
     function xmltag_foo_bar($xp, $name, $attribs)

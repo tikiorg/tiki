@@ -25,4 +25,3 @@
 /**
  * Include Auth package
  */
-require_once 'Auth.php';

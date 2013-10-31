@@ -23,12 +23,6 @@
  */
 
 /**
- * base class
- */
-require_once 'PEAR/Command/Common.php';
-require_once 'PEAR/REST.php';
-
-/**
  * PEAR commands for remote server querying
  *
  * @category   pear
@@ -594,9 +588,6 @@ parameter.
     // }}}
     function &getDownloader($options)
     {
-        if (!class_exists('PEAR_Downloader')) {
-            require_once 'PEAR/Downloader.php';
-        }
         $a = &new PEAR_Downloader($this->ui, $options, $this->config);
         return $a;
     }
@@ -652,7 +643,6 @@ parameter.
 
     function doListUpgrades($command, $options, $params)
     {
-        require_once 'PEAR/Common.php';
         if (isset($params[0]) && !is_array(PEAR_Common::betterStates($params[0]))) {
             return $this->raiseError($params[0] . ' is not a valid state (stable/beta/alpha/devel/etc.) try "pear help list-upgrades"');
         }

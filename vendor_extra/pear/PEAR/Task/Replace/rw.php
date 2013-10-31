@@ -20,10 +20,6 @@
  * @since      File available since Release 1.4.0a10
  */
 /**
- * Base class
- */
-require_once 'PEAR/Task/Replace.php';
-/**
  * Abstracts the replace task xml.
  * @category   pear
  * @package    PEAR

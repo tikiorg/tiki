@@ -116,6 +116,17 @@
 				}
 			}
 		},
+ 		{
+ 			"type": "package",
+ 			"package": {
+				"name": "codemirror/codemirror",
+				"version": "3.16",
+				"dist": {
+					"url": "http://codemirror.net/codemirror-3.16.zip",
+					"type": "zip"
+				}
+			}
+		},
 		{
 			"type": "package",
 			"package": {
@@ -816,6 +827,17 @@
 				"version": "2.3.0",
 				"dist": {
 					"url": "http://simile-widgets.googlecode.com/files/timeline_libraries_v2.3.0.zip",
+					"type": "zip"
+				}
+			}
+		},
+ 		{
+			"type": "package",
+			"package": {
+				"name": "player/mp3",
+				"version": "1.0",
+				"dist": {
+					"url": "https://github.com/neolao/mp3-player/archive/master.zip",
 					"type": "zip"
 				}
 			}

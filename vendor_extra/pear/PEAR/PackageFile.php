@@ -23,7 +23,6 @@
 /**
  * needed for PEAR_VALIDATE_* constants
  */
-require_once 'PEAR/Validate.php';
 /**
  * Error code if the package.xml <package> tag does not contain a valid version
  */
@@ -233,9 +232,6 @@ class PEAR_PackageFile
                 '" has unsupported package.xml <package> version "' . $packageversion[1] . '"');
             return $a;
         } else {
-            if (!class_exists('PEAR_ErrorStack')) {
-                require_once 'PEAR/ErrorStack.php';
-            }
             PEAR_ErrorStack::staticPush('PEAR_PackageFile',
                 PEAR_PACKAGEFILE_ERROR_NO_PACKAGEVERSION,
                 'warning', array('xml' => $data), 'package.xml "' . $file .
@@ -294,9 +290,6 @@ class PEAR_PackageFile
      */
     function &fromTgzFile($file, $state)
     {
-        if (!class_exists('Archive_Tar')) {
-            require_once 'Archive/Tar.php';
-        }
         $tar = new Archive_Tar($file);
         if ($this->_debug <= 1) {
             $tar->pushErrorHandling(PEAR_ERROR_RETURN);

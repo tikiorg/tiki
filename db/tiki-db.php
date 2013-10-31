@@ -207,24 +207,15 @@ $initializer->setInitializeCallback(
 	}
 );
 
-try {
-	$db = $initializer->getConnection($credentials['primary']);
-} catch (Exception $e) {
-	echo $e;
-	require_once 'lib/init/smarty.php';
-
-	$smarty->assign('msg', $e->getMessage());
-	$smarty->assign('where', 'connection');
-	echo $smarty->fetch('database-connection-error.tpl');
-	exit;
-}
+ini_set('display_errors', 1);
+$db = $initializer->getConnection($credentials['primary']);
 
 if (! $db && ! defined('TIKI_IN_INSTALLER')) {
 	header('location: tiki-install.php');
 	exit;
+} elseif ($db) {
+	TikiDb::set($db);
 }
-
-TikiDb::set($db);
 
 if ($credentials['shadow']) {
 	global $dbMaster, $dbSlave;

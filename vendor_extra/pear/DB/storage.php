@@ -22,10 +22,6 @@
  * @link       http://pear.php.net/package/DB
  */
 
-/**
- * Obtain the DB class so it can be extended from
- */
-require_once 'DB.php';
 
 /**
  * Provides an object interface to a table row

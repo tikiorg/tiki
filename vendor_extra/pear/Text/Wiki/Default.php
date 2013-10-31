@@ -13,7 +13,6 @@
  * @link       http://pear.php.net/package/Text_Wiki
  */
 
-require_once('Text/Wiki.php');
 
 /**
  * This is the parser for the Default ruleset. For now, this simply extends Text_Wiki.

@@ -21,11 +21,6 @@
  */
 
 /**
- * base xml parser class
- */
-require_once 'PEAR/XMLParser.php';
-require_once 'PEAR/ChannelFile.php';
-/**
  * Parser for channel.xml
  * @category   pear
  * @package    PEAR

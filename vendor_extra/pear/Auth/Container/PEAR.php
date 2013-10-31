@@ -23,14 +23,6 @@
  * @since      File available since Release 1.3.0
  */
 
-/**
- * Include PEAR HTTP_Client.
- */
-require_once 'HTTP/Client.php';
-/**
- * Include Auth_Container base class
- */
-require_once 'Auth/Container.php';
 
 /**
  * Storage driver for authenticating against PEAR website

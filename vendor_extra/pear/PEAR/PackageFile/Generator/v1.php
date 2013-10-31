@@ -20,12 +20,6 @@
  * @since      File available since Release 1.4.0a1
  */
 /**
- * needed for PEAR_VALIDATE_* constants
- */
-require_once 'PEAR/Validate.php';
-require_once 'System.php';
-require_once 'PEAR/PackageFile/v2.php';
-/**
  * This class converts a PEAR_PackageFile_v1 object into any output format.
  *
  * Supported output formats include array, XML string, and a PEAR_PackageFile_v2
@@ -63,7 +57,6 @@ class PEAR_PackageFile_Generator_v1
      */
     function toTgz(&$packager, $compress = true, $where = null)
     {
-        require_once 'Archive/Tar.php';
         if ($where === null) {
             if (!($where = System::mktemp(array('-d')))) {
                 return PEAR::raiseError('PEAR_Packagefile_v1::toTgz: mktemp failed');

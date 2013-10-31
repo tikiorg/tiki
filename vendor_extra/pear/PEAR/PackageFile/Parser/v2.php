@@ -20,11 +20,6 @@
  * @since      File available since Release 1.4.0a1
  */
 /**
- * base xml parser class
- */
-require_once 'PEAR/XMLParser.php';
-require_once 'PEAR/PackageFile/v2.php';
-/**
  * Parser for package.xml version 2.0
  * @category   pear
  * @package    PEAR

@@ -24,15 +24,6 @@
  */
 
 /**
- * Include Auth_Container base class
- */
-require_once 'Auth/Container.php';
-/**
- * Include PEAR DB package
- */
-require_once 'DB.php';
-
-/**
  * A lighter storage driver for fetching login data from a database
  *
  * This driver is derived from the DB storage container but
