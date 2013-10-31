@@ -40,6 +40,12 @@
 					<a href="tiki-list_submissions.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'publishDate_desc'}publishDate_asc{else}publishDate_desc{/if}">{tr}Publish Date{/tr}</a>
 				</th>
 			{/if}
+			{if $prefs.art_list_expire eq 'y'}
+				{assign var=numbercol value=$numbercol+1}
+				<th>
+					<a href="tiki-list_submissions.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'expireDate_desc'}expireDate_asc{else}expireDate_desc{/if}">{tr}Expiry Date{/tr}</a>
+				</th>
+			{/if}
 			{if $prefs.art_list_size eq 'y'}
 				{assign var=numbercol value=$numbercol+1}
 				<th style="text-align:right;">
@@ -82,7 +88,10 @@
 					<td class="text">{$listpages[changes].topicName|escape}</td>
 				{/if}
 				{if $prefs.art_list_date eq 'y'}
-					<td class="date">{$listpages[changes].publishDate|tiki_short_datetime}</td>
+					<td class="date" title="{$listpages[changes].publishDate|tiki_short_datetime}">{$listpages[changes].publishDate|tiki_short_date}</td>
+				{/if}
+				{if $prefs.art_list_expire eq 'y'}
+					<td class="date" title="{$listpages[changes].expireDate|tiki_short_datetime}">{$listpages[changes].expireDate|tiki_short_date}</td>
 				{/if}
 				{if $prefs.art_list_size eq 'y'}
 					<td class="integer">{$listpages[changes].size|kbsize}</td>
