@@ -94,6 +94,17 @@
 				}
 			}
 		},
+ 		{
+ 			"type": "package",
+ 			"package": {
+				"name": "codemirror/codemirror",
+				"version": "3.16",
+				"dist": {
+					"url": "http://codemirror.net/codemirror-3.16.zip",
+					"type": "zip"
+				}
+			}
+		},
 		{
 			"type": "package",
 			"package": {
@@ -589,6 +600,28 @@
 				}
 			}
 		},
+ 		{
+			"type": "package",
+			"package": {
+				"name": "player/mp3",
+				"version": "1.0",
+				"dist": {
+					"url": "https://github.com/neolao/mp3-player/archive/master.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "player/flv",
+				"version": "1.0",
+				"dist": {
+					"url": "https://github.com/neolao/flv-player/archive/master.zip",
+					"type": "zip"
+				}
+			}
+		},
 		{
 			"type": "svn",
 			"url": "http://svn.code.sf.net/p/jcapture-applet/code/trunk@46"
@@ -646,6 +679,8 @@
 		"jquery/plugins/sparkline": "2.1.1",
 		"phpcas/phpcas": "1.3.2",
 		"phpseclib/phpseclib": "0.3.1",
+		"player/flv": "1.0",
+		"player/mp3": "1.0",
 		"rangy/rangy": "1.2.3",
 		"simile_timeline/simile_timeline": "2.3.0",
 		"smarty/smarty": "3.1.14",
