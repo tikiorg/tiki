@@ -351,6 +351,7 @@ $headerlib->add_js('var zoomToFoundLocation = "'.$zoomToFoundLocation.'";');	// 
 
 $headerlib->add_jsfile('lib/jquery_tiki/tiki-maps.js');
 $headerlib->add_jsfile('vendor/jquery/plugins/jquery-json/jquery.json-2.4.js');
+$headerlib->add_jsfile('vendor/jquery/plugins/zoom/jquery.zoom.js');
 
 if ($prefs['feature_syntax_highlighter'] == 'y') {
 	//add codemirror stuff

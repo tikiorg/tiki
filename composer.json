@@ -49,6 +49,7 @@
 		"jquery/plugins/tablesorter": "2.12.0",
 		"jquery/plugins/treetable": "3.0.2",
 		"jquery/plugins/sparkline": "2.1.1",
+		"jquery/plugins/zoom": "1.7.10",
 		"phpcas/phpcas": "1.3.2",
 		"phpseclib/phpseclib": "0.3.1",
 		"rangy/rangy": "1.2.3",
