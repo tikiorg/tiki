@@ -37,8 +37,7 @@ class Table_Code_MainOptions extends Table_Code_Manager
 		if (parent::$sort && is_array(parent::$s['sort']['columns'])) {
 			foreach (parent::$s['sort']['columns'] as $col => $info) {
 				//row grouping setting
-				if (!empty($info['group'])) {
-					parent::$s['sort']['group'] = true;
+				if (!empty($info['group']) && parent::$s['sort']['group'] !== false) {
 					$allcols[$col]['addClass'][] = 'group-' . $info['group'];
 				}
 				if (isset($info['type']) && $info['type'] !== true) {
@@ -99,7 +98,7 @@ class Table_Code_MainOptions extends Table_Code_Manager
 		//standard ones
 		$w[] = 'zebra';
 		$w[] = 'stickyHeaders';
-		if (!isset(parent::$s['sort']['group']) || parent::$s['sort']['group'] !== false) {
+		if (!empty(parent::$s['sort']['group'])) {
 			$w[] = 'group';
 		}
 		//saveSort

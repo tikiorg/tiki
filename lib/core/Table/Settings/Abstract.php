@@ -34,6 +34,7 @@ abstract class Table_Settings_Abstract
 		'total' => '',
 //		'selflinks' => true,				//if smarty self_links need to be removed
 		'sort' => array(
+			'group' => true,
 			'type' => 'reset',				//choices: boolean true, boolean false, save, reset, savereset.
 /*			'columns' => array(				//zero-based column index, used only if column-specific settings
 				0 => array(

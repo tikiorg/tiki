@@ -216,9 +216,15 @@ class Tiki_Profile_Writer
 			);
 		}
 
+		// If it looks like a special parameter, leave as-is
+		if (preg_match('/^\{+\$?\w+\}+$/', $id)) {
+			return $id;
+		}
+
 		foreach ($this->data['objects'] as $object) {
 			if ($object['type'] == $type && $object['_id'] == $id) {
-				return "\$profileobject:{$object['ref']}\$";
+				$name = trim($object['ref']);
+				return "\$profileobject:{$name}\$";
 			}
 		}
 
@@ -253,6 +259,9 @@ class Tiki_Profile_Writer
 
 	function formatExternalReference($symbol, $profile, $repository = null)
 	{
+		$symbol = trim($symbol);
+		$profile = trim($profile);
+		$repository = trim($repository);
 		if ($repository) {
 			$repository .= ':';
 		}

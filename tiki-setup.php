@@ -426,8 +426,9 @@ if ($prefs['mobile_feature'] === 'y' && $prefs['mobile_mode'] === 'y') {
 			$headerlib->add_jsfile('vendor/jquery/plugins/chosen/chosen.jquery.js');
 			$headerlib->add_cssfile('vendor/jquery/plugins/chosen/chosen.css');
 			$headerlib->add_css(
-				'.chosen-container .chosen-drop, .chosen-results li { z-index: 100; color: #444 }
-				select { font-size: 14px; }'
+				'.chosen-container .chosen-drop, .chosen-results li { z-index: 10000; color: #444 }
+select { font-size: 13px; margin-right: 26px; padding: 0 0 0 8px; }
+select[multiple=multiple] { margin: 3px 0 3px 5px; padding: 3px 20px 3px 5px; }'
 			);
 		}
 		if ( $prefs['jquery_ui_selectmenu'] == 'y' ) {
@@ -468,7 +469,6 @@ if ($prefs['mobile_feature'] === 'y' && $prefs['mobile_mode'] === 'y') {
 		$headerlib->add_jsfile('vendor/jquery/plugins/media/jquery.media.js');
 	}
 	if ( $prefs['feature_jquery_tablesorter'] == 'y' ) {
-//		$headerlib->add_jsfile('vendor/jquery/plugins/tablesorter/addons/pager/jquery.tablesorter.pager.js');
 		$headerlib->add_cssfile('lib/jquery_tiki/tablesorter/style.css');
 		if ( $prefs['tiki_minify_javascript'] === 'y' ) {
 			//tablesorter has bad syntax in the non-min file, however the min file seems to work fine when double minned :)
@@ -483,6 +483,7 @@ if ($prefs['mobile_feature'] === 'y' && $prefs['mobile_mode'] === 'y') {
 			$headerlib->add_jsfile('vendor/jquery/plugins/tablesorter/js/jquery.tablesorter.widgets-filter-formatter.js');
 		}
 		$headerlib->add_jsfile('vendor/jquery/plugins/tablesorter/js/widgets/widget-grouping.js');
+		$headerlib->add_jsfile('vendor/jquery/plugins/tablesorter/js/widgets/widget-pager.js');
 		$headerlib->add_jsfile('vendor/jquery/plugins/tablesorter/js/parsers/parser-input-select.js');
 	}
 	if ( $prefs['feature_shadowbox'] == 'y' ) {

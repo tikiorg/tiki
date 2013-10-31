@@ -62,7 +62,6 @@ class Table_Code_Pager extends Table_Code_Manager
 			if (!isset(parent::$s['ajax']['custom']) || parent::$s['ajax']['custom'] !== false) {
 				$ca = array(
 					'var vars = {}, hashes, hash, sort, sorts, filters, params = [], dir, newurl, offset = true,',
-					'			extid, extval;',
 					//parse out url parameters
 					'hashes = url.slice(url.indexOf(\'?\') + 1).split(\'&\');',
 					'for(var i = 0; i < hashes.length; i++) {',
@@ -114,10 +113,8 @@ class Table_Code_Pager extends Table_Code_Manager
 					'	newurl = newurl + \'&\' + value;',
 					'});',
 					//add external filter param if selected
-					'if (typeof $(\'' . parent::$tid . '\').data(\'ext_filter\') !== \'undefined\') {',
-					'	extid = \'#\' + $(\'' . parent::$tid . '\').data(\'ext_filter\');',
-					'	extval = $(extid).val();',
-					'	newurl = newurl + \'&\' + extval;',
+					'if (typeof $(\'' . parent::$tid . '\').data(\'ts_extval\') !== \'undefined\') {',
+					'	newurl = newurl + \'&\' + $(\'' . parent::$tid . '\').data(\'ts_extval\');',
 					'}',
 					'return newurl;'
 				);
