@@ -20,10 +20,6 @@
  * @since      File available since Release 1.4.0a8
  */
 /**
- * For base class
- */
-require_once 'PEAR/PackageFile/v2.php';
-/**
  * @category   pear
  * @package    PEAR
  * @author     Greg Beaver <cellog@php.net>

@@ -21,12 +21,6 @@
  */
 
 /**
- * For downloading REST xml/txt files
- */
-require_once 'PEAR/REST.php';
-require_once 'PEAR/REST/10.php';
-
-/**
  * Implement REST 1.3
  *
  * @category   pear

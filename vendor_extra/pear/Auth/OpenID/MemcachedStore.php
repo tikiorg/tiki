@@ -16,11 +16,6 @@
  */
 
 /**
- * Import the interface for creating a new store class.
- */
-require_once 'Auth/OpenID/Interface.php';
-
-/**
  * This is a memcached-based store for OpenID associations and
  * nonces. 
  * 

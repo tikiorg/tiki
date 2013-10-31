@@ -22,14 +22,6 @@
  * @link       http://pear.php.net/package/Auth
  */
 
-/**
- * Include Auth_Container base class
- */
-require_once 'Auth/Container.php';
-/**
- * Include PEAR DB
- */
-require_once 'DB.php';
 
 /**
  * Storage driver for fetching login data from a database

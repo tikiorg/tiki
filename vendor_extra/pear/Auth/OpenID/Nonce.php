@@ -7,11 +7,6 @@
  */
 
 /**
- * Need CryptUtil to generate random strings.
- */
-require_once 'Auth/OpenID/CryptUtil.php';
-
-/**
  * This is the characters that the nonces are made from.
  */
 define('Auth_OpenID_Nonce_CHRS',"abcdefghijklmnopqrstuvwxyz" .

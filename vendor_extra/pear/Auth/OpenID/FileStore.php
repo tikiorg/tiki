@@ -15,14 +15,6 @@
  */
 
 /**
- * Require base class for creating a new interface.
- */
-require_once 'Auth/OpenID.php';
-require_once 'Auth/OpenID/Interface.php';
-require_once 'Auth/OpenID/HMAC.php';
-require_once 'Auth/OpenID/Nonce.php';
-
-/**
  * This is a filesystem-based store for OpenID associations and
  * nonces.  This store should be safe for use in concurrent systems on
  * both windows and unix (excluding NFS filesystems).  There are a

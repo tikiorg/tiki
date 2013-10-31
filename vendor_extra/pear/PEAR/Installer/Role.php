@@ -21,11 +21,6 @@
  */
 
 /**
- * base class for installer roles
- */
-require_once 'PEAR/Installer/Role/Common.php';
-require_once 'PEAR/XMLParser.php';
-/**
  * @category   pear
  * @package    PEAR
  * @author     Greg Beaver <cellog@php.net>
@@ -75,9 +70,6 @@ class PEAR_Installer_Role
             return $a;
         }
         $a = 'PEAR_Installer_Role_' . ucfirst($role);
-        if (!class_exists($a)) {
-            require_once str_replace('_', '/', $a) . '.php';
-        }
         $b = new $a($config);
         return $b;
     }

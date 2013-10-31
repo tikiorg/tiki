@@ -20,10 +20,6 @@
  * @since      File available since Release 1.4.0a1
  */
 /**
- * Base class
- */
-require_once 'PEAR/Task/Common.php';
-/**
  * Implements the unix line endings file task.
  * @category   pear
  * @package    PEAR

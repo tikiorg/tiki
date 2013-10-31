@@ -22,12 +22,6 @@
  * @since      File available since Release 0.1
  */
 
-/**
- * base class
- */
-require_once 'PEAR/Common.php';
-require_once 'PEAR/PackageFile.php';
-require_once 'System.php';
 
 /**
  * Administration class used to make a PEAR release tarball.

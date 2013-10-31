@@ -20,10 +20,6 @@
  * @since      File available since Release 1.4.0a1
  */
 /**
- * Base class
- */
-require_once 'PEAR/Task/Common.php';
-/**
  * Implements the postinstallscript file task.
  *
  * Note that post-install scripts are handled separately from installation, by the

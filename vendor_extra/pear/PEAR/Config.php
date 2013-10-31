@@ -768,9 +768,6 @@ class PEAR_Config extends PEAR
     {
         do { // poor man's try
             if (!class_exists('PEAR_FTP')) {
-                if (!class_exists('PEAR_Common')) {
-                    require_once 'PEAR/Common.php';
-                }
                 if (PEAR_Common::isIncludeable('PEAR/FTP.php')) {
                     require_once 'PEAR/FTP.php';
                 }

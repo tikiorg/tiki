@@ -14,8 +14,6 @@
  * @license http://www.apache.org/licenses/LICENSE-2.0 Apache
  */
 
-require_once 'Auth/OpenID.php';
-
 /**
  * SHA1_BLOCKSIZE is this module's SHA1 blocksize used by the fallback
  * implementation.

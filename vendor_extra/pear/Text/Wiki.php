@@ -14,16 +14,6 @@
  */
 
 /**
- * The baseline abstract parser class.
- */
-require_once 'Text/Wiki/Parse.php';
-
-/**
- * The baseline abstract render class.
- */
-require_once 'Text/Wiki/Render.php';
-
-/**
  * Parse structured wiki text and render into arbitrary formats such as XHTML.
  *
  * This is the "master" class for handling the management and convenience
@@ -470,7 +460,6 @@ class Text_Wiki {
         $class = 'Text_Wiki_' . $parser;
         $file = str_replace('_', '/', $class).'.php';
         if (!class_exists($class)) {
-            require_once $file;
             if (!class_exists($class)) {
                 return Text_Wiki::error(
                     'Class ' . $class . ' does not exist after requiring '. $file .

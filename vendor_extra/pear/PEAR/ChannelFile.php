@@ -1539,9 +1539,6 @@ class PEAR_ChannelFile {
      */
     function &getValidationObject($package = false)
     {
-        if (!class_exists('PEAR_Validate')) {
-            require_once 'PEAR/Validate.php';
-        }
         if (!$this->_isValid) {
             if (!$this->validate()) {
                 $a = false;

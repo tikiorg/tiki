@@ -19,10 +19,6 @@
  * @link       http://pear.php.net/package/PEAR
  * @since      File available since Release 1.4.0a1
  */
-/**
- * For error handling
- */
-require_once 'PEAR/ErrorStack.php';
 
 /**
  * Error code if parsing is attempted with no xml extension
@@ -1311,9 +1307,6 @@ class PEAR_PackageFile_v1
      */
     function &getDefaultGenerator()
     {
-        if (!class_exists('PEAR_PackageFile_Generator_v1')) {
-            require_once 'PEAR/PackageFile/Generator/v1.php';
-        }
         $a = &new PEAR_PackageFile_Generator_v1($this);
         return $a;
     }
@@ -1334,9 +1327,6 @@ class PEAR_PackageFile_v1
                 return implode('', file($file));
             }
         } else { // tgz
-            if (!class_exists('Archive_Tar')) {
-                require_once 'Archive/Tar.php';
-            }
             $tar = &new Archive_Tar($this->_archiveFile);
             $tar->pushErrorHandling(PEAR_ERROR_RETURN);
             if ($file != 'package.xml' && $file != 'package2.xml') {

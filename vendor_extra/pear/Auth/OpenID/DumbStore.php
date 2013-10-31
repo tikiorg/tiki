@@ -15,12 +15,6 @@
  */
 
 /**
- * Import the interface for creating a new store class.
- */
-require_once 'Auth/OpenID/Interface.php';
-require_once 'Auth/OpenID/HMAC.php';
-
-/**
  * This is a store for use in the worst case, when you have no way of
  * saving state on the consumer site. Using this store makes the
  * consumer vulnerable to replay attacks, as it's unable to use

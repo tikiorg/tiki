@@ -28,8 +28,6 @@ define('PEAR_VALIDATE_NORMAL', 3);
 define('PEAR_VALIDATE_DOWNLOADING', 4); // this is not bit-mapped like the others
 define('PEAR_VALIDATE_PACKAGING', 7);
 /**#@-*/
-require_once 'PEAR/Common.php';
-require_once 'PEAR/Validator/PECL.php';
 
 /**
  * Validation class for package.xml - channel-level advanced validation

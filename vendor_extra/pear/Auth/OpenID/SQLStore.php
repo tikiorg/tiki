@@ -14,22 +14,6 @@
  */
 
 /**
- * @access private
- */
-require_once 'Auth/OpenID/Interface.php';
-require_once 'Auth/OpenID/Nonce.php';
-
-/**
- * @access private
- */
-require_once 'Auth/OpenID.php';
-
-/**
- * @access private
- */
-require_once 'Auth/OpenID/Nonce.php';
-
-/**
  * This is the parent class for the SQL stores, which contains the
  * logic common to all of the SQL stores.
  *

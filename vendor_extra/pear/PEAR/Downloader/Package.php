@@ -666,9 +666,6 @@ class PEAR_Downloader_Package
                 if (PEAR::isError($url)) {
                     // check to see if this is a pecl package that has jumped
                     // from pear.php.net to pecl.php.net channel
-                    if (!class_exists('PEAR_Dependency2')) {
-                        require_once 'PEAR/Dependency2.php';
-                    }
                     $newdep = PEAR_Dependency2::normalizeDep($dep);
                     $newdep = $newdep[0];
                     $newdep['channel'] = 'pecl.php.net';
@@ -1036,9 +1033,6 @@ class PEAR_Downloader_Package
             $channel = isset($param['channel']) ? $param['channel'] :
                 $param['info']->getChannel();
             if (isset($param['rel'])) {
-                if (!class_exists('PEAR_Dependency2')) {
-                    require_once 'PEAR/Dependency2.php';
-                }
                 $newdep = PEAR_Dependency2::normalizeDep($param);
                 $newdep = $newdep[0];
             } elseif (isset($param['min'])) {
@@ -1480,7 +1474,6 @@ class PEAR_Downloader_Package
                     return $err;
             }
             if ($this->_rawpackagefile) {
-                require_once 'Archive/Tar.php';
                 $tar = &new Archive_Tar($file);
                 $packagexml = $tar->extractInString('package2.xml');
                 if (!$packagexml) {
@@ -1712,9 +1705,6 @@ class PEAR_Downloader_Package
                 } elseif (isset($pname['state'])) {
                     $vs = ', stability "' . $pname['state'] . '"';
                 } elseif ($param == 'dependency') {
-                    if (!class_exists('PEAR_Common')) {
-                        require_once 'PEAR/Common.php';
-                    }
                     if (!in_array($info['info']->getState(),
                           PEAR_Common::betterStates($this->_config->get('preferred_state'), true))) {
                         if ($optional) {
@@ -1727,9 +1717,6 @@ class PEAR_Downloader_Package
                         $vs = ' within preferred state "' . $this->_config->get('preferred_state') .
                             '"';
                     } else {
-                        if (!class_exists('PEAR_Dependency2')) {
-                            require_once 'PEAR/Dependency2.php';
-                        }
                         if ($optional) {
                             // don't spit out confusing error message
                             return $this->_downloader->_getPackageDownloadUrl(
@@ -1775,9 +1762,6 @@ class PEAR_Downloader_Package
                 } elseif (isset($pname['state'])) {
                     $vs = ', stability "' . $pname['state'] . '"';
                 } elseif ($param == 'dependency') {
-                    if (!class_exists('PEAR_Common')) {
-                        require_once 'PEAR/Common.php';
-                    }
                     if (!in_array($info['info']->getState(),
                           PEAR_Common::betterStates($this->_config->get('preferred_state'), true))) {
                         if ($optional) {
@@ -1791,9 +1775,6 @@ class PEAR_Downloader_Package
                         $vs = ' within preferred state "' . $this->_config->get('preferred_state') .
                             '"';
                     } else {
-                        if (!class_exists('PEAR_Dependency2')) {
-                            require_once 'PEAR/Dependency2.php';
-                        }
                         if ($optional) {
                             // don't spit out confusing error message, and don't die on
                             // optional dep failure!

@@ -21,11 +21,6 @@
  * @since      File available since Release 0.1
  */
 
-/**
- * base class
- */
-require_once 'PEAR/Command/Common.php';
-require_once 'PEAR/Config.php';
 
 /**
  * PEAR commands for login/logout

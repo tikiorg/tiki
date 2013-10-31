@@ -94,7 +94,6 @@ class PEAR_RunTest
         }
         $this->ini_overwrites[] = 'error_reporting=' . (E_ALL & ~(E_DEPRECATED | E_STRICT));
         if (is_null($logger)) {
-            require_once 'PEAR/Common.php';
             $logger = new PEAR_Common;
         }
         $this->_logger  = $logger;

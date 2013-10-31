@@ -7,11 +7,6 @@
  * @subpackage  Examples
  */
 
-/**
- * require the parser
- */
-require_once 'XML/Parser.php';
-
 class myHandler
 {
    /**

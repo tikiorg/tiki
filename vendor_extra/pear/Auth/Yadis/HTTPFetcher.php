@@ -13,10 +13,6 @@
  * @license http://www.apache.org/licenses/LICENSE-2.0 Apache
  */
 
-/**
- * Require logging functionality
- */
-require_once "Auth/OpenID.php";
 
 define('Auth_OpenID_FETCHER_MAX_RESPONSE_KB', 1024);
 define('Auth_OpenID_USER_AGENT', 

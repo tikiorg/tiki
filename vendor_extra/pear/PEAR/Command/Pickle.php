@@ -21,11 +21,6 @@
  */
 
 /**
- * base class
- */
-require_once 'PEAR/Command/Common.php';
-
-/**
  * PEAR commands for login/logout
  *
  * @category   pear
@@ -95,9 +90,6 @@ generate both package.xml.
      */
     function &getPackager()
     {
-        if (!class_exists('PEAR_Packager')) {
-            require_once 'PEAR/Packager.php';
-        }
         $a = &new PEAR_Packager;
         return $a;
     }
@@ -112,12 +104,6 @@ generate both package.xml.
      */
     function &getPackageFile($config, $debug = false, $tmpdir = null)
     {
-        if (!class_exists('PEAR_Common')) {
-            require_once 'PEAR/Common.php';
-        }
-        if (!class_exists('PEAR_PackageFile')) {
-            require_once 'PEAR/PackageFile.php';
-        }
         $a = &new PEAR_PackageFile($config, $debug, $tmpdir);
         $common = new PEAR_Common;
         $common->ui = $this->ui;
@@ -153,7 +139,6 @@ generate both package.xml.
             return $this->raiseError('Cannot process "' .
                 $packagexml . '", is not a package.xml 2.0');
         }
-        require_once 'PEAR/PackageFile/v1.php';
         $pf = new PEAR_PackageFile_v1;
         $pf->setConfig($this->config);
         if ($pf2->getPackageType() != 'extsrc' && $pf2->getPackageType() != 'zendextsrc') {
