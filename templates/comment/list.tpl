@@ -1,9 +1,13 @@
-{if ! $parentId && $allow_lock}
-	{self_link controller=comment action=lock type=$type objectId=$objectId _icon=lock _class="confirm-prompt" _confirm="{tr}Do you really want to lock comments?{/tr}"}{tr}Lock{/tr}{/self_link}
-{/if}
-
-{if ! $parentId && $allow_unlock}
-	{self_link controller=comment action=unlock type=$type objectId=$objectId _icon=lock_break _class="confirm-prompt" _confirm="{tr}Do you really want to unlock comments?{/tr}"}{tr}Unlock{/tr}{/self_link}
+<div class="actions">
+	{if ! $parentId && $allow_lock}
+		{self_link controller=comment action=lock type=$type objectId=$objectId _icon=lock _class="confirm-prompt" _confirm="{tr}Do you really want to lock comments?{/tr}"}{tr}Lock{/tr}{/self_link}
+	{/if}
+	{if ! $parentId && $allow_unlock}
+		{self_link controller=comment action=unlock type=$type objectId=$objectId _icon=lock_break _class="confirm-prompt" _confirm="{tr}Do you really want to unlock comments?{/tr}"}{tr}Unlock{/tr}{/self_link}
+	{/if}
+</div>
+{if ! $parentId}
+	<h3>{tr}Comments{/tr}</h3>
 {/if}
 
 {if $cant gt 0}
@@ -11,7 +15,7 @@
 		{foreach from=$comments item=comment}
 			<li class="comment {if $comment.archived eq 'y'}archived{/if} {if ! $parentId && $prefs.feature_wiki_paragraph_formatting eq 'y'}inline{/if}" data-comment-thread-id="{$comment.threadId|escape}">
 				<article>
-					<div style="float: right;">
+					<div class="actions">
 						{if $allow_remove}
 							{self_link controller=comment action=remove threadId=$comment.threadId _icon=cross _class="confirm-prompt" _confirm="{tr}Are you sure you want to remove this comment?{/tr}"}{tr}Remove{/tr}{/self_link}
 						{/if}
@@ -28,11 +32,18 @@
 						{/if}
 					</div>
 					{if $prefs.comments_notitle eq 'y'}
-						<h4>{tr _0=$comment.userName|userlink _1=$comment.commentDate|tiki_long_datetime}Comment posted by %0 on %1{/tr}</h4>
-					{else}
-						<h4 class="title">{$comment.title}</h4>
-						<span class="avatar">{$comment.userName|avatarize}</span>
-						<div class="author_info">{tr _0=$comment.userName|userlink _1=$comment.commentDate|tiki_long_datetime}Comment posted by %0 on %1{/tr}</div>
+						<div class="title notitle clearfix">
+							<span class="avatar">{$comment.userName|avatarize}</span>
+							<h4>{tr _0=$comment.userName|userlink}By %0{/tr}</h4>
+							<div class="date">{tr _0=$comment.commentDate|tiki_short_datetime}On %0{/tr}</div>
+						</div>
+						{else}
+						<div class="title clearfix">
+							<h4 class="title">{$comment.title}</h4>
+							<span class="avatar">{$comment.userName|avatarize}</span>
+							<div class="author_info">{tr _0=$comment.userName|userlink}Comment posted by %0{/tr}</div>
+							<div class="date">{tr _0=$comment.commentDate|tiki_short_datetime}On %0{/tr}</div>
+						</div>
 					{/if}
 					<div class="body">
 						{$comment.parsed}

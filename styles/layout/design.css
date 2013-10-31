@@ -1593,12 +1593,22 @@ body.tiki_forums .normal {
 	font-size: 1.2em;
 }
 
-#comment-container .buttons table {
-	width: 100%;
+#comment-container .notitle h4 {
+	margin-bottom: 0.2em;
+}
+
+#comment-container .buttons table td {
+	padding: 0;
+}
+#comment-container .buttons table .button {
+	margin: 0;
 }
 
 /* Comments (article, blogs) */
 
+#comment-container .actions {
+	float: right;
+}
 #comment-container ol {
 	list-style: none;
 	margin: 0 0 0 1em;
@@ -1607,6 +1617,19 @@ body.tiki_forums .normal {
 
 #comment-container ol ol {
 	margin: 0 0 0 4em;
+}
+
+#comment-container .avatar {
+	float: left;
+	margin-right: .7em;
+}
+
+#comment-container .author_info {
+	padding: 0;
+}
+
+#comment-container .date {
+	font-style: italic;
 }
 
 /* Comment Annotations */
