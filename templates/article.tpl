@@ -83,7 +83,7 @@
 				{/if}
 				{if  $prefs.art_header_text_pos eq 'below' && $list_image_x > 0}
 					 </td></tr><tr><td valign="top">
-				{elseif $isfloat eq 'n'}
+				{elseif $isfloat eq 'n' and $topics[$topicId].image_size > 0}
 					</td>
 					<td valign="top" width="100%">
 				{/if}

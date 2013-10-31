@@ -1237,7 +1237,7 @@ ul.floatleft li {
 }
 
 .articletitle h2 {
-	margin: 0;
+	margin: 0 0 .3em;
 }
 
 img.topicimage,
@@ -1289,6 +1289,11 @@ img.articleimage {
 	top: 0;
 	text-align: right;
 	white-space: nowrap;
+}
+
+.article .avatar {
+	float: left;
+	margin-right: 1em;
 }
 
 /* To keep language form and actions icons on one line */
