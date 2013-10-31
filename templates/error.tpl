@@ -50,13 +50,11 @@ close();
 		 		{/if}
 			{/if}
 
-			{if $prefs.feature_search eq 'y' && $tiki_p_search eq 'y'}
-				{if $prefs.feature_likePages ne 'y'}
-				{/if}
+			{if ($prefs.feature_search eq 'y' or $prefs.feature_search_fulltext eq 'y') && $tiki_p_search eq 'y'}
 				{if $prefs.feature_search_fulltext eq 'y'}
 					{include file='tiki-searchresults.tpl' searchNoResults="false" searchStyle="menu" searchOrientation="horiz" words="$page"}
 				{else}
-					{include file='tiki-searchindex.tpl' searchNoResults="true" searchStyle="menu" searchOrientation="horiz" words="$page" filter=$filter}
+					{include file='tiki-searchindex_form.tpl' searchNoResults="true" searchStyle="menu" searchOrientation="horiz" words="$page" filter=$filter}
 				{/if}
 			{/if}
 		{elseif $commenttype eq "note" and isset($msg)}
