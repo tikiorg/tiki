@@ -81,7 +81,13 @@ class Tracker_Field_UserSelector extends Tracker_Field_Abstract implements Track
 
 		if ( isset($requestData[$ins_id])) {
 			if ($autoassign == 0 || $tiki_p_admin_trackers === 'y') {
-				$data['value'] = $requestData[$ins_id];
+				$auser = $requestData[$ins_id];
+				if (! $auser || TikiLib::lib('user')->user_exists($auser)) {
+					$data['value'] = $auser;
+				} else {
+					$data['value'] = $this->getValue();
+					TikiLib::lib('errorreport')->report(tr('User "%0" not found', $auser));
+				}
 			} else {
 				if ($autoassign == 2) {
 					$data['value'] = $user;

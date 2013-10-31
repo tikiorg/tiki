@@ -879,33 +879,6 @@ h3.box-title {
 	overflow: hidden;
 }
 
-/* remarks boxes */
-.rbox-title {
-	display: inline-block;
-	width: auto;
-	z-index: 0;
-	position: relative;
-	margin-bottom: -0.33em;
-	padding: 0.35em 0.9em 0.1em;
-	font-weight: bold;
-	border-bottom: none;
-}
-
-.rbox-title .icon {
-	padding: 0 .35em 0 0;
-	vertical-align: top;
-}
-
-.rbox-data {
-	position: relative;
-	z-index: 0;
-}
-
-.rbox-close {
-	float: right;
-	cursor: pointer;
-}
-
 /* For wikitext or custom code areas, editors can add, for example, a div class="halffloat"
 and put two modules or other divs between its tags;, each of these will use just under half of the width of the
 wikitext or custom content area. Similarly for three or four modules (or divs) across the page. */
@@ -1264,7 +1237,7 @@ ul.floatleft li {
 }
 
 .articletitle h2 {
-	margin: 0;
+	margin: 0 0 .3em;
 }
 
 img.topicimage,
@@ -1316,6 +1289,11 @@ img.articleimage {
 	top: 0;
 	text-align: right;
 	white-space: nowrap;
+}
+
+.article .avatar {
+	float: left;
+	margin-right: 1em;
 }
 
 /* To keep language form and actions icons on one line */
@@ -3233,6 +3211,33 @@ div #metadata fieldset.tabcontent, div #metadata div.tabs {
 	border: 1px solid #000;
 	background: #eee;
 	color: #000;
+}
+
+/* remarks boxes */
+.rbox-title {
+	display: inline-block;
+	width: auto;
+	z-index: 0;
+	position: relative;
+	margin-bottom: -0.33em;
+	padding: 0 0.6em 0.2em;
+	font-weight: bold;
+	border-bottom: none;
+}
+
+.rbox-title .icon {
+	padding: 0 .5em 0 0;
+	vertical-align: middle;
+}
+
+.rbox-data {
+	position: relative;
+	z-index: 0;
+}
+
+.rbox-close {
+	float: right;
+	cursor: pointer;
 }
 
 .error .rbox-title,

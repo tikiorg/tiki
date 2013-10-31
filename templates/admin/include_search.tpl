@@ -41,13 +41,19 @@
 				</legend>
 
 				{if $prefs.unified_last_rebuild}
-					{remarksbox _icon=info title="{tr}Last rebuild{/tr}"}
-						<p>{tr _0=$prefs.unified_last_rebuild|tiki_long_datetime}Your index was last fully rebuilt on %0.{/tr}</p>
+					{remarksbox type=info title="{tr}Last rebuild{/tr}"}
+						{tr _0=$prefs.unified_last_rebuild|tiki_long_datetime}Your index was last fully rebuilt on %0.{/tr}
 					{/remarksbox}
 				{/if}
 
 				{preference name=feature_search visible="always"}
 				<div class="adminoptionboxchild" id="feature_search_childcontainer">
+					{remarksbox type=tip title="{tr}About the Unified Index{/tr}"}
+						{tr}The Unified Index provides many underlying features for Tiki, including object selectors for translations amongst other things.{/tr}
+						{tr}Disabling this will cause some parts of Tiki to be unavailable.{/tr}<br>
+						<a href="http://doc.tiki.org/Unified+Index">{tr}Find out more about it here.{/tr}</a>
+					{/remarksbox}
+
 					{preference name=feature_search_stats}
 					{preference name=user_in_search_result}
 					{preference name="unified_incremental_update"}

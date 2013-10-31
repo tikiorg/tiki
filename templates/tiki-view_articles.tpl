@@ -33,8 +33,13 @@
 			</div>
 		{/if} 
 		<article class="article{if !empty($container_class)} {$container_class}{/if} article{$smarty.section.ix.index}">
+			{if ($listpages[ix].show_avatar eq 'y')}
+				<div class="avatar">
+					{$listpages[ix].author|avatarize}
+				</div>
+			{/if}
 			{if $listpages[ix].show_topline eq 'y' and $listpages[ix].topline}<div class="articletopline">{$listpages[ix].topline|escape}</div>{/if}
-			<header class="articletitle">
+			<header class="articletitle clearfix">
 				<h2>{object_link type=article id=$listpages[ix].articleId url=$smarty.capture.href title=$listpages[ix].title}</h2>
 				{if $listpages[ix].show_subtitle eq 'y' and $listpages[ix].subtitle}<div class="articlesubtitle">{$listpages[ix].subtitle|escape}</div>{/if}
 				{if ($listpages[ix].show_author eq 'y')
@@ -42,8 +47,12 @@
 				 or ($listpages[ix].show_expdate eq 'y')
 				 or ($listpages[ix].show_reads eq 'y')}	
 					<span class="titleb">
-						{if $listpages[ix].show_author eq 'y'}	
-							<span class="author">{tr}Author:{/tr} {$listpages[ix].authorName|escape}&nbsp;- </span>
+						{if $listpages[ix].show_author eq 'y'}
+							{if $listpages[ix].authorName}
+								<span class="author">{tr}Author:{/tr} {$listpages[ix].authorName|escape}&nbsp;- </span>
+							{else}
+								<span class="author">{tr}Author:{/tr} {$listpages[ix].author|username}&nbsp;- </span>
+							{/if}
 						{/if}
 						{if $listpages[ix].show_pubdate eq 'y'}
 							<span class="pubdate">{tr}Published At:{/tr} {$listpages[ix].publishDate|tiki_short_datetime}&nbsp;- </span>
@@ -109,9 +118,6 @@
 										</a>
 									{/if}
 								{/if}
-							{/if}
-							{if ($listpages[ix].show_avatar eq 'y')}
-								{$listpages[ix].author|avatarize}
 							{/if}
 							{if $listpages[ix].isfloat eq 'n'}
 								</td><td  valign="top">

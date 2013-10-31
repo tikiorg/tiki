@@ -11,7 +11,7 @@
 		{/if}
 		
 		<span class="titleb">
-			{if $show_author eq 'y' && $authorName}{tr}Author:{/tr} {$authorName|escape} - {/if}
+			{if $show_author eq 'y' && ($authorName or $author)}{tr}Author:{/tr} {if $authorName}{$authorName|escape}{else}{$author|username}{/if} - {/if}
 			{if $show_pubdate eq 'y' && $publishDate}{$publishDate|tiki_short_datetime:'Published At:'} - {/if}
 			{if $show_expdate eq 'y' && $expireDate}{tr}Expires At:{/tr} {$expireDate|tiki_short_datetime} - {/if}
 			{if $show_reads eq 'y'}({$reads} {tr}Reads{/tr}){/if}
@@ -83,7 +83,7 @@
 				{/if}
 				{if  $prefs.art_header_text_pos eq 'below' && $list_image_x > 0}
 					 </td></tr><tr><td valign="top">
-				{elseif $isfloat eq 'n'}
+				{elseif $isfloat eq 'n' and $topics[$topicId].image_size > 0}
 					</td>
 					<td valign="top" width="100%">
 				{/if}

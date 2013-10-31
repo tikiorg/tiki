@@ -122,10 +122,10 @@
 					<td class="text">{$listpages[changes].topicName|escape}</td>
 				{/if}
 				{if $prefs.art_list_date eq 'y'}
-					<td class="date">{$listpages[changes].publishDate|tiki_short_datetime}</td>
+					<td class="date" title="{$listpages[changes].publishDate|tiki_short_datetime}">{$listpages[changes].publishDate|tiki_short_date}</td>
 				{/if}
 				{if $prefs.art_list_expire eq 'y'}
-					<td class="date">{$listpages[changes].expireDate|tiki_short_datetime}</td>
+					<td class="date" title="{$listpages[changes].expireDate|tiki_short_datetime}">{$listpages[changes].expireDate|tiki_short_date}</td>
 				{/if}
 				{if $prefs.art_list_visible eq 'y'}
 					<td class="text">{tr}{$listpages[changes].disp_article}{/tr}</td>
