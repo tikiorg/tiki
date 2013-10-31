@@ -120,6 +120,22 @@ if ( function_exists('apc_sma_info') && ini_get('apc.enabled') ) {
 	$opcode_stats['memory_avail'] /= $opcode_stats['memory_total'];
 	$opcode_stats['hit_hit'] /= $opcode_stats['hit_total'];
 	$opcode_stats['hit_miss'] /= $opcode_stats['hit_total'];
+} elseif ( function_exists('opcache_get_status') ) {
+	$opcode_cache = 'OpCache';
+	$status = opcache_get_status();
+
+	$opcode_stats['hit_hit'] = $status['opcache_statistics']['hits'];
+	$opcode_stats['hit_miss'] = $status['opcache_statistics']['misses'];
+	$opcode_stats['hit_total'] = $status['opcache_statistics']['hits'] + $status['opcache_statistics']['misses'];
+
+	$opcode_stats['memory_avail'] = $status['memory_usage']['free_memory'];
+	$opcode_stats['memory_used'] = $status['memory_usage']['used_memory'];
+	$opcode_stats['memory_total'] = $status['memory_usage']['used_memory'] + $status['memory_usage']['free_memory'];
+
+	$opcode_stats['memory_used'] /= $opcode_stats['memory_total'];
+	$opcode_stats['memory_avail'] /= $opcode_stats['memory_total'];
+	$opcode_stats['hit_hit'] /= $opcode_stats['hit_total'];
+	$opcode_stats['hit_miss'] /= $opcode_stats['hit_total'];
 }
 
 // Make results easier to read
