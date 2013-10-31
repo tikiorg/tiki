@@ -468,7 +468,6 @@ select[multiple=multiple] { margin: 3px 0 3px 5px; padding: 3px 20px 3px 5px; }'
 		$headerlib->add_jsfile('vendor/jquery/plugins/media/jquery.media.js');
 	}
 	if ( $prefs['feature_jquery_tablesorter'] == 'y' ) {
-//		$headerlib->add_jsfile('vendor/jquery/plugins/tablesorter/addons/pager/jquery.tablesorter.pager.js');
 		$headerlib->add_cssfile('lib/jquery_tiki/tablesorter/style.css');
 		if ( $prefs['tiki_minify_javascript'] === 'y' ) {
 			//tablesorter has bad syntax in the non-min file, however the min file seems to work fine when double minned :)
@@ -483,6 +482,7 @@ select[multiple=multiple] { margin: 3px 0 3px 5px; padding: 3px 20px 3px 5px; }'
 			$headerlib->add_jsfile('vendor/jquery/plugins/tablesorter/js/jquery.tablesorter.widgets-filter-formatter.js');
 		}
 		$headerlib->add_jsfile('vendor/jquery/plugins/tablesorter/js/widgets/widget-grouping.js');
+		$headerlib->add_jsfile('vendor/jquery/plugins/tablesorter/js/widgets/widget-pager.js');
 		$headerlib->add_jsfile('vendor/jquery/plugins/tablesorter/js/parsers/parser-input-select.js');
 	}
 	if ( $prefs['feature_shadowbox'] == 'y' ) {

@@ -55,6 +55,7 @@ class Table_Code_Other extends Table_Code_Manager
 					foreach($info['options'] as $label => $val) {
 						$xopt[] = ' value="' . $val . '">' . $label;
 					}
+					//create dropdown
 					$divr[] = $this->iterate(
 						$xopt,
 						'<select id="' . $f['external'][$key]['id'] . '">',
@@ -63,15 +64,16 @@ class Table_Code_Other extends Table_Code_Manager
 						'</option>',
 						''
 					);
+					//trigger table update and filter when dropdown value is changed
 					$jq[] = '$(\'#' . $f['external'][$key]['id'] . '\').on(\'change\', function(){'
-						. $this->nt2 . '$(\'' . parent::$tid . '\')'
-						. '.data(\'ext_filter\', \'' . $f['external'][$key]['id'] . '\').trigger(\'update\');'
+						. $this->nt2 . '$(\'' . parent::$tid .'\').data(\'ts_extval\', this.value).trigger(\'search\', false);'
 						. $this->nt . '});';
+					//filter-reset also clears any external dropdown filter (column filters cleared by tablesorter)
 					if ($f['type'] === 'reset') {
-						$reset[] = 'if ($(\'#' . $f['external'][$key]['id'] . '\').prop(\'selectedIndex\') != 0) {';
-						$reset[] = '	$(\'#' . $f['external'][$key]['id'] . ' option\')[0].selected = true;';
-						$reset[] = '	$(\'#' . $f['external'][$key]['id'] . '\').change();';
-						$reset[] = '}';
+						$reset[] = 'if ($(\'#' . $f['external'][$key]['id'] . '\').prop(\'selectedIndex\') != 0) {'
+							. $this->nt3 . '$(\'#' . $f['external'][$key]['id'] . ' option\')[0].selected = true;'
+							. $this->nt3 . '$(\'#' . $f['external'][$key]['id'] . '\').change();'
+							. $this->nt2 . '}';
 					}
 				}
 				if ($f['type'] === 'reset' && count($reset) > 0) {

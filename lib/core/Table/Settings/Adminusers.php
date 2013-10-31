@@ -27,6 +27,7 @@ class Table_Settings_Adminusers extends Table_Settings_Abstract
 		'serverside' => true,
 		'selflinks' => true,
 		'sort' => array(
+			'group' => true,
 			'columns' => array(
 				0 => array(					//checkbox
 					'type' => false,
@@ -50,12 +51,12 @@ class Table_Settings_Adminusers extends Table_Settings_Abstract
 				4 => array(					//last login
 					'type' => 'text',
 					'ajax' => 'currentLogin',
-					'group' => 'word'
+					'group' => 'false'
 				),
 				5 => array(					//registered
-					'type' => true,
+					'type' => 'isoDate',
 					'ajax' => 'registrationDate',
-					'group' => 'date-year'
+					'group' => 'false'
 				),
 				6 => array(					//group
 					'type' => false,
