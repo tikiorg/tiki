@@ -8,7 +8,7 @@
 		{if $rbox_params.title ne ''}
 			<div class="rbox-title panel-heading">
 				{if $rbox_params.icon ne 'none'}
-                    <img src="img/icons/{$rbox_params.icon}.png" alt="{tr}{$rbox_params.type}{/tr}" style="vertical-align:middle">
+                    <img src="img/icons/{$rbox_params.icon}.png" alt="{tr}{$rbox_params.type}{/tr}" class="icon">
 				{/if}
 				<span>{$rbox_params.title|escape}</span>
 			</div>
