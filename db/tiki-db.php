@@ -83,6 +83,16 @@ $systemConfiguration = new Zend_Config(
 	),
 	array('readOnly' => false)
 );
+if (isset ($_SERVER['TIKI_INI_FILE'])) {
+	if (! is_readable($_SERVER['TIKI_INI_FILE'])) {
+		die('Configuration file could not be read.');
+	}
+
+	$systemConfiguration = $systemConfiguration->merge(new Zend_Config_Ini(
+		$_SERVER['TIKI_INI_FILE'],
+		isset($_SERVER['TIKI_INI_IDENTIFIER']) ? $_SERVER['TIKI_INI_IDENTIFIER'] : null
+	));
+}
 if (isset ($system_configuration_file)) {
 	if (! is_readable($system_configuration_file)) {
 		die('Configuration file could not be read.');
