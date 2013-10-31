@@ -210,7 +210,7 @@ $initializer->setInitializeCallback(
 try {
 	$db = $initializer->getConnection($credentials['primary']);
 } catch (Exception $e) {
-	echo $e;
+	define('TIKI_IN_INSTALLER', 1);	// not really in the installer but this stops the modules being rendered
 	require_once 'lib/init/smarty.php';
 
 	$smarty->assign('msg', $e->getMessage());
