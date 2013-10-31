@@ -76,6 +76,12 @@ class CleanVendors
 		self::deleteDirectory($vendors . 'zetacomponents/webdav/design');
 		self::deleteDirectory($vendors . 'zetacomponents/webdav/docs');
 		self::deleteDirectory($vendors . 'zetacomponents/webdav/tests');
+		self::deleteDirectory($vendors . 'player/flv/base');
+		self::deleteDirectory($vendors . 'player/flv/classes');
+		self::deleteDirectory($vendors . 'player/flv/html5');
+		self::deleteDirectory($vendors . 'player/flv/mtasc');
+		self::deleteDirectory($vendors . 'player/mp3/classes');
+		self::deleteDirectory($vendors . 'player/mp3/mtasc');
 	}
 
 	private static function deleteDirectory($path)
