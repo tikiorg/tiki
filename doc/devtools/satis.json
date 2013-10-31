@@ -163,6 +163,16 @@
 		{
 			"type": "package",
 			"package": {
+				"name": "codemirror/codemirror",
+				"version": "3.16",
+				"dist": {
+					"url": "http://codemirror.net/codemirror-3.16.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
 				"name": "jquery/jquery-min",
 				"version": "1.9.1",
 				"dist": {
