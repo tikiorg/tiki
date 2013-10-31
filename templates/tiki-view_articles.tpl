@@ -51,7 +51,7 @@
 							{if $listpages[ix].authorName}
 								<span class="author">{tr}Author:{/tr} {$listpages[ix].authorName|escape}&nbsp;- </span>
 							{else}
-								<span class="author">{tr}Author:{/tr} {$listpages[ix].author|escape}&nbsp;- </span>
+								<span class="author">{tr}Author:{/tr} {$listpages[ix].author|username}&nbsp;- </span>
 							{/if}
 						{/if}
 						{if $listpages[ix].show_pubdate eq 'y'}
