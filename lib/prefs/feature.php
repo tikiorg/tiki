@@ -273,7 +273,7 @@ function prefs_feature_list($partial = false)
 		  'module' => 'score',
 		),
 		'feature_search' => array(
-			'name' => tra('Unified Search'),
+			'name' => tra('Unified Search Index'),
 			'description' => tra("Also known as 'Advanced Search'. Enables searching for content on the website, using Tiki-managed index."),
 			'help' => 'Search',
 			'type' => 'flag',
