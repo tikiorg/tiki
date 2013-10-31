@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "2ddc4e8570af17b3aa2926381319bdb3",
+    "hash": "9d3926cf0e3ed9bdceecd2e208913571",
     "packages": [
         {
             "name": "aFarkas/html5shiv",
@@ -119,12 +119,12 @@
         },
         {
             "name": "codemirror/codemirror",
-            "version": "2.25",
+            "version": "3.16",
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/codemirror-codemirror-2.25.zip",
-                "reference": "2.25",
-                "shasum": "9e2354bcfa135e1dad7acb82e5ea06483922fcf7"
+                "url": "https://composer.tiki.org/dist/codemirror-codemirror-3.16.zip",
+                "reference": "3.16",
+                "shasum": "db9227726036aa72072a0152bdab7c174f64e582"
             },
             "type": "library"
         },
@@ -622,6 +622,17 @@
                 "url": "https://composer.tiki.org/dist/jquery-plugins-treetable-3.0.2.zip",
                 "reference": "3.0.2",
                 "shasum": "c245ade681e528d650d858dbd2ad4c368f8d0338"
+            },
+            "type": "library"
+        },
+        {
+            "name": "jquery/plugins/zoom",
+            "version": "1.7.10",
+            "dist": {
+                "type": "zip",
+                "url": "https://composer.tiki.org/dist/jquery-plugins-zoom-1.7.10.zip",
+                "reference": "1.7.10",
+                "shasum": "4f2bb52f56bc72f588347ff27c6bf786174ab06a"
             },
             "type": "library"
         },
