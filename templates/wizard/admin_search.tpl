@@ -38,7 +38,6 @@
 
 <fieldset>
 	<legend>{tr}Other settings{/tr}</legend>
-		{preference name=search_autocomplete}
 		{preference name=search_default_interface_language}
 		{preference name=search_default_where}
 		{if $prefs.feature_file_galleries eq 'y'}<br>

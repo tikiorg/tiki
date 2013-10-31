@@ -470,37 +470,51 @@ function initTikiDB( &$api, &$driver, $host, $user, $pass, $dbname, $client_char
 	$dbcon = ! empty($dbTiki);
 
 	// Attempt to create database. This might work if the $user has create database permissions.
-	// First check that suggested database name will not cause issues
-	$dbname_clean = preg_replace('/[^a-z0-9$_-]/', "", $dbname);
-	if ($dbname_clean != $dbname) {
-		$tikifeedback[] = array( 'num' => 1, 'mes'=> tra("Some invalid characters were detected in database name. Please use alphanumeric characters or _ or -.", '', false, array($dbname_clean)) );
-		$attempt_creation=false;
-	} else {
-		$attempt_creation=true;
-	}
-
-	if ( ($dbcon) && ($attempt_creation == true) ) {
-		$sql="CREATE DATABASE IF NOT EXISTS `$dbname_clean` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;";
-		$dbTiki->queryError($sql, $error);
-		if ( empty($error) ) {
-			$tikifeedback[] = array( 'num' => 1, 'mes'=> tra("Database `%0` was created.", '', false, array($dbname_clean)) );
-		} else {
-			$tikifeedback[] = array( 'num' => 1, 'mes'=> tra("Database `%0` creation failed. You need to create the database.", '', false, array($dbname_clean)) );
-		}
-
+	if ( ! $dbcon ) {
+		// First first get a valid connection to the database
 		try {
 			$dbTiki = $initializer->getConnection(
 				array(
 					'host' => $host,
 					'user' => $user,
 					'pass' => $pass,
-					'dbs' => $dbname,
+					//'dbs' => $dbname,
 					'charset' => $client_charset,
 				)
 			);
-			$dbcon = ! empty($dbTiki);
 		} catch (Exception $e) {
 			$tikifeedback[] = array( 'num' => 1, 'mes' => $e->getMessage() );
+		}
+		$dbcon = ! empty($dbTiki);
+		// First check that suggested database name will not cause issues
+		$dbname_clean = preg_replace('/[^a-z0-9$_-]/', "", $dbname);
+		if ($dbname_clean != $dbname) {
+			$tikifeedback[] = array( 'num' => 1, 'mes'=> tra("Some invalid characters were detected in database name. Please use alphanumeric characters or _ or -.", '', false, array($dbname_clean)) );
+			$dbcon = false;
+		} else {
+			$error = '';
+			$sql="CREATE DATABASE IF NOT EXISTS `$dbname_clean` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;";
+			$dbTiki->queryError($sql, $error);
+			if ( empty($error) ) {
+				$tikifeedback[] = array( 'num' => 0, 'mes'=> tra("Database `%0` was created.", '', false, array($dbname_clean)) );
+			} else {
+				$tikifeedback[] = array( 'num' => 1, 'mes'=> tra("Database `%0` creation failed. You need to create the database.", '', false, array($dbname_clean)) );
+			}
+
+			try {
+				$dbTiki = $initializer->getConnection(
+					array(
+						'host' => $host,
+						'user' => $user,
+						'pass' => $pass,
+						'dbs' => $dbname,
+						'charset' => $client_charset,
+					)
+				);
+				$dbcon = ! empty($dbTiki);
+			} catch (Exception $e) {
+				$tikifeedback[] = array( 'num' => 1, 'mes' => $e->getMessage() );
+			}
 		}
 	}
 
