@@ -46,6 +46,7 @@ function prefs_search_list()
 			'name' => tra('Autocomplete on page names'),
 			'type' => 'flag',
 			'dependencies' => array('feature_jquery_autocomplete', 'javascript_enabled'),
+			'warning' => tra('deprecated'),
 			'default' => 'n',
 		),
 		'search_show_category_filter' => array(
