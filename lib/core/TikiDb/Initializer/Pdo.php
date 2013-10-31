@@ -44,19 +44,23 @@ class TikiDb_Initializer_Pdo
 		// Setup SSL, if activated
 		$this->setupSSL($pdo_options);
 				
-		$dbTiki = new PDO("mysql:$db_hoststring;dbname={$credentials['dbs']}", $credentials['user'], $credentials['pass'], $pdo_options);
+		try {
+			$dbTiki = new PDO("mysql:$db_hoststring;dbname={$credentials['dbs']}", $credentials['user'], $credentials['pass'], $pdo_options);
 
-		$dbTiki->setAttribute(PDO::ATTR_CASE, PDO::CASE_NATURAL);
-		$dbTiki->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
-		//	$dbTiki->setAttribute(PDO::ATTR_ORACLE_NULLS, PDO::NULL_EMPTY_STRING);
+			$dbTiki->setAttribute(PDO::ATTR_CASE, PDO::CASE_NATURAL);
+			$dbTiki->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
+			//	$dbTiki->setAttribute(PDO::ATTR_ORACLE_NULLS, PDO::NULL_EMPTY_STRING);
 
-		$db = new TikiDb_Pdo($dbTiki);
+			$db = new TikiDb_Pdo($dbTiki);
 
-		foreach ($pdo_post_queries as $query) {
-			$db->query($query);
+			foreach ($pdo_post_queries as $query) {
+				$db->query($query);
+			}
+
+			return $db;
+		} catch (Exception $e) {
+			return null;
 		}
-
-		return $db;
 	}
 	
 	function setupSSL(&$pdo_options)
