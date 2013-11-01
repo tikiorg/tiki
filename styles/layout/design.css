@@ -723,7 +723,7 @@ a.toolbar {			/* each tool button */
 
 /* New Help section */
 #tikihelp {
-	position: absolute;
+	/*position: absolute;*/ /*to avoid white spacing in Internet Explorer below footer*/
 	height: 100%;
 }
 
