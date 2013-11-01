@@ -359,6 +359,7 @@ if ($prefs['feature_syntax_highlighter'] == 'y') {
 		->add_cssfile('vendor/codemirror/codemirror/lib/codemirror.css')
 		->add_jsfile_dependancy('vendor/codemirror/codemirror/lib/codemirror.js')
 		->add_jsfile('vendor/codemirror/codemirror/addon/search/searchcursor.js', 3)
+		->add_jsfile('vendor/codemirror/codemirror/addon/mode/overlay.js')
 	//add tiki stuff
 		->add_cssfile('lib/codemirror_tiki/codemirror_tiki.css')
 		->add_jsfile('lib/codemirror_tiki/codemirror_tiki.js', 5);

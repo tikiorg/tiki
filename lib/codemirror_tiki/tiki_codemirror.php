@@ -17,11 +17,14 @@ function codemirrorModes($minify = true)
 
 	if (!file_exists($jsModes) || !file_exists($cssModes)) {
 		//codemirror theme
-		$js .= 'window.codeMirrorTheme = "' . $prefs['feature_syntax_highlighter_theme'] .'";';
+		$js .= 'window.codeMirrorTheme = "' . $prefs['feature_syntax_highlighter_theme'] .'";
+test = { mode: function () {} }
+';	// test is a dummy line to supress exceptions from mode tests in cm 3
+
 		//load modes first
 		//tiki first, where are our priorities!
 		$js .= @file_get_contents("lib/codemirror_tiki/mode/tiki/tiki.js");
-		$css .= @file_get_contents("lib/codemirror_tiki/mode/tiki/tiki.css");
+ 		$css .= @file_get_contents("lib/codemirror_tiki/mode/tiki/tiki.css");
 
 		foreach (glob('vendor/codemirror/codemirror/mode/*', GLOB_ONLYDIR) as $dir) {
 			foreach (glob($dir.'/*.js') as $jsFile) {
