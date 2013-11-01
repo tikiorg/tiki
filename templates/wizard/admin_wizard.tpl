@@ -5,10 +5,7 @@
 <div class="adminWizardIconleft">
 	<img src="img/icons/large/wizard48x48.png" alt="{tr}Tiki Admin Wizard{/tr}" />
 </div>
-{tr}The Tiki Admin Wizard helps you quickly configure key features and settings. Use the{/tr}
-<a href="tiki-admin.php" target="_blank">{tr}Admin Panel{/tr}</a>
-{tr} to configure other features and settings not included in this wizard or when not using the wizard. Uncheck
-the checkbox above to keep this wizard from showing upon admin login{/tr}.
+{tr}The Tiki Admin Wizard helps you quickly configure key features and settings. Use the <a href="tiki-admin.php" target="_blank">Admin Panel</a> to configure other features and settings not included in this wizard or when not using the wizard. Uncheck the checkbox above to keep this wizard from showing upon admin login{/tr}.
 <div class="adminWizardContent">
 <fieldset>
 	<legend>{tr}Get Started{/tr}</legend>
