@@ -385,6 +385,7 @@ class WikiLib extends TikiLib
 		}
 
 		require_once('lib/search/refresh-functions.php');
+		refresh_index('pages', $oldName, false);
 		refresh_index('pages', $newName);
 
 		if ($renameHomes && $prefs['wikiHomePage'] == $oldName) {
