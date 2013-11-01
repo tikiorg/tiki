@@ -293,7 +293,6 @@ $("#'.$id.'_showSelected").click( function () {
 		// set up tree hierarchy
 		if ($_sortColumn) {
 			$treeType = htmlspecialchars(trim($row[$_sortColumn]));
-			$treeTypeId = '';
 			$childRowClass = '';
 
 			if (!empty($_sortColumnDelimiter)) {	// nested
@@ -303,19 +302,14 @@ $("#'.$id.'_showSelected").click( function () {
 					$part = preg_replace('/\s+/', '_', $parts[$i]);
 					if (in_array($part, $treeSectionsAdded) && $i > 0) {
 						$treeParentId = preg_replace('/\s+/', '_', $parts[$i]);
-//						$childRowClass = ' child-of-' . $id . '_' . $treeParentId;
-						$treeTypeId = preg_replace('/\s+/', '_', $parts[$i - 1]);
-						$treeType = $parts[$i - 1];
 						$tt_parent_id = $id . '_' . $treeParentId;
-						$tt_id = $id . '_' . $treeParentId;
 						break;
 					}
 				}
 
-				if (empty($treeTypeId)) {
-					$treeTypeId = preg_replace('/\s+/', '_', $part);
-					$tt_id = $id . '_' . $treeTypeId;
-				}
+				$treeTypeId = preg_replace('/\s+/', '_', $parts[0]);
+				$tt_id = $id . '_' . $treeTypeId;
+
 				$treeSectionsAdded[] = $treeTypeId;
 
 			} else {
@@ -376,7 +370,7 @@ $("#'.$id.'_showSelected").click( function () {
 				$cbxVal = htmlspecialchars($row[$_checkboxColumnIndex[$i]]);
 				$rowVal = htmlspecialchars($row[$_valueColumnIndex]);
 				$cbxTit = empty($_checkboxTitles) ? $cbxVal : htmlspecialchars($_checkboxTitles[$i]);
-				$html .= '<td class="checkBoxCell">';
+				$html .= '<td class="checkBoxCell" style="white-space: nowrap;">';
 				$html .= '<input type="checkbox" name="' . htmlspecialchars($_checkbox[$i]) . '[]" value="' . $rowVal . '"' .
 									($cbxVal=='y' ? ' checked="checked"' : '') . ' title="' . $cbxTit . '" />';
 				if ($cbxVal == 'y') {
