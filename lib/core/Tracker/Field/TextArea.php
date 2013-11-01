@@ -108,19 +108,35 @@ class Tracker_Field_TextArea extends Tracker_Field_Text
 		$ins_id = $this->getInsertId();
 		$data = $this->processMultilingual($requestData, $ins_id);
 
-		global $user;
+		global $user, $prefs;
+		$language = $prefs['language'];
+		$c = 0;
 		if (isset($requestData[$ins_id])) {
-			$newvalue = TikiLib::lib('parser')->process_save_plugins(
-				$data['value'],
-				array(
-					'type' => 'trackeritem',
-					'itemId' => $this->getItemId(),
-					'user' => $user,
-				)
-			);
-			if ($newvalue !== $data['value']) {
-				$data['value'] = $newvalue;
-				$data['pvalue'] = $this->attemptParse($newvalue);
+			$value = (array) $data['value'];
+
+			foreach ($value as $key => $val) {
+				$newvalue = TikiLib::lib('parser')->process_save_plugins(
+					$val,
+					array(
+						'type' => 'trackeritem',
+						'itemId' => $this->getItemId(),
+						'user' => $user,
+					)
+				);
+				if ($newvalue !== $val) {
+					if (isset($data['lingualvalue'][$c])) {
+						$data['lingualvalue'][$c]['value'] = $newvalue;
+						$data['lingualpvalue'][$c]['value'] = $this->attemptParse($newvalue);
+						$data['value'][$data['lingualvalue'][$c]['lang']] = $newvalue;
+						if ($data['lingualvalue'][$c]['lang'] === $language) {
+							$data['pvalue'] = $data['lingualpvalue'][$c]['value'];
+						}
+					} else {
+						$data['value'] = $newvalue;
+						$data['pvalue'] = $this->attemptParse($newvalue);
+					}
+				}
+				$c++;
 			}
 		}
 
