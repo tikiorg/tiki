@@ -236,6 +236,8 @@ if ($inclusion) {
 	$_SERVER['PHP_SELF'] = $inclusion;
 	include __DIR__ . '/' . $inclusion;
 } else {
+	error_log("No route found. Please see http://dev.tiki.org/URL+Rewriting+Revamp");
+
 	header('HTTP/1.0 Not Found');
 	header('Content-Type: text/plain');
 
