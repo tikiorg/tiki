@@ -331,14 +331,11 @@ class FileGalLib extends TikiLib
 		$fileData['filetype'] = $this->fixMime($fileData);
 		if (empty($id)) {
 			$fileId = $filesTable->insert($fileData);
-
-			if ($id === 0) {
-				$final_event = 'tiki.file.create';
-			}
+			$final_event = 'tiki.file.create';
 		} else {
 			$filesTable->update($fileData, array('fileId' => $id));
 			$fileId = $id;
-			$final_event = null;
+			$final_event = 'tiki.file.update';
 		}
 
 		$galleriesTable->update(array('lastModif' => $this->now), array('galleryId' => $galleryId));
@@ -4084,6 +4081,9 @@ class FileGalLib extends TikiLib
 			$metadata = $this->extractMetadataJson($file, $ispath);
 			//update database for newly extracted metadata
 			$filesTable->update(array('metadata' => $metadata), array('fileId' => $fileId));
+			// update search index
+			require_once('lib/search/refresh-functions.php');
+			refresh_index('files', $fileId);
 		} else {
 			$metadata = $metacol[0];
 		}
