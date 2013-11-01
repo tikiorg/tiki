@@ -820,7 +820,7 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_user_watches' => array(
 			'name' => tra('User Watches'),
-			'description' => tra('Receive email notification of changes'),
+			'description' => tra('Receive email notification of changes. Each user can choose to be notified of changes to specific items'),
 			'help' => 'User+Watches',
 			'type' => 'flag',
 			'default' => 'n',
@@ -829,7 +829,7 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_group_watches' => array(
 			'name' => tra('Group Watches'),
-			'description' => tra('Group Watches'),
+			'description' => tra('All users in a group selected by an admin will receive email notification of changes to specific items. Users cannot choose to stop receiving those notifications while they are members to that group'),
 			'help' => 'Group+Watches',
 			'type' => 'flag',
 			'default' => 'n',

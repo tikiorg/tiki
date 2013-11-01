@@ -34,13 +34,7 @@
 	{tr}Enable email notifications to users when changes in the content of specific items (pages, posts, trackers, etc.) are made{/tr}.
 	<div class="admin clearfix featurelist">
 		{preference name=feature_user_watches}
-		<div class="adminoptionboxchild">
-			{tr}Each user can choose to be notified of changes to specific items.{/tr}
-		</div>
 		{preference name=feature_group_watches}
-		<div class="adminoptionboxchild">
-			{tr}All users in a group can be notified of changes to specific items.{/tr}
-		</div>
 		{preference name=feature_daily_report_watches}
 		<div class="adminoptionboxchild" id="feature_daily_report_watches_childcontainer">
 			{preference name=dailyreports_enabled_for_new_users}
