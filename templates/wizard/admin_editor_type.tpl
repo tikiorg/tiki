@@ -14,7 +14,7 @@
 	<td>
 		<input type="radio" name="editorType" value="text" {if empty($editorType) || $editorType eq 'text'}checked="checked"{/if} />  {tr}Raw text{/tr}
 		<div style="display:block; margin-left:20px">
-			{tr}The raw text editor is the most stable editor mode and most compatible with Tiki functionality{/tr}.
+			{tr}Use only the raw text editor, which is the most stable editor mode and most compatible with Tiki functionality{/tr}.
 		</div>
 	</td>
 	</tr>
