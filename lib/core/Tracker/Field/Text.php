@@ -126,33 +126,31 @@ class Tracker_Field_Text extends Tracker_Field_Abstract implements Tracker_Field
 
 	protected function processMultilingual($requestData, $id_string) 
 	{
-		global $prefs;
+		global $prefs, $jitRequest;
 		$language = $prefs['language'];
 		$multilingual = $this->getConfiguration('isMultilingual') == 'y';
 
-		if (!isset($requestData[$id_string])) {
+		if (!isset($requestData[$id_string])) { // although we're using jitRequest test for $requestData here as it gets unset once processed
 			$value = $this->getValue();
 			if ($multilingual) {
-				$requestData[$id_string] = @json_decode($value, true);
+				$newValue = @json_decode($value, true);
 
-				if ($requestData[$id_string] === false) {
-					$requestData[$id_string] = $value;
+				if ($newValue !== false) {
+					$value = $newValue;
 				}
-			} else {
-				$requestData[$id_string] = $value;
 			}
-		}
-		
-		$data['raw'] = $requestData[$id_string];
-
-		if (is_array($data['raw'])) {
-			$thisVal = $data['raw'][$language];
 		} else {
-			$thisVal = $data['raw'];
+			$value = $jitRequest->$id_string->wikicontent();
+		}
+
+		if (is_array($value)) {
+			$thisVal = $value[$language];
+		} else {
+			$thisVal = $value;
 		}
 
 		$data = array(
-			'value' => $data['raw'],
+			'value' => $value,
 			'pvalue' => trim($this->attemptParse($thisVal), "\n"),
 			'lingualvalue' => array(),
 			'lingualpvalue' => array(),
@@ -160,14 +158,14 @@ class Tracker_Field_Text extends Tracker_Field_Abstract implements Tracker_Field
 
 		if ($multilingual) {
 			foreach ($prefs['available_languages'] as $num => $lang) { // TODO add a limit on number of langs - 40+ makes this blow up
-				if (!isset($data['raw'][$lang])) {
-					$data['raw'][$lang] = $thisVal;
+				if (!isset($value[$lang])) {
+					$value[$lang] = $thisVal;
 				}
 
 				$data['lingualvalue'][$num]['lang'] = $lang;
-				$data['lingualvalue'][$num]['value'] = $requestData[$id_string][$lang];
+				$data['lingualvalue'][$num]['value'] = $value[$lang];
 				$data['lingualpvalue'][$num]['lang'] = $lang;
-				$data['lingualpvalue'][$num]['value'] = $this->attemptParse($requestData[$id_string][$lang]);
+				$data['lingualpvalue'][$num]['value'] = $this->attemptParse($value[$lang]);
 			}
 		}
 

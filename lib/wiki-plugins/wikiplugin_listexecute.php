@@ -11,7 +11,7 @@ function wikiplugin_listexecute_info()
 		'name' => tra('List Execute'),
 		'documentation' => 'PluginListExecute',
 		'description' => tra('Generates a list of objects based on a set of filters and allows to execute configured actions on them.'),
-		'prefs' => array('wikiplugin_listexecute'),
+		'prefs' => array('wikiplugin_listexecute', 'feature_search'),
 		'body' => tra('List configuration information'),
 		'validate' => 'all',
 		'filter' => 'wikicontent',

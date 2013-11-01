@@ -11,7 +11,7 @@
 	{preference name='fgal_elfinder_feature'}
 	<div class="adminoptionboxchild">
 		{tr}This setting makes the feature available, go to next wizard page to apply elFinder to File Galleries.
-		This setting also activates jQuery, which is required for elFinder.{/tr}.
+		This setting also activates jQuery, which is required for elFinder{/tr}.
 		{tr}See also{/tr} <a href="http://doc.tiki.org/elFinder" target="_blank">{tr}elFinder{/tr} @ doc.tiki.org</a>
 	</div><br>
 	{preference name='fgal_use_db'}<br>

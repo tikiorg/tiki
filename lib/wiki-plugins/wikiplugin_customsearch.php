@@ -11,7 +11,7 @@ function wikiplugin_customsearch_info()
 		'name' => tra('Custom Search'),
 		'documentation' => 'PluginCustomSearch',
 		'description' => tra('Custom Search Interface that displays results using the LIST plugin'),
-		'prefs' => array('wikiplugin_customsearch', 'wikiplugin_list', 'feature_ajax'),
+		'prefs' => array('wikiplugin_customsearch', 'wikiplugin_list', 'feature_ajax', 'feature_search'),
 		'body' => tra('LIST plugin configuration information'),
 		'filter' => 'wikicontent',
 		'profile_reference' => 'search_plugin_content',

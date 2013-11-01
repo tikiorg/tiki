@@ -51,6 +51,7 @@ class TikiFilter
 		case 'purifier':
 			return new TikiFilter_HtmlPurifier('temp/cache');
 		case 'wikicontent':
+			return new TikiFilter_WikiContent;
 		case 'rawhtml_unsafe':
 		case 'none':
 			return new TikiFilter_RawUnsafe;

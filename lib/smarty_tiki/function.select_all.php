@@ -17,6 +17,7 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
  * params:
  *  - checkbox_names: Values of the 'name' HTML attribute of the checkboxes to check/uncheck, either as an array or as a comma-separated list
  *	- label: text to display on the right side of the checkbox. If empty, no default text is displayed
+ *  - hidden_too: switch the hidden checkboxes too (n/y)
  */
 function smarty_function_select_all($params, $smarty)
 {
@@ -36,11 +37,17 @@ function smarty_function_select_all($params, $smarty)
 	if (!is_array($checkbox_names)) {
 		$checkbox_names = explode(',', $checkbox_names);
 	}
+	if (isset($params['hidden_too']) && $params['hidden_too'] === 'y') {
+		$hidden_too = ',true';
+	} else {
+		$hidden_too = '';
+	}
 
   $smarty->loadPlugin('smarty_modifier_escape');
 
-	foreach ( $checkbox_names as $cn ) 
-		$onclick .= "switchCheckboxes(this.form,'" . htmlspecialchars(smarty_modifier_escape($cn, 'javascript')) . "',this.checked);";
+	foreach ( $checkbox_names as $cn ) {
+		$onclick .= "switchCheckboxes(this.form,'" . htmlspecialchars(smarty_modifier_escape($cn, 'javascript')) . "',this.checked$hidden_too);";
+	}
 
 	return "<div>\n" . 
 			'<input name="switcher'.$id.'" id="clickall'.$id.'" type="checkbox" onclick="' . $onclick . '"' . 

@@ -11,7 +11,7 @@ function wikiplugin_activitystream_info()
 		'name' => tra('Activity Stream'),
 		'documentation' => 'PluginActivityStream',
 		'description' => tra('Generates a feed or activity stream based on the recorded events in the system.'),
-		'prefs' => array('wikiplugin_activitystream', 'activity_custom_events'),
+		'prefs' => array('wikiplugin_activitystream', 'activity_custom_events', 'feature_search'),
 		'default' => 'y',
 		'format' => 'html',
 		'body' => tra('List configuration information'),

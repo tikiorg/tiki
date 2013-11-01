@@ -94,29 +94,31 @@
 {/if}
 {if isset($diff_style)}
 	<div id="diff_outer">
-		<div style="overflow:auto;height:20ex;" id="diff_history">
-			{if $translation_mode == 'y'}		
+		{if $translation_mode == 'y'}
+			<div class="translation_message">
 				<h2>{tr}Translate from:{/tr} {$source_page|escape}</h2>
 				{tr}Changes that need to be translated are highlighted below.{/tr}
-			{/if}
-			{include file='pagehistory.tpl' cant=0}
-		</div>
-		{if $diff_summaries}
-			<div class="wikitext" id="diff_versions">
-				<ul>
-					{foreach item=diff from=$diff_summaries}
-						<li>
-							{tr}Version:{/tr} {$diff.version|escape} - {$diff.comment|escape|default:"<em>{tr}No comment{/tr}</em>"}
-							{if count($diff_summaries) gt 1}
-								{assign var=diff_version value=$diff.version}
-								{icon _id="arrow_right"  onclick="\$('input[name=oldver]').val($diff_version);\$('#editpageform').submit();return false;"  _text="{tr}View{/tr}" style="cursor: pointer"}
-							{/if}
-						</li>
-					{/foreach}
-					{button  _onclick="\$('input[name=oldver]').val(1);\$('#editpageform').submit();return false;"  _text="{tr}All Versions{/tr}" _ajax="n"}
-				</ul>
 			</div>
 		{/if}
+		<div id="diff_history">
+			{include file='pagehistory.tpl' cant=0}
+			{if $diff_summaries}
+				<div class="wikitext" id="diff_versions">
+					<ul>
+						{foreach item=diff from=$diff_summaries}
+							<li>
+								{tr}Version:{/tr} {$diff.version|escape} - {$diff.comment|escape|default:"<em>{tr}No comment{/tr}</em>"}
+								{if count($diff_summaries) gt 1}
+									{assign var=diff_version value=$diff.version}
+									{icon _id="arrow_right"  onclick="\$('input[name=oldver]').val($diff_version);\$('#editpageform').submit();return false;"  _text="{tr}View{/tr}" style="cursor: pointer"}
+								{/if}
+							</li>
+						{/foreach}
+						{button  _onclick="\$('input[name=oldver]').val(1);\$('#editpageform').submit();return false;"  _text="{tr}All Versions{/tr}" _ajax="n"}
+					</ul>
+				</div>
+			{/if}
+		</div>
 	</div>
 {/if}
 
@@ -175,7 +177,7 @@
 						{if $translation_mode == 'y'}
 							<div class="translation_message">
 								<h2>{tr}Translate to:{/tr} {$target_page|escape}</h2>
-								<p>{tr}Reproduce the changes highlighted on the left using the editor below{/tr}.</p>
+								{tr}Reproduce the changes highlighted on the left using the editor below{/tr}.
 							</div>
 						{/if}
 						{textarea codemirror='true' syntax='tiki'}{$pagedata}{/textarea}
