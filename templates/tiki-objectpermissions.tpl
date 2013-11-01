@@ -151,7 +151,10 @@ if ($("#assignstructure").prop("checked")) {
 			<h2>{tr}Groups{/tr}</h2>
 			
 			<div>
-			{treetable _data=$groups _checkbox="group_filter" _checkboxTitles="{tr}Select all{/tr}" _checkboxColumnIndex="in_group_filter" _valueColumnIndex="id" _columns='"groupName"="{tr}Group name{/tr}","groupDesc"="{tr}Description{/tr}"' _sortColumn='parents' _collapseMaxSections=20 _sortColumnDelimiter=','}
+			{treetable _data=$groups _checkbox="group_filter" _checkboxTitles="{tr}Select all{/tr}"
+					_checkboxColumnIndex="in_group_filter" _valueColumnIndex="id"
+					_columns='"groupName"="{tr}Group name{/tr}","groupDesc"="{tr}Description{/tr}"'
+					_sortColumn='parents' _collapseMaxSections=20 _sortColumnDelimiter=',' _selectAllHiddenToo='y'}
 			</div>
 			
 			<div class="input_submit_container" style="text-align: center">

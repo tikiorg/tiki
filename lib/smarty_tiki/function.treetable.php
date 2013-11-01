@@ -58,6 +58,8 @@
  * _openall					: show folder button to open all areas (y/n default=n)
  *
  * _showSelected			: checkbox to show only selected (y/n default=n)
+ *
+ * _selectAllHiddenToo = 'n': select all checkbox incudes hidden rows
  */
 
 //this script may only be included - so its better to die if called directly.
@@ -81,6 +83,7 @@ function smarty_function_treetable($params, $smarty)
 	$_checkboxTitles = empty($_checkboxTitles) ? '' : $_checkboxTitles;
 	$_openall = isset($_openall) ? $_openall : 'n';
 	$_showSelected = isset($_showSelected) ? $_showSelected : 'n';
+	$_selectAllHiddenToo = isset($_selectAllHiddenToo) ? $_selectAllHiddenToo : 'n';
 
 	if (is_string($_checkbox) && strpos($_checkbox, ',') !== false) {
 		$_checkbox = preg_split('/,/', trim($_checkbox));
@@ -269,7 +272,8 @@ $("#'.$id.'_showSelected").click( function () {
 			$html .= smarty_function_select_all(
 				array(
 					'checkbox_names'=>array($_checkbox[$i] . '[]'),
-					'label' => empty($_checkboxTitles) ? '' : htmlspecialchars($_checkboxTitles[$i])
+					'label' => empty($_checkboxTitles) ? '' : htmlspecialchars($_checkboxTitles[$i]),
+					'hidden_too' => $_selectAllHiddenToo,
 				),
 				$smarty
 			);
