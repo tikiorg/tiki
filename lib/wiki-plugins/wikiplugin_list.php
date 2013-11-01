@@ -11,7 +11,7 @@ function wikiplugin_list_info()
 		'name' => tra('List'),
 		'documentation' => 'PluginList',
 		'description' => tra('Create lists of Tiki objects based on custom search criteria and formatting'),
-		'prefs' => array('wikiplugin_list'),
+		'prefs' => array('wikiplugin_list', 'feature_search'),
 		'body' => tra('List configuration information'),
 		'filter' => 'wikicontent',
 		'profile_reference' => 'search_plugin_content',
