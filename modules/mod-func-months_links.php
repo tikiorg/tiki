@@ -99,7 +99,7 @@ function module_months_links($mod_reference, $module_params)
 			$month_expanded = $month_names[$current_month_num-1];
 		}
 		$archives = array();
-		$numrows = $mod_reference['rows'] > 0 ? $mod_reference['rows'] : 12;
+		$numrows = $mod_reference['rows'] > 0 ? $mod_reference['rows'] : 120;
 
 		for ($i = 0 ; $i < $numrows ; $i++, $current_month_num--) {
 			if ($current_month_num == 0) {
