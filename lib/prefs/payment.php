@@ -34,7 +34,7 @@ function prefs_payment_list()
 		'payment_paypal_business' => array(
 			'name' => tra('Paypal Business ID'),
 			'description' => tra('Enable payments through paypal.'),
-			'hint' => tra('Email address'),
+			'hint' => tra('Primary email of your PayPal account'),
 			'type' => 'text',
 			'filter' => 'email',
 			'dependencies' => array( 'payment_feature' ),
