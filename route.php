@@ -224,7 +224,7 @@ default:
 
 if (is_null($base) || is_null($path)) {
 	header('HTTP/1.0 500 Internal Server Error');
-	header('Content-Type: text/plain');
+	header('Content-Type: text/plain; charset=utf-8');
 
 	echo "Request could not be understood. Verify routing file.";
 	exit;
@@ -236,10 +236,10 @@ if ($inclusion) {
 	$_SERVER['PHP_SELF'] = $inclusion;
 	include __DIR__ . '/' . $inclusion;
 } else {
-	error_log("No route found. Please see http://dev.tiki.org/URL+Rewriting+Revamp");
+	error_log("No route found - full:$full query:{$_SERVER['QUERY_STRING']}");
 
-	header('HTTP/1.0 Not Found');
-	header('Content-Type: text/plain');
+	header('HTTP/1.0 404 Not Found');
+	header('Content-Type: text/plain; charset=utf-8');
 
 	echo "No route found. Please see http://dev.tiki.org/URL+Rewriting+Revamp";
 	exit;
