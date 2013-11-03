@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "9e0408b126358c94d3f0e552201f2943",
+    "hash": "86d7e123d23b049f47a3f3ff6a881c7f",
     "packages": [
         {
             "name": "aFarkas/html5shiv",
@@ -605,12 +605,12 @@
         },
         {
             "name": "jquery/plugins/tablesorter",
-            "version": "2.12.0",
+            "version": "2.13.2",
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/jquery-plugins-tablesorter-2.12.0.zip",
-                "reference": "2.12.0",
-                "shasum": "01b25b415bf08fbba9e95469d9f3866a8ca71eed"
+                "url": "https://composer.tiki.org/dist/jquery-plugins-tablesorter-2.13.2.zip",
+                "reference": "2.13.2",
+                "shasum": "c7f29aa5b5291d686d743b7db52c5cc3cf839895"
             },
             "type": "library"
         },
