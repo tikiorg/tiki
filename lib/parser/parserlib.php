@@ -242,7 +242,7 @@ class ParserLib extends TikiDb_Bridge
 		$matches = WikiParser_PluginMatcher::match($data);		// find the plugins
 
 		foreach ($matches as $match) {							// each plugin
-			if (! $removeCb || $removeCb($match)) {
+			if (! $removeCb || (is_callable($removeCb) && $removeCb($match))) {
 				$plugin = (string) $match;
 				$key = '§'.md5($tikilib->genPass()).'§';				// by replace whole plugin with a guid
 
