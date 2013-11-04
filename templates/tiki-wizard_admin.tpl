@@ -7,4 +7,5 @@
 <div id="wizardBody"> 
 {include file="{$wizardBody}"}
 </div>
+{include file="wizard/wizard_bar_admin.tpl"}
 </form>
