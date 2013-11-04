@@ -102,6 +102,10 @@ function tiki_mail_setup()
 			)
 		);
 		Zend_Mail::setDefaultTransport($transport);
+	} elseif ($prefs['zend_mail_handler'] == 'sendmail' && ! empty($prefs['sender_email'])) {
+		// from http://framework.zend.com/manual/1.12/en/zend.mail.introduction.html#zend.mail.introduction.sendmail
+		$transport = new Zend_Mail_Transport_Sendmail('-f' . $prefs['sender_email']);
+		Zend_Mail::setDefaultTransport($transport);
 	}
 
 	$done = true;
