@@ -205,7 +205,7 @@
 	</div>
 {/if}		
 	
-{*if $tikifeedback}
+{if $tikifeedback}
 	<br>
 {section name=n loop=$tikifeedback}
 	<div class="simplebox {if $tikifeedback[n].num > 0} highlight{/if}">
@@ -216,7 +216,7 @@
 		{/if}
 	</div>
 {/section}
-{/if*}
+{/if}
   <div id="installer_3_new_db_form"{if $dbcon eq 'y'} style="display:none;"{/if}>
 	<p>{tr}Use this page to create a new database connection, or use the <a href="http://doc.tiki.org/Manual+Installation" target="_blank" title="manual installation">manual installation process</a>.{/tr} <a href="http://doc.tiki.org/Manual+Installation" target="_blank" title="{tr}Help{/tr}"><img src="img/icons/help.png" alt="{tr}Help{/tr}"></a></p>
 	<form action="tiki-install.php" method="post">
