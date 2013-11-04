@@ -440,6 +440,7 @@ if ($itemObject->canModify()) {
 				}
 			}
 			$item_info = $trklib->get_tracker_item($_REQUEST["itemId"]);
+			$item_info['logs'] = $trklib->get_item_history($item_info, 0, '', 0, 1);
 			$smarty->assign('item_info', $item_info);
 		} else {
 			$error = $ins_fields;
