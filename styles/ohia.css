@@ -53,7 +53,7 @@ body.fixed_width .fixedwidth .fixedwidth {
 
 #c1c2 #col2 > .content {
 	margin: auto;
-	padding-top: 20px}
+}
 
 #col3 {
 	margin-left: -240px;
@@ -61,7 +61,7 @@ body.fixed_width .fixedwidth .fixedwidth {
 
 #col3 .content {
 	margin: auto;
-	padding-top: 20px}
+}
 
 #footer {
 	text-align: center;
@@ -284,8 +284,6 @@ label {margin: 0 2px}
 	padding: .6em;
 	text-decoration: none;
 	font: 1.1em Verdana, Helvetica, Arial, Sans-Serif;
-	color: #f4f4f4;
-	background: #030511;
 }
 
 /****** Menus, Links ******/
