@@ -2732,6 +2732,7 @@ div.aclabel, span.aclabel, label.aclabel {
 #diff_history {
 	overflow-x: hidden;
 	overflow-y: auto;
+	padding: 0 .1em;
 }
 
 /* end fullscreen etc */

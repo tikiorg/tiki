@@ -53,7 +53,7 @@ body.fixed_width .fixedwidth .fixedwidth {
 
 #c1c2 #col2 > .content {
 	margin: auto;
-	padding-top: 20px}
+}
 
 #col3 {
 	margin-left: -240px;
@@ -61,7 +61,7 @@ body.fixed_width .fixedwidth .fixedwidth {
 
 #col3 .content {
 	margin: auto;
-	padding-top: 20px}
+}
 
 #footer {
 	text-align: center;
@@ -203,12 +203,18 @@ label {margin: 0 2px}
 
 #top_modules .box-login_box {
 	position: absolute;
-	bottom: 10px;
+	bottom: 0;
 	right: 10px;
 }
 
-#top_modules .box-login_box > .tabmark {
+#top_modules .box-login_box .tabmark {
 	float: left;
+	display: inline-block;
+}
+
+#top_modules .box-login_box .cssmenu_horiz li {
+	padding-bottom: 0;
+
 }
 
 #top_modules .siteloginbar_popup a.login_link {
@@ -250,11 +256,18 @@ label {margin: 0 2px}
 	margin-top: 3px;
 	padding-top: 6px}
 
+#topbar_modules {
+	min-height: 3em;
+}
+
 #tiki-top {
 	position: absolute;
 	top: 0;
 	left: 0;
-	text-align: left}
+	text-align: left;
+	background: #030511;
+	width: 100%;
+}
 
 #tiki-top ul.cssmenu_horiz {
 	float: left;
@@ -263,19 +276,15 @@ label {margin: 0 2px}
 
 #tiki-top table {width: auto}
 
-#top_modules .box-search {
+#top_modules .box-search,
+#topbar_modules .box-search {
 	position: absolute;
 	top: 0;
 	right: 0;
-	padding: 2px;
+	padding: .6em;
 	text-decoration: none;
 	font: 1.1em Verdana, Helvetica, Arial, Sans-Serif;
-	color: #f4f4f4;
-	background: #030511;
-	border-left: 1px solid #333;
-	border-bottom: 1px solid #696969}
-
-#top_modules .box-search .sitesearchbar form {margin-right: 40px}
+}
 
 /****** Menus, Links ******/
 /** CSS (suckerfish) menus **/
@@ -554,7 +563,9 @@ a.forumnameread {color: #fd0006}
 
 .tabmark {
 	background: #5e0000;
-	border: 1px solid #4c4c4c}
+	border: 1px solid #4c4c4c;
+	border-bottom: none;
+}
 
 .tabmark a {
 	border-bottom: 0;
