@@ -4653,5 +4653,8 @@ div#outerToc-static ul {
 .tiki_sheet .ui-widget-header {
 	border: 0 !important;
 }
-
+/** jquery chosen **/
+.chosen-container-single .chosen-single span {
+	width: 100%;
+}
 /* End of file */
