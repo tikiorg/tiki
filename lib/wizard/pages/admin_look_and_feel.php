@@ -58,8 +58,11 @@ class AdminWizardLookAndFeel extends Wizard
 	function onContinue ($homepageUrl) 
 	{
 		// Run the parent first
-		parent::onContinue($homepageUrl);
-		
+		$changes = parent::onContinue($homepageUrl);
+		if (array_key_exists('style', $changes) || array_key_exists('style_option', $changes)) {
+			$query = array('url' => $_REQUEST['url'], 'wizard_step' => $_REQUEST['wizard_step']);
+			TikiLib::lib('access')->redirect($_SERVER['PHP_SELF'] . '?' . http_build_query($query, '', '&') );
+		}
 	}
 	
 	/**

@@ -44,7 +44,7 @@ abstract class Wizard
 	/**
 	 * onContinue processes the settings on the wizard page.
 	 * @param string $homepageUrl The url to return to, when the wizard is complete
-	 * @return none
+	 * @return array
 	 *
 	 */	
 	function onContinue ($homepageUrl) {
@@ -54,7 +54,8 @@ abstract class Wizard
 		// Mark the login mode for the wizard
 		$wizardlib = TikiLib::lib('wizard');
 		$wizardlib->showOnLogin($showOnLogin);	
-		
+
+		$changes = array();
 		// Commit any preferences on the page
 		if ($this->isEditable()) {
 			if ( isset( $_REQUEST['lm_preference'] ) ) {
@@ -62,5 +63,6 @@ abstract class Wizard
 				$changes = $prefslib->applyChanges((array) $_REQUEST['lm_preference'], $_REQUEST);
 			}		
 		}
+		return $changes;
 	}
 }
