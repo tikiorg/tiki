@@ -4666,6 +4666,7 @@ class TrackerLib extends TikiLib
 		$definition = Tracker_Definition::get($args['trackerId']);
 		$ins_categs = array();
 		$parent_categs_only = array();
+		$tosync = false;
 
 		foreach ($definition->getCategorizedFields() as $fieldId) {
 			if (isset($args['values'][$fieldId])) {
@@ -4673,10 +4674,13 @@ class TrackerLib extends TikiLib
 				$field = $definition->getField($fieldId);
 				$options = json_decode($field['options']);
 				$parent_categs_only[] = $options->parentId;
+				$tosync = true;
 			}
 		}
 
-		$this->categorized_item($args['trackerId'], $args['object'], "item {$args['object']}", $ins_categs, $parent_categs_only);
+		if ($tosync) {
+			$this->categorized_item($args['trackerId'], $args['object'], "item {$args['object']}", $ins_categs, $parent_categs_only);
+		}
 	}
 
 	public function field_render_value( $params )
