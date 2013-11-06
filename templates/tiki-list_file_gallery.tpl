@@ -291,7 +291,7 @@ window.handleFinderFile = function (file, elfinder) {
 		},
 		success: function (data) {
 			{{if !empty($filegals_manager)}}
-				window.opener.insertAt('{{$filegals_manager}}', data.wiki_syntax);
+				window.opener.insertAt('{{$filegals_manager}}', data.fileId);
 				checkClose();
 			{{/if}}
 		}
