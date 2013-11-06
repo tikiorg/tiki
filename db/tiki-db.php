@@ -217,7 +217,6 @@ $initializer->setInitializeCallback(
 	}
 );
 
-ini_set('display_errors', 1);
 $db = $initializer->getConnection($credentials['primary']);
 
 if (! $db && ! defined('TIKI_IN_INSTALLER')) {
