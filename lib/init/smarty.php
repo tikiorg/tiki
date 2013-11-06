@@ -202,6 +202,7 @@ class Smarty_Tiki extends Smarty
 	public function fetch($_smarty_tpl_file = null, $_smarty_cache_id = null, $_smarty_compile_id = null, $parent = null, $_smarty_display = false, $merge_tpl_vars = true, $no_output_filter = false)
 	{
 		global $prefs, $style_base, $tikidomain;
+		$this->muteExpectedErrors();
 
 		if ( ($tpl = $this->getTemplateVars('mid')) && ( $_smarty_tpl_file == 'tiki.tpl' || $_smarty_tpl_file == 'tiki-print.tpl' || $_smarty_tpl_file == 'tiki_full.tpl' ) ) {
 
@@ -333,6 +334,8 @@ class Smarty_Tiki extends Smarty
 	{
 
 		global $prefs;
+
+		$this->muteExpectedErrors();
 
 		if ( !empty($prefs['feature_htmlpurifier_output']) and $prefs['feature_htmlpurifier_output'] == 'y' ) {
 			static $loaded = false;
