@@ -33,7 +33,7 @@ function wikiplugin_slider_info()
 			'height' => array(
 				'required' => false,
 				'name' => tra('Height'),
-				'description' => tra('Height in pixels or percentage. Default value is complete slider height.'),
+				'description' => tra('Height in pixels or percentage. Default value is complete slider height. if expand parameter set to y, then don\'t use percent only use pixels '),
 				'filter' => 'striptags',
 				'accepted' => 'Number of pixels followed by \'px\' or percent followed by % (e.g. "200px" or "100%").',
 				'default' => 'Slider height',
@@ -57,7 +57,7 @@ function wikiplugin_slider_info()
 			'expand' => array(
 				'required' => false,
 				'name' => tra('Expand'),
-				'description' => tra('if y, the entire slider will expand to fit the parent element'),
+				'description' => tra('if y, the entire slider will expand to fit the parent element and height parameter should not be empty'),
 				'filter' => 'alpha',
 				'accepted' => 'y or n',
 				'default' => 'n',
@@ -432,7 +432,16 @@ function wikiplugin_slider($data, $params)
 		</div>";
 	}
 
+	if($expand == 'y') {
+		/** if expand eq 'y', "100%" height not working **/
+		/** Temp fix: if $height is empty**/
+		$height = (empty($height) === false ? $height : '300px');
+		$result = "<div style='width: $width; height: $height;'><div class='tiki-slider'>$ret</div></div>";
+	} else {
+		$result = "<div class='tiki-slider' style='width: $width; height: $height;'>$ret</div>";
+	}
+	
 	return <<<EOF
-	~np~<div class='tiki-slider' style='width: $width; height: $height;'>$ret</div>~/np~
+	~np~$result~/np~
 EOF;
 }
