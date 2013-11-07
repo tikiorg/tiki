@@ -119,6 +119,11 @@ class MailinLib extends TikiLib
 	 */
 	function replace_mailin_account($accountId, $account, $pop, $port, $username, $clearpass, $smtp, $useAuth, $smtpPort, $type, $active, $anonymous, $admin, $attachments, $routing, $article_topicId = NULL, $article_type = NULL, $discard_after=NULL, $show_inlineImages='n', $save_html='y', $categoryId = 0, $namespace='', $respond_email = 'y', $leave_email = 'n')
 	{
+		// Fix values
+		if ($attachments == null) {
+			$attachments = 'n';
+		}
+		
 		// Encrypt password
 		$pass = $this->encryptPassword($clearpass);
 		
