@@ -689,3 +689,12 @@ $headerlib->add_jsfile('vendor/twitter/bootstrap/js/bootstrap.js');
 $headerlib->add_cssfile('vendor/twitter/bootstrap/css/bootstrap.min.css');
 
 $headerlib->lockMinifiedJs();
+
+if( $prefs['feature_hidden_links'] == 'y' ) {
+	$headerlib->add_js("$('body').find('h1, h2, h3, h4, h5, h6').each(function() {
+	var headerid = $(this).attr('id');
+		if(headerid != undefined) {
+			$(this).append('<a class=\"tiki_anchor\" href=\"#'+headerid+'\"></a>');
+		}
+	});");
+}

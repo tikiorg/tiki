@@ -2803,5 +2803,13 @@ function prefs_feature_list($partial = false)
 			'type' => 'flag',
 			'default' => 'n',
 		),
+		'feature_hidden_links' => array(
+			'name' => tra('Hidden anchors/links shown on mouseover of headers'),
+			'description' => tra('Hidden anchors/links shown on mouseover of header.'),
+			'help' => '',
+			'type' => 'flag',
+			'default' => 'n',
+			'tags' => array('advanced'),
+		),
 	);
 }

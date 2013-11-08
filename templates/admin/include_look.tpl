@@ -179,6 +179,7 @@
 							{preference name=jquery_colorbox_theme}
 						</div>
 					{preference name=feature_jscalendar}
+                    {preference name=feature_hidden_links}
 				</div>
 			</fieldset>
 		{/tab}

@@ -4628,4 +4628,33 @@ div#outerToc-static ul {
 	border: 0 !important;
 }
 
+/** Hidden anchors/links shown on mouseover of header  **/
+a.tiki_anchor:before {
+    content: "¶";
+}
+a.tiki_anchor {
+    display: none;
+    font-size: 85%;
+    font-weight: lighter;
+    margin-left: 0.7em;
+    text-decoration: none;
+    line-height: 100%;
+}
+h1:hover a.tiki_anchor,
+h2:hover a.tiki_anchor,
+h3:hover a.tiki_anchor,
+h4:hover a.tiki_anchor,
+h5:hover a.tiki_anchor,
+h6:hover a.tiki_anchor {
+    color: #BBBBBB;
+    display: inline;
+}
+h1 a.tiki_anchor:hover,
+h2 a.tiki_anchor:hover,
+h3 a.tiki_anchor:hover,
+h4 a.tiki_anchor:hover,
+h5 a.tiki_anchor:hover,
+h6 a.tiki_anchor:hover {
+    color: #3333CC;
+}
 /* End of file */
