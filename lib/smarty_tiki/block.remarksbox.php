@@ -38,93 +38,53 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 function smarty_block_remarksbox($params, $content, $smarty, &$repeat)
 {
 	global $prefs;
-	static $instance = 0;
+	
+	if ( $repeat ) return;
 
-	if ( $repeat ) return '';
-	$instance++;
-
-	$params = array_merge(
-		array(
-			'type' => 'tip',
-			'title' => '',
-			'close' => 'y',
-			'width' => '',
-			'highlight' => 'n',
-			'icon' => '',
-			'class' => '',
-		),
-		$params
-	);
-
-	if ($params['highlight'] === 'y') {
-		$params['highlight'] = ' highlight';
+	extract($params);
+	if (!isset($type))  $type = 'tip';
+	if (!isset($title)) $title = '';
+	if (!isset($close)) $close = 'y';
+	if (!isset($width)) $width = '';
+	
+	if (isset($highlight) && $highlight == 'y') {
+		$highlightClass = ' highlight';
 	} else {
-		$params['highlight'] = '';
+		$highlightClass = '';
 	}
 
-	if ($params['icon'] ==='') {
-		if ($params['type']=='tip') {//get_strings tra('tip')
-			$params['icon']='book_open';
-		} else if ($params['type']=='comment') {//get_strings tra('comment')
-			$params['icon']='comments';
-		} else if ($params['type']=='warning') {//get_strings tra('warning'))
-			$params['icon']='exclamation';
-		} else if ($params['type'] == 'confirm') {//get_strings tra('confirm')
-			$params['icon']='accept';
-		} else if ($params['type']=='note') {//get_strings tra('note')
-			$params['icon']='information';
-		} else if ($params['type'] == 'errors') {//get_strings tra('errors')
-			$params['icon'] = 'delete';
-		} else {//get_strings tra('information')
-			$params['icon'] = 'information';
-		}
-	}
-
-	if ($prefs['javascript_enabled'] != 'y' || $params['type'] === 'errors' || $params['type'] === 'confirm') {
-		$params['close'] = false;
-	} else {
-		$params['close'] = $params['close'] === 'y';
-	}
-	$md5 = 'rbox-' . md5(serialize(array($params, $instance,  $_SERVER['REQUEST_URI'])));
-
-	if (function_exists('getCookie') && getCookie($md5, 'rbox')) {
-		return '';
-	}
-
-	if ($params['close']) {
-		TikiLib::lib('header')->add_jq_onready(
-			'
-		$("#' . $md5 . ' .rbox-close").click( function () {
-			if (/*getCookie("rbox") ||*/ confirm("' . tra('Do you want to permanently hide this remarks box? (can actually be reset on User Preferences screen (tiki-user_preferences.php))') . '")) {
-				$("#' . $md5 . '").fadeOut();
-				setCookie("'. $md5 . '", "y", "rbox");		// advisory alert on first use
-			}
-			return false;
-		});
-		'
-		);
-	}
-
-	if ($params['class'] ==='') {
-		if ($params['type']=='tip')
-			$params['class']='panel-default';
-		else if ($params['type']=='comment') 
-			$params['class']='panel-default';
-		else if ($params['type']=='warning')
-			$params['class']='panel-warning';
-		else if ($params['type'] == 'confirm')
-			$params['class']='panel-success';
-		else if ($params['type']=='note')
-			$params['class']='panel-info';
-		else if ($params['type'] == 'errors')
-			$params['class'] = 'panel-danger';
-		else
-			$params['class'] = 'panel-primary';
+	switch ($type) {
+	case 'warning':
+		$class = 'alert-warning';
+		$icon = 'flash';
+		break;
+	case 'error':
+		$class = 'alert-danger';
+		$icon = 'fire';
+		break;
+	case 'confirm':
+		$class = 'alert-success';
+		$icon = 'ok';
+		break;
+	default:
+		$class = 'alert-info';
+		$icon = 'info-sign';
+		break;
 	}
 	
-	$smarty->assign('rbox_guid', $md5);
-	$smarty->assign('rbox_params', $params);
-	$smarty->assign('rbox_instance', $instance);
-	$smarty->assign('remarksbox_content', $content);
+	if ($prefs['javascript_enabled'] != 'y') {
+		$close = false;
+	} else {
+		$close = $close != 'n';
+	}
+	
+	$smarty->assign('remarksbox_title', $title);
+	$smarty->assign('remarksbox_type', $type);
+	$smarty->assign('remarksbox_icon', $icon);
+	$smarty->assign('remarksbox_class', $class);
+	$smarty->assign('remarksbox_highlight', $highlightClass);
+	$smarty->assign('remarksbox_close', $close);
+	$smarty->assign('remarksbox_width', $width);
+	$smarty->assignByRef('remarksbox_content', $content);
 	return $smarty->fetch('remarksbox.tpl');
 }

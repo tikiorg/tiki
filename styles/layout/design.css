@@ -2854,28 +2854,6 @@ fieldset {
 	padding: 1px 4px !important;
 }
 
-.button,
-.button:hover,
-button,
-button:hover,
-input[type=reset],
-input[type=submit],
-input[type=reset]:hover,
-input[type=submit]:hover {
-	margin: 0 0 4px 2px;
-	font-size: inherit;
-	font-family: inherit;
-}
-
-input {
-	padding: 0;
-}
-
-.button a {
-	padding: .1em 1em;
-	display: block;
-}
-
 button.ui-button, button.ui-button:hover {
     padding: 0;
 }
@@ -2917,12 +2895,6 @@ div.highlight {
 	display: block;
 	font-weight: bold;
 }
-
-input[type=checkbox],
-input[type=radio] {
-	border: 0;
-}
-
 
 .sitelogo img {
 	margin-top: 10px;
