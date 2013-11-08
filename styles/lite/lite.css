@@ -17,18 +17,15 @@ body {
 			the layout will behave nicely as it would in a table while keeping the document semanticaly clean. it means the content will
 			expand to the right and at the same time it will not overflow the last column but rather gently push it further aside */
 	font-family: sans-serif;
-	font-size: 80%;/* the body font-size must be in percents to scale the fonts in IE properly */
 	margin: 0;
 	padding: 0;
 	width: 100%;/* this is needed to keep the width to the maximum available */
 }
 html>body {
-	font-size: 0.75em;/* redefine the body font-size for all modern browsers - ignored by old IEs */
 }
 /* and this is a special workaround for IE 7 */
 *:first-child+html
 body {
-	font-size: 80%;
 }
 
 /* *** THE MAIN LAYOUT *** */

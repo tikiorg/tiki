@@ -78,29 +78,6 @@ body.fixed_width .fixedwidth .fixedwidth {
     min-height: 40em;
 }
 
-.button {
-	display: inline-block;
-}
-
-/* Links in buttons */
-.button a,
-.button a:visited,
-button,
-.button input,
-.calbuttonBox a {
-	text-decoration: none;
-	white-space: nowrap;
-	cursor: pointer;
-}
-
-/* Definitions below are the same as above, but are separated to make those above work in IE6 */
-input[type=reset],
-input[type=submit] {
-	text-decoration: none;
-	white-space: nowrap;
-	cursor: pointer;
-}
-
 /* submit buttons input type="submit" in a container */
 .input_submit_container {
 	padding: 1px;
@@ -2852,9 +2829,6 @@ textarea:disabled {
 }
 
 fieldset {
-	border: solid 1px #999;
-	margin-bottom: 2px;
-	padding: 0.3em;
 	clear: both;
 }
 

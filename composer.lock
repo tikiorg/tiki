@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "86d7e123d23b049f47a3f3ff6a881c7f",
+    "hash": "6bccb4d5506631a3be10f112a0d4a0a4",
     "packages": [
         {
             "name": "aFarkas/html5shiv",
@@ -866,6 +866,17 @@
             "time": "2013-03-01 06:43:14"
         },
         {
+            "name": "twitter/bootstrap",
+            "version": "3.0.2",
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/twbs/bootstrap/releases/download/v3.0.2/bootstrap-3.0.2-dist.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "library"
+        },
+        {
             "name": "zetacomponents/base",
             "version": "1.8",
             "source": {
@@ -1019,31 +1030,32 @@
         },
         {
             "name": "phpunit/dbunit",
-            "version": "1.2.3",
+            "version": "1.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/dbunit.git",
-                "reference": "8386782a2d55153e44a06eb1a9d13d6ed35d9c2d"
+                "reference": "9d8a28bdb41fbd3c0dc16fa32fc00862d06abace"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/dbunit/zipball/8386782a2d55153e44a06eb1a9d13d6ed35d9c2d",
-                "reference": "8386782a2d55153e44a06eb1a9d13d6ed35d9c2d",
+                "url": "https://api.github.com/repos/sebastianbergmann/dbunit/zipball/9d8a28bdb41fbd3c0dc16fa32fc00862d06abace",
+                "reference": "9d8a28bdb41fbd3c0dc16fa32fc00862d06abace",
                 "shasum": ""
             },
             "require": {
                 "ext-pdo": "*",
                 "ext-simplexml": "*",
                 "php": ">=5.3.3",
-                "phpunit/phpunit": ">=3.7.0@stable"
+                "phpunit/phpunit": ">=3.7.0@stable",
+                "symfony/yaml": ">=2.1.0"
             },
             "bin": [
-                "dbunit.php"
+                "composer/bin/dbunit"
             ],
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.2.x-dev"
+                    "dev-master": "1.3.x-dev"
                 }
             },
             "autoload": {
@@ -1073,7 +1085,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2013-03-01 11:50:46"
+            "time": "2013-11-04 08:33:33"
         },
         {
             "name": "phpunit/php-code-coverage",

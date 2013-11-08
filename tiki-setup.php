@@ -685,5 +685,7 @@ if ($prefs['openpgp_gpg_pgpmimemail'] == 'y') {
 // ******************************************************************** //
 //////////////////////////////////////////////////////////////////////////
 
+$headerlib->add_jsfile('vendor/twitter/bootstrap/js/bootstrap.js');
+$headerlib->add_cssfile('vendor/twitter/bootstrap/css/bootstrap.min.css');
 
 $headerlib->lockMinifiedJs();
