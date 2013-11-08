@@ -11,7 +11,7 @@
 
 function smarty_function_toolbars($params, $smarty)
 {
-	global $prefs, $is_html;
+	global $prefs, $is_html, $tiki_p_admin;
 	$default = array('comments' => '', 'is_html' => $is_html);
 	$params = array_merge($default, $params);
 
@@ -41,6 +41,10 @@ function smarty_function_toolbars($params, $smarty)
 //	}
 	if ( (!isset( $params['switcheditor'] ) && !in_array($params['section'], array('wiki page', 'blogs', 'newsletters', 'cms', 'webmail'))) || $params['switcheditor'] !== 'y') {
 		$hidden[] = 'switcheditor';
+	}
+	
+	if(!$tiki_p_admin) {
+		$hidden[] = 'admintoolbar';
 	}
 
 	if ( ! isset( $params['area_id'] ) ) {
