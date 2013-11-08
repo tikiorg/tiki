@@ -39,7 +39,7 @@ function smarty_block_accordion($params, $content, $smarty, &$repeat)
 		return;
 	} else {
 		return <<<CONTENT
-<div class="accordion" id="$accordion_current_group">
+<div class="panel-group" id="$accordion_current_group">
 $content
 </div>
 CONTENT;

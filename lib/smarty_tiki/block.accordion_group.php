@@ -49,14 +49,16 @@ function smarty_block_accordion_group($params, $content, $smarty, $repeat)
 	$first = ($accordion_position == 1) ? 'in' : '';
 
 	return <<<CONTENT
-<div class="accordion-group">
-	<div class="accordion-heading">
-		<a class="accordion-toggle" data-toggle="collapse" data-parent="#$accordion_current_group" href="#$id">
-			$title
-		</a>
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<h4 class="panel-title">
+			<a class="accordion-toggle" data-toggle="collapse" data-parent="#$accordion_current_group" href="#$id">
+				$title
+			</a>
+		</h4>
 	</div>
-	<div id="$id" class="accordion-body collapse $first">
-		<div class="accordion-inner">
+	<div id="$id" class="panel-collapse collapse $first">
+		<div class="panel-body">
 			$content
 		</div>
 	</div>
