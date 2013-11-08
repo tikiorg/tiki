@@ -491,7 +491,7 @@ function initTikiDB( &$api, &$driver, $host, $user, $pass, $dbname, $client_char
 		if ($dbname_clean != $dbname) {
 			$tikifeedback[] = array( 'num' => 1, 'mes'=> tra("Some invalid characters were detected in database name. Please use alphanumeric characters or _ or -.", '', false, array($dbname_clean)) );
 			$dbcon = false;
-		} else {
+		} elseif ($dbcon) {
 			$error = '';
 			$sql="CREATE DATABASE IF NOT EXISTS `$dbname_clean` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;";
 			$dbTiki->queryError($sql, $error);
@@ -504,22 +504,26 @@ function initTikiDB( &$api, &$driver, $host, $user, $pass, $dbname, $client_char
 			try {
 				$dbTiki = $initializer->getConnection(
 					array(
-						'host' => $host,
-						'user' => $user,
-						'pass' => $pass,
-						'dbs' => $dbname,
-						'charset' => $client_charset,
-					)
-				);
+							'host' => $host,
+							'user' => $user,
+							'pass' => $pass,
+							'dbs' => $dbname,
+							'charset' => $client_charset,
+							)
+						);
 				$dbcon = ! empty($dbTiki);
 			} catch (Exception $e) {
 				$tikifeedback[] = array( 'num' => 1, 'mes' => $e->getMessage() );
 			}
+		} else {
+			$tikifeedback[] = array( 'num' => 1, 'mes'=> tra("Database `%0`. Unable to connect to database.", '', false, array($dbname_clean)) );
 		}
 	}
 
-	TikiDb::set($dbTiki);
-
+	if (isset($dbTiki)) {
+		TikiDb::set($dbTiki);
+	}
+	
 	return $dbcon;
 }
 
