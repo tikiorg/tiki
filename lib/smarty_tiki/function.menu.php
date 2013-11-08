@@ -70,6 +70,9 @@ function smarty_function_menu($params, $smarty)
 	}
 
 	list($menu_info, $channels) = get_menu_with_selections($params);
+	$smarty->assign('menu_channels', $channels['data']);
+	$smarty->assign('menu_info', $menu_info);
+	$smarty->assign('escape_menu_labels', ($prefs['menus_item_names_raw'] === 'n' && isset($menu_info['parse']) && $menu_info['parse'] === 'n'));
 
 	if (isset($params['bootstrap'])) {
 		$structured = array();
@@ -96,12 +99,14 @@ function smarty_function_menu($params, $smarty)
 		}
 
 		$smarty->assign('list', $structured);
-		return $smarty->fetch('bootstrap_menu.tpl');
+		switch ($params['bootstrap']) {
+		case 'navbar':
+			return $smarty->fetch('bootstrap_menu_navbar.tpl');
+		default:
+			return $smarty->fetch('bootstrap_menu.tpl');
+		}
 	}
 
-	$smarty->assign('menu_channels', $channels['data']);
-	$smarty->assign('menu_info', $menu_info);
-	$smarty->assign('escape_menu_labels', ($prefs['menus_item_names_raw'] === 'n' && isset($menu_info['parse']) && $menu_info['parse'] === 'n'));
 	$data = $smarty->fetch($tpl);
 	$menulib = TikiLib::lib('menu');
 	return $menulib->clean_menu_html($data);
