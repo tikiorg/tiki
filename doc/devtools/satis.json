@@ -887,7 +887,7 @@
 		"jquery/jquery": "*",
 		"jquery/jquery-min": "*",
 		"jquery/jquery-s5": "dev-master",
-		"jquery/jquery-sheet": "2.0.1",
+		"jquery/jquery-sheet": "3.0",
 		"jquery/jquery-ui": "*",
 		"jquery/jquery-mobile": "*",
 		"jquery/jquery-ui-themes": "*",
