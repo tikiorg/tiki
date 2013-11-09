@@ -32,7 +32,7 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 function smarty_block_textarea($params, $content, $smarty, $repeat)
 {
     static $included=false;
-	global $prefs, $headerlib, $smarty, $is_html;
+	global $prefs, $headerlib, $smarty, $is_html, $tiki_p_admin;
 
 	if ( $repeat ) {
 		return;
@@ -345,6 +345,13 @@ function switchEditor(mode, form) {
 		$(form).find("input[name=wysiwyg]").val("n");
 	}
 	form.submit();
+}';
+		}
+		if ($tiki_p_admin) {
+			$js_editconfirm .= '
+function admintoolbar() {
+	window.needToConfirm=false;
+	window.location="tiki-admin_toolbars.php";
 }';
 		}
 

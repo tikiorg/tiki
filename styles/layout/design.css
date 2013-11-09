@@ -4599,7 +4599,10 @@ div#outerToc-static ul {
 .tiki_sheet .ui-widget-header {
 	border: 0 !important;
 }
-
+/** jquery chosen **/
+.chosen-container-single .chosen-single span {
+	width: 100%;
+}
 /** Hidden anchors/links shown on mouseover of header  **/
 a.tiki_anchor:before {
     content: "¶";

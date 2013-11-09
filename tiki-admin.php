@@ -224,6 +224,7 @@ $smarty->assign('indexNeedsRebuilding', $prefslib->indexNeedsRebuilding());
 
 if (isset($_REQUEST['prefrebuild'])) {
 	$prefslib->rebuildIndex();
+	header('Location: ' . $base_url . 'tiki-admin.php');
 }
 
 $icons = array(

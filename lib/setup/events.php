@@ -80,6 +80,7 @@ function tiki_setup_events()
 		$events->bind('tiki.trackeritem.save', $defer('trk', 'update_create_missing_pages'));
 
 		if ($prefs['trackerfield_computed'] == 'y') {
+			$events->bind('tiki.trackeritem.rating', array('Tracker_Field_Computed', 'computeFields'));
 			$events->bind('tiki.trackeritem.save', array('Tracker_Field_Computed', 'computeFields'));
 		}
 
@@ -93,6 +94,7 @@ function tiki_setup_events()
 
 		$events->bind('tiki.trackeritem.save', $defer('trk', 'update_tracker_summary'));
 		$events->bind('tiki.trackeritem.save', $defer('trk', 'invalidate_item_cache'));
+		$events->bind('tiki.trackeritem.rating', $defer('trk', 'invalidate_item_cache'));
 
 		if ($prefs['tracker_refresh_itemlink_detail'] == 'y') {
 			$events->bind('tiki.trackeritem.update', $defer('trk', 'refresh_index_on_master_update'));
@@ -143,7 +145,6 @@ function tiki_setup_events()
 	$events->bind('tiki.wiki.save', 'tiki.save');
 	$events->bind('tiki.wiki.view', 'tiki.view');
 
-	$events->bind('tiki.trackeritem.rating', 'tiki.trackeritem.update');
 	$events->bind('tiki.trackeritem.update', 'tiki.trackeritem.save');
 	$events->bind('tiki.trackeritem.create', 'tiki.trackeritem.save');
 	$events->bind('tiki.trackeritem.save', 'tiki.save');

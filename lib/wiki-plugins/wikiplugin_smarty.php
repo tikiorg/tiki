@@ -34,15 +34,19 @@ function wikiplugin_smarty($data, $params)
 	if (empty($params['name'])) {
 		return tra('Incorrect parameter');
 	}
-	$path = 'lib/smarty_tiki/function.'.$params['name'].'.php';
-	if (!file_exists($path)) {
-		$path = 'lib/smarty/libs/plugins/function.'.$params['name'].'.php';
+	if($params['name'] == 'eval') {
+		$content = $smarty->fetch('string:'.$params['var']);
+	} else {
+		$path = 'lib/smarty_tiki/function.'.$params['name'].'.php';
 		if (!file_exists($path)) {
-			return tra('Incorrect parameter');
+			$path = 'lib/smarty/libs/plugins/function.'.$params['name'].'.php';
+			if (!file_exists($path)) {
+				return tra('Incorrect parameter');
+			}
 		}
+		include_once($path);
+		$func = 'smarty_function_'.$params['name'];
+		$content = $func($params, $smarty);
 	}
-	include_once($path);
-	$func = 'smarty_function_'.$params['name'];
-	$content = $func($params, $smarty);
 	return '~np~'.$content.'~/np~';
 }

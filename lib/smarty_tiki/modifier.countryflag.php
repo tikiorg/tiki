@@ -30,6 +30,6 @@ function smarty_modifier_countryflag($user)
 	$flag = $tikilib->get_user_preference($user, 'country', 'Other');
 	if ($flag == 'Other' || empty($flag))
 		return '';
-	return "<img alt='" . tra(str_replace('_', ' ', $flag)) . "' src='img/flags/" . $flag .
+	return "<img alt='" . tra(str_replace('_', ' ', $flag)) . "' src='img/flags/" . str_replace(' ', '_', $flag) .
 		".gif' title='" . tra(str_replace('_', ' ', $flag)) . "' />";
 }

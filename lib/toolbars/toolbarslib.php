@@ -56,6 +56,8 @@ abstract class Toolbar
 			return new ToolbarHelptool;
 		elseif ( $tagName == 'switcheditor' )
 			return new ToolbarSwitchEditor;
+		elseif ( $tagName == 'admintoolbar' )
+			return new ToolbarAdmin;
 		elseif ( $tagName == 'screencapture' )
 			return new ToolbarCapture();
 		elseif ( $tagName == '-' )
@@ -140,6 +142,7 @@ abstract class Toolbar
 					'tikifile',
 					'switcheditor',
 					'autosave',
+					'admintoolbar',
 					'nonparsed',
 					'bidiltr',
 					'bidirtl',
@@ -1565,6 +1568,51 @@ class ToolbarSwitchEditor extends Toolbar
 
 }
 
+
+class ToolbarAdmin extends Toolbar
+{
+	private $name;
+	function __construct() // {{{
+	{
+		$this->setLabel(tra('Admin Toolbars'))
+			->setIcon(tra('img/icons/wrench.png'))
+			->setWysiwygToken('admintoolbar')
+			->setType('admintoolbar')
+			->addRequiredPreference('feature_wysiwyg');
+	} // }}}
+
+	function getWikiHtml( $areaId ) // {{{
+	{
+		return $this->getSelfLink(
+			'admintoolbar();',
+			htmlentities($this->label, ENT_QUOTES, 'UTF-8'),
+			'qt-switcheditor'
+		);
+	} // }}}
+
+	function getWysiwygToken( $areaId ) // {{{
+	{
+		global $prefs;
+		if (!empty($this->wysiwyg)) {
+			$this->name = $this->wysiwyg;	// temp
+
+			if ($prefs['feature_wysiwyg'] == 'y') {
+				$js = "admintoolbar();";
+				$this->setupCKEditorTool($js, $this->name, $this->label, $this->icon);
+			}
+
+		}
+		return $this->wysiwyg;
+	} // }}}
+
+
+	function getWysiwygWikiToken( $areaId ) // {{{ // wysiwyg_htmltowiki
+	{
+		return $this->getWysiwygToken($areaId);
+	} // }}}
+
+}
+
 class ToolbarCapture extends Toolbar
 {
 	function __construct() // {{{
@@ -2001,7 +2049,7 @@ class ToolbarsList
 			for ($bitx = 0, $bitxcount_line = count($line); $bitx < $bitxcount_line; $bitx++ ) {
 				$lineBit = '';
 
-				if ($c == 0 && $bitx == 1 && ($tiki_p_admin == 'y' or $tiki_p_admin_toolbars == 'y')) {
+				/*if ($c == 0 && $bitx == 1 && ($tiki_p_admin == 'y' or $tiki_p_admin_toolbars == 'y')) {
 					$params = array('_script' => 'tiki-admin_toolbars.php', '_onclick' => 'needToConfirm = true;', '_class' => 'toolbar', '_icon' => 'wrench', '_ajax' => 'n');
 					if (isset($comments) && $comments == 'y')
 						$params['comments'] = 'on';
@@ -2009,7 +2057,7 @@ class ToolbarsList
 						$params['section'] = $section;
 					$content = tra('Admin Toolbars');
 					$right .= smarty_block_self_link($params, $content, $smarty);
-				}
+				}*/
 
 				foreach ( $line[$bitx] as $group ) {
 					$groupHtml = '';

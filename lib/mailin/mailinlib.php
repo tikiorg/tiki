@@ -119,6 +119,11 @@ class MailinLib extends TikiLib
 	 */
 	function replace_mailin_account($accountId, $account, $pop, $port, $username, $clearpass, $smtp, $useAuth, $smtpPort, $type, $active, $anonymous, $admin, $attachments, $routing, $article_topicId = NULL, $article_type = NULL, $discard_after=NULL, $show_inlineImages='n', $save_html='y', $categoryId = 0, $namespace='', $respond_email = 'y', $leave_email = 'n')
 	{
+		// Fix values
+		if ($attachments == null) {
+			$attachments = 'n';
+		}
+		
 		// Encrypt password
 		$pass = $this->encryptPassword($clearpass);
 		
@@ -130,7 +135,7 @@ class MailinLib extends TikiLib
 			$bindvars = array($account,$pop,(int)$port,(int)$smtpPort,$username,$pass,$smtp,$useAuth,$type,$active,$anonymous,$admin,$attachments,$routing,(int)$article_topicId,$article_type, $show_inlineImages, $save_html, $categoryId, $namespace, $respond_email, $leave_email);
 			$query = "delete from `tiki_mailin_accounts` where `account`=? and `pop`=? and `port`=? and `smtpPort`=? and `username`=? and `pass`=? and `smtp`=? and `useAuth`=? and `type`=? and `active`=? and `anonymous`=? and `admin`=? and `attachments`=? and `routing`=? and `article_topicId`=?, `article_type`=?, `show_inlineImages`=?, `save_html`=?, `categoryId`=?, `namespace`=?, `respond_email`=?, `leave_email`=?";
 			$result = $this->query($query, $bindvars, -1, -1, false);
-			$query = "insert into `tiki_mailin_accounts`(`account`,`pop`,`port`,`smtpPort`,`username`,`pass`,`smtp`,`useAuth`,`type`,`active`,`anonymous`,`admin`,`attachments`,`routing`,`article_topicId`,`article_type`,`show_inlineImages`, `save_html`, `categoryId`, `namespace`, `respond_email`, `leave_email`) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+			$query = "insert into `tiki_mailin_accounts`(`account`,`pop`,`port`,`smtpPort`,`username`,`pass`,`smtp`,`useAuth`,`type`,`active`,`anonymous`,`admin`,`attachments`,`routing`,`article_topicId`,`article_type`,`show_inlineImages`, `save_html`, `categoryId`, `namespace`, `respond_email`, `leave_email`) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 			$result = $this->query($query, $bindvars);
 		}
 		return true;

@@ -3885,17 +3885,18 @@ class TrackerLib extends TikiLib
 		}
 		$query = 'select * from `tiki_tracker_item_field_logs` ttifl left join `tiki_actionlog` ta on (ta.`comment`=ttifl.`version` and ta.`objectType`=? and ta.`object`='.$join.') where '.implode(' and ', $mid).' order by ttifl.`itemId` asc, ttifl.`version` desc, ttifl.`fieldId` asc';
 		$all = $this->fetchAll($query, $bindvars, -1, 0);
-		$history['cant'] = count($all);
 		$history['data'] = array();
 		$i = 0;
 		foreach ($all as $hist) {
+			$hist['new'] = isset($last[$hist['fieldId']])? $last[$hist['fieldId']]: '';
+			if($hist['new'] == $hist['value']) { continue; }
 			if ($i >= $offset && ($max == -1 || $i < $offset + $max)) {
-				$hist['new'] = isset($last[$hist['fieldId']])? $last[$hist['fieldId']]: '';
 				$history['data'][] = $hist;
 			}
 			$last[$hist['fieldId']] = $hist['value'];
 			++$i;
-		}
+		}		
+		$history['cant'] = $i;
 		return $history;
 	}
 
@@ -4666,6 +4667,7 @@ class TrackerLib extends TikiLib
 		$definition = Tracker_Definition::get($args['trackerId']);
 		$ins_categs = array();
 		$parent_categs_only = array();
+		$tosync = false;
 
 		foreach ($definition->getCategorizedFields() as $fieldId) {
 			if (isset($args['values'][$fieldId])) {
@@ -4673,10 +4675,13 @@ class TrackerLib extends TikiLib
 				$field = $definition->getField($fieldId);
 				$options = json_decode($field['options']);
 				$parent_categs_only[] = $options->parentId;
+				$tosync = true;
 			}
 		}
 
-		$this->categorized_item($args['trackerId'], $args['object'], "item {$args['object']}", $ins_categs, $parent_categs_only);
+		if ($tosync) {
+			$this->categorized_item($args['trackerId'], $args['object'], "item {$args['object']}", $ins_categs, $parent_categs_only);
+		}
 	}
 
 	public function field_render_value( $params )
