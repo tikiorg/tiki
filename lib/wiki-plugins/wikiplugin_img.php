@@ -350,10 +350,11 @@ function wikiplugin_img_info()
 			'description' => tra('Do not show draw/edit icon button under image.'),
 			'advanced' => true,
 			'options' => array(
+				array('text' => tra('None'), 'value' => ''),			
 				array('text' => tra('No'), 'value' => 'n'),
 				array('text' => tra('Yes'), 'value' => 'y'),
 			),
-			'default' => 'n',
+			'default' => '',
 		);
 	}
 	return $info;
