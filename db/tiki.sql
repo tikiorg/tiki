@@ -2795,6 +2795,7 @@ CREATE TABLE `tiki_score` (
   event varchar(40) NOT NULL default '',
   score int(11) NOT NULL default '0',
   expiration int(11) NOT NULL default '0',
+  validObjectIds text,
   PRIMARY KEY (`event`)
 ) ENGINE=MyISAM;
 
