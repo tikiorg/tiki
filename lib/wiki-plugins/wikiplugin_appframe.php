@@ -243,7 +243,8 @@ function wikiplugin_appframe_execute($plugin)
 {
 	$name = $plugin->getName();
 	$body = $plugin->getBody();
-	$params = WikiParser_PluginArgumentParser::parse($plugin->getArguments());
+	$argumentParger = new WikiParser_PluginArgumentParser();
+	$params = $argumentParger->parse($plugin->getArguments());
 
 	if (! in_array($name, array('tab', 'column', 'page', 'module', 'cond', 'anchor', 'overlay', 'template', 'hidden', 'mapcontrol'))) {
 		return null;
