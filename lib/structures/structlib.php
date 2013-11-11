@@ -563,7 +563,11 @@ class StructLib extends TikiLib
 		}
 
 		if ($res = $result->fetchRow()) {
-			return $res;
+			if (Perms::get(array( 'type' => 'wiki page', 'object' => $res['pageName'] ))->view) {
+				return $res;
+			} else {
+				return null;
+			}
 		} else {
 			return null;
 		}
