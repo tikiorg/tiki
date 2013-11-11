@@ -62,7 +62,7 @@ class Tracker_Field_Header extends Tracker_Field_Abstract implements Tracker_Fie
 	
 	function renderOutput($context = array())
 	{
-		if ($context['list_mode'] === 'csv') {
+		if (isset($context['list_mode']) && $context['list_mode'] === 'csv') {
 			return;
 		}
 		global $prefs;

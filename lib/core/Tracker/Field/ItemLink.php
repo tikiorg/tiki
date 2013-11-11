@@ -393,9 +393,7 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 			"{$baseKey}_text" => $typeFactory->sortable($label),
 		);
 
-		if (is_array($indexRemote)) {
-			$indexRemote = array_filter($this->getOption('indexRemote'));
-		}
+		$indexRemote = array_filter($this->getOption('indexRemote'));
 
 		if (count($indexRemote) && is_numeric($item)) {
 			$utilities = new Services_Tracker_Utilities;
@@ -420,9 +418,7 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 		$fields = array($baseKey, "{$baseKey}_text");
 
 		$trackerId = $this->getOption('trackerId');
-		if (is_array($indexRemote)) {
-			$indexRemote = array_filter($this->getOption('indexRemote'));
-		}
+		$indexRemote = array_filter($this->getOption('indexRemote'));
 
 		if (count($indexRemote)) {
 			if ($definition = Tracker_Definition::get($trackerId)) {

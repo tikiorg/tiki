@@ -111,6 +111,9 @@ class Tracker_Field_Factory
 
 	function getHandler($field_info, $itemData = array())
 	{
+		if (!isset($field_info['type'])) {
+			return null;
+		}
 		$type = $field_info['type'];
 
 		if (isset($this->typeMap[$type])) {
