@@ -18,11 +18,10 @@ body {
 	background: #9faec2 url(eatlon/body_bg.gif) repeat-x;
 	font-family: arial, sans-serif;
 	color: #8f8f8f;
-	font: 76% Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
 	line-height: 1.5;
 }
 
-html>body {font-size: 76%}
 body.fullscreen {padding: 3em}
 
 /* next two: fixed-width: 960px */

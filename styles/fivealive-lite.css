@@ -16,15 +16,11 @@ html {
 /***** XHTML Elements (body tag here,
 			others follow Layout) *****/
 body {
-	font: 76% Verdana,Arial,sans-serif;
+	font-family: Verdana,Arial,sans-serif;
 	line-height: 1.5;
 	color: #000;
 	background: #fff;
 }
-
-html > body,
-*:first-child+html body {font-size: 74%}
-
 
 body.filegal_popup {
 	background-image: none;

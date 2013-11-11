@@ -17,13 +17,7 @@
 body {
 	background: white;
 	color: #000;
-	font: 72% Georgia, serif;
-	text-align: center;
-}
-
-html>body {
-	font-size: 12px;
-	text-align: left;
+	font: 13px Georgia, serif;
 }
 
 a, a:link,

@@ -13,16 +13,12 @@
 
 body {
     background: #fff;
-	font: 90% Century Gothic,Lucida Grande,Arial,Helvetcia,sans-serif;
+	font-family: Century Gothic,Lucida Grande,Arial,Helvetcia,sans-serif;
     color: rgb(30, 30, 30);
 }
 
 .tiki {
     background: url('greenvalley/background.jpg') repeat;
-}
-
-html > body {
-    font-size: 0.85em;
 }
 
 #middle {

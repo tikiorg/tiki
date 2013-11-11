@@ -14,11 +14,8 @@
 body {
 	background: #b1c1db url(snow/flakesptn.jpg) repeat;
 	color: #000;
-	font: 76% arial, helvetica, verdana, sans-serif;
-	line-height: 1.4;
+	font-family: arial, helvetica, verdana, sans-serif;
 }
-
-*:first-child+html body {font-size: 74% !important}
 
  /***** Layout (overrides layout.css;
 		also styling of page layout divs)  *****/

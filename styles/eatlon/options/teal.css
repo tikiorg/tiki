@@ -21,9 +21,8 @@ body {
 	background: #9DC4C4 url(teal/body_bg.gif) repeat-x;
 	font-family: arial, sans-serif;
 	color: #8f8f8f;
-	font: 76%/1.4em Verdana, Geneva, Arial, Helvetica, sans-serif}
-
-html>body {font-size: 76% !important}
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif}
+}
 body.fullscreen {padding: 3em}
 
 /* next two: fixed-width: 960px */

@@ -15,8 +15,7 @@
 /***** XHTML Elements ******/
 body {
 	text-align: left;
-	font: .7em Arial, Helvetica, sans-serif;
-	line-height: 1.4;
+	font-family: Arial, Helvetica, sans-serif;
 }
 
 a,

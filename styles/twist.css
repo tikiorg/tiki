@@ -14,7 +14,7 @@
 			others follow Layout) *****/
 body {
 	background: #0f1644 url(twist/background.gif);
-	font: 76% Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
 	line-height: 1.6;
 	color: black;
 }

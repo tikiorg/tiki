@@ -10,7 +10,7 @@
 			others follow Layout) *****/
 body {
 	background: #e9ecef;
-	font: 76% Corbel, "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", "DejaVu Sans", "Bitstream Vera Sans", "Liberation Sans", Verdana, sans-serif;
+	font-family: Corbel, "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", "DejaVu Sans", "Bitstream Vera Sans", "Liberation Sans", Verdana, sans-serif;
 	line-height: 1.6;
 	color: #000;
 }
@@ -19,7 +19,6 @@ body {
 		and styles page layout divs)  *****/
 #tiki-main {
 	margin: 0;
-	font-size: 1em;
 }
 
 /* Enable header and footer content to widen when middle has wide content. */ 
@@ -30,13 +29,9 @@ body.fixed_width .fixedwidth .fixedwidth {
 
 #middle {
 	text-align: left;
-	font-size: 1em;
 	margin-bottom: 2px;
 }
 
-#c1c2 {
-	font-size: 1em;
-}
 
 #c1c2	#wrapper #col1 > .content {
 	background: #fff;

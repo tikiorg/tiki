@@ -11,13 +11,10 @@
 /***** XHTML Elements (body tag here,
 			others follow Layout) *****/ 
 body {
-	font: 76% Verdana, Geneva, Arial, Helvetica, sans-serif;
-	line-height: 1.4;
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
 	color: #000;
 	background: #efefe7
 }
-
-*:first-child+html body {font-size: 74% !important}
 
  /***** Layout (overrides layout.css;
 		also styling of page layout divs)  *****/

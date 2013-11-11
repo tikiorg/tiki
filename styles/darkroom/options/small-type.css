@@ -1,8 +1,6 @@
 /* Variation on darkroom.css */
 
-body { font-size: 65% !important; }
-html>body {font-size: 65% !important}
-*:first-child+html body {font-size: 62% !important;}
+body { font-size: 12px; }
 
 h3.box-title {
 	font-size: 1.2em;

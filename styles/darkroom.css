@@ -22,7 +22,7 @@ html {
 body {
 	background: #474747;
 	color: #d8d8d8;
-	font: 74% "Trebuchet MS", "Bitstream Vera Sans", sans-serif;
+	font-family: "Trebuchet MS", "Bitstream Vera Sans", sans-serif;
 }
 
 body.cke_show_borders {

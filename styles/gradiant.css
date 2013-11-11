@@ -30,7 +30,7 @@ a:focus, a:active		{
 }
 body {
 	background: #f0f0f0;
-	font: 76%/1.5em 'Liberation Serif', Cambria, Georgia, serif;
+	font-family: 'Liberation Serif', Cambria, Georgia, serif;
 }
 a {
 	color: #333;

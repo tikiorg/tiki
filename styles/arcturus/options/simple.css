@@ -43,11 +43,6 @@ h1, h2, h3, h4, h5 {
 body {
 	background: #fff url(simple/bg.png) top center repeat-y;
 	font-family: "Trebuchet MS", "Luxi Sans", "Lucida Grande", Tahoma, helvetica, sans-serif;
-	font-size: 80% !important;
-}
-
-html>body {
-	font-size: 0.75em !important;
 }
 
 

@@ -11,13 +11,9 @@
 /***** XHTML Elements (body tag here,
 			others follow Layout) *****/
 body {
-	font: 76% Verdana,Arial,sans-serif;
-	line-height: 1.5;
+	font-family: Verdana,Arial,sans-serif;
 	color: #000;
 	background: #fff}
-
-html > body,
-*:first-child+html body {font-size: 74%}
 
  /***** Layout (overrides layout.css;
 		also styling of page layout divs)  *****/

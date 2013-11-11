@@ -15,11 +15,8 @@
 			others follow Layout) *****/
 body {
 	background: #90140C url(darkshine/stripes.png) repeat-x 50% 0;
-	font: normal 76% arial, verdana, helvetica, sans-serif;
-	line-height: 1.5;
+	font-family: arial, verdana, helvetica, sans-serif;
 }
-
-html>body {font-size: 72% !important}
 
 body.fullscreen {
 	background: #90140C url(darkshine/stripes.png) repeat-x;

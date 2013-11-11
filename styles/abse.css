@@ -16,9 +16,7 @@
 body {
 	background: #000 url(abse/wgreenwall.png) fixed;
 	color: #fff;
-	font: 70% "Bitstream Vera Sans", Verdana, Geneva, sans-serif}
-
-html>body {font-size: .7em !important}
+	font-family: "Bitstream Vera Sans", Verdana, Geneva, sans-serif}
 
  /***** Layout (overrides layout.css
 		and styles page layout divs)  *****/

@@ -11,8 +11,7 @@
 /***** XHTML Elements (body tag here, others follow Layout) *****/
 
 body {
-	font: 70% Verdana, Geneva, Arial, Helvetica, sans-serif;
-	line-height: 1.4;
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
 	color: #848484;
 }
 
