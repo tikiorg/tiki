@@ -130,13 +130,13 @@ function wikiplugin_toc( $data, $params )
 	}
 
 	if (empty($structId)) {
-		if (!empty($page_ref_id)) {	//And we are currently viewing a structure
-			$pageName_ref_id = null;
-			if (!empty($pagename)) {
-				$pageName_ref_id = $structlib->get_struct_ref_id($pagename);
-			} else {
-				$pageName_ref_id = $page_ref_id;
-			}
+		$pageName_ref_id = null;
+		if (!empty($pagename)) {
+			$pageName_ref_id = $structlib->get_struct_ref_id($pagename);
+		} else if (!empty($page_ref_id)) {
+			$pageName_ref_id = $page_ref_id;
+		}
+		if (!empty($pageName_ref_id)) {	// we have a structure
 			$page_info = $structlib->s_get_page_info($pageName_ref_id);
 			$structure_info = $structlib->s_get_structure_info($pageName_ref_id);
 			if (isset($page_info)) {
@@ -144,7 +144,6 @@ function wikiplugin_toc( $data, $params )
 				return "~np~$button $html $button~/np~";
 			}
 		}
-			//Dont display the {toc} string for non structure pages
 		return '';
 	} else {
 		$structure_info = $structlib->s_get_structure_info($structId);
