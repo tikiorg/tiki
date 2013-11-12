@@ -2805,10 +2805,9 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_hidden_links' => array(
 			'name' => tra('Hidden anchors/links shown on mouseover of headers'),
-			'description' => tra('Hidden anchors/links shown on mouseover of header.'),
-			'help' => '',
+			'description' => tra('This is useful to share a URL to exact location on the page.'),
 			'type' => 'flag',
-			'default' => 'n',
+			'default' => 'y',
 			'tags' => array('advanced'),
 		),
 	);
