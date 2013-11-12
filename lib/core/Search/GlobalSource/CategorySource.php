@@ -102,7 +102,7 @@ class Search_GlobalSource_CategorySource implements Search_GlobalSource_Interfac
 			$filtered = array_filter(
 				$categories,
 				function ($category) use ($self, $rootId) {
-					return $category != $rootId && $self->hasParent($category, $rootId);
+					return $this->categlib->get_category_parent($category) == $rootId;
 				}
 			);
 			$deepfiltered = array_filter(
