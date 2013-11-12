@@ -563,11 +563,7 @@ class StructLib extends TikiLib
 		}
 
 		if ($res = $result->fetchRow()) {
-			if (Perms::get(array( 'type' => 'wiki page', 'object' => $res['pageName'] ))->view) {
-				return $res;
-			} else {
-				return null;
-			}
+			return $res;
 		} else {
 			return null;
 		}
@@ -861,21 +857,44 @@ class StructLib extends TikiLib
 	}
 	public function get_navigation_info($page_ref_id)
 	{
-		$struct_nav_pages = array();
-		// Get structure info for this page
-		$prev_page_ref_id = $this->get_prev_page($page_ref_id);
-		$next_page_ref_id = $this->get_next_page($page_ref_id);
-		$struct_nav_pages['prev'] = null;
-		if (isset($prev_page_ref_id)) {
-			$struct_nav_pages['prev']   = $this->s_get_page_info($prev_page_ref_id);
-		}
-		$struct_nav_pages['next'] = null;
-		if (isset($next_page_ref_id)) {
-			$struct_nav_pages['next']   = $this->s_get_page_info($next_page_ref_id);
-		}
- 		$struct_nav_pages['parent'] = $this->s_get_parent_info($page_ref_id);
- 		$struct_nav_pages['home']   = $this->s_get_structure_info($page_ref_id);
+		$struct_nav_pages = array(
+			'prev'   => $this->get_neighbor_info($page_ref_id, 'get_prev_page'),
+			'next'   => $this->get_neighbor_info($page_ref_id, 'get_next_page'),
+			'parent' => $this->get_neighbor_info($page_ref_id, 's_get_parent_info'),
+			'home'   => $this->s_get_structure_info($page_ref_id),
+		);
+
  		return $struct_nav_pages;
+	}
+
+	/**
+	 * Get structure info for a page's neighbour respecting view perms
+	 * @param int $page_ref_id
+	 * @param string $fn		function to find neighbour (get_prev_page|get_next_page|s_get_parent_info)
+	 * @return null | array		neighbour page info
+	 */
+	private function get_neighbor_info($page_ref_id, $fn)
+	{
+		if (method_exists($this, $fn)) {
+			$neighbor = $this->$fn($page_ref_id);
+			if ($neighbor) {
+				if (is_array($neighbor)) {	// s_get_parent_info() returns the info array
+					$info = $neighbor;
+				} else {
+					$info = $this->s_get_page_info($neighbor);
+				}
+				if ($info && Perms::get(array( 'type' => 'wiki page', 'object' => $info['pageName'] ))->view) {
+					return $info;
+				} else {
+					return $this->get_neighbor_info($neighbor, $fn);
+				}
+			} else {
+				return null;
+			}
+		} else {
+			trigger_error('No structlib method found: ' . $fn);
+			return null;
+		}
 	}
 	/** Return an array of subpages
       Used by the 'After Page' select box
