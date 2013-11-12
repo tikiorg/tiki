@@ -1561,7 +1561,7 @@ class TrackerLib extends TikiLib
 
 				if ($currentItemId || $array['type'] != 'q') {
 					$this->modify_field($currentItemId, $fieldId, $value);
-					if ($old_value) {
+					if ($old_value != $value) {
 						if ($is_visible) {
 							if ($is_date) {
 								$dformat = $prefs['short_date_format'].' '.$prefs['short_time_format'];
@@ -3895,7 +3895,7 @@ class TrackerLib extends TikiLib
 			}
 			$last[$hist['fieldId']] = $hist['value'];
 			++$i;
-		}		
+		}
 		$history['cant'] = $i;
 		return $history;
 	}
