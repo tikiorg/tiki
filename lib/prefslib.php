@@ -321,8 +321,8 @@ class PreferencesLib
 			} else {
 				$value = $this->formatPreference($pref, $data);
 				$realPref = in_array($pref, $user_overrider_prefs)? "site_$pref": $pref;
+				$old = $tikilib->get_preference($realPref);
 				$allprefs[$pref] = $this->getPreference($realPref, true);
-				$old = $allprefs[$pref]['value'];
 				if($allprefs[$pref]['type'] == 'flag' && empty($old)) {	$old = 'n';	}
 
 				if ( $old != $value ) {
