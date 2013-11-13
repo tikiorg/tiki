@@ -3,7 +3,7 @@
 
 {block name=title}
 {if $translation_mode eq 'n'}
-	{title}{if isset($hdr) && $prefs.wiki_edit_section eq 'y'}{tr}Edit Section:{/tr}{else}{tr}Edit:{/tr}{/if} {$page}{if $pageAlias ne ''} ({$pageAlias}){/if}{/title}
+	{title url="tiki-editpage.php?page=$page"}{if isset($hdr) && $prefs.wiki_edit_section eq 'y'}{tr}Edit Section:{/tr}{else}{tr}Edit:{/tr}{/if} {$page}{if $pageAlias ne ''} ({$pageAlias}){/if}{/title}
 {else}
    {title}{tr}Update '{$page}'{/tr}{/title}
 {/if}
