@@ -165,7 +165,7 @@ if (jqueryTiki.chosen) {
 				{if $prefs.default_wiki_diff_style eq "old"}, {tr}c=compare{/tr}, {tr}d=diff{/tr}{/if}
 				{if $tiki_p_rollback eq 'y'}, {tr}b=rollback{/tr}{/if}
 			</div>
-			<table class="formcolor" width="100%">
+			<table class="table">
 				<tr>
 					{if $tiki_p_remove eq 'y'}<th><input type="submit" class="btn btn-warning" name="delete" value="{tr}Del{/tr}"></th>{/if}
 					<th>{tr}Information{/tr}</th>
