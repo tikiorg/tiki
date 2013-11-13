@@ -23,7 +23,10 @@ if (getcwd()) {
 	// that calls the script we are looking for. In this case, we have to
 	// fallback to PATH_TRANSLATED. This one may be wrong on some systems, this
 	// is why SCRIPT_FILENAME is tried first.
-	if ( substr($_SERVER['SCRIPT_FILENAME'], 0, strlen($tiki_setup_dir)) != $tikipath ) {
+	
+	// I can't make sense of the above paragraph, but SCRIPT_FILENAME appears to always work, as the alternative case was broken for 2 years. Chealer
+	 
+	if ( substr($_SERVER['SCRIPT_FILENAME'], 0, strlen($tikipath)) != $tikipath ) {
 		// PATH_TRANSLATED is not always set on PHP5, so try to get first value of get_included_files() in this case
 		$scriptDirectory = empty($_SERVER['PATH_TRANSLATED']) ? current(get_included_files()) : $_SERVER['PATH_TRANSLATED'];
 	} else {
