@@ -138,6 +138,10 @@ function smarty_modifier_sefurl($source, $type='wiki', $with_next = '', $all_lan
 			$href = "tiki-browse_freetags.php?tag=" . urlencode($source);
 			break;
 
+		case 'newsletter':
+			$href = "tiki-newsletters.php?nlId=" . urlencode($source);
+			break;
+
 		default:
 			$href = $source;
 			break;

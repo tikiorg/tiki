@@ -1,7 +1,12 @@
 {* $Id$ *}
 {$showBoxCheck}
 
-{title help="Newsletters"}{tr}Send Newsletters{/tr}{/title}
+{if $nlId}
+	{$titleurl="tiki-send_newsletters.php?nlId=$nlId"}
+{else}
+	{$titleurl="tiki-send_newsletters.php"}
+{/if}
+{title help="Newsletters" url=$titleurl}{tr}Send Newsletters{/tr}{/title}
 
 {if $tiki_p_admin_newsletters eq "y"}
 	<div class="navbar">
