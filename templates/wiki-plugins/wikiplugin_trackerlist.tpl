@@ -90,10 +90,10 @@
 				{/if}
 			{/foreach}
 			{if $showcreated eq 'y'}
-		<th>{self_link _sort_arg='tr_sort_mode'|cat:$iTRACKERLIST _sort_field='created'}{tr}Created{/tr}{/self_link}</th>
+		<th>{self_link _sort_arg='tr_sort_mode'|cat:$iTRACKERLIST _sort_field='created' session_filters='y'}{tr}Created{/tr}{/self_link}</th>
 			{/if}
 			{if $showlastmodif eq 'y'}
-		<th>{self_link _sort_arg='tr_sort_mode'|cat:$iTRACKERLIST _sort_field='lastModif'}{tr}LastModif{/tr}{/self_link}</th>
+		<th>{self_link _sort_arg='tr_sort_mode'|cat:$iTRACKERLIST _sort_field='lastModif' session_filters='y'}{tr}LastModif{/tr}{/self_link}</th>
 			{/if}
 			{if $tracker_info.useComments eq 'y' and $tracker_info.showComments eq 'y' and $tiki_p_tracker_view_comments ne 'n'}
 		<th style="width:5%">{tr}Coms{/tr}</th>

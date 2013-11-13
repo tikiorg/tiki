@@ -140,7 +140,7 @@ function wikiplugin_youtube($data, $params)
 		$fqdn = 'www.youtube.com';
 	}
 
-	$params['movie'] = '//'.$fqdn.'/embed/' . $params['movie'] . '?';
+	$params['movie'] = '//'.$fqdn.'/embed/' . $sYoutubeId . '?';
 	// backward compatibility
 	if ($params['allowFullScreen'] == 'y') {
 		$params['allowFullScreen'] = 'true';

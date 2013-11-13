@@ -91,9 +91,13 @@ Configure how your mailed-in wiki pages are to be linked / organized.
 	</form>
 {else}
 	<p>
-	{tr}Wiki structures feature is not enabled{/tr}
+		{tr}Wiki structures feature is not enabled{/tr}
+		{if $tiki_p_admin eq 'y'}
+			<blockquote>
+				<a href="tiki-admin.php?page=wiki&highlight=feature_wiki_structure&cookietab=2">{tr}Go to wiki structure setting{/tr}  {icon _id='wrench'}</a>
+			</blockquote>
+		{/if}
 	</p>
-	<a href="tiki-admin.php?page=wiki&highlighted='feature_wiki_structure'">Go to wiki structure setting</a>
 {/if}
 {/tab}
 

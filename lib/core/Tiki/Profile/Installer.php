@@ -51,7 +51,7 @@ class Tiki_Profile_Installer
 
 	private static $typeMap = array(
 		'wiki_page' => 'wiki page',
-		'file_gallery' => 'fgal',
+		'file_gallery' => 'file gallery',
 		'tracker_item' => 'trackeritem',
 	);
 
@@ -59,6 +59,7 @@ class Tiki_Profile_Installer
 		'wiki page' => 'wiki_page',
 		'wiki' => 'wiki_page',
 		'fgal' => 'file_gallery',
+		'file gallery' => 'file_gallery',
 		'trackeritem' => 'tracker_item',
 		'tracker item' => 'tracker_item',
 	);

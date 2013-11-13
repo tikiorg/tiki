@@ -96,7 +96,7 @@
 				<select name="visibility">
 					<option value="n"{if $field.isHidden eq 'n'} selected="selected"{/if}>{tr}Visible by all{/tr}</option>
 					<option value="r"{if $field.isHidden eq 'r'} selected="selected"{/if}>{tr}Visible by all but not in RSS feeds{/tr}</option>
-					<option value="y"{if $field.isHidden eq 'y'} selected="selected"{/if}>{tr}Visible by administrators only{/tr}</option>
+					<option value="y"{if $field.isHidden eq 'y'} selected="selected"{/if}>{tr}Visible after creation by administrators only{/tr}</option>
 					<option value="p"{if $field.isHidden eq 'p'} selected="selected"{/if}>{tr}Editable by administrators only{/tr}</option>
 					<option value="c"{if $field.isHidden eq 'c'} selected="selected"{/if}>{tr}Editable by administrators and creator only{/tr}</option>
 					<option value="i"{if $field.isHidden eq 'i'} selected="selected"{/if}>{tr}Immutable after creation{/tr}</option>

@@ -4171,7 +4171,7 @@ class TikiLib extends TikiDb_Bridge
 			}
 
 		} else { // If $my_user is empty, we must be Anonymous updating one of our own preferences
-
+			$prefs[$name] = $value;
 			if ( $name == 'theme' && $prefs['change_theme'] == 'y' ) { 				// FIXME: Remove this exception
 				$prefs['style'] = $value;
 				$_SESSION['preferences']['style'] = $value;

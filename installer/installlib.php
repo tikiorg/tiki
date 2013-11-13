@@ -133,8 +133,9 @@ class Installer extends TikiDb_Bridge
 		}
 
 		global $dbs_tiki;
-		if (empty($dbs_tiki)) {
-			require(TikiInit::getCredentialsFile());
+		$local_php = TikiInit::getCredentialsFile();
+		if (empty($dbs_tiki) && is_readable($local_php)) {
+			require($local_php);
 			unset($db_tiki, $host_tiki, $user_tiki, $pass_tiki);
 		}
 
