@@ -116,102 +116,100 @@
 <div>
 
 {capture name=upload_file assign=upload_str}
-	<hr class="clear"/>
 	
 	<div class="fgal_file">
 		<div class="fgal_file_c1">
-			<table width="100%">
-				
-				{if $simpleMode neq 'y'}
-					<tr>
-						<td><label for="name">{tr}File title:{/tr}</label></td>
-						<td width="80%">
-							<input style="width:100%" type="text" id="name" name="name[]"
-								{if isset($fileInfo) and $fileInfo.name}
-								   value="{$fileInfo.name|escape}"
-								{/if}
-								size="40"
-							>
-							{if isset($gal_info.type) and ($gal_info.type eq "podcast" or $gal_info.type eq "vidcast")}
-								({tr}required field for podcasts{/tr})
+			{if $simpleMode neq 'y'}
+				<div class="form-group">
+					<label for="name" class="col-sm-2 control-label">{tr}File title:{/tr}</label>
+					<div class="col-sm-10">
+						<input class="form-control" type="text" id="name" name="name[]"
+							{if isset($fileInfo) and $fileInfo.name}
+							   value="{$fileInfo.name|escape}"
 							{/if}
-						</td>
-					</tr>
-					<tr>
-						<td><label for="description">{tr}File description:{/tr}</label></td>
-						<td>
-							<textarea style="width:100%" rows="2" cols="40" id="description" name="description[]">{if isset($fileInfo.description)}{$fileInfo.description|escape}{/if}</textarea>
-							{if isset($gal_info.type) and ($gal_info.type eq "podcast" or $gal_info.type eq "vidcast")}
-								<br><em>{tr}Required for podcasts{/tr}.</em>
-							{/if}
-						</td>
-					</tr>
-				{/if}
-				<tr>
-					{if $prefs.javascript_enabled neq 'y' || !$editFileId}
-						<td><label for="userfile">{tr}Upload from disk:{/tr}</label></td>
-						<td>
-							{if $editFileId}{$fileInfo.filename|escape}{/if}
-							{if $prefs.fgal_upload_progressbar eq 'ajax_flash'}
-								<table><tr><td><div id="divSWFUploadUI">
-									<div class="fieldset flash" id="fsUploadProgress"></div>
-									<div class="flashButton">
-										<span class="button flashButtonText" id="btnBrowse" style="display:none"><a>{tr}Browse{/tr}</a></span>
-										<span id="spanButtonPlaceholder" />
-										{* Button below is used to take the required place to avoid errors div to start under the Browse button *}
-										<span class="button" style="visibility:hidden" /><a>&nbsp;</a></span>
-									</div>
+							size="40"
+						>
+						{if isset($gal_info.type) and ($gal_info.type eq "podcast" or $gal_info.type eq "vidcast")}
+							({tr}required field for podcasts{/tr})
+						{/if}
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="description" class="col-sm-2 control-label">{tr}File description:{/tr}</label>
+					<div class="col-sm-10">
+						<textarea class="form-control" rows="2" cols="40" id="description" name="description[]">{if isset($fileInfo.description)}{$fileInfo.description|escape}{/if}</textarea>
+						{if isset($gal_info.type) and ($gal_info.type eq "podcast" or $gal_info.type eq "vidcast")}
+							<br><em>{tr}Required for podcasts{/tr}.</em>
+						{/if}
+					</div>
+				</div>
+			{/if}
+			{if $prefs.javascript_enabled neq 'y' || !$editFileId}
+				<div class="form-group">
+					<label for="userfile" class="col-sm-2 control-label">{tr}Upload from disk:{/tr}</label>
+					<div class="col-sm-10">
+						{if $editFileId}
+							{$fileInfo.filename|escape}
+						{/if}
+
+						{if $prefs.fgal_upload_progressbar eq 'ajax_flash'}
+							<div id="divSWFUploadUI">
+								<div class="fieldset flash" id="fsUploadProgress"></div>
+								<div class="flashButton">
+									<span class="button flashButtonText" id="btnBrowse" style="display:none"><a>{tr}Browse{/tr}</a></span>
+									<span id="spanButtonPlaceholder" />
+									{* Button below is used to take the required place to avoid errors div to start under the Browse button *}
+									<span class="button" style="visibility:hidden" /><a>&nbsp;</a></span>
 								</div>
-								<noscript>
-									<div style="background-color: #FFFF66; border-top: solid 4px #FF9966; border-bottom: solid 4px #FF9966; padding: 10px 15px;">
-										{tr}We're sorry.{/tr}<br>
-										{tr}Upload interface could not load.  You must have JavaScript enabled to enjoy Upload interface.{/tr}
-									</div>
-								</noscript>
-								<div id="divLoadingContent" style="display: none;">
-									{remarksbox type="note"}
-										{tr}Upload interface is loading.{/tr} {tr}Please wait a moment...{/tr}
-									{/remarksbox}
+							</div>
+							<noscript>
+								<div style="background-color: #FFFF66; border-top: solid 4px #FF9966; border-bottom: solid 4px #FF9966; padding: 10px 15px;">
+									{tr}We're sorry.{/tr}<br>
+									{tr}Upload interface could not load.  You must have JavaScript enabled to enjoy Upload interface.{/tr}
 								</div>
-								<div id="divLongLoading" style="display: none;">
-									{remarksbox type="warning"}
-										{tr}Upload interface is taking a long time to load or the load has failed.{/tr}<br>
-										{tr}Please make sure that the Flash Plugin is enabled and that a working version of the Adobe Flash Player is installed.{/tr}
-									{/remarksbox}
-								</div>
-								<div id="divAlternateContent" style="display: none;">
-									{remarksbox type="errors"}
-										{tr}We are sorry: Upload interface could not load.  You may need to install or upgrade Flash Player.{/tr}<br>
-										<a href="http://www.adobe.com/shockwave/download/download.cgi?P1_Prod_Version=ShockwaveFlash">{tr}Visit the Adobe Website to get the Flash Player.{/tr}</a>
-									{/remarksbox}
-								</div>
-								{* Table and BR are there to avoid the Browse button to overlap next cell when a file has been selected by the user *}
-								</td></tr></table>
-								<br>
-							{else}
-								<input id="userfile" name="userfile[]" type="file" size="40">
-							{/if}
-						</td>
-					{/if}
-				</tr>
-			</table>
+							</noscript>
+							<div id="divLoadingContent" style="display: none;">
+								{remarksbox type="note"}
+									{tr}Upload interface is loading.{/tr} {tr}Please wait a moment...{/tr}
+								{/remarksbox}
+							</div>
+							<div id="divLongLoading" style="display: none;">
+								{remarksbox type="warning"}
+									{tr}Upload interface is taking a long time to load or the load has failed.{/tr}<br>
+									{tr}Please make sure that the Flash Plugin is enabled and that a working version of the Adobe Flash Player is installed.{/tr}
+								{/remarksbox}
+							</div>
+							<div id="divAlternateContent" style="display: none;">
+								{remarksbox type="errors"}
+									{tr}We are sorry: Upload interface could not load.  You may need to install or upgrade Flash Player.{/tr}<br>
+									<a href="http://www.adobe.com/shockwave/download/download.cgi?P1_Prod_Version=ShockwaveFlash">{tr}Visit the Adobe Website to get the Flash Player.{/tr}</a>
+								{/remarksbox}
+							</div>
+							{* Table and BR are there to avoid the Browse button to overlap next cell when a file has been selected by the user *}
+							<br>
+						{else}
+							<input id="userfile" name="userfile[]" type="file" size="40">
+						{/if}
+					</div>
+				</div>
+			{/if}
 		</div>
 
 		{if $simpleMode neq 'y'}
 			<div class="fgal_file_c2">
-				<table width="100%">
-					{if !$editFileId and $tiki_p_batch_upload_files eq 'y'}
-						<tr><td>
-							<label for="isbatch">{tr}Unzip zip files:{/tr}</label>
-						</td><td width="80%">
+				{if !$editFileId and $tiki_p_batch_upload_files eq 'y'}
+					<div class="form-group">
+						<label for="isbatch" class="col-sm-10 col-sm-offset-2">
 							<input type="checkbox" id="isbatch" name="isbatch[]">
-						</td></tr>
-					{/if}
-	
-					{if $prefs.fgal_delete_after eq 'y'}
-						<tr><td>
-							<label for="deleteAfter">{tr}File can be deleted after:{/tr}</label>
-						</td><td width="80%">
+							{tr}Unzip zip files{/tr}
+						</label>
+					</div>
+				{/if}
+
+				{if $prefs.fgal_delete_after eq 'y'}
+					<div class="form-group">
+						<label for="deleteAfter" class="col-sm-2 control-label">{tr}File can be deleted after:{/tr}</label>
+						<div class="col-sm-10">
 							{if $editFileId}
 								{html_select_duration prefix='deleteAfter' default_value=$fileInfo.deleteAfter}
 							{else}
@@ -221,20 +219,21 @@
 									{html_select_duration prefix='deleteAfter[]' default_unit=week}
 								{/if}
 							{/if}
-						</td></tr>
-					{/if}
+						</div>
+					</div>
+				{/if}
 
-					{if $editFileId}
-						<input type="hidden" name="galleryId" value="{$galleryId}">
-						<input type="hidden" name="fileId" value="{$editFileId}">
-						<input type="hidden" name="lockedby" value="{$fileInfo.lockedby|escape}">
-					{else}
-						{if count($galleries) eq 0}
-							<input type="hidden" name="galleryId" value="{$treeRootId}">
-						{elseif empty($groupforalert)}
-							<tr><td>
-								<label for="galleryId">{tr}File gallery:{/tr}</label>
-							</td><td width="80%">
+				{if $editFileId}
+					<input type="hidden" name="galleryId" value="{$galleryId}">
+					<input type="hidden" name="fileId" value="{$editFileId}">
+					<input type="hidden" name="lockedby" value="{$fileInfo.lockedby|escape}">
+				{else}
+					{if count($galleries) eq 0}
+						<input type="hidden" name="galleryId" value="{$treeRootId}">
+					{elseif empty($groupforalert)}
+						<div class="form-group">
+							<label for="galleryId" class="col-sm-2">{tr}File gallery:{/tr}</label>
+							<div class="col-sm-10">
 								<select id="galleryId" name="galleryId[]">
 									<option value="{$treeRootId}" {if $treeRootId eq $galleryId}selected="selected"{/if} style="font-style:italic; border-bottom:1px dashed #666;">{tr}Root{/tr}</option>
 									{section name=idx loop=$galleries}
@@ -243,74 +242,81 @@
 										{/if}
 									{/section}
 								</select>
-							</td></tr>
-						{else}
-							<input type="hidden" name="galleryId" value="{$galleryId}">
-						{/if}
+							</div>
+						</div>
+					{else}
+						<input type="hidden" name="galleryId" value="{$galleryId}">
 					{/if}
-	
-					<tr><td>
-						<label for="user">{tr}Uploaded by:{/tr}</label>
-					</td><td width="80%">
+				{/if}
+
+				<div class="form-group">
+					<label for="user" class="col-sm-2 control-label">{tr}Uploaded by:{/tr}</label>
+					<div class="col-sm-10">
 						{user_selector id='user' name='user[]' select=$fileInfo.user editable=$tiki_p_admin_file_galleries}
-					</td></tr>
-					{if $prefs.feature_file_galleries_author eq 'y'}
-						<tr><td>
-							<label for="author">{tr}Creator{/tr}</label>
-						</td><td width="80%">
+					</div>
+				</div>
+
+				{if $prefs.feature_file_galleries_author eq 'y'}
+					<div class="form-group">
+						<label for="author" class="col-sm-2 control-label">{tr}Creator{/tr}</label>
+						<div class="col-sm-10">
 							<input type="text" id="author"name="author[]" value="{$fileInfo.author|escape}"><br>
 							<span class="description">{tr}Creator of file, if different from the 'Uploaded by' user{/tr}</span>
-						</td></tr>
-					{/if}
-					{if !empty($groupforalert)}
-						{if $showeachuser eq 'y'}
-							<tr><td>
-								{tr}Choose users to alert{/tr}
-							</td><td width="80%">
-						{/if}
+						</div>
+					</td></tr>
+				{/if}
+				{if !empty($groupforalert)}
+					{if $showeachuser eq 'y'}
+						<div class="form-group">
+							<label class="col-sm-2 control-label">{tr}Choose users to alert{/tr}</label>
+							<div class="col-sm-10">
+								{section name=idx loop=$listusertoalert}
+									<label>
+										<input type="checkbox" name="listtoalert[]" value="{$listusertoalert[idx].user|escape}"> {$listusertoalert[idx].user|escape}
+									</label>
+								{/section}
+							</div>
+						</div>
+					{else}
 						{section name=idx loop=$listusertoalert}
-							{if $showeachuser eq 'n'}
-								<input type="hidden"  name="listtoalert[]" value="{$listusertoalert[idx].user}">
-							{else}
-								<input type="checkbox" name="listtoalert[]" value="{$listusertoalert[idx].user}"> {$listusertoalert[idx].user}
-							{/if}
+							<input type="hidden"  name="listtoalert[]" value="{$listusertoalert[idx].user}">
 						{/section}
-						{if $showeachuser eq 'y'}
-							</td></tr>
-						{/if}
 					{/if}
-					{if $editFileId}
-						<tr><td>
-							<label for="filetype">File Type:</label>
-						</td><td width="80%">
+				{/if}
+				{if $editFileId}
+					<div class="form-group">
+						<label for="filetype" class="col-sm-2 form-label">File Type:</label>
+						<div class="col-sm-10">
 							<select id="filetype" name="filetype[]">
 								{foreach $mimetypes as $type}
 									<option value="{$type}"{if $fileInfo.filetype eq $type} selected="selected"{/if}>{$type|truncate:60} (*.{$type@key})</option>
 								{/foreach}
 							</select>
-						</td></tr>
-					{/if}
-				</table>
+						</div>
+					</div>
+				{/if}
 			</div>
 			<div class="fgal_file_c3">
 				{if $prefs.fgal_limit_hits_per_file eq 'y'}
-					<label>
-						<label for="hit_limit">{tr}Maximum number of downloads:{/tr}</label>
-						<input type="text" id="hit_limit" name="hit_limit[]" value="{$hit_limit|default:0}">
-						<br><em>{tr}Use{/tr} {tr}-1 for no limit{/tr}.</em>
-					</label>
-					<br/>
+					<div class="form-group">
+						<label for="hit_limit" class="col-sm-2 form-label">{tr}Maximum number of downloads:{/tr}</label>
+						<div class="col-sm-10">
+							<input type="text" id="hit_limit" name="hit_limit[]" value="{$hit_limit|default:0}">
+							<br><em>{tr}Use{/tr} {tr}-1 for no limit{/tr}.</em>
+						</div>
+					</div>
 				{else}
 					<input type="hidden" id="hit_limit" name="hit_limit[]" value="{$hit_limit|default:-1}">
 				{/if}
 	
 				{* We want comments only on updated files *}
 				{if $prefs.javascript_enabled neq 'y' && $editFileId}
-					<label>
-						<label for="comment">{tr}Comment:{/tr}</label>
-						<input type="text" id="comment" name="comment[]" value="" size="40">
-					</label>
-					<br/>
+					<div class="form-group">
+						<label for="comment" class="col-sm-2 form-label">{tr}Comment:{/tr}</label>
+						<div class="col-sm-10">
+							<input type="text" id="comment" name="comment[]" value="" size="40">
+						</div>
+					</div>
 				{/if}
 			</div>
 			{if $prefs.javascript_enabled eq 'y' and !$editFileId}
@@ -329,6 +335,7 @@
 <form method="post"
 	action='tiki-upload_file.php' 
 	enctype='multipart/form-data'
+	class="form-horizontal"
 	id="file_0"
 	{if !$editFileId and $prefs.fgal_upload_progressbar eq 'ajax_flash'}
 		onsubmit="return verifUploadFlash()"
@@ -349,42 +356,45 @@
 
 	{if $editFileId}
 		{include file='categorize.tpl' notable='y'}<br>
-		<hr class="clear">
-		<div id="page_bar">
-			<input name="upload" type="submit" class="btn btn-default" value="{tr}Save{/tr}">
+		<div id="page_bar" class="form-group">
+			<div class="col-sm-10 col-sm-offset-2">
+				<input name="upload" type="submit" class="btn btn-default" value="{tr}Save{/tr}">
+			</div>
 		</div>
 	{elseif $prefs.javascript_enabled neq 'y'}
 		{$upload_str}
 		{$upload_str}
 		{include file='categorize.tpl' notable='y'}<br>
-		<hr class="clear">
-		<div id="page_bar">
-			<input type="submit" class="btn btn-default" name="upload" value="{tr}Upload{/tr}">
+		<div id="page_bar" class="form-group">
+			<div class="col-sm-10 col-sm-offset-2">
+				<input type="submit" class="btn btn-default" name="upload" value="{tr}Upload{/tr}">
+			</div>
 		</div>
 	{/if}
-</form>
 
 {if !$editFileId}
-	<div id="page_bar">
-		<input type="submit" class="btn btn-default"
-			{if $prefs.fgal_upload_progressbar eq 'n'}
-				onClick="upload_files(); return false"
-			{elseif $prefs.fgal_upload_progressbar eq 'ajax_flash'}
-				onclick="return verifUploadFlash()"
-				disabled="disabled"
+	<div id="page_bar" class="form-group">
+		<div class="col-sm-10 col-sm-offset-2">
+			<input type="submit" class="btn btn-primary"
+				{if $prefs.fgal_upload_progressbar eq 'n'}
+					onClick="upload_files(); return false"
+				{elseif $prefs.fgal_upload_progressbar eq 'ajax_flash'}
+					onclick="return verifUploadFlash()"
+					disabled="disabled"
+				{/if}
+				id="btnUpload"
+				name="upload"
+				value="{tr}Upload File(s){/tr}"
+			>
+			{if $prefs.fgal_upload_progressbar eq 'ajax_flash'}
+				<input type="submit" id="btnCancel" class="btn btn-default" style="display:none" value="{tr}Cancel Upload{/tr}" onclick="return false">
+			{elseif $simpleMode neq 'y'}
+				<input type="submit" class="btn btn-default" onclick="javascript:add_upload_file('multiple_upload'); return false" value="{tr}Add Another File{/tr}">
 			{/if}
-			id="btnUpload"
-			name="upload"
-			value="{tr}Upload File(s){/tr}"
-		>
-		<hr class="clear">
-		{if $prefs.fgal_upload_progressbar eq 'ajax_flash'}
-			<input type="submit" id="btnCancel" class="btn btn-default" style="display:none" value="{tr}Cancel Upload{/tr}" onclick="return false">
-		{elseif $simpleMode neq 'y'}
-			<input type="submit" class="btn btn-default" onclick="javascript:add_upload_file('multiple_upload'); return false" value="{tr}Add Another File{/tr}">
-		{/if}
+		</div>
 	</div>
 {/if}
+</form>
 </div>
 {if !empty($fileInfo.lockedby) and $user ne $fileInfo.lockedby}
 	{icon _id="lock" class="" alt=""}

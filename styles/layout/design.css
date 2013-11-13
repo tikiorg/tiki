@@ -119,10 +119,6 @@ form {
 	padding: 0;
 }
 
-input, legend {
-	vertical-align: middle;
-}
-
 hr {
 	width: 100%;
 	height: 1px;
