@@ -147,7 +147,7 @@ class Tracker_Options
 	function getParamFromIndex($index, $default = false)
 	{
 		if ($field = $this->getParamDefinitionFromIndex($index)) {
-			return $this->getParam($field[$key], $default);
+			return $this->getParam($field['key'], $default);
 		} else {
 			return $default;
 		}
