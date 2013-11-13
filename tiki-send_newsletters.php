@@ -65,6 +65,9 @@ if ($_REQUEST["nlId"]) {
 }
 if ($_REQUEST["editionId"]) {
 	$info = $nllib->get_edition($_REQUEST["editionId"]);
+	if (!empty($_REQUEST['resend'])) {
+		$info['editionId'] = 0;
+	}
 } else {
 	$info = array();
 	$info["data"] = '';
