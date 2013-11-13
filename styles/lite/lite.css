@@ -16,7 +16,6 @@ body {
 			to handle occassional main content which become too wide such as bigger images, long links or tables. thanks to this property
 			the layout will behave nicely as it would in a table while keeping the document semanticaly clean. it means the content will
 			expand to the right and at the same time it will not overflow the last column but rather gently push it further aside */
-	font-family: sans-serif;
 	margin: 0;
 	padding: 0;
 	width: 100%;/* this is needed to keep the width to the maximum available */

@@ -14,7 +14,7 @@
 		{button show_hidden_modules="" _text="{tr}Hide hidden modules{/tr}"}
 	{/if}
 	{button href="./" _text="{tr}Exit Modules{/tr}"}
-	{button save_modules="y" _text="{tr}Save{/tr}" _style="display:none;" _id="save_modules" _ajax="n"}
+	{button save_modules="y" _text="{tr}Save{/tr}" _type="primary" _class="hidden" _id="save_modules" _ajax="n"}
 </div>
 
 {if !empty($missing_params)}

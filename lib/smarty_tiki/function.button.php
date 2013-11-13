@@ -22,6 +22,7 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
  *	- _flip_hide_text: if set to 'n', do not display a '(Hide)' suffix after _text when status is not 'hidden'
  *	- _flip_default_open: if set to 'y', the flip is open by default (if no cookie jar)
  *	- _escape: if set to 'y', will escape the apostrophes in onclick
+ *  - _type: button styling. Possible values: default, primary, success, info, warning, danger, link (following bootstrap conventions)
  */
 function smarty_function_button($params, $smarty)
 {
@@ -169,11 +170,9 @@ function smarty_function_button($params, $smarty)
 		);
 	}
 
+	$type = isset($params['_type']) ? $params['type'] : 'default';
+
 	$auto_query_args = $auto_query_args_orig;
-	if ($prefs['mobile_feature'] !== 'y' || $prefs['mobile_mode'] !== 'y') {
-		$html = '<span type="button" class="'.(!empty($params['_noborder']) ? '' : 'btn btn-default button').(!empty($class)?" $class":'').'"'.$id.'>'.$html.'</span>';
-	} else {
-		$html = preg_replace('/<a /', '<a class="btn btn-default" data-role="button" ' . $id, $html);
-	}
+	$html = preg_replace('/<a /', '<a class="btn btn-' . $type . ' ' . $class . '" data-role="button" ' . $id . ' ', $html);
 	return $html;
 }
