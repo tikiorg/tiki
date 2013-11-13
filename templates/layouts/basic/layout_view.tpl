@@ -40,22 +40,22 @@
 						{modulelist zone=right}
 					</div>
 				{elseif zone_is_empty('right')}
-					<div class="col-md-2">
-						{modulelist zone=left}
-					</div>
-					<div class="col-md-10">
+					<div class="col-md-10 col-md-push-2">
 						{block name=title}{/block}
 						{block name=content}{/block}
 						{block name=show_content}{/block}
+					</div>
+					<div class="col-md-2 col-md-pull-10">
+						{modulelist zone=left}
 					</div>
 				{else}
-					<div class="col-md-2">
-						{modulelist zone=left}
-					</div>
-					<div class="col-md-8">
+					<div class="col-md-8 col-md-push-2">
 						{block name=title}{/block}
 						{block name=content}{/block}
 						{block name=show_content}{/block}
+					</div>
+					<div class="col-md-2 col-md-pull-8">
+						{modulelist zone=left}
 					</div>
 					<div class="col-md-2">
 						{modulelist zone=right}
