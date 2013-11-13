@@ -48,12 +48,12 @@
 					        {modulelist zone=right}
 				        </div>
 			        {elseif zone_is_empty('right')}
-				        <div class="col-lg-10 col-lg-pull-2">
+				        <div class="col-lg-10 col-lg-push-2">
 					        {block name=title}{/block}
 					        {block name=content}{/block}
 					        {block name=show_content}{/block}
 				        </div>
-                        <div class="col-lg-2 col-lg-push-10">
+                        <div class="col-lg-2 col-lg-pull-10">
                             {modulelist zone=left}
                             </div>
 			        {else}
