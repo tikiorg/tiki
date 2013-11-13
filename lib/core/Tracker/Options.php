@@ -82,9 +82,14 @@ class Tracker_Options
 			$filter = $info['filter'];
 
 			if (isset($info['count']) && $info['count'] === '*') {
-				$values = explode(',', $input->$key->none());
-				$filter = TikiFilter::get($filter);
-				$values = array_map(array($filter, 'filter'), $values);
+				$rawValue = $input->$key->none();
+				if ($rawValue !== '') {
+					$values = explode(',', $rawValue);
+					$filter = TikiFilter::get($filter);
+					$values = array_map(array($filter, 'filter'), $values);
+				} else {
+					$values = '';
+				}
 
 				$options->setParam($key, $values);
 			} elseif (isset($info['separator'])) {
@@ -126,7 +131,7 @@ class Tracker_Options
 
 	function getParam($key, $default = false)
 	{
-		if (isset($this->data[$key])) {
+		if (isset($this->data[$key]) && ($this->data[$key] !== '' || !is_array($default))) {
 			return $this->data[$key];
 		} elseif ($default === false && $def = $this->getParamDefinition($key)) {
 			if (isset($def['default'])) {
