@@ -113,16 +113,15 @@ function get_menu_with_selections($params)
 		$structure_info =  $structlib->s_get_page_info($structureId);
 		$channels = $structlib->to_menu($channels, $structure_info['pageName'], 0, 0, $params);
 		$menu_info = array('type'=>'d', 'menuId'=> "s_$structureId", 'structure' => 'y');
-		//echo '<pre>'; print_r($channels); echo '</pre>';
 	} else if (!empty($id)) {
 		$menu_info = $menulib->get_menu($id);
 		$channels = $menulib->list_menu_options($id, 0, -1, 'position_asc', '', '', isset($prefs['mylevel'])?$prefs['mylevel']:0);
 		$channels = $menulib->sort_menu_options($channels);
-		if (strpos($_SERVER['SCRIPT_NAME'], 'tiki-register') === false) {
-			$cachelib->cacheItem($cacheName, serialize(array($menu_info, $channels)), $cacheType);
-		}
 	} else {
 		return '<span class="error">menu function: Menu or Structure ID not set</span>';
+	}
+	if (strpos($_SERVER['SCRIPT_NAME'], 'tiki-register') === false) {
+		$cachelib->cacheItem($cacheName, serialize(array($menu_info, $channels)), $cacheType);
 	}
 	$channels = $menulib->setSelected($channels, isset($sectionLevel)?$sectionLevel:'', isset($toLevel)?$toLevel: '', $params);
 
