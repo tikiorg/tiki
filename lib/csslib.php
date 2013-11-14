@@ -13,6 +13,18 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
 
 class cssLib extends TikiLib
 {
+	function list_layouts()
+	{
+		$available_layouts = array();
+		foreach (scandir('templates/layouts/') as $layoutName) {
+			if ($layoutName[0] != '.' && $layoutName != 'index.php') {
+				$available_layouts[$layoutName] = ucfirst($layoutName);
+			}   
+		}   
+
+		return $available_layouts;
+	}
+
 	function list_css($path, $recursive = false)
 	{
 		$files = $this->list_files($path, '.css', $recursive);

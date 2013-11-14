@@ -554,6 +554,18 @@ $("input[name=allowhtml]").change(function() {
 									</label>
 								</fieldset>
 							{/if}
+							{if $prefs.site_layout_per_object eq 'y'}
+								<fieldset>
+									<legend>{tr}Presentation{/tr}</legend>
+									<label for="object_layout">{tr}Layout{/tr}</label>
+									<select name="object_layout">
+										<option value="">{tr}Site Default{/tr}</option>
+										{foreach $object_layout.available as $key => $label}
+											<option value="{$key|escape}"{if $object_layout.current eq $key} selected{/if}>{$label|escape}</option>
+										{/foreach}
+									</select>
+								</fieldset>
+							{/if}
 							{if $tiki_p_admin_wiki eq "y"}
 								<a href="tiki-admin.php?page=wiki">{tr}Admin wiki preferences{/tr} {icon _id='wrench'}</a>
 							{/if}

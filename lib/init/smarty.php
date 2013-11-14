@@ -340,7 +340,6 @@ class Smarty_Tiki extends Smarty
 
 		global $prefs;
 		$this->muteExpectedErrors();
-		$this->refreshLanguage();
 		if ( !empty($prefs['feature_htmlpurifier_output']) and $prefs['feature_htmlpurifier_output'] == 'y' ) {
 			static $loaded = false;
 			static $purifier = null;
@@ -361,6 +360,15 @@ class Smarty_Tiki extends Smarty
 		if ( $content_type != '' && ! headers_sent() ) {
 			header('Content-Type: '.$content_type);
 		}
+
+		if (function_exists('current_object') && $obj = current_object()) {
+			$attributes = TikiLib::lib('attribute')->get_attributes($obj['type'], $obj['object']);
+			if (isset($attributes['tiki.object.layout'])) {
+				$prefs['site_layout'] = $attributes['tiki.object.layout'];
+			}
+		}
+
+		$this->refreshLanguage();
 		if ( !empty($prefs['feature_htmlpurifier_output']) and $prefs['feature_htmlpurifier_output'] == 'y' ) {
 			return $purifier->purify(parent::display($resource_name, $cache_id, $compile_id));
 		} else {
