@@ -34,12 +34,14 @@
                 <div class="row">
    			        {if zone_is_empty('left') and zone_is_empty('right')}
     			        <div class="col-lg-12">
+							{error_report}
 					        {block name=title}{/block}
 					        {block name=content}{/block}
 					        {block name=show_content}{/block}
 				        </div>
 			        {elseif zone_is_empty('left')}
 				        <div class="col-lg-10">
+							{error_report}
 					        {block name=title}{/block}
 					        {block name=content}{/block}
 					        {block name=show_content}{/block}
@@ -49,6 +51,7 @@
 				        </div>
 			        {elseif zone_is_empty('right')}
 				        <div class="col-lg-10 col-lg-push-2">
+							{error_report}
 					        {block name=title}{/block}
 					        {block name=content}{/block}
 					        {block name=show_content}{/block}
@@ -58,6 +61,7 @@
                             </div>
 			        {else}
 			        <div class="col-lg-8 col-lg-push-2">
+							{error_report}
 					        {block name=title}{/block}
 					        {block name=content}{/block}
 					        {block name=show_content}{/block}

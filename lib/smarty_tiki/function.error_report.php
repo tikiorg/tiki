@@ -13,6 +13,16 @@ function smarty_function_error_report($params, $smarty)
 	$pre = '<div id="error_report">';
 	$post = '</div>';
 
+	$legacy = $smarty->getTemplateVars('display_msg');
+	if ($legacy) {
+		// Handle reporting ofthe display_msg smarty variable
+		$smarty->loadPlugin('smarty_block_remarksbox');
+		$post .= smarty_block_remarksbox(array(
+			'type' => 'note',
+			'title' => tr('Notice'),
+		), $legacy, $smarty, false);
+	}
+
 	TikiLib::lib('header')->add_js(
 		'
 	$(document).ajaxComplete(function (e, jqxhr) {

@@ -109,9 +109,6 @@
 										{/if}
 *}
 											{error_report}
-											{if $display_msg}
-												{remarksbox type="note" title="{tr}Notice{/tr}"}{$display_msg|escape}{/remarksbox}
-											{/if}
 											<div id="role_main">
 												{block name=title}{/block}
 												{block name=content}{/block}
