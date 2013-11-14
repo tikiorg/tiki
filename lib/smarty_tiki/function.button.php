@@ -29,6 +29,8 @@ function smarty_function_button($params, $smarty)
 	if ( ! is_array($params) || ! isset($params['_text']) ) return;
 	global $tikilib, $prefs, $auto_query_args;
 
+	$class = null;
+
 	$smarty->loadPlugin('smarty_block_self_link');
 
 	$selected = false ;
