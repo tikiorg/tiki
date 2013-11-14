@@ -157,6 +157,8 @@ class Tracker_Field_ItemsList extends Tracker_Field_Abstract
 	{
 		$trackerId = (int) $this->getOption('trackerId');
 		$remoteField = (int) $this->getOption('fieldIdThere');
+		$localField = (int) $this->getOption('fieldIdHere');
+		$localFieldDef = $this->getTrackerDefinition()->getField($localField);
 		$displayFields = $this->getOption('displayFieldIdThere');
 		$status = $this->getOption('status', 'opc');
 
@@ -164,22 +166,23 @@ class Tracker_Field_ItemsList extends Tracker_Field_Abstract
 		$technique = 'value';
 
 		if ($tracker && ($field = $tracker->getField($remoteField)) && !$this->getOption('fieldIdHere')) {
-			if ($field['type'] == 'r' || $field['type'] == 'q' && $field['options_array'][3] == 'itemId') {
+			if ($field['type'] == 'r') {
 				$technique = 'id';
 			}
+		}
+		if ($localFieldDef['type'] == 'q' && isset($localFieldDef['options_array'][3]) && $localFieldDef['options_array'][3] == 'itemId') {		
+			$technique = 'id';
 		}
 
 		$trklib = TikiLib::lib('trk');
 		if ($technique == 'id') {
 			$items = $trklib->get_items_list($trackerId, $remoteField, $this->getItemId(), $status);
 		} else {
-			$localField = (int) $this->getOption('fieldIdHere');
 			$localValue = $this->getData($localField);
 			if (!$localValue) {
 				// in some cases e.g. pretty tracker $this->getData($localField) is not reliable as the info is not there
 				$localValue = $trklib->get_item_value($trackerId, $this->getItemId(), $localField);
 			}
-			$localFieldDef = $this->getTrackerDefinition()->getField($localField);
 			if ($localFieldDef['type'] == 'r' && isset($localFieldDef['options_array'][0]) && isset($localFieldDef['options_array'][1])) {
 				$localValue = $trklib->get_item_value($localFieldDef['options_array'][0], $localValue, $localFieldDef['options_array'][1]);
 			}
