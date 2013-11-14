@@ -3861,7 +3861,9 @@ class TrackerLib extends TikiLib
 					$aux[] = $cat['categId'];
 				}
 				$field_categs = $aux;
-				$f['value'] = implode(',', array_intersect($field_categs, $item_categs));
+				if(!empty(array_intersect($field_categs, $item_categs))) {
+					$f['value'] = implode(',', array_intersect($field_categs, $item_categs));
+				}
 			}
 			$last[$f['fieldId']] = $f['value'];
 		}
