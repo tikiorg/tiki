@@ -164,6 +164,7 @@ class Services_File_FinderController
 			$filegallib = TikiLib::lib('filegal');
 			$info = $filegallib->get_file(str_replace('f_', '', $fileId));
 			$info['wiki_syntax'] = $filegallib->getWikiSyntax($info['galleryId'], $info);
+			$info['data'] = '';	// binary data makes JSON fall over
 			return $info;
 		}
 
