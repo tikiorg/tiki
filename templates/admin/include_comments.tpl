@@ -38,6 +38,7 @@
 
 				<div class="admin featurelist">
 					{preference name=comments_notitle}
+					{preference name=section_comments_parse}
 					{preference name=comments_field_email}
 					{preference name=comments_field_website}
 					{preference name=default_rows_textarea_comment}
