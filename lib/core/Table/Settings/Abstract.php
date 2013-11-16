@@ -34,7 +34,7 @@ abstract class Table_Settings_Abstract
 		'total' => '',
 //		'selflinks' => true,				//if smarty self_links need to be removed
 		'sort' => array(
-			'group' => true,
+			'group' => false,
 			'type' => 'reset',				//choices: boolean true, boolean false, save, reset, savereset.
 /*			'columns' => array(				//zero-based column index, used only if column-specific settings
 				0 => array(
@@ -88,10 +88,11 @@ abstract class Table_Settings_Abstract
 			'type' => true,					//choices: true, false
 			'max' => 25,
 			'expand' => array(50, 100, 250, 500),
-		),
-		'ajax' => array(						//can also be set to false
-			'url' => 'tiki-adminusers.php?{sort:sort}&{filter:filter}',
-		)*/
+		),*/
+		'ajax' => array(
+			'type' => false,
+//			'url' => 'tiki-adminusers.php?{sort:sort}&{filter:filter}',
+		)
 	);
 
 	/**
@@ -156,6 +157,14 @@ abstract class Table_Settings_Abstract
 			),
 			'controls' => array(
 				'id' => '-pager',
+			),
+		),
+		'ajax' => array(
+			'servercount' => array(
+				'id' => '-count',
+			),
+			'serveroffset' => array(
+				'id' => '-offset',
 			),
 		),
 	);

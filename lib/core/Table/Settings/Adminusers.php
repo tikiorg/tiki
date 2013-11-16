@@ -24,10 +24,9 @@ class Table_Settings_Adminusers extends Table_Settings_Abstract
 {
 	protected $ts = array(
 		'id' => 'usertable',
-		'serverside' => true,
 		'selflinks' => true,
 		'sort' => array(
-			'group' => true,
+			'group' => false,
 			'columns' => array(
 				0 => array(					//checkbox
 					'type' => false,
@@ -112,6 +111,7 @@ class Table_Settings_Adminusers extends Table_Settings_Abstract
 			'type' => true,
 		),
 		'ajax' => array(
+			'type' => true,
 			'url' => 'tiki-adminusers.php?{sort:sort}&{filter:filter}',
 			'offset' => 'offset'
 		)

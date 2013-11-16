@@ -46,7 +46,7 @@ class Table_Code_WidgetOptions extends Table_Code_Manager
 			$wo[] = 'filter_filteredRow : \'filtered\'';
 			$wo[] = 'filter_searchDelay : 300';
 			//server side filtering
-			if (isset(parent::$s['serverside']) && parent::$s['serverside'] === true) {
+			if (parent::$ajax) {
 				$wo[] = 'filter_serversideFiltering : true';
 			}
 			//hide filters
@@ -104,8 +104,12 @@ class Table_Code_WidgetOptions extends Table_Code_Manager
 		}
 
 		if (count($wo) > 0) {
-			$code = $this->iterate($wo, $this->nt2 . 'widgetOptions : {', $this->nt2 . '}', $this->nt3, '');
-			parent::$code[self::$level1][self::$level2] = $code;
+			if (!parent::$ajax) {
+				$code = $this->iterate($wo, $this->nt2 . 'widgetOptions : {', $this->nt2 . '}', $this->nt3, '');
+				parent::$code[self::$level1][self::$level2] = $code;
+			} else {
+				parent::$tempcode['wo'] = $wo;
+			}
 		}
 	}
 

@@ -25,34 +25,59 @@ class Table_Code_Pager extends Table_Code_Manager
 
 	public function setCode()
 	{
-		global $prefs;
 		$p = array();
+		$pre = parent::$ajax ? 'pager_' : '';
+//		$pre = '';
 		//add pager controls
 		if (parent::$pager) {
-			$p[] = 'size: ' . parent::$s['pager']['max'];
-			$p[] = 'output: \'{startRow} to {endRow} ({totalRows})\'';
-			$p[] = 'container: $(\'div#' . parent::$s['pager']['controls']['id'] . '\')';
+			$p[] = $pre . 'size: ' . parent::$s['pager']['max'];
+//			$p[] = 'container: $(\'div#' . parent::$s['pager']['controls']['id'] . '\')';
+			if (!parent::$ajax) {
+				$p[] = 'container: $(\'div#' . parent::$s['pager']['controls']['id'] . '\')';
+//				$p[] = 'output: \'{startRow} to {endRow} ({totalRows})\'';
+			} else {
+				$p[] = $pre . 'output: \'{start} {parens}\'';
+				$p[] = 'output: \'{startRow} to {endRow} ({totalRows})\'';
+			}
 		}
 
 		//ajax settings
 		if (parent::$ajax) {
-			$p[] = 'ajaxObject: {dataType: \'html\'}';
-			$p[] = 'ajaxUrl : \'' . parent::$s['ajax']['url'] . '\'';
+			$p[] = $pre . 'ajaxObject: {dataType: \'html\'}';
+			$p[] = $pre . 'ajaxUrl : \'' . parent::$s['ajax']['url'] . '\'';
+			$p[] = $pre . 'savePages: false';
 
-			//ajax processing - this part grabs the html, usually from the smarty template file
+				//ajax processing - this part grabs the html, usually from the smarty template file
 			$ap = array(
-				'var parsed = $.parseHTML( data );',
-				'var parsedtable = $(parsed).find(\'' . parent::$tid . ' tbody\');',
-				'var data = $(parsedtable).html();',
-				'$(table).find(\'tbody\').html( data );',
-				'var total = \'' . parent::$s['total'] . '\';',
-				'return [ total ];'
+				//set variables. parse data into array. data is the html that smarty returns for the entire page
+				//returning object r allows custom variables to be available elsewhere in tablesorter under
+				//table.config.pager.ajaxData
+				//variables tablesorter uses: rows, total and headers; all others are custom
+				'var parsedpage = $.parseHTML(data), r = {}, p = table.config.pager;',
+				//extract needed data from html returned by smarty template file
+				'r.rows = $(parsedpage).find(\'' . parent::$tid . ' tbody\').children();',
+				'r.filtered = parseInt($(parsedpage).find(\'#' . parent::$s['ajax']['servercount']['id'] . '\').val());',
+				'r.offset = parseInt($(parsedpage).find(\'#' . parent::$s['ajax']['serveroffset']['id'] . '\').val());',
+				//set other variables
+				'r.fp = Math.ceil( r.filtered / p.size );',
+				'r.total = \'' . parent::$s['total'] . '\';',
+//				'r.end = Math.min((p.page * parseInt(p.$size.val()) + $(r.rows).length, r.filtered);',
+				'r.end = r.offset + $(r.rows).length;',
+				'r.headers = null;',
+				//set pager text
+				'if (r.filtered == 0) {r.start = tr(\'No records found\')}',
+				'if (r.filtered == 1) {r.start = tr(\'Showing 1 of 1\')}',
+				'if (r.filtered > 1) {r.start = tr(\'Showing \') + (r.offset + 1) + tr(\' to \') + r.end + tr(\' of \')
+					+ r.filtered}',
+				'r.parens = r.filtered < r.total ? \' (filtered from \' + r.total + tr(\' records)\') :
+					tr(\' records\');',
+				'return r;'
 			);
 			$p[] = $this->iterate(
 				$ap,
-				'ajaxProcessing: function(data, table){',
-				$this->nt2 . '}',
-				$this->nt3,
+				$pre . 'ajaxProcessing: function(data, table){',
+				$this->nt3 . '}',
+				$this->nt4,
 				'',
 				''
 			);
@@ -61,7 +86,8 @@ class Table_Code_Pager extends Table_Code_Manager
 			//be used by Tiki
 			if (!isset(parent::$s['ajax']['custom']) || parent::$s['ajax']['custom'] !== false) {
 				$ca = array(
-					'var vars = {}, hashes, hash, sort, sorts, filters, params = [], dir, newurl, offset = true,',
+					'var vars = {}, hashes, hash, size, sort, sorts, filter, filtered, filters, params = [], dir, newurl,
+						p = table.config.pager, lcf = table.config.lastCombinedFilter;',
 					//parse out url parameters
 					'hashes = url.slice(url.indexOf(\'?\') + 1).split(\'&\');',
 					'for(var i = 0; i < hashes.length; i++) {',
@@ -74,69 +100,92 @@ class Table_Code_Pager extends Table_Code_Manager
 					'$.each(vars, function(key, value) {',
 						//handle sort parameters
 					'	if (sort && key in sort) {',
-					'		if (value == 0){',
-					'			dir = \'_asc\';',
-					'		} else {',
-					'			dir = \'_desc\';',
-					'		}',
-							//if sorts is not yet defined
-					'		if (typeof sorts === \'undefined\') {',
-					'			sorts = sort[key] + dir;',
-							//allows for multiple comma-separated sort parameters
-					'		} else {',
-					'			sorts += \',\' + sort[key] + dir;',
-					'		}',
+					'		value == 0 ? dir = \'_asc\' : dir = \'_desc\';',
+							//add sort if not yet defined or add sort for multiple comma-separated sort parameters
+					'		typeof sorts === \'undefined\' ? sorts = sort[key] + dir : sorts += \',\' + sort[key] + dir;',
 					'	}',
 						//handle filter parameters
 					'	if (key in filters) {',
-					'		if (filters[key][value]){',
-					'			params.push(filters[key][value]);',
-					'		} else {',
-					'			params.push(filters[key] + \'=\' + value);',
+					'		filter = true;',
+					'		if (key in filters) {',
+					'			filters[key][value] ? params.push(filters[key][value]) : params.push(filters[key]
+									+ \'=\' + value);',
 					'		}',
-					'offset = false;',
 					'	}',
 					'});',
 					//convert to tiki sort param sort_mode
 					'if (sorts) {',
 					'	params.push(\'sort_mode=\' + sorts);',
 					'}',
+					//add external filter param if selected
+					'if (filter !== true && typeof lcf !== \'undefined\') {',
+					'	if (lcf.length > 0) {',
+					'		filter = true;',
+					'		params.push(lcf);',
+					'	}',
+					'}',
+					//offset parameter
+					'size = parseInt(p.$size.val());',
+					'filtered = typeof p.ajaxData === \'undefined\' ? 0 : p.ajaxData.filtered;',
+					'filter || ((p.page * size) >= filtered) ? offset = \'\' : offset = \'&'
+						. parent::$s['ajax']['offset'] . '=\' + (p.page * size); ',
 					//build url, starting with no parameters
 					'newurl = url.slice(0,url.indexOf(\'?\'));',
-					'if (offset == false) {',
-					'	offset = \'\';',
-					'} else {',
-					'	offset = \'&' . parent::$s['ajax']['offset'] . '=\' + (this.page * this.size);',
-					'}',
-					'newurl = newurl + \'?numrows=\' + this.size + offset + \'&tsAjax=true\';',
+					'newurl = newurl + \'?numrows=\' + size + offset + \'&tsAjax=true\';',
 					'$.each(params, function(key, value) {',
 					'	newurl = newurl + \'&\' + value;',
 					'});',
-					//add external filter param if selected
-					'if (typeof $(\'' . parent::$tid . '\').data(\'ts_extval\') !== \'undefined\') {',
-					'	newurl = newurl + \'&\' + $(\'' . parent::$tid . '\').data(\'ts_extval\');',
-					'}',
 					'return newurl;'
 				);
 			} else {
 				$ca = array(
-					'return url + \'&tsAjax=true&' . parent::$s['ajax']['offset'] . '=\' + (this.page * this.size);'
+					'var p = table.config.pager;',
+					'var size = parseInt(p.$size.val());',
+					'return url + \'&tsAjax=true&' . parent::$s['ajax']['offset'] . '=\' + (p.page * size)
+						+ \'&numrows=\' + size;'
 				);
 			}
 			if (count($ca) > 0) {
 				$p[] = $this->iterate(
 					$ca,
-					'customAjaxUrl: function(table, url) {',
-					$this->nt2 . '}',
-					$this->nt3,
+					$pre . 'customAjaxUrl: function(table, url) {',
+					$this->nt3 . '}',
+					$this->nt4,
 					'',
+					''
+				);
+			}
+			if (parent::$pager) {
+				//pager css
+				$pc[] = 'container: \'tablesorter-pager\'';
+				$p[] = $this->iterate(
+					$pc,
+					$pre . 'css: {',
+					$this->nt3 . '}',
+					$this->nt4,
+					''
+				);
+				//pager selectors
+				$ps[] = 'container : \'div#' . parent::$s['pager']['controls']['id'] . '\'';
+				$p[] = $this->iterate(
+					$ps,
+					$pre . 'selectors: {',
+					$this->nt3 . '}',
+					$this->nt4,
 					''
 				);
 			}
 		}
 		if (count($p) > 0) {
-			$code = $this->iterate($p, '.tablesorterPager({', $this->nt . '});', $this->nt2, '');
-			parent::$code[self::$level1] = $code;
+			if (!parent::$ajax) {
+				$code = $this->iterate($p, '.tablesorterPager({', $this->nt . '});', $this->nt2, '');
+				parent::$code[self::$level1] = $code;
+			} else {
+				$wo = array_merge(parent::$tempcode['wo'], $p);
+				parent::$code['main']['widgetOptions'] = $this->iterate($wo, $this->nt2
+					. 'widgetOptions : {', $this->nt2 . '}', $this->nt3, '');
+				unset(parent::$tempcode['wo']);
+			}
 		}
 	}
 }

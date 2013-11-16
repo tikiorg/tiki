@@ -19,7 +19,6 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
 class Table_Settings_PluginTrackerlist extends Table_Settings_Abstract
 {
 	protected $ts = array(
-		'serverside' => true,		//ajax will be used for server side sorting and filtering
 		'selflinks' => true,
 		'sort' => array(
 			'multisort' => false,	//$trklib->list_items doesn't seem to support multisorts
