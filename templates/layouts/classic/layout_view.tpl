@@ -33,14 +33,14 @@
                 </div>
                 <div class="row">
    			        {if zone_is_empty('left') and zone_is_empty('right')}
-    			        <div class="col-lg-12">
+    			        <div class="col-lg-12" id="col1">
 							{error_report}
 					        {block name=title}{/block}
 					        {block name=content}{/block}
 					        {block name=show_content}{/block}
 				        </div>
 			        {elseif zone_is_empty('left')}
-				        <div class="col-lg-10">
+				        <div class="col-lg-10" id="col1">
 							{error_report}
 					        {block name=title}{/block}
 					        {block name=content}{/block}
@@ -50,7 +50,7 @@
 					        {modulelist zone=right}
 				        </div>
 			        {elseif zone_is_empty('right')}
-				        <div class="col-lg-10 col-lg-push-2">
+				        <div class="col-lg-10 col-lg-push-2" id="col1">
 							{error_report}
 					        {block name=title}{/block}
 					        {block name=content}{/block}
@@ -60,7 +60,7 @@
                             {modulelist zone=left}
                             </div>
 			        {else}
-			        <div class="col-lg-8 col-lg-push-2">
+			        <div class="col-lg-8 col-lg-push-2" id="col1">
 							{error_report}
 					        {block name=title}{/block}
 					        {block name=content}{/block}
