@@ -127,7 +127,7 @@ class Services_File_FinderController
 
 		}
 
-		if ($prefs['feature_wiki_attachments'] == 'y') {
+		if ($prefs['feature_wiki_attachments'] == 'y' && $prefs['feature_use_fgal_for_wiki_attachments'] === 'y') {
 			if ($startGallery && $startGallery == $prefs['fgal_root_wiki_attachments_id']) {
 				$startRoot = count($opts['roots']);
 			}
