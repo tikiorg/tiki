@@ -871,11 +871,13 @@ function wikiplugin_trackerlist($data, $params)
 		}
 		/*** tablesorter ***/
 		//note whether tablesorter will be used
+		$tsServer = isset($params['server']) && $params['server'] === 'y' ? true : false;
+
 		$tsOn	= $prefs['disableJavascript'] === 'n' && $prefs['feature_jquery_tablesorter'] === 'y'
-		&& $prefs['feature_ajax'] === 'y' && isset($sortable) && $sortable !== 'n' ? true : false;
+		&& ($prefs['feature_ajax'] === 'y' || $tsServer === false) && isset($sortable) && $sortable !== 'n' ? true : false;
 		$smarty->assign('tsOn', $tsOn);
 
-		//tablesorter: note whether this is the initial call or a subsequent ajax call
+		//note whether this is the initial tablesorter ajax call or a subsequent ajax call
 		$tsAjax = $tsOn && isset($_REQUEST['tsAjax']) && $_REQUEST['tsAjax'] ? true : false;
 		$smarty->assign('tsAjax', $tsAjax);
 
@@ -899,6 +901,10 @@ function wikiplugin_trackerlist($data, $params)
 					}
 					$sort_mode = 'f_' . $allfields['data'][$col]['fieldId'] . $dir;
 				}
+			}
+			//set max records
+			if (isset($_REQUEST['numrows'])) {
+				$max = $_REQUEST['numrows'];
 			}
 		}
 		/*** end first tablesorter section ***/
@@ -1628,7 +1634,15 @@ function wikiplugin_trackerlist($data, $params)
 			}
 			// End Optimization
 
-			if ($tsAjax || !$tsOn) {
+
+			if ($tsOn) {
+				$ts_countid = 'trackerlist_' . $iTRACKERLIST . '-count';
+				$ts_offsetid = 'trackerlist_' . $iTRACKERLIST . '-offset';
+				$smarty->assign('ts_countid', $ts_countid);
+				$smarty->assign('ts_offsetid', $ts_offsetid);
+			}
+
+			if ($tsAjax || !$tsOn || !$tsServer) {
 				//fetch tracker items
 				$items = $trklib->list_items(
 					$trackerId,
@@ -1646,12 +1660,15 @@ function wikiplugin_trackerlist($data, $params)
 					$skip_status_perm_check
 				);
 			/*** tablesorter ***/
-			} elseif($tsOn) {
+			}
+			if($tsOn && ! $tsAjax) {
 				$trkritems = $tikilib->table('tiki_tracker_items');
 				$itemcount = $trkritems->fetchCount(array('trackerId' => $iTRACKERLIST));
 				$ts = new Table_Plugin;
 				$ts->setSettings(
-					'trackerlist_' . $iTRACKERLIST, $sortable,
+					'trackerlist_' . $iTRACKERLIST,
+					isset($server) ? $server : null,
+					$sortable,
 					isset($sortList) ? $sortList : null,
 					isset($tsortcolumns) ? $tsortcolumns : null,
 					isset($tsfilters) ? $tsfilters : null,
@@ -1663,6 +1680,8 @@ function wikiplugin_trackerlist($data, $params)
 				//loads the jquery tablesorter code
 				if (is_array($ts->settings)) {
 					$ts->settings['ajax']['offset'] = 'tr_offset' . $iTRACKERLIST;
+					$ts->settings['ajax']['servercount']['id'] = $ts_countid;
+					$ts->settings['ajax']['serveroffset']['id'] = $ts_offsetid;
 					Table_Factory::build('pluginTrackerlist', $ts->settings);
 				}
 			}

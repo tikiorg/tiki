@@ -10,6 +10,8 @@ function wikiplugin_fancytable_info()
 
 	$ts = new Table_Plugin;
 	$ts->createParams();
+	$tsparams = $ts->params;
+	unset($tsparams['server']);
 	$params = array_merge(
 		array(
 			 'head' => array(
@@ -54,7 +56,7 @@ function wikiplugin_fancytable_info()
 				 'description' => tra('Table body column vertical alignments separated by |. Choices: top, middle, bottom, baseline.'),
 				 'default' => '',
 			 ),
-		), $ts->params
+		), $tsparams
 	);
 	return array(
 		'name' => tra('Fancy Table'),
@@ -83,7 +85,9 @@ function wikiplugin_fancytable($data, $params)
 		$ts = new Table_Plugin;
 		if ($ts->perms !== false) {
 			$ts->setSettings(
-				'fancytable_' . $iFancytable, $sortable,
+				'fancytable_' . $iFancytable,
+				'n',
+				$sortable,
 				isset($sortList) ? $sortList : null,
 				isset($tsortcolumns) ? $tsortcolumns : null,
 				isset($tsfilters) ? $tsfilters : null,
