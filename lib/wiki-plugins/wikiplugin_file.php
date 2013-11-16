@@ -159,7 +159,7 @@ function wikiplugin_file( $data, $params )
 				return tra('No such file');
 			}
 		} else {
-			$info = $filegallib->get_file_info($fileId);
+			$info = $filegallib->get_file_info($fileId, false, false);
 			if (empty($info)) {
 				return tra('Incorrect parameter').' fileId';
 			}

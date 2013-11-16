@@ -614,7 +614,7 @@ function wikiplugin_files($data, $params)
 function  wikiplugin_files_check_perm_file($fileId)
 {
 		global $filegallib, $tikilib, $tiki_p_admin, $user, $tiki_p_admin_files_galleries;
-		$info = $filegallib->get_file_info($fileId);
+		$info = $filegallib->get_file_info($fileId, false, false);
 		$gal_info = $filegallib->get_file_gallery($info['galleryId']);
 		if ($tiki_p_admin != 'y' && $tiki_p_admin_files_galleries != 'y' && $gal_info['user'] != $user) {
 			$info['p_view_file_gallery'] = $tikilib->user_has_perm_on_object($user, $info['galleryId'], 'file gallery', 'tiki_p_view_file_gallery') ? 'y' : 'n';
