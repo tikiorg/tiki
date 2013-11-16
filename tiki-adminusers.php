@@ -761,9 +761,16 @@ if ($tiki_p_admin == 'y') {
 		&& $prefs['feature_ajax'] == 'y' ? true : false;*/
 $tsOn = false;
 
-$smarty->assign('ts', $tsOn);
+$smarty->assign('tsOn', $tsOn);
 $tsAjax = isset($_REQUEST['tsAjax']) && $_REQUEST['tsAjax'] ? true : false;
 
+if ($tsOn) {
+	$ts_countid = 'usertable-count';
+	$ts_offsetid = 'usertable-offset';
+	$smarty->assign('ts_countid', $ts_countid);
+	$smarty->assign('ts_offsetid', $ts_offsetid);
+}
+if (!$tsOn || ($tsOn && $tsAjax)) {
 	$users = $userlib->get_users(
 		$offset,
 		$numrows,
@@ -777,6 +784,7 @@ $tsAjax = isset($_REQUEST['tsAjax']) && $_REQUEST['tsAjax'] ? true : false;
 		!empty($_REQUEST['filterNotValidated']),
 		!empty($_REQUEST['filterNeverLoggedIn'])
 	);
+}
 if ($tsOn && !$tsAjax) {
 	$users['cant'] = $userlib->count_users('');
 	$users['data'] = $users['cant'] > 0 ? true : false;
@@ -795,7 +803,15 @@ if ($tsOn && !$tsAjax) {
 						 'options' => $ts_groups
 				 	)
 				)
-			 )
+			 ),
+			'ajax' => array(
+				'servercount' => array(
+					'id' => $ts_countid,
+				),
+				'serveroffset' => array(
+					'id' => $ts_offsetid,
+				),
+			),
 		)
 	);
 }
