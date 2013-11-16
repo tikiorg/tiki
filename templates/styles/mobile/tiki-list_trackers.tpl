@@ -1,4 +1,4 @@
-{* $Id: tiki-list_trackers.tpl 47523 2013-09-17 14:39:03Z chibaguy $ *}
+{* $Id$ *}
 
 {title help="Trackers" admpage="trackers"}{tr}Trackers{/tr}{/title}
 

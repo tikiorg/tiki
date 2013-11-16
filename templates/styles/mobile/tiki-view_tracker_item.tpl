@@ -1,4 +1,4 @@
-{* $Id: tiki-view_tracker_item.tpl 47507 2013-09-16 13:52:16Z chibaguy $ *}
+{* $Id$ *}
 {title help="trackers"}{$tracker_info.name}{/title}
 
 {if ! isset($print_page) || $print_page ne 'y'}

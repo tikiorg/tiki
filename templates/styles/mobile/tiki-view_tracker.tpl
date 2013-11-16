@@ -1,4 +1,4 @@
-{* $Id: tiki-view_tracker.tpl 47523 2013-09-17 14:39:03Z chibaguy $ *}
+{* $Id$ *}
 {title url="tiki-view_tracker.php?trackerId=$trackerId" adm="trackers"}{tr}Tracker:{/tr} {$tracker_info.name}{/title}
 
 <div class="navbar" align="right" data-role="controlgroup" data-type="horizontal">{* mobile *}
