@@ -4,8 +4,6 @@
 	layout properties, is to be imported by theme stylesheets.
 */
 
-/* First the layout part - merged from old layout.css
-   TODO: merge and optimize with the DESIGN part (search for "DESIGN" below) */
 
 /***** XHTML Elements *****/
 
@@ -61,11 +59,6 @@ body.fixed_width .fixedwidth .fixedwidth {
     min-height: 40em;
 }
 
-/* submit buttons input type="submit" in a container */
-.input_submit_container {
-	padding: 1px;
-}
-
 /* Some default values for basic CSS menus layout */
 .cssmenu_horiz a, .cssmenu_vert a, .cssmenu_horiz ul li a {
 	line-height: 16px;
@@ -77,15 +70,6 @@ body.fixed_width .fixedwidth .fixedwidth {
 	display: inline;
 }
 
-#col2 select,
-#col3 select,
-#col3 input[type="text"],
-#col2 input[type="text"],
-#col3 input[type="password"],
-#col2 input[type="password"] {
-	width: 95%;
-}
-
 #col2 input.openid_url,
 #col3 input.openid_url {
 	padding: 1px 1px 1px 18px;
@@ -95,22 +79,6 @@ body.fixed_width .fixedwidth .fixedwidth {
 
 label {
 	cursor: pointer;
-}
-
-form {
-	margin: 0;
-	padding: 0;
-}
-
-hr {
-	width: 100%;
-	height: 1px;
-	border-width: 0;
-	padding: 0;
-}
-
-img {
-	border: 0;
 }
 
 /***** Site Header & Identity *****/
@@ -291,100 +259,6 @@ li#logout_link a {
 }
 
 /***** Misc. *****/
-/* Minimize Menus */
-.minimize-modules-left #col1 {
-	margin-left: 80px !important;
-}
-
-.minimize-modules-right #col1 {
-	margin-right: 80px !important;
-}
-
-.minimize-modules-left #col2 .separatoricon-toggle,
-.minimize-modules-left #col2 .box .menuText,
-.minimize-modules-left #col2 .mdkfwdarr,
-.minimize-modules-right #col3 .separatoricon-toggle,
-.minimize-modules-right #col3 .box .menuText,
-.minimize-modules-right #col3 .mdkfwdarr {
-	display: none !important;
-}
-
-.minimize-modules-left #col2 .box .menuLevel1 .menuText,
-.minimize-modules-left #col2 .separatoricon-url,
-.minimize-modules-right #col3 .box .menuLevel1 .menuText,
-.minimize-modules-right #col3 .separatoricon-url {
-  display: inline !important;
-}
-
-.moduleflip-vert {
-	display: block;
-	top: 20px !important;
-	right: 1% !important;
-}
-
-#col2 .moduleflip-vert .flipmodimage,
-.minimize-modules-right #col3 .moduleflip-vert .flipmodimage {
-	background-image: url(../../img/icons/resultset_first.png) !important;
-}
-
-#col3 .moduleflip-vert .flipmodimage,
-.minimize-modules-left #col2 .moduleflip-vert .flipmodimage {
-	background-image: url(../../img/icons/resultset_last.png) !important;
-}
-
-.minimize-modules-left #col2 .separator,
-.minimize-modules-right #col3 .separator {
-	padding: 0;
-	background: transparent;
-	border: none;
-}
-
-.minimize-modules-left #col2 .box-shadow,
-.minimize-modules-left #col2 .box,
-.minimize-modules-right #col3 .box-shadow,
-.minimize-modules-right #col3 .box {
-	width: 70px !important;
-}
-
-.minimize-modules-left #col2 .content,
-.minimize-modules-right #col3 .content {
-	margin: 0 !important;
-}
-
-.minimize-modules-left #col2 .option,
-.minimize-modules-left #col2 .optionline,
-.minimize-modules-right #col3 .option,
-.minimize-modules-right #col3 .optionline {
-	margin: 0 !important;
-	padding: 0 !important;
-}
-
-
-.minimize-modules-left #col2,
-.minimize-modules-right #col3 {
-	width: 60px !important;
-}
-
-
-/* Minimize CSS Menus */
-.minimize-modules-left #col2 .cssmenu_vert,
-.minimize-modules-left #col2 .cssmenu_vert div > ul,
-.minimize-modules-left #col2 .cssmenu_vert li.menuLevel0,
-.minimize-modules-left #col2 .cssmenu_vert li.menuLevel0 > a,
-.minimize-modules-right #col3 .cssmenu_vert,
-.minimize-modules-right #col3 .cssmenu_vert div > ul,
-.minimize-modules-right #col3 .cssmenu_vert li.menuLevel0,
-.minimize-modules-right #col3 .cssmenu_vert li.menuLevel0 > a {
-	width: 44px;
-}
-
-.minimize-modules-left #col2 .cssmenu_vert li.menuLevel0 > ul {
-	margin-left: 55px;
-}
-
-.minimize-modules-right #col3 .cssmenu_vert li.menuLevel0 > ul {
-	margin-right: 55px;
-}
 
 .mod-share-item {
 	float: left;
@@ -518,21 +392,6 @@ ul.jumplinks,
 .clear,
 #clear {
 	clear: both;
-}
-
-/* Clearfix for modern browsers */
-.clearfix:before,
-.clearfix:after {
-    content: "";
-    display: inherit;
-}
-
-.clearfix:after {
-    clear: both;
-}
-
-#overdiv table {
-	width: auto !important;
 }
 
 .imagerank {
@@ -2158,11 +2017,6 @@ ul.freetagged li {
 	vertical-align: middle;
 }
 
-@media print {
-	.tikihelp, .navbar, .categbar, .tabstoggle, .tabs, #show-errors-button {display:none;}
-}
-
-
 /* treeTable definitions - used in object-perms so far */
 
 table.treetable {
@@ -2809,22 +2663,6 @@ textarea:disabled {
 fieldset {
 	clear: both;
 }
-
-/* margin and padding for span surrounding the "button" links, same definition for button form element */
-/*button,
-.button,
-.button.highlight {
-	margin: 1px 2px;
-	padding: 2px;
-}
-
-.button a,
-.button a:visited,
-.button a:hover,
-.button input,
-.calbuttonBox a {
-	padding: 1px 4px;
-}*/
 
 #genPass .button a,
 #genPass .button a:visited,
