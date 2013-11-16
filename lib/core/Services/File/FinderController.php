@@ -127,6 +127,18 @@ class Services_File_FinderController
 
 		}
 
+		if ($prefs['feature_wiki_attachments'] == 'y') {
+			if ($startGallery && $startGallery == $prefs['fgal_root_wiki_attachments_id']) {
+				$startRoot = count($opts['roots']);
+			}
+			$opts['roots'][] = array_merge(
+				array(
+					'path' => $prefs['fgal_root_wiki_attachments_id'],		// should be $prefs['fgal_root_id']?
+				),
+				$rootDefaults
+			);
+		}
+
 		if ($startGallery) {
 			$opts['startRoot'] = $startRoot;
 			$d = $opts['roots'][$startRoot]['path'] == $startGallery ? '' : 'd_';	// needs to be the cached name in elfinder (with 'd_' in front) unless it's the root id
@@ -152,6 +164,7 @@ class Services_File_FinderController
 			$filegallib = TikiLib::lib('filegal');
 			$info = $filegallib->get_file(str_replace('f_', '', $fileId));
 			$info['wiki_syntax'] = $filegallib->getWikiSyntax($info['galleryId'], $info);
+			$info['data'] = '';	// binary data makes JSON fall over
 			return $info;
 		}
 

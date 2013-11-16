@@ -1674,7 +1674,7 @@ class CategLib extends ObjectLib
 	function get_jailed( $categories )
 	{
 		if ( $jail = $this->get_jail() ) {
-			$existing = $this->getCategories();
+			$existing = $this->getCategories(null, false, false, false);
 
 			return array_values(array_intersect($categories, array_keys($existing)));
 		} else {
