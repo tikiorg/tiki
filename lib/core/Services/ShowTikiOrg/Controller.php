@@ -23,6 +23,11 @@ class Services_ShowTikiOrg_Controller
 		$command = $input->command->word();
 		$svntag = $input->svntag->text();
 
+		$item = Tracker_Item::fromId($id);
+		if (!$item->canViewField($fieldId)) {
+			throw new Services_Exception_Denied;
+		}
+
 		$field = TikiLib::lib('trk')->get_tracker_field($fieldId);
 		$options = json_decode($field['options']);
 		if (!is_object($options) && is_array($field['options_array'])) {
