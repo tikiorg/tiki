@@ -8,29 +8,12 @@
    TODO: merge and optimize with the DESIGN part (search for "DESIGN" below) */
 
 /***** XHTML Elements *****/
-body {
-	display: block;
-	margin: 0;
-	padding: 0;
-	text-align: left;
-	width: 100%;
-}
-
-body.db_error #tiki-main {
-	max-width: 800px;
-	margin: 1em auto;
-}
 
 /* ckeditor body definition */
 html[dir=ltr]>body {
 	display: block;
 	padding: 1em;
 	width: auto;
-}
-
-/* Make HTML 5 elements display block-level */
-header, nav, article, section, footer, address {
-    display: block;
 }
 
 /* general #fixedwidth wrapper when fixed width is off */
