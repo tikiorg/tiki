@@ -693,32 +693,6 @@ h3.box-title {
 	overflow: hidden;
 }
 
-/* For wikitext or custom code areas, editors can add, for example, a div class="halffloat"
-and put two modules or other divs between its tags;, each of these will use just under half of the width of the
-wikitext or custom content area. Similarly for three or four modules (or divs) across the page. */
-.halffloat .box,
-.wikitext .halffloat .box {
-	float: left !important;
-	clear: none;
-	width: 48%;
-	margin: 0 2% 0 0;
- }
-
-.thirdfloat .box,
-.wikitext .thirdfloat .box {
-	float: left !important;
-	clear: none;
-	width: 31%;
-	margin: 0 2% 0 0;
-}
-
-.quarterfloat .box,
-.wikitext .quarterfloat .box {
-	float: left !important;
-	clear: none;
-	width: 22%;
-	margin: 0 2% 0 0;
-}
 
 #autosave_preview > div {
 	height: 30ex;
@@ -755,16 +729,6 @@ tr.diffheader {
 }
 
 /** Tabs **/
-.tabs {
-	margin: 10px 3px 0 3px;
-	padding: 0;
-	position: relative;
-	z-index: 2;
-}
-
-.tabs br {
-	display: none;
-}
 
 .tabstoggle {
 	font-size: .8em;
@@ -791,65 +755,6 @@ tr.diffheader {
 	position: absolute;
 	top: 0;
 	right: 0;
-}
-
-.tabs .container {
-	float: left;
-	width: 84%;
-}
-
-.tabs .full_width {
-	width: 100%;
-}
-
-.tabmark {
-	display: inline;
-	margin: 0 5px 0 0;
-	padding: 1px 0;
-	white-space: nowrap;
-}
-
-.tabmark a {
-	border-bottom: 0;
-	padding: 1px 5px;
-	text-decoration: none;
-}
-
-.tabactive {
-	border: solid 1px #999;
-	border-bottom: none;
-	border-top-width: 2px;
-	position: relative;
-	top: 0;
-}
-
-.tabinactive {
-	border-bottom: none;
-	position: relative;
-	top: 0;
-}
-
-.tabcontent {
-	z-index: 1;
-	position: relative;
-	padding: 4px;
-	top: 0;
-/*	border-top: none;*/
-	margin: 0;
-}
-
-.tabcontent table {
-	text-align: left;
-	width: auto;
-	background: transparent;
-}
-
-.tabcontent .normal {
-	width: 100%;
-}
-
-.tabcontent table td {
-	padding: 5px;
 }
 
 /***** Wiki *****/
