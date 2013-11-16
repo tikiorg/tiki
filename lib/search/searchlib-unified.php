@@ -122,10 +122,10 @@ class UnifiedSearchLib
 	}
 
     /**
-     * @param bool $loggit
+     * @param int $loggit 0=no logging, 1=log to Search_Indexer.log, 2=log to Search_Indexer_console.log
      * @return array
      */
-    function rebuild($loggit = false)
+    function rebuild($loggit = 0)
 	{
 		global $prefs;
 		$errlib = TikiLib::lib('errorreport');
@@ -378,10 +378,10 @@ class UnifiedSearchLib
 
     /**
      * @param $index
-     * @param bool $loggit
+     * @param int $loggit 0=no logging, 1=log to Search_Indexer.log, 2=log to Search_Indexer_console.log
      * @return Search_Indexer
      */
-    private function buildIndexer($index, $loggit = false)
+    private function buildIndexer($index, $loggit = 0)
 	{
 		global $prefs;
 
@@ -391,8 +391,10 @@ class UnifiedSearchLib
 
 		$logWriter = null;
 
-		if ($loggit) {
+		if ((int) $loggit == 1) {
 			$logWriter = new Zend_Log_Writer_Stream($prefs['tmpDir'] . '/Search_Indexer.log', 'w');
+		} elseif ((int) $loggit == 2) {
+			$logWriter = new Zend_Log_Writer_Stream($prefs['tmpDir'] . '/Search_Indexer_console.log', 'w');
 		}
 
 		$indexer = new Search_Indexer($index, $logWriter);

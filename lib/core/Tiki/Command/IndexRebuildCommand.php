@@ -37,7 +37,11 @@ class IndexRebuildCommand extends Command
 	protected function execute(InputInterface $input, OutputInterface $output)
 	{
 		$force = $input->getOption('force');
-		$log = $input->getOption('log');
+		if ($input->getOption('log')) {
+			$log = 2;
+		} else {
+			$log = 0;
+		} 
 
 		$unifiedsearchlib = \TikiLib::lib('unifiedsearch');
 
