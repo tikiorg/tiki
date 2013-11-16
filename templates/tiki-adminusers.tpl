@@ -68,7 +68,7 @@
 {* ---------------------- tab with list -------------------- *}
 {tab name="{tr}Users{/tr}"}
 	<h2>{tr}Users{/tr}</h2>
-	{if !$ts}
+	{if !$tsOn}
 		<form method="get" action="tiki-adminusers.php">
 			<table class="findtable">
 				<tr>
@@ -120,12 +120,12 @@
 			</div>
 		</form>
 	{/if}
-	{if ($cant > $numrows or !empty($initial)) && !$ts}
+	{if ($cant > $numrows or !empty($initial)) && !$tsOn}
 		{initials_filter_links}
 	{/if}
 
 	<form name="checkform" method="post" action="{$smarty.server.PHP_SELF}{if (!isset($group_management_mode) or $group_management_mode ne 'y') and (!isset($set_default_groups_mode) or $set_default_groups_mode ne 'y') and (!isset($email_mode) or $email_mode ne 'y')}#multiple{/if}">
-		<div id="usertable" {if $ts}style="visibility: hidden"{/if}>
+		<div id="usertable" {if $tsOn}style="visibility: hidden"{/if}>
 			<table id="usertable" class="table normal">
 				{* Note: for any changes in the logic determining which columns are shown, corresponding changes will
 				need to be made in the getTableSettings function at /lib/core/Table/Settings/Adminusers.php *}
@@ -330,9 +330,10 @@
 		<input type="hidden" name="find" value="{$find|escape}">
 		<input type="hidden" name="numrows" value="{$numrows|escape}">
 		<input type="hidden" name="sort_mode" value="{$sort_mode|escape}">
-		<input type="hidden" name="offset" value="{$offset|escape}">
+		<input type="hidden" {if $tsOn}id="{$ts_offsetid|escape}" {/if}name="offset" value="{$offset|escape}">
+		<input type="hidden" {if $tsOn}id="{$ts_countid|escape}" {/if}name="count" value="{$cant|escape}">
 	</form>
-	{if !$ts}
+	{if !$tsOn}
 		{pagination_links cant=$cant step=$numrows offset=$offset}{/pagination_links}
 	{/if}
 {/tab}

@@ -65,8 +65,8 @@ class Table_Code_Other extends Table_Code_Manager
 						''
 					);
 					//trigger table update and filter when dropdown value is changed
-					$jq[] = '$(\'#' . $f['external'][$key]['id'] . '\').on(\'change\', function(){'
-						. $this->nt2 . '$(\'' . parent::$tid .'\').data(\'ts_extval\', this.value).trigger(\'search\', false);'
+					$jq[] = '$(\'#' . $f['external'][$key]['id'] . '\').bind(\'change\', function(e){'
+						. $this->nt2 . '$(\'' . parent::$tid .'\').trigger(\'search\', [ [this.value] ]);'
 						. $this->nt . '});';
 					//filter-reset also clears any external dropdown filter (column filters cleared by tablesorter)
 					if ($f['type'] === 'reset') {
@@ -140,19 +140,42 @@ class Table_Code_Other extends Table_Code_Manager
 			array_unshift($jq, '$(\'' . parent::$tid . '\').before(\'' . $allhtml . '\'' . $this->nt . ');');
 		}
 
-		//bind to ajax event to show processing
 		if (parent::$ajax) {
+			//bind to ajax event to show processing
 			$bind = array(
 				'if (e.type === \'ajaxSend\') {',
-				'	$(\'' . parent::$tid . ' tbody\').css(\'opacity\', 0.5);',
+				'	$(\'' . parent::$tid . ' tbody tr td\').css(\'opacity\', 0.25);',
 				'}',
 				'if (e.type === \'ajaxComplete\') {',
-				'	$(\'' . parent::$tid . ' tbody\').css(\'opacity\', 1);',
+				'	$(\'' . parent::$tid . ' tbody tr td\').css(\'opacity\', 1);',
 				'}'
 			);
 			$jq[] = $this->iterate(
 				$bind,
 				'$(document).bind(\'ajaxSend ajaxComplete\', function(e){',
+				$this->nt . '});',
+				$this->nt2,
+				'',
+				''
+			);
+			//change pages dropdown when filtering to show only filtered pages
+			$bind = array(
+				'var ret = c.pager.ajaxData;',
+				'opts = $(\'select.gotoPage option\').length;',
+				'if (ret.fp != opts && opts != 0) {',
+				'	$(\'select.gotoPage\').empty();',
+				'	for (var i = 1; i <= ret.fp; i++) {',
+				'		$(\'select.gotoPage\').append($(\'<option>\', {',
+				'		    text: i',
+				'		}));',
+				'	}',
+				'}',
+				'var page = ret.offset == 0 ? 0 : Math.ceil(ret.offset / c.pager.size);',
+				'$(\'select.gotoPage option\')[page].selected = true;',
+			);
+			$jq[] = $this->iterate(
+				$bind,
+				'$(\'' . parent::$tid . '\').bind(\'pagerComplete\', function(e, c){',
 				$this->nt . '});',
 				$this->nt2,
 				'',

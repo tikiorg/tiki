@@ -1,3 +1,4 @@
+<div id="testingstatus" style="display:none">{$field.status|escape}</div>
 <h5 id="showtikiorg{$field.fieldId}_{$item.itemId}{if isset($context.list_mode)}_view{/if}" class="showactive{$field.fieldId}_{$item.itemId}" {if $field.status neq 'ACTIV'}style="display: none;"{/if}>This bug has been demonstrated on show.tiki.org</h5>
 <h5 class="shownone{$field.fieldId}_{$item.itemId}" {if $field.status neq 'NONE'}style="display: none;"{/if}>Please demonstrate your bug on show.tiki.org</h5>
 {if $field.status == 'NOSSH'}
@@ -56,7 +57,6 @@
 Version: <select name="svntag">
 <option selected="selected">trunk</option>
 <option>12.x</option>
-<option>12.0alpha</option>
 <option>11.0</option>
 <option>10.4</option>
 <option>10.3</option>
@@ -127,6 +127,7 @@ function showtikiorg_process{{$field.fieldId}}_{{$item.itemId}}(action) {
 		type: 'POST',
 		success:  function(data) {
 			var debugoutput = data.debugoutput;
+			//$('#testingstatus').html(data.status);
 			$('.showdebugoutput{{$field.fieldId}}_{{$item.itemId}}').html(data.debugoutput);
 			if (data.version == '12.x' || data.version == 'trunk') {
 				$('.buttonupdate{{$field.fieldId}}_{{$item.itemId}}').show();

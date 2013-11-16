@@ -33,6 +33,7 @@ class Table_Code_Abstract
 	protected static $level1;
 	protected static $level2;
 	protected $subclasses;
+	protected static $tempcode;
 	protected $t = "\t";
 	protected $nt = "\n\t";
 	protected $nt2 = "\n\t\t";
@@ -52,7 +53,6 @@ class Table_Code_Abstract
 			self::$s = $settings;
 			self::$id = $settings['id'];
 			self::$tid = 'table#' . $settings['id'];
-
 			//overall sort on unless sort type set to false
 			self::$sort = isset($settings['sort']['type']) && $settings['sort']['type'] === false ? false : true;
 
@@ -60,7 +60,7 @@ class Table_Code_Abstract
 			self::$filters = empty($settings['filters']['type']) ? false : true;
 			self::$pager = empty($settings['pager']['type']) ? false : true;
 			global $prefs;
-			self::$ajax = empty($settings['ajax']) || $prefs['feature_ajax'] === 'n'? false : true;
+			self::$ajax = $settings['ajax']['type'] === false || $prefs['feature_ajax'] === 'n'? false : true;
 		}
 	}
 

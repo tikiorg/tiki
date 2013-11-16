@@ -926,7 +926,7 @@ class FileGalLib extends TikiLib
 	{
 		global $prefs, $user;
 
-		$return = $this->get_files_info(null, (int)$fileId, $include_search_data, $include_data);
+		$return = $this->get_files_info(null, (int)$fileId, $include_search_data, $include_data, 1);
 
 		if (!$return) {
 			return false;
@@ -962,7 +962,7 @@ class FileGalLib extends TikiLib
 		return $this->get_files_info((int)$galleryId, null, $include_search_data, $include_data);
 	}
 
-	function get_files_info($galleryIds = null, $fileIds = null, $include_search_data = false, $include_data = false)
+	function get_files_info($galleryIds = null, $fileIds = null, $include_search_data = false, $include_data = false, $numrows = -1)
 	{
 		$files = $this->table('tiki_files');
 
@@ -989,7 +989,7 @@ class FileGalLib extends TikiLib
 			$conditions['galleryId'] = $files->in((array) $galleryIds);
 		}
 
-		return $files->fetchAll($fields, $conditions);
+		return $files->fetchAll($fields, $conditions, $numrows);
 	}
 
 	function update_file($id, $name, $description, $user, $comment = NULL)

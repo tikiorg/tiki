@@ -691,7 +691,8 @@ function update_changelog_file($newVersion)
 	}
 
 	$isNewMajorVersion = substr($newVersion, -1) == 0;
-	$releaseNotesURL = '<http://tiki.org/ReleaseNotes'.str_replace('.', '', $newVersion).'>';
+	$majorVersion = substr($newVersion, 0, strpos($newVersion, '.'));
+	$releaseNotesURL = '<http://doc.tiki.org/Tiki' . $majorVersion . '>';
 	$parseLogs = $sameFinalVersion = $skipBuffer = false;
 	$lastReleaseMajorNumber = -1;
 	$minRevision = $currentParsedRevision = 0;
@@ -1015,8 +1016,9 @@ function update_readme_file($releaseVersion, $mainVersion)
 	$copyrights_file = COPYRIGHTS_FILENAME;
 	$license_file = LICENSE_FILENAME;
 
-	$release_notes_url = 'http://tiki.org/ReleaseNotes' . str_replace('.', '', $mainVersion);
-	// For example, Tiki 3.x release notes are on http://tiki.org/ReleaseNotes30
+	$majorVersion = substr($mainVersion, 0, strpos($mainVersion, '.'));
+	$release_notes_url = 'http://doc.tiki.org/Tiki' . $majorVersion;
+	// Changed from Tiki 12 to point to http://doc.tiki.org/Tiki12 instead of http://tiki.org/ReleaseNotes30
 
 	$readme = <<<EOF
 Tiki! The wiki with a lot of features!

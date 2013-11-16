@@ -64,13 +64,13 @@
 					{preference name="unified_engine"}
 					{remarksbox type=tip title="{tr}About Unified Search Engines{/tr}"}
 						<b>{tr}MySQL Full Text Search{/tr}: </b></br>
-						{tr}Advantages{/tr}: {tr}Fast performance, Works out of the box with Tiki and even on most basic server setups{/tr}.</br>
-						{tr}Disadvantages{/tr}: {tr}Many common words (such as "first", "second", and "third" are not searchable), Only the first 65,535 characters (about 8000 words) of long pieces of content are searchable{/tr}(See this <a class='rbox-link' href='http://dev.mysql.com/doc/refman/5.7/en/fulltext-stopwords.html'>{tr}link{/tr}</a> {tr} for full list) {/tr}</br>
+						{tr}Advantages{/tr}: {tr}Fast performance. Works out of the box with Tiki and even on most basic server setups{/tr}.</br>
+						{tr}Disadvantages{/tr}: {tr}Many common words (such as "first", "second", and "third" are not searchable unless MySQL configuration is modified). Only the first 65,535 characters (about 8000 words) of long pieces of content are searchable{/tr}(See this <a class='rbox-link' href='http://dev.mysql.com/doc/refman/5.7/en/fulltext-stopwords.html'>{tr}link{/tr}</a> {tr} for full list) {/tr}</br>
 						<b>{tr}Lucene (PHP implementation){/tr}: </b></br>
-						{tr}Advantages{/tr}: {tr}Overcomes limitations of MySQL search mentioned above, Comes built in with Tiki{/tr}.</br>
-						{tr}Disadvantages{/tr}: {tr}Slower performance, May not work well with the most basic server setups and because the index is stored on disk it is more prone to file permissions problems and other server configuration issues{/tr}.</br>
+						{tr}Advantages{/tr}: {tr}Overcomes limitations of MySQL search mentioned above. Comes built in with Tiki{/tr}.</br>
+						{tr}Disadvantages{/tr}: {tr}Slower performance. May not work well with the most basic server setups and because the index is stored on disk it is more prone to file permissions problems and other server configuration issues{/tr}.</br>
 						<b>{tr}ElasticSearch{/tr}: </b></br>
-						{tr}Advantages{/tr}: {tr}Most advanced and scalable search engine, Enables some very advanced/new features of Tiki{/tr}.</br>
+						{tr}Advantages{/tr}: {tr}Most advanced, fast and scalable search engine. Enables some very advanced/new features of Tiki{/tr}.</br>
 						{tr}Disadvantages{/tr}: {tr}Needs to be separately installed from Tiki and requires more configuration{/tr} (See this <a class='rbox-link' href='http://www.elasticsearch.org/'>{tr}link{/tr}</a> {tr}for more information) {/tr}</br>
 					{/remarksbox}
 					{if ! empty($engine_info)}
@@ -133,7 +133,7 @@
 							<a href="tiki-admin.php?page=search&amp;rebuild=now" id="rebuild-link">{tr}Rebuild Index{/tr}</a> {tr}From the command line:{/tr} <kbd> php console.php index:rebuild</kbd><br>
 							<label for="log-rebuild">{tr}Log rebuild?{/tr}</label>
 							<input type="checkbox" id="log-rebuild" />
-							<span class="description">{tr}Log file is saved as temp/Search_Indexer.log{/tr}</span> <br> {tr}From the command line:{/tr} <kbd>php console.php index:rebuild --log</kbd><br>
+							<span class="description">{tr}Log file is saved as temp/Search_Indexer.log (or temp/Search_Indexer_console.log if indexed from the command line){/tr}</span> <br> {tr}From the command line:{/tr} <kbd>php console.php index:rebuild --log</kbd><br>
 							{jq}
 $("#log-rebuild").click(function(){
 	if ($(this).prop("checked")) {

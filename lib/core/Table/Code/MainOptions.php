@@ -53,10 +53,11 @@ class Table_Code_MainOptions extends Table_Code_Manager
 				//set filter to false for no filter
 				if (isset($info['type']) && $info['type'] === false) {
 					$allcols[$col]['addClass'][] = 'filter-false';
-				}
-				//add placeholders
-				if (isset($info['placeholder'])) {
-					$allcols[$col]['data']['placeholder'] = $info['placeholder'];
+				} else {
+					//add placeholders
+					if (isset($info['placeholder'])) {
+						$allcols[$col]['data']['placeholder'] = $info['placeholder'];
+					}
 				}
 			}
 		}
@@ -109,14 +110,17 @@ class Table_Code_MainOptions extends Table_Code_Manager
 		if (parent::$filters) {
 			$w[] = 'filter';
 		}
+		//pager
+		if (parent::$ajax) {
+			$w[] = 'pager';
+		}
 		if (count($w) > 0) {
 			$mo[] = $this->iterate($w, 'widgets : [', ']', '\'', '\'', ',');
 		}
 		/*** end widget section ***/
 
-		//Show processing
-		$mo[] = 'showProcessing: true';
-		if (parent::$sort && isset(parent::$s['serverside']) && parent::$s['serverside'] === true) {
+		//server side sorting
+		if (parent::$sort && parent::$ajax) {
 			$mo[] = 'serverSideSorting: true';
 		}
 

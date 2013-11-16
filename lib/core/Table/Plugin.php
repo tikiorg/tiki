@@ -41,6 +41,18 @@ class Table_Plugin
 	public function createParams()
 	{
 		$this->params = array(
+			'server' => array(
+				'required' => false,
+				'name' => tra('Server Side Processing'),
+				'description' => tr(
+					'Enter %0y%1 to have the server do the sorting and filtering through Ajax and %0n%1 to have the browser
+					do it (n is the default). Set to y if you do not want all rows fetched at once, but rather
+					fetch rows as you paginate, filter or sort.',
+					'<b>', '</b>'
+				),
+				'default' => 'n',
+				'filter' => 'striptags',
+			),
 			'sortable' => array(
 				'required' => false,
 				'name' => tra('Overall Sort Settings'),
@@ -95,7 +107,7 @@ class Table_Plugin
 				)
 					. '<br> <b>Text - </b>type:text;placeholder:xxxx<br>
 					<b>Dropdown - </b>type:dropdown;placeholder:****;option:****;option:****;option:**** <br>' .
-					tra('(options generated automatically if not set)') . '<br>
+					tra('(options generated automatically based on visible rows if not set)') . '<br>
 					<b>' . tra('Date range - ') . '</b>type:date;format:yyyy-mm-dd;from:2013-06-30;to:2013-12-31<br>' .
 					tra('(from and to values set defaults for these fields when user clicks on the input field)') . '<br>
 					<b>' . tra('Numeric range - ') . '</b>type:range;from:0;to:50<br>
@@ -149,8 +161,8 @@ class Table_Plugin
 	 * @param null   $ajaxurl			//only needed if ajax will be used to pull partial record sets
 	 * @param null   $totalrows			//only needed if ajax will be used to pull partial record sets
 	 */
-	public function setSettings ($id = null, $sortable = 'n', $sortList = null, $tsortcolumns = null, $tsfilters = null,
-						 $tsfilteroptions = null, $tspaginate = null, $ajaxurl = null, $totalrows = null)
+	public function setSettings ($id = null, $server = 'n', $sortable = 'n', $sortList = null, $tsortcolumns = null,
+		$tsfilters = null, $tsfilteroptions = null, $tspaginate = null, $ajaxurl = null, $totalrows = null)
 	{
 		$s = array();
 
@@ -162,6 +174,7 @@ class Table_Plugin
 		//sortable
 		switch ($sortable) {
 			case 'y':
+			case 'server':
 				$s['sort']['type'] = true;
 				break;
 			case 'n':
@@ -265,10 +278,11 @@ class Table_Plugin
 		}
 
 		//ajaxurl
-		if (!empty($ajaxurl)) {
+		if (!empty($ajaxurl) && $server === 'y') {
 			$s['ajax']['url'] = $this->getAjaxurl($ajaxurl);
+			$s['ajax']['type'] = true;
 		} else {
-			$s['ajax'] = false;
+			$s['ajax']['type'] = false;
 		}
 
 		//totalrows
