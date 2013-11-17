@@ -3,12 +3,6 @@
 	Adapted for Tiki 7.x
 	$Id$ */
 
-/* Import *lite as the base: */
-@import url("lite/lite.css");
-
-/* Then import the default layout properties file: */
-@import url("layout/layout.css");
-
 /* And design defaults: */
 @import url("layout/design.css");
 
@@ -20,7 +14,7 @@ html {
 }
 
 body {
-	font: 12px Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
 	line-height: 1.4;
 	background-color: #fff;
 }
@@ -135,8 +129,7 @@ h6 {
 }
 
 hr {
-	background: #aaa;
-	color: #000;
+	border-top-color: #000;
 }
 
 fieldset {
@@ -209,8 +202,8 @@ input#comments-title {
 }
 
 /* Links in buttons */
-.button a,
-.button a:visited,
+.btn-default,
+.btn-default a:visited,
 button,
 input[type=reset],
 input[type=submit],
@@ -225,7 +218,7 @@ input[type=submit],
 	font: normal 11px Verdana, Helvetica, Geneva, Arial, sans-serif;
 }
 
-.button a:hover,
+.btn:hover,
 button:hover,
 input[type=reset]:hover,
 input[type=submit]:hover,
@@ -237,7 +230,7 @@ input[type=submit]:hover,
 	font-size: 11px;
 }
 
-.button a:active,	
+.btn:active,	
 button:active,
 input[type=reset]:active,
 input[type=submit]:active,
@@ -265,10 +258,6 @@ input[type="reset"]:hover,
 input[type="submit"]:hover {
 	padding: .1em .8em;
 }
-
-/*.button {
-    margin: 2px;
-}*/
 
 small {
 	font-size: .9em;
@@ -302,18 +291,6 @@ label {
 
 #c1c2 {
 	background: #fff;
-}
-
-/*.fullscreen #col1 {
-	margin: 0 30px !important;
-}*/
-
-#c1c2 #wrapper .marginleft {
-	margin-left: 240px;
-}
-
-#c1c2 #wrapper .marginright {
-	margin-right: 210px;
 }
 
 #c1c2 #wrapper #col1 #tiki-center {
