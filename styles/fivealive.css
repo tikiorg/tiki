@@ -363,20 +363,18 @@ tt {
 }
 
 hr {
-	background: #74c0e2;
-	color: #74c0e2;
-	height: 2px;
+	border-top: 2px solid #74c0e2;
 }
 
-.button a,
-.button a:visited,
+.btn-default,
+.btn-default:visited,
 button,
 input[type="reset"],
 input[type="submit"],
 .button input,
 .calbuttonBox a,
-#genPass .button a,
-#genPass .button a:visited,
+#genPass .btn-default,
+#genPass .btn-default:visited,
 .daterow {
 	color: #fff;
 	background: #2098cd;
@@ -387,13 +385,13 @@ input[type="submit"],
 	-webkit-border-radius: 4px;
 }
 
-.button a:hover,
+.btn-default:hover,
 button:hover,
 input[type="reset"]:hover,
 input[type="submit"]:hover,
 .button input:hover,
 .calbuttonBox a:hover,
-#genPass .button a:hover,
+#genPass .btn-default:hover,
 .daterow:hover {
 	background: #1173a5;
 	border: 1px solid #11597e;
@@ -445,7 +443,7 @@ textarea,
 }
 
 /* Needed for Opera (11) */
-.button a,
+.btn-default,
 input[type="reset"],
 input[type="submit"],
 input[type="reset"]:hover,
@@ -454,10 +452,6 @@ button[type="submit"],
 button[type="submit"]:hover {
 	padding: .2em .8em;
 }
-
-/*span.button {
-	margin: 2px;
-}*/
 
 select[multiple="multiple"] {
 	height: 120px;
@@ -478,12 +472,6 @@ select {
 #editItemForm .formlabel {width: 30%;}
 
 /***** Site Header & Identity *****/
-
-/*#header-top {
-	min-height: 170px;
-	position: relative;
-	background: url(fivealive/options/blueberry/siteheader.jpg) no-repeat;
-}*/
 
 #top_modules .box-quickadmin {
 	position: absolute;
@@ -628,8 +616,6 @@ select {
 
 #top_modules .sitesubtitle {
 	font-size: 30px;
-/*	margin-top: 24px;
-	line-height: 1.2;*/
 }
 
 /* Sitelogin Popup */
@@ -761,12 +747,6 @@ a.login_link {
 li.login_link ul li a {
 	background: none !important;
 	color: #1174a5;
-}
-/* end Sitelogin Popup */
-
-#tiki-top[id] {
-	height: auto;
-	min-height: 50px;
 }
 
 /****** Menus, Links ******/
@@ -977,39 +957,6 @@ img.icon {
 	border-bottom: 3px solid #74c0e2;
 	font-weight: bold;
 }
-.rbox-title,
-.rbox-data {
-	border-color: #2098cd;
-	background: #c2eef8;
-	color: #143c64;
-}
-
-.rbox-title {
-	border-bottom: none !important;
-	margin-bottom: -.5em;
-	border-top-left-radius: 3px;
-	border-top-right-radius: 3px;
-	-moz-border-radius-topleft: 3px;
-	-moz-border-radius-topright: 3px;
-	-webkit-border-top-left-radius: 3px;
-	-webkit-border-top-right-radius: 3px;
-}
-
-.rbox-data {
-	border-top-right-radius: 3px;
-	border-bottom-left-radius: 3px;
-	border-bottom-right-radius: 3px;
-	-moz-border-radius-topright: 3px;
-	-moz-border-radius-bottomleft: 3px;
-	-moz-border-radius-bottomright: 3px;
-	-webkit-border-top-right-radius: 3px;
-	-webkit-border-bottom-left-radius: 3px;
-	-webkit-border-bottom-right-radius: 3px;
-}
-
-.error {
-	background: none;
-}
 
 .simplebox {
 	border: 2px solid #74c0e2;
@@ -1077,9 +1024,9 @@ fieldset.admin label,
 	color: #1174a5;
 }
 
-.admin .button a,
-.tabstoggle .button a,
-.tabstoggle .button a:visited {
+.admin .btn-default,
+.tabstoggle .btn-default,
+.tabstoggle .btn-default:visited {
 	color: #fff;
 }
 
