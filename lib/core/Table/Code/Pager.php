@@ -27,17 +27,15 @@ class Table_Code_Pager extends Table_Code_Manager
 	{
 		$p = array();
 		$pre = parent::$ajax ? 'pager_' : '';
-//		$pre = '';
 		//add pager controls
 		if (parent::$pager) {
 			$p[] = $pre . 'size: ' . parent::$s['pager']['max'];
-//			$p[] = 'container: $(\'div#' . parent::$s['pager']['controls']['id'] . '\')';
 			if (!parent::$ajax) {
 				$p[] = 'container: $(\'div#' . parent::$s['pager']['controls']['id'] . '\')';
-//				$p[] = 'output: \'{startRow} to {endRow} ({totalRows})\'';
+				$p[] = 'output: tr(\'Showing \') + \'{startRow} \' + tr(\'to\') + \' {endRow} \' + tr(\'of\')
+					+ \' {filteredRows} \' + \'(\' + tr(\'filtered from\') + \' {totalRows} \' + tr(\'records\') + \')\'';
 			} else {
 				$p[] = $pre . 'output: \'{start} {parens}\'';
-				$p[] = 'output: \'{startRow} to {endRow} ({totalRows})\'';
 			}
 		}
 
@@ -61,16 +59,16 @@ class Table_Code_Pager extends Table_Code_Manager
 				//set other variables
 				'r.fp = Math.ceil( r.filtered / p.size );',
 				'r.total = \'' . parent::$s['total'] . '\';',
-//				'r.end = Math.min((p.page * parseInt(p.$size.val()) + $(r.rows).length, r.filtered);',
 				'r.end = r.offset + $(r.rows).length;',
 				'r.headers = null;',
 				//set pager text
 				'if (r.filtered == 0) {r.start = tr(\'No records found\')}',
 				'if (r.filtered == 1) {r.start = tr(\'Showing 1 of 1\')}',
-				'if (r.filtered > 1) {r.start = tr(\'Showing \') + (r.offset + 1) + tr(\' to \') + r.end + tr(\' of \')
-					+ r.filtered}',
-				'r.parens = r.filtered < r.total ? \' (filtered from \' + r.total + tr(\' records)\') :
-					tr(\' records\');',
+				'if (r.filtered > 1) {r.start = tr(\'Showing \') + (r.offset + 1) + \' \' + tr(\'to\') + \' \'
+					+ r.end + \' \' + \' \' + tr(\'of\') + \' \' + r.filtered}',
+				'r.parens = r.filtered < r.total ? \' \' + \'(\' + tr(\'filtered from\') + \' \' + r.total + \' \'
+					+ tr(\'records)\') : \' \' + tr(\'records\');',
+				//return object
 				'return r;'
 			);
 			$p[] = $this->iterate(
