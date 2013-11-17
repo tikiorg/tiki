@@ -237,24 +237,12 @@ ul span, ol span {
 	padding: 1em;
 }
 
-#c1c2 #col2 {
-	width: 240px;
+#col2 {
 	overflow: visible;
 	background: #A8CCE2 url(feb12/columnbg.jpg) repeat-x;
 }
 
 #c1c2 #col2 .content {
-	padding: 1em;
-}
-
-#col3 {
-	margin-left: -240px;
-	width: 240px;
-	text-align: left;
-}
-
-#col3 .content {
-	margin: 0;
 	padding: 1em;
 }
 
@@ -384,7 +372,7 @@ body.fixed_width .fixedwidth .fixedwidth {
 }
 
 /* tiki-top_bar.tpl - menu and search */
-#tiki-top {
+#topbar_modules .navbar-default {
 	background: url(feb12/header.jpg) repeat-x;
 	color: #F5F5F5;
 	height: 34px;
@@ -392,8 +380,14 @@ body.fixed_width .fixedwidth .fixedwidth {
 	font-size: 14px;
 }
 
-#tiki-top a {
+#topbar_modules a {
 	color: #F5F5F5;
+}
+
+.navbar-collapse {
+	border: none;
+	padding-left: 0;
+	padding-right: 0;
 }
 
 #topbar_modules .box-search {
