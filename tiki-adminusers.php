@@ -756,10 +756,8 @@ if ($tiki_p_admin == 'y') {
 }
 
 //add tablesorter sorting and filtering
-//TODO restore tablesorter once implementation is complete
-/*$tsOn	= $prefs['disableJavascript'] == 'n' && $prefs['feature_jquery_tablesorter'] == 'y'
-		&& $prefs['feature_ajax'] == 'y' ? true : false;*/
-$tsOn = false;
+$tsOn	= $prefs['disableJavascript'] == 'n' && $prefs['feature_jquery_tablesorter'] == 'y'
+		&& $prefs['feature_ajax'] == 'y' ? true : false;
 
 $smarty->assign('tsOn', $tsOn);
 $tsAjax = isset($_REQUEST['tsAjax']) && $_REQUEST['tsAjax'] ? true : false;
