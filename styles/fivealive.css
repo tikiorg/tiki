@@ -60,7 +60,7 @@ body.fixed_width .fixedwidth {
     margin-left: auto;
 }
 
-#header {	/* inner <header> element that gets .fixedwidth class applied */
+.header {	/* inner <header> element that gets .fixedwidth class applied */
 	background: url(fivealive/options/blueberry/siteheader.jpg) 0 0 no-repeat;
 /*	height: 220px;*/
 }
@@ -107,35 +107,13 @@ body.fixed_width .fixedwidth {
 	margin-top: 0;
 }
 
-#c1c2	#wrapper	#col1.marginleft  {
-	margin-left: 200px;
-}
-
-#c1c2	#wrapper	#col1.marginright {
-	margin-right: 200px;
-}
-
-#c1c2	#wrapper	#col1	.content {
-	background: transparent;
-}
-
 #c1c2 #wrapper #col1 #tiki-center {
 	padding: 10px;
 	padding-right: 20px;
 }
 
-#c1c2 #col2 {
-	width: 200px;
-	overflow: visible;
-}
-
 #c1c2 #col2 .content {
 	margin-left: 8px;
-}
-
-#col3 {
-	width: 200px;
-	margin-left: -200px;
 }
 
 #col3 .content {
