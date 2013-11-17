@@ -502,8 +502,8 @@ a.highlight,
 
 /***** Boxes *****/
 /** Modules **/
-.box {
-	margin: 0 25px 25px 25px;
+.module {
+	margin-bottom: 25px; /* added for bootstrap compatibility */
 	background: #3475c6 url(business/title_bg.png) no-repeat 100% 0;
 }
 
