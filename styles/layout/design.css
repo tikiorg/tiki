@@ -41,6 +41,7 @@ label {
 }
 
 /***** Site Header & Identity *****/
+/* The following 2 are needed for now, but should be made redundant with something more bootstrap-generic. */
 .floatright {
 	float: right;
 	clear: none;
@@ -548,6 +549,12 @@ a.toolbar {			/* each tool button */
 
 /***** Boxes *****/
 /** Modules **/
+
+.module {
+	padding-left: 15px; /* These two: added for bootstrap compatibility. */
+	padding-right: 15px;
+	
+}
 
 .modules {
 	position: relative;
