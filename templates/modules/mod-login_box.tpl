@@ -88,7 +88,7 @@ if (jqueryTiki.tooltips) {
 	{if $user}
 		{if empty($mode) or $mode eq "module"}
 			<div>{tr}Logged in as:{/tr} <span style="white-space: nowrap">{$user|userlink}</span></div>
-			<div style="text-align: center;">
+			<div class="text-center">
 				{button href="tiki-logout.php" _text="{tr}Log out{/tr}"}
 			</div>
 			{if $login_module.can_revert}
@@ -97,7 +97,7 @@ if (jqueryTiki.tooltips) {
 						<legend>{tr}Return to Main User{/tr}</legend>
 						<input type="hidden" name="su" value="revert" />
 						<input type="hidden" name="username" value="auto" />
-						<div style="text-align: center"><button type="submit" class="btn btn-default" name="actsu">{tr}Switch{/tr}</button></div>
+						<div class="text-center"><button type="submit" class="btn btn-default" name="actsu">{tr}Switch{/tr}</button></div>
 					</fieldset>
 				</form>
 			{elseif $tiki_p_admin eq 'y'}
@@ -110,7 +110,7 @@ if (jqueryTiki.tooltips) {
 							{help url="Switch+User" desc="{tr}Help{/tr}" desc="{tr}Switch User:{/tr}{tr}Enter user name and click 'Switch'.<br>Useful for testing permissions.{/tr}"}
 						{/if}
 						<input type="text" name="username" id="login-switchuser_{$module_logo_instance}" size="{if empty($module_params.input_size)}15{else}{$module_params.input_size}{/if}" />
-						<div style="text-align: center"><button type="submit" class="btn btn-default" name="actsu">{tr}Switch{/tr}</button></div>
+						<div class="text-center"><button type="submit" class="btn btn-default" name="actsu">{tr}Switch{/tr}</button></div>
 						{autocomplete element="#login-switchuser_"|cat:$module_logo_instance type="username"}
 					</fieldset>
 				</form>
@@ -224,7 +224,7 @@ function doChallengeResponse() {
 			{if $prefs.rememberme eq 'always'}
 				<input type="hidden" name="rme" id="login-remember-module-input_{$module_logo_instance}" value="on" />
 			{else}
-				<div style="text-align: center" class="rme">
+				<div class="text-center rme">
 					<label for="login-remember-module_{$module_logo_instance}">{tr}Remember me{/tr}
 					({tr}for{/tr}
 					{if $prefs.remembertime eq 300}
@@ -255,11 +255,11 @@ function doChallengeResponse() {
 					{capture assign="close_tags"}</div>{$close_tags}{/capture}
 			{/if}
 		{/if}
-		<div style="text-align: center">
+		<div class="text-center">
 			<input class="btn btn-default button submit" type="submit" name="login" value="{tr}Log in{/tr}" />
 		</div>
 		{if $module_params.show_forgot eq 'y' or $module_params.show_register eq 'y'}
-			<div {if $mode eq 'header'}style="text-align: right; display:inline"{/if}>
+			<div {if $mode eq 'header'}class="text-right" display:inline"{/if}>
 				{strip}
 				{if $module_params.show_forgot eq 'y' && $prefs.forgotPass eq 'y'}
 					<div class="pass"><a {*class="linkmodule"*} href="tiki-remind_password.php" title="{tr}Click here if you've forgotten your password{/tr}">{tr}I forgot my password{/tr}</a></div>
@@ -317,7 +317,7 @@ function doChallengeResponse() {
 	</form>
 {/if}
 {if $prefs.socialnetworks_facebook_login eq 'y' and $mode neq "header" and $mode neq "popup"}
-	<div style="text-align: center"><a href="tiki-socialnetworks.php?request_facebook=true"><img src="http://developers.facebook.com/images/devsite/login-button.png"></a></div>
+	<div class="text-center"><a href="tiki-socialnetworks.php?request_facebook=true"><img src="http://developers.facebook.com/images/devsite/login-button.png"></a></div>
 {/if}
 {if $mode eq "header"}</div>{/if}
 {/tikimodule}
