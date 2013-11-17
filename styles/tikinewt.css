@@ -955,64 +955,59 @@ td.third {
 	float: left;
 }
 
-.tabmark {
-	list-style-image: none;
-	float: left;
+.nav-tabs > li > a {
 	border: solid 1px #aaa;
-	border-bottom: none !important;
-	margin: 0 .2em 0 0;
 }
 
-.tabmark a,
-.tabmark a:visited {
+.nav-tabs > li > a,
+.nav-tabs > li > a:visited {
 	padding: 0.5em 1em;
 	color: #666;
 	font-weight: bold;
 }
 
-.tabmark a:active {
+.nav-tabs > li > a:active {
 	color: #f00;
 }
 
-.tabmark a:hover {
+.nav-tabs > li > a:hover {
 	color: #000;
 	text-decoration: none;
 }
 
-.tabactive {
+.nav-tabs > li.active > a {
 	border: solid 1px #225566;
-	border-bottom-width: 0;
 	background: #eee;
 }
 
-.tabmark:hover {
+.nav-tabs > li.active > a:hover {
 	background: #ccc;
 }
 
-.tabactive:hover {
+.nav-tabs > li > a:hover {
 	background: #eee;
 }
 
-.tabactive a:hover {
+.nav-tabs > li > a:hover {
 	color: #666;
 	text-decoration: none;
 }
 
-.tabcontent {
+.tab-content {
 	border: 1px solid #225566 !important;
-	border-top: none !important;
+	border-top: none;
 	padding: 6px 2px 2px 2px;
 	background: #eee;
-	margin-top: 0 !important;
+	margin-top: 0;
 }
 
-.tabcontent table {
+.tab-content table {
 	margin: 1% auto 2% auto;
 	text-align: left;
 	width: 95%;
 }
 
-.tabcontent table td {
+.tab-content table td {
 	padding: 5px;
 }
 
