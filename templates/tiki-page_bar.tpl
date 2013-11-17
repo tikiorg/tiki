@@ -112,7 +112,7 @@
 					{/if}
 					
 					
-						<a id="comment-toggle" class="button btn-default" href="{service controller=comment action=list type="wiki page" objectId=$page}#comment-container">
+						<a id="comment-toggle" class="btn btn-default" href="{service controller=comment action=list type="wiki page" objectId=$page}#comment-container">
 							{tr}Comments{/tr}
 							{if $count_comments}
 								&nbsp;(<span class="count_comments">{$count_comments}</span>)
