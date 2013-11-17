@@ -12,8 +12,8 @@
 		{/if}
 
         <div class="header_outer">
-            <div class="header_container">
-		        <header class="container header">
+            <div class="container header_container">
+		        <header class="header">
 			        <div class="row">
 				        <div class="col-md-12">
 					        {modulelist zone=top}
