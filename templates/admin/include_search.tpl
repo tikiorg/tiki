@@ -71,7 +71,7 @@
 						{tr}Disadvantages{/tr}: {tr}Slower performance. May not work well with the most basic server setups and because the index is stored on disk it is more prone to file permissions problems and other server configuration issues{/tr}.</br>
 						<b>{tr}ElasticSearch{/tr}: </b></br>
 						{tr}Advantages{/tr}: {tr}Most advanced, fast and scalable search engine. Enables some very advanced/new features of Tiki{/tr}.</br>
-						{tr}Disadvantages{/tr}: {tr}Needs to be separately installed from Tiki and requires more configuration{/tr} (See this <a class='rbox-link' href='http://www.elasticsearch.org/'>{tr}link{/tr}</a> {tr}for more information) {/tr}</br>
+						{tr}Disadvantages{/tr}: {tr}Needs to be separately installed from Tiki and requires more configuration{/tr} (See this <a class='rbox-link' href='http://doc.tiki.org/ElasticSearch'>{tr}link{/tr}</a> {tr}for more information) {/tr}</br>
 					{/remarksbox}
 					{if ! empty($engine_info)}
 						<div class="adminoptionboxchild">

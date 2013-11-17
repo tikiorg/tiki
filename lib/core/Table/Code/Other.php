@@ -86,14 +86,7 @@ class Table_Code_Other extends Table_Code_Manager
 						''
 					);
 				}
-				$html[] = $this->iterate(
-					$divr,
-					'<div style="float:right">',
-					'</div>',
-					'',
-					'',
-					''
-				);
+				$html[] = $this->iterate($divr, '<div style="float:right">', '</div>', '', '', '');
 			}
 		}
 
@@ -114,14 +107,7 @@ class Table_Code_Other extends Table_Code_Manager
 				$opt[] = $sel . ' value="' . $option . '">' . $option;
 			}
 			if (isset($opt)) {
-				$div[] = $this->iterate(
-					$opt,
-					'<select class="pagesize">',
-					'</select>',
-					'<option',
-					'</option>',
-					''
-				);
+				$div[] = $this->iterate($opt, '<select class="pagesize">', '</select>', '<option', '</option>', '');
 			}
 			//put all pager controls in a div
 			$html[] = $this->iterate(
@@ -158,6 +144,20 @@ class Table_Code_Other extends Table_Code_Manager
 				'',
 				''
 			);
+			//note when filter is in place - used for setting offset when simplified ajax url is used
+			$bind = array(
+				'if (typeof this.config.pager.ajaxData !== \'undefined\') {',
+				'	this.config.pager.ajaxData.filter = true;',
+				'}',
+			);
+			$jq[] = $this->iterate(
+				$bind,
+				'$(\'' . parent::$tid . '\').bind(\'filterStart\', function(){',
+				$this->nt . '});',
+				$this->nt2,
+				'',
+				''
+			);
 			//change pages dropdown when filtering to show only filtered pages
 			$bind = array(
 				'var ret = c.pager.ajaxData;',
@@ -172,6 +172,9 @@ class Table_Code_Other extends Table_Code_Manager
 				'}',
 				'var page = ret.offset == 0 ? 0 : Math.ceil(ret.offset / c.pager.size);',
 				'$(\'select.gotoPage option\')[page].selected = true;',
+				'if (page != c.pager.page) {',
+				'	$(\'' . parent::$tid . '\').trigger(\'pageSet\', page);',
+				'}',
 			);
 			$jq[] = $this->iterate(
 				$bind,

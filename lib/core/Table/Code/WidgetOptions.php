@@ -43,8 +43,6 @@ class Table_Code_WidgetOptions extends Table_Code_Manager
 		//filter
 		if (parent::$filters) {
 			$wo[] = 'filter_cssFilter : \'tablesorter-filter\'';
-			$wo[] = 'filter_filteredRow : \'filtered\'';
-			$wo[] = 'filter_searchDelay : 300';
 			//server side filtering
 			if (parent::$ajax) {
 				$wo[] = 'filter_serversideFiltering : true';

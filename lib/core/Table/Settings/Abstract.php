@@ -380,16 +380,26 @@ abstract class Table_Settings_Abstract
 					}
 				}
 			}
-			//filter params
+			//column filter params
 			if (isset($this->s['filters']['columns']) && is_array($this->s['filters']['columns'])) {
 				foreach ($this->s['filters']['columns'] as $col => $info) {
 					if (isset($info['ajax'])) {
 						//tablesorter url param pattern is filter[0]=text for filter on first column
-						$this->s['ajax']['filters']['filter[' . $col . ']'] = $info['ajax'];
+						$this->s['ajax']['colfilters']['filter[' . $col . ']'] = $info['ajax'];
 					} elseif (isset($info['options'])) {
 						foreach ($info['options'] as $label => $value) {
 							$label = rawurlencode($label);
-							$this->s['ajax']['filters']['filter[' . $col . ']'][$label] = $value;
+							$this->s['ajax']['colfilters']['filter[' . $col . ']'][$label] = $value;
+						}
+					}
+				}
+			}
+			//external filter params
+			if (is_array($this->s['filters']['external'])) {
+				foreach($this->s['filters']['external'] as $key => $info) {
+					if (is_array($info['options'])) {
+						foreach($info['options'] as $opt => $value) {
+							$this->s['ajax']['extfilters'][] = rawurlencode($value);
 						}
 					}
 				}

@@ -27,17 +27,15 @@ class Table_Code_Pager extends Table_Code_Manager
 	{
 		$p = array();
 		$pre = parent::$ajax ? 'pager_' : '';
-//		$pre = '';
 		//add pager controls
 		if (parent::$pager) {
 			$p[] = $pre . 'size: ' . parent::$s['pager']['max'];
-//			$p[] = 'container: $(\'div#' . parent::$s['pager']['controls']['id'] . '\')';
 			if (!parent::$ajax) {
 				$p[] = 'container: $(\'div#' . parent::$s['pager']['controls']['id'] . '\')';
-//				$p[] = 'output: \'{startRow} to {endRow} ({totalRows})\'';
+				$p[] = 'output: tr(\'Showing \') + \'{startRow} \' + tr(\'to\') + \' {endRow} \' + tr(\'of\')
+					+ \' {filteredRows} \' + \'(\' + tr(\'filtered from\') + \' {totalRows} \' + tr(\'records\') + \')\'';
 			} else {
 				$p[] = $pre . 'output: \'{start} {parens}\'';
-				$p[] = 'output: \'{startRow} to {endRow} ({totalRows})\'';
 			}
 		}
 
@@ -61,16 +59,16 @@ class Table_Code_Pager extends Table_Code_Manager
 				//set other variables
 				'r.fp = Math.ceil( r.filtered / p.size );',
 				'r.total = \'' . parent::$s['total'] . '\';',
-//				'r.end = Math.min((p.page * parseInt(p.$size.val()) + $(r.rows).length, r.filtered);',
 				'r.end = r.offset + $(r.rows).length;',
 				'r.headers = null;',
 				//set pager text
 				'if (r.filtered == 0) {r.start = tr(\'No records found\')}',
 				'if (r.filtered == 1) {r.start = tr(\'Showing 1 of 1\')}',
-				'if (r.filtered > 1) {r.start = tr(\'Showing \') + (r.offset + 1) + tr(\' to \') + r.end + tr(\' of \')
-					+ r.filtered}',
-				'r.parens = r.filtered < r.total ? \' (filtered from \' + r.total + tr(\' records)\') :
-					tr(\' records\');',
+				'if (r.filtered > 1) {r.start = tr(\'Showing \') + (r.offset + 1) + \' \' + tr(\'to\') + \' \'
+					+ r.end + \' \' + \' \' + tr(\'of\') + \' \' + r.filtered}',
+				'r.parens = r.filtered < r.total ? \' \' + \'(\' + tr(\'filtered from\') + \' \' + r.total + \' \'
+					+ tr(\'records)\') : \' \' + tr(\'records\');',
+				//return object
 				'return r;'
 			);
 			$p[] = $this->iterate(
@@ -86,8 +84,8 @@ class Table_Code_Pager extends Table_Code_Manager
 			//be used by Tiki
 			if (!isset(parent::$s['ajax']['custom']) || parent::$s['ajax']['custom'] !== false) {
 				$ca = array(
-					'var vars = {}, hashes, hash, size, sort, sorts, filter, filtered, filters, params = [], dir, newurl,
-						p = table.config.pager, lcf = table.config.lastCombinedFilter;',
+					'var vars = {}, hashes, hash, size, sort, sorts, filter, filtered, colfilters, extfilters,
+						params = [], dir, newurl, p = table.config.pager;',
 					//parse out url parameters
 					'hashes = url.slice(url.indexOf(\'?\') + 1).split(\'&\');',
 					'for(var i = 0; i < hashes.length; i++) {',
@@ -96,7 +94,9 @@ class Table_Code_Pager extends Table_Code_Manager
 					'}',
 					//map of columns keys to sort and filter server side parameters
 					'sort = ' . json_encode(parent::$s['ajax']['sort']) . ';',
-					'filters = ' . json_encode(parent::$s['ajax']['filters']) . ';',
+					'colfilters = ' . json_encode(parent::$s['ajax']['colfilters']) . ';',
+					'extfilters = ' . json_encode(parent::$s['ajax']['extfilters']) . ';',
+					//iterate through url parameters
 					'$.each(vars, function(key, value) {',
 						//handle sort parameters
 					'	if (sort && key in sort) {',
@@ -104,30 +104,24 @@ class Table_Code_Pager extends Table_Code_Manager
 							//add sort if not yet defined or add sort for multiple comma-separated sort parameters
 					'		typeof sorts === \'undefined\' ? sorts = sort[key] + dir : sorts += \',\' + sort[key] + dir;',
 					'	}',
-						//handle filter parameters
-					'	if (key in filters) {',
+						//handle column and external filter parameters
+					'	if ($.inArray(value, extfilters) > -1) {',
 					'		filter = true;',
-					'		if (key in filters) {',
-					'			filters[key][value] ? params.push(filters[key][value]) : params.push(filters[key]
-									+ \'=\' + value);',
-					'		}',
+					'		params.push(decodeURIComponent(value));',
+					'	} else if (key in colfilters) {',
+					'		filter = true;',
+					'		colfilters[key][value] ? params.push(colfilters[key][value]) : params.push(colfilters[key]
+								+ \'=\' + value);',
 					'	}',
 					'});',
 					//convert to tiki sort param sort_mode
 					'if (sorts) {',
 					'	params.push(\'sort_mode=\' + sorts);',
 					'}',
-					//add external filter param if selected
-					'if (filter !== true && typeof lcf !== \'undefined\') {',
-					'	if (lcf.length > 0) {',
-					'		filter = true;',
-					'		params.push(lcf);',
-					'	}',
-					'}',
 					//offset parameter
 					'size = parseInt(p.$size.val());',
 					'filtered = typeof p.ajaxData === \'undefined\' ? 0 : p.ajaxData.filtered;',
-					'filter || ((p.page * size) >= filtered) ? offset = \'\' : offset = \'&'
+					'offset = filter || ((p.page * size) >= filtered) ? \'\' : offset = \'&'
 						. parent::$s['ajax']['offset'] . '=\' + (p.page * size); ',
 					//build url, starting with no parameters
 					'newurl = url.slice(0,url.indexOf(\'?\'));',
@@ -139,10 +133,17 @@ class Table_Code_Pager extends Table_Code_Manager
 				);
 			} else {
 				$ca = array(
-					'var p = table.config.pager;',
-					'var size = parseInt(p.$size.val());',
-					'return url + \'&tsAjax=true&' . parent::$s['ajax']['offset'] . '=\' + (p.page * size)
-						+ \'&numrows=\' + size;'
+					'var p = table.config.pager, size = parseInt(p.$size.val()), filter, filtered;',
+					'if (typeof p.ajaxData === \'undefined\') {',
+					'	filtered = 0;',
+					'	filter = false;',
+					'} else {',
+					'	filtered = typeof p.ajaxData.filtered === \'undefined\' ? 0 : p.ajaxData.filtered;',
+					'	filter = typeof p.ajaxData.filter === \'undefined\' ? false : true;',
+					'}',
+					'offset = filter || (p.page * size) >= filtered ? \'\' : \''
+						. parent::$s['ajax']['offset'] . '\' + \'=\' + (p.page * size);',
+					'return url + \'&tsAjax=true&\' + offset + \'&numrows=\' + size;'
 				);
 			}
 			if (count($ca) > 0) {
@@ -158,22 +159,10 @@ class Table_Code_Pager extends Table_Code_Manager
 			if (parent::$pager) {
 				//pager css
 				$pc[] = 'container: \'tablesorter-pager\'';
-				$p[] = $this->iterate(
-					$pc,
-					$pre . 'css: {',
-					$this->nt3 . '}',
-					$this->nt4,
-					''
-				);
+				$p[] = $this->iterate($pc, $pre . 'css: {', $this->nt3 . '}', $this->nt4, '');
 				//pager selectors
 				$ps[] = 'container : \'div#' . parent::$s['pager']['controls']['id'] . '\'';
-				$p[] = $this->iterate(
-					$ps,
-					$pre . 'selectors: {',
-					$this->nt3 . '}',
-					$this->nt4,
-					''
-				);
+				$p[] = $this->iterate($ps, $pre . 'selectors: {', $this->nt3 . '}', $this->nt4, '');
 			}
 		}
 		if (count($p) > 0) {
