@@ -23,7 +23,7 @@
 			</div>
         </div>
         <div class="middle_outer">
-            <div class="container clearfix fixedwidth middle" id="middle">
+            <div class="container clearfix middle" id="middle">
                 <div id="tiki-top" class="topbar">
 		        	<div class="row">
 				        <div class="col-md-12">
@@ -77,7 +77,7 @@
             </div>
                 <footer class="footer" id="footer">
                     <div class="footer_liner">
-                        <div class="fixedwidth footerbgtrap container">
+                        <div class="footerbgtrap container">
 		        	        <div class="row">
 				                <div class="col-md-12">
 					                {modulelist zone=bottom}
