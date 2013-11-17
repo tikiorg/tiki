@@ -17,7 +17,7 @@ function prefs_unified_list()
 				'mysql' => tra('MySQL Full Text Search'),
 				'elastic' => tra('ElasticSearch'),
 			),
-			'default' => 'lucene',
+			'default' => 'mysql',
 		),
 		'unified_lucene_location' => array(
 			'name' => tra('Lucene Index Location'),
