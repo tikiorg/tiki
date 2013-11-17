@@ -77,6 +77,12 @@ body.fixed_width .fixedwidth {
 	min-height: 55px;
 }
 
+/* bootstrap override */
+#topbar_modules .navbar-default {
+	background: transparent;
+	border: none;
+}
+
 #topbar_modules .box-search {
 	position: absolute;
 	top: 13px;
@@ -803,6 +809,12 @@ li.login_link ul li a {
 	background: url(fivealive/menu_divider.png) 100% 50% no-repeat;
 }
 
+#topbar_modules .navbar-default .navbar-nav > li > a {
+	background: url(fivealive/menu_divider.png) 100% 50% no-repeat;
+	color: #fff;
+	text-transform: uppercase;
+}
+
 #main #tiki-top .cssmenu_horiz li a:hover {
 	background: #1d1d1d;
 }
@@ -1160,9 +1172,6 @@ body.tiki_cms h1 a.pagetitle:hover {border-bottom: 0}
 	padding: 6px;
 }
 
-.navbar {
-	margin: 5px 0;
-}
 .postbody-title {
 	padding: .5em .3em .3em 1em;
 	position: relative;
