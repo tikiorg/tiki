@@ -111,14 +111,14 @@
 					{/jq}
 					{/if}
 					
-					<span class="button btn-default">
-						<a id="comment-toggle" href="{service controller=comment action=list type="wiki page" objectId=$page}#comment-container">
+					
+						<a id="comment-toggle" class="button btn-default" href="{service controller=comment action=list type="wiki page" objectId=$page}#comment-container">
 							{tr}Comments{/tr}
 							{if $count_comments}
 								&nbsp;(<span class="count_comments">{$count_comments}</span>)
 							{/if}
 						</a>
-					</span>
+					
 					{jq}
 						$('#comment-toggle').comment_toggle();
 					{/jq}
