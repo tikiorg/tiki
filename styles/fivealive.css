@@ -5,7 +5,6 @@
 */
 
 /* Import foundation CSS files. */
-@import url("lite/lite.css");
 @import url("layout/layout.css");
 @import url("layout/design.css");
 
@@ -29,30 +28,12 @@ body.filegal_popup {
 }
 
  /***** Layout *****/
-
-/*#fixedwidth*/
-.fixedwidth {
-	margin: 0;
-}
-
-body.fixed_width .fixedwidth {
-	width: 100%;
-	margin: 0;
-}
-
-.fixed_width .fixedwidth .fixedwidth {
-	width: 990px;
-	margin: 0 auto;
-}
-
 .header_outer {		/* whole width div containing the header strip */
 	background: url(fivealive/options/blueberry/headertile.png) 0 0 no-repeat;
-/*	height: 220px;*/
 }
 
 .header_container {	/* 2nd whole width div for background image tricks */
 	background: url(fivealive/header_left.png) 0 100% no-repeat;
-
 }
 
 /* keep header content in page center (override layout.css)*/
@@ -62,7 +43,6 @@ body.fixed_width .fixedwidth {
 
 .header {	/* inner <header> element that gets .fixedwidth class applied */
 	background: url(fivealive/options/blueberry/siteheader.jpg) 0 0 no-repeat;
-/*	height: 220px;*/
 }
 
 #header #top_modules .module.secondary_site_menu {
@@ -82,6 +62,7 @@ body.fixed_width .fixedwidth {
 	background: transparent;
 	border: none;
 	width: 75%;
+	margin-bottom: 0;
 }
 
 #topbar_modules .box-search {
@@ -91,40 +72,7 @@ body.fixed_width .fixedwidth {
 }
 
 .middle_outer {
-		background: url('fivealive/topbar.jpg') repeat-x;
-}
-
-#middle {
-	display: table;
-	margin: 0 auto;
-}
-
-#fixedwidth[id]
-#middle[id] {
-	height: auto;
-}
-
-#main {
-	text-align: left;
-	background: #fff;
-	background: transparent;
-}
-
-#main[id] {
-	margin-top: 0;
-}
-
-#c1c2 #wrapper #col1 #tiki-center {
-	padding: 10px;
-	padding-right: 20px;
-}
-
-#c1c2 #col2 .content {
-	margin-left: 8px;
-}
-
-#col3 .content {
-	margin-right: 8px;
+		background: url("fivealive/topbar.jpg") repeat-x;
 }
 
 #footer {
@@ -154,8 +102,6 @@ body.fixed_width .fixedwidth {
 }
 
 #footer .container {
-	border-top: 1px solid #28aae1;
-	border-bottom: 1px solid #28aae1;
 	margin-bottom: 2px;
 }
 
@@ -290,7 +236,8 @@ body.fixed_width .fixedwidth {
 #show-errors-button {
 	text-align: right;
 	margin-top: -26px;
-	display: block;
+	display: inline-block;
+	float: right;
 }
 
 #show-errors-button a {
