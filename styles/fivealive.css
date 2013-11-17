@@ -81,6 +81,7 @@ body.fixed_width .fixedwidth {
 #topbar_modules .navbar-default {
 	background: transparent;
 	border: none;
+	width: 75%;
 }
 
 #topbar_modules .box-search {
