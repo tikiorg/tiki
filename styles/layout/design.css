@@ -549,8 +549,8 @@ a.toolbar {			/* each tool button */
 
 /***** Boxes *****/
 /** Modules **/
-
-.module {
+.box-title,
+.box-data {
 	padding-left: 15px; /* These two: added for bootstrap compatibility. */
 	padding-right: 15px;
 	
