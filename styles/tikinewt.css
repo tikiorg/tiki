@@ -83,7 +83,7 @@ body.fixed_width .fixedwidth .fixedwidth {
 	padding-top: 10px;
 	padding-bottom: 5px;
 	background: #c7d0d9;
-	margin: 10px;
+	margin: 10px auto;
 	border: 1px solid #8cacbb;
 	border-width: 1px;
 	text-align: center;
@@ -165,7 +165,7 @@ form {
 	padding: 0;
 }
 
-button,
+.btn-default,
 input,
 textarea,
 select {
@@ -194,8 +194,8 @@ input[type=radio] {
 	margin: 0;
 }
 
-.button a,
-.button a:visited,
+.btn-default,
+.btn-default:visited,
 button,
 input[type=reset],
 input[type=submit],
@@ -213,7 +213,7 @@ input[type=submit],
 	font-weight: bold;
 }
 	
-.button a:hover,
+.btn-default:hover,
 button:hover,
 input[type=reset]:hover,
 input[type=submit]:hover,
