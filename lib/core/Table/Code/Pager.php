@@ -84,8 +84,8 @@ class Table_Code_Pager extends Table_Code_Manager
 			//be used by Tiki
 			if (!isset(parent::$s['ajax']['custom']) || parent::$s['ajax']['custom'] !== false) {
 				$ca = array(
-					'var vars = {}, hashes, hash, size, sort, sorts, filter, filtered, filters, params = [], dir, newurl,
-						p = table.config.pager, lcf = table.config.lastCombinedFilter;',
+					'var vars = {}, hashes, hash, size, sort, sorts, filter, filtered, colfilters, extfilters,
+						params = [], dir, newurl, p = table.config.pager;',
 					//parse out url parameters
 					'hashes = url.slice(url.indexOf(\'?\') + 1).split(\'&\');',
 					'for(var i = 0; i < hashes.length; i++) {',
@@ -94,7 +94,9 @@ class Table_Code_Pager extends Table_Code_Manager
 					'}',
 					//map of columns keys to sort and filter server side parameters
 					'sort = ' . json_encode(parent::$s['ajax']['sort']) . ';',
-					'filters = ' . json_encode(parent::$s['ajax']['filters']) . ';',
+					'colfilters = ' . json_encode(parent::$s['ajax']['colfilters']) . ';',
+					'extfilters = ' . json_encode(parent::$s['ajax']['extfilters']) . ';',
+					//iterate through url parameters
 					'$.each(vars, function(key, value) {',
 						//handle sort parameters
 					'	if (sort && key in sort) {',
@@ -102,25 +104,19 @@ class Table_Code_Pager extends Table_Code_Manager
 							//add sort if not yet defined or add sort for multiple comma-separated sort parameters
 					'		typeof sorts === \'undefined\' ? sorts = sort[key] + dir : sorts += \',\' + sort[key] + dir;',
 					'	}',
-						//handle filter parameters
-					'	if (key in filters) {',
+						//handle column and external filter parameters
+					'	if ($.inArray(value, extfilters) > -1) {',
 					'		filter = true;',
-					'		if (key in filters) {',
-					'			filters[key][value] ? params.push(filters[key][value]) : params.push(filters[key]
-									+ \'=\' + value);',
-					'		}',
+					'		params.push(decodeURIComponent(value));',
+					'	} else if (key in colfilters) {',
+					'		filter = true;',
+					'		colfilters[key][value] ? params.push(colfilters[key][value]) : params.push(colfilters[key]
+								+ \'=\' + value);',
 					'	}',
 					'});',
 					//convert to tiki sort param sort_mode
 					'if (sorts) {',
 					'	params.push(\'sort_mode=\' + sorts);',
-					'}',
-					//add external filter param if selected
-					'if (filter !== true && typeof lcf !== \'undefined\') {',
-					'	if (lcf.length > 0) {',
-					'		filter = true;',
-					'		params.push(lcf);',
-					'	}',
 					'}',
 					//offset parameter
 					'size = parseInt(p.$size.val());',
@@ -156,22 +152,10 @@ class Table_Code_Pager extends Table_Code_Manager
 			if (parent::$pager) {
 				//pager css
 				$pc[] = 'container: \'tablesorter-pager\'';
-				$p[] = $this->iterate(
-					$pc,
-					$pre . 'css: {',
-					$this->nt3 . '}',
-					$this->nt4,
-					''
-				);
+				$p[] = $this->iterate($pc, $pre . 'css: {', $this->nt3 . '}', $this->nt4, '');
 				//pager selectors
 				$ps[] = 'container : \'div#' . parent::$s['pager']['controls']['id'] . '\'';
-				$p[] = $this->iterate(
-					$ps,
-					$pre . 'selectors: {',
-					$this->nt3 . '}',
-					$this->nt4,
-					''
-				);
+				$p[] = $this->iterate($ps, $pre . 'selectors: {', $this->nt3 . '}', $this->nt4, '');
 			}
 		}
 		if (count($p) > 0) {
