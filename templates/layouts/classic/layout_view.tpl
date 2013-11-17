@@ -56,7 +56,7 @@
 					        {block name=content}{/block}
 					        {block name=show_content}{/block}
 				        </div>
-                        <div class="col-lg-2 col-lg-pull-10">
+                        <div class="col-lg-2 col-lg-pull-10" id="col2">
                             {modulelist zone=left}
                             </div>
 			        {else}
@@ -66,10 +66,10 @@
 					        {block name=content}{/block}
 					        {block name=show_content}{/block}
 				        </div>
-                        <div class="col-lg-2 col-lg-pull-8">
+                        <div class="col-lg-2 col-lg-pull-8" id="col2">
                             {modulelist zone=left}
                         </div>
-                        <div class="col-lg-2">
+                        <div class="col-lg-2" id="col3">
 		    		        {modulelist zone=right}
 				        </div>
 			        {/if}
