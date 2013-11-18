@@ -577,26 +577,12 @@ select {
 	-moz-border-radius-topright: 5px;
 }
 
-.siteloginbar_poppedup.cbox {
-	background: transparent;
-}
-.siteloginbar_poppedup .tabcontent {
-	box-shadow: 0 5px 5px -3px rgba(0, 0, 0, .5);
-}
-
 .siteloginbar_popup ul.clearfix #register_link {
 	background-color: #969696;
 }
 
 .siteloginbar_popup ul.clearfix .tabmark {
 	background-color: #070707;
-}
-
-.siteloginbar_poppedup li.tabcontent {
-	border-radius: 5px;
-	-webkit-border-radius: 5px;
-	-moz-border-radius: 5px;
-	color: #2098CD;
 }
 
 .siteloginbar_poppedup a {
