@@ -6,7 +6,6 @@
 // $Id$
 
 require_once('tikiimporter_wiki.php');
-require_once('Text/Wiki/Mediawiki.php');
 
 /**
  * Parses a MediaWiki-style XML dump to import it into TikiWiki.

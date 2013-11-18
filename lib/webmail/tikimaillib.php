@@ -68,6 +68,7 @@ class TikiMail
 
 	function setSubject($subject)
 	{
+		$this->mail->clearSubject();
 		$this->mail->setSubject($subject);
 	}
 

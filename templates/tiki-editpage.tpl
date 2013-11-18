@@ -307,21 +307,21 @@ $("input[name=allowhtml]").change(function() {
 								</fieldset>
 							{/if}
 							
-							{if $tiki_p_export_wiki eq 'y' && $prefs.feature_wiki_import_page eq 'y'}
+							{if $prefs.feature_wiki_import_page eq 'y'}
 								<fieldset>
 									<legend>{tr}Import page:{/tr}</legend>
 									<input type="hidden" name="MAX_FILE_SIZE" value="1000000000">
 									<input id="userfile1" name="userfile1" type="file">
                                     <input type="submit" class="wikiaction btn btn-default" name="attach" value="{tr}Import{/tr}" onclick="javascript:needToConfirm=false;insertImgFile('editwiki','userfile2','hasAlreadyInserted2','file', 'page2', 'attach_comment'); return true;">
                                 </fieldset>
-									{if $prefs.feature_wiki_export eq 'y' and $tiki_p_export_wiki eq 'y'}
-                                <fieldset>
+							{/if}
+							{if $prefs.feature_wiki_export eq 'y' and $tiki_p_export_wiki eq 'y'}
+								<fieldset>
 									<legend>{tr}Export pages:{/tr}</legend>
 									<a href="tiki-export_wiki_pages.php?page={$page|escape:"url"}&amp;all=1" class="link">{tr}export all versions{/tr}</a>
-									{/if}									
 								</fieldset>
 							{/if}
-							
+
 							{if !isset($wysiwyg) || $wysiwyg neq 'y'}
 								{if $prefs.feature_wiki_attachments == 'y' and ($tiki_p_wiki_attach_files eq 'y' or $tiki_p_wiki_admin_attachments eq 'y')}
 									<fieldset>
