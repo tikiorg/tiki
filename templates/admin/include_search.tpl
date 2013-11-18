@@ -155,7 +155,7 @@ $("#log-rebuild").click(function(){
 						</li>
 					</ul>
 					{remarksbox type="tip" title="{tr}Indexing Problems?{/tr}"}
-					<p>{tr}If the indexing does not complete, check the log file to see where it ended. Perhaps there could be a problem with the last content it was trying to index. Settings tips: excluding plugins from the indexing usually helps, and it might be necessary to increase the time limit above for large sites.{/tr}</p>
+					<p>{tr}If the indexing does not complete, check the log file to see where it ended. Perhaps there could be a problem with the last content it was trying to index. Settings tips: excluding plugins from the indexing usually helps, and it might be necessary to increase the time limit above for large sites. You can also exclude items from being indexed by categorizing them in excluded categories.{/tr}</p>
 					<p>{tr}Last line of log file (web):{/tr} {$lastLogItemWeb|escape}<br />
 					{tr}Last line of log file (console):{/tr} {$lastLogItemConsole|escape}</p>
 					{/remarksbox}
