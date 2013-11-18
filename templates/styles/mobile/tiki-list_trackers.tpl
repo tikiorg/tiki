@@ -49,7 +49,11 @@
 				<td class="action">
 					<div data-role="controlgroup" data-type="horizontal">{* mobile *}
 						{if $tracker.permissions->export_tracker}
-							<a data-role="button" title="{tr _0=$tracker.name|escape}Export %0{/tr}" class="export dialog" href="{service controller=tracker action=export trackerId=$tracker.trackerId}">{icon _id='disk' alt="{tr}Export{/tr}"}</a>
+							{if $tracker.items > 0}
+								<a data-role="button" title="{tr _0=$tracker.name|escape}Export %0{/tr}" class="export dialog" href="{service controller=tracker action=export trackerId=$tracker.trackerId}">{icon _id='disk' alt="{tr}Export{/tr}"}</a>
+							{else}
+								<span data-role="button" class="ui-disabled">{icon _id='disk' alt="{tr}Export{/tr}"}</span>
+							{/if}
 						{/if}
 						{if $tracker.permissions->admin_trackers}
 							<a data-role="button" title="{tr _0=$tracker.name|escape}Import in %0{/tr}" class="import dialog" href="{service controller=tracker action=import_items trackerId=$tracker.trackerId}">{icon _id='upload' alt="{tr}Import{/tr}"}</a>
