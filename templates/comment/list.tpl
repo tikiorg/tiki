@@ -49,42 +49,31 @@
 						{$comment.parsed}
 					</div>
 
-					<div class="buttons comment-form">
-						<table>
-							<tr>
-								{if $allow_post && $comment.locked neq 'y'}
-								<td>
-									<div class="button">{self_link controller=comment action=post type=$type objectId=$objectId parentId=$comment.threadId}{tr}Reply{/tr}{/self_link}</div>
-								</td>
-								{/if}
-								<td>
-								{if $comment.can_edit}
-									<div class="button">{self_link controller=comment action=edit threadId=$comment.threadId}{tr}Edit{/tr}{/self_link}</div>
-								{/if}
-								</td>
-
-								{if $prefs.wiki_comments_simple_ratings eq 'y'}
-								<td>
-									<form class="commentRatingForm" method="post" action="" style="float: right;">
-										{rating type="comment" id=$comment.threadId}
-										<input type="hidden" name="id" value="{$comment.threadId}" />
-										<input type="hidden" name="type" value="comment" />
-									</form>
-									{jq}
-										var crf = $('form.commentRatingForm').submit(function() {
-											var vals = $(this).serialize();
-											$.modal(tr('Loading...'));
-											$.post($.service('rating', 'vote'), vals, function() {
-												$.modal();
-												$.notify(tr('Thanks for rating!'));
-											});
-											return false;
-										});
-									{/jq}
-								</td>
-								{/if}
-							</tr>
-						</table>
+					<div class="buttons comment-form btn-group">
+						{if $allow_post && $comment.locked neq 'y'}
+							{self_link _class='btn btn-default btn-sm' controller=comment action=post type=$type objectId=$objectId parentId=$comment.threadId}{tr}Reply{/tr}{/self_link}
+						{/if}
+						{if $comment.can_edit}
+							{self_link _class='btn btn-default btn-sm' controller=comment action=edit threadId=$comment.threadId}{tr}Edit{/tr}{/self_link}
+						{/if}
+						{if $prefs.wiki_comments_simple_ratings eq 'y'}
+							<form class="commentRatingForm" method="post">
+								{rating type="comment" id=$comment.threadId}
+								<input type="hidden" name="id" value="{$comment.threadId}" />
+								<input type="hidden" name="type" value="comment" />
+							</form>
+							{jq}
+var crf = $('form.commentRatingForm').submit(function() {
+	var vals = $(this).serialize();
+	$.modal(tr('Loading...'));
+	$.post($.service('rating', 'vote'), vals, function() {
+		$.modal();
+		$.notify(tr('Thanks for rating!'));
+	});
+	return false;
+});
+							{/jq}
+						{/if}
 					</div>
 					{if $comment.replies_info.numReplies gt 0}
 						{include file='comment/list.tpl' comments=$comment.replies_info.replies cant=$comment.replies_info.numReplies parentId=$comment.threadId}

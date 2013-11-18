@@ -1257,13 +1257,6 @@ body.tiki_forums .normal {
 	margin-bottom: 0.2em;
 }
 
-#comment-container .buttons table td {
-	padding: 0;
-}
-#comment-container .buttons table .button {
-	margin: 0;
-}
-
 /* Comments (article, blogs) */
 
 #comment-container .actions {
@@ -1271,12 +1264,12 @@ body.tiki_forums .normal {
 }
 #comment-container ol {
 	list-style: none;
-	margin: 0 0 0 1em;
+	margin: 0 0 1em 1em;
 	padding: 0;
 }
 
 #comment-container ol ol {
-	margin: 0 0 0 4em;
+	margin: 1em 0 1em 4em;
 }
 
 #comment-container .avatar {
@@ -1290,6 +1283,12 @@ body.tiki_forums .normal {
 
 #comment-container .date {
 	font-style: italic;
+}
+
+#comment-container .commentRatingForm {
+	white-space: nowrap;
+	padding-left: .5em;
+	display: inline-block;
 }
 
 /* Comment Annotations */
