@@ -44,7 +44,7 @@
 						{capture name='name'}
 							icnmodv-{$smarty.capture.name}
 						{/capture}
-						{icon name="icnmod-"|cat:$smarty.capture.name class="flipmodimage" _id="trans" alt="[{tr}Toggle Vertically{/tr}]" _defaultdir="pics"}
+						{icon name="icnmod-"|cat:$smarty.capture.name class="flipmodimage" _id="trans" alt="[{tr}Toggle Vertically{/tr}]" _defaultdir="img"}
 					</a>
 				</span>
 			{/if}
