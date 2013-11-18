@@ -326,6 +326,7 @@ input[type="submit"]:hover,
 .daterow:hover {
 	background: #1173a5;
 	border: 1px solid #11597e;
+	color: #fff;
 	text-decoration: none;
 	font-weight: bold;
 	border-radius: 4px;
@@ -696,6 +697,7 @@ li.login_link ul li a {
 	padding: 8px 1em;
 }
 
+.dropdown-menu, /* bootstrap */
 #tiki-top .cssmenu_horiz li a:hover,
 .cssmenu_vert li ul a:hover,
 .cssmenu_horiz li ul a:hover,
@@ -765,6 +767,22 @@ li.login_link ul li a {
 
 #main #tiki-top .cssmenu_horiz li a:hover {
 	background: #1d1d1d;
+}
+
+/* bootstrap */
+#topbar_modules .dropdown-menu {
+	background: #153c64;
+	color: #fff;
+	padding: 0;
+}
+
+#topbar_modules .dropdown-menu li a {
+	color: #fff;
+}
+
+#topbar_modules .dropdown-menu > li > a:hover,
+#topbar_modules .dropdown-menu > li > a:focus {
+	background: #128bc9;
 }
 
 /* ul ul top compensation for padding */

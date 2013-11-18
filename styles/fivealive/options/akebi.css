@@ -26,15 +26,14 @@ fieldset {
 }
 
 hr {
-	color: #18a3bb;
-	background: #18a3bb;
+	border-top: #18a3bb;
 }
 
-#main .header_outer {
+.header_outer {
 	background: url(akebi/siteheadertile.jpg) 0 0 no-repeat;
 }
 
-#header {
+.header {
 	background: url(akebi/siteheader.png) -250px 0 no-repeat;
 }
 
@@ -61,8 +60,8 @@ hr {
 	color: #19a5be;
 }
 
-.button a,
-.button a:visited,
+.btn-default,
+.btn-default:visited,
 button,
 input[type="reset"],
 input[type="submit"],
@@ -77,7 +76,7 @@ input[type="submit"],
 	font-weight: bold;
 }
 	
-.button a:hover,
+.btn-default:hover,
 button:hover,
 input[type="reset"]:hover,
 input[type="submit"]:hover,
@@ -100,6 +99,7 @@ input[type="submit"]:hover,
 	color: #0b8a98;
 }
 
+#topbar_modules .dropdown-menu,
 .cssmenu_vert li ul a,
 .cssmenu_horiz li ul a,
 .header .cssmenu_horiz li ul a,
@@ -110,10 +110,13 @@ input[type="submit"]:hover,
 	color: #fff;
 }
 
+#topbar_modules .dropdown-menu,
 #tiki-top .cssmenu_horiz li a {
 	background: url(akebi/siteheader.png) no-repeat -600px -40px;
 }
 
+#topbar_modules .dropdown-menu > li > a:hover,
+#topbar_modules .dropdown-menu > li > a:focus,
 #tiki-top .cssmenu_horiz li a:hover,
 .cssmenu_vert li ul a:hover,
 .cssmenu_horiz li ul a:hover,
@@ -122,6 +125,7 @@ input[type="submit"]:hover,
 	background: #14a1bb;
 }
 
+#topbar_modules .dropdown-menu li.active a, /* bootstrap */
 .header .cssmenu_horiz li.selected a,
 #topbar_modules .cssmenu_horiz li.selected a,
 .cssmenu_horiz li.selected a,
@@ -175,7 +179,10 @@ textarea,
 	border: 2px solid #18a3bb;
 }
 
-h3.box-title,
+h3.box-title {
+	color: #0f91a2;
+}
+
 .postbody-title,
 #top_modules .module.secondary_site_menu {
 	background: #0f91a2 url(akebi/siteheader.png) no-repeat -700px -200px;
