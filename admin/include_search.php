@@ -168,6 +168,18 @@ if ($tiki_p_admin == 'y' && !empty($_REQUEST['refresh_tracker_index_now']) && $_
 	$smarty->assign('refresh_tracker_index_now', $_REQUEST['refresh_tracker_index_now']);
 }
 
+$lastLogItem = $unifiedsearchlib->getLastLogItem();
+if ($lastLogItem['web']) {
+	$smarty->assign('lastLogItemWeb', $lastLogItem['web']);
+} else {
+	$smarty->assign('lastLogItemWeb', tr('Unable to get info from log file.'));
+}
+if ($lastLogItem['console']) {
+	$smarty->assign('lastLogItemConsole', $lastLogItem['console']);
+} else {
+	$smarty->assign('lastLogItemConsole', tr('Unable to get info from log file.'));
+}
+
 if (isMySQLFulltextSearchSupported()) {
 	$smarty->assign('no_fulltext_support', false);
 } else {

@@ -154,6 +154,11 @@ $("#log-rebuild").click(function(){
 							{/if}
 						</li>
 					</ul>
+					{remarksbox type="tip" title="{tr}Indexing Problems?{/tr}"}
+					<p>{tr}If the indexing does not complete, check the log file to see where it ended. Perhaps there could be a problem with the last content it was trying to index. Settings tips: excluding plugins from the indexing usually helps, and it might be necessary to increase the time limit above for large sites.{/tr}</p>
+					<p>{tr}Last line of log file (web):{/tr} {$lastLogItemWeb|escape}<br />
+					{tr}Last line of log file (console):{/tr} {$lastLogItemConsole|escape}</p>
+					{/remarksbox}
 					{if $queue_count > 0}
 						<h5>{tr}Queue size:{/tr} {$queue_count}</h5>
 						{tr}Process:{/tr}
