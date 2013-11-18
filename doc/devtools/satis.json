@@ -43,9 +43,9 @@
 			"type": "package",
 			"package": {
 				"name": "ckeditor/ckeditor",
-				"version": "4.2",
+				"version": "4.2.1",
 				"dist": {
-					"url": "https://github.com/ckeditor/ckeditor-releases/archive/4.2/full.zip",
+					"url": "https://github.com/ckeditor/ckeditor-releases/archive/4.2.1/full.zip",
 					"type": "zip"
 				}
 			}
@@ -54,9 +54,9 @@
 			"type": "package",
 			"package": {
 				"name": "ckeditor/ckeditor",
-				"version": "4.2.1",
+				"version": "4.3.0",
 				"dist": {
-					"url": "https://github.com/ckeditor/ckeditor-releases/archive/4.2.1/full.zip",
+					"url": "https://github.com/ckeditor/ckeditor-releases/archive/4.3.0/full.zip",
 					"type": "zip"
 				}
 			}
@@ -76,9 +76,9 @@
 			"type": "package",
 			"package": {
 				"name": "ckeditor/ckeditor/skins/kama",
-				"version": "4.2",
+				"version": "4.2.1",
 				"dist": {
-					"url": "http://download.ckeditor.com/kama/releases/kama_4.2.zip",
+					"url": "http://download.ckeditor.com/kama/releases/kama_4.2.1.zip",
 					"type": "zip"
 				}
 			}
@@ -87,9 +87,9 @@
 			"type": "package",
 			"package": {
 				"name": "ckeditor/ckeditor/skins/kama",
-				"version": "4.2.1",
+				"version": "4.3.0",
 				"dist": {
-					"url": "http://download.ckeditor.com/kama/releases/kama_4.2.1.zip",
+					"url": "http://download.ckeditor.com/kama/releases/kama_4.3.0.zip",
 					"type": "zip"
 				}
 			}
@@ -109,20 +109,9 @@
 			"type": "package",
 			"package": {
 				"name": "ckeditor/ckeditor/plugins/divarea",
-				"version": "4.2",
+				"version": "4.2.1",
 				"dist": {
-					"url": "http://download.ckeditor.com/divarea/releases/divarea_4.2.zip",
-					"type": "zip"
-				}
-			}
-		},
- 		{
- 			"type": "package",
- 			"package": {
-				"name": "codemirror/codemirror",
-				"version": "3.16",
-				"dist": {
-					"url": "http://codemirror.net/codemirror-3.16.zip",
+					"url": "http://download.ckeditor.com/divarea/releases/divarea_4.2.1.zip",
 					"type": "zip"
 				}
 			}
@@ -131,9 +120,9 @@
 			"type": "package",
 			"package": {
 				"name": "ckeditor/ckeditor/plugins/divarea",
-				"version": "4.2.1",
+				"version": "4.3.0",
 				"dist": {
-					"url": "http://download.ckeditor.com/divarea/releases/divarea_4.2.1.zip",
+					"url": "http://download.ckeditor.com/divarea/releases/divarea_4.3.0.zip",
 					"type": "zip"
 				}
 			}
@@ -149,35 +138,13 @@
 				}
 			}
 		},
-		{
-			"type": "package",
-			"package": {
+ 		{
+ 			"type": "package",
+ 			"package": {
 				"name": "codemirror/codemirror",
-				"version": "2.37",
+				"version": "3.19.0",
 				"dist": {
-					"url": "http://codemirror.net/codemirror-2.37.zip",
-					"type": "zip"
-				}
-			}
-		},
-		{
-			"type": "package",
-			"package": {
-				"name": "codemirror/codemirror",
-				"version": "2.38",
-				"dist": {
-					"url": "http://codemirror.net/codemirror-2.38.zip",
-					"type": "zip"
-				}
-			}
-		},
-		{
-			"type": "package",
-			"package": {
-				"name": "codemirror/codemirror",
-				"version": "3.16",
-				"dist": {
-					"url": "http://codemirror.net/codemirror-3.16.zip",
+					"url": "https://github.com/marijnh/CodeMirror/archive/3.19.0.zip",
 					"type": "zip"
 				}
 			}
