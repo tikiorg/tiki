@@ -83,7 +83,7 @@
 							{if $tracker.items > 0}
 								<a data-role="button" title="{tr}Clear{/tr}" class="link clear confirm-prompt" href="{service controller=tracker action=clear trackerId=$tracker.trackerId}">{icon _id='bin' alt="{tr}Clear{/tr}"}</a>
 							{else}
-								<span data-role="button">{icon _id='bin_empty' alt="{tr}Clear{/tr}"}</span>
+								<span data-role="button" class="ui-disabled">{icon _id='bin_empty' alt="{tr}Clear{/tr}"}</span>
 							{/if}
 							<a data-role="button" title="{tr}Delete{/tr}" class="link remove confirm-prompt" href="{service controller=tracker action=remove trackerId=$tracker.trackerId}">{icon _id='cross' alt="{tr}Delete{/tr}"}</a>
 						{/if}
