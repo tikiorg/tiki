@@ -75,7 +75,7 @@
 		{section name=changes loop=$listpages}
 			<tr class="{cycle}">
 				{if $tiki_p_remove_submission eq 'y' or $tiki_p_approve_submission eq 'y'}
-					<td class="checkbox">
+					<td class="checkbox-cell">
 						<input type="checkbox" name="checked[]" value="{$listpages[changes].subId|escape}" {if $listpages[changes].checked eq 'y'}checked="checked" {/if}>
 					</td>
 				{/if}

@@ -96,7 +96,7 @@
 		{cycle print=false values="even,odd"}
 		{section name=user loop=$channels}
 			<tr class="{cycle}">
-				<td class="checkbox">
+				<td class="checkbox-cell">
 					<input type="checkbox" name="checked[]" value="{$channels[user].watchtype}{$channels[user].watchId|escape}" {if $smarty.request.checked and in_array($channels[user].watchId,$smarty.request.checked)}checked="checked"{/if}>
 				</td>
 				<td class="text">{$channels[user].event}</td>

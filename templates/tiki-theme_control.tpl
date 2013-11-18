@@ -77,7 +77,7 @@
 	{cycle values="odd,even" print=false}
 		{section name=user loop=$channels}
 			<tr class="{cycle}">
-				<td class="checkbox">
+				<td class="checkbox-cell">
 					<input type="checkbox" name="categ[{$channels[user].categId}]">
 				</td>
 				<td class="text">{$channels[user].name|escape} ({$channels[user].categId})</td>

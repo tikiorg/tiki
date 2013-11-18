@@ -212,7 +212,7 @@
 		{cycle values="odd,even" print=false}
 		{section name=user loop=$items}
 			<tr class="{cycle}">
-				<td class="checkbox">
+				<td class="checkbox-cell">
 					<input type="checkbox" name="delsec[{$items[user].banId}]">
 				</td>
 				<td class="text">

@@ -41,7 +41,7 @@
 {cycle values="odd,even" print=false}
 {section name=ix loop=$items}
 <tr class="{cycle}">
-	<td class="checkbox">
+	<td class="checkbox-cell">
 	  <input type="checkbox" name="msg[{$items[ix].threadId}]">
 	</td>
 	<td class="text">

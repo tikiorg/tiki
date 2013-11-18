@@ -237,7 +237,7 @@
 				{cycle values="even,odd" print=false}
 				{foreach from=$actionlogs item=actionlog}
 					<tr class="{cycle}">
-						<td class="checkbox"><input type="checkbox" name="checked[]" value="{$actionlog.actionId}"></td>
+						<td class="checkbox-cell"><input type="checkbox" name="checked[]" value="{$actionlog.actionId}"></td>
 						<td class="username">
 							{if $actionlog.user}{$actionlog.user|escape}{else}{tr}Anonymous{/tr}{/if}
 						</td>
@@ -697,12 +697,12 @@
 			{foreach from=$action_log_conf_selected item=actionlog}
 				<tr class="{cycle}">
 					{if $tiki_p_admin eq 'y'}
-						<td class="checkbox">
+						<td class="checkbox-cell">
 							<input type="checkbox" name="{$actionlog.code}" {if $actionlog.status eq 'y' or $actionlog.status eq 'v'}checked="checked"{/if}>
 						</td>
 					{/if}
 					{if $tiki_p_admin eq 'y' or $actionlog.status eq 'y' or $actionlog.status eq 'v'}
-						<td class="checkbox">
+						<td class="checkbox-cell">
 							<input type="checkbox" name="v_{$actionlog.code}" {if $actionlog.status eq 'v'}checked="checked"{/if}>
 						</td>
 						<td class="text">{tr}{$actionlog.action}{/tr}</td>

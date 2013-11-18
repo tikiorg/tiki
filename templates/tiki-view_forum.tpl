@@ -489,7 +489,7 @@
 			{/if}
 			<tr class="{cycle}">
 				{if $tiki_p_admin_forum eq 'y'}
-					<td class="checkbox">
+					<td class="checkbox-cell">
 						<input type="checkbox" name="forumtopic[]" value="{$comments_coms[ix].threadId|escape}" {if isset($smarty.request.forumtopic) and in_array($comments_coms[ix].threadId,$smarty.request.forumtopic)}checked="checked"{/if}>
 					</td>
 				{/if}	

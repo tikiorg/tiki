@@ -100,7 +100,7 @@
 		{cycle values="odd,even" print=false}
 		{section name=changes loop=$listpages}
 			<tr class="{cycle}">
-				<td class="checkbox">
+				<td class="checkbox-cell">
 					<input type="checkbox" name="checked[]" value="{$listpages[changes].articleId|escape}" {if $listpages[changes].checked eq 'y'}checked="checked" {/if}>
 				</td>
 				{if $prefs.art_list_title eq 'y'}

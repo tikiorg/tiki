@@ -155,7 +155,7 @@
 	{foreach item=w from=$watches}
 		<tr class="{cycle}">
 			{if $watches}
-				<td class="checkbox">
+				<td class="checkbox-cell">
 					<input type="checkbox" name="watch[{$w.watchId}]">
 				</td>
 			{/if}

@@ -51,7 +51,7 @@
 		{cycle values="even,odd" print=false}
 		{section name=user loop=$users}
 			<tr class="{cycle}">
-				<td class="checkbox">
+				<td class="checkbox-cell">
 					{if $users[user].groupName ne 'Admins' and $users[user].groupName ne 'Anonymous' and $users[user].groupName ne 'Registered'}
 						<input type="checkbox" name="checked[]" value="{$users[user].groupName|escape}">
 					{/if}
@@ -405,7 +405,7 @@ $("#userstracker").change(function () {
 			<tr>
 				{foreach from=$memberslist item=member}
 					<tr class="{cycle}">
-					<td class="checkbox"><input type="checkbox" name="members[]" value="{$member.userId}"></td>
+					<td class="checkbox-cell"><input type="checkbox" name="members[]" value="{$member.userId}"></td>
 					<td class="username">{$member.login|userlink}</td>
 					<td class="date">{$member.created|tiki_short_datetime}</td>
 					<td class="date">{if !empty($member.expire)}{$member.expire|tiki_short_datetime}{/if}</td>

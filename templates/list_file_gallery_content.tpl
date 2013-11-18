@@ -6,7 +6,7 @@
 	<tr>
 		{if $gal_info.show_checked ne 'n' and ($tiki_p_admin_file_galleries eq 'y' or $tiki_p_upload_files eq 'y')}
 			{assign var=nbCols value=$nbCols+1}
-			<th class="checkbox">
+			<th class="checkbox-cell">
 				{select_all checkbox_names='file[],subgal[]'}
 			</th>
 		{/if}
@@ -261,7 +261,7 @@
 		<tr class="{cycle}">
 
 			{if $gal_info.show_checked neq 'n' and ($tiki_p_admin_file_galleries eq 'y' or $tiki_p_upload_files eq 'y')}
-				<td class="checkbox">
+				<td class="checkbox-cell">
 					{if $files[changes].isgal eq 1}
 						{assign var='checkname' value='subgal'}
 					{else}

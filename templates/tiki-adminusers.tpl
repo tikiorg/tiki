@@ -155,7 +155,7 @@
 					{if $users[user].editable}
 						{capture assign=username}{$users[user].user|escape}{/capture}
 						<tr class="{cycle}">
-							<td class="checkbox">
+							<td class="checkbox-cell">
 								{if $users[user].user ne 'admin'}
 									<input type="checkbox" name="checked[]" value="{$users[user].user|escape}" {if isset($users[user].checked) && $users[user].checked eq 'y'}checked="checked" {/if}>
 								{/if}

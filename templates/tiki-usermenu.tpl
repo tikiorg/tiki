@@ -53,7 +53,7 @@
 		{cycle values="odd,even" print=false}
 		{section name=user loop=$channels}
 			<tr class="{cycle}">
-				<td class="checkbox">
+				<td class="checkbox-cell">
 					<input type="checkbox" name="menu[{$channels[user].menuId}]">
 				</td>
 				<td class="text">{$channels[user].position}</td>

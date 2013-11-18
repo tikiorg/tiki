@@ -361,7 +361,7 @@
 					{assign var=class value=""}
 				{/if}
 				<tr class="{$class}">
-					<td class="checkbox">
+					<td class="checkbox-cell">
 						<input type="checkbox" name="msg[]" value="{$list[ix].msgid}">
 						<input type="hidden" name="realmsg[{$list[ix].msgid}]" value="{$list[ix].realmsgid|escape}">
 					</td>
@@ -617,7 +617,7 @@
 						</tr>
 						{section name=ix loop=$not_contacts}
 							<tr>
-								<td class="checkbox">
+								<td class="checkbox-cell">
 									<input type="checkbox" name="add[{$smarty.section.ix.index}]">
 									<input type="hidden" name="addemail[{$smarty.section.ix.index}]" value="{$not_contacts[ix]|escape}">
 								</td>

@@ -154,7 +154,7 @@
 				{section name=ix loop=$structures}
 					{if $structures[ix].structureName eq $structures[user].structureName}
 						<tr class="{cycle}">
-							<td class="checkbox">
+							<td class="checkbox-cell">
 								<input type="checkbox" name="checked[]" value="{$structures[ix].pageName|escape}" >
 							</td>
 							<td class="id">{$structures[ix].receivedPageId}</td>

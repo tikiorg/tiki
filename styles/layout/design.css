@@ -2899,7 +2899,7 @@ td.integer {
 td.date {
 	text-align: center;
 }
-td.checkbox {
+td.checkbox-cell {
 	text-align: center;
 	width: 20px;
 }

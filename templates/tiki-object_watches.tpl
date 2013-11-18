@@ -77,7 +77,7 @@
 				{if !empty($cat) && !empty($desc)}
 					<td class="text"><label for="group_watch{$i}">{$g|escape}</label></td>
 					{if $isTop ne 'y'}
-						<td class="checkbox"><input id="group_watch{$i}"type="checkbox" name="checked[]" 
+						<td class="checkbox-cell"><input id="group_watch{$i}"type="checkbox" name="checked[]"
 						value="{$g|escape}"{if in_array($g, $group_watches)} checked="checked"{/if}></td>
 					{/if}
 					<td class="text">
@@ -90,7 +90,7 @@
 					</td>
 					
 				{else}
-				<td class="checkbox"><input id="group_watch{$i}" type="checkbox" name="checked[]" value="{$g|escape}"
+				<td class="checkbox-cell"><input id="group_watch{$i}" type="checkbox" name="checked[]" value="{$g|escape}"
 					{if in_array($g, $group_watches)} checked="checked"{/if}></td>
 				<td class="text"><label for="group_watch{$i}">{$g|escape}</label></td>
 				{/if}
