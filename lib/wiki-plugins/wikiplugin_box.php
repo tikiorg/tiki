@@ -118,15 +118,15 @@ function wikiplugin_box($data, $params)
 	$f = (isset($float) && ($float == "left" || $float == "right")) ? " float:$float" : "";
 	$c = (isset($clear))    ? " clear:both" : "";
 	if (empty($float)) {
-	$begin = "<div class='cbox$class' $id style='$bg;$f;margin:0;$w;$c;$style'>";
+	$begin = "<div class='panel panel-default$class' $id style='$bg;$f;margin:0;$w;$c;$style'>";
     } else {
-	$begin = "<div class='cbox$class' $id style='$bg;$f;margin:1em;margin-$float:0;$w;$c;style'>";
+	$begin = "<div class='panel panel-default$class' $id style='$bg;$f;margin:1em;margin-$float:0;$w;$c;style'>";
 	}
 
 	if (isset($title)) {
-		$begin .= "<div class='cbox-title'>$title</div>";
+		$begin .= "<div class='panel-heading'>$title</div>";
 	}
-	$begin.= "<div class='cbox-data'".(strlen($bg) > 0 ? " style=\"$bg\"" : "").">";
+	$begin.= "<div class='panel-body'".(strlen($bg) > 0 ? " style=\"$bg\"" : "").">";
 	$end = "</div></div>";
 	// Prepend any newline char with br
 	//$data = preg_replace("/\\n/", "<br />", $data);
