@@ -1,9 +1,7 @@
 /* Tikinewt theme stylesheet (tikinewt.css);
- (imports lite.css, layout.css and design.css) 
+ (imports design.css)
 
 /* Import layout and default styles: */
-@import url("lite/lite.css");
-@import url("layout/layout.css");
 @import url("layout/design.css");
  
 /***** XHTML Elements (body tag here,
@@ -15,8 +13,6 @@ body {
 	color: #000;
 }
 
- /***** Layout (overrides layout.css
-		and styles page layout divs)  *****/
 #tiki-main {
 	margin: 0;
 }

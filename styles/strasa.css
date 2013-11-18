@@ -1108,7 +1108,7 @@ a.forumnameread {
 	background: #cce5ff !important;
 }
 
-[class].tabactive {/* override layout.css */
+[class].tabactive {
 	top: 1px;
 }
 

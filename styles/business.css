@@ -4,8 +4,6 @@
 	Visit http://themes.tiki.org for more information.
 
 /* Import basic layout files: */
-@import url("lite/lite.css");
-@import url("layout/layout.css");
 @import url("layout/design.css");
 
 /***** XHTML Elements (body tag here, others follow Layout) *****/
@@ -14,10 +12,6 @@ body {
 	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
 	color: #848484;
 }
-
-/***** Layout (overrides layout.css;
-also styling of page layout divs) *****/
-
 
 #c1c2 {
 	text-align: left;
@@ -665,7 +659,6 @@ td.odd a, td.odd a:visited {
 	margin-right: 35px;
 }
 
-/* reset layout.css */
 .tabactive,
 .tabinactive,
 [class].tabactive,

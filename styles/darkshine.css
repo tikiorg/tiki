@@ -7,8 +7,6 @@
 */
 
 /* Import default layout properties: */
-@import url("lite/lite.css");
-@import url("layout/layout.css");
 @import url("layout/design.css");
 
 /***** XHTML Elements (body tag here,
@@ -43,11 +41,6 @@ body.fixed_width .fixedwidth .fixedwidth {
 .fixed_width .fixedwidth {
 	width: 880px;
 }
-
- /***** Layout (overrides layout.css;
-		also styling of page layout divs)  *****/
-
-
 
 .fixed_width #main,
 #fixedwidth {
@@ -658,7 +651,6 @@ table.normal tr:nth-child(2n) {
 
 /** Tabs **/
 
-/* reset what's in layout.css */
 .tabactive,
 .tabinactive,
 [class].tabactive,

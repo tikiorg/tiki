@@ -5,8 +5,6 @@
 */
  
 /* Don't import foundation CSS files. *
-@import url("lite/lite.css");
-@import url("layout/layout.css");
 @import url("layout/design.css");
 * End of File */
 
@@ -21,8 +19,7 @@ body {
 	font-size: 1em;
 }
 
-/* remarks boxes from layout.css */
-/* also some from design.css */
+/* remarks boxes from design.css */
 
 .rbox {
 	margin: 1em .3em .3em .3em;

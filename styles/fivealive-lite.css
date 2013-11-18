@@ -4,8 +4,6 @@ the Fivealive theme options (styles/fivealive/options/).
 */
 
 /* Import foundation CSS files. */
-@import url("lite/lite.css");
-@import url("layout/layout.css");
 @import url("layout/design.css");
 
 /* make sure whole browser viewport background is always set to white */
@@ -755,7 +753,6 @@ fieldset.admin label,
 }
 
 /** Tabs **/
-/* reset what's in layout.css */
 
 .tabactive,
 .tabinactive,

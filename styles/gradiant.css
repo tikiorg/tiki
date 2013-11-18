@@ -3,8 +3,6 @@
 	No images were harmed during creation of this theme.
 	Lots of CSS3 going on here ! ;)
 */
-@import url("lite/lite.css");
-@import url("layout/layout.css");
 @import url("layout/design.css");
 * {
 	vertical-align: middle !important;

@@ -30,7 +30,6 @@ body.fixed_width .fixedwidth .fixedwidth {
 	padding: 0;
 }
 
-/* keep header content in page center (override layout.css)*/
 .header_container .fixedwidth {
     margin-left: auto;
 }

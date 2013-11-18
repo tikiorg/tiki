@@ -4,8 +4,7 @@
 	*
 */
 
-/* Import foundation CSS files. */
-@import url("layout/layout.css");
+/* Import foundation CSS file */
 @import url("layout/design.css");
 
 /* make sure whole browser viewport background is always set to white */
@@ -972,7 +971,6 @@ fieldset.admin label,
 }
 
 /** Tabs **/
-/* reset what's in layout.css */
 
 .tabactive,
 .tabinactive,

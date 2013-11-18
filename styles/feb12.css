@@ -2,8 +2,6 @@
  * See http://themes.tikwiki.org for more information. -- */
 
 /* import default layout and styles: */
-@import url("lite/lite.css");
-@import url("layout/layout.css");
 @import url("layout/design.css");
 
 /* XHTML Elements */
@@ -721,7 +719,6 @@ tr.diffheader {
 }
 
 /** Tabs **/
-/* reset what's in layout.css */
 
 .tabactive,
 .tabinactive,

@@ -4,8 +4,6 @@
 */
  
 /* Import foundation CSS files. */
-@import url("lite/lite.css");
-@import url("layout/layout.css");
 @import url("layout/design.css");
 
 /***** XHTML Elements (body tag here,
@@ -16,10 +14,7 @@ body {
 	background: #efefe7
 }
 
- /***** Layout (overrides layout.css;
-		also styling of page layout divs)  *****/
-		
-/* Enable header and footer content to widen when middle has wide content. */ 
+/* Enable header and footer content to widen when middle has wide content. */
 body.fixed_width .fixedwidth .fixedwidth {
 	width: 100%;
 	padding: 0;
@@ -546,7 +541,6 @@ table.normal tr:nth-child(2n),
 }
 
 /** Tabs **/
-/* reset what's in layout.css */
 
 .tabactive,
 .tabinactive,

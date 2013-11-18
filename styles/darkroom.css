@@ -4,13 +4,7 @@
  * For more information on Darkroom, please visit http://themes.tiki.org.
  */
 
- /* import *lite as the base: */
-@import url("lite/lite.css");
-
-/* Then import the default layout properties file: */
-@import url("layout/layout.css");
-
-/* And design defaults: */
+/* design defaults: */
 @import url("layout/design.css");
 
 /***** XHTML Elements ******/

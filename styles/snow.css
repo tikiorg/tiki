@@ -5,8 +5,6 @@
 */
  
 /* Import layout foundation CSS files. */
-@import url("lite/lite.css");
-@import url("layout/layout.css");
 @import url("layout/design.css");
  
 /***** XHTML Elements (body tag here,
@@ -17,8 +15,6 @@ body {
 	font-family: arial, helvetica, verdana, sans-serif;
 }
 
- /***** Layout (overrides layout.css;
-		also styling of page layout divs)  *****/
 .header {text-align: left}
 #middle {text-align: left}
 
@@ -578,7 +574,6 @@ td.heading,
 	float: left;
 }
 
-/* reset what's in layout.css */
 .tabactive,
 .tabinactive,
 [class].tabactive,

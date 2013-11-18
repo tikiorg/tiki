@@ -6,8 +6,6 @@
 */
 
 /* Import layout foundation CSS files. */
-@import url("lite/lite.css");
-@import url("layout/layout.css");
 @import url("layout/design.css");
 
 /***** XHTML Elements (body tag here,
@@ -20,9 +18,6 @@ body {
 body.cke_show_borders {
 	text-align: left !important;
 }
-
- /***** Layout (overrides layout.css;
-		also styling of page layout divs)  *****/
 
 /* Enable header and footer content to widen when middle has wide content. */
 body.fixed_width .fixedwidth .fixedwidth {

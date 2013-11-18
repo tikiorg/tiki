@@ -6,8 +6,6 @@
 */
 
 /* Import layout foundation CSS files: */
-@import url("lite/lite.css");
-@import url("layout/layout.css");
 @import url("layout/design.css");
 
 /***** XHTML Elements (body tag here,
@@ -17,9 +15,6 @@ body {
 	background: #000 url(abse/wgreenwall.png) fixed;
 	color: #fff;
 	font-family: "Bitstream Vera Sans", Verdana, Geneva, sans-serif}
-
- /***** Layout (overrides layout.css
-		and styles page layout divs)  *****/
 
 /* Enable header and footer content to widen when middle has wide content. */
 body.fixed_width .fixedwidth .fixedwidth {
@@ -595,7 +590,6 @@ td.heading {
 }
 
 /** Tabs **/
-/* reset what's in layout.css */
 
 .tabactive,
 .tabinactive,

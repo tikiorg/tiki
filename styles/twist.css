@@ -6,8 +6,6 @@
 */
 
 /* Import the default layout files: */
-@import url("lite/lite.css");
-@import url("layout/layout.css");
 @import url("layout/design.css");
 
 /***** XHTML Elements (body tag here,
