@@ -103,7 +103,7 @@ function tiki_route($path)
 	);
 	tiki_route_attempt_prefix('int', 'tiki-integrator.php', 'repID');
 	tiki_route_attempt_prefix('item', 'tiki-view_tracker_item.php', 'itemId');
-	tiki_route_attempt_prefix('newsletter', 'tiki-newsletters.php', 'nlId=1', array('info' => '1'));
+	tiki_route_attempt_prefix('newsletter', 'tiki-newsletters.php', 'nlId', array('info' => '1'));
 	tiki_route_attempt_prefix('poll', 'tiki-poll_form.php', 'pollId');
 	tiki_route_attempt_prefix('quiz', 'tiki-take_quiz.php', 'quizId');
 	tiki_route_attempt_prefix('survey', 'tiki-take_survey.php', 'surveyId');
