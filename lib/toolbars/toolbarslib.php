@@ -1577,8 +1577,8 @@ class ToolbarAdmin extends Toolbar
 		$this->setLabel(tra('Admin Toolbars'))
 			->setIcon(tra('img/icons/wrench.png'))
 			->setWysiwygToken('admintoolbar')
-			->setType('admintoolbar')
-			->addRequiredPreference('feature_wysiwyg');
+			->setType('admintoolbar');
+			//->addRequiredPreference('feature_wysiwyg');
 	} // }}}
 
 	function getWikiHtml( $areaId ) // {{{
