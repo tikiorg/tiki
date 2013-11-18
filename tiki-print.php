@@ -55,9 +55,25 @@ if ($info["flag"] == 'L') {
 } else {
 	$smarty->assign('lock', false);
 }
-if (isset($_REQUEST['page_ref_id'])) {
-	// If a structure page has been requested
-	$page_ref_id = $_REQUEST['page_ref_id'];
+if ($prefs['feature_wiki_structure'] == 'y') {
+	$structlib = TikiLib::lib('struct');
+	if (isset($_REQUEST['page_ref_id'])) {
+		// If a structure page has been requested
+		$page_ref_id = $_REQUEST['page_ref_id'];
+	} else {
+		$page_ref_id = $structlib->get_struct_ref_id($_REQUEST['page']);
+	}
+	if ($page_ref_id) {
+		$page_info = $structlib->s_get_page_info($page_ref_id);
+		$structure = 'y';
+		$structure_path = $structlib->get_structure_path($page_ref_id);
+		$smarty->assign('structure_path', $structure_path);
+		if (!empty($page_info['page_alias'])) {
+			$crumbpage = $page_info['page_alias'];
+		} else {
+			$crumbpage = $page;
+		}
+	}
 }
 $pdata = $tikilib->parse_data($info["data"], array('is_html' => $info["is_html"], 'print' => 'y', 'namespace' => $info["namespace"]));
 $smarty->assign_by_ref('parsed', $pdata);
@@ -67,8 +83,6 @@ if (empty($info["user"])) {
 }
 $smarty->assign_by_ref('lastVersion', $info["version"]);
 $smarty->assign_by_ref('lastUser', $info["user"]);
-if (isset($structure) && $structure == 'y' && isset($page_info['page_alias']) && $page_info['page_alias'] != '') $crumbpage = $page_info['page_alias'];
-else $crumbpage = $page;
 $crumbs[] = new Breadcrumb($crumbpage, $info["description"], 'tiki-index.php?page=' . urlencode($page), '', '');
 ask_ticket('print');
 // disallow robots to index page:

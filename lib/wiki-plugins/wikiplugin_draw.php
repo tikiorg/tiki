@@ -83,10 +83,12 @@ function wikiplugin_draw($data, $params)
 		$gals=$filegallib->list_file_galleries(0, -1, 'name_desc', $user);
 
 		$galHtml = "";
-		function cmp($a, $b) {
-			return strcmp(strtolower($a["name"]), strtolower($b["name"]));
+		if (!function_exists('wp_draw_cmp')) {
+			function wp_draw_cmp($a, $b) {
+				return strcmp(strtolower($a["name"]), strtolower($b["name"]));
+			}
 		}
-		usort($gals['data'], 'cmp');
+		usort($gals['data'], 'wp_draw_cmp');
 		foreach ($gals['data'] as $gal) {
 			if ($gal['name'] != "Wiki Attachments" && $gal['name'] != "Users File Galleries")
 				$galHtml .= "<option value='".$gal['id']."'>".$gal['name']."</option>";

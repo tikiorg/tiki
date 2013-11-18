@@ -170,7 +170,7 @@ class Search_ContentSource_UserSource implements Search_ContentSource_Interface
 			$item = $this->trk->get_tracker_item($row['itemId']);
 
 			foreach (Search_ContentSource_TrackerItemSource::getIndexableHandlers($definition, $item) as $baseKey => $handler) {
-				$data = array_merge($data, $handler->getDocumentPart($baseKey, $typeFactory));
+				$data = array_merge($data, $handler->getDocumentPart($typeFactory));
 			}
 		}
 

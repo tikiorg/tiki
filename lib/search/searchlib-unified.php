@@ -376,6 +376,34 @@ class UnifiedSearchLib
 		return $types;
 	}
 
+
+	function getLastLogItem() {
+		global $prefs;
+		$files['web'] = $prefs['tmpDir'] . '/Search_Indexer.log'; 
+		$files['console'] = $prefs['tmpDir'] . '/Search_Indexer_console.log';
+		foreach ($files as $type => $file) {
+			if ( $fp = @fopen($file, "r") ) {	
+				$pos = -2;
+				$t = " ";
+				while ($t != "\n") {
+					if (!fseek($fp, $pos, SEEK_END)) {
+						$t = fgetc($fp);
+						$pos = $pos - 1;
+					} else {
+						rewind($fp);
+						break;
+					}
+				}
+				$t = fgets($fp);
+				fclose($fp);
+				$ret[$type] = $t;	
+			} else {
+				$ret[$type] = '';
+			}
+		}
+		return $ret;
+	}
+
     /**
      * @param $index
      * @param int $loggit 0=no logging, 1=log to Search_Indexer.log, 2=log to Search_Indexer_console.log

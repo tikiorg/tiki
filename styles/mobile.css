@@ -240,3 +240,35 @@ body {
 .thumbnailcontener {
 	float: left;
 }
+
+/* wikiplugin_convene */
+
+.conveneHeaderRow td {
+	text-align: center;
+}
+
+.conveneVotes td,
+.conveneFooterRow td,
+.conveneHeaderRow td {
+	vertical-align: middle;
+}
+
+.convene-ok {
+	background-color: #D1F3D1 !important;
+	background-image: none !important;
+	text-align: center;
+}
+.convene-no {
+	background-color: #FFCCCA !important;
+	background-image: none !important;
+	text-align: center;
+}
+.convene-no img {
+	display: none;
+}
+.convene-unconfirmed {
+	text-align: center;
+}
+.conveneFooter, .conveneHeader {
+	text-align: center;
+}

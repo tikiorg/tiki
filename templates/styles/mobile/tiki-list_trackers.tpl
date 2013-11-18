@@ -49,7 +49,11 @@
 				<td class="action">
 					<div data-role="controlgroup" data-type="horizontal">{* mobile *}
 						{if $tracker.permissions->export_tracker}
-							<a data-role="button" title="{tr _0=$tracker.name|escape}Export %0{/tr}" class="export dialog" href="{service controller=tracker action=export trackerId=$tracker.trackerId}">{icon _id='disk' alt="{tr}Export{/tr}"}</a>
+							{if $tracker.items > 0}
+								<a data-role="button" title="{tr _0=$tracker.name|escape}Export %0{/tr}" class="export dialog" href="{service controller=tracker action=export trackerId=$tracker.trackerId}">{icon _id='disk' alt="{tr}Export{/tr}"}</a>
+							{else}
+								<span data-role="button" class="ui-disabled">{icon _id='disk' alt="{tr}Export{/tr}"}</span>
+							{/if}
 						{/if}
 						{if $tracker.permissions->admin_trackers}
 							<a data-role="button" title="{tr _0=$tracker.name|escape}Import in %0{/tr}" class="import dialog" href="{service controller=tracker action=import_items trackerId=$tracker.trackerId}">{icon _id='upload' alt="{tr}Import{/tr}"}</a>
@@ -83,7 +87,7 @@
 							{if $tracker.items > 0}
 								<a data-role="button" title="{tr}Clear{/tr}" class="link clear confirm-prompt" href="{service controller=tracker action=clear trackerId=$tracker.trackerId}">{icon _id='bin' alt="{tr}Clear{/tr}"}</a>
 							{else}
-								<span data-role="button">{icon _id='bin_empty' alt="{tr}Clear{/tr}"}</span>
+								<span data-role="button" class="ui-disabled">{icon _id='bin_empty' alt="{tr}Clear{/tr}"}</span>
 							{/if}
 							<a data-role="button" title="{tr}Delete{/tr}" class="link remove confirm-prompt" href="{service controller=tracker action=remove trackerId=$tracker.trackerId}">{icon _id='cross' alt="{tr}Delete{/tr}"}</a>
 						{/if}
