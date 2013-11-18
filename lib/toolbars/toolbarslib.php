@@ -1387,16 +1387,8 @@ class ToolbarHelptool extends Toolbar
 
 		$smarty->assign_by_ref('plugins', $plugins);
 
-		global $prefs;
-		if ($prefs['wysiwyg_htmltowiki'] === 'y') {
-			$exec_js = $smarty->fetch('tiki-edit_help_wiki_wysiwyg.tpl') .
-					$smarty->fetch('tiki-edit_help_plugins.tpl');
-			$this->setLabel(tra('Wiki Wysiwyg Help'));
-		} else {
-			$exec_js = $smarty->fetch('tiki-edit_help_wysiwyg.tpl') .
-					$smarty->fetch('tiki-edit_help_plugins.tpl');
-			$this->setLabel(tra('Wysiwyg Help'));
-		}
+		$unused = $smarty->fetch('tiki-edit_help_wysiwyg.tpl') . $smarty->fetch('tiki-edit_help_plugins.tpl');
+		$this->setLabel(tra('Wysiwyg Help'));
 
 		$name = 'tikihelp';
 

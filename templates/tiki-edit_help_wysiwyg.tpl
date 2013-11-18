@@ -16,15 +16,18 @@
  
 <hr>
 <p>
-	{icon _id="star"} {tr}The WYSIWYG editor in Tiki 6+ is
-	<a href="http://ckeditor.com">CKEditor</a>,
-	the new version of FCKEditor (used in Tiki since version 2.0){/tr}</p>
+	{icon _id="star"} {tr}The WYSIWYG editor in Tiki is <a href="http://ckeditor.com">CKEditor</a>{/tr}</p>
 <p>
 	{tr}To switch modes between WYSIWYG and Wiki edit modes click the {icon _id="pencil_go"} button on the toolbar.{/tr}</p>
 <p style="margin-left: 2em; ">
+{if $prefs.wysiwyg_htmltowiki ne 'y'}
 	{tr}<strong>N.B. </strong>Using this button converts the page source from wiki to HTML, or vice versa.
 	The conversion process is not entirely transparent, meaning that you may notice differences between the look of a page in different modes.
 	This will improve in future updates but as the two systems have significant differences in what they can do it is unlikely to ever be totally transparent.{/tr}</p>
+<p>
+{else}
+	{tr}<strong>N.B. </strong>Using this button changes the editor between WYSIWYG and the usual wiki editor, but leaves the page source in wiki syntax.{/tr}</p>
+{/if}
 <p>
 	{icon _id="plugin"} {tr}Wiki plugins can be used and edited in WYSIWYG mode, double click the plugin to bring up the plugin edit popup form.<br>
 	Here is an example of the {ldelim}BOX{rdelim} plugin:{/tr}</p>
@@ -43,9 +46,9 @@
 </div>
 </div>
 <p style="margin-left: 2em;">
-	{icon _id="error"} {tr}<strong>Caution:</strong> This is a new feature and still work in progress.<br>
+	{icon _id="error"} {tr}<strong>Caution:</strong> There are still limitations regarding use of plugins in the WYSIWYG editor.<br>
 	If you intend to use plugins extensively in a page consider editing that page in wiki mode only.<br>
-	Currently (still in Tiki 9.0) drag and drop of plugins in WYSIWYG does not work.{/tr}</p>
+	Currently, cutting and pasting, or drag and drop of plugins in WYSIWYG will cause problems. Use source mode or the plain wiki editor if you need to move plugins around.{/tr}</p>
 
 	{if $tiki_p_admin eq "y"}
 		<hr style="border-width: 1px;" />
