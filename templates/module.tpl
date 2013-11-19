@@ -9,9 +9,10 @@
 		<div class="box-shadow">{$prefs.box_shadow_start}
 	{/if}
 	{if !isset($moduleId)}{assign var=moduleId value=' '}{/if}
-	<div id="module_{$moduleId}" class="box box-{$module_name}{if $module_type eq 'cssmenu'} cssmenubox{/if} module"{if !empty($tpl_module_style)} style="{$tpl_module_style}"{/if}>
+	<div id="module_{$moduleId}" class="panel panel-default box-{$module_name}{if $module_type eq 'cssmenu'} cssmenubox{/if} module"{if !empty($tpl_module_style)} style="{$tpl_module_style}"{/if}>
 	{if $module_decorations ne 'n'}
-		<h3 class="box-title clearfix" {if !empty($module_params.bgcolor)} style="background-color:{$module_params.bgcolor};"{/if}>
+        <div class="panel-heading">
+		<h3 class="panel-title clearfix" {if !empty($module_params.bgcolor)} style="background-color:{$module_params.bgcolor};"{/if}>
 		{if $user and $prefs.user_assigned_modules == 'y' and $prefs.feature_modulecontrols eq 'y'}
 			<span class="modcontrols">
 			<a title="{tr}Move module up{/tr}" href="{$current_location|escape}{$mpchar|escape}mc_up={$module_name}">
@@ -45,12 +46,17 @@
 				</span>
 			{/if}
 		{/if}
-		<!--[if IE]><br class="clear" style="height: 1px !important" /><![endif]--></h3>
+		<!--[if IE]><br class="clear" style="height: 1px !important" /><![endif]-->
+        </h3></div>
 	{elseif $module_notitle ne 'y'}
 		{if $module_flip eq 'y' and $prefs.javascript_enabled ne 'n'}
-			<h3 class="box-title" ondblclick="javascript:icntoggle('mod-{$smarty.capture.name}','module.png');"{if !empty($module_params.color)} style="color:{$module_params.color};"{/if}>
-		{else}
-			<h3 class="box-title"{if !empty($module_params.color)} style="color:{$module_params.color};"{/if}>
+            <div class="panel-heading">
+            <h3 class="panel-title" ondblclick="javascript:icntoggle('mod-{$smarty.capture.name}','module.png');"{if !empty($module_params.color)} style="color:{$module_params.color};"{/if}>
+		    </div>
+        {else}
+            <div class="panel-heading">
+            <h3 class="panel-title"{if !empty($module_params.color)} style="color:{$module_params.color};"{/if}>
+            </div>
 		{/if}
 		{$module_title}
 		{if $module_flip eq 'y' and $prefs.javascript_enabled ne 'n'}
@@ -75,7 +81,7 @@
 {$module_error}
 {if $module_nobox neq 'y'}
 		</div>
-		<div class="box-footer">
+		<div class="module-footer">
 
 		</div>
 	</div>
