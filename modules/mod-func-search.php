@@ -253,7 +253,7 @@ function module_search($mod_reference, $smod_params) 	// modifies $smod_params s
 		$smod_params['input_value'] = $_REQUEST['words'];
 	} else if (!empty($_REQUEST['find'])) {
 		$smod_params['input_value'] = $_REQUEST['find'];
-	} else if (isset($_REQUEST['filter']['content']) && !empty($_REQUEST['filter']['content'])) {
+	} else if (!empty($_REQUEST['filter']['content']) && is_array($_REQUEST['filter'])) {
 		$smod_params['input_value'] = $_REQUEST['filter']['content'];
 	} else {
 		$smod_params['input_value'] = '';
