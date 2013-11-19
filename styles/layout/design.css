@@ -5,14 +5,6 @@
 
 
 /***** XHTML Elements *****/
-
-/* ckeditor body definition */
-html[dir=ltr]>body {
-	display: block;
-	padding: 1em;
-	width: auto;
-}
-
 #role_main {
     min-height: 40em;
 }
@@ -26,13 +18,6 @@ html[dir=ltr]>body {
 
 .iconmenu {
 	display: inline;
-}
-
-#col2 input.openid_url,
-#col3 input.openid_url {
-	padding: 1px 1px 1px 18px;
-	min-height: 16px;
-	width: 85%;
 }
 
 label {
@@ -71,108 +56,6 @@ label {
 #top_modules .box-login_box .siteloginbar {
 	margin-bottom: 5px;
 }
-
-.siteloginbar div {
-	display: inline-block;
-}
-
-.siteloginbar_popup .tabcontent fieldset {
-	margin: 0 0 0 -4px;
-	border: none;
-}
-
-.siteloginbar_poppedup div {
-	text-align: right;
-}
-
-li#register_link {
-	margin-right: 5px;
-}
-
-.tabmark a.register_link,
-.tabmark a.login_link {
-	padding-right: 26px !important;
-}
-
-.siteloginbar_popup ul, ul.siteloginbar_poppedup {
-	list-style: none;
-}
-.siteloginbar_popup ul.clearfix {
-	width: inherit;
-	margin: inherit;
-}
-
-.siteloginbar_popup ul.clearfix ul li {
-	width: 100%;
-	font-size: inherit;
-}
-
-.siteloginbar_popup form {
-	text-align: left;
-	width: auto;
-	white-space: normal !important;
-}
-
-li#logout_link a {
-	padding-right: 40px;
-}
-
-.siteloginbar_popup #logout_link {
-	text-align: center;
-}
-
-.siteloginbar_popup ul.clearfix div a.login_link {
-	display: block;
-}
-
-.siteloginbar_popup ul.clearfix div a {
-	display: inline;
-}
-
-.siteloginbar_poppedup {
-	padding: 0;
-	margin: 2px 2px 3px 1px;
-	display: none;
-}
-
-.siteloginbar_poppedup * {
-	line-height: 1.1;
-	margin: 2px;
-}
-.siteloginbar_poppedup li {
-	display: table;
-}
-
-
-.siteloginbar_popup .rme {
-	display: block;
-	padding: 5px 0;
-	text-align: right;
-}
-
-.siteloginbar_popup .pass {
-	margin: 0;
-	padding: 0;
-	text-align: left;
-	width: 47%;
-}
-
-.siteloginbar_popup div.pass a {
-	text-align: left;
-	display:block;
-}
-
-.siteloginbar_popup .register {
-	float: right;
-	margin: 0;
-	padding: 0;
-	width: 47%;
-}
-.siteloginbar_popup .wikiaction {
-	clear: both;
-	float: right;
-}
-/* end Sitelogin Popup */
 
 #sitesearchbar {
 	float: right;
