@@ -114,7 +114,7 @@ if (jqueryTiki.no_cookie) {
 					<span>{tr}Log in{/tr}</span>
 					<span class="caret"></span>
 				</a>
-				<div class="siteloginbar_poppedup panel dropdown-menu pull-right">
+				<div class="siteloginbar_poppedup panel panel-body dropdown-menu pull-right">
 						{capture assign="close_tags"}</div></div>{$close_tags}{/capture}
 		{/if}
 		<form name="loginbox" id="loginbox-{$module_logo_instance}" action="{$login_module.login_url|escape}"
