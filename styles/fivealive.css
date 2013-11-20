@@ -898,10 +898,10 @@ panel {
 	color: inherit;
 }
 
-panel-heading { 
+.panel-heading { 
 	border-bottom: none;
 	border-radius: 0;
-	padding: 10px 15px 5px;
+	padding: 10px 0 5px;
 }
 
 h3.panel-title { 
