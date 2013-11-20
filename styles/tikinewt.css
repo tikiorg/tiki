@@ -175,11 +175,6 @@ input[type=radio] {
 	border: 0;
 }
 
-#page-bar table, #page-bar td, #page-bar tr {
-	margin: 0;
-	padding: 0;
-}
-
 .navbar,
 .categbar,
 .findtable {
@@ -1046,12 +1041,6 @@ h1.pagetitle strong {
 	padding: 0 6px 1px 6px;
 	margin: 3px 0 6px 0;
 	font-weight: bold;
-}
-
-#page-bar {
-	padding-bottom: 40px;
-	display: block;
-	padding-top: 5px;
 }
 
 .cache {

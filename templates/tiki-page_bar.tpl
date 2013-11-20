@@ -170,7 +170,7 @@
 	{/capture}
 
 	{if $page_bar neq ''}
-		<div class="clearfix" id="page-bar">
+		<div class="btn-group btn-group-justified" id="page-bar">
 			{$page_bar}
 		</div>
 	{/if}

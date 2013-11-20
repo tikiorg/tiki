@@ -147,10 +147,6 @@ input.wikiaction,
 	margin-left: 0;
 }
 
-/*#page-bar .button {
-	margin: 0 2px;
-}*/
-
 /* do not put this rule with button rule for IE6 */
 input[type=submit],
 input[type=reset] {
@@ -1288,11 +1284,6 @@ a.wiki {
 
 .textarea-toolbar {
 	background: #e4e4e4;
-}
-
-#page-bar {
-	text-align: center;
-	line-height: 150%;
 }
 
 .navbar {

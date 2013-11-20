@@ -183,7 +183,7 @@
   && $comments_cant != 0)
   ||  $tiki_p_post_comments  == 'y'
   ||  $tiki_p_edit_comments  == 'y')}
-  <div id="page-bar" class="clearfix">
+  <div id="page-bar" class="btn-group btn-group-justified">
 		<span class="button btn-default"><a id="comment-toggle" href="{service controller=comment action=list type="image gallery" objectId=$galleryId}#comment-container">{tr}Comments{/tr}</a></span>
 		{jq}
 			$('#comment-toggle').comment_toggle();

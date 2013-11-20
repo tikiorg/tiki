@@ -636,16 +636,6 @@ div.titlebar {
 	font-weight: bold;
 }
 
-div#page-bar {
-	padding: .75em 0 4em;
-	display: block;
-}
-
-div#page-bar table, div#page-bar td, div#page-bar tr {
-	margin: 0;
-	padding: 0;
-}
-
 ul.floatleft {
 	display: block;
 	list-style: none;
