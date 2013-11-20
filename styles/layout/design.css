@@ -292,12 +292,12 @@ h3.panel-title {
 	top: 0;
 }
 
-.box:hover .moduleflip,
-.box:hover .box-title span img.flipmodimage {
+.panel:hover .moduleflip,
+.panel:hover .box-title span img.flipmodimage {
 	display: block;
 }
 
-.box:hover img.flipmodimage {
+.panel:hover img.flipmodimage {
 	border: 1px solid transparent;
 }
 
@@ -373,14 +373,6 @@ h3.panel-title {
 
 /***** Tables, Tabs ****/
 /** Tables **/
-
-.normal,
-.normalnoborder,
-.admin {
-	padding: 0;
-	margin: 0;
-	width: 100%;
-}
 
 .ui-accordion .normal,
 .ui-accordion .normalnoborder,
