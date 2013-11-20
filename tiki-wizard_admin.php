@@ -37,16 +37,19 @@ if ($useDefaultPrefs) {
 	$smarty->assign('useDefaultPrefs', $useDefaultPrefs);
 
 } else {
-	require_once('lib/wizard/pages/admin_language.php'); 
+	require_once('lib/wizard/pages/admin_language.php');
 	$pages[] = new AdminWizardLanguage();
 
-	require_once('lib/wizard/pages/admin_look_and_feel.php'); 
+    require_once('lib/wizard/pages/admin_date_time.php');
+    $pages[] = new AdminWizardDateTime();
+
+    require_once('lib/wizard/pages/admin_profiles.php');
+    $pages[] = new AdminWizardProfiles();
+
+    require_once('lib/wizard/pages/admin_look_and_feel.php');
 	$pages[] = new AdminWizardLookAndFeel();
 
-	require_once('lib/wizard/pages/admin_date_time.php'); 
-	$pages[] = new AdminWizardDateTime();
-
-	require_once('lib/wizard/pages/admin_editor_type.php'); 
+	require_once('lib/wizard/pages/admin_editor_type.php');
 	$pages[] = new AdminWizardEditorType();
 
 	require_once('lib/wizard/pages/admin_wysiwyg.php'); 
@@ -91,11 +94,6 @@ if ($useDefaultPrefs) {
 	require_once('lib/wizard/pages/admin_namespace.php'); 
 	$pages[] = new AdminWizardNamespace();
 }
-
-// Always show the last, profiles page
-require_once('lib/wizard/pages/admin_profiles.php'); 
-$pages[] = new AdminWizardProfiles();
-
 
 /////////////////////////////////////
 // END Wizard page section
