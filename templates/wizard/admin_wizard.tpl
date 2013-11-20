@@ -1,9 +1,9 @@
 {* $Id$ *}
 
-<h1>{tr}Tiki Setup Wizard{/tr}</h1>
+<h1>{tr}Tiki Setup{/tr}</h1>
 {tr}The Tiki Admin Wizard helps you quickly configure key features and settings. Use the <a href="tiki-admin.php" target="_blank">Admin Panel</a> to configure other features and settings not included in this wizard or when not using the wizard. Uncheck the checkbox above to keep this wizard from showing upon admin login{/tr}.
 <br>
-{tr}Tiki Profiles is a quick and easy way to setup a preconfigures application, e.g. a Blog site{/tr}.
+{tr}Tiki Profiles is a quick and easy way to setup a preconfigured application, e.g. a Blog site{/tr}.
 <div class="adminWizardContent">
 <fieldset>
 	<legend>{tr}Get Started{/tr}</legend>
