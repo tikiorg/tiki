@@ -20,7 +20,7 @@
 </div>
 <br>
 <div style="display:block;margin-left: auto; margin-right: auto; margin-bottom: 10px">
-{tr}No thanks{/tr}.
+{tr}Do it manually using the <a href="tiki-admin.php" target="_blank">Admin Panel</a>{/tr}.
 <br>
 	<img src="img/icons/large/stock_missing-image48x48.png" alt="{tr}No wizard{/tr}" />
 		<input  type="submit" class="btn btn-default" name="skip" value="{tr}Skip setup and don't show again{/tr}" />
