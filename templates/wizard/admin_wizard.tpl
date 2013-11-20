@@ -26,7 +26,6 @@
 		<input  type="submit" class="btn btn-default" name="skip" value="{tr}Skip setup and don't show again{/tr}" />
 </div>
 </fieldset>
-<br>
 <fieldset>
 <legend>{tr}Server Fitness{/tr}</legend>
 	{tr _0=$tiki_version}To check if your server meets the requirements for running Tiki version %0, please visit <a href="tiki-check.php" target="_blank">Tiki Server Compatibility Check</a>{/tr}.
