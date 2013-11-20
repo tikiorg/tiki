@@ -56,11 +56,9 @@
 						   <select id="searchLang" name="searchLang">
 						   <option value="" >{tr}any language{/tr}</option>
 						   {section name=ix loop=$languages}
-						   		{if !is_array($prefs.available_languages) || count($prefs.available_languages) == 0 || in_array($languages[ix].value, $prefs.available_languages)}
-									<option value="{$languages[ix].value|escape}" {if $searchLang eq $languages[ix].value}selected="selected"{/if}>
+								<option value="{$languages[ix].value|escape}" {if $searchLang eq $languages[ix].value}selected="selected"{/if}>
 									{tr}{$languages[ix].name}{/tr}
-									</option>
-								{/if}
+								</option>
 							{/section}
 						   </select>
 					</label>

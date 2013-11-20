@@ -68,11 +68,9 @@
 				<td>
 					<select name="language">
 						{section name=ix loop=$languages}
-							{if count($prefs.available_languages) == 0 || in_array($languages[ix].value, $prefs.available_languages)}
-								<option value="{$languages[ix].value|escape}" {if $language eq $languages[ix].value}selected="selected"{/if}>
-									{$languages[ix].name}
-								</option>
-							{/if}
+							<option value="{$languages[ix].value|escape}" {if $language eq $languages[ix].value}selected="selected"{/if}>
+								{$languages[ix].name}
+							</option>
 						{/section}
 						<option value='' {if !$language}selected="selected"{/if}>
 							{tr}Site default{/tr}

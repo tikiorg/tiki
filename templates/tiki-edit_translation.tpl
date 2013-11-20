@@ -58,9 +58,7 @@
 			<select name="lang" id="language_list" size="1">
 			   <option value="unspecified">{tr}Unspecified{/tr}</option>
 				{section name=ix loop=$languages}
-				{if in_array($languages[ix].value, $prefs.available_languages) or $prefs.available_languages|@count eq 0 or !is_array($prefs.available_languages)}
 				<option value="{$languages[ix].value|escape}"{if $only_one_language_left eq "y"} selected="selected"{/if}>{$languages[ix].name|escape}</option>
-				{/if}
 				{/section}
 			</select>
 		</p>

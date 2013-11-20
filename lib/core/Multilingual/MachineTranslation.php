@@ -47,7 +47,7 @@ class Multilingual_MachineTranslation
 			$usedLangs[] = $trad['lang'];
 		}
 
-		if (!empty($prefs['available_languages'])) {
+		if ($prefs['restrict_language'] === 'y' && !empty($prefs['available_languages'])) {
 			$candidates = array();
 
 			//restrict langs available for machine translation to those
