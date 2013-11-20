@@ -717,11 +717,10 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_banning' => array(
 			'name' => tra('Banning system'),
-			'description' => tra('Banning system'),
+			'description' => tra('Deny access to specific users based on username, IP, and date/time range.'),
 			'help' => 'Banning',
 			'type' => 'flag',
 			'keywords' => 'ban kick exclude deny',
-			'hint' => tra('Deny access to specific users based on username, IP, and date/time range.'),
 			'default' => 'n',
 			'tags' => array('basic'),
 			'view' => 'tiki-admin_banning.php',
