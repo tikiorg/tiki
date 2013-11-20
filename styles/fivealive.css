@@ -881,6 +881,37 @@ img.icon {
 }
 
 /***** Boxes *****/
+panel { 
+	background-color: transparent;
+	border: none;
+	box-shadow: none;
+	margin-bottom: 20px;
+}
+
+.panel-default { 
+	border-color: transparent;
+}
+
+.panel-default > .panel-heading { 
+	background-color: transparent;
+	border: none;
+	color: inherit;
+}
+
+panel-heading { 
+	border-bottom: none;
+	border-radius: 0;
+	padding: 10px 15px 5px;
+}
+
+h3.panel-title { 
+	font-size: 1.7em;
+	font-weight: bold;
+}
+
+.panel-body { 
+	padding: 5px;
+}
 #main h3.box-title {
 	background: none;
 }
