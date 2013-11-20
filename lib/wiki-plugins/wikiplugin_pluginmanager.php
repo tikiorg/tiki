@@ -303,7 +303,7 @@ class WikiPluginPluginManager extends PluginsLib
 				$pluginprefs = '';
 			}
 			$sOutput = $title . '<em>' . tr('Required parameters are in%0 %1bold%2', '</em>', '<b>', '</b>') . '<br />' . 
-						$pluginprefs . '<table class="normal">' . $header . $rows . '</table>' . "\n";
+						$pluginprefs . '<table class="table-bordered">' . $header . $rows . '</table>' . "\n";
 			return $sOutput;
 		}
 	}

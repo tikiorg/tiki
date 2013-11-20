@@ -209,7 +209,7 @@ class PluginsLibUtil
 				$sOutput .= '<em>'. tra('Required parameters are in</em> <b>bold</b>') . '<br />';
 			}
 			// Header for info
-			$sOutput .= '<table class="normal">' . "\n\t" . '<tr>' . "\n\t\t" . '<td class="heading"' . $sStyle. '>' 
+			$sOutput .= '<table class="table-bordered">' . "\n\t" . '<tr>' . "\n\t\t" . '<td class="heading"' . $sStyle. '>'
 				. tra($aPrincipalField['name']) . '</td>';
 			foreach ($aInfo as $iInfo => $sHeader) {
 				if ($sHeader == 'paraminfo') {
@@ -321,7 +321,7 @@ class PluginsLibUtil
 		$aPrincipalField = array('field' => 'pageName', 'name' => 'Pages');
 
 		// Header for info
-		$sOutput = '<table class="normal"><tr><td class="heading">' . tra($aPrincipalField['name']) . '</td></tr><tr><td class="even">';
+		$sOutput = '<table class="table-bordered"><tr><td class="heading">' . tra($aPrincipalField['name']) . '</td></tr><tr><td class="even">';
 		$iCounter = 0;
 		// create a comma separated list of entries
 		foreach ($aData as $aPage) {

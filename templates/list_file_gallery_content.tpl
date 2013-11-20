@@ -2,7 +2,8 @@
 {if empty($sort_arg)}
 	{assign var='sort_arg' value='sort_mode'}
 {/if}
-<table class="table normal">
+
+<table class="table table-bordered">
 	<tr>
 		{if $gal_info.show_checked ne 'n' and ($tiki_p_admin_file_galleries eq 'y' or $tiki_p_upload_files eq 'y')}
 			{assign var=nbCols value=$nbCols+1}
@@ -483,6 +484,7 @@
 
 
 </table>
+
 {if $prefs.feature_jquery_tooltips eq 'y'}
 	{jq}if (jqueryTiki.tooltips) { $('a.fgalbacklink').cluetip({showTitle:false, sticky:true}); }{/jq}
 {/if}

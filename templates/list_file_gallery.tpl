@@ -38,8 +38,8 @@
 		{/if}
 	</div>
 {/if}
-
-<table border="0" cellpadding="3" cellspacing="3" width="100%" style="clear: both">
+<div class="table-responsive">
+<table class="table">
 	<tr>
 		{if isset($tree) && count($tree) gt 0 && $tiki_p_list_file_galleries != 'n'
 			&& $fgal_options.show_explorer.value eq 'y' && $tiki_p_view_fgal_explorer eq 'y' && $view neq 'page'}
@@ -179,3 +179,4 @@
 		</td>
 	</tr>
 </table>
+</div>

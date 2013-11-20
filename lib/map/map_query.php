@@ -13,7 +13,7 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 
 function map_query($map, $corx, $cory)
 {
-	$map_querymsg = '<table class="normal">';
+	$map_querymsg = '<table class="table-bordered">';
 	$map_querymsg .= '<tr><td class="heading" colspan="2">' . tra('Query point:') . ' <b>' . $corx . ' / ' . $cory . '</b></td><tr>';
 	$query_point = ms_newpointObj();
 	$query_point->setXY($corx, $cory);

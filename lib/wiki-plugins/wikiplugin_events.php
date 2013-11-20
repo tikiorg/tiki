@@ -217,7 +217,7 @@ function wikiplugin_events($data,$params)
 	$repl="";
 	if (count($events)<$max) $max = count($events);
 
-	$repl .= '<table class="normal">';
+	$repl .= '<table class="table-bordered">';
 	$repl .= '<tr class="heading"><td colspan="2">'.tra("Upcoming Events").'</td></tr>';
 	for ($j = 0; $j < $max; $j++) {
 		if ($datetime!=1) {

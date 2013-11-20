@@ -24,7 +24,7 @@ class Text_Diff_Renderer_sidebyside extends Tiki_Text_Diff_Renderer
     function _startDiff()
     {
         ob_start();
-        //echo '<table class="normal diff">';
+        //echo '<table class="table-bordered diff">';
     }
 
     function _endDiff()

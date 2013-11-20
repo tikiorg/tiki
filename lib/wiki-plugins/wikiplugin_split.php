@@ -154,12 +154,12 @@ function wikiplugin_split($data, $params, $pos)
 		}
 		$tdtotaltd=floor($tdtotal/100*100);
 		if ($tdtotaltd == 100) // avoir IE to do to far
-			$class = 'class="normalnoborder split"';
+			$class = 'class="table split"';
 		else
 			$class = 'class="split" width="'.$tdtotaltd.'%"';
 	} elseif ($fixedsize) {
 		$columnSize = floor(100 / $maxcols);
-		$class = 'class="normalnoborder split"';
+		$class = 'class="table split"';
 		$percent = true;	
 	}
 	if (!isset($edit)) $edit = 'n';
