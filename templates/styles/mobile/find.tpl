@@ -31,28 +31,28 @@
 	*                  {include file='find.tpl' find_show_languages='y' find_show_categories='y' find_show_num_rows='y'} 
 *}
 
-<div class="clearfix ui-bar find-div">
+<div class="clearfix">
 		<form method="post" action="{$smarty.server.PHP_SELF}" class="findtable">
 		{if !empty($filegals_manager)}<input type="hidden" name="filegals_manager" value="{$filegals_manager|escape}">{/if}
 
 		{query _type='form_input' maxRecords='NULL' type='NULL' types='NULL' find='NULL' topic='NULL' lang='NULL' exact_match='NULL' categId='NULL' cat_categories='NULL' filegals_manager='NULL' save='NULL' offset='NULL' searchlist='NULL' searchmap='NULL'}
 
-	<label class="findtitle" for="find">
+	<label class="findtitle">
 		{if empty($whatlabel)}
 			{tr}Find{/tr}
 		{else}
 			{tr}{$whatlabel}{/tr}
 		{/if}
-		<input type="text" name="find" id="find" value="{$find|escape}" data-type="search">
+		<input type="text" name="find" id="find" value="{$find|escape}">
 		{if isset($autocomplete)}
 			{jq}$("#find").tiki("autocomplete", "{{$autocomplete}}"){/jq}
 		{/if}
 	</label>
 	{if isset($find_in)}{help url="#" desc="{tr}Find in:{/tr} {$find_in}"}{/if}
 
-<div data-role="collapsible" data-collapsed="true">
-	<h3>{tr}More search options{/tr}</h3>
-	<div data-role="controlgroup">
+<div data-role="collapsible" data-collapsed="true"> {*mobile *}
+	<h3>{tr}More search options{/tr}</h3> {*mobile *}
+	<div data-role="controlgroup"> {*mobile *}
 {if isset($exact_match)}
 	<label class="findexactmatch" for="findexactmatch" style="white-space: nowrap">
 			{tr}Exact match{/tr}
@@ -81,11 +81,11 @@
 {if !empty($topics)}
 	<select name="topic" class="findtopics">
 		<option value='' {if $find_topic eq ''}selected="selected"{/if}>{tr}any topic{/tr}</option>
-		{section name=ix loop=$topics}
-			<option value="{$topics[ix].topicId|escape}" {if $find_topic eq $topics[ix].topicId}selected="selected"{/if}>
-				{$topics[ix].name|tr_if|escape}
+		{foreach $topics as $topic}
+			<option value="{$topic.topicId|escape}" {if $find_topic eq $topic.topicId}selected="selected"{/if}>
+				{$topic.name|tr_if|escape}
 			</option>
-		{/section}
+		{/foreach}
 	</select>
 {/if}
 
@@ -93,25 +93,21 @@
 	<span class="findlang">
 		<select name="lang" class="in">
 			<option value='' {if $find_lang eq ''}selected="selected"{/if}>{tr}any language{/tr}</option>
-		{section name=ix loop=$languages}
-			{if !is_array($prefs.available_languages) || count($prefs.available_languages) == 0 || in_array($languages[ix].value, $prefs.available_languages)}
-			<option value="{$languages[ix].value|escape}" {if $find_lang eq $languages[ix].value}selected="selected"{/if}>
-				{$languages[ix].name}
-			</option>
-			{/if}
-		{/section}
+			{section name=ix loop=$languages}
+				<option value="{$languages[ix].value|escape}" {if $find_lang eq $languages[ix].value}selected="selected"{/if}>
+					{$languages[ix].name}
+				</option>
+			{/section}
 		</select>
 		{if isset($find_show_languages_excluded) and $find_show_languages_excluded eq 'y'}
 		<label>{tr}not in{/tr}
 			<select name="langOrphan" class="notin">
 				<option value='' {if $find_langOrphan eq ''}selected="selected"{/if}></option>
-		{section name=ix loop=$languages}
-			{if !is_array($prefs.available_languages) || count($prefs.available_languages) == 0 || in_array($languages[ix].value, $prefs.available_languages)}
-				<option value="{$languages[ix].value|escape}" {if $find_langOrphan eq $languages[ix].value}selected="selected"{/if}>
-					{$languages[ix].name}
-				</option>
-			{/if}
-		{/section}
+				{section name=ix loop=$languages}
+					<option value="{$languages[ix].value|escape}" {if $find_langOrphan eq $languages[ix].value}selected="selected"{/if}>
+						{$languages[ix].name}
+					</option>
+				{/section}
 			</select>
 		</label>
 		{/if}
@@ -122,11 +118,11 @@
 	<div id="date_range_find">
 		<span class="findDateFrom">
 			{tr}From{/tr}
-			{html_select_date time=$find_date_from prefix="find_from_" start_year="-2" end_year="+2" month_format="%m" field_order=$prefs.display_field_order}
+			{html_select_date time=$find_date_from prefix="find_from_" month_format="%m"}
 		</span>
 		<span class="findDateTo">
 			{tr}to{/tr}
-			{html_select_date time=$find_date_to prefix="find_to_" start_year="-2" end_year="+2" month_format="%m" field_order=$prefs.display_field_order}
+			{html_select_date time=$find_date_to prefix="find_to_" month_format="%m"}
 		</span>
 	</div>
 {/if}
@@ -229,20 +225,21 @@
 			<input type="text" name="maxRecords" id="findnumrows" value="{$maxRecords|escape}" size="3">
 	</label>
 {/if}
-	</div>
-</div>
+	</div> {*mobile *}
+</div> {*mobile *}
 <label class="findsubmit">
-	<input type="submit" name="search" value="{tr}Go{/tr}">
-	{if $find ne ''}
+	<input type="submit" class="btn btn-default" name="search" value="{tr}Go{/tr}">
+	{if !empty($find) or !empty($find_type) or !empty($find_topic) or !empty($find_lang) or !empty($find_langOrphan) or !empty($find_categId) or !empty($find_orphans) or !empty($find_other_val) or $maxRecords ne $prefs.maxRecords}
+		{*  $find_date_from & $find_date_to get set usually *}
 		<span class="button">
-			<a href="{$smarty.server.PHP_SELF}?{query find='' type='' types='' topic='' lang='' langOrphan='' exact_match='' categId='' maxRecords='' find_from_Month='' find_from_Day='' find_from_Year='' find_to_Month='' find_to_Day='' find_to_Year=''}" title="{tr}Clear Filter{/tr}">{tr}Clear Filter{/tr}</a>
+			<a href="{$smarty.server.PHP_SELF}?{query find='' type='' types='' topic='' lang='' langOrphan='' exact_match='' categId='' maxRecords=$prefs.maxRecords find_from_Month='' find_from_Day='' find_from_Year='' find_to_Month='' find_to_Day='' find_to_Year=''}" title="{tr}Clear Filter{/tr}">{tr}Clear Filter{/tr}</a>
 		</span>
 	{/if}
 	{if (isset($gmapbuttons) && $gmapbuttons) and (isset($mapview) && $mapview)}
-		<input type="submit" name="searchlist" value="{tr}List View{/tr}">
+		<input class="btn btn-default" type="submit" name="searchlist" value="{tr}List View{/tr}">
 		<input type="hidden" name="mapview" value="y">
 	{elseif (isset($gmapbuttons) && $gmapbuttons)}
-		<input type="submit" name="searchmap" value="{tr}Map View{/tr}">
+		<input type="submit" class="btn btn-default" name="searchmap" value="{tr}Map View{/tr}">
 		<input type="hidden" name="mapview" value="n">
 	{/if}
 </label>
