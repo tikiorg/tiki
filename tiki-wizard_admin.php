@@ -46,10 +46,13 @@ if ($useDefaultPrefs) {
     require_once('lib/wizard/pages/admin_profiles.php');
     $pages[] = new AdminWizardProfiles();
 
-    require_once('lib/wizard/pages/admin_look_and_feel.php');
-	$pages[] = new AdminWizardLookAndFeel();
+    require_once('lib/wizard/pages/admin_login.php');
+	$pages[] = new AdminWizardLogin();
 
-	require_once('lib/wizard/pages/admin_editor_type.php');
+    require_once('lib/wizard/pages/admin_look_and_feel.php');
+    $pages[] = new AdminWizardLookAndFeel();
+
+    require_once('lib/wizard/pages/admin_editor_type.php');
 	$pages[] = new AdminWizardEditorType();
 
 	require_once('lib/wizard/pages/admin_wysiwyg.php'); 
