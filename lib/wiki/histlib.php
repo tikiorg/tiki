@@ -93,10 +93,10 @@ class HistLib extends TikiLib
 		$query = "delete from `tiki_links` where `fromPage` = ?";
 		$result = $this->query($query, array($page));
 		$this->clear_links($page);
-		$pages = $this->get_pages($res["data"]);
+		$pages = $this->get_pages($res["data"], true);
 
-		foreach ($pages as $a_page) {
-			$this->replace_link($page, $a_page);
+		foreach ($pages as $a_page => $types) {
+			$this->replace_link($page, $a_page, $types);
 		}
 
 		global $prefs;
