@@ -688,7 +688,7 @@ class SheetLib extends TikiLib
 				$result1 .= "<tr>";
 				$result2 .= "<tr>";
 				for ( $col = 0; $col < count_longest($grids1[$i]->dataGrid[$row], $grids2[$i]->dataGrid[$row]); $col++ ) { //cycle through columns
-					$diff = new Text_Diff(sanitize_for_diff(trim(html_entity_decode($grids1[$i]->dataGrid[$row][$col]))), sanitize_for_diff(trim(html_entity_decode($grids2[$i]->dataGrid[$row][$col]))));
+					$diff = new Text_Diff(sanitize_for_diff(html_entity_decode($grids1[$i]->dataGrid[$row][$col])), sanitize_for_diff(html_entity_decode($grids2[$i]->dataGrid[$row][$col])));
 					$changes = $diff->getDiff();
 
 					//print_r($changes);
