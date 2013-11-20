@@ -3,15 +3,14 @@
 <h1>{tr}Initialize Tiki{/tr}</h1>
 
 <div class="adminWizardIconleft"><img src="img/icons/large/profiles48x48.png" alt="{tr}Initialize Tiki{/tr}" /></div>
-{tr}This is an optional step, which can initialize Tiki as an application, e.g. a blog., by means of applying one of the 4 featured configuration profiles{/tr}. </br></br>
-{tr}The links below will open in a new window, so that you can continue fine tuning your installation here through the admin wizard once the profile is applied{/tr}.</br></br>
+{tr}Initialize Tiki as an application, e.g. a blog., by means of applying one of the 4 featured configuration profiles{/tr}. </br></br>
 <div class="adminWizardContent">
 <fieldset>
 	<legend>{tr}Profiles{/tr}</legend>
 	<table style="width:100%">
 	<tr>
 	<td style="width:48%">
-	<b>{tr}Collaborative Community{/tr}</b> (<a href="tiki-admin.php?profile=&categories%5B%5D=12.x&categories%5B%5D=Featured+profiles&repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2" target="_blank">{tr}apply profile now{/tr}</a>)
+	<b>{tr}Collaborative Community{/tr}</b> (<a href="tiki-admin.php?profile=&categories%5B%5D=12.x&categories%5B%5D=Featured+profiles&repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2" target="_self">{tr}apply profile now{/tr}</a>)
 	<br>
 {tr}Setup to help subject experts and enthusiasts work together to build a Knowledge Base{/tr}
 	<ul>
@@ -25,7 +24,7 @@
 	&nbsp;
 	</td>
 	<td style="width:48%">
-	<b>{tr}Company Intranet{/tr}</b> (<a href="tiki-admin.php?profile=&categories%5B%5D=12.x&categories%5B%5D=Featured+profiles&repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2" target="_blank">{tr}apply profile now{/tr}</a>)
+	<b>{tr}Company Intranet{/tr}</b> (<a href="tiki-admin.php?profile=&categories%5B%5D=12.x&categories%5B%5D=Featured+profiles&repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2" target="_self">{tr}apply profile now{/tr}</a>)
 	<br>
 {tr}Setup for a Corporate Intranet of a typical medium-sized business{/tr}. 
 	<ul>
@@ -38,7 +37,7 @@
 	</tr>
 	<tr>
 	<td style="width:48%">
-	<b>{tr}Personal Blog and Profile{/tr}</b>  (<a href="tiki-admin.php?profile=&categories%5B%5D=12.x&categories%5B%5D=Featured+profiles&repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2" target="_blank">{tr}apply profile now{/tr}</a>)
+	<b>{tr}Personal Blog and Profile{/tr}</b>  (<a href="tiki-admin.php?profile=&categories%5B%5D=12.x&categories%5B%5D=Featured+profiles&repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2" target="_self">{tr}apply profile now{/tr}</a>)
 	<br>
 {tr}Setup with many cool features to help you integrate the Social Web and establish a strong presence in the Blogosphere{/tr} 
 	<ul>
@@ -52,7 +51,7 @@
 	&nbsp;
 	</td>
 	<td style="width:48%">
-	<b>{tr}Small Organization Web Presence{/tr}</b> (<a href="tiki-admin.php?profile=&categories%5B%5D=12.x&categories%5B%5D=Featured+profiles&repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2" target="_blank">{tr}apply profile now{/tr}</a>)
+	<b>{tr}Small Organization Web Presence{/tr}</b> (<a href="tiki-admin.php?profile=&categories%5B%5D=12.x&categories%5B%5D=Featured+profiles&repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2" target="_self">{tr}apply profile now{/tr}</a>)
 	<br>
 {tr}Setup for a Web Presence of a typical small business or non-profit{/tr}. 
 	<ul>
