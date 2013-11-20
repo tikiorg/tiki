@@ -60,7 +60,7 @@ body.filegal_popup {
 #topbar_modules .navbar-default {
 	background: transparent;
 	border: none;
-	width: 75%;
+	width: 100%;
 	margin-bottom: 0;
 }
 
@@ -743,10 +743,14 @@ li.login_link ul li a {
 	background: url(fivealive/menu_divider.png) 100% 50% no-repeat;
 }
 
+#topbar_modules .navbar-default .navbar-nav{
+    margin-top: 0px;
+}
+
 #topbar_modules .navbar-default .navbar-nav > li > a {
-	background: url(fivealive/menu_divider.png) 100% 50% no-repeat;
-	color: #fff;
-	text-transform: uppercase;
+    background: url("fivealive/topbar.jpg") repeat-x;
+    color: #fff;
+    text-transform: uppercase;
 }
 
 #main #tiki-top .cssmenu_horiz li a:hover {
