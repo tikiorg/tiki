@@ -30,11 +30,15 @@ $pages = array();
 require_once('lib/wizard/pages/admin_wizard.php'); 
 $pages[] = new AdminWizard();
 
+// If $useDefaultPrefs is set, the profiles "wizard" should be run. Otherwise the standard 
 $useDefaultPrefs = isset($_REQUEST['use-default-prefs']) ? true : false;
 if ($useDefaultPrefs) {
 	
 	// Store the default prefs selection in the wizard bar
 	$smarty->assign('useDefaultPrefs', $useDefaultPrefs);
+
+	require_once('lib/wizard/pages/admin_profiles.php');
+	$pages[] = new AdminWizardProfiles();
 
 } else {
 	require_once('lib/wizard/pages/admin_language.php');
@@ -42,9 +46,6 @@ if ($useDefaultPrefs) {
 
     require_once('lib/wizard/pages/admin_date_time.php');
     $pages[] = new AdminWizardDateTime();
-
-    require_once('lib/wizard/pages/admin_profiles.php');
-    $pages[] = new AdminWizardProfiles();
 
     require_once('lib/wizard/pages/admin_login.php');
 	$pages[] = new AdminWizardLogin();
