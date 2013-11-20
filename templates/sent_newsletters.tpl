@@ -60,7 +60,7 @@
 		{/section}
 	</table>
 
-	<div class="mini">
+	<div class="center-block">
 		{if $prev_offset >= 0}
 			[<a class="prevnext" href="{$url}?nlId={$nlId}&amp;{$cur}_offset={$prev_offset}&amp;{$bak}_offset={$offset_bak}&amp;{$cur}_sort_mode={$sort_mode}&amp;{$bak}_sort_mode={$sort_mode_bak}&amp;cookietab={$tab}">{tr}Prev{/tr}</a>]&nbsp;
 			{/if}

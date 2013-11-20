@@ -70,18 +70,18 @@
 		</div>
 
 		<div class="freetagsort">
-			<div class="mini">
+			<div class="center-block">
 				{if empty($maxPopular)}
 					{assign var=maxPopular value=50+$prefs.freetags_browse_amount_tags_in_cloud}
 				{/if}
 				<a class='more' href="{$smarty.server.PHP_SELF}?{query maxPopular=$maxPopular tagString=$tagString}">{tr}More Popular Tags{/tr}</a>
 			</div>
 
-			<div class="mini">
+			<div class="center-block">
 				{tr}Sort:{/tr}<a href="{$smarty.server.PHP_SELF}?{query tsort_mode=tag_asc}">{tr}Alphabetically{/tr}</a> | <a href="{$smarty.server.PHP_SELF}?{query tsort_mode=count_desc tagString=$tagString}">{tr}By Size{/tr}</a>
 			</div>
 
-			<div class="mini">
+			<div class="center-block">
 				<a href="{$smarty.server.PHP_SELF}?{query mode=c tagString=$tagString}">{tr}Cloud{/tr}</a> | <a href="{$smarty.server.PHP_SELF}?{query mode=l tagString=$tagString}">{tr}List{/tr}</a>
 			</div>
 		</div>

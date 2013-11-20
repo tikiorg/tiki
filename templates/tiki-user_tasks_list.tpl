@@ -97,12 +97,12 @@
 					<a {if $tasklist[task_i].status eq 'c'}style="text-decoration:line-through;"{/if} class="link" href="tiki-user_tasks.php?taskId={$tasklist[task_i].taskId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;tiki_view_mode=view&amp;find={$find}">{$tasklist[task_i].title|escape}</a>
 				</td>
 				<td {if $tasklist[task_i].status eq 'c'}style="text-decoration:line-through;"{/if} class="prio{$tasklist[task_i].priority}">
-					<div class="mini">
+					<div class="center-block">
 						{$tasklist[task_i].start|tiki_short_date}&nbsp;[{$tasklist[task_i].start|tiki_short_time}]
 					</div>
 				</td>
 				<td {if $tasklist[task_i].status eq 'c'}style="text-decoration:line-through;"{/if} class="prio{$tasklist[task_i].priority}">
-					<div class="mini">
+					<div class="center-block">
 						{$tasklist[task_i].end|tiki_short_date}&nbsp;[{$tasklist[task_i].end|tiki_short_time}]
 					</div>
 				</td>

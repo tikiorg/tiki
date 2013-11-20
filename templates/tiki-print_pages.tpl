@@ -75,7 +75,7 @@
     </select>
 		</td>
 		<td style="vertical-align:middle" width="20%">
-			<div class="mini">
+			<div class="center-block">
 {if $pages}
 			<p><input type="submit" class="btn btn-default" name="addpage" title="{tr}Add Page{/tr}" value="{tr}Add Page{/tr} &gt;"></p>
 {/if}
@@ -132,7 +132,7 @@
         <option value="" disabled="disabled">{tr}No structures{/tr}</option>
       {/section}
     </select>
-    <p class="mini"><input type="submit" class="btn btn-default" name="addstructurepages" value="{tr}Add Pages from Structures{/tr}"></p>
+    <p class="center-block"><input type="submit" class="btn btn-default" name="addstructurepages" value="{tr}Add Pages from Structures{/tr}"></p>
 		</td>
 		<td width="20%"></td>
 		<td width="40%"></td>		

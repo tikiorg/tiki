@@ -132,7 +132,7 @@
 			{/if}
 
 			{if $comments_cant_pages gt 1}
-				<div class="mini">
+				<div class="center-block">
 					{if $comments_prev_offset >= 0 && ! $display eq ''}
 						[<a class="prevnext" href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;comments_parentId={$comments_parentId}&amp;comments_offset={$comments_prev_offset}{$thread_sort_mode_param}&amp;comments_per_page={$comments_per_page}&amp;thread_style={$thread_style}">{tr}Prev{/tr}</a>]&nbsp;
 					{/if}
