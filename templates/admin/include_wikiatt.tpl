@@ -1,4 +1,4 @@
-<fieldset class="admin">
+<fieldset class="table">
 	<legend>{tr}Wiki attachments{/tr}</legend>
 			<form action="tiki-admin.php?page=wikiatt" method="post">
 				<input type="text" name="find" value="{$find|escape}" />

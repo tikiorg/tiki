@@ -1,6 +1,6 @@
 <form method="post" action="tiki-admin.php?page=webservices">
 
-	<fieldset class="admin">
+	<fieldset class="table">
 		<legend>{tr}Activate the feature{/tr}</legend>
 		{preference name=feature_webservices visible="always"}
 	</fieldset>		

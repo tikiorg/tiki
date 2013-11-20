@@ -5,12 +5,12 @@
 		<input type="submit" class="btn btn-default" name="messagesprefs" value="{tr}Change preferences{/tr}" />
 	</div>
 
-	<fieldset class="admin">
+	<fieldset class="table">
 		<legend>{tr}Activate the feature{/tr}</legend>
 		{preference name=feature_messages visible="always"}
 	</fieldset>
 
-	<fieldset class="admin">
+	<fieldset class="table">
 		<legend>{tr}Settings{/tr}</legend>
 
 		{preference name=allowmsg_by_default}

@@ -9,7 +9,7 @@
 		<input type="submit" class="btn btn-default" name="save" value="{tr}Change preferences{/tr}" />
 	</div>
 	
-	<fieldset class="admin">
+	<fieldset class="table">
 		<legend>{tr}Activate the feature{/tr}</legend>
 		{preference name=feature_sefurl visible="always"}
 
@@ -51,7 +51,7 @@
 		{/if}
 	</fieldset>		
 	
-	<fieldset class="admin">
+	<fieldset class="table">
 		
 		<legend>{tr}Settings{/tr}</legend>
 		{preference name=feature_sefurl_filter}

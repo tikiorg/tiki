@@ -5,12 +5,12 @@
 		<input type="submit" class="btn btn-default" name="commentssetprefs" value="{tr}Change preferences{/tr}" />
 	</div>
 
-	<fieldset class="admin">
+	<fieldset class="table">
 		<legend>{tr}Activate the feature{/tr}</legend>
 		{preference name=feature_share visible="always"}
 	</fieldset>		
 	
-			<fieldset class="admin">
+			<fieldset class="table">
 				<legend>{tr}Site-wide features{/tr}</legend>
 
 				<div class="admin featurelist">

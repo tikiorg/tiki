@@ -5,19 +5,19 @@
 		<input type="submit" class="btn btn-default" name="scoreevents" value="{tr}Save{/tr}" />
 	</div>
 
-<fieldset class="admin">
+<fieldset class="table">
 	<legend>{tr}Activate the feature{/tr}</legend>
 	{preference name=feature_score visible="always"}
 </fieldset>
 
-<fieldset class="admin">
+<fieldset class="table">
 	<legend>{tr}Expire score older than certain days{/tr}</legend>
 	{preference name=feature_score_expday visible="always"}
 </fieldset>	
 
-<fieldset class="admin">
+<fieldset class="table">
 <legend>{tr}Settings{/tr}</legend>
-<table class="admin">
+<table class="table">
 <tr>
   <td style="padding-left:5px"></td>
   <td></td>

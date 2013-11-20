@@ -52,7 +52,7 @@
 			</div>
 		{/tab}
 		{tab name="{tr}Social Network{/tr}"}
-			<fieldset class="admin">
+			<fieldset class="table">
 				<legend>{tr}Friendship and Followers{/tr}</legend>
 				{preference name=feature_friends}
 				<div class="adminoptionboxchild" id="feature_friends_childcontainer">
@@ -68,7 +68,7 @@
 				</div>
 			</fieldset>
 
-			<fieldset class="admin">
+			<fieldset class="table">
 				<legend>{tr}Activity Stream{/tr}</legend>
 				{preference name=activity_basic_events visible="always"}
 

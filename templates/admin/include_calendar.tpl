@@ -7,12 +7,12 @@
 		<input type="submit" class="btn btn-default" name="calprefs" value="{tr}Change settings{/tr}" />
 	</div>
 
-	<fieldset class="admin">
+	<fieldset class="table">
 		<legend>{tr}Activate the feature{/tr}</legend>
 		{preference name=feature_calendar visible="always"}
 	</fieldset>
 	
-	<fieldset class="admin">
+	<fieldset class="table">
 		<legend>{tr}Plugins{/tr}</legend>
 		{preference name=wikiplugin_calendar}
 		{preference name=wikiplugin_events}

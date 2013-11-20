@@ -7,12 +7,12 @@
 
 	{tabset name="admin_wiki"}
 		{tab name="{tr}Polls{/tr}"}
-			<fieldset class="admin">
+			<fieldset class="table">
 				<legend>{tr}Activate the feature{/tr}</legend>
 				{preference name=feature_polls visible="always"}
 			</fieldset>
 
-			<fieldset class="admin">
+			<fieldset class="table">
 				<legend>{tr}Plugins{/tr}</legend>
 				{preference name=wikiplugin_poll}
 			</fieldset>
@@ -33,7 +33,7 @@
 			</fieldset>
 		{/tab}
 		{tab name="{tr}Surveys{/tr}"}
-			<fieldset class="admin">
+			<fieldset class="table">
 				<legend>{tr}Activate the feature{/tr}</legend>
 				{preference name=feature_surveys visible="always"}
 			</fieldset>

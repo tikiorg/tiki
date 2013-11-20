@@ -9,12 +9,12 @@
 	</div>
 	<input type="hidden" name="adssetup">
 	
-	<fieldset class="admin">
+	<fieldset class="table">
 		<legend>{tr}Activate the feature{/tr}</legend>
 		{preference name=feature_banners visible="always"}
 	</fieldset>		
 
-	<fieldset class="admin">
+	<fieldset class="table">
 		<legend>{tr}Plugins{/tr}</legend>
 		{preference name=wikiplugin_banner}
 	</fieldset>

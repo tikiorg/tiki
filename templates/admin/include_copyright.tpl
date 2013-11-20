@@ -8,7 +8,7 @@
 	</div>
 	<input type="hidden" name="setcopyright" />
 	
-	<fieldset class="admin">
+	<fieldset class="table">
 		<legend>{tr}Activate the feature{/tr}</legend>
 		{preference name=feature_copyright visible="always"}
 	</fieldset>

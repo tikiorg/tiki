@@ -36,7 +36,7 @@
 				{preference name=wiki_dynvar_multilingual}
 			</fieldset>
 
-			<fieldset class="admin featurelist">
+			<fieldset class="table featurelist">
 				<legend>{tr}Plugins{/tr}</legend>
 				{preference name=wikiplugin_showreference}
 				{preference name=wikiplugin_addreference}
@@ -134,24 +134,24 @@
 				{/remarksbox}
 			{/if}
 
-			<fieldset class="admin">
+			<fieldset class="table">
 				<legend>{tr}Plugin preferences{/tr}</legend>
 				{preference name=wikipluginprefs_pending_notification}
 			</fieldset>
 
-			<fieldset class="admin">
+			<fieldset class="table">
 				<legend>{tr}Edit plugin icons{/tr}</legend>
 				{preference name=wiki_edit_plugin}
 				{preference name=wiki_edit_icons_toggle}
 			</fieldset>
 			
-			<fieldset class="admin" id="plugins">
+			<fieldset class="table" id="plugins">
 				<legend>{tr}Plugins{/tr}</legend>
-				<fieldset class="admin donthide">
+				<fieldset class="table donthide">
 					{listfilter selectors='#plugins fieldset.admin' exclude=".donthide"}
 				</fieldset>
 				{foreach from=$plugins key=plugin item=info}
-					<fieldset class="admin">
+					<fieldset class="table">
 						<legend>{$info.name|escape}</legend>
 						<div class="adminoptionbox">
 							<strong>{$plugin|escape}</strong>: {$info.description|escape}{assign var=pref value="wikiplugin_$plugin"}{help url="Plugin$plugin"}

@@ -5,12 +5,12 @@
 	{tabset name="admin_freetags"}
 		{tab name="{tr}General Settings{/tr}"}
 		
-	<fieldset class="admin">
+	<fieldset class="table">
 		<legend>{tr}Activate the feature{/tr}</legend>
 		{preference name=feature_freetags visible="always"}
 	</fieldset>			
 	
-	<fieldset class="admin">
+	<fieldset class="table">
 		<legend>{tr}Plugins{/tr}</legend>
 		{preference name=wikiplugin_freetagged}
 		{preference name=wikiplugin_addfreetag}		

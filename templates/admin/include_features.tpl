@@ -140,14 +140,14 @@
 {/tab}
 			
 {tab name="{tr}Interface{/tr}"}
-			<fieldset class="admin clearfix featurelist">
+			<fieldset class="table clearfix featurelist">
 				<legend> {tr}Ajax{/tr} </legend>	
 				{preference name=feature_ajax}
 				<div class="adminoptionboxchild half_width" id="feature_ajax_childcontainer">
 					{preference name=ajax_autosave}
 				</div>
 			</fieldset>
-			<fieldset class="admin clearfix featurelist">
+			<fieldset class="table clearfix featurelist">
 				<legend> {tr}jQuery plugins and add-ons{/tr} </legend>
 				{preference name=feature_jquery_autocomplete}
 				{preference name=feature_jquery_media}
@@ -171,7 +171,7 @@
 				</div>
 			</fieldset>
 
-			<fieldset class="admin clearfix featurelist">
+			<fieldset class="table clearfix featurelist">
 				<legend> {tr}Mobile{/tr} </legend>
 					{preference name=mobile_feature}
 
@@ -223,7 +223,7 @@
 				</fieldset>
 			</div>
 
-			<div class="admin">
+			<div class="table">
 				<fieldset>
 					<legend>{tr}Custom Code{/tr}</legend>
 					{preference name="header_custom_js"}

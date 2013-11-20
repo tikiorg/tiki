@@ -7,12 +7,12 @@
 		<input type="submit" class="btn btn-default" name="faqcomprefs" value="{tr}Change settings{/tr}" />
 	</div>
 
-	<fieldset class="admin">
+	<fieldset class="table">
 		<legend>{tr}Activate the feature{/tr}</legend>
 		{preference name=feature_faqs visible="always"}
 	</fieldset>	
 
-	<fieldset class="admin">
+	<fieldset class="table">
 		<legend>{tr}Settings{/tr}</legend>
 		{preference name=faq_prefix}
 		

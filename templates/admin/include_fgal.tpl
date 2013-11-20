@@ -33,7 +33,7 @@
 	
 		{tab name="{tr}General Settings{/tr}"}
 
-			<fieldset class="admin">
+			<fieldset class="table">
 				<legend>{tr}Activate the feature{/tr}</legend>
 				{preference name=feature_file_galleries visible="always"}
 			</fieldset>
@@ -124,7 +124,7 @@
 		{/tab}
 
 		{tab name="{tr}Plugins{/tr}"}
-			<fieldset class="admin">
+			<fieldset class="table">
 				<legend>{tr}Plugins{/tr}</legend>
 				{preference name=wikiplugin_files}
 				{preference name=wikiplugin_file}
@@ -179,7 +179,7 @@
 
 			<fieldset>
 				<legend>{tr}Select which items to display when listing galleries: {/tr}</legend>
-				<table class="admin">
+				<table class="table">
 					{include file='fgal_listing_conf.tpl'}
 				</table>
 			</fieldset>
@@ -189,7 +189,7 @@
 			{tab name="{tr}Admin Listings{/tr}"}
 				<fieldset>
 					<legend>{tr}Select which items to display when admin galleries: {/tr}</legend>
-					<table class="admin">
+					<table class="table">
 						{include file='fgal_listing_conf.tpl' fgal_options='' fgal_listing_conf=$fgal_listing_conf_admin}
 					</table>
 				</fieldset>

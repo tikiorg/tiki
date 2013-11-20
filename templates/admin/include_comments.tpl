@@ -62,7 +62,7 @@
 			<fieldset>
 				<legend>{tr}Using comments in various features{/tr}</legend>
 
-				<div class="admin">
+				<div class="table">
 					{preference name=feature_article_comments}
 					{preference name=feature_wiki_comments}
 					<div class="adminoptionboxchild" id="feature_wiki_comments_childcontainer">

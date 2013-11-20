@@ -16,12 +16,12 @@
 		<input type="submit" class="btn btn-default" value="{tr}Change preferences{/tr}" />
 	</div>
 
-	<fieldset class="admin">
+	<fieldset class="table">
 		<legend>{tr}Activate the feature{/tr}</legend>
 		{preference name=feature_categories visible="always"}
 	</fieldset>	
 
-	<fieldset class="admin">
+	<fieldset class="table">
 		<legend>{tr}Plugins{/tr}</legend>
 		{preference name=wikiplugin_category}
 		{preference name=wikiplugin_catpath}

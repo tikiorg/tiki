@@ -1,6 +1,6 @@
 <h2>{tr}Settings{/tr}</h2>
 <form action="tiki-admin.php?page=semantic" method="post">
-	<fieldset class="admin">
+	<fieldset class="table">
 		<legend>{tr}Activate the feature{/tr}</legend>
 		{preference name=feature_semantic visible="always"}
 		{preference name=feature_backlinks}

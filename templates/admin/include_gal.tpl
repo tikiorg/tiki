@@ -6,12 +6,12 @@
 {tr}You can upload images of a size of {/tr}{$max_img_upload_size|kbsize}. {tr}Alter the php.ini variables file_uploads, upload_max_filesize, post_max_size and database variables (max_allowed_packet for mysql) to change this value{/tr}.
 {/remarksbox}
 
-<fieldset class="admin">
+<fieldset class="table">
 	<legend>{tr}Activate the feature{/tr}</legend>
 	{preference name=feature_galleries visible="always"}
 </fieldset>
 
-<fieldset class="admin">
+<fieldset class="table">
 	<legend>{tr}Home Gallery{/tr}</legend>
 	<form action="tiki-admin.php?page=gal" method="post">
 		{preference name=home_gallery}
@@ -19,10 +19,10 @@
 	</form>
 </fieldset>
 
-<fieldset class="admin">
+<fieldset class="table">
 	<legend>{tr}Galleries features{/tr}</legend>
 	<form action="tiki-admin.php?page=gal" method="post">
-		<table class="admin">
+		<table class="table">
 			<tr>
 				<td><label>{tr}Rankings:{/tr}</label></td>
 				<td>
@@ -173,10 +173,10 @@
 	</form>
 </fieldset>
 
-<fieldset class="admin">
+<fieldset class="table">
 	<legend>{tr}Exterminator{/tr}</legend>
 	<form action="tiki-admin.php?page=gal" method="post">
-		<table class="admin">
+		<table class="table">
 			<tr>
 				<td>
 					<label>{tr}Remove images in the system gallery not being used in Wiki pages, articles or blog posts{/tr}</label>
@@ -190,10 +190,10 @@
 	</form>
 </fieldset>
 
-<fieldset class="admin">
+<fieldset class="table">
 	<legend>{tr}Mover{/tr}</legend>
 		<form action="tiki-admin.php?page=gal" method="post">
-		<table class="admin">
+		<table class="table">
 			<tr>
 				<td>
 					{if $prefs.gal_use_db eq 'n'}
@@ -235,10 +235,10 @@
 	</form>
 </fieldset>
 
-<fieldset class="admin">
+<fieldset class="table">
 	<legend>{tr}Gallery listing configuration{/tr}</legend>
 	<form method="post" action="tiki-admin.php?page=gal">
-		<table class="admin">
+		<table class="table">
 			<tr>
 				<td><label>{tr}Name{/tr}</label></td>
 				<td><input type="checkbox" name="gal_list_name" {if $prefs.gal_list_name eq 'y'}checked="checked"{/if} /></td>
@@ -278,10 +278,10 @@
 	</form>	
 </fieldset>
 
-<fieldset class="admin">
+<fieldset class="table">
 	<legend>{tr}Image galleries comments settings{/tr}</legend>
 	<form method="post" action="tiki-admin.php?page=gal">
-		<table class="admin">
+		<table class="table">
 			<tr>
 				<td><label>{tr}Default number of comments per page:{/tr} </label></td>
 				<td>

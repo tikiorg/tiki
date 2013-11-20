@@ -5,7 +5,7 @@
 		<input type="submit" class="btn btn-default" name="paymentprefs" value="{tr}Change settings{/tr}" style="float:right;" />
 	</div>
 	{if $prefs.payment_feature neq "y"}
-		<fieldset class="admin">
+		<fieldset class="table">
 			<legend>{tr}Activate the feature{/tr}</legend>
 			{preference name=payment_feature visible="always"}
 		</fieldset>
@@ -20,7 +20,7 @@
 			{/remarksbox}
 
 			<div class="adminoptionboxchild" id="payment_feature_childcontainer">
-				<fieldset class="admin">
+				<fieldset class="table">
 					{preference name=payment_system}
 					{preference name=payment_currency}
 					{preference name=payment_default_delay}
@@ -134,7 +134,7 @@
 
 		{tab name="{tr}Plugins{/tr}"}
 
-			<fieldset class="admin">
+			<fieldset class="table">
 				<legend>{tr}Plugins{/tr}</legend>
 				{preference name=wikiplugin_addtocart}
 				{preference name=wikiplugin_adjustinventory}

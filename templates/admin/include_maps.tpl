@@ -2,7 +2,7 @@
 	<div class="heading input_submit_container" style="text-align: right">
 		<input type="submit" class="btn btn-default" name="mapsset" value="{tr}Change preferences{/tr}" />
 	</div>
-	<fieldset class="admin">
+	<fieldset class="table">
 		<legend>{tr}Settings{/tr}</legend>
 
 		{preference name=geo_tilesets}
@@ -35,7 +35,7 @@
 		</div>
 	</fieldset>
 	
-	<fieldset class="admin">			
+	<fieldset class="table">
 		<legend>{tr}MapServer settings{/tr}</legend>
 		
 		{preference name=feature_maps}

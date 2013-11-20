@@ -3,13 +3,13 @@
 		<input type="submit" class="btn btn-default" name="webmail" value="{tr}Change preferences{/tr}" />
 	</div>
 	
-	<fieldset class="admin">
+	<fieldset class="table">
 		<legend>{tr}Activate the feature{/tr}</legend>
 		{preference name=feature_webmail visible="always"}
 	</fieldset>		
 
 	
-	<fieldset class="admin">
+	<fieldset class="table">
 		<legend>{tr}Settings{/tr}</legend>
 		{preference name=webmail_view_html}
 		{preference name=webmail_max_attachment}

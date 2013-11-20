@@ -363,7 +363,7 @@ $("#repository, #categories").change(function(){
 
 
 
-<fieldset class="admin">
+<fieldset class="table">
 <legend>{tr}Status{/tr}</legend>
 <div class="adminoptionbox">
 	<table class="table normal">
