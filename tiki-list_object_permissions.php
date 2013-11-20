@@ -104,7 +104,7 @@ if ($del || $dup) {
 	}
 }
 
-$types = array('wiki page', 'file gallery', 'tracker', 'forum', 'group');
+$types = array('wiki page', 'file gallery', 'tracker', 'forum', 'group', 'articles', 'blog', 'calendar', 'sheet');
 $commentslib = TikiLib::lib('comments');
 $all_groups = $userlib->list_all_groups();
 $res = array();
@@ -188,6 +188,64 @@ foreach ($types as $type) {
 				}
 				if (count($r['category']) > 0) {
 					$res[$type]['category'][] = array('objectId' => $r['objectId'], 'category' => $r['category']);
+				}
+			}
+    		break;
+		
+		case 'calendar':
+			$calendarlib = TikiLib::lib('calendar');
+			$objects = $calendarlib->list_calendars();
+			foreach ($objects['data'] as $object) {
+				$r = list_perms($object['calendarId'], $type, $object['name'], $filterGroup);
+				if (count($r['special']) > 0) {
+					$res[$type]['objects'][] = array('objectId' => $r['objectId'], 'special' => $r['special'], 'objectName' => $object['name']);
+				}
+				if (count($r['category']) > 0) {
+					$res[$type]['category'][] = array('objectId' => $r['objectId'], 'category' => $r['category'], 'objectName' => $object['name']);
+				}
+			}
+    		break;
+		
+		case 'articles':
+			$artlib = TikiLib::lib('art');
+			$objects = $artlib->list_articles();
+			foreach ($objects['data'] as $object) {
+				$r = list_perms($object['articleId'], $type, $object['title'], $filterGroup);
+				if (count($r['special']) > 0) {
+					$res[$type]['objects'][] = array('objectId' => $r['objectId'], 'special' => $r['special'], 'objectName' => $object['title']);
+				}
+				if (count($r['category']) > 0) {
+					$res[$type]['category'][] = array('objectId' => $r['objectId'], 'category' => $r['category'], 'objectName' => $object['title']);
+				}
+			}
+    		break;
+		
+		case 'blog':
+			$bloglib = TikiLib::lib('blog');
+			$objects = $bloglib->list_blogs();
+			
+			foreach ($objects['data'] as $object) {
+				
+				$r = list_perms($object['blogId'], $type, $object['name'], $filterGroup);
+				if (count($r['special']) > 0) {
+					$res[$type]['objects'][] = array('objectId' => $r['objectId'], 'special' => $r['special'], 'objectName' => $object['name']);
+				}
+				if (count($r['category']) > 0) {
+					$res[$type]['category'][] = array('objectId' => $r['objectId'], 'category' => $r['category'], 'objectName' => $object['name']);
+				}
+			}
+    		break;
+		
+		case 'sheet':
+			$sheetlib = TikiLib::lib('sheet');
+			$objects = $sheetlib->list_sheets();
+			foreach ($objects['data'] as $object) {
+				$r = list_perms($object['sheetId'], $type, $object['name'], $filterGroup);
+				if (count($r['special']) > 0) {
+					$res[$type]['objects'][] = array('objectId' => $r['objectId'], 'special' => $r['special'], 'objectName' => $object['name']);
+				}
+				if (count($r['category']) > 0) {
+					$res[$type]['category'][] = array('objectId' => $r['objectId'], 'category' => $r['category'], 'objectName' => $object['name']);
 				}
 			}
     		break;
