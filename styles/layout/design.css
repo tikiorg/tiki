@@ -9,50 +9,8 @@
 	display: inline;
 }
 
-label {
-	cursor: pointer;
-}
-
 /***** Site Header & Identity *****/
-/* The following 2 are needed for now, but should be made redundant with something more bootstrap-generic. */
-.floatright {
-	float: right;
-	clear: none;
-}
 
-.floatleft {
-	float: left;
-	clear: none;
-}
-
-.sitetitle,
-.sitesubtitle {
-	line-height: 1;
-}
-
-/* default minimum height in case only login, etc. (absolutely positioned) is assigned */
-/*#top_modules {
-	min-height: 20px;
-}*/
-
-#sitesearchbar {
-	float: right;
-	clear: left;
-	padding-right: 4px;
-	text-align: right;
-	display: block;
-	margin: 0;
-}
-
-#tiki-top form.findtable {
-	margin-top: 0;
-	margin-bottom: 0;
-}
-
-#tiki-top table {
-	width: auto;
-	white-space: nowrap;
-}
 
 #top_modules .box-quickadmin {
 	position: absolute;
@@ -1692,8 +1650,6 @@ ul.freetagged li {
 	margin-right: 20px;
 	padding: .2em .8em;
 }
-
-
 
 /***** New (unsorted) *****/
 
@@ -4002,3 +3958,7 @@ h6 a.tiki_anchor:hover {
     color: #3333CC;
 }
 /* End of file */
+
+.panel-body input[type="text"] {
+	width: 90%;
+}
