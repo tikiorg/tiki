@@ -1701,9 +1701,15 @@ function wikiplugin_trackerlist($data, $params)
 					$items['data'][$f]['my_rate'] = $tikilib->get_user_vote("tracker.".$trackerId.'.'.$items['data'][$f]['itemId'], $user);
 				}
 			}
-			if ($definition->isEnabled('useComments') && $definition->isEnabled('showComments')) {
+			if ($definition->isEnabled('useComments') && $definition->isEnabled('showComments') || $definition->isEnabled('showLastComment') ) {
 				foreach ($items['data'] as $itkey=>$oneitem) {
-					$items['data'][$itkey]['comments'] = $trklib->get_item_nb_comments($items['data'][$itkey]['itemId']);
+					if ($definition->isEnabled('showComments')) {
+						$items['data'][$itkey]['comments'] = $trklib->get_item_nb_comments($items['data'][$itkey]['itemId']);
+					}
+					if ($definition->isEnabled('showLastComment')) {
+						$l = $trklib->list_last_comments($items['data'][$itkey]['trackerId'], $items['data'][$itkey]['itemId'], 0, 1);
+						$items['data'][$itkey]['lastComment'] = !empty($l['cant']) ? $l['data'][0] : '';
+					}
 				}
 			}
 			if ($definition->isEnabled('useAttachments') && $definition->isEnabled('showAttachments')) {
