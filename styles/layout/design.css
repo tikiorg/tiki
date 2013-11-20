@@ -247,13 +247,6 @@ img.icon {
 	white-space: nowrap;
 }
 
-/** Titles (not boxed) bold lines alone not in summary used by categobjects.tpl + ? **/
-.simple_title {
-	font-weight: bold;
-	display: block;
-	padding: 8px 5px 5px 0;
-}
-
 /** Find form **/
 .findtable {
   text-align: center;
@@ -398,13 +391,6 @@ a.toolbar {			/* each tool button */
 
 /***** Boxes *****/
 /** Modules **/
-.box-title,
-.box-data {
-	padding-left: 15px; /* These two: added for bootstrap compatibility. */
-	padding-right: 15px;
-	
-}
-
 .modules {
 	position: relative;
 }
@@ -414,14 +400,14 @@ a.toolbar {			/* each tool button */
 	max-width: 180px;
 }
 
-h3.box-title {
+h3.panel-title {
 	display: block;
 	padding-top: 0;
 	position: relative; /* Needed for module shading icon to work. */
 }
 
 .moduleflip,
-.box-title span img.flipmodimage {
+.panel-title span img.flipmodimage {
 	display: none;
 	position: absolute;
 	right: 1%;
@@ -437,16 +423,16 @@ h3.box-title {
 	border: 1px solid transparent;
 }
 
-.box-data table {
+.panel-body table {
 	width: 100%;
 }
 
-.box-data a.linkmenu {
+.panel-body a.linkmenu {
 	display: block;
 }
 
-.box-data ol,
-.box-data ul {
+.panel-body ol,
+.panel-body ul {
 	padding-left: 2em;
 	padding-right: .6em;
 	overflow: hidden;
@@ -454,7 +440,7 @@ h3.box-title {
 	margin-bottom: 0;
 }
 
-.box-data ul {
+.panel-body ul {
 	padding-left: 1.3em;
 }
 
@@ -496,14 +482,9 @@ h3.box-title {
 }
 
 /* mod-switch_lang */
-.box-switch_lang .box-data img {
+.box-switch_lang .panel-body img {
 	padding: .2em;
 	vertical-align: middle;
-}
-
-.cbox,
-.cbox-data {
-	overflow: hidden;
 }
 
 #autosave_preview > div {
