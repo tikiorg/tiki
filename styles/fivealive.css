@@ -912,6 +912,11 @@ h3.panel-title {
 .panel-body { 
 	padding: 5px;
 }
+
+#middle > .row {
+	margin-top: 1em;
+}
+
 #main h3.box-title {
 	background: none;
 }
