@@ -6,7 +6,7 @@
 	<legend>{tr}Get Started{/tr}</legend>
 
 <div style="display:block;margin-left: auto; margin-right: auto">
-{tr}The Tiki Admin Wizard helps you quickly configure key features and settings. Use the <a href="tiki-admin.php" target="_blank">Admin Panel</a> to configure other features and settings not included in this wizard or when not using the wizard. Uncheck the checkbox above to keep this wizard from showing upon admin login{/tr}.
+{tr}The Tiki Admin Wizard helps you quickly configure key features and settings. Use the <a href="tiki-admin.php" target="_blank">Admin Panel</a> to configure other features and settings not included in this wizard or when not using the wizard{/tr}.
 <br>
 	<img src="img/icons/large/wizard48x48.png" alt="{tr}Tiki Admin Wizard{/tr}" />
 		<input type="submit" class="btn btn-default" name="continue" value="{tr}Start admin wizard{/tr}" /><br>
