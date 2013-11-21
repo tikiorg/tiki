@@ -143,7 +143,7 @@ $("input[name=ins_' . $this->getOption('filterFieldIdHere') . '], select[name=in
 		$definition = Tracker_Definition::get($this->getOption('trackerId'));
 		$field = $definition->getField($this->getOption('listFieldIdThere'));
 
-		if ($field['type'] === 'e') {
+		if ($field['type'] == 'e' || $field['type'] == 'r') {
 			$item = $this->getItemData();
 			$item['ins_' . $this->getOption('listFieldIdThere')] = array($this->getValue());
 			$field['value'] = $this->getValue();
