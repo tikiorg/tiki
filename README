@@ -1,5 +1,5 @@
 Tiki! The wiki with a lot of features!
-Version 12.0alpha
+Version 12.0beta
 
 
 DOCUMENTATION
@@ -10,7 +10,7 @@ DOCUMENTATION
 * It is highly recommended that you refer to the online documentation:
 * http://doc.tiki.org/Installation for a setup guide
 
-* Notes about this release are accessible from http://tiki.org/ReleaseNotes120
+* Notes about this release are accessible from http://doc.tiki.org/Tiki12
 * Tikiwiki has an active IRC channel, #tikiwiki on irc.freenode.net
 
 INSTALLATION
