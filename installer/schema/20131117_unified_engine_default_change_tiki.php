@@ -12,7 +12,7 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 }
 
 /**
- * default for feature_wiki_paragraph_formatting changed between tiki 11 and 12 - this maintains previous default setting
+ * default for unified_engine changed between tiki 11 and 12 - this maintains previous default setting
  *
  * @param $installer
  */
