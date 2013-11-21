@@ -275,7 +275,7 @@ h3.panel-title {
 }
 
 .moduleflip,
-.panel-title span img.flipmodimage {
+.moduleflip img {
 	display: none;
 	position: absolute;
 	right: 1%;
@@ -283,7 +283,7 @@ h3.panel-title {
 }
 
 .panel:hover .moduleflip,
-.panel:hover .box-title span img.flipmodimage {
+.panel:hover .moduleflip img {
 	display: block;
 }
 
