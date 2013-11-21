@@ -19,8 +19,8 @@
     <td>{$info.country}</td>
   </tr></table>
 {else}
-<div class="cbox">
-  <div class="cbox-title">
+<div class="panel panel-default">
+  <div class="panel-heading">
   {if $tiki_p_admin ne 'y'}
   {tr}Error{/tr}
   </div>

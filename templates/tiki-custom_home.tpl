@@ -1,8 +1,8 @@
 <table  border="0">
 	<tr>
 		<td >
-			<div class="cbox">
-				<div class="cbox-title">
+			<div class="panel panel-default">
+				<div class="panel-heading">
 					What is Tiki?
 				</div>
 				<div class="cbox-data">
@@ -14,8 +14,8 @@
 		</td>
 	</tr>
 </table>
-<div class="cbox">
-	<div class="cbox-title">
+<div class="panel panel-default">
+	<div class="panel-heading">
 		Download!
 	</div>
 	<div class="cbox-data">
@@ -24,8 +24,8 @@
 	</div>
 </div>
 
-<div class="cbox">
-	<div class="cbox-title">
+<div class="panel panel-default">
+	<div class="panel-heading">
 		Join us!
 	</div>
 	<div class="cbox-data">
@@ -33,8 +33,8 @@
 		<a class="link" href="http://sourceforge.net/mail/?group_id=64258">mailing list</a>
 	</div>
 </div>
-<div class="cbox">
-	<div class="cbox-title">
+<div class="panel panel-default">
+	<div class="panel-heading">
 		Some of the many features in Tiki
 	</div>
 	<div class="cbox-data">
@@ -55,8 +55,8 @@
 	</div>
 </div>
 
-<div class="cbox">
-	<div class="cbox-title">
+<div class="panel panel-default">
+	<div class="panel-heading">
 		Testing Tiki
 	</div>
 	<div class="cbox-data">

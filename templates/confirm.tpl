@@ -1,13 +1,12 @@
 {* $Id$ *}
-<div class="cbox">
+<div class="panel panel-default">
 	{if !empty($confirmation_text)}
-		<div class="cbox-title">{icon _id=information style="vertical-align:middle"} {$confirmation_text|escape}</div>
+        <div class="panel-heading">{icon _id=information style="vertical-align:middle"} {$confirmation_text|escape}</div>
 	{/if}
 	{if !empty($confirm_detail)}
 		{$confirm_detail}
 	{/if}
-	<br>
-	<div class="cbox-data">
+	<div class="panel-body">
 		<form id='confirm' action="{$confirmaction|escape}" method="post">
 			<div>
 				{query _type='form_input' _keepall='y' ticket=$ticket daconfirm='y'}

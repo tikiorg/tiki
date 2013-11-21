@@ -13,8 +13,8 @@
 {if $step eq 'new'}
 {* This part of the tool is not ready yet, so let's hide it for now...
 
-<div class="cbox">
-<div class="cbox-title">{tr}Import Forum Contents from Tiki's DB and Server{/tr}</div>
+<div class="panel panel-default">
+<div class="panel-heading">{tr}Import Forum Contents from Tiki's DB and Server{/tr}</div>
 <div class="cbox-data">
 	<form action="tiki-forum_import.php" method="post">
 	<input type="hidden" name="step1" value="true">
@@ -44,7 +44,7 @@
 </div>
 <br>
 <div class="cbox">
-<div class="cbox-title">{tr}Import from Another DB or Server{/tr}</div>
+<div class="panel-heading">{tr}Import from Another DB or Server{/tr}</div>
 <div class="cbox-data">
 	<form action="tiki-forum_import.php" method="post">
 	<input type="hidden" name="step1" value="true">
@@ -82,8 +82,8 @@
 <br>
 
 End hiding of unfinished section... *}
-<div class="cbox">
-<div class="cbox-title">{tr}Import from a Local SQL File{/tr}</div>
+<div class="panel panel-default">
+<div class="panel-heading">{tr}Import from a Local SQL File{/tr}</div>
 <div class="cbox-data">
 	<form action="tiki-forum_import.php" method="post">
 	<input type="hidden" name="step1" value="true">
@@ -118,8 +118,8 @@ End hiding of unfinished section... *}
 
 {elseif $step eq 'test'}
 
-<div class="cbox">
-<div class="cbox-title">{tr}Verification{/tr}</div>
+<div class="panel panel-default">
+<div class="panel-heading">{tr}Verification{/tr}</div>
 <div class="cbox-data">
 	<form action="tiki-forum_import.php" method="post">
 	{if $passed eq 'true'}
@@ -156,8 +156,8 @@ End hiding of unfinished section... *}
 {elseif $step eq 'select'}
 
 <form action="tiki-forum_import.php" method="post">
-<div class="cbox">
-<div class="cbox-title">{tr}Select a Forum You Wish to Move (ONE at a time!){/tr}</div>
+<div class="panel panel-default">
+<div class="panel-heading">{tr}Select a Forum You Wish to Move (ONE at a time!){/tr}</div>
 <div class="cbox-data">
 	<input type="hidden" name="step3" value="true">
 	<input type="hidden" name="import" value="{$iMethod}">
@@ -186,8 +186,8 @@ End hiding of unfinished section... *}
 </div>
 </div>
 <p> </p>
-<div class="cbox">
-<div class="cbox-title">{tr}Which Forum Do You Wish to Import this Into?{/tr}</div>
+<div class="panel panel-default">
+<div class="panel-heading">{tr}Which Forum Do You Wish to Import this Into?{/tr}</div>
 <div class="cbox-data">
 	<table class="table normal">
 	<tr>

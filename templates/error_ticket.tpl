@@ -22,8 +22,8 @@
       {/if}
       <td id="centercolumn"><div id="tiki-center">
       <br>
-        <div class="cbox">
-        <div class="cbox-title">{icon _id=exclamation alt="{tr}Error{/tr}" style="vertical-align:middle"} {$errortitle|default:"{tr}Error{/tr}"}
+        <div class="panel panel-default">
+        <div class="panel-heading">{icon _id=exclamation alt="{tr}Error{/tr}" style="vertical-align:middle"} {$errortitle|default:"{tr}Error{/tr}"}
         </div>
         <div class="cbox-data">
         <br>{$msg}

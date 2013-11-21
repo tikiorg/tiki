@@ -1,7 +1,7 @@
 {* $Id$ *}
 {strip}
 <div id="themegenerator_content">
-	<div class="box-data">			
+	<div class="panel-body">
 		{if !empty($smarty.session.tg_preview)}
 			<div style="float:right;">
 				<em class="highlight">{tr}* PREVIEW *{/tr}</em>

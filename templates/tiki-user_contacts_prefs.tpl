@@ -7,7 +7,7 @@
 
 {tabset name="contact_prefs"}
 	{tab name="{tr}Options{/tr}"}
-		<div class="cbox">
+		<div class="panel panel-default">
 			<div class="cbox-data">
 				<form method='post' action='tiki-user_contacts_prefs.php'>
 					<table class="formcolor">
@@ -32,7 +32,7 @@
 	{/tab}
 
 	{tab name="{tr}Manage Fields{/tr}"}
-		<div class="cbox">
+		<div class="panel panel-default">
 			<div class="cbox-data">
 				<form method='post' action='tiki-user_contacts_prefs.php'>
 					<table class="table normal">

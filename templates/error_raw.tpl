@@ -3,10 +3,10 @@
 {/if}
 
 <div id="tiki-mid">
-	<div class="cbox">
-		<div class="cbox-title">{icon _id=exclamation alt="{tr}Error{/tr}" style="vertical-align:middle"} {tr}Error{/tr}</div>
-		<div class="cbox-data">
-			{$msg}<br><br>
+	<div class="panel panel-default">
+		<div class="panel-heading">{icon _id=exclamation alt="{tr}Error{/tr}" style="vertical-align:middle"} {tr}Error{/tr}</div>
+		<div class="panel-body">
+			{$msg}
 		</div>
 	</div>
 </div>

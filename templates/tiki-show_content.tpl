@@ -47,8 +47,8 @@
 
 {if $prefs.feature_urgent_translation eq 'y'}
 	{section name=i loop=$translation_alert}
-		<div class="cbox">
-			<div class="cbox-title">
+		<div class="panel panel-default">
+			<div class="panel-heading">
 				{icon _id=information style="vertical-align:middle"} {tr}Content may be out of date{/tr}
 			</div>
 			<div class="cbox-data">

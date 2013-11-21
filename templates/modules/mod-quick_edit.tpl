@@ -16,7 +16,7 @@
 			<input type="hidden" name="wikiHeaderTpl" value="{$wikiHeaderTpl|escape}" />
 		{/if}
 		{if $mod_quickedit_heading}
-			<div class="box-data">{$mod_quickedit_heading|escape}</div>
+			<div class="panel-body">{$mod_quickedit_heading|escape}</div>
 		{/if}
 		<input id="{$qefield}" size="{$size}" type="text" name="page" />
 		{if $addcategId}

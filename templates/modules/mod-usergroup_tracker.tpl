@@ -16,7 +16,7 @@
 
 {if $prefs.groupTracker eq 'y'}
 <div>{tr}Group information:{/tr}</div>
-<div class="box-data">
+<<div class="panel-body">
 &nbsp;&nbsp;<a href="tiki-view_tracker_item.php?view=+group" class="linkmodule">{$default_group|escape}</a>
 </div>
 {/if}

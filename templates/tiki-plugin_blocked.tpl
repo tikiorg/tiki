@@ -1,5 +1,5 @@
-<div class="cbox" id="{$plugin_fingerprint|escape}">
-<div class="cbox-title">
+<div class="panel panel-default" id="{$plugin_fingerprint|escape}">
+<div class="panel-heading">
 	{icon _id=error style="vertical-align:middle"}
 	{if $plugin_status eq 'rejected'}
 		{tr}Plugin execution was denied{/tr}
@@ -39,8 +39,8 @@
 				{/if}
 
 				{if $plugin_body}
-					<div class="cbox">
-					<div class="cbox-title">
+					<div class="panel panel-default">
+					<div class="panel-heading">
 						 {tr}Body{/tr}
 					</div>
 					<div class="cbox-data">

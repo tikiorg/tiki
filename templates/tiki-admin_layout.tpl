@@ -12,8 +12,8 @@
 		<a href="#{$sections[ij].name}" class="link">{$sections[ij].name}</a>
 	{/section}]
 
-	<div class="cbox">
-		<div class="cbox-title">{tr}layout options:{/tr} {tr}{$sections[ix].name}{/tr}</div>
+	<div class="panel panel-default">
+		<div class="panel-heading">{tr}layout options:{/tr} {tr}{$sections[ix].name}{/tr}</div>
 		<div class="cbox-data">
 			<div class="simplebox">
 				{$sections[ix].name} {tr}layout options{/tr}
