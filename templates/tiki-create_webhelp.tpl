@@ -7,9 +7,9 @@
 	</div>
 {/if}
 {if $output ne ''}
-	<div class="simplebox">
+	<div class="panel panel-default"><div class="panel-body">
 		{$output}
-	</div>
+	</div></div>
 {/if}
 <form method="post" action="tiki-create_webhelp.php">
 	<table class="formcolor">

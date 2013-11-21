@@ -39,12 +39,12 @@
 	<input type="hidden" name="image_type" value="{$image_type|escape}">
 	<input type="hidden" name="image_name" value="{$image_name|escape}">
 	<input type="hidden" name="image_size" value="{$image_size|escape}">
-	<div class="simplebox">
+	<div class="panel panel-default"><div class="panel-body">
 		{tr}<b>*</b>=optional{/tr}
 		{if $types.$type.show_topline eq 'y'}, {tr}<b>Topline</b>=small line above Title{/tr}{/if} 
 		{if $types.$type.show_subtitle eq 'y'}, {tr}<b>Subtitle</b>=small line below Title{/tr}{/if}
 		{if $types.$type.show_linkto eq 'y'}, {tr}<b>Source</b>=URL to article source{/tr}{/if}
-	</div>
+	</div></div>
 	<br>
 	<table class="formcolor">
 		<tr id='show_topline' {if $types.$type.show_topline eq 'y'}style="display:;"{else}style="display:none;"{/if}>

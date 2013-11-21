@@ -10,7 +10,7 @@
 
 <h2>{tr}Banner Information{/tr}</h2>
 
-<div class="simplebox">
+<div class="panel panel-default"><div class="panel-body">
 <table>
 <tr>
   <td>{tr}Client:{/tr}</td>
@@ -77,10 +77,10 @@
   </td>
 </tr>
 </table>
-</div>
+</div></div>
 <h2>{tr}Banner raw data{/tr}</h2>
-<div class="simplebox">
+<div class="panel panel-default"><div class="panel-body">
 <div align="center">
 {$raw}
 </div>
-</div>
+</div></div>

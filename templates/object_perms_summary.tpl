@@ -1,5 +1,5 @@
 {* $Id$ *}
-<div class="simplebox">
+<div class="panel panel-default"><div class="panel-body">
 	{capture name=permType}{$objectType}s{/capture}
 	<a title="{tr}Permissions{/tr}" class="link" href="tiki-objectpermissions.php?objectName={$name|escape:"url"}&amp;objectType={$objectType}&amp;permType={$smarty.capture.permType}&amp;objectId={$objectId}">
 		{if $permsType eq 'category'}
@@ -15,4 +15,4 @@
 			</a>
 			{tr}No individual permissions. Global permissions apply.{/tr}
 		{/if}
-</div>
+</div></div>

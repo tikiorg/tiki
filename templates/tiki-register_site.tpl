@@ -33,17 +33,17 @@
   </div>
   <div class="cbox-data">
   <table><tr><td>
-    <div class="simplebox">
-    <b>{tr}Read this first!{/tr}</b><br><br>
-    {tr}On this page you can make your tiki site known to Tiki.org. It will get shown there in a list of known tiki sites.{/tr}
-    <ul>
-    <li>{tr}Registering is voluntary.{/tr}</li>
-    <li>{tr}Registering does not give you any benefits except one more link to your site.{/tr}</li>
-    <li>{tr}You don't get any emails, we don't sell the data about your site.{/tr}</li>
-    <li>{tr}Registering is just for us to get an overview of Tiki's usage.{/tr}</li>
-    </ul>
-    <b>{tr}If your site is private or inside your intranet, you should not register!{/tr}</b><br><br>
-    </div>
+    <div class="panel panel-default"><div class="panel-body">
+        <b>{tr}Read this first!{/tr}</b><br><br>
+        {tr}On this page you can make your tiki site known to Tiki.org. It will get shown there in a list of known tiki sites.{/tr}
+        <ul>
+            <li>{tr}Registering is voluntary.{/tr}</li>
+            <li>{tr}Registering does not give you any benefits except one more link to your site.{/tr}</li>
+            <li>{tr}You don't get any emails, we don't sell the data about your site.{/tr}</li>
+            <li>{tr}Registering is just for us to get an overview of Tiki's usage.{/tr}</li>
+        </ul>
+        <b>{tr}If your site is private or inside your intranet, you should not register!{/tr}</b><br><br>
+    </div></div>
   </td><td align="center" width="30%"><br><br><br>
   <a href="http://tiki.org/" target="_tikiwiki"><img src="img/tiki/Tiki_WCG.png"></a><br>
   <br>

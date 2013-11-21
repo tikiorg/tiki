@@ -521,9 +521,9 @@
 	</div>
 
 	{section name=ix loop=$attachs}
-		<div class="simplebox">
+		<div class="panel panel-default"><div class="panel-body">
 			<a class="link" href="tiki-webmail_download_attachment.php?locSection=read&amp;msgid={$msgid}&amp;getpart={$attachs[ix].part}">{$attachs[ix].name|iconify}{$attachs[ix].name}</a>
-		</div>
+		</div></div>
 	{/section}
 {/if}
 {if $locSection eq 'compose'}

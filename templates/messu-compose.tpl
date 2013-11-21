@@ -4,9 +4,9 @@
 {include file='messu-nav.tpl'}
 
 {if $allowMsgs ne 'y'}<br>
-	<div class="simplebox">
+	<div class="panel panel-default"><div class="panel-body">
 		{icon _id=information style="vertical-align:middle" align="left"} {tr}If you want people to be able to reply to you, enable <a href='tiki-user_preferences.php'>Allow messages from other users</a> in your preferences.{/tr}
-	</div>
+	</div></div>
 	<br>
 	<br>
 {/if}

@@ -104,7 +104,7 @@
 	</table>
 </form>
 {if count($topics) > 0}
-	<div class="simplebox">
+	<div class="panel panel-default"><div class="panel-body">
 		<table>
 			<tr>
 				{section name=numloop loop=$topics}
@@ -136,5 +136,5 @@
 					{/if}
 				{/section}
 		</table>
-	</div>
+	</div></div>
 {/if}

@@ -159,12 +159,12 @@ if (jqueryTiki.chosen) {
 					<input type="submit" class="btn btn-default" name="compare" value="{tr}Compare{/tr}">
 				</div>
 			{/if}
-			<div class="simplebox">
+			<div class="panel panel-default"><div class="panel-body">
 				<b>{tr}Legend:{/tr}</b> {tr}v=view{/tr}
 				{if $tiki_p_wiki_view_source eq "y" and $prefs.feature_source eq "y"}, {tr}s=source{/tr} {/if}
 				{if $prefs.default_wiki_diff_style eq "old"}, {tr}c=compare{/tr}, {tr}d=diff{/tr}{/if}
 				{if $tiki_p_rollback eq 'y'}, {tr}b=rollback{/tr}{/if}
-			</div>
+			</div></div>
 			<table class="table">
 				<tr>
 					{if $tiki_p_remove eq 'y'}<th><input type="submit" class="btn btn-warning" name="delete" value="{tr}Del{/tr}"></th>{/if}

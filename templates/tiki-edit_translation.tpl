@@ -135,10 +135,10 @@ function validate_translation_request() {
 </form>
 
 {else}
-	<div class="simplebox">
+	<div class="panel panel-default"><div class="panel-body">
 		{icon _id=delete alt="{tr}Alert{/tr}" style="vertical-align:middle"} 
 		{tr}No language is assigned to this page.{/tr}
-	</div>
+	</div></div>
 	<p>{tr}Please select a language before performing translation.{/tr}</p>
 	<form method="post" action="tiki-edit_translation.php">
 		<p>

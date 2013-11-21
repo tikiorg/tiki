@@ -35,12 +35,12 @@
 				{tr}Send Wiki Pages{/tr}
 			</div>
 			<div class="cbox-data">
-				<div class="simplebox">
+				<div class="panel panel-default"><div class="panel-body">
 					<b>{tr}Pages{/tr}</b>:
 					{section name=ix loop=$sendpages}
 						{$sendpages[ix]}&nbsp;
 					{/section}
-				</div>
+				</div></div>
 				<select name="pageName">
 					{section name=ix loop=$pages}
 						<option value="{$pages[ix].pageName|escape}">{$pages[ix].pageName|escape}</option>
@@ -59,13 +59,12 @@
 				<div class="panel-heading">
 					{tr}Send a structure{/tr}
 				</div>
-				<div class="cbox-data">
-					<div class="simplebox">
+					<div class="panel panel-default"><div class="panel-body">
 						<b>{tr}Structures{/tr}</b>:
 						{section name=ix loop=$sendstructures_names}
 							{$sendstructures_names[ix]}&nbsp;
 						{/section}
-					</div>
+					</div></div>
 					<select name="structure">
 						{foreach item=struct from=$structures}
 							<option value="{$struct.page_ref_id|escape}">{$struct.pageName|escape}{if $struct.page_alias} (alias: {$struct.page_alias}){/if}</option>
@@ -86,13 +85,14 @@
 			<div class="panel-heading">
 				{tr}Send Articles{/tr}
 			</div>
-			<div class="cbox-data">
-				<div class="simplebox">
-					<b>{tr}Articles{/tr}</b>:
-					{section name=ix loop=$sendarticles}
-						{$sendarticles[ix]}&nbsp;
+			<div class="panel panel-default">
+                <div class="panel-body">
+				    <b>{tr}Articles{/tr}</b>:
+				    {section name=ix loop=$sendarticles}
+				    {$sendarticles[ix]}&nbsp;
 					{/section}
 				</div>
+            </div>
 				<select name="articleId">
 					{section name=ix loop=$articles}
 						<option value="{$articles[ix].articleId|escape}">{$articles[ix].articleId}: {$articles[ix].title|escape}</option>
@@ -111,7 +111,7 @@
 		<div class="panel-heading">
 			{tr}Send objects to this site{/tr}
 		</div>
-		<div class="cbox-data">
+		<div class="panel-body">
 			<input type="hidden" name="sendpages" value="{$form_sendpages|escape}">
 			<input type="hidden" name="sendstructures" value="{$form_sendstructures|escape}">
 			<input type="hidden" name="sendarticles" value="{$form_sendarticles|escape}">

@@ -66,9 +66,9 @@
 						{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Use Ctrl+Click to select multiple options{/tr}{/remarksbox}
 					{/if}
 					{if $prefs.modallgroups eq 'y'}
-						<div class="simplebox">
+						<div class="panel panel-default"><div class="panel-body">
 							{icon _id=information style="vertical-align:middle;float:left"} {tr}The{/tr} <a class="rbox-link" href="tiki-admin.php?page=module">{tr}Display Modules to All Groups{/tr}</a> {tr}setting will override your selection of specific groups.{/tr}
-						</div>
+						</div></div>
 						<br>
 					{/if}
 				</div>
@@ -90,9 +90,9 @@
 								{tr}Not displayed until a user chooses it{/tr}
 							</option>
 						</select>
-						<div class="simplebox">
+						<div class="panel panel-default"><div class="panel-body">
 							{icon _id=information style="vertical-align:middle;float:left;"}{tr}Because <a class="rbox-link" href="tiki-admin.php?page=module">Users can Configure Modules</a>, select either{/tr} &quot;{tr}Displayed now for all eligible users even with personal assigned modules{/tr}&quot; {tr}or{/tr} &quot;{tr}Displayed now, can't be unassigned{/tr}&quot; {tr}to make sure users will notice any newly assigned modules.{/tr}
-						</div>
+						</div></div>
 					</div>
 				{/if}
 			</fieldset>

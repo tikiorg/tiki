@@ -7,7 +7,7 @@
 
 <form action="tiki-edit_banner.php" method="post" enctype="multipart/form-data">
 	<input type="hidden" name="bannerId" value="{$bannerId|escape}">
-	<div class="simplebox">
+	<div class="panel panel-default"><div class="panel-body">
 		<table class="formcolor">
 			<tr>
 				<td>{tr}URL to link the banner{/tr}</td>
@@ -69,9 +69,9 @@
 				</td>
 			</tr>
 		</table>
-	</div>
+	</div></div>
 
-	<div class="simplebox">
+	<div class="panel panel-default"><div class="panel-body">
 		<table class="formcolor">
 			<tr>
 				<td colspan="2">{tr}Show the banner only between these dates:{/tr}</td>
@@ -95,9 +95,9 @@
 				</td>
 			</tr>
 		</table>
-	</div>
+	</div></div>
 
-	<div class="simplebox">
+	<div class="panel panel-default"><div class="panel-body">
 		<table class="formcolor">
 			<tr>
 				<td colspan="2">{tr}Show the banner only in this hours:{/tr}</td>
@@ -111,9 +111,9 @@
 				<td>{html_select_time time=$toTime display_seconds=false prefix='toTime' use_24_hours=$use_24hr_clock}</td>
 			</tr>
 		</table>
-	</div>
+	</div></div>
 
-	<div class="simplebox">
+	<div class="panel panel-default"><div class="panel-body">
 		<table class="formcolor">
 			<tr>
 				<td colspan="7">{tr}Show the banner only on:{/tr}</td>
@@ -142,9 +142,9 @@
 				</td>
 			</tr>
 		</table>
-	</div>
+	</div></div>
 
-	<div class="simplebox">
+	<div class="panel panel-default"><div class="panel-body">
 		{tr}Select ONE method for the banner{/tr}
 		<table class="formcolor">
 			<tr>
@@ -252,13 +252,13 @@
 				</td>
 			</tr>
 		</table>
-	</div>
+	</div></div>
 
 	<input type="submit" class="btn btn-default" name="save" value="{tr}Save the Banner{/tr}">
 </form>
 
 {if $zones}
-	<div align="left" class="simplebox">
+	<div align="left" class="panel panel-default"><div class="panel-body">
 		<h2>{tr}Remove Zones (you lose entered info for the banner){/tr}</h2>
 		<table class="table normal">
 			<tr>
@@ -275,5 +275,5 @@
 				</tr>
 			{/section}
 		</table>
-	</div>
+	</div></div>
 {/if}

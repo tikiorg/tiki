@@ -32,7 +32,7 @@
 {/if}
 {if $installask}
 <form method='post' action='?'>
-	<div class="simplebox">
+	<div class="panel panel-default"><div class="panel-body">
 		<ul>
 		{if $installask.wanted}
 			<li>You asked to install these mods:
@@ -138,7 +138,7 @@ function update_button_install() {
 	button.style.display='';
 }
 {/jq}
-	</div>
+	</div></div>
 </form>
 {/if}
 <br>
@@ -271,7 +271,7 @@ function update_button_install() {
 							<table>
 								<tr>
 									<td>
-										<div class="simplebox">
+										<div class="panel panel-default"><div class="panel-body">
 											{if $more->docurl}Documentation :<br>{foreach key=ku item=iu from=$more->docurl}<a href="{$iu}">{$iu}</a><br>{/foreach}{/if}
 											{if $more->devurl}Development : <br>{foreach key=ku item=iu from=$more->devurl}<a href="{$iu}">{$iu}</a><br>{/foreach}{/if}
 											{if $more->help}{$more.help}<br>{/if}
@@ -281,7 +281,7 @@ function update_button_install() {
 											
 											{tr}Last Modification:{/tr} {$more->lastmodif}<br>
 											{tr}by:{/tr} {$more->contributor[0]}<br>
-										</div>
+										</div></div>
 									</td><td>
 										{foreach key=kk item=ii from=$more->files}
 											{$ii[0]} -&gt; <b>{$ii[1]}</b><br>
