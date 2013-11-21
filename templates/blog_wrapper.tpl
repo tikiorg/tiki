@@ -1,12 +1,12 @@
 {* $Id$ *}
-<div class="postbody clearfix">
+<div class="panel panel-default postbody clearfix">
 	<a name="postId{$post_info.postId}"></a>
 	{include file='blog_post_postbody_title.tpl'}
 	{include file='blog_post_author_info.tpl'}
 	{include file='blog_post_postbody_content.tpl'}
 	{if $blog_post_context ne 'excerpt'}
 		{if $blog_post_context ne 'print'} 
-			<div class="postfooter">
+			<div class="postfooter panel-footer">
 				{include file='blog_post_author_actions.tpl'}
 				{include file='blog_post_actions.tpl'}
 				{include file='blog_post_status.tpl'}

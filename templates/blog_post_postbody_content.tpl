@@ -1,11 +1,11 @@
 {* $Id$ *}
 {if $blog_post_context eq 'view_blog' && $use_excerpt eq 'y' && !empty($post_info.excerpt)}
-	<div class="postbody-content postbody-excerpt">
+	<div class="postbody-content postbody-excerpt panel-body">
 	{$post_info.excerpt}
 	</div>
 	{self_link _script=$post_info.postId|sefurl:blogpost _noauto='y'}{tr}Read more{/tr}{/self_link}
 {else}
-	<div class="postbody-content">
+	<div class="postbody-content panel-body">
 		{$post_info.parsed_data}
 	</div>
 {/if}
