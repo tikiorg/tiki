@@ -306,8 +306,8 @@
 			</div>
 			{if $prefs.geo_locate_article eq 'y'}
 				<div class="form-group">
-					<label>{tr}Location{/tr}</td>
-						<div class="map-container" data-geo-center="{defaultmapcenter}" data-target-field="geolocation" style="height: 250px; width: 250px;"></div>
+					<label>{tr}Location{/tr}</label>
+					<div class="map-container" data-geo-center="{defaultmapcenter}" data-target-field="geolocation" style="height: 250px; width: 250px;"></div>
 					<input type="hidden" name="geolocation" value="{$geolocation_string|escape}">
 					{$headerlib->add_map()}
 				</div>
