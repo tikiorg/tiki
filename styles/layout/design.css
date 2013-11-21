@@ -287,10 +287,6 @@ h3.panel-title {
 	display: block;
 }
 
-.panel:hover img.flipmodimage {
-	border: 1px solid transparent;
-}
-
 .panel-body table {
 	width: 100%;
 }
