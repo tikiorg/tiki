@@ -293,6 +293,12 @@ if (isset($_REQUEST["preview"])) {
 	}
 	$smarty->assign_by_ref('info', $info);
 	$smarty->assign('previewdata', $previewdata);
+
+	$tikilib = TikiLib::lib('tiki');
+	$news_cssfile = $tikilib->get_style_path($prefs['style'], '', 'newsletter.css');
+	$news_cssfile_option = $tikilib->get_style_path($prefs['style'], $prefs['style_option'], 'newsletter.css');
+
+	TikiLib::lib('header')->add_cssfile($news_cssfile)->add_cssfile($news_cssfile_option);
 }
 $smarty->assign('presend', 'n');
 if (isset($_REQUEST["save"])) {
