@@ -47,24 +47,16 @@
 			{/if}
 		{/if}
         </h3></div>
-	{elseif $module_notitle ne 'y'}
+	{elseif $module_notitle ne 'y'}{* means when module decorations are set to 'n' *}
 		{if $module_flip eq 'y' and $prefs.javascript_enabled ne 'n'}
-            <div class="panel-heading">
-            <h3 class="panel-title" ondblclick="javascript:icntoggle('mod-{$smarty.capture.name}','module.png');"{if !empty($module_params.color)} style="color:{$module_params.color};"{/if}>
-		    </div>
-        {else}
-            <div class="panel-heading">
-            <h3 class="panel-title"{if !empty($module_params.color)} style="color:{$module_params.color};"{/if}>
-            </div>
+	<h3 class="panel-title" ondblclick="javascript:icntoggle('mod-{$smarty.capture.name}','module.png');"{if !empty($module_params.color)} style="color:{$module_params.color};"{/if}>
+		{else}
+	<h3 class="panel-title"{if !empty($module_params.color)} style="color:{$module_params.color};"{/if}>
 		{/if}
 		{$module_title}
 		{if $module_flip eq 'y' and $prefs.javascript_enabled ne 'n'}
-			<span id="moduleflip-{$smarty.capture.name}">
+			<span class="moduleflip" id="moduleflip-{$smarty.capture.name}">
 				<a title="{tr}Toggle module contents{/tr}" class="flipmodtitle" href="javascript:icntoggle('mod-{$smarty.capture.name}','module.png');">
-					{assign var="name" value="icnmod-"|cat:$smarty.capture.name}
-					{capture name=name}
-						icnmod-{$smarty.capture.name}
-					{/capture}
 					{icon name="icnmod-"|cat:$smarty.capture.name class="flipmodimage" _id="module" alt="[{tr}Hide{/tr}]"}
 				</a>
 			</span>
