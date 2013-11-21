@@ -86,7 +86,7 @@
 	</p>
 	{if $subscribers gt 0}
 		<h3>{tr}Recipients{/tr} <a id="flipperrecipients" href="javascript:flipWithSign('recipients')">[+]</a></h3>
-		<div id="recipients" class="simplebox" style="display:none; max-height: 250px; overflow: auto;">
+		<div id="recipients" class="cbox" style="display:none; max-height: 250px; overflow: auto;">
 			<table class="small normal">
 				<tr>
 					<th>{tr}Email{/tr}</th>
@@ -106,19 +106,19 @@
 	{/if}	
 	<h2>{tr}Preview{/tr}</h2>
 	<h3>{tr}Subject{/tr}</h3>
-	<div class="simplebox wikitext">{$subject|escape}</div>
+	<div class="cbox wikitext">{$subject|escape}</div>
 
 	<h3>{tr}HTML version{/tr}</h3>
-	<div class="simplebox wikitext">{$previewdata}</div>
+	<div class="cbox wikitext">{$previewdata}</div>
 
 	{if $allowTxt eq 'y'}
 		<h3>{tr}Text version{/tr}</h3>
-		{if $info.datatxt}<div class="simplebox wikitext" >{$info.datatxt|escape|nl2br}</div>{/if}
-		{if $txt}<div class="simplebox wikitext">{$txt|escape|nl2br}</div>{/if}
+		{if $info.datatxt}<div class="cbox wikitext" >{$info.datatxt|escape|nl2br}</div>{/if}
+		{if $txt}<div class="cbox wikitext">{$txt|escape|nl2br}</div>{/if}
 	{/if}
 	
 	<h3>{tr}Files{/tr}</h3>
-	<div class="simplebox wikitext">
+	<div class="cbox wikitext">
 		{if $info.files|@count gt 0}
 			<ul>
 				{foreach from=$info.files item=newsletterfile key=fileid}
@@ -158,15 +158,15 @@
 	{if $preview eq 'y'}
 		<h2>{tr}Preview{/tr}</h2>
 		<h3>{tr}Subject{/tr}</h3>
-		<div class="simplebox wikitext">{$info.subject|escape}</div>
+		<div class="cbox wikitext">{$info.subject|escape}</div>
 
 		<h3>{tr}HTML version{/tr}</h3>
-		<div class="simplebox wikitext">{$previewdata}</div>
+		<div class="cbox wikitext">{$previewdata}</div>
 
 		{if $allowTxt eq 'y'}
 			<h3>{tr}Text version{/tr}</h3>
-			{if $info.datatxt}<div class="simplebox wikitext" >{$info.datatxt|escape|nl2br}</div>{/if}
-			{if $txt}<div class="simplebox wikitext">{$txt|escape|nl2br}</div>{/if}
+			{if $info.datatxt}<div class="cbox wikitext" >{$info.datatxt|escape|nl2br}</div>{/if}
+			{if $txt}<div class="cbox wikitext">{$txt|escape|nl2br}</div>{/if}
 		{/if}
 
 		<h3>{tr}Files{/tr}</h3>

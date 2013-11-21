@@ -13,10 +13,10 @@
 </div>
 <br>
 <div style="display:block;margin-left: auto; margin-right: auto">
-{tr}Tiki Profiles is a quick and easy way to setup a preconfigured application, e.g. a Blog site{/tr}.
+{tr}Tiki Profiles are a quick and easy way to setup a preconfigured application, e.g. a Blog site{/tr}.
 <br>
-	<img src="img/icons/large/profiles48x48.png" alt="{tr}Tiki Profiles{/tr}" />
-		<input  type="submit" class="btn btn-default" name="use-default-prefs" value="{tr}Easy application setup using profiles{/tr}" /><br>
+	<img src="img/icons/large/profiles48x48.png" alt="{tr}Tiki Configuration Profiles{/tr}" />
+		<input  type="submit" class="btn btn-default" name="use-default-prefs" value="{tr}Easy application setup using configuration profiles{/tr}" /><br>
 </div>
 <br>
 <div style="display:block;margin-left: auto; margin-right: auto; margin-bottom: 10px">
