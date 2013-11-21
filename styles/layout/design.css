@@ -10,8 +10,6 @@
 }
 
 /***** Site Header & Identity *****/
-
-
 #top_modules .box-quickadmin {
 	position: absolute;
 	right: 1em;
@@ -33,7 +31,6 @@
 }
 
 /***** Misc. *****/
-
 .mod-share-item {
 	float: left;
 }
@@ -70,7 +67,9 @@
 
 /****** Misc. Global Classes (layout and style) ****/
 #attzone,
-#comzone {
+#comzone,
+#rules-copy-panel,
+#edithelpzone {
 	display: none;
 }
 
@@ -78,15 +77,6 @@
 #comzoneopen {
 	display: block;
 }
-
-#edithelpzone {
-	display: none
-}
-
-#rules-copy-panel {
-	display: none;
-}
-
 .clear,
 #clear {
 	clear: both;
@@ -414,6 +404,7 @@ tr.diffheader {
 	position: relative;
 	clear: none;
 }
+
 .tabs .tabstoggle.floatright .button {
 	position: absolute;
 	top: 0;
@@ -436,8 +427,8 @@ tr.diffheader {
 }
 
 #page-bar {
-	display: block;
-	margin-top: 0;
+/*	display: block;
+	margin-top: 0; */
 }
 
 #page-bar > span {
@@ -2212,10 +2203,6 @@ option:disabled,
 input:disabled,
 textarea:disabled {
 	color: #888 !important;
-}
-
-fieldset {
-	clear: both;
 }
 
 #genPass .button a,
