@@ -95,13 +95,13 @@
 						<option value="Other" {if $user_prefs.country eq "Other"}selected="selected"{/if}>
 							{tr}Other{/tr}
 						</option>
-						{section name=ix loop=$flags}
-							{if $flags[ix] ne "Other"}
-								<option value="{$flags[ix]|escape}" {if $user_prefs.country eq $flags[ix]}selected="selected"{/if}>
-									{tr}{$flags[ix]|stringfix}{/tr}
+                        {foreach from=$flags item=flag}
+							{if $flag ne "Other"}
+								<option value="{$flag|escape}" {if $user_prefs.country eq $flag}selected="selected"{/if}>
+									{tr}{$flag|stringfix}{/tr}
 								</option>
 							{/if}
-						{/section}
+						{/foreach}
 					</select>
 				</td>
 			</tr>
@@ -109,7 +109,7 @@
 			<tr>
 				<td>{tr}Location:{/tr}</td>
 				<td>
-					<div class="map-container" style="height: 250px;" data-target-field="location">
+					<div class="map-container" style="height: 250px;" data-geo-center="{defaultmapcenter}" data-target-field="location">
 					</div>
 					<input type="hidden" name="location" value="{$location|escape}">
 				</td>
@@ -262,11 +262,9 @@
 				<td>
 					<select name="language">
 						{section name=ix loop=$languages}
-							{if count($prefs.available_languages) == 0 || in_array($languages[ix].value, $prefs.available_languages)}
-								<option value="{$languages[ix].value|escape}" {if $user_prefs.language eq $languages[ix].value}selected="selected"{/if}>
-									{$languages[ix].name}
-								</option>
-							{/if}
+							<option value="{$languages[ix].value|escape}" {if $user_prefs.language eq $languages[ix].value}selected="selected"{/if}>
+								{$languages[ix].name}
+							</option>
 						{/section}
 						<option value='' {if !$user_prefs.language}selected="selected"{/if}>
 							{tr}Site default{/tr}

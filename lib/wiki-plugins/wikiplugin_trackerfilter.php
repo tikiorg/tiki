@@ -114,9 +114,9 @@ function wikiplugin_trackerfilter_info()
 				'default' => 'UTF-8',
 				'advanced' => true,
 			),					
-			'googlemapButtons' => array(
+			'mapButtons' => array(
 				'required' => false,
-				'name' => tra('Google Map Buttons'),
+				'name' => tra('Map View Buttons'),
 				'description' => tra('Display Mapview and Listview buttons'),
 				'filter' => 'alpha',
 				'default' => '',
@@ -161,10 +161,12 @@ function wikiplugin_trackerfilter($data, $params)
 		$params = array_merge($params, wikiplugin_trackerFilter_get_session_filters($iTrackerFilter));
 	}
 	if (isset($_REQUEST["mapview"]) && $_REQUEST["mapview"] == 'y' && !isset($_REQUEST["searchmap"]) && !isset($_REQUEST["searchlist"]) || isset($_REQUEST["searchmap"]) && !isset($_REQUEST["searchlist"])) {
-		$params["googlemap"] = 'y';
+		$params["showmap"] = 'y';
+		$smarty->assign('mapview', true);
 	}
 	if (isset($_REQUEST["mapview"]) && $_REQUEST["mapview"] == 'n' && !isset($_REQUEST["searchmap"]) && !isset($_REQUEST["searchlist"]) || isset($_REQUEST["searchlist"]) && !isset($_REQUEST["searchmap"]) ) {
-		$params["googlemap"] = 'n';
+		$params["showmap"] = 'n';
+		$smarty->assign('mapview', false);
 	}
 	$params = array_merge($default, $params);
 	extract($params, EXTR_SKIP);
@@ -348,8 +350,8 @@ function wikiplugin_trackerfilter($data, $params)
 	$smarty->assign_by_ref('noflipflop', $noflipflop);
 	$smarty->assign_by_ref('dataRes', $dataRes);
 
-	if (isset($googlemapButtons)) {
-		$smarty->assign('googlemapButtons', $googlemapButtons);
+	if (isset($mapButtons)) {
+		$smarty->assign('mapButtons', $mapButtons);
 	}
 
 	$dataF = $smarty->fetch('wiki-plugins/wikiplugin_trackerfilter.tpl');

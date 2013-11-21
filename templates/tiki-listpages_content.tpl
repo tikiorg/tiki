@@ -166,6 +166,11 @@
 
 	{cycle values="even,odd" print=false}
 	{section name=changes loop=$listpages}
+
+	{if isset($mapview) and $mapview}
+		<div class="listpagesmap" style="display:none;">{object_link type="wiki page" id="`$listpages[changes].pageName|escape`"}</div>
+	{/if}
+
 	{if $find eq $listpages[changes].pageName}
 		{assign var='pagefound' value='y'}
 	{/if}

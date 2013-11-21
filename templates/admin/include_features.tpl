@@ -100,7 +100,6 @@
 			<div class="admin clearfix featurelist">		
 				{preference name=connect_feature}
 				{preference name=feature_maps}
-				{preference name=feature_gmap}
 				{preference name=feature_socialnetworks}
 				
 				{preference name=feature_watershed}				

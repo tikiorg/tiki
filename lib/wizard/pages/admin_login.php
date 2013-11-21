@@ -8,13 +8,13 @@
 require_once('lib/wizard/wizard.php');
 
 /**
- * Show the initial profiles choices
+ * The Wizard's editor type selector handler 
  */
-class AdminWizardProfiles extends Wizard 
+class AdminWizardLogin extends Wizard
 {
 	function isEditable ()
 	{
-		return false;
+		return true;
 	}
 	
 	function onSetupPage ($homepageUrl) 
@@ -23,17 +23,22 @@ class AdminWizardProfiles extends Wizard
 
 		// Run the parent first
 		parent::onSetupPage($homepageUrl);
-		
-		// Assign the page temaplte
-		$wizardTemplate = 'wizard/admin_profiles.tpl';
+
+		// Assign the page template
+		$wizardTemplate = 'wizard/admin_login.tpl';
 		$smarty->assign('wizardBody', $wizardTemplate);
 		
-		return true;		
+		return true;
 	}
 
 	function onContinue ($homepageUrl) 
 	{
-		// Run the parent first
-		parent::onContinue($homepageUrl);
+        global $tikilib;
+
+        // Run the parent first
+        parent::onContinue($homepageUrl);
+
+        // Configure detail preferences in own page
 	}
+
 }

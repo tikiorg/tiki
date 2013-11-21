@@ -218,6 +218,12 @@ $headerlib->add_jq_onready(
 		})
 		.change();'
 );
+// Jquery Chosen not working in slide footer.
+$headerlib->add_js('
+	if(jqueryTiki.chosen) {
+		jqueryTiki.chosen = false;
+	}
+');
 
 ask_ticket('index-raw');
 

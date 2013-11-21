@@ -18,7 +18,7 @@
 {/if}
 
 {if $mapview}
-{wikiplugin _name="googlemap" type="objectlist" width="400" height="400"}{/wikiplugin}
+{wikiplugin _name="map" scope=".listarticlesmap .geolocated" width="400" height="400"}{/wikiplugin}
 {/if}
 
 <form name="checkform" method="get" action="{$smarty.server.PHP_SELF}">
@@ -99,6 +99,11 @@
 		</tr>
 		{cycle values="odd,even" print=false}
 		{section name=changes loop=$listpages}
+	
+			{if isset($mapview) and $mapview}
+				<div class="listarticlesmap" style="display:none;">{object_link type="article" id="`$listpages[changes].articleId|escape`"}</div>
+			{/if}
+
 			<tr class="{cycle}">
 				<td class="checkbox-cell">
 					<input type="checkbox" name="checked[]" value="{$listpages[changes].articleId|escape}" {if $listpages[changes].checked eq 'y'}checked="checked" {/if}>

@@ -39,13 +39,13 @@ function wikiplugin_mediaplayer_info()
 			'mp3' => array(
 				'required' => false,
 				'name'=> tra('MP3 URL'),
-				'description' => tra('Complete URL to the mp3 to include.'),
+				'description' => tra("Complete URL to the MP3 to include. http://example.org/example.mp3 for an external file or the following for a local file: tiki-download_file.php?fileId=2 (No need for http:// in this case)"),
 				'filter' => 'url',
 			),
 			'flv' => array(
 				'required' => false,
 				'name'=> tra('FLV URL'),
-				'description' => tra('Complete URL to the flv to include.'),
+				'description' => tra("Complete URL to the FLV to include. http://example.org/example.flv for an external file or the following for a local file: http:tiki-download_file.php?fileId=2 (the missing // is intentional as this is a valid internal link)"),
 				'filter' => 'url'
 			),
 

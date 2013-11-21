@@ -520,7 +520,7 @@ $("input[name=allowhtml]").change(function() {
 							{/if}
 							{if $prefs.geo_locate_wiki eq 'y'}
 								{$headerlib->add_map()}
-								<div class="map-container" data-target-field="geolocation" style="height: 250px; width: 250px;"></div>
+								<div class="map-container" data-geo-center="{defaultmapcenter}" data-target-field="geolocation" style="height: 250px; width: 250px;"></div>
 								<input type="hidden" name="geolocation" value="{$geolocation_string}">
 							{/if}
 							{if $prefs.wiki_auto_toc eq 'y'}

@@ -4171,7 +4171,6 @@ class TikiLib extends TikiDb_Bridge
 			}
 
 		} else { // If $my_user is empty, we must be Anonymous updating one of our own preferences
-			$prefs[$name] = $value;
 			if ( $name == 'theme' && $prefs['change_theme'] == 'y' ) { 				// FIXME: Remove this exception
 				$prefs['style'] = $value;
 				$_SESSION['preferences']['style'] = $value;
@@ -5585,7 +5584,7 @@ class TikiLib extends TikiDb_Bridge
 		// run through all the language codes:
 		if (isset($short) && $short == "y") {
 			foreach ($languages as $lc) {
-				if ( empty($prefs['available_languages'] ) || (!$all and in_array($lc, $prefs['available_languages']))) {
+				if ( $prefs['restrict_language'] === 'n' || empty($prefs['available_languages'] ) || (!$all and in_array($lc, $prefs['available_languages']))) {
 					if (isset($langmapping[$lc]))
 						$formatted[] = array('value' => $lc, 'name' => $langmapping[$lc][0]);
 					else
@@ -5596,7 +5595,7 @@ class TikiLib extends TikiDb_Bridge
 			return $formatted;
 		}
 		foreach ($languages as $lc) {
-			if (empty($prefs['available_languages']) || (!$all and in_array($lc, $prefs['available_languages'])) or $all) {
+			if ( $prefs['restrict_language'] === 'n' || empty($prefs['available_languages']) || (!$all and in_array($lc, $prefs['available_languages'])) or $all) {
 				if (isset($langmapping[$lc])) {
 					// known language
 					if ($langmapping[$lc][0] == $langmapping[$lc][1]) {
@@ -6929,7 +6928,7 @@ function detect_browser_language()
 	if (is_dir("lang")) {
 		$dh = opendir("lang");
 		while ($lang = readdir($dh)) {
-			if (!strpos($lang, '.') and is_dir("lang/$lang") and file_exists("lang/$lang/language.php") and (empty($prefs['available_languages']) || in_array($lang, $prefs['available_languages']))) {
+			if (!strpos($lang, '.') and is_dir("lang/$lang") and file_exists("lang/$lang/language.php") and ($prefs['restrict_language'] === 'n' || empty($prefs['available_languages']) || in_array($lang, $prefs['available_languages']))) {
 				$available[strtolower($lang)] = $lang;
 				$available_aprox[substr(strtolower($lang), 0, 2)] = $lang;
 			}

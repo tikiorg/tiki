@@ -15,7 +15,7 @@ function isValidLocale($localeIdentifier = '')
 {
 	global $prefs;
 	return preg_match("/[a-zA-Z-_]+$/", $localeIdentifier) && file_exists('lang/'. $localeIdentifier .'/language.php')
-		&& (empty($prefs['available_languages']) || in_array($localeIdentifier, $prefs['available_languages']));
+		&& ($prefs['restrict_language'] === 'n' || empty($prefs['available_languages']) || in_array($localeIdentifier, $prefs['available_languages']));
 }
 
 // Sets the language

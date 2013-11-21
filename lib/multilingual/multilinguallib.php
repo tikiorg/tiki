@@ -298,7 +298,7 @@ class MultilingualLib extends TikiLib
 			}
 		}
 
-		if ( $prefs['available_languages'] && $prefs['language_inclusion_threshold'] >= count($prefs['available_languages']) ) {
+		if ( $prefs['restrict_language'] === 'y' && $prefs['available_languages'] && $prefs['language_inclusion_threshold'] >= count($prefs['available_languages']) ) {
 			foreach ( array_diff($prefs['available_languages'], $langs) as $lang ) {
 				$langs[] = $lang;
 			}

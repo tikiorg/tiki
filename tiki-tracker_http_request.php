@@ -96,7 +96,7 @@ for ($index = 0, $count_arrayTrackerId = count($arrayTrackerId); $index < $count
 				$label = str_replace('<br/>', ',', $label);				// categories can be many so replace html
 				$json_return[] = array($field['value'], $label);
 			} else if ($field['type'] == 'r') {
-				$label = $trklib->get_field_handler($field, $item)->renderOutput();
+				$label = $trklib->get_field_handler($field, $item)->renderOutput(array('list_mode' => 'csv'));
 				$json_return[] = array($field['value'], $label);
 			} else {
 				$json_return[] = array($field['value'], $field['value']);

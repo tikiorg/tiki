@@ -62,6 +62,7 @@ function prefs_geo_list()
 		'geo_google_streetview' => array(
 			'name' => tr('Google Street View'),
 			'description' => tr('Open up Google Street View in a window to see the visible coordinates.'),
+			'dependencies' => array('gmap_key'),
 			'type' => 'flag',
 			'default' => 'n',
 			'tags' => array('basic', 'experimental'),
@@ -69,6 +70,7 @@ function prefs_geo_list()
 		'geo_google_streetview_overlay' => array(
 			'name' => tr('Google Street View Overlay'),
 			'description' => tr('Open up Google Street View in a window to see the visible coordinates.'),
+			'dependencies' => array('geo_google_streetview'),
 			'warning' => tr('This is not guaranteed to work.'),
 			'type' => 'flag',
 			'default' => 'n',

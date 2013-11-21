@@ -127,11 +127,13 @@ function wikiplugin_map($data, $params)
 	$controls = implode(',', $controls);
 
 	$center = null;
+	$geolib = TikiLib::lib('geo');
 	if (isset($params['center'])) {
-		$geolib = TikiLib::lib('geo');
 		if ($coords = $geolib->parse_coordinates($params['center'])) {
 			$center = ' data-geo-center="' . smarty_modifier_escape($geolib->build_location_string($coords)) . '" ';
 		}
+	} else {
+		$center = $geolib->get_default_center();
 	}
 
 	TikiLib::lib('header')->add_map();

@@ -192,6 +192,12 @@ class GeoLib
 		}
 	}
 
+	function get_default_center() {
+		global $prefs;
+		$coords = $this->parse_coordinates($prefs['gmap_defaultx'] . ',' . $prefs['gmap_defaulty'] . ',' . $prefs['gmap_defaultz']);
+                $center = ' data-geo-center="' . smarty_modifier_escape($this->build_location_string($coords)) . '" ';
+		return $center;
+        }
 }
 
 $geolib = new GeoLib;

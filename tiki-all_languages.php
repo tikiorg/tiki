@@ -93,7 +93,7 @@ foreach ( array_reverse($pages) as $id => $info ) {
 	if ( $tiki_p_view == 'y' ) {
 		$renderer->runSetups();
 
-		$contents[] = $smarty->fetch('tiki-show_page.tpl');
+		$contents[] = $smarty->fetch('tiki-show_content.tpl');
 
 		if ( $id === count($pages) - 1 )
 			$renderer->restoreAll();

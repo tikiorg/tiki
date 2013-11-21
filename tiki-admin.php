@@ -479,14 +479,6 @@ $icons = array(
 		'description' => tr('Settings and features for directory of links'),
 		'help' => 'Directory',
 	),
-	"gmap" => array(
-		'icon' => 'img/icons/large/google_maps.png',
-		'position' => '-200px -515px;',
-		'title' => tr('Google Maps'),
-		'disabled' => $prefs['feature_gmap'] != 'y',
-		'description' => tr('Defaults and API key for Google Maps'),
-		'help' => 'gmap',
-	),
 	"copyright" => array(
 		'icon' => 'img/icons/large/copyright.png',
 		'position' => '-300px -515px;',

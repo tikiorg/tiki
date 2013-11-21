@@ -90,25 +90,21 @@
 	<span class="findlang">
 		<select name="lang" class="in">
 			<option value='' {if $find_lang eq ''}selected="selected"{/if}>{tr}any language{/tr}</option>
-		{section name=ix loop=$languages}
-			{if !is_array($prefs.available_languages) || count($prefs.available_languages) == 0 || in_array($languages[ix].value, $prefs.available_languages)}
-			<option value="{$languages[ix].value|escape}" {if $find_lang eq $languages[ix].value}selected="selected"{/if}>
-				{$languages[ix].name}
-			</option>
-			{/if}
-		{/section}
+			{section name=ix loop=$languages}
+				<option value="{$languages[ix].value|escape}" {if $find_lang eq $languages[ix].value}selected="selected"{/if}>
+					{$languages[ix].name}
+				</option>
+			{/section}
 		</select>
 		{if isset($find_show_languages_excluded) and $find_show_languages_excluded eq 'y'}
 		<label>{tr}not in{/tr}
 			<select name="langOrphan" class="notin">
 				<option value='' {if $find_langOrphan eq ''}selected="selected"{/if}></option>
-		{section name=ix loop=$languages}
-			{if !is_array($prefs.available_languages) || count($prefs.available_languages) == 0 || in_array($languages[ix].value, $prefs.available_languages)}
-				<option value="{$languages[ix].value|escape}" {if $find_langOrphan eq $languages[ix].value}selected="selected"{/if}>
-					{$languages[ix].name}
-				</option>
-			{/if}
-		{/section}
+				{section name=ix loop=$languages}
+					<option value="{$languages[ix].value|escape}" {if $find_langOrphan eq $languages[ix].value}selected="selected"{/if}>
+						{$languages[ix].name}
+					</option>
+				{/section}
 			</select>
 		</label>
 		{/if}

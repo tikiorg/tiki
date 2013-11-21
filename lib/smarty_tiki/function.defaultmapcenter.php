@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2013 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -11,10 +11,12 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 	exit;
 }
 
-if (isset($prefs['gmap_key']) and strlen($prefs['gmap_key']) == '86') {
-	$smarty->assign('show_map', 'y');
-	$headerlib->add_jsfile('http://maps.google.com/maps?file=api&amp;v=2&key=' . $prefs['gmap_key'], 'external');
-} else {
-	$smarty->assign('show_map', 'n');
+function smarty_function_defaultmapcenter($params, $smarty)
+{
+	$smarty->loadPlugin('smarty_modifier_escape');
+	global $prefs;
+	$geolib = TikiLib::lib('geo');
+	$coords = $geolib->parse_coordinates($prefs['gmap_defaultx'] . ',' . $prefs['gmap_defaulty'] . ',' . $prefs['gmap_defaultz']);
+	$center = $geolib->build_location_string($coords); 
+	return smarty_modifier_escape($center);
 }
-ask_ticket('admin-inc-gmap');
