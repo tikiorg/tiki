@@ -1,4 +1,4 @@
-<ul class="nav nav-justtified">
+<ul class="nav">
 	{foreach from=$list item=item}
 		{if $item.children|count}
 			<li class="{if $item.selected} active{/if}">
