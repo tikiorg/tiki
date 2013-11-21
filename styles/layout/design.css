@@ -641,22 +641,9 @@ img.articleimage {
 	float: left;
 }
 
-.article .status {
-	position: absolute;
-	left: 0;
-}
-
 .articletrailer span {
 	display: inline-block;
 	margin: auto;
-	white-space: nowrap;
-}
-
-.article .actions {
-	position: absolute;
-	right: 0;
-	top: 0;
-	text-align: right;
 	white-space: nowrap;
 }
 
@@ -716,11 +703,6 @@ body.tiki_blogs .post_single {
 	padding-bottom: 30px;
 }
 
-body.tiki_blogs .post .postfooter {
-	clear: both;
-	float: right;
-}
-
 /* Related content */
 .related_posts, .related_articles {
 	margin-top: 3em;
@@ -768,12 +750,6 @@ body.tiki_forums .normal {
 	margin-top: 3px;
 }
 
-.post .author {
-	float: right;
-	text-align: right;
-	vertical-align: top;
-}
-
 .post .author_post_info {
 	padding-left: 4px;
 	padding-bottom: 4px;
@@ -791,18 +767,6 @@ body.tiki_forums .normal {
 	float: left;
 }
 
-.post .postbody-title .actions {
-	float: right;
-}
-
-.postbody-content {
-	padding: 3px;
-}
-
-.postbody .content {
-	margin: 5px;
-}
-
 .post .postbody .attachments {
 	clear: both;
 	margin-top: 5px;
@@ -812,40 +776,8 @@ body.tiki_forums .normal {
 	vertical-align: text-bottom;
 }
 
-.post .postfooter {
-	text-align: right;
-	width: 100%;
-	margin-top: 5px;
-}
 .post .postfooter .rating {
 	display: inline;
-}
-
-.post .postfooter .actions,
-.post .postfooter .author_actions,
-.post .postfooter .status {
-	display: inline;
-	vertical-align: top;
-}
-
-.post .postfooter .actions,
-.post .postfooter .author_actions {
-	float: left;
-	margin-left: 5px;
-}
-
-.post .postfooter .status {
-	float: right;
-	margin-right: 5px;
-}
-
-.post .postfooter .actions .share {
-	float: right;
-	margin: 1px 2px 2px 5px;
-}
-
-.post .inner > .postfooter {
-	clear: both;
 }
 
 .post .avatar {
@@ -2858,17 +2790,6 @@ body.tiki_wiki #comments {
 	font-style: italic;
 }
 
-.blogtools {
-	padding: 3px;
-	text-align: right
-}
-
-a.blogt,
-a.blog:visited {
-	border: 0;
-	text-decoration: none;
-}
-
 small.description {
 	display: block;
 }
@@ -2878,18 +2799,6 @@ small.description {
 	font-style: italic;
 }
 
-
-/*body.tiki_blogs*/ .post .title {
-	margin-top: 0;
-}
-
-/*body.tiki_blogs .post*/ .postfooter {
-	margin-bottom: 2em;
-}
-
-/*body.tiki_blogs div*/.author_info {
-	padding: 5px 0px 15px 0px;
-}
 
 /**** Image Galleries ****/
 

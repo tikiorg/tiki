@@ -13,12 +13,11 @@ body {
 	color: #000;
 	background: #fff}
 
-.footerbgtrap {
+.footerbgtrap > .row {
 	color: #363636;
 	background: #fdfdfd;
 	border: 1px solid #cccccc;
 	border-bottom: none;
-	margin: 10px;
 	margin-bottom: 0;
 	text-align: center;
 }
@@ -90,6 +89,21 @@ input[type="submit"],
 	outline: none;
 }
 
+.btn,
+input[type="reset"],
+input[type="submit"] {
+	margin: .5em .4em .5em 0;
+	line-height: 1.4em;
+	width: auto;
+	border: 1px solid #cccccc;
+	background: #e2e2e2 url(../vendor/jquery/jquery-ui-themes/themes/smoothness/images/ui-bg_glass_75_e6e6e6_1x400.png) 50% 50% repeat-x;
+	font-weight: normal;
+}
+
+.btn .btn-default a {
+	color: #666666
+}
+
 .button a:hover,
 button:hover,
 input[type="reset"]:hover,
@@ -104,13 +118,13 @@ input[type="submit"]:hover,
 	outline: none;
 }
 
-/* Needed for Opera (11) */
+/* Needed for Opera (11) *//*
 input[type="reset"],
 input[type="submit"],
 input[type="reset"]:hover,
 input[type="submit"]:hover {
 	padding: .1em .8em;
-}
+}*/
 
 .highlight,
 .highlight a {
@@ -742,7 +756,7 @@ td.calheadhighlight {
 /***** End New (unsorted) *****/
 
 /***** border radius definitions                   *****
- ***** remove if you require strict css validation *****/
+ ***** remove if you require strict css validation *****
 
 .footerbgtrap,
 .rbox-title,
@@ -814,6 +828,6 @@ a.admbox.off,
 	border-top-right-radius: 0;
 	border-bottom-right-radius: 0;
 }
-/***** end border radius definitions  *****/
+***** end border radius definitions  *****/
 
 /* End of File */

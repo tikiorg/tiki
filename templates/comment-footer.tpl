@@ -1,6 +1,6 @@
 {* $Id$ *}
-<div class="postfooter">
-	<div class="status">
+<div class="postfooter panel-footer">
+	<div class="status pull-right">
 	{if $prefs.feature_contribution eq 'y' and $prefs.feature_contribution_display_in_comment eq 'y'}
 		<span class="contributions">
 		{section name=ix loop=$comment.contributions}

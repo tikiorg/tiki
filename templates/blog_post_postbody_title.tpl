@@ -1,6 +1,6 @@
 {* $Id$ *}
-<header class="clearfix postbody-title">
-	<div class="title panel-heading">
+<header class="clearfix postbody-title panel-heading">
+	<div class="title">
 		{if $blog_post_context eq 'view_blog'}
 			<h2 class="panel-title">{object_link type="blog post" id=$post_info.postId title=$post_info.title}{if $post_info.priv eq 'y'} ({tr}private{/tr}){/if}</h2>
 		{elseif $blog_post_context eq 'excerpt'}
