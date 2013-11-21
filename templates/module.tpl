@@ -46,7 +46,6 @@
 				</span>
 			{/if}
 		{/if}
-		<!--[if IE]><br class="clear" style="height: 1px !important" /><![endif]-->
         </h3></div>
 	{elseif $module_notitle ne 'y'}
 		{if $module_flip eq 'y' and $prefs.javascript_enabled ne 'n'}
@@ -70,7 +69,7 @@
 				</a>
 			</span>
 		{/if}
-		<!--[if IE]><br class="clear" style="height: 1px !important" /><![endif]--></h3>
+	</h3>
 	{/if}
 		<div id="mod-{$smarty.capture.name}" style="display: {if !isset($module_display) or $module_display}block{else}none{/if};{$module_params.style}" class="clearfix panel-body{if !empty($module_params.class)} {$module_params.class}{/if}">
 {else}{* $module_nobox eq 'y' *}
