@@ -13,7 +13,7 @@
 
         <div class="header_outer">
             <div class="header_container">
-		        <header class="container header">
+		        <header class="container header page-header">
 			        <div class="row">
 				        <div class="col-md-12">
 					        {modulelist zone=top}
