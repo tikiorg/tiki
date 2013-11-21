@@ -125,7 +125,7 @@ Add a value in first check when you create a new admin page. *}
 "gal", "fgal", "articles", "polls", "search", "blogs", "forums", "faqs",
 "trackers", "webmail", "comments", "rss", "directory", "userfiles", "maps",
 "metatags", "performance", "security", "wikiatt", "score", "community", "messages",
-"calendar", "intertiki", "video", "freetags", "gmap",
+"calendar", "intertiki", "video", "freetags", 
 "i18n", "wysiwyg", "copyright", "category", "module", "look", "textarea",
  "ads", "profiles", "semantic", "plugins", "webservices",
 'sefurl', 'connect', 'metrics', 'payment', 'rating', 'socialnetworks', 'share', "workspace"))}

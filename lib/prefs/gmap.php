@@ -10,7 +10,7 @@ function prefs_gmap_list()
 	return array(
 		'gmap_key' => array(
 			'name' => tra('Google Maps API Key'),
-            'description' => tra(''),
+			'description' => tra('Needed for Street View or other advanced features'),
 			'type' => 'text',
 			'size' => 87,
 			'help' => 'http://code.google.com/apis/maps/signup.html',
@@ -53,11 +53,9 @@ function prefs_gmap_list()
 				13 => 13,
 				14 => 14,
 				15 => 15,
-				16 => tra('village size'),
+				16 => 16, 
 				17 => 17,
-				18 => 18,
-				19 => 19,
-				20 => tra('max zoom'),
+				18 => tra('max zoom'),
 			),
 			'default' => '1',
 		),
@@ -66,7 +64,7 @@ function prefs_gmap_list()
             'description' => tra(''),
 			'type' => 'flag',
 			'dependencies' => array(
-				'feature_gmap',
+				'geo_locate_article',
 			),
 			'default' => 'n',
 		),
@@ -75,7 +73,7 @@ function prefs_gmap_list()
             'description' => tra(''),
 			'type' => 'flag',
 			'dependencies' => array(
-				'feature_gmap',
+				'geo_locate_wiki',
 			),
 			'default' => 'n',
 		),

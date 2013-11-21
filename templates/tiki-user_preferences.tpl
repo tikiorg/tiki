@@ -109,7 +109,7 @@
 			<tr>
 				<td>{tr}Location:{/tr}</td>
 				<td>
-					<div class="map-container" style="height: 250px;" data-target-field="location">
+					<div class="map-container" style="height: 250px;" data-geo-center="{defaultmapcenter}" data-target-field="location">
 					</div>
 					<input type="hidden" name="location" value="{$location|escape}">
 				</td>

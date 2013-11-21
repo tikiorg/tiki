@@ -13,7 +13,9 @@
 
 		{preference name=geo_locate_blogpost}
 		{preference name=geo_locate_wiki}
+		{preference name=gmap_page_list}
 		{preference name=geo_locate_article}
+		{preference name=gmap_article_list}
 		{preference name=wikiplugin_map}
 		{preference name=trackerfield_location}
 
@@ -34,7 +36,14 @@
 			</div>
 		</div>
 	</fieldset>
-	
+
+	<fieldset class="admin">
+		<legend>{tr}Defaults{/tr}</legend>
+		{preference name=gmap_defaultx}
+		{preference name=gmap_defaulty}
+		{preference name=gmap_defaultz}
+	</fieldset>
+
 	<fieldset class="admin">			
 		<legend>{tr}MapServer settings{/tr}</legend>
 		

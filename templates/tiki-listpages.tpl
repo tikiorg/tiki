@@ -21,7 +21,7 @@
 		{/if}
 
 {if isset($mapview) and $mapview}
-{wikiplugin _name="googlemap" type="objectlist" width="400" height="400"}{/wikiplugin}
+{wikiplugin _name="map" scope=".listpagesmap .geolocated" width="400" height="400"}{/wikiplugin}
 {/if}
 
 <div id="tiki-listpages-content">

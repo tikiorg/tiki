@@ -546,10 +546,10 @@ function wikiplugin_trackerlist_info()
 					 array('text' => tra('No'), 'value' => 'n')
 				 )
 			 ),
-			 'googlemap' => array(
+			 'showmap' => array(
 				 'required' => false,
-				 'name' => tra('Show Google Map'),
-				 'description' => tra('Show Google Map of results (not shown by default)'),
+				 'name' => tra('Show Results Map'),
+				 'description' => tra('Show Map of results (not shown by default)'),
 				 'filter' => 'alpha',
 				 'default' => '',
 				 'options' => array(
@@ -557,14 +557,6 @@ function wikiplugin_trackerlist_info()
 					 array('text' => tra('Yes'), 'value' => 'y'),
 					 array('text' => tra('No'), 'value' => 'n')
 				 )
-			 ),
-			 'googlemapicon' => array(
-				 'required' => false,
-				 'name' => tra('Google Map Icon'),
-				 'description' => tra('Url of default icon to use for markers on the map'),
-				 'filter' => 'url',
-				 'default' => '',
-				 'parent' => array('name' => 'googlemap', 'value' => 'y')
 			 ),
 			 'calendarfielddate' => array(
 				 'required' => false,
@@ -1825,58 +1817,9 @@ function wikiplugin_trackerlist($data, $params)
 			$smarty->assign_by_ref('items', $items["data"]);
 			$smarty->assign('daformat', $tikilib->get_long_date_format()." ".tra("at")." %H:%M");
 
-			if (!empty($params['googlemap']) && $params['googlemap'] == 'y') {
+			if (!empty($params['showmap']) && $params['showmap'] == 'y') {
 				$smarty->assign('trackerlistmapview', true);
-				$smarty->assign('trackerlistmapname', "trackerlistgmap_$iTRACKERLIST");
-				// Check for custom bubble text
-				$unlimitedallfields = $trklib->list_tracker_fields($trackerId);
-				$markerfields = array();
-				foreach ($unlimitedallfields["data"] as $f) {
-					if ($f["type"] == 'G' && $f["options_array"][0] == 'y' && !empty($f["options_array"][1])) {
-						$markerfields = explode('|', $f["options_array"][1]);
-						break;
-					}
-				}
-				// Generate Google map plugin data
-				if (!empty($params["googlemapicon"])) {
-					$googlemapicon = $params["googlemapicon"];
-				} else {
-					$googlemapicon = '';
-				}
-				global $gmapobjectarray;
-				$gmapobjectarray = array();
-				foreach ($items["data"] as $i) {
-					if (!empty($params["url"])) {
-						$href = str_replace('itemId', $i["itemId"], $params["url"]);
-					} else {
-						$href = 'tiki-view_tracker_item.php?itemId=' . $i["itemId"];
-					}
-					$markertext = '';
-					$markertitle = $i["value"];
-					foreach ($markerfields as $k => $m) {
-						foreach ($i["field_values"] as $f) {
-							if ($f["fieldId"] == $m) {
-								if ($k == 0 && !empty($f["value"])) {
-									$markertitle = preg_replace("/[\r\n|\r|\n]/", "<br />", htmlspecialchars($f["value"]));
-								} elseif (!empty($f["value"])) {
-									if ($markertext) {
-										$markertext .= '<br /><br />';
-									}
-									$markertext .= preg_replace("/[\r\n|\r|\n]/", "<br />", htmlspecialchars($f["value"]));
-								}
-								break;
-							}
-						}
-					}
-
-					$gmapobjectarray[] = array('type' => 'trackeritem',
-						'id' => $i["itemId"],
-						'title' => $markertitle,
-						'href' => $href,
-						'icon' => $googlemapicon,
-						'text' => $markertext,
-					);
-				}
+				$smarty->assign('trackerlistmapname', "trackerlistmap_$iTRACKERLIST");
 			} else {
 				$smarty->assign('trackerlistmapview', false);
 			}

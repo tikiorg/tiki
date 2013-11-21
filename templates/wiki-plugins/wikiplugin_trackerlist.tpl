@@ -48,7 +48,7 @@
 	{/if}
 
 	{if $trackerlistmapview}
-		{wikiplugin _name="googlemap" name=$trackerlistmapname type="objectlist" width="400" height="400"}{/wikiplugin}
+		{wikiplugin _name="map" scope=".trackerlist_{$trackerlistmapname|escape}_geo .geolocated" width="400" height="400"}{/wikiplugin}
 	{/if}
 
 	{if empty($tpl)}
@@ -196,6 +196,12 @@ $('.exportButton a').click(function() {
 		<tbody>
 	{/if}
 	{section name=user loop=$items}
+
+{* ------ map stuff ---- *}
+
+		{if $trackerlistmapview}
+			<div class="trackerlist_{$trackerlistmapname|escape}_geo" style="display:none;">{object_link type="trackeritem" id="`$items[user].itemId|escape`"}</div>
+		{/if}
 
 {* ------- popup ---- *}
 		{if !empty($popupfields)}

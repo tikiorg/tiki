@@ -122,7 +122,7 @@ function tf_export_submit(fm) {
 	{else}
 		&nbsp;
 	{/if}
-	{if $googlemapButtons && $googlemapButtons eq 'y'}
+	{if $mapButtons && $mapButtons eq 'y'}
         {if isset($mapview) && $mapview}
         <br><input class="button submit btn btn-default" type="submit" name="searchlist" value="{tr}List View{/tr}">
         {else}
