@@ -13,48 +13,6 @@ body {
 	color: #000;
 	background: #fff}
 
-/* Enable header and footer content to widen when middle has wide content. */
-body.fixed_width .fixedwidth .fixedwidth {
-	width: 100%;
-	padding: 0;
-}
-
-#main {
-	text-align: left
-}
-
-#c1c2 #wrapper #col1.marginleft  {
-	margin-left: 200px;
-}
-
-#c1c2 #wrapper #col1.marginright {
-	margin-right: 200px;
-}
-
-#c1c2 #wrapper #col1 .content {
-	background: transparent;
-}
-
-#c1c2 #wrapper #col1 #tiki-center {
-	padding: 10px;
-}
-
-* html #tiki-center {font-size: 1em}
-
-#c1c2 #col2 {
-	width: 200px;
-	overflow: visible;
-}
-
-#c1c2 #col2 .content {margin-left: 4px}
-
-#col3 {
-	width: 200px;
-	margin-left: -200px;
-}
-
-#col3 .content {margin-right: 4px;}
-
 .footerbgtrap {
 	color: #363636;
 	background: #fdfdfd;
@@ -224,11 +182,15 @@ input[type="submit"]:hover {
 
 #tiki-top {
 	padding: 0 .3em 0 1em;
+	margin: 0 10px 10px;
+	font-size: 1.1em;
+}
+
+.navbar-default {
 	border: 1px solid #aaa;
 	background: #cccccc url(../vendor/jquery/jquery-ui-themes/themes/smoothness/images/ui-bg_highlight-soft_75_cccccc_1x100.png) 50% 50% repeat-x;
 	color: #363636;
-	margin: 0 10px 10px;
-	font-size: 1.1em;
+	
 }
 
 #topbar_modules {
@@ -366,8 +328,7 @@ a .sf-sub-indicator {
 
 /***** Boxes *****/
 /** Modules **/
-.box,
-.cbox {
+.panel .panel-default {
 	padding: .2em;
 	margin: 0 .5em 10px;
 	background-color: #fefefe;
@@ -375,26 +336,26 @@ a .sf-sub-indicator {
 	border: 1px solid #aaa;
 }
 
-#col2 .box,
-#col3 .box {
+#col2 .panel,
+#col3 .panel {
 	margin-bottom: 10px;
 }
 
-
-h3.box-title,
-.cbox-title {
-	padding: .5em .3em .3em 1em;
-	position: relative;
+.panel-heading {
 	border: 1px solid #aaa;
 	background: #cccccc url(../vendor/jquery/jquery-ui-themes/themes/smoothness/images/ui-bg_highlight-soft_75_cccccc_1x100.png) 50% 50% repeat-x;
+	margin: .2em; /* Bootstrap */
+	padding: .5em .3em .3em 1em; /* Bootstrap: moved from h3 */
+}
+h3.panel-title {
+	position: relative;
 	color: #363636;
 	font-weight: bold;
 	margin: 0;
 	font-size: 1.1em;
 }
 
-.cbox-data,
-.box-data {
+.panel-body {
 	padding: .5em 1em;
 	background-image: none;
 }
