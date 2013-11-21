@@ -95,13 +95,13 @@
 						<option value="Other" {if $user_prefs.country eq "Other"}selected="selected"{/if}>
 							{tr}Other{/tr}
 						</option>
-						{section name=ix loop=$flags}
-							{if $flags[ix] ne "Other"}
-								<option value="{$flags[ix]|escape}" {if $user_prefs.country eq $flags[ix]}selected="selected"{/if}>
-									{tr}{$flags[ix]|stringfix}{/tr}
+                        {foreach from=$flags item=flag}
+							{if $flag ne "Other"}
+								<option value="{$flag|escape}" {if $user_prefs.country eq $flag}selected="selected"{/if}>
+									{tr}{$flag|stringfix}{/tr}
 								</option>
 							{/if}
-						{/section}
+						{/foreach}
 					</select>
 				</td>
 			</tr>
