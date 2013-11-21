@@ -7,8 +7,8 @@
 {/if}
 
 {if $prefs.feature_tabs neq 'y' and $user and $prefs.feature_messages eq 'y' and $tiki_p_messages eq 'y' and $allowMsgs eq 'y'}
-	<div class="navbar">
-		{button href="#message" _text="{tr}Send me a message{/tr}"}
+	<div class="t_navbar">
+		{button href="#message" class="btn btn-default" _text="{tr}Send me a message{/tr}"}
 	</div>
 {/if}
 

@@ -2,8 +2,8 @@
 
 {include file='tiki-mytiki_bar.tpl'}
 
-<div class="navbar">
-	{button href="tiki-user_assigned_modules.php?recreate=1" _text="{tr}Restore defaults{/tr}"}
+<div class="t_navbar">
+	{button href="tiki-user_assigned_modules.php?recreate=1" class="btn btn-default" _text="{tr}Restore defaults{/tr}"}
 </div>
 
 <h2>{tr}User assigned modules{/tr}</h2>

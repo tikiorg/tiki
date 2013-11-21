@@ -3,8 +3,8 @@
 {title}{tr}Available Repositories{/tr}{/title}
 
 {if $tiki_p_admin eq 'y'}
-	<div class="navbar">
-		{button href="tiki-admin_integrator.php" _text="{tr}Configure Repositories{/tr}"}
+	<div class="t_navbar">
+		{button href="tiki-admin_integrator.php" class="btn btn-default" _text="{tr}Configure Repositories{/tr}"}
 	</div>
 {/if}
 

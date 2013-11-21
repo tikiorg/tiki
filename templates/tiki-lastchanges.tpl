@@ -2,23 +2,23 @@
 
 {title admpage="wiki" help="Using+Wiki+Pages#Last_Changes" url="tiki-lastchanges.php?days=$days"}{tr}Last Changes{/tr}{/title}
 
-<div class="navbar">
+<div class="navbar btn-group">
 	{if $days eq '1'}{assign var=thisclass value='active'}{else}{assign var=thisclass value=''}{/if}
-	{button href="tiki-lastchanges.php?days=1" _text="{tr}Today{/tr}" _class=$thisclass}
+	{button href="tiki-lastchanges.php?days=1" class="btn btn-default" _text="{tr}Today{/tr}" _class=$thisclass}
 	{if $days eq '2'}{assign var=thisclass value='active'}{else}{assign var=thisclass value=''}{/if}
-	{button href="tiki-lastchanges.php?days=2" _text="{tr}Last 2 days{/tr}" _class=$thisclass}
+	{button href="tiki-lastchanges.php?days=2" class="btn btn-default" _text="{tr}Last 2 days{/tr}" _class=$thisclass}
 	{if $days eq '3'}{assign var=thisclass value='active'}{else}{assign var=thisclass value=''}{/if}
-	{button href="tiki-lastchanges.php?days=3" _text="{tr}Last 3 days{/tr}" _class=$thisclass}
+	{button href="tiki-lastchanges.php?days=3" class="btn btn-default" _text="{tr}Last 3 days{/tr}" _class=$thisclass}
 	{if $days eq '5'}{assign var=thisclass value='active'}{else}{assign var=thisclass value=''}{/if}
-	{button href="tiki-lastchanges.php?days=5" _text="{tr}Last 5 days{/tr}" _class=$thisclass}
+	{button href="tiki-lastchanges.php?days=5" class="btn btn-default" _text="{tr}Last 5 days{/tr}" _class=$thisclass}
 	{if $days eq '7'}{assign var=thisclass value='active'}{else}{assign var=thisclass value=''}{/if}
-	{button href="tiki-lastchanges.php?days=7" _text="{tr}Last week{/tr}" _class=$thisclass}
+	{button href="tiki-lastchanges.php?days=7" class="btn btn-default" _text="{tr}Last week{/tr}" _class=$thisclass}
 	{if $days eq '14'}{assign var=thisclass value='active'}{else}{assign var=thisclass value=''}{/if}
-	{button href="tiki-lastchanges.php?days=14" _text="{tr}Last 2 weeks{/tr}" _class=$thisclass}
+	{button href="tiki-lastchanges.php?days=14" class="btn btn-default" _text="{tr}Last 2 weeks{/tr}" _class=$thisclass}
 	{if $days eq '31'}{assign var=thisclass value='active'}{else}{assign var=thisclass value=''}{/if}
-	{button href="tiki-lastchanges.php?days=31" _text="{tr}Last month{/tr}" _class=$thisclass}
+	{button href="tiki-lastchanges.php?days=31" class="btn btn-default" _text="{tr}Last month{/tr}" _class=$thisclass}
 	{if $days eq '0'}{assign var=thisclass value='active'}{else}{assign var=thisclass value=''}{/if}
-	{button href="tiki-lastchanges.php?days=0" _text="{tr}All{/tr}" _class=$thisclass}
+	{button href="tiki-lastchanges.php?days=0" class="btn btn-default" _text="{tr}All{/tr}" _class=$thisclass}
 </div>
 
 {if $lastchanges or ($find ne '')}

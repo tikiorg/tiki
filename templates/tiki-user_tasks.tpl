@@ -2,9 +2,9 @@
 
 {include file='tiki-mytiki_bar.tpl'}
 
-<div class="navbar">
-	{button href="tiki-user_tasks.php?show_form=y" _text="{tr}New task{/tr}"}
-	{button href="tiki-user_tasks.php" _text="{tr}Task list{/tr}"}
+<div class="t_navbar">
+	{button href="tiki-user_tasks.php?show_form=y" class="btn btn-default" _text="{tr}New task{/tr}"}
+	{button href="tiki-user_tasks.php" class="btn btn-default" _text="{tr}Task list{/tr}"}
 
 	{if $task_admin}
 		{if $admin_mode}

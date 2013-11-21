@@ -1,20 +1,20 @@
-<div class="navbar">
+<div class="t_navbar btn-group">
 
 {if $prefs.feature_userPreferences eq 'y'}
-	{button _icon="img/icons/large/mytiki.gif" _text="{tr}MyTiki{/tr}" href="tiki-my_tiki.php" _menu_text="y"}
+	{button _icon="img/icons/large/mytiki.gif" class="btn btn-default" _text="{tr}MyTiki{/tr}" href="tiki-my_tiki.php" _menu_text="y"}
 {/if}
 
 {if $prefs.feature_userPreferences eq 'y' or $prefs.change_password eq 'y'}
-	{button _icon="img/icons/large/prefs.gif" _text="{tr}Preferences{/tr}" href="tiki-user_preferences.php" _menu_text="y"}
+	{button _icon="img/icons/large/prefs.gif" class="btn btn-default" _text="{tr}Preferences{/tr}" href="tiki-user_preferences.php" _menu_text="y"}
 {/if}
 
-{button _icon="img/icons/large/admin.gif" _text="{tr}MyInfo{/tr}" href="tiki-user_information.php" _menu_text="y"}
+{button _icon="img/icons/large/admin.gif" class="btn btn-default" _text="{tr}MyInfo{/tr}" href="tiki-user_information.php" _menu_text="y"}
 
 {if $prefs.feature_messages eq 'y' and $tiki_p_messages eq 'y'}
 	{if $unread}
-		{button _icon="img/icons/large/messages.gif" _text="{tr}Messages{/tr} ($unread)" href="messu-mailbox.php" _menu_text="y"}
+		{button _icon="img/icons/large/messages.gif" class="btn btn-default" _text="{tr}Messages{/tr} ($unread)" href="messu-mailbox.php" _menu_text="y"}
 	{else}
-		{button _icon="img/icons/large/messages.gif" _text="{tr}Messages{/tr}" href="messu-mailbox.php" _menu_text="y"}
+		{button _icon="img/icons/large/messages.gif" class="btn btn-default" _text="{tr}Messages{/tr}" href="messu-mailbox.php" _menu_text="y"}
 	{/if}
 {/if}
 

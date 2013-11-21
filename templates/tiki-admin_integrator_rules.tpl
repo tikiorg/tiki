@@ -2,13 +2,13 @@
 
 {title help="Integrator"}{tr}Edit Rules for Repository:{/tr} {$name}{/title}
 
-<div class="navbar">
-	{button href="tiki-admin_integrator.php" _text="{tr}Configure Repositories{/tr}"}
-  {button href="tiki-list_integrator_repositories.php" _text="{tr}List Repositories{/tr}</a>"}
+<div class="t_navbar btn-group">
+	{button href="tiki-admin_integrator.php" class="btn btn-default" _text="{tr}Configure Repositories{/tr}"}
+  {button href="tiki-list_integrator_repositories.php" class="btn btn-default" _text="{tr}List Repositories{/tr}</a>"}
 	{assign var=thisrepID value=$repID|escape} 
-	{button href="tiki-admin_integrator.php?action=edit&amp;repID=$thisrepID" _text="{tr}Configure this Repository{/tr}"}
-	{button href="tiki-integrator.php?repID=$thisrepID" _text="{tr}View this Repository{/tr}"}
-	{button href="tiki-admin_integrator_rules.php?repID=$thisrepID" _text="{tr}New Rule{/tr}"}
+	{button href="tiki-admin_integrator.php?action=edit&amp;repID=$thisrepID" class="btn btn-default" _text="{tr}Configure this Repository{/tr}"}
+	{button href="tiki-integrator.php?repID=$thisrepID" _text="{tr}View this Repository{/tr}" class="btn btn-default"}
+	{button href="tiki-admin_integrator_rules.php?repID=$thisrepID" _text="{tr}New Rule{/tr}" class="btn btn-default"}
 	{if count($reps) gt 0}
 		{button _onclick="javascript:flip('rules-copy-panel');" _text="{tr}Copy Rules{/tr}" _title="{tr}view/hide copy rules dialog{/tr}"}
   {/if}

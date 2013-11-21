@@ -5,14 +5,14 @@
   {if $prefs.feature_forum_topics_archiving eq 'y' && $thread_info.archived eq 'y'}({tr}Archived{/tr}){/if}
 {/title}
 
-<div class="navbar">
+<div class="t_navbar btn-group">
 	{if $tiki_p_admin_forum eq "y"}
-		{button href="tiki-admin_forums.php?forumId=$forumId" _text="{tr}Edit Forum{/tr}"} 
+		{button href="tiki-admin_forums.php?forumId=$forumId" class="btn btn-default" _text="{tr}Edit Forum{/tr}"}
 	{/if}
 	{if $tiki_p_admin_forum eq 'y' or !isset($all_forums) or $all_forums|@count > 1}
-		{button href="tiki-forums.php" _text="{tr}Forum List{/tr}"}
+		{button href="tiki-forums.php" class="btn btn-default" _text="{tr}Forum List{/tr}"}
 	{/if}
-	{button href="tiki-view_forum.php?forumId=$forumId" _text="{tr}Topic List{/tr}"}
+	{button href="tiki-view_forum.php?forumId=$forumId" class="btn btn-default" _text="{tr}Topic List{/tr}"}
 </div>
 
 {if $post_reported eq 'y'}

@@ -4,23 +4,23 @@
   {$description}
 </div>
 
-<div class="navbar">
+<div class="t_navbar btn-group">
 	{if $system eq 'n'}
 		{if $tiki_p_admin_galleries eq 'y' or ($user and $user eq $owner)}
-			{button href="tiki-galleries.php?edit_mode=1&galleryId=$galleryId" _text="{tr}Edit Gallery{/tr}"}
-			{button href="tiki-list_gallery.php?galleryId=$galleryId&rebuild=$galleryId" _text="{tr}Rebuild Thumbnails{/tr}"}
+			{button href="tiki-galleries.php?edit_mode=1&galleryId=$galleryId" class="btn btn-default" _text="{tr}Edit Gallery{/tr}"}
+			{button href="tiki-list_gallery.php?galleryId=$galleryId&rebuild=$galleryId" class="btn btn-default" _text="{tr}Rebuild Thumbnails{/tr}"}
 		{/if}
 		{if $tiki_p_upload_images eq 'y'}
 			{if $tiki_p_admin_galleries eq 'y' or ($user and $user eq $owner) or $public eq 'y'}
-					{button href="tiki-upload_image.php?galleryId=$galleryId" _text="{tr}Upload Image{/tr}"}
+					{button href="tiki-upload_image.php?galleryId=$galleryId" class="btn btn-default" _text="{tr}Upload Image{/tr}"}
 			{/if}
 		{/if}
 	{/if}
-	{button href="tiki-browse_gallery.php?galleryId=$galleryId" _text="{tr}Browse Gallery{/tr}"}
+	{button href="tiki-browse_gallery.php?galleryId=$galleryId" class="btn btn-default" _text="{tr}Browse Gallery{/tr}"}
 </div>
 
 <h2>{tr}Gallery Images{/tr}</h2>
-<div align="center">
+<div class="text-center">
 <table class="table normal">
 <tr>
 <th><a href="tiki-list_gallery.php?galleryId={$galleryId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'imageId_desc'}imageId_asc{else}imageId_desc{/if}">{tr}ID{/tr}</a></th>

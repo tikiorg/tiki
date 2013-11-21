@@ -1,23 +1,23 @@
 {* $Id$ *}
 {title url="tiki-view_tracker.php?trackerId=$trackerId" adm="trackers"}{tr}Tracker:{/tr} {$tracker_info.name}{/title}
 
-<div class="navbar">
+<div class="t_navbar">
 	 {if $prefs.feature_group_watches eq 'y' and ( $tiki_p_admin_users eq 'y' or $tiki_p_admin eq 'y' )}
-	 	 <a href="tiki-object_watches.php?objectId={$trackerId|escape:"url"}&amp;watch_event=tracker_modified&amp;objectType=tracker&amp;objectName={$tracker_info.name|escape:"url"}&amp;objectHref={'tiki-view_tracker.php?trackerId='|cat:$trackerId|escape:"url"}" class="icon">{icon _id='eye_group' alt="{tr}Group Monitor{/tr}" align='right' hspace="1"}</a>
+	 	 <a class="btn btn-default" href="tiki-object_watches.php?objectId={$trackerId|escape:"url"}&amp;watch_event=tracker_modified&amp;objectType=tracker&amp;objectName={$tracker_info.name|escape:"url"}&amp;objectHref={'tiki-view_tracker.php?trackerId='|cat:$trackerId|escape:"url"}" class="icon">{icon _id='eye_group' alt="{tr}Group Monitor{/tr}" align='right' hspace="1"}</a>
 	{/if}
 	{if $prefs.feature_user_watches eq 'y' and $tiki_p_watch_trackers eq 'y' and $user}
 		{if $user_watching_tracker ne 'y'}
-			<a href="tiki-view_tracker.php?trackerId={$trackerId}&amp;watch=add" title="{tr}Monitor{/tr}">{icon _id='eye' align="right" hspace="1" alt="{tr}Monitor{/tr}"}</a>
+			<a class="btn btn-default" href="tiki-view_tracker.php?trackerId={$trackerId}&amp;watch=add" title="{tr}Monitor{/tr}">{icon _id='eye' align="right" hspace="1" alt="{tr}Monitor{/tr}"}</a>
 		{else}
-			<a href="tiki-view_tracker.php?trackerId={$trackerId}&amp;watch=stop" title="{tr}Stop Monitor{/tr}">{icon _id='no_eye' align="right" hspace="1" alt="{tr}Stop Monitor{/tr}"}</a>
+			<a class="btn btn-default" href="tiki-view_tracker.php?trackerId={$trackerId}&amp;watch=stop" title="{tr}Stop Monitor{/tr}">{icon _id='no_eye' align="right" hspace="1" alt="{tr}Stop Monitor{/tr}"}</a>
 		{/if}
 	{/if}
 
 	{if $prefs.feed_tracker eq "y"}
-		<a href="tiki-tracker_rss.php?trackerId={$trackerId}">{icon _id='feed' align="right" hspace="1" alt="{tr}RSS feed{/tr}"}</a>
+		<a class="btn btn-default" href="tiki-tracker_rss.php?trackerId={$trackerId}">{icon _id='feed' align="right" hspace="1" alt="{tr}RSS feed{/tr}"}</a>
 	{/if}
 	{if $tiki_p_admin_trackers eq "y"}
-		<a title="{tr}Import{/tr}" class="import dialog" href="{service controller=tracker action=import_items trackerId=$trackerId}">{icon _id='upload' align="right" alt="{tr}Import{/tr}"}</a>
+		<a class="btn btn-default" title="{tr}Import{/tr}" class="import dialog" href="{service controller=tracker action=import_items trackerId=$trackerId}">{icon _id='upload' align="right" alt="{tr}Import{/tr}"}</a>
 		{jq}
 			$('.import.dialog').click(function () {
 				var link = this;
@@ -34,7 +34,7 @@
 		{/jq}
 	{/if}
 	{if $tiki_p_export_tracker eq "y"}
-		<a title="{tr}Export{/tr}" class="export dialog" href="{service controller=tracker action=export trackerId=$trackerId}">{icon _id='disk' align="right" alt="{tr}Export{/tr}"}</a>
+		<a class="btn btn-default" title="{tr}Export{/tr}" class="export dialog" href="{service controller=tracker action=export trackerId=$trackerId}">{icon _id='disk' align="right" alt="{tr}Export{/tr}"}</a>
 		{jq}
 			$('.export.dialog').click(function () {
 				var link = this;

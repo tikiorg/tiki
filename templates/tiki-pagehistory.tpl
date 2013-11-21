@@ -2,14 +2,14 @@
 
 {title admpage="wiki"}{tr}History:{/tr} {$page}{/title}
 
-<div class="navbar">
+<div class="t_navbar btn-group">
 	{assign var=thispage value=$page|escape:url}
-	{button href="tiki-index.php?page=$thispage" _text="{tr}View page{/tr}"}
+	{button href="tiki-index.php?page=$thispage" class="btn btn-default" _text="{tr}View page{/tr}"}
 	{if !isset($noHistory)}
 		{if $show_all_versions eq "y"}
-			{button _text="{tr}Show Edit Sessions{/tr}" show_all_versions="n" href="?clear_versions=1" _auto_args="*"}
+			{button _text="{tr}Show Edit Sessions{/tr}" show_all_versions="n" href="?clear_versions=1" _auto_args="*" class="btn btn-default"}
 		{else}
-			{button _text="{tr}Show All Versions{/tr}" show_all_versions="y" href="?clear_versions=1" _auto_args="*"}
+			{button _text="{tr}Show All Versions{/tr}" show_all_versions="y" href="?clear_versions=1" _auto_args="*" class="btn btn-default"}
 		{/if}
 	{/if}
 </div>

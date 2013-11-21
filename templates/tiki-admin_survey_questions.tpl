@@ -1,12 +1,12 @@
 {title url="tiki-admin_survey_questions.php?surveyId=$surveyId"}{tr}Edit survey questions:{/tr} {$survey_info.name}{/title}
 
-<div class="navbar">
-	{button href="tiki-admin_survey_questions.php?surveyId=$surveyId" _text="{tr}Add a New Question{/tr}"}
-	{button href="tiki-list_surveys.php" _text="{tr}List surveys{/tr}"}
-	{button href="tiki-survey_stats.php" _text="{tr}Survey Stats{/tr}"}
-	{button href="tiki-survey_stats_survey.php?surveyId=$surveyId" _text="{tr}This survey stats{/tr}"}
-	{button href="tiki-admin_surveys.php?surveyId=$surveyId" _text="{tr}Edit this Survey{/tr}"}
-	{button href="tiki-admin_surveys.php" _text="{tr}Admin Surveys{/tr}"}
+<div class="t_navbar btn-group">
+	{button href="tiki-admin_survey_questions.php?surveyId=$surveyId" class="btn btn-default" _text="{tr}Add a New Question{/tr}"}
+	{button href="tiki-list_surveys.php" class="btn btn-default" _text="{tr}List surveys{/tr}"}
+	{button href="tiki-survey_stats.php" class="btn btn-default" _text="{tr}Survey Stats{/tr}"}
+	{button href="tiki-survey_stats_survey.php?surveyId=$surveyId" class="btn btn-default" _text="{tr}This survey stats{/tr}"}
+	{button href="tiki-admin_surveys.php?surveyId=$surveyId" class="btn btn-default" _text="{tr}Edit this Survey{/tr}"}
+	{button href="tiki-admin_surveys.php" class="btn btn-default" _text="{tr}Admin Surveys{/tr}"}
 </div>
 
 <h2>{if $questionId gt 0}{tr}Edit Survey Question{/tr}{else}{tr}Add a New Question to this survey{/tr}{/if}</h2>

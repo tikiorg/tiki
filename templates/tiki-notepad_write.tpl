@@ -2,8 +2,8 @@
 
 {include file='tiki-mytiki_bar.tpl'}
 
-<div class="navbar">
-	{button href="tiki-notepad_list.php" _text="{tr}Notes{/tr}"} 
+<div class="t_navbar">
+	{button href="tiki-notepad_list.php" class="btn btn-default" _text="{tr}Notes{/tr}"}
 </div>
 
 <form action="tiki-notepad_write.php" method="post">

@@ -6,11 +6,11 @@
 
 {title help="Quiz"}{tr}Edit quiz:{/tr} {$quiz->name}{/title}
 
-<div class="navbar">
-	{button href="tiki-list_quizzes.php" _text="{tr}List Quizzes{/tr}"}
-	{button href="tiki-quiz_stats.php" _text="{tr}Quiz Stats{/tr}"}
-	{button href="tiki-quiz_stats_quiz.php" _auto_args='quizId' _text="{tr}This Quiz Stats{/tr}"}
-	{button href="tiki-quiz_edit.php" _text="{tr}Admin Quizzes{/tr}"}
+<div class="t_navbar btn-group">
+	{button href="tiki-list_quizzes.php" class="btn btn-default" _text="{tr}List Quizzes{/tr}"}
+	{button href="tiki-quiz_stats.php" class="btn btn-default" _text="{tr}Quiz Stats{/tr}"}
+	{button href="tiki-quiz_stats_quiz.php" _auto_args='quizId' class="btn btn-default" _text="{tr}This Quiz Stats{/tr}"}
+	{button href="tiki-quiz_edit.php" class="btn btn-default" _text="{tr}Admin Quizzes{/tr}"}
 </div>
 
 <form enctype="multipart/form-data" method="post" action="tiki-quiz_edit.php">

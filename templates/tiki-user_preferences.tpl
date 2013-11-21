@@ -11,10 +11,10 @@
 {/if}
 
 {if $tiki_p_admin_users eq 'y'}
-	<div class="navbar">
+	<div class="t_navbar btn-group">
 		{assign var=thisuser value=$userinfo.login}
-		{button href="tiki-assignuser.php?assign_user=$thisuser" _text="{tr}Assign Group{/tr}"}
-		{button href="tiki-user_information.php?view_user=$thisuser" _text="{tr}User Information{/tr}"}
+		{button href="tiki-assignuser.php?assign_user=$thisuser" class="btn btn-default" _text="{tr}Assign Group{/tr}"}
+		{button href="tiki-user_information.php?view_user=$thisuser" class="btn btn-default" _text="{tr}User Information{/tr}"}
 	</div>
 {/if}
 

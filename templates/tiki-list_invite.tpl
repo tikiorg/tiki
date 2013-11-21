@@ -1,8 +1,8 @@
 {* $Id$ *}
 {title}{tr}Invitations list{/tr}{/title}
 
-<div class="navbar">
-	{button href="tiki-invite.php" _text="{tr}Invite{/tr}"}
+<div class="t_avbar">
+	{button href="tiki-invite.php" class="btn btn-default" _text="{tr}Invite{/tr}"}
 	{if $tiki_p_admin eq 'y'}{button href="tiki-adminusers.php" _text="{tr}Admin users{/tr}"}{/if}
 </div>
 

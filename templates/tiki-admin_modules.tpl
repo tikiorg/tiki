@@ -3,17 +3,17 @@
 {strip}
 {title help="Modules" admpage="module"}{tr}Admin Modules{/tr}{/title}
 
-<div class="navbar">
-	{button href="tiki-admin_modules.php?clear_cache=1" _text="{tr}Clear Cache{/tr}"}
+<div class="t_navbar">
+	{button href="tiki-admin_modules.php?clear_cache=1" class="btn btn-default" _text="{tr}Clear Cache{/tr}"}
 	{if $tiki_p_edit_menu eq 'y'}
-		{button href="tiki-admin_menus.php" _text="{tr}Admin Menus{/tr}"}
+		{button href="tiki-admin_menus.php" class="btn btn-default" _text="{tr}Admin Menus{/tr}"}
 	{/if}
 	{if empty($smarty.request.show_hidden_modules)}
-		{button show_hidden_modules="y" _text="{tr}Show hidden modules{/tr}"}
+		{button show_hidden_modules="y" class="btn btn-default" _text="{tr}Show hidden modules{/tr}"}
 	{else}
-		{button show_hidden_modules="" _text="{tr}Hide hidden modules{/tr}"}
+		{button show_hidden_modules="" class="btn btn-default" _text="{tr}Hide hidden modules{/tr}"}
 	{/if}
-	{button href="./" _text="{tr}Exit Modules{/tr}"}
+	{button href="./" class="btn btn-default" _text="{tr}Exit Modules{/tr}"}
 	{button save_modules="y" _text="{tr}Save{/tr}" _type="primary" _class="hidden" _id="save_modules" _ajax="n"}
 </div>
 

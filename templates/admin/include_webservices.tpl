@@ -5,12 +5,12 @@
 		{preference name=feature_webservices visible="always"}
 	</fieldset>		
 
-	<div class="navbar">
+	<div class="t_navbar btn-group">
 		{foreach from=$webservices item=name}
-			{button href="tiki-admin.php?page=webservices&amp;name=$name" _text=$name}
+			{button href="tiki-admin.php?page=webservices&amp;name=$name" class="btn btn-default" _text=$name}
 		{/foreach}
 		{if $storedName}
-			{button href="tiki-admin.php?page=webservices" _text="{tr}Create New{/tr}"}
+			{button href="tiki-admin.php?page=webservices" class="btn btn-default" _text="{tr}Create New{/tr}"}
 		{/if}
 	</div>
 

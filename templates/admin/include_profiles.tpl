@@ -395,7 +395,7 @@ $("#repository, #categories").change(function(){
 			{if !empty($export_yaml)}
 				<div class="wikitext">{$export_yaml}</div>
 			{/if}
-			<div class="navbar">
+			<div class="t_navbar">
 				<label for="export_type">{tr}Object type:{/tr}</label>
 				<select name="export_type" id="export_type">
 					<option value="prefs"{if $export_type eq "prefs"} selected="selected"{/if}>
@@ -408,7 +408,7 @@ $("#repository, #categories").change(function(){
 			</div>
 			<fieldset>
 				<legend>{tr}Export modified preferences as YAML{/tr}</legend>
-				<div class="navbar">
+				<div class="t_navbar">
 					{listfilter selectors=".profile_export_list > li"}
 					<label for="select_all_prefs_to_export">{tr}Toggle Visible{/tr}</label>
 					<input type="checkbox" id="select_all_prefs_to_export" />

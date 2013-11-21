@@ -5,8 +5,8 @@
 	{remarksbox type="warning" title="{tr}Notice{/tr}"}{tr}This feature is disabled{/tr}<br>{tr}You will not see the latest queries.{/tr}{/remarksbox}
 {/if}
 
-<div class="navbar">
-	{button href="?clean=y" _text="{tr}Clean{/tr}"}
+<div class="t_navbar">
+	{button href="?clean=y" class="btn btn-default" _text="{tr}Clean{/tr}"}
 </div>
 
 {include file='find.tpl' find_show_num_rows='y'}

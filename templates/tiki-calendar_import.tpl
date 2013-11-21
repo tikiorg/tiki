@@ -1,8 +1,8 @@
 {title}{tr}Calendar import{/tr}{/title}
 
-<div class="navbar">
-{button _text="{tr}View Calendars{/tr}" href="tiki-calendar.php"}
-{button _text="{tr}Admin Calendars{/tr}" href="tiki-admin_calendars.php"}
+<div class="t_navbar">
+{button class="btn btn-default" _text="{tr}View Calendars{/tr}" href="tiki-calendar.php"}
+{button class="btn btn-default" _text="{tr}Admin Calendars{/tr}" href="tiki-admin_calendars.php"}
 </div>
 
 {if isset($updated) and $updated eq 'y'}

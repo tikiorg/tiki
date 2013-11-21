@@ -1,8 +1,8 @@
 {title help="User+Contacts+Prefs"}{tr}User Contacts Preferences{/tr}{/title}
 
 {include file='tiki-mytiki_bar.tpl'}
-<div class="navbar">
-	{button href="tiki-contacts.php" _text="{tr}Contacts{/tr}"}
+<div class="t_navbar">
+	{button href="tiki-contacts.php" class="btn btn-default" _text="{tr}Contacts{/tr}"}
 </div>
 
 {tabset name="contact_prefs"}

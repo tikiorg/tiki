@@ -12,12 +12,12 @@
     <h2>{tr}Create New Repository{/tr}</h2>
 {/if}
 
-<div class="navbar">
-	{button href="tiki-list_integrator_repositories.php" _text="{tr}List Repositories{/tr}"}
-	{button href="tiki-admin_integrator.php" _text="{tr}New Repository{/tr}"}
+<div class="t_navbar btn-group">
+	{button href="tiki-list_integrator_repositories.php" class="btn btn-default" _text="{tr}List Repositories{/tr}"}
+	{button href="tiki-admin_integrator.php" class="btn btn-default" _text="{tr}New Repository{/tr}"}
 	{if isset($repID) and $repID ne '0'}
 		{assign var=thisrepID value=$repID|escape}
-		{button href="tiki-integrator.php?repID=$thisrepID" _text="{tr}View Repository{/tr}"}
+		{button href="tiki-integrator.php?repID=$thisrepID" class="btn btn-default" _text="{tr}View Repository{/tr}"}
   {/if}
 </div>
 

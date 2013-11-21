@@ -8,8 +8,8 @@
 	{/if}
 {/title}
 
-<div class="navbar">
-	{button href="$url" _text="{tr}Back{/tr}"}
+<div class="t_navbar">
+	{button href="$url" class="btn btn-default" _text="{tr}Back{/tr}"}
 </div>
 
 {if isset($sent)}

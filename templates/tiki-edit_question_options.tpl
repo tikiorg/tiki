@@ -1,11 +1,11 @@
 {title url="tiki-edit_question_options.php?questionId=$questionId"}{tr}Edit question options{/tr}{/title}
 
-<div class="navbar">
-	{button href="tiki-list_quizzes.php" _text="{tr}List Quizzes{/tr}"} 
-	{button href="tiki-quiz_stats.php" _text="{tr}Quiz Stats{/tr}"}
-	{button href="tiki-quiz_stats_quiz.php?quizId=$quizId" _text="{tr}This Quiz Stats{/tr}"}
-	{button href="tiki-edit_quiz.php?quizId=$quizId" _text="{tr}Edit this Quiz{/tr}"} 
-	{button href="tiki-edit_quiz.php" _text="{tr}Admin Quizzes{/tr}"}
+<div class="t_navbar btn-group">
+	{button href="tiki-list_quizzes.php" class="btn btn-default" _text="{tr}List Quizzes{/tr}"}
+	{button href="tiki-quiz_stats.php" class="btn btn-default" _text="{tr}Quiz Stats{/tr}"}
+	{button href="tiki-quiz_stats_quiz.php?quizId=$quizId" class="btn btn-default" _text="{tr}This Quiz Stats{/tr}"}
+	{button href="tiki-edit_quiz.php?quizId=$quizId" class="btn btn-default" _text="{tr}Edit this Quiz{/tr}"}
+	{button href="tiki-edit_quiz.php" class="btn btn-default" _text="{tr}Admin Quizzes{/tr}"}
 </div>
 
 <h2>{tr}Create/edit options for question:{/tr} <a  href="tiki-edit_quiz_questions.php?quizId={$question_info.quizId}&amp;questionId={$question_info.questionId}">{$question_info.question|escape}</a></h2>

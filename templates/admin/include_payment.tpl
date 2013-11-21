@@ -1,7 +1,7 @@
 {* $Id$ *}
 <form action="tiki-admin.php?page=payment" method="post">
-	<div class="navbar">
-		{button href="tiki-payment.php" _text="{tr}Payments{/tr}"}
+	<div class="t_navbar btn-group">
+		{button href="tiki-payment.php" class="btn btn-default" _text="{tr}Payments{/tr}"}
 		<input type="submit" class="btn btn-default" name="paymentprefs" value="{tr}Change settings{/tr}" style="float:right;" />
 	</div>
 	{if $prefs.payment_feature neq "y"}

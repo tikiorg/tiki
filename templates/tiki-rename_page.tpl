@@ -1,8 +1,8 @@
 {title}{tr}Rename page:{/tr} {$page}{/title}
 
-<div class="navbar">
+<div class="t_navbar">
 	{assign var=thispage value=$page|escape:url}
-	{button href="tiki-index.php?page=$thispage" _text="{tr}View page{/tr}"}
+	{button href="tiki-index.php?page=$thispage" class="btn btn-default" _text="{tr}View page{/tr}"}
 </div>
 
 <form action="tiki-rename_page.php" method="post">

@@ -11,10 +11,10 @@
 
 	{title}{tr}Browsing Image:{/tr} {$name}{/title}
 <div id="{$rootid}browse_image">
-	<div class="navbar">
-		{button href="tiki-browse_gallery.php?galleryId=$galleryId&amp;offset=$offset" _text="{tr}Return to Gallery{/tr}"}
+	<div class="t_navbar">
+		{button href="tiki-browse_gallery.php?galleryId=$galleryId&amp;offset=$offset" class="btn btn-default" _text="{tr}Return to Gallery{/tr}"}
 		{if $tiki_p_admin_galleries eq 'y' or ($user and $user eq $owner)}
-			{button href="tiki-edit_image.php?galleryId=$galleryId&amp;edit=$imageId&amp;sort_mode=$sort_mode" _text="{tr}Edit Image{/tr}"}
+			{button href="tiki-edit_image.php?galleryId=$galleryId&amp;edit=$imageId&amp;sort_mode=$sort_mode" class="btn btn-default" _text="{tr}Edit Image{/tr}"}
 		{/if}
 	</div>
 {/if}

@@ -1,29 +1,29 @@
 {strip}
 	{title admpage="calendar"}{tr}Calendar event : {/tr}{$calitem.name}{/title}
 	
-	<div class="navbar">
+	<div class="t_navbar btn-group">
 		{if $tiki_p_view_calendar eq 'y'}
-			{button href="tiki-calendar.php" _text="{tr}View Calendars{/tr}"}
+			{button href="tiki-calendar.php" class="btn btn-default" _text="{tr}View Calendars{/tr}"}
 		{/if}
 		{if $tiki_p_admin_calendar eq 'y'}
-			{button href="tiki-admin_calendars.php?calendarId=$calendarId" _text="{tr}Edit Calendar{/tr}"}
+			{button href="tiki-admin_calendars.php?calendarId=$calendarId" class="btn btn-default" _text="{tr}Edit Calendar{/tr}"}
 		{/if}
 		{if $tiki_p_add_events eq 'y' and $id}
-			{button href="tiki-calendar_edit_item.php" _text="{tr}New event{/tr}"}
+			{button href="tiki-calendar_edit_item.php" class="btn btn-default" _text="{tr}New event{/tr}"}
 		{/if}
 		{if $id}
 			{if $edit}
-				{button href="tiki-calendar_edit_item.php?viewcalitemId=$id" _text="{tr}View event{/tr}"}
+				{button href="tiki-calendar_edit_item.php?viewcalitemId=$id" class="btn btn-default" _text="{tr}View event{/tr}"}
 			{elseif $tiki_p_change_events eq 'y'}
-				{button href="tiki-calendar_edit_item.php?calitemId=$id" _text="{tr}Edit/Delete event{/tr}"}
+				{button href="tiki-calendar_edit_item.php?calitemId=$id" class="btn btn-default" _text="{tr}Edit/Delete event{/tr}"}
 			{/if}
 		{/if}
 		{if $tiki_p_admin_calendar eq 'y'}
-			{button href="tiki-admin_calendars.php" _text="{tr}Admin Calendars{/tr}"}
+			{button href="tiki-admin_calendars.php" class="btn btn-default" _text="{tr}Admin Calendars{/tr}"}
 		{/if}
 		{if $prefs.calendar_fullcalendar neq 'y' or not $edit}
 			{if $prefs.calendar_export_item == 'y' and $tiki_p_view_calendar eq 'y'}
-				{button href='tiki-calendar_export_ical.php? export=y&calendarItem='|cat:$id _text='{tr}Export Event as iCal{/tr}'}
+				{button href='tiki-calendar_export_ical.php? export=y&calendarItem='|cat:$id class="btn btn-default" _text='{tr}Export Event as iCal{/tr}'}
 			{/if}
 		{/if}
 	</div>

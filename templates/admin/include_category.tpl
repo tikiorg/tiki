@@ -1,8 +1,8 @@
 {* $Id$ *}
-<div class="navbar">
-	{button href="tiki-browse_categories.php" _text="{tr}Browse categories{/tr}"}
-	{button href="tiki-admin_categories.php" _text="{tr}Administer categories{/tr}"}
-	{button href="tiki-edit_categories.php" _text="{tr}Organize Objects{/tr}" _title="{tr}Organize Objects{/tr}"}	
+<div class="t_navbar btn-group">
+	{button href="tiki-browse_categories.php" class="btn btn-default" _text="{tr}Browse categories{/tr}"}
+	{button href="tiki-admin_categories.php" class="btn btn-default" _text="{tr}Administer categories{/tr}"}
+	{button href="tiki-edit_categories.php" class="btn btn-default" _text="{tr}Organize Objects{/tr}" _title="{tr}Organize Objects{/tr}"}
 </div>
 {if !empty($feedbacks) || !empty($assignWikiCategories)}
 	{remarksbox type="feedback" title="{tr}Feedback{/tr}"}

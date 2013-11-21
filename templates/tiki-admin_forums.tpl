@@ -2,21 +2,21 @@
 
 {title help="Forums" admpage="forums"}{tr}Admin Forums{/tr}{/title}
 
-<div class="navbar">
+<div class="t_navbar btn-group">
 	{if $tiki_p_admin_forum eq 'y' && $forumId > 0 or (isset($dup_mode) and $dup_mode eq 'y')}
-		{button href="?" _text="{tr}Create New Forum{/tr}"}
+		{button class="btn btn-default" href="?" _text="{tr}Create New Forum{/tr}"}
 	{/if}
 	{if $tiki_p_admin_forum eq 'y' && (!isset($dup_mode) or $dup_mode ne 'y')}
-		{button href="tiki-admin_forums.php?dup_mode=y" _text="{tr}Duplicate Forum{/tr}"}
+		{button class="btn btn-default" href="tiki-admin_forums.php?dup_mode=y" _text="{tr}Duplicate Forum{/tr}"}
 	{/if}
 	{if $forumId > 0}
-		{button href="tiki-view_forum.php?forumId=$forumId" _text="{tr}View this forum{/tr}"}
+		{button class="btn btn-default" href="tiki-view_forum.php?forumId=$forumId" _text="{tr}View this forum{/tr}"}
 	{/if}
 	{if $tiki_p_admin_forum eq 'y'}
-		{button href="tiki-forum_import.php" _text="{tr}Import forums{/tr}"}
+		{button class="btn btn-default" href="tiki-forum_import.php" _text="{tr}Import forums{/tr}"}
 	{/if}
 	{if $tiki_p_forum_read eq 'y'}
-		{button href="tiki-forums.php" _text="{tr}List forums{/tr}"}
+		{button class="btn btn-default" href="tiki-forums.php" _text="{tr}List forums{/tr}"}
 	{/if}
 </div>
 

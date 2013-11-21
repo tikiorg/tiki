@@ -1,8 +1,8 @@
 {title}{tr}Tag translation{/tr}{if isset($data)}: {$data.pageName}{/if}{/title}
 
 {if isset($data)}
-	<div class="navbar">
-		{button  href="tiki-index.php?page=$objId" _text="{tr}View page{/tr}"}
+	<div class="t_navbar">
+		{button  href="tiki-index.php?page=$objId" class="btn btn-default" _text="{tr}View page{/tr}"}
 	</div>
 {/if}
 

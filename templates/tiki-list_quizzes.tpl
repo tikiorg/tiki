@@ -1,12 +1,12 @@
 {* $Id$ *}
 {title help="Quiz"}{tr}Quizzes{/tr}{/title}
 
-<div class="navbar">
+<div class="t_navbar">
 	{if $tiki_p_admin_quizzes eq 'y'}
-			{button href="tiki-edit_quiz.php" _text="{tr}Admin Quizzes{/tr}"}
+			{button href="tiki-edit_quiz.php" class="btn btn-default" _text="{tr}Admin Quizzes{/tr}"}
 	{/if}
 	{if $tiki_p_view_quiz_stats eq 'y'}
-		{button href="tiki-quiz_stats.php" _text="{tr}Quiz Stats{/tr}"}
+		{button href="tiki-quiz_stats.php" class="btn btn-default" _text="{tr}Quiz Stats{/tr}"}
 	{/if}
 </div>
 

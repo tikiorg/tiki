@@ -1,18 +1,18 @@
 {title url="tiki-blog_post.php?blogId=$blogId&amp;postId=$postId"}{if $postId gt 0}{tr}Edit Post{/tr}{else}{tr}New Post{/tr}{/if}{if !empty($blog_data.title)} - {$blog_data.title}{/if}{/title}
 
-<div class="navbar">
+<div class="t_navbar btn-group">
 	{if $postId > 0}
-		{button href=$postId|sefurl:blogpost _text="{tr}View post{/tr}"}
+		{button href=$postId|sefurl:blogpost class="btn btn-default" _text="{tr}View post{/tr}"}
 	{/if}
 
 	{if $blogId gt 0}
 		{assign var=thisblog value=$blogId|sefurl:blog}
-		{button href=$thisblog _text="{tr}View Blog{/tr}"}
+		{button href=$thisblog class="btn btn-default" _text="{tr}View Blog{/tr}"}
 	{/if}
 
 	{if $blogs|@count gt 1}
 		{* No need for users to go to blog list if they are already looking at the only blog *}
-		{button href="tiki-list_blogs.php" _text="{tr}List Blogs{/tr}"}
+		{button href="tiki-list_blogs.php" class="btn btn-default" _text="{tr}List Blogs{/tr}"}
 	{/if}
 </div>
 

@@ -1,8 +1,8 @@
 
 {title help="forums" admpage="forums"}{tr}Message queue for forum{/tr} {$forum_info.name}{/title}
 
-<div class="navbar">
-	{button href="tiki-view_forum.php?forumId=$forumId" _text="{tr}Back to forum{/tr}"}
+<div class="t_navbar">
+	{button href="tiki-view_forum.php?forumId=$forumId" class="btn btn-default" _text="{tr}Back to forum{/tr}"}
 </div>
 
 {if $smarty.request.qId and $form eq 'y'}

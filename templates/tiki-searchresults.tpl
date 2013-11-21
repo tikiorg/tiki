@@ -10,10 +10,10 @@
 
 <div class="nohighlight">
 	{if $searchStyle neq "menu" && $prefs.feature_search_show_object_filter eq 'y'}
-		<div class="navbar">
+		<div class="t_navbar">
 			{tr}Search in:{/tr}
 			{foreach item=name key=k from=$where_list}
-				{button _auto_args='where,highlight' href="tiki-searchresults.php?where=$k"  _selected="'$where'=='$k'" _selected_class="highlight" _text="$name"}
+				{button _auto_args='where,highlight' href="tiki-searchresults.php?where=$k"  _selected="'$where'=='$k'" _selected_class="highlight" class="btn btn-default" _text="$name"}
 			{/foreach}
 		</div>
 	{/if}

@@ -2,15 +2,15 @@
 
 {title help="Permission"}{if $objectType eq 'global'}{tr}Assign global permissions{/tr}{else}{tr}Assign permissions to {/tr}{$objectType}: {$objectName}{/if}{/title}
 
-<div class="navbar">
-	{if !empty($referer)}{button href="$referer" _text="{tr}Back{/tr}"}{/if}
+<div class="t_navbar btn-group">
+	{if !empty($referer)}{button href="$referer" class="btn btn-default" _text="{tr}Back{/tr}"}{/if}
 	{if $tiki_p_admin eq 'y'} {* only full admins can manage groups, not tiki_p_admin_users *}
-		{button href="tiki-admingroups.php" _text="{tr}Admin Groups{/tr}"}
+		{button href="tiki-admingroups.php" class="btn btn-default" _text="{tr}Admin Groups{/tr}"}
 	{/if}
 	{if $tiki_p_admin_users eq 'y'}
-	{button href="tiki-adminusers.php" _text="{tr}Admin users{/tr}"}
+	{button href="tiki-adminusers.php" class="btn btn-default" _text="{tr}Admin users{/tr}"}
 	{/if}
-	{button href="tiki-list_object_permissions.php" _text="{tr}Object Permissions List{/tr}"}
+	{button href="tiki-list_object_permissions.php" class="btn btn-default" _text="{tr}Object Permissions List{/tr}"}
 </div>
 
 {tabset name='tabs_objectpermissions'}
@@ -143,7 +143,7 @@ if ($("#assignstructure").prop("checked")) {
 				{/remarksbox}
 			{/if}
 			{if $objectId}
-			<div class="navbar">
+			<div class="t_navbar">
 				 <input type="submit" class="btn btn-default" name="used_groups" value="{tr}Select only groups that have a perm with the object{/tr}">
 			</div>
 			{/if}

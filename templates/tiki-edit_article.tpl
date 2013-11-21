@@ -11,9 +11,9 @@
 	{/if}
 {/title}
 
-<div class="navbar">
-	{button href="tiki-list_articles.php" _text="{tr}List Articles{/tr}"}
-	{button href="tiki-view_articles.php" _text="{tr}View Articles{/tr}"}
+<div class="t_navbar btn-group">
+	{button href="tiki-list_articles.php" class="btn btn-default" _text="{tr}List Articles{/tr}"}
+	{button href="tiki-view_articles.php" class="btn btn-default" _text="{tr}View Articles{/tr}"}
 </div>
 
 {if $preview}

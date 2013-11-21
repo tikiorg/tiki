@@ -12,9 +12,9 @@
 {if $user eq $userwatch}
 	{include file='tiki-mytiki_bar.tpl'}
 {else}
-	<div class="navbar">
+	<div class="t_navbar">
 		{assign var=thisuserwatch value=$userwatch|escape}
-		{button href="tiki-user_preferences.php?view_user=$thisuserwatch" _text="{tr}User Preferences{/tr}"}
+		{button href="tiki-user_preferences.php?view_user=$thisuserwatch" class="btn btn-default" _text="{tr}User Preferences{/tr}"}
 	</div>
 {/if}
 <h2>{if $user eq $userwatch}{tr}Your current avatar{/tr}{else}{tr}Avatar{/tr}{/if}</h2>

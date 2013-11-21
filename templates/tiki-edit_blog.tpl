@@ -4,12 +4,12 @@
   {title help="Blogs"}{tr}Create Blog{/tr}{/title}
 {/if}
 
-<div class="navbar">
-	{button href="tiki-list_blogs.php" _text="{tr}List Blogs{/tr}"}
+<div class="t_navbar btn-group">
+	{button href="tiki-list_blogs.php" class="btn btn-default" _text="{tr}List Blogs{/tr}"}
 	 
   {if $blogId > 0}
 		{assign var=thisblogId value=$blogId|sefurl:blog}
-		{button href=$thisblogId _text="{tr}View Blog{/tr}"}
+		{button href=$thisblogId class="btn btn-default" _text="{tr}View Blog{/tr}"}
 	{/if}
 </div>
 

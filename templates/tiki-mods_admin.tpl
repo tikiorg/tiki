@@ -1,8 +1,8 @@
 {* $Id$ *}
 {title help="mods"}{tr}Tiki Mods Configuration{/tr}{/title}
 
-<div class="navbar">
-	{button href="tiki-mods.php" _text="{tr}Mods Install/uninstall{/tr}"}
+<div class="t_navbar">
+	{button href="tiki-mods.php" class="btn btn-default" _text="{tr}Mods Install/uninstall{/tr}"}
 </div>
 
 {section name=n loop=$tikifeedback}<div class="simplebox{if $tikifeedback[n].num > 0} highlight{/if}">{$tikifeedback[n].mes}</div>{/section}

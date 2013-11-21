@@ -1,15 +1,15 @@
 {title help="FAQs"}{tr}{$faq_info.title}{/tr}{/title}
 <div class="description">{$faq_info.description|escape}</div>
 
-<div class="navbar">
+<div class="t_navbar btn-group">
 	{self_link print='y'}{icon _id='printer' align='right' hspace='1' alt="{tr}Print{/tr}"}{/self_link}
-	{button href="tiki-list_faqs.php" _text="{tr}List FAQs{/tr}"}
+	{button href="tiki-list_faqs.php" class="btn btn-default" _text="{tr}List FAQs{/tr}"}
 	
 	{if $tiki_p_admin_faqs eq 'y'}
-		{button href="tiki-list_faqs.php?faqId=$faqId" _text="{tr}Edit this FAQ{/tr}"}
+		{button href="tiki-list_faqs.php?faqId=$faqId" class="btn btn-default" _text="{tr}Edit this FAQ{/tr}"}
 	{/if}
 	{if $tiki_p_admin_faqs eq 'y'}
-		{button href="tiki-faq_questions.php?faqId=$faqId" _text="{tr}New Question{/tr}"}
+		{button href="tiki-faq_questions.php?faqId=$faqId" class="btn btn-default" _text="{tr}New Question{/tr}"}
 	{/if}
 </div>
 

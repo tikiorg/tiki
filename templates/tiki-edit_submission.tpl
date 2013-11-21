@@ -22,7 +22,7 @@
 	{title help="Articles" admpage="articles"}{tr}Submit article{/tr}{/title}
 {/if}
 
-<div class="navbar">
+<div class="t_navbar">
 	{button href="tiki-list_submissions.php" _text="{tr}List Submissions{/tr}"}
 </div>
 

@@ -1,7 +1,7 @@
 {title help="Forums" admpage="forums"}{tr}Reported messages for forum{/tr}&nbsp;{$forum_info.name}{/title}
 
-<div class="navbar">
-	{button href="tiki-view_forum.php?forumId=$forumId" _text="{tr}Back to forum{/tr}"}
+<div class="t_navbar">
+	{button href="tiki-view_forum.php?forumId=$forumId" class="btn btn-default" _text="{tr}Back to forum{/tr}"}
 </div>
 
 <h2>{tr}List of messages{/tr} ({$cant})</h2>

@@ -1,10 +1,10 @@
 {* $Id$ *}
 {title help="Newsletters"}{tr}Admin newsletters{/tr}{/title}
 
-<div class="navbar">
-	{button href="tiki-admin_newsletters.php?cookietab=2" _text="{tr}Create Newsletter{/tr}"}
-	{button href="tiki-newsletters.php" _text="{tr}List Newsletters{/tr}"}
-	{button href="tiki-send_newsletters.php" _text="{tr}Send Newsletters{/tr}"}
+<div class="t_navbar btn-group">
+	{button href="tiki-admin_newsletters.php?cookietab=2" class="btn btn-default" _text="{tr}Create Newsletter{/tr}"}
+	{button href="tiki-newsletters.php" class="btn btn-default" _text="{tr}List Newsletters{/tr}"}
+	{button href="tiki-send_newsletters.php" class="btn btn-default" _text="{tr}Send Newsletters{/tr}"}
 </div>
 
 {tabset}

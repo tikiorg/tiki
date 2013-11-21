@@ -9,12 +9,12 @@
 {title help="Newsletters" url=$titleurl}{tr}Send Newsletters{/tr}{/title}
 
 {if $tiki_p_admin_newsletters eq "y"}
-	<div class="navbar">
-		{button href="tiki-newsletters.php" _text="{tr}List Newsletters{/tr}"}
+	<div class="t_navbar btn-group">
+		{button href="tiki-newsletters.php" class="btn btn-default" _text="{tr}List Newsletters{/tr}"}
 		{if $nlId}
-			{button href="tiki-admin_newsletters.php?nlId=$nlId" _text="{tr}Admin Newsletters{/tr}"}
+			{button href="tiki-admin_newsletters.php?nlId=$nlId" class="btn btn-default" _text="{tr}Admin Newsletters{/tr}"}
 		{else}
-			{button href="tiki-admin_newsletters.php" _text="{tr}Admin Newsletters{/tr}"}
+			{button href="tiki-admin_newsletters.php" class="btn btn-default" _text="{tr}Admin Newsletters{/tr}"}
 		{/if}
 	</div>
 {/if}

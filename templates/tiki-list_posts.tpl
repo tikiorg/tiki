@@ -2,10 +2,10 @@
 
 {title help="Blogs"}{if isset($blogTitle)}{tr _0=$blogTitle}Blog: %0{/tr}{else}{tr}Blog{/tr}{/if}{/title}
 
-<div class="navbar">
-	{button href="tiki-edit_blog.php" _text="{tr}Create Blog{/tr}"}
-	{button href="tiki-blog_post.php" _text="{tr}New Blog Post{/tr}"}
-	{button href="tiki-list_blogs.php" _text="{tr}List Blogs{/tr}"}
+<div class="t_navbar btn-group">
+	{button href="tiki-edit_blog.php" class="btn btn-default" _text="{tr}Create Blog{/tr}"}
+	{button href="tiki-blog_post.php" class="btn btn-default" _text="{tr}New Blog Post{/tr}"}
+	{button href="tiki-list_blogs.php" class="btn btn-default" _text="{tr}List Blogs{/tr}"}
 </div>
 
 {if $posts or ($find ne '')}

@@ -1,8 +1,8 @@
 {* $Id$ *}
 
 {remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}WYSIWYG means What You See Is What You Get, and is handled in Tiki by <a href="http://ckeditor.com/">CKEditor</a>{/tr}.{/remarksbox}
-<div class="navbar">
-{button href="tiki-admin_toolbars.php" _text="{tr}Toolbars{/tr}"}
+<div class="t_navbar">
+{button href="tiki-admin_toolbars.php" class="btn btn-default" _text="{tr}Toolbars{/tr}"}
 </div>
 
 <form action="tiki-admin.php?page=wysiwyg" method="post">

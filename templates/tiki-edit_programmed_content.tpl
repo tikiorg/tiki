@@ -1,8 +1,8 @@
 {title url="tiki-edit_programmed_content.php?contentId=$contentId"}{tr}Program dynamic content for block:{/tr} {$contentId}{/title}
 
-<div class="navbar">
-	{button href="?contentId=$contentId" _text="{tr}Create New Block{/tr}"}
-	{button href="tiki-list_contents.php" _text="{tr}Return to block listing{/tr}"}
+<div class="t_navbar">
+	{button href="?contentId=$contentId" class="btn btn-default" _text="{tr}Create New Block{/tr}"}
+	{button href="tiki-list_contents.php" class="btn btn-default" _text="{tr}Return to block listing{/tr}"}
 </div>
 
 <h2>{tr}Block description: {/tr}{$description}</h2>

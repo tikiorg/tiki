@@ -1,8 +1,8 @@
 {* $Id$ *}
 {title url="tiki-invite.php"}{tr}Invitation{/tr}{/title}
 
-<div class="navbar">
-	 {button _text="{tr}Invitations list{/tr}" href="tiki-list_invite.php"}
+<div class="t_navbar">
+	 {button class="btn btn-default" _text="{tr}Invitations list{/tr}" href="tiki-list_invite.php"}
 </div>
 
 {if $sentresult}

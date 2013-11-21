@@ -57,8 +57,8 @@
 {tab name="{tr}Edit/Create{/tr}"}
   {if $faqId > 0}
 		<h2>{tr}Edit this FAQ:{/tr} {$title}</h2>
-		<div class="navbar">
-			{button href="tiki-list_faqs.php" _text="{tr}Create new FAQ{/tr}"} 
+		<div class="t_navbar">
+			{button href="tiki-list_faqs.php" class="btn btn-default" _text="{tr}Create new FAQ{/tr}"}
 		</div>
   {else}
 		<h2>{tr}Create New FAQ:{/tr}</h2>

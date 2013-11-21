@@ -4,13 +4,13 @@
 	{title help=Calendar url="tiki-admin_calendars.php" admpage="calendar"}{tr}Admin Calendars{/tr}{/title}
 {/if}
 
-<div class="navbar">
+<div class="t_navbar btn-group">
 	{if !empty($calendarId) && $tiki_p_admin_calendar eq 'y'}
-		{button _text="{tr}Create Calendar{/tr}" href="tiki-admin_calendars.php?cookietab=2"}
+		{button _text="{tr}Create Calendar{/tr}" href="tiki-admin_calendars.php?cookietab=2" class="btn btn-default"}
 	{/if}
-	{button _text="{tr}View Calendars{/tr}" href="tiki-calendar.php"}
+	{button _text="{tr}View Calendars{/tr}" href="tiki-calendar.php" class="btn btn-default"}
 	{if $tiki_p_admin_calendar eq 'y'}
-		{button _text="{tr}Import{/tr}" href="tiki-calendar_import.php"}
+		{button _text="{tr}Import{/tr}" href="tiki-calendar_import.php" class="btn btn-default"}
 	{/if}
 </div>
 

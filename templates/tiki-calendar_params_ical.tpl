@@ -2,8 +2,8 @@
 {title}{tr}Advanced parameters for iCal export{/tr}{/title}
 
 {if $tiki_p_view_calendar eq 'y'}
-	<div class="navbar">
-		{button  href="tiki-calendar.php" _text="{tr}Calendar{/tr}"}
+	<div class="t_navbar">
+		{button href="tiki-calendar.php" _text="{tr}Calendar{/tr}"}
 	</div>
 {/if}
 

@@ -2,12 +2,12 @@
 {assign var=nlId_urlencoded value=$nlId|urlencode}
 {title url="tiki-admin_newsletter_subscriptions.php?nlId=$nlId_urlencoded"}{tr}Admin newsletter subscriptions{/tr}{/title}
 
-<div class="navbar">
-	{button href="tiki-newsletters.php" _text="{tr}List Newsletters{/tr}"}
+<div class="t_navbar btn-group">
+	{button href="tiki-newsletters.php" class="btn btn-default" _text="{tr}List Newsletters{/tr}"}
 	{assign var="nlid_encod" value=$nlId|urlencode}
-	{button href="tiki-admin_newsletters.php?nlId=$nlid_encod" _text="{tr}Edit Newsletter{/tr}"}
-	{button href="tiki-admin_newsletters.php" _text="{tr}Admin Newsletters{/tr}"}
-	{button href="tiki-send_newsletters.php?nlId=$nlid_encod" _text="{tr}Send Newsletters{/tr}"}
+	{button href="tiki-admin_newsletters.php?nlId=$nlid_encod" class="btn btn-default" _text="{tr}Edit Newsletter{/tr}"}
+	{button href="tiki-admin_newsletters.php" class="btn btn-default" _text="{tr}Admin Newsletters{/tr}"}
+	{button href="tiki-send_newsletters.php?nlId=$nlid_encod" class="btn btn-default" _text="{tr}Send Newsletters{/tr}"}
 </div>
 
 <table class="table normal">

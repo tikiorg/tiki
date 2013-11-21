@@ -1,12 +1,12 @@
 {* $Id$ *}
 {title help="Surveys"}{tr}Surveys{/tr}{/title}
 
-<div class="navbar">
+<div class="t_navbar btn-group">
 	{if $tiki_p_view_survey_stats eq 'y'}
-		{button href="tiki-survey_stats.php" _text="{tr}Survey stats{/tr}"}
+		{button href="tiki-survey_stats.php" class="btn btn-default" _text="{tr}Survey stats{/tr}"}
 	{/if}
 	{if $tiki_p_admin_surveys eq 'y'}
-		{button href="tiki-admin_surveys.php" _text="{tr}Create New Survey{/tr}"}
+		{button href="tiki-admin_surveys.php" class="btn btn-default" _text="{tr}Create New Survey{/tr}"}
 	{/if}
 </div>
 

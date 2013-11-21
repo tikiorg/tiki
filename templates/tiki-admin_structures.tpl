@@ -2,7 +2,7 @@
 {title help="Structures"}{tr}Structures{/tr}{/title}
 
 {if $tiki_p_admin eq 'y'}
-	<div class="navbar">
+	<div class="t_navbar">
 		{button href='tiki-import_xml_zip.php' _text="{tr}XML Zip Import{/tr}"}
 	</div>
 {/if}

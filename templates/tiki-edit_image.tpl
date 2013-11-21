@@ -1,8 +1,8 @@
 {title}{tr}Edit Image{/tr}{/title}
 
-<div class="navbar">
-	{button href="tiki-browse_gallery.php" _auto_args='galleryId' _text="{tr}Return to Gallery{/tr}"}
-	{button href="tiki-browse_image.php?imageId=$imageId" _text="{tr}Browse Images{/tr}"}
+<div class="t_navbar">
+	{button href="tiki-browse_gallery.php" _auto_args='galleryId' class="btn btn-default" _text="{tr}Return to Gallery{/tr}"}
+	{button href="tiki-browse_image.php?imageId=$imageId" class="btn btn-default" _text="{tr}Browse Images{/tr}"}
 </div>
 
 <div align="center">

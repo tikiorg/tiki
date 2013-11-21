@@ -3,8 +3,8 @@
 {title help="forums" admpage="forums"}{tr}Forums{/tr}{/title}
 
 {if $tiki_p_admin_forum eq 'y'}
-  <div class="navbar">
-		{button href="tiki-admin_forums.php" _text="{tr}Admin forums{/tr}"}
+  <div class="t_navbar">
+		{button href="tiki-admin_forums.php" class="btn btn-default" _text="{tr}Admin forums{/tr}"}
   </div>
 {/if}
 

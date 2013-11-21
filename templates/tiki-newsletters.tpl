@@ -1,8 +1,8 @@
 {title help="Newsletters"}{tr}Newsletters{/tr}{/title}
 
 {if $tiki_p_admin_newsletters eq "y"}
-	<div class="navbar">
-		{button href="tiki-admin_newsletters.php" _text="{tr}Admin Newsletters{/tr}"}
+	<div class="t_navbar">
+		{button href="tiki-admin_newsletters.php" class="btn btn-default" _text="{tr}Admin Newsletters{/tr}"}
 	</div>
 {/if}
 

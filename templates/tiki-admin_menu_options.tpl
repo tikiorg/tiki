@@ -1,12 +1,12 @@
 {* $Id$ *}
 {title help="Menus" url="tiki-admin_menu_options.php?menuId=$menuId" admpage="general&amp;cookietab=3"}{tr}Admin Menu:{/tr} {$editable_menu_info.name}{/title}
 
-<div class="navbar">
-	{button href="tiki-admin_menus.php" _text="{tr}List menus{/tr}"}
-	{button href="tiki-admin_menus.php?menuId=$menuId&cookietab=2" _text="{tr}Edit this menu{/tr}"}
+<div class="t_navbar btn-group">
+	{button href="tiki-admin_menus.php" class="btn btn-default" _text="{tr}List menus{/tr}"}
+	{button href="tiki-admin_menus.php?menuId=$menuId&cookietab=2" class="btn btn-default" _text="{tr}Edit this menu{/tr}"}
 	{if $prefs.feature_tabs neq 'y'}
-		{button href="#export" _text="{tr}Export{/tr}"}
-		{button href="#import" _text="{tr}Import{/tr}"}
+		{button href="#export" class="btn btn-default" _text="{tr}Export{/tr}"}
+		{button href="#import" class="btn btn-default" _text="{tr}Import{/tr}"}
 	{/if}
 </div>
 

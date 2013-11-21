@@ -2,7 +2,7 @@
 
 {title help="Adding+fields+to+a+tracker" url="tiki-admin_tracker_fields.php?trackerId=$trackerId"}{tr}Admin Tracker:{/tr} {$tracker_info.name}{/title}
 {assign var='title' value="{tr}Admin Tracker:{/tr} "|cat:$tracker_info.name|escape}
-<div class="navbar">
+<div class="t_navbar">
 	{include file="tracker_actions.tpl"}
 </div>
 

@@ -2,9 +2,9 @@
 
 {title help="Forums" admpage="forums"}{tr}Forum Importer{/tr}{/title}
 
-<div class="navbar">
-	{button href="tiki-admin_forums.php" _text="{tr}Admin forums{/tr}"}
-	{button href="tiki-forums.php" _text="{tr}List forums{/tr}"}
+<div class="t_navbar btn-group">
+	{button href="tiki-admin_forums.php" class="btn btn-default" _text="{tr}Admin forums{/tr}"}
+	{button href="tiki-forums.php" class="btn btn-default" _text="{tr}List forums{/tr}"}
 </div>
 {*
  * If this is a new import, start by selecting the import method and we'll

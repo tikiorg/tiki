@@ -46,7 +46,7 @@
 
 <h2>{tr}Cookies{/tr}</h2>
 {if $channels}
-	<div class="navbar">
+	<div class="t_navbar">
 		{button href="?removeall=1" _text="{tr}Remove all cookies{/tr}"}
 	</div>
 {/if}

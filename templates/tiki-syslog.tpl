@@ -1,9 +1,9 @@
 {* $Id$ *}
 {title help="System+Log"}{tr}Tiki Logs{/tr}{/title}
 
-<div class="navbar">
-	 {button _text="{tr}Log SQL{/tr}" href="tiki-sqllog.php"}
-	 {button _text="{tr}Export through Action Log{/tr}" href="tiki-admin_actionlog.php#Report"}
+<div class="t_navbar">
+	 {button class="btn btn-default" _text="{tr}Log SQL{/tr}" href="tiki-sqllog.php"}
+	 {button class="btn btn-default" _text="{tr}Export through Action Log{/tr}" href="tiki-admin_actionlog.php#Report"}
 </div>
 
 {if $tikifeedback}

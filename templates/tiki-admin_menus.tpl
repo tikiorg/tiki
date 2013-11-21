@@ -1,7 +1,7 @@
 {title help="Menus" admpage="general&amp;cookietab=3"}{tr}Admin Menus{/tr}{/title}
 
 {if $tiki_p_admin eq 'y'}
-	<div class="navbar">
+	<div class="t_navbar">
 		{button href="tiki-admin_modules.php" _text="{tr}Admin Modules{/tr}"}
 	</div>
 {/if}

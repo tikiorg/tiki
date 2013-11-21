@@ -411,8 +411,8 @@
 {if $find and $tiki_p_edit eq 'y' and $pagefound eq 'n' and $alias_found eq 'n'}
 	{capture assign='find_htmlescaped'}{$find|escape}{/capture}
 	{capture assign='find_urlescaped'}{$find|escape:'url'}{/capture}
-	<div class="navbar">
-		 {button _text="{tr}Create Page:{/tr} $find_htmlescaped" href="tiki-editpage.php?page=$find_urlescaped&lang=$find_lang&templateId=$template_id&template_name=$template_name&categId=$create_page_with_categId" _title="{tr}Create{/tr}"}
+	<div class="t_navbar">
+		 {button _text="{tr}Create Page:{/tr} $find_htmlescaped" href="tiki-editpage.php?page=$find_urlescaped&lang=$find_lang&templateId=$template_id&template_name=$template_name&categId=$create_page_with_categId" class="btn btn-default" _title="{tr}Create{/tr}"}
 	</div>
 {/if}
 {if $checkboxes_on eq 'y'}

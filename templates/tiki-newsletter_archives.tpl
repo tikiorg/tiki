@@ -1,17 +1,17 @@
 {title help="Newsletters"}{tr}Sent editions{/tr}{if $nl_info}: {$nl_info.name}{/if}{/title}
 
-<div class="navbar">
+<div class="t_navbar btn-group">
 	{if $tiki_p_list_newsletters eq "y"}
-		{button href="tiki-newsletters.php" _text="{tr}List Newsletters{/tr}"}
+		{button href="tiki-newsletters.php" class="btn btn-default" _text="{tr}List Newsletters{/tr}"}
 	{/if}
 	{if $tiki_p_subscribe_newsletters eq "y"}
-		{button href="tiki-newsletters.php?nlId=$nlId&amp;info=1" _text="{tr}Subscribe{/tr}"}
+		{button href="tiki-newsletters.php?nlId=$nlId&amp;info=1" class="btn btn-default" _text="{tr}Subscribe{/tr}"}
 	{/if}
 	{if $tiki_p_send_newsletters eq "y"}
-		{button href="tiki-send_newsletters.php?nlId=$nlId" _text="{tr}Send Newsletters{/tr}"} 
+		{button href="tiki-send_newsletters.php?nlId=$nlId" class="btn btn-default" _text="{tr}Send Newsletters{/tr}"}
 	{/if}
 	{if $tiki_p_admin_newsletters eq "y"}
-		{button href="tiki-admin_newsletters.php" _text="{tr}Admin Newsletters{/tr}"}
+		{button href="tiki-admin_newsletters.php" class="btn btn-default" _text="{tr}Admin Newsletters{/tr}"}
 	{/if}
 </div>
 <br>

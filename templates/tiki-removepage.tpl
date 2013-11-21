@@ -1,8 +1,8 @@
 {title}{tr}Remove page:{/tr} {$page} ({if $version == 'last'}{tr}Last Version{/tr}{else}{tr}Version:{/tr} {$version}{/if}){/title}
 
-<div class="navbar">
+<div class="t_navbar">
 	{assign var=thispage value=$page|escape:'url'}
-	{button href="tiki-index.php?page=$thispage" _text="{tr}Back to page{/tr}"}
+	{button href="tiki-index.php?page=$thispage" class="btn btn-default" _text="{tr}Back to page{/tr}"}
 </div>
 
 <form action="tiki-removepage.php" method="post">

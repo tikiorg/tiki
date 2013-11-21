@@ -1,10 +1,10 @@
 {title}{tr}Admin FAQ:{/tr} {$faq_info.title}{/title}
 
-<div class="navbar">
-	{button href="tiki-list_faqs.php" _text="{tr}List FAQs{/tr}"}
-	{button href="tiki-view_faq.php?faqId=$faqId" _text="{tr}View FAQ{/tr}"}
-	{button href="tiki-list_faqs.php?faqId=$faqId" _text="{tr}Edit this FAQ{/tr}"}
-	{button href="tiki-faq_questions.php?faqId=$faqId" _text="{tr}New Question{/tr}"}
+<div class="t_navbar btn-group">
+	{button href="tiki-list_faqs.php" class="btn btn-default" _text="{tr}List FAQs{/tr}"}
+	{button href="tiki-view_faq.php?faqId=$faqId" class="btn btn-default" _text="{tr}View FAQ{/tr}"}
+	{button href="tiki-list_faqs.php?faqId=$faqId" class="btn btn-default" _text="{tr}Edit this FAQ{/tr}"}
+	{button href="tiki-faq_questions.php?faqId=$faqId" class="btn btn-default" _text="{tr}New Question{/tr}"}
 </div>
 
 <h2>{if $questionId}{tr}Edit FAQ question{/tr}{else}{tr}Add FAQ question{/tr}{/if}</h2>

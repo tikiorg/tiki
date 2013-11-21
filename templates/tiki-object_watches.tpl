@@ -3,8 +3,8 @@
 {title help="Mail notifications"}{$smarty.capture.default}{/title}
 
 {if isset($referer)}
-	<div class="navbar">
-		{button href="$referer" _text="{tr}Back{/tr}"}
+	<div class="t_navbar">
+		{button href="$referer" class="btn btn-default" _text="{tr}Back{/tr}"}
 	</div>
 {/if}
 

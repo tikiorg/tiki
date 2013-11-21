@@ -2,14 +2,14 @@
 
 {include file='tiki-mytiki_bar.tpl'}
 
-<div class="navbar">
-	{button href="tiki-minical.php#add" _text="{tr}Add{/tr} "}
-	{button href="tiki-minical_prefs.php" _text="{tr}Prefs{/tr}"}
-	{button href="tiki-minical.php?view=daily" _text="{tr}Daily{/tr}"}
-	{button href="tiki-minical.php?view=weekly" _text="{tr}Weekly{/tr}"}
-	{button href="tiki-minical.php?view=list" _text="{tr}List{/tr}"}
-	{button href="tiki-minical_export.php" _text="{tr}Export{/tr}"}
-	{button href="tiki-minical_prefs.php#import" _text="{tr}Import{/tr}"}
+<div class="t_navbar btn-group">
+	{button href="tiki-minical.php#add" class="btn btn-default" _text="{tr}Add{/tr} "}
+	{button href="tiki-minical_prefs.php" class="btn btn-default" _text="{tr}Prefs{/tr}"}
+	{button href="tiki-minical.php?view=daily" class="btn btn-default" _text="{tr}Daily{/tr}"}
+	{button href="tiki-minical.php?view=weekly" class="btn btn-default" _text="{tr}Weekly{/tr}"}
+	{button href="tiki-minical.php?view=list" class="btn btn-default" _text="{tr}List{/tr}"}
+	{button href="tiki-minical_export.php" class="btn btn-default" _text="{tr}Export{/tr}"}
+	{button href="tiki-minical_prefs.php#import" class="btn btn-default" _text="{tr}Import{/tr}"}
 </div>
 
 <table class="table normal" >

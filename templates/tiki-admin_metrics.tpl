@@ -2,13 +2,13 @@
 
 {title help="Metrics" admpage="metrics"}{tr}Admin Metrics{/tr}{/title}
 
-<div class="navbar">
-	{button href="#metrics" _text="{tr}Metrics{/tr}"}
-	{button href="#tabs" _text="{tr}Tabs{/tr}"}
-	{button href="#assign" _text="{tr}Assign Metrics{/tr}"}
-	{button href="#assigned" _text="{tr}Assigned Metrics{/tr}"}
-	{button href="#editcreate" _text="{tr}Edit/Create Metrics{/tr}"}
-	{button href="#editcreatetab" _text="{tr}Edit/Create Tab{/tr}"}
+<div class="t_navbar btn-group">
+	{button href="#metrics" class="btn btn-default" _text="{tr}Metrics{/tr}"}
+	{button href="#tabs" class="btn btn-default" _text="{tr}Tabs{/tr}"}
+	{button href="#assign" class="btn btn-default" _text="{tr}Assign Metrics{/tr}"}
+	{button href="#assigned" class="btn btn-default" _text="{tr}Assigned Metrics{/tr}"}
+	{button href="#editcreate" class="btn btn-default" _text="{tr}Edit/Create Metrics{/tr}"}
+	{button href="#editcreatetab" class="btn btn-default" _text="{tr}Edit/Create Tab{/tr}"}
 </div>
 
 <h2>{tr}Metrics{/tr}</h2>

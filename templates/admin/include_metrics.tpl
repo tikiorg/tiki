@@ -5,8 +5,8 @@
 	<fieldset>
 		<legend>{tr}Metrics Dashboard{/tr}</legend>
 
-	<div class="navbar">
-		{button href="tiki-admin_metrics.php" _text="{tr}Configure metrics{/tr}"}
+	<div class="t_navbar">
+		{button href="tiki-admin_metrics.php" class="btn btn-default" _text="{tr}Configure metrics{/tr}"}
 	</div>
 
   		{preference name=feature_metrics_dashboard visible="always"}

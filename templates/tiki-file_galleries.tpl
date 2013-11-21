@@ -15,17 +15,17 @@
 {remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Be careful to set the right permissions on the files you link to{/tr}.{/remarksbox}
 {/if}
 
-<div class="navbar">
+<div class="t_navbar btn-group">
 {if $edit_mode eq 'y' or $dup_mode eq 'y'}
-<a href="tiki-list_file_gallery.php{if $filegals_manager neq ''}?filegals_manager={$filegals_manager|escape}{/if}">{tr}List Galleries{/tr}</a>
-{if $galleryId}<a href="tiki-list_file_gallery.php?galleryId={$galleryId}{if $filegals_manager neq ''}&amp;filegals_manager={$filegals_manager|escape}{/if}">{tr}Browse Gallery{/tr}</a>{/if}
+<a href="tiki-list_file_gallery.php{if $filegals_manager neq ''}?filegals_manager={$filegals_manager|escape}{/if}" class="btn btn-default">{tr}List Galleries{/tr}</a>
+{if $galleryId}<a href="tiki-list_file_gallery.php?galleryId={$galleryId}{if $filegals_manager neq ''}&amp;filegals_manager={$filegals_manager|escape}{/if}" class="btn btn-default">{tr}Browse Gallery{/tr}</a>{/if}
 {/if}
 {if $tiki_p_create_file_galleries eq 'y'and $edit_mode ne 'y'}
-<a href="tiki-list_file_gallery.php?edit_mode=1&amp;galleryId=0{if $filegals_manager neq ''}&amp;filegals_manager={$filegals_manager|escape}{/if}">{tr}Create New File Gallery{/tr}</a>
+<a href="tiki-list_file_gallery.php?edit_mode=1&amp;galleryId=0{if $filegals_manager neq ''}&amp;filegals_manager={$filegals_manager|escape}{/if}" class="btn btn-default">{tr}Create New File Gallery{/tr}</a>
 {/if}
 
 {if $tiki_p_create_file_galleries eq 'y'and $dup_mode ne 'y'}
-<a href="tiki-list_file_gallery.php?dup_mode=1{if $filegals_manager neq ''}&amp;filegals_manager={$filegals_manager|escape}{/if}">{tr}Duplicate File Gallery{/tr}</a>
+<a href="tiki-list_file_gallery.php?dup_mode=1{if $filegals_manager neq ''}&amp;filegals_manager={$filegals_manager|escape}{/if}" class="btn btn-default">{tr}Duplicate File Gallery{/tr}</a>
 {/if}
 </div>
 

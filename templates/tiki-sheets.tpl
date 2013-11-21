@@ -5,8 +5,8 @@
 {tabset}
 {tab name="{tr}List{/tr}"}
 {if $tiki_p_edit_sheet eq 'y'}
-	<div class="navbar">
-		{button href="tiki-sheets.php?edit_mode=1&amp;sheetId=0" _text="{tr}Create New Sheet{/tr}"}
+	<div class="t_navbar">
+		{button href="tiki-sheets.php?edit_mode=1&amp;sheetId=0" class="btn btn-default" _text="{tr}Create New Sheet{/tr}"}
 	</div>
 {/if}
 <h2>{tr}Spreadsheet{/tr}</h2>

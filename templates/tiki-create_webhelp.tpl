@@ -1,6 +1,6 @@
 {title help='WebHelp' url='tiki-create_webhelp.php'}{tr}Create WebHelp{/tr}{/title}
 {if  $generated eq 'y'}
-	<div class="navbar">
+	<div class="t_navbar">
 		<span class="button">
 			<a class="link" href="whelp/{$dir}/index.html">{tr}View generated WebHelp.{/tr}</a>
 		</span>

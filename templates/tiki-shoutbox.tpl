@@ -3,8 +3,8 @@
 {title help="Shoutbox"}{tr}Shoutbox{/tr}{/title}
 
 {if $tiki_p_admin_shoutbox eq 'y'}
-  <div class="navbar">
-		{button href="tiki-admin_shoutbox_words.php" _text="{tr}Banned Words{/tr}"}
+  <div class="t_navbar">
+		{button href="tiki-admin_shoutbox_words.php" class="btn btn-default" _text="{tr}Banned Words{/tr}"}
   </div>
 
 	<h2>{tr}Change shoutbox general settings{/tr}</h2>

@@ -2,16 +2,16 @@
 
 {title help="Image+Galleries"}{tr}Upload Image{/tr}{/title}
 
-<div class="navbar">
+<div class="navbar btn-group">
 	{if $galleryId ne ''}
-		{button href="tiki-browse_gallery.php" _auto_args="galleryId" _text="{tr}Browse Gallery{/tr}"}
+		{button href="tiki-browse_gallery.php" _auto_args="galleryId" class="btn btn-default" _text="{tr}Browse Gallery{/tr}"}
 	{else}
-		{button href="tiki-galleries.php" _text="{tr}Browse Gallery{/tr}"}
+		{button href="tiki-galleries.php" class="btn btn-default" _text="{tr}Browse Gallery{/tr}"}
 	{/if}
 
 	{if $prefs.feature_gal_batch eq "y" and $tiki_p_batch_upload_image_dir eq 'y'}
 		{if $tiki_p_admin_galleries eq 'y' or ($user and $user eq $owner) or $public eq 'y'}
-			{button href="tiki-batch_upload.php" _auto_args="galleryId" _text="{tr}Directory Batch{/tr}"}
+			{button href="tiki-batch_upload.php" _auto_args="galleryId" class="btn btn-default" _text="{tr}Directory Batch{/tr}"}
 		{/if}
 	{/if}
 </div>

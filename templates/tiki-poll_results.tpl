@@ -2,9 +2,9 @@
 
 {title help="polls" admpage="polls"}{tr}Poll Results{/tr}{/title}
 
-<div class="navbar">
-	{button href="tiki-old_polls.php" _text="{tr}Polls{/tr}"}
-	{button href="tiki-poll_results.php" _text="{tr}Top Voted Polls{/tr}"}
+<div class="t_navbar btn-group">
+	{button href="tiki-old_polls.php" class="btn btn-default" _text="{tr}Polls{/tr}"}
+	{button href="tiki-poll_results.php" class="btn btn-default" _text="{tr}Top Voted Polls{/tr}"}
 	{if $tiki_p_admin_polls eq 'y'}
 		{if empty($pollId)}{button href="tiki-admin_polls.php" _text="{tr}Admin Polls{/tr}"}{else}{button href="tiki-admin_polls.php?pollId=$pollId" _text="{tr}Edit Poll{/tr}"}{/if}
 	{/if}
@@ -70,9 +70,9 @@
 	</div>
 {/if}
 {if $tiki_p_view_poll_voters eq 'y' && $poll_info_arr[x].votes > 0}
-	<div class="navbar">
+	<div class="t_navbar">
 		{assign var=thispoll_info_arr value=$poll_info_arr[x].pollId}
-		{button href="?list=y&amp;pollId=$thispoll_info_arr" _text="{tr}List Votes{/tr}" _auto_args="$auto_args"}
+		{button href="?list=y&amp;pollId=$thispoll_info_arr" class="btn btn-default" _text="{tr}List Votes{/tr}" _auto_args="$auto_args"}
 	</div>
 {/if}
 

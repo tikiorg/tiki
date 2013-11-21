@@ -2,8 +2,8 @@
 
 {title}{tr}XML Zip Import{/tr}{/title}
 
-<div class="navbar">
-	 {button href='tiki-admin_structures.php' _text="{tr}Structures{/tr}"}
+<div class="t_navbar">
+	 {button href='tiki-admin_structures.php' class="btn btn-default" _text="{tr}Structures{/tr}"}
 </div>
 
 {if $error}

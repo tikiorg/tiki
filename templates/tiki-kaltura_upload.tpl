@@ -1,14 +1,14 @@
 {title help="Kaltura" admpage="video"}{tr}Upload Media{/tr}{/title}
 
-<div class="navbar">
+<div class="t_navbar">
 	{if $tiki_p_list_videos eq 'y'}
-	{button _text="{tr}List Media{/tr}" href="tiki-list_kaltura_entries.php"}
+	{button class="btn btn-default" _text="{tr}List Media{/tr}" href="tiki-list_kaltura_entries.php"}
 	{/if}
 </div>
 <div id="upload-container">
 </div>
 <p id="more-media">
-	{button _text="{tr}Add more media{/tr}" href="tiki-kaltura_upload.php"}
+	{button class="btn btn-default" _text="{tr}Add more media{/tr}" href="tiki-kaltura_upload.php"}
 </p>
 {jq}
 var url = $.service('kaltura', 'upload');

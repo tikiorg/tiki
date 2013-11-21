@@ -6,9 +6,9 @@
 
 {title help="Quiz"}{tr}Admin Quizzes{/tr}{/title}
 
-<div class="navbar">
-	{button href="tiki-list_quizzes.php" _text="{tr}List Quizzes{/tr}"}
-	{button href="tiki-quiz_stats.php" _text="{tr}Quiz Stats{/tr}"}
+<div class="t_navbar">
+	{button href="tiki-list_quizzes.php" class="btn btn-default" _text="{tr}List Quizzes{/tr}"}
+	{button href="tiki-quiz_stats.php" class="btn btn-default" _text="{tr}Quiz Stats{/tr}"}
 </div>
 
 {tabset}

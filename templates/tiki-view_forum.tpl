@@ -6,7 +6,7 @@
 	<div class="description">{wiki}{$forum_info.description}{/wiki}</div>
 {/if}
 
-<div class="navbar">
+<div class="t_navbar">
 	<table width="97%">
 		<tr>
 			<td>

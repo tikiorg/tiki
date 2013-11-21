@@ -2,16 +2,16 @@
 	{if $kmode eq 'edit'}{tr}Change Details:{/tr}{$videoInfo->name}
 	{elseif $kmode eq 'view'}{tr}View:{/tr}{$videoInfo->name}
 	{else}{tr}Kaltura Video{/tr}{/if}{/title}
-<div class="navbar">
+<div class="navbar btn-group">
 	{if $tiki_p_list_videos eq 'y'}
-	{button _text="{tr}List Media{/tr}" href="tiki-list_kaltura_entries.php"}
+	{button class="btn btn-default" _text="{tr}List Media{/tr}" href="tiki-list_kaltura_entries.php"}
 	{/if}
 	{if $kmode ne ''}
 	{if $kmode ne 'edit' and ($tiki_p_edit_videos eq 'y' or $tiki_p_admin_kaltura eq 'y' or $tiki_p_admin eq 'y')}
 		{if $entryType eq "media"}
-			{button _text="{tr}Change Details{/tr}" href="tiki-kaltura_video.php?mediaId=$videoId&action=edit"}
+			{button class="btn btn-default" _text="{tr}Change Details{/tr}" href="tiki-kaltura_video.php?mediaId=$videoId&action=edit"}
 		{else}
-			{button _text="{tr}Change Details{/tr}" href="tiki-kaltura_video.php?mixId=$videoId&action=edit"}		
+			{button class="btn btn-default" _text="{tr}Change Details{/tr}" href="tiki-kaltura_video.php?mixId=$videoId&action=edit"}
 		{/if}
 	{/if}
 	{/if}

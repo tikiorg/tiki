@@ -2,14 +2,14 @@
 
 {title help="Articles" admpage="articles"}{tr}Articles{/tr}{/title}
 
-<div class="navbar">
+<div class="t_navbar btn-group">
 	{if $tiki_p_edit_article eq 'y'}
-		{button href="tiki-edit_article.php" _text="{tr}New Article{/tr}"}
+		{button href="tiki-edit_article.php" class="btn btn-default" _text="{tr}New Article{/tr}"}
 	{/if}
-	{button href="tiki-view_articles.php" _text="{tr}View Articles{/tr}"}
+	{button href="tiki-view_articles.php" class="btn btn-default" _text="{tr}View Articles{/tr}"}
 
 	{if $prefs.feature_submissions == 'y' && ($tiki_p_approve_submission == "y" || $tiki_p_remove_submission == "y" || $tiki_p_edit_submission == "y")}
-		{button href="tiki-list_submissions.php" _text="{tr}View Submissions{/tr}"}
+		{button href="tiki-list_submissions.php" class="btn btn-default" _text="{tr}View Submissions{/tr}"}
 	{/if}
 </div>
 

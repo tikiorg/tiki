@@ -2,10 +2,10 @@
 {title help="Image+Galleries" admpage="gal"}{tr}Galleries{/tr}{/title}
 {if $tiki_p_create_galleries eq 'y'}
 	{if $edit_mode ne 'y' or $galleryId ne 0}
-		<div class="navbar">
-			{button href="?edit_mode=1&amp;galleryId=0" _text="{tr}Create New Gallery{/tr}"}
+		<div class="t_navbar">
+			{button href="?edit_mode=1&amp;galleryId=0" class="btn btn-default" _text="{tr}Create New Gallery{/tr}"}
 			{if $galleryId ne 0}
-				{button href="tiki-browse_gallery.php?galleryId=$galleryId" _text="{tr}Browse Gallery{/tr}"}
+				{button href="tiki-browse_gallery.php?galleryId=$galleryId" class="btn btn-default" _text="{tr}Browse Gallery{/tr}"}
 			{/if}
 		</div>
 	{/if}
@@ -159,7 +159,7 @@
 	{/if}
 {/if}
 {if $tiki_p_create_galleries eq 'y' && $galleryId ne 0}
-	<div class="navbar"><a href="tiki-galleries.php?edit_mode=1&amp;galleryId=0">{tr}Create New Gallery{/tr}</a></div>
+	<div class="t_navbar"><a href="tiki-galleries.php?edit_mode=1&amp;galleryId=0" class="btn btn-default">{tr}Create New Gallery{/tr}</a></div>
 {/if}
 <h2>{tr}Available Galleries{/tr}</h2>
 <div align="center">

@@ -1,7 +1,7 @@
 {title help="Html+Pages"}{tr}Admin HTML pages{/tr}{/title}
 
 {if $pageName ne ''}
-	<div class="navbar">
+	<div class="navt_bar">
 		{button _text="{tr}Create new HTML page{/tr}"}
 	</div>
 {/if}

@@ -2,10 +2,10 @@
 
 {title help="Surveys"}{tr}Admin surveys{/tr}{/title}
 
-<div class="navbar">
-	{button href="tiki-list_surveys.php" _text="{tr}List Surveys{/tr}"}
-	{button href="tiki-survey_stats.php" _text="{tr}Survey Stats{/tr}"}
-	{button surveyId=0 cookietab=2 _auto_args="surveyId,cookietab" _text="{tr}Create Survey{/tr}"}
+<div class="t_navbar btn-group">
+	{button href="tiki-list_surveys.php" class="btn btn-default" _text="{tr}List Surveys{/tr}"}
+	{button href="tiki-survey_stats.php" class="btn btn-default" _text="{tr}Survey Stats{/tr}"}
+	{button surveyId=0 cookietab=2 _auto_args="surveyId,cookietab" class="btn btn-default" _text="{tr}Create Survey{/tr}"}
 </div>
 
 {tabset}
