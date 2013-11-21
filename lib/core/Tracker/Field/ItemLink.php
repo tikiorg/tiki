@@ -349,7 +349,10 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 			$items = $item;
 		}
 
-		$labels = array_map(array($this, 'getItemLabel'), $items);
+		$labels = array();
+		foreach ($items as $i) {
+			$labels[] = $this->getItemLabel($i, $context);
+		}
 		$label = implode(', ', $labels);
 
 		if ($item && !is_array($item) && $context['list_mode'] !== 'csv' && $this->getOption('fieldId')) {
@@ -439,7 +442,7 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 		return array();
 	}
 
-	function getItemLabel($itemId)
+	function getItemLabel($itemId, $context = array('list_mode' => ''))
 	{
 		$trklib = TikiLib::lib('trk');
 		$item = $trklib->get_tracker_item($itemId);
@@ -448,25 +451,28 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 			return '';
 		}
 
+		$trackerId = (int) $this->getOption('trackerId');
+		$status = $this->getOption('status', 'opc');
+
 		$parts = array();
 
 		if ($fields = $this->getDisplayFieldsListArray()) {
 			foreach ($fields as $fieldId) {
 				if (isset($item[$fieldId])) {
-					$parts[] = $item[$fieldId];
+					$parts[] = $fieldId;
 				}
 			}
 		} else {
 			$fieldId = $this->getOption('fieldId');
 
 			if (isset($item[$fieldId])) {
-				$parts[] = $item[$fieldId];
+				$parts[] = $fieldId;
 			}
 		}
 
 
 		if (count($parts)) {
-			return implode(' ', $parts);
+			return $trklib->concat_item_from_fieldslist($trackerId, $itemId, $parts, $status, ' ', $context['list_mode']); 
 		} else {
 			return TikiLib::lib('object')->get_title('trackeritem', $itemId);
 		}
