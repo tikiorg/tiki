@@ -881,35 +881,35 @@ img.icon {
 }
 
 /***** Boxes *****/
-panel { 
+.module.panel { 
 	background-color: transparent;
 	border: none;
 	box-shadow: none;
 	margin-bottom: 20px;
 }
 
-.panel-default { 
+.module.panel-default { 
 	border-color: transparent;
 }
 
-.panel-default > .panel-heading { 
+.module.panel-default > .panel-heading { 
 	background-color: transparent;
 	border: none;
 	color: inherit;
 }
 
-.panel-heading { 
+.module .panel-heading { 
 	border-bottom: none;
 	border-radius: 0;
 	padding: 10px 0 5px;
 }
 
-h3.panel-title { 
+.module h3.panel-title { 
 	font-size: 1.55em;
 	font-weight: 700;
 }
 
-.panel-body { 
+.module .panel-body { 
 	padding: 5px;
 }
 
