@@ -14734,7 +14734,7 @@ $lang = array(
 "Easy application setup using configuration profiles" => "Puesta a punto fácil de la aplicación usando perfiles de configuración",
 "No wizard" => "Ningún wizard",
 "Do it manually using the <a href=\"tiki-admin.php\" target=\"_blank\">Admin Panel</a>" => "Hazlo manualmente usando el <a href=\"tiki-admin.php\" target=\"_blank\">Panel de Administración</a>",
-"Skip setup and don't show again" => "Sáltate esta puesto a punto inicial y no la vuelvas a mostrar de nuevo",
+"Skip setup and don't show again" => "Sáltate esta puesta a punto inicial y no la vuelvas a mostrar de nuevo",
 "To check if your server meets the requirements for running Tiki version %0, please visit <a href=\"tiki-check.php\" target=\"_blank\">Tiki Server Compatibility Check</a>" => "Para comprobar si el servidor cumple los requisitos para ejecutar la versión Tiki %0, visita por favor la <a href=\"tiki-check.php\" target=\"_blank\"> Comprobación de compatibilidad del Servidor de Tiki</a>",
 "Set up the Wysiwyg editor" => "Pon a punto el editor Wysiwyg",
 "Set up the Wysiwyg environment" => "Pon a punto el entorno del editor Wysiwyg",
