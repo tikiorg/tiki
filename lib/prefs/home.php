@@ -82,6 +82,7 @@ function listfgal_pref()
 
 	global $prefs;
 	$allfgals = $filegallib->getSubGalleries($prefs['fgal_root_id']);
+	array_unshift($allfgals['data'], $filegallib->get_file_gallery($prefs['fgal_root_id']));
 
 	$listfgals = array();
 
