@@ -564,6 +564,7 @@ class PreferencesLib
 	private function indexPreference( $typeFactory, $pref, $info )
 	{
 		$contents = array(
+			$info['preference'],
 			$info['name'],
 			isset($info['description']) ? $info['description'] : '',
 			isset($info['keywords']) ? $info['keywords'] : '',
