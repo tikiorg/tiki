@@ -5942,7 +5942,7 @@ class TikiLib extends TikiDb_Bridge
 	 * @param bool $sort_names
 	 * @return array|mixed
 	 */
-	function get_flags($with_names = false, $translate = false, $sort_names = false)
+	function get_flags($with_names = false, $translate = false, $sort_names = false, $langsort = false)
 	{
 		global $prefs;
 
@@ -5963,6 +5963,12 @@ class TikiLib extends TikiDb_Bridge
 			}
 		}
 		closedir($h);
+		if($langsort) {
+			foreach($flags as $flagname => $flagtra){
+				unset($flags[$flagname]);
+				$flags[$flagtra] = tra($flagtra);
+			}
+		}
 		natcasesort($flags);
 
 		if ( $with_names ) {

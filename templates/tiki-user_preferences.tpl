@@ -95,10 +95,10 @@
 						<option value="Other" {if $user_prefs.country eq "Other"}selected="selected"{/if}>
 							{tr}Other{/tr}
 						</option>
-                        {foreach from=$flags item=flag}
-							{if $flag ne "Other"}
-								<option value="{$flag|escape}" {if $user_prefs.country eq $flag}selected="selected"{/if}>
-									{tr}{$flag|stringfix}{/tr}
+                        {foreach from=$flags item=flag key=fval}
+							{if $fval ne "Other"}
+								<option value="{$fval|escape}" {if $user_prefs.country eq $fval}selected="selected"{/if}>
+									{$flag|stringfix}
 								</option>
 							{/if}
 						{/foreach}
