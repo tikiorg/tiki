@@ -11,9 +11,9 @@
 {/if}
 
 {if $cant gt 0}
-	<ol>
+	<ul class="media-list">
 		{foreach from=$comments item=comment}
-			<li class="comment {if $comment.archived eq 'y'}archived{/if} {if ! $parentId && $prefs.feature_wiki_paragraph_formatting eq 'y'}inline{/if}" data-comment-thread-id="{$comment.threadId|escape}">
+			<li class="media comment {if $comment.archived eq 'y'}archived{/if} {if ! $parentId && $prefs.feature_wiki_paragraph_formatting eq 'y'}inline{/if}" data-comment-thread-id="{$comment.threadId|escape}">
 				<article>
 					<div class="actions">
 						{if $allow_remove}
@@ -81,7 +81,7 @@ var crf = $('form.commentRatingForm').submit(function() {
 				</article>
 			</li>
 		{/foreach}
-	</ol>
+	</ul>
 {else}
 	{remarksbox type=info title="{tr}No comments{/tr}"}
 		{tr}There are no comments at this time.{/tr}
