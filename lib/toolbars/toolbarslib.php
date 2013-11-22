@@ -1441,7 +1441,7 @@ class ToolbarFileGallery extends Toolbar
 			return 'openElFinderDialog(
 				this,
 				{
-					defaultGalleryId: ' . $prefs['home_file_gallery'] . ',
+					defaultGalleryId: ' . (empty($prefs['home_file_gallery']) ? $prefs['fgal_root_id'] : $prefs['home_file_gallery']) . ',
 					deepGallerySearch: true,
 					getFileCallback: function(file,elfinder) {
 							window.handleFinderInsertAt(file,elfinder,\''.$areaId.'\');
