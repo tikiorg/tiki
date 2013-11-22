@@ -193,12 +193,6 @@ input[type="submit"]:hover {
 	right: 20px;
 }
 
-#tiki-top {
-	padding: 0 .3em 0 1em;
-	margin: 0 10px 10px;
-	font-size: 1.1em;
-}
-
 .navbar-default {
 	border: 1px solid #aaa;
 	background: #cccccc url(../vendor/jquery/jquery-ui-themes/themes/smoothness/images/ui-bg_highlight-soft_75_cccccc_1x100.png) 50% 50% repeat-x;
