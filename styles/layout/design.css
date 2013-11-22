@@ -2428,29 +2428,6 @@ div #metadata fieldset.tabcontent, div #metadata div.tabs {
 	background-color: transparent;
 }
 
-.admin #content1 .tabcontent .cbox {
-	background: transparent;
-}
-
-/* To display content without module-style background and border. */
-.halffloat > .box,
-.wikitext .halffloat > .box,
-.thirdfloat > .box,
-.wikitext .thirdfloat > .box,
-.quarterfloat > .box,
-.wikitext .quarterfloat > .box {
-	background: none;
-	border: none;
-}
-
-.cbox-title {
-	padding: 3px 3px 0 3px;
-}
-
-.cbox-data {
-	padding: 0 3px 3px 3px;
-}
-
 /* remarks boxes */
 
 #error {
@@ -2462,11 +2439,6 @@ div #metadata fieldset.tabcontent, div #metadata div.tabs {
 .warning a:link,
 .warning a:visited {
 	color: #b93c2e;
-}
-
-.simplebox {
-	border: 1px solid #999;
-	padding: 3px;
 }
 
 /* odd and even classes for tr, td, and li */
