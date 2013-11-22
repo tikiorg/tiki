@@ -1,4 +1,4 @@
-{* $Id: mod-quickadmin.tpl 47253 2013-08-24 12:57:08Z jonnybradley $ *}
+{* $Id$ *}
 
 {tikimodule error=$module_params.error title=$tpl_module_title name="quickadmin" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
 	{if $tiki_p_admin == "y"}
