@@ -80,13 +80,14 @@ function listfgal_pref()
 {
 	$filegallib = TikiLib::lib('filegal');
 
-	$allfgals = $filegallib->list_visible_file_galleries(0, -1, 'name_desc', 'admin', '');
+	global $prefs;
+	$allfgals = $filegallib->getSubGalleries($prefs['fgal_root_id']);
 
 	$listfgals = array();
 
 	if ($allfgals['cant'] > 0) {
 		foreach ($allfgals['data'] as $onefgal) {
-			$listfgals[ $onefgal['galleryId'] ] = substr($onefgal['name'], 0, 30);
+			$listfgals[ $onefgal['id'] ] = substr($onefgal['name'], 0, 30);
 		}
 	} else {
 		$listfgals[''] = tra('No file gallery available (create one first)');

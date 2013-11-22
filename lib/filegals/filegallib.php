@@ -2966,6 +2966,16 @@ class FileGalLib extends TikiLib
 		return array('data' => $ret, 'cant' => $cant);
 	}
 
+	/**
+	 * No longer used (12.x) - was only called from listfgal_pref() in /lib/prefs/home.php
+	 *
+	 * @param int $offset
+	 * @param $maxRecords
+	 * @param string $sort_mode
+	 * @param string $user
+	 * @param null $find
+	 * @return array
+	 */
 	function list_visible_file_galleries($offset = 0, $maxRecords = -1, $sort_mode = 'name_desc', $user = '', $find = null)
 	{
 		// If $user is admin then get ALL galleries, if not only user galleries are shown
