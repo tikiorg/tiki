@@ -129,6 +129,17 @@
 				{include file='tracker_pretty_item.tpl' item=$item_info fields=$fields wiki=$tracker_info.viewItemPretty}
 			{/if}
 		{/if}
+		
+		{* -------------------------------------------------- section with comments --- *}
+		{if $tracker_info.useComments eq 'y' and ($tiki_p_tracker_view_comments ne 'n' or $tiki_p_comment_tracker_items ne 'n') and $prefs.tracker_show_comments_below eq 'y'}
+		
+			<div id="comment-container" data-target="{service controller=comment action=list type=trackeritem objectId=$itemId}"></div>
+			{jq}
+				var id = '#comment-container';
+				$(id).comment_load($(id).data('target'));
+			{/jq}
+		
+		{/if}
 
 	{/tab}
 
@@ -333,16 +344,6 @@
 
 {/tabset}
 
-{* -------------------------------------------------- section with comments --- *}
-{if $tracker_info.useComments eq 'y' and ($tiki_p_tracker_view_comments ne 'n' or $tiki_p_comment_tracker_items ne 'n') and $prefs.tracker_show_comments_below eq 'y'}
-
-	<div id="comment-container" data-target="{service controller=comment action=list type=trackeritem objectId=$itemId}"></div>
-	{jq}
-		var id = '#comment-container';
-		$(id).comment_load($(id).data('target'));
-	{/jq}
-
-{/if}
 <br><br>
 
 {if isset($print_page) && $print_page eq 'y'}
