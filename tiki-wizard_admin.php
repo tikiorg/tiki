@@ -97,6 +97,10 @@ if ($useDefaultPrefs) {
 
 	require_once('lib/wizard/pages/admin_namespace.php'); 
 	$pages[] = new AdminWizardNamespace();
+
+	require_once('lib/wizard/pages/admin_wizard_completed.php'); 
+	$pages[] = new AdminWizardCompleted();
+	
 }
 
 /////////////////////////////////////
