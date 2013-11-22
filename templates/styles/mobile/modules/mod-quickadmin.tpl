@@ -3,7 +3,7 @@
 {tikimodule error=$module_params.error title=$tpl_module_title name="quickadmin" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
 	{if $tiki_p_admin == "y"}
 		<div id="quickadmin" style="text-align: left; padding-left: 12px;" data-role="controlgroup" data-type="horizontal">
-			<ul class="cssmenu_horiz clearfix" style="display: inline-block;line-height: 30px;">
+{*			<ul style="line-height: 30px;">
 				<li>
 					{if $prefs.feature_jquery_superfish eq "y"}
 						<a>&nbsp;</a>
@@ -22,6 +22,7 @@
 					</ul>
 				</li>
 			</ul>
+*}{* recent prefs removed from mobile since they take way too much space *}
 			<a data-role="button" href="tiki-admin.php" title="{tr}Admin home{/tr}">{icon _id=house alt="{tr}Admin home{/tr}"}</a> 
 			<a data-role="button" href="tiki-admin.php?page=look&amp;cookietab=2" title="{tr}Modify the look &amp; feel (logo, theme, etc.){/tr}">{icon _id=wrench alt="{tr}Modify the look &amp; feel (logo, theme, etc.){/tr}"} </a> 
 			<a data-role="button" href="tiki-adminusers.php" title="{tr}Users{/tr}">{icon _id=user alt="{tr}Users{/tr}"}</a> 
