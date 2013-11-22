@@ -132,7 +132,7 @@
   && ($tiki_p_read_comments  == 'y'
   ||  $tiki_p_post_comments  == 'y'
   ||  $tiki_p_edit_comments  == 'y')}
-  <div id="page-bar" class="btn-group btn-group-justified">
+  <div id="page-bar" class="btn-group">
 		<span class="button btn-default"><a id="comment-toggle" href="{service controller=comment action=list type=poll objectId=$pollId}#comment-container">{tr}Comments{/tr}</a></span>
 		{jq}
 			$('#comment-toggle').comment_toggle();
