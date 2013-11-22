@@ -42,5 +42,11 @@ function prefs_tracker_list()
 			'default' => 'n',
 			'warning' => tra('Use with care!'),
 		),
+		'tracker_show_comments_below' => array(
+			'name' => tr('Show comments below items'),
+			'description' => tr('Show comments to a tracker item below the item itself like in other trackers, instead of enclosed in a tab'),
+			'type' => 'flag',
+			'default' => 'n',
+		),		
 	);
 }

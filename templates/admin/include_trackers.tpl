@@ -30,6 +30,7 @@
 			{preference name=ajax_inline_edit_trackerlist}
 		</div>
 		{preference name=tracker_change_field_type}
+		{preference name=tracker_show_comments_below}
 	</fieldset>
 
 	<fieldset class="table">
