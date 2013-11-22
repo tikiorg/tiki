@@ -48,7 +48,7 @@ class UserWizardPreferencesInfo extends Wizard
 			$gender = $tikilib->get_user_preference($userwatch, 'gender', 'Hidden');
 			$smarty->assign('gender', $gender);
 		}
-		$flags = $tikilib->get_flags();
+		$flags = $tikilib->get_flags('','','', true);
 		$smarty->assign_by_ref('flags', $flags);
 		$country = $tikilib->get_user_preference($userwatch, 'country', 'Other');
 		$smarty->assign('country', $country);

@@ -381,7 +381,7 @@ $user_galleries = $tikilib->get_user_galleries($userwatch, -1);
 $smarty->assign_by_ref('user_galleries', $user_galleries);
 $user_items = TikiLib::lib('trk')->get_user_items($userwatch);
 $smarty->assign_by_ref('user_items', $user_items);
-$flags = $tikilib->get_flags();
+$flags = $tikilib->get_flags('','','', true);
 $smarty->assign_by_ref('flags', $flags);
 $scramblingMethods = array("n", "strtr", "unicode", "x", 'y'); // email_isPublic utilizes 'n'
 $smarty->assign_by_ref('scramblingMethods', $scramblingMethods);

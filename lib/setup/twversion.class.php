@@ -73,7 +73,7 @@ class TWVersion
 				20=>'Herbig Haro',	// 9.x
 				21=>'Sun',			// 10.x
 				22=>'Vega',			// 11.x
-				22=>'Altair'		// 12.x
+				23=>'Altair'		// 12.x
 		);
 	}
 

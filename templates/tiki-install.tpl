@@ -41,7 +41,7 @@
 
 	<form action="tiki-install.php" method="post">
 		<label>{tr}Select your language:{/tr}
-		<select name="lang" id="general-lang" onchange="this.form.submit();" title="{tr}Select your language:{/tr}">
+		<select name="lang" id="general-lang" onchange="$('input[name=lang]:hidden').val($(this).val()); this.form.submit();" title="{tr}Select your language:{/tr}">
 			{section name=ix loop=$languages}
 				<option value="{$languages[ix].value|escape}"
 					{if $prefs.site_language eq $languages[ix].value}selected="selected"{/if}>{$languages[ix].name}</option>
@@ -54,7 +54,7 @@
 <div align="center" style="margin-top: 1em;">
 	<form action="tiki-install.php" method="post">
 {if $multi}		<input type="hidden" name="multi" value="{$multi}">{/if}
-{if $lang}		<input type="hidden" name="lang" value="{$lang}">{/if}
+		<input type="hidden" name="lang" value="{if $lang}{$lang}{/if}">
 		<input type="hidden" name="install_step" value="1">
 		<input type="submit" class="btn btn-default" value=" {tr}Continue{/tr} ">
 	</form>

@@ -31,8 +31,15 @@ class SheetLib extends TikiLib
 			$result['childSheetIds'] = $this->get_related_sheet_ids( $sheetId );
 			$result['childTrackerIds'] = $this->get_related_tracker_ids( $sheetId );
 			$result['childFileIds'] = $this->get_related_file_ids( $sheetId );
-			$result['created'] = $this->get_created($result['sheetId']);
+			$result['created'] = $this->get_sheet_created($result['sheetId']);
 			$result['lastModif'] = $this->get_lastModif ($result['sheetId']);
+			if(!$result['lastModif']) {
+				if($this->get_sheet_lastModif($result['sheetId'])){
+					$result['lastModif'] = $this->get_sheet_lastModif($result['sheetId']);
+				} else {
+					$result['lastModif'] = $result['created'];
+				}
+			}
 
 			return $result;
 		}
@@ -253,10 +260,29 @@ class SheetLib extends TikiLib
 			", array( $sheetId ));
 	}
 
+	function get_sheet_created( $sheetId ) {
+		return $this->getOne( "
+				SELECT begin
+				FROM tiki_sheet_layout
+				WHERE sheetId = ?
+				ORDER BY begin ASC
+			", array( $sheetId ));
+	}
+
 	function get_lastModif ( $sheetId ) {
 		return $this->getOne( "
 				SELECT begin
 				FROM tiki_sheet_values
+				WHERE
+					sheetId = ?
+				ORDER BY end DESC
+			", array( $sheetId ));
+	}
+
+	function get_sheet_lastModif ( $sheetId ) {
+		return $this->getOne( "
+				SELECT end
+				FROM tiki_sheet_layout
 				WHERE
 					sheetId = ?
 				ORDER BY end DESC

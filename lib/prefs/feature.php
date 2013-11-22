@@ -963,6 +963,7 @@ function prefs_feature_list($partial = false)
 		'feature_detect_language' => array(
 			'name' => tra('Detect browser language'),
 			'description' => tra('Lookup the user\'s preferred language through browser preferences.'),
+			'dependencies' => array('change_language'),
 			'type' => 'flag',
 			'default' => 'n',
 		),

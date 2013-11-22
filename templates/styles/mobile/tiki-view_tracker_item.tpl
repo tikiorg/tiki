@@ -343,7 +343,6 @@
 {/if}
 
 {/tabset}
-
 <br><br>
 
 {if isset($print_page) && $print_page eq 'y'}
