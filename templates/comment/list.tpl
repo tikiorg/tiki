@@ -34,18 +34,18 @@
 					{if $prefs.comments_notitle eq 'y'}
 						<div class="title notitle clearfix">
 							<span class="avatar">{$comment.userName|avatarize}</span>
-							<h4>{tr _0=$comment.userName|userlink}By %0{/tr}</h4>
+							<h4 class="media-heading">{tr _0=$comment.userName|userlink}By %0{/tr}</h4>
 							<div class="date">{tr _0=$comment.commentDate|tiki_short_datetime}On %0{/tr}</div>
 						</div>
 						{else}
 						<div class="title clearfix">
-							<h4 class="title">{$comment.title}</h4>
+							<h4 class="media-heading">{$comment.title}</h4>
 							<span class="avatar">{$comment.userName|avatarize}</span>
 							<div class="author_info">{tr _0=$comment.userName|userlink}Comment posted by %0{/tr}</div>
 							<div class="date">{tr _0=$comment.commentDate|tiki_short_datetime}On %0{/tr}</div>
 						</div>
 					{/if}
-					<div class="body">
+					<div class="media-body">
 						{$comment.parsed}
 					</div>
 
