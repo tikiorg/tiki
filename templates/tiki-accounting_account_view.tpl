@@ -4,7 +4,7 @@
 	{tr}View account{/tr} {$account.accountId} {$account.accountName}
 {/title}
 {if !empty($errors)}
-	<div class="simplebox highlight">
+	<div class="alert alert-warning">
 		{icon _id=exclamation alt="{tr}Error{/tr}" style="vertical-align:middle" align="left"}
 		{foreach from=$errors item=m name=errors}
 			{$m}

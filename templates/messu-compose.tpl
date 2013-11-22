@@ -13,7 +13,7 @@
 
 
 {if $sent}
-	<div class="simplebox highlight">
+	<div class="alert alert-warning">
 		{if (strstr($message, "{tr}ERROR{/tr}")) or (strstr($message, "{tr}Invalid{/tr}"))}
 			{icon _id=delete alt="{tr}Error{/tr}" style="vertical-align:middle" align="left"}
 		{else}

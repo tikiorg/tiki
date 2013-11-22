@@ -33,7 +33,7 @@
 		</table>
 	{else}
 		{if $msg}
-			<div class="simplebox highlight">{icon _id=exclamation alt="{tr}Error{/tr}" style="vertical-align:middle"} {tr}{$msg}{/tr}</div>
+			<div class="alert alert-warning">{icon _id=exclamation alt="{tr}Error{/tr}" style="vertical-align:middle"} {tr}{$msg}{/tr}</div>
 		{/if}
 
 		{* Display a form to add or edit a site *}

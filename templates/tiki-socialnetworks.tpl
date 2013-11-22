@@ -5,7 +5,7 @@
 {include file='tiki-mytiki_bar.tpl'}
 
 {if $tikifeedback}
-  <div class="simplebox highlight">
+  <div class="alert alert-warning">
     {section name=n loop=$tikifeedback}<div>{$tikifeedback[n].mes}</div>{/section}
   </div>
 {/if}

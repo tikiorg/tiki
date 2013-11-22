@@ -7,7 +7,7 @@
 		{if $prefs.feature_bidi eq 'y'}
 			<table dir="rtl" ><tr><td>
 		{/if}
-		<div id="tiki-main" class="simplebox">
+		<div id="tiki-main" class="alert alert-info">
 			<h3>{tr}Details{/tr}</h3>
 			<table class="formcolor">
 				{if $info.name}

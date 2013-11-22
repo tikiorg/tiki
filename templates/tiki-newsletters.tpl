@@ -7,16 +7,16 @@
 {/if}
 
 {if $subscribed eq 'y'}
-	<div class="simplebox highlight">
+	<div class="alert alert-warning">
 		{tr}Thanks for your subscription. You will receive an email soon to confirm your subscription. No newsletters will be sent to you until the subscription is confirmed.{/tr}
 	</div>
 {/if}
 
 {if $unsub eq 'y'}
-	<div class="highlight">
+	<div class="alert alert-warning">
 		{tr}Your email address was removed from the list of subscriptors.{/tr}</div>
 {elseif $unsub eq 'f'}
-	<div class="simplebox error">{tr}Removal of your email address failed.{/tr}</div>
+	<div class="alert alert-danger">{tr}Removal of your email address failed.{/tr}</div>
 {/if}
 
 {if $confirm eq 'y'}

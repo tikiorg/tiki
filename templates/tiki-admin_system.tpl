@@ -50,7 +50,7 @@
 		<p><label>{tr}Full Path to the Zip File:{/tr}<input type="text" name="zipPath" value="{$zipPath|escape}"></label>
 		<input type="submit" class="btn btn-default" name="zip" value="{tr}Generate a zip of those directories{/tr}"></p>
 		{if $zipPath}
-			<div class="simplebox highlight">{tr _0=$zipPath}A zip has been written to %0{/tr}</div>
+			<div class="alert alert-warning">{tr _0=$zipPath}A zip has been written to %0{/tr}</div>
 		{/if}
 	</form>
 	<ul>

@@ -3,7 +3,7 @@
 {title help="Communication+Center"}{tr}Received Pages{/tr}{/title}
 
 {if !empty($errors)}
-	<div class="simplebox highlight">
+	<div class="alert alert-warning">
 		{foreach item=error from=$errors}
 			{tr}{$error.error}{/tr} {$error.param}
 			<br>

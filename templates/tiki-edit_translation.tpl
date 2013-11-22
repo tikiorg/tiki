@@ -10,7 +10,7 @@
 </div>
 
 {if $error}
-	<div class="simplebox highlight">
+	<div class="alert alert-warning">
 	{if $error == "traLang"}
 		{tr}You must specify the object language{/tr}
 	{elseif $error == "srcExists"}

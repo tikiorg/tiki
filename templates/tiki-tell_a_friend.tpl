@@ -13,7 +13,7 @@
 </div>
 
 {if isset($sent)}
-	<div class="simplebox highlight">{icon _id=accept alt="{tr}OK{/tr}" style="vertical-align:middle" align="left"} 
+	<div class="alert alert-warning">{icon _id=accept alt="{tr}OK{/tr}" style="vertical-align:middle" align="left"}
 		{if $report eq 'y'}
 			{tr}Your email was sent{/tr}.
 		{else}
@@ -24,7 +24,7 @@
 {/if}
 
 {if !empty($errors)}
-	<div class="simplebox highlight">
+	<div class="alert alert-warning">
 		{icon _id=exclamation alt="{tr}Error{/tr}" style="vertical-align:middle" align="left"} 
 		{foreach from=$errors item=m name=errors}
 			{$m}

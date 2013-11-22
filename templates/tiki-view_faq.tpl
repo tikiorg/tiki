@@ -71,7 +71,7 @@
 	<div class="faq_suggestions" id="faqsugg" style="display:{if !empty($error)}block{else}none{/if};">
 		{if !empty($error)}
 			<br>
-			<div class="simplebox highlight">{icon _id=exclamation alt="{tr}Error{/tr}" style="vertical-align:middle"} {$error}</div>
+			<div class="alert alert-warning">{icon _id=exclamation alt="{tr}Error{/tr}" style="vertical-align:middle"} {$error}</div>
 		{/if}
 		<br>
 		<form action="tiki-view_faq.php" method="post">

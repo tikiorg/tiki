@@ -1,7 +1,7 @@
 <h1><a class="pagetitle" href="tiki-admin_keywords.php">{tr}Admin keywords{/tr}</a></h1>
 
 {if $keywords_updated}
-	<div class="simplebox highlight">
+	<div class="alert alert-warning">
 		{if $keywords_updated == 'y'}{tr}Keywords have been updated{/tr} 
 		{else}{tr}Updating keywords has failed. Page probably doesn't exist.{/tr}{/if}
 		{if $keywords_updated_on} ({$keywords_updated_on|escape}){/if}

@@ -50,7 +50,7 @@
 {button _icon="img/icons/large/messages.gif" _text="{tr}Admin Mail-in Routes{/tr}" href="tiki-admin_mailin_routes.php" _menu_text="y"}
 <br>
 {if $tikifeedback}
-	{section name=n loop=$tikifeedback}<div class="simplebox {if $tikifeedback[n].num > 0} highlight{/if}">{$tikifeedback[n].mes}</div>{/section}
+	{section name=n loop=$tikifeedback}<div class="alert {if $tikifeedback[n].num > 0} alert-warning{/if}">{$tikifeedback[n].mes}</div>{/section}
 	<br>
 {/if}
 <a name="check" ></a><h2><a href="tiki-mailin.php#check">{tr}Check Mail-in accounts{/tr}</a></h2>

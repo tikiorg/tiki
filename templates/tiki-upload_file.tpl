@@ -36,7 +36,7 @@
 {/if}
 
 {if isset($errors) and count($errors) > 0}
-	<div class="simplebox highlight">
+	<div class="alert alert-danger">
 	<h2>{tr}Errors detected{/tr}</h2>
 	{section name=ix loop=$errors}
 		{$errors[ix]}<br>

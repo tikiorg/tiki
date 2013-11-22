@@ -1137,7 +1137,7 @@ function wikiplugin_tracker($data, $params)
 				$_REQUEST['error'] = 'y';
 			}
 			if (isset($field_errors['err_outputwiki'])) {
-				$back.= '<div class="simplebox highlight"><img src="img/icons/exclamation.png" alt=" '.tra('Error').'" style="vertical-align:middle" /> ';
+				$back.= '<div class="alert alert-warning"><img src="img/icons/exclamation.png" alt=" '.tra('Error').'" style="vertical-align:middle" /> ';
 				$back .= $field_errors['err_outputwiki'];
 				$back.= '</div><br />';
 				$_REQUEST['error'] = 'y';

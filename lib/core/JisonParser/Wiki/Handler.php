@@ -800,7 +800,7 @@ class JisonParser_Wiki_Handler extends JisonParser_Wiki
 	 */
 	function box($content) //^content^
 	{
-		return $this->createWikiTag("box", "div", $content, array("class" => "simplebox"));
+		return $this->createWikiTag("box", "div", $content, array("class" => "well"));
 	}
 
 	/**

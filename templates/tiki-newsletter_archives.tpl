@@ -19,15 +19,15 @@
 <div id="newsletter_archives">
 {if $edition}
 <h3>{tr}Subject{/tr}</h3>
-<div class="simplebox newsletter_subject">{$edition.subject|escape}</div>
+<div class="alert alert-info newsletter_subject">{$edition.subject|escape}</div>
 
 <h3>{tr}HTML version{/tr}</h3>
-<div class="simplebox newsletter_content">{$edition.dataparsed}</div>
+<div class="alert alert-info newsletter_content">{$edition.dataparsed}</div>
 
 {if $allowTxt eq 'y'}
 	<h3>{tr}Text version{/tr}</h3>
-	{if $edition.datatxt}<div class="simplebox newsletter_textdata" >{$info.datatxt|escape|nl2br}</div>{/if}
-	{if $txt}<div class="simplebox newsletter_text">{$txt|escape|nl2br}</div>{/if}
+	{if $edition.datatxt}<div class="alert alert-info newsletter_textdata" >{$info.datatxt|escape|nl2br}</div>{/if}
+	{if $txt}<div class="alert alert-info newsletter_text">{$txt|escape|nl2br}</div>{/if}
 {/if}
 <div class="newsletter_trailer">
 {assign var="sent" value=$edition.users}

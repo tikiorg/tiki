@@ -7,7 +7,7 @@
 </div>
 
 {if !empty($errors)}
-	<div class="simplebox highlight">{section name=ix loop=$errors}{$errors[ix]}{/section}</div>
+	<div class="alert alert-warning">{section name=ix loop=$errors}{$errors[ix]}{/section}</div>
 {/if}
 
 <div class="tree" id="top">

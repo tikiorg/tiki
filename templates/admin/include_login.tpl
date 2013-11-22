@@ -189,7 +189,7 @@
 			<fieldset>
 				<legend>LDAP {help url="Login+Authentication+Methods"}</legend>
 				{if $prefs.auth_method ne 'ldap'}
-					<div style="padding:0.5em;clear:both" class="simplebox">
+					<div class="alert alert-warning">
 						<div>{icon _id=information} {tr}You must change the Authentication Method to LDAP for these changes to take effect{/tr}.</div>
 					</div>
 				{/if}
@@ -293,7 +293,7 @@
 				<legend>{tr}PAM{/tr} {help url="AuthPAM" desc="{tr}PAM{/tr}"}</legend>
 	
 				{if $prefs.auth_method ne 'pam'}
-					<div style="padding:0.5em;clear:both" class="simplebox">
+					<div class="alert alert-warning">
 						<div>
 							{icon _id=information} {tr}You must change the Authentication Method to PAM for these changes to take effect{/tr}.
 						</div>
@@ -311,7 +311,7 @@
 				<legend>{tr}Shibboleth{/tr}{help url="AuthShib" desc="{tr}Shibboleth Authentication {/tr}"}</legend>
 				<input type="hidden" name="auth_shib" />
 				{if $prefs.auth_method ne 'shib'}
-					<div style="padding:0.5em;clear:both" class="simplebox">
+					<div class="alert alert-warning">
 						<div>{icon _id=information} {tr}You must change the Authentication Method to Shibboleth for these changes to take effect{/tr}.</div>
 					</div>
 				{/if}
@@ -332,7 +332,7 @@
 			<fieldset>
 				<legend>{tr}CAS (Central Authentication Service){/tr}{help url="CAS+Authentication"}</legend>
 				{if $prefs.auth_method ne 'cas'}
-					<div style="padding:0.5em;clear:both" class="simplebox">
+					<div class="alert alert-warning">
 						<div>
 							{icon _id=information} {tr}You must change the Authentication Method to CAS for these changes to take effect{/tr}.
 						</div>
@@ -361,12 +361,12 @@
 				<legend>{tr}phpBB{/tr}{help url="phpBB+Authentication" desc="{tr}phpBB User Database Authentication {/tr}"}</legend>
 				<input type="hidden" name="auth_phpbb" />
 				{if $prefs.auth_method ne 'phpbb'}
-					<div style="padding:0.5em;clear:both" class="simplebox">
+					<div class="alert alert-warning">
 						<div>{icon _id=information} {tr}You must change the Authentication Method to phpBB for these changes to take effect{/tr}.</div>
 					</div>
 				{/if}
 				{if $prefs.allowRegister ne 'n'}
-					<div style="padding:0.5em;clear:both" class="simplebox">
+					<div class="alert alert-warning">
 						<div>{icon _id=information} {tr}You must turn Users can register off for phpBB Authentication to function properly{/tr}.</div>
 					</div>
 				{/if}
@@ -375,7 +375,7 @@
 				{preference name=auth_phpbb_disable_tikionly}
 				{preference name=auth_phpbb_version}
 
-				<div style="padding:0.5em;clear:both" class="simplebox">
+				<div class="alert alert-warning">
 					<div>{icon _id=information} {tr}MySql only (for now){/tr}.</div>
 				</div>
 				{preference name=auth_phpbb_dbhost}
@@ -391,7 +391,7 @@
 				<legend>{tr}Web Server{/tr}{help url="External+Authentication#Web_Server_HTTP_" desc="{tr}Web Server Authentication {/tr}"}</legend>
 				<input type="hidden" name="auth_ws" />
 				{if $prefs.auth_method ne 'ws'}
-					<div style="padding:0.5em;clear:both" class="simplebox">
+					<div class="alert alert-warning">
 						<div>
 							{icon _id=information} {tr}You must change the Authentication Method to Web Server for these changes to take effect{/tr}.
 						</div>

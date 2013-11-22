@@ -1,7 +1,7 @@
 {*param :  $msgTrackerFilter, $line, $open, $iTrackerFilter, $trackerId, $filters(array(name, format, fieldId, selected, opts)), $showFieldId *}
 {strip}
 {if isset($msgTrackerFilter) && $msgTrackerFilter}
-<div class="simplebox highlight">{$msgTrackerFilter|escape}</div>
+<div class="alert alert-warning">{$msgTrackerFilter|escape}</div>
 {/if}
 {if (!isset($line) || $line ne 'y') and $prefs.javascript_enabled eq 'y' and $noflipflop ne 'y'}
 {button _text="{tr}Filters{/tr}" _flip_id="trackerFilter$iTrackerFilter"}

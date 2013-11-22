@@ -4,7 +4,7 @@
 {/title}
 
 {if isset($sent) && empty($errors)}
-	<div class="simplebox highlight">
+	<div class="alert alert-warning">
 		{icon _id=accept alt="{tr}OK{/tr}" style="vertical-align:middle" align="left"}
 		{tr}Page shared:{/tr}<br>
 		{if isset($emailSent)}
@@ -40,7 +40,7 @@
 {/if}
 
 {if !empty($errors)}
-	<div class="simplebox highlight">
+	<div class="alert alert-warning">
 		{icon _id=exclamation alt="{tr}Error{/tr}" style="vertical-align:middle" align="left"}
 		{foreach from=$errors item=m name=errors}
 			{$m}

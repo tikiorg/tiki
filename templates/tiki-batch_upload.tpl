@@ -10,7 +10,7 @@
 	{button href="tiki-upload_image.php" class="btn btn-default" _text="{tr}Upload From Disk{/tr}"}
 </div>
 
-{if count($feedback)}<div class="simplebox highlight">{section name=i loop=$feedback}{$feedback[i]}<br>{/section}</div>{/if}
+{if count($feedback)}<div class="alert alert-warning">{section name=i loop=$feedback}{$feedback[i]}<br>{/section}</div>{/if}
 
 {$totimg} {tr}available images{/tr} {$dirsize} <br><br>
 <form method="post" action="tiki-batch_upload.php" name="f">

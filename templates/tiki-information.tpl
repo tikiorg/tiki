@@ -6,7 +6,7 @@
 	 {tr}Information{/tr}
 	 </div>
 
-	<div class="simplebox highlight">
+	<div class="alert alert-warning">
 	{if is_array($msg)}
 		{foreach from=$msg item=line}
 	 		{$line|escape}<br>

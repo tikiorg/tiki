@@ -208,7 +208,7 @@
 {if $tikifeedback}
 	<br>
 {section name=n loop=$tikifeedback}
-	<div class="simplebox {if $tikifeedback[n].num > 0} highlight{/if}">
+	<div class="alert {if $tikifeedback[n].num > 0} alert-warning{/if}">
 		{if $tikifeedback[n].num > 0}
 		<img src="img/icons/delete.png" alt="{tr}Error{/tr}" style="vertical-align:middle"> {$tikifeedback[n].mes}
 		{else}

@@ -134,7 +134,7 @@ Add a value in first check when you create a new admin page. *}
   {assign var="include" value="list_sections"}
 {/if}
 {if $include != "list_sections"}
-  <div class="simplebox adminanchors clearfix" >{include file='admin/include_anchors.tpl'}</div>
+  <div class="alert alert-warning adminanchors clearfix" >{include file='admin/include_anchors.tpl'}</div>
 {/if}
 
 {if $upgrade_messages|count}

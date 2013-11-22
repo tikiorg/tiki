@@ -5,7 +5,7 @@
 {/remarksbox}
 
 {if !empty($msgs)}
-	<div class="simplebox highlight">
+	<div class="alert alert-warning">
 	{foreach from=$msgs item=msg}
 	{$msg}			 
 	{/foreach}

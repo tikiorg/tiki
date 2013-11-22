@@ -5,7 +5,7 @@
 <br><br>
 
 {if $message}
-	<div class="simplebox highlight">
+	<div class="alert alert-warning">
 		{if $preview eq '1'}
 			{icon _id=exclamation style="vertical-align:middle" alt="{tr}Confirmation{/tr}"}
 		{elseif $sent eq '1'}

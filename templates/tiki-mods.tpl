@@ -145,7 +145,7 @@ function update_button_install() {
 {if $tikifeedback}
 	<br>
 	{section name=n loop=$tikifeedback}
-		<div class="simplebox {if $tikifeedback[n].num > 0} highlight{/if}">
+		<div class="alert {if $tikifeedback[n].num > 0} alert-warning{/if}">
 			{if $tikifeedback[n].num > 0}{icon _id=delete alt="Alert" style="vertical-align:middle;"}{/if}{$tikifeedback[n].mes}
 		</div><br>
 	{/section}

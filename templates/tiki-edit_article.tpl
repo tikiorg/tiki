@@ -23,7 +23,7 @@
 {/if}
 
 {if !empty($errors)}
-	<div class="simplebox highlight">
+	<div class="alert-warning">
 		{tr}One of the email addresses you typed is invalid{/tr}
 		<br>
 		{foreach from=$errors item=m name=errors}
