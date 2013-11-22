@@ -92,6 +92,8 @@ if (strpos($prefs['tiki_domain_redirects'], ',') !== false) {
 		list($old, $new) = array_map('trim', explode(',', $row, 2));
 		$domain_map[$old] = $new;
 	}
+	unset($old);
+	unset($new);
 }
 
 if ( isset($domain_map[$host]) ) {

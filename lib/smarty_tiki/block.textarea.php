@@ -318,7 +318,7 @@ function editTimerTick() {
 	// attach dirty function to all relevant inputs etc for wiki/newsletters, blog, article and trackers (trackers need {teaxtarea} implementing)
 	if ('$as_id' === 'editwiki' || '$as_id' === 'blogedit' || '$as_id' === 'body' || '$as_id'.indexOf('area_') > -1) {
 		\$(\$('#$as_id').prop('form')).find('input, textarea, select').change( function (event, data) {
-			if ($(this).is('select') && '$as_id'.indexOf('area_') > -1 && data !== undefined) {	// tracker dynamic list selects get a change event on load
+			if (!$(this).is('textarea') && '$as_id'.indexOf('area_') > -1) {	// tracker dynamic list and map inputs get change events on load
 				return;
 			}
 			if (!editorDirty) { editorDirty = true; }

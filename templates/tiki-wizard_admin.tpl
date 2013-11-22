@@ -1,6 +1,6 @@
 {* $Id$ *}
 
-{title}{tr}Admin Wizard{/tr}{/title}
+{* {title}{tr}Admin Wizard{/tr}{/title} *}
 
 <form action="tiki-wizard_admin.php" method="post">
 {include file="wizard/wizard_bar_admin.tpl"}

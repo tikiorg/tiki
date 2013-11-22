@@ -6,24 +6,25 @@
 	<legend>{tr}Get Started{/tr}</legend>
 
 <div style="display:block;margin-left: auto; margin-right: auto">
+<div class="adminWizardIconleft"><img src="img/icons/large/wizard48x48.png" alt="{tr}Tiki Admin Wizard{/tr}" /><br/><br/></div>
 {tr}The Tiki Admin Wizard helps you quickly configure key features and settings. Use the <a href="tiki-admin.php" target="_blank">Admin Panel</a> to configure other features and settings not included in this wizard{/tr}.
 <br>
-	<img src="img/icons/large/wizard48x48.png" alt="{tr}Tiki Admin Wizard{/tr}" />
 		<input type="submit" class="btn btn-default" name="continue" value="{tr}Start admin wizard{/tr}" /><br>
 </div>
-<br>
+</br>
 <div style="display:block;margin-left: auto; margin-right: auto">
+<div class="adminWizardIconleft"><img src="img/icons/large/profiles48x48.png" alt="{tr}Tiki Configuration Profiles{/tr}" /></div>
 {tr}Tiki Profiles are a quick and easy way to setup a preconfigured application, e.g. a Blog site{/tr}.
-<br>
-	<img src="img/icons/large/profiles48x48.png" alt="{tr}Tiki Configuration Profiles{/tr}" />
+</br>
 		<input  type="submit" class="btn btn-default" name="use-default-prefs" value="{tr}Easy application setup using configuration profiles{/tr}" /><br>
 </div>
-<br>
+</br>
 <div style="display:block;margin-left: auto; margin-right: auto; margin-bottom: 10px">
+<div class="adminWizardIconleft"><img src="img/icons/large/stock_missing-image48x48.png" alt="{tr}No wizard{/tr}" /></div>
 {tr}Do it manually using the <a href="tiki-admin.php" target="_blank">Admin Panel</a>{/tr}.
-<br>
-	<img src="img/icons/large/stock_missing-image48x48.png" alt="{tr}No wizard{/tr}" />
+</br>
 		<input  type="submit" class="btn btn-default" name="skip" value="{tr}Skip setup and don't show again{/tr}" />
+</br></br>
 </div>
 </fieldset>
 <fieldset>

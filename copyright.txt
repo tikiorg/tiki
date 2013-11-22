@@ -12,8 +12,8 @@ This is how we implement the Tiki Social Contract.
 http://tiki.org/Social+Contract
 
 List of members of the Community
-As of 2013-10-11, the community has:
-  * 502 members on SourceForge.net,
+As of 2013-11-21, the community has:
+  * 507 members on SourceForge.net,
   * 0 of those people who made at least one code commit
 
 This list is automatically generated and alphabetically sorted
@@ -480,6 +480,10 @@ Nickname: dimaz-z
 Name: dimaz
 SF Role: Developer
 
+Nickname: djnz
+Name: MrAnchovy
+SF Role: Developer
+
 Nickname: djoguet
 Name: Damien Joguet
 SF Role: Developer
@@ -908,6 +912,10 @@ Name: Josef Drexler
 First Commit: 2006-02-01
 SF Role: Developer
 
+Nickname: jean-lucnavarro
+Name: Jean-Luc NAVARRO
+SF Role: Developer
+
 Nickname: jeanhabib
 Name: habib
 SF Role: Developer
@@ -952,7 +960,6 @@ Name: Juzan Jean-Michel
 SF Role: Developer
 
 Nickname: jobicarter
-Name: jcarter
 SF Role: Developer
 
 Nickname: joeyhartmann
@@ -1016,6 +1023,10 @@ SF Role: Developer
 
 Nickname: jtpuk
 Name: Suzanne Jones
+SF Role: Developer
+
+Nickname: juxtagonale
+Name: Marie-Michelle Ouellet
 SF Role: Developer
 
 Nickname: jwigdahl
@@ -1227,6 +1238,9 @@ SF Role: Developer
 Nickname: mangapower
 Name: Ben Palacios
 First Commit: 2009-04-16
+SF Role: Developer
+
+Nickname: manivannans
 SF Role: Developer
 
 Nickname: marc-etienne
@@ -2094,6 +2108,9 @@ SF Role: Developer
 Nickname: trebly
 Name: Trebly
 First Commit: 2010-12-20
+SF Role: Developer
+
+Nickname: trosen
 SF Role: Developer
 
 Nickname: uiprncss
