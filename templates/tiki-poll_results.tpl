@@ -10,7 +10,7 @@
 	{/if}
 </div>
 
-<form method="post" action="{$smarty.server.PHP_SELF}"  class="findtable">
+<form method="post" action="{$smarty.server.PHP_SELF}"  class="text-center">
 {if !empty($sort_mode)}<input type="hidden" name="sort_mode" value="{$sort_mode|escape}">{/if}
 {if !empty($pollId)}<input type="hidden" name="pollId" value="{$pollId|escape}">{/if}
 {if !empty($list)}<input type="hidden" name="list" value="{$list|escape}">{/if}
@@ -85,9 +85,9 @@
 {if isset($list_votes)}
 <h2>{tr}List Votes{/tr}</h2>
 <div align="center">
-<table class="findtable">
-<tr><td class="findtable">{tr}Find{/tr}</td>
-   <td class="findtable">
+<table class="text-center">
+<tr><td class="text-center">{tr}Find{/tr}</td>
+   <td class="text-center">
    <form method="get" action="tiki-poll_results.php">
      <input type="text" name="find" value="{$find|escape}">
      <input type="submit" class="btn btn-default" value="{tr}Find{/tr}" name="search">

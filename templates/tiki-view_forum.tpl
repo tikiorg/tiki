@@ -368,7 +368,7 @@
 {/if}
 
 {if $prefs.feature_forum_content_search eq 'y' and $prefs.feature_search eq 'y'}
-	<div class="findtable">
+	<div class="text-center">
 		<form id="search-form" class="forms" method="get" action="tiki-search{if $prefs.feature_forum_local_tiki_search eq 'y'}index{else}results{/if}.php">
 				<input name="highlight" size="30" type="text">
 				<input type="hidden" name="where" value="forums">

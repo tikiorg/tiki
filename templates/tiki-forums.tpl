@@ -10,11 +10,11 @@
 
 {if $channels or ($find ne '')}
 	{if $prefs.feature_forums_search eq 'y' or $prefs.feature_forums_name_search eq 'y'}
-		<table class="findtable">
+		<table class="text-center">
 			<tr>
-				<td class="findtable">{tr}Find{/tr}</td>
+				<td class="text-center">{tr}Find{/tr}</td>
 				{if $prefs.feature_forums_name_search eq 'y'}
-					<td class="findtable">
+					<td class="text-center">
 						<form method="get" action="tiki-forums.php">
 							<input type="text" name="find" value="{$find|escape}">
 							<input type="submit" class="btn btn-default" value="{tr}Search by name{/tr}" name="search">

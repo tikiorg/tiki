@@ -7,7 +7,7 @@
 </div>
 
 <div class="clearfix">
-	<form class="findtable" action="tiki-list_invite.php" method="post">
+	<form class="text-center" action="tiki-list_invite.php" method="post">
 	{if $tiki_p_admin eq 'y'}
 		<label>
 			{tr}Inviter:{/tr}

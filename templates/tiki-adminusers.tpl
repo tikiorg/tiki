@@ -70,7 +70,7 @@
 	<h2>{tr}Users{/tr}</h2>
 	{if !$tsOn}
 		<form method="get" action="tiki-adminusers.php">
-			<table class="findtable">
+			<table class="text-center">
 				<tr>
 					<td><label for="find">{tr}Find{/tr}</label></td>
 					<td><input type="text" id="find" name="find" value="{$find|escape}"></td>
@@ -88,7 +88,7 @@
 			{autocomplete element='#find' type='username'}
 
 			<div id="search" {if $filterGroup or $filterEmail}style="display:block;"{else}style="display:none;"{/if}>
-				<table class="findtable">
+				<table class="text-center">
 					<tr>
 						<td><label for="filterGroup">{tr}Group (direct){/tr}</label></td>
 						<td>

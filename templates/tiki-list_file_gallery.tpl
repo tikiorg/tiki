@@ -207,7 +207,7 @@ $("#viewSwitcher").change(function() {
 		{/if}
 		{if $prefs.fgal_search_in_content eq 'y' and $galleryId > 0}
 			{if $view neq 'page'}
-				<div class="findtable">
+				<div class="text-center">
 					<form id="search-form" class="forms" method="get" action="tiki-search{if $prefs.feature_forum_local_tiki_search eq 'y'}index{else}results{/if}.php">
 						<input type="hidden" name="where" value="files">
 						<input type="hidden" name="galleryId" value="{$galleryId}">

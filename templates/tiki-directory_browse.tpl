@@ -22,7 +22,7 @@
 {/if}
 <div class="description">{$parent_info.description|escape}</div>
 {if count($items) > 0}
-<div class="findtable">
+<div class="text-center">
   <form action="tiki-directory_search.php" method="post">
     <input type="hidden" name="parent" value="{$parent|escape}">
     {tr}Find:{/tr}
@@ -81,7 +81,7 @@
 <h2>{tr}Links{/tr}</h2>
 {if count($items) > 0}
 <div class="dirlistsites">
-  <div class="findtable">
+  <div class="text-center">
   <form method="post" action="tiki-directory_browse.php">
     <input type="hidden" name="parent" value="{$parent|escape}">
     {tr}Sort by:{/tr}&nbsp;
