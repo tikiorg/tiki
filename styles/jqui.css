@@ -69,9 +69,7 @@ legend {
 	margin: 5px 0;
 	line-height: 220%;
 }
-
-.button a,
-.button a:visited,
+.btn-default,
 button,
 input[type="reset"],
 input[type="submit"],
@@ -84,12 +82,13 @@ input[type="submit"],
 	overflow: visible;
 	border: 1px solid #cccccc;
 	background: #e2e2e2 url(../vendor/jquery/jquery-ui-themes/themes/smoothness/images/ui-bg_glass_75_e6e6e6_1x400.png) 50% 50% repeat-x;
+/*	background: #cccccc url(../vendor/jquery/jquery-ui-themes/themes/smoothness/images/ui-bg_highlight-soft_75_cccccc_1x100.png) 50% 50% repeat-x;*/
+
 	font-weight: normal;
 	color: #666666;
 	outline: none;
 }
 
-.btn,
 input[type="reset"],
 input[type="submit"] {
 	margin: .5em .4em .5em 0;
@@ -103,7 +102,7 @@ input[type="submit"] {
 .btn .btn-default a {
 	color: #666666
 }
-
+.btn:hover,
 .button a:hover,
 button:hover,
 input[type="reset"]:hover,

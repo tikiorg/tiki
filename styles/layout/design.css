@@ -3777,3 +3777,10 @@ h6 a.tiki_anchor:hover {
 .panel-body input[type="text"] {
 	width: 90%;
 }
+
+/* override default Bootstrap style */
+.page-header {
+	border-bottom: none;
+	margin: 0;
+	padding-bottom: 0;
+}
