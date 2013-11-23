@@ -18,6 +18,7 @@
 
 {if $batchRes}
 	<h2>{tr}Batch Upload Results{/tr}</h2>
+    <div class="table-responsive">
 	<table class="table normal">
 		<tr>
 			<th>{tr}Filename{/tr}</th>
@@ -41,6 +42,7 @@
 			</tr>
 		{/section}
 	</table>
+    </div>
 {/if}
 
 {if $show eq 'y'}

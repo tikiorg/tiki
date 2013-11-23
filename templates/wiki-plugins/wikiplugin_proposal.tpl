@@ -1,3 +1,4 @@
+<div class="table-responsive">
 <table class="table normal">
 	{if $params.caption}
 		<caption>{$params.caption|escape}</caption>
@@ -43,3 +44,4 @@
 		</tr>
 	{/if}
 </table>
+</div>

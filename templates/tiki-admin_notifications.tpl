@@ -80,6 +80,7 @@
   {include file='find.tpl' find_show_num_rows='y'}
 {/if}
 <form method="get" action="tiki-admin_notifications.php">
+    <div class="table-responsive">
 	<table class="table normal">
 		<tr>
 			<th>
@@ -130,6 +131,7 @@
          {norecords _colspan=6}
 		{/section}
 	</table>
+    </div>
 	{if $channels}
 		<br>
 		{tr}Perform action with checked:{/tr}
@@ -141,6 +143,7 @@
 
 {if !empty($trackers)}
 	<h2>{tr}Trackers Outbound Emails{/tr}</h2>
+    <div class="table-responsive">
 	<table class="table normal">
 		{section name=ix loop=$trackers}
 			<tr class="{cycle}">
@@ -148,10 +151,12 @@
 			</tr>
 		{/section}
 	</table>
+    </div>
 {/if}
 
 {if !empty($forums)}
 	<h2>{tr}Forums Outbound Emails{/tr}</h2>
+    <div class="table-responsive">
 	<table class="table normal">
 		{section name=ix loop=$forums}
 			<tr class="{cycle}">
@@ -159,5 +164,6 @@
 			</tr>
 		{/section}
 	</table>
+    </div>
 {/if}
 

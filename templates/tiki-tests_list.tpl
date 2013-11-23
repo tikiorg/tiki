@@ -4,7 +4,8 @@
 
 {pagination_links cant=$files_number offset=$offset step=$files_per_page}{/pagination_links}
 
-<table class="table normal" style="clear: both;">
+<div class="table-responsive">
+<table class="table normal">
 <tr>
 	<th>{tr}File Name{/tr}</th>
 	<th>{tr}Actions{/tr}</th>
@@ -21,5 +22,6 @@
 </tr>
 {/foreach}
 </table>
+</div>
 
 {pagination_links cant=$files_number offset=$offset step=$files_per_page}{/pagination_links}

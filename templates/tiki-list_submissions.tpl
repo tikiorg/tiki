@@ -12,6 +12,7 @@
 {/if}
 <form name="checkform" method="get" action="{$smarty.server.PHP_SELF}">
 	<input type="hidden" name="maxRecords" value="{$maxRecords|escape}">
+    <div class="table-responsive">
 	<table class="table normal">
 		{assign var=numbercol value=0}
 		<tr>
@@ -143,5 +144,6 @@
 			</tr>
 		{/if}
 	</table>
+    </div>
 	{pagination_links cant=$cant_pages step=$maxRecords offset=$offset}{/pagination_links}
 </form>

@@ -181,7 +181,8 @@
 			</form>
 		</div>
 	{/if}
-	<br  />
+
+    <div class="table-responsive">
 	<table class="table normal">
 		<tr>
 			{if $prefs.gal_list_name eq 'y'}
@@ -299,6 +300,7 @@
 			{norecords _colspan=9}
 		{/section}
 	</table>
+    </div>
 	{if $prefs.feature_maps eq 'y'}{$map_error}{/if}
 	{pagination_links cant=$cant step=$maxRecords offset=$offset}{/pagination_links}
 </div>

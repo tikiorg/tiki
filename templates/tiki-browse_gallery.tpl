@@ -192,6 +192,7 @@
   <div id="comment-container"></div>
 {/if}
 
+<div class="table-responsive">
 <table class="table normal noslideshow">
 	<tr>
 		<td class="even" colspan="2" style="border:0px; font-size:x-small">
@@ -235,3 +236,4 @@
   		</td>
 	</tr>
 </table>
+</div>

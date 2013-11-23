@@ -248,6 +248,7 @@ function showDetails( id, domain, profile ) { // {{{
 				<form method="get" action="tiki-admin.php">
 					<div class="adminoptionbox">
 						<b>{tr}Step 1: Use the Quick or Manual Filter option to see a list of Configuration Profiles you can apply{/tr}</b>
+                        <div class="table-responsive">
 						<table class="table normal">
 							<tr>
 								<th width="50%" class="quickmode_notes">{tr}Option 1: Quick Filter{/tr}</th>
@@ -331,6 +332,7 @@ $("#repository, #categories").change(function(){
 							</td>
 						</tr>
 					</table>
+                    </div>
 				</div>
 		</form>
 	        <a name="step2"></a>
@@ -339,6 +341,7 @@ $("#repository, #categories").change(function(){
 	       {if isset($result) && $result|@count != '0'}
 	
 	        <b>{tr}Step 2: Click on a Configuration Profile Name below to review it and to be able to apply it on your Web site{/tr}</b>
+            <div class="table-responsive">
 			<table class="table normal">
 				<tr>
 					<th>{tr}Profile Name{/tr}</th>
@@ -356,6 +359,7 @@ $("#repository, #categories").change(function(){
 				<tr><td colspan="3" class="odd">{tr}None{/tr}</td></tr>
 				{/if}
 			</table>
+            </div>
 			{/if}
 	
 	</fieldset>
@@ -366,6 +370,7 @@ $("#repository, #categories").change(function(){
 <fieldset class="table">
 <legend>{tr}Status{/tr}</legend>
 <div class="adminoptionbox">
+    <div class="table-responsive">
 	<table class="table normal">
 		<tr>
 			<th>{tr}Profile repository{/tr}</th>
@@ -380,6 +385,7 @@ $("#repository, #categories").change(function(){
 			</tr>
 		{/foreach}
 	</table>
+    </div>
 </div>
 </fieldset>
 {else}

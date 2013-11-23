@@ -127,6 +127,7 @@
 
 {if isset($view_atts) and $view_atts eq 'y'}
 <h2 id="attachments">{tr}Attachments{/tr}</h2>
+<div class="table-responsive">
 <table class="table normal">
 	<tr>
 		<th>{tr}Type{/tr}</th>
@@ -146,5 +147,6 @@
 	</tr>
 	{/foreach} 
 </table>
+</div>
 {pagination_links cant=$atts.cant offset=$atts.offset offset_arg='fa_offset' step=$atts.maxRecords _anchor='attachments'}{/pagination_links}
 {/if}

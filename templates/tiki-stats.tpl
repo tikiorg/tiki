@@ -340,6 +340,7 @@
 	 	&rarr; {html_select_date time=$endDate prefix="endDate_" start_year=$start_year end_year=$end_year day_value_format="%02d" field_order=$prefs.display_field_order}
 		<input type="submit" class="btn btn-default" name="modify" value="{tr}Filter{/tr}">
 	</form>
+    <div class="table-responsive">
 	<table class="table normal">
 		<tr>
 			<th>{tr}Object{/tr}</th>
@@ -355,10 +356,13 @@
 			</tr>
 		{/section}
 	</table>
+    </div<
 {/if}
 
 {if $best_objects_stats_lastweek}
 	<h2 id="best_objects_stats_lastweek">{tr}Most viewed objects in the last 7 days{/tr}</h2>
+
+    <div class="table-responsive">
 	<table class="table normal">
 		<tr>
 			<th>{tr}Object{/tr}</th>
@@ -374,6 +378,7 @@
 			</tr>
 		{/section}
 	</table>
+    </div>
 {/if}
 
 <a name="charts" href="tiki-stats.php?chart=usage#charts" class="link">{tr}Usage chart{/tr}</a>

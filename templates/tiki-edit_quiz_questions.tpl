@@ -81,6 +81,7 @@
 <h2>{tr}Questions{/tr}</h2>
 {include file='find.tpl'}
 
+<div class="table-responsive">
 <table class="table normal">
 	<tr>
 		<th>
@@ -115,6 +116,7 @@
 		{norecords _colspan=6}
 	{/section}
 </table>
+</div>
 
 {pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}
 <!-- tiki-edit_quiz_questions.tpl end -->

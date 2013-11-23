@@ -6,6 +6,7 @@
 			</form>
 
 			{cycle values="odd,even" print=false}
+            <div class="table-responsive">
 			<table class="table normal">
 				<tr>
 					<th>{self_link _sort_arg='sort_mode' _sort_field='user'}{tr}User{/tr}{/self_link}</th>
@@ -39,6 +40,7 @@
 					{norecords _colspan=9}
 				{/section}
 			</table>
+            </div>
 
 			{pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}
 		

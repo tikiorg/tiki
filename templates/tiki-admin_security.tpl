@@ -6,6 +6,7 @@
 {/remarksbox}
 
 <h2>{tr}Tiki settings{/tr}</h2>
+<div class="table-responsive">
 <table class="table normal">
 	<tr>
 		<th>{tr}Tiki variable{/tr}</th>
@@ -37,7 +38,7 @@
 		{norecords _colspan=4}
 	{/if}
 </table>
-
+</div>
 {tr}About WikiPlugins and security: Make sure to only grant the "tiki_p_plugin_approve" permission to trusted editors.{/tr} {tr}You can deactivate risky plugins at (<a href="tiki-admin.php?page=textarea">tiki-admin.php?page=textarea</a>).{/tr} {tr}You can approve plugin use at <a href="tiki-plugins.php">tiki-plugins.php</a>.{/tr}
 
 <br>
@@ -51,6 +52,7 @@
 </div>
 {if $filecheck}
 	{cycle values="even,odd" print=false}
+    <div class="table-responsive">
 	<table class="table normal">
 		<tr>
 			<th colspan="2">{tr}File checks{/tr}</th>
@@ -66,6 +68,7 @@
 			</tr>
 		{/foreach}
 	</table>
+    </div>
 {/if}
 
 <a href="tiki-admin_security.php?check_file_permissions">{tr}Check file permissions{/tr}</a>
@@ -80,6 +83,7 @@
 
 
 {if $permcheck}
+    <div class="table-responsive">
 	<table class="table normal">
 		<tr>
 			<th rowspan="2">{tr}Filename{/tr}</th>
@@ -227,6 +231,7 @@
 			</tr>
 		{/foreach}
 	</table>
+    </div>
 
 	{remarksbox type="tip" title="{tr}Info{/tr}"}
 		{tr}What to do with these check results?{/tr}

@@ -59,6 +59,7 @@
 			<span class="highlight">{tr}The highlight pages already exist.{/tr}</span> {tr}Please, change the name if you want the page to be uploaded.{/tr}
 		</p>
 	{/if}
+    <div class="table-responsive">
 	<table class="table normal">
 		<tr>
 			<th>
@@ -103,6 +104,7 @@
 			{norecords _colspan=6}
 		{/section}
 	</table>
+    </div>
 	{pagination_links cant=$cant step=$maxRecords offset=$offset}{/pagination_links}
 </div>
 
@@ -113,6 +115,7 @@
 	</p>
 {/if}
 <form action="tiki-received_pages.php" method="post">
+    <div class="table-responsive">
 	<table class="table normal">
 		<tr>
 			<th>&nbsp;</th>
@@ -182,6 +185,7 @@
 		{/section}
 		{select_all checkbox_names='checked[]' label="{tr}Select All{/tr}"}
 	</table>
+    </div>
 	{tr}Prefix the checked:{/tr}<input type="text" name="prefix">
 	{tr}Postfix the checked:{/tr}<input type="text" name="postfix">&nbsp;<input type="submit" class="btn btn-default" value="{tr}OK{/tr}">
 </form>

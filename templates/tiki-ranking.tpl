@@ -20,6 +20,7 @@
 
 {cycle values="odd,even" print=false}
 {section name=ix loop=$rankings}
+    <div class="table-responsive">
 	<table class="table normal">
 		<tr>
 			<th>{tr}Rank{/tr}</th>
@@ -40,4 +41,5 @@
 			{norecords _colspan=3}
 		{/section}
 	</table>
+    </div>
 {/section}

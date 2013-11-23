@@ -32,6 +32,7 @@
 	{/if}
 
 	<form name="checkform" method="post" action="{$smarty.server.PHP_SELF}">
+    <div class="table-responsive">
 	<table class="table normal">
 		<tr>
 			<th style="width: 20px;">{select_all checkbox_names='checked[]'}</th>
@@ -89,6 +90,7 @@
 			</tr>
 		{/section}
 	</table>
+    </div>
 	<p align="left"> {*on the left to have it close to the checkboxes*}
 		<label>{tr}Perform action with checked:{/tr}
 			<select name="submit_mult">
@@ -393,6 +395,7 @@ $("#userstracker").change(function () {
 		<h2>{tr}Members List:{/tr} {$groupname|escape}</h2>
 		<form name="checkform" method="post" action="{$smarty.server.PHP_SELF}">
 		<input type="hidden" name="group" value="{$group|escape}">
+        <div class="table-responsive">
 		<table class="table normal">
 			<tr>
 				<th class="auto">{if $memberslist}{select_all checkbox_names='members[]'}{/if}</th>
@@ -418,6 +421,7 @@ $("#userstracker").change(function () {
 					</tr>
 				{/foreach}
 		</table>
+        </div>
 
 		{if $groupname neq 'Registered'}
 		<label>{tr}Perform action with checked:{/tr}
@@ -435,6 +439,7 @@ $("#userstracker").change(function () {
 		<div class="box">{$membersCount} {tr}users in group{/tr} {$groupname|escape}</div>
 
 		<h2>{tr}Banned members List:{/tr} {$groupname|escape}</h2>
+        <div class="table-responsive">
 		<table class="table normal">
 			<tr>
 				<th>{tr}User{/tr}</th>
@@ -453,6 +458,7 @@ $("#userstracker").change(function () {
 					</tr>
 				{/foreach}
 		</table>
+        </div>
 		{if ! empty($userslist)}
 			<h2>{tr}Add or Ban members to:{/tr} {$groupname|escape}</h2>
 			<form method="post" action="tiki-admingroups.php">

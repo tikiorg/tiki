@@ -126,6 +126,7 @@
 		{/section}
 		</h2>
 		<input type="hidden" name="custom_lang" value="{$custom_lang|escape}" />
+        <div class="table-responsive">
 		<table class="table normal">
 		<tr><th>{tr}English{/tr}</th><th>{tr}Translation{/tr}</th></tr>
 		{if !empty($custom_translation)}
@@ -137,6 +138,7 @@
 			<tr><td><input type="text" name="from[]" value="{$fr|escape}"/></td><td><input type="text" name="to[]" value="{$to.$i|escape}"/></td></tr>
 		{/foreach}
 		</table>
+        </div>
 		<input type="submit" class="btn btn-default" name="custom_save" value="{tr}Save{/tr}" />
 	{/if}
 </div>

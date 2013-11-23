@@ -54,6 +54,7 @@
 {jq notonready=true}
 var CHECKBOX_LIST = [{{section name=user loop=$items}'msg[{$items[user].msgId}]'{if not $smarty.section.user.last},{/if}{/section}}];
 {/jq}
+    <div class="table-responsive">
 	<table class="table normal">
 		<tr>
 			<th>{if $items}<input title="{tr}Select All{/tr}" type="checkbox" name="checkall" onclick="checkbox_list_check_all('form_messu_mailbox',CHECKBOX_LIST,this.checked);">{/if}</th>
@@ -85,6 +86,7 @@ var CHECKBOX_LIST = [{{section name=user loop=$items}'msg[{$items[user].msgId}]'
 			<tr><td colspan="7" class="odd">{tr}No messages to display{/tr}</td></tr>
 		{/section}
 	</table>
+    </div>
 	{if $items}
 		<p>{tr}Perform action with checked:{/tr}
 		<input type="submit" class="btn btn-warning" name="delete" value="{tr}Delete{/tr}">

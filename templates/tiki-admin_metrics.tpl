@@ -12,6 +12,7 @@
 </div>
 
 <h2>{tr}Metrics{/tr}</h2>
+<div class="table-responsive">
 <table class="table normal" id="metrics">
 	<tr class="first">
 		<th>{tr}Name{/tr}</th>
@@ -39,8 +40,10 @@
 		{norecords _colspan=5}
 	{/if}
 </table>
+</div>
 
 <h2>{tr}Tabs{/tr}</h2>
+<div class="table-responsive">
 <table class="table normal" id="tabs">
 	<tr class="first">
 		<th>{tr}Name{/tr}</th>
@@ -63,8 +66,9 @@
 		{norecords _colspan=3}
 	{/if}
 </table>
-
+</div>
 <h2>{tr}Assigned Metrics{/tr}</h2>
+<div class="table-responsive">
 <table class="table normal" id="assigned_metrics">
 	<tr class="first">
 		<th>{tr}Metric Name{/tr}</th>
@@ -87,6 +91,7 @@
 		{norecords _colspan=3}
 	{/if}
 </table>
+</div>
 
 <h2 id="assign">
 	{if $assign_metric eq ''}

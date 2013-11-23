@@ -26,6 +26,7 @@
 					<input type="hidden" name="sort_mode" value="{$sort_mode|escape}">
 					<input type="hidden" name="menuId" value="{$menuId}">
 					<input type="hidden" name="offset" value="{$offset}">
+                    <div class="table-responsive">
 					<table class="table normal">
 						{assign var=numbercol value=0}
 						<tr>
@@ -91,6 +92,7 @@
 							{norecords _colspan=$numbercol}
 						{/section}
 					</table>
+                    </div>
 
 					{if $channels}
 						<div align="left">
@@ -112,6 +114,7 @@
 	{$editname = "{tr}Edit menu option{/tr}"}
 {/if}
 {tab name=$editname}
+<div class="table-responsive">
 	<table class="table normal">
 		<tr>
 			<td valign="top" class="odd">
@@ -375,6 +378,7 @@
 			</td>
 		</tr>
 	</table>
+</div>
 
 {/tab}
 {tab name="{tr}Preview{/tr}"}

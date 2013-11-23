@@ -14,6 +14,7 @@
 	{include file='find.tpl'}
 {/if}
 
+<div class="table-responsive">
 <table class="table normal">
 	<tr>
 		{assign var=numbercol value=1}
@@ -67,5 +68,6 @@
 		{norecords _colspan=$numbercol}
 	{/section}
 </table>
+</div>
 
 {pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}

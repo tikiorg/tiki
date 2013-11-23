@@ -36,6 +36,7 @@
 </tr>
 </table>
 </form>
+<div class="table-responsive">
 <table class="table normal">
 <tr>
 <th><a href="tiki-live_support_transcripts.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'chat_started_desc'}chat_started_asc{else}chat_started_desc{/if}">{tr}started{/tr}</a></th>
@@ -57,11 +58,13 @@
 	{norecords _colspan=5}
 {/section}
 </table>
+</div>
 
 {pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}
 
 {if $smarty.request.view}
 <h3>{tr}Transcript{/tr}</h3>
+<div class="table-responsive">
 <table class="table normal">
 {section name=ix loop=$events}
 <tr>
@@ -74,4 +77,5 @@
 </tr>	
 {/section}
 </table>
+</div>
 {/if}

@@ -13,6 +13,7 @@
 {if $listpages or ($find ne '')}
   {include file='find.tpl'}
 {/if}
+<div class="table-responsive">
 <table class="table normal">
 <tr>
 <th>{self_link _sort_arg='sort_mode' _sort_field='bannerId'}{tr}Id{/tr}{/self_link}</th>
@@ -54,5 +55,6 @@
 	{norecords _colspan=12}
 {/section}
 </table>
+</div>
 
 {pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}

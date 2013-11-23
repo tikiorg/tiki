@@ -1,4 +1,5 @@
 <div class="blogtools{if !empty($container_class)} {$container_class}{/if}">
+<div class="table-responsive">
 <table class="table normal">
 <tr><th>{tr}Date{/tr}</th><th>{tr}Title{/tr}</th><th>{tr}Author{/tr}</th></tr>
 {cycle values="odd,even" print=false}
@@ -10,4 +11,5 @@
 	</tr>
 {/foreach}
 </table>
+</div>
 </div>

@@ -29,6 +29,7 @@
 
 {tr}Number of invitations:{/tr} {$cant}
 {if $cant > 0}
+<div class="table-responsive">
 <table class="table normal">
 <tr>
 {if $tiki_p_admin eq 'y'}
@@ -50,6 +51,7 @@
 	</tr>
 {/foreach}
 </table>
+</div>
 {/if}
 
 {pagination_links cant=$cant step=$max offset=$offset}{/pagination_links}

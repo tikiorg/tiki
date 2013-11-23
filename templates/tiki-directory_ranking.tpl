@@ -7,6 +7,7 @@
 
 {* Display the list of categories (items) using pagination *}
 {* Links to edit, remove, browse the categories *}
+<div class="table-responsive">
 <table class="table normal">
   <tr>
     <th><a href="tiki-directory_ranking.php?parent={$parent}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}Name{/tr}</a></th>
@@ -36,4 +37,5 @@
 	{norecords _colspan=4}
   {/section}
 </table>
+</div>
 {pagination_links cant=$cant step=$maxRecords offset=$offset}{/pagination_links} 

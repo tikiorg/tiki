@@ -27,6 +27,7 @@
 		{else}
 			{$offsetparam = ''}
 		{/if}
+        <div class="table-responsive">
 		<table class="table normal">
 			<caption> {tr}List of attached files{/tr} </caption>
 			<tr>
@@ -75,6 +76,7 @@
 				</tr>
 			{/section}
 		</table>
+        </div>
 	{/if}{* Generate table if view ... attached files > 0 *}
 
 	{* It is allow to attach files or current user have admin rights *}

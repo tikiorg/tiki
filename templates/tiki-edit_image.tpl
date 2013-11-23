@@ -34,7 +34,8 @@
 </form>
 <br>
 <br><br>   
-	<!--this table is a duplicate of the one in tiki-browse_image.tpl-->  
+	<!--this table is a duplicate of the one in tiki-browse_image.tpl-->
+    <div class="table-responsive">
 	<table class="table normal noslideshow">
 		<tr><td class="odd">{tr}Image Name:{/tr}</td><td class="odd">{$name}</td></tr>
 		<tr><td class="even">{tr}Created:{/tr}</td><td class="even">{$created|tiki_long_datetime}</td></tr>
@@ -70,7 +71,9 @@
 		</tr>
 		{/if}
 	</table>
-	<br><br>    
+    </div>
+	<br><br>
+    <div class="table-responsive">
 	<table class="table normal noslideshow" style="font-size:small">
 		<tr>
 			<td class="even" style="border-bottom:0px" colspan="2">
@@ -127,4 +130,5 @@
 			</td>
 		</tr>
 	</table>
+    </div>
 </div>

@@ -12,6 +12,7 @@
 	{button href="tiki-minical_prefs.php#import" class="btn btn-default" _text="{tr}Import{/tr}"}
 </div>
 
+<div class="table-responsive">
 <table class="table normal" >
 	<tr>
 		<td>
@@ -42,6 +43,7 @@
 		</td>
 	</tr>
 </table>
+</div>
 <br>
 
 {cycle values="odd,even" print=false}
@@ -128,6 +130,7 @@
 	<a class="link" href="tiki-minical.php?view={$view}&amp;removeold=1">{tr}Remove old events{/tr}</a>
 	<form action="tiki-minical.php" method="post">
 		<input type="hidden" name="view" value="{$view|escape}">
+        <div class="table-responsive">
 		<table class="table normal">
 			<tr>
 				<th><input type="submit" class="btn btn-default" name="delete" value="x "></th>
@@ -169,6 +172,7 @@
 				</tr>
 			{/section}
 		</table>
+        </div>
 	</form>
 
 	{pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}

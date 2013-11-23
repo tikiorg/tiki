@@ -13,7 +13,8 @@
 	<form method="post" action="#">
 {cycle values="even,odd" print=false}
 		
-		{listfilter selectors='#plugins_list tr.odd,#plugins_list tr.even'} 
+		{listfilter selectors='#plugins_list tr.odd,#plugins_list tr.even'}
+        <div class="table-responsive">
 		<table class="table normal" id="plugins_list">
 			<tr>
 				<th>{select_all checkbox_names='clear[]'}</th>
@@ -44,6 +45,7 @@
 			</tr>
 {/foreach}
 		</table>
+        </div>
 		<p>
 		<label for="submit_mult">{tr}Perform action with checked:{/tr}</label>
 		<select name="submit_mult" id="submit_mult" onchange="this.form.submit();">

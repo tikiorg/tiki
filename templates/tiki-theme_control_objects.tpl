@@ -65,6 +65,7 @@
 
 <form action="tiki-theme_control_objects.php" method="post">
 	<input type="hidden" name="type" value="{$type|escape}">
+    <div class="table-responsive">
 	<table class="table normal">
 		<tr>
 			<th><input type="submit" class="btn btn-default" name="delete" value="{tr}Del{/tr}"></th>
@@ -95,6 +96,7 @@
 			</tr>
 		{/section}
 	</table>
+    </div>
 </form>
 
 {pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links} 

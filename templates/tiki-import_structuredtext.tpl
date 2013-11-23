@@ -22,6 +22,7 @@
 </form>
 <br><br>
 {if $result eq 'y'}
+<div class="table-responsive">
 <table class="table normal">
 <tr>
   <th>{tr}page{/tr}</th>
@@ -39,4 +40,5 @@
 </tr>
 {/section}
 </table>
+</div>
 {/if}

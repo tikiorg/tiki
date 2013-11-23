@@ -14,6 +14,7 @@
   {include file='find.tpl'}
 {/if}
 
+<div class="table-responsive">
 <table class="table normal">
 	<tr>
 		<th>{self_link _sort_arg='sort_mode' _sort_field='title'}{tr}Title{/tr}{/self_link}</th>
@@ -33,6 +34,7 @@
 		{norecords _colspan=6}
 	{/foreach}
 </table>
+</div>
 
 {pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}
 {/tab}

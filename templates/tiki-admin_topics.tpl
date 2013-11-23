@@ -27,6 +27,7 @@
 </form>
 
 <h2>{tr}Topics{/tr}</h2>
+<div class="table-responsive">
 <table class="table normal">
 	<tr>
 		<th>{tr}ID{/tr}</th>
@@ -74,3 +75,4 @@
 		{if $prefs.feature_submissions eq 'y'}{norecords _colspan=7}{else}{norecords _colspan=6}{/if}
 	{/section}
 </table>
+</div>

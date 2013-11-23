@@ -23,6 +23,7 @@
 
 {include file='find.tpl'}
 
+<div class="table-responsive">
 <table class="table normal">
 <tr>
 <th><a href="tiki-edit_question_options.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'optionId_desc'}optionId_asc{else}optionId_desc{/if}">{tr}ID{/tr}</a></th>
@@ -46,5 +47,6 @@
 	{norecords _colspan=4}
 {/section}
 </table>
+</div>
 
 {pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}

@@ -25,6 +25,7 @@
 
 {assign var='pagefound' value='n'}
 
+<div class="table-responsive">
 <table class="table normal">
 	<tr>
 		{if isset($checkboxes_on) and $checkboxes_on eq 'y' && count($listpages) > 0}
@@ -371,7 +372,7 @@
 		{/if}
 	{/section}
 </table>
-
+</div>
 {if $checkboxes_on eq 'y' && count($listpages) > 0} {* what happens to the checked items? *}
 	<p align="left"> {*on the left to have it close to the checkboxes*}
 		<label for="submit_mult">{tr}Perform action with checked:{/tr}</label>

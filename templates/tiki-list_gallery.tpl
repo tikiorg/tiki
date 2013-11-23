@@ -21,6 +21,7 @@
 
 <h2>{tr}Gallery Images{/tr}</h2>
 <div class="text-center">
+<div class="table-responsive">
 <table class="table normal">
 <tr>
 <th><a href="tiki-list_gallery.php?galleryId={$galleryId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'imageId_desc'}imageId_asc{else}imageId_desc{/if}">{tr}ID{/tr}</a></th>
@@ -48,6 +49,7 @@
 	{norecords _colspan=6}
 {/section}
 </table>
+</div>
 
 {pagination_links cant=$cant step=$maxRecords offset=$offset}{/pagination_links}
 

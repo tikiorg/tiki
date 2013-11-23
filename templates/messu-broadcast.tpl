@@ -73,7 +73,7 @@
 				</td>
 			</tr>
 		</table>
-		<br>
+        <div class="table-responsive">
 		<table class="table normal" >
 			<tr>
 				<td style="text-align: center;">
@@ -81,5 +81,6 @@
 				</td>
 			</tr>
 		</table>
+        </div>
 	</form>
 {/if}

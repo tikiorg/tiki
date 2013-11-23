@@ -40,6 +40,7 @@
 <div class="quizanswer">{$result.answer}</div>
 
 <h2>{tr}User answers{/tr}</h2>
+<div class="table-responsive">
 <table class="table normal">
 	<tr>
 		<th>
@@ -69,5 +70,5 @@
 		</tr>
 	{/section}
 </table>
-
+</div>
 

@@ -15,6 +15,7 @@
 	<table border="0" cellpadding="0" cellspacing="0" >
 	  <tr>
 	     <td align="center" valign="middle">
+        <div class="table-responsive">
 		<table class="table normal">
 		  <tr><td align="center"> 
 		  <div id="mapWindow" style="z-index:50;overflow:hidden;
@@ -177,6 +178,7 @@
 		</td></tr>
 	<tr><td><div id="resultBox">{$map_querymsg}</div></td></tr>	
 		</table>
+        </div>
 		<footer class="editdate">{tr}Last modification date:{/tr} {$lastModif|tiki_long_datetime} {tr}by{/tr} <a class="link" href="tiki-user_information.php?view_user={$lastUser}">{$lastUser}</a> ({$ip})-{tr}Hits:{/tr}{$mapstats}({$mapstats7days})</footer>
 	     
 	     </td>
@@ -197,6 +199,7 @@
 			{tr}Layer Manager{/tr}
 			</div>
 			<div id='layermenu' style="{$mnu_layermenu}">
+                <div class="table-responsive">
     			<table class="table normal">
 			<tr>
 				<th><b>{tr}Layer{/tr}</b></th>
@@ -225,7 +228,8 @@
 					{/if}
 					{tr}{$my_layers[j]->group}{/tr}		
 				</div>
-				<div id='submenu{$unique_layer_group[j]}' style="{$mnu_submenu}"> 
+				<div id='submenu{$unique_layer_group[j]}' style="{$mnu_submenu}">
+                    <div class="table-responsive">
 					<table class="table normal">
 					{section name=i loop=$my_layers}
 					{if $my_layers[i]->group neq ""}
@@ -285,6 +289,7 @@
 					{/if}
 					{/section}
 					</table>
+                    </div>
 				</div>
 				</td>
 			    </tr>
@@ -343,6 +348,7 @@
 			{/if}	
 			{/section}
 			</table>
+            </div>
 			</div>
 		</td>
 		</tr>

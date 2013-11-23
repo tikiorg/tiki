@@ -55,6 +55,7 @@
 {else}
 	<p>&nbsp;</p>
 {/if}
+<div class="table-responsive">
 <table class="table normal">
 	<tr>
 		{if !empty($cat) && !empty($desc)}
@@ -98,5 +99,6 @@
 		{/if}
 	{/foreach}
 </table>
+</div>
 	<p><div style="float: left; margin-right: 10px;"><input type="submit" class="btn btn-default" name="assign" value="{tr}Apply{/tr}"></div></p>
 </form>

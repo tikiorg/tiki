@@ -15,6 +15,7 @@
 	{/if}
 </div>
 <form action="tiki-userfiles.php" method="post">
+    <div class="table-responsive">
 	<table class="table normal">
 		<tr>
 			<th style="text-align:center;">&nbsp;</th>
@@ -44,6 +45,7 @@
 			{norecords _colspan=4}
 		{/section}
 	</table>
+    </div>
 	{if $channels|@count ge '1'}
 		{tr}Perform action with checked:{/tr} <input type="submit" class="btn btn-default" name="delete" value="{tr}Delete{/tr}">
 	{/if}

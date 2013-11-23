@@ -33,6 +33,7 @@
 {if $findwhat!=""}
 	{tr}Found{/tr} "<b>{$findwhat|escape}</b>" {tr}in{/tr} {$cant_records|escape} {tr}LastChanges{/tr} 
 {/if}
+<div class="table-responsive">
 <table class="table normal">
 	<tr>
 		<th>{self_link _sort_arg='sort_mode' _sort_field='lastModif'}{tr}Date{/tr}{/self_link}</th>
@@ -83,5 +84,5 @@
 		{norecords _colspan=7}
 	{/section}
 </table>
-
+</div>
 {pagination_links cant=$cant_records step=$prefs.maxRecords offset=$offset}{/pagination_links}

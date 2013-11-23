@@ -16,6 +16,7 @@
 {if count($channels) > 0 or $find ne ''}
 	{include file='find.tpl'}
 	<form action="tiki-notepad_list.php" method="post">
+        <div class="table-responsive">
 		<table class="table normal">
 			<tr>
 				<th style="text-align:center;">
@@ -70,6 +71,7 @@
 				</td>
 			</tr>
 		</table>
+        </div>
 	</form>
 
 	{pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}

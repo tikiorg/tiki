@@ -4,6 +4,7 @@
 {tabset name="tabs_admtokens"}
 	{tab name="{tr}List tokens{/tr}"}
 		<h2>{tr}List tokens{/tr}</h2>
+        <div class="table-responsive">
 		<table class="table normal">
 			<tr>
 				<th>{tr}Id{/tr}</th>
@@ -42,6 +43,7 @@
 				{norecords _colspan=10}
 			{/foreach}
 		</table>
+        </div>
 	{/tab}
 	{tab name="{tr}Add new token{/tr}"}
 		<h2>{tr}Add new token{/tr}</h2>

@@ -123,9 +123,11 @@
 			<input type="hidden" name="page_ref_id" value="{$page_ref_id}">
 
 			<h3>{tr}Categorize all pages in structure together:{/tr}</h3>
+            <div class="table-responsive">
 			<table class="table normal">
 			{include file='categorize.tpl'}
 			</table>
+            </div>
 			<input type="submit" class="btn btn-default" name="recategorize" value="{tr}Update{/tr}">
 			&nbsp;&nbsp;{tr}Remove existing categories from ALL pages before recategorizing:{/tr} <input type="checkbox"
 																										 name="cat_override">

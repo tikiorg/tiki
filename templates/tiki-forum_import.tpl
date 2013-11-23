@@ -15,7 +15,7 @@
 
 <div class="panel panel-default">
 <div class="panel-heading">{tr}Import Forum Contents from Tiki's DB and Server{/tr}</div>
-<div class="cbox-data">
+<div class="panel-body">
 	<form action="tiki-forum_import.php" method="post">
 	<input type="hidden" name="step1" value="true">
 	<input type="hidden" name="import" value="same">
@@ -45,7 +45,7 @@
 <br>
 <div class="cbox">
 <div class="panel-heading">{tr}Import from Another DB or Server{/tr}</div>
-<div class="cbox-data">
+<div class="panel-body">
 	<form action="tiki-forum_import.php" method="post">
 	<input type="hidden" name="step1" value="true">
 	<input type="hidden" name="import" value="other">
@@ -84,7 +84,7 @@
 End hiding of unfinished section... *}
 <div class="panel panel-default">
 <div class="panel-heading">{tr}Import from a Local SQL File{/tr}</div>
-<div class="cbox-data">
+<div class="panel-body">
 	<form action="tiki-forum_import.php" method="post">
 	<input type="hidden" name="step1" value="true">
 	<input type="hidden" name="import" value="sql">
@@ -120,7 +120,7 @@ End hiding of unfinished section... *}
 
 <div class="panel panel-default">
 <div class="panel-heading">{tr}Verification{/tr}</div>
-<div class="cbox-data">
+<div class="panel-body">
 	<form action="tiki-forum_import.php" method="post">
 	{if $passed eq 'true'}
 	  <input type="hidden" name="step2" value="true">
@@ -158,14 +158,15 @@ End hiding of unfinished section... *}
 <form action="tiki-forum_import.php" method="post">
 <div class="panel panel-default">
 <div class="panel-heading">{tr}Select a Forum You Wish to Move (ONE at a time!){/tr}</div>
-<div class="cbox-data">
+<div class="panel-body">
 	<input type="hidden" name="step3" value="true">
 	<input type="hidden" name="import" value="{$iMethod}">
 	<input type="hidden" name="ftype" value="{$fi_type}">
 	<input type="hidden" name="prefix" value="{$fi_prefix}">
 	<input type="hidden" name="server" value="{$server}">
 
-	<table class="table normal">
+    <div class="table-responsive">
+    <table class="table normal">
 	<tr>
 	<th>Select</th>
 	<th>Forum Name</th>
@@ -183,12 +184,14 @@ End hiding of unfinished section... *}
 	</tr>
 	{/section}
 	</table>
+    </div>
 </div>
 </div>
 <p> </p>
 <div class="panel panel-default">
 <div class="panel-heading">{tr}Which Forum Do You Wish to Import this Into?{/tr}</div>
-<div class="cbox-data">
+<div class="panel-body">
+    <div class="table-responsive">
 	<table class="table normal">
 	<tr>
 	<th>Select</th>
@@ -207,6 +210,7 @@ End hiding of unfinished section... *}
 	</tr>
 	{/section}
 	</table>
+    </div>
 	<br>
 	<div align="center">
 		{if $noforumsF eq 'true'}

@@ -29,6 +29,7 @@
 {/if}
 
 <form action="#">
+    <div class="table-responsive">
 	<table class="table normal">
 		{assign var=numbercol value=8}
 		<tr>
@@ -101,7 +102,8 @@
 			{norecords _colspan=$numbercol}
 		{/section}
 	</table>
-	
+	</div>
+
 	{if $channels}
 		<div style="text-align:left">
 			<br>

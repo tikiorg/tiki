@@ -22,6 +22,7 @@
         [ <a class="link" href="javascript:show('status');">{tr}Show{/tr}</a>
  				| <a class="link" href="javascript:hide('status');">{tr}Hide{/tr}</a> ]
  				<div id="status" style="display:none;">
+                    <div class="table-responsive">
 					<table class="table normal">
 						<tr>
 							<td>
@@ -44,6 +45,7 @@
 							{/foreach}
 						{/if}
 					</table>
+                    </div>
 			  </div>
 			</td>
 		</tr>
@@ -92,6 +94,7 @@
 				[ <a class="link" href="javascript:show('test-time');">{tr}Show{/tr}</a>
  				| <a class="link" href="javascript:hide('test-time');">{tr}Hide{/tr}</a> ]
  				<div id="test-time" style="display:none;">
+                    <div class="table-responsive">
 					<table class="table normal">
 						<tr>
   						<td><input type="checkbox" name=quiz.shuffleQuestions id="shuffle-questions" {if $quiz->shuffleQuestions eq 'y'}checked="checked"{/if}><label for="shuffle-questions">{tr}Shuffle questions{/tr}</td>
@@ -113,6 +116,7 @@
 							<select name=quiz.repetitions id="quiz-repeat">{html_options values=$tpl.repetitions selected=$quiz->repetitions output=$tpl.repetitions}</select> {tr}times{/tr}</td>
 						</tr>
 					</table>
+                    </div>
 			  </div>
 			</td>
 		</tr>
@@ -123,6 +127,7 @@
 				[ <a class="link" href="javascript:show('feedback');">{tr}Show{/tr}</a>
  				| <a class="link" href="javascript:hide('feedback');">{tr}Hide{/tr}</a> ]
  				<div id="feedback" style="display:none;">
+                    <div class="table-responsive">
 					<table class="table normal">
 						<tr>
 							<td colspan=2><label>{tr}Grading method {/tr}</label><select name=quiz.gradingMethod" id="grading-method">{html_options values=$tpl.optionsGrading selected=$quiz->gradingMethod output=$tpl.optionsGrading}</select>
@@ -140,6 +145,7 @@
 							<td><label>{tr}Publish statistics {/tr}</label><select name=quiz.publishStats>{html_options values=$tpl.optionsShowScore selected=$quiz->publishStats output=$tpl.optionsShowScore}</select>
 						</tr>
 					</table>
+                    </div>
 			  </div>
 			</td>
 		</tr>
@@ -154,16 +160,19 @@
 							<td><input type='checkbox' name='quiz.additionalQuestions' {if $quiz->additionalQuestions eq 'y'}checked="checked"{/if}><label for="additional-questions">{tr}Solicit additional questions from students{/tr}</td>
 						</tr>
 					</table>
+                    <div class="table-responsive">
 					<table class="table normal">
 						<tr>
 							<td><input type="checkbox" name="quiz.forum" id="forum" {if $quiz->forum eq 'y'}checked="checked"{/if}><label>{tr}Link quiz to forum named: {/tr}</label><input type="text" name="quiz.forumName" value="{$quiz->nameForum|escape}" size="40"></td>
 						</tr>
 				  </table>
+                  </div>
 			  </div>
 			</td>
 		</tr>
     {include file='categorize.tpl'}
   </table>
+    <div class="table-responsive">
 	<table class="table normal">
     <tr>
       <td>
@@ -190,6 +199,7 @@
       </td>
     </tr>
   </table>
+  </div>
 </form>
 
 <!- tiki-quiz_edit end ->

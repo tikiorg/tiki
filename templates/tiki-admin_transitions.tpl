@@ -90,6 +90,7 @@
 			return false;
 		} );
 		{/jq}
+		<div class="table-responsive">
 		<table class="table normal">
 			<thead>
 				<tr>
@@ -122,6 +123,7 @@
 				{/foreach}
 			</tbody>
 		</table>
+        </div>
 	{/tab}
 
 	{tab name="{tr}New / Edit{/tr}"}
@@ -173,6 +175,7 @@
 
 	{if $selected_transition}
 		{tab name="{tr}Guards{/tr}"}
+		    <div class="table-responsive">
 			<table class="table normal">
 				<thead>
 					<tr>
@@ -205,6 +208,7 @@
 					{/foreach}
 				</tbody>
 			</table>
+			</div>
 			<form method="post" action="tiki-admin_transitions.php?action=addguard&amp;transitionId={$selected_transition.transitionId|escape}&amp;cookietab=4" style="text-align: left;">
 				<h2>{tr}New Guard{/tr}</h2>
 				<fieldset>

@@ -5,7 +5,7 @@
 				<div class="panel-heading">
 					What is Tiki?
 				</div>
-				<div class="cbox-data">
+				<div class="panel-body">
 					Tiki is a powerful Content Management System easy to customize and
 					configure designed to create Portals, community sites, intranets,
 					and general web applications.
@@ -18,7 +18,7 @@
 	<div class="panel-heading">
 		Download!
 	</div>
-	<div class="cbox-data">
+	<div class="panel-body">
 		You can download Tiki from 
 		<a class="link" href="http://www.sourceforge.net/projects/tikiwiki/">Sourceforge</a>
 	</div>
@@ -28,7 +28,7 @@
 	<div class="panel-heading">
 		Join us!
 	</div>
-	<div class="cbox-data">
+	<div class="panel-body">
 		If you want to contribute with this project join our
 		<a class="link" href="http://sourceforge.net/mail/?group_id=64258">mailing list</a>
 	</div>
@@ -37,7 +37,7 @@
 	<div class="panel-heading">
 		Some of the many features in Tiki
 	</div>
-	<div class="cbox-data">
+	<div class="panel-body">
 		<ul>
 			<li>A wiki system where users can edit pages using a powerful syntax</li>
 			<li>Articles, reviews, topics and user submissions</li>
@@ -59,7 +59,7 @@
 	<div class="panel-heading">
 		Testing Tiki
 	</div>
-	<div class="cbox-data">
+	<div class="panel-body">
 		<ol>
 			<li>Test the wiki following this <a href="tiki-index.php" class="link">link</a></li>
 			<li>Visit the <a href="tiki-forums.php" class="link">forums</a>, write a topic or reply to an existing topic if you want</li>

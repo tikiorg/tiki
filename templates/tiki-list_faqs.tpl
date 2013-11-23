@@ -7,6 +7,7 @@
   {include file='find.tpl'}
 {/if}
 
+<div class="table-responsive">
 <table class="table normal">
 	<tr>
 		<th>
@@ -49,6 +50,7 @@
 		{if $tiki_p_admin_faqs eq 'y'}{norecords _colspan=5}{else}{norecords _colspan=4}{/if}
 	{/section}
 </table>
+</div>
 
 {pagination_links cant=$cant step=$maxRecords offset=$offset}{/pagination_links}
 {/tab}

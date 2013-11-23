@@ -10,7 +10,7 @@
 {/if}
 {tabset}
 {tab name="{tr}My books{/tr}"}
-<div id="booklist">
+<div id="booklist" class="table-responsive">
 	<table class="table normal">
 		<tr>
 			<th>{tr}Id{/tr}</th>

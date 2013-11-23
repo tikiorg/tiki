@@ -104,6 +104,7 @@
 		</form>
 		{if count($suggested) != 0}
 			<br>
+            <div class="table-responsive">
 			<table class="table normal">
 				<tr>
 					<th>{tr}Suggested questions{/tr}</th>
@@ -115,6 +116,7 @@
 					</tr>
 				{/section}
 			</table>
+            </div>
 		{/if}
 	</div>
 {/if}

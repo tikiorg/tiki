@@ -79,6 +79,7 @@
 {* Display the list of categories (items) using pagination *}
 {* Links to edit, remove, browse the categories *}
 <form action="tiki-directory_admin_sites.php" method="post">
+  <div class="table-responsive">
   <table class="table normal">
     <tr>
       <th> </th>
@@ -120,6 +121,7 @@
 		{/if}
     {/section}
   </table>
+  </div>
   {if $items}
   {tr}Perform action with selected:{/tr}
   <input type="submit" class="btn btn-default" name="groupdel" value=" {tr}Delete{/tr} ">

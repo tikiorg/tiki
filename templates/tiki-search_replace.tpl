@@ -30,6 +30,7 @@
 {/if}
 <form action="tiki-search_replace.php" method="post">
 {if isset($results)}
+    <div class="table-responsive">
 	<table class="table normal">
 	<tr>
 		<td style="text-align: right">
@@ -66,6 +67,7 @@
 	{/if}
 	{/section}
 	</table>
+    </div>
 	<input type="hidden" name="searchtext" value="{$searchtext}"> 
 	<input type="hidden" name="replacetext" value="{$replacetext}">
 	<input type="hidden" name="maxRecords" value="{$maxRecords}">

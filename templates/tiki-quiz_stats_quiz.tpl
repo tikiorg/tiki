@@ -16,7 +16,7 @@
 <h2>{tr}Quiz stats{/tr}</h2>
 
 <!-- begin table for stats data -->
-
+<div class="table-responsive">
 <table class="table normal">
 <tr>
 <th>
@@ -60,6 +60,7 @@ Set the names of the table headings to reflect the names of the db
 </tr>
 {/section}
 </table>
+</div>
 
 {pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}
 
@@ -71,6 +72,7 @@ Set the names of the table headings to reflect the names of the db
 {tr}Question:{/tr}
 <a class="link" href="tiki-edit_quiz_questions.php?quizId={$quizId.questionId}">{$questions[ix].question|escape}<br></a>
 
+<div class="table-responsive">
 <table class="table normal">
 <!-- begin header data for table -->
 
@@ -98,7 +100,7 @@ Set the names of the table headings to reflect the names of the db
 {*second section end *}
   {/section}
 </table>
-
+</div>
 <br>
 {*first section end *}
 {/section}

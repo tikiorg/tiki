@@ -124,6 +124,8 @@
 <input type="hidden" name="offset" value="{$offset|escape}">
 <input type="hidden" name="sort_mode" value="{$sort_mode|escape}">
 <input type="hidden" name="find" value="{$find|escape}">
+
+<div class="table-responsive">
 <table class="table normal">
 <tr>
 {if $items}<th>&nbsp;</th>
@@ -171,6 +173,7 @@
 	{norecords _colspan=2 _text="{tr}No messages queued yet{/tr}"}
 {/section}
 </table>
+</div>
 {if $items}
 <br>
 {tr}Perform action with checked:{/tr} 

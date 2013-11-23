@@ -14,8 +14,8 @@
             {tr}My pages{/tr}{else}{tr}User Pages{/tr}
           {/if}
         </div>
-        <div class="cbox-data">
-          
+        <div class="panel-body">
+            <div class="table-responsive">
           <table class="table normal">
             <tr>
               <th>
@@ -52,6 +52,7 @@
               </tr>
             {/section}
           </table>
+          </div>
 		  <div style="text-align:right;">{tr}Records:{/tr} {$user_pages|@count}</div>
         </div>
       </div>
@@ -64,7 +65,8 @@
         <div class="panel-heading">
           {if $userwatch eq $user}{tr}My galleries{/tr}{else}{tr}User Galleries{/tr}{/if}
         </div>
-        <div class="cbox-data">
+        <div class="panel-body">
+          <div class="table-responsive">
           <table class="table normal">
             <tr>
               <th>{tr}Gallery{/tr}</th>
@@ -84,6 +86,7 @@
               </tr>
             {/section}
           </table>
+          </div>
 		  <div style="text-align:right;">{tr}Records:{/tr} {$user_galleries|@count}</div>
         </div>
       </div>
@@ -96,7 +99,8 @@
         <div class="panel-heading">
           {if $userwatch eq $user}{tr}My Articles{/tr}{else}{tr}User Articles{/tr}{/if}
         </div>
-        <div class="cbox-data">
+        <div class="panel-body">
+          <div class="table-responsive">
           <table class="table normal">
             <tr>
               <th>{tr}Article{/tr}</th>
@@ -116,6 +120,7 @@
               </tr>
             {/section}
           </table>
+          </div>
 		  <div style="text-align:right;">{tr}Records:{/tr} {$user_articles|@count}</div>
         </div>
       </div>
@@ -128,7 +133,8 @@
         <div class="panel-heading">
           {if $userwatch eq $user}{tr}My User Items{/tr}{else}{tr}User Items{/tr}{/if}
         </div>
-        <div class="cbox-data">
+        <div class="panel-body">
+          <div class="table-responsive">
           <table class="table normal">
             <tr>
               <th>{tr}Item{/tr}</th>
@@ -146,6 +152,7 @@
               </tr>
             {/section}
           </table>
+          </div>
 		  <div style="text-align:right;">
 		  	   {tr}Records:{/tr} {$user_items|@count}
 			   {if !empty($nb_item_comments)}<br>{tr}Comments:{/tr} {$nb_item_comments}{/if}
@@ -159,7 +166,8 @@
     <div id="content4" class="content">
       <div class="panel panel-default">
         <div class="panel-heading">{tr}Unread Messages{/tr}</div>
-        <div class="cbox-data">
+        <div class="panel-body">
+          <div class="table-responsive">
           <table class="table normal">
             <tr>
               <th>{tr}Subject{/tr}</th>
@@ -181,6 +189,7 @@
               </tr>
             {/section}
           </table>
+          </div>
 		  <div style="text-align:right;">{tr}Records:{/tr} {$msgs|@count}</div>
         </div>
       </div>
@@ -194,6 +203,7 @@
           {if $userwatch eq $user}{tr}My tasks{/tr}{else}{tr}My Tasks{/tr}{/if}
         </div>
         <div class="cbox-data">
+          <div class="table-responsive">
           <table class="table normal">
             <tr>
               <th>{tr}Tasks{/tr}</th>
@@ -207,6 +217,7 @@
               </tr>
             {/section}
           </table>
+          </div>
 		  <div style="text-align:right;">{tr}Records:{/tr} {$tasks|@count}</div>
         </div>
       </div>
@@ -219,7 +230,8 @@
         <div class="panel-heading">
           {if $userwatch eq $user}{tr}My forum topics{/tr}{else}{tr}User forum topics{/tr}{/if}
         </div>
-        <div class="cbox-data">
+        <div class="panel-body">
+          <div class="table-responsive">
           <table class="table normal">
             <tr>
               <th>{tr}Forum topics{/tr}</th>              
@@ -237,6 +249,7 @@
               </tr>
             {/section}
           </table>
+          </div>
 		  <div style="text-align:right;">{tr}Records:{/tr} {$user_forum_topics|@count}</div>
         </div>
       </div>
@@ -249,7 +262,8 @@
         <div class="panel-heading">
           {if $userwatch eq $user}{tr}My forum replies{/tr}{else}{tr}User forum replies{/tr}{/if}
         </div>
-        <div class="cbox-data">
+        <div class="panel-body">
+          <div class="table-responsive">
           <table class="table normal">
             <tr>
               <th>{tr}Forum replies{/tr}</th>              
@@ -267,6 +281,7 @@
               </tr>
             {/section}
           </table>
+          </div>
 		  <div style="text-align:right;">{tr}Records:{/tr} {$user_forum_replies|@count}</div>
         </div>
       </div>
@@ -279,7 +294,8 @@
         <div class="panel-heading">
           {if $userwatch eq $user}{tr}My blogs{/tr}{else}{tr}User Blogs{/tr}{/if}
         </div>
-        <div class="cbox-data">
+        <div class="panel-body">
+          <div class="table-responsive">
           <table class="table normal">
             <tr>
               <th>{tr}Blogs{/tr}</th>
@@ -299,6 +315,7 @@
               </tr>
             {/section}
           </table>
+          </div>
 		  <div style="text-align:right;">{tr}Records:{/tr} {$user_blogs|@count}</div>
         </div>
       </div>
@@ -307,6 +324,7 @@
           {if $userwatch eq $user}{tr}My blog Posts{/tr}{else}{tr}User Blog Posts{/tr}{/if}
         </div>
         <div class="cbox-data">
+          <div class="table-responsive">
           <table class="table normal">
             <tr>
               <th>{tr}Blog Posts{/tr}</th>
@@ -326,6 +344,7 @@
               </tr>
             {/section}
           </table>
+          </div>
 		  <div style="text-align:right;">{tr}Records:{/tr} {$user_blog_posts|@count}</div>
         </div>
       </div>

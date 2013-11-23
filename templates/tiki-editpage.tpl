@@ -79,12 +79,13 @@
 				{/section}
 			</ul>
 		{else}
+            <div class="table-responsive">
 			<table class="table normal"><tr>
 				{cycle name=table values=',,,,</tr><tr>' print=false advance=false}
 				{section name=back loop=$likepages}
 					<td><a href="{$likepages[back]|sefurl}" class="wiki">{$likepages[back]|escape}</a></td>{cycle name=table}
 				{/section}
-			</tr></table>
+			</tr></table></div>
 		{/if}
 	</div>
 {/if}

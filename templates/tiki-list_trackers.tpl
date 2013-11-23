@@ -17,7 +17,7 @@
 			<p>{tr}Found{/tr} {$trackers|@count} {tr}trackers:{/tr}</p>
 		{/if}
 	{/if}
-
+    <div class="table-responsive">
 	<table class="table normal">
 		<tr>
 			<th>{self_link _sort_arg='sort_mode' _sort_field='trackerId'}{tr}Id{/tr}{/self_link}</th>
@@ -96,6 +96,7 @@
 			{/if}
 		{/foreach}
 	</table>
+    </div>
 	{pagination_links cant=$cant step=$maxRecords offset=$offset}{/pagination_links}
 	{if $tiki_p_admin_trackers eq 'y'}
 		<form class="create-tracker" method="post" action="{service controller=tracker action=replace}">

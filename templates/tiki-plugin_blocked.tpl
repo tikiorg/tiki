@@ -7,7 +7,7 @@
 		{tr}Plugin execution pending approval{/tr}
 	{/if}
 </div>
-<div class="cbox-data">
+<div class="well">
 	{if $plugin_status eq 'rejected'}
 		<p>{tr}After argument validation by an editor, the execution of this plugin was denied. This plugin will eventually be removed or corrected.{/tr}</p>
 	{else}
@@ -43,7 +43,7 @@
 					<div class="panel-heading">
 						 {tr}Body{/tr}
 					</div>
-					<div class="cbox-data">
+					<div class="panel-body">
 						<textarea rows="10" style="width: 99%">{$plugin_body}</textarea>
 					</div>
 					</div>

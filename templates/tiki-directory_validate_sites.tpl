@@ -11,6 +11,7 @@
 var CHECKBOX_LIST = [{{section name=user loop=$items}'sites[{$items[user].siteId}]'{if not $smarty.section.user.last},{/if}{/section}}];
 {/jq}
   <br>
+  <div class="table-responsive">
   <table class="table normal">
     <tr>
       <th>{if $items}
@@ -48,6 +49,7 @@ var CHECKBOX_LIST = [{{section name=user loop=$items}'sites[{$items[user].siteId
 		{norecords _colspan=6}
     {/section}
   </table>
+  </div>
   {if $items} <br>
   {tr}Perform action with selected:{/tr}
   <input type="submit" class="btn btn-default" name="del" value="{tr}Remove{/tr}">

@@ -10,6 +10,7 @@
 	{button href="tiki-send_newsletters.php?nlId=$nlid_encod" class="btn btn-default" _text="{tr}Send Newsletters{/tr}"}
 </div>
 
+<div class="table-responsive">
 <table class="table normal">
 	<tr>
 		<th colspan="2">{tr}Newsletter{/tr}</th>
@@ -23,12 +24,14 @@
 		<td class="even">{$nl_info.description|escape|nl2br}</td>
 	</tr>
 </table>
+</div>
 
 {tabset name='tabs_newsletter_subscriptions'}
 
 {tab name="{tr}Subscriptions{/tr}"}
 {* groups------------------------------------ *}
 {if $nb_groups > 0}
+    <div class="table-responsive">
 	<table class="table normal">
 		<tr>
 			<th>
@@ -56,11 +59,13 @@
 			</tr>
 		{/section}
 	</table>
+    </div>
 {/if}
 {* /groups------------------------------------ *}
 
 {* included------------------------------------ *}
 {if $nb_included > 0}
+    <div class="table-responsive">
 	<table class="table normal">
 		<tr>
 			<th>
@@ -80,11 +85,13 @@
 			</tr>
 		{/foreach}
 	</table>
+    </div>
 {/if}
 {* /included------------------------------------ *}
 
 {* pages------------------------------------ *}
 {if $nb_pages > 0}
+    <div class="table-responsive">
 	<table class="table normal">
 		<tr>
 			<th>{tr}Wiki Page Name{/tr}</th>
@@ -104,6 +111,7 @@
 			</tr>
 		{/section}
 	</table>
+    </div>
 {/if}
 {* /pages------------------------------------ *}
 
@@ -111,6 +119,7 @@
 
 <form method="post" action="tiki-admin_newsletter_subscriptions.php">
 	<input type="hidden" name="nlId" value="{$nlId|escape}">
+<div class="table-responsive">
 <table class="table normal">
 	<tr>
 		<th>
@@ -158,6 +167,7 @@
          {norecords _colspan=5}
 	{/section}
 </table>
+</div>
 
 {if $channels}
 	<div align="left">

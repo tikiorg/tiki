@@ -9,6 +9,7 @@
 {tabset name="admin_menus"}
 	{tab name="{tr}Menus{/tr}"}
 		{include file='find.tpl'}
+        <div class="table-responsive">
 		<table class="table normal">
 			<tr>
 				<th>{self_link _sort_arg='sort_mode' _sort_field='menuId'}{tr}ID{/tr}{/self_link}</th>
@@ -57,6 +58,7 @@
 				{norecords _colspan=5}
 			{/section}
 		</table>
+        </div>
 		{pagination_links cant=$cant step=$maxRecords offset=$offset}{/pagination_links} 
 	{/tab}
 

@@ -114,6 +114,7 @@
 </form>
 
 <h2>{tr}List of contributions{/tr}</h2>
+<div class="table-responsive">
 <table class="table normal">
 	<tr>
 		<th>{tr}Name{/tr}</th>
@@ -134,3 +135,4 @@
 		{norecords _colspan=3}
 	{/section}
 </table>
+</div>

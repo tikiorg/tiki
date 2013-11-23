@@ -174,7 +174,7 @@
 	{if $channels or $find ne ''}
 		{include file='find.tpl'}
 	{/if}
-
+    <div class="table-responsive">
 	<table class="table normal">
 		<tr>
 			<th>
@@ -214,5 +214,6 @@
 			{norecords _colspan=6}
 		{/section}
 	</table>
+    </div>
 	{pagination_links cant=$cant step=$maxRecords offset=$offset}{/pagination_links}
 </div>

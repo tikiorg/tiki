@@ -25,6 +25,7 @@
 
 {pagination_links cant=$cant step=$maxRecords offset=$offset}{/pagination_links}
 
+<div class="table-responsive">
 <table class="table normal">
 <tr>
 <th>{self_link _sort_arg="sort_mode" _sort_field="actionid"}{tr}Id{/tr}{/self_link}</th>
@@ -48,6 +49,7 @@
 </tr>
 {/section}
 </table>
+</div>
 
 {pagination_links cant=$cant step=$maxRecords offset=$offset}{/pagination_links}
 

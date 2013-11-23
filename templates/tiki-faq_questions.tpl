@@ -85,6 +85,7 @@
   {include file='find.tpl'}
 {/if}
 
+<div class="table-responsive">
 <table class="table normal">
 <tr>
 <th>
@@ -108,12 +109,14 @@
 	{norecords _colspan=3}
 {/section}
 </table>
+</div>
 
 {pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}
 
 {if count($suggested) > 0}
 
 <h2>{tr}Suggested questions{/tr}</h2>
+<div class="table-responsive">
 <table class="table normal">
 <tr>
   <th>{tr}Question{/tr}</th>
@@ -132,6 +135,7 @@
 </tr>
 {/section}
 </table>
+</div>
 {else}
 <h2>{tr}No suggested questions{/tr}</h2>
 {/if}

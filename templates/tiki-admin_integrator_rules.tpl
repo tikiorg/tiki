@@ -111,6 +111,7 @@
 <h2>{tr}Rules List{/tr}</h2>
 
 {* Table with list of repositories *}
+<div class="table-responsive">
 <table class="table normal" id="integrator_rules">
   <tr>
     <th rowspan="2"><span title="{tr}Rule order{/tr}">#</span></th>
@@ -148,3 +149,4 @@
     </tr>
   {/section}
 </table>
+</div>

@@ -17,6 +17,7 @@
 	 </form>
 </div>
 <br/>
+<div class="table-responsive">
 <table class="table normal">
 <tr>
 	<th>{tr}Version{/tr}</th>
@@ -53,5 +54,6 @@
 	{/if}
 {/foreach}
 </table>
+</div>
 {pagination_links cant=$cant offset=$offset step=$prefs.maxRecords}
 {/pagination_links}

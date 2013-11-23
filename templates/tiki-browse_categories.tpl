@@ -110,6 +110,7 @@
 <div class="cattree">{$tree}</div>
 <div class="catobj">
 	{if $cant_pages > 0}
+    <div class="table-responsive">
 		<table class="table normal">
 			<tr>
 				<th>
@@ -149,7 +150,7 @@
 				{/if}
 			{/section}
 		</table>
-		<br>
+		</div>
 	{/if}
 </div>
 

@@ -143,6 +143,7 @@
 </form>
 <br>
 <form action="tiki-user_watches.php" method="post">
+<div class="table-responsive">
 <table class="table normal">
 	<tr>
 		{if $watches}
@@ -183,6 +184,7 @@
 		{norecords _colspan=2}
 	{/foreach}
 </table>
+</div>
 {if $watches}
 	{tr}Perform action with checked:{/tr} <input type="submit" class="btn btn-warning" name="delete" value="{tr}Delete{/tr}">
 {/if}

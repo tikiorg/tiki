@@ -61,6 +61,7 @@ $('#template-list').load($.service('workspace', 'list_templates'));
 			{/if}
 			<fieldset class="table">
 				<legend>{tr}Areas{/tr}</legend>
+                <div class="table-responsive">
 				<table class="table normal">
 					<tr>
 						<th>{tr}On{/tr}</th>
@@ -99,6 +100,7 @@ $(".enabledChecks").click(function() {
 						<td class="{cycle}" colspan="7">{tr}No areas found. Click "Update Areas" to populate this list{/tr}</td>
 					{/if}
 				</table>
+                </div>
 			</fieldset>
 			{remarksbox type="info" title="{tr}Hint{/tr}"}{tr}This tab shows you an overview of categories affected by the areas feature. <br> More help here: <a href="http://doc.tiki.org/Areas" target="tikihelp">doc.tiki.org/Areas</a> {/tr}{/remarksbox}
 			<div class="heading input_submit_container" style="text-align: center">

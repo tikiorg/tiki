@@ -4,6 +4,7 @@
 
 {if $parentId>0}[<a class="link" href="tiki-user_bookmarks.php">{tr}top{/tr}</a>] {/if}{tr}Current folder:{/tr} {$path}<br>
 <h2>{tr}Folders{/tr}</h2>
+<div class="table-responsive">
 <table class="table normal">
 	<tr>
 		<th>{tr}Name{/tr}</th>
@@ -28,8 +29,10 @@
 		{norecords _colspan=2}
 	{/section}
 </table>
+</div>
 
 <h2>{tr}Bookmarks{/tr}</h2>
+<div class="table-responsive">
 <table class="table normal">
 	<tr>
 		<th>{tr}Name{/tr}</th>
@@ -59,6 +62,7 @@
 		{norecords _colspan=3}
 	{/section}
 </table>
+</div>
 <h2>{tr}Admin folders and bookmarks{/tr}</h2>
 <table class="formcolor">
 	<tr>

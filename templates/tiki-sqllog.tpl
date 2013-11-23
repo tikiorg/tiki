@@ -11,6 +11,7 @@
 
 {include file='find.tpl' find_show_num_rows='y'}
 
+<div class="table-responsive">
 <table class="table normal">
 	<tr>
 		<th>{self_link _sort_arg='sort_mode' _sort_field='created'}{tr}Created{/tr}{/self_link}</th>
@@ -29,4 +30,6 @@
 		</tr>
 	{/foreach}
 </table>
+</div>
+
 {pagination_links cant=$cant step=$numrows offset=$offset}{/pagination_links}

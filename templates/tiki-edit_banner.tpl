@@ -260,6 +260,7 @@
 {if $zones}
 	<div align="left" class="panel panel-default"><div class="panel-body">
 		<h2>{tr}Remove Zones (you lose entered info for the banner){/tr}</h2>
+        <div class="table-responsive">
 		<table class="table normal">
 			<tr>
 				<th>{tr}Name{/tr}</th>
@@ -275,5 +276,7 @@
 				</tr>
 			{/section}
 		</table>
-	</div></div>
+        </div>
+	</div>
+    </div>
 {/if}

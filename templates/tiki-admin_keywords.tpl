@@ -39,6 +39,7 @@
 {/if}
 <br class="clear"/>
 {if $existing_keywords}
+<div class="table-responsive">
 	<table class="table normal">
 		<tbody>	
 			<tr>
@@ -59,6 +60,7 @@
 			{/section}
 		</tbody>
 	</table>
+    </div>
 {else}
 	<h2>{tr}No pages found{/tr}</h2>
 {/if}

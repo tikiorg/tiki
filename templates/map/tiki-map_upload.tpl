@@ -3,6 +3,7 @@
 <a class="pagetitle" href="tiki-map_upload.php">Layer Management</a><br><br>
 <a class="link" href="tiki-map_upload.php?dir={$dir}">
 <h3>{tr}{$dir}{/tr}</h3></a>
+<div class="table-responsive">
 <table class="table normal">
 <tr>
 <th colspan="2">{tr}Directories{/tr}</th>
@@ -62,6 +63,7 @@
 </tr>
 {/section}
 </table>
+</div>
 <br>
 {if $tiki_p_map_create eq 'y'}
 <form enctype="multipart/form-data" action="tiki-map_upload.php" method="post">

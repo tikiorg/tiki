@@ -8,7 +8,7 @@
 		{if $listpages or $find neq ''}
 		  {include file='find.tpl'}
 		{/if}
-
+        <div class="table-responsive">
 		<table class="table normal">
 		  <tr>
 		    <th>{self_link _sort_arg='sort_mode' _sort_field='contentId'}{tr}Id{/tr}{/self_link}</th>
@@ -45,6 +45,7 @@
 				{norecords _colspan=7}
 			{/section}
 		</table>
+        </div>
 		{pagination_links cant=$cant step=$prefs.maxRecords offset=$offset}{/pagination_links}
 	{/tab}
 	{tab name="{tr}Create/Edit content block{/tr}"}

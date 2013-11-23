@@ -50,6 +50,7 @@
 {if $edition_errors}
   <h2>{tr}Errors:{/tr} {$edition_info.subject} / {$edition_info.sent|tiki_short_datetime}</h2>
   <a href="tiki-newsletter_archives.php?deleteError={$edition_info.editionId}" title="{tr}Delete errors{/tr}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
+  <div class="table-responsive">
   <table class="table normal">
     <tr>
       <th>{tr}Email{/tr}</th>
@@ -65,5 +66,6 @@
       </tr>
     {/section}
   </table>
+  </div>
 {/if}
 </div>

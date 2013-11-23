@@ -16,6 +16,7 @@
 
 		{if $detailed eq 'y'}
 			{cycle values="odd,even" print=false}
+            <div class="table-responsive">
 			<table class="table normal">
 				{foreach key=k item=i from=$modcatlist}
 					{if $i.incat eq 'y'}
@@ -36,6 +37,7 @@
 					{/if}
 				{/foreach}
 			</table>
+            </div>
 		{/if}
 
 		{if $detailed eq 'n' or ($add eq 'y' and not $isInAllManagedCategories)}

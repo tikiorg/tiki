@@ -2,6 +2,7 @@
 {tabset}
 	{tab name="{tr}List{/tr}"}
 		<a href="tiki-switch_perspective.php">{tr}Return to default perspective{/tr}</a>
+        <div class="table-responsive">
 		<table class="table normal">
 			<tr>
 				<th>{tr}Perspective{/tr}</th>
@@ -26,6 +27,7 @@
 				</tr>
 			{/foreach}
 		</table>
+        </div>
 		{pagination_links offset=$offset step=$prefs.maxRecords cant=$count}{/pagination_links}
 	{/tab}
 	{if $tiki_p_perspective_create eq 'y'}

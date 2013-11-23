@@ -5,6 +5,7 @@
 {if $mapfile}<h2>{tr}Mapfile:{/tr} {$mapfile}</h2>{/if}
 {if $mode eq 'listing'}
 <h3>{tr}Available mapfiles:{/tr}</h3>
+<div class="table-responsive">
 <table class="table normal">
 <tr>
 <th>{tr}Mapfile{/tr}</th>
@@ -70,6 +71,7 @@
 <tr><td colspan="2" class="odd">{tr}No records found{/tr}</td></tr>
 {/section}
 </table>
+</div>
 {if $tiki_p_map_create eq 'y'}
 <h3>{tr}Create a new mapfile{/tr}</h3>
 <form action="tiki-map_edit.php" method="post">
@@ -83,6 +85,7 @@
 <a class="link" href="tiki-map_edit.php?mapfile={$mapfile}&mode=editing">{tr}Reload{/tr}</a>&nbsp;&nbsp;
 <a class="link" href="tiki-map_history.php?mapfile={$mapfile}">{tr}History{/tr}</a><br>
 
+<div class="table-responsive">
 <table class="table normal">
 <tr class="formcolor">
 <td>
@@ -97,6 +100,7 @@
 </td>
 </tr>
 </table>
+</div>
 
 <div align="center">
 <input type="submit" class="wikiaction btn btn-default" name="save" value="{tr}Save{/tr}">
@@ -115,7 +119,7 @@
 </div>
 {/if}
   <br>
-  <div align="center">
+  <div align="center table-responsive">
   <table class="table normal">
   <tr>
   	<td class="even">

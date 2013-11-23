@@ -72,6 +72,7 @@
 		{/if}
 		<br>
 		<form>
+            <div class="table-responsive">
 			<table class="table normal">
 				<tr>
 					{if $tiki_p_admin eq 'y'}<th width="15">{select_all checkbox_names='action[]'}</th>{/if}
@@ -124,6 +125,7 @@
 					{if $tiki_p_admin eq 'y'}{norecords _colspan=3}{else}{norecords _colspan=2}{/if}
 				{/section}
 			</table>
+            </div>
 
 			{if $tiki_p_admin eq 'y'}
 				<div style="text-align:left">

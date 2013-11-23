@@ -188,6 +188,7 @@
 			{tr}Records:{/tr} {$cant}
 			<form name="checkboxes_on" method="post" action="tiki-admin_actionlog.php">
 			{query _type='form_input'}
+            <div class="table-responsive">
 			<table class="table normal">
 				<tr>
 					<th>
@@ -299,6 +300,7 @@
 					</tr>
 				{/foreach}
 			</table>
+            </div>
 			{pagination_links cant=$cant step=$maxRecords offset=$offset}{/pagination_links}
 			<div class="formcolor">
 				{tr}Perform action with checked:{/tr}
@@ -319,7 +321,8 @@
 				{if $selectedGroups}<input type="hidden" name="selectedGroups" value="{$selectedGroups}">{/if}
 				{if $startDate}<input type="hidden" name="startDate" value="{$startDate}">{/if}
 				{if $endDate}<input type="hidden" name="endDate" value="{$endDate}">{/if}
-				{$action.action} / {$action.objectType} / {$action.object} 
+				{$action.action} / {$action.objectType} / {$action.object}
+                <div class="table-responsive">
 				<table class="table normal">
 					{if $prefs.feature_contribution eq 'y'}
 						{include file='contribution.tpl' section=$action.objectType}
@@ -334,6 +337,7 @@
 						</td>
 					</tr>
 				</table>
+                </div>
 			</form>
 		{/if}
 
@@ -366,6 +370,7 @@
 		<i>{tr}Volumes are equally distributed on each contributors/author{/tr}</i>
 
  		{if $showLogin eq 'y' and $logTimes|@count ne 0}
+            <div class="table-responsive">
 			<table class="table normal">
 				<caption>{tr}Log in{/tr}</caption>
 				<tr>
@@ -386,10 +391,12 @@
 						<td>{$time.nbLogins}</td>
 					</tr>
 				{/foreach}
+            </div>
 			</table>
 		{/if}
 
 		{if $showCateg eq 'y' and $volCateg|@count ne 0 and $tiki_p_admin eq 'y'}
+            <div class="table-responsive">
 			<table class="table normal">
 				<caption>{tr}Volume per category{/tr}</caption>
 				<tr>
@@ -410,10 +417,12 @@
 						{/foreach}
 					</tr>
 				{/foreach}
+            </div>
 			</table>
 		{/if}
 
 		{if $showCateg eq 'y' and $volUserCateg|@count ne 0}
+            <div class="table-responsive">
 			<table class="table normal">
 				<caption>{tr}Volume per category and per user{/tr}</caption>
 				<tr>
@@ -436,10 +445,12 @@
 						{/foreach}
 					</tr>
 				{/foreach}
+            </div>
 			</table>
 		{/if}
 
 		{if $userActions|@count ne 0}
+            <div class="table-responsive">
 			<table class="table normal">
 				<caption>{tr}Number of actions per user{/tr}</caption>
 				<tr>
@@ -457,11 +468,13 @@
 						{/foreach}
 					</tr>
 				{/foreach}
+            </div>
 			</table>
 			{tr}Total number of users:{/tr} {$smarty.foreach.userActions.total}
 		{/if}
 
 		{if $objectActions|@count ne 0}
+            <div class="table-responsive">
 			<table class="table normal">
 				<caption>{tr}Number of actions per object{/tr}</caption>
 				<tr>
@@ -481,11 +494,13 @@
 						{/foreach}
 					</tr>
 				{/foreach}
+            </div>
 			</table>
 			{tr}Total number of objects:{/tr} {$smarty.foreach.objectActions.total}
 		{/if}
     
 		{if $showbigbluebutton eq 'y' and $stay_in_big_Times|@count ne 0}
+            <div class="table-responsive">
 			<table class="table normal">
 				<caption>{tr}Bigbluebutton{/tr}</caption>
 				<tr>
@@ -517,9 +532,11 @@
 		          <td></td>
 		        </tr>
 			</table>
+            </div>
 		{/if}
 		
 		{if $showCateg eq 'y' and $tiki_p_admin eq 'y'}
+            <div class="table-responsive">
 			<table class="table normal">
 				<caption>{tr}Number of actions per category{/tr}</caption>
 				<tr>
@@ -538,9 +555,11 @@
 					</tr>
 				{/foreach}
 			</table>
+            </div>
 		{/if}
 
 		{if $showCateg eq 'y' && $statUserCateg|@count ne 0}
+            <div class="table-responsive">
 			<table class="table normal">
 				<caption>{tr}Number of actions per category and per user{/tr}</caption>
 				<tr>
@@ -562,6 +581,7 @@
 					</tr>
 				{/foreach}
 			</table>
+            </div>
 		{/if}
 
 		{if $prefs.feature_contribution eq 'y' && isset($groupContributions) && $groupContributions|@count >= 1}

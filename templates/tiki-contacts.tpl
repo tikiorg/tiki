@@ -76,7 +76,7 @@
 {include file='find.tpl'}
 
 {initials_filter_links}
-
+<div class="table-responsive">
 <table class="table normal">
 	<tr>
 		{assign var=numbercol value=4}
@@ -177,7 +177,8 @@
 		{/if}
 	{/foreach}
 </table>
-	
+</div>
+
 <div class="center-block">
 	{if $prev_offset >= 0}
 		[<a class="prevnext" href="tiki-contacts.php?find={$find}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}Prev{/tr}</a>]

@@ -30,7 +30,8 @@
 {/if}
 
 <h2>{tr}Attachments{/tr}</h2>
-<table class="table normal">
+<div class="table-responsive">
+    <table class="table normal">
 	<tr>
 		{assign var='nbcols' value=2}
 		<th class="auto">&nbsp;</th>
@@ -82,4 +83,5 @@
 	</tr>
 	{/section}
 </table>
-{/strip}
+<div class="table-responsive">
+    {/strip}

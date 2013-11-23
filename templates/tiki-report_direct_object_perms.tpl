@@ -1,5 +1,6 @@
 <h1>Wiki pages with direct object permissions</h1>
 <a href="tiki-list_object_permissions.php">Click here to access list of permissions for all objects.</a>
+<div class="table-responsive">
 <table class="table normal">
 	<tr>
 		<th>Pagename</th>
@@ -10,4 +11,4 @@
 		</tr>
 	{/foreach}
 </table>
-
+</div>

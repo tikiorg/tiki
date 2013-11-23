@@ -11,6 +11,7 @@
 {/if}
 
 {assign var=numbercol value=2}
+<div class="table-responsive">
 <table class="table normal">
 	<tr>
 		{if $comments}
@@ -142,6 +143,7 @@
 		{norecords _colspan=$numbercol}
 	{/section}
 </table>
+</div>
 
 {if $comments}
 	<div class="formcolor">

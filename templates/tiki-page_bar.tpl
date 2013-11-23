@@ -95,34 +95,6 @@
 
 			{if isset($show_page) and $show_page eq 'y'}
 
-				{* don't show comments if feature disabled or not enough rights *}
-
-				{if $prefs.feature_wiki_comments eq 'y'
-					&& ($prefs.wiki_comments_allow_per_page neq 'y' or $info.comments_enabled eq 'y')
-					&& $tiki_p_wiki_view_comments eq 'y'
-					&& $tiki_p_read_comments eq 'y'}
-					
-					{* Auto display comments if display by default preference is set *}
-					{if $prefs.wiki_comments_displayed_default eq 'y'}
-					{jq}{literal}
-						var id = '#comment-container';
-						$(id).comment_load('tiki-ajax_services.php?controller=comment&action=list&type=wiki+page&objectId={/literal}{$page|escape:url}{literal}#comment-container');
-						{/literal}
-					{/jq}
-					{/if}
-					
-					
-						<a id="comment-toggle" class="btn btn-default" href="{service controller=comment action=list type="wiki page" objectId=$page}#comment-container">
-							{tr}Comments{/tr}
-							{if $count_comments}
-								&nbsp;(<span class="count_comments">{$count_comments}</span>)
-							{/if}
-						</a>
-					
-					{jq}
-						$('#comment-toggle').comment_toggle();
-					{/jq}
-				{/if}
 
 				{* don't show attachments button if feature disabled or no corresponding rights or no attached files and r/o*}
 
@@ -170,7 +142,7 @@
 	{/capture}
 
 	{if $page_bar neq ''}
-		<div class="btn-group" id="page-bar">
+		<div class="btn-bar" id="page-bar">
 			{$page_bar}
 		</div>
 	{/if}
@@ -191,4 +163,32 @@
 		{/if}
 
 	{/strip}
+{/if}
+{* don't show comments if feature disabled or not enough rights *}
+
+{if $prefs.feature_wiki_comments eq 'y'
+&& ($prefs.wiki_comments_allow_per_page neq 'y' or $info.comments_enabled eq 'y')
+&& $tiki_p_wiki_view_comments eq 'y'
+&& $tiki_p_read_comments eq 'y'}
+
+{* Auto display comments if display by default preference is set *}
+    {if $prefs.wiki_comments_displayed_default eq 'y'}
+        {jq}{literal}
+            var id = '#comment-container';
+            $(id).comment_load('tiki-ajax_services.php?controller=comment&action=list&type=wiki+page&objectId={/literal}{$page|escape:url}{literal}#comment-container');
+        {/literal}
+        {/jq}
+    {/if}
+
+
+    <a id="comment-toggle" class="btn btn-default" href="{service controller=comment action=list type="wiki page" objectId=$page}#comment-container">
+        {tr}Comments{/tr}
+        {if $count_comments}
+            &nbsp;(<span class="count_comments">{$count_comments}</span>)
+        {/if}
+    </a>
+
+    {jq}
+        $('#comment-toggle').comment_toggle();
+    {/jq}
 {/if}

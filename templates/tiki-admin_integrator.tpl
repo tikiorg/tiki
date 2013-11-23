@@ -67,7 +67,8 @@
 <h2>{tr}Available Repositories{/tr}</h2>
 
 {* Table with list of repositories *}
-<table class="table normal" border=1 id="integrator-repositories">
+<div class="table-responsive">
+<table class="table normal" id="integrator-repositories">
   <tr>
     <th rowspan="2">{tr}Name{/tr}</th>
     <th>{tr}Path{/tr}</th>
@@ -104,3 +105,4 @@
     </tr>
   {/section}
 </table>
+</div>

@@ -8,6 +8,7 @@
 {/if}
 
 <form method="post">
+<div class="table-responsive">
 <table class="table normal invite">
 <tr>
 	<td>
@@ -42,4 +43,5 @@
 	<td><input type="submit" class="btn btn-default" name="invite" value="{tr}Invite{/tr}"></td>
 </tr>
 </table>
+</div>
 </form>

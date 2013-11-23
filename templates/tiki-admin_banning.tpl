@@ -201,6 +201,7 @@
 	<input type="hidden" name="offset" value="{$offset|escape}">
 	<input type="hidden" name="find" value="{$find|escape}">
 	<input type="hidden" name="sort_mode" value="{$sort_mode|escape}">
+    <div class="table-responsive">
 	<table class="table normal">
 		<tr>
 			<th><input type="submit" class="btn btn-warning" name="del" value="{tr}x{/tr} "></th>
@@ -243,6 +244,7 @@
 				{norecords _colspan=5}
 		{/section}
 	</table>
+    </div>
 </form>
 
 {pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}

@@ -57,7 +57,8 @@
 {jq notonready=true}
 var CHECKBOX_LIST = [{{section name=user loop=$items}'msg[{$items[user].msgId}]'{if not $smarty.section.user.last},{/if}{/section}}];
 {/jq}
-	<table class="table normal">
+    <div class="table-responsive">
+        <table class="table normal">
 		<tr>
 			<th><input type="checkbox" name="checkall" onclick="checkbox_list_check_all('form_messu_archive',CHECKBOX_LIST,this.checked);"></th>
 			<th style="width:18px">&nbsp;</th>
@@ -80,5 +81,6 @@ var CHECKBOX_LIST = [{{section name=user loop=$items}'msg[{$items[user].msgId}]'
 			<tr><td colspan="6">{tr}No messages to display{/tr}<td></tr>
 		{/section}
 	</table>
+    </div>
 </form>
 {pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}

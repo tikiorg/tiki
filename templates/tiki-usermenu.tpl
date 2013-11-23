@@ -42,6 +42,7 @@
 {include file='find.tpl'}
 
 <form action="tiki-usermenu.php" method="post">
+    <div class="table-responsive">
 	<table class="table normal">
 		<tr>
 			<th><input type="submit" class="btn btn-warning" name="delete" value="x " title="{tr}Delete Selected{/tr}"></th>
@@ -69,6 +70,7 @@
 			{norecords _colspan=5}
 		{/section}
 	</table>
+    </div<
 </form>
 
 {pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}

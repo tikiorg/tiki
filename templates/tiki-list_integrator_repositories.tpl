@@ -11,6 +11,7 @@
 
 {* Table with list of repositories (if array is not empty) *}
 {if count($repositories) gt 0}
+<div class="table-responsive">
 <table class="table normal" id="integrator-repositories">
   <tr>
     <th>{tr}Name{/tr}</th>
@@ -28,6 +29,7 @@
     </tr>
   {/section}
 </table>
+</div>
 {else}
 
 {* Here should be panel (let it be style 'info-panel') with info

@@ -1,4 +1,5 @@
 <h4>{tr}Events{/tr}</h4>
+<div class="table-responsive">
 <table class="table normal">
 	<tr>
 		<th>{tr}From{/tr}</th>
@@ -36,6 +37,7 @@
 		</tr>
 	{/foreach}
 </table>
+</div>
 <form class="simple add-event no-ajax" method="post" action="{service controller=tracker_todo action=add trackerId=$trackerId}">
 	<h4>{tr}New event{/tr}</h4>
 	<label>

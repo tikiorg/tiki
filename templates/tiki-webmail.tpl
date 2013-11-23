@@ -43,6 +43,7 @@
 		{tab name="{tr}List{/tr}"}
 			{if count($accounts) != 0}
 				<h2>{tr}Personal e-mail accounts{/tr}</h2>
+                <div class="table-responsive">
 				<table class="table normal">
 					<tr>
 						<th>{tr}Active{/tr}</th>
@@ -90,11 +91,13 @@
 						{norecords _colspan=5}
 					{/section}
 				</table>
+                </div>
 			{/if}
 			
 			{if $tiki_p_use_group_webmail eq 'y'}
 				{if count($pubAccounts) != 0}
 					<h2>{tr}Group e-mail accounts{/tr}</h2>
+                    <div class="table-responsive">
 					<table class="table normal">
 						<tr>
 							<th>{tr}Active{/tr}</th>
@@ -142,6 +145,7 @@
 							{norecords _colspan=5}
 						{/section}
 					</table>
+                    </div>
 				{/if}
 			{/if}
 		{/tab}
@@ -345,6 +349,7 @@
 		<input type="submit" class="btn btn-default" name="operate" value="{tr}Mark{/tr}">
 		<br>
 		<br>
+        <div class="table-responsive">
 		<table class="table normal webmail_list">
 			<tr>
 				<th>{select_all checkbox_names='msg[]'}</th>
@@ -387,6 +392,7 @@
 				</tr>
 			{/section}
 		</table>
+        </div>
 	</form>
 {/if}
 
@@ -607,6 +613,7 @@
 				{tr}The following addresses are not in your address book{/tr}
 				<br><br>
 				<form action="tiki-webmail.php" method="post">
+                    <div class="table-responsive">
 					<table class="table normal">
 						<tr>
 							<th>&nbsp;</th>
@@ -640,6 +647,7 @@
 							</td>
 						</tr>
 					</table>
+                    </div>
 				</form>
 			{/if}
 		{/if}

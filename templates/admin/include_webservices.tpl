@@ -54,6 +54,7 @@
 	{/if}
 	{if $data}
 		<h3>{tr}Response Information{/tr}</h3>
+        <div class="table-responsive">
 		<table class="table normal">
 			<tr>
 				<th>{tr}OIntegrate Version{/tr}</th>
@@ -98,6 +99,7 @@
 				</tr>
 			{/foreach}
 		</table>
+        </div>
 		{if ! $storedName}
 			<p>{tr}Register this web service. It will be possible to register the templates afterwards. Service name must only contain letters.{/tr}</p>
 			<p>

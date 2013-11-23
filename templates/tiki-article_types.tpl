@@ -7,6 +7,7 @@
 		{section name=user loop=$types}
 			<h3>{tr}{$types[user].type|escape}{/tr}</h3>
 			<a class="link" href="tiki-view_articles.php?type={$types[user].type|escape:url}">{tr}View articles with this type{/tr}</a>
+            <div class="table-responsive">
 			<table class="table normal">
 				<tr>
 					<th>{tr}Articles{/tr}</th>
@@ -103,7 +104,9 @@
 					</td>
 			</tr>
 		</table>
+        </div>
 		{if $prefs.article_custom_attributes eq 'y'}
+            <div class="table-responsive">
 			<table class="table normal">
 				<tr>
 					<th>{tr}Custom attribute{/tr}</th>
@@ -125,6 +128,7 @@
 					<td>&nbsp;</td>
 				</tr>
 			</table>
+            </div>
 		{/if}
 		<input type="submit" class="btn btn-default" name="update_type" value="{tr}Save{/tr}"><br>
 		<hr>

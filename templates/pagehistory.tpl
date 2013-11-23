@@ -2,6 +2,7 @@
 	{if !isset($translation_mode) or $translation_mode ne 'y'}
 		<h2>{tr}Comparing version {$old.version} with version {$new.version}{/tr}</h2>		
 	{/if}
+<div class="table-responsive">
 	<table class="table normal diff">
 	{if isset($translation_mode) and $translation_mode eq 'n'}
 		<tr>
@@ -101,4 +102,5 @@
 			{if $diffdata}{$diffdata}{else}<tr><td colspan="4">{tr}Versions are identical{/tr}</td></tr>{/if}
 		{/if}
 	</table>
+</div>
 {/if}

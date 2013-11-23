@@ -7,6 +7,7 @@
 </div>
 
 <h2>{tr}List of featured links{/tr}</h2>
+<div class="table-responsive">
 <table class="table normal">
 	<tr>
 		<th>{tr}URL{/tr}</th>
@@ -33,7 +34,8 @@
 		{norecords _colspan=6}
 	{/section}
 </table>
-<br>
+</div>
+
 {if $editurl eq 'n'}
 	<h2>{tr}Add Featured Link{/tr}</h2>
 {else}

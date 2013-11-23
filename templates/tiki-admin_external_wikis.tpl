@@ -29,6 +29,7 @@
 
 <h2>{tr}External Wiki{/tr}</h2>
 
+<div class="table-responsive">
 <table class="table normal">
 	<tr>
 		<th>
@@ -55,5 +56,6 @@
 		{norecords _colspan=3}
 	{/section}
 </table>
+</div>
 
 {pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}

@@ -4,6 +4,7 @@
 {include file='tiki-page_contribution_form.tpl'}
 {if $showstatistics==1}
 <h2>{tr}Statistics{/tr}</h2>
+<div class="table-responsive">
 <table class="table normal">
  <tr>
   <th rowspan="2">{tr}Author{/tr}</th>
@@ -62,6 +63,7 @@
   <td class="text"><strong>(100 %)</strong></td>
  </tr>
 </table>
+</div>
 {/if}
 {if $showpage==1}
 <h2>{tr}Page changes{/tr}</h2>

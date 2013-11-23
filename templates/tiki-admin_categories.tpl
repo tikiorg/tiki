@@ -90,6 +90,7 @@
 				<input type="hidden" name="find_objects" value="{$find_objects|escape}">
 			</form>
 		{/if}
+        <div class="table-responsive">
 		<table class="table normal">
 			<tr>
 				<th>&nbsp;</th>
@@ -115,6 +116,7 @@
 				{norecords _colspan=3}
 			{/section}
 		</table>
+        </div>
 
 		{pagination_links cant=$cant_objects step=$prefs.maxRecords offset=$offset}{/pagination_links}
 	{/tab}

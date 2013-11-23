@@ -35,6 +35,7 @@
 		<div class="panel panel-default">
 			<div class="cbox-data">
 				<form method='post' action='tiki-user_contacts_prefs.php'>
+                    <div class="table-responsive">
 					<table class="table normal">
 						<tr>
 							<th colspan="2">{tr}Order{/tr}</th>
@@ -71,6 +72,7 @@
 							</tr>
 						{/foreach}
 					</table>
+                    </div>
 					<div>{tr}Add:{/tr} <input type='text' name='ext_add' /> <input type='submit' name='add_fields' value="{tr}Add{/tr}"></div>
 				</form>
 			</div>

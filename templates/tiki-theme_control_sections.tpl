@@ -55,6 +55,7 @@
 
 <h2>{tr}Assigned sections{/tr}</h2>
 <form action="tiki-theme_control_sections.php" method="post">
+    <div class="table-responsive">
 	<table class="table normal">
 		<tr>
 			<th><input type="submit" class="btn btn-warning" name="delete" value="{tr}Del{/tr}"></th>
@@ -80,5 +81,6 @@
 			</tr>
 		{/section}
 	</table>
+    </div>
 </form>
 <br> <br> <br> 

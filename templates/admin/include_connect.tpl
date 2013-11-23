@@ -118,7 +118,8 @@
 				{/if}
 			</form>
 
-			<table class="table normal">
+                <div class="table-responsive">
+                <table class="table normal">
 				<tr>
 					<th>{tr}Created{/tr}</th>
 					<th>{tr}Title{/tr}</th>
@@ -145,6 +146,7 @@
 					{norecords _colspan=4}
 				{/section}
 			</table>
+            </div>
 
 		{/tab}
 	{/if}

@@ -25,7 +25,7 @@
         <div class="panel panel-default">
         <div class="panel-heading">{icon _id=exclamation alt="{tr}Error{/tr}" style="vertical-align:middle"} {$errortitle|default:"{tr}Error{/tr}"}
         </div>
-        <div class="cbox-data">
+        <div class="panel-body">
         <br>{$msg}
 <form action="{$self}{if $query}?{$query|escape}{/if}" method="post">
 {foreach key=k item=i from=$post}

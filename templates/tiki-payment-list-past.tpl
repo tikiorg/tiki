@@ -1,3 +1,4 @@
+<div class="table-responsive">
 <table class="table normal">
 	<tr>
 		<th>{tr}ID{/tr}</th>
@@ -32,4 +33,6 @@
 		</tr>
 	{/foreach}
 </table>
+</div>
+
 {pagination_links cant=$payments.cant step=$payments.max offset=$payments.offset offset_arg=$payments.offset_arg}{/pagination_links}

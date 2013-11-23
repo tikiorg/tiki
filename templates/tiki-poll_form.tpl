@@ -6,7 +6,7 @@
 	{/remarksbox}
 {else}
 	<div class="panel panel-default">
-	<div class="cbox-data">
+	<div class="panel-body">
 	{include file='tiki-poll.tpl'}
 	</div>
 	</div>
