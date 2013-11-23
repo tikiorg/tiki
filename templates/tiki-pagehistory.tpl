@@ -165,6 +165,7 @@ if (jqueryTiki.chosen) {
 				{if $prefs.default_wiki_diff_style eq "old"}, {tr}c=compare{/tr}, {tr}d=diff{/tr}{/if}
 				{if $tiki_p_rollback eq 'y'}, {tr}b=rollback{/tr}{/if}
 			</div></div>
+            <div class="table-responsive">
 			<table class="table">
 				<tr>
 					{if $tiki_p_remove eq 'y'}<th><input type="submit" class="btn btn-warning" name="delete" value="{tr}Del{/tr}"></th>{/if}
@@ -342,6 +343,7 @@ if (jqueryTiki.chosen) {
 				</tr>
 				{/if}
 			</table>
+			</div>
 			{if $paginate}
 				{if isset($smarty.request.history_offset)}
 					{pagination_links cant=$history_cant offset=$smarty.request.history_offset offset_arg="history_offset" step=$maxRecords}{/pagination_links}
