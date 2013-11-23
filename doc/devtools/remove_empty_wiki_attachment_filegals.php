@@ -41,7 +41,7 @@ function removeEmptyAttachmentGals()
 		}
 	}
 	if ($galleriesToDelete) {
-		$prompt = 'Are you sure you want to permanently remove all these galleries? There is no undo... (y/n): ';
+		$prompt = 'Are you sure you want to permanently remove all these (' . count($galleriesToDelete) . ') galleries? There is no undo... (y/n): ';
 		if (readSTDIN($prompt, array('y', 'n')) == 'y') {
 			echo "\n\n\nDeleting...\n\n";
 			foreach ($galleriesToDelete as $gal) {
