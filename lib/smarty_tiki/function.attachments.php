@@ -52,7 +52,7 @@ function s_f_attachments_actionshandler( $params )
 					global $smarty;
 					$smarty->loadPlugin('smarty_function_query');
 
-					$galleryId = $filegallib->get_attachment_gallery($params['page'], 'wiki page');
+					$galleryId = $filegallib->get_attachment_gallery($params['page'], 'wiki page', true);
 					$filegallib->actionHandler(
 						'uploadFile', array(
 							'galleryId' => array($galleryId),
@@ -86,9 +86,9 @@ function s_f_attachments_actionshandler( $params )
  */
 function smarty_function_attachments($params, $template)
 {
-	if ( ! is_array($params) || ! isset($params['_id']) || ! isset($params['_type']) ) return;
+	if ( ! is_array($params) || ! isset($params['_id']) || ! isset($params['_type']) ) return tra('Missing _id or _type params');
 
-	global $smarty, $prefs, $tikilib, $userlib;
+	global $smarty, $prefs, $page;
 	global $filegallib; include_once('lib/filegals/filegallib.php');
 
 	/*** For the moment, only wiki attachments are handled through file galleries ***/
@@ -97,8 +97,12 @@ function smarty_function_attachments($params, $template)
 	$galleryId = $filegallib->get_attachment_gallery($params['_id'], $params['_type']);
 
 	/*** If anything in this function is changed, please change lib/wiki-plugins/wikiplugin_attach.php as well. ***/
+	/* but wikiplugin_attach doesn't seem to work at all with file gals attachemnts??? jonnyb tiki12 */
 
-	if ( empty($galleryId) || ! $gal_info = $filegallib->get_file_gallery($galleryId) ) {
+	if ( empty($galleryId) ) {			// no gallery for this page yet, is no problem (12.0+)
+		$gal_info = $filegallib->default_file_gallery();
+		$gal_info['name'] = $page . ' *';	// temp name with * - not displayed in most configs
+	} else if (! $gal_info = $filegallib->get_file_gallery($galleryId) ) {
 		$smarty->loadPlugin('smarty_block_remarksbox');
 		$repeat = false;
 		return smarty_block_remarksbox(
@@ -132,7 +136,11 @@ function smarty_function_attachments($params, $template)
 	$gal_info['show_checked'] = 'n';
 
 	// Get list of files in the gallery
-	$files = $filegallib->get_files(0, -1, $params['sort_mode'], '', $galleryId);
+	if ( !empty($galleryId) ) {
+		$files = $filegallib->get_files(0, -1, $params['sort_mode'], '', $galleryId);
+	} else {
+		$files = array('data' => array(), 'cant' => 0);
+	}
 
 	// Reajust perms using special wiki attachments perms
 	global $tiki_p_wiki_admin_attachments, $tiki_p_wiki_attach_files, $tiki_p_wiki_view_attachments;
