@@ -959,8 +959,10 @@ if ( \$('#$id') ) {
 
 			// Reset the tr_offset1 value, which comes from a list selection and specifies the offset to use within the resultset.
 			//  Pretty trackers can contain other tracker plugins. These plugins should get the results from index = 0, and not the index in the calling list
-			$_REQUEST['list_tr_offset1'] = $_REQUEST['tr_offset1'];
-			$_REQUEST['tr_offset1'] = 0;
+			if (isset($_REQUEST['tr_offset1'])) {
+				$_REQUEST['list_tr_offset1'] = $_REQUEST['tr_offset1'];
+				$_REQUEST['tr_offset1'] = 0;
+			}
 		}
 		foreach ($args as $arg) {
 			if (substr($arg, 0, 4) == '{$f_') {
