@@ -1414,17 +1414,19 @@ function wikiplugin_tracker($data, $params)
 					}
 
 					if ($f['type'] != 'S' && empty($tpl) && empty($wiki)) {
-						$back .= '<tr><td class="plugindesc_cell" colspan="2">';
-						$back .= '<span class="trackerplugindesc">';
+						if ($showdesc == 'y') {
+							$back .= '<tr><td class="plugindesc_cell" colspan="2">';
+							$back .= '<span class="trackerplugindesc">';
 
-						if ($f['descriptionIsParsed'] == 'y') {
-							$back .= $tikilib->parse_data($f['description']);
-						} else {
-							$back .= tra($f['description']);
+							if ($f['descriptionIsParsed'] == 'y') {
+								$back .= $tikilib->parse_data($f['description']);
+							} else {
+								$back .= tra($f['description']);
+							}
+
+							$back .= '</span>';
+							$back .= "</td></tr>";
 						}
-
-						$back .= '</span>';
-						$back .= "</td></tr>";
 					}
 				}
 			}
