@@ -2,11 +2,12 @@
 {if empty($sort_arg)}
 	{assign var='sort_arg' value='sort_mode'}
 {/if}
-<table class="normal">
+
+<table class="table table-bordered">
 	<tr>
 		{if $gal_info.show_checked ne 'n' and ($tiki_p_admin_file_galleries eq 'y' or $tiki_p_upload_files eq 'y')}
 			{assign var=nbCols value=$nbCols+1}
-			<th class="checkbox">
+			<th class="checkbox-cell">
 				{select_all checkbox_names='file[],subgal[]'}
 			</th>
 		{/if}
@@ -261,7 +262,7 @@
 		<tr class="{cycle}">
 
 			{if $gal_info.show_checked neq 'n' and ($tiki_p_admin_file_galleries eq 'y' or $tiki_p_upload_files eq 'y')}
-				<td class="checkbox">
+				<td class="checkbox-cell">
 					{if $files[changes].isgal eq 1}
 						{assign var='checkname' value='subgal'}
 					{else}
@@ -348,7 +349,7 @@
 						{else}
 							{assign var=propval value="<a class='fgalname' $link>$propval</a>"}
 						{/if}
-						{if $propname eq 'name' and $gal_info.show_name eq 'n'}
+						{if $propname eq 'name' and $gal_info.show_name eq 'n'  and $gal_info.show_description neq 'n'}
 							{if $gal_info.max_desc gt 0}
 								{assign var=desc value=$files[changes].description|truncate:$gal_info.max_desc:"...":false|nl2br}
 							{else}
@@ -483,6 +484,7 @@
 
 
 </table>
+
 {if $prefs.feature_jquery_tooltips eq 'y'}
 	{jq}if (jqueryTiki.tooltips) { $('a.fgalbacklink').cluetip({showTitle:false, sticky:true}); }{/jq}
 {/if}
