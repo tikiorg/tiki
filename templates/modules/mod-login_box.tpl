@@ -47,7 +47,7 @@ if (jqueryTiki.no_cookie) {
 						<legend>{tr}Return to Main User{/tr}</legend>
 						<input type="hidden" name="su" value="revert" />
 						<input type="hidden" name="username" value="auto" />
-						<div class="text-center"><button type="submit" class="btn btn-sm" name="actsu">{tr}Switch{/tr}</button></div>
+						<div class="text-center"><button type="submit" class="btn btn-default btn-sm" name="actsu">{tr}Switch{/tr}</button></div>
 					</fieldset>
 				</form>
 			{elseif $tiki_p_admin eq 'y'}
@@ -60,7 +60,7 @@ if (jqueryTiki.no_cookie) {
 							{help url="Switch+User" desc="{tr}Help{/tr}" desc="{tr}Switch User:{/tr}{tr}Enter user name and click 'Switch'.<br>Useful for testing permissions.{/tr}"}
 						{/if}
 						<input type="text" name="username" id="login-switchuser_{$module_logo_instance}" size="{if empty($module_params.input_size)}15{else}{$module_params.input_size}{/if}" />
-						<div class="text-center"><button type="submit" class="btn btn-sm" name="actsu">{tr}Switch{/tr}</button></div>
+						<div class="text-center"><button type="submit" class="btn btn-default btn-sm" name="actsu">{tr}Switch{/tr}</button></div>
 						{autocomplete element="#login-switchuser_"|cat:$module_logo_instance type="username"}
 					</fieldset>
 				</form>
@@ -92,7 +92,7 @@ if (jqueryTiki.no_cookie) {
 				{/foreach}
 				</select>
 				<input type="hidden" name="action" value="select"/>
-				<input type="submit" class="btn btn-sm" value="{tr}Go{/tr}"/>
+				<input type="submit" class="btn btn-default btn-sm" value="{tr}Go{/tr}"/>
 			</fieldset>
 		</form>
 		{/if}
@@ -209,7 +209,7 @@ function doChallengeResponse() {
 			{/if}
 		{/if}
 		<div class="text-center">
-			<input class="btn btn-sm button submit" type="submit" name="login" value="{tr}Log in{/tr}" />
+			<input class="btn btn-default btn-sm button submit" type="submit" name="login" value="{tr}Log in{/tr}" />
 		</div>
 		{if $module_params.show_forgot eq 'y' or $module_params.show_register eq 'y'}
 			<div {if $mode eq 'header'}class="text-right" display:inline"{/if}>
@@ -264,7 +264,7 @@ function doChallengeResponse() {
 		<fieldset>
 			<legend>{tr}OpenID Log in{/tr}</legend>
 			<input class="openid_url" type="text" name="openid_url"/>
-			<input type="submit" class="btn btn-sm" value="{tr}Go{/tr}"/>
+			<input type="submit" class="btn btn-default btn-sm" value="{tr}Go{/tr}"/>
 			<a class="linkmodule tikihelp" target="_blank" href="http://doc.tiki.org/OpenID">{tr}What is OpenID?{/tr}</a>
 		</fieldset>
 	</form>
