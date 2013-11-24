@@ -114,7 +114,7 @@
 {* ----------------------- tab with form --------------------------------------- *}
 
 	{if !empty($user) and $prefs.feature_user_watches eq 'y'}
-		<div class="floatright">
+		<div class="pull-right">
 			{if not $group_info.isWatching}
 				{self_link watch=$groupname}
 					{icon _id='eye' alt="{tr}Group is NOT being monitored. Click icon to START monitoring.{/tr}"}

@@ -11,7 +11,7 @@
 	{/if}
 	<div class="content">{$activityframe.content}</div>
 	<div class="footer">
-		<span class="floatright">
+		<span class="pull-right">
 			{$activityframe.activity.modification_date|tiki_short_datetime}
 		</span>
 		<a class="comment" href="{service controller=comment action=list type=activity objectId=$activityframe.activity.object_id}">

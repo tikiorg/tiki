@@ -14,7 +14,7 @@
 {if $prefs.feature_webmail eq 'y'}
 <form action="javascript:void(null);" onsubmit="return submitWebmail();" name="webmail_form">
 	<div class="mod_webmail_heading">
-		<div class="floatright">
+		<div class="pull-right">
 			{*icon _id='resultset_first' class=''*}
 			{if isset($prevstart) and $prevstart}
 				<a href="#" onclick="doRefreshWebmail({$prevstart});return false;">{icon _id='resultset_previous' class=''}</a>

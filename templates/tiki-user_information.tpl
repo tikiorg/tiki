@@ -18,10 +18,10 @@
 	<div>
 		<div style="vertical-align: top">
 			<div class="clearfix">
-				<div class="floatleft">
+				<div class="pull-left">
 					<h2>{$userinfo.login|userlink}</h2>
 				</div>
-				<div class="floatright">
+				<div class="pull-right">
 					{if $tiki_p_admin eq 'y' or $userinfo.login eq $user}
 						{if $tiki_p_admin eq 'y'}
 							<a class="link" href="tiki-assignuser.php?assign_user={$userinfo.login|escape:"url"}" title="{tr}Assign Group{/tr}">
@@ -46,8 +46,8 @@
                 <div class="panel-body">
 					{if $avatar}
 						<div class="clearfix {cycle}">
-							<div class="floatleft">{tr}Avatar{/tr} ({tr}User Icon{/tr}):</div>
-							<div class="floatright">
+							<div class="pull-left">{tr}Avatar{/tr} ({tr}User Icon{/tr}):</div>
+							<div class="pull-right">
 								{if $userinfo.login eq $user}<a href="tiki-pick_avatar.php">{/if}
 								{$avatar}
 								{if $userinfo.login eq $user}</a>{/if}
@@ -57,25 +57,25 @@
 
 					{if $realName}
 						<div class="clearfix {cycle}">
-							<div class="floatleft">{tr}Real Name:{/tr}</div>
-							<div class="floatright">{$realName|escape}</div>
+							<div class="pull-left">{tr}Real Name:{/tr}</div>
+							<div class="pull-right">{$realName|escape}</div>
 						</div>
 					{/if}
 					{if $prefs.feature_community_gender eq 'y' and $gender neq 'Hidden' and $gender}
 						<div class="clearfix {cycle}">
-							<div class="floatleft">{tr}Gender:{/tr}</div>
-							<div class="floatright">{tr}{$gender}{/tr}</div>
+							<div class="pull-left">{tr}Gender:{/tr}</div>
+							<div class="pull-right">{tr}{$gender}{/tr}</div>
 						</div>
 					{/if}
 					{if $email_isPublic neq 'n' and $userinfo.email neq ''}
 						<div class="clearfix {cycle}">
-							<div class="floatleft">{tr}Email:{/tr}</div>
-							<div class="floatright">{mailto address=$userinfo.email text=$scrambledEmail encode="javascript"}</div>
+							<div class="pull-left">{tr}Email:{/tr}</div>
+							<div class="pull-right">{mailto address=$userinfo.email text=$scrambledEmail encode="javascript"}</div>
 						</div>
 					{elseif $email_isPublic eq 'n' and $userinfo.email neq '' and $tiki_p_admin eq 'y'}
 						<div class="clearfix {cycle}">
-							<div class="floatleft">{tr}Email:{/tr}</div>
-							<div class="floatright">
+							<div class="pull-left">{tr}Email:{/tr}</div>
+							<div class="pull-right">
 								{mailto address=$userinfo.email encode="javascript"}
 								<i>{tr}(non public){/tr}</i>
 							</div>
@@ -83,26 +83,26 @@
 					{/if}
 					{if !empty($country) and $country != 'Other'}
 						<div class="clearfix {cycle}">
-							<div class="floatleft">{tr}Country:{/tr}</div>
-							<div class="floatright">{$userinfo.login|countryflag} {tr}{$country|stringfix}{/tr}</div>
+							<div class="pull-left">{tr}Country:{/tr}</div>
+							<div class="pull-right">{$userinfo.login|countryflag} {tr}{$country|stringfix}{/tr}</div>
 						</div>
 					{/if}
 					{if $prefs.change_theme ne 'n'}
 						<div class="clearfix {cycle}">
-							<div class="floatleft">{tr}Theme:{/tr}</div>
-							<div class="floatright">{$user_style}</div>
+							<div class="pull-left">{tr}Theme:{/tr}</div>
+							<div class="pull-right">{$user_style}</div>
 						</div>
 					{/if}
 					{if $prefs.change_language eq 'y'}
 						<div class="clearfix {cycle}">
-							<div class="floatleft">{tr}Language:{/tr}</div>
-							<div class="floatright">{$user_language}</div>
+							<div class="pull-left">{tr}Language:{/tr}</div>
+							<div class="pull-right">{$user_language}</div>
 						</div>
 					{/if}
 					{if $homePage}
 						<div class="clearfix {cycle}">
-							<div class="floatleft">{tr}Homepage:{/tr}</div>
-							<div class="floatright">
+							<div class="pull-left">{tr}Homepage:{/tr}</div>
+							<div class="pull-right">
 								<a href="{$homePage|escape}" class="link" title="{tr}User's homepage{/tr}">
 									{$homePage|escape}
 								</a>
@@ -111,14 +111,14 @@
 					{/if}
 					{if $prefs.feature_score eq 'y'}
 						<div class="clearfix {cycle}">
-							<div class="floatleft">{tr}Score:{/tr}</div>
-							<div class="floatright">{$userinfo.score|star}{$userinfo.score}</div>
+							<div class="pull-left">{tr}Score:{/tr}</div>
+							<div class="pull-right">{$userinfo.score|star}{$userinfo.score}</div>
 						</div>
 					{/if}
 					{if $prefs.feature_wiki eq 'y' && $prefs.feature_wiki_userpage eq 'y' && ($userPage_exists or $user == $userinfo.login)}
 						<div class="clearfix {cycle}">
-							<div class="floatleft">{tr}Personal Wiki Page:{/tr}</div>
-							<div class="floatright">
+							<div class="pull-left">{tr}Personal Wiki Page:{/tr}</div>
+							<div class="pull-right">
 								{if $userPage_exists}
 									<a class="link" href="tiki-index.php?page={$prefs.feature_wiki_userpage_prefix|escape:'url'}{$userinfo.login|escape:'url'}">
 										{$prefs.feature_wiki_userpage_prefix}{$userinfo.login}
@@ -133,8 +133,8 @@
 					{/if}
 
 					<div class="clearfix {cycle}">
-						<div class="floatleft">{tr}Last login:{/tr}</div>
-						<div class="floatright">{$userinfo.lastLogin|tiki_short_datetime}</div>
+						<div class="pull-left">{tr}Last login:{/tr}</div>
+						<div class="pull-right">{$userinfo.lastLogin|tiki_short_datetime}</div>
 					</div>
 
 					{* Custom database fields *}
@@ -142,8 +142,8 @@
 						{cycle values="even,odd" print=false}
 						{if $customfields[ir].show}
 							<div class="clearfix {cycle}">
-								<div class="floatleft">{$customfields[ir].label}:</div>
-								<div class="floatright">{$customfields[ir].value}</div>
+								<div class="pull-left">{$customfields[ir].label}:</div>
+								<div class="pull-right">{$customfields[ir].value}</div>
 							</div>
 						{/if}
 					{/section}
@@ -161,10 +161,10 @@
 {if $prefs.user_tracker_infos and $infoPublic eq "y"}{tab name="{tr}Additional Information{/tr}"}
 	<div class="panel panel-default"><div class="panel-body">
 		<div class="clearfix">
-			<div class="floatleft">
+			<div class="pull-left">
 				<h2 class="center">{tr}Additional Information{/tr} &ndash; {$userinfo.login|userlink}</h2>
 			</div>
-			<div class="floatright">
+			<div class="pull-right">
 				{if $userinfo.login eq $user}
 					<a class="link" href="tiki-view_tracker_item.php?view=+user&cookietab=2" title="{tr}Change user information{/tr}">
 						{icon _id='wrench' align="right" alt="{tr}Change user information{/tr}"}
@@ -176,8 +176,8 @@
 		{foreach item=itemField from=$userItem.field_values}
 			{if $itemField.value ne '' or !empty($itemField.categs) or !empty($itemField.links)}
 				<div class="clearfix {cycle}">
-					<div class="floatleft" style="width: 25%">{$itemField.name}:</div>
-					<div class="floatright" style="width: 75%">{trackeroutput field=$itemField item=$itemField}</div>
+					<div class="pull-left" style="width: 25%">{$itemField.name}:</div>
+					<div class="pull-right" style="width: 75%">{trackeroutput field=$itemField item=$itemField}</div>
 				</div>
 			{/if}
 		{/foreach}
@@ -326,10 +326,10 @@
 				{cycle values="even,odd" print=false}
 				{section name=ix loop=$whoviewed}
 					<div class="clearfix {cycle}">
-						<div class="form floatleft">
+						<div class="form pull-left">
 							{$whoviewed[ix].user|userlink} - {$whoviewed[ix].lastViewed|tiki_short_datetime}
 						</div>
-						<div class="form floatright">
+						<div class="form pull-right">
 							<a href="{$whoviewed[ix].link|escape}">
 								{$whoviewed[ix].object|escape} ({$whoviewed[ix].objectType|escape})
 							</a>
@@ -354,8 +354,8 @@
 						<p>{tr}The following message will be sent to user{/tr} {$userinfo.login|userlink}&hellip;</p>
 
 						<div class="clearfix">
-							<div class="floatleft" style="width: 25%"><label for="priority"><span>{tr}Priority{/tr}</span></label>:</div>
-							<div class="floatleft" style="width: 50%">
+							<div class="pull-left" style="width: 25%"><label for="priority"><span>{tr}Priority{/tr}</span></label>:</div>
+							<div class="pull-left" style="width: 50%">
 								<select name="priority" id="priority">
 									<option value="1" {if $priority eq 1}selected="selected"{/if}>1: {tr}Lowest{/tr}</option>
 									<option value="2" {if $priority eq 2}selected="selected"{/if}>2: {tr}Low{/tr}</option>
@@ -364,7 +364,7 @@
 									<option value="5" {if $priority eq 5}selected="selected"{/if}>5: {tr}Very High{/tr}</option>
 								</select>
 							</div>
-							<div class="floatright input_submit_container">
+							<div class="pull-right input_submit_container">
 								<input type="submit" class="btn btn-default" name="send" value="{tr}Send{/tr}">
 							</div>
 						</div>

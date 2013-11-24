@@ -25,7 +25,7 @@
 {/if}
 	
 {if $prefs.ajax_autosave eq "y"}
-<div class="floatright">
+<div class="pull-right">
 	{self_link _icon="magnifier" _class="previewBtn" _ajax="n"}{tr}Preview your changes.{/tr}{/self_link}
 </div>
 {jq} $(".previewBtn").click(function(){
