@@ -89,7 +89,7 @@
 				"name": "ckeditor/ckeditor/skins/kama",
 				"version": "4.3.0",
 				"dist": {
-					"url": "http://download.ckeditor.com/kama/releases/kama_4.3.0.zip",
+					"url": "http://download.ckeditor.com/kama/releases/kama_4.3.zip",
 					"type": "zip"
 				}
 			}
@@ -122,7 +122,7 @@
 				"name": "ckeditor/ckeditor/plugins/divarea",
 				"version": "4.3.0",
 				"dist": {
-					"url": "http://download.ckeditor.com/divarea/releases/divarea_4.3.0.zip",
+					"url": "http://download.ckeditor.com/divarea/releases/divarea_4.3.zip",
 					"type": "zip"
 				}
 			}
