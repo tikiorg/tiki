@@ -10,7 +10,7 @@
 
 <div id="calscreen">
 
-	<div class="t_navbar btn-group">
+	<div class="t_navbar form-group">
 		{if $displayedcals|@count eq 1 and $prefs.feature_group_watches eq 'y' and ( $tiki_p_admin_users eq 'y' or $tiki_p_admin eq 'y' )}
 			<a class="btn btn-default" href="tiki-object_watches.php?objectId={$displayedcals[0]|escape:"url"}&amp;watch_event=calendar_changed&amp;objectType=calendar&amp;objectName={$infocals[$x].name|escape:"url"}&amp;objectHref={'tiki-calendar.php?calIds[]='|cat:$displayedcals[0]|escape:"url"}" class="icon">{icon _id='eye_group' alt="{tr}Group Monitor{/tr}" align='right' hspace="1"}</a>
 		{/if}
@@ -49,7 +49,7 @@
 			{button href="#" _onclick="toggle('filtercal');return false;" _text="{tr}Visible Calendars{/tr}" _title="{tr}Click to select visible calendars{/tr}"}
 
 			{if count($thiscal)}
-				<div id="configlinks">
+				<div id="configlinks" class="form-group text-right">
 				{assign var='maxCalsForButton' value=20}
 				{if count($checkedCals) > $maxCalsForButton}<select size="5">{/if}
 				{foreach item=k from=$listcals name=listc}

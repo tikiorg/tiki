@@ -1,5 +1,5 @@
 {* $Id$ *}
-<div class="t_navbar btn-group">
+<div class="t_navbar form-group">
 	{button href="tiki-browse_categories.php" class="btn btn-default" _text="{tr}Browse categories{/tr}"}
 	{button href="tiki-admin_categories.php" class="btn btn-default" _text="{tr}Administer categories{/tr}"}
 	{button href="tiki-edit_categories.php" class="btn btn-default" _text="{tr}Organize Objects{/tr}" _title="{tr}Organize Objects{/tr}"}
