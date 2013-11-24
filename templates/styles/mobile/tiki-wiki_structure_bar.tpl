@@ -12,7 +12,7 @@
 			{else}
 				<input type="checkbox" name="add_child" id="add_child" class="custom" data-mini="true"><label for="add_child">{tr}Child{/tr}</label>
 			{/if}      
-			<input type="submit" class="btn btn-default" name="insert_into_struct" value="{tr}Add Page{/tr}">
+			<input type="submit" class="btn btn-default btn-sm" name="insert_into_struct" value="{tr}Add Page{/tr}">
 		</div>
 	</form>
 	</div>

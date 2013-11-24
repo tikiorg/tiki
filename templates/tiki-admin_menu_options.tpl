@@ -370,7 +370,7 @@
 						<tr>
 							<td>&nbsp;</td>
 							<td colspan="3">
-								<input type="submit" class="btn btn-default" name="save" value="{tr}Save{/tr}">
+								<input type="submit" class="btn btn-default btn-sm" name="save" value="{tr}Save{/tr}">
 							</td>
 						</tr>
 					</table>
@@ -413,7 +413,7 @@
 <h2>{tr}Export CSV data{/tr}</h2>
 <form action="tiki-admin_menu_options.php" method="post">
 	<input type="hidden" name="menuId" value="{$menuId}">
-	<input type="submit" class="btn btn-default" name="export" value="{tr}Export{/tr}">
+	<input type="submit" class="btn btn-default btn-sm" name="export" value="{tr}Export{/tr}">
 </form>
 
 <br>
@@ -423,7 +423,7 @@
 <form action="tiki-admin_menu_options.php" method="post" enctype="multipart/form-data">
 	<input type="hidden" name="menuId" value="{$menuId}">
 	{tr}File:{/tr} <input name="csvfile" type="file">
-	<input type="submit" class="btn btn-default" name="import" value="{tr}Import{/tr}">
+	<input type="submit" class="btn btn-default btn-sm" name="import" value="{tr}Import{/tr}">
 </form>
 {/tab}
 {/tabset}

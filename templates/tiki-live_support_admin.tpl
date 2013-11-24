@@ -133,7 +133,7 @@
 	<tr>
 		<td>&nbsp;</td>
 		<td>
-			<input type="submit" class="btn btn-default" name="adduser" value="{tr}Set as Operator{/tr}">
+			<input type="submit" class="btn btn-default btn-sm" name="adduser" value="{tr}Set as Operator{/tr}">
 		</td>
 	</tr>
 </table>

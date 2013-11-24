@@ -102,7 +102,7 @@
 			</fieldset>
 
 			<div class="heading input_submit_container" style="text-align: center;">
-				<input type="submit" class="btn btn-default" name="connectprefs" value="{tr}Change preferences{/tr}" />
+				<input type="submit" class="btn btn-default btn-sm" name="connectprefs" value="{tr}Change preferences{/tr}" />
 			</div>
 		</form>
 	{/tab}

@@ -16,7 +16,7 @@
 <td>
 	<small>{tr}Find{/tr}</small>
 	<input size="8" type="text" name="find" value="{$find|escape}">
-	<input type="submit" class="btn btn-default" name="filter" value="{tr}Filter{/tr}">
+	<input type="submit" class="btn btn-default btn-sm" name="filter" value="{tr}Filter{/tr}">
 </td>
 </tr>
 </table>	

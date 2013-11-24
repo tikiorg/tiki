@@ -94,7 +94,7 @@
 	</tr>
 	{/if}
 	<tr><td>&nbsp;</td>
-	<td><input type="submit" class="btn btn-default" name="add" value="{tr}Add{/tr}"></td>
+	<td><input type="submit" class="btn btn-default btn-sm" name="add" value="{tr}Add{/tr}"></td>
 	</tr>
 	</table>
 	</form>
@@ -203,7 +203,7 @@
 		<p><input type="checkbox" name="user_calendar_watch_editor" value="true" {if $user_calendar_watch_editor eq 'y'}checked{/if}> {tr}Calendar{/tr}</p>
 		<p><input type="checkbox" name="user_comment_watch_editor" value="true" {if $user_comment_watch_editor eq 'y'}checked{/if}> {tr}Comment{/tr}</p>
 
-		<p><input type="submit" class="btn btn-default" name="submit" value=" {tr}Apply{/tr} "></p>
+		<p><input type="submit" class="btn btn-default btn-sm" name="submit" value=" {tr}Apply{/tr} "></p>
 	</form>
 {/tab}
 {/tabset}

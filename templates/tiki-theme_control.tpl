@@ -49,7 +49,7 @@
 				</select>
 			</td>
 			<td>
-				<input type="submit" class="btn btn-default" name="assigcat" value="{tr}Assign{/tr}">
+				<input type="submit" class="btn btn-default btn-sm" name="assigcat" value="{tr}Assign{/tr}">
 			</td>
 		</tr>
 	</table>
@@ -63,7 +63,7 @@
     <div class="table-responsive">
 	<table class="table normal">
 		<tr>
-			<th><input type="submit" class="btn btn-default" name="delete" value="{tr}Del{/tr}"></th>
+			<th><input type="submit" class="btn btn-default btn-sm" name="delete" value="{tr}Del{/tr}"></th>
 			<th>
 				<a href="tiki-theme_control.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">
 					{tr}Category{/tr}

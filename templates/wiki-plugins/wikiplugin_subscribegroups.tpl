@@ -61,6 +61,6 @@
 {/foreach}
 </table>
 </div>
-<input type="submit" class="btn btn-default" value="{if !empty($subscribe)}{$subscribe|escape}{else}{tr}Subscribe to groups{/tr}{/if}">
+<input type="submit" class="btn btn-default btn-sm" value="{if !empty($subscribe)}{$subscribe|escape}{else}{tr}Subscribe to groups{/tr}{/if}">
 </form>{/if}
 </div>

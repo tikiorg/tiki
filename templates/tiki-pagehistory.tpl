@@ -39,13 +39,13 @@
 					<p>{tr}This revision is currently marked as approved.{/tr}<p>
 					<div class="submit">
 						<input type="hidden" name="unapprove" value="{$preview|escape}">
-						<input type="submit" class="btn btn-default" name="flaggedrev" value="{tr}Remove Approval{/tr}">
+						<input type="submit" class="btn btn-default btn-sm" name="flaggedrev" value="{tr}Remove Approval{/tr}">
 					</div>
 				{else}
 					<p>{tr}This revision has not been approved.{/tr}<p>
 					<div class="submit">
 						<input type="hidden" name="approve" value="{$preview|escape}">
-						<input type="submit" class="btn btn-default" name="flaggedrev" value="{tr}Approve Revision{/tr}">
+						<input type="submit" class="btn btn-default btn-sm" name="flaggedrev" value="{tr}Approve Revision{/tr}">
 					</div>
 				{/if}
 			</form>
@@ -83,7 +83,7 @@
 			<p>{tr}This revision has not been approved.{/tr}<p>
 			<div class="submit">
 				<input type="hidden" name="approve" value="{$new.version|escape}">
-				<input type="submit" class="btn btn-default" name="flaggedrev" value="{tr}Approve Revision{/tr}">
+				<input type="submit" class="btn btn-default btn-sm" name="flaggedrev" value="{tr}Approve Revision{/tr}">
 			</div>
 		</form>
 	{/remarksbox}
@@ -156,7 +156,7 @@ if (jqueryTiki.chosen) {
 						<option value="sidediff" {if $diff_style == "sidediff"}selected="selected"{/if}>{tr}Side-by-side diff{/tr}</option>
 					</select>{/if}
 					<input type="hidden" name="show_all_versions" value="{$show_all_versions}">
-					<input type="submit" class="btn btn-default" name="compare" value="{tr}Compare{/tr}">
+					<input type="submit" class="btn btn-default btn-sm" name="compare" value="{tr}Compare{/tr}">
 				</div>
 			{/if}
 			<div class="panel panel-default"><div class="panel-body">
@@ -177,7 +177,7 @@ if (jqueryTiki.chosen) {
 					<th>{tr}Action{/tr}</th>
 					{if $prefs.default_wiki_diff_style != "old" and $history}
 						<th colspan="2">
-							<input type="submit" class="btn btn-default" name="compare" value="{tr}Compare{/tr}">
+							<input type="submit" class="btn btn-default btn-sm" name="compare" value="{tr}Compare{/tr}">
 						</th>
 					{/if}
 				</tr>
@@ -332,7 +332,7 @@ if (jqueryTiki.chosen) {
 								<option value="{$languages[ix].value|escape}"{if $lang eq $languages[ix].value} selected="selected"{/if}>{$languages[ix].name}</option>
 							{/section}
 						</select>
-						<input type="submit" class="btn btn-default" name="update_translation" value="{tr}Update Translation{/tr}"/>
+						<input type="submit" class="btn btn-default btn-sm" name="update_translation" value="{tr}Update Translation{/tr}"/>
 						{if $show_translation_history}
 							<input type="hidden" name="show_translation_history" value="1">
 							{button show_translation_history=0 _text="{tr}Hide translation history{/tr}" _auto_args="*"}

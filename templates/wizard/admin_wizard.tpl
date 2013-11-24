@@ -9,7 +9,7 @@
 <div class="adminWizardIconleft"><img src="img/icons/large/wizard48x48.png" alt="{tr}Tiki Admin Wizard{/tr}" /><br/><br/></div>
 {tr}The Tiki Admin Wizard helps you quickly configure key features and settings. Use the <a href="tiki-admin.php" target="_blank">Admin Panel</a> to configure other features and settings not included in this wizard{/tr}.
 <br>
-		<input type="submit" class="btn btn-default" name="continue" value="{tr}Start admin wizard{/tr}" /><br>
+		<input type="submit" class="btn btn-default btn-sm" name="continue" value="{tr}Start admin wizard{/tr}" /><br>
 </div>
 </br>
 <div style="display:block;margin-left: auto; margin-right: auto">

@@ -20,7 +20,7 @@
 				</div>
 
 				{if $prefs.javascript_enabled eq 'n' or $prefs.feature_jquery eq 'n'}
-					<input type="submit" class="btn btn-default" name="changestyle" value="{tr}Go{/tr}" />
+					<input type="submit" class="btn btn-default btn-sm" name="changestyle" value="{tr}Go{/tr}" />
 				{/if}
 			</div>
 		</div>

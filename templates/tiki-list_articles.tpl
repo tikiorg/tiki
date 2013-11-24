@@ -189,7 +189,7 @@
 								<option value="remove_articles" >{tr}Remove{/tr}</option>
 							</select>
 						</label>
-						<input type="submit" class="btn btn-default" value="{tr}OK{/tr}">
+						<input type="submit" class="btn btn-default btn-sm" value="{tr}OK{/tr}">
 					</p>
 				{/if}
 			</td>

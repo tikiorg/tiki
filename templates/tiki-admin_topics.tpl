@@ -20,7 +20,7 @@
 		<tr>
 			<td>&nbsp;</td>
 			<td>
-				<input type="submit" class="btn btn-default" name="addtopic" value="{tr}Add{/tr}">
+				<input type="submit" class="btn btn-default btn-sm" name="addtopic" value="{tr}Add{/tr}">
 			</td>
 		</tr>
 	</table>

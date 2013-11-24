@@ -11,6 +11,6 @@
 	{foreach from=$prefills item=field}
 		<input type="hidden" name="values[]" value="{$field.value|escape}">
 	{/foreach}
-	<input type="submit" class="btn btn-default button submit" name="go" value="{if $params.label}{tr}{$params.label}{/tr}{else}{tr}Go{/tr}{/if}">
+	<input type="submit" class="btn btn-default btn-sm button submit" name="go" value="{if $params.label}{tr}{$params.label}{/tr}{else}{tr}Go{/tr}{/if}">
 </form>
 {/strip}

@@ -87,7 +87,7 @@
 		</label>
 	</fieldset>
 	<div class="submit">
-		<input type="submit" class="btn btn-default" value="{tr}Create{/tr}">
+		<input type="submit" class="btn btn-default btn-sm" value="{tr}Create{/tr}">
 	</div>
 </form>
 {jq}

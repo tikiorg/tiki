@@ -200,7 +200,7 @@ JS;
 	return <<<HTML
 <form class="exercise-form" method="get" action="#">
 	<p>$yourScoreIs</p>
-	<input type="submit" class="btn btn-default" value="$checkYourScore"/>
+	<input type="submit" class="btn btn-default btn-sm btn-sm" value="$checkYourScore"/>
 </form>
 HTML;
 }

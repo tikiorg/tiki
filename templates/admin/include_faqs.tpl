@@ -4,7 +4,7 @@
 
 <form action="tiki-admin.php?page=faqs" method="post">
 	<div class="heading input_submit_container" style="text-align: right">
-		<input type="submit" class="btn btn-default" name="faqcomprefs" value="{tr}Change settings{/tr}" />
+		<input type="submit" class="btn btn-default btn-sm" name="faqcomprefs" value="{tr}Change settings{/tr}" />
 	</div>
 
 	<fieldset class="table">
@@ -23,6 +23,6 @@
 		</div>
 	</fieldset>
 	<div class="heading input_submit_container" style="text-align: center">
-		<input type="submit" class="btn btn-default" name="faqcomprefs" value="{tr}Change settings{/tr}" />
+		<input type="submit" class="btn btn-default btn-sm" name="faqcomprefs" value="{tr}Change settings{/tr}" />
 	</div>
 </form>

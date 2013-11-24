@@ -36,7 +36,7 @@
 						<input type="hidden" name="content" value="{$body|escape}">
 						<input type="hidden" name="index" value="{$passes|escape}">
 						<input type="hidden" name="type" value="proposal">
-						<input type="submit" class="btn btn-default" value="{$label|escape}">
+						<input type="submit" class="btn btn-default btn-sm" value="{$label|escape}">
 					</div>
 				</form>
 			</td>

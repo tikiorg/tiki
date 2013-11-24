@@ -63,7 +63,7 @@
 				</tr>
 				{/if}
 				<tr>
-					<td align="center" colspan="2"><input type="submit" class="btn btn-default" name="save" value="{tr}Save{/tr}"></td>
+					<td align="center" colspan="2"><input type="submit" class="btn btn-default btn-sm" name="save" value="{tr}Save{/tr}"></td>
 				</tr>
 			</table>
 		</form>
@@ -74,7 +74,7 @@
 			<h2>{tr}Batch upload (CSV file){/tr}<a {popup text='category,description,parent&lt;br /&gt;vegetable,vegetable&lt;br /&gt;potato,,vegetable'}>{icon _id='help'}</a></h2>
 			<form action="tiki-admin_categories.php" method="post" enctype="multipart/form-data">
 				<input type="file" name="csvlist"><br>
-				<input type="submit" class="btn btn-default" name="import" value="{tr}Add{/tr}">
+				<input type="submit" class="btn btn-default btn-sm" name="import" value="{tr}Add{/tr}">
 			</form>
 		{/tab}
 	{/if}
@@ -85,7 +85,7 @@
 			<form method="get" action="tiki-admin_categories.php">
 				<label>{tr}Find:{/tr}<input type="text" name="find"></label>
 				<input type="hidden" name="parentId" value="{$parentId|escape}">
-				<input type="submit" class="btn btn-default" value="{tr}Filter{/tr}" name="search">
+				<input type="submit" class="btn btn-default btn-sm" value="{tr}Filter{/tr}" name="search">
 				<input type="hidden" name="sort_mode" value="{$sort_mode|escape}">
 				<input type="hidden" name="find_objects" value="{$find_objects|escape}">
 			</form>
@@ -125,20 +125,20 @@
 			<h2>{tr}Moving objects between categories{/tr}</h2>
 			<form method="get" action="tiki-admin_categories.php" name="move">
 				<input type="hidden" name="parentId" value="{$parentId|escape}">
-				<input type="submit" class="btn btn-default" name="unassign" value="{tr}Unassign all objects from this category{/tr}">
+				<input type="submit" class="btn btn-default btn-sm" name="unassign" value="{tr}Unassign all objects from this category{/tr}">
 				<hr>
 				<select name="toId">
 				{foreach $categories as $category}
 					<option value="{$category.categId}" {if $category.categId eq $parentId}selected="selected"{/if}>{$category.categpath|escape}</option>
 				{/foreach}
 				</select>
-				<input type="submit" class="btn btn-default" name="move_to" value="{tr}Move all the objects from this category to this one{/tr}">
+				<input type="submit" class="btn btn-default btn-sm" name="move_to" value="{tr}Move all the objects from this category to this one{/tr}">
 				<hr>
 				<select name="to">
 				{foreach $categories as $category}
 					<option value="{$category.categId}" {if $category.categId eq $parentId}selected="selected"{/if}>{$category.categpath|escape}</option>
 				{/foreach}				</select>
-				<input type="submit" class="btn btn-default" name="copy_from" value="{tr}Assign all objects of this category to this one{/tr}">
+				<input type="submit" class="btn btn-default btn-sm" name="copy_from" value="{tr}Assign all objects of this category to this one{/tr}">
 			</form>
 		{/tab}
 				
@@ -161,7 +161,7 @@
 					<div>
 						<input type="hidden" name="categId" value="{$parentId|escape}">
 						<input type="hidden" name="confirm" value="1">
-						<input type="submit" class="btn btn-default" value="{tr}Add{/tr}">
+						<input type="submit" class="btn btn-default btn-sm" value="{tr}Add{/tr}">
 						<span id="add_object_message" style="display: none;"></span>
 					</div>
 				</form>
@@ -215,7 +215,7 @@ $("#add_object_type").change(function () {
 			<form method="get" action="tiki-admin_categories.php">
 				<label>{tr}Find:{/tr}<input type="text" name="find_objects"></label>
 				<input type="hidden" name="parentId" value="{$parentId|escape}">
-				<input type="submit" class="btn btn-default" value="{tr}Filter{/tr}" name="search_objects">
+				<input type="submit" class="btn btn-default btn-sm" value="{tr}Filter{/tr}" name="search_objects">
 				<input type="hidden" name="sort_mode" value="{$sort_mode|escape}">
 				<input type="hidden" name="offset" value="{$offset|escape}">
 				<input type="hidden" name="find" value="{$find|escape}">
@@ -235,7 +235,7 @@ $("#add_object_type").change(function () {
 								</select>
 							</td>
 							<td>
-								<input type="submit" class="btn btn-default" name="addpage" value="{tr}Add{/tr}">
+								<input type="submit" class="btn btn-default btn-sm" name="addpage" value="{tr}Add{/tr}">
 							</td>
 						</tr>
 					{/if}
@@ -250,7 +250,7 @@ $("#add_object_type").change(function () {
 									{/section}
 								</select>
 							</td>
-							<td><input type="submit" class="btn btn-default" name="addarticle" value="{tr}Add{/tr}"></td>
+							<td><input type="submit" class="btn btn-default btn-sm" name="addarticle" value="{tr}Add{/tr}"></td>
 						</tr>
 					{/if}
 						
@@ -264,7 +264,7 @@ $("#add_object_type").change(function () {
 									{/section}
 								</select>
 							</td>
-							<td><input type="submit" class="btn btn-default" name="addblog" value="{tr}Add{/tr}"></td>
+							<td><input type="submit" class="btn btn-default btn-sm" name="addblog" value="{tr}Add{/tr}"></td>
 						</tr>
 					{/if}
 					
@@ -278,7 +278,7 @@ $("#add_object_type").change(function () {
 									{/section}
 								</select>
 							</td>
-							<td><input type="submit" class="btn btn-default" name="adddirectory" value="{tr}Add{/tr}"></td>
+							<td><input type="submit" class="btn btn-default btn-sm" name="adddirectory" value="{tr}Add{/tr}"></td>
 						</tr>
 					{/if}
 
@@ -292,7 +292,7 @@ $("#add_object_type").change(function () {
 									{/section}
 								</select>
 							</td>
-							<td><input type="submit" class="btn btn-default" name="addgallery" value="{tr}Add{/tr}"></td>
+							<td><input type="submit" class="btn btn-default btn-sm" name="addgallery" value="{tr}Add{/tr}"></td>
 						</tr>
 					{/if}
 			
@@ -306,7 +306,7 @@ $("#add_object_type").change(function () {
 									{/section}
 								</select>
 							</td>
-							<td><input type="submit" class="btn btn-default" name="addfilegallery" value="{tr}Add{/tr}"></td>
+							<td><input type="submit" class="btn btn-default btn-sm" name="addfilegallery" value="{tr}Add{/tr}"></td>
 						</tr>
 					{/if}
 			
@@ -320,7 +320,7 @@ $("#add_object_type").change(function () {
 									{/section}
 								</select>
 							</td>
-							<td><input type="submit" class="btn btn-default" name="addforum" value="{tr}Add{/tr}"></td>
+							<td><input type="submit" class="btn btn-default btn-sm" name="addforum" value="{tr}Add{/tr}"></td>
 						</tr>
 					{/if}
 				
@@ -334,7 +334,7 @@ $("#add_object_type").change(function () {
 									{/section}
 								</select>
 							</td>
-							<td><input type="submit" class="btn btn-default" name="addpoll" value="{tr}Add{/tr}"></td>
+							<td><input type="submit" class="btn btn-default btn-sm" name="addpoll" value="{tr}Add{/tr}"></td>
 						</tr>
 					{/if}
 					
@@ -348,7 +348,7 @@ $("#add_object_type").change(function () {
 									{/section}
 								</select>
 							</td>
-							<td><input type="submit" class="btn btn-default" name="addfaq" value="{tr}Add{/tr}"></td>
+							<td><input type="submit" class="btn btn-default btn-sm" name="addfaq" value="{tr}Add{/tr}"></td>
 						</tr> 
 					{/if}
 				
@@ -376,7 +376,7 @@ $("#add_object_type").change(function () {
 									{/section}
 								</select>
 							</td>
-							<td><input type="submit" class="btn btn-default" name="addquiz" value="{tr}Add{/tr}"></td>
+							<td><input type="submit" class="btn btn-default btn-sm" name="addquiz" value="{tr}Add{/tr}"></td>
 						</tr>
 					{/if}
 				</table>

@@ -21,7 +21,7 @@
 			<option value="{$objectypes[ix]|escape}" {if $type eq $objectypes[ix]}selected="selected"{/if}>{$objectypes[ix]}</option>
 		{/section}
 	</select>
-<!--<input type="submit" class="btn btn-default" name="settype" value="{tr}Set{/tr}">-->
+<!--<input type="submit" class="btn btn-default btn-sm" name="settype" value="{tr}Set{/tr}">-->
 	<table class="formcolor">
 		<tr>
 			<td>{tr}Object{/tr}</td>
@@ -53,7 +53,7 @@
 				</select>
 			</td>
 			<td>
-				<input type="submit" class="btn btn-default" name="assign" value="{tr}Assign{/tr}">
+				<input type="submit" class="btn btn-default btn-sm" name="assign" value="{tr}Assign{/tr}">
 			</td>
 		</tr>
 	</table>
@@ -68,7 +68,7 @@
     <div class="table-responsive">
 	<table class="table normal">
 		<tr>
-			<th><input type="submit" class="btn btn-default" name="delete" value="{tr}Del{/tr}"></th>
+			<th><input type="submit" class="btn btn-default btn-sm" name="delete" value="{tr}Del{/tr}"></th>
 			<th>
 				<a href="tiki-theme_control_objects.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'type_desc'}type_asc{else}type_desc{/if}">
 					{tr}Type{/tr}

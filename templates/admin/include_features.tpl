@@ -4,7 +4,7 @@
 
 	<form class="admin" id="features" name="features" action="tiki-admin.php?page=features" method="post">
 		<div class="heading input_submit_container" style="text-align: right">
-			<input type="submit" class="btn btn-default" name="features" value="{tr}Apply{/tr}" />
+			<input type="submit" class="btn btn-default btn-sm" name="features" value="{tr}Apply{/tr}" />
 			<input type="reset" class="btn btn-warning" name="featuresreset" value="{tr}Reset{/tr}" />
 		</div>
 
@@ -235,6 +235,6 @@
 
 
 	<div class="input_submit_container" style="margin-top: 5px; text-align: center">
-		<input type="submit" class="btn btn-default" name="features" value="{tr}Apply{/tr}" />
+		<input type="submit" class="btn btn-default btn-sm" name="features" value="{tr}Apply{/tr}" />
 	</div>
 </form>

@@ -75,7 +75,7 @@
 				</tr>
 				<tr>
 					<td></td>
-					<td><input type="submit" class="btn btn-default" value="{tr}Add{/tr}"></td>
+					<td><input type="submit" class="btn btn-default btn-sm" value="{tr}Add{/tr}"></td>
 				</tr>
 			</table>
 		</form>

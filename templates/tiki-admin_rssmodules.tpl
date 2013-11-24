@@ -132,7 +132,7 @@
 				</tr>
 				<tr>
 					<td>&nbsp;</td>
-					<td><input type="submit" class="btn btn-default" name="save" value="{tr}Save{/tr}"></td>
+					<td><input type="submit" class="btn btn-default btn-sm" name="save" value="{tr}Save{/tr}"></td>
 				</tr>
 			</table>
 		</form>
@@ -190,7 +190,7 @@
 					{include file='categorize.tpl'}
 				</p>
 				<p>
-					<input type="submit" class="btn btn-default" value="{tr}Configure{/tr}">
+					<input type="submit" class="btn btn-default btn-sm" value="{tr}Configure{/tr}">
 				</p>
 			</form>
 		{/tab}

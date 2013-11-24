@@ -97,7 +97,7 @@
 				<tr>
 					<td>&nbsp;</td>
 					<td>
-						<input type="submit" class="btn btn-default" name="sugg" value="{tr}Add{/tr}">
+						<input type="submit" class="btn btn-default btn-sm" name="sugg" value="{tr}Add{/tr}">
 					</td>
 				</tr>
 			</table>

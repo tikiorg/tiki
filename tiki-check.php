@@ -185,7 +185,7 @@ Couldn't connect to database, please provide valid credentials.
 	<p><label for="dbhost">Database host</label>: <input type="text" id="dbhost" name="dbhost" value="localhost" /></p>
 	<p><label for="dbuser">Database username</label>: <input type="text" id="dbuser" name="dbuser" /></p>
 	<p><label for="dbpass">Database password</label>: <input type="password" id="dbpass" name="dbpass" /></p>
-	<p><input type="submit" class="btn btn-default" value=" Connect " /></p>
+	<p><input type="submit" class="btn btn-default btn-sm" value=" Connect " /></p>
 </form>
 DBC;
 	} else {
@@ -1473,7 +1473,7 @@ if ($standalone) {
 	} else {
 		$render .= '<form method="post" action="'.$_SERVER['REQUEST_URI'].'">';
 		$render .= '<p><label for="e-mail">e-mail address to send test mail to</label>: <input type="text" id="email_test_to" name="email_test_to" /></p>';
-		$render .= '<p><input type="submit" class="btn btn-default" value=" Send e-mail " /></p>';
+		$render .= '<p><input type="submit" class="btn btn-default btn-sm" value=" Send e-mail " /></p>';
 		$render .= '<p><input type="hidden" id="dbhost" name="dbhost" value="';
 				if (isset($_POST['dbhost'])) {
 					$render .= $_POST['dbhost'];

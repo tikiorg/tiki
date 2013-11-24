@@ -26,7 +26,7 @@
 	</label>
 	<input type="hidden" name="ticket_id" value="{$ticket.id|escape}"/>
 	<input type="hidden" name="chunk_id" value="0"/>
-	<input type="submit" class="btn btn-default" value="Upload"{if $disabled} disabled="disabled"{/if}/>
+	<input type="submit" class="btn btn-default btn-sm" value="Upload"{if $disabled} disabled="disabled"{/if}/>
 </form>
 <iframe style="display: none;" id="vimeo{$ticket.id|escape}" name="vimeo{$ticket.id|escape}" src="about:blank">
 </iframe>

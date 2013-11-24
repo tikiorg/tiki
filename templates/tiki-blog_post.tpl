@@ -159,5 +159,5 @@
 	<input type="submit" class="wikiaction btn btn-default" name="preview" value="{tr}Preview{/tr}" onclick="needToConfirm=false">
 	<input type="submit" class="wikiaction btn btn-default" name="save" value="{tr}Save{/tr}" onclick="needToConfirm=false">
 	<input type="hidden" name="referer" value="{$referer|escape}">
-	<input type="submit" class="btn btn-default" name="cancel" onclick='document.location="{$referer|escape:'html'}";needToConfirm=false;return false;' value="{tr}Cancel{/tr}">
+	<input type="submit" class="btn btn-default btn-sm" name="cancel" onclick='document.location="{$referer|escape:'html'}";needToConfirm=false;return false;' value="{tr}Cancel{/tr}">
 </form>

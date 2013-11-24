@@ -64,7 +64,7 @@
 					{/section}
 				</select>
 			</td>
-			<td><input type="submit" class="btn btn-default" name="batch_upload" value="{tr}Process files{/tr}"></td>
+			<td><input type="submit" class="btn btn-default btn-sm" name="batch_upload" value="{tr}Process files{/tr}"></td>
 		</tr>
 	</table>
 </form>

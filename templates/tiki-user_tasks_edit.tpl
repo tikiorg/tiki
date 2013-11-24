@@ -260,9 +260,9 @@
 	{/if}
 	<td colspan="4">
 		<div align="center">
-			<input type="submit" class="btn btn-default" name="save" value="{tr}Save{/tr}">
-			<input type="submit" class="btn btn-default" name="preview" value="{tr}Preview{/tr}">
-			<input type="submit" class="btn btn-default" name="reload" value="{tr}Reload{/tr}">
+			<input type="submit" class="btn btn-default btn-sm" name="save" value="{tr}Save{/tr}">
+			<input type="submit" class="btn btn-default btn-sm" name="preview" value="{tr}Preview{/tr}">
+			<input type="submit" class="btn btn-default btn-sm" name="reload" value="{tr}Reload{/tr}">
 		</div>
 	</td>
 	{else}

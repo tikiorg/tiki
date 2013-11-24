@@ -52,7 +52,7 @@
 			<div><input type="hidden" name="facebook" value="-1" /><input type="checkbox" name="shout_facebook" value='1' /> {tr}Post on my Facebook wall{/tr}</div>
             {/if}
         {/if}
-	    <input type="submit" class="btn btn-default btn-sm" id="shout_send" name="shout_send" value="{$buttontext}" />
+	    <input type="submit" class="btn btn-default btn-sm btn-sm" id="shout_send" name="shout_send" value="{$buttontext}" />
       </div>
       </form>
     {/if}

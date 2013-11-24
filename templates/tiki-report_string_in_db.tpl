@@ -2,7 +2,7 @@
 <h1>Occurences of string in database</h1>
 
 <form action="#">
-<input type="text" name="string_in_db_search" size="60" /> <input type="submit" class="btn btn-default" value="Search" />
+<input type="text" name="string_in_db_search" size="60" /> <input type="submit" class="btn btn-default btn-sm" value="Search" />
 </form>
 <hr/>
 {if isset($searchString)}

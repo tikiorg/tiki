@@ -1,7 +1,7 @@
 {* $Id$ *}
 <form action="tiki-admin.php?page=workspace" method="post">
 	<div class="heading input_submit_container" style="text-align: right">
-		<input type="submit" class="btn btn-default" name="workspacesetprefs" value="{tr}Change preferences{/tr}" />
+		<input type="submit" class="btn btn-default btn-sm" name="workspacesetprefs" value="{tr}Change preferences{/tr}" />
 	</div>
 	{tabset}
 		{tab name="{tr}Workspaces{/tr}"}
@@ -104,7 +104,7 @@ $(".enabledChecks").click(function() {
 			</fieldset>
 			{remarksbox type="info" title="{tr}Hint{/tr}"}{tr}This tab shows you an overview of categories affected by the areas feature. <br> More help here: <a href="http://doc.tiki.org/Areas" target="tikihelp">doc.tiki.org/Areas</a> {/tr}{/remarksbox}
 			<div class="heading input_submit_container" style="text-align: center">
-				<input type="submit" class="btn btn-default" name="update_areas" value="{tr}Update areas{/tr}" />
+				<input type="submit" class="btn btn-default btn-sm" name="update_areas" value="{tr}Update areas{/tr}" />
 			</div>
 			<div class="adminoptionboxchild" id="feature_areas_childcontainer">
 				{preference name=areas_root}
@@ -113,6 +113,6 @@ $(".enabledChecks").click(function() {
 		{/tab}
 	{/tabset}
 	<div class="heading input_submit_container" style="text-align: center">
-		<input type="submit" class="btn btn-default" name="workspacesetprefs" value="{tr}Change preferences{/tr}" />
+		<input type="submit" class="btn btn-default btn-sm" name="workspacesetprefs" value="{tr}Change preferences{/tr}" />
 	</div>
 </form>

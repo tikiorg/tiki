@@ -52,8 +52,8 @@ var CHECKBOX_LIST = [{{section name=user loop=$items}'sites[{$items[user].siteId
   </div>
   {if $items} <br>
   {tr}Perform action with selected:{/tr}
-  <input type="submit" class="btn btn-default" name="del" value="{tr}Remove{/tr}">
-  <input type="submit" class="btn btn-default" name="validate" value="{tr}Validate{/tr}">
+  <input type="submit" class="btn btn-default btn-sm" name="del" value="{tr}Remove{/tr}">
+  <input type="submit" class="btn btn-default btn-sm" name="validate" value="{tr}Validate{/tr}">
   {/if}
 </form>
 {pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links} 

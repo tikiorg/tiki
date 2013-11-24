@@ -26,7 +26,7 @@
 <td>
 <form action="tiki-notepad_write.php" method="post">
 <input type="hidden" name="noteId" value="{$noteId|escape}">
-<input type="submit" class="btn btn-default" name="write" value="{tr}Edit{/tr}">
+<input type="submit" class="btn btn-default btn-sm" name="write" value="{tr}Edit{/tr}">
 </form>
 </td>
 {if $tiki_p_edit eq 'y'}

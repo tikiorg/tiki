@@ -107,7 +107,7 @@
 			</div>
 		</div>
 	</fieldset>
-	<input type="submit" class="btn btn-default" name="create" value="{tr}Create a new book{/tr}">
+	<input type="submit" class="btn btn-default btn-sm" name="create" value="{tr}Create a new book{/tr}">
  </form>
 </div>
 {/tab}

@@ -5,6 +5,6 @@
 	</label>
 
 	<div class="submit">
-		<input type="submit" class="btn btn-default" value="{tr}Add template{/tr}">
+		<input type="submit" class="btn btn-default btn-sm" value="{tr}Add template{/tr}">
 	</div>
 </form>

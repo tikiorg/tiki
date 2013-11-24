@@ -100,7 +100,7 @@
 	{pagination_links cant=$cant step=$maxRecords offset=$offset}{/pagination_links}
 	{if $tiki_p_admin_trackers eq 'y'}
 		<form class="create-tracker" method="post" action="{service controller=tracker action=replace}">
-			<input type="submit" class="btn btn-default" value="{tr}Create tracker{/tr}">
+			<input type="submit" class="btn btn-default btn-sm" value="{tr}Create tracker{/tr}">
 		</form>
 	{/if}
 	{if !empty($trackerId)}
@@ -238,7 +238,7 @@
 					{tr}Duplicate permissions{/tr}
 				</label>
 				<div class="submit">
-					<input type="submit" class="btn btn-default" value="{tr}Duplicate{/tr}">
+					<input type="submit" class="btn btn-default btn-sm" value="{tr}Duplicate{/tr}">
 				</div>
 			</form>
 		{/accordion_group}
@@ -251,7 +251,7 @@
 						<input type="url" name="url" required="required">
 					</label>
 					<div>
-						<input type="submit" class="btn btn-default" value="{tr}Search for trackers to clone{/tr}">
+						<input type="submit" class="btn btn-default btn-sm" value="{tr}Search for trackers to clone{/tr}">
 					</div>
 				</form>
 			{/accordion_group}
@@ -268,7 +268,7 @@
 				</label>
 				{remarksbox close='n' title='{tr}Note{/tr}'}{tr}Use "Tracker -> Export -> Structure" to produce this data.{/tr}{/remarksbox}
 				<div class="submit">
-					<input type="submit" class="btn btn-default" value="{tr}Import{/tr}">
+					<input type="submit" class="btn btn-default btn-sm" value="{tr}Import{/tr}">
 				</div>
 			</form>
 		{/accordion_group}
@@ -283,7 +283,7 @@
 	            </label>
 	            <textarea name="yaml" id="importFromProfileYaml" data-codemirror="true" data-syntax="yaml" data-line-numbers="true" style="height: 400px;"></textarea>
                 <div class="submit">
-                    <input type="submit" class="btn btn-default" value="{tr}Import{/tr}">
+                    <input type="submit" class="btn btn-default btn-sm" value="{tr}Import{/tr}">
                 </div>
             </form>
         {/accordion_group}

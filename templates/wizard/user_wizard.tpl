@@ -17,7 +17,7 @@
 	</p>
 	<p>
 	{tr}If you don't want to run the wizard, you can close it using the button below, or use the "Close" button on top (available on all wizard pages){/tr}.<br>
-	<input type="submit" class="btn btn-default" name="close" value="{tr}Close the wizard{/tr}" />
+	<input type="submit" class="btn btn-default btn-sm" name="close" value="{tr}Close the wizard{/tr}" />
 	</p>
 	<p>
 	<b>Tiki version {$tiki_version}</b>. {tr}To learn more about this Tiki release, go to <a href="http://doc.tiki.org/tiki12">Tiki 12</a>{/tr}.<br/><br/>	

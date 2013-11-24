@@ -181,7 +181,7 @@
 							{/if}
 						{/foreach}
 					</select>
-					<input type="submit" class="btn btn-default" name="go" value="{tr}Move to another tracker{/tr}">
+					<input type="submit" class="btn btn-default btn-sm" name="go" value="{tr}Move to another tracker{/tr}">
 				</form>
 			{/if}
 
@@ -210,10 +210,10 @@
 					<tr>
 						<td colspan="2">
 							{if count($fields) >= 5}
-								<input type="submit" class="btn btn-default" name="save" value="{tr}Save{/tr}" onclick="needToConfirm=false">
+								<input type="submit" class="btn btn-default btn-sm" name="save" value="{tr}Save{/tr}" onclick="needToConfirm=false">
 								{* --------------------------- to return to tracker list after saving --------- *}
 								{if $canView}
-									<input type="submit" class="btn btn-default" name="save_return" value="{tr}Save{/tr} &amp; {tr}Back to Items list{/tr}" onclick="needToConfirm=false">
+									<input type="submit" class="btn btn-default btn-sm" name="save_return" value="{tr}Save{/tr} &amp; {tr}Back to Items list{/tr}" onclick="needToConfirm=false">
 									{if $canRemove}
 										<a class="link" href="tiki-view_tracker.php?trackerId={$trackerId}&amp;remove={$itemId}" title="{tr}Delete{/tr}">{icon _id='cross' alt="{tr}Delete{/tr}"}</a>
 									{/if}
@@ -280,10 +280,10 @@
 				{/if}
 				<tr>
 					<td colspan="2">
-						<input type="submit" class="btn btn-default" name="save" value="{tr}Save{/tr}" onclick="needToConfirm=false">
+						<input type="submit" class="btn btn-default btn-sm" name="save" value="{tr}Save{/tr}" onclick="needToConfirm=false">
 						{* --------------------------- to return to tracker list after saving --------- *}
 						{if $canView}
-							<input type="submit" class="btn btn-default" name="save_return" value="{tr}Save{/tr} &amp; {tr}Back to Items List{/tr}" onclick="needToConfirm=false">
+							<input type="submit" class="btn btn-default btn-sm" name="save_return" value="{tr}Save{/tr} &amp; {tr}Back to Items List{/tr}" onclick="needToConfirm=false">
 						{/if}
 						{if $canRemove}
 							<a class="link" href="tiki-view_tracker.php?trackerId={$trackerId}&amp;remove={$itemId}" title="{tr}Delete{/tr}">{icon _id='cross' alt="{tr}Delete{/tr}"}</a>
@@ -321,7 +321,7 @@
 					<table class="formcolor">
 						<tr>
 							<td>{$cur_field.name}</td>
-							<td><input type="submit" class="btn btn-default" name="trck_act" value="{$cur_field.options_array[0]|escape}" ></td>
+							<td><input type="submit" class="btn btn-default btn-sm" name="trck_act" value="{$cur_field.options_array[0]|escape}" ></td>
 						<tr>
 					</table>
 					</form>

@@ -94,7 +94,7 @@
 					modeManager.addMode({name: newMode = "{{$tpl_module_title}}", controls: [control, new OpenLayers.Control.NavToolbar()]});
 				}
 
-				button = $('<input type="submit" class="btn btn-default btn-sm" />')
+				button = $('<input type="submit" class="btn btn-default btn-sm btn-sm" />')
 					.val($(':submit', form).val())
 					.button()
 					.click(function () {

@@ -130,14 +130,14 @@
 			</table>
             </div>
 		{/if}
-		<input type="submit" class="btn btn-default" name="update_type" value="{tr}Save{/tr}"><br>
+		<input type="submit" class="btn btn-default btn-sm" name="update_type" value="{tr}Save{/tr}"><br>
 		<hr>
 		<br>
 		{/section}
 	{/tab}
 	{tab name="{tr}Add Type{/tr}"}
 		<h3>{tr}Add article type{/tr}</h3>
-		<input type="text" name="new_type"><input type="submit" class="btn btn-default" name="add_type" value="{tr}Add{/tr}">
+		<input type="text" name="new_type"><input type="submit" class="btn btn-default btn-sm" name="add_type" value="{tr}Add{/tr}">
 	{/tab}
 	</form>
 {/tabset}

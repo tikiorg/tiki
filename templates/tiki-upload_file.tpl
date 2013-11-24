@@ -367,7 +367,7 @@
 		{include file='categorize.tpl' notable='y'}<br>
 		<div id="page_bar" class="form-group">
 			<div class="col-sm-10 col-sm-offset-2">
-				<input type="submit" class="btn btn-default" name="upload" value="{tr}Upload{/tr}">
+				<input type="submit" class="btn btn-default btn-sm" name="upload" value="{tr}Upload{/tr}">
 			</div>
 		</div>
 	{/if}
@@ -389,7 +389,7 @@
 			{if $prefs.fgal_upload_progressbar eq 'ajax_flash'}
 				<input type="submit" id="btnCancel" class="btn btn-default" style="display:none" value="{tr}Cancel Upload{/tr}" onclick="return false">
 			{elseif $simpleMode neq 'y'}
-				<input type="submit" class="btn btn-default" onclick="javascript:add_upload_file('multiple_upload'); return false" value="{tr}Add Another File{/tr}">
+				<input type="submit" class="btn btn-default btn-sm" onclick="javascript:add_upload_file('multiple_upload'); return false" value="{tr}Add Another File{/tr}">
 			{/if}
 		</div>
 	</div>
@@ -573,7 +573,7 @@
 						<input type="checkbox" name="reference" value="1" class="tips" title="{tr}Upload from URL{/tr}|{tr}Keeps a reference to the remote file{/tr}">
 					</label>
 				{/if}
-				<input type="submit" class="btn btn-default" value="{tr}Add{/tr}">
+				<input type="submit" class="btn btn-default btn-sm" value="{tr}Add{/tr}">
 			</p>
 			<div class="result"></div>
 		</form>

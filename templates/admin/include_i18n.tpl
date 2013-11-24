@@ -14,7 +14,7 @@
 
 <form action="tiki-admin.php?page=i18n" method="post">
 	<div class="heading input_submit_container" style="text-align: right">
-		<input type="submit" class="btn btn-default" value="{tr}Change preferences{/tr}" />
+		<input type="submit" class="btn btn-default btn-sm" value="{tr}Change preferences{/tr}" />
 	</div>
 <input type="hidden" name="i18nsetup" />
 {tabset name="admin_i18n"}
@@ -102,7 +102,7 @@
 				</option>
 			{/section}
 		</select>
-		<input type="submit" class="btn btn-default" name="custom" value="{tr}Edit{/tr}" />
+		<input type="submit" class="btn btn-default btn-sm" name="custom" value="{tr}Edit{/tr}" />
 	{else}
 		{if !empty($custom_error)}
 			{remarksbox title="{tr}Error{/tr}" type="error"}
@@ -139,12 +139,12 @@
 		{/foreach}
 		</table>
         </div>
-		<input type="submit" class="btn btn-default" name="custom_save" value="{tr}Save{/tr}" />
+		<input type="submit" class="btn btn-default btn-sm" name="custom_save" value="{tr}Save{/tr}" />
 	{/if}
 </div>
 {/tab}
 {/tabset}
 	<div class="heading input_submit_container" style="text-align: center">
-		<input type="submit" class="btn btn-default" value="{tr}Change preferences{/tr}" />
+		<input type="submit" class="btn btn-default btn-sm" value="{tr}Change preferences{/tr}" />
 	</div>
 </form>

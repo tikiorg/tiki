@@ -2,7 +2,7 @@
 
 <form action="tiki-admin.php?page=share" method="post">
 	<div class="heading input_submit_container" style="text-align: right">
-		<input type="submit" class="btn btn-default" name="commentssetprefs" value="{tr}Change preferences{/tr}" />
+		<input type="submit" class="btn btn-default btn-sm" name="commentssetprefs" value="{tr}Change preferences{/tr}" />
 	</div>
 
 	<fieldset class="table">
@@ -30,6 +30,6 @@
 
 
 <div class="heading input_submit_container" style="text-align: center">
-	<input type="submit" class="btn btn-default" name="sharesetprefs" value="{tr}Change preferences{/tr}" />
+	<input type="submit" class="btn btn-default btn-sm" name="sharesetprefs" value="{tr}Change preferences{/tr}" />
 </div>
 </form>

@@ -4,7 +4,7 @@
 		<p>
 			<input type="hidden" name="galleryId" value="{$galleryId|escape}">
 			<label>{tr}URL:{/tr} <input type="url" name="url" placeholder="http://"></label>
-			<input type="submit" class="btn btn-default" value="{tr}Add{/tr}">
+			<input type="submit" class="btn btn-default btn-sm" value="{tr}Add{/tr}">
 		</p>
 	</form>
 {else}

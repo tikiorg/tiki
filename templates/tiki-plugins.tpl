@@ -53,7 +53,7 @@
 			<option value="clear" >Clear</option>
 			<option value="approve">Approve</option>
 		</select> {tr}or{/tr}
-		<input type="submit" class="btn btn-default" name="approveall" value="{tr}Approve all pending plugins{/tr}">
+		<input type="submit" class="btn btn-default btn-sm" name="approveall" value="{tr}Approve all pending plugins{/tr}">
 		</p>
 {remarksbox type="warning" title="{tr}Warning{/tr}"}
 {tr}Using <strong>Approve</strong> or <strong>Approve All</strong> will approve and activate the pending plugins.{/tr} {tr}Use this feature <strong>only</strong> if you have verified that all the pending plugins are safe.{/tr}
@@ -65,7 +65,7 @@
 		//-->
 	</script>
 	<noscript>
-		<input type="submit" class="btn btn-default" value="{tr}OK{/tr}">
+		<input type="submit" class="btn btn-default btn-sm" value="{tr}OK{/tr}">
 	</noscript>
 </form>
 {else}

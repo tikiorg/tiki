@@ -14,7 +14,7 @@
 		<div>
 			{tr}Name:{/tr} 
 			<input type="text" name="bbb_name">
-			<input type="submit" class="btn btn-default" value="{tr}Join{/tr}">
+			<input type="submit" class="btn btn-default btn-sm" value="{tr}Join{/tr}">
 		</div>
 	{else}
 		<div>

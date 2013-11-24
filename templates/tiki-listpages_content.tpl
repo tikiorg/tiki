@@ -410,7 +410,7 @@
 		//-->
 	</script>
 	<noscript>
-		<input type="submit" class="btn btn-default" value="{tr}OK{/tr}">
+		<input type="submit" class="btn btn-default btn-sm" value="{tr}OK{/tr}">
 	</noscript>
 {/if}
 

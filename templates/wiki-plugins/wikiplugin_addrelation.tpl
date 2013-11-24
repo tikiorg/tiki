@@ -1,7 +1,7 @@
 <form action="{$smarty.server.PHP_SELF}?{query}" method="post">
 <input type="hidden" name="{$wp_addrelation_id|escape}" value="{$wp_addrelation_action|escape}">
 {if $wp_addrelation_action eq 'y'}
-<input type="submit" class="btn btn-default" value="{$label_add|escape}">
+<input type="submit" class="btn btn-default btn-sm" value="{$label_add|escape}">
 {elseif $wp_addrelation_action eq 'n'}
 <input id="wp_addrelation_added_{$wp_addrelation_id|escape}" type="submit" class="btn btn-default" value="{$label_added|escape}">
 {/if}

@@ -16,7 +16,7 @@
 <td style="text-align:left">
 	<input type="submit" class="btn btn-warning" name="close" value="{tr}Close{/tr}" />
 	&nbsp;&nbsp;&nbsp;
-	{if !isset($firstWizardPage)}<input type="submit" class="btn btn-default" name="back" value="{tr}Back{/tr}" />{/if}
+	{if !isset($firstWizardPage)}<input type="submit" class="btn btn-default btn-sm" name="back" value="{tr}Back{/tr}" />{/if}
 	</td>
 <td style="text-align:right">
 	<input type="hidden" name="url" value="{$homepageUrl}">
@@ -24,7 +24,7 @@
 	{if isset($useDefaultPrefs)}
 		<input type="hidden" name="use-default-prefs" value="{$useDefaultPrefs}">
 	{/if}
-	<input type="submit" class="btn btn-default" name="continue" value="{if isset($lastWizardPage)}{tr}Finish{/tr}{elseif isset($firstWizardPage)}{tr}Start{/tr}{else}{if $isEditable eq true}{tr}Save and Continue{/tr}{else}{tr}Next{/tr}{/if}{/if}" />
+	<input type="submit" class="btn btn-default btn-sm" name="continue" value="{if isset($lastWizardPage)}{tr}Finish{/tr}{elseif isset($firstWizardPage)}{tr}Start{/tr}{else}{if $isEditable eq true}{tr}Save and Continue{/tr}{else}{tr}Next{/tr}{/if}{/if}" />
 	</td>
 </tr>
 </table>

@@ -40,7 +40,7 @@
 </tr>
 <tr>
 	<td>&nbsp;</td>
-	<td><input type="submit" class="btn btn-default" name="invite" value="{tr}Invite{/tr}"></td>
+	<td><input type="submit" class="btn btn-default btn-sm" name="invite" value="{tr}Invite{/tr}"></td>
 </tr>
 </table>
 </div>

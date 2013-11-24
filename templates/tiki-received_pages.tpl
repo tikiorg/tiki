@@ -42,9 +42,9 @@
 			<tr>
 				<td>&nbsp;</td>
 				<td>
-					<input type="submit" class="btn btn-default" name="preview" value="{tr}Preview{/tr}">
+					<input type="submit" class="btn btn-default btn-sm" name="preview" value="{tr}Preview{/tr}">
 					&nbsp;
-					<input type="submit" class="btn btn-default" name="save" value="{tr}Save{/tr}">
+					<input type="submit" class="btn btn-default btn-sm" name="save" value="{tr}Save{/tr}">
 				</td>
 			</tr>
 		</table>
@@ -187,5 +187,5 @@
 	</table>
     </div>
 	{tr}Prefix the checked:{/tr}<input type="text" name="prefix">
-	{tr}Postfix the checked:{/tr}<input type="text" name="postfix">&nbsp;<input type="submit" class="btn btn-default" value="{tr}OK{/tr}">
+	{tr}Postfix the checked:{/tr}<input type="text" name="postfix">&nbsp;<input type="submit" class="btn btn-default btn-sm" value="{tr}OK{/tr}">
 </form>

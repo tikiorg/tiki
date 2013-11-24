@@ -17,7 +17,7 @@
 					<td class="text-center">
 						<form method="get" action="tiki-forums.php">
 							<input type="text" name="find" value="{$find|escape}">
-							<input type="submit" class="btn btn-default" value="{tr}Search by name{/tr}" name="search">
+							<input type="submit" class="btn btn-default btn-sm" value="{tr}Search by name{/tr}" name="search">
 							<input type="hidden" name="sort_mode" value="{$sort_mode|escape}">
 						</form>
 					</td>

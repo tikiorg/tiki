@@ -167,7 +167,7 @@
 						{/remarksbox}
 					{/if}
 						<p>{tr}Page name:{/tr} <input type="text" name="page" value="{$page|escape}">
-							<input type="submit" class="btn btn-default" name="rename" value="{tr}Rename{/tr}">
+							<input type="submit" class="btn btn-default btn-sm" name="rename" value="{tr}Rename{/tr}">
 						</p>
 				{else}
 					<input type="hidden" name="page" value="{$page|escape}"> 

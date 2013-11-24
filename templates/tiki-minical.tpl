@@ -133,7 +133,7 @@
         <div class="table-responsive">
 		<table class="table normal">
 			<tr>
-				<th><input type="submit" class="btn btn-default" name="delete" value="x "></th>
+				<th><input type="submit" class="btn btn-default btn-sm" name="delete" value="x "></th>
 				<th>
 					<a href="tiki-minical.php?view={$view}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'title_desc'}title_asc{else}title_desc{/if}">{tr}Title{/tr}</a>
 				</th>
@@ -229,7 +229,7 @@
 		<tr>
 			<td>&nbsp;</td>
 			<td>
-				<input type="submit" class="btn btn-default" name="save" value="{tr}Save{/tr}">
+				<input type="submit" class="btn btn-default btn-sm" name="save" value="{tr}Save{/tr}">
 				{if $eventId}
 					<input type="submit" class="btn btn-warning" name="remove2" value="{tr}Delete{/tr}">
 				{/if}

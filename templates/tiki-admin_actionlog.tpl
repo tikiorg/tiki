@@ -101,7 +101,7 @@
 					{if $prefs.feature_contribution eq 'y'}
 						<tr>
 							<td colspan="2">
-								<input type="submit" class="btn btn-default" name="graph" value="{tr}Graph Contributions{/tr}">
+								<input type="submit" class="btn btn-default btn-sm" name="graph" value="{tr}Graph Contributions{/tr}">
 								{if $prefs.feature_jpgraph eq 'y'}
 									<br>
 									{tr}Group Bar Plot:{/tr}
@@ -139,11 +139,11 @@
 
 				<input type="hidden" name="max" value="{$maxRecords}">
 				<span class="input_submit_container">
-					<input type="submit" class="btn btn-default" name="list" value="{tr}Report{/tr}"></td>
+					<input type="submit" class="btn btn-default btn-sm" name="list" value="{tr}Report{/tr}"></td>
 				</span>
 				{if $tiki_p_admin eq 'y'}
 					<span class="input_submit_container">
-						<input type="submit" class="btn btn-default" name="export" value="{tr}Export{/tr}">
+						<input type="submit" class="btn btn-default btn-sm" name="export" value="{tr}Export{/tr}">
 					</span>
 				{/if}
 
@@ -333,7 +333,7 @@
 					<tr>
 						<td>&nbsp;</td>
 						<td>
-							<input type="submit" class="btn btn-default" name="saveAction" value="{tr}Save Action{/tr}">
+							<input type="submit" class="btn btn-default btn-sm" name="saveAction" value="{tr}Save Action{/tr}">
 						</td>
 					</tr>
 				</table>
@@ -524,7 +524,7 @@
 		          {if $tiki_p_admin eq 'y'}
 		            <form method="post" action="{$smarty.server.PHP_SELF}?{$smarty.server.QUERY_STRING}"/>
 		              <span class="input_submit_container">
-		                <input type="submit" class="btn btn-default" name="export_bbb" value="{tr}Export{/tr}" />
+		                <input type="submit" class="btn btn-default btn-sm" name="export_bbb" value="{tr}Export{/tr}" />
 		              </span>
 		            </form>
 		          {/if}
@@ -696,12 +696,12 @@
 			{/foreach}
 		</select>
 			<span class="input_submit_container">
-				<input type="submit" class="btn btn-default" name="search" value="{tr}Search{/tr}">
+				<input type="submit" class="btn btn-default btn-sm" name="search" value="{tr}Search{/tr}">
 			</span>
 		</fieldset>
 		<br>
 		<span class="input_submit_container" style="float: right">
-			<input type="submit" class="btn btn-default" name="save" value="{tr}Set{/tr}">
+			<input type="submit" class="btn btn-default btn-sm" name="save" value="{tr}Set{/tr}">
 		</span>
 				<br class="clearfix" />
 		<table class="formcolor">
@@ -732,7 +732,7 @@
 			{/foreach}
 			<tr>
 				<td colspan="4" class="input_submit_container">
-					<input type="submit" class="btn btn-default" name="save" value="{tr}Set{/tr}">
+					<input type="submit" class="btn btn-default btn-sm" name="save" value="{tr}Set{/tr}">
 				</td>
 			</tr>
 		</table>

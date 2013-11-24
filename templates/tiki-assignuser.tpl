@@ -50,7 +50,7 @@
 				<input type="hidden" value="{$prefs.maxRecords}" name="maxRecords">
 				<input type="hidden" value="{$offset}" name="offset">
 				<input type="hidden" value="{$sort_mode}" name="sort_mode">
-				<input type="submit" class="btn btn-default" value="{tr}Set{/tr}" name="set_default">
+				<input type="submit" class="btn btn-default btn-sm" value="{tr}Set{/tr}" name="set_default">
 			</td>
 		</tr>
 	</form>
@@ -100,6 +100,6 @@
 	{/section}
 </table>
 </div>
-<input type="submit" class="btn btn-default" name="save" value="{tr}Save{/tr}" />
+<input type="submit" class="btn btn-default btn-sm" name="save" value="{tr}Save{/tr}" />
 </form>
 {pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}

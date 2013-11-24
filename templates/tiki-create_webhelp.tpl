@@ -29,7 +29,7 @@
 		</tr>
 		<tr>
 			<td>&nbsp;</td>
-			<td><input type="submit" class="btn btn-default" {if !$struct_info.pageName}disabled=disabled" {/if}name="create" value="{tr}Create{/tr}"></td>
+			<td><input type="submit" class="btn btn-default btn-sm" {if !$struct_info.pageName}disabled=disabled" {/if}name="create" value="{tr}Create{/tr}"></td>
 		</tr>
 	</table>  
 </form>

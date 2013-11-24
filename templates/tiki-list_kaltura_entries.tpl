@@ -19,7 +19,7 @@
 	</label>
 	<input type="hidden" name="list" value="{$entryType}">
 	<label class="findsubmit">
-		<input type="submit" class="btn btn-default" name="search" value="{tr}Go{/tr}">
+		<input type="submit" class="btn btn-default btn-sm" name="search" value="{tr}Go{/tr}">
 	</label>
 </form>
 

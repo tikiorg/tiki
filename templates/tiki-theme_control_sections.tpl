@@ -47,7 +47,7 @@
 				</select>
 			</td>
 			<td>
-				<input type="submit" class="btn btn-default" name="assign" value="{tr}Assign{/tr}">
+				<input type="submit" class="btn btn-default btn-sm" name="assign" value="{tr}Assign{/tr}">
 			</td>
 		</tr>
 	</table>

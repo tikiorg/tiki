@@ -328,7 +328,7 @@ $("#repository, #categories").change(function(){
 });
 										{/jq}
 									</div>
-								<div align="center"><input type="submit" class="btn btn-default" name="list" value="{tr}List{/tr}" /></div>
+								<div align="center"><input type="submit" class="btn btn-default btn-sm" name="list" value="{tr}List{/tr}" /></div>
 							</td>
 						</tr>
 					</table>
@@ -483,7 +483,7 @@ $("#export_type").change(function(){
 });
 				{/jq}
 				<div class="input_submit_container">
-					<input type="submit" class="btn btn-default" name="export" value="{tr}Export{/tr}" />
+					<input type="submit" class="btn btn-default btn-sm" name="export" value="{tr}Export{/tr}" />
 				</div>
 			</fieldset>
 		</fieldset>
@@ -497,7 +497,7 @@ $("#export_type").change(function(){
 	{preference name=profile_sources}
 	{preference name=profile_channels}
 
-	<div align="center" style="padding:1em;"><input type="submit" class="btn btn-default" name="config" value="{tr}Save{/tr}" /></div>
+	<div align="center" style="padding:1em;"><input type="submit" class="btn btn-default btn-sm" name="config" value="{tr}Save{/tr}" /></div>
 </form>
 </fieldset>
 
@@ -525,7 +525,7 @@ $("#export_type").change(function(){
 					<textarea data-codemirror="true" data-syntax="yaml" id="profile_tester" name="profile_tester" rows="5" cols="40" style="width:95%;">{if isset($test_source)}{$test_source}{/if}</textarea>
 				</div>
 			</div>
-			<div align="center" style="padding:1em;"><input type="submit" class="btn btn-default" name="test" value="{tr}Test{/tr}" /></div>
+			<div align="center" style="padding:1em;"><input type="submit" class="btn btn-default btn-sm" name="test" value="{tr}Test{/tr}" /></div>
 		{/remarksbox}
 		</form>
 	</fieldset>

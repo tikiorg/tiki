@@ -412,7 +412,7 @@ SCRIPT;
 		<input type="hidden" name="message" value="$message"/>
 		<textarea id="$cid-content" name="content"></textarea>
 	</div>
-	<p><input type="submit" class="btn btn-default" value="$labelSave"/></p>
+	<p><input type="submit" class="btn btn-default btn-sm btn-sm" value="$labelSave"/></p>
 </form>
 FORM;
 	else
@@ -444,7 +444,7 @@ JS;
 			<div><input type="text" name="label" id="$cid-label" style="width:96%" onkeyup="handleCancel(event, '$cid')"/></div>
 			<div style="display:none">Link</div>
 			<div style="display:none"><input type="text" name="link" id="$cid-link" style="width:96%" onkeyup="handleCancel(event, '$cid')"/></div>
-			<div><input type="submit" class="btn btn-default" value="Save"/></div>
+			<div><input type="submit" class="btn btn-default btn-sm btn-sm" value="Save"/></div>
 		</form>
 	</div>
 </div>

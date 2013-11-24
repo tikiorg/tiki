@@ -20,7 +20,7 @@
 			<option value="{$action|escape}">{$action|escape}</option>
 		{/foreach}
 	</select>
-	<input type="submit" class="btn btn-default" value="{tr}Apply{/tr}">
+	<input type="submit" class="btn btn-default btn-sm" value="{tr}Apply{/tr}">
 </form>
 {jq}
 $('.listexecute-select-all').removeClass('listexecute-select-all')

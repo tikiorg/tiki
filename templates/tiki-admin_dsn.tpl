@@ -23,7 +23,7 @@
 		<tr>
 			<td>&nbsp;</td>
 			<td>
-				<input type="submit" class="btn btn-default" name="save" value="{tr}Save{/tr}">
+				<input type="submit" class="btn btn-default btn-sm" name="save" value="{tr}Save{/tr}">
 			</td>
 		</tr>
 	</table>
@@ -104,7 +104,7 @@
 				<tr>
 					<td><input type="text" name="post_new_field"></td>
 					<td><input type="text" name="post_new_value"></td>
-					<td><input type="submit" class="btn btn-default" name="post_new_add" value="{tr}Add{/tr}"></td>
+					<td><input type="submit" class="btn btn-default btn-sm" name="post_new_add" value="{tr}Add{/tr}"></td>
 				</tr>
 			</tfoot>
 			<tbody>
@@ -116,8 +116,8 @@
 		<label>{tr}URL:{/tr} <input type="url" name="get_url"></label>
 	</fieldset>
 	<fieldset>
-		<input type="submit" class="btn btn-default" name="save" value="{tr}Save{/tr}">
-		<input type="submit" class="btn btn-default" name="delete" value="{tr}Delete{/tr}">
+		<input type="submit" class="btn btn-default btn-sm" name="save" value="{tr}Save{/tr}">
+		<input type="submit" class="btn btn-default btn-sm" name="delete" value="{tr}Delete{/tr}">
 	</fieldset>
 </form>
 {jq}

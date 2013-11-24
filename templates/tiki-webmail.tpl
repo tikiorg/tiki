@@ -286,8 +286,8 @@
 							<tr>
 								<td>&nbsp;</td>
 								<td colspan="3">
-									<input type="submit" class="btn btn-default" name="new_acc" value="{if $accountId eq ''}{tr}Add{/tr}{else}{tr}Update{/tr}{/if}">
-									<input type="submit" class="btn btn-default" name="cancel_acc" value="{tr}Cancel{/tr}">
+									<input type="submit" class="btn btn-default btn-sm" name="new_acc" value="{if $accountId eq ''}{tr}Add{/tr}{else}{tr}Update{/tr}{/if}">
+									<input type="submit" class="btn btn-default btn-sm" name="cancel_acc" value="{tr}Cancel{/tr}">
 								</td>
 							</tr>
 						</table>
@@ -346,7 +346,7 @@
 			<option value="read">{tr}Mark as read{/tr}</option>
 			<option value="unread">{tr}Mark as unread{/tr}</option>
 		</select>
-		<input type="submit" class="btn btn-default" name="operate" value="{tr}Mark{/tr}">
+		<input type="submit" class="btn btn-default btn-sm" name="operate" value="{tr}Mark{/tr}">
 		<br>
 		<br>
         <div class="table-responsive">
@@ -423,7 +423,7 @@
 			<td>
 				<form method="post" action="tiki-webmail.php">
 					<input type="hidden" name="locSection" value="compose">
-					<input type="submit" class="btn btn-default" name="reply" value="{tr}Reply{/tr}">
+					<input type="submit" class="btn btn-default btn-sm" name="reply" value="{tr}Reply{/tr}">
 					<input type="hidden" name="realmsgid" value="{$realmsgid|escape}">
 					<input type="hidden" name="to" value="{$headers.replyto|escape}">
 					<input type="hidden" name="subject" value="Re:{$headers.subject}">
@@ -433,7 +433,7 @@
 			<td>
 				<form method="post" action="tiki-webmail.php">
 					<input type="hidden" name="locSection" value="compose">
-					<input type="submit" class="btn btn-default" name="replyall" value="{tr}Reply To All{/tr}">
+					<input type="submit" class="btn btn-default btn-sm" name="replyall" value="{tr}Reply To All{/tr}">
 					<input type="hidden" name="to" value="{$headers.replyto|escape}">
 					<input type="hidden" name="realmsgid" value="{$realmsgid|escape}">
 					<input type="hidden" name="cc" value="{$headers.replycc|escape}">
@@ -443,7 +443,7 @@
 			</td>
 			<td>
 				<form method="post" action="tiki-webmail.php">
-					<input type="submit" class="btn btn-default" name="reply" value="{tr}Forward{/tr}">
+					<input type="submit" class="btn btn-default btn-sm" name="reply" value="{tr}Forward{/tr}">
 					<input type="hidden" name="locSection" value="compose">
 					<input type="hidden" name="to" value="">
 					<input type="hidden" name="cc" value="">
@@ -546,7 +546,7 @@
 				<input type="hidden" name="attach1type" value="{$attach1type|escape}">
 				<input type="hidden" name="attach2type" value="{$attach2type|escape}">
 				<input type="hidden" name="attach3type" value="{$attach3type|escape}">
-				<input type="submit" class="btn btn-default" name="send" value="{tr}Send{/tr}">
+				<input type="submit" class="btn btn-default btn-sm" name="send" value="{tr}Send{/tr}">
 				<table class="formcolor">
 					<tr>
 						<td>
@@ -587,7 +587,7 @@
 							{if $attach3}
 								({$attach3})
 							{/if}
-							<input type="submit" class="btn btn-default" name="attach" value="{tr}Add{/tr}">
+							<input type="submit" class="btn btn-default btn-sm" name="attach" value="{tr}Add{/tr}">
 						</td>
 					</tr>
 					<tr>
@@ -643,7 +643,7 @@
 						<tr>
 							<td>&nbsp;</td>
 							<td>
-								<input type="submit" class="btn btn-default" name="add_contacts" value="{tr}Add Contacts{/tr}">
+								<input type="submit" class="btn btn-default btn-sm" name="add_contacts" value="{tr}Add Contacts{/tr}">
 							</td>
 						</tr>
 					</table>
@@ -672,7 +672,7 @@
 				{if $attach1}
 					<tr>
 						<td>{tr}Attachment 1{/tr}</td>
-						<td>{$attach1} <input type="submit" class="btn btn-default" name="remove_attach1" value="{tr}Remove{/tr}"></td>
+						<td>{$attach1} <input type="submit" class="btn btn-default btn-sm" name="remove_attach1" value="{tr}Remove{/tr}"></td>
 					</tr>
 				{else}
 					<tr>
@@ -718,7 +718,7 @@
 				<tr>
 					<td>&nbsp;</td>
 					<td>
-						<input type="submit" class="btn btn-default" name="attached" value="{tr}Done{/tr}">
+						<input type="submit" class="btn btn-default btn-sm" name="attached" value="{tr}Done{/tr}">
 					</td>
 				</tr>
 			</table>

@@ -47,7 +47,7 @@
 	</table>
     </div>
 	{if $channels|@count ge '1'}
-		{tr}Perform action with checked:{/tr} <input type="submit" class="btn btn-default" name="delete" value="{tr}Delete{/tr}">
+		{tr}Perform action with checked:{/tr} <input type="submit" class="btn btn-default btn-sm" name="delete" value="{tr}Delete{/tr}">
 	{/if}
 </form>
 
@@ -64,7 +64,7 @@
 				<input type="hidden" name="MAX_FILE_SIZE" value="10000000000000" /><input size="60" name="userfile3" type="file"><br>
 				<input type="hidden" name="MAX_FILE_SIZE" value="10000000000000" /><input size="60" name="userfile4" type="file"><br>
 				<input type="hidden" name="MAX_FILE_SIZE" value="10000000000000" /><input size="60" name="userfile5" type="file"><br>
-				<input type="submit" class="btn btn-default" name="upload" value="{tr}Upload{/tr}">
+				<input type="submit" class="btn btn-default btn-sm" name="upload" value="{tr}Upload{/tr}">
 			</td>
 		</tr>
 	</table>

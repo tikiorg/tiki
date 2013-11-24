@@ -126,7 +126,7 @@
 				      <option value="{$galleries[idx].id|escape}" {if $galleries[idx].id eq $galleryId}selected="selected"{/if}>{$galleries[idx].name}</option>
 				    {/section}
 					</select>
-					<input type="submit" class="btn btn-default" name="move_image" value="{tr}Move{/tr}">
+					<input type="submit" class="btn btn-default btn-sm" name="move_image" value="{tr}Move{/tr}">
 			  </form>
 			</td>
 		</tr>

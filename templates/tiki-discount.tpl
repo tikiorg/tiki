@@ -64,7 +64,7 @@
 	</tr>
 	<tr>
 		<td></td>
-		<td><input type="submit" class="btn btn-default" name="save" value="{tr}Save{/tr}"></td>
+		<td><input type="submit" class="btn btn-default btn-sm" name="save" value="{tr}Save{/tr}"></td>
 	</tr>
 	</table>
 	</form>

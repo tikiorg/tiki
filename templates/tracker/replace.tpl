@@ -390,6 +390,6 @@
 	<div class="submit">
 		<input type="hidden" name="confirm" value="1">
 		<input type="hidden" name="trackerId" value="{$trackerId|escape}">
-		<input type="submit" class="btn btn-default" value="{tr}Save{/tr}">
+		<input type="submit" class="btn btn-default btn-sm" value="{tr}Save{/tr}">
 	</div>
 </form>

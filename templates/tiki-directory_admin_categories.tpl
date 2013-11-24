@@ -16,7 +16,7 @@
 {/section}
 
   </select>
-  <input type="submit" class="btn btn-default" name="go" value="{tr}Go{/tr}">
+  <input type="submit" class="btn btn-default btn-sm" name="go" value="{tr}Go{/tr}">
 </form>
 {* Dislay a form to add or edit a category *} <br>
 {if $categId eq 0}
