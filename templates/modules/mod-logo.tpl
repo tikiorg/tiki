@@ -10,14 +10,14 @@
 		</div>
 		{if !empty($module_params.sitetitle) or !empty($module_params.sitesubtitle)}
 			<div class="pull-left  {$module_params.class_titles|escape}">
-				<div class="sitetitle">
+				<h1 class="sitetitle">
 					{if !empty($module_params.sitetitle)}
 						<a href="{$module_params.link}"{if $prefs.mobile_mode eq "y"} rel="external"{/if}>
 							{tr}{$module_params.sitetitle|escape}{/tr}
 						</a>
 					{/if}
-				</div>
-				<div class="sitesubtitle">{if !empty($module_params.sitesubtitle)}{tr}{$module_params.sitesubtitle|escape}{/tr}{/if}</div>
+				</h1>
+				<h2 class="sitesubtitle">{if !empty($module_params.sitesubtitle)}{tr}{$module_params.sitesubtitle|escape}{/tr}{/if}</h3>
 			</div>
 		{/if}
 	{/tikimodule}
