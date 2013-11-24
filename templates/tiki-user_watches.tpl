@@ -186,7 +186,7 @@
 </table>
 </div>
 {if $watches}
-	{tr}Perform action with checked:{/tr} <input type="submit" class="btn btn-warning" name="delete" value="{tr}Delete{/tr}">
+	{tr}Perform action with checked:{/tr} <input type="submit" class="btn btn-warning btn-sm" name="delete" value="{tr}Delete{/tr}">
 {/if}
 </form>
 {/tab}

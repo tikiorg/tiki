@@ -52,7 +52,7 @@
 	<input type="hidden" name="flag" value="{$flag|escape}">
 	<input type="hidden" name="flagval" value="{$flagval|escape}">
 	<input type="hidden" name="priority" value="{$priority|escape}">
-	<input type="submit" class="btn btn-warning" name="delete" value="{tr}Delete{/tr}">
+	<input type="submit" class="btn btn-warning btn-sm" name="delete" value="{tr}Delete{/tr}">
 	<input type="submit" class="btn btn-default btn-sm" name="download" value="{tr}Download{/tr}">
 {jq notonready=true}
 var CHECKBOX_LIST = [{{section name=user loop=$items}'msg[{$items[user].msgId}]'{if not $smarty.section.user.last},{/if}{/section}}];

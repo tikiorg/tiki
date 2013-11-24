@@ -58,7 +58,7 @@
     <div class="table-responsive">
 	<table class="table normal">
 		<tr>
-			<th><input type="submit" class="btn btn-warning" name="delete" value="{tr}Del{/tr}"></th>
+			<th><input type="submit" class="btn btn-warning btn-sm" name="delete" value="{tr}Del{/tr}"></th>
 			<th>
 				<a href="tiki-theme_control_sections.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'section_desc'}section_asc{else}section_desc{/if}">
 					{tr}Section{/tr}

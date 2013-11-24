@@ -58,7 +58,7 @@
 					{/if}
 					{if $plugin_approve}
 						<input type="submit" class="btn btn-default btn-sm" name="plugin_accept" value="{tr}Approve{/tr}">
-						<input type="submit" class="btn btn-warning" name="plugin_reject" value="{tr}Reject{/tr}">
+						<input type="submit" class="btn btn-warning btn-sm" name="plugin_reject" value="{tr}Reject{/tr}">
 					{/if}
 					</p>
 				</form>

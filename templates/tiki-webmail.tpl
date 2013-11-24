@@ -338,7 +338,7 @@
 		<input type="hidden" name="quickFlag" value="">
 		<input type="hidden" name="quickFlagMsg" value="">
 		<input type="hidden" name="locSection" value="mailbox">
-		<input type="submit" class="btn btn-warning" name="delete" value="{tr}Delete{/tr}">
+		<input type="submit" class="btn btn-warning btn-sm" name="delete" value="{tr}Delete{/tr}">
 		<input type="hidden" name="start" value="{$start|escape}">
 		<select name="action">
 			<option value="flag">{tr}Mark as flagged{/tr}</option>
@@ -410,7 +410,7 @@
 		<tr>
 			<td>
 				<form method="post" action="tiki-webmail.php">
-					<input type="submit" class="btn btn-warning" name="delete_one" value="{tr}Delete{/tr}">
+					<input type="submit" class="btn btn-warning btn-sm" name="delete_one" value="{tr}Delete{/tr}">
 					{if $next}
 						<input type="hidden" name="locSection" value="read">
 						<input type="hidden" name="msgid" value="{$next|escape}">
@@ -687,7 +687,7 @@
 					<tr>
 						<td>{tr}Attachment 2{/tr}</td>
 						<td>
-							{$attach2} <input type="submit" class="btn btn-warning" name="remove_attach2" value="{tr}Remove{/tr}">
+							{$attach2} <input type="submit" class="btn btn-warning btn-sm" name="remove_attach2" value="{tr}Remove{/tr}">
 						</td>
 					</tr>
 				{else}
@@ -704,7 +704,7 @@
 					<tr>
 						<td>{tr}Attachment 3{/tr}</td>
 						<td>
-							{$attach3} <input type="submit" class="btn btn-warning"name="remove_attach3" value="{tr}Remove{/tr}">
+							{$attach3} <input type="submit" class="btn btn-warning btn-sm"name="remove_attach3" value="{tr}Remove{/tr}">
 						</td>
 					</tr>
 				{else}

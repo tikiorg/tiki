@@ -168,7 +168,7 @@ if (jqueryTiki.chosen) {
             <div class="table-responsive">
 			<table class="table">
 				<tr>
-					{if $tiki_p_remove eq 'y'}<th><input type="submit" class="btn btn-warning" name="delete" value="{tr}Del{/tr}"></th>{/if}
+					{if $tiki_p_remove eq 'y'}<th><input type="submit" class="btn btn-warning btn-sm" name="delete" value="{tr}Del{/tr}"></th>{/if}
 					<th>{tr}Information{/tr}</th>
 					{if $prefs.feature_contribution eq 'y'}<th>{tr}Contribution{/tr}</th>{/if}
 					{if $prefs.feature_contribution eq 'y' and $prefs.feature_contributor_wiki eq 'y'}<th>{tr}Contributors{/tr}</th>{/if}

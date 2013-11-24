@@ -204,7 +204,7 @@
     <div class="table-responsive">
 	<table class="table normal">
 		<tr>
-			<th><input type="submit" class="btn btn-warning" name="del" value="{tr}x{/tr} "></th>
+			<th><input type="submit" class="btn btn-warning btn-sm" name="del" value="{tr}x{/tr} "></th>
 			<th>{tr}Title{/tr}</th>
 			<th>{tr}User/IP{/tr}</th>
 			<th>{tr}Sections{/tr}</th>

@@ -56,7 +56,7 @@
 {/section}
 </table>
 {if $items}
-{tr}Perfom action with checked:{/tr} <input type="submit" class="btn btn-warning" name="del" value=" {tr}Un-report{/tr} ">
+{tr}Perfom action with checked:{/tr} <input type="submit" class="btn btn-warning btn-sm" name="del" value=" {tr}Un-report{/tr} ">
 {/if}
 
 </form>

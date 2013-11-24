@@ -89,7 +89,7 @@ var CHECKBOX_LIST = [{{section name=user loop=$items}'msg[{$items[user].msgId}]'
     </div>
 	{if $items}
 		<p>{tr}Perform action with checked:{/tr}
-		<input type="submit" class="btn btn-warning" name="delete" value="{tr}Delete{/tr}">
+		<input type="submit" class="btn btn-warning btn-sm" name="delete" value="{tr}Delete{/tr}">
 		<input type="submit" class="btn btn-default btn-sm" name="archive" value="{tr}Archive{/tr}">
 		<input type="submit" class="btn btn-default btn-sm" name="download" value="{tr}Download{/tr}">
 		<select name="action">

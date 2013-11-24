@@ -27,7 +27,7 @@
     {else}
     <input type="hidden" name="msgId" value="">
     {/if}
-    <input type="submit" class="btn btn-warning" name="delete" value="{tr}Delete{/tr}">
+    <input type="submit" class="btn btn-warning btn-sm" name="delete" value="{tr}Delete{/tr}">
     </form>
   </td>
   <td>

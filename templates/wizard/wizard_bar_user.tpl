@@ -6,7 +6,7 @@
 	<div style="float:left; width:20px"><img src="img/icons/wizard16x16.png" alt="{tr}Tiki User Wizard{/tr}" /></div>
 	</td>
 <td style="text-align:left">
-	<input type="submit" class="btn btn-warning" name="close" value="{tr}Close{/tr}" />
+	<input type="submit" class="btn btn-warning btn-sm" name="close" value="{tr}Close{/tr}" />
 	&nbsp;&nbsp;&nbsp;
 	{if !isset($firstWizardPage)}<input type="submit" class="btn btn-default btn-sm" name="back" value="{tr}Back{/tr}" />{/if}
 	</td>

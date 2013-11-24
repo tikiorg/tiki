@@ -33,8 +33,8 @@
 			</table>
 			<p>
 				<input type="submit" class="btn btn-default btn-sm" name="list" value="{tr}Show Usage{/tr}"/>
-				<input type="submit" class="btn btn-warning" name="remove" value="{tr}Delete{/tr}"/>
-				<input type="submit" class="btn btn-warning" name="removeclean" value="{tr}Delete &amp; Unreference{/tr}"/>
+				<input type="submit" class="btn btn-warning btn-sm" name="remove" value="{tr}Delete{/tr}"/>
+				<input type="submit" class="btn btn-warning btn-sm" name="removeclean" value="{tr}Delete &amp; Unreference{/tr}"/>
 			</p>
 			</form>
 

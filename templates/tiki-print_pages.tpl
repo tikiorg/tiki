@@ -80,7 +80,7 @@
 			<p><input type="submit" class="btn btn-default btn-sm" name="addpage" title="{tr}Add Page{/tr}" value="{tr}Add Page{/tr} &gt;"></p>
 {/if}
 {if $printpages}
-			<p><input type="submit" class="btn btn-warning" name="removepage" title="{tr}Remove Page{/tr}" value="&lt; {tr}Remove Page{/tr}"></p>
+			<p><input type="submit" class="btn btn-warning btn-sm" name="removepage" title="{tr}Remove Page{/tr}" value="&lt; {tr}Remove Page{/tr}"></p>
 			<p><input type="submit" class="btn btn-default btn-sm" name="clearpages" title="{tr}Clear{/tr}" value="{tr}Clear{/tr}"></p>
 {/if}
 			</div>

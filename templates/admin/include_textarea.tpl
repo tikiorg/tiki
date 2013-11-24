@@ -249,7 +249,7 @@ if (window.location.href.indexOf('plugin_alias_new=true') > -1) {
 					{/foreach}
 					<div align="center">
 						<input type="submit" class="btn btn-default btn-sm" name="enable" value="{tr}Enable Plugins{/tr}"/>
-						<input type="submit" class="btn btn-warning" name="delete" value="{tr}Delete Plugins{/tr}"/>
+						<input type="submit" class="btn btn-warning btn-sm" name="delete" value="{tr}Delete Plugins{/tr}"/>
 					</div>
 					{remarksbox type="tip" title="{tr}Tip{/tr}"}
 						{tr}Click on the plugin name to edit it.{/tr} {tr}Click on the + icon to add a new one.{/tr}

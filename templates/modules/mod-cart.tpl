@@ -50,7 +50,7 @@
 					<br>
 				{/if}
 				{if $gift_certificate_redeem_code}
-					<input type="submit" class="btn btn-warning" name="remove_gift_certificate" value="{tr}Remove Gift Certificate{/tr}">
+					<input type="submit" class="btn btn-warning btn-sm" name="remove_gift_certificate" value="{tr}Remove Gift Certificate{/tr}">
 				{else}
 					Code: <input type="text" name="gift_certificate_redeem_code" style="width: 70px;">
 					<input type="submit" class="btn btn-default btn-sm btn-sm" name="add_gift_certificate" value="{tr}Add Gift Certificate{/tr}">
