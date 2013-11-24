@@ -14,7 +14,7 @@
   <form method="post" action="">
   <div>
   <input type="text" name="tags" value=""/>
-  <input type="submit" class="btn btn-default btn-small" name="mod_add_tags" value="{tr}Add tags{/tr}"/>
+  <input type="submit" class="btn btn-sm" name="mod_add_tags" value="{tr}Add tags{/tr}"/>
   </div>
   </form>
   {/if}

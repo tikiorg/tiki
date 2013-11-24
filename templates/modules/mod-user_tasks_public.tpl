@@ -15,7 +15,7 @@
 </option>
 {/section}
     </select>
-    <input type="submit" class="wikiaction btn btn-default" name="modTasksSearch" value="{tr}Go{/tr}" />
+    <input type="submit" class="wikiaction btn btn-sm" name="modTasksSearch" value="{tr}Go{/tr}" />
 </form>
 </td></tr>
 {section name=iix loop=$public_tasks}
