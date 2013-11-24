@@ -129,9 +129,11 @@
 					</div>
 				</div>
 			{/if}
-		<div class="input_submit_container">
-			<input type="submit" class="btn btn-default btn-sm" name="preview" value="{tr}Preview{/tr}" onclick="needToConfirm=false;">
-			<input type="submit" class="btn btn-default btn-sm" name="assign" value="{tr}Assign{/tr}" onclick="needToConfirm=false;">
-		</div>
+                <div class="form-group clearfix">
+                    <div class="pull-right">
+			            <input type="submit" class="btn btn-default btn-sm" name="preview" value="{tr}Preview{/tr}" onclick="needToConfirm=false;">
+			            <input type="submit" class="btn btn-default btn-sm" name="assign" value="{tr}Assign{/tr}" onclick="needToConfirm=false;">
+		            </div>
+                </div>
 	{/if}
 </div>

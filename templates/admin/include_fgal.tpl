@@ -25,10 +25,14 @@
 {/remarksbox}
 
 <form action="tiki-admin.php?page=fgal" method="post">
-	<div class="heading input_submit_container" style="text-align: right">
-		<input type="submit" class="btn btn-default btn-sm" name="filegalhandlers" value="{tr}Change preferences{/tr}" />
-	</div>
 
+    <div class="row">
+        <div class="form-group col-lg-12 clearfix">
+            <div class="pull-right">
+                <input type="submit" class="btn btn-default btn-sm" name="filegalhandlers" value="{tr}Change preferences{/tr}">
+            </div>
+        </div>
+    </div>
 	{tabset name="fgal_admin"}
 	
 		{tab name="{tr}General Settings{/tr}"}
@@ -318,7 +322,10 @@
 		{/tab}
 	{/tabset}
 
-	<div class="input_submit_container clear" style="text-align: center">
-		<input type="submit" class="btn btn-default btn-sm" name="filegalhandlers" value="{tr}Change preferences{/tr}" />
-	</div>
+    <br>{* I cheated. *}
+    <div class="row">
+        <div class="form-group col-lg-12 text-center">
+            <input type="submit" class="btn btn-default btn-sm" name="filegalhandlers" value="{tr}Change preferences{/tr}">
+        </div>
+    </div>
 </form>

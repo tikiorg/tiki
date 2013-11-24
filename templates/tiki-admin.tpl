@@ -8,7 +8,7 @@
 	{/remarksbox}
 {/if}
 
-<form method="post" action="">
+<form method="post" action="" class="form-group">
 	<fieldset>
 		<legend>{tr}Preference Filters{/tr}</legend>
 		{foreach from=$pref_filters key=name item=info}

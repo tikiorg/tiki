@@ -7,11 +7,16 @@
 </div>
 
 <form action="tiki-admin.php?page=community" method="post">
-	<div class="input_submit_container clear" style="text-align: right;">
-		<input type="submit" class="btn btn-default btn-sm" value="{tr}Change preferences{/tr}" />
-	</div>
+<div class="row">
+    <div class="form-group col-lg-12 clearfix">
+        <div class="pull-right">
+            <input type="submit" class="btn btn-default btn-sm" value="{tr}Change preferences{/tr}">
+        </div>
+    </div>
+</div>
 
-	{tabset name="admin_community"}
+
+{tabset name="admin_community"}
 		{tab name="{tr}User features{/tr}"}
 	
 			<div class="admin featurelist">
@@ -228,7 +233,10 @@
 			</div>
 		{/tab}
 	{/tabset}
-	<div class="input_submit_container clear" style="text-align: center;">
-		<input type="submit" class="btn btn-default btn-sm" value="{tr}Change preferences{/tr}" />
-	</div>
+<br>{* I cheated. *}
+<div class="row">
+    <div class="form-group col-lg-12 text-center">
+        <input type="submit" class="btn btn-default btn-sm" value="{tr}Change preferences{/tr}">
+    </div>
+</div>
 </form>

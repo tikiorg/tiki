@@ -8,9 +8,14 @@
 {if $kaltura_legacyremix eq 'y'}{button _text="{tr}List Remix Entries{/tr}" href="tiki-list_kaltura_entries.php?list=mix"}{/if}
 {button _text="{tr}Add New Media{/tr}" href="tiki-kaltura_upload.php"}
 
-<div class="heading input_submit_container" style="text-align: right">
-	<input type="submit" class="btn btn-default btn-sm" name="video" value="{tr}Change preferences{/tr}" />
-</div>
+    <div class="row">
+        <div class="form-group col-lg-12 clearfix">
+            <div class="pull-right">
+                <input type="submit" class="btn btn-default btn-sm" name="video" value="{tr}Change preferences{/tr}">
+            </div>
+        </div>
+    </div>
+
 <fieldset class="table">
 
 <legend>{tr}Activate the feature{/tr}</legend>

@@ -6,9 +6,13 @@
 
 
 <form action="tiki-admin.php?page=comments" method="post">
-	<div class="heading input_submit_container" style="text-align: right">
-		<input type="submit" class="btn btn-default btn-sm" name="commentssetprefs" value="{tr}Change preferences{/tr}" />
-	</div>
+    <div class="row">
+        <div class="form-group col-lg-12 clearfix">
+            <div class="pull-right">
+                <input type="submit" class="btn btn-default btn-sm" name="commentssetprefs" value="{tr}Change preferences{/tr}">
+            </div>
+        </div>
+    </div>
 
 	{tabset name="admin_wiki"}
 		{tab name="{tr}General Preferences{/tr}"}
@@ -88,7 +92,10 @@
 		{/tab}
 {/tabset}
 
-<div class="heading input_submit_container" style="text-align: center">
-	<input type="submit" class="btn btn-default btn-sm" name="commentssetprefs" value="{tr}Change preferences{/tr}" />
-</div>
+    <br>{* I cheated. *}
+    <div class="row">
+        <div class="form-group col-lg-12 text-center">
+            <input type="submit" class="btn btn-default btn-sm" value="{tr}Change preferences{/tr}">
+        </div>
+    </div>
 </form>

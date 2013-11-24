@@ -1,7 +1,12 @@
 <form action="tiki-admin.php?page=metrics" onreset="return(confirm("{tr}Cancel Edit{/tr}"))" class="admin" method="post">
-	<div class="heading input_submit_container" style="text-align: right">
-		<input type="submit" class="btn btn-default btn-sm" value="{tr}Change preferences{/tr}" />
-	</div>
+
+    <div class="row">
+        <div class="form-group col-lg-12 clearfix">
+            <div class="pull-right">
+                <input type="submit" class="btn btn-default btn-sm" value="{tr}Change preferences{/tr}">
+            </div>
+        </div>
+    </div>
 	<fieldset>
 		<legend>{tr}Metrics Dashboard{/tr}</legend>
 
@@ -21,7 +26,10 @@
 			{preference name=metrics_cache_output}
 		</div>
 	</fieldset>
-	<div class="heading input_submit_container" style="text-align: right">
-		<input type="submit" class="btn btn-default btn-sm" value="{tr}Change preferences{/tr}" />
-	</div>
+<br>{* I cheated. *}
+<div class="row">
+    <div class="form-group col-lg-12">
+        <input type="submit" class="btn btn-default btn-sm pull-right" value="{tr}Change preferences{/tr}">
+    </div>
+</div>
 </form>

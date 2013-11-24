@@ -27,9 +27,13 @@
 
 <form action="tiki-admin.php?page=login" class="admin" method="post" name="LogForm">
 	<input type="hidden" name="loginprefs" />
-	<div class="heading input_submit_container" style="text-align: right">
-		<input type="submit" class="btn btn-default btn-sm" value="{tr}Change preferences{/tr}" />
-	</div>
+    <div class="row">
+        <div class="form-group col-lg-12 clearfix">
+            <div class="pull-right">
+		        <input type="submit" class="btn btn-default btn-sm" value="{tr}Change preferences{/tr}" />
+	        </div>
+        </div>
+    </div>
 
 	{tabset name="admin_login"}
 		{tab name="{tr}General Preferences{/tr}"}
@@ -400,8 +404,10 @@
 				{preference name='auth_ws_create_tiki'}
 			</fieldset>
 		{/tab}
-	{/tabset}
-	<div class="heading input_submit_container" style="text-align: center">
+	{/tabset}<br>{* I cheated. *}
+    <div class="row">
+        <div class="form-group col-lg-12 text-center">
 		<input type="submit" class="btn btn-default btn-sm" value="{tr}Change preferences{/tr}" />
 	</div>
+    </div>
 </form>

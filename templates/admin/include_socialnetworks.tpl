@@ -1,7 +1,12 @@
 <form action="tiki-admin.php?page=socialnetworks" method="post">
-	<div class="heading input_submit_container" style="text-align: right">
-		<input type="submit" class="btn btn-default btn-sm" name="socialnetworksset" value="{tr}Change preferences{/tr}" />
-	</div>
+
+    <div class="row">
+        <div class="form-group col-lg-12 clearfix">
+            <div class="pull-right">
+                <input type="submit" class="btn btn-default btn-sm" name="socialnetworksset" value="{tr}Change preferences{/tr}">
+            </div>
+        </div>
+    </div>
 
 	{tabset}
 		{tab name="{tr}General{/tr}"}

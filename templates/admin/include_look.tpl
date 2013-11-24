@@ -1,10 +1,10 @@
 {* $Id$ *}
 <form action="tiki-admin.php?page=look" id="look" name="look" class="labelColumns" onreset="return(confirm("{tr}Cancel Edit{/tr}"))" class="admin" method="post">
-	<div class="heading input_submit_container" style="text-align: right">
+<div class="row">
+<div class="btn-group pull-right form-group">
 		<input type="submit" class="btn btn-default btn-sm" name="looksetup" value="{tr}Apply{/tr}" />
-		<input type="reset" class="btn btn-warning" name="looksetupreset" value="{tr}Reset{/tr}" />
-	</div>
-
+		<input type="reset" class="btn btn-danger btn-sm" name="looksetupreset" value="{tr}Reset{/tr}" />
+</div></div>
 	{tabset name="admin_look"}
 		{tab name="{tr}Theme{/tr}"}
 
