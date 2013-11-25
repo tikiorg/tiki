@@ -5,7 +5,13 @@
 {* <td style="text-align:left; width:270px">  *} {* mobile *}
 	{if !isset($showOnLoginDisplayed) or $showOnLoginDisplayed neq 'y'}
 {* 		<div style="float:left; width:20px; margin-top:20px;"><img src="img/icons/wizard16x16.png" alt="{tr}Tiki Admin Wizard{/tr}" /></div> *} {* mobile *}
-		<input type="checkbox" name="showOnLogin" id="showOnLogin" class="custom" data-mini="true" data-theme="a" {if isset($showOnLogin) AND $showOnLogin eq true}checked="checked"{/if} /> <label for="showOnLogin"><img src="img/icons/wizard16x16.png" alt="{tr}Tiki Admin Wizard{/tr}" /> {tr}Show on admin login{/tr}</label> {* mobile *}
+		<input type="checkbox" name="showOnLogin" id="showOnLogin" class="custom" data-mini="true" data-theme="a" 
+			{if isset($showOnLogin) AND $showOnLogin eq true}checked="checked" 
+				{jq}
+					$("input[name='showOnLogin']").attr("checked",true).checkboxradio("refresh");
+				{/jq}
+			{/if}
+		/> <label for="showOnLogin"><img src="img/icons/wizard16x16.png" alt="{tr}Tiki Admin Wizard{/tr}" /> {tr}Show on admin login{/tr}</label> {* mobile *}
 		{assign var="showOnLoginDisplayed" value="y" scope="root"}
 	{else}
 		&nbsp;
