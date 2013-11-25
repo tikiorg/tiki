@@ -36,52 +36,53 @@
 			</td>
 			
 			<td style="text-align:right;">
-				{if $prefs.feed_forum eq 'y'}
-					<a href="tiki-forum_rss.php?forumId={$forumId}" title="{tr}RSS feed{/tr}">{icon _id="feed" alt="{tr}RSS feed{/tr}"}</a>
-				{/if}
-
-				{if !empty($tiki_p_forum_lock) and $tiki_p_forum_lock eq 'y'}
-					{if $forum_info.is_locked eq 'y'}
-						{self_link lock='n' _icon='lock_break' _alt="{tr}Unlock{/tr}"}{/self_link}
-					{else}
-						{self_link lock='y' _icon='lock_add' _alt="{tr}Lock{/tr}"}{/self_link}
+				{if $prefs.mobile_mode eq 'y'}<div class="navbar" data-role="controlgroup" data-type="horizontal">{/if} {* mobile *}
+					{if $prefs.feed_forum eq 'y'}
+						<a {if $prefs.mobile_mode eq 'y'} data-role="button"{/if} href="tiki-forum_rss.php?forumId={$forumId}" title="{tr}RSS feed{/tr}">{icon _id="feed" alt="{tr}RSS feed{/tr}"}</a> {* mobile *}
 					{/if}
-				{/if}
-
-				{if $user and $prefs.feature_user_watches eq 'y'}
-					{if $user_watching_forum eq 'n'}
-						<a href="tiki-view_forum.php?forumId={$forumId}&amp;watch_event=forum_post_topic&amp;watch_object={$forumId}&amp;watch_action=add" title="{tr}Monitor Topics of this Forum{/tr}">{icon _id='eye' alt="{tr}Monitor Topics of this Forum{/tr}"}</a>
-					{else}
-						<a href="tiki-view_forum.php?forumId={$forumId}&amp;watch_event=forum_post_topic&amp;watch_object={$forumId}&amp;watch_action=remove" title="{tr}Stop Monitoring Topics of this Forum{/tr}">{icon _id='no_eye' alt="{tr}Stop Monitoring Topics of this Forum{/tr}"}</a>
-					{/if}			
-				{/if}
-
-				{if $user and $prefs.feature_user_watches eq 'y'}
-					{if $user_watching_forum_topic_and_thread eq 'n'}
-						<a href="tiki-view_forum.php?forumId={$forumId}&amp;watch_event=forum_post_topic_and_thread&amp;watch_object={$forumId}&amp;watch_action=add" title="{tr}Monitor Topics and Threads of this Forum{/tr}">{icon _id='eye_magnifier' alt="{tr}Monitor Topics and Threads of this Forum{/tr}"}</a>
-					{else}
-						<a href="tiki-view_forum.php?forumId={$forumId}&amp;watch_event=forum_post_topic_and_thread&amp;watch_object={$forumId}&amp;watch_action=remove" title="{tr}Stop Monitoring Topics and Threads of this Forum{/tr}">{icon _id='no_eye' alt="{tr}Stop Monitoring Topics and Threads of this Forum{/tr}"}</a>
+	
+					{if !empty($tiki_p_forum_lock) and $tiki_p_forum_lock eq 'y'}
+						{if $forum_info.is_locked eq 'y'}
+							<a {if $prefs.mobile_mode eq 'y'} data-role="button"{/if} href="{query _type='relative' lock='n'}" title="{tr}Unlock{/tr}">{icon _id=lock_break alt="{tr}Unlock{/tr}"}</a>  {* mobile *}
+						{else}
+							<a {if $prefs.mobile_mode eq 'y'} data-role="button"{/if} href="{query _type='relative' lock='y'}" title="{tr}Lock{/tr}">{icon _id=lock_add alt="{tr}Lock{/tr}"}</a>  {* mobile *}
+						{/if}
 					{/if}
-				{/if}
-				{if $prefs.feature_group_watches eq 'y' and ( $tiki_p_admin_users eq 'y' or $tiki_p_admin eq 'y' )}
-					<a href="tiki-object_watches.php?objectId={$forumId|escape:"url"}&amp;watch_event=forum_post_topic&amp;objectType=forum&amp;objectName={$forum_info.name|escape:"url"}&amp;objectHref={'tiki-view_forum.php?forumId='|cat:$forumId|escape:"url"}" class="icon">{icon _id='eye_group' alt="{tr}Group Monitor Topics of this Forum{/tr}"}</a>
-				{/if}
-				{if $prefs.feature_group_watches eq 'y' and ( $tiki_p_admin_users eq 'y' or $tiki_p_admin eq 'y' )}
-					<a href="tiki-object_watches.php?objectId={$forumId|escape:"url"}&amp;watch_event=forum_post_topic_and_thread&amp;objectType=forum&amp;objectName={$forum_info.name|escape:"url"}&amp;objectHref={'tiki-view_forum.php?forumId='|cat:$forumId|escape:"url"}" class="icon">{icon _id='eye_group' alt="{tr}Group Monitor Topics and Threads of this Forum{/tr}"}</a>
-				{/if}
-
-				<div class="categbar" align="right" >
+	
 					{if $user and $prefs.feature_user_watches eq 'y'}
-						{if isset($category_watched) and $category_watched eq 'y'}
-							{tr}Watched by categories:{/tr}
-							{section name=i loop=$watching_categories}
-								<a href="tiki-browse_categories.php?parentId={$watching_categories[i].categId}">{$watching_categories[i].name|escape}</a>
-								&nbsp;
-							{/section}
-						{/if}	
+						{if $user_watching_forum eq 'n'}
+							<a {if $prefs.mobile_mode eq 'y'} data-role="button"{/if} href="tiki-view_forum.php?forumId={$forumId}&amp;watch_event=forum_post_topic&amp;watch_object={$forumId}&amp;watch_action=add" title="{tr}Monitor Topics of this Forum{/tr}">{icon _id='eye' alt="{tr}Monitor Topics of this Forum{/tr}"}</a> {* mobile *}
+						{else}
+							<a {if $prefs.mobile_mode eq 'y'} data-role="button"{/if} href="tiki-view_forum.php?forumId={$forumId}&amp;watch_event=forum_post_topic&amp;watch_object={$forumId}&amp;watch_action=remove" title="{tr}Stop Monitoring Topics of this Forum{/tr}">{icon _id='no_eye' alt="{tr}Stop Monitoring Topics of this Forum{/tr}"}</a> {* mobile *}
+						{/if}			
 					{/if}
-				</div>
-
+	
+					{if $user and $prefs.feature_user_watches eq 'y'}
+						{if $user_watching_forum_topic_and_thread eq 'n'}
+							<a {if $prefs.mobile_mode eq 'y'} data-role="button"{/if} href="tiki-view_forum.php?forumId={$forumId}&amp;watch_event=forum_post_topic_and_thread&amp;watch_object={$forumId}&amp;watch_action=add" title="{tr}Monitor Topics and Threads of this Forum{/tr}">{icon _id='eye_magnifier' alt="{tr}Monitor Topics and Threads of this Forum{/tr}"}</a> {* mobile *}
+						{else}
+							<a {if $prefs.mobile_mode eq 'y'} data-role="button"{/if} href="tiki-view_forum.php?forumId={$forumId}&amp;watch_event=forum_post_topic_and_thread&amp;watch_object={$forumId}&amp;watch_action=remove" title="{tr}Stop Monitoring Topics and Threads of this Forum{/tr}">{icon _id='no_eye' alt="{tr}Stop Monitoring Topics and Threads of this Forum{/tr}"}</a> {* mobile *}
+						{/if}
+					{/if}
+					{if $prefs.feature_group_watches eq 'y' and ( $tiki_p_admin_users eq 'y' or $tiki_p_admin eq 'y' )}
+						<a {if $prefs.mobile_mode eq 'y'} data-role="button"{/if} href="tiki-object_watches.php?objectId={$forumId|escape:"url"}&amp;watch_event=forum_post_topic&amp;objectType=forum&amp;objectName={$forum_info.name|escape:"url"}&amp;objectHref={'tiki-view_forum.php?forumId='|cat:$forumId|escape:"url"}" class="icon">{icon _id='eye_group' alt="{tr}Group Monitor Topics of this Forum{/tr}"}</a> {* mobile *}
+					{/if}
+					{if $prefs.feature_group_watches eq 'y' and ( $tiki_p_admin_users eq 'y' or $tiki_p_admin eq 'y' )}
+						<a {if $prefs.mobile_mode eq 'y'} data-role="button"{/if} href="tiki-object_watches.php?objectId={$forumId|escape:"url"}&amp;watch_event=forum_post_topic_and_thread&amp;objectType=forum&amp;objectName={$forum_info.name|escape:"url"}&amp;objectHref={'tiki-view_forum.php?forumId='|cat:$forumId|escape:"url"}" class="icon">{icon _id='eye_group' alt="{tr}Group Monitor Topics and Threads of this Forum{/tr}"}</a> {* mobile *}
+					{/if}
+	
+					<div class="categbar" align="right" >
+						{if $user and $prefs.feature_user_watches eq 'y'}
+							{if isset($category_watched) and $category_watched eq 'y'}
+								{tr}Watched by categories:{/tr}
+								{section name=i loop=$watching_categories}
+									<a {if $prefs.mobile_mode eq 'y'} data-role="button"{/if} href="tiki-browse_categories.php?parentId={$watching_categories[i].categId}">{$watching_categories[i].name|escape}</a> {* mobile *}
+									&nbsp;
+								{/section}
+							{/if}	
+						{/if}
+					</div>
+				{if $prefs.mobile_mode eq 'y'}</div>{/if} {* mobile *}
 			</td>
 		</tr>
 	</table>
