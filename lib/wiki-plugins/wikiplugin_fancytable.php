@@ -121,7 +121,7 @@ function wikiplugin_fancytable($data, $params)
 	//Start the table
 	$style = $sort === true ? ' style="visibility:hidden"' : '';
 	$wret = '<div id="fancytable_' . $iFancytable . '"' . $style . '>' . "\r\t";
-	$wret .= '<table class="normal" id="fancytable_' . $iFancytable . '">' . "\r\t";
+	$wret .= '<table class="normal" id="fancytable_' . $iFancytable . '_table">' . "\r\t";
 
 	//Header
 	if (isset($head)) {
