@@ -1068,6 +1068,7 @@ class ToolbarPicker extends Toolbar
 		static $pickerAdded = false;
 
 		if ( ! $pickerAdded ) {
+			TikiLib::lib('header')->add_jsfile('lib/jquery_tiki/tiki-toolbars.js');
 			$pickerAdded = true;
 		}
 	}
@@ -1267,7 +1268,7 @@ class ToolbarDialog extends Toolbar
 		return 'displayDialog( this, ' . $this->index . ', \'' . $areaId . '\')';
 	}
 
-	static private function setupJs()
+	static function setupJs()
 	{
 		TikiLib::lib('header')->add_jsfile('lib/jquery_tiki/tiki-toolbars.js');
 	}
