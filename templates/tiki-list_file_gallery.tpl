@@ -20,44 +20,39 @@
 {* admin icons on the right side of the top navigation bar under the title *}
 <div class="navbar"{if $prefs.mobile_mode eq 'y'} data-role="controlgroup" data-type="horizontal"{/if}>
 	{if $galleryId gt 0}
-		{if $prefs.feature_group_watches eq 'y' and ( $tiki_p_admin_users eq 'y' or $tiki_p_admin eq 'y' )}
-			<a href="tiki-object_watches.php?objectId={$galleryId|escape:"url"}&amp;watch_event=file_gallery_changed&amp;objectType=File+Gallery&amp;objectName={$gal_info.name|escape:"url"}&amp;objectHref={'tiki-list_file_gallery.php?galleryId='|cat:$galleryId|escape:"url"}" class="icon">
-				{icon _id='eye_group' alt="{tr}Group monitor{/tr}" align='right' hspace="1"}
-			</a>
-		{/if}
-		{if $user and $prefs.feature_user_watches eq 'y'}
-			{if !isset($user_watching_file_gallery) or $user_watching_file_gallery eq 'n'}
-				{self_link galleryName=$name watch_event='file_gallery_changed' watch_object=$galleryId watch_action='add'}
-					{icon _id='eye' align='right' alt="{tr}Monitor this gallery{/tr}" hspace="1"}
-				{/self_link}
-			{else}
-				{self_link galleryName=$name watch_event='file_gallery_changed' watch_object=$galleryId watch_action='remove'}
-					{icon _id='no_eye' align='right' alt="{tr}Stop monitoring this gallery{/tr}" hspace="1"}
-				{/self_link}
+		{if $prefs.mobile_mode eq 'y'}<div class="navbar" align="right" data-role="controlgroup" data-type="horizontal">{/if} {* mobile *}
+			{if $prefs.feature_group_watches eq 'y' and ( $tiki_p_admin_users eq 'y' or $tiki_p_admin eq 'y' )}
+				<a {if $prefs.mobile_mode eq 'y'} data-role="button"{/if} href="tiki-object_watches.php?objectId={$galleryId|escape:"url"}&amp;watch_event=file_gallery_changed&amp;objectType=File+Gallery&amp;objectName={$gal_info.name|escape:"url"}&amp;objectHref={'tiki-list_file_gallery.php?galleryId='|cat:$galleryId|escape:"url"}" class="icon">
+					{icon _id='eye_group' alt="{tr}Group monitor{/tr}" align='right' hspace="1"}
+				</a>
 			{/if}
-		{/if}
+			{if $user and $prefs.feature_user_watches eq 'y'}
+				{if !isset($user_watching_file_gallery) or $user_watching_file_gallery eq 'n'}
+					<a {if $prefs.mobile_mode eq 'y'} data-role="button"{/if} href="{query _type='relative' galleryName=$name watch_event='file_gallery_changed' watch_object=$galleryId watch_action='add'}" title="{tr}Monitor this gallery{/tr}">{icon _id=eye align='right' hspace="1" alt="{tr}Monitor this gallery{/tr}"}</a> {* mobile *}
+				{else}
+	
+					<a {if $prefs.mobile_mode eq 'y'} data-role="button"{/if} href="{query _type='relative' galleryName=$name watch_event='file_gallery_changed' watch_object=$galleryId watch_action='remove'}" title="{tr}Stop monitoring this gallery{/tr}">{icon _id=no_eye align='right' hspace="1" alt="{tr}Stop monitoring this gallery{/tr}"}</a> {* mobile *}
+				{/if}
+			{/if}
 		{if $prefs.feed_file_gallery eq 'y'}
 			{if $gal_info.type eq "podcast" or $gal_info.type eq "vidcast"}
-				<a href="tiki-file_gallery_rss.php?galleryId={$galleryId}&amp;ver=PODCAST">
+				<a {if $prefs.mobile_mode eq 'y'} data-role="button"{/if} href="tiki-file_gallery_rss.php?galleryId={$galleryId}&amp;ver=PODCAST">
 					<img src='img/rss_podcast_80_15.png' alt="{tr}RSS feed{/tr}" title="{tr}RSS feed{/tr}" align='right'>
 				</a>
 			{else}
-				<a href="tiki-file_gallery_rss.php?galleryId={$galleryId}">
+				<a {if $prefs.mobile_mode eq 'y'} data-role="button"{/if} href="tiki-file_gallery_rss.php?galleryId={$galleryId}">
 					{icon _id='feed' alt="{tr}RSS feed{/tr}" title="{tr}RSS feed{/tr}" align='right'}
 				</a>
 			{/if}
 		{/if}
 		{if $view eq 'browse'}
 			{if $show_details eq 'y'}
-				{self_link show_details='n'}
-					{icon _id='no_information' align='right' alt="{tr}Hide file information from list view{/tr}" }
-				{/self_link}
+				<a {if $prefs.mobile_mode eq 'y'} data-role="button"{/if} href="{query _type='relative' show_details='n'}" title="{tr}Hide file information from list view{/tr}">{icon _id=no_information align='right' alt="{tr}Hide file information from list view{/tr}"}</a>  {* mobile *}
 			{else}
-				{self_link show_details='y'}
-					{icon _id='information' align='right' alt="{tr}Show file information from list view{/tr}"}
-				{/self_link}
+				<a {if $prefs.mobile_mode eq 'y'} data-role="button"{/if} href="{query _type='relative' show_details='y'}" title="{tr}Show file information from list view{/tr}">{icon _id=information align='right' alt="{tr}Show file information from list view{/tr}"}</a>  {* mobile *}
 			{/if}
 		{/if}
+		{if $prefs.mobile_mode eq 'y'}</div>{/if} {* mobile *}
 {* main navigation buttons under the page title *}
 		{if $treeRootId eq $prefs.fgal_root_id && ( $tiki_p_list_file_galleries eq 'y'
 			or (!isset($tiki_p_list_file_galleries) and $tiki_p_view_file_gallery eq 'y') )}
