@@ -82,7 +82,7 @@ You are here because you have just clicked on the link from my invitation email.
 
 {if count($invitegroups) > 0 && count($usergroups) > 0}
   <br>
-  <div>{tr}Choose one or more group you want theses suscribtion to be in. Don't choose any if you don't want anything special :{/tr}</div>
+  <div>{tr}Choose one or more groups that you want these subscriptions to be in. Don't choose any if you don't want anything special :{/tr}</div>
   <div><select multiple="multiple" name='invitegroups[]'>
    {foreach from=$usergroups item=ug}
     <option value='{$ug|escape}' {if is_array($smarty.request.invitegroups) && in_array($ug,$smarty.request.invitegroups)}selected{/if}>{$ug|escape}{if !empty($invitegroups[$ug])} ({$invitegroups[$ug]|escape}){/if}</option>
