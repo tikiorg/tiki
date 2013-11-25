@@ -30,7 +30,7 @@ class Table_Code_WidgetOptions extends Table_Code_Manager
 		//sort
 		if (parent::$sort) {
 			//row grouping
-			if (!isset(parent::$s['sort']['group']) || parent::$s['sort']['group'] !== false) {
+			if (parent::$group) {
 				$wo[] = 'group_collapsible : true';
 				$wo[] = 'group_count : \' ({num})\'';
 			}
@@ -70,7 +70,8 @@ class Table_Code_WidgetOptions extends Table_Code_Manager
 								}
 								$options = $this->iterate($o, '{', $this->nt4 . '}', $this->nt5, '', ',');
 								$ffunc[] = $col . ' : ' . $options;
-							} else {
+							//TODO should work with ajax too when bug 436 is fixed: https://github.com/Mottie/tablesorter/issues/436
+							} elseif (!parent::$ajax) {
 								$ffunc[] = $col . ' : true';
 							}
 							break;

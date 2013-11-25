@@ -80,15 +80,16 @@ class Table_Plugin
 				'required' => false,
 				'name' => tra('Sort Settings by Column'),
 				'description' => tr(
-					'Set %0type%1 and %0group%1 settings for each column, using the %0|%1 to separate columns. Note
-					that once %0group%1 is set for one column it will be set for all.',
-					'<b>', '</b>')
+					'Set %0type%1 and %0group%1 settings for each column, using the %0|%1 to separate columns. To
+					show group headings upon page load, the pre-sorted columns parameter will need to be set for a
+					column with a group setting. Group will not work in plugins where the server parameter is set
+					to \'y\'.', '<b>', '</b>')
 				. '<br>' . tr('%0type%1 tells the sorter what type of date is being sorted and choices include:
 					%0text%1, %0digit%1, %0currency%1, %0percent%1, %0usLongDate%1, %0shortDate%1, %0isoDate%1,
 					%0dateFormat-ddmmyyyy%1, %0ipAddress%1, %0url%1, %0time%1.
 					Also handle strings in numeric columns with %0string-min%1 and %0string-max%1. Handle empty cells
 					with %0empty-top%1, %0empty-bottom%1 or %0empty-zero%1.', '<b>', '</b>')
-				. '<br>' . tr('%0group%1 creates automatic row headings with the text of the heading determined by
+				. '<br>' . tr('%0group%1 creates automatic row headings upon sort with the heading text determined by
 					the setting as follows: %0letter%1 (first letter), %0word%1 (first word), %0number%1, %0date%1,
 					%0date-year%1, %0date-month%1, %0date-day%1, %0date-week%1, %0date-time%1. %0letter%1 and %0word%1
 					can be extended, e.g., %0word-2%1 shows first 2 words. %0number-10%1 will group rows in blocks of
@@ -105,9 +106,10 @@ class Table_Plugin
 					'Enter %0y%1 for a blank text filter on all columns, or %0n%1 for no filters. Or set custom column filters
 					separated by %0|%1 for each column for the following filter choices and parameters:', '<b>', '</b>'
 				)
-					. '<br> <b>Text - </b>type:text;placeholder:xxxx<br>
+					. '<br> <b>Text - </b>type:text;placeholder:xxxx<br>' .
+					tra('(For PluginTrackerlist this will be an exact search, for other plugins partial values will work.)') . '<br>
 					<b>Dropdown - </b>type:dropdown;placeholder:****;option:****;option:****;option:**** <br>' .
-					tra('(options generated automatically based on visible rows if not set)') . '<br>
+					tra('(options generated automatically if not set and the server parameter is not \'y\')') . '<br>
 					<b>' . tra('Date range - ') . '</b>type:date;format:yyyy-mm-dd;from:2013-06-30;to:2013-12-31<br>' .
 					tra('(from and to values set defaults for these fields when user clicks on the input field)') . '<br>
 					<b>' . tra('Numeric range - ') . '</b>type:range;from:0;to:50<br>

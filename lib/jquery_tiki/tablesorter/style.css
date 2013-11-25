@@ -214,9 +214,9 @@ tr.group-header td {
 	text-transform: uppercase;
 	font-weight: bold;
 }
-.group-count {
+/*.group-count {
 	color: #999;
-}
+}*/
 .group-hidden {
 	display: none;
 }
