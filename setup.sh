@@ -483,7 +483,7 @@ composer()
 				echo "Composer failed, retrying in 5 seconds, for a few times. Hit Ctrl-C to cancel."
 				sleep 5
 			fi
-			((N++))
+			N=$((N+1))
 		done
 	fi
 	#exit

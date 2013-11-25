@@ -114,8 +114,21 @@ class Services_Broker
 			return $smarty->fetch($template);
 		} elseif ($access->is_xml_http_request()) {
 			$headerlib = TikiLib::lib('header');
+
+			// similar to code in \WikiLib::get_parse, TODO refactor into headerlib for tiki 13
+			$jsFile1 = $headerlib->getJsfiles();
+			$js1 = $headerlib->getJs();
 			$content = $smarty->fetch($template);
-			$content .= $headerlib->output_js();
+
+			// get any JS added to headerlib during $smarty->fetch and add to the output
+			$jsFile = array_diff($headerlib->getJsfiles(), $jsFile1);
+			$js = array_diff($headerlib->getJs(), $js1);
+			if ($jsFile) {
+				$content .= implode("\n", $jsFile);
+			}
+			if ($js) {
+				$content .= $headerlib->wrap_js(implode("\n", $js));
+			}
 
 			return $content;
 		} else {
