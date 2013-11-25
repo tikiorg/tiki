@@ -119,12 +119,12 @@
         },
         {
             "name": "codemirror/codemirror",
-            "version": "3.16",
+            "version": "3.19.0",
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/codemirror-codemirror-3.16.zip",
-                "reference": "3.16",
-                "shasum": "db9227726036aa72072a0152bdab7c174f64e582"
+                "url": "https://composer.tiki.org/dist/codemirror-codemirror-3.19.0.zip",
+                "reference": "3.19.0",
+                "shasum": "295a61adc7c494e6f963355b250941265d8d2965"
             },
             "type": "library"
         },
@@ -1495,7 +1495,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2013-11-22 08:54:11"
+            "time": "2013-08-25 12:29:25"
         },
         {
             "name": "symfony/yaml",
