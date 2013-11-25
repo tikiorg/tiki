@@ -20,7 +20,7 @@
 		<fieldset>
 			<legend><strong>{tr}Promote your site{/tr}</strong></legend>
 			<p>
-				{tr}Add your site to the Tiki diretory.{/tr}
+				{tr}Add your site to the Tiki directory.{/tr}
 				{button href="tiki-register_site.php" _text="{tr}Submit your site{/tr}"}
 			</p>
 		</fieldset>
