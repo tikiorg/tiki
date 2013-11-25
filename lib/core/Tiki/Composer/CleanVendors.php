@@ -21,6 +21,7 @@ class CleanVendors
 		self::deleteDirectory($vendors . 'codemirror/codemirror/demo');
 		self::deleteDirectory($vendors . 'codemirror/codemirror/doc');
 		self::deleteDirectory($vendors . 'codemirror/codemirror/test');
+		self::deleteDirectory($vendors . 'codemirror/codemirror/mode/tiki');
 		self::deleteDirectory($vendors . 'jarnokurlin/fullcalendar/demos');
 		self::deleteDirectory($vendors . 'jcapture-applet/jcapture-applet/src');
 		self::deleteDirectory($vendors . 'jquery/jquery-mobile/demos');

@@ -68,22 +68,24 @@ class FileGalLib extends TikiLib
 		return $fhash;
 	}
 
-	function get_attachment_gallery( $objectId, $objectType )
+	function get_attachment_gallery( $objectId, $objectType, $create = false )
 	{
 		switch ( $objectType ) {
 			case 'wiki page':
-				return $this->get_wiki_attachment_gallery($objectId);
+				return $this->get_wiki_attachment_gallery($objectId, $create);
 		}
 
 		return false;
 	}
 
-	function get_wiki_attachment_gallery( $pageName )
+	function get_wiki_attachment_gallery( $pageName, $create = false )
 	{
 		global $prefs;
 
+		$return = $this->getGalleryId($pageName, $prefs['fgal_root_wiki_attachments_id']);
+
 		// Get the Wiki Attachment Gallery for this wiki page or create it if it does not exist
-		if ( ! $return = $this->getGalleryId($pageName, $prefs['fgal_root_wiki_attachments_id']) ) {
+		if ( $create && !$return ) {
 
 			// Create the attachment gallery only if the wiki page really exists
 			if ( $this->get_page_id_from_name($pageName) > 0 ) {

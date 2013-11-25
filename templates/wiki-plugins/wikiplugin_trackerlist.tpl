@@ -59,8 +59,8 @@
 		<div id="trackerlist_{$iTRACKERLIST}" {if $tsOn}style="visibility:hidden"{/if}>
 			<input type="hidden" {if $tsOn}id="{$ts_offsetid|escape}" {/if}name="offset" value="{$tr_offset{$iTRACKERLIST}}">
 			<input type="hidden" {if $tsOn}id="{$ts_countid|escape}" {/if}name="count" value="{$count_item}">
-            <div class="table-responsive">
-			<table class="table normal wikiplugin_trackerlist" id="trackerlist_{$iTRACKERLIST}"
+			<div class="table-responsive">
+			<table class="table normal wikiplugin_trackerlist" id="trackerlist_{$iTRACKERLIST}_table"
 	{if isset($displaysheet) && $displaysheet eq 'true'}title="{$tracker_info.name}" readonly="true"{/if}
 	{if isset($tableassheet) && $tableassheet eq 'true'}title="{tr}Tracker - {/tr}{$tracker_info.name}" readonly="true"{/if}
 	>
@@ -150,6 +150,7 @@ the section loop so that the vars are not replaced by nested pretty tracker exec
 </table>
 </div>
 
+</div> {* end: div id="trackerlist_{$iTRACKERLIST}" *}
 {if isset($displaysheet) && $displaysheet eq 'true'}
 </div>
 {/if}
@@ -307,5 +308,5 @@ link="{tr}List Attachments{/tr}"><img src="img/icons/folderin.gif" alt="{tr}List
 	{/section}
 
 	{$smarty.capture.trackerlist_bottomstuff}
-	</tbody>
+	{* </tbody> causes HTML errors *}
 {/strip}

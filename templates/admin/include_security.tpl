@@ -130,12 +130,6 @@
 				{preference name=auth_token_share}
 		{/tab}
 
-		{tab name="{tr}Clipperz online password management{/tr}"}
-			<fieldset>
-			{tr}Tiki doesn't offer a built-in password management feature.{/tr} <a href="http://doc.tiki.org/clipperz" target="_blank">{tr}Learn more about Clipperz{/tr}</a>
-			</fieldset>
-		{/tab}		
-		
 		{tab name="{tr}OpenPGP{/tr}"}
 			<fieldset>
 				<legend>{tr}OpenPGP fuctionality for PGP/MIME encrypted email messaging{/tr}</legend>

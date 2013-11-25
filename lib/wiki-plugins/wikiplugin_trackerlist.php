@@ -9,19 +9,7 @@ function wikiplugin_trackerlist_info()
 {
 	$ts = new Table_Plugin;
 	$ts->createParams();
-	$ts->params['tsfilters']['description'] = tr(
-		'Enter %0y%1 for a blank text filter on all columns, or %0n%1 for no filters. Or set custom column filters
-		separated by %0|%1 for each column for the following filter choices and parameters:', '<b>', '</b>'
-	)
-	. '<br> <b>Text - </b>type:text;placeholder:xxxx<br>
-		<b>Dropdown - </b>type:dropdown;placeholder:****;option:****;option:****;option:**** <br>'
-	. tra('(options generated automatically if not set)')
-	. '<br><b>' . tra('Numeric range - ') . '</b>type:range;from:0;to:50<br>
-		<b>' . tra('No filter - ') . '</b>type:nofilter<br>' .
-		tra(
-			'For example: tsfilters="type:dropdown;placeholder:Type to filter..." would result in a dropdown
-			filter on the first column with all unique values in that column in the dropdown list.'
-		);
+	$tsparams = $ts->params;
 	$params = array_merge(
 		array(
 			 'trackerId' => array(
@@ -733,7 +721,7 @@ function wikiplugin_trackerlist_info()
 					 array('text' => tra('No'), 'value' => 'n')
 				 )
 			 ),
-		), $ts->params
+		), $tsparams
 	);
 	return array(
 		'name' => tra('Tracker List'),

@@ -75,7 +75,7 @@
 
 			<fieldset class="table">
 				<legend>{tr}Activity Stream{/tr}</legend>
-				{preference name=activity_basic_events visible="always"}
+				{preference name=activity_basic_events}
 
 				<div class="adminoptionboxchild" id="activity_basic_events_childcontainer">
 					{preference name=activity_basic_tracker_create}
@@ -84,7 +84,7 @@
 					{preference name=activity_basic_user_follow_incoming}
 					{preference name=activity_basic_user_friend_add}
 				</div>
-				{preference name=activity_custom_events visible="always"}
+				{preference name=activity_custom_events}
 
 				<div class="adminoptionboxchild" id="activity_custom_events_childcontainer">
 					

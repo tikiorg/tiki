@@ -22,7 +22,7 @@ class Table_Settings_PluginTrackerlist extends Table_Settings_Abstract
 		'selflinks' => true,
 		'sort' => array(
 			'multisort' => false,	//$trklib->list_items doesn't seem to support multisorts
-			'group' => false,		//overriden to true if the user sets a group type for at least one column
+			'group' => true,
 		),
 		'ajax' => array(
 			'custom' => false,		//url sort and filter params manipulated on the server side for this plugin

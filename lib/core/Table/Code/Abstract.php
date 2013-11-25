@@ -27,6 +27,7 @@ class Table_Code_Abstract
 	protected static $s;
 	protected static $filters;
 	protected static $sort;
+	protected static $group;
 	protected static $pager;
 	protected static $ajax;
 	public static $code = '';
@@ -52,15 +53,18 @@ class Table_Code_Abstract
 		if ($class == 'Table_Code_Manager') {
 			self::$s = $settings;
 			self::$id = $settings['id'];
-			self::$tid = 'table#' . $settings['id'];
+			self::$tid = 'table#' . $settings['id'] . '_table';
 			//overall sort on unless sort type set to false
 			self::$sort = isset($settings['sort']['type']) && $settings['sort']['type'] === false ? false : true;
 
-			//filter, pager and ajax off unless type is set and is not false
+			//filter, group, pager and ajax off unless type is set and is not false
 			self::$filters = empty($settings['filters']['type']) ? false : true;
 			self::$pager = empty($settings['pager']['type']) ? false : true;
 			global $prefs;
-			self::$ajax = $settings['ajax']['type'] === false || $prefs['feature_ajax'] === 'n'? false : true;
+			self::$ajax = $settings['ajax']['type'] === true && $prefs['feature_ajax'] === 'y'? true : false;
+			//TODO allow for use of group headers with ajax when tablesorter bug 437 is fixed
+			self::$group = self::$sort && !self::$ajax && isset($settings['sort']['group'])
+			&& $settings['sort']['group'] === true ? true : false;
 		}
 	}
 

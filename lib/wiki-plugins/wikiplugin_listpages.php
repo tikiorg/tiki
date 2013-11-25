@@ -11,7 +11,7 @@ function wikiplugin_listpages_info()
 		'name' => tra('List Pages'),
 		'documentation' => 'PluginListpages',
 		'description' => tra('List pages based on various criteria'),
-		'prefs' => array('wikiplugin_listpages'),
+		'prefs' => array('wikiplugin_listpages', 'feature_listPages'),
 		'icon' => 'img/icons/page_find.png',
 		'params' => array(
 			'offset' => array(

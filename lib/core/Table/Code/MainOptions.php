@@ -37,7 +37,14 @@ class Table_Code_MainOptions extends Table_Code_Manager
 		if (parent::$sort && is_array(parent::$s['sort']['columns'])) {
 			foreach (parent::$s['sort']['columns'] as $col => $info) {
 				//row grouping setting
-				if (!empty($info['group']) && parent::$s['sort']['group'] !== false) {
+				if (parent::$group) {
+					if (!empty($info['group'])) {
+						$allcols[$col]['addClass'][] = 'group-' . $info['group'];
+					} else {
+						$allcols[$col]['addClass'][] = 'group-false';
+					}
+				}
+				if (!empty($info['group']) && parent::$group !== false) {
 					$allcols[$col]['addClass'][] = 'group-' . $info['group'];
 				}
 				if (isset($info['type']) && $info['type'] !== true) {
@@ -90,7 +97,7 @@ class Table_Code_MainOptions extends Table_Code_Manager
 			$orh[] = '$(this).addClass(\'sorter-false\');';
 		}
 		if (count($orh) > 0) {
-			array_unshift($mo, 'headerTemplate: \'{content}\'');
+			array_unshift($mo, 'headerTemplate: \'{content} {icon}\'');
 			$mo[] = $this->iterate($orh, 'onRenderHeader: function(index){', $this->nt2 . '}', $this->nt3, '', '');
 		}
 		/***  end onRenderHeader section ***/
@@ -99,7 +106,7 @@ class Table_Code_MainOptions extends Table_Code_Manager
 		//standard ones
 		$w[] = 'zebra';
 		$w[] = 'stickyHeaders';
-		if (!empty(parent::$s['sort']['group'])) {
+		if (parent::$group) {
 			$w[] = 'group';
 		}
 		//saveSort

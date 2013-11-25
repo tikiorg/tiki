@@ -133,15 +133,17 @@ class Table_Code_Pager extends Table_Code_Manager
 				);
 			} else {
 				$ca = array(
-					'var p = table.config.pager, size = parseInt(p.$size.val()), filter, filtered;',
+					'var p = table.config.pager, size = parseInt(p.$size.val()), filter, filtered, offset, total;',
 					'if (typeof p.ajaxData === \'undefined\') {',
 					'	filtered = 0;',
 					'	filter = false;',
 					'} else {',
 					'	filtered = typeof p.ajaxData.filtered === \'undefined\' ? 0 : p.ajaxData.filtered;',
 					'	filter = typeof p.ajaxData.filter === \'undefined\' ? false : true;',
+					'	total = typeof p.ajaxData.total === \'undefined\' ? 0 : p.ajaxData.total;',
+					'	filter = filter === false || filtered == total ? false : true;',
 					'}',
-					'offset = filter || (p.page * size) >= filtered ? \'\' : \''
+					'offset = (filter === true || ((p.page * size) >= filtered)) ? \'\' : \''
 						. parent::$s['ajax']['offset'] . '\' + \'=\' + (p.page * size);',
 					'return url + \'&tsAjax=true&\' + offset + \'&numrows=\' + size;'
 				);
