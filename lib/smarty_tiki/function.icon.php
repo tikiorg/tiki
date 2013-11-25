@@ -206,12 +206,19 @@ function smarty_function_icon($params, $smarty)
 
 		switch ( $tag ) {
 			case 'input_image':
-				$html = '<input type="image"'.$html.' />';
+				if ($prefs['mobile_feature'] !== 'y' || $prefs['mobile_mode'] !== 'y') {
+					$html = '<input type="image"'.$html.' />';
+				} else {
+					$html = '<span data-role="button"><input type="image"'.$html.' /></span>';
+				}
 				break;
 			case 'img':
 			default:
 				try {
 					$html = smarty_function_html_image($params, $smarty);
+					if ($prefs['mobile_feature'] === 'y' && $prefs['mobile_mode'] === 'y' && (!empty($params['link']) ||!empty($params['href']))) {
+						$html = str_replace('<a ', '<a  data-role="button" ', $html);
+					}
 				} catch (Exception $e) {
 					$html = '<span class="icon error" title="' . tra('Error:') . ' ' . $e->getMessage() . '">?</span>';
 				}
