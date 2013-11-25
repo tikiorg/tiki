@@ -59,7 +59,7 @@
 		<div id="trackerlist_{$iTRACKERLIST}" {if $tsOn}style="visibility:hidden"{/if}>
 			<input type="hidden" {if $tsOn}id="{$ts_offsetid|escape}" {/if}name="offset" value="{$tr_offset{$iTRACKERLIST}}">
 			<input type="hidden" {if $tsOn}id="{$ts_countid|escape}" {/if}name="count" value="{$count_item}">
-			<table class="table normal wikiplugin_trackerlist" id="trackerlisttable_{$iTRACKERLIST}"
+			<table class="table normal wikiplugin_trackerlist" id="trackerlist_{$iTRACKERLIST}_table"
 	{if isset($displaysheet) && $displaysheet eq 'true'}title="{$tracker_info.name}" readonly="true"{/if}
 	{if isset($tableassheet) && $tableassheet eq 'true'}title="{tr}Tracker - {/tr}{$tracker_info.name}" readonly="true"{/if}
 	>
@@ -111,8 +111,6 @@
 	</thead>
 		{/if}
 	{/if}
-
-<tbody>
 
 {* All this that is supposed to be at the end needs to be processed before
 the section loop so that the vars are not replaced by nested pretty tracker execution *}
