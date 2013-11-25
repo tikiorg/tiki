@@ -13,12 +13,12 @@
 		</div>
 	{/if}
   <div class="catlists">
-    <ul class="{if $params.showtype ne 'n'}catfeatures{elseif $params.one eq 'y'}catitemsone{else}catitems{/if}">
+    <ul class="{if $params.showtype ne 'n'}catfeatures{elseif $params.one eq 'y'}catitemsone{else}list-inline{/if}">
    {foreach key=t item=i from=$listcat}
    	{if $params.showtype ne 'n'}
       <li>
       {$t}:
-      <ul class="{if $params.one eq 'y'}catitemsone{else}catitems{/if}">
+      <ul class="{if $params.one eq 'y'}catitemsone{else}list-inline{/if}">
 	{/if}
         {section name=o loop=$i}
         <li>
