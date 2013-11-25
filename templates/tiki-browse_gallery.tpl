@@ -2,7 +2,7 @@
 
 {title}{tr}Browsing Gallery:{/tr} {$name}{/title}
 
-<div class="t_navbar btn-group">
+<div class="t_navbar form-group">
 	{if $tiki_p_list_image_galleries eq 'y'}
 		{button href="tiki-galleries.php" class="btn btn-default" _text="{tr}List Galleries{/tr}"}
 	{/if}

@@ -1,6 +1,6 @@
 {* $Id$ *}
 
-<div class="t_navbar btn-group">
+<div class="t_navbar form-group btn-group">
 	{button class="btn btn-default" href="messu-mailbox.php" class="btn btn-default" _text="{tr}Mailbox{/tr}"}
 	{button class="btn btn-default" href="messu-compose.php" class="btn btn-default" _text="{tr}Compose{/tr}"}
 

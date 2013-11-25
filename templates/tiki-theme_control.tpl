@@ -9,7 +9,7 @@
 5. {tr}Finally if the user didn't select a theme the default theme is used{/tr}
 {/remarksbox}
 
-<div class="t_navbar btn-group">
+<div class="t_navbar btn-group form-group">
 	{button href="tiki-theme_control_objects.php" class="btn btn-default" _text="{tr}Control by Objects{/tr}"}
 	{button href="tiki-theme_control_sections.php" class="btn btn-default" _text="{tr}Control by Sections{/tr}"}
 </div>

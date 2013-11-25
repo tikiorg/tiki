@@ -1,6 +1,6 @@
 {title url="tiki-blog_post.php?blogId=$blogId&amp;postId=$postId"}{if $postId gt 0}{tr}Edit Post{/tr}{else}{tr}New Post{/tr}{/if}{if !empty($blog_data.title)} - {$blog_data.title}{/if}{/title}
 
-<div class="t_navbar btn-group">
+<div class="t_navbar btn-group form-group">
 	{if $postId > 0}
 		{button href=$postId|sefurl:blogpost class="btn btn-default" _text="{tr}View post{/tr}"}
 	{/if}

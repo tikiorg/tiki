@@ -5,7 +5,7 @@
 	{$description|escape}
 </div>
 
-<div class="t_navbar btn-group">
+<div class="t_navbar form-group">
 	{if $tiki_p_view_sheet eq 'y' || $tiki_p_admin_sheet eq 'y' || $tiki_p_admin eq 'y'}
 		{button href="tiki-sheets.php" class="btn btn-default" _text="{tr}List Sheets{/tr}"}
 	{/if}

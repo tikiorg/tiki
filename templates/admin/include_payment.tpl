@@ -1,6 +1,6 @@
 {* $Id$ *}
 <form action="tiki-admin.php?page=payment" method="post">
-	<div class="t_navbar btn-group">
+	<div class="t_navbar form-group">
 		{button href="tiki-payment.php" class="btn btn-default" _text="{tr}Payments{/tr}"}
 		<input type="submit" class="btn btn-default btn-sm" name="paymentprefs" value="{tr}Change settings{/tr}" style="float:right;" />
 	</div>

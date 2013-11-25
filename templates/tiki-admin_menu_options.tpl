@@ -1,7 +1,7 @@
 {* $Id$ *}
 {title help="Menus" url="tiki-admin_menu_options.php?menuId=$menuId" admpage="general&amp;cookietab=3"}{tr}Admin Menu:{/tr} {$editable_menu_info.name}{/title}
 
-<div class="t_navbar btn-group">
+<div class="t_navbar btn-group form-group">
 	{button href="tiki-admin_menus.php" class="btn btn-default" _text="{tr}List menus{/tr}"}
 	{button href="tiki-admin_menus.php?menuId=$menuId&cookietab=2" class="btn btn-default" _text="{tr}Edit this menu{/tr}"}
 	{if $prefs.feature_tabs neq 'y'}

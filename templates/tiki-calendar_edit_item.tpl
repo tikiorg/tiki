@@ -1,7 +1,7 @@
 {strip}
 	{title admpage="calendar"}{tr}Calendar event : {/tr}{$calitem.name}{/title}
 	
-	<div class="t_navbar btn-group">
+	<div class="t_navbar btn-group form-group">
 		{if $tiki_p_view_calendar eq 'y'}
 			{button href="tiki-calendar.php" class="btn btn-default" _text="{tr}View Calendars{/tr}"}
 		{/if}

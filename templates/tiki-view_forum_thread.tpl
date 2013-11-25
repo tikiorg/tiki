@@ -5,7 +5,7 @@
   {if $prefs.feature_forum_topics_archiving eq 'y' && $thread_info.archived eq 'y'}({tr}Archived{/tr}){/if}
 {/title}
 
-<div class="t_navbar btn-group">
+<div class="t_navbar btn-group form-group">
 	{if $tiki_p_admin_forum eq "y"}
 		{button href="tiki-admin_forums.php?forumId=$forumId" class="btn btn-default" _text="{tr}Edit Forum{/tr}"}
 	{/if}

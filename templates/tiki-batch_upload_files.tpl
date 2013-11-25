@@ -1,6 +1,6 @@
 {title}{tr}Directory batch upload{/tr}{/title}
 
-<div class="t_navbar btn-group">
+<div class="t_navbar btn-group form-group">
 	{if $galleryId ne ''}
 		{button href="tiki-list_file_gallery.php?galleryId=$galleryId" class="btn btn-default" _text="{tr}Browse File Gallery{/tr}"}
 	{else}

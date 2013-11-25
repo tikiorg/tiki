@@ -1,6 +1,6 @@
 {title help="Quiz"}{tr}Quiz result stats{/tr}{/title}
 
-<div class="t_navbar btn-group">
+<div class="t_navbar form-group">
 	{button href="tiki-list_quizzes.php" class="btn btn-default" _text="{tr}List Quizzes{/tr}"}
 	{button href="tiki-quiz_stats.php" class="btn btn-default" _text="{tr}Quiz Stats{/tr}"}
 	{button href="tiki-quiz_stats_quiz.php?quizId=$quizId" class="btn btn-default" _text="{tr}This Quiz Stats{/tr}"}

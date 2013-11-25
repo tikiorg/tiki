@@ -16,7 +16,7 @@
 {/foreach}
 <div id="feedback" style="height: 1.5em; margin-left: .2em"><span></span></div>
 
-<div class="t_navbar btn-group">
+<div class="t_navbar btn-group form-group">
 	{if $page}
 		{button href="tiki-index.php" page="$page" class="btn btn-default" _text="{tr}Back to Page{/tr}"}
 	{/if}

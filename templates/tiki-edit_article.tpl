@@ -11,7 +11,7 @@
 	{/if}
 {/title}
 
-<div class="t_navbar btn-group">
+<div class="t_navbar btn-group form-group">
 	{button href="tiki-list_articles.php" class="btn btn-default" _text="{tr}List Articles{/tr}"}
 	{button href="tiki-view_articles.php" class="btn btn-default" _text="{tr}View Articles{/tr}"}
 </div>

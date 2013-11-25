@@ -75,7 +75,7 @@
 						{if isset($category_watched) and $category_watched eq 'y'}
 							{tr}Watched by categories:{/tr}
 							{section name=i loop=$watching_categories}
-								<a href="tiki-browse_categories.php?parentId={$watching_categories[i].categId}">{$watching_categories[i].name|escape}</a>
+								<a class="btn btn-default btn-sm" href="tiki-browse_categories.php?parentId={$watching_categories[i].categId}">{$watching_categories[i].name|escape}</a>
 								&nbsp;
 							{/section}
 						{/if}	

@@ -1,6 +1,6 @@
 {title url="tiki-admin_poll_options.php?pollId=$pollId"}{tr}Admin Polls:{/tr} {$menu_info.title}{/title}
 
-<div class="t_navbar btn-group">
+<div class="t_navbar btn-group form-group">
 	{button href="tiki-admin_polls.php" class="btn btn-default" _text="{tr}List polls{/tr}"}
 	{button href="tiki-admin_polls.php?pollId=$pollId" class="btn btn-default" _text="{tr}Edit this poll{/tr}"}
 </div>

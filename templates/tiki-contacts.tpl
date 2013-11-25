@@ -1,6 +1,6 @@
 {title}{tr}Contacts{/tr}{/title}
 
-<div class="t_navbar btn-group">
+<div class="t_navbar btn-group form-group">
 	<div style="float:right;margin:5px;">
 		{if $view eq 'list'}
 			{button href="?view=group" class="btn btn-default" _text="{tr}Group View{/tr}"}

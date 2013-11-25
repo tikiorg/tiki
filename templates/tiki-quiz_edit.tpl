@@ -6,7 +6,7 @@
 
 {title help="Quiz"}{tr}Edit quiz:{/tr} {$quiz->name}{/title}
 
-<div class="t_navbar btn-group">
+<div class="t_navbar form-group">
 	{button href="tiki-list_quizzes.php" class="btn btn-default" _text="{tr}List Quizzes{/tr}"}
 	{button href="tiki-quiz_stats.php" class="btn btn-default" _text="{tr}Quiz Stats{/tr}"}
 	{button href="tiki-quiz_stats_quiz.php" _auto_args='quizId' class="btn btn-default" _text="{tr}This Quiz Stats{/tr}"}

@@ -4,7 +4,7 @@
   {title help="Blogs"}{tr}Create Blog{/tr}{/title}
 {/if}
 
-<div class="t_navbar btn-group">
+<div class="t_navbar btn-group form-group">
 	{button href="tiki-list_blogs.php" class="btn btn-default" _text="{tr}List Blogs{/tr}"}
 	 
   {if $blogId > 0}

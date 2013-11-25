@@ -1,6 +1,6 @@
 {title help="Live+Support"}{tr}Live support system{/tr}{/title}
 
-<div class="t_navbar btn-group">
+<div class="t_navbar form-group">
 	{button href='#' _onclick="javascript:window.open('tiki-live_support_console.php','','menubar=no,scrollbars=yes,resizable=yes,height=400,width=600');" class="btn btn-default" _text="{tr}Open operator console{/tr}"}
 	{button href='#' _onclick="javascript:window.open('tiki-live_support_client.php','','menubar=no,scrollbars=yes,resizable=yes,height=450,width=300');" class="btn btn-default" _text="{tr}Open client window{/tr}"}
 	{button href="?show_html" class="btn btn-default" _text="{tr}Generate HTML{/tr}"}

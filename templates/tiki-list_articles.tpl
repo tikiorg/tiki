@@ -2,7 +2,7 @@
 
 {title help="Articles" admpage="articles"}{tr}Articles{/tr}{/title}
 
-<div class="t_navbar btn-group">
+<div class="t_navbar form-group">
 	{if $tiki_p_edit_article eq 'y'}
 		{button href="tiki-edit_article.php" class="btn btn-default" _text="{tr}New Article{/tr}"}
 	{/if}

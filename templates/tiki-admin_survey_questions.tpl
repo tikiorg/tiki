@@ -1,6 +1,6 @@
 {title url="tiki-admin_survey_questions.php?surveyId=$surveyId"}{tr}Edit survey questions:{/tr} {$survey_info.name}{/title}
 
-<div class="t_navbar btn-group">
+<div class="t_navbar btn-group form-group">
 	{button href="tiki-admin_survey_questions.php?surveyId=$surveyId" class="btn btn-default" _text="{tr}Add a New Question{/tr}"}
 	{button href="tiki-list_surveys.php" class="btn btn-default" _text="{tr}List surveys{/tr}"}
 	{button href="tiki-survey_stats.php" class="btn btn-default" _text="{tr}Survey Stats{/tr}"}

@@ -2,7 +2,7 @@
 
 {title help="Forums" admpage="forums"}{tr}Admin Forums{/tr}{/title}
 
-<div class="t_navbar btn-group">
+<div class="t_navbar form-group">
 	{if $tiki_p_admin_forum eq 'y' && $forumId > 0 or (isset($dup_mode) and $dup_mode eq 'y')}
 		{button class="btn btn-default" href="?" _text="{tr}Create New Forum{/tr}"}
 	{/if}
