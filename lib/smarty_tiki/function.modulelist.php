@@ -38,7 +38,7 @@ function smarty_function_modulelist($params, $smarty)
 			'',
 			array_map(
 				function ($module) {
-					return $module['data'];
+					return (isset($module['data']) ? $module['data'] : '');
 				},
 				$moduleZones[$key]
 			)

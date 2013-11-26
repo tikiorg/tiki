@@ -1468,7 +1468,7 @@ function zone_is_empty($zoneName)
 	}
 
 	foreach ($moduleZones[$key] as $module) {
-		$data = (string) $module['data'];
+		$data = (string) (isset($module['data']) ? $module['data'] : '');
 		if (! empty($data)) {
 			return false;
 		}
