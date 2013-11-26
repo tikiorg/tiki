@@ -65,7 +65,7 @@
 			{else}
 				href="#"
 			{/if}
-			>{$cell[w][d].items[item].name|truncate:$trunc:".."|escape|default:"..."}</a>
+			>{$cell[w][d].items[item].name|truncate:$trunc:".."|escape|default:"..."|unescape:"htmlall"}</a>
 			{if $cell[w][d].items[item].web}
 			<a href="{$cell[w][d].items[item].web}" target="_other" class="calweb" title="{$cell[w][d].items[item].web}"><img src="img/icons/external_link.gif" width="7" height="7" alt="&gt;"></a>
 			{/if}

@@ -321,10 +321,7 @@ class PreferencesLib
 			} else {
 				$value = $this->formatPreference($pref, $data);
 				$realPref = in_array($pref, $user_overrider_prefs)? "site_$pref": $pref;
-				$old = $tikilib->get_preference($realPref);
-				$allprefs[$pref] = $this->getPreference($realPref, true);
-				if($allprefs[$pref]['type'] == 'flag' && empty($old)) {	$old = 'n';	}
-
+				$old = $this->formatPreference($pref, array($pref => $tikilib->get_preference($realPref)));
 				if ( $old != $value ) {
 					if ($tikilib->set_preference($pref, $value)) {
 						$changes[$pref] = array('type'=> 'changed', 'new'=> $value, 'old' => $old);
@@ -585,8 +582,13 @@ class PreferencesLib
 	private function _getFlagValue( $info, $data )
 	{
 		$name = $info['preference'];
+		if(isset( $data[$name] )&& !empty($data[$name]) && $data[$name] != 'n') {
+			$ret = 'y';
+		} else {
+			$ret = 'n';
+		}
 
-		return isset( $data[$name] ) ? 'y' : 'n';
+		return $ret;
 	}
 
 	private function _getTextValue( $info, $data )
@@ -594,7 +596,7 @@ class PreferencesLib
 		$name = $info['preference'];
 
 		if ( isset($info['separator']) && is_string($data[$name])) {
-			$value = explode($info['separator'], $data[$name]);
+			if(!empty($data[$name])) { $value = explode($info['separator'], $data[$name]); } else { $value = array(); }
 		} else {
 			$value = $data[$name];
 		}
@@ -630,6 +632,7 @@ class PreferencesLib
 		} else {
 			$value = $data[$name];
 		}
+		$value = str_replace("\r", "", $value);
 
 		if ( isset( $info['unserialize'] ) ) {
 			$fnc = $info['unserialize'];

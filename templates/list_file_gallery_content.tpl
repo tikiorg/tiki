@@ -349,7 +349,7 @@
 						{else}
 							{assign var=propval value="<a class='fgalname' $link>$propval</a>"}
 						{/if}
-						{if $propname eq 'name' and $gal_info.show_name eq 'n'  and $gal_info.show_description neq 'n'}
+						{if $propname eq 'name' and $gal_info.show_name eq 'n' and $gal_info.show_description neq 'n'}
 							{if $gal_info.max_desc gt 0}
 								{assign var=desc value=$files[changes].description|truncate:$gal_info.max_desc:"...":false|nl2br}
 							{else}
