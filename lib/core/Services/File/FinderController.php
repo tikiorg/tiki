@@ -171,7 +171,14 @@ class Services_File_FinderController
 			$fileId = $elFinder->realpath($input->hash->text());
 			$filegallib = TikiLib::lib('filegal');
 			$info = $filegallib->get_file(str_replace('f_', '', $fileId));
-			$info['wiki_syntax'] = $filegallib->getWikiSyntax($info['galleryId'], $info);
+			$params = array();
+			if ($input->filegals_manager->text()) {
+				$params['filegals_manager'] = $input->filegals_manager->text();
+			}
+			if ($input->insertion_syntax->text()) {
+				$params['insertion_syntax'] = $input->insertion_syntax->text();
+			}
+			$info['wiki_syntax'] = $filegallib->getWikiSyntax($info['galleryId'], $info, $params);
 			$info['data'] = '';	// binary data makes JSON fall over
 			return $info;
 		}
