@@ -4295,7 +4295,7 @@ class TikiLib extends TikiDb_Bridge
 		}
 		// Collect pages before modifying data
 		$pointedPages = $this->get_pages($data, true);
-
+		$this->check_alias($data, $name);
 		if (!isset($_SERVER["SERVER_NAME"])) {
 			$_SERVER["SERVER_NAME"] = $_SERVER["HTTP_HOST"];
 		}
@@ -4712,7 +4712,7 @@ class TikiLib extends TikiDb_Bridge
 		$this->invalidate_cache($pageName);
 		// Collect pages before modifying edit_data (see update of links below)
 		$pages = $this->get_pages($edit_data, true);
-
+		$this->check_alias($edit_data, $pageName);
 		if (!$this->page_exists($pageName))
 			return false;
 
@@ -6762,6 +6762,22 @@ JS;
 
 		$start  = $length * -1; //negative
 		return (substr($haystack, $start) === $needle);
+	}
+
+	function check_alias($edit, $page) {
+		global $smarty;
+		foreach ($this->get_pages($edit, true) as $pointedPage => $types) {
+			if($types[0] == 'alias'){
+				$alias = $this->table('tiki_object_relations')->fetchColumn('source_itemId', array('target_itemId' => $pointedPage));
+				if(($key = array_search($page, $alias)) !== false) { unset($alias[$key]); }
+				if(isset($alias) && count($alias) > 0) {
+					$aliasmsg = "Can't duplicate alias link, <b>" . $pointedPage . "</b> link already present in <b>" . implode(',', $alias) . "</b> page";
+					$smarty->assign('msg', $aliasmsg);
+					$smarty->display("error.tpl");
+					return false;
+				}
+			}
+		}
 	}
 }
 // end of class ------------------------------------------------------
