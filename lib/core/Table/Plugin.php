@@ -45,10 +45,10 @@ class Table_Plugin
 				'required' => false,
 				'name' => tra('Server Side Processing'),
 				'description' => tr(
-					'Enter %0y%1 to have the server do the sorting and filtering through Ajax and %0n%1 to have the browser
-					do it (n is the default). Set to y if you do not want all rows fetched at once, but rather
-					fetch rows as you paginate, filter or sort.',
-					'<b>', '</b>'
+					'Enter %0y%1 to have the server do the sorting and filtering through Ajax and %0n%1 to have the
+					browser do it (n is the default). Set to y (and also set the %2Paginate%3 parameter) if you do not
+					want all rows fetched at once, but rather fetch rows as you paginate, filter or sort.',
+					'<b>', '</b>', '<em>', '</em>'
 				),
 				'default' => 'n',
 				'filter' => 'striptags',
@@ -58,8 +58,9 @@ class Table_Plugin
 				'name' => tra('Overall Sort Settings'),
 				'description' => tr(
 					'Enter %0y%1 to allow sorting and %0n%1 to disallow (n is the default). Enter type:%0save%1
-					to allow sorts to be saved between page refreshes. Enter type:%0reset%1;text:***** to allow sorting and
-					show an unsort button with custom text. Enter %0type:savereset%1;text:buttontext to allow the same for saved sorts.',
+					to allow sorts to be saved between page refreshes. Enter type:%0reset%1;text:***** to allow sorting
+					and show an unsort button with custom text. Enter %0type:savereset%1;text:buttontext to allow the
+					same for saved sorts.',
 					'<b>', '</b>'
 				),
 				'default' => 'n',
@@ -80,10 +81,10 @@ class Table_Plugin
 				'required' => false,
 				'name' => tra('Sort Settings by Column'),
 				'description' => tr(
-					'Set %0type%1 and %0group%1 settings for each column, using the %0|%1 to separate columns. To
-					show group headings upon page load, the pre-sorted columns parameter will need to be set for a
-					column with a group setting. Group will not work in plugins where the server parameter is set
-					to \'y\'.', '<b>', '</b>')
+					'Set %0type%1 and %0group%1 settings for each column, using %0|%1 to separate columns. To
+					show group headings upon page load, the %2Pre-sorted Columns%3 parameter will need to be set for a
+					column with a group setting. Group will not work in plugins where the %2Server Side Processing%3
+					parameter is set to \'y\'.', '<b>', '</b>', '<em>', '</em>')
 				. '<br>' . tr('%0type%1 tells the sorter what type of date is being sorted and choices include:
 					%0text%1, %0digit%1, %0currency%1, %0percent%1, %0usLongDate%1, %0shortDate%1, %0isoDate%1,
 					%0dateFormat-ddmmyyyy%1, %0ipAddress%1, %0url%1, %0time%1.
@@ -93,7 +94,8 @@ class Table_Plugin
 					the setting as follows: %0letter%1 (first letter), %0word%1 (first word), %0number%1, %0date%1,
 					%0date-year%1, %0date-month%1, %0date-day%1, %0date-week%1, %0date-time%1. %0letter%1 and %0word%1
 					can be extended, e.g., %0word-2%1 shows first 2 words. %0number-10%1 will group rows in blocks of
-					ten.', '<b>', '</b>'
+					ten. Group will not work in plugins where the %2Server Side Processing%3 parameter is set to
+					\'y\'.', '<b>', '</b>', '<em>', '</em>'
 				),
 				'default' => '',
 				'filter' => 'striptags',
