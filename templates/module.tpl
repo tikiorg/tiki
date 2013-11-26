@@ -5,36 +5,17 @@
 {capture name=name}{$module_name|replace:"+":"_"|cat:$module_position|cat:$module_ord|escape}{/capture}
 {if !empty($module_params.topclass)}<div class="{$module_params.topclass}">{/if}
 {if $module_nobox neq 'y'}
-	{if $prefs.feature_layoutshadows eq 'y'}
-		<div class="box-shadow">{$prefs.box_shadow_start}
-	{/if}
 	{if !isset($moduleId)}{assign var=moduleId value=' '}{/if}
 	<div id="module_{$moduleId}" class="panel panel-default box-{$module_name}{if $module_type eq 'cssmenu'} cssmenubox{/if} module"{if !empty($tpl_module_style)} style="{$tpl_module_style}"{/if}>
 	{if $module_decorations ne 'n'}
         <div class="panel-heading">
 		<h3 class="panel-title clearfix" {if !empty($module_params.bgcolor)} style="background-color:{$module_params.bgcolor};"{/if}>
-		{if $user and $prefs.user_assigned_modules == 'y' and $prefs.feature_modulecontrols eq 'y'}
-			<span class="modcontrols">
-			<a title="{tr}Move module up{/tr}" href="{$current_location|escape}{$mpchar|escape}mc_up={$module_name}">
-				{icon _id="resultset_up" alt="[{tr}Up{/tr}]"}
-			</a>
-			<a title="{tr}Move module down{/tr}" href="{$current_location|escape}{$mpchar|escape}mc_down={$module_name}">
-				{icon _id="resultset_down" alt="[{tr}Down{/tr}]"}
-			</a>
-			<a title="{tr}Move module to opposite side{/tr}" href="{$current_location|escape}{$mpchar|escape}mc_move={$module_name}">
-				{icon _id="arrow_right-left" alt="[{tr}opp side{/tr}]"}
-			</a>
-			<a title="{tr}Unassign this module{/tr}" href="{$current_location|escape}{$mpchar|escape}mc_unassign={$module_name}" onclick='return confirmTheLink(this,"{tr}Are you sure you want to unassign this module?{/tr}")'>
-				{icon _id="cross" alt="[{tr}Remove{/tr}]"}
-			 </a>
-			</span>
-		{/if}
 		{if $module_notitle ne 'y'}
 			<span class="moduletitle">{$module_title}</span>
 		{/if}
 		{if $module_flip eq 'y' and $prefs.javascript_enabled ne 'n'}
 			<span class="moduleflip" id="moduleflip-{$smarty.capture.name}">
-				<a title="{tr}Toggle module contents{/tr}" class="flipmodtitle" href="javascript:icntoggle('mod-{$smarty.capture.name}','module.png');">
+				<a title="{tr}Toggle module contents{/tr}" class="flipmodtitle close" href="javascript:icntoggle('mod-{$smarty.capture.name}','module.png');">
 					{icon id="icnmod-"|cat:$smarty.capture.name class="flipmodimage" _id="module" alt="[{tr}Toggle{/tr}]"}
 				</a>
 			</span>
@@ -72,11 +53,25 @@
 {$module_error}
 {if $module_nobox neq 'y'}
 		</div>
-		<div class="module-footer">
-
-		</div>
+		{if $user and $prefs.user_assigned_modules == 'y' and $prefs.feature_modulecontrols eq 'y'}
+		<div class="panel-footer">		
+			<span class="modcontrols">
+				<a title="{tr}Move module up{/tr}" href="{$current_location|escape}{$mpchar|escape}mc_up={$module_name}">
+					{icon _id="resultset_up" alt="{tr}Up{/tr}"}
+				</a>
+				<a title="{tr}Move module down{/tr}" href="{$current_location|escape}{$mpchar|escape}mc_down={$module_name}">
+					{icon _id="resultset_down" alt="{tr}Down{/tr}"}
+				</a>
+				<a title="{tr}Move module to opposite side{/tr}" href="{$current_location|escape}{$mpchar|escape}mc_move={$module_name}">
+					{icon _id="arrow_right-left" alt="{tr}Move to opposite side{/tr}"}
+				</a>
+				<a title="{tr}Unassign this module{/tr}" href="{$current_location|escape}{$mpchar|escape}mc_unassign={$module_name}" onclick='return confirmTheLink(this,"{tr}Are you sure you want to unassign this module?{/tr}")'>
+					{icon _id="cross" alt="{tr}Unassign{/tr}"}
+				 </a>
+			</span>
+		</div> 
+		{/if}
 	</div>
-	{if $prefs.feature_layoutshadows eq 'y'}{$prefs.box_shadow_end}</div>{/if}
 {else}
 		</div>
 	</div>
