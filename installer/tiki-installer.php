@@ -902,8 +902,10 @@ if ( isset( $_GET['lockenter'] ) || isset( $_GET['nolockenter'] ) ) {
 		session_destroy();
 	}
 	include_once 'tiki-setup.php';
-	$cachelib->empty_cache();
+	TikiLib::lib('cache')->empty_cache();
 	if ($install_type == 'scratch') {
+		initialize_prefs(true);
+		TikiLib::lib('unifiedsearch')->rebuild();
 		$u = 'tiki-change_password.php?user=admin&oldpass=admin';
 	} else {
 		$u = '';
