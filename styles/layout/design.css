@@ -4570,6 +4570,12 @@ div#outerToc {
 	z-index:5;
 	padding:5px;
 	margin:5px;
+	max-height:95%;
+}
+
+
+div#innerToc{
+	overflow-y:auto;
 }
 
 div#outerToc-static {
