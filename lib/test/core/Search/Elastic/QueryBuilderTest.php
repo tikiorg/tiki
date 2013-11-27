@@ -230,9 +230,9 @@ class Search_Elastic_QueryBuilderTest extends PHPUnit_Framework_TestCase
 
 		$this->assertEquals(
 			array(
-				"prefix" => array(
+				"text_phrase_prefix" => array(
 					"title" => array(
-						"value" => "hello",
+						"query" => "hello",
 						"boost" => 1.5,
 					),
 				),
