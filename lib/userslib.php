@@ -2790,6 +2790,13 @@ class UsersLib extends TikiLib
 
 	private function get_raw_permissions()
 	{
+		static $permissions;
+
+		// Avoid multiple unserialize per page
+		if ($permissions) {
+			return $permissions;
+		}
+
 		global $prefs;
 		$cachelib = TikiLib::lib('cache');
 
