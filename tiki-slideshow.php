@@ -223,6 +223,14 @@ $headerlib->add_js('
 	if(jqueryTiki.chosen) {
 		jqueryTiki.chosen = false;
 	}
+	setTimeout(function(){
+		jQuery(".s5-slide-grid .s5-slide-left").each(function(){
+			jQuery(this).siblings(".s5-slide-right").append(jQuery(this).find("video").clone());
+		 	jQuery(this).find("video").remove();
+		 	jQuery(this).siblings(".s5-slide-right").append(jQuery(this).find("object, embed").clone());
+		 	jQuery(this).find("object, embed").remove();
+		});
+	}, 500);
 ');
 
 ask_ticket('index-raw');
