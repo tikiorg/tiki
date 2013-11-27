@@ -35,12 +35,7 @@ body.filegal_popup {
 	background: url(fivealive/header_left.png) 0 100% no-repeat;
 }
 
-/* keep header content in page center (override layout.css)*/
-.header_container .fixedwidth {
-    margin-left: auto;
-}
-
-.header {	/* inner <header> element that gets .fixedwidth class applied */
+.header_container > .header {	/* inner <header> element that gets .fixedwidth class applied */
 	background: url(fivealive/options/blueberry/siteheader.jpg) 0 0 no-repeat;
 }
 
@@ -295,10 +290,7 @@ hr {
 .btn-default,
 .btn-default:visited,
 button,
-input[type="reset"],
-input[type="submit"],
 .button input,
-.calbuttonBox a,
 #genPass .btn-default,
 #genPass .btn-default:visited,
 .daterow {
@@ -313,8 +305,6 @@ input[type="submit"],
 
 .btn-default:hover,
 button:hover,
-input[type="reset"]:hover,
-input[type="submit"]:hover,
 .button input:hover,
 .calbuttonBox a:hover,
 #genPass .btn-default:hover,
@@ -352,15 +342,7 @@ input[type="submit"]:hover,
 	border: 1px solid #000;
 }
 
-select,
-input[type="text"],
-input[type="password"],
-input[type="file"],
-input[type="email"],
-input[type="file"],
-input[type="search"],
-input[type="number"],
-input#login-pass,
+.btn .btn-default,
 textarea,
 .adminoptionbox option {
 	background-color: #d6f3fa;
@@ -369,7 +351,7 @@ textarea,
 	border-color: #9ae8fa #e3f7fb #e3f7fb #9ae8fa;
 }
 
-/* Needed for Opera (11) */
+/* Needed for Opera (11) 
 .btn-default,
 input[type="reset"],
 input[type="submit"],
@@ -378,7 +360,7 @@ input[type="submit"]:hover,
 button[type="submit"],
 button[type="submit"]:hover {
 	padding: .2em .8em;
-}
+}*/
 
 select[multiple="multiple"] {
 	height: 120px;
@@ -881,6 +863,10 @@ img.icon {
 }
 
 /***** Boxes *****/
+.panel-default > .panel-heading {
+	background: #9ae8fa;
+}
+
 .module.panel { 
 	background-color: transparent;
 	border: none;

@@ -11,8 +11,9 @@ tr.odd a,
 tr.odd a:visited {
 	color: #c75a28;
 }
- 
-a:active, a:hover,
+
+a:active,
+a:hover,
 tr.even a:active,
 tr.even a:hover,
 tr.odd a:active,
@@ -25,21 +26,20 @@ fieldset {
 }
 
 hr {
-	color: #ffc506;
-	background: #ffc506;
+	border-top: #ffc506;
 }
 
-#main .header_outer {
+.header_outer {
 	background: url(lemon/siteheadertile.png) 0 0 no-repeat;
 }
 
-#header {
+.header_container > .header {
 	background: url(lemon/siteheader.png) -250px 0 no-repeat;
 }
 
 .sitetitle,
 .sitesubtitle {
-	text-shadow: #c85a28 3px 2px 0;
+	text-shadow-color: #c85a28;
 }
 
 .footer_liner {
@@ -60,29 +60,20 @@ hr {
 	color: #ffc506;
 }
 
-.button a,
-.button a:visited,
-button,
-input[type="reset"],
-input[type="submit"],
-.button input,
-.calbuttonBox a,
-span#genPass .button a,
-span#genPass .button a:visited,
+.btn-default,
+.btn-default:visited,
+#genPass .button a,
+#genPass .button a:visited,
 .daterow {
 	color: #fff;
 	background: #ffc506;
 	border-color: #ffc506 #c35627 #c35627 #ffc506;
 	font-weight: bold;
 }
-	
+
+.btn-default:hover,
 .button a:hover,
-button:hover,
-input[type="reset"]:hover,
-input[type="submit"]:hover,
-.button input:hover,
-.calbuttonBox:hover,
-span#genPass .button a:hover,
+#genPass .button a:hover,
 .daterow:hover {
 	background: #f68c1a;
 	border-color: #c35627 #ffc506 #ffc506 #c35627;
@@ -100,20 +91,24 @@ span#genPass .button a:hover,
 	color: #c74b23;
 }
 
+.dropdown-menu,
 .cssmenu_vert li ul a,
 .cssmenu_horiz li ul a,
 .header .cssmenu_horiz li ul a,
 .header .cssmenu_horiz li:hover ul a,
-#main #topbar_modules .cssmenu_horiz li ul a,
-#main #topbar_modules .cssmenu_horiz li:hover ul a  {
+#topbar_modules .cssmenu_horiz li ul a,
+#topbar_modules .cssmenu_horiz li:hover ul a  {
 	background: #c75a29;
 	color: #fff;
 }
 
+#topbar_modules .dropdown-menu,
 #tiki-top .cssmenu_horiz li a {
 	background: url(lemon/siteheader.png) no-repeat -600px -40px;
 }
 
+#topbar_modules .dropdown-menu > li > a:hover,
+#topbar_modules .dropdown-menu > li > a:focus,
 #tiki-top .cssmenu_horiz li a:hover,
 .cssmenu_vert li ul a:hover,
 .cssmenu_horiz li ul a:hover,
@@ -122,6 +117,7 @@ span#genPass .button a:hover,
 	background: #f68c1a;
 }
 
+#topbar_modules .dropdown-menu li.active a, /* bootstrap */
 .header .cssmenu_horiz li.selected a,
 #topbar_modules .cssmenu_horiz li.selected a,
 .cssmenu_horiz li.selected a,
@@ -137,48 +133,41 @@ span#genPass .button a:hover,
 	color: #fff;
 }
 
-
 .cssmenu_vert .sf-sub-indicator {
 	background: url(lemon/arrows-c75a28.png) no-repeat 10px 0;
 }
 
 select,
-input[type="text"],
-input[type="password"],
-input[type="file"],
-input[type="email"],
-input[type="file"],
-input[type="search"],
-input[type="number"],
-input#login-pass,
 textarea,
 .adminoptionbox option {
 	background: #fdf1d0;
+	color: #000;
 	border-color: #fee194 #fdfae9 #fdfae9 #fee194;
 }
 
 .titlebar,
-.rbox-title, 
-.rbox-data {
+.panel-default .panel-heading {
 	border-color: #ffc506;
 	background: #fcebbc;
 	color: #c85a28;
 }
 
-.cbox {
-	background: #fcebbc;
-	color: #c85a28;
+.panel-default.module > .panel-heading,
+.panel-default.module > .panel-body {
+	background: none;
 }
 
-.cbox-title {
+.well {
+	background: #fcebbc;
+	color: #c85a28;
+	border: 2px solid #ffc506
+}
+
+.panel-default.module .panel-heading {
 	border-bottom: 3px solid #ffc506;
 }
 
-.simplebox {
-	border: 2px solid #ffc506; 
-}
-
-h3.box-title,
+.panel-heading,
 .postbody-title,
 #top_modules .module.secondary_site_menu {
 	background: #fec107 url(lemon/siteheader.png) no-repeat -1000px -200px;
@@ -189,7 +178,7 @@ h3.box-title,
 	background: #ffc506;
 }
 
-.normal,
+.table,
 .wikitable {
 	border: 2px solid #ffc506;
 }
@@ -217,13 +206,13 @@ td.calheadhighlight {
 }
 
 .odd,
-table.normal tr:nth-child(2n+1),
+table.table tr:nth-child(2n+1),
 .tablesorter tr.odd td {
 	background: #fdf1d0;
 }
 
 .even,
-table.normal tr:nth-child(2n),
+table.table tr:nth-child(2n),
 .tablesorter tr.even td {
 	background: #fcebbc;
 }
@@ -299,4 +288,3 @@ form.admin fieldset,
 .cluetip-default #cluetip-title a {
 	color: #FFF1D1;
 }
-  

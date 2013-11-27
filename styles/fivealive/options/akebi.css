@@ -11,7 +11,7 @@ tr.odd a,
 tr.odd a:visited {
 	color: #0b8a98;
 }
- 
+
 a:active,
 a:hover,
 tr.even a:active,
@@ -33,16 +33,16 @@ hr {
 	background: url(akebi/siteheadertile.jpg) 0 0 no-repeat;
 }
 
-.header {
+.header_container .header {
 	background: url(akebi/siteheader.png) -250px 0 no-repeat;
 }
 
 .sitetitle,
 .sitesubtitle {
-	text-shadow: #005064 3px 2px 0;
+	text-shadow-color: #005064;
 }
 
-#footer_liner {
+.footer_liner {
 	border-top: 1px solid #19a5be;
 	border-bottom: 1px solid #19a5be;
 }
@@ -62,11 +62,6 @@ hr {
 
 .btn-default,
 .btn-default:visited,
-button,
-input[type="reset"],
-input[type="submit"],
-.button input,
-.calbuttonBox a,
 #genPass .button a,
 #genPass .button a:visited,
 .daterow {
@@ -77,11 +72,7 @@ input[type="submit"],
 }
 	
 .btn-default:hover,
-button:hover,
-input[type="reset"]:hover,
-input[type="submit"]:hover,
-.button input:hover,
-.calbuttonBox:hover,
+.button a:hover,
 #genPass .button a:hover,
 .daterow:hover {
 	background: #0b8896;
@@ -104,8 +95,8 @@ input[type="submit"]:hover,
 .cssmenu_horiz li ul a,
 .header .cssmenu_horiz li ul a,
 .header .cssmenu_horiz li:hover ul a,
-#main #topbar_modules .cssmenu_horiz li ul a,
-#main #topbar_modules .cssmenu_horiz li:hover ul a {
+#topbar_modules .cssmenu_horiz li ul a,
+#topbar_modules .cssmenu_horiz li:hover ul a {
 	background: #005064;
 	color: #fff;
 }
@@ -148,8 +139,11 @@ input[type="submit"]:hover,
 select,
 input[type="text"],
 input[type="password"],
-input[type="search"],
 input[type="file"],
+input[type="email"],
+input[type="file"],
+input[type="search"],
+input[type="number"],
 input#login-pass,
 textarea,
 .adminoptionbox option {
@@ -158,29 +152,30 @@ textarea,
 	border-color: #b4f3fb #fff #fff #b4f3fb;
 }
 
+.panel-default > .panel-heading {
+	background: #cbf4f6;
+}
+
 .titlebar,
-.rbox-title, 
-.rbox-data {
+.panel-heading {
 	border-color: #18a3bb;
 	background: #cbf4f6;
 	color: #005064;
 }
 
-.cbox {
+.modules .panel-default > .panel-heading,
+.modules .panel-default > .panel-body {
+	background: none;
+}
+
+.well {
 	background: #cbf4f6;
 	color: #005064;
-}
-
-.cbox-title {
-	border-bottom: 3px solid #18a3bb;
-}
-
-.simplebox {
 	border: 2px solid #18a3bb;
 }
 
-h3.box-title {
-	color: #0f91a2;
+.panel-heading {
+	border-bottom: 3px solid #18a3bb;
 }
 
 .postbody-title,
@@ -192,7 +187,7 @@ h3.box-title {
 	background: #18a3bb;
 }
 
-.normal,
+.table,
 .wikitable {
 	border: 2px solid #1296a9;
 }
@@ -211,6 +206,11 @@ th.header {
 .caltable .even,
 .wikicell {
 	border: 2px solid #cbf4f6;
+}
+
+.caltable td.calhighlight,
+td.calheadhighlight {
+	background: #ddf4ef;
 }
 
 .odd,

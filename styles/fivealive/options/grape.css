@@ -26,21 +26,20 @@ fieldset {
 }
 
 hr {
-	color: #a82a76;
-	background: #a82a76;
+	border-top: #a82a76;
 }
 
-#main .header_outer {
+.header_outer {
 	background: url(grape/siteheadertile.png) 0 0 no-repeat;
 }
 
-#header {
+.header_container .header {
 	background: url(grape/siteheader.png) -250px 0 no-repeat;
 }
 
 .sitetitle,
 .sitesubtitle {
-	text-shadow: #781437 3px 2px 0;
+	text-shadow-color: #781437;
 }
 
 .footer_liner {
@@ -61,13 +60,10 @@ hr {
 	color: #a52873;
 }
 
-.button a,
-.button a:visited,
+.btn-default,
+.btn-default:visited,
 button,
-input[type="reset"],
-input[type="submit"],
 .button input,
-.calbuttonBox a,
 #genPass .button a,
 #genPass .button a:visited,
 .daterow {
@@ -77,12 +73,9 @@ input[type="submit"],
 	font-weight: bold;
 }
 	
-.button a:hover,
+.btn-default:hover,
 button:hover,
-input[type="reset"]:hover,
-input[type="submit"]:hover,
 .button input:hover,
-.calbuttonBox:hover,
 #genPass .button a:hover,
 .daterow:hover {
 	background: #9b286f;
@@ -101,20 +94,24 @@ input[type="submit"]:hover,
 	color: #8e286a;
 }
 
+#topbar_modules .dropdown-menu,
 .cssmenu_vert li ul a,
 .cssmenu_horiz li ul a,
 .header .cssmenu_horiz li ul a,
 .header .cssmenu_horiz li:hover ul a,
-#main #topbar_modules .cssmenu_horiz li ul a,
-#main #topbar_modules .cssmenu_horiz li:hover ul a  {
+#topbar_modules .cssmenu_horiz li ul a,
+#topbar_modules .cssmenu_horiz li:hover ul a  {
 	background: #3b284a;
 	color: #fff;
 }
 
+#topbar_modules .dropdown-menu,
 #tiki-top .cssmenu_horiz li a {
 	background: url(grape/siteheader.png) no-repeat -600px -40px;
 }
 
+#topbar_modules .dropdown-menu > li > a:hover,
+#topbar_modules .dropdown-menu > li > a:focus,
 #tiki-top .cssmenu_horiz li a:hover,
 .cssmenu_vert li ul a:hover,
 .cssmenu_horiz li ul a:hover,
@@ -123,6 +120,7 @@ input[type="submit"]:hover,
 	background: #972269;
 }
 
+#topbar_modules .dropdown-menu li.active a, /* bootstrap */
 .header .cssmenu_horiz li.selected a,
 #topbar_modules .cssmenu_horiz li.selected li a,
 .cssmenu_horiz li.selected a,
@@ -143,51 +141,39 @@ input[type="submit"]:hover,
 }
 
 select,
-input[type="text"],
-input[type="password"],
-input[type="file"],
-input[type="email"],
-input[type="file"],
-input[type="search"],
-input[type="number"],
-input#login-pass,
 textarea,
 .adminoptionbox option {
 	background: #f4dded;
+	color: #000;
 	border-color: #e4afd3 #faf1f8 #faf1f8 #e4afd3;
 }
 
-/*th a:link,
-th a:visited,
-td.heading a:link,
-td.heading a:visited,
-tr.diffheader a:link,
-tr.diffheader a:visited {
-	color: #fff
-}*/
+.panel-default > .panel-heading {
+	background: #a82a76;
+}
 
 .titlebar,
-.rbox-title, 
-.rbox-data {
+.panel-heading {
 	border-color: #a82a76;
 	background: #efcde5;
 	color: #8b1932;
 }
 
-.cbox {
-	background: #efcde5;
-	color: #8b1932;
+.modules .panel-default > .panel-heading,
+.modules .panel-default > .panel-body {
+	background: none;
 }
 
-.cbox-title {
+.well {
+	background: #cbf4f6;
+	color: #005064;
+	border: 2px solid #18a3bb;
+}
+
+.panel-heading {
 	border-bottom: 3px solid #a82a76;
 }
 
-.simplebox {
-	border: 2px solid #a82a76;
-}
-
-h3.box-title,
 .postbody-title,
 #top_modules .module.secondary_site_menu {
 	background: #97286e url(grape/siteheader.png) no-repeat -1000px -200px;
@@ -197,7 +183,7 @@ h3.box-title,
 	background: #a82a76;
 }
 
-.normal,
+.table,
 .wikitable {
 	border: 2px solid #a82a76;
 }
@@ -231,7 +217,8 @@ table.normal tr:nth-child(2n+1),
 }
 
 .even,
-table.normal tr:nth-child(2n),
+table.table tr:nth-child(2n),
+table.table tr:nth-child(2n) td,
 .tablesorter tr.even td {
 	background: #f4dded;
 }

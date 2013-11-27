@@ -11,7 +11,7 @@ tr.odd a,
 tr.odd a:visited {
 	color: #b51360;
 }
- 
+
 a:active,
 a:hover,
 tr.even a:active,
@@ -26,15 +26,14 @@ fieldset {
 }
 
 hr {
-	color: #8b1946;
-	background: #f6cae2;
+	border-top: #f6cae2;
 }
 
-#main .header_outer {
+.header_outer {
 	background: url(raspberry/siteheadertile.png) 900px 0 no-repeat;
 }
 
-#header {
+.header_container .header {
 	background: url(raspberry/siteheader.png) -250px 0 no-repeat;
 }
 
@@ -61,29 +60,23 @@ hr {
 	color: #eb0a82;
 }
 
-.button a,
-.button a:visited,
+.btn-default,
+.btn-default:visited,
 button,
-input[type="reset"],
-input[type="submit"],
 .button input,
-.calbuttonBox a,
-span#genPass .button a,
-span#genPass .button a:visited,
+#genPass .button a,
+#genPass .button a:visited,
 .daterow {
 	color: #fff;
 	background: #e60b7f;
 	border-color: #f588c1 #b00b62 #b00b62 #f588c1;
 	font-weight: bold;
 }
-	
-.button a:hover,
+
+.btn-default:hover,
 button:hover,
-input[type="reset"]:hover,
-input[type="submit"]:hover,
 .button input:hover,
-.calbuttonBox:hover,
-span#genPass span.button a:hover,
+#genPass .button a:hover,
 .daterow:hover {
 	background: #b4135f;
 	border-color: #b00b62 #f588c1 #f588c1 #b00b62;
@@ -100,20 +93,24 @@ span#genPass span.button a:hover,
 	color: #b51360;
 }
 
+#topbar_modules .dropdown-menu,
 .cssmenu_vert li ul a,
 .cssmenu_horiz li ul a,
 .header .cssmenu_horiz li ul a,
 .header .cssmenu_horiz li:hover ul a,
-#main #topbar_modules .cssmenu_horiz li ul a,
-#main #topbar_modules .cssmenu_horiz li:hover ul a  {
+#topbar_modules .cssmenu_horiz li ul a,
+#topbar_modules .cssmenu_horiz li:hover ul a  {
 	background: #771437;
 	color: #fff;
 }
 
+#topbar_modules .dropdown-menu,
 #tiki-top .cssmenu_horiz li a {
 	background: #b91262 url(raspberry/siteheader.png) no-repeat -600px -40px;
 }
 
+#topbar_modules .dropdown-menu > li > a:hover,
+#topbar_modules .dropdown-menu > li > a:focus,
 #tiki-top .cssmenu_horiz li a:hover,
 .cssmenu_vert li ul a:hover,
 .cssmenu_horiz li ul a:hover,
@@ -122,6 +119,7 @@ span#genPass span.button a:hover,
 	background: #8c1946;
 }
 
+#topbar_modules .dropdown-menu li.active a, /* bootstrap */
 .header .cssmenu_horiz li.selected a,
 #topbar_modules .cssmenu_horiz li.selected a,
 .cssmenu_horiz li.selected a,
@@ -142,42 +140,38 @@ span#genPass span.button a:hover,
 }
 
 select,
-input[type="text"],
-input[type="password"],
-input[type="file"],
-input[type="email"],
-input[type="file"],
-input[type="search"],
-input[type="number"],
-input#login-pass,
 textarea,
 .adminoptionbox option {
 	background: #f9dcec;
 	border-color: #fa9ccd #fcf6f9 #fcf6f9 #fa9ccd;
 }
 
+.panel-default > .panel-heading {
+	background: #a82a76;
+}
+
 .titlebar,
-.rbox-title, 
-.rbox-data {
+.panel-heading {
 	border-color: #d40b75;
 	background: #f6cae2;
 	color: #8b1946;
 }
 
-.cbox {
+.modules .panel-default > .panel-heading,
+.modules .panel-default > .panel-body {
+	background: none;
+}
+
+.well {
 	background: #f6cae2;
 	color: #8b1946;
-}
-
-.cbox-title {
-	border-bottom: 3px solid #d40b75;
-}
-
-.simplebox {
 	border: 2px solid #d40b75; 
 }
 
-h3.box-title,
+.panel-heading {
+	border-bottom: 3px solid #d40b75;
+}
+
 .postbody-title,
 #top_modules .module.secondary_site_menu {
 	background: #e10c7c url(raspberry/siteheader.png) no-repeat -1000px -200px;
@@ -187,7 +181,7 @@ h3.box-title,
 	background: #d40b75;
 }
 
-.normal,
+.table,
 .wikitable {
 	border: 2px solid #f459ab;
 }
@@ -225,7 +219,7 @@ table.normal tr:nth-child(2n+1),
 }
 
 .even,
-table.normal tr:nth-child(2n),
+table.table tr:nth-child(2n),
 .tablesorter tr.even td {
 	background: #fcebbc;
 }
