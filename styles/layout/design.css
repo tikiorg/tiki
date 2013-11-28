@@ -176,7 +176,7 @@ img {
 
 /* default minimum height in case only login, etc. (absolutely positioned) is assigned */
 #top_modules {
-	min-height: 20px;
+	min-height: 96px;
 }
 
 /* Siteloginbar (no popup, items arranged horizontally) */
