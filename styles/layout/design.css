@@ -4569,22 +4569,25 @@ div#outerToc {
 	border-radius:0px 0px 5px 5px;
 	z-index:5;
 	padding:5px;
-	margin:5px;
+	margin: 0 5px 5px;
 	max-height:95%;
 }
-
+div#outerToc * {
+	color: #000;
+}
 
 div#innerToc{
 	overflow-y:auto;
 }
 
 div#outerToc-static {
-    border: 1px solid;
-    border-collapse: collapse;
+	border: 1px solid;
 	padding: 5px;
 	margin: 5px;
 }
 div#outerToc-static ul {
+	list-style-position: inside;
+	list-style-type: none;
 	padding-left: 1em;
 }
 
