@@ -3,8 +3,8 @@
 {title help="$helpUrl"}{$admintitle}{/title}
 
 {if $prefs.sender_email eq ''}
-	{remarksbox type=warning title="{tr}Configuration Error{/tr}"}
-		{tr _0="tiki-admin.php?page=general&highlight=sender_email"}Your sender email is not set. You can set it <a href="%0" class="alert-link">in the general admin panel</a>{/tr}
+	{remarksbox type=warning title="{tr}Warning{/tr}"}
+		{tr _0="tiki-admin.php?page=general&highlight=sender_email"}Your sender email is not set. You can set it <a href="%0" class="alert-link">in the general admin panel.</a>{/tr}
 	{/remarksbox}
 {/if}
 
