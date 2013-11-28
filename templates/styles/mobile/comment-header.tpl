@@ -1,4 +1,4 @@
-{* $Id: comment-header.tpl 48797 2013-11-28 21:34:25Z xavidp $ *}
+{* $Id$ *}
 <header class="clearfix postbody-title">
 	{if $prefs.feature_comments_locking neq 'y' or
 		( $comment.locked neq 'y' and $thread_is_locked neq 'y' )}

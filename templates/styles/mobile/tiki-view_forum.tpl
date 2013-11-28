@@ -1,4 +1,4 @@
-{* $Id: tiki-view_forum.tpl 48797 2013-11-28 21:34:25Z xavidp $ *}
+{* $Id$ *}
 
 {title help="forums" admpage="forums"}{$forum_info.name}{/title}
 
