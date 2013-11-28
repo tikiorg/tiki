@@ -108,7 +108,7 @@ input.url, textarea {
 	line-height: 2em !important;
 }
 .menuLevel1 a:hover, .menuLevel1 a:focus, .menuLevel1 a:active {
-	background: transparent;
+	background: rgba(0,0,0,.5);
 	border-radius: 0;
 	color: #fff;
 	text-shadow: none;
