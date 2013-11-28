@@ -19,7 +19,7 @@ class BackupDBCommand extends Command
 	{
 		$this
 			->setName('database:backup')
-			->setDescription('Create a database backup')
+			->setDescription('Create a database backup (with mysqldump)')
 			->addArgument(
 				'path',
 				InputArgument::REQUIRED,	
