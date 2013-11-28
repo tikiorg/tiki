@@ -59,11 +59,11 @@ $isInstalled = $installer->isInstalled();
 if ($isInstalled) {
 	require_once 'tiki-setup.php';
 	$console->add(new Tiki\Command\CacheClearCommand);
-	$console->add(new Tiki\Command\DumpDBCommand);
+	$console->add(new Tiki\Command\BackupDBCommand);
 	$console->add(new Tiki\Command\BackupFilesCommand);
 } else {
 	$console->add(new Tiki\Command\UnavailableCommand('cache:clear'));
-	$console->add(new Tiki\Command\UnavailableCommand('database:dump'));
+	$console->add(new Tiki\Command\UnavailableCommand('database:backup'));
 	$console->add(new Tiki\Command\UnavailableCommand('backup:files'));
 }
 
