@@ -8,7 +8,7 @@
 	{/if}
 
 	{if $thread_style != 'commentStyle_headers' and $this_is_locked eq 'n' and isset($comment.threadId) and $comment.threadId > 0}
-	<div class="actions"{if $prefs.mobile_mode eq 'y'} data-role="controlgroup" data-type="horizontal"{/if}> {* mobile *}
+	<div class="actions" data-role="controlgroup" data-type="horizontal"> {* mobile *}
 		{if $tiki_p_admin_forum eq 'y'
 			|| ( $comment.userName == $user && $tiki_p_forum_edit_own_posts eq 'y' )}
 		<a title="{tr}Edit{/tr}"{if $prefs.mobile_mode eq 'y'} data-role="button" {/if}
@@ -31,33 +31,33 @@
 		{/if}
 					
 		{if $tiki_p_forums_report eq 'y'}
-			<a {if $prefs.mobile_mode eq 'y'} data-role="button"{/if} href="{query _type='relative' report=$comment.threadId}" title="{tr}Report this post{/tr}">{icon _id='delete' alt="{tr}Report this post{/tr}"}</a>  {* mobile *}
+			<a data-role="button" href="{query _type='relative' report=$comment.threadId}" title="{tr}Report this post{/tr}">{icon _id='delete' alt="{tr}Report this post{/tr}"}</a>  {* mobile *}
 		{/if}
 					
 		{if $user and $prefs.feature_notepad eq 'y' and $tiki_p_notepad eq 'y' and $forumId}
-			<a {if $prefs.mobile_mode eq 'y'} data-role="button"{/if} href="{query _type='relative' savenotepad=$comment.threadId}" title="{tr}Save to notepad{/tr}">{icon _id='disk' alt="{tr}Save to notepad{/tr}"}</a>  {* mobile *}
+			<a data-role="button" href="{query _type='relative' savenotepad=$comment.threadId}" title="{tr}Save to notepad{/tr}">{icon _id='disk' alt="{tr}Save to notepad{/tr}"}</a>  {* mobile *}
 		{/if}
 	
 		{if $user and $prefs.feature_user_watches eq 'y' and $display eq ''}
 		{if $first eq 'y'}
 		{if $user_watching_topic eq 'n'}
-			<a {if $prefs.mobile_mode eq 'y'} data-role="button"{/if} href="{query _type='relative' watch_event='forum_post_thread' watch_object=$comments_parentId watch_action='add'}" title="{tr}Monitor this Topic{/tr}">{icon _id='eye' alt="{tr}Monitor this Topic{/tr}"}</a>  {* mobile *}
+			<a data-role="button" href="{query _type='relative' watch_event='forum_post_thread' watch_object=$comments_parentId watch_action='add'}" title="{tr}Monitor this Topic{/tr}">{icon _id='eye' alt="{tr}Monitor this Topic{/tr}"}</a>  {* mobile *}
 		{else}
-			<a {if $prefs.mobile_mode eq 'y'} data-role="button"{/if} href="{query _type='relative' watch_event='forum_post_thread' watch_object=$comments_parentId watch_action='remove'}" title="{tr}Stop Monitoring this Topic{/tr}">{icon _id='no_eye' alt="{tr}Stop Monitoring this Topic{/tr}"}</a>  {* mobile *}
+			<a data-role="button" href="{query _type='relative' watch_event='forum_post_thread' watch_object=$comments_parentId watch_action='remove'}" title="{tr}Stop Monitoring this Topic{/tr}">{icon _id='no_eye' alt="{tr}Stop Monitoring this Topic{/tr}"}</a>  {* mobile *}
 		{/if}
 		{if $prefs.feature_group_watches eq 'y' and ( $tiki_p_admin_users eq 'y' or $tiki_p_admin eq 'y' )}
-			<a {if $prefs.mobile_mode eq 'y'} data-role="button"{/if} href="tiki-object_watches.php?objectId={$comments_parentId|escape:"url"}&amp;watch_event=forum_post_thread&amp;objectType=forum&amp;objectName={$comment.title|escape:"url"}&amp;objectHref={'tiki-view_forum_thread.php?comments_parentId='|cat:$comments_parentId|cat:'&forumId='|cat:$forumId|escape:"url"}" class="icon">{icon _id='eye_group' alt="{tr}Group Monitor{/tr}"}</a>
+			<a data-role="button" href="tiki-object_watches.php?objectId={$comments_parentId|escape:"url"}&amp;watch_event=forum_post_thread&amp;objectType=forum&amp;objectName={$comment.title|escape:"url"}&amp;objectHref={'tiki-view_forum_thread.php?comments_parentId='|cat:$comments_parentId|cat:'&forumId='|cat:$forumId|escape:"url"}" class="icon">{icon _id='eye_group' alt="{tr}Group Monitor{/tr}"}</a>
 		{/if}
 		{/if}
 		<br>
 		{if $category_watched eq 'y'}
 			{tr}Watched by categories:{/tr}
 			{section name=i loop=$watching_categories}
-				<a {if $prefs.mobile_mode eq 'y'} data-role="button"{/if} href="tiki-browse_categories.php?parentId={$watching_categories[i].categId}" class="icon">{$watching_categories[i].name|escape}</a>&nbsp;
+				<a data-role="button" href="tiki-browse_categories.php?parentId={$watching_categories[i].categId}" class="icon">{$watching_categories[i].name|escape}</a>&nbsp;
 			{/section}
 		{/if}	
 		{/if}
-	</div>
+	</div>  {* mobile *}
 	{/if}
 
 	{if !isset($first) or $first neq 'y'}
