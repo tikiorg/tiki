@@ -18,7 +18,7 @@ function codemirrorModes($minify = true)
 	if (!file_exists($jsModes) || !file_exists($cssModes)) {
 		//codemirror theme
 		$js .= 'window.codeMirrorTheme = "' . $prefs['feature_syntax_highlighter_theme'] .'";
-test = { mode: function () {} }
+test = { mode: function () {}, indentation: function() {} }
 ';	// test is a dummy line to supress exceptions from mode tests in cm 3
 
 		//load modes first

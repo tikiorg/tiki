@@ -2486,6 +2486,20 @@ class UsersLib extends TikiLib
 			} else {
 				$title = $auser;
 			}
+
+			$lat = $this->get_user_preference($auser, 'lat');
+			$lon = $this->get_user_preference($auser, 'lon');
+			$zoom = $this->get_user_preference($auser, 'zoom');
+
+			if (! ($lat == 0 && $lon == 0)) {
+				$class .= " geolocated";
+				$extra .= " data-geo-lat='$lat' data-geo-lon='$lon'";
+
+				if ($zoom) {
+					$extra .= " data-geo-zoom='$zoom'";
+				}
+			}
+
 			$body = "<a title=\"" . htmlspecialchars($title, ENT_QUOTES) . "\" href=\"$url\" class=\"$class\"$extra>" . $body . '</a>';
 			return $body;
 		}
@@ -2790,6 +2804,13 @@ class UsersLib extends TikiLib
 
 	private function get_raw_permissions()
 	{
+		static $permissions;
+
+		// Avoid multiple unserialize per page
+		if ($permissions) {
+			return $permissions;
+		}
+
 		global $prefs;
 		$cachelib = TikiLib::lib('cache');
 

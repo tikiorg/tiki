@@ -223,6 +223,13 @@ function current_object()
 		);
 	}
 
+	if ($section == 'trackers' && ! empty($_REQUEST['itemId'])) {
+		return array(
+			'type' => 'trackeritem',
+			'object' => $_REQUEST['itemId'],
+		);
+	}
+
 	if ( isset( $sections[$section] ) ) {
 		$info = $sections[$section];
 

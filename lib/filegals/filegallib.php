@@ -2391,14 +2391,17 @@ class FileGalLib extends TikiLib
 	 * @return string			wiki markup
 	 */
 
-	function getWikiSyntax($galleryId=0, $fileinfo =null)
+	function getWikiSyntax($galleryId=0, $fileinfo =null, $params = null)
 	{
-		if (isset($_REQUEST['insertion_syntax']) && $_REQUEST['insertion_syntax'] == 'file') {	// for use in 'Choose or Upload' toolbar item (tikifile)
+		if (!$params) {
+			$params = $_REQUEST;
+		}
+		if (isset($params['insertion_syntax']) && $params['insertion_syntax'] == 'file') {	// for use in 'Choose or Upload' toolbar item (tikifile)
 			$syntax = '{file type="gallery" fileId="%fileId%" showicon="y"}';
-		} else if (isset($_REQUEST['filegals_manager'])) {		// for use in plugin edit popup
-			if ($_REQUEST['filegals_manager'] === 'fgal_picker_id') {
+		} else if (isset($params['filegals_manager'])) {		// for use in plugin edit popup
+			if ($params['filegals_manager'] === 'fgal_picker_id') {
 				$syntax = '%fileId%';		// for use in plugin edit popup
-			} else if ($_REQUEST['filegals_manager'] === 'fgal_picker') {
+			} else if ($params['filegals_manager'] === 'fgal_picker') {
 				$href = 'tiki-download_file.php?fileId=123&amp;display';	// dummy id as sefurl expects a (/d+) pattern
 				global $smarty; include_once('tiki-sefurl.php');
 				$href = filter_out_sefurl($href);

@@ -50,6 +50,9 @@ function smarty_function_icon($params, $smarty)
 	}
 
 	$serialized_params = serialize(array_merge($params, array($current_style, $current_style_option, isset($_SERVER['HTTPS']))));
+	if ($prefs['mobile_feature'] === 'y') {
+		$serialized_params .=  $prefs['mobile_mode'];
+	}
 	$language = isset($prefs['language']) ? $prefs['language'] : 'en';
 	$cache_key = 'icons_' . $language . '_' . md5($serialized_params);
 	if ( $cached = $cachelib->getCached($cache_key) ) {

@@ -1557,22 +1557,19 @@ class TrackerLib extends TikiLib
 				}
 			} else {
 				$is_date = in_array($array["type"], array('f', 'j'));
-				$is_visible = !isset($array["isHidden"]) || $array["isHidden"] == 'n';
 
 				if ($currentItemId || $array['type'] != 'q') {
 					$this->modify_field($currentItemId, $fieldId, $value);
 					if ($old_value != $value) {
-						if ($is_visible) {
-							if ($is_date) {
-								$dformat = $prefs['short_date_format'].' '.$prefs['short_time_format'];
-								$old_value = $this->date_format($dformat, (int) $old_value);
-								$new_value = $this->date_format($dformat, (int) $value);
-							} else {
-								$new_value = $value;
-							}
-							if ($old_value != $new_value && !empty($itemId)) {
-								$this->log($version, $itemId, $array['fieldId'], $old_value);
-							}
+						if ($is_date) {
+							$dformat = $prefs['short_date_format'].' '.$prefs['short_time_format'];
+							$old_value = $this->date_format($dformat, (int) $old_value);
+							$new_value = $this->date_format($dformat, (int) $value);
+						} else {
+							$new_value = $value;
+						}
+						if ($old_value != $new_value && !empty($itemId)) {
+							$this->log($version, $itemId, $array['fieldId'], $old_value);
 						}
 					}
 				}
