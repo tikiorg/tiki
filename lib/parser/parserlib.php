@@ -2535,7 +2535,11 @@ if ( \$('#$id') ) {
 							} else {
 								$iconDisplayStyle = '';
 							}
-							$button = '<div class="icon_edit_section"' . $iconDisplayStyle . '><a href="tiki-editpage.php?';
+							if ($prefs['mobile_mode']== 'y') {
+								$button = '<div class="icon_edit_section"' . $iconDisplayStyle . '><a data-role="button" data-inline="true" href="tiki-editpage.php?';
+							} else {
+								$button = '<div class="icon_edit_section"' . $iconDisplayStyle . '><a href="tiki-editpage.php?';
+							}
 							if (!empty($this->option['page'])) {
 								$button .= 'page='.urlencode($this->option['page']).'&amp;';
 							}
@@ -2821,7 +2825,11 @@ if ( \$('#$id') ) {
 
 			$smarty = TikiLib::lib('smarty');
 			include_once('lib/smarty_tiki/function.icon.php');
-			$button = '<div class="icon_edit_section"><a href="tiki-editpage.php?';
+			if ($prefs['mobile_mode']== 'y') {
+				$button = '<div class="icon_edit_section"><a data-role="button" data-inline="true" href="tiki-editpage.php?';
+			} else {
+				$button = '<div class="icon_edit_section"><a href="tiki-editpage.php?';
+			}
 			if (!empty($this->option['page'])) {
 				$button .= 'page='.urlencode($this->option['page']).'&amp;';
 			}
