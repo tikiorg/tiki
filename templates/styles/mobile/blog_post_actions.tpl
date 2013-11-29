@@ -1,5 +1,5 @@
 <div class="actions">
-	<a href='tiki-print_blog_post.php?postId={$post_info.postId}'>{icon _id='printer' alt="{tr}Print{/tr}"}</a>
+	<a {if $prefs.mobile_mode eq "y"}data-role="button" data-inline="true" {/if}href='tiki-print_blog_post.php?postId={$post_info.postId}'>{icon _id='printer' alt="{tr}Print{/tr}"}</a> {* mobile *}
 	{if $prefs.feature_blog_sharethis eq "y"}
 		{capture name=shared_title}{tr}Share This{/tr}{/capture}
 		{capture name=shared_link_title}{tr}ShareThis via AIM, social bookmarking and networking sites, etc.{/tr}{/capture}

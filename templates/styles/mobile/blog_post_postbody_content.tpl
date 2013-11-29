@@ -13,15 +13,15 @@
 {if $post_info.pages > 1}
 	<div class="postbody-pagination">
 		{if $blog_post_context eq 'view_blog'}
-			<a class="link more" href="{$post_info.postId|sefurl:blogpost}">
-			{tr}More...{/tr} ({$post_info.pages} {tr}pages{/tr})</a>
+			<a {if $prefs.mobile_mode eq "y"}data-role="button" data-inline="true" {/if}class="link more" href="{$post_info.postId|sefurl:blogpost}">
+			{tr}More...{/tr} ({$post_info.pages} {tr}pages{/tr})</a> {* mobile *}
 		{else}
 			<div align="center">
-				<a href="tiki-view_blog_post.php?blogId={$smarty.request.blogId}&amp;postId={$smarty.request.postId}&amp;page={$post_info.first_page}">{icon _id='resultset_first' alt="{tr}First page{/tr}"}</a>
-				<a href="tiki-view_blog_post.php?blogId={$smarty.request.blogId}&amp;postId={$smarty.request.postId}&amp;page={$post_info.prev_page}">{icon _id='resultset_previous' alt="{tr}Previous page{/tr}"}</a>
+				<a {if $prefs.mobile_mode eq "y"}data-role="button" data-inline="true" {/if}href="tiki-view_blog_post.php?blogId={$smarty.request.blogId}&amp;postId={$smarty.request.postId}&amp;page={$post_info.first_page}">{icon _id='resultset_first' alt="{tr}First page{/tr}"}</a> {* mobile *}
+				<a {if $prefs.mobile_mode eq "y"}data-role="button" data-inline="true" {/if}href="tiki-view_blog_post.php?blogId={$smarty.request.blogId}&amp;postId={$smarty.request.postId}&amp;page={$post_info.prev_page}">{icon _id='resultset_previous' alt="{tr}Previous page{/tr}"}</a> {* mobile *}
 				<small>{tr}page:{/tr}{$post_info.pagenum}/{$post_info.pages}</small>
-				<a href="tiki-view_blog_post.php?blogId={$smarty.request.blogId}&amp;postId={$smarty.request.postId}&amp;page={$post_info.next_page}">{icon _id='resultset_next' alt="{tr}Next page{/tr}"}</a>
-				<a href="tiki-view_blog_post.php?blogId={$smarty.request.blogId}&amp;postId={$smarty.request.postId}&amp;page={$post_info.last_page}">{icon _id='resultset_last' alt="{tr}Last page{/tr}"}</a>
+				<a {if $prefs.mobile_mode eq "y"}data-role="button" data-inline="true" {/if}href="tiki-view_blog_post.php?blogId={$smarty.request.blogId}&amp;postId={$smarty.request.postId}&amp;page={$post_info.next_page}">{icon _id='resultset_next' alt="{tr}Next page{/tr}"}</a> {* mobile *}
+				<a {if $prefs.mobile_mode eq "y"}data-role="button" data-inline="true" {/if}href="tiki-view_blog_post.php?blogId={$smarty.request.blogId}&amp;postId={$smarty.request.postId}&amp;page={$post_info.last_page}">{icon _id='resultset_last' alt="{tr}Last page{/tr}"}</a> {* mobile *}
 			</div>
 		{/if}
 	</div>
