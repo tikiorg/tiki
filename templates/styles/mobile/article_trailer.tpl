@@ -5,20 +5,15 @@
 				({$size} {tr}bytes{/tr})
 			{/if}
 		</span>
-		<div class="actions">
-		{if $prefs.feature_multilingual eq 'y' and $lang and $prefs.show_available_translations eq 'y'}	
-			<div class="lang_select">
-				{include file='translated-lang.tpl' object_type='article'}
-			</div>
-		{/if}
+		<div class="actions" data-role="controlgroup" data-type="horizontal"> {* mobile *}
 		{if $tiki_p_edit_article eq 'y'}
-			<a class="icon" href="tiki-edit_article.php?articleId={$articleId}">{icon _id='page_edit'}</a>
+			<a {if $prefs.mobile_mode eq "y"}data-role="button" data-inline="true" {/if}class="icon" href="tiki-edit_article.php?articleId={$articleId}">{icon _id='page_edit'}</a> {* mobile *}
 		{/if}
 		{if $prefs.feature_cms_print eq 'y'}
-			<a class="icon" href="tiki-print_article.php?articleId={$articleId}">{icon _id='printer' alt="{tr}Print{/tr}"}</a>
+			<a {if $prefs.mobile_mode eq "y"}data-role="button" data-inline="true" {/if}class="icon" href="tiki-print_article.php?articleId={$articleId}">{icon _id='printer' alt="{tr}Print{/tr}"}</a> {* mobile *}
 		{/if}
 		{if $prefs.feature_share eq 'y' && $tiki_p_share eq 'y'}
-			<a title="{tr}Share page{/tr}" href="tiki-share.php?url={$smarty.server.REQUEST_URI|escape:'url'}">{icon _id='share_link' alt="{tr}Share this page{/tr}"}</a>
+			<a {if $prefs.mobile_mode eq "y"}data-role="button" data-inline="true" {/if}title="{tr}Share page{/tr}" href="tiki-share.php?url={$smarty.server.REQUEST_URI|escape:'url'}">{icon _id='share_link' alt="{tr}Share this page{/tr}"}</a> {* mobile *}
 		{/if}
 		{if $prefs.feature_cms_sharethis eq "y"}
 			{capture name=shared_title}{tr}Share This{/tr}{/capture}
@@ -35,11 +30,16 @@
 				var element{/literal}{$articleId}{literal} = document.getElementById("share{/literal}{$articleId}{literal}"); object{/literal}{$articleId}{literal}.attachButton(element{/literal}{$articleId}{literal}); </script>{/literal}
 		{/if}
 		{if $prefs.feature_tell_a_friend eq 'y' && $tiki_p_tell_a_friend eq 'y'}
-			<a title="{tr}Send a link{/tr}" href="tiki-tell_a_friend.php?url={$smarty.server.REQUEST_URI|escape:'url'}">{icon _id='email_link' alt="{tr}Send a link{/tr}"}</a>
+			<a {if $prefs.mobile_mode eq "y"}data-role="button" data-inline="true" {/if}title="{tr}Send a link{/tr}" href="tiki-tell_a_friend.php?url={$smarty.server.REQUEST_URI|escape:'url'}">{icon _id='email_link' alt="{tr}Send a link{/tr}"}</a> {* mobile *}
 		{/if}
 		{if $tiki_p_remove_article eq 'y'}
-			<a class="icon" href="tiki-list_articles.php?remove={$articleId}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
+			<a {if $prefs.mobile_mode eq "y"}data-role="button" data-inline="true" {/if}class="icon" href="tiki-list_articles.php?remove={$articleId}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a> {* mobile *}
 		{/if}
-		</div>
+		</div> {* mobile *}
+		{if $prefs.feature_multilingual eq 'y' and $lang and $prefs.show_available_translations eq 'y'}	 {* mobile - moved out of the control group because it was breaking the group *}
+			<div class="lang_select">
+				{include file='translated-lang.tpl' object_type='article'}
+			</div>
+		{/if} {* mobile *}
 	</div>
 {/if}

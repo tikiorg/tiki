@@ -50,7 +50,7 @@
 				
 				{* Show either a topic name, image OR a custom image (if there is a custom image or a topic). If a topic is set, link to it even if we show a custom image. *}
 				{if $topicId}
-					<a href="tiki-view_articles.php?topic={$topicId}" title="{if $show_image_caption and $image_caption}{$image_caption|escape}{else}{tr}List all articles of this same topic:{/tr} {tr}{$topicName|escape}{/tr}{/if}">
+					<a {if $prefs.mobile_mode eq "y"}data-role="button" data-inline="true" data-mini="true" {/if}href="tiki-view_articles.php?topic={$topicId}" title="{if $show_image_caption and $image_caption}{$image_caption|escape}{else}{tr}List all articles of this same topic:{/tr} {tr}{$topicName|escape}{/tr}{/if}"> {* mobile *}
 				{/if}
 				{if $useImage eq 'y' and $hasImage eq 'y'}
 					{* display article image *}{$style=''}
@@ -115,15 +115,15 @@
 	
 		{if $prefs.article_paginate eq 'y' and $pages > 1}
 			<div align="center">
-				<a href="{$articleId|sefurl:article:with_next}page={$first_page}"><img src='img/icons/resultset_first.png' alt="{tr}First page{/tr}" title="{tr}First page{/tr}" width='16' height='16'></a>
+				<a {if $prefs.mobile_mode eq "y"}data-role="button" data-inline="true" data-mini="true" {/if}href="{$articleId|sefurl:article:with_next}page={$first_page}"><img src='img/icons/resultset_first.png' alt="{tr}First page{/tr}" title="{tr}First page{/tr}" width='16' height='16'></a> {* mobile *}
 
-				<a href="{$articleId|sefurl:article:with_next}page={$prev_page}">{icon _id='resultset_previous' alt="{tr}Previous page{/tr}"}</a>
+				<a {if $prefs.mobile_mode eq "y"}data-role="button" data-inline="true" data-mini="true" {/if}href="{$articleId|sefurl:article:with_next}page={$prev_page}">{icon _id='resultset_previous' alt="{tr}Previous page{/tr}"}</a> {* mobile *}
 
 				<small>{tr}page:{/tr}{$pagenum}/{$pages}</small>
 
-				<a href="{$articleId|sefurl:article:with_next}page={$next_page}">{icon _id='resultset_next' alt="{tr}Next page{/tr}"}</a>
+				<a {if $prefs.mobile_mode eq "y"}data-role="button" data-inline="true" data-mini="true" {/if}href="{$articleId|sefurl:article:with_next}page={$next_page}">{icon _id='resultset_next' alt="{tr}Next page{/tr}"}</a> {* mobile *}
 
-				<a href="{$articleId|sefurl:article:with_next}page={$last_page}"><img src='img/icons/resultset_last.png' alt="{tr}Last page{/tr}" title="{tr}Last page{/tr}" width='16' height='16'></a>
+				<a {if $prefs.mobile_mode eq "y"}data-role="button" data-inline="true" data-mini="true" {/if}href="{$articleId|sefurl:article:with_next}page={$last_page}"><img src='img/icons/resultset_last.png' alt="{tr}Last page{/tr}" title="{tr}Last page{/tr}" width='16' height='16'></a> {* mobile *}
 			</div>
 		{/if}
 	</div>

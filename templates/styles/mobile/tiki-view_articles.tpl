@@ -7,16 +7,16 @@
 		{/title}
 	{/if}
 	<div class="clearfix" style="clear: both;">
-		<div style="float: right; padding-left:10px; white-space: nowrap">
+		<div style="float: right; padding-left:10px; white-space: nowrap" data-role="controlgroup" data-type="horizontal"> {* mobile *}
 		{if $user and $prefs.feature_user_watches eq 'y'}
 			{if $user_watching_articles eq 'n'}
-					{self_link watch_event='article_*' watch_object='*' watch_action='add' _icon='eye' _alt="{tr}Monitor Articles{/tr}" _title="{tr}Monitor Articles{/tr}"}{/self_link}
+					<a {if $prefs.mobile_mode eq "y"}data-role="button" {/if}href="{query _type='relative' watch_event='article_*' watch_object='*' watch_action='add'}" title="{tr}Monitor Articles{/tr}">{icon _id=eye alt="{tr}Monitor Articles{/tr}"}</a> {* mobile *}
 			{else}
-					{self_link watch_event='article_*' watch_object='*' watch_action='remove' _icon='no_eye' _alt="{tr}Stop Monitoring Articles{/tr}" _title="{tr}Stop Monitoring Articles{/tr}"}{/self_link}
+					<a {if $prefs.mobile_mode eq "y"}data-role="button" {/if}href="{query _type='relative' watch_event='article_*' watch_object='*' watch_action='remove'}" title="{tr}Stop Monitoring Articles{/tr}">{icon _id=no_eye alt="{tr}Stop Monitoring Articles{/tr}"}</a> {* mobile *}
 			{/if}
 		{/if}
 		{if $prefs.feature_group_watches eq 'y' and $tiki_p_admin_users eq 'y'}
-			<a href="tiki-object_watches.php?watch_event=article_*&amp;objectId=*" class="icon">{icon _id='eye_group' alt="{tr}Group Monitor{/tr}"}</a>
+			<a {if $prefs.mobile_mode eq "y"}data-role="button" {/if}href="tiki-object_watches.php?watch_event=article_*&amp;objectId=*" class="icon">{icon _id='eye_group' alt="{tr}Group Monitor{/tr}"}</a> {* mobile *}
 		{/if}
 		</div>
 	</div>
@@ -28,7 +28,7 @@
 			<div class="freetaglist">
 				{foreach from=$listpages[ix].freetags.data item=taginfo}
 				{capture name=tagurl}{if (strstr($taginfo.tag, ' '))}"{$taginfo.tag}"{else}{$taginfo.tag}{/if}{/capture}
-				<a class="freetag" href="tiki-browse_freetags.php?tag={$smarty.capture.tagurl|escape:'url'}">{$taginfo.tag}</a>
+				<a {if $prefs.mobile_mode eq "y"}data-role="button" data-inline="true" data-mini="true" data-theme="a" {/if}class="freetag" href="tiki-browse_freetags.php?tag={$smarty.capture.tagurl|escape:'url'}">{$taginfo.tag}</a> {* mobile *}
 				{/foreach}
 			</div>
 		{/if} 
@@ -135,7 +135,7 @@
 					{if ($tiki_p_read_article eq 'y' and $listpages[ix].heading_only ne 'y' and (!isset($fullbody) or $fullbody ne "y"))}
 						{if ($listpages[ix].size > 0)}
 							<div class="status"> {* named to be similar to forum/blog item *}
-								<a href="{$smarty.capture.href}" class="more">{tr}Read More{/tr}</a>
+								<a {if $prefs.mobile_mode eq "y"}data-role="button" data-inline="true" {/if}href="{$smarty.capture.href}" class="more">{tr}Read More{/tr}</a> {* mobile *}
 							</div>
 							{if ($listpages[ix].show_size eq 'y')}
 								<span>
@@ -146,7 +146,7 @@
 					{/if}
 					{if ($prefs.feature_article_comments eq 'y') and ($tiki_p_read_comments eq 'y') and ($listpages[ix].allow_comments eq 'y')}
 						<span>
-							<a href="{$listpages[ix].articleId|sefurl:article:with_next}show_comzone=y{if !empty($urlparam)}&amp;{$urlparam}{/if}#comments"{if $listpages[ix].comments_cant > 0} class="highlight"{/if}>
+							<a {if $prefs.mobile_mode eq "y"}data-role="button" data-inline="true" {/if}href="{$listpages[ix].articleId|sefurl:article:with_next}show_comzone=y{if !empty($urlparam)}&amp;{$urlparam}{/if}#comments"{if $listpages[ix].comments_cant > 0} class="highlight"{/if}> {* mobile *}
 								{if $listpages[ix].comments_cant == 0 and $tiki_p_post_comments == 'y'}
 									{if !isset($actions) or $actions eq "y"}
 										{tr}Add Comment{/tr}
@@ -163,29 +163,29 @@
 					{/if}
 				{/if}
 				{if !isset($actions) or $actions eq "y"}
-					<div class="actions">
+					<div class="actions" data-role="controlgroup" data-type="horizontal"> {* mobile *}
 						{if $tiki_p_edit_article eq 'y' or ($listpages[ix].author eq $user and $listpages[ix].creator_edit eq 'y')}
-							<a class="icon" href="tiki-edit_article.php?articleId={$listpages[ix].articleId}">{icon _id='page_edit'}</a>
+							<a {if $prefs.mobile_mode eq "y"}data-role="button" data-inline="true" {/if}class="icon" href="tiki-edit_article.php?articleId={$listpages[ix].articleId}">{icon _id='page_edit'}</a> {* mobile *}
 						{/if}
 						{if $prefs.feature_cms_print eq 'y'}
-							<a class="icon" href="tiki-print_article.php?articleId={$listpages[ix].articleId}">{icon _id='printer' alt="{tr}Print{/tr}"}</a>
-						{/if}
-						{if $prefs.feature_multilingual eq 'y' and $tiki_p_edit_article eq 'y'}
-							<div class="lang_select">
-								{include file='translated-lang.tpl' object_type='article' trads=$listpages[ix].translations articleId=$listpages[ix].articleId}
-							</div>
+							<a {if $prefs.mobile_mode eq "y"}data-role="button" data-inline="true" {/if}class="icon" href="tiki-print_article.php?articleId={$listpages[ix].articleId}">{icon _id='printer' alt="{tr}Print{/tr}"}</a> {* mobile *}
 						{/if}
 						{if $tiki_p_remove_article eq 'y'}
-							<a class="icon" href="tiki-list_articles.php?remove={$listpages[ix].articleId}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
+							<a {if $prefs.mobile_mode eq "y"}data-role="button" data-inline="true" {/if}class="icon" href="tiki-list_articles.php?remove={$listpages[ix].articleId}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a> {* mobile *}
 						{/if}
 					</div>
+					{if $prefs.feature_multilingual eq 'y' and $tiki_p_edit_article eq 'y'}{* mobile - moved out of the previous controlgroup since it was breaking its display*}
+						<div class="lang_select">
+							{include file='translated-lang.tpl' object_type='article' trads=$listpages[ix].translations articleId=$listpages[ix].articleId}
+						</div>
+					{/if}{* mobile *}
 				{/if}
 			</div>
 		</article>
 	{/if}
 {sectionelse}
 	{if $quiet ne 'y'}{tr}No articles yet.{/tr}
-		{if $tiki_p_edit_article eq 'y'}<a href="tiki-edit_article.php">{tr}Add an article{/tr}</a>{/if}
+		{if $tiki_p_edit_article eq 'y'}<a {if $prefs.mobile_mode eq "y"}data-role="button" data-inline="true" {/if}href="tiki-edit_article.php">{tr}Add an article{/tr}</a>{/if} {* mobile *}
 	{/if}
 {/section}
 {if !empty($listpages) && (!isset($usePagination) or $usePagination ne 'n')}
