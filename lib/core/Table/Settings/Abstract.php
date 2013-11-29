@@ -131,15 +131,15 @@ abstract class Table_Settings_Abstract
 		'sort' => array(
 			'reset' => array(
 				'id' => '-sortreset',
-				//tra('Reset Sort')
-				'text' => 'Reset Sort',
+				//tra('Unsort')
+				'text' => 'Unsort',
 			),
 		),
 		'filters' => array(
 			'reset' => array(
 				'id' => '-filterreset',
-				//tra('Reset Filter')
-				'text' => 'Reset Filter',
+				//tra('Clear Filters')
+				'text' => 'Clear Filters',
 			),
 			'external' => array(
 				'id' => '-ext',

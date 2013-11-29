@@ -71,7 +71,9 @@ class Table_Plugin
 				'name' => tra('Pre-sorted Columns'),
 				'description' => tra(
 					'Bracketed numbers for column number (first column = 0) and sort direction
-					(0 = ascending, 1 = descending, n = no sort), for example: [0,0],[1,0],[2,n]'
+					(0 = ascending, 1 = descending, n = no sort, y = allow sorting but no pre-sort), for example:
+					[0,y],[1,0],[2,n]. If the first pre-sorted or no filter column is not the first column, then you
+					should use the y parameter (as in [0,y]) to assign all previous columns.'
 				),
 				'default' => '',
 				'filter' => 'striptags',
@@ -140,8 +142,8 @@ class Table_Plugin
 				'required' => false,
 				'name' => tra('Paginate'),
 				'description' => tra(
-					'Enter y to set default values: 20 rows max and expand dropdown with values from
-				 	10-200. Set custom values as in the following example: '
+					'Enter y to set default values based on the site setting for maximum records in listings (on the
+				 	pagination table of the Look & Feel admin panel). Set custom values as in the following example: '
 				) .
 					'<b>max</b>:40;<b>expand</b>:60;expand:100;expand:140',
 				'default' => '',
@@ -207,13 +209,20 @@ class Table_Plugin
 							case '1':
 								$dir = 'desc';
 								break;
+							case 'y':
+								$dir = true;
+								break;
 							case 'n':
 								$dir = false;
 								break;
+							default:
+								if($s['sort']['type'] !== false) {
+									$dir = true;
+								} else {
+									$dir = false;
+								}
 						}
-					}
-					if (isset($dir)) {
-						if ($dir === false) {
+						if ($dir === false || $dir === true) {
 							$s['sort']['columns'][$lpieces[0]]['type'] = $dir;
 						} else {
 							$s['sort']['columns'][$lpieces[0]]['dir'] = $dir;
@@ -233,6 +242,7 @@ class Table_Plugin
 						$s['sort']['columns'][$col] = $info;
 					}
 				}
+				ksort($s['sort']['columns']);
 			}
 		} else {
 			$s['sort']['group'] = false;
