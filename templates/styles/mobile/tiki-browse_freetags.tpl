@@ -1,4 +1,3 @@
-
 {* $Id$ *}
 
 {title admpage=freetags}{tr}Browse related tags{/tr}{/title}
@@ -66,7 +65,7 @@
 		<div class="freetaglist"> 
 			{foreach from=$most_popular_tags item=popular_tag}
 				{capture name=tagurl}{if (strstr($popular_tag.tag, ' '))}"{$popular_tag.tag}"{else}{$popular_tag.tag}{/if}{/capture}
-				<a class="freetag_{$popular_tag.size}{if $tag eq $popular_tag.tag|escape} selectedtag{/if}" href="tiki-browse_freetags.php?tag={$smarty.capture.tagurl|escape:'url'}" onclick="javascript:addTag('{$popular_tag.tag|escape:'javascript'}');return false;" ondblclick="location.href=this.href;"{if $popular_tag.color} style="color:{$popular_tag.color}"{/if}>{$popular_tag.tag|escape}</a> 
+				<a {if $prefs.mobile_mode eq "y"}data-role="button" data-inline="true"  data-theme="a"{/if}class="freetag_{$popular_tag.size}{if $tag eq $popular_tag.tag|escape} selectedtag{/if}" href="tiki-browse_freetags.php?tag={$smarty.capture.tagurl|escape:'url'}" onclick="javascript:addTag('{$popular_tag.tag|escape:'javascript'}');return false;" ondblclick="location.href=this.href;"{if $popular_tag.color} style="color:{$popular_tag.color}"{/if}>{$popular_tag.tag|escape}</a> 
 			{/foreach}
 		</div>
 
@@ -75,15 +74,15 @@
 				{if empty($maxPopular)}
 					{assign var=maxPopular value=50+$prefs.freetags_browse_amount_tags_in_cloud}
 				{/if}
-				<a class='more' href="{$smarty.server.PHP_SELF}?{query maxPopular=$maxPopular tagString=$tagString}">{tr}More Popular Tags{/tr}</a>
+				<a {if $prefs.mobile_mode eq "y"}data-role="button" data-inline="true" {/if}class='more' href="{$smarty.server.PHP_SELF}?{query maxPopular=$maxPopular tagString=$tagString}">{tr}More Popular Tags{/tr}</a>
 			</div>
 
 			<div class="mini">
-				{tr}Sort:{/tr}<a href="{$smarty.server.PHP_SELF}?{query tsort_mode=tag_asc}">{tr}Alphabetically{/tr}</a> | <a href="{$smarty.server.PHP_SELF}?{query tsort_mode=count_desc tagString=$tagString}">{tr}By Size{/tr}</a>
+				{tr}Sort:{/tr}<a {if $prefs.mobile_mode eq "y"}data-role="button" data-inline="true" {/if}href="{$smarty.server.PHP_SELF}?{query tsort_mode=tag_asc}">{tr}Alphabetically{/tr}</a> | <a {if $prefs.mobile_mode eq "y"}data-role="button" data-inline="true" {/if}href="{$smarty.server.PHP_SELF}?{query tsort_mode=count_desc tagString=$tagString}">{tr}By Size{/tr}</a>
 			</div>
 
 			<div class="mini">
-				<a href="{$smarty.server.PHP_SELF}?{query mode=c tagString=$tagString}">{tr}Cloud{/tr}</a> | <a href="{$smarty.server.PHP_SELF}?{query mode=l tagString=$tagString}">{tr}List{/tr}</a>
+				<a {if $prefs.mobile_mode eq "y"}data-role="button" data-inline="true" {/if}href="{$smarty.server.PHP_SELF}?{query mode=c tagString=$tagString}">{tr}Cloud{/tr}</a> | <a {if $prefs.mobile_mode eq "y"}data-role="button" data-inline="true" {/if}href="{$smarty.server.PHP_SELF}?{query mode=l tagString=$tagString}">{tr}List{/tr}</a>
 			</div>
 		</div>
 	{/if}
@@ -193,7 +192,7 @@
 				<h3>
 					<a href="{$objects[ix].href}">{$objects[ix].name|strip_tags|escape}</a>
 					{if $tiki_p_unassign_freetags eq 'y' or $tiki_p_admin eq 'y'}
-						<a href="tiki-browse_freetags.php?del=1&amp;tag={$tag}{if $type}&amp;type={$type|escape:'url'}{/if}&amp;typeit={$objects[ix].type|escape:'url'}&amp;itemit={$objects[ix].name|escape:'url'}">{icon _id='cross' alt="{tr}Delete{/tr}"}</a>
+						<a {if $prefs.mobile_mode eq "y"}data-role="button" data-inline="true" {/if}href="tiki-browse_freetags.php?del=1&amp;tag={$tag}{if $type}&amp;type={$type|escape:'url'}{/if}&amp;typeit={$objects[ix].type|escape:'url'}&amp;itemit={$objects[ix].name|escape:'url'}">{icon _id='cross' alt="{tr}Delete{/tr}"}</a>
 					{/if}
 				</h3>
 				<div class="type">
