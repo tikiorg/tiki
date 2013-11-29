@@ -547,7 +547,11 @@ if ( \$('#$id') ) {
 					}
 				}
 
+				if ($prefs['mobile_mode']== 'y') {
+				$ret .= '~np~<a data-role="button" data-inline="true" id="' .$id. '" href="javascript:void(1)" class="editplugin"'.$iconDisplayStyle.'>'.smarty_function_icon(array('_id'=>'wiki_plugin_edit', 'alt'=>tra('Edit Plugin').':'.$plugin_name), $smarty)."</a>~/np~";
+				} else {
 				$ret .= '~np~<a id="' .$id. '" href="javascript:void(1)" class="editplugin"'.$iconDisplayStyle.'>'.smarty_function_icon(array('_id'=>'wiki_plugin_edit', 'alt'=>tra('Edit Plugin').':'.$plugin_name), $smarty)."</a>~/np~";
+				}
 			}
 
 			// End plugin handling
