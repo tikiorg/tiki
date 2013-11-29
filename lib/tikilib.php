@@ -3422,9 +3422,9 @@ class TikiLib extends TikiDb_Bridge
 		}
 
 		if ( $only_orphan_pages ) {
-			$join_tables .= ' left join `tiki_links` as tl on tp.`pageName` = tl.`toPage` left join `tiki_structures` as ts on tp.`page_id` = ts.`page_id`';
+			$join_tables .= ' left join `tiki_links` as tl on tp.`pageName` = tl.`toPage` left join `tiki_structures` as tsoo on tp.`page_id` = tsoo.`page_id`';
 			$mid .= ( $mid == '' ) ? ' where ' : ' and ';
-			$mid .= 'tl.`toPage` IS NULL and ts.`page_id` IS NULL';
+			$mid .= 'tl.`toPage` IS NULL and tsoo.`page_id` IS NULL';
 		}
 
 		if ( $prefs['rating_advanced'] == 'y' ) {
