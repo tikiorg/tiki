@@ -13,17 +13,17 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class DumpDBCommand extends Command
+class BackupDBCommand extends Command
 {
 	protected function configure()
 	{
 		$this
-			->setName('database:dump')
-			->setDescription('Create a database dump')
+			->setName('database:backup')
+			->setDescription('Create a database backup (with mysqldump)')
 			->addArgument(
 				'path',
 				InputArgument::REQUIRED,	
-				'Path to save dump (relative to console.php, or absolute)' 
+				'Path to save backup (relative to console.php, or absolute)' 
 			);
 	}
 
@@ -63,6 +63,6 @@ class DumpDBCommand extends Command
 		$outputFile = $path . '/' . $dbs_tiki . '_' . date( 'Y-m-d_H:i:s' ) . '.sql.gz';
 		$command = "mysqldump --quick $args | gzip -5 > " . escapeshellarg( $outputFile );
 		exec( $command );
-		$output->writeln('<comment>Database dumped: '.$outputFile.'</comment>');
+		$output->writeln('<comment>Database backup completed: '.$outputFile.'</comment>');
 	}
 }
