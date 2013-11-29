@@ -541,7 +541,7 @@ class UnifiedSearchLib
      */
     function getIndex($indexType = 'data')
 	{
-		global $prefs;
+		global $prefs, $tiki_p_admin;
 
 		switch ($prefs['unified_engine']) {
 		case 'lucene':
@@ -573,7 +573,12 @@ class UnifiedSearchLib
 
 		// Do nothing, provide a fake index.
 		$errlib = TikiLib::lib('errorreport');
-		$errlib->report(tr('No index available.'));
+		if($tiki_p_admin != 'y') {
+			$errlib->report(tr('Contact the site administrator. The index needs rebuilding.'));
+		} else {
+			$errlib->report('<a title="' . tr("Rebuild Search index") .'" href="tiki-admin.php?page=search&rebuild=now">'. tr("Click here to rebuild index") . '</a>');
+		}
+
 
 		return new Search_Index_Memory;
 	}
