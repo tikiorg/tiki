@@ -68,6 +68,7 @@ function module_search_morelikethis($mod_reference, $module_params)
 
 		$query = $unifiedsearchlib->buildQuery(array());
 		$query->filterSimilar($object['type'], $object['object']);
+		$smarty->assign('simobject', $object);
 		$query->setRange(0, $mod_reference['rows']);
 		foreach ($textfilters as $k => $v) { 
 			$query->filterContent($v, $k);

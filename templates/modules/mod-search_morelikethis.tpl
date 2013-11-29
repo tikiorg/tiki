@@ -5,13 +5,17 @@
   {if ($nonums eq 'y')}
   	<ul>
       {foreach item=row from=$modMoreLikeThis}
-        <li>{object_link type=$row.object_type id=$row.object_id}</li>
+        {if $row.object_id eq $simobject.object and $row.object_type eq $row.object_type}{else}
+          <li>{object_link type=$row.object_type id=$row.object_id}</li>
+        {/if}
       {/foreach}
 	</ul>
   {else}
   	<ol>
       {foreach item=row from=$modMoreLikeThis}
-        <li>{object_link type=$row.object_type id=$row.object_id}</li>
+        {if $row.object_id eq $simobject.object and $row.object_type eq $row.object_type}{else}
+          <li>{object_link type=$row.object_type id=$row.object_id}</li>
+        {/if}
       {/foreach}
 	</ol>
   {/if}
