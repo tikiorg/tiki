@@ -19,9 +19,6 @@ class Search_MySql_Table extends TikiDb_Table
 		parent::__construct($db, $table);
 
 		$table = $this->escapeIdentifier($this->tableName);
-		if (! $this->exists()) {
-			$this->createTable();
-		}
 		$this->schemaBuffer = new Search_MySql_QueryBuffer($db, 2000, "ALTER TABLE $table ");
 		$this->dataBuffer = new Search_MySql_QueryBuffer($db, 100, '-- '); // Null Object, replaced later
 	}
