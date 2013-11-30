@@ -12,7 +12,7 @@ This is how we implement the Tiki Social Contract.
 http://tiki.org/Social+Contract
 
 List of members of the Community
-As of 2013-11-29, the community has:
+As of 2013-11-30, the community has:
   * 556 members on SourceForge.net,
   * 291 of those people who made at least one code commit
 
@@ -442,8 +442,8 @@ SF Role: Developer
 Nickname: changi67
 Name: Jean-FranÃ§ois  B.
 First Commit: 2009-04-23
-Last Commit: 2013-11-29
-Number of Commits: 1615
+Last Commit: 2013-11-30
+Number of Commits: 1623
 SF Role: Admin
 
 Nickname: chealer
@@ -1692,8 +1692,8 @@ SF Role: Developer
 Nickname: marclaporte
 Name: Marc Laporte
 First Commit: 2003-11-28
-Last Commit: 2013-11-29
-Number of Commits: 1798
+Last Commit: 2013-11-30
+Number of Commits: 1800
 SF Role: Admin
 
 Nickname: marcmont
@@ -2027,8 +2027,8 @@ SF Role: Developer
 Nickname: nkoth
 Name: Nelson
 First Commit: 2007-05-17
-Last Commit: 2013-11-24
-Number of Commits: 1602
+Last Commit: 2013-11-30
+Number of Commits: 1605
 SF Role: Admin
 
 Nickname: normandaoust
@@ -2894,8 +2894,8 @@ SF Role: Developer
 Nickname: xavidp
 Name: Xavier de Pedro
 First Commit: 2005-07-08
-Last Commit: 2013-11-29
-Number of Commits: 1018
+Last Commit: 2013-11-30
+Number of Commits: 1022
 SF Role: Admin
 
 Nickname: xbtheria
