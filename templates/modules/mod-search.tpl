@@ -68,7 +68,7 @@
 			{/if}
 			{if $smod_params.compact eq "y"}
 				{icon _id="magnifier" class="search_mod_magnifier icon"}
-				<div class="search_mod_buttons box" style="display:none; position: absolute; right: 0; padding: 0 1em; z-index: 2; white-space: nowrap;">
+				{if $prefs.mobile_mode neq "y"}<div class="search_mod_buttons box" style="display:none; position: absolute; right: 0; padding: 0 1em; z-index: 2; white-space: nowrap;">{/if} {* mobile *}
 			{/if}
 			{if $smod_params.show_search_button eq 'y'}
 					<input type = "submit" class = "wikiaction tips{if $smod_params.default_button eq 'search'} button_default{/if}"
@@ -95,7 +95,7 @@
 										$('#search-module-form{$search_mod_usage_counter}').attr('action', '{$smod_params.edit_action|escape:javascript}').attr('page_selected','');" />
 				{/if}
 			{if $smod_params.compact eq "y"}
-				</div>
+				{if $prefs.mobile_mode neq "y"}</div> {* mobile *}
 				{jq}$(".search_mod_magnifier").mouseover( function () {
 					$(".search_mod_buttons", $(this).parent())
 						.show('fast')
@@ -107,6 +107,7 @@
 				});
 				$("#search_mod_input_{{$search_mod_usage_counter}}")
 					.keydown( function () { $(".search_mod_magnifier", $(this).parent()).mouseover();} );{/jq}
+				{/if} {* mobile *}
 			{/if}
 	    </div>
     </form>
