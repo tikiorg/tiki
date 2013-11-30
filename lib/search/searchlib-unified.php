@@ -371,6 +371,12 @@ class UnifiedSearchLib
 
 		if (in_array($prefs['user_in_search_result'], array('all', 'public'))) {
 			$types['user'] = tra('user');
+		} else {
+			// Check for fresh install in which case index admin user otherwise initial indexing will not work with no content
+			if (TikiLib::lib('tiki')->getOne("select count(*) from users_users") === '1' && !TikiLib::lib('tiki')->page_exists('HomePage')) {
+				$prefs['user_in_search_result'] = 'all';
+				$types['user'] = tra('user');
+			}
 		}
 
 		return $types;
@@ -541,7 +547,7 @@ class UnifiedSearchLib
      */
     function getIndex($indexType = 'data')
 	{
-		global $prefs;
+		global $prefs, $tiki_p_admin;
 
 		switch ($prefs['unified_engine']) {
 		case 'lucene':
@@ -573,7 +579,12 @@ class UnifiedSearchLib
 
 		// Do nothing, provide a fake index.
 		$errlib = TikiLib::lib('errorreport');
-		$errlib->report(tr('No index available.'));
+		if($tiki_p_admin != 'y') {
+			$errlib->report(tr('Contact the site administrator. The index needs rebuilding.'));
+		} else {
+			$errlib->report('<a title="' . tr("Rebuild Search index") .'" href="tiki-admin.php?page=search&rebuild=now">'. tr("Click here to rebuild index") . '</a>');
+		}
+
 
 		return new Search_Index_Memory;
 	}

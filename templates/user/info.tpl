@@ -17,7 +17,7 @@
 			{/if}
 			{if $country}
 				<span class="country">{icon _id='img/flags/'|cat:$country|cat:'.gif'}<span> {$country|stringfix}</span></span>
-				<span class="distance">{$distance}<span> away</span></span>
+				<span class="distance">{$distance}<span>{if !empty($distance)} away{/if}</span></span>
 			{/if}
 			{if $email}
 				<span class="email">Email: {$email}</span>

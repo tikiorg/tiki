@@ -906,7 +906,7 @@ function parse_copyrights()
  * @param int $step
  * @return mixed
  */
-function get_contributors_data($path, &$contributors, $minRevision, $maxRevision, $step = 15000)
+function get_contributors_data($path, &$contributors, $minRevision, $maxRevision, $step = 20000)
 {
 	global $nbCommiters;
 

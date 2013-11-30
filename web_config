@@ -44,21 +44,22 @@
 		<!--#Use this if tiki is installed in the root (above condition probably not necessary in this case)-->
 		<!--#RewriteRule ^(.+[^/])/$  /HomePage [R=301,L]-->
 		<!--# This prevents reading of files with certain extensions.-->
-		<!--# This prevents reading of tags file for developpers who run ctags on their server-->
+		<!--# This prevents reading of tags file for developers who run ctags on their server-->
 		<!--#<Files tags>-->
 		<!--#	order deny,allow-->
 		<!--#	deny from all-->
 		<!--#</Files>-->
 		<!--# if using wiki as homepage feature you may avoid the home page name being appended to the url by replacing the previous line with the following line-->
 		<!--#DirectoryIndex tiki-index.php index.php-->
+		<!--# Persistent connections: Allow multiple requests to be sent over -->
+		<!--# the same TCP connection. Enable if you serve a lot of static content -->
+		<!--# but, be aware of the possible disadvantages!-->
+		<!--# http://httpd.apache.org/docs/current/en/mod/core.html#keepalive-->
+		<!--# <IfModule mod_headers.c>-->
+		<!--#    Header set Connection Keep-Alive-->
+		<!--# </IfModule>-->
 		<!--# Using ETags will improve the YSlow scores-->
-		<!--# If the site is stable, might be worth setting the expires header on all files for optimization.-->
-		<!--#<IfModule mod_expires.c>-->
-		<!--#	<FilesMatch "\.(js|png|gif|jpg|css|ico)$">-->
-		<!--#		ExpiresActive on-->
-		<!--#		ExpiresDefault "access plus 6 months"-->
-		<!--#	</FilesMatch>-->
-		<!--#</IfModule>-->
+		<!--# Expires headers: If the site is in active development, you may want to comment out this section.-->
 		<!--# if you want to use the Web Server Auth-->
 		<!--#AuthType Basic-->
 		<!--#AuthName "Restricted Access"-->
@@ -92,6 +93,9 @@
 		<!--#php_value include_path "." -->
 		<!--# some features like assigning perms to a group with a name containing a quote will not work without this-->
 		<!--#php_flag magic_quotes_gpc off-->
+		<!--# You may need to uncomment and fix the RewriteBase value below to suit your installation. e.g. if your Tiki is not installed directly in the web root.-->
+		<!--# And if you get errors like "The requested URL /absolutepath/tiki-index.php was not found on this server",-->
+		<!--# RewriteBase   /tiki-->
 		<!--# Rewrite rules to maintain any hard-coded URLs following http://dev.tiki.org/ImgDirectoryRevamp-->
 		<rule name="Imported Rule 1">
 		  <match url="^img/icons2/(.*)$" ignoreCase="false" />
@@ -114,11 +118,6 @@
 		  <action type="Rewrite" url="img/icons/{R:1}" />
 		</rule>
 		<!--The rule cannot be converted into an equivalent IIS format because of unsupported flags: E-->
-		<!--# You may need to uncomment and fix the RewriteBase value below to suit your installation. e.g. if your Tiki is not installed directly in the web root.-->
-		<!--#RewriteBase   /tiki-->
-		<!--# And if you get errors like "The requested URL /absolutepath/tiki-index.php was not found on this server",-->
-		<!--# You may need to uncomment the following line.-->
-		<!--# RewriteBase   /-->
 		<!--#If your website is a checkout-->
 		<rule name="Imported Rule 7" stopProcessing="true">
 		  <match url=".*/\.svn/.*" ignoreCase="false" />
