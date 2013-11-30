@@ -357,7 +357,7 @@
 					<b>{tr}Editing posts:{/tr}</b>
 					<br>
 					<br>
-					{tr}Use{/tr} [http://www.foo.com] {tr}or{/tr} [http://www.foo.com|description] {tr}for links{/tr}<br>
+					{tr}Use{/tr} [http://example.org] {tr}or{/tr} [http://example.org|description] {tr}for links{/tr}<br>
 					{tr}HTML tags are not allowed inside posts{/tr}<br>
 				</td>
 			</tr>
