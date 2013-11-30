@@ -31,7 +31,7 @@
 	*                  {include file='find.tpl' find_show_languages='y' find_show_categories='y' find_show_num_rows='y'} 
 *}
 
-<div class="clearfix">
+<div class="clearfix" data-role="collapsible" data-collapsed="false" data-theme="b" data-content-theme="b">
 		<form method="post" action="{$smarty.server.PHP_SELF}" class="findtable">
 		{if !empty($filegals_manager)}<input type="hidden" name="filegals_manager" value="{$filegals_manager|escape}">{/if}
 
@@ -39,9 +39,9 @@
 
 	<label class="findtitle">
 		{if empty($whatlabel)}
-			{tr}Find{/tr}
+			<h3>{tr}Find{/tr}</h3>
 		{else}
-			{tr}{$whatlabel}{/tr}
+			<h3>{tr}{$whatlabel}{/tr}</h3>
 		{/if}
 		<input type="text" name="find" id="find" value="{$find|escape}">
 		{if isset($autocomplete)}
@@ -50,189 +50,204 @@
 	</label>
 	{if isset($find_in)}{help url="#" desc="{tr}Find in:{/tr} {$find_in}"}{/if}
 
-<div data-role="collapsible" data-collapsed="true"> {*mobile *}
-	<h3>{tr}More search options{/tr}</h3> {*mobile *}
-	<div data-role="controlgroup"> {*mobile *}
-{if isset($exact_match)}
-	<label class="findexactmatch" for="findexactmatch" style="white-space: nowrap">
-			{tr}Exact match{/tr}
-		<input type="checkbox" name="exact_match" id="findexactmatch" {if $exact_match ne 'n'}checked="checked"{/if}>
-	</label>
-{/if}
-
-{if !empty($find_show_sub) and $find_show_sub eq 'y'}
-	<label class="findsub">
-		{tr}and all the sub-objects{/tr}
-		<input type="checkbox" name="find_sub" id="find_sub" {if !empty($find_sub) and $find_sub eq 'y'}checked="checked"{/if}>
-	</label>
-{/if}
-
-{if !empty($types) and ( !isset($types_tag) or $types_tag eq 'select' )}
-	<select name="type" class="findtypes">
-		<option value='' {if $find_type eq ''}selected="selected"{/if}>{tr}any type{/tr}</option>
-		{section name=t loop=$types}
-			<option value="{$types[t].type|escape}" {if $find_type eq $types[t].type}selected="selected"{/if}>
-				{$types[t].type|tr_if|escape}
-			</option>
-		{/section}
-	</select>
-{/if}
-
-{if !empty($topics)}
-	<select name="topic" class="findtopics">
-		<option value='' {if $find_topic eq ''}selected="selected"{/if}>{tr}any topic{/tr}</option>
-		{foreach $topics as $topic}
-			<option value="{$topic.topicId|escape}" {if $find_topic eq $topic.topicId}selected="selected"{/if}>
-				{$topic.name|tr_if|escape}
-			</option>
-		{/foreach}
-	</select>
-{/if}
-
-{if (isset($find_show_languages) && $find_show_languages eq 'y') and $prefs.feature_multilingual eq 'y'}
-	<span class="findlang">
-		<select name="lang" class="in">
-			<option value='' {if $find_lang eq ''}selected="selected"{/if}>{tr}any language{/tr}</option>
-			{section name=ix loop=$languages}
-				<option value="{$languages[ix].value|escape}" {if $find_lang eq $languages[ix].value}selected="selected"{/if}>
-					{$languages[ix].name}
+{if isset($exact_match) or 
+ (!empty($find_show_sub) and $find_show_sub eq 'y') or
+ (!empty($types) and ( !isset($types_tag) or $types_tag eq 'select' )) or
+ !empty($topics) or
+ ((isset($find_show_languages) && $find_show_languages eq 'y') and $prefs.feature_multilingual eq 'y') or
+ (isset($find_show_date_range) && $find_show_date_range eq 'y') or 
+ (((isset($find_show_categories) && $find_show_categories eq 'y') or (isset($find_show_categories_multi) && $find_show_categories_multi eq 'y')) and $prefs.feature_categories eq 'y' and !empty($categories)) or
+ (!empty($types) and isset($types_tag) and $types_tag eq 'checkbox') or
+ !empty($filters) or
+ !empty($find_durations) or
+ (!empty($show_find_orphans) and $show_find_orphans eq 'y') or
+ !empty($find_other) or
+ (isset($find_show_num_rows) && $find_show_num_rows eq 'y')  
+ } {* mobile *}
+	<div data-role="collapsible" data-collapsed="true" data-theme="b" data-content-theme="b"> {*mobile *}
+		<h3>{tr}More search options{/tr}</h3> {*mobile *}
+		<div data-role="controlgroup"> {*mobile *}
+	{if isset($exact_match)}
+		<label class="findexactmatch" for="findexactmatch" style="white-space: nowrap">
+				{tr}Exact match{/tr}
+			<input type="checkbox" name="exact_match" id="findexactmatch" {if $exact_match ne 'n'}checked="checked"{/if}>
+		</label>
+	{/if}
+	
+	{if !empty($find_show_sub) and $find_show_sub eq 'y'}
+		<label class="findsub">
+			{tr}and all the sub-objects{/tr}
+			<input type="checkbox" name="find_sub" id="find_sub" {if !empty($find_sub) and $find_sub eq 'y'}checked="checked"{/if}>
+		</label>
+	{/if}
+	
+	{if !empty($types) and ( !isset($types_tag) or $types_tag eq 'select' )}
+		<select name="type" class="findtypes">
+			<option value='' {if $find_type eq ''}selected="selected"{/if}>{tr}any type{/tr}</option>
+			{section name=t loop=$types}
+				<option value="{$types[t].type|escape}" {if $find_type eq $types[t].type}selected="selected"{/if}>
+					{$types[t].type|tr_if|escape}
 				</option>
 			{/section}
 		</select>
-		{if isset($find_show_languages_excluded) and $find_show_languages_excluded eq 'y'}
-		<label>{tr}not in{/tr}
-			<select name="langOrphan" class="notin">
-				<option value='' {if $find_langOrphan eq ''}selected="selected"{/if}></option>
+	{/if}
+	
+	{if !empty($topics)}
+		<select name="topic" class="findtopics">
+			<option value='' {if $find_topic eq ''}selected="selected"{/if}>{tr}any topic{/tr}</option>
+			{foreach $topics as $topic}
+				<option value="{$topic.topicId|escape}" {if $find_topic eq $topic.topicId}selected="selected"{/if}>
+					{$topic.name|tr_if|escape}
+				</option>
+			{/foreach}
+		</select>
+	{/if}
+	
+	{if (isset($find_show_languages) && $find_show_languages eq 'y') and $prefs.feature_multilingual eq 'y'}
+		<span class="findlang">
+			<select name="lang" class="in">
+				<option value='' {if $find_lang eq ''}selected="selected"{/if}>{tr}any language{/tr}</option>
 				{section name=ix loop=$languages}
-					<option value="{$languages[ix].value|escape}" {if $find_langOrphan eq $languages[ix].value}selected="selected"{/if}>
+					<option value="{$languages[ix].value|escape}" {if $find_lang eq $languages[ix].value}selected="selected"{/if}>
 						{$languages[ix].name}
 					</option>
 				{/section}
 			</select>
-		</label>
-		{/if}
-	</span>
-{/if}
-
-{if isset($find_show_date_range) && $find_show_date_range eq 'y'}
-	<div id="date_range_find">
-		<span class="findDateFrom">
-			{tr}From{/tr}
-			{html_select_date time=$find_date_from prefix="find_from_" month_format="%m"}
+			{if isset($find_show_languages_excluded) and $find_show_languages_excluded eq 'y'}
+			<label>{tr}not in{/tr}
+				<select name="langOrphan" class="notin">
+					<option value='' {if $find_langOrphan eq ''}selected="selected"{/if}></option>
+					{section name=ix loop=$languages}
+						<option value="{$languages[ix].value|escape}" {if $find_langOrphan eq $languages[ix].value}selected="selected"{/if}>
+							{$languages[ix].name}
+						</option>
+					{/section}
+				</select>
+			</label>
+			{/if}
 		</span>
-		<span class="findDateTo">
-			{tr}to{/tr}
-			{html_select_date time=$find_date_to prefix="find_to_" month_format="%m"}
-		</span>
-	</div>
-{/if}
-
-{if ((isset($find_show_categories) && $find_show_categories eq 'y') or (isset($find_show_categories_multi) && $find_show_categories_multi eq 'y')) and $prefs.feature_categories eq 'y' and !empty($categories)}
-	<div class="category_find">
-	{if $find_show_categories_multi eq 'n' || $findSelectedCategoriesNumber <= 1}
-	<div id="category_singleselect_find">
-		<select name="categId" class="findcateg">
-			<option value='' {if $find_categId eq ''}selected="selected"{/if}>{tr}any category{/tr}</option>
-			{foreach $categories as $identifier => $category}
-				<option value="{$identifier}" {if $find_categId eq $identifier}selected="selected"{/if}>
-					{$category.categpath|tr_if|escape}
-				</option>
-			{/foreach}
-		</select>
-		{if $prefs.javascript_enabled eq 'y' && $find_show_categories_multi eq 'y'}<a href="#" onclick="show('category_multiselect_find');hide('category_singleselect_find');javascript:document.getElementById('category_select_find_type').value='y';">{tr}Multiple select{/tr}</a>{/if}
-		<input id="category_select_find_type" name="find_show_categories_multi" value="n" type="hidden">
-	</div>
 	{/if}
-	<div id="category_multiselect_find" style="display: {if $find_show_categories_multi eq 'y' && $findSelectedCategoriesNumber > 1}block{else}none{/if};">
-  		<div class="multiselect"> 
-  			{if count($categories) gt 0}
-				{$cat_tree}
-				<div class="clear">
-				{if $tiki_p_admin_categories eq 'y'}
-    				<div class="floatright"><a href="tiki-admin_categories.php" class="link">{tr}Admin Categories{/tr} {icon _id='wrench'}</a></div>
-				{/if}
-				{select_all checkbox_names='cat_categories[]' label="{tr}Select/deselect all categories{/tr}"}
-			{else}
-				<div class="clear">
- 				{if $tiki_p_admin_categories eq 'y'}
-    				<div class="floatright"><a href="tiki-admin_categories.php" class="link">{tr}Admin Categories{/tr} {icon _id='wrench'}</a></div>
- 				{/if}
-    			{tr}No categories defined{/tr}
-  			{/if}
-			</div> {* end .clear *}
-		</div> {* end #multiselect *}
-	</div> {* end #category_multiselect_find *}
-	</div>
-{/if}
-
-{if !empty($types) and isset($types_tag) and $types_tag eq 'checkbox'}
-	<div class="findtypes">
-		<ul>
-			<li>
-				{tr}in:{/tr}
-			</li>
-			{foreach key=key item=value from=$types}
-				<li>
-					<input type="checkbox" name="types[]" value="{$key|escape}" {if is_array($find_type) && in_array($key, $find_type)}checked="checked"{/if}> {tr}{$value}{/tr}
-			</li>
-		{/foreach}
-		</ul>
-	</div>
-{/if}
-
-{if !empty($filters)}
-	<div class="findfilter">
-		{foreach key=key item=item from=$filters}
-			<span>
-				{$filter_names.$key}{tr}:{/tr}
+	
+	{if isset($find_show_date_range) && $find_show_date_range eq 'y'}
+		<div id="date_range_find">
+			<span class="findDateFrom">
+				{tr}From{/tr}
+				{html_select_date time=$find_date_from prefix="find_from_" month_format="%m"}
 			</span>
-			<select name="findfilter_{$key}">
-				<option value='' {if $filter_values.$key eq ''}selected="selected"{/if}>--</option>
-				{foreach key=key2 item=value from=$item}
-					<option value="{$key2}"{if $filter_values.$key eq $key2} selected="selected"{/if}>{$value}</option>
+			<span class="findDateTo">
+				{tr}to{/tr}
+				{html_select_date time=$find_date_to prefix="find_to_" month_format="%m"}
+			</span>
+		</div>
+	{/if}
+	
+	{if ((isset($find_show_categories) && $find_show_categories eq 'y') or (isset($find_show_categories_multi) && $find_show_categories_multi eq 'y')) and $prefs.feature_categories eq 'y' and !empty($categories)}
+		<div class="category_find">
+		{if $find_show_categories_multi eq 'n' || $findSelectedCategoriesNumber <= 1}
+		<div id="category_singleselect_find">
+			<select name="categId" class="findcateg">
+				<option value='' {if $find_categId eq ''}selected="selected"{/if}>{tr}any category{/tr}</option>
+				{foreach $categories as $identifier => $category}
+					<option value="{$identifier}" {if $find_categId eq $identifier}selected="selected"{/if}>
+						{$category.categpath|tr_if|escape}
+					</option>
 				{/foreach}
 			</select>
+			{if $prefs.javascript_enabled eq 'y' && $find_show_categories_multi eq 'y'}<a href="#" onclick="show('category_multiselect_find');hide('category_singleselect_find');javascript:document.getElementById('category_select_find_type').value='y';">{tr}Multiple select{/tr}</a>{/if}
+			<input id="category_select_find_type" name="find_show_categories_multi" value="n" type="hidden">
+		</div>
+		{/if}
+		<div id="category_multiselect_find" style="display: {if $find_show_categories_multi eq 'y' && $findSelectedCategoriesNumber > 1}block{else}none{/if};">
+	  		<div class="multiselect"> 
+	  			{if count($categories) gt 0}
+					{$cat_tree}
+					<div class="clear">
+					{if $tiki_p_admin_categories eq 'y'}
+	    				<div class="floatright"><a href="tiki-admin_categories.php" class="link">{tr}Admin Categories{/tr} {icon _id='wrench'}</a></div>
+					{/if}
+					{select_all checkbox_names='cat_categories[]' label="{tr}Select/deselect all categories{/tr}"}
+				{else}
+					<div class="clear">
+	 				{if $tiki_p_admin_categories eq 'y'}
+	    				<div class="floatright"><a href="tiki-admin_categories.php" class="link">{tr}Admin Categories{/tr} {icon _id='wrench'}</a></div>
+	 				{/if}
+	    			{tr}No categories defined{/tr}
+	  			{/if}
+				</div> {* end .clear *}
+			</div> {* end #multiselect *}
+		</div> {* end #category_multiselect_find *}
+		</div>
+	{/if}
+	
+	{if !empty($types) and isset($types_tag) and $types_tag eq 'checkbox'}
+		<div class="findtypes">
+			<ul>
+				<li>
+					{tr}in:{/tr}
+				</li>
+				{foreach key=key item=value from=$types}
+					<li>
+						<input type="checkbox" name="types[]" value="{$key|escape}" {if is_array($find_type) && in_array($key, $find_type)}checked="checked"{/if}> {tr}{$value}{/tr}
+				</li>
+			{/foreach}
+			</ul>
+		</div>
+	{/if}
+	
+	{if !empty($filters)}
+		<div class="findfilter">
+			{foreach key=key item=item from=$filters}
+				<span>
+					{$filter_names.$key}{tr}:{/tr}
+				</span>
+				<select name="findfilter_{$key}">
+					<option value='' {if $filter_values.$key eq ''}selected="selected"{/if}>--</option>
+					{foreach key=key2 item=value from=$item}
+						<option value="{$key2}"{if $filter_values.$key eq $key2} selected="selected"{/if}>{$value}</option>
+					{/foreach}
+				</select>
+			{/foreach}
+		</div>
+	{/if}
+	
+	{if !empty($find_durations)}
+		{foreach key=key item=duration from=$find_durations}
+			<label class="find_duration">
+			{tr}{$duration.label}{/tr}
+			{html_select_duration prefix=$duration.prefix default=$duration.default default_unit=$duration.default_unit}
+			</label>
 		{/foreach}
-	</div>
-{/if}
-
-{if !empty($find_durations)}
-	{foreach key=key item=duration from=$find_durations}
-		<label class="find_duration">
-		{tr}{$duration.label}{/tr}
-		{html_select_duration prefix=$duration.prefix default=$duration.default default_unit=$duration.default_unit}
+	{/if}
+	
+	{if !empty($show_find_orphans) and $show_find_orphans eq 'y'}
+		<label class="find_orphans" for="find_orphans">
+			   {tr}Orphans{/tr}
+			   <input type="checkbox" name="find_orphans" id="find_orphans" {if isset($find_orphans) and $find_orphans eq 'y'}checked="checked"{/if}>
 		</label>
-	{/foreach}
-{/if}
-
-{if !empty($show_find_orphans) and $show_find_orphans eq 'y'}
-	<label class="find_orphans" for="find_orphans">
-		   {tr}Orphans{/tr}
-		   <input type="checkbox" name="find_orphans" id="find_orphans" {if isset($find_orphans) and $find_orphans eq 'y'}checked="checked"{/if}>
-	</label>
-{/if}
-
-{if !empty($find_other)}
-	<label class="find_other" for="find_other">
-		   {tr}{$find_other}{/tr}
-		   <input type="text" name="find_other" id="find_other" value="{if !empty($find_other_val)}{$find_other_val|escape}{/if}">
-	</label>
-{/if}
-
-{if isset($find_show_num_rows) && $find_show_num_rows eq 'y'}
-	<label class="findnumrows" for="findnumrows">
-			{tr}Number of displayed rows{/tr}
-			<input type="text" name="maxRecords" id="findnumrows" value="{$maxRecords|escape}" size="3">
-	</label>
-{/if}
+	{/if}
+	
+	{if !empty($find_other)}
+		<label class="find_other" for="find_other">
+			   {tr}{$find_other}{/tr}
+			   <input type="text" name="find_other" id="find_other" value="{if !empty($find_other_val)}{$find_other_val|escape}{/if}">
+		</label>
+	{/if}
+	
+	{if isset($find_show_num_rows) && $find_show_num_rows eq 'y'}
+		<label class="findnumrows" for="findnumrows">
+				{tr}Number of displayed rows{/tr}
+				<input type="text" name="maxRecords" id="findnumrows" value="{$maxRecords|escape}" size="3">
+		</label>
+	{/if}
+		</div> {*mobile *}
 	</div> {*mobile *}
-</div> {*mobile *}
+{/if} {*mobile *}
 <label class="findsubmit">
-	<input type="submit" class="btn btn-default" name="search" value="{tr}Go{/tr}">
+	<input type="submit" class="btn btn-default" data-theme="a" name="search" value="{tr}Go{/tr}">
 	{if !empty($find) or !empty($find_type) or !empty($find_topic) or !empty($find_lang) or !empty($find_langOrphan) or !empty($find_categId) or !empty($find_orphans) or !empty($find_other_val) or $maxRecords ne $prefs.maxRecords}
 		{*  $find_date_from & $find_date_to get set usually *}
 		<span class="button">
-			<a href="{$smarty.server.PHP_SELF}?{query find='' type='' types='' topic='' lang='' langOrphan='' exact_match='' categId='' maxRecords=$prefs.maxRecords find_from_Month='' find_from_Day='' find_from_Year='' find_to_Month='' find_to_Day='' find_to_Year=''}" title="{tr}Clear Filter{/tr}">{tr}Clear Filter{/tr}</a>
+			<a data-role="button" data-inline="true" data-mini="true" href="{$smarty.server.PHP_SELF}?{query find='' type='' types='' topic='' lang='' langOrphan='' exact_match='' categId='' maxRecords=$prefs.maxRecords find_from_Month='' find_from_Day='' find_from_Year='' find_to_Month='' find_to_Day='' find_to_Year=''}" title="{tr}Clear Filter{/tr}">{tr}Clear Filter{/tr}</a>
 		</span>
 	{/if}
 	{if (isset($gmapbuttons) && $gmapbuttons) and (isset($mapview) && $mapview)}
