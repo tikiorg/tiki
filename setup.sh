@@ -852,9 +852,13 @@ tiki_setup_default_menu() {
  Tiki setup.sh - your options
  ============================
 
+Composer: If you installing via a released Tiki package (zip, tar.gz, tar.bz2, 7z), you can and should skip using Composer. If you are installing and upgrading via SVN, you need to run Composer after 'svn checkout' and 'svn upgrade'. More info at https://dev.tiki.org/Composer
+  
  c run composer and exit (recommended to be done first)
 
- f fix (classic default)                 o open (classic option)
+For all Tiki instances (via SVN or via a released package):
+
+ f fix file & directory permissions (classic default)          o open file and directory permissions (classic option)
  S clear screen
 
  predefined Tiki Permission Check models:
