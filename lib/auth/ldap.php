@@ -10,9 +10,6 @@
  *  from a LDAP directory
  */
 
-// class uses Pears Net_LDAP2
-require_once ('Net/LDAP2.php');
-
 
 class TikiLdapLib
 {
