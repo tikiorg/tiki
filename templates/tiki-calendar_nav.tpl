@@ -29,17 +29,17 @@
 {*previous*}
 		<div>
 		{if $viewmode eq "day"}
-			{self_link _ajax=$ajax _class="prev" todate=$focus_prev _title="{tr}Day{/tr}" _alt="{tr}Day{/tr}" _icon="resultset_previous"}{/self_link}
+			<a {if $prefs.mobile_mode eq "y"}data-role="button" data-mini="true" data-inline="true" {/if}href="{query _type='relative' _ajax=$ajax _ajax=$ajax _class='prev' todate=$focus_prev}" title="{tr}Day{/tr}">{icon _id=resultset_previous alt="{tr}Day{/tr}"}</a> {* mobile *}
 		{elseif $viewmode eq "week"}
-			{self_link _ajax=$ajax _class="prev" todate=$focus_prev _title="{tr}Week{/tr}" _alt="{tr}Week{/tr}" _icon="resultset_previous"}{/self_link}
+			<a {if $prefs.mobile_mode eq "y"}data-role="button" data-mini="true" data-inline="true" {/if}href="{query _type='relative' _ajax=$ajax _ajax=$ajax _class='prev' todate=$focus_prev}" title="{tr}Week{/tr}">{icon _id=resultset_previous alt="{tr}Week{/tr}"}</a> {* mobile *}
 		{elseif $viewmode eq "month"}
-			{self_link _ajax=$ajax _class="prev" todate=$focus_prev _title="{tr}Month{/tr}" _alt="{tr}Month{/tr}" _icon="resultset_previous"}{/self_link}
+			<a {if $prefs.mobile_mode eq "y"}data-role="button" data-mini="true" data-inline="true" {/if}href="{query _type='relative' _ajax=$ajax _ajax=$ajax _class='prev' todate=$focus_prev}" title="{tr}Month{/tr}">{icon _id=resultset_previous alt="{tr}Month{/tr}"}</a> {* mobile *}
 		{elseif $viewmode eq "quarter"}
-			{self_link _ajax=$ajax _class="prev" todate=$focus_prev _title="{tr}Quarter{/tr}" _alt="{tr}Quarter{/tr}" _icon="resultset_previous"}{/self_link}
+			<a {if $prefs.mobile_mode eq "y"}data-role="button" data-mini="true" data-inline="true" {/if}href="{query _type='relative' _ajax=$ajax _ajax=$ajax _class='prev' todate=$focus_prev}" title="{tr}Quarter{/tr}">{icon _id=resultset_previous alt="{tr}Quarter{/tr}"}</a> {* mobile *}
 		{elseif $viewmode eq "semester"}
-			{self_link _ajax=$ajax _class="prev" todate=$focus_prev _title="{tr}Semester{/tr}" _alt="{tr}Semester{/tr}" _icon="resultset_previous"}{/self_link}
+			<a {if $prefs.mobile_mode eq "y"}data-role="button" data-mini="true" data-inline="true" {/if}href="{query _type='relative' _ajax=$ajax _ajax=$ajax _class='prev' todate=$focus_prev}" title="{tr}Semester{/tr}">{icon _id=resultset_previous alt="{tr}Semester{/tr}"}</a> {* mobile *}
 		{elseif $viewmode eq "year"}
-			{self_link _ajax=$ajax _class="prev" todate=$focus_prev _title="{tr}Year{/tr}" _alt="{tr}Year{/tr}" _icon="resultset_previous"}{/self_link}
+			<a {if $prefs.mobile_mode eq "y"}data-role="button" data-mini="true" data-inline="true" {/if}href="{query _type='relative' _ajax=$ajax _ajax=$ajax _class='prev' todate=$focus_prev}" title="{tr}Year{/tr}">{icon _id=resultset_previous alt="{tr}Year{/tr}"}</a> {* mobile *}
 		{/if}
 		</div>
 
@@ -68,17 +68,17 @@
 {*next*}
 		<div>
 		{if $viewmode eq "day"}
-			{self_link _ajax=$ajax _class="next" todate=$focus_next _title="{tr}Day{/tr}" _alt="{tr}Day{/tr}" _icon="resultset_next"}{/self_link}
+			<a {if $prefs.mobile_mode eq "y"}data-role="button" data-mini="true" data-inline="true" {/if}href="{query _type='relative' _ajax=$ajax _class='next' todate=$focus_next}" title="{tr}Day{/tr}">{icon _id=resultset_next alt="{tr}Day{/tr}"}</a> {* mobile *}
 		{elseif $viewmode eq "week"}
-			{self_link _ajax=$ajax _class="next" todate=$focus_next _title="{tr}Week{/tr}" _alt="{tr}Week{/tr}" _icon="resultset_next"}{/self_link}
+			<a {if $prefs.mobile_mode eq "y"}data-role="button" data-mini="true" data-inline="true" {/if}href="{query _type='relative' _ajax=$ajax _class='next' todate=$focus_next}" title="{tr}Week{/tr}">{icon _id=resultset_next alt="{tr}Week{/tr}"}</a> {* mobile *}
 		{elseif $viewmode eq "month"}
-			{self_link _ajax=$ajax _class="next" todate=$focus_next _title="{tr}Month{/tr}" _alt="{tr}Month{/tr}" _icon="resultset_next"}{/self_link}
+			<a {if $prefs.mobile_mode eq "y"}data-role="button" data-mini="true" data-inline="true" {/if}href="{query _type='relative' _ajax=$ajax _class='next' todate=$focus_next}" title="{tr}Month{/tr}">{icon _id=resultset_next alt="{tr}Month{/tr}"}</a> {* mobile *}
 		{elseif $viewmode eq "quarter"}
-			{self_link _ajax=$ajax _class="next" todate=$focus_next _title="{tr}Quarter{/tr}" _alt="{tr}Quarter{/tr}" _icon="resultset_next"}{/self_link}
+			<a {if $prefs.mobile_mode eq "y"}data-role="button" data-mini="true" data-inline="true" {/if}href="{query _type='relative' _ajax=$ajax _class='next' todate=$focus_next}" title="{tr}Quarter{/tr}">{icon _id=resultset_next alt="{tr}Quarter{/tr}"}</a> {* mobile *}
 		{elseif $viewmode eq "semester"}
-			{self_link _ajax=$ajax _class="next" todate=$focus_next _title="{tr}Semester{/tr}" _alt="{tr}Semester{/tr}" _icon="resultset_next"}{/self_link}
+			<a {if $prefs.mobile_mode eq "y"}data-role="button" data-mini="true" data-inline="true" {/if}href="{query _type='relative' _ajax=$ajax _class='next' todate=$focus_next}" title="{tr}Semester{/tr}">{icon _id=resultset_next alt="{tr}Semester{/tr}"}</a> {* mobile *}
 		{elseif $viewmode eq "year"}
-			{self_link _ajax=$ajax _class="next" todate=$focus_next _title="{tr}Year{/tr}" _alt="{tr}Year{/tr}" _icon="resultset_next"}{/self_link}
+			<a {if $prefs.mobile_mode eq "y"}data-role="button" data-mini="true" data-inline="true" {/if}href="{query _type='relative' _ajax=$ajax _class='next' todate=$focus_next}" title="{tr}Year{/tr}">{icon _id=resultset_next alt="{tr}Year{/tr}"}</a> {* mobile *}
 		{/if}
 		</div>
 		{/strip}</span>

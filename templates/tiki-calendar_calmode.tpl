@@ -11,7 +11,7 @@
 {cycle values="odd,even" print=false}
 {section name=w loop=$cell}
   <tr id="row_{$smarty.section.w.index}" style="height:80px">
-  <td width="1%" class="heading weeks"><a href="{$myurl}?viewmode=week&amp;todate={$cell[w][0].day}" title="{tr}View this Week{/tr}">{$weekNumbers[w]}</a></td>
+  <td width="1%" class="heading weeks"><a {if $prefs.mobile_mode eq "y"}data-role="button" data-inline="true" {/if}href="{$myurl}?viewmode=week&amp;todate={$cell[w][0].day}" title="{tr}View this Week{/tr}">{$weekNumbers[w]}</a></td> {* mobile *}
   {section name=d loop=$weekdays}
 	{if in_array($smarty.section.d.index,$viewdays)}
 		{if $cell[w][d].focus}
@@ -25,17 +25,19 @@
 		  <td class="focus {if $cell[w][d].day eq $today}calhighlight{/if}" style="width:50%;text-align:left">
 {* test display_field_order and use %d/%m or %m/%d on each day 'cell' *}
 		{if ($prefs.display_field_order eq 'DMY') || ($prefs.display_field_order eq 'DYM') || ($prefs.display_field_order eq 'YDM')}
-			<a href="{$myurl}?focus={$cell[w][d].day}" title="{tr}Change Focus{/tr}" style="font-size:11px">{$cell[w][d].day|tiki_date_format:"%d/%m"}</a>
-		{else} <a href="{$myurl}?focus={$cell[w][d].day}" title="{tr}Change Focus{/tr}" style="font-size:11px">{$cell[w][d].day|tiki_date_format:"%m/%d"}</a>
+			<a {if $prefs.mobile_mode eq "y"}data-role="button" data-inline="true" data-mini="true" data-theme="b" {/if}href="{$myurl}?focus={$cell[w][d].day}" title="{tr}Change Focus{/tr}" style="font-size:11px">{$cell[w][d].day|tiki_date_format:"%d/%m"}</a> {* mobile *}
+		{else} <a {if $prefs.mobile_mode eq "y"}data-role="button" data-inline="true" data-mini="true" data-theme="b" {/if}href="{$myurl}?focus={$cell[w][d].day}" title="{tr}Change Focus{/tr}" style="font-size:11px">{$cell[w][d].day|tiki_date_format:"%m/%d"}</a> {* mobile *}
 		{/if}			
 		  </td>
 		  {if $myurl neq "tiki-action_calendar.php"}
 		  <td class="focus {if $cell[w][d].day eq $today}calhighlight{/if}" style="width:50%;text-align:right">
-{* add additional check to NOT show add event icon if no calendar displayed *} 		  
-			{if $tiki_p_add_events eq 'y' and count($listcals) > 0 and $displayedcals|@count > 0}
-			<a href="tiki-calendar_edit_item.php?todate={$cell[w][d].day}{if $displayedcals|@count eq 1}&amp;calendarId={$displayedcals[0]}{/if}" title="{tr}Add Event{/tr}" class="addevent">{icon _id='calendar_add' alt="{tr}+{/tr}" title="{tr}Add Event{/tr}"}</a>
-			{/if}
-			<a class="viewthisday" href="tiki-calendar.php?viewmode=day&amp;todate={$cell[w][d].day}{if $displayedcals|@count eq 1}&amp;calendarId={$displayedcals[0]}{/if}" title="{tr}View this Day{/tr}">{icon _id='img/icons/external_link.gif' width=7 height=8 alt="{tr}o{/tr}" title="{tr}View this Day{/tr}"}</a>
+{* add additional check to NOT show add event icon if no calendar displayed *} 
+			{if $prefs.mobile_mode eq "y"}<div class="navbar" data-role="controlgroup" data-type="horizontal">{/if} {* mobile *}
+				{if $tiki_p_add_events eq 'y' and count($listcals) > 0 and $displayedcals|@count > 0}
+				<a {if $prefs.mobile_mode eq "y"}data-role="button" data-mini="true" {/if}href="tiki-calendar_edit_item.php?todate={$cell[w][d].day}{if $displayedcals|@count eq 1}&amp;calendarId={$displayedcals[0]}{/if}" title="{tr}Add Event{/tr}" class="addevent">{icon _id='calendar_add' alt="{tr}+{/tr}" title="{tr}Add Event{/tr}"}</a> {* mobile *}
+				{/if}
+				<a {if $prefs.mobile_mode eq "y"}data-role="button" data-mini="true" {/if}class="viewthisday" href="tiki-calendar.php?viewmode=day&amp;todate={$cell[w][d].day}{if $displayedcals|@count eq 1}&amp;calendarId={$displayedcals[0]}{/if}" title="{tr}View this Day{/tr}">{icon _id='img/icons/external_link.gif' width=7 height=8 alt="{tr}o{/tr}" title="{tr}View this Day{/tr}"}</a> {* mobile *}
+			{if $prefs.mobile_mode eq "y"}</div>{/if} {* mobile *}
 		  </td>
 		  {/if}
 		</tr>
@@ -67,10 +69,10 @@
 			{/if}
 			>{$cell[w][d].items[item].name|truncate:$trunc:".."|escape|default:"..."|unescape:"htmlall"}</a>
 			{if $cell[w][d].items[item].web}
-			<a href="{$cell[w][d].items[item].web}" target="_other" class="calweb" title="{$cell[w][d].items[item].web}"><img src="img/icons/external_link.gif" width="7" height="7" alt="&gt;"></a>
+			<a {if $prefs.mobile_mode eq "y"}data-role="button" data-mini="true" {/if}href="{$cell[w][d].items[item].web}" target="_other" class="calweb" title="{$cell[w][d].items[item].web}"><img src="img/icons/external_link.gif" width="7" height="7" alt="&gt;"></a>
 			{/if}
 			{if $cell[w][d].items[item].nl}
-			<a href="tiki-newsletters.php?nlId={$cell[w][d].items[item].nl}&info=1" class="calweb" title="Subscribe"><img src="img/icons/external_link.gif" width="7" height="7" alt="&gt;"></a>
+			<a {if $prefs.mobile_mode eq "y"}data-role="button" data-mini="true" {/if}href="tiki-newsletters.php?nlId={$cell[w][d].items[item].nl}&info=1" class="calweb" title="Subscribe"><img src="img/icons/external_link.gif" width="7" height="7" alt="&gt;"></a>
 			{/if}
 			{else}&nbsp;
 			{/if}
