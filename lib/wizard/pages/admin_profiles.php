@@ -12,6 +12,10 @@ require_once('lib/wizard/wizard.php');
  */
 class AdminWizardProfiles extends Wizard 
 {
+    function pageTitle ()
+    {
+        return tra('Initialize Tiki');
+    }
 	function isEditable ()
 	{
 		return false;

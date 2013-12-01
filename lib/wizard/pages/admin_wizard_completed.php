@@ -12,7 +12,11 @@ require_once('lib/wizard/wizard.php');
  */
 class AdminWizardCompleted extends Wizard 
 {
-	function isEditable ()
+    function pageTitle ()
+    {
+        return tra('Admin Wizard Completed!');
+    }
+    function isEditable ()
 	{
 		return false;
 	}

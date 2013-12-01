@@ -1,7 +1,5 @@
 {* $Id$ *}
 
-<h1>{tr}File storage setup{/tr}</h1>
-
 <div class="adminWizardIconleft"><img src="img/icons/large/fileopen48x48.png" alt="{tr}File storage setup{/tr}" /></div>
 <div class="adminWizardContent">
 <p>

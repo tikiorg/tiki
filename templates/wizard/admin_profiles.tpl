@@ -1,7 +1,5 @@
 {* $Id$ *}
 
-<h1>{tr}Initialize Tiki{/tr}</h1>
-
 <div class="adminWizardIconleft"><img src="img/icons/large/profiles48x48.png" alt="{tr}Initialize Tiki{/tr}" /></div>
 {tr}Initialize Tiki as an application, e.g. a blog., by means of applying one of the 4 featured configuration profiles{/tr}. </br></br>
 <div class="adminWizardContent">

@@ -1,7 +1,5 @@
 {* $Id$ *}
 
-<h1>{tr}Set up Date and Time{/tr}</h1>
-
 {tr}Set the site timezone and format for displaying dates and times{/tr}.
 <div class="adminWizardIconleft"><img src="img/icons/large/icon-configuration48x48.png" alt="{tr}Set up your Date and Time{/tr}" /></div>
 <div class="adminWizardContent">

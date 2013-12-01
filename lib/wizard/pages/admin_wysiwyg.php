@@ -12,6 +12,10 @@ require_once('lib/wizard/wizard.php');
  */
 class AdminWizardWysiwyg extends Wizard 
 {
+    function pageTitle ()
+    {
+        return tra('Set up the Wysiwyg editor');
+    }
 	function isEditable ()
 	{
 		return true;

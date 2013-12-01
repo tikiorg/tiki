@@ -12,6 +12,10 @@ require_once('lib/wizard/wizard.php');
  */
 class AdminWizardCommunity extends Wizard 
 {
+    function pageTitle ()
+    {
+        return tra('Set up your User & Community features');
+    }
 	function isEditable ()
 	{
 		return true;

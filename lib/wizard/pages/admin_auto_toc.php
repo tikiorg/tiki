@@ -12,6 +12,10 @@ require_once('lib/wizard/wizard.php');
  */
 class AdminWizardAutoTOC extends Wizard 
 {
+    function pageTitle ()
+    {
+        return tra('Auto TOC setup');
+    }
 	function isEditable ()
 	{
 		return true;

@@ -1,10 +1,7 @@
 {* $Id$ *}
 
-<h1>{tr}Tiki Setup{/tr}</h1>
-<div class="adminWizardContent">
 <fieldset>
 	<legend>{tr}Get Started{/tr}</legend>
-
 <div style="display:block;margin-left: auto; margin-right: auto">
 <div class="adminWizardIconleft"><img src="img/icons/large/wizard48x48.png" alt="{tr}Tiki Admin Wizard{/tr}" /><br/><br/></div>
 {tr}The Tiki Admin Wizard helps you quickly configure key features and settings. Use the <a href="tiki-admin.php" target="_blank">Admin Panel</a> to configure other features and settings not included in this wizard{/tr}.
@@ -31,5 +28,4 @@
 <legend>{tr}Server Fitness{/tr}</legend>
 	{tr _0=$tiki_version}To check if your server meets the requirements for running Tiki version %0, please visit <a href="tiki-check.php" target="_blank">Tiki Server Compatibility Check</a>{/tr}.
 </fieldset>
-<br>
-</div>
+

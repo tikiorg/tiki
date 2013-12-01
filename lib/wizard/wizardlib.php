@@ -13,6 +13,8 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
 
 class WizardLib extends TikiLib
 {
+    public $wizard_stepNr;
+
 	/**
 	 * onLogin is the collection point for all login events, which may run a wizard.
 	 * All triggers at login time, must call this function.
@@ -37,8 +39,8 @@ class WizardLib extends TikiLib
 
 		// Check if a Login Wizard should be displayed		
 		$activeLoginWizard = $this->get_preference('wizard_admin_hide_on_login') !== 'y';
-		if ($force || ($isAdmin && $activeLoginWizard)) {	
-			
+		if ($force || ($isAdmin && $activeLoginWizard)) {
+
 			// User is an admin. Show Admin Wizard
 			$this->startAdminWizard($homePageUrl,0);
 			
@@ -63,7 +65,7 @@ class WizardLib extends TikiLib
 	public function startAdminWizard($homePageUrl, $stepNr=0)
 	{
 		global $base_url;
-		
+
 		// Start the admin wizard
 		$url = $base_url.'tiki-wizard_admin.php?&stepNr=' . $stepNr . '&url=' . rawurlencode($homePageUrl);
 		$accesslib = TikiLib::lib('access');
@@ -82,7 +84,7 @@ class WizardLib extends TikiLib
 	public function startUserWizard($homePageUrl, $stepNr=0)
 	{
 		global $base_url;
-		
+
 		// Start the admin wizard
 		$url = $base_url.'tiki-wizard_user.php?&stepNr=' . $stepNr . '&url=' . rawurlencode($homePageUrl);
 		$accesslib = TikiLib::lib('access');
@@ -117,8 +119,7 @@ class WizardLib extends TikiLib
 			$homepageUrl = $_REQUEST['url'];
 			$smarty->assign('homepageUrl', $homepageUrl);
 
-
-			// User pressed "Close". 
+			// User pressed "Close".
 			//	Save the "Show on login" setting, and no other preferences
 			if (isset($_REQUEST['close'])) {
 
@@ -154,7 +155,7 @@ class WizardLib extends TikiLib
 				throw new Exception(tra("Invalid wizard stepNr specified"));
 			}
 		
-			if (!$stepBack && !$isFirstStep || ($isUserStep && $stepNr > 0)) {
+			if (!$stepBack && !$isFirstStep && (!$isUserStep && $stepNr >= 0)) {
 			
 				// Commit the step just completed
 				$pages[$stepNr]->onContinue($homepageUrl);
@@ -213,7 +214,11 @@ class WizardLib extends TikiLib
 			}
 
 			$smarty->assign('wizard_step', $stepNr);
-			
+            $this->wizard_stepNr = $stepNr;
+
+            // Set the page title
+            $smarty->assign('pageTitle', $pages[$stepNr]->pageTitle());
+
 		} catch (Exception $e) {
 			$error = $e->getMessage();
 			$smarty->assign('msg', $error);

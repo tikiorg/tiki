@@ -12,6 +12,10 @@ require_once('lib/wizard/wizard.php');
  */
 class AdminWizardFiles extends Wizard 
 {
+    function pageTitle ()
+    {
+        return tra('Set up File Gallery and Attachments');
+    }
 	function isEditable ()
 	{
 		return true;

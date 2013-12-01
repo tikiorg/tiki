@@ -1,6 +1,5 @@
 {* $Id$ *}
 
-<h1>{tr}Set up Look & Feel{/tr}</h1>
 <div class="adminWizardIconleft"><img src="img/icons/large/gnome-settings-background48x48.png" alt="{tr}Set up Look & Feel{/tr}" /></div>
 {tr}Configure the Tiki theme and other look & feel preferences{/tr}.
 <div class="adminWizardContent">

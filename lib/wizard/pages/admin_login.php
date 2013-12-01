@@ -12,6 +12,11 @@ require_once('lib/wizard/wizard.php');
  */
 class AdminWizardLogin extends Wizard
 {
+    function pageTitle ()
+    {
+        return tra('Set up Login');
+    }
+
 	function isEditable ()
 	{
 		return true;

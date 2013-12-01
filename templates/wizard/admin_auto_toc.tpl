@@ -1,7 +1,5 @@
 {* $Id$ *}
 
-<h1>{tr}Auto TOC setup{/tr}</h1>
-
 <div class="adminWizardIconleft"><img src="img/icons/large/wikipages48x48.png" alt="{tr}Set up the language{/tr}" /></div>
 <div class="adminWizardContent">
 <fieldset>

@@ -1,7 +1,5 @@
 {* $Id$ *}
 
-<h1>{tr}Select editor type{/tr}</h1>
-
 {tr}Select editor type{/tr}.
 <div class="adminWizardIconleft"><img src="img/icons/large/icon-configuration48x48.png" alt="{tr}Select editor type{/tr}" /></div>
 <div class="adminWizardContent">

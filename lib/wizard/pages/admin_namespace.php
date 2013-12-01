@@ -12,6 +12,10 @@ require_once('lib/wizard/wizard.php');
  */
 class AdminWizardNamespace extends Wizard 
 {
+    function pageTitle ()
+    {
+        return tra('Namespace setup');
+    }
 	function isEditable ()
 	{
 		return true;

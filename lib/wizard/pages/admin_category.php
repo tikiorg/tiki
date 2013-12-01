@@ -12,6 +12,10 @@ require_once('lib/wizard/wizard.php');
  */
 class AdminWizardCategory extends Wizard 
 {
+    function pageTitle ()
+    {
+        return tra('Set up Categories');
+    }
 	function isEditable ()
 	{
 		return false;

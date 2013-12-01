@@ -110,10 +110,47 @@ if ($useDefaultPrefs) {
 
 // Step the wizard pages
 $wizardlib = TikiLib::lib('wizard');
+
+// Show pages
 $wizardlib->showPages($pages, true);
 
+// Set the display flag
 $showOnLogin = $wizardlib->get_preference('wizard_admin_hide_on_login') !== 'y';
 $smarty->assign('showOnLogin', $showOnLogin);
+
+
+// Build the TOC
+$toc = '';
+$stepNr = 0;
+$reqStepNr = $wizardlib->wizard_stepNr;
+    /*
+    $reqStepNr = isset($_REQUEST['stepNr']) ? intval($_REQUEST['stepNr']) : -1;
+    if ($reqStepNr < 0) {
+        if(isset($_REQUEST['wizard_step'])) {
+            if(isset($_REQUEST['back'])) {
+                $reqStepNr = $_REQUEST['wizard_step'] - 1;
+            } else {
+                $reqStepNr = $_REQUEST['wizard_step'] + 1;
+            }
+        } else {
+            $reqStepNr = 0;
+        }
+    }
+    */
+$homepageUrl = $_REQUEST['url'];
+foreach($pages as $page) {
+    global $base_url;
+
+    // Start the admin wizard
+    $url = $base_url.'tiki-wizard_admin.php?&stepNr=' . $stepNr . '&url=' . rawurlencode($homepageUrl);
+    $toc .= '<a ';
+    if($stepNr == $reqStepNr) {
+        $toc .= 'class="selectedAdminTOC" ';
+    }
+    $toc .= 'href="'.$url.'">'.$page->pageTitle().'</a><br>';
+    $stepNr++;
+}
+$smarty->assign('wizard_toc', $toc);
 
 
 // disallow robots to index page:
