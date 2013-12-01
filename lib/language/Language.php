@@ -40,8 +40,9 @@ class Language extends TikiDb_Bridge
 	 */
 	public static function getDbTranslatedLanguages()
 	{
+        $lang = new Language();
 		$languages = array();
-		$result = self::fetchAll('SELECT DISTINCT `lang` FROM `tiki_language` ORDER BY `lang` asc');
+		$result = $lang->fetchAll('SELECT DISTINCT `lang` FROM `tiki_language` ORDER BY `lang` asc');
 
 		foreach ($result as $res) {
 			$languages[] = $res['lang'];
