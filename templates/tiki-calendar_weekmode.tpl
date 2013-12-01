@@ -69,7 +69,7 @@
 									{popup vauto=true hauto=true sticky=false fullhtml="1" text=$over}
 								{/if}>
 								<span style="padding-top:4px;float:right">
-									<a style="padding:0 3px;"
+									<a {if $prefs.mobile_mode eq "y"}data-role="button" data-inline="true" data-mini="true" {/if}style="padding:0 3px;"
 										{if $event.modifiable eq "y" || $event.visible eq 'y'}
 											{if $prefs.calendar_sticky_popup eq "y"}
 												href="#"

@@ -126,6 +126,7 @@
 				</label>
 				{/if}
 			</span>
+<<<<<<< .working
 		{/if}
 		
 		{if isset($find_show_date_range) && $find_show_date_range eq 'y'}
@@ -189,6 +190,71 @@
 						<li>
 							<input type="checkbox" name="types[]" value="{$key|escape}" {if is_array($find_type) && in_array($key, $find_type)}checked="checked"{/if}> {tr}{$value}{/tr}
 					</li>
+=======
+		{/if}
+		
+		{if isset($find_show_date_range) && $find_show_date_range eq 'y'}
+			<div id="date_range_find">
+				<span class="findDateFrom">
+					{tr}From{/tr}
+					{html_select_date time=$find_date_from prefix="find_from_" month_format="%m"}
+				</span>
+				<span class="findDateTo">
+					{tr}to{/tr}
+					{html_select_date time=$find_date_to prefix="find_to_" month_format="%m"}
+				</span>
+			</div>
+		{/if}
+		
+		{if ((isset($find_show_categories) && $find_show_categories eq 'y') or (isset($find_show_categories_multi) && $find_show_categories_multi eq 'y')) and $prefs.feature_categories eq 'y' and !empty($categories)}
+			<div class="category_find">
+			{if $find_show_categories_multi eq 'n' || $findSelectedCategoriesNumber <= 1}
+			<div id="category_singleselect_find">
+				<select name="categId" class="findcateg">
+					<option value='' {if $find_categId eq ''}selected="selected"{/if}>{tr}any category{/tr}</option>
+					{foreach $categories as $identifier => $category}
+						<option value="{$identifier}" {if $find_categId eq $identifier}selected="selected"{/if}>
+							{$category.categpath|tr_if|escape}
+						</option>
+					{/foreach}
+				</select>
+				{if $prefs.javascript_enabled eq 'y' && $find_show_categories_multi eq 'y'}<a href="#" onclick="show('category_multiselect_find');hide('category_singleselect_find');javascript:document.getElementById('category_select_find_type').value='y';">{tr}Multiple select{/tr}</a>{/if}
+				<input id="category_select_find_type" name="find_show_categories_multi" value="n" type="hidden">
+			</div>
+			{/if}
+			<div id="category_multiselect_find" style="display: {if $find_show_categories_multi eq 'y' && $findSelectedCategoriesNumber > 1}block{else}none{/if};">
+		  		<div class="multiselect"> 
+		  			{if count($categories) gt 0}
+						{$cat_tree}
+						<div class="clear">
+						{if $tiki_p_admin_categories eq 'y'}
+		    				<div class="floatright"><a href="tiki-admin_categories.php" class="link">{tr}Admin Categories{/tr} {icon _id='wrench'}</a></div>
+						{/if}
+						{select_all checkbox_names='cat_categories[]' label="{tr}Select/deselect all categories{/tr}"}
+					{else}
+						<div class="clear">
+		 				{if $tiki_p_admin_categories eq 'y'}
+		    				<div class="floatright"><a href="tiki-admin_categories.php" class="link">{tr}Admin Categories{/tr} {icon _id='wrench'}</a></div>
+		 				{/if}
+		    			{tr}No categories defined{/tr}
+		  			{/if}
+					</div> {* end .clear *}
+				</div> {* end #multiselect *}
+			</div> {* end #category_multiselect_find *}
+			</div>
+		{/if}
+		
+		{if !empty($types) and isset($types_tag) and $types_tag eq 'checkbox'}
+			<div class="findtypes">
+				<ul>
+					<li>
+						{tr}in:{/tr}
+					</li>
+					{foreach key=key item=value from=$types}
+						<li>
+							<input type="checkbox" name="types[]" value="{$key|escape}" {if is_array($find_type) && in_array($key, $find_type)}checked="checked"{/if}> {tr}{$value}{/tr}
+					</li>
+>>>>>>> .merge-right.r48871
 				{/foreach}
 				</ul>
 			</div>
@@ -243,7 +309,11 @@
 	</div> {*mobile *}
 {/if} {*mobile *}
 <label class="findsubmit">
+<<<<<<< .working
 	<input type="submit" class="btn btn-default btn-sm" data-theme="a" name="search" value="{tr}Go{/tr}">
+=======
+	<input type="submit" class="btn btn-default" data-theme="a" name="search" value="{tr}Go{/tr}">
+>>>>>>> .merge-right.r48871
 	{if !empty($find) or !empty($find_type) or !empty($find_topic) or !empty($find_lang) or !empty($find_langOrphan) or !empty($find_categId) or !empty($find_orphans) or !empty($find_other_val) or $maxRecords ne $prefs.maxRecords}
 		{*  $find_date_from & $find_date_to get set usually *}
 		<span class="button">
