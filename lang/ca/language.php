@@ -11480,7 +11480,7 @@ $lang = array(
 "For example, the default icon is: img/icons/folder.png" => "Per exemple, la icona per omissió és: img/icons/folder.png",
 "The name of the \"open folder\" icon is: img/icons/ofolder.png" => "El nom de la \"carpeta oberta\" icona és: img/icons/ofolder.png",
 "Configure icons for menu entries" => "Configuració d'icones per a les entrades del menú",
-"You can use menus by assigning the menu <a href=\"tiki-admin_modules.php\">module</a> (to the top, left, right, etc.), or you can customize a template, using {literal}{menu id=x}{/literal}, where x is the ID of the menu" => "Pots utilitzar els menús mitjançant l'assignació al menú <a href=\"tiki-admin_modules.php\"> mòdul </a> (a la part superior, esquerra, dreta, etc), o pot personalitzar una plantilla, usant {literal } {menú de id = x} {/ literal}, on x és l'ID del menú",
+"You can use menus by assigning the menu <a href=\"tiki-admin_modules.php\">module</a> (to the top, left, right, etc.), or you can customize a template, using {literal}{menu id=x}{/literal}, where x is the ID of the menu" => "Pots utilitzar els menús mitjançant l'assignació del <a href=\"tiki-admin_modules.php\">mòdul</a> menú (a la part superior, esquerra, dreta, etc), o pot personalitzar una plantilla, usant {literal}{menu id=x}{/literal}, on x és l'ID del menú",
 "To use a menu in a tiki format" => "Per utilitzar un menú en un format tiki",
 "To use menu in a css/suckerfish format" => "Per utilitzar el menú en un format css / suckerfish",
 "To customize the menu's CSS id (#)" => "Per personalitzar el menú del CSS id (#)",
