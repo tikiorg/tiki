@@ -12,29 +12,31 @@ require_once('lib/wizard/wizard.php');
  */
 class AdminWizardNamespace extends Wizard 
 {
-    function pageTitle ()
-    {
-        return tra('Namespace setup');
-    }
+	function pageTitle ()
+	{
+		return tra('Namespace setup');
+	}
 	function isEditable ()
 	{
 		return true;
 	}
-	
+	function isVisible ()
+	{
+		global	$prefs;
+		return $prefs['namespace_enabled'] === 'y';
+	}
+
 	function onSetupPage ($homepageUrl) 
 	{
 		global	$smarty, $prefs;
 
 		// Run the parent first
 		parent::onSetupPage($homepageUrl);
-		
-		$showPage = false;
 
-		// Show if option is selected
-		if ($prefs['namespace_enabled'] === 'y') {
-			$showPage = true;
+		if (!$this->isVisible()) {
+			return false;
 		}
-		
+
 		// Only show "hide namespace in structures" option, if structures are active
 		$isStructures = isset($prefs['feature_wiki_structure']) && $prefs['feature_wiki_structure'] === 'y' ? true : false;
 		$smarty->assign('isStructures', $isStructures);
@@ -43,7 +45,7 @@ class AdminWizardNamespace extends Wizard
 		$wizardTemplate = 'wizard/admin_namespace.tpl';
 		$smarty->assign('wizardBody', $wizardTemplate);
 		
-		return $showPage;
+		return true;
 	}
 
 	function onContinue ($homepageUrl) 

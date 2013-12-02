@@ -12,15 +12,20 @@ require_once('lib/wizard/wizard.php');
  */
 class AdminWizardJCapture extends Wizard 
 {
-    function pageTitle ()
-    {
-        return tra('jCapture setup');
-    }
+	function pageTitle ()
+	{
+		return tra('jCapture setup');
+	}
 	function isEditable ()
 	{
 		return true;
 	}
-	
+	function isVisible ()
+	{
+		global	$prefs;
+		return $prefs['feature_jcapture'] === 'y';
+	}
+
 	function onSetupPage ($homepageUrl) 
 	{
 		global	$smarty, $prefs;
@@ -28,30 +33,26 @@ class AdminWizardJCapture extends Wizard
 
 		// Run the parent first
 		parent::onSetupPage($homepageUrl);
-		
-		$showPage = false;
 
-		// Show if option is selected
-		if ($prefs['feature_jcapture'] === 'y') {
-			$showPage = true;
-			
-			// Set the name of the current jcapture gallery
-			//	Unless the root file gallery is selected, then leave the name empty
-			$galleryId = $prefs['fgal_for_jcapture'];
-			$galleryName = '';
-			if ($galleryId != $prefs['fgal_root_id']) {
-				$gallery = $filegalib->get_file_gallery($galleryId);
-				$galleryName = $gallery['name'];
-			}
-			$smarty->assign('jcaptureFileGalleryName', $galleryName);
-			
+		if (!$this->isVisible()) {
+			return false;
 		}
-		
-		// Assign the page tempalte
+
+		// Set the name of the current jcapture gallery
+		//	Unless the root file gallery is selected, then leave the name empty
+		$galleryId = $prefs['fgal_for_jcapture'];
+		$galleryName = '';
+		if ($galleryId != $prefs['fgal_root_id']) {
+			$gallery = $filegalib->get_file_gallery($galleryId);
+			$galleryName = $gallery['name'];
+		}
+		$smarty->assign('jcaptureFileGalleryName', $galleryName);
+
+		// Assign the page template
 		$wizardTemplate = 'wizard/admin_jcapture.tpl';
 		$smarty->assign('wizardBody', $wizardTemplate);
 		
-		return $showPage;
+		return true;
 	}
 
 	function onContinue ($homepageUrl) 

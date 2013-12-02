@@ -12,15 +12,20 @@ require_once('lib/wizard/wizard.php');
  */
 class AdminWizardStructures extends Wizard 
 {
-    function pageTitle ()
-    {
-        return tra('Set up Structures');
-    }
+	function pageTitle ()
+	{
+		return tra('Set up Structures');
+	}
 	function isEditable ()
 	{
 		return true;
 	}
-	
+	function isVisible ()
+	{
+		global	$prefs;
+		return isset($prefs['feature_wiki_structure']) && $prefs['feature_wiki_structure'] === 'y' ? true : false;
+	}
+
 	function onSetupPage ($homepageUrl) 
 	{
 		global	$smarty, $prefs;
@@ -28,9 +33,10 @@ class AdminWizardStructures extends Wizard
 		// Run the parent first
 		parent::onSetupPage($homepageUrl);
 
-		// Only show the page if the option is selected		
-		$showPage = isset($prefs['feature_wiki_structure']) && $prefs['feature_wiki_structure'] === 'y' ? true : false;
-		
+		if (!$this->isVisible()) {
+			return false;
+		}
+
 		$isCategories = isset($prefs['feature_categories']) && $prefs['feature_categories'] === 'y' ? true : false;
 		$smarty->assign('isCategories', $isCategories);
 		
@@ -39,7 +45,7 @@ class AdminWizardStructures extends Wizard
 		$wizardTemplate = 'wizard/admin_structures.tpl';
 		$smarty->assign('wizardBody', $wizardTemplate);
 		
-		return $showPage;
+		return true;
 	}
 
 	function onContinue ($homepageUrl) 
