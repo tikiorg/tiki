@@ -12,6 +12,7 @@
 			{include file="{$wizardBody}"}
 		</td>
 		<td class="adminWizardTOC">
+			<span class="adminWizardTOCTitle">{tr}Admin Wizard Steps{/tr}</span><br>
 			{$wizard_toc}
 		</td>
 	</tr>

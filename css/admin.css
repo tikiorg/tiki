@@ -525,6 +525,10 @@ a.admbox.off img {
 .adminWizardTable {
 	width:100%;
 }
+.adminWizardTOCTitle {
+	font-weight: bold;
+	text-decoration:underline;
+}
 .adminWizardTOC {
 	vertical-align: top;
 	width:25%;
