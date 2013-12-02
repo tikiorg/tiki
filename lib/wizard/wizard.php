@@ -18,16 +18,27 @@
  */
 abstract class Wizard 
 {
-    /**
-     * pageTitle
-     *	Answer the title of the wizard page.
-     * @return string
-     *
-     */
-    function pageTitle ()
-    {
-        return 'Page title not set';
-    }
+	/**
+	* pageTitle
+	*	Answer the title of the wizard page.
+	* @return string
+	*
+	*/
+	function pageTitle ()
+	{
+		return 'Page title not set';
+	}
+
+	/**
+	* isVisible
+	*	Answer if the page should be displayed or not.
+	* @return bool		true if the page should be displayed
+	*
+	*/
+	function isVisible ()
+	{
+		return true;
+	}
 
 	/**
 	 * isEditable

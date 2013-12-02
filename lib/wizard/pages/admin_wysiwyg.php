@@ -20,6 +20,11 @@ class AdminWizardWysiwyg extends Wizard
 	{
 		return true;
 	}
+	function isVisible ()
+	{
+		global	$prefs;
+		return $prefs['feature_wysiwyg'] === 'y';
+	}
 
 	function onSetupPage ($homepageUrl) 
 	{
@@ -27,13 +32,11 @@ class AdminWizardWysiwyg extends Wizard
 
 		// Run the parent first
 		parent::onSetupPage($homepageUrl);
-		
-		// Show if option is selected
-		if ($prefs['feature_wysiwyg'] !== 'y') {
+
+		if (!$this->isVisible()) {
 			return false;
 		}
 
-		
 		// Setup initial wizard screen
 		$smarty->assign('useHighlighter', isset($prefs['feature_syntax_highlighter']) && $prefs['feature_syntax_highlighter'] === 'y' ? 'y' : 'n');
 		$smarty->assign('useWysiwyg', isset($prefs['feature_wysiwyg']) && $prefs['feature_wysiwyg'] === 'y' ? 'y' : 'n');

@@ -124,17 +124,26 @@ $toc = '';
 $stepNr = 0;
 $reqStepNr = $wizardlib->wizard_stepNr;
 $homepageUrl = $_REQUEST['url'];
-foreach($pages as $page) {
-    global $base_url;
+foreach ($pages as $page) {
+	global $base_url;
+	$cssClasses = '';
 
-    // Start the admin wizard
-    $url = $base_url.'tiki-wizard_admin.php?&stepNr=' . $stepNr . '&url=' . rawurlencode($homepageUrl);
-    $toc .= '<a ';
-    if($stepNr == $reqStepNr) {
-        $toc .= 'class="highlight" ';
-    }
-    $toc .= 'href="'.$url.'">'.$page->pageTitle().'</a><br>';
-    $stepNr++;
+	// Start the admin wizard
+	$url = $base_url.'tiki-wizard_admin.php?&stepNr=' . $stepNr . '&url=' . rawurlencode($homepageUrl);
+	$toc .= '<a ';
+	if ($stepNr == $reqStepNr) {
+		$cssClasses .= 'highlight ';
+	}
+	if (!$page->isVisible()) {
+		$cssClasses .= 'disabledTOCSelection ';
+	}
+	$css = '';
+	if (strlen($cssClasses) > 0) {
+		$css = 'class="'.$cssClasses.'" ';
+	}
+	$toc .= $css;
+	$toc .= 'href="'.$url.'">'.$page->pageTitle().'</a><br>';
+	$stepNr++;
 }
 $smarty->assign('wizard_toc', $toc);
 

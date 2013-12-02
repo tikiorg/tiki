@@ -12,15 +12,20 @@ require_once('lib/wizard/wizard.php');
  */
 class AdminWizardCategory extends Wizard 
 {
-    function pageTitle ()
-    {
-        return tra('Set up Categories');
-    }
+	function pageTitle ()
+	{
+		return tra('Set up Categories');
+	}
 	function isEditable ()
 	{
 		return false;
 	}
-	
+	function isVisible ()
+	{
+		global	$prefs;
+		return $prefs['feature_categories'] === 'y';
+	}
+
 	function onSetupPage ($homepageUrl) 
 	{
 		global	$smarty, $prefs;
@@ -28,18 +33,15 @@ class AdminWizardCategory extends Wizard
 		// Run the parent first
 		parent::onSetupPage($homepageUrl);
 		
-		$showPage = false;
-
-		// Show if option is selected
-		if ($prefs['feature_categories'] === 'y') {
-			$showPage = true;
+		if (!$this->isVisible()) {
+			return false;
 		}
-		
+
 		// Assign the page tempalte
 		$wizardTemplate = 'wizard/admin_category.tpl';
 		$smarty->assign('wizardBody', $wizardTemplate);
 		
-		return $showPage;
+		return true;
 	}
 
 	function onContinue ($homepageUrl) 

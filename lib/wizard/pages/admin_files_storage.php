@@ -12,15 +12,23 @@ require_once('lib/wizard/wizard.php');
  */
 class AdminWizardFileStorage extends Wizard 
 {
-    function pageTitle ()
-    {
-        return tra('File storage setup');
-    }
+	function pageTitle ()
+	{
+		return tra('File storage setup');
+	}
 	function isEditable ()
 	{
 		return true;
 	}
-	
+	function isVisible ()
+	{
+		global	$prefs;
+		return  $prefs['fgal_elfinder_feature'] === 'y' || // Elfinder
+				$prefs['fgal_use_db'] !== 'y' || // File Gallery
+				(($prefs['feature_wiki_attachments'] === 'y') && ($prefs['feature_use_fgal_for_wiki_attachments'] !== 'y'))
+		;
+	}
+
 	function onSetupPage ($homepageUrl) 
 	{
 		global	$smarty, $prefs;
@@ -61,7 +69,7 @@ class AdminWizardFileStorage extends Wizard
 		}
 
 		
-		// Assign the page tempalte
+		// Assign the page template
 		$wizardTemplate = 'wizard/admin_files_storage.tpl';
 		$smarty->assign('wizardBody', $wizardTemplate);
 		

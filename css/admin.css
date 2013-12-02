@@ -520,52 +520,54 @@ a.admbox.off img {
 /* Admin wizard */
 
 .adminWizardLink {
-    float: right;
+	float: right;
 }
 .adminWizardTable {
-    width:100%;
+	width:100%;
 }
 .adminWizardTOC {
-    vertical-align: top;
-    width:25%;
-    padding-left:15px;
+	vertical-align: top;
+	width:25%;
+	padding-left:15px;
 }
-
+.disabledTOCSelection {
+	opacity: 0.5;
+}
 .adminWizardContent {
-    vertical-align: top;
-    margin-top: 1em;
-    display:inline;
-    width:75%;
+	vertical-align: top;
+	margin-top: 1em;
+	display:inline;
+	width:75%;
 }
 
 .adminWizardContent legend {
-    margin-bottom: 1em;
-    font-weight: bold;
+	margin-bottom: 1em;
+	font-weight: bold;
 }
 
 .adminWizardContent fieldset {
-    margin: 1em 0;
+	margin: 1em 0;
 }
 
 .adminWizardIconleft {
-    float: left;
-    margin-right: 10px;
+	float: left;
+	margin-right: 10px;
 }
 
 .adminWizardIconright {
-    float: right;
-    margin-left: 10px;
+	float: right;
+	margin-left: 10px;
 }
 
 .adminWizardtable {
-    border: 0px;
-    padding-left: 20px;
+	border: 0px;
+	padding-left: 20px;
 }
 
 .adminWizardlookandfell {
-    position: absolute;
-    right: .5em;
-    top: 0.5em;
+	position: absolute;
+	right: .5em;
+	top: 0.5em;
 }
 
 

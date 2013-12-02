@@ -12,34 +12,37 @@ require_once('lib/wizard/wizard.php');
  */
 class AdminWizardAutoTOC extends Wizard 
 {
-    function pageTitle ()
-    {
-        return tra('Auto TOC setup');
-    }
+	function pageTitle ()
+	{
+		return tra('Auto TOC setup');
+	}
 	function isEditable ()
 	{
 		return true;
 	}
-	
+
+	function isVisible ()
+	{
+		global	$prefs;
+		return $prefs['wiki_auto_toc'] === 'y';
+	}
+
 	function onSetupPage ($homepageUrl) 
 	{
-		global	$smarty, $prefs;
+		global	$smarty;
 
 		// Run the parent first
 		parent::onSetupPage($homepageUrl);
-		
-		$showPage = false;
 
-		// Show if Auto TOC is selected
-		if ($prefs['wiki_auto_toc'] === 'y') {
-			$showPage = true;
+		if (!$this->isVisible()) {
+			return false;
 		}
-		
-		// Assign the page tempalte
+
+		// Assign the page template
 		$wizardTemplate = 'wizard/admin_auto_toc.tpl';
 		$smarty->assign('wizardBody', $wizardTemplate);
 		
-		return $showPage;
+		return true;
 	}
 
 	function onContinue ($homepageUrl) 
