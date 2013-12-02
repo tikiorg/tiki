@@ -5,7 +5,6 @@
 <form action="tiki-wizard_admin.php" method="post">
 {include file="wizard/wizard_bar_admin.tpl"}
 <div id="wizardBody">
-<h1 class="adminWizardPageTitle">{$pageTitle}</h1>
 <table class="adminWizardTable">
 	<tr>
 		<td class="adminWizardTOC">

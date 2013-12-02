@@ -18,6 +18,11 @@
 	&nbsp;&nbsp;&nbsp;
 	{if !isset($firstWizardPage)}<input type="submit" class="btn btn-default" name="back" value="{tr}Back{/tr}" />{/if}
 	</td>
+<td>
+	{if !isset($showWizardPageTitle) or $showWizardPageTitle neq 'y'}
+		<h1 class="adminWizardPageTitle">{$pageTitle}</h1></td>
+		{assign var="showWizardPageTitle" value="y" scope="root"}
+	{/if}
 <td style="text-align:right">
 	<input type="hidden" name="url" value="{$homepageUrl}">
 	<input type="hidden" name="wizard_step" value="{$wizard_step}">
