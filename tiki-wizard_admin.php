@@ -123,20 +123,6 @@ $smarty->assign('showOnLogin', $showOnLogin);
 $toc = '';
 $stepNr = 0;
 $reqStepNr = $wizardlib->wizard_stepNr;
-    /*
-    $reqStepNr = isset($_REQUEST['stepNr']) ? intval($_REQUEST['stepNr']) : -1;
-    if ($reqStepNr < 0) {
-        if(isset($_REQUEST['wizard_step'])) {
-            if(isset($_REQUEST['back'])) {
-                $reqStepNr = $_REQUEST['wizard_step'] - 1;
-            } else {
-                $reqStepNr = $_REQUEST['wizard_step'] + 1;
-            }
-        } else {
-            $reqStepNr = 0;
-        }
-    }
-    */
 $homepageUrl = $_REQUEST['url'];
 foreach($pages as $page) {
     global $base_url;
