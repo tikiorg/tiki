@@ -222,7 +222,7 @@
 		<div>
 			<label>
 				{tr}Copy activity to email{/tr}
-				<input type="email" name="outboundEmail" value="{$info.outboundEmail|escape}">
+				<input name="outboundEmail" value="{$info.outboundEmail|escape}" class="email_multi" size="60">
 				<div class="description">
 					{tr}You can add several email addresses by separating them with commas.{/tr}
 				</div>
