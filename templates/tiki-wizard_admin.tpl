@@ -8,12 +8,12 @@
 <h1>{$pageTitle}</h1>
 <table class="adminWizardTable">
 	<tr>
-		<td class="adminWizardContent">
-			{include file="{$wizardBody}"}
-		</td>
 		<td class="adminWizardTOC">
 			<span class="adminWizardTOCTitle">{tr}Admin Wizard Steps{/tr}</span><br>
 			{$wizard_toc}
+		</td>
+		<td class="adminWizardContent">
+			{include file="{$wizardBody}"}
 		</td>
 	</tr>
 </table>

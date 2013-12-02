@@ -131,6 +131,7 @@ foreach ($pages as $page) {
 	// Start the admin wizard
 	$url = $base_url.'tiki-wizard_admin.php?&stepNr=' . $stepNr . '&url=' . rawurlencode($homepageUrl);
 	$toc .= '<a ';
+	$cssClasses .= 'adminWizardTOCItem ';
 	if ($stepNr == $reqStepNr) {
 		$cssClasses .= 'highlight ';
 	}
