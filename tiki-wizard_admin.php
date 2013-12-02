@@ -129,7 +129,7 @@ foreach ($pages as $page) {
 	$cssClasses = '';
 
 	// Start the admin wizard
-	$url = $base_url.'tiki-wizard_admin.php?&stepNr=' . $stepNr . '&url=' . rawurlencode($homepageUrl);
+	$url = $base_url.'tiki-wizard_admin.php?&amp;stepNr=' . $stepNr . '&amp;url=' . rawurlencode($homepageUrl);
 	$cnt = 	$stepNr+1;
 	if ($cnt <= 9) {
 		$cnt = '&nbsp;&nbsp;'.$cnt;
