@@ -530,9 +530,6 @@ a.admbox.off img {
     width:25%;
     padding-left:15px;
 }
-.selectedAdminTOC {
-    background-color: #FFCCCC;
-}
 
 .adminWizardContent {
     vertical-align: top;
