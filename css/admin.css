@@ -522,6 +522,9 @@ a.admbox.off img {
 .adminWizardLink {
 	float: right;
 }
+.adminWizardPageTitle {
+    text-align:center;
+}
 .adminWizardTable {
 	width:100%;
 }
