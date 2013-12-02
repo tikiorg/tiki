@@ -13,6 +13,9 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__))!=FALSE) {
 	header('location: index.php');
 	exit;
 }
+$tikilib = TikiLib::lib('tiki');
+$smarty = TikiLib::lib('smarty');
+global $prefs;
 
 if ( ! ($prefs['feature_calendar'] == 'y' || $prefs['feature_action_calendar'] == 'y')) {
 	if (isset($_SERVER['SCRIPT_NAME'])) {
@@ -249,7 +252,7 @@ if ( $calendarViewMode['casedefault'] == 'month' ||
 	} elseif ($calendarViewMode['casedefault'] == 'quarter') {
 		$viewend = $tikilib->make_time(0, 0, 0, $focus_month + 3, $df, $focus_year);
 	} elseif ($calendarViewMode['casedefault'] == 'semester') {
-		$viewend = TikiLib::make_time(0, 0, 0, $focus_month + 6, $df, $focus_year);
+		$viewend = $tikilib->make_time(0, 0, 0, $focus_month + 6, $df, $focus_year);
 	} elseif ($calendarViewMode['casedefault'] == 'year') {
 		$viewend = $tikilib->make_time(0, 0, 0, 1, $df, $focus_year+1);
 	} else {
@@ -263,7 +266,7 @@ if ( $calendarViewMode['casedefault'] == 'month' ||
 		$viewend = $tikilib->make_time(
 			23, 59, 59,
 			TikiLib::date_format("%m", $viewend),
-			TikiLib::date_format("%d", $viewend) + ( 6 - $TmpWeekday ),
+			(int) TikiLib::date_format("%d", $viewend) + ( 6 - $TmpWeekday ),
 			TikiLib::date_format("%Y", $viewend)
 		);
 	}
@@ -273,11 +276,11 @@ if ( $calendarViewMode['casedefault'] == 'month' ||
 	$lastweek = TikiLib::date_format("%U", $viewend);
 
 	if ($lastweek <= $firstweek) {
-		$startyear = TikiLib::date_format("%Y", $daystart - 1);
-		$weeksinyear = TikiLib::date_format("%U", $tikilib->make_time(0, 0, 0, 12, 31, $startyear));
+		$startyear = (int) TikiLib::date_format("%Y", $daystart - 1);
+		$weeksinyear = (int) TikiLib::date_format("%U", $tikilib->make_time(0, 0, 0, 12, 31, $startyear));
 
 		if ($weeksinyear == 1) {
-			$weeksinyear = TikiLib::date_format("%U", $tikilib->make_time(0, 0, 0, 12, 28, $startyear));
+			$weeksinyear = (int) TikiLib::date_format("%U", $tikilib->make_time(0, 0, 0, 12, 28, $startyear));
 		}
 
 		$lastweek += $weeksinyear;
@@ -340,9 +343,9 @@ if ( $calendarViewMode['casedefault'] == 'month' ||
 		0,
 		0,
 		0,
-		TikiLib::date_format("%m", $daystart),
-		TikiLib::date_format("%d", $daystart) + 7,
-		TikiLib::date_format("%Y", $daystart)
+			(int) TikiLib::date_format("%m", $daystart),
+		(int) TikiLib::date_format("%d", $daystart) + 7,
+			(int) TikiLib::date_format("%Y", $daystart)
 	) - 1;
 
 	$dayend = $viewend;
@@ -358,9 +361,9 @@ if ( $calendarViewMode['casedefault'] == 'month' ||
 		0,
 		0,
 		0,
-		TikiLib::date_format("%m", $viewstart),
-		TikiLib::date_format("%d", $viewstart) + 1,
-		TikiLib::date_format("%Y", $viewstart)
+		(int) TikiLib::date_format("%m", $viewstart),
+		(int) TikiLib::date_format("%d", $viewstart) + 1,
+		(int) TikiLib::date_format("%Y", $viewstart)
 	) - 1;
 
 	$dayend = $daystart;

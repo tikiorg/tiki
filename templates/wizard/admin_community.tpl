@@ -1,7 +1,5 @@
 {* $Id$ *}
 
-<h1>{tr}Set up your User & Community features{/tr}</h1>
-
 <div class="adminWizardIconleft"><img src="img/icons/large/users48x48.png" alt="{tr}Set up your User & Community features{/tr}"></div>
 {tr}Configure general user & community features and friendship network settings{/tr}.
 <div class="adminWizardContent">

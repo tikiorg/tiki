@@ -1,7 +1,5 @@
 {* $Id$ *}
 
-<h1>{tr}Namespace setup{/tr}</h1>
-
 <div class="adminWizardIconleft"><img src="img/icons/large/icon-configuration48x48.png" alt="{tr}Namespace setup{/tr}" /></div>
 <div class="adminWizardContent">
 {tr}The namespace separator should not{/tr}

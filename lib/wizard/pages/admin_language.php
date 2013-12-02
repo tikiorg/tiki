@@ -12,6 +12,11 @@ require_once('lib/wizard/wizard.php');
  */
 class AdminWizardLanguage extends Wizard 
 {
+    function pageTitle ()
+    {
+        return tra('Set up language');
+    }
+
 	function isEditable ()
 	{
 		return true;

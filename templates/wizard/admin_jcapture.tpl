@@ -1,7 +1,5 @@
 {* $Id$ *}
 
-<h1>{tr}jCapture setup{/tr}</h1>
-
 <div class="adminWizardIconleft"><img src="img/icons/large/gnome-camera-video-48.png" alt="{tr}jCapture setup{/tr}" /></div>
 <div class="adminWizardContent">
 <p>

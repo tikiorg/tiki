@@ -12,6 +12,10 @@ require_once('lib/wizard/wizard.php');
  */
 class AdminWizardSearch extends Wizard 
 {
+    function pageTitle ()
+    {
+        return tra('Set up Search');
+    }
 	function isEditable ()
 	{
 		return true;

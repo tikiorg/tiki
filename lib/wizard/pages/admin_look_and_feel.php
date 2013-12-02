@@ -12,6 +12,10 @@ require_once('lib/wizard/wizard.php');
  */
 class AdminWizardLookAndFeel extends Wizard 
 {
+    function pageTitle ()
+    {
+        return tra('Set up Look & Feel');
+    }
 	function isEditable ()
 	{
 		return true;

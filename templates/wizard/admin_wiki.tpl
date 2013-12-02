@@ -1,7 +1,5 @@
 {* $Id$ *}
 
-<h1>{tr}Set up Wiki environment{/tr}</h1>
-
 {tr}Set up the Wiki environment{/tr}
 <div class="adminWizardIconleft"><img src="img/icons/large/wikipages48x48.png" alt="{tr}Set up the Wiki environment{/tr}" /></div>
 <div class="adminWizardContent">

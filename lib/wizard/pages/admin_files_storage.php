@@ -12,6 +12,10 @@ require_once('lib/wizard/wizard.php');
  */
 class AdminWizardFileStorage extends Wizard 
 {
+    function pageTitle ()
+    {
+        return tra('File storage setup');
+    }
 	function isEditable ()
 	{
 		return true;

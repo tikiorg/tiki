@@ -1,7 +1,6 @@
 {* $Id$ *}
 
 <div class="adminWizardIconleft"><img src="img/icons/large/wizard48x48.png" alt="{tr}Wizard completed{/tr}" /></div>
-<h1>{tr}Admin Wizard Completed!{/tr}</h1>
 <div class="adminWizardContent">
 <img src="img/icons/tick.png" alt="{tr}Ok{/tr}" />{tr}Congratulations{/tr}. {tr}You are done with the admin wizard{/tr}.<br>
 

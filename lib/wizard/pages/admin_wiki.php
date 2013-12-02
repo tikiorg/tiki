@@ -12,7 +12,11 @@ require_once('lib/wizard/wizard.php');
  */
 class AdminWizardWiki extends Wizard 
 {
-	function isEditable ()
+    function pageTitle ()
+    {
+        return tra('Set up Wiki environment');
+    }
+    function isEditable ()
 	{
 		return true;
 	}

@@ -12,6 +12,10 @@ require_once('lib/wizard/wizard.php');
  */
 class AdminWizardEditorType extends Wizard 
 {
+    function pageTitle ()
+    {
+        return tra('Select editor type');
+    }
 	function isEditable ()
 	{
 		return true;

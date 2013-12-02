@@ -12,6 +12,10 @@ require_once('lib/wizard/wizard.php');
  */
 class AdminWizardTextArea extends Wizard 
 {
+    function pageTitle ()
+    {
+        return tra('Set up the Text Area');
+    }
 	function isEditable ()
 	{
 		return true;

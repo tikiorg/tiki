@@ -1,7 +1,5 @@
 {* $Id$ *}
 
-<h1>{tr}Set up Categories{/tr}</h1>
-
 <div class="adminWizardIconleft"><img src="img/icons/large/categories48x48.png" alt="{tr}Set up Categories{/tr}" /></div>
 {tr}Global content category system. Items of different types (wiki pages, articles, tracker items, etc) can be added to one or more categories. Permissions set for a category will apply to all items in that category, allowing access to be restricted to certain groups, users, etc{/tr}.
 <div class="adminWizardContent">

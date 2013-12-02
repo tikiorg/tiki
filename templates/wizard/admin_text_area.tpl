@@ -1,7 +1,5 @@
 {* $Id$ *}
 
-<h1>{tr}Set up the Text Area{/tr}</h1>
-
 {tr}Set up the text area environment (Editing and Plugins){/tr}.
 <div class="adminWizardIconleft"><img src="img/icons/large/editing48x48.png" alt="{tr}Set up the Text Area{/tr}" /></div>
 <div class="adminWizardContent">

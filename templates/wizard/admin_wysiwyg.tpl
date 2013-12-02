@@ -1,6 +1,5 @@
 {* $Id$ *}
 
-<h1>{tr}Set up the Wysiwyg editor{/tr}</h1>
 <div class="adminWizardIconleft"><img src="img/icons/large/wysiwyg48x48.png" alt="{tr}Set up the Wysiwyg environment{/tr}" /></div>
 {tr}You can choose to use by default the 'Compatible' Wiki mode (content is saved in wiki syntax), or the HTML mode{/tr}.
 <div class="adminWizardContent">

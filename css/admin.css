@@ -522,9 +522,23 @@ a.admbox.off img {
 .adminWizardLink {
     float: right;
 }
+.adminWizardTable {
+    width:100%;
+}
+.adminWizardTOC {
+    vertical-align: top;
+    width:25%;
+    padding-left:15px;
+}
+.selectedAdminTOC {
+    background-color: #FFCCCC;
+}
 
 .adminWizardContent {
+    vertical-align: top;
     margin-top: 1em;
+    display:inline;
+    width:75%;
 }
 
 .adminWizardContent legend {

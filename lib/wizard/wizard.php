@@ -18,6 +18,17 @@
  */
 abstract class Wizard 
 {
+    /**
+     * pageTitle
+     *	Answer the title of the wizard page.
+     * @return string
+     *
+     */
+    function pageTitle ()
+    {
+        return 'Page title not set';
+    }
+
 	/**
 	 * isEditable
 	 *	Answer if any preferences or other settings are changed by the wizard page.

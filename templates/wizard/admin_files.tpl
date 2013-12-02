@@ -1,7 +1,5 @@
 {* $Id$ *}
 
-<h1>{tr}Set up File Gallery and Attachments{/tr}</h1>
-
 <div class="adminWizardIconleft"><img src="img/icons/large/fileopen48x48.png" alt="{tr}Set up Files and File Gallery{/tr}" /></div>
 {tr}Set up the file gallery and attachments{/tr}. {tr}Choose to store them either in the database or in files on disk, among other options{/tr}.<br/><br/>
 <div class="adminWizardContent">

@@ -1,7 +1,5 @@
 {* $Id$ *}
 
-<h1>{tr}Set up Search{/tr}</h1>
-
 <div class="adminWizardIconleft"><img src="img/icons/large/xfce4-appfinder48x48.png" alt="{tr}Set up your Search features{/tr}"></div>
 {tr}There are two search systems in Tiki that use different search engines: <strong>Basic Search</strong> and <strong>Advanced Search</strong>{/tr}.
 {tr}The Advanced Search generally provides better results, but is more demanding on the server (it creates a search index,

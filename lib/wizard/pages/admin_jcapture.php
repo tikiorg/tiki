@@ -12,6 +12,10 @@ require_once('lib/wizard/wizard.php');
  */
 class AdminWizardJCapture extends Wizard 
 {
+    function pageTitle ()
+    {
+        return tra('jCapture setup');
+    }
 	function isEditable ()
 	{
 		return true;

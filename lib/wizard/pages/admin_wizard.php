@@ -12,6 +12,11 @@ require_once('lib/wizard/wizard.php');
  */
 class AdminWizard extends Wizard 
 {
+    function pageTitle ()
+    {
+        return tra('Tiki Setup');
+    }
+
 	function isEditable ()
 	{
 		return false;
@@ -31,7 +36,8 @@ class AdminWizard extends Wizard
 			$smarty->clear_assign('useDefaultPrefs');
 		}
 		
-		// Assign the page temaplte
+		// Assign the page template
+        $smarty->assign('pageTitle', $this->pageTitle());
 		$wizardTemplate = 'wizard/admin_wizard.tpl';
 		$smarty->assign('wizardBody', $wizardTemplate);
 		

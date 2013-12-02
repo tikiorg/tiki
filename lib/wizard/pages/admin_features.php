@@ -12,7 +12,11 @@ require_once('lib/wizard/wizard.php');
  */
 class AdminWizardFeatures extends Wizard 
 {
-	function isEditable ()
+    function pageTitle ()
+    {
+        return tra('Main features setup');
+    }
+    function isEditable ()
 	{
 		return true;
 	}
