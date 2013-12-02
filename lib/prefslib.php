@@ -646,7 +646,7 @@ class PreferencesLib
 	private function _getListValue( $info, $data )
 	{
 		$name = $info['preference'];
-		$value = $data[$name];
+		$value = isset ($data[$name]) ? $data[$name]: null;
 
 		$options = $info['options'];
 
