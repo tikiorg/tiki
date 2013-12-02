@@ -131,7 +131,7 @@ foreach($pages as $page) {
     $url = $base_url.'tiki-wizard_admin.php?&stepNr=' . $stepNr . '&url=' . rawurlencode($homepageUrl);
     $toc .= '<a ';
     if($stepNr == $reqStepNr) {
-        $toc .= 'class="selectedAdminTOC" ';
+        $toc .= 'class="highlight" ';
     }
     $toc .= 'href="'.$url.'">'.$page->pageTitle().'</a><br>';
     $stepNr++;
