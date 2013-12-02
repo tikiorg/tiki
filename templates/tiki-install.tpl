@@ -570,7 +570,7 @@
 			<br><em>{tr}This is the email address for your administrator account.{/tr}</em></div>
 		</div>
 	</fieldset>
-	{if $upgradefix eq 'y'}
+	{if $upgradefix eq 'y' && $install_type eq 'update'}
 		<fieldset>
 			<legend><img src="img/icons/error.png" alt="{tr}error{/tr}" style="vertical-align:middle"> {tr}Upgrade fix{/tr}</legend>
 			<p>{tr}Experiencing problems with the upgrade? Your administrator account lost its privileges? This may occur if you upgraded from a very old version of Tiki.</p>
