@@ -425,7 +425,7 @@ function module_since_last_visit_new($mod_reference, $params = null)
 		$count = 0;
 		while ($res = $result->fetchRow()) {
 			if ($userlib->user_has_perm_on_object($user, $res['galleryId'], 'file gallery', 'tiki_p_view_file_gallery')) {
-				$ret['items']['files']['list'][$count]['href']  = filter_out_sefurl('tiki-download_file.php?fileId=' . $res['fileId']. '&preview', 'file gallery');
+				$ret['items']['files']['list'][$count]['href']  = filter_out_sefurl('tiki-list_file_gallery.php?galleryId=' . $res['galleryId']. '&fileId=' . $res['fileId']. '&view=page', 'file gallery');
 				$ret['items']['files']['list'][$count]['title'] = $tikilib->get_short_datetime($res['created']) .' '. tra('by') .' '. $res['user'];
 				$ret['items']['files']['list'][$count]['label'] = $res['name'] . ' (' . $res['filename'] . ')';
 				$count++;
