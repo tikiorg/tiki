@@ -14,7 +14,7 @@ class AdminWizardCategory extends Wizard
 {
 	function pageTitle ()
 	{
-		return tra('Set up Categories');
+		return tra('Define Categories');
 	}
 	function isEditable ()
 	{

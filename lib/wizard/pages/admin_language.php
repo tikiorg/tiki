@@ -14,7 +14,7 @@ class AdminWizardLanguage extends Wizard
 {
     function pageTitle ()
     {
-        return tra('Set up language');
+        return tra('Set up Language');
     }
 
 	function isEditable ()

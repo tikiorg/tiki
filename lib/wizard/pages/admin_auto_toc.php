@@ -14,7 +14,7 @@ class AdminWizardAutoTOC extends Wizard
 {
 	function pageTitle ()
 	{
-		return tra('Auto TOC setup');
+		return tra('Set up Auto TOC');
 	}
 	function isEditable ()
 	{

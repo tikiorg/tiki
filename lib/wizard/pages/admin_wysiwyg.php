@@ -14,7 +14,7 @@ class AdminWizardWysiwyg extends Wizard
 {
     function pageTitle ()
     {
-        return tra('Set up the Wysiwyg editor');
+        return tra('Set up Wysiwyg editor');
     }
 	function isEditable ()
 	{

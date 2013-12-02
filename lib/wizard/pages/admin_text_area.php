@@ -14,7 +14,7 @@ class AdminWizardTextArea extends Wizard
 {
     function pageTitle ()
     {
-        return tra('Set up the Text Area');
+        return tra('Set up Text Area');
     }
 	function isEditable ()
 	{

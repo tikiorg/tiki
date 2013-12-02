@@ -14,7 +14,7 @@ class AdminWizardFileStorage extends Wizard
 {
 	function pageTitle ()
 	{
-		return tra('File storage setup');
+		return tra('Set up File storage');
 	}
 	function isEditable ()
 	{

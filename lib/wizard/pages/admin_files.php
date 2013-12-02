@@ -14,7 +14,7 @@ class AdminWizardFiles extends Wizard
 {
     function pageTitle ()
     {
-        return tra('Set up File Gallery and Attachments');
+        return tra('Set up File Gallery & Attachments');
     }
 	function isEditable ()
 	{

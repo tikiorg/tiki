@@ -14,7 +14,7 @@ class AdminWizardJCapture extends Wizard
 {
 	function pageTitle ()
 	{
-		return tra('jCapture setup');
+		return tra('Set up jCapture');
 	}
 	function isEditable ()
 	{

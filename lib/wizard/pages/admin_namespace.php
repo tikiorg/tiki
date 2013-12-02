@@ -14,7 +14,7 @@ class AdminWizardNamespace extends Wizard
 {
 	function pageTitle ()
 	{
-		return tra('Namespace setup');
+		return tra('Set up Namespace');
 	}
 	function isEditable ()
 	{

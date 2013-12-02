@@ -14,7 +14,7 @@ class AdminWizardProfiles extends Wizard
 {
     function pageTitle ()
     {
-        return tra('Initialize Tiki');
+        return tra('Featured Profiles');
     }
 	function isEditable ()
 	{

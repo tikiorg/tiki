@@ -20,9 +20,11 @@
 	{preference name=users_prefs_mailCharset}
 	
 </fieldset>
-<fieldset>
-	<legend>{tr}Social Network{/tr}</legend>
-	{preference name=feature_friends}
-</fieldset>
+{if $prefs.feature_search eq 'y'}
+	<fieldset>
+		<legend>{tr}Social Network{/tr}</legend>
+		{preference name=feature_friends}
+	</fieldset>
+{/if}
 
 </div>

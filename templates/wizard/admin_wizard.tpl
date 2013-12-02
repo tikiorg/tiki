@@ -8,20 +8,21 @@
 <br>
 		<input type="submit" class="btn btn-default btn-sm" name="continue" value="{tr}Start admin wizard{/tr}" /><br>
 </div>
-</br>
+<br>
 <div style="display:block;margin-left: auto; margin-right: auto">
 <div class="adminWizardIconleft"><img src="img/icons/large/profiles48x48.png" alt="{tr}Tiki Configuration Profiles{/tr}" /></div>
-{tr}Tiki Profiles are a quick and easy way to setup a preconfigured application, e.g. a Blog site{/tr}.
-</br>
+{tr}Tiki Profiles are a quick and easy way to setup a preconfigured application{/tr}.
+{tr}Featured profiles: Collaborative Community, Company Intranet, Personal Blog and Profile and Small Organization Web Presence{/tr}.
+<br>
 		<input  type="submit" class="btn btn-default" name="use-default-prefs" value="{tr}Easy application setup using configuration profiles{/tr}" /><br>
 </div>
-</br>
+<br>
 <div style="display:block;margin-left: auto; margin-right: auto; margin-bottom: 10px">
 <div class="adminWizardIconleft"><img src="img/icons/large/stock_missing-image48x48.png" alt="{tr}No wizard{/tr}" /></div>
 {tr}Do it manually using the <a href="tiki-admin.php" target="_blank">Admin Panel</a>{/tr}.
-</br>
+<br>
 		<input  type="submit" class="btn btn-default" name="skip" value="{tr}Skip setup and don't show again{/tr}" />
-</br></br>
+<br><br>
 </div>
 </fieldset>
 <fieldset>

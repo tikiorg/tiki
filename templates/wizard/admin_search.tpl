@@ -19,6 +19,7 @@
 <fieldset>
 	<legend>{tr}Advanced Search{/tr}</legend>
 	{tr}Uses Unified Search Index with a specified search engine{/tr}. {tr}If you have issues with Advanced Search, simply revert to Basic Search{/tr}.
+	{tr}Unified Search is required by a number of other features, e.g. the community friendship network{/tr}
 	{preference name=feature_search visible="always"}
 				<div class="adminoptionboxchild" id="feature_search_childcontainer">
 					{preference name="unified_incremental_update"}
