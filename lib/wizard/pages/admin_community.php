@@ -14,7 +14,7 @@ class AdminWizardCommunity extends Wizard
 {
     function pageTitle ()
     {
-        return tra('Set up your User & Community features');
+        return tra('Set up User & Community features');
     }
 	function isEditable ()
 	{

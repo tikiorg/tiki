@@ -14,7 +14,7 @@ class AdminWizardEditorType extends Wizard
 {
     function pageTitle ()
     {
-        return tra('Select editor type');
+        return tra('Select Editor type');
     }
 	function isEditable ()
 	{
