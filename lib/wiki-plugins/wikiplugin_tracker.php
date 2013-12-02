@@ -63,6 +63,18 @@ function wikiplugin_tracker_info()
 					array('text' => tra('No'), 'value' => 'n')
 				)
 			),
+			'showfieldsdesc' => array(
+				'required' => false,
+				'name' => tra('Show Fields Descriptions'),
+				'description' => tra('Show the tracker\'s field descriptions (shown by default)'),
+				'filter' => 'alpha',
+				'default' => 'y',
+				'options' => array(
+					array('text' => '', 'value' => ''),
+					array('text' => tra('Yes'), 'value' => 'y'),
+					array('text' => tra('No'), 'value' => 'n')
+				)
+			),				
 			'showmandatory' => array(
 				'required' => false,
 				'name' => tra('Mark Mandatory'),
@@ -371,7 +383,7 @@ function wikiplugin_tracker($data, $params)
 	++$iTRACKER;
 	if (isset($params['itemId']) && empty($params['itemId']))
 		return;
-	$default = array('overwrite' => 'n', 'embedded' => 'n', 'showtitle' => 'n', 'showdesc' => 'n', 'sort' => 'n', 'showmandatory'=>'y', 'status' => '', 'registration' => 'n', 'emailformat' => 'text');
+	$default = array('overwrite' => 'n', 'embedded' => 'n', 'showtitle' => 'n', 'showdesc' => 'n', 'showfieldsdesc' => 'y', 'sort' => 'n', 'showmandatory'=>'y', 'status' => '', 'registration' => 'n', 'emailformat' => 'text');
 	$params = array_merge($default, $params);
 	$item = array();
 
@@ -1414,7 +1426,7 @@ function wikiplugin_tracker($data, $params)
 					}
 
 					if ($f['type'] != 'S' && empty($tpl) && empty($wiki)) {
-						if ($showdesc == 'y') {
+						if ($showfieldsdesc == 'y') {
 							$back .= '<tr><td class="plugindesc_cell" colspan="2">';
 							$back .= '<span class="trackerplugindesc">';
 
