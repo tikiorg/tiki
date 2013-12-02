@@ -522,6 +522,9 @@ a.admbox.off img {
 .adminWizardLink {
 	float: right;
 }
+.adminWizardPageTitle {
+    text-align:center;
+}
 .adminWizardTable {
 	width:100%;
 }
@@ -540,9 +543,13 @@ a.admbox.off img {
 .disabledTOCSelection {
 	opacity: 0.5;
 }
+.adminWizardBody {
+    vertical-align: top;
+    width:73%;
+}
+
 .adminWizardContent {
 	vertical-align: top;
-	width:73%;
 }
 
 .adminWizardContent legend {

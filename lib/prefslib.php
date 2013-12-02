@@ -646,7 +646,7 @@ class PreferencesLib
 	private function _getListValue( $info, $data )
 	{
 		$name = $info['preference'];
-		$value = $data[$name];
+		$value = isset ($data[$name]) ? $data[$name]: null;
 
 		$options = $info['options'];
 
@@ -660,7 +660,7 @@ class PreferencesLib
 	private function _getMultilistValue( $info, $data )
 	{
 		$name = $info['preference'];
-		$value = (array) $data[$name];
+		$value = isset($data[$name])? (array) $data[$name] : array();
 
 		$options = $info['options'];
 		$options = array_keys($options);
