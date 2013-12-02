@@ -543,9 +543,13 @@ a.admbox.off img {
 .disabledTOCSelection {
 	opacity: 0.5;
 }
+.adminWizardBody {
+    vertical-align: top;
+    width:73%;
+}
+
 .adminWizardContent {
 	vertical-align: top;
-	width:73%;
 }
 
 .adminWizardContent legend {

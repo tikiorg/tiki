@@ -12,7 +12,7 @@
 			<span class="adminWizardTOCTitle">{tr}Admin Wizard Steps{/tr}</span><br>
 			{$wizard_toc}
 		</td>
-		<td class="adminWizardContent">
+		<td class="adminWizardBody">
 			{include file="{$wizardBody}"}
 		</td>
 	</tr>
