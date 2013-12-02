@@ -86,13 +86,13 @@ if ($useDefaultPrefs) {
 	require_once('lib/wizard/pages/admin_features.php'); 
 	$pages[] = new AdminWizardFeatures();
 
-	require_once('lib/wizard/pages/admin_community.php'); 
+	require_once('lib/wizard/pages/admin_search.php');
+	$pages[] = new AdminWizardSearch();
+
+	require_once('lib/wizard/pages/admin_community.php');
 	$pages[] = new AdminWizardCommunity();
 
-	require_once('lib/wizard/pages/admin_search.php'); 
-	$pages[] = new AdminWizardSearch();
-	
-	require_once('lib/wizard/pages/admin_advanced.php'); 
+	require_once('lib/wizard/pages/admin_advanced.php');
 	$pages[] = new AdminWizardAdvanced();
 
 	require_once('lib/wizard/pages/admin_namespace.php'); 
