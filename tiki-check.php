@@ -16,7 +16,7 @@ tiki-check.php should not crash but rather avoid running tests which lead to tik
 */
 if (file_exists('./db/local.php') && file_exists('./templates/tiki-check.tpl')) {
 	$standalone = false;
-	require_once ('tiki-setup.php');
+	require_once('tiki-setup.php');
 	$access->check_permission('tiki_p_admin');
 } else {
 	$standalone = true;
@@ -32,8 +32,8 @@ if (file_exists('./db/local.php') && file_exists('./templates/tiki-check.tpl')) 
 	}
 
 	/**
-	  * @param $var
-	  */
+	 * @param $var
+	 */
 	function renderTable($var)
 	{
 		global $render;
@@ -44,14 +44,14 @@ if (file_exists('./db/local.php') && file_exists('./templates/tiki-check.tpl')) 
 				$render .= '<td style="border:1px black;padding:5px;white-space:nowrap;">';
 				$render .= $key;
 				$render .= "</td>";
-				$iNbCol=0;
+				$iNbCol = 0;
 				foreach ($var[$key] as $key2 => $value2) {
 					$render .= '<td style="border:1px solid;';
-					if ($iNbCol != count(array_keys($var[$key]))-1) {
+					if ($iNbCol != count(array_keys($var[$key])) - 1) {
 						$render .= 'text-align: center;white-space:nowrap;';
 					}
 					$render .= '"><span class="';
-					switch($value2) {
+					switch ($value2) {
 						case 'good':
 						case 'safe':
 						case 'ugly':
@@ -61,7 +61,7 @@ if (file_exists('./db/local.php') && file_exists('./templates/tiki-check.tpl')) 
 							$render .= "button $value2";
 							break;
 					}
-					$render .= '">'.$value2.'</span></td>';
+					$render .= '">' . $value2 . '</span></td>';
 					$iNbCol++;
 				}
 				$render .= '</tr>';
@@ -70,7 +70,7 @@ if (file_exists('./db/local.php') && file_exists('./templates/tiki-check.tpl')) 
 		} else {
 			$render .= 'Nothing to display.';
 		}
- 	}
+	}
 }
 
 // Get PHP properties and check them
@@ -79,7 +79,7 @@ $php_properties = false;
 // Check error reporting level
 $e = error_reporting();
 $d = ini_get('display_errors');
-if ( $e == 0 ) {
+if ($e == 0) {
 	if ($d != 1) {
 		$php_properties['Error reporting'] = array(
 			'fitness' => tra('info'),
@@ -93,32 +93,32 @@ if ( $e == 0 ) {
 			'message' => tra('You will get no errors reported although display_errors is On, because the error_reporting level is set to 0. This might be the right thing for a production site, but in case of problems raise the value in php.ini to get more information.')
 		);
 	}
-} elseif ( $e > 0 && $e < 32767) {
+} elseif ($e > 0 && $e < 32767) {
 	if ($d != 1) {
 		$php_properties['Error reporting'] = array(
 			'fitness' => tra('info'),
 			'setting' => 'Disabled',
-			'message' => tra('You will get no errors reported, because display_errors is turned off. This might be the right thing for a production site, but in case of problems enable it in php.ini to get more information. Your error_reporting level is decent at '.$e.'.')
+			'message' => tra('You will get no errors reported, because display_errors is turned off. This might be the right thing for a production site, but in case of problems enable it in php.ini to get more information. Your error_reporting level is decent at ' . $e . '.')
 		);
 	} else {
 		$php_properties['Error reporting'] = array(
 			'fitness' => tra('info'),
 			'setting' => 'Partly',
-			'message' => tra('You will not get all errors reported as your error_reporting level is at '.$e.'. '.'This is not necessarily a bad thing (and it might be just right for production sites) as you will still get critical errors reported, but sometimes it can be handy to get more information. Check your error_reporting level in php.ini in case of having issues.')
+			'message' => tra('You will not get all errors reported as your error_reporting level is at ' . $e . '. ' . 'This is not necessarily a bad thing (and it might be just right for production sites) as you will still get critical errors reported, but sometimes it can be handy to get more information. Check your error_reporting level in php.ini in case of having issues.')
 		);
 	}
 } else {
-	if ( $d != 1 ) {
+	if ($d != 1) {
 		$php_properties['Error reporting'] = array(
 			'fitness' => tra('info'),
 			'setting' => 'Disabled',
-			'message' => tra('You will get no errors reported although your error_reporting level is all the way up at '.$e.', but display_errors is off. This might be the right thing for a production site, but in case of problems enable it in php.ini to get more information.')
+			'message' => tra('You will get no errors reported although your error_reporting level is all the way up at ' . $e . ', but display_errors is off. This might be the right thing for a production site, but in case of problems enable it in php.ini to get more information.')
 		);
 	} else {
 		$php_properties['Error reporting'] = array(
 			'fitness' => tra('info'),
 			'setting' => 'Full',
-			'message' => tra('You will get all errors reported as your error_reporting level is all the way up at '.$e.' and display_errors is on. Way to go in case of problems as the error reports usually contain some valuable hints!')
+			'message' => tra('You will get all errors reported as your error_reporting level is all the way up at ' . $e . ' and display_errors is on. Way to go in case of problems as the error reports usually contain some valuable hints!')
 		);
 	}
 }
@@ -153,13 +153,13 @@ if ($s) {
 		'setting' => 'PDO',
 		'message' => tra('The PDO extension is the suggested database driver/abstraction layer.')
 	);
-} elseif ( $s = extension_loaded('mysqli') ) {
+} elseif ($s = extension_loaded('mysqli')) {
 	$php_properties['DB Driver'] = array(
 		'fitness' => tra('ugly'),
 		'setting' => 'MySQLi',
 		'message' => tra('You do not have the recommended PDO database driver/abstraction layer. You do have the MySQLi driver though, so we will to fall back to the AdoDB abstraction layer that is bundled with Tiki.')
 	);
-} elseif ( extension_loaded('mysql') ) {
+} elseif (extension_loaded('mysql')) {
 	$php_properties['DB Driver'] = array(
 		'fitness' => tra('ugly'),
 		'setting' => 'MySQL',
@@ -176,9 +176,9 @@ if ($s) {
 
 // Now connect to the DB and make all our connectivity methods work the same
 $connection = false;
-if ( $standalone ) {
-	if ( empty($_POST['dbhost']) && !($php_properties['DB Driver']['setting'] == 'Not available') ) {
-			$render .= <<<DBC
+if ($standalone) {
+	if (empty($_POST['dbhost']) && !($php_properties['DB Driver']['setting'] == 'Not available')) {
+		$render .= <<<DBC
 <h2>Database credentials</h2>
 Couldn't connect to database, please provide valid credentials.
 <form method="post" action="{$_SERVER['REQUEST_URI']}">
@@ -192,26 +192,27 @@ DBC;
 		switch ($php_properties['DB Driver']['setting']) {
 			case 'PDO':
 				// We don't do exception handling here to be PHP 4 compatible
-				$connection = new PDO('mysql:host='.$_POST['dbhost'], $_POST['dbuser'], $_POST['dbpass']);
+				$connection = new PDO('mysql:host=' . $_POST['dbhost'], $_POST['dbuser'], $_POST['dbpass']);
 				/**
-				  * @param $query
-				   * @param $connection
-				   * @return mixed
-				  */
+				 * @param $query
+				 * @param $connection
+				 * @return mixed
+				 */
 				function query($query, $connection)
 				{
 					$result = $connection->query($query);
 					$return = $result->fetchAll();
-					return($return);
+					return ($return);
 				}
+
 				break;
 			case 'MySQLi':
 				$error = false;
 				$connection = new mysqli($_POST['dbhost'], $_POST['dbuser'], $_POST['dbpass']);
 				$error = mysqli_connect_error();
-				if ( !empty($error) ) {
+				if (!empty($error)) {
 					$connection = false;
-					$render .= 'Couldn\'t connect to database: '.$error;
+					$render .= 'Couldn\'t connect to database: ' . $error;
 				}
 				/**
 				 * @param $query
@@ -222,15 +223,16 @@ DBC;
 				{
 					$result = $connection->query($query);
 					$return = array();
-					while (	$row = $result->fetch_assoc() ) {
+					while ($row = $result->fetch_assoc()) {
 						$return[] = $row;
 					}
-					return($return);
+					return ($return);
 				}
+
 				break;
 			case 'MySQL':
 				$connection = mysql_connect($_POST['dbhost'], $_POST['dbuser'], $_POST['dbpass']);
-				if ( $connection === false ) {
+				if ($connection === false) {
 					$render .= 'Cannot connect to MySQL. Wrong credentials?';
 				}
 				/**
@@ -242,28 +244,29 @@ DBC;
 				{
 					$result = mysql_query($query);
 					$return = array();
-					while (	$row = mysql_fetch_array($result) ) {
+					while ($row = mysql_fetch_array($result)) {
 						$return[] = $row;
 					}
-					return($return);
+					return ($return);
 				}
+
 				break;
 		}
 	}
 } else {
 	/**
-	  * @param $query
-	  * @return array
-	  */
+	 * @param $query
+	 * @return array
+	 */
 	function query($query)
 	{
 		global $tikilib;
 		$result = $tikilib->query($query);
 		$return = array();
-		while ( $row = $result->fetchRow() ) {
+		while ($row = $result->fetchRow()) {
 			$return[] = $row;
 		}
-		return($return);
+		return ($return);
 	}
 }
 
@@ -272,9 +275,9 @@ $server_information['Operating System'] = array(
 	'value' => PHP_OS,
 );
 
-if ( PHP_OS == 'Linux' && function_exists('exec') ) {
+if (PHP_OS == 'Linux' && function_exists('exec')) {
 	exec('lsb_release -d', $output, $retval);
-	if ( $retval == 0 ) {
+	if ($retval == 0) {
 		$server_information['Release'] = array(
 			'value' => str_replace('Description:', '', $output[0])
 		);
@@ -294,35 +297,35 @@ $server_information['Server Signature']['value'] = !empty($_SERVER['SERVER_SIGNA
 // Free disk space
 if (function_exists('disk_free_space')) {
 	$bytes = disk_free_space('.');
-	$si_prefix = array( 'B', 'KB', 'MB', 'GB', 'TB', 'EB', 'ZB', 'YB' );
+	$si_prefix = array('B', 'KB', 'MB', 'GB', 'TB', 'EB', 'ZB', 'YB');
 	$base = 1024;
-	$class = min((int) log($bytes, $base), count($si_prefix) - 1);
+	$class = min((int)log($bytes, $base), count($si_prefix) - 1);
 	$free_space = sprintf('%1.2f', $bytes / pow($base, $class)) . ' ' . $si_prefix[$class];
-	if ( $bytes < 200 * 1024 * 1024 ) {
+	if ($bytes < 200 * 1024 * 1024) {
 		$server_properties['Disk Space'] = array(
 			'fitness' => 'bad',
 			'value' => $free_space,
 			'message' => tra('You have less than 200 megs of free disk space. Tiki will not fit on this disk drive.')
 		);
-	} elseif ( $bytes < 250 * 1024 * 1024 ) {
+	} elseif ($bytes < 250 * 1024 * 1024) {
 		$server_properties['Disk Space'] = array(
 			'fitness' => 'ugly',
 			'value' => $free_space,
-			'message' => tra('You have less than 250 megs of free disk space. This is quite tight. Tiki needs disk space for compiling templates and for uploading files.').' '.tra('When the disk runs full you will not be able to log into your Tiki any more.').' '.tra('We can not reliably check for quotas, so be warned that if your server makes use of them you might have less disk space available.')
+			'message' => tra('You have less than 250 megs of free disk space. This is quite tight. Tiki needs disk space for compiling templates and for uploading files.') . ' ' . tra('When the disk runs full you will not be able to log into your Tiki any more.') . ' ' . tra('We can not reliably check for quotas, so be warned that if your server makes use of them you might have less disk space available.')
 		);
 	} else {
 		$server_properties['Disk Space'] = array(
 			'fitness' => 'good',
 			'value' => $free_space,
-			'message' => tra('You have more than 251 megs of free disk space. Tiki will run nicely, but you may run into issues when your site grows (e.g. file uploads)').' '.tra('When the disk runs full you will not be able to log into your Tiki any more.').' '.tra('We can not reliably check for quotas, so be warned that if your server makes use of them you might have less disk space available.')
+			'message' => tra('You have more than 251 megs of free disk space. Tiki will run nicely, but you may run into issues when your site grows (e.g. file uploads)') . ' ' . tra('When the disk runs full you will not be able to log into your Tiki any more.') . ' ' . tra('We can not reliably check for quotas, so be warned that if your server makes use of them you might have less disk space available.')
 		);
 	}
 } else {
-		$server_properties['Disk Space'] = array(
-			'fitness' => 'N/A',
-			'value' => 'N/A',
-			'message' => tra('The PHP function disk_free_space is not available on your server, so we can\'t check for this.')
-		);
+	$server_properties['Disk Space'] = array(
+		'fitness' => 'N/A',
+		'value' => 'N/A',
+		'message' => tra('The PHP function disk_free_space is not available on your server, so we can\'t check for this.')
+	);
 }
 
 // PHP Version
@@ -375,19 +378,19 @@ if (substr($s, 0, 3) == 'cgi') {
 }
 
 // ByteCode Cache
-if ( function_exists('apc_sma_info') && ini_get('apc.enabled') ) {
+if (function_exists('apc_sma_info') && ini_get('apc.enabled')) {
 	$php_properties['ByteCode Cache'] = array(
 		'fitness' => tra('good'),
 		'setting' => 'APC',
 		'message' => tra('You are using APC as your ByteCode Cache which increases performance, if correctly configured. See Admin->Performance in your Tiki for more details.')
 	);
-} elseif ( function_exists('xcache_info') && ( ini_get('xcache.cacher') == '1' || ini_get('xcache.cacher') == 'On' ) ) {
+} elseif (function_exists('xcache_info') && (ini_get('xcache.cacher') == '1' || ini_get('xcache.cacher') == 'On')) {
 	$php_properties['ByteCode Cache'] = array(
 		'fitness' => tra('good'),
 		'setting' => 'xCache',
 		'message' => tra('You are using xCache as your ByteCode Cache which increases performance, if correctly configured. See Admin->Performance in your Tiki for more details.')
 	);
-} elseif ( function_exists('wincache_ocache_fileinfo') && ( ini_get('wincache.ocenabled') == '1') ) {
+} elseif (function_exists('wincache_ocache_fileinfo') && (ini_get('wincache.ocenabled') == '1')) {
 	$sapi_type = php_sapi_name();
 	if ($sapi_type == 'cgi-fcgi') {
 		$php_properties['ByteCode Cache'] = array(
@@ -421,29 +424,32 @@ if ( function_exists('apc_sma_info') && ini_get('apc.enabled') ) {
 // memory_limit
 $memory_limit = ini_get('memory_limit');
 $s = trim($memory_limit);
-$last = strtolower($s{strlen($s)-1});
-switch ( $last ) {
-	case 'g': $s *= 1024;
-	case 'm': $s *= 1024;
-	case 'k': $s *= 1024;
+$last = strtolower($s{strlen($s) - 1});
+switch ($last) {
+	case 'g':
+		$s *= 1024;
+	case 'm':
+		$s *= 1024;
+	case 'k':
+		$s *= 1024;
 }
 if ($s >= 160 * 1024 * 1024) {
 	$php_properties['memory_limit'] = array(
 		'fitness' => tra('good'),
 		'setting' => $memory_limit,
-		'message' => tra('Your memory_limit is at').' '.$memory_limit.'. '.tra('This is known to behave well even for bigger sites.')
+		'message' => tra('Your memory_limit is at') . ' ' . $memory_limit . '. ' . tra('This is known to behave well even for bigger sites.')
 	);
-} elseif ( $s < 160 * 1024 * 1024 && $s > 127 * 1024 * 1024 ) {
+} elseif ($s < 160 * 1024 * 1024 && $s > 127 * 1024 * 1024) {
 	$php_properties['memory_limit'] = array(
-		'fitness' => tra('ugly') ,
+		'fitness' => tra('ugly'),
 		'setting' => $memory_limit,
-		'message' => tra('Your memory_limit is at').' '.$memory_limit.'. '.tra('This will normally work, but you might run into problems when your site grows.')
+		'message' => tra('Your memory_limit is at') . ' ' . $memory_limit . '. ' . tra('This will normally work, but you might run into problems when your site grows.')
 	);
 } else {
 	$php_properties['memory_limit'] = array(
 		'fitness' => tra('bad'),
 		'setting' => $memory_limit,
-		'message' => tra('Your memory_limit is at').' '.$memory_limit.'. '.tra('This is known to cause issues! You should raise your memory_limit to at least 128M, which is the default of PHP.')
+		'message' => tra('Your memory_limit is at') . ' ' . $memory_limit . '. ' . tra('This is known to cause issues! You should raise your memory_limit to at least 128M, which is the default of PHP.')
 	);
 }
 
@@ -529,7 +535,7 @@ if ($s) {
 
 // default_charset
 $s = ini_get('default_charset');
-if ( strtolower($s) == 'utf-8' ) {
+if (strtolower($s) == 'utf-8') {
 	$php_properties['default_charset'] = array(
 		'fitness' => tra('good'),
 		'setting' => $s,
@@ -545,7 +551,7 @@ if ( strtolower($s) == 'utf-8' ) {
 
 // date.timezone
 $s = ini_get('date.timezone');
-if ( empty($s) ) {
+if (empty($s)) {
 	$php_properties['date.timezone'] = array(
 		'fitness' => tra('ugly'),
 		'setting' => $s,
@@ -577,103 +583,109 @@ if ($s) {
 
 // max_execution_time
 $s = ini_get('max_execution_time');
-if ( $s >= 30 && $s <= 90 ) {
+if ($s >= 30 && $s <= 90) {
 	$php_properties['max_execution_time'] = array(
 		'fitness' => tra('good'),
-		'setting' => $s.'s',
-		'message' => tra('Your max_execution_time is at').' '.$s.'. '.tra('This is a good value for production sites. If you experience timeouts (such as when performing admin functions) you may need to increase this nevertheless.')
+		'setting' => $s . 's',
+		'message' => tra('Your max_execution_time is at') . ' ' . $s . '. ' . tra('This is a good value for production sites. If you experience timeouts (such as when performing admin functions) you may need to increase this nevertheless.')
 	);
-} elseif ( $s == -1 || $s == 0 ) {
+} elseif ($s == -1 || $s == 0) {
 	$php_properties['max_execution_time'] = array(
 		'fitness' => tra('ugly'),
-		'setting' => $s.'s',
-		'message' => tra('Your max_execution_time is unlimited.').' '.tra('This is not necessarily bad, but it\'s a good idea to limit this time on productions servers in order to eliminate unexpectedly long running scripts.')
+		'setting' => $s . 's',
+		'message' => tra('Your max_execution_time is unlimited.') . ' ' . tra('This is not necessarily bad, but it\'s a good idea to limit this time on productions servers in order to eliminate unexpectedly long running scripts.')
 	);
-} elseif ( $s > 90 ) {
+} elseif ($s > 90) {
 	$php_properties['max_execution_time'] = array(
 		'fitness' => tra('ugly'),
-		'setting' => $s.'s',
-		'message' => tra('Your max_execution_time is at').' '.$s.'. '.tra('This is not necessarily bad, but it\'s a good idea to limit this time on productions servers in order to eliminate unexpectedly long running scripts.')
+		'setting' => $s . 's',
+		'message' => tra('Your max_execution_time is at') . ' ' . $s . '. ' . tra('This is not necessarily bad, but it\'s a good idea to limit this time on productions servers in order to eliminate unexpectedly long running scripts.')
 	);
 } else {
 	$php_properties['max_execution_time'] = array(
 		'fitness' => tra('bad'),
-		'setting' => $s.'s',
-		'message' => tra('Your max_execution_time is at').' '.$s.'. '.tra('It is likely that some scripts, e.g. admin functions will not finish in this time! You should raise your max_execution_time to at least 30s.')
+		'setting' => $s . 's',
+		'message' => tra('Your max_execution_time is at') . ' ' . $s . '. ' . tra('It is likely that some scripts, e.g. admin functions will not finish in this time! You should raise your max_execution_time to at least 30s.')
 	);
 }
 
 // max_input_time
 $s = ini_get('max_input_time');
-if ( $s >= 50 && $s <= 90 ) {
+if ($s >= 50 && $s <= 90) {
 	$php_properties['max_input_time'] = array(
 		'fitness' => tra('good'),
-		'setting' => $s.'s',
-		'message' => tra('Your max_input_time is at').' '.$s.'. '.tra('This is a good value for production sites. If you experience timeouts (such as when performing admin functions) you may need to increase this nevertheless.')
+		'setting' => $s . 's',
+		'message' => tra('Your max_input_time is at') . ' ' . $s . '. ' . tra('This is a good value for production sites. If you experience timeouts (such as when performing admin functions) you may need to increase this nevertheless.')
 	);
-} elseif ( $s == -1 || $s == 0 ) {
+} elseif ($s == -1 || $s == 0) {
 	$php_properties['max_input_time'] = array(
 		'fitness' => tra('ugly'),
-		'setting' => $s.'s',
-		'message' => tra('Your max_input_time is unlimited.').' '.tra('This is not necessarily bad, but it\'s a good idea to limit this time on productions servers in order to eliminate unexpectedly long running scripts.')
+		'setting' => $s . 's',
+		'message' => tra('Your max_input_time is unlimited.') . ' ' . tra('This is not necessarily bad, but it\'s a good idea to limit this time on productions servers in order to eliminate unexpectedly long running scripts.')
 	);
-} elseif ( $s > 90 ) {
+} elseif ($s > 90) {
 	$php_properties['max_input_time'] = array(
 		'fitness' => tra('ugly'),
-		'setting' => $s.'s',
-		'message' => tra('Your max_input_time is at').' '.$s.'. '.tra('This is not necessarily bad, but it\'s a good idea to limit this time on productions servers in order to eliminate unexpectedly long running scripts.')
+		'setting' => $s . 's',
+		'message' => tra('Your max_input_time is at') . ' ' . $s . '. ' . tra('This is not necessarily bad, but it\'s a good idea to limit this time on productions servers in order to eliminate unexpectedly long running scripts.')
 	);
 } else {
 	$php_properties['max_input_time'] = array(
 		'fitness' => tra('bad'),
-		'setting' => $s.'s',
-		'message' => tra('Your max_input_time is at').' '.$s.'. '.tra('It is likely that some scripts, e.g. admin functions will not finish in this time! You should raise your max_input_time to at least 30 seconds.')
+		'setting' => $s . 's',
+		'message' => tra('Your max_input_time is at') . ' ' . $s . '. ' . tra('It is likely that some scripts, e.g. admin functions will not finish in this time! You should raise your max_input_time to at least 30 seconds.')
 	);
 }
 
 // upload_max_filesize
 $upload_max_filesize = ini_get('upload_max_filesize');
 $s = trim($upload_max_filesize);
-$last = strtolower($s{strlen($s)-1});
-switch ( $last ) {
-	case 'g': $s *= 1024;
-	case 'm': $s *= 1024;
-	case 'k': $s *= 1024;
+$last = strtolower($s{strlen($s) - 1});
+switch ($last) {
+	case 'g':
+		$s *= 1024;
+	case 'm':
+		$s *= 1024;
+	case 'k':
+		$s *= 1024;
 }
 if ($s >= 8 * 1024 * 1024) {
 	$php_properties['upload_max_filesize'] = array(
 		'fitness' => tra('good'),
 		'setting' => $upload_max_filesize,
-		'message' => tra('Your upload_max_filesize is at').' '.$upload_max_filesize.'. '.tra('You can upload quite big files, but keep in mind to set your script timeouts accordingly.')
+		'message' => tra('Your upload_max_filesize is at') . ' ' . $upload_max_filesize . '. ' . tra('You can upload quite big files, but keep in mind to set your script timeouts accordingly.')
 	);
 } else {
 	$php_properties['upload_max_filesize'] = array(
 		'fitness' => tra('ugly'),
 		'setting' => $upload_max_filesize,
-		'message' => tra('Your upload_max_filesize is at').' '.$upload_max_filesize.'. '.tra('Nothing wrong with that, but some users might want to upload something bigger.')
+		'message' => tra('Your upload_max_filesize is at') . ' ' . $upload_max_filesize . '. ' . tra('Nothing wrong with that, but some users might want to upload something bigger.')
 	);
 }
 
 // post_max_size
 $post_max_size = ini_get('post_max_size');
 $s = trim($post_max_size);
-$last = strtolower($s{strlen($s)-1});
-switch ( $last ) {
-	case 'g': $s *= 1024;
-	case 'm': $s *= 1024;
-	case 'k': $s *= 1024;
+$last = strtolower($s{strlen($s) - 1});
+switch ($last) {
+	case 'g':
+		$s *= 1024;
+	case 'm':
+		$s *= 1024;
+	case 'k':
+		$s *= 1024;
 }
 if ($s >= 8 * 1024 * 1024) {
 	$php_properties['post_max_size'] = array(
 		'fitness' => tra('good'),
 		'setting' => $post_max_size,
-		'message' => tra('Your post_max_size is at').' '.$post_max_size.'. '.tra('You can upload quite big files, but keep in mind to set your script timeouts accordingly.')
+		'message' => tra('Your post_max_size is at') . ' ' . $post_max_size . '. ' . tra('You can upload quite big files, but keep in mind to set your script timeouts accordingly.')
 	);
 } else {
 	$php_properties['post_max_size'] = array(
 		'fitness' => tra('ugly'),
 		'setting' => $post_max_size,
-		'message' => tra('Your post_max_size is at').' '.$post_max_size.'. '.tra('Nothing wrong with that, but some users might want to upload something bigger.')
+		'message' => tra('Your post_max_size is at') . ' ' . $post_max_size . '. ' . tra('Nothing wrong with that, but some users might want to upload something bigger.')
 	);
 }
 
@@ -712,7 +724,7 @@ if ($s) {
 
 // GD
 $s = extension_loaded('gd');
-if ( $s && function_exists('gd_info') ) {
+if ($s && function_exists('gd_info')) {
 	$gd_info = gd_info();
 	$im = $ft = null;
 	if (function_exists('imagecreate')) {
@@ -730,11 +742,11 @@ if ( $s && function_exists('gd_info') ) {
 		imagedestroy($im);
 	} else if ($im) {
 		$php_properties['gd'] = array(
-				'fitness' => tra('ugly'),
-				'setting' => $gd_info['GD Version'],
-				'message' => tra('The GD extension is loaded, and Tiki can create images, but the FreeType extension is needed for CAPTCHA text generation.')
-			);
-			imagedestroy($im);
+			'fitness' => tra('ugly'),
+			'setting' => $gd_info['GD Version'],
+			'message' => tra('The GD extension is loaded, and Tiki can create images, but the FreeType extension is needed for CAPTCHA text generation.')
+		);
+		imagedestroy($im);
 	} else {
 		$php_properties['gd'] = array(
 			'fitness' => tra('ugly'),
@@ -752,10 +764,10 @@ if ( $s && function_exists('gd_info') ) {
 
 // Image Magick
 $s = class_exists('Imagick');
-if ( $s ) {
+if ($s) {
 	$image = new Imagick();
 	$image->newImage(100, 100, new ImagickPixel('red'));
-	if ( $image ) {
+	if ($image) {
 		$php_properties['Image Magick'] = array(
 			'fitness' => tra('good'),
 			'setting' => 'Available',
@@ -766,15 +778,15 @@ if ( $s ) {
 		$php_properties['Image Magick'] = array(
 			'fitness' => tra('ugly'),
 			'setting' => 'Dysfunctional',
-			'message' => tra('ImageMagick is used as a fallback in case that GD is not available.').tra('ImageMagick is available, but unable to create images. Please check your ImageMagick configuration.')
-			);
+			'message' => tra('ImageMagick is used as a fallback in case that GD is not available.') . tra('ImageMagick is available, but unable to create images. Please check your ImageMagick configuration.')
+		);
 	}
 } else {
 	$php_properties['Image Magick'] = array(
 		'fitness' => tra('info'),
 		'setting' => 'Not Available',
 		'message' => tra('ImageMagick is used as a fallback in case that GD is not available.')
-		);
+	);
 }
 
 // mbstring
@@ -791,7 +803,7 @@ if ($s) {
 		$php_properties['mbstring'] = array(
 			'fitness' => tra('ugly'),
 			'setting' => 'Badly configured',
-			'message' => tra('The mbstring extension is loaded, but mbstring.func_overload = '.' '.$func_overload.'.'.' '.'Tiki only works with mbsring.func_overload = 0. Please check your php.ini.')
+			'message' => tra('The mbstring extension is loaded, but mbstring.func_overload = ' . ' ' . $func_overload . '.' . ' ' . 'Tiki only works with mbsring.func_overload = 0. Please check your php.ini.')
 		);
 	} else {
 		$php_properties['mbstring'] = array(
@@ -820,7 +832,7 @@ if ($s) {
 	$php_properties['calendar'] = array(
 		'fitness' => tra('bad'),
 		'setting' => 'Not available',
-		'message' => tra('calendar extension is needed by Tiki.').' '.tra('You will not be able to use the calendar feature of Tiki.')
+		'message' => tra('calendar extension is needed by Tiki.') . ' ' . tra('You will not be able to use the calendar feature of Tiki.')
 	);
 }
 
@@ -846,13 +858,31 @@ if ($s) {
 	$php_properties['libxml'] = array(
 		'fitness' => tra('good'),
 		'setting' => 'Loaded',
-		'message' => tra('This extension is needed for WebDAV.')
+		'message' => tra('This extension is needed for WebDAV and the dom extension (see below).')
 	);
 } else {
 	$php_properties['libxml'] = array(
 		'fitness' => tra('bad'),
 		'setting' => 'Not available',
-		'message' => tra('This extension is needed for WebDAV.')
+		'message' => tra('This extension is needed for WebDAV and the dom extension (see below).')
+	);
+}
+
+// dom (depends on libxml)
+$s = extension_loaded('dom');
+if ($s) {
+	$php_properties['dom'] = array(
+		'fitness' => tra('good'),
+		'setting' => 'Loaded',
+		'message' => tra('This extension is needed for many features such as:') . '<br>' .
+			tra('bigbluebutton, machine translation, SCORM & meta-data in file galleries, wiki importers, custom search, Kalura and others.')
+	);
+} else {
+	$php_properties['dom'] = array(
+		'fitness' => tra('bad'),
+		'setting' => 'Not available',
+		'message' => tra('This extension is needed for many features such as:') . '<br>' .
+			tra('bigbluebutton, machine translation, SCORM & meta-data in file galleries, wiki importers, custom search, Kalura and others.')
 	);
 }
 
@@ -897,13 +927,13 @@ if (is_file('.svn/wc.db')) {
 			'fitness' => tra('good'),
 			'setting' => 'Loaded',
 			'message' => tra('This extension is used to interpret SVN information for TortoiseSVN 1.7 or higher.')
-			);
+		);
 	} else {
 		$php_properties['sqlite3'] = array(
 			'fitness' => tra('ugly'),
 			'setting' => 'Not available',
 			'message' => tra('This extension is used to interpret SVN information for TortoiseSVN 1.7 or higher.')
-			);
+		);
 	}
 }
 
@@ -911,7 +941,7 @@ if (is_file('.svn/wc.db')) {
 // eval() is a language construct and not a function
 // so function_exists() doesn't work
 $s = eval('return 42;');
-if ( $s == 42 ) {
+if ($s == 42) {
 	$php_properties['eval()'] = array(
 		'fitness' => tra('good'),
 		'setting' => 'Available',
@@ -921,40 +951,40 @@ if ( $s == 42 ) {
 	$php_properties['eval()'] = array(
 		'fitness' => tra('bad'),
 		'setting' => 'Not available',
-		'message' => tra('The eval() function is required by the Smarty templating engine.').' '.tra('You will get "Please contact support about" messages instead of modules. eval() is most probably disabled via Suhosin.')
+		'message' => tra('The eval() function is required by the Smarty templating engine.') . ' ' . tra('You will get "Please contact support about" messages instead of modules. eval() is most probably disabled via Suhosin.')
 	);
 }
 
 // Zip Archive class
 $s = class_exists('ZipArchive');
-if ( $s ) {
+if ($s) {
 	$php_properties['ZipArchive class'] = array(
 		'fitness' => tra('good'),
 		'setting' => 'Available',
 		'message' => tra('The ZipArchive class is needed for features such as XML Wiki Import/Export and PluginArchiveBuilder.')
-		);
+	);
 } else {
 	$php_properties['ZipArchive class'] = array(
 		'fitness' => tra('ugly'),
 		'setting' => 'Not Available',
 		'message' => tra('The ZipArchive class is needed for features such as XML Wiki Import/Export and PluginArchiveBuilder.')
-		);
+	);
 }
 
 // DateTime class
 $s = class_exists('DateTime');
-if ( $s ) {
+if ($s) {
 	$php_properties['DateTime class'] = array(
 		'fitness' => tra('good'),
 		'setting' => 'Available',
 		'message' => tra('The DateTime class is needed for the WebDAV feature.')
-		);
+	);
 } else {
 	$php_properties['DateTime class'] = array(
 		'fitness' => tra('ugly'),
 		'setting' => 'Not Available',
 		'message' => tra('The DateTime class is needed for the WebDAV feature.')
-		);
+	);
 }
 
 // Get MySQL properties and check them
@@ -967,7 +997,7 @@ if ($connection || !$standalone) {
 	$result = query($query, $connection);
 	$mysql_version = $result[0]['VERSION()'];
 	$s = version_compare($mysql_version, '5.0.2', '>=');
-	if ( $s == true ) {
+	if ($s == true) {
 		$mysql_properties['Version'] = array(
 			'fitness' => tra('good'),
 			'setting' => $mysql_version,
@@ -989,24 +1019,24 @@ if ($connection || !$standalone) {
 	if ($s >= 8 * 1024 * 1024) {
 		$mysql_properties['max_allowed_packet'] = array(
 			'fitness' => tra('good'),
-			'setting' => $max_allowed_packet.'M',
-			'message' => tra('Your max_allowed_packet setting is at').' '.$max_allowed_packet.'M. '.tra('You can upload quite big files, but keep in mind to set your script timeouts accordingly.').' '.tra('This limits the size of binary files that can be added to Tiki, when storing files in the database. Please see: <a href="http://doc.tiki.org/File+Storage">file storage</a>.')
+			'setting' => $max_allowed_packet . 'M',
+			'message' => tra('Your max_allowed_packet setting is at') . ' ' . $max_allowed_packet . 'M. ' . tra('You can upload quite big files, but keep in mind to set your script timeouts accordingly.') . ' ' . tra('This limits the size of binary files that can be added to Tiki, when storing files in the database. Please see: <a href="http://doc.tiki.org/File+Storage">file storage</a>.')
 		);
 	} else {
 		$mysql_properties['max_allowed_packet'] = array(
 			'fitness' => tra('ugly'),
-			'setting' => $max_allowed_packet.'M',
-			'message' => tra('Your max_allowed_packet setting is at').' '.$max_allowed_packet.'M. '.tra('Nothing wrong with that, but some users might want to upload something bigger.').' '.tra('This limits the size of binary files that can be added to Tiki, when storing files in the database. Please see: <a href="http://doc.tiki.org/File+Storage">file storage</a>.')
+			'setting' => $max_allowed_packet . 'M',
+			'message' => tra('Your max_allowed_packet setting is at') . ' ' . $max_allowed_packet . 'M. ' . tra('Nothing wrong with that, but some users might want to upload something bigger.') . ' ' . tra('This limits the size of binary files that can be added to Tiki, when storing files in the database. Please see: <a href="http://doc.tiki.org/File+Storage">file storage</a>.')
 		);
 	}
 
 	// UTF-8 Charset
 	$charset_types = "client connection database results server system";
 	foreach (explode(' ', $charset_types) as $type) {
-		$query = "SHOW VARIABLES LIKE 'character_set_".$type."';";
+		$query = "SHOW VARIABLES LIKE 'character_set_" . $type . "';";
 		$result = query($query, $connection);
 		foreach ($result as $value) {
-			if ( $value['Value'] == 'utf8' ) {
+			if ($value['Value'] == 'utf8') {
 				$mysql_properties[$value['Variable_name']] = array(
 					'fitness' => tra('good'),
 					'setting' => $value['Value'],
@@ -1025,10 +1055,10 @@ if ($connection || !$standalone) {
 	// UTF-8 Collation
 	$collation_types = "connection database server";
 	foreach (explode(' ', $collation_types) as $type) {
-		$query = "SHOW VARIABLES LIKE 'collation_".$type."';";
+		$query = "SHOW VARIABLES LIKE 'collation_" . $type . "';";
 		$result = query($query, $connection);
 		foreach ($result as $value) {
-			if ( substr($value['Value'], 0, 4) == 'utf8' ) {
+			if (substr($value['Value'], 0, 4) == 'utf8') {
 				$mysql_properties[$value['Variable_name']] = array(
 					'fitness' => tra('good'),
 					'setting' => $value['Value'],
@@ -1084,7 +1114,7 @@ if ($connection || !$standalone) {
 // Apache properties
 
 $apache_properties = false;
-if ( function_exists('apache_get_version')) {
+if (function_exists('apache_get_version')) {
 
 	// Apache Modules
 	$apache_modules = apache_get_modules();
@@ -1095,13 +1125,13 @@ if ( function_exists('apache_get_version')) {
 	if ($s) {
 		$apache_properties['mod_rewrite'] = array(
 			'setting' => 'Loaded',
-			'fitness' => tra('good') ,
+			'fitness' => tra('good'),
 			'message' => tra('Tiki needs this module for Search Engine Friendly URLs via .htaccess. We can\'t check though, if your web server respects configurations made in .htaccess. For further information go to Admin->SefURL in your Tiki.')
 		);
 	} else {
 		$apache_properties['mod_rewrite'] = array(
 			'setting' => 'Not available',
-			'fitness' => tra('ugly') ,
+			'fitness' => tra('ugly'),
 			'message' => tra('Tiki needs this module for Search Engine Friendly URLs. For further information go to Admin->SefURL in your Tiki.')
 		);
 	}
@@ -1123,20 +1153,20 @@ if ( function_exists('apache_get_version')) {
 				$smarty->assign('rewritebaseSetting', $rewritebase);
 				$apache_properties['RewriteBase'] = array(
 					'setting' => $rewritebase,
-					'fitness' => tra('good') ,
+					'fitness' => tra('good'),
 					'message' => tra('Your RewriteBase is set correctly in .htaccess. Search Engine Friendly URLs should work. Beware though that we can\'t check if Apache really loads .htaccess.')
 				);
 			} else {
 				$apache_properties['RewriteBase'] = array(
 					'setting' => $rewritebase,
-					'fitness' => tra('bad') ,
-					'message' => tra('Your RewriteBase is not set correctly in .htaccess. Search Engine Friendly URLs are not going to work like that. It should be set to "').substr($url_path, 0, -1).'".'
+					'fitness' => tra('bad'),
+					'message' => tra('Your RewriteBase is not set correctly in .htaccess. Search Engine Friendly URLs are not going to work like that. It should be set to "') . substr($url_path, 0, -1) . '".'
 				);
 			}
 		} else {
 			$apache_properties['RewriteBase'] = array(
 				'setting' => $rewritebase,
-				'fitness' => tra('info') ,
+				'fitness' => tra('info'),
 				'message' => tra('You haven\'t activated .htaccess. So this check is useless. If you want to use Search Engine Friendly URLs, you will have to activate .htaccess by copying _htaccess into its place (or a symlink if supported by your Operating System). Then come back to have a look at this check again.')
 			);
 		}
@@ -1148,13 +1178,13 @@ if ( function_exists('apache_get_version')) {
 	if ($s) {
 		$apache_properties['mod_expires'] = array(
 			'setting' => 'Loaded',
-			'fitness' => tra('good') ,
+			'fitness' => tra('good'),
 			'message' => tra('With this module you can set the HTTP Expires header and therefore increase performance. We can\'t check though, if mod_expires is configured correctly.')
 		);
 	} else {
 		$apache_properties['mod_expires'] = array(
 			'setting' => 'Not available',
-			'fitness' => tra('ugly') ,
+			'fitness' => tra('ugly'),
 			'message' => tra('With this module you can set the HTTP Expires header and therefore increase performance. Once you install it, you still need to configure it correctly.')
 		);
 	}
@@ -1165,13 +1195,13 @@ if ( function_exists('apache_get_version')) {
 	if ($s) {
 		$apache_properties['mod_deflate'] = array(
 			'setting' => 'Loaded',
-			'fitness' => tra('good') ,
+			'fitness' => tra('good'),
 			'message' => tra('With this module you can compress the data your webserver sends out and therefore decrease used bandwidth and increase performance. We can\'t check though, if mod_deflate is configured correctly.')
 		);
 	} else {
 		$apache_properties['mod_deflate'] = array(
 			'setting' => 'Not available',
-			'fitness' => tra('ugly') ,
+			'fitness' => tra('ugly'),
 			'message' => tra('With this module you can compress the data your webserver sends out and therefore decrease used bandwidth and increase performance. Once you install it, you still need to configure it correctly.')
 		);
 	}
@@ -1182,13 +1212,13 @@ if ( function_exists('apache_get_version')) {
 	if ($s) {
 		$apache_properties['mod_security'] = array(
 			'setting' => 'Loaded',
-			'fitness' => tra('info') ,
+			'fitness' => tra('info'),
 			'message' => tra('This module can increase security of your Tiki and therefore your server, but be warned that it is very tricky to configure it correctly. A misconfiguration can lead to failed page saves or other hard to trace bugs.')
 		);
 	} else {
 		$apache_properties['mod_security'] = array(
 			'setting' => 'Not available',
-			'fitness' => tra('info') ,
+			'fitness' => tra('info'),
 			'message' => tra('This module can increase security of your Tiki and therefore your server, but be warned that it is very tricky to configure it correctly. A misconfiguration can lead to failed page saves or other hard to trace bugs.')
 		);
 	}
@@ -1223,16 +1253,15 @@ if (check_isIIS()) {
 			'fitness' => tra('good'),
 			'setting' => 'Available',
 			'message' => tra('The URL Rewrite Module is required to use SEFURL on IIS.')
-			);
+		);
 	} else {
 		$iis_properties['IIS Url Rewrite Module'] = array(
 			'fitness' => tra('bad'),
 			'setting' => 'Not Available',
 			'message' => tra('The URL Rewrite Module is required to use SEFURL on IIS.')
-			);
+		);
 	}
 }
-
 
 
 // Security Checks
@@ -1242,15 +1271,15 @@ $security = false;
 // check file upload dir and compare it to tiki root dir
 $s = ini_get('upload_tmp_dir');
 $sn = substr($_SERVER['SCRIPT_NAME'], 0, -14);
-if ( $s != "" && strpos($sn, $s) !== false) {
+if ($s != "" && strpos($sn, $s) !== false) {
 	$security['upload_tmp_dir'] = array(
-		'fitness' => tra('unsafe') ,
+		'fitness' => tra('unsafe'),
 		'setting' => $s,
 		'message' => tra('upload_tmp_dir is probably within your Tiki directory. There is a risk that someone can upload any file to this directory and access them via web browser')
 	);
 } else {
 	$security['upload_tmp_dir'] = array(
-		'fitness' => tra('unknown') ,
+		'fitness' => tra('unknown'),
 		'setting' => $s,
 		'message' => tra('Can\'t reliably determine, if your upload_tmp_dir is accessible via a web browser. To make sure you should check your webserver config.')
 	);
@@ -1261,13 +1290,13 @@ $s = ini_get('register_globals');
 if ($s) {
 	$security['register_globals'] = array(
 		'setting' => 'On',
-		'fitness' => tra('unsafe') ,
+		'fitness' => tra('unsafe'),
 		'message' => tra('register_globals should be off by default. See the php manual for details.')
 	);
 } else {
 	$security['register_globals'] = array(
 		'setting' => 'Off',
-		'fitness' => tra('safe') ,
+		'fitness' => tra('safe'),
 		'message' => tra('register_globals should be off by default. See the php manual for details.')
 	);
 }
@@ -1275,60 +1304,60 @@ if ($s) {
 // Determine system state
 $pdf_webkit = '';
 if (isset($prefs) && $prefs['print_pdf_from_url'] == 'webkit') {
-	$pdf_webkit = '<b>'.tra('WebKit is enabled').'.</b> ';
+	$pdf_webkit = '<b>' . tra('WebKit is enabled') . '.</b> ';
 }
 $feature_blogs = '';
 if (isset($prefs) && $prefs['feature_blogs'] == 'y') {
-	$feature_blogs = '<b>'.tra('Blogs is enabled').'.</b> ';
+	$feature_blogs = '<b>' . tra('Blogs is enabled') . '.</b> ';
 }
 
 $fcts = array(
-		array (
-			'function' => 'exec',
-			'risky' => tra('Exec can potentially be used to execute arbitrary code on your server.').' '.tra('Tiki does not need it, you may want to disable it.'),
-			'safe' => tra('Exec can be potentially be used to execute arbitrary code on your server.').' '.tra('Tiki does not need it, you are wise to have it disabled.')
-		),
-		array (
-			'function' => 'passthru',
-			'risky' => tra('Passthru is similar to exec.').' '.tra('Tiki does not need it, you may want to disable it.'),
-			'safe' =>  tra('Passthru is similar to exec.').' '.tra('Tiki does not need it, you are wise to have it disabled.')
-		),
-		array (
-			'function' => 'shell_exec',
-			'risky' => tra('Shell_exec is similar to exec.').' '.tra('Tiki needs it to run PDF from URL: WebKit (wkhtmltopdf). '.$pdf_webkit.'If you need this and trust the other PHP software on your server, you should enable it.'),
-			'safe' =>  tra('Shell_exec is similar to exec.').' '.tra('Tiki needs it to run PDF from URL: WebKit (wkhtmltopdf). '.$pdf_webkit.'If you need this and trust the other PHP software on your server, you should enable it.')
-		),
-		array (
-			'function' => 'system',
-			'risky' => tra('System is similar to exec.').' '.tra('Tiki does not need it, you may want to disable it.'),
-			'safe' =>  tra('System is similar to exec.').' '.tra('Tiki does not need it, you are wise to have it disabled.')
-		),
-		array (
-			'function' => 'proc_open',
-			'risky' => tra('Proc_open is similar to exec.').' '.tra('Tiki does not need it, you may want to disable it.'),
-			'safe' =>  tra('Proc_open is similar to exec.').' '.tra('Tiki does not need it, you are wise to have it disabled.')
-		),
-		array (
-			'function' => 'curl_exec',
-			'risky' => tra('Curl_exec can potentially be abused to write malicious code.').' '.tra('Tiki needs it to run features like Kaltura, CAS login, CClite and the myspace and sf wiki-plugins. If you need these and trust the other PHP software on your server, you should enable it.'),
-			'safe' => tra('Curl_exec can potentially be abused to write malicious code.').' '.tra('Tiki needs it to run features like Kaltura, CAS login, CClite and the myspace and sf wiki-plugins. If you need these and trust the other PHP software on your server, you should enable it.')
-		),
-		array (
-			'function' => 'curl_multi_exec',
-			'risky' => tra('Curl_multi_exec can potentially be abused to write malicious code.').' '.tra('Tiki needs it to run features like Kaltura, CAS login, CClite and the myspace and sf wiki-plugins. If you need these and trust the other PHP software on your server, you should enable it.'),
-			'safe' => tra('Curl_multi_exec can potentially be abused to write malicious code.').' '.tra('Tiki needs it to run features like Kaltura, CAS login, CClite and the myspace and sf wiki-plugins. If you need these and trust the other PHP software on your server, you should enable it.')
-		),
-		array (
-			'function' => 'parse_ini_file',
-			'risky' => tra('It is probably an urban myth that this is dangerous. Tiki team will reconsider this check, but be warned.'),
-			'safe' => tra('It is probably an urban myth that this is dangerous. Tiki team will reconsider this check, but be warned.'),
-		),
-		array (
-			'function' => 'show_source',
-			'risky' => tra('It is probably an urban myth that this is dangerous. Tiki team will reconsider this check, but be warned.'),
-			'safe' => tra('It is probably an urban myth that this is dangerous. Tiki team will reconsider this check, but be warned.'),
-		)
-	);
+	array(
+		'function' => 'exec',
+		'risky' => tra('Exec can potentially be used to execute arbitrary code on your server.') . ' ' . tra('Tiki does not need it, you may want to disable it.'),
+		'safe' => tra('Exec can be potentially be used to execute arbitrary code on your server.') . ' ' . tra('Tiki does not need it, you are wise to have it disabled.')
+	),
+	array(
+		'function' => 'passthru',
+		'risky' => tra('Passthru is similar to exec.') . ' ' . tra('Tiki does not need it, you may want to disable it.'),
+		'safe' => tra('Passthru is similar to exec.') . ' ' . tra('Tiki does not need it, you are wise to have it disabled.')
+	),
+	array(
+		'function' => 'shell_exec',
+		'risky' => tra('Shell_exec is similar to exec.') . ' ' . tra('Tiki needs it to run PDF from URL: WebKit (wkhtmltopdf). ' . $pdf_webkit . 'If you need this and trust the other PHP software on your server, you should enable it.'),
+		'safe' => tra('Shell_exec is similar to exec.') . ' ' . tra('Tiki needs it to run PDF from URL: WebKit (wkhtmltopdf). ' . $pdf_webkit . 'If you need this and trust the other PHP software on your server, you should enable it.')
+	),
+	array(
+		'function' => 'system',
+		'risky' => tra('System is similar to exec.') . ' ' . tra('Tiki does not need it, you may want to disable it.'),
+		'safe' => tra('System is similar to exec.') . ' ' . tra('Tiki does not need it, you are wise to have it disabled.')
+	),
+	array(
+		'function' => 'proc_open',
+		'risky' => tra('Proc_open is similar to exec.') . ' ' . tra('Tiki does not need it, you may want to disable it.'),
+		'safe' => tra('Proc_open is similar to exec.') . ' ' . tra('Tiki does not need it, you are wise to have it disabled.')
+	),
+	array(
+		'function' => 'curl_exec',
+		'risky' => tra('Curl_exec can potentially be abused to write malicious code.') . ' ' . tra('Tiki needs it to run features like Kaltura, CAS login, CClite and the myspace and sf wiki-plugins. If you need these and trust the other PHP software on your server, you should enable it.'),
+		'safe' => tra('Curl_exec can potentially be abused to write malicious code.') . ' ' . tra('Tiki needs it to run features like Kaltura, CAS login, CClite and the myspace and sf wiki-plugins. If you need these and trust the other PHP software on your server, you should enable it.')
+	),
+	array(
+		'function' => 'curl_multi_exec',
+		'risky' => tra('Curl_multi_exec can potentially be abused to write malicious code.') . ' ' . tra('Tiki needs it to run features like Kaltura, CAS login, CClite and the myspace and sf wiki-plugins. If you need these and trust the other PHP software on your server, you should enable it.'),
+		'safe' => tra('Curl_multi_exec can potentially be abused to write malicious code.') . ' ' . tra('Tiki needs it to run features like Kaltura, CAS login, CClite and the myspace and sf wiki-plugins. If you need these and trust the other PHP software on your server, you should enable it.')
+	),
+	array(
+		'function' => 'parse_ini_file',
+		'risky' => tra('It is probably an urban myth that this is dangerous. Tiki team will reconsider this check, but be warned.'),
+		'safe' => tra('It is probably an urban myth that this is dangerous. Tiki team will reconsider this check, but be warned.'),
+	),
+	array(
+		'function' => 'show_source',
+		'risky' => tra('It is probably an urban myth that this is dangerous. Tiki team will reconsider this check, but be warned.'),
+		'safe' => tra('It is probably an urban myth that this is dangerous. Tiki team will reconsider this check, but be warned.'),
+	)
+);
 
 foreach ($fcts as $fct) {
 	if (function_exists($fct['function'])) {
@@ -1382,20 +1411,20 @@ if ($s == 1) {
 	$security['allow_url_fopen'] = array(
 		'setting' => 'Enabled',
 		'fitness' => tra('risky'),
-		'message' => tra('allow_url_fopen may potentially be used to upload remote data or scripts. '.$feature_blogs.'If you dont use the blog feature, you can switch it off.')
+		'message' => tra('allow_url_fopen may potentially be used to upload remote data or scripts. ' . $feature_blogs . 'If you dont use the blog feature, you can switch it off.')
 	);
 } else {
 	$security['allow_url_fopen'] = array(
 		'setting' => 'Disabled',
 		'fitness' => tra('safe'),
-		'message' => tra('allow_url_fopen may potentially be used to upload remote data or scripts. '.$feature_blogs.'If you dont use the blog feature, you can switch it off.')
+		'message' => tra('allow_url_fopen may potentially be used to upload remote data or scripts. ' . $feature_blogs . 'If you dont use the blog feature, you can switch it off.')
 	);
 }
 
 if (!$standalone) {
 	// The following is borrowed from tiki-admin_system.php
 	if ($prefs['feature_forums'] == 'y') {
-		include_once ('lib/comments/commentslib.php');
+		include_once('lib/comments/commentslib.php');
 		$commentslib = new Comments($dbTiki);
 		$dirs = $commentslib->list_directories_to_save();
 	} else {
@@ -1442,21 +1471,21 @@ if ($standalone) {
 	renderTable($mysql_properties);
 	$render .= '<h2>Test sending e-mails</h2>';
 	if (isset($_REQUEST['email_test_to'])) {
-		$email_test_headers = 'From: noreply@tiki.org' . "\n";	// needs a valid sender
-		$email_test_headers .= 'Reply-to: '. $_POST['email_test_to'] . "\n";
+		$email_test_headers = 'From: noreply@tiki.org' . "\n"; // needs a valid sender
+		$email_test_headers .= 'Reply-to: ' . $_POST['email_test_to'] . "\n";
 		$email_test_headers .= "Content-type: text/plain; charset=utf-8\n";
 		$email_test_headers .= 'X-Mailer: Tiki-Check - PHP/' . phpversion() . "\n";
 		$email_test_subject = tra('Test mail from Tiki Server Compatibility Test');
 		$email_test_body = tra("Congratulations!\n\nYour server can send emails.\n\n");
-		$email_test_body .= "\t".tra('Server:').' '.(empty($_SERVER['SERVER_NAME']) ? $_SERVER['SERVER_ADDR'] : $_SERVER['SERVER_NAME']) . "\n";
-		$email_test_body .= "\t".tra('Sent:').' '.date(DATE_RFC822) . "\n";
+		$email_test_body .= "\t" . tra('Server:') . ' ' . (empty($_SERVER['SERVER_NAME']) ? $_SERVER['SERVER_ADDR'] : $_SERVER['SERVER_NAME']) . "\n";
+		$email_test_body .= "\t" . tra('Sent:') . ' ' . date(DATE_RFC822) . "\n";
 
 		$sentmail = mail($_POST['email_test_to'], $email_test_subject, $email_test_body, $email_test_headers);
 		if ($sentmail) {
 			$mail['Sending mail'] = array(
 				'setting' => 'Accepted',
 				'fitness' => tra('good'),
-				'message' => tra('We were able to send an e-mail. This only means that a mail server accepted the mail for delivery. We don\'t know, if that server really delivers the mail. Please check the inbox of '.$_POST['email_test_to'].' to see, if the delivery really works.')
+				'message' => tra('We were able to send an e-mail. This only means that a mail server accepted the mail for delivery. We don\'t know, if that server really delivers the mail. Please check the inbox of ' . $_POST['email_test_to'] . ' to see, if the delivery really works.')
 			);
 		} else {
 			$mail['Sending mail'] = array(
@@ -1467,24 +1496,24 @@ if ($standalone) {
 		}
 		renderTable($mail);
 	} else {
-		$render .= '<form method="post" action="'.$_SERVER['REQUEST_URI'].'">';
+		$render .= '<form method="post" action="' . $_SERVER['REQUEST_URI'] . '">';
 		$render .= '<p><label for="e-mail">e-mail address to send test mail to</label>: <input type="text" id="email_test_to" name="email_test_to" /></p>';
 		$render .= '<p><input type="submit" value=" Send e-mail " /></p>';
 		$render .= '<p><input type="hidden" id="dbhost" name="dbhost" value="';
-				if (isset($_POST['dbhost'])) {
-					$render .= $_POST['dbhost'];
-				};
-			$render .= '" /></p>';
-			$render .= '<p><input type="hidden" id="dbuser" name="dbuser" value="';
-				if (isset($_POST['dbuser'])) {
-					$render .= $_POST['dbuser'];
-				};
-			$render .= '"/></p>';
-			$render .= '<p><input type="hidden" id="dbpass" name="dbpass" value="';
-				if (isset($_POST['dbpass'])) {
-					$render .= $_POST['dbpass'];
-				};
-			$render .= '"/></p>';
+		if (isset($_POST['dbhost'])) {
+			$render .= $_POST['dbhost'];
+		};
+		$render .= '" /></p>';
+		$render .= '<p><input type="hidden" id="dbuser" name="dbuser" value="';
+		if (isset($_POST['dbuser'])) {
+			$render .= $_POST['dbuser'];
+		};
+		$render .= '"/></p>';
+		$render .= '<p><input type="hidden" id="dbpass" name="dbpass" value="';
+		if (isset($_POST['dbpass'])) {
+			$render .= $_POST['dbpass'];
+		};
+		$render .= '"/></p>';
 		$render .= '</form>';
 	}
 
@@ -1499,7 +1528,7 @@ if ($standalone) {
 			if (isset($_REQUEST['apacheinfo']) && $_REQUEST['apacheinfo'] == 'y') {
 				$render .= $apache_server_info;
 			} else {
-				$render .= '<a href="'.$_SERVER['SCRIPT_NAME'].'?'.$_SERVER['QUERY_STRING'].'&apacheinfo=y">Append Apache /server-info;</a>';
+				$render .= '<a href="' . $_SERVER['SCRIPT_NAME'] . '?' . $_SERVER['QUERY_STRING'] . '&apacheinfo=y">Append Apache /server-info;</a>';
 			}
 		} elseif ($apache_server_info == 'nocurl') {
 			$render .= 'You don\'t have the Curl extension in PHP, so we can\'t append Apache\'s server-info.';
@@ -1522,7 +1551,7 @@ if ($standalone) {
 	$render .= '<h2>MySQL Variables</h2>';
 	renderTable($mysql_variables);
 	$render .= '<h2>PHP Info</h2>';
-	if ( isset($_REQUEST['phpinfo']) && $_REQUEST['phpinfo'] == 'y' ) {
+	if (isset($_REQUEST['phpinfo']) && $_REQUEST['phpinfo'] == 'y') {
 		ob_start();
 		phpinfo();
 		$info = ob_get_contents();
@@ -1530,7 +1559,7 @@ if ($standalone) {
 		$info = preg_replace('%^.*<body>(.*)</body>.*$%ms', '$1', $info);
 		$render .= $info;
 	} else {
-		$render .= '<a href="'.$_SERVER['SCRIPT_NAME'].'?'.$_SERVER['QUERY_STRING'].'&phpinfo=y">Append phpinfo();</a>';
+		$render .= '<a href="' . $_SERVER['SCRIPT_NAME'] . '?' . $_SERVER['QUERY_STRING'] . '&phpinfo=y">Append phpinfo();</a>';
 	}
 	createPage('Tiki Server Compatibility', $render);
 } else {
@@ -1571,6 +1600,7 @@ function check_hasIIS_UrlRewriteModule()
 {
 	return isset($_SERVER['IIS_UrlRewriteModule']) == true;
 }
+
 function createPage($title, $content)
 {
 	echo <<<END
@@ -1606,8 +1636,8 @@ function createPage($title, $content)
 					<div class="content clearfix modules" id="top_modules" style="min-height: 168px;">
 						<div id="sitelogo" style="float: left">
 END;
-echo tikiLogo();
-							echo <<< END
+	echo tikiLogo();
+	echo <<< END
 						</div>
 						<div id="sitetitles" style="float: left;">
 							<div id="sitetitle" style="font-size: 42px;">$title</div>
@@ -1634,8 +1664,8 @@ echo tikiLogo();
 		<div class="footerbgtrap fixedwidth" style="padding: 10px 0;">
 			<a href="http://tiki.org" target="_blank" title="Powered by Tiki Wiki CMS Groupware">
 END;
-echo tikiButton();
-echo <<< END
+	echo tikiButton();
+	echo <<< END
 				<img src="img/tiki/tikibutton.png" alt="Powered by Tiki Wiki CMS Groupware" />
 			</a>
 		</div>
@@ -1653,7 +1683,7 @@ function tikiLogo()
 	return '<img alt="Tiki Logo" src="data:image/png;base64,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%3D" />';
 }
 
-function tikiButton ()
+function tikiButton()
 {
 	return '<img alt="tikibutton" src="data:image/png;base64,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%3D%3D"';
 

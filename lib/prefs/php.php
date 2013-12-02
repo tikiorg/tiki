@@ -5,6 +5,13 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
+/**
+ * Note this file is redundant in Tiki 11 and 12 (php 5.3 required)
+ * extensions are now being checked using the extensions array in the pref definition
+ * TODO remove in Tiki 13
+ */
+
+
 function prefs_php_list()
 {
 	return array(
@@ -16,7 +23,7 @@ function prefs_php_list()
 				implicitly accomplished because libxml is enabled by default.'
 			),
 			'type' => 'flag',
-			'default' => class_exists('DOMDocument') ? 'y' :'n',
+			'default' => class_exists('DOMDocument') ? 'y' : 'n',
 		),
 		'php_datetime' => array(
 			'name' => tra('PHP DateTime'),
@@ -27,7 +34,7 @@ function prefs_php_list()
 				CFLAGS=-DEXPERIMENTAL_DATE_SUPPORT=1'
 			),
 			'type' => 'flag',
-			'default' => class_exists('DateTime') ? 'y' :'n',
+			'default' => class_exists('DateTime') ? 'y' : 'n',
 		),
 	);
 }

@@ -16,9 +16,9 @@ function prefs_bigbluebutton_list()
 			'help' => 'BigBlueButton',
 			'tags' => array('basic'),
 			'default' => 'n',
-			'dependencies' => array(
-				'php_libxml',
-			),			
+			'extensions' => array(
+				'dom',
+			),
 		),
 		'bigbluebutton_server_location' => array(
 			'name' => tra('BigBlueButton server location'),
@@ -49,7 +49,7 @@ function prefs_bigbluebutton_list()
 			'type' => 'text',
 			'filter' => 'digits',
 			'size' => 6,
-			'default' => 5*60,
+			'default' => 5 * 60,
 			'tags' => array('basic'),
 		),
 		'bigbluebutton_dynamic_configuration' => array(
