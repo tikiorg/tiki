@@ -542,8 +542,6 @@ a.admbox.off img {
 }
 .adminWizardContent {
 	vertical-align: top;
-	margin-top: 1em;
-	display:inline;
 	width:73%;
 }
 
