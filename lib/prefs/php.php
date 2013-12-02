@@ -5,6 +5,13 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
+/**
+ * Note this file is redundant in Tiki 11 and 12 (php 5.3 required)
+ * extensions are now being checked using the extensions array in the pref definition
+ * TODO remove in Tiki 13
+ */
+
+
 function prefs_php_list()
 {
 	return array(

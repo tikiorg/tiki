@@ -16,8 +16,8 @@ function prefs_bigbluebutton_list()
 			'help' => 'BigBlueButton',
 			'tags' => array('basic'),
 			'default' => 'n',
-			'dependencies' => array(
-				'php_libxml',
+			'extensions' => array(
+				'dom',
 			),			
 		),
 		'bigbluebutton_server_location' => array(

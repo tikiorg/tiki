@@ -2574,8 +2574,9 @@ function prefs_feature_list($partial = false)
 			'tags' => array('experimental'),
 			'dependencies' => array(
 				'feature_file_galleries',
-				'php_libxml',
-				'php_datetime',
+			),
+			'extensions' => array(
+				'libxml',
 			),
 			'default' => 'n',
 		),
