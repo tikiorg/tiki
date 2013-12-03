@@ -51,10 +51,16 @@ class ShoutboxLib extends TikiLib
 			}
 
 			// if not in html tag (e.g. autolink), place after every '*;' the empty span too to prevent e.g. '&amp;&amp;...'
-			$res["message"] = preg_replace('/(\s*)([^>]+)(<|$)/e', "'\\1'.str_replace(';', ';<span></span>','\\2').'\\3'", $res["message"]);
+			//$res["message"] = preg_replace('/(\s*)([^>]+)(<|$)/e', "'\\1'.str_replace(';', ';<span></span>','\\2').'\\3'", $res["message"]);
+			$res["message"] = preg_replace_callback('/(\s*)([^>]+)(<|$)/', function($mat) {
+				return $mat[1].str_replace(';', ';<span></span>',$mat[2]).$mat[3];
+			}, $res["message"]);
 			// if not in tag or on a space or doesn't contain a html entity we split all plain text strings longer than 25 chars using the empty span tag again
 			$wrap_at = 25;
-			$res["message"] = preg_replace('/(\s*)([^\;>\s]{'.$wrap_at.',})([^&]<|$)/e', "'\\1'.wordwrap('\\2', '".$wrap_at."', '<span></span>', 1).'\\3'", $res["message"]);
+			// $res["message"] = preg_replace('e', "'\\1'.wordwrap('\\2', '".$wrap_at."', '<span></span>', 1).'\\3'", $res["message"]);
+			$res["message"] = preg_replace_callback('/(\s*)([^\;>\s]{'.$wrap_at.',})([^&]<|$)/', function($m, $wrap_at) {
+				return $m[1].wordwrap($m[2], $wrap_at, '<span></span>', 1).$m[3];
+			}, $res["message"]);
 			// emoticons support
 			$res["message"] = $parserlib->parse_smileys($res["message"]);
 			$ret[] = $res;

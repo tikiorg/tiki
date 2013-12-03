@@ -335,7 +335,7 @@ a.admbox.off img {
 .pref_search_results {
 	max-height: 20em;
 	min-height: 10em;
-	overflow: auto;
+	overflow: auto !important;
 
 }
 
