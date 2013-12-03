@@ -21,7 +21,7 @@ class UserWizardPreferencesInfo extends Wizard
 	function onSetupPage ($homepageUrl) 
 	{
 
-		global	$smarty, $userlib, $tikilib, $user, $prefs;
+		global	$smarty, $userlib, $tikilib, $user, $prefs, $user_preferences;
 
 		// Run the parent first
 		parent::onSetupPage($homepageUrl);
@@ -65,6 +65,7 @@ class UserWizardPreferencesInfo extends Wizard
 			$re = $userlib->get_usertracker($userinfo["userId"]);
 			if (isset($re['usersTrackerId']) and $re['usersTrackerId']) {
 				include_once ('lib/trackers/trackerlib.php');
+				$trklib = TikiLib::lib('trk');
 				$info = $trklib->get_item_id($re['usersTrackerId'], $trklib->get_field_id($re['usersTrackerId'], 'Login'), $userwatch);
 				$usertrackerId = $re['usersTrackerId'];
 				$useritemId = $info;

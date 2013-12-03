@@ -94,7 +94,7 @@ class UserWizardPreferencesParams extends Wizard
 		$smarty->assign_by_ref('languages', $languages);
 		$user_pages = $tikilib->get_user_pages($userwatch, -1);
 		$smarty->assign_by_ref('user_pages', $user_pages);
-		require_once('lib/blogs/bloglib.php');
+		$bloglib = TikiLib::lib('blog');
 		$user_blogs = $bloglib->list_user_blogs($userwatch, false);
 		$smarty->assign_by_ref('user_blogs', $user_blogs);
 		$user_galleries = $tikilib->get_user_galleries($userwatch, -1);
@@ -114,7 +114,7 @@ class UserWizardPreferencesParams extends Wizard
 		if ($prefs['userTracker'] == 'y') {
 			$re = $userlib->get_usertracker($userinfo["userId"]);
 			if (isset($re['usersTrackerId']) and $re['usersTrackerId']) {
-				include_once ('lib/trackers/trackerlib.php');
+				$trklib = TikiLib::lib('trk');
 				$info = $trklib->get_item_id($re['usersTrackerId'], $trklib->get_field_id($re['usersTrackerId'], 'Login'), $userwatch);
 				$usertrackerId = $re['usersTrackerId'];
 				$useritemId = $info;
