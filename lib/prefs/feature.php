@@ -1073,7 +1073,6 @@ function prefs_feature_list($partial = false)
 			'dependencies' => array(
 				'feature_file_galleries',
 			),
-			'tags' => array('experimental'),
 		),
 		'feature_draw_hide_buttons' => array(
 			'name' => tra('Draw (SVG-edit) Hide Buttons'),
