@@ -5,6 +5,7 @@ tesfile changed
 testfile changed by jonnybradley (sf.net had reset my password - huh?)
 pointless change...hi
 This is matthew 3
+adding a new line in 12.x to deliberately cause trouble.
 jonnyb having survived machine-rebuild (?)
 First commit on Tiki4x branch
 Second commit on 5.x
@@ -18,3 +19,4 @@ start merge for 9.x
 on the old sf.net repo (just checking)
 test
 check merge for 12.x
+new lines on the end can also be tricky
