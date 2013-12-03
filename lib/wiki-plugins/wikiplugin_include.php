@@ -14,6 +14,7 @@ function wikiplugin_include_info()
 		'prefs' => array('wikiplugin_include'),
 		'icon' => 'img/icons/page_copy.png',
 		'tags' => array( 'basic' ),
+		'format' => 'html',
 		'params' => array(
 			'page' => array(
 				'required' => true,
@@ -139,12 +140,19 @@ function wikiplugin_include($dataIn, $params)
 	}
 	
 	$parserlib = TikiLib::lib('parser');
-	$options = null;
+	$old_options = 	$parserlib->option;
+	$options = array(
+		'is_html' => $data[$memo]['is_html'],
+		'suppress_icons' => true,
+	);
 	if (!empty($_REQUEST['page'])) {
 		$options['page'] = $_REQUEST['page'];
 	}
 	$parserlib->setOptions($options);
 	$parserlib->parse_wiki_argvariable($text);
+	$text = $parserlib->parse_data($text, $options);
+	$parserlib->setOptions($old_options);
+
 	// append an edit button
 	if (isset($perms) && $perms['tiki_p_edit'] === 'y' && strpos($_SERVER['PHP_SELF'], 'tiki-send_newsletters.php') === false) {
 		global $smarty;
