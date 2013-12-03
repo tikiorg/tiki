@@ -1631,7 +1631,8 @@ function check_hasIIS_UrlRewriteModule()
 function createPage($title, $content)
 {
 	echo <<<END
-<html
+<!DOCTYPE html>
+<html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<link type="text/css" rel="stylesheet" href="http://dev.tiki.org/styles/fivealive.css" />
