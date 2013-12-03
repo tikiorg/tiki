@@ -1,17 +1,17 @@
 <?php
 // (c) Copyright 2002-2013 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 // Note for translators about translation of text ending with punctuation
-// 
+//
 // The current list of concerned punctuation can be found in 'lib/init/tra.php'
 // On 2009-03-02, it is: (':', '!', ';', '.', ',', '?')
 // For clarity, we explain here only for colons: ':' but it is the same for the rest
-// 
+//
 // Short version: it is not a problem that string "Login:" has no translation. Only "Login" needs to be translated.
-// 
+//
 // Technical justification:
 // If a string ending with colon needs translating (like "{tr}Login:{/tr}")
 // then Tiki tries to translate 'Login' and ':' separately.
@@ -14717,7 +14717,7 @@ $lang = array(
 // "No wizard" => "No wizard",
 "Do it manually using the <a href=\"tiki-admin.php\" target=\"_blank\">Admin Panel</a>" => "Gjør oppsettet manuelt ved å bruke <a href=\"tiki-admin.php\" target=\"_blank\">Administrator Panelet</a>",
 "Skip setup and don't show again" => "Hopp over og ikke vis igjen",
-"To check if your server meets the requirements for running Tiki version %0, please visit <a href=\"tiki-check.php\" target=\"_blank\">Tiki Server Compatibility Check</a>" => "Sjekk om serveren støtter kravene for å kjøre Tiki versjon 12.1svn. Gå til <a href=\"tiki-check.php\" target=\"_blank\">Tiki Server Kompatibilitetssjekk</a>",
+"To check if your server meets the requirements for running Tiki version %0, please visit <a href=\"tiki-check.php\" target=\"_blank\">Tiki Server Compatibility Check</a>" => "Sjekk om serveren støtter kravene for å kjøre Tiki versjon %0. Gå til <a href=\"tiki-check.php\" target=\"_blank\">Tiki Server Kompatibilitetssjekk</a>",
 // "Set up the Wysiwyg editor" => "Set up the Wysiwyg editor",
 // "Set up the Wysiwyg environment" => "Set up the Wysiwyg environment",
 // "You can choose to use by default the 'Compatible' Wiki mode (content is saved in wiki syntax), or the HTML mode" => "You can choose to use by default the 'Compatible' Wiki mode (content is saved in wiki syntax), or the HTML mode",
