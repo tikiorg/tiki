@@ -14,6 +14,8 @@ class CleanVendors
 	{
 		$vendors = __DIR__ . '/../../../../vendor/';
 
+		self::addIndexFile($vendors);
+
 		self::deleteDirectory($vendors . 'adodb/adodb/docs');
 		self::deleteDirectory($vendors . 'adodb/adodb/tests');
 		self::deleteDirectory($vendors . 'aFarkas/html5shiv/build');
@@ -128,6 +130,15 @@ class CleanVendors
 		}
 
 		unlink($path);
+	}
+
+	private static function addIndexFile($path)
+	{
+		if (! file_exists($path) || ! is_writable($path)) {
+			return;
+		}
+
+		file_put_contents($path . 'index.php', '<?php header("location: ../index.php"); die;');
 	}
 }
 
