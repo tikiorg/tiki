@@ -428,17 +428,6 @@
 			"type": "package",
 			"package": {
 				"name": "jquery/md5",
-				"version": "1.0",
-				"dist": {
-					"url": "https://github.com/blueimp/JavaScript-MD5/archive/master.zip",
-					"type": "zip"
-				}
-			}
-		},
-		{
-			"type": "package",
-			"package": {
-				"name": "jquery/md5",
 				"version": "1.1",
 				"dist": {
 					"url": "https://github.com/blueimp/JavaScript-MD5/archive/1.1.0.zip",
@@ -885,7 +874,7 @@
 		"jquery/jtrack": "1.0",
 		"jquery/minicart": "2.6",
 		"jquery/photoswipe": "3.0.5",
-		"jquery/md5": "1.0",
+		"jquery/md5": "1.1",
 		"jquery/plugins/anythingslider": "*",
 		"jquery/plugins/async": "1.0",
 		"jquery/plugins/brosho": "0.1",
