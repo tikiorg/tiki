@@ -83,23 +83,29 @@
 
 	{if ($tiki_p_wiki_attach_files eq 'y' or $tiki_p_wiki_admin_attachments eq 'y')
 		and (!isset($attach_box) or $attach_box ne 'n') and $editable}
-		<form enctype="multipart/form-data" action="tiki-index.php?page={$page|escape:"url"}" method="post">
+		<form class="form-horizontal" enctype="multipart/form-data" action="tiki-index.php?page={$page|escape:"url"}" method="post">
 			{if $page_ref_id}
 				<input type="hidden" name="page_ref_id" value="{$page_ref_id|escape}">
 			{/if}
 			{if !empty($smarty.request.no_bl)}
 				<input type="hidden" name="no_bl" value="{$smarty.request.no_bl|escape}">
 			{/if}
-			<table class="formcolor">
-				<tr>
-					<td>
-						<label for="attach-upload">{tr}Upload file:{/tr}</label><input type="hidden" name="MAX_FILE_SIZE" value="1000000000">
-						<input size="16" name="userfile1" type="file" id="attach-upload">
-						<label for="attach-comment">{tr}Comment:{/tr}</label><input type="text" name="attach_comment" maxlength="250" id="attach-comment">
-						<input type="submit" class="btn btn-default btn-sm" name="attach" value="{tr}Attach{/tr}">
-					</td>
-				</tr>
-			</table>
+            <div class="form-group">
+			    <label class="col-sm-2 control-label" for="attach-upload">{tr}Upload file:{/tr}</label><input type="hidden" name="MAX_FILE_SIZE" value="1000000000">
+                <div class="col-sm-10">
+				    <input class="form-control"  name="userfile1" type="file" id="attach-upload">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label" for="attach-comment">{tr}Comment:{/tr}</label>
+                <div class="col-sm-8">
+                    <input class="form-control" type="text" name="attach_comment" maxlength="250" id="attach-comment">
+                </div>
+                <div class="col-sm-2">
+                	<input type="submit" class="btn btn-default btn-sm" name="attach" value="{tr}Attach{/tr}">
+	            </div>
+            </div>
 		</form>
 	{/if}
 </div>
