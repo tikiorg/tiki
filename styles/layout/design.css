@@ -4677,4 +4677,7 @@ div#outerToc-static ul {
 .chosen-container-single .chosen-single span {
 	width: 100%;
 }
+.chosen-container .chosen-drop, .chosen-container-single .chosen-single {
+	min-width: 100px;
+}
 /* End of file */
