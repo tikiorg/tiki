@@ -12,18 +12,26 @@ function smarty_function_activity($params)
 	if (isset($params['info'])) {
 		$activity = $params['info'];
 	} else {
-		$lib = TikiLib::lib('activity');
-		$info = $lib->getActivity($params['id']);
-		if (! $info) {
+		$lib = TikiLib::lib('unifiedsearch');
+		$docs = $lib->getDocuments('activity', $params['id']);
+
+		$activity = reset($docs);
+
+		if (! $activity) {
 			return tr('Not found.');
 		}
 
-		$activity = $info['arguments'];
-		$activity['object_type'] = 'activity';
-		$activity['object_id'] = $params['id'];
-		$activity['event_type'] = $info['eventType'];
-		$activity['comment_count'] = TikiLib::lib('comments')->count_comments("activity:{$params['id']}");
-		$activity['like_list'] = TikiLib::lib('social')->getLikes('activity', $params['id']);
+		$activity = array_map(function ($entry) {
+			if (is_object($entry)) {
+				if (method_exists($entry, 'getRawValue')) {
+					return $entry->getRawValue();
+				} else {
+					return $entry->getValue();
+				}
+			} else {
+				return $entry;
+			}
+		}, $activity);
 	}
 
 	$smarty->assign('activity', $activity);
