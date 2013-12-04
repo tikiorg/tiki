@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "ed0c558f7249f548375e10ae84ded74c",
+    "hash": "03b87911b0518039f87e9d644ac04c39",
     "packages": [
         {
             "name": "aFarkas/html5shiv",
@@ -352,12 +352,12 @@
         },
         {
             "name": "jquery/md5",
-            "version": "1.0",
+            "version": "1.1",
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/jquery-md5-1.0.zip",
-                "reference": "1.0",
-                "shasum": "b34b4cc794488f431374d0ca6b90fc634441e40f"
+                "url": "https://composer.tiki.org/dist/jquery-md5-1.1.zip",
+                "reference": "1.1",
+                "shasum": "f8138ce5c0c467112ae734f7ccae5bb5e009e0e2"
             },
             "type": "library"
         },
