@@ -48,7 +48,7 @@
 	$('ul', container).sortList();
 	$('.selector', container).change(function () {
 		createItem($(this).val(), $(this).data('label'));
-		$('ul', container).sortList();
+		$('ul:first', container).sortList();
 	});
 }());
 {/jq}
