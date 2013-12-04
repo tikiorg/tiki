@@ -143,6 +143,9 @@ function wikiplugin_customsearch($data, $params)
 	if (!isset($params['searchonload'])) {
 		$params['searchonload'] = 1;
 	}
+	if (!isset($params['requireinput'])) {
+		$params['requireinput'] = false;
+	}
 
 	$definitionKey = md5($data);
 	$matches = WikiParser_PluginMatcher::match($data);
@@ -233,10 +236,10 @@ var customsearch = {
 			selector = '#customsearch_' + cs.id;
 		}
 
-		$(selector).modal(cs.options.searchfadetext);
+		$(selector).tikiModal(cs.options.searchfadetext);
 
 		cs._load(function (data) {
-			$(selector).modal();
+			$(selector).tikiModal();
 			$(cs.options.results).html(data);
 			$(document).trigger('pageSearchReady');
 		});
