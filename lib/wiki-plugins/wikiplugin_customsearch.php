@@ -243,6 +243,7 @@ var customsearch = {
 			$(cs.options.results).html(data);
 			$(document).trigger('pageSearchReady');
 		});
+		cs.store_query = 0;
 	}),
 	init: function () {
 		var that = this;
@@ -345,6 +346,7 @@ customsearch._load = function (receive) {
 		searchid: this.id,
 		offset: customsearch.offset,
 		maxRecords: this.maxRecords,
+		store_query: this.store_query,
 		page: " . json_encode($page) . ",
 		recalllastsearch: $recalllastsearch
 	};
@@ -366,6 +368,7 @@ customsearch._load = function (receive) {
 customsearch.sort_mode = " . json_encode($sort_mode) . ";
 customsearch.offset = $offset;
 customsearch.maxRecords = $maxRecords;
+customsearch.store_query = 0;
 customsearch.init();
 ";
 
@@ -705,4 +708,24 @@ $('#{$fieldid_from}_dptxt,#{$fieldid_to}_dptxt').change(function() {
 ";
 
 	return $picker;
+}
+
+function cs_design_store($id, $fieldname, $fieldid, $arguments, $default, &$script)
+{
+	$document = new DOMDocument;
+	$element = $document->createElement('input');
+	$element->setAttribute('type', 'submit');
+	cs_design_setbasic($element, $fieldid, $fieldname, $arguments);
+	$document->appendChild($element);
+
+	$script .= "
+
+$('#$fieldid').click(function() {
+	customsearch.store_query = 1;
+	customsearch.load();
+	return false;
+});
+";
+
+	return $document->saveHTML();
 }

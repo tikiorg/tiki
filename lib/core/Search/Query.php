@@ -27,6 +27,11 @@ class Search_Query implements Search_Query_Interface
 		}
 	}
 
+	function __clone()
+	{
+		$this->expr = clone $this->expr;
+	}
+
 	function setIdentifierFields(array $fields)
 	{
 		$this->identifierFields = $fields;

@@ -15,6 +15,11 @@ class Search_Expr_Not implements Search_Expr_Interface
 		$this->expression = $expression;
 	}
 
+	function __clone()
+	{
+		$this->expression = clone $this->expression;
+	}
+
 	function setType($type)
 	{
 		$this->expression->setType($type);

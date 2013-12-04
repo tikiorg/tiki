@@ -190,6 +190,8 @@ class UnifiedSearchLib
 		$access = TikiLib::lib('access');
 		$access->preventRedirect(true);
 
+		$this->isRebuildingNow = true;
+
 		$stat = array();
 		$indexer = null;
 		try {
@@ -209,8 +211,6 @@ class UnifiedSearchLib
 				'<br />' . $e->getMessage()
 			);
 		}
-
-		$access->preventRedirect(false);
 
 		// Force destruction to clear locks
 		if ($indexer) {
@@ -263,6 +263,9 @@ class UnifiedSearchLib
 		$this->processUpdateQueue(1000);
 
 		$tikilib->set_preference('unified_last_rebuild', $tikilib->now);
+
+		$this->isRebuildingNow = false;
+		$access->preventRedirect(false);
 		return $stat;
 	}
 
@@ -418,6 +421,10 @@ class UnifiedSearchLib
     private function buildIndexer($index, $loggit = 0)
 	{
 		global $prefs;
+
+		if (! $this->isRebuildingNow && $index instanceof Search_Index_QueryRepository) {
+			$index = new Search_Index_QueryAlertDecorator($index);
+		}
 
 		if (! empty($prefs['unified_excluded_categories'])) {
 			$index = new Search_Index_CategoryFilterDecorator($index, array_filter($prefs['unified_excluded_categories']));
@@ -715,18 +722,27 @@ class UnifiedSearchLib
 
 	function initQuery(Search_Query $query)
 	{
+		$this->initQueryBase($query);
+		$this->initQueryPermissions($query);
+	}
+
+	function initQueryBase($query)
+	{
 		global $prefs;
 
 		$query->setWeightCalculator($this->getWeightCalculator());
 		$query->setIdentifierFields($prefs['unified_identifier_fields']);
 
-		if (! Perms::get()->admin) {
-			$query->filterPermissions(Perms::get()->getGroups());
-		}
-
 		$categlib = TikiLib::lib('categ');
 		if ($jail = $categlib->get_jail()) {
 			$query->filterCategory(implode(' or ', $jail), true);
+		}
+	}
+	
+	private function initQueryPermissions($query)
+	{
+		if (! Perms::get()->admin) {
+			$query->filterPermissions(Perms::get()->getGroups());
 		}
 	}
 

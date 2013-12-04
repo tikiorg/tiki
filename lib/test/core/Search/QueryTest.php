@@ -373,5 +373,15 @@ class Search_QueryTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals($expr, $index->getLastQuery());
 		$this->assertEquals(array('hello'), $query->getTerms());
 	}
+
+	function testQueryCloning()
+	{
+		$query = new Search_Query('Hello World');
+		$clone = clone $query;
+
+		$query->filterCategory('1 OR 2');
+
+		$this->assertNotEquals($query, $clone);
+	}
 }
 

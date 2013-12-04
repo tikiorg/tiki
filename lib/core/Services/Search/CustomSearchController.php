@@ -141,6 +141,12 @@ class Services_Search_CustomSearchController
 			}
 		}
 
+		if ($input->store_query->int()) {
+			// Store prior to adding 
+			$storedsearchlib = TikiLib::lib('storedsearch');
+			$storedsearchlib->storeUserQuery($GLOBALS['user'], $query);
+		}
+
 		$unifiedsearchlib = TikiLib::lib('unifiedsearch');
 		$unifiedsearchlib->initQuery($query); // Done after cache because permissions vary
 
