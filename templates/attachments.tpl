@@ -103,7 +103,7 @@
                     <input class="form-control" type="text" name="attach_comment" maxlength="250" id="attach-comment">
                 </div>
                 <div class="col-sm-2">
-                	<input type="submit" class="btn btn-default btn-sm" name="attach" value="{tr}Attach{/tr}">
+                	<input type="submit" class="btn btn-default" name="attach" value="{tr}Attach{/tr}">
 	            </div>
             </div>
 		</form>
