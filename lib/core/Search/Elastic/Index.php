@@ -5,7 +5,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-class Search_Elastic_Index implements Search_Index_Interface
+class Search_Elastic_Index implements Search_Index_Interface, Search_Index_QueryRepository
 {
 	private $connection;
 	private $index;
@@ -32,6 +32,18 @@ class Search_Elastic_Index implements Search_Index_Interface
 
 	function addDocument(array $data)
 	{
+		list($objectType, $objectId, $data) = $this->generateDocument($data);
+		unset($this->invalidateList[$objectType . ':' . $objectId]);
+
+		if (! empty($data['hash'])) {
+			$objectId .= "~~{$data['hash']}";
+		}
+
+		$this->connection->index($this->index, $objectType, $objectId, $data);
+	}
+
+	private function generateDocument(array $data)
+	{
 		$objectType = $data['object_type']->getValue();
 		$objectId = $data['object_id']->getValue();
 
@@ -43,13 +55,7 @@ class Search_Elastic_Index implements Search_Index_Interface
 			}, $data
 		);
 
-		if (! empty($data['hash'])) {
-			$objectId .= "~~{$data['hash']}";
-		}
-
-		unset($this->invalidateList[$objectType . ':' . $objectId]);
-
-		$this->connection->index($this->index, $objectType, $objectId, $data);
+		return [ $objectType, $objectId, $data ];
 	}
 
 	private function generateMapping($type, $data)
@@ -169,6 +175,22 @@ class Search_Elastic_Index implements Search_Index_Interface
 		return function ($type, $object) use ($connection, $index) {
 			return (array) $connection->document($index, $type, $object);
 		};
+	}
+
+	function getMatchingQueries(array $document)
+	{
+		list($type, $object, $document) = $this->generateDocument($document);
+		$result = $this->connection->percolate($this->index, $type, $document);
+		return $result->matches;
+	}
+
+	function store($name, Search_Expr_Interface $expr)
+	{
+		$builder = new Search_Elastic_QueryBuilder;
+		$builder->setDocumentReader($this->createDocumentReader());
+		$doc = $builder->build($expr);
+
+		$this->connection->storeQuery($this->index, $name, $doc);
 	}
 }
 

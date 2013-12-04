@@ -231,6 +231,23 @@ class Search_Query implements Search_Query_Interface
 
 	function search(Search_Index_Interface $index)
 	{
+		$this->finalize();
+		return $index->find($this, $this->start, $this->count);
+	}
+
+	function store($name, $index)
+	{
+		if ($index instanceof Search_Index_QueryRepository) {
+			$this->finalize();
+			$index->store($name, $this->expr);
+			return true;
+		}
+
+		return false;
+	}
+
+	private function finalize()
+	{
 		if ($this->weightCalculator) {
 			$this->expr->walk(array($this->weightCalculator, 'calculate'));
 		}
@@ -245,8 +262,6 @@ class Search_Query implements Search_Query_Interface
 				}
 			);
 		}
-
-		return $index->find($this, $this->start, $this->count);
 	}
 
 	function getExpr()

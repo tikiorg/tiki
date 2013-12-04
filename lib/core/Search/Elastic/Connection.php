@@ -8,7 +8,8 @@
 class Search_Elastic_Connection
 {
 	private $dsn;
-	private $dirty = false;
+	private $dirty = array();
+	private $dirtyPercolator = false;
 
 	private $indices = array();
 
@@ -72,17 +73,41 @@ class Search_Elastic_Connection
 
 	function search($index, array $query, $resultStart, $resultCount)
 	{
-		if ($this->dirty) {
+		if (! empty($this->dirty[$index])) {
 			$this->refresh($index);
 		}
 
 		return $this->get("/$index/_search", json_encode($query));
 	}
 
+	function storeQuery($index, $name, $query)
+	{
+		return $this->rawIndex('_percolator', $index, $name, $query);
+	}
+
+	function percolate($index, $type, $document)
+	{
+		if (! empty($this->dirty['_percolator'])) {
+			$this->refresh('_percolator');
+		}
+
+		$type = $this->simplifyType($type);
+		return $this->get("/$index/$type/_percolate", json_encode(array(
+			'doc' => $document,
+			'prefer_local' => false,
+		)));
+	}
+
 	function index($index, $type, $id, array $data)
 	{
-		$this->dirty = true;
 		$type = $this->simplifyType($type);
+
+		$this->rawIndex($index, $type, $id, $data);
+	}
+
+	private function rawIndex($index, $type, $id, $data)
+	{
+		$this->dirty[$index] = true;
 
 		if ($this->bulk) {
 			$this->bulk->index($index, $type, $id, $data);
@@ -95,7 +120,7 @@ class Search_Elastic_Connection
 
 	function unindex($index, $type, $id)
 	{
-		$this->dirty = true;
+		$this->dirty[$index] = true;
 		$type = $this->simplifyType($type);
 
 		if ($this->bulk) {
@@ -119,12 +144,12 @@ class Search_Elastic_Connection
 		$this->flush();
 
 		$this->post("/$index/_refresh", '');
-		$this->dirty = false;
+		$this->dirty[$index] = false;
 	}
 
 	function document($index, $type, $id)
 	{
-		if ($this->dirty) {
+		if (! empty($this->dirty[$index])) {
 			$this->refresh($index);
 		}
 
