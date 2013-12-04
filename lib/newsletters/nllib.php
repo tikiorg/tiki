@@ -1196,7 +1196,7 @@ class NlLib extends TikiLib
 		return $retval;
 	}
 
-	private function get_edition_mail($editionId, $target)
+	private function get_edition_mail($editionId, $target, $is_html = null)
 	{
 		global $prefs, $base_url;
 		static $mailcache = array();
@@ -1212,7 +1212,11 @@ class NlLib extends TikiLib
 			// build the html
 			$beginHtml = '<body class="tiki_newsletters"><div id="tiki-center" class="clearfix content"><div class="wikitext">';
 			$endHtml = '</div></div></body>';
-			$is_html = $info['wysiwyg'] === 'y' && $prefs['wysiwyg_htmltowiki'] !== 'y';	// parse as html if wysiwyg and not htmltowiki
+			if ($is_html === null) {
+				$is_html = $info['wysiwyg'] === 'y' && $prefs['wysiwyg_htmltowiki'] !== 'y'; // parse as html if wysiwyg and not htmltowiki
+			} else {
+				$is_html = !empty($is_html);
+			}
 			if (stristr($info['data'], '<body') === false) {
 				$html = "<html>$beginHtml" . $tikilib->parse_data(
 					$info['data'], array(
@@ -1391,7 +1395,7 @@ class NlLib extends TikiLib
 			}
 
 			try {
-				$zmail = $this->get_edition_mail($info['editionId'], $us);
+				$zmail = $this->get_edition_mail($info['editionId'], $us, $info['is_html']);
 				if (!$zmail) {
 					continue;
 				}

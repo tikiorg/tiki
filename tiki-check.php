@@ -1087,6 +1087,47 @@ if ($connection || !$standalone) {
 		);
 	}
 
+	// MySQL SSL
+	$query = 'show variables like "have_ssl";';
+	$result = query($query, $connection);
+	if (empty($result)) {
+		$query = 'show variables like "have_openssl";';
+		$result = query($query, $connection);
+	}
+	$haveMySQLSSL = false;
+	if (!empty($result)) {
+		$ssl = $result[0]['Value'];
+		$haveMySQLSSL = $ssl == 'YES';
+	}
+	$s = '';
+	if ($haveMySQLSSL) {
+		$query = 'show status like "Ssl_cipher";';
+		$result = query($query, $connection);
+		$isSSL = !empty($result[0]['Value']);
+	} else {
+		$isSSL = false;
+	}
+	if ($isSSL) {
+		$msg = tra('MySQL SSL connection is active');
+		$s = tra('ON');
+	} else if($haveMySQLSSL && !$isSSL) {
+		$msg = tra('MySQL connection is not encrypted');
+		$s = tra('OFF');
+	} else {
+		$msg = tra('MySQL Server does not have SSL activated');
+		$s = '';
+	}
+	$fitness = tra('info');
+	if ($s == tra('ON')) {
+		$fitness = tra('good');
+	}
+	$mysql_properties['SSL connection'] = array(
+		'fitness' => $fitness,
+		'setting' => $s,
+		'message' => $msg
+	);
+
+
 	// MySQL Variables
 	$query = "SHOW VARIABLES;";
 	$result = query($query, $connection);
@@ -1596,7 +1637,8 @@ function check_hasIIS_UrlRewriteModule()
 function createPage($title, $content)
 {
 	echo <<<END
-<html
+<!DOCTYPE html>
+<html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<link type="text/css" rel="stylesheet" href="http://dev.tiki.org/styles/fivealive.css" />

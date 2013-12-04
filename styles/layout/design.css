@@ -1578,7 +1578,7 @@ table.treetable.objectperms td.removed {
 	display: block;
 }
 
-.ui-datepicker {
+.ui-datepicker, .ui-dialog {
 	z-index: 1024;
 }
 

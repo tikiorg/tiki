@@ -77,6 +77,7 @@
 			<input type="hidden" name="datatxt" value="{$info.datatxt|escape}">
 			<input type="hidden" name="replyto" value="{$replyto|escape}">
 			<input type="hidden" name="wysiwyg" value="{$info.wysiwyg|escape}">
+			<input type="hidden" name="is_html" value="{$info.is_html|escape}">
 			<input type="submit" class="btn btn-default btn-sm" name="send" value="{tr}Send{/tr}" onclick="document.getElementById('confirmArea').style.display = 'none'; document.getElementById('sendingArea').style.display = 'block';">
 			<input type="submit" class="btn btn-default btn-sm" name="cancel" value="{tr}Cancel{/tr}">
 			{foreach from=$info.files item=newsletterfile key=fileid}
