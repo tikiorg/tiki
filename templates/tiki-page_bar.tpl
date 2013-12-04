@@ -142,9 +142,11 @@
 	{/capture}
 
 	{if $page_bar neq ''}
-		<div class="btn-bar" id="page-bar">
+        <div class="form-group" id="page-bar">
+		<div class="btn-bar">
 			{$page_bar}
 		</div>
+        </div>
 	{/if}
 
 	{strip}
