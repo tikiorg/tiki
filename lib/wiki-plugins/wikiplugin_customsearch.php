@@ -269,7 +269,7 @@ $('#customsearch_$id').submit(function() {
 	return false;
 });
 
-customsearch_$id = customsearch;
+window.customsearch_$id = customsearch;
 ";
 
 	$parser = new WikiParser_PluginArgumentParser;
@@ -421,7 +421,7 @@ function cs_design_input($id, $fieldname, $fieldid, $arguments, $default, &$scri
 		customsearch.add($(this).attr('id'), filter);
 	});
 
-	if (config.default || $(field).attr('type') === 'hidden') {
+	if (config['default'] || $(field).attr('type') === 'hidden') {
 		field.change();
 	}
 })('$fieldid', " . json_encode($arguments) . ", " . json_encode($fieldname) . ");
