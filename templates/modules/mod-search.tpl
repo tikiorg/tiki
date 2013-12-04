@@ -114,7 +114,7 @@
     {jq notonready=true}
 function submitSearch{{$search_mod_usage_counter}}() {
 	var $f = $('#search-module-form{{$search_mod_usage_counter}}');
-	if ($f.data('page_selected') === $("#search_mod_input_{{$search_mod_usage_counter}}").val()) {
+	if ($f.attr('action') !== "tiki-editpage.php" && $f.data('page_selected') === $("#search_mod_input_{{$search_mod_usage_counter}}").val()) {
 		if ($f.find('input[name="find"]').length) {
 		    $f.find('input[name="find"]').val($f.data('page_selected'));
 		} else {
