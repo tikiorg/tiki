@@ -189,65 +189,69 @@ Couldn't connect to database, please provide valid credentials.
 </form>
 DBC;
 	} else {
-		switch ($php_properties['DB Driver']['setting']) {
-			case 'PDO':
-				// We don't do exception handling here to be PHP 4 compatible
-				$connection = new PDO('mysql:host='.$_POST['dbhost'], $_POST['dbuser'], $_POST['dbpass']);
-				/**
-				  * @param $query
-				   * @param $connection
-				   * @return mixed
-				  */
-				function query($query, $connection)
-				{
-					$result = $connection->query($query);
-					$return = $result->fetchAll();
-					return($return);
-				}
-				break;
-			case 'MySQLi':
-				$error = false;
-				$connection = new mysqli($_POST['dbhost'], $_POST['dbuser'], $_POST['dbpass']);
-				$error = mysqli_connect_error();
-				if ( !empty($error) ) {
-					$connection = false;
-					$render .= 'Couldn\'t connect to database: '.$error;
-				}
-				/**
-				 * @param $query
-				 * @param $connection
-				 * @return array
-				 */
-				function query($query, $connection)
-				{
-					$result = $connection->query($query);
-					$return = array();
-					while (	$row = $result->fetch_assoc() ) {
-						$return[] = $row;
+		try {
+			switch ($php_properties['DB Driver']['setting']) {
+				case 'PDO':
+					// We don't do exception handling here to be PHP 4 compatible
+					$connection = new PDO('mysql:host='.$_POST['dbhost'], $_POST['dbuser'], $_POST['dbpass']);
+					/**
+					  * @param $query
+					   * @param $connection
+					   * @return mixed
+					  */
+					function query($query, $connection)
+					{
+						$result = $connection->query($query);
+						$return = $result->fetchAll();
+						return($return);
 					}
-					return($return);
-				}
-				break;
-			case 'MySQL':
-				$connection = mysql_connect($_POST['dbhost'], $_POST['dbuser'], $_POST['dbpass']);
-				if ( $connection === false ) {
-					$render .= 'Cannot connect to MySQL. Wrong credentials?';
-				}
-				/**
-				 * @param $query
-				 * @param string $connection
-				 * @return array
-				 */
-				function query($query, $connection = '')
-				{
-					$result = mysql_query($query);
-					$return = array();
-					while (	$row = mysql_fetch_array($result) ) {
-						$return[] = $row;
+					break;
+				case 'MySQLi':
+					$error = false;
+					$connection = new mysqli($_POST['dbhost'], $_POST['dbuser'], $_POST['dbpass']);
+					$error = mysqli_connect_error();
+					if ( !empty($error) ) {
+						$connection = false;
+						$render .= 'Couldn\'t connect to database: '.$error;
 					}
-					return($return);
-				}
-				break;
+					/**
+					 * @param $query
+					 * @param $connection
+					 * @return array
+					 */
+					function query($query, $connection)
+					{
+						$result = $connection->query($query);
+						$return = array();
+						while (	$row = $result->fetch_assoc() ) {
+							$return[] = $row;
+						}
+						return($return);
+					}
+					break;
+				case 'MySQL':
+					$connection = mysql_connect($_POST['dbhost'], $_POST['dbuser'], $_POST['dbpass']);
+					if ( $connection === false ) {
+						$render .= 'Cannot connect to MySQL. Wrong credentials?';
+					}
+					/**
+					 * @param $query
+					 * @param string $connection
+					 * @return array
+					 */
+					function query($query, $connection = '')
+					{
+						$result = mysql_query($query);
+						$return = array();
+						while (	$row = mysql_fetch_array($result) ) {
+							$return[] = $row;
+						}
+						return($return);
+					}
+					break;
+			}
+		} catch(Exception $e) {
+			$render .= 'Cannot connect to MySQL. Error: '.$e->getMessage();
 		}
 	}
 } else {

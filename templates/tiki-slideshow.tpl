@@ -3,6 +3,7 @@
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		{include file="canonical.tpl"}
 		<title>{$page_info.pageName}</title>
 		<script type="text/javascript" src="lib/tiki-js.js"></script>
 	</head>

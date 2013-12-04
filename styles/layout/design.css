@@ -2122,7 +2122,7 @@ body.wikitext {
 #autosave_preview {
 	background-color: #FFFFFF;
 	color: #000000;
-	z-index: 500001; /* ensure the preview is not partly covered even by #diff_outer in fullscreen side-by-side translation mode */
+	z-index: 110; /* ensure the preview is not partly covered even by #diff_outer in fullscreen side-by-side translation mode */
 }
 #autosave_preview_grippy {
 	background-color: #ccc;
@@ -3730,8 +3730,8 @@ div#outerToc-static ul {
 .chosen-container-single .chosen-single span {
 	width: 100%;
 }
-.chosen-container .chosen-drop, .chosen-container-single .chosen-single {
-	min-width: 100px;
+.chosen-container-single .chosen-single {
+	min-width: 45px;
 }
 /** Hidden anchors/links shown on mouseover of header  **/
 a.tiki_anchor:before {
@@ -3761,6 +3761,12 @@ h4 a.tiki_anchor:hover,
 h5 a.tiki_anchor:hover,
 h6 a.tiki_anchor:hover {
     color: #3333CC;
+}
+.chosen-container .chosen-results, .chosen-container .chosen-drop {
+    min-width: 200px; 
+}
+.chosen-container .chosen-results li.highlighted, .chosen-container .chosen-results li.active-result {
+    width: 90%;
 }
 /* End of file */
 

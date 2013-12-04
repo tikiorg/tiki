@@ -708,7 +708,6 @@ function prefs_feature_list($partial = false)
 			'description' => tra('Users can identify other users as their friends'),
 			'dependencies' => array(
 				'feature_search',
-				'activity_custom_events',
 				'user_in_search_result',
 			),
 			'help' => 'Friendship+Network',

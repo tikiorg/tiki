@@ -57,6 +57,7 @@ $installer = $installer = new Installer;
 $isInstalled = $installer->isInstalled();
 
 if ($isInstalled) {
+	$bypass_siteclose_check = true;
 	require_once 'tiki-setup.php';
 	$console->add(new Tiki\Command\CacheClearCommand);
 	$console->add(new Tiki\Command\BackupDBCommand);

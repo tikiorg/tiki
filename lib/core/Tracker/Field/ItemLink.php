@@ -634,7 +634,7 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 
 		$usedFields = array_merge(
 			array($this->getOption('fieldId')),
-			$this->getOption('indexRemote'),
+			$this->getOption('indexRemote', array()),
 			$this->getDisplayFieldsListArray()
 		);
 
