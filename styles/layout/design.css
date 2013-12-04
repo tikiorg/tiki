@@ -4677,7 +4677,13 @@ div#outerToc-static ul {
 .chosen-container-single .chosen-single span {
 	width: 100%;
 }
-.chosen-container .chosen-drop, .chosen-container-single .chosen-single {
-	min-width: 100px;
+.chosen-container-single .chosen-single {
+	min-width: 45px;
+}
+.chosen-container .chosen-results, .chosen-container .chosen-drop {
+    min-width: 200px; 
+}
+.chosen-container .chosen-results li.highlighted, .chosen-container .chosen-results li.active-result {
+    width: 90%;
 }
 /* End of file */
