@@ -2845,7 +2845,7 @@ body.wikitext {
 #autosave_preview {
 	background-color: #FFFFFF;
 	color: #000000;
-	z-index: 500001; /* ensure the preview is not partly covered even by #diff_outer in fullscreen side-by-side translation mode */
+	z-index: 110; /* ensure the preview is not partly covered even by #diff_outer in fullscreen side-by-side translation mode */
 }
 #autosave_preview_grippy {
 	background-color: #ccc;
