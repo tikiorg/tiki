@@ -86,6 +86,7 @@ include_once ('tiki-section_options.php');
 $smarty->assign('wiki_extras', 'y');
 ask_ticket('slideshow2');
 // Display the Index Template
+$smarty->assign('page', $page);
 $smarty->assign('dblclickedit', 'y');
 $smarty->assign('mid', 'tiki-show_page.tpl');
 $smarty->display("tiki-slideshow.tpl");
