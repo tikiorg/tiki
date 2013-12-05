@@ -26,7 +26,7 @@
 			{if $forumId}<input type="hidden" name="forumId" value="{$forumId|escape}">{/if}
 
 			{if $tiki_p_admin_forum eq 'y'}
-				<div class="forum_actions">
+				<div class="forum_actions form-group">
 					<div class="headers">
 						<span class="title">{tr}Moderator actions{/tr}</span>
 						<span class="infos">
@@ -199,7 +199,7 @@
 				{include file='comment.tpl' comment=$comment_preview_data}
 			{/if}
 
-			<form enctype="multipart/form-data" method="post" action="{$comments_complete_father}#comments" id='editpostform'>
+			<form class="form-horizontal" role="form" enctype="multipart/form-data" method="post" action="{$comments_complete_father}#comments" id='editpostform'>
 				<input type="hidden" name="comments_reply_threadId" value="{$comments_reply_threadId|escape}">    
 				<input type="hidden" name="comments_grandParentId" value="{$comments_grandParentId|escape}">    
 				<input type="hidden" name="comments_parentId" value="{$comments_parentId|escape}">
@@ -215,99 +215,93 @@
 					<input type="hidden" name="{$comments_request_data[i].name|escape}" value="{$comments_request_data[i].value|escape}">
 				{/section}
 
-				<table class="formcolor" width="100%">
-					{if !$user}
-						<tr>
-							<td><label for="anonymous_name">{tr}Name{/tr}</span></label></td>
-							<td><input type="text" maxlength="50" size="30" id="anonymous_name" name="anonymous_name"  value="{$comment_preview_data.name|escape}"></td>
-						</tr>
-						<tr>
-							<td>
-								<label for="anonymous_email">
-									{tr}If you would like to be notified when someone replies to this topic<br>please tell us your e-mail address{/tr}
-								</label>
-							</td>
-							<td>
+                {if !$user}
+                    <div class="form-group">
+						<label class="col-sm-2 control-label" for="anonymous_name">{tr}Name{/tr}</label>
+                        <div class="col-sm-10">
+                            <input type="text" maxlength="50" size="30" id="anonymous_name" name="anonymous_name"  value="{$comment_preview_data.name|escape}">
+                        </div>
+				    </div>
+                    <div class="form-group">
+						<label class="col-sm-2 control-label" for="anonymous_email">{tr}If you would like to be notified when someone replies to this topic<br>please tell us your e-mail address{/tr}</label>
+                        <div class="col-sm-10">
 								<input type="text" size="30" id="anonymous_email" name="anonymous_email" value="{$comment_preview_data.email|escape}">
-							</td>
-						</tr>
+                        </div>
+                    </div>
+				{/if}
+
+				{if $prefs.forum_reply_notitle neq 'y'}
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="comments-title">{tr}Title{/tr} <span class="text-danger">*</span> </label>
+                        <div class="col-sm-10">
+                            <input type="text" name="comments_title" id="comments-title" value="{$comment_title|escape}">
+                        </div>
+                    </div>
+                {/if}
+
+                <div class="form-group">
+				    <label class="col-sm-2 control-label" for="editpost2">{tr}Reply{/tr}</label>
+                    <div class="col-sm-10">
+                        {textarea codemirror='true' syntax='tiki' id="editpost2" name="comments_data" comments="y"}{if ($prefs.feature_forum_replyempty ne 'y') || $edit_reply > 0 || $comment_preview eq 'y' || !empty($errors)}{$comment_data}{/if}{/textarea}
+
+						{if $user and $prefs.feature_user_watches eq 'y'}
+    						<div id="watch_thread_on_reply">
+								<input id="watch_thread" type="checkbox" name="watch" value="y"{if $user_watching_topic eq 'y' or $smarty.request.watch eq 'y'} checked="checked"{/if}> <label for="watch_thread">{tr}Send me an e-mail when someone replies{/tr}</label>
+							</div>
+						{/if}
+                    </div>
+                </div>
+
+                {if ($forum_info.att eq 'att_all') or ($forum_info.att eq 'att_admin' and ($tiki_p_admin_forum eq 'y'  or $forum_info.moderator == $user)) or ($forum_info.att eq 'att_perm' and $tiki_p_forum_attach eq 'y')}
+	    			{assign var='can_attach_file' value='y'}
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="userfile1">
+                            {tr}Attach file{/tr}
+                        </label>
+                        <div class="col-sm-10">
+                            <input type="hidden" name="MAX_FILE_SIZE" value="{$forum_info.att_max_size|escape}"><input id="userfile1" name="userfile1" type="file">{tr}Maximum size:{/tr} {$forum_info.att_max_size|kbsize}
+                        </div>
+                    </div>
+                {/if}
+
+				{if $prefs.feature_contribution eq 'y'}
+					{include file='contribution.tpl' in_comment="y"}
+				{/if}
+
+				{if $prefs.feature_antibot eq 'y'}
+					{assign var='showmandatory' value='y'}
+					{include file='antibot.tpl' td_style="formcolor"}
+				{/if}
+
+                <div class="form-group">
+					{if isset($parent_coms) and $parent_coms}
+                        <label class="col-sm-2 control-label" for="comments_postComment">
+					        {tr}Reply to parent post{/tr}
+                        </label>
+                    {else}
+                        <label class="col-sm-2 control-label" for="comments_postComment">
+                            {tr}Post new reply{/tr}
+                        </label>
 					{/if}
-
-					{if $prefs.forum_reply_notitle neq 'y'}
-						<tr>
-							<td>
-								<label for="comments-title">{tr}Title{/tr} <span class="attention">*</span> </label>
-							</td>
-							<td>
-								<input type="text" name="comments_title" id="comments-title" value="{$comment_title|escape}"> 
-							</td>
-						</tr>
-					{/if}
-
-					<tr>
-						<td>
-							<label for="editpost2">{tr}Reply{/tr}</label>
-						</td>
-						<td>
-							{textarea codemirror='true' syntax='tiki' id="editpost2" name="comments_data" comments="y"}{if ($prefs.feature_forum_replyempty ne 'y') || $edit_reply > 0 || $comment_preview eq 'y' || !empty($errors)}{$comment_data}{/if}{/textarea}
-
-							{if $user and $prefs.feature_user_watches eq 'y'}
-								<div id="watch_thread_on_reply">
-									<input id="watch_thread" type="checkbox" name="watch" value="y"{if $user_watching_topic eq 'y' or $smarty.request.watch eq 'y'} checked="checked"{/if}> <label for="watch_thread">{tr}Send me an e-mail when someone replies{/tr}</label>
-								</div>
-							{/if}
-						</td>
-					</tr>
-
-					{if ($forum_info.att eq 'att_all') or ($forum_info.att eq 'att_admin' and ($tiki_p_admin_forum eq 'y'  or $forum_info.moderator == $user)) or ($forum_info.att eq 'att_perm' and $tiki_p_forum_attach eq 'y')}
-						{assign var='can_attach_file' value='y'}
-						<tr>
-							<td>{tr}Attach file{/tr}</td>
-							<td>
-								<input type="hidden" name="MAX_FILE_SIZE" value="{$forum_info.att_max_size|escape}"><input id="userfile1" name="userfile1" type="file">{tr}Maximum size:{/tr} {$forum_info.att_max_size|kbsize}
-							</td>
-						</tr>
-					{/if}
-
-					{if $prefs.feature_contribution eq 'y'}
-						{include file='contribution.tpl' in_comment="y"}
-					{/if}
-
-					{if $prefs.feature_antibot eq 'y'}
-						{assign var='showmandatory' value='y'}
-						{include file='antibot.tpl' td_style="formcolor"}
-					{/if}
-
-					<tr>
-						<td>
-							{if isset($parent_coms) and $parent_coms}
-								{tr}Reply to parent post{/tr}
-							{else}
-								{tr}Post new reply{/tr}
-							{/if}
-						</td>
-
-						<td>
-							<input type="submit" class="btn btn-default btn-sm" id="comments_postComment" name="comments_postComment" value="{tr}Post{/tr}" onclick="needToConfirm=false;">
-							{if !empty($user) && $prefs.feature_comments_post_as_anonymous eq 'y'}
-								<input type="submit" class="btn btn-default btn-sm" name="comments_postComment_anonymous" value="{tr}Post as Anonymous{/tr}" onclick="needToConfirm=false;">
-							{/if}
-							<input type="submit" class="btn btn-default btn-sm" name="comments_previewComment" id="comments_previewComment" value="{tr}Preview{/tr}"
+                    <div class="col-sm-10">
+					    <input type="submit" class="btn btn-default btn-sm" id="comments_postComment" name="comments_postComment" value="{tr}Post{/tr}" onclick="needToConfirm=false;">
+						{if !empty($user) && $prefs.feature_comments_post_as_anonymous eq 'y'}
+							<input type="submit" class="btn btn-default btn-sm" name="comments_postComment_anonymous" value="{tr}Post as Anonymous{/tr}" onclick="needToConfirm=false;">
+						{/if}
+						<input type="submit" class="btn btn-default btn-sm" name="comments_previewComment" id="comments_previewComment" value="{tr}Preview{/tr}"
 							{if ( isset($can_attach_file) && $can_attach_file eq 'y' ) or empty($user)}{strip}
 								{assign var='file_preview_warning' value="{tr}Please note that the preview does not keep the attached file which you will have to choose before posting.{/tr}"}
 								onclick="
-								{if isset($can_attach_file) && $can_attach_file eq 'y'}
-									if ($('#userfile1').val()) alert('{$file_preview_warning|escape:"javascript"}');
-								{/if}
-								"
+							{if isset($can_attach_file) && $can_attach_file eq 'y'}
+								if ($('#userfile1').val()) alert('{$file_preview_warning|escape:"javascript"}');
+							{/if}
+							"
 							{/strip}{else} onclick="needToConfirm=false;"{/if}>
 							<input type="submit" class="btn btn-default btn-sm" name="comments_cancelComment" value="{tr}Cancel{/tr}" onclick="hide('{$postclass}'); return false">
-						</td>
-					</tr>
-				</table>
+			    	</div>
+                </div>
 			</form>
 
-			<br>
 			{assign var=tips_title value="{tr}Posting replies{/tr}"}
 
 			</div>
