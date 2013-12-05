@@ -2,7 +2,6 @@
 
 {include file='tiki-mytiki_bar.tpl'}
 {include file='messu-nav.tpl'}
-<br><br>
 
 {if $message}
 	<div class="alert alert-warning">
@@ -26,61 +25,53 @@
 			</form>
 		{/if}
 	</div>
-	<br>
-	<br>
 {/if}
 
 {if $sent ne '1' and $preview ne '1'}
-	<form action="messu-broadcast.php" method="post">
-		<table class="formcolor" >
-			<tr>
-				<td>
-					<label for="broadcast-group">{tr}Group:{/tr}</label>
-				</td>
-				<td>
-					<select name="groupbr" id="broadcast-group">
-						<option value=""{if $groupbr eq ''} selected="selected"{/if} />
-						{if $tiki_p_broadcast_all eq 'y'}
-							<option value="all"{if $groupbr eq 'All'} selected="selected"{/if}>{tr}All users{/tr}</option>
-						{/if}
-						{foreach item=groupName from=$groups}
-							<option value="{$groupName|escape}"{if $groupbr eq $groupName} selected="selected"{/if}>{$groupName|escape}</option>
-						{/foreach}
-					</select>
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<label for="broadcast-priority">{tr}Priority:{/tr}</label>
-				</td>
-				<td>
-					<select name="priority" id="broadcast-priority">
-						<option value="1" {if $priority eq 1}selected="selected"{/if}>1 -{tr}Lowest{/tr}-</option>
-						<option value="2" {if $priority eq 2}selected="selected"{/if}>2 -{tr}Low{/tr}-</option>
-						<option value="3" {if $priority eq 3}selected="selected"{/if}>3 -{tr}Normal{/tr}-</option>
-						<option value="4" {if $priority eq 4}selected="selected"{/if}>4 -{tr}High{/tr}-</option>
-						<option value="5" {if $priority eq 5}selected="selected"{/if}>5 -{tr}Very High{/tr}-</option>
-					</select>
-					<input type="hidden" name="replyto_hash" value="{$replyto_hash}">
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<label for="broadcast-subject">{tr}Subject:{/tr}</label>
-				</td>
-				<td>
-					<input type="text" name="subject" id="broadcast-subject" value="{$subject|escape}" size="80" maxlength="255">
-				</td>
-			</tr>
-		</table>
-        <div class="table-responsive">
-		<table class="table normal" >
-			<tr>
-				<td style="text-align: center;">
-					<textarea rows="20" cols="80" name="body">{$body|escape}</textarea><br><input type="submit" class="btn btn-default btn-sm" name="preview" value="{tr}Send{/tr}">
-				</td>
-			</tr>
-		</table>
+	<form class="form-horizontal" role="form" action="messu-broadcast.php" method="post">
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="broadcast-group">{tr}Group:{/tr}</label>
+            <div class="col-sm-10">
+				<select name="groupbr" id="broadcast-group">
+					<option value=""{if $groupbr eq ''} selected="selected"{/if} />
+					{if $tiki_p_broadcast_all eq 'y'}
+						<option value="all"{if $groupbr eq 'All'} selected="selected"{/if}>{tr}All users{/tr}</option>
+					{/if}
+					{foreach item=groupName from=$groups}
+						<option value="{$groupName|escape}"{if $groupbr eq $groupName} selected="selected"{/if}>{$groupName|escape}</option>
+					{/foreach}
+				</select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="broadcast-priority">{tr}Priority:{/tr}</label>
+            <div class="col-sm-10">
+		    	<select name="priority" id="broadcast-priority">
+					<option value="1" {if $priority eq 1}selected="selected"{/if}>1 -{tr}Lowest{/tr}-</option>
+					<option value="2" {if $priority eq 2}selected="selected"{/if}>2 -{tr}Low{/tr}-</option>
+					<option value="3" {if $priority eq 3}selected="selected"{/if}>3 -{tr}Normal{/tr}-</option>
+					<option value="4" {if $priority eq 4}selected="selected"{/if}>4 -{tr}High{/tr}-</option>
+					<option value="5" {if $priority eq 5}selected="selected"{/if}>5 -{tr}Very High{/tr}-</option>
+				</select>
+				<input type="hidden" name="replyto_hash" value="{$replyto_hash}">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="broadcast-subject">{tr}Subject:{/tr}</label>
+            <div class="col-sm-10">
+				<input type="text" name="subject" id="broadcast-subject" value="{$subject|escape}" size="80" maxlength="255">
+			</div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="broadcast-body">{tr}Message:{/tr}</label>
+            <div class="col-sm-10">
+			    <textarea rows="20" cols="80" id="broadcast-body" name="body">{$body|escape}</textarea>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-10 col-sm-push-2">
+                <input type="submit" class="btn btn-default" name="preview" value="{tr}Send{/tr}">
+            </div>
         </div>
 	</form>
 {/if}
