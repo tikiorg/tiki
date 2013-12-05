@@ -121,6 +121,9 @@ function wikiplugin_customsearch($data, $params)
 	} else {
 		$searchfadediv = '';
 	}
+	if (!isset($params['requireinput'])) {
+		$params['requireinput'] = 0;
+	}
 	if (!isset($_REQUEST["offset"])) {
 		$offset = 0;
 	} else {
