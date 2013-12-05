@@ -189,7 +189,7 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 			'list' => $this->getItemList(),
 		);
 
-		if ($this->getOption('addItems') && ! $context['in_ajax_form']) {
+		if ($this->getOption('addItems') && empty($context['in_ajax_form'])) {
 
 			$context['in_ajax_form'] = true;
 
