@@ -672,17 +672,19 @@ class TrackerLib extends TikiLib
 
 		$semanticlib = TikiLib::lib('semantic');
 		$t_links = $semanticlib->getLinksUsing('trackerid', array('toPage' => $trackerId));
-		$target = $t_links[0]['fromPage'];
-		if ($prefs['feature_multilingual'] == 'y' && count($t_links) > 1) {
-			foreach ($t_links as $t) {
-				if ($prefs['language'] == TikiLib::lib('multilingual')->getLangOfPage($t['fromPage'])) {
-					$target = $t['fromPage'];
-					break;
-				}
-			}
-		}
 
 		if (count($t_links)) {
+			if ($prefs['feature_multilingual'] == 'y' && count($t_links) > 1) {
+				foreach ($t_links as $t) {
+					if ($prefs['language'] == TikiLib::lib('multilingual')->getLangOfPage($t['fromPage'])) {
+						$target = $t['fromPage'];
+						break;
+					}
+				}
+			} else {
+				$target = $t_links[0]['fromPage'];
+			}
+
 			$p_links = $semanticlib->getLinksUsing('prefixalias', array('fromPage' => $target));
 			if (count($p_links)) {
 				$ret = $p_links[0]['toPage'] . $itemId;
