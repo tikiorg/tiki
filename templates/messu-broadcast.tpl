@@ -63,7 +63,7 @@
 			</div>
         </div>
         <div class="form-group">
-            <label class="col-sm-2 control-label" for="broadcast-body">{tr}Message:{/tr}</label>
+            <label class="col-sm-2 control-label" for="broadcast-body">{tr}Body:{/tr}</label>
             <div class="col-sm-10">
 			    <textarea rows="20" cols="80" id="broadcast-body" name="body">{$body|escape}</textarea>
             </div>
