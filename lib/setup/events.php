@@ -105,6 +105,7 @@ function tiki_setup_events()
 		$events->bindPriority(100, 'tiki.save', 'tiki_save_refresh_index');
 		$events->bindPriority(100, 'tiki.user.save', 'tiki_save_refresh_index');
 		$events->bindPriority(100, 'tiki.social.save', 'tiki_save_refresh_index');
+		$events->bindPriority(100, 'tiki.rating', 'tiki_save_refresh_index');
 	}
 
 	if ($prefs['feature_file_galleries'] == 'y') {
@@ -149,6 +150,7 @@ function tiki_setup_events()
 	$events->bind('tiki.trackeritem.create', 'tiki.trackeritem.save');
 	$events->bind('tiki.trackeritem.save', 'tiki.save');
 	$events->bind('tiki.trackeritem.delete', 'tiki.save');
+	$events->bind('tiki.trackeritem.rating', 'tiki.rating');
 
 	$events->bind('tiki.file.update', 'tiki.file.save');
 	$events->bind('tiki.file.create', 'tiki.file.save');
