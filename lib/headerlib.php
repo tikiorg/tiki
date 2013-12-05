@@ -432,10 +432,13 @@ class HeaderLib
 
 	}
 
-	function clear_js()
+	function clear_js($clear_js_files = false)
 	{
 		$this->js = array();
 		$this->jq_onready = array();
+		if ($clear_js_files) {
+			$this->jsfiles = array();
+		}
 		return $this;
 	}
 

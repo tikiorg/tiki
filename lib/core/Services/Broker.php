@@ -85,7 +85,7 @@ class Services_Broker
 
 		if ($access->is_xml_http_request() && ! $access->is_serializable_request()) {
 			$headerlib = TikiLib::lib('header');
-			$headerlib->clear_js(); // Only need the partials
+			$headerlib->clear_js(true); // Only need the partials
 		}
 	}
 
@@ -115,20 +115,10 @@ class Services_Broker
 		} elseif ($access->is_xml_http_request()) {
 			$headerlib = TikiLib::lib('header');
 
-			// similar to code in \WikiLib::get_parse, TODO refactor into headerlib for tiki 13
-			$jsFile1 = $headerlib->getJsfiles();
-			$js1 = $headerlib->getJs();
 			$content = $smarty->fetch($template);
 
-			// get any JS added to headerlib during $smarty->fetch and add to the output
-			$jsFile = array_diff($headerlib->getJsfiles(), $jsFile1);
-			$js = array_diff($headerlib->getJs(), $js1);
-			if ($jsFile) {
-				$content .= implode("\n", $jsFile);
-			}
-			if ($js) {
-				$content .= $headerlib->wrap_js(implode("\n", $js));
-			}
+			$content .= $headerlib->output_js_files();
+			$content .= $headerlib->output_js();
 
 			return $content;
 		} else {
