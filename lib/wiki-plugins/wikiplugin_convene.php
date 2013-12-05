@@ -507,7 +507,7 @@ FORM;
 				}
 			});
 
-			$('.conveneAddUser$i')
+			var addUsers$i = $('.conveneAddUser$i')
 				.click(function() {
 					if (!$(this).data('clicked')) {
 						$(this)
@@ -531,14 +531,18 @@ FORM;
 						convene$i.addUser(user);
 						return false;
 					}
-				})
-				.autocomplete({
-					source: $existingUsers
 				});
 
-				$('.conveneAddUserButton$i').click(function() {
-					convene$i.addUser($('.conveneAddUser$i').val());
+//ensure autocomplete works, it may not be available in mobile mode
+            if (addUsers$i.autocomplete) {
+				addUsers$i.autocomplete({
+					source: $existingUsers
 				});
+            }
+
+            $('.conveneAddUserButton$i').click(function() {
+                convene$i.addUser($('.conveneAddUser$i').val());
+            });
 
 			$('#pluginConvene$i .icon').css('cursor', 'pointer');
 		};
