@@ -22,14 +22,14 @@
 // This allows correctly displaying emails and JavaScript messages, not only web pages as would happen with &nbsp;.
 
 $lang = array(
-// "You must specify a directory" => "You must specify a directory",
-// "Creation Date" => "Creation Date",
-// "Name" => "Name",
-// "Last modification date" => "Last modification date",
-// "Hits" => "Hits",
-// "Owner" => "Owner",
-// "Description" => "Description",
-// "ID" => "ID",
+"You must specify a directory" => "يجب عليك تحديد مجلد",
+"Creation Date" => "تاريخ الإنشاء",
+"Name" => "اسم",
+"Last modification date" => "تاريخ آخر تعديل",
+"Hits" => "مشاهدات",
+"Owner" => "صاحب",
+"Description" => "وصف",
+"ID" => "معرف",
 // "moved %d images, %d errors occurred" => "moved %d images, %d errors occurred",
 // "a timeout occurred. Hit the reload button to move the rest" => "a timeout occurred. Hit the reload button to move the rest",
 // "Detected, Version" => "Detected, Version",
