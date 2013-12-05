@@ -59,13 +59,13 @@
         <div class="form-group">
             <label class="col-sm-2 control-label" for="broadcast-subject">{tr}Subject:{/tr}</label>
             <div class="col-sm-10">
-				<input type="text" name="subject" id="broadcast-subject" value="{$subject|escape}" size="80" maxlength="255">
+				<input type="text" name="subject" class="form-control" id="broadcast-subject" value="{$subject|escape}" maxlength="255">
 			</div>
         </div>
         <div class="form-group">
             <label class="col-sm-2 control-label" for="broadcast-body">{tr}Body:{/tr}</label>
             <div class="col-sm-10">
-			    <textarea rows="20" cols="80" id="broadcast-body" name="body">{$body|escape}</textarea>
+			    <textarea class="form-control" rows="20" id="broadcast-body" name="body">{$body|escape}</textarea>
             </div>
         </div>
         <div class="form-group">
