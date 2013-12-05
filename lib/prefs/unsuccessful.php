@@ -15,7 +15,7 @@ function prefs_unsuccessful_list()
 			'filter' => 'int',
 			'shorthint' => tra('unsuccessful login attempts'),
 			'hint' => tra('Use "-1" for never'),
-			'description' => tra('After a certain number of consecutive unsuccessfull login attempts, the user will receive a mail with instruction to validate his account. However the user can still log-in with his old password.'),
+			'description' => tra('After a certain number of consecutive unsuccessful login attempts, the user will receive a mail with instruction to validate his account. However the user can still log-in with his old password.  Keywords: brute force, brute-force, login failure, login-failure, failed logins.'),
 			'default' => 20,
 		),
 		'unsuccessful_logins_invalid' => array(
@@ -23,10 +23,10 @@ function prefs_unsuccessful_list()
 			'type' => 'text',
 			'size' => 5,
 			'filter' => 'int',
-			'description' => tra('After a certain number of consecutive unsuccessfull login attempts, the account is suspended . An admin must revalidate the account before the user can use it again.'),
+			'description' => tra('After a certain number of consecutive unsuccessful login attempts, the account is suspended. An admin must revalidate the account before the user can use it again.  Keywords: brute force, brute-force, login failure, login-failure, failed logins.'),
 			'shorthint' => tra('unsuccessful login attempts'),
 			'hint' => tra('Use "-1" for never'),
-			'default' => -1,
+			'default' => 50,
 		),
 	);	
 }
