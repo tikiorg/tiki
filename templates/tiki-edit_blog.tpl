@@ -23,60 +23,67 @@
   <a class="link" href="tiki-objectpermissions.php?objectName={$title|escape:"url"}&amp;objectType=blog&amp;permType=blogs&amp;objectId={$blogId}">{tr}There are individual permissions set for this blog{/tr}</a>
 {/if}
 
-<form method="post" action="tiki-edit_blog.php" id="blog-edit-form">
+<form method="post" action="tiki-edit_blog.php" id="blog-edit-form" class="form-horizontal" role="form">
   <input type="hidden" name="blogId" value="{$blogId|escape}">
   {tabset name='tabs_editblog'}
     {tab name="{tr}General Settings{/tr}"}
-      <table class="formcolor">
-        <tr class="editblogform">
-          <td><label for="blog-title">{tr}Title{/tr}</label></td>
-          <td><input type="text" size="61" maxlength="200" name="title" id="blog-title" value="{$title|escape}"></td>
-        </tr>
-        <tr class="editblogform">
-          <td>
-            <label for="blog-desc">{tr}Description{/tr}</label>
-          </td>
-          <td>
-            <textarea class="wikiedit" name="description" id="blog-desc" rows="20" cols="80" wrap="virtual">{$description|escape}</textarea>
-          </td>
-        </tr>
-        <tr class="editblogform">
-          <td>{tr}Creator{/tr}</td>
-          <td>
-            <select name="creator">
-              {if ($tiki_p_admin eq 'y' or $tiki_p_blog_admin eq 'y') and !empty($users)}
-                {foreach from=$users key=userId item=u}
-                  <option value="{$u|escape}"{if $u eq $creator} selected="selected"{/if}>{$u|escape}</option>
-                {/foreach}
-              {else}
-                <option value="{$user|escape}" selected="selected">{$user|escape}</option>
-              {/if}
-            </select> 
-          </td>
-        </tr>
-        <tr class="editblogform">
-          <td class="checkbox-cell"><input type="checkbox" name="public" id="blogs-allow_others" {if $public eq 'y'}checked='checked'{/if}></td>
-          <td><label for="blogs-allow_others">{tr}Allow other users to post in this blog{/tr}</label></td>
-        </tr>	
-        <tr class="editblogform">
-          <td class="checkbox-cell"><input type="checkbox" name="alwaysOwner" id="blogs-always_owner" {if isset($alwaysOwner) and $alwaysOwner eq 'y'}checked='checked'{/if}></td>
-          <td><label for="blogs-always_owner">{tr}If others post to blog, author should always be owner{/tr}</label></td>
-        </tr>
-        <tr class="editblogform">
-          <td class="checkbox-cell"><input type="checkbox" name="use_find" id="blogs-search" {if $use_find eq 'y'}checked='checked'{/if}></td>
-          <td><label for="blogs-search">{tr}Allow search{/tr}</label></td>
-        </tr>
-        <tr class="editblogform">
-          <td class="checkbox-cell">
-            <input type="checkbox" name="allow_comments" id="blogs-comments" {if $allow_comments eq 'y' or $allow_comments eq 'c'}checked='checked'{/if}{if $prefs.feature_blogposts_comments ne 'y'} disabled="disabled"{/if}>
-            {if $prefs.feature_blogposts_comments ne 'y'}Global post-level comments is disabled.{/if}
-          </td>
-          <td><label for="blogs-comments">{tr}Allow comments{/tr}</label></td>
-        </tr>
+    <div class="form-group">
+        <label class="col-sm-2 control-label" for="blog-title">{tr}Title{/tr}</label>
+        <div class="col-sm-10">
+            <input type="text" maxlength="200" name="title" id="blog-title" class="form-control" value="{$title|escape}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label" for="blog-desc">{tr}Description{/tr}</label>
+        <div class="col-sm-10">
+            <textarea class="wikiedit form-control" name="description" id="blog-desc" rows="10">{$description|escape}</textarea>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label" for="creator">{tr}Creator{/tr}</label>
+        <div class="col-sm-10">
+            <select name="creator" class="form-control">
+                {if ($tiki_p_admin eq 'y' or $tiki_p_blog_admin eq 'y') and !empty($users)}
+                    {foreach from=$users key=userId item=u}
+                        <option value="{$u|escape}"{if $u eq $creator} selected="selected"{/if}>{$u|escape}</option>
+                    {/foreach}
+                {else}
+                    <option value="{$user|escape}" selected="selected">{$user|escape}</option>
+                {/if}
+            </select>
+        </div>
+    </div>
+    <div class="col-sm-10 col-sm-push-2 form-group">
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" value=""><input type="checkbox" name="public" id="blogs-allow_others" {if $public eq 'y'}checked='checked'{/if}>
+                <label for="blogs-allow_others">{tr}Allow other users to post in this blog{/tr}
+            </label>
+        </div>
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" name="alwaysOwner" id="blogs-always_owner" {if isset($alwaysOwner) and $alwaysOwner eq 'y'}checked='checked'{/if}>
+                <label for="blogs-always_owner">{tr}If others post to blog, author should always be owner{/tr}
+            </label>
+        </div>
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" name="use_find" id="blogs-search" {if $use_find eq 'y'}checked='checked'{/if}>
+                <label for="blogs-search">{tr}Allow search{/tr}
+            </label>
+        </div>
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" name="allow_comments" id="blogs-comments" {if $allow_comments eq 'y' or $allow_comments eq 'c'}checked='checked'{/if}{if $prefs.feature_blogposts_comments ne 'y'} disabled="disabled"{/if}>
+                {if $prefs.feature_blogposts_comments ne 'y'}Global post-level comments is disabled.{/if}
+                <label for="blogs-comments">{tr}Allow comments{/tr}
+            </label>
+        </div>
+    </div>
 
         {include file='categorize.tpl'}
 
-      </table>
+
     {/tab}
     {tab name="{tr}Display Options{/tr}"}
       <table class="formcolor">
