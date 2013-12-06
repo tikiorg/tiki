@@ -32,7 +32,7 @@
         <div class="form-group">
             <label class="col-sm-2 control-label" for="broadcast-group">{tr}Group:{/tr}</label>
             <div class="col-sm-10">
-				<select name="groupbr" id="broadcast-group">
+				<select name="groupbr" id="broadcast-group" class="form-control">
 					<option value=""{if $groupbr eq ''} selected="selected"{/if} />
 					{if $tiki_p_broadcast_all eq 'y'}
 						<option value="all"{if $groupbr eq 'All'} selected="selected"{/if}>{tr}All users{/tr}</option>
@@ -46,7 +46,7 @@
         <div class="form-group">
             <label class="col-sm-2 control-label" for="broadcast-priority">{tr}Priority:{/tr}</label>
             <div class="col-sm-10">
-		    	<select name="priority" id="broadcast-priority">
+		    	<select name="priority" id="broadcast-priority" class="form-control">
 					<option value="1" {if $priority eq 1}selected="selected"{/if}>1 -{tr}Lowest{/tr}-</option>
 					<option value="2" {if $priority eq 2}selected="selected"{/if}>2 -{tr}Low{/tr}-</option>
 					<option value="3" {if $priority eq 3}selected="selected"{/if}>3 -{tr}Normal{/tr}-</option>
