@@ -1,23 +1,26 @@
 {title}{tr}Rankings{/tr}{/title}
+<div class="form-group">
+    <form action="{$rpage}" method="post" class="form-inline" role="form">
+        <div class="form-group">
+        	<select name="which" class="form-control">
+	        	{section name=ix loop=$allrankings}
+		        	<option value="{$allrankings[ix].value|escape}" {if $which eq $allrankings[ix].value}selected="selected"{/if}>{$allrankings[ix].name}</option>
+		        {/section}
+	        </select>
+        </div>
+        <div class="form-group">
+	        <select name="limit" class="form-control">
+		        <option value="10" {if $limit eq 10}selected="selected"{/if}>{tr}Top 10{/tr}</option>
+		        <option value="20" {if $limit eq 20}selected="selected"{/if}>{tr}Top 20{/tr}</option>
+		        <option value="50" {if $limit eq 50}selected="selected"{/if}>{tr}Top 50{/tr}</option>
+		        <option value="100" {if $limit eq 100}selected="selected"{/if}>{tr}Top 100{/tr}</option>
+	        </select>
+        </div>
 
-<form action="{$rpage}" method="post">
-	<select name="which">
-		{section name=ix loop=$allrankings}
-			<option value="{$allrankings[ix].value|escape}" {if $which eq $allrankings[ix].value}selected="selected"{/if}>{$allrankings[ix].name}</option>
-		{/section}
-	</select>
-
-	<select name="limit">
-		<option value="10" {if $limit eq 10}selected="selected"{/if}>{tr}Top 10{/tr}</option>
-		<option value="20" {if $limit eq 20}selected="selected"{/if}>{tr}Top 20{/tr}</option>
-		<option value="50" {if $limit eq 50}selected="selected"{/if}>{tr}Top 50{/tr}</option>
-		<option value="100" {if $limit eq 100}selected="selected"{/if}>{tr}Top 100{/tr}</option>
-	</select>
-
-	{if $categIdstr}<input type="hidden" name="categId" value="{$categIdstr}">{/if}
-	<input type="submit" class="btn btn-default btn-sm" name="selrank" value="{tr}View{/tr}">
-</form>
-
+	        {if $categIdstr}<input type="hidden" name="categId" value="{$categIdstr}">{/if}
+	        <input type="submit" class="btn btn-default" name="selrank" value="{tr}View{/tr}">
+    </form>
+</div>
 {cycle values="odd,even" print=false}
 {section name=ix loop=$rankings}
     <div class="table-responsive">
