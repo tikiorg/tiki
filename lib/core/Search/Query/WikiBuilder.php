@@ -14,10 +14,17 @@ class Search_Query_WikiBuilder
 
 	function __construct(Search_Query $query)
 	{
+		global $prefs;
+		if (!empty($prefs['maxRecords'])) {
+			$max = $prefs['maxRecords'];
+		} else {
+			$max = 50;
+		}
+
 		$this->query = $query;
 		$this->paginationArguments = array(
 			'offset_arg' => 'offset',
-			'max' => 50,
+			'max' => $max,
 		);
 	}
 
