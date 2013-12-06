@@ -86,103 +86,93 @@
 
     {/tab}
     {tab name="{tr}Display Options{/tr}"}
-      <table class="formcolor">
-        <tr class="editblogform">
-          <td><label for="blogs-number">{tr}Number of posts to show per page{/tr}</label></td>
-          <td><input type="text" name="maxPosts" id="blogs-number" value="{$maxPosts|escape}"></td>
-        </tr>
-    	<tr class="editblogform">
-          <td><label for="blogs-title">{tr}Display blog title in posts list page{/tr}</label></td>	 
-          <td><input type="checkbox" name="use_title" id="blogs-title" {if $use_title eq 'y'}checked='checked'{/if}></td>	 
-        </tr>
-    	<tr class="editblogform">
-          <td><label for="blogs-title-post">{tr}Display blog title in post page{/tr}</label></td>	 
-          <td><input type="checkbox" name="use_title_in_post" id="blogs-title-post" {if $use_title_in_post eq 'y'}checked='checked'{/if}></td>	 
-        </tr>
-    	<tr class="editblogform">
-          <td><label for="blogs-description">{tr}Display blog description{/tr}</label></td>	 
-          <td><input type="checkbox" name="use_description" id="blogs-description" {if $use_description eq 'y'}checked='checked'{/if}></td>	 
-        </tr>
-    	<tr class="editblogform">
-          <td><label for="blogs-breadcrumbs">{tr}Display breadcrumbs{/tr}</label></td>	 
-          <td><input type="checkbox" name="use_breadcrumbs" id="blogs-breadcrumbs" {if $use_breadcrumbs eq 'y'}checked='checked'{/if}></td>	 
-        </tr>
-    	<tr class="editblogform">
-          <td><label for="blogs-author">{tr}Display author in blog posts{/tr}</label></td>	 
-          <td><input type="checkbox" name="use_author" id="blogs-author" {if $use_author eq 'y'}checked='checked'{/if}></td>	 
-        </tr>
-        <tr class="editblogform">
-          <td><label for="blogs-date">{tr}Display published date in blog posts{/tr}</label></td>	 
-          <td><input type="checkbox" name="add_date" id="blogs-date" {if $add_date eq 'y'}checked='checked'{/if}></td>	 
-        </tr>	
-        <tr class="editblogform">
-          <td><label for="blogs-avatar">{tr}Show user avatar{/tr}</label></td>
-          <td><input type="checkbox" name="show_avatar" id="blogs-avatar" {if $show_avatar eq 'y'}checked='checked'{/if}></td>
-        </tr>
-        <tr class="editblogform">
-          <td><label for="blogs-post-related">{tr}Show post related content{/tr}</label></td>
-          <td>
-		    <input type="checkbox" name="show_related" id="blogs-post-related" {if $show_related eq 'y'}checked='checked'{/if} {if $prefs.feature_freetags ne 'y'}disabled="disabled"{/if}>
-  		    {if $prefs.feature_freetags neq 'y'}
-		  	  <em>{tr}The checkbox is disabled because feature_freetags is disabled globally.{/tr}</em>
-	    	{/if}
-		  </td>
-        </tr>
-        <tr class="editblogform">
-          <td><label for="blogs-post-max-related">{tr}Maximum number of related posts to display{/tr}</label></td>
-          <td>
-		    <input type="text" name="related_max" id="blogs-post-max-related" value="{$related_max|escape}">
-		  </td>
-        </tr>
-        <tr class="editblogform">
-          <td><label for="blogs-post-use-excerpt">{tr}Use post excerpt{/tr}</label></td>
-          <td>
-		    <input type="checkbox" name="use_excerpt" id="blogs-post-use-excerpt" {if $use_excerpt eq 'y'}checked='checked'{/if}>
-		  </td>
-        </tr>
 
-        {if $prefs.feature_blog_heading eq 'y' and $tiki_p_edit_templates eq 'y'}
-          <tr class="editblogform">
-            <td colspan="2">
-              <label for="blogs-heading">{tr}Blog heading{/tr}</label>
-            </td>
-					</tr>
-          <tr class="editblogform">
-            <td colspan="2">
-              <textarea name="heading" id="blogs-heading" rows='10' cols='80'>{$heading|escape}</textarea>
-            </td>
-          </tr>
-
-          {if strlen($heading) > 0 and $show_blog_heading_preview eq 'y'}
-            <tr class="editblogform">
-              <td colspan="2">
-                {button href="#" _flip_id='blog_heading_preview' _class='link' _text="{tr}Heading preview{/tr}" _flip_default_open='n'}
-                <div id="blog_heading_preview" style="display: {if $show_blog_heading_preview eq 'y'}block{else}none{/if};">
-                  {eval var=$heading}
-                </div>
-              </td>
-            </tr>
-          {/if}
-
-          <tr class="editblogform">
-            <td colspan="2">
-              <label for="blogs-post-heading">{tr}Blog post heading{/tr}</label>
-            </td>
-					</tr>
-          <tr class="editblogform">
-            <td colspan="2">
-              <textarea name="post_heading" id="blogs-post_heading" rows='10' cols='80'>{$post_heading|escape}</textarea>
-            </td>
-          </tr>
-
-        {/if}
-
-      </table>
-    {/tab}
+    <div class="form-group">
+        <label class="col-sm-5 control-label" for="blogs-number">{tr}Number of posts to show per page{/tr}</label>
+        <div class="col-sm-7">
+          <input type="text" name="maxPosts" id="blogs-number" class="form-control" value="{$maxPosts|escape}">
+        </div>
+        <div class="col-sm-offset-1 col-sm-11">
+            <div class="checkbox">
+                <label for="blogs-title">{tr}Display blog title in posts list page{/tr}
+                <input type="checkbox" name="use_title" id="blogs-title" {if $use_title eq 'y'}checked='checked'{/if}>
+            </label>
+        </div>
+        <div class="checkbox">
+            <label for="blogs-title-post">{tr}Display blog title in post page{/tr}
+                <input type="checkbox" name="use_title_in_post" id="blogs-title-post" {if $use_title_in_post eq 'y'}checked='checked'{/if}>
+            </label>
+        </div>
+        <div class="checkbox">
+            <label for="blogs-description">{tr}Display blog description{/tr}
+                <input type="checkbox" name="use_description" id="blogs-description" {if $use_description eq 'y'}checked='checked'{/if}>
+            </label>
+        </div>
+        <div class="checkbox">
+        <label for="blogs-breadcrumbs">{tr}Display breadcrumbs{/tr}
+            <input type="checkbox" name="use_breadcrumbs" id="blogs-breadcrumbs" {if $use_breadcrumbs eq 'y'}checked='checked'{/if}>
+        </label>
+        </div>
+        <div class="checkbox">
+        <label for="blogs-author">{tr}Display author in blog posts{/tr}
+            <input type="checkbox" name="use_author" id="blogs-author" {if $use_author eq 'y'}checked='checked'{/if}>
+        </label>
+        </div>
+        <div class="checkbox">
+        <label for="blogs-date">{tr}Display published date in blog posts{/tr}
+            <input type="checkbox" name="add_date" id="blogs-date" {if $add_date eq 'y'}checked='checked'{/if}>
+        </label>
+        </div>
+        <div class="checkbox">
+        <label for="blogs-avatar">{tr}Show user avatar{/tr}
+            <input type="checkbox" name="show_avatar" id="blogs-avatar" {if $show_avatar eq 'y'}checked='checked'{/if}>
+        </label>
+        </div>
+        <div class="checkbox">
+            <label for="blogs-post-related">{tr}Show post related content{/tr}
+                <input type="checkbox" name="show_related" id="blogs-post-related" {if $show_related eq 'y'}checked='checked'{/if} {if $prefs.feature_freetags ne 'y'}disabled="disabled"{/if}>
+  		        {if $prefs.feature_freetags neq 'y'}
+		  	    <em>{tr}The checkbox is disabled because feature_freetags is disabled globally.{/tr}</em>
+	    	    {/if}
+            </label>
+        </div>
+        <label class="col-sm-5 control-label" for="blogs-post-max-related">{tr}Maximum number of related posts to display{/tr}</label>
+        <div class="col-sm-7">
+		    <input type="text" name="related_max" id="blogs-post-max-related" class="form-control"  value="{$related_max|escape}">
+	  </div>
+    </div>
+    <div class="col-sm-offset-1 col-sm-11">
+        <div class="checkbox">
+            <label for="blogs-post-use-excerpt">{tr}Use post excerpt{/tr}
+                <input type="checkbox" name="use_excerpt" id="blogs-post-use-excerpt" {if $use_excerpt eq 'y'}checked='checked'{/if}>
+            </label>
+        </div>
+    </div>
+</div>
+{if $prefs.feature_blog_heading eq 'y' and $tiki_p_edit_templates eq 'y'}
+    <div class="form-group">
+        <label class="col-sm-2 control-label" for="blogs-heading">{tr}Blog heading{/tr}</label>
+        <div class="col-sm-10">
+            <textarea name="heading" id="blogs-heading" rows='10' class="form-control">{$heading|escape}</textarea>
+        </div>
+    </div>
+    {if strlen($heading) > 0 and $show_blog_heading_preview eq 'y'}
+        {button href="#" _flip_id='blog_heading_preview' _class='link' _text="{tr}Heading preview{/tr}" _flip_default_open='n'}
+            <div id="blog_heading_preview" style="display: {if $show_blog_heading_preview eq 'y'}block{else}none{/if};">
+               {eval var=$heading}
+            </div>
+    {/if}
+    <div class="form-group">
+        <label class="col-sm-2 control-label" for="blogs-post-heading">{tr}Blog post heading{/tr}</label>
+        <div class="col-sm-10">
+              <textarea name="post_heading" id="blogs-post_heading" rows='10' class="form-control">{$post_heading|escape}</textarea>
+        </div>
+    </div>
+{/if}
+      {/tab}
   {/tabset}
   {if $prefs.feature_blog_heading eq 'y' and $tiki_p_edit_templates eq 'y'}
     <input type="submit" class="wikiaction btn btn-defaul" name="preview" value="{tr}Heading preview{/tr}">
   {/if}
   <input type="submit" class="wikiaction btn btn-default" name="save" value="{tr}Save{/tr}">
 </form>
-<br>
