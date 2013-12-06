@@ -19,23 +19,27 @@
 	{/if}
 
 	{if $prefs.feature_search_show_search_box eq 'y' or  $searchStyle eq "menu"}
-		<form action="tiki-searchresults.php" method="get" id="search-form" class="text-center">
-			<label class="findtitle">
+		<form action="tiki-searchresults.php" method="get" id="search-form" class="form-inline" role="form">
+            <div class="form-group">
+			<label class="findtitle control-label">
 				{tr}Search{/tr} <input id="highlight{$iSearch}" name="highlight" style="width:300px" type="text" accesskey="s" value="{$words|escape}">
 			</label>
 			{if $prefs.search_autocomplete eq 'y'}
 				{autocomplete element="#highlight$iSearch" type='pagename'}
-			{/if}			
+			{/if}
+            </div>
 				{if !( $searchStyle eq "menu" )}
-				<label class="searchboolean" for="boolean">
-					{tr}Advanced search:{/tr}<input type="checkbox" name="boolean" id="boolean" {if $boolean eq 'y'} checked="checked"{/if}>
+                <div class="form-group">
+				<label class="searchboolean control-label" for="boolean">
+					{tr}Advanced search:{/tr} <input type="checkbox" name="boolean" id="boolean" {if $boolean eq 'y'} checked="checked"{/if}>
 				</label>
 				{add_help show='y' title="{tr}Search Help{/tr}" id="advanced_search_help"}
 					{$smarty.capture.advanced_search_help}
 				{/add_help}
-
+                </div>
 				{if $prefs.feature_search_show_last_modification eq 'y'}
-				<label class="searchdate" for="date">
+                    <div class="form-group">
+				<label class="searchdate control-label" for="date">
 					{tr}Date Search:{/tr}
 					<select id="date" name="date" onchange="javascript:submit()">
 						{section name=date start=0 loop=12 step=1}	
@@ -49,6 +53,7 @@
 						{/section}
 					</select>
 				</label>
+                    </div>
 				{/if}
 
 				{if $prefs.feature_multilingual eq 'y' and ($where eq 'wikis' || $where eq 'articles')}
