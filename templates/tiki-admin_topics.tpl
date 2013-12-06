@@ -4,26 +4,25 @@
 
 <h2>{tr}Add topic{/tr}</h2>
 
-<form enctype="multipart/form-data" action="tiki-admin_topics.php" method="post">
-	<table class="formcolor">
-		<tr>
-			<td>{tr}Name{/tr}</td>
-			<td><input type="text" name="name"></td>
-		</tr>
-		<tr>
-			<td>{tr}Image{/tr}</td>
-			<td>
-				<input type="hidden" name="MAX_FILE_SIZE" value="1000000">
-				<input name="userfile1" type="file">
-			</td>
-		</tr>
-		<tr>
-			<td>&nbsp;</td>
-			<td>
-				<input type="submit" class="btn btn-default btn-sm" name="addtopic" value="{tr}Add{/tr}">
-			</td>
-		</tr>
-	</table>
+<form enctype="multipart/form-data" action="tiki-admin_topics.php" method="post" class="form-horizontal">
+    <div class="form-group">
+        <label class="col-sm-2 control-label" for="name">{tr}Name{/tr}</label>
+        <div class="col-sm-10">
+            <input type="text" name="name" id="name" class="form-control">
+        </div>
+	</div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label" for="image">{tr}Image{/tr}</label>
+        <div class="col-sm-10">
+	    	<input type="hidden" name="MAX_FILE_SIZE" value="1000000" class="form-control">
+			<input name="userfile1" type="file" class="form-control">
+		</div>
+	</div>
+    <div class="form-group">
+        <div class="col-sm-10 col-sm-offset-2">
+			<input type="submit" class="btn btn-default btn-sm" name="addtopic" value="{tr}Add{/tr}">
+	    </div>
+	</div>
 </form>
 
 <h2>{tr}Topics{/tr}</h2>
