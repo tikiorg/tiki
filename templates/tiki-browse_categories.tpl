@@ -8,7 +8,7 @@
 <div class="form-group categbar">
 	{button href="tiki-edit_categories.php" _text="{tr}Organize Objects{/tr}" _title="{tr}Organize Objects{/tr}"}
 	{if $tiki_p_admin_categories eq 'y'}
-		{button href="tiki-admin_categories.php?parentId=$parentId" _text="{tr}Admin Category{/tr}" _title="{tr}Admin the Category System{/tr}"}
+		{button href="tiki-admin_categories.php?parentId=$parentId" _text="{tr}Admin Categories{/tr}" _title="{tr}Admin the Category System{/tr}"}
 	{/if}
 </div>
 
