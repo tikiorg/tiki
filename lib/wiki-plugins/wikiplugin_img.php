@@ -1118,6 +1118,7 @@ function wikiplugin_img( $data, $params )
 						$link_button = $browse_full_image;
 					}
 				}
+				$link_button = filter_out_sefurl($link_button);
 			} else {
 				$link_button = $link;
 			}
