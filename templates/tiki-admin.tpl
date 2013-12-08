@@ -71,6 +71,9 @@
 	$('.preffilter').change(updateVisible);
 {/jq}
 
+<a href="tiki-wizard_admin.php?&stepNr=0&url=tiki-admin.php"><img src="img/icons/large/wizard48x48.png"></a>For easier configuration, use one of our <a href="tiki-wizard_admin.php?&stepNr=0&url=tiki-admin.php">Confiuration Wizards</a>.
+<br>
+
 {if !isset($smarty.get.page) or $smarty.get.page != 'profiles'} {* We don't want on this page because it results in two search boxes *}
 <form method="post" action="">
 	{*remarksbox type="note" title="{tr}Development Notice{/tr}"}
@@ -80,12 +83,12 @@
 		<label>{tr}Configuration search:{/tr} <input type="text" name="lm_criteria" value="{$lm_criteria|escape}"></label>
 		<input type="submit" class="btn btn-default btn-sm" value="{tr}Search{/tr}" {if $indexNeedsRebuilding} class="tips" title="{tr}Configuration search{/tr}|{tr}Note: The search index needs rebuilding, this will take a few minutes.{/tr}"{/if} />
 		<input type="hidden" name="filters">
-		<span class="adminWizardLink">{button _icon='wizard16x16' href='tiki-wizard_admin.php?url=tiki-admin.php' _text="{tr}Open Admin Wizard{/tr}"}</span>
 	</p>
 </form>
 {if $lm_error}
 	{remarksbox type="warning" title="{tr}Search error{/tr}"}{$lm_error}{/remarksbox}
 {elseif $lm_searchresults}
+
 <fieldset>
 <legend>{tr}Preferences Search Results{/tr}</legend>
 	<form method="post" action="">
@@ -102,6 +105,7 @@
 	{remarksbox type="note" title="{tr}No results{/tr}" icon="magnifier"}{tr}No preferences were found for your search query.{/tr}{if $prefs.unified_engine eq 'lucene'}{tr} Not what you expected? Try {/tr}<a class="rbox-link" href="tiki-admin.php?prefrebuild">{tr}rebuild{/tr}</a> {tr}the preferences search index.{/tr}{/if}{/remarksbox}
 {/if}
 {/if}
+
 
 <div id="pageheader">
 {* bother to display this only when breadcrumbs are on *}
@@ -183,6 +187,7 @@ if $pagetop_msg}
 		{$pagetop_msg}
 	{/remarksbox}
 {/if*}
+
 
 {include file="admin/include_$include.tpl"}
 

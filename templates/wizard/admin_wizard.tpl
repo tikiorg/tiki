@@ -1,30 +1,49 @@
 {* $Id$ *}
 
+
 <fieldset>
 	<legend>{tr}Get Started{/tr}</legend>
-<div style="display:block;margin-left: auto; margin-right: auto">
-<div class="adminWizardIconleft"><img src="img/icons/large/wizard48x48.png" alt="{tr}Tiki Admin Wizard{/tr}" /><br/><br/></div>
-{tr}The Tiki Admin Wizard helps you quickly configure key features and settings. Use the <a href="tiki-admin.php" target="_blank">Admin Panel</a> to configure other features and settings not included in this wizard{/tr}.
-<br>
-		<input type="submit" class="btn btn-default btn-sm" name="continue" value="{tr}Start admin wizard{/tr}" /><br>
-</div>
-<br>
-<div style="display:block;margin-left: auto; margin-right: auto">
-<div class="adminWizardIconleft"><img src="img/icons/large/profiles48x48.png" alt="{tr}Tiki Configuration Profiles{/tr}" /></div>
-{tr}Tiki Profiles are a quick and easy way to setup a preconfigured application{/tr}.
-{tr}Featured profiles: Collaborative Community, Company Intranet, Personal Blog and Profile and Small Organization Web Presence{/tr}.
-<br>
-		<input  type="submit" class="btn btn-default" name="use-default-prefs" value="{tr}Easy application setup using configuration profiles{/tr}" /><br>
-</div>
-<br>
-<div style="display:block;margin-left: auto; margin-right: auto; margin-bottom: 10px">
-<div class="adminWizardIconleft"><img src="img/icons/large/stock_missing-image48x48.png" alt="{tr}No wizard{/tr}" /></div>
-{tr}Do it manually using the <a href="tiki-admin.php" target="_blank">Admin Panel</a>{/tr}.
-<br>
-		<input  type="submit" class="btn btn-default" name="skip" value="{tr}Skip setup and don't show again{/tr}" />
-<br><br>
-</div>
+
+    {tr}Congratulations! You now have a working instance of Tiki{/tr}.
+    <p/>
+    {tr}You may <a href="tiki-index.php">start using it right away</a>, or you may configure it to better meet your needs, using one one of the configuration wizards below.{/tr}
+    <br>
+
+    <table>
+        <tr>
+            <td><div class="adminWizardIconleft"><img src="img/icons/large/cookie_cuter.png" alt="{tr}Tiki Template Sites{/tr}" /></div></td>
+            <td>
+                {tr}You may start by applying one of our <b>Site Templates</b>{/tr}.
+                {tr}Each of those thas been carefully designed to meet most needs of a particular kind of community or site (ex: Personal Blog space, Company Intranet){/tr}.
+                {tr}If you are new to Tiki administration, we recommend that you start with that approach{/tr}.
+                {tr}If the template you selected does not quite meet your needs, you will still have the option of customizing it further with one of the approaches below{/tr}.
+                <br>
+                <input  type="submit" class="btn btn-default" name="use-default-prefs" value="{tr}Choose a site template{/tr}" />
+                <br><br>
+            </td>
+        </tr>
+
+        <tr>
+            <td><div class="adminWizardIconleft"><img src="img/icons/large/barefeet48x48.png" alt="{tr}Configuration Walkthrough{/tr}" /><br/><br/></div></td>
+            <td>
+                {tr}Alternatively, you may use the <b>Configuration Walkthrough</b>{/tr}
+                {tr}This will guide you through a subset of preferences that most commonly need to be changed{/tr}.
+                {tr}Use this wizard if none of the <b>Site Templates</b> looks like a good starting point, or if you need to customize your site further{/tr}.
+                <br>
+                <input type="submit" class="btn btn-default btn-sm" name="continue" value="{tr}Start Config Walkthrough{/tr}" /><br><br>
+            </td>
+        </tr>
+
+        <tr>
+            <td><div class="adminWizardIconleft"><img src="img/icons/large/admin_panel48x48.png" alt="{tr}Admin Panel{/tr}" /></div></td>
+            <td>
+                {tr}Use the <a href="tiki-admin.php" target="_blank">Admin Panel</a> to manually browse through the full list of preferences{/tr}.
+                <br><br>
+            </td>
+        </tr>
+    </table>
 </fieldset>
+
 <fieldset>
 <legend>{tr}Server Fitness{/tr}</legend>
 	{tr _0=$tiki_version}To check if your server meets the requirements for running Tiki version %0, please visit <a href="tiki-check.php" target="_blank">Tiki Server Compatibility Check</a>{/tr}.
