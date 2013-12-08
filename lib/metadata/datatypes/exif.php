@@ -774,7 +774,7 @@ class Exif
 		if (isset($exif['MAKERNOTE'])) {
 			$exif['MAKERNOTE'] = "";
 			$exif['MAKERNOTE']['Note']['label'] = "";
-			$exif['MAKERNOTE']['Note']['newval'] = "(Not processed)S";
+			$exif['MAKERNOTE']['Note']['newval'] = "(Not processed)";
 		}
 		//Interpret GPSVersion field
 		if (isset($exif['GPS']['GPSVersion'])) {
