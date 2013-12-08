@@ -179,7 +179,7 @@
 										{if $prefs.feature_shadowbox eq 'y' && empty($filegals_manager)}
 											{if $key_type eq 'image/png' or $key_type eq 'image/jpeg'
 											or $key_type eq 'image/jpg' or $key_type eq 'image/gif'}
-													rel="shadowbox[gallery];type=img"
+													rel="box[g]"
 											{elseif $key_type eq 'text/html'}
 													rel="shadowbox[gallery];type=iframe"
 											{elseif $key_type eq 'application/x-shockwave-flash'}
@@ -193,7 +193,7 @@
 										{/if}>
 										{if $key_type neq 'image/svg' and $key_type neq 'image/svg+xml'}
 											{if $view eq 'page'}
-												<img src="tiki-download_file.php?fileId={$files[changes].id}" alt="" style="max-width:{$maxWidth}">
+												<img src="tiki-download_file.php?fileId={$files[changes].id}&preview" alt="" style="max-width:{$maxWidth}">
 											{else}
 												<img src="{$files[changes].id|sefurl:thumbnail}" alt="" style="max-height:{$thumbnailcontener_size}px">
 											{/if}
