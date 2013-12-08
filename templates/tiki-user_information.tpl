@@ -341,57 +341,61 @@
 	{/if}
 
 	{if $user and $prefs.feature_messages eq 'y' and $tiki_p_messages eq 'y' and $allowMsgs eq 'y'}{tab name="{tr}Send Me A Message{/tr}"}
-		<div id="message" class="panel panel-default"><div class="panel-body">
+		<div id="message">
 			{if $sent}
 				{$message}
 			{else}
 				<h2 class="center">{tr}Send me a message !{/tr}</h2>
-				<form method="post" action="tiki-user_information.php" name="f">
+				<form method="post" action="tiki-user_information.php" name="f" class="form-horizontal">
 					<input type="hidden" name="to" value="{$userwatch|escape}">
 					<input type="hidden" name="view_user" value="{$userwatch|escape}">
 
-					<div class="table normalnoborder">
-						<p>{tr}The following message will be sent to user{/tr} {$userinfo.login|userlink}&hellip;</p>
+				    <p>{tr}The following message will be sent to user{/tr} {$userinfo.login|userlink}&hellip;</p>
 
-						<div class="clearfix">
-							<div class="pull-left" style="width: 25%"><label for="priority"><span>{tr}Priority{/tr}</span></label>:</div>
-							<div class="pull-left" style="width: 50%">
-								<select name="priority" id="priority">
-									<option value="1" {if $priority eq 1}selected="selected"{/if}>1: {tr}Lowest{/tr}</option>
-									<option value="2" {if $priority eq 2}selected="selected"{/if}>2: {tr}Low{/tr}</option>
-									<option value="3" {if $priority eq 3}selected="selected"{/if}>3: {tr}Normal{/tr}</option>
-									<option value="4" {if $priority eq 4}selected="selected"{/if}>4: {tr}High{/tr}</option>
-									<option value="5" {if $priority eq 5}selected="selected"{/if}>5: {tr}Very High{/tr}</option>
-								</select>
-							</div>
-							<div class="pull-right input_submit_container">
-								<input type="submit" class="btn btn-default btn-sm" name="send" value="{tr}Send{/tr}">
-							</div>
-						</div>
-						<div class="clearfix">
-							<label><span>{tr}Subject{/tr}</span>: <input type="text" name="subject" value="" maxlength="255" style="width:100%;"></label>
-						</div>
-						<div>
-							<label><span>{tr}Message Body{/tr}</span>:
-								<textarea rows="20" cols="80" name="body" style="border: solid 1px #000; width: 100%;"></textarea>
-							</label>
-						</div>
-						<input type="checkbox" name="replytome" id="replytome">
-						<label for="replytome">
-							{tr}Reply-to my email{/tr}
-							{help url="User+Information" desc="{tr}Reply-to my email:{/tr}{tr}The user will be able to reply to you directly via email.{/tr}"}
-						</label>
-						<input type="checkbox" name="bccme" id="bccme">
-						<label for="bccme">
-							{tr}Send me a copy{/tr}
-							{help url="User+Information" desc="{tr}Send me a copy:{/tr}{tr}You will be sent a copy of this email.{/tr}"}
-						</label>
 
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="priority">{tr}Priority{/tr}</label>
+                        <div class="col-sm-10">
+    						<select name="priority" id="priority" class="form-control">
+								<option value="1" {if $priority eq 1}selected="selected"{/if}>1: {tr}Lowest{/tr}</option>
+								<option value="2" {if $priority eq 2}selected="selected"{/if}>2: {tr}Low{/tr}</option>
+								<option value="3" {if $priority eq 3}selected="selected"{/if}>3: {tr}Normal{/tr}</option>
+								<option value="4" {if $priority eq 4}selected="selected"{/if}>4: {tr}High{/tr}</option>
+								<option value="5" {if $priority eq 5}selected="selected"{/if}>5: {tr}Very High{/tr}</option>
+							</select>
+						</div>
 					</div>
-
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="subject">{tr}Subject{/tr}</label>
+                        <div class="col-sm-10">
+                            <input type="text" name="subject" id="subject" value="" maxlength="255" class="form-control">
+	    				</div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="message">{tr}Message Body{/tr}</label>
+                        <div class="col-sm-10">
+  						    <textarea rows="20" class="form-control" name="body" id="message"></textarea>
+					    </div>
+						</div>
+                    <div class="form-group">
+                        <div class="col-sm-10 col-sm-push-2">
+                            <input type="submit" class="btn btn-default" name="send" value="{tr}Send{/tr}">
+						    <input type="checkbox" name="replytome" id="replytome">
+						    <label for="replytome">
+						        {tr}Reply-to my email{/tr}
+							    {help url="User+Information" desc="{tr}Reply-to my email:{/tr}{tr}The user will be able to reply to you directly via email.{/tr}"}
+						    </label>
+						    <input type="checkbox" name="bccme" id="bccme">
+				            <label for="bccme">
+			    		        {tr}Send me a copy{/tr}
+						        {help url="User+Information" desc="{tr}Send me a copy:{/tr}{tr}You will be sent a copy of this email.{/tr}"}
+					        </label>
+				        </div>
+                    </div>
 				</form>
 			{/if}
-		</div></div>
+        </div>
 	{/tab}{/if}
 	{/tabset}
 
