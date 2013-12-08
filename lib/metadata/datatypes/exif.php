@@ -767,10 +767,15 @@ class Exif
 		unset($exif['FILE']['FileDateTime']);
 		//No processing of maker notes yet as specific code is needed for each manufacturer
 		//Blank out field since it is very long and will distort the dialog box
-		if (!empty($exif['EXIF']['MakerNote']['value']['display'])) {
+		if (!empty($exif['EXIF']['MakerNote']['newval'])) {
 			$exif['EXIF']['MakerNote']['newval'] = '(Not processed)';
+			unset($exif['EXIF']['MakerNote']['rawval']);
 		}
-
+		if (isset($exif['MAKERNOTE'])) {
+			$exif['MAKERNOTE'] = "";
+			$exif['MAKERNOTE']['Note']['label'] = "";
+			$exif['MAKERNOTE']['Note']['newval'] = "(Not processed)";
+		}
 		//Interpret GPSVersion field
 		if (isset($exif['GPS']['GPSVersion'])) {
 			$exif['GPS']['GPSVersion']['newval'] = '';
