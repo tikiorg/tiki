@@ -11,9 +11,9 @@
 
     <table>
         <tr>
-            <td><div class="adminWizardIconleft"><img src="img/icons/large/cookie_cuter.png" alt="{tr}Tiki Template Sites{/tr}" /></div></td>
+            <td><div class="adminWizardIconleft"><img src="img/icons/large/cookie_cutter.png" alt="{tr}Tiki Template Sites{/tr}" /></div></td>
             <td>
-                {tr}You may start by applying one of our <b>Site Templates</b> (also known as configuration "<b><i>profiles</i></b>" <img src="img/icons/large/profiles.png" width="20" alt="{tr}Profiles{/tr}" />){/tr}.
+                {tr}You may start by applying one of our <b>Site Templates</b> (also known as "<b><i>Featured Profiles</i></b>" <img src="img/icons/large/profiles.png" width="20" alt="{tr}Profiles{/tr}" />){/tr}.
                 {tr}Each of those has been carefully designed to meet most needs of a particular kind of community or site (ex: Personal Blog space, Company Intranet){/tr}.
                 {tr}If you are new to Tiki administration, we recommend that you start with that approach{/tr}.
                 {tr}If the template you selected does not quite meet your needs, you will still have the option of customizing it further with one of the approaches below{/tr}.
@@ -26,7 +26,7 @@
         <tr>
             <td><div class="adminWizardIconleft"><img src="img/icons/large/barefeet48x48.png" alt="{tr}Configuration Walkthrough{/tr}" /><br/><br/></div></td>
             <td>
-                {tr}Alternatively, you may use the <b>Configuration Walkthrough</b>{/tr} (also known as admin "<b><i>wizard</i></b>" <img src="img/icons/large/wizard32x32.png" width="20" alt="{tr}Wizards{/tr}" />).
+                {tr}Alternatively, you may use the <b>Configuration Walkthrough</b>{/tr} (also known as "<b><i>admin wizard</i></b>" <img src="img/icons/large/wizard32x32.png" width="20" alt="{tr}Wizards{/tr}" />).
                 {tr}This will guide you through a subset of preferences that most commonly need to be changed{/tr}.
                 {tr}Use this wizard if none of the <b>Site Templates</b> looks like a good starting point, or if you need to customize your site further{/tr}.
                 <br>
