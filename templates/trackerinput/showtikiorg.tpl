@@ -99,8 +99,8 @@ Version: <select name="svntag">
 {if $field.canDestroy}
 {button href="#showtikiorg{$field.fieldId}_{$item.itemId}{if isset($context.list_mode)}_view{/if}" _onclick="showtikiorg_process{$field.fieldId}_{$item.itemId}('destroy');"  _text="{tr}Destroy this show.tiki.org instance{/tr}"}
 {button href="#showtikiorg{$field.fieldId}_{$item.itemId}{if isset($context.list_mode)}_view{/if}" _onclick="showtikiorg_process{$field.fieldId}_{$item.itemId}('reset');"  _text="{tr}Reset password to 12345{/tr}"}
-<span class="buttonupdate{$field.fieldId}_{$item.itemId}" {if $field.version != 'trunk' && $field.version != '12.x'}style="display: none;"{/if}>{button href="#showtikiorg{$field.fieldId}_{$item.itemId}{if isset($context.list_mode)}_view{/if}" _onclick="showtikiorg_process{$field.fieldId}_{$item.itemId}('update');"  _text="{tr}SVN update{/tr}"}</span>
 {/if}
+<span class="buttonupdate{$field.fieldId}_{$item.itemId}" {if $field.version != 'trunk' && $field.version != '12.x'}style="display: none;"{/if}>{button href="#showtikiorg{$field.fieldId}_{$item.itemId}{if isset($context.list_mode)}_view{/if}" _onclick="showtikiorg_process{$field.fieldId}_{$item.itemId}('update');"  _text="{tr}SVN update{/tr}"}</span>
 </div>
 
 {if $field.debugmode}
