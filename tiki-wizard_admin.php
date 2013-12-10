@@ -160,7 +160,9 @@ foreach ($pages as $page) {
 JS
 );
 
-$smarty->assign('wizard_toc', $toc);
+if ($reqStepNr > 0) {
+	$smarty->assign('wizard_toc', $toc);
+}
 
 
 // disallow robots to index page:
