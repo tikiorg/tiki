@@ -1825,8 +1825,8 @@ class UsersLib extends TikiLib
 	}
 	function user_is_in_group($user, $group)
 	{
-		$user_groups = $this->get_user_groups($user);
-		if (in_array($group, $user_groups)) {
+		$user_details = $this->get_user_details($user);
+		if (in_array($group, $user_details['groups'])) {
 			return true;
 		} else {
 			return false;
