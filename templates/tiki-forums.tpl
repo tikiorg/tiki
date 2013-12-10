@@ -3,7 +3,7 @@
 {title help="forums" admpage="forums"}{tr}Forums{/tr}{/title}
 
 {if $tiki_p_admin_forum eq 'y'}
-  <div class="t_navbar">
+  <div class="t_navbar form-group">
 		{button href="tiki-admin_forums.php" class="btn btn-default" _text="{tr}Admin forums{/tr}"}
   </div>
 {/if}
@@ -15,7 +15,7 @@
 				<td class="text-center">{tr}Find{/tr}</td>
 				{if $prefs.feature_forums_name_search eq 'y'}
 					<td class="text-center">
-						<form method="get" action="tiki-forums.php">
+						<form method="get" class="form-group" action="tiki-forums.php">
 							<input type="text" name="find" value="{$find|escape}">
 							<input type="submit" class="btn btn-default btn-sm" value="{tr}Search by name{/tr}" name="search">
 							<input type="hidden" name="sort_mode" value="{$sort_mode|escape}">
@@ -25,7 +25,7 @@
 
 				{if $prefs.feature_forums_search eq 'y' and $prefs.feature_search eq 'y'}
 					<td>
-						<form class="forms" method="get" action="{if $prefs.feature_search_fulltext neq 'y'}tiki-searchindex.php{else}tiki-searchresults.php{/if}">
+						<form class="form-group" method="get" action="{if $prefs.feature_search_fulltext neq 'y'}tiki-searchindex.php{else}tiki-searchresults.php{/if}">
 							<input name="highlight" size="30" type="text">
 							<input type="hidden" name="where" value="forums">
 							<input type="hidden" name="filter~type" value="forum post">
