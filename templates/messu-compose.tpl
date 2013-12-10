@@ -3,12 +3,12 @@
 {include file='tiki-mytiki_bar.tpl'}
 {include file='messu-nav.tpl'}
 
-{if $allowMsgs ne 'y'}<br>
-	<div class="panel panel-default"><div class="panel-body">
-		{icon _id=information style="vertical-align:middle" align="left"} {tr}If you want people to be able to reply to you, enable <a href='tiki-user_preferences.php'>Allow messages from other users</a> in your preferences.{/tr}
-	</div></div>
-	<br>
-	<br>
+{if $allowMsgs ne 'y'}
+	<div class="panel panel-default">
+        <div class="panel-body">
+	    	{icon _id=information style="vertical-align:middle" align="left"} {tr}If you want people to be able to reply to you, enable <a href='tiki-user_preferences.php'>Allow messages from other users</a> in your preferences.{/tr}
+	    </div>
+    </div>
 {/if}
 
 
@@ -35,7 +35,7 @@
 				{help url="Inter-User+Messages#Composing_messages" desc='{tr}To: Multiple addresses can be separated with semicolons (";") or commas (","){/tr}'}
             </label>
             <div class="col-sm-10">
-				<input type="text"  class="form-control" name="to" id="mess-composeto" value="{$to|escape}" class="username">
+				<input type="text"  class="username form-control" name="to" id="mess-composeto" value="{$to|escape}">
 				<input type="hidden" name="replyto_hash" value="{$replyto_hash}">
 				<input type="hidden" name="reply" value="{$reply}">
             </div>
@@ -45,7 +45,7 @@
 				{help url="Inter-User+Messages#Composing_messages" desc='{tr}CC: Multiple addresses can be separated with semicolons (";") or commas (","){/tr}'}
             </label>
             <div class="col-sm-10">
-				<input type="text"  class="form-control" name="cc" id="mess-composecc" value="{$cc|escape}" class="username">
+				<input type="text"  class="username form-control" name="cc" id="mess-composecc" value="{$cc|escape}">
             </div>
         </div>
         <div class="form-group">
