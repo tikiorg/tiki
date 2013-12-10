@@ -150,7 +150,7 @@ class BigBlueButtonLib
 		}
 
 		if ( isset($params['logout']) ) {
-			$request['logoutURL'] = $params['logout'];
+			$request['logoutURL'] = $tikilib->tikiUrl($params['logout']);
 		}
 
 		if ( isset($params['recording']) && $params['recording'] > 0 && $this->isRecordingSupported() ) {
