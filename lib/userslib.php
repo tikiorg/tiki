@@ -1839,6 +1839,7 @@ class UsersLib extends TikiLib
 		global $tikilib, $prefs;
 		$cachelib->invalidate('user_details_'.$user);
 		$tikilib->invalidate_usergroups_cache($user);
+		$this->invalidate_usergroups_cache($user); // this is needed as cache is present in this instance too
 
 		$userid = $this->get_user_id($user);
 
@@ -5738,6 +5739,7 @@ class UsersLib extends TikiLib
 
 		$cachelib->invalidate('user_details_'.$user);
 		$tikilib->invalidate_usergroups_cache($user);
+		$this->invalidate_usergroups_cache($user); // this is needed as cache is present in this instance too
 
 		$group_ret = false;
 		$userid = $this->get_user_id($user);
