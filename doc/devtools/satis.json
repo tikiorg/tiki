@@ -860,6 +860,7 @@
 		"ckeditor/ckeditor/plugins/divarea": "*",
 		"codemirror/codemirror": "*",
 		"ezyang/htmlpurifier": "4.5.0",
+		"fivefilters/php-readability": "1.0",
 		"jarnokurlin/fullcalendar": "*",
 		"jcapture-applet/jcapture-applet": "dev-master",
 		"jquery/jquery": "*",
