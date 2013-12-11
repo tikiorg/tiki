@@ -37,9 +37,8 @@
 					<th>{self_link _sort_arg='sort_mode' _sort_field='showPubDate'}{tr}Show Date?{/tr}{/self_link}</th>
 					<th>{tr}Action{/tr}</th>
 				</tr>
-				{cycle values="even,odd" print=false}
 				{section name=chan loop=$channels}
-					<tr class="{cycle}">
+					<tr>
 						<td class="id">{$channels[chan].rssId|escape}</td>
 						<td class="text">
 							<strong>{$channels[chan].name|escape}</strong><br>
@@ -87,54 +86,61 @@
 		{else}
 			</h2>
 		{/if}
-		<form action="tiki-admin_rssmodules.php" method="post">
+		<form action="tiki-admin_rssmodules.php" method="post" class="form-horizontal">
 			<input type="hidden" name="rssId" value="{$rssId|escape}">
-			<table class="formcolor">
-				<tr>
-					<td>{tr}Name:{/tr}</td>
-					<td><input type="text" name="name" value="{$name|escape}"></td>
-				</tr>
-				<tr>
-					<td>{tr}Description:{/tr}</td>
-					<td><textarea name="description" rows="4" cols="40" style="width:95%">{$description|escape}</textarea></td>
-				</tr>
-				<tr>
-					<td>{tr}URL:{/tr}</td>
-					<td><input size="47" type="text" name="url" value="{$url|escape}"></td>
-				</tr>
-				<tr>
-					<td>{tr}Refresh rate:{/tr}</td>
-					<td>
-						<select name="refresh">
-							<option value="1" {if $refresh eq 60}selected="selected"{/if}>{60|duration}</option>
-							<option value="5" {if $refresh eq 300}selected="selected"{/if}>{300|duration}</option>
-							<option value="10" {if $refresh eq 600}selected="selected"{/if}>{600|duration}</option>
-							<option value="15" {if $refresh eq 900}selected="selected"{/if}>{900|duration}</option>
-							<option value="20" {if $refresh eq 1200}selected="selected"{/if}>{1200|duration}</option>
-							<option value="30" {if $refresh eq 1800}selected="selected"{/if}>{1800|duration}</option>
-							<option value="45" {if $refresh eq 2700}selected="selected"{/if}>{2700|duration}</option>
-							<option value="60" {if $refresh eq 3600}selected="selected"{/if}>{3600|duration}</option>
-							<option value="90" {if $refresh eq 5400}selected="selected"{/if}>{5400|duration}</option>
-							<option value="120" {if $refresh eq 7200}selected="selected"{/if}>{7200|duration}</option>
-							<option value="360" {if $refresh eq 21600}selected="selected"{/if}>{21600|duration}</option>
-							<option value="720" {if $refresh eq 43200}selected="selected"{/if}>{43200|duration}</option>
-							<option value="1440" {if $refresh eq 86400}selected="selected"{/if}>{86400|duration}</option>
-						</select>
-					</td>
-				</tr>
-				<tr>
-					<td>{tr}show feed title:{/tr}</td>
-					<td><input type="checkbox" name="showTitle" {if $showTitle eq 'y'}checked="checked"{/if}></td>
-				</tr>
-				<tr>
-					<td>{tr}show publish date:{/tr}</td>
-					<td><input type="checkbox" name="showPubDate" {if $showPubDate eq 'y'}checked="checked"{/if}></td>
-				</tr>
-				<tr>
-					<td>&nbsp;</td>
-					<td><input type="submit" class="btn btn-default btn-sm" name="save" value="{tr}Save{/tr}"></td>
-				</tr>
-			</table>
+			<div class="form-group">
+				<label for="name" class="control-label col-sm-3">{tr}Name{/tr}</label>
+				<div class="col-sm-9">
+					<input type="text" name="name" value="{$name|escape}" class="form-control">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="url" class="control-label col-sm-3">{tr}URL{/tr}</label>
+				<div class="col-sm-9">
+					<input type="url" name="url" value="{$url|escape}" class="form-control">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="description" class="control-label col-sm-3">{tr}Description{/tr}</label>
+				<div class="col-sm-9">
+					<textarea name="description" rows="4" class="form-control">{$description|escape}</textarea>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="refresh" class="control-label col-sm-3">{tr}Refresh rate{/tr}</label>
+				<div class="col-sm-9">
+					<select name="refresh">
+						{foreach [1, 5, 10, 15, 20, 30, 45, 60, 90, 120, 360, 720, 1440] as $min}
+							<option value="{$min|escape}" {if $refresh eq ($min*60)}selected="selected"{/if}>{($min*60)|duration}</option>
+						{/foreach}
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-9 col-sm-offset-3">
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" name="showTitle" {if $showTitle eq 'y'}checked="checked"{/if}>
+							{tr}Show feed title{/tr}
+						</label>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-9 col-sm-offset-3">
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" name="showPubDate" {if $showPubDate eq 'y'}checked="checked"{/if}>
+							{tr}Show publish date{/tr}
+						</label>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-9 col-sm-offset-3">
+					<input type="submit" class="btn btn-primary" name="save" value="{tr}Save{/tr}">
+				</div>
+			</div>
 		</form>
 	{/tab}
 	{if $articleConfig}
