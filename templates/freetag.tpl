@@ -10,7 +10,9 @@
 			<div id="freetager">
 				<input type="text" id="tagBox" class="form-control" name="freetag_string" value="{$taglist|escape}">
                 {if $prefs.feature_help eq 'y'}
-                    {tr}Put tags separated by spaces. For tags with more than one word, use no spaces and put words together or enclose them with double quotes.{/tr}
+                    <span class="help-block">
+                        {tr}Put tags separated by spaces. For tags with more than one word, use no spaces and put words together or enclose them with double quotes.{/tr}
+                    </span>
                 {/if}
 				{foreach from=$tag_suggestion item=t}
 					{capture name=tagurl}{if (strstr($t, ' '))}"{$t}"{else}{$t}{/if}{/capture}

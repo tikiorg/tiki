@@ -262,15 +262,17 @@
 							{if $prefs.feature_wiki_templates eq 'y' and $tiki_p_use_content_templates eq 'y'}
                                 <div class="form-group">
 								    <label for="templateId" class="col-sm-2 control-label">{tr}Apply template:{/tr}</label>
-                                    <div class="col-sm-10 checkbox">
-									    <select id="templateId" "name="templateId" onchange="javascript:document.getElementById('editpageform').submit();" onclick="needToConfirm = false;">
+                                    <div class="col-sm-10 form-inline">
+                                        <div class="col-sm-4">
+									    <select class="form-control" id="templateId" "name="templateId" onchange="javascript:document.getElementById('editpageform').submit();" onclick="needToConfirm = false;">
 										    <option value="0">{tr}none{/tr}</option>
 										    {section name=ix loop=$templates}
 										    <option value="{$templates[ix].templateId|escape}" {if $templateId eq $templates[ix].templateId}selected="selected"{/if}>{tr}{$templates[ix].name|escape}{/tr}</option>
 										    {/section}
 									    </select>
+                                        </div>
 									    {if $tiki_p_edit_content_templates eq 'y'}
-									        <a style="align=right;" href="tiki-admin_content_templates.php" class="link" onclick="needToConfirm = true;">{tr}Admin Content Templates{/tr}</a>
+									        <a style="align=right;" href="tiki-admin_content_templates.php" class="btn btn-link" onclick="needToConfirm = true;">{tr}Admin Content Templates{/tr}</a>
 									    {/if}
                                     </div>
                                 </div>
@@ -310,9 +312,11 @@ $("input[name=allowhtml]").change(function() {
 							{if $prefs.feature_wiki_import_html eq 'y'}
                                 <div class="form-group">
 									<label for="suck_url" class="col-sm-2 control-label">{tr}Import HTML:{/tr}</label>
-                                    <div class="col-sm-10">
-									<input class="wikiedit" type="text" id="suck_url" name="suck_url" value="{$suck_url|escape}">&nbsp;
-									<input type="submit" class="wikiaction btn btn-default" name="do_suck" value="{tr}Import{/tr}" onclick="needToConfirm=false;">&nbsp;
+                                    <div class="col-sm-10 form-group">
+                                        <div class="col-sm-4">
+									        <input class="form-control wikiedit" type="text" id="suck_url" name="suck_url" value="{$suck_url|escape}">
+                                        </div>
+									<input type="submit" class="wikiaction btn btn-default" name="do_suck" value="{tr}Import{/tr}" onclick="needToConfirm=false;">
 									<label><input type="checkbox" name="parsehtml" {if $parsehtml eq 'y'}checked="checked"{/if}>&nbsp;
 									{tr}Try to convert HTML to wiki{/tr}. </label>
                                     </div>
@@ -322,10 +326,12 @@ $("input[name=allowhtml]").change(function() {
 							{if $prefs.feature_wiki_import_page eq 'y'}
 								<div class="form-group">
 									<label for="userfile1" class="col-sm-2 control-label">{tr}Import page:{/tr}</label>
-                                    <div class="col-sm-10">
-									    <input type="hidden" name="MAX_FILE_SIZE" value="1000000000">
-									    <input id="userfile1" name="userfile1" type="file">
-                                        <input type="submit" class="wikiaction btn btn-default" name="attach" value="{tr}Import{/tr}" onclick="javascript:needToConfirm=false;insertImgFile('editwiki','userfile2','hasAlreadyInserted2','file', 'page2', 'attach_comment'); return true;">
+                                    <div class="col-sm-10 form-group">
+                                        <div class="col-sm-6">
+    									    <input type="hidden" name="MAX_FILE_SIZE" value="1000000000">
+								            <input class="form-control" id="userfile1" name="userfile1" type="file">
+                                        </div>
+                                           <input type="submit" class="wikiaction btn btn-default" name="attach" value="{tr}Import{/tr}" onclick="javascript:needToConfirm=false;insertImgFile('editwiki','userfile2','hasAlreadyInserted2','file', 'page2', 'attach_comment'); return true;">
                                     </div>
                                 </div>
 							{/if}
@@ -347,6 +353,7 @@ $("input[name=allowhtml]").change(function() {
                                             <label for="attach-upload" class="col-sm-2 control-label">{tr}Upload file:{/tr}</label>
                                             <div class="col-sm-10">
 										        <input name="userfile2" type="file" id="attach-upload" class="btn btn-default">
+                                                <div class="table"></div>
                                                 <label for="attach-comment" class="col-sm-2">{tr}Comment:{/tr}</label>
                                                 <div class="col-sm-8">
                                                     <input type="text" name="attach_comment" class="form-control" maxlength="250" id="attach-comment">
@@ -437,7 +444,7 @@ $("input[name=allowhtml]").change(function() {
 											{/if}
 
 											{if $tiki_p_edit_structures eq 'y'}
-												<a href="tiki-admin_structures.php" class="btn btn-link">{tr}Manage structures{/tr} {icon _id='wrench'}</a>
+												<a href="tiki-admin_structures.php">{tr}Manage structures{/tr} {icon _id='wrench'}</a>
 											{/if}
 										</div>
                                     </div>
