@@ -1504,7 +1504,7 @@ class CategLib extends ObjectLib
 		}
 		$manip->setNewCategories($categories ? $categories : array());
 
-		if ( is_array($managedCategories) ) {
+		if ( is_array($managedCategories) && !$override_perms ) {
 			$manip->setManagedCategories($managedCategories);
 		}
 
