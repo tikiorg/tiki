@@ -231,117 +231,43 @@ class ArtLib extends TikiLib
 		$topicName = $this->getOne($query, array((int) $topicId));
 		$size = strlen($body);
 
+		$info = array(
+			'title' => $title,
+			'authorName' => $authorName,
+			'topicId' => (int) $topicId,
+			'topicName' => $topicName,
+			'size' => (int) $size,
+			'useImage' => $useImage,
+			'image_name' => $imgname,
+			'image_type' => $imgtype,
+			'image_size' => (int) $imgsize,
+			'image_data' => $imgdata,
+			'isfloat' => $isfloat,
+			'image_x' => (int) $image_x,
+			'image_y' => (int) $image_y,
+			'heading' => $heading,
+			'body' => $body,
+			'publishDate' => (int) $publishDate,
+			'expireDate' => (int) $expireDate,
+			'created' => (int) $this->now,
+			'author' => $user,
+			'type' => $type,
+			'rating' => (float) $rating,
+			'topline' => $topline,
+			'subtitle' => $subtitle,
+			'linkto' => $linkto,
+			'image_caption' => $image_caption,
+			'lang' => $lang,
+			'ispublished' => $ispublished,
+		);
+
+		$article_table = $this->table('tiki_submissions');
 		if ($subId) {
-			// Update the article
-			$query = 'update `tiki_submissions` set
-									`title` = ?,
-									`authorName` = ?,
-									`topicId` = ?,
-									`topicName` = ?,
-									`size` = ?,
-									`useImage` = ?,
-									`isfloat` = ?,
-									`image_name` = ?,
-									`image_type` = ?,
-									`image_size` = ?,
-									`image_data` = ?,
-									`image_x` = ?,
-									`image_y` = ?,
-									`heading` = ?,
-									`body` = ?,
-									`publishDate` = ?,
-									`expireDate` = ?,
-									`created` = ?,
-									`author` = ? ,
-									`type` = ?,
-									`rating` = ?,
-									`topline`=?,
-									`subtitle`=?,
-									`linkto`=?,
-									`image_caption`=?,
-									`lang`=?
-							where `subId` = ?';
-
-			$result = $this->query(
-				$query,
-				array(
-					$title,
-					$authorName,
-					(int) $topicId,
-					$topicName,
-					(int) $size,
-					$useImage,
-					$isfloat,
-					$imgname,
-					$imgtype,
-					(int) $imgsize,
-					$imgdata,
-					(int) $image_x,
-					(int) $image_y,
-					$heading,
-					$body,
-					(int) $publishDate,
-					(int) $expireDate,
-					(int) $this->now,
-					$user,
-					$type,
-					(float) $rating,
-					$topline,
-					$subtitle,
-					$linkto,
-					$image_caption,
-					$lang,
-					(int) $subId,
-				)
-			);
-			$id = $subId;
+			$article_table->update($info, array(
+				'subId' => (int) $subId,
+			));
 		} else {
-			// Insert the article
-			$query = 'insert into `tiki_submissions`(`title`,`authorName`,`topicId`,`useImage`'
-								. ',`image_name`,`image_size`,`image_type`,`image_data`,`publishDate`,`expireDate`'
-								.	',`created`,`heading`,`body`,`hash`,`author`,`nbreads`,`votes`,`points`'
-								.	',`size`,`topicName`,`image_x`,`image_y`,`type`,`rating`,`isfloat`,`topline`'
-								.	', `subtitle`, `linkto`,`image_caption`, `lang`)'
-							.	' values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)'
-							;
-
-			$result = $this->query(
-				$query,
-				array(
-					$title,
-					$authorName,
-					(int) $topicId,
-					$useImage,
-					$imgname,
-					(int) $imgsize,
-					$imgtype,
-					$imgdata,
-					(int) $publishDate,
-					(int) $expireDate,
-					(int) $this->now,
-					$heading,
-					$body,
-					$hash,
-					$user,
-					0,
-					0,
-					0,
-					(int) $size,
-					$topicName,
-					(int) $image_x,
-					(int) $image_y,
-					$type,
-					(float) $rating,
-					$isfloat,
-					$topline,
-					$subtitle,
-					$linkto,
-					$image_caption,
-					$lang
-				)
-			);
-			// Fixed query. -edgar
-			$id = $this->lastInsertId();
+			$id = $article_table->insert($info);
 		}
 
 		if ($tiki_p_autoapprove_submission != 'y') {
@@ -439,48 +365,44 @@ class ArtLib extends TikiLib
 		$topicName = $this->getOne($query, array($topicId));
 		$size = $body ? mb_strlen($body) : mb_strlen($heading);
 
+		$info = array(
+			'title' => $title,
+			'authorName' => $authorName,
+			'topicId' => (int) $topicId,
+			'topicName' => $topicName,
+			'size' => (int) $size,
+			'useImage' => $useImage,
+			'image_name' => $imgname,
+			'image_type' => $imgtype,
+			'image_size' => (int) $imgsize,
+			'image_data' => $imgdata,
+			'isfloat' => $isfloat,
+			'image_x' => (int) $image_x,
+			'image_y' => (int) $image_y,
+			'list_image_x' => (int) $list_image_x,
+			'list_image_y' => (int) $list_image_y,
+			'heading' => $heading,
+			'body' => $body,
+			'publishDate' => (int) $publishDate,
+			'expireDate' => (int) $expireDate,
+			'created' => (int) $this->now,
+			'author' => $user,
+			'type' => $type,
+			'rating' => (float) $rating,
+			'topline' => $topline,
+			'subtitle' => $subtitle,
+			'linkto' => $linkto,
+			'image_caption' => $image_caption,
+			'lang' => $lang,
+			'ispublished' => $ispublished,
+		);
+
+		$article_table = $this->table('tiki_articles');
 		if ($articleId) {
 			$oldArticle = $this->get_article($articleId);
-			$query	= 'update `tiki_articles` set `title` = ?, `authorName` = ?, `topicId` = ?, `topicName` = ?, `size` = ?, `useImage` = ?, `image_name` = ?, ';
-			$query .= ' `image_type` = ?, `image_size` = ?, `image_data` = ?, `isfloat` = ?, `image_x` = ?, `image_y` = ?, `list_image_x` = ?, `list_image_y` = ?, `heading` = ?, `body` = ?, ';
-			$query .= ' `publishDate` = ?, `expireDate` = ?, `created` = ?, `author` = ?, `type` = ?, `rating` = ?, `topline`=?, `subtitle`=?, `linkto`=?, ';
-			$query .= ' `image_caption`=?, `lang`=?, `ispublished`=? where `articleId` = ?';
-
-			$result = $this->query(
-				$query,
-				array(
-					$title,
-					$authorName,
-					(int) $topicId,
-					$topicName,
-					(int) $size,
-					$useImage,
-					$imgname,
-					$imgtype,
-					(int) $imgsize,
-					$imgdata,
-					$isfloat,
-					(int) $image_x,
-					(int) $image_y,
-					(int) $list_image_x,
-					(int) $list_image_y,
-					$heading,
-					$body,
-					(int) $publishDate,
-					(int) $expireDate,
-					(int) $this->now,
-					$user,
-					$type,
-					(float) $rating,
-					$topline,
-					$subtitle,
-					$linkto,
-					$image_caption,
-					$lang,
-					$ispublished,
-					(int) $articleId
-				)
-			);
+			$article_table->update($info, array(
+				'articleId' => (int) $articleId,
+			));
 			// Clear article image cache because image may just have been changed
 			$this->delete_image_cache('article', $articleId);
 
@@ -494,53 +416,7 @@ class ArtLib extends TikiLib
 			$smarty->assign('mail_old_data', $oldArticle['heading'] . "\n----------------------\n" . $oldArticle['body']);
 
 		} else {
-			// Insert the article
-			$query	= 'insert into `tiki_articles` (`title`, `authorName`, `topicId`, `useImage`, `image_name`, `image_size`, `image_type`, `image_data`, ';
-			$query .= ' `publishDate`, `expireDate`, `created`, `heading`, `body`, `hash`, `author`, `nbreads`, `votes`, `points`, `size`, `topicName`, ';
-			$query .= ' `image_x`, `image_y`, `list_image_x`, `list_image_y`, `type`, `rating`, `isfloat`,`topline`, `subtitle`, `linkto`,`image_caption`, `lang`, `ispublished`) ';
-			$query .= ' values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
-
-			$result = $this->query(
-				$query,
-				array(
-						$title,
-						$authorName,
-						(int) $topicId,
-						$useImage,
-						$imgname,
-						(int) $imgsize,
-						$imgtype,
-						$imgdata,
-						(int) $publishDate,
-						(int) $expireDate,
-						(int) $this->now,
-						$heading,
-						$body,
-						$hash,
-						$user,
-						0,
-						0,
-						0,
-						(int) $size,
-						$topicName,
-						(int) $image_x,
-						(int) $image_y,
-						(int) $list_image_x,
-						(int) $list_image_y,
-						$type,
-						(float) $rating,
-						$isfloat,
-						$topline,
-						$subtitle,
-						$linkto,
-						$image_caption,
-						$lang,
-						$ispublished
-					)
-			);
-
-			$query2 = 'select max(`articleId`) from `tiki_articles` where `created` = ? and `title`=? and `hash`=?';
-			$articleId = $this->getOne($query2, array( (int) $this->now, $title, $hash ));
+			$articleId = $article_table->insert($info);
 
 			global $prefs;
 			if ($prefs['feature_score'] == 'y') {
