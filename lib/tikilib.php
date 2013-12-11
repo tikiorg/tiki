@@ -201,6 +201,9 @@ class TikiLib extends TikiDb_Bridge
 			case 'rss':
 				global $rsslib; include_once('lib/rss/rsslib.php');
 				return self::$libraries[$name] = $rsslib;
+			case 'pagecontent':
+				global $rsslib; include_once('lib/rss/pagecontentlib.php');
+				return self::$libraries[$name] = new PageContentLib;
 			case 'unifiedsearch':
 				global $unifiedsearchlib; include_once('lib/search/searchlib-unified.php');
 				return self::$libraries[$name] = $unifiedsearchlib;

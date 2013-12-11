@@ -1540,7 +1540,7 @@ class ArtLib extends TikiLib
 								`tiki_article_types`.`show_image_caption`,
 								`tiki_article_types`.`creator_edit`
 						from `tiki_articles`
-						inner join `tiki_article_types` ON `tiki_articles`.`type` = `tiki_article_types`.`type`
+						left join `tiki_article_types` ON `tiki_articles`.`type` = `tiki_article_types`.`type`
 						left join `users_users` on `tiki_articles`.`author` = `users_users`.`login` 
 						where `tiki_articles`.`articleId`=?"
 						;

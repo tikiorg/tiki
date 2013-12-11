@@ -553,6 +553,9 @@ class RSSLib extends TikiDb_Bridge
 		$actions = json_decode($actions, true);
 
 		if (!empty($actions)) {
+			$pagecontentlib = TikiLib::lib('pagecontent');
+			$data = $pagecontentlib->augmentInformation($data);
+
 			foreach ( $actions as $action ) {
 				$method = 'process_action_' . $action['type'];
 				unset( $action['type'] );

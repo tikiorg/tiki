@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "45b9635867df3e9e501f3f7ae9c5da25",
+    "hash": "43e9ad692bae985f38deed3d764d7f71",
     "packages": [
         {
             "name": "aFarkas/html5shiv",
@@ -171,6 +171,58 @@
                 "html"
             ],
             "time": "2013-02-18 00:04:08"
+        },
+        {
+            "name": "fivefilters/php-readability",
+            "version": "v1.0",
+            "source": {
+                "type": "git",
+                "url": "http://code.fivefilters.org/php-readability.git",
+                "reference": "4f56053bd1fd540969b6cfb7f799a31c7352faee"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://composer.tiki.org/dist/fivefilters-php-readability-v1.0-0b40ad.zip",
+                "reference": "v1.0",
+                "shasum": "e8fc0c99403385c0aae090787991fe3746a86813"
+            },
+            "require": {
+                "php": ">=5.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Readability": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Keyvan Minoukadeh",
+                    "email": "keyvan@keyvan.net",
+                    "homepage": "http://keyvan.net",
+                    "role": "Developer (ported Python code to PHP)"
+                },
+                {
+                    "name": "Arc90",
+                    "homepage": "http://arc90.com",
+                    "role": "Developer (original JS version)"
+                }
+            ],
+            "description": "Automatic article extraction from HTML",
+            "homepage": "http://code.fivefilters.org/php-readability/",
+            "keywords": [
+                "article",
+                "article extraction",
+                "content",
+                "content extraction",
+                "extraction",
+                "html"
+            ],
+            "time": "2013-04-17 13:51:09"
         },
         {
             "name": "jcapture-applet/jcapture-applet",
@@ -764,6 +816,12 @@
                 "type": "svn",
                 "url": "http://smarty-php.googlecode.com/svn",
                 "reference": "/tags/v3.1.14/@4752"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://composer.tiki.org/dist/smarty-smarty-v3.1.14-a8f22b.zip",
+                "reference": "v3.1.14",
+                "shasum": "69a262b46a1821222eb3ba5847b46ac335457205"
             },
             "require": {
                 "php": ">=5.2"

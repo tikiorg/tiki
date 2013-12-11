@@ -175,6 +175,9 @@
 				{preference name=feed_shoutbox_homepage}
 			</div>
 		{/tab}
+		{tab name="{tr}Incoming Feeds{/tr}"}
+			{preference name=page_content_fetch}
+		{/tab}
 	{/tabset}
 
     <br>{* I cheated. *}

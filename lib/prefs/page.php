@@ -25,5 +25,11 @@ function prefs_page_list()
 			'type' => 'flag',
 			'default' => 'n',
 		),
+		'page_content_fetch' => array(
+			'name' => tra('Fetch page content from incoming feeds'),
+			'description' => tra('Page content from the source will be fetched before sending the content to the generators'),
+			'type' => 'flag',
+			'default' => 'n',
+		),
 	);
 }
