@@ -93,9 +93,35 @@
 				{button _keepall='y' href="tiki-view_forum.php" forumId=$prefs.wiki_forum_id comments_postComment="post" comments_title=$page comments_data=$wiki_discussion_string comment_topictype="n" _text="{tr}Discuss{/tr}"}
 			{/if}
 
+					{if $prefs.feature_wiki_comments eq 'y'
+						&& ($prefs.wiki_comments_allow_per_page eq 'n' or $info.comments_enabled eq 'y')
+						&& $tiki_p_wiki_view_comments eq 'y'
+						&& $tiki_p_read_comments eq 'y'}
+						
+						{* Auto display comments if display by default preference is set *}
+						{if $prefs.wiki_comments_displayed_default eq 'y'}
+						{jq}{literal}
+							var id = '#comment-container';
+							$(id).comment_load('tiki-ajax_services.php?controller=comment&action=list&type=wiki+page&objectId={/literal}{$page|escape:url}{literal}#comment-container');
+							{/literal}
+						{/jq}
+						{/if}
+						
+						<span class="button btn-default">
+							<a id="comment-toggle" href="{service controller=comment action=list type="wiki page" objectId=$page}#comment-container">
+								{tr}Comments{/tr}
+								{if $count_comments}
+									&nbsp;(<span class="count_comments">{$count_comments}</span>)
+								{/if}
+							</a>
+						</span>
+						{jq}
+							$('#comment-toggle').comment_toggle();
+						{/jq}
+					{/if}
+
+
 			{if isset($show_page) and $show_page eq 'y'}
-
-
 				{* don't show attachments button if feature disabled or no corresponding rights or no attached files and r/o*}
 
 				{if $prefs.feature_wiki_attachments == 'y'
@@ -167,30 +193,3 @@
 	{/strip}
 {/if}
 {* don't show comments if feature disabled or not enough rights *}
-
-{if $prefs.feature_wiki_comments eq 'y'
-&& ($prefs.wiki_comments_allow_per_page neq 'y' or $info.comments_enabled eq 'y')
-&& $tiki_p_wiki_view_comments eq 'y'
-&& $tiki_p_read_comments eq 'y'}
-
-{* Auto display comments if display by default preference is set *}
-    {if $prefs.wiki_comments_displayed_default eq 'y'}
-        {jq}{literal}
-            var id = '#comment-container';
-            $(id).comment_load('tiki-ajax_services.php?controller=comment&action=list&type=wiki+page&objectId={/literal}{$page|escape:url}{literal}#comment-container');
-        {/literal}
-        {/jq}
-    {/if}
-
-
-    <a id="comment-toggle" class="btn btn-default" href="{service controller=comment action=list type="wiki page" objectId=$page}#comment-container">
-        {tr}Comments{/tr}
-        {if $count_comments}
-            &nbsp;(<span class="count_comments">{$count_comments}</span>)
-        {/if}
-    </a>
-
-    {jq}
-        $('#comment-toggle').comment_toggle();
-    {/jq}
-{/if}
