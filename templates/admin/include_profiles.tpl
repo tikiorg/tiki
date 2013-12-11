@@ -264,8 +264,8 @@ function showDetails( id, domain, profile ) { // {{{
 									
 									<p>
 										{assign var=profilesFilterUrlFeaturedProfiles value='Featured+profiles'}
-										<a href="{$profilesFilterUrlStart}{$tikiMajorVersion}{$profilesFilterUrlMid}{$profilesFilterUrlFeaturedProfiles}{$profilesFilterUrlEnd}">{tr}Featured Profiles{/tr}</a>
-										<br>{tr}Featured Profiles is a list of applications that are maintained by the Tiki community and are a great way to get started.{/tr}
+										<a href="{$profilesFilterUrlStart}{$tikiMajorVersion}{$profilesFilterUrlMid}{$profilesFilterUrlFeaturedProfiles}{$profilesFilterUrlEnd}">{tr}Featured Site Profiles{/tr}</a>
+										<br>{tr}Featured Site Profiles is a list of applications that are maintained by the Tiki community and are a great way to get started.{/tr}
 									</p>
 									
 									<p>
