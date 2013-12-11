@@ -350,16 +350,22 @@ $("input[name=allowhtml]").change(function() {
 										<input type="hidden" name="hasAlreadyInserted2" value="">
 										<input type="hidden" id="page2" name="page2" value="{$page}">
                                         <div class="form-group">
-                                            <label for="attach-upload" class="col-sm-2 control-label">{tr}Upload file:{/tr}</label>
+                                            <label for="attach-upload" class="col-sm-2 control-label">{tr}Attachments:{/tr}</label>
                                             <div class="col-sm-10">
-										        <input name="userfile2" type="file" id="attach-upload" class="btn btn-default">
-                                                <div class="table"></div>
-                                                <label for="attach-comment" class="col-sm-2">{tr}Comment:{/tr}</label>
-                                                <div class="col-sm-8">
-                                                    <input type="text" name="attach_comment" class="form-control" maxlength="250" id="attach-comment">
+                                                <div class="form-group">
+                                                    <label for="attach-comment" class="control-label col-sm-2">{tr}Upload file:{/tr}</label>
+                                                    <div class="col-sm-10">
+		    								            <input name="userfile2" type="file" id="attach-upload" class="btn btn-default">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="attach-comment" class="col-sm-2 control-label">{tr}Comment:{/tr}</label>
+                                                    <div class="col-sm-8">
+                                                        <input type="text" name="attach_comment" class="form-control" maxlength="250" id="attach-comment">
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div class="col-sm-10 col-sm-offset-2">
+                                            <div class="col-sm-6 col-sm-offset-4">
                                                 <input type="submit" class="wikiaction btn btn-default" name="attach" value="{tr}Attach{/tr}" onclick="javascript:needToConfirm=false;insertImgFile('editwiki','userfile2','hasAlreadyInserted2','file', 'page2', 'attach_comment'); return true;">
                                             </div>
                                         </div>
