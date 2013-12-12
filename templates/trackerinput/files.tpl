@@ -120,7 +120,21 @@ var handleFiles = function (files) {
 
 						$field.input_csv('add', ',', fileId);
 
-						li.prepend($('<img src="tiki-download_file.php?fileId=' + fileId + '&display&height=24" height="24">'));
+						if(data.type.substring(0,6) == 'image/') {
+							li.prepend($('<img src="tiki-download_file.php?fileId=' + fileId + '&display&height=24" height="24">'));
+						} else if(data.type == 'application/pdf') {
+							li.prepend($('<img height="16" width="16" title="application/pdf" alt="application/pdf" src="img/icons/mime/pdf.png">'));
+						} else if(data.type.indexOf("sheet") != -1) {
+							li.prepend($('<img height="16" width="16" title="'+ data.type +'" alt="'+ data.type +'" src="img/icons/mime/xls.png">'));
+						} else if(data.type.indexOf("zip") != -1) {
+							li.prepend($('<img height="16" width="16" title="'+ data.type +'" alt="'+ data.type +'" src="img/icons/mime/zip.png">'));
+						} else if (data.type.substring(0,6) == 'video/') {
+							li.prepend($('<img height="16" width="16" title="'+ data.type +'" alt="'+ data.type +'" src="img/icons/mime/flv.png">'));
+						} else if (data.type.indexOf("word") != -1) {
+							li.prepend($('<img height="16" width="16" title="'+ data.type +'" alt="'+ data.type +'" src="img/icons/mime/doc.png">'));
+						} else {
+							li.prepend($('<img height="16" width="16" title="'+ data.type +'" alt="'+ data.type +'" src="img/icons/mime/default.png">'));
+						}
 						li.append($('<label>{{icon _id=cross}}</label>'));
 						li.find('img.icon').click(function () {
 							$field.input_csv('delete', ',', fileId);
