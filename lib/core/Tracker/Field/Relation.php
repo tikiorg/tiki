@@ -83,7 +83,7 @@ class Tracker_Field_Relation extends Tracker_Field_Abstract
 			} else {
 				$data = (array) $requestData[$insertId];
 			}
-			$data = array_unique($data);
+			$data = array_unique(array_filter($data));
 		} else {
 			$data = $this->getRelations($this->getOption(self::OPT_RELATION));
 		}
