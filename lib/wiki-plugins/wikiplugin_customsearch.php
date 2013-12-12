@@ -207,6 +207,7 @@ function wikiplugin_customsearch($data, $params)
 		'autosearchdelay' => isset($params['autosearchdelay']) ? max(1500, (int) $params['autosearchdelay']) : 0,
 		'searchonload' => (int) $params['searchonload'],
 		'requireinput' => (bool) $params['requireinput'],
+		'origrequireinput' => (bool) $params['requireinput'],
 	);
 
 	/**
@@ -276,6 +277,9 @@ $('#customsearch_$id').submit(function() {
 	if (customsearch.options.requireinput && !$(this).find('input.searchFormBlockChildText:first').val()) {
 		alert(tr('Please enter a search query'));
 		return false;
+	}
+	if (customsearch.options.origrequireinput != customsearch.options.requireinput) {
+		customsearch.options.requireinput = customsearch.options.origrequireinput;
 	}
 	customsearch.load();
 	return false;
