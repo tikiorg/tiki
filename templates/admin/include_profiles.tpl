@@ -350,7 +350,15 @@ $("#repository, #categories").change(function(){
 				</tr>
 				{foreach key=k item=profile from=$result}
 					<tr id="profile-{$k}">
-						<td><a href="javascript:showDetails( 'profile-{$k}', '{$profile.domain|escape}', '{$profile.name|escape}' )">{$profile.name|escape}</a>{if $profile.installed} <em>{tr}applied{/tr}</em>{/if}</td>
+                        {if $profile.name == $show_details_for}
+                            {assign var="show_details_for_profile_num" value="$k"}
+                            {assign var="show_details_for_fullname" value=$profile.name|escape}
+                            {assign var="show_details_for_domain" value=$profile.domain|escape}
+                            <td>{$profile.name|escape}: {tr}See profile info below (may take a few seconds to load){/tr}.</td>
+                        {else}
+						    <td><a href="javascript:showDetails( 'profile-{$k}', '{$profile.domain|escape}', '{$profile.name|escape}' )">{$profile.name|escape}</a>{if $profile.installed} <em>{tr}applied{/tr}</em>{/if}</td>
+                        {/if}
+
 						<td>{$profile.domain}</td>
 						<td>{$profile.categoriesString}</td>
 					</tr>
@@ -359,6 +367,9 @@ $("#repository, #categories").change(function(){
 				<tr><td colspan="3" class="odd">{tr}None{/tr}</td></tr>
 				{/if}
 			</table>
+            {if $show_details_for_profile_num != ""}
+                {jq}showDetails('profile-{{$show_details_for_profile_num}}', '{{$show_details_for_domain}}', '{{$show_details_for_fullname}}');{/jq}
+            {/if}
             </div>
 			{/if}
 	
