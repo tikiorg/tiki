@@ -4,7 +4,7 @@
 <fieldset>
 	<legend>{tr}Get Started{/tr}</legend>
 
-    {tr}Congratulations! You now have a working instance of Tiki 12{/tr}.<br><br>
+	{tr _0=$tiki_version}Congratulations! You now have a working instance of Tiki %0{/tr}.<br><br>
     {tr}You may <a href="tiki-index.php">start using it right away</a>, or you may configure it to better meet your needs, using one of the configuration helpers below.{/tr}
     <br><br>
 
