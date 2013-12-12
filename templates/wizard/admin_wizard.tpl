@@ -4,14 +4,13 @@
 <fieldset>
 	<legend>{tr}Get Started{/tr}</legend>
 
-    {tr}Congratulations! You now have a working instance of Tiki{/tr}.
-    <p/>
+    {tr}Congratulations! You now have a working instance of Tiki 12{/tr}.<br><br>
     {tr}You may <a href="tiki-index.php">start using it right away</a>, or you may configure it to better meet your needs, using one of the configuration helpers below.{/tr}
-    <br>
+    <br><br>
 
     <table>
         <tr>
-            <td><div class="adminWizardIconleft"><img src="img/icons/large/profiles.png" alt="{tr}Tiki Template Sites{/tr}" /></div></td>
+            <td><div class="adminWizardIconleft"><img src="img/icons/large/profiles48x48.png" alt="{tr}Tiki Template Sites{/tr}" /></div></td>
             <td>
                 {tr}You may start by applying one of our <b>Featured Site Profiles</b>{/tr}.
                 {tr}Each of these provides a shrink-wrapped solution that meets most of the needs of a particular kind of community or site (ex: Personal Blog space, Company Intranet){/tr}.
