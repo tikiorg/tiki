@@ -14,7 +14,7 @@
             <td>
                 {tr}You may start by applying one of our <b>Featured Site Profiles</b>{/tr}.
                 {tr}Each of these provides a shrink-wrapped solution that meets most of the needs of a particular kind of community or site (ex: Personal Blog space, Company Intranet){/tr}.
-                {tr}If you are new to Tiki administration, we recommend that you start with that approach{/tr}.
+                {tr}If you are new to Tiki administration, we recommend that you start with this approach{/tr}.
                 {tr}If the profile you selected does not quite meet your needs, you will still have the option of customizing it further with one of the approaches below{/tr}.
                 <br>
                 <input  type="submit" class="btn btn-default" name="use-default-prefs" value="{tr}Choose a Site Profile{/tr}" />
