@@ -5,102 +5,118 @@
 {tabset name="admin_actionlog"}
 
 {tab name="{tr}Report{/tr}"}
-	<form method="get" action="tiki-admin_actionlog.php#Report">
+	<form method="get" action="tiki-admin_actionlog.php#Report" class="form-horizontal" >
 		<h2>{tr}Filter{/tr}</h2>
 		{if empty($nbViewedConfs)}
 			{button _text="{tr}Please select some actions to be reported.{/tr}" href="tiki-admin_actionlog.php?cookietab=2"}
 		{else}
 		<fieldset>
 			<legend>{tr}Date{/tr}</legend>
-			<table>
-				<tr>
-					<td>{tr}Start:{/tr}</td>
-					<td>{html_select_date time=$startDate prefix="startDate_" end_year="-10" field_order=$prefs.display_field_order} {html_select_time use_24_hours=true time=$startDate}</td>
-					<td>{tr}End:{/tr}</td>
-					<td>{html_select_date time=$endDate prefix="endDate_" end_year="-10" field_order=$prefs.display_field_order} {html_select_time use_24_hours=true time=$endDate prefix="end_"}</td>
-				</tr>
-			</table>
+			<div class="form-group">
+                <label class="col-sm-2 control-label" for="">{tr}Start:{/tr}</label>
+                <div class="col-sm-6">
+                    <div class="">
+					    {html_select_date time=$startDate prefix="startDate_" end_year="-10" field_order=$prefs.display_field_order} {html_select_time use_24_hours=true time=$startDate}
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label" for="">{tr}End:{/tr}</label>
+                <div class="col-sm-6">
+                    <div class="">
+                        {html_select_date time=$endDate prefix="endDate_" end_year="-10" field_order=$prefs.display_field_order} {html_select_time use_24_hours=true time=$endDate prefix="end_"}
+	    			</div>
+                </div>
+			</div>
 		</fieldset>
 				{if $tiki_p_list_users eq 'y'}
 			<fieldset>
 				<legend>{tr}Users and Groups{/tr}</legend>
-				<table class="formcolor">
-					<tr>
-						<td>{tr}User:{/tr}</td>
-						<td>
-							<select multiple="multiple" size="{if $users|@count > 5}5{else}{math equation=x+y x=$users|@count y=2}{/if}" name="selectedUsers[]">
-								<option value="">{tr}All{/tr}</option>
-								<option value="Anonymous">{tr}Anonymous{/tr}</option>
-								{foreach key=ix item=auser from=$users}
-									<option value="{$auser|escape}" {if $selectedUsers[$ix] eq 'y'}selected="selected"{/if}>{$auser|escape}</option>
-								{/foreach}
-							</select>
-						</td>
+				<div class="form-group">
+                <label class="col-sm-2 control-label" for="selectedUsers">{tr}User:{/tr}</label>
+			    	<div class="col-sm-6">
+					    <select multiple="multiple" size="{if $users|@count > 5}5{else}{math equation=x+y x=$users|@count y=2}{/if}" name="selectedUsers[]" id="selectedUsers" class="form-control">
+							<option value="">{tr}All{/tr}</option>
+							<option value="Anonymous">{tr}Anonymous{/tr}</option>
+					    	{foreach key=ix item=auser from=$users}
+								<option value="{$auser|escape}" {if $selectedUsers[$ix] eq 'y'}selected="selected"{/if}>{$auser|escape}</option>
+							{/foreach}
+						</select>
+					</div>
+                </div>
 				{else}
 					<input type="hidden" name="selectedUsers[]" value="{$auser|escape}">
 				{/if}
 				
 				{if $groups|@count >= 1}
-						<td>{tr}Group:{/tr}</td>
-						<td>
-							<select multiple="multiple" size="{if $groups|@count > 5}5{else}{math equation=x+y x=$groups|@count y=1}{/if}" name="selectedGroups[]">
-								<option value="">{tr}All{/tr}</option>
-								{foreach from=$groups key=ix item=group}
-									<option value="{$group|escape}" {if $selectedGroups[$group] eq 'y'}selected="selected"{/if}>{$group|escape}</option>
-								{/foreach}
-							</select>
-						</td>
-					</tr>
-				</table>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" for="selectedGroups">{tr}Group:{/tr}</label>
+                    <div class="col-sm-6">
+						<select multiple="multiple" size="{if $groups|@count > 5}5{else}{math equation=x+y x=$groups|@count y=1}{/if}" name="selectedGroups[]" id="selectedGroups" class="form-control">
+							<option value="">{tr}All{/tr}</option>
+							{foreach from=$groups key=ix item=group}
+								<option value="{$group|escape}" {if $selectedGroups[$group] eq 'y'}selected="selected"{/if}>{$group|escape}</option>
+							{/foreach}
+						</select>
+					</div>
+                </div>
 				</fieldset>
 				{/if}
 
 			<fieldset>
 				<legend>{tr}Category:{/tr}</legend>
-				<table class="formcolor">
-				<tr>
-					<td>
-						<select name="categId">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" for="categId">{tr}Category:{/tr}</label>
+                    <div class="col-sm-6">
+                        <select name="categId" id="categId" class="form-control">
 							<option value="" {if $reportCateg eq '' or $reportCateg eq 0}selected="selected"{/if}>* {tr}All{/tr} *</option>
 							{foreach item=category from=$categories}
 								<option value="{$category.categId|escape}" {if $reportCateg eq $category.name}selected="selected"{/if}>{$category.name|escape}</option>
 							{/foreach}
 						</select>
-						</td>
-					</tr>
-				</table>
+					</div>
+				</div>
 				</fieldset>
 
 				<fieldset>
 				<legend>{tr}Misc.{/tr}</legend>
-				<table class="formcolor">
-					<tr>
-						<th>{tr}Units{/tr}</th>
-						<td>
-							{tr}bytes{/tr}
-							<input type="radio" name="unit" value="bytes"{if $unit ne 'kb'} checked="checked"{/if}> {tr}kb{/tr}
-							<input type="radio" name="unit" value="kb"{if $unit eq 'kb'} checked="checked"{/if}>
-						</td>
-					</tr>
-					<tr>
-						<th>{tr}Contibution Time{/tr}</th>
-						<td>
-							{tr}Week{/tr}
-							<input type="radio" name="contribTime" value="w"{if $contribTime ne 'd'} checked="checked"{/if}> 
-							{tr}Day{/tr}
-							<input type="radio" name="contribTime" value="d"{if $contribTime eq 'd'} checked="checked"{/if}>
-						</td>
-					</tr>
-					<tr>
-						<th>{tr}Search{/tr}</th>
-						<td>
-							<input type="text" name="find" value="{$find}"> 
-						</td>
-					</tr>
+
+                    <div class="col-sm-11 col-sm-offset-1 form-inline">
+                        <div class="form-group col-sm-10">
+                            <div class="col-sm-4">
+       					        <label>{tr}Units{/tr}</label>
+                            </div>
+                        <div class="form-group col-sm-4 col-sm-offset-1">
+                            <label>{tr}kb{/tr}</label>
+                            <input class="radio" type="radio" name="unit" value="bytes"{if $unit ne 'kb'} checked="checked"{/if}>
+                            <label>{tr}bytes{/tr}</label>
+                            <input type="radio" name="unit" value="kb"{if $unit eq 'kb'} checked="checked"{/if}>
+                        </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-11 col-sm-offset-1 form-inline">
+                        <div class="form-group col-sm-10">
+                            <div class="col-sm-4">
+                                <label>{tr}Contibution Time{/tr}</label>
+                            </div>
+                            <div class="form-group col-sm-4 col-sm-offset-1">
+                            <label>{tr}Week{/tr}</label>
+                            <input type="radio" name="contribTime" value="w"{if $contribTime ne 'd'} checked="checked"{/if}>
+                            <label>{tr}Day{/tr}</label>
+                    		<input type="radio" name="contribTime" value="d"{if $contribTime eq 'd'} checked="checked"{/if}>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" for="">{tr}Search{/tr}</label>
+                    <div class="col-sm-4">
+						<input class="form-control" type="text" name="find" value="{$find}">
+					</div>
+				</div>
 				
 					{if $prefs.feature_contribution eq 'y'}
-						<tr>
-							<td colspan="2">
+                        <div class="form-group">
 								<input type="submit" class="btn btn-default btn-sm" name="graph" value="{tr}Graph Contributions{/tr}">
 								{if $prefs.feature_jpgraph eq 'y'}
 									<br>
@@ -130,11 +146,10 @@
 										{/foreach}
 									</select>
 								{/if}
-							</td>
-						</tr>
+						</div>
 					{/if}
 
-				</table>
+
 				</fieldset>
 
 				<input type="hidden" name="max" value="{$maxRecords}">
