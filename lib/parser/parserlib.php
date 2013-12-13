@@ -2042,7 +2042,7 @@ if ( \$('#$id') ) {
 	//*
 	function parse_wiki_argvariable(&$data)
 	{
-		global $prefs, $user;
+		global $prefs, $user, $smarty;
 		if ( $prefs['feature_wiki_argvariable'] == 'y' && !$this->option['ck_editor'] ) {
 			if (preg_match_all("/\\{\\{((\w+)(\\|([^\\}]*))?)\\}\\}/", $data, $args, PREG_SET_ORDER)) {
 				$needles = array();
@@ -2058,6 +2058,14 @@ if ( \$('#$id') ) {
 					case 'page':
 						$value = $this->option['page'];
 						break;
+					case 'domain':
+						if ($smarty->getTemplateVars('url_host') != null) {
+							$value = $smarty->getTemplateVars('url_host');
+							break;	
+						} else {
+							$value='';
+							break;	
+						}
 					default:
 						if ( isset($_GET[$name]) )
 							$value = $_GET[$name];
