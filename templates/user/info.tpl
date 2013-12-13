@@ -13,14 +13,14 @@
 		{/if}
 		<p class="info">
 			{if $gender}
-				<span class="gender">{icon _id=$gender|lower}<span> Gender: {$gender}</span></span>
+				<span class="gender">{icon _id=$gender|lower}<span>{tr}Gender:{/tr} {$gender}</span></span>
 			{/if}
 			{if $country}
 				<span class="country">{icon _id='img/flags/'|cat:$country|cat:'.gif'}<span> {$country|stringfix}</span></span>
-				<span class="distance">{$distance}<span>{if !empty($distance)} away{/if}</span></span>
+				{if !empty($distance)}<span class="distance">{tr _0=$distance}%0 away{/tr}</span>{/if}
 			{/if}
 			{if $email}
-				<span class="email">Email: {$email}</span>
+				<span class="email">{tr}Email:{/tr} {$email}</span>
 			{/if}
 			<span class="lastseen"><span>{tr}Last login:{/tr} </span>{$lastSeen|tiki_short_datetime}</span>
 			{if $shared_groups}
