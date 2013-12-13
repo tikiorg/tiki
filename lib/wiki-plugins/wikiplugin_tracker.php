@@ -816,6 +816,8 @@ function wikiplugin_tracker($data, $params)
 					} else {
 						$status = '';
 					}
+
+					$tx = TikiDb::get()->begin();
 					//tracker item created here
 					if (!empty($fieldsfill) && !empty($_REQUEST['ins_fill']) ) {	// We create multiple items
 						$fill_lines = explode("\n", $_REQUEST['ins_fill']);
@@ -899,6 +901,8 @@ function wikiplugin_tracker($data, $params)
 						}
 					}
 					// end wiki output
+					$tx->commit();
+
 					if (!empty($email)) {
 						$emailOptions = preg_split("#\|#", $email);
 						if (is_numeric($emailOptions[0])) {
