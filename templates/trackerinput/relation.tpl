@@ -1,6 +1,6 @@
 <div id="{$field.ins_id|escape}_container">
 	<input type="hidden" name="{$field.ins_id|escape}[]" value="">
-	<ul>
+	<ul class="related_items">
 		{foreach from=$data.labels item=label key=id}
 			<li>{$label|escape}</li>
 		{/foreach}
@@ -37,18 +37,18 @@
 			);
 		}
 
-		$('ul', container).append(item);
+		$('ul.related_items', container).append(item);
 	};
 
-	$('ul', container).empty();
+	$('ul.related_items', container).empty();
 	$('textarea', container).remove();
 	var labels = {{$data.labels|@json_encode}};
 	$.each(labels, createItem);
 
-	$('ul', container).sortList();
+	$('ul.related_items', container).sortList();
 	$('.selector', container).change(function () {
 		createItem($(this).val(), $(this).data('label'));
-		$('ul:first', container).sortList();
+		$('ul.related_items', container).sortList();
 	});
 }());
 {/jq}
