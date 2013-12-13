@@ -354,5 +354,15 @@ class Perms
 			$data = $factory->bulk($baseContext, $bulkKey, $data);
 		}
 	}
+
+	public function clear()
+	{
+		$this->hashes = array();
+		foreach ($this->factories as $factory) {
+			if (method_exists($factory, 'clear')) {
+				$factory->clear();
+			}
+		}
+	}
 }
 

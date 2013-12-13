@@ -63,6 +63,10 @@ class UnifiedSearchLib
 		if (count($toProcess)) {
 			$indexer = null;
 			try {
+				// Since the object being updated may have category changes during the update,
+				// make sure internal permission cache does not refer to the pre-update situation.
+				Perms::getInstance()->clear();
+
 				$indexer = $this->buildIndexer($this->getIndex());
 				$indexer->update($toProcess);
 			} catch (Exception $e) {
