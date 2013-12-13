@@ -84,7 +84,10 @@
 	</div>
 	{preference name=lang_machine_translate_wiki}
 </div>
-
+	{preference name=feature_lang_nonswitchingpages}
+	<div class="adminoptionboxchild" id="feature_lang_nonswitchingpages_childcontainer">
+		{preference name=feature_lang_nonswitchingpages_names}
+	</div>
 </div>
 {/tab}
 
