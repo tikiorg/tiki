@@ -406,9 +406,9 @@ function wikiplugin_countdown($data, $params)
 			}
 		}
 		//add text
-		if (!isset($text) || ($text && $text != 'silent')) {
+		if (empty($text) || ($text && $text != 'silent')) {
 			$word = '';
-			if (isset($text) && ($text == 'default' || strpos($text, '|') === false)) {
+			if (empty($text) || $text == 'default' || strpos($text, '|') === false) {
 				//if $ret is empty here, it means the time before/after the event is shorter than the smallest unit of time being shown
 				if (empty($ret)) {
 					if ($diff['invert'] == 1) {
@@ -456,10 +456,14 @@ function wikiplugin_countdown($data, $params)
 					}
 					$data = $data . ' ' . $nowtext;
 				} else {
-					if ($diff['invert'] == 1) {
-						$word = tra('until');
+					if (empty($text) || $text == 'default') {
+						if ($diff['invert'] == 1) {
+							$word = tra('until');
+						} else {
+							$word = tra('since');
+						}
 					} else {
-						$word = tra('since');
+						$word = $text;
 					}
 				}
 			} elseif (!empty($text) && strpos($text, '|') !== false) {
