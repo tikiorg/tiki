@@ -2066,6 +2066,14 @@ if ( \$('#$id') ) {
 							$value='';
 							break;	
 						}
+					case 'domainslash':
+						if ($smarty->getTemplateVars('url_host') != null) {
+							$value = $smarty->getTemplateVars('url_host') . '/';
+							break;	
+						} else {
+							$value='';
+							break;	
+						}
 					default:
 						if ( isset($_GET[$name]) )
 							$value = $_GET[$name];
