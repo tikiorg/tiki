@@ -10,10 +10,14 @@
 {/if}
 
 <div class="clearfix">
-	 <form method="post">
-	 <label class="findtitle">{tr}Version{/tr}<input type="text" name="version" value="{if !empty($filter.version)}{$filter.version|escape}{/if}"></label>
-	 <label class="findtitle">{tr}Field ID{/tr}<input type="text" name="fieldId" value="{if !empty($fieldId)}{$fieldId|escape}{/if}"></label>
-	 <input type="submit" class="btn btn-default btn-sm" name="Filter" value="{tr}Filter{/tr}">
+	 <form method="post" class="form-inline">
+        <div class="form-group">
+	        <label class="control-label">{tr}Version{/tr} <input type="text" name="version" value="{if !empty($filter.version)}{$filter.version|escape}{/if}"></label>
+        </div>
+        <div class="form-group">
+	        <label class="control-label">{tr}Field ID{/tr} <input type="text" name="fieldId" value="{if !empty($fieldId)}{$fieldId|escape}{/if}"></label>
+        </div>
+	    <input type="submit" class="btn btn-default btn-sm" name="Filter" value="{tr}Filter{/tr}">
 	 </form>
 </div>
 <br/>
