@@ -1,5 +1,5 @@
 {* $Id$ *}
-
+<div class="row">
 {title}{if $parentId ne 0}{tr}Category{/tr} {$p_info.name}{else}{tr}Categories{/tr}{/if}{/title}
 
 {if $parentId and $p_info.description}
@@ -12,7 +12,7 @@
 	{/if}
 </div>
 
-<div class="t_navbar">
+<div class="t_navbar form-group spacer-bottom-15px">
 	{tr}Browse in:{/tr}
 		<a class="btn btn-default" {if $type eq ''} id="highlight"{/if} href="tiki-browse_categories.php?find={$find|escape:"url"}&amp;deep={$deep}&amp;parentId={$parentId|escape:"url"}&amp;sort_mode={$sort_mode|escape:"url"}">{tr}All{/tr}</a>
 
@@ -72,15 +72,21 @@
 	{/if}
 </div>
 
-<form method="post" action="tiki-browse_categories.php">
-	<label>{tr}Find:{/tr} {if $parentId ne 0}{$p_info.name|escape} {/if}<input type="text" name="find" value="{$find|escape}" size="35"></label>
-	{help url="#" desc="{tr}Find in:{/tr} <ul><li>{tr}Name{/tr}</li><li>{tr}Description{/tr}</li></ul>"}
-	<input type="submit" class="btn btn-default btn-sm" value="{tr}Find{/tr}" name="search">
-	<label>{tr}in the current category - and its subcategories: {/tr}<input type="checkbox" name="deep" {if $deep eq 'on'}checked="checked"{/if}></label>
-	<input type="hidden" name="parentId" value="{$parentId|escape}">
-	<input type="hidden" name="type" value="{$type|escape}">
-	
-	<input type="hidden" name="sort_mode" value="{$sort_mode|escape}">
+<form method="post" action="tiki-browse_categories.php" class="col-md-12 form-inline form-horizontal form-group" role="form">
+    <div class="form-group">
+        <label class="control-label col-sm-1">{tr}Find:{/tr} {if $parentId ne 0}{$p_info.name|escape} {/if}</label>
+        <div class="input-group col-sm-3">
+            <input class="form-control" type="text" name="find" value="{$find|escape}">
+        </div>
+        <div class="input-group col-sm-8">
+            {help url="#" desc="{tr}Find in:{/tr} <ul><li>{tr}Name{/tr}</li><li>{tr}Description{/tr}</li></ul>"}
+            <input type="submit" class="btn btn-default btn-sm" value="{tr}Find{/tr}" name="search">
+	        <label>{tr}in the current category - and its subcategories: {/tr}<input type="checkbox" name="deep" {if $deep eq 'on'}checked="checked"{/if}></label>
+	        <input type="hidden" name="parentId" value="{$parentId|escape}">
+	        <input type="hidden" name="type" value="{$type|escape}">
+	        <input type="hidden" name="sort_mode" value="{$sort_mode|escape}">
+        </div>
+    </div>
 </form>
 
 {if $deep eq 'on'}
@@ -155,3 +161,4 @@
 </div>
 
 {pagination_links cant=$cant_pages step=$maxRecords offset=$offset}{/pagination_links}
+</div>
