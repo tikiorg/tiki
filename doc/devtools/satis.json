@@ -735,6 +735,17 @@
 		{
 			"type": "package",
 			"package": {
+				"name": "jquery/plugins/tablesorter",
+				"version": "2.14.4",
+				"dist": {
+					"url": "https://github.com/Mottie/tablesorter/archive/v2.14.4.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
 				"name": "jquery/plugins/treetable",
 				"version": "3.0.1",
 				"dist": {
