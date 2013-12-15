@@ -31,23 +31,26 @@
 	*                  {include file='find.tpl' find_show_languages='y' find_show_categories='y' find_show_num_rows='y'} 
 *}
 
-<div class="clearfix">
-		<form method="post" action="{$smarty.server.PHP_SELF}" class="text-center">
+<div class="text-center row">
+		<form method="post" action="{$smarty.server.PHP_SELF}" class="col-md-12 form-inline form-horizontal form-group" role="form">
 		{if !empty($filegals_manager)}<input type="hidden" name="filegals_manager" value="{$filegals_manager|escape}">{/if}
 
 		{query _type='form_input' maxRecords='NULL' type='NULL' types='NULL' find='NULL' topic='NULL' lang='NULL' exact_match='NULL' categId='NULL' cat_categories='NULL' filegals_manager='NULL' save='NULL' offset='NULL' searchlist='NULL' searchmap='NULL'}
-
-	<label class="findtitle">
+    <div class="form-group">
+	<label class="control-label col-sm-3">
 		{if empty($whatlabel)}
 			{tr}Find{/tr}
 		{else}
 			{tr}{$whatlabel}{/tr}
 		{/if}
-		<input type="text" name="find" id="find" value="{$find|escape}">
+    </label>
+    <div class="input-group col-sm-9">
+		<input class="form-control" type="text" name="find" id="find" value="{$find|escape}">
 		{if isset($autocomplete)}
 			{jq}$("#find").tiki("autocomplete", "{{$autocomplete}}"){/jq}
 		{/if}
-	</label>
+	</div>
+    </div>
 	{if isset($find_in)}{help url="#" desc="{tr}Find in:{/tr} {$find_in}"}{/if}
 
 {if isset($exact_match)}
