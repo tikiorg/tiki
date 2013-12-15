@@ -6,6 +6,8 @@
 <fieldset>
 	<legend>{tr}General settings{/tr}</legend>
 	{preference name=feature_fullscreen}
+	{preference name=wikipluginprefs_pending_notification}
+	{preference name=wiki_edit_plugin}
 	{preference name=wiki_edit_icons_toggle}
 	{if $isRTL eq false and $isHtmlMode neq true}
 		{* Disable Codemirror for RTL languages. It doesn't work. *}

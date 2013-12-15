@@ -39,6 +39,12 @@ class Perms_ResolverFactory_CategoryFactory implements Perms_ResolverFactory
 	private $knownObjects = array();
 	private $knownCategories = array();
 
+	function clear()
+	{
+		$this->knownObjects = array();
+		$this->knownCategories = array();
+	}
+
 	/**
 	 * Provides a hash matching the full list of ordered categories
 	 * applicable to the context.
