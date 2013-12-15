@@ -10,32 +10,42 @@
 
 {if $channels or ($find ne '')}
 	{if $prefs.feature_forums_search eq 'y' or $prefs.feature_forums_name_search eq 'y'}
-		<table class="text-center">
-			<tr>
-				<td class="text-center">{tr}Find{/tr}</td>
+
 				{if $prefs.feature_forums_name_search eq 'y'}
-					<td class="text-center">
-						<form method="get" class="form-group" action="tiki-forums.php">
-							<input type="text" name="find" value="{$find|escape}">
-							<input type="submit" class="btn btn-default btn-sm" value="{tr}Search by name{/tr}" name="search">
-							<input type="hidden" name="sort_mode" value="{$sort_mode|escape}">
-						</form>
-					</td>
+                    <div class="row form-group">
+					    <form method="get" class="col-md-12 form-inline form-horizontal" role="form" action="tiki-forums.php">
+                            <label class="control-label col-sm-2">{tr}Find{/tr}</label>
+                            <div class="input-group col-sm-6">
+                                <input type="text" name="find" class="form-control" value="{$find|escape}">
+                            </div>
+                            <div class="col-sm-2">
+				    		    <input type="submit" class="btn btn-default" value="{tr}Search by name{/tr}" name="search">
+					    	    <input type="hidden" name="sort_mode" value="{$sort_mode|escape}">
+                            </div>
+                        </form>
+                    </div>
 				{/if}
 
 				{if $prefs.feature_forums_search eq 'y' and $prefs.feature_search eq 'y'}
-					<td>
-						<form class="form-group" method="get" action="{if $prefs.feature_search_fulltext neq 'y'}tiki-searchindex.php{else}tiki-searchresults.php{/if}">
-							<input name="highlight" size="30" type="text">
-							<input type="hidden" name="where" value="forums">
-							<input type="hidden" name="filter~type" value="forum post">
-							<input type="submit" class="wikiaction btn btn-default" name="search" value="{tr}Search in content{/tr}">
-						</form>
-					</td>
+                    <div class="row form-group">
+					    <form class="col-md-12 form-inline form-horizontal" method="get" role="form" action="{if $prefs.feature_search_fulltext neq 'y'}tiki-searchindex.php{else}tiki-searchresults.php{/if}">
+                            {if $prefs.feature_forums_name_search neq 'y'}
+                                <label class="control-label col-sm-2">{tr}Find{/tr}</label>
+                            {else}
+                                <div class="col-sm-2">&nbsp;</div>
+                            {/if}
+                            <div class="input-group col-sm-6">
+                                <input name="highlight" type="text" class="form-control">
+                            </div>
+                            <div class="col-sm-2">
+						        <input type="hidden" name="where" value="forums">
+							    <input type="hidden" name="filter~type" value="forum post">
+							    <input type="submit" class="wikiaction btn btn-default" name="search" value="{tr}Search in content{/tr}">
+                            </div>
+                        </form>
+                    </div>
 				{/if}
-			</tr>
-		</table>
-	{/if}
+		{/if}
 {/if}
 <div class="table-responsive">
 <table class="table normal">
