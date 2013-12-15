@@ -190,8 +190,7 @@ input[type=radio] {
 button,
 input[type=reset],
 input[type=submit],
-.button input,
-.calbuttonbox a {
+.button input {
 	color: #223344;
 	background: #c7d0d9;
 	border: 1px solid #999;
@@ -208,8 +207,7 @@ input[type=submit],
 button:hover,
 input[type=reset]:hover,
 input[type=submit]:hover,
-.button input:hover,
-.calbuttonbox a:hover {
+.button input:hover {
 	background: #dca;
 	padding: 0 4px;
 	margin-right: 1px;

@@ -192,8 +192,7 @@ button,
 input[type="reset"],
 input[type="submit"],
 .button input,
-.submitbutton,
-.calbuttonBox a {
+.submitbutton {
 	border-top: 1px solid #f3f3f4;
 	border-left: 1px solid #f3f3f4;
 	border-right: 1px solid #878689;
@@ -223,8 +222,7 @@ button:hover,
 input[type="reset"]:hover,
 input[type="submit"]:hover,
 .button input:hover,
-.submitbutton:hover,
-.calbuttonBox a:hover {
+.submitbutton:hover {
 	border-top: 1px solid #868f93;
 	border-left: 1px solid #868f93;
 	color: #ececec}

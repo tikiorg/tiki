@@ -69,7 +69,6 @@ button,
 input[type=reset],
 input[type=submit],
 .button input,
-.calbuttonBox,
 .siteloginbar input.wikiaction {
 	color: #fff;
 	background: #565656;
@@ -865,12 +864,6 @@ body.tiki_blogs .postbody-title,
 .opaque .box-title {
 	color: #ebebeb;
 	background: #212121;
-}
-
-.calbuttonBox {
-	color: #fff;
-	background: #565656;
-	border-color: #878787 #343434 #343434 #878787;
 }
 
 .buttonon a,

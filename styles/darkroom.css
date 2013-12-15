@@ -127,8 +127,7 @@ input.button,
 button,
 .button input,
 .button,
-input.wikiaction,
-.calbuttonbox {
+input.wikiaction {
 	background: #4e4e4e url(darkroom/button.png) top left repeat-x;
 	color: #b2b2b2;
 	font-weight: bold;
@@ -137,10 +136,6 @@ input.wikiaction,
 	vertical-align: middle;
 	cursor: pointer;
 	white-space: nowrap;
-}
-
-.calbuttonbox {
-	margin: 0 2px 0 2px;
 }
 
 #next {
@@ -163,8 +158,7 @@ input.button:hover,
 button:hover,
 input[type=submit]:hover,
 .button input:hover,
-.button:hover,
-.calbuttonbox a:hover {
+.button:hover {
 	border: 1px solid #b2b2b2;
 }
 

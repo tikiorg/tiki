@@ -129,8 +129,7 @@ input[type="submit"],
 button:hover,
 input[type="reset"]:hover,
 input[type="submit"]:hover,
-.button input:hover,
-.calbuttonBox:hover,
+.button input:hover
 .daterow:hover {
 	background: url(matrix/ltgreen.png);
 	border: 1px solid #676767;

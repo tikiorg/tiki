@@ -143,8 +143,7 @@ button,
 button[type="submit"],
 input[type="reset"],
 input[type="submit"],
-.button input,
-.calbuttonbox {
+.button input {
 	padding: 1px 4px;
 	margin: 2px;
 	color: #fd0006;
@@ -159,8 +158,7 @@ input[type="submit"],
 button:hover,
 input[type="reset"]:hover,
 input[type="submit"]:hover,
-.button input:hover,
-.calbuttonbox:hover {
+.button input:hover {
 	padding: 1px 4px;
 	margin: 2px;
 	color: #f4f4f4;

@@ -116,8 +116,7 @@ input[type="submit"] {
 button a:hover,
 button:hover,
 .button input:hover,
-.submitbutton:hover,
-.calbuttonBox a:hover,
+.submitbutton:hover
 input[type="file"]:hover,
 input[type="reset"]:hover,
 input[type="submit"]:hover,

@@ -121,8 +121,7 @@ fieldset {
 button,
 input[type=reset],
 input[type=submit],
-.button input,
-.calbuttonBox a {
+.button input {
 	margin: .3em;
 	padding: .1em 1em;
 	font-weight: bold;
@@ -135,8 +134,7 @@ input[type=submit],
 button:hover,
 input[type=reset]:hover,
 input[type=submit]:hover,
-.button input:hover,
-.calbuttonBox:hover {
+.button input:hover {
 	margin: .3em;
 	padding: .1em 1em;
 	color: #000;

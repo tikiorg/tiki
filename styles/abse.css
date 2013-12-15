@@ -158,7 +158,6 @@ option {
 button,
 .button input,
 .submitbutton,
-.calbuttonBox,
 input[type=submit],
 input[type=reset] {
 	background: #424248 url(abse/titlebgoff.png) repeat-x;
@@ -178,8 +177,7 @@ select {
 button:hover,
 .button input:hover,
 .submitbutton:hover,
-option:hover,
-.calbuttonBox a:hover {
+option:hover {
 	background: url(abse/titlebgon.png) repeat-x 0 1px;
 	color: #fff/*#BDCEC3*/;
 	text-decoration: none}

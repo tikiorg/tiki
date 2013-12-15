@@ -305,8 +305,7 @@ button,
 
 .btn-default:hover,
 button:hover,
-.button input:hover,
-.calbuttonBox a:hover,
+.button input:hover
 #genPass .btn-default:hover,
 .daterow:hover {
 	background: #1173a5;

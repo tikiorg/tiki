@@ -147,8 +147,7 @@ input[type=radio] {border: 0}
 button,
 input[type="reset"],
 input[type="submit"],
-.button input,
-.calbuttonBox a  {
+.button input  {
 	background:#FD9339 url(darkshine/hover_list.jpg) repeat-x scroll 0 0;
 	color: #fff;
 	border: 1px solid #783C1C;
@@ -159,8 +158,7 @@ input[type="submit"],
 button:hover,
 input[type="reset"]:hover,
 input[type="submit"]:hover,
-.button input:hover,
-.calbuttonBox:hover {
+.button input:hover {
 	background: #FD9339 url(darkshine/hover_list.jpg) repeat-x scroll 0 100%;
 	font-size: 94%;
 	font-weight: bold;

@@ -33,8 +33,7 @@ body, a, a:visited {
 button,
 input[type="reset"],
 input[type="submit"],
-.button input,
-.calbuttonBox a {
+.button input {
 	border-color: #395BB0;
 	background: #395BB0 url(../../../vendor/jquery/jquery-ui-themes/themes/start/images/ui-bg_gloss-wave_75_2191c0_500x100.png) 50% 50% repeat-x;
 	background-image: none;
@@ -45,8 +44,7 @@ input[type="submit"],
 button:hover,
 input[type="reset"]:hover,
 input[type="submit"]:hover,
-.button input:hover,
-.calbuttonBox:hover {
+.button input:hover {
 	border-color: #395BB0;
 	background: #fff url(../../../vendor/jquery/jquery-ui-themes/themes/start/images/ui-bg_gloss-wave_75_2191c0_500x100.png) 50% 0% repeat-x;
 	background-image: none;

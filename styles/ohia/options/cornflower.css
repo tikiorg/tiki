@@ -90,8 +90,7 @@ input[type="file"] {color: #004354}
 button,
 input[type="reset"],
 input[type="submit"],
-.button input,
-.calbuttonbox {
+.button input {
 	color: #F9FBCC;
 	font-weight: bold;
 	border: 1px solid #528D9C;
@@ -104,8 +103,7 @@ input[type="submit"],
 button:hover,
 input[type="reset"]:hover,
 input[type="submit"]:hover,
-.button input:hover,
-.calbuttonbox:hover {
+.button input:hover {
 	color: #fff;
 	background: #608C96;
 }

@@ -11,8 +11,7 @@
 button,
 input[type="reset"],
 input[type="submit"],
-.button input,
-.calbuttonBox a {
+.button input {
 	background-image: none;
 }
 
@@ -20,8 +19,7 @@ input[type="submit"],
 button:hover,
 input[type="reset"]:hover,
 input[type="submit"]:hover,
-.button input:hover,
-.calbuttonBox:hover {
+.button input:hover {
 	background-image: none;
 }
 	

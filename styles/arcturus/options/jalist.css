@@ -99,8 +99,7 @@ legend {
 button,
 input[type="reset"],
 input[type="submit"],
-.button input,
-.calbuttonBox a {
+.button input {
 	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size: 11px;
 	background-color: #ccc;
@@ -112,8 +111,7 @@ input[type="submit"],
 button:hover,
 input[type="reset"]:hover,
 input[type="submit"]:hover,
-.button input:hover,
-.calbuttonBox:hover {
+.button input:hover {
 	font-size: 11px;
 	color: #636363;
 }

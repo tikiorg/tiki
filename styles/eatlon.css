@@ -182,8 +182,7 @@ select {
 button,
 input[type="reset"],
 input[type="submit"],
-.button input,
-.calbuttonBox a {
+.button input {
 	border-top: 1px solid #f3f3f4;
 	border-left: 1px solid #f3f3f4;
 	border-right: 1px solid #878689;
@@ -203,8 +202,7 @@ input:disabled {
 button:hover,
 input[type="reset"]:hover,
 input[type="submit"]:hover,
-.button input:hover,
-.calbuttonBox:hover {
+.button input:hover {
 	border-top: 1px solid #868f93;
 	border-left: 1px solid #868f93;
 	border-right: 1px solid #f3f3f4;

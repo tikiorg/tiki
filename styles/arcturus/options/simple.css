@@ -156,8 +156,7 @@ button,
 input[type=reset],
 input[type=submit],
 .button input,
-.submitbutton,
-.calbuttonBox {
+.submitbutton {
 	border: 1px solid #99ccff;
 	background: #f6f9fc url(simple/button_bg.png) center center repeat-x;
 	color: #0066cc;
@@ -175,8 +174,7 @@ button:hover,
 input[type=reset]:hover,
 input[type=submit]:hover,
 .button input:hover,
-.submitbutton:hover,
-.calbuttonBox:hover {
+.submitbutton:hover {
 	border: 1px solid #000;
 	color: #000;
 	background: #f6f9fc url(simple/button_bg.png) center 100% repeat-x;

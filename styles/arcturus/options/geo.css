@@ -96,8 +96,7 @@ input, select {
 button,
 input[type="reset"],
 input[type="submit"],
-.button input,
-.calbuttonBox a {
+.button input {
 	color: #000;
 	background: #f1f1c9;
 	font: normal 10px Verdana, Arial, Helvetica, sans-serif;
@@ -108,8 +107,7 @@ input[type="submit"],
 button:hover,
 input[type="reset"]:hover,
 input[type="submit"]:hover,
-.button input:hover,
-.calbuttonBox:hover {
+.button input:hover {
 	border: 1px solid #999970;
 	font: normal 10px Verdana, Arial, Helvetica, sans-serif;
 }

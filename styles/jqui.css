@@ -107,8 +107,7 @@ input[type="submit"] {
 button:hover,
 input[type="reset"]:hover,
 input[type="submit"]:hover,
-.button input:hover,
-.calbuttonBox:hover {
+.button input:hover {
 	margin: .5em .4em .5em 0;
 	border: 1px solid #aaa;
 	background: #cccccc url(../vendor/jquery/jquery-ui-themes/themes/smoothness/images/ui-bg_glass_75_e6e6e6_1x400.png) 50% 50% repeat-x;

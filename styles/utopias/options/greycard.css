@@ -145,8 +145,7 @@ input[type="email"],
 input[type="file"],
 input[type="search"],
 input[type="number"],
-span.button input,
-.calbuttonBox a {
+span.button input {
 	font-weight: bold;
 	color: #333;
 	background: #888;
@@ -158,8 +157,7 @@ span.button input,
 button:hover,
 input[type=reset]:hover,
 input[type=submit]:hover,
-span.button input:hover,
-.calbuttonBox a:hover {
+span.button input:hover {
 	color: #000;
 	background: #abc;
 	padding: 0.1em 0.5em

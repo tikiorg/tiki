@@ -90,8 +90,7 @@ input[type=radio] {
 button,
 input[type="reset"],
 input[type="submit"],
-.button input,
-.calbuttonBox a {
+.button input {
 	border: solid 1px #aaa;
 	background: #fbfbfb;
 	color: #000;
@@ -105,8 +104,7 @@ input[type="submit"],
 button:hover,
 input[type="reset"]:hover,
 input[type="submit"]:hover,
-.button input:hover,
-.calbuttonBox:hover {
+.button input:hover {
 	cursor: pointer;
 	background: #e6e6f8;
 	font: .8em Arial, Helvetica, sans-serif;

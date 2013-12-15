@@ -116,8 +116,7 @@ input[type="submit"], input[type="file"], select {
 button,
 input[type=reset],
 input[type=submit],
-.button input,
-.calbuttonBox a {
+.button input {
 	border-color: #24880c;
 	background: #24880c url(simple/button_bg.png) center center repeat-x;
 	color: #24880c;
@@ -131,8 +130,7 @@ input[type=submit],
 button:hover,
 input[type=reset]:hover,
 input[type=submit]:hover,
-.button input:hover,
-.calbuttonBox:hover {
+.button input:hover {
 	border-color: #000;
 	color: #000;
 	font-size: 0.8em;
