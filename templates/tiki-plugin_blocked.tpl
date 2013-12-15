@@ -1,4 +1,4 @@
-<div class="panel panel-default" id="{$plugin_fingerprint|escape}">
+<div class="panel panel-danger" id="{$plugin_fingerprint|escape}">
 <div class="panel-heading">
 	{icon _id=error style="vertical-align:middle"}
 	{if $plugin_status eq 'rejected'}
@@ -7,7 +7,7 @@
 		{tr}Plugin execution pending approval{/tr}
 	{/if}
 </div>
-<div class="well">
+<div class="panel-body">
 	{if $plugin_status eq 'rejected'}
 		<p>{tr}After argument validation by an editor, the execution of this plugin was denied. This plugin will eventually be removed or corrected.{/tr}</p>
 	{else}
@@ -39,7 +39,7 @@
 				{/if}
 
 				{if $plugin_body}
-					<div class="panel panel-default">
+					<div class="panel panel-warning">
 					<div class="panel-heading">
 						 {tr}Body{/tr}
 					</div>
