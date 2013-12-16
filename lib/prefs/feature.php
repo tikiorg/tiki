@@ -1,16 +1,3 @@
-			'default' => 'n',
-		),
-		'feature_lang_nonswitchingpages' => array(
-			'name' => tra('List of page names that always redirect to home page on language switching'),
-			'description' => tra('List of page names that always redirect to home page on language switching'),
-			'type' => 'flag',
-			'default' => 'n',
-		),
-		'feature_lang_nonswitchingpages_names' => array(
-			'name' => tra('Enter the multiple page names with comma separated'),
-			'description' => tra('List of page names that always redirect to home page on language switching'),
-			'type' => 'textarea',
-			'default' => 'n',
 <?php
 // (c) Copyright 2002-2013 by authors of the Tiki Wiki CMS Groupware Project
 //
