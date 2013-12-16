@@ -46,14 +46,14 @@ function smarty_function_listfilter($params, $smarty)
 		$childPrefix = isset($childPrefix) ? $childPrefix : 'child-of-';
 		$exclude = isset($exclude) ? $exclude : '';
 
-		$input = "<label>";
+		$input = ' <div class="form-horizontal"><div class="form-group"><label class="col-sm-2 control-label">';
 
 		if (!isset($prefix)) {
 			$input .= tra("Filter:");
 		} else {
 			$input .= tra($prefix);
 		}
-		$input .= "&nbsp;<input type='text'";
+		$input .= '</label><div class="col-sm-10"><input type="text" class="form-control"';
 		if (!isset($id)) {
 			if (isset($listfilter_id)) {
 				$listfilter_id++;
@@ -103,9 +103,9 @@ function smarty_function_listfilter($params, $smarty)
 			);
 		}
 
-		$input .= " class='listfilter' />";
+		$input .= " class='listfilter' /></div></div></div>";
 		$input .= "<img src='img/icons/close.png' onclick=\"\$('#$id').val('').focus().keyup();return false;\" class='closeicon' width='16' height='16' style='visibility:hidden;position:relative;right:20px;top:6px;'/>";
-		$input .= "</label>";
+		$input .= '</label>';
 
 		if (!isset($selectors)) $selectors = ".$id table tr";
 
