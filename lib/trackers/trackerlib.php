@@ -4241,6 +4241,7 @@ class TrackerLib extends TikiLib
 
 				$i = 0;
 				foreach ($watchers as $watcher) {
+					$watcher['language'] = $this->get_user_preference($watcher['user'], 'language', $prefs['site_language']);
 					$mail = new TikiMail($watcher['user']);
 					// first we look for strings marked "-[...]-" to translate by watcher language
 					$translate_strings[$i] = preg_match_all('/-\[([^\]]*)\]-/', $the_data, $tra_matches);
