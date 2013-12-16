@@ -35,21 +35,28 @@
 {jq}
 	$('#tagBox').tiki('autocomplete', 'tag', {multiple: true, multipleSeparator: " "} );
 {/jq}
-<form class="freetagsearch" action="tiki-browse_freetags.php" method="get">
-	<div class="freetagskeywords">
-		<b>{tr}Tags{/tr}</b> 
-		<input type="text" id="tagBox" name="tag" size="25" value="{$tagString|escape}">
-		{button _onclick="clearTags(); return false;" _text="{tr}Clear{/tr}"}
-		<input type="submit" class="btn btn-default btn-sm" value="{tr}Go{/tr}">
-		<br>
-		<input type="hidden" name="sort_mode" value="{$sort_mode|escape}">
-		<input type="radio" name="broaden" id="stopb1" value="n"{if $broaden eq 'n'} checked="checked"{/if}>
-		<label for="stopb1">{tr}With all selected tags{/tr}</label>
-		<input type="radio" name="broaden" id="stopb2" value="y"{if $broaden eq 'y'} checked="checked"{/if}>
-		<label for="stopb2">{tr}With one selected tag{/tr}</label>
-		<input type="radio" name="broaden" id="stopb3" value="last"{if $broaden eq 'last'} checked="checked"{/if}>
-		<label for="stopb3">{tr}With last selected tag{/tr}</label>
-	</div>
+<form action="tiki-browse_freetags.php" method="get" class="freetagsearch col-md-12 form-inline form-horizontal" role="form">
+    <div class="row">
+        <label class="control-label col-sm-2" for="tabBox">{tr}Tags{/tr}</label>
+        <div class="input-group col-sm-7">
+		    <input type="text" id="tagBox" class="form-control" name="tag" value="{$tagString|escape}">
+        </div>
+        <div class="col-sm-3">
+		    {button _onclick="clearTags(); return false;" _text="{tr}Clear{/tr}"}
+	    	<input type="submit" class="btn btn-default" value="{tr}Go{/tr}">
+    	</div>
+    </div>
+    <div class="row table spacer-bottom-15px">
+        <div class="col-sm-10 col-sm-offset-2 radio">
+		    <input type="hidden" name="sort_mode" value="{$sort_mode|escape}">
+		    <input type="radio" name="broaden" class="radio" id="stopb1" value="n"{if $broaden eq 'n'} checked="checked"{/if}>
+		    <label for="stopb1">{tr}With all selected tags{/tr}</label>
+		    <input type="radio" name="broaden" class="radio" id="stopb2" value="y"{if $broaden eq 'y'} checked="checked"{/if}>
+		    <label for="stopb2">{tr}With one selected tag{/tr}</label>
+		    <input type="radio" name="broaden" class="radio" id="stopb3" value="last"{if $broaden eq 'last'} checked="checked"{/if}>
+		    <label for="stopb3">{tr}With last selected tag{/tr}</label>
+        </div>
+    </div>
 
 	{if $prefs.freetags_browse_show_cloud eq 'y'}
 		{jq notonready=true}
@@ -62,7 +69,7 @@
 				}
 		{/jq}
 
-		<div class="freetaglist"> 
+		<div class="freetaglist table spacer-bottom-15px">
 			{foreach from=$most_popular_tags item=popular_tag}
 				{capture name=tagurl}{if (strstr($popular_tag.tag, ' '))}"{$popular_tag.tag}"{else}{$popular_tag.tag}{/if}{/capture}
 				<a class="freetag_{$popular_tag.size}{if $tag eq $popular_tag.tag|escape} selectedtag{/if}" href="tiki-browse_freetags.php?tag={$smarty.capture.tagurl|escape:'url'}" onclick="javascript:addTag('{$popular_tag.tag|escape:'javascript'}');return false;" ondblclick="location.href=this.href;"{if $popular_tag.color} style="color:{$popular_tag.color}"{/if}>{$popular_tag.tag|escape}</a> 
@@ -70,18 +77,18 @@
 		</div>
 
 		<div class="freetagsort">
-			<div class="center-block">
+			<div class="text-center">
 				{if empty($maxPopular)}
 					{assign var=maxPopular value=50+$prefs.freetags_browse_amount_tags_in_cloud}
 				{/if}
 				<a class='more' href="{$smarty.server.PHP_SELF}?{query maxPopular=$maxPopular tagString=$tagString}">{tr}More Popular Tags{/tr}</a>
 			</div>
 
-			<div class="center-block">
+			<div class="text-center">
 				{tr}Sort:{/tr}<a href="{$smarty.server.PHP_SELF}?{query tsort_mode=tag_asc}">{tr}Alphabetically{/tr}</a> | <a href="{$smarty.server.PHP_SELF}?{query tsort_mode=count_desc tagString=$tagString}">{tr}By Size{/tr}</a>
 			</div>
 
-			<div class="center-block">
+			<div class="text-center">
 				<a href="{$smarty.server.PHP_SELF}?{query mode=c tagString=$tagString}">{tr}Cloud{/tr}</a> | <a href="{$smarty.server.PHP_SELF}?{query mode=l tagString=$tagString}">{tr}List{/tr}</a>
 			</div>
 		</div>
