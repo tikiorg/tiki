@@ -84,34 +84,35 @@
 	<a class="link" href="tiki-objectpermissions.php?objectName={$info.name|escape:"url"}&amp;objectType=survey&amp;permType=surveys&amp;objectId={$info.surveyId}">{tr}There are individual permissions set for this survey{/tr}</a><br><br>
 {/if}
 
-<form action="tiki-admin_surveys.php" method="post">
-	<input type="hidden" name="surveyId" value="{$info.surveyId|escape}">
-	<table class="formcolor">
-		<tr>
-			<td>{tr}Name:{/tr}</td>
-			<td><input type="text" name="name" size="80" value="{$info.name|escape}"></td>
-		</tr>
-		<tr>
-			<td>{tr}Description:{/tr}</td>
-			<td>{textarea name="description" rows="6" cols="80" _toolbars='y' _simple='y' comments='y'}{$info.description}{/textarea}</td>
-		</tr>
+<form action="tiki-admin_surveys.php" method="post" class="form-horizontal" role="form">
+    <div class="form-group">
+    	<input type="hidden" name="surveyId" value="{$info.surveyId|escape}">
+        <label for="name" class="col-sm-2 control-label">{tr}Name:{/tr}</label>
+        <div class="col-sm-10">
+			<input type="text" name="name" id="name" class="form-control" value="{$info.name|escape}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="description" class="col-sm-2 control-label">{tr}Description:{/tr}</label>
+        <div class="col-sm-10">
+			{textarea name="description" rows="6" id="description" class="form-control" _toolbars='y' _simple='y' comments='y'}{$info.description}{/textarea}
+		</div>
+    </div>
+    <div class=" table spacer-bottom-15px">
 		{include file='categorize.tpl'}
-		<tr>
-			<td>{tr}Status{/tr}</td>
-			<td>
-				<select name="status">
-					<option value="o" {if $info.status eq 'o'}selected='selected'{/if}>{tr}Open{/tr}</option>
-					<option value="c" {if $info.status eq 'c'}selected='selected'{/if}>{tr}Closed{/tr}</option>
-				</select>
-			</td>
-		</tr>
-		<tr>
-			<td>&nbsp;</td>
-			<td>
-				<input type="submit" class="btn btn-default btn-sm" name="save" value="{tr}Save{/tr}">
-			</td>
-		</tr>
-	</table>
+    </div>
+    <div class="form-group">
+        <label for="status" class="col-sm-2 control-label">{tr}Status{/tr}</label>
+        <div class="col-sm-10">
+			<select name="status" class="form-control">
+				<option value="o" {if $info.status eq 'o'}selected='selected'{/if}>{tr}Open{/tr}</option>
+				<option value="c" {if $info.status eq 'c'}selected='selected'{/if}>{tr}Closed{/tr}</option>
+			</select>
+		</div>
+    </div>
+    <div class="form-group">
+        <input type="submit" class="btn btn-default" name="save" value="{tr}Save{/tr}">
+	</div>
 </form>
 {/tab}
 
