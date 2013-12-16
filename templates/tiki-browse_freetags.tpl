@@ -196,12 +196,12 @@
 		{cycle values="odd,even" print=false}
 		{section name=ix loop=$objects}
 			<div class="{cycle} freetagitemlist" >
-				<h3>
+				<h4>
 					<a href="{$objects[ix].href}">{$objects[ix].name|strip_tags|escape}</a>
 					{if $tiki_p_unassign_freetags eq 'y' or $tiki_p_admin eq 'y'}
 						<a href="tiki-browse_freetags.php?del=1&amp;tag={$tag}{if $type}&amp;type={$type|escape:'url'}{/if}&amp;typeit={$objects[ix].type|escape:'url'}&amp;itemit={$objects[ix].name|escape:'url'}">{icon _id='cross' alt="{tr}Delete{/tr}"}</a>
 					{/if}
-				</h3>
+				</h4>
 				<div class="type">
 					{tr}{$objects[ix].type|replace:"wiki page":"Wiki"|replace:"article":"Article"|regex_replace:"/tracker [0-9]*/":"tracker item"}{/tr}
 				{if !empty($objects[ix].parent_object_id)} {tr}in{/tr} {object_link type=$objects[ix].parent_object_type id=$objects[ix].parent_object_id}{/if}
