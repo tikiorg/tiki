@@ -15,9 +15,9 @@
 			<table>
 				<tr>
 					<td>{tr}Start:{/tr}</td>
-					<td>{html_select_date time=$startDate prefix="startDate_" end_year="-10" field_order=$prefs.display_field_order} {html_select_time use_24_hours=true time=$startDate}</td>
+					<td>{html_select_date time=$startDate|default:time() prefix="startDate_" start_year="-10" field_order=$prefs.display_field_order} {html_select_time use_24_hours=true time=$startDate}</td>
 					<td>{tr}End:{/tr}</td>
-					<td>{html_select_date time=$endDate prefix="endDate_" end_year="-10" field_order=$prefs.display_field_order} {html_select_time use_24_hours=true time=$endDate prefix="end_"}</td>
+					<td>{html_select_date time=$endDate|default:time() prefix="endDate_" start_year="-10" field_order=$prefs.display_field_order} {html_select_time use_24_hours=true time=$endDate prefix="end_"}</td>
 				</tr>
 			</table>
 		</fieldset>
