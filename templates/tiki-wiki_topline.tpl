@@ -156,9 +156,9 @@
 								</div>
 							{/if}
 							{if $prefs.feature_multilingual eq 'y' && $prefs.show_available_translations eq 'y' && $machine_translate_to_lang eq ''}
-								<div class="lang_select">
+								<span class="btn-i18n">
 									{include file='translated-lang.tpl' object_type='wiki page'}
-								</div>
+								</span>
 							{/if}
 						</div><!-- END of icons -->
 					</div> {* END of wikiactions *}
