@@ -7,9 +7,7 @@
 		</span>
 		<div class="actions pull-right">
 		{if $prefs.feature_multilingual eq 'y' and $lang and $prefs.show_available_translations eq 'y'}	
-			<span class="btn-i18n">
-				{include file='translated-lang.tpl' object_type='article'}
-			</div>
+			{include file='translated-lang.tpl' object_type='article'}
 		{/if}
 		{if $tiki_p_edit_article eq 'y'}
 			<a class="icon" href="tiki-edit_article.php?articleId={$articleId}">{icon _id='page_edit'}</a>
