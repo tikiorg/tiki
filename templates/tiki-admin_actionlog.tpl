@@ -16,7 +16,7 @@
                 <label class="col-sm-2 control-label" for="">{tr}Start:{/tr}</label>
                 <div class="col-sm-6">
                     <div class="">
-					    {html_select_date time=$startDate prefix="startDate_" end_year="-10" field_order=$prefs.display_field_order} {html_select_time use_24_hours=true time=$startDate}
+					    {html_select_date time=$startDate prefix="startDate_" start_year="-10" field_order=$prefs.display_field_order} {html_select_time use_24_hours=true time=$startDate}
                     </div>
                 </div>
             </div>
@@ -24,7 +24,7 @@
                 <label class="col-sm-2 control-label" for="">{tr}End:{/tr}</label>
                 <div class="col-sm-6">
                     <div class="">
-                        {html_select_date time=$endDate prefix="endDate_" end_year="-10" field_order=$prefs.display_field_order} {html_select_time use_24_hours=true time=$endDate prefix="end_"}
+                        {html_select_date time=$endDate prefix="endDate_" start_year="-10" field_order=$prefs.display_field_order} {html_select_time use_24_hours=true time=$endDate prefix="end_"}
 	    			</div>
                 </div>
 			</div>
