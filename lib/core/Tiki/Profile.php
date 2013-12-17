@@ -168,7 +168,11 @@ class Tiki_Profile
 	public static function fromNames( $domain, $profile ) // {{{
 	{
 		if ( strpos($domain, '://') === false) {
-			$domain = "http://$domain";
+			if ( is_dir($domain) ) {
+				$domain = "file://$domain";
+			} else {
+				$domain = "http://$domain";
+			}
 		}
 
 		if ( $domain == 'tiki://local' ) {
