@@ -2049,7 +2049,7 @@ if ( \$('#$id') ) {
 	//*
 	function parse_wiki_argvariable(&$data)
 	{
-		global $prefs, $user, $smarty;
+		global $prefs, $user, $smarty, $tikilib;
 		if ( $prefs['feature_wiki_argvariable'] == 'y' && !$this->option['ck_editor'] ) {
 			if (preg_match_all("/\\{\\{((\w+)(\\|([^\\}]*))?)\\}\\}/", $data, $args, PREG_SET_ORDER)) {
 				$needles = array();
@@ -2065,6 +2065,14 @@ if ( \$('#$id') ) {
 					case 'page':
 						$value = $this->option['page'];
 						break;
+					case 'pageid':
+						if ($_REQUEST['page'] != null) {
+							$value = $tikilib->get_page_id_from_name($_REQUEST['page']);
+							break;
+						} else {
+							$value='';
+							break;	
+						}
 					case 'domain':
 						if ($smarty->getTemplateVars('url_host') != null) {
 							$value = $smarty->getTemplateVars('url_host');
@@ -2075,6 +2083,17 @@ if ( \$('#$id') ) {
 						}
 					case 'domainslash':
 						if ($smarty->getTemplateVars('url_host') != null) {
+							$value = $smarty->getTemplateVars('url_host') . '/';
+							break;	
+						} else {
+							$value='';
+							break;	
+						}
+					case 'domainslash_if_multitiki':
+						if (is_file('db/virtuals.inc')) {
+							$virtuals = array_map('trim', file('db/virtuals.inc'));
+						}
+						if ($virtuals && $smarty->getTemplateVars('url_host') != null) {
 							$value = $smarty->getTemplateVars('url_host') . '/';
 							break;	
 						} else {
