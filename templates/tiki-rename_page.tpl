@@ -1,12 +1,12 @@
 {title}{tr}Rename page:{/tr} {$page}{/title}
 
-<div class="t_navbar">
+<div class="t_navbar table spacer-bottom-20px">
 	{assign var=thispage value=$page|escape:url}
 	{button href="tiki-index.php?page=$thispage" class="btn btn-default" _text="{tr}View page{/tr}"}
 </div>
 
-<form action="tiki-rename_page.php" method="post">
-  <input type="hidden"  name="page" value="{$page|escape}">
+<form action="tiki-rename_page.php" method="post" class="form-horizontal" role="form">
+   <input type="hidden"  name="page" value="{$page|escape}">
 	{if isset($page_badchars_display)}
 		{if $prefs.wiki_badchar_prevent eq 'y'}
 			{remarksbox type=errors title="{tr}Invalid page name{/tr}"}
@@ -24,13 +24,13 @@
 			{$msg}
 		{/remarksbox}		
 	{/if}
-  <table class="formcolor">
-    <tr>
-      <td><label for='newpage'>{tr}New name:{/tr}</label></td>
-      <td>
-        <input type='text' id='newpage' name='newpage' size='40' value='{$newname|escape}'>
-        <input type="submit" class="btn btn-default btn-sm" name="rename" value="{tr}Rename{/tr}">
-      </td>
-    </tr>
-  </table>
-</form>
+    <div class="form-group">
+        <label for='newpage' class="col-sm-2 control-label">{tr}New name:{/tr}</label>
+        <div class="col-sm-8">
+            <input type='text' id='newpage' name='newpage' class="form-control" value='{$newname|escape}'>
+        </div>
+        <div class="col-sm-2">
+            <input type="submit" class="btn btn-default btn-sm" name="rename" value="{tr}Rename{/tr}">
+        </div>
+    </div>
+ </form>
