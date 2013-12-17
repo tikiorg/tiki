@@ -22,8 +22,8 @@ if (isset($_GET['do'])) {
 		// seems combination of clearing prefs and public now messes up the page, so reload (tiki 11)
 		include_once('lib/setup/prefs.php');
 		initialize_prefs();
-		include('lib/setup/javascript.php');
 		include('lib/setup/mobile.php');
+		include('lib/setup/javascript.php');
 	}
 }
 if (isset($_GET['compiletemplates'])) {
