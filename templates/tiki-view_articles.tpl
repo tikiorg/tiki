@@ -171,9 +171,9 @@
 							<a class="icon" href="tiki-print_article.php?articleId={$listpages[ix].articleId}">{icon _id='printer' alt="{tr}Print{/tr}"}</a>
 						{/if}
 						{if $prefs.feature_multilingual eq 'y' and $tiki_p_edit_article eq 'y'}
-							<div class="lang_select">
+							<span class="btn-i18n">
 								{include file='translated-lang.tpl' object_type='article' trads=$listpages[ix].translations articleId=$listpages[ix].articleId}
-							</div>
+							</span>
 						{/if}
 						{if $tiki_p_remove_article eq 'y'}
 							<a class="icon" href="tiki-list_articles.php?remove={$listpages[ix].articleId}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>

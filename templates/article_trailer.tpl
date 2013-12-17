@@ -7,7 +7,7 @@
 		</span>
 		<div class="actions pull-right">
 		{if $prefs.feature_multilingual eq 'y' and $lang and $prefs.show_available_translations eq 'y'}	
-			<div class="lang_select">
+			<span class="btn-i18n">
 				{include file='translated-lang.tpl' object_type='article'}
 			</div>
 		{/if}
