@@ -85,6 +85,13 @@ class Tiki_Profile
 
 	public static function getProfileKeyfor ( $domain, $profile ) // {{{
 	{
+		if ( strpos($domain, '://') === false ) {
+			if ( is_dir($domain) ) {
+				$domain = "file://" . $domain;
+			} else {
+				$domain = "http://" . $domain;
+			}
+		}
 		return $domain . '/' . $profile;
 	} // }}}
 
@@ -123,6 +130,14 @@ class Tiki_Profile
 	private static function findObjectReference($object) // {{{
 	{
 		global $tikilib;
+
+		if ( strpos($object['domain'], '://') === false ) {
+			if ( is_dir($object['domain']) ) {
+				$object['domain'] = "file://" . $object['domain'];
+			} else {
+				$object['domain'] = "http://" . $object['domain'];
+			}
+		}
 
 		$result = $tikilib->query(
 			"SELECT value FROM tiki_profile_symbols WHERE domain = ? AND profile = ? AND object = ?",
@@ -168,7 +183,11 @@ class Tiki_Profile
 	public static function fromNames( $domain, $profile ) // {{{
 	{
 		if ( strpos($domain, '://') === false) {
-			$domain = "http://$domain";
+			if ( is_dir($domain) ) {
+				$domain = "file://$domain";
+			} else {
+				$domain = "http://$domain";
+			}
 		}
 
 		if ( $domain == 'tiki://local' ) {
@@ -429,6 +448,8 @@ class Tiki_Profile
 			foreach ( $parts as $row )
 				$array[] = $this->convertReference($row);
 		}
+
+		$array = array_unique($array);
 
 		return $array;
 	} // }}}

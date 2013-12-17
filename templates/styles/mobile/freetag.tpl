@@ -16,7 +16,7 @@
 				<br>
 				{foreach from=$tag_suggestion item=t}
 					{capture name=tagurl}{if (strstr($t, ' '))}"{$t}"{else}{$t}{/if}{/capture}
-					<a {if $prefs.mobile_mode eq "y"}data-role="button" data-inline="true" data-mini="true" data-theme="a" {/if}href="javascript:addTag('{$smarty.capture.tagurl|escape:'javascript'|escape}');" onclick="javascript:needToConfirm=false">{$t|escape}</a> 
+					<a {if $prefs.mobile_mode eq "y"}data-role="button" data-inline="true" data-mini="true" data-theme="e" {/if}href="javascript:addTag('{$smarty.capture.tagurl|escape:'javascript'|escape}');" onclick="javascript:needToConfirm=false">{$t|escape}</a> 
 				{/foreach}
 			</div>
 		</td>

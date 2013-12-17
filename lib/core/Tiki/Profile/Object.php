@@ -15,6 +15,13 @@ class Tiki_Profile_Object
 
 	public static function serializeNamedObject( $object ) // {{{
 	{
+		if ( strpos($object['domain'], '://') === false ) {
+			if ( is_dir($object['domain']) ) {
+				$object['domain'] = "file://" . $object['domain'];
+			} else {
+				$object['domain'] = "http://" . $object['domain'];
+			}
+		}
 		return sprintf("%s#%s", Tiki_Profile::getProfileKeyfor($object['domain'], $object['profile']), $object['object']);
 	} // }}}
 
