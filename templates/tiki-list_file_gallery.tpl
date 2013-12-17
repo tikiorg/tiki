@@ -59,7 +59,7 @@
 			{button _text="{tr}List Galleries{/tr}" href="?"}
 		{/if}
 		{if $tiki_p_create_file_galleries eq 'y' and $edit_mode ne 'y'}
-			{button _keepall='y' _text="{tr}Create a Gallery{/tr}" edit_mode=1 parentId=$galleryId cookietab=1}
+			{button _keepall='y' _text="{tr}Create a gallery{/tr}" edit_mode=1 parentId=$galleryId cookietab=1}
 		{/if}
 		{if $tiki_p_create_file_galleries eq 'y' and $dup_mode ne 'y' and $gal_info.type neq 'user'}
 			{button _text="{tr}Duplicate Gallery{/tr}" dup_mode=1 galleryId=$galleryId}
@@ -142,7 +142,7 @@ $("#viewSwitcher").change(function() {
 			{button _text="{tr}List Galleries{/tr}" href='?'}
 		{/if}
 		{if $tiki_p_create_file_galleries eq 'y' and $edit_mode ne 'y'}
-			{button _keepall='y' _text="{tr}Create a Gallery{/tr}" edit_mode="1" parentId="-1" galleryId="0"}
+			{button _keepall='y' _text="{tr}Create a gallery{/tr}" edit_mode="1" parentId="-1" galleryId="0"}
 		{/if}
 		{if $tiki_p_upload_files eq 'y'}
 			{button _text="{tr}Upload File{/tr}" href="tiki-upload_file.php"}
