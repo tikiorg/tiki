@@ -79,6 +79,22 @@ $tikilib->get_preferences($needed_prefs, true, true);
 global $systemConfiguration;
 $prefs = $systemConfiguration->preference->toArray() + $prefs;
 
+// mose : simulate strong var type checking for http vars
+$patterns['int'] = "/^[0-9]*$/"; // *Id
+$patterns['intSign'] = "/^[-+]?[0-9]*$/"; // *offset,
+$patterns['char'] = "/^(pref:)?[-,_a-zA-Z0-9]*$/"; // sort_mode
+$patterns['string'] = "/^<\/?(b|strong|small|br *\/?|ul|li|i)>|[^<>\";#]*$/"; // find, and such extended chars
+$patterns['stringlist'] = "/^[^<>\"#]*$/"; // to, cc, bcc (for string lists like: user1;user2;user3)
+$patterns['vars'] = "/^[-_a-zA-Z0-9]*$/"; // for variable keys
+$patterns['dotvars'] = "/^[-_a-zA-Z0-9\.]*$/"; // same pattern as a variable key, but that may contain a dot
+$patterns['hash'] = "/^[a-z0-9]*$/"; // for hash reqId in live support
+// allow quotes in url for additional tag attributes if html allowed in menu options links
+if ($prefs['menus_item_names_raw'] == 'y' and strpos($_SERVER["SCRIPT_NAME"], 'tiki-admin_menu_options.php') !== false) {
+	$patterns['url'] = "/^(https?:\/\/)?[^<>]*$/";
+} else {
+	$patterns['url'] = "/^(https?:\/\/)?[^<>\"]*$/";
+}
+
 // IIS always sets the $_SERVER['HTTPS'] value (on|off)
 $noSSLActive = !isset($_SERVER['HTTPS']) || (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'off');
 if (isset($prefs['session_protected']) && $prefs['session_protected'] == 'y' && $noSSLActive && php_sapi_name() != 'cli') {
@@ -214,21 +230,6 @@ function remove_gpc(&$var)
 	} else {
 		$var = stripslashes($var);
 	}
-}
-// mose : simulate strong var type checking for http vars
-$patterns['int'] = "/^[0-9]*$/"; // *Id
-$patterns['intSign'] = "/^[-+]?[0-9]*$/"; // *offset,
-$patterns['char'] = "/^(pref:)?[-,_a-zA-Z0-9]*$/"; // sort_mode
-$patterns['string'] = "/^<\/?(b|strong|small|br *\/?|ul|li|i)>|[^<>\";#]*$/"; // find, and such extended chars
-$patterns['stringlist'] = "/^[^<>\"#]*$/"; // to, cc, bcc (for string lists like: user1;user2;user3)
-$patterns['vars'] = "/^[-_a-zA-Z0-9]*$/"; // for variable keys
-$patterns['dotvars'] = "/^[-_a-zA-Z0-9\.]*$/"; // same pattern as a variable key, but that may contain a dot
-$patterns['hash'] = "/^[a-z0-9]*$/"; // for hash reqId in live support
-// allow quotes in url for additional tag attributes if html allowed in menu options links
-if ($prefs['menus_item_names_raw'] == 'y' and strpos($_SERVER["SCRIPT_NAME"], 'tiki-admin_menu_options.php') !== false) {
-	$patterns['url'] = "/^(https?:\/\/)?[^<>]*$/";
-} else {
-	$patterns['url'] = "/^(https?:\/\/)?[^<>\"]*$/";
 }
 // parameter type definitions. prepend a + if variable may not be empty, e.g. '+int'
 $vartype['id'] = '+int';
