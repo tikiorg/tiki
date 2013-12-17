@@ -100,10 +100,10 @@ if (isset($_REQUEST['view']) && $_REQUEST['view'] == 'admin') {
 
 		if ( isset($_REQUEST['page']) && $_REQUEST['page'] === 'fgal' ) {
 			// We are in the file gallery admin panel
-			$fgal_options[$k_gal]['value'] = $prefs[$k_prefs];
+			$fgal_options[$k_gal]['value'] = isset($prefs[$k_prefs]) ? $prefs[$k_prefs] : null;
 		} elseif ( isset($_REQUEST['edit_mode']) ) {
 			// We are in the edit file gallery page
-			$fgal_options[$k_gal]['value'] = $gal_info[$k_gal];
+			$fgal_options[$k_gal]['value'] = isset($gal_info[$k_gal]) ? $gal_info[$k_gal] : null;
 		} else {
 			// normal gallery view
 			$fgal_options[$k_gal]['value'] = ( isset($gal_info) && isset($gal_info[$k_gal]) ) ? $gal_info[$k_gal] : $prefs[$k_prefs];

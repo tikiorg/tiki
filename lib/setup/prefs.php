@@ -405,7 +405,7 @@ function initialize_prefs($force = false)
 	// Override preferences with system-configured preferences.
 	$prefs = $systemConfiguration->preference->toArray() + $prefs;
 
-	define('TIKI_PREFS_DEFINED', 1);
+	if ( !defined('TIKI_PREFS_DEFINED') ) define('TIKI_PREFS_DEFINED', 1);
 }
 
 /**
