@@ -221,7 +221,7 @@ if (isset($_REQUEST['intertiki']) and in_array($_REQUEST['intertiki'], array_key
 	}
 }
 if ($isvalid) {
-
+        $userlib->set_unsuccessful_logins($requestedUser, 0);
 	if ($prefs['feature_invite'] == 'y') {
 		// tiki-invite, this part is just here to add groups to users which just registered after received an
 		// invitation via tiki-invite.php and set the redirect to wiki page if required by the invitation
@@ -347,34 +347,42 @@ if ($isvalid) {
 	$smarty->assign('module_params', $module_params);
 	if ($error == PASSWORD_INCORRECT && ($prefs['unsuccessful_logins'] >= 0 || $prefs['unsuccessful_logins_invalid'] >= 0)) {
 		$nb_bad_logins = $userlib->unsuccessful_logins($requestedUser);
-		if ($prefs['unsuccessful_logins_invalid'] > 0 && ($nb_bad_logins >= $prefs['unsuccessful_logins_invalid'] - 1)) {
+		$nb_bad_logins++ ; 
+		$userlib->set_unsuccessful_logins($requestedUser, $nb_bad_logins);
+		if ($prefs['unsuccessful_logins_invalid'] > 0 && ($nb_bad_logins >= $prefs['unsuccessful_logins_invalid'])) {
 			$info = $userlib->get_user_info($requestedUser);
 			$userlib->change_user_waiting($requestedUser, 'a');
-			$msg = sprintf(tra('More than %d unsuccessful login attempts have been made.'), $prefs['unsuccessful_logins_invalid']);
-			$msg .= ' '.tra('Your account has been suspended.').' '.tra('A site administrator will reactivate it');
-			include_once ('lib/webmail/tikimaillib.php');
-			$mail = new TikiMail();
+			$msg = sprintf(tra('%d or more unsuccessful login attempts have been made.'), $prefs['unsuccessful_logins_invalid']);
+			$msg .= ' '.tra('Your account has been suspended.').' '.tra('Contact your site administrator to reactivate it.');
 			$smarty->assign('msg', $msg);
-			$smarty->assign('mail_user', $requestedUser);
-			$foo = parse_url($_SERVER['REQUEST_URI']);
-			$mail_machine = $tikilib->httpPrefix(true).str_replace('tiki-login.php', '', $foo['path']);
-			$smarty->assign('mail_machine', $mail_machine);
-			$mail->setText($smarty->fetch('mail/unsuccessful_logins_suspend.tpl'));
-			$mail->setSubject($smarty->fetch('mail/unsuccessful_logins_suspend_subject.tpl'));
-			$emails = !empty($prefs['validator_emails'])?preg_split('/,/', $prefs['validator_emails']): (!empty($prefs['sender_email'])? array($prefs['sender_email']): '');
-			if (!$mail->send(array($info['email'])) || !$mail->send($emails)) {
-				$smarty->assign('msg', tra("The mail can't be sent. Contact the administrator"));
-				$smarty->display("error.tpl");
-				die;
+			if ($nb_bad_logins % $prefs['unsuccessful_logins_invalid'] == 0) {
+				//don't send an email after every failed login
+			        include_once ('lib/webmail/tikimaillib.php');
+			        $mail = new TikiMail();
+			        $smarty->assign('mail_user', $requestedUser);
+			        $foo = parse_url($_SERVER['REQUEST_URI']);
+			        $mail_machine = $tikilib->httpPrefix(true).str_replace('tiki-login.php', '', $foo['path']);
+			        $smarty->assign('mail_machine', $mail_machine);
+			        $mail->setText($smarty->fetch('mail/unsuccessful_logins_suspend.tpl'));
+			        $mail->setSubject($smarty->fetch('mail/unsuccessful_logins_suspend_subject.tpl'));
+			        $emails = !empty($prefs['validator_emails'])?preg_split('/,/', $prefs['validator_emails']): (!empty($prefs['sender_email'])? array($prefs['sender_email']): '');
+			        if (!$mail->send(array($info['email'])) || !$mail->send($emails)) {
+				        $smarty->assign('msg', tra("The mail can't be sent. Contact the administrator"));
+				        $smarty->display("error.tpl");
+				        die;
+			        }
 			}
 			$smarty->assign('mid', 'tiki-information.tpl');
 			$smarty->display('tiki.tpl');
 			die;
-		} elseif ($prefs['unsuccessful_logins'] > 0 && ($nb_bad_logins >= $prefs['unsuccessful_logins'] - 1)) {
-			$msg = sprintf(tra('More than %d unsuccessful login attempts have been made.'), $prefs['unsuccessful_logins']);
+		} elseif ($prefs['unsuccessful_logins'] > 0 && ($nb_bad_logins >= $prefs['unsuccessful_logins'])) {
+			$msg = sprintf(tra('%d or more unsuccessful login attempts have been made.'), $prefs['unsuccessful_logins']);
 			$smarty->assign('msg', $msg);
-			if ($userlib->send_confirm_email($requestedUser, 'unsuccessful_logins')) {
-				$smarty->assign('msg', $msg . ' ' . tra('An email has been sent to you with the instructions to follow.'));
+			if ($nb_bad_logins % $prefs['unsuccessful_logins'] == 0) {
+				//don't send an email after every failed login
+			        if ($userlib->send_confirm_email($requestedUser, 'unsuccessful_logins')) {
+				        $smarty->assign('msg', $msg . ' ' . tra('An email has been sent to you with the instructions to follow.'));
+			        }
 			}
 			$show_history_back_link = 'y';
 			$smarty->assign_by_ref('show_history_back_link', $show_history_back_link);
@@ -382,10 +390,12 @@ if ($isvalid) {
 			$smarty->display("tiki.tpl");
 			die;
 		}
-		$userlib->set_unsuccessful_logins($requestedUser, $nb_bad_logins + 1);
 	}
 	switch ($error) {
 		case PASSWORD_INCORRECT:
+			$error = tra('Invalid username or password.');
+        		break;
+
 		case USER_NOT_FOUND:
 			$smarty->assign('error_login', $error);
 			$smarty->assign('mid', 'tiki-login.tpl');
@@ -394,28 +404,28 @@ if ($isvalid) {
 			exit;
 
 		case ACCOUNT_DISABLED:
-			$error = tra('Account requires administrator approval');
-    		break;
+			$error = tra('Account requires administrator approval.');
+        		break;
 
 		case ACCOUNT_WAITING_USER:
-			$error = tra('You did not validate your account');
+			$error = tra('You did not validate your account.');
 			$extraButton = array('href'=>'tiki-send_mail.php?user='. urlencode($_REQUEST['user']), 'text'=>tra('Resend'), 'comment'=>tra('You should have received an email. Check your mailbox and your spam box. Otherwise click on the button to resend the email'));
-    		break;
+        		break;
  
 		case USER_AMBIGOUS:
-			$error = tra('You must use the right case for your user name');
-    		break;
+			$error = tra('You must use the right case for your user name.');
+        		break;
 
 		case USER_NOT_VALIDATED:
-			$error = tra('You are not yet validated');
-    		break;
+			$error = tra('You are not yet validated.');
+        		break;
 
 		case USER_ALREADY_LOGGED:
-			$error = tra('You are already logged in');
-    		break;
+			$error = tra('You are already logged in.');
+        		break;
 
 		default:
-			$error = tra('Invalid username or password');
+			$error = tra('Invalid username or password.');
 	}
 	if (isset($extraButton)) $smarty->assign_by_ref('extraButton', $extraButton);
 	$smarty->assign('msg', $error);
