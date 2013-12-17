@@ -92,6 +92,9 @@ if ( $prefs['auth_token_access'] == 'y' && isset($_REQUEST['TOKEN']) ) {
 
 		}
 
+		if ( empty($notificationPage) ) {
+				$notificationPage = preg_replace('/[\?&]TOKEN='.$token.'/','',$_SERVER['REQUEST_URI']);
+		}
 		// Log each token access
 		$logslib->add_log('token', $detailtoken['email'] . ' ' . tra('has accessed the following shared content:') . ' ' . $notificationPage);
 	} else {
