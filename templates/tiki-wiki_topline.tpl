@@ -110,8 +110,14 @@
 									<a class="btn btn-default" href="tiki-object_watches.php?objectId={$page_info.page_ref_id|escape:"url"}&amp;watch_event=structure_changed&amp;objectType=structure&amp;objectName={$page|escape:"url"}&amp;objectHref={'tiki-index.php?page_ref_id='|cat:$page_ref_id|escape:"url"}" class="icon">{icon _id=eye_group_arrow_down alt="{tr}Group Monitor on Structure{/tr}"}</a>
 								{/if}
 							{/if}
-							{if $prefs.feature_backlinks eq 'y' and $backlinks and $tiki_p_view_backlink eq 'y'}
-								<div class="backlinks_button">
+                            {if $prefs.feature_multilingual eq 'y' && $prefs.show_available_translations eq 'y' && $machine_translate_to_lang eq ''}
+                                <!--span class="btn-i18n" -->
+                                {include file='translated-lang.tpl' object_type='wiki page'}
+                                <!--/span -->
+                            {/if}
+
+                            {if $prefs.feature_backlinks eq 'y' and $backlinks and $tiki_p_view_backlink eq 'y'}
+								<div class="backlinks_button" style="display:inline">
 									<ul class="clearfix cssmenu_horiz">
 										<li class="tabmark">
 											{icon _id=arrow_turn_left title="{tr}Backlinks{/tr}" class="icon"}
@@ -126,7 +132,7 @@
 											</ul>
 										</li>
 									</ul>
-								</div>		
+								</div>
 							{/if}
 							{if ( $structure eq 'y' and count($showstructs) gt 1 ) or ( $structure eq 'n' and count($showstructs) neq 0 )}
 								<div class="structure_select">
@@ -154,11 +160,6 @@
 										</li>
 									</ul>
 								</div>
-							{/if}
-							{if $prefs.feature_multilingual eq 'y' && $prefs.show_available_translations eq 'y' && $machine_translate_to_lang eq ''}
-								<span class="btn-i18n">
-									{include file='translated-lang.tpl' object_type='wiki page'}
-								</span>
 							{/if}
 						</div><!-- END of icons -->
 					</div> {* END of wikiactions *}

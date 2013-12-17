@@ -2,8 +2,8 @@
 {** Currently works for the following object types: 'article' and 'wiki page' **}
 <div class="btn-group">
 	{* For all object types: First show the world icon and on hover the language of the current object *}
-	<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-		{icon _id=world class="icon" title="{tr}Current language:{/tr} {$trads[0].langName|escape} ({$trads[0].lang|escape})"}
+	<button type="button" class="btn btn-default btn-i18n dropdown-toggle" data-toggle="dropdown">
+		{icon _id="world class="icon" title="{tr}Current language:{/tr} {$trads[0].langName|escape} ({$trads[0].lang|escape})"}
 	</button>
 	{* ..than on hover first show the list of translations including the current language highlighted *}
 	{if empty($trads[0].lang)}
