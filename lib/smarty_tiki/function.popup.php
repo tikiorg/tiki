@@ -107,12 +107,12 @@ function smarty_function_popup($params, $smarty)
 		$retval = ' class="tips"';		// adds default ct options including 'hover' activation
 	}
 	if ($title) {
-		$retval .= '" title="' . $title . '"';
+		$retval .= ' title="' . $title . '"';
 	} else {
 		$options['showTitle'] = false;
 	}
 	if ($body) {
-		$retval .= '" data-cluetip-body=\'' . $body . '\'';
+		$retval .= ' data-cluetip-body=\'' . $body . '\'';
 		$options['attribute'] = 'data-cluetip-body';
 	}
 	$retval .= ' data-cluetip-options=\'' . json_encode($options) . '\'';
