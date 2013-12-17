@@ -15,7 +15,7 @@ $access->check_feature(array('validateUsers','validateRegistration'), '', 'login
 $isvalid = false;
 if (isset($_REQUEST["user"])) {
 	if (isset($_REQUEST["pass"])) {
-		if (empty($_REQUEST['pass'])) {// case: user invalidated his account with wrong password- no email was sent - admin must reactivate
+		if (empty($_REQUEST['pass']) && $tiki_p_admin_users === 'y') {// case: user invalidated his account with wrong password- no email was sent - admin must reactivate
 			$userlib->change_user_waiting($_REQUEST['user'], NULL);
 			$userlib->set_unsuccessful_logins($_REQUEST['user'], 0);
 			$smarty->assign('msg', tra("Account validated successfully."));
