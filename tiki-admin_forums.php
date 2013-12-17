@@ -127,6 +127,7 @@ if (isset($_REQUEST["save"])) {
 	$cat_href = "tiki-view_forum.php?forumId=" . $cat_objid;
 	include_once ("categorize.php");
 	$_REQUEST["forumId"] = $fid;
+	$cookietab = 1;
 }
 if (!empty($_REQUEST['duplicate']) && !empty($_REQUEST['name']) && !empty($_REQUEST['forumId'])) {
 	$newForumId = $commentslib->duplicate_forum($_REQUEST['forumId'], $_REQUEST['name'], isset($_REQUEST['description']) ? $_REQUEST['description'] : '');
