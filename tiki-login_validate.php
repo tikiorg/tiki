@@ -8,17 +8,17 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 $inputConfiguration = array(
-	array( 'staticKeyFilters' => array(
+	array('staticKeyFilters' => array(
 		'user' => 'text',
-	) )
+	))
 );
 
-require_once ('tiki-setup.php');
-$access->check_feature(array('validateUsers','validateRegistration'), '', 'login', true);
+require_once('tiki-setup.php');
+$access->check_feature(array('validateUsers', 'validateRegistration'), '', 'login', true);
 $isvalid = false;
 if (isset($_REQUEST["user"])) {
 	if (isset($_REQUEST["pass"])) {
-		if (empty($_REQUEST['pass'])) {// case: user invalidated his account with wrong password- no email was sent - admin must reactivate
+		if (empty($_REQUEST['pass']) && $tiki_p_admin_users === 'y') { // case: user invalidated his account with wrong password- no email was sent - admin must reactivate
 			$userlib->change_user_waiting($_REQUEST['user'], NULL);
 			$userlib->set_unsuccessful_logins($_REQUEST['user'], 0);
 			$smarty->assign('msg', tra("Account validated successfully."));
@@ -62,7 +62,7 @@ if ($isvalid) {
 		$smarty->assign('mail_site', $_SERVER['SERVER_NAME']);
 		$smarty->assign('mail_user', $_REQUEST['user']);
 		$email = $userlib->get_user_email($_REQUEST['user']);
-		include_once ("lib/webmail/tikimaillib.php");
+		include_once("lib/webmail/tikimaillib.php");
 		$mail = new TikiMail();
 		$mail->setText($smarty->fetch('mail/moderate_activation_mail.tpl'));
 		$mail->setSubject($smarty->fetch('mail/moderate_activation_mail_subject.tpl'));
