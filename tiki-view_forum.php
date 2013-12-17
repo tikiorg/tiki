@@ -235,7 +235,7 @@ if (isset($_REQUEST['comments_postComment'])) {
 	// Check if the thread/topic already existis
 	$threadId = $commentslib->check_for_topic($_REQUEST['comments_title'], $_REQUEST['comments_data']);
 	// If it does, send the user there with no delay.
-	if ($threadId) {
+	if ($threadId && count($errors) === 0) {
 		// If the samely titled comment already
 		// exists, go straight to it.
 		$url = 'tiki-view_forum_thread.php?comments_parentId=' . urlencode($threadId) . '&forumId=' . urlencode($_REQUEST["forumId"]);
