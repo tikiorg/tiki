@@ -194,7 +194,7 @@
 						{preference name="themegenerator_theme"}
 						<div  class="adminoptionboxchild" id="themegenerator_feature_childcontainer">
 
-							<input type="text" name="tg_edit_theme_name" value="{$tg_edit_theme_name|escape}"{if !empty($prefs.themegenerator_theme)} style="display:none;"{/if} />
+							<input type="text" name="tg_edit_theme_name" value="{$tg_edit_theme_name|default:''|escape}"{if !empty($prefs.themegenerator_theme)} style="display:none;"{/if} />
 							<input type="submit" class="btn btn-default btn-sm" name="tg_new_theme" value="{tr}New{/tr}"{if !empty($prefs.themegenerator_theme)} style="display:none;"{/if} />
 							<input type="submit" class="btn btn-default btn-sm" name="tg_delete_theme" value="{tr}Delete{/tr}"{if empty($prefs.themegenerator_theme)} style="display:none;"{/if} />
 							{jq}$("select[name=themegenerator_theme]").change(function(){

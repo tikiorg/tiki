@@ -159,7 +159,7 @@
 					<fieldset class="table">
 						<legend>{$info.name|escape}</legend>
 						<div class="adminoptionbox">
-							<strong>{$plugin|escape}</strong>: {$info.description|escape}{assign var=pref value="wikiplugin_$plugin"}{help url="Plugin$plugin"}
+							<strong>{$plugin|escape}</strong>: {$info.description|default:''|escape}{assign var=pref value="wikiplugin_$plugin"}{help url="Plugin$plugin"}
 						</div>
 						{if in_array( $pref, $info.prefs)}
 							{assign var=pref value="wikiplugin_$plugin"}
@@ -288,13 +288,13 @@ if (window.location.href.indexOf('plugin_alias_new=true') > -1) {
 				</div>
 			</div>
 			<div class="adminoptionbox"><div class="adminoptionlabel">
-					<label for="plugin_name">{tr}Name:{/tr}</label> <input type="text" name="name" id="plugin_name" value="{$plugin_admin.description.name|escape}"/>
+					<label for="plugin_name">{tr}Name:{/tr}</label> <input type="text" name="name" id="plugin_name" value="{$plugin_admin.description.name|default:''|escape}"/>
 			</div></div>
 			<div class="adminoptionbox"><div class="adminoptionlabel">
-					<label for="plugin_description">{tr}Description:{/tr}</label> <input type="text" name="description" id="plugin_description" value="{$plugin_admin.description.description|escape}" class="width_40em"/>
+					<label for="plugin_description">{tr}Description:{/tr}</label> <input type="text" name="description" id="plugin_description" value="{$plugin_admin.description.description|default:''|escape}" class="width_40em"/>
 			</div></div>
 			<div class="adminoptionbox"><div class="adminoptionlabel">
-					<label for="plugin_body">{tr}Body Label:{/tr}</label> <input type="text" name="body" id="plugin_body" value="{$plugin_admin.description.body|escape}"/>
+					<label for="plugin_body">{tr}Body Label:{/tr}</label> <input type="text" name="body" id="plugin_body" value="{$plugin_admin.description.body|default:''|escape}"/>
 			</div></div>
 			<div class="adminoptionbox"><div class="adminoptionlabel">
 					<label for="plugin_deps">{tr}Dependencies:{/tr}</label> <input type="text" name="prefs" id="plugin_deps" value="{if !empty($plugin_admin.description.prefs)}{','|implode:$plugin_admin.description.prefs}{/if}"/>
@@ -306,12 +306,12 @@ if (window.location.href.indexOf('plugin_alias_new=true') > -1) {
 					<label for="validate">{tr}Validation:{/tr}</label>
 					<select name="validate" id="validate">
 						{foreach from=','|explode:'none,all,body,arguments' item=val}
-							<option value="{$val|escape}" {if $plugin_admin.description.validate eq $val}selected="selected"{/if}>{$val|escape}</option>
+							<option value="{$val|escape}" {if !empty($plugin_admin.description.validate) and $plugin_admin.description.validate eq $val}selected="selected"{/if}>{$val|escape}</option>
 						{/foreach}
 					</select>
 			</div></div>
 			<div class="adminoptionbox"><div class="adminoptionlabel">
-					<label for="inline">{tr}Inline (No Plugin Edit UI):{/tr}</label> <input type="checkbox" id="inline" name="inline" value="1" {if $plugin_admin.description.inline}checked="checked"{/if}/>
+					<label for="inline">{tr}Inline (No Plugin Edit UI):{/tr}</label> <input type="checkbox" id="inline" name="inline" value="1" {if !empty($plugin_admin.description.inline)}checked="checked"{/if}/>
 			</div></div>
 		</fieldset>
 		<fieldset id="pluginalias_simple_args">
@@ -333,11 +333,12 @@ $('#pluginalias_simple_add').click(function() {
 
 	return false;
 });
-{{if $plugin_admin.params}}
+{{if !empty($plugin_admin.params)}}
 $('#pluginalias_doc legend').trigger('click'{{if isset($plugin_admin.description.params)}, true{/if}});
 $('#pluginalias_simple_new').hide();
 {{/if}}
 			{/jq}
+      {if !empty($plugin_admin.params)}
 			{foreach from=$plugin_admin.params key=token item=value}
 				{if ! $value|is_array}
 					<div class="admingroup adminoptionbox">
@@ -348,6 +349,7 @@ $('#pluginalias_simple_new').hide();
 					</div>
 				{/if}
 			{/foreach}
+      {/if}
 			<div class="admingroup adminoptionbox hidefirst" id="pluginalias_simple_new">
 				<div class="adminoptionlabel">
 					<label for="sparams__NEW__token">{tr}New Argument:{/tr}</label>
@@ -361,6 +363,7 @@ $('#pluginalias_simple_new').hide();
 			<legend>{tr}Plugin Parameter Documentation{/tr}{icon _id="omodule"} {icon _id="add" id="pluginalias_doc_add"}</legend>
 			{jq}$('#pluginalias_doc_add').click(function() { $('#pluginalias_doc_new').toggle(); return false; });{/jq}
 			
+      {if !empty($plugin_admin.description.params)}
 			{foreach from=$plugin_admin.description.params key=token item=detail}
 				<div class="clearfix admingroup adminoptionbox{if $token eq '__NEW__'} hidefirst" id="pluginalias_doc_new{/if}">
 					<div class="adminoptionlabel q1">
@@ -385,19 +388,20 @@ $('#pluginalias_simple_new').hide();
 					</div>
 				</div>
 			{/foreach}
+      {/if}
 		</fieldset>
 		<fieldset id="pluginalias_body">
 			<legend>{tr}Plugin Body{/tr}{icon _id="omodule"}</legend>
 
 			<div class="adminoptionbox">
 				<div class="adminoptionlabel">
-					<label for="ignorebody">{tr}Ignore User Input:{/tr}</label> <input type="checkbox" name="ignorebody" id="ignorebody" value="y" {if $plugin_admin.body.input eq 'ignore'}checked="checked"{/if}/>
+					<label for="ignorebody">{tr}Ignore User Input:{/tr}</label> <input type="checkbox" name="ignorebody" id="ignorebody" value="y" {if !empty($plugin_admin.body.input) and $plugin_admin.body.input eq 'ignore'}checked="checked"{/if}/>
 				</div>
 			</div>
 			<div class="adminoptionbox">
 				<div class="adminoptionlabel">
 					<label for="defaultbody">{tr}Default Content:{/tr}</label>
-					<textarea cols="60" rows="12" id="defaultbody" name="defaultbody">{$plugin_admin.body.default|escape}</textarea>
+					<textarea cols="60" rows="12" id="defaultbody" name="defaultbody">{$plugin_admin.body.default|default:''|escape}</textarea>
 				</div>
 				<div class="q1">&nbsp;</div>
 				<div class="q234">
@@ -405,6 +409,7 @@ $('#pluginalias_simple_new').hide();
 						<legend>{tr}Parameters{/tr}{icon _id="omodule"}{icon _id="add" id="pluginalias_body_add"}</legend>
 						{jq}$('#pluginalias_body_add').click(function() { $('#pluginalias_body_new').toggle("fast"); return false; });{/jq}
 						
+            {if !empty($plugin_admin.body.params)}
 						{foreach from=$plugin_admin.body.params key=token item=detail}
 							<div class="clearfix admingroup adminoptionbox{if $token eq '__NEW__'} hidefirst" id="pluginalias_body_new{/if}">
 								<div class="q1">
@@ -428,6 +433,7 @@ $('#pluginalias_simple_new').hide();
 								</div>
 							</div>
 						{/foreach}
+            {/if}
 					</fieldset>
 				</div>
 			</div>
@@ -436,6 +442,7 @@ $('#pluginalias_simple_new').hide();
 			<legend>{tr}Composed Plugin Arguments{/tr}{icon _id="omodule"} {icon _id="add" id="pluginalias_composed_add"}</legend>
 			{jq}$('#pluginalias_composed_add').click(function() { $('#pluginalias_composed_new').toggle("fast"); return false; });{/jq}
 
+      {if !empty($plugin_admin.params)}
 			{foreach from=$plugin_admin.params key=token item=detail}
 				{if $detail|is_array}
 					{if !isset($composed_args)}{assign var=composed_args value=true}{/if}
@@ -450,6 +457,7 @@ $('#pluginalias_simple_new').hide();
 							<fieldset class="stayopen">
 								<legend>{tr}Parameters{/tr}{icon _id="omodule"} {icon _id="add" id="pluginalias_composed_addparam"}</legend>
 								{jq}$('#pluginalias_composed_addparam').click(function() { $('#pluginalias_composed_newparam').toggle("fast"); return false; });{/jq}
+                {if !empty($detail.params)}
 								{foreach from=$detail.params key=t item=d}
 									<div class="clearfix admingroup adminoptionbox{if $t eq '__NEW__'} hidefirst" id="pluginalias_composed_newparam{/if}">
 										<div class="q1">
@@ -473,11 +481,13 @@ $('#pluginalias_simple_new').hide();
 										</div>
 									</div>
 								{/foreach}
+                {/if}
 							</fieldset>
 						</div>
 					</div>
 				{/if}
 			{/foreach}
+      {/if}
 			{if $plugin_admin}{jq}$('#pluginalias_composed_args legend').trigger('click'{{if isset($composed_args)}, true{/if}});{/jq}{/if}
 		</fieldset>
 		{/tab}
