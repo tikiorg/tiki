@@ -2082,6 +2082,17 @@ if ( \$('#$id') ) {
 							$value='';
 							break;	
 						}
+					case 'domainslash_if_multitiki':
+						if (is_file('db/virtuals.inc')) {
+							$virtuals = array_map('trim', file('db/virtuals.inc'));
+						}
+						if ($virtuals && $smarty->getTemplateVars('url_host') != null) {
+							$value = $smarty->getTemplateVars('url_host') . '/';
+							break;	
+						} else {
+							$value='';
+							break;	
+						}
 					default:
 						if ( isset($_GET[$name]) )
 							$value = $_GET[$name];
