@@ -885,4 +885,5 @@ class HeaderLib
 }
 
 global $headerlib; $headerlib = new HeaderLib;
+global $smarty;
 $smarty->assignByRef('headerlib', $headerlib);
