@@ -13,13 +13,19 @@
 			{button _text="$langname" href="tiki-switch_lang.php?language=$val" _title="$langname" _class="$class"}
 		{/if}
 	{/section}
-{elseif $mode eq 'words'}
+{elseif $mode eq 'words' || $mode eq 'abrv'}
 	<ul>
 	{section name=ix loop=$languages}
 	  <li>
+      {if $mode eq 'words'}
 	    <a title="{$languages[ix].name|escape}" class="linkmodule {$languages[ix].class}" href="tiki-switch_lang.php?language={$languages[ix].value|escape}">
 	      {$languages[ix].name|escape}
 	    </a>
+      {else}
+	    <a title="{$languages[ix].name|escape}" class="linkmodule {$languages[ix].class}" href="tiki-switch_lang.php?language={$languages[ix].value|escape}">
+	      {$languages[ix].value|escape}
+      </a>
+      {/if}
 	  </li>
 	{/section}
 	</ul>
