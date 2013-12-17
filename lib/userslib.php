@@ -6851,7 +6851,7 @@ class UsersLib extends TikiLib
 				global $logslib; include_once('lib/logs/logslib.php');
 				$logslib->add_log('login', 'confirm email '.$user);
 			}
-                        TikiLib::lib('user')->set_unsuccessful_logins($_REQUEST['user'], 0);
+			TikiLib::lib('user')->set_unsuccessful_logins($_REQUEST['user'], 0);
 			return true;
 		}
 
