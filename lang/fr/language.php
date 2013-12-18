@@ -15703,4 +15703,5 @@ $lang = array(
 "Top pages" => "Pages les plus populaires",
 "Last pages" => "Dernières pages",
 "You do not have permissions to view the maps" => "Vous n'avez pas les droits pour voir les cartes",
+"Subscribe notification" => "Recevoir les notifications de consultation"
 );
