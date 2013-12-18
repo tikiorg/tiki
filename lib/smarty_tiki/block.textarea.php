@@ -116,7 +116,7 @@ JS
 	if ($params['_simple'] === 'n' && $editWarning) {
 		$remrepeat = false;
 		$html .= smarty_block_remarksbox(
-			array( 'type'=>'tip', 'title'=>tra('Tip')),
+			array( 'type'=>'warning', 'title'=>tra('Warning')),
 			tra('This edit session will expire in') .
 			' <span id="edittimeout">' . (ini_get('session.gc_maxlifetime') / 60) .'</span> '. tra('minutes') . '. ' .
 			tra('<strong>Preview</strong> (if available) or <strong>Save</strong> your work to restart the edit session timer'),
