@@ -103,209 +103,224 @@
 	{tab name=$edtab}
 		<h2>{$edtab}</h2>
 
-		<form action="tiki-admin_calendars.php" method="post">
+		<form action="tiki-admin_calendars.php" method="post" class="form-horizontal" role="form">
 			<input type="hidden" name="calendarId" value="{$calendarId|escape}">
-			<table class="formcolor">
-				{if $tiki_p_modify_object_categories eq 'y'}
-					{include file='categorize.tpl'}
-				{/if}
-				<tr>
-					<td>{tr}Name:{/tr}</td>
-					<td>
-						<input type="text" name="name" value="{$name|escape}">
-						{tr}Show in popup box{/tr}
-						<input type="checkbox" name="show[calname]" value="on"{if $show_calname eq 'y'} checked="checked"{/if}>
-					</td>
-				</tr>
-				<tr>
-					<td>{tr}Description:{/tr}</td>
-					<td>
-						<textarea name="description" rows="5" wrap="virtual" style="width:100%;">{$description|escape}</textarea>
-						<br>
-						{tr}Show in popup box{/tr}
-						<input type="checkbox" name="show[description]" value="on"{if $show_description eq 'y'} checked="checked"{/if}>
-					</td>
-				</tr>
-				<tr>
-					<td>{tr}Custom Locations:{/tr}</td>
-					<td>
-						<select name="customlocations">
-							<option value='y' {if $customlocations eq 'y'}selected="selected"{/if}>{tr}Yes{/tr}</option>
-							<option value='n' {if $customlocations eq 'n'}selected="selected"{/if}>{tr}No{/tr}</option>
+            {if $tiki_p_modify_object_categories eq 'y'}
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        {include file='categorize.tpl'}
+                    </div>
+                </div>
+			{/if}
+			<div class="form-group">
+                <label class="col-sm-3 control-label" for="calendarName">{tr}Name:{/tr}</label>
+                <div class="col-sm-6">
+					<input type="text" class="form-control" name="name" id="calendarName" value="{$name|escape}">
+                </div>
+                <div class="checkbox col-sm-3">
+                    <label for="showCalnamePopup">{tr}Show in popup box{/tr} <input type="checkbox" name="show[calname]" id="showCalnamePopup" value="on"{if $show_calname eq 'y'} checked="checked"{/if}></label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label" for="calendarDescription">{tr}Description:{/tr}</label>
+                <div class="col-sm-6">
+					<textarea name="description" rows="5" wrap="virtual" class="form-control">{$description|escape}</textarea>
+                </div>
+                <div class="checkbox col-sm-3">
+					<label for="showCalDescriptionPopup" class="control-label">{tr}Show in popup box{/tr} <input type="checkbox" id="showCalDescriptionPopup"name="show[description]" value="on"{if $show_description eq 'y'} checked="checked"{/if}></label>
+				</div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label" for="customlocations">{tr}Custom Locations:{/tr}</label>
+                <div class="col-sm-2">
+					<select name="customlocations" id="customlocations" class="form-control">
+					    <option value='y' {if $customlocations eq 'y'}selected="selected"{/if}>{tr}Yes{/tr}</option>
+						<option value='n' {if $customlocations eq 'n'}selected="selected"{/if}>{tr}No{/tr}</option>
+					</select>
+                </div>
+                <div class="checkbox col-sm-3">
+					<label>{tr}Show in popup box{/tr} <input type="checkbox" name="show[location]" id="showCustomLocationsPopup" value="on"{if $show_location eq 'y'} checked="checked"{/if}></label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label" for="customparticipants">{tr}Custom Participants:{/tr}</label>
+                <div class="col-sm-2">
+					<select name="customparticipants" class="form-control">
+						<option value='y' {if $customparticipants eq 'y'}selected="selected"{/if}>{tr}Yes{/tr}</option>
+						<option value='n' {if $customparticipants eq 'n'}selected="selected"{/if}>{tr}No{/tr}</option>
+					</select>
+                </div>
+                <div class="checkbox col-sm-3">
+                    <label>{tr}Show in popup box{/tr} <input type="checkbox" name="show[participants]" value="on"{if $show_participants eq 'y'} checked="checked"{/if}></label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label" for="customcategories">{tr}Custom Classifications:{/tr}</label>
+                <div class="col-sm-2">
+					<select name="customcategories" id="customcategories" class="form-control">
+						<option value='y' {if $customcategories eq 'y'}selected="selected"{/if}>{tr}Yes{/tr}</option>
+						<option value='n' {if $customcategories eq 'n'}selected="selected"{/if}>{tr}No{/tr}</option>
+					</select>
+                </div>
+                <div class="checkbox col-sm-3">
+                    <label>{tr}Show in popup box{/tr}<input type="checkbox" name="show[category]" value="on"{if $show_category eq 'y'} checked="checked"{/if}></label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label" for="customlanguages">{tr}Custom Languages:{/tr}</label>
+                <div class="col-sm-2">
+					<select name="customlanguages" id="customlanguages" class="form-control">
+						<option value='y' {if $customlanguages eq 'y'}selected="selected"{/if}>{tr}Yes{/tr}</option>
+						<option value='n' {if $customlanguages eq 'n'}selected="selected"{/if}>{tr}No{/tr}</option>
+					</select>
+                </div>
+                <div class="checkbox col-sm-3">
+					<label for="showlanguagepopup">{tr}Show in popup box{/tr} <input type="checkbox" name="show[language]" id="showlanguagepopup" value="on"{if $show_language eq 'y'} checked="checked"{/if}></label>
+			    </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label" for="customurl">{tr}Custom URL:{/tr}</label>
+                <div class="col-sm-2">
+					<select name="options[customurl]" id="customurl" class="form-control">
+						<option value='y' {if $customurl eq 'y'}selected="selected"{/if}>{tr}Yes{/tr}</option>
+						<option value='n' {if $customurl eq 'n'}selected="selected"{/if}>{tr}No{/tr}</option>
+					</select>
+                </div>
+                <div class="checkbox col-sm-3">
+                    <label for="showurlpopup" class="control-label">{tr}Show in popup box{/tr}</label>
+					<input type="checkbox" id="showurlpopup" name="show[url]" value="on"{if $show_url eq 'y'} checked="checked"{/if}>
+                </div>
+            </div>
+            {if $prefs.feature_newsletters eq 'y'}
+                <div class="form-group">
+                    <label class="col-sm-3 control-label" for="customsubscription">{tr}Custom Subscription List:{/tr}</label>
+                    <div class="col-sm-2">
+			    		<select name="customsubscription" id="customsubscription" class="form-control">
+							<option value='y' {if $customsubscription eq 'y'}selected="selected"{/if}>{tr}Yes{/tr}</option>
+							<option value='n' {if $customsubscription eq 'n'}selected="selected"{/if}>{tr}No{/tr}</option>
 						</select>
-						{tr}Show in popup box{/tr}
-						<input type="checkbox" name="show[location]" value="on"{if $show_location eq 'y'} checked="checked"{/if}>
-					</td>
-				</tr>
-				<tr>
-					<td>{tr}Custom Participants:{/tr}</td>
-					<td>
-						<select name="customparticipants">
-							<option value='y' {if $customparticipants eq 'y'}selected="selected"{/if}>{tr}Yes{/tr}</option>
-							<option value='n' {if $customparticipants eq 'n'}selected="selected"{/if}>{tr}No{/tr}</option>
-						</select>
-						{tr}Show in popup box{/tr}
-						<input type="checkbox" name="show[participants]" value="on"{if $show_participants eq 'y'} checked="checked"{/if}>
-					</td>
-				</tr>
-				<tr>
-					<td>{tr}Custom Classifications:{/tr}</td>
-					<td>
-						<select name="customcategories">
-							<option value='y' {if $customcategories eq 'y'}selected="selected"{/if}>{tr}Yes{/tr}</option>
-							<option value='n' {if $customcategories eq 'n'}selected="selected"{/if}>{tr}No{/tr}</option>
-						</select>
-						{tr}Show in popup box{/tr}
-						<input type="checkbox" name="show[category]" value="on"{if $show_category eq 'y'} checked="checked"{/if}>
-					</td>
-				</tr>
-				<tr>
-					<td>{tr}Custom Languages:{/tr}</td>
-					<td>
-						<select name="customlanguages">
-							<option value='y' {if $customlanguages eq 'y'}selected="selected"{/if}>{tr}Yes{/tr}</option>
-							<option value='n' {if $customlanguages eq 'n'}selected="selected"{/if}>{tr}No{/tr}</option>
-						</select>
-						{tr}Show in popup box{/tr}
-						<input type="checkbox" name="show[language]" value="on"{if $show_language eq 'y'} checked="checked"{/if}>
-					</td>
-				</tr>
-				<tr>
-					<td>{tr}Custom URL:{/tr}</td>
-					<td>
-						<select name="options[customurl]">
-							<option value='y' {if $customurl eq 'y'}selected="selected"{/if}>{tr}Yes{/tr}</option>
-							<option value='n' {if $customurl eq 'n'}selected="selected"{/if}>{tr}No{/tr}</option>
-						</select>
-						{tr}Show in popup box{/tr}
-						<input type="checkbox" name="show[url]" value="on"{if $show_url eq 'y'} checked="checked"{/if}>
-					</td>
-				</tr>
-				{if $prefs.feature_newsletters eq 'y'}
-					<tr>
-						<td>{tr}Custom Subscription List:{/tr}</td>
-						<td>
-							<select name="customsubscription">
-								<option value='y' {if $customsubscription eq 'y'}selected="selected"{/if}>{tr}Yes{/tr}</option>
-								<option value='n' {if $customsubscription eq 'n'}selected="selected"{/if}>{tr}No{/tr}</option>
-							</select>
-						</td>
-					</tr>
-				{/if}
-				<tr>
-					<td>{tr}Custom Priorities:{/tr}</td>
-					<td>
-						<select name="custompriorities">
-							<option value='y' {if $custompriorities eq 'y'}selected="selected"{/if}>{tr}Yes{/tr}</option>
-							<option value='n' {if $custompriorities eq 'n'}selected="selected"{/if}>{tr}No{/tr}</option>
-						</select>
-					</td>
-				</tr>
-				<tr>
-					<td>{tr}Personal Calendar:{/tr}</td>
-					<td>
-						<select name="personal">
-							<option value='y' {if $personal eq 'y'}selected="selected"{/if}>{tr}Yes{/tr}</option>
-							<option value='n' {if $personal eq 'n'}selected="selected"{/if}>{tr}No{/tr}</option>
-						</select>
-					</td>
-				</tr>
-				<tr>
-					<td>{tr}Start of day:{/tr}</td>
-					<td>
-						{html_select_time prefix="startday_" time=$info.startday display_minutes=false display_seconds=false use_24_hours=$use_24hr_clock}
-					</td>
-				</tr>
-				<tr>
-					<td>{tr}End of day:{/tr}</td>
-					<td>
-						{html_select_time prefix="endday_" time=$info.endday display_minutes=false display_seconds=false use_24_hours=$use_24hr_clock}
-					</td>
-				</tr>
-				<tr>
-					<td>{tr}Days to display:{/tr}</td>
-					<td>
-						{section name="viewdays" start=0 loop=7}
-							{$days_names[$smarty.section.viewdays.index]}&nbsp;<input type="checkbox" name="viewdays[]" value="{$smarty.section.viewdays.index}" {if !empty($info.viewdays) && in_array($smarty.section.viewdays.index,$info.viewdays)} checked="checked" {/if}>
-						{/section}
-					</td>
-				</tr>
-				<tr>
-					<td>{tr}Standard Colors:{/tr}</td>
-					<td>
-						<select name="options[customcolors]" onChange="javascript:document.getElementById('fgColorField').disabled=(this.options[this.selectedIndex].value != 0);document.getElementById('bgColorField').disabled=(this.options[this.selectedIndex].value != 0);">
-							<option value="" />
-							<option value="008400-99fa99" style="background-color:#99fa99;color:#008400" {if ($customColors) eq '008400-99fa99'}selected{/if}>{tr}Green{/tr}</option>
-							<option value="3333ff-aaccff" style="background-color:#aaccff;color:#3333ff" {if ($customColors) eq '3333ff-aaccff'}selected{/if}>{tr}Blue{/tr}</option>
-							<option value="996699-c2a6d2" style="background-color:#e0cae5;color:#996699" {if ($customColors) eq '996699-c2a6d2'}selected{/if}>{tr}Purple{/tr}</option>
-							<option value="cc0000-ff9966" style="background-color:#ff9966;color:#cc0000" {if ($customColors) eq 'cc0000-ff9966'}selected{/if}>{tr}Red{/tr}</option>
-							<option value="996600-ffcc66" style="background-color:#ffcc66;color:#996600" {if ($customColors) eq '996600-ffcc66'}selected{/if}>{tr}Orange{/tr}</option>
-							<option value="666600-ffff00" style="background-color:#ffff00;color:#666600" {if ($customColors) eq '666600-ffff00'}selected{/if}>{tr}Yellow{/tr}</option>
-						</select>
-					</td>
-				</tr>
-				<tr>
-					<td>{tr}Custom foreground color:{/tr}</td>
-					<td>
-						<input id="fgColorField" type="text" name="options[customfgcolor]" value="{$customfgcolor}" size="6"><i>{tr}Ex:{/tr} FFFFFF</i>
-					</td>
-				</tr>
-				<tr>
-					<td>{tr}Custom background color:{/tr}</td>
-					<td>
-						<input id="bgColorField" type="text" name="options[custombgcolor]" value="{$custombgcolor}" size="6"><i>{tr}Ex:{/tr} 000000</i>
-					</td>
-				</tr>
-				<tr>
-					<td>{tr}Status{/tr}</td>
-					<td>
-						<select name="customstatus">
-							<option value='y' {if $info.customstatus ne 'n'}selected="selected"{/if}>{tr}Yes{/tr}</option>
-							<option value='n' {if $info.customstatus eq 'n'}selected="selected"{/if}>{tr}No{/tr}</option>
-						</select>
-						<br>
-						{tr}Default event status:{/tr}
-						{html_options name='options[defaulteventstatus]' options=$eventstatus selected=$defaulteventstatus}
-						<br>
-						{tr}Show in popup box{/tr}<input type="checkbox" name="show[status]" value="on"{if $info.show_status eq 'y'} checked="checked"{/if}>
-						{tr}Show in calendar view{/tr}<input type="checkbox" name="show[status_calview]" value="on"{if $info.show_status_calview ne 'n'} checked="checked"{/if}>
-					</td>
-				</tr>
-				{if $prefs.feature_groupalert eq 'y'}
-					<tr>
-						<td>{tr}Group of users alerted when calendar event is modified{/tr}</td>
-						<td>
-							<select id="groupforAlert" name="groupforAlert">
-								<option value="">&nbsp;</option>
-								{foreach key=k item=i from=$groupforAlertList}
-									<option value="{$k|escape}" {$i}>{$k|escape}</option>
-								{/foreach}
-							</select>
-						</td>
-					</tr>
-					<tr>
-						<td>{tr}Allows to select each user for small groups{/tr}</td>
-						<td>
-							<input type="checkbox" name="showeachuser" {if $showeachuser eq 'y'}checked="checked"{/if}>
-						</td>
-					</tr>
-				{/if}
-				<tr>
-					<td>{tr}Default event to all day{/tr}</td>
-					<td><input type="checkbox" name="allday"{if $info.allday eq 'y'} checked="checked"{/if}></td>
-				</tr>
-				<tr>
-					<td>{tr}Event name on each day in calendar view{/tr}</td>
-					<td><input type="checkbox" name="nameoneachday"{if $info.nameoneachday eq 'y'}  checked="checked"{/if}></td>
-				</tr>
-				<tr>
-					<td>&nbsp;</td>
-					<td>
-						<input type="submit" class="btn btn-default btn-sm" name="save" value="{tr}Save{/tr}">
-					</td>
-				</tr>
-			</table>
-			<br>
+                    </div>
+                </div>
+			{/if}
+            <div class="form-group">
+                <label class="col-sm-3 control-label" for="customsubscription">{tr}Custom Priorities:{/tr}</label>
+                <div class="col-sm-2">
+					<select name="custompriorities" id="custompriorities" class="form-control">
+						<option value='y' {if $custompriorities eq 'y'}selected="selected"{/if}>{tr}Yes{/tr}</option>
+						<option value='n' {if $custompriorities eq 'n'}selected="selected"{/if}>{tr}No{/tr}</option>
+					</select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label" for="customcategories">{tr}Personal Calendar:{/tr}</label>
+                <div class="col-sm-2">
+					<select name="personal" id="personal" class="form-control">
+						<option value='y' {if $personal eq 'y'}selected="selected"{/if}>{tr}Yes{/tr}</option>
+						<option value='n' {if $personal eq 'n'}selected="selected"{/if}>{tr}No{/tr}</option>
+					</select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label" for="customcategories">{tr}Start of day:{/tr}</label>
+                <div class="col-sm-2 checkbox-inline">
+					{html_select_time prefix="startday_" time=$info.startday display_minutes=false display_seconds=false use_24_hours=$use_24hr_clock}
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label" for="customcategories">{tr}End of day:{/tr}</label>
+                <div class="col-sm-9 checkbox-inline">
+					{html_select_time prefix="endday_" time=$info.endday display_minutes=false display_seconds=false use_24_hours=$use_24hr_clock}
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label" for="customcategories">{tr}Days to display:{/tr}</label>
+                <div class="col-sm-9">
+					{section name="viewdays" start=0 loop=7}
+                    <div class="checkbox-inline">
+						{$days_names[$smarty.section.viewdays.index]}&nbsp;<input type="checkbox" name="viewdays[]" value="{$smarty.section.viewdays.index}" {if !empty($info.viewdays) && in_array($smarty.section.viewdays.index,$info.viewdays)} checked="checked" {/if}>
+					</div>
+                    {/section}
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label" for="customcategories">{tr}Standard Colors:{/tr}</label>
+                <div class="col-sm-9 checkbox-inline">
+					<select name="options[customcolors]" onChange="javascript:document.getElementById('fgColorField').disabled=(this.options[this.selectedIndex].value != 0);document.getElementById('bgColorField').disabled=(this.options[this.selectedIndex].value != 0);">
+						<option value="" />
+						<option value="008400-99fa99" style="background-color:#99fa99;color:#008400" {if ($customColors) eq '008400-99fa99'}selected{/if}>{tr}Green{/tr}</option>
+						<option value="3333ff-aaccff" style="background-color:#aaccff;color:#3333ff" {if ($customColors) eq '3333ff-aaccff'}selected{/if}>{tr}Blue{/tr}</option>
+						<option value="996699-c2a6d2" style="background-color:#e0cae5;color:#996699" {if ($customColors) eq '996699-c2a6d2'}selected{/if}>{tr}Purple{/tr}</option>
+						<option value="cc0000-ff9966" style="background-color:#ff9966;color:#cc0000" {if ($customColors) eq 'cc0000-ff9966'}selected{/if}>{tr}Red{/tr}</option>
+						<option value="996600-ffcc66" style="background-color:#ffcc66;color:#996600" {if ($customColors) eq '996600-ffcc66'}selected{/if}>{tr}Orange{/tr}</option>
+						<option value="666600-ffff00" style="background-color:#ffff00;color:#666600" {if ($customColors) eq '666600-ffff00'}selected{/if}>{tr}Yellow{/tr}</option>
+					</select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label" for="customcategories">{tr}Custom foreground color:{/tr}</label>
+                <div class="col-sm-9 checkbox-inline">
+					<input id="fgColorField" type="text" name="options[customfgcolor]" value="{$customfgcolor}" size="6"> <i>{tr}Ex:{/tr} FFFFFF</i>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label" for="customcategories">{tr}Custom background color:{/tr}</label>
+                <div class="col-sm-9 checkbox-inline">
+					<input id="bgColorField" type="text" name="options[custombgcolor]" value="{$custombgcolor}" size="6"> <i>{tr}Ex:{/tr} 000000</i>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label" for="customcategories">{tr}Status{/tr}</label>
+                <div class="col-sm-9 checkbox-inline">
+					<select name="customstatus">
+						<option value='y' {if $info.customstatus ne 'n'}selected="selected"{/if}>{tr}Yes{/tr}</option>
+						<option value='n' {if $info.customstatus eq 'n'}selected="selected"{/if}>{tr}No{/tr}</option>
+					</select>
+					<br>
+                    <div class="checkbox-inline">
+					{tr}Default event status:{/tr}
+					{html_options name='options[defaulteventstatus]' options=$eventstatus selected=$defaulteventstatus}
+    					{tr}Show in popup box{/tr}<input type="checkbox" name="show[status]" value="on"{if $info.show_status eq 'y'} checked="checked"{/if}>
+                    </div>
+				    <div class="checkbox-inline">
+                        {tr}Show in calendar view{/tr}<input type="checkbox" name="show[status_calview]" value="on"{if $info.show_status_calview ne 'n'} checked="checked"{/if}>
+                    </div>
+                </div>
+            </div>
+           	{if $prefs.feature_groupalert eq 'y'}
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" for="customcategories">{tr}Group of users alerted when calendar event is modified{/tr}</label>
+                    <div class="col-sm-10 checkbox-inline">
+					    <select id="groupforAlert" name="groupforAlert">
+						    <option value="">&nbsp;</option>
+						    {foreach key=k item=i from=$groupforAlertList}
+							    <option value="{$k|escape}" {$i}>{$k|escape}</option>
+					    	{/foreach}
+					    </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" for="customcategories">{tr}Allows to select each user for small groups{/tr}</label>
+                    <div class="col-sm-10 checkbox-inline">
+					    <input type="checkbox" name="showeachuser" {if $showeachuser eq 'y'}checked="checked"{/if}>
+			    	</div>
+			    </div>
+		    {/if}
+            <div class="form-group">
+                <label class="col-sm-3 control-label" for="customcategories">{tr}Default event to all day{/tr}</label>
+                <div class="col-sm-9 checkbox-inline">
+                    <input type="checkbox" name="allday"{if $info.allday eq 'y'} checked="checked"{/if}>
+                </div>
+			</div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label" for="customcategories">{tr}Event name on each day in calendar view{/tr}</label>
+                <div class="col-sm-9 checkbox-inline">
+				    <input type="checkbox" name="nameoneachday"{if $info.nameoneachday eq 'y'}  checked="checked"{/if}>
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="submit" class="btn btn-default col-sm-offset-4" name="save" value="{tr}Save{/tr}">
+            </div>
+
 			{if $calendarId ne 0}{$name|escape} : {/if}
 			{tr}Delete events older than:{/tr} <input type="text" name="days" value="0"> {tr}days{/tr} <input type="submit" class="btn btn-default btn-sm" name="clean" value="{tr}Delete{/tr}">
 		</form>
