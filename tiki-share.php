@@ -231,9 +231,12 @@ if (isset($_REQUEST['send'])) {
 
 				if (is_array($tokenlist)) {
 					foreach ($tokenlist as $i=>$data) {
+						$query = parse_url($data);
+						parse_str($query['query'],$query_vars);
+						$detailtoken = $tokenlib->getToken($query_vars['TOKEN']);
 						// Delete old user watch if it's necessary => avoid bad mails
-						$tikilib->remove_user_watch_object('auth_token_called', $data['tokenId'], 'security');
-						$tikilib->add_user_watch($user, 'auth_token_called', $data['tokenId'], 'security', tra('Token called'), $data['url']);
+						$tikilib->remove_user_watch_object('auth_token_called', $detailtoken['tokenId'], 'security');
+						$tikilib->add_user_watch($user, 'auth_token_called', $detailtoken['tokenId'], 'security', tra('Token called'), $data);
 					}
 				}
 
