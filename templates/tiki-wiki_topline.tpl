@@ -117,8 +117,8 @@
                             {/if}
 
                             {if $prefs.feature_backlinks eq 'y' and $backlinks and $tiki_p_view_backlink eq 'y'}
-								<div class="btn-group">
-									<button type="button" class="btn btn-default btn-backlinks dropdown-toggle" data-toggle="dropdown">
+								<div class="btn-group backlinks">
+									<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
 										{icon _id=arrow_turn_left title="{tr}Backlinks{/tr}" class="icon"}
 									</button>
 									<ul class="dropdown-menu" role="menu">
