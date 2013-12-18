@@ -11,17 +11,19 @@
 		</div>
 	</div>
 {/strip}{/capture}
-    
-<form method="post" action="{$smarty.server.PHP_SELF}" class="findtable">
-	<label class="findtitle">
-	{tr}Find{/tr}
-		<input type="text" name="find" value="{$find|escape}">
-	</label>
-	<input type="hidden" name="list" value="{$entryType}">
-	<label class="findsubmit">
-		<input type="submit" class="btn btn-default btn-sm" name="search" value="{tr}Go{/tr}">
-	</label>
-</form>
+
+<div class="row form-group">
+    <form method="post" action="{$smarty.server.PHP_SELF}" class="col-md-12 form-inline form-horizontal" role="form">
+        <label class="control-label col-sm-2" for="find">{tr}Find{/tr}</label>
+        <div class="input-group col-sm-8">
+    		<input type="text" name="find"  class="form-control" id="find" value="{$find|escape}">
+	    	<input type="hidden" name="list" value="{$entryType}">
+        </div>
+        <div class="col-sm-2">
+            <input type="submit" class="btn btn-default btn-sm" name="search" value="{tr}Go{/tr}">
+	    </div>
+    </form>
+</div>
 
 {if $view ne "browse"}
 <form action='tiki-list_kaltura_entries.php?list={if $entryType eq "mix"}mix{else}media{/if}' method="post"{if $entryType ne "mix"} id="videoAction"{/if}>	
