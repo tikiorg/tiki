@@ -98,6 +98,7 @@ class Tracker_Field_Math extends Tracker_Field_Abstract implements Tracker_Field
 			$runner = new Math_Formula_Runner(
 				array(
 					'Math_Formula_Function_' => '',
+					'Tiki_Formula_Function_' => '',
 				)
 			);
 
