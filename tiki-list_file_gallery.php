@@ -551,7 +551,7 @@ if (isset($_REQUEST['edit'])) {
 			$gal_info['show_path'] = $old_gal_info['show_path'];
 		}
 
-		if ($prefs['fgal_show_checked'] != 'y') {
+		if ($prefs['fgal_checked'] != 'y') {
 			$gal_info['show_checked'] = $old_gal_info['show_checked'];
 		}
 

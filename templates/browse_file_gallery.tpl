@@ -16,7 +16,7 @@
 		{else}
 			{assign var=checkname value=$file_checkbox_name|default:'file'}
 		{/if}
-		{if $gal_info.show_checked neq 'n' and isset($smarty.request.$checkname) and $smarty.request.$checkname
+		{if $prefs.fgal_checked neq 'n' and isset($smarty.request.$checkname) and $smarty.request.$checkname
 			and in_array($files[changes].id,$smarty.request.$checkname)}
 			{assign var=is_checked value='y'}
 		{else}
@@ -140,7 +140,7 @@
 		{capture name="thumbactions"}
 			{if ($prefs.fgal_show_thumbactions eq 'y' or $show_details eq 'y')}
 					<div class="thumbactions" style="float:{if $view neq 'page'}right; width:{$thumbnail_size}px"{else}none"{/if}>
-				{if $gal_info.show_checked neq 'n' and $tiki_p_admin_file_galleries eq 'y' and $view neq 'page'}
+				{if $prefs.fgal_checked neq 'n' and $tiki_p_admin_file_galleries eq 'y' and $view neq 'page'}
 					<label style="float:left">
 						<input type="checkbox" onclick="flip_thumbnail_status('{$checkname}_{$files[changes].id}')" name="{$checkname}[]" value="{$files[changes].id|escape}" {if $is_checked eq 'y'}checked="checked"{/if}>
 						{if isset($checkbox_label)}
@@ -320,7 +320,7 @@
 </div>
 
 <br clear="all" />
-{if ($gal_info.show_checked neq 'n' and $tiki_p_admin_file_galleries eq 'y'
+{if ($prefs.fgal_checked neq 'n' and $tiki_p_admin_file_galleries eq 'y'
 	and ( !isset($show_selectall) or $show_selectall eq 'y') and $view neq 'page' )
 			and ($prefs.fgal_show_thumbactions eq 'y' or $show_details eq 'y')}
 	{select_all checkbox_names='file[],subgal[]' label="{tr}Select All{/tr}"}
