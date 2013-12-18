@@ -185,7 +185,14 @@
 										{assign var=propkey value="show_$propname"}
 									{/if}
 									{if isset($files[changes].$propname)}
-										{assign var=propval value=$files[changes].$propname}
+										{if $propname == 'share' && isset($files[changes].share.data)}
+											{foreach item=tmp_prop key=tmp_propname from=$files[changes].share.data}
+												{$email[]=$tmp_prop.email}
+											{/foreach}
+											{assign var=propval value=$email|implode:','}
+										{else}
+											{assign var=propval value=$files[changes].$propname}
+										{/if}
 									{/if}
 									{* Format property values *}
 									{if isset($propname) and ($propname eq 'created' or $propname eq 'lastModif'
@@ -405,7 +412,7 @@
 							{capture assign=share_capture}
 								{strip}
 									<a class='fgalname' href='#' {popup fullhtml=1 text=$over_share|escape:'javascript'|escape:'html' left=true} style='cursor:help'>
-										{icon _id='group_link' class='' title=''}
+										{icon _id='group_link' alt="{tr}Share with{/tr}"}
 									</a> ({$share_nb}) {$share_string}
 								{/strip}
 							{/capture}

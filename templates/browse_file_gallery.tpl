@@ -65,7 +65,14 @@
 										{assign var=propkey value="show_$propname"}
 									{/if}
 									{if isset($files[changes].$propname)}
-										{assign var=propval value=$files[changes].$propname}
+                    {if $propname == 'share' && isset($files[changes].share.data)}
+											{foreach item=tmp_prop key=tmp_propname from=$files[changes].share.data}
+												{$email[]=$tmp_prop.email}
+											{/foreach}
+											{assign var=propval value=$email|implode:','}
+										{else}
+											{assign var=propval value=$files[changes].$propname}
+										{/if}
 									{/if}
 									{* Format property values *}
 									{if $propname eq 'created' or $propname eq 'lastModif' or $propname eq 'lastDownload'}
