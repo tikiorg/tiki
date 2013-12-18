@@ -34,48 +34,60 @@
 		{else}
 			<h2>{tr}Add new category{/tr}</h2>
 		{/if}
-		<form action="tiki-admin_categories.php" method="post">
+		<form action="tiki-admin_categories.php" method="post" class="form-horizontal role="form">
 			<input type="hidden" name="categId" value="{$categId|escape}">
-			<table class="formcolor">
-				<tr>
-					<td>{tr}Parent:{/tr}</td>
-					<td>
-						<select name="parentId">
-							{if $tiki_p_admin_categories eq 'y'}<option value="0">{tr}Top{/tr}</option>{/if}
-								{foreach $categories as $category}
-								<option value="{$category.categId}" {if $category.categId eq $parentId}selected="selected"{/if}>{$category.categpath|escape}</option>
-								{/foreach}
-						</select>
-					</td>
-				</tr>
-				<tr>
-					<td>{tr}Name:{/tr}</td>
-					<td><input type="text" size="40" name="name" value="{$categoryName|escape}"></td>
-				</tr>
-				<tr>
-					<td>{tr}Description:{/tr}</td>
-					<td><textarea rows="2" cols="40" name="description">{$description|escape}</textarea></td>
-				</tr>
-				{if $tiki_p_admin_categories == 'y'}
-				<tr>
-					<td>{tr}Apply parent category permissions{/tr}</td>
-					<td><input type="checkbox" name="parentPerms" {if empty($categId)}checked="checked"{/if}></td>
-				</tr>
-				{/if}
-				<tr>
-					<td align="center" colspan="2"><input type="submit" class="btn btn-default btn-sm" name="save" value="{tr}Save{/tr}"></td>
-				</tr>
-			</table>
+			<div class="form-group">
+                <label class="col-sm-3 control-label" for="parentId">{tr}Parent:{/tr}</label>
+				<div class="col-sm-9">
+					<select name="parentId" id="parentId" class="form-control">
+						{if $tiki_p_admin_categories eq 'y'}<option value="0">{tr}Top{/tr}</option>{/if}
+							{foreach $categories as $category}
+					    		<option value="{$category.categId}" {if $category.categId eq $parentId}selected="selected"{/if}>{$category.categpath|escape}</option>
+							{/foreach}
+					</select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label" for="parentId">{tr}Name:{/tr}</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" name="name" id="name" value="{$categoryName|escape}">
+			    </div>
+			</div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label" for="description">{tr}Description:{/tr}</label>
+                <div class="col-sm-9">
+					<textarea rows="2" class="form-control" name="description" id="description">{$description|escape}</textarea>
+                </div>
+            </div>
+			{if $tiki_p_admin_categories == 'y'}
+                <div class="form-group">
+                <label class="col-sm-5 control-label" for="parentPerms">{tr}Apply parent category permissions{/tr}</label>
+                    <div class="col-sm-7 checkbox-inline">
+					    <input type="checkbox" name="parentPerms" {if empty($categId)}checked="checked"{/if}>
+				    </div>
+                </div>
+			{/if}
+            <div class="text-center">
+			    <input type="submit" class="btn btn-default" name="save" value="{tr}Save{/tr}">
+            </div>
 		</form>
 	{/tab}
 
 	{if $categId <= 0}
 		{tab name="{tr}Batch upload{/tr}"}
 			<h2>{tr}Batch upload (CSV file){/tr}<a {popup text='category,description,parent&lt;br /&gt;vegetable,vegetable&lt;br /&gt;potato,,vegetable'}>{icon _id='help'}</a></h2>
-			<form action="tiki-admin_categories.php" method="post" enctype="multipart/form-data">
-				<input type="file" name="csvlist"><br>
-				<input type="submit" class="btn btn-default btn-sm" name="import" value="{tr}Add{/tr}">
-			</form>
+			<form action="tiki-admin_categories.php" method="post" enctype="multipart/form-data" class="form-horizontal" role="form">
+                <div class="form-group">
+                    <div class="col-sm-3 col-sm-offset-3">
+    				    <input type="file" class="form-control" name="csvlist">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-3 col-sm-offset-3">
+    				    <input type="submit" class="btn btn-default" name="import" value="{tr}Add{/tr}">
+                    </div>
+                </div>
+            </form>
 		{/tab}
 	{/if}
 	{if $parentId != 0}
