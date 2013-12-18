@@ -337,7 +337,7 @@ $("input[name=allowhtml]").change(function() {
 							{/if}
 							{if $prefs.feature_wiki_export eq 'y' and $tiki_p_export_wiki eq 'y'}
                                 <div class="form-group">
-								    <label for="" class="col-sm-2 control-label">{tr}Export pages:{/tr}</label>
+								    <label for="" class="col-sm-2 control-label">{tr}Export pages{/tr}</label>
                                     <div class="col-sm-10">
 									     <a href="tiki-export_wiki_pages.php?page={$page|escape:"url"}&amp;all=1" class="btn btn-default">{tr}export all versions{/tr}</a>
                                     </div>
@@ -501,7 +501,7 @@ $("input[name=allowhtml]").change(function() {
 							{/if}
 							{if $prefs.feature_wiki_ratings eq 'y' and $tiki_p_wiki_admin_ratings eq 'y'}
 								<div class="form-group">
-                                	<label for="" class="col-sm-2 control-label">{tr}Use rating:{/tr}</label>
+                                	<label for="" class="col-sm-2 control-label">{tr}Rating{/tr}</label>
                                     <div class="col-sm-10">
 									{foreach from=$poll_rated item=rating}
 										<div>
@@ -540,32 +540,41 @@ $("input[name=allowhtml]").change(function() {
                                 </div>
 							{/if}
 							{if $prefs.feature_multilingual eq 'y'}
-								<fieldset class="col-sm-12">
-									<legend>{tr}Language:{/tr}</legend>
-									<select name="lang" id="lang">
-										<option value="">{tr}Unknown{/tr}</option>
-										{section name=ix loop=$languages}
-											<option value="{$languages[ix].value|escape}"{if $lang eq $languages[ix].value or (!($data.page_id) and $lang eq '' and $languages[ix].value eq $prefs.language)} selected="selected"{/if}>{$languages[ix].name}</option>
-										{/section}
-									</select>
-									<br>
-									{tr _0="tiki-edit_translation.php?no_bl=y&amp;page={$page|escape:url}"}To translate, do not change the language and the content.
-									Instead, <a href="%0">create a new translation</a> in the new language.{/tr}
-									{if $translationOf}
-										<input type="hidden" name="translationOf" value="{$translationOf|escape}">
-									{/if}
+								<fieldset>
+									<div class="form-group">
+										<label for="" class="col-sm-2 control-label">{tr}Language{/tr}</label>
+										<div class="col-sm-10">
+										<select name="lang" id="lang" class="form-control">
+											<option value="">{tr}Unknown{/tr}</option>
+											{section name=ix loop=$languages}
+												<option value="{$languages[ix].value|escape}"{if $lang eq $languages[ix].value or (!($data.page_id) and $lang eq '' and $languages[ix].value eq $prefs.language)} selected="selected"{/if}>{$languages[ix].name}</option>
+											{/section}
+										</select>
+										{remarksbox type=tip title="{tr}Tip{/tr}"}
+											{tr _0="tiki-edit_translation.php?no_bl=y&amp;page={$page|escape:url}"}To translate, do not change the language and the content.
+											Instead, <a class="alert-link" href="%0">create a new translation</a> in the new language.{/tr}
+										{/remarksbox}
+										{if $translationOf}
+											<input type="hidden" name="translationOf" value="{$translationOf|escape}">
+										{/if}
+									</div>
 								</fieldset>
 								{if $trads|@count > 1 and $urgent_allowed}
-									<fieldset class="col-sm-12 {if $prefs.feature_urgent_translation neq 'y' or $diff_style} style="display:none;"{/if}>
-										<legend>{tr}Translation request:{/tr}</legend>
-										<input type="hidden" name="lang" value="{$lang|escape}">
-										<input type="checkbox" id="translation_critical" name="translation_critical" id="translation_critical"{if $translation_critical} checked="checked"{/if}>
-										<label for="translation_critical">{tr}Send urgent translation request.{/tr}</label>
-										{if $diff_style}
-											<input type="hidden" name="oldver" value="{$diff_oldver|escape}">
-											<input type="hidden" name="newver" value="{$diff_newver|escape}">
-										{/if}
-									</fieldset>
+									<div class="form-group">
+										<label for="" class="col-sm-2 control-label">{tr}Translation{/tr}</label>
+										<div class="col-sm-10">
+											<fieldset class="{if $prefs.feature_urgent_translation neq 'y' or $diff_style} style="display:none;"{/if}>
+												<legend>{tr}Translation request:{/tr}</legend>
+												<input type="hidden" name="lang" value="{$lang|escape}">
+												<input type="checkbox" id="translation_critical" name="translation_critical" id="translation_critical"{if $translation_critical} checked="checked"{/if}>
+												<label for="translation_critical">{tr}Send urgent translation request.{/tr}</label>
+												{if $diff_style}
+													<input type="hidden" name="oldver" value="{$diff_oldver|escape}">
+													<input type="hidden" name="newver" value="{$diff_newver|escape}">
+												{/if}
+											</fieldset>
+										</div>
+									</div>
 								{/if}
 							{/if}
 							{if $prefs.geo_locate_wiki eq 'y'}
@@ -616,15 +625,18 @@ $("input[name=allowhtml]").change(function() {
 								</div>
 							{/if}
 							{if $prefs.site_layout_per_object eq 'y'}
-								<fieldset class="col-sm-12">
-									<legend>{tr}Presentation{/tr}</legend>
-									<label for="object_layout">{tr}Layout{/tr}</label>
-									<select name="object_layout">
-										<option value="">{tr}Site Default{/tr}</option>
-										{foreach $object_layout.available as $key => $label}
-											<option value="{$key|escape}"{if $object_layout.current eq $key} selected{/if}>{$label|escape}</option>
-										{/foreach}
-									</select>
+								<fieldset>
+									<div class="form-group">
+										<label for="object_layout" class="col-sm-2 control-label">{tr}Layout{/tr}</label>
+										<div class="col-sm-10">
+											<select name="object_layout" class="form-control">
+												<option value="">{tr}Site Default{/tr}</option>
+												{foreach $object_layout.available as $key => $label}
+													<option value="{$key|escape}"{if $object_layout.current eq $key} selected{/if}>{$label|escape}</option>
+												{/foreach}
+											</select>
+										</div>
+									</div>
 								</fieldset>
 							{/if}
 							{if $tiki_p_admin_wiki eq "y"}
