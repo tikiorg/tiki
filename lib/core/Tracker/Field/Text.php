@@ -135,7 +135,7 @@ class Tracker_Field_Text extends Tracker_Field_Abstract implements Tracker_Field
 			if ($multilingual) {
 				$newValue = @json_decode($value, true);
 
-				if ($newValue !== false) {
+				if ($newValue !== false && ! is_null($newValue)) {
 					$value = $newValue;
 				}
 			}
