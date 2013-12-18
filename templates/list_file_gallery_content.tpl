@@ -5,7 +5,7 @@
 
 <table class="table table-bordered">
 	<tr>
-		{if $gal_info.show_checked ne 'n' and ($tiki_p_admin_file_galleries eq 'y' or $tiki_p_upload_files eq 'y')}
+		{if $prefs.fgal_checked ne 'n' and ($tiki_p_admin_file_galleries eq 'y' or $tiki_p_upload_files eq 'y')}
 			{assign var=nbCols value=$nbCols+1}
 			<th class="checkbox-cell">
 				{select_all checkbox_names='file[],subgal[]'}
@@ -186,7 +186,14 @@
 										{assign var=propkey value="show_$propname"}
 									{/if}
 									{if isset($files[changes].$propname)}
-										{assign var=propval value=$files[changes].$propname}
+										{if $propname == 'share' && isset($files[changes].share.data)}
+											{foreach item=tmp_prop key=tmp_propname from=$files[changes].share.data}
+												{$email[]=$tmp_prop.email}
+											{/foreach}
+											{assign var=propval value=$email|implode:','}
+										{else}
+											{assign var=propval value=$files[changes].$propname}
+										{/if}
 									{/if}
 									{* Format property values *}
 									{if isset($propname) and ($propname eq 'created' or $propname eq 'lastModif'
@@ -261,7 +268,7 @@
 			
 		<tr class="{cycle}">
 
-			{if $gal_info.show_checked neq 'n' and ($tiki_p_admin_file_galleries eq 'y' or $tiki_p_upload_files eq 'y')}
+			{if $prefs.fgal_checked neq 'n' and ($tiki_p_admin_file_galleries eq 'y' or $tiki_p_upload_files eq 'y')}
 				<td class="checkbox-cell">
 					{if $files[changes].isgal eq 1}
 						{assign var='checkname' value='subgal'}
@@ -406,7 +413,7 @@
 							{capture assign=share_capture}
 								{strip}
 									<a class='fgalname' href='#' {popup fullhtml=1 text=$over_share|escape:'javascript'|escape:'html' left=true} style='cursor:help'>
-										{icon _id='group_link' class='' title=''}
+										{icon _id='group_link' alt=''}
 									</a> ({$share_nb}) {$share_string}
 								{/strip}
 							{/capture}
@@ -473,7 +480,7 @@
 	{sectionelse}
 		{norecords _colspan=$nbCols}
 	{/section}
-	{if $gal_info.show_checked ne 'n' and $tiki_p_admin_file_galleries eq 'y' and $prefs.javascript_enabled eq 'y'
+	{if $prefs.fgal_checked ne 'n' and $tiki_p_admin_file_galleries eq 'y' and $prefs.javascript_enabled eq 'y'
 		and $view neq 'page'}
 		<tr>
 			<td colspan="{$nbCols}">

@@ -191,7 +191,8 @@ if (isset($_REQUEST['send'])) {
 			if (substr($_REQUEST['addresses'], -2) == ', ') {
 				$_REQUEST['addresses'] = substr($_REQUEST['addresses'], 0, -2);
 			}
-			$adresses = checkAddresses($_REQUEST['addresses']);
+			// Call checkAddresses with error = false to avoid double error reporting
+			$adresses = checkAddresses($_REQUEST['addresses'], false);
 
 			require_once 'lib/auth/tokens.php';
 			if ($prefs['share_can_choose_how_much_time_access']
@@ -231,9 +232,12 @@ if (isset($_REQUEST['send'])) {
 
 				if (is_array($tokenlist)) {
 					foreach ($tokenlist as $i=>$data) {
+						$query = parse_url($data);
+						parse_str($query['query'],$query_vars);
+						$detailtoken = $tokenlib->getToken($query_vars['TOKEN']);
 						// Delete old user watch if it's necessary => avoid bad mails
-						$tikilib->remove_user_watch_object('auth_token_called', $data['tokenId'], 'security');
-						$tikilib->add_user_watch($user, 'auth_token_called', $data['tokenId'], 'security', tra('Token called'), $data['url']);
+						$tikilib->remove_user_watch_object('auth_token_called', $detailtoken['tokenId'], 'security');
+						$tikilib->add_user_watch($user, 'auth_token_called', $detailtoken['tokenId'], 'security', tra('Token called'), $data);
 					}
 				}
 
@@ -331,10 +335,10 @@ $smarty->display('tiki.tpl');
  * @param array|string	$recipients		list of recipients as an array or a comma/semicolon separated list
  * @return array|bool
  */
-function checkAddresses($recipients)
+function checkAddresses($recipients, $error = true)
 {
-	global $errors, $prefs;
-	global $registrationlib, $userlib;
+	global $errors, $prefs, $user;
+	global $registrationlib, $userlib, $logslib;
 	include_once ('lib/registration/registrationlib.php');
 
 	$e = array();
@@ -353,8 +357,9 @@ function checkAddresses($recipients)
 			$ret = $registrationlib->SnowCheckMail($recipient, '', 'mini');
 			$ok = $ret[0];
 		}
-		if (!$ok) {
+		if ( $error && !$ok) {
 			$e[] = tra('One of the email addresses you typed is invalid:') . '&nbsp;' . $recipient;
+			$logslib->add_log('share', tra('One of the email addresses you typed is invalid:') . ' ' . $recipient . ' ' . tra('by') . ' ' . $user);
 		}
 	}
 
@@ -434,6 +439,7 @@ function sendMail($sender, $recipients, $subject, $tokenlist = array())
 		$mailsent = $mail->send(array($recipient));
 		if (!$mailsent) {
 			$errors[] = tra('Error sending mail to'). " $recipient";
+			$logslib->add_log('share', tra('Error sending mail to'). " $recipient "  . tra('by') .' ' . $user);
 		} else {
 			$logslib->add_log('share', tra('Share page').': '.$url_for_friend.' '.tra('to').' '.$recipient.' '.tra('by').' '.$user);
 		}
