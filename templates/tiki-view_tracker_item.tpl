@@ -204,7 +204,7 @@
 					<input type="hidden" name="cant" value="{$cant}">
 				{/if}
 
-				{remarksbox type="note"}<em class='mandatory_note'>{tr}Fields marked with a * are mandatory.{/tr}</em>{/remarksbox}
+				{remarksbox type="warning" title="{tr}Warning{/tr}"}<em class='mandatory_note'>{tr}Fields marked with a * are mandatory.{/tr}</em>{/remarksbox}
 
 				<table class="formcolor">
 					<tr>
