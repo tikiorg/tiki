@@ -123,7 +123,7 @@
 								<tr>
 									<td>{tr}Your name{/tr}</td>
 									<td>
-										<input style="width:95%;" type="text" name="name" value="{$name}">
+										<input style="width:95%;" type="text" name="name" value="{$name|username:false:true}">
 									</td>
 								</tr>
 								<tr>
