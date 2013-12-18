@@ -28,20 +28,20 @@
   {tabset name='tabs_editblog'}
     {tab name="{tr}General Settings{/tr}"}
     <div class="form-group">
-        <label class="col-sm-2 control-label" for="blog-title">{tr}Title{/tr}</label>
-        <div class="col-sm-10">
+        <label class="col-sm-3 control-label" for="blog-title">{tr}Title{/tr}</label>
+        <div class="col-sm-9">
             <input type="text" maxlength="200" name="title" id="blog-title" class="form-control" value="{$title|escape}">
         </div>
     </div>
     <div class="form-group">
-        <label class="col-sm-2 control-label" for="blog-desc">{tr}Description{/tr}</label>
-        <div class="col-sm-10">
+        <label class="col-sm-3 control-label" for="blog-desc">{tr}Description{/tr}</label>
+        <div class="col-sm-9">
             <textarea class="wikiedit form-control" name="description" id="blog-desc" rows="10">{$description|escape}</textarea>
         </div>
     </div>
     <div class="form-group">
-        <label class="col-sm-2 control-label" for="creator">{tr}Creator{/tr}</label>
-        <div class="col-sm-10">
+        <label class="col-sm-3 control-label" for="creator">{tr}Creator{/tr}</label>
+        <div class="col-sm-9">
             <select name="creator" class="form-control">
                 {if ($tiki_p_admin eq 'y' or $tiki_p_blog_admin eq 'y') and !empty($users)}
                     {foreach from=$users key=userId item=u}
@@ -53,7 +53,8 @@
             </select>
         </div>
     </div>
-    <div class="col-sm-10 col-sm-push-2 form-group">
+    <div class="form-group">
+    <div class="col-sm-9 col-sm-offset-3">
         <div class="checkbox">
             <label for="blogs-allow_others">
                 <input type="checkbox" name="public" id="blogs-allow_others" {if $public eq 'y'}checked='checked'{/if}>
@@ -79,7 +80,7 @@
                 {tr}Allow comments{/tr}
             </label>
         </div>
-    </div>
+    </div></div>
 
         {include file='categorize.tpl'}
 
@@ -89,10 +90,12 @@
 
     <div class="form-group">
         <label class="col-sm-5 control-label" for="blogs-number">{tr}Number of posts to show per page{/tr}</label>
-        <div class="col-sm-7">
+        <div class="col-sm-2">
           <input type="text" name="maxPosts" id="blogs-number" class="form-control" value="{$maxPosts|escape}">
         </div>
-        <div class="col-sm-offset-1 col-sm-11">
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-3 col-sm-9">
             <div class="checkbox">
                 <label for="blogs-title">{tr}Display blog title in posts list page{/tr}
                    <input type="checkbox" name="use_title" id="blogs-title" {if $use_title eq 'y'}checked='checked'{/if}>
@@ -137,11 +140,11 @@
                 </label>
             </div>
             <label class="col-sm-5 control-label" for="blogs-post-max-related">{tr}Maximum number of related posts to display{/tr}</label>
-            <div class="col-sm-7">
+            <div class="col-sm-2">
 		        <input type="text" name="related_max" id="blogs-post-max-related" class="form-control"  value="{$related_max|escape}">
 	        </div>
         </div>
-        <div class="col-sm-offset-1 col-sm-11">
+        <div class="col-sm-offset-3 col-sm-9">
             <div class="checkbox">
                 <label for="blogs-post-use-excerpt">{tr}Use post excerpt{/tr}
                     <input type="checkbox" name="use_excerpt" id="blogs-post-use-excerpt" {if $use_excerpt eq 'y'}checked='checked'{/if}>
@@ -149,10 +152,11 @@
             </div>
         </div>
     </div>
+
 {if $prefs.feature_blog_heading eq 'y' and $tiki_p_edit_templates eq 'y'}
     <div class="form-group">
-        <label class="col-sm-2 control-label" for="blogs-heading">{tr}Blog heading{/tr}</label>
-        <div class="col-sm-10">
+        <label class="col-sm-3 control-label" for="blogs-heading">{tr}Blog heading{/tr}</label>
+        <div class="col-sm-9">
             <textarea name="heading" id="blogs-heading" rows='10' class="form-control">{$heading|escape}</textarea>
         </div>
     </div>
@@ -163,16 +167,19 @@
         </div>
     {/if}
     <div class="form-group">
-        <label class="col-sm-2 control-label" for="blogs-post-heading">{tr}Blog post heading{/tr}</label>
-        <div class="col-sm-10">
+        <label class="col-sm-3 control-label" for="blogs-post-heading">{tr}Blog post heading{/tr}</label>
+        <div class="col-sm-9">
               <textarea name="post_heading" id="blogs-post_heading" rows='10' class="form-control">{$post_heading|escape}</textarea>
         </div>
     </div>
 {/if}
       {/tab}
   {/tabset}
-  {if $prefs.feature_blog_heading eq 'y' and $tiki_p_edit_templates eq 'y'}
-    <input type="submit" class="wikiaction btn btn-defaul" name="preview" value="{tr}Heading preview{/tr}">
-  {/if}
-  <input type="submit" class="wikiaction btn btn-default" name="save" value="{tr}Save{/tr}">
+    {if $prefs.feature_blog_heading eq 'y' and $tiki_p_edit_templates eq 'y'}
+        <input type="submit" class="wikiaction btn btn-defaul" name="preview" value="{tr}Heading preview{/tr}">
+    {/if}
+
+    <div class="form-group text-center">
+        <input type="submit" class="wikiaction btn btn-default" name="save" value="{tr}Save{/tr}">
+    </div>
 </form>

@@ -1,13 +1,13 @@
 {if $prefs.feature_categories eq 'y' and $tiki_p_modify_object_categories eq 'y' and (count($categories) gt 0 or $tiki_p_admin_categories eq 'y')}
     {if !isset($notable) || $notable neq 'y'}
-        <div class="form-horizontal">
+        <!-- div class="form-horizontal" -->
             <div class="form-group">
                 <label class="col-sm-3 text-right">{tr}Categorize{/tr}</label>
                 <div class="col-sm-9">
                     {if isset($colsCategorize)} colspan="{$colsCategorize}"{/if}
                 </div>
             </div>
-        </div>
+        <!--/div-->
     {/if}
     {if $mandatory_category >= 0 or $prefs.javascript_enabled neq 'y' or (isset($auto) and $auto eq 'y')}
         <div id="categorizator">
