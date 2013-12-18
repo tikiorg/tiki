@@ -412,7 +412,7 @@
 							{capture assign=share_capture}
 								{strip}
 									<a class='fgalname' href='#' {popup fullhtml=1 text=$over_share|escape:'javascript'|escape:'html' left=true} style='cursor:help'>
-										{icon _id='group_link' alt="{tr}Share with{/tr}"}
+										{icon _id='group_link' alt=''}
 									</a> ({$share_nb}) {$share_string}
 								{/strip}
 							{/capture}
