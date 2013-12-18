@@ -117,19 +117,17 @@
                             {/if}
 
                             {if $prefs.feature_backlinks eq 'y' and $backlinks and $tiki_p_view_backlink eq 'y'}
-								<div class="backlinks_button" style="display:inline">
-									<ul class="clearfix cssmenu_horiz">
-										<li class="tabmark">
-											{icon _id=arrow_turn_left title="{tr}Backlinks{/tr}" class="icon"}
-											<ul class="backlinks_poppedup">
-												<li class="tabcontent">
-													{section name=back loop=$backlinks}
-													<a href="tiki-index.php?page={$backlinks[back].fromPage|escape:url}" title="{$backlinks[back].fromPage|escape}">
+								<div class="btn-group">
+									<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+										{icon _id=arrow_turn_left title="{tr}Backlinks{/tr}" class="icon"}
+									</button>
+									<ul class="dropdown-menu" role="menu">
+										<li role="presentation">
+											{section name=back loop=$backlinks}
+												<a role="menuitem" tabindex="-1" href="tiki-index.php?page={$backlinks[back].fromPage|escape:url}" title="{$backlinks[back].fromPage|escape}">
 														{if $prefs.wiki_backlinks_name_len ge '1'}{$backlinks[back].fromPage|truncate:$prefs.wiki_backlinks_name_len:"...":true|escape}{else}{$backlinks[back].fromPage|escape}{/if}
-													</a>
-													{/section}
-												</li>
-											</ul>
+												</a>
+											{/section}
 										</li>
 									</ul>
 								</div>
