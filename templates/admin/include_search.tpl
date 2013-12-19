@@ -8,13 +8,73 @@
 
 {if $prefs.feature_file_galleries eq 'y'}
 	{remarksbox type="tip" title="{tr}Tip{/tr}"}
-		{tr}Also see the Search Indexing tab here:{/tr} <a class='rbox-link' target='tikihelp' href='tiki-admin.php?page=fgal'>{tr}File Gallery admin panel{/tr}</a>
+		{tr}Also see the Search Indexing tab:{/tr} <a class='rbox-link' target='tikihelp' href='tiki-admin.php?page=fgal'>{tr}File Gallery admin panel{/tr}</a>
 	{/remarksbox}
 {/if}
 
 
 <form action="tiki-admin.php?page=search" method="post">
 	<input type="hidden" name="searchprefs" />
+
+	{if $prefs.feature_search eq 'y'}
+		{remarksbox type=tip title="{tr}Index maintenance{/tr}"}
+			<p>
+				<a class="btn btn-primary" href="tiki-admin.php?page=search&amp;rebuild=now" id="rebuild-link">{tr}Rebuild Index{/tr}</a>
+				<a class="btn btn-default" href="tiki-admin.php?page=search&amp;rebuild=now&amp;loggit" id="rebuild-link">{tr}Rebuild Index with Log{/tr}</a>
+				<a class="btn btn-default" href="tiki-admin.php?page=search&amp;optimize=now">{tr}Optimize{/tr}</a>
+			</p>
+			<p>{tr}Log file is saved as temp/Search_Indexer.log{/tr}</p>
+
+			{if $queue_count > 0}
+				<h5>{tr}Queue size:{/tr} {$queue_count}</h5>
+				{foreach [10, 20, 50, 100] as $count}
+					{if $queue_count > $count}
+						<a class="btn btn-default" href="tiki-admin.php?page=search&amp;process={$count|escape}">{tr _0=$count}Process %0{/tr}</a>
+					{/if}
+				{/foreach}
+				{if $queue_count > 0 and !empty($smarty.request.process) and $smarty.request.process eq 'all' and $prefs.javascript_enabled eq "y"}
+					{jq} setTimeout(function() { history.go(0); }, 1000); {/jq}
+					<a class="btn btn-warning" href="tiki-admin.php?page=search">{tr}Stop{/tr}</a>
+				{else}
+					<a class="btn-warning" href="tiki-admin.php?page=search&amp;process=all">{tr}All{/tr}</a>
+					<br><span class="description">{tr}Uses JavaScript to reload this page until queue is processed{/tr}</span></li>
+				{/if}
+			{/if}
+
+		{/remarksbox}
+
+		{if !empty($stat)}
+			{remarksbox type='feedback' title="{tr}Indexation{/tr}"}
+				<ul>
+					{foreach from=$stat key=what item=nb}
+						<li>{$what|escape}: {$nb|escape}</li>
+					{/foreach}
+				</ul>
+			{/remarksbox}
+		{else}
+			{* If the indexing succeeded, there are clearly no problems, free up some screen space *}
+			{remarksbox type=tip title="{tr}Indexing Problems?{/tr}"}
+				<p>{tr}If the indexing does not complete, check the log file to see where it ended.{/tr}</p>
+				<p>{tr}Last line of log file (web):{/tr} {$lastLogItemWeb|escape}</p>
+				<p>{tr}Last line of log file (console):{/tr} {$lastLogItemConsole|escape}</p>
+
+				<p>Common failures include:</p>
+				<ul>
+					<li><strong>{tr}Not enough memory.{/tr}</strong> Larger sites require more memory to re-index.</li>
+					<li><strong>{tr}Time limit too short.{/tr}</strong> It may be required to run the rebuild through the command line.</li>
+					<li><strong>{tr}High resource usage.{/tr}</strong> Some plugins in your pages may cause excessive load. Blacklisting some plugins during indexing can help.</li>
+				</ul>
+			{/remarksbox}
+		{/if}
+		{remarksbox type=tip title="{tr}Command Line Utilities{/tr}"}
+			<kbd>php console.php index:optimize</kbd><br>
+			<kbd>php console.php index:rebuild</kbd><br>
+			<kbd>php console.php index:rebuild --log</kbd><br>
+			<p>{tr}Log file is saved as temp/Search_Indexer_console.log{/tr}</p>
+		{/remarksbox}
+
+	{/if}
+
     <div class="row">
         <div class="form-group col-lg-12 clearfix">
             <div class="pull-right">
@@ -22,7 +82,6 @@
             </div>
         </div>
     </div>
-
 	{tabset name=admin_search}
 		{tab name="{tr}General Settings{/tr}"}
 		
@@ -129,58 +188,6 @@
 
 					{preference name=unified_trackerfield_keys}
 					{preference name=unified_add_to_categ_search}
-
-					<h4>{tr}Index maintenance{/tr}</h4>
-					<ul>
-						<li><a href="tiki-admin.php?page=search&amp;optimize=now">{tr}Optimize{/tr}</a> {tr}From the command line:{/tr} <kbd>php console.php index:optimize</kbd></li>
-						<li>
-							<a href="tiki-admin.php?page=search&amp;rebuild=now" id="rebuild-link">{tr}Rebuild Index{/tr}</a> {tr}From the command line:{/tr} <kbd> php console.php index:rebuild</kbd><br>
-							<label for="log-rebuild">{tr}Log rebuild?{/tr}</label>
-							<input type="checkbox" id="log-rebuild" />
-							<span class="description">{tr}Log file is saved as temp/Search_Indexer.log (or temp/Search_Indexer_console.log if indexed from the command line){/tr}</span> <br> {tr}From the command line:{/tr} <kbd>php console.php index:rebuild --log</kbd><br>
-							{jq}
-$("#log-rebuild").click(function(){
-	if ($(this).prop("checked")) {
-		$("#rebuild-link").attr("href", $("#rebuild-link").attr("href") + "&loggit");
-	} else {
-		$("#rebuild-link").attr("href", $("#rebuild-link").attr("href").replace("&loggit",""));
-	}
-});
-							{/jq}
-							{if !empty($stat)}
-								{remarksbox type='feedback' title="{tr}Indexation{/tr}"}
-									<ul>
-										{foreach from=$stat key=what item=nb}
-											<li>{$what|escape}: {$nb|escape}</li>
-										{/foreach}
-									</ul>
-								{/remarksbox}
-							{/if}
-						</li>
-					</ul>
-					{remarksbox type="tip" title="{tr}Indexing Problems?{/tr}"}
-					<p>{tr}If the indexing does not complete, check the log file to see where it ended. Perhaps there could be a problem with the last content it was trying to index. Settings tips: excluding plugins from the indexing usually helps, and it might be necessary to increase the time limit above for large sites. You can also exclude items from being indexed by categorizing them in excluded categories.{/tr}</p>
-					<p>{tr}Last line of log file (web):{/tr} {$lastLogItemWeb|escape}<br />
-					{tr}Last line of log file (console):{/tr} {$lastLogItemConsole|escape}</p>
-					{/remarksbox}
-					{if $queue_count > 0}
-						<h5>{tr}Queue size:{/tr} {$queue_count}</h5>
-						{tr}Process:{/tr}
-						<ul>
-							{if $queue_count > 10}
-								<li><a  href="tiki-admin.php?page=search&amp;process=10">10</a></li>
-							{/if}
-							{if $queue_count > 20}
-								<li><a  href="tiki-admin.php?page=search&amp;process=20">20</a></li>
-							{/if}
-							{if $queue_count > 0 and !empty($smarty.request.process) and $smarty.request.process eq 'all' and $prefs.javascript_enabled eq "y"}
-								{jq} setTimeout(function() { history.go(0); }, 1000); {/jq}
-								<li><strong><a  href="tiki-admin.php?page=search&amp;process=">{tr}Stop{/tr}</a></strong></li>
-							{else}
-								<li><em><a  href="tiki-admin.php?page=search&amp;process=all">{tr}All{/tr}</a></em> <br><span class="description">{tr}Uses JavaScript to reload this page until queue is processed{/tr}</span></li>
-							{/if}
-						</ul>
-					{/if}
 				</div>
 			</fieldset>
 

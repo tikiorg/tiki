@@ -64,6 +64,7 @@ function smarty_block_remarksbox($params, $content, $smarty, &$repeat)
 		$icon = 'fire';
 		break;
 	case 'confirm':
+	case 'feedback':
 		$class = 'alert-success';
 		$icon = 'ok';
 		break;
