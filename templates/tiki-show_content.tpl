@@ -47,14 +47,12 @@
 
 {if $prefs.feature_urgent_translation eq 'y'}
 	{section name=i loop=$translation_alert}
-		<div class="panel panel-default">
+		<div class="panel panel-warning">
 			<div class="panel-heading">
-				{icon _id=information style="vertical-align:middle"} {tr}Content may be out of date{/tr}
+				{tr}Content may be out of date{/tr}
 			</div>
-			<div class="cbox-data">
-				<p>
-					{tr}An urgent request for translation has been sent. Until this page is updated, you can see a corrected version in the following pages:{/tr}
-				</p>
+			<div class="panel-body">
+				{tr}An urgent request for translation has been sent. Until this page is updated, you can see a corrected version in the following pages:{/tr}
 				<ul>
 					{section name=j loop=$translation_alert[i]}
 						<li>
