@@ -17,9 +17,9 @@ abstract class Math_Formula_Function
 
 	abstract function evaluate( $element );
 
-	protected function evaluateChild( $child )
+	protected function evaluateChild( $child, array $extraVariables = array() )
 	{
-		return call_user_func($this->callback, $child);
+		return call_user_func($this->callback, $child, $extraVariables);
 	}
 
 	protected function error( $message )
