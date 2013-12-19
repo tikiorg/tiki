@@ -50,11 +50,19 @@ class Math_Formula_Runner
 		return $this->evaluateData($this->element);
 	}
 
-	function evaluateData( $data )
+	function evaluateData( $data, array $variables = array() )
 	{
 		if ( $data instanceof Math_Formula_Element ) {
 			$op = $this->getOperation($data);
-			return $op->evaluateTemplate($data, array( $this, 'evaluateData' ));
+			
+			$current = $this->variables;
+			if ( ! empty($variables) ) {
+				$this->variables = array_merge($this->variables, $variables);
+			}
+			$out = $op->evaluateTemplate($data, array( $this, 'evaluateData' ));
+			$this->variables = $current;
+
+			return $out;
 		} elseif ( is_numeric($data) ) {
 			return (double) $data;
 		} elseif ( isset($this->variables[$data]) ) {

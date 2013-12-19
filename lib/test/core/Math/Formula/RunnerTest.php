@@ -247,5 +247,47 @@ class Math_Formula_RunnerTest extends TikiTestCase
 		$this->runner->setFormula('(or 0 0 0 0 0)');
 		$this->assertEquals(0, $this->runner->evaluate());
 	}
+
+	function testExtractParts()
+	{
+		$this->runner->setFormula('(split-list (content string) (separator :) (keys object-type object-id))');
+		$this->runner->setVariables(
+			array(
+				'string' => "wiki page:HomePage\ntrackeritem:2\ntrackeritem:3",
+			)
+		);
+
+		$this->assertEquals(array(
+			array('object-type' => 'wiki page', 'object-id' => 'HomePage'),
+			array('object-type' => 'trackeritem', 'object-id' => '2'),
+			array('object-type' => 'trackeritem', 'object-id' => '3'),
+		), $this->runner->evaluate());
+	}
+
+	function testMapList()
+	{
+		$this->runner->setFormula('(for-each (list list) (formula (mul a b c)))');
+		$this->runner->setVariables(array(
+			'c' => 10,
+			'list' => array(
+				array('a' => 1, 'b' => 2),
+				array('a' => 2, 'b' => 3),
+				array('a' => 3, 'b' => 4),
+			),
+		));
+
+		$this->assertEquals(array(20, 60, 120), $this->runner->evaluate());
+	}
+
+	function testAverageList()
+	{
+		$this->runner->setFormula('(avg a b)');
+		$this->runner->setVariables(array(
+			'a' => 1,
+			'b' => array(3, 5, 7),
+		));
+
+		$this->assertEquals(4, $this->runner->evaluate());
+	}
 }
 
