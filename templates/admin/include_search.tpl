@@ -18,6 +18,10 @@
 
 	{if $prefs.feature_search eq 'y'}
 		{remarksbox type=tip title="{tr}Index maintenance{/tr}"}
+			{if $prefs.unified_last_rebuild}
+				<p>{tr _0=$prefs.unified_last_rebuild|tiki_long_datetime}Your index was last fully rebuilt on %0.{/tr}</p>
+			{/if}
+
 			<p>
 				<a class="btn btn-primary" href="tiki-admin.php?page=search&amp;rebuild=now" id="rebuild-link">{tr}Rebuild Index{/tr}</a>
 				<a class="btn btn-default" href="tiki-admin.php?page=search&amp;rebuild=now&amp;loggit" id="rebuild-link">{tr}Rebuild Index with Log{/tr}</a>
@@ -87,27 +91,8 @@
 		
 			<fieldset>
 				<legend>
-					{tr}Basic Search{/tr} {help url="Search"}
-				</legend>
-				{preference name=feature_search_fulltext}
-				<div class="adminoptionboxchild" id="feature_search_fulltext_childcontainer">				
-					{preference name=feature_referer_highlight}
-
-					{preference name=feature_search_show_forbidden_obj}
-					{preference name=feature_search_show_forbidden_cat}
-				</div>
-			</fieldset>
-		
-			<fieldset>
-				<legend>
 					{tr}Advanced Search{/tr}
 				</legend>
-
-				{if $prefs.unified_last_rebuild}
-					{remarksbox type=info title="{tr}Last rebuild{/tr}"}
-						{tr _0=$prefs.unified_last_rebuild|tiki_long_datetime}Your index was last fully rebuilt on %0.{/tr}
-					{/remarksbox}
-				{/if}
 
 				{preference name=feature_search visible="always"}
 				<div class="adminoptionboxchild" id="feature_search_childcontainer">
@@ -191,6 +176,19 @@
 				</div>
 			</fieldset>
 
+			<fieldset>
+				<legend>
+					{tr}Basic Search{/tr} {help url="Search"}
+				</legend>
+				{preference name=feature_search_fulltext}
+				<div class="adminoptionboxchild" id="feature_search_fulltext_childcontainer">				
+					{preference name=feature_referer_highlight}
+
+					{preference name=feature_search_show_forbidden_obj}
+					{preference name=feature_search_show_forbidden_cat}
+				</div>
+			</fieldset>
+		
 			<fieldset>
 				<legend>{tr}Features{/tr}</legend>
 				{preference name=search_autocomplete}
