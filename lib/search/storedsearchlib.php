@@ -49,11 +49,32 @@ class StoredSearchLib
 		));
 
 		$priority = $this->getPriority($data['priority']);
-		if ($priority['repository']) {
+		if ($priority['indexed']) {
 			$this->loadInIndex($GLOBALS['user'], "{$data['priority']}-$queryId", $query);
 		}
 
 		return true;
+	}
+
+	function reloadAll()
+	{
+		$table = $this->table();
+		$queries = $table->fetchColumn('queryId', [
+			'priority' => $table->in($this->getIndexedPriorities()),
+		]);
+		$unifiedsearchlib = TikiLib::lib('unifiedsearch');
+		$index = $unifiedsearchlib->getIndex();
+
+		$tikilib = TikiLib::lib('tiki');
+		foreach ($queries as $queryId) {
+			$info = $this->fetchQuery($queryId);
+			$user = $tikilib->get_user_login($info['userId']);
+
+			if (! empty($info['query'])) {
+				$query = unserialize($info['query']);
+				$this->loadInIndex($user, "{$info['priority']}-$queryId", $query, $index);
+			}
+		}
 	}
 
 	function getPriorities($priority)
@@ -65,13 +86,13 @@ class StoredSearchLib
 					'label' => tr('Manual'),
 					'description' => tr('You can revisit the results of this query on demand.'),
 					'class' => 'label-default',
-					'repository' => false,
+					'indexed' => false,
 				),
 				'high' => array(
 					'label' => tr('High'),
 					'description' => tr('You will receive an immediate notification every time a new result arrives.'),
 					'class' => 'label-danger',
-					'repository' => true,
+					'indexed' => true,
 				),
 			);
 		}
@@ -79,10 +100,12 @@ class StoredSearchLib
 		return $list;
 	}
 
-	private function loadInIndex($user, $name, $query)
+	private function loadInIndex($user, $name, $query, $index = null)
 	{
-		$unifiedsearchlib = TikiLib::lib('unifiedsearch');
-		$index = $unifiedsearchlib->getIndex();
+		if (! $index) {
+			$unifiedsearchlib = TikiLib::lib('unifiedsearch');
+			$index = $unifiedsearchlib->getIndex();
+		}
 
 		if ($index) {
 			$userlib = TikiLib::lib('user');
@@ -123,6 +146,17 @@ class StoredSearchLib
 		$userId = TikiLib::lib('login')->getUserId();
 
 		return $userId && $query && $userId == $query['userId'];
+	}
+
+	private function getIndexedPriorities()
+	{
+		$indexed = [];
+		foreach ($this->getPriorities() as $key => $info) {
+			if ($info['indexed']) {
+				$indexed[] = $key;
+			}
+		}
+		return $indexed;
 	}
 
 	public function handleQueryHigh($args)

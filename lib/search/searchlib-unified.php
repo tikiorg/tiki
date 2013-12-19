@@ -266,6 +266,11 @@ class UnifiedSearchLib
 		// Process the documents updated while we were processing the update
 		$this->processUpdateQueue(1000);
 
+		ini_set('display_errors', 1);
+		if ($prefs['storedsearch_enabled'] == 'y') {
+			TikiLib::lib('storedsearch')->reloadAll();
+		}
+
 		$tikilib->set_preference('unified_last_rebuild', $tikilib->now);
 
 		$this->isRebuildingNow = false;
