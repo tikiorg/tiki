@@ -140,6 +140,10 @@ function tiki_setup_events()
 		}
 	}
 
+	if ($prefs['storedsearch_enabled'] == 'y') {
+		$events->bind('tiki.query.high', $defer('storedsearch', 'handleQueryHigh'));
+	}
+
 	// Chain events
 	$events->bind('tiki.wiki.update', 'tiki.wiki.save');
 	$events->bind('tiki.wiki.create', 'tiki.wiki.save');
@@ -180,6 +184,8 @@ function tiki_setup_events()
 	$events->bind('tiki.social.favorite.remove', 'tiki.social.save');
 	$events->bind('tiki.social.relation.add', 'tiki.social.save');
 	$events->bind('tiki.social.relation.remove', 'tiki.social.save');
+
+	$events->bind('tiki.query.high', 'tiki.query.hit');
 }
 
 function tiki_save_refresh_index($args)

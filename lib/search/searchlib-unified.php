@@ -426,7 +426,7 @@ class UnifiedSearchLib
 	{
 		global $prefs;
 
-		if (! $this->isRebuildingNow && $index instanceof Search_Index_QueryRepository) {
+		if (! $this->isRebuildingNow && $index instanceof Search_Index_QueryRepository && $prefs['storedsearch_enabled'] == 'y') {
 			$index = new Search_Index_QueryAlertDecorator($index);
 		}
 
@@ -844,6 +844,21 @@ class UnifiedSearchLib
 		$this->addSources($provider);
 
 		return $provider;
+	}
+
+	function getRawArray($document)
+	{
+		return array_map(function ($entry) {
+			if (is_object($entry)) {
+				if (method_exists($entry, 'getRawValue')) {
+					return $entry->getRawValue();
+				} else {
+					return $entry->getValue();
+				}
+			} else {
+				return $entry;
+			}
+		}, $document);
 	}
 }
 

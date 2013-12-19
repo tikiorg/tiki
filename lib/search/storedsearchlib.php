@@ -30,7 +30,8 @@ class StoredSearchLib
 
 	public function storeUserQuery($queryId, $query)
 	{
-		if (! $this->canUserStoreQuery($queryId)) {
+		$data = $this->fetchQuery($queryId);
+		if (! $this->canUserStoreQuery($data)) {
 			return false;
 		}
 
@@ -47,20 +48,35 @@ class StoredSearchLib
 			'queryId' => $queryId,
 		));
 
-		$this->loadInIndex($GLOBALS['user'], $queryId, $query);
+		$priority = $this->getPriority($data['priority']);
+		if ($priority['repository']) {
+			$this->loadInIndex($GLOBALS['user'], "{$data['priority']}-$queryId", $query);
+		}
 
 		return true;
 	}
 
 	function getPriorities($priority)
 	{
-		return array(
-			'manual' => array(
-				'label' => tr('Manual'),
-				'description' => tr('You can revisit the results of this query on demand'),
-				'class' => 'label-default',
-			),
-		);
+		static $list;
+		if (! $list) {
+			$list = array(
+				'manual' => array(
+					'label' => tr('Manual'),
+					'description' => tr('You can revisit the results of this query on demand.'),
+					'class' => 'label-default',
+					'repository' => false,
+				),
+				'high' => array(
+					'label' => tr('High'),
+					'description' => tr('You will receive an immediate notification every time a new result arrives.'),
+					'class' => 'label-danger',
+					'repository' => true,
+				),
+			);
+		}
+
+		return $list;
 	}
 
 	private function loadInIndex($user, $name, $query)
@@ -84,18 +100,42 @@ class StoredSearchLib
 
 	private function isValidPriority($priority)
 	{
-		$priorities = $this->getPriorities();
-		return isset($priorities[$priority]);
+		return !! $this->getPriority($priority);
 	}
 
-	private function canUserStoreQuery($queryId)
+	private function getPriority($priority)
 	{
-		$userId = TikiLib::lib('login')->getUserId();
-		$owner = $this->table()->fetchOne('userId', array(
+		$priorities = $this->getPriorities();
+		if (isset($priorities[$priority])) {
+			return $priorities[$priority];
+		}
+	}
+
+	private function fetchQuery($queryId)
+	{
+		return $this->table()->fetchFullRow(array(
 			'queryId' => $queryId,
 		));
+	}
 
-		return $userId && $owner && $userId == $owner;
+	private function canUserStoreQuery($query)
+	{
+		$userId = TikiLib::lib('login')->getUserId();
+
+		return $userId && $query && $userId == $query['userId'];
+	}
+
+	public function handleQueryHigh($args)
+	{
+		$query = $this->fetchQuery($args['query']);
+		$info = TikiLib::lib('user')->get_userid_info($args['userId']);
+
+		include_once('lib/webmail/tikimaillib.php');
+		$mail = new TikiMail();
+		$mail->setUser($info['login']);
+		$mail->setSubject(tr('%0 - Match on %1', $args['document']['title'], $query['label']));
+		$mail->setText(tr("View the document:") . "\n" . TikiLib::tikiUrl($args['document']['url']));
+		$mail->send(array($info['email']));
 	}
 }
 

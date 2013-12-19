@@ -10,11 +10,16 @@ class Search_Index_QueryAlertDecorator extends Search_Index_AbstractIndexDecorat
 	function addDocument(array $document)
 	{
 		$matches = $this->parent->getMatchingQueries($document);
-		foreach ($matches as $match) {
-			TikiLib::events()->trigger('tiki.query.hit', array(
-				'query' => $match,
-				'document' => $document,
-			));
+
+		if (count($matches)) {
+			$raw = TikiLib::lib('unifiedsearch')->getRawArray($document);
+			foreach ($matches as $match) {
+				list($priority, $id) = explode('-', $match, 2);
+				TikiLib::events()->trigger('tiki.query.' . $priority, array(
+					'query' => $id,
+					'document' => $raw,
+				));
+			}
 		}
 		return $this->parent->addDocument($document);
 	}
