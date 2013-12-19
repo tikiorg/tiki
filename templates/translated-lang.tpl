@@ -15,13 +15,13 @@
                 {if $object_type eq 'wiki page' and ($tiki_p_edit eq 'y' or (!$user and $prefs.wiki_encourage_contribution eq 'y')) and !$lock}
 					<li role="presentation">
 						<a role="menuitem" tabindex="-1" href="tiki-edit_translation.php?page={$page|escape}">
-							{tr}Please select a language before performing translation.{/tr}
+							{tr}Set page language{/tr}
 						</a>
 					</li>
                 {elseif $object_type eq 'article' and $tiki_p_edit_article eq 'y'}
                     <li role="presentation">
 						<a role="menuitem" tabindex="-1" href="tiki-edit_article.php?articleId={$articleId|escape}">
-							{tr}Please select a language before performing translation.{/tr}
+							{tr}Set article language{/tr}
 						</a>
 					</li>
 				{/if}
