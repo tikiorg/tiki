@@ -80,6 +80,7 @@ class ServiceLib
 			'report' => 'Services_Report_Controller',
 			'tracker_calendar' => 'Services_Tracker_CalendarController',
 			'search_customsearch' => 'Services_Search_CustomSearchController',
+			'search_stored' => 'Services_Search_StoredController',
 			'showtikiorg' => 'Services_ShowTikiOrg_Controller',
 			'social' => 'Services_User_SocialController',
 			'tracker' => 'Services_Tracker_Controller',

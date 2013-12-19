@@ -13,6 +13,21 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
 
 class LoginLib
 {
+	function getUser()
+	{
+		return $GLOBALS['user'];
+	}
+
+	function getUserId()
+	{
+		$id = TikiLib::lib('tiki')->get_user_id($this->getUser());
+		if ($id === -1) {
+			return false;
+		} else {
+			return $id;
+		}
+	}
+
 	function activateSession($user)
 	{
 		global $user_cookie_site;

@@ -3794,3 +3794,13 @@ CREATE TABLE `tiki_user_mailin_struct` (
 	`is_active` char(1) NULL DEFAULT 'n',
    PRIMARY KEY (`mailin_struct_id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1;
+
+CREATE TABLE `tiki_search_queries` (
+	`queryId` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	`userId` INT NOT NULL,
+	`lastModif` INT,
+	`label` VARCHAR(100) NOT NULL,
+	`priority` VARCHAR(15) NOT NULL,
+	`query` BLOB,
+	INDEX `query_userId` (`userId`)
+) ENGINE=MyISAM AUTO_INCREMENT=1;

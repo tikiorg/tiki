@@ -226,9 +226,13 @@ $("#log-rebuild").click(function(){
 			</fieldset>
 		{/tab}
 
-	{tab name="{tr}Tools{/tr}"}
-		<a href="tiki-report_string_in_db.php">{tr}Report all occurences of a string in any table{/tr}</a><br>
-	{/tab}
+		{tab name="{tr}Stored Search{/tr}"}
+			{preference name=storedsearch_enabled}
+		{/tab}
+
+		{tab name="{tr}Tools{/tr}"}
+			<a href="tiki-report_string_in_db.php">{tr}Report all occurences of a string in any table{/tr}</a><br>
+		{/tab}
 
 	{/tabset}
     <br>{* I cheated. *}
