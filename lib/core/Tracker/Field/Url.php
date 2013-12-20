@@ -26,14 +26,22 @@ class Tracker_Field_Url extends Tracker_Field_Abstract implements Tracker_Field_
 					'linkToURL' => array(
 						'name' => tr('Display'),
 						'description' => tr('How the URL should be rendered'),
-                                                'filter' => 'int',
+						'filter' => 'int',
 						'options' => array(
 							0 => tr('URL as link'),
 							1 => tr('Plain text'),
 							2 => tr('Site title as link'),
 							3 => tr('URL as link plus site title'),
+							4 => tr('Text as link (see Other)'),
 						),
 						'legacy_index' => 0,
+						'default' => 0,
+					),
+					'other' => array(
+						'name' => tr('Other'),
+						'description' => tr('Label of the link text. Requires "Display" to be set to "Text as link"'),
+						'filter' => 'text',
+						'default' => '',
 					),
 				),
 			),
@@ -68,7 +76,7 @@ class Tracker_Field_Url extends Tracker_Field_Abstract implements Tracker_Field_
 				),
 				$smarty
 			);
-		} elseif (!$this->getOption('linkToURL')) { // URL as link
+		} elseif ($this->getOption('linkToURL') == 0) { // URL as link
 			$parsedUrl = trim(str_replace('<br />', '', TikiLib::lib('tiki')->parse_data($url)));
 			if ($parsedUrl != $url) {
 				return $parsedUrl;
@@ -88,6 +96,16 @@ class Tracker_Field_Url extends Tracker_Field_Abstract implements Tracker_Field_
 				array(
 					'type' => 'external_extended',
 					'id' => $url,
+				),
+				$smarty
+			);
+		} elseif ($this->getOption('linkToURL') == 4) { // URL as link
+			$smarty->loadPlugin('smarty_function_object_link');
+			return smarty_function_object_link(
+				array(
+					'type' => 'external',
+					'id' => $url,
+					'title' => $this->getOption('other'),
 				),
 				$smarty
 			);
