@@ -4,7 +4,7 @@
 {/title}
 
 {if isset($sent) && empty($errors)}
-	<div class="alert alert-warning">
+	<div id="success" class="alert alert-warning">
 		{icon _id=accept alt="{tr}OK{/tr}" style="vertical-align:middle" align="left"}
 		{tr}Page shared:{/tr}<br>
 		{if isset($emailSent)}
@@ -40,7 +40,7 @@
 {/if}
 
 {if !empty($errors)}
-	<div class="alert alert-warning">
+	<div id="shareerror" class="alert alert-warning">
 		{icon _id=exclamation alt="{tr}Error{/tr}" style="vertical-align:middle" align="left"}
 		{foreach from=$errors item=m name=errors}
 			{$m}
@@ -50,6 +50,7 @@
 {/if}
 
 {if !isset($sent) && empty($errors)}
+    <div id="ajaxmsg"></div>
 	<form method="post" action="tiki-share.php?url={$url|escape:url}" id="share-form">
 		<input type="hidden" name="url" value="{$url|escape:url}">
 		<input type="hidden" name="report" value="{$report}">
@@ -387,3 +388,35 @@
 {else}
 	<p><a href="javascript:window.history.go(-2);">{tr}Return to previous page{/tr}</a></p>
 {/if}
+{jq}
+    $('#share-form').submit(function(e){
+        if($('#addresses').val() !='') {
+            $(this).modal("Please wait....");
+            var postData = $(this).serializeArray();
+            var formURL = 'tiki-share.php?send=share';
+            $.ajax({
+                url : formURL,
+                type: "POST",
+                data : postData,
+                success:function(data, textStatus, jqXHR) {
+                    var shrsuccess =  $($.parseHTML(data)).find("#success").html();
+                    var shrerror = $($.parseHTML(data)).find("#shareerror").html();
+                    if(shrsuccess) {
+                        $('#ajaxmsg').html("<div class='alert alert-warning'>"+shrsuccess+"</div>");
+                    } else {
+                        $('#ajaxmsg').html("<div class='alert alert-warning'>"+shrerror+"</div>");
+                    }
+                    $('#share-form').modal("");
+                    $('#addresses').val('');
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    $('#share-form').modal("");
+                }
+            });
+        } else {
+            alert("You must provide at least one recipient email address");
+        }
+        e.preventDefault();
+        return false;
+    });
+{/jq}
