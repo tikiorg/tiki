@@ -85,6 +85,11 @@ class Search_Elastic_Connection
 		return $this->rawIndex('_percolator', $index, $name, $query);
 	}
 
+	function unstoreQuery($index, $name)
+	{
+		return $this->delete("/_percolator/$index/$name");
+	}
+
 	function percolate($index, $type, $document)
 	{
 		if (! empty($this->dirty['_percolator'])) {
@@ -278,8 +283,10 @@ class Search_Elastic_Connection
 			return $content;
 		} elseif (isset($content->exists) && $content->exists === false) {
 			throw new Search_Elastic_NotFoundException($content->_type, $content->_id);
-		} else {
+		} elseif (isset($content->error)) {
 			throw new Search_Elastic_Exception($content->error, $content->status);
+		} else {
+			return $content;
 		}
 	}
 

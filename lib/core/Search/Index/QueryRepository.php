@@ -10,5 +10,6 @@ interface Search_Index_QueryRepository
 	function getMatchingQueries(array $document);
 
 	function store($name, Search_Expr_Interface $expr);
+	function unstore($name);
 }
 

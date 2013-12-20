@@ -45,6 +45,7 @@ class StoredSearchLib
 	public function deleteQuery($data)
 	{
 		$this->table()->delete(array('queryId' => $data['queryId']));
+		$this->removeFromIndex("{$data['priority']}-{$data['queryId']}");
 	}
 
 	public function storeUserQuery($queryId, $query)
@@ -70,6 +71,38 @@ class StoredSearchLib
 		}
 
 		return true;
+	}
+
+	function updateQuery($queryId, $label, $priority)
+	{
+		$data = $this->getEditableQuery($queryId);
+
+		if (! $data) {
+			return false;
+		}
+
+		if (! $this->isValidPriority($priority)) {
+			return false;
+		}
+
+		$this->table()->update(array(
+			'label' => $label,
+			'priority' => $priority,
+			'lastModif' => TikiLib::lib('tiki')->now,
+		), array(
+			'queryId' => $queryId,
+		));
+
+		$oldPriority = $this->getPriority($data['priority']);
+		if ($oldPriority['indexed'] && $data['priority'] != $priority) {
+			$this->removeFromIndex("{$data['priority']}-$queryId");
+		}
+
+		$newPriority = $this->getPriority($priority);
+
+		if ($newPriority['indexed'] && ! empty($data['query'])) {
+			$this->loadInIndex($GLOBALS['user'], "$priority-$queryId", unserialize($data['query']));
+		}
 	}
 
 	public function getQuery($queryId)
@@ -142,6 +175,16 @@ class StoredSearchLib
 			$query->filterPermissions($groups);
 
 			$query->store($name, $index);
+		}
+	}
+	
+	private function removeFromIndex($name)
+	{
+		$unifiedsearchlib = TikiLib::lib('unifiedsearch');
+		$index = $unifiedsearchlib->getIndex();
+
+		if ($index && $index instanceof Search_Index_QueryRepository) {
+			$index->unstore($name);
 		}
 	}
 

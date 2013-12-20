@@ -192,5 +192,10 @@ class Search_Elastic_Index implements Search_Index_Interface, Search_Index_Query
 
 		$this->connection->storeQuery($this->index, $name, $doc);
 	}
+
+	function unstore($name)
+	{
+		$this->connection->unstoreQuery($this->index, $name);
+	}
 }
 

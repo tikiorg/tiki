@@ -18,6 +18,12 @@ class Search_Elastic_QueryRepositoryTest extends PHPUnit_Framework_TestCase
 
 		$this->index = new Search_Elastic_Index($connection, 'test_index');
 		$this->index->destroy();
+		$factory = $this->index->getTypeFactory();
+		$this->index->addDocument(array(
+			'object_type' => $factory->identifier('wiki page'),
+			'object_id' => $factory->identifier('HomePage'),
+			'contents' => $factory->plaintext('Hello World'),
+		));
 	}
 
 	function tearDown()
@@ -58,6 +64,22 @@ class Search_Elastic_QueryRepositoryTest extends PHPUnit_Framework_TestCase
 	{
 		$query = new Search_Query('Foobar');
 		$query->store('my_custom_name', $this->index);
+
+		$tf = $this->index->getTypeFactory();
+		$names = $this->index->getMatchingQueries(array(
+			'object_type' => $tf->identifier('wiki page'),
+			'object_id' => $tf->identifier('HomePage'),
+			'contents' => $tf->plaintext('Hello World!'),
+		));
+
+		$this->assertEquals(array(), $names);
+	}
+
+	function testRemoveQuery()
+	{
+		$query = new Search_Query('Hello World');
+		$query->store('my_custom_name', $this->index);
+		$this->index->unstore('my_custom_name');
 
 		$tf = $this->index->getTypeFactory();
 		$names = $this->index->getMatchingQueries(array(

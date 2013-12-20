@@ -45,8 +45,6 @@ class Services_Search_StoredController
 
 	function action_list($input)
 	{
-		ini_set('display_errors', 1);
-		error_reporting(E_ALL);
 		$lib = TikiLib::lib('storedsearch');
 		$results = null;
 
@@ -118,10 +116,15 @@ class Services_Search_StoredController
 			'priorities' => $lib->getPriorities(),
 		);
 
-		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-			$lib->deleteQuery($data);
+		$label = $input->label->text();
+		$priority = $input->priority->word();
 
+		if ($_SERVER['REQUEST_METHOD'] == 'POST' && $label && $priority) {
 			$out['success'] = true;
+
+			$lib->updateQuery($data['queryId'], $label, $priority);
+
+			$out['FORWARD'] = ['action' => 'list', 'queryId' => $data['queryId']];
 		}
 
 		return $out;
