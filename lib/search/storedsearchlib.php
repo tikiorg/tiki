@@ -60,7 +60,20 @@ class StoredSearchLib
 		return true;
 	}
 
-	function reloadAll()
+	public function getQuery($queryId)
+	{
+		$data = $this->fetchQuery($queryId);
+
+		if (! empty($data['query'])) {
+			$query = unserialize($data['query']);
+		} else {
+			$query = new Search_Query;
+		}
+		
+		return $query;
+	}
+
+	public function reloadAll()
 	{
 		$table = $this->table();
 		$queries = $table->fetchColumn('queryId', [
@@ -81,7 +94,7 @@ class StoredSearchLib
 		}
 	}
 
-	function getPriorities()
+	public function getPriorities()
 	{
 		static $list;
 		if (! $list) {

@@ -16,7 +16,7 @@
 		{foreach $queries as $query}
 			<tr>
 				<td>
-					{$query.label|escape}
+					<a href="tiki-searchindex.php?storedQuery={$query.queryId|escape}">{$query.label|escape}</a>
 					<span class="label {$priorities[$query.priority].class|escape}">{$priorities[$query.priority].label|escape}</span>
 				</td>
 				<td>

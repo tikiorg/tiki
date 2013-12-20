@@ -19,6 +19,7 @@ $inputConfiguration = array(
     'words' =>'text',
     'boolean' =>'word',
 	'storeAs' => 'int',
+	'storedQuery' => 'int',
     )
   )
 );
@@ -40,7 +41,7 @@ foreach (array('find', 'highlight', 'where') as $possibleKey) {
 $filter = isset($_REQUEST['filter']) ? $_REQUEST['filter'] : array();
 $facets = array();
 
-if (count($filter)) {
+if (count($filter) || ! empty($_REQUEST['storedQuery'])) {
 	if (isset($_REQUEST['save_query'])) {
 		$_SESSION['quick_search'][(int) $_REQUEST['save_query']] = $_REQUEST;
 	}
@@ -167,9 +168,15 @@ function tiki_searchindex_get_results($filter, $offset, $maxRecords)
 	global $prefs;
 
 	$unifiedsearchlib = TikiLib::lib('unifiedsearch');
-	$query = new Search_Query;
-	$unifiedsearchlib->initQueryBase($query);
-	$query = $unifiedsearchlib->buildQuery($filter, $query);
+
+	if ($prefs['storedsearch_enabled'] == 'y' && ! empty($_REQUEST['storedQuery'])) {
+		$storedsearch = TikiLib::lib('storedsearch');
+		$query = $storedsearch->getQuery($_REQUEST['storedQuery']);
+	} else {
+		$query = new Search_Query;
+		$unifiedsearchlib->initQueryBase($query);
+		$query = $unifiedsearchlib->buildQuery($filter, $query);
+	}
 
 	if (isset($_REQUEST['sort_mode']) && $order = Search_Query_Order::parse($_REQUEST['sort_mode'])) {
 		$query->setOrder($order);
