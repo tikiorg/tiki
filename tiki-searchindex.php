@@ -179,6 +179,7 @@ function tiki_searchindex_get_results($filter, $offset, $maxRecords)
 	if ($prefs['storedsearch_enabled'] == 'y' && ! empty($_POST['storeAs'])) {
 		$storedsearch = TikiLib::lib('storedsearch');
 		$storedsearch->storeUserQuery($_POST['storeAs'], $query);
+		TikiLib::lib('smarty')->assign('display_msg', tr('Your query was stored.'));
 	}
 
 	$unifiedsearchlib->initQueryPermissions($query);
