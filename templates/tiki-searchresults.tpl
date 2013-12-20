@@ -21,7 +21,7 @@
 	{if $prefs.feature_search_show_search_box eq 'y' or  $searchStyle eq "menu"}
 		<form action="tiki-searchresults.php" method="get" id="search-form" class="form-inline" role="form">
             <div class="form-group">
-			<label class="findtitle control-label">
+			<label class="control-label">
 				{tr}Search{/tr} <input id="highlight{$iSearch}" name="highlight" style="width:300px" type="text" accesskey="s" value="{$words|escape}">
 			</label>
 			{if $prefs.search_autocomplete eq 'y'}

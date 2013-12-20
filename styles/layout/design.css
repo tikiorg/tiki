@@ -3,6 +3,7 @@
 	and layout properties, is to be imported by theme stylesheets.
 */
 
+.
 
 /***** XHTML Elements *****/
 .iconmenu {
@@ -113,21 +114,6 @@ img.icon {
 
 .iconmenutext {
 	white-space: nowrap;
-}
-
-/** Find form **/
-.findtitle,
-.findexactmatch,
-.findnumrows,
-.findtypes,
-.findlang {
-	display: inline;
-	vertical-align: middle;
-	margin: 0 1px;
-}
-
-.findtable ul li {
-	float: left;
 }
 
 /* New Toolbars */
@@ -996,13 +982,6 @@ textarea#editpost2 {
 }
 
 /**** Image Galleries ****/
-.galtable {
-	width: 100%;
-}
-
-body.tiki_galleries .findtable {
-	display: inline;
-}
 
 .oddthumb {
 	border-collapse: collapse;
@@ -1209,7 +1188,7 @@ a.categpath {
 	display: inline;
 }
 
-/***** Tags (freetags) *****/
+/***** Tags (freetags) *****
 .freetaglist {
 	padding: 0 20px 8px;
 	text-align: right;
@@ -1289,7 +1268,7 @@ ul.freetag {
 .freetagObjectName a {
 	text-decoration: none;
 }
-
+************/
 /* freetegged plugin */
 
 ul.freetagged li {
@@ -2290,14 +2269,6 @@ a.flip:hover,
 	width: 190px;
 	text-align: left;
 	margin: auto;
-}
-
-.findtitle input {
-	margin-left: 2px;
-}
-
-.findtable ul {
-	list-style: none;
 }
 
 .alphafilter {
