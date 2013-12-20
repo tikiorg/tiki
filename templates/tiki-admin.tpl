@@ -92,7 +92,7 @@
 <fieldset>
 <legend>{tr}Preferences Search Results{/tr}</legend>
 	<form method="post" action="">
-		<div class="pref_search_results box">
+		<div class="pref_search_results panel">
 			{foreach from=$lm_searchresults item=prefName}
 				{preference name=$prefName get_pages="y"}
 			{/foreach}
