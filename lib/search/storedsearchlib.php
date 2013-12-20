@@ -81,7 +81,7 @@ class StoredSearchLib
 		}
 	}
 
-	function getPriorities($priority)
+	function getPriorities()
 	{
 		static $list;
 		if (! $list) {
