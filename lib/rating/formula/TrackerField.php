@@ -57,7 +57,7 @@ class Tiki_Formula_Function_TrackerField extends Math_Formula_Function
 			return $default;
 		}
 
-		return (float) $item[$fieldId];
+		return $item[$fieldId];
 	}
 }
 
