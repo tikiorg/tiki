@@ -10,7 +10,7 @@
 	<form id="search-form" method="get" action="tiki-searchindex.php">
 		<p>
 			<input type="search" name="filter~content" value="{$filter.content|escape}"/>
-			<input type="submit" class="btn btn-default btn-sm" value="{tr}Search{/tr}"/>
+			<input type="submit" class="btn btn-primary btn-sm" value="{tr}Search{/tr}"/>
 
 			{foreach from=$facets item=facet}
 				<input type="hidden" name="filter~{$facet|escape}" value="{$filter[$facet]|escape}"/>
