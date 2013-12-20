@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "c8163e487cc41c98e1b341d85212dee7",
+    "hash": "65b42a27b11bcd31b30624d7293eb832",
     "packages": [
         {
             "name": "aFarkas/html5shiv",
@@ -86,34 +86,34 @@
         },
         {
             "name": "ckeditor/ckeditor",
-            "version": "4.2.1",
+            "version": "4.2.3",
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/ckeditor-ckeditor-4.2.1.zip",
-                "reference": "4.2.1",
-                "shasum": "070fb08677ae2bf2303ec6cca9bdf7672457b001"
+                "url": "https://composer.tiki.org/dist/ckeditor-ckeditor-4.2.3.zip",
+                "reference": "4.2.3",
+                "shasum": "626c6720e02614f718ebae3761d17e51dbae6741"
             },
             "type": "library"
         },
         {
             "name": "ckeditor/ckeditor/plugins/divarea",
-            "version": "4.2.1",
+            "version": "4.2.3",
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/ckeditor-ckeditor-plugins-divarea-4.2.1.zip",
-                "reference": "4.2.1",
-                "shasum": "e7376750b1c2f2533a2e3fdd85ee928b71237160"
+                "url": "https://composer.tiki.org/dist/ckeditor-ckeditor-plugins-divarea-4.2.3.zip",
+                "reference": "4.2.3",
+                "shasum": "cbd1a971e4bf85c5d3e4e859d79b87cbb13521d0"
             },
             "type": "library"
         },
         {
             "name": "ckeditor/ckeditor/skins/kama",
-            "version": "4.2.1",
+            "version": "4.2.3",
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/ckeditor-ckeditor-skins-kama-4.2.1.zip",
-                "reference": "4.2.1",
-                "shasum": "920d3910780bfe8aa9c458b9037333d4f1132bb5"
+                "url": "https://composer.tiki.org/dist/ckeditor-ckeditor-skins-kama-4.2.3.zip",
+                "reference": "4.2.3",
+                "shasum": "aebec58a06ff6ac2d45511a66bf451ffaa184988"
             },
             "type": "library"
         },
