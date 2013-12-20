@@ -35,7 +35,13 @@ class FileGallery_Wrapper
 				return $this->temporaryFile;
 			}
 
-			$this->temporaryFile = $tmpfname = tempnam("/tmp", "wiki_");
+			if (!empty(ini_get('upload_tmp_dir'))) {
+				$sTmpDir = ini_get('upload_tmp_dir');
+			} else {
+				$sTmpDir = '/tmp';
+			}
+
+			$this->temporaryFile = $tmpfname = tempnam($sTmpDir, 'wiki_');
 			@file_put_contents($tmpfname, $this->data);
 			return $tmpfname;
 		} else {
