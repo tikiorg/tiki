@@ -105,7 +105,7 @@ class Tracker_Field_Url extends Tracker_Field_Abstract implements Tracker_Field_
 				array(
 					'type' => 'external',
 					'id' => $url,
-					'title' => $this->getOption('other'),
+					'title' => tr($this->getOption('other')),
 				),
 				$smarty
 			);
