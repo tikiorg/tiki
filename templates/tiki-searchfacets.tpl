@@ -21,6 +21,7 @@
 		{if $prefs.storedsearch_enabled eq 'y'}
 			<input type="hidden" name="storeAs" value=""/>
 			<button id="store-query" class="btn btn-default">{tr}Store Query{/tr}</button>
+			<a href="{service controller=search_stored action=list}" class="btn btn-link">{tr}View Stored Queries{/tr}</button>
 			{jq}
 				$('#store-query').click(function () {
 					var form = $(this).closest('form')[0];

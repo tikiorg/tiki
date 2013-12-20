@@ -15,9 +15,9 @@
 	</thead>
 	<tbody>
 		{foreach $queries as $query}
-			<tr>
+			<tr{if $query.queryId eq $queryId} class="active"{/if}>
 				<td>
-					<a href="tiki-searchindex.php?storedQuery={$query.queryId|escape}">{$query.label|escape}</a>
+					<a href="{service controller=search_stored action=list queryId=$query.queryId}">{$query.label|escape}</a>
 					<span class="label {$priorities[$query.priority].class|escape}">{$priorities[$query.priority].label|escape}</span>
 				</td>
 				<td>
@@ -42,6 +42,11 @@
 		{/foreach}
 	</tbody>
 </table>
+
+{if $results}
+	<h2>{tr}Results{/tr}</h2>
+	{$results}
+{/if}
 {jq}
 $('.query-remove').requireConfirm({
 	success: function () {

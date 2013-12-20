@@ -45,12 +45,24 @@ class Services_Search_StoredController
 
 	function action_list($input)
 	{
+		ini_set('display_errors', 1);
+		error_reporting(E_ALL);
 		$lib = TikiLib::lib('storedsearch');
+		$results = null;
+
+		if ($queryId = $input->queryId->int()) {
+			if ($query = $lib->getQuery($queryId)) {
+				$resultset = $this->getResultSet($query);
+				$results = $this->renderResults($resultset);
+			}
+		}
 
 		return array(
 			'title' => tr('Stored Queries'),
 			'priorities' => $lib->getPriorities(),
 			'queries' => $lib->getUserQueries(),
+			'queryId' => $queryId,
+			'results' => $results,
 		);
 	}
 
@@ -82,5 +94,57 @@ class Services_Search_StoredController
 		}
 
 		return $out;
+	}
+
+	private function getResultSet($query)
+	{
+		try {
+			$unifiedsearchlib = TikiLib::lib('unifiedsearch');
+
+			return $query->search($unifiedsearchlib->getIndex());
+		} catch (Search_Elastic_TransportException $e) {
+			TikiLib::lib('errorreport')->report('Search functionality currently unavailable.');
+		} catch (Exception $e) {
+			TikiLib::lib('errorreport')->report($e->getMessage());
+		}
+	}
+	
+	private function renderResults($resultset)
+	{
+		global $prefs;
+
+		$unifiedsearchlib = TikiLib::lib('unifiedsearch');
+		$dataSource = $unifiedsearchlib->getDataSource('formatting');
+
+		$plugin = new Search_Formatter_Plugin_SmartyTemplate(realpath('templates/searchresults-plain.tpl'));
+		$plugin->setData(
+			array(
+				'prefs' => $prefs,
+			)
+		);
+		$fields = array(
+			'title' => null,
+			'url' => null,
+			'modification_date' => null,
+			'highlight' => null,
+		);
+		if ($prefs['feature_search_show_visit_count'] === 'y') {
+			$fields['visits'] = null;
+		}
+		$plugin->setFields($fields);
+
+		$formatter = new Search_Formatter($plugin);
+		$formatter->setDataSource($dataSource);
+
+		$wiki = $formatter->format($resultset);
+		$tikilib = TikiLib::lib('tiki');
+		$results = $tikilib->parse_data(
+			$wiki,
+			array(
+				'is_html' => true,
+			)
+		);
+
+		return $results;
 	}
 }
