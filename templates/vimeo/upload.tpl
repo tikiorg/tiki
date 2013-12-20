@@ -41,7 +41,7 @@
 	var $title = $('input[name=title]', $form);
 
 	$form.submit(function(){
-		$(this).modal(tr("Uploading..."));
+		$(this).parents(".ui-dialog").modal(tr("Uploading..."));
 		return true;
 	});
 
@@ -60,7 +60,7 @@
 			}
 			$file.val("");	// empty file value so it doesn't get added twice (mainly in webkit)
 			$.post($.service('vimeo', 'complete'), updata, function(data) {
-				$form.modal();
+				$form.parents(".ui-dialog").modal();
 				if (data.err) {
 					alert("Upload Error:\n" + data.err);
 				} else {
@@ -69,9 +69,11 @@
 			}, 'json')
 			.error(function (e) {
 				alert(tr("An error occurred uploading your video.") + "\n" + e.statusText + " (" + e.status + ")");
-				$form.modal();
+				$form.parents(".ui-dialog").modal();
 				$(".vimeo_upload").trigger("vimeo_uploaded", [{}]);	// get vimeo_uploaded to close the dialog
 			});
+		} else {
+			$form.parents(".ui-dialog").modal();
 		}
 	});
 {/jq}
