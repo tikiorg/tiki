@@ -26,6 +26,7 @@ class Tracker_Field_Math extends Tracker_Field_Abstract implements Tracker_Field
 				'params' => array(
 					'calculation' => array(
 						'name' => tr('Calculation'),
+						'type' => 'textarea',
 						'description' => tr('Calculation in the Rating Language'),
 						'filter' => 'text',
 						'legacy_index' => 0,
@@ -50,7 +51,7 @@ class Tracker_Field_Math extends Tracker_Field_Abstract implements Tracker_Field
 
 	function renderInput($context = array())
 	{
-		return tr('Feature cannot be set or modified through this interface.');
+		return tr('Value will be re-calculated on save. Current value: %0', $this->getValue());
 	}
 
 	function renderOutput($context = array())
