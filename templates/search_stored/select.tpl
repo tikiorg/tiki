@@ -1,3 +1,10 @@
+{extends 'layout_view.tpl'}
+
+{block name="title"}
+	{title}{$title|escape}{/title}
+{/block}
+
+{block name="content"}
 <form role="form" method="post" action="{service controller=search_stored action=select}">
 	<div class="panel panel-primary">
 		<div class="panel-heading">
@@ -70,3 +77,4 @@
 		</div>
 	</div>
 </form>
+{/block}

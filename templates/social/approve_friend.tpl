@@ -1,3 +1,10 @@
+{extends 'layout_view.tpl'}
+
+{block name="title"}
+	{title}{$title|escape}{/title}
+{/block}
+
+{block name="content"}
 {if $status eq 'DONE'}
 	{tr _0=$username|userlink}%0 has been accepted{/tr}
 {else}
@@ -9,3 +16,4 @@
 		</div>
 	</form>
 {/if}
+{/block}

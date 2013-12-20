@@ -1,3 +1,10 @@
+{extends 'layout_view.tpl'}
+
+{block name="title"}
+	{title}{$title|escape}{/title}
+{/block}
+
+{block name="content"}
 <form method="post" action="{service controller=workspace action=select_permissions}">
 	<table class="data">
 		<tr>
@@ -29,3 +36,4 @@
 		{/foreach}
 	</table>
 </form>
+{/block}

@@ -1,3 +1,10 @@
+{extends 'layout_view.tpl'}
+
+{block name="title"}
+	{title}{$title|escape}{/title}
+{/block}
+
+{block name="content"}
 <form class="simple" method="post" action="{service controller=tracker action=edit_field}">
 	<div class="accordion">
 		<h4>{tr}General{/tr}</h4>
@@ -191,3 +198,4 @@ $('.accordion').removeClass('accordion').accordion({
 	heightStyle: "content"
 });
 {/jq}
+{/block}

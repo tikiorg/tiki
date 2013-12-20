@@ -1,3 +1,10 @@
+{extends 'layout_view.tpl'}
+
+{block name="title"}
+	{title}{$title|escape}{/title}
+{/block}
+
+{block name="content"}
 <form class="simple" method="post" action="{service controller=managestream action=record}">
 	<label>
 		{tr}Event{/tr}
@@ -16,3 +23,4 @@
 		<input type="submit" class="btn btn-default btn-sm" value="{tr}Record Event{/tr}"/>
 	</div>
 </form>
+{/block}

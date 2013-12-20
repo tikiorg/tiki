@@ -1,3 +1,10 @@
+{extends 'layout_view.tpl'}
+
+{block name="title"}
+	{title}{$title|escape}{/title}
+{/block}
+
+{block name="content"}
 {if $threadId}
 	<p>{tr}Your comment was posted.{/tr}</p>
 	<p>{object_link type=$type objectId=$objectId}</p>
@@ -34,3 +41,4 @@
 		</fieldset>
 	</form>
 {/if}
+{/block}

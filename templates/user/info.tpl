@@ -1,3 +1,10 @@
+{extends 'layout_view.tpl'}
+
+{block name="title"}
+	{title}{$title|escape}{/title}
+{/block}
+
+{block name="content"}
 {strip}
 {if $error}
 	<div class="user-info">
@@ -63,3 +70,4 @@
 	</div>
 {/if}
 {/strip}
+{/block}

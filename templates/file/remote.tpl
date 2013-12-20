@@ -1,3 +1,10 @@
+{extends 'layout_view.tpl'}
+
+{block name="title"}
+	{title}{$title|escape}{/title}
+{/block}
+
+{block name="content"}
 {if ! $fileId}
 	<form method="post" action="{service controller=file action=remote}">
 		<h3>{tr}Upload from URL{/tr}</h3>
@@ -10,3 +17,4 @@
 {else}
 	<p>{tr}File added:{/tr} {object_link type=file id=$fileId title=$name}</p>
 {/if}
+{/block}

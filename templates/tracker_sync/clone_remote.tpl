@@ -1,3 +1,10 @@
+{extends 'layout_view.tpl'}
+
+{block name="title"}
+	{title}{$title|escape}{/title}
+{/block}
+
+{block name="content"}
 {if $trackerId}
 	<a href="tiki-admin_tracker_fields.php?trackerId={$trackerId|escape:'url'}">{tr}Admin Fields{/tr}</a>
 {else}
@@ -30,3 +37,4 @@
 		</div>
 	</form>
 {/if}
+{/block}

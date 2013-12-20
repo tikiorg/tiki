@@ -1,3 +1,10 @@
+{extends 'layout_view.tpl'}
+
+{block name="title"}
+	{title}{$title|escape}{/title}
+{/block}
+
+{block name="content"}
 <form class="workspace-ui" method="post" action="{service controller=workspace action=edit_template id=$id}">
 	{remarksbox type=info title="{tr}Not enough options?{/tr}"}
 		<p>{tr}This is the simple edition interface offering a subset of the available features. You can switch to the advanced mode and get more power.{/tr}</p>
@@ -78,3 +85,4 @@
 		<input type="submit" class="btn btn-default btn-sm" value="{tr}Save{/tr}"/>
 	</div>
 </form>
+{/block}

@@ -103,7 +103,9 @@ class Services_Broker
 		$template = "$controller/$action.tpl";
 
 		//if template doesn't exists, simply return the array given from the action
-		if ($smarty->templateExists($template) == false) return json_encode($output);
+		if (! $smarty->templateExists($template)) {
+			return json_encode($output);
+		}
 
 		$access = TikiLib::lib('access');
 		foreach ($output as $key => $value) {
@@ -111,20 +113,12 @@ class Services_Broker
 		}
 
 		if ($internal) {
-			return $smarty->fetch($template);
+			$GLOBALS['prefs']['site_layout'] = 'internal';
 		} elseif ($access->is_xml_http_request()) {
-			$headerlib = TikiLib::lib('header');
-
-			$content = $smarty->fetch($template);
-
-			$content .= $headerlib->output_js_files();
-			$content .= $headerlib->output_js();
-
-			return $content;
-		} else {
-			$smarty->assign('mid', $template);
-			return $smarty->fetch('tiki.tpl');
+			$GLOBALS['prefs']['site_layout'] = 'ajax';
 		}
+
+		return $smarty->fetch($template);
 	}
 }
 

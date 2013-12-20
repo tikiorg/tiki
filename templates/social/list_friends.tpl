@@ -1,3 +1,10 @@
+{extends 'layout_view.tpl'}
+
+{block name="title"}
+	{title}{$title|escape}{/title}
+{/block}
+
+{block name="content"}
 <div class="friend-container" data-controller="social" data-action="list_friends">
 <ul class="friend-list">
 	{foreach from=$friends item=friend}
@@ -37,3 +44,4 @@
 {/if}
 <button class="add-friend">{tr}Add Friend{/tr}</button>
 </div>
+{/block}

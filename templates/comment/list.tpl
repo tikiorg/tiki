@@ -1,3 +1,10 @@
+{extends 'layout_view.tpl'}
+
+{block name="title"}
+	{title}{$title|escape}{/title}
+{/block}
+
+{block name="content"}
 <div class="actions">
 	{if ! $parentId && $allow_lock}
 		{self_link controller=comment action=lock type=$type objectId=$objectId _icon=lock _class="confirm-prompt" _confirm="{tr}Do you really want to lock comments?{/tr}"}{tr}Lock{/tr}{/self_link}
@@ -102,3 +109,4 @@ var crf = $('form.commentRatingForm').submit(function() {
 var ajax_url = '{$base_url}';
 var objectId = '{$objectId}';
 </script>
+{/block}

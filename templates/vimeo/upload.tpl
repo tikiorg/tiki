@@ -1,3 +1,10 @@
+{extends 'layout_view.tpl'}
+
+{block name="title"}
+	{title}{$title|escape}{/title}
+{/block}
+
+{block name="content"}
 {if $errMsg}
 	{remarksbox title='{tr}Vimeo Setup Error{/tr}' type='error'}
 		<p>{$errMsg}</p>
@@ -77,3 +84,4 @@
 		}
 	});
 {/jq}
+{/block}

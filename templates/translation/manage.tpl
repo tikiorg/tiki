@@ -1,3 +1,10 @@
+{extends 'layout_view.tpl'}
+
+{block name="title"}
+	{title}{$title|escape}{/title}
+{/block}
+
+{block name="content"}
 {if $translations|@count}
 	<p>{tr}Current translation set:{/tr}</p>
 	<ul>
@@ -31,3 +38,4 @@
 		<p>{tr}All possible translations exist.{/tr}</p>
 	{/if}
 {/if}
+{/block}

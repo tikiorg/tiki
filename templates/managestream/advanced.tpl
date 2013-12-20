@@ -1,3 +1,10 @@
+{extends 'layout_view.tpl'}
+
+{block name="title"}
+	{title}{$title|escape}{/title}
+{/block}
+
+{block name="content"}
 {if $rule.ruleId && $rule.ruleType neq 'advanced'}
 	{remarksbox title="{tr}Operation not reversible{/tr}"}
 		{tr}This action is currently of a basic type. Using the advanced editor will prevent the simple editor to be used.{/tr}
@@ -25,3 +32,4 @@
 		<input type="submit" class="btn btn-default btn-sm" value="{tr}Save{/tr}"/>
 	</div>
 </form>
+{/block}

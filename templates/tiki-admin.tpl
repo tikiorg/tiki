@@ -8,7 +8,7 @@
 	{/remarksbox}
 {/if}
 
-<form method="post" action="" class="form-group">
+<form method="post" action="" class="form-inline">
 	<fieldset>
 		<legend>{tr}Preference Filters{/tr}</legend>
 		{foreach from=$pref_filters key=name item=info}
@@ -97,7 +97,7 @@
 				{preference name=$prefName get_pages="y"}
 			{/foreach}
 		</div>
-		<input type="submit" value="{tr}Change{/tr}" class="clear">
+		<input class="btn btn-default" type="submit" value="{tr}Change{/tr}" class="clear">
 		<input type="hidden" name="lm_criteria" value="{$lm_criteria|escape}">
 	</form>
 </fieldset>

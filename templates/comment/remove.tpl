@@ -1,3 +1,10 @@
+{extends 'layout_view.tpl'}
+
+{block name="title"}
+	{title}{$title|escape}{/title}
+{/block}
+
+{block name="content"}
 {if $status neq 'DONE'}
 	<form method="post" action="{service controller=comment action=remove}">
 		<p>{tr}Are you sure you want to remove this comment?{/tr}</p>
@@ -12,3 +19,4 @@
 	</form>
 {/if}
 {object_link type=$objectType id=$objectId title="{tr}Return{/tr}"}
+{/block}

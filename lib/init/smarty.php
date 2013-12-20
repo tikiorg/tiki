@@ -207,6 +207,7 @@ class Smarty_Tiki extends Smarty
 	{
 		global $prefs, $style_base, $tikidomain;
 		$this->muteExpectedErrors();
+		$this->refreshLanguage();
 
 		if ( ($tpl = $this->getTemplateVars('mid')) && ( $_smarty_tpl_file == 'tiki.tpl' || $_smarty_tpl_file == 'tiki-print.tpl' || $_smarty_tpl_file == 'tiki_full.tpl' ) ) {
 

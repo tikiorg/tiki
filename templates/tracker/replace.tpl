@@ -1,3 +1,10 @@
+{extends 'layout_view.tpl'}
+
+{block name="title"}
+	{title}{$title|escape}{/title}
+{/block}
+
+{block name="content"}
 <form method="post" class="simple" action="{service controller=tracker action=replace}">
 	{accordion}
 		{accordion_group title="{tr}General{/tr}"}
@@ -393,3 +400,4 @@
 		<input type="submit" class="btn btn-default btn-sm" value="{tr}Save{/tr}">
 	</div>
 </form>
+{/block}

@@ -1,3 +1,10 @@
+{extends 'layout_view.tpl'}
+
+{block name="title"}
+	{title}{$title|escape}{/title}
+{/block}
+
+{block name="content"}
 {if $yaml}
 	<div class="t_navbar form-group">
 		{include file="tracker_actions.tpl"}
@@ -9,3 +16,4 @@
 	{$yaml}
 	
 {/if}
+{/block}

@@ -1,3 +1,10 @@
+{extends 'layout_view.tpl'}
+
+{block name="title"}
+	{title}{$title|escape}{/title}
+{/block}
+
+{block name="content"}
 {if $message}
 	{remarksbox type="info" title="{tr}Upload Successful{/tr}"}
 		{$message|escape}
@@ -39,3 +46,4 @@ swfobject.embedSWF("{{$prefs.kaltura_kServiceUrl}}kcw/ui_conf_id/{{$prefs.kaltur
 	{/jq}
 
 {/if}
+{/block}

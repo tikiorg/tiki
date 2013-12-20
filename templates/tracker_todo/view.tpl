@@ -1,3 +1,10 @@
+{extends 'layout_view.tpl'}
+
+{block name="title"}
+	{title}{$title|escape}{/title}
+{/block}
+
+{block name="content"}
 <h4>{tr}Events{/tr}</h4>
 <div class="table-responsive">
 <table class="table normal">
@@ -109,3 +116,4 @@ $('.add-event').removeClass('add-event').submit(function () {
 	return false;
 });
 {/jq}
+{/block}

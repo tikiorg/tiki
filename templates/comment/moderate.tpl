@@ -1,3 +1,10 @@
+{extends 'layout_view.tpl'}
+
+{block name="title"}
+	{title}{$title|escape}{/title}
+{/block}
+
+{block name="content"}
 {if $status neq 'DONE'}
 	<form method="post" action="{service controller=comment action=moderate}">
 		{if $do eq 'approve'}
@@ -14,3 +21,4 @@
 	</form>
 {/if}
 {object_link type=$type id=$objectId title="{tr}Return{/tr}"}
+{/block}

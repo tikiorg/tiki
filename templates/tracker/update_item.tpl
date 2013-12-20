@@ -1,3 +1,10 @@
+{extends 'layout_view.tpl'}
+
+{block name="title"}
+	{title}{$title|escape}{/title}
+{/block}
+
+{block name="content"}
 <form class="simple" method="post" action="{service controller=tracker action=update_item}" id="updateItemForm">
 	{trackerfields trackerId=$trackerId fields=$fields}
 	<div class="submit">
@@ -9,3 +16,4 @@
 		{/foreach}
 	</div>
 </form>
+{/block}

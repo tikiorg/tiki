@@ -1,3 +1,10 @@
+{extends 'layout_view.tpl'}
+
+{block name="title"}
+	{title}{$title|escape}{/title}
+{/block}
+
+{block name="content"}
 <form method="post" action="{service controller=comment action=edit threadId=$comment.threadId}">
 	<fieldset>
 		<input type="hidden" name="edit" value="1"/>
@@ -10,3 +17,4 @@
 		<div class="button"><a href="#" onclick="$(this).closest('.comment-container, .ui-dialog-content').reload(); return false;">{tr}Cancel{/tr}</a></div>
 	</fieldset>
 </form>
+{/block}

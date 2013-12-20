@@ -1,3 +1,10 @@
+{extends 'layout_view.tpl'}
+
+{block name="title"}
+	{title}{$title|escape}{/title}
+{/block}
+
+{block name="content"}
 <ul>
 	{foreach from=$list item=template}
 		<li>
@@ -9,3 +16,4 @@
 		</li>
 	{/foreach}
 </ul>
+{/block}
