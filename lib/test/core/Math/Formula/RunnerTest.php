@@ -289,5 +289,28 @@ class Math_Formula_RunnerTest extends TikiTestCase
 
 		$this->assertEquals(4, $this->runner->evaluate());
 	}
+
+	/**
+	 * @dataProvider stringConcats
+	 */
+	function testStringConcat($in, $out)
+	{
+		$this->runner->setFormula($in);
+		$this->runner->setVariables(array(
+			'a' => 'hello',
+			'b' => 'world',
+		));
+
+		$this->assertEquals($out, $this->runner->evaluate());
+	}
+
+	function stringConcats()
+	{
+		return array(
+			array('(str a b)', 'a b'),
+			array('(str (mul 3 2)b)', '6 b'),
+			array('(str Say: (eval a b) !)', 'Say: hello world !'),
+		);
+	}
 }
 

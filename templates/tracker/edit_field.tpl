@@ -49,6 +49,8 @@
 						<input type="text" name="option~{$param|escape}" value="{$options[$param]|implode:$def.separator|escape}">
 					{elseif $def.count eq '*'}
 						<input type="text" name="option~{$param|escape}" value="{$options[$param]|implode:','|escape}">
+					{elseif $def.type eq 'textarea'}
+						<textarea name="option~{$param|escape}">{$options[$param]|escape}</textarea>
 					{else}
 						<input type="text" name="option~{$param|escape}" value="{$options[$param]|escape}">
 					{/if}

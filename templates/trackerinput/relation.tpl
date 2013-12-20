@@ -12,8 +12,9 @@
 (function () {
 	var inverts = {{$field.inverts|@json_encode}};
 	var container = $('#{{$field.ins_id}}_container')[0];
+	var currents = [];
 
-	var createItem = function (id, label) {
+	var createItem = function (id, label, highlight) {
 		if (!id) {
 			return false;
 		}
@@ -36,8 +37,19 @@
 					})
 			);
 		}
+		$('ul.related_items li', container).removeClass('highlight');
 
-		$('ul.related_items', container).append(item);
+		if (-1 === $.inArray(id, currents)) {
+			currents.push(id);
+			$('ul.related_items', container).append(item);
+		} else if (highlight) {
+			$('ul.related_items input', container)
+				.filter(function () {
+					return id === $(this).val();
+				})
+				.closest('li')
+				.addClass('highlight');
+		}
 	};
 
 	$('ul.related_items', container).empty();
@@ -47,7 +59,7 @@
 
 	$('ul.related_items', container).sortList();
 	$('.selector', container).change(function () {
-		createItem($(this).val(), $(this).data('label'));
+		createItem($(this).val(), $(this).data('label'), true);
 		$('ul.related_items', container).sortList();
 	});
 }());

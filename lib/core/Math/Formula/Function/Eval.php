@@ -5,18 +5,14 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-class Math_Formula_Function_Str extends Math_Formula_Function
+class Math_Formula_Function_Eval extends Math_Formula_Function
 {
 	function evaluate( $element )
 	{
 		$out = array();
 
 		foreach ( $element as $child ) {
-			if ($child instanceof Math_Formula_Element) {
-				$out[] = $this->evaluateChild($child);
-			} else {
-				$out[] = $child;
-			}
+			$out[] = $this->evaluateChild($child);
 		}
 
 		return implode(' ', $out);
