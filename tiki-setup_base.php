@@ -252,7 +252,6 @@ $vartype['thread_style'] = '+char';
 $vartype['comments_per_page'] = '+int';
 $vartype['topics_offset'] = 'int';
 $vartype['topics_sort_mode'] = '+char';
-$vartype['priority'] = 'int';
 $vartype['theme'] = 'string';
 $vartype['flag'] = 'char';
 $vartype['lang'] = 'char';

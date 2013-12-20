@@ -10,6 +10,7 @@
 		<tr>
 			<th>Query</th>
 			<th>Last Modification</th>
+			<th>Actions</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -26,6 +27,9 @@
 						{tr}Never{/tr}
 					{/if}
 				</td>
+				<td>
+					<a class="query-remove" data-confirm="{tr _0=$query.label}Do you really want to remove the %0 query?{/tr}" href="{service controller=search_stored action=delete queryId=$query.queryId}">{icon _id=cross}</a>
+				</td>
 			</tr>
 		{foreachelse}
 			<tr>
@@ -33,8 +37,16 @@
 					{tr}No stored queries!{/tr}
 				</td>
 				<td>{tr}Never{/tr}</td>
+				<td>&nbsp;</td>
 			</tr>
 		{/foreach}
 	</tbody>
 </table>
+{jq}
+$('.query-remove').requireConfirm({
+	success: function () {
+		$(this).closest('tr').remove();
+	}
+});
+{/jq}
 {/block}

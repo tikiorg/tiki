@@ -28,7 +28,7 @@ class StoredSearchLib
 		));
 	}
 
-	public function storeUserQuery($queryId, $query)
+	public function getEditableQuery($queryId)
 	{
 		$data = $this->fetchQuery($queryId);
 		if (! $data) {
@@ -38,6 +38,18 @@ class StoredSearchLib
 		if (! $this->canUserStoreQuery($data)) {
 			return false;
 		}
+
+		return $data;
+	}
+
+	public function deleteQuery($data)
+	{
+		$this->table()->delete(array('queryId' => $data['queryId']));
+	}
+
+	public function storeUserQuery($queryId, $query)
+	{
+		$data = $this->getEditableQuery($queryId);
 
 		$query = clone $query;
 

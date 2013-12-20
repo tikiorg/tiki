@@ -53,4 +53,34 @@ class Services_Search_StoredController
 			'queries' => $lib->getUserQueries(),
 		);
 	}
+
+	function action_delete($input)
+	{
+		if (! $input->queryId->int()) {
+			return array(
+				'FORWARD' => ['action' => 'list'],
+			);
+		}
+
+		$lib = TikiLib::lib('storedsearch');
+		if (! $data = $lib->getEditableQuery($input->queryId->int())) {
+			throw new Services_Exception_NotFound('User query not found.');
+		}
+
+		$out = array(
+			'title' => tr('Delete User Query'),
+			'success' => false,
+			'queryId' => $data['queryId'],
+			'label' => $data['label'],
+			'lastModif' => $data['lastModif'],
+		);
+
+		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+			$lib->deleteQuery($data);
+
+			$out['success'] = true;
+		}
+
+		return $out;
+	}
 }
