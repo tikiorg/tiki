@@ -15,6 +15,7 @@
 		{assign var='title' value="{tr}Edit poll{/tr}"}
 	{/if}
 	{tab name=$title}
+        <h2>{$title}</h2>
 		<form action="tiki-admin_polls.php" method="post">
 			<input type="hidden" name="pollId" value="{$pollId|escape}">
 			<table class="formcolor">
@@ -84,6 +85,7 @@
 	{/tab}
 
 	{tab name="{tr}Polls{/tr}"}
+        <h2>{tr}Polls{/tr}</h2>
 		{if $channels or ($find ne '')}
 			{include file='find.tpl'}
 		{/if}
@@ -150,6 +152,7 @@
 	{/tab}
 
 	{tab name="{tr}Add poll to pages{/tr}"}
+        <h2>{tr}Add poll to pages{/tr}</h2>
 		<form action="tiki-admin_polls.php" method="post">
 			<table class="formcolor">
 				<tr>

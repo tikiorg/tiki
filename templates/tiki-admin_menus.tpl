@@ -8,6 +8,7 @@
 
 {tabset name="admin_menus"}
 	{tab name="{tr}Menus{/tr}"}
+        <h2>{tr}Menus{/tr}</h2>
 		{include file='find.tpl'}
         <div class="table-responsive">
 		<table class="table normal">

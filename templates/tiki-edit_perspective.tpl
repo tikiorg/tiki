@@ -1,6 +1,7 @@
 {title help="Perspectives"}{tr}Perspectives{/tr}{/title}
 {tabset}
 	{tab name="{tr}List{/tr}"}
+        <h2>{tr}List{/tr}</h2>
 		<a href="tiki-switch_perspective.php">{tr}Return to default perspective{/tr}</a>
         <div class="table-responsive">
 		<table class="table normal">
@@ -32,6 +33,7 @@
 	{/tab}
 	{if $tiki_p_perspective_create eq 'y'}
 		{tab name="{tr}Create{/tr}"}
+            <h2>{tr}Create{/tr}</h2>
 			<form method="post" action="tiki-edit_perspective.php">
 				<p>{tr}Name:{/tr} <input type="text" name="name"/> <input type="submit" class="btn btn-default btn-sm" name="create" value="{tr}Create{/tr}"></p>
 			</form>
@@ -39,6 +41,7 @@
 	{/if}
 	{if $perspective_info && $perspective_info.can_edit}
 		{tab name="{tr}Edit{/tr}"}
+            <h2>{tr}Edit{/tr}</h2>
 			<form method="post" action="tiki-edit_perspective.php">
 				<p>
 					{tr}Name:{/tr}

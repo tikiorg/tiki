@@ -15,33 +15,29 @@
 {tabset name="user_information"}
 {tab name="{tr}Basic Data{/tr}"}
 {if $infoPublic eq 'y'}
-	<div>
-		<div style="vertical-align: top">
-			<div class="clearfix">
-				<div class="pull-left">
-					<h2>{$userinfo.login|userlink}</h2>
-				</div>
-				<div class="pull-right">
-					{if $tiki_p_admin eq 'y' or $userinfo.login eq $user}
-						{if $tiki_p_admin eq 'y'}
-							<a class="link" href="tiki-assignuser.php?assign_user={$userinfo.login|escape:"url"}" title="{tr}Assign Group{/tr}">
-								{icon _id='group_key' align="right" alt="{tr}Assign Group{/tr}"}
-							</a>
-						{/if}
-						<a class="link" href="tiki-user_preferences.php?userId={$userinfo.userId}" title="{tr}Change user preferences{/tr}">
-							{icon _id='wrench' align="right" alt="{tr}Change user preferences{/tr}"}
-						</a>
-					{/if}
-				</div>
-			</div>
-
-			{if isset($user_picture_id)}
-				<div class="userpicture">
-					{wikiplugin _name="img" fileId="$user_picture_id"}{/wikiplugin}
-				</div>
+    <h2>{$userinfo.login}</h2>
+	<div class="clearfix">
+		<div class="pull-right">
+	    	{if $tiki_p_admin eq 'y' or $userinfo.login eq $user}
+				{if $tiki_p_admin eq 'y'}
+					<a class="link" href="tiki-assignuser.php?assign_user={$userinfo.login|escape:"url"}" title="{tr}Assign Group{/tr}">
+						{icon _id='group_key' align="right" alt="{tr}Assign Group{/tr}"}
+					</a>
+				{/if}
+				<a class="link" href="tiki-user_preferences.php?userId={$userinfo.userId}" title="{tr}Change user preferences{/tr}">
+					{icon _id='wrench' align="right" alt="{tr}Change user preferences{/tr}"}
+				</a>
 			{/if}
+			</div>
+		</div>
 
-			{cycle values="even,odd" print=false}
+		{if isset($user_picture_id)}
+			<div class="userpicture">
+				{wikiplugin _name="img" fileId="$user_picture_id"}{/wikiplugin}
+			</div>
+		{/if}
+
+		{cycle values="even,odd" print=false}
 			<div class="panel panel-default">
                 <div class="panel-body">
 					{if $avatar}
@@ -149,8 +145,7 @@
 					{/section}
 			    </div>
             </div>
-		</div>
-	</div>
+
 {else}{* infoPublic eq 'n' *}
 	<div>
 		{remarksbox type="info" title="Private"}{tr}The user has chosen to make his information private{/tr}{/remarksbox}
@@ -159,11 +154,11 @@
 {/tab}
 
 {if $prefs.user_tracker_infos and $infoPublic eq "y"}{tab name="{tr}Additional Information{/tr}"}
-	<div class="panel panel-default"><div class="panel-body">
+    <h2>{tr}Additional Information{/tr} &ndash; {$userinfo.login}</h2>
+	<div class="panel panel-default">
+        <div class="panel-body">
 		<div class="clearfix">
-			<div class="pull-left">
-				<h2 class="center">{tr}Additional Information{/tr} &ndash; {$userinfo.login|userlink}</h2>
-			</div>
+
 			<div class="pull-right">
 				{if $userinfo.login eq $user}
 					<a class="link" href="tiki-view_tracker_item.php?view=+user&cookietab=2" title="{tr}Change user information{/tr}">

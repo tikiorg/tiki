@@ -10,6 +10,7 @@
 
 {tabset}
 	{tab name="{tr}Edit languages{/tr}"}
+        <h2>{tr}Edit languages{/tr}</h2>
 		<form action="tiki-edit_languages.php" id="select_action" method="post">
 			{if isset($find)}
 				<input type="hidden" name="find" value="{$find}">
@@ -150,6 +151,7 @@
 	{/tab}
 
 	{tab name="{tr}Export languages{/tr}"}
+        <h2>{tr}Export languages{/tr}</h2>
 		<form action="tiki-edit_languages.php" method="post">
 			{if isset($expmsg)}
 			    {remarksbox type="note" title="{tr}Note:{/tr}"}

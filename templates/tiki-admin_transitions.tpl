@@ -2,6 +2,7 @@
 
 {tabset}
 	{tab name="{tr}Subset Selection{/tr}"}
+        <h2>{tr}Subset Selection{/tr}</h2>
 		<form method="post" action="tiki-admin_transitions.php?action=subset" style="text-align: left;">
 			<fieldset>
 				<legend>{tr}Type{/tr}</legend>
@@ -80,6 +81,7 @@
 	{/tab}
 	{if $available_states|@count > 0}
 	{tab name="{tr}Transitions{/tr}"}
+	    <h2>{tr}Transitions{/tr}</h2>
 		{$headerlib->add_dracula()}
 		<div id="graph-canvas" class="graph-canvas" data-graph-nodes="{$graph_nodes|escape}" data-graph-edges="{$graph_edges|escape}"></div>
 		<a href="#" id="graph-draw" class="button">{tr}Draw Transition Diagram{/tr}</a>
@@ -175,6 +177,7 @@
 
 	{if $selected_transition}
 		{tab name="{tr}Guards{/tr}"}
+		    <h2>{tr}Guards{/tr}</h2>
 		    <div class="table-responsive">
 			<table class="table normal">
 				<thead>

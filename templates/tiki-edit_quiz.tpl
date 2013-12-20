@@ -14,7 +14,7 @@
 {tabset}
 
 {tab name="{tr}Quizzes{/tr}"}
-
+    <h2>{tr}Quizzes{/tr}</h2>
 {include file='find.tpl'}
 
 <div class="table-responsive">
@@ -77,7 +77,7 @@
 {/tab}
 
 {tab name="{tr}Create/edit quizzes{/tr}"}
-
+    <h2>{tr}Create/edit quizzes{/tr}</h2>
 {if $individual eq 'y'}
 	<a class="link" href="tiki-objectpermissions.php?objectName={$name|escape:"url"}&amp;objectType=quiz&amp;permType=quizzes&amp;objectId={$quizId}">{tr}There are individual permissions set for this quiz{/tr}</a>
 	<br>

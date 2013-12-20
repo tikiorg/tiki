@@ -2,6 +2,7 @@
 
 {tabset name='tabs_list_faqs'}
 {tab name="{tr}Available FAQs{/tr}"}
+    <h2>{tr}Available FAQs{/tr}</h2>
 
 {if $channels or ($find ne '')}
   {include file='find.tpl'}

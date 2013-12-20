@@ -47,6 +47,7 @@
 	{/if}
 	{tabset}
 		{tab name="{tr}General{/tr}"}
+            <h2>{tr}General{/tr}</h2>
 			<div class="form-group">
 				<label for="title">{tr}Title{/tr}</label>
 				<input type="text" name="title" value="{$arttitle|escape}" maxlength="255" class="form-control">
@@ -114,6 +115,7 @@
 			</div>
 		{/tab}
 		{tab name="{tr}Publication{/tr}"}
+            <h2>{tr}Publication{/tr}</h2>
 			<div class="form-group">
 				<label for="authorName">{tr}Author Name (as displayed){/tr}</label>
 				<input type="text" name="authorName" value="{$authorName|escape}" class="form-control">
@@ -149,6 +151,7 @@
 			</div>
 		{/tab}
 		{tab name="{tr}Classification{/tr}"}
+            <h2>{tr}Classification{/tr}</h2>
 			<div class="form-group">
 				<label for="topicId">{tr}Topic{/tr}</label>
 				<div>
@@ -180,6 +183,7 @@
 			{include file='freetag.tpl'}
 		{/tab}
 		{tab name="{tr}Image{/tr}"}
+            <h2>{tr}Image{/tr}</h2>
 			<input type="hidden" name="MAX_FILE_SIZE" value="1000000">
 			<div class="form-group {if $types.$type.show_image neq 'y'}hidden{/if}">
 				<label for="userfile1">{tr}Own Image{/tr}</label>
@@ -255,6 +259,7 @@
 			</fieldset>
 		{/tab}
 		{tab name="{tr}Advanced{/tr}"}
+            <h2>{tr}Advanced{/tr}</h2>
 			{if $prefs.feature_multilingual eq 'y' and empty($translationOf)}
 				<div class="form-group">
 					<label for="translationOf">{tr}Attach existing article ID as translation{/tr}</label>

@@ -173,7 +173,7 @@
 				{/if}
 				{tabset name='tabs_editpage' cookietab=1}
 					{tab name="{tr}Edit page{/tr}"}
-                        <div class="table spacer-top-20px"></div>
+                        <h2>{tr}Edit page{/tr}</h2>
 						{if $translation_mode == 'y'}
 							<div class="translation_message">
 								<h2>{tr}Translate to:{/tr} {$target_page|escape}</h2>
@@ -224,7 +224,7 @@
 					{/tab}
 					{if $prefs.feature_categories eq 'y' and $tiki_p_modify_object_categories eq 'y' and count($categories) gt 0}
 						{tab name="{tr}Categories{/tr}"}
-                            <div class="table spacer-20px"></div>
+                            <h2>{tr}Categories{/tr}</h2>
 							{if $categIds}
 								{remarksbox type="note" title="{tr}Note:{/tr}"}
 								<strong>{tr}Categorization has been preset for this edit{/tr}</strong>
@@ -247,19 +247,15 @@
 					{if $prefs.wiki_freetags_edit_position eq 'freetagstab'}
 						{if $prefs.feature_freetags eq 'y' and $tiki_p_freetags_tag eq 'y'}
 							{tab name="{tr}Freetags{/tr}"}
-								<fieldset>
-									<legend>{tr}Freetags{/tr}</legend>
-									<table>
-										{include file='freetag.tpl'}
-									</table>
-								</fieldset>
+                                <h2>{tr}Freetags{/tr}</h2>
+								{include file='freetag.tpl'}
 							{/tab}
 						{/if}
 					{/if}
 					{if !empty($showPropertiesTab)}
 						{tab name="{tr}Properties{/tr}"}
-                            <div class="table spacer-20px"></div>
-							{if $prefs.feature_wiki_templates eq 'y' and $tiki_p_use_content_templates eq 'y'}
+                            <h2>{tr}Properties{/tr}</h2>
+                            {if $prefs.feature_wiki_templates eq 'y' and $tiki_p_use_content_templates eq 'y'}
                                 <div class="form-group">
 								    <label for="templateId" class="col-sm-2 control-label">{tr}Apply template:{/tr}</label>
                                     <div class="col-sm-10 form-inline">

@@ -67,6 +67,7 @@
 
 {tabset}
 	{tab name="{tr}Structures{/tr}"}
+        <h2>{tr}Structures{/tr}</h2>
 		{if $channels or ($find ne '')}
 			{include file='find.tpl' find_show_languages='y' find_show_categories='y' find_show_num_rows='y'}
 		{/if}
@@ -145,6 +146,7 @@
 
 	{if $tiki_p_edit_structures == 'y'}
 		{tab name="{tr}Create New Structure{/tr}"}
+            <h2>{tr}Create New Structure{/tr}</h2>
 			<form action="tiki-admin_structures.php" method="post">
 				<table class="formcolor">
 					<tr>

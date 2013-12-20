@@ -11,6 +11,7 @@
 {* --- tab with list --- *}
 {tab name="{tr}Trackers{/tr}"}
 <a name="view"></a>
+    <h2>{tr}Trackers{/tr}</h2>
 	{if ($trackers) or ($find)}
 		{include autocomplete='trackername' file='find.tpl' filters=''}
 		{if ($find) and ($trackers)}
@@ -211,7 +212,7 @@
 {if $tiki_p_admin_trackers eq 'y'}
 {tab name="{tr}Duplicate/Import Tracker{/tr}"}
 {* --- tab with raw form --- *}
-
+    <h2>{tr}Duplicate/Import Tracker{/tr}</h2>
 	{accordion}
 		{accordion_group title="{tr}Duplicate Tracker{/tr}"}
 			<form class="simple" action="{service controller=tracker action=duplicate}" method="post">

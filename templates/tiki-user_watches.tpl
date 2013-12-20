@@ -13,6 +13,7 @@
 {tabset name="user_watches"}
 	{if $prefs.feature_daily_report_watches eq 'y'}
 	{tab name="{tr}Report Preferences{/tr}"}
+        <h2>{tr}Report Preferences{/tr}</h2>
 		{if isset($remove_user_watch_error) && $remove_user_watch_error}
 			{remarksbox type="error" title="{tr}Error{/tr}"}{tr}You are not allowed to remove this notification !{/tr}{/remarksbox}
 		{else}
@@ -51,6 +52,7 @@
 	{/tab}
 	{/if}
 	{tab name="{tr}My watches{/tr}"}
+        <h2>{tr}My watches{/tr}</h2>
 
 {remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Use "watches" to monitor wiki pages or other objects.{/tr} {tr}Watch new items by clicking the {icon _id=eye} button on specific pages.{/tr}{/remarksbox}
 
@@ -191,6 +193,7 @@
 </form>
 {/tab}
 {tab name="{tr}Notification Preferences{/tr}"}
+    <h2>{tr}Notification Preferences{/tr}</h2>
 	{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Use this form to control notifications about objects you are watching.{/tr}{/remarksbox}
 	
 	<form action="tiki-user_notifications.php" method="post">

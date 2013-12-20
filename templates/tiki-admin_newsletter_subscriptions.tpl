@@ -29,6 +29,7 @@
 {tabset name='tabs_newsletter_subscriptions'}
 
 {tab name="{tr}Subscriptions{/tr}"}
+    <h2>{tr}Subscriptions{/tr}</h2>
 {* groups------------------------------------ *}
 {if $nb_groups > 0}
     <div class="table-responsive">
@@ -425,7 +426,7 @@
 
 
 {tab name="{tr}Export Subscriber Emails{/tr}"}
-
+    <h2>{tr}Export Subscriber Emails{/tr}</h2>
 <form action="tiki-admin_newsletter_subscriptions.php" method="post">
 	<input type="hidden" name="nlId" value="{$nlId|escape}"> 
 	<table class="formcolor">

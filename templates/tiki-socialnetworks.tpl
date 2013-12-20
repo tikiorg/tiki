@@ -11,6 +11,7 @@
 {/if}
 {tabset name="mytiki_user_preference"}
 {tab name="{tr}Accounts{/tr}"}
+    <h2>{tr}Accounts{/tr}</h2>
 {cycle values="odd,even" print=false}
 <form action="tiki-socialnetworks.php" method="post">
 <table class="formcolor" style="width:100%;">

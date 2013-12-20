@@ -151,6 +151,7 @@
 		{/tab}
 		{if $accountId eq 0}{assign var="tablab" value="{tr}Create{/tr}"}{else}{assign var="tablab" value="{tr}Edit{/tr}"}{/if}
 		{tab name=$tablab}
+            <h2>{$tablab}</h2>
 			{if $tiki_p_admin_personal_webmail eq 'y' or $tiki_p_admin_group_webmail eq 'y' or !isset($info.user) or $user eq $info.user}
 				<div id="settingsFormDiv">
 					<form action="tiki-webmail.php" method="post" name="settings">

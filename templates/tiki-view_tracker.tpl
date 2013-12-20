@@ -83,6 +83,7 @@
 	
 	{if $tiki_p_view_trackers eq 'y' or (($tracker_info.writerCanModify eq 'y' or $tracker_info.writerGroupCanModify eq 'y') and $user)}
 		{tab name="{tr}Tracker Items{/tr}"}
+            <h2>{tr}Tracker Items{/tr}</h2>
 			{* -------------------------------------------------- tab with list --- *}
 			
 			{if (($tracker_info.showStatus eq 'y' and $tracker_info.showStatusAdminOnly ne 'y') or $tiki_p_admin_trackers eq 'y') or $show_filters eq 'y'}
@@ -221,6 +222,7 @@
 	{if $tiki_p_create_tracker_items eq 'y'}
 		{* --------------------------------------------------------------------------------- tab with edit --- *}
 		{tab name="{tr}Insert New Item{/tr}"}
+            <h2>{tr}Insert New Item{/tr}</h2>
 			{if isset($validationjs)}
 				{jq}
 					$("#newItemForm").validate({
@@ -300,6 +302,7 @@
 	
 	{if $tracker_sync}
 		{tab name="{tr}Synchronization{/tr}"}
+            <h2>{tr}Synchronization{/tr}</h2>
 			<p>
 				{tr _0=$tracker_sync.provider|cat:'/tracker'|cat:$tracker_sync.source}This tracker is a remote copy of <a href="%0">%0</a>.{/tr}
 				{if $tracker_sync.last}

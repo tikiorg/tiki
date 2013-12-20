@@ -15,6 +15,7 @@
 
 	{tabset name="admin_blogs"}
 		{tab name="{tr}General Settings{/tr}"}
+            <h2>{tr}General Settings{/tr}</h2>
 		
 			<fieldset class="table">
 				<legend>{tr}Activate the feature{/tr}</legend>
@@ -65,6 +66,7 @@
 		{/tab}
 	
 		{tab name="{tr}Blogs Listings{/tr}"}
+            <h2>{tr}Blogs Listings{/tr}</h2>
 			<input type="hidden" name="bloglistconf" />
 			{preference name=blog_list_order}
 

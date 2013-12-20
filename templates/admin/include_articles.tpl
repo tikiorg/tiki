@@ -23,6 +23,7 @@
 
 	{tabset name="admin_articles"}
 		{tab name="{tr}General Settings{/tr}"}
+            <h2>{tr}General Settings{/tr}</h2>
 			<input type="hidden" name="articlesprefs" />
 
 			<fieldset class="table">
@@ -119,6 +120,7 @@
 		{/tab}
 
 		{tab name="{tr}Articles Listing{/tr}"}
+            <h2>{tr}Articles Listing{/tr}</h2>
 			<fieldset>
 				<legend>{tr}List Articles{/tr}</legend>
 				<div class="adminoptionbox">

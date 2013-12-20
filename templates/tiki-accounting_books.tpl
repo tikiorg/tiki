@@ -10,6 +10,7 @@
 {/if}
 {tabset}
 {tab name="{tr}My books{/tr}"}
+    <h2>{tr}My books{/tr}</h2>
 <div id="booklist" class="table-responsive">
 	<table class="table normal">
 		<tr>
@@ -44,6 +45,7 @@
 {/tab}
 {if $canCreate}
 {tab name="{tr}Create a book{/tr}"}
+    <h2>{tr}Create a book{/tr}</h2>
 <div id="createbookform">
  <form action="tiki-accounting_books.php" method="post">
  	<input type="hidden" name="action" value="create">

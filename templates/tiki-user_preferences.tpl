@@ -31,6 +31,7 @@
 
 {if $prefs.feature_userPreferences eq 'y'}
 	{tab name="{tr}Personal Information{/tr}"}
+        <h2>{tr}Personal Information{/tr}</h2>
 		<form action="tiki-user_preferences.php" method="post">
 		<input type="hidden" name="view_user" value="{$userwatch|escape}">
 
@@ -199,6 +200,7 @@
 		</table>
 	{/tab}
 	{tab name="{tr}Preferences{/tr}"}
+        <h2>{tr}Preferences{/tr}</h2>
 		<table class="formcolor">
 		<tr>
 			<th colspan="2">{tr}General settings{/tr}</th>
@@ -556,6 +558,7 @@
 
 {if $prefs.change_password neq 'n' or ! ($prefs.login_is_email eq 'y' and $userinfo.login neq 'admin')}
 	{tab name="{tr}Account Information{/tr}"}
+        <h2>{tr}Account Information{/tr}</h2>
 		<form action="tiki-user_preferences.php" method="post">
 			<input type="hidden" name="view_user" value="{$userwatch|escape}">
 			<table class="formcolor">
@@ -608,6 +611,7 @@
 
 {if $tiki_p_delete_account eq 'y' and $userinfo.login neq 'admin'}
 	{tab name="{tr}Account Deletion{/tr}"}
+        <h2>{tr}Account Deletion{/tr}</h2>
 		<form action="tiki-user_preferences.php" method="post"
 			  onsubmit='return confirm("{tr _0=$userwatch|escape}Are you really sure you want to delete the account %0?{/tr}");'>
 			{if !empty($userwatch)}<input type="hidden" name="view_user" value="{$userwatch|escape}">{/if}

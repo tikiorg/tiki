@@ -32,6 +32,7 @@ Configure how your mailed-in wiki pages are to be linked / organized.
 </p>
 {tabset name="user_mailin"}
 {tab name="{tr}Structure Routing{/tr}"}
+    <h2>{tr}Structure Routing{/tr}</h2>
 <p>
 {tr}Structure routing will link mailed-in pages as a child to the specified structure node. Only email matching the filters are linked.{/tr}<br/>
 {tr}Only newly created pages, using the mail-in wiki-put function, are affected.{/tr}

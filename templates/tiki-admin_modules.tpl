@@ -360,7 +360,7 @@
 {/tab}
 
 {tab name="{tr}All Modules{/tr}"}
-
+    <h2>{tr}All Modules{/tr}</h2>
 	<form method="post" action="tiki-admin_modules.php">
 		<div style="height:400px;overflow:auto;">
 			<div class="navbar">

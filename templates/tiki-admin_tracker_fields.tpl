@@ -9,6 +9,7 @@
 {tabset}
 	<a name="list"></a>
 	{tab name="{tr}Tracker fields{/tr}"}
+        <h2>{tr}Tracker fields{/tr}</h2>
 		<form class="save-fields" method="post" action="{service controller=tracker action=save_fields}">
 			<table id="fields" class="table normal">
 				<thead>
@@ -124,6 +125,7 @@
 	{/tab}
 	
 	{tab name="{tr}Import Tracker Fields{/tr}"}
+        <h2>{tr}Import Tracker Fields{/tr}</h2>
 		<form class="simple import-fields" action="{service controller=tracker action=import_fields}" method="post">
 			<label>
 				{tr}Raw Fields{/tr}

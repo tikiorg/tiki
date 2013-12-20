@@ -20,6 +20,7 @@
 			</div>
 			{tabset name="list_file_gallery"}
 				{tab name="{tr}Properties{/tr}"}
+                    <h2>{tr}Properties{/tr}</h2>
                     <div class="form-group">
                         <label for="name" class="col-sm-4 control-label">{tr}Name:{/tr}</label>
                         <div class="col-sm-8">

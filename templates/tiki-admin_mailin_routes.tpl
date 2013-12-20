@@ -3,6 +3,7 @@
 
 {tabset name="user_mailin"}
 {tab name="{tr}Structure Routing{/tr}"}
+    <h2>{tr}Structure Routing{/tr}</h2>
 <p>
 Routes are edited in the user's: My Tiki / Mail-in panel
 </p>

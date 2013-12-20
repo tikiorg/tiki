@@ -23,6 +23,7 @@
 {tabset}
 
 {tab name="{tr}Forums{/tr}"}
+    <h2>{tr}Forums{/tr}</h2>
 
 {if $channels or ($find ne '')}
 	{include file='find.tpl'}

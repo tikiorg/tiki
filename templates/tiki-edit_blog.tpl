@@ -27,6 +27,7 @@
   <input type="hidden" name="blogId" value="{$blogId|escape}">
   {tabset name='tabs_editblog'}
     {tab name="{tr}General Settings{/tr}"}
+        <h2>{tr}General Settings{/tr}</h2>
     <div class="form-group">
         <label class="col-sm-3 control-label" for="blog-title">{tr}Title{/tr}</label>
         <div class="col-sm-9">
@@ -87,6 +88,7 @@
 
     {/tab}
     {tab name="{tr}Display Options{/tr}"}
+        <h2>{tr}Display Options{/tr}</h2>
 
     <div class="form-group">
         <label class="col-sm-5 control-label" for="blogs-number">{tr}Number of posts to show per page{/tr}</label>

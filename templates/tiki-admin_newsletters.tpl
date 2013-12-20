@@ -10,6 +10,7 @@
 {tabset}
 
 {tab name="{tr}Newsletters{/tr}"}
+    <h2>{tr}Newsletters{/tr}</h2>
 
 {if $channels or ($find ne '')}
   {include file='find.tpl'}
@@ -66,6 +67,7 @@
 {/tab}
 
 {tab name="{tr}Create/Edit Newsletters{/tr}"}
+    <h2>{tr}Create/Edit Newsletters{/tr}</h2>
 {if isset($individual) && $individual eq 'y'}
 	<a class="link" href="tiki-objectpermissions.php?objectName={$info.name|escape:"url"}&amp;objectType=newsletter&amp;permType=newsletters&amp;objectId={$info.nlId}">{tr}There are individual permissions set for this newsletter{/tr}</a><br><br>
 {/if}

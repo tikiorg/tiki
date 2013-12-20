@@ -11,7 +11,7 @@
 {tabset}
 
 {tab name="{tr}Surveys{/tr}"}
-
+    <h2>{tr}Surveys{/tr}</h2>
 {if $channels or ($find ne '')}
 	{include file='find.tpl'}
 {/if}

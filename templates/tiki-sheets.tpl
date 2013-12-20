@@ -4,6 +4,7 @@
 
 {tabset}
 {tab name="{tr}List{/tr}"}
+    <h2>{tr}List{/tr}</h2>
 {if $tiki_p_edit_sheet eq 'y'}
 	<div class="t_navbar">
 		{button href="tiki-sheets.php?edit_mode=1&amp;sheetId=0" class="btn btn-default" _text="{tr}Create New Sheet{/tr}"}

@@ -16,6 +16,7 @@
 
 	{tabset name="admin_wiki"}
 		{tab name="{tr}General Preferences{/tr}"}
+            <h2>{tr}General Preferences{/tr}</h2>
 
 			<fieldset>
 				<legend>{tr}Site-wide features{/tr}</legend>

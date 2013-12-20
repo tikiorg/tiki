@@ -5,6 +5,7 @@
 
 {tabset name='tabs_wikipages'}
 	{tab name="{tr}List Wiki Pages{/tr}"}
+        <h2>{tr}List Wiki Pages{/tr}</h2>
 
 		{include autocomplete='pagename' file='find.tpl' find_show_languages='y' find_show_languages_excluded='y' find_show_categories_multi='y' find_show_num_rows='y' find_in="<ul><li>{tr}Page name{/tr}</li></ul>" }
 
@@ -40,6 +41,7 @@
 	{/tab}
 	{if $tiki_p_edit == 'y'}
 		{tab name="{tr}Create a Wiki Page{/tr}"}
+            <h2>{tr}Create a Wiki Page{/tr}</h2>
 <div class="center" style="text-align: center">
 	<strong>{tr}Insert name of the page you wish to create{/tr}</strong>
 	<form method="get" action="tiki-editpage.php">

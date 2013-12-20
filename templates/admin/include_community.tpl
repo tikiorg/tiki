@@ -18,6 +18,7 @@
 
 {tabset name="admin_community"}
 		{tab name="{tr}User features{/tr}"}
+            <h2>{tr}User features{/tr}</h2>
 	
 			<div class="admin featurelist">
 				{preference name=feature_score}
@@ -57,6 +58,7 @@
 			</div>
 		{/tab}
 		{tab name="{tr}Social Network{/tr}"}
+            <h2>{tr}Social Network{/tr}</h2>
 			<fieldset class="table">
 				<legend>{tr}Friendship and Followers{/tr}</legend>
 				{preference name=feature_friends}
@@ -113,6 +115,7 @@
 		{/tab}
 		
 		{tab name="{tr}Plugins{/tr}"}
+            <h2>{tr}Plugins{/tr}</h2>
 			{preference name=wikiplugin_author}
 			{preference name=wikiplugin_avatar}
 			{preference name=wikiplugin_favorite}
@@ -137,6 +140,7 @@
 		
 
 		{tab name="{tr}General Settings{/tr}"}
+            <h2>{tr}General Settings{/tr}</h2>
 			{preference name=user_show_realnames}
 			{preference name=user_in_search_result}
 			{preference name=highlight_group}
@@ -223,7 +227,8 @@
 				{preference name=users_prefs_mytiki_items}
 			</fieldset>
 		{/tab}
-		{tab name="{tr}BigBlueButton{/tr}"}
+		{tab name="BigBlueButton"}
+            <h2>BigBlueButton</h2>
 			{preference name=bigbluebutton_feature}
 			<div class="adminoptionboxchild" id="bigbluebutton_feature_childcontainer">
 				{preference name=bigbluebutton_server_location}

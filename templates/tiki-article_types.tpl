@@ -3,6 +3,7 @@
 
 {tabset name='tabs_articletypes'}
 	{tab name="{tr}Article Types{/tr}"}
+        <h2>{tr}Article Types{/tr}</h2>
 	<form enctype="multipart/form-data" action="tiki-article_types.php" method="post">
 		{section name=user loop=$types}
 			<h3>{tr}{$types[user].type|escape}{/tr}</h3>
@@ -136,7 +137,7 @@
 		{/section}
 	{/tab}
 	{tab name="{tr}Add Type{/tr}"}
-		<h3>{tr}Add article type{/tr}</h3>
+        <h2>{tr}Add article type{/tr}</h2>
 		<input type="text" name="new_type"><input type="submit" class="btn btn-default btn-sm" name="add_type" value="{tr}Add{/tr}">
 	{/tab}
 	</form>
