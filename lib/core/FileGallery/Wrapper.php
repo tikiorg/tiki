@@ -35,7 +35,8 @@ class FileGallery_Wrapper
 				return $this->temporaryFile;
 			}
 
-			if (!empty(ini_get('upload_tmp_dir'))) {
+			$sIniUploadTmpDir = ini_get('upload_tmp_dir');
+			if (!empty($sIniUploadTmpDir)) {
 				$sTmpDir = ini_get('upload_tmp_dir');
 			} else {
 				$sTmpDir = '/tmp';
