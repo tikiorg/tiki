@@ -42,4 +42,15 @@ class Services_Search_StoredController
 			'queryId' => $queryId,
 		);
 	}
+
+	function action_list($input)
+	{
+		$lib = TikiLib::lib('storedsearch');
+
+		return array(
+			'title' => tr('Stored Queries'),
+			'priorities' => $lib->getPriorities(),
+			'queries' => $lib->getUserQueries(),
+		);
+	}
 }
