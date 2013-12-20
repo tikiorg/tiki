@@ -12,6 +12,7 @@
 	{/if}
 	{tabset}
 		{tab name="{tr}Payment{/tr}"}
+            <h2>{tr}Payment{/tr}</h2>
 			{remarksbox title="{tr}Choose payment system{/tr}"}
 				{tr}You can use only one payment method: PayPal or Cclite or Tiki User Credits{/tr}<br>
 				{tr}PayPal is working at the moment. See PayPal.com{/tr}<br>
@@ -70,6 +71,7 @@
 			</div>
 		{/tab}
 		{tab name="{tr}Advanced Shopping Cart{/tr}"}
+            <h2>{tr}Advanced Shopping Cart{/tr}</h2>
 			<fieldset>
 				<legend>{tr}Advanced Cart Tracker Names Setup{/tr}</legend>
 				{preference name=payment_cart_product_tracker_name}
@@ -133,6 +135,7 @@
 		{/tab}
 
 		{tab name="{tr}Plugins{/tr}"}
+            <h2>{tr}Plugins{/tr}</h2>
 
 			<fieldset class="table">
 				<legend>{tr}Plugins{/tr}</legend>
@@ -149,6 +152,7 @@
 		{/tab}
 
 		{tab name="{tr}Shipping{/tr}"}
+            <h2>{tr}Shipping{/tr}</h2>
 			{preference name=shipping_service}
 
 			{preference name=shipping_fedex_enable}

@@ -24,6 +24,7 @@
 <input type="hidden" name="i18nsetup" />
 {tabset name="admin_i18n"}
 	{tab name="{tr}Internationalization{/tr}"}
+        <h2>{tr}Internationalization{/tr}</h2>
 
 {preference name=language}
 {preference name=wiki_page_regex}
@@ -93,6 +94,7 @@
 
 {tab name="{tr}Babelfish links{/tr}"}
 {*------------------------------- Babelfish ----------------------------- *}
+    <h2>{tr}Babelfish links{/tr}</h2>
 
 {preference name=feature_babelfish}
 {preference name=feature_babelfish_logo}
@@ -100,6 +102,7 @@
 {/tab}
 {tab name="{tr}Customized String Translation{/tr}"}
 {*----------------------------------- Custom translation --------------------*}
+    <h2>{tr}Customized String Translation{/tr}</h2>
 <div class="adminoptionbox">
 	{if empty($custom_lang)}
 		<select name="custom_lang" id="custom_lang_select">

@@ -10,12 +10,11 @@
 
 	{tabset}
 		{tab name="{tr}General{/tr}"}
-			<fieldset class="table">
-				<legend>{tr}Social Network Integration{/tr}</legend>
-				{preference name=feature_socialnetworks visible="always"}
-			</fieldset>
+            <h2>{tr}Social Network Integration{/tr}</h2>
+			{preference name=feature_socialnetworks visible="always"}
 		{/tab}
 		{tab name="{tr}Twitter{/tr}"}
+            <h2>{tr}Twitter{/tr}</h2>
 			{remarksbox type="note" title="{tr}Note{/tr}"}
 			<p>{tr}To use Twitter integration, you must register this site as an application at{/tr}
 			 <a href="http://twitter.com/oauth_clients/" target="_blank">http://twitter.com/oauth_clients/</a>
@@ -28,6 +27,7 @@
 			</div>
 		{/tab}
 		{tab name="{tr}Facebook{/tr}"}
+            <h2>{tr}Facebook{/tr}</h2>
 			{remarksbox type="note" title="{tr}Note{/tr}"}
 			<p>{tr}To use Facebook integration, you must register this site as an application at{/tr}
 			 <a href="http://developers.facebook.com/setup/" target="_blank">http://developers.facebook.com/setup/</a>
@@ -51,6 +51,7 @@
 			</div>
 		{/tab}
 		{tab name="{tr}bit.ly{/tr}"}
+            <h2>{tr}bit.ly{/tr}</h2>
 			{remarksbox type="note" title="{tr}Note{/tr}"}
 			<p>{tr}There is no need to set up a site-wide bit.ly account; every user can have his or her own, but this allows for site-wide statistics{/tr}<br>
 			{tr}Go to{/tr} <a href="http://bit.ly/a/sign_up">http://bit.ly/a/sign_up</a> {tr}to sign up for an account{/tr}.<br>

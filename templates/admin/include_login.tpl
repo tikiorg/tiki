@@ -37,6 +37,7 @@
 
 	{tabset name="admin_login"}
 		{tab name="{tr}General Preferences{/tr}"}
+            <h2>{tr}General Preferences{/tr}</h2>
 			{preference name=auth_method}
 			{preference name=feature_intertiki}
 			
@@ -189,6 +190,7 @@
 		{/tab}
 
 		{tab name="{tr}LDAP{/tr}"}
+            <h2>{tr}LDAP{/tr}</h2>
 			<input type="hidden" name="auth_ldap" />
 			<fieldset>
 				<legend>LDAP {help url="Login+Authentication+Methods"}</legend>
@@ -235,6 +237,7 @@
 		{/tab}
 
 		{tab name="{tr}LDAP external groups{/tr}"}
+            <h2>{tr}LDAP external groups{/tr}</h2>
 			<fieldset>
 				<legend>{tr}LDAP external groups{/tr}</legend>
 
@@ -292,6 +295,7 @@
 		{/tab}
 
 		{tab name="{tr}PAM{/tr}"}
+            <h2>{tr}PAM{/tr}</h2>
 			<input type="hidden" name="auth_pam" />
 			<fieldset>
 				<legend>{tr}PAM{/tr} {help url="AuthPAM" desc="{tr}PAM{/tr}"}</legend>
@@ -311,6 +315,7 @@
 		{/tab}
 
 		{tab name="{tr}Shibboleth{/tr}"}
+            <h2>{tr}Shibboleth{/tr}</h2>
 			<fieldset>
 				<legend>{tr}Shibboleth{/tr}{help url="AuthShib" desc="{tr}Shibboleth Authentication {/tr}"}</legend>
 				<input type="hidden" name="auth_shib" />
@@ -332,6 +337,7 @@
 		{/tab}
 
 		{tab name="{tr}CAS{/tr}"}
+            <h2>{tr}CAS{/tr}</h2>
 			<input type="hidden" name="auth_cas" />
 			<fieldset>
 				<legend>{tr}CAS (Central Authentication Service){/tr}{help url="CAS+Authentication"}</legend>
@@ -361,6 +367,7 @@
 			</fieldset>
 		{/tab}
 		{tab name="{tr}phpBB{/tr}"}
+            <h2>{tr}phpBB{/tr}</h2>
 			<fieldset>
 				<legend>{tr}phpBB{/tr}{help url="phpBB+Authentication" desc="{tr}phpBB User Database Authentication {/tr}"}</legend>
 				<input type="hidden" name="auth_phpbb" />

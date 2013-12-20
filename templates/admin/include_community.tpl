@@ -227,8 +227,8 @@
 				{preference name=users_prefs_mytiki_items}
 			</fieldset>
 		{/tab}
-		{tab name="BigBlueButton"}
-            <h2>BigBlueButton</h2>
+		{tab name="{tr}BigBlueButton{/tr}"}
+            <h2>{tr}BigBlueButton{/tr}</h2>
 			{preference name=bigbluebutton_feature}
 			<div class="adminoptionboxchild" id="bigbluebutton_feature_childcontainer">
 				{preference name=bigbluebutton_server_location}

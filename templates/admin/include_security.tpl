@@ -20,7 +20,7 @@
 {tabset}
 
 		{tab name="{tr}General Security{/tr}"}
-			
+			<h2>{tr}General Security{/tr}</h2>
 			<div class="adminoptionboxchild" id="smarty_security_childcontainer">
 			{if $haveMySQLSSL}
 				{if $mysqlSSL === true}
@@ -79,6 +79,7 @@
 		{/tab}
 
 		{tab name="{tr}Spam protection{/tr}"}
+            <h2>{tr}Spam protection{/tr}</h2>
 			<fieldset>
 			<legend>{tr}Captcha{/tr}</legend>
 			{preference name=feature_antibot}
@@ -112,11 +113,13 @@
 		{/tab}
 	
 		{tab name="{tr}Search results{/tr}"}
+            <h2>{tr}Search results{/tr}</h2>
 				{preference name=feature_search_show_forbidden_cat}
 				{preference name=feature_search_show_forbidden_obj}
 		{/tab}
 
 		{tab name="{tr}Site Access{/tr}"}
+            <h2>{tr}Site Access{/tr}</h2>
 				{preference name=site_closed}
 				<div class="adminoptionboxchild" id="site_closed_childcontainer">
 					{preference name=site_closed_msg}
@@ -130,6 +133,7 @@
 		{/tab}
 
 		{tab name="{tr}Tokens{/tr}"}
+            <h2>{tr}Tokens{/tr}</h2>
 				{remarksbox type="tip" title="{tr}Tip{/tr}"}
 					{tr}To manage tokens go to <a href="tiki-admin_tokens.php">Admin Tokens</a> page{/tr}
 				{/remarksbox}
@@ -141,6 +145,7 @@
 		{/tab}
 
 		{tab name="{tr}OpenPGP{/tr}"}
+            <h2>{tr}OpenPGP{/tr}</h2>
 			<fieldset>
 				<legend>{tr}OpenPGP fuctionality for PGP/MIME encrypted email messaging{/tr}</legend>
 				{remarksbox type="tip" title="{tr}Note{/tr}"}

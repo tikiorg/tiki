@@ -2,6 +2,7 @@
 
 {tabset name="admin_video"}
 {tab name="{tr}Kaltura{/tr}"}
+    <h2>{tr}Kaltura{/tr}</h2>
 {remarksbox type="info" title="{tr}Kaltura Registration{/tr}"}{tr}To get a Kaltura Partner ID:{/tr} {tr}Setup your own instance of Kaltura Community Edition (CE){/tr} or <a href="http://corp.kaltura.com/about/signup">{tr}get an account via Kaltura.com{/tr}</a> {/remarksbox}
 
 {button _text="{tr}List Media{/tr}" href="tiki-list_kaltura_entries.php"}
@@ -70,6 +71,7 @@
 </form>
 {/tab}
 {tab name="{tr}Ustream Watershed{/tr}"}
+    <h2>{tr}Ustream Watershed{/tr}</h2>
 {remarksbox type="info" title="{tr}Ustream Watershed Registration{/tr}"}{tr}If you don't have a Watershed account, {/tr}<a href="https://watershed.ustream.tv/">{tr}you can find out more about it here{/tr}.</a>{/remarksbox}
 <fieldset class="table">
 <legend>{tr}Activate the feature{/tr}</legend>

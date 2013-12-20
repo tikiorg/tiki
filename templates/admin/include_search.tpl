@@ -88,6 +88,7 @@
     </div>
 	{tabset name=admin_search}
 		{tab name="{tr}General Settings{/tr}"}
+            <h2>{tr}General Settings{/tr}</h2>
 		
 			<fieldset>
 				<legend>
@@ -208,6 +209,7 @@
 		{/tab}
 
 		{tab name="{tr}Search Results{/tr}"}
+            <h2>{tr}Search Results{/tr}</h2>
 			{preference name=search_use_facets}
 			{preference name=category_custom_facets}
 			
@@ -232,10 +234,12 @@
 		{/tab}
 
 		{tab name="{tr}Stored Search{/tr}"}
+            <h2>{tr}Stored Search{/tr}</h2>
 			{preference name=storedsearch_enabled}
 		{/tab}
 
 		{tab name="{tr}Tools{/tr}"}
+            <h2>{tr}Tools{/tr}</h2>
 			<a href="tiki-report_string_in_db.php">{tr}Report all occurences of a string in any table{/tr}</a><br>
 		{/tab}
 

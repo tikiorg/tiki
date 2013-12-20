@@ -5,6 +5,7 @@
 	</div>
 	{tabset}
 		{tab name="{tr}Workspaces{/tr}"}
+            <h2>{tr}Workspaces{/tr}</h2>
 
 			<fieldset class="table">
 				<legend>{tr}Activate the feature{/tr}</legend>
@@ -51,6 +52,7 @@ $('#template-list').load($.service('workspace', 'list_templates'));
 			{/jq}
 		{/tab}
 		{tab name="{tr}Areas{/tr}"}
+            <h2>{tr}Areas{/tr}</h2>
 
 			<fieldset class="table">
 				<legend>{tr}Activate the feature{/tr}</legend>

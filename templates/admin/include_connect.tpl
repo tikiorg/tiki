@@ -1,6 +1,7 @@
 <div>&nbsp;</div>
 {tabset}
 	{tab name="{tr}Tiki Connect{/tr}"}
+        <h2>{tr}Tiki Connect{/tr}</h2>
 		<fieldset>
 			<legend><strong>{tr}Join the community!{/tr}</strong></legend>
 			<p>{tr}Tiki Wiki CMS Groupware is Free and Open Source Software (FOSS). It is a community-driven project which exists and improves thanks to the participation of people just like YOU.{/tr}</p>
@@ -48,6 +49,7 @@
 		</fieldset>
 	{/tab}
 	{tab name="{tr}Settings{/tr}"}
+        <h2>{tr}Settings{/tr}</h2>
 		<form class="admin" id="connect" name="connect" action="tiki-admin.php?page=connect" method="post">
 			<fieldset>
 				<legend>{tr}Tiki Connect{/tr}</legend>

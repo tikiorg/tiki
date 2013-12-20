@@ -17,6 +17,7 @@
 
 	{tabset name="admin_general"}
 		{tab name="{tr}General Preferences{/tr}"}
+            <h2>{tr}General Preferences{/tr}</h2>
 			<fieldset>
 				<legend>{tr}Server Fitness{/tr}</legend>
 				{tr}To check if your server meets the requirements for running Tiki please visit <a href="tiki-check.php">Tiki Server Compatibility Check</a>{/tr}.
@@ -118,6 +119,7 @@
 		{/tab}
 
 		{tab name="{tr}General Settings{/tr}"}
+            <h2>{tr}General Settings{/tr}</h2>
 			<fieldset>
 				<legend>{tr}Server{/tr}</legend>
 				{preference name=tmpDir}
@@ -202,6 +204,7 @@
 		{/tab}
 
 		{tab name="{tr}Navigation{/tr}"}
+            <h2>{tr}Navigation{/tr}</h2>
 			<fieldset>
 				<legend>{tr}Menus{/tr}</legend>
 				<em>{tr}Create and edit menus {/tr}</em><a href="tiki-admin_menus.php"><em>{tr}here{/tr}</em></a>
@@ -322,6 +325,7 @@
 		{/tab}
 
 		{tab name="{tr}Date and Time{/tr}"}
+            <h2>{tr}Date and Time{/tr}</h2>
 			{preference name=server_timezone}
 			{preference name=users_prefs_display_timezone}
 			{preference name=long_date_format}
@@ -356,6 +360,7 @@
 		{/tab}
 
 		{tab name="{tr}Change admin password{/tr}"}
+            <h2>{tr}Change admin password{/tr}</h2>
 			<div style="padding:1em;" align="left">
 				<p>{tr}Change the <strong>Admin</strong> password:{/tr} <a href="tiki-adminusers.php?find=admin">{tr}User administration{/tr}</a></p>
 			</div>

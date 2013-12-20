@@ -14,6 +14,7 @@
 
 	{tabset name="admin_rss"}
 		{tab name="{tr}General Preferences{/tr}"}
+            <h2>{tr}General Preferences{/tr}</h2>
 			{preference name=feed_default_version}
 			<div class="adminoptionboxchild feed_default_version_childcontainer 5">
 				{preference name=feed_atom_author_name}
@@ -33,6 +34,7 @@
 		{/tab}
 
 		{tab name="{tr}Feeds{/tr}"}
+            <h2>{tr}Feeds{/tr}</h2>
 			{preference name=feed_articles}
 			<div class="adminoptionboxchild" id="feed_articles_childcontainer">
 				<a href="tiki-articles_rss.php" title="{tr}Feed for articles{/tr}"> {icon _id=feed}</a>
@@ -176,6 +178,7 @@
 			</div>
 		{/tab}
 		{tab name="{tr}Incoming Feeds{/tr}"}
+            <h2>{tr}Incoming Feeds{/tr}</h2>
 			{preference name=page_content_fetch}
 		{/tab}
 	{/tabset}

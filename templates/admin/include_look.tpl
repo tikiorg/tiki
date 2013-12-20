@@ -7,6 +7,7 @@
 </div></div>
 	{tabset name="admin_look"}
 		{tab name="{tr}Theme{/tr}"}
+            <h2>{tr}Theme{/tr}</h2>
 
 			<div style="position:relative;">
 				<div style="position:absolute;right:.5em;top:0.5em;">
@@ -65,6 +66,7 @@
 		{/tab}
 
 		{tab name="{tr}General Layout{/tr}"}
+            <h2>{tr}General Layout{/tr}</h2>
 
 			{remarksbox type="tip" title="{tr}Tip{/tr}"}
 				{tr}&quot;Modules&quot; are the items of content at the top &amp; bottom and in the right &amp; left columns of the site.{/tr} {tr}Select{/tr}
@@ -115,6 +117,7 @@
 		{/tab}
 
 		{tab name="{tr}Shadow layer{/tr}"}
+            <h2>{tr}Shadow layer{/tr}</h2>
 			{preference name=feature_layoutshadows}
 			<div class="adminoptionboxchild" id="feature_layoutshadows_childcontainer">
 				{preference name=main_shadow_start}
@@ -138,6 +141,7 @@
 		{/tab}
 
 		{tab name="{tr}Pagination{/tr}"}
+            <h2>{tr}Pagination{/tr}</h2>
 			{preference name=user_selector_threshold}
 			{preference name=maxRecords}
 			{preference name=nextprev_pagination}
@@ -154,6 +158,7 @@
 		{/tab}
 
 		{tab name="{tr}UI Effects{/tr}"}
+            <h2>{tr}UI Effects{/tr}</h2>
 			<div class="adminoptionbox">
 				<fieldset class="table">
 					<legend>{tr}Standard UI effects{/tr}</legend>
@@ -186,6 +191,7 @@
 		{/tab}
 
 		{tab name="{tr}Customization{/tr}"}
+            <h2>{tr}Customization{/tr}</h2>
 			<fieldset>
 				<legend>{tr}Theme Generator{/tr} <em>({tr}Experimental{/tr})</em></legend>
 				{preference name="themegenerator_feature"}
@@ -276,6 +282,7 @@
 		{/tab}
 
 		{tab name="{tr}Miscellaneous{/tr}"}
+            <h2>{tr}Miscellaneous{/tr}</h2>
 			{preference name=feature_tabs}
 			<div class="adminoptionboxchild" id="feature_tabs_childcontainer">
 				{preference name=layout_tabs_optional}

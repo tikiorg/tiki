@@ -12,6 +12,7 @@
 
     {tabset}
 	{tab name="{tr}Settings{/tr}"}
+        <h2>{tr}Settings{/tr}</h2>
 	<fieldset class="table">
 		<legend>{tr}Activate the feature{/tr}</legend>
 		{preference name=feature_trackers visible="always"}
@@ -66,6 +67,7 @@
 
 	{/tab}
 	{tab name="{tr}Plugins{/tr}"}
+        <h2>{tr}Plugins{/tr}</h2>
 	<fieldset class="table">
 		<legend>{tr}Plugins{/tr}</legend>
 		{preference name=wikiplugin_tracker}
@@ -87,6 +89,7 @@
 	</fieldset>
 	{/tab}
 	{tab name="{tr}Field Types{/tr}"}
+        <h2>{tr}Field Types{/tr}</h2>
 	<fieldset class="table">
 		<legend>{tr}Field Types{/tr}</legend>
 		{foreach from=$fieldPreferences item=name}

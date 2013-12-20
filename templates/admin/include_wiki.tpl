@@ -36,6 +36,7 @@
 
 	{tabset name="admin_wiki"}
 		{tab name="{tr}General Preferences{/tr}"}
+            <h2>{tr}General Preferences{/tr}</h2>
 
 			<fieldset class="table">
 				<legend>{tr}Activate the feature{/tr}</legend>
@@ -126,6 +127,7 @@
 		{/tab}
 
 		{tab name="{tr}Features{/tr}"}
+            <h2>{tr}Features{/tr}</h2>
 			<input type="hidden" name="wikifeatures" />
 
 			{preference name=feature_sandbox}
@@ -349,6 +351,7 @@
 	{/tab}
 
 	{tab name="{tr}Flagged Revision{/tr}"}
+        <h2>{tr}Flagged Revision{/tr}</h2>
 		<fieldset>
 			<legend>{tr}Revision Approval{/tr}</legend>
 
@@ -360,6 +363,7 @@
 	{/tab}
 
 	{tab name="{tr}Page Listings{/tr}"}
+        <h2>{tr}Page Listings{/tr}</h2>
 		<input type="hidden" name="wikilistprefs" />
 		{preference name=feature_listPages}
 		{preference name=feature_lastChanges}
@@ -413,6 +417,7 @@
 
 	{if $prefs.feature_morcego eq 'y'}
 		{tab name="{tr}Wiki 3D Browser Configuration{/tr}"}
+            <h2>{tr}Wiki 3D Browser Configuration{/tr}</h2>
 			<fieldset>
 				<legend>{tr}General{/tr}</legend>
 				{preference name=wiki_feature_3d}
@@ -448,6 +453,7 @@
 	{/if}
 
 	{tab name="{tr}Tools{/tr}"}
+        <h2>{tr}Tools{/tr}</h2>
 		<a href="tiki-search_replace.php">{tr}Mass search and replace{/tr}</a><br>
 		<a href="tiki-report_direct_object_perms.php">{tr}Report wiki pages with direct object permissions{/tr}</a><br>
 	{/tab}

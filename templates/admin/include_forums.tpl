@@ -14,6 +14,7 @@
 
 	{tabset name="admin_forums"}
 		{tab name="{tr}General Settings{/tr}"}
+            <h2>{tr}General Settings{/tr}</h2>
 		
 			<fieldset class="table">
 				<legend>{tr}Activate the feature{/tr}</legend>
@@ -66,6 +67,7 @@
 		{/tab}
 
 		{tab name="{tr}Forums Listing{/tr}"}
+            <h2>{tr}Forums Listing{/tr}</h2>
 			<input type="hidden" name="forumlistprefs" />
 			{preference name=forums_ordering}
 			{tr}Select which items to display when listing forums:{/tr}

@@ -235,8 +235,7 @@ function showDetails( id, domain, profile ) { // {{{
 {/if}
 {tabset name='tabs_admin-profiles'}
 	{tab name="{tr}Apply Profiles{/tr}"}
-	
-		<h3>{tr}Configure Tiki in 3 easy steps using Profiles{/tr}</h3>
+		<h2>{tr}Configure Tiki in 3 easy steps using Profiles{/tr}</h2>
 		{if $prefs.javascript_enabled eq 'y'}
 				{if $openSources == 'some'}
 					{remarksbox type="warning" title="{tr}A Friendly Warning{/tr}"}
@@ -406,6 +405,7 @@ $("#repository, #categories").change(function(){
 {/if}
 {/tab}
 {tab name="{tr}Export{/tr}"}
+    <h2>{tr}Export{/tr}</h2>
 	<form action="tiki-admin.php?page=profiles" method="post">
 		<fieldset id="export_to_yaml">
 			<legend>{tr}Export YAML{/tr}</legend>
@@ -501,6 +501,7 @@ $("#export_type").change(function(){
 	</form>
 {/tab}
 {tab name="{tr}Advanced{/tr}"}
+    <h2>{tr}Advanced{/tr}</h2>
 
 <fieldset><legend>{tr}Repositories{/tr}</legend>
 <form action="tiki-admin.php?page=profiles" method="post">

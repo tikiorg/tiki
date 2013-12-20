@@ -14,6 +14,7 @@
 
 	{tabset name="admin_textarea"}
 		{tab name="{tr}General Settings{/tr}"}
+            <h2>{tr}General Settings{/tr}</h2>
 			<fieldset>
 				<legend>{tr}Features{/tr}{help url="Text+Area"}</legend>
 				{preference name=feature_fullscreen}				
@@ -118,6 +119,7 @@
 		{/tab}
 
 		{tab name="{tr}Plugins{/tr}"}
+            <h2>{tr}Plugins{/tr}</h2>
 			{remarksbox type="note" title="{tr}About plugins{/tr}"}{tr}Tiki plugins add functionality to wiki pages, articles, blogs, and so on. You can enable and disable them below.{/tr}
 			{tr}You can approve plugin use at <a href="tiki-plugins.php">tiki-plugins.php</a>.{/tr}		
 			{tr}The edit-plugin icon is an easy way for users to edit the parameters of each plugin in wiki pages. It can be disabled for individual plugins below.{/tr}
@@ -173,6 +175,7 @@
 		{/tab}
 
 		{tab name="{tr}Plugin Aliases{/tr}"}
+            <h2>{tr}Plugin Aliases{/tr}</h2>
 			{remarksbox type="note" title="{tr}About plugin aliases{/tr}"}
 				{tr}Tiki plugin aliases allow you to define your own custom configurations of existing plugins.<br>Find out more here: {help url="Plugin+Alias"}{/tr}
 			{/remarksbox}

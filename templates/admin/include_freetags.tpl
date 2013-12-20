@@ -9,6 +9,7 @@
 
 	{tabset name="admin_freetags"}
 		{tab name="{tr}General Settings{/tr}"}
+            <h2>{tr}General Settings{/tr}</h2>
 		
 	<fieldset class="table">
 		<legend>{tr}Activate the feature{/tr}</legend>
@@ -72,6 +73,7 @@
 
 		{if $prefs.feature_morcego eq 'y'}
 			{tab name="{tr}3D Tag Browser Configuration{/tr}"}
+                <h2>{tr}3D Tag Browser Configuration{/tr}</h2>
 				{preference name=freetags_feature_3d}
 				<div id=freetags_feature_3d_childcontainer>
 					<fieldset>

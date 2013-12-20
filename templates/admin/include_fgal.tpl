@@ -36,6 +36,7 @@
 	{tabset name="fgal_admin"}
 	
 		{tab name="{tr}General Settings{/tr}"}
+            <h2>{tr}General Settings{/tr}</h2>
 
 			<fieldset class="table">
 				<legend>{tr}Activate the feature{/tr}</legend>
@@ -128,6 +129,7 @@
 		{/tab}
 
 		{tab name="{tr}Plugins{/tr}"}
+            <h2>{tr}Plugins{/tr}</h2>
 			<fieldset class="table">
 				<legend>{tr}Plugins{/tr}</legend>
 				{preference name=wikiplugin_files}
@@ -143,6 +145,7 @@
 		{/tab}
 
 		{tab name="{tr}Listings{/tr}"}
+            <h2>{tr}Listings{/tr}</h2>
 			{remarksbox title="Note"}
 				{tr}Changing these settings will <em>not</em> affect existing file galleries. These changes will apply <em>only</em> to new file galleries{/tr}.
 			{/remarksbox}
@@ -191,6 +194,7 @@
 
 		{if $section eq 'admin'}
 			{tab name="{tr}Admin Listings{/tr}"}
+                <h2>{tr}Admin Listings{/tr}</h2>
 				<fieldset>
 					<legend>{tr}Select which items to display when admin galleries: {/tr}</legend>
 					<table class="table">
@@ -270,6 +274,7 @@
 			</div>
 		{/tab}
 		{tab name="{tr}Enhancements{/tr}"}
+            <h2>{tr}Enhancements{/tr}</h2>
 
 			<fieldset>
 				<legend>{tr}Access{/tr}</legend>
