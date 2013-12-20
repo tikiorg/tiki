@@ -96,6 +96,37 @@ class Services_Search_StoredController
 		return $out;
 	}
 
+	function action_edit($input)
+	{
+		if (! $input->queryId->int()) {
+			return array(
+				'FORWARD' => ['action' => 'list'],
+			);
+		}
+
+		$lib = TikiLib::lib('storedsearch');
+		if (! $data = $lib->getEditableQuery($input->queryId->int())) {
+			throw new Services_Exception_NotFound('User query not found.');
+		}
+
+		$out = array(
+			'title' => tr('Edit User Query'),
+			'success' => false,
+			'queryId' => $data['queryId'],
+			'label' => $data['label'],
+			'priority' => $data['priority'],
+			'priorities' => $lib->getPriorities(),
+		);
+
+		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+			$lib->deleteQuery($data);
+
+			$out['success'] = true;
+		}
+
+		return $out;
+	}
+
 	private function getResultSet($query)
 	{
 		try {
