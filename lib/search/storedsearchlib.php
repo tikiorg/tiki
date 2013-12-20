@@ -31,6 +31,10 @@ class StoredSearchLib
 	public function storeUserQuery($queryId, $query)
 	{
 		$data = $this->fetchQuery($queryId);
+		if (! $data) {
+			return false;
+		}
+
 		if (! $this->canUserStoreQuery($data)) {
 			return false;
 		}

@@ -754,7 +754,7 @@ class UnifiedSearchLib
 		}
 	}
 	
-	private function initQueryPermissions($query)
+	function initQueryPermissions($query)
 	{
 		if (! Perms::get()->admin) {
 			$query->filterPermissions(Perms::get()->getGroups());
@@ -765,10 +765,12 @@ class UnifiedSearchLib
      * @param array $filter
      * @return Search_Query
      */
-    function buildQuery(array $filter)
+    function buildQuery(array $filter, $query = null)
 	{
-		$query = new Search_Query;
-		$this->initQuery($query);
+		if (! $query) {
+			$query = new Search_Query;
+			$this->initQuery($query);
+		}
 
 		if (isset($filter['type']) && $filter['type']) {
 			$query->filterType($filter['type']);
