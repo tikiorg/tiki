@@ -151,6 +151,25 @@ function wikiplugin_trackeritemfield($data, $params)
 			$trackerId = $info['trackerId'];
 		}
 
+		if (empty($info) && !empty($test) && $test == 1) {
+			// item not found, should still test if that is the function (as documented)
+			if (!isset($data)) {
+				$data = $dataelse = '';
+			} elseif (!empty($data) && strpos($data, '{ELSE}')) {
+				$dataelse = substr($data, strpos($data, '{ELSE}')+6);
+				$data = substr($data, 0, strpos($data, '{ELSE}'));
+			} else {
+				$dataelse = '';	
+			}
+			if (empty($value)) {
+				// testing if empty
+				return $data;
+			} else {
+				// testing for something
+				return $dataelse;
+			}
+		} 
+
 		$itemObject = Tracker_Item::fromInfo($info);
 		if (! $itemObject->canView()) {
 			return WikiParser_PluginOutput::error(tr('Permission denied'), tr('You are not allowed to view this item.'));
