@@ -101,7 +101,7 @@
 	{pagination_links cant=$cant step=$maxRecords offset=$offset}{/pagination_links}
 	{if $tiki_p_admin_trackers eq 'y'}
 		<form class="create-tracker" method="post" action="{service controller=tracker action=replace}">
-			<input type="submit" class="btn btn-default btn-sm" value="{tr}Create tracker{/tr}">
+			<input type="submit" class="btn btn-default" value="{tr}Create tracker{/tr}">
 		</form>
 	{/if}
 	{if !empty($trackerId)}
@@ -215,76 +215,96 @@
     <h2>{tr}Duplicate/Import Tracker{/tr}</h2>
 	{accordion}
 		{accordion_group title="{tr}Duplicate Tracker{/tr}"}
-			<form class="simple" action="{service controller=tracker action=duplicate}" method="post">
-				<label>
-					{tr}Name{/tr}
-					<input type="text" name="name">
+			<form class="form-horizontal" action="{service controller=tracker action=duplicate}" method="post">
+				<div class="form-group">
+                    <label class="col-sm-2 control-label" for="name">
+    					{tr}Name{/tr}
+                    </label>
+                    <div class="col-sm-4">
+    					<input type="text" name="name" id="name" class="form-control">
+                    </div>
 				</label>
-				<label>
+				<label class="col-sm-2 control-label" for="trackerId">
 					{tr}Tracker{/tr}
-					<select name="trackerId">
+                </label>
+                <div class="col-sm-4">
+					<select name="trackerId" id="trackerId" class="form-control">
 						{foreach from=$trackers item=tr}
 							<option value="{$tr.trackerId|escape}">{$tr.name|escape}</option>
 						{/foreach}
 					</select>
-				</label>
-				{if $prefs.feature_categories eq 'y'}
-					<label>
-						<input type="checkbox" name="dupCateg" value="1">
-						{tr}Duplicate categories{/tr}
-					</label>
-				{/if}
-				<label>
-					<input type="checkbox" name="dupPerms" value="1">
-					{tr}Duplicate permissions{/tr}
-				</label>
-				<div class="submit">
-					<input type="submit" class="btn btn-default btn-sm" value="{tr}Duplicate{/tr}">
+				</div>
+            </div>
+            <div class="col-sm-10 col-sm-offset-2">
+                <div class="form-group">
+                    {if $prefs.feature_categories eq 'y'}
+					    <label class="checkbox-inline">
+						    <input type="checkbox" name="dupCateg" value="1">
+						    {tr}Duplicate categories{/tr}
+					    </label>
+				    {/if}
+				    <label class="checkbox-inline">
+					    <input type="checkbox" name="dupPerms" value="1">
+					    {tr}Duplicate permissions{/tr}
+				    </label>
+                </div>
+            </div>
+            <div class="submit text-center">
+					<input type="submit" class="btn btn-default" value="{tr}Duplicate{/tr}">
 				</div>
 			</form>
 		{/accordion_group}
 			
 		{if $prefs.tracker_remote_sync eq 'y'}
 			{accordion_group title="{tr}Duplicate Remote Tracker{/tr}"}
-				<form class="simple" method="post" action="{service controller=tracker_sync action=clone_remote}">
-					<label>
+				<form class="form-horizontal" method="post" action="{service controller=tracker_sync action=clone_remote}" role="form">
+					<label class="col-sm-3 control-label">
 						{tr}URL:{/tr}
-						<input type="url" name="url" required="required">
+						<input type="url" name="url" id="name" class="form-control" required="required">
 					</label>
 					<div>
-						<input type="submit" class="btn btn-default btn-sm" value="{tr}Search for trackers to clone{/tr}">
+						<input type="submit" class="btn btn-default" value="{tr}Search for trackers to clone{/tr}">
 					</div>
 				</form>
 			{/accordion_group}
 		{/if}
 		{accordion_group title="{tr}Import Structure{/tr}"}
-			<form class="simple" method="post" action="{service controller=tracker action=import}">
-				<label>
-					{tr}Raw data{/tr}
-					<textarea name="raw" rows="20"></textarea>
-				</label>
-				<label>
-					<input type="checkbox" name="preserve" value="1">
-					{tr}Preserve tracker ID{/tr}
-				</label>
+			<form class="form-horizontal" method="post" action="{service controller=tracker action=import}">
+                <div class="form-group">
+			        <label class="col-sm-2 control-label">{tr}Raw data{/tr}</label>
+                    <div class="col-sm-10">
+					    <textarea name="raw" rows="20" class="form-control"></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-10 col-sm-offset-2">
+                        <div class="checkbox-inline">
+                            <label>
+					            <input type="checkbox" name="preserve" value="1">
+					            {tr}Preserve tracker ID{/tr}
+				            </label>
+                    </div></div>
+                </div>
 				{remarksbox close='n' title='{tr}Note{/tr}'}{tr}Use "Tracker -> Export -> Structure" to produce this data.{/tr}{/remarksbox}
-				<div class="submit">
-					<input type="submit" class="btn btn-default btn-sm" value="{tr}Import{/tr}">
+				<div class="text-center">
+					<input type="submit" class="btn btn-default" value="{tr}Import{/tr}">
 				</div>
 			</form>
 		{/accordion_group}
 
         {accordion_group title="{tr}Import From Profile/YAML{/tr}"}
-	        <form id="forumImportFromProfile" action="{service controller=tracker action=import_profile trackerId=$trackerId}" method="post" enctype="multipart/form-data">
+	        <form class="form-horizontal" id="forumImportFromProfile" action="{service controller=tracker action=import_profile trackerId=$trackerId}" method="post" enctype="multipart/form-data">
 				{remarksbox type="info" title="{tr}New Feature{/tr}" icon="bricks"}
 	                <p><em>{tr}Please note: Experimental - work in progress{/tr}</em></p>
 				{/remarksbox}
-	            <label style="display: block">
-					{tr}YAML{/tr}
-	            </label>
-	            <textarea name="yaml" id="importFromProfileYaml" data-codemirror="true" data-syntax="yaml" data-line-numbers="true" style="height: 400px;"></textarea>
-                <div class="submit">
-                    <input type="submit" class="btn btn-default btn-sm" value="{tr}Import{/tr}">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">{tr}YAML{/tr}</label>
+                    <div class="col-sm-10">
+	                    <textarea name="yaml" id="importFromProfileYaml" data-codemirror="true" data-syntax="yaml" data-line-numbers="true" style="height: 400px;" class="form-control"></textarea>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <input type="submit" class="btn btn-default" value="{tr}Import{/tr}">
                 </div>
             </form>
         {/accordion_group}
