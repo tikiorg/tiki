@@ -227,45 +227,22 @@ body.fixed_width .fixedwidth .fixedwidth {
 }
 
 #middle {
-	text-align: left;
 	font-size: 1.2em;
 	background: #0c0c0c;
 }
 
 #c1c2 {
-	text-align: left;
 	font-size: 1em;
-}
-
-#c1c2 #wrapper .marginleft {
-	margin-left: 200px;
-}
-
-#c1c2 #wrapper .marginright {
-	margin-right: 200px;
-}
-
-#c1c2 #col2 {
-	width: 200px;
-	font-size: 1em;
-	overflow: visible;
 }
 
 #c1c2 #col2 .content {
 	margin: 0;
-	padding: 3px;
 }
 
 #col3 {
-	width: 200px;
-	font-size: 1em;
-	margin-left: -200px;
 	margin-top: 10px;
 }
 
-#col3 .content {
-	padding: 3px;
-}
 
 #footer {
 	text-align: center;

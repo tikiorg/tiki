@@ -274,16 +274,6 @@ label {
 	color: #000;
 }
 
-/*** override lite.css ***/
-#main {
-	text-align: left;
-}
-
-#main[id] {
-	height: auto;
-	min-height: 100%;
-}
-
 #middle {
 	background: #fff;
 }
@@ -297,27 +287,13 @@ label {
 }
 
 #c1c2 #col2 {
-	width: 240px;
-	text-align: right;
 	background: url(strasa/box_top.gif) no-repeat 100% 0;
 	padding-top: 5px;
 }
 
 #c1c2 #col2 .content {
-	text-align: left;
-	margin-left: 58px;
 	padding-bottom: 5px;
 	background: url(strasa/box_bottom.gif) no-repeat 0 100%;
-}
-
-#col3 {
-	margin-left: -210px;
-	width: 210px;
-	text-align: left;
-}
-
-#col3 .content {
-	margin-right: 58px;
 }
 
 #footer {

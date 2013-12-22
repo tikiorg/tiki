@@ -15,34 +15,7 @@ body {
 	font-family: arial, helvetica, verdana, sans-serif;
 }
 
-.header {text-align: left}
-#middle {text-align: left}
-
-#c1c2 {
-	text-align: left;
-}
-	
 #col1 {background: url(snow/flakesptn3.jpg)}
-
-#c1c2 #wrapper #col1.marginleft {margin-left: 230px}
-#c1c2 #wrapper #col1.marginright {margin-right: 230px}
-
-#c1c2 #col2 {
-	width: 230px;
-}
-
-#c1c2 #col2 .content {
-	overflow: visible;
-}
-
-#col3 {
-	margin-left: -230px;
-	width: 230px;
-	text-align: center}
-
-#col3 .content {
-	margin: 0;
-}
 
 #footer {
  	text-align: center;

@@ -35,16 +35,6 @@ body {
 	font-family: Verdana, sans-serif;
 }
 
-#c1c2	#wrapper	#col1.marginright {
-	margin-right: 333px;
-}
-
-#col3 {
-	margin-left: -333px;
-	padding: 0;
-	width: 333px;
-}
-
 dt {
 	font-weight: bold
 }

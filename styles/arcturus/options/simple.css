@@ -62,23 +62,6 @@ body {
 
 #c1c2 #wrapper #col1 #tiki-center {border: 0}
 
-#c1c2 #wrapper #col1.marginleft  {
-	margin-left: 180px;
-}
-
-#c1c2 #wrapper #col1.marginright {
-	margin-right: 180px;
-}
-
-#c1c2 #col2,
-#col3 {
-	width: 180px;
-	padding: 0;
-}
-
-#col3 {
-	margin-left: -180px;
-}
 
 #centercolumn {padding: 5px}
 #tiki-center {padding: 5px 0}

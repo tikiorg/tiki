@@ -58,20 +58,8 @@ body.fixed_width .fixedwidth .fixedwidth {
 	text-align: left;
 }
 
-#c1c2 #wrapper #col1.marginleft {margin-left: 200px}
-#c1c2 #wrapper #col1.marginright {margin-right: 200px}
-
-#c1c2 #col2 {
-	width: 200px;
-}
-
 #col2 .content {
 	margin: 0 10px 0 20px
-}
-
-#col3 {
-	margin-left: -200px;
-	width: 200px;
 }
 
 #col3 .content {

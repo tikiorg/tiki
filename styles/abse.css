@@ -16,26 +16,16 @@ body {
 	color: #fff;
 	font-family: "Bitstream Vera Sans", Verdana, Geneva, sans-serif}
 
-/* Enable header and footer content to widen when middle has wide content. */
-body.fixed_width .fixedwidth .fixedwidth {
-	width: 100%;
-	padding: 0;
-}
 
 #middle {padding-top: 8px}
 
 #c1c2 {
-	text-align: left;
 	font-size: 1em;
 	background: transparent}
 
 #c1c2	#wrapper	#col1 {
 	background: transparent;
 	color: #fff}
-
-#c1c2	#wrapper	#col1.marginleft  {margin-left: 200px;}
-#c1c2	#wrapper	#col1.marginright {margin-right: 200px;}
-#c1c2	#wrapper	#col1	.content {background: transparent}
 
 #c1c2 #wrapper #col1 #tiki-center {
 	padding: 15px 20px 5px;
@@ -45,14 +35,11 @@ body.fixed_width .fixedwidth .fixedwidth {
 	background: url(abse/titlebgoff.png) repeat-x;
 	font-size: 1em}
 
-* html #tiki-center {font-size: 1em}
-
 html>body #c1c2 #wrapper #col1 #tiki-center:hover {
 	background: #0E1D10 url(abse/titlebgon.png) repeat-x}
 
 #c1c2 #col2 {
 	background: transparent;
-	width: 200px;
 	font-size: 1em}
 
 #c1c2 #col2 .content {
@@ -60,10 +47,7 @@ html>body #c1c2 #wrapper #col1 #tiki-center:hover {
 	padding: 0 4px 4px}
 
 #col3 {
-	margin-left: -200px;
-	margin-top: -3px;
 	background: transparent;
-	width: 200px;
 	font-size: 1em}
 
 #col3 .content {

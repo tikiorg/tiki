@@ -43,10 +43,6 @@ body {
 	background: #fff;
 }
 
-html>body {
-	font-size: 13px;
-}
-
 a,
 a:visited {
 	text-decoration: none;
@@ -115,19 +111,10 @@ h1, .pagetitle {
 
 #c1c2 #col2 {
 	background: #f0ead8;
-	text-align: right;
 	border-right: 1px solid #ddccbb;
 }
 
-#c1c2 #col2 .content {
-	margin-right: 2px;
-	width: 168px;
-	text-align: left;
-}
-
 #col3 {
-	width: 170px;
-	margin-left: -170px;
 	background: #f0ead8;
 	border-left: 1px solid #ddccbb;
 }

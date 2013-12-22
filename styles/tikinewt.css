@@ -24,7 +24,6 @@ body.fixed_width .fixedwidth .fixedwidth {
 }
 
 #middle {
-	text-align: left;
 	margin-bottom: 2px;
 }
 
@@ -40,18 +39,8 @@ body.fixed_width .fixedwidth .fixedwidth {
 	border: 1px solid #8cacbb;
 }
 
-#c1c2 #wrapper .marginleft {
-	margin-left: 190px;
-}
-
-#c1c2 #wrapper .marginright {
-	margin-right: 190px;
-}
-
 #c1c2 #col2 {
 	background: transparent;
-	width: 190px;
-	text-align: left;
 	overflow: visible;
 }
 
@@ -59,13 +48,6 @@ body.fixed_width .fixedwidth .fixedwidth {
 	padding-left: 7px;
 	padding-right: 4px;
 	padding-top: 0;
-}
-
-#col3 {
-	background: transparent;
-	width: 189px;
-	margin-left: -190px;
-	text-align: left;
 }
 
 #col3 .content {

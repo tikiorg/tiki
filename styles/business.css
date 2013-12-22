@@ -23,13 +23,6 @@ body {
 	background: #fbfbfb url(business/image1.jpg) repeat-x;
 }
 
-#c1c2 #wrapper #col1.marginleft {
-	margin-left: 280px;
-}
-
-#c1c2 #wrapper #col1.marginright {
-	margin-right: 280px;
-}
 
 #c1c2 #wrapper #col1 .content {
 	background: transparent;
@@ -39,15 +32,9 @@ body {
 	padding: 20px 30px;
 }
 
-#c1c2 #col2 {
-	width: 280px;
-	overflow: visible;
-}
 
 #col3 {
-	width: 280px;
 	margin-top: 8px;
-	margin-left: -280px;
 	margin-bottom: 0;
 	font-size: 1em;
 }

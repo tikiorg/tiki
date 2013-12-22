@@ -49,35 +49,15 @@ h1:first-letter, h2:first-letter, h3:first-letter, h4:first-letter, h5:first-let
 	padding: 1.5em;
 }
 
-#c1c2	#wrapper	#col1.marginleft  {
-	margin-left: 250px;
-}
-
-#c1c2	#wrapper	#col1.marginright {
-	margin-right: 250px;
-}
-
-#c1c2	#wrapper	#col1	.content {
-	background: transparent;
-}
-
 #c1c2 #wrapper #col1 #tiki-center {
 	padding: 10px 20px 10px 10px;
 }
 
-#c1c2 #col2 {
-	width: 250px;
-	overflow: visible;
-}
 
 #c1c2 #col2 .content {
 	margin-left: 8px;
 }
 
-#col3 {
-	width: 250px;
-	margin-left: -250px;
-}
 
 #col3 .content {
 	margin-right: 8px;

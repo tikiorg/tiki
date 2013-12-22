@@ -40,10 +40,6 @@ body {
 	background: #efefef;
 }
 
-html>body {
-	font-size: 11px;
-}
-
 a,
 a:visited {
 	text-decoration: none;
@@ -127,14 +123,6 @@ input[type="submit"]:hover,
 	color: #fff;
 }
 
-#c1c2	#wrapper	#col1.marginleft  {
-	margin-left: 180px;
-}
-
-#c1c2	#wrapper	#col1.marginright {
-	margin-right: 180px;
-}
-
 #c1c2	#wrapper	#col1	.content {
 	background: transparent;
 }
@@ -143,22 +131,11 @@ input[type="submit"]:hover,
 	padding: 10px;
 }
 
-#c1c2 #col2 {
-	width: 180px;
-	overflow: visible
-}
-
-#col3 {
-	width: 180px;
-	margin-left: -180px;
-}
-
 .footerbgtrap {
 	padding-top: 10px;
 	margin-top: 0;
 	background: #CECECE;
 	padding-bottom: 15px;
-
 }
 
 .box {

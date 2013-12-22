@@ -36,25 +36,6 @@ body.fixed_width .fixedwidth .fixedwidth {
 	color: #f4f4f4;
 	padding: 0 1em}
 
-#c1c2 #wrapper .marginleft {margin-left: 240px}
-#c1c2 #wrapper .marginright {margin-right: 240px}
-
-#c1c2 #col2 {
-	width: 240px;
-	overflow: hidden}
-
-#c1c2 #col2 > .content {
-	margin: auto;
-}
-
-#col3 {
-	margin-left: -240px;
-	width: 240px}
-
-#col3 .content {
-	margin: auto;
-}
-
 #footer {
 	text-align: center;
 	font-size: .9em;

@@ -69,21 +69,6 @@ fieldset {
 #col2 fieldset {
 	width: 100px;
 }
-/*
-button,
-input,
-label,
-textarea,
-option,
-select {
-	margin: 1px;
-	vertical-align: middle;
-}
-
-input[type=checkbox],
-input[type=radio] {
-	vertical-align: middle !important;
-}*/
 
 .button a,
 .button a:visited,
@@ -184,10 +169,6 @@ small {
 /***** Pasic Page Layout
 	Including Site Header *****/
 
-#main {
-	font-size: 1em;
-}
-
 .fullscreenbutton,
 #fullscreenbutton {
 	background: #f4f4f4;
@@ -273,22 +254,8 @@ body.fixed_width .fixedwidth .fixedwidth {
 }
 
 #c1c2 {
-	text-align: left;
 	font-size: 1em;
 }
-
-#c1c2 #wrapper .marginleft {
-	margin-left: 214px;
-}
-
-#c1c2 #wrapper .marginright {
-	margin-right: 214px;
-}
-/*
-#tiki-columns {
-	border-top: 1px solid #aaa;
-	padding: 2px 2px 0 2px;
-}*/
 
 a.flip,
 a.flip:visited {
@@ -351,21 +318,9 @@ a.flip:hover {
 	margin: 1px;
 }
 
-#c1c2 #col2 {
-	width: 214px;
-	overflow: visible;
-}
-
 #c1c2 #col2 .content {
 	border: 1px solid #aaa;
 	margin-left: 9px;
-}
-
-#col3 {
-	margin-left: -214px;
-	width: 214px;
-	text-align: left;
-	font-size: 1em;
 }
 
 #col3 .content {
