@@ -26,7 +26,7 @@ settimeleft(itid);
 {/if}
 
 <h2>{$quiz_info.name|escape}</h2>
-<div class="description">{$quiz_info.description|escape}</div>
+<div class="description help-block">{$quiz_info.description|escape}</div>
 {if $ans eq 'n'}
 {section name=ix loop=$questions}
 <div class="questionblock">

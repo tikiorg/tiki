@@ -4,7 +4,7 @@
 		{tabset}
 			{foreach from=$memberlist_groups key=groupName item=groupData}
 				{tab name="{$groupName|escape}"}
-					<div class="group">
+                    <div class="group">
 						{if !empty($user) and $prefs.feature_user_watches eq 'y'}
 							<div class="pull-right">
 								{if not $groupData.isWatching}

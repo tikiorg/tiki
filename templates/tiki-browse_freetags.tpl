@@ -206,7 +206,7 @@
 					{tr}{$objects[ix].type|replace:"wiki page":"Wiki"|replace:"article":"Article"|regex_replace:"/tracker [0-9]*/":"tracker item"}{/tr}
 				{if !empty($objects[ix].parent_object_id)} {tr}in{/tr} {object_link type=$objects[ix].parent_object_type id=$objects[ix].parent_object_id}{/if}
 				</div>
-				<div class="description">
+				<div class="description help-block">
 					{$objects[ix].description|strip_tags|escape}&nbsp;
 				</div>
 			</div>

@@ -58,7 +58,7 @@
 	<label>
 		<input type="checkbox" name="adminOnly" value="1">
 		{tr}Restrict visibility to administrators{/tr}
-		<div class="description">
+		<div class="description help-block">
 			{tr}Useful if you are working on a live tracker.{/tr}
 		</div>
 	</label>

@@ -12,7 +12,7 @@
 {/title}
 
 {if $edit_mode neq 'y' and $gal_info.description neq ''}
-	<div class="description">
+	<div class="description help-block">
 		{$gal_info.description|escape|nl2br}
 	</div>
 {/if}

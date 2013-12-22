@@ -88,7 +88,7 @@
 		<label>
 			{tr}Mail body ressource{/tr}
 			<input type="text" name="body">
-			<div class="description">
+			<div class="description help-block">
 				{tr}wiki:pageName for a wiki page or tplName.tpl for a template{/tr}
 			</div>
 		</label>

@@ -13,7 +13,7 @@
 						<span class="mandatory_star">*</span>
 					{/if}
 					{trackerinput field=$field}
-					<div class="description">
+					<div class="description help-block">
 						{$field.description|escape}
 					</div>
 				</label>

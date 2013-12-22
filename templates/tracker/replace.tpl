@@ -79,7 +79,7 @@
 					<option value="flat"{if $info.sectionFormat eq 'flat'} selected="selected"{/if}>{tr}Title{/tr}</option>
 					<option value="tab"{if $info.sectionFormat eq 'tab'} selected="selected"{/if}>{tr}Tabs{/tr}</option>
 				</select>
-				<div class="description">
+				<div class="description help-block">
 					{tr}Determines how headers will be rendered when using header fields as form section dividers.{/tr}
 				</div>
 			</label>
@@ -101,7 +101,7 @@
 			<label class="depends" data-on="showCreated">
 				{tr}Creation date format{/tr}
 				<input type="text" name="showCreatedFormat" value="{$info.showCreatedFormat|escape}">
-				<div class="description">
+				<div class="description help-block">
 					<a class="link" target="strftime" href="http://www.php.net/manual/en/function.strftime.php">{tr}Date and Time Format Help{/tr}</a>
 				</div>
 			</label>
@@ -128,7 +128,7 @@
 			<label class="depends" data-on="showLastModif">
 				{tr}Modification date format{/tr}
 				<input type="text" name="showLastModifFormat" value="{$info.showLastModifFormat|escape}">
-				<div class="description">
+				<div class="description help-block">
 					<a class="link" target="strftime" href="http://www.php.net/manual/en/function.strftime.php">{tr}Date and Time Format Help{/tr}</a>
 				</div>
 			</label>
@@ -160,21 +160,21 @@
 			<label>
 				{tr}List detail pop-up{/tr}
 				<input type="text" name="showPopup" value="{$info.showPopup|escape}">
-				<div class="description">
+				<div class="description help-block">
 					{tr}Comma-separated list of field IDs{/tr}
 				</div>
 			</label>
 			<label>
 				{tr}Template to display an item{/tr}
 				<input type="text" name="viewItemPretty" value="{$info.viewItemPretty|escape}">
-				<div class="description">
+				<div class="description help-block">
 					{tr}wiki:pageName for a wiki page or tpl:tplName for a template{/tr}
 				</div>
 			</label>
 			<label>
 				{tr}Template to edit an item{/tr}
 				<input type="text" name="editItemPretty" value="{$info.editItemPretty|escape}">
-				<div class="description">
+				<div class="description help-block">
 					{tr}wiki:pageName for a wiki page or tpl:tplName for a template{/tr}
 				</div>
 			</label>
@@ -182,7 +182,7 @@
 				<input type="checkbox" name="adminOnlyViewEditItem" value="1"
 					{if $info.adminOnlyViewEditItem eq 'y'} checked="checked"{/if}>
 				{tr}Restrict non admins to wiki page access only{/tr}
-				<div class="description">
+				<div class="description help-block">
 					{tr}Only users with admin tracker permission (tiki_p_admin_trackers) can use the built-in tracker interfaces (tiki-view_tracker.php and tiki-view_tracker_item.php). This is useful if you want the users of these trackers to only access them via wiki pages, where you can use the various tracker plugins to embed forms and reports.{/tr}
 				</div>
 			</label>
@@ -225,7 +225,7 @@
 			<label>
 				{tr}Copy activity to email{/tr}
 				<input name="outboundEmail" value="{$info.outboundEmail|escape}" class="email_multi" size="60">
-				<div class="description">
+				<div class="description help-block">
 					{tr}You can add several email addresses by separating them with commas.{/tr}
 				</div>
 			</label>
@@ -233,7 +233,7 @@
 				<input type="checkbox" name="simpleEmail" value="1"
 					{if $info.simpleEmail eq 'y'} checked="checked"{/if}>
 				{tr}Use simplified e-mail format{/tr}
-				<div class="description">
+				<div class="description help-block">
 					{tr}The tracker will use the text field named Subject if any as subject and will use the user email or for anonymous the email field if any as sender{/tr}
 				</div>
 			</label>
@@ -242,7 +242,7 @@
 					{if $prefs.feed_tracker neq 'y'}disabled="disabled"{/if}
 					{if $info.publishRSS eq 'y'}checked="checked"{/if}>
 				{tr}Publish RSS feed for this tracker{/tr}
-				<div class="description">
+				<div class="description help-block">
 					{tr}Requires "RSS per tracker" to be set in Admin/RSS{/tr}
 					{if $prefs.feed_tracker eq 'y'}
 						{tr}(Currently set){/tr}
@@ -274,7 +274,7 @@
 				<input type="checkbox" name="writerCanModify" value="1"
 					{if $info.writerCanModify eq 'y'}checked="checked"{/if}>
 				{tr}Item creator can modify his items{/tr}
-				<div class="description">
+				<div class="description help-block">
 					{tr}The tracker needs a user field with the auto-assign activated{/tr}
 				</div>
 			</label>
@@ -282,7 +282,7 @@
 				<input type="checkbox" name="writerCanRemove" value="1"
 					{if $info.writerCanRemove eq 'y'}checked="checked"{/if}>
 				{tr}Item creator can remove his items{/tr}
-				<div class="description">
+				<div class="description help-block">
 					{tr}The tracker needs a user field with the auto-assign activated{/tr}
 				</div>
 			</label>
@@ -295,7 +295,7 @@
 				<input type="checkbox" name="oneUserItem" value="1"
 					{if $info.oneUserItem eq 'y'}checked="checked"{/if}>
 				{tr}Only one item per user or IP{/tr}
-				<div class="description">
+				<div class="description help-block">
 					{tr}The tracker needs a user or IP address field with the auto-assign set to Creator{/tr}
 				</div>
 			</label>
@@ -303,7 +303,7 @@
 				<input type="checkbox" name="writerGroupCanModify" value="1"
 					{if $info.writerGroupCanModify eq 'y'}checked="checked"{/if}>
 				{tr}Members of the creator group can modify items{/tr}
-				<div class="description">
+				<div class="description help-block">
 					{tr}The tracker needs a group field with the auto-assign activated{/tr}
 				</div>
 			</label>
@@ -311,7 +311,7 @@
 				<input type="checkbox" name="writerGroupCanRemove" value="1"
 					{if $info.writerGroupCanRemove eq 'y'}checked="checked"{/if}>
 				{tr}Members of the creator group can remove items{/tr}
-				<div class="description">
+				<div class="description help-block">
 					{tr}The tracker needs a group field with the auto-assign activated{/tr}
 				</div>
 			</label>

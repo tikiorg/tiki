@@ -32,7 +32,7 @@
 					{/if}
 				</a>
 				{if $showDescription eq 'y'}
-					<div class="description">{$modUpcomingEvents[ix].parsed}</div>
+					<div class="description help-block">{$modUpcomingEvents[ix].parsed}</div>
 				{/if}
 		{if $smarty.section.ix.last}
 			</td>

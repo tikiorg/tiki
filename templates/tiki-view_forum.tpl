@@ -3,7 +3,7 @@
 {title help="forums" admpage="forums"}{$forum_info.name}{/title}
 
 {if $forum_info.show_description eq 'y'}
-	<div class="description">{wiki}{$forum_info.description}{/wiki}</div>
+	<div class="description help-block">{wiki}{$forum_info.description}{/wiki}</div>
 {/if}
 
 <div class="t_navbar">

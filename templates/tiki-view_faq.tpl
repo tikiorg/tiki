@@ -1,5 +1,5 @@
 {title help="FAQs"}{tr}{$faq_info.title}{/tr}{/title}
-<div class="description">{$faq_info.description|escape}</div>
+<div class="description help-block">{$faq_info.description|escape}</div>
 
 <div class="t_navbar btn-group form-group">
 	{self_link print='y'}{icon _id='printer' align='right' hspace='1' alt="{tr}Print{/tr}"}{/self_link}

@@ -6,7 +6,7 @@
 		{/if}
 	>
 	{if $prefs.javascript_enabled neq 'y'}<form action="{$smarty.server.PHP_SELF}" method="POST">{/if}
-	<div class="description">
+	<div class="description help-block">
 		{wiki}{tr}{$prefs.cookie_consent_description}{/tr}{/wiki}
 	</div>
 	{if !empty($prefs.cookie_consent_question)}

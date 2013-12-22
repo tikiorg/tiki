@@ -5,7 +5,7 @@
 	{if $error_msg neq ''}
 		{remarksbox type="warning" title="{tr}Warning{/tr}"}{$error_msg}{/remarksbox}
 	{/if}
-    <div class="description">{wiki}{$survey_info.description}{/wiki}</div>
+    <div class="description help-block">{wiki}{$survey_info.description}{/wiki}</div>
     {section name=ix loop=$questions}
     <div class="questionblock">
       <div class="quizquestion">{$questions[ix].question|escape|nl2br}</div>

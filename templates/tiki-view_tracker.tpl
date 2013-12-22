@@ -67,9 +67,9 @@
 
 {if !empty($tracker_info.description)}
 	{if $tracker_info.descriptionIsParsed eq 'y'}
-		<div class="description">{wiki}{$tracker_info.description}{/wiki}</div>
+		<div class="description help-block">{wiki}{$tracker_info.description}{/wiki}</div>
 	{else}
-		<div class="description">{$tracker_info.description|escape|nl2br}</div>
+		<div class="description help-block">{$tracker_info.description|escape|nl2br}</div>
 	{/if}
 {/if}
 
@@ -237,30 +237,32 @@
 			
 			<h2>{tr}Insert New Item{/tr}</h2>
 			{remarksbox type="note"}<strong class='mandatory_note'>{tr}Fields marked with a * are mandatory.{/tr}</strong>{/remarksbox}
-			<table class="formcolor">
+			<div class="form-horizontal">
 			
 			{if $tracker_info.showStatus eq 'y' and ($tracker_info.showStatusAdminOnly ne 'y' or $tiki_p_admin_trackers eq 'y')}
-				<tr>
-					<td>{tr}Status{/tr}</td>
-					<td>{include file='tracker_status_input.tpl' tracker=$tracker_info form_status=status}</td>
-				</tr>
+				<div class="form-group">
+					<label class="col-sm-3 control-label">{tr}Status{/tr}</label>
+					<div class="col-sm-8">
+                        {include file='tracker_status_input.tpl' tracker=$tracker_info form_status=status}
+                    </div>
+				</div>
 			{/if}
 			{foreach from=$ins_fields key=ix item=field_value}
 				{if $field_value.type ne 'x' and $field_value.type ne 'l' and $field_value.type ne 'q' and
 						($field_value.type ne 'A' or $tiki_p_attach_trackers eq 'y') and $field_value.type ne 'N' and $field_value.type ne '*' and
 						!($field_value.type eq 's' and $field_value.name eq 'Rating')}
-					<tr>
-						<td>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">
 							{if $field_value.isMandatory eq 'y'}
 								{$field_value.name}<em class='mandatory_star'>*</em>
 							{else}
 								{$field_value.name}
 							{/if}
-						</td>
-						<td>
-							{trackerinput field=$field_value inTable=formcolor showDescription=y}
-						</td>
-					</tr>
+					</label>
+                    <div class="col-sm-8">
+						{trackerinput field=$field_value inTable=formcolor showDescription=y}
+					</div>
+				</div>
 				{/if}
 			{/foreach}
 			
@@ -270,32 +272,35 @@
 			{/if}
 			
 			{if !isset($groupforalert) || $groupforalert ne ''}
+                <div class="form-group">
 				{if $showeachuser eq 'y'}
-					<tr>
-						<td>{tr}Choose users to alert{/tr}</td>
-					<td>
+
+                    <label class="col-sm-3 control-label">{tr}Choose users to alert{/tr}</label>
+
 				{/if}
 				{section name=idx loop=$listusertoalert}
+                <div class="col-sm-8 checkbox-inline">
 					{if $showeachuser eq 'n'}
 						<input type="hidden"  name="listtoalert[]" value="{$listusertoalert[idx].user}">
 					{else}
 						<input type="checkbox" name="listtoalert[]" value="{$listusertoalert[idx].user}"> {$listusertoalert[idx].user}
 					{/if}
+                </div>
 				{/section}
-				</td>
-				</tr>
+
+				</div>
 			{/if}
-			
-			<tr>
-				<td class="formlabel">&nbsp;</td>
-				<td class="formcontent">
+
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">&nbsp;</label>
+                    <div class="col-sm-8 checkbox-inline">
 					<input type="submit" class="btn btn-default btn-sm" name="save" value="{tr}Save{/tr}" onclick="needToConfirm = false;">
 					<input type="radio" name="viewitem" value="view" /> {tr}View inserted item{/tr}
 					{* --------------------------- to continue inserting items after saving --------- *}
 					<input type="radio" name="viewitem" value="new" checked="checked"> {tr}Insert new item{/tr}
-				</td>
-			</tr>
-			</table>
+				    </div>
+			    </div>
+            </div>
 			</form>
 		{/tab}
 	{/if}

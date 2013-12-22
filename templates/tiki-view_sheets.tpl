@@ -1,7 +1,7 @@
 {* $Id$ *}
 {title help="Spreadsheet"}{$title}{/title}
 
-<div class="description">
+<div class="description help-block">
 	{$description|escape}
 </div>
 <div class="msg">

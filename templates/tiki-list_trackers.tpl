@@ -36,7 +36,7 @@
 				</td>
 				<td class="text">
 					<a class="tablename" href="tiki-view_tracker.php?trackerId={$tracker.trackerId}" title="{tr}View{/tr}">{$tracker.name|escape}</a>
-					<div class="description">
+					<div class="description help-block">
 						{if $tracker.descriptionIsParsed eq 'y'}
 							{wiki}{$tracker.description}{/wiki}
 						{else}

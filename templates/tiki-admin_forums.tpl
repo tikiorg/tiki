@@ -197,7 +197,7 @@
         <div class="form-group">
             <label class="col-sm-3 control-label" for="name">{tr}Password protected{/tr}</label>
             <div class="col-sm-4">
-		        {html_options name=forum_use_password options=$forum_use_password_options selected=$forum_use_password}
+		        {html_options name=forum_use_password options=$forum_use_password_options selected=$forum_use_password class=form-control}
             </div>
         </div>
         <div class="form-group">

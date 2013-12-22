@@ -22,7 +22,7 @@
 				<tr>
 					<td>
 						{$row.description|escape}
-						<div class="description">
+						<div class="description help-block">
 							{$row.name|escape}
 						</div>
 					</td>

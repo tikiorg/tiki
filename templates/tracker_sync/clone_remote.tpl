@@ -23,7 +23,7 @@
 			<label>
 				{tr}URL:{/tr}
 				<input type="url" name="url" value="{$url|escape}" required="required">
-				<div class="description">
+				<div class="description help-block">
 					{tr}It is very likely that authentication will be required to access this data on the remote site. Configure the authentication source from Admin DSN.{/tr}
 				</div>
 			</label>
