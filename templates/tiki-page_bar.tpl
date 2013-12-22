@@ -14,9 +14,9 @@
 				{/if}
 				{if $prefs.flaggedrev_approval neq 'y' or ! $revision_approval or $lastVersion eq $revision_displayed}
 					{if isset($page_ref_id)}
-						{button _keepall='y' href="tiki-editpage.php" page=$page page_ref_id=$page_ref_id _class=$thisPageClass _text="{tr}Edit this page{/tr}"}
+						{button _keepall='y' href="tiki-editpage.php" page=$page page_ref_id=$page_ref_id _class=$thisPageClass _text="{tr}Edit{/tr}" _title="{tr}Edit this page{/tr}"}
 					{else}
-						{button _keepall='y' href="tiki-editpage.php" page=$page _class=$thisPageClass _text="{tr}Edit this page{/tr}"}
+						{button _keepall='y' href="tiki-editpage.php" page=$page _class=$thisPageClass _text="{tr}Edit{/tr}" _title="{tr}Edit this page{/tr}"}
 					{/if}
 				{elseif $tiki_p_wiki_view_latest eq 'y'}
 					<span class="button">
@@ -64,7 +64,7 @@
 						<a class="btn btn-default" id="comment-toggle" href="{service controller=comment action=list type="wiki page" objectId=$page}#comment-container">
 							{tr}Comments{/tr}
 							{if $count_comments}
-								&nbsp;(<span class="count_comments">{$count_comments}</span>)
+								&nbsp;<span class="count_comments badge pull-right">{$count_comments}</span>
 							{/if}
 						</a>
 						{jq}
@@ -91,7 +91,7 @@
 						{strip}
 							{if (!isset($atts) or $atts|@count == 0) || $tiki_p_wiki_attach_files == 'y'
 								&& $tiki_p_wiki_view_attachments == 'n' && $tiki_p_wiki_admin_attachments == 'n'}
-								{tr}Attach File{/tr}
+								{tr}Attachments{/tr}
 							{elseif isset($atts) and $atts|@count == 1}
 								{tr}1 File Attached{/tr}
 							{else}
