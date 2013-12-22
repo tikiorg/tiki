@@ -199,23 +199,8 @@ label {
 	margin-right: 30px;
 }
 
-body.tiki_wiki_page #c1c2 #wrapper #col1 > .content {
-	position: relative;
-}
-
-body.tiki_cms #c1c2 #wrapper #col1 #tiki-center,
-body.tiki_login #c1c2 #wrapper #col1 #tiki-center,
-body.tiki_wiki_page #c1c2 #wrapper #col1 #tiki-center {
-	background: none;
-}
 body.tiki_wiki_page.manage #c1c2 #wrapper #col1 #tiki-center {
 	background: url(coelesce/tiki-centerbg.jpg) repeat-x;
-}
-
-#col3 .content {
-	margin-left: 0;
-	padding-top: 1px;
-	padding-right: 18px;
 }
 
 #footer {

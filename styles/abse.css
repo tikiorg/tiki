@@ -42,17 +42,9 @@ html>body #c1c2 #wrapper #col1 #tiki-center:hover {
 	background: transparent;
 	font-size: 1em}
 
-#c1c2 #col2 .content {
-	margin: 0;
-	padding: 0 4px 4px}
-
 #col3 {
 	background: transparent;
 	font-size: 1em}
-
-#col3 .content {
-	padding: 3px;
-	overflow: hidden}
 
 #footer {
 	clear: both;

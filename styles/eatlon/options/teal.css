@@ -37,15 +37,11 @@ body.fixed_width .fixedwidth .fixedwidth {
 	margin-bottom: 0;
 }
 
-#col2 .content {padding: 0 20px}
-
 #col1 #tiki-center {
 	border-left: none;
 	border-right: none;
 	padding: 0 30px
 }
-
-#col3 .content {padding: 0 20px}
 
 #footer {
 	min-height: 163px}

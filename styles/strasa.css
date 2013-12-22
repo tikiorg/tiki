@@ -1888,32 +1888,12 @@ a.admbox.off:active {
 body.fixed_width {
 	background: #214d68 url(strasa/body-bg_fw.png) repeat-x !important
 }
-
-body.fixed_width #c1c2 #wrapper .marginleft {
- margin-left: 180px;
-}
-
-body.fixed_width #c1c2 #wrapper .marginright {
-	margin-right: 180px;
-}
-
 body.fixed_width #c1c2 #col2 {
-	width: 180px;
 	background: url(strasa/box_top_fw.gif) no-repeat 100% 0;
 }
 
 body.fixed_width #c1c2 #col2 .content {
-	margin-left: 0;
 	background: url(strasa/box_bottom_fw.gif) no-repeat 100% 100%;
-}
-
-body.fixed_width #col3 {
-	margin-left: -180px;
-	width: 180px;
-}
-
-body.fixed_width #col3 .content {
-	margin-right: 0;
 }
 
 body.fixed_width #outer_wrapper {

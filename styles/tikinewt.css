@@ -44,19 +44,6 @@ body.fixed_width .fixedwidth .fixedwidth {
 	overflow: visible;
 }
 
-#col2 .content {
-	padding-left: 7px;
-	padding-right: 4px;
-	padding-top: 0;
-}
-
-#col3 .content {
-	padding-right: 0;
-	padding-top: 0;
-	padding-left: 0;
-	text-align: left;
-}
-
 .footerbgtrap {
 	padding-top: 10px;
 	padding-bottom: 5px;

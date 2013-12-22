@@ -58,14 +58,6 @@ body.fixed_width .fixedwidth .fixedwidth {
 	text-align: left;
 }
 
-#col2 .content {
-	margin: 0 10px 0 20px
-}
-
-#col3 .content {
-	margin: 0 20px 0 10px
-}
-
 .footerbgtrap {
 	text-align: center;
 	background: #000;
