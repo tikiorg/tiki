@@ -180,12 +180,14 @@ class SocialLib
 				// Friendship breakups are bidirectional, not follow ones
 				$this->relationlib->remove_relation($followInvert);
 			}
+			require_once('lib/search/refresh-functions.php');
 			refresh_index('user', $user);
 			refresh_index('user', $oldFriend);
 			return true;
 		} elseif ($request || $requestInvert) {
 			$this->relationlib->remove_relation($request);
 			$this->relationlib->remove_relation($requestInvert);
+			require_once('lib/search/refresh-functions.php');
 			refresh_index('user', $user);
 			refresh_index('user', $oldFriend);
 			return true;
