@@ -523,24 +523,28 @@ $("input[name=allowhtml]").change(function() {
 								<div class="map-container" data-geo-center="{defaultmapcenter}" data-target-field="geolocation" style="height: 250px; width: 250px;"></div>
 								<input type="hidden" name="geolocation" value="{$geolocation_string}">
 							{/if}
-							{if $prefs.wiki_auto_toc eq 'y'}
+							{if $prefs.wiki_auto_toc eq 'y' or  $prefs.wiki_page_hide_title eq 'y'}
 								<fieldset>
 									<legend>{tr}Page display options{/tr}</legend>
 									<ul>
-									
-									<li>{tr}Automatic Table of Contents generation{/tr} <select name="pageAutoToc"> 
-									<option value="0" {if $pageAutoToc == 0}selected{/if}></option>
-									{* <option value="1" {if $pageAutoToc == 1}selected{/if}>On</option> *}
-									<option value="-1" {if $pageAutoToc == -1}selected{/if}>Off</option>
-									</select>
-									</li>
 
-									<li>{tr}Show page title{/tr} <select name="page_hide_title"> 
-									<option value="0" {if $page_hide_title == 0}selected{/if}></option>
-									{* <option value="1" {if $page_hide_title == 1}selected{/if}>On</option> *}
-									<option value="-1" {if $page_hide_title == -1}selected{/if}>Off</option>
-									</select>
-									</li>
+									{if $prefs.wiki_auto_toc eq 'y'}
+										<li>{tr}Automatic Table of Contents generation{/tr} <select name="pageAutoToc">
+										<option value="0" {if $pageAutoToc == 0}selected{/if}></option>
+										{* <option value="1" {if $pageAutoToc == 1}selected{/if}>On</option> *}
+										<option value="-1" {if $pageAutoToc == -1}selected{/if}>Off</option>
+										</select>
+										</li>
+									{/if}
+
+									{if $prefs.wiki_page_hide_title eq 'y'}
+										<li>{tr}Show page title{/tr} <select name="page_hide_title">
+										<option value="0" {if $page_hide_title == 0}selected{/if}></option>
+										{* <option value="1" {if $page_hide_title == 1}selected{/if}>On</option> *}
+										<option value="-1" {if $page_hide_title == -1}selected{/if}>Off</option>
+										</select>
+										</li>
+									{/if}
 									
 									</ul>
 								</fieldset>
