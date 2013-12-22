@@ -8,7 +8,12 @@
 	{/remarksbox}
 {/if}
 
-<form method="post" action="" class="form-inline">
+<div class="alert alert-info"alert-dismissable">
+<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+    <a href="tiki-wizard_admin.php?&stepNr=0&url=tiki-admin.php"><img src="img/icons/large/wizard48x48.png"></a>Use the <a href="tiki-wizard_admin.php?&stepNr=0&url=tiki-admin.php">Configuration Wizards</a> to more easily set up your site.
+</div>
+
+<form method="post" action="" class="horizontal-form">
 	<fieldset>
 		<legend>{tr}Preference Filters{/tr}</legend>
 		{foreach from=$pref_filters key=name item=info}
@@ -71,9 +76,6 @@
 	$('.preffilter').change(updateVisible);
 {/jq}
 
-<a href="tiki-wizard_admin.php?&stepNr=0&url=tiki-admin.php"><img src="img/icons/large/wizard48x48.png"></a>For easier configuration, use one of our <a href="tiki-wizard_admin.php?&stepNr=0&url=tiki-admin.php">Confiuration Wizards</a>.
-<br>
-
 {if !isset($smarty.get.page) or $smarty.get.page != 'profiles'} {* We don't want on this page because it results in two search boxes *}
 <form method="post" action="">
 	{*remarksbox type="note" title="{tr}Development Notice{/tr}"}
@@ -91,13 +93,13 @@
 
 <fieldset>
 <legend>{tr}Preferences Search Results{/tr}</legend>
-	<form method="post" action="">
+	<form method="post" action="" class="table">
 		<div class="pref_search_results panel">
 			{foreach from=$lm_searchresults item=prefName}
 				{preference name=$prefName get_pages="y"}
 			{/foreach}
 		</div>
-		<input class="btn btn-default" type="submit" value="{tr}Change{/tr}" class="clear">
+		<input class="btn btn-default" type="submit" value="{tr}Change{/tr}">
 		<input type="hidden" name="lm_criteria" value="{$lm_criteria|escape}">
 	</form>
 </fieldset>
