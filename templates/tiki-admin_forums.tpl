@@ -133,229 +133,229 @@
 		<h2>{tr}Create New Forum{/tr}</h2>
 	{/if}
 
-	<form action="tiki-admin_forums.php" method="post">
+	<form action="tiki-admin_forums.php" method="post" class="form-horizontal" role="form">
 		<input type="hidden" name="forumId" value="{$forumId|escape}">
-		<table class="formcolor">
-			<tr>
-				<td>{tr}Name:{/tr}</td>
-				<td>
-					<input type="text" name="name" size="50" value="{$name|escape}">
-				</td>
-			</tr>
-			<tr>
-				<td>{tr}Description:{/tr}</td>
-				<td>
-					<textarea name="description" rows="4" cols="40">{$description|escape}</textarea>
-				</td>
-			</tr>
-			<tr>
-				<td>{tr}Show description:{/tr}</td>
-				<td>
-					<input type="checkbox" name="show_description" {if $show_description eq 'y'}checked="checked"{/if}>
-				</td>
-			</tr>
-			<tr>
-				<td>{tr}Prevent flooding:{/tr}</td>
-				<td>
-					<input type="checkbox" name="controlFlood" {if $controlFlood eq 'y'}checked="checked"{/if}>
-					{tr}Minimum time between posts:{/tr}
-					{html_options name=floodInterval options=$flood_options selected=$floodInterval}
-				</td>
-			</tr>
-			<tr>
-				<td>{tr}Section:{/tr}</td>
-				<td>
-					<select name="section">
-						<option value="" {if $forumSection eq ""}selected="selected"{/if}>{tr}None{/tr}</option>
-						<option value="__new__">{tr}Create new{/tr}</option>
-						{section name=ix loop=$sections}
-							<option {if $forumSection eq $sections[ix]}selected="selected"{/if} value="{$sections[ix]|escape}">{$sections[ix]|escape}</option>
-						{/section}
-					</select>
-					<input name="new_section" type="text">
-				</td>
-			</tr>
-			<tr>
-				<td>{tr}Moderator user:{/tr}</td>
-				<td>
-					<input id="moderator_user" type="text" name="moderator" value="{$moderator|escape}">
-					{autocomplete element='#moderator_user' type='username'}
-				</td>
-			</tr>
-			<tr>
-				<td>{tr}Moderator group:{/tr}</td>
-				<td>
-					<input id="moderator_group" type="text" name="moderator_group" value="{$moderator_group|escape}">
-					{autocomplete element='#moderator_group' type='groupname'}
-				</td>
-			</tr>
-			<tr>
-				<td>{tr}Password protected{/tr}</td>
-				<td>
-					{html_options name=forum_use_password options=$forum_use_password_options selected=$forum_use_password}
-				</td>
-			</tr>
-			<tr>
-				<td>{tr}Forum password{/tr}</td>
-				<td>
-					<input type="text" name="forum_password" value="{$forum_password|escape}">
-				</td>
-			</tr>
-			<tr>
-				<td>{tr}Only allow replies to the first message (flat forum):{/tr}</td>
-				<td>
-					<input type="checkbox" name="is_flat" {if $is_flat eq 'y'}checked="checked"{/if}>
-				</td>
-			</tr>
+		<div class="form-group">
+            <label class="col-sm-3 control-label" for="name">{tr}Name:{/tr}</label>
+            <div class="col-sm-9">
+				<input type="text" name="name" class="form-control" id="name" value="{$name|escape}">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label" for="name">{tr}Description:{/tr}</label>
+            <div class="col-sm-9">
+			    <textarea name="description" rows="4" class="form-control" id="description">{$description|escape}</textarea>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label" for="name">{tr}Show description:{/tr}</label>
+            <div class="col-sm-9 checkbox-inline">
+				<input type="checkbox" name="show_description" {if $show_description eq 'y'}checked="checked"{/if}>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label" for="name">{tr}Prevent flooding:{/tr}</label>
+            <div class="col-sm-9 checkbox-inline">
+				<input type="checkbox" name="controlFlood" {if $controlFlood eq 'y'}checked="checked"{/if}>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label" for="name">{tr}Minimum time between posts:{/tr}</label>
+            <div class="col-sm-4 checkbox-inline">
+				{html_options name=floodInterval class="form-control" options=$flood_options selected=$floodInterval}
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label" for="name">{tr}Section:{/tr}</label>
+            <div class="col-sm-4">
+				<select name="section" class="form-control">
+					<option value="" {if $forumSection eq ""}selected="selected"{/if}>{tr}None{/tr}</option>
+					<option value="__new__">{tr}Create new{/tr}</option>
+					{section name=ix loop=$sections}
+						<option {if $forumSection eq $sections[ix]}selected="selected"{/if} value="{$sections[ix]|escape}">{$sections[ix]|escape}</option>
+					{/section}
+				</select>
+            </div>
+            <div class="col-sm-5">
+				<input name="new_section" class="form-control"  type="text">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label" for="name">{tr}Moderator user:{/tr}</label>
+            <div class="col-sm-9">
+			    <input id="moderator_user" class="form-control" type="text" name="moderator" value="{$moderator|escape}">
+				{autocomplete element='#moderator_user' type='username'}
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label" for="moderator_group">{tr}Moderator group:{/tr}</label>
+            <div class="col-sm-9">
+				<input id="moderator_group" type="text" class="form-control" name="moderator_group" id="moderator_group" value="{$moderator_group|escape}">
+				{autocomplete element='#moderator_group' type='groupname'}
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label" for="name">{tr}Password protected{/tr}</label>
+            <div class="col-sm-4">
+		        {html_options name=forum_use_password options=$forum_use_password_options selected=$forum_use_password}
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label" for="name">{tr}Forum password{/tr}</label>
+            <div class="col-sm-9">
+				<input type="text" name="forum_password" class="form-control" value="{$forum_password|escape}">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label" for="name">{tr}Only allow replies to the first message (flat forum):{/tr}</label>
+            <div class="col-sm-9 checkbox-inline">
+				<input type="checkbox" name="is_flat" {if $is_flat eq 'y'}checked="checked"{/if}>
+		    </div>
+		</div>
 
 			{include file='categorize.tpl'}
 
-			<tr>
-				<td>
-					<input type="checkbox" name="useMail" {if $useMail eq 'y'}checked="checked"{/if}> {tr}Send this forums posts to this email:{/tr}
-				</td>
-				<td>
-					<input type="text" name="mail" value="{$mail|escape}">
-					</td>
-			</tr>
-			<tr>
-				<td>
-					<input type="checkbox" name="usePruneUnreplied" {if $usePruneUnreplied eq 'y'}checked="checked"{/if}> {tr}Prune unreplied messages after:{/tr}
-				</td>
-				<td>
-					{html_options name=pruneUnrepliedAge options=$pruneUnrepliedAge_options selected=$pruneUnrepliedAge}
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<input type="checkbox" name="usePruneOld" {if $usePruneOld eq 'y'}checked="checked"{/if}> {tr}Prune old messages after:{/tr}</td>
-				<td>
-					{html_options name=pruneMaxAge options=$pruneMaxAge_options selected=$pruneMaxAge}
-				</td>
-			</tr>
-			<tr>
-				<td>{tr}Topic list configuration{/tr}</td>
-				<td>
-					<table class="formcolor">
-						<tr>
-							<td>{tr}Replies{/tr}</td>
-							<td>{tr}Reads{/tr}</td>
-							<td>{tr}Points{/tr}</td>
-							<td>{tr}Last post{/tr}</td>
-							<td>{tr}Last post title{/tr}</td>
-							<td>{tr}Last post avatar{/tr}</td>
-							<td>{tr}Author{/tr}</td>
-							<td>{tr}Author avatar{/tr}</td>
-						</tr>
-						<tr>
-							<td>
-								<input type="checkbox" name="topics_list_replies" {if $topics_list_replies eq 'y'}checked="checked"{/if}>
-							</td>
-							<td>
-								<input type="checkbox" name="topics_list_reads" {if $topics_list_reads eq 'y'}checked="checked"{/if}>
-							</td>
-							<td>
-								<input type="checkbox" name="topics_list_pts" {if $topics_list_pts eq 'y'}checked="checked"{/if}>
-							</td>
-							<td>
-								<input type="checkbox" name="topics_list_lastpost" {if $topics_list_lastpost eq 'y'}checked="checked"{/if}>
-							</td>
-							<td>
-								<input type="checkbox" name="topics_list_lastpost_title" {if $topics_list_lastpost_title eq 'y'}checked="checked"{/if}>
-							</td>
-							<td>
-								<input type="checkbox" name="topics_list_lastpost_avatar" {if $topics_list_lastpost_avatar eq 'y'}checked="checked"{/if}>
-							</td>
-							<td>
-								<input type="checkbox" name="topics_list_author" {if $topics_list_author eq 'y'}checked="checked"{/if}>
-							</td>
-							<td>
-								<input type="checkbox" name="topics_list_author_avatar" {if $topics_list_author_avatar eq 'y'}checked="checked"{/if}>
-							</td>
+        <div class="form-group">
+            <label class="col-sm-3 control-label" for="useMail">
+		    	<input type="checkbox" name="useMail" id="useMail" {if $useMail eq 'y'}checked="checked"{/if}> {tr}Send this forums posts to this email:{/tr} </label>
+            <div class="col-sm-9">
+				<input type="text" class="form-control" name="mail" value="{$mail|escape}">
+            </div>
+		</div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label" for="name">
+				<input type="checkbox" name="usePruneUnreplied" {if $usePruneUnreplied eq 'y'}checked="checked"{/if}> {tr}Prune unreplied messages after:{/tr}
+			</label>
+            <div class="col-sm-4">
+                {html_options name=pruneUnrepliedAge options=$pruneUnrepliedAge_options selected=$pruneUnrepliedAge}
+			</div>
+		</div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label" for="name">
+                <input type="checkbox" name="usePruneOld" {if $usePruneOld eq 'y'}checked="checked"{/if}> {tr}Prune old messages after:{/tr}
+            </label>
+            <div class="col-sm-4">
+				{html_options name=pruneMaxAge options=$pruneMaxAge_options selected=$pruneMaxAge}
+			</div>
+		</div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label" for="name">{tr}Topic list configuration{/tr}</label>
+			<div class="col-sm-9">
+				<table class="formcolor">
+					<tr>
+						<td>{tr}Replies{/tr}</td>
+						<td>{tr}Reads{/tr}</td>
+						<td>{tr}Points{/tr}</td>
+						<td>{tr}Last post{/tr}</td>
+						<td>{tr}Last post title{/tr}</td>
+						<td>{tr}Last post avatar{/tr}</td>
+						<td>{tr}Author{/tr}</td>
+						<td>{tr}Author avatar{/tr}</td>
+					</tr>
+					<tr>
+						<td>
+							<input type="checkbox" name="topics_list_replies" {if $topics_list_replies eq 'y'}checked="checked"{/if}>
+						</td>
+						<td>
+							<input type="checkbox" name="topics_list_reads" {if $topics_list_reads eq 'y'}checked="checked"{/if}>
+						</td>
+						<td>
+							<input type="checkbox" name="topics_list_pts" {if $topics_list_pts eq 'y'}checked="checked"{/if}>
+						</td>
+						<td>
+							<input type="checkbox" name="topics_list_lastpost" {if $topics_list_lastpost eq 'y'}checked="checked"{/if}>
+						</td>
+						<td>
+							<input type="checkbox" name="topics_list_lastpost_title" {if $topics_list_lastpost_title eq 'y'}checked="checked"{/if}>
+						</td>
+						<td>
+							<input type="checkbox" name="topics_list_lastpost_avatar" {if $topics_list_lastpost_avatar eq 'y'}checked="checked"{/if}>
+						</td>
+						<td>
+							<input type="checkbox" name="topics_list_author" {if $topics_list_author eq 'y'}checked="checked"{/if}>
+						</td>
+						<td>
+							<input type="checkbox" name="topics_list_author_avatar" {if $topics_list_author_avatar eq 'y'}checked="checked"{/if}>
+						</td>
+                    </tr>
+				</table>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label" for="name">{tr}Posts can be rated{/tr}</label>
+            <div class="col-sm-8">
+    			<input type="checkbox" name="vote_threads" {if $vote_threads eq 'y'}checked="checked"{/if}>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label" for="name">{tr}Display last post titles{/tr}</label>
+			<div class="col-sm-4">
+				{html_options name=forum_last_n options=$forum_last_n_options selected=$forum_last_n}
+			</div>
+		</div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label" for="name">{tr}Forward messages to this forum to this e-mail address, in a format that can be used for sending back to the inbound forum e-mail address{/tr}</label>
+            <div class="col-sm-9">
+                <input type="text" name="outbound_address" size="50" value="{$outbound_address|escape}">
+			</div>
+		</div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label" for="name">{tr}Send mails even when the post is generated by inbound mail{/tr}</label>
+            <div class="col-sm-9">
+			    <input type="checkbox" name="outbound_mails_for_inbound_mails" {if $outbound_mails_for_inbound_mails eq 'y'}checked="checked"{/if}>
+			</div>
+		</div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label" for="name">{tr}Append a reply link to outbound mails{/tr}</label>
+            <div class="col-sm-9">
+				<input type="checkbox" name="outbound_mails_reply_link" {if $outbound_mails_reply_link eq 'y'}checked="checked"{/if}>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label" for="name">{tr}Originating e-mail address for mails from this forum{/tr}</label>
+            <div class="col-sm-9">
+		    	<input type="text" name="outbound_from" size="50" value="{$outbound_from|escape}">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label" for="name">{tr}Add messages from this email to the forum{/tr}</label>
+            <div class="col-sm-9">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label" for="inbound_pop_server">{tr}POP3 server:{/tr}</label>
+			    	<div class="col-sm-9">
+				    	<input type="text" name="inbound_pop_server" id="inbound_pop_server"  value="{$inbound_pop_server|escape}">
+				    </div>
+	            </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label" for="inbound_pop_server">{tr}User:{/tr}</label>
+                    <div class="col-sm-9">
+			    	    <input type="text" name="inbound_pop_user" value="{$inbound_pop_user|escape}" autocomplete="off">
+				    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label" for="inbound_pop_server">{tr}Password:{/tr}</label>
+                    <div class="col-sm-9">
+                        <input type="password" name="inbound_pop_password" value="{$inbound_pop_password|escape}" autocomplete="off">
+                    </div>
+                </div>
+			</div>
+        </div>
+		<div class="form-group">
+            <label class="col-sm-3 control-label" for="inbound_pop_server">{tr}Use topic smileys{/tr}</label>
+            <div class="col-sm-9">
+				<input type="checkbox" name="topic_smileys" {if $topic_smileys eq 'y'}checked="checked"{/if}>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label" for="inbound_pop_server">{tr}Show topic summary{/tr}</label>
+            <div class="col-sm-9">
+				<input type="checkbox" name="topic_summary" {if $topic_summary eq 'y'}checked="checked"{/if}>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label" for="inbound_pop_server">{tr}User information display{/tr}</label>
+            <div class="col-sm-9">
 
-						</tr>
-					</table>
-				</td>
-			</tr>
-			<tr>
-				<td>{tr}Posts can be rated{/tr}</td>
-				<td>
-					<input type="checkbox" name="vote_threads" {if $vote_threads eq 'y'}checked="checked"{/if}>
-				</td>
-			</tr>
-			<tr>
-				<td>{tr}Display last post titles{/tr}</td>
-				<td>
-					{html_options name=forum_last_n options=$forum_last_n_options selected=$forum_last_n}
-				</td>
-			</tr>
-			<tr>
-				<td>
-					{tr}Forward messages to this forum to this e-mail address, in a format that can be used for sending back to the inbound forum e-mail address{/tr}
-				</td>
-				<td>
-					<input type="text" name="outbound_address" size="50" value="{$outbound_address|escape}">
-				</td>
-			</tr>
-			<tr>
-				<td>{tr}Send mails even when the post is generated by inbound mail{/tr}</td>
-				<td>
-					<input type="checkbox" name="outbound_mails_for_inbound_mails" {if $outbound_mails_for_inbound_mails eq 'y'}checked="checked"{/if}>
-				</td>
-			</tr>
-			<tr>
-				<td>{tr}Append a reply link to outbound mails{/tr}</td>
-				<td>
-					<input type="checkbox" name="outbound_mails_reply_link" {if $outbound_mails_reply_link eq 'y'}checked="checked"{/if}>
-				</td>
-			</tr>
-			<tr>
-				<td>{tr}Originating e-mail address for mails from this forum{/tr}</td>
-				<td>
-					<input type="text" name="outbound_from" size="50" value="{$outbound_from|escape}">
-				</td>
-			</tr>
-			<tr>
-				<td>{tr}Add messages from this email to the forum{/tr}</td>
-				<td>
-					<table>
-						<tr>
-							<td>{tr}POP3 server:{/tr}</td>
-							<td>
-								<input type="text" name="inbound_pop_server" value="{$inbound_pop_server|escape}">
-							</td>
-						</tr>
-						<tr>
-							<td>{tr}User:{/tr}</td>
-							<td>
-								<input type="text" name="inbound_pop_user" value="{$inbound_pop_user|escape}" autocomplete="off">
-							</td>
-						</tr>
-						<tr>
-							<td>{tr}Password:{/tr}</td>
-							<td>
-								<input type="password" name="inbound_pop_password" value="{$inbound_pop_password|escape}" autocomplete="off">
-							</td>
-						</tr>
-					</table>
-				</td>
-			</tr>
-			<tr>
-				<td>{tr}Use topic smileys{/tr}</td>
-				<td>
-					<input type="checkbox" name="topic_smileys" {if $topic_smileys eq 'y'}checked="checked"{/if}>
-				</td>
-			</tr>
-			<tr>
-				<td>{tr}Show topic summary{/tr}</td>
-				<td>
-					<input type="checkbox" name="topic_summary" {if $topic_summary eq 'y'}checked="checked"{/if}>
-				</td>
-			</tr>
-
-			<tr>
-				<td>{tr}User information display{/tr}</td>
-				<td>
 					<table class="formcolor">
 						<tr>
 							<td>{tr}Avatar{/tr}</td>
@@ -386,17 +386,17 @@
 						</td>
 					</tr>		
 				</table>
-			</td>
-		</tr>
-		<tr>
-			<td>{tr}Approval type{/tr}</td>
-			<td>
-				{html_options name=approval_type options=$approval_options selected=$approval_type}
-			</td>
-		</tr>
-		<tr>
-			<td>{tr}Attachments{/tr}</td>
-			<td>
+            </div>
+        </div>
+   		<div class="form-group">
+            <label class="col-sm-3 control-label" for="approval_type">{tr}Approval type{/tr}</label>
+            <div class="col-sm-4 checkbox-inline">
+				{html_options name=approval_type for=approval_type id=approval_type class=form-control options=$approval_options selected=$approval_type}
+			</div>
+		</div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label" for="approval_type">{tr}Attachments{/tr}</label>
+            <div class="col-sm-4 checkbox-inline">
 				{html_options name=att options=$attachment_options selected=$att}
 				<br>
 				{tr}Store attachments in:{/tr}
@@ -422,132 +422,121 @@
 							</td>
 						</tr>
 					</table>
-				</td>
-			</tr>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label" for="approval_type">{tr}Set topics preferences{/tr}</label>
+            <div class="col-sm-9">
+			    <a class="link" href="javascript:flip('topicconfig');flip('topicprefshow','inline');flip('topicprefhide','inline');">
+				    <span id="topicprefshow" style="display:{if isset($smarty.session.tiki_cookie_jar.show_topicconfig) and $smarty.session.tiki_cookie_jar.show_topicconfig eq 'y'}none{else}inline{/if};">{tr}Show topics preferences{/tr}</span>
+				    <span id="topicprefhide" style="display:{if isset($smarty.session.tiki_cookie_jar.show_topicconfig) and $smarty.session.tiki_cookie_jar.show_topicconfig eq 'y'}inline{else}none{/if};">{tr}hide topics preferences{/tr}</span>
+				</a>
+			</div>
+		</div>
+	{if $prefs.feature_multilingual eq 'y'}
+        <div class="form-group">
+            <label class="col-sm-3 control-label" for="approval_type">{tr}Language{/tr}</label>
+            <div class="col-sm-9">
+			    <select name="forumLanguage" id="forumLanguage">
+				    <option value="">{tr}Unknown{/tr}</option>
+					{section name=ix loop=$languages}
+						<option value="{$languages[ix].value|escape}"{if $forumLanguage eq $languages[ix].value or (!($data.page_id) and $forumLanguage eq '' and $languages[ix].value eq $prefs.language)} selected="selected"{/if}>{$languages[ix].name}</option>
+					{/section}
+				</select>
+			</div>
+		</div>
+	{/if}
+        <div id="topicconfig" style="display:{if isset($smarty.session.tiki_cookie_jar.show_topicconfig) and $smarty.session.tiki_cookie_jar.show_topicconfig eq 'y'}block{else}none{/if};">
+            <div class="form-group">
+                <label class="col-sm-3 control-label" for="approval_type">{tr}Default ordering for topics:{/tr}</label>
+                <div class="col-sm-9">
+				    {html_options name=topicOrdering options=$topicOrdering_options selected=$topicOrdering}
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label" for="approval_type">{tr}Topics per page:{/tr}</label>
+                <div class="col-sm-9">
+				    <input type="text" name="topicsPerPage" value="{$topicsPerPage|escape}">
+				</div>
+			</div>
+		</div>
+	{*if $prefs.forum_thread_defaults_by_forum eq 'y'*}
+        <div class="form-group">
+            <label class="col-sm-3 control-label" for="approval_type">{tr}Set thread preferences{/tr}</label>
+            <div class="col-sm-9">
+    			<a class="link" href="javascript:flip('threadconfig');flip('threadprefshow','inline');flip('threadprefhide','inline');">
+					<span id="threadprefshow" style="display:{if isset($smarty.session.tiki_cookie_jar.show_threadconfig) and $smarty.session.tiki_cookie_jar.show_threadconfig eq 'y'}none{else}inline{/if};">{tr}Show threads preferences{/tr}</span>
+					<span id="threadprefhide" style="display:{if isset($smarty.session.tiki_cookie_jar.show_threadconfig) and $smarty.session.tiki_cookie_jar.show_threadconfig eq 'y'}inline{else}none{/if};">{tr}hide threads preferences{/tr}</span>
+				</a>
+			</div>
+		</div>
+	    <div id="threadconfig" style="display:{if isset($smarty.session.tiki_cookie_jar.show_threadconfig) and $smarty.session.tiki_cookie_jar.show_threadconfig eq 'y'}block{else}none{/if};">
+            <div class="form-group">
+                <label class="col-sm-3 control-label" for="approval_type">{tr}Default ordering for threads:{/tr}</label>
+                <div class="col-sm-9">
+				    {html_options name=threadOrdering options=$threadOrdering_options selected=$threadOrdering}
+				</div>
+			</div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label" for="approval_type">{tr}Default style for threads:{/tr}</label>
+                <div class="col-sm-9">
+					{html_options name=threadStyle options=$threadStyle_options selected=$threadStyle}
+				</div>
+			</div>
+        </div>
+    {*/if*}
+            <div class="form-group">
+                <label class="col-sm-3 control-label" for="approval_type">{tr}Default number of comments per page:{/tr}</label>
+                <div class="col-sm-9">
+					{html_options name=commentsPerPage options=$commentsPerPage_options selected=$commentsPerPage}
+				</div>
+            </div>
+   		<div class="text-center">
+            <input type="submit" class="btn btn-default" name="save" value="{tr}Save{/tr}">
+        </div>
 
-			<tr>
-				<td>{tr}Set topics preferences{/tr}</td>
-				<td>
-					<a class="link" href="javascript:flip('topicconfig');flip('topicprefshow','inline');flip('topicprefhide','inline');">
-						<span id="topicprefshow" style="display:{if isset($smarty.session.tiki_cookie_jar.show_topicconfig) and $smarty.session.tiki_cookie_jar.show_topicconfig eq 'y'}none{else}inline{/if};">{tr}Show topics preferences{/tr}</span>
-						<span id="topicprefhide" style="display:{if isset($smarty.session.tiki_cookie_jar.show_topicconfig) and $smarty.session.tiki_cookie_jar.show_topicconfig eq 'y'}inline{else}none{/if};">{tr}hide topics preferences{/tr}</span>
-					</a>
-				</td>
-			</tr>
-			
-			{if $prefs.feature_multilingual eq 'y'}
-				<tr>
-					<td>{tr}Language{/tr}</td>
-					<td>
-						<select name="forumLanguage" id="forumLanguage">
-							<option value="">{tr}Unknown{/tr}</option>
-							{section name=ix loop=$languages}
-								<option value="{$languages[ix].value|escape}"{if $forumLanguage eq $languages[ix].value or (!($data.page_id) and $forumLanguage eq '' and $languages[ix].value eq $prefs.language)} selected="selected"{/if}>{$languages[ix].name}</option>
-							{/section}
-						</select>
-					</td>
-				</tr>
-			{/if}
-			
-			<tr>
-				<td colspan="2">
-
-					<table id="topicconfig" style="display:{if isset($smarty.session.tiki_cookie_jar.show_topicconfig) and $smarty.session.tiki_cookie_jar.show_topicconfig eq 'y'}block{else}none{/if}; border: 0;">
-						<tr>
-							<td>{tr}Default ordering for topics:{/tr}</td>
-							<td>
-								{html_options name=topicOrdering options=$topicOrdering_options selected=$topicOrdering}
-							</td>
-						</tr>
-						<tr>
-							<td>{tr}Topics per page:{/tr}</td>
-							<td>
-								<input type="text" name="topicsPerPage" value="{$topicsPerPage|escape}">
-							</td>
-						</tr>
-					</table>
-
-				</td>
-			</tr>
-
-			{if $prefs.forum_thread_defaults_by_forum eq 'y'}
-				<tr><td>{tr}Set thread preferences{/tr}</td>
-					<td>
-						<a class="link" href="javascript:flip('threadconfig');flip('threadprefshow','inline');flip('threadprefhide','inline');">
-							<span id="threadprefshow" style="display:{if isset($smarty.session.tiki_cookie_jar.show_threadconfig) and $smarty.session.tiki_cookie_jar.show_threadconfig eq 'y'}none{else}inline{/if};">{tr}Show threads preferences{/tr}</span>
-							<span id="threadprefhide" style="display:{if isset($smarty.session.tiki_cookie_jar.show_threadconfig) and $smarty.session.tiki_cookie_jar.show_threadconfig eq 'y'}inline{else}none{/if};">{tr}hide threads preferences{/tr}</span>
-							</a>
-					</td>
-				</tr>
-				<tr>
-					<td colspan="2">
-						
-						<table id="threadconfig" style="display:{if isset($smarty.session.tiki_cookie_jar.show_threadconfig) and $smarty.session.tiki_cookie_jar.show_threadconfig eq 'y'}block{else}none{/if}; border: 0;">
-							<tr>
-								<td>{tr}Default ordering for threads:{/tr}</td>
-								<td>
-									{html_options name=threadOrdering options=$threadOrdering_options selected=$threadOrdering}
-								</td>
-							</tr>
-							<tr>
-								<td>{tr}Default style for threads:{/tr}</td>
-								<td>
-									{html_options name=threadStyle options=$threadStyle_options selected=$threadStyle}
-								</td>
-							</tr>
-							<tr>
-								<td>{tr}Default number of comments per page:{/tr}</td>
-								<td>
-									{html_options name=commentsPerPage options=$commentsPerPage_options selected=$commentsPerPage}
-								</td>
-							</tr>
-						</table>
-
-					</td>
-				</tr>
-			{/if}
-			<tr>
-				<td>&nbsp;</td>
-				<td><input type="submit" class="btn btn-default btn-sm" name="save" value="{tr}Save{/tr}"></td>
-			</tr>
-		</table>
 	</form>
 
 {else}{*duplicate*}
 	<h2>{tr}Duplicate Forum{/tr}</h2>
-	<form action="tiki-admin_forums.php" method="post">
-		<table class="formcolor">
-			<tr>
-				<td>{tr}Name{/tr}</td>
-				<td><input type="text" size="50" name="name" value="{$name|escape}"></td>
-			</tr>
-			<tr>
-				<td>{tr}Description{/tr}</td>
-				<td><textarea name="description" rows="4" cols="50">{$description|escape}</textarea></td>
-			</tr>
-			<tr>
-				<td>{tr}Forum{/tr}</td>
-				<td>
-					<select name="forumId">
+	<form action="tiki-admin_forums.php" method="post" class="form-horizontal" role="form">
+        <div class="form-group">
+    		<label class="col-sm-3 control-label" for="duplicate_name">{tr}Name{/tr}</label>
+            <div class="col-sm-9">
+		    	<input type="text" name="duplicate_name" id="duplicate_name" value="{$name|escape}">
+            </div>
+		</div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label" for="duplicate_description">{tr}Description{/tr}</label>
+            <div class="col-sm-9">
+                <textarea name="description" rows="4" id="duplicate_description" class="form-control">{$description|escape}</textarea>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label" for="duplicate_forumId">{tr}Forum{/tr}</label>
+            <div class="col-sm-9">
+					<select name="duplicate_forumId" id="duplicate_forumId">
 						{section name=ix loop=$allForums}
 							<option value="{$allForums[ix].forumId}">{$allForums[ix].name}</option>
 						{/section}
 					</select>
-				</td>
-			</tr>
-			<tr>
-				<td>{tr}Duplicate categories{/tr}</td>
-				<td><input type="checkbox" name="dupCateg"></td>
-			</tr>
-			<tr>
-				<td>{tr}Duplicate perms{/tr}</td>
-				<td><input type="checkbox" name="dupPerms"></td>
-			</tr>
-			<tr>
-				<td></td>
-				<td><input type="submit" class="btn btn-default btn-sm" name="duplicate" value="{tr}Duplicate{/tr}"></td>
-			</tr>
-		</table>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label" for="duplicate_categories">{tr}Duplicate categories{/tr}</label>
+            <div class="col-sm-9">
+                <input type="checkbox" name="dupCateg" id="duplicate_categories">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label" for="duplicate_perms">{tr}Duplicate perms{/tr}</label>
+            <div class="col-sm-9">
+                <input type="checkbox" name="dupPerms" id="duplicate_perms">
+            </div>
+        </div>
+        <div class="text-center">
+            <input type="submit" class="btn btn-default" name="duplicate" value="{tr}Duplicate{/tr}">
+        </div>
 	</form>
 {/if}
 {/tab}
