@@ -80,7 +80,7 @@ JS
 	$params['name'] = isset($params['name']) ? $params['name'] : 'edit';
 	$params['id'] = isset($params['id']) ? $params['id'] : 'editwiki';
 	$params['area_id'] = isset($params['area_id']) ? $params['area_id'] : $params['id'];	// legacy param for toolbars?
-	$params['class'] = isset($params['class']) ? $params['class'] : 'wikiedit';
+	$params['class'] = isset($params['class']) ? $params['class'] : 'wikiedit form-control';
 	$params['comments'] = isset($params['comments']) ? $params['comments'] : 'n';
 	$params['autosave'] = isset($params['autosave']) ? $params['autosave'] : 'y';
 
@@ -212,7 +212,7 @@ CKEDITOR.on("instanceReady", function(event) {
 		// setup for wiki editor
 
 		$params['rows'] = !empty($params['rows']) ? $params['rows'] : 20;
-		$params['cols'] = !empty($params['cols']) ? $params['cols'] : 80;
+//		$params['cols'] = !empty($params['cols']) ? $params['cols'] : 80;
 
 		$textarea_attributes = '';
 		foreach ($params as $k => $v) {
