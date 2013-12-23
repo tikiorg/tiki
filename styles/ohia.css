@@ -107,6 +107,8 @@ fieldset {
 legend {color: #cfcfcf}
 
 .btn.btn-default,
+.btn.btn-primary,
+
 button,
 input,
 textarea,
@@ -134,6 +136,8 @@ input[type="submit"],
 	border-bottom: 1px solid #474747}
 
 .btn.btn-default:hover,
+.btn.btn-primary:hover,
+
 .button a:hover,
 button:hover,
 input[type="reset"]:hover,
@@ -360,6 +364,17 @@ background-image:url('../vendor/jquery/jquery-ui-themes/themes/smoothness/images
 
 
 /***** Boxes *****/
+
+.jumbotron {
+	background-color: #030511;
+  border: 1px solid #5e0000;
+}
+
+.well {
+  background-color: #030511;
+  border: 1px solid #5e0000;	
+}
+
 /** Modules **/
 .panel {
 	border-radius: 0; 
@@ -649,6 +664,7 @@ h1 a.pagetitle:hover {
 .codelisting {
 	font-family: "Courier New", Courier, monospace;
 	padding: 10px;
+	color: #fff;
 	background: #000;
 	margin: 4px;
 	border: 1px dashed #696969;
