@@ -44,7 +44,7 @@ function wikiplugin_fitnesse($data, $params)
 			$table->replaceWith($replace);
 		} else {
 			$data = new FixtureTable($body);
-			$table->replaceWith('__' . tr('Fixture not found: %0', $fixture) . "__\n$data\n");
+			$table->replaceWith('__' . tr('Fixture not found: %0', $fixture) . "__\n$data");
 		}
 	}
 
@@ -127,7 +127,7 @@ class FixtureTable implements Iterator
 
 		return "||" . implode("\n", array_map(function ($line) {
 			return implode(' | ', $line);
-		}, $lines)) . "||\n";
+		}, $lines)) . "||";
 	}
 
 	function getHeadings()
