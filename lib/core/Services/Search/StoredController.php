@@ -61,6 +61,7 @@ class Services_Search_StoredController
 			'queries' => $lib->getUserQueries(),
 			'queryId' => $queryId,
 			'results' => $results,
+			'url' => TikiLib::lib('service')->getUrl(['controller' => 'search_stored', 'action' => 'list']),
 		);
 	}
 

@@ -141,6 +141,7 @@ function tiki_setup_events()
 	}
 
 	if ($prefs['storedsearch_enabled'] == 'y') {
+		$events->bind('tiki.query.moderate', $defer('storedsearch', 'handleQueryModerate'));
 		$events->bind('tiki.query.high', $defer('storedsearch', 'handleQueryHigh'));
 	}
 

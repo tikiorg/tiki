@@ -1,7 +1,7 @@
 {extends 'layout_view.tpl'}
 
 {block name="title"}
-	{title}{$title|escape}{/title}
+	{title url=$url}{$title|escape}{/title}
 {/block}
 
 {block name="content"}
@@ -52,12 +52,21 @@
 			{service_inline controller=search_stored action=delete queryId=$queryId}
 		{/tab}
 	{/tabset}
+{else}
+	<h2>{tr}My Watch List{/tr}</h2>
+	{wikiplugin _name=list}
+	{literal}
+		{filter relation={/literal}{$user}{literal} objecttype=user qualifier=tiki.watchlist.contains.invert}
+		{ALTERNATE()}^{/literal}{tr}Watch List is empty.{/tr}{literal}^{ALTERNATE}
+		{sort mode=modification_date_desc}
+		{OUTPUT(template=table paginate=1)}
+			{column label="{/literal}{tr}Title{/tr}{literal}" field="title_link" mode=raw}
+			{column label="{/literal}{tr}Last Modification{/tr}{literal}" field="date"}
+		{OUTPUT}
+
+		{FORMAT(name="title_link")}{display name=title format=objectlink}{FORMAT}
+		{FORMAT(name="date")}{display name=modification_date format=datetime}{FORMAT}
+	{/literal}
+	{/wikiplugin}
 {/if}
-{jq}
-$('.query-remove').requireConfirm({
-	success: function () {
-		$(this).closest('tr').remove();
-	}
-});
-{/jq}
 {/block}

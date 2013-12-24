@@ -150,6 +150,12 @@ class StoredSearchLib
 					'class' => 'label-default',
 					'indexed' => false,
 				),
+				'moderate' => array(
+					'label' => tr('Moderate'),
+					'description' => tr('Results will be added to your watch-list.'),
+					'class' => 'label-warning',
+					'indexed' => true,
+				),
 				'high' => array(
 					'label' => tr('High'),
 					'description' => tr('You will receive an immediate notification every time a new result arrives.'),
@@ -233,8 +239,12 @@ class StoredSearchLib
 
 	public function handleQueryHigh($args)
 	{
-		$query = $this->fetchQuery($args['query']);
-		$info = TikiLib::lib('user')->get_userid_info($args['userId']);
+		if (! $query = $this->fetchQuery($args['query'])) {
+			return;
+		}
+		if (! $info = TikiLib::lib('user')->get_userid_info($query['userId'])) {
+			return;
+		}
 
 		include_once('lib/webmail/tikimaillib.php');
 		$mail = new TikiMail();
@@ -242,6 +252,22 @@ class StoredSearchLib
 		$mail->setSubject(tr('%0 - Match on %1', $args['document']['title'], $query['label']));
 		$mail->setText(tr("View the document:") . "\n" . TikiLib::tikiUrl($args['document']['url']));
 		$mail->send(array($info['email']));
+	}
+
+	public function handleQueryModerate($args)
+	{
+		if (! $query = $this->fetchQuery($args['query'])) {
+			return;
+		}
+		if (! $info = TikiLib::lib('user')->get_userid_info($query['userId'])) {
+			return;
+		}
+
+		$relationlib = TikiLib::lib('relation');
+		$relationlib->add_relation('tiki.watchlist.contains', 'user', $info['login'], $args['document']['object_type'], $args['document']['object_id']);
+
+		$unifiedsearchlib = TikiLib::lib('unifiedsearch');
+		$unifiedsearchlib->invalidateObject($args['document']['object_type'], $args['document']['object_id']);
 	}
 }
 

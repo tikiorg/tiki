@@ -69,6 +69,12 @@ class UnifiedSearchLib
 
 				$indexer = $this->buildIndexer($this->getIndex());
 				$indexer->update($toProcess);
+
+				if ($prefs['storedsearch_enabled'] == 'y') {
+					// Stored search relation adding may cause residual index backlog
+					$toProcess = $queuelib->pull(self::INCREMENT_QUEUE, $count);
+					$indexer->update($toProcess);
+				}
 			} catch (Exception $e) {
 				// Re-queue pulled messages for next update
 				foreach ($toProcess as $message) {
@@ -266,7 +272,6 @@ class UnifiedSearchLib
 		// Process the documents updated while we were processing the update
 		$this->processUpdateQueue(1000);
 
-		ini_set('display_errors', 1);
 		if ($prefs['storedsearch_enabled'] == 'y') {
 			TikiLib::lib('storedsearch')->reloadAll();
 		}
