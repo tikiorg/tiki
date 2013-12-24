@@ -7,7 +7,7 @@
 {block name="content"}
 <div class="accordion">
 	<h4>{tr}Quick Export{/tr}</h4>
-	<form method="post" class="simple no-ajax" action="{service controller=tracker action=dump_items trackerId=$trackerId}">
+	<form method="post" class="simple no-ajax form-horizontal" action="{service controller=tracker action=dump_items trackerId=$trackerId}">
 		<p>{tr}Produce a CSV with basic formatting.{/tr}</p>
 		<div {*class="submit"*}>
 			<input type="submit" class="btn btn-default btn-sm" value="{tr}Export{/tr}">

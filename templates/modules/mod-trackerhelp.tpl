@@ -4,8 +4,17 @@
 {jq}$(".trackername").tiki("autocomplete", "trackername");{/jq}
 {/if}
 <form method="post">
-	<label>{tr}Tracker name:{/tr}<input type="text" name="trackerhelp_name" class="trackername"{if isset($smarty.session.trackerhelp_name)} value="{$smarty.session.trackerhelp_name|escape}"{/if} /></label>
-	<label><input type="submit" class="btn btn-default btn-sm btn-sm" name="trackerhelp" value="{tr}Go{/tr}" /></label>
+    <div class="form-group">
+	    <label class="col-sm-3 control-label" for="trackerhelp_name">{tr}Tracker name:{/tr}</label>
+        <div class="col-sm-9">
+            <input type="text" name="trackerhelp_name" id="trackerhelp_name" class="form-control trackername"{if isset($smarty.session.trackerhelp_name)} value="{$smarty.session.trackerhelp_name|escape}"{/if} />
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-9 col-sm-offset-3">
+            <input type="submit" class="btn btn-default btn-sm" name="trackerhelp" value="{tr}Go{/tr}" />
+        </div>
+    </div>
 </form>
 
 {if !empty($smarty.session.trackerhelp_text)}

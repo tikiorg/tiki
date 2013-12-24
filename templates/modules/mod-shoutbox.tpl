@@ -39,8 +39,8 @@
       <input type="hidden" id="shout_remove" name="shout_remove" value="0" />
       <input type="hidden" id="shout_edit" name="shout_edit" value="0" />{/if}
 	  {if !empty($shout_error)}<div class="highlight">{$shout_error}</div>{/if}
-      <div align="center">
-        <textarea rows="3" cols="16" class="tshoutbox" id="shout_msg" name="shout_msg"></textarea>
+      <div class="text-center">
+        <textarea rows="3" class="form-control form-group tshoutbox" id="shout_msg" name="shout_msg"></textarea>
 		{if $prefs.feature_antibot eq 'y' && $user eq ''}
 			<table>{include file="antibot.tpl"}</table>
 		{/if}

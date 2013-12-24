@@ -18,20 +18,22 @@
 		{if $mod_quickedit_heading}
 			<div class="panel-body">{$mod_quickedit_heading|escape}</div>
 		{/if}
-		<input id="{$qefield}" size="{$size}" type="text" name="page" />
-		{if $addcategId}
-			<input type="hidden" name="cat_categories[]" value="{$addcategId|escape}" />
-			<input type="hidden" name="cat_categorize" value="on" />
-		{/if}
-		{if $prefs.namespace_enabled == 'y' && $prefs.namespace_default}
-			<div>
-				<label>
-					<input type="checkbox" name="namespace" value="{$prefs.namespace_default|escape}" checked="checked" />
-					{tr _0=$prefs.namespace_default}Within %0{/tr}
-				</label>
-			</div>
-		{/if}
-		<input type="submit" class="btn btn-default btn-sm btn-sm" name="qedit" value="{$submit|escape}" />
+        <div class="form-group">
+    		<input id="{$qefield}" class="form-control" type="text" name="page" />
+	    	{if $addcategId}
+		    	<input type="hidden" name="cat_categories[]" value="{$addcategId|escape}" />
+			    <input type="hidden" name="cat_categorize" value="on" />
+	    	{/if}
+		    {if $prefs.namespace_enabled == 'y' && $prefs.namespace_default}
+			    <div>
+		    		<label>
+			    		<input type="checkbox" name="namespace" value="{$prefs.namespace_default|escape}" checked="checked" />
+				    	{tr _0=$prefs.namespace_default}Within %0{/tr}
+		    		</label>
+			    </div>
+		    {/if}
+        </div>
+		<input type="submit" class="btn btn-default btn-sm" name="qedit" value="{$submit|escape}" />
 	</div>
 </form>
 {if $prefs.javascript_enabled eq 'y' and $prefs.feature_jquery_autocomplete eq 'y'}

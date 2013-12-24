@@ -2,7 +2,7 @@
 
 {if $module_position eq 'topbar'}
 	<nav class="navbar navbar-default" role="navigation">
-		<div class="container">
+		{* <div class="container"> *}
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="sr-only">Toggle navigation</span>
@@ -14,7 +14,7 @@
             <div class="collapse navbar-collapse">
                 {menu params=$module_params bootstrap=navbar}
             </div>
-        </div>
+        {* </div> *}
 	</nav>
 {elseif $module_position eq 'left'}
 	{menu params=$module_params bootstrap=basic}

@@ -37,8 +37,8 @@ if (jqueryTiki.no_cookie) {
 	{if $mode eq "header"}<div class="siteloginbar{if $user} logged-in{/if}">{/if}
 	{if $user}
 		{if empty($mode) or $mode eq "module"}
-			<div>{tr}Logged in as:{/tr} <span style="white-space: nowrap">{$user|userlink}</span></div>
-			<div class="text-center">
+			<div class="form-group">{tr}Logged in as:{/tr} <span style="white-space: nowrap">{$user|userlink}</span></div>
+			<div class="text-center form-group">
 				{button href="tiki-logout.php" _text="{tr}Log out{/tr}"}
 			</div>
 			{if $login_module.can_revert}
@@ -51,16 +51,18 @@ if (jqueryTiki.no_cookie) {
 					</fieldset>
 				</form>
 			{elseif $tiki_p_admin eq 'y'}
-				<form action="{$login_module.login_url|escape}" method="post"{if $prefs.desactive_login_autocomplete eq 'y'} autocomplete="off"{/if}>
+				<form action="{$login_module.login_url|escape}" method="post"{if $prefs.desactive_login_autocomplete eq 'y'} autocomplete="off"{/if} role="form">
 					<fieldset>
 						<legend>{tr}Switch User{/tr}</legend>
-						<label for="login-switchuser_{$module_logo_instance}">{tr}Username:{/tr}</label>
-						<input type="hidden" name="su" value="1" />
-						{if $prefs.feature_help eq 'y'}
-							{help url="Switch+User" desc="{tr}Help{/tr}" desc="{tr}Switch User:{/tr}{tr}Enter user name and click 'Switch'.<br>Useful for testing permissions.{/tr}"}
-						{/if}
-						<input type="text" name="username" id="login-switchuser_{$module_logo_instance}" size="{if empty($module_params.input_size)}15{else}{$module_params.input_size}{/if}" />
-						<div class="text-center"><button type="submit" class="btn btn-default btn-sm" name="actsu">{tr}Switch{/tr}</button></div>
+                        <div class="form-group">
+						    <label for="login-switchuser_{$module_logo_instance}">{tr}Username:{/tr}</label>
+						    <input type="hidden" name="su" value="1" class="form-control" />
+						    {if $prefs.feature_help eq 'y'}
+							    {help url="Switch+User" desc="{tr}Help{/tr}" desc="{tr}Switch User:{/tr}{tr}Enter user name and click 'Switch'.<br>Useful for testing permissions.{/tr}"}
+						    {/if}
+						    <input type="text" name="username" class="form-control" id="login-switchuser_{$module_logo_instance}" {* size="{if empty($module_params.input_size)}15{else}{$module_params.input_size}{/if}" *} />
+                        </div>
+                        <div class="text-center"><button type="submit" class="btn btn-default" name="actsu">{tr}Switch{/tr}</button></div>
 						{autocomplete element="#login-switchuser_"|cat:$module_logo_instance type="username"}
 					</fieldset>
 				</form>
