@@ -1,5 +1,6 @@
 {* $Id$ *}
-<table>
+<table class="table">
+	<thead>
 	<tr>
 		{foreach from=$column item=col}
 			<th>
@@ -11,6 +12,8 @@
 			</th>
 		{/foreach}
 	</tr>
+	</thead>
+	<tbody>
 	{foreach from=$results item=row}
 		<tr>
 			{foreach from=$column item=col}
@@ -22,5 +25,6 @@
 			{/foreach}
 		</tr>
 	{/foreach}
+	</tbody>
 </table>
 {pagination_links resultset=$results}{/pagination_links}
