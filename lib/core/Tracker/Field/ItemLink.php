@@ -221,7 +221,8 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 				'$("select[name=' . $this->getInsertId() . ']").change(function(e, val) {
 	var $select = $(this);
 	if ($select.val() == -1) {
-		var $d = $("<div id=\'add_dialog_' . $this->getInsertId() . '\' style=\'display:none\'>' . addslashes($form) . '</div>")
+		var $d = $("<div id=\'add_dialog_' . $this->getInsertId() . '\' style=\'display:none\'/>")
+			.html(' . json_encode($form) . ')
 			.appendTo(document.body);
 
 		var w = $d.width() * 1.4;
@@ -236,7 +237,7 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 		$d.dialog({
 				width: w,
 				height: h,
-				title: "'.$this->getOption('addItems').'",
+				title: '.json_encode($this->getOption('addItems')).',
 				modal: true,
 				buttons: {
 					"Add": function() {
@@ -245,26 +246,30 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 							ajaxLoadingShow($f);
 							$.post( $f.attr("action"), $f.serialize(), function(data, status) {
 								if (data && data.data) {
-									for (var i = 0; i < data.data.length; i++) {
-										var a = data.data[i];
-										if ( a && a["fieldId"] == '. $displayFieldId .' ) {
-											var $o = $("<option value=\'" + data["itemId"] + "\'>" + a["value"] + "</option>");
-											$("select[name=' . $this->getInsertId() . '] > option:first").after($o);
-											$("select[name=' . $this->getInsertId() . ']")[0].selectedIndex = 1;
+									$.each(data.data, function (i, a) {
+										if ( a && a.fieldId == '. intval($displayFieldId) .' ) {
+											if ("string" !== typeof a.value && a.pvalue) {
+												a.value = a.pvalue;
+											}
+
+											var $o = $("<option/>")
+												.val(data.itemId)
+												.text(a.value);
+											$select
+												.append($o)
+												.val(data.itemId);
 										}
-									}
+									});
 								}
 								ajaxLoadingHide();
 								$d.dialog( "close" );
-								if (jqueryTiki.chosen) {
-									$select.trigger("chosen:updated");
-								}
+								$select.trigger("chosen:updated");
 								return;
 							}, "json");
 						}
 					},
 					Cancel: function() {
-						$("select[name=' . $this->getInsertId() . ']")[0].selectedIndex = 0;
+						$select.val("");
 						$( this ).dialog( "close" );
 					}
 				},
