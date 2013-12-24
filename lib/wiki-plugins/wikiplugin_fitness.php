@@ -74,6 +74,10 @@ function wp_fixture_tracker_math($data, $params)
 
 		if ($permName != $heading) {
 			$checks[$key] = $factory->getHandler($field);
+
+			if (! $checks[$key] instanceof Tracker_Field_Math) {
+				return '__' . tr('Field is not a math field: %0', $permName) . '__';
+			}
 		}
 	}
 
