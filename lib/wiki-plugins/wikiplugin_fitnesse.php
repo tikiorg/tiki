@@ -5,13 +5,13 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function wikiplugin_fitness_info()
+function wikiplugin_fitnesse_info()
 {
 	return array(
-		'name' => tra('Fitness Test Suite'),
-		'documentation' => 'PluginFitness',
+		'name' => tra('Fitnesse Test Suite'),
+		'documentation' => 'PluginFitnesse',
 		'description' => tra('Executable test suite'),
-		'prefs' => array('wikiplugin_fitness'),
+		'prefs' => array('wikiplugin_fitnesse'),
 		'default' => 'n',
 		'format' => 'wiki',
 		'body' => tra('Test execution scenario'),
@@ -23,7 +23,7 @@ function wikiplugin_fitness_info()
 	);
 }
 
-function wikiplugin_fitness($data, $params)
+function wikiplugin_fitnesse($data, $params)
 {
 	$fixtures = array(
 		'trackermath' => 'wp_fixture_tracker_math',
