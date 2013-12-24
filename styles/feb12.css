@@ -258,7 +258,8 @@ body.fixed_width .fixedwidth .fixedwidth {
 	padding: 0;
 }
 
-.header_container {
+header.page-header {
+	margin: 0 auto;
 	background: url(feb12/header.jpg) repeat-x bottom;
 }
 
@@ -368,12 +369,14 @@ body.fixed_width .fixedwidth .fixedwidth {
 }
 
 /* tiki-top_bar.tpl - menu and search */
-#topbar_modules .navbar-default {
+#topbar_modules .navbar-default/*,
+.navbar-default .navbar-collapse,
+.navbar-default .navbar-form*/ {
 	background: url(feb12/header.jpg) repeat-x;
 	color: #F5F5F5;
-	height: 34px;
+/*	height: 34px;
 	padding-top: 3px;
-	font-size: 14px;
+	font-size: 14px;*/
 }
 
 #topbar_modules a {

@@ -21,8 +21,6 @@ body {
  	text-align: center;
  	font-size: .9em;
 	min-height: 40px}
-	
-* html #footer {height: 40px}
 
 /***** XHTML Elements (other than body tag) ******/
 a,
@@ -68,6 +66,8 @@ fieldset {
 form {color: black}
 legend {color: #000}
 
+
+.btn.btn-default,
 .button a,
 .button a:visited,
 button,
@@ -85,6 +85,7 @@ input[type="submit"] {
 	padding: 2px 4px;
 }
 
+.btn.btn-default:hover,
 .button a:hover,
 button a:hover,
 button:hover,
@@ -127,9 +128,6 @@ select {
 	background: #ECEEF2;
 	text-decoration: none}
 	
-.box select {
-	width: 90%;
-}
 
 textarea {
 	border: 1px solid #788596;
@@ -359,12 +357,12 @@ a.flip:hover,
 	margin: 5px 10px;
 }
 
+#col2 .panel,
+#col3 .panel,
 #col2 .box,
 #col3 .box {
-	width: 210px;
-	text-align: left;
-	margin: 5px 10px;
-	background: url(snow/boxmid.jpg) repeat-y}
+	background: url(snow/boxmid.jpg) repeat-y;
+	background-size: 100% auto;}
 
 h3.box-title {
 	text-align: center;
@@ -377,11 +375,11 @@ h3.box-title {
 	border-bottom: 1px solid #6c7b8c;
 	line-height: normal;	
 }	
-	
+
+#col2 .panel-heading,
+#col3 .panel-heading,
 #col2 h3.box-title,
 #col3 h3.box-title {
-	padding-top: 8px;
-	height: 35px;
 	background: url(snow/boxtop.jpg) no-repeat;
 	border-bottom: none;
 }
@@ -677,16 +675,6 @@ ul.floatleft li {
 
 .editdate ul.floatleft {margin-top: 8px}
  
-.button2,
-.button2,
-.button3 {
-	display: inline-block;
-	margin-right: 5px}
-
-.linkbut {
-	white-space: nowrap;
-	font-weight: normal}
-
 .wiki-edithelp {
 	display: none;
 }

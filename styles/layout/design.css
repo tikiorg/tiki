@@ -2893,24 +2893,6 @@ a.freetag_7 {
 
 /***** Shoutbox *****/
 
-.shoutboxmsg {
-	margin-bottom: 0;
-	padding: 4px;
-	padding-bottom: 1px;
-}
-
-.shoutboxmodmsg {
-	font-size: .95em;
-	margin: 0 5px 4px 5px;
-	padding-top: 5px;
-	padding-bottom: 1px
-}
-
-textarea.tshoutbox{
-	font-size: .95em;
-	width: 90%;
-}
-
 /***** Directory *****/
 
 .dircategs {
@@ -3740,9 +3722,6 @@ h6 a.tiki_anchor:hover {
 }
 /* End of file */
 
-.panel-body input[type="text"] {
-	width: 90%;
-}
 
 /* override default Bootstrap style */
 .page-header {

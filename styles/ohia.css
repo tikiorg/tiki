@@ -6,8 +6,8 @@
 */
 
 /* Import layout foundation CSS files. */
-/* @import url("layout/design.css");
-*/
+ @import url("layout/design.css");
+
 /***** XHTML Elements (body tag here,
 			others follow Layout) *****/
 body {
@@ -20,8 +20,11 @@ body.cke_show_borders {
 	text-align: left !important;
 }
 
+/* bs override */
 header.page-header {
 	margin: 0 auto;
+	border-bottom: none;
+	padding-bottom: 0;
 }
 
 /* Enable header and footer content to widen when middle has wide content. */
@@ -102,7 +105,7 @@ hr {
 fieldset {
 	color: #cfcfcf;
 	border: 1px solid #4c4c4c;
-	padding: 10px}
+}
 
 legend {color: #cfcfcf}
 
@@ -225,17 +228,27 @@ label {margin: 0 2px}
 	display: block;
 	margin-top: 3px;
 	padding-top: 6px}
+	
+/* bs override */
+.navbar {
+/*	margin-bottom: 0; */
+	background: #030511;
+	border: #313131;
 
-#topbar_modules {
-	min-height: 3em;
+}
+
+/* bs override */
+.navbar-default {
+/*	background: #030511;
+	border: #313131; */
 }
 
 #tiki-top {
 /*	position: absolute;
 	top: 0;
 	left: 0;
-	text-align: left;*/
-	background: #030511;
+	text-align: left;
+	background: #030511;*/
 	width: 100%;
 }
 
@@ -374,6 +387,8 @@ background-image:url('../vendor/jquery/jquery-ui-themes/themes/smoothness/images
   background-color: #030511;
   border: 1px solid #5e0000;	
 }
+
+
 
 /** Modules **/
 .panel {
@@ -599,6 +614,7 @@ a.forumnameread {color: #fd0006}
 
 .tabcontent table td {padding: 5px}
 */
+
 /***** Wiki *****/
 
 h1 a.pagetitle,
