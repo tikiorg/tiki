@@ -2226,19 +2226,7 @@ class TrackerLib extends TikiLib
 		$cachelib = TikiLib::lib('cache');
 		$cachelib->invalidate('trackerItemLabel'.$itemId);
 		foreach ($fieldList['data'] as $f) {
-			$cachelib->invalidate(md5('trackerfield'.$f['fieldId'].$status));
-			$cachelib->invalidate(md5('trackerfield'.$f['fieldId'].'opc'));
-			$cachelib->invalidate(md5('trackerfield'.$f['fieldId'].'opc'));
-			if ($status == 'o') {
-				$cachelib->invalidate(md5('trackerfield'.$f['fieldId'].'op'));
-				$cachelib->invalidate(md5('trackerfield'.$f['fieldId'].'oc'));
-			} elseif ($status == 'c') {
-				$cachelib->invalidate(md5('trackerfield'.$f['fieldId'].'oc'));
-				$cachelib->invalidate(md5('trackerfield'.$f['fieldId'].'pc'));
-			} elseif ($status == 'p') {
-				$cachelib->invalidate(md5('trackerfield'.$f['fieldId'].'op'));
-				$cachelib->invalidate(md5('trackerfield'.$f['fieldId'].'pc'));
-			}
+			$this->invalidate_field_cache($f['fieldId']);
 		}
 
 		$options=$this->get_tracker_options($trackerId);
@@ -2740,14 +2728,7 @@ class TrackerLib extends TikiLib
 		$this->fields()->delete($conditions);
 		$this->itemFields()->deleteMultiple($conditions);
 
-		$cachelib->invalidate(md5('trackerfield'.$fieldId.'o'));
-		$cachelib->invalidate(md5('trackerfield'.$fieldId.'p'));
-		$cachelib->invalidate(md5('trackerfield'.$fieldId.'c'));
-		$cachelib->invalidate(md5('trackerfield'.$fieldId.'op'));
-		$cachelib->invalidate(md5('trackerfield'.$fieldId.'oc'));
-		$cachelib->invalidate(md5('trackerfield'.$fieldId.'pc'));
-		$cachelib->invalidate(md5('trackerfield'.$fieldId.'opc'));
-		$cachelib->invalidate(md5('trackerfield'.$fieldId.'poc'));
+		$this->invalidate_field_cache($fieldId);
 
 		$this->clear_tracker_cache($trackerId);
 
@@ -4570,14 +4551,31 @@ class TrackerLib extends TikiLib
 			$new = isset($args['values'][$fieldId]) ? $args['values'][$fieldId] : null;
 
 			if ($old !== $new) {
-				$cachelib->invalidate(md5('trackerfield'.$fieldId.'o'));
-				$cachelib->invalidate(md5('trackerfield'.$fieldId.'c'));
-				$cachelib->invalidate(md5('trackerfield'.$fieldId.'p'));
-				$cachelib->invalidate(md5('trackerfield'.$fieldId.'op'));
-				$cachelib->invalidate(md5('trackerfield'.$fieldId.'oc'));
-				$cachelib->invalidate(md5('trackerfield'.$fieldId.'pc'));
-				$cachelib->invalidate(md5('trackerfield'.$fieldId.'opc'));
+				$this->invalidate_field_cache($fieldId);
 			}
+		}
+	}
+
+	private function invalidate_field_cache($fieldId)
+	{
+		global $prefs;
+		$multi_languages=$prefs['available_languages'];
+		if (! $multi_languages) {
+			$multi_languages = array();
+		}
+
+		$multi_languages[] = '';
+
+		$cachelib = TikiLib::lib('cache');
+
+		foreach ($multi_languages as $lang) {
+			$cachelib->invalidate(md5('trackerfield'.$fieldId.'o'.$lang));
+			$cachelib->invalidate(md5('trackerfield'.$fieldId.'c'.$lang));
+			$cachelib->invalidate(md5('trackerfield'.$fieldId.'p'.$lang));
+			$cachelib->invalidate(md5('trackerfield'.$fieldId.'op'.$lang));
+			$cachelib->invalidate(md5('trackerfield'.$fieldId.'oc'.$lang));
+			$cachelib->invalidate(md5('trackerfield'.$fieldId.'pc'.$lang));
+			$cachelib->invalidate(md5('trackerfield'.$fieldId.'opc'.$lang));
 		}
 	}
 
