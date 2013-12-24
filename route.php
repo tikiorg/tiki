@@ -70,6 +70,7 @@ function tiki_route($path)
 	tiki_route_attempt('|^blogpost(\d+)(\-.*)?$|', 'tiki-view_blog_post.php', tiki_route_single(1, 'postId'));
 	tiki_route_attempt('|^cat(\d+)(\-.*)?$|', 'tiki-browse_categories.php', tiki_route_single(1, 'parentId'));
 	tiki_route_attempt_prefix('browseimage', 'tiki-browse_image.php', 'imageId');
+	tiki_route_attempt('/^event(\d+)(\-.*)?$/', 'tiki-calendar_edit_item.php', tiki_route_single(1, 'viewcalitemId'));
 
 	tiki_route_attempt(
 		'|^cal(\d[\d,]*)$|',
