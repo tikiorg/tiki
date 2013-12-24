@@ -1591,6 +1591,7 @@ class TrackerLib extends TikiLib
 
 			foreach ($final as $job) {
 				$value = $job['handler']->handleFinalSave($data);
+				$data[$permName] = $value;
 				$this->modify_field($currentItemId, $job['field']['fieldId'], $value);
 			}
 		}
