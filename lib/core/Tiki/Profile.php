@@ -138,10 +138,11 @@ class Tiki_Profile
 				$object['domain'] = "http://" . $object['domain'];
 			}
 		}
+		$shortdomain = substr($object['domain'], strpos($object['domain'], '://') + 3);
 
 		$result = $tikilib->query(
-			"SELECT value FROM tiki_profile_symbols WHERE domain = ? AND profile = ? AND object = ?",
-			array( $object['domain'], $object['profile'], $object['object'] )
+			"SELECT value FROM tiki_profile_symbols WHERE (domain = ? || domain = ?) AND profile = ? AND object = ?",
+			array( $object['domain'], $shortdomain, $object['profile'], $object['object'] )
 		);
 
 		if ( $row = $result->fetchRow() )

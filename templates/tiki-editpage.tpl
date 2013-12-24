@@ -583,7 +583,7 @@ $("input[name=allowhtml]").change(function() {
                                     </div>
                                 </div>
 							{/if}
-							{if $prefs.wiki_auto_toc eq 'y'}
+							{if $prefs.wiki_auto_toc eq 'y' or  $prefs.wiki_page_hide_title eq 'y'}
 								<div class="form-group">
 									<label for="" class="col-sm-2 control-label">{tr}Page display options{/tr}</label>
                                     <div class="col-sm-10">

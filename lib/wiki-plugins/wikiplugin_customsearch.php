@@ -266,7 +266,7 @@ var customsearch = {
 
 		if (that.options.autosearchdelay) {
 			that.auto = delayedExecutor(that.options.autosearchdelay, function () {
-				if (that.options.requireinput && !$('#customsearch_$id').find('input.searchFormBlockChildText:first').val()) {
+				if (that.options.requireinput && (!$('#customsearch_$id').find(':text').val() || $('#customsearch_$id').find(':text').val().indexOf('...') > 0)) {
 					return false;
 				}
 				that.load();
@@ -278,7 +278,7 @@ $('#customsearch_$id').click(function() {
 	customsearch.offset = 0;
 });
 $('#customsearch_$id').submit(function() {
-	if (customsearch.options.requireinput && !$(this).find('input.searchFormBlockChildText:first').val()) {
+	if (customsearch.options.requireinput && (!$(this).find(':text').val() || $(this).find(':text').val().indexOf('...') > 0)) {
 		alert(tr('Please enter a search query'));
 		return false;
 	}

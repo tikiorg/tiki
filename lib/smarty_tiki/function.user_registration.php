@@ -52,7 +52,6 @@ function smarty_function_user_registration($params, $smarty)
 			$smarty->assign('trackerEditFormId', 1);	// switch on to make mandatory_star *'s appear even though the tracker form is loaded by ajax
 		}
 	}
-
 	if (isset($_REQUEST['register']) && $_SERVER['REQUEST_METHOD'] == 'POST') {
 		check_ticket('register');
 		$cookie_name = $prefs['session_cookie_name'];

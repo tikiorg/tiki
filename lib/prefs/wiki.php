@@ -732,7 +732,7 @@ function prefs_wiki_list($partial = false)
 			'name' => tr('Hide title per wiki page'),
 			'description' => tr('Allow the title to be hidden for individual wiki pages'),
 			'type' => 'flag',
-			'default' => 'n',
+			'default' => 'y',
 			'dependencies' => array(),
 		),
 	);
