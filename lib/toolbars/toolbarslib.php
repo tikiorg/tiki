@@ -1648,7 +1648,7 @@ class ToolbarCapture extends Toolbar
 	function getSyntax( $areaId )
 	{
 		global $page;
-		return 'openJCaptureDialog(\''.$areaId.'\', \'' . $page . '\', event);return false;';
+		return 'openJCaptureDialog(\''.$areaId.'\', \'' . urlencode($page) . '\', event);return false;';
 	}
 
 }
