@@ -106,7 +106,7 @@ if (isset($_REQUEST['view']) && $_REQUEST['view'] == 'admin') {
 			$fgal_options[$k_gal]['value'] = $gal_info[$k_gal];
 		} else {
 			// normal gallery view
-			$fgal_options[$k_gal]['value'] = ( isset($gal_info) && isset($gal_info[$k_gal]) ) ? $gal_info[$k_gal] : $prefs[$k_prefs];
+			$fgal_options[$k_gal]['value'] = ( isset($gal_info) && isset($gal_info[$k_gal]) ) ? $gal_info[$k_gal] : isset($prefs[$k_prefs]) ? $prefs[$k_prefs] : null;
 		}
 	}
 }
