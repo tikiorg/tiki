@@ -40,6 +40,8 @@ class Services_Broker
 			}
 		} catch (Services_Exception $e) {
 			$access->display_error(NULL, $e->getMessage(), $e->getCode());
+		} catch (Exception $e) {
+			$access->display_error(NULL, $e->getMessage(), $e->getCode());
 		}
 	}
 
