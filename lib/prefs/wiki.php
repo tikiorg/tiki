@@ -634,7 +634,7 @@ function prefs_wiki_list($partial = false)
 			'options' => array(
 				'properties' => tra('Properties tab'),
 				'edit' => tra('Edit tab'),
-				'freetagstab' => tra('Freetags tab'),
+				'freetagstab' => tra('Tags tab'),
 			),
 			'default' => 'properties',
 		),

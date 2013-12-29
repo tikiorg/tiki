@@ -458,7 +458,7 @@ $icons = array(
 	"freetags" => array(
 		'icon' => 'img/icons/large/vcard.png',
 		'position' => '-300px -415px;',
-		'title' => tr('Freetags'),
+		'title' => tr('Tags'),
 		'disabled' => $prefs['feature_freetags'] != 'y',
 		'description' => tr('Settings and features for freetags'),
 		'help' => 'Tags',

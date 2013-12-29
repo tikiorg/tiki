@@ -1459,7 +1459,7 @@ INSERT INTO `tiki_secdb` (`filename`, `md5_value`, `tiki_version`, `severity`) V
 INSERT INTO `tiki_secdb` (`filename`, `md5_value`, `tiki_version`, `severity`) VALUES('./lib/core/Tracker/Field/Factory.php', 'd35c852240e82980a9c7adb8053c6c76', '12.0', 0);
 INSERT INTO `tiki_secdb` (`filename`, `md5_value`, `tiki_version`, `severity`) VALUES('./lib/core/Tracker/Field/File.php', 'e721e3b68292a3a958c04ded74776318', '12.0', 0);
 INSERT INTO `tiki_secdb` (`filename`, `md5_value`, `tiki_version`, `severity`) VALUES('./lib/core/Tracker/Field/Files.php', '600fd149fde920291b5ecdbfd26e72bc', '12.0', 0);
-INSERT INTO `tiki_secdb` (`filename`, `md5_value`, `tiki_version`, `severity`) VALUES('./lib/core/Tracker/Field/Freetags.php', 'c4fb682ce696cf92ad0f252c0670bf86', '12.0', 0);
+INSERT INTO `tiki_secdb` (`filename`, `md5_value`, `tiki_version`, `severity`) VALUES('./lib/core/Tracker/Field/Tags.php', 'c4fb682ce696cf92ad0f252c0670bf86', '12.0', 0);
 INSERT INTO `tiki_secdb` (`filename`, `md5_value`, `tiki_version`, `severity`) VALUES('./lib/core/Tracker/Field/GeographicFeature.php', 'ec03bb7f9f5b2b2c5c42d0857f738c11', '12.0', 0);
 INSERT INTO `tiki_secdb` (`filename`, `md5_value`, `tiki_version`, `severity`) VALUES('./lib/core/Tracker/Field/GroupSelector.php', '53529eb050e8d7e1835895c6ea059eaa', '12.0', 0);
 INSERT INTO `tiki_secdb` (`filename`, `md5_value`, `tiki_version`, `severity`) VALUES('./lib/core/Tracker/Field/Header.php', '9cf7c0544e8a2ac7b8bed8ce5da2729f', '12.0', 0);

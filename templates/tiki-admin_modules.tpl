@@ -3,7 +3,7 @@
 {strip}
 {title help="Modules" admpage="module"}{tr}Admin Modules{/tr}{/title}
 
-<div class="t_navbar">
+<div class="t_navbar form-group spacer-bottom-15px">
 	{button href="tiki-admin_modules.php?clear_cache=1" class="btn btn-default" _text="{tr}Clear Cache{/tr}"}
 	{if $tiki_p_edit_menu eq 'y'}
 		{button href="tiki-admin_menus.php" class="btn btn-default" _text="{tr}Admin Menus{/tr}"}
@@ -52,7 +52,9 @@
 		</legend>
 	{/if}
 	<h2>{tr}Assigned Modules{/tr}</h2>
-	{button edit_assign=0 cookietab=2 _auto_args="edit_assign,cookietab" _text="{tr}Add module{/tr}"}
+    <div class="form-group spacer-bottom-15px">
+    	{button edit_assign=0 cookietab=2 _auto_args="edit_assign,cookietab" _text="{tr}Add module{/tr}"}
+    </div>
 
 	<div id="assigned_modules">
 		{tabset}
@@ -350,7 +352,7 @@
 			<tr>
 				<td colspan="2" class="odd">{tr}Data{/tr}<br>
 					<a name="editcreate"></a>
-					{textarea name='um_data' id='um_data' rows="6" cols="80" _toolbars='y' _previewConfirmExit='n' _wysiwyg="n"}{$um_data}{/textarea}
+					{textarea name='um_data' id='um_data' rows="6" _class=form-color _toolbars='y' _previewConfirmExit='n' _wysiwyg="n"}{$um_data}{/textarea}
 					<br>
 					<input type="submit" class="btn btn-default btn-sm" name="um_update" value="{if empty($um_name)}{tr}Create{/tr}{else}{tr}Save{/tr}{/if}" onclick="needToConfirm=false">
 				</td>

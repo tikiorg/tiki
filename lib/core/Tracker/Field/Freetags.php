@@ -6,12 +6,10 @@
 // $Id$
 
 /**
- * Handler class for Freetags
- *
- * Letter key: ~F~
+ * Handler class for FreeTags * Letter key: ~F~
  *
  */
-class Tracker_Field_Freetags extends Tracker_Field_Abstract implements Tracker_Field_Synchronizable
+class Tracker_Field_FreetagsTags Tracker_Field_Abstract implements Tracker_Field_Synchronizable
 {
 	public static function getTypes()
 	{
