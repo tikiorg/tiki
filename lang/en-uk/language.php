@@ -1145,7 +1145,7 @@ $lang = array(
 // "Problem with uploaded file: \"%0\"" => "Problem with uploaded file: \"%0\"",
 // "No gallery for uploaded file, galleryId=%0" => "No gallery for uploaded file, galleryId=%0",
 // "No permissions to upload file to gallery \"%0\"" => "No permissions to upload file to gallery \"%0\"",
-"Freetags" => "Freetags",
+"Tags" => "Tags",
 // "Allows freetags to be shown or added for tracker items" => "Allows freetags to be shown or added for tracker items",
 // "Visible size of the input field" => "Visible size of the input field",
 // "Hide or show the input help" => "Hide or show the input help",

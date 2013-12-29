@@ -1145,7 +1145,7 @@ $lang = array(
 // "Problem with uploaded file: \"%0\"" => "Problem with uploaded file: \"%0\"",
 // "No gallery for uploaded file, galleryId=%0" => "No gallery for uploaded file, galleryId=%0",
 "No permissions to upload file to gallery \"%0\"" => "Вам не разрешено добавлять файлы в галерею \"%0\"",
-"Freetags" => "Метки",
+"Tags" => "Метки",
 "Allows freetags to be shown or added for tracker items" => "Разрешить показ и добавление меток в Трекерах",
 "Visible size of the input field" => "Видимый размер поля",
 "Hide or show the input help" => "Скрывать или показывать справку при вводе",

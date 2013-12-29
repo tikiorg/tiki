@@ -184,7 +184,7 @@
 						{if $prefs.wiki_freetags_edit_position eq 'edit'}
 								{if $prefs.feature_freetags eq 'y' and $tiki_p_freetags_tag eq 'y'}
 									<fieldset>
-										<legend>{tr}Freetags{/tr}</legend>
+										<legend>{tr}Tags{/tr}</legend>
 										<table>
 											{include file='freetag.tpl'}
 										</table>
@@ -246,8 +246,8 @@
 					{/if}
 					{if $prefs.wiki_freetags_edit_position eq 'freetagstab'}
 						{if $prefs.feature_freetags eq 'y' and $tiki_p_freetags_tag eq 'y'}
-							{tab name="{tr}Freetags{/tr}"}
-                                <h2>{tr}Freetags{/tr}</h2>
+							{tab name="{tr}Tags{/tr}"}
+                                <h2>{tr}Tags{/tr}</h2>
 								{include file='freetag.tpl'}
 							{/tab}
 						{/if}

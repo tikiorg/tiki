@@ -1145,7 +1145,7 @@ $lang = array(
 "Problem with uploaded file: \"%0\"" => "업로드된 파일에 문제: \"%0\"",
 "No gallery for uploaded file, galleryId=%0" => "업로드된 파일에 대한 갤러리 없음, galleryId=%0",
 "No permissions to upload file to gallery \"%0\"" => "갤러리 \"%0\" 로 파일 업로드할 권한 없음",
-"Freetags" => "프리태그",
+"Tags" => "프리태그",
 "Allows freetags to be shown or added for tracker items" => "프리태그가 트래커 항목에 대하여 표시되거나 추가되는 것을 허용함",
 "Visible size of the input field" => "입력 필드의 보이는 크기",
 "Hide or show the input help" => "입력 도움말을 숨김 혹은 표시",

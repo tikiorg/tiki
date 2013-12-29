@@ -1145,7 +1145,7 @@ $lang = array(
 "Problem with uploaded file: \"%0\"" => "Ha habido algún problema con el archivo subido: \"%0\"",
 // "No gallery for uploaded file, galleryId=%0" => "No gallery for uploaded file, galleryId=%0",
 // "No permissions to upload file to gallery \"%0\"" => "No permissions to upload file to gallery \"%0\"",
-"Freetags" => "Marcas",
+"Tags" => "Marcas",
 "Allows freetags to be shown or added for tracker items" => "Permite mostrar o añadir marcas a items de formularios-bd",
 // "Visible size of the input field" => "Visible size of the input field",
 // "Hide or show the input help" => "Hide or show the input help",

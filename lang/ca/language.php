@@ -1145,7 +1145,7 @@ $lang = array(
 "Problem with uploaded file: \"%0\"" => "Problema amb el fitxer enviat: \" %0 \"",
 "No gallery for uploaded file, galleryId=%0" => "No hi ha galeria per fitxer enviat, galleryId=%0",
 "No permissions to upload file to gallery \"%0\"" => "No hi ha permisos de càrrega a la galeria \"%0\"",
-"Freetags" => "Etiquetes lliures",
+"Tags" => "Etiquetes lliures",
 "Allows freetags to be shown or added for tracker items" => "Permet que es mostrin o s'afegeixin marques lliures a ítems del formulari-bd",
 "Visible size of the input field" => "Mida visible del camp d'entrada",
 "Hide or show the input help" => "Ocultar o mostrar l'ajuda a les entrades",

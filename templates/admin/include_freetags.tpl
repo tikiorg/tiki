@@ -23,7 +23,7 @@
 	</fieldset>
 		
 			<fieldset>
-				<legend>{tr}Freetags{/tr}{help url="Tags"}</legend>
+				<legend>{tr}Tags{/tr}{help url="Tags"}</legend>
 				<input type="hidden" name="freetagsfeatures" />
 				{preference name=freetags_browse_show_cloud}
 
