@@ -59,8 +59,8 @@
 			{* If the indexing succeeded, there are clearly no problems, free up some screen space *}
 			{remarksbox type=tip title="{tr}Indexing Problems?{/tr}"}
 				<p>{tr}If the indexing does not complete, check the log file to see where it ended.{/tr}</p>
-				<p>{tr}Last line of log file (web):{/tr} {$lastLogItemWeb|escape}</p>
-				<p>{tr}Last line of log file (console):{/tr} {$lastLogItemConsole|escape}</p>
+				<p>{tr}Last line of log file (web):{/tr} <strong>{$lastLogItemWeb|escape}</strong></p>
+				<p>{tr}Last line of log file (console):{/tr} <strong>{$lastLogItemConsole|escape}</strong></p>
 
 				<p>Common failures include:</p>
 				<ul>
