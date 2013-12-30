@@ -19,7 +19,14 @@ class Services_Tracker_Utilities
 		return $this->replaceItem($definition, $item['itemId'], $item['status'], $item['fields']);
 	}
 
-	private function replaceItem($definition, $itemId, $status, $fieldMap)
+	function resaveItem($itemId)
+	{
+		$tracker = TikiLib::lib('trk')->get_item_info($itemId);
+		$definition = Tracker_Definition::get($tracker['trackerId']);
+		$this->replaceItem($definition, $itemId, null, array(), false);
+	}
+
+	private function replaceItem($definition, $itemId, $status, $fieldMap, $validate = true)
 	{
 		$trackerId = $definition->getConfiguration('trackerId');
 		$fields = array();
@@ -60,6 +67,9 @@ class Services_Tracker_Utilities
 		$errors = $trklib->check_field_values(array('data' => $fields), $categorizedFields, $trackerId, $itemId ? $itemId : '');
 
 		if (count($errors['err_mandatory']) == 0 && count($errors['err_value']) == 0) {
+			$newItem = $trklib->replace_item($trackerId, $itemId, array('data' => $fields), $status, 0, true);
+			return $newItem;
+		} elseif (! $validate) {
 			$newItem = $trklib->replace_item($trackerId, $itemId, array('data' => $fields), $status, 0, true);
 			return $newItem;
 		}

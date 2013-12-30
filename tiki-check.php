@@ -1131,6 +1131,36 @@ if ($connection || !$standalone) {
 		'message' => $msg
 	);
 
+	// Strict mode
+	$query = 'SELECT @@sql_mode as Value;';
+	$result = query($query, $connection);
+	$s = '';
+	$msg = 'Unable to query strict mode';
+	if (!empty($result)) {
+		$sql_mode = $result[0]['Value'];
+		$modes = explode(',', $sql_mode);
+
+		if (in_array('STRICT_ALL_TABLES', $modes)) {
+			$s = 'STRICT_ALL_TABLES';
+		}
+		if (in_array('STRICT_TRANS_TABLES', $modes)) {
+			if (!empty($s)) {
+				$s .= ',';
+			}
+			$s .= 'STRICT_TRANS_TABLES';
+		}
+
+		if(!empty($s)) {
+			$msg = 'MySQL is using strict mode';
+		} else {
+			$msg = 'MySQL is not using strict mode';
+		}
+	}
+	$mysql_properties['Strict Mode'] = array(
+		'fitness' => tra('info'),
+		'setting' => $s,
+		'message' => $msg
+	);
 
 	// MySQL Variables
 	$query = "SHOW VARIABLES;";

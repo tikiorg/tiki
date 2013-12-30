@@ -670,6 +670,33 @@ class TikiAccessLib extends TikiLib
 				case 'json':
 					header("Content-Type: $full");
 					$data = json_encode($data);
+					if ($data === false) {
+						$error = '';
+						switch (json_last_error()) {
+							case JSON_ERROR_NONE:
+								$error = 'json_encode - No errors';
+								break;
+							case JSON_ERROR_DEPTH:
+								$error = 'json_encode - Maximum stack depth exceeded';
+								break;
+							case JSON_ERROR_STATE_MISMATCH:
+								$error = 'json_encode - Underflow or the modes mismatch';
+								break;
+							case JSON_ERROR_CTRL_CHAR:
+								$error = 'json_encode - Unexpected control character found';
+								break;
+							case JSON_ERROR_SYNTAX:
+								$error = 'json_encode - Syntax error, malformed JSON';
+								break;
+							case JSON_ERROR_UTF8:
+								$error = 'json_encode - Malformed UTF-8 characters, possibly incorrectly encoded';
+								break;
+							default:
+								$error = 'json_encode - Unknown error';
+								break;
+						}
+						throw new Exception ($error);
+					}
 					if (isset($_REQUEST['callback'])) {
 						$data = $_REQUEST['callback'] . '(' . $data . ')';
 					}

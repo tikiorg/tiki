@@ -66,6 +66,15 @@ class Tracker_Field_Relation extends Tracker_Field_Abstract
 						),
 						'legacy_index' => 4,
 					),
+					'refresh' => array(
+						'name' => tr('Force Refresh'),
+						'description' => tr('Re-save related tracker items.'),
+						'filter' => 'alpha',
+						'options' => array(
+							'' => tr('No'),
+							'save' => tr('On Save'),
+						),
+					),
 				),
 			),
 		);
@@ -154,7 +163,17 @@ class Tracker_Field_Relation extends Tracker_Field_Abstract
 
 	function handleSave($value, $oldValue)
 	{
+		if ($value) {
+			$target = explode("\n", trim($value));
+		} else {
+			$target = array();
+		}
+
 		if ($this->getOption(self::OPT_READONLY)) {
+			if ($this->getOption('refresh') == 'save') {
+				$this->prepareRefreshRelated($target);
+			}
+
 			return array(
 				'value' => $value,
 			);
@@ -169,11 +188,6 @@ class Tracker_Field_Relation extends Tracker_Field_Abstract
 			$map[$key] = $id;
 		}
 
-		if ($value) {
-			$target = explode("\n", trim($value));
-		} else {
-			$target = array();
-		}
 		$toRemove = array_diff(array_keys($map), $target);
 		$toAdd = array_diff($target, array_keys($map));
 
@@ -188,6 +202,10 @@ class Tracker_Field_Relation extends Tracker_Field_Abstract
 			$relationlib->add_relation($this->getOption(self::OPT_RELATION), 'trackeritem', $this->getItemId(), $type, $id);
 		}
 
+		if ($this->getOption('refresh') == 'save') {
+			$this->prepareRefreshRelated($target);
+		}
+
 		return array(
 			'value' => $value,
 		);
@@ -195,6 +213,26 @@ class Tracker_Field_Relation extends Tracker_Field_Abstract
 
 	function watchCompare($old, $new)
 	{
+	}
+
+	private function prepareRefreshRelated($target)
+	{
+		$itemId = $this->getItemId();
+		// After saving the field, bind a temporary event on save to refresh child elements
+
+		TikiLib::events()->bind('tiki.trackeritem.save', function ($args) use ($itemId, $target) {
+			if ($args['type'] == 'trackeritem' && $args['object'] == $itemId) {
+				$utilities = new Services_Tracker_Utilities;
+
+				foreach ($target as $key) {
+					list($type, $id) = explode(':', $key, 2);
+
+					if ($type == 'trackeritem') {
+						$utilities->resaveItem($id);
+					}
+				}
+			}
+		});
 	}
 
 	private function buildFilter()
