@@ -152,19 +152,25 @@ class StoredSearchLib
 					'class' => 'label-default',
 					'indexed' => false,
 				),
-				'moderate' => array(
-					'label' => tr('Moderate'),
-					'description' => tr('Results will be added to your watch-list.'),
-					'class' => 'label-warning',
-					'indexed' => true,
-				),
-				'high' => array(
-					'label' => tr('High'),
-					'description' => tr('You will receive an immediate notification every time a new result arrives.'),
-					'class' => 'label-danger',
-					'indexed' => true,
-				),
 			);
+
+			$index = TikiLib::lib('unifiedsearch')->getIndex();
+			if ($index instanceof Search_Index_QueryRepository) {
+				$list = array_merge($list, array(
+					'moderate' => array(
+						'label' => tr('Moderate'),
+						'description' => tr('Results will be added to your watch-list.'),
+						'class' => 'label-warning',
+						'indexed' => true,
+					),
+					'high' => array(
+						'label' => tr('High'),
+						'description' => tr('You will receive an immediate notification every time a new result arrives.'),
+						'class' => 'label-danger',
+						'indexed' => true,
+					),
+				));
+			}
 		}
 
 		return $list;
