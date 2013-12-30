@@ -25,6 +25,8 @@ class StoredSearchLib
 
 		return $this->table()->fetchAll(array('queryId', 'label', 'priority', 'lastModif'), array(
 			'userId' => $userId,
+		), -1, -1, array(
+			'label' => 'ASC',
 		));
 	}
 
@@ -145,7 +147,7 @@ class StoredSearchLib
 		if (! $list) {
 			$list = array(
 				'manual' => array(
-					'label' => tr('Manual'),
+					'label' => tr('On Demand'),
 					'description' => tr('You can revisit the results of this query on demand.'),
 					'class' => 'label-default',
 					'indexed' => false,
