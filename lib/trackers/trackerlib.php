@@ -3014,7 +3014,7 @@ class TrackerLib extends TikiLib
 		return $this->fields()->fetchOne('fieldId', array('isMain' => 'y', 'trackerId' => $trackerId));
 	}
 
-	public function categorized_item($trackerId, $itemId, $mainfield, $ins_categs, $parent_categs_only = array(), $override_perms = false)
+	public function categorized_item($trackerId, $itemId, $mainfield, $ins_categs, $parent_categs_only = array(), $override_perms = false, $managed_fields = null)
 	{
 		global $prefs;
 
@@ -3024,6 +3024,10 @@ class TrackerLib extends TikiLib
 
 		$definition = Tracker_Definition::get($trackerId);
 		foreach ($definition->getCategorizedFields() as $t) {
+			if ($managed_fields && ! in_array($t, $managed_fields)) {
+				continue;
+			}
+
 			$this->itemFields()->insert(array('itemId' => $itemId, 'fieldId' => $t,	'value' => ''), true);
 
 			$field = $definition->getField($t);
@@ -4671,19 +4675,18 @@ class TrackerLib extends TikiLib
 		$ins_categs = array();
 		$parent_categs_only = array();
 		$tosync = false;
+		$managed_fields = array();
 
 		foreach ($definition->getCategorizedFields() as $fieldId) {
 			if (isset($args['values'][$fieldId])) {
 				$ins_categs = array_merge($ins_categs, array_filter(explode(',', $args['values'][$fieldId])));
-				$field = $definition->getField($fieldId);
-				$options = json_decode($field['options']);
-				$parent_categs_only[] = $options->parentId;
+				$managed_fields[] = $fieldId;
 				$tosync = true;
 			}
 		}
 
 		if ($tosync) {
-			$this->categorized_item($args['trackerId'], $args['object'], "item {$args['object']}", $ins_categs, $parent_categs_only);
+			$this->categorized_item($args['trackerId'], $args['object'], "item {$args['object']}", $ins_categs, null, false, $managed_fields);
 		}
 	}
 
