@@ -9390,7 +9390,7 @@ $lang = array(
 // "If you use preferences option for the signer passphrase, clear the file option just for security" => "If you use preferences option for the signer passphrase, clear the file option just for security",
 // "If you use file for the signer passphrase, clear the preferences option just for security" => "If you use file for the signer passphrase, clear the preferences option just for security",
 // "The email of preference <a href=\"tiki-admin.php?page=general&alt=General\">'sender_email'</a> is used as signer key ID, and it must have both private and public key in the gnupg keyring" => "The email of preference <a href=\"tiki-admin.php?page=general&alt=General\">'sender_email'</a> is used as signer key ID, and it must have both private and public key in the gnupg keyring",
-// "Meta-tags" => "Meta-tags",
+// "Meta tags" => "Meta tags",
 // "SEFURL requires the <strong>URL Rewrite module</strong> for IIS. You do not seem to have this module installed" => "SEFURL requires the <strong>URL Rewrite module</strong> for IIS. You do not seem to have this module installed",
 // "Please see <a href=\"http://doc.tiki.org/Windows+Server+Install\">Windows Server Install</a> on tiki.org for more information" => "Please see <a href=\"http://doc.tiki.org/Windows+Server+Install\">Windows Server Install</a> on tiki.org for more information",
 // "SEFURL will not work unless Tiki specific directives are deployed to the %0 file" => "SEFURL will not work unless Tiki specific directives are deployed to the %0 file",

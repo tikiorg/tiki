@@ -9391,7 +9391,7 @@ $lang = array(
 "If you use preferences option for the signer passphrase, clear the file option just for security" => "서명자 패스문구에 대하여 기본설정 선택사항을 사용하는 경우, 단순히 보안만 위하여 파일 선택사항을 삭제하십시오",
 "If you use file for the signer passphrase, clear the preferences option just for security" => "서명자 패스문구에 대한 파일을 사용하는 경우, 단순히 보안을 위하여 기본설정 선택사항을 삭제하십시오",
 "The email of preference <a href=\"tiki-admin.php?page=general&alt=General\">'sender_email'</a> is used as signer key ID, and it must have both private and public key in the gnupg keyring" => "<a href=\"tiki-admin.php?page=general&alt=General\">'발신자_이메일'</a> 기본설정의 이메일은 서명자 키 ID로써 사용됩니다, 그리고 gnupg keyring 내부에서 개인 및 공용 키 둘 다 보유해야만 합니다",
-"Meta-tags" => "메타-태그",
+"Meta tags" => "메타-태그",
 "SEFURL requires the <strong>URL Rewrite module</strong> for IIS. You do not seem to have this module installed" => "SEFURL 은 IIS 에 대하여 <strong>URL Rewrite 모듈</strong> 을 필요로 합니다. 이 모듈이 설치되지 않은 것으로 보입니다",
 "Please see <a href=\"http://doc.tiki.org/Windows+Server+Install\">Windows Server Install</a> on tiki.org for more information" => "추가 정보는 tiki.org 상에서 <a href=\"http://doc.tiki.org/Windows+Server+Install\">윈도우 서버 설치</a> 를 참고하십시오",
 "SEFURL will not work unless Tiki specific directives are deployed to the %0 file" => "SEFURL 은 티키 특정 지시어가 %0 파일 내부에 배포되어있지 않은 경우 작동하지 않을 것입니다",
