@@ -201,7 +201,9 @@ class FixtureTable implements Iterator
 	}
 
 	function current() {
-		return $this->data[$this->position];
+		return array_map(function ($value) {
+			return str_replace('%%%', "\n", $value);
+		}, $this->data[$this->position]);
 	}
 
 	function key() {
@@ -222,7 +224,7 @@ class FixtureTable implements Iterator
 			$value = "~~$color:$value~~";
 		}
 
-		$this->data[$this->position][$pos] = $value;
+		$this->data[$this->position][$pos] = str_replace("\n", '%%%', $value);
 	}
 }
 
