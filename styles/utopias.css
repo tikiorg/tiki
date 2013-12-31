@@ -111,7 +111,6 @@ select {
 
 fieldset {
 	border: solid .1em #f4f4f4;
-	padding: 1em;
 }
 
 /* Links in buttons */
@@ -517,7 +516,6 @@ form.admin {
 
 form.admin fieldset {
 	border: solid 1px #ccc;
-	margin: 0 0 .5em 0;
 }
 
 /** Tabs **/

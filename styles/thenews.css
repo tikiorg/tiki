@@ -66,10 +66,6 @@ fieldset {
 	border: solid 1px #a9a9a9;
 }
 
-#col2 fieldset {
-	width: 100px;
-}
-
 .button a,
 .button a:visited,
 button,
@@ -119,8 +115,6 @@ form.admin {
 
 form.admin fieldset {
 	border: solid 1px #8cacbb;
-	margin: 0;
-	margin-bottom: 3px;
 }
 
 form.admin legend.heading {

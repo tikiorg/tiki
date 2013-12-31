@@ -427,24 +427,6 @@ h3.panel-title {
 .cbox > .normal {
 	border: none;
 }
-/*
-.normal a.link,
-.normal a,
-th a,
-th a:visited,
-td.heading a,
-td.heading a:visited {
-	color: ;
-}
-
-.admin a.link,
-.admin a,
-.admin label,
-fieldset.admin label,
-.cbox fieldset.admin a {
-	color: ;
-}
-*/
 
 tr.odd td,
 td.odd,

@@ -195,8 +195,6 @@ input[type="submit"]:hover {
 
 fieldset {
 	border: solid 1px #c7d0d9;
-	padding: 10px;
-	margin: 0;
 }
 
 label {
@@ -755,8 +753,6 @@ form.admin {
 
 form.admin fieldset {
 	border: solid 1px #8cacbb;
-	margin: 0;
-	margin-bottom: 3px;
 }
 
 form.admin legend.heading {
