@@ -527,7 +527,7 @@ $("input[name=allowhtml]").change(function() {
 											{else}
 												{tr}There is no available poll template.{/tr}
 												{if $tiki_p_admin_polls ne 'y'}
-													{tr}You should ask an admin to create them.{/tr}
+													{tr}Please ask an administrator to create one.{/tr}
 												{/if}
 											{/if}
 										</div>

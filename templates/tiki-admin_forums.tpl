@@ -472,13 +472,13 @@
 		</div>
 	    <div id="threadconfig" style="display:{if isset($smarty.session.tiki_cookie_jar.show_threadconfig) and $smarty.session.tiki_cookie_jar.show_threadconfig eq 'y'}block{else}none{/if};">
             <div class="form-group">
-                <label class="col-sm-3 control-label" for="approval_type">{tr}Default ordering for threads:{/tr}</label>
+                <label class="col-sm-3 control-label" for="approval_type">{tr}Default ordering of threads:{/tr}</label>
                 <div class="col-sm-9">
 				    {html_options name=threadOrdering options=$threadOrdering_options selected=$threadOrdering}
 				</div>
 			</div>
             <div class="form-group">
-                <label class="col-sm-3 control-label" for="approval_type">{tr}Default style for threads:{/tr}</label>
+                <label class="col-sm-3 control-label" for="approval_type">{tr}Default style of threads:{/tr}</label>
                 <div class="col-sm-9">
 					{html_options name=threadStyle options=$threadStyle_options selected=$threadStyle}
 				</div>
@@ -529,7 +529,7 @@
             </div>
         </div>
         <div class="form-group">
-            <label class="col-sm-3 control-label" for="duplicate_perms">{tr}Duplicate perms{/tr}</label>
+            <label class="col-sm-3 control-label" for="duplicate_perms">{tr}Duplicate permissions{/tr}</label>
             <div class="col-sm-9 checkbox-inline">
                 <input type="checkbox" name="dupPerms" id="duplicate_perms">
             </div>

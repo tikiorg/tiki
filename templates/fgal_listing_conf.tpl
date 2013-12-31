@@ -33,7 +33,7 @@
 		            {if isset($edit_mode) and $edit_mode eq 'y' and $prefs.$pref_name neq 'y'}
                     <span class="help-block">{tr}The checkbox is disabled because this preference is disabled globally.{/tr}</span>
 			            {if $tiki_p_admin eq 'y' or $tiki_p_admin_file_galleries eq 'y'}
-                            <span class="help-block"><a href="tiki-admin.php?page=fgal">{tr}Please, enable the preference globally first.{/tr}</a></span>
+                            <span class="help-block"><a href="tiki-admin.php?page=fgal">{tr}Please enable the preference globally first.{/tr}</a></span>
 			            {else}
                             <span class="help-block">{tr}You can ask your site Admin to enable the preference.{/tr}</span>
 			            {/if}

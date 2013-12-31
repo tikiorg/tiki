@@ -176,8 +176,8 @@
 			</div>
 		{/tab}
 		
-		{tab name="{tr}Time and Memory limits{/tr}"}
-            <h2>{tr}Time and Memory limits{/tr}</h2>
+		{tab name="{tr}Time and memory limits{/tr}"}
+            <h2>{tr}Time and memory limits{/tr}</h2>
 				{preference name=allocate_memory_tracker_export_items}
 				{preference name=allocate_time_tracker_export_items}
 				{preference name="allocate_memory_unified_rebuild"}
