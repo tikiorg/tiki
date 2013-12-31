@@ -41,7 +41,7 @@
 	
 	<span id="saveState">
 		{if $objectperms->edit_sheet}
-			{button _id="save_button" _text="{tr}Save{/tr}" _htmlelement="role_main" _template="tiki-view_sheets.tpl" sheetId="$sheetId" _class="" _title="{tr}Tiki Sheet{/tr} | {tr}Save current spreadsheet{/tr}" _onclick="\$.sheet.saveSheet();return false;"}
+			{button _id="save_button" _text="{tr}Save{/tr}" _htmlelement="role_main" _template="tiki-view_sheets.tpl" sheetId="$sheetId" _class="" _title="{tr}Tiki Sheet{/tr} | {tr}Save current spreadsheet{/tr}" _onclick="\$.sheet.saveSheet(\$.sheet.view);return false;"}
 			{button _id="cancel_button" _text="{tr}Cancel{/tr}" _htmlelement="role_main" _template="tiki-view_sheets.tpl" sheetId="$sheetId" _class="" _title="{tr}Tiki Sheet{/tr} | {tr}Cancel editing current spreadsheet{/tr}"}
 		{/if}
 	</span>

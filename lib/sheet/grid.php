@@ -126,6 +126,7 @@ class TikiSheet
 	 */
 	public $rowCount;
 	public $columnCount;
+	public $metadata;
 
 	/**
 	 * Layout parameters.
@@ -228,12 +229,13 @@ class TikiSheet
 	 * @param $parseValues	String Parse cell values as wiki text if ='y'
 	 * 						when using output handler
 	 */
-	function configureLayout( $className, $headerRow = 0, $footerRow = 0, $parseValues = 'n' )
+	function configureLayout( $className, $headerRow = 0, $footerRow = 0, $parseValues = 'n', $metadata = '' )
 	{
 		$this->cssName = $className;
 		$this->headerRow = $headerRow;
 		$this->footerRow = $footerRow;
 		$this->parseValues = $parseValues;
+		$this->metadata = json_decode($metadata);
 	}
 
 	/** getColumnIndex
@@ -325,9 +327,10 @@ class TikiSheet
 
 	/**
 	 * @param $incsubs boolean Include sub-sheets
+	 * @param $date
      * @return String
 	 */
-	function getTableHtml( $incsubs = true )
+	function getTableHtml( $incsubs = true, $date = null )
 	{
 		global $prefs, $sheetlib;
 
@@ -788,7 +791,6 @@ class TikiSheetDataHandler
     public $maxcols = 26;
     public $output = "";
 	public $cssName;
-
 
 	/** name
 	 * Identifies the handler in a readable form.
@@ -1330,23 +1332,25 @@ class TikiSheetDatabaseHandler extends TikiSheetDataHandler
 	public $readDate;
 	public $rowCount;
 	public $columnCount;
+	public $metadata;
 
 	/** Constructor
 	 * Assigns a sheet ID to the handler.
-	 * @param $id The ID of the sheet in the database.
-	 * @param $db The database link to use.
+	 * @param $id Integer The ID of the sheet in the database.
+	 * @param $date Integer The database link to use.
 	 */
-	function __construct( $id , $date = null )
+	function __construct( $id , $date = null, $metadata = null )
 	{
-		global $tikilib, $sheetlib;
+		global $sheetlib;
 
 		$this->id = $id;
 		$this->readDate = ( $date ? $date : time() );
 
-		$info = $sheetlib->get_sheet_info( $this->id);
+		$info = $sheetlib->get_sheet_info( $this->id );
 
 		$this->type = "sheet";
 		$this->name = $info['title'];
+		$this->metadata= $metadata;
 	}
 
 	// _load
@@ -1381,7 +1385,7 @@ class TikiSheetDatabaseHandler extends TikiSheetDataHandler
 
 		// Fetching the layout informations.
 		$result2 = $tikilib->query( "
-			SELECT `className`, `headerRow`, `footerRow`, `parseValues`
+			SELECT `className`, `headerRow`, `footerRow`, `parseValues`, `metadata`
 			FROM `tiki_sheet_layout`
 			WHERE
 				`sheetId` = ? AND
@@ -1391,7 +1395,7 @@ class TikiSheetDatabaseHandler extends TikiSheetDataHandler
 
 		if ( $row = $result2->fetchRow() )
 		{
-			$sheet->configureLayout( $row['className'], $row['headerRow'], $row['footerRow'], $row['parseValues'] );
+			$sheet->configureLayout( $row['className'], $row['headerRow'], $row['footerRow'], $row['parseValues'], $row['metadata'] );
 		}
 
 		return true;
@@ -1407,7 +1411,7 @@ class TikiSheetDatabaseHandler extends TikiSheetDataHandler
 		global $tikilib, $user, $prefs;
 		// Load the current database state {{{3
 		$current = new TikiSheet;
-		$handler = new TikiSheetDatabaseHandler( $this->id );
+		$handler = new TikiSheetDatabaseHandler( $this->id, null, $this->metadata );
 		$current->import( $handler );
 
 		// Find differences {{{3
@@ -1465,7 +1469,9 @@ class TikiSheetDatabaseHandler extends TikiSheetDataHandler
 				$old[$row['rowIndex'].'-'.$row['columnIndex']]['style'] = $row['style'];
 				$old[$row['rowIndex'].'-'.$row['columnIndex']]['class'] = $row['class'];
 			}
-		}
+
+
+		$tikilib->query( "UPDATE `tiki_sheet_layout` SET `metadata` = ?  WHERE `sheetId` = ?", array($handler->metadata, $handler->id) );}
 
 		$tikilib->query( "UPDATE `tiki_sheet_values` SET `end` = ?  WHERE `sheetId` = ? AND `end` IS NULL AND ( {$conditions}`rowIndex` >= ? OR `columnIndex` >= ? )", $updates );
 
@@ -1852,7 +1858,7 @@ class TikiSheetOutputHandler extends TikiSheetDataHandler
 	}
 
 	// _save
-	function _save( &$sheet )
+	function _save( TikiSheet &$sheet )
 	{
 //		if ( $sheet->headerRow + $sheet->footerRow > $sheet->getRowCount() )
 //			return false;
@@ -1881,10 +1887,9 @@ class TikiSheetOutputHandler extends TikiSheetDataHandler
 		$class = empty( $sheet->cssName ) ? "" : " class='{$sheet->cssName}'";
 		$id = empty( $sheet->id ) ? '' : " data-id='{$sheet->id}'";
 		$title = " title='" . htmlspecialchars($sheet->name(), ENT_QUOTES) . "'";
-		$sub = $sheet->isSubSheet ? ' style="display:none;"' : '';
 		$type = (!empty($sheet->type) ? ' data-type="'.$sheet->type.'" ' : '');
 
-		$this->output = "<table" . $class . $id . $sub . $title . $type . ">\n";
+		$this->output = "<table" . $class . $id . $title . $type . ">\n";
 
 		if ( !is_null( $this->heading ) )
 			$this->output .= "	<caption>{$this->heading}</caption>\n";
@@ -2031,16 +2036,23 @@ class TikiSheetOutputHandler extends TikiSheetDataHandler
 	 * @param $begin The index of the begining row. (included)
 	 * @param $end The index of the end row (excluded)
 	 */
-	function drawCols( &$sheet )
+	function drawCols( TikiSheet &$sheet )
 	{
 		global $sheetlib;
-		$beginCol = $sheet->getRangeBeginCol();
-		$endCol = $sheet->getRangeEndCol();
-		for( $i = $beginCol; $i < $endCol; $i++ )
-		{
-			$style = $sheet->cellInfo[0][$i]['style'];
-			$width = $sheetlib->get_attr_from_css_string($style, "width", "118px");
-			$this->output .= "<col style='width: $width;' width='$width' />\n";
+
+		if (isset($sheet->metadata) && isset($sheet->metadata->widths)) {
+			foreach($sheet->metadata->widths as $width) {
+				$this->output .= "<col style='width:" . ($width * 1) . "px;' />";
+			}
+		} else {
+			$beginCol = $sheet->getRangeBeginCol();
+			$endCol = $sheet->getRangeEndCol();
+			for( $i = $beginCol; $i < $endCol; $i++ )
+			{
+				$style = $sheet->cellInfo[0][$i]['style'];
+				$width = $sheetlib->get_attr_from_css_string($style, "width", "118px");
+				$this->output .= "<col style='width: $width;' width='$width' />\n";
+			}
 		}
 	}
 

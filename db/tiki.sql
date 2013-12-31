@@ -2000,6 +2000,7 @@ CREATE TABLE `tiki_sheet_layout` (
   `className` varchar(64) default NULL,
   `parseValues` char( 1 ) NOT NULL default 'n',
   `clonedSheetId` int(8) NULL,
+  `metadata` longblob default '',
   UNIQUE KEY `sheetId` (`sheetId`, `begin`)
 ) ENGINE=MyISAM;
 

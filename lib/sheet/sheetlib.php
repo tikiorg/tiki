@@ -47,7 +47,7 @@ class SheetLib extends TikiLib
 
 	function get_sheet_layout( $sheetId ) // {{{2
 	{
-		$result = $this->query( "SELECT `className`, `headerRow`, `footerRow`, `parseValues` FROM `tiki_sheet_layout` WHERE `sheetId` = ? AND `end` IS NULL", array( $sheetId ) );
+		$result = $this->query( "SELECT `className`, `headerRow`, `footerRow`, `parseValues`, `metadata` FROM `tiki_sheet_layout` WHERE `sheetId` = ? AND `end` IS NULL", array( $sheetId ) );
 
 		return $result->fetchRow();
 	}
@@ -152,7 +152,9 @@ class SheetLib extends TikiLib
 
 	function remove_related_sheet($childSheetId) {
 		$this->query( " UPDATE `tiki_sheets` SET `parentSheetId` = 0 WHERE `sheetId` = ? ", array( $childSheetId ) );
-		$this->remove_relate("sheet", end($this->get_related_sheet_ids( $childSheetId, true )), $childSheetId);
+		$sheetIds = $this->get_related_sheet_ids( $childSheetId, true );
+		$sheetId = end($sheetIds);
+		$this->remove_relate("sheet", $sheetId, $childSheetId);
 	}
 
 	function update_related_sheets($sheetId, $childSheetIds) {
@@ -334,7 +336,8 @@ class SheetLib extends TikiLib
 			"footerRow" => 1,
 			"className" => '',
 			"parseValues" => 'n',
-			"clonedSheetId" => 0
+			"clonedSheetId" => 0,
+			"metadata" => ''
 		);
 
 		foreach($layoutDefault as $key => $value) {
@@ -343,14 +346,15 @@ class SheetLib extends TikiLib
 			}
 		}
 
-		$this->query( "INSERT INTO `tiki_sheet_layout` (`sheetId`, `begin`, `headerRow`, `footerRow`, `className`, `parseValues`, `clonedSheetId`) VALUES (?, ?, ?, ?, ?, ?, ?)", array(
+		$this->query( "INSERT INTO `tiki_sheet_layout` (`sheetId`, `begin`, `headerRow`, `footerRow`, `className`, `parseValues`, `clonedSheetId`, `metadata`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", array(
 			$sheetId,
 			$layout["begin"],
 			$layout["headerRow"],
 			$layout["footerRow"],
 			$layout["className"],
 			$layout["parseValues"],
-			$layout["clonedSheetId"]
+			$layout["clonedSheetId"],
+			$layout["metadata"]
 		));
 
 		$this->add_related_sheet($parentSheetId, $sheetId);
@@ -561,6 +565,7 @@ class SheetLib extends TikiLib
 							} else {
 								$title = $info['title'] . ' subsheet';
 							}
+
 							$newId = $sheetlib->replace_sheet( 0, $title, '', $user, $sheetId, $layout );
 							$rc .= tra('new') . " (sheetId=$newId) ";
 							$sheet->id = $newId;
@@ -568,7 +573,7 @@ class SheetLib extends TikiLib
 							$res = $grid->import($handler);
 						}
 						if ($sheetId && $res) {
-							$handler = new TikiSheetDatabaseHandler( $sheet->id );
+							$handler = new TikiSheetDatabaseHandler( $sheet->id, null, json_encode($sheet->metadata) );
 							$grid->export($handler);
 							$rc .= $grid->getColumnCount() . ' x ' . $grid->getRowCount() . ' ' . tra('sheet') . " (sheetId=".$sheet->id.")";
 						}
@@ -644,8 +649,6 @@ class SheetLib extends TikiLib
 		function join_with_sub_grids( $id, $date )
 		{
 			global $prefs, $sheetlib;
-			$result1 = "";
-			$result2 = "";
 
 			$handler = new TikiSheetDatabaseHandler($id, $date);
 			$handler->setReadDate($date);
@@ -716,6 +719,9 @@ class SheetLib extends TikiLib
 		$grids1 = join_with_sub_grids($id, $dates[0]);
 		$grids2 = join_with_sub_grids($id, $dates[1]);
 
+		$result1 = '';
+		$result2 = '';
+
 		for ( $i = 0; $i < count_longest($grids1, $grids2); $i++ ) { //cycle through the sheets within a spreadsheet
 			$result1 .= "<table title='".$grids1[$i]->name()."'>";
 			$result2 .= "<table title='".$grids2[$i]->name()."'>";
@@ -725,11 +731,6 @@ class SheetLib extends TikiLib
 				for ( $col = 0; $col < count_longest($grids1[$i]->dataGrid[$row], $grids2[$i]->dataGrid[$row]); $col++ ) { //cycle through columns
 					$diff = new Text_Diff(sanitize_for_diff(html_entity_decode($grids1[$i]->dataGrid[$row][$col])), sanitize_for_diff(html_entity_decode($grids2[$i]->dataGrid[$row][$col])));
 					$changes = $diff->getDiff();
-
-					//print_r($changes);
-
-					$class = array('','');
-					$values = array('','');
 
 					//I left this diff switch, but it really isn't being used as of now, in the future we may though.
 					switch ( get_class($changes[0]) ) {
