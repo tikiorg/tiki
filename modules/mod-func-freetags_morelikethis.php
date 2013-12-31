@@ -18,7 +18,7 @@ function module_freetags_morelikethis_info()
 {
 	return array(
 		'name' => tra('Similar-Tag Items'),
-		'description' => tra('Shows content with multiple freetags in common.'),
+		'description' => tra('Shows content with multiple tags in common.'),
 		'prefs' => array('feature_freetags'),
 		'params' => array(
 			'type' => array(

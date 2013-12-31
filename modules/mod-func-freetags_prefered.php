@@ -18,7 +18,7 @@ function module_freetags_prefered_info()
 {
 	return array(
 		'name' => tra('My Preferred Tags'),
-		'description' => tra('Displays to registered users the freetags they prefer, based on the number of objects they added the tag to. More preference is indicated by a larger font.'),
+		'description' => tra('Displays to registered users the tags they prefer, based on the number of objects they tagged. Greater preference is indicated by a larger text size.'),
 		'prefs' => array('feature_freetags'),
 		'params' => array(),
 		'common_params' => array('rows')
