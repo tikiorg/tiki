@@ -68,6 +68,11 @@ function wp_fixture_tracker_math($data, $params)
 		return '__' . tr('Tracker not found.') . '__';
 	}
 
+	$smarty = TikiLib::lib('smarty');
+	$smarty->loadPlugin('smarty_modifier_sefurl');
+	$url = smarty_modifier_sefurl($trackerId, 'tracker');
+	$table->setTitle(tr('Tracker Math for [%0|%1]', $url, $tracker->getConfiguration('name')));
+
 	$factory = new Tracker_Field_Factory($tracker);
 
 	$checks = array();
@@ -112,11 +117,17 @@ function wp_fixture_tracker_data($data, $params, $mock)
 	$table = new FixtureTable($data);
 	$headings = $table->getHeadings();
 
-	$tracker = Tracker_Definition::get($params->trackerId->int());
+	$trackerId = $params->trackerId->int();
+	$tracker = Tracker_Definition::get($trackerId);
 
 	if (! $tracker) {
 		return '__' . tr('Tracker not found.') . '__';
 	}
+
+	$smarty = TikiLib::lib('smarty');
+	$smarty->loadPlugin('smarty_modifier_sefurl');
+	$url = smarty_modifier_sefurl($trackerId, 'tracker');
+	$table->setTitle(tr('Tracker Data for [%0|%1]', $url, $tracker->getConfiguration('name')));
 
 	if (! in_array('itemId', $headings)) {
 		return '__' . tr('Table must contain at least one field named itemId') . '__';
@@ -141,6 +152,7 @@ function wp_fixture_tracker_data($data, $params, $mock)
 
 class FixtureTable implements Iterator
 {
+	private $title;
 	private $headings = array();
 	private $data = array();
 	private $position = 0;
@@ -166,6 +178,9 @@ class FixtureTable implements Iterator
 			return "__{$entry}__";
 		}, $this->headings));
 
+		if ($this->title) {
+			array_unshift($lines, array($this->title));
+		}
 		return "||" . implode("\n", array_map(function ($line) {
 			return implode(' | ', $line);
 		}, $lines)) . "||";
@@ -174,6 +189,11 @@ class FixtureTable implements Iterator
 	function getHeadings()
 	{
 		return $this->headings;
+	}
+
+	function setTitle($title)
+	{
+		$this->title = $title;
 	}
 
 	function rewind() {
