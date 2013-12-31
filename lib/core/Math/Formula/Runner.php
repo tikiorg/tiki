@@ -147,5 +147,10 @@ class Math_Formula_Runner
 			}
 		};
 	}
+
+	function mockFunction($functionName, $function)
+	{
+		$this->known[$functionName] = $function;
+	}
 }
 

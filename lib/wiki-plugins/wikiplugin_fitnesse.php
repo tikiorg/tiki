@@ -25,8 +25,15 @@ function wikiplugin_fitnesse_info()
 
 function wikiplugin_fitnesse($data, $params)
 {
+	$runner = Tracker_Field_Math::getRunner();
+	$mock = new FixtureMockTrackerField;
+	$runner->mockFunction('tracker-field', $mock);
+
 	$fixtures = array(
 		'trackermath' => 'wp_fixture_tracker_math',
+		'trackerdata' => function ($data, $params) use ($mock) {
+			return wp_fixture_tracker_data($data, $params, $mock);
+		},
 	);
 
 	$matches = WikiParser_PluginMatcher::match($data);
@@ -48,6 +55,7 @@ function wikiplugin_fitnesse($data, $params)
 		}
 	}
 
+	Tracker_Field_Math::resetRunner();
 	return $matches->getText();
 }
 
@@ -94,6 +102,38 @@ function wp_fixture_tracker_math($data, $params)
 				$table->setValue($key, tr("%0 (expect: %1)", $out, $row[$key]), 'red');
 			}
 		}
+	}
+
+	return $table;
+}
+
+function wp_fixture_tracker_data($data, $params, $mock)
+{
+	$table = new FixtureTable($data);
+	$headings = $table->getHeadings();
+
+	$tracker = Tracker_Definition::get($params->trackerId->int());
+
+	if (! $tracker) {
+		return '__' . tr('Tracker not found.') . '__';
+	}
+
+	if (! in_array('itemId', $headings)) {
+		return '__' . tr('Table must contain at least one field named itemId') . '__';
+	}
+
+	foreach ($headings as $permName) {
+		if ($permName != 'itemId' && ! $field = $tracker->getFieldFromPermName($permName)) {
+			return '__' . tr('Tracker Field not found: %0', $permName) . '__';
+		}
+	}
+
+	foreach ($table as $row) {
+		$fields = array_combine($headings, $row);
+		$itemId = $fields['itemId'];
+		unset($fields['itemId']);
+
+		$mock->addValues($itemId, $fields);
 	}
 
 	return $table;
@@ -166,4 +206,26 @@ class FixtureTable implements Iterator
 	}
 }
 
-ini_set('display_errors', 1);
+class FixtureMockTrackerField extends Tiki_Formula_Function_TrackerField
+{
+	private $data = array();
+
+	function fetchValue($object, $field, $default)
+	{
+		if (isset($this->data[$object][$field])) {
+			return $this->data[$object][$field];
+		} else {
+			return $default;
+		}
+	}
+
+	function addValues($id, array $data)
+	{
+		if (! isset($this->data[$id])) {
+			$this->data[$id] = $data;
+		} else {
+			$this->data[$id] = array_merge($this->data[$id], $data);
+		}
+	}
+}
+
