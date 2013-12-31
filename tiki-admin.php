@@ -460,7 +460,7 @@ $icons = array(
 		'position' => '-300px -415px;',
 		'title' => tr('Tags'),
 		'disabled' => $prefs['feature_freetags'] != 'y',
-		'description' => tr('Settings and features for freetags'),
+		'description' => tr('Settings and features for tags'),
 		'help' => 'Tags',
 	),
 	"faqs" => array(

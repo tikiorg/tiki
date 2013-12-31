@@ -137,7 +137,7 @@
                 <label for="blogs-post-related">{tr}Show post related content{/tr}
                     <input type="checkbox" name="show_related" id="blogs-post-related" {if $show_related eq 'y'}checked='checked'{/if} {if $prefs.feature_freetags ne 'y'}disabled="disabled"{/if}>
   		            {if $prefs.feature_freetags neq 'y'}
-		  	            <em>{tr}The checkbox is disabled because feature_freetags is disabled globally.{/tr}</em>
+		  	            <em>{tr}The checkbox is disabled because the tags feature is disabled globally.{/tr}</em>
 	    	        {/if}
                 </label>
             </div>
