@@ -278,7 +278,7 @@ function smarty_function_object_link_freetag( $smarty, $tag, $title = null )
 {
 	global $prefs;
 	if ($prefs['feature_freetags'] != 'y') {
-		return tr('freetags disabled');
+		return tr('tags disabled');
 	}
 
 	if (is_numeric($tag)) {

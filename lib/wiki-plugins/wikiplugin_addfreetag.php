@@ -8,8 +8,8 @@
 function wikiplugin_addfreetag_info()
 {
 	return array(
-		'name' => tra('Add Freetag'),
-		'description' => tra('Add a single freetag to specified object'),
+		'name' => tra('Add Tag'),
+		'description' => tra('Add a single tag to specified object'),
 		'format' => 'html',
 		'prefs' => array('feature_freetags', 'wikiplugin_addfreetag'),
 		'introduced' => 8,

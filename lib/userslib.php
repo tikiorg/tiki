@@ -3763,7 +3763,7 @@ class UsersLib extends TikiLib
 			),
 			array(
 				'name' => 'tiki_p_view_freetags',
-				'description' => tra('Can browse freetags'),
+				'description' => tra('Can browse tags'),
 				'level' => 'basic',
 				'type' => 'freetags',
 				'admin' => false,
@@ -3772,7 +3772,7 @@ class UsersLib extends TikiLib
 			),
 			array(
 				'name' => 'tiki_p_admin_freetags',
-				'description' => tra('Can admin freetags'),
+				'description' => tra('Can admin tags'),
 				'level' => 'admin',
 				'type' => 'freetags',
 				'admin' => true,

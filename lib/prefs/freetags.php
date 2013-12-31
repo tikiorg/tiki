@@ -34,13 +34,13 @@ function prefs_freetags_list()
 			'default' => '100',
 		),
 		'freetags_show_middle' => array(
-			'name' => tra('Show freetags in middle column'),
+			'name' => tra('Show tags in middle column'),
             'description' => tra(''),
 			'type' => 'flag',
 			'default' => 'y',
 		),
 		'freetags_preload_random_search' => array(
-			'name' => tra('Preload freetag random tag'),
+			'name' => tra('Preload random tag'),
             'description' => tra(''),
 			'type' => 'flag',
 			'default' => 'y',
@@ -67,7 +67,7 @@ function prefs_freetags_list()
 			'default' => 'y',
 		),
 		'freetags_feature_3d' => array(
-			'name' => tra('Enable freetags 3D browser'),
+			'name' => tra('Enable 3D tags browser'),
             'description' => tra(''),
 			'type' => 'flag',
 			'default' => 'n',

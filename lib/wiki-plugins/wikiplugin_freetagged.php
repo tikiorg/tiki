@@ -8,7 +8,7 @@
 function wikiplugin_freetagged_info()
 {
 	return array(
-		'name' => tra('Freetagged'),
+		'name' => tra('Tagged'),
 		'documentation' => 'PluginFreetagged',
 		'description' => tra('List similarly tagged objects'),
 		'prefs' => array('feature_freetags','wikiplugin_freetagged'),

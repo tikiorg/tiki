@@ -18,7 +18,7 @@ class Tracker_Field_Freetags extends Tracker_Field_Abstract implements Tracker_F
 		return array(
 			'F' => array(
 				'name' => tr('Freetags'),
-				'description' => tr('Allows freetags to be shown or added for tracker items.'),
+				'description' => tr('Allows tags to be shown or added for tracker items.'),
 				'prefs' => array('trackerfield_freetags', 'feature_freetags'),
 				'tags' => array('advanced'),
 				'default' => 'y',
@@ -42,7 +42,7 @@ class Tracker_Field_Freetags extends Tracker_Field_Abstract implements Tracker_F
 					),
 					'hidesuggest' => array(
 						'name' => tr('Suggest'),
-						'description' => tr('Hide or show the freetag suggestions'),
+						'description' => tr('Hide or show the tag suggestions'),
 						'default' => '',
 						'filter' => 'alpha',
 						'options' => array(

@@ -141,8 +141,8 @@ function prefs_watershed_list()
 			'profile_reference' => 'tracker_field',
 		),
 		'watershed_archive_tags_fieldId' => array(
-			'name' => tra('Field ID of Tags for Archive (freetags field type)'),
-			'description' => tra('The Archive tracker could have a freetags field for storing the tags of the recording'),
+			'name' => tra('Field ID of Tags for Archive (tags field type)'),
+			'description' => tra('The Archive tracker could have a tags field for storing the tags of the recording'),
 			'type' => 'text',
 			'size' => '3',
 			'filter' => 'digits',

@@ -628,8 +628,8 @@ function prefs_wiki_list($partial = false)
 			'default' => 'n',
 		),
 		'wiki_freetags_edit_position' => array(
-			'name' => tra('Choose position of freetags selection'),
-			'description' => tra('If you wish to place freetags selection more prominently than in the properties tab.'),
+			'name' => tra('Choose position of tags selection'),
+			'description' => tra('If you wish to place tags selection more prominently than in the properties tab.'),
 			'type' => 'list',
 			'options' => array(
 				'properties' => tra('Properties tab'),
