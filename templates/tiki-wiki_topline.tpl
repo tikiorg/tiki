@@ -20,7 +20,7 @@
 
 			{if !isset($versioned)}
 				{if $print_page ne 'y'}
-					<div class="wikiactions" style="float: right; padding-left:10px; white-space: nowrap">
+					<div class="wikiactions" style="float: right; padding-left:10px;">
 						<div class="icons" style="float: left;">
 							{if $pdf_export eq 'y'}
 								<a class="btn btn-default" href="tiki-print.php?{query display="pdf" page=$page}" title="{tr}PDF{/tr}">{icon _id='page_white_acrobat' alt="{tr}PDF{/tr}"}</a>
