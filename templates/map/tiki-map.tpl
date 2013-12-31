@@ -8,7 +8,7 @@
 <script src="lib/map/map.js"></script>
 {$xajax_javascript}
 
-<h1>{$pagelink}</h1>
+<h1 class="pagetitle">{$pagelink}</h1>
 <div align="center">
   <form name="frmmap" id="frmmap" action="tiki-map.php" method="get">
    <input type="hidden" name="mapfile" value="{$mapfile}">

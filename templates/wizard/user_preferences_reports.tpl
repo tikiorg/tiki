@@ -1,6 +1,6 @@
 {* $Id$ *}
 
-<h1>{tr}User Watches{/tr}: {tr}Report Preferences{/tr}</h1>
+<h1 class="pagetitle">{tr}User Watches{/tr}: {tr}Report Preferences{/tr}</h1>
 <div class="userWizardIconleft"><img src="img/icons/large/user.png" alt="{tr}Report Preferences{/tr}" /></div>
 {tr}Use "watches" to monitor wiki pages or other objects.{/tr} {tr}Watch new items by clicking the {icon _id=eye} button on specific pages.{/tr}<br/> 
 {tr}Use reports to summarise notifications about objects you are watching{/tr}.<br/><br/>

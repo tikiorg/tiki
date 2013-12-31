@@ -1,6 +1,6 @@
 {* $Id$ *}
 
-<h1><a href="tiki-invited.php" class="pagetitle">{tr}Invitation{/tr}</a></h1>
+<h1 class="pagetitle"><a href="tiki-invited.php">{tr}Invitation{/tr}</a></h1>
 
 {if $error}
  {$error|escape}

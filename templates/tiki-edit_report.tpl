@@ -1,3 +1,4 @@
+{title admpage="reports" help="Reports"}{tr}Reports{/tr}{/title}
 <style>
 	#reports .reportOptionLabel {
 		font-weight: bold;

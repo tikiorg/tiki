@@ -1,4 +1,4 @@
-<h1>{tr}Your OpenID identity is valid{/tr}</h1>
+<h1 class="pagetitle">{tr}Your OpenID identity is valid{/tr}</h1>
 <p>
 	{tr}Your identity gives you access to multiple user accounts.{/tr}
 </p>

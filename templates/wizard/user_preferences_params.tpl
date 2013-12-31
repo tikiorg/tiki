@@ -1,6 +1,6 @@
 {* $Id$ *}
 
-<h1>{tr}User Preferences{/tr}: {tr}Settings{/tr}</h1>
+<h1 class="pagetitle">{tr}User Preferences{/tr}: {tr}Settings{/tr}</h1>
 <div class="userWizardIconleft"><img src="img/icons/large/user.png" alt="{tr}User Dummy{/tr} 3" /></div>
 {tr}Set up your general settings for your account{/tr}.<br/><br/><br/>
 <div class="userWizardContent">

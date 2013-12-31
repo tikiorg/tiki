@@ -30,7 +30,7 @@
 
 {if $install_step eq '0' or !$install_step}
 {* start of installation *}
-<h1>{tr}Welcome{/tr}</h1>
+<h1 class="pagetitle">{tr}Welcome{/tr}</h1>
 <div class="clearfix">
 	<p>{tr}Welcome to the Tiki installation and upgrade script.{/tr} {tr}Use this script to install a new Tiki database or upgrade your existing database to release{/tr} <strong>{$tiki_version_name}</strong></p>
 	<ul>
@@ -61,7 +61,7 @@
 </div>
 
 {elseif $install_step eq '1'}
-<h1>{tr}Read the License{/tr}</h1>
+<h1 class="pagetitle">{tr}Read the License{/tr}</h1>
 <p>{tr}Tiki is software distributed under the LGPL license.{/tr} </p>
 <div align="center" style="margin-top:1em;">
 <iframe src="license.txt" width="700" height="300" style="width:700px;height:300px"> </iframe>
@@ -74,7 +74,7 @@
 </div>
 
 {elseif $install_step eq '2'}
-<h1>{tr}Review the System Requirements{/tr}</h1>
+<h1 class="pagetitle">{tr}Review the System Requirements{/tr}</h1>
 <div style="float:left;width:60px"><img src="img/webmail/compose.gif" alt="{tr}Review{/tr}"></div>
 <div class="clearfix">
 	<p>{tr}Before installing Tiki, <a href="http://doc.tiki.org/Requirements" target="_blank">review the documentation</a> and confirm that your system meets the minimum requirements.{/tr}</p>
@@ -175,7 +175,7 @@
 
 {elseif $install_step eq '3' or ($dbcon eq 'n' or $resetdb eq 'y')}
 {* we do not have a valid db connection or db reset is requested *}
-<h1>{tr}Set the Database Connection{/tr}</h1>
+<h1 class="pagetitle">{tr}Set the Database Connection{/tr}</h1>
 <div style="float:left; width:60px"><img src="img/icons/large/stock_line-in48x48.png" alt="{tr}Database{/tr}"></div>
 <div class="clearfix">
 	<p>{tr}Tiki requires an active database connection.{/tr} {tr}You must create the database and user <em>before</em> completing this page.{/tr}</p>
@@ -292,7 +292,7 @@
 </div>
 
 {elseif $install_step eq '4'}
-<h1>{if $tikidb_created}{tr}Install &amp; Upgrade{/tr}{else}{tr}Install{/tr}{/if}</h1>
+<h1 class="pagetitle">{if $tikidb_created}{tr}Install &amp; Upgrade{/tr}{else}{tr}Install{/tr}{/if}</h1>
 {if $max_exec_set_failed eq 'y'}
 {remarksbox type="warning" title="{tr}Warning{/tr}"}
 {tr}Failed to set max_execution_time for PHP. You may experience problems when creating/upgrading the database using this installer on a slow system. This can manifest itself by a blank page.{/tr}
@@ -411,7 +411,7 @@
 </div>
 
 {elseif $install_step eq '5' or ($dbdone ne 'n')}
-<h1>{if isset($smarty.post.update)}{tr}Review the Upgrade{/tr}{else}{tr}Review the Installation{/tr}{/if}</h1>
+<h1 class="pagetitle">{if isset($smarty.post.update)}{tr}Review the Upgrade{/tr}{else}{tr}Review the Installation{/tr}{/if}</h1>
 		<div style="background: #c2eef8; border: 2px solid #2098cd; color:#000; padding: 4px;">
 		<p style="text-align:center; font-size: large;">{if isset($smarty.post.update)}{tr}Upgrade complete{/tr}{else}{tr}Installation complete{/tr}{/if}.</p>
 		<p>{tr}Your database has been configured and Tiki is ready to run!{/tr} 
@@ -609,7 +609,7 @@
 </form>
 
 {elseif $install_step eq '7'}
-<h1>{tr}Enter Your Tiki{/tr}</h1>
+<h1 class="pagetitle">{tr}Enter Your Tiki{/tr}</h1>
 <div style="float:left; width:60px"><img src="img/icons/large/stock_quit48x48.png" alt="{tr}Log in{/tr}"></div>
 <div class="clearfix">
 	<p>{tr}The installation is complete!{/tr} {tr}Your database has been configured and Tiki is ready to run.{/tr} </p>
