@@ -82,7 +82,8 @@ function wp_fixture_tracker_math($data, $params)
 	}
 
 	foreach ($table as $row) {
-		$variables = array_combine($headings, $row);
+		$variableNames = array_map('rtrim', $headings, array_fill(0, count($headings), '?'));
+		$variables = array_combine($variableNames, $row);
 
 		foreach ($checks as $key => $field) {
 			$out = $field->handleFinalSave($variables);
