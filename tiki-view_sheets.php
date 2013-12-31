@@ -213,10 +213,11 @@ if (!empty($_REQUEST['parse']) && $_REQUEST['parse'] == 'edit') {
 
 $headerlib->add_jq_onready(
 	'$.sheet.tikiOptions = $.extend($.sheet.tikiOptions, {
-					menu: $("#sheetMenu").clone().html()
+					menuLeft: $("#sheetMenu").clone().html()
 				});
 
 				jST = $("div.tiki_sheet")
+				    .height(window.innerHeight * 0.8)
 					.sheet($.sheet.tikiOptions);
 
 				jST.id = "'.$_REQUEST['sheetId'].'";

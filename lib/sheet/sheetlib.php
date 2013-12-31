@@ -369,21 +369,30 @@ class SheetLib extends TikiLib
 	{
 		global $headerlib;
 		if (!$this->setup_jQuery_sheet_files) {
-			$headerlib->add_cssfile( 'vendor/jquery/jquery-sheet/jquery.sheet.css' );
-			$headerlib->add_jsfile( 'vendor/jquery/jquery-sheet/jquery.sheet.js' );
-			$headerlib->add_jsfile( 'vendor/jquery/jquery-sheet/jquery.sheet.advancedfn.js' );
-			$headerlib->add_jsfile( 'vendor/jquery/jquery-sheet/jquery.sheet.financefn.js' );
-			$headerlib->add_jsfile( 'vendor/jquery/jquery-sheet/parser.js' );
-			$headerlib->add_jsfile( 'lib/sheet/grid.js' );
+			$headerlib
+                //core
+                ->add_cssfile( 'vendor/jquery/jquery-sheet/jquery.sheet.css' )
+                ->add_jsfile( 'vendor/jquery/jquery-sheet/jquery.sheet.js' )
 
-			//json support
-			//Should not be necessary because it's loaded by tiki-setup.php
-			//$headerlib->add_jsfile('lib/jquery/plugins/json/jquery.json-2.4.js');
+                //parsers
+                ->add_jsfile( 'vendor/jquery/jquery-sheet/parser/formula/formula.js' )
+                ->add_jsfile( 'vendor/jquery/jquery-sheet/parser/tsv/tsv.js' )
 
-			// plugins
-			$headerlib->add_jsfile( 'vendor/jquery/jquery-sheet/plugins/jquery.scrollTo-min.js' );
-			$headerlib->add_jsfile( 'vendor/jquery/jquery-sheet/plugins/raphael-min.js', 'external' );
-			$headerlib->add_jsfile( 'vendor/jquery/jquery-sheet/plugins/g.raphael-min.js', 'external' );
+                //tiki integration
+                ->add_jsfile( 'lib/sheet/grid.js' )
+
+			    // plugins
+                ->add_jsfile( 'vendor/jquery/jquery-sheet/plugins/jquery.sheet.dts.js' )
+                ->add_jsfile( 'vendor/jquery/jquery-sheet/plugins/jquery.sheet.advancedfn.js' )
+                ->add_jsfile( 'vendor/jquery/jquery-sheet/plugins/jquery.sheet.financefn.js' )
+
+                ->add_jsfile( 'vendor/jquery/jquery-sheet/plugins/globalize.js' )
+                ->add_jsfile( 'vendor/jquery/jquery-sheet/plugins/globalize.cultures.js' )
+
+                ->add_jsfile( 'vendor/jquery/jquery-sheet/plugins/jquery.nearest.min.js', 'external' )
+                ->add_jsfile( 'vendor/jquery/jquery-sheet/plugins/raphael-min.js', 'external' )
+                ->add_jsfile( 'vendor/jquery/jquery-sheet/plugins/g.raphael-min.js', 'external' );
+
 			$this->setup_jQuery_sheet_files = true;
 		}
 	}
@@ -542,29 +551,29 @@ class SheetLib extends TikiLib
 					// Save the changes
 					$rc .= strlen($rc) === 0 ? '' : ', ';
 
-					if ($sheet->metadata->sheetId != $sheetId)
-						$sheetIds[] = $sheet->metadata->sheetId;
+					if ($sheet->id != $sheetId)
+						$sheetIds[] = $sheet->id;
 
 					if ($res) {
-						if (!$sheet->metadata->sheetId) {
-							if (!empty($sheet->metadata->title)) {
-								$title = $sheet->metadata->title;
+						if (!$sheet->id) {
+							if (!empty($sheet->title)) {
+								$title = $sheet->title;
 							} else {
 								$title = $info['title'] . ' subsheet';
 							}
 							$newId = $sheetlib->replace_sheet( 0, $title, '', $user, $sheetId, $layout );
 							$rc .= tra('new') . " (sheetId=$newId) ";
-							$sheet->metadata->sheetId = $newId;
-							$handler = new TikiSheetHTMLTableHandler($sheet);
+							$sheet->id = $newId;
+							$handler = new TikiSheetHTMLTableHandler( $sheet );
 							$res = $grid->import($handler);
 						}
 						if ($sheetId && $res) {
-							$handler = new TikiSheetDatabaseHandler( $sheet->metadata->sheetId );
+							$handler = new TikiSheetDatabaseHandler( $sheet->id );
 							$grid->export($handler);
-							$rc .= $grid->getColumnCount() . ' x ' . $grid->getRowCount() . ' ' . tra('sheet') . " (sheetId=".$sheet->metadata->sheetId.")";
+							$rc .= $grid->getColumnCount() . ' x ' . $grid->getRowCount() . ' ' . tra('sheet') . " (sheetId=".$sheet->id.")";
 						}
-						if (!empty($sheet->metadata->title)) {
-							$sheetlib->set_sheet_title($sheet->metadata->sheetId, $sheet->metadata->title);
+						if (!empty($sheet->title)) {
+							$sheetlib->set_sheet_title($sheet->id, $sheet->title);
 						}
 					}
 				}

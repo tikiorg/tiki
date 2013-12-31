@@ -274,9 +274,9 @@
 			"type": "package",
 			"package": {
 				"name": "jquery/jquery-sheet",
-				"version": "3.0",
+				"version": "3.1-rc-5",
 				"dist": {
-					"url": "http://jquerysheet.googlecode.com/files/jquery.sheet-3.0.zip",
+					"url": "https://github.com/Spreadsheets/jQuery.sheet/archive/3.1-rc-5.zip",
 					"type": "zip"
 				}
 			}
@@ -910,7 +910,7 @@
 		"jquery/jquery": "*",
 		"jquery/jquery-min": "*",
 		"jquery/jquery-s5": "dev-master",
-		"jquery/jquery-sheet": "3.0",
+		"jquery/jquery-sheet": "3.1",
 		"jquery/jquery-ui": "*",
 		"jquery/jquery-mobile": "*",
 		"jquery/jquery-ui-themes": "*",

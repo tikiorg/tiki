@@ -338,12 +338,10 @@
         },
         {
             "name": "jquery/jquery-sheet",
-            "version": "2.0.1",
+            "version": "3.1",
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/jquery-jquery-sheet-2.0.1.zip",
-                "reference": "2.0.1",
-                "shasum": "c74cdaf7e96137ef248967f3455f077ac4210941"
+                "url": "https://github.com/Spreadsheets/jQuery.sheet/archive/3.1-rc-5.zip"
             },
             "type": "library"
         },
