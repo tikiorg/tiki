@@ -13,6 +13,8 @@
  */
 class Tracker_Field_Math extends Tracker_Field_Abstract implements Tracker_Field_Synchronizable, Tracker_Field_Indexable
 {
+	private static $runner;
+
 	public static function getTypes()
 	{
 		return array(
@@ -96,12 +98,7 @@ class Tracker_Field_Math extends Tracker_Field_Abstract implements Tracker_Field
 	function handleFinalSave(array $data)
 	{
 		try {
-			$runner = new Math_Formula_Runner(
-				array(
-					'Math_Formula_Function_' => '',
-					'Tiki_Formula_Function_' => '',
-				)
-			);
+			$runner = self::getRunner();
 
 			$runner->setFormula($this->getOption('calculation'));
 			$runner->setVariables($data);
@@ -110,6 +107,25 @@ class Tracker_Field_Math extends Tracker_Field_Abstract implements Tracker_Field
 		} catch (Math_Formula_Exception $e) {
 			return $e->getMessage();
 		}
+	}
+
+	public static function getRunner()
+	{
+		if (! self::$runner) {
+			self::$runner = new Math_Formula_Runner(
+				array(
+					'Math_Formula_Function_' => '',
+					'Tiki_Formula_Function_' => '',
+				)
+			);
+		}
+
+		return self::$runner;
+	}
+
+	public static function resetRunner()
+	{
+		self::$runner = null;
 	}
 }
 
