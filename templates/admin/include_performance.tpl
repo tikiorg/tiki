@@ -146,8 +146,8 @@
 			{preference name=wikiplugin_snarf_cache}
 		{/tab}
 
-		{tab name="{tr}Major slow down{/tr}"}
-            <h2>{tr}Major slow down{/tr}</h2>
+		{tab name="{tr}Major slowdown{/tr}"}
+            <h2>{tr}MMajor slowdown/tr}</h2>
 			{remarksbox type="note" title="{tr}Major slow down{/tr}"}{tr}These are reported to slow down Tiki. If you have a high-volume site, you may want to deactivate them{/tr}
 			{/remarksbox}
 			{preference name=wikiplugin_sharethis}

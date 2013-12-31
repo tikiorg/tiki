@@ -9244,7 +9244,7 @@ $lang = array(
 "Clear all APC caches" => "Neteja totes les memòries Cau d'APC",
 "Clear Caches" => "Neteja les memòries Cau",
 "Bytecode cache is not used. Using a bytecode cache (APC, XCache, WinCache) is highly recommended for production environments" => "No s'utilitza memòria cau bytecode. L'ús d'un cau de bytecode (APC, XCache, WinCache) és molt recomanable per a entorns de producció",
-"Major slow down" => "Major a poc a poc",
+"Major slowdown" => "Major a poc a poc",
 "These are reported to slow down Tiki. If you have a high-volume site, you may want to deactivate them" => "Aquests solen disminuir la velocitat de Tiki. Si tens un lloc de gran volum, és possible que vulguis desactivar-los",
 "Many search options impact performance. Please see <a href=\"tiki-admin.php?page=search\">Search admin panel</a>" => "Molts opcions de cerca tenen un impacte en el rendiment. Si us plau, consulta el <a href=\"tiki-admin.php?page=search\">panell d'administració de Cerca</a>",
 "Time and Memory limits" => "Límits de temps i de memòria",

@@ -9246,7 +9246,7 @@ $lang = array(
 // "Clear all APC caches" => "Clear all APC caches",
 // "Clear Caches" => "Clear Caches",
 // "Bytecode cache is not used. Using a bytecode cache (APC, XCache, WinCache) is highly recommended for production environments" => "Bytecode cache is not used. Using a bytecode cache (APC, XCache, WinCache) is highly recommended for production environments",
-"Major slow down" => "Besondere Verlangsamer",
+"Major slowdown" => "Besondere Verlangsamer",
 "These are reported to slow down Tiki. If you have a high-volume site, you may want to deactivate them" => "Von diesen Funktionen wird berichtet, dass sie Tiki verlangsamen können. Wenn Du eine Site mit hohem Datenvolumen hast, solltest Du diese Funktionen ggf. deaktivieren",
 "Many search options impact performance. Please see <a href=\"tiki-admin.php?page=search\">Search admin panel</a>." => "Viele Suchoptionen haben einen negativen Einfluss auf die Performance. Siehe hierzu <a href=\"tiki-admin.php?page=search\">Suchoptionen</a>.",
 // "Time and Memory limits" => "Time and Memory limits",
