@@ -186,6 +186,9 @@ if (!empty($page_ref_id)) {
 $page = $_REQUEST['page'];
 $smarty->assign_by_ref('page', $page);
 
+$cat_type = 'wiki page';
+$cat_objid = $page;
+
 // Inline Ckeditor editor
 if ($prefs['wysiwyg_inline_editing'] == 'y' && $page &&
 		(	($tikilib->user_has_perm_on_object($user, $_REQUEST['page'], 'wiki page', 'edit')) ||
@@ -525,8 +528,6 @@ if (isset($_REQUEST['refresh'])) {
 	$tikilib->invalidate_cache($page);
 }
 
-$cat_type = 'wiki page';
-$cat_objid = $page;
 include_once('tiki-section_options.php');
 
 if ( isset($_REQUEST['pagenum']) && $_REQUEST['pagenum'] > 0 ) {
