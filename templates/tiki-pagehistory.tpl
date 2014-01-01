@@ -101,7 +101,7 @@
 		<div style="text-align:center;">
 			{if ($prefs.default_wiki_diff_style ne "old") and $history}
 				<div style=" text-align:right;">
-					{if $prefs.javascript_enabled eq "y"}{button _text="{tr}Advanced{/tr}" _id="toggle_diffs" _ajax="n"}
+					{if $prefs.javascript_enabled eq "y"}{button _text="{tr}Advanced{/tr}" _id="toggle_diffs" _ajax="n" _class="btn btn-default btn-sm"}
 					{jq}
 $("#toggle_diffs a").click(function(){
 	if ($(this).text() == "{tr}Advanced{/tr}") {
@@ -168,7 +168,7 @@ if (jqueryTiki.chosen) {
             <div class="table-responsive">
 			<table class="table">
 				<tr>
-					{if $tiki_p_remove eq 'y'}<th><input type="submit" class="btn btn-warning btn-sm" name="delete" value="{tr}Del{/tr}"></th>{/if}
+					{if $tiki_p_remove eq 'y'}<th><input type="submit" class="btn btn-warning btn-sm" name="delete" value="{tr}Delete{/tr}"></th>{/if}
 					<th>{tr}Information{/tr}</th>
 					{if $prefs.feature_contribution eq 'y'}<th>{tr}Contribution{/tr}</th>{/if}
 					{if $prefs.feature_contribution eq 'y' and $prefs.feature_contributor_wiki eq 'y'}<th>{tr}Contributors{/tr}</th>{/if}
@@ -335,9 +335,9 @@ if (jqueryTiki.chosen) {
 						<input type="submit" class="btn btn-default btn-sm" name="update_translation" value="{tr}Update Translation{/tr}"/>
 						{if $show_translation_history}
 							<input type="hidden" name="show_translation_history" value="1">
-							{button show_translation_history=0 _text="{tr}Hide translation history{/tr}" _auto_args="*"}
+							{button show_translation_history=0 _text="{tr}Hide translation history{/tr}" _auto_args="*" _class="btn btn-default btn-sm"}
 						{else}
-							{button show_translation_history=1 _text="{tr}Show translation history{/tr}" _auto_args="*"}
+							{button show_translation_history=1 _text="{tr}Show translation history{/tr}" _auto_args="*" _class="btn btn-default btn-sm"}
 						{/if}
 					</td>
 				</tr>
