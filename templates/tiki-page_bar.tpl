@@ -64,7 +64,7 @@
 						<a class="btn btn-default" id="comment-toggle" href="{service controller=comment action=list type="wiki page" objectId=$page}#comment-container">
 							{tr}Comments{/tr}
 							{if $count_comments}
-								&nbsp;<span class="count_comments badge pull-right">{$count_comments}</span>
+								&nbsp;<span class="count_comments badge">{$count_comments}</span>
 							{/if}
 						</a>
 						{jq}
