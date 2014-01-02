@@ -163,7 +163,7 @@ if ( ! empty($info['path']) ) {
 		$last_modified = $file_stats['mtime'];
 		$md5 = empty($info['hash']) ?
 			md5($file_stats['mtime'].'='.$file_stats['ino'].'='.$file_stats['size'])
-			: $info['hash'];
+			: md5($info['hash'] . $last_modified);
 	} else {
 		// File missing or not readable
 		header("HTTP/1.0 404 Not Found");
@@ -173,7 +173,7 @@ if ( ! empty($info['path']) ) {
 	}
 } elseif ( ! empty($content) ) {
 	$last_modified = $info['lastModif'];
-	$md5 = empty($info['hash']) ? md5($content) : $info['hash'];
+	$md5 = empty($info['hash']) ? md5($content) : md5($info['hash'] . $last_modified);
 } else {
 	// Empty content
 	die;
