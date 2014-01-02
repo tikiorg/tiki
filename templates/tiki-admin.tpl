@@ -198,29 +198,29 @@ if $pagetop_msg}
 
 	{tr}Administration features:{/tr}<br>
 	{* TODO: to be fixed {if $prefs.feature_debug_console eq 'y'} <a href="javascript:toggle("debugconsole")">{tr}(debug){/tr}</a> {/if} *}
-	<a href="tiki-adminusers.php">{tr}Users{/tr}</a> 
-	<a href="tiki-admingroups.php">{tr}Groups{/tr}</a> 
-	<a href="tiki-admin_security.php">{tr}Security{/tr}</a> 
-	<a href="tiki-admin_system.php">{tr}TikiCache/System{/tr}</a> 
-	<a href="tiki-syslog.php">{tr}SysLogs{/tr}</a> 
-	<a href="tiki-mods.php">{tr}Mods{/tr}</a>
+	<a href="tiki-adminusers.php" class="alert-link">{tr}Users{/tr}</a> 
+	<a href="tiki-admingroups.php" class="alert-link">{tr}Groups{/tr}</a> 
+	<a href="tiki-admin_security.php" class="alert-link">{tr}Security{/tr}</a> 
+	<a href="tiki-admin_system.php" class="alert-link">{tr}TikiCache/System{/tr}</a> 
+	<a href="tiki-syslog.php" class="alert-link">{tr}SysLogs{/tr}</a> 
+	<a href="tiki-mods.php" class="alert-link">{tr}Mods{/tr}</a>
 	<hr>
 
 	{tr}Transversal features{/tr} ({tr}which apply to more than one section{/tr}):<br>
-	<a href="tiki-admin_notifications.php">{tr}Mail Notifications{/tr}</a> 
+	<a href="tiki-admin_notifications.php" class="alert-link">{tr}Mail Notifications{/tr}</a> 
 	<hr>
 
 	{tr}Navigation features:{/tr}<br>
-	<a href="tiki-admin_menus.php">{tr}Menus{/tr}</a> 
-	<a href="tiki-admin_modules.php">{tr}Modules{/tr}</a>
+	<a href="tiki-admin_menus.php" class="alert-link">{tr}Menus{/tr}</a> 
+	<a href="tiki-admin_modules.php" class="alert-link">{tr}Modules{/tr}</a>
 	<hr>
 
 	{tr}Text area features{/tr} ({tr}features you can use in all text areas, like wiki pages, blogs, articles, forums, etc{/tr}):<br>
-	<a href="tiki-admin_cookies.php">{tr}Cookies{/tr}</a> 
-	<a href="tiki-list_cache.php">{tr}External Pages Cache{/tr}</a> 
-	<a href="tiki-admin_toolbars.php">{tr}Toolbars{/tr}</a> 
-	<a href="tiki-admin_dsn.php">{tr}DSN{/tr}</a> 
-	<a href="tiki-admin_external_wikis.php">{tr}External Wikis{/tr}</a> 
+	<a href="tiki-admin_cookies.php" class="alert-link">{tr}Cookies{/tr}</a> 
+	<a href="tiki-list_cache.php" class="alert-link">{tr}External Pages Cache{/tr}</a> 
+	<a href="tiki-admin_toolbars.php" class="alert-link">{tr}Toolbars{/tr}</a> 
+	<a href="tiki-admin_dsn.php" class="alert-link">{tr}DSN{/tr}</a> 
+	<a href="tiki-admin_external_wikis.php" class="alert-link">{tr}External Wikis{/tr}</a> 
 	<hr>
 
 {/remarksbox}
