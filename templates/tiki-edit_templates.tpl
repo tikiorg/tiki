@@ -28,9 +28,9 @@
 		<tr>
 			<th>{tr}Template{/tr}</th>
 		</tr>
-		{cycle values="odd,even" print=false}
+
 		{section name=user loop=$files}
-		<tr class="{cycle}">
+		<tr>
 			<td>
 				<a class="link" href="tiki-edit_templates.php?template={$files[user]}">
 					{$files[user]}

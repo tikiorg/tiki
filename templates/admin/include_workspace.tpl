@@ -73,7 +73,7 @@ $('#template-list').load($.service('workspace', 'list_templates'));
 						<th>{tr}Share Common{/tr}</th>
 						<th>{tr}Description{/tr}</th>
 					</tr>
-					{cycle values="odd,even" print=false}
+
 					{if $areas|count}
 						{foreach from=$areas item=area}
 							<tr class="{cycle}{if $area.enabled neq 'y'} disabled{/if}">
@@ -99,7 +99,7 @@ $(".enabledChecks").click(function() {
 });
 						{/jq}
 					{else}
-						<td class="{cycle}" colspan="7">{tr}No areas found. Click "Update Areas" to populate this list{/tr}</td>
+						<td colspan="7">{tr}No areas found. Click "Update Areas" to populate this list{/tr}</td>
 					{/if}
 				</table>
                 </div>

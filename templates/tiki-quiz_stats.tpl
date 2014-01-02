@@ -27,10 +27,10 @@
 			<a href="tiki-quiz_stats.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'avgtime_desc'}avgtime_asc{else}avgtime_desc{/if}">{tr}Av time{/tr}</a>
 		</th>
 	</tr>
-	{cycle values="odd,even" print=false}
+
 	{section name=user loop=$channels}
 		{if ($tiki_p_admin eq 'y') or ($channels[user].individual eq 'n' and $tiki_p_view_quiz_stats eq 'y') or ($channels[user].individual_tiki_p_view_quiz_stats eq 'y')}
-			<tr class="{cycle}">
+			<tr>
 				<td class="text"><a class="tablename" href="tiki-quiz_stats_quiz.php?quizId={$channels[user].quizId}">{$channels[user].quizName|escape}</a></td>
 				<td class="date">{$channels[user].timesTaken}</td>
 				<td class="integer">{$channels[user].avgavg}%</td>

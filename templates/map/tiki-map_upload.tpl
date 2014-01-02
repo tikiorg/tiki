@@ -47,7 +47,7 @@
 {/if}
 {/section}
 <th colspan="2">{tr}Files{/tr}</th>
-{cycle values="odd,even" print=false}
+
 {section name=user loop=$files}
 <tr>
 <td class="{cycle advance=false}">

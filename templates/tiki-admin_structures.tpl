@@ -80,9 +80,9 @@
 					<th>{tr}Structure ID{/tr}</th>
 					<th>{tr}Action{/tr}</th>
 				</tr>
-				{cycle values="odd,even" print=false}
+
 				{section loop=$channels name=ix}
-					<tr class="{cycle}">
+					<tr>
 						{if $tiki_p_admin eq 'y'}
 							<td class="checkbox-cell">
 								<input type="checkbox" name="action[]" value='{$channels[ix].page_ref_id}' style="border:1px;font-size:80%;">

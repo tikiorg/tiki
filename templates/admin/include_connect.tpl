@@ -128,9 +128,9 @@
 					<th>{tr}Language{/tr}</th>
 					<th>{tr}Keywords{/tr}</th>
 				</tr>
-				{cycle values="odd,even" print=false}
+
 				{section name=connection loop=$connect_recent}
-					<tr class="{cycle}">
+					<tr>
 						<td>
 							{$connect_recent[connection].created}
 						</td>

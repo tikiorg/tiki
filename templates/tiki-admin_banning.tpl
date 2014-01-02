@@ -195,7 +195,7 @@
 			<th>{tr}Sections{/tr}</th>
 			<th>{tr}Action{/tr}</th>
 		</tr>
-		{cycle values="odd,even" print=false}
+
 		{section name=user loop=$items}
 			<div class="form-inline">
                 <div class="form-group">

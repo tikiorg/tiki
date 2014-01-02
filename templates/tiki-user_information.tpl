@@ -37,7 +37,7 @@
 			</div>
 		{/if}
 
-		{cycle values="even,odd" print=false}
+
 			<div class="panel panel-default">
                 <div class="panel-body">
 					{if $avatar}
@@ -135,7 +135,7 @@
 
 					{* Custom database fields *}
 					{section name=ir loop=$customfields}
-						{cycle values="even,odd" print=false}
+
 						{if $customfields[ir].show}
 							<div class="clearfix {cycle}">
 								<div class="pull-left">{$customfields[ir].label}:</div>
@@ -167,7 +167,7 @@
 				{/if}
 			</div>
 		</div>
-		{cycle values="even,odd" print=false}
+
 		{foreach item=itemField from=$userItem.field_values}
 			{if $itemField.value ne '' or !empty($itemField.categs) or !empty($itemField.links)}
 				<div class="clearfix {cycle}">
@@ -193,10 +193,10 @@
 		{if $user_pages|@count > 0}
 			<h3>{tr}Wiki Pages{/tr}</h3>
 			<div class="table normal">
-				{cycle values="even,odd" print=false}
+
 				{section name=ix loop=$user_pages}
 					<div>
-						<div class="{cycle}">
+						<div>
 							<a class="link" title="{tr}View:{/tr} {$user_pages[ix].pageName|escape}" href="tiki-index.php?page={$user_pages[ix].pageName|escape:"url"}">
 								{$user_pages[ix].pageName|truncate:40:"(...)"|escape}
 							</a>
@@ -208,10 +208,10 @@
 		{if $user_galleries|@count > 0}
 			<h3>{tr}Image Galleries{/tr}</h3>
 			<div class="table normal">
-				{cycle values="even,odd" print=false}
+
 				{section name=ix loop=$user_galleries}
 					<div>
-						<div class="{cycle}">
+						<div>
 							<a class="link" href="{$user_galleries[ix].galleryId|sefurl:gallery}">
 								{$user_galleries[ix].name|escape}
 							</a>
@@ -223,10 +223,10 @@
 		{if $user_blogs|@count > 0}
 			<h3>{tr}Blogs{/tr}</h3>
 			<div class="table normal">
-				{cycle values="even,odd" print=false}
+
 				{section name=ix loop=$user_blogs}
 					<div>
-						<div class="{cycle}">
+						<div>
 							<a class="link" title="{tr}View{/tr}" href="{$user_blogs[ix].blogId|sefurl:blog}">
 								{$user_blogs[ix].title|escape}
 							</a>
@@ -241,7 +241,7 @@
 		<div class="table normal">
 			{section name=ix loop=$user_blog_posts}
 				<div>
-					<div class="{cycle}">
+					<div>
 						<a class="link" title="{tr}View{/tr}" href="{$user_blog_posts[ix].postId|sefurl:blogpost}">
 							{$user_blog_posts[ix].title|escape}
 						</a>
@@ -252,10 +252,10 @@
 			{if $user_articles|@count > 0}
 				<h3>{tr}Articles{/tr}</h3>
 				<div class="table normal">
-					{cycle values="even,odd" print=false}
+
 					{section name=ix loop=$user_articles}
 						<div>
-							<div class="{cycle}">
+							<div>
 								<a class="link" title="{tr}View{/tr}" href="{$user_articles[ix].articleId|sefurl:article}">
 									{$user_articles[ix].title|escape}
 								</a>
@@ -267,10 +267,10 @@
 			{if $user_forum_comments|@count > 0}
 				<h3>{tr}Forum comments{/tr}</h3>
 				<div class="table normal">
-					{cycle values="even,odd" print=false}
+
 					{section name=ix loop=$user_forum_comments}
 						<div>
-							<div class="{cycle}">
+							<div>
 								<a class="link" title="{tr}View{/tr}" href="tiki-view_forum_thread.php?comments_parentId={$user_forum_comments[ix].threadId}&forumId={$user_forum_comments[ix].object}">
 									{$user_forum_comments[ix].title|escape}
 								</a>
@@ -282,10 +282,10 @@
 			{if $user_forum_topics|@count > 0}
 				<h3>{tr}Forum topics{/tr}</h3>
 				<div class="table normal">
-					{cycle values="even,odd" print=false}
+
 					{section name=ix loop=$user_forum_topics}
 						<div>
-							<div class="{cycle}">
+							<div>
 								<a class="link" title="{tr}View{/tr}" href="tiki-view_forum_thread.php?comments_parentId={$user_forum_topics[ix].threadId}&forumId={$user_forum_topics[ix].object}">
 									{$user_forum_topics[ix].title|escape}
 								</a>
@@ -297,10 +297,10 @@
 			{if $user_items|@count > 0}
 				<h3>{tr}User Items{/tr}</h3>
 				<div class="table normal">
-					{cycle values="even,odd" print=false}
+
 					{section name=ix loop=$user_items}
 						<div>
-							<div class="{cycle}">
+							<div>
 								<a class="link" title="{tr}View{/tr}" href="tiki-view_tracker_item.php?trackerId={$user_items[ix].trackerId}&amp;itemId={$user_items[ix].itemId}">
 									{$user_items[ix].name|escape} : {$user_items[ix].value|escape}
 								</a>
@@ -318,7 +318,7 @@
 		{tab name="{tr}Who Looks At Stuff?{/tr}"}
 			<div class="panel panel-default"><div class="panel-body">
 				<h2 class="center">{if $user eq $userinfo.login}{tr}Who Looks At Your Stuff?{/tr}{else}{tr}Who Looks At His Stuff?{/tr}{/if}</h2>
-				{cycle values="even,odd" print=false}
+
 				{section name=ix loop=$whoviewed}
 					<div class="clearfix {cycle}">
 						<div class="form pull-left">

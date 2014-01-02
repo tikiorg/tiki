@@ -70,9 +70,9 @@
 				</a>
 			</th>
 		</tr>
-		{cycle values="odd,even" print=false}
+
 		{section name=user loop=$channels}
-			<tr class="{cycle}">
+			<tr>
 				<td class="checkbox-cell">
 					<input type="checkbox" name="sec[{$channels[user].section}]">
 				</td>

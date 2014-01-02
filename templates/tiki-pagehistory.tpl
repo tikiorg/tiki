@@ -239,9 +239,9 @@ if (jqueryTiki.chosen) {
 						{/if}
 					{/if}
 				</tr>
-				{cycle values="odd,even" print=false}
+
 				{foreach name=hist item=element from=$history}
-					<tr class="{cycle}">
+					<tr>
 						{if $tiki_p_remove eq 'y'}
 							<td class="button_container"><input type="checkbox" name="hist[{$element.version}]"></td>
 						{/if}

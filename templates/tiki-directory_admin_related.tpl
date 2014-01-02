@@ -57,9 +57,9 @@
       <th>{tr}Directory Category{/tr}</th>
       <th>{tr}Action{/tr}</th>
     </tr>
-    {cycle values="odd,even" print=false}
+
     {section name=user loop=$items}
-    <tr class="{cycle}">
+    <tr>
       <td>
 			<select name="categId">
 				{section name=ix loop=$categs}

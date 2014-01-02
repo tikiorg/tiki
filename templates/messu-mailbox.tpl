@@ -65,7 +65,7 @@ var CHECKBOX_LIST = [{{section name=user loop=$items}'msg[{$items[user].msgId}]'
 			<th>{tr}is reply to{/tr}</th>
 			<th style="text-align:right;">{tr}Size{/tr}</th>
 		</tr>
-		{cycle values="odd,even" print=false}
+
 		{section name=user loop=$items}
 			<tr>
 				<td class="prio{$items[user].priority}"><input type="checkbox" name="msg[{$items[user].msgId}]"></td>

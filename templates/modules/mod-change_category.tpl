@@ -15,7 +15,7 @@
 		{else}
 
 		{if $detailed eq 'y'}
-			{cycle values="odd,even" print=false}
+
             <div class="table-responsive">
 			<table class="table normal">
 				{foreach key=k item=i from=$modcatlist}
@@ -29,7 +29,7 @@
 								{/if}
 							</td>
 							{if !isset($module_params.del) or $module_params.del eq 'y'}
-								<td class="{cycle}">
+								<td>
 									{self_link remove=$i.categId}{icon _id=cross alt="{tr}Delete{/tr}"}{/self_link}
 								</td>
 							{/if}

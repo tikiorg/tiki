@@ -78,9 +78,9 @@
   </tr><tr>
     <th colspan="4">{tr}Description{/tr}</th>
   </tr>
-  {cycle values="odd,even" print=false}
+
   {section name=rep loop=$repositories}
-    <tr class="{cycle}">
+    <tr>
       <td class="text"{if (strlen($repositories[rep].description) > 0)} rowspan="2"{/if}>
         <a href="tiki-admin_integrator_rules.php?repID={$repositories[rep].repID|escape}" title="{tr}Edit rules{/tr}">
           {$repositories[rep].name}
@@ -99,7 +99,7 @@
 
     {* Show description as colspaned row if it is not an empty *}
     {if (strlen($repositories[rep].description) > 0)}
-    </tr><tr class="{cycle}">
+    </tr><tr>
       <td class="text" colspan="4">{$repositories[rep].description}</td>
     {/if}
     </tr>

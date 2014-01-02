@@ -182,7 +182,7 @@ function update_button_install() {
 				{button href="tiki-mods.php?type=$thistype$findarg" _title="{tr}Display only this type{/tr}" _text=$type}
 			</td><td colspan="7">&nbsp;</td>
 			</tr>
-			{cycle values="odd,even" print=false}
+
 			{foreach key=item item=it from=$display.$type}
 				<tr class="{if $focus and $focus eq $display.$type.$item->name}focus{else}{cycle}{/if}">
 				{if $prefs.feature_mods_provider eq 'y'}
@@ -266,7 +266,7 @@ function update_button_install() {
 				{/if}
 				</tr>
 				{if $focus and $focus eq $local.$type.$item->modname}
-					<tr class="{cycle}">
+					<tr>
 						<td colspan="{if $prefs.feature_mods_provider eq 'y'}9{else}8{/if}">
 							<table>
 								<tr>

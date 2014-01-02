@@ -45,9 +45,9 @@
 <th><a href="tiki-live_support_transcripts.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'operator_desc'}operator_asc{else}operator_desc{/if}">{tr}operator{/tr}</a></th>
 <th>{tr}msgs{/tr}</th>
 </tr>
-{cycle values="odd,even" print=false}
+
 {section name=ix loop=$items}
-<tr class="{cycle}">
+<tr>
 <td>{$items[ix].chat_started|tiki_short_datetime}</td><!--date_format:"%d %b [%H:%M]"-->
 <td>{if $items[ix].tiki_user ne ""}{$items[ix].tiki_user}{else}{$items[ix].user|escape}{/if}</td>
 <td>{$items[ix].reason}</td>

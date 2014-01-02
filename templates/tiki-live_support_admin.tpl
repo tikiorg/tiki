@@ -37,7 +37,7 @@
 	</tr>
 {cycle values='odd,even' print=false}	
 {section name=ix loop=$online_operators}
-<tr class="{cycle}">
+<tr>
 		<td style="text-align:center;">
 			{$online_operators[ix].user|avatarize}<br>	
 			<b>{$online_operators[ix].user|escape}</b>
@@ -85,7 +85,7 @@
 		</th>		
 	</tr>
 {section name=ix loop=$offline_operators}
-	<tr class="{cycle}">
+	<tr>
 		<td style="text-align:center;">
 			{$offline_operators[ix].user|avatarize}<br>	
 			<b>{$offline_operators[ix].user|escape}</b>

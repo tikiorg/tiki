@@ -19,10 +19,10 @@
 		<th>{tr}Questions{/tr}</th>
 		<th>{tr}Actions{/tr}</th>
 	</tr>
-	{cycle values="odd,even" print=false}
+
 	{section name=user loop=$channels}
 		{if ($tiki_p_admin eq 'y') or ($channels[user].individual eq 'n' and $tiki_p_take_survey eq 'y') or ($channels[user].individual_tiki_p_take_survey eq 'y')}
-			<tr class="{cycle}">
+			<tr>
 				<td class="text">
 					{if ($tiki_p_admin_surveys eq 'y') or ($channels[user].status eq 'o' and $channels[user].taken_survey eq 'n')}
 						<a class="tablename" href="tiki-take_survey.php?surveyId={$channels[user].surveyId}">{$channels[user].name|escape}</a>

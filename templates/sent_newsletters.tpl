@@ -21,9 +21,9 @@
 			<th>{tr}Errors{/tr}</th>
 			<th>{tr}Action{/tr}</th>
 		</tr>
-		{cycle values="odd,even" print=false}
+
 		{section name=user loop=$channels}
-			<tr class="{cycle}">
+			<tr>
 				<td class="text">{$channels[user].name|escape}</td>
 				<td class="text"><a class="link" href="{$url}?{if $nl_info}nlId={$channels[user].nlId}&amp;{/if}offset={$offset}&amp;sort_mode={$sort_mode}&amp;editionId={$channels[user].editionId}">{$channels[user].subject|escape}</a></td>
 				{if $view_editions eq 'y'}

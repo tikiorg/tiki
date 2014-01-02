@@ -98,14 +98,14 @@
 				<th>{tr}Actions{/tr}</th>
 			{/if}
 		</tr>
-		{cycle values="odd,even" print=false}
+
 		{section name=changes loop=$listpages}
 	
 			{if isset($mapview) and $mapview}
 				<div class="listarticlesmap" style="display:none;">{object_link type="article" id="`$listpages[changes].articleId|escape`"}</div>
 			{/if}
 
-			<tr class="{cycle}">
+			<tr>
 				<td class="checkbox-cell">
 					<input type="checkbox" name="checked[]" value="{$listpages[changes].articleId|escape}" {if $listpages[changes].checked eq 'y'}checked="checked" {/if}>
 				</td>

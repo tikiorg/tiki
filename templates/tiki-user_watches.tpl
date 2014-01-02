@@ -154,9 +154,9 @@
 		<th>{tr}Event{/tr}</th>
 		<th>{tr}Object{/tr}</th>
 	</tr>
-	{cycle values="odd,even" print=false}
+
 	{foreach item=w from=$watches}
-		<tr class="{cycle}">
+		<tr>
 			{if $watches}
 				<td class="checkbox-cell">
 					<input type="checkbox" name="watch[{$w.watchId}]">

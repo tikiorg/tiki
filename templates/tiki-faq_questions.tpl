@@ -95,9 +95,9 @@
 </th>
 <th>{tr}Action{/tr}</th>
 </tr>
-{cycle values="odd,even" print=false}
+
 {section name=user loop=$channels}
-<tr class="{cycle}">
+<tr>
 <td class="id">{$channels[user].questionId}</td>
 <td class="text">{$channels[user].question|escape}</td>
 <td class="action">
@@ -123,9 +123,9 @@
   <th>{tr}Answer{/tr}</th>
   <th>{tr}Action{/tr}</th>
 </tr>
-{cycle values="odd,even" print=false}
+
 {section name=ix loop=$suggested}
-<tr class="{cycle}">
+<tr>
   <td class="text">{$suggested[ix].question|escape} </td>
   <td class="text">{$suggested[ix].answer|escape}</td>
   <td class="action">

@@ -40,9 +40,9 @@
 			</th>
 			<th>{tr}Action{/tr}</th>
 		</tr>
-		{cycle values="odd,even" print=false}
+
 		{section name=ix loop=$groups_g}
-			<tr class="{cycle}">
+			<tr>
 				<td class="text">
 					{$groups_g[ix].groupName|escape}
 					{if count($groups_g[ix].additional_groups)}
@@ -74,9 +74,9 @@
 			</th>
 			<th>{tr}Action{/tr}</th>
 		</tr>
-		{cycle values="odd,even" print=false}
+
 		{foreach key=incId item=incName from=$included_n}
-			<tr class="{cycle}">
+			<tr>
 				<td class="text">
 					<a href="tiki-admin_newsletter_subscriptions.php?nlId={$incId|urlencode}">{$incName|escape}</a>
 				</td>
@@ -100,9 +100,9 @@
 			<th>{tr}Add To List{/tr}</th>
 			<th>{tr}Action{/tr}</th>
 		</tr>
-		{cycle values="odd,even" print=false}
+
 		{section name=ix loop=$pages}
-			<tr class="{cycle}">
+			<tr>
 				<td class="text"><a href="{$pages[ix].wikiPageName|sefurl}">{$pages[ix].wikiPageName|escape}</a></td>
 				<td class="text">{$pages[ix].validateAddrs|escape}</td>
 				<td class="text">{$pages[ix].addToList|escape}</td>
@@ -137,9 +137,9 @@
 		</th>
 		<th>{tr}Action{/tr}</th>
 	</tr>
-	{cycle values="odd,even" print=false}
+
 	{section name=user loop=$channels}
-		<tr class="{cycle}">
+		<tr>
 			<td class="checkbox-cell">
 				<input type="checkbox" name="checked[]" value="{$channels[user].code}" {if $smarty.request.checked and in_array($channels[user].code, $smarty.request.checked)}checked="checked"{/if}>
 			</td>

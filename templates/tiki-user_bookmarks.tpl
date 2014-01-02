@@ -10,9 +10,9 @@
 		<th>{tr}Name{/tr}</th>
 		<th>{tr}Action{/tr}</th>
 	</tr>
-{cycle values="odd,even" print=false}
+
 	{section name=ix loop=$folders}
-		<tr class="{cycle}">
+		<tr>
 			<td class="text"><a href="tiki-user_bookmarks.php?parentId={$folders[ix].folderId}">
 				{icon _id='folder' alt="{tr}Folder in{/tr}"}</a>&nbsp;{$folders[ix].name|escape} ({$folders[ix].urls})
 			</td>
@@ -39,9 +39,9 @@
 		<th>{tr}Url{/tr}</th>
 		<th>{tr}Action{/tr}</th>
 	</tr>
-{cycle values="odd,even" print=false}
+
 	{section name=ix loop=$urls}
-		<tr class="{cycle}">
+		<tr>
 			<td class="text"><a class="link" target="_blank" href="{$urls[ix].url}">{$urls[ix].name|escape}</a>
 				{if $tiki_p_cache_bookmarks eq 'y' and $urls[ix].datalen > 0}
 					(<a href="tiki-user_cached_bookmark.php?urlid={$urls[ix].urlId}" class="link" target="_blank">{tr}Cache{/tr}</a>)

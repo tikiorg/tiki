@@ -146,7 +146,7 @@
 		{/if}
 	</tr>
 
-	{cycle values="odd,even" print=false}
+
 	{section name=changes loop=$files}
 
 		{if ( ( ! isset($fileId) ) || $fileId == 0 ) || ( $fileId == $files[changes].id )}
@@ -266,7 +266,7 @@
 			{/if}
 			
 			
-		<tr class="{cycle}">
+		<tr>
 
 			{if $prefs.fgal_checked neq 'n' and ($tiki_p_admin_file_galleries eq 'y' or $tiki_p_upload_files eq 'y')}
 				<td class="checkbox-cell">

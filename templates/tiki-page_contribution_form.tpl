@@ -28,8 +28,8 @@
 					<td><strong>{$info.lastModif|tiki_short_datetime}</strong></td>
 					<td><strong>{$info.user|userlink}</strong></td>
 				</tr>
-{cycle values="odd,even" print=false}{foreach name=hist item=element from=$history}
-				<tr class="{cycle}">
+{foreach name=hist item=element from=$history}
+				<tr>
 					<td class="text"><label><input type="radio" name="lastversion" value="{$element.version}"{if $lastversion==$element.version} checked="checked"{/if}  title="{tr}Version{/tr} {$info.version}"> {$element.version}</label></td>
 					<td class="date">{$element.lastModif|tiki_short_datetime}</td>
 					<td class="text">{$element.user|userlink}</td>

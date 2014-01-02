@@ -155,7 +155,7 @@
 	</tr>
 	{cycle values="odd,even" print=false advance=false}
 	{section name=user loop=$channels}
-		<tr class="{cycle}">
+		<tr>
 			<td class="text">{$channels[user].name|escape}</td>
 			<td class="date">{$channels[user].created|tiki_short_datetime}</td>
 			<td class="text">

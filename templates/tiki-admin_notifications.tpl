@@ -96,7 +96,7 @@
 		</tr>
 		{cycle print=false values="even,odd"}
 		{section name=user loop=$channels}
-			<tr class="{cycle}">
+			<tr>
 				<td class="checkbox-cell">
 					<input type="checkbox" name="checked[]" value="{$channels[user].watchtype}{$channels[user].watchId|escape}" {if $smarty.request.checked and in_array($channels[user].watchId,$smarty.request.checked)}checked="checked"{/if}>
 				</td>
@@ -146,7 +146,7 @@
     <div class="table-responsive">
 	<table class="table normal">
 		{section name=ix loop=$trackers}
-			<tr class="{cycle}">
+			<tr>
 				<td><a href="tiki-list_trackers.php?trackerId={$trackers[ix].trackerId}">{$trackers[ix].value|escape}</a></td>
 			</tr>
 		{/section}
@@ -159,7 +159,7 @@
     <div class="table-responsive">
 	<table class="table normal">
 		{section name=ix loop=$forums}
-			<tr class="{cycle}">
+			<tr>
 				<td><a href="tiki-admin_forums.php?forumId={$forums[ix].forumId}">{$forums[ix].outbound_address|escape}</a><br/></td>
 			</tr>
 		{/section}

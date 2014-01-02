@@ -97,9 +97,9 @@
 		<th style="width:100px;">{tr}Action{/tr}</th>
 	</tr>
 
-	{cycle values="odd,even" print=false}
+
 	{section name=user loop=$channels}
-		<tr class="{cycle}">
+		<tr>
 			<td class="text">{$channels[user].pageName}</td>
 			<td class="text">{$channels[user].type} {if $channels[user].type eq 'd'}({$channels[user].refresh} secs){/if}</td>
 			<td class="date">{$channels[user].created|tiki_short_datetime}</td>

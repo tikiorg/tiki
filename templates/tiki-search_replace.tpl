@@ -37,7 +37,7 @@
 			{select_all checkbox_names='checked[]'}
 		</td>
 	</tr>
-	{cycle values="even,odd" print=false}
+
 	{section name=search loop=$results}
 	{if isset($results[search].searchreplace)}
 	<tr>
@@ -47,7 +47,7 @@
 			<a href="{$results[search].pageName|sefurl}" target="_blank">{$results[search].pageName|escape}</a>
 			</th></tr>
 			{section name=snippet loop=$results[search].beforeSnippet}
-			<tr class="{cycle}">
+			<tr>
 				<td style="border: 1px solid">
 					{* note that non-escaping is intentional *}
 					{$results[search].beforeSnippet[snippet]}

@@ -26,7 +26,7 @@
 		</tr>
 		{cycle print=false values="even,odd"}
 		{foreach key=k item=it from=$filestring}
-			<tr class="{cycle}">
+			<tr>
 				<td class="checkbox-cell">
 					<input type="checkbox" name="files[]" value="{$it[0]}" id="box_{$k}">
 				</td>

@@ -26,9 +26,9 @@
 			<th>{tr}ID{/tr}</th>
 			<th>{tr}Image{/tr}</th>
 		</tr>
-		{cycle values="odd,even" print=false}
+
 		{section name=ix loop=$batchRes}
-			<tr class="{cycle}">
+			<tr>
 				<td>{$batchRes[ix].filename}</td>
 				{if $batchRes[ix].msg}
 					<td colspan="3">

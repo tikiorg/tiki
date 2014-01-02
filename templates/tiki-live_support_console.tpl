@@ -49,9 +49,9 @@
 			<th>{tr}Requested{/tr}</th>
 			<th>&nbsp;</th>
 		</tr>
-		{cycle values="odd,even" print=false}
+
 		{section loop=$requests name=ix}
-		<tr class="{cycle}">
+		<tr>
 			<td>{$requests[ix].user}</td>
 			<td>{$requests[ix].reason}</td>
 			<td>{$requests[ix].timestamp|tiki_short_time}</td>

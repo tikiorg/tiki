@@ -67,9 +67,9 @@
 		</th>
 		<th>{tr}Action{/tr}</th>
 	</tr>
-	{cycle values="odd,even" print=false}
+
 	{section name=user loop=$channels}
-		<tr class="{cycle}">
+		<tr>
 			<td class="integer">{$channels[user].fromPoints}</td>
 			<td class="integer">{$channels[user].toPoints}</td>
 			<td class="text">{$channels[user].answer|truncate:230:"(...)":true|escape|nl2br}</td>

@@ -114,7 +114,7 @@
         <input type="submit" class="btn btn-default btn-sm" name="action" value="{tr}Find{/tr}" />
       </form>
 {/if}
-      {cycle values="odd,even" print=false}
+
       <div class="table-responsive">
       <table class="table normal">
         <tr>

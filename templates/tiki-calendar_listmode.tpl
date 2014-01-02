@@ -6,7 +6,7 @@
 		<th>{tr}Action{/tr}</th>
 	</tr>
 	{if $listevents|@count eq 0}{norecords _colspan=4}{/if}
-	{cycle values="odd,even" print=false}
+
 	{foreach from=$listevents item=event}
 		{assign var=calendarId value=$event.calendarId}
 		<tr class="{cycle}{if $event.start <= $smarty.now and $event.end >= $smarty.now} selected{/if} vevent">

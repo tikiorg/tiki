@@ -218,7 +218,7 @@ if ($("#assignstructure").prop("checked")) {
 			</tr>
 			{cycle print=false values="even,odd"}
 			{section name=grp loop=$groups}
-			<tr class="{cycle}">
+			<tr>
 				<td>
 				{$groups[grp].groupName|escape}
 				</td>

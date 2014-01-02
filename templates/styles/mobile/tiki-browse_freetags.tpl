@@ -186,7 +186,7 @@
 		{/if}
 	{/if}
 	{if $cantobjects > 0}
-		{cycle values="odd,even" print=false}
+
 		{section name=ix loop=$objects}
 			<div class="{cycle} freetagitemlist" >
 				<h3>

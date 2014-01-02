@@ -242,9 +242,9 @@
 									<th>{tr}MIME Type{/tr}</th>
 									<th>{tr}System Command{/tr}</th>
 								</tr>
-								{cycle values="odd,even" print=false}
+
 								{foreach key=mime item=cmd from=$fgal_handlers}
-									<tr class="{cycle}">
+									<tr>
 										<td>{$mime}</td>
 										<td>
 											<input name="mimes[{$mime}]" type="text" value="{$cmd|escape:html}" size="30"/>

@@ -52,10 +52,10 @@
 						<th>{tr}Username{/tr}</th>
 						<th>{tr}Action{/tr}</th>
 					</tr>
-					{cycle values="odd,even" print=false}
+
 					{section name=ix loop=$accounts}
 						{if $accounts[ix].current eq 'y' and $accounts[ix].user eq $user or $accounts[ix].accountId eq $mailCurrentAccount}{assign var=active value=true}{else}{assign var=active value=false}{/if}
-						<tr class="{cycle}">
+						<tr>
 							<td class="icon">
 								{if !$active}
 									{self_link _icon='star_grey' current=$accounts[ix].accountId}{tr}Activate{/tr}{/self_link}
@@ -106,10 +106,10 @@
 							<th>{tr}Username{/tr}</th>
 							<th>{tr}Action{/tr}</th>
 						</tr>
-						{cycle values="odd,even" print=false}
+
 						{section name=ixp loop=$pubAccounts}
 							{if $pubAccounts[ixp].current eq 'y' and $pubAccounts[ixp].user eq $user or $pubAccounts[ixp].accountId eq $mailCurrentAccount}{assign var=active value=true}{else}{assign var=active value=false}{/if}
-							<tr class="{cycle}">
+							<tr>
 								<td class="icon">
 									{if !$active}
 										{self_link _icon='star_grey' current=$pubAccounts[ixp].accountId}{tr}Activate{/tr}{/self_link}

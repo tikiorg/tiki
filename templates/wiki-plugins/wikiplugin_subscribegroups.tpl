@@ -2,11 +2,11 @@
 <div class="subscribeGroups">
 {if !empty($userGroups)}
 <h3>{tr}Groups you are in{/tr}</h3>
-{cycle values="odd,even" print=false}
+
 <div class="table-responsive">
 <table class="table normal">
 {foreach from=$userGroups key=gr item=type}
-	<tr class="{cycle}">
+	<tr>
 	<td>
 		{if !empty($allGroups.$gr.groupHome)}<a href="{$allGroups.$gr.groupHome|escape:url}" class="groupLink">{/if}
 		{if $type eq 'included'}{$gr|escape} <i>{tr}(This is an included group){/tr}</i>
@@ -52,7 +52,7 @@
 <table class="table normal">
 {foreach from=$possibleGroups item=gr}
 	<tr>
-	<td class="{cycle}">
+	<td>
 	<input name="assign[]" type="checkbox" value="{$gr|escape}"> 
 	{if !in_array($gr, $privategroups)}<a href="{$allGroups.$gr.groupHome|escape:url}" class="groupLink">{else}<span class="groupLink">{/if}{if isset($basegroupnames.$gr)}{$basegroupnames.$gr|escape} <i>{tr}This group requires approval to join{/tr}</i>{else}{$gr|escape}{/if}{if !in_array($gr, $privategroups)}</a>{else}</span>{/if}
 	{if $showgroupdescription eq 'y'}<div style="padding-left: 25px;">{$allGroups.$gr.groupDesc|escape}</div>{/if}

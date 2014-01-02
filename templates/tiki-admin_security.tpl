@@ -14,9 +14,9 @@
 		<th>{tr}Risk Factor{/tr}</th>
 		<th>{tr}Explanation{/tr}</th>
 	</tr>
-	{cycle values="even,odd" print=false}
+
 	{foreach from=$tikisettings key=key item=item}
-		<tr class="{cycle}">
+		<tr>
 			<td class="text">{$key}</td>
 			<td class="text">{$item.setting}</td>
 			<td class="text">
@@ -51,7 +51,7 @@
 	<br>
 </div>
 {if $filecheck}
-	{cycle values="even,odd" print=false}
+
     <div class="table-responsive">
 	<table class="table normal">
 		<tr>
@@ -62,7 +62,7 @@
 			<th>{tr}State{/tr}</th>
 		</tr>
 		{foreach from=$tikifiles key=key item=item}
-			<tr class="{cycle}">
+			<tr>
 				<td class="text">{$key}</td>
 				<td class="text">{$item}</td>
 			</tr>
@@ -113,9 +113,9 @@
 		<tr>
 			<th colspan="16">{tr}Set User ID (suid) files{/tr}</th>
 		</tr>
-		{cycle values="even,odd" print=false}
+
 		{foreach from=$suid key=key item=item}
-			<tr class="{cycle}">
+			<tr>
 				<td class="text">{$key}</td>
 				<td class="text">{$item.t}</td>
 				<td class="text">{$item.u}</td>
@@ -139,7 +139,7 @@
 			<th colspan="16">{tr}World writable files or directories{/tr}</th>
 		</tr>
 		{foreach from=$worldwritable key=key item=item}
-			<tr class="{cycle}">
+			<tr>
 				<td class="text">{$key}</td>
 				<td class="text">{$item.t}</td>
 				<td class="text">{$item.u}</td>
@@ -163,7 +163,7 @@
 			<th colspan="16">{tr}Files or directories the Webserver can write to{/tr}</th>
 		</tr>
 		{foreach from=$apachewritable key=key item=item}
-			<tr class="{cycle}">
+			<tr>
 				<td class="text">{$key}</td>
 				<td class="text">{$item.t}</td>
 				<td class="text">{$item.u}</td>
@@ -183,11 +183,11 @@
 			</tr>
 		{/foreach}
 
-		<tr class="{cycle}">
+		<tr>
 			<th colspan="16">{tr}Strange Inodes (not file, not link, not directory){/tr}</th>
 		</tr>
 		{foreach from=$strangeinode key=key item=item}
-			<tr class="{cycle}">
+			<tr>
 				<td class="text">{$key}</td>
 				<td class="text">{$item.t}</td>
 				<td class="text">{$item.u}</td>
@@ -207,11 +207,11 @@
 			</tr>
 		{/foreach}
 
-		<tr class="{cycle}">
+		<tr>
 			<th colspan="16">{tr}Executable files{/tr}</th>
 		</tr>
 		{foreach from=$executable key=key item=item}
-			<tr class="{cycle}">
+			<tr>
 				<td class="text">{$key}</td>
 				<td class="text">{$item.t}</td>
 				<td class="text">{$item.u}</td>

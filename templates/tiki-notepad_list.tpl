@@ -39,9 +39,9 @@
 				</th>
 				<th style="text-align:center;">{tr}Actions{/tr}</th>
 			</tr>
-			{cycle values="odd,even" print=false}
+
 			{section name=user loop=$channels}
-				<tr class="{cycle}">
+				<tr>
 					<td class="id">
 						<input type="checkbox" name="note[{$channels[user].noteId}]">
 					</td>

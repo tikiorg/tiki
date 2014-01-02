@@ -53,7 +53,7 @@
 			</tr>
 			{cycle values="odd,even" print=false advance=false}
 			{section name=ix loop=$atts}
-				<tr class="{cycle}">
+				<tr>
 					<td class="id">{$atts[ix].attId}</td>
 					<td class="text">
 						{$atts[ix].filename|iconify}

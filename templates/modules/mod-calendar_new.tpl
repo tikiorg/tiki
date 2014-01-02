@@ -12,7 +12,7 @@
 						<th class="days" width="14%">{$daysnames_abr[dn]|ucfirst}</th>
 					{/section}
 				</tr>
-				{cycle values="odd,even" print=false}
+
 				{section name=w loop=$cell}
 					<tr>
 						{section name=d loop=$daysnames_abr}
@@ -39,7 +39,7 @@
 							{assign var=month_today value=$smarty.now|tiki_date_format:"%m"}
 
 							{if isset($cell[w][d].focus) and $cell[w][d].focus}
-								{cycle values="odd,even" print=false}
+
 							{else}
 								{cycle values="notoddoreven" print=false}
 							{/if}

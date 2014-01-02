@@ -29,9 +29,9 @@
 		</th>
 		<th>{tr}Action{/tr}</th>
 	</tr>
-	{cycle values="odd,even" print=false}
+
 	{section name=user loop=$words}
-		<tr class="{cycle}">
+		<tr>
 			<td class="text">{$words[user].word|escape}</td>
 			<td class="action">
 				&nbsp;&nbsp;

@@ -1,6 +1,6 @@
 {* $Id: tiki-sheets.tpl 35450 2011-07-17 19:03:36Z changi67 $ *}
 
-<tr class="{cycle}">
+<tr>
 	<td class="text">
 		{if $sheet.parentSheetId}
 			<span class="ui-icon ui-icon-grip-dotted-vertical" style="float: left;"></span>

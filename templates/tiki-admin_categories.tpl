@@ -113,9 +113,9 @@
 					<a href="tiki-admin_categories.php?parentId={$parentId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'type_desc'}type_asc{else}type_desc{/if}#objects">{tr}Type{/tr}</a>
 				</th>
 			</tr>
-			{cycle values="even,odd" print=false}
+
 			{section name=ix loop=$objects}
-				<tr class="{cycle}">
+				<tr>
 					<td class="icon">
 						<a href="tiki-admin_categories.php?parentId={$parentId}&amp;removeObject={$objects[ix].catObjectId}&amp;fromCateg={$parentId}" title="{tr}Remove from this Category{/tr}">{icon _id='link_delete' alt="{tr}Remove from this Category{/tr}"}</a>
 					</td>

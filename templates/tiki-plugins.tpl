@@ -11,7 +11,7 @@
 		</p>
 		<p>{tr}Plugins can be individually previewed, approved, or rejected from the particular location that contains the plugin.{/tr} {tr}For security, you should review each plugin to ensure it is safe to approve.{/tr}</p>
 	<form method="post" action="#">
-{cycle values="even,odd" print=false}
+
 		
 		{listfilter selectors='#plugins_list tr.odd,#plugins_list tr.even'}
         <div class="table-responsive">
@@ -24,7 +24,7 @@
 				<th>{tr}Actions{/tr} </th>
 			</tr>
 {foreach name=foo from=$plugin_list item=plugin}
-			<tr class="{cycle}">
+			<tr>
 				<td class="checkbox-cell"><input type="checkbox" name="clear[]" value="{$plugin.fingerprint|escape}" id="{$plugin.fingerprint|escape}"></td>
 				<td class="text"><label for="{$plugin.fingerprint|escape}"><strong>{$plugin.fingerprint|substring:0:20|escape|replace:"-":"</strong> <br>{tr}Signature:{/tr} "}...</label></td>
 				<td class="text">{if $plugin.last_objectType eq 'wiki page'}

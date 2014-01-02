@@ -32,9 +32,9 @@
 						<th>{tr}Name{/tr}</th>
 						<th>{tr}act{/tr}</th>
 					</tr>
-					{cycle values="odd,even" print=false}
+
 					{section name=ix loop=$modules_l}
-						<tr class="{cycle}">
+						<tr>
 							<td>{$modules_l[ix].ord}</td>
 							<td>{$modules_l[ix].name}</td>
 							<td>
@@ -63,9 +63,9 @@
 						<th>{tr}Name{/tr}</th>
 						<th>{tr}act{/tr}</th>
 					</tr>
-					{cycle values="odd,even" print=false}
+
 					{section name=ix loop=$modules_r}
-						<tr class="{cycle}">
+						<tr>
 							<td>{$modules_r[ix].ord}</td>
 							<td>{$modules_r[ix].name}</td>
 							<td>

@@ -10,9 +10,9 @@
 		<th>{tr}Tiki Fitness{/tr}</th>
 		<th>{tr}Explanation{/tr}</th>
 	</tr>
-	{cycle values="even,odd" print=false}
+
 	{foreach from=$mysql_properties key=key item=item}
-		<tr class="{cycle}">
+		<tr>
 			<td class="text">{$key}</td>
 			<td class="text">{$item.setting}</td>
 			<td class="text">
@@ -45,9 +45,9 @@
 		<th>{tr}Table{/tr}</th>
 		<th>{tr}Comment{/tr}</th>
 	</tr>
-	{cycle values="even,odd" print=false}
+
 	{foreach from=$mysql_crashed_tables key=key item=item}
-		<tr class="{cycle}">
+		<tr>
 			<td class="text">{$key}</td>
 			<td class="text">{$item.Comment}</td>
 		</tr>
@@ -67,9 +67,9 @@
 		<th>{tr}Property{/tr}</th>
 		<th>{tr}Value{/tr}</th>
 	</tr>
-	{cycle values="even,odd" print=false}
+
 	{foreach from=$server_information key=key item=item}
-		<tr class="{cycle}">
+		<tr>
 			<td class="text">{$key}</td>
 			<td class="text">{$item.value}</td>
 		</tr>
@@ -88,9 +88,9 @@
 		<th>{tr}Tiki Fitness{/tr}</th>
 		<th>{tr}Explanation{/tr}</th>
 	</tr>
-	{cycle values="even,odd" print=false}
+
 	{foreach from=$server_properties key=key item=item}
-		<tr class="{cycle}">
+		<tr>
 			<td class="text">{$key}</td>
 			<td class="text">{$item.value}</td>
 			<td class="text">
@@ -125,9 +125,9 @@
 			<th>{tr}Fitness{/tr}</th>
 			<th>{tr}Explanation{/tr}</th>
 		</tr>
-		{cycle values="even,odd" print=false}
+
 		{foreach from=$dirs item=d key=k}
-			<tr class="{cycle}">
+			<tr>
 				<td class="text">{$d|escape}</td>
 				<td class="text">
 					{if $dirsWritable[$k]}
@@ -160,9 +160,9 @@
 			<th>{tr}Tiki Fitness{/tr}</th>
 			<th>{tr}Explanation{/tr}</th>
 		</tr>
-		{cycle values="even,odd" print=false}
+
 		{foreach from=$apache_properties key=key item=item}
-			<tr class="{cycle}">
+			<tr>
 				<td class="text">{$key}</td>
 				<td class="text">{$item.setting}</td>
 				<td class="text">
@@ -200,9 +200,9 @@
 			<th>{tr}Tiki Fitness{/tr}</th>
 			<th>{tr}Explanation{/tr}</th>
 		</tr>
-		{cycle values="even,odd" print=false}
+
 		{foreach from=$iis_properties key=key item=item}
-			<tr class="{cycle}">
+			<tr>
 				<td class="text">{$key}</td>
 				<td class="text">{$item.setting}</td>
 				<td class="text">
@@ -239,9 +239,9 @@
 		<th>{tr}Tiki Fitness{/tr}</th>
 		<th>{tr}Explanation{/tr}</th>
 	</tr>
-	{cycle values="even,odd" print=false}
+
 	{foreach from=$php_properties key=key item=item}
-		<tr class="{cycle}">
+		<tr>
 			<td class="text">{$key}</td>
 			<td class="text">{$item.setting}</td>
 			<td class="text">
@@ -276,9 +276,9 @@
 		<th>{tr}Tiki Fitness{/tr}</th>
 		<th>{tr}Explanation{/tr}</th>
 	</tr>
-	{cycle values="even,odd" print=false}
+
 	{foreach from=$security key=key item=item}
-		<tr class="{cycle}">
+		<tr>
 			<td class="text">{$key}</td>
 			<td class="text">{$item.setting}</td>
 			<td class="text">
@@ -310,9 +310,9 @@
 		<th>{tr}Property{/tr}</th>
 		<th>{tr}Value{/tr}</th>
 	</tr>
-	{cycle values="even,odd" print=false}
+
 	{foreach from=$mysql_variables key=key item=item}
-		<tr class="{cycle}">
+		<tr>
 			<td class="text">{$key}</td>
 			<td class="text">{$item.value}</td>
 		</tr>

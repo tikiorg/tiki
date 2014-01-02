@@ -104,9 +104,9 @@
 				<th>{tr}Options{/tr}</th>
 				<th>{tr}Action{/tr}</th>
 			</tr>
-			{cycle values="odd,even" print=false}
+
 			{section name=user loop=$channels}
-				<tr class="{cycle}">
+				<tr>
 					<td class="id">{$channels[user].pollId}</td>
 					<td class="text">
 						<a class="tablename" href="tiki-poll_results.php?pollId={$channels[user].pollId}">{$channels[user].title|escape}</a>

@@ -25,7 +25,7 @@
 		</tr>
 		{cycle print=false values="even,odd"}
 		{foreach key=k item=it from=$imgstring}
-			<tr class="{cycle}">
+			<tr>
 				<td><input type="checkbox" name="imgs[]" value="{$it[0]}" id="box_{$k}"></td>
 				<td><label for="box_{$k}">{$it[0]}</label></td>
 				<td>{$it[1]}</td>

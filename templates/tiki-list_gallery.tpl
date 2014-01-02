@@ -33,7 +33,7 @@
 </tr>
 {cycle print=false values="even,odd"}
 {section name=changes loop=$images}
-<tr class="{cycle}">
+<tr>
 <td>{$images[changes].imageId}&nbsp;</td>
 <td><a class="imagename" href="tiki-browse_image.php?{if $images[changes].galleryId}galleryId={$images[changes].galleryId}&amp;{/if}imageId={$images[changes].imageId}">{$images[changes].name|truncate:22:"..."}</a>&nbsp;
 {if $tiki_p_admin_galleries eq 'y' or ($user and $user eq $owner)}

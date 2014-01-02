@@ -9,7 +9,7 @@
   <td class="userlistheading"><a class="userlistheading" href="tiki-list_users.php?offset=0&amp;sort_mode={if $sort_mode eq 'score_desc'}score_asc{else}score_desc{/if}">{tr}Score{/tr}</a></td>
 {/if}
 </tr>
-{cycle values="odd,even" print=false}
+
 {section name=changes loop=$listusers}
 <tr>
   <td class="userlist{cycle advance=false}">&nbsp;{$listusers[changes].login|userlink}&nbsp;</td>

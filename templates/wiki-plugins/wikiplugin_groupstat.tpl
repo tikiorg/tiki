@@ -6,10 +6,10 @@
 <th>{tr}Number of Users{/tr}</th>
 <th>{tr}Percentage of Total{/tr}</th>
 </tr>
-{cycle values="even,odd" print=false}
+
 {foreach from=$stats item=stat}
 	{if $stat.group ne 'Anonymous' and $stat.group ne 'Registered'}
-		<tr class="{cycle}">
+		<tr>
 		<td>{$stat.group|escape}</td>
 		<td>{$stat.nb}</td>
 		<td>

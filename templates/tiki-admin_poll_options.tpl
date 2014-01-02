@@ -49,9 +49,9 @@
 			<th>{tr}Votes{/tr}</th>
 			<th>{tr}Action{/tr}</th>
 		</tr>
-		{cycle values="even,odd" print=false}
+
 		{section name=user loop=$channels}
-			<tr class="{cycle}">
+			<tr>
 				<td class="id">{$channels[user].position}</td>
 				<td class="text">{$channels[user].title|escape}</td>
 				<td class="integer">{$channels[user].votes}</td>

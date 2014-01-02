@@ -24,7 +24,7 @@
 	{if !empty($metrics_list)}
 		{cycle print=false values="odd,even"}
 		{foreach from=$metrics_list key=i item=metric}
-			<tr class="{cycle}">
+			<tr>
 				<td class="text">{$metric.metric_name|escape}</td>
 				<td class="text">{$metric.metric_range|escape}</td>
 				<td class="text">{$metric.metric_datatype|escape}</td>
@@ -53,7 +53,7 @@
 	{if !empty($tabs_list)}
 		{cycle print=false values="odd,even"}
 		{foreach from=$tabs_list key=i item=tab}
-			<tr class="{cycle}">
+			<tr>
 				<td class="text">{$tab.tab_name|escape}</td>
 				<td class="integer">{$tab.tab_order|escape}</td>
 				<td class="action">
@@ -78,7 +78,7 @@
 	{if !empty($metrics_assigned_list)}
 		{cycle print=false values="odd,even"}
 		{foreach from=$metrics_assigned_list key=i item=assigned_item}
-			<tr class="{cycle}">
+			<tr>
 				<td class="text">{$metrics_list[$assigned_item.metric_id].metric_name|escape}</td>
 				<td class="text">{$tabs_list[$assigned_item.tab_id].tab_name|escape}</td>
 				<td class="action">

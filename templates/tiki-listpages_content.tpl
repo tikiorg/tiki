@@ -165,7 +165,7 @@
 		{/if}
 	</tr>
 
-	{cycle values="even,odd" print=false}
+
 	{section name=changes loop=$listpages}
 
 	{if isset($mapview) and $mapview}
@@ -176,7 +176,7 @@
 		{assign var='pagefound' value='y'}
 	{/if}
 
-	<tr class="{cycle}">
+	<tr>
 		{if $checkboxes_on eq 'y'}
 			<td class="checkbox-cell">
 				<input type="checkbox" name="checked[]" value="{$listpages[changes].pageName|escape}">

@@ -28,9 +28,9 @@
               </th>
               <th style="width:50px">{tr}Actions{/tr}</th>
             </tr>
-            {cycle values="even,odd" print=false}
+
             {section name=ix loop=$user_pages}
-              <tr class="{cycle}">
+              <tr>
                 <td class="text">
                   <a class="link" title="{tr}View:{/tr} {$user_pages[ix].pageName}" href="tiki-index.php?page={$user_pages[ix].pageName|escape:"url"}">{$user_pages[ix].pageName|truncate:40:"(...)"}</a>
                 </td>
@@ -72,9 +72,9 @@
               <th>{tr}Gallery{/tr}</th>
               <th style="width:50px">{tr}Actions{/tr}</th>
             </tr>
-            {cycle values="even,odd" print=false}
+
             {section name=ix loop=$user_galleries}
-              <tr class="{cycle}">
+              <tr>
                 <td class="text">
                   <a class="link" href="{$user_galleries[ix].galleryId|sefurl:gallery}">{$user_galleries[ix].name}</a>
                 </td>
@@ -106,9 +106,9 @@
               <th>{tr}Article{/tr}</th>
               <th style="width:50px">{tr}Actions{/tr}</th>
             </tr>
-            {cycle values="even,odd" print=false}
+
             {section name=ix loop=$user_articles}
-              <tr class="{cycle}">
+              <tr>
                 <td class="text">
                   <a class="link" href="{$user_articles[ix].articleId|sefurl:article}">{$user_articles[ix].title}</a>
                 </td>
@@ -140,9 +140,9 @@
               <th>{tr}Item{/tr}</th>
               <th>{tr}Tracker{/tr}</th>
             </tr>
-            {cycle values="even,odd" print=false}
+
             {section name=ix loop=$user_items}
-              <tr class="{cycle}">
+              <tr>
                 <td class="text">
                   <a class="link" title="{tr}View{/tr}" href="tiki-view_tracker_item.php?trackerId={$user_items[ix].trackerId}&amp;itemId={$user_items[ix].itemId}">{$user_items[ix].value}</a>
                 </td>
@@ -174,9 +174,9 @@
               <th>{tr}From{/tr}</th>
               <th>{tr}Date{/tr}</th>
             </tr>
-            {cycle values="even,odd" print=false}
+
             {section name=ix loop=$msgs}
-              <tr class="{cycle}">
+              <tr>
                 <td class="text">
                   <a class="link" title="{tr}View{/tr}" href="messu-read.php?offset=0&amp;flag=&amp;flagval=&amp;find=&amp;sort_mode=date_desc&amp;priority=&amp;msgId={$msgs[ix].msgId}">{$msgs[ix].subject}</a>
                 </td>
@@ -208,9 +208,9 @@
             <tr>
               <th>{tr}Tasks{/tr}</th>
             </tr>
-            {cycle values="even,odd" print=false}
+
             {section name=ix loop=$tasks}
-              <tr class="{cycle}">
+              <tr>
                 <td class="text">
                   <a class="link" href="tiki-user_tasks.php?taskId={$tasks[ix].taskId}">{$tasks[ix].title}</a>
                 </td>
@@ -237,9 +237,9 @@
               <th>{tr}Forum topics{/tr}</th>              
               <th>{tr}Date of post{/tr}</th>              
             </tr>
-            {cycle values="even,odd" print=false}
+
             {section name=ix loop=$user_forum_topics}
-              <tr class="{cycle}">
+              <tr>
                 <td class="text">
                   <a class="link" title="{tr}View{/tr}" href="tiki-view_forum_thread.php?comments_parentId={$user_forum_topics[ix].threadId}&amp;forumId={$user_forum_topics[ix].object}">{$user_forum_topics[ix].title}</a>
                 </td>                
@@ -269,9 +269,9 @@
               <th>{tr}Forum replies{/tr}</th>              
               <th>{tr}Date of post{/tr}</th>              
             </tr>
-            {cycle values="even,odd" print=false}
+
             {section name=ix loop=$user_forum_replies}
-              <tr class="{cycle}">
+              <tr>
                 <td class="text">
                   <a class="link" title="{tr}View{/tr}" href="tiki-view_forum_thread.php?comments_parentId={$user_forum_replies[ix].threadId}&amp;forumId={$user_forum_replies[ix].object}">{$user_forum_replies[ix].title}</a>
                 </td>
@@ -301,9 +301,9 @@
               <th>{tr}Blogs{/tr}</th>
               <th style="width:50px">{tr}Actions{/tr}</th>
             </tr>
-            {cycle values="even,odd" print=false}
+
             {section name=ix loop=$user_blogs}
-              <tr class="{cycle}">
+              <tr>
                 <td class="text">
                   <a class="link" title="{tr}View{/tr}" href="{$user_blogs[ix].blogId|sefurl:blog}">{$user_blogs[ix].title}</a>
                 </td>
@@ -330,9 +330,9 @@
               <th>{tr}Blog Posts{/tr}</th>
               <th style="width:50px">{tr}Actions{/tr}</th>
             </tr>
-            {cycle values="even,odd" print=false}
+
             {section name=ix loop=$user_blog_posts}
-              <tr class="{cycle}">
+              <tr>
                 <td class="text">
                   <a class="link" title="{tr}View{/tr}" href="{$user_blog_posts[ix].postId|sefurl:blogpost}">{$user_blog_posts[ix].title|escape}</a>
                 </td>

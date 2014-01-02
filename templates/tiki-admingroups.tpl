@@ -49,9 +49,9 @@
 			<th>{tr}Permissions{/tr}</th>
 			<th style="width: 20px;">&nbsp;</th>
 		</tr>
-		{cycle values="even,odd" print=false}
+
 		{section name=user loop=$users}
-			<tr class="{cycle}">
+			<tr>
 				<td class="checkbox-cell">
 					{if $users[user].groupName ne 'Admins' and $users[user].groupName ne 'Anonymous' and $users[user].groupName ne 'Registered'}
 						<input type="checkbox" name="checked[]" value="{$users[user].groupName|escape}">
@@ -404,10 +404,10 @@ $("#userstracker").change(function () {
 				<th>{self_link _sort_arg='sort_mode_member' _sort_field='expire'}{tr}Expire{/tr}{/self_link}</th>
 				<th>{tr}Action{/tr}</th>
 			</tr>
-			{cycle values="even,odd" print=false}
+
 			<tr>
 				{foreach from=$memberslist item=member}
-					<tr class="{cycle}">
+					<tr>
 					<td class="checkbox-cell"><input type="checkbox" name="members[]" value="{$member.userId}"></td>
 					<td class="username">{$member.login|userlink}</td>
 					<td class="date">{$member.created|tiki_short_datetime}</td>
@@ -445,10 +445,10 @@ $("#userstracker").change(function () {
 				<th>{tr}User{/tr}</th>
 				<th>{tr}Action{/tr}</th>
 			</tr>
-			{cycle values="even,odd" print=false}
+
 			<tr>
 				{foreach from=$bannedlist item=member}
-					<tr class="{cycle}">
+					<tr>
 					<td class="username">{$member|userlink}</td>
 					<td class="action">
 						{self_link user=$member|escape:"url" action=unbanuser group=$groupname|escape:url _title="{tr}Unban user{/tr}"}

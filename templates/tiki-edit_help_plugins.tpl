@@ -23,9 +23,9 @@
 {/if}
 <table id="plugins_help_table" width="95%" class="formcolor">
 	<tr><th>{tr}Description{/tr}</th></tr>
-  {cycle values="even,odd" print=false}
+
   {section name=i loop=$plugins}    {* To modify the template of below: tiki-plugin_help.tpl *}
-    <tr class="{cycle}">
+    <tr>
       <td>
         {if $plugins[i].help eq ''}
           {tr}No description available{/tr}

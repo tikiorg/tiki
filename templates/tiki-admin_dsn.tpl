@@ -41,8 +41,8 @@
 		</th>
 		<th>{tr}Action{/tr}</th>
 	</tr>
-	{cycle values="odd,even" print=false}
-	<tr class="{cycle}">
+
+	<tr>
 		<td class="text">{tr}Local (Tiki database){/tr}</td>
 		<td class="text">{tr}See db/local.php{/tr}</td>
 		<td class="action">
@@ -51,7 +51,7 @@
 		</td>
 	</tr>
 	{section name=user loop=$channels}
-		<tr class="{cycle}">
+		<tr>
 			<td class="text">{$channels[user].name}</td>
 			<td class="text">{$channels[user].dsn}</td>
 			<td class="action">

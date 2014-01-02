@@ -58,7 +58,7 @@
 	</tr>
 	{cycle print=false values="odd,even"}
 	{section name=ix loop=$questions}
-		<tr class="{cycle}">
+		<tr>
 			<td class="text">{$questions[ix].question}</td>
 			<td class="text">{$questions[ix].options[0].optionText}</td>
 			<td class="integer">{$questions[ix].options[0].points}</td>

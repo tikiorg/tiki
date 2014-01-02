@@ -51,9 +51,9 @@
 						<th>{tr}Group{/tr}</th>
 						<th>{tr}Permission{/tr}</th>
 					</tr>
-					{cycle values="even,odd" print=false}
+
 					{foreach from=$content.default item=default}
-						<tr class="{cycle}">
+						<tr>
 							<td class="checkbox-cell"><input type="checkbox" name="groupPerm[]" value='{$default|json_encode|escape}'></td>
 							<td class="text">{$default.group|escape}</td>
 							<td class="text">{$default.perm|escape}</td>
@@ -90,7 +90,7 @@
 					{foreach from=$content.objects item=object}
 						{if !empty($object.special)}
 							{foreach from=$object.special item=special}
-								<tr class="{cycle}">
+								<tr>
 									<td class="checkbox-cell"><input type="checkbox" name="objectPerm[]" value='{$special|json_encode|escape}'></td>
 									<td class="text">{$special.objectName|escape}</td>
 									<td class="text">{$special.group|escape}</td>
@@ -136,7 +136,7 @@
 					{foreach from=$content.category item=object}
 						{if !empty($object.category)}
 							{foreach from=$object.category item=special}
-								<tr class="{cycle}">
+								<tr>
 									<td class="text">{if isset($object.objectName)}{$object.objectName|escape}{else}{$object.objectId|escape}{/if}</td>
 									<td class="text">{$special.group|escape}</td>
 									<td class="text">{$special.perm|escape}</td>

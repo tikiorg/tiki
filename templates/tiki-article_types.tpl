@@ -25,7 +25,7 @@
 				</tr>
 				{cycle print=false values="even,odd"}
 				<input type="hidden" name="type_array[{$types[user].type|escape}]">
-				<tr class="{cycle}">
+				<tr>
 					<td class="integer">{$types[user].article_cnt}</td>
 					<td class="checkbox-cell">
 						<input type="checkbox" name="use_ratings[{$types[user].type|escape}]" {if $types[user].use_ratings eq 'y'}checked="checked"{/if}>
@@ -69,7 +69,7 @@
 					<th>{tr}Creator can edit{/tr}</th>
 					<th colspan="2">{tr}Action{/tr}</th>
 				</tr>
-				<tr class="{cycle}">
+				<tr>
 					<td class="checkbox-cell">
 						<input type="checkbox" name="show_expdate[{$types[user].type|escape}]" {if $types[user].show_expdate eq 'y'}checked="checked"{/if}>
 					</td>
@@ -115,7 +115,7 @@
 				</tr>
 				{cycle print=false values="even,odd"}
 				{foreach from=$types[user].attributes item=att key=attname}
-					<tr class="{cycle}">
+					<tr>
 						<td>{$attname|escape}</td>
 						<td class="action">
 							<a class="link" href="tiki-article_types.php?att_type={$types[user].type|escape:url}&att_remove={$att.relationId|escape:url}">

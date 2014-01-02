@@ -26,7 +26,7 @@
 		{/section}
 	</div>
 {/if}
-{cycle values="odd,even" print=false}
+
 {tabset name="mytiki_user_preference"}
 
 {if $prefs.feature_userPreferences eq 'y'}
@@ -616,7 +616,7 @@
 			  onsubmit='return confirm("{tr _0=$userwatch|escape}Are you really sure you want to delete the account %0?{/tr}");'>
 			{if !empty($userwatch)}<input type="hidden" name="view_user" value="{$userwatch|escape}">{/if}
 			<table class="formcolor">
-				<tr class="{cycle}">
+				<tr>
 					<td></td>
 					<td>
 						<input type='checkbox' name='deleteaccountconfirm' value='1'>

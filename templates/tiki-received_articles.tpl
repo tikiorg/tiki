@@ -194,9 +194,9 @@
 			</th>
 			<th>{tr}Action{/tr}</th>
 		</tr>
-		{cycle values="even,odd" print=false}
+
 		{section name=user loop=$channels}
-			<tr class="{cycle}">
+			<tr>
 				<td class="id">{$channels[user].receivedArticleId}</td>
 				<td class="text">{$channels[user].title|escape}
 					{if $channels[user].type eq 'Review'}(r){/if}

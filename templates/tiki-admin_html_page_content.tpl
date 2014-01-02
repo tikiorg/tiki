@@ -54,9 +54,9 @@
 			</th>
 			<th>{tr}Action{/tr}</th>
 		</tr>
-		{cycle values="odd,even" print=false}
+
 		{section name=user loop=$channels}
-			<tr class="{cycle}">
+			<tr>
 				<td class="text">{$channels[user].zone}</td>
 				<td class="text">
 					{if $channels[user].type eq 'ta'}

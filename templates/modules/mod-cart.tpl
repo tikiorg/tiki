@@ -7,9 +7,9 @@
 			<th style="width:5em;">{tr}Unit cost{/tr}</th>
 			<th style="width:2em;">{tr}Qty{/tr}</th>
 		</tr>
-		{cycle values="odd,even" print=false}
+
 		{foreach from=$cart_content item=item} 
-				<tr class="{cycle}">
+				<tr>
 					<td>
 						{if $item.href}
 							<a href="{$item.href|escape}">{$item.description|escape}</a>
@@ -24,7 +24,7 @@
 					<td style="width:2em;"><input type="text" name="cart[{$item.code|escape}]" style="width:2em;text-align:right;" value="{$item.quantity|escape}"></td>
 				</tr>
 				{foreach from=$item.bundledproducts item=child_item}
-					<tr class="{cycle}">
+					<tr>
 						<td colspan="3">
 							{tr}Bundled Product{/tr} - {$child_item.description|escape} {if $child_item.quantity > 1}(x{$child_item.quantity|escape}){/if}
 						</td>

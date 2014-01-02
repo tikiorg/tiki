@@ -58,9 +58,9 @@
 		{/section}
 		<th>&nbsp;</th>
 	</tr>
-	{cycle values="odd,even" print=false}
+
 	{section name=ix loop=$atts}
-		<tr class="{cycle}">
+		<tr>
 		<td nowrap="nowrap" class="auto">
 		{if $attextra eq 'y'}
 			{assign var=link value='tiki-view_tracker_more_info.php?attId='|cat:$atts[ix].attId}

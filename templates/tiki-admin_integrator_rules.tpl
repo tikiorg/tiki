@@ -123,9 +123,9 @@
   </tr><tr>
     <th colspan="5">{tr}Description{/tr}</th>
   </tr>
-  {cycle values="odd,even" print=false}
+
   {section name=rule loop=$rules}
-    <tr class="{cycle}">
+    <tr>
       <td{if (strlen($rules[rule].description) > 0)} rowspan="2"{/if}>
         {if $rules[rule].enabled ne 'y'}<s>{$rules[rule].ord|escape}</s>
         {else}{$rules[rule].ord|escape}
@@ -143,7 +143,7 @@
 
     {* Show description as colspaned row if it is not an empty *}
     {if (strlen($rules[rule].description) > 0)}
-    </tr><tr class="{cycle}">
+    </tr><tr>
       <td colspan="5" class="text">{$rules[rule].description|escape}</td>
     {/if}
     </tr>

@@ -110,7 +110,7 @@
 		<th>{tr}Action{/tr}</th>
 	</tr>
 	
-	{cycle values="odd,even" print=false}
+
 	{foreach key=k item=channels from=$all}
 		{if count($channels)}
 			{if $view neq 'list'}
@@ -121,7 +121,7 @@
 				</tr>
 			{/if}
 			{section name=user loop=$channels}
-				<tr class="{cycle}">
+				<tr>
 					<td class="text">
 						<a class="link" href="tiki-contacts.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;contactId={$channels[user].contactId}">
 							{$channels[user].firstName}

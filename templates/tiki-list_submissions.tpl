@@ -72,9 +72,9 @@
 			{assign var=numbercol value=$numbercol+1}
 			<th>{tr}Actions{/tr}</th>
 		</tr>
-		{cycle values="odd,even" print=false}
+
 		{section name=changes loop=$listpages}
-			<tr class="{cycle}">
+			<tr>
 				{if $tiki_p_remove_submission eq 'y' or $tiki_p_approve_submission eq 'y'}
 					<td class="checkbox-cell">
 						<input type="checkbox" name="checked[]" value="{$listpages[changes].subId|escape}" {if $listpages[changes].checked eq 'y'}checked="checked" {/if}>

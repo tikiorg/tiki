@@ -158,11 +158,11 @@ Add a value in first check when you create a new admin page. *}
 
 {if $tikifeedback}
 	{remarksbox type="note" title="{tr}Note{/tr}"}
-		{cycle values="odd,even" print=false}
+
 		{tr}The following list of changes has been applied:{/tr}
 		<ul>
 		{section name=n loop=$tikifeedback}
-			<li class="{cycle}">
+			<li>
 				<p>
 			{if $tikifeedback[n].st eq 0}
 				{icon _id=delete alt="{tr}Disabled{/tr}" style="vertical-align: middle"}

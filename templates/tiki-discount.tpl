@@ -18,9 +18,9 @@
 		<th>{tr}Comment{/tr}</th>
 		<th>{tr}Actions{/tr}</th>
 	</tr>
-	{cycle values="odd,even" print=false}
+
 	{foreach from=$discounts.data item=discount}
-	<tr class="{cycle}">
+	<tr>
 		<td class="text">{$discount.code|escape}</td>
 		<td class="text">{$discount.value|escape}{if !strstr($discount.value, '%')} {$prefs.payment_currency|escape}{/if}</td>
 		<td class="date">{$discount.created|tiki_short_date}</td>

@@ -222,11 +222,11 @@ function showDetails( id, domain, profile ) { // {{{
 
 {if isset($profilefeedback)}
 	{remarksbox type="note" title="{tr}Note{/tr}"}
-		{cycle values="odd,even" print=false}
+
 		{tr}The following list of changes has been applied:{/tr}
 		<ul>
 		{section name=n loop=$profilefeedback}
-			<li class="{cycle}">
+			<li>
 				<p>{$profilefeedback[n]}</p>
 			</li>
 		{/section}
@@ -434,9 +434,9 @@ $("#repository, #categories").change(function(){
 							{if !empty($smarty.request.export_show_added)} checked="checked"{/if} />
 				</div>
 				<ul id="prefs_to_export_list" class="profile_export_list"{if $export_type neq "prefs"} style=display:none;"{/if}>
-					{cycle values="odd,even" print=false}
+
 					{foreach from=$modified_list  key="name" item="data"}
-						<li class="{cycle}">
+						<li>
 							{if is_array($data.current.expanded)}
 								{assign var=current value=$data.current.expanded|implode:", "}
 								{assign var=current value="[$current]"}
@@ -465,9 +465,9 @@ $("#repository, #categories").change(function(){
 					{/foreach}
 				</ul>
 				<ul id="modules_to_export_list" class="profile_export_list"{if $export_type neq "modules"} style=display:none;"{/if}>
-					{cycle values="odd,even" print=false}
+
 					{foreach from=$modules_for_export  key="name" item="data"}
-						<li class="{cycle}">
+						<li>
 							<input type="checkbox" name="modules_to_export[{$name}]" value="{$data.name|escape}"
 								   id="modcheckbox_{$name}"{if isset($modules_to_export[$name])} checked="checked"{/if} />
 							<label for="modcheckbox_{$name}">

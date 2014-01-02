@@ -251,9 +251,9 @@
 					{/if}
 				</tr>
 				
-				{cycle values="even,odd" print=false}
+
 				{foreach from=$actionlogs item=actionlog}
-					<tr class="{cycle}">
+					<tr>
 						<td class="checkbox-cell"><input type="checkbox" name="checked[]" value="{$actionlog.actionId}"></td>
 						<td class="username">
 							{if $actionlog.user}{$actionlog.user|escape}{else}{tr}Anonymous{/tr}{/if}
@@ -396,7 +396,7 @@
 					<th>{tr}Log in{/tr}</th>
 				</tr>
 				{foreach key=auser item=time from=$logTimes}
-					<tr class="{cycle}">
+					<tr>
 						{if $selectedUsers|@count gt 0}
 							<td>{$auser}</td>
 						{/if}
@@ -424,7 +424,7 @@
 					{/foreach}
 				</tr>
 				{foreach key=categId item=vol from=$volCateg}
-					<tr class="{cycle}">
+					<tr>
 						<td>{$vol.category}</td>
 						{foreach item=type from=$typeVol} 
 							<td class="{if $vol[$type].add} diffadded{/if}">{if $vol[$type].add}{$vol[$type].add}{else}0{/if}</td>
@@ -451,7 +451,7 @@
 					{/foreach}
 				</tr>
 				{foreach key=categId item=vol from=$volUserCateg}
-					<tr class="{cycle}">
+					<tr>
 						<td>{$vol.category}</td>
 						<td>{$vol.user}</td>
 						{foreach item=type from=$typeVol} 
@@ -475,9 +475,9 @@
 						{if $title ne 'user'}<th>{$title|replace:"/":" "|escape}</th>{/if}
 					{/foreach}
 				</tr>
-				{cycle values="even,odd" print=false}
+
 				{foreach item=stat from=$userActions name=userActions}
-					<tr class="{cycle}">
+					<tr>
 						<td class="username">{$stat.user|escape}</td>
 						{foreach key=a item=nb from=$stat}
 							{if $a ne 'user'}<td class="integer">{$nb}</td>{/if}
@@ -499,9 +499,9 @@
 						{if $title ne 'object' and $title ne 'link'}<th>{$title|replace:"/":" "|escape}</th>{/if}
 					{/foreach}
 				</tr>
-				{cycle values="even,odd" print=false}
+
 				{foreach item=stat from=$objectActions name=objectActions}
-					<tr class="{cycle}">
+					<tr>
 						<td class="text">
 							{if $stat.link}<a href="{$stat.link}" target="_blank" title="{tr}View{/tr}">{$stat.object|escape}</a>{else}{$stat.object|escape}{/if}
 						</td>
@@ -527,7 +527,7 @@
 				{foreach key=user item=room from=$stay_in_big_Times}
 				  {foreach key=room_name item=values from=$room}
 					{foreach key=inc item=value from=$values}
-					  <tr class="{cycle}">
+					  <tr>
 						<td>{$user}</td>
 						<td>{$room_name}</td>
 						<td>{$value|default:'0'}</td>
@@ -562,7 +562,7 @@
 					{/foreach}
 				</tr>
 				{foreach key=categId item=stat from=$statCateg}
-					<tr class="{cycle}">
+					<tr>
 						<td class="text">{$stat.category|escape}</td>
 						{foreach key=a item=nb from=$statCateg[$categId]}
 							{if $a ne 'category'}<td class="integer">{$nb}</td>{/if}
@@ -586,7 +586,7 @@
 					{/foreach}
 				</tr>
 				{foreach key=categUser item=stat from=$statUserCateg}
-					<tr class="{cycle}">
+					<tr>
 						<td class="text">{$stat.category|escape}</td>
 						<td class="username">{$stat.user|escape}</td>
 						{foreach key=a item=nb from=$stat}
@@ -617,7 +617,7 @@
 				</tr>
 				{foreach from=$groupContributions key=group item=contributions}
 					{foreach from=$contributions key=contribution item=stat}
-						<tr class="{cycle}">
+						<tr>
 							<td class="text">{$group|escape}</td>
 							<td class="text">{$contribution|escape}</td>
 							<td class="integer">{$stat.add}</td>
@@ -639,7 +639,7 @@
 				</tr>
 				{foreach from=$userContributions key=user item=contributions}
 					{foreach from=$contributions key=contribution item=stat}
-						<tr class="{cycle}">
+						<tr>
 							<td class="username">{$user|escape}</td>
 							<td class="text">{$stat.name|escape}</td>
 							<td class="integer">{$stat.stat.add}</td>
@@ -664,7 +664,7 @@
 					{/section}
 				</tr>
 				{foreach from=$contributionStat key=contributionId item=contribution}
-					<tr class="{cycle}">
+					<tr>
 						<td>{$contribution.name|escape}</td>
 						{foreach from=$contribution.stat item=stat}
 							<td>
@@ -729,9 +729,9 @@
 				<th>{tr}Action{/tr}</th>
 				<th>{tr}Type{/tr}</th>
 			</tr>
-			{cycle values="even,odd" print=false}
+
 			{foreach from=$action_log_conf_selected item=actionlog}
-				<tr class="{cycle}">
+				<tr>
 					{if $tiki_p_admin eq 'y'}
 						<td class="checkbox-cell">
 							<input type="checkbox" name="{$actionlog.code}" {if $actionlog.status eq 'y' or $actionlog.status eq 'v'}checked="checked"{/if}>

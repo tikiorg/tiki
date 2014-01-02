@@ -112,9 +112,9 @@
 	<th>{self_link _sort_arg='sort_mode' _sort_field='time'}{tr}Date{/tr}{/self_link}</th>
 	{if $tiki_p_admin eq 'y'}<th>{tr}Actions{/tr}</th>{/if}
 </tr>
-{cycle values="odd,even" print=false}
+
 {section name=ix loop=$list_votes}
-<tr class="{cycle}">
+<tr>
 	<td class="username">{$list_votes[ix].user|userlink}</td>
 	<td class="text">{$list_votes[ix].ip|escape}</td>
 	{if $tiki_p_view_poll_choices eq 'y'}<td class="text">{$list_votes[ix].title|escape}</td>{/if}

@@ -481,14 +481,14 @@
 			<th>{tr}Actions{/tr}</th>
 		</tr>
 		
-		{cycle values="odd,even" print=false}
+
 		{section name=ix loop=$comments_coms}
 			{if $userinfo && $comments_coms[ix].lastPost > $userinfo.lastLogin}
 				{assign var="newtopic" value="_new"}
 			{else}
 				{assign var="newtopic" value=""}
 			{/if}
-			<tr class="{cycle}">
+			<tr>
 				{if $tiki_p_admin_forum eq 'y'}
 					<td class="checkbox">
 						<input type="checkbox" name="forumtopic[]" value="{$comments_coms[ix].threadId|escape}" {if isset($smarty.request.forumtopic) and in_array($comments_coms[ix].threadId,$smarty.request.forumtopic)}checked="checked"{/if}>
@@ -637,13 +637,13 @@
 
 {if $forum_info.forum_last_n > 0 && count($last_comments)}
 	{* Last n titles *}
-	{cycle values="odd,even" print=false}
+
 	<table class="table normal">
 		<tr>
 			<th>{tr}Last{/tr} {$forum_info.forum_last_n} {tr}posts in this forum{/tr}</th>
 		</tr>
 		{section name=ix loop=$last_comments}
-			<tr class="{cycle}">
+			<tr>
 				<td>
 					{if $last_comments[ix].parentId eq 0}
 						{assign var="idt" value=$last_comments[ix].threadId}

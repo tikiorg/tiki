@@ -46,7 +46,7 @@
 </div>
 <br>
 
-{cycle values="odd,even" print=false}
+
 {if $view eq 'daily'}
 	<b>
 		<a class="link" href="tiki-minical.php?view={$view}&amp;day={$yesterday|tiki_date_format:"%d"}&amp;mon={$yesterday|tiki_date_format:"%m"}&amp;year={$yesterday|tiki_date_format:"%Y"}">{icon _id='resultset_previous' style="vertical-align:middle"}</a>
@@ -56,7 +56,7 @@
 
 	<table clas="normal" width="100%">
 		{section name=ix loop=$slots}
-			<tr class="{cycle}">
+			<tr>
 				<td>
 					<table>
 						<tr>
@@ -93,7 +93,7 @@
 	<a class="link" href="tiki-minical.php?view={$view}&amp;day={$next_week_start|tiki_date_format:"%d"}&amp;mon={$next_week_start|tiki_date_format:"%m"}&amp;year={$next_week_start|tiki_date_format:"%Y"}">{icon _id='resultset_next'}</a>
 	<table class="table normal">
 		{section name=ix loop=$slots}
-			<tr class="{cycle}">
+			<tr>
 				<td>
 					<table >
 						<tr>
@@ -147,9 +147,9 @@
 					<a href="tiki-minical.php?view={$view}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'topicId_desc'}topicId_asc{else}topicId_desc{/if}">{tr}Topic{/tr}</a>
 				</th>
 			</tr>
-			{cycle values="odd,even" print=false}
+
 			{section name=user loop=$channels}
-				<tr class="{cycle}">
+				<tr>
 					<td style="text-align:center;">
 						<input type="checkbox" name="event[{$channels[user].eventId}]">
 					</td>

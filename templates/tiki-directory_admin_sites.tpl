@@ -92,7 +92,7 @@
       <th> <a href="tiki-directory_admin_sites.php?parent={$parent}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'isValid_desc'}isValid_asc{else}isValid_desc{/if}">{tr}Valid{/tr}</a> </th>
       <th>{tr}Action{/tr}</th>
     </tr>
-    {cycle values="odd,even" print=false}
+
     {section name=user loop=$items}
     <tr class="{cycle advance=false}">
       <td class="checkbox-cell"><input type="checkbox" name="remove[]" value="{$items[user].siteId}"></td>
@@ -105,7 +105,7 @@
       <td class="text">{$items[user].isValid}</td>
       <td class="action"><a class="link" href="tiki-directory_admin_sites.php?parent={$parent}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;siteId={$items[user].siteId}">{icon _id='page_edit'}</a> <a class="link" href="tiki-directory_admin_sites.php?parent={$parent}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$items[user].siteId}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a> </td>
     </tr>
-    <tr class="{cycle}">
+    <tr>
       <td>&nbsp;</td>
       <td class="text" colspan="6"><i> {tr}Directory Categories:{/tr}{assign var=fsfs value=1}
         {section name=ii loop=$items[user].cats}

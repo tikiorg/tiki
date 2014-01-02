@@ -9,9 +9,9 @@
 <th>{self_link _sort_arg='sort_mode' _sort_field='votes' title="{tr}Votes{/tr}"}{tr}Votes{/tr}{/self_link}</th>
 <th>{tr}Action{/tr}</th>
 </tr>
-{cycle values="odd,even" print=false}
+
 {section name=changes loop=$listpages}
-<tr class="{cycle}">
+<tr>
 <td class="text">{$listpages[changes].title|escape}</td>
 <td class="date">{$listpages[changes].publishDate|tiki_short_datetime}</td>
 <td class="text">{$listpages[changes].votes}</td>

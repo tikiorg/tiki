@@ -15,7 +15,7 @@
 <td id="heading">{tr}Comment{/tr}</td>
 <td id="heading">{tr}Action{/tr}</td>
 </tr>
-{cycle values="even,odd" print=false}
+
 {section name=hist loop=$history}
 <tr>
 <td id="{cycle advance=false}">&nbsp;{$history[hist].lastModif|tiki_long_datetime}&nbsp;</td>

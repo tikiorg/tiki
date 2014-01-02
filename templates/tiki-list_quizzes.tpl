@@ -36,10 +36,10 @@
 			</th>
 		{/if}
 	</tr>
-	{cycle values="odd,even" print=false}
+
 	{section name=user loop=$channels}
 		{if ($tiki_p_admin eq 'y') or ($channels[user].individual eq 'n' and $tiki_p_take_quiz eq 'y') or ($channels[user].individual_tiki_p_take_quiz eq 'y')}
-			<tr class="{cycle}">
+			<tr>
 				<td class="text">
 					<a class="tablename" href="tiki-take_quiz.php?quizId={$channels[user].quizId}">{$channels[user].name|escape}</a>
 					<div class="subcomment">

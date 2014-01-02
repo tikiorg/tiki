@@ -68,7 +68,7 @@
 	</tr>
 	{cycle print=false values="odd,even"}
 	{section name=user loop=$channels}
-		<tr class="{cycle}">
+		<tr>
 			<td class="id">{$channels[user].questionId}</td>
 			<td class="integer">{$channels[user].position}</td>
 			<td class="text">{$channels[user].question|escape|nl2br}</td>

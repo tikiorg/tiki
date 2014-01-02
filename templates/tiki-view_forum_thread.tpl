@@ -138,9 +138,9 @@
 		<th>{tr}Created{/tr}</th>
 		<th>{tr}Action{/tr}</th>
 	</tr>
-	{cycle values="odd,even" print=false}
+
 	{foreach from=$atts.data item=att}
-	<tr class="{cycle}">
+	<tr>
 		<td class="icon">{$att.filename|iconify}</td>
 		<td class="text"><a href="tiki-download_forum_attachment.php?attId={$att.attId}" title="{tr}Download{/tr}">{$att.filename|escape}</a></td>
 		<td class="integer">{$att.filesize|kbsize}</td>

@@ -30,9 +30,9 @@
   <th>{tr}Result{/tr}</th>
   <th>{tr}body{/tr}</th>
 </tr>
-{cycle values="odd,even" print=false}
+
 {section name=ix loop=$lines}
-<tr class="{cycle}">
+<tr>
   <td class="text">{$lines[ix].page}</td>
   <td class="text">{$lines[ix].ex}</td>
   <td class="text">{$lines[ix].msg}</td>

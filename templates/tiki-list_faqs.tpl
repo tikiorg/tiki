@@ -24,9 +24,9 @@
 			<th>{tr}Action{/tr}</th>
 		{/if}
 	</tr>
-	{cycle values="odd,even" print=false}
+
 	{section name=user loop=$channels}
-		<tr class="{cycle}">
+		<tr>
 			<td class="text">
 				<a class="tablename" href="tiki-view_faq.php?faqId={$channels[user].faqId}">{$channels[user].title|escape}</a>
 				<div class="subcomment">

@@ -111,7 +111,7 @@
 </th>
 {/if}
 </tr>
-{cycle values="odd,even" print=false}
+
 {section name=hist loop=$history step=-1}
 <tr>
 <td class="{cycle advance=false}">{$history[hist].lastModif|tiki_short_datetime}</td>

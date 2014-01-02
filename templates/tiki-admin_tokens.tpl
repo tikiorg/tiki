@@ -20,7 +20,7 @@
 				<th>{tr}Actions{/tr}</th>
 			</tr>
 			
-			{cycle values="even,odd" print=false}
+
 			{foreach $tokens as $token}
 				<tr>
 					<td>{$token.tokenId}</td>

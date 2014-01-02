@@ -44,9 +44,9 @@
 							<th>{tr}Field{/tr}</th>
 							<th>{tr}Action{/tr}</th>
 						</tr>
-						{cycle values="odd,even" print=false}
+
 						{foreach from=$exts item=ext key=k name=e}
-							<tr class="{cycle}">
+							<tr>
 								<td width="2%">
 									{if not $smarty.foreach.e.first}
 										<a href="?ext_up={$ext.fieldId}" title="{tr}Up{/tr}">{icon _id='resultset_up'}</a>

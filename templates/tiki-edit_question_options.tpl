@@ -32,9 +32,9 @@
 <th>{tr}Action{/tr}</th>
 </tr>
 
-{cycle values="odd,even" print=false}
+
 {section name=user loop=$channels}
-<tr class="{cycle}">
+<tr>
 <td class="id">{$channels[user].optionId}</td>
 <td class="text">{$channels[user].optionText|escape}</td>
 <td class="integer">{$channels[user].points}</td>

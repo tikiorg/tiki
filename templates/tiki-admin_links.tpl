@@ -17,9 +17,9 @@
 		<th>{tr}Type{/tr}</th>
 		<th>{tr}Action{/tr}</th>
 	</tr>
-	{cycle values="odd,even" print=false}
+
 	{section name=user loop=$links}
-		<tr class="{cycle}">
+		<tr>
 			<td class="text">{$links[user].url}</td>
 			<td class="text">{$links[user].title|escape}</td>
 			<td class="integer">{$links[user].hits}</td>

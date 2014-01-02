@@ -8,7 +8,7 @@
 		{/if}
 {/section}
   </tr>
-{cycle values="odd,even" print=false}
+
 {section name=w loop=$cell}
   <tr id="row_{$smarty.section.w.index}" style="height:80px">
   <td width="1%" class="heading weeks"><a {if $prefs.mobile_mode eq "y"}data-role="button" data-inline="true" {/if}href="{$myurl}?viewmode=week&amp;todate={$cell[w][0].day}" title="{tr}View this Week{/tr}">{$weekNumbers[w]}</a></td> {* mobile *}

@@ -39,7 +39,7 @@
 	</tr>
 	{cycle print=false values="even,odd"}
 	{section name=user loop=$topics}
-		<tr class="{cycle}">
+		<tr>
 			<td class="integer">{$topics[user].topicId}</td>
 			<td class="text">
 				<a class="link" href="tiki-view_articles.php?topic={$topics[user].topicId}">{$topics[user].name|escape}</a>

@@ -98,9 +98,9 @@
 		<th>{tr}maxScore{/tr}</th>
 		<th>{tr}Action{/tr}</th>
 	</tr>
-	{cycle values="odd,even" print=false}
+
 	{section name=user loop=$channels}
-		<tr class="{cycle}">
+		<tr>
 			<td class="id">{$channels[user].questionId}</td>
 			<td class="id">{$channels[user].position}</td>
 			<td class="text">{$channels[user].question|escape}</td>

@@ -45,9 +45,9 @@
 				<th>{tr}Email{/tr}</th>
 				<th>{tr}Message{/tr}</th>
 			</tr>
-			{cycle values="odd,even" print=false}
+
 			{section loop=$errors name=ix}
-				<tr class="{cycle}">
+				<tr>
 					<td>{$errors[ix].user|escape}</td>
 					<td>{$errors[ix].email|escape}</td>
 					<td>{$errors[ix].msg|escape}</td>
@@ -94,9 +94,9 @@
 					<th>{tr}Validated{/tr}</th>
 					<th>{tr}Is user{/tr}</th>
 				</tr>
-				{cycle values="even,odd" print=false}
+
 				{foreach from=$subscribers_list item=sub key=ix}
-					<tr class="{cycle}">
+					<tr>
 						<td>{$sub.email|escape}</td>
 						<td>{$sub.valid}</td>
 						<td>{$sub.isUser}</td>

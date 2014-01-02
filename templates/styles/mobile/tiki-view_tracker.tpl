@@ -138,9 +138,9 @@
 						
 						{* ------- Items loop --- *}
 						{assign var=itemoff value=0}
-						{cycle values="odd,even" print=false}
+
 						{section name=user loop=$items}
-							<tr class="{cycle}">
+							<tr>
 								{if $tracker_info.showStatus eq 'y' or ($tracker_info.showStatusAdminOnly eq 'y' and $tiki_p_admin_trackers eq 'y')}
 									<td class="icon">
 										{assign var=ustatus value=$items[user].status|default:"c"}

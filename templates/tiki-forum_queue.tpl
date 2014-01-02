@@ -132,9 +132,9 @@
 {/if}
 <th>{tr}Message{/tr}</th>
 </tr>
-{cycle values="odd,even" print=false}
+
 {section name=ix loop=$items}
-<tr class="{cycle}">
+<tr>
 	<td class="checkbox-cell">
 	  <input type="checkbox" name="msg[{$items[ix].qId}]">
 	</td>

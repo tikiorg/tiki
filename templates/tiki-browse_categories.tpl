@@ -132,9 +132,9 @@
 				{/if}
 			</tr>
 
-			{cycle values="odd,even" print=false}
+
 			{section name=ix loop=$objects}
-				<tr class="{cycle}">
+				<tr>
 					<td class="text">
 						<a href={if empty($objects[ix].sefurl)}"{$objects[ix].href}"{else}"{$objects[ix].sefurl}"{/if} class="catname">{$objects[ix].name|escape|default:'&nbsp;'}</a>
 						<div class="subcomment">{$objects[ix].description|escape|nl2br}</div>

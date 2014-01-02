@@ -36,9 +36,9 @@
 <th>{self_link _sort_arg="sort_mode" _sort_field="ip"}{tr}IP{/tr}{/self_link}</th>
 <th>{self_link _sort_arg="sort_mode" _sort_field="client"}{tr}Client{/tr}{/self_link}</th>
 </tr>
-{cycle values="odd,even" print=false}
+
 {section name=ix loop=$list}
-<tr class="{cycle}">
+<tr>
 <td class="id">{$list[ix].actionId}</td>
 <td class="text">{$list[ix].object|escape}</td>
 <td class="date"><span title="{$list[ix].lastModif|tiki_long_datetime}">{$list[ix].lastModif|tiki_short_datetime}</span></td>

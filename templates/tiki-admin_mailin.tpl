@@ -22,9 +22,9 @@
     <th>{tr}Email{/tr}</th>
     <th>{tr}Leave{/tr}</th>
   </tr>
-  {cycle values="even,odd" print=false}
+
   {section name=ix loop=$accounts}
-    <tr class="{cycle}">
+    <tr>
       <td class="action">
         <a href="tiki-admin_mailin.php?accountId={$accounts[ix].accountId}#add">{icon _id='page_edit'}</a>
         <a href="tiki-admin_mailin.php?remove={$accounts[ix].accountId}" >{icon _id='cross' alt="{tr}Remove{/tr}"}</a>

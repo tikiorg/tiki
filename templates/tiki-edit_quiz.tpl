@@ -37,9 +37,9 @@
 		<th>{tr}Actions{/tr}</th>
 	</tr>
 
-	{cycle values="odd,even" print=false}
+
 	{section name=user loop=$channels}
-		<tr class="{cycle}">
+		<tr>
 			<td class="id">{$channels[user].quizId}</td>
 			<td class="text">
 				{$channels[user].name|escape}

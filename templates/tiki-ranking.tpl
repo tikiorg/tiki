@@ -21,7 +21,7 @@
 	        <input type="submit" class="btn btn-default" name="selrank" value="{tr}View{/tr}">
     </form>
 </div>
-{cycle values="odd,even" print=false}
+
 {section name=ix loop=$rankings}
     <div class="table-responsive">
 	<table class="table normal">
@@ -31,7 +31,7 @@
 			<th>{$rankings[ix].y}</th>
 		</tr>
 		{section name=xi loop=$rankings[ix].data}
-			<tr class="{cycle}">
+			<tr>
 				<td class="id">{$smarty.section.xi.index_next}</td>
 				<td class="text">
 					<a class="link" href="{$rankings[ix].data[xi].href}">{if $rankings[ix].data[xi].name eq ""}-{else}{$rankings[ix].data[xi].name|escape}{/if}</a>

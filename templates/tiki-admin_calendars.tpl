@@ -52,9 +52,9 @@
 					<th>{tr}Perms{/tr}</th>
 					<th>{tr}Action{/tr}</th>
 				</tr>
-				{cycle values="odd,even" print=false}
+
 				{foreach key=id item=cal from=$calendars}
-					<tr class="{cycle}">
+					<tr>
 						<td class="id">{$id}</td>
 						<td class="text">
 							<a class="tablename" href="tiki-admin_calendars.php?calendarId={$id}&cookietab=2" title="{tr}Edit{/tr}">{$cal.name|escape}</a>

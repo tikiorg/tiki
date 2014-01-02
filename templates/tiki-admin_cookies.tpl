@@ -68,7 +68,7 @@
 	</tr>
 	{cycle values="odd,even" print=false advance=false}
 	{section name=user loop=$channels}
-		<tr class="{cycle}">
+		<tr>
 			<td class="id">{$channels[user].cookieId}</td>
 			<td class="text">{$channels[user].cookie|escape}</td>
 			<td class="action">

@@ -17,9 +17,9 @@
     <th>{tr}Name{/tr}</th>
     <th>{tr}Description{/tr}</th>
   </tr>
-  {cycle values="odd,even" print=false}
+
   {section name=rep loop=$repositories}
-    <tr class="{cycle}">
+    <tr>
       <td class="text">
         <a href="tiki-integrator.php?repID={$repositories[rep].repID|escape}">
           {$repositories[rep].name}

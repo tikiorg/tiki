@@ -22,8 +22,8 @@
 			<th>{tr}Tax automation{/tr}</th>
 			<th>{tr}Status{/tr}</th>
 		</tr>
-{cycle values="odd,even" print=false}{foreach item=element from=$books}
-				<tr class="{cycle}">
+{foreach item=element from=$books}
+				<tr>
 					<td><a href="tiki-accounting.php?bookId={$element.bookId}">{$element.bookId}</a></td>
 					<td><a href="tiki-accounting.php?bookId={$element.bookId}">{$element.bookName}</a></td>
 					<td>{$element.bookStartDate|tiki_short_datetime}</td>

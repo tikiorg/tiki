@@ -12,13 +12,13 @@
 {tabset name="mytiki_user_preference"}
 {tab name="{tr}Accounts{/tr}"}
     <h2>{tr}Accounts{/tr}</h2>
-{cycle values="odd,even" print=false}
+
 <form action="tiki-socialnetworks.php" method="post">
 <table class="formcolor" style="width:100%;">
 <tr>
  <th colspan="2"><img src="img/icons/twitter_t_logo_32.png" alt="Twitter" width="16" height="16"> Twitter</th>
 </tr>
-<tr class="{cycle}">
+<tr>
  <td colspan="2">
  {if $twitterRegistered==0}{remarksbox type="note" title="{tr}Note{/tr}"}
   {tr}To use Twitter integration, the site admin must register this site as an application at <a href="http://twitter.com/oauth_clients/" target="_blank">http://twitter.com/oauth_clients/</a> and allow write access for the application.{/tr}
@@ -39,7 +39,7 @@
 <tr>
  <th colspan="2"><img src="img/icons/facebook-logo_32.png" alt="Facebook" width="16" height="16"> Facebook</th>
 </tr>
-<tr class="{cycle}">
+<tr>
  <td colspan="2">
  {if $facebookRegistered==0}{remarksbox type="note" title="{tr}Note{/tr}"}
   {tr}To use Facebook integration, the site admin must register this site as an application at <a href="http://developers.facebook.com/setup/" target="_blank">http://developers.facebook.com/setup/</a> first.{/tr}
@@ -59,7 +59,7 @@
 </tr>
 <tr><th colspan="2">bit.ly</th>
 </tr>
-<tr class="{cycle}">
+<tr>
 {if $prefs.socialnetworks_bitly_sitewide=='y'}
 <td colspan="2">
 {remarksbox type="note" title="{tr}Note{/tr}"}
@@ -70,7 +70,7 @@
 <td>{tr}bit.ly Login{/tr}</td>
 <td><input type="text" name="bitly_login" value="{$bitly_login}" style="width:95%;"></td>
 </tr>
-<tr class="{cycle}">
+<tr>
 <td>{tr}bit.ly Key{/tr}</td>
 <td><input type="text" name="bitly_key" value="{$bitly_key}" style="width:95%;"></td>
 {/if}

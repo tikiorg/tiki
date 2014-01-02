@@ -46,9 +46,9 @@
 		<th>{self_link _sort_arg='sort_mode' _sort_field='comment'}{tr}Comment{/tr}{/self_link}</th>
 		<th>{tr}Action{/tr}</th>
 	</tr>
-	{cycle values="odd,even" print=false}
+
 	{section name=changes loop=$lastchanges}
-		<tr class="{cycle}">
+		<tr>
 			<td class="date">{$lastchanges[changes].lastModif|tiki_short_datetime}</td>
 			<td class="text">
 				<a href="{$lastchanges[changes].pageName|sefurl}" class="tablename" title="{$lastchanges[changes].pageName|escape}">

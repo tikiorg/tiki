@@ -9,9 +9,9 @@
 				<th>{tr}Perspective{/tr}</th>
 				<th>{tr}Actions{/tr}</th>
 			</tr>
-			{cycle values="odd,even" print=false}
+
 			{foreach from=$perspectives item=persp}
-				<tr class="{cycle}">
+				<tr>
 					<td class="text">{$persp.name|escape}</td>
 					<td class="action">
 						<a href="tiki-switch_perspective.php?perspective={$persp.perspectiveId|escape:url}">{icon _id=arrow_right alt="{tr}Switch to{/tr}"}</a>

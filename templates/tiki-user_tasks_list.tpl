@@ -36,7 +36,7 @@
 				</a>
 			</th>
 		</tr>
-		{cycle values="odd,even" print=false}
+
 		{section name=task_i loop=$tasklist}
 			<tr>
 				<td class="prio{$tasklist[task_i].priority}">

@@ -27,7 +27,7 @@
 			<th style="text-align:right;">{self_link _sort_arg='sort_mode' _sort_field='items'}{tr}Items{/tr}{/self_link}</th>
 			<th style="width:650px">{tr}Action{/tr}</th>
 		</tr>
-		{cycle values="odd,even" print=false}
+
 		{foreach from=$trackers item=tracker}
 			<tr>
 				<td class="id">

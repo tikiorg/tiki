@@ -227,11 +227,11 @@
 			{/if}
 			<th>{tr}Actions{/tr}</th>
 		</tr>
-		{cycle values="odd,even" print=false}
+
 		{section name=changes loop=$galleries}
 			{if ($filter eq 'topgal' and $galleries[changes].parentgallery eq -1) or ($filter eq 'parentgal' and $galleries[changes].parentgal eq 'y') or ($filter eq '')}
 				{if $galleries[changes].visible eq 'y' or $tiki_p_admin_galleries eq 'y'}
-					<tr class="{cycle}">
+					<tr>
 						{if $prefs.gal_list_name eq 'y'}
 							<td><a class="galname" href="{$galleries[changes].galleryId|sefurl:gallery}">{$galleries[changes].name}</a></td>
 						{/if}

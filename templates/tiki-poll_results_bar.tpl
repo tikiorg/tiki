@@ -5,10 +5,10 @@
 </div>
 {/if}
 <div class="pollresults">
-{cycle values="even,odd" print=false}
+
 <table class="pollresults">
 	{section name=ix loop=$poll_info.options}
-		<tr class="{cycle}">
+		<tr>
 			<td class="pollr">
 				{if $smarty.section.x.total > 1}<a href="tiki-poll_results.php?{if !empty($scoresort_desc)}scoresort_asc{else}scoresort_desc{/if}={$smarty.section.ix.index}">{/if}
 				{$poll_info.options[ix].title|escape}

@@ -71,10 +71,10 @@
 		<th style="width:100%">{tr}Groups{/tr}</th>
 		{/if}
 	</tr>
-	{cycle values="odd,even" print=false}
+
 	{foreach from=$all_groups item=g key=i}
 		{if $g ne 'Anonymous'}
-			<tr class="{cycle}">
+			<tr>
 				{if !empty($cat) && !empty($desc)}
 					<td class="text"><label for="group_watch{$i}">{$g|escape}</label></td>
 					{if $isTop ne 'y'}

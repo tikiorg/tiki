@@ -47,9 +47,9 @@
 				<th>{tr}Keywords{/tr}</th>
 				<th>{tr}Actions{/tr}</th>	
 			</tr>	
-			{cycle values="even,odd" print=false}
+
 			{section name=i loop=$existing_keywords}
-				<tr class="{cycle}">
+				<tr>
 					<td class="text"><a href="{$existing_keywords[i].page|sefurl}">{$existing_keywords[i].page|escape}</a></td>
 					<td class="text">{$existing_keywords[i].keywords|escape}</td>
 					<td class="action">

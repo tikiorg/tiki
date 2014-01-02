@@ -101,9 +101,9 @@
     <th><a href="tiki-directory_admin_categories.php?parent={$parent}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'editorGroup_desc'}editorGroup_asc{else}editorGroup_desc{/if}">{tr}editor{/tr}</a></th>
     <th>{tr}Action{/tr}</th>
   </tr>
-  {cycle values="odd,even" print=false}
+
   {section name=user loop=$items}
-  <tr class="{cycle}">
+  <tr>
     <td class="text"><a class="tablename" href="tiki-directory_admin_categories.php?parent={$items[user].categId}">{$items[user].name|escape}</a></td>
     <td class="text">{$items[user].childrenType}</td>
     <td class="integer">{$items[user].viewableChildren}</td>

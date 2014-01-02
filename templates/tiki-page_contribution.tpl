@@ -43,7 +43,7 @@
   <td class="text">{$stats.deleted_printables}</td>
   <td class="text">({$stats.deleted_printables_percent|percent}%)</td>
  </tr>{/foreach}
-  <tr class="{cycle}">
+  <tr>
   <td class="text"><strong>{tr}Total{/tr}</strong></td>
   <td class="text"><strong>{$total.words}</strong></td>
   <td class="text"><strong>(100.0%)</strong></td>

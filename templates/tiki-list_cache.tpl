@@ -6,7 +6,7 @@
 
 {include file='find.tpl'}
 
-{cycle values="odd,even" print=false}
+
 <div class="table-responsive">
 <table class="table normal">
 	<tr>
@@ -19,7 +19,7 @@
 		<th>{tr}Action{/tr}</th>
 	</tr>
 	{section name=changes loop=$listpages}
-		<tr class="{cycle}">
+		<tr>
 			<td class="text">
 				<a class="link" href="{$listpages[changes].url}">{$listpages[changes].url}</a>
 			</td>

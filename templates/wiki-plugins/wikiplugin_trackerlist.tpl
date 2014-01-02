@@ -193,7 +193,7 @@ $('.exportButton a').click(function() {
 	{/if}
 {/capture}
 
-	{cycle values="odd,even" print=false}
+
 	{assign var=itemoff value=0}
 	{if empty($tpl)}
 		<tbody>
@@ -211,12 +211,12 @@ $('.exportButton a').click(function() {
 			{capture name=popup}
 <div class="panel panel-default">
 	<table style="width:100%">
-				{cycle values="odd,even" print=false}
+
 				{foreach from=$items[user].field_values item=f}
 					{if in_array($f.fieldId, $popupfields)}
 						{capture name=popupl}{trackeroutput field=$f item=$items[user] url=$url editable=in_array($f.fieldId, $editableFields)}{/capture}
 						{if !empty($smarty.capture.popupl)}
-							<tr>{if count($popupfields) > 1}<th class="{cycle advance=false}">{$f.name}</th>{/if}<td class="{cycle}">{$smarty.capture.popupl}</td></tr>
+							<tr>{if count($popupfields) > 1}<th class="{cycle advance=false}">{$f.name}</th>{/if}<td>{$smarty.capture.popupl}</td></tr>
 						{/if}
 					{/if}
 				{/foreach}
@@ -231,7 +231,7 @@ $('.exportButton a').click(function() {
 
 		{if empty($tpl)}
 
-	<tr class="{cycle}">
+	<tr>
 			{if $checkbox}
 		<td><input type="{$checkbox.type}" name="{$checkbox.name}[]" value="{if $checkbox.ix > -1}{$items[user].field_values[$checkbox.ix].value|escape}{else}{$items[user].itemId}{/if}"></td>
 			{/if}

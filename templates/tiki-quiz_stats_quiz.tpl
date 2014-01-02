@@ -39,9 +39,9 @@ Set the names of the table headings to reflect the names of the db
 <a href="tiki-quiz_stats_quiz.php?quizId={$quizId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'resultId_desc'}resultId_asc{else}resultId_desc{/if}">{tr}Result{/tr}</a></th>
 <th>{tr}P/F{/tr}</th>
 </tr>
-{cycle values="odd,even" print=false}
+
 {section name=user loop=$channels}
-<tr class="{cycle}">
+<tr>
   <td class="username">{$channels[user].user|userlink}</td>
   <td class="date">{$channels[user].timestamp|tiki_short_datetime}</td>
   <td class="date">{$channels[user].timeTaken} secs</td>

@@ -32,12 +32,12 @@
 	<th>{tr}Old{/tr}</th>
 	<th>{tr}New{/tr}</th>
 </tr> 
-{cycle values="odd,even" print=false}
+
 {foreach from=$history item=hist}
 	{if $hist.value neq $hist.new}
 		{assign var='fieldId' value=$hist.fieldId}
 		{assign var='field_value' value=$field_option[$fieldId]}
-		<tr class="{cycle}">
+		<tr>
 			<td class="id">{$hist.version|escape}</td>
 			<td class="date">{$hist.lastModif|tiki_short_datetime}</td>
 			<td class="username">{$hist.user|username}</td>

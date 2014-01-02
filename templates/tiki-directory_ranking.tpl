@@ -15,7 +15,7 @@
     <th><a href="tiki-directory_ranking.php?parent={$parent}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'country_desc'}country_asc{else}country_desc{/if}">{tr}Country{/tr}</a></th>
     <th><a href="tiki-directory_ranking.php?parent={$parent}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'hits_desc'}hits_asc{else}hits_desc{/if}">{tr}Hits{/tr}</a></th>
   </tr>
-  {cycle values="odd,even" print=false}
+
   {section name=user loop=$items}
   <tr class="{cycle advance=false}">
     <td class="text"><a class="link" href="tiki-directory_redirect.php?siteId={$items[user].siteId}" {if $prefs.directory_open_links eq 'n'}target='_blank'{/if}>{$items[user].name}</a></td>
@@ -25,7 +25,7 @@
     {/if}
     <td class="integer">{$items[user].hits}</td>
   </tr>
-  <tr class="{cycle}">
+  <tr>
     <td>&nbsp;</td>
     <td class="text" colspan="4"><i>{tr}Directory Categories:{/tr}{assign var=fsfs value=1}
       {section name=ii loop=$items[user].cats}

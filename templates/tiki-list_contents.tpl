@@ -19,9 +19,9 @@
 		    <th>{self_link _sort_arg='sort_mode' _sort_field='future'}{tr}Future vers{/tr}{/self_link}</th>
 		    <th>{tr}Action{/tr}</th>
 		  </tr>
-			{cycle values="odd,even" print=false}
+
 			{section name=changes loop=$listpages}
-			  <tr class="{cycle}">
+			  <tr>
 			    <td class="id">{$listpages[changes].contentId}</td>
 			    <td class="text">
 			      {if $listpages[changes].contentLabel neq ''}

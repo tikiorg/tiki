@@ -35,9 +35,9 @@ function tf_export_submit(fm) {
 <div class="table-responsive">
 <table class="table normal">
 {if isset($line) && $line eq 'y'}<tr>{/if}
-{cycle values="even,odd" print=false}
+
 {foreach from=$filters item=filter}
-	{if !isset($line) || $line ne 'y'}<tr class="{cycle}">{/if}
+	{if !isset($line) || $line ne 'y'}<tr>{/if}
 		<td>
 		{if $indrop ne 'y' or ($filter.format ne 'd' and  $filter.format ne 'm')}<label for="f_{$filter.fieldId}">{$filter.name|tr_if}</label>{/if}
 		{if $showFieldId eq 'y'} -- {$filter.fieldId}{/if}

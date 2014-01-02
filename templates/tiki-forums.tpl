@@ -84,7 +84,7 @@
 
 	{assign var=section_old value=""}
 	{section name=user loop=$channels}
-		{cycle values="odd,even" print=false}
+
 		{assign var=section value=$channels[user].section}
 		{if $section ne $section_old}
 			{assign var=section_old value=$section}
@@ -99,7 +99,7 @@
 			{/if}
 		{/if}
 
-		<tr class="{cycle}">
+		<tr>
 			<td class="text">
 				<span style="float:left">
 					{if (isset($channels[user].individual) and $channels[user].individual eq 'n')

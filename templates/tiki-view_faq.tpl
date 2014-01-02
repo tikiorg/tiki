@@ -109,9 +109,9 @@
 				<tr>
 					<th>{tr}Suggested questions{/tr}</th>
 				</tr>
-				{cycle values="odd,even" print=false}
+
 				{section name=ix loop=$suggested}
-					<tr class="{cycle}">
+					<tr>
 						<td class="text">{$suggested[ix].question}</td>
 					</tr>
 				{/section}

@@ -23,7 +23,7 @@
 		<tr><td>{tr}Forum Type:{/tr}</td><td>
 		<select name="forum">
 		
-		{cycle values="odd,even" print=false}
+
 		{section name=ftype loop=$fi_types}
 		<option value="{$fi_types[ftype]}">{$fi_types[ftype]}</option>
 		{/section}
@@ -93,7 +93,7 @@ End hiding of unfinished section... *}
 		<select name="ftype">
 		
 		{* List all forums that are supported. *}
-		{cycle values="odd,even" print=false}
+
 		{section name=ftype loop=$fi_types}
 		<option value="{$fi_types[ftype]}">{$fi_types[ftype]}</option>
 		{/section}
@@ -173,9 +173,9 @@ End hiding of unfinished section... *}
 	<th>Posts</th>
 	</tr>
 
-	{cycle values="odd,even" print=false}
+
 	{section name=fforum loop=$fromForums}
-	<tr class="{cycle}">
+	<tr>
 	<td>
           <input type="radio" name="fForumid" value="{$fromForums[fforum].id}">
         </td>
@@ -199,9 +199,9 @@ End hiding of unfinished section... *}
 	<th>Posts</th>
 	</tr>
 
-	{cycle values="odd,even" print=false}
+
 	{section name=tforum loop=$toForums}
-	<tr class="{cycle}">
+	<tr>
 	<td>
           <input type="radio" name="tForumid" value="{$toForums[tforum].forumId}">
         </td>

@@ -19,9 +19,9 @@
 				<th>{tr}Options{/tr}</th>
 				<th>{tr}Action{/tr}</th>
 			</tr>
-			{cycle values="odd,even" print=false}
+
 			{section name=user loop=$channels}
-				<tr class="{cycle}">
+				<tr>
 					<td class="id">{$channels[user].menuId}</td>
 					<td class="text">
 						{if $tiki_p_edit_menu_option eq 'y' and $channels[user].menuId neq 42}

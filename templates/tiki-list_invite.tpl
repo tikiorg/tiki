@@ -39,9 +39,9 @@
 <th>{self_link _sort_arg='sort_mode' _sort_field='email'}{tr}Email{/tr}{/self_link}</th>
 <th>{self_link _sort_arg='sort_mode' _sort_field='status'}{tr}Status{/tr}{/self_link}</th>
 </tr>
-{cycle values="odd,even" print=false}
+
 {foreach item=invited from=$inviteds}
-	<tr class="{cycle}">
+	<tr>
 	{if $tiki_p_admin eq 'y'}
 		<td class="text">{$invited.inviter|userlink}</td>
 	{/if}

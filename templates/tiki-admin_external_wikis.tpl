@@ -40,9 +40,9 @@
 		</th>
 		<th>{tr}Action{/tr}</th>
 	</tr>
-	{cycle values="odd,even" print=false}
+
 	{section name=user loop=$channels}
-		<tr class="{cycle}">
+		<tr>
 			<td class="text">{$channels[user].name}</td>
 			<td class="text">{$channels[user].extwiki}</td>
 			<td class="action">

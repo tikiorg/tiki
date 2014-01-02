@@ -44,7 +44,7 @@
 		<th></th>
 	</tr>
 	
-	{cycle values="even,odd" print=false}
+
 	{section name=ix loop=$comments}{assign var=id value=$comments[ix].threadId}
 		{capture name=over_actions}
 			{strip}

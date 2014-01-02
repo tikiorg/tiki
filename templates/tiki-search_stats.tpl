@@ -21,9 +21,9 @@
 <!-- How can we increase the number of items displayed on a page? -->
 
 </tr>
-{cycle values="odd,even" print=false}
+
 {section name=user loop=$channels}
-  <tr class="{cycle}">
+  <tr>
     <td class="text">{$channels[user].term}</td>
     <td class="integer">{$channels[user].hits}</td>
   </tr>

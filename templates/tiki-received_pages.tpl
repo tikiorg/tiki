@@ -79,9 +79,9 @@
 			</th>
 			<th>{tr}Action{/tr}</th>
 		</tr>
-		{cycle values="even,odd" print=false}
+
 		{section name=user loop=$channels}
-			<tr class="{cycle}">
+			<tr>
 				<td class="id">{$channels[user].receivedPageId}</td>
 				{if $channels[user].pageExists ne ''}
 					<td class="text">
@@ -137,10 +137,10 @@
 			</th>
 			<th>{tr}Action{/tr}</th>
 		</tr>
-		{cycle values="even,odd" print=false}
+
 		{section name=user loop=$structures}
 			{if $structures[user].structureName eq $structures[user].pageName}
-				<tr class="{cycle}">
+				<tr>
 					<td class="text">&nbsp;</td>
 					<td class="id">{$structures[user].receivedPageId}</td>
 					<td class="text">{$structures[user].pageName}</td>
@@ -156,7 +156,7 @@
 				</tr>
 				{section name=ix loop=$structures}
 					{if $structures[ix].structureName eq $structures[user].structureName}
-						<tr class="{cycle}">
+						<tr>
 							<td class="checkbox-cell">
 								<input type="checkbox" name="checked[]" value="{$structures[ix].pageName|escape}" >
 							</td>

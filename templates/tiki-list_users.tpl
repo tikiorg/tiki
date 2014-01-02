@@ -20,9 +20,9 @@
 		{/if}
 		{if $prefs.feature_community_list_distance eq 'y'}<th>{tr}Distance (km){/tr}&nbsp;</th>{/if}
 	</tr>
-	{cycle values="odd,even" print=false}
+
 	{section name=changes loop=$listusers}
-		<tr class="{cycle}">
+		<tr>
 			<td class="username">&nbsp;{$listusers[changes].login|userlink}&nbsp;</td>
 			{if $prefs.feature_community_list_name eq 'y' and $prefs.user_show_realnames neq 'y'}
 				<td class="text">&nbsp;{$listusers[changes].realName}&nbsp;</td>

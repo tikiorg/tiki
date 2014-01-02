@@ -69,10 +69,10 @@
 		<th>{tr}Expiration{/tr}</th>
 		<th>{tr}Action{/tr}</th>
 	</tr>
-	{cycle values="even,odd" print=false}
+
 	{section name=user loop=$users}
 		{if $users[user].groupName != 'Anonymous'}
-			<tr class="{cycle}">
+			<tr>
 				<td class="text">
 					{if $tiki_p_admin eq 'y'} {* only full admins can manage groups, not tiki_p_admin_users *}
 						<a class="link" href="tiki-admingroups.php?group={$users[user].groupName|escape:"url"}{if $prefs.feature_tabs ne 'y'}#2{/if}" title="{tr}Edit{/tr}">
