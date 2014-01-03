@@ -20,5 +20,9 @@
 {set var=f_status value=$item.status}
 {set var=f_itemUser value=$item.itemUser}
 {* ------------------------------------ *}
-{include file="$wiki" item=$item}
+{if $force_separate_compile eq 'y'}
+	{include file="$wiki" item=$item compile_id=$f_itemId}
+{else}
+    {include file="$wiki" item=$item}
+{/if}
 {/strip}

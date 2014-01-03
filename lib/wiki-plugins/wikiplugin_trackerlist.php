@@ -721,6 +721,18 @@ function wikiplugin_trackerlist_info()
 					 array('text' => tra('No'), 'value' => 'n')
 				 )
 			 ),
+			 'force_separate_compile' => array(
+				'required' => false,
+				'name' => tra('Force separate compiles for each itemId'),
+				'description' => tra('Instead of forcing a complete smarty tpl(recompile), it simply compiles separately for each itemId'),
+				'filter' => 'alpha',
+				'default' => 'y',
+				'options' => array(
+					array('text' => '', 'value' => ''),
+					array('text' => tra('Yes'), 'value' => 'y'),
+					array('text' => tra('No'), 'value' => 'n')
+				)
+			 ),
 		), $tsparams
 	);
 	return array(
@@ -768,6 +780,10 @@ function wikiplugin_trackerlist($data, $params)
 	extract($params, EXTR_SKIP);
 
 	$skip_status_perm_check = false;
+
+	if($force_separate_compile == 'y') {
+		$smarty->assign('force_separate_compile', 'y');
+	}
 
 	if ($prefs['feature_trackers'] != 'y' || !isset($trackerId) || !($tracker_info = $trklib->get_tracker($trackerId))) {
 		return $smarty->fetch("wiki-plugins/error_tracker.tpl");
