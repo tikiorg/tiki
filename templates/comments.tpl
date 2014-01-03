@@ -319,5 +319,16 @@ $('#editpostform').submit( function() {
 });
 {/jq}
 {/if}
+{jq}
+    var $forum = $("#editpostform");
+    $forum.submit(function() {
+        // prevent double submission
+        if (!$forum.data("sub")) {
+            $forum.modal('Save in Progress...');
+            $forum.data("sub", true);
+            $forum.submit();
+        }
+    });
+{/jq}
 {* End of Post dialog *}
 

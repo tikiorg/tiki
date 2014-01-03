@@ -788,3 +788,14 @@
 		if (js_anonymous_name) document.getElementById('anonymous_name').value = js_anonymous_name;
 	{/jq}
 {/if}
+{jq}
+    var $forum = $("#editpageform");
+    $forum.submit(function() {
+        // prevent double submission
+        if (!$forum.data("sub")) {
+            $forum.modal('Save in Progress...');
+            $forum.data("sub", true);
+            $forum.submit();
+        }
+    });
+{/jq}
