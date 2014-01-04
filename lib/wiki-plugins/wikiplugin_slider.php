@@ -43,12 +43,12 @@ function wikiplugin_slider_info()
 				'name' => tra('Theme'),
 				'description' => tra('The theme to use in slider.'),
 				'filter' => 'striptags',
-				'accepted' => 'name of the theme you want to use',
+				'accepted' => 'Name of the theme you want to use. Choose one from: default | construction | cs-portfolio | metallic | minimalist-round | minimalist-square.',
 				'default' => 'default',
 				'options' => array(
 					array('text' => 'default', 'value' => ''),
 					array('text' => 'construction', 'value' => 'construction'),
-					array('text' => 'portfolio', 'value' => 'portfolio'),
+					array('text' => 'cs-portfolio', 'value' => 'cs-portfolio'),
 					array('text' => 'metallic', 'value' => 'metallic'),
 					array('text' => 'minimalist-round', 'value' => 'minimalist-round'),
 					array('text' => 'minimalist-square', 'value' => 'minimalist-square')
@@ -335,7 +335,7 @@ function wikiplugin_slider($data, $params)
 	if (isset($theme) && !empty($theme)) {
 		switch (strtolower($theme)) {
 			case 'construction':
-			case 'portfolio':
+			case 'cs-portfolio':
 			case 'metallic':
 			case 'minimalist-round':
 			case 'minimalist-square':
