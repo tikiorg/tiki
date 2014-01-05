@@ -13,119 +13,108 @@
 {else}
 	<h2>{tr}Create new template{/tr}</h2>
 {/if}
-<form action="tiki-admin_content_templates.php" method="post">
+<form action="tiki-admin_content_templates.php" method="post" class="form-horizontal" role="form">
 	<input type="hidden" name="templateId" value="{$templateId|escape}">
-	<table class="formcolor">
-		<tr>
-			<td><label for="name">{tr}Name:{/tr} (*)</label></td>
-			<td>
-				<input type="text" maxlength="255" size="40" id="name" name="name" value="{$info.name|escape}"> 
+	<div class="form-group">
+        <label class="col-sm-3 control-label" for="name">{tr}Name:{/tr} *</label>
+        <div class="col-sm-9">
+			<input type="text" maxlength="255" class="form-control" id="name" name="name" value="{$info.name|escape}">
 				{if $emptyname}
-					<span class="attention">{tr}Name field is mandatory{/tr}</span>
+					<span class="attention alert-warning">{tr}Name field is mandatory{/tr}</span>
 				{/if}
-			</td>
-		</tr>
-		<tr>
-			<td>{tr}Use in:{/tr}</td>
-			<td>
-				{$toolbar_section='admin'}
-				{if $prefs.feature_cms_templates eq 'y'}
-					<input type="checkbox" name="section_cms" {if $info.section_cms eq 'y'}checked="checked"{/if}> 
-					{tr}CMS{/tr} ({tr}Articles{/tr})
-					{if $info.section_cms eq 'y'}{$toolbar_section='cms'}{/if}
-					<br>
-				{/if}
-				{if $prefs.feature_wiki_templates eq 'y'}
-					<label><input type="checkbox" name="section_wiki" {if $info.section_wiki eq 'y'}checked="checked"{/if}>
-					{tr}Wiki{/tr}</label>
-					{if $info.section_wiki eq 'y'}{$toolbar_section='wiki page'}{/if}
-					<br>
-				{/if}
-				{if $prefs.feature_file_galleries_templates eq 'y'}
-					<label><input type="checkbox" name="section_file_galleries" {if $info.section_file_galleries eq 'y'}checked="checked"{/if}>
-					{if $info.section_file_galleries eq 'y'}{$toolbar_section='admin'}{/if}
-					{tr}File Galleries{/tr}</label>
-					<br>
-				{/if}
-				{if $prefs.feature_newsletters eq 'y'}
-					<label><input type="checkbox" name="section_newsletters" {if $info.section_newsletters eq 'y'}checked="checked"{/if}>
-					{if $info.section_newsletters eq 'y'}{$toolbar_section='newsletters'}{/if}
-					{tr}Newsletters{/tr}</label>
-					<br>
-				{/if}
-				{if $prefs.feature_events eq 'y'}
-					<label><input type="checkbox" name="section_events" {if $info.section_events eq 'y'}checked="checked"{/if}>
-					{if $info.section_events eq 'y'}{$toolbar_section='calendar'}{/if}
-					{tr}Events{/tr}</label>
-					<br>
-				{/if}
-				{if $prefs.feature_html_pages eq 'y'}
-					<label><input type="checkbox" name="section_html" {if $info.section_html eq 'y'}checked="checked"{/if}>
-					{if $info.section_html eq 'y'}{$toolbar_section='wiki page'}{/if}
-					{tr}HTML Pages{/tr}</label>
-					<br>
-				{/if}
-				{if ($prefs.feature_cms_templates ne 'y') and ($prefs.feature_wiki_templates ne 'y') and ($prefs.feature_file_galleries_templates ne 'y') and ($prefs.feature_newsletters ne 'y') and ($prefs.feature_events ne 'y') and ($prefs.feature_html_pages ne 'y')}
-					{tr}No features are configured to use templates.{/tr}
-				{/if}
-			</td>
-		</tr>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-3 control-label" for="section_css">{tr}Use in:{/tr}</label>
+        <div class="col-sm-9">
+	    	{$toolbar_section='admin'}
+			{if $prefs.feature_cms_templates eq 'y'}
+                <div class="col-sm-3 checkbox-inline">
+                    <label for="section_cms">{tr}CMS{/tr} ({tr}Articles{/tr})</label>
+				    <input type="checkbox" name="section_cms" id="section_cms" {if $info.section_cms eq 'y'}checked="checked"{/if}>
+				    {if $info.section_cms eq 'y'}{$toolbar_section='cms'}{/if}
+                </div>
+			{/if}
+			{if $prefs.feature_wiki_templates eq 'y'}
+                <div class="col-sm-3 checkbox-inline">
+				    <label for="section_wiki">{tr}Wiki{/tr}</label>
+                    <input type="checkbox" name="section_wiki" id="section_wiki" {if $info.section_wiki eq 'y'}checked="checked"{/if}>
+				    {if $info.section_wiki eq 'y'}{$toolbar_section='wiki page'}{/if}
+                </div>
+			{/if}
+			{if $prefs.feature_file_galleries_templates eq 'y'}
+                <div class="col-sm-3 checkbox-inline">
+				    <label for="section_file_galleries">{tr}File Galleries{/tr}</label>
+                    <input type="checkbox" name="section_file_galleries" id="section_file_galleries" {if $info.section_file_galleries eq 'y'}checked="checked"{/if}>
+				    {if $info.section_file_galleries eq 'y'}{$toolbar_section='admin'}{/if}
+                </div>
+			{/if}
+			{if $prefs.feature_newsletters eq 'y'}
+                <div class="col-sm-3 checkbox-inline">
+				    <label for="section_newsletters" >{tr}Newsletters{/tr}</label><input type="checkbox" name="section_newsletters" id="section_newsletters" {if $info.section_newsletters eq 'y'}checked="checked"{/if}>
+				    {if $info.section_newsletters eq 'y'}{$toolbar_section='newsletters'}{/if}
+                </div>
+			{/if}
+			{if $prefs.feature_events eq 'y'}
+                <div class="col-sm-3 checkbox-inline">
+				    <label for="section_events">{tr}Events{/tr}</label><input type="checkbox" name="section_events" id="section_events" {if $info.section_events eq 'y'}checked="checked"{/if}>
+				    {if $info.section_events eq 'y'}{$toolbar_section='calendar'}{/if}
+                </div>
+			{/if}
+			{if $prefs.feature_html_pages eq 'y'}
+                <div class="col-sm-3 checkbox-inline">
+				    <label for="section_html">{tr}HTML Pages{/tr}</label><input type="checkbox" name="section_html" id="section_html" {if $info.section_html eq 'y'}checked="checked"{/if}>
+				    {if $info.section_html eq 'y'}{$toolbar_section='wiki page'}{/if}
+                </div>
+			{/if}
+			{if ($prefs.feature_cms_templates ne 'y') and ($prefs.feature_wiki_templates ne 'y') and ($prefs.feature_file_galleries_templates ne 'y') and ($prefs.feature_newsletters ne 'y') and ($prefs.feature_events ne 'y') and ($prefs.feature_html_pages ne 'y')}
+				{tr}No features are configured to use templates.{/tr}
+			{/if}
+		</div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-3 control-label" for="type-selector">{tr}Template Type:{/tr}</label>
+        <div class="col-sm-9">
+			<select name="template_type" id="type-selector" class="form-control">
+				<option value="static"{if $info.template_type eq 'static'} selected="selected"{/if}>{tr}Text area{/tr}</option>
+				<option value="page"{if $info.template_type eq 'page'} selected="selected"{/if}>{tr}Wiki Page{/tr}</option>
+			</select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-3 control-label" for="is_html">{tr}Is HTML{/tr}</label>
+	    <div class="col-sm-9 checkbox-inline">
+			<input type="checkbox" name="section_wiki_html" id="is_html" class="form=control" {if $info.section_wiki_html eq 'y'}checked="checked"{/if}>
+		</div>
+	</div>
+    <div class="form-group type-cond for-page">
+		<label class="col-sm-3 control-label" for="page_name">{tr}Page Name:{/tr}</label>
+        <div class="col-sm-9">
+			<input type="text" name="page_name" id="page_name" value="{$info.page_name}">
+			{autocomplete element='input[name=page_name]' type='pagename'}
+        </div>
+	</div>
 
-		<tr>
-			<td>{tr}Template Type:{/tr}</td>
-			<td>
-				<select name="template_type" id="type-selector">
-					<option value="static"{if $info.template_type eq 'static'} selected="selected"{/if}>{tr}Text area{/tr}</option>
-					<option value="page"{if $info.template_type eq 'page'} selected="selected"{/if}>{tr}Wiki Page{/tr}</option>
-				</select>
-			</td>
-		</tr>
+    <div class="form-group type-cond for-static">
+	    <label class="col-sm-3 control-label" for="editwiki">{tr}Template:{/tr}</label>
+        <div class="col-sm-9">
+		    {if $prefs.feature_wysiwyg eq 'y' and $info.section_wiki_html eq 'y'}
+			    {$use_wysiwyg='y'}
+			    <input type="hidden" name="allowhtml" value="on">
+			    {if $prefs.wysiwyg_htmltowiki eq 'y'}{$is_html = 'y'}{else}{$is_html = 'n'}{/if}
+			{else}
+				{$use_wysiwyg='n'}
+				{$is_html = 'n'}
+			{/if}
+			{textarea id="editwiki" name="content" switcheditor="y" _class="form-control" _wysiwyg=$use_wysiwyg _is_html=$is_html section=$toolbar_section}{$info.content}{/textarea}
+		</div>
+    </div>
+    <div class="form-group text-center">
+		<input type="submit" name="preview" class="btn btn-default" value="{tr}Preview{/tr}" onclick="needToConfirm=false;">
+        <input type="submit" name="save" class="btn btn-default" value="{tr}Save{/tr}" onclick="needToConfirm=false;">
+    </div>
 
-		<tr class="type-cond for-static">
-			<td>
-				{tr}Is HTML{/tr}
-			</td>
-			<td>
-				<input type="checkbox" name="section_wiki_html" {if $info.section_wiki_html eq 'y'}checked="checked"{/if}>
-			</td>
-		</tr>
-		
-		<tr class="type-cond for-page">
-			<td>{tr}Page Name:{/tr}</td>
-			<td>
-				<input type="text" name="page_name" value="{$info.page_name}">
-				{autocomplete element='input[name=page_name]' type='pagename'}
-			</td>
-		</tr>
-
-		<tr class="type-cond for-static">
-			<td colspan="2">
-				<label for="editwiki">{tr}Template:{/tr}</label>
-			</td>
-		</tr>
-		<tr class="type-cond for-static">
-			<td colspan="2">
-				{if $prefs.feature_wysiwyg eq 'y' and $info.section_wiki_html eq 'y'}
-					{$use_wysiwyg='y'}
-					<input type="hidden" name="allowhtml" value="on">
-					{if $prefs.wysiwyg_htmltowiki eq 'y'}{$is_html = 'y'}{else}{$is_html = 'n'}{/if}
-				{else}
-					{$use_wysiwyg='n'}
-					{$is_html = 'n'}
-				{/if}
-				{textarea id="editwiki" name="content" switcheditor="y" _wysiwyg=$use_wysiwyg _is_html=$is_html section=$toolbar_section}{$info.content}{/textarea}
-			</td>
-		</tr>
-
-		<tr>
-			<td/>
-			<td>
-				<input type="submit" name="save" class="btn btn-default" value="{tr}Save{/tr}" onclick="needToConfirm=false;">
-				<input type="submit" name="preview" class="btn btn-default" value="{tr}Preview{/tr}" onclick="needToConfirm=false;">
-			</td>
-		</tr>
-	</table>
-	{jq}
+    {jq}
 		$('#type-selector').change( function( e ) {
 			$('.type-cond').hide();
 			var val = $('#type-selector').val();
