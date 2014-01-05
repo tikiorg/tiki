@@ -71,7 +71,7 @@
 							<th>{tr}Groups{/tr}</th>
 							<th>{tr}Action{/tr}</th>
 						</tr>
-						{cycle print=false values="even,odd"}
+
 						{foreach from=$assigned_modules[$zone_initial] item=module name=assigned_foreach}
 							<tr>
 								<td>{$module.name|escape}</td>
@@ -153,7 +153,7 @@
 			<th>{tr}Title{/tr}</th>
 			<th>{tr}Action{/tr}</th>
 		</tr>
-		{cycle print=false values="even,odd"}
+
 		{section name=user loop=$user_modules}
 			<tr>
 				<td class="text">{$user_modules[user].name|escape}</td>

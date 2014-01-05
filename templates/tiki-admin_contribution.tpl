@@ -26,7 +26,7 @@
 
 <h2>{tr}Settings{/tr}</h2>
 <form action="tiki-admin_contribution.php?page=features" method="post" class="form-horizontal" role="form">
-	{cycle print=false values="even,odd"}
+
     <div class="form-group">
         <div class="checkbox">
             <label class="col-sm-11 col-sm-offset-1" for=feature_contribution_mandatory">
@@ -109,7 +109,7 @@
 		<th>{tr}Description{/tr}</th>
 		<th>{tr}Actions{/tr}</th>
 	</tr>
-	{cycle print=false values="even,odd"}
+
 	{section name=ix loop=$contributions}
 		<tr>
 			<td class="text">{$contributions[ix].name|escape}</td>

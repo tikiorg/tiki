@@ -23,7 +23,7 @@
 					<th>{tr}Show author{/tr}</th>
 					<th>{tr}Show publish date{/tr}</th>
 				</tr>
-				{cycle print=false values="even,odd"}
+
 				<input type="hidden" name="type_array[{$types[user].type|escape}]">
 				<tr>
 					<td class="integer">{$types[user].article_cnt}</td>
@@ -113,7 +113,7 @@
 					<th>{tr}Custom attribute{/tr}</th>
 					<th>{tr}Action{/tr}</th>
 				</tr>
-				{cycle print=false values="even,odd"}
+
 				{foreach from=$types[user].attributes item=att key=attname}
 					<tr>
 						<td>{$attname|escape}</td>

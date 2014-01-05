@@ -216,7 +216,7 @@ if ($("#assignstructure").prop("checked")) {
 			{/foreach}
 				<th class="tips" title="{tr}A couple of userdefined permissions are currently assigned (See tab Assign Permissions){/tr}">Advanced</th>
 			</tr>
-			{cycle print=false values="even,odd"}
+			
 			{section name=grp loop=$groups}
 			<tr>
 				<td>

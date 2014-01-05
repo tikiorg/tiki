@@ -266,7 +266,7 @@
 				<th>{tr}Name{/tr}</th>
 				<th>{tr}Action{/tr}</th>
 			</tr>
-			{cycle print=false values="even,odd"}
+
 			{section name=ix loop=$zones}
 				<tr>
 					<td class="text">{$zones[ix].zone|escape}</td>

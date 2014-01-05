@@ -31,7 +31,7 @@
 <th><a href="tiki-list_gallery.php?galleryId={$galleryId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'user_desc'}user_asc{else}user_desc{/if}">{tr}User{/tr}</a></th>
 <th><a href="tiki-list_gallery.php?galleryId={$galleryId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'filesize_desc'}filesize_asc{else}filesize_desc{/if}">{tr}Filesize{/tr}</a></th>
 </tr>
-{cycle print=false values="even,odd"}
+
 {section name=changes loop=$images}
 <tr>
 <td>{$images[changes].imageId}&nbsp;</td>

@@ -94,7 +94,7 @@
 			<th>{self_link _sort_arg="sort_mode" _sort_field="user"}{tr}User / Group{/tr}{/self_link}</th>
 			<th>{tr}Action{/tr}</th>
 		</tr>
-		{cycle print=false values="even,odd"}
+
 		{section name=user loop=$channels}
 			<tr>
 				<td class="checkbox-cell">

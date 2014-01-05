@@ -152,7 +152,7 @@
 					</tr>
 				</thead>
 				<tbody>
-				{cycle print=false values="even,odd"}
+
 				{section name=user loop=$users}
 					{if $users[user].editable}
 						{capture assign=username}{$users[user].user|escape}{/capture}

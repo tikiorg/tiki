@@ -23,7 +23,7 @@
 			<th style="width:80px"><a href="javascript:void(0);">{tr}Filesize{/tr}</a></th>
 			<th style="width:80px"><a href="javascript:void(0);">{tr}Filetype{/tr}</a></th>
 		</tr>
-		{cycle print=false values="even,odd"}
+
 		{foreach key=k item=it from=$imgstring}
 			<tr>
 				<td><input type="checkbox" name="imgs[]" value="{$it[0]}" id="box_{$k}"></td>

@@ -37,7 +37,7 @@
 		{if $prefs.feature_submissions eq 'y'}<th>{tr}Submissions{/tr}</th>{/if}
 		<th>{tr}Actions{/tr}</th>
 	</tr>
-	{cycle print=false values="even,odd"}
+
 	{section name=user loop=$topics}
 		<tr>
 			<td class="integer">{$topics[user].topicId}</td>

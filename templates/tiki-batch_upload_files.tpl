@@ -24,7 +24,7 @@
 			<th width="80"><a href="javascript:void(0);">{tr}Filesize{/tr}</a></th>
 			<th width="80"><a href="javascript:void(0);">{tr}Filetype{/tr}</a></th>
 		</tr>
-		{cycle print=false values="even,odd"}
+
 		{foreach key=k item=it from=$filestring}
 			<tr>
 				<td class="checkbox-cell">
