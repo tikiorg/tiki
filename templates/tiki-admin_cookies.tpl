@@ -5,44 +5,32 @@
 {/remarksbox}
 
 <h2>{tr}Create/edit cookies{/tr}</h2>
-<form action="tiki-admin_cookies.php" method="post">
-	<input type="hidden" name="cookieId" value="{$cookieId|escape}">
-	<table class="formcolor">
-		<tr>
-			<td>{tr}Cookie:{/tr}</td>
-			<td>
-				<input type="text" maxlength="255" size="40" name="cookie" value="{$cookie|escape}">
-			</td>
-		</tr>
-		<tr>
-			<td>&nbsp;</td>
-			<td>
-				<input type="submit" class="btn btn-default btn-sm" name="save" value="{tr}Save{/tr}">
-			</td>
-		</tr>
-	</table>
+<form action="tiki-admin_cookies.php" method="post" class="form-horizontal" role="form">
+    <input type="hidden" name="cookieId" value="{$cookieId|escape}">
+    <div class="form-group">
+        <label class="col-sm-3 control-label" for="cookie">{tr}Cookie:{/tr}</label>
+		<div class="col-sm-9">
+			<input type="text" maxlength="255" class="form-control" id="cookie" name="cookie" value="{$cookie|escape}">
+        </div>
+    </div>
+    <div class="form-group text-center">
+		<input type="submit" class="btn btn-default btn-sm" name="save" value="{tr}Save{/tr}">
+    </div>
 </form>
 
 <h2>{tr}Upload Cookies from textfile{/tr}</h2>
-<form enctype="multipart/form-data" action="tiki-admin_cookies.php" method="post">
-	<table class="formcolor">
-		<tr>
-			<td>{tr}Upload from disk:{/tr}</td>
-			<td>
-				<input type="hidden" name="MAX_FILE_SIZE" value="1000000000">
-				<input name="userfile1" type="file">
-			</td>
-		</tr>
-		<tr>
-			<td>&nbsp;</td>
-			<td>
-				<input type="submit" class="btn btn-default btn-sm" name="upload" value="{tr}Upload{/tr}">
-			</td>
-		</tr>
-	</table>
+<form enctype="multipart/form-data" action="tiki-admin_cookies.php" method="post" class="form-horizontal" role="form">
+    <div class="form-group">
+        <label class="col-sm-3 control-label" for="cookie">{tr}Upload from disk:{/tr}</label>
+        <div class="col-sm-9">
+			<input type="hidden" name="MAX_FILE_SIZE" value="1000000000">
+			<input name="userfile1" type="file" class="form-control">
+		</div>
+	</div>
+    <div class="form-group text-center">
+        <input type="submit" class="btn btn-default btn-sm" name="upload" value="{tr}Upload{/tr}">
+	</div>
 </form>
-
-<br>
 
 <h2>{tr}Cookies{/tr}</h2>
 {if $channels}
@@ -80,7 +68,7 @@
 		</tr>
 	{sectionelse}
 		{norecords _colspan=3}
-	{/section}>
+	{/section}
 </table>
 </div>
 
