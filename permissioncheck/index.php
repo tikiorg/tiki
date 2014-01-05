@@ -259,7 +259,7 @@
 ?>
  </table></div>
  <div>&nbsp;</div>
- <form method="post"><input type="text" name="usersubmittedfile" size="42"> <input type="submit" class="btn btn-default btn-sm btn-sm" name="checkfile" value="check path or file"></form>
+ <form method="post"><input type="text" name="usersubmittedfile" size="42"> <input type="submit" class="btn btn-default btn-sm" name="checkfile" value="check path or file"></form>
  <p><a href="./">permissioncheck</a></p>
  <p><a href="./create_new_htaccess.php">create new_htaccess</a></p>
  <p class="block">

@@ -1,6 +1,6 @@
 <form id="{$search_location_id|escape}" method="get" action="" class="map-location-search">
 	<input type="search" name="address" placeholder="{tr}Location{/tr}"/>
-	<input type="submit" class="btn btn-default btn-sm btn-sm" value="{tr}Search{/tr}"/>
+	<input type="submit" class="btn btn-default btn-sm" value="{tr}Search{/tr}"/>
 </form>
 {jq}
 	var id = '#{{$search_location_id|escape}}';
