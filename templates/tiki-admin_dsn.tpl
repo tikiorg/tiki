@@ -5,28 +5,23 @@
 {/remarksbox}
 
 <h2>{tr}Create/edit DSN{/tr}</h2>
-<form action="tiki-admin_dsn.php" method="post">
+<form action="tiki-admin_dsn.php" method="post" class="form-horizontal" role="form">
 	<input type="hidden" name="dsnId" value="{$dsnId|escape}">
-	<table class="formcolor">
-		<tr>
-		<td>{tr}Name:{/tr}</td>
-		 <td>
-			<input type="text" maxlength="255" size="10" name="name" value="{$info.name|escape}">
-			</td>
-		</tr>
-		<tr>
-			<td>{tr}DSN:{/tr}</td>
-			<td>
-				<input type="text" maxlength="255" size="40" name="dsn" value="{$info.dsn|escape}">
-			</td>
-		</tr>
-		<tr>
-			<td>&nbsp;</td>
-			<td>
-				<input type="submit" class="btn btn-default btn-sm" name="save" value="{tr}Save{/tr}">
-			</td>
-		</tr>
-	</table>
+    <div class="form-group">
+        <label class="col-sm-3 control-label" for="name">{tr}Name:{/tr}</label>
+        <div class="col-sm-9">
+			<input type="text" maxlength="255" name="name" id="name" class="form-control" value="{$info.name|escape}">
+		</div>
+	</div>
+    <div class="form-group">
+        <label class="col-sm-3 control-label" for="dsn">{tr}DSN:{/tr}</label>
+        <div class="col-sm-9">
+			<input type="text" maxlength="255" class="form-control" name="dsn" id="dsn" value="{$info.dsn|escape}">
+		</div>
+	</div>
+	<div class="form-group text-center">
+		<input type="submit" class="btn btn-default btn-sm" name="save" value="{tr}Save{/tr}">
+	</div>
 </form>
 
 <h2>{tr}DSN{/tr}</h2>
@@ -68,30 +63,51 @@
 {pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}
 
 <h2>{tr}Content Authentication{/tr}</h2>
-<form id="source-form" method="post" action="{service controller=auth_source}">
+<form id="source-form" method="post" action="{service controller=auth_source}" class="form-horizontal" role="form">
 	<fieldset>
 		<legend>{tr}Identification{/tr}</legend>
-		<label>
-			{tr}Identifier:{/tr}
-			<select name="existing">
-				<option value="">{tr}New{/tr}</option>
-			</select>
-		</label>
-		<input type="text" name="identifier">
-		<label>{tr}URL:{/tr} <input type="url" name="url"/></label>
-		<label>
-			{tr}Type:{/tr}
-			<select name="method">
-				<option value="basic">{tr}HTTP Basic{/tr}</option>
-				<option value="post">{tr}HTTP Session / Login{/tr}</option>
-				<option value="get">{tr}HTTP Session / Visit{/tr}</option>
-			</select>
-		</label>
+        <div class="form-group">
+		    <label class="col-sm-3 control-label">{tr}Identifier:{/tr}</label>
+            <div class="col-sm-3">
+    			<select name="existing" class="form-control">
+	    			<option value="">{tr}New{/tr}</option>
+		    	</select>
+            </div>
+            <div class="col-sm-4">
+        		<input type="text" name="identifier" class="form-control">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label" for="url">{tr}URL:{/tr}</label>
+            <div class="col-sm-4">
+                <input type="url" name="url" id="url" class="form-control" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label" for="method">{tr}Type:{/tr}</label>
+            <div class="col-sm-4">
+    			<select name="method" id="method">
+	    			<option value="basic">{tr}HTTP Basic{/tr}</option>
+		    		<option value="post">{tr}HTTP Session / Login{/tr}</option>
+			    	<option value="get">{tr}HTTP Session / Visit{/tr}</option>
+		    	</select>
+		    </div>
+        </div>
 	</fieldset>
 	<fieldset class="method basic">
 		<legend>{tr}HTTP Basic{/tr}</legend>
-		<label>{tr}Username:{/tr} <input type="text" name="basic_username"></label>
-		<label>{tr}Password:{/tr} <input type="password" name="basic_password"></label>
+        <div class="form-group">
+		    <label class="col-sm-3 control-label" for="basic_username">{tr}Username:{/tr}</label>
+            <div class="col-sm-9">
+                <input type="text" name="basic_username" id="basic_username" class="form-control">
+            </div>
+        </div>
+        <div class="form-group">
+		    <label class="col-sm-3 control-label" for="basic_password">{tr}Password:{/tr}</label>
+            <div class="col-sm-9">
+                <input type="password" name="basic_password" id="basic_password" class="form-control">
+            </div>
+        </div>
 	</fieldset>
 	<fieldset class="method post">
 		<legend>{tr}HTTP Session / Login{/tr}</legend>
@@ -116,8 +132,10 @@
 		<label>{tr}URL:{/tr} <input type="url" name="get_url"></label>
 	</fieldset>
 	<fieldset>
-		<input type="submit" class="btn btn-default btn-sm" name="save" value="{tr}Save{/tr}">
-		<input type="submit" class="btn btn-default btn-sm" name="delete" value="{tr}Delete{/tr}">
+        <div class="form-group text-center">
+    		<input type="submit" class="btn btn-default btn-sm" name="save" value="{tr}Save{/tr}">
+	    	<input type="submit" class="btn btn-default btn-sm" name="delete" value="{tr}Delete{/tr}">
+        </div>
 	</fieldset>
 </form>
 {jq}
