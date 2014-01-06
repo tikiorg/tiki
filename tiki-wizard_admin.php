@@ -137,7 +137,7 @@ foreach ($pages as $page) {
 	if ($cnt <= 9) {
 		$cnt = '&nbsp;&nbsp;'.$cnt;
 	}
-	$toc .= $cnt.' '.'<a ';
+	$toc .= '<li><a ';
 	$cssClasses .= 'adminWizardTOCItem ';
 	if ($stepNr == $reqStepNr) {
 		$cssClasses .= 'highlight ';
@@ -150,7 +150,7 @@ foreach ($pages as $page) {
 		$css = 'class="'.$cssClasses.'" ';
 	}
 	$toc .= $css;
-	$toc .= 'href="'.$url.'">'.$page->pageTitle().'</a><br>';
+	$toc .= 'href="'.$url.'">'.$page->pageTitle().'</a></li>';
 	$stepNr++;
 }
 
