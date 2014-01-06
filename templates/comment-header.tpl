@@ -31,19 +31,19 @@
 		{/if}
 					
 		{if $tiki_p_forums_report eq 'y'}
-			{self_link report=$comment.threadId _icon='delete' class="btn btn-default btn-small" _alt="{tr}Report this post{/tr}" _title="{tr}Report this post{/tr}"}{/self_link}
+			{self_link report=$comment.threadId _icon='delete' _class="btn btn-default btn-small" _alt="{tr}Report this post{/tr}" _title="{tr}Report this post{/tr}"}{/self_link}
 		{/if}
 					
 		{if $user and $prefs.feature_notepad eq 'y' and $tiki_p_notepad eq 'y' and $forumId}
-			{self_link savenotepad=$comment.threadId _icon='disk' class="btn btn-default btn-small" _alt="{tr}Save to notepad{/tr}" _title="{tr}Save to notepad{/tr}"}{/self_link}
+			{self_link savenotepad=$comment.threadId _icon='disk' _class="btn btn-default btn-small" _alt="{tr}Save to notepad{/tr}" _title="{tr}Save to notepad{/tr}"}{/self_link}
 		{/if}
 	
 		{if $user and $prefs.feature_user_watches eq 'y' and $display eq ''}
 		{if $first eq 'y'}
 		{if $user_watching_topic eq 'n'}
-			{self_link watch_event='forum_post_thread' watch_object=$comments_parentId watch_action='add' class="btn btn-default btn-small" _icon='eye' _alt="{tr}Monitor this Topic{/tr}" _title="{tr}Monitor this Topic{/tr}"}{/self_link}
+			{self_link watch_event='forum_post_thread' watch_object=$comments_parentId watch_action='add' _class="btn btn-default btn-small" _icon='eye' _alt="{tr}Monitor this Topic{/tr}" _title="{tr}Monitor this Topic{/tr}"}{/self_link}
 		{else}
-			{self_link watch_event='forum_post_thread' watch_object=$comments_parentId watch_action='remove' class="btn btn-default btn-small" _icon='no_eye' _alt="{tr}Stop Monitoring this Topic{/tr}" _title="{tr}Stop Monitoring this Topic{/tr}"}{/self_link}
+			{self_link watch_event='forum_post_thread' watch_object=$comments_parentId watch_action='remove' _class="btn btn-default btn-small" _icon='no_eye' _alt="{tr}Stop Monitoring this Topic{/tr}" _title="{tr}Stop Monitoring this Topic{/tr}"}{/self_link}
 		{/if}
 		{if $prefs.feature_group_watches eq 'y' and ( $tiki_p_admin_users eq 'y' or $tiki_p_admin eq 'y' )}
 			<a class="btn btn-default btn-small" href="tiki-object_watches.php?objectId={$comments_parentId|escape:"url"}&amp;watch_event=forum_post_thread&amp;objectType=forum&amp;objectName={$comment.title|escape:"url"}&amp;objectHref={'tiki-view_forum_thread.php?comments_parentId='|cat:$comments_parentId|cat:'&forumId='|cat:$forumId|escape:"url"}" class="icon">{icon _id='eye_group' alt="{tr}Group Monitor{/tr}"}</a>
