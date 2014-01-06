@@ -39,3 +39,13 @@
 	{if !isset($notable) || $notable neq 'y'}
     {/if}
 {/if}
+
+{if $prefs.feature_theme_control_autocategorize eq 'y'}
+ {jq}
+  if ('{{$smarty.session.tc_theme_cat}}') {
+        if ($('.tree ul[data-id="{{$prefs.feature_theme_control_parentcategory}}"] input[type=checkbox]:checked').length == 0) { 
+       $('#categ-{{$smarty.session.tc_theme_cat}}').prop("checked", true);
+     }
+  }
+ {/jq}
+{/if}

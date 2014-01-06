@@ -43,6 +43,9 @@ if ($prefs['feature_theme_control'] == 'y') {
 	}
 	
 	if ($tc_theme) {
+		if ($prefs['feature_theme_control_savesession'] == 'y' && !empty($tc_theme_option)) {
+			$_SESSION['tc_theme'] = $tc_theme_option;
+		}
 		if ($old_tc_theme) {
 			$headerlib->drop_cssfile($tikilib->get_style_path('', '', $old_tc_theme));
 			$headerlib->drop_cssfile($tikilib->get_style_path($old_tc_theme, $old_tc_theme_option, $old_tc_theme_option));

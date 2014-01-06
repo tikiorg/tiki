@@ -10,7 +10,7 @@ function prefs_feature_list($partial = false)
 
 	global $prefs;
 
-	$catree = array('-1' => tra('None'));
+	$catree = $catlist = array('-1' => tra('None'));
 
 	if (! $partial && isset($prefs['feature_categories']) && $prefs['feature_categories'] == 'y') {
 		global $categlib;
@@ -21,6 +21,7 @@ function prefs_feature_list($partial = false)
 		$catree['0'] = tra('All');
 
 		foreach ($all_categs as $categ) {
+			$catlist[$categ['categId']] = $categ['name'] . " (" .$categ['categId'] . ")";
 			$catree[$categ['categId']] = $categ['categpath'];
 		}
 	}
@@ -1716,6 +1717,9 @@ function prefs_feature_list($partial = false)
 			'description' => tra('Assign different themes to different sections, categories, and objects'),
 			'keywords' => tra('design themes'),
 			'type' => 'flag',
+			'dependencies' => array(
+				'feature_categories',
+			),
 			'default' => 'n',
 			'view' => 'tiki-theme_control.php',
 		),
@@ -2827,6 +2831,29 @@ function prefs_feature_list($partial = false)
 			'type' => 'flag',
 			'default' => 'y',
 			'tags' => array('advanced'),
+		),
+		'feature_theme_control_savesession' => array(
+			'name' => tra('Store session variable for current theme'),
+			'description' => tra('Store a session variable for current theme so that it can  be used for auto-selecting a category when categorizing'),
+			'type' => 'flag',
+			'default' => 'n',
+		),
+		'feature_theme_control_parentcategory' => array(
+			'name' => tra('Parent category of theme control categories'),
+			'description' => tra('Choose the parent category that contains categories used in theme control'),
+			'type' => 'list',
+			'options' => $catlist,
+			'dependencies' => array(
+				'feature_categories',
+			),
+			'default' => 'n',
+		),
+		'feature_theme_control_autocategorize' => array(
+			'name' => tra('Automatically select theme control category of current theme when categorizing'),
+			'description' => tra('When creating or editing object, automatically check the category that matches the theme control category of the current theme'),
+			'type' => 'flag',
+			'dependencies' => array('feature_theme_control_savesession', 'feature_theme_control_parentcategory'),
+			'default' => 'n',
 		),
 		'feature_lang_nonswitchingpages' => array(
 			'name' => tra('List of page names that always redirect to home page on language switching'),

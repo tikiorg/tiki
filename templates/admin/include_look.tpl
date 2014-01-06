@@ -58,11 +58,12 @@
 
 			{preference name=useGroupTheme}
 			{preference name=feature_theme_control}
-			{if $prefs.feature_theme_control eq 'y'}
-				<div class="adminoptionboxchild">
+				<div class="adminoptionboxchild" id="feature_theme_control_childcontainer">
 					{button _text="{tr}Theme Control{/tr}" href="tiki-theme_control.php"}
+					{preference name=feature_theme_control_savesession}
+					{preference name=feature_theme_control_parentcategory}
+					{preference name=feature_theme_control_autocategorize}
 				</div>
-			{/if}
 
 		{/tab}
 
