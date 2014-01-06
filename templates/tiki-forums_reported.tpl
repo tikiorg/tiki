@@ -1,4 +1,4 @@
-{title help="Forums" admpage="forums"}{tr}Reported messages for forum{/tr}&nbsp;{$forum_info.name}{/title}
+{title help="Forums" admpage="forums"}{tr _0=$forum_info.name}Reported messages for forum %0{/tr}{/title}
 
 <div class="t_navbar">
 	{button href="tiki-view_forum.php?forumId=$forumId" class="btn btn-default" _text="{tr}Back to forum{/tr}"}
