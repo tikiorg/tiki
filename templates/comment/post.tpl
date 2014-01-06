@@ -11,8 +11,9 @@
 {else}
 	<form method="post" action="{service controller=comment action=post}" role="form">
 		<div class="panel panel-default">
-			{if ! $user or $prefs.feature_comments_post_as_anonymous eq 'y'}
-				<div class="panel-heading">
+			<div class="panel-heading">
+				{tr}Post New Comment{/tr}
+				{if ! $user or $prefs.feature_comments_post_as_anonymous eq 'y'}
 					<fieldset>
 						{if $user}
 							{remarksbox type=warning title="Anonymous posting"}
@@ -34,8 +35,8 @@
 							</div>
 						</div>
 					</fieldset>
-				</div>
-			{/if}
+				{/if}
+			</div>
 			<fieldset>
 				<div class="panel-body">
 					<input type="hidden" name="type" value="{$type|escape}"/>
