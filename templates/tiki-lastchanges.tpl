@@ -2,7 +2,7 @@
 
 {title admpage="wiki" help="Using+Wiki+Pages#Last_Changes" url="tiki-lastchanges.php?days=$days"}{tr}Last Changes{/tr}{/title}
 
-<div class="t_navbar btn-group">
+<div class="t_navbar btn-group form-group spacer-bottom-15px">
 	{if $days eq '1'}{assign var=thisclass value='active'}{else}{assign var=thisclass value=''}{/if}
 	{button href="tiki-lastchanges.php?days=1" class="btn btn-default" _text="{tr}Today{/tr}" _class=$thisclass}
 	{if $days eq '2'}{assign var=thisclass value='active'}{else}{assign var=thisclass value=''}{/if}
@@ -27,8 +27,6 @@
 		{button href="tiki-lastchanges.php" _text="{tr}Search by Date{/tr}"}
 	{/if}
 {/if}
-
-<br>
 
 {if $findwhat!=""}
 	{tr}Found{/tr} "<b>{$findwhat|escape}</b>" {tr}in{/tr} {$cant_records|escape} {tr}LastChanges{/tr} 
