@@ -202,7 +202,7 @@
         <div class="panel-heading">
           {if $userwatch eq $user}{tr}My tasks{/tr}{else}{tr}My Tasks{/tr}{/if}
         </div>
-        <div class="cbox-data">
+        <div class="panel-body">
           <div class="table-responsive">
           <table class="table normal">
             <tr>
@@ -323,7 +323,7 @@
         <div class="panel-heading">
           {if $userwatch eq $user}{tr}My blog Posts{/tr}{else}{tr}User Blog Posts{/tr}{/if}
         </div>
-        <div class="cbox-data">
+        <div class="panel-body">
           <div class="table-responsive">
           <table class="table normal">
             <tr>

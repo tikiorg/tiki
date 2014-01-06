@@ -24,14 +24,14 @@
   {if $tiki_p_admin ne 'y'}
   {tr}Error{/tr}
   </div>
-  <div class="cbox-data">
+  <div class="panel-body">
   {tr}You don't have permission to use this feature.{/tr}
   {tr}Please register.{/tr}
   </div>
   {else}
   {tr}Register this site at Tiki.org{/tr}
   </div>
-  <div class="cbox-data">
+  <div class="panel-body">
   <table><tr><td>
     <div class="panel panel-default"><div class="panel-body">
         <b>{tr}Read this first!{/tr}</b><br><br>

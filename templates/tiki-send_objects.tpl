@@ -7,7 +7,7 @@
 		<div class="panel-heading">
 			{tr}Transmission results{/tr}
 		</div>
-		<div class="cbox-data">
+		<div class="panel-body">
 			{$msg}
 		</div>
 	</div>
@@ -21,7 +21,7 @@
 		<div class="panel-heading">
 			{tr}Filter{/tr}
 		</div>
-		<div class="cbox-data">
+		<div class="panel-body">
 			{tr}Filter:{/tr}<input type="text" name="find" value="{$find|escape}"><input type="submit" class="btn btn-default btn-sm" name="filter" value="{tr}Filter{/tr}"><br>
 		</div>
 	</div>
@@ -34,7 +34,7 @@
 			<div class="panel-heading">
 				{tr}Send Wiki Pages{/tr}
 			</div>
-			<div class="cbox-data">
+			<div class="panel-body">
 				<div class="panel panel-default"><div class="panel-body">
 					<b>{tr}Pages{/tr}</b>:
 					{section name=ix loop=$sendpages}
