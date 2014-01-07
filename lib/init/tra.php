@@ -83,12 +83,19 @@ function init_language( $lg )
 			}
 		}
 
-		if (is_file("lang/$lg/custom.php")) {
-			include_once("lang/$lg/custom.php");
+		$access = TikiLib::lib('access');
+		$customfile = "lang/$lg/custom.php";
+		if (is_file($customfile)) {
+			if (! $access->check_file_BOM($customfile)) {
+				include_once($customfile);
+			}
 		}
 
-		if (!empty($tikidomain) && is_file("lang/$lg/$tikidomain/custom.php")) {
-			include_once("lang/$lg/$tikidomain/custom.php");
+		$customfile = "lang/$lg/$tikidomain/custom.php";
+		if (!empty($tikidomain) && is_file($customfile)) {
+			if (! $access->check_file_BOM($customfile)) {
+				include_once($customfile);
+			}
 		}
 
 		if ( isset( $prefs['lang_use_db'] ) && $prefs['lang_use_db'] == 'y' ) {
