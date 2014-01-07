@@ -1627,7 +1627,7 @@ class FileGalLib extends TikiLib
 	 * @param bool $wholeSpecialGallery If true, will return the subgalleries of the special gallery (User File Galleries, Wiki Attachment Galleries, File Galleries, ...) that contains the $parentId gallery
 	 * @param string $permission If set, will limit the list of subgalleries to those having this permission for the current user
 	 */
-	function getSubGalleries( $parentId = 0, $wholeSpecialGallery = true, $permission = '' )
+	function getSubGalleries( $parentId = 0, $wholeSpecialGallery = true, $permission = 'view_file_gallery' )
 	{
 
 		// Use the special File Galleries root if no other special gallery root id is specified
