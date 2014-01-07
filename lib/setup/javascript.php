@@ -96,6 +96,8 @@ function inArray(item, array) {
 var allTimeZoneCodes = ' . json_encode(array_map("strtoupper", $tz)) . ';
 var now = new Date();
 var now_string = now.toString();
+var offsethours = - now.getTimezoneOffset() / 60;
+setCookie("local_tzoffset", offsethours);
 var m = now_string.match(/[ \(]([A-Z]{3,6})[ \)]?[ \d]*$/);	// try three or more char tz first at the end or just before the year
 if (!m) {
 	m = now_string.match(/[ \(]([A-Z]{1,6})[ \)]?[ \d]*$/);	// might be a "military" one if not

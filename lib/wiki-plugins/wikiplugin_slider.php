@@ -43,15 +43,26 @@ function wikiplugin_slider_info()
 				'name' => tra('Theme'),
 				'description' => tra('The theme to use in slider.'),
 				'filter' => 'striptags',
-				'accepted' => 'name of the theme you want to use',
+				'accepted' => 'Name of the theme you want to use',
 				'default' => 'default',
 				'options' => array(
 					array('text' => 'default', 'value' => ''),
 					array('text' => 'construction', 'value' => 'construction'),
-					array('text' => 'portfolio', 'value' => 'portfolio'),
+					array('text' => 'cs-portfolio', 'value' => 'cs-portfolio'),
+					array('text' => 'default1', 'value' => 'default1'),
+					array('text' => 'default2', 'value' => 'default2'),
 					array('text' => 'metallic', 'value' => 'metallic'),
+					array('text' => 'mini-dark', 'value' => 'mini-dark'),
+					array('text' => 'mini-light', 'value' => 'mini-light'),
 					array('text' => 'minimalist-round', 'value' => 'minimalist-round'),
-					array('text' => 'minimalist-square', 'value' => 'minimalist-square')
+					array('text' => 'minimalist-square', 'value' => 'minimalist-square'),
+					array('text' => 'office', 'value' => 'office'),
+					array('text' => 'polished', 'value' => 'polished'),
+					array('text' => 'ribbon', 'value' => 'ribbon'),
+					array('text' => 'shiny', 'value' => 'shiny'),
+					array('text' => 'simple', 'value' => 'simple'),
+					array('text' => 'tabs-dark', 'value' => 'tabs-dark'),
+					array('text' => 'tabs-light', 'value' => 'tabs-light')
 				)
 			),
 			'expand' => array(
@@ -331,14 +342,36 @@ function wikiplugin_slider($data, $params)
 	$headerlib->add_cssfile('vendor/jquery/plugins/anythingslider/css/theme-metallic.css');
 	$headerlib->add_cssfile('vendor/jquery/plugins/anythingslider/css/theme-minimalist-round.css');
 	$headerlib->add_cssfile('vendor/jquery/plugins/anythingslider/css/theme-minimalist-square.css');
-
+	$headerlib->add_cssfile('vendor_extra/anythingslider-themes/css/theme-default1.css');
+	$headerlib->add_cssfile('vendor_extra/anythingslider-themes/css/theme-default2.css');
+	$headerlib->add_cssfile('vendor_extra/anythingslider-themes/css/theme-mini-dark.css');
+	$headerlib->add_cssfile('vendor_extra/anythingslider-themes/css/theme-mini-light.css');
+	$headerlib->add_cssfile('vendor_extra/anythingslider-themes/css/theme-office.css');
+	$headerlib->add_cssfile('vendor_extra/anythingslider-themes/css/theme-polished.css');
+	$headerlib->add_cssfile('vendor_extra/anythingslider-themes/css/theme-ribbon.css');
+	$headerlib->add_cssfile('vendor_extra/anythingslider-themes/css/theme-shiny.css');
+	$headerlib->add_cssfile('vendor_extra/anythingslider-themes/css/theme-simple.css');
+	$headerlib->add_cssfile('vendor_extra/anythingslider-themes/css/theme-tabs-dark.css');
+	$headerlib->add_cssfile('vendor_extra/anythingslider-themes/css/theme-tabs-light.css');
+	
 	if (isset($theme) && !empty($theme)) {
 		switch (strtolower($theme)) {
 			case 'construction':
-			case 'portfolio':
+			case 'cs-portfolio':
+			case 'default1':
+			case 'default2':
 			case 'metallic':
+			case 'mini-dark':
+			case 'mini-light':
 			case 'minimalist-round':
 			case 'minimalist-square':
+			case 'office':
+			case 'polished':
+			case 'ribbon':
+			case 'shiny':
+			case 'simple':
+			case 'tabs-dark':
+			case 'tabs-light':
 				$theme = $theme;
     			break;
 			default:

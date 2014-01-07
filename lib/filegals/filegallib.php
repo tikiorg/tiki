@@ -771,7 +771,7 @@ class FileGalLib extends TikiLib
 			'wiki_syntax' => '',
 			'default_view' => $prefs['fgal_default_view'],
 			'template' => null,
-			'icon_fileId' => isset($prefs['fgal_icon_fileId']) ? $prefs['fgal_icon_fileId'] : null,
+			'icon_fileId' => !empty($prefs['fgal_icon_fileId']) ? $prefs['fgal_icon_fileId'] : null,
 		);
 	}
 	function replace_file_gallery($fgal_info)

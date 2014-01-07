@@ -229,6 +229,10 @@ class TikiDate
      */
     function setTZbyID($tz_id)
 	{
+        global $prefs;
+        if (isset($prefs['timezone_offset']) && !empty($prefs['timezone_offset'])) {
+            $tz_id = timezone_name_from_abbr($tz_id, $prefs['timezone_offset'] * 3600);
+        }
 		$dtz = null;
 		while (!$dtz) {
 			try {

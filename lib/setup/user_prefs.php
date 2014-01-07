@@ -79,6 +79,7 @@ if ($prefs['users_prefs_display_timezone'] == 'Site'
 		//   ... we try to use the timezone detected by javascript and stored in cookies
 		if (TikiDate::TimezoneIsValidId($_COOKIE['local_tz'])) {
 			$prefs['display_timezone'] = $_COOKIE['local_tz'];
+            $prefs['timezone_offset'] = isset($_COOKIE['local_tzoffset']) ? $_COOKIE['local_tzoffset'] : '';
 		} elseif ( $_COOKIE['local_tz'] == 'HAEC' ) {
 			// HAEC, returned by Safari on Mac, is not recognized as a DST timezone (with daylightsavings)
 			//  ... So use one equivalent timezone name
