@@ -14,7 +14,6 @@
 			<div class="panel-heading">
 				{tr}Post New Comment{/tr}
 				{if ! $user or $prefs.feature_comments_post_as_anonymous eq 'y'}
-					<fieldset>
 						{if $user}
 							{remarksbox type=warning title="Anonymous posting"}
 								{tr}You are currently registered on this site. This section is optional. By filling it, you will not link this post to your account and preserve your anonymity.{/tr}
@@ -34,10 +33,8 @@
 								<input type="url" id="comment-anonymus_website" name="anonymous_website" value="{$anonymous_website|escape}"/>
 							</div>
 						</div>
-					</fieldset>
 				{/if}
 			</div>
-			<fieldset>
 				<div class="panel-body">
 					<input type="hidden" name="type" value="{$type|escape}"/>
 					<input type="hidden" name="objectId" value="{$objectId|escape}"/>
@@ -62,7 +59,6 @@
 						<a href="#" onclick="$(this).closest('.comment-container, .ui-dialog-content').reload(); return false;">{tr}Cancel{/tr}</a>
 					</div>
 				</div>
-			</fieldset>
 		</div>
 	</form>
 {/if}
