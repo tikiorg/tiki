@@ -707,6 +707,7 @@ a.toolbar {			/* each tool button */
 .toolbars-picker.color a ,.toolbars-picker.bgcolor a {
 	width: 14px;
 	height: 12px;
+	padding: 0;
 }
 
 .toolbars-picker a:hover {
@@ -719,6 +720,12 @@ a.toolbar {			/* each tool button */
 	width: 100% !important;
 	text-align: center;
 	border: none !important;
+}
+
+.toolbars-picker span {
+	display: block;
+	width: 14px;
+	height: 12px;
 }
 
 /* New Help section */
