@@ -60,10 +60,10 @@ if (
 	die;
 }
 
-$globalperms = Perms::get(array( 'type' => 'file gallery', 'object' => $fileInfo['galleryId'] ));
+$perms = TikiLib::lib('tiki')->get_perm_object( $fileInfo['fileId'], 'file', $fileInfo );
 
 //check permissions
-if (!($globalperms->upload_files == 'y')) {
+if ($perms['tiki_p_upload_files'] !== 'y' ) {
 	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("You do not have permission to view/edit this file"));
 	$smarty->display("error.tpl");
