@@ -959,7 +959,6 @@ class ToolbarPicker extends Toolbar
 			if ($section == 'sheet')
 				$list['reset'] = "<span title='".tra("Reset Colors")."' class='toolbars-picker-reset' reset='true'>".tra("Reset")."</span>";
 
-			$headerlib->add_css('.toolbars-picker span {display: block; width: 14px; height: 12px}');
 			break;
 
 		case 'bgcolor':
@@ -988,7 +987,6 @@ class ToolbarPicker extends Toolbar
 			if ($section == 'sheet')
 				$list['reset'] = "<span title='".tra("Reset Colors")."' class='toolbars-picker-reset' reset='true'>".tra("Reset")."</span>";
 
-			$headerlib->add_css('.toolbars-picker span {display: block; width: 14px; height: 12px}');
 			break;
 
 		default:
