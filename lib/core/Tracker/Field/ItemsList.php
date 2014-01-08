@@ -165,7 +165,7 @@ class Tracker_Field_ItemsList extends Tracker_Field_Abstract
 		$tracker = Tracker_Definition::get($trackerId);
 		$technique = 'value';
 
-		if ($tracker && ($field = $tracker->getField($remoteField)) && !$this->getOption('fieldIdHere')) {
+		if ($tracker && ($field = $tracker->getField($remoteField)) && (!$localField || $field['type'] === 'r')) {
 			if ($field['type'] == 'r') {
 				$technique = 'id';
 			}
