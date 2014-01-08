@@ -10,8 +10,8 @@
 	<p>{object_link type=$type objectId=$objectId}</p>
 {else}
 	<form method="post" action="{service controller=comment action=post}" role="form">
-		<fieldset class="panel panel-default">
-			<legend class="panel-heading">
+		<div class="panel panel-default">
+			<div class="panel-heading">
 				{tr}Post New Comment{/tr}
 				{if ! $user or $prefs.feature_comments_post_as_anonymous eq 'y'}
 						{if $user}
@@ -34,7 +34,7 @@
 							</div>
 						</div>
 				{/if}
-			</legend>
+			</div>
 				<div class="panel-body">
 					<input type="hidden" name="type" value="{$type|escape}"/>
 					<input type="hidden" name="objectId" value="{$objectId|escape}"/>
@@ -59,7 +59,7 @@
 						<a href="#" onclick="$(this).closest('.comment-container, .ui-dialog-content').reload(); return false;">{tr}Cancel{/tr}</a>
 					</div>
 				</div>
-		</fieldset>
+		</div>
 	</form>
 {/if}
 {/block}
