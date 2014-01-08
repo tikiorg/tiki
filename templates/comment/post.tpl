@@ -10,8 +10,8 @@
 	<p>{object_link type=$type objectId=$objectId}</p>
 {else}
 	<form method="post" action="{service controller=comment action=post}" role="form">
-		<div class="panel panel-default">
-			<div class="panel-heading">
+		<fieldset class="panel panel-default">
+			<legend class="panel-heading">
 				{tr}Post New Comment{/tr}
 				{if ! $user or $prefs.feature_comments_post_as_anonymous eq 'y'}
 						{if $user}
@@ -21,20 +21,20 @@
 						{/if}
 						<div class="form-inline">
 							<div class="form-group">
-								<label class="clearfix" for="comment-anonymus_name">{tr}Name{/tr}</label>
+								<label class="clearfix" for="comment-anonymous_name">{tr}Name{/tr}</label>
 								<input type="text" name="anonymous_name" id="comment-anonymous_name" value="{$anonymous_name|escape}"/>
 							</div>
 							<div class="form-group">
-								<label class="clearfix" for="comment-anonymus_email">{tr}Email{/tr}</label>
-								<input type="email" id="comment-anonymus_email" name="anonymous_email" value="{$anonymous_email|escape}"/>
+								<label class="clearfix" for="comment-anonymous_email">{tr}Email{/tr}</label>
+								<input type="email" id="comment-anonymous_email" name="anonymous_email" value="{$anonymous_email|escape}"/>
 							</div>
 							<div class="form-group">
-								<label class="clearfix" for="comment-anonymus_website">{tr}Website{/tr}</label>
-								<input type="url" id="comment-anonymus_website" name="anonymous_website" value="{$anonymous_website|escape}"/>
+								<label class="clearfix" for="comment-anonymous_website">{tr}Website{/tr}</label>
+								<input type="url" id="comment-anonymous_website" name="anonymous_website" value="{$anonymous_website|escape}"/>
 							</div>
 						</div>
 				{/if}
-			</div>
+			</legend>
 				<div class="panel-body">
 					<input type="hidden" name="type" value="{$type|escape}"/>
 					<input type="hidden" name="objectId" value="{$objectId|escape}"/>
@@ -54,12 +54,12 @@
 						{assign var='showmandatory' value='y'}
 						{include file='antibot.tpl'}
 					{/if}
-					<input type="submit" class="comment-postclass btn btn-primary btn-sm" value="{tr}Post{/tr}"/>
+					<input type="submit" class="comment-post btn btn-primary btn-sm" value="{tr}Post{/tr}"/>
 					<div class="btn btn-link btn-sm">
 						<a href="#" onclick="$(this).closest('.comment-container, .ui-dialog-content').reload(); return false;">{tr}Cancel{/tr}</a>
 					</div>
 				</div>
-		</div>
+		</fieldset>
 	</form>
 {/if}
 {/block}

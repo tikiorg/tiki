@@ -58,7 +58,7 @@
 
                     </div>
 
-					<div class="buttons comment-form btn-group">
+					<div class="buttons comment-form">
 						{if $allow_post && $comment.locked neq 'y'}
 							{self_link _class='btn btn-default btn-sm' controller=comment action=post type=$type objectId=$objectId parentId=$comment.threadId}{tr}Reply{/tr}{/self_link}
 						{/if}
