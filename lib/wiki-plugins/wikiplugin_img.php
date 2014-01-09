@@ -1233,7 +1233,7 @@ function wikiplugin_img( $data, $params )
 			$prefs['feature_draw'] == 'y' && !empty($dbinfo['galleryId']) && $imgdata['noDrawIcon'] !== 'y') {
 
 		global $tiki_p_edit;
-		$globalperms = Perms::get(array( 'type' => 'file gallery', 'object' => $dbinfo['galleryId'] ));
+		$perms = TikiLib::lib('tiki')->get_perm_object( $imgdata['fileId'], 'file', $dbinfo );
 		if ($imgdata['fromItemId']) {
 			if ($imgdata['checkItemPerms'] !== 'n') {
 				$perms_Accessor = Perms::get(array('type' => 'tracker item', 'object' => $imgdata['fromItemId']));
@@ -1245,7 +1245,7 @@ function wikiplugin_img( $data, $params )
 			$trackerItemPerms = false;
 		}
 
-		if ($globalperms->upload_files == 'y' &&
+		if ($perms['tiki_p_upload_files'] === 'y' &&
 			(empty($src) == true || $srcIsEditable == true) &&
 			($tiki_p_edit == 'y' || $trackerItemPerms)) {
 
