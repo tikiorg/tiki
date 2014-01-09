@@ -21,12 +21,19 @@ class Services_Search_StoredController
 
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			$label = $input->label->text();
+			$description = $input->description->wikicontent();
 			$priority = $input->priority->word();
 			$queryId = $input->queryId->int();
 
 			if (! $queryId) {
 				if ($label && $priority) {
-					$queryId = $lib->createBlank($label, $priority);
+					try {
+						$queryId = $lib->createBlank($label, $priority, $description);
+					} catch (TikiDb_Exception_DuplicateEntry $e) {
+						throw new Services_Exception_FieldError('label', tr('Could not create query, name already in use'));
+					} catch (TikiDb_Exception $e) {
+						throw new Services_Exception($e->getMessage(), 500);
+					}
 				}
 			}
 
@@ -47,19 +54,25 @@ class Services_Search_StoredController
 	{
 		$lib = TikiLib::lib('storedsearch');
 		$results = null;
+		$query = array(
+			'query' => null,
+			'label' => null,
+			'description' => null,
+		);
 
 		if ($queryId = $input->queryId->int()) {
-			if ($query = $lib->getQuery($queryId)) {
-				$resultset = $this->getResultSet($query);
+			if ($query = $lib->getPresentedQuery($queryId)) {
+				$resultset = $this->getResultSet($query['query']);
 				$results = $this->renderResults($resultset);
 			}
 		}
 
 		return array(
-			'title' => tr('Stored Queries'),
+			'title' => $query['label'] ?: tr('Stored Queries'),
 			'priorities' => $lib->getPriorities(),
 			'queries' => $lib->getUserQueries(),
 			'queryId' => $queryId,
+			'description' => $query['description'],
 			'results' => $results,
 			'url' => TikiLib::lib('service')->getUrl(['controller' => 'search_stored', 'action' => 'list']),
 		);
@@ -113,17 +126,19 @@ class Services_Search_StoredController
 			'success' => false,
 			'queryId' => $data['queryId'],
 			'label' => $data['label'],
+			'description' => $data['description'],
 			'priority' => $data['priority'],
 			'priorities' => $lib->getPriorities(),
 		);
 
 		$label = $input->label->text();
 		$priority = $input->priority->word();
+		$description = $input->description->wikicontent();
 
 		if ($_SERVER['REQUEST_METHOD'] == 'POST' && $label && $priority) {
 			$out['success'] = true;
 
-			$lib->updateQuery($data['queryId'], $label, $priority);
+			$lib->updateQuery($data['queryId'], $label, $priority, $description);
 
 			$out['FORWARD'] = ['action' => 'list', 'queryId' => $data['queryId']];
 		}

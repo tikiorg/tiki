@@ -3803,5 +3803,7 @@ CREATE TABLE `tiki_search_queries` (
 	`label` VARCHAR(100) NOT NULL,
 	`priority` VARCHAR(15) NOT NULL,
 	`query` BLOB,
-	INDEX `query_userId` (`userId`)
+	`description` TEXT,
+	INDEX `query_userId` (`userId`),
+	UNIQUE KEY `tiki_user_query_uq` (`userId`, `label`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1;

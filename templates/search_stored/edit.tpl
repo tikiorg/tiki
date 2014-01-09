@@ -23,6 +23,12 @@
 		</div>
 	</div>
 	<div class="form-group">
+		<label for="label" class="col-md-3 control-label">{tr}Description{/tr}</label>
+		<div class="col-md-9">
+			<textarea class="form-control" name="description" rows="5">{$description|escape}</textarea>
+		</div>
+	</div>
+	<div class="form-group">
 		<div class="col-md-9 col-md-offset-3">
 			<input type="submit" class="btn btn-primary" value="{tr}Update{/tr}"/>
 		</div>

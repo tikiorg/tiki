@@ -6,7 +6,7 @@
 
 class StoredSearchLib
 {
-	public function createBlank($label, $priority)
+	public function createBlank($label, $priority, $description)
 	{
 		$userId = TikiLib::lib('login')->getUserId();
 
@@ -15,6 +15,7 @@ class StoredSearchLib
 				'userId' => $userId,
 				'label' => $label,
 				'priority' => $priority,
+				'description' => $description,
 			));
 		}
 	}
@@ -23,7 +24,7 @@ class StoredSearchLib
 	{
 		$userId = TikiLib::lib('login')->getUserId();
 
-		return $this->table()->fetchAll(array('queryId', 'label', 'priority', 'lastModif'), array(
+		return $this->table()->fetchAll(array('queryId', 'label', 'priority', 'description', 'lastModif'), array(
 			'userId' => $userId,
 		), -1, -1, array(
 			'label' => 'ASC',
@@ -75,7 +76,7 @@ class StoredSearchLib
 		return true;
 	}
 
-	function updateQuery($queryId, $label, $priority)
+	function updateQuery($queryId, $label, $priority, $description)
 	{
 		$data = $this->getEditableQuery($queryId);
 
@@ -90,6 +91,7 @@ class StoredSearchLib
 		$this->table()->update(array(
 			'label' => $label,
 			'priority' => $priority,
+			'description' => $description,
 			'lastModif' => TikiLib::lib('tiki')->now,
 		), array(
 			'queryId' => $queryId,
@@ -107,7 +109,7 @@ class StoredSearchLib
 		}
 	}
 
-	public function getQuery($queryId)
+	public function getPresentedQuery($queryId)
 	{
 		$data = $this->fetchQuery($queryId);
 
@@ -117,7 +119,11 @@ class StoredSearchLib
 			$query = new Search_Query;
 		}
 		
-		return $query;
+		return array(
+			'query' => $query,
+			'label' => $data['label'],
+			'description' => TikiLib::lib('parser')->parse_data($data['description']),
+		);
 	}
 
 	public function reloadAll()

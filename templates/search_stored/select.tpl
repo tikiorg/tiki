@@ -28,6 +28,10 @@
 				</select>
 			</div>
 			<div class="form-group">
+				<label for="label" class="control-label">{tr}Description{/tr}</label>
+				<textarea class="form-control" name="description" rows="5"></textarea>
+			</div>
+			<div class="form-group">
 				<input type="submit" class="btn btn-primary" value="{tr}Create{/tr}"/>
 			</div>
 		</div>

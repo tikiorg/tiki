@@ -40,6 +40,9 @@
 
 {if $queryId}
 	{tabset}
+		{if $description}
+			<div class="well">{$description}</div>
+		{/if}
 		{if $results}
 			{tab name="{tr}Results{/tr}"}
 				{$results}
