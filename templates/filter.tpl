@@ -100,24 +100,19 @@
 	</div>
 	<div class="text-center">
 		<input type="submit" class="btn btn-primary" value="{tr}Search{/tr}">
-		{if $prefs.storedsearch_enabled eq 'y'}
+		{if $prefs.storedsearch_enabled eq 'y' and $user}
 			<input type="hidden" name="storeAs" value=""/>
-			<button id="store-query" class="btn btn-default">{tr}Store Query{/tr}</button>
+			<a href="{service controller=search_stored action=select modal=true}" id="store-query" class="btn btn-default">{tr}Store Query{/tr}</a>
 			<a href="{service controller=search_stored action=list}" class="btn btn-link">{tr}View Stored Queries{/tr}</a>
 			{jq}
-				$('#store-query').click(function () {
-					var form = $(this).closest('form')[0];
-					$(this).serviceDialog({
-						title: $(this).text(),
-						controller: 'search_stored',
-						action: 'select',
-						success: function (data) {
-							$(form.storeAs).val(data.queryId);
-							$(form).attr('method', 'post');
-							$(form).submit();
-						}
-					});
-					return false;
+				$('#store-query').clickModal({
+					success: function (data) {
+						var form = $(this).closest('form')[0];
+
+						$(form.storeAs).val(data.queryId);
+						$(form).attr('method', 'post');
+						$(form).submit();
+					}
 				});
 			{/jq}
 		{/if}
