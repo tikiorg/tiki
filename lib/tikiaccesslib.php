@@ -307,42 +307,6 @@ class TikiAccessLib extends TikiLib
 		}
 	}
 
-	/**
-	 * Checks a php file for a Byte Order Mark (BOM) and trigger error (and report error for admin)
-	 *
-	 * @param string $filename		full path of file to check
-	 * @param bool $try_to_fix		if file perms allow remove BOM if found
-	 *
-	 * @return bool					true if file still has a BOM
-	 */
-	function check_file_BOM($filename, $try_to_fix = true) {
-		$BOM_found = false;
-
-		if (is_readable($filename)) {
-			$file = @fopen($filename, "r");
-			$BOM_found = (fread($file, 3) === "\xEF\xBB\xBF");
-
-			if ($try_to_fix && $BOM_found && is_writable($filename)) {
-				$content = fread($file, filesize($filename));
-				fclose($file);
-				file_put_contents($filename, $content);
-				trigger_error('File "' . $filename . '" contained a BOM which has been fixed.');
-				$BOM_found = false;
-			} else {
-				fclose($file);
-			}
-		}
-		if ($BOM_found) {
-			$message = 'Warning: File "' . $filename . '" contains a BOM which cannot be fixed. Please re-edit and save as "UTF-8 without BOM"';
-			if (Perms::get()->admin) {
-				TikiLib::lib('errorreport')->report($message);
-			}
-			trigger_error($message);
-		}
-
-		return $BOM_found;
-	}
-
     /**
      * @param $page
      * @param string $errortitle

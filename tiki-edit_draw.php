@@ -35,6 +35,9 @@ $smarty->assign('fileId', $_REQUEST['fileId']);
 
 if ($_REQUEST['fileId'] > 0) {
 	$fileInfo = $filegallib->get_file_info($_REQUEST['fileId']);
+	if (empty($_REQUEST['galleryId'])) {
+		$_REQUEST['galleryId'] = $fileInfo['galleryId'];
+	}
 } else {
 	$fileInfo = array();
 }
@@ -60,7 +63,7 @@ if (
 	die;
 }
 
-$perms = TikiLib::lib('tiki')->get_perm_object( $fileInfo['fileId'], 'file', $fileInfo );
+$perms = TikiLib::lib('tiki')->get_perm_object( $gal_info['galleryId'], 'file gallery', $gal_info );
 
 //check permissions
 if ($perms['tiki_p_upload_files'] !== 'y' ) {
