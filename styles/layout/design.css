@@ -525,6 +525,10 @@ ul.jumplinks,
 	color: #000;
 }
 
+#tiki-clean a.editplugin {
+	display:none;
+}
+
 /****** Misc. Global Classes (layout and style) ****/
 .floatlist {
 	clear: left;
@@ -2630,6 +2634,10 @@ div.aclabel, span.aclabel, label.aclabel {
 .s5-footer {
   font-size:110%;
 }
+
+.s5-slide a.editplugin {
+	display:none;
+} 
 
 /* structures tiki 9 */
 
