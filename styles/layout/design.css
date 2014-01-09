@@ -67,10 +67,24 @@
 }
 
 /****** Misc. Global Classes (layout and style) ****/
+/* put all the one-liners which should not display together */
+
 #attzone,
+#bottom_modules .box-rsslist br,
 #comzone,
+#edithelpzone,
+#forumpost,
+#polledit,
+#pollzone,
 #rules-copy-panel,
-#edithelpzone {
+#tiki-clean a.editplugin,
+.collapsed ul,
+.comment.archived,
+.convene-no img,
+.s5-slide a.editplugin,
+.tabs br,
+.wiki-edithelp,
+.wpfade-div-plain {
 	display: none;
 }
 
@@ -78,6 +92,7 @@
 #comzoneopen {
 	display: block;
 }
+
 .clear,
 #clear {
 	clear: both;
@@ -311,10 +326,6 @@ h3.panel-title {
 	padding-left: 1.3em;
 }
 
-.collapsed ul {
-	display: none;
-}
-
 .modcontrols {
 	display: block;
 	float: right;
@@ -422,10 +433,6 @@ tr.diffheader {
 	visibility: hidden;
 }
 
-.wiki-edithelp {
-	display: none;
-}
-
 /* Wiki plugins */
 .wikiplugin-split {
 	border: none;
@@ -457,9 +464,6 @@ tr.diffheader {
 	background-color: #FFCCCA !important;
 	background-image: none !important;
 	text-align: center;
-}
-.convene-no img {
-	display: none;
 }
 .convene-unconfirmed {
 	text-align: center;
@@ -698,10 +702,6 @@ body.tiki_blogs .post_single {
 /***** Forums *****/
 body.tiki_forums .normal {
 	margin: auto;
-}
-
-#forumpost {
-	display: none;
 }
 
 #forumpostopen {
@@ -1297,14 +1297,6 @@ ul.freetagged li {
 
 #pollopen {
 	display: block;
-}
-
-#pollzone {
-	display: none;
-}
-
-#polledit {
-	display: none;
 }
 
 /***** FAQs *****/
@@ -2550,10 +2542,6 @@ body.tiki_wiki #comments {
 	margin-left:19px;
 }
 
-.wpfade-div-plain {
-	display: none;
-}
-
 .wpfade-div-icon {
 	display: none;
 	margin-left:19px;
@@ -3300,10 +3288,6 @@ form.simple label.error {
 	padding-left: 16px;
 }
 
-
-.comment.archived {
-	display: none;
-}
 
 .all .comment.archived {
 	display: block;
