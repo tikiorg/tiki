@@ -2,17 +2,17 @@
     {if !isset($notable) || $notable neq 'y'}
         <!-- div class="form-horizontal" -->
             <div class="form-group">
-                <label class="col-sm-3 text-right">{tr}Categorize{/tr}</label>
+                <label class="col-sm-3 control-label">{tr}Categorize{/tr}</label>
                 <div class="col-sm-9">
                     {if isset($colsCategorize)} colspan="{$colsCategorize}"{/if}
                 </div>
-            </div>
+
         <!--/div-->
     {/if}
     {if $mandatory_category >= 0 or $prefs.javascript_enabled neq 'y' or (isset($auto) and $auto eq 'y')}
-        <div id="categorizator">
+        <div id="categorizator " class="col-sm-9">
     {else}
-        {if !isset($notable) || $notable neq 'y'} <div class="col-sm-9 col-sm-offset-3">{button href="#" _flip_id='categorizator' _class='link' _text="{tr}Select Categories{/tr}" _flip_default_open='n'}</div>{/if}
+        {if !isset($notable) || $notable neq 'y'} <div class="col-sm-9">{button href="#" _flip_id='categorizator' _class='link' _text="{tr}Select Categories{/tr}" _flip_default_open='n'}</div>{/if}
         <div id="categorizator" class="col-sm-9 col-sm-offset-3" style="display:{if isset($smarty.session.tiki_cookie_jar.show_categorizator) and $smarty.session.tiki_cookie_jar.show_categorizator eq 'y' or (isset($notable) && $notable eq 'y')}block{else}none{/if};">
     {/if}
     <div class="multiselect">
@@ -36,6 +36,7 @@
             </div> {* end .clear *}
     </div> {* end #multiselect *}
 </div> {* end #categorizator *}
+            </div> {* end .form-group *}
 	{if !isset($notable) || $notable neq 'y'}
     {/if}
 {/if}
