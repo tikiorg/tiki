@@ -29,7 +29,7 @@ class TikiDb_Table
 		$bindvars = array();
 		$query = $this->buildInsert($values, $ignore, $bindvars);
 
-		$this->db->query($query, $bindvars);
+		$this->db->queryException($query, $bindvars);
 
 		return $this->db->lastInsertId();
 	}
@@ -43,7 +43,7 @@ class TikiDb_Table
 		$query .= ' ON DUPLICATE KEY UPDATE ';
 		$query .= $this->buildUpdateList($data, $bindvars);
 
-		$this->db->query($query, $bindvars);
+		$this->db->queryException($query, $bindvars);
 
 		return $this->db->lastInsertId();
 	}
@@ -57,7 +57,7 @@ class TikiDb_Table
 		$bindvars = array();
 		$query = $this->buildDelete($conditions, $bindvars) . ' LIMIT 1';
 
-		return $this->db->query($query, $bindvars);
+		return $this->db->queryException($query, $bindvars);
 	}
 
 	/**
@@ -78,7 +78,7 @@ class TikiDb_Table
 			$query .= ' LIMIT ' . intval($limit);
 		}
 
-		return $this->db->query($query, $bindvars);
+		return $this->db->queryException($query, $bindvars);
 	}
 
 
@@ -94,7 +94,7 @@ class TikiDb_Table
 		$bindvars = array();
 		$query = $this->buildDelete($conditions, $bindvars);
 
-		return $this->db->query($query, $bindvars);
+		return $this->db->queryException($query, $bindvars);
 	}
 
 	function fetchOne($field, array $conditions, $orderClause = null)

@@ -60,6 +60,17 @@ abstract class TikiDb
 		return $result;
 	} // }}}
 
+	function queryException($query, $values = null, $numrows = -1, $offset = -1) // {{{
+	{
+		$result = $this->queryError($query, $error, $values, $numrows, $offset);
+
+		if ($error) {
+			throw TikiDb_Exception::classify($error);
+		}
+
+		return $result;
+	} // }}}
+
 	function getOne($query, $values = null, $reporterrors = true, $offset = 0) // {{{
 	{
 		$result = $this->query($query, $values, 1, $offset, $reporterrors);

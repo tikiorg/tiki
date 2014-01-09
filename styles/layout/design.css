@@ -3228,8 +3228,10 @@ a.freetag_7 {
 }
 
 /* jquery validation */
+div.form-group label.error {
+	font-weight: normal !important;
+}
 
-label.error,
 form.simple label.error {
 	background : url('../../img/icons/error.png') no-repeat 0 4px;
 	color:red;

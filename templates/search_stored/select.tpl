@@ -15,12 +15,12 @@
 		</div>
 		<div class="panel-body">
 			<div class="form-group">
-				<label for="label">{tr}Label{/tr}</label>
+				<label for="label" class="control-label">{tr}Label{/tr}</label>
 				<input type="text" class="form-control" name="label"/>
 				<span class="help-block">{tr}This will help you recognize your stored queries if ever you want to modify or remove them.{/tr}</span>
 			</div>
 			<div class="form-group">
-				<label for="priority">Priority</label>
+				<label for="priority" class="control-label">Priority</label>
 				<select name="priority" class="form-control">
 					{foreach $priorities as $key => $info}
 						<option value="{$key|escape}">{$info.label|escape} - {$info.description|escape}</option>
