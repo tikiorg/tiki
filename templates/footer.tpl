@@ -1,5 +1,6 @@
 {* $Id$ *}
 {* ==> put in this file what is not displayed in the layout (javascript, debug..)*}
+<div id="bootstrap-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"></div>
 {if (! isset($display) or $display eq '')}
 	{if count($phpErrors)}
 		{if ($prefs.error_reporting_adminonly eq 'y' and $tiki_p_admin eq 'y') or $prefs.error_reporting_adminonly eq 'n'}

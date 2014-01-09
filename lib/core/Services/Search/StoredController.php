@@ -138,9 +138,13 @@ class Services_Search_StoredController
 		if ($_SERVER['REQUEST_METHOD'] == 'POST' && $label && $priority) {
 			$out['success'] = true;
 
-			$lib->updateQuery($data['queryId'], $label, $priority, $description);
-
-			$out['FORWARD'] = ['action' => 'list', 'queryId' => $data['queryId']];
+			try {
+				$lib->updateQuery($data['queryId'], $label, $priority, $description);
+			} catch (TikiDb_Exception_DuplicateEntry $e) {
+				throw new Services_Exception_FieldError('label', tr('Could not create query, name already in use'));
+			} catch (TikiDb_Exception $e) {
+				throw new Services_Exception($e->getMessage(), 500);
+			}
 		}
 
 		return $out;

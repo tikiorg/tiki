@@ -3353,11 +3353,11 @@ form.simple textarea.export {
 }
 
 /* $.fn.modal */
-.modal {
+.tiki-modal {
 	position: absolute;
 	text-align: center;
 }
-.modal .mask {
+.tiki-modal .mask {
 	position: absolute;
 	background-color: #fff;
 	display: none;
@@ -3365,7 +3365,7 @@ form.simple textarea.export {
 	height: auto;
 }
 
-.modal .dialog {
+.tiki-modal .dialog {
 	position:absolute;
 	top: 50%;
 	left: 50%;

@@ -117,7 +117,7 @@ class Services_Broker
 		if ($internal) {
 			$GLOBALS['prefs']['site_layout'] = 'internal';
 		} elseif ($access->is_xml_http_request()) {
-			$GLOBALS['prefs']['site_layout'] = 'ajax';
+			$GLOBALS['prefs']['site_layout'] =  ! empty($_REQUEST['modal']) ? 'modal' : 'ajax';
 		}
 
 		return $smarty->fetch($template);
