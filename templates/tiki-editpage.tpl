@@ -292,7 +292,7 @@
 				
 							{if $prefs.feature_wiki_allowhtml eq 'y' and $tiki_p_use_HTML eq 'y' and ($wysiwyg neq 'y' or $prefs.wysiwyg_htmltowiki eq 'y')}
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label for="allowhtml">{tr}Allow HTML:{/tr}</label>
+                                    <label class="col-sm-2 control-label" for="allowhtml">{tr}Allow HTML:{/tr}</label>
                                     <div class="col-sm-10 checkbox">
                                         <input type="checkbox" name="allowhtml" {if $allowhtml eq 'y'}checked="checked"{/if}>
                                     </div>
@@ -559,7 +559,7 @@ $("input[name=allowhtml]").change(function() {
 									<div class="form-group">
 										<label for="" class="col-sm-2 control-label">{tr}Translation{/tr}</label>
 										<div class="col-sm-10">
-											<fieldset class="{if $prefs.feature_urgent_translation neq 'y' or $diff_style} style="display:none;"{/if}>
+											<fieldset {if $prefs.feature_urgent_translation neq 'y' or $diff_style} style="display:none;"{/if}>
 												<legend>{tr}Translation request:{/tr}</legend>
 												<input type="hidden" name="lang" value="{$lang|escape}">
 												<input type="checkbox" id="translation_critical" name="translation_critical" id="translation_critical"{if $translation_critical} checked="checked"{/if}>
