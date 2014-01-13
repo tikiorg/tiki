@@ -5,7 +5,7 @@
 	"homepage": "https://tiki.org",
 	"minimum-stability": "stable",
 	"require": {
-		"twitter/bootstrap": "3.0.2",
+		"twitter/bootstrap": "3.0.3",
 
 		"adodb/adodb": "5.18",
 		"aFarkas/html5shiv": "3.6.2",
@@ -124,9 +124,9 @@
 			"type": "package",
 			"package": {
 				"name": "twitter/bootstrap",
-				"version": "3.0.2",
+				"version": "3.0.3",
 				"dist": {
-					"url": "https://github.com/twbs/bootstrap/releases/download/v3.0.2/bootstrap-3.0.2-dist.zip",
+					"url": "https://github.com/twbs/bootstrap/releases/download/v3.0.3/bootstrap-3.0.3-dist.zip",
 					"type": "zip"
 				}
 			}
