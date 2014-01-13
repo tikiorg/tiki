@@ -111,6 +111,11 @@ function wikiplugin_trackertoggle($data, $params)
 				$htmltype = 'select';
 				$trigger = 'change';
 				break;
+			case 'R':
+				$extension = ':checked';
+				$htmltype = 'input';
+				$trigger = 'change';
+				break;
 			case 'e':					// category - NB needs categId not categName to match
 				if ($field['options_array'][1] == 'd') {
 					$htmltype = 'select';

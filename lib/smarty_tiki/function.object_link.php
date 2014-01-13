@@ -213,10 +213,10 @@ function smarty_function_object_link_external( $smarty, $link_orig, $title = nul
 	$escapedTitle = smarty_modifier_escape($title);
 
 	if ( $type == 'external_extended' && "$link_orig" != "$title") {
-		$data = '<a href="' . $escapedHref . '">' . $escapedLink . '</a>'
+		$data = '<a rel="external" href="' . $escapedHref . '">' . $escapedLink . '</a>'
 					. "<div class='link_extend_title'><em>" . $escapedTitle . "</em></div>";
 	} else {
-		$data = '<a href="' . $escapedHref . '">' . $escapedTitle . '</a>';
+		$data = '<a rel="external" href="' . $escapedHref . '">' . $escapedTitle . '</a>';
 	}
 
 	return $data;

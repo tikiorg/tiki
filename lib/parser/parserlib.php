@@ -967,10 +967,11 @@ if ( \$('#$id') ) {
 				$_REQUEST['list_tr_offset1'] = $_REQUEST['tr_offset1'];
 				$_REQUEST['tr_offset1'] = 0;
 			}
-		}
-		foreach ($args as $arg) {
-			if (substr($arg, 0, 4) == '{$f_') {
-				return $name . ': ' . tra('Plugin cannot be executed because pretty tracker references are not replaced. Please use smarty wikiplugin tag instead.');
+			foreach ($args as $arg) {
+				if (substr($arg, 0, 4) == '{$f_') {
+					return $name . ': ' . tr('Pretty tracker reference "%0" could not be replaced in plugin "%1".',
+								str_replace(array('{','}'), '', $arg), $name);
+				}
 			}
 		}
 
