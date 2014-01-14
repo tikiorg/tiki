@@ -372,7 +372,9 @@ if ( isset($_GET['preview']) || isset($_GET['thumbnail']) || isset($_GET['displa
 }
 
 $mimelib = TikiLib::lib('mime');
-if ( empty($info['filetype']) || $info['filetype'] == 'application/x-octetstream' || $info['filetype'] == 'application/octet-stream' ) {
+if ( empty($info['filetype']) || $info['filetype'] == 'application/x-octetstream'
+			|| $info['filetype'] == 'application/octet-stream' || $info['filetype'] == 'unknown') {
+
 	$info['filetype'] = $mimelib->from_path($info['filename'], $filepath);
 
 } else if (isset($_GET['thumbnail']) && (strpos($info['filetype'], 'image') === false || ($content_changed && strpos($info['filetype'], 'image/svg') === false))) {	// use thumb format
