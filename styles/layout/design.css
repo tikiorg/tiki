@@ -2942,6 +2942,7 @@ div.highlight {
 input[type=checkbox],
 input[type=radio] {
 	border: 0;
+	margin-left:10px;
 }
 
 
