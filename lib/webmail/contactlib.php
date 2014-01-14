@@ -171,7 +171,7 @@ class ContactLib extends TikiLib
 				$query = 'delete from `tiki_webmail_contacts_ext` where `contactId`=?';
 				$bindvars = array((int)$contactId);
 			} else {
-				$query = 'DELETE `tiki_webmail_contacts_ext`.* AS x FROM `tiki_webmail_contacts_ext` AS x '.
+				$query = 'DELETE x.* FROM `tiki_webmail_contacts_ext` AS x '.
 					'LEFT JOIN `tiki_webmail_contacts_fields` AS f ON x.`fieldId`=f.`fieldId`'.
 					'WHERE x.`contactId`=? AND f.`flagsPublic`=\'n\' AND f.`user`=?';
 				$bindvars = array((int)$contactId, $user);
