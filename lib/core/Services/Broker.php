@@ -114,17 +114,21 @@ class Services_Broker
 			$smarty->assign($key, $value);
 		}
 
-		$initial = $GLOBALS['prefs']['site_layout'];
+		$layout = null;
 
 		if ($internal) {
-			$GLOBALS['prefs']['site_layout'] = 'internal';
+			$layout = "layouts/internal/layout_view.tpl";
 		} elseif ($access->is_xml_http_request()) {
-			$GLOBALS['prefs']['site_layout'] =  ! empty($_REQUEST['modal']) ? 'modal' : 'ajax';
+			$layout = ! empty($_REQUEST['modal'])
+				? 'layouts/internal/modal.tpl'
+				: 'layouts/internal/ajax.tpl';
 		}
 
-		$out = $smarty->fetch($template);
-
-		$GLOBALS['prefs']['site_layout'] = $initial;
+		if ($layout) {
+			$out = $smarty->fetch("extends:$layout|$template");
+		} else {
+			$out = $smarty->fetch($template);
+		}
 
 		return $out;
 	}
