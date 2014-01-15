@@ -98,6 +98,18 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 						'legacy_index' => 9,
 						'profile_reference' => 'file_gallery',
 					),
+					'indexGeometry' => array(
+						'name' => tr('Index As Map Layer'),
+						'description' => tr('Index the files in a specific format for use in map searchlayers to display trails and features.'),
+						'filter' => 'text',
+						'default' => '',
+						'options' => array(
+							'' => tr('No'),
+							'geojson' => tr('GeoJSON'),
+							'gpx' => tr('GPX'),
+						),
+						'legacy_index' => 10,
+					),
 				),
 			),
 		);
@@ -470,6 +482,43 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 			return $filegallib->update_single_file($gal_info, $file['name'], $file['size'], $file['type'], file_get_contents($file['tmp_name']), $fileIds[0]);
 		} else {
 			return $filegallib->upload_single_file($gal_info, $file['name'], $file['size'], $file['type'], file_get_contents($file['tmp_name']));
+		}
+	}
+
+	function getDocumentPart(Search_Type_Factory_Interface $typeFactory)
+	{
+		if ($this->getOption('indexGeometry') && $this->getValue()) {
+			TikiLib::lib('smarty')->loadPlugin('smarty_modifier_sefurl');
+			$urls = array();
+
+			foreach(explode(',', $this->getValue()) as $value) {
+				$urls[] = smarty_modifier_sefurl($value, 'file');
+			}
+			return array(
+				'geo_located' => $typeFactory->identifier('y'),
+				'geo_file' => $typeFactory->identifier(implode(',', $urls)),
+				'geo_file_format' => $typeFactory->identifier($this->getOption('indexGeometry')),
+			);
+		} else {
+			return parent::getDocumentPart($typeFactory);
+		}
+	}
+
+	function getProvidedFields()
+	{
+		if ($this->getOption('indexGeometry') && $this->getValue()) {
+			return array('geo_located', 'geo_file', 'geo_file_format');
+		} else {
+			return parent::getProvidedFields();
+		}
+	}
+
+	function getGlobalFields()
+	{
+		if ($this->getOption('indexGeometry') && $this->getValue()) {
+			return array();
+		} else {
+			return parent::getGlobalFields();
 		}
 	}
 }
