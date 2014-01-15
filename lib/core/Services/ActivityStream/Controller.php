@@ -13,7 +13,6 @@ class Services_ActivityStream_Controller
 	{
 		$this->lib = TikiLib::lib('unifiedsearch');
 		Services_Exception_Disabled::check('wikiplugin_activitystream');
-		Services_Exception_Disabled::check('activity_custom_events');
 	}
 
 	function action_render(JitFilter $request)
