@@ -18,14 +18,16 @@
 	color: #9d8859;
 }
 
-/*Removed .cm-tw-box since it produced a missplacement with the selections of text inside it*/
+/*Removed border attributes from .cm-tw-box since it produced a missplacement with the selections of text inside it. Added grey color instead*/
 /* .cm-tw-box {
 	border-top-width: 0px ! important;
 	border-style: solid;
 	border-width: 1px;
 	border-color: inherit;
 } */
-
+ .cm-tw-box {
+	color: #808080;
+}
 .cm-tw-underline {
 	text-decoration: underline;
 }
