@@ -57,10 +57,10 @@
 
 					<div class="buttons comment-form">
 						{if $allow_post && $comment.locked neq 'y'}
-							{self_link _class='btn btn-default btn-sm' controller=comment action=post type=$type objectId=$objectId parentId=$comment.threadId}{tr}Reply{/tr}{/self_link}
+							<a class='btn btn-default btn-sm' href="{service controller=comment action=post type=$type objectId=$objectId parentId=$comment.threadId}">{tr}Reply{/tr}</a>
 						{/if}
 						{if $comment.can_edit}
-							{self_link _class='btn btn-default btn-sm' controller=comment action=edit threadId=$comment.threadId}{tr}Edit{/tr}{/self_link}
+							<a class='btn btn-default btn-sm' href="{service controller=comment action=edit threadId=$comment.threadId}">{tr}Edit{/tr}</a>
 						{/if}
 						{if $prefs.wiki_comments_simple_ratings eq 'y'}
 							<form class="commentRatingForm" method="post">
@@ -71,9 +71,9 @@
 							{jq}
 var crf = $('form.commentRatingForm').submit(function() {
 	var vals = $(this).serialize();
-	$.modal(tr('Loading...'));
+	$.tikiModal(tr('Loading...'));
 	$.post($.service('rating', 'vote'), vals, function() {
-		$.modal();
+		$.tikiModal();
 		$.notify(tr('Thanks for rating!'));
 	});
 	return false;
@@ -82,7 +82,7 @@ var crf = $('form.commentRatingForm').submit(function() {
 						{/if}
 					</div>
 					{if $comment.replies_info.numReplies gt 0}
-						{include file='comment/list.tpl' comments=$comment.replies_info.replies cant=$comment.replies_info.numReplies parentId=$comment.threadId}
+						{include file='extends:layouts/internal/layout_view.tpl|comment/list.tpl' comments=$comment.replies_info.replies cant=$comment.replies_info.numReplies parentId=$comment.threadId}
 					{/if}
 				</article>
 			</li>
