@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "5917fcd9cc5518e24490016a7ab356ef",
+    "hash": "b4d5fa2b530c15c663e7d41a953698a1",
     "packages": [
         {
             "name": "aFarkas/html5shiv",
@@ -341,7 +341,9 @@
             "version": "3.1",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/Spreadsheets/jQuery.sheet/archive/3.1-rc-5.zip"
+                "url": "https://github.com/Spreadsheets/jQuery.sheet/archive/3.1-rc-5.zip",
+                "reference": null,
+                "shasum": null
             },
             "type": "library"
         },
@@ -917,10 +919,10 @@
         },
         {
             "name": "twitter/bootstrap",
-            "version": "3.0.2",
+            "version": "3.0.3",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/twbs/bootstrap/releases/download/v3.0.2/bootstrap-3.0.2-dist.zip",
+                "url": "https://github.com/twbs/bootstrap/releases/download/v3.0.3/bootstrap-3.0.3-dist.zip",
                 "reference": null,
                 "shasum": null
             },
