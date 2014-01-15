@@ -46,7 +46,7 @@
 				{$tree}
 			</div>
 
-			<div class="col-sm-9 fgallisting explorerHidden">
+			<div class="col-sm-12 fgallisting explorerHidden">
 		{else}
 			<div class="col-sm-12 fgallisting explorerDisplayed">
 		{/if}
