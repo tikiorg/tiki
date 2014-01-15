@@ -260,12 +260,12 @@ function prefs_wiki_list($partial = false)
 			'default' => 'n',
 		),
 		'wiki_comments_displayed_default' => array(
-			'name' => tra('Display by default'),
+			'name' => tra('Display comment list by default'),
 			'type' => 'flag',
 			'default' => 'n',
 		),
 		'wiki_comments_form_displayed_default' => array(
-			'name' => tra('Display comments form by default'),
+			'name' => tra('Display Post new comment form by default'),
 			'type' => 'flag',
 			'default' => 'n',
 		),
