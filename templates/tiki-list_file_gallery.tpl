@@ -18,7 +18,7 @@
 {/if}
 
 {* admin icons on the right side of the top navigation bar under the title *}
-<div class="t_navbar"{if $prefs.mobile_mode eq 'y'} data-role="controlgroup" data-type="horizontal"{/if}>
+<div class="t_navbar form-group"{if $prefs.mobile_mode eq 'y'} data-role="controlgroup" data-type="horizontal"{/if}>
 	{if $galleryId gt 0}
 		{if $prefs.mobile_mode eq 'y'}<div class="navbar" align="right" data-role="controlgroup" data-type="horizontal">{/if} {* mobile *}
 			{if $prefs.feature_group_watches eq 'y' and ( $tiki_p_admin_users eq 'y' or $tiki_p_admin eq 'y' )}

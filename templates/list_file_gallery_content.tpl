@@ -2,7 +2,7 @@
 {if empty($sort_arg)}
 	{assign var='sort_arg' value='sort_mode'}
 {/if}
-
+<div class="table-responsive">
 <table class="table table-bordered">
 	<tr>
 		{if $prefs.fgal_checked ne 'n' and ($tiki_p_admin_file_galleries eq 'y' or $tiki_p_upload_files eq 'y')}
@@ -491,7 +491,7 @@
 
 
 </table>
-
+</div>
 {if $prefs.feature_jquery_tooltips eq 'y'}
 	{jq}if (jqueryTiki.tooltips) { $('a.fgalbacklink').cluetip({showTitle:false, sticky:true}); }{/jq}
 {/if}

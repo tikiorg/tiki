@@ -8,7 +8,7 @@
 	or ( !empty($gallery_path) && $fgal_options.show_path.value eq 'y' && $tiki_p_view_fgal_path eq 'y' )
 }
 
-	<div class="fgal_top_bar" style="height:16px; vertical-align:middle">
+	<div class="fgal_top_bar form-group">
 
 		{if isset($tree) and count($tree) gt 0 && $tiki_p_list_file_galleries != 'n'
 			&& $fgal_options.show_explorer.value eq 'y' && $tiki_p_view_fgal_explorer eq 'y'}
@@ -38,23 +38,20 @@
 		{/if}
 	</div>
 {/if}
-<div class="table-responsive">
-<table class="table">
-	<tr>
+
+<div class="row">
 		{if isset($tree) && count($tree) gt 0 && $tiki_p_list_file_galleries != 'n'
 			&& $fgal_options.show_explorer.value eq 'y' && $tiki_p_view_fgal_explorer eq 'y' && $view neq 'page'}
-			<td width="25%" class="fgalexplorer" id="fgalexplorer" style="{if ( isset($smarty.session.tiki_cookie_jar.show_fgalexplorer) and $smarty.session.tiki_cookie_jar.show_fgalexplorer neq 'y') and ( ! isset($smarty.request.show_fgalexplorer) or $smarty.request.show_fgalexplorer neq 'y' )}display:none;{/if} width: 25%">
-				<div>
-					{$tree}
-				</div>
-			</td>
+			<div class="col-sm-3 fgalexplorer" id="fgalexplorer" style="{if ( isset($smarty.session.tiki_cookie_jar.show_fgalexplorer) and $smarty.session.tiki_cookie_jar.show_fgalexplorer neq 'y') and ( ! isset($smarty.request.show_fgalexplorer) or $smarty.request.show_fgalexplorer neq 'y' )}display:none;{/if}">
+				{$tree}
+			</div>
 
-			<td width="75%" class="fgallisting">
+			<div class="col-sm-9 fgallisting explorerHidden">
 		{else}
-			<td width="100%" class="fgallisting">
+			<div class="col-sm-12 fgallisting explorerDisplayed">
 		{/if}
 
-		<div style="padding:1px; overflow-x:auto; overflow-y:hidden;">
+		<div style="{*overflow-x:auto;*} overflow-y:hidden;">
 			{if $maxRecords > 20 and $cant > $maxRecords}
 				<div class="clearboth" style="margin-bottom: 3px;">
 					{pagination_links cant=$cant step=$maxRecords offset=$offset}{/pagination_links}
@@ -176,7 +173,6 @@
 				{/if}
 			{/pagination_links}
 			</div>
-		</td>
-	</tr>
-</table>
+		</div>
+
 </div>

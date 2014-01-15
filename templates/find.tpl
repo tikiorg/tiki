@@ -31,27 +31,27 @@
 	*                  {include file='find.tpl' find_show_languages='y' find_show_categories='y' find_show_num_rows='y'} 
 *}
 
-<div class="text-center row">
-		<form method="post" action="{$smarty.server.PHP_SELF}" class="col-md-12 form-inline form-horizontal form-group" role="form">
+<div>
+		<form method="post" action="{$smarty.server.PHP_SELF}" class="form-horizontal" role="form">
 		{if !empty($filegals_manager)}<input type="hidden" name="filegals_manager" value="{$filegals_manager|escape}">{/if}
 
 		{query _type='form_input' maxRecords='NULL' type='NULL' types='NULL' find='NULL' topic='NULL' lang='NULL' exact_match='NULL' categId='NULL' cat_categories='NULL' filegals_manager='NULL' save='NULL' offset='NULL' searchlist='NULL' searchmap='NULL'}
-    <div class="form-group">
-	<label class="control-label col-sm-3">
-		{if empty($whatlabel)}
-			{tr}Find{/tr}
-		{else}
-			{tr}{$whatlabel}{/tr}
-		{/if}
-    </label>
-    <div class="input-group col-sm-9">
-		<input class="form-control" type="text" name="find" id="find" value="{$find|escape}">
+            <div class="form-group">
+	            <label class="control-label col-sm-4">
+		            {if empty($whatlabel)}
+			            {tr}Find{/tr}
+		            {else}
+			            {tr}{$whatlabel}{/tr}
+		            {/if}
+                </label>
+                <div class="input-group col-sm-8">
+		            <input class="form-control" type="text" name="find" id="find" value="{$find|escape}">
 		{if isset($autocomplete)}
 			{jq}$("#find").tiki("autocomplete", "{{$autocomplete}}"){/jq}
 		{/if}
-	</div>
-    </div>
-	{if isset($find_in)}{help url="#" desc="{tr}Find in:{/tr} {$find_in}"}{/if}
+	            </div>
+            </div>
+{*	{if isset($find_in)}{help url="#" desc="{tr}Find in:{/tr} {$find_in}"}{/if} *}
 
 {if isset($exact_match)}
 	<label class="findexactmatch" for="findexactmatch" style="white-space: nowrap">
@@ -61,10 +61,12 @@
 {/if}
 
 {if !empty($find_show_sub) and $find_show_sub eq 'y'}
-	<label class="findsub">
-		{tr}and all the sub-objects{/tr}
+    <div class="form-group">
+	<label class="col-sm-4 control-label findsub">{tr}and all the sub-objects{/tr} {if isset($find_in)}{help url="#" desc="{tr}Find in:{/tr} {$find_in}"}{/if}</label>
+    <div class="col-sm-8 checkbox-inline">
 		<input type="checkbox" name="find_sub" id="find_sub" {if !empty($find_sub) and $find_sub eq 'y'}checked="checked"{/if}>
-	</label>
+    </div>
+    </div>
 {/if}
 
 {if !empty($types) and ( !isset($types_tag) or $types_tag eq 'select' )}
@@ -128,40 +130,41 @@
 {/if}
 
 {if ((isset($find_show_categories) && $find_show_categories eq 'y') or (isset($find_show_categories_multi) && $find_show_categories_multi eq 'y')) and $prefs.feature_categories eq 'y' and !empty($categories)}
-	<div class="category_find">
-	{if $find_show_categories_multi eq 'n' || $findSelectedCategoriesNumber <= 1}
-	<div id="category_singleselect_find">
-		<select name="categId" class="findcateg">
-			<option value='' {if $find_categId eq ''}selected="selected"{/if}>{tr}any category{/tr}</option>
-			{foreach $categories as $identifier => $category}
-				<option value="{$identifier}" {if $find_categId eq $identifier}selected="selected"{/if}>
-					{$category.categpath|tr_if|escape}
-				</option>
-			{/foreach}
-		</select>
-		{if $prefs.javascript_enabled eq 'y' && $find_show_categories_multi eq 'y'}<a href="#" onclick="show('category_multiselect_find');hide('category_singleselect_find');javascript:document.getElementById('category_select_find_type').value='y';">{tr}Multiple select{/tr}</a>{/if}
-		<input id="category_select_find_type" name="find_show_categories_multi" value="n" type="hidden">
-	</div>
-	{/if}
-	<div id="category_multiselect_find" style="display: {if $find_show_categories_multi eq 'y' && $findSelectedCategoriesNumber > 1}block{else}none{/if};">
-  		<div class="multiselect"> 
-  			{if count($categories) gt 0}
-				{$cat_tree}
-				<div class="clear">
-				{if $tiki_p_admin_categories eq 'y'}
-    				<div class="pull-right"><a href="tiki-admin_categories.php" class="link">{tr}Admin Categories{/tr} {icon _id='wrench'}</a></div>
-				{/if}
-				{select_all checkbox_names='cat_categories[]' label="{tr}Select/deselect all categories{/tr}"}
-			{else}
-				<div class="clear">
- 				{if $tiki_p_admin_categories eq 'y'}
-    				<div class="pull-right"><a href="tiki-admin_categories.php" class="link">{tr}Admin Categories{/tr} {icon _id='wrench'}</a></div>
- 				{/if}
-    			{tr}No categories defined{/tr}
-  			{/if}
-			</div> {* end .clear *}
-		</div> {* end #multiselect *}
-	</div> {* end #category_multiselect_find *}
+	<div class="form-group category_find">
+	    {if $find_show_categories_multi eq 'n' || $findSelectedCategoriesNumber <= 1}
+            <label class="col-sm-4 control-label">{tr}Category{/tr}</label>
+	        <div id="category_singleselect_find" class="col-sm-8">
+		        <select name="categId" class="findcateg form-control">
+			        <option value='' {if $find_categId eq ''}selected="selected"{/if}>{tr}any category{/tr}</option>
+			        {foreach $categories as $identifier => $category}
+				        <option value="{$identifier}" {if $find_categId eq $identifier}selected="selected"{/if}>
+				            {$category.categpath|tr_if|escape}
+				        </option>
+			        {/foreach}
+		        </select>
+		        {if $prefs.javascript_enabled eq 'y' && $find_show_categories_multi eq 'y'}<a href="#category_select_find_type" onclick="show('category_multiselect_find');hide('category_singleselect_find');javascript:document.getElementById('category_select_find_type').value='y';">{tr}Multiple select{/tr}</a>{/if}
+		        <input id="category_select_find_type" name="find_show_categories_multi" value="n" type="hidden">
+            </div>
+		{/if}
+	    <div id="category_multiselect_find" class="col-sm-8 col-sm-offset-4" style="display: {if $find_show_categories_multi eq 'y' && $findSelectedCategoriesNumber > 1}block{else}none{/if};">
+  		    <div class="multiselect">
+  			    {if count($categories) gt 0}
+				    {$cat_tree}
+				    <div class="clear">
+				        {if $tiki_p_admin_categories eq 'y'}
+    				        <div class="pull-right"><a href="tiki-admin_categories.php" class="link">{tr}Admin Categories{/tr} {icon _id='wrench'}</a></div>
+				        {/if}
+				        {select_all checkbox_names='cat_categories[]' label="{tr}Select/deselect all categories{/tr}"}
+			    {else}
+				    <div class="clear">
+ 				        {if $tiki_p_admin_categories eq 'y'}
+    				        <div class="pull-right"><a href="tiki-admin_categories.php" class="link">{tr}Admin Categories{/tr} {icon _id='wrench'}</a></div>
+ 				        {/if}
+    			        {tr}No categories defined{/tr}
+  			    {/if}
+			        </div> {* end .clear *}
+	    	</div> {* end #multiselect *}
+	    </div> {* end #category_multiselect_find *}
 	</div>
 {/if}
 
@@ -225,7 +228,7 @@
 			<input type="text" name="maxRecords" id="findnumrows" value="{$maxRecords|escape}" size="3">
 	</label>
 {/if}
-
+<div class="form-group text-center">
 <label class="findsubmit">
 	<input type="submit" class="btn btn-default btn-sm" name="search" value="{tr}Go{/tr}">
 	{if !empty($find) or !empty($find_type) or !empty($find_topic) or !empty($find_lang) or !empty($find_langOrphan) or !empty($find_categId) or !empty($find_orphans) or !empty($find_other_val) or $maxRecords ne $prefs.maxRecords}
@@ -242,7 +245,7 @@
 		<input type="hidden" name="mapview" value="n">
 	{/if}
 </label>
-
+</div>
 </form>
 </div>
 
