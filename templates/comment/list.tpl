@@ -1,11 +1,6 @@
 {extends 'layout_view.tpl'}
 
 {block name="title"}
-	{title}{$title|escape}{/title}
-{/block}
-
-{block name="content"}
-{if ! $parentId}
 	<h3>{tr}Comments{/tr}
 		<span class="actions">
 			{if ! $parentId && $allow_lock}
@@ -16,7 +11,9 @@
 			{/if}
 		</span>
 	</h3>
-{/if}
+{/block}
+
+{block name="content"}
 
 {if $cant gt 0}
 	<ol class="media-list">
@@ -98,7 +95,9 @@ var crf = $('form.commentRatingForm').submit(function() {
 {/if}
 
 {if ! $parentId && $allow_post}
-	<div class="button buttons comment-form {if $prefs.wiki_comments_form_displayed_default eq 'y'}autoshow{/if}">{self_link controller=comment action=post type=$type objectId=$objectId}{tr}Post new comment{/tr}{/self_link}</div>
+	<div class="button buttons comment-form {if $prefs.wiki_comments_form_displayed_default eq 'y'}autoshow{/if}">
+		<a class="btn btn-primary" href="{service controller=comment action=post type=$type objectId=$objectId}">{tr}Post new comment{/tr}</a>
+	</div>
 {/if}
 
 {if ! $parentId && $prefs.feature_wiki_paragraph_formatting eq 'y'}

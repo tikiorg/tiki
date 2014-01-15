@@ -34,6 +34,7 @@ class Services_Comment_Controller
 		$this->markEditable($comments['data']);
 
 		return array(
+			'title' => tr('Comments'),
 			'comments' => $comments['data'],
 			'type' => $type,
 			'objectId' => $objectId,

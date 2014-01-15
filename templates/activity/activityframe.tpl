@@ -14,10 +14,12 @@
 		<span class="pull-right">
 			{$activityframe.activity.modification_date|tiki_short_datetime}
 		</span>
-		<a class="comment" href="{service controller=comment action=list type=activity objectId=$activityframe.activity.object_id}">
-			{tr}Comment{/tr}
-			{if $activityframe.activity.comment_count}({$activityframe.activity.comment_count|escape}){/if}
-		</a>
+		{if $activity_format neq 'extended'}
+			<a class="comment" href="{service controller=comment action=list type=activity objectId=$activityframe.activity.object_id modal=true}">
+				{tr}Comment{/tr}
+				{if $activityframe.activity.comment_count}({$activityframe.activity.comment_count|escape}){/if}
+			</a>
+		{/if}
 		{if $activityframe.like}
 			<a class="like" href="{service controller=social action=unlike type=activity id=$activityframe.activity.object_id}">
 				{tr}Unlike{/tr}
@@ -30,4 +32,9 @@
 			</a>
 		{/if}
 	</div>
+	{if $activity_format eq 'extended'}
+		<div class="comment-container" data-reload="{service controller=comment action=list type=activity objectId=$activityframe.activity.object_id}">
+			{service_inline controller=comment action=list type=activity objectId=$activityframe.activity.object_id}
+		</div>
+	{/if}
 </div>

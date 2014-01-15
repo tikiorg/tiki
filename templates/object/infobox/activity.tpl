@@ -1,1 +1,1 @@
-{activity id=$activity}
+{activity id=$activity format=$format}

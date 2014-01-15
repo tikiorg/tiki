@@ -34,6 +34,7 @@ class Services_Object_Controller
 			'object' => $input->object->none(),
 			'content' => $this->{'infobox_' . $type}($input),
 			'plain' => $input->plain->int(),
+			'format' => $input->format->word(),
 		);
 	}
 

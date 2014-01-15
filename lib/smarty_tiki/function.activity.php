@@ -25,6 +25,7 @@ function smarty_function_activity($params)
 	}
 
 	$smarty->assign('activity', $activity);
+	$smarty->assign('activity_format', !empty($params['format']) ? $params['format'] : 'default');
 	return $smarty->fetch('activity/' . $activity['event_type'] . '.tpl');
 }
 
