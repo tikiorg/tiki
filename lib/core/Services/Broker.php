@@ -114,13 +114,19 @@ class Services_Broker
 			$smarty->assign($key, $value);
 		}
 
+		$initial = $GLOBALS['prefs']['site_layout'];
+
 		if ($internal) {
 			$GLOBALS['prefs']['site_layout'] = 'internal';
 		} elseif ($access->is_xml_http_request()) {
 			$GLOBALS['prefs']['site_layout'] =  ! empty($_REQUEST['modal']) ? 'modal' : 'ajax';
 		}
 
-		return $smarty->fetch($template);
+		$out = $smarty->fetch($template);
+
+		$GLOBALS['prefs']['site_layout'] = $initial;
+
+		return $out;
 	}
 }
 
