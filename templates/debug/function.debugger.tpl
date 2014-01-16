@@ -7,7 +7,7 @@
 <form method="post" action="{$console_father|escape}">
 <b>{tr}Debugger Console{/tr}</b>
 <span style="float: right">{icon _id='img/icons/close.gif' onclick='toggle("debugconsole");' _title="{tr}Close{/tr}" width=13 height=13}</span>
-<table>
+<table.table>
   <tr>
     <td class="formcolor"><small>{tr}Current URL:{/tr}</small></td>
     <td class="formcolor">{$console_father|escape}</td>
