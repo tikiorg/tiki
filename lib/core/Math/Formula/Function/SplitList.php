@@ -42,8 +42,11 @@ class Math_Formula_Function_SplitList extends Math_Formula_Function
 			foreach (explode("\n", $string) as $line) {
 				$parts = explode($separator, $line, $keyCount);
 
-				$entry = array_combine($keys, $parts);
-				$out[] = $entry;
+				// Skip entries with missing values
+				if (count($parts) === $keyCount) {
+					$entry = array_combine($keys, $parts);
+					$out[] = $entry;
+				}
 			}
 		}
 
