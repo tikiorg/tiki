@@ -8,184 +8,221 @@
 <form method="post" class="simple" action="{service controller=tracker action=replace}">
 	{accordion}
 		{accordion_group title="{tr}General{/tr}"}
-			<label>
-				{tr}Name{/tr}
-				<input type="text" name="name" value="{$info.name|escape}" required="required">
-			</label>
-			<label>
-				{tr}Description{/tr}
-				
-				<textarea name="description" rows="4" cols="40">{$info.description|escape}</textarea>
-			</label>
-			<label>
-				<input type="checkbox" name="descriptionIsParsed" {if $info.descriptionIsParsed eq 'y'}checked="checked"{/if} value="1">
-				{tr}Description is wiki-parsed{/tr}
-			</label>
+			<div class="form-group">
+				<label for="name">{tr}Name{/tr}</label>
+				<input class="form-control" type="text" name="name" value="{$info.name|escape}" required="required">
+			</div>
+			<div class="form-group">
+				<label for="description">{tr}Description{/tr}</label>
+				<textarea class="form-control" name="description" rows="4" cols="40">{$info.description|escape}</textarea>
+			</div>
+			<div class="checkbox">
+				<label>
+					<input type="checkbox" name="descriptionIsParsed" {if $info.descriptionIsParsed eq 'y'}checked="checked"{/if} value="1">
+					{tr}Description is wiki-parsed{/tr}
+				</label>
+			</div>
 		{/accordion_group}
 		{accordion_group title="{tr}Features{/tr}"}
-			<label>
-				<input type="checkbox" name="useRatings" value="1"
-					{if $info.useRatings eq 'y'} checked="checked"{/if}>
-				{tr}Allow ratings (deprecated, use rating field){/tr}
-			</label>
-			<label class="depends" data-on="useRatings">
-				{tr}Rating options{/tr}
-				<input type="text" name="ratingOptions" value="{if $info.ratingOptions}{$info.ratingOptions|escape}{else}-2,-1,0,1,2{/if}">
-			</label>
-			<label class="depends" data-on="useRatings">
-				<input type="checkbox" name="showRatings" value="1"
-					{if $info.showRatings eq 'y'} checked="checked"{/if}>
-				{tr}Show ratings in listing{/tr}
-			</label>
-			<label>
-				<input type="checkbox" name="useComments" value="1"
-					{if $info.useComments eq 'y'} checked="checked"{/if}>
-				{tr}Allow comments{/tr}
-			</label>
-			<label class="depends" data-on="useComments">
-				<input type="checkbox" name="showComments" value="1"
-					{if $info.showComments eq 'y'} checked="checked"{/if}>
-				{tr}Show comments in listing{/tr}
-			</label>
-			<label class="depends" data-on="useComments">
-				<input type="checkbox" name="showLastComment" value="1"
-					{if $info.showLastComment eq 'y'} checked="checked"{/if}>
-				{tr}Display last comment author and date{/tr}
-			</label>
-			<label>
-				<input type="checkbox" name="useAttachments" value="1"
-					{if $info.useAttachments eq 'y'} checked="checked"{/if}>
-				{tr}Allow attachments{/tr}
-			</label>
-			<label class="depends" data-on="useAttachments">
-				<input type="checkbox" name="showAttachments" value="1"
-					{if $info.showAttachments eq 'y'} checked="checked"{/if}>
-				{tr}Display attachments in listing{/tr}
-			</label>
-			<fieldset class="depends sortable" data-on="useAttachments" data-selector="label">
+			<div class="checkbox">
+				<label>
+					<input type="checkbox" name="useRatings" value="1"
+						{if $info.useRatings eq 'y'} checked="checked"{/if}>
+					{tr}Allow ratings (deprecated, use rating field){/tr}
+				</label>
+			</div>
+			<div class="form-group depends" data-on="useRatings">
+				<label for="ratingOptions">{tr}Rating options{/tr}</label>
+				<input class="form-controls" type="text" name="ratingOptions" value="{$info.ratingOptions|default:'-2,-1,0,1,2'|escape}">
+			</div>
+			<div class="checkbox depends" data-on="useRatings">
+				<label>
+					<input type="checkbox" name="showRatings" value="1"
+						{if $info.showRatings eq 'y'} checked="checked"{/if}>
+					{tr}Show ratings in listing{/tr}
+				</label>
+			</div>
+			<div class="checkbox">
+				<label>
+					<input type="checkbox" name="useComments" value="1"
+						{if $info.useComments eq 'y'} checked="checked"{/if}>
+					{tr}Allow comments{/tr}
+				</label>
+			</div>
+			<div class="checkbox depends" data-on="useComments">
+				<label>
+					<input type="checkbox" name="showComments" value="1"
+						{if $info.showComments eq 'y'} checked="checked"{/if}>
+					{tr}Show comments in listing{/tr}
+				</label>
+			</div>
+			<div class="checkbox depends" data-on="useComments">
+				<label>
+					<input type="checkbox" name="showLastComment" value="1"
+						{if $info.showLastComment eq 'y'} checked="checked"{/if}>
+					{tr}Display last comment author and date{/tr}
+				</label>
+			</div>
+			<div class="checkbox">
+				<label>
+					<input type="checkbox" name="useAttachments" value="1"
+						{if $info.useAttachments eq 'y'} checked="checked"{/if}>
+					{tr}Allow attachments{/tr}
+				</label>
+			</div>
+			<div class="checkbox depends" data-on="useAttachments">
+				<label>
+					<input type="checkbox" name="showAttachments" value="1"
+						{if $info.showAttachments eq 'y'} checked="checked"{/if}>
+					{tr}Display attachments in listing{/tr}
+				</label>
+			</div>
+			<fieldset class="depends sortable" data-on="useAttachments" data-selector="div.checkbox">
 				<legend>{tr}Attachment attributes (sortable){/tr}</legend>
 				{foreach from=$attachmentAttributes key=name item=att}
-					<label>
-						<input type="checkbox" name="orderAttachments[]" value="{$name|escape}" {if $att.selected} checked="checked"{/if}>
-						{$att.label|escape}
-					</label>
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" name="orderAttachments[]" value="{$name|escape}" {if $att.selected} checked="checked"{/if}>
+							{$att.label|escape}
+						</label>
+					</div>
 				{/foreach}
 			</fieldset>
 		{/accordion_group}
 		{accordion_group title="{tr}Display{/tr}"}
-			<label>
-				{tr}Section format{/tr}
-				<select name="sectionFormat">
+			<div class="form-group">
+				<label for="sectionFormat">{tr}Section format{/tr}</label>
+				<select name="sectionFormat" class="form-control">
 					<option value="flat"{if $info.sectionFormat eq 'flat'} selected="selected"{/if}>{tr}Title{/tr}</option>
 					<option value="tab"{if $info.sectionFormat eq 'tab'} selected="selected"{/if}>{tr}Tabs{/tr}</option>
 				</select>
-				<div class="description help-block">
+				<div class="help-block">
 					{tr}Determines how headers will be rendered when using header fields as form section dividers.{/tr}
 				</div>
-			</label>
-			<label>
-				<input type="checkbox" name="showStatus" value="1"
-					{if $info.showStatus eq 'y'} checked="checked"{/if}>
-				{tr}Show status{/tr}
-			</label>
-			<label>
-				<input type="checkbox" name="showStatusAdminOnly" value="1"
-					{if $info.showStatusAdminOnly eq 'y'} checked="checked"{/if}>
-				{tr}Show status to tracker administrator only{/tr}
-			</label>
-			<label>
-				<input type="checkbox" name="showCreated" value="1"
-					{if $info.showCreated eq 'y'} checked="checked"{/if}>
-				{tr}Show creation date when listing items{/tr}
-			</label>
-			<label class="depends" data-on="showCreated">
-				{tr}Creation date format{/tr}
+			</div>
+			<div class="checkbox">
+				<label>
+					<input type="checkbox" name="showStatus" value="1"
+						{if $info.showStatus eq 'y'} checked="checked"{/if}>
+					{tr}Show status{/tr}
+				</label>
+			</div>
+			<div class="checkbox">
+				<label>
+					<input type="checkbox" name="showStatusAdminOnly" value="1"
+						{if $info.showStatusAdminOnly eq 'y'} checked="checked"{/if}>
+					{tr}Show status to tracker administrator only{/tr}
+				</label>
+			</div>
+			<div class="checkbox">
+				<label>
+					<input type="checkbox" name="showCreated" value="1"
+						{if $info.showCreated eq 'y'} checked="checked"{/if}>
+					{tr}Show creation date when listing items{/tr}
+				</label>
+			</div>
+			<div class="form-group depends" data-on="showCreated">
+				<label for="showCreatedFormat">{tr}Creation date format{/tr}</label>
 				<input type="text" name="showCreatedFormat" value="{$info.showCreatedFormat|escape}">
-				<div class="description help-block">
+				<div class="help-block">
+					<a rel="external" class="link" target="strftime" href="http://www.php.net/manual/en/function.strftime.php">{tr}Date and Time Format Help{/tr}</a>
+				</div>
+			</div>
+			<div class="depends checkbox" data-on="showCreated">
+				<label>
+					<input type="checkbox" name="showCreatedBy" value="1"
+						{if $info.showCreatedBy eq 'y'} checked="checked"{/if}>
+					{tr}Show item creator{/tr}
+				</label>
+			</div>
+			<div class="checkbox">
+				<label>
+					<input type="checkbox" name="showCreatedView" value="1"
+						{if $info.showCreatedView eq 'y'} checked="checked"{/if}>
+					{tr}Show creation date when viewing items{/tr}
+				</label>
+			</div>
+			<div class="checkbox">
+				<label>
+					<input type="checkbox" name="showLastModif" value="1"
+						{if $info.showLastModif eq 'y'} checked="checked"{/if}>
+					{tr}Show last modification date when listing items{/tr}
+				</label>
+			</div>
+			<div class="depends checkbox" data-on="showLastModif">
+				<label>
+					<input type="checkbox" name="showLastModifBy" value="1"
+						{if $info.showLastModifBy eq 'y'} checked="checked"{/if}>
+					{tr}Show item last modifier{/tr}
+				</label>
+			</div>
+			<div class="form-group depends" data-on="showLastModif">
+				<label for="showLastModifFormat">{tr}Modification date format{/tr}</label>
+				<input class="form-control" type="text" name="showLastModifFormat" value="{$info.showLastModifFormat|escape}">
+				<div class="help-block">
 					<a class="link" target="strftime" href="http://www.php.net/manual/en/function.strftime.php">{tr}Date and Time Format Help{/tr}</a>
 				</div>
-			</label>
-			<label class="depends" data-on="showCreated">
-				<input type="checkbox" name="showCreatedBy" value="1"
-					{if $info.showCreatedBy eq 'y'} checked="checked"{/if}>
-				{tr}Show item creator{/tr}
-			</label>
-			<label>
-				<input type="checkbox" name="showCreatedView" value="1"
-					{if $info.showCreatedView eq 'y'} checked="checked"{/if}>
-				{tr}Show creation date when viewing items{/tr}
-			</label>
-			<label>
-				<input type="checkbox" name="showLastModif" value="1"
-					{if $info.showLastModif eq 'y'} checked="checked"{/if}>
-				{tr}Show last modification date when listing items{/tr}
-			</label>
-			<label class="depends" data-on="showLastModif">
-				<input type="checkbox" name="showLastModifBy" value="1"
-					{if $info.showLastModifBy eq 'y'} checked="checked"{/if}>
-				{tr}Show item last modifier{/tr}
-			</label>
-			<label class="depends" data-on="showLastModif">
-				{tr}Modification date format{/tr}
-				<input type="text" name="showLastModifFormat" value="{$info.showLastModifFormat|escape}">
-				<div class="description help-block">
-					<a class="link" target="strftime" href="http://www.php.net/manual/en/function.strftime.php">{tr}Date and Time Format Help{/tr}</a>
-				</div>
-			</label>
-			<label>
-				<input type="checkbox" name="showLastModifView" value="1"
-					{if $info.showLastModifView eq 'y'} checked="checked"{/if}>
-				{tr}Show last modification date when viewing items{/tr}
-			</label>
-			<label>
-				{tr}Default sort order{/tr}
-				<select name="defaultOrderKey">
+			</div>
+			<div class="checkbox">
+				<label>
+					<input type="checkbox" name="showLastModifView" value="1"
+						{if $info.showLastModifView eq 'y'} checked="checked"{/if}>
+					{tr}Show last modification date when viewing items{/tr}
+				</label>
+			</div>
+			<div class="form-group">
+				<label for="defaultOrderKey">{tr}Default sort order{/tr}</label>
+				<select name="defaultOrderKey" class="form-control">
 					{foreach from=$sortFields key=k item=label}
 						<option value="{$k|escape}" {if $k eq $info.defaultOrderKey} selected="selected"{/if}>{$label|truncate:42:'...'|escape}</option>
 					{/foreach}
 				</select>
-			</label>
-			<label>
-				{tr}Default sort direction{/tr}
-				<select name="defaultOrderDir">
+			</div>
+			<div class="form-group">
+				<label for="defaultOrderDir">{tr}Default sort direction{/tr}</label>
+				<select name="defaultOrderDir" class="form-control">
 					<option value="asc" {if $info.defaultOrderDir eq 'asc'}selected="selected"{/if}>{tr}ascending{/tr}</option>
 					<option value="desc" {if $info.defaultOrderDir eq 'desc'}selected="selected"{/if}>{tr}descending{/tr}</option>
 				</select>
-			</label>
-			<label>
-				<input type="checkbox" name="doNotShowEmptyField" value="1"
-					{if $info.doNotShowEmptyField eq 'y'} checked="checked"{/if}>
-				{tr}Hide empty fields from item view{/tr}
-			</label>
-			<label>
-				{tr}List detail pop-up{/tr}
+			</div>
+			<div class="checkbox">
+				<label>
+					<input type="checkbox" name="doNotShowEmptyField" value="1"
+						{if $info.doNotShowEmptyField eq 'y'} checked="checked"{/if}>
+					{tr}Hide empty fields from item view{/tr}
+				</label>
+			</div>
+			<div class="form-group">
+				<label for="showPopup">{tr}List detail pop-up{/tr}</label>
 				<input type="text" name="showPopup" value="{$info.showPopup|escape}">
-				<div class="description help-block">
+				<div class="help-block">
 					{tr}Comma-separated list of field IDs{/tr}
 				</div>
-			</label>
-			<label>
-				{tr}Template to display an item{/tr}
-				<input type="text" name="viewItemPretty" value="{$info.viewItemPretty|escape}">
-				<div class="description help-block">
+			</div>
+			<div class="form-group">
+				<label for="viewItemPretty">{tr}Template to display an item{/tr}</label>
+				<input class="form-control" type="text" name="viewItemPretty" value="{$info.viewItemPretty|escape}">
+				<div class="help-block">
 					{tr}wiki:pageName for a wiki page or tpl:tplName for a template{/tr}
 				</div>
-			</label>
-			<label>
-				{tr}Template to edit an item{/tr}
-				<input type="text" name="editItemPretty" value="{$info.editItemPretty|escape}">
-				<div class="description help-block">
+			</div>
+			<div class="form-group">
+				<label for="editItemPretty">{tr}Template to edit an item{/tr}</label>
+				<input class="form-control" type="text" name="editItemPretty" value="{$info.editItemPretty|escape}">
+				<div class="help-block">
 					{tr}wiki:pageName for a wiki page or tpl:tplName for a template{/tr}
 				</div>
-			</label>
-			<label>
-				<input type="checkbox" name="adminOnlyViewEditItem" value="1"
-					{if $info.adminOnlyViewEditItem eq 'y'} checked="checked"{/if}>
-				{tr}Restrict non admins to wiki page access only{/tr}
-				<div class="description help-block">
-					{tr}Only users with admin tracker permission (tiki_p_admin_trackers) can use the built-in tracker interfaces (tiki-view_tracker.php and tiki-view_tracker_item.php). This is useful if you want the users of these trackers to only access them via wiki pages, where you can use the various tracker plugins to embed forms and reports.{/tr}
-				</div>
-			</label>
+			</div>
+			<div class="checkbox">
+				<label>
+					<input type="checkbox" name="adminOnlyViewEditItem" value="1"
+						{if $info.adminOnlyViewEditItem eq 'y'} checked="checked"{/if}>
+					{tr}Restrict non admins to wiki page access only{/tr}
+					<div class="help-block">
+						{tr}Only users with admin tracker permission (tiki_p_admin_trackers) can use the built-in tracker interfaces (tiki-view_tracker.php and tiki-view_tracker_item.php). This is useful if you want the users of these trackers to only access them via wiki pages, where you can use the various tracker plugins to embed forms and reports.{/tr}
+					</div>
+				</label>
+			</div>
 		{/accordion_group}
 		{accordion_group title="{tr}Status{/tr}"}
 			<label>
@@ -347,57 +384,71 @@
 		{/accordion_group}
 		{if $prefs.feature_categories eq 'y'}
 			{accordion_group title="{tr}Categories{/tr}"}
-				{include file='categorize.tpl' colsCategorize=2 auto=y}
-				<label>
-					<input type="checkbox" name="autoCreateCategories" value="1"
-						{if $info.autoCreateCategories eq 'y'}checked="checked"{/if}>
-					{tr}Auto-create corresponding categories{/tr}
-				</label>
+				<div class="form-group">
+					{include file='categorize.tpl' notable=y auto=y}
+				</div>
+				<div class="checkbox">
+					<label>
+						<input type="checkbox" name="autoCreateCategories" value="1"
+							{if $info.autoCreateCategories eq 'y'}checked="checked"{/if}>
+						{tr}Auto-create corresponding categories{/tr}
+					</label>
+				</div>
 			{/accordion_group}
 		{/if}
 		{if $prefs.groupTracker eq 'y'}
 			{accordion_group title="{tr}Groups{/tr}"}
-				<label>
-					<input type="checkbox" name="autoCreateGroup" value="1"
-						{if $info.autoCreateGroup eq 'y'} checked="checked"{/if}>
-					{tr}Create a group for each item{/tr}
-				</label>
-				<label class="depends" data-on="autoCreateGroup">
-					{tr}Groups will include{/tr}
-					<select name="autoCreateGroupInc">
+				<div class="checkbox">
+					<label>
+						<input type="checkbox" name="autoCreateGroup" value="1"
+							{if $info.autoCreateGroup eq 'y'} checked="checked"{/if}>
+						{tr}Create a group for each item{/tr}
+					</label>
+				</div>
+				<div class="form-group depends" data-on="autoCreateGroup">
+					<label for="autoCreateGroupInc">{tr}Groups will include{/tr}</label>
+					<select name="autoCreateGroupInc" class="form-control">
 						<option value=""></option>
 						{foreach from=$groupList item=g}
 							<option value="{$g|escape}" {if $g eq $info.autoCreateGroupInc}selected="selected"{/if}>{$g|escape}</option>
 						{/foreach}
 					</select>
-				</label>
-				<label class="depends" data-on="autoCreateGroup">
-					<input type="checkbox" name="autoAssignCreatorGroup" value="1"
-						{if $info.autoAssignCreatorGroup eq 'y'} checked="checked"{/if}>
-					{tr}Creator is assigned to the group{/tr}
-				</label>
-				<label class="depends" data-on="autoCreateGroup">
-					<input type="checkbox" name="autoAssignCreatorGroupDefault" value="1"
-						{if $info.autoAssignCreatorGroupDefault eq 'y'} checked="checked"{/if}>
-					{tr}Will become the creator's default group{/tr}
-				</label>
-				<label class="depends" data-on="autoCreateGroup">
-					<input type="checkbox" name="autoAssignGroupItem" value="1"
-						{if $info.autoAssignGroupItem eq 'y'} checked="checked"{/if}>
-					{tr}Will become the new item's group creator{/tr}
-				</label>
-				<label class="depends" data-on="autoCreateGroup">
-					<input type="checkbox" name="autoCopyGroup" value="1"
-						{if $info.autoCopyGroup eq 'y'} checked="checked"{/if}>
-					{tr}Copy the default group in the field ID before updating the group{/tr}
-				</label>
+				</div>
+				<div class="checkbox depends" data-on="autoCreateGroup">
+					<label>
+						<input type="checkbox" name="autoAssignCreatorGroup" value="1"
+							{if $info.autoAssignCreatorGroup eq 'y'} checked="checked"{/if}>
+						{tr}Creator is assigned to the group{/tr}
+					</label>
+				</div>
+				<div class="checkbox depends" data-on="autoCreateGroup">
+					<label>
+						<input type="checkbox" name="autoAssignCreatorGroupDefault" value="1"
+							{if $info.autoAssignCreatorGroupDefault eq 'y'} checked="checked"{/if}>
+						{tr}Will become the creator's default group{/tr}
+					</label>
+				</div>
+				<div class="checkbox depends" data-on="autoCreateGroup">
+					<label>
+						<input type="checkbox" name="autoAssignGroupItem" value="1"
+							{if $info.autoAssignGroupItem eq 'y'} checked="checked"{/if}>
+						{tr}Will become the new item's group creator{/tr}
+					</label>
+				</div>
+				<div class="checkbox depends" data-on="autoCreateGroup">
+					<label>
+						<input type="checkbox" name="autoCopyGroup" value="1"
+							{if $info.autoCopyGroup eq 'y'} checked="checked"{/if}>
+						{tr}Copy the default group in the field ID before updating the group{/tr}
+					</label>
+				</div>
 			{/accordion_group}
 		{/if}
 	{/accordion}
-	<div class="submit">
+	<div class="form-group">
 		<input type="hidden" name="confirm" value="1">
 		<input type="hidden" name="trackerId" value="{$trackerId|escape}">
-		<input type="submit" class="btn btn-default btn-sm" value="{tr}Save{/tr}">
+		<input type="submit" class="btn btn-primary" value="{tr}Save{/tr}">
 	</div>
 </form>
 {/block}

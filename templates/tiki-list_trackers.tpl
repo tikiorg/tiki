@@ -74,7 +74,7 @@
 					
 					{if $tracker.permissions->admin_trackers}
 						<a title="{tr}Fields{/tr}" class="link" href="tiki-admin_tracker_fields.php?trackerId={$tracker.trackerId}">{icon _id='table' alt="{tr}Fields{/tr}"}</a>
-						<a title="{tr}Edit{/tr}" class="edit dialog" href="{service controller=tracker action=replace trackerId=$tracker.trackerId}">{icon _id='pencil' alt="{tr}Edit{/tr}"}</a>
+						<a title="{tr}Edit{/tr}" class="edit" data-toggle="modal" data-target="#bootstrap-modal" href="{service controller=tracker action=replace trackerId=$tracker.trackerId modal=true}">{icon _id='pencil' alt="{tr}Edit{/tr}"}</a>
 						{if $tracker.individual eq 'y'}
 							<a title="{tr}Active Permissions{/tr}" class="link" href="tiki-objectpermissions.php?objectName={$tracker.name|escape:"url"}&amp;objectType=tracker&amp;permType=trackers&amp;objectId={$tracker.trackerId}">{icon _id='key_active' alt="{tr}Active Permissions{/tr}"}</a>
 						{else}
@@ -100,9 +100,7 @@
     </div>
 	{pagination_links cant=$cant step=$maxRecords offset=$offset}{/pagination_links}
 	{if $tiki_p_admin_trackers eq 'y'}
-		<form class="create-tracker" method="post" action="{service controller=tracker action=replace}">
-			<input type="submit" class="btn btn-default" value="{tr}Create tracker{/tr}">
-		</form>
+		<a class="btn btn-default" href="{service controller=tracker action=replace modal=true}" data-toggle="modal" data-target="#bootstrap-modal">{tr}Create tracker{/tr}</a>
 	{/if}
 	{if !empty($trackerId)}
 		<div id="trackeredit"></div>
@@ -129,22 +127,6 @@
 			success: function (data) {
 				history.go(0);	// reload
 			}
-		});
-		$('.edit.dialog').click(function () {
-			var link = this;
-			$(this).serviceDialog({
-				title: $(link).closest('tr').find('.text a').text(),
-				data: {
-					controller: 'tracker',
-					action: 'replace',
-					trackerId: parseInt($(link).closest('tr').find('.id').text(), 10)
-				},
-				load: function() {
-					$(".tree.root:not(.init)", this).browse_tree().addClass("init");
-				}
-			});
-
-			return false;
 		});
 
 		$('.export.dialog').click(function () {
@@ -183,25 +165,6 @@
 					controller: 'tracker',
 					action: 'import_items',
 					trackerId: parseInt($(link).closest('tr').find('.id').text(), 10)
-				}
-			});
-
-			return false;
-		});
-
-		$('.create-tracker').submit(function () {
-			var form = this;
-			$(this).serviceDialog({
-				title: $(':submit', form).val(),
-				data: {
-					controller: 'tracker',
-					action: 'replace'
-				},
-				success: function () {
-					document.location.reload();
-				},
-				load: function() {
-					$(".tree.root:not(.init)", this).browse_tree().addClass("init");
 				}
 			});
 
@@ -316,11 +279,11 @@
 
 {jq}
 	$('#forumImportFromProfile').submit(function() {
-		$.modal(tr('Loading...'));
+		$.tikiModal(tr('Loading...'));
 		$.post($(this).attr('action'), {yaml: $('#importFromProfileYaml').val()}, function(feedback) {
 			feedback = $.parseJSON(feedback);
 
-			$.modal();
+			$.tikiModal();
 			if (feedback.length) {
 				for(i in feedback) {
 					$.notify(feedback[i]);
