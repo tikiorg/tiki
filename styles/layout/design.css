@@ -86,10 +86,6 @@
 	display: block;
 }
 
-#debugconsole table {
-	width: 100%;
-}
-
 #debugconsole input[type="text"] {
 	width: auto;
 }
