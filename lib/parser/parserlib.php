@@ -2492,7 +2492,7 @@ if ( \$('#$id') ) {
 						// Update the current title number to hide all parents levels numbers if the parent has no autonumbering
 						$hideall = false;
 						for ( $j = $hdrlevel ; $j > 0 ; $j-- ) {
-							if ( $hideall || ! $show_title_level[$j] ) {
+							if ( $hideall || empty($show_title_level[$j]) ) {
 								unset($hdr_structure[$nb_hdrs][$j - 1]);
 								$hideall = true;
 							}
