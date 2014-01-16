@@ -193,6 +193,15 @@
 					{preference name=print_pdf_webservice_url}
 				</div>
 			</fieldset>
+			
+			<fieldset>
+				<legend>{tr}Terms and Conditions{/tr}</legend>
+
+				{preference name=conditions_enabled}
+				<div class="adminoptionboxchild" id="conditions_enabled_childcontainer">
+					{preference name=conditions_page_name}
+				</div>
+			</fieldset>
 
 			<fieldset>
 				<legend>{tr}Miscellaneous{/tr}</legend>

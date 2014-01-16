@@ -19,11 +19,9 @@
 						{button _keepall='y' href="tiki-editpage.php" page=$page _class=$thisPageClass _text="{tr}Edit{/tr}" _title="{tr}Edit this page{/tr}"}
 					{/if}
 				{elseif $tiki_p_wiki_view_latest eq 'y'}
-					<span class="button">
-						{self_link latest=1}
-							{tr}View latest version before editing{/tr}
-						{/self_link}
-					</span>
+					{self_link latest=1 _class="btn btn-warning"}
+						{tr}View latest version before editing{/tr}
+					{/self_link}
 				{/if}
 			{/if}
 
