@@ -17,5 +17,8 @@
 				{debug}
 			{/if}
 		</div>
+		<div class="modal-footer">
+			<button type="button" class="btn btn-default" data-dismiss="modal">{tr}Close{/tr}</button>
+		</div>
 	</div>
 </div>

@@ -13,7 +13,7 @@
 	{else}
 		<form method="post" action="{service controller=search_stored action=delete}">
 			<div class="form-group">{tr _0=$label}Do you really want to remove the %0 query?{/tr}</div>
-			<div class="form-group">
+			<div class="form-group submit">
 				<input type="hidden" name="queryId" value="{$queryId|escape}"/>
 				<input class="btn btn-danger" type="submit" value="{tr}Delete Query{/tr}"/>
 			</div>

@@ -103,12 +103,15 @@
 	{/if}
 
 	{if ! $parentId && $allow_post}
-		<hr>
-		<h3>
-			<div class="button buttons comment-form {if $prefs.wiki_comments_form_displayed_default eq 'y'}autoshow{/if}">
-				<a class="btn btn-default" href="{service controller=comment action=post type=$type objectId=$objectId}">{tr}Post new comment{/tr}</a>
-			</div>
-		</h3>
+		<div class="submit">
+			<hr>
+			<h3>
+				<div class="button buttons comment-form {if $prefs.wiki_comments_form_displayed_default eq 'y'}autoshow{/if}">
+					<a class="btn btn-primary" href="{service controller=comment action=post type=$type objectId=$objectId}" data-target="#add-comment-zone-{$objectId|escape}">{tr}Post new comment{/tr}</a>
+				</div>
+		</div>
+		<div id="add-comment-zone-{$objectId|escape}">
+		</div>
 	{/if}
 
 	{if ! $parentId && $prefs.feature_wiki_paragraph_formatting eq 'y'}

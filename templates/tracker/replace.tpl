@@ -445,7 +445,7 @@
 			{/accordion_group}
 		{/if}
 	{/accordion}
-	<div class="form-group">
+	<div class="form-group submit">
 		<input type="hidden" name="confirm" value="1">
 		<input type="hidden" name="trackerId" value="{$trackerId|escape}">
 		<input type="submit" class="btn btn-primary" value="{tr}Save{/tr}">

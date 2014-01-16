@@ -3651,3 +3651,8 @@ h6 a.tiki_anchor:hover {
 	margin: 0;
 	padding-bottom: 0;
 }
+
+/* Modal submit buttons need to be hidden to avoid blink */
+.modal-body div.submit {
+	display: none;
+}
