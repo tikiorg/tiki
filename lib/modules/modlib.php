@@ -866,7 +866,7 @@ class ModLib extends TikiLib
 				),
 				'section' => array(
 					'name' => tra('Section'),
-					'description' => tra('Module only applicable for the specified sections. Multiple values can be separated by semi-colons.'),
+					'description' => tra('Module only applicable for the specified sections. Multiple values can be separated by semi-colons. Choose values from: blogs; calendar; categories; cms (for "articles"); contacts; directory; faqs; featured_links; file_galleries; forums; galleries (for "image galleries"); gmaps; html_pages; maps; mytiki; newsletters; poll; quizzes; surveys; trackers; user_messages; webmail; wiki page'),
 					'separator' => ';',
 					'filter' => 'striptags',
 					'section' => 'visibility',
