@@ -109,9 +109,19 @@ class Services_User_ConditionsController
 
 	private function getApprovalPage()
 	{
-		// TODO : Handle page language / feature_multilingual
 		global $prefs;
-		return $prefs['conditions_page_name'];
+		$pageName = $prefs['conditions_page_name'];
+		if ($prefs['feature_multilingual'] == 'y') {
+			$tikilib = TikiLib::lib('tiki');
+			$multilinguallib = TikiLib::lib('multilingual');
+
+			$pageId = $tikilib->get_page_id_from_name($pageName);
+			$bestId = $multilinguallib->selectLangObj('wiki page', $pageId);
+
+			return $tikilib->get_page_name_from_id($bestId);
+		} else {
+			return $pageName;
+		}
 	}
 
 	private function approveVersion($hash)
