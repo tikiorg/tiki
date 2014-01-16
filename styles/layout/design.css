@@ -86,11 +86,6 @@
 	display: block;
 }
 
-.clear,
-#clear {
-	clear: both;
-}
-
 #debugconsole table {
 	width: 100%;
 }
