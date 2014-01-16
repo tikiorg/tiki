@@ -9,6 +9,10 @@ class Services_User_ConditionsController
 {
 	public static function requiresApproval($user)
 	{
+		if (! empty($_SESSION['terms_approved'])) {
+			return false;
+		}
+
 		global $user;
 
 		if (! $user) {
@@ -29,12 +33,18 @@ class Services_User_ConditionsController
 			// This includes adminsitrators who have all permissions
 			// Among other things, this avoids the issue of having to approve terms
 			// after modifying the page
+			$_SESSION['terms_approved'] = 'none';
 			return false;
 		}
 
 		$hash = $lib->generateHash($page, $user);
 		$versions = $lib->getApprovedVersions($user);
-		return ! in_array($hash, $versions);
+		if (in_array($hash, $versions)) {
+			$_SESSION['terms_approved'] = $hash;
+			return false;
+		}
+
+		return true;
 	}
 
 	function setUp()
