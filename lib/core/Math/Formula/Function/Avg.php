@@ -21,7 +21,11 @@ class Math_Formula_Function_Avg extends Math_Formula_Function
 			}
 		}
 
-		return array_sum($list) / count($list);
+		if (empty($list)) {
+			return 0;
+		} else {
+			return array_sum($list) / count($list);
+		}
 	}
 }
 
