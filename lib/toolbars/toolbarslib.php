@@ -2068,7 +2068,7 @@ class ToolbarsList
 						if (!empty($right)) {
 							$right = '<span class="toolbar-list">' . $right . '</span>';
 						}
-						$lineHtml = "<div class='helptool-admin'>$lineBit $right</div>" . $lineHtml;
+						$lineHtml = "<div class='helptool-admin pull-right'>$lineBit $right</div>" . $lineHtml;
 					} else {
 						$lineHtml = $lineBit;
 					}
@@ -2076,7 +2076,7 @@ class ToolbarsList
 
 				// adding admin icon if no right part - messy - TODO better
 				if ($c == 0 && empty($lineBit) && !empty($right)) {
-					$lineHtml .= "<div class='helptool-admin'>$right</div>";
+					$lineHtml .= "<div class='helptool-admin pull-right'>$right</div>";
 				}
 			}
 			if ( !empty($lineHtml) ) {

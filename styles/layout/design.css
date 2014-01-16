@@ -88,17 +88,12 @@
 
 /* New Toolbars */
 
-.textarea-toolbar {
-	width: 100%;
-}
-
 .textarea-toolbar img.icon {
 	vertical-align: middle;
 	margin: 1px 3px;
 }
 
 .helptool-admin {	/* right justified section of toolbars */
-	float: right;
 	padding-left: 8px;
 	margin-left: 8px;
 	border-left: medium double #bfbfbf;
@@ -181,13 +176,6 @@ a.toolbar {			/* each tool button */
 	font-size: .9em;
 	height: 90%;
 	overflow: auto;
-}
-
-/* Inline_help : the inline_help are text displayed dependinf of user option : beginner, confirmed, expert */
-.simple_inlinehelp {
-	font-style: italic;
-	font-size: small;
-	font-family: sans-serif;
 }
 
 .box-share > div {
