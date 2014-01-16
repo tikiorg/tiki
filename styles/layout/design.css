@@ -86,31 +86,6 @@
 	display: block;
 }
 
-.pagenums input[type="text"] {
-	margin-top: -1px;
-}
-
-a.tikihelp,
-a.tikihelp:visited {
-	border: 0;
-	vertical-align: text-top;
-}
-
-a.tikihelp:hover {
-	cursor: help;
-	vertical-align: text-top;
-}
-
-#rss img,
-a.icon,
-img.icon {
-	vertical-align: middle;
-}
-
-.iconmenutext {
-	white-space: nowrap;
-}
-
 /* New Toolbars */
 
 .textarea-toolbar {
