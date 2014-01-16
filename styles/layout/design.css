@@ -86,10 +86,6 @@
 	display: block;
 }
 
-#debugconsole input[type="text"] {
-	width: auto;
-}
-
 .pagenums input[type="text"] {
 	margin-top: -1px;
 }
