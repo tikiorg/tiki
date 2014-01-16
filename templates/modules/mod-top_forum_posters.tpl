@@ -7,7 +7,7 @@
 			<div style="position: relative">
 			<div class="module" style="position: absolute; right: 0; bottom: -.4em;">{$modTopForumPosters[ix].posts}</div>
 			<span class="module">{$modTopForumPosters[ix].name|avatarize}</span>
-			<div class="module" style="position: absolute; left: 0; bottom: -.4em">{$modTopForumPosters[ix].name|escape}</div><br class="clear" /></div>
+			<div class="module clearfix" style="position: absolute; left: 0; bottom: -.4em">{$modTopForumPosters[ix].name|escape}</div></div>
 		</li>
 	{/section}
 {/modules_list}

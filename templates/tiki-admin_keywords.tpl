@@ -8,7 +8,7 @@
 	</div>
 {/if}
 {if $edit_on}
-	<div id="current_keywords">
+	<div id="current_keywords" class="clearfix">
 		<h2>{tr}Edit page keywords{/tr} ({$edit_keywords_page|escape})</h2>
 		<form action="tiki-admin_keywords.php" method="post">
 			<input name="page" value="{$edit_keywords_page|escape}" type="hidden">
@@ -27,7 +27,7 @@
 		</form>
 	</div>
 {/if}
-<br class="clear"/>
+
 <h2>{tr}Current Page Keywords{/tr}</h2>
 <form method="get" action="tiki-admin_keywords.php">
 	<label for="q">{tr}Search by page:{/tr}</label>
@@ -35,9 +35,9 @@
 	<input type="submit" class="btn btn-default btn-sm" name="search" value="{tr}Go{/tr}">
 </form>
 {if $search_on}
-	<div style="font-weight:bold;">{$search_cant|escape} {tr}results found!{/tr}</div>
+	<strong>{$search_cant|escape} {tr}results found!{/tr}</strong>
 {/if}
-<br class="clear"/>
+
 {if $existing_keywords}
 <div class="table-responsive">
 	<table class="table normal">
@@ -64,5 +64,5 @@
 {else}
 	<h2>{tr}No pages found{/tr}</h2>
 {/if}
-<br class="clear" />
+
 {pagination_links cant=$pages_cant step=$prefs.maxRecords offset=$offset}{/pagination_links}

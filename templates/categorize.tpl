@@ -19,7 +19,7 @@
         {if count($categories) gt 0}
 	        {$cat_tree}
             <input type="hidden" name="cat_categorize" value="on">
-	        <div class="clear">
+	        <div class="clearfix">
 	            {if $tiki_p_admin_categories eq 'y'}
     	            <div class="pull-right"><a href="tiki-admin_categories.php" class="link">{tr}Admin Categories{/tr} {icon _id='wrench'}</a></div>
 	            {/if}
@@ -28,7 +28,7 @@
             </div> {* end .clear *}
   
 	    {else}
-	        <div class="clear">
+	        <div class="clearfix">
  	            {if $tiki_p_admin_categories eq 'y'}
                     <div class="pull-right"><a href="tiki-admin_categories.php" class="link">{tr}Admin Categories{/tr} {icon _id='wrench'}</a></div>
             </div> {* end .clear *}

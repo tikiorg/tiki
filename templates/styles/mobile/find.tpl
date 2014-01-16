@@ -161,13 +161,13 @@
 		  		<div class="multiselect"> 
 		  			{if count($categories) gt 0}
 						{$cat_tree}
-						<div class="clear">
+						<div class="clearfix">
 						{if $tiki_p_admin_categories eq 'y'}
 		    				<div class="pull-right"><a href="tiki-admin_categories.php" class="link">{tr}Admin Categories{/tr} {icon _id='wrench'}</a></div>
 						{/if}
 						{select_all checkbox_names='cat_categories[]' label="{tr}Select/deselect all categories{/tr}"}
 					{else}
-						<div class="clear">
+						<div class="clearfix">
 		 				{if $tiki_p_admin_categories eq 'y'}
 		    				<div class="pull-right"><a href="tiki-admin_categories.php" class="link">{tr}Admin Categories{/tr} {icon _id='wrench'}</a></div>
 		 				{/if}
