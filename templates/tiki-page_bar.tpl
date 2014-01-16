@@ -1,5 +1,61 @@
 {* $Id$ *}
 {if !isset($versioned) or not $versioned}
+	{capture assign=more_section}
+		{if $page|lower ne 'sandbox'}
+			{if $tiki_p_remove eq 'y' && (isset($editable) and $editable)}
+				<li>{button _keepall='y' href="tiki-removepage.php" page=$page _class="btn-link" version="last" _text="{tr}Remove{/tr}"}</li>
+			{/if}
+			{if $tiki_p_admin_wiki eq 'y' or $tiki_p_assign_perm_wiki_page eq 'y'}
+				<li>{button _keepall='y' href="tiki-objectpermissions.php" objectId=$page objectName=$page objectType="wiki+page" permType="wiki" _class="btn-link" _text="{tr}Permissions{/tr}"}</li>
+			{/if}
+			{if $prefs.feature_page_contribution eq 'y' and $tiki_p_page_contribution_view eq 'y'}
+				<li>{button _keepall='y' href="tiki-page_contribution.php" page=$page _class="btn-link" _text="{tr}Contributions by author{/tr}"}</li>
+			{/if}
+		{/if}
+		{if $prefs.feature_likePages eq 'y' and $tiki_p_wiki_view_similar eq 'y'}
+			<li>{button _keepall='y' href="tiki-likepages.php" page=$page _class="btn-link" _text="{tr}Similar{/tr}"}</li>
+		{/if}
+
+		{if $prefs.feature_wiki_undo eq 'y' and $canundo eq 'y'}
+			<li>{button _keepall='y' href="tiki-index.php" page=$page undo="1" _class="btn-link" _text="{tr}Undo{/tr}"}</li>
+		{/if}
+
+		{if $prefs.feature_wiki_make_structure eq 'y' and $tiki_p_edit_structures eq 'y' and (isset($editable)
+		and $editable) and $structure eq 'n' and count($showstructs) eq 0}
+			<li>{button _keepall='y' href="tiki-index.php" page=$page convertstructure="1" _class="btn-link" _text="{tr}Make Structure{/tr}"}</li>
+		{/if}
+
+		{if $prefs.feature_slideshow eq 'y' && $prefs.wiki_uses_slides eq 'y'}
+			{if $show_slideshow eq 'y'}
+				<li>{button _keepall='y' href="./tiki-slideshow.php" page=$page _class="btn-link" _text="{tr}Slideshow{/tr}"}</li>
+			{elseif $structure eq 'y'}
+				<li>{button _keepall='y' href="tiki-slideshow2.php" page_ref_id=$page_info.page_ref_id _class="btn-link" _text="{tr}Slideshow{/tr}"}</li>
+			{/if}
+		{/if}
+
+		{if $prefs.feature_wiki_export eq 'y' and ( $tiki_p_admin_wiki eq 'y' or $tiki_p_export_wiki eq 'y' )}
+			<li>{button _keepall='y' href="tiki-export_wiki_pages.php" page=$page _class="btn-link" _text="{tr}Export{/tr}"}</li>
+		{/if}
+
+		{if $prefs.feature_wiki_discuss eq 'y' && $show_page eq 'y' && $tiki_p_forum_post eq 'y'}
+			{capture assign=wiki_discussion_string}
+				{include file='wiki-discussion.tpl'} [tiki-index.php?page={$page|escape:url}|{$page}]
+			{/capture}
+			<li>{button _keepall='y' href="tiki-view_forum.php" forumId=$prefs.wiki_forum_id comments_postComment="post" comments_title=$page comments_data=$wiki_discussion_string comment_topictype="n" _class="btn-link" _text="{tr}Discuss{/tr}"}</li>
+		{/if}
+		{if $prefs.feature_multilingual eq 'y' and ($tiki_p_edit eq 'y'
+		or (!$user and $prefs.wiki_encourage_contribution eq 'y')) and !$lock}
+			<li>{button _keepall='y' href="tiki-edit_translation.php" page=$page _class="btn-link" _text="{tr}Translate{/tr}"}</li>
+		{/if}
+
+		{if $tiki_p_admin_wiki eq 'y' && $prefs.wiki_keywords eq 'y'}
+			<li>{button _keepall='y' href="tiki-admin_keywords.php" page=$page _class="btn-link" _text="{tr}Keywords{/tr}"}</li>
+		{/if}
+		{if $user and (isset($tiki_p_create_bookmarks) and $tiki_p_create_bookmarks eq 'y') and $prefs.feature_user_bookmarks eq 'y'}
+			<li>{assign var=urlurl value="{$page|sefurl}{$smarty.server.REQUEST_URI|regex_replace:'/^[^\?\&]*/':''|regex_replace:'/(\?page=[^\&]+)/':''}"}{button _script="tiki-user_bookmarks.php" urlname=$page urlurl=$urlurl addurl="Add" _class="btn-link" _text="{tr}Bookmark{/tr}" _auto_args="urlname,urlurl,addurl"}</li>
+		{/if}
+
+	{/capture}
 	{capture assign=page_bar}
 		{favorite type="wiki page" object=$page}
 
@@ -103,72 +159,20 @@
 				{/if}{* attachments *}
 
 			{/if}
-            <div class="btn-group dropup">
-                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                    {tr}More{/tr} <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu" role="menu">
-                    {if $page|lower ne 'sandbox'}
-                        {if $tiki_p_remove eq 'y' && (isset($editable) and $editable)}
-                            <li>{button _keepall='y' href="tiki-removepage.php" page=$page _class="btn-link" version="last" _text="{tr}Remove{/tr}"}</li>
-                        {/if}
-                        {if $tiki_p_admin_wiki eq 'y' or $tiki_p_assign_perm_wiki_page eq 'y'}
-                            <li>{button _keepall='y' href="tiki-objectpermissions.php" objectId=$page objectName=$page objectType="wiki+page" permType="wiki" _class="btn-link" _text="{tr}Permissions{/tr}"}</li>
-                        {/if}
-                        {if $prefs.feature_page_contribution eq 'y' and $tiki_p_page_contribution_view eq 'y'}
-                            <li>{button _keepall='y' href="tiki-page_contribution.php" page=$page _class="btn-link" _text="{tr}Contributions by author{/tr}"}</li>
-                        {/if}
-                    {/if}
-                    {if $prefs.feature_likePages eq 'y' and $tiki_p_wiki_view_similar eq 'y'}
-                        <li>{button _keepall='y' href="tiki-likepages.php" page=$page _class="btn-link" _text="{tr}Similar{/tr}"}</li>
-                    {/if}
-
-                    {if $prefs.feature_wiki_undo eq 'y' and $canundo eq 'y'}
-                        <li>{button _keepall='y' href="tiki-index.php" page=$page undo="1" _class="btn-link" _text="{tr}Undo{/tr}"}</li>
-                    {/if}
-
-                    {if $prefs.feature_wiki_make_structure eq 'y' and $tiki_p_edit_structures eq 'y' and (isset($editable)
-                    and $editable) and $structure eq 'n' and count($showstructs) eq 0}
-                        <li>{button _keepall='y' href="tiki-index.php" page=$page convertstructure="1" _class="btn-link" _text="{tr}Make Structure{/tr}"}</li>
-                    {/if}
-
-                    {if $prefs.feature_slideshow eq 'y' && $prefs.wiki_uses_slides eq 'y'}
-                        {if $show_slideshow eq 'y'}
-                            <li>{button _keepall='y' href="./tiki-slideshow.php" page=$page _class="btn-link" _text="{tr}Slideshow{/tr}"}</li>
-                        {elseif $structure eq 'y'}
-                            <li>{button _keepall='y' href="tiki-slideshow2.php" page_ref_id=$page_info.page_ref_id _class="btn-link" _text="{tr}Slideshow{/tr}"}</li>
-                        {/if}
-                    {/if}
-
-                    {if $prefs.feature_wiki_export eq 'y' and ( $tiki_p_admin_wiki eq 'y' or $tiki_p_export_wiki eq 'y' )}
-                        <li>{button _keepall='y' href="tiki-export_wiki_pages.php" page=$page _class="btn-link" _text="{tr}Export{/tr}"}</li>
-                    {/if}
-
-                    {if $prefs.feature_wiki_discuss eq 'y' && $show_page eq 'y' && $tiki_p_forum_post eq 'y'}
-                        {capture assign=wiki_discussion_string}
-                            {include file='wiki-discussion.tpl'} [tiki-index.php?page={$page|escape:url}|{$page}]
-                        {/capture}
-                        <li>{button _keepall='y' href="tiki-view_forum.php" forumId=$prefs.wiki_forum_id comments_postComment="post" comments_title=$page comments_data=$wiki_discussion_string comment_topictype="n" _class="btn-link" _text="{tr}Discuss{/tr}"}</li>
-                    {/if}
-                    {if $prefs.feature_multilingual eq 'y' and ($tiki_p_edit eq 'y'
-                    or (!$user and $prefs.wiki_encourage_contribution eq 'y')) and !$lock}
-                        <li>{button _keepall='y' href="tiki-edit_translation.php" page=$page _class="btn-link" _text="{tr}Translate{/tr}"}</li>
-                    {/if}
-
-                    {if $tiki_p_admin_wiki eq 'y' && $prefs.wiki_keywords eq 'y'}
-                        <li>{button _keepall='y' href="tiki-admin_keywords.php" page=$page _class="btn-link" _text="{tr}Keywords{/tr}"}</li>
-                    {/if}
-                    {if $user and (isset($tiki_p_create_bookmarks) and $tiki_p_create_bookmarks eq 'y') and $prefs.feature_user_bookmarks eq 'y'}
-                        <li>{assign var=urlurl value="{$page|sefurl}{$smarty.server.REQUEST_URI|regex_replace:'/^[^\?\&]*/':''|regex_replace:'/(\?page=[^\&]+)/':''}"}{button _script="tiki-user_bookmarks.php" urlname=$page urlurl=$urlurl addurl="Add" _class="btn-link" _text="{tr}Bookmark{/tr}" _auto_args="urlname,urlurl,addurl"}</li>
-                    {/if}
-
-                    </li>
-                </ul>
-            </div>
+			{if $more_section|trim neq ''}
+				<div class="btn-group dropup">
+					<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+						{tr}More{/tr} <span class="caret"></span>
+					</button>
+					<ul class="dropdown-menu" role="menu">
+						{$more_section}
+					</ul>
+				</div>
+			{/if}
 		{/if}
 	{/capture}
 
-	{if $page_bar neq ''}
+	{if $page_bar|trim neq ''}
         <div class="form-group" id="page-bar">
 		<div class="btn-bar">
 			{$page_bar}
