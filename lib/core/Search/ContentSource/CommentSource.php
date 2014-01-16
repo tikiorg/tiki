@@ -92,7 +92,9 @@ class Search_ContentSource_CommentSource implements Search_ContentSource_Interfa
 
 	private function getParentPermissionForType($type)
 	{
-		return $this->permissionMap[$type];
+		if (isset($this->permissionMap[$type])) {
+			return $this->permissionMap[$type];
+		}
 	}
 }
 
