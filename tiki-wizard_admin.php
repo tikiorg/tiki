@@ -130,11 +130,14 @@ foreach ($pages as $page) {
 
 	// Start the admin wizard
 	$url = $base_url.'tiki-wizard_admin.php?&amp;stepNr=' . $stepNr . '&amp;url=' . rawurlencode($homepageUrl);
+	if ($useDefaultPrefs) {
+		$url .= '&amp;use-default-prefs=1';
+	}
 	$cnt = 	$stepNr+1;
 	if ($cnt <= 9) {
 		$cnt = '&nbsp;&nbsp;'.$cnt;
 	}
-	$toc .= $cnt.' '.'<a ';
+	$toc .= '<li><a ';
 	$cssClasses .= 'adminWizardTOCItem ';
 	if ($stepNr == $reqStepNr) {
 		$cssClasses .= 'highlight ';
@@ -147,7 +150,7 @@ foreach ($pages as $page) {
 		$css = 'class="'.$cssClasses.'" ';
 	}
 	$toc .= $css;
-	$toc .= 'href="'.$url.'">'.$page->pageTitle().'</a><br>';
+	$toc .= 'href="'.$url.'">'.$page->pageTitle().'</a></li>';
 	$stepNr++;
 }
 
@@ -160,7 +163,9 @@ foreach ($pages as $page) {
 JS
 );
 
-$smarty->assign('wizard_toc', $toc);
+if ($reqStepNr > 0) {
+	$smarty->assign('wizard_toc', $toc);
+}
 
 
 // disallow robots to index page:
