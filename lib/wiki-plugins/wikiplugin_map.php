@@ -83,6 +83,14 @@ function wikiplugin_map_info()
 				'filter' => 'int',
 				'advanced' => true,
 			),
+			'tooltips' => array(
+				'required' => false,
+				'name' => tra('Tooltips'),
+				'description' => tra('Show item name in a tooltip on hover (n/y).'),
+				'default' => 'n',
+				'filter' => 'alpha',
+				'advanced' => true,
+			),
 		),
 	);
 }
@@ -120,6 +128,12 @@ function wikiplugin_map($data, $params)
 		$params['popupstyle'] = 'bubble';
 	}
 
+	if (! empty($params['tooltips'])) {
+		$tooltips = ' data-tooltips="1"';
+	} else {
+		$tooltips = '';
+	}
+
 	$popupStyle = smarty_modifier_escape($params['popupstyle']);
 
 	$controls = array_intersect($params['controls'], wp_map_available_controls());
@@ -139,7 +153,7 @@ function wikiplugin_map($data, $params)
 	TikiLib::lib('header')->add_map();
 	$scope = smarty_modifier_escape(wp_map_getscope($params));
 
-	$output = "<div class=\"map-container\" data-marker-filter=\"$scope\" data-map-controls=\"{$controls}\" data-popup-style=\"$popupStyle\" style=\"width: {$width}; height: {$height};\" $center>";
+	$output = "<div class=\"map-container\" data-marker-filter=\"$scope\" data-map-controls=\"{$controls}\" data-popup-style=\"$popupStyle\" style=\"width: {$width}; height: {$height};\" $center{$tooltips}>";
 
 	$argumentParser = new WikiParser_PluginArgumentParser;
 	$matches = WikiParser_PluginMatcher::match($data);

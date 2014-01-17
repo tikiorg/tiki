@@ -199,11 +199,21 @@
 	<form action="tiki-user_notifications.php" method="post">
 		<input type="hidden" name="notification_preferences" value="true">
 		<p>Send notification when I am the editor:</p>
+        {if $prefs.feature_wiki eq 'y'}
 		<p><input type="checkbox" name="user_wiki_watch_editor" value="true" {if $user_wiki_watch_editor eq 'y'}checked{/if}> {tr}Wiki{/tr}</p>
+        {/if}
+        {if $prefs.feature_articles eq 'y'}
 		<p><input type="checkbox" name="user_article_watch_editor" value="true" {if $user_article_watch_editor eq 'y'}checked{/if}> {tr}Article{/tr}</p>
+        {/if}
+        {if $prefs.feature_blogs eq 'y'}
 		<p><input type="checkbox" name="user_blog_watch_editor" value="true" {if $user_blog_watch_editor eq 'y'}checked{/if}> {tr}Blog{/tr}</p>
+        {/if}
+        {if $prefs.feature_trackers eq 'y'}
 		<p><input type="checkbox" name="user_tracker_watch_editor" value="true" {if $user_tracker_watch_editor eq 'y'}checked{/if}> {tr}Tracker{/tr}</p>
+        {/if}
+        {if $prefs.feature_calendar eq 'y'}
 		<p><input type="checkbox" name="user_calendar_watch_editor" value="true" {if $user_calendar_watch_editor eq 'y'}checked{/if}> {tr}Calendar{/tr}</p>
+        {/if}
 		<p><input type="checkbox" name="user_comment_watch_editor" value="true" {if $user_comment_watch_editor eq 'y'}checked{/if}> {tr}Comment{/tr}</p>
 
 		<p><input type="submit" class="btn btn-default btn-sm" name="submit" value=" {tr}Apply{/tr} "></p>
