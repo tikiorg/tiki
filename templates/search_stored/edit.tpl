@@ -25,7 +25,7 @@
 	<div class="form-group">
 		<label for="label" class="col-md-3 control-label">{tr}Description{/tr}</label>
 		<div class="col-md-9">
-			<textarea class="form-control" name="description" rows="5">{$description|escape}</textarea>
+			<textarea class="form-control" name="description" rows="5" data-codemirror="true" data-syntax="tiki">{$description|escape}</textarea>
 		</div>
 	</div>
 	<div class="form-group submit">
