@@ -430,7 +430,6 @@ if ($prefs['mobile_feature'] === 'y' && $prefs['mobile_mode'] === 'y') {
 			$headerlib->add_cssfile('vendor/jquery/plugins/chosen/chosen.css');
 			$headerlib->add_css(
 				'.chosen-container .chosen-drop, .chosen-results li { z-index: 10000; color: #444 }
-select { font-size: 14px; padding: 6px 12px; }
 .chosen-container-multi .chosen-choices li.search-field input[type="text"] { height: inherit; }'
 			);
 		}
