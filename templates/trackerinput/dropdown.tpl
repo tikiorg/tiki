@@ -7,12 +7,22 @@
 		</label>
 	{/foreach}
 {elseif $field.type eq 'M'}
-	{foreach from=$field.possibilities key=value item=label}
-		<label>
-			<input type="checkbox" name="{$field.ins_id|escape}[]" value="{$value|escape}" {if in_array($value, $field.selected)}checked="checked"{/if}>
-			{$label|tr_if|escape}
-		</label>
-	{/foreach}
+	{if empty($field.options_map.inputtype)}
+		{foreach from=$field.possibilities key=value item=label}
+			<label>
+				<input type="checkbox" name="{$field.ins_id|escape}[]" value="{$value|escape}" {if in_array($value, $field.selected)}checked="checked"{/if}>
+				{$label|tr_if|escape}
+			</label>
+		{/foreach}
+	{elseif $field.options_map.inputtype eq 'm'}
+		{if $prefs.jquery_ui_chosen neq 'y'}<small>{tr}Hold "Ctrl" in order to select multiple values{/tr}</small><br>{/if}
+		<select name="{$field.ins_id}[]" multiple="multiple">
+			{foreach key=ku from=$field.possibilities key=value item=label}
+				<option value="{$value|escape}" {if in_array($value, $field.selected)}selected="selected"{/if}>{$label|escape}</option>
+			{/foreach}
+		</select>
+	{/if}
+	<input type="hidden" name="{$field.ins_id}_old" value="{$field.value|escape}">
 {else}
 	<select name="{$field.ins_id|escape}"{if $field.type eq 'D'} class="group_{$field.ins_id|escape}"{/if}>
 		{assign var=otherValue value=$field.value}
