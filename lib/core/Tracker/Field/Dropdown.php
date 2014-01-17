@@ -82,6 +82,16 @@ class Tracker_Field_Dropdown extends Tracker_Field_Abstract implements Tracker_F
 						'count' => '*',
 						'legacy_index' => 0,
 					),
+					'inputtype' => array(
+						'name' => tr('Input Type'),
+						'description' => tr('User interface control to be used.'),
+						'default' => '',
+						'filter' => 'alpha',
+						'options' => array(
+							'' => tr('Multiple-selection check-boxes'),
+							'm' => tr('List box'),
+						),
+					),
 				),
 			),
 		);
@@ -97,10 +107,12 @@ class Tracker_Field_Dropdown extends Tracker_Field_Abstract implements Tracker_F
 		
 		$ins_id = $this->getInsertId();
 
-		if (!empty($requestData['other_'.$this->getInsertId()])) {
-			$value = $requestData['other_'.$this->getInsertId()];
-		} elseif (isset($requestData[$this->getInsertId()])) {
-			$value = implode(',', (array) $requestData[$this->getInsertId()]);
+		if (!empty($requestData['other_'.$ins_id])) {
+			$value = $requestData['other_'.$ins_id];
+		} elseif (isset($requestData[$ins_id])) {
+			$value = implode(',', (array) $requestData[$ins_id]);
+		} elseif (isset($requestData[$ins_id . '_old'])) {
+			$value = '';
 		} else {
 			$value = $this->getValue($this->getDefaultValue());
 		}
