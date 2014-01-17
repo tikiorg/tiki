@@ -35,7 +35,7 @@ class Search_Formatter_ValueFormatter_Snippet extends Search_Formatter_ValueForm
 			}
 		}
 
-		return '~np~' . $snippet . '~/np~';
+		return $snippet;
 	}
 }
 
