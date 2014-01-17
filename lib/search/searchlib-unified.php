@@ -153,7 +153,8 @@ class UnifiedSearchLib
 
 			$index = new Search_Lucene_Index($tempName);
 
-			register_shutdown_function(
+			TikiLib::events()->bind(
+				'tiki.process.shutdown',
 				function () use ($index) {
 					if ($index->exists()) {
 						$index->destroy();
@@ -167,7 +168,8 @@ class UnifiedSearchLib
 			$indexName = $prefs['unified_elastic_index_prefix'] . uniqid();
 			$index = new Search_Elastic_Index($connection, $indexName);
 
-			register_shutdown_function(
+			TikiLib::events()->bind(
+				'tiki.process.shutdown',
 				function () use ($indexName, $index) {
 					global $prefs;
 					if ($prefs['unified_elastic_index_current'] !== $indexName) {
@@ -180,7 +182,8 @@ class UnifiedSearchLib
 			$indexName = 'index_' . uniqid();
 			$index = new Search_MySql_Index(TikiDb::get(), $indexName);
 
-			register_shutdown_function(
+			TikiLib::events()->bind(
+				'tiki.process.shutdown',
 				function () use ($indexName, $index) {
 					global $prefs;
 					if ($prefs['unified_mysql_index_current'] !== $indexName) {

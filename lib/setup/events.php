@@ -7,6 +7,10 @@
 
 tiki_setup_events();
 
+register_shutdown_function(function () {
+	TikiLib::events()->trigger('tiki.process.shutdown', []);
+});
+
 function tiki_setup_events()
 {
 	global $prefs;
@@ -187,6 +191,11 @@ function tiki_setup_events()
 	$events->bind('tiki.social.relation.remove', 'tiki.social.save');
 
 	$events->bind('tiki.query.high', 'tiki.query.hit');
+
+	if (function_exists('fastcgi_finish_request')) {
+		// If available, try to send everything to the user at this point
+		$events->bindPriority(-10, 'tiki.process.shutdown', 'fastcgi_finish_request');
+	}
 }
 
 function tiki_save_refresh_index($args)
