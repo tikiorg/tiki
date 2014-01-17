@@ -28,6 +28,7 @@
 				{preference name=feature_notepad}
 				{preference name=feature_user_bookmarks}
 				{preference name=feature_contacts}
+				{preference name=monitor_enabled}
 				{preference name=feature_user_watches}
 				{preference name=feature_group_watches}
 				{preference name=feature_daily_report_watches}

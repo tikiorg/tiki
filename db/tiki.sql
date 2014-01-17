@@ -3796,6 +3796,7 @@ CREATE TABLE `tiki_user_mailin_struct` (
    PRIMARY KEY (`mailin_struct_id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1;
 
+DROP TABLE IF EXISTS `tiki_search_queries`;
 CREATE TABLE `tiki_search_queries` (
 	`queryId` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	`userId` INT NOT NULL,
@@ -3807,3 +3808,15 @@ CREATE TABLE `tiki_search_queries` (
 	INDEX `query_userId` (`userId`),
 	UNIQUE KEY `tiki_user_query_uq` (`userId`, `label`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1;
+
+DROP TABLE IF EXISTS `tiki_user_monitors`;
+CREATE TABLE `tiki_user_monitors` (
+	`monitorId` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	`userId` INT NOT NULL,
+	`event` VARCHAR(50) NOT NULL,
+	`priority` VARCHAR(10) NOT NULL,
+	`target` VARCHAR(15) NOT NULL,
+	INDEX `userid_target_ix` (`userId`, `target`),
+	UNIQUE `event_target_uq` (`event`, `target`, `userId`)
+) ENGINE=MyISAM;
+
