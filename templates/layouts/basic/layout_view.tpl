@@ -29,14 +29,12 @@
 						{block name=title}{/block}
 						{error_report}
 						{block name=content}{/block}
-						{block name=show_content}{/block}
 					</div>
 				{elseif zone_is_empty('left')}
 					<div class="col-md-10" id="col1">
 						{block name=title}{/block}
 						{error_report}
 						{block name=content}{/block}
-						{block name=show_content}{/block}
 					</div>
 					<div class="col-md-2">
 						{modulelist zone=right}
@@ -46,7 +44,6 @@
 						{block name=title}{/block}
 						{error_report}
 						{block name=content}{/block}
-						{block name=show_content}{/block}
 					</div>
 					<div class="col-md-2 col-md-pull-10">
 						{modulelist zone=left}
@@ -56,7 +53,6 @@
 						{block name=title}{/block}
 						{error_report}
 						{block name=content}{/block}
-						{block name=show_content}{/block}
 					</div>
 					<div class="col-md-2 col-md-pull-8">
 						{modulelist zone=left}

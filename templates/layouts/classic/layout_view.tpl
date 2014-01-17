@@ -40,7 +40,6 @@
 							    {error_report}
 					            {block name=title}{/block}
 					            {block name=content}{/block}
-					            {block name=show_content}{/block}
                             {if $prefs.feature_layoutshadows eq 'y'}{eval var=$prefs.center_shadow_end}</div>{/if}
 				        </div>
 			        {elseif zone_is_empty('left')}
@@ -49,7 +48,6 @@
 							    {error_report}
 					            {block name=title}{/block}
 					            {block name=content}{/block}
-					            {block name=show_content}{/block}
                             {if $prefs.feature_layoutshadows eq 'y'}{eval var=$prefs.center_shadow_end}</div>{/if}
 				        </div>
 				        <div class="col-lg-2">
@@ -60,7 +58,6 @@
 							    {error_report}
 					            {block name=title}{/block}
 					            {block name=content}{/block}
-					            {block name=show_content}{/block}
                             {if $prefs.feature_layoutshadows eq 'y'}{eval var=$prefs.center_shadow_end}</div>{/if}
 				        </div>
                         <div class="col-lg-2 col-lg-pull-10" id="col2">
@@ -72,7 +69,6 @@
 				    			{error_report}
 					            {block name=title}{/block}
 					            {block name=content}{/block}
-					            {block name=show_content}{/block}
                             {if $prefs.feature_layoutshadows eq 'y'}{eval var=$prefs.center_shadow_end}</div>{/if}
     		            </div>
                         <div class="col-lg-2 col-lg-pull-8" id="col2">
