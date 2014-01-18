@@ -8,7 +8,6 @@
 class Search_GlobalSource_CategorySource implements Search_GlobalSource_Interface, Tiki_Profile_Writer_ReferenceProvider, Search_FacetProvider_Interface
 {
 	private $categlib;
-	private $parentCategories = array();
 
 	function __construct()
 	{
@@ -107,8 +106,8 @@ class Search_GlobalSource_CategorySource implements Search_GlobalSource_Interfac
 			);
 			$deepfiltered = array_filter(
 				$deepcategories,
-				function ($category) use ($self, $rootId) {
-					return $category != $rootId && $self->hasParent($category, $rootId);
+				function ($category) use ($rootId) {
+					return $category != $rootId && $this->hasParent($category, $rootId);
 				}
 			);
 
@@ -121,32 +120,16 @@ class Search_GlobalSource_CategorySource implements Search_GlobalSource_Interfac
 
 	private function getWithParent($categories)
 	{
-		$full = array();
-
-		foreach ($categories as $category) {
-			$full = array_merge($full, $this->getParents($category));
-		}
-
-		return array_unique($full);
+		return $this->categlib->get_with_parents($categories);
 	}
 
-	private function getParents($categId)
-	{
-		if (! isset($this->parentCategories[$categId])) {
-			$category = $this->categlib->get_category($categId);
-			$this->parentCategories[$categId] = array_keys($category['tepath']);
-		}
-
-		return $this->parentCategories[$categId];
-	}
-
-	function hasParent($category, $parent)
+	private function hasParent($category, $parent)
 	{
 		if ($category == 'orphan') {
 			return false;
 		}
 
-		$parents = $this->getParents($category);
+		$parents = $this->categlib->get_parents($category);
 		return in_array($parent, $parents);
 	}
 }

@@ -19,13 +19,17 @@
 						<td>
 							{$option.description|escape}
 							{if $option.type eq 'category'}
-								<span class="label label-info">{tr}Category{/tr}</span>
+								{if $option.isParent}
+									<span class="label label-warning">{tr}Parent Category{/tr}</span>
+								{else}
+									<span class="label label-info">{tr}Category{/tr}</span>
+								{/if}
 							{elseif $option.type eq 'global'}
 								<span class="label label-warning">{tr}Global{/tr}</span>
 							{/if}
 						</td>
 						<td>
-							<select name="notification~{$option.hash|escape}">
+							<select name="notification~{$option.hash|escape}" class="nochosen">
 								{foreach $priorities as $priority => $info}
 									<option value="{$priority|escape}" {if $priority eq $option.priority}selected{/if}>{$info.label|escape}</option>
 								{/foreach}

@@ -19,6 +19,7 @@ global $objectlib;require_once("lib/objectlib.php");
 
 class CategLib extends ObjectLib
 {
+	private $parentCategories = array();
 
 	// Returns a string representing the specified category's path.
 	// The path includes all parent categories ordered from the root to the category's parent, and the category itself.
@@ -599,7 +600,7 @@ class CategLib extends ObjectLib
 		}
 		$result = $this->query($query, $bindvars);
 		while ($res = $result->fetchRow()) {
-			$ret[] = $res["categId"];
+			$ret[] = (int) $res["categId"];
 		}
 
 		if ( $jailed ) {
@@ -1790,6 +1791,30 @@ class CategLib extends ObjectLib
 		$list = array_filter(array_map('intval', $this->get_preference('category_custom_facets', array(), true)));
 
 		return $list;
+	}
+
+	/**
+	 * Provides the list of all parents for a given set of categories.
+	 */
+	function get_with_parents($categories)
+	{
+		$full = array();
+
+		foreach ($categories as $category) {
+			$full = array_merge($full, $this->get_parents($category));
+		}
+
+		return array_unique($full);
+	}
+
+	function get_parents($categId)
+	{
+		if (! isset($this->parentCategories[$categId])) {
+			$category = $this->get_category($categId);
+			$this->parentCategories[$categId] = array_keys($category['tepath']);
+		}
+
+		return $this->parentCategories[$categId];
 	}
 }
 $categlib = new CategLib;

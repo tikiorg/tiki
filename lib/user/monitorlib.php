@@ -30,10 +30,15 @@ class MonitorLib
 
 		$categlib = TikiLib::lib('categ');
 		$categories = $categlib->get_object_categories($type, $object);
-		foreach ($categories as $categoryId) {
+		$parents = $categlib->get_with_parents($categories);
+
+		foreach ($parents as $categoryId) {
 			$perms = Perms::get('category', $categoryId);
 			if ($perms->view_category) {
-				$options[] = $this->gatherOptions($userId, $events, 'category', $categoryId);
+				$options[] = array_map(function ($item) use ($categories) {
+					$item['isParent'] = ! in_array($item['object'], $categories);
+					return $item;
+				}, $this->gatherOptions($userId, $events, 'category', $categoryId));
 			}
 		}
 
@@ -98,38 +103,17 @@ class MonitorLib
 		}
 
 		$eventId = $args['EVENT_ID'];
-		$targets = $this->collectTargets($args);
-
-		$table = $this->table();
-		$results = $table->fetchAll(['priority', 'userId'], [
-			'event' => $registeredEvent,
-			'target' => $table->in($targets),
-		]);
-
-		// Ignore events not being watched
-		if (empty($results)) {
-			return;
-		}
 
 		// Handle newly encountered events
 		if (! isset($this->queue[$eventId])) {
-			$args['stream'] = isset($args['stream']) ? (array) $args['stream'] : [];
 			$this->queue[$eventId] = [
 				'event' => $originalEvent,
 				'arguments' => $args,
-				'sendTo' => [],
+				'events' => [],
 			];
 		}
 
-		foreach ($results as $row) {
-			// Add entries to the named streams, each user will have a few of those
-			$priority = $row['priority'];
-			$this->queue[$eventId]['arguments']['stream'][] = $priority . $row['userId'];
-
-			if ($priority == 'critical') {
-				$this->queue[$eventId]['sendTo'] = $row['userId'];
-			}
-		}
+		$this->queue[$eventId]['events'][] = $registeredEvent;
 	}
 
 	private function finalEvent()
@@ -145,13 +129,44 @@ class MonitorLib
 		// TODO : Shrink large events / truncate content ? 
 
 		foreach ($queue as $item) {
-			$args = $item['arguments'];
-			$item['sendTo'] = array_unique($item['sendTo']);
+			list($args, $sendTo) = $this->finalHandleEvent($item['arguments'], $item['events']);
 
-			$activitylib->recordEvent($item['event'], $args);
+			if ($args) {
+				$activitylib->recordEvent($item['event'], $args);
+			}
 		}
 
 		$tx->commit();
+	}
+	
+	private function finalHandleEvent($args, $events)
+	{
+		$targets = $this->collectTargets($args);
+
+		$table = $this->table();
+		$results = $table->fetchAll(['priority', 'userId'], [
+			'event' => $table->in($events),
+			'target' => $table->in($targets),
+		]);
+
+		if (empty($results)) {
+			return [null, []];
+		}
+
+		$sendTo = [];
+		$args['stream'] = isset($args['stream']) ? (array) $args['stream'] : [];
+
+		foreach ($results as $row) {
+			// Add entries to the named streams, each user will have a few of those
+			$priority = $row['priority'];
+			$args['stream'][] = $priority . $row['userId'];
+
+			if ($priority == 'critical') {
+				$sendTo[] = $row['userId'];
+			}
+		}
+
+		return [$args, array_unique($sendTo)];
 	}
 
 	private function gatherOptions($userId, $events, $type, $object)
@@ -189,6 +204,7 @@ class MonitorLib
 
 		return array(
 			'type' => $type,
+			'object' => $object,
 			'target' => "$type:$object",
 			'title' => $title,
 			'isContainer' => $type == 'category',
@@ -203,7 +219,7 @@ class MonitorLib
 			$object = $tikilib->get_page_id_from_name($object);
 		}
 
-		return [$type, $object];
+		return [$type, (int) $object];
 	}
 
 	private function createOption($userId, $eventName, $label, $objectInfo)
@@ -217,6 +233,7 @@ class MonitorLib
 			'target' => $objectInfo['target'],
 			'hash' => md5($eventName . $objectInfo['target']),
 			'type' => $objectInfo['type'],
+			'object' => $objectInfo['object'],
 			'description' => $objectInfo['isContainer']
 				? tr('%0 in %1', $label, $objectInfo['title'])
 				: tr('%0 for %1', $label, $objectInfo['title']),
@@ -240,8 +257,19 @@ class MonitorLib
 
 	private function collectTargets($args)
 	{
-		list($type, $object) = $this->cleanObjectId($args['type'], $args['object']);
-		$targets = ['global', "$type:$object"];
+		$type = $args['type'];
+		$object = $args['object'];
+
+		$categlib = TikiLib::lib('categ');
+		$categories = $categlib->get_object_categories($type, $object);
+		$categories = $categlib->get_with_parents($categories);
+		$targets = array_map(function ($categoryId) {
+			return "category:$categoryId";
+		}, $categories);
+		
+		list($type, $object) = $this->cleanObjectId($type, $object);
+		$targets[] = 'global';
+		$targets[] = "$type:$object";
 
 		return $targets;
 	}
