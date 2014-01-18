@@ -246,9 +246,8 @@ class MonitorLib
 		case 'wiki page':
 			return [
 				'tiki.save' => ['global' => false, 'label' => tr('Any activity')],
-				'tiki.wiki.save' => ['global' => true, 'label' => tr('Page created or modified')],
+				'tiki.wiki.save' => ['global' => true, 'label' => tr('Page modified')],
 				'tiki.wiki.create' => ['global' => true, 'label' => tr('Page created')],
-				'tiki.wiki.update' => ['global' => false, 'label' => tr('Page modified')],
 			];
 		default:
 			return [];
