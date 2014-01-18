@@ -28,7 +28,7 @@
 		  	{if isset($show_all_versions) and $show_all_versions eq "n"}
 				{pagination_links cant=$ver_cant offset=$smarty.request.preview_idx offset_arg="preview_idx" itemname="{tr}Session{/tr}" show_numbers="n"}{/pagination_links}
 			{else}
-				{pagination_links cant=$ver_cant offset=$smarty.request.preview_idx offset_arg="preview_idx" itemname="{tr}Version{/tr}" show_numbers="n"}{/pagination_links}
+				{pagination_links cant=$ver_cant offset=$smarty.request.preview_idx offset_arg="preview_idx" itemname="{tr}Version{/tr}" show_numbers="n" _keepall="n"}{/pagination_links}
 			{/if}
 		{/if}
 	</div>
@@ -69,7 +69,7 @@
 		  	{if isset($show_all_versions) and $show_all_versions eq "n"}
 				{pagination_links cant=$ver_cant offset=$smarty.request.source_idx offset_arg="source_idx" itemname="{tr}Session{/tr}" show_numbers="n"}{/pagination_links}
 			{else}
-				{pagination_links cant=$ver_cant offset=$smarty.request.source_idx offset_arg="source_idx" itemname="{tr}Version{/tr}" show_numbers="n"}{/pagination_links}
+				{pagination_links cant=$ver_cant offset=$smarty.request.source_idx offset_arg="source_idx" itemname="{tr}Version{/tr}" show_numbers="n" _keepall="n"}{/pagination_links}
 			{/if}
 		{/if}
 	</div>
@@ -95,15 +95,16 @@
 
 {if !isset($noHistory)}
 	{if $preview || $source || $diff_style}<h2>{tr}History{/tr}</h2>{/if}
-	<form action="tiki-pagehistory.php" method="get">
+	<form id="pagehistory" action="tiki-pagehistory.php?page={$page}" method="post">
 		<input type="hidden" name="page" value="{$page|escape}">
 		<input type="hidden" name="history_offset" value="{$history_offset}">
 		<div style="text-align:center;">
 			{if ($prefs.default_wiki_diff_style ne "old") and $history}
 				<div style=" text-align:right;">
-					{if $prefs.javascript_enabled eq "y"}{button _text="{tr}Advanced{/tr}" _id="toggle_diffs" _ajax="n" _class="btn btn-default btn-sm"}
+					{if $prefs.javascript_enabled eq "y"}{button _text="{tr}Advanced{/tr}" _id="toggle_diffs" _ajax="n"}
 					{jq}
-$("#toggle_diffs a").click(function(){
+$("a#toggle_diffs").click(function(e){
+	e.preventDefault();
 	if ($(this).text() == "{tr}Advanced{/tr}") {
 		$(this).text("{tr}Simple{/tr}");
 		if (jqueryTiki.chosen) {
@@ -351,7 +352,7 @@ if (jqueryTiki.chosen) {
 					{pagination_links cant=$history_cant offset_arg="history_offset" step=$maxRecords}{/pagination_links}
 				{/if}
 			{/if}
-			<input type="checkbox" name="paginate" id="paginate"{if $paginate} checked="checked"{/if} onchange="this.form.submit();">
+			<input type="checkbox" name="paginate" id="paginate"{if $paginate} checked="checked"{/if}>
 			<label for="paginate">{tr}Enable pagination{/tr}</label>
 			{if $paginate}
 				<input type="text" name="history_pagesize" id="history_pagesize" value="{$history_pagesize}" size="5">
@@ -362,4 +363,19 @@ if (jqueryTiki.chosen) {
 {/if}
 
 {include file='tiki-page_bar.tpl'}
-
+{jq}
+	$('input[name=compare], input[name=paginate]').click(function(){
+		var values = [];
+		var oldver= $('input[name=oldver]:checked').val();
+		var newver= $('input[name=newver]:checked').val();
+		if ($('#diff_style_all').is(':visible'))
+			var diff_style = $('select[id=diff_style_all]').val();
+		else
+			var diff_style = $('select[id=diff_style_simple]').val();
+		values.push("oldver="+oldver);
+        if(newver!=0){values.push("newver="+newver);}
+        if(diff_style!="sidediff"){values.push("diff_style="+diff_style);}
+        document.getElementById('pagehistory').action += '&' + values.join('&');
+        document.getElementById('pagehistory').submit();
+	});
+{/jq}
