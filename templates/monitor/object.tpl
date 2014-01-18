@@ -44,6 +44,15 @@
 			</tbody>
 		</table>
 
+		<div class="well">
+			<h4>{tr}Priorities{/tr}</h4>
+			{foreach $priorities as $priority}
+				{if $priority.description}
+					<p><strong>{$priority.label|escape}:</strong> {$priority.description|escape}</p>
+				{/if}
+			{/foreach}
+		</div>
+
 		<div class="submit">
 			<input type="submit" class="btn btn-primary" value="{tr}Apply{/tr}">
 		</div>

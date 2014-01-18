@@ -11,15 +11,18 @@ class MonitorLib
 
 	function getPriorities()
 	{
-		// TODO : Add more priorities
 		return array(
-			'none' => ['label' => ''],
-			'critical' => ['label' => tr('Critical')],
+			'none' => ['label' => '', 'description' => null],
+			'critical' => ['label' => tr('Critical'), 'description' => tr('Immediate notification by email.')],
+			'high' => ['label' => tr('High'), 'description' => tr('Sent to you with the next periodic digest.')],
+			'low' => ['label' => tr('Low'), 'description' => tr('Included in your personalized recent changes feed.')],
 		);
 	}
 
 	function getOptions($user, $type, $object)
 	{
+		global $prefs;
+
 		$tikilib = TikiLib::lib('tiki');
 		$userId = $tikilib->get_user_id($user);
 
@@ -28,17 +31,19 @@ class MonitorLib
 
 		$options[] = $this->gatherOptions($userId, $events, $type, $object);
 
-		$categlib = TikiLib::lib('categ');
-		$categories = $categlib->get_object_categories($type, $object);
-		$parents = $categlib->get_with_parents($categories);
+		if ($prefs['feature_categories'] == 'y') {
+			$categlib = TikiLib::lib('categ');
+			$categories = $categlib->get_object_categories($type, $object);
+			$parents = $categlib->get_with_parents($categories);
 
-		foreach ($parents as $categoryId) {
-			$perms = Perms::get('category', $categoryId);
-			if ($perms->view_category) {
-				$options[] = array_map(function ($item) use ($categories) {
-					$item['isParent'] = ! in_array($item['object'], $categories);
-					return $item;
-				}, $this->gatherOptions($userId, $events, 'category', $categoryId));
+			foreach ($parents as $categoryId) {
+				$perms = Perms::get('category', $categoryId);
+				if ($perms->view_category) {
+					$options[] = array_map(function ($item) use ($categories) {
+						$item['isParent'] = ! in_array($item['object'], $categories);
+						return $item;
+					}, $this->gatherOptions($userId, $events, 'category', $categoryId));
+				}
 			}
 		}
 
@@ -256,15 +261,19 @@ class MonitorLib
 
 	private function collectTargets($args)
 	{
+		global $prefs;
+
 		$type = $args['type'];
 		$object = $args['object'];
 
-		$categlib = TikiLib::lib('categ');
-		$categories = $categlib->get_object_categories($type, $object);
-		$categories = $categlib->get_with_parents($categories);
-		$targets = array_map(function ($categoryId) {
-			return "category:$categoryId";
-		}, $categories);
+		if ($prefs['feature_categories'] == 'y') {
+			$categlib = TikiLib::lib('categ');
+			$categories = $categlib->get_object_categories($type, $object);
+			$categories = $categlib->get_with_parents($categories);
+			$targets = array_map(function ($categoryId) {
+				return "category:$categoryId";
+			}, $categories);
+		}
 		
 		list($type, $object) = $this->cleanObjectId($type, $object);
 		$targets[] = 'global';
