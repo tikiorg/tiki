@@ -22,6 +22,8 @@ class Search_Type_Analyzer
 		} else {
 			if ($key == 'type' || $key == 'object' || $key == 'version' || $key == 'user') {
 				return 'identifier';
+			} elseif ($key == 'stream') {
+				return 'multivalue';
 			} elseif ($this->hasSuffix($key, '_id')) {
 				return 'identifier';
 			} elseif ($this->hasSuffix($key, 'Id')) {
