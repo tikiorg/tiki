@@ -218,6 +218,17 @@ class Search_Query_WikiBuilder
 		if (in_array('follow', $types)) {
 			$subquery->filterMultivalue($targetUser, 'user_followers');
 		}
+
+		$userId = TikiLib::lib('tiki')->get_user_id($targetUser);
+		if (in_array('stream_critical', $types)) {
+			$subquery->filterMultivalue("critical$userId", 'stream');
+		}
+		if (in_array('stream_high', $types)) {
+			$subquery->filterMultivalue("high$userId", 'stream');
+		}
+		if (in_array('stream_low', $types)) {
+			$subquery->filterMultivalue("low$userId", 'stream');
+		}
 	}
 
 	function wpquery_sort_mode($query, $value, array $arguments)
