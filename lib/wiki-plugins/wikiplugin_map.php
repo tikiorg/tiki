@@ -128,7 +128,7 @@ function wikiplugin_map($data, $params)
 		$params['popupstyle'] = 'bubble';
 	}
 
-	if (! empty($params['tooltips'])) {
+	if (! empty($params['tooltips']) && $params['tooltips'] === 'y') {
 		$tooltips = ' data-tooltips="1"';
 	} else {
 		$tooltips = '';
