@@ -837,7 +837,7 @@ class StructLib extends TikiLib
 		$parent_id = $page_info['parent_id'];
 		$pos       = $page_info['pos'];
 		//At the top of the tree
-		if (!isset($parent_id)) {
+		if (empty($parent_id)) {
 			return null;
 		}
 		$query  = 'select `page_ref_id` ';
