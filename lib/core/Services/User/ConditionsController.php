@@ -80,7 +80,11 @@ class Services_User_ConditionsController
 
 		$origin = $input->origin->url() ?: $_SERVER['REQUEST_URI'];
 		$toApprove = $input->approve->word();
-		if ($_SERVER['REQUEST_METHOD'] == 'POST' && $toApprove) {
+		if ($_SERVER['REQUEST_METHOD'] == 'POST' && $input->decline->text()) {
+			$loginlib = TikiLib::lib('login');
+			$loginlib->logout();
+			TikiLib::lib('access')->redirect($origin);
+		} elseif ($_SERVER['REQUEST_METHOD'] == 'POST' && $toApprove) {
 			if ($toApprove == $hash) {
 				$this->approveVersion($hash);
 				TikiLib::lib('access')->redirect($origin);
