@@ -120,7 +120,7 @@
 {if $db_requires_update}
 	{remarksbox type="error" title="{tr}Database Version Problem{/tr}"}
 	{tr}Your database requires an update to match the current Tiki version. Please proceed to <a class="alert-link" href="tiki-install.php">the installer</a>. Using Tiki with an incorrect database version usually provokes errors.{/tr}
-	{tr}If you have shell (SSH) access, you can also use the following, on the command line, from the root of your Tiki installation:{/tr} php installer/shell.php
+	{tr}If you have shell (SSH) access, you can also use the following, on the command line, from the root of your Tiki installation:{/tr} php console.php database:update
 	{/remarksbox}
 {/if}
 {*{tr}{$description}{/tr}*}
