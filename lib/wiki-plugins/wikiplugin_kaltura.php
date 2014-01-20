@@ -177,9 +177,9 @@ REG
 			);
 
 		} else if (!empty($user)) {
-			$html = '<span class="error">' . tra('Media id or permission to upload video is required') . '</span>';
+			$html = '<span class="alert-warning">' . tra('Media id or permission to upload video is required') . '</span>';
 		} else {
-			$html = '<span class="error">' . tra('Log in to upload video') . '</span>';
+			$html = '<span class="alert-warning">' . tra('Log in to upload video') . '</span>';
 		}
 
 		return $html;
@@ -202,7 +202,7 @@ REG
 				$params['height'] = $player['height'];
 			}
 		} else {
-			return '<span class="error">' . tra('Player not found') . '</span>';
+			return '<span class="alert-warning">' . tra('Player not found') . '</span>';
 		}
 	}
 

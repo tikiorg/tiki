@@ -67,7 +67,7 @@
 				<div>
 					<textarea name="formula" rows="5" style="width: 100%;">{$config.formula|escape}</textarea>
 				</div>
-				<div class="error"></div>
+				<div class="alert alert-danger"></div>
 				<input type="submit" class="btn btn-default btn-sm" name="edit" value="{tr}Save{/tr}"/>
 			</fieldset>
 		</form>

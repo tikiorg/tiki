@@ -39,7 +39,7 @@
 		{/if}
 	</div>
 	<div class="webmail_list">
-		{if isset($error)}<span class="error">{$error}</span>{/if}
+		{if isset($error)}<span class="alert-warning">{$error}</span>{/if}
 		{if isset($module_params.date_format)}
 			{assign var=date_format value=$module_params.date_format}
 		{else}
@@ -112,7 +112,7 @@
 	</div>
 </form>
 {else}
-	<span class="error">{$error}</span>
+	<span class="alert-warning">{$error}</span>
 {/if}
 {/tikimodule}
 {/strip}

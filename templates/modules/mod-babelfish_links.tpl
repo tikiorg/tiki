@@ -8,7 +8,7 @@
 				</li>
 			{sectionelse}
 				{if $tiki_p_admin eq 'y'}
-					<li class="error">Babelfish ({tr}debug{/tr}): {tr}Fatal error{/tr}</li>
+					<li class="alert-warning">Babelfish ({tr}debug{/tr}): {tr}Fatal error{/tr}</li>
 				{/if}
 			{/section}
 		</ul>

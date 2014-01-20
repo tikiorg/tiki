@@ -137,7 +137,7 @@
 										{modulelist zone=right class="content modules"}
 										{if $module_pref_errors}
 											<div data-role="collapsible" data-theme="{$prefs.mobile_theme_modules}" data-collapsed="true">
-												<h3 href="#" class="error">{tr}Module errors{/tr}</h3>
+												<h3 href="#" class="alert-warning">{tr}Module errors{/tr}</h3>
 												{remarksbox type="warning" title="{tr}Module errors{/tr}"}
 													{tr}The following modules could not be loaded{/tr}
 													<form method="post" action="tiki-admin.php">

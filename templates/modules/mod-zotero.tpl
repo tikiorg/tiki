@@ -5,7 +5,7 @@
 		<input type="submit" class="btn btn-default btn-sm" name="zotero" value="{tr}Search{/tr}"/>
 		<ul class="results">
 		</ul>
-		<div class="error">
+		<div class="alert alert-warning">
 			{remarksbox type="errors" title="{tr}No results!{/tr}"}
 				<p>{tr}No results were found. Are you sure you searched for a tag?{/tr}</p>
 

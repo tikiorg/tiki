@@ -135,10 +135,6 @@ input[type="submit"]:active,
 	color: #363636;
 }
 
-.error {
-	background: none;
-}
-
 /* Needed for Opera (11) */
 input[type="reset"],
 input[type="submit"],
@@ -428,7 +424,8 @@ h3.box-title,
 }
 	
 .errors .rbox-title,
-.errors .rbox-data {
+.errors .rbox-data,
+.panel .panel-alert {
 	color: #cd0a0a;
 	background: #fef1ec;
 	border: 1px solid #cd0a0a;

@@ -78,7 +78,7 @@ function module_menupage($mod_reference, $module_params)
 		if ($perms->view) {
 			$content = $wikilib->get_parse($pagemenu, $dummy, true);
 		} else {
-			$content = '<label class="error">' . tra("You are not logged in") . '</label>';
+			$content = '<label class="alert-warning">' . tra("You are not logged in") . '</label>';
 		}
 
 		if (! empty($content) && ! empty($module_params['menu_type']) && in_array($module_params['menu_type'], array('horiz', 'vert'))) {

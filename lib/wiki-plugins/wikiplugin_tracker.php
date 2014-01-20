@@ -1088,7 +1088,7 @@ function wikiplugin_tracker($data, $params)
 						}
 					}
 					if (!$ok) {
-						$back .= '<div class="error">' . tra('Incorrect fieldId:').' '.$l . '</div>';
+						$back .= '<div class="alert alert-warning">' . tra('Incorrect fieldId:').' '.$l . '</div>';
 					}
 				}
 			} elseif (empty($fields) && empty($wiki) && empty($tpl)) {
@@ -1109,7 +1109,7 @@ function wikiplugin_tracker($data, $params)
 						}
 					}
 					if (!$ok) {
-						$back .= '<div class="error">' . tra('Incorrect fieldId:').' '.$l . '</div>';
+						$back .= '<div class="alert alert-warning">' . tra('Incorrect fieldId:').' '.$l . '</div>';
 					}
 				}
 			}
@@ -1480,7 +1480,7 @@ FILL;
 				if ($tikilib->page_exists($wiki)) {
 					$back .= $smarty->fetch('wiki:'.$wiki);
 				} else {
-					$back .= '<span class="error">' . tr('Missing wiki template page "%0"', htmlspecialchars($wiki)) . '</span>';
+					$back .= '<span class="alert-warning">' . tr('Missing wiki template page "%0"', htmlspecialchars($wiki)) . '</span>';
 				}
 			}
 			include_once('lib/smarty_tiki/function.trackerheader.php');

@@ -261,10 +261,10 @@ function wikiplugin_paypal($data, $params)
 
 	if ($params['cmd'] === '_cart') {
 		if (empty($params['item_name'])) {
-			return '<span class="error">' . tra('PayPal button:') . ' ' . tra('Item name (item_name) required') . '</span>';
+			return '<span class="alert-warning">' . tra('PayPal button:') . ' ' . tra('Item name (item_name) required') . '</span>';
 		}
 		if (empty($params['amount'])) {
-			return '<span class="error">' . tra('PayPal button:') . ' ' . tra('Price (amount) required') . '</span>';
+			return '<span class="alert-warning">' . tra('PayPal button:') . ' ' . tra('Price (amount) required') . '</span>';
 		}
 
 		$params[$params['cart_action']] = 1;
