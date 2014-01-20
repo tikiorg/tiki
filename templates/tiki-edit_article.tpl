@@ -88,34 +88,37 @@
 					</select>
 					<div class="help-block">
 						{if $articleId != 0}
-							{tr _0="tiki-edit_article.php?translationOf=$articleId"}To translate, do not change the language and the content.
-							Instead, <a href="%0">create a new translation</a> in the new language.{/tr}
-						{/if}
-						{if $translations}
-							<p>{tr}Edit Translations{/tr}:</p>
-							{section loop=$translations name=t}
-								{if $articleId != $translations[t].objId}
-									{$translations[t].lang|escape}: <a href="tiki-edit_article.php?articleId={$translations[t].objId|escape}">{$translations[t].objName|escape}</a><br>
-								{/if}
-							{/section}
+							{remarksbox type=tip title="{tr}Tip{/tr}"}
+								{tr _0="tiki-edit_article.php?translationOf=$articleId"}To translate, do not change the language and the content. Instead, <a class="alert-link" href="%0">create a new translation</a> in the new language.{/tr}
+							{/remarksbox}
+							{if $translations}
+								{remarksbox type=tip title="{tr}Translations{/tr}"}
+									<ul>
+										<li>
+										{section loop=$translations name=t}						
+											{if $articleId != $translations[t].objId}
+												{$translations[t].lang|escape}: <a href="tiki-edit_article.php?articleId={$translations[t].objId|escape}">{$translations[t].objName|escape}</a><br>
+												{/if}
+											{/section}
+										</li>
+									</ul>
+								{/remarksbox}
+							{/if}
 						{/if}
 					</div>
 				</div>
 			{/if}
-			<div class="checkbox">
-				<label>
-					<input type="checkbox" name="ispublished" {if $ispublished eq 'y'}checked="checked"{/if}>
-					{tr}Published{/tr}
-				</label>
-			</div>
-			<div>
-				<input type="submit" class="wikiaction btn btn-default" name="preview" value="{tr}Preview{/tr}" onclick="needToConfirm=false;">
-				<input type="submit" class="wikiaction btn btn-primary" name="save" value="{tr}Save{/tr}"  onclick="this.form.saving=true;needToConfirm=false;">
-				{if $articleId}<input type="submit" class="wikiaction tips btn btn-link" title="{tr}Cancel{/tr}|{tr}Cancel the edit, you will lose your changes.{/tr}" name="cancel_edit" value="{tr}Cancel Edit{/tr}"  onclick="needToConfirm=false;">{/if}
-			</div>
 		{/tab}
 		{tab name="{tr}Publication{/tr}"}
             <h2>{tr}Publication{/tr}</h2>
+			<div class="well">
+				<div class="checkbox">
+					<label>
+						<input type="checkbox" name="ispublished" {if $ispublished eq 'y'}checked="checked"{/if}>
+						<strong>{tr}Published{/tr}</strong>
+					</label>
+				</div>
+			</div>
 			<div class="form-group">
 				<label for="authorName">{tr}Author Name (as displayed){/tr}</label>
 				<input type="text" name="authorName" value="{$authorName|escape}" class="form-control">
@@ -365,7 +368,12 @@
 			{/if}
 		{/tab}
 	{/tabset}
-	
+	<div class="article-buttons text-center">
+		<hr>
+		<input type="submit" class="wikiaction btn btn-default" name="preview" value="{tr}Preview{/tr}" onclick="needToConfirm=false;">
+		<input type="submit" class="wikiaction btn btn-primary" name="save" value="{tr}Save{/tr}"  onclick="this.form.saving=true;needToConfirm=false;">
+		{if $articleId}<input type="submit" class="wikiaction tips btn btn-link" title="{tr}Cancel{/tr}|{tr}Cancel the edit, you will lose your changes.{/tr}" name="cancel_edit" value="{tr}Cancel Edit{/tr}"  onclick="needToConfirm=false;">{/if}
+	</div>
 {if $smarty.session.wysiwyg neq 'y'}
 	{jq}
 $("#editpageform").submit(function(evt) {
