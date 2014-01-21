@@ -487,15 +487,6 @@ h1 a.pagetitle:hover {
 	padding: 2ex;
 }
 
-.editdate {
-	background: #121212;
-	color: #999;
-	font-size: smaller;
-	margin-top: 20px;
-	padding: 0 10px;
-	text-align: right;
-}
-
 a.admbox,
 a.admbox.off,
 a.admbox:visited {

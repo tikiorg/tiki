@@ -646,11 +646,7 @@ ul.floatleft li {
 	padding: .4em .2em;
 }
 
-.editdate ul.floatleft {
-	margin-top: .8em;
-}
-
-.navbar {
+.t_navbar {
 	line-height: 150%;
 	margin-bottom: 1em;
 	margin-top: .5em;
@@ -772,13 +768,6 @@ div.description {
 
 textarea.wikiedit {
 	font-size: 1.6em;
-}
-
-p.editdate {
-	color: #999;
-	font-size: 0.8em;
-	display: block;
-	padding: 0;
 }
 
 div.wiki-edithelp {

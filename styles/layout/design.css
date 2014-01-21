@@ -462,10 +462,6 @@ ul.floatleft li {
 	padding: 4px 2px;
 }
 
-.editdate ul.floatleft {
-	margin-top: 8px;
-}
-
 .editplugin {
     vertical-align: bottom;
 }
@@ -2445,13 +2441,6 @@ caption {
 
 body.tiki_wiki #comments {
 	padding: 1em;
-}
-
-.editdate {
-	padding-bottom: 5px;
-	padding-top: 10px;
-	font-size: 0.9em;
-	font-style: italic;
 }
 
 /* wikiplugin_code */

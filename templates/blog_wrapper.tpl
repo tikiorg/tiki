@@ -13,7 +13,7 @@
                     {/capture}
                 {* When copyright section is not empty show it *}
                     {if $smarty.capture.copyright_section neq ''}
-                        <div class="help-block editdate">
+                        <div class="help-block">
                             {$smarty.capture.copyright_section}
                         </div>
                     {/if}
@@ -30,7 +30,7 @@
                 {/capture}
             {* When copyright section is not empty show it *}
                 {if $smarty.capture.copyright_section neq ''}
-                    <div class="help-block editdate">
+                    <div class="help-block">
                         {$smarty.capture.copyright_section}
                     </div>
                 {/if}

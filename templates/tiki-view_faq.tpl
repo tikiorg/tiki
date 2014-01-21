@@ -127,7 +127,7 @@
 
 {* When copyright section is not empty show it *}
 {if $smarty.capture.copyright_section neq ''}
-	<footer class="editdate">
+	<footer class="help-block editdate">
 		{$smarty.capture.copyright_section}
 	</footer>
 {/if}

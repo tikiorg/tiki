@@ -659,8 +659,6 @@ a.pagetitle:hover {
 	border: 1px solid #999;
 	border-collapse: collapse}
 
-.editdate {padding-bottom: 5px}
-
 ul.floatleft {
 	display: block;
 	list-style: none;
@@ -673,8 +671,6 @@ ul.floatleft li {
 	float: left;
 	padding: 4px 2px}
 
-.editdate ul.floatleft {margin-top: 8px}
- 
 .wiki-edithelp {
 	display: none;
 }
