@@ -36,6 +36,6 @@
                 {/if}
             {/if}
 		{/if}
-		{include file='blog_post_navigation.tpl'}
 	{/if}
 </div> <!-- postbody -->
+{include file='blog_post_navigation.tpl'}
