@@ -418,7 +418,7 @@ abstract class Toolbar
 
 		$params = array();
 		$params['_onclick'] = $click . (substr($click, strlen($click)-1) != ';' ? ';' : '') . 'return false;';
-		$params['_class'] = 'toolbar ' . (!empty($class) ? ' '.$class : '');
+		$params['_class'] = 'toolbar btn btn-xs btn-link' . (!empty($class) ? ' '.$class : '');
 		$params['_ajax'] = 'n';
 		$content = $title;
 		$params['_icon'] = $this->icon;
