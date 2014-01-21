@@ -369,7 +369,6 @@
 		{/tab}
 	{/tabset}
 	<div class="article-buttons text-center">
-		<hr>
 		<input type="submit" class="wikiaction btn btn-default" name="preview" value="{tr}Preview{/tr}" onclick="needToConfirm=false;">
 		<input type="submit" class="wikiaction btn btn-primary" name="save" value="{tr}Save{/tr}"  onclick="this.form.saving=true;needToConfirm=false;">
 		{if $articleId}<input type="submit" class="wikiaction tips btn btn-link" title="{tr}Cancel{/tr}|{tr}Cancel the edit, you will lose your changes.{/tr}" name="cancel_edit" value="{tr}Cancel Edit{/tr}"  onclick="needToConfirm=false;">{/if}
