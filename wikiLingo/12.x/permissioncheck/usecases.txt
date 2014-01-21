@@ -1,0 +1,9 @@
+paranoia:700:600
+paranoia-suphp:701:600
+worry:701:604
+moreworry:705:604
+pain:701:606
+morepain:705:606
+mixed:770:660
+risky:775:664
+insane:777:777

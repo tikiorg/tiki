@@ -1,0 +1,16 @@
+#!/bin/bash
+setup()
+{
+		export LC_ALL=C
+		MY_PATH="`dirname \"$0\"`"
+		MY_PATH="`( cd \"$MY_PATH\" && pwd )`"
+		. $MY_PATH/tim-common
+}
+
+setup
+
+cd $SVN_CACHE/trunk/
+svn up > /dev/null
+touch $SVN_CACHE/trunk.lock
+tar -czf $SVN_CACHE/tmp_trunk.tgz . && mv $SVN_CACHE/tmp_trunk.tgz $SVN_CACHE/trunk.tar.gz
+/bin/rm $SVN_CACHE/trunk.lock

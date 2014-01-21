@@ -1,0 +1,30 @@
+{if !empty($field.options_array[2]) && ($field.options_array[2] eq '1' or $field.options_array[2] eq 'y')}
+	{select_all checkbox_names=$field.ins_id|cat:"[]" label="{tr}Select All{/tr}"}
+{/if}
+{if $field.options_array[1] eq 'd' || $field.options_array[1] eq 'm'}
+	{if $field.options_array[1] eq 'm' and $prefs.jquery_ui_chosen neq 'y'}<small>{tr}Hold "Ctrl" in order to select multiple values{/tr}</small><br>{/if}
+	<select name="{$field.ins_id}[]"{if $field.options_array[1] eq 'm'} multiple="multiple"{/if}>
+	{if $field.options_array[1] eq 'd' and (empty($field.value[0]) or $field.isMandatory ne 'y')}
+		<option value=""></option>
+	{/if}
+	{foreach key=ku item=cat from=$field.list}
+		<option value="{$cat.categId|escape}" {if in_array($cat.categId, $field.selected_categories)}selected="selected"{/if}>{$cat.relativePathString|escape}</option>
+	{/foreach}
+	</select>
+{elseif !empty($cat_tree)}
+	{$cat_tree}{* checkboxes with descendents *}
+{else}
+<table width="100%">
+	<tr>
+	{foreach key=ku item=iu from=$field.list name=eforeach}
+	{assign var=fcat value=$iu.categId}
+	<td width="50%"  class="trackerCategoryName">
+		<input id="cat{$iu.categId|escape}_hidden" type="hidden" name="cat_managed[]" value="{$iu.categId|escape}">
+		<input type={if $field.options_array[1] eq "radio"}"radio"{else}"checkbox"{/if} name="{$field.ins_id}[]" value="{$iu.categId}" id="cat{$iu.categId}" {if in_array($fcat, $field.selected_categories)} checked="checked"{/if}>
+		{if $field.options_array[4] eq 1 && !empty($iu.description)}<a href="{$iu.description|escape}" target="tikihelp" class="tikihelp" title="{$iu.name|escape}:{$iu.description|escape}">{icon _id=help alt=''}</a>{/if}
+		<label for="cat{$iu.categId}">{$iu.name|escape}</label>
+	</td>{if !$smarty.foreach.eforeach.last and $smarty.foreach.eforeach.index % 2}</tr><tr>{elseif $smarty.foreach.eforeach.last and !($smarty.foreach.eforeach.index % 2)}<td width="50%"  class="trackerCategoryName">&nbsp;</td>{/if}
+	{/foreach}
+	</tr>
+</table>
+{/if}
