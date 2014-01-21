@@ -59,9 +59,9 @@
 		<input type="hidden" name="blogId" value="{$blogId|escape}">
 	{/if}
     <div class="form-group">
-        <label class="col-sm-2 control-label" for="blog_title">{tr}Title:{/tr}</label>
+        <label class="col-sm-2 control-label" for="title">{tr}Title:{/tr}</label>
         <div class="col-sm-10">
-			<input type="text" maxlength="255" class="form-control" name="blog_title" id="blog_title" {if isset($post_info.title)}value="{$post_info.title|escape}"{/if}>
+			<input type="text" maxlength="255" class="form-control" name="title" id="blog_title" {if isset($post_info.title)}value="{$post_info.title|escape}"{/if}>
 		</div>
 	</div>
     <div class="form-group">
@@ -75,7 +75,7 @@
         <div class="form-group">
         <label class="col-sm-2 control-label" for="post_excerpt">{tr}Excerpt:{/tr}</label>
             <div class="col-sm-10">
-		        {textarea id='post_excerpt' class="form-control wikiedit" name="post_excerpt"}{if isset($post_info.excerpt)}{$post_info.excerpt}{/if}{/textarea}
+		        {textarea id='post_excerpt' class="form-control wikiedit" name="excerpt"}{if isset($post_info.excerpt)}{$post_info.excerpt}{/if}{/textarea}
             </div>
         </div>
     {/if}
