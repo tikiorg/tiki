@@ -104,7 +104,6 @@
 
 	{if ! $parentId && $allow_post}
 		<div class="submit">
-			<hr>
 			<h3>
 				<div class="button buttons comment-form {if $prefs.wiki_comments_form_displayed_default eq 'y'}autoshow{/if}">
 					<a class="btn btn-primary" href="{service controller=comment action=post type=$type objectId=$objectId}" data-target="#add-comment-zone-{$objectId|escape}">{tr}Post new comment{/tr}</a>
