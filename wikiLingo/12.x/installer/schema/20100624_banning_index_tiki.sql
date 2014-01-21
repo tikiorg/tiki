@@ -1,0 +1,1 @@
+ALTER TABLE `tiki_banning` ADD INDEX ban(`use_dates`, `date_from`, `date_to`);

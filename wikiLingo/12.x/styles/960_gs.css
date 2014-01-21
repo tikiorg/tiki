@@ -1,0 +1,16 @@
+/* $Id$ The 960.gs theme for Tiki CMS/Groupware
+	Other details TBA...
+*/
+
+/* Import layout foundation CSS files: */
+/*probably */
+@import url("lite/lite.css");
+@import url("layout/layout.css");
+
+/* maybe */
+@import url("layout/design.css");
+
+/* the grid file itself */
+@import url("960_gs/960_16_col.css");
+
+

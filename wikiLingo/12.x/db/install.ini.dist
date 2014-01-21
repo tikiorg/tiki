@@ -1,0 +1,12 @@
+; Rename this file to install.ini
+; Uncomment the appropriate section and modify it to your parameters
+
+; Local file (or through the local filesystem)
+;source.type = local
+;source.file = /home/example/backups/dump.sql
+
+; Remote file - Make sure the file access is limited through a firewall or authentication
+; MD5 hash is optional, but recommended.
+;source.type = http
+;source.file = "https://user:password@admin.example.com/backups/dump.sql"
+;source.md5 = 2af0507e3468d796fa6a204e410e34a5

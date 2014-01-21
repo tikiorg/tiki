@@ -1,0 +1,14 @@
+#centercolumn .freetaglist {
+	padding: 0 10px;
+}
+
+a.freetag {
+	padding: 0 4px;
+	margin: 1px;
+}
+
+a.freetag:hover {
+	background-color: #ffffff;
+	margin: 0;
+	border: 1px solid #999;
+}

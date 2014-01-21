@@ -1,0 +1,1 @@
+{tr}User joined group{/tr} {$mail_group}
