@@ -1,1 +1,0 @@
-{tr}Wiki page renamed{/tr}

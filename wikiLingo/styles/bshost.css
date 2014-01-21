@@ -1,4 +1,0 @@
-/* bshost.css - Not for distribution. Enables an external Bootstrap theme to be used as-is with Tiki. */
-@import url("layout/tiki.css");
-@import url(../vendor/twitter/bootstrap/css/bootstrap.css);
-

@@ -1,1 +1,0 @@
-{tr}Your Gift Certificate Purchase{/tr}
