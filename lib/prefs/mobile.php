@@ -41,7 +41,7 @@ function prefs_mobile_list()
 			'dependencies' => array(
 				'mobile_feature',
 			),
-			'default' => array(''),
+			'default' => array(),
 			'profile_reference' => 'perspective',
 		),
 		'mobile_theme_header' => array(
