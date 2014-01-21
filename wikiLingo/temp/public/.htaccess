@@ -1,0 +1,10 @@
+<FilesMatch ".*">
+	order deny,allow
+	allow from all
+</FilesMatch>
+<IfModule mod_expires.c>
+<FilesMatch "avatar_.*\.jpg$">
+	ExpiresActive on
+	ExpiresDefault "modification"
+</FilesMatch>
+</IfModule>

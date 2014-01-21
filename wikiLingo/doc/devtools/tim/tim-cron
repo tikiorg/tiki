@@ -1,0 +1,19 @@
+#!/bin/bash
+setup()
+{
+		export LC_ALL=C
+		MY_PATH="`dirname \"$0\"`"
+		MY_PATH="`( cd \"$MY_PATH\" && pwd )`"
+		. $MY_PATH/tim-common
+}
+
+setup
+
+for BRANCH in $BRANCHES;
+do
+	cd $SVN_CACHE/$BRANCH/
+	svn up > /dev/null
+	touch $SVN_CACHE/$BRANCH.lock
+	tar -czf $SVN_CACHE/tmp_$BRANCH.tgz . && mv $SVN_CACHE/tmp_$BRANCH.tgz $SVN_CACHE/$BRANCH.tar.gz
+	/bin/rm $SVN_CACHE/$BRANCH.lock
+done

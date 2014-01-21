@@ -1,0 +1,7 @@
+<?php
+$lang_custom = array(
+//"Hello"=>"El meu hola",
+//"This is the place to customize your translation"=>":-)",
+);
+$lang = $lang_custom + $lang;
+

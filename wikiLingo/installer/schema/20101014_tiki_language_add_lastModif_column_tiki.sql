@@ -1,0 +1,1 @@
+ALTER TABLE `tiki_language` ADD COLUMN `lastModif` int(14) NULL;

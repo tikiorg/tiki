@@ -1,0 +1,23 @@
+#!/bin/bash
+# This is the login shell you use in /etc/passwd
+# It is a wrapper around tim, because otherwise all
+# arguments passed by SSH will be quoted and
+# interpreted as a single argument only by getopts
+
+setup()
+{
+		export LC_ALL=C
+		MY_PATH="`dirname \"$0\"`"
+		MY_PATH="`( cd \"$MY_PATH\" && pwd )`"
+		. $MY_PATH/tim-common
+}
+
+setup
+
+$MY_PATH/tim $@
+
+# Here as a reminder for a possible later version that
+# drops the -c argument
+#COMMAND=`echo $@ | awk '{ print $2 }'`
+#PARAMS=`echo $@ |  awk '{ print substr($0, index($0,$3)) }'`
+#tim ${COMMAND} ${PARAMS}

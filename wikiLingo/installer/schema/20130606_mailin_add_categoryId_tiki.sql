@@ -1,0 +1,1 @@
+alter table tiki_mailin_accounts add column (`categoryId` int(12));
