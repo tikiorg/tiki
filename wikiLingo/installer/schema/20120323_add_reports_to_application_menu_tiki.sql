@@ -1,0 +1,1 @@
+INSERT INTO `tiki_menu_options` (`menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (42,'r',  'Reports','tiki-edit_report.php',1275,'feature_reports','tiki_p_admin','',0);

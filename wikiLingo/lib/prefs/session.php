@@ -1,0 +1,59 @@
+<?php
+// (c) Copyright 2002-2013 by authors of the Tiki Wiki CMS Groupware Project
+// 
+// All Rights Reserved. See copyright.txt for details and a complete list of authors.
+// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+// $Id$
+
+function prefs_session_list()
+{
+	return array (
+		'session_storage' => array(
+			'name' => tra('Session storage location'),
+			'description' => tra('Select where the session information should be stored. Memcache sessions require memcache to be configured.'),
+			'type' => 'list',
+			'perspective' => false,
+			'options' => array(
+				'default' => tra('Default (from php.ini)'),
+				'db' => tra('Database'),
+				'memcache' => tra('Memcache'),
+			),
+			'default' => 'default',
+		),
+		'session_lifetime' => array(
+			'name' => tra('Session lifetime'),
+			'description' => tra('Session lifetime'),
+			'hint' => tra('Value provided in minutes. It will be the minimum time you are logged in. If you want it to be the exact time, you need to adjust in .htaccess session.gc_probability and session.gc_divisor to 1. Be careful that changing the probability will affect the server performance.'),
+			'type' => 'text',
+			'filter' => 'digits',
+			'perspective' => false,
+			'size' => '4',
+			'default' => 10080,
+		),
+		'session_silent' => array(
+			'name' => tra('Silent session'),
+			'description' => tra('Do not automatically start sessions.'),
+			'hint' => tra('Users will only have a session if they log in. So anonymous users will lose the capacity to have things like Switch Language or Switch Theme (a session is needed for this)'),
+			'perspective' => false,
+			'type' => 'flag',
+			'default' => 'n',
+		),
+		'session_cookie_name' => array(
+			'name' => tra('Session cookie name'),
+			'description' => tra('Session cookie name used instead of the PHP default configuration.'),
+			'type' => 'text',
+			'perspective' => false,
+			'size' => 10,
+			'default' => session_name(),
+		),
+		'session_protected' => array(
+			'name' => tra('Protect all sessions with HTTPS'),
+			'description' => tra('Always redirect to HTTPS to prevent session hijack through network sniffing.'),
+			'type' => 'flag',
+			'perspective' => false,
+			'default' => 'n',
+			'warning' => tra('Only activate if you have already configured SSL, otherwise, your will lock yourself out of Tiki'),
+			'tags' => array('advanced'),
+		),
+	);
+}

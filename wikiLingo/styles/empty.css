@@ -1,0 +1,7 @@
+/* Empty theme stylesheet (empty.css);
+ (imports design.css and does nothing else)
+
+
+ /* Import design defaults. */
+@import url("layout/design.css");
+
