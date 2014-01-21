@@ -23,5 +23,13 @@ function prefs_conditions_list()
 			'filter' => 'pagename',
 			'default' => 'Terms',
 		),
+		'conditions_minimum_age' => array(
+			'name' => tr('Minimal age'),
+			'description' => tr('While accepting the terms of use, request age.'),
+			'hint' => tr('0 to ignore age validation'),
+			'type' => 'text',
+			'filter' => 'int',
+			'default' => 0,
+		),
 	);
 }

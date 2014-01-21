@@ -701,6 +701,12 @@ if( $prefs['feature_hidden_links'] == 'y' ) {
 $headerlib->lockMinifiedJs();
 
 if ( $prefs['conditions_enabled'] == 'y' ) {
+	if (! Services_User_ConditionsController::hasRequiredAge($user)) {
+		$servicelib = TikiLib::lib('service');
+		$broker = $servicelib->getBroker();
+		$broker->process('user_conditions', 'age_validation', $jitRequest);
+		exit;
+	}
 	if (Services_User_ConditionsController::requiresApproval($user)) {
 		$servicelib = TikiLib::lib('service');
 		$broker = $servicelib->getBroker();
