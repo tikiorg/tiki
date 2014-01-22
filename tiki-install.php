@@ -96,8 +96,8 @@ if (isset($_SESSION['accessible'])) {
 							<p>To verify that you are a site administrator, enter your <strong><em>database</em></strong> credentials (database username and password) here.</p>
 							<p>If you have forgotten your database credentials, find the directory where you have unpacked your Tiki and have a look inside the <strong><code>db</code></strong> folder into the <strong><code>local.php</code></strong> file.</p>
 							<form method="post" action="' . $_SERVER['REQUEST_URI'] . '">
-								<p><label for="dbuser">Database username</label>: <input type="text" id="dbuser" name="dbuser" /></p>
-								<p><label for="dbpass">Database password</label>: <input type="password" id="dbpass" name="dbpass" /></p>
+								<p><label for="dbuser" class="sr-only">Database username</label> <input type="text" id="dbuser" name="dbuser" placeholder="Database username"/></p>
+								<p><label for="dbpass" class="sr-only">Database password</label> <input type="password" id="dbpass" name="dbpass" placeholder="Database password"/></p>
 								<p><input type="submit" class="btn btn-default btn-sm" value=" Validate and Continue " /></p>
 							</form>
 							<p>&nbsp;</p>';
@@ -122,45 +122,26 @@ function createPage($title, $content)
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<link type="text/css" rel="stylesheet" href="styles/fivealive.css" />
+		<link type="text/css" rel="stylesheet" href="vendor/twitter/bootstrap/css/bootstrap.css" />
 		<title>$title</title>
 	</head>
-	<body class="tiki_wiki fixed_width">
-	<div id="fixedwidth" class="fixedwidth">
-		<div class="header_outer">
-			<div class="header_container">
-				<div class="clearfix fixedwidth header_fixedwidth">
-					<header id="header" class="header">
-						<div class="content clearfix modules" id="top_modules" style="display: table; width: 990px;">
-							<div class="sitelogo">
-								<img alt="Site Logo" src="img/tiki/Tiki_WCG.png" style="margin-bottom: 10px;" />
-							</div>
-						</div>
-					</header>
-				</div>	
+	<body class="container text-center">
+		<div class="row">
+			<img alt="Site Logo" src="img/tiki/Tiki_WCG.png" style="margin: 10px;" />
+		</div>
+		<div class="row">
+			<h1>
+				$title
+			</h1>
+		</div>
+		</div>
+			<div id="middle">
+				$content
 			</div>
 		</div>
-		<div class="middle_outer">
-			<div id="middle" class="fixedwidth">
-				<div id="tiki-top" class="clearfix">
-								<h1 style="font-size: 30px; line-height: 30px; color: #fff; text-shadow: 3px 2px 0 #781437; margin: 8px 0 0 10px; padding: 0;">
-									$title
-								</h1>
-							</div>
-				</div>
-					<div id="middle" style="width: 990px; text-align: center;">
-						$content
-					</div>
-				</div>
-			</div><!--
-		<footer id="footer" class="footer" style="margin-top: 50px;">
-	<div class="footer_liner">
-		<div class="footerbgtrap fixedwidth" style="padding: 10px 0;">
+		<div class="row">
 			<a href="http://tiki.org" target="_blank" title="Powered by Tiki Wiki CMS Groupware"><img src="img/tiki/tikibutton.png" alt="Powered by Tiki Wiki CMS Groupware" /></a>
 		</div>
-	</div>
-</footer>-->
-</div>
 	</body>
 </html>
 END;
