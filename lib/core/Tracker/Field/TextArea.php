@@ -157,8 +157,8 @@ class Tracker_Field_TextArea extends Tracker_Field_Text
 			'keyup' => '',
 		);
 
-		if ($this->getOption('wordwrap')) {
-			$data['keyup'] = "wordCount({$this->getOption('wordwrap')}, this, 'cpt_{$this->getConfiguration('fieldId')}', '" . tr('Word Limit Exceeded') . "')";
+		if ($this->getOption('wordmax')) {
+			$data['keyup'] = "wordCount({$this->getOption('wordmax')}, this, 'cpt_{$this->getConfiguration('fieldId')}', '" . tr('Word Limit Exceeded') . "')";
 		} elseif ($this->getOption('max')) {
 			$data['keyup'] = "charCount({$this->getOption('max')}, this, 'cpt_{$this->getConfiguration('fieldId')}', '" . tr('Character Limit Exceeded') . "')";
 		}
