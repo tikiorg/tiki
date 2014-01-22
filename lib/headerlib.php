@@ -784,6 +784,13 @@ class HeaderLib
 		return $files;
 	}
 
+	function get_css_files()
+	{
+		$files = $this->collect_css_files();
+
+		return array_merge($files['default'], $files['screen']);
+	}
+
 	private function process_themegen_files($files)
 	{
 		global $prefs, $tikidomainslash, $in_installer;

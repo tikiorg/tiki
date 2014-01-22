@@ -340,7 +340,43 @@ class MonitorLib
 		$activity = $mail['args'];
 		$activity['event_type'] = $mail['event'];
 		$smarty->assign('monitor', $activity);
-		return $smarty->fetchLang($mail['language'], 'monitor/notification_email_body.tpl');
+		$html = $smarty->fetchLang($mail['language'], 'monitor/notification_email_body.tpl');
+		$css = $this->collectCss();
+
+		$processor = new \TijsVerkoyen\CssToInlineStyles\CssToInlineStyles($html, $css);
+
+		$html = $processor->convert();
+		echo $html;die;
+		return $html;
+	}
+
+	private function collectCss()
+	{
+		static $css;
+		if ($css) {
+			return $css;
+		}
+
+		$cachelib = TikiLib::lib('cache');
+		if ($css = $cachelib->getCached('email_css')) {
+			return $css;
+		}
+
+		$headerlib = TikiLib::lib('header');
+		$files = $headerlib->get_css_files();
+		$contents = array_map(function ($file) {
+			if ($file{0} == '/') {
+				return file_get_contents($file);
+			} elseif (substr($file, 0, 4) == 'http') {
+				return TikiLib::lib('tiki')->httprequest($file);
+			} else {
+				return file_get_contents(TIKI_PATH . '/' . $file);
+			}
+		}, $files);
+
+		$css = implode("\n\n", $contents);
+		$cachelib->cacheItem('email_css', $css);
+		return $css;
 	}
 
 	private function sendMail($email, $title, $html)

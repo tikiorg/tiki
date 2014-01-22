@@ -952,6 +952,7 @@
 		"smarty/smarty": ">=3.1.14",
 		"svg-edit/svg-edit": "2.6",
 		"symfony/console": "2.2.0",
+		"tijsverkoyen/css-to-inline-styles": "1.2.1",
 		"zetacomponents/base": "1.8"
 	},
 	"archive": {

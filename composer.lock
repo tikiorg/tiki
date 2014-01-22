@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "b4d5fa2b530c15c663e7d41a953698a1",
+    "hash": "6088745dfe4df0d790ad4a18e7c0fe0a",
     "packages": [
         {
             "name": "aFarkas/html5shiv",
@@ -916,6 +916,45 @@
             "description": "Symfony Console Component",
             "homepage": "http://symfony.com",
             "time": "2013-03-01 06:43:14"
+        },
+        {
+            "name": "tijsverkoyen/css-to-inline-styles",
+            "version": "1.2.1",
+            "target-dir": "TijsVerkoyen/CssToInlineStyles",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/tijsverkoyen/CssToInlineStyles.git",
+                "reference": "e53f25f6685d167f80b9d51b91b09aa70ea6c1c9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/tijsverkoyen/CssToInlineStyles/zipball/e53f25f6685d167f80b9d51b91b09aa70ea6c1c9",
+                "reference": "e53f25f6685d167f80b9d51b91b09aa70ea6c1c9",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "TijsVerkoyen\\CssToInlineStyles": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD"
+            ],
+            "authors": [
+                {
+                    "name": "Tijs Verkoyen",
+                    "email": "css_to_inline_styles@verkoyen.eu",
+                    "role": "Developer"
+                }
+            ],
+            "description": "CssToInlineStyles is a class that enables you to convert HTML-pages/files into HTML-pages/files with inline styles. This is very useful when you're sending emails.",
+            "homepage": "https://github.com/tijsverkoyen/CssToInlineStyles",
+            "time": "2013-02-09 17:48:44"
         },
         {
             "name": "twitter/bootstrap",
