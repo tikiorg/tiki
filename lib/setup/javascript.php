@@ -166,6 +166,7 @@ jqueryTiki.jcaptureFgal = ' . ((int)$prefs['fgal_for_jcapture']) . ';
 jqueryTiki.no_cookie = false;
 jqueryTiki.language = "' . $prefs['language'] . '";
 jqueryTiki.useInlineComment = '.($prefs['feature_inline_comments'] === 'y' ? 'true' : 'false') . ';
+jqueryTiki.helpurl = "' . ($prefs['feature_help'] === 'y' ? $prefs['helpurl'] : '') . '";
 ';	// NB replace "normal" speeds with int to workaround issue with jQuery 1.4.2
 
 	if ($prefs['mobile_feature'] === 'y' && $prefs['mobile_mode'] === 'y') {
