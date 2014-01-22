@@ -588,20 +588,25 @@ $("input[name=allowhtml]").change(function() {
 									<label for="" class="col-sm-2 control-label">{tr}Page display options{/tr}</label>
                                     <div class="col-sm-10">
 									    <ul>
-									        <li>{tr}Automatic Table of Contents generation{/tr}
-                                                <select name="pageAutoToc">
-    									            <option value="0" {if $pageAutoToc == 0}selected{/if}></option>
-	    								            {* <option value="1" {if $pageAutoToc == 1}selected{/if}>On</option> *}
-		    							            <option value="-1" {if $pageAutoToc == -1}selected{/if}>Off</option>
-			            						</select>
-						        			</li>
-        									<li>{tr}Show page title{/tr}
-                                                <select name="page_hide_title">
-									                <option value="0" {if $page_hide_title == 0}selected{/if}></option>
-									                {* <option value="1" {if $page_hide_title == 1}selected{/if}>On</option> *}
-									                <option value="-1" {if $page_hide_title == -1}selected{/if}>Off</option>
-									            </select>
-					        				</li>
+											{if $prefs.wiki_auto_toc eq 'y'}
+												<li>{tr}Automatic Table of Contents generation{/tr}
+													<select name="pageAutoToc">
+														<option value="0" {if $pageAutoToc == 0}selected{/if}></option>
+														{* <option value="1" {if $pageAutoToc == 1}selected{/if}>On</option> *}
+														<option value="-1" {if $pageAutoToc == -1}selected{/if}>Off</option>
+													</select>
+												</li>
+											{/if}
+		
+											{if $prefs.wiki_page_hide_title eq 'y' && $prefs.wiki_page_name_above eq 'y'}
+												<li>{tr}Show page title{/tr}
+													<select name="page_hide_title">
+														<option value="0" {if $page_hide_title == 0}selected{/if}></option>
+														{* <option value="1" {if $page_hide_title == 1}selected{/if}>On</option> *}
+														<option value="-1" {if $page_hide_title == -1}selected{/if}>Off</option>
+													</select>
+												</li>
+											{/if}
     									</ul>
                                     </div>
 								</div>

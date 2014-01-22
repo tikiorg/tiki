@@ -46,6 +46,7 @@ if ( !isset($_REQUEST['mobile_mode']) || $_REQUEST['mobile_mode'] === 'y' ) {
 		$prefs['feature_smileys'] = 'n';
 		$prefs['feature_jcapture'] = 'n';
 		$prefs['calendar_fullcalendar'] = 'n';
+		$prefs['feature_inline_comments'] = 'n';
 
 		$prefs['site_layout'] = 'mobile';
 
