@@ -41,6 +41,12 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
  * Changing a user's Tiki password directly in the database will not fire onChangeUserPassword,
  * making the stored passwords unreadable.
  *
+ * The system needs to have both the old and new passwords in cleartext (or the MD5 hash),
+ * in order order to be able to rehash the encrypted data. This may not always be possible.
+ * When an admin "hard" sets a user password, without having to know the previous password,
+ * the old password is unknown. The encrypted data can then no longer be decrypted when the user logs in,
+ * since the "secret key" has changed. The user will have to re-enter the lost data.
+ * A recovery is possible. The recovery mechanism should call onChangeUserPassword.
  */
 class CryptLib extends TikiLib
 {
