@@ -165,13 +165,9 @@ jqueryTiki.jcapture = '.($prefs['feature_jcapture'] == 'y' ? 'true' : 'false') .
 jqueryTiki.jcaptureFgal = ' . ((int)$prefs['fgal_for_jcapture']) . ';
 jqueryTiki.no_cookie = false;
 jqueryTiki.language = "' . $prefs['language'] . '";
+jqueryTiki.useInlineComment = '.($prefs['feature_inline_comments'] === 'y' ? 'true' : 'false') . ';
 ';	// NB replace "normal" speeds with int to workaround issue with jQuery 1.4.2
 
-	//Set inline comments on/off
-	if ($prefs['feature_inline_comments'] === 'y') {
-		$js .= 'jqueryTiki.useInlineComment = true;';
-	}
-	
 	if ($prefs['mobile_feature'] === 'y' && $prefs['mobile_mode'] === 'y') {
 		$js .= '
 // overrides for prefs for jq in mobile mode
@@ -182,7 +178,6 @@ jqueryTiki.autocomplete = false;
 jqueryTiki.superfish = false;
 jqueryTiki.colorbox = false;
 jqueryTiki.tablesorter = false;
-jqueryTiki.useInlineComment = false;	// Inline comments do not seem to work, and an option is missing. Disable for now.
 ';
 		if ($prefs['feature_ajax'] !== 'y') {
 			$headerlib->add_js_config('var mobile_ajaxEnabled = false;');
