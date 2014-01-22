@@ -33,6 +33,8 @@
 					<h2 style="padding-left:25px">{tr}PayPal{/tr}</h2>
 					<div class="admin payment">
 						{preference name=payment_paypal_business}
+                        {preference name=payment_paypal_password}
+                        {preference name=payment_paypal_signature}
 
 						<div class="adminoptionboxchild">
 							{preference name=payment_paypal_environment}
