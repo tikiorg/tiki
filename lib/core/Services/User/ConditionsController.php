@@ -93,6 +93,8 @@ class Services_User_ConditionsController
 				} else {
 					TikiLib::lib('errorreport')->report(tr('The terms and conditions were modified while you were reading them.'));
 				}
+			} else {
+				TikiLib::lib('errorreport')->report(tr('You are required to approve the terms of use to continue.'));
 			}
 		}
 
