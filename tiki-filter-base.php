@@ -14,7 +14,8 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 /* Automatically set params used for absolute URLs - BEGIN */
 
 // Note: need to substitute \ for / for windows.
-$tikipath = str_replace('\\', '/', realpath(dirname(__FILE__)));
+$tikipath = str_replace('\\', '/', __DIR__);
+define(TIKI_PATH, $tikipath);
 
 if (getcwd()) {
 	$scriptDirectory = getcwd();

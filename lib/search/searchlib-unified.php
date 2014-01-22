@@ -12,6 +12,7 @@ class UnifiedSearchLib
 {
 	const INCREMENT_QUEUE = 'search-increment';
 	private $batchToken;
+	private $isRebuildingNow = false;
 
     /**
      * @return string

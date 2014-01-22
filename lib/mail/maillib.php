@@ -95,7 +95,7 @@ function tiki_mail_setup()
 	} elseif ($prefs['zend_mail_handler'] == 'file') {
 		$transport = new Zend_Mail_Transport_File(
 			array(
-				'path' => 'temp',
+				'path' => TIKI_PATH . '/temp',
 				'callback' => function ($transport) {
 					return 'Mail_' . date('YmdHis') . '_' . mt_rand() . '.tmp';
 				},

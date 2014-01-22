@@ -133,15 +133,39 @@ class MonitorLib
 		// TODO : Implement sendTo
 		// TODO : Shrink large events / truncate content ? 
 
+		$mailQueue = [];
+
 		foreach ($queue as $item) {
 			list($args, $sendTo) = $this->finalHandleEvent($item['arguments'], $item['events']);
 
 			if ($args) {
 				$activitylib->recordEvent($item['event'], $args);
 			}
+
+			if (! empty($sendTo)) {
+				$recipients = $this->getRecipients($sendTo);
+
+				foreach ($recipients as $recipient) {
+					$key = "{$args['EVENT_ID']}-{$recipient['language']}";
+
+					if (! isset($mailQueue[$key])) {
+						$mailQueue[$key] = ['language' => $recipient['language'], 'event' => $item['event'], 'args' => $args, 'emails' => []];
+					}
+
+					$mailQueue[$key]['emails'][] = $recipient['email'];
+				}
+			}
 		}
 
 		$tx->commit();
+
+		foreach ($mailQueue as $mail) {
+			$title = $this->renderTitle($mail);
+			$content = $this->renderContent($mail);
+			foreach ($mail['emails'] as $email) {
+				$this->sendMail($email, $title, $content);
+			}
+		}
 	}
 	
 	private function finalHandleEvent($args, $events)
@@ -285,6 +309,47 @@ class MonitorLib
 	private function table()
 	{
 		return TikiDb::get()->table('tiki_user_monitors');
+	}
+
+	private function getRecipients($sendTo)
+	{
+		global $prefs;
+		$db = TikiDb::get();
+		$bindvars = [$prefs['site_language']];
+		$condition = $db->in('userId', $sendTo, $bindvars);
+
+		$result = $db->fetchAll("
+			SELECT email, IFNULL(p.value, ?) language
+			FROM users_users u
+				LEFT JOIN tiki_user_preferences p ON u.login = p.user AND p.prefName = 'language'
+			WHERE $condition
+		", $bindvars);
+
+		return $result;
+	}
+
+	private function renderTitle($mail)
+	{
+		// FIXME : Needs a better title
+		return tra('Notification', $mail['language']);
+	}
+
+	private function renderContent($mail)
+	{
+		$smarty = TikiLib::lib('smarty');
+		$activity = $mail['args'];
+		$activity['event_type'] = $mail['event'];
+		$smarty->assign('monitor', $activity);
+		return $smarty->fetchLang($mail['language'], 'monitor/notification_email_body.tpl');
+	}
+
+	private function sendMail($email, $title, $html)
+	{
+		require_once 'lib/webmail/tikimaillib.php';
+		$mail = new TikiMail;
+		$mail->setSubject($title);
+		$mail->setHtml($html);
+		$mail->send($email);
 	}
 }
 
