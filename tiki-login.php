@@ -455,6 +455,12 @@ $url.= ((strpos($url, '?') === false) ? '?' : '&') . SID;
 // If a wizard is run, it will return to the $url location when it has completed. Thus no code after $wizardlib->onLogin will be executed
 // The user must be actually logged in before onLogin is called. If $isdue is set, then: "Note that the user is not logged in he's just validated to change his password"
 if (!$isdue) {
+
+	// Notify CryptLib about the login
+	require_once('lib/crypt/cryptlib.php');
+	CryptLib::onUserLogin($user, $pass);
+
+	// Process wizard
 	$wizardlib = TikiLib::lib('wizard');
 	$wizardlib->onLogin($user, $url);
 }

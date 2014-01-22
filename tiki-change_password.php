@@ -91,7 +91,11 @@ if (isset($_REQUEST["change"])) {
 	// Login the user and display Home page
 	$_SESSION["$user_cookie_site"] = $_REQUEST["user"];
 	$logslib->add_log('login', 'logged from change_password', $_REQUEST['user'], '', '', $tikilib->now);
-	
+
+	// Notify CryptLib about the password change
+	require_once('lib/crypt/cryptlib.php');
+	CryptLib::onChangeUserPassword($user, $_REQUEST["oldpass"], $_REQUEST["pass"]);
+
 	// Check if a wizard should be run.
 	// If a wizard is run, it will return to the $url location when it has completed. Thus no code after $wizardlib->onLogin will be executed
 	$wizardlib = TikiLib::lib('wizard');
