@@ -572,9 +572,10 @@ function prefs_feature_list($partial = false)
 			'tags' => array('experimental'),
 		),
 		'feature_user_encryption' => array(
-			'name' => tra('Tiki User Encryption'),
-			'description' => tra('Tiki user encryption enables a personal, secure storage of sensitive data, e.g. password.'),
-			'help' => '',
+			'name' => tra('User Encryption'),
+			'description' => tra('Tiki user encryption enables a personal, secure storage of sensitive data, e.g. password. Only the user can see the data. No decryption passwords are stored.'),
+			'hint' => tra('Enable personal, secure storage of sensitive data, e.g. passwords'),
+			'help' => 'User Encryption',
 			'type' => 'flag',
 			'default' => 'n',
 			'tags' => array('experimental'),
