@@ -458,8 +458,8 @@ if (!$isdue) {
 
 	if ($prefs['feature_user_encryption'] === 'y') {
 		// Notify CryptLib about the login
-		require_once('lib/crypt/cryptlib.php');
-		CryptLib::onUserLogin($user, $pass);
+		$cryptlib = TikiLib::lib('crypt');
+		$cryptlib->onUserLogin($user, $pass);
 	}
 
 	// Process wizard

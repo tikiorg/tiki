@@ -94,8 +94,8 @@ if (isset($_REQUEST["change"])) {
 
 	if ($prefs['feature_user_encryption'] === 'y') {
 		// Notify CryptLib about the password change
-		require_once('lib/crypt/cryptlib.php');
-		CryptLib::onChangeUserPassword($user, $_REQUEST["oldpass"], $_REQUEST["pass"]);
+		$cryptlib = TikiLib::lib('crypt');
+		$cryptlib->onChangeUserPassword($user, $_REQUEST["oldpass"], $_REQUEST["pass"]);
 	}
 
 	// Check if a wizard should be run.

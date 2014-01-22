@@ -315,7 +315,7 @@ class TikiLib extends TikiDb_Bridge
 				require_once 'lib/user/monitorlib.php';
 				return self::$libraries[$name] = new MonitorLib();
 			case 'crypt':
-				require_once 'lib/crypt/cryptlib.php';
+				global $cryptlib; require_once 'lib/crypt/cryptlib.php';
 				return self::$libraries[$name] = new CryptLib();
 		}
 	}

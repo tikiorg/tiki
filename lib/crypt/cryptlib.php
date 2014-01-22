@@ -8,6 +8,12 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
+//this script may only be included - so its better to die if called directly.
+if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
+	header("location: index.php");
+	exit;
+}
+
 /*
  * CryptLib (aims to) safely store encrypted data, e.g. passwords for external systems, in Tiki.
  * The encrypted data can only be decrypted by the owner/user.
@@ -133,7 +139,8 @@ class CryptLib extends TikiLib
 	// Tiki events
 	////////////////////////////////
 
-	static function onUserLogin($user, $cleartextPwd)
+	// User has logged in
+	function onUserLogin($user, $cleartextPwd)
 	{
 		// Encode the phrase
 		$phraseMD5 = md5($cleartextPwd);
@@ -142,9 +149,9 @@ class CryptLib extends TikiLib
 		$_SESSION['cryptphrase'] = $phraseMD5;
 	}
 
-	// static function
+	// User has changed the password
 	// Change/Rehash the password, given the old and the new key phrases
-	static function onChangeUserPassword($user, $oldCleartextPwd, $newCleartextPwd)
+	function onChangeUserPassword($user, $oldCleartextPwd, $newCleartextPwd)
 	{
 		// Lookup pref key that are encrypted data
 		$prefKeys = array('userkey');	// HARDCODE for now
@@ -155,10 +162,9 @@ class CryptLib extends TikiLib
 		}
 	}
 
-	// static function
 	// Change/Rehash the password, given the old and the new key phrases
-	// Return true on success; false, if no stored password is found
-	static function changeUserPassword($user, $userprefKey, $oldPhraseMD5, $newPhraseMD5)
+	// Return true on success; otherwise false, e.g. if no stored password is found, or a decryption failure
+	function changeUserPassword($user, $userprefKey, $oldPhraseMD5, $newPhraseMD5)
 	{
 		// Retrieve the old password
 		$cryptOld = new CryptLib();
@@ -171,6 +177,13 @@ class CryptLib extends TikiLib
 		$cleartextPwd = $cryptOld->getUserPassword($user, $userprefKey);
 		$cryptOld->release();
 		if ($cleartextPwd == false) {
+			return false;
+		}
+
+		// Check if the cleartext contain any illigal password character.
+		// 	If found, it indicates that the decryption has failed. The $oldPhraseMD5 may be incorrect?
+		//  Then, do not proceed to rehash the password
+		if (!ctype_print ($cleartextPwd)) {
 			return false;
 		}
 
@@ -228,3 +241,4 @@ class CryptLib extends TikiLib
 		return $cleartext;
 	}
 }
+$cryptlib = new CryptLib();
