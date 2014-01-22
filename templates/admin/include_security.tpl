@@ -68,6 +68,7 @@
 			{preference name=tiki_check_file_content}
 			{preference name=tiki_allow_trust_input}
 			{preference name=feature_quick_object_perms}
+			{preference name=feature_user_encryption}
 		<fieldset>
 			<legend>{tr}CSRF Security{/tr}{help url="Security"}</legend>
 			<div class="adminoptionbox">
