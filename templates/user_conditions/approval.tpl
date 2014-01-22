@@ -6,7 +6,9 @@
 
 {block name="content"}
 	<div class="well">
+		<div style="overflow: auto; max-height: 400px;">
 		{$content}
+		</div>
 	</div>
 	<form method="post" action="{service controller=user_conditions action=approval}">
 		<div class="checkbox">
