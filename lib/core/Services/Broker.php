@@ -56,6 +56,10 @@ class Services_Broker
 
 	function internalRender($controller, $action, $request)
 	{
+		if (! $request instanceof JitFilter) {
+			$request = new JitFilter($request);
+		}
+
 		$output = $this->internal($controller, $action, $request);
 		return $this->render($controller, $action, $output, $request, true);
 	}
