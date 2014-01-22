@@ -17,7 +17,7 @@
  *
  * In order to use mcrypt
  * 1. The mcrypt PHP extension must be available
- * 2. Call the init method with the correct key phrase
+ * 2. Call the init method before using cryptlib
  *
  * The method setUserPassword encrypts the value and stores a user preference
  * getUserPassword reads it back into cleartext
