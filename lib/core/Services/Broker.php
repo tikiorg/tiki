@@ -36,7 +36,7 @@ class Services_Broker
 			if ($access->is_serializable_request()) {
 				echo $access->output_serialized($output);
 			} else {
-				echo $this->render($controller, $action, $output);
+				echo $this->render($controller, $action, $output, $request);
 			}
 		} catch (Services_Exception $e) {
 			$access->display_error(NULL, $e->getMessage(), $e->getCode());
@@ -57,7 +57,7 @@ class Services_Broker
 	function internalRender($controller, $action, $request)
 	{
 		$output = $this->internal($controller, $action, $request);
-		return $this->render($controller, $action, $output, true);
+		return $this->render($controller, $action, $output, $request, true);
 	}
 
 	private function attemptProcess($controller, $action, $request)
@@ -91,7 +91,7 @@ class Services_Broker
 		}
 	}
 
-	private function render($controller, $action, $output, $internal = false)
+	private function render($controller, $action, $output, JitFilter $request, $internal = false)
 	{
 		if (isset($output['FORWARD'])) {
 			$loc = $_SERVER['PHP_SELF'];
@@ -119,7 +119,7 @@ class Services_Broker
 		if ($internal) {
 			$layout = "layouts/internal/layout_view.tpl";
 		} elseif ($access->is_xml_http_request()) {
-			$layout = ! empty($_REQUEST['modal'])
+			$layout = $request->modal->int()
 				? 'layouts/internal/modal.tpl'
 				: 'layouts/internal/ajax.tpl';
 		}
