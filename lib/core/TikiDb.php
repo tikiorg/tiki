@@ -290,9 +290,9 @@ abstract class TikiDb
 		else return '';
 	} // }}}
 
-	function table($tableName) // {{{
+	function table($tableName, $autoIncrement = true) // {{{
 	{
-		return new TikiDb_Table($this, $tableName);
+		return new TikiDb_Table($this, $tableName, $autoIncrement);
 	} // }}}
 
 	function begin() // {{{

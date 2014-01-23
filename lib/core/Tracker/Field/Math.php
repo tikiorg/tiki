@@ -97,10 +97,16 @@ class Tracker_Field_Math extends Tracker_Field_Abstract implements Tracker_Field
 
 	function handleFinalSave(array $data)
 	{
+		static $cache = array();
+		$fieldId = $this->getConfiguration('fieldId');
+		if (! isset($cache[$fieldId])) {
+			$cache[$fieldId] = $this->getOption('calculation');
+		}
+
 		try {
 			$runner = self::getRunner();
 
-			$runner->setFormula($this->getOption('calculation'));
+			$cache[$fieldId] = $runner->setFormula($cache[$fieldId]);
 			$runner->setVariables($data);
 
 			return $runner->evaluate();

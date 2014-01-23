@@ -199,13 +199,22 @@ class Tracker_Field_Category extends Tracker_Field_Abstract implements Tracker_F
 
 	private function getApplicableCategories()
 	{
-		$parentId = (int) $this->getOption('parentId');
-		$descends = $this->getOption('descendants') > 0;
-		if ($parentId > 0) {
-			return TikiLib::lib('categ')->getCategories(array('identifier'=>$parentId, 'type'=>$descends ? 'descendants' : 'children'));
-		} else {
-			return TikiLib::lib('categ')->getCategories(array('type' => $descends ? 'all' : 'roots'));
+		static $cache = array();
+		$fieldId = $this->getConfiguration('fieldId');
+
+		if (! isset($cache[$fieldId])) {
+			$parentId = (int) $this->getOption('parentId');
+			$descends = $this->getOption('descendants') > 0;
+			if ($parentId > 0) {
+				$data = TikiLib::lib('categ')->getCategories(array('identifier'=>$parentId, 'type'=>$descends ? 'descendants' : 'children'));
+			} else {
+				$data = TikiLib::lib('categ')->getCategories(array('type' => $descends ? 'all' : 'roots'));
+			}
+
+			$cache[$fieldId] = $data;
 		}
+
+		return $cache[$fieldId];
 	}
 
 	private function getCategories()

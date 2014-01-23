@@ -51,7 +51,7 @@ class TrackerLib extends TikiLib
 
 	private function itemFields()
 	{
-		return $this->table('tiki_tracker_item_fields');
+		return $this->table('tiki_tracker_item_fields', false);
 	}
 
 	private function trackers()
@@ -76,7 +76,7 @@ class TrackerLib extends TikiLib
 
 	private function logs()
 	{
-		return $this->table('tiki_tracker_item_field_logs');
+		return $this->table('tiki_tracker_item_field_logs', false);
 	}
 
 	public function remove_field_images($fieldId)
