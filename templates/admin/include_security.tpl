@@ -70,8 +70,11 @@
 			{preference name=feature_quick_object_perms}
 			{preference name=feature_user_encryption}
 			<div class="adminoptionboxchild" id="feature_user_encryption_childcontainer">
-				Semi-colon separated list of password domains, e.g.: Company ABC;Company XYZ<br>
-				The user can choose to add passwords for a registered password domain.
+				Requires the mcrypt PHP extension for cryptation. <a href="tiki-check.php" target="_new">Check Now</a><br>.
+				You may also want to add the "Domain Password" module somewhere.<br>
+				<br>
+				Comma separated list of password domains, e.g.: Company ABC,Company XYZ<br>
+				The user can add passwords for a registered password domain.
 				{preference name=feature_password_domains}
 			</div>
 		<fieldset>

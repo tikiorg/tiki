@@ -8,13 +8,11 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-/*
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 	header("location: index.php");
 	exit;
 }
-*/
 
 /*
  * CryptLib (aims to) safely store encrypted data, e.g. passwords for external systems, in Tiki.
@@ -108,24 +106,42 @@ class CryptLib extends TikiLib
 	////////////////////////////////
 
 
-	// Encrypt and save the data in the user preferences
+	/*
+	 * Encrypt and save the data in the user preferences.
+	 * The class specified prefix will be applied to the pref key.
+	 * So, is the paramName, if specified. Given...
+	 * $prefprefix = 'pwddom';
+	 * $userprefKey = 'test'
+	 * $paramName = ''
+	 * => pwddom.test
+	 * if $paramName = 'user', then
+	 * * => pwddom.test.user
+	 */
+	//
 	// Return false on failure otherwise the generated crypt text
-	function setUserData($user, $userprefKey, $cleartext)
+	function setUserData($user, $userprefKey, $cleartext, $paramName = '')
 	{
 		if (empty($cleartext)) {
 			return false;
 		}
 		$storedPwd64 = $this->encryptData($cleartext);
-		$this->set_user_preference($user, $this->prefprefix.'.'.$userprefKey, $storedPwd64);
+		if (!empty($paramName)) {
+			$paramName = '.'.$paramName;
+		}
+		$this->set_user_preference($user, $this->prefprefix.'.'.$userprefKey.$paramName, $storedPwd64);
+
 		return $storedPwd64;
 	}
 
 	// Get the data from the user preferences.
 	// Decrypt and return cleartext
 	// Return false, if no stored data is found
-	function getUserData($user, $userprefKey)
+	function getUserData($user, $userprefKey, $paramName = '')
 	{
-		$storedPwd64 = $this->get_user_preference($user, $this->prefprefix.'.'.$userprefKey);
+		if (!empty($paramName)) {
+			$paramName = '.'.$paramName;
+		}
+		$storedPwd64 = $this->get_user_preference($user, $this->prefprefix.'.'.$userprefKey.$paramName);
 		if (empty($storedPwd64)) {
 			return false;
 		}
@@ -136,8 +152,17 @@ class CryptLib extends TikiLib
 	function getPasswordDomains($use_prefix = false)
 	{
 		global $prefs;
+
+		// Load the domain ddefinitions
 		$domainsText = $prefs['feature_password_domains'];
-		$domains = explode(';', $domainsText);
+		$domains = explode(',', $domainsText);
+
+		// Trim whitespace from names
+		foreach($domains as &$dom) {
+			$dom = trim($dom);
+		}
+
+		// Add prefix
 		if($use_prefix) {
 			foreach($domains as &$dom) {
 				$dom = $this->prefprefix.'.'.$dom;
