@@ -72,20 +72,20 @@
 	{/if}
 </div>
 
-<form method="post" action="tiki-browse_categories.php" class="col-md-12 form-inline form-horizontal form-group" role="form">
+<form method="post" action="tiki-browse_categories.php" class="form-inline form-horizontal" role="form">
     <div class="form-group">
-        <label class="control-label col-sm-1">{tr}Find:{/tr} {if $parentId ne 0}{$p_info.name|escape} {/if}</label>
-        <div class="input-group col-sm-3">
-            <input class="form-control" type="text" name="find" value="{$find|escape}">
+        <label class="col-sm-2 control-label" for="find">{tr}Find:{/tr} {if $parentId ne 0}{$p_info.name|escape} {/if}</label>
+        <div class="col-sm-9">
+            <input class="form-control" type="text" name="find" id="find" value="{$find|escape}">
         </div>
-        <div class="input-group col-sm-8">
-            {help url="#" desc="{tr}Find in:{/tr} <ul><li>{tr}Name{/tr}</li><li>{tr}Description{/tr}</li></ul>"}
-            <input type="submit" class="btn btn-default btn-sm" value="{tr}Find{/tr}" name="search">
-	        <label>{tr}in the current category - and its subcategories: {/tr}<input type="checkbox" name="deep" {if $deep eq 'on'}checked="checked"{/if}></label>
-	        <input type="hidden" name="parentId" value="{$parentId|escape}">
-	        <input type="hidden" name="type" value="{$type|escape}">
-	        <input type="hidden" name="sort_mode" value="{$sort_mode|escape}">
-        </div>
+    </div>
+    <div class="form-group">
+        {help url="#" desc="{tr}Find in:{/tr} <ul><li>{tr}Name{/tr}</li><li>{tr}Description{/tr}</li></ul>"}
+        <input type="submit" class="btn btn-default btn-sm" value="{tr}Find{/tr}" name="search">
+        <label>{tr}in the current category - and its subcategories: {/tr}<input type="checkbox" name="deep" {if $deep eq 'on'}checked="checked"{/if}></label>
+	    <input type="hidden" name="parentId" value="{$parentId|escape}">
+	    <input type="hidden" name="type" value="{$type|escape}">
+	    <input type="hidden" name="sort_mode" value="{$sort_mode|escape}">
     </div>
 </form>
 
