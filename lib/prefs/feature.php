@@ -583,9 +583,12 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_password_domains' => array(
 			'name' => tra('Password Domains'),
-			'description' => tra('Securely store extra user passwords for other "domains", or just for yourself'),
+			'description' => tra('Securely store extra user passwords and other user specific data for other "domains", or just for yourself'),
 			'type' => 'text',
 			'default' => 'userkey',
+			'dependencies' => array(
+				'feature_user_encryption',
+			),
 			'tags' => array('experimental'),
 		),
 		'feature_purifier' => array(
