@@ -15,7 +15,7 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 
 // Note: need to substitute \ for / for windows.
 $tikipath = str_replace('\\', '/', __DIR__);
-define(TIKI_PATH, $tikipath);
+define('TIKI_PATH', $tikipath);
 
 if (getcwd()) {
 	$scriptDirectory = getcwd();
