@@ -29,31 +29,33 @@
 			<td>Domain</td>
 			<td>{$domain}</td>
 		</tr>
-		<tr>
-			<td>Username</td>
-			<td>
-				{if isset($can_update) and $can_update eq 'y' and $currentuser neq 'y' and $edit_option neq 'y'}
-					<input type="text" id="domUsername" name="domUsername">
-				{else}
-					{$username}
-				{/if}
-			</td>
-		</tr>
-		{if isset($can_update) and $can_update eq 'y' and $edit_option neq 'y'}
+		{if !empty($user)}
 			<tr>
-				<td>Password</td>
-				<td><input type="password" id="domPassword" name="domPassword"></td>
-			</tr>
-			<tr>
-				<td colspan="2">
-					<input type="submit" name="saveButton" value="Save">
-					<input type="reset" value="Cancel" onclick="javascript:submitform(false)">
+				<td>Username</td>
+				<td>
+					{if isset($can_update) and $can_update eq 'y' and $currentuser neq 'y' and $edit_option neq 'y'}
+						<input type="text" id="domUsername" name="domUsername">
+					{else}
+						{$username}
+					{/if}
 				</td>
 			</tr>
-		{elseif $edit_option eq 'y'}
-			<td colspan="2">
-				<a href="javascript:submitform(true)">Edit</a>
-			</td>
+			{if isset($can_update) and $can_update eq 'y' and $edit_option neq 'y'}
+				<tr>
+					<td>Password</td>
+					<td><input type="password" id="domPassword" name="domPassword"></td>
+				</tr>
+				<tr>
+					<td colspan="2">
+						<input type="submit" name="saveButton" value="Save">
+						<input type="reset" value="Cancel" onclick="javascript:submitform(false)">
+					</td>
+				</tr>
+			{elseif $edit_option eq 'y'}
+				<td colspan="2">
+					<a href="javascript:submitform(true)">Edit</a>
+				</td>
+			{/if}
 		{/if}
 	</table>
 </form>
