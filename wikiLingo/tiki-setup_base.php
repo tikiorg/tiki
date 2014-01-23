@@ -69,6 +69,7 @@ $needed_prefs = array(
 	'cookie_consent_name' => 'tiki_cookies_accepted',
 
 );
+
 // check that tiki_preferences is there
 if ($tikilib->query("SHOW TABLES LIKE 'tiki_preferences'")->numRows() == 0) {
 	// smarty not initialised at this point to do a polite message, sadly
@@ -78,6 +79,14 @@ if ($tikilib->query("SHOW TABLES LIKE 'tiki_preferences'")->numRows() == 0) {
 $tikilib->get_preferences($needed_prefs, true, true);
 global $systemConfiguration;
 $prefs = $systemConfiguration->preference->toArray() + $prefs;
+
+
+TikiLib::events()->bind('tiki.wiki.parse', function($args) use ($prefs){
+    $content = Tiki::lib('parser')->parse_data($args['object'], $args['options']);
+
+});
+
+
 
 // mose : simulate strong var type checking for http vars
 $patterns['int'] = "/^[0-9]*$/"; // *Id

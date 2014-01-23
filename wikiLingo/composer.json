@@ -62,6 +62,7 @@
 		"smarty/smarty": "3.1.14",
 		"svg-edit/svg-edit": "2.6",
 		"symfony/console": "2.2.0",
+        "wikiLingo":"1.0",
 		"zetacomponents/base": "1.8",
 		"zetacomponents/webdav": "1.1.3"
 	},

@@ -918,6 +918,17 @@
             "time": "2013-03-01 06:43:14"
         },
         {
+            "name": "wikiLingo",
+            "version": "1.0"
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/wikiLingo/wikiLingo/archive/master.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "library"
+        },
+        {
             "name": "twitter/bootstrap",
             "version": "3.0.3",
             "dist": {
