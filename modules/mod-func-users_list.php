@@ -156,7 +156,6 @@ function module_users_list($module_params)
 	if (isset($module_params['params']['log']) && $module_params['params']['log'] == 'y' && $prefs['feature_actionlog'] != 'y') {
 		$module_params['params']['log'] = 'n';
 	 }
-	 var_dump($users['data']);
 	$smarty->assign_by_ref('users', $users['data']);
 	$smarty->assign_by_ref('module_params_users_list', $module_params['params']);
 }
