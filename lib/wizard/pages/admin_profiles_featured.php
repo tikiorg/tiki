@@ -8,9 +8,9 @@
 require_once('lib/wizard/wizard.php');
 
 /**
- * Show the initial profiles choices
+ * Show the initial featured profile choices
  */
-class AdminWizardProfiles extends Wizard 
+class AdminWizardProfilesFeatured extends Wizard 
 {
     function pageTitle ()
     {
@@ -29,7 +29,7 @@ class AdminWizardProfiles extends Wizard
 		parent::onSetupPage($homepageUrl);
 		
 		// Assign the page temaplte
-		$wizardTemplate = 'wizard/admin_profiles.tpl';
+		$wizardTemplate = 'wizard/admin_profiles_featured.tpl';
 		$smarty->assign('wizardBody', $wizardTemplate);
 		
 		return true;		
