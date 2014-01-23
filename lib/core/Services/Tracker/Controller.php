@@ -1436,8 +1436,13 @@ class Services_Tracker_Controller
 
 	public function action_import_profile($input)
 	{
-		global $tikilib, $access;
-		$access->check_permission('tiki_p_admin');
+		$tikilib = TikiLib::lib('tiki');
+
+		$perms = Perms::get();
+		if (! $perms->admin) {
+			throw new Services_Exception_Denied(tr('Reserved for administrators'));
+		}
+
 		$transaction = $tikilib->begin();
 		$installer = new Tiki_Profile_Installer;
 
