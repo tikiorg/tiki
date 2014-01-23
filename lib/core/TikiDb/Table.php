@@ -9,11 +9,13 @@ class TikiDb_Table
 {
 	protected $db;
 	protected $tableName;
+	protected $autoIncrement;
 
-	function __construct($db, $tableName)
+	function __construct($db, $tableName, $autoIncrement = true)
 	{
 		$this->db = $db;
 		$this->tableName = $tableName;
+		$this->autoIncrement = $autoIncrement;
 	}
 
 	/**
@@ -31,7 +33,9 @@ class TikiDb_Table
 
 		$this->db->query($query, $bindvars);
 
-		return $this->db->lastInsertId();
+		if ($this->autoIncrement) {
+			return $this->db->lastInsertId();
+		}
 	}
 
 	function insertOrUpdate(array $data, array $keys)
@@ -45,7 +49,9 @@ class TikiDb_Table
 
 		$this->db->query($query, $bindvars);
 
-		return $this->db->lastInsertId();
+		if ($this->autoIncrement) {
+			return $this->db->lastInsertId();
+		}
 	}
 
 	/**

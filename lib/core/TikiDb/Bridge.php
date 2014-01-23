@@ -118,8 +118,8 @@ class TikiDb_Bridge extends TikiDb
 		return call_user_func_array(array( self::get(), 'concat' ), $arr);
 	} // }}}
 
-	function table($tableName) // {{{
+	function table($tableName, $autoIncrement = true) // {{{
 	{
-		return self::get()->table($tableName);
+		return self::get()->table($tableName, $autoIncrement);
 	} // }}}
 }
