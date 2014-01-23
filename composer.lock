@@ -928,9 +928,9 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tijsverkoyen/CssToInlineStyles/zipball/e53f25f6685d167f80b9d51b91b09aa70ea6c1c9",
-                "reference": "e53f25f6685d167f80b9d51b91b09aa70ea6c1c9",
-                "shasum": ""
+                "url": "https://composer.tiki.org/dist/tijsverkoyen-css-to-inline-styles-e53f25f6685d167f80b9d51b91b09aa70ea6c1c9-zip-cd3ab0.zip",
+                "reference": "1.2.1",
+                "shasum": "5055fcdc9436ec9d1da29733bfcd1a53c8f0205d"
             },
             "require": {
                 "php": ">=5.3.0"
