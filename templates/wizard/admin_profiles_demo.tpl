@@ -18,7 +18,7 @@
 	<li>{tr}Uses PluginTracker in a wiki page to add items{/tr}</li>
     <li>{tr}Create some custom feedback for message to the user after item insertion{/tr}</li>
     <li>{tr}Uses PluginTrackerList to display inserted items{/tr}</li>
-	<br/><em>{tr}See also{/tr}: <a href="https://doc.tiki.org/Trackers" target="_blank">{tr}Trackers in doc.tiki.org{/tr}</a></em>
+	<br/><em>{tr}See also{/tr} <a href="https://doc.tiki.org/Trackers" target="_blank">{tr}Trackers in doc.tiki.org{/tr}</a></em>
 	</ul>
 	</td>
 	<td style="width:4%"> 
@@ -34,7 +34,7 @@
     <li>{tr}Useful for Types and Subtypes{/tr}</li>
     <li>{tr}Useful for Program Names and Versions{/tr}</li>
     <li>{tr}Easily mamange the options in the second tracker without editing the dropdown in the first tracker{/tr} </li> 
-	<br/><em>{tr}See also{/tr}: <a href="https://doc.tiki.org/Dynamic+items+list" target="_blank">{tr}Dynamic items list in doc.tiki.org{/tr}</a></em>
+	<br/><em>{tr}See also{/tr} <a href="https://doc.tiki.org/Dynamic+items+list" target="_blank">{tr}Dynamic items list in doc.tiki.org{/tr}</a></em>
 	</ul>
 	</td>
 	</tr>
@@ -49,7 +49,7 @@
 	<li>{tr}Working example of Plugin TrackerCalendar{/tr}</li>
     <li>{tr}Drag & Drop to resize or move events{/tr}</li>
     <li>{tr}Several display modes, useful for Project & Resource Management{/tr}</li>
-	<br/><em>{tr}See also{/tr}: <a href="https://doc.tiki.org/PluginTrackerCalendar" target="_blank">{tr}Plugin TrackerCalendar in doc.tiki.org{/tr}</a></em>
+	<br/><em>{tr}See also{/tr} <a href="https://doc.tiki.org/PluginTrackerCalendar" target="_blank">{tr}Plugin TrackerCalendar in doc.tiki.org{/tr}</a></em>
 	</ul>
 	</td>
 	<td style="width:4%"> 

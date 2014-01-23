@@ -1,7 +1,7 @@
 {* $Id$ *}
 
 <div class="adminWizardIconleft"><img src="img/icons/large/profiles48x48.png" alt="{tr}Check out some potentially useful profiles{/tr}" /></div>
-{tr}Check out some potentially useful profiles for your site. {/tr}. </br></br>
+{tr}Check out some potentially useful profiles for your site{/tr}. </br></br>
 <div class="adminWizardContent">
 <fieldset>
 	<legend>{tr}Potentially Useful Profiles{/tr}</legend>
@@ -16,7 +16,7 @@
 	<li>{tr}Automatic switch when a mobile device is detected{/tr}</li>
     <li>{tr}Manual switch allowed with provided side module{/tr}</li>
     <li>{tr}Enhanced mobile mode in Tiki 12{/tr}</li>
-	<br/><em>{tr}See also{/tr}: <a href="https://doc.tiki.org/Mobile" target="_blank">{tr}Mobile in doc.tiki.org{/tr}</a></em>
+	<br/><em>{tr}See also{/tr} <a href="https://doc.tiki.org/Mobile" target="_blank">{tr}Mobile in doc.tiki.org{/tr}</a></em>
 	</ul>
 	</td>
 	<td style="width:4%"> 
@@ -34,7 +34,7 @@
     <li>{tr}Enables/Disables logging tools{/tr}</li>
     <li>{tr}Disables/Enables redirections to similar pages{/tr}</li>
     <li>{tr}Enables/Disables error and warning display to all users, not only admins{/tr} </li> 
-	<br/><em>{tr}See also{/tr}: <a href="https://dev.tiki.org/Recovery" target="_blank">{tr}Recovery in dev.tiki.org{/tr}</a></em>
+	<br/><em>{tr}See also{/tr} <a href="https://dev.tiki.org/Recovery" target="_blank">{tr}Recovery in dev.tiki.org{/tr}</a></em>
 	</ul>
 	</td>
 	</tr>
@@ -48,7 +48,7 @@
 	<li>{tr}Allows cowriting documents in real time{/tr}</li>
 	<li>{tr}Allows voice communication in real time while editing{/tr}</li>
     <li>{tr}Uses the TogetherJS Mozilla widget{/tr}</li>
-	<br/><em>{tr}See also{/tr}: <a href="https://doc.tiki.org/PluginTogether" target="_blank">{tr}Plugin Together in doc.tiki.org{/tr}</a></em>
+	<br/><em>{tr}See also{/tr} <a href="https://doc.tiki.org/PluginTogether" target="_blank">{tr}Plugin Together in doc.tiki.org{/tr}</a></em>
 	</ul>
 	</td>
 	<td style="width:4%"> 
@@ -64,7 +64,7 @@
 	<li>{tr}Timesheet & Projects linked trackers already{/tr}</li>
     <li>{tr}Customize your project categories{/tr}</li>
     <li>{tr}Add or edit your timesheet fields as desired{/tr} </li> 
-	<br/><em>{tr}See also{/tr}: <a href="https://doc.tiki.org/Timesheet" target="_blank">{tr}Timesheet feature{/tr}</a> {tr}and{/tr} <a href="https://doc.tiki.org/PluginTimesheet" target="_blank">{tr}Plugin Timesheet in doc.tiki.org{/tr}</a></em>
+	<br/><em>{tr}See also{/tr} <a href="https://doc.tiki.org/Timesheet" target="_blank">{tr}Timesheet feature{/tr}</a> {tr}and{/tr} <a href="https://doc.tiki.org/PluginTimesheet" target="_blank">{tr}Plugin Timesheet in doc.tiki.org{/tr}</a></em>
 	</ul>
 	</td>
 	</tr>
