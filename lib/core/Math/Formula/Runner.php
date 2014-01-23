@@ -28,6 +28,8 @@ class Math_Formula_Runner
 	{
 		$this->element = $this->getElement($element);
 		$this->collected = array();
+
+		return $this->element;
 	}
 
 	function setVariables( array $variables )
