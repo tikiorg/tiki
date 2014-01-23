@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "6088745dfe4df0d790ad4a18e7c0fe0a",
+    "hash": "21111e8f1e315779b3b7c9c778a8a93e",
     "packages": [
         {
             "name": "aFarkas/html5shiv",
@@ -872,26 +872,32 @@
         },
         {
             "name": "symfony/console",
-            "version": "v2.2.0",
+            "version": "v2.4.1",
             "target-dir": "Symfony/Component/Console",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Console.git",
-                "reference": "v2.2.0"
+                "reference": "4c1ed2ff514bd85ee186eebb010ccbdeeab05af7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/symfony-console-v2.2.0-v2.2.0-12a657.zip",
-                "reference": "v2.2.0",
-                "shasum": "90e38e0d7734b8ed8807eddced63293c800aef07"
+                "url": "https://composer.tiki.org/dist/symfony-console-4c1ed2ff514bd85ee186eebb010ccbdeeab05af7-zip-04e417.zip",
+                "reference": "v2.4.1",
+                "shasum": "ec0b2553af4a8d2bfad8519588eb2bf9575f872c"
             },
             "require": {
                 "php": ">=5.3.3"
             },
+            "require-dev": {
+                "symfony/event-dispatcher": "~2.1"
+            },
+            "suggest": {
+                "symfony/event-dispatcher": ""
+            },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.2-dev"
+                    "dev-master": "2.4-dev"
                 }
             },
             "autoload": {
@@ -915,7 +921,7 @@
             ],
             "description": "Symfony Console Component",
             "homepage": "http://symfony.com",
-            "time": "2013-03-01 06:43:14"
+            "time": "2014-01-01 08:14:50"
         },
         {
             "name": "tijsverkoyen/css-to-inline-styles",
