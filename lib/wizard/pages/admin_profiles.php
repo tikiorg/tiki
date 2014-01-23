@@ -14,7 +14,7 @@ class AdminWizardProfiles extends Wizard
 {
     function pageTitle ()
     {
-        return tra('Featured Profiles');
+        return tra('Featured Site Profiles');
     }
 	function isEditable ()
 	{
