@@ -12,8 +12,8 @@
         <tr>
             <td><div class="adminWizardIconleft"><img src="img/icons/large/profiles48x48.png" alt="{tr}Tiki Template Sites{/tr}" /></div></td>
             <td>
-                {tr}You may start by applying one of our <b>Featured Site Profiles</b>{/tr}.
-                {tr}Each of these provides a shrink-wrapped solution that meets most of the needs of a particular kind of community or site (ex: Personal Blog space, Company Intranet){/tr}.
+                {tr}You may start by applying some of our <b>Site Profiles</b>{/tr}.
+                {tr}Each of these provides a shrink-wrapped solution that meets most of the needs of a particular kind of community or site (ex: Personal Blog space, Company Intranet, ...) or that extends basic setup with extra features configured for you{/tr}.
                 {tr}If you are new to Tiki administration, we recommend that you start with this approach{/tr}.
                 {tr}If the profile you selected does not quite meet your needs, you will still have the option of customizing it further with one of the approaches below{/tr}.
                 <br>
