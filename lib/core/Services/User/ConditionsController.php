@@ -121,6 +121,8 @@ class Services_User_ConditionsController
 			} elseif ($inputBirthDate && ! $this->getBirthDate($user)) {
 				$this->setBirthDate($user, $inputBirthDate);
 				TikiLib::lib('access')->redirect($origin);
+			} else {
+				TikiLib::lib('errorreport')->report(tr('You are required enter your birth date to continue.'));
 			}
 		}
 
