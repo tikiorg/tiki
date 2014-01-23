@@ -69,6 +69,11 @@
 			{preference name=tiki_allow_trust_input}
 			{preference name=feature_quick_object_perms}
 			{preference name=feature_user_encryption}
+			<div class="adminoptionboxchild" id="feature_user_encryption_childcontainer">
+				Semi-colon separated list of password domains, e.g.: Company ABC;Company XYZ<br>
+				The user can choose to add passwords for a registered password domain.
+				{preference name=feature_password_domains}
+			</div>
 		<fieldset>
 			<legend>{tr}CSRF Security{/tr}{help url="Security"}</legend>
 			<div class="adminoptionbox">

@@ -8,11 +8,13 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
+/*
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 	header("location: index.php");
 	exit;
 }
+*/
 
 /*
  * CryptLib (aims to) safely store encrypted data, e.g. passwords for external systems, in Tiki.
@@ -28,7 +30,7 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
  * The method setUserPassword encrypts the value and stores a user preference
  * getUserPassword reads it back into cleartext
  *
- * The secret key phrase is the MD5 sum of the user's Tiki password.
+ * The secret key phrase is the MD5 sum of the username + Tiki password.
  * The secret key is thus 1) personal 2) not stored anywhere in Tiki.
  *
  * Each encryption uses its own initialization vector (seed).
@@ -41,7 +43,7 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
  * Changing a user's Tiki password directly in the database will not fire onChangeUserPassword,
  * making the stored passwords unreadable.
  *
- * The system needs to have both the old and new passwords in cleartext (or the MD5 hash),
+ * The system needs to have the username + both the old and new passwords in cleartext,
  * in order order to be able to rehash the encrypted data. This may not always be possible.
  * When an admin "hard" sets a user password, without having to know the previous password,
  * the old password is unknown. The encrypted data can then no longer be decrypted when the user logs in,
@@ -53,6 +55,8 @@ class CryptLib extends TikiLib
 	private $key;			// mcrypt key
 	private $mcrypt;		// mcrypt object
 	private $iv;			// mcrypt initialization vector
+
+	private $prefprefix = 'pwddom';
 
 	//
 	// Init and release
@@ -111,12 +115,8 @@ class CryptLib extends TikiLib
 		if (empty($cleartext)) {
 			return false;
 		}
-		$crypttext = $this->encrypt($cleartext, $this->iv);
-
-		// Save iv in the stored password
-		$storedPwd64 = base64_encode($this->iv.$crypttext);
-
-		$this->set_user_preference($user, $userprefKey, $storedPwd64);
+		$storedPwd64 = $this->encryptData($cleartext);
+		$this->set_user_preference($user, $this->prefprefix.'.'.$userprefKey, $storedPwd64);
 		return $storedPwd64;
 	}
 
@@ -125,16 +125,50 @@ class CryptLib extends TikiLib
 	// Return false, if no stored password is found
 	function getUserPassword($user, $userprefKey)
 	{
-		$storedPwd64 = $this->get_user_preference($user, $userprefKey);
+		$storedPwd64 = $this->get_user_preference($user, $this->prefprefix.'.'.$userprefKey);
 		if (empty($storedPwd64)) {
+			return false;
+		}
+		$cleartext = $this->decryptData($storedPwd64);
+		return $cleartext;
+	}
+
+	//
+	// Data encryption
+	////////////////////////////////
+
+	// Encrypt data
+	// Return encrypted data, or false on error
+	function encryptData($cleartextData)
+	{
+		if(empty($cleartextData)) {
+			return false;
+		}
+
+		// Encrypt the data
+		$cryptData = $this->encrypt($cleartextData, $this->iv);
+		if(empty($cryptData)) {
+			return false;
+		}
+
+		// Save iv in the stored data
+		$cryptData64 = base64_encode($this->iv.$cryptData);
+		return $cryptData64;
+	}
+
+	// Decrypt data
+	// Return cleartext data, or false on error
+	function decryptData($cryptData64)
+	{
+		if(empty($cryptData64)) {
 			return false;
 		}
 
 		// Extract the iv and crypttext
-		$storedPwd = base64_decode($storedPwd64);
+		$cryptData = base64_decode($cryptData64);
 		$ivSize = mcrypt_enc_get_iv_size($this->mcrypt);
-		$iv = substr($storedPwd, 0, $ivSize);
-		$crypttext = substr($storedPwd, $ivSize);
+		$iv = substr($cryptData, 0, $ivSize);
+		$crypttext = substr($cryptData, $ivSize);
 
 		// Decrypt
 		$cleartext = $this->decrypt($crypttext, $iv);
@@ -149,7 +183,7 @@ class CryptLib extends TikiLib
 	function onUserLogin($user, $cleartextPwd)
 	{
 		// Encode the phrase
-		$phraseMD5 = md5($cleartextPwd);
+		$phraseMD5 = md5($user.$cleartextPwd);
 
 		// Store the pass phrase in a session variable
 		$_SESSION['cryptphrase'] = $phraseMD5;
@@ -159,12 +193,19 @@ class CryptLib extends TikiLib
 	// Change/Rehash the password, given the old and the new key phrases
 	function onChangeUserPassword($user, $oldCleartextPwd, $newCleartextPwd)
 	{
+		global $prefs;
+
 		// Lookup pref key that are encrypted data
-		$prefKeys = array('userkey');	// HARDCODE for now
+		$domainsText = $prefs['feature_password_domains'];
+		$domains = explode(';', $domainsText);
+		foreach($domains as &$dom) {
+			$dom = $this->prefprefix.'.'.$dom;
+		}
+		$prefKeys = $domains;
 
 		// Rehash encrypted preferences
 		foreach($prefKeys as $userprefKey) {
-			self::changeUserPassword($user, $userprefKey, md5($oldCleartextPwd), md5($newCleartextPwd));
+			self::changeUserPassword($user, $userprefKey, md5($user.$oldCleartextPwd), md5($user.$newCleartextPwd));
 		}
 	}
 
@@ -221,7 +262,7 @@ class CryptLib extends TikiLib
 
 	// Use MCrypt if available. Otherwise Base64 encode only
 	// Return base64 encoded string, containing either the crypttext or cleartext (if on base64 encoding is used)
-	function encrypt($cleartext, $iv)
+	private function encrypt($cleartext, $iv)
 	{
 		if ($this->hasCrypt()) {
 			$crypttext = mcrypt_encrypt(MCRYPT_RIJNDAEL_256, $this->key, $cleartext, MCRYPT_MODE_CBC, $iv);
@@ -234,7 +275,7 @@ class CryptLib extends TikiLib
 
 	// Use MCrypt if available. Otherwise Base64 decode
 	// Return cleartext
-	function decrypt($crypttext, $iv)
+	private function decrypt($crypttext, $iv)
 	{
 		if ($this->hasCrypt()) {
 			$rawcleartext = mcrypt_decrypt(MCRYPT_RIJNDAEL_256, $this->key, $crypttext, MCRYPT_MODE_CBC, $iv);
