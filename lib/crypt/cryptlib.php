@@ -27,8 +27,8 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
  * 1. The mcrypt PHP extension must be available
  * 2. Call the init method before using cryptlib
  *
- * The method setUserPassword encrypts the value and stores a user preference
- * getUserPassword reads it back into cleartext
+ * The method setUserData encrypts the value and stores a user preference
+ * getUserData reads it back into cleartext
  *
  * The secret key phrase is the MD5 sum of the username + Tiki password.
  * The secret key is thus 1) personal 2) not stored anywhere in Tiki.
@@ -104,13 +104,13 @@ class CryptLib extends TikiLib
 	}
 
 	//
-	// User password utilities
+	// User data utilities
 	////////////////////////////////
 
 
-	// Encrypt and save the password in the user preferences
+	// Encrypt and save the data in the user preferences
 	// Return false on failure otherwise the generated crypt text
-	function setUserPassword($user, $userprefKey, $cleartext)
+	function setUserData($user, $userprefKey, $cleartext)
 	{
 		if (empty($cleartext)) {
 			return false;
@@ -120,10 +120,10 @@ class CryptLib extends TikiLib
 		return $storedPwd64;
 	}
 
-	// Get the password from the user preferences.
+	// Get the data from the user preferences.
 	// Decrypt and return cleartext
-	// Return false, if no stored password is found
-	function getUserPassword($user, $userprefKey)
+	// Return false, if no stored data is found
+	function getUserData($user, $userprefKey)
 	{
 		$storedPwd64 = $this->get_user_preference($user, $this->prefprefix.'.'.$userprefKey);
 		if (empty($storedPwd64)) {
@@ -234,7 +234,7 @@ class CryptLib extends TikiLib
 			// Only Base64 encoding. No conversion needed
 			return false;
 		}
-		$cleartextPwd = $cryptOld->getUserPassword($user, $userprefKey);
+		$cleartextPwd = $cryptOld->getUserData($user, $userprefKey);
 		$cryptOld->release();
 		if ($cleartextPwd == false) {
 			return false;
@@ -250,7 +250,7 @@ class CryptLib extends TikiLib
 		// Rehash and save
 		$cryptNew = new CryptLib();
 		$cryptNew->initSeed($newPhraseMD5);
-		$cryptPwd = $cryptNew->setUserPassword($user, $userprefKey, $cleartextPwd);
+		$cryptPwd = $cryptNew->setUserData($user, $userprefKey, $cleartextPwd);
 		$cryptNew->release();
 		if ($cryptPwd == false) {
 			return false;
