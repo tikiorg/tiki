@@ -55,6 +55,11 @@ class Perms_ResolverFactory_CategoryFactory implements Perms_ResolverFactory
 			return '';
 		}
 
+		if ($context['type'] == 'category') {
+			// Categories cannot be categorized
+			return '';
+		}
+
 		$this->bulk($context, 'object', array( $context['object'] ));
 
 		$key = $this->objectKey($context);
@@ -113,7 +118,7 @@ class Perms_ResolverFactory_CategoryFactory implements Perms_ResolverFactory
 		foreach ( $values as $v ) {
 			$key = $this->objectKey(array_merge($baseContext, array('object' => $v)));
 
-			if ( ! isset($this->knownObjects[$key]) ) {
+			if ( ! isset($this->knownObjects[$key]) && $baseContext['type'] != 'category' ) {
 				$objects[$this->cleanObject($v)] = $key;
 				$this->knownObjects[$key] = array();
 			}
