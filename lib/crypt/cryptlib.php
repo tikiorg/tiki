@@ -56,7 +56,7 @@ class CryptLib extends TikiLib
 	private $mcrypt;		// mcrypt object
 	private $iv;			// mcrypt initialization vector
 
-	private $prefprefix = 'pwddom';
+	private $prefprefix = 'pwddom';		// prefix for user pref keys: 'test' => 'pwddom.test'
 
 	//
 	// Init and release
@@ -131,6 +131,19 @@ class CryptLib extends TikiLib
 		}
 		$cleartext = $this->decryptData($storedPwd64);
 		return $cleartext;
+	}
+
+	function getPasswordDomains($use_prefix = false)
+	{
+		global $prefs;
+		$domainsText = $prefs['feature_password_domains'];
+		$domains = explode(';', $domainsText);
+		if($use_prefix) {
+			foreach($domains as &$dom) {
+				$dom = $this->prefprefix.'.'.$dom;
+			}
+		}
+		return $domains;
 	}
 
 	//
