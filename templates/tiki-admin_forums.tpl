@@ -138,19 +138,19 @@
         <fieldset>
         <legend>{tr}Main details{/tr}</legend>
 		    <div class="form-group">
-                <label class="col-sm-4 control-label" for="name">{tr}Name:{/tr}</label>
+                <label class="col-sm-4 control-label" for="name">{tr}Name{/tr}</label>
                 <div class="col-sm-8">
 				    <input type="text" name="name" class="form-control" id="name" value="{$name|escape}">
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-4 control-label" for="name">{tr}Description:{/tr}</label>
+                <label class="col-sm-4 control-label" for="name">{tr}Description{/tr}</label>
                 <div class="col-sm-8">
 			        <textarea name="description" rows="4" class="form-control" id="description">{$description|escape}</textarea>
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-4 control-label" for="section">{tr}Section:{/tr}</label>
+                <label class="col-sm-4 control-label" for="section">{tr}Section{/tr}</label>
                 <div class="col-sm-4">
 				    <select name="section" id="section" class="form-control">
 					    <option value="" {if $forumSection eq ""}selected="selected"{/if}>{tr}None{/tr}</option>
@@ -180,20 +180,20 @@
             </div>
         {/if}
         <div class="form-group">
-            <label class="col-sm-4 control-label" for="is_flat">{tr}Only allow replies to the first message (flat forum):{/tr}</label>
+            <label class="col-sm-4 control-label" for="is_flat">{tr}Only allow replies to the first message (flat forum){/tr}</label>
             <div class="col-sm-8 checkbox">
                 <input type="checkbox" name="is_flat" id="is_flat" {if $is_flat eq 'y'}checked="checked"{/if}>
             </div>
         </div>
         <div class="form-group">
-            <label class="col-sm-4 control-label" for="moderator_user">{tr}Moderator user:{/tr}</label>
+            <label class="col-sm-4 control-label" for="moderator_user">{tr}Moderator user{/tr}</label>
             <div class="col-sm-8">
 			    <input id="moderator_user" class="form-control" type="text" name="moderator" value="{$moderator|escape}">
 				{autocomplete element='#moderator_user' type='username'}
             </div>
         </div>
         <div class="form-group">
-            <label class="col-sm-4 control-label" for="moderator_group">{tr}Moderator group:{/tr}</label>
+            <label class="col-sm-4 control-label" for="moderator_group">{tr}Moderator group{/tr}</label>
             <div class="col-sm-8">
 				<input id="moderator_group" type="text" class="form-control" name="moderator_group" id="moderator_group" value="{$moderator_group|escape}">
 				{autocomplete element='#moderator_group' type='groupname'}
@@ -212,26 +212,26 @@
             </div>
         </div>
         <div class="form-group">
-            <label class="col-sm-4 control-label" for="controlFlood">{tr}Prevent flooding:{/tr}</label>
+            <label class="col-sm-4 control-label" for="controlFlood">{tr}Prevent flooding{/tr}</label>
             <div class="col-sm-8 checkbox-inline">
                 <input type="checkbox" name="controlFlood" id="controlFlood" {if $controlFlood eq 'y'}checked="checked"{/if}>
             </div>
         </div>
         <div class="form-group">
-            <label class="col-sm-4 control-label" for="floodInterval">{tr}Minimum time between posts:{/tr}</label>
+            <label class="col-sm-4 control-label" for="floodInterval">{tr}Minimum time between posts{/tr}</label>
             <div class="col-sm-4 checkbox-inline">
                 {html_options name=floodInterval id=floodInterval class="form-control" options=$flood_options selected=$floodInterval}
             </div>
         </div>
         <div class="form-group">
-            <label class="col-sm-4 control-label" for="useMail"><input type="checkbox" name="useMail" id="useMail" {if $useMail eq 'y'}checked="checked"{/if}> {tr}Send this forums posts to this email:{/tr} </label>
+            <label class="col-sm-4 control-label" for="useMail"><input type="checkbox" name="useMail" id="useMail" {if $useMail eq 'y'}checked="checked"{/if}> {tr}Send this forums posts to this email{/tr} </label>
             <div class="col-sm-8">
 				<input type="text" class="form-control" name="useMail" id="useMail" value="{$mail|escape}">
             </div>
 		</div>
         <div class="form-group">
             <label class="col-sm-4 control-label" for="usePruneUnreplied">
-				<input type="checkbox" name="usePruneUnreplied" id="usePruneUnreplied" {if $usePruneUnreplied eq 'y'}checked="checked"{/if}> {tr}Prune unreplied messages after:{/tr}
+				<input type="checkbox" name="usePruneUnreplied" id="usePruneUnreplied" {if $usePruneUnreplied eq 'y'}checked="checked"{/if}> {tr}Prune unreplied messages after{/tr}
 			</label>
             <div class="col-sm-4 checkbox-inline">
                 {html_options name=pruneUnrepliedAge options=$pruneUnrepliedAge_options selected=$pruneUnrepliedAge}
@@ -239,7 +239,7 @@
 		</div>
         <div class="form-group">
             <label class="col-sm-4 control-label" for="usePruneOld">
-                <input type="checkbox" name="usePruneOld" id="usePruneOld" {if $usePruneOld eq 'y'}checked="checked"{/if}> {tr}Prune old messages after:{/tr}
+                <input type="checkbox" name="usePruneOld" id="usePruneOld" {if $usePruneOld eq 'y'}checked="checked"{/if}> {tr}Prune old messages after{/tr}
             </label>
             <div class="col-sm-4 checkbox-inline">
 				{html_options name=pruneMaxAge options=$pruneMaxAge_options selected=$pruneMaxAge}
@@ -276,19 +276,19 @@
             <label class="col-sm-4 control-label">{tr}Add messages from this email to the forum{/tr}</label>
             <div class="col-sm-8">
                 <div class="form-group">
-                    <label class="col-sm-4 control-label" for="inbound_pop_server">{tr}POP3 server:{/tr}</label>
+                    <label class="col-sm-4 control-label" for="inbound_pop_server">{tr}POP3 server{/tr}</label>
 			    	<div class="col-sm-8">
 				    	<input type="text" name="inbound_pop_server" id="inbound_pop_server" class="form-control" value="{$inbound_pop_server|escape}">
 				    </div>
 	            </div>
                 <div class="form-group">
-                    <label class="col-sm-4 control-label" for="inbound_pop_user">{tr}User:{/tr}</label>
+                    <label class="col-sm-4 control-label" for="inbound_pop_user">{tr}User{/tr}</label>
                     <div class="col-sm-8">
 			    	    <input type="text" name="inbound_pop_user" id="inbound_pop_user" class="form-control"value="{$inbound_pop_user|escape}" autocomplete="off">
 				    </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-4 control-label" for="inbound_pop_password">{tr}Password:{/tr}</label>
+                    <label class="col-sm-4 control-label" for="inbound_pop_password">{tr}Password{/tr}</label>
                     <div class="col-sm-8">
                         <input type="password" name="inbound_pop_password" id="inbound_pop_password" class="form-control" value="{$inbound_pop_password|escape}" autocomplete="off">
                     </div>
@@ -299,7 +299,7 @@
     <fieldset>
         <legend>{tr}Forums list{/tr}</legend>
         <div class="form-group">
-            <label class="col-sm-4 control-label" for="show_description">{tr}Show description:{/tr}</label>
+            <label class="col-sm-4 control-label" for="show_description">{tr}Show description{/tr}</label>
             <div class="col-sm-8 checkbox-inline">
                 <input type="checkbox" name="show_description" id="show_description" {if $show_description eq 'y'}checked="checked"{/if}>
             </div>
@@ -314,13 +314,13 @@
     <fieldset>
         <legend>{tr}Forum topics (threads) list{/tr}</legend>
             <div class="form-group">
-                <label class="col-sm-4 control-label" for="topicOrdering">{tr}Default ordering for topics:{/tr}</label>
+                <label class="col-sm-4 control-label" for="topicOrdering">{tr}Default ordering for topics{/tr}</label>
                 <div class="col-sm-8 checkbox-inline">
                     {html_options name=topicOrdering id=topicOrdering options=$topicOrdering_options selected=$topicOrdering}
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-4 control-label" for="topicsPerPage">{tr}Topics per page:{/tr}</label>
+                <label class="col-sm-4 control-label" for="topicsPerPage">{tr}Topics per page{/tr}</label>
                 <div class="col-sm-4">
                     <input type="text" class="form-control" name="topicsPerPage" id="topicsPerPage" value="{$topicsPerPage|escape}">
                 </div>
@@ -386,19 +386,19 @@
         <fieldset>
             <legend>{tr}Forum threads{/tr}</legend>
             <div class="form-group">
-                <label class="col-sm-4 control-label" for="threadOrdering">{tr}Default ordering of threads:{/tr}</label>
+                <label class="col-sm-4 control-label" for="threadOrdering">{tr}Default ordering of threads{/tr}</label>
                 <div class="col-sm-8">
                     {html_options name=threadOrdering id=threadOrdering options=$threadOrdering_options selected=$threadOrdering}
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-4 control-label" for="threadStyle">{tr}Default style of threads:{/tr}</label>
+                <label class="col-sm-4 control-label" for="threadStyle">{tr}Default style of threads{/tr}</label>
                 <div class="col-sm-8">
                     {html_options name=threadStyle id=threadStyle options=$threadStyle_options selected=$threadStyle}
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-4 control-label" for="commentsPerPage">{tr}Default number of comments per page:{/tr}</label>
+                <label class="col-sm-4 control-label" for="commentsPerPage">{tr}Default number of comments per page{/tr}</label>
                 <div class="col-sm-8">
                     {html_options name=commentsPerPage id=commentsPerPage options=$commentsPerPage_options selected=$commentsPerPage}
                 </div>
@@ -463,7 +463,7 @@
                 </div>
             </div>
             <div class="row">
-                <label class="col-sm-4 control-label" for="att_store_db">{tr}Store attachments in:{/tr}</label>
+                <label class="col-sm-4 control-label" for="att_store_db">{tr}Store attachments in{/tr}</label>
                 <div class="col-sm-2 checkbox-inline">
                     <input type="radio" name="att_store" id="att_store_db" value="db" {if $att_store eq 'db'}checked="checked"{/if}> {tr}Database{/tr}
                 </div>
@@ -471,13 +471,13 @@
             <div class="form-group">
                 <div class="col-sm-2 col-sm-offset-4 checkbox-inline">
                     <input type="radio"  name="att_store" value="dir" {if $att_store eq 'dir'}checked="checked"{/if}> {tr}File system{/tr}</div>
-                <label class="control-label col-sm-2" for="att_store_dir">{tr}Path:{/tr}</label>
+                <label class="control-label col-sm-2" for="att_store_dir">{tr}Path{/tr}</label>
                 <div class="col-sm-4 checkbox-inline">
                     <input type="text" name="att_store_dir" id="att_store_dir" value="{$att_store_dir|escape}" class="form-control" />
                 </div>
             </div>
             <div class="form-group">
-                <label class="control-label col-sm-4" for="att_max_size">{tr}Max attachment size (bytes):{/tr}</label>
+                <label class="control-label col-sm-4" for="att_max_size">{tr}Max attachment size (bytes){/tr}</label>
                 <div class="col-sm-8">
                     <input type="text" name="att_max_size" id="att_max_size" class="form-control" value="{$att_max_size|escape}">
                     <span class="help-block">{tr}Max:{/tr} {$maxAttachSize|escape} ({$maxAttachSize|kbsize})</span>

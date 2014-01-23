@@ -59,13 +59,13 @@
 		<input type="hidden" name="blogId" value="{$blogId|escape}">
 	{/if}
     <div class="form-group">
-        <label class="col-sm-2 control-label" for="title">{tr}Title:{/tr}</label>
+        <label class="col-sm-2 control-label" for="title">{tr}Title{/tr}</label>
         <div class="col-sm-10">
 			<input type="text" maxlength="255" class="form-control" name="title" id="blog_title" {if isset($post_info.title)}value="{$post_info.title|escape}"{/if}>
 		</div>
 	</div>
     <div class="form-group">
-        <label class="col-sm-2 control-label" for="blogedit">{tr}Body:{/tr}</label>
+        <label class="col-sm-2 control-label" for="blogedit">{tr}Body{/tr}</label>
         <div class="col-sm-10">
 		    {textarea id='blogedit' class="form-control wikiedit" name="data"}{if isset($data)}{$data}{/if}{/textarea}
 		</div>
@@ -73,7 +73,7 @@
 
 	{if $blog_data.use_excerpt eq 'y'}
         <div class="form-group">
-        <label class="col-sm-2 control-label" for="post_excerpt">{tr}Excerpt:{/tr}</label>
+        <label class="col-sm-2 control-label" for="post_excerpt">{tr}Excerpt{/tr}</label>
             <div class="col-sm-10">
 		        {textarea id='post_excerpt' class="form-control wikiedit" name="excerpt"}{if isset($post_info.excerpt)}{$post_info.excerpt}{/if}{/textarea}
             </div>
@@ -117,7 +117,7 @@
 	    </div>
 	{/if}
     <div class="form-group">
-        <label class="col-sm-2 control-label" for="blogpriv">{tr}Mark entry as private:{/tr}</label>
+        <label class="col-sm-2 control-label" for="blogpriv">{tr}Mark entry as private{/tr}</label>
 		<div class="col-sm-10 checkbox-inline">
             <input type="checkbox" name="blogpriv" id="blogpriv" {if $blogpriv eq 'y'}checked="checked"{/if}>
         </div>

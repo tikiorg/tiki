@@ -31,7 +31,7 @@
 {/if}
 	<form action="messu-compose.php" method="post" class="form-horizontal" role="form">
         <div class="form-group">
-            <label class="col-sm-2 control-label" for="mess-composeto">{tr}To:{/tr}
+            <label class="col-sm-2 control-label" for="mess-composeto">{tr}To{/tr}
 				{help url="Inter-User+Messages#Composing_messages" desc='{tr}To: Multiple addresses can be separated with semicolons (";") or commas (","){/tr}'}
             </label>
             <div class="col-sm-10">
@@ -41,7 +41,7 @@
             </div>
         </div>
         <div class="form-group">
-            <label class="col-sm-2 control-label" for="mess-composecc">{tr}CC:{/tr}
+            <label class="col-sm-2 control-label" for="mess-composecc">{tr}CC{/tr}
 				{help url="Inter-User+Messages#Composing_messages" desc='{tr}CC: Multiple addresses can be separated with semicolons (";") or commas (","){/tr}'}
             </label>
             <div class="col-sm-10">
@@ -49,7 +49,7 @@
             </div>
         </div>
         <div class="form-group">
-            <label class="col-sm-2 control-label" for="mess-composebcc">{tr}BCC:{/tr}
+            <label class="col-sm-2 control-label" for="mess-composebcc">{tr}BCC{/tr}
 				{help url="Inter-User+Messages#Composing_messages" desc='{tr}BCC: Multiple addresses can be separated with semicolons (";") or commas (","){/tr}'}
             </label>
             <div class="col-sm-10">
@@ -57,7 +57,7 @@
             </div>
         </div>
         <div class="form-group">
-            <label class="col-sm-2 control-label" for="mess-prio">{tr}Priority:{/tr}</label>
+            <label class="col-sm-2 control-label" for="mess-prio">{tr}Priority{/tr}</label>
             <div class="col-sm-10">
 				<select name="priority" id="mess-prio" class="form-control">
 					<option value="1" {if $priority eq 1}selected="selected"{/if}>1: {tr}Lowest{/tr}</option>
@@ -69,13 +69,13 @@
             </div>
         </div>
         <div class="form-group">
-            <label class="col-sm-2 control-label" for="mess-subj">{tr}Subject:{/tr}</label>
+            <label class="col-sm-2 control-label" for="mess-subj">{tr}Subject{/tr}</label>
             <div class="col-sm-10">
 				<input type="text"  class="form-control" name="subject" id="mess-subj" value="{$subject|escape}" maxlength="255">
             </div>
         </div>
         <div class="form-group">
-            <label class="col-sm-2 control-label" for="broadcast-body">{tr}Body:{/tr}</label>
+            <label class="col-sm-2 control-label" for="broadcast-body">{tr}Body{/tr}</label>
             <div class="col-sm-10">
                 <textarea class="form-control" rows="20" name="body">{$body|escape}</textarea>
             </div>
@@ -86,7 +86,7 @@
 				<input type="checkbox" name="replytome" id="replytome">
 				<label for="replytome">
 					{tr}Reply-to my email{/tr}
-					{help url="User+Information" desc="{tr}Reply-to my email:{/tr}{tr}The user will be able to reply to you directly via email.{/tr}"}
+					{help url="User+Information" desc="{tr}Reply-to my email{/tr}{tr}The user will be able to reply to you directly via email.{/tr}"}
 				</label>
 				<input type="checkbox" name="bccme" id="bccme">
 				<label for="bccme">

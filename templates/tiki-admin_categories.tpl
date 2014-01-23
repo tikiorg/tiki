@@ -37,7 +37,7 @@
 		<form action="tiki-admin_categories.php" method="post" class="form-horizontal role="form">
 			<input type="hidden" name="categId" value="{$categId|escape}">
 			<div class="form-group">
-                <label class="col-sm-3 control-label" for="parentId">{tr}Parent:{/tr}</label>
+                <label class="col-sm-3 control-label" for="parentId">{tr}Parent{/tr}</label>
 				<div class="col-sm-9">
 					<select name="parentId" id="parentId" class="form-control">
 						{if $tiki_p_admin_categories eq 'y'}<option value="0">{tr}Top{/tr}</option>{/if}
@@ -48,13 +48,13 @@
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-3 control-label" for="parentId">{tr}Name:{/tr}</label>
+                <label class="col-sm-3 control-label" for="parentId">{tr}Name{/tr}</label>
                 <div class="col-sm-9">
                     <input type="text" class="form-control" name="name" id="name" value="{$categoryName|escape}">
 			    </div>
 			</div>
             <div class="form-group">
-                <label class="col-sm-3 control-label" for="description">{tr}Description:{/tr}</label>
+                <label class="col-sm-3 control-label" for="description">{tr}Description{/tr}</label>
                 <div class="col-sm-9">
 					<textarea rows="2" class="form-control" name="description" id="description">{$description|escape}</textarea>
                 </div>
@@ -237,7 +237,7 @@ $("#add_object_type").change(function () {
 				<input type="hidden" name="parentId" value="{$parentId|escape}">
 					{if $prefs.feature_wiki eq 'y' and $pages}
                         <div class="form-group">
-				            <label class="col-sm-3" for="pageName">{tr}Page:{/tr}</label>
+				            <label class="col-sm-3" for="pageName">{tr}Page{/tr}</label>
                             <div class="col-sm-7">
 							    <select name="pageName[]" id="pageName" class="form-control" multiple="multiple" size="5">
 								    {section name=ix loop=$pages}
@@ -253,7 +253,7 @@ $("#add_object_type").change(function () {
 					
 					{if $prefs.feature_articles eq 'y' and $articles}
                         <div class="form-group">
-                            <label class="col-sm-3" for="articleId">{tr}Article:{/tr}</label>
+                            <label class="col-sm-3" for="articleId">{tr}Article{/tr}</label>
                             <div class="col-sm-7">
 						        <select name="articleId" id="articleId">
 							        {section name=ix loop=$articles}
@@ -269,7 +269,7 @@ $("#add_object_type").change(function () {
 						
 					{if $prefs.feature_blogs eq 'y' and $blogs}
                         <div class="form-group">
-                            <label class="col-sm-3" for="blogId">{tr}Blog:{/tr}</label>
+                            <label class="col-sm-3" for="blogId">{tr}Blog{/tr}</label>
                             <div class="col-sm-7">
 								<select name="blogId" id="blogId">
 									{section name=ix loop=$blogs}
@@ -285,7 +285,7 @@ $("#add_object_type").change(function () {
 					
 					{if $prefs.feature_directory eq 'y'and $directories}
                         <div class="form-group">
-                            <label class="col-sm-3" for="directoryId">{tr}Directory:{/tr}</label>
+                            <label class="col-sm-3" for="directoryId">{tr}Directory{/tr}</label>
                             <div class="col-sm-7">
 						        <select name="directoryId" id="directoryId">
 							        {section name=ix loop=$directories}
@@ -301,7 +301,7 @@ $("#add_object_type").change(function () {
 
 					{if $prefs.feature_galleries eq 'y' and $galleries}
                         <div class="form-group">
-                            <label class="col-sm-3" for="galleryId">{tr}image gal:{/tr}</label>
+                            <label class="col-sm-3" for="galleryId">{tr}image gal{/tr}</label>
                             <div class="col-sm-7">
 								<select name="galleryId" id="galleryId">
 									{section name=ix loop=$galleries}
@@ -317,7 +317,7 @@ $("#add_object_type").change(function () {
 			
 					{if $prefs.feature_file_galleries eq 'y' and $file_galleries}
                         <div class="form-group">
-                            <label class="col-sm-3" for="file_galleryId">{tr}File gal:{/tr}</label>
+                            <label class="col-sm-3" for="file_galleryId">{tr}File gal{/tr}</label>
                             <div class="col-sm-7">
 								<select name="file_galleryId" id="file_galleryId">
 									{section name=ix loop=$file_galleries}
@@ -333,7 +333,7 @@ $("#add_object_type").change(function () {
 			
 					{if $prefs.feature_forums eq 'y' and $forums}
                         <div class="form-group">
-                            <label class="col-sm-3" for="forumId">{tr}Forum:{/tr}</label>
+                            <label class="col-sm-3" for="forumId">{tr}Forum{/tr}</label>
                             <div class="col-sm-7">
 								<select name="forumId" id="forumId">
 									{section name=ix loop=$forums}
@@ -349,7 +349,7 @@ $("#add_object_type").change(function () {
 				
 					{if $prefs.feature_polls eq 'y' and $polls}
                         <div class="form-group">
-                            <label class="col-sm-3" for="pollId">{tr}Poll:{/tr}</label>
+                            <label class="col-sm-3" for="pollId">{tr}Poll{/tr}</label>
                             <div class="col-sm-7">
 								<select name="pollId" id="pollId">
 									{section name=ix loop=$polls}
@@ -365,7 +365,7 @@ $("#add_object_type").change(function () {
 					
 					{if $prefs.feature_faqs eq 'y and $faqs'}
                         <div class="form-group">
-                        <label class="col-sm-3" for="faqId">{tr}FAQ:{/tr}</label>
+                        <label class="col-sm-3" for="faqId">{tr}FAQ{/tr}</label>
                             <div class="col-sm-7">
 								<select name="faqId" id="faqId">
 									{section name=ix loop=$faqs}
@@ -381,7 +381,7 @@ $("#add_object_type").change(function () {
 				
 					{if $prefs.feature_trackers eq 'y' and $trackers}
                         <div class="form-group">
-                        <label class="col-sm-3" for="trackerId">{tr}Tracker:{/tr}</label>
+                        <label class="col-sm-3" for="trackerId">{tr}Tracker{/tr}</label>
                             <div class="col-sm-7">
 							    <select name="trackerId" id="trackerId">
 								    {section name=ix loop=$trackers}
@@ -397,7 +397,7 @@ $("#add_object_type").change(function () {
 						
 					{if $prefs.feature_quizzes eq 'y' and $quizzes}
                         <div class="form-group">
-                            <label class="col-sm-3" for="quizId">{tr}quiz:{/tr}</label>
+                            <label class="col-sm-3" for="quizId">{tr}quiz{/tr}</label>
                             <div class="col-sm-7">
 						        <select name="quizId" id="quizId">
 								    {section name=ix loop=$quizzes}

@@ -4,13 +4,13 @@
 <form action="tiki-admin_external_wikis.php" method="post" class="form-horizontal" role="form">
 	<input type="hidden" name="extwikiId" value="{$extwikiId|escape}">
 	<div class="form-group">
-        <label for="name" class="col-sm-3 control-label">{tr}Name:{/tr}</label>
+        <label for="name" class="col-sm-3 control-label">{tr}Name{/tr}</label>
         <div class="col-sm-9">
             <input type="text" maxlength="255" class="form-control" name="name" value="{$info.name|escape}">
         </div>
     </div>
     <div class="form-group">
-        <label for="extwiki" class="col-sm-3 control-label">{tr}URL:{/tr}</label>
+        <label for="extwiki" class="col-sm-3 control-label">{tr}URL{/tr}</label>
     	<div class="col-sm-9">
 			<input type="text" maxlength="255" class="form-control" name="extwiki" id="extwiki" value="{$info.extwiki|escape}">
             <p class="help-block">{tr}URL (use $page to be replaced by the page name in the URL example: http://www.example.com/tiki-index.php?page=$page):{/tr}</p>

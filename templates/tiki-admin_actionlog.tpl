@@ -14,7 +14,7 @@
 		<fieldset>
 			<legend>{tr}Date{/tr}</legend>
 			<div class="form-group">
-                <label class="col-sm-2 control-label" for="">{tr}Start:{/tr}</label>
+                <label class="col-sm-2 control-label" for="">{tr}Start{/tr}</label>
                 <div class="col-sm-6">
                     <div class="">
 					    {html_select_date time=$startDate prefix="startDate_" start_year="-10" field_order=$prefs.display_field_order} {html_select_time use_24_hours=true time=$startDate}
@@ -22,7 +22,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-2 control-label" for="">{tr}End:{/tr}</label>
+                <label class="col-sm-2 control-label" for="">{tr}End{/tr}</label>
                 <div class="col-sm-6">
                     <div class="">
                         {html_select_date time=$endDate prefix="endDate_" start_year="-10" field_order=$prefs.display_field_order} {html_select_time use_24_hours=true time=$endDate prefix="end_"}
@@ -34,7 +34,7 @@
 			<fieldset>
 				<legend>{tr}Users and Groups{/tr}</legend>
 				<div class="form-group">
-                <label class="col-sm-2 control-label" for="selectedUsers">{tr}User:{/tr}</label>
+                <label class="col-sm-2 control-label" for="selectedUsers">{tr}User{/tr}</label>
 			    	<div class="col-sm-6">
 					    <select multiple="multiple" size="{if $users|@count > 5}5{else}{math equation=x+y x=$users|@count y=2}{/if}" name="selectedUsers[]" id="selectedUsers" class="form-control">
 							<option value="">{tr}All{/tr}</option>
@@ -51,7 +51,7 @@
 				
 				{if $groups|@count >= 1}
                 <div class="form-group">
-                    <label class="col-sm-2 control-label" for="selectedGroups">{tr}Group:{/tr}</label>
+                    <label class="col-sm-2 control-label" for="selectedGroups">{tr}Group{/tr}</label>
                     <div class="col-sm-6">
 						<select multiple="multiple" size="{if $groups|@count > 5}5{else}{math equation=x+y x=$groups|@count y=1}{/if}" name="selectedGroups[]" id="selectedGroups" class="form-control">
 							<option value="">{tr}All{/tr}</option>
@@ -65,9 +65,9 @@
 				{/if}
 
 			<fieldset>
-				<legend>{tr}Category:{/tr}</legend>
+				<legend>{tr}Category{/tr}</legend>
                 <div class="form-group">
-                    <label class="col-sm-2 control-label" for="categId">{tr}Category:{/tr}</label>
+                    <label class="col-sm-2 control-label" for="categId">{tr}Category{/tr}</label>
                     <div class="col-sm-6">
                         <select name="categId" id="categId" class="form-control">
 							<option value="" {if $reportCateg eq '' or $reportCateg eq 0}selected="selected"{/if}>* {tr}All{/tr} *</option>

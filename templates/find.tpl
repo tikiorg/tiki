@@ -62,7 +62,7 @@
 
 {if !empty($find_show_sub) and $find_show_sub eq 'y'}
     <div class="form-group">
-	<label class="col-sm-4 control-label findsub">{tr}and all the sub-objects{/tr} {if isset($find_in)}{help url="#" desc="{tr}Find in:{/tr} {$find_in}"}{/if}</label>
+	<label class="col-sm-4 control-label findsub">{tr}and all the sub-objects{/tr} {if isset($find_in)}{help url="#" desc="{tr}Find in{/tr} {$find_in}"}{/if}</label>
     <div class="col-sm-8 checkbox-inline">
 		<input type="checkbox" name="find_sub" id="find_sub" {if !empty($find_sub) and $find_sub eq 'y'}checked="checked"{/if}>
     </div>

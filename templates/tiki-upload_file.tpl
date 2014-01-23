@@ -121,7 +121,7 @@
 		<div class="fgal_file_c1">
 			{if $simpleMode neq 'y'}
 				<div class="form-group">
-					<label for="name" class="col-sm-2 control-label">{tr}File title:{/tr}</label>
+					<label for="name" class="col-sm-2 control-label">{tr}File title{/tr}</label>
 					<div class="col-sm-10">
 						<input class="form-control" type="text" id="name" name="name[]"
 							{if isset($fileInfo) and $fileInfo.name}
@@ -135,7 +135,7 @@
 					</div>
 				</div>
 				<div class="form-group">
-					<label for="description" class="col-sm-2 control-label">{tr}File description:{/tr}</label>
+					<label for="description" class="col-sm-2 control-label">{tr}File description{/tr}</label>
 					<div class="col-sm-10">
 						<textarea class="form-control" rows="2" cols="40" id="description" name="description[]">{if isset($fileInfo.description)}{$fileInfo.description|escape}{/if}</textarea>
 						{if isset($gal_info.type) and ($gal_info.type eq "podcast" or $gal_info.type eq "vidcast")}
@@ -146,7 +146,7 @@
 			{/if}
 			{if $prefs.javascript_enabled neq 'y' || !$editFileId}
 				<div class="form-group">
-					<label for="userfile" class="col-sm-2 control-label">{tr}Upload from disk:{/tr}</label>
+					<label for="userfile" class="col-sm-2 control-label">{tr}Upload from disk{/tr}</label>
 					<div class="col-sm-10">
 						{if $editFileId}
 							{$fileInfo.filename|escape}
@@ -208,7 +208,7 @@
 
 				{if $prefs.fgal_delete_after eq 'y'}
 					<div class="form-group">
-						<label for="deleteAfter" class="col-sm-2 control-label">{tr}File can be deleted after:{/tr}</label>
+						<label for="deleteAfter" class="col-sm-2 control-label">{tr}File can be deleted after{/tr}</label>
 						<div class="col-sm-10">
 							{if $editFileId}
 								{html_select_duration prefix='deleteAfter' default_value=$fileInfo.deleteAfter}
@@ -232,7 +232,7 @@
 						<input type="hidden" name="galleryId" value="{$treeRootId}">
 					{elseif empty($groupforalert)}
 						<div class="form-group">
-							<label for="galleryId" class="col-sm-2">{tr}File gallery:{/tr}</label>
+							<label for="galleryId" class="col-sm-2">{tr}File gallery{/tr}</label>
 							<div class="col-sm-10">
 								<select id="galleryId" name="galleryId[]">
 									<option value="{$treeRootId}" {if $treeRootId eq $galleryId}selected="selected"{/if} style="font-style:italic; border-bottom:1px dashed #666;">{tr}Root{/tr}</option>
@@ -250,7 +250,7 @@
 				{/if}
 
 				<div class="form-group">
-					<label for="user" class="col-sm-2 control-label">{tr}Uploaded by:{/tr}</label>
+					<label for="user" class="col-sm-2 control-label">{tr}Uploaded by{/tr}</label>
 					<div class="col-sm-10">
 						{user_selector id='user' name='user[]' select=$fileInfo.user editable=$tiki_p_admin_file_galleries}
 					</div>
@@ -299,7 +299,7 @@
 			<div class="fgal_file_c3">
 				{if $prefs.fgal_limit_hits_per_file eq 'y'}
 					<div class="form-group">
-						<label for="hit_limit" class="col-sm-2 form-label">{tr}Maximum number of downloads:{/tr}</label>
+						<label for="hit_limit" class="col-sm-2 form-label">{tr}Maximum number of downloads{/tr}</label>
 						<div class="col-sm-10">
 							<input type="text" id="hit_limit" name="hit_limit[]" value="{$hit_limit|default:0}">
 							<br><em>{tr}Use{/tr} {tr}-1 for no limit{/tr}.</em>
@@ -312,7 +312,7 @@
 				{* We want comments only on updated files *}
 				{if $prefs.javascript_enabled neq 'y' && $editFileId}
 					<div class="form-group">
-						<label for="comment" class="col-sm-2 form-label">{tr}Comment:{/tr}</label>
+						<label for="comment" class="col-sm-2 form-label">{tr}Comment{/tr}</label>
 						<div class="col-sm-10">
 							<input type="text" id="comment" name="comment[]" value="" size="40">
 						</div>

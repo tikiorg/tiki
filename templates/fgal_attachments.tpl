@@ -34,13 +34,13 @@
 				<input type="hidden" name="page_ref_id" value="{$page_ref_id}">
 			{/if}
             <div class="form-group">
-				<label  class="col-sm-2 control-label" for="attach-upload">{tr}Upload file:{/tr}</label>
+				<label  class="col-sm-2 control-label" for="attach-upload">{tr}Upload file{/tr}</label>
                 <div class="col-sm-10">
 					<input size="16" name="userfile[0]" type="file" id="attach-upload">
                 </div>
             </div>
             <div class="form-group">
-                <label  class="col-sm-2 control-label" for="attach-comment">{tr}Comment:{/tr}</label>
+                <label  class="col-sm-2 control-label" for="attach-comment">{tr}Comment{/tr}</label>
                 <div class="col-sm-10">
                     <input type="text" name="s_f_attachments-comment" maxlength="250" id="attach-comment">
                 </div>

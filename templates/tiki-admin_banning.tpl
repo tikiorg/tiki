@@ -65,7 +65,7 @@
 		</div>
 	</div>
     <div class="form-group">
-        <label class="col-sm-4 control-label" for="banning-userregex">{tr}Username regex matching:{/tr}</label>
+        <label class="col-sm-4 control-label" for="banning-userregex">{tr}Username regex matching{/tr}</label>
         <div class="col-sm-8">
 				<input type="radio" name="mode" value="user" {if $info.mode eq 'user'}checked="checked"{/if}>
 				<input type="text" name="userreg" id="banning-userregex" value="{$info.user|escape}">
@@ -73,7 +73,7 @@
 		</div>
 		{if isset($mass_ban_ip)}
         <div class="form-group">
-            <label class="col-sm-4 control-label" for="banning-ipregex">{tr}Multiple IP regex matching:{/tr}</label>
+            <label class="col-sm-4 control-label" for="banning-ipregex">{tr}Multiple IP regex matching{/tr}</label>
             <div class="col-sm-8">
 			    <input type="radio" name="mode" value="mass_ban_ip" {if $info.mode eq 'mass_ban_ip'}checked="checked"{/if}>
             </div>
@@ -91,7 +91,7 @@
 					{/foreach}
 		{else}
         <div class="form-group">
-            <label class="col-sm-4 control-label" for="banning-ipregex">{tr}IP regex matching:{/tr}</label></label>
+            <label class="col-sm-4 control-label" for="banning-ipregex">{tr}IP regex matching{/tr}</label></label>
             <div class="col-sm-8">
 				<input type="radio" name="mode" value="ip" {if $info.mode eq 'ip'}checked="checked"{/if}>
 				<input type="text" name="ip1" id="banning-ipregex" value="{$info.ip1|escape}" size="3">.
@@ -102,7 +102,7 @@
 		</div>
 		{/if}
     <div class="form-group">
-        <label class="col-sm-4 control-label" for="banning-section">{tr}Banned from sections:{/tr}</label>
+        <label class="col-sm-4 control-label" for="banning-section">{tr}Banned from sections{/tr}</label>
         <div class="col-sm-8">
 			<input type="checkbox" name="checkall" {if (!$banId)}checked="checked"{/if} onclick="CheckAll();">
 			<label for="sectionswitch">{tr}Check / Uncheck All{/tr}</label>

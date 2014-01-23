@@ -8,7 +8,7 @@
 <form action="tiki-admin_cookies.php" method="post" class="form-horizontal" role="form">
     <input type="hidden" name="cookieId" value="{$cookieId|escape}">
     <div class="form-group">
-        <label class="col-sm-3 control-label" for="cookie">{tr}Cookie:{/tr}</label>
+        <label class="col-sm-3 control-label" for="cookie">{tr}Cookie{/tr}</label>
 		<div class="col-sm-9">
 			<input type="text" maxlength="255" class="form-control" id="cookie" name="cookie" value="{$cookie|escape}">
         </div>
@@ -21,7 +21,7 @@
 <h2>{tr}Upload Cookies from textfile{/tr}</h2>
 <form enctype="multipart/form-data" action="tiki-admin_cookies.php" method="post" class="form-horizontal" role="form">
     <div class="form-group">
-        <label class="col-sm-3 control-label" for="cookie">{tr}Upload from disk:{/tr}</label>
+        <label class="col-sm-3 control-label" for="cookie">{tr}Upload from disk{/tr}</label>
         <div class="col-sm-9">
 			<input type="hidden" name="MAX_FILE_SIZE" value="1000000000">
 			<input name="userfile1" type="file" class="form-control">

@@ -30,7 +30,7 @@
 {if $sent ne '1' and $preview ne '1'}
 	<form class="form-horizontal" role="form" action="messu-broadcast.php" method="post">
         <div class="form-group">
-            <label class="col-sm-2 control-label" for="broadcast-group">{tr}Group:{/tr}</label>
+            <label class="col-sm-2 control-label" for="broadcast-group">{tr}Group{/tr}</label>
             <div class="col-sm-10">
 				<select name="groupbr" id="broadcast-group" class="form-control">
 					<option value=""{if $groupbr eq ''} selected="selected"{/if} />
@@ -44,7 +44,7 @@
             </div>
         </div>
         <div class="form-group">
-            <label class="col-sm-2 control-label" for="broadcast-priority">{tr}Priority:{/tr}</label>
+            <label class="col-sm-2 control-label" for="broadcast-priority">{tr}Priority{/tr}</label>
             <div class="col-sm-10">
 		    	<select name="priority" id="broadcast-priority" class="form-control">
 					<option value="1" {if $priority eq 1}selected="selected"{/if}>1 -{tr}Lowest{/tr}-</option>
@@ -57,13 +57,13 @@
             </div>
         </div>
         <div class="form-group">
-            <label class="col-sm-2 control-label" for="broadcast-subject">{tr}Subject:{/tr}</label>
+            <label class="col-sm-2 control-label" for="broadcast-subject">{tr}Subject{/tr}</label>
             <div class="col-sm-10">
 				<input type="text" name="subject" class="form-control" id="broadcast-subject" value="{$subject|escape}" maxlength="255">
 			</div>
         </div>
         <div class="form-group">
-            <label class="col-sm-2 control-label" for="broadcast-body">{tr}Body:{/tr}</label>
+            <label class="col-sm-2 control-label" for="broadcast-body">{tr}Body{/tr}</label>
             <div class="col-sm-10">
 			    <textarea class="form-control" rows="20" id="broadcast-body" name="body">{$body|escape}</textarea>
             </div>

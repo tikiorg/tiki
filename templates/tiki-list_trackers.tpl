@@ -222,7 +222,7 @@
 			{accordion_group title="{tr}Duplicate Remote Tracker{/tr}"}
 				<form class="form-horizontal" method="post" action="{service controller=tracker_sync action=clone_remote}" role="form">
 					<label class="col-sm-3 control-label">
-						{tr}URL:{/tr}
+						{tr}URL{/tr}
 						<input type="url" name="url" id="name" class="form-control" required="required">
 					</label>
 					<div>
