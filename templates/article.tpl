@@ -39,9 +39,8 @@
 	{if $prefs.art_trailer_pos ne 'between'}{include file='article_trailer.tpl'}{/if}
 
 	<div class="articleheading">
-		<table cellpadding="0" cellspacing="0" width="100%">
-			<tr>
-				<td valign="top">
+
+				<div class="garys">
 				{capture name=imgTitle}{if $show_image_caption eq 'y' and $image_caption}{$image_caption|escape}{elseif isset($topicName)}{tr}{$topicName}{/tr}{/if}{/capture}
 				{assign var="big_image" value=$prefs.art_header_text_pos eq 'below' && $list_image_x > 0}
 				{if $big_image}
@@ -50,12 +49,12 @@
 				
 				{* Show either a topic name, image OR a custom image (if there is a custom image or a topic). If a topic is set, link to it even if we show a custom image. *}
 				{if $topicId}
-					<a href="tiki-view_articles.php?topic={$topicId}" title="{if $show_image_caption and $image_caption}{$image_caption|escape}{else}{tr}List all articles of this same topic:{/tr} {tr}{$topicName|escape}{/tr}{/if}">
+					<a href="tiki-view_articles.php?topic={$topicId}" class="thumbnail{if $big_image} cboxElement{/if}" {if $isfloat eq 'y'} style="margin-right:4px;float:left;"{/if} title="{if $show_image_caption and $image_caption}{$image_caption|escape}{else}{tr}List all articles of this same topic:{/tr} {tr}{$topicName|escape}{/tr}{/if}">
 				{/if}
 				{if $useImage eq 'y' and $hasImage eq 'y'}
 					{* display article image *}{$style=''}
 					<img 
-						 {if $big_image}class="cboxElement"{elseif $isfloat eq 'y'}{$style="margin-right:4px;float:left;"}{else}class="articleimage"{/if}
+						 {*{if $big_image}class="cboxElement"{elseif $isfloat eq 'y'}{$style="margin-right:4px;float:left;"}{else}*}class="articleimage"{*{/if}*}
 						 alt="{$smarty.capture.imgTitle}"
 						 src="article_image.php?image_type={if isset($preview) and $imageIsChanged eq 'y'}preview&amp;id={$previewId}{elseif isset($preview) and $subId}submission&amp;id={$subId}{else}article&amp;id={$articleId}{/if}"
 						 {if $image_x > 0}{$style=$style|cat:"max-width:"|cat:$image_x|cat:"px;"}{/if}
@@ -63,7 +62,7 @@
 				{elseif $topicId}
 						{if $topics[$topicId].image_size > 0}
 							<img 
-								 {if $big_image}class="cboxElement"{elseif $isfloat eq 'y'}style="margin-right:4px;float:left;"{else}class="articleimage"{/if}
+								 {if $big_image}class="cboxElement"{*{elseif $isfloat eq 'y'}style="margin-right:4px;float:left;"*}{else}class="articleimage"{/if}
 								 alt="{tr}{$topicName}{/tr}"
 								 src="article_image.php?image_type=topic&amp;id={$topicId}">
 					{else}
@@ -82,10 +81,10 @@
 					</div>
 				{/if}
 				{if  $prefs.art_header_text_pos eq 'below' && $list_image_x > 0}
-					 </td></tr><tr><td valign="top">
+					 </div></div><div class="garys">
 				{elseif $isfloat eq 'n' and $topics[$topicId].image_size > 0}
-					</td>
-					<td valign="top" width="100%">
+					</div>
+					<div class="table-cell">
 				{/if}
 				<div class="articleheadingtext">
 					{if $article_attributes}
@@ -97,9 +96,8 @@
 					{/if}
 					{$parsed_heading}
 				</div>
-				</td>
-			</tr>
-		</table>
+				</div>
+
 	</div>
 
 	{if $prefs.art_trailer_pos eq 'between'}{include file='article_trailer.tpl'}{/if}
