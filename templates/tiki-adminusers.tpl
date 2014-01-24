@@ -350,6 +350,13 @@
 {/if}
 
 {tab name=$add_edit_user_tablabel}
+	{if $prefs.feature_user_encryption eq 'y'}
+		{remarksbox type="warning" title="{tr}Warning: User Encryption is Active{/tr}"}
+		{tr}The feature User Encryption stores encrypted user information, such as password used to connect to externalsystems.
+			If the password is changed, it will destroy the user's decryption key, and make the data unreadable.
+			The user will be forced to re-enter the passwords and other data that may be encrypted.{/tr}</a>.
+		{/remarksbox}
+	{/if}
 	{if isset($userinfo.userId) && $userinfo.userId}
 		<h2>{tr}Edit user:{/tr} {$userinfo.login|escape}</h2>
 		{if $userinfo.login ne 'admin' and $userinfo.editable}
