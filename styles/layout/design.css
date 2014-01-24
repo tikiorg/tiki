@@ -3631,9 +3631,6 @@ h6 a.tiki_anchor:hover {
     color: #3333CC;
 }
 
-/* End of file */
-
-
 /* override default Bootstrap style */
 .page-header {
 	border-bottom: none;
@@ -3645,3 +3642,13 @@ h6 a.tiki_anchor:hover {
 .modal-body div.submit {
 	display: none;
 }
+
+/* Conditions and Terms validation */
+
+.age-validation .form-control {
+	width: auto;
+	display: inline;
+	margin: 0 1em;
+}
+
+/* End of file */
