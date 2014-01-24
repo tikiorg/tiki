@@ -4155,6 +4155,14 @@ li.ui-tabs-active a {
 	background:#CCCCCC; 
 }
 
+#mytabs .ui-tabs-nav {
+	zoom: 0.75;
+}
+
+#mytabs {
+	min-width:150px;
+}
+
 /* jquery validation */
 
 label.error,
