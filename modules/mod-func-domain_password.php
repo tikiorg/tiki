@@ -109,7 +109,7 @@ function module_domain_password($mod_reference, $module_params)
 	$isSaving = isset($_REQUEST['saveButton']) ? true : false;
 
 	// Check stored data if they can be decrypted
-	if ($isSaving == false) {
+	if (isset($user) && $isSaving == false) {
 		$chkPwd = $cryptlib->hasUserData($user, $domain);
 		if ($chkPwd == false) {
 			$errors[] = "No password saved";
@@ -123,7 +123,7 @@ function module_domain_password($mod_reference, $module_params)
 
 	// Saved the credentials
 	/////////////////////////////////
-	if ($isSaving && $hasDomain && isset($_REQUEST['domPassword'])) {
+	if (isset($user) && $isSaving && $hasDomain && isset($_REQUEST['domPassword'])) {
 		if(empty($_REQUEST['domPassword'])) {
 			$errors[] = 'No password specified';
 		} elseif(!$use_currentuser && empty($_REQUEST['domUsername'])) {
