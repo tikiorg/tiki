@@ -70,7 +70,14 @@
 			{preference name=feature_quick_object_perms}
 			{preference name=feature_user_encryption}
 			<div class="adminoptionboxchild" id="feature_user_encryption_childcontainer">
-				Requires the mcrypt PHP extension for cryptation. <a href="tiki-check.php" target="_new">Check Now</a><br>.
+				{if isset($no_mcrypt)}
+					{remarksbox type="warning" title="{tr}Mcrypt is not loaded{/tr}"}
+					{tr}User Encryption requires the PHP expension Mcrypt for encryption.
+						You should activate Mcrypt before activating User Encryption{/tr}</a>.
+					{/remarksbox}
+				{else}
+					Requires the Mcrypt PHP extension for encryption. <u>You have Mcrypt installed</u>.<br>
+				{/if}
 				You may also want to add the "Domain Password" module somewhere.<br>
 				<br>
 				Comma separated list of password domains, e.g.: Company ABC,Company XYZ<br>
