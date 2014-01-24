@@ -1731,4 +1731,12 @@ li.ui-state-active a {
 	background:#CCCCCC; 
 }
 
+#mytabs .ui-tabs-nav {
+	zoom: 0.75;
+}
+
+#mytabs {
+	min-width:150px;
+}
+
 /* End of file */
