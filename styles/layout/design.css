@@ -1726,4 +1726,9 @@ form.simple textarea.export {
 	padding-left: 21px;
 }
 
+/* jquery-ui in since_last_visit */
+li.ui-state-active a { 
+	background:#CCCCCC; 
+}
+
 /* End of file */
