@@ -61,93 +61,97 @@ function module_domain_password($mod_reference, $module_params)
 		$errors[] = "You are not logged in";
 	} else {
 
-		$cryptlib = TikiLib::lib('crypt');
-		$cryptlib->init();
+		try {
+			$cryptlib = TikiLib::lib('crypt');
+			$cryptlib->init();
 
-		// Determine domain
-		if (!empty($domain)) {
-			// Validate the domain
-			$allDomains = $cryptlib->getPasswordDomains();
-			if (!$allDomains) {
-				$errors[] = 'No Password Domains found';
-			} elseif (!in_array($domain, $allDomains)) {
-				$errors[] = 'Domain is not defined';
+			// Determine domain
+			if (!empty($domain)) {
+				// Validate the domain
+				$allDomains = $cryptlib->getPasswordDomains();
+				if (!$allDomains) {
+					$errors[] = 'No Password Domains found';
+				} elseif (!in_array($domain, $allDomains)) {
+					$errors[] = 'Domain is not defined';
+				} else {
+					$hasDomain = true;
+				}
 			} else {
-				$hasDomain = true;
+				$errors[] = 'No domain specified';
 			}
-		} else {
-			$errors[] = 'No domain specified';
-		}
 
-		// Determine if writable
-		$can_update = 'n';
-		if (!empty($module_params['can_update'])) {
-			$can_update = $module_params['can_update'];
-		}
-
-		// Determine user
-		$use_currentuser = 'y';
-		if (!empty($module_params['use_currentuser'])) {
-			$use_currentuser = $module_params['use_currentuser'];
-		}
-		if ($use_currentuser == 'y') {
-			$smarty->assign('currentuser', 'y');
-			$smarty->assign('username', $user);
-		} else {
-			$smarty->assign('currentuser', 'n');
-			$username = $cryptlib->getUserData($user, $domain, 'usr');
-			if (!empty($username)) {
-				$smarty->assign('username', $username);
-			}
-		}
-
-		// Check if editing
-		$edit_option = 'n';
-		if ($can_update == 'y' && (!isset($_REQUEST['edit_form']) || $_REQUEST['edit_form'] != 'y'))
-		{
-			// Only enable editing, after the user clicks the edit link
+			// Determine if writable
 			$can_update = 'n';
-			$edit_option= 'y';
-		}
-		$smarty->assign('edit_option', $edit_option);
-		$smarty->assign('can_update', $can_update);
+			if (!empty($module_params['can_update'])) {
+				$can_update = $module_params['can_update'];
+			}
 
-		$isSaving = isset($_REQUEST['saveButton']) ? true : false;
-
-		// Check stored data if they can be decrypted
-		if (isset($user) && $isSaving == false) {
-			$chkPwd = $cryptlib->hasUserData($user, $domain);
-			if ($chkPwd == false) {
-				$errors[] = "No password saved";
+			// Determine user
+			$use_currentuser = 'y';
+			if (!empty($module_params['use_currentuser'])) {
+				$use_currentuser = $module_params['use_currentuser'];
+			}
+			if ($use_currentuser == 'y') {
+				$smarty->assign('currentuser', 'y');
+				$smarty->assign('username', $user);
 			} else {
-				$chkPwd = $cryptlib->getUserData($user, $domain);
-				if ($chkPwd == false) {
-					$errors[] = "Read error";
+				$smarty->assign('currentuser', 'n');
+				$username = $cryptlib->getUserData($user, $domain, 'usr');
+				if (!empty($username)) {
+					$smarty->assign('username', $username);
 				}
 			}
-		}
 
-		// Saved the credentials
-		/////////////////////////////////
-		if (isset($user) && $isSaving && $hasDomain && isset($_REQUEST['domPassword'])) {
-			if(empty($_REQUEST['domPassword'])) {
-				$errors[] = 'No password specified';
-			} elseif(!$use_currentuser && empty($_REQUEST['domUsername'])) {
-				$errors[] = 'No username specified';
-			} else {
-				$username = $use_currentuser === 'y' ? $user : $_REQUEST['domUsername'];
-				$password = $_REQUEST['domPassword'];
+			// Check if editing
+			$edit_option = 'n';
+			if ($can_update == 'y' && (!isset($_REQUEST['edit_form']) || $_REQUEST['edit_form'] != 'y'))
+			{
+				// Only enable editing, after the user clicks the edit link
+				$can_update = 'n';
+				$edit_option= 'y';
+			}
+			$smarty->assign('edit_option', $edit_option);
+			$smarty->assign('can_update', $can_update);
 
-				if (!$cryptlib->setUserData($user, $domain, $password)) {
-					$errors[] = 'Failed to save password';
+			$isSaving = isset($_REQUEST['saveButton']) ? true : false;
+
+			// Check stored data if they can be decrypted
+			if (isset($user) && $isSaving == false) {
+				$chkPwd = $cryptlib->hasUserData($user, $domain);
+				if ($chkPwd == false) {
+					$errors[] = "No password saved";
 				} else {
-					if (!$cryptlib->setUserData($user, $domain, $username, 'usr')) {
-						$errors[] = 'Failed to save user';
-					} else {
-						$smarty->assign('result', 'Saved OK');
+					$chkPwd = $cryptlib->getUserData($user, $domain);
+					if ($chkPwd == false) {
+						$errors[] = "Read error";
 					}
 				}
 			}
+
+			// Saved the credentials
+			/////////////////////////////////
+			if (isset($user) && $isSaving && $hasDomain && isset($_REQUEST['domPassword'])) {
+				if(empty($_REQUEST['domPassword'])) {
+					$errors[] = 'No password specified';
+				} elseif(!$use_currentuser && empty($_REQUEST['domUsername'])) {
+					$errors[] = 'No username specified';
+				} else {
+					$username = $use_currentuser === 'y' ? $user : $_REQUEST['domUsername'];
+					$password = $_REQUEST['domPassword'];
+
+					if (!$cryptlib->setUserData($user, $domain, $password)) {
+						$errors[] = 'Failed to save password';
+					} else {
+						if (!$cryptlib->setUserData($user, $domain, $username, 'usr')) {
+							$errors[] = 'Failed to save user';
+						} else {
+							$smarty->assign('result', 'Saved OK');
+						}
+					}
+				}
+			}
+		} catch(Exception $e) {
+			$errors[] = $e->getMessage();
 		}
 	}
 	if (!empty($errors)) {
