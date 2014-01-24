@@ -25,14 +25,18 @@
 					{if $slvn_item.count > 0}
 						<li>
 							<a href="#fragment-{$fragment}">
-								{if $pos eq "blogs" or $pos eq "blogPosts"}
+								{if $pos eq "blogs"}
 									<img src="img/icons/large/blogs.png" alt="{tr}Blogs{/tr}" title="{tr}Blogs{/tr}">
+								{elseif $pos eq "blogPosts"}
+									<img src="img/icons/large/blogs_new.png" alt="{tr}Blog Posts{/tr}" title="{tr}Blog Posts{/tr}">
 								{elseif $pos eq "articles"}
 									<img src="img/icons/large/stock_bold.png" alt="{tr}Articles{/tr}" title="{tr}Articles{/tr}">
 								{elseif $pos eq "posts"}
 									<img src="img/icons/large/stock_index.png" alt="{tr}Forums{/tr}" title="{tr}Forums{/tr}">
-								{elseif $pos eq "fileGalleries" or $pos eq "files"}
-									<img src="img/icons/large/file-manager.png" alt="{tr}File Gallery{/tr}" title="{tr}File Gallery{/tr}">
+								{elseif $pos eq "fileGalleries"}
+									<img src="img/icons/large/file-manager.png" alt="{tr}File Galleries{/tr}" title="{tr}File Galleries{/tr}">
+								{elseif $pos eq "files"}
+									<img src="img/icons/large/file-manager_new.png" alt="{tr}Files{/tr}" title="{tr}Files{/tr}">
 								{elseif $pos eq "poll"}
 									<img src="img/icons/large/stock_missing-image.png" alt="{tr}Poll{/tr}" title="{tr}Poll{/tr}">
 								{elseif $pos eq "pages"}
