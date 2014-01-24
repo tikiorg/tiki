@@ -4150,6 +4150,11 @@ textarea.tshoutbox{
 	color: #999;
 }
 
+/* jquery-ui in since_last_visit */
+li.ui-tabs-active a { 
+	background:#808080; 
+}
+
 /* jquery validation */
 
 label.error,
