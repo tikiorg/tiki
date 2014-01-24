@@ -9,14 +9,14 @@
 
     <table>
         <tr>
-            <td><div class="adminWizardIconleft"><img src="img/icons/large/profiles48x48.png" alt="{tr}Tiki Template Sites{/tr}" /></div></td>
+            <td><div class="adminWizardIconleft"><img src="img/icons/large/profiles48x48.png" alt="{tr}Configuration Profiles{/tr}" /></div></td>
             <td>
-                {tr}You may start by applying some of our <b>Site Profiles</b>{/tr}.
+                {tr}You may start by applying some of our <b>Configuration Profiles</b>{/tr}.
                 {tr}Each of these provides a shrink-wrapped solution that meets most of the needs of a particular kind of community or site (ex: Personal Blog space, Company Intranet, ...) or that extends basic setup with extra features configured for you{/tr}.
                 {tr}If you are new to Tiki administration, we recommend that you start with this approach{/tr}.
                 {tr}If the profile you selected does not quite meet your needs, you will still have the option of customizing it further with one of the approaches below{/tr}.
                 <br>
-                <input  type="submit" class="btn btn-default" name="use-default-prefs" value="{tr}Choose a Site Profile{/tr}" />
+                <input  type="submit" class="btn btn-default" name="use-default-prefs" value="{tr}Choose a Configuration Profile{/tr}" />
                 <br><br>
             </td>
         </tr>
