@@ -46,7 +46,7 @@
 								{elseif $pos eq "utrackers"}
 									<img src="img/icons/large/trackers_updated.png" alt="{tr}Trackers{/tr} ({tr}Updated{/tr})" title="{tr}Trackers{/tr} ({tr}Updated{/tr})">
 								{elseif $pos eq "users"}
-									<img src="img/icons/large/vcard.png" alt="{tr}Users{/tr}" title="{tr}Users{/tr}">
+									<img src="img/icons/large/users.png" alt="{tr}Users{/tr}" title="{tr}Users{/tr}">
 								{else}
 									{$pos}
 								{/if}
