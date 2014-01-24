@@ -33,7 +33,7 @@
 	<li>{tr}Useful for Geographic data (State, Country/Province, ...){/tr}</li>
     <li>{tr}Useful for Types and Subtypes{/tr}</li>
     <li>{tr}Useful for Program Names and Versions{/tr}</li>
-    <li>{tr}Easily mamange the options in the second tracker without editing the dropdown in the first tracker{/tr} </li> 
+    <li>{tr}Easily manage the options in the second tracker without editing the dropdown in the first tracker{/tr} </li> 
 	<br/><em>{tr}See also{/tr} <a href="https://doc.tiki.org/Dynamic+items+list" target="_blank">{tr}Dynamic items list in doc.tiki.org{/tr}</a></em>
 	</ul>
 	</td>
