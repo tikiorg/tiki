@@ -118,7 +118,7 @@ function module_domain_password($mod_reference, $module_params)
 			if (!$cryptlib->setUserData($user, $domain, $password)) {
 				$errors[] = 'Failed to save password';
 			} else {
-				if (!$cryptlib->setUserData($user, $domain, $username, 'user')) {
+				if (!$cryptlib->setUserData($user, $domain, $username, 'usr')) {
 					$errors[] = 'Failed to save user';
 				} else {
 					$smarty->assign('result', 'Saved OK');

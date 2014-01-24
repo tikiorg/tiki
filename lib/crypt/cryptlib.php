@@ -54,7 +54,7 @@ class CryptLib extends TikiLib
 	private $mcrypt;		// mcrypt object
 	private $iv;			// mcrypt initialization vector
 
-	private $prefprefix = 'pwddom';		// prefix for user pref keys: 'test' => 'pwddom.test'
+	private $prefprefix = 'dp';		// prefix for user pref keys: 'test' => 'dp.test'
 
 	//
 	// Init and release
