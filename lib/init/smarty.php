@@ -454,7 +454,7 @@ class Smarty_Tiki extends Smarty
 		if (! $this->main_template_dir) {
 			// First run only
 			$this->main_template_dir = TIKI_PATH . '/templates/';
-			$this->setCompileDir(TIKI_PATH . "templates_c");
+			$this->setCompileDir(TIKI_PATH . "/templates_c");
 			$this->setPluginsDir(
 				array(	// the directory order must be like this to overload a plugin
 					TIKI_PATH . '/' . TIKI_SMARTY_DIR,
