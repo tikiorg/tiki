@@ -72,6 +72,9 @@ class CryptLib extends TikiLib
 
 	function init()
 	{
+		if (!isset($_SESSION['cryptphrase'])) {
+			throw new Exception('Unable to locate cryptphrase');
+		}
 		$phraseMD5 = $_SESSION['cryptphrase'];
 		$this->initSeed($phraseMD5);
 	}
