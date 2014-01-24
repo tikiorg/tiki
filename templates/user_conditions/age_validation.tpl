@@ -8,7 +8,7 @@
 	{if $birth_date}
 		<form class="age-validation" method="post" action="{service controller=user_conditions action=age_validation}">
 			<p>{tr _0=$prefs.conditions_minimum_age _1=$birth_date}To login to this site you must be %0 years old, which does not match the birthdate of %1 you provided.{/tr}</p>
-			<input class="btn btn-lg btn-primary" type="submit" name="decline" value="{tr}Leave the site{/tr}">
+			<input class="btn btn-lg btn-primary" type="submit" name="decline" value="{tr}Cancel login process{/tr}">
 			<input name="origin" value="{$origin|escape}" type="hidden">
 		</form>
 	{else}
