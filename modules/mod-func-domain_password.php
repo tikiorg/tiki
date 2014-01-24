@@ -55,6 +55,7 @@ function module_domain_password($mod_reference, $module_params)
 		$errors[] = "You are not logged in";
 	}
 
+	// Determine dmain
 	if (!empty($module_params['domain'])) {
 		$domain = $module_params['domain'];
 		$smarty->assign('domain', $domain);
@@ -71,11 +72,14 @@ function module_domain_password($mod_reference, $module_params)
 	} else {
 		$errors[] = 'No domain specified';
 	}
+
+	// Determine if writable
 	$can_update = 'n';
 	if (!empty($module_params['can_update'])) {
 		$can_update = $module_params['can_update'];
 	}
 
+	// Determine user
 	$use_currentuser = 'y';
 	if (!empty($module_params['use_currentuser'])) {
 		$use_currentuser = $module_params['use_currentuser'];
@@ -85,7 +89,7 @@ function module_domain_password($mod_reference, $module_params)
 		$smarty->assign('username', $user);
 	} else {
 		$smarty->assign('currentuser', 'n');
-		$username = $cryptlib->getUserData($user, $domain, 'user');
+		$username = $cryptlib->getUserData($user, $domain, 'usr');
 		if (!empty($username)) {
 			$smarty->assign('username', $username);
 		}
@@ -103,6 +107,19 @@ function module_domain_password($mod_reference, $module_params)
 	$smarty->assign('can_update', $can_update);
 
 	$isSaving = isset($_REQUEST['saveButton']) ? true : false;
+
+	// Check stored data if they can be decrypted
+	if ($isSaving == false) {
+		$chkPwd = $cryptlib->hasUserData($user, $domain);
+		if ($chkPwd == false) {
+			$errors[] = "No password saved";
+		} else {
+			$chkPwd = $cryptlib->getUserData($user, $domain);
+			if ($chkPwd == false) {
+				$errors[] = "Read error";
+			}
+		}
+	}
 
 	// Saved the credentials
 	/////////////////////////////////

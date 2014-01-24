@@ -1,4 +1,4 @@
-{* $Id$ *}
+	{* $Id$ *}
 
 {tikimodule error=$module_params.error title=$tpl_module_title name="domain_password" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
 {literal}
@@ -17,9 +17,6 @@
 			{$error|escape}<br>
 		{/foreach}
 	</span>
-{/if}
-{if !empty($result)}
-	{$result}
 {/if}
 
 <form name="frmDomainPassword" method="post" action="">
@@ -59,4 +56,10 @@
 		{/if}
 	</table>
 </form>
+{if !empty($result)}
+	<span id="error">
+		{$result}
+	</span>
+{/if}
+
 {/tikimodule}

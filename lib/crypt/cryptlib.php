@@ -101,6 +101,32 @@ class CryptLib extends TikiLib
 		}
 	}
 
+
+	//
+	// Test/Check utilities
+	////////////////////////////////
+
+	// Check if encryption is used (and not Base64)
+	function hasCrypt()
+	{
+		return $this->mcrypt != null;
+	}
+
+	// Check if any data exists the user preference.
+	// Return true if data exit (not necessarily readable). false, if no stored data is found
+	function hasUserData($user, $userprefKey, $paramName = '')
+	{
+		if (!empty($paramName)) {
+			$paramName = '.'.$paramName;
+		}
+		$storedPwd64 = $this->get_user_preference($user, $this->prefprefix.'.'.$userprefKey.$paramName);
+		if (empty($storedPwd64)) {
+			return false;
+		}
+		return true;
+	}
+
+
 	//
 	// User data utilities
 	////////////////////////////////
@@ -146,6 +172,48 @@ class CryptLib extends TikiLib
 			return false;
 		}
 		$cleartext = $this->decryptData($storedPwd64);
+
+		// Check if the cleartext contain any illigal password character.
+		// 	If found, it indicates that the decryption has failed.
+		if (!ctype_print ($cleartext)) {
+			return false;
+		}
+
+		return $cleartext;
+	}
+
+	// Recover the stored cleartext data from the user preferences.
+	// Return stored data in cleartext or false on error
+	function recoverUserData($user, $cleartextPwd, $userprefKey, $paramName = '')
+	{
+		if (empty($cleartextPwd)) {
+			return false;
+		}
+		// Initialize using the input params
+		$cryptlib = new CryptLib();
+		$phraseMD5 = md5($user.$cleartextPwd);
+		$cryptlib->initSeed($phraseMD5);
+
+		// Build the pref key
+		if (!empty($paramName)) {
+			$paramName = '.'.$paramName;
+		}
+		$prefKey = $cryptlib->prefprefix.'.'.$userprefKey.$paramName;
+
+		// Get the stored data
+		$storedPwd64 = $cryptlib->get_user_preference($user, $prefKey);
+		if (empty($storedPwd64)) {
+			return false;
+		}
+
+		// Decrypt
+		$cleartext = $cryptlib->decryptData($storedPwd64);
+		// Check if the cleartext contain any illigal password character.
+		// 	If found, it indicates that the decryption has failed.
+		if (!ctype_print ($cleartext)) {
+			return false;
+		}
+
 		return $cleartext;
 	}
 
@@ -289,14 +357,6 @@ class CryptLib extends TikiLib
 	//
 	// Crypt
 	////////////////////////////////
-
-
-	// Check if encryption is used (and not Base64)
-	function hasCrypt()
-	{
-		return $this->mcrypt != null;
-	}
-
 
 	// Use MCrypt if available. Otherwise Base64 encode only
 	// Return base64 encoded string, containing either the crypttext or cleartext (if on base64 encoding is used)
