@@ -46,7 +46,25 @@ function module_domain_password($mod_reference, $module_params)
 {
 	global $prefs, $tikilib, $smarty, $user;
 
-	$errors = array();
+	// Allow for multiple modules on one page
+	$moduleNr = $mod_reference['moduleId'];
+	$moduleNr = str_replace('wikiplugin_', '', $moduleNr); // Remove the leading wikiplugin_ when used in a wiki page
+	$cntModule = intval($moduleNr);
+	$dompwdCount = 0;
+	if (isset($_REQUEST['dompwdCount'])) {
+		$dompwdCount = intval($_REQUEST['dompwdCount']);
+	}
+	$smarty->assign('dompwdCount', $cntModule);
+
+
+	// Use a static array of smarty variables, to support multiple modules on a single page
+	static $errors = array();
+	$errors[$cntModule] = array();
+
+	static $can_update = array();
+	static $edit_option = array();
+	static $use_currentuser = array();
+	static $username = array();
 
 	$hasDomain = false;
 
@@ -57,8 +75,8 @@ function module_domain_password($mod_reference, $module_params)
 		$smarty->assign('domain', $domain);
 	}
 
-	if (!isset($user)) {
-		$errors[] = "You are not logged in";
+	if (empty($user)) {
+		$errors[$cntModule][] = "You are not logged in";
 	} else {
 
 		try {
@@ -70,91 +88,105 @@ function module_domain_password($mod_reference, $module_params)
 				// Validate the domain
 				$allDomains = $cryptlib->getPasswordDomains();
 				if (!$allDomains) {
-					$errors[] = 'No Password Domains found';
+					$errors[$cntModule][] = 'No Password Domains found';
 				} elseif (!in_array($domain, $allDomains)) {
-					$errors[] = 'Domain is not defined';
+					$errors[$cntModule][] = 'Domain is not valid';
 				} else {
 					$hasDomain = true;
 				}
 			} else {
-				$errors[] = 'No domain specified';
+				$errors[$cntModule][] = 'No domain specified';
 			}
 
 			// Determine if writable
-			$can_update = 'n';
+			$can_update[$cntModule] = 'n';
 			if (!empty($module_params['can_update'])) {
-				$can_update = $module_params['can_update'];
+				$can_update[$cntModule] = $module_params['can_update'];
 			}
 
+			$isSaving = isset($_REQUEST['saveButton'.$cntModule]) ? true : false;
+
 			// Determine user
-			$use_currentuser = 'y';
+			$use_currentuser[$cntModule] = 'y';
 			if (!empty($module_params['use_currentuser'])) {
-				$use_currentuser = $module_params['use_currentuser'];
+				$use_currentuser[$cntModule] = $module_params['use_currentuser'];
 			}
-			if ($use_currentuser == 'y') {
-				$smarty->assign('currentuser', 'y');
-				$smarty->assign('username', $user);
+			if ($use_currentuser[$cntModule] == 'y') {
+				$username[$cntModule] = $user;
+				$smarty->assign('currentuser', $use_currentuser);
+				$smarty->assign('username', $username);
 			} else {
-				$smarty->assign('currentuser', 'n');
-				$username = $cryptlib->getUserData($user, $domain, 'usr');
-				if (!empty($username)) {
+				$smarty->assign('currentuser', $use_currentuser);
+				$username[$cntModule] = $cryptlib->getUserData($user, $domain, 'usr');
+				if (!empty($username[$cntModule])) {
 					$smarty->assign('username', $username);
+				} else {
+					if ($isSaving == false) {
+						$errors[$cntModule][] = "No user defined";
+					}
 				}
 			}
 
 			// Check if editing
-			$edit_option = 'n';
-			if ($can_update == 'y' && (!isset($_REQUEST['edit_form']) || $_REQUEST['edit_form'] != 'y'))
+			$edit_option[$cntModule] = 'n';
+			if ($can_update[$cntModule] == 'y' && (!isset($_REQUEST['edit_form'.$cntModule]) || $_REQUEST['edit_form'.$cntModule] != 'y'))
 			{
 				// Only enable editing, after the user clicks the edit link
-				$can_update = 'n';
-				$edit_option= 'y';
+				$can_update[$cntModule] = 'n';
+				$edit_option[$cntModule] = 'y';
 			}
 			$smarty->assign('edit_option', $edit_option);
 			$smarty->assign('can_update', $can_update);
 
-			$isSaving = isset($_REQUEST['saveButton']) ? true : false;
-
 			// Check stored data if they can be decrypted
-			if (isset($user) && $isSaving == false) {
+			if (!empty($username[$cntModule]) && $isSaving == false) {
 				$chkPwd = $cryptlib->hasUserData($user, $domain);
 				if ($chkPwd == false) {
-					$errors[] = "No password saved";
+					if ($isSaving == false) {
+						$errors[$cntModule][] = "No password saved";
+					}
 				} else {
 					$chkPwd = $cryptlib->getUserData($user, $domain);
 					if ($chkPwd == false) {
-						$errors[] = "Read error";
+						$errors[$cntModule][] = "Read error";
 					}
 				}
 			}
 
 			// Saved the credentials
 			/////////////////////////////////
-			if (isset($user) && $isSaving && $hasDomain && isset($_REQUEST['domPassword'])) {
+			if (($dompwdCount == $cntModule) && $isSaving && $hasDomain && isset($_REQUEST['domPassword'])) {
 				if(empty($_REQUEST['domPassword'])) {
-					$errors[] = 'No password specified';
-				} elseif(!$use_currentuser && empty($_REQUEST['domUsername'])) {
-					$errors[] = 'No username specified';
+					$errors[$cntModule][] = 'No password specified';
+				} elseif(!$use_currentuser[$cntModule] && empty($_REQUEST['domUsername'])) {
+					$errors[$cntModule][] = 'No username specified';
 				} else {
-					$username = $use_currentuser === 'y' ? $user : $_REQUEST['domUsername'];
-					$password = $_REQUEST['domPassword'];
+					$domUsername = $use_currentuser[$cntModule] === 'y' ? $user : $_REQUEST['domUsername'];
+					$domPassword = $_REQUEST['domPassword'];
 
-					if (!$cryptlib->setUserData($user, $domain, $password)) {
-						$errors[] = 'Failed to save password';
+					if (!$cryptlib->setUserData($user, $domain, $domPassword)) {
+						$errors[$cntModule][] = 'Failed to save password';
 					} else {
-						if (!$cryptlib->setUserData($user, $domain, $username, 'usr')) {
-							$errors[] = 'Failed to save user';
+						if (!$cryptlib->setUserData($user, $domain, $domUsername, 'usr')) {
+							$errors[$cntModule][] = 'Failed to save user';
 						} else {
-							$smarty->assign('result', 'Saved OK');
+							// Refresh the displayed username is saved ok
+							$username[$cntModule] = $domUsername;
+							$smarty->assign('username', $username);
+
+							// Format result
+							$result = array();
+							$result[$cntModule] = 'Saved OK';
+							$smarty->assign('result', $result);
 						}
 					}
 				}
 			}
 		} catch(Exception $e) {
-			$errors[] = $e->getMessage();
+			$errors[$cntModule][] = $e->getMessage();
 		}
 	}
-	if (!empty($errors)) {
+	if (!empty($errors[$cntModule])) {
 		$smarty->assign('errors', $errors);
 	}
 }
