@@ -104,12 +104,15 @@ close();
 			<br><br>
 		{/if}
 
-		{if $prefs.javascript_enabled eq 'y'}
-			{button _onclick="javascript:history.back();return false;" _text="{tr}Go back{/tr}" _ajax="n"}
-			<br><br>
-		{/if}
+		{* Hide the error navigation on the homepage *}
+		{if !isset($page) or $prefs.site_wikiHomePage neq $page}
+			{if $prefs.javascript_enabled eq 'y'}
+				{button _onclick="javascript:history.back();return false;" _text="{tr}Go back{/tr}" _ajax="n"}
+				<br><br>
+			{/if}
 
-		{button href=$prefs.tikiIndex _text="{tr}Return to home page{/tr}"}
+			{button href=$prefs.tikiIndex _text="{tr}Return to home page{/tr}"}
+		{/if}
 	{/if}
 {/capture}
 

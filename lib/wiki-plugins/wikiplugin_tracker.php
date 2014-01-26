@@ -1426,13 +1426,11 @@ function wikiplugin_tracker($data, $params)
 						}
 
 						$back .= wikiplugin_tracker_render_input($f, $item, $dynamicSave);
-						$back .= "</td></tr>";
 					}
 
 					if ($f['type'] != 'S' && empty($tpl) && empty($wiki)) {
 						if ($showfieldsdesc == 'y') {
-							$back .= '<tr><td class="plugindesc_cell" colspan="2">';
-							$back .= '<span class="trackerplugindesc">';
+							$back .= '<div class="trackerplugindesc">';
 
 							if ($f['descriptionIsParsed'] == 'y') {
 								$back .= $tikilib->parse_data($f['description']);
@@ -1440,8 +1438,7 @@ function wikiplugin_tracker($data, $params)
 								$back .= tra($f['description']);
 							}
 
-							$back .= '</span>';
-							$back .= "</td></tr>";
+							$back .= '</div>';
 						}
 					}
 				}

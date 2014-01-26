@@ -595,6 +595,44 @@ function module_since_last_visit_new($mod_reference, $params = null)
 		$ret['items']['utrackers']['count'] = $count;
 	}
 
+	/////////////////////////////////////////////////////////////////////////
+	// CALENDARS & THEIR EVENTS
+	if ($prefs['feature_calendar'] == 'y') {
+		$ret['items']['calendar']['label'] = tra('new calendars');
+		$ret['items']['calendar']['cname'] = 'slvn_calendar_menu';
+
+		$query = "select `calendarId`, `name`, `user`, `created` from `tiki_calendars` where `created`>? order by `created` desc";
+		$result = $tikilib->query($query, array((int) $last), $resultCount);
+
+		$count = 0;
+		while ($res = $result->fetchRow()) {
+			if ($userlib->user_has_perm_on_object($user, $res['calendarId'], 'calendar', 'tiki_p_view_calendar')) {
+				$ret['items']['calendar']['list'][$count]['href']  = filter_out_sefurl('tiki-calendar.php?calIds[]=' . $res['calendarId'], 'calendar', $res['name']);
+				$ret['items']['calendar']['list'][$count]['title'] = $tikilib->get_short_datetime($res['created']) .' '. tra('by') .' '. $res['user'];
+				$ret['items']['calendar']['list'][$count]['label'] = $res['name'];
+				$count++;
+			}
+		}
+		$ret['items']['calendar']['count'] = $count;
+
+		$ret['items']['events']['label'] = tra('new events');
+		$ret['items']['events']['cname'] = 'slvn_events_menu';
+
+		$query = "select `calitemId`, `calendarId`, `name`, `user`, `created`, `start` from `tiki_calendar_items` where `created`>? order by `created` desc";
+		$result = $tikilib->query($query, array((int) $last), $resultCount);
+
+		$count = 0;
+		while ($res = $result->fetchRow()) {
+			if ($userlib->user_has_perm_on_object($user, $res['calendarId'], 'calendar', 'tiki_p_view_events')) {
+				$ret['items']['events']['list'][$count]['href']  = filter_out_sefurl('tiki-calendar_edit_item.php?viewcalitemId=' . $res['calitemId'], 'event', $res['name']);
+				$ret['items']['events']['list'][$count]['title'] = $tikilib->get_short_datetime($res['created']) .' '. tra('by') .' '. $res['user'] .', '. tra('starting on') .' '. $tikilib->get_short_datetime($res['start']) ;
+				$ret['items']['events']['list'][$count]['label'] = $res['name'];
+				$count++;
+			}
+		}
+		$ret['items']['events']['count'] = $count;
+	}
+
 	//////////////////////////////////////////////////////////////////////////
 	// SUMMARY
 	//get the total of items

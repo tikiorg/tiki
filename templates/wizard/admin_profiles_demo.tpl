@@ -2,8 +2,8 @@
 
 <div class="adminWizardIconleft"><img src="img/icons/large/profiles48x48.png" alt="{tr}Check out some profiles{/tr}" /></div>
 {tr}Each of these profiles create a working instance of some features, such as trackers and wiki pages customized for specific purposes, for example{/tr}. 
-{tr}They are initially intended for testing environments, so that, after you have played with the feature, you don't have to deal with removing the created objects, nor with restoring the potentially changed settnigs in your site{/tr}. 
-{tr}Once you know what they do, you can also apply them in your production site, in order to have working templates of the underlying features, that you can furhter adapt to your site later on{/tr}.</br></br>
+{tr}They are initially intended for testing environments, so that, after you have played with the feature, you don't have to deal with removing the created objects, nor with restoring the potentially changed settings in your site{/tr}. 
+{tr}Once you know what they do, you can also apply them in your production site, in order to have working templates of the underlying features, that you can further adapt to your site later on{/tr}.</br></br>
 <div class="adminWizardContent">
 <fieldset>
 	<legend>{tr}Demo Profiles{/tr}</legend>
@@ -33,7 +33,7 @@
 	<li>{tr}Useful for Geographic data (State, Country/Province, ...){/tr}</li>
     <li>{tr}Useful for Types and Subtypes{/tr}</li>
     <li>{tr}Useful for Program Names and Versions{/tr}</li>
-    <li>{tr}Easily mamange the options in the second tracker without editing the dropdown in the first tracker{/tr} </li> 
+    <li>{tr}Easily manage the options in the second tracker without editing the dropdown in the first tracker{/tr} </li> 
 	<br/><em>{tr}See also{/tr} <a href="https://doc.tiki.org/Dynamic+items+list" target="_blank">{tr}Dynamic items list in doc.tiki.org{/tr}</a></em>
 	</ul>
 	</td>

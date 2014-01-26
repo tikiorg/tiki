@@ -58,7 +58,7 @@
 	<div class="adminWizardIconright"><img src="img/icons/large/profile_timesheet48x48.png" alt="{tr}Timesheet{/tr}" /></div>
 	<b>{tr}Timesheet{/tr}</b> (<a href="tiki-admin.php?profile=Time_Sheet&categories%5B%5D=12.x&repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2" target="_blank">{tr}apply profile now{/tr}</a>)
 	<br>
-	{tr}This profile allows recording time spent on projects. It creates two trackers: one to hold the time spent, and the other with the project names. Both trakers are linked, so that project names can be chosen when entering items to the timesheet tracker{/tr}. 
+	{tr}This profile allows recording time spent on projects. It creates two trackers: one to hold the time spent, and the other with the project names. Both trackers are linked, so that project names can be chosen when entering items to the timesheet tracker{/tr}. 
 	<ul>
     <li>{tr}Allows to track your time spent on projects{/tr}</li>
 	<li>{tr}Timesheet & Projects linked trackers already{/tr}</li>

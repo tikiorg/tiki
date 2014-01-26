@@ -3146,6 +3146,19 @@ a.freetag_7 {
 	color: #999;
 }
 
+/* jquery-ui in since_last_visit */
+li.ui-tabs-active a { 
+	background:#CCCCCC; 
+}
+
+#mytabs .ui-tabs-nav {
+	zoom: 0.75;
+}
+
+#mytabs {
+	min-width:150px;
+}
+
 /* jquery validation */
 div.form-group label.error {
 	font-weight: normal !important;

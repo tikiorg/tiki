@@ -14,7 +14,7 @@ class AdminWizardProfilesUseful extends Wizard
 {
     function pageTitle ()
     {
-        return tra('Useful Site Profiles');
+        return tra('Useful Profiles');
     }
 	function isEditable ()
 	{

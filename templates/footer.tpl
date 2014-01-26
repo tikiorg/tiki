@@ -20,3 +20,50 @@
 	{/if}
 
 {/if}
+{*needs to be in the footer.tpl so that it runs at the end rather than in antibot.tpl where it breaks tracker validation*}
+{jq}
+if ($("#antibotcode").parents('form').data("validator")) {
+    $( "#antibotcode" ).rules( "add", {
+        required: true,
+        remote: {
+            url: "validate-ajax.php",
+            type: "post",
+            data: {
+                validator: "captcha",
+                parameter: function() {
+                    return $jq("#captchaId").val();
+                },
+                input: function() {
+                    return $jq("#antibotcode").val();
+                }
+            }
+        }
+    });
+} else {
+    var form = $("#antibotcode").parents('form');
+    $("form[name="+ form.attr('name') +"]").validate({
+        rules: {
+            "captcha[input]": {
+                required: true,
+                remote: {
+                    url: "validate-ajax.php",
+                    type: "post",
+                    data: {
+                        validator: "captcha",
+                        parameter: function() {
+                            return $jq("#captchaId").val();
+                        },
+                        input: function() {
+                            return $jq("#antibotcode").val();
+                        }
+                    }
+                }
+            }
+        },
+        messages: {
+            "captcha[input]": { required: "This field is required"},
+        },
+        submitHandler: function(){form.submit();}
+    });
+}
+{/jq}
