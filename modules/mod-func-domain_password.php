@@ -33,6 +33,10 @@ function module_domain_password_info()
 				'name' => tra('Can Update'),
 				'description' => tra('If "y" the user can update the values, otherwise the display is read-only (y/n). Default: n'),
 			),
+			'show_domain_prompt' => array(
+				'name' => tra('Show domain prompt'),
+				'description' => tra('If "y" the word "domain" is show before the domain. Otherwise the domain name takes the full row (y/n). Default: y'),
+			),
 		),
 		'common_params' => array('nonums', 'rows')
 	);
@@ -65,6 +69,7 @@ function module_domain_password($mod_reference, $module_params)
 	static $edit_option = array();
 	static $use_currentuser = array();
 	static $username = array();
+	static $domainDisplayPrompt = array();
 
 	$hasDomain = false;
 
@@ -74,6 +79,14 @@ function module_domain_password($mod_reference, $module_params)
 		$domain = $module_params['domain'];
 		$smarty->assign('domain', $domain);
 	}
+
+	// Domain display option
+	$domainDisplayPrompt[$cntModule] = 'y';
+	if (!empty($module_params['show_domain_prompt'])) {
+		$domainDisplayPrompt[$cntModule] = $module_params['show_domain_prompt'];
+	}
+	$smarty->assign('domainDisplayPrompt', $domainDisplayPrompt);
+
 
 	if (empty($user)) {
 		$errors[$cntModule][] = "You are not logged in";

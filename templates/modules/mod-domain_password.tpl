@@ -1,5 +1,4 @@
-	{* $Id$ *}
-
+{* $Id$ *}
 {tikimodule error=$module_params.error title=$tpl_module_title name="domain_password" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
 {literal}
 	<script type="text/javascript">
@@ -11,26 +10,33 @@
 	</script>
 {/literal}
 
-{if !empty($errors[{$dompwdCount}])}
-	<span id="error">
-		{foreach from=$errors[{$dompwdCount}] item=error}
-			{$error|escape}<br>
-		{/foreach}
-	</span>
-{/if}
-
 <form name="frmDomainPassword{$dompwdCount}" method="post" action="">
 	<input type="hidden" name="edit_form{$dompwdCount}" value="">
 	<input type="hidden" name="dompwdCount" value="{$dompwdCount}">
 	<table>
 		<tr>
-			<td>Domain</td>
-			<td>{$domain}</td>
+			{if isset($domainDisplayPrompt[{$dompwdCount}]) and $domainDisplayPrompt[{$dompwdCount}] eq 'n'}
+				<td colspan="2" class="pwddom_domain_name">{$domain}</td>
+			{else}
+				<td>Domain</td>
+				<td class="pwddom_domain_name">{$domain}</td>
+			{/if}
 		</tr>
+		{if !empty($errors[{$dompwdCount}])}
+			<tr>
+				<td colspan="2">
+					<span id="error">
+						{foreach from=$errors[{$dompwdCount}] item=error}
+							{$error|escape}<br>
+						{/foreach}
+					</span>
+				</td>
+			</tr>
+		{/if}
 		{if !empty($user)}
 			<tr>
-				<td>Username</td>
-				<td>
+				<td>User</td>
+				<td class="pwddom_username_name">
 					{if isset($can_update[{$dompwdCount}]) and $can_update[{$dompwdCount}] eq 'y' and $currentuser[{$dompwdCount}] neq 'y' and $edit_option[{$dompwdCount}] neq 'y'}
 						<input type="text" id="domUsername" name="domUsername" value="{$username[{$dompwdCount}]}">
 					{else}
@@ -40,7 +46,7 @@
 			</tr>
 			{if isset($can_update[{$dompwdCount}]) and $can_update[{$dompwdCount}] eq 'y' and $edit_option[{$dompwdCount}] neq 'y'}
 				<tr>
-					<td>Password</td>
+					<td>Pass</td>
 					<td><input type="password" id="domPassword" name="domPassword"></td>
 				</tr>
 				<tr>

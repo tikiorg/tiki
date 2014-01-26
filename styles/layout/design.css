@@ -3651,4 +3651,12 @@ h6 a.tiki_anchor:hover {
 	margin: 0 1em;
 }
 
+/* Password domain module */
+.pwddom_domain_name {
+    font-weight: bold;
+}
+.pwddom_username_name {
+    font-weight: bold;
+}
+
 /* End of file */
