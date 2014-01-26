@@ -1569,7 +1569,7 @@ function wikiplugin_tracker_render_input($f, $item, $dynamicSave)
 		$handler = TikiLib::lib("trk")->get_field_handler($f, $item);
 	}
 
-	$input = $handler->renderInput(array('inTable' => 'y'));
+	$input = $handler->renderInput(array('inTable' => 'y', 'pluginTracker' => 'y'));
 
 	if ($dynamicSave && $item['itemId']) {
 		$servicelib = TikiLib::lib('service');
