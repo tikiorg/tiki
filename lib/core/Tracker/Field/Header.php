@@ -76,7 +76,10 @@ class Tracker_Field_Header extends Tracker_Field_Abstract implements Tracker_Fie
 		$toggle = $this->getOption('toggle');
 		$inTable = isset($context['inTable']) ? $context['inTable'] : '';
 		$name =  htmlspecialchars(tra($this->getConfiguration('name')));
-
+		$desc =  htmlspecialchars($this->getConfiguration('description'));
+		//to distinguish formatting for header description on tiki-view_tracker.php versus when plugin tracker is used
+		$desclass = $inTable == 'y' && strpos($_SERVER['PHP_SELF'],'tiki-view_tracker_item.php') === false ?
+			'trackerplugindesc' : 'headerdesc';
 		$data_toggle = '';
 		if ($prefs['javascript_enabled'] === 'y' && ($toggle === 'o' || $toggle === 'c')) {
 			$class = ' ' . ($toggle === 'c' ? 'trackerHeaderClose' : 'trackerHeaderOpen');
@@ -86,23 +89,28 @@ class Tracker_Field_Header extends Tracker_Field_Abstract implements Tracker_Fie
 			$js = '
 (function() {
 	var processTableForHeaders = function( $table ) {
-		var $hdr, $newtable = $("<table>").attr("class", $table.attr("class"));
+		var $hdr, $hdrplus, $descdiv, $newtable = $("<table>").attr("class", $table.attr("class"));
 		$("tr", $table).each(function() {	// step through each row
 			if ($(".hdrField", this).length) {	// chop the table...
 				var $this = $(this);
 				var $sibs = $this.nextAll("tr");
 				var level = $(".hdrField:first", this).data("level");
-				var name = $("td:first", this).text();
+				var desc = $(".hdrField:first", this).data("desc");
+				$descdiv = $("<div>").attr("class", "' . $desclass . '").text(desc);
+				var name = $(".hdrField:first", this).data("name");
 				$hdr = $("<h" + level + ">").text($.trim(name));
 				var toggle = $(".hdrField:first", this).data("toggle");
 				if (toggle) {
 					$hdr.click(function(){
 						$newtable.toggle();
+						$descdiv.toggle();
 						$(this).toggleClass("trackerHeaderClose")
 								.toggleClass("trackerHeaderOpen");
 					}).addClass(toggle === "c" ? "trackerHeaderClose" : "trackerHeaderOpen");
-					if (toggle === "c") $newtable.hide();
-
+					if (toggle === "c") {
+						$newtable.hide();
+						$descdiv.hide();
+					}
 				}
 				$sibs.each(function(){
 					$newtable.append(this);
@@ -112,6 +120,7 @@ class Tracker_Field_Header extends Tracker_Field_Abstract implements Tracker_Fie
 			}
 		});
 		$table.after($newtable).after($hdr);
+		if (typeof $descdiv != \'undefined\' && $("tr", $newtable).length > 0){$newtable.before($descdiv);}
 		if ($("tr", $newtable).length) {
 			processTableForHeaders($newtable);	// recurse until done
 		}
@@ -126,8 +135,8 @@ class Tracker_Field_Header extends Tracker_Field_Abstract implements Tracker_Fie
 		$headerlib->add_jq_onready($js);
 		
 		// just a marker for jQ to find
-		$html = '<span class="hdrField' . $class . '" data-level="' . $level . '" ' .
-				$data_toggle .' style="display:none;"></span>';
+		$html = '<span class="hdrField' . $class . '" data-level="' . $level . '" ' . '" data-desc="' . $desc . '" ' .
+			'" data-name="' . $name . '" ' . $data_toggle .' style="display:none;"></span>';
 		
 		return $html;
 	}
