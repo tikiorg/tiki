@@ -4156,7 +4156,12 @@ li.ui-tabs-active a {
 }
 
 #mytabs .ui-tabs-nav {
-	zoom: 0.75;
+	zoom: 0.70;
+}
+
+#mytabs .ui-widget-content {
+	margin-left: -10px; 
+	zoom: 0.85;
 }
 
 #mytabs {
