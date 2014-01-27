@@ -4408,6 +4408,11 @@ form.simple textarea.export {
 	display: block;
 }
 
+/* Users_list module styling */
+#role_main .box-users_list {
+	max-width:100%;
+}
+
 /* Namespace styling */
 
 .wiki .namespace {
