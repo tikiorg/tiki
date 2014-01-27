@@ -46,9 +46,9 @@
 								{elseif $pos eq "forums"}
 									<img src="img/icons/large/stock_index.png" alt="{tr}Forums{/tr}" title="{tr}Forums{/tr}"/>
 								{elseif $pos eq "trackers"}
-									<img src="img/icons/large/trackers_new.png" alt="{tr}Tracker Items{/tr} ({tr}New{/tr})" title="{tr}Trackers{/tr} ({tr}New{/tr})"/>
+									<img src="img/icons/large/trackers_new.png" alt="{tr}Tracker Items{/tr} ({tr}New{/tr})" title="{tr}Tracker Items{/tr} ({tr}New{/tr})"/>
 								{elseif $pos eq "utrackers"}
-									<img src="img/icons/large/trackers_updated.png" alt="{tr}Tracker Items{/tr} ({tr}Updated{/tr})" title="{tr}Trackers{/tr} ({tr}Updated{/tr})"/>
+									<img src="img/icons/large/trackers_updated.png" alt="{tr}Tracker Items{/tr} ({tr}Updated{/tr})" title="{tr}Tracker Items{/tr} ({tr}Updated{/tr})"/>
 								{elseif $pos eq "users"}
 									<img src="img/icons/large/users.png" alt="{tr}Users{/tr}" title="{tr}Users{/tr}"/>
 																	{elseif $pos eq "calendar"}
