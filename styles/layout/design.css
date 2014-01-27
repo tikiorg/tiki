@@ -3657,7 +3657,7 @@ h6 a.tiki_anchor:hover {
 /* override default Bootstrap style */
 .page-header {
 	border-bottom: none;
-	margin: 0;
+	margin: auto;
 	padding-bottom: 0;
 }
 
