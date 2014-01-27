@@ -3152,7 +3152,12 @@ li.ui-tabs-active a {
 }
 
 #mytabs .ui-tabs-nav {
-	zoom: 0.75;
+	zoom: 0.70;
+}
+
+#mytabs .ui-widget-content {
+	margin-left: -10px; 
+	zoom: 0.85;
 }
 
 #mytabs {
@@ -3355,6 +3360,11 @@ form.simple textarea.export {
 .fb-name {
 	font-weight: bold;
 	display: block;
+}
+
+/* Users_list module styling */
+#role_main .box-users_list {
+	max-width:100%;
 }
 
 /* Namespace styling */
