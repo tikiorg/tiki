@@ -372,14 +372,14 @@ tt, code, kbd, samp {
 	border-radius: 0;
 }
 .sitetitle a {
-	font: normal bold 4em "Segoe UI", "Lucida Grande", sans-serif;
+	font: normal bold 4rem "Segoe UI", "Lucida Grande", sans-serif;
 	padding: 0 .5em;
 	-webkit-background-clip: text;
 	-moz-background-clip: text;
 	background-clip: text;
 	color: rgba(55,55,55,.5);
 	text-shadow: #fff 0 0 3em, rgba(255,255,255,.7) .2em .2em .3em, #fff 0 -.1em .5em, rgba(255,255,255,.7) -.2em 0 .3em;
-	line-height: 1.5em;
+	line-height: 1.5rem;
 	-moz-transition: all .5s ease;
 	-o-transition: all .5s ease;
 	-webkit-transition: all .5s ease;
