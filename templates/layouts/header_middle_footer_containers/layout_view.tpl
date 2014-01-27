@@ -34,7 +34,7 @@
                 <div class="row">
    			        {if zone_is_empty('left') and zone_is_empty('right')}
                         {if $prefs.feature_layoutshadows eq 'y'}<div id="tiki-center-shadow">{eval var=$prefs.center_shadow_start}{/if}
-    			        <div class="col-lg-12" id="col1">
+    			        <div class="col-md-12" id="col1">
 							{error_report}
 					        {block name=title}{/block}
 					        {block name=content}{/block}
@@ -42,38 +42,38 @@
                         {if $prefs.feature_layoutshadows eq 'y'}{eval var=$prefs.center_shadow_end}</div>{/if}
 			        {elseif zone_is_empty('left')}
                     {if $prefs.feature_layoutshadows eq 'y'}<div id="tiki-center-shadow">{eval var=$prefs.center_shadow_start}{/if}
-				        <div class="col-lg-10" id="col1">
+				        <div class="col-md-10" id="col1">
 							{error_report}
 					        {block name=title}{/block}
 					        {block name=content}{/block}
 				        </div>
                     {if $prefs.feature_layoutshadows eq 'y'}{eval var=$prefs.center_shadow_end}</div>{/if}
-				        <div class="col-lg-2">
+				        <div class="col-md-2">
 					        {modulelist zone=right}
 				        </div>
 			        {elseif zone_is_empty('right')}
                         {if $prefs.feature_layoutshadows eq 'y'}<div id="tiki-center-shadow">{eval var=$prefs.center_shadow_start}{/if}
-				        <div class="col-lg-10 col-lg-push-2" id="col1">
+				        <div class="col-md-10 col-md-push-2" id="col1">
 							{error_report}
 					        {block name=title}{/block}
 					        {block name=content}{/block}
 				        </div>
                         {if $prefs.feature_layoutshadows eq 'y'}{eval var=$prefs.center_shadow_end}</div>{/if}
-                        <div class="col-lg-2 col-lg-pull-10" id="col2">
+                        <div class="col-md-2 col-md-pull-10" id="col2">
                             {modulelist zone=left}
                             </div>
 			        {else}
                             {if $prefs.feature_layoutshadows eq 'y'}<div id="tiki-center-shadow">{eval var=$prefs.center_shadow_start}{/if}
-			        <div class="col-lg-8 col-lg-push-2" id="col1">
+			        <div class="col-md-8 col-md-push-2" id="col1">
 							{error_report}
 					        {block name=title}{/block}
 					        {block name=content}{/block}
 				        </div>
                         {if $prefs.feature_layoutshadows eq 'y'}{eval var=$prefs.center_shadow_end}</div>{/if}
-                        <div class="col-lg-2 col-lg-pull-8" id="col2">
+                        <div class="col-md-2 col-md-pull-8" id="col2">
                             {modulelist zone=left}
                         </div>
-                        <div class="col-lg-2" id="col3">
+                        <div class="col-md-2" id="col3">
 		    		        {modulelist zone=right}
 				        </div>
 			        {/if}
