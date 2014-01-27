@@ -51,7 +51,7 @@
 									<img src="img/icons/large/trackers_updated.png" alt="{tr}Tracker Items{/tr} ({tr}Updated{/tr})" title="{tr}Tracker Items{/tr} ({tr}Updated{/tr})"/>
 								{elseif $pos eq "users"}
 									<img src="img/icons/large/users.png" alt="{tr}Users{/tr}" title="{tr}Users{/tr}"/>
-																	{elseif $pos eq "calendar"}
+								{elseif $pos eq "calendar"}
 									<img src="img/icons/large/date.png" alt="{tr}Calendars{/tr}" title="{tr}Calendars{/tr}"/>
 								{elseif $pos eq "events"}
 									<img src="img/icons/large/date_new.png" alt="{tr}Events{/tr}" title="{tr}Events{/tr}"/>
