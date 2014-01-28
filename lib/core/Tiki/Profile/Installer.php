@@ -7,6 +7,81 @@
 
 class Tiki_Profile_Installer
 {
+	public static function exportGroup(Tiki_Profile_Writer $writer, $group, $categories = false, $objects = false) // {{{
+	{
+		$userlib = \TikiLib::lib('user');
+		$info = $userlib->get_group_info($group);
+
+		if (empty($info['id'])) {
+			return false;
+		}
+
+		$data = array(
+			'description' => $info['groupDesc'],
+			'home' => $info['groupHome'],
+			'user_tracker' => $info['userTrackerId'],
+			'group_tracker' => $info['groupTrackerId'],
+			'user_tracker_field' => $info['userTrackerFieldId'],
+			'group_tracker_field' => $info['groupTrackerFieldId'],
+			'registration_fields' => array_filter(explode(':', $info['registrationUsersFieldIds'])),
+			'user_signup' => $info['userChoice'],
+			'default_category' => $info['groupDefCat'],
+			'theme' => $info['groupTheme'],
+			'allow' => [],
+			'objects' => [],
+		);
+
+		foreach ($info['perms'] as $perm) {
+			// Skip tiki_p_
+			$data['allow'][] = substr($perm, 7);
+		}
+
+		if ($categories) {
+			$data['objects'] = self::getPermissionList($writer, 'category', $group);
+		}
+
+		// Clean and store
+		$data = array_filter($data);
+		$writer->addPermissions($group, $data);
+
+		return true;
+	} // }}}
+
+	private static function getPermissionList($writer, $objectType, $group) // {{{
+	{
+		switch ($objectType) {
+		case 'category':
+			$sub = "SELECT MD5(CONCAT('category', categId)) hash, categId objectId FROM tiki_categories";
+			break;
+		default:
+			return array();
+		}
+
+		$db = TikiDb::get();
+		$result = $db->fetchAll("
+		SELECT i.objectId, permName
+		FROM users_objectpermissions p
+			INNER JOIN ($sub) i ON i.hash = p.objectId
+		WHERE p.objectType = ? AND p.groupName = ?
+		", array($objectType, $group));
+
+		$map = [];
+		foreach ($result as $row) {
+			$id = $row['objectId'];
+			if (! isset($map[$id])) {
+				$map[$id] = array(
+					'type' => $objectType,
+					'id' => $writer->getReference($objectType, $id),
+					'allow' => [],
+				);
+			}
+
+			// Strip tiki_p_
+			$map[$id]['allow'][] = substr($row['permName'], 7);
+		}
+		return array_values($map);
+	} // }}}
+
 	private $installed = array();
 	private $handlers = array(
 		'tracker' => 'Tiki_Profile_InstallHandler_Tracker',

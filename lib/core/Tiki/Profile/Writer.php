@@ -21,6 +21,7 @@ class Tiki_Profile_Writer
 			$this->data = Horde_Yaml::load($content);
 		} else {
 			$this->data = array(
+				'permissions' => array(),
 				'preferences' => array(),
 				'objects' => array(),
 				'unknown_objects' => array(),
@@ -79,6 +80,13 @@ class Tiki_Profile_Writer
 		$this->removeUnknown($type, $currentId, $ref);
 
 		return $reference;
+	}
+
+	function addPermissions($groupName, array $data)
+	{
+		$this->addFake('group', $groupName);
+
+		$this->data['permissions'][$groupName] = $data;
 	}
 
 	private function addRawObject($type, $reference, $currentId, $data)
@@ -155,6 +163,14 @@ class Tiki_Profile_Writer
 				$token = $entry['token'];
 				array_walk_recursive(
 					$this->data['objects'],
+					function (& $entry) use ($token, $replacement) {
+						if (is_string($entry)) {
+							$entry = str_replace($token, $replacement, $entry);
+						}
+					}
+				);
+				array_walk_recursive(
+					$this->data['permissions'],
 					function (& $entry) use ($token, $replacement) {
 						if (is_string($entry)) {
 							$entry = str_replace($token, $replacement, $entry);
