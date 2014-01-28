@@ -48,4 +48,10 @@ class LoginLib
 		global $user_cookie_site;
 		return isset($_SESSION[$user_cookie_site . '_previous']);
 	}
+
+	function logout()
+	{
+		$userlib = TikiLib::lib('user');
+		$userlib->user_logout($this->getUser());
+	}
 }
