@@ -307,9 +307,6 @@ $headerlib->add_jsfile('lib/tiki-js.js');
 if ( $prefs['feature_cssmenus'] == 'y' ) {
 	$headerlib->add_cssfile('css/cssmenus.css');
 }
-if ( $prefs['feature_bidi'] == 'y' ) {
-	$headerlib->add_cssfile('styles/BiDi/BiDi.css');
-}
 
 // using jquery-migrate-1.2.1.js plugin for tiki 11, still required in tiki 12 LTS to support some 3rd party plugins
 
