@@ -197,12 +197,15 @@ class MonitorLib
 	
 	private function finalHandleEvent($args, $events)
 	{
+		$currentUser = TikiLib::lib('login')->getUserId();
+
 		$targets = $this->collectTargets($args);
 
 		$table = $this->table();
 		$results = $table->fetchAll(['priority', 'userId'], [
 			'event' => $table->in($events),
 			'target' => $table->in($targets),
+			'userId' => $table->not($currentUser),
 		]);
 
 		if (empty($results)) {
