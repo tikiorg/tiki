@@ -29,7 +29,7 @@ function smarty_function_favorite($params, $smarty)
 				),
 				$smarty
 			),
-			'_text' => tr('Favorite'),
+			'_text' => '', //required param by button function, but no need for actual text as it gets replaced in tiki-jquery.js anyway
 		),
 		$smarty
 	);

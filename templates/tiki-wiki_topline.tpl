@@ -113,12 +113,15 @@
 									<a class="btn btn-default" href="tiki-object_watches.php?objectId={$page_info.page_ref_id|escape:"url"}&amp;watch_event=structure_changed&amp;objectType=structure&amp;objectName={$page|escape:"url"}&amp;objectHref={'tiki-index.php?page_ref_id='|cat:$page_ref_id|escape:"url"}" class="icon">{icon _id=eye_group_arrow_down alt="{tr}Group Monitor on Structure{/tr}"}</a>
 								{/if}
 							{/if}
+							{if $prefs.user_favorites eq 'y'}
+								{favorite type="wiki page" object=$page}
+							{/if}
                             {if $prefs.feature_multilingual eq 'y' && $prefs.show_available_translations eq 'y' && $machine_translate_to_lang eq ''}
                                 <!--span class="btn-i18n" -->
                                 {include file='translated-lang.tpl' object_type='wiki page'}
                                 <!--/span -->
                             {/if}
-
+							
                             {if $prefs.feature_backlinks eq 'y' and $backlinks and $tiki_p_view_backlink eq 'y'}
 								<div class="btn-group backlinks">
 									<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
