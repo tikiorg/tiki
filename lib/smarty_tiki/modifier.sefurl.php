@@ -131,7 +131,6 @@ function smarty_modifier_sefurl($source, $type='wiki', $with_next = '', $all_lan
 
 		case 'category':
 			$href = $sefurl ? "cat$source": "tiki-browse_categories.php?parentId=$source";
-			$with_title='n';
 			break;
 
 		case 'freetag':
@@ -147,7 +146,7 @@ function smarty_modifier_sefurl($source, $type='wiki', $with_next = '', $all_lan
 			break;
 	}
 
-	if ($with_next) {
+	if ($with_next && $with_title != 'y') {
 		$href .= '&amp;';
 	}
 
