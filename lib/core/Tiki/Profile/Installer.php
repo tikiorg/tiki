@@ -40,6 +40,14 @@ class Tiki_Profile_Installer
 			$data['objects'] = self::getPermissionList($writer, 'category', $group);
 		}
 
+		if ($objects) {
+			$data['objects'] = array_merge(
+				$data['objects'],
+				self::getPermissionList($writer, 'wiki page', $group),
+				self::getPermissionList($writer, 'forum', $group)
+			);
+		}
+
 		// Clean and store
 		$data = array_filter($data);
 		$writer->addPermissions($group, $data);
@@ -52,6 +60,12 @@ class Tiki_Profile_Installer
 		switch ($objectType) {
 		case 'category':
 			$sub = "SELECT MD5(CONCAT('category', categId)) hash, categId objectId FROM tiki_categories";
+			break;
+		case 'forum':
+			$sub = "SELECT MD5(CONCAT('forum', forumId)) hash, forumId objectId FROM tiki_forums";
+			break;
+		case 'wiki page':
+			$sub = "SELECT MD5(CONCAT('wiki page', LOWER(pageName))) hash, pageName objectId FROM tiki_pages";
 			break;
 		default:
 			return array();

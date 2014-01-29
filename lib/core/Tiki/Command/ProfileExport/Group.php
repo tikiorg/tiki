@@ -30,6 +30,12 @@ class Group extends ObjectWriter
 				InputOption::VALUE_NONE,
 				'Include category permissions'
 			)
+			->addOption(
+				'with-object',
+				null,
+				InputOption::VALUE_NONE,
+				'Include object permissions (note: some object types may be missing)'
+			)
 			;
 
 		parent::configure();
@@ -40,8 +46,9 @@ class Group extends ObjectWriter
 		$writer = $this->getProfileWriter($input);
 		$group = $input->getArgument('group');
 		$category = $input->getOption('with-category');
+		$object = $input->getOption('with-object');
 
-		if (\Tiki_Profile_Installer::exportGroup($writer, $group, $category)) {
+		if (\Tiki_Profile_Installer::exportGroup($writer, $group, $category, $object)) {
 			$writer->save();
 		} else {
 			$output->writeln("<error>Group '$group' not found.</error>");
