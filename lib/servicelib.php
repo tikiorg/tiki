@@ -49,7 +49,7 @@ class ServiceLib
 			$url .= '?' . http_build_query($params, '', '&');
 		}
 
-		return $url;
+		return TikiLib::tikiUrlOpt($url);
 	}
 
 	private function getControllerMap()

@@ -340,13 +340,14 @@ class MonitorLib
 		$activity = $mail['args'];
 		$activity['event_type'] = $mail['event'];
 		$smarty->assign('monitor', $activity);
+		TikiLib::setExternalContext(true);
 		$html = $smarty->fetchLang($mail['language'], 'monitor/notification_email_body.tpl');
+		TikiLib::setExternalContext(false);
 		$css = $this->collectCss();
 
 		$processor = new \TijsVerkoyen\CssToInlineStyles\CssToInlineStyles($html, $css);
 
 		$html = $processor->convert();
-		echo $html;die;
 		return $html;
 	}
 

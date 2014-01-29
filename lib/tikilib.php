@@ -42,6 +42,8 @@ class TikiLib extends TikiDb_Bridge
 	 */
 	protected static $libraries = array();
 
+	protected static $isExternalContext = false;
+
 	/**
 	 * @param $name
 	 * @return ActivityLib|AdminLib|AreasLib|array|ArtLib|AttributeLib|AutoSaveLib|BannerLib|BigBlueButtonLib|BlogLib|Cachelib|CalendarLib|Captcha|CategLib|Comments|ContactLib|ContributionLib|cssLib|DCSLib|EditLib|ErrorReportLib|FaqLib|FileGalLib|FlaggedRevisionLib|FreetagLib|GeoLib|groupAlertLib|HeaderLib|HistLib|ImageGalsLib|KalturaLib|LdapLib|LoginLib|LogsLib|LogsQueryLib|Memcachelib|MenuLib|MimeLib|mixed|ModLib|MultilingualLib|OAuthLib|ObjectLib|ParserLib|PerspectiveLib|PollLib|PollLibShared|PreferencesLib|QuantifyLib|QueueLib|QuizLib|RatingConfigLib|RatingLib|ReferencesLib|RegistrationLib|RelationLib|RSSLib|ScoreLib|ScormLib|SearchStatsLib|SemanticLib|ServiceLib|SheetLib|Smarty_Tiki|SocialLib|StatsLib|StructLib|ThemeControlLib|Tiki_Connect_Client|Tiki_Connect_Server|TikiAccessLib|TikiDate|TikiLib|TodoLib|TrackerLib|UnifiedSearchLib|UserModulesLib|UserPrefsLib|UsersLib|Validators|VimeoLib|WikiLib|WYSIWYGLib|ZoteroLib
@@ -5709,6 +5711,7 @@ class TikiLib extends TikiDb_Bridge
 	}
 
 	/**
+	 * Includes the full tiki path in the links for external link generation.
 	 * @param string $relative
 	 * @param array $args
 	 * @return string
@@ -5729,6 +5732,28 @@ class TikiLib extends TikiDb_Bridge
 		}
 
 		return $base;
+	}
+
+	/**
+	 * Include the full tiki path if requested in an external context.
+	 * Otherwise, leave as-is.
+	 *
+	 * @param string $relative
+	 * @param array $args
+	 * @return string
+	 */
+	static function tikiUrlOpt($relative)
+	{
+		if (self::$isExternalContext) {
+			return self::tikiUrl($relative);
+		} else {
+			return $relative;
+		}
+	}
+
+	static function setExternalContext($isExternal)
+	{
+		self::$isExternalContext = (bool) $isExternal;
 	}
 
 	/**

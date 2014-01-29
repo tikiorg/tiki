@@ -3,7 +3,10 @@
 	{activity info=$monitor format=extended}
 
 	<div class="well">
-		<p>{tr}You receive this notification because you requested it. Log in to the website to manage your notifications.{/tr}<p>
+		<p>
+			{tr}You receive this notification because you requested it.{/tr}
+			<a href="{service controller=monitor action=object type=$monitor.type object=$monitor.object}">{tr}Manage your notifications{/tr}</a>
+		</p>
 	</div>
 </div>
 </body>
