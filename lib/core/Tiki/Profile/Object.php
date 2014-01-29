@@ -70,8 +70,9 @@ class Tiki_Profile_Object
 
 	function getRef() // {{{
 	{
-		if ( array_key_exists('ref', $this->data) )
-			return $this->data['ref'];
+		if (isset($this->data['ref'])) {
+			return trim($this->data['ref']);
+		}
 	} // }}}
 
 	function getValue() // {{{
@@ -103,8 +104,9 @@ class Tiki_Profile_Object
 
 	function getData() // {{{
 	{
-		if ( array_key_exists('data', $this->data) )
+		if ( array_key_exists('data', $this->data) ) {
 			return $this->data['data'];
+		}
 
 		return array();
 	} // }}}

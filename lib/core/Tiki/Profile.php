@@ -414,9 +414,11 @@ class Tiki_Profile
 
 		$named = array();
 
-		foreach ( $this->data['objects'] as $object )
-			if ( isset($object['ref']) )
-				$named[] = array( 'domain' => $this->domain, 'profile' => $this->profile, 'object' => $object['ref'] );
+		foreach ( $this->data['objects'] as $object ) {
+			if ( isset($object['ref']) ) {
+				$named[] = array( 'domain' => $this->domain, 'profile' => $this->profile, 'object' => trim($object['ref']) );
+			}
+		}
 
 		return $named;
 	} // }}}
@@ -430,9 +432,11 @@ class Tiki_Profile
 	{
 		$out = array();
 
-		foreach ( $this->getReferences() as $ref )
-			if ( $this->domain != $ref['domain'] || $this->profile != $ref['profile'] )
+		foreach ( $this->getReferences() as $ref ) {
+			if ( $this->domain != $ref['domain'] || $this->profile != $ref['profile'] ) {
 				$out[] = $ref;
+			}
+		}
 
 		return $out;
 	} // }}}
@@ -725,11 +729,13 @@ class Tiki_Profile
 			if ( empty($refs) ) {
 				$counter = 0;
 				$classified[] = $object;
-				if ( $object->getRef() )
+				if ( $object->getRef() ) {
 					$names[] = $object->getRef();
+				}
 			}
-			else
+			else {
 				$objects[] = $object;
+			}
 		}
 
 		$this->objects = $classified;
