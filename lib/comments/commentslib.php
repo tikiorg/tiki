@@ -1020,9 +1020,6 @@ class Comments extends TikiLib
 			$forumId = $forums->insert($data);
 		}
 
-		require_once('lib/search/refresh-functions.php');
-		refresh_index('forums', $forumId);
-
 		return $forumId;
 	}
 
