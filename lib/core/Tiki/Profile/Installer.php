@@ -44,6 +44,7 @@ class Tiki_Profile_Installer
 			$data['objects'] = array_merge(
 				$data['objects'],
 				self::getPermissionList($writer, 'wiki page', $group),
+				self::getPermissionList($writer, 'tracker', $group),
 				self::getPermissionList($writer, 'forum', $group)
 			);
 		}
@@ -63,6 +64,9 @@ class Tiki_Profile_Installer
 			break;
 		case 'forum':
 			$sub = "SELECT MD5(CONCAT('forum', forumId)) hash, forumId objectId FROM tiki_forums";
+			break;
+		case 'tracker':
+			$sub = "SELECT MD5(CONCAT('tracker', trackerId)) hash, trackerId objectId FROM tiki_trackers";
 			break;
 		case 'wiki page':
 			$sub = "SELECT MD5(CONCAT('wiki page', LOWER(pageName))) hash, pageName objectId FROM tiki_pages";
