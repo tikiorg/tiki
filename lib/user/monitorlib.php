@@ -9,6 +9,9 @@ class MonitorLib
 {
 	private $queue = [];
 
+	/**
+	 * Provides the list of priorities available for notifications.
+	 */
 	function getPriorities()
 	{
 		return array(
@@ -19,6 +22,15 @@ class MonitorLib
 		);
 	}
 
+	/**
+	 * Provides the complete list of notifications that can affect a
+	 * specific object in the system, including all of it's supported
+	 * structures, like translation sets.
+	 *
+	 * @param user login name
+	 * @param type standard object type
+	 * @param object full itemId
+	 */
 	function getOptions($user, $type, $object)
 	{
 		global $prefs;
@@ -26,11 +38,21 @@ class MonitorLib
 		$tikilib = TikiLib::lib('tiki');
 		$userId = $tikilib->get_user_id($user);
 
+		// Events applicable for this object
 		$events = $this->getApplicableEvents($type);
 		$options = [];
 
+		// Include object directly
 		$options[] = $this->gatherOptions($userId, $events, $type, $object);
+		
+		// Include translation set
+		if ($this->hasMultilingual($type)) {
+			// Using fake types - wiki page -> wiki page trans
+			//                    article   -> article trans
+			$options[] = $this->gatherOptions($userId, $events, "$type trans", $object);
+		}
 
+		// Include any category and parent category
 		if ($prefs['feature_categories'] == 'y') {
 			$categlib = TikiLib::lib('categ');
 			$categories = $categlib->get_object_categories($type, $object);
@@ -47,12 +69,17 @@ class MonitorLib
 			}
 		}
 
+		// Global / Catch-all always applicable, except for tiki.save, which would
+		// cause too much noise.
 		unset($events['tiki.save']); // Disallow global watch-all
 		$options[] = $this->gatherOptions($userId, $events, 'global', null);
 
 		return call_user_func_array('array_merge', $options);
 	}
 
+	/**
+	 * Replaces the current priority for an event/target pair, for a specific user.
+	 */
 	function replacePriority($user, $event, $target, $priority)
 	{
 		$tikilib = TikiLib::lib('tiki');
@@ -198,6 +225,10 @@ class MonitorLib
 		return [$args, array_unique($sendTo)];
 	}
 
+	/**
+	 * Create an option set for each event in the list.
+	 * Collects the appropriate object information for adequate display.
+	 */
 	private function gatherOptions($userId, $events, $type, $object)
 	{
 		if ($object) {
@@ -227,25 +258,46 @@ class MonitorLib
 	{
 		$objectlib = TikiLib::lib('object');
 
-		$title = $objectlib->get_title($type, $object);
+		list($realType, $objectId) = $this->cleanObjectId($type, $object);
 
-		list($type, $object) = $this->cleanObjectId($type, $object);
+		$title = $objectlib->get_title($realType, $object);
+
+		$target = "$type:$objectId";
+
+		// For multilingual targets, collect all targets in the set as the event
+		// is bound for a single page, but needs to be displayed for all other pages
+		// as well to explain why the notification occurs.
+		if (substr($type, -6) == ' trans') {
+			$title = tr('translations of %0', $title);
+			$fetchTargets = $this->getMultilingualTargets($realType, $objectId);
+			$isTranslation = true;
+		} else {
+			$fetchTargets = [];
+			$isTranslation = false;
+		}
+
+		$fetchTargets[] = $target;
 
 		return array(
 			'type' => $type,
-			'object' => $object,
-			'target' => "$type:$object",
+			'object' => $objectId,
+			'target' => $target,
 			'title' => $title,
-			'isContainer' => $type == 'category',
+			'isContainer' => $isTranslation || $realType == 'category',
+			'fetchTargets' => $fetchTargets,
 		);
 	}
 
 	private function cleanObjectId($type, $object)
 	{
 		// Hash must be short, so never use page names or such, use IDs
-		if ($type == 'wiki page') {
+		if ($type == 'wiki page' || $type == 'wiki page trans') {
 			$tikilib = TikiLib::lib('tiki');
 			$object = $tikilib->get_page_id_from_name($object);
+		}
+
+		if (substr($type, -6) == ' trans') {
+			$type = substr($type, 0, -6);
 		}
 
 		return [$type, (int) $object];
@@ -253,14 +305,27 @@ class MonitorLib
 
 	private function createOption($userId, $eventName, $label, $objectInfo)
 	{
-		$conditions = ['userId' => $userId, 'event' => $eventName, 'target' => $objectInfo['target']];
-		$active = $this->table()->fetchOne('priority', $conditions);
-
-		return array(
-			'priority' => $active ?: 'none',
+		$table = $this->table();
+		$conditions = [
+			'userId' => $userId,
 			'event' => $eventName,
-			'target' => $objectInfo['target'],
-			'hash' => md5($eventName . $objectInfo['target']),
+			'target' => $table->in($objectInfo['fetchTargets']),
+		];
+		// Always fetch the oldest target possible, there would rarely be multiple
+		// But a case where two translation sets would be join could have multiple
+		// monitors active, only display the oldest one.
+		$active = $table->fetchRow(['target', 'priority'], $conditions, [
+			'monitorId' => 'ASC',
+		]);
+
+		// Because of the above rule, the active target may not be the requested one
+		// Still display everything as it is the requested one
+		$realTarget = $active ? $active['target'] : $objectInfo['target'];
+		return array(
+			'priority' => $active ? $active['priority'] : 'none',
+			'event' => $eventName,
+			'target' => $realTarget,
+			'hash' => md5($eventName . $realTarget),
 			'type' => $objectInfo['type'],
 			'object' => $objectInfo['object'],
 			'description' => $objectInfo['isContainer']
@@ -283,6 +348,10 @@ class MonitorLib
 		}
 	}
 
+	/**
+	 * Method used to enumerate all targets being triggered by an event.
+	 * Used to generate a single lookup query on event trigger.
+	 */
 	private function collectTargets($args)
 	{
 		global $prefs;
@@ -299,9 +368,13 @@ class MonitorLib
 			}, $categories);
 		}
 		
-		list($type, $object) = $this->cleanObjectId($type, $object);
+		list($type, $objectId) = $this->cleanObjectId($type, $object);
 		$targets[] = 'global';
-		$targets[] = "$type:$object";
+		$targets[] = "$type:$objectId";
+
+		if ($this->hasMultilingual($type)) {
+			$targets = array_merge($targets, $this->getMultilingualTargets($type, $objectId));
+		}
 
 		return $targets;
 	}
@@ -311,6 +384,10 @@ class MonitorLib
 		return TikiDb::get()->table('tiki_user_monitors');
 	}
 
+	/**
+	 * Ontain the list of email addresses and preferred language for each
+	 * user id to whom the notification email must be sent.
+	 */
 	private function getRecipients($sendTo)
 	{
 		global $prefs;
@@ -334,6 +411,9 @@ class MonitorLib
 		return tra('Notification', $mail['language']);
 	}
 
+	/**
+	 * Renders the body of the email and inline any applicable CSS.
+	 */
 	private function renderContent($mail)
 	{
 		$smarty = TikiLib::lib('smarty');
@@ -387,6 +467,23 @@ class MonitorLib
 		$mail->setSubject($title);
 		$mail->setHtml($html);
 		$mail->send($email);
+	}
+
+	private function hasMultilingual($type)
+	{
+		global $prefs;
+		return $prefs['feature_multilingual'] == 'y' && in_array($type, ['wiki page', 'article']);
+	}
+
+	private function getMultilingualTargets($type, $objectId)
+	{
+		$targets = [];
+		$multilingual = TikiLib::lib('multilingual');
+		foreach ($multilingual->getTrads($type, $objectId) as $row) {
+			$targets[] = "$type trans:{$row['objId']}";
+		}
+
+		return $targets;
 	}
 }
 
