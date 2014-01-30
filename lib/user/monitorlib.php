@@ -52,6 +52,18 @@ class MonitorLib
 			$options[] = $this->gatherOptions($userId, $events, "$type trans", $object);
 		}
 
+		if ($prefs['feature_wiki_structure'] == 'y' && $type == 'wiki page') {
+			$structlib = TikiLib::lib('struct');
+			$structures = $structlib->get_page_structures($object);
+			foreach ($structures as $row) {
+				$path = $structlib->get_structure_path($row['req_page_ref_id']);
+				$path = array_reverse($path);
+				foreach ($path as $level => $entry) {
+					$options[] = $this->gatherOptions($userId, $events, 'structure', $entry['page_ref_id'], $this->getStructureLabel($level, $entry));
+				}
+			}
+		}
+
 		// Include any category and parent category
 		if ($prefs['feature_categories'] == 'y') {
 			$categlib = TikiLib::lib('categ');
@@ -103,6 +115,17 @@ class MonitorLib
 
 		if ($this->hasMultilingual($type)) {
 			$targets = array_merge($targets, $this->getMultilingualTargets($type, $objectId));
+		}
+
+		if ($prefs['feature_wiki_structure'] == 'y' && $type == 'wiki page') {
+			$structlib = TikiLib::lib('struct');
+			$structures = $structlib->get_page_structures($object);
+			foreach ($structures as $row) {
+				$path = $structlib->get_structure_path($row['req_page_ref_id']);
+				foreach ($path as $entry) {
+					$targets[] = "structure:{$entry['page_ref_id']}";
+				}
+			}
 		}
 
 		return $targets;
@@ -254,10 +277,10 @@ class MonitorLib
 	 * Create an option set for each event in the list.
 	 * Collects the appropriate object information for adequate display.
 	 */
-	private function gatherOptions($userId, $events, $type, $object)
+	private function gatherOptions($userId, $events, $type, $object, $title = null)
 	{
 		if ($object) {
-			$objectInfo = $this->getObjectInfo($type, $object);
+			$objectInfo = $this->getObjectInfo($type, $object, $title);
 		} else {
 			$objectInfo = array(
 				'type' => 'global',
@@ -279,13 +302,13 @@ class MonitorLib
 		return $options;
 	}
 
-	private function getObjectInfo($type, $object)
+	private function getObjectInfo($type, $object, $title)
 	{
 		$objectlib = TikiLib::lib('object');
 
 		list($realType, $objectId) = $this->cleanObjectId($type, $object);
 
-		$title = $objectlib->get_title($realType, $object);
+		$title = $title ?: $objectlib->get_title($realType, $object);
 
 		$target = "$type:$objectId";
 
@@ -308,7 +331,7 @@ class MonitorLib
 			'object' => $objectId,
 			'target' => $target,
 			'title' => $title,
-			'isContainer' => $isTranslation || $realType == 'category',
+			'isContainer' => $isTranslation || $realType == 'category' || $realType == 'structure',
 			'fetchTargets' => $fetchTargets,
 		);
 	}
@@ -388,6 +411,19 @@ class MonitorLib
 		}
 
 		return $targets;
+	}
+
+	private function getStructureLabel($level, $entry)
+	{
+		$page = $entry['pageName'];
+
+		if ($entry['parent_id'] == 0) {
+			return tr('%0 (%1 level up, entire structure)', $page, $level);
+		} elseif ($level) {
+			return tr('%0 (%1 level up)', $page, $level);
+		} else {
+			return tr('%0 (current subtree)', $page);
+		}
 	}
 }
 
