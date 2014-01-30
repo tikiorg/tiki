@@ -1,6 +1,6 @@
 {* $Id$ *}
 
-<div class="adminWizardIconleft"><img src="img/icons/large/gnome-settings-background48x48.png" alt="{tr}Set up Look & Feel{/tr}" /></div>
+<div class="adminWizardIconleft"><img src="img/icons/large/wizard_admin48x48.png" alt="{tr}Admin Wizard{/tr}" title="{tr}Admin Wizard{/tr}" /></div><div class="adminWizardIconright"><img src="img/icons/large/gnome-settings-background48x48.png" alt="{tr}Set up Look & Feel{/tr}" /></div>
 {tr}Configure the Tiki theme and other look & feel preferences{/tr}.
 <div class="adminWizardContent">
 <fieldset>

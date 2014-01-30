@@ -38,13 +38,6 @@ body {
 }
 
 /***** Layout *****/
-/* This div encloses the whole Tiki application */
-/*DIV#tiki-main {
-    direction: rtl !important;
-}
-
-DIV#main {
-    text-align: right;}*/
 
 
 /* This div encloses the "clean" Tiki screens */
@@ -53,49 +46,6 @@ div#tiki-clean {
 }
 
 /* Col reversing; This is one col only specific and must be edited if otherwise */
-/* Note : margin width must be equal to col width in your rtl theme file */
-/*#col1.marginleft {
-    margin-left: 0px !important;
-    margin-right: 200px !important;
-}*/
-
-/*#c1c2 #wrapper #col1.marginright {
-	margin-left: 200px;
-	margin-right: 0;
-}*/
-
-/*html[dir=rtl] #c1c2 #wrapper #col1.marginright {
-    margin-right: 180px !important;
-}
-html[dir=rtl] #c1c2 #wrapper #col1.marginleft {
-    margin-left: 180px !important;
-}*/
-
-/* ToDo: handle this in the column switcher code */
-/*html[dir="rtl"] #c1c2 #wrapper #col1.marginleft.marginright[style~="margin-right:"]:not([style="margin-right: 0px;"]) {
-    margin-left: 180px !important;
-    margin-right: 0 !important;
-}
-html[dir="rtl"] #c1c2 #wrapper #col1.marginleft.marginright[style~="margin-right:"] {
-    margin-left: 0 !important;
-    margin-right: 180px !important;
-}
-html[dir="rtl"] #c1c2 #wrapper #col1.marginleft.marginright[style~="margin-left:"]:not([style="margin-left: 0px;"]) {
-    margin-left: 0 !important;
-    margin-right: 180px !important;
-}
-html[dir="rtl"] #c1c2 #wrapper #col1.marginleft.marginright[style~="margin-left:"] {
-    margin-left: 180px !important;
-    margin-right: 0 !important;
-}
-html[dir="rtl"] #c1c2 #wrapper #col1.marginleft.marginright[style="margin-left: 0px; margin-right: 0px;"] {
-    margin-left: 0 !important;
-    margin-right: 0 !important;
-}
-html[dir="rtl"] #c1c2 #wrapper #col1.marginleft.marginright[style~="margin-right:"][style~="margin-left:"]:not([style="margin-left: 0px; margin-right: 0px;"]) {
-    margin-left: auto !important;
-    margin-right: auto !important;
-}*/
 
 #col2 {
     float: right !important;

@@ -1,6 +1,6 @@
 {* $Id$ *}
 
-<div class="adminWizardIconleft"><img src="img/icons/large/wikipages48x48.png" alt="{tr}Set up the language{/tr}" /></div>
+<div class="adminWizardIconleft"><img src="img/icons/large/wizard_admin48x48.png" alt="{tr}Admin Wizard{/tr}" title="{tr}Admin Wizard{/tr}" /></div><div class="adminWizardIconright"><img src="img/icons/large/wikipages48x48.png" alt="{tr}Set up the language{/tr}" /></div>
 <div class="adminWizardContent">
 <fieldset>
 	<legend>{tr}Auto TOC options{/tr}</legend>
