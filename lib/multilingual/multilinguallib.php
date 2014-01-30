@@ -1136,9 +1136,11 @@ class MultilingualLib extends TikiLib
 			if (in_array($prefs['language'], array('ar', 'he', 'fa'))) {
 				$prefs['feature_bidi'] =  'y';
 				TikiLib::lib('header')->add_cssfile('styles/BiDi/BiDi.css');
+				setCookie('rtl','y');
 			} else {
 				$prefs['feature_bidi'] =  'n';
 				TikiLib::lib('header')->drop_cssfile('styles/BiDi/BiDi.css');
+				setCookie('rtl','n');
 			}
 		}
 	}
