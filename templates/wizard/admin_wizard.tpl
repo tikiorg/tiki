@@ -16,7 +16,7 @@
                 {tr}If you are new to Tiki administration, we recommend that you start with this approach{/tr}.
                 {tr}If the profile you selected does not quite meet your needs, you will still have the option of customizing it further with one of the approaches below{/tr}.
                 <br>
-                <input  type="submit" class="btn btn-default" name="use-default-prefs" value="{tr}Choose a Configuration Profile{/tr}" />
+                <input  type="submit" class="btn btn-default" name="use-default-prefs" value="{tr}Start Profiles Wizard{/tr}" />
                 <br><br>
             </td>
         </tr>

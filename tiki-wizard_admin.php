@@ -46,6 +46,9 @@ if ($useDefaultPrefs) {
 	require_once('lib/wizard/pages/admin_profiles_demo.php');
 	$pages[] = new AdminWizardProfilesDemo();
 
+	require_once('lib/wizard/pages/admin_profiles_completed.php'); 
+	$pages[] = new AdminWizardProfilesCompleted();
+
 } else {
 	require_once('lib/wizard/pages/admin_language.php');
 	$pages[] = new AdminWizardLanguage();
