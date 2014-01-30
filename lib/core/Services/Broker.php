@@ -109,7 +109,8 @@ class Services_Broker
 		$template = "$controller/$action.tpl";
 
 		//if template doesn't exists, simply return the array given from the action
-		if (! $smarty->templateExists($template)) {
+        //if noTemplate is specified in the query string, it will skip the template
+		if (! $smarty->templateExists($template) || strpos($_SERVER['QUERY_STRING'], '&noTemplate') !== false) {
 			return json_encode($output);
 		}
 

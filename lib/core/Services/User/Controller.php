@@ -40,7 +40,6 @@ class Services_User_Controller
 			return array('result' => json_encode(array(tr("secure connection required"))));
 		}
 
-		$result = array();
 		$name = $input->name->string();
 		$pass = $input->pass->string();
 		$passAgain = $input->passAgain->string();
@@ -59,19 +58,9 @@ class Services_User_Controller
 			)
 		);
 
-		if (is_array($regResult)) {
-			foreach ($regResult as $r) {
-				$result[] = $r->msg;
-			}
-		} else if (is_a($regResult, 'RegistrationError')) {
-			$result[] = $regResult->msg;
-		} else if (is_string($regResult)) {
-			$result = trim($regResult, "\n");
-		} elseif (!empty($regResult['msg'])) {
-			$result = trim($regResult['msg'], "\n");
-		}
-
-		return array('result' => json_encode($result));
+		return array(
+            'result' => $regResult,
+        );
 	}
 
 	/**
