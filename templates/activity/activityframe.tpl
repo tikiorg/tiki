@@ -34,7 +34,7 @@
 	</div>
 	{if $activity_format eq 'extended'}
 		<div class="comment-container" data-reload="{service controller=comment action=list type=$activityframe.object.type objectId=$activityframe.object.id}">
-			{service_inline controller=comment action=list type=$activityframe.object.type objectId=$activityframe.object.id}
+			{service_inline controller=comment action=list type=$activityframe.object.type objectId=$activityframe.object.id _silent=true}
 		</div>
 	{/if}
 </div>
