@@ -64,6 +64,11 @@ class MonitorLib
 			}
 		}
 
+		if ($prefs['feature_forums'] == 'y' && $type == 'forum post') {
+			$post = TikiLib::lib('comments')->get_comment($object);
+			$options[] = $this->gatherOptions($userId, $events, 'forum', $post['object']);
+		}
+
 		// Include any category and parent category
 		if ($prefs['feature_categories'] == 'y') {
 			$categlib = TikiLib::lib('categ');
@@ -125,6 +130,15 @@ class MonitorLib
 				foreach ($path as $entry) {
 					$targets[] = "structure:{$entry['page_ref_id']}";
 				}
+			}
+		}
+
+		if ($prefs['feature_forums'] == 'y' && $type == 'forum post') {
+			if (! empty($args['forum_id'])) {
+				$targets[] = "forum:{$args['forum_id']}";
+			}
+			if (! empty($args['parent_id'])) {
+				$targets[] = "forum post:{$args['parent_id']}";
 			}
 		}
 
@@ -287,6 +301,7 @@ class MonitorLib
 				'target' => 'global',
 				'title' => tr('Anywhere'),
 				'isContainer' => true,
+				'fetchTargets' => ['global'],
 			);
 		}
 
@@ -331,7 +346,7 @@ class MonitorLib
 			'object' => $objectId,
 			'target' => $target,
 			'title' => $title,
-			'isContainer' => $isTranslation || $realType == 'category' || $realType == 'structure',
+			'isContainer' => $isTranslation || in_array($realType, ['category', 'structure', 'forum']),
 			'fetchTargets' => $fetchTargets,
 		);
 	}
@@ -390,6 +405,12 @@ class MonitorLib
 				'tiki.save' => ['global' => false, 'label' => tr('Any activity')],
 				'tiki.wiki.save' => ['global' => false, 'label' => tr('Page modified')],
 				'tiki.wiki.create' => ['global' => true, 'label' => tr('Page created')],
+			];
+		case 'forum post':
+			return [
+				'tiki.save' => ['global' => false, 'label' => tr('Any activity')],
+				'tiki.forumpost.save' => ['global' => false, 'label' => tr('Any forum activity')],
+				'tiki.forumpost.create' => ['global' => true, 'label' => tr('New topics')],
 			];
 		default:
 			return [];

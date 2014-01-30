@@ -197,7 +197,7 @@
                     </div>
 				{/if}
                 <div class="form-group">
-                    <label class="col-sm-2 control-label" for="editpost">{tr}Edit{/tr}</label>
+                    <label class="col-sm-2 control-label" for="editpost">{tr}Message{/tr}</label>
                     <div class="col-sm-10">
                         {textarea id="editpost" class="form-control" name="comments_data" _simple="y" codemirror="y" syntax="tiki" _toolbars=$prefs.feature_forum_parse}{$comment_data}{/textarea}
 				    </div>

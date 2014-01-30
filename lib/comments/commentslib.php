@@ -2542,6 +2542,7 @@ class Comments extends TikiLib
 					array(
 						'type' => $type,
 						'object' => $threadId,
+						'parent_id' => $comment['parentId'],
 						'forum_id' => $comment['object'],
 						'user' => $GLOBALS['user'],
 						'title' => $title,
