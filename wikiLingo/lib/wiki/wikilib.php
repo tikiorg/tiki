@@ -485,7 +485,7 @@ class WikiLib extends TikiLib
 				$this->update_cache($page, $content . $jsFile . $js);
 			}
 		} else {
-            TikiLib::events()->trigger(
+            $content = TikiLib::events()->trigger(
                 'tiki.wiki.parse',
                     array(
                         'type' => 'wiki page',

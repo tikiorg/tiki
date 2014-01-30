@@ -80,14 +80,6 @@ $tikilib->get_preferences($needed_prefs, true, true);
 global $systemConfiguration;
 $prefs = $systemConfiguration->preference->toArray() + $prefs;
 
-
-TikiLib::events()->bind('tiki.wiki.parse', function($args) use ($prefs){
-    $content = Tiki::lib('parser')->parse_data($args['object'], $args['options']);
-
-});
-
-
-
 // mose : simulate strong var type checking for http vars
 $patterns['int'] = "/^[0-9]*$/"; // *Id
 $patterns['intSign'] = "/^[-+]?[0-9]*$/"; // *offset,
@@ -645,5 +637,7 @@ if (function_exists('mb_internal_encoding')) {
 if (!isset($_SERVER['QUERY_STRING'])) {
 	$_SERVER['QUERY_STRING'] = '';
 }
+
+
 
 $smarty->assign("tikidomain", $tikidomain);

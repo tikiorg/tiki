@@ -919,7 +919,7 @@
         },
         {
             "name": "wikiLingo",
-            "version": "1.0"
+            "version": "1.0",
             "dist": {
                 "type": "zip",
                 "url": "https://github.com/wikiLingo/wikiLingo/archive/master.zip",

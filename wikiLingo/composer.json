@@ -96,7 +96,9 @@
 			"Feed": "lib/core/",
 			"FutureLink": "lib/core/",
 			"FileGallery": "lib/core/",
-			"WikiPlugin": "lib/core/"
+			"WikiPlugin": "vendor/wikiLingo/WikiLingo",
+			"WikiLingoWYSISYG": "vendor/wikiLingo/WikiLingoWYSISYG",
+			"WYSISYGWikiLingo": "vendor/wikiLingo/WYSISYGWikiLingo"
 		},
 		"classmap": [
 			"vendor_extra/pear/",

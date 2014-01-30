@@ -157,6 +157,17 @@ function tiki_setup_events()
 	$events->bind('tiki.wiki.update', 'tiki.wiki.save');
 	$events->bind('tiki.wiki.create', 'tiki.wiki.save');
 	$events->bind('tiki.wiki.save', 'tiki.save');
+    $events->bind('tiki.wiki.parse', function($args) use ($prefs){
+
+        if($prefs['feature_wikilingo']){
+            $wikiLingo = new WikiLingo\Parser();
+            return $wikiLingo->parse($args['object']);
+        }
+        else{
+            $content = Tiki::lib('parser')->parse_data($args['object'], $args['options']);
+            return $content;
+        }
+    });
 	$events->bind('tiki.wiki.view', 'tiki.view');
 
 	$events->bind('tiki.trackeritem.update', 'tiki.trackeritem.save');
