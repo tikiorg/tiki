@@ -1,6 +1,6 @@
 {* $Id$ *}
 
-<div class="adminWizardIconleft"><img src="img/icons/large/profiles48x48.png" alt="{tr}Profiles Wizard completed{/tr}" /></div>
+<div class="adminWizardIconleft"><img src="img/icons/large/wizard_profiles48x48.png" alt="{tr}Profiles Wizard completed{/tr}" /></div>
 <div class="adminWizardContent">
 <img src="img/icons/tick.png" alt="{tr}Ok{/tr}" />{tr}Congratulations{/tr}. {tr}You are done with the Profiles Wizard{/tr}.<br>
 
