@@ -9,7 +9,7 @@
 
     <table>
         <tr>
-            <td><div class="adminWizardIconleft"><img src="img/icons/large/wizard_profiles48x48.png" alt="{tr}Profiles Wizard{/tr}" /></div></td>
+            <td><div class="adminWizardIconleft"><img src="img/icons/large/wizard_profiles48x48.png" alt="{tr}Profiles Wizard{/tr}" title="{tr}Profiles Wizard{/tr}" /></div></td>
             <td>
                 {tr}You may start by applying some of our configuration templates through the <b>Profiles Wizard</b>{/tr}.
                 {tr}Each of these provides a shrink-wrapped solution that meets most of the needs of a particular kind of community or site (ex: Personal Blog space, Company Intranet, ...) or that extends basic setup with extra features configured for you{/tr}.
@@ -22,7 +22,7 @@
         </tr>
 
         <tr>
-            <td><div class="adminWizardIconleft"><img src="img/icons/large/wizard_admin48x48.png" alt="{tr}Configuration Walkthrough{/tr}" /><br/><br/></div></td>
+            <td><div class="adminWizardIconleft"><img src="img/icons/large/wizard_admin48x48.png" alt="{tr}Configuration Walkthrough{/tr}" title="Configuration Walkthrough" /><br/><br/></div></td>
             <td>
                 {tr}Alternatively, you may use the <b>Admin Wizard</b>{/tr}.
                 {tr}This will guide you through the most common preference settings in order to customize your site{/tr}.

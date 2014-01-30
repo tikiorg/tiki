@@ -1,6 +1,6 @@
 {* $Id$ *}
 
-<div class="adminWizardIconleft"><img src="img/icons/large/fileopen48x48.png" alt="{tr}File storage setup{/tr}" /></div>
+<div class="adminWizardIconleft"><img src="img/icons/large/wizard_admin48x48.png" alt="{tr}Admin Wizard{/tr}" title="{tr}Admin Wizard{/tr}" /></div><div class="adminWizardIconright"><img src="img/icons/large/fileopen48x48.png" alt="{tr}File storage setup{/tr}" /></div>
 <div class="adminWizardContent">
 <p>
 
