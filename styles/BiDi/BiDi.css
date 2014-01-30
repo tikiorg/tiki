@@ -511,8 +511,8 @@ table.normal th.auto {
     left: .5em;
 }
 
-/* Overrides for main page content in non-RTL languages */
-#role_main:not([lang=ar]):not([lang=he]):not([lang=fa]):not([lang=ku]):not([lang=ug]) * {
+/* Overrides for main page content in non-RTL languages (only when lang attr is set on it) */
+#role_main[lang]:not([lang=ar]):not([lang=he]):not([lang=fa]):not([lang=ku]):not([lang=ug]) * {
     direction: ltr;
     text-align: start;
 }
