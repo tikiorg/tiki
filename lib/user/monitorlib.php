@@ -78,6 +78,42 @@ class MonitorLib
 	}
 
 	/**
+	 * Method used to enumerate all targets being triggered by an event.
+	 * Used to generate a single lookup query on event trigger.
+	 */
+	private function collectTargets($args)
+	{
+		global $prefs;
+
+		$type = $args['type'];
+		$object = $args['object'];
+
+		if ($prefs['feature_categories'] == 'y') {
+			$categlib = TikiLib::lib('categ');
+			$categories = $categlib->get_object_categories($type, $object);
+			$categories = $categlib->get_with_parents($categories);
+			$targets = array_map(function ($categoryId) {
+				return "category:$categoryId";
+			}, $categories);
+		}
+		
+		list($type, $objectId) = $this->cleanObjectId($type, $object);
+		$targets[] = 'global';
+		$targets[] = "$type:$objectId";
+
+		if ($this->hasMultilingual($type)) {
+			$targets = array_merge($targets, $this->getMultilingualTargets($type, $objectId));
+		}
+
+		return $targets;
+	}
+
+	private function table()
+	{
+		return TikiDb::get()->table('tiki_user_monitors');
+	}
+
+	/**
 	 * Replaces the current priority for an event/target pair, for a specific user.
 	 */
 	function replacePriority($user, $event, $target, $priority)
@@ -157,11 +193,11 @@ class MonitorLib
 
 		$tx = TikiDb::get()->begin();
 
-		// TODO : Implement sendTo
 		// TODO : Shrink large events / truncate content ? 
 
 		$mailQueue = [];
 
+		$monitormail = TikiLib::lib('monitormail');
 		foreach ($queue as $item) {
 			list($args, $sendTo) = $this->finalHandleEvent($item['arguments'], $item['events']);
 
@@ -170,29 +206,15 @@ class MonitorLib
 			}
 
 			if (! empty($sendTo)) {
-				$recipients = $this->getRecipients($sendTo);
-
-				foreach ($recipients as $recipient) {
-					$key = "{$args['EVENT_ID']}-{$recipient['language']}";
-
-					if (! isset($mailQueue[$key])) {
-						$mailQueue[$key] = ['language' => $recipient['language'], 'event' => $item['event'], 'args' => $args, 'emails' => []];
-					}
-
-					$mailQueue[$key]['emails'][] = $recipient['email'];
-				}
+				$monitormail->queue($item['event'], $args, $sendTo);
 			}
+				
 		}
 
 		$tx->commit();
 
-		foreach ($mailQueue as $mail) {
-			$title = $this->renderTitle($mail);
-			$content = $this->renderContent($mail);
-			foreach ($mail['emails'] as $email) {
-				$this->sendMail($email, $title, $content);
-			}
-		}
+		// Send email (rather slow, dealing with external services) after Tiki's management is done
+		$monitormail->sendQueue();
 	}
 	
 	private function finalHandleEvent($args, $events)
@@ -349,127 +371,6 @@ class MonitorLib
 		default:
 			return [];
 		}
-	}
-
-	/**
-	 * Method used to enumerate all targets being triggered by an event.
-	 * Used to generate a single lookup query on event trigger.
-	 */
-	private function collectTargets($args)
-	{
-		global $prefs;
-
-		$type = $args['type'];
-		$object = $args['object'];
-
-		if ($prefs['feature_categories'] == 'y') {
-			$categlib = TikiLib::lib('categ');
-			$categories = $categlib->get_object_categories($type, $object);
-			$categories = $categlib->get_with_parents($categories);
-			$targets = array_map(function ($categoryId) {
-				return "category:$categoryId";
-			}, $categories);
-		}
-		
-		list($type, $objectId) = $this->cleanObjectId($type, $object);
-		$targets[] = 'global';
-		$targets[] = "$type:$objectId";
-
-		if ($this->hasMultilingual($type)) {
-			$targets = array_merge($targets, $this->getMultilingualTargets($type, $objectId));
-		}
-
-		return $targets;
-	}
-
-	private function table()
-	{
-		return TikiDb::get()->table('tiki_user_monitors');
-	}
-
-	/**
-	 * Ontain the list of email addresses and preferred language for each
-	 * user id to whom the notification email must be sent.
-	 */
-	private function getRecipients($sendTo)
-	{
-		global $prefs;
-		$db = TikiDb::get();
-		$bindvars = [$prefs['site_language']];
-		$condition = $db->in('userId', $sendTo, $bindvars);
-
-		$result = $db->fetchAll("
-			SELECT email, IFNULL(p.value, ?) language
-			FROM users_users u
-				LEFT JOIN tiki_user_preferences p ON u.login = p.user AND p.prefName = 'language'
-			WHERE $condition
-		", $bindvars);
-
-		return $result;
-	}
-
-	private function renderTitle($mail)
-	{
-		// FIXME : Needs a better title
-		return tra('Notification', $mail['language']);
-	}
-
-	/**
-	 * Renders the body of the email and inline any applicable CSS.
-	 */
-	private function renderContent($mail)
-	{
-		$smarty = TikiLib::lib('smarty');
-		$activity = $mail['args'];
-		$activity['event_type'] = $mail['event'];
-		$smarty->assign('monitor', $activity);
-		TikiLib::setExternalContext(true);
-		$html = $smarty->fetchLang($mail['language'], 'monitor/notification_email_body.tpl');
-		TikiLib::setExternalContext(false);
-		$css = $this->collectCss();
-
-		$processor = new \TijsVerkoyen\CssToInlineStyles\CssToInlineStyles($html, $css);
-
-		$html = $processor->convert();
-		return $html;
-	}
-
-	private function collectCss()
-	{
-		static $css;
-		if ($css) {
-			return $css;
-		}
-
-		$cachelib = TikiLib::lib('cache');
-		if ($css = $cachelib->getCached('email_css')) {
-			return $css;
-		}
-
-		$headerlib = TikiLib::lib('header');
-		$files = $headerlib->get_css_files();
-		$contents = array_map(function ($file) {
-			if ($file{0} == '/') {
-				return file_get_contents($file);
-			} elseif (substr($file, 0, 4) == 'http') {
-				return TikiLib::lib('tiki')->httprequest($file);
-			} else {
-				return file_get_contents(TIKI_PATH . '/' . $file);
-			}
-		}, $files);
-
-		$css = implode("\n\n", $contents);
-		$cachelib->cacheItem('email_css', $css);
-		return $css;
-	}
-
-	private function sendMail($email, $title, $html)
-	{
-		require_once 'lib/webmail/tikimaillib.php';
-		$mail = new TikiMail;
-		$mail->setSubject($title);
-		$mail->setHtml($html);
-		$mail->send($email);
 	}
 
 	private function hasMultilingual($type)
