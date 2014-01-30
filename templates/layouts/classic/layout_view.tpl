@@ -1,5 +1,5 @@
 {* $Id$ *}<!DOCTYPE html>
-<html lang="{if !empty($pageLang)}{$pageLang}{else}{$prefs.language}{/if}"{if !empty($page_id)} id="page_{$page_id}"{/if}>
+<html lang="{if !empty($pageLang)}{$pageLang}{else}{$prefs.language}{/if}"{if $prefs.feature_bidi eq 'y'} dir="rtl"{/if}{if !empty($page_id)} id="page_{$page_id}"{/if}>
 	<head>
 		{include file='header.tpl'}
 	</head>
@@ -37,7 +37,7 @@
 							<div class="header_outer">
 								<div class="header_container">
 									<div class="fixedwidth header_fixedwidth">
-										<header class="clearfix header" id="header"{if $prefs.feature_bidi eq 'y'} dir="rtl"{/if}>
+										<header class="clearfix header" id="header">
 											{modulelist zone=top}
 										</header>
 									</div>	
@@ -52,7 +52,7 @@
 							{modulelist zone=topbar}
 							<div class="clearfix {if $prefs.feature_fullscreen != 'y' or $smarty.session.fullscreen != 'y'}nofullscreen{else}fullscreen{/if}" id="c1c2">
 								<div class="clearfix" id="wrapper">
-									<div id="col1" class="{if $prefs.feature_left_column eq 'fixed' or ($prefs.feature_left_column ne 'n' && ! zone_is_empty('left') && $show_columns.left_modules ne 'n')}marginleft{/if}{if  $prefs.feature_right_column eq 'fixed' or ($prefs.feature_right_column ne 'n' && ! zone_is_empty('right') && $show_columns.right_modules ne 'n')} marginright{/if}"{if $prefs.feature_bidi eq 'y'} dir="rtl"{/if}>
+									<div id="col1" class="{if $prefs.feature_left_column eq 'fixed' or ($prefs.feature_left_column ne 'n' && ! zone_is_empty('left') && $show_columns.left_modules ne 'n')}marginleft{/if}{if  $prefs.feature_right_column eq 'fixed' or ($prefs.feature_right_column ne 'n' && ! zone_is_empty('right') && $show_columns.right_modules ne 'n')} marginright{/if}">
 									{if $prefs.feature_layoutshadows eq 'y'}<div id="tiki-center-shadow">{eval var=$prefs.center_shadow_start}{/if}
 										<div id="tiki-center" {*id needed for ajax editpage link*} class="clearfix content">
 										{if ($prefs.feature_fullscreen != 'y' or $smarty.session.fullscreen != 'y')}
@@ -89,7 +89,7 @@
 											{if $display_msg}
 												{remarksbox type="note" title="{tr}Notice{/tr}"}{$display_msg|escape}{/remarksbox}
 											{/if}
-											<div id="role_main">
+											<div id="role_main"{if !empty($pageLang)} lang="{$pageLang}"{/if}>
 												{block name=title}{/block}
 												{block name=content}{/block}
 												{block name=show_content}{/block}{* Help separate the page content from the whole page. Must be defined at root to work. AB *}
@@ -105,7 +105,7 @@
 
 								{if $prefs.feature_fullscreen != 'y' or $smarty.session.fullscreen != 'y'}
 									{if  $prefs.feature_left_column eq 'fixed' or ($prefs.feature_left_column ne 'n' && ! zone_is_empty('left') && $show_columns.left_modules ne 'n')}
-										<div id="col2"{if $prefs.feature_left_column eq 'user'} style="display:{if isset($cookie.show_col2) and $cookie.show_col2 ne 'y'} none{elseif isset($ie6)} block{else} table-cell{/if};"{/if}{if $prefs.feature_bidi eq 'y'} dir="rtl"{/if}>
+										<div id="col2"{if $prefs.feature_left_column eq 'user'} style="display:{if isset($cookie.show_col2) and $cookie.show_col2 ne 'y'} none{elseif isset($ie6)} block{else} table-cell{/if};"{/if}>
 											{modulelist zone=left class="content modules"}
 										</div>
 									{/if}
@@ -113,7 +113,7 @@
 							</div>{* -- END of #c1c2 -- *}
 							{if $prefs.feature_fullscreen != 'y' or $smarty.session.fullscreen != 'y'}
 								{if  $prefs.feature_right_column eq 'fixed' or ($prefs.feature_right_column ne 'n' && ! zone_is_empty('right') && $show_columns.right_modules ne 'n') or (isset($module_pref_errors) and $module_pref_errors)}
-									<div class="clearfix" id="col3"{if $prefs.feature_right_column eq 'user'} style="display:{if isset($cookie.show_col3) and $cookie.show_col3 ne 'y'} none{elseif isset($ie6)} block{else} table-cell{/if};"{/if}{if $prefs.feature_bidi eq 'y'} dir="rtl"{/if}>
+									<div class="clearfix" id="col3"{if $prefs.feature_right_column eq 'user'} style="display:{if isset($cookie.show_col3) and $cookie.show_col3 ne 'y'} none{elseif isset($ie6)} block{else} table-cell{/if};"{/if}>
 										{block name=zone_right}
 										{modulelist zone=right class="content modules"}
 										{if $module_pref_errors}
