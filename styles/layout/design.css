@@ -2448,6 +2448,9 @@ body.tiki_wiki #comments {
 	overflow: auto;
 	max-width: 990px;
 }
+.CodeMirror.codelisting {
+	position: static; /* fix the "double height with scrollbar" issue in codelisting with CodeMirror */
+}
 
 /* wikiplugin_fade */
 .wpfade-hidden {
