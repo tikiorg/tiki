@@ -7,7 +7,11 @@
 
 function smarty_function_monitor_link($params)
 {
-	global $user;
+	global $user, $prefs;
+
+	if ($prefs['monitor_enabled'] != 'y') {
+		return;
+	}
 
 	if (! isset($params['type']) || ! isset($params['object'])) {
 		return tr('Missing parameter.');

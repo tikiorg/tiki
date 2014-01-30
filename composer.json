@@ -5,7 +5,7 @@
 	"homepage": "https://tiki.org",
 	"minimum-stability": "stable",
 	"require": {
-		"twitter/bootstrap": "3.0.3",
+		"twitter/bootstrap": "3.1.0",
 
 		"adodb/adodb": "5.18",
 		"aFarkas/html5shiv": "3.6.2",

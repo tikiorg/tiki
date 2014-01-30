@@ -7,7 +7,7 @@
 	</button>
 	{* ..than on hover first show the list of translations including the current language highlighted *}
 	{if empty($trads[0].lang)}
-		<ul class="dropdown-menu" role="menu">
+		<ul class="dropdown-menu dropdown-menu-right" role="menu">
 			<li>
 				<li role="presentation" class="dropdown-header">
 					{tr}No language assigned.{/tr}
@@ -28,7 +28,7 @@
             </li>
         </ul>
 	{else}
-		<ul class="dropdown-menu" role="menu">
+		<ul class="dropdown-menu dropdown-menu-right" role="menu">
 			<li>
 			{* First the language of the object *}
 			<li role="presentation" class="dropdown-header">

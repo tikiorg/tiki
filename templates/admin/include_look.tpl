@@ -16,14 +16,22 @@
 				</div>
 
 				<div class="adminoptionbox">
-					{preference name=style}
-					{preference name=style_option}
+					{preference name=theme_active}
+
+					<div class="adminoptionbox theme_active_childcontainer custom">
+						{preference name=theme_custom}
+					</div>
+
+					<div class="adminoptionbox theme_active_childcontainer legacy">
+						{preference name=style}
+						{preference name=style_option}
+
+						{preference name=style_admin}
+						{preference name=style_admin_option}
+					</div>
 
 					{preference name=site_layout}
 					{preference name=site_layout_per_object}
-
-					{preference name=style_admin}
-					{preference name=style_admin_option}
 
 					{if $prefs.javascript_enabled eq 'n' or $prefs.feature_jquery eq 'n'}
 						<input type="submit" class="btn btn-default btn-sm" name="changestyle" value="{tr}Go{/tr}" />
