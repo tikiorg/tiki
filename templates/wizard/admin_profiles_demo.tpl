@@ -56,6 +56,17 @@
 	&nbsp;
 	</td>
 	<td style="width:48%">
+	<div class="adminWizardIconright"><img src="img/icons/large/profile_voting_system48x48.png" alt="{tr}Voting System{/tr}" /></div>
+	<b>{tr}Voting System{/tr}</b> (<a href="tiki-admin.php?profile=Voting_System&categories%5B%5D=12.x&repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2" target="_blank">{tr}apply profile now{/tr}</a>)
+	<br>
+	{tr}This profile sets up a Voting system in which only members of a group will be able to vote. It creates a tracker, 2 groups of users, one user in each group and a custom wiki page as interface to vote{/tr}. 
+	<ul>
+    <li>{tr}Group homepage set for the voting group{/tr}</li>
+    <li>{tr}Only one vote per member is allowed{/tr}</li> 
+	<li>{tr}Results shown in real time (Plugin TrackerStat){/tr}</li>
+    <li>{tr}Other candidates can be voted beyond the proposed{/tr}</li>
+	<br/><em>{tr}See also{/tr} <a href="http://doc.tiki.org/E-Democracy+system" target="_blank">{tr}E-democracy documentation page{/tr}</a> {tr}in doc.tiki.org{/tr}</a></em>
+	</ul>
 	</td>
 	</tr>
 	</table>
