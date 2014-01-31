@@ -94,6 +94,7 @@ function module_categories($mod_reference, &$module_params)
 		$categId = 0;
 	}
 	if (empty($categories)) {
+		$smarty->clearAssign('tree');
 		return;
 	}
 
