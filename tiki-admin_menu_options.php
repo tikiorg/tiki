@@ -145,7 +145,7 @@ $smarty->assign_by_ref('maxRecords', $maxRecords);
 $smarty->assign_by_ref('sort_mode', $sort_mode);
 $allchannels = $menulib->list_menu_options($_REQUEST["menuId"], 0, -1, $sort_mode, $find);
 $allchannels = $menulib->sort_menu_options($allchannels);
-$channels = $menulib->list_menu_options($_REQUEST["menuId"], $offset, $maxRecords, $sort_mode, $find, true);
+$channels = $menulib->list_menu_options($_REQUEST["menuId"], $offset, $maxRecords, $sort_mode, $find, true, 0, true);
 $channels = $menulib->describe_menu_types($channels);
 $smarty->assign_by_ref('cant_pages', $channels["cant"]);
 $smarty->assign_by_ref('channels', $channels["data"]);
