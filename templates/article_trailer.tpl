@@ -9,6 +9,9 @@
 		{if $prefs.feature_multilingual eq 'y' and $lang and $prefs.show_available_translations eq 'y'}	
 			{include file='translated-lang.tpl' object_type='article'}
 		{/if}
+		{if $prefs.user_favorites eq 'y'}
+			{favorite type="article" object=$articleId}
+		{/if}
 		{if $tiki_p_edit_article eq 'y'}
 			<a class="btn btn-default icon" href="tiki-edit_article.php?articleId={$articleId}">{icon _id='page_edit'}</a>
 		{/if}
