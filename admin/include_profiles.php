@@ -15,6 +15,12 @@ $sources = $list->getSources();
 
 $parserlib = TikiLib::lib('parser');
 
+$show_details_for = "";
+if (isset($_REQUEST['show_details_for'])) {
+    $show_details_for = $_REQUEST['show_details_for'];
+}
+$smarty->assign('show_details_for', $show_details_for);
+
 if ($prefs['profile_unapproved'] == 'y') {
 	Tiki_Profile::enableDeveloperMode();
 }
