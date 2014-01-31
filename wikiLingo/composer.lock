@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "b4d5fa2b530c15c663e7d41a953698a1",
+    "hash": "bfcdba10d10f428c58f4a5d5f974b4f8",
     "packages": [
         {
             "name": "aFarkas/html5shiv",
@@ -230,13 +230,13 @@
             "source": {
                 "type": "svn",
                 "url": "http://svn.code.sf.net/p/jcapture-applet/code",
-                "reference": "/trunk/@46"
+                "reference": "/trunk/@47"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/jcapture-applet-jcapture-applet-dev-trunk-f04408.zip",
+                "url": "https://composer.tiki.org/dist/jcapture-applet-jcapture-applet-dev-trunk-56537c.zip",
                 "reference": "dev-trunk",
-                "shasum": "99359f87c4472e26605dc4989fd7624506ed6701"
+                "shasum": "0f910540cf75ece6edf67ba09af420f9b6d01f04"
             },
             "type": "library",
             "license": [
@@ -264,7 +264,7 @@
                 "screencapture",
                 "screenshot"
             ],
-            "time": "2013-04-18 04:48:36"
+            "time": "2014-01-27 14:02:15"
         },
         {
             "name": "jquery/jquery",
@@ -918,17 +918,6 @@
             "time": "2013-03-01 06:43:14"
         },
         {
-            "name": "wikiLingo",
-            "version": "1.0",
-            "dist": {
-                "type": "zip",
-                "url": "https://github.com/wikiLingo/wikiLingo/archive/master.zip",
-                "reference": null,
-                "shasum": null
-            },
-            "type": "library"
-        },
-        {
             "name": "twitter/bootstrap",
             "version": "3.0.3",
             "dist": {
@@ -938,6 +927,35 @@
                 "shasum": null
             },
             "type": "library"
+        },
+        {
+            "name": "wikilingo/wikilingo",
+            "version": "0.11",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/wikiLingo/wikiLingo.git",
+                "reference": "84762b95a911f732f668829f1cc28aa3290464c5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/wikiLingo/wikiLingo/zipball/84762b95a911f732f668829f1cc28aa3290464c5",
+                "reference": "84762b95a911f732f668829f1cc28aa3290464c5",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Types\\": "./",
+                    "WikiLingo\\": "./",
+                    "WikiLingoWYSIWYG\\": "./",
+                    "WYSIWYGWikiLingo\\": "./"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "time": "2014-01-31 12:23:42"
         },
         {
             "name": "zetacomponents/base",

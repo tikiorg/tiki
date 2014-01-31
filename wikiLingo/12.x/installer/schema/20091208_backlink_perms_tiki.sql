@@ -1,1 +1,0 @@
-AlTER TABLE `tiki_file_galleries` ADD COLUMN `backlinkPerms` char(1) default 'n';

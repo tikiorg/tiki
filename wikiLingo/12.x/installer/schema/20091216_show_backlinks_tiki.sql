@@ -1,1 +1,0 @@
-ALTER TABLE `tiki_file_galleries` ADD COLUMN  `show_backlinks` char(1) default NULL;
