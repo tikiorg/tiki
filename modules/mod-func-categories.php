@@ -73,10 +73,12 @@ function module_categories($mod_reference, &$module_params)
 		$deep = $module_params['deep'];
 	else
 		$deep= 'on';
-	if (empty($urlEnd)) {
-		$urlEnd .= '&amp;';
+	if ($deep === 'on') {
+		if (empty($urlEnd)) {
+			$urlEnd .= '&amp;';
+		}
+		$urlEnd .= "deep=$deep";
 	}
-	$urlEnd .= "deep=$deep";
 	$name = "";
 
 
@@ -116,7 +118,7 @@ function module_categories($mod_reference, &$module_params)
 		if (isset($module_params['selflink']) && $module_params['selflink'] == 'y') {
 			$url = filter_out_sefurl('tiki-index.php?page=' . urlencode($cat['name']));
 		} else {
-			$url = filter_out_sefurl('tiki-browse_categories.php?parentId=' . $cat['categId'], 'category', $cat['name'], true) .$urlEnd;
+			$url = filter_out_sefurl('tiki-browse_categories.php?parentId=' . $cat['categId'], 'category', $cat['name'], !empty($urlEnd)) .$urlEnd;
 		}
 		$tree_nodes[] = array(
 			"id" => $cat["categId"],
