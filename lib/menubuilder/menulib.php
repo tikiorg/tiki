@@ -589,7 +589,7 @@ class MenuLib extends TikiLib
 		return $res;
 	}
 
-	public function list_menu_options($menuId, $offset=0, $maxRecords=-1, $sort_mode='position_asc', $find='', $full=false, $level=0)
+	public function list_menu_options($menuId, $offset=0, $maxRecords=-1, $sort_mode='position_asc', $find='', $full=false, $level=0, $do_not_parse = false)
 	{
 		global $user, $tiki_p_admin, $prefs;
 		$wikilib = TikiLib::lib('wiki');
@@ -616,7 +616,7 @@ class MenuLib extends TikiLib
 		$ret = array();
 		foreach ($result as $res) {
 			$res['canonic'] = $res['url'];
-			if (isset($menu['parse']) && $menu['parse'] === 'y') {
+			if (!$do_not_parse && isset($menu['parse']) && $menu['parse'] === 'y') {
 				$res['name'] = $wikilib->parse_data($res['name'], array('is_html' => ($prefs['menus_item_names_raw'] === 'y')));
 			}
 			if (preg_match('|^\(\((.+?)\)\)$|', $res['url'], $matches)) {
