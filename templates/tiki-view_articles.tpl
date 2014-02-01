@@ -10,13 +10,13 @@
 		<div style="float: right; padding-left:10px; white-space: nowrap">
 		{if $user and $prefs.feature_user_watches eq 'y'}
 			{if $user_watching_articles eq 'n'}
-					{self_link watch_event='article_*' watch_object='*' watch_action='add' _icon='eye' _alt="{tr}Monitor Articles{/tr}" _title="{tr}Monitor Articles{/tr}"}{/self_link}
+				{self_link watch_event='article_*' watch_object='*' watch_action='add' _icon='eye' _alt="{tr}Monitor Articles{/tr}" _title="{tr}Monitor Articles{/tr}" _class="btn btn-default"}{/self_link}
 			{else}
-					{self_link watch_event='article_*' watch_object='*' watch_action='remove' _icon='no_eye' _alt="{tr}Stop Monitoring Articles{/tr}" _title="{tr}Stop Monitoring Articles{/tr}"}{/self_link}
+				{self_link watch_event='article_*' watch_object='*' watch_action='remove' _icon='no_eye' _alt="{tr}Stop Monitoring Articles{/tr}" _title="{tr}Stop Monitoring Articles{/tr}" _class="btn btn-default"}{/self_link}
 			{/if}
 		{/if}
 		{if $prefs.feature_group_watches eq 'y' and $tiki_p_admin_users eq 'y'}
-			<a href="tiki-object_watches.php?watch_event=article_*&amp;objectId=*" class="icon">{icon _id='eye_group' alt="{tr}Group Monitor{/tr}"}</a>
+			<a href="tiki-object_watches.php?watch_event=article_*&amp;objectId=*" class="btn btn-default">{icon _id='eye_group' alt="{tr}Group Monitor{/tr}"}</a>
 		{/if}
 		</div>
 	</div>
@@ -181,8 +181,10 @@
 		</article>
 	{/if}
 {sectionelse}
-	{if $quiet ne 'y'}{tr}No articles yet.{/tr}
-		{if $tiki_p_edit_article eq 'y'}<a href="tiki-edit_article.php">{tr}Add an article{/tr}</a>{/if}
+	{if $quiet ne 'y'}
+		{remarksbox type=info title="{tr}No articles yet.{/tr}" close="n"}
+			{if $tiki_p_edit_article eq 'y'}<a href="tiki-edit_article.php" class="alert-link">{tr}Add an article{/tr}</a>{/if}
+		{/remarksbox}
 	{/if}
 {/section}
 {if !empty($listpages) && (!isset($usePagination) or $usePagination ne 'n')}
