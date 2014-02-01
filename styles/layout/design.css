@@ -3532,6 +3532,14 @@ body.tiki_wiki #comments {
     border: 2px solid #800;
 }
 
+.ic_caption {
+	background:#808080;
+	opacity:0.75;
+	width:100%;
+	color:black;
+	padding:5px 10px 5px 10px;
+}
+
 /* wikiplugin_sign */
 
 .wp-sign {
