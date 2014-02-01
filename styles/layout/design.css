@@ -4438,4 +4438,9 @@ a.cke_button span.cke_icon {
     margin-top: -5px;
 }
 
+/* jquery-ui in since_last_visit */
+ li.ui-tabs-active a { 
+	background:#CCCCCC; 
+}
+
 /* End of file */
