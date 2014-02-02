@@ -4439,8 +4439,21 @@ a.cke_button span.cke_icon {
 }
 
 /* jquery-ui in since_last_visit */
- li.ui-tabs-active a { 
+li.ui-tabs-active a { 
 	background:#CCCCCC; 
+}
+
+#mytabs .ui-tabs-nav {
+	zoom: 0.70;
+}
+ 
+#mytabs .ui-widget-content {
+	margin-left: -10px; 
+	zoom: 0.85;
+}
+
+#mytabs {
+	min-width:150px;
 }
 
 /* End of file */
