@@ -33,14 +33,17 @@ $smarty->assign('page_ref_id', $_REQUEST["page_ref_id"]);
 $smarty->assign('structure_id', $structure_info["page_ref_id"]);
 $smarty->assign('structure_name', $structure_info["pageName"]);
 
-if (!$tikilib->user_has_perm_on_object($user, $structure_info["pageName"], 'wiki page', 'tiki_p_view')) {
+$perms = Perms::get((array('type' => 'wiki page', 'object' => $structure_info["pageName"])));
+$tikilib->get_perm_object($structure_info["pageName"], 'wiki page', $page_info);	// global perms still needed for logic in categorize.tpl
+
+if ( ! $perms->view ) {
 	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra('You do not have permission to view this page.'));
 	$smarty->display("error.tpl");
 	die;
 }
 
-if ($tiki_p_edit_structures  == 'y')
+if ($perms->edit_structures)
 	$editable = 'y';
 else
 	$editable = 'n';
@@ -53,7 +56,7 @@ $alert_to_remove_cats = array();
 $alert_to_remove_extra_cats = array();
 
 // start security hardened section
-if ($tiki_p_edit_structures == 'y') {
+if ($perms->edit_structures) {
 	$smarty->assign('remove', 'n');
 	
 	if (isset($_REQUEST["remove"])) {
@@ -63,8 +66,7 @@ if ($tiki_p_edit_structures == 'y') {
 	  	$structs = $structlib->get_page_structures($remove_info['pageName'], $structure);
 		//If page is member of more than one structure, do not give option to remove page
 		$single_struct = (count($structs) == 1);
-		$perms = $tikilib->get_perm_object($remove_info['pageName'], 'wiki page', $tikilib->get_page_info($remove_info['pageName']), false);
-		if ($single_struct && $perms['tiki_p_remove'] == 'y') {
+		if ($single_struct && $perms->remove) {
 			$smarty->assign('page_removable', 'y');
 		} else {
 			$smarty->assign('page_removable', 'n');
@@ -237,7 +239,7 @@ foreach ($subtree as $i=>$s) { // dammed recursivite - acn not do a left join
 $smarty->assign('subtree', $subtree);
 
 // Re-categorize
-if ($tiki_p_edit_structures == 'y' && $editable == 'y') {
+if ($perms->edit_structures) {
 	$all_editable = 'y';
 	foreach ($subtree as $k => $st) {
 		if ($st['editable'] != 'y' && $k > 0) {
