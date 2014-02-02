@@ -117,8 +117,10 @@ class CryptLib extends TikiLib
 
 	// Check if any data exists the user preference.
 	// Return true if data exit (not necessarily readable). false, if no stored data is found
-	function hasUserData($user, $userprefKey, $paramName = '')
+	function hasUserData($userprefKey, $paramName = '')
 	{
+		global $user;
+
 		if (!empty($paramName)) {
 			$paramName = '.'.$paramName;
 		}
@@ -148,8 +150,9 @@ class CryptLib extends TikiLib
 	 */
 	//
 	// Return false on failure otherwise the generated crypt text
-	function setUserData($user, $userprefKey, $cleartext, $paramName = '')
+	function setUserData($userprefKey, $cleartext, $paramName = '')
 	{
+		global $user;
 		if (empty($cleartext)) {
 			return false;
 		}
@@ -165,8 +168,10 @@ class CryptLib extends TikiLib
 	// Get the data from the user preferences.
 	// Decrypt and return cleartext
 	// Return false, if no stored data is found
-	function getUserData($user, $userprefKey, $paramName = '')
+	function getUserData($userprefKey, $paramName = '')
 	{
+		global $user;
+
 		if (!empty($paramName)) {
 			$paramName = '.'.$paramName;
 		}
@@ -187,14 +192,14 @@ class CryptLib extends TikiLib
 
 	// Recover the stored cleartext data from the user preferences.
 	// Return stored data in cleartext or false on error
-	function recoverUserData($user, $cleartextPwd, $userprefKey, $paramName = '')
+	function recoverUserData($username, $cleartextPwd, $userprefKey, $paramName = '')
 	{
 		if (empty($cleartextPwd)) {
 			return false;
 		}
 		// Initialize using the input params
 		$cryptlib = new CryptLib();
-		$phraseMD5 = md5($user.$cleartextPwd);
+		$phraseMD5 = md5($username.$cleartextPwd);
 		$cryptlib->initSeed($phraseMD5);
 
 		// Build the pref key
@@ -204,7 +209,7 @@ class CryptLib extends TikiLib
 		$prefKey = $cryptlib->prefprefix.'.'.$userprefKey.$paramName;
 
 		// Get the stored data
-		$storedPwd64 = $cryptlib->get_user_preference($user, $prefKey);
+		$storedPwd64 = $cryptlib->get_user_preference($username, $prefKey);
 		if (empty($storedPwd64)) {
 			return false;
 		}
@@ -289,8 +294,10 @@ class CryptLib extends TikiLib
 	////////////////////////////////
 
 	// User has logged in
-	function onUserLogin($user, $cleartextPwd)
+	function onUserLogin($cleartextPwd)
 	{
+		global $user;
+
 		// Encode the phrase
 		$phraseMD5 = md5($user.$cleartextPwd);
 
@@ -300,28 +307,32 @@ class CryptLib extends TikiLib
 
 	// User has changed the password
 	// Change/Rehash the password, given the old and the new key phrases
-	function onChangeUserPassword($user, $oldCleartextPwd, $newCleartextPwd)
+	function onChangeUserPassword($oldCleartextPwd, $newCleartextPwd)
 	{
-		global $prefs;
+		global $user;
 
 		// Lookup pref key that are encrypted data
-		$domainsText = $prefs['feature_password_domains'];
-		$domains = explode(';', $domainsText);
-		foreach($domains as &$dom) {
-			$dom = $this->prefprefix.'.'.$dom;
-		}
-		$prefKeys = $domains;
+		$domains = $this->getPasswordDomains();
 
 		// Rehash encrypted preferences
-		foreach($prefKeys as $userprefKey) {
-			self::changeUserPassword($user, $userprefKey, md5($user.$oldCleartextPwd), md5($user.$newCleartextPwd));
+		foreach($domains as $userprefKey) {
+			$rc = $this->changeUserPassword($userprefKey, md5($user.$oldCleartextPwd), md5($user.$newCleartextPwd));
+
+			// Also update the username, if defined
+			if ($rc && $this->hasUserData($userprefKey, 'usr')) {
+				$this->changeUserPassword($userprefKey.'.usr', md5($user.$oldCleartextPwd), md5($user.$newCleartextPwd));
+			}
 		}
+
+		// Save the new cryptphrase, so the new hash is readable without logging out
+		$this->onUserLogin($newCleartextPwd);
 	}
 
 	// Change/Rehash the password, given the old and the new key phrases
 	// Return true on success; otherwise false, e.g. if no stored password is found, or a decryption failure
-	function changeUserPassword($user, $userprefKey, $oldPhraseMD5, $newPhraseMD5)
+	function changeUserPassword($userprefKey, $oldPhraseMD5, $newPhraseMD5)
 	{
+		global $user;
 		// Retrieve the old password
 		$cryptOld = new CryptLib();
 		$cryptOld->initSeed($oldPhraseMD5);
@@ -330,7 +341,7 @@ class CryptLib extends TikiLib
 			// Only Base64 encoding. No conversion needed
 			return false;
 		}
-		$cleartextPwd = $cryptOld->getUserData($user, $userprefKey);
+		$cleartextPwd = $cryptOld->getUserData($userprefKey);
 		$cryptOld->release();
 		if ($cleartextPwd == false) {
 			return false;
@@ -346,7 +357,7 @@ class CryptLib extends TikiLib
 		// Rehash and save
 		$cryptNew = new CryptLib();
 		$cryptNew->initSeed($newPhraseMD5);
-		$cryptPwd = $cryptNew->setUserData($user, $userprefKey, $cleartextPwd);
+		$cryptPwd = $cryptNew->setUserData($userprefKey, $cleartextPwd);
 		$cryptNew->release();
 		if ($cryptPwd == false) {
 			return false;

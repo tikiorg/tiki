@@ -130,7 +130,7 @@ function module_domain_password($mod_reference, $module_params)
 				$smarty->assign('username', $username);
 			} else {
 				$smarty->assign('currentuser', $use_currentuser);
-				$username[$cntModule] = $cryptlib->getUserData($user, $domain, 'usr');
+				$username[$cntModule] = $cryptlib->getUserData($domain, 'usr');
 				if (!empty($username[$cntModule])) {
 					$smarty->assign('username', $username);
 				} else {
@@ -153,13 +153,13 @@ function module_domain_password($mod_reference, $module_params)
 
 			// Check stored data if they can be decrypted
 			if (!empty($username[$cntModule]) && $isSaving == false) {
-				$chkPwd = $cryptlib->hasUserData($user, $domain);
+				$chkPwd = $cryptlib->hasUserData($domain);
 				if ($chkPwd == false) {
 					if ($isSaving == false) {
 						$errors[$cntModule][] = "No password saved";
 					}
 				} else {
-					$chkPwd = $cryptlib->getUserData($user, $domain);
+					$chkPwd = $cryptlib->getUserData($domain);
 					if ($chkPwd == false) {
 						$errors[$cntModule][] = "Read error";
 					}
@@ -177,10 +177,10 @@ function module_domain_password($mod_reference, $module_params)
 					$domUsername = $use_currentuser[$cntModule] === 'y' ? $user : $_REQUEST['domUsername'];
 					$domPassword = $_REQUEST['domPassword'];
 
-					if (!$cryptlib->setUserData($user, $domain, $domPassword)) {
+					if (!$cryptlib->setUserData($domain, $domPassword)) {
 						$errors[$cntModule][] = 'Failed to save password';
 					} else {
-						if (!$cryptlib->setUserData($user, $domain, $domUsername, 'usr')) {
+						if (!$cryptlib->setUserData($domain, $domUsername, 'usr')) {
 							$errors[$cntModule][] = 'Failed to save user';
 						} else {
 							// Refresh the displayed username is saved ok
