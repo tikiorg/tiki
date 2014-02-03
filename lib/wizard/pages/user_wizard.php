@@ -14,7 +14,7 @@ class UserWizard extends Wizard
 {
     function pageTitle ()
     {
-        return tra('Welcome to the User Wizard');
+        return tra('Welcome to the User Wizard') . '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
     }
 
 	function isEditable ()
