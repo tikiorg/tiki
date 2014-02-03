@@ -297,8 +297,8 @@ function wikiplugin_module($data, $params)
 			'name' => $module,
 			'params' => $params,
 			'rows' => $max,
-			'position' => null,
-			'ord' => null,
+			'position' => '_wp_',
+			'ord' => $instance,
 			'cache_time'=> 0,
 		);
 
