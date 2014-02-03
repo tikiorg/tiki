@@ -12,6 +12,7 @@ require 'tiki-setup.php';
 
 require_once('lib/headerlib.php');
 $headerlib->add_cssfile('css/admin.css');
+$headerlib->add_cssfile('css/wizards.css');
 
 // Hide the display of the preference dependencies in the wizard
 $headerlib->add_css('.pref_dependency{display:none !important;}');
