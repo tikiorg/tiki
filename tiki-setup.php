@@ -367,6 +367,9 @@ if ($prefs['feature_syntax_highlighter'] == 'y') {
 	codemirrorModes($prefs['tiki_minify_javascript'] === 'y');
 }
 
+if ( $prefs['feature_jquery_carousel'] == 'y' ) {
+	$headerlib->add_jsfile('vendor/jquery/plugins/infinitecarousel/jquery.infinitecarousel3.js');
+}
 
 if ($prefs['mobile_feature'] === 'y' && $prefs['mobile_mode'] === 'y') {
 
@@ -385,7 +388,7 @@ if ($prefs['mobile_feature'] === 'y' && $prefs['mobile_mode'] === 'y') {
 
 	$headerlib->drop_cssfile('css/cssmenus.css');
 
-} else {
+} else {	// js includes that don't work or aren't needed in mobile mode
 
 	$headerlib->add_jsfile('lib/swfobject/swfobject.js');
 
@@ -490,10 +493,6 @@ select[multiple=multiple] { margin: 3px 0 3px 5px; padding: 3px 20px 3px 5px; }'
 		$headerlib->add_jsfile('vendor/jquery/plugins/colorbox/jquery.colorbox.js');
 		$headerlib->add_cssfile('vendor/jquery/plugins/colorbox/' . $prefs['jquery_colorbox_theme'] . '/colorbox.css');
 	}
-	if ( $prefs['feature_jquery_carousel'] == 'y' ) {
-		$headerlib->add_jsfile('vendor/jquery/plugins/infinitecarousel/jquery.infinitecarousel3.js');
-	}
-
 	if ( $prefs['feature_jquery'] != 'y' || $prefs['feature_jquery_tablesorter'] != 'y' ) {
 		$headerlib->add_jsfile('lib/tiki-js-sorttable.js');
 	}
