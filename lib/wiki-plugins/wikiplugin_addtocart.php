@@ -167,7 +167,7 @@ function wikiplugin_addtocart_info()
 
 function wikiplugin_addtocart( $data, $params )
 {
-	global $cartlib, $headerlib; require_once 'lib/payment/cartlib.php';
+	global $cartlib, $headerlib, $prefs; require_once 'lib/payment/cartlib.php';
 	$headerlib->add_jsfile('lib/payment/cartlib.js');
 
 	if ( ! session_id() ) {
@@ -242,7 +242,7 @@ function wikiplugin_addtocart( $data, $params )
 	}
 
 	if ( $ajax_add_to_cart == 'y' ) {
-			$headerlib->add_jq_onready("$('form.addProduct').cartAjaxAdd();");
+		$headerlib->add_jq_onready("$('.wp_addtocart_form').cartAjaxAdd();");
 	}
 
 	if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {

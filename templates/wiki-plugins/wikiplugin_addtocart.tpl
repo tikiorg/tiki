@@ -1,5 +1,5 @@
 {* $Id$ *}
-<form method="post" action="{query _type=relative _keepall=y}" style="display: inline;">
+<form method="post" action="{query _type=relative _keepall=y}" style="display: inline;" class="wp_addtocart_form">
 	<input type="hidden" name="code" value="{$code|escape}">
 	{if $onbehalf == 'y'}
 		{tr}Buy on behalf of:{/tr}
@@ -36,7 +36,7 @@
 		</tr>
 		{/if}
 	</table>
-	<input type="submit" class="btn btn-default" value="{$add_label|escape}" class="addProductToCartSubmit">
+	<input type="submit" class="btn btn-default" value="{$add_label|escape}">
 	{if $exchangeorderitemid && $exchangetoproductid}
 		<input type="hidden" value="{$exchangeorderitemid|escape}" name="exchangeorderitemid">
 		<input type="hidden" value="{$exchangetoproductid|escape}" name="exchangetoproductid">
