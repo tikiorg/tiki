@@ -14,6 +14,11 @@ include_once('lib/userprefs/userprefslib.php');
  */
 class UserWizardPreferencesParams extends Wizard 
 {
+	function pageTitle ()
+    {
+        return tra('User Preferences:') . ' ' . tra('Settings');
+    }
+    
 	function isEditable ()
 	{
 		return true;

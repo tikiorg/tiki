@@ -14,6 +14,11 @@ include_once ('lib/userprefs/userprefslib.php');
  */
 class UserWizardPreferencesReports extends Wizard 
 {
+	function pageTitle ()
+    {
+        return tra('User Watches:') . ' ' . tra('Report Preferences');
+    }
+    
 	function isEditable ()
 	{
 		return true;
