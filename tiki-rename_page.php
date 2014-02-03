@@ -32,8 +32,7 @@ if (!($info = $tikilib->get_page_info($page))) {
 	die;
 }
 // Now check permissions to rename this page
-$tikilib->get_perm_object($page, 'wiki page', $info);
-$access->check_permission(array('tiki_p_view', 'tiki_p_rename'));
+$access->check_permission(array('view', 'rename'), tr('Rename wiki page'), 'wiki page', $page);
 
 if (isset($_REQUEST["rename"]) || isset($_REQUEST["confirm"])) {
 	check_ticket('rename-page');
