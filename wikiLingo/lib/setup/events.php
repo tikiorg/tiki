@@ -157,16 +157,15 @@ function tiki_setup_events()
 	$events->bind('tiki.wiki.update', 'tiki.wiki.save');
 	$events->bind('tiki.wiki.create', 'tiki.wiki.save');
 	$events->bind('tiki.wiki.save', 'tiki.save');
-    $events->bind('tiki.wiki.parse', function($args) use ($prefs){
-
-        if($prefs['feature_wikilingo'] === 'y'){
+    $events->bind('tiki.wiki.parse', function(&$args) use ($prefs) {
+        $wikiLibOutput = $args['object'];
+        $fn = $args['fn'];
+        if($prefs['feature_wikilingo'] === 'y') {
             $wikiLingo = new WikiLingo\Parser();
-            return $wikiLingo->parse($args['object']);
-        }
-        else{
+            $fn($wikiLingo->parse($wikiLibOutput->originalValue));
+        } else {
             global $tikilib;
-            $content = $tikilib->parse_data($args['object'], $args['options']);
-            return $content;
+            $fn($tikilib->parse_data($wikiLibOutput->originalValue, $wikiLibOutput->options));
         }
     });
 	$events->bind('tiki.wiki.view', 'tiki.view');

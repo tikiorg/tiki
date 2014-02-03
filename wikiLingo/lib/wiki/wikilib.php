@@ -485,17 +485,10 @@ class WikiLib extends TikiLib
 				$this->update_cache($page, $content . $jsFile . $js);
 			}
 		} else {
-            $content = TikiLib::events()->trigger(
-                'tiki.wiki.parse',
-                    array(
-                        'type' => 'wiki page',
-                        'object' => $info['data'],
-                        'name' => $page,
-                        'options' => $parse_options
-                    )
-            );
+            $parsedValue = new WikiLibOutput($page, $info['data'], $parse_options);
 		}
-		return $content;
+
+		return $parsedValue->parsedValue;
 	}
 
 	public function update_cache($page, $data)
@@ -1781,4 +1774,30 @@ class convertToTiki9
 	}
 
 	//end conversion methods-->
+}
+
+
+class WikiLibOutput
+{
+    public $name;
+    public $originalValue;
+    public $parsedValue;
+    public $options;
+
+    public function __construct($name, $originalValue, $options = array())
+    {
+        $this->name = $name;
+        $this->originalValue = $originalValue;
+        $this->options = $options;
+
+        TikiLib::events()->trigger(
+            'tiki.wiki.parse',
+            array(
+                'fn' => function($output) {
+                    $this->parsedValue = $output;
+                },
+                'object' => $this
+            )
+        );
+    }
 }
