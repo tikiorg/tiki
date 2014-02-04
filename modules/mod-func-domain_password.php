@@ -89,7 +89,7 @@ function module_domain_password($mod_reference, $module_params)
 
 
 	if (empty($user)) {
-		$errors[$cntModule][] = "You are not logged in";
+		$errors[$cntModule][] = tra('You are not logged in');
 	} else {
 
 		try {
@@ -101,14 +101,14 @@ function module_domain_password($mod_reference, $module_params)
 				// Validate the domain
 				$allDomains = $cryptlib->getPasswordDomains();
 				if (!$allDomains) {
-					$errors[$cntModule][] = 'No Password Domains found';
+					$errors[$cntModule][] = tra('No Password Domains found');
 				} elseif (!in_array($domain, $allDomains)) {
-					$errors[$cntModule][] = 'Domain is not valid';
+					$errors[$cntModule][] = tra('Domain is not valid');
 				} else {
 					$hasDomain = true;
 				}
 			} else {
-				$errors[$cntModule][] = 'No domain specified';
+				$errors[$cntModule][] = tra('No domain specified');
 			}
 
 			// Determine if writable
@@ -135,7 +135,7 @@ function module_domain_password($mod_reference, $module_params)
 					$smarty->assign('username', $username);
 				} else {
 					if ($isSaving == false) {
-						$errors[$cntModule][] = "No user defined";
+						$errors[$cntModule][] = tra('No user defined');
 					}
 				}
 			}
@@ -156,12 +156,12 @@ function module_domain_password($mod_reference, $module_params)
 				$chkPwd = $cryptlib->hasUserData($domain);
 				if ($chkPwd == false) {
 					if ($isSaving == false) {
-						$errors[$cntModule][] = "No password saved";
+						$errors[$cntModule][] = tra('No password saved');
 					}
 				} else {
 					$chkPwd = $cryptlib->getUserData($domain);
 					if ($chkPwd == false) {
-						$errors[$cntModule][] = "Read error";
+						$errors[$cntModule][] = tra('Read error');
 					}
 				}
 			}
@@ -170,18 +170,18 @@ function module_domain_password($mod_reference, $module_params)
 			/////////////////////////////////
 			if (($dompwdCount == $cntModule) && $isSaving && $hasDomain && isset($_REQUEST['domPassword'])) {
 				if(empty($_REQUEST['domPassword'])) {
-					$errors[$cntModule][] = 'No password specified';
+					$errors[$cntModule][] = tra('No password specified');
 				} elseif(!$use_currentuser[$cntModule] && empty($_REQUEST['domUsername'])) {
-					$errors[$cntModule][] = 'No username specified';
+					$errors[$cntModule][] = tra('No username specified');
 				} else {
 					$domUsername = $use_currentuser[$cntModule] === 'y' ? $user : $_REQUEST['domUsername'];
 					$domPassword = $_REQUEST['domPassword'];
 
 					if (!$cryptlib->setUserData($domain, $domPassword)) {
-						$errors[$cntModule][] = 'Failed to save password';
+						$errors[$cntModule][] = tra('Failed to save password');
 					} else {
 						if (!$cryptlib->setUserData($domain, $domUsername, 'usr')) {
-							$errors[$cntModule][] = 'Failed to save user';
+							$errors[$cntModule][] = tra('Failed to save user');
 						} else {
 							// Refresh the displayed username is saved ok
 							$username[$cntModule] = $domUsername;
@@ -189,7 +189,7 @@ function module_domain_password($mod_reference, $module_params)
 
 							// Format result
 							$result = array();
-							$result[$cntModule] = 'Saved OK';
+							$result[$cntModule] = tra('Saved OK');
 							$smarty->assign('result', $result);
 						}
 					}
