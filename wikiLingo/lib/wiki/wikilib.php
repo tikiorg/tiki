@@ -1784,21 +1784,31 @@ class WikiLibOutput
     public $parsedValue;
     public $options;
 
+    private static $init = false;
+    private static $wikiLingo;
+    private static $wikiLingoScripts;
+
     public function __construct($info, $originalValue, $options = array())
     {
-        global
-            $tikilib,
-            $prefs,
-            $headerlib;
+        $tikilib = TikiLib::lib('tiki');
+        $prefs = TikiLib::lib('prefs');
+        $headerlib = TikiLib::lib('headerlib');
 
         //TODO: info may have an override, we need to build it in using MYSQL
         $this->info = $info;
         $this->originalValue = $originalValue;
         $this->options = $options;
 
-        if($prefs['feature_wikilingo'] === 'y') {
-            $scripts = new WikiLingo\Utilities\Scripts(TikiLib::tikiUrl() . "vendor/wikiLingo/");
-            $wikiLingo = new WikiLingo\Parser($scripts);
+        if($prefs->getPreference('feature_wikilingo') === 'y') {
+            if (self::$init) {
+                $scripts = self::$wikiLingoScripts;
+                $wikiLingo = self::$wikiLingo;
+            } else {
+                self::$init = true;
+                $scripts = self::$wikiLingoScripts = new WikiLingo\Utilities\Scripts(TikiLib::tikiUrl() . "vendor/wikiLingo/");
+                $wikiLingo = self::$wikiLingo = new WikiLingo\Parser($scripts);
+            }
+
             $this->parsedValue = $wikiLingo->parse($this->originalValue);
 
             //transfer scripts over to headerlib
