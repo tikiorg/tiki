@@ -1,12 +1,13 @@
 {* $Id$ *}
 
-<h1 class="pagetitle">{tr}User Preferences{/tr}: {tr}Personal Information{/tr}</h1>
-<div class="userWizardIconleft"><img src="img/icons/large/user.png" alt="{tr}User Preferences{/tr}" /></div>
+<div class="userWizardIconleft"><img src="img/icons/large/wizard_user48x48.png" alt="{tr}User Wizard{/tr}" /></div>
 {tr}Set up basic information as a user on this site{/tr}.
 <div class="userWizardContent">
 <fieldset>
 {if $prefs.feature_userPreferences eq 'y'}
 	<legend>{tr}Personal Information{/tr}</legend>
+	<div class="userWizardIconright"><img src="img/icons/large/vcard48x48.png" alt="{tr}User Preferences{/tr}" /></div>
+
 		<table class="formcolor">
 			<tr>
 				<td>{tr}User:{/tr}</td>

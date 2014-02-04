@@ -1,13 +1,12 @@
 {* $Id$ *}
 
-<h1 class="pagetitle">{tr}User Preferences{/tr}: {tr}Settings{/tr}</h1>
-<div class="userWizardIconleft"><img src="img/icons/large/user.png" alt="{tr}User Dummy{/tr} 3" /></div>
-{tr}Set up your general settings for your account{/tr}.<br/><br/><br/>
+<div class="userWizardIconleft"><img src="img/icons/large/wizard_user48x48.png" alt="{tr}User Wizard{/tr}" /></div>
+{tr}Set up the general settings for your account{/tr}.<br/><br/><br/>
 <div class="userWizardContent">
 {if $prefs.feature_userPreferences eq 'y'}
 <fieldset>
 	<legend>{tr}General settings{/tr}</legend>
-
+		<div class="userWizardIconright"><img src="img/icons/large/user.png" alt="{tr}User Params{/tr}" /></div>
 		<table class="formcolor">
 		<tr>
 			<td>{tr}Is email public? (uses scrambling to prevent spam){/tr}</td>
@@ -192,6 +191,8 @@
 {/if}
 <fieldset>
 	<legend>{tr}My Tiki{/tr}</legend>
+		<div class="userWizardIconright"><img src="img/icons/project.gif" alt="{tr}My Tiki{/tr}" /></div>
+
 		<table class="formcolor">
 
 		{if $prefs.feature_wiki eq 'y'}

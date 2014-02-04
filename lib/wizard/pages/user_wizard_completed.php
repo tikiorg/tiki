@@ -8,21 +8,20 @@
 require_once('lib/wizard/wizard.php');
 
 /**
- * The Wizard's first page and frame handler 
+ * The Wizard's last screen
  */
-class UserWizard extends Wizard 
+class UserWizardCompleted extends Wizard 
 {
     function pageTitle ()
     {
-        return tra('Welcome to the User Wizard') . '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+        return tra('User Wizard Completed!');
     }
-
-	function isEditable ()
+    function isEditable ()
 	{
 		return false;
 	}
-
-	function onSetupPage ($homepageUrl) 
+	
+	public function onSetupPage ($homepageUrl) 
 	{
 		global	$smarty;
 
@@ -30,15 +29,16 @@ class UserWizard extends Wizard
 		parent::onSetupPage($homepageUrl);
 		
 		// Assign the page template
-        $smarty->assign('pageTitle', $this->pageTitle());
-		$wizardTemplate = 'wizard/user_wizard.tpl';
+		$wizardTemplate = 'wizard/user_wizard_completed.tpl';
 		$smarty->assign('wizardBody', $wizardTemplate);
 		
-		return true;		
+		return true;
 	}
 
 	function onContinue ($homepageUrl) 
 	{
+		global $tikilib; 
+
 		// Run the parent first
 		parent::onContinue($homepageUrl);
 	}
