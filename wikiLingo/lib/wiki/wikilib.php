@@ -1799,7 +1799,7 @@ class WikiLibOutput
         $this->originalValue = $originalValue;
         $this->options = $options;
 
-        if($prefslib->getPreference('feature_wikilingo') === 'y') {
+        if($prefslib->getPreference('feature_wikilingo')['value'] === 'y') {
             if (self::$init) {
                 $scripts = self::$wikiLingoScripts;
                 $wikiLingo = self::$wikiLingo;
