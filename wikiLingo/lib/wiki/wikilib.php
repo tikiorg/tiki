@@ -1792,7 +1792,7 @@ class WikiLibOutput
     {
         $tikilib = TikiLib::lib('tiki');
         $prefslib = TikiLib::lib('prefs');
-        $headerlib = TikiLib::lib('headerlib');
+        $headerlib = TikiLib::lib('header');
 
         //TODO: info may have an override, we need to build it in using MYSQL
         $this->info = $info;
