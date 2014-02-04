@@ -2004,6 +2004,13 @@ function prefs_feature_list($partial = false)
 			'help' => 'JQuery#Media',
 			'default' => 'n',
 		),
+		'feature_jquery_zoom' => array(
+			'name' => tra('jQuery Zoom'),
+            'description' => tra('Enlarge images plugin'),
+			'type' => 'flag',
+			'help' => 'JQuery#Zoom',
+			'default' => 'n',
+		),
 		'feature_tabs' => array(
 			'name' => tra('Use Tabs'),
 			'description' => tra('Makes pages shorter by splitting the content in different tabs'),

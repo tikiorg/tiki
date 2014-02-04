@@ -145,7 +145,6 @@ function wikiplugin_img_info()
 				'options' => array(
 					array('text' => tra('None'), 'value' => ''),
 					array('text' => tra('Yes'), 'value' => 'y', 'description' => tra('Full size image appears when thumbnail is clicked.')),
-					array('text' => tra('Overlay with zoom'), 'value' => 'zoombox', 'description' => tra('Full size image appears with zoom option in a "Colorbox" overlay when thumbnail is clicked.')),
 					array('text' => tra('Overlay'), 'value' => 'box', 'description' => tra('Full size image appears in a "Colorbox" overlay when thumbnail is clicked.')),
 					array('text' => tra('Mouseover'), 'value' => 'mouseover', 'description' => tra('Full size image will pop up while cursor is over the thumbnail (and disappear when not).')),
 					array('text' => tra('Mouseover (Sticky)'), 'value' => 'mousesticky', 'description' => tra('Full size image will pop up once cursor passes over thumbnail and will remain up unless cursor passes over full size popup.')),
@@ -357,6 +356,12 @@ function wikiplugin_img_info()
 			'default' => '',
 		);
 	}
+
+	if ($prefs['feature_jquery_zoom'] === 'y') {
+		$info['params']['thumb']['options'][] = array('text' => tra('Overlay with zoom'), 'value' => 'zoombox', 'description' => tra('Full size image appears with zoom option in a "Colorbox" overlay when thumbnail is clicked.'));
+		$info['params']['thumb']['options'][] = array('text' => tra('Zoom'), 'value' => 'zoom', 'description' => tra('Adds a magnifying glass icon and zooms the image when hovered over.'));
+	}
+
 	return $info;
 }
 
@@ -1025,6 +1030,8 @@ function wikiplugin_img( $data, $params )
 		}
 		if (($imgdata['thumb'] == 'box' || $imgdata['thumb'] == 'zoombox') && empty($imgdata['rel'])) {
 			$imgdata['rel'] = 'box';
+		} else if ($imgdata['thumb'] == 'zoom') {
+			$imgdata['rel'] = 'zoom';
 		}
 
 		if($imgdata['thumb'] == 'zoombox') {

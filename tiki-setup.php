@@ -350,7 +350,28 @@ $headerlib->add_js('var zoomToFoundLocation = "'.$zoomToFoundLocation.'";');	// 
 
 $headerlib->add_jsfile('lib/jquery_tiki/tiki-maps.js');
 $headerlib->add_jsfile('vendor/jquery/plugins/jquery-json/jquery.json-2.4.js');
-$headerlib->add_jsfile('vendor/jquery/plugins/zoom/jquery.zoom.js');
+
+if ($prefs['feature_jquery_zoom'] === 'y') {
+	$headerlib->add_jsfile('vendor/jquery/plugins/zoom/jquery.zoom.js')
+		->add_css('
+.img_zoom {
+	display:inline-block;
+}
+.img_zoom:after {
+	content:"";
+	display:block;
+	width:33px;
+	height:33px;
+	position:absolute;
+	top:0;
+	right:0;
+	background:url(vendor/jquery/plugins/zoom/icon.png);
+}
+.img_zoom img {
+	display:block;
+}
+');
+}
 
 if ($prefs['feature_syntax_highlighter'] == 'y') {
 	//add codemirror stuff
