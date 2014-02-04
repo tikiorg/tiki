@@ -1791,7 +1791,7 @@ class WikiLibOutput
     public function __construct($info, $originalValue, $options = array())
     {
         $tikilib = TikiLib::lib('tiki');
-        $prefs = TikiLib::lib('prefs');
+        $prefslib = TikiLib::lib('prefs');
         $headerlib = TikiLib::lib('headerlib');
 
         //TODO: info may have an override, we need to build it in using MYSQL
@@ -1799,7 +1799,7 @@ class WikiLibOutput
         $this->originalValue = $originalValue;
         $this->options = $options;
 
-        if($prefs->getPreference('feature_wikilingo') === 'y') {
+        if($prefslib->getPreference('feature_wikilingo') === 'y') {
             if (self::$init) {
                 $scripts = self::$wikiLingoScripts;
                 $wikiLingo = self::$wikiLingo;
