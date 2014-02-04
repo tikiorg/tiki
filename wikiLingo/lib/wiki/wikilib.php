@@ -470,7 +470,7 @@ class WikiLib extends TikiLib
 				$jsFile1 = $headerlib->getJsfiles();
 				$js1 = $headerlib->getJs();
 
-				$content = $this->parse_data($info['data'], $parse_options);
+                $content = (new WikiLibOutput($info, $info['data'], $parse_options))->parsedValue;
 
 				// get any JS added to headerlib during parse_data and add to the bottom of the data to cache
 				$jsFile2 = $headerlib->getJsfiles();
@@ -485,10 +485,10 @@ class WikiLib extends TikiLib
 				$this->update_cache($page, $content . $jsFile . $js);
 			}
 		} else {
-            $parsedValue = new WikiLibOutput($page, $info['data'], $parse_options);
+            $content = (new WikiLibOutput($info, $info['data'], $parse_options))->parsedValue;
 		}
 
-		return $parsedValue->parsedValue;
+		return $content;
 	}
 
 	public function update_cache($page, $data)
@@ -1779,25 +1779,47 @@ class convertToTiki9
 
 class WikiLibOutput
 {
-    public $name;
+    public $info;
     public $originalValue;
     public $parsedValue;
     public $options;
 
-    public function __construct($name, $originalValue, $options = array())
+    public function __construct($info, $originalValue, $options = array())
     {
-        $this->name = $name;
+        global
+            $tikilib,
+            $prefs,
+            $headerlib;
+
+        //TODO: info may have an override, we need to build it in using MYSQL
+        $this->info = $info;
         $this->originalValue = $originalValue;
         $this->options = $options;
 
-        TikiLib::events()->trigger(
-            'tiki.wiki.parse',
-            array(
-                'fn' => function($output) {
-                    $this->parsedValue = $output;
-                },
-                'object' => $this
-            )
-        );
+        if($prefs['feature_wikilingo'] === 'y') {
+            $scripts = new WikiLingo\Utilities\Scripts(TikiLib::tikiUrl() . "vendor/wikiLingo/");
+            $wikiLingo = new WikiLingo\Parser($scripts);
+            $this->parsedValue = $wikiLingo->parse($this->originalValue);
+
+            //transfer scripts over to headerlib
+            //css
+            foreach($scripts->css as $css) {
+                $headerlib->add_css($css);
+            }
+            //css files
+            foreach($scripts->cssLocations as $cssLocation) {
+                $headerlib->add_cssfile($cssLocation);
+            }
+            //js
+            foreach($scripts->scripts as $script) {
+                $headerlib->add_js($script);
+            }
+            //js files
+            foreach($scripts->scriptLocations as $scriptLocation) {
+                $headerlib->add_jsfile($scriptLocation);
+            }
+        } else {
+            $this->parsedValue = $tikilib->parse_data($this->originalValue, $this->options = $options);
+        }
     }
 }
