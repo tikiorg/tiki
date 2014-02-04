@@ -20,7 +20,7 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
  * @uses Comments
  * @license LGPL. Please, see licence.txt for mode details
  */
-class Importer extends Comments
+class Importer extends TikiDb_Bridge
 {
 	// The types of forums are hard-coded into the library and displayed
 	// in the template. As support for more imports grows, add the type to
