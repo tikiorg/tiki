@@ -156,6 +156,7 @@
 				{preference name=feature_jquery_ui_theme}
 				{preference name=feature_jquery_ui}
 				{preference name=feature_jquery_validation}
+				{preference name=feature_jquery_zoom}
 				<div class="adminoptionboxchild">
 				<fieldset>
 					<legend> {tr}Experimental:{/tr} {icon _id=bug_error}</legend>
