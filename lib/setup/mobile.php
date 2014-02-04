@@ -47,7 +47,8 @@ if ( !isset($_REQUEST['mobile_mode']) || $_REQUEST['mobile_mode'] === 'y' ) {
 		$prefs['feature_jcapture'] = 'n';
 		$prefs['calendar_fullcalendar'] = 'n';
 		$prefs['feature_inline_comments'] = 'n';
-
+		$prefs['feature_jquery_tablesorter'] = 'n';
+		
 		$prefs['site_layout'] = 'mobile';
 
 		$headerlib = TikiLib::lib('header');
