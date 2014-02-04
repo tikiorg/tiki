@@ -8,7 +8,7 @@
 //this script may only be included - so its better to die if called directly.
 $access->check_script($_SERVER['SCRIPT_NAME'], basename(__FILE__));
 
-$groupList = $tikilib->get_user_groups($user);
+$groupList = null;
 $is_token_access = false;
 if ( $prefs['auth_token_access'] == 'y' && isset($_REQUEST['TOKEN']) ) {
 	require_once 'lib/auth/tokens.php';
@@ -104,7 +104,8 @@ if ( $prefs['auth_token_access'] == 'y' && isset($_REQUEST['TOKEN']) ) {
 }
 
 $allperms = $userlib->get_enabled_permissions();
-$permissionList = array_keys($allperms);
+
+Perms_Context::setPermissionList($allperms);
 
 $builder = new Perms_Builder;
 $perms = $builder
@@ -112,23 +113,15 @@ $perms = $builder
 	->withDefinitions($allperms)
 	->build();
 
-$perms->setGroups($groupList);
 Perms::set($perms);
 
-if (! function_exists('remove_tiki_p_prefix')) {
-	function remove_tiki_p_prefix($name)
-	{
-		return substr($name, 7);
-	}
+$_permissionContext = new Perms_Context($user, false);
+
+if ($groupList) {
+	$_permissionContext->overrideGroups($groupList);
 }
 
-$shortPermList = array_map('remove_tiki_p_prefix', $permissionList);
-
-$globalperms = Perms::get();
-$globalperms->globalize($shortPermList, $smarty, false);
-if (is_object($smarty)) {
-	$smarty->assign('globalperms', $globalperms);
-}
+$_permissionContext->activate(true);
 
 unset($allperms);
 unset($tokenParams);

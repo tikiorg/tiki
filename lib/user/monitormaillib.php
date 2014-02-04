@@ -13,24 +13,18 @@ class MonitorMailLib
 	{
 		$recipients = $this->getRecipients($sendTo);
 
-		foreach ($recipients as $recipient) {
-			$key = "{$args['EVENT_ID']}-{$recipient['language']}";
-
-			if (! isset($this->mailQueue[$key])) {
-				$this->mailQueue[$key] = ['language' => $recipient['language'], 'event' => $event, 'args' => $args, 'emails' => []];
-			}
-
-			$this->mailQueue[$key]['emails'][] = $recipient['email'];
-		}
+		$this->mailQueue[] = [
+			'event' => $event,
+			'args' => $args,
+			'recipients' => $recipients,
+		];
 	}
 
 	function sendQueue()
 	{
 		foreach ($this->mailQueue as $mail) {
-			$title = $this->renderTitle($mail);
-			$content = $this->renderContent($mail);
-			foreach ($mail['emails'] as $email) {
-				$this->sendMail($email, $title, $content);
+			foreach ($mail['recipients'] as $recipient) {
+				$this->sendMail($recipient['login'], $recipient['email'], $recipient['language'], $mail);
 			}
 		}
 
@@ -49,7 +43,7 @@ class MonitorMailLib
 		$condition = $db->in('userId', $sendTo, $bindvars);
 
 		$result = $db->fetchAll("
-			SELECT email, IFNULL(p.value, ?) language
+			SELECT login, email, IFNULL(p.value, ?) language
 			FROM users_users u
 				LEFT JOIN tiki_user_preferences p ON u.login = p.user AND p.prefName = 'language'
 			WHERE $condition
@@ -58,23 +52,23 @@ class MonitorMailLib
 		return $result;
 	}
 
-	private function renderTitle($mail)
+	private function renderTitle($language, $mail)
 	{
 		// FIXME : Needs a better title
-		return tra('Notification', $mail['language']);
+		return tra('Notification', $language);
 	}
 
 	/**
 	 * Renders the body of the email and inline any applicable CSS.
 	 */
-	private function renderContent($mail)
+	private function renderContent($language, $mail)
 	{
 		$smarty = TikiLib::lib('smarty');
 		$activity = $mail['args'];
 		$activity['event_type'] = $mail['event'];
 		$smarty->assign('monitor', $activity);
 		TikiLib::setExternalContext(true);
-		$html = $smarty->fetchLang($mail['language'], 'monitor/notification_email_body.tpl');
+		$html = $smarty->fetchLang($language, 'monitor/notification_email_body.tpl');
 		TikiLib::setExternalContext(false);
 		$css = $this->collectCss();
 
@@ -113,13 +107,21 @@ class MonitorMailLib
 		return $css;
 	}
 
-	private function sendMail($email, $title, $html)
+	private function sendMail($user, $email, $language, $mail)
 	{
+		// Override the user until the end of the function
+		$context = new Perms_Context($user);
+
+		$title = $this->renderTitle($language, $mail);
+		$html = $this->renderContent($language, $mail);
+
 		require_once 'lib/webmail/tikimaillib.php';
 		$mail = new TikiMail;
 		$mail->setSubject($title);
 		$mail->setHtml($html);
 		$mail->send($email);
+
+		unset($context);
 	}
 }
 
