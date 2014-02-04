@@ -4792,10 +4792,9 @@ class TikiLib extends TikiDb_Bridge
 			'is_html' => $html,
 			'wysiwyg' => $wysiwyg,
 			'wiki_authors_style' => $wiki_authors_style,
+			'lang' => $lang,
 		);
-		if ($lang) {
-			$queryData['lang'] = $lang;
-		}
+
 		if ($hash !== null) {
 			if (!empty($hash['lock_it']) && ($hash['lock_it'] == 'y' || $hash['lock_it'] == 'on')) {
 				$queryData['flag'] = 'L';
