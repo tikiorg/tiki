@@ -1092,8 +1092,6 @@ if ( \$('#$id') ) {
 		if (in_array($name, $excluded) || !$enabled) {
 			$plugin_result = '&nbsp;&nbsp;&nbsp;&nbsp;' . $ck_editor_plugin;
 		} else {
-			// Tiki 7+ adds ~np~ to plugin output so remove them
-			$plugin_result = preg_replace('/~[\/]?np~/ms', '', $plugin_result);
 
 			if (!isset($info['format']) || $info['format'] !== 'html') {
 				$oldOptions = $this->option;
