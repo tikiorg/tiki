@@ -2112,17 +2112,28 @@ if ( \$('#$id') ) {
 							break;	
 						}
 					case 'lastAuthor':
-						global $histlib;
-						include_once ('lib/wiki/histlib.php');
-						// get_page_history arguments: page name, page contents (set to "false" to save memory), history_offset (none, therefore "0"), max. records (just one for this case);
-						$history = $histlib->get_page_history($this->option['page'], false, 0, 1);
-						if ($history[0]['user'] != null) {
-							$value = $history[0]['user'];
-							break;	
-						} else {
-							$value='';
-							break;	
-						}
+				        global $histlib, $tikilib;
+				        include_once ('lib/wiki/histlib.php');
+				        // get_page_history arguments: page name, page contents (set to "false" to save memory), history_offset (none, therefore "0"), max. records (just one for this case);
+				        $history = $histlib->get_page_history($this->option['page'], false, 0, 1);
+				        if ($history[0]['user'] != null) {
+				                $bindvars=array($history[0]['user']);
+				                $numRows = -1;
+				                $query = 'SELECT `login` , `userId` , `value` FROM `users_users` u LEFT JOIN `tiki_user_preferences` p ON p.`user` = u.`login` WHERE p.`prefName` = "realName" AND `login`= ?';
+				                $result = $tikilib->query($query, $bindvars, $numRows);
+				                while ($row = $result->fetchRow()) {
+									// Check that the user has the Real Name set and the preference to show Real Name where possible is enabled
+			                        if ( $row['value'] != '' & $prefs['user_show_realnames']== 'y') {
+			                                $value = $row['value'];
+			                        } else {
+			                                $value = $history[0]['user'];
+			                        }
+				                }
+				                break;  
+				        } else {
+				                $value='';
+				                break;  
+				        }
 					case 'lastModif':
 						global $histlib;
 						include_once ('lib/wiki/histlib.php');
@@ -2163,7 +2174,7 @@ if ( \$('#$id') ) {
 							break;	
 						}
 					case 'lastItemAuthor':
-						global $trklib; include_once ('lib/trackers/trackerlib.php');
+						global $trklib, $tikilib; include_once ('lib/trackers/trackerlib.php');
 						$auto_query_args = array('itemId');
 						if (!empty($_REQUEST['itemId'])) {
 							$item_info = $trklib->get_item_info($_REQUEST['itemId']);
@@ -2174,7 +2185,20 @@ if ( \$('#$id') ) {
 								$smarty->display('error.tpl');
 								die;
 							}
-							$value = $item_info['lastModifBy'];
+							if ($item_info['lastModifBy'] != null) {
+				                $bindvars=array($item_info['lastModifBy']);
+				                $numRows = -1;
+				                $query = 'SELECT `login` , `userId` , `value` FROM `users_users` u LEFT JOIN `tiki_user_preferences` p ON p.`user` = u.`login` WHERE p.`prefName` = "realName" AND `login`= ?';
+				                $result = $tikilib->query($query, $bindvars, $numRows);
+				                while ($row = $result->fetchRow()) {
+									// Check that the user has the Real Name set and the preference to show Real Name where possible is enabled
+			                        if ( $row['value'] != '' & $prefs['user_show_realnames']== 'y') {
+			                                $value = $row['value'];
+			                        } else {
+			                                $value = $item_info['lastModifBy'];
+			                        }
+				                }
+				            }
 							break;	
 							
 						} else {
