@@ -16,7 +16,7 @@
 	</td>
 </tr>
 <tr>
-	<td style="width:240px">
+	<td {if !isset($firstWizardPage)}style="width:240px"{else}style="width:120px"{/if}>
 	</td>
 	<td style="text-align:left">
 		{if !isset($showWizardPageTitle) or $showWizardPageTitle neq 'y'}
