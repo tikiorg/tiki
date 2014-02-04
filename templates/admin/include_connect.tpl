@@ -152,4 +152,22 @@
 
 		{/tab}
 	{/if}
+	{tab name="{tr}Jitsi{/tr}"}
+		<form class="admin" id="connect" name="connect" action="tiki-admin.php?page=connect" method="post">
+			<fieldset>
+				<legend>{tr}Jitsi{/tr}</legend>
+
+				<div class="form-row">
+					<label for="jitsi-url">{tr}Provision URL{/tr}</label>
+					<input id="jitsi-url" readonly type="text" value="{$jitsi_url|escape}" class="form-control">
+				</div>
+				{preference name=suite_jitsi_provision}
+				{preference name=suite_jitsi_configuration}
+			</fieldset>
+
+			<div class="heading input_submit_container" style="text-align: center;">
+				<input type="submit" class="btn btn-default btn-sm" name="connectprefs" value="{tr}Change preferences{/tr}" />
+			</div>
+		</form>
+	{/tab}
 {/tabset}
