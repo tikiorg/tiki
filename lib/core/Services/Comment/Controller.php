@@ -452,7 +452,7 @@ class Services_Comment_Controller
 		case 'article':
 			return $prefs['feature_article_comments'] == 'y';
 		case 'activity':
-			return $prefs['activity_basic_events'] == 'y' || $prefs['activity_custom_events'] == 'y';
+			return $prefs['activity_basic_events'] == 'y' || $prefs['activity_custom_events'] == 'y' || $prefs['monitor_enabled'] == 'y';
 		default:
 			return false;
 		}

@@ -20,16 +20,18 @@
 				{if $activityframe.activity.comment_count}({$activityframe.activity.comment_count|escape}){/if}
 			</a>
 		{/if}
-		{if $activityframe.like}
-			<a class="like" href="{service controller=social action=unlike type=$activityframe.object.type id=$activityframe.object.id}">
-				{tr}Unlike{/tr}
-				{if $activityframe.activity.like_list}({$activityframe.activity.like_list|count}){/if}
-			</a>
-		{else}
-			<a class="like" href="{service controller=social action=like type=$activityframe.object.type id=$activityframe.object.id}">
-				{tr}Like{/tr}
-				{if $activityframe.activity.like_list}({$activityframe.activity.like_list|count}){/if}
-			</a>
+		{if $prefs.feature_friends eq 'y'}
+			{if $activityframe.like}
+				<a class="like" href="{service controller=social action=unlike type=$activityframe.object.type id=$activityframe.object.id}">
+					{tr}Unlike{/tr}
+					{if $activityframe.activity.like_list}({$activityframe.activity.like_list|count}){/if}
+				</a>
+			{else}
+				<a class="like" href="{service controller=social action=like type=$activityframe.object.type id=$activityframe.object.id}">
+					{tr}Like{/tr}
+					{if $activityframe.activity.like_list}({$activityframe.activity.like_list|count}){/if}
+				</a>
+			{/if}
 		{/if}
 	</div>
 	{if $activity_format eq 'extended'}
