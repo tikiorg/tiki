@@ -47,5 +47,65 @@ class Services_User_MonitorController
 			'priorities' => $monitorlib->getPriorities(),
 		);
 	}
+
+	function action_stream($input)
+	{
+		$loginlib = TikiLib::lib('login');
+
+		$userId = $loginlib->getUserId();
+		if (! $userId) {
+			throw new Services_Exception_Denied(tr('Authentication required'));
+		}
+
+		$critical = $input->critical->int();
+		$high = $input->high->int();
+		$low = $input->low->int();
+
+		$quantity = $input->quantity->int();
+
+		if (! $critical && ! $high && ! $low) {
+			throw new Services_Exception_NotFound;
+		}
+
+		$searchlib = TikiLib::lib('unifiedsearch');
+		$query = $searchlib->buildQuery([
+			'type' => 'activity',
+		]);
+		$query->setOrder('modification_date_desc');
+
+		$sub = $query->getSubQuery('optional');
+		if ($critical) {
+			$sub->filterMultivalue("critical$userId", "stream");
+		}
+		if ($high) {
+			$sub->filterMultivalue("high$userId", "stream");
+		}
+		if ($low) {
+			$sub->filterMultivalue("low$userId", "stream");
+		}
+
+		if ($quantity) {
+			$query->setRange(0, $quantity);
+		} else {
+			$query->setRange($input->offset->int());
+		}
+
+		$result = $query->search($searchlib->getIndex());
+
+		if (! $result->count()) {
+			throw new Services_Exception_NotFound(tr('No notifications.'));
+		}
+
+		$_GET += ['critical' => $critical, 'high' => $high, 'low' => $low];
+
+		return [
+			'title' => tr('Notifications'),
+			'result' => $result,
+			'quantity' => $quantity,
+			'critical' => $critical,
+			'high' => $high,
+			'low' => $low,
+		];
+	}
 }
 
