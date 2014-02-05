@@ -45,8 +45,6 @@ class MonitorMailLib
 		try {
 			$html = $servicelib->render('monitor', 'stream', [
 				'high' => 1,
-				'critical' => 1, // FIXME : REMOVE
-				'low' => 1, // FIXME : REMOVE
 				'from' => $from,
 				'to' => $to,
 			]);
