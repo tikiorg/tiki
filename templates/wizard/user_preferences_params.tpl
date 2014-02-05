@@ -111,6 +111,9 @@
 						</option>
 					{/foreach}
 				</select>
+				{if $warning_site_timezone_set eq 'y'}
+					<br/><strong>{tr}Warning:{/tr}</strong> <i>{tr}Site timezone is enforced and overrides user preferences{/tr}</i>
+				{/if}
 			</td>
 		</tr>
 		<tr>
