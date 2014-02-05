@@ -96,23 +96,6 @@
         {if $prefs.feature_layoutshadows eq 'y'}{eval var=$prefs.main_shadow_end}</div>{/if}
 
 		{include file='footer.tpl'}
-		{if isset($prefs.socialnetworks_user_firstlogin) && $prefs.socialnetworks_user_firstlogin == 'y'}
-			{include file='tiki-socialnetworks_firstlogin_launcher.tpl'}
-		{/if}
-
-		{if $prefs.site_google_analytics_account}
-			{wikiplugin _name=googleanalytics account=$prefs.site_google_analytics_account}{/wikiplugin}
-		{/if}
-		{if $prefs.feature_endbody_code}
-			{eval var=$prefs.feature_endbody_code}
-		{/if}
-		{interactivetranslation}
-		<!-- Put JS at the end -->
-		{if $headerlib}
-			{$headerlib->output_js_config()}
-			{$headerlib->output_js_files()}
-			{$headerlib->output_js()}
-		{/if}
 	</body>
 </html>
 {if !empty($smarty.request.show_smarty_debug)}
