@@ -158,7 +158,7 @@ class Tracker_Definition
 		foreach ($this->getFields() as $field) {
 			if ($field['type'] == 'u'
 				&& $field['options_map']['autoassign'] == 1
-				&& $this->isEnabled('writerCanModify')) {
+				&& ($this->isEnabled('userCanSeeOwn') or $this->isEnabled('writerCanModify'))) {
 
 				return $field['fieldId'];
 			}
