@@ -41,6 +41,29 @@ function prefs_payment_list()
 			'size' => 50,
 			'default' => '',
 		),
+
+        'payment_paypal_password' => array(
+            'name' => tra('Paypal Business Password'),
+            'description' => tra('The Paypal password associated with you PayPal Pro business account.'),
+            'hint' => tra('Primary password of your PayPal Pro business account'),
+            'type' => 'password',
+            'filter' => 'text',
+            'dependencies' => array( 'payment_feature' ),
+            'size' => 50,
+            'default' => '',
+            ''
+        ),
+
+        'payment_paypal_signature' => array(
+            'name' => tra('Paypal Business Signature'),
+            'description' => tra('Your API signature associated with your PayPal Pro business account'),
+            'hint' => tra('Your API signature associated with your PayPal Pro business account'),
+            'type' => 'text',
+            'filter' => 'text',
+            'dependencies' => array( 'payment_feature' ),
+            'size' => 50,
+            'default' => '',
+        ),
 		'payment_paypal_environment' => array(
 			'name' => tra('Paypal Environment'),
 			'description' => tra('Used to switch between the paypal sandbox, used for testing and development and the live environment.'),

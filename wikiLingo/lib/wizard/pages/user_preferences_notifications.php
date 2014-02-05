@@ -14,7 +14,12 @@ include_once ('lib/userprefs/userprefslib.php');
  */
 class UserWizardPreferencesNotifications extends Wizard 
 {
-	function isEditable ()
+	function pageTitle ()
+    {
+        return tra('User Watches:') . ' ' . tra('Notification Preferences');
+    }
+    
+   	function isEditable ()
 	{
 		return true;
 	}

@@ -8,13 +8,13 @@
 <form action="tiki-admin_dsn.php" method="post" class="form-horizontal" role="form">
 	<input type="hidden" name="dsnId" value="{$dsnId|escape}">
     <div class="form-group">
-        <label class="col-sm-3 control-label" for="name">{tr}Name:{/tr}</label>
+        <label class="col-sm-3 control-label" for="name">{tr}Name{/tr}</label>
         <div class="col-sm-9">
 			<input type="text" maxlength="255" name="name" id="name" class="form-control" value="{$info.name|escape}">
 		</div>
 	</div>
     <div class="form-group">
-        <label class="col-sm-3 control-label" for="dsn">{tr}DSN:{/tr}</label>
+        <label class="col-sm-3 control-label" for="dsn">{tr}DSN{/tr}</label>
         <div class="col-sm-9">
 			<input type="text" maxlength="255" class="form-control" name="dsn" id="dsn" value="{$info.dsn|escape}">
 		</div>
@@ -67,7 +67,7 @@
 	<fieldset>
 		<legend>{tr}Identification{/tr}</legend>
         <div class="form-group">
-		    <label class="col-sm-3 control-label">{tr}Identifier:{/tr}</label>
+		    <label class="col-sm-3 control-label">{tr}Identifier{/tr}</label>
             <div class="col-sm-3">
     			<select name="existing" class="form-control">
 	    			<option value="">{tr}New{/tr}</option>
@@ -78,13 +78,13 @@
             </div>
         </div>
         <div class="form-group">
-            <label class="col-sm-3 control-label" for="url">{tr}URL:{/tr}</label>
+            <label class="col-sm-3 control-label" for="url">{tr}URL{/tr}</label>
             <div class="col-sm-4">
                 <input type="url" name="url" id="url" class="form-control" />
             </div>
         </div>
         <div class="form-group">
-            <label class="col-sm-3 control-label" for="method">{tr}Type:{/tr}</label>
+            <label class="col-sm-3 control-label" for="method">{tr}Type{/tr}</label>
             <div class="col-sm-4">
     			<select name="method" id="method">
 	    			<option value="basic">{tr}HTTP Basic{/tr}</option>
@@ -97,13 +97,13 @@
 	<fieldset class="method basic">
 		<legend>{tr}HTTP Basic{/tr}</legend>
         <div class="form-group">
-		    <label class="col-sm-3 control-label" for="basic_username">{tr}Username:{/tr}</label>
+		    <label class="col-sm-3 control-label" for="basic_username">{tr}Username{/tr}</label>
             <div class="col-sm-9">
                 <input type="text" name="basic_username" id="basic_username" class="form-control">
             </div>
         </div>
         <div class="form-group">
-		    <label class="col-sm-3 control-label" for="basic_password">{tr}Password:{/tr}</label>
+		    <label class="col-sm-3 control-label" for="basic_password">{tr}Password{/tr}</label>
             <div class="col-sm-9">
                 <input type="password" name="basic_password" id="basic_password" class="form-control">
             </div>
@@ -111,7 +111,7 @@
 	</fieldset>
 	<fieldset class="method post">
 		<legend>{tr}HTTP Session / Login{/tr}</legend>
-		<label>{tr}URL:{/tr} <input type="url" name="post_url"></label>
+		<label>{tr}URL{/tr} <input type="url" name="post_url"></label>
 		<table>
 			<thead>
 				<tr><th>{tr}Name{/tr}</th><th>{tr}Value{/tr}</th></tr>
@@ -129,7 +129,7 @@
 	</fieldset>
 	<fieldset class="method get">
 		<legend>{tr}HTTP Session / Visit{/tr}</legend>
-		<label>{tr}URL:{/tr} <input type="url" name="get_url"></label>
+		<label>{tr}URL{/tr} <input type="url" name="get_url"></label>
 	</fieldset>
 	<fieldset>
         <div class="form-group text-center">

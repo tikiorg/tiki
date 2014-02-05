@@ -157,15 +157,25 @@ class Tracker_Field_Text extends Tracker_Field_Abstract implements Tracker_Field
 		);
 
 		if ($multilingual) {
+			// When multilingual is turned on after data exists, this may well be a string
+			// rather than an array. Assume it's empty, $thisVal will replace all values.
+			if (! is_array($value)) {
+				$value = array();
+			}
 			foreach ($prefs['available_languages'] as $num => $lang) { // TODO add a limit on number of langs - 40+ makes this blow up
 				if (!isset($value[$lang])) {
 					$value[$lang] = $thisVal;
 				}
 
-				$data['lingualvalue'][$num]['lang'] = $lang;
-				$data['lingualvalue'][$num]['value'] = $value[$lang];
-				$data['lingualpvalue'][$num]['lang'] = $lang;
-				$data['lingualpvalue'][$num]['value'] = $this->attemptParse($value[$lang]);
+				$data['lingualvalue'][$num] = array(
+					'id' => str_replace(array('[', ']'), array('_', ''), $this->getInsertId()) . '_' . $lang,
+					'lang' => $lang,
+					'value' => $value[$lang],
+				);
+				$data['lingualpvalue'][$num] = array(
+					'lang' => $lang,
+					'value' => $this->attemptParse($value[$lang]),
+				);
 			}
 		}
 

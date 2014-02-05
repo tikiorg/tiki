@@ -16,44 +16,70 @@ if ( isset($_SESSION['try_style']) ) {
 	$prefs['style_option'] = $prefs['site_style_option'];
 }
 
-if ($prefs['feature_fixed_width'] === 'y') {
-	$headerlib->add_css(
-		'.fixed_width .fixedwidth, .fixed_width .fixedwidth .fixedwidth { width:' .
-		(!empty($prefs['layout_fixed_width']) ? $prefs['layout_fixed_width'] : '990px') .
-		'; }'
-	);
-}
+// Always include default bootstrap JS
+$headerlib->add_jsfile('vendor/twitter/bootstrap/dist/js/bootstrap.js');
 
-if ( $prefs['useGroupTheme'] == 'y' && $group_style = $userlib->get_user_group_theme()) {
-	$prefs['style'] = $group_style;
-	$smarty->assign_by_ref('group_style', $group_style);
-}
-if (empty($prefs['style']) || $tikilib->get_style_path('', '', $prefs['style']) == '') {
-	$prefs['style'] = 'fivealive.css';
-}
+if (empty($prefs['theme_active']) || $prefs['theme_active'] == 'default') {
+	$headerlib->add_cssfile('styles/layout/design.css');
 
-if (!empty($prefs['style_admin']) && ($section === 'admin' || empty($section))) {		// use admin theme if set
-	$prefs['style'] = $prefs['style_admin'];
-	$prefs['style_option'] = $prefs['style_admin_option'];								// and it's option
-	$prefs['themegenerator_theme'] = '';												// and disable theme generator
-}
+	$headerlib->add_cssfile('vendor/twitter/bootstrap/dist/css/bootstrap.min.css');
+} elseif ($prefs['theme_active'] == 'custom') {
+	$headerlib->add_cssfile('styles/layout/design.css');
 
-$headerlib->add_cssfile($tikilib->get_style_path('', '', $prefs['style']), 51);
-$style_base = $tikilib->get_style_base($prefs['style']);
+	$custom_theme = $prefs['theme_custom'];
+	// Use external link if url begins with http://, https://, or // (auto http/https)
+	if (preg_match('/^(http(s)?:)?\/\//', $custom_theme)) {
+		$headerlib->add_cssfile($custom_theme, 'external');
+	} else {
+		$headerlib->add_cssfile($custom_theme);
+	}
+} elseif ($prefs['theme_active'] == 'legacy') {
+	// Use legacy styles
+	if ($prefs['feature_fixed_width'] === 'y') {
+		$headerlib->add_css(
+			'.fixed_width .fixedwidth, .fixed_width .fixedwidth .fixedwidth { width:' .
+			(!empty($prefs['layout_fixed_width']) ? $prefs['layout_fixed_width'] : '990px') .
+			'; }'
+		);
+	}
+
+	if ( $prefs['useGroupTheme'] == 'y' && $group_style = $userlib->get_user_group_theme()) {
+		$prefs['style'] = $group_style;
+		$smarty->assign_by_ref('group_style', $group_style);
+	}
+	if (empty($prefs['style']) || $tikilib->get_style_path('', '', $prefs['style']) == '') {
+		$prefs['style'] = 'fivealive.css';
+	}
+
+	if (!empty($prefs['style_admin']) && ($section === 'admin' || empty($section))) {		// use admin theme if set
+		$prefs['style'] = $prefs['style_admin'];
+		$prefs['style_option'] = $prefs['style_admin_option'];								// and it's option
+		$prefs['themegenerator_theme'] = '';												// and disable theme generator
+	}
+
+	$headerlib->add_cssfile($tikilib->get_style_path('', '', $prefs['style']), 51);
+	$style_base = $tikilib->get_style_base($prefs['style']);
+
+	// include optional "options" cascading stylesheet if set
+	if ( !empty($prefs['style_option'])) {
+		$style_option_css = $tikilib->get_style_path($prefs['style'], $prefs['style_option'], $prefs['style_option']);
+		if (!empty($style_option_css)) {
+			$headerlib->add_cssfile($style_option_css, 52);
+		}
+	}
+	// End legacy
+} else {
+	// TODO : Handle normal registered themes
+
+	// Will need this
+	$headerlib->add_cssfile('styles/layout/design.css');
+}
 
 // Allow to have a IE specific CSS files for the theme's specific hacks
 $style_ie6_css = $tikilib->get_style_path($prefs['style'], $prefs['style_option'], 'ie6.css');
 $style_ie7_css = $tikilib->get_style_path($prefs['style'], $prefs['style_option'], 'ie7.css');
 $style_ie8_css = $tikilib->get_style_path($prefs['style'], $prefs['style_option'], 'ie8.css');
 $style_ie9_css = $tikilib->get_style_path($prefs['style'], $prefs['style_option'], 'ie9.css');
-
-// include optional "options" cascading stylesheet if set
-if ( !empty($prefs['style_option'])) {
-	$style_option_css = $tikilib->get_style_path($prefs['style'], $prefs['style_option'], $prefs['style_option']);
-	if (!empty($style_option_css)) {
-		$headerlib->add_cssfile($style_option_css, 52);
-	}
-}
 
 // include optional "custom" cascading stylesheet if there
 $custom_css = $tikilib->get_style_path($prefs['style'], $prefs['style_option'], 'custom.css');;

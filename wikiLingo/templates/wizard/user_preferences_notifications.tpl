@@ -1,7 +1,6 @@
 {* $Id$ *}
 
-<h1 class="pagetitle">{tr}User Watches{/tr}: {tr}Notification Preferences{/tr}</h1>
-<div class="userWizardIconleft"><img src="img/icons/large/user.png" alt="{tr}Notification Preferences{/tr}" /></div>
+<div class="userWizardIconleft"><img src="img/icons/large/wizard_user48x48.png" alt="{tr}User Wizard{/tr}" /></div>
 {tr}Use 'watches' to monitor wiki pages or other objects.{/tr} {tr}Watch new items by clicking the {icon _id=eye} button on specific pages.{/tr}<br/> 
 {tr}Set up below preferences related to receiving notifications by email about changes in the site{/tr}.<br/><br/><br/>
 
@@ -16,6 +15,7 @@
 <fieldset>
 {if $prefs.feature_user_watches eq 'y'}
 	<legend>{tr}Notification Preferences{/tr}</legend>
+		<div class="userWizardIconright"><img src="img/icons/large/evolution48x48.png" alt="{tr}Notification Preferences{/tr}" /></div>
 		<table class="formcolor">
 				<p>{tr}Send notification when I am the editor{/tr}:</p>
 					<p><input type="checkbox" name="user_wiki_watch_editor" {if $user_wiki_watch_editor eq 'y'}checked{/if}> {tr}Wiki{/tr}</p>

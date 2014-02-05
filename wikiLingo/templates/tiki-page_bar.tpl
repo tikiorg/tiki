@@ -57,8 +57,6 @@
 
 	{/capture}
 	{capture assign=page_bar}
-		{favorite type="wiki page" object=$page}
-
 		{if $edit_page neq 'y'}
 			{* Check that page is not locked and edit permission granted. SandBox can be edited w/o perm *}
 			{if ((isset($editable) and $editable) and ($tiki_p_edit eq 'y' or $page|lower eq 'sandbox')

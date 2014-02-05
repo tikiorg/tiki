@@ -8,10 +8,15 @@
 require_once('lib/wizard/wizard.php');
 
 /**
- * Set up the wysiwyg editor, including inline editing
+ * The Wizard's first page and frame handler 
  */
 class UserWizard extends Wizard 
 {
+    function pageTitle ()
+    {
+        return tra('Welcome to the User Wizard');
+    }
+
 	function isEditable ()
 	{
 		return false;
@@ -24,7 +29,8 @@ class UserWizard extends Wizard
 		// Run the parent first
 		parent::onSetupPage($homepageUrl);
 		
-		// Assign the page temaplte
+		// Assign the page template
+        $smarty->assign('pageTitle', $this->pageTitle());
 		$wizardTemplate = 'wizard/user_wizard.tpl';
 		$smarty->assign('wizardBody', $wizardTemplate);
 		

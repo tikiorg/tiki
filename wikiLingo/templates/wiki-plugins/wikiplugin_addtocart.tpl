@@ -1,5 +1,5 @@
 {* $Id$ *}
-<form method="post" action="{query _type=relative _keepall=y}" style="display: inline;">
+<form method="post" action="{query _type=relative _keepall=y}" style="display: inline;" class="wp_addtocart_form">
 	<input type="hidden" name="code" value="{$code|escape}">
 	{if $onbehalf == 'y'}
 		{tr}Buy on behalf of:{/tr}

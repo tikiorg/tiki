@@ -59,5 +59,4 @@ if (!isValidLocale($prefs['language'])) {
 	setLanguage($prefs['site_language']);
 }
 
-// Some languages need BiDi support. Add their code names here ...
-$prefs['feature_bidi'] = in_array($prefs['language'], array('ar', 'he', 'fa')) ? 'y' : 'n';
+TikiLib::lib('multilingual')->setupBiDi();

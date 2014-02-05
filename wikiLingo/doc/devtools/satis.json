@@ -888,7 +888,7 @@
 		},
 		{
 			"type": "svn",
-			"url": "http://svn.code.sf.net/p/jcapture-applet/code/trunk@46"
+			"url": "http://svn.code.sf.net/p/jcapture-applet/code/trunk@47"
 		},
 		{
 			"type": "svn",
@@ -951,7 +951,8 @@
 		"simile_timeline/simile_timeline": "2.3.0",
 		"smarty/smarty": ">=3.1.14",
 		"svg-edit/svg-edit": "2.6",
-		"symfony/console": "2.2.0",
+		"symfony/console": "2.4.1",
+		"tijsverkoyen/css-to-inline-styles": "1.2.1",
 		"zetacomponents/base": "1.8"
 	},
 	"archive": {

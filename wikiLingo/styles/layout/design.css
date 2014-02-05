@@ -2448,6 +2448,9 @@ body.tiki_wiki #comments {
 	overflow: auto;
 	max-width: 990px;
 }
+.CodeMirror.codelisting {
+	position: static; /* fix the "double height with scrollbar" issue in codelisting with CodeMirror */
+}
 
 /* wikiplugin_fade */
 .wpfade-hidden {
@@ -2564,6 +2567,14 @@ body.tiki_wiki #comments {
 
 .ic_active {
     border: 2px solid #800;
+}
+
+.ic_caption {
+	background:#808080;
+	opacity:0.75;
+	width:100%;
+	color:black;
+	padding:5px 10px 5px 10px;
 }
 
 /* wikiplugin_sign */
@@ -3146,6 +3157,24 @@ a.freetag_7 {
 	color: #999;
 }
 
+/* jquery-ui in since_last_visit */
+li.ui-tabs-active a { 
+	background:#CCCCCC; 
+}
+
+#mytabs .ui-tabs-nav {
+	zoom: 0.70;
+}
+
+#mytabs .ui-widget-content {
+	margin-left: -10px; 
+	zoom: 0.85;
+}
+
+#mytabs {
+	min-width:150px;
+}
+
 /* jquery validation */
 div.form-group label.error {
 	font-weight: normal !important;
@@ -3342,6 +3371,11 @@ form.simple textarea.export {
 .fb-name {
 	font-weight: bold;
 	display: block;
+}
+
+/* Users_list module styling */
+#role_main .box-users_list {
+	max-width:100%;
 }
 
 /* Namespace styling */
@@ -3631,13 +3665,10 @@ h6 a.tiki_anchor:hover {
     color: #3333CC;
 }
 
-/* End of file */
-
-
 /* override default Bootstrap style */
 .page-header {
 	border-bottom: none;
-	margin: 0;
+	margin: auto;
 	padding-bottom: 0;
 }
 
@@ -3645,3 +3676,21 @@ h6 a.tiki_anchor:hover {
 .modal-body div.submit {
 	display: none;
 }
+
+/* Conditions and Terms validation */
+
+.age-validation .form-control {
+	width: auto;
+	display: inline;
+	margin: 0 1em;
+}
+
+/* Password domain module */
+.pwddom_domain_name {
+    font-weight: bold;
+}
+.pwddom_username_name {
+    font-weight: bold;
+}
+
+/* End of file */

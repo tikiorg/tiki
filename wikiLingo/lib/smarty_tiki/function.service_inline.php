@@ -23,9 +23,11 @@ function smarty_function_service_inline($params, $smarty)
 	try {
 		return $servicelib->render($controller, $action, $params);
 	} catch (Services_Exception $e) {
-		$smarty->loadPlugin('smarty_block_remarksbox');
-		$repeat = false;
-		return smarty_block_remarksbox(['type' => 'warning', 'title' => tr('Unavailable')], $e->getMessage(), $smarty, $repeat);
+		if (empty($params['_silent'])) {
+			$smarty->loadPlugin('smarty_block_remarksbox');
+			$repeat = false;
+			return smarty_block_remarksbox(['type' => 'warning', 'title' => tr('Unavailable')], $e->getMessage(), $smarty, $repeat);
+		}
 	}
 }
 

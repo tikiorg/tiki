@@ -28,11 +28,28 @@ function smarty_block_activityframe($params, $content, $smarty, &$repeat)
 		$sharedGroups = array();
 	}
 
+	if (isset($params['activity']['object_type'], $params['activity']['object_id'])) {
+		// Use the activity
+		$object = array(
+			'type' => $params['activity']['object_type'],
+			'id' => $params['activity']['object_id'],
+		);
+	} elseif (isset($params['activity']['type'], $params['activity']['object'])) {
+		// Not a registered activity, use parent object
+		$object = array(
+			'type' => $params['activity']['type'],
+			'id' => $params['activity']['object'],
+		);
+	} else {
+		$object = [];
+	}
+
 	$smarty = TikiLib::lib('smarty');
 	$smarty->assign(
 		'activityframe', array(
 			'content' => $content,
 			'activity' => $params['activity'],
+			'object' => $object,
 			'heading' => $params['heading'],
 			'like' => in_array($GLOBALS['user'], $likes),
 			'sharedgroups' => $sharedGroups,

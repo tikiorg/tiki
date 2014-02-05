@@ -1,6 +1,6 @@
 {* $Id$ *}
 
-<div class="adminWizardIconleft"><img src="img/icons/large/stock_quit48x48.png" alt="{tr}Set up Login{/tr}" /></div>
+<div class="adminWizardIconleft"><img src="img/icons/large/wizard_admin48x48.png" alt="{tr}Admin Wizard{/tr}" title="{tr}Admin Wizard{/tr}" /></div><div class="adminWizardIconright"><img src="img/icons/large/stock_quit48x48.png" alt="{tr}Set up Login{/tr}" /></div>
 {tr}Configure the login, registration and validation preferences for the new accounts{/tr}.
 <div class="adminWizardContent">
 <fieldset>

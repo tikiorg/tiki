@@ -1,6 +1,6 @@
 {* $Id$ *}
-<form action="tiki-admin.php?page=look" id="look" name="look" class="labelColumns" onreset="return(confirm("{tr}Cancel Edit{/tr}"))" class="admin" method="post">
-<div class="row text-center">
+<form action="tiki-admin.php?page=look" id="look" name="look" class="form-horizontal labelColumns" onreset="return(confirm("{tr}Cancel Edit{/tr}"))" class="admin" method="post">
+<div class="text-center">
 	<div class="btn-group form-group">
 		<input type="submit" class="btn btn-primary btn-sm" name="looksetup" value="{tr}Apply{/tr}" />
 		<input type="reset" class="btn btn-warning btn-sm" name="looksetupreset" value="{tr}Reset{/tr}" />
@@ -16,14 +16,22 @@
 				</div>
 
 				<div class="adminoptionbox">
-					{preference name=style}
-					{preference name=style_option}
+					{preference name=theme_active}
+
+					<div class="adminoptionbox theme_active_childcontainer custom">
+						{preference name=theme_custom}
+					</div>
+
+					<div class="adminoptionbox theme_active_childcontainer legacy">
+						{preference name=style}
+						{preference name=style_option}
+
+						{preference name=style_admin}
+						{preference name=style_admin_option}
+					</div>
 
 					{preference name=site_layout}
 					{preference name=site_layout_per_object}
-
-					{preference name=style_admin}
-					{preference name=style_admin_option}
 
 					{if $prefs.javascript_enabled eq 'n' or $prefs.feature_jquery eq 'n'}
 						<input type="submit" class="btn btn-default btn-sm" name="changestyle" value="{tr}Go{/tr}" />
@@ -339,7 +347,7 @@
 		{/tab}
 	{/tabset}
 
-<div class="row text-center">
+<div class="text-center">
 	<div class="btn-group form-group">
 		<input type="submit" class="btn btn-primary btn-sm" name="looksetup" value="{tr}Apply{/tr}" />
 		<input type="reset" class="btn btn-warning btn-sm" name="looksetupreset" value="{tr}Reset{/tr}" />

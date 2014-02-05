@@ -40,46 +40,69 @@ function browser() {
 }
 
 /* toggle CSS (tableless) layout columns */
-function toggleCols(id,zeromargin,maincol) {
+function toggleCols(id, zeromargin, maincol, bidi) {
 	var showit = 'show_' + escape(id);
 	if (!zeromargin) { zeromargin = ''; }
 	if (!id) { id = ''; }
 	if (!maincol) { maincol = 'col1'; }
+	if (!bidi) { bidi = 'ltr'; } /* when bidi is not set default is left to right */
 	var $id = $('#' + id), $maincol = $('#' + maincol);
 	if (! $id.is(':visible')) {
-		showCol(id, zeromargin, maincol);
+		showCol(id, zeromargin, maincol, bidi);
 		setCookie(showit,'y');
 	} else {
-		hideCol(id, zeromargin, maincol);
+		hideCol(id, zeromargin, maincol, bidi);
 		setCookie(showit,'n');
 	}
 }
 
-function showCol(id, zeromargin, maincol) {
+function showCol(id, zeromargin, maincol, bidi) {
 	var $id = $('#' + id), $maincol = $('#' + maincol);
 
 	$id.show();
 	if (zeromargin == 'left') {
-		$maincol.css('margin-left', '');
-		if (!$maincol.css('margin-left') || $maincol.css('margin-left').replace('px', '') == 0) {
-			$maincol.css('margin-left', $id.width());
+		if (bidi == 'ltr') {
+			$maincol.css('margin-left', '');
+			if (!$maincol.css('margin-left') || $maincol.css('margin-left').replace('px', '') == 0) {
+				$maincol.css('margin-left', $id.width());
+			}
+		} else {
+			$maincol.css('margin-right', '');
+			if (!$maincol.css('margin-right') || $maincol.css('margin-right').replace('px', '') == 0) {
+				$maincol.css('margin-right', $id.width());
+			}
 		}
 	} else {
-		$maincol.css('margin-right', '');
-		if (!$maincol.css('margin-right') || $maincol.css('margin-right').replace('px', '') == 0) {
-			$maincol.css('margin-right', $id.width());
+		if (bidi == 'ltr') {
+			$maincol.css('margin-right', '');
+			if (!$maincol.css('margin-right') || $maincol.css('margin-right').replace('px', '') == 0) {
+				$maincol.css('margin-right', $id.width());
+			}
+		} else {
+			$maincol.css('margin-left', '');
+			if (!$maincol.css('margin-left') || $maincol.css('margin-left').replace('px', '') == 0) {
+				$maincol.css('margin-left', $id.width());
+			}
 		}
 	}
 }
 
-function hideCol(id, zeromargin, maincol) {
+function hideCol(id, zeromargin, maincol, bidi) {
 	var $id = $('#' + id), $maincol = $('#' + maincol);
 
 	$id.hide();
 	if (zeromargin == 'left') {
-		$maincol.css('margin-left', 0);
+			if (bidi == 'ltr') {
+				$maincol.css('margin-left', 0);
+			} else {
+				$maincol.css('margin-right', 0);
+			}
 	} else {
-		$maincol.css('margin-right', 0);
+			if (bidi == 'ltr') {
+				$maincol.css('margin-right', 0);
+			} else {
+				$maincol.css('margin-left', 0);
+			}
 	}
 }
 
@@ -1321,8 +1344,8 @@ function build_plugin_form( type, index, pageName, pluginArgs, bodyContent, sele
 
 	var desc = document.createElement( 'div' );
 	desc.innerHTML = meta.description;
-	if (meta.documentation) {
-		desc.innerHTML += ' <a href="http://doc.tiki.org/' + meta.documentation + '" target="tikihelp" class="tikihelp" tabIndex="-1">' +
+	if (meta.documentation && jqueryTiki.helpurl) {
+		desc.innerHTML += ' <a href="' + jqueryTiki.helpurl + meta.documentation + '" target="tikihelp" class="tikihelp" tabIndex="-1">' +
 				'<img src="img/icons/help.png" alt="Help" width="16" height="16" class="icon" title="Help" class="icon">' +
 			'</a>';
 

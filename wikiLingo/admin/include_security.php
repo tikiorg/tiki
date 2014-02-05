@@ -14,4 +14,9 @@ if (isset($_REQUEST["security"])) {
 	check_ticket('admin-inc-security');
 }
 
+if (!extension_loaded('mcrypt')) {
+	global $smarty;
+	$smarty->assign('no_mcrypt', 'y');
+}
+
 ask_ticket('admin-inc-security');

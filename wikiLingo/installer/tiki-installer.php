@@ -1052,7 +1052,7 @@ if ( isset($_REQUEST['general_settings']) && $_REQUEST['general_settings'] == 'y
 
 include_once "lib/headerlib.php";
 $headerlib->add_js("var tiki_cookie_jar=new Array();");
-$headerlib->add_cssfile('styles/fivealive.css');
+$headerlib->add_cssfile('vendor/twitter/bootstrap/css/bootstrap.css');
 $headerlib->add_jsfile('lib/tiki-js.js');
 $headerlib->add_jsfile_dependancy("vendor/jquery/jquery-min/jquery-$headerlib->jquery_version.min.js");
 $headerlib->add_jsfile('lib/jquery_tiki/tiki-jquery.js');

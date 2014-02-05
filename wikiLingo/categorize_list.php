@@ -49,6 +49,8 @@ if ($prefs['feature_categories'] == 'y' && isset($cat_type) && isset($cat_objid)
 
  	$can = $catobjperms->modify_object_categories;
 
+	$categories = Perms::filter(array('type' => 'category'), 'object', $categories, array( 'object' => 'categId' ), array('view_category'));
+
 	foreach ($categories as &$category) {
 		$catperms = Perms::get(array( 'type' => 'category', 'object' => $category['categId'] ));
 

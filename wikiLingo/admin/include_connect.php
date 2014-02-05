@@ -63,3 +63,5 @@ if ($prefs['connect_server_mode'] === 'y') {
 	$smarty->assign('connect_stats', null);
 	$smarty->assign('connect_recent', null);
 }
+
+$smarty->assign('jitsi_url', Services_Suite_Controller::getJitsiUrl());

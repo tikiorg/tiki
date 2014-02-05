@@ -80,7 +80,7 @@
 				$(container).addClass('comment-container');
 				container.reload = function () {
 					myReload();
-					$(container).load(url, function () {
+					$('.modal-content', container).load(url, function () {
 						$(container).trigger('tiki.modal.redraw');
 					});
 				};

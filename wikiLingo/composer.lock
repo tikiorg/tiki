@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "bfcdba10d10f428c58f4a5d5f974b4f8",
+    "hash": "973730372b77d716db1347dee5d922e9",
     "packages": [
         {
             "name": "aFarkas/html5shiv",
@@ -230,13 +230,13 @@
             "source": {
                 "type": "svn",
                 "url": "http://svn.code.sf.net/p/jcapture-applet/code",
-                "reference": "/trunk/@47"
+                "reference": "/trunk/@46"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/jcapture-applet-jcapture-applet-dev-trunk-56537c.zip",
+                "url": "https://composer.tiki.org/dist/jcapture-applet-jcapture-applet-dev-trunk-f04408.zip",
                 "reference": "dev-trunk",
-                "shasum": "0f910540cf75ece6edf67ba09af420f9b6d01f04"
+                "shasum": "99359f87c4472e26605dc4989fd7624506ed6701"
             },
             "type": "library",
             "license": [
@@ -264,7 +264,7 @@
                 "screencapture",
                 "screenshot"
             ],
-            "time": "2014-01-27 14:02:15"
+            "time": "2013-04-18 04:48:36"
         },
         {
             "name": "jquery/jquery",
@@ -872,26 +872,32 @@
         },
         {
             "name": "symfony/console",
-            "version": "v2.2.0",
+            "version": "v2.4.1",
             "target-dir": "Symfony/Component/Console",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Console.git",
-                "reference": "v2.2.0"
+                "reference": "4c1ed2ff514bd85ee186eebb010ccbdeeab05af7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/symfony-console-v2.2.0-v2.2.0-12a657.zip",
-                "reference": "v2.2.0",
-                "shasum": "90e38e0d7734b8ed8807eddced63293c800aef07"
+                "url": "https://composer.tiki.org/dist/symfony-console-4c1ed2ff514bd85ee186eebb010ccbdeeab05af7-zip-04e417.zip",
+                "reference": "v2.4.1",
+                "shasum": "ec0b2553af4a8d2bfad8519588eb2bf9575f872c"
             },
             "require": {
                 "php": ">=5.3.3"
             },
+            "require-dev": {
+                "symfony/event-dispatcher": "~2.1"
+            },
+            "suggest": {
+                "symfony/event-dispatcher": ""
+            },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.2-dev"
+                    "dev-master": "2.4-dev"
                 }
             },
             "autoload": {
@@ -915,47 +921,88 @@
             ],
             "description": "Symfony Console Component",
             "homepage": "http://symfony.com",
-            "time": "2013-03-01 06:43:14"
+            "time": "2014-01-01 08:14:50"
         },
         {
-            "name": "twitter/bootstrap",
-            "version": "3.0.3",
-            "dist": {
-                "type": "zip",
-                "url": "https://github.com/twbs/bootstrap/releases/download/v3.0.3/bootstrap-3.0.3-dist.zip",
-                "reference": null,
-                "shasum": null
-            },
-            "type": "library"
-        },
-        {
-            "name": "wikilingo/wikilingo",
-            "version": "0.11",
+            "name": "tijsverkoyen/css-to-inline-styles",
+            "version": "1.2.1",
+            "target-dir": "TijsVerkoyen/CssToInlineStyles",
             "source": {
                 "type": "git",
-                "url": "https://github.com/wikiLingo/wikiLingo.git",
-                "reference": "84762b95a911f732f668829f1cc28aa3290464c5"
+                "url": "https://github.com/tijsverkoyen/CssToInlineStyles.git",
+                "reference": "e53f25f6685d167f80b9d51b91b09aa70ea6c1c9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wikiLingo/wikiLingo/zipball/84762b95a911f732f668829f1cc28aa3290464c5",
-                "reference": "84762b95a911f732f668829f1cc28aa3290464c5",
-                "shasum": ""
+                "url": "https://composer.tiki.org/dist/tijsverkoyen-css-to-inline-styles-e53f25f6685d167f80b9d51b91b09aa70ea6c1c9-zip-cd3ab0.zip",
+                "reference": "1.2.1",
+                "shasum": "5055fcdc9436ec9d1da29733bfcd1a53c8f0205d"
             },
             "require": {
-                "php": ">=5.4.0"
+                "php": ">=5.3.0"
             },
             "type": "library",
             "autoload": {
                 "psr-0": {
-                    "Types\\": "./",
-                    "WikiLingo\\": "./",
-                    "WikiLingoWYSIWYG\\": "./",
-                    "WYSIWYGWikiLingo\\": "./"
+                    "TijsVerkoyen\\CssToInlineStyles": ""
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
-            "time": "2014-01-31 12:23:42"
+            "license": [
+                "BSD"
+            ],
+            "authors": [
+                {
+                    "name": "Tijs Verkoyen",
+                    "email": "css_to_inline_styles@verkoyen.eu",
+                    "role": "Developer"
+                }
+            ],
+            "description": "CssToInlineStyles is a class that enables you to convert HTML-pages/files into HTML-pages/files with inline styles. This is very useful when you're sending emails.",
+            "homepage": "https://github.com/tijsverkoyen/CssToInlineStyles",
+            "time": "2013-02-09 17:48:44"
+        },
+        {
+            "name": "twitter/bootstrap",
+            "version": "v3.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/twbs/bootstrap.git",
+                "reference": "1409cde7e800ca83fd761f87e5ad8f0d259e38d1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/twbs/bootstrap/zipball/1409cde7e800ca83fd761f87e5ad8f0d259e38d1",
+                "reference": "1409cde7e800ca83fd761f87e5ad8f0d259e38d1",
+                "shasum": ""
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.0.x-dev"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jacob Thornton",
+                    "email": "jacobthornton@gmail.com"
+                },
+                {
+                    "name": "Mark Otto",
+                    "email": "markdotto@gmail.com"
+                }
+            ],
+            "description": "Sleek, intuitive, and powerful mobile first front-end framework for faster and easier web development.",
+            "homepage": "http://getbootstrap.com",
+            "keywords": [
+                "bootstrap",
+                "css"
+            ],
+            "time": "2014-01-30 16:30:37"
         },
         {
             "name": "zetacomponents/base",
@@ -1076,6 +1123,35 @@
             "description": "This component allows you to set up and run your own WebDAV (RFC 2518) server, to enable online content editing for the users of your system through the WebDAV HTTP extension.",
             "homepage": "https://github.com/zetacomponents",
             "time": "2009-11-09 05:34:07"
+        },
+		{
+            "name": "wikilingo/wikilingo",
+            "version": "0.11",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/wikiLingo/wikiLingo.git",
+                "reference": "84762b95a911f732f668829f1cc28aa3290464c5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/wikiLingo/wikiLingo/zipball/84762b95a911f732f668829f1cc28aa3290464c5",
+                "reference": "84762b95a911f732f668829f1cc28aa3290464c5",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Types\\": "./",
+                    "WikiLingo\\": "./",
+                    "WikiLingoWYSIWYG\\": "./",
+                    "WYSIWYGWikiLingo\\": "./"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "time": "2014-01-31 12:23:42"
         }
     ],
     "packages-dev": [

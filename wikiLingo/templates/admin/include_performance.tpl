@@ -108,7 +108,7 @@
 					<p>{tr}Clear all APC caches:{/tr} {self_link apc_clear=true}{tr}Clear Caches{/tr}{/self_link}</p>
 				{/if}
 			{else}
-				{tr}Bytecode cache is not used. Using a bytecode cache (APC, XCache, WinCache) is highly recommended for production environments.{/tr}
+				{tr}Bytecode cache is not used. Using a bytecode cache (OPcache, APC, XCache, WinCache) is highly recommended for production environments.{/tr}
 			{/if}
 		{/tab}
 		
@@ -147,8 +147,8 @@
 		{/tab}
 
 		{tab name="{tr}Major slowdown{/tr}"}
-            <h2>{tr}MMajor slowdown/tr}</h2>
-			{remarksbox type="note" title="{tr}Major slow down{/tr}"}{tr}These are reported to slow down Tiki. If you have a high-volume site, you may want to deactivate them{/tr}
+            <h2>{tr}Major slowdown{/tr}</h2>
+			{remarksbox type="note" title="{tr}Major slowdown{/tr}"}{tr}These are reported to slow down Tiki. If you have a high-volume site, you may want to deactivate them{/tr}
 			{/remarksbox}
 			{preference name=wikiplugin_sharethis}
 			{preference name=log_sql}

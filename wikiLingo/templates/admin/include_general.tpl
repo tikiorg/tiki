@@ -200,6 +200,7 @@
 				{preference name=conditions_enabled}
 				<div class="adminoptionboxchild" id="conditions_enabled_childcontainer">
 					{preference name=conditions_page_name}
+					{preference name=conditions_minimum_age}
 				</div>
 			</fieldset>
 

@@ -10,13 +10,13 @@
 		<div style="float: right; padding-left:10px; white-space: nowrap">
 		{if $user and $prefs.feature_user_watches eq 'y'}
 			{if $user_watching_articles eq 'n'}
-					{self_link watch_event='article_*' watch_object='*' watch_action='add' _icon='eye' _alt="{tr}Monitor Articles{/tr}" _title="{tr}Monitor Articles{/tr}"}{/self_link}
+				{self_link watch_event='article_*' watch_object='*' watch_action='add' _icon='eye' _alt="{tr}Monitor Articles{/tr}" _title="{tr}Monitor Articles{/tr}" _class="btn btn-default"}{/self_link}
 			{else}
-					{self_link watch_event='article_*' watch_object='*' watch_action='remove' _icon='no_eye' _alt="{tr}Stop Monitoring Articles{/tr}" _title="{tr}Stop Monitoring Articles{/tr}"}{/self_link}
+				{self_link watch_event='article_*' watch_object='*' watch_action='remove' _icon='no_eye' _alt="{tr}Stop Monitoring Articles{/tr}" _title="{tr}Stop Monitoring Articles{/tr}" _class="btn btn-default"}{/self_link}
 			{/if}
 		{/if}
 		{if $prefs.feature_group_watches eq 'y' and $tiki_p_admin_users eq 'y'}
-			<a href="tiki-object_watches.php?watch_event=article_*&amp;objectId=*" class="icon">{icon _id='eye_group' alt="{tr}Group Monitor{/tr}"}</a>
+			<a href="tiki-object_watches.php?watch_event=article_*&amp;objectId=*" class="btn btn-default">{icon _id='eye_group' alt="{tr}Group Monitor{/tr}"}</a>
 		{/if}
 		</div>
 	</div>
@@ -79,16 +79,14 @@
 				</div>
 			{/if}
 			<div class="articleheading">
-				<table  cellpadding="0" cellspacing="0">
-					<tr>
-						<td valign="top">
+						<div {if $listpages[ix].isfloat eq 'n'}style="display:table-cell"{/if}>
 							{if $listpages[ix].show_image eq 'y'}
 								{if $listpages[ix].useImage eq 'y'}
 									{if $listpages[ix].hasImage eq 'y'}
-										<a href="{$smarty.capture.href}"
+										<a href="{$smarty.capture.href}" class="thumbnail" {if $listpages[ix].isfloat eq 'y'}{$style="margin-right:4px;float:left;"}{/if}
 												title="{if $listpages[ix].show_image_caption and $listpages[ix].image_caption}{$listpages[ix].image_caption|escape}{elseif $listpages[ix].topicName}{tr}{$listpages[ix].topicName}{/tr}{else}{tr}Read More{/tr}{/if}">
 											{$style=''}
-											<img {if $listpages[ix].isfloat eq 'y'}{$style="margin-right:4px;float:left;"}{else}class="articleimage"{/if} 
+											<img {*{if $listpages[ix].isfloat eq 'y'}{$style="margin-right:4px;float:left;"}{else}*}class="articleimage"{*{/if}*}
 													alt="{if $listpages[ix].show_image_caption and $listpages[ix].image_caption}{$listpages[ix].image_caption|escape}{elseif $listpages[ix].topicName}{tr}{$listpages[ix].topicName}{/tr}{/if}"
 													{strip}src="article_image.php?image_type=article&amp;id={$listpages[ix].articleId}
 													{if $listpages[ix].list_image_x > 0 and ($largefirstimage neq 'y' or not $smarty.section.ix.first)}
@@ -110,9 +108,9 @@
 									{/if}
 								{else}
 									{if isset($topics[$listpages[ix].topicId].image_size) and $topics[$listpages[ix].topicId].image_size > 0}
-										<a href="{$smarty.capture.href}"
+										<a href="{$smarty.capture.href}" class="thumbnail" {if $listpages[ix].isfloat eq 'y'} style="margin-right:4px;float:left;"{/if}
 												title="{if $listpages[ix].show_image_caption and $listpages[ix].image_caption}{$listpages[ix].image_caption|escape}{else}{tr}{$listpages[ix].topicName}{/tr}{/if}">
-											<img {if $listpages[ix].isfloat eq 'y'}style="margin-right:4px;float:left;"{else}class="articleimage"{/if} 
+											<img {if $listpages[ix].isfloat eq 'y'}{*style="margin-right:4px;float:left;*}"{else}class="articleimage"{/if}
 													alt="{if $listpages[ix].show_image_caption and $listpages[ix].image_caption}{$listpages[ix].image_caption|escape}{else}{tr}{$listpages[ix].topicName}{/tr}{/if}"
 													src="article_image.php?image_type=topic&amp;id={$listpages[ix].topicId}">
 										</a>
@@ -120,15 +118,14 @@
 								{/if}
 							{/if}
 							{if $listpages[ix].isfloat eq 'n'}
-								</td><td  valign="top">
+						</div>
+                        <div style="display:table-cell; vertical-align: top">
 							{/if}
 							<div class="articleheadingtext">{$listpages[ix].parsed_heading}</div>
 							{if isset($fullbody) and $fullbody eq "y"}
 								<div class="articlebody">{$listpages[ix].parsed_body}</div>
 							{/if}
-						</td>
-					</tr>
-				</table>
+						</div>
 			</div>
 			<div class="articletrailer">
 				{if ($listpages[ix].size > 0) or (($prefs.feature_article_comments eq 'y') and ($tiki_p_read_comments eq 'y'))}
@@ -184,8 +181,10 @@
 		</article>
 	{/if}
 {sectionelse}
-	{if $quiet ne 'y'}{tr}No articles yet.{/tr}
-		{if $tiki_p_edit_article eq 'y'}<a href="tiki-edit_article.php">{tr}Add an article{/tr}</a>{/if}
+	{if $quiet ne 'y'}
+		{remarksbox type=info title="{tr}No articles yet.{/tr}" close="n"}
+			{if $tiki_p_edit_article eq 'y'}<a href="tiki-edit_article.php" class="alert-link">{tr}Add an article{/tr}</a>{/if}
+		{/remarksbox}
 	{/if}
 {/section}
 {if !empty($listpages) && (!isset($usePagination) or $usePagination ne 'n')}

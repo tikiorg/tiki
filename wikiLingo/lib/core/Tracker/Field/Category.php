@@ -75,6 +75,17 @@ class Tracker_Field_Category extends Tracker_Field_Abstract implements Tracker_F
 						),
 						'legacy_index' => 4,
 					),
+					'outputtype' => array(
+						'name' => tr('Output Type'),
+						'description' => tr('.'),
+						'filter' => 'word',
+						'options' => array(
+							'' => tr('Plain list separate by line breaks (default)'),
+							'links' => tr('Links separate by line breaks'),
+							'ul' => tr('Unordered list of labels'),
+							'ulinks' => tr('Unordered list of links'),
+						),
+					),
 				),
 			),
 		);
@@ -131,15 +142,38 @@ class Tracker_Field_Category extends Tracker_Field_Abstract implements Tracker_F
 			foreach ($categories as $category) {
 				if ($category['categId'] == $categId) {
 					if ($this->getOption('descendants') == 2) {
-						$ret[] = $category['relativePathString'];
+						$str = $category['relativePathString'];
 					} else {
-						$ret[] = $category['name'];
+						$str = $category['name'];
 					}
+					if (strpos($this->getOption('outputtype'), 'links') !== false) {
+						TikiLib::lib('smarty')->loadPlugin('smarty_modifier_sefurl');
+						$deep = $this->getOption('descendants') != 0;
+						$href = smarty_modifier_sefurl($categId, 'category', $deep, '', 'y', $str);
+						if ($deep) {
+							$href .= 'deep=on';
+						}
+						$str = "<a href=\"$href\">$str</a>";
+					}
+					$ret[] = $str;
 					break;
 				}
 			}
 		}
-		return implode('<br/>', $ret);
+		if (strpos($this->getOption('outputtype'), 'ul') === 0) {
+			if (count($ret)) {
+				$out = '<ul class="tracker_field_category">';
+				foreach($ret as $li) {
+					$out .= '<li>' . $li . '</li>';
+				}
+				$out .= '</ul>';
+				return $out;
+			} else {
+				return '';
+			}
+		} else {
+			return implode('<br/>', $ret);
+		}
 	}
 
 	public function handleSave($value, $oldValue)
@@ -199,13 +233,22 @@ class Tracker_Field_Category extends Tracker_Field_Abstract implements Tracker_F
 
 	private function getApplicableCategories()
 	{
-		$parentId = (int) $this->getOption('parentId');
-		$descends = $this->getOption('descendants') > 0;
-		if ($parentId > 0) {
-			return TikiLib::lib('categ')->getCategories(array('identifier'=>$parentId, 'type'=>$descends ? 'descendants' : 'children'));
-		} else {
-			return TikiLib::lib('categ')->getCategories(array('type' => $descends ? 'all' : 'roots'));
+		static $cache = array();
+		$fieldId = $this->getConfiguration('fieldId');
+
+		if (! isset($cache[$fieldId])) {
+			$parentId = (int) $this->getOption('parentId');
+			$descends = $this->getOption('descendants') > 0;
+			if ($parentId > 0) {
+				$data = TikiLib::lib('categ')->getCategories(array('identifier'=>$parentId, 'type'=>$descends ? 'descendants' : 'children'));
+			} else {
+				$data = TikiLib::lib('categ')->getCategories(array('type' => $descends ? 'all' : 'roots'));
+			}
+
+			$cache[$fieldId] = $data;
 		}
+
+		return $cache[$fieldId];
 	}
 
 	private function getCategories()

@@ -571,6 +571,26 @@ function prefs_feature_list($partial = false)
 			'default' => 'n',
 			'tags' => array('experimental'),
 		),
+		'feature_user_encryption' => array(
+			'name' => tra('User Encryption'),
+			'description' => tra('Tiki user encryption enables a personal, secure storage of sensitive data, e.g. password. Only the user can see the data. No decryption passwords are stored.'),
+			'hint' => tra('Enable personal, secure storage of sensitive data, e.g. passwords'),
+			'help' => 'User Encryption',
+			'warning' => tra('This is an experimental feature. Using it may cause loss of the encrypted data.'),
+			'type' => 'flag',
+			'default' => 'n',
+			'tags' => array('experimental'),
+		),
+		'feature_password_domains' => array(
+			'name' => tra('Password Domains'),
+			'description' => tra('Securely store extra user passwords and other user specific data for other "domains", or just for yourself'),
+			'type' => 'text',
+			'default' => 'userkey',
+			'dependencies' => array(
+				'feature_user_encryption',
+			),
+			'tags' => array('experimental'),
+		),
 		'feature_purifier' => array(
 			'name' => tra('HTML Purifier'),
 			'description' => tra("HTML Purifier is a standards-compliant HTML filter library written in PHP and integrated in Tiki. HTML Purifier will not only remove all malicious code (better known as XSS) with a thoroughly audited, secure yet permissive whitelist, it will also make sure your documents are standards compliant, something only achievable with a comprehensive knowledge of W3C's specifications."),
@@ -1982,6 +2002,13 @@ function prefs_feature_list($partial = false)
             'description' => tra('Media player'),
 			'type' => 'flag',
 			'help' => 'JQuery#Media',
+			'default' => 'n',
+		),
+		'feature_jquery_zoom' => array(
+			'name' => tra('jQuery Zoom'),
+            'description' => tra('Enlarge images plugin'),
+			'type' => 'flag',
+			'help' => 'JQuery#Zoom',
 			'default' => 'n',
 		),
 		'feature_tabs' => array(

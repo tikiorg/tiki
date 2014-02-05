@@ -87,13 +87,13 @@
 <form action="tiki-admin_surveys.php" method="post" class="form-horizontal" role="form">
     <div class="form-group">
     	<input type="hidden" name="surveyId" value="{$info.surveyId|escape}">
-        <label for="name" class="col-sm-2 control-label">{tr}Name:{/tr}</label>
+        <label for="name" class="col-sm-2 control-label">{tr}Name{/tr}</label>
         <div class="col-sm-10">
 			<input type="text" name="name" id="name" class="form-control" value="{$info.name|escape}">
         </div>
     </div>
     <div class="form-group">
-        <label for="description" class="col-sm-2 control-label">{tr}Description:{/tr}</label>
+        <label for="description" class="col-sm-2 control-label">{tr}Description{/tr}</label>
         <div class="col-sm-10">
 			{textarea name="description" rows="6" id="description" class="form-control" _toolbars='y' _simple='y' comments='y'}{$info.description}{/textarea}
 		</div>

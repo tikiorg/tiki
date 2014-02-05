@@ -4,11 +4,12 @@
  *  
  * @ignore 
  * @package TikiWiki
- * @subpackage img
+ * @subpackage db
  * @copyright (c) Copyright 2002-2013 by authors of the Tiki Wiki CMS Groupware Project
  * @licence Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
  */
 // $Id$
 
+// This redirects to the sites root to prevent directory browsing
 header("location: ../tiki-index.php");
 die;

@@ -8,7 +8,7 @@
 <div class="row">
 	{if !empty($wizard_toc)}
 	    <div class="col-sm-4">
-		    <span class="adminWizardTOCTitle">{tr}Admin Wizard Steps{/tr}</span>
+		    <span class="adminWizardTOCTitle">{tr}Wizard Steps{/tr}</span>
             <ol>
 			    {$wizard_toc}
             </ol>

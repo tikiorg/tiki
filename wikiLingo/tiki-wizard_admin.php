@@ -12,6 +12,7 @@ require 'tiki-setup.php';
 
 require_once('lib/headerlib.php');
 $headerlib->add_cssfile('css/admin.css');
+$headerlib->add_cssfile('css/wizards.css');
 
 // Hide the display of the preference dependencies in the wizard
 $headerlib->add_css('.pref_dependency{display:none !important;}');
@@ -37,8 +38,17 @@ if ($useDefaultPrefs) {
 	// Store the default prefs selection in the wizard bar
 	$smarty->assign('useDefaultPrefs', $useDefaultPrefs);
 
-	require_once('lib/wizard/pages/admin_profiles.php');
-	$pages[] = new AdminWizardProfiles();
+	require_once('lib/wizard/pages/admin_profiles_featured.php');
+	$pages[] = new AdminWizardProfilesFeatured();
+
+	require_once('lib/wizard/pages/admin_profiles_useful.php');
+	$pages[] = new AdminWizardProfilesUseful();
+
+	require_once('lib/wizard/pages/admin_profiles_demo.php');
+	$pages[] = new AdminWizardProfilesDemo();
+
+	require_once('lib/wizard/pages/admin_profiles_completed.php'); 
+	$pages[] = new AdminWizardProfilesCompleted();
 
 } else {
 	require_once('lib/wizard/pages/admin_language.php');

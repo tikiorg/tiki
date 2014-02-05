@@ -993,6 +993,7 @@ class Services_Tracker_Controller
 				'modItemStatus' => $input->modItemStatus->word(),
 				'outboundEmail' => $input->outboundEmail->email(),
 				'simpleEmail' => $input->simpleEmail->int() ? 'y' : 'n',
+				'userCanSeeOwn' => $input->userCanSeeOwn->int() ? 'y' : 'n',
 				'writerCanModify' => $input->writerCanModify->int() ? 'y' : 'n',
 				'writerCanRemove' => $input->writerCanRemove->int() ? 'y' : 'n',
 				'userCanTakeOwnership' => $input->userCanTakeOwnership->int() ? 'y' : 'n',
@@ -1437,8 +1438,13 @@ class Services_Tracker_Controller
 
 	public function action_import_profile($input)
 	{
-		global $tikilib, $access;
-		$access->check_permission('tiki_p_admin');
+		$tikilib = TikiLib::lib('tiki');
+
+		$perms = Perms::get();
+		if (! $perms->admin) {
+			throw new Services_Exception_Denied(tr('Reserved for administrators'));
+		}
+
 		$transaction = $tikilib->begin();
 		$installer = new Tiki_Profile_Installer;
 

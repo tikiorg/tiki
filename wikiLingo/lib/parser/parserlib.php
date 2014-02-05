@@ -1091,8 +1091,6 @@ if ( \$('#$id') ) {
 		if (in_array($name, $excluded) || !$enabled) {
 			$plugin_result = '&nbsp;&nbsp;&nbsp;&nbsp;' . $ck_editor_plugin;
 		} else {
-			// Tiki 7+ adds ~np~ to plugin output so remove them
-			$plugin_result = preg_replace('/~[\/]?np~/ms', '', $plugin_result);
 
 			if (!isset($info['format']) || $info['format'] !== 'html') {
 				$oldOptions = $this->option;
@@ -2073,6 +2071,131 @@ if ( \$('#$id') ) {
 						if ($virtuals && $smarty->getTemplateVars('url_host') != null) {
 							$value = $smarty->getTemplateVars('url_host') . '/';
 							break;	
+						} else {
+							$value='';
+							break;	
+						}
+					case 'lastVersion':
+						global $histlib;
+						include_once ('lib/wiki/histlib.php');
+						// get_page_history arguments: page name, page contents (set to "false" to save memory), history_offset (none, therefore "0"), max. records (just one for this case);
+						$history = $histlib->get_page_history($this->option['page'], false, 0, 1);
+						if ($history[0]['version'] != null) {
+							$value = $history[0]['version'];
+							break;	
+						} else {
+							$value='';
+							break;	
+						}
+					case 'lastAuthor':
+				        global $histlib, $tikilib;
+				        include_once ('lib/wiki/histlib.php');
+				        // get_page_history arguments: page name, page contents (set to "false" to save memory), history_offset (none, therefore "0"), max. records (just one for this case);
+				        $history = $histlib->get_page_history($this->option['page'], false, 0, 1);
+				        if ($history[0]['user'] != null) {
+				                $bindvars=array($history[0]['user']);
+				                $numRows = -1;
+				                $query = 'SELECT `login` , `userId` , `value` FROM `users_users` u LEFT JOIN `tiki_user_preferences` p ON p.`user` = u.`login` WHERE p.`prefName` = "realName" AND `login`= ?';
+				                $result = $tikilib->query($query, $bindvars, $numRows);
+				                while ($row = $result->fetchRow()) {
+									// Check that the user has the Real Name set and the preference to show Real Name where possible is enabled
+			                        if ( $row['value'] != '' & $prefs['user_show_realnames']== 'y') {
+			                                $value = $row['value'];
+			                        } else {
+			                                $value = $history[0]['user'];
+			                        }
+				                }
+				                break;  
+				        } else {
+				                $value='';
+				                break;  
+				        }
+					case 'lastModif':
+						global $histlib;
+						include_once ('lib/wiki/histlib.php');
+						// get_page_history arguments: page name, page contents (set to "false" to save memory), history_offset (none, therefore "0"), max. records (just one for this case);
+						$history = $histlib->get_page_history($this->option['page'], false, 0, 1);
+						if ($history[0]['lastModif'] != null) {
+							$value = $tikilib->get_short_datetime($history[0]['lastModif']);
+							break;	
+						} else {
+							$value='';
+							break;	
+						}
+					case 'lastItemVersion':
+						global $trklib; include_once ('lib/trackers/trackerlib.php');
+						$auto_query_args = array('itemId');
+						if (!empty($_REQUEST['itemId'])) {
+							$item_info = $trklib->get_item_info($_REQUEST['itemId']);
+							$perms = Perms::get(array('type'=>'tracker', 'object'=> $item_info['trackerId']));
+							if (!$perms->view_trackers) {
+								$smarty->assign('errortype', 401);
+								$smarty->assign('msg', tra('You do not have permission to view this information from this tracker.'));
+								$smarty->display('error.tpl');
+								die;
+							}
+							$fieldId = empty($_REQUEST['fieldId'])?0: $_REQUEST['fieldId'];
+							$filter = array();
+							if (!empty($_REQUEST['version'])) {
+								$filter['version'] = $_REQUEST['version'];
+							}
+							$offset = empty($_REQUEST['offset'])? 0: $_REQUEST['offset'];
+							$history = $trklib->get_item_history($item_info, $fieldId, $filter, $offset, $prefs['maxRecords']);
+
+							$value = $history['data'][0]['version'];
+							break;	
+
+						} else {
+							$value='';
+							break;	
+						}
+					case 'lastItemAuthor':
+						global $trklib, $tikilib; include_once ('lib/trackers/trackerlib.php');
+						$auto_query_args = array('itemId');
+						if (!empty($_REQUEST['itemId'])) {
+							$item_info = $trklib->get_item_info($_REQUEST['itemId']);
+							$perms = Perms::get(array('type'=>'tracker', 'object'=> $item_info['trackerId']));
+							if (!$perms->view_trackers) {
+								$smarty->assign('errortype', 401);
+								$smarty->assign('msg', tra('You do not have permission to view this information from this tracker.'));
+								$smarty->display('error.tpl');
+								die;
+							}
+							if ($item_info['lastModifBy'] != null) {
+				                $bindvars=array($item_info['lastModifBy']);
+				                $numRows = -1;
+				                $query = 'SELECT `login` , `userId` , `value` FROM `users_users` u LEFT JOIN `tiki_user_preferences` p ON p.`user` = u.`login` WHERE p.`prefName` = "realName" AND `login`= ?';
+				                $result = $tikilib->query($query, $bindvars, $numRows);
+				                while ($row = $result->fetchRow()) {
+									// Check that the user has the Real Name set and the preference to show Real Name where possible is enabled
+			                        if ( $row['value'] != '' & $prefs['user_show_realnames']== 'y') {
+			                                $value = $row['value'];
+			                        } else {
+			                                $value = $item_info['lastModifBy'];
+			                        }
+				                }
+				            }
+							break;	
+							
+						} else {
+							$value='';
+							break;	
+						}
+					case 'lastItemModif':
+						global $trklib; include_once ('lib/trackers/trackerlib.php');
+						$auto_query_args = array('itemId');
+						if (!empty($_REQUEST['itemId'])) {
+							$item_info = $trklib->get_item_info($_REQUEST['itemId']);
+							$perms = Perms::get(array('type'=>'tracker', 'object'=> $item_info['trackerId']));
+							if (!$perms->view_trackers) {
+								$smarty->assign('errortype', 401);
+								$smarty->assign('msg', tra('You do not have permission to view this information from this tracker.'));
+								$smarty->display('error.tpl');
+								die;
+							}
+							$value = $tikilib->get_short_datetime($item_info['lastModif']);
+							break;	
+							
 						} else {
 							$value='';
 							break;	

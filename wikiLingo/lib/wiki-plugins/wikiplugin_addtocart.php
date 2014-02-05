@@ -167,7 +167,7 @@ function wikiplugin_addtocart_info()
 
 function wikiplugin_addtocart( $data, $params )
 {
-	global $cartlib, $headerlib; require_once 'lib/payment/cartlib.php';
+	global $cartlib, $headerlib, $prefs; require_once 'lib/payment/cartlib.php';
 	$headerlib->add_jsfile('lib/payment/cartlib.js');
 
 	if ( ! session_id() ) {
@@ -176,21 +176,16 @@ function wikiplugin_addtocart( $data, $params )
 	if ( ! isset( $params['code'], $params['description'], $params['price'] ) ) {
 		return WikiParser_PluginOutput::argumentError(array_diff(array( 'code', 'description', 'price'), array_keys($params)));
 	}
-	if ( ! isset( $params['href'] ) ) {
-		$params['href'] = null;
+
+	$plugininfo = wikiplugin_addtocart_info();
+	foreach ($plugininfo['params'] as $key => $param) {
+		$default["$key"] = $param['default'];
 	}
-	if (! isset($params['label'])) {
-		$params['label'] = tra('Add to cart');
-	}
-	if (! isset($params['forceanon'])) {
-		$params['forceanon'] = 'n';
-	}
+	$params = array_merge($default, $params);
+
 	// once forceanon is set it will have to affect the whole shopping cart otherwise it will be inconsistent
 	if ($params['forceanon'] == 'y') {
 		$_SESSION['forceanon'] = 'y';
-	}
-	if (! isset($params['ajaxaddtocart'])) {
-		$params['ajaxaddtocart'] = 'y';
 	}
 	foreach ($params as &$p) {
 		$p = trim($p);			// remove some line ends picked up in pretty tracker
@@ -247,7 +242,7 @@ function wikiplugin_addtocart( $data, $params )
 	}
 
 	if ( $ajax_add_to_cart == 'y' ) {
-			$headerlib->add_jq_onready("$('form.addProduct').cartAjaxAdd();");
+		$headerlib->add_jq_onready("$('.wp_addtocart_form').cartAjaxAdd();");
 	}
 
 	if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {

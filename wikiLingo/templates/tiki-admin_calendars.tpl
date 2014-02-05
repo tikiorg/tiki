@@ -113,7 +113,7 @@
                 </div>
 			{/if}
 			<div class="form-group">
-                <label class="col-sm-3 control-label" for="calendarName">{tr}Name:{/tr}</label>
+                <label class="col-sm-3 control-label" for="calendarName">{tr}Name{/tr}</label>
                 <div class="col-sm-6">
 					<input type="text" class="form-control" name="name" id="calendarName" value="{$name|escape}">
                 </div>
@@ -122,7 +122,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-3 control-label" for="calendarDescription">{tr}Description:{/tr}</label>
+                <label class="col-sm-3 control-label" for="calendarDescription">{tr}Description{/tr}</label>
                 <div class="col-sm-6">
 					<textarea name="description" rows="5" wrap="virtual" class="form-control">{$description|escape}</textarea>
                 </div>
@@ -131,7 +131,7 @@
 				</div>
             </div>
             <div class="form-group">
-                <label class="col-sm-3 control-label" for="customlocations">{tr}Custom Locations:{/tr}</label>
+                <label class="col-sm-3 control-label" for="customlocations">{tr}Custom Locations{/tr}</label>
                 <div class="col-sm-2">
 					<select name="customlocations" id="customlocations" class="form-control">
 					    <option value='y' {if $customlocations eq 'y'}selected="selected"{/if}>{tr}Yes{/tr}</option>
@@ -143,7 +143,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-3 control-label" for="customparticipants">{tr}Custom Participants:{/tr}</label>
+                <label class="col-sm-3 control-label" for="customparticipants">{tr}Custom Participants{/tr}</label>
                 <div class="col-sm-2">
 					<select name="customparticipants" class="form-control">
 						<option value='y' {if $customparticipants eq 'y'}selected="selected"{/if}>{tr}Yes{/tr}</option>
@@ -155,7 +155,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-3 control-label" for="customcategories">{tr}Custom Classifications:{/tr}</label>
+                <label class="col-sm-3 control-label" for="customcategories">{tr}Custom Classifications{/tr}</label>
                 <div class="col-sm-2">
 					<select name="customcategories" id="customcategories" class="form-control">
 						<option value='y' {if $customcategories eq 'y'}selected="selected"{/if}>{tr}Yes{/tr}</option>
@@ -167,7 +167,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-3 control-label" for="customlanguages">{tr}Custom Languages:{/tr}</label>
+                <label class="col-sm-3 control-label" for="customlanguages">{tr}Custom Languages{/tr}</label>
                 <div class="col-sm-2">
 					<select name="customlanguages" id="customlanguages" class="form-control">
 						<option value='y' {if $customlanguages eq 'y'}selected="selected"{/if}>{tr}Yes{/tr}</option>
@@ -179,7 +179,7 @@
 			    </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-3 control-label" for="customurl">{tr}Custom URL:{/tr}</label>
+                <label class="col-sm-3 control-label" for="customurl">{tr}Custom URL{/tr}</label>
                 <div class="col-sm-2">
 					<select name="options[customurl]" id="customurl" class="form-control">
 						<option value='y' {if $customurl eq 'y'}selected="selected"{/if}>{tr}Yes{/tr}</option>
@@ -193,7 +193,7 @@
             </div>
             {if $prefs.feature_newsletters eq 'y'}
                 <div class="form-group">
-                    <label class="col-sm-3 control-label" for="customsubscription">{tr}Custom Subscription List:{/tr}</label>
+                    <label class="col-sm-3 control-label" for="customsubscription">{tr}Custom Subscription List{/tr}</label>
                     <div class="col-sm-2">
 			    		<select name="customsubscription" id="customsubscription" class="form-control">
 							<option value='y' {if $customsubscription eq 'y'}selected="selected"{/if}>{tr}Yes{/tr}</option>
@@ -203,7 +203,7 @@
                 </div>
 			{/if}
             <div class="form-group">
-                <label class="col-sm-3 control-label" for="customsubscription">{tr}Custom Priorities:{/tr}</label>
+                <label class="col-sm-3 control-label" for="customsubscription">{tr}Custom Priorities{/tr}</label>
                 <div class="col-sm-2">
 					<select name="custompriorities" id="custompriorities" class="form-control">
 						<option value='y' {if $custompriorities eq 'y'}selected="selected"{/if}>{tr}Yes{/tr}</option>
@@ -212,7 +212,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-3 control-label" for="customcategories">{tr}Personal Calendar:{/tr}</label>
+                <label class="col-sm-3 control-label" for="customcategories">{tr}Personal Calendar{/tr}</label>
                 <div class="col-sm-2">
 					<select name="personal" id="personal" class="form-control">
 						<option value='y' {if $personal eq 'y'}selected="selected"{/if}>{tr}Yes{/tr}</option>
@@ -221,19 +221,19 @@
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-3 control-label" for="customcategories">{tr}Start of day:{/tr}</label>
+                <label class="col-sm-3 control-label" for="customcategories">{tr}Start of day{/tr}</label>
                 <div class="col-sm-2 checkbox-inline">
 					{html_select_time prefix="startday_" time=$info.startday display_minutes=false display_seconds=false use_24_hours=$use_24hr_clock}
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-3 control-label" for="customcategories">{tr}End of day:{/tr}</label>
+                <label class="col-sm-3 control-label" for="customcategories">{tr}End of day{/tr}</label>
                 <div class="col-sm-9 checkbox-inline">
 					{html_select_time prefix="endday_" time=$info.endday display_minutes=false display_seconds=false use_24_hours=$use_24hr_clock}
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-3 control-label" for="customcategories">{tr}Days to display:{/tr}</label>
+                <label class="col-sm-3 control-label" for="customcategories">{tr}Days to display{/tr}</label>
                 <div class="col-sm-9">
 					{section name="viewdays" start=0 loop=7}
                     <div class="checkbox-inline">
@@ -243,7 +243,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-3 control-label" for="customcategories">{tr}Standard Colors:{/tr}</label>
+                <label class="col-sm-3 control-label" for="customcategories">{tr}Standard Colors{/tr}</label>
                 <div class="col-sm-9 checkbox-inline">
 					<select name="options[customcolors]" onChange="javascript:document.getElementById('fgColorField').disabled=(this.options[this.selectedIndex].value != 0);document.getElementById('bgColorField').disabled=(this.options[this.selectedIndex].value != 0);">
 						<option value="" />
@@ -257,13 +257,13 @@
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-3 control-label" for="customcategories">{tr}Custom foreground color:{/tr}</label>
+                <label class="col-sm-3 control-label" for="customcategories">{tr}Custom foreground color{/tr}</label>
                 <div class="col-sm-9 checkbox-inline">
 					<input id="fgColorField" type="text" name="options[customfgcolor]" value="{$customfgcolor}" size="6"> <i>{tr}Ex:{/tr} FFFFFF</i>
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-3 control-label" for="customcategories">{tr}Custom background color:{/tr}</label>
+                <label class="col-sm-3 control-label" for="customcategories">{tr}Custom background color{/tr}</label>
                 <div class="col-sm-9 checkbox-inline">
 					<input id="bgColorField" type="text" name="options[custombgcolor]" value="{$custombgcolor}" size="6"> <i>{tr}Ex:{/tr} 000000</i>
                 </div>

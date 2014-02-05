@@ -24,8 +24,14 @@
 								{else}
 									<span class="label label-info">{tr}Category{/tr}</span>
 								{/if}
+							{elseif $option.type eq 'structure'}
+								<span class="label label-info">{tr}Structure{/tr}</span>
+							{elseif $option.type eq 'forum'}
+								<span class="label label-info">{tr}Forum{/tr}</span>
 							{elseif $option.type eq 'global'}
 								<span class="label label-warning">{tr}Global{/tr}</span>
+							{elseif $option.type eq 'wiki page trans' or $option.type eq 'article trans'}
+								<span class="label label-default">{tr}Translation{/tr}</span>
 							{/if}
 						</td>
 						<td>

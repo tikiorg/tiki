@@ -1020,9 +1020,6 @@ class Comments extends TikiLib
 			$forumId = $forums->insert($data);
 		}
 
-		require_once('lib/search/refresh-functions.php');
-		refresh_index('forums', $forumId);
-
 		return $forumId;
 	}
 
@@ -2545,6 +2542,7 @@ class Comments extends TikiLib
 					array(
 						'type' => $type,
 						'object' => $threadId,
+						'parent_id' => $comment['parentId'],
 						'forum_id' => $comment['object'],
 						'user' => $GLOBALS['user'],
 						'title' => $title,

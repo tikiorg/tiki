@@ -193,10 +193,10 @@
 						{/if}
 						{if $page|lower neq 'sandbox'}
 							<fieldset>
-								<label for="comment">{tr}Describe the change you made:{/tr} {help url='Editing+Wiki+Pages' desc="{tr}Edit comment: Enter some text to describe the changes you are currently making{/tr}"}</label>
-								<input style="width:98%;" class="wikiedit" type="text" id="comment" name="comment" value="{$commentdata|escape}">
+								<label for="comment">{tr}Describe the change you made{/tr} {help url='Editing+Wiki+Pages' desc="{tr}Edit comment: Enter some text to describe the changes you are currently making{/tr}"}</label>
+								<input class="form-control wikiedit" type="text" id="comment" name="comment" value="{$commentdata|escape}">
 								{if isset($show_watch) && $show_watch eq 'y'}
-									<label for="watch">{tr}Monitor this page:{/tr}</label>
+									<label for="watch">{tr}Monitor this page{/tr}</label>
 									<input type="checkbox" id="watch" name="watch" value="1"{if $watch_checked eq 'y'} checked="checked"{/if}>
 								{/if}
 							</fieldset>
@@ -210,7 +210,7 @@
 							{/if}
 							{if (!isset($wysiwyg) || $wysiwyg neq 'y') and $prefs.feature_wiki_pictures eq 'y' and $tiki_p_upload_picture eq 'y' and $prefs.feature_filegals_manager neq 'y'}
 								<fieldset>
-									<legend>{tr}Upload picture:{/tr}</legend>
+									<legend>{tr}Upload picture{/tr}</legend>
 									<input type="hidden" name="MAX_FILE_SIZE" value="1000000000">
 									<input type="hidden" name="hasAlreadyInserted" value="">
 									<input type="hidden" name="prefix" value="/img/wiki_up/{if $tikidomain}{$tikidomain}/{/if}">
@@ -257,7 +257,7 @@
                             <h2>{tr}Properties{/tr}</h2>
                             {if $prefs.feature_wiki_templates eq 'y' and $tiki_p_use_content_templates eq 'y'}
                                 <div class="form-group">
-								    <label for="templateId" class="col-sm-2 control-label">{tr}Apply template:{/tr}</label>
+								    <label for="templateId" class="col-sm-2 control-label">{tr}Apply template{/tr}</label>
                                     <div class="col-sm-10 form-inline">
                                         <div class="col-sm-4">
 									    <select class="form-control" id="templateId" "name="templateId" onchange="javascript:document.getElementById('editpageform').submit();" onclick="needToConfirm = false;">
@@ -292,7 +292,7 @@
 				
 							{if $prefs.feature_wiki_allowhtml eq 'y' and $tiki_p_use_HTML eq 'y' and ($wysiwyg neq 'y' or $prefs.wysiwyg_htmltowiki eq 'y')}
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label" for="allowhtml">{tr}Allow HTML:{/tr}</label>
+                                    <label class="col-sm-2 control-label" for="allowhtml">{tr}Allow HTML{/tr}</label>
                                     <div class="col-sm-10 checkbox">
                                         <input type="checkbox" name="allowhtml" {if $allowhtml eq 'y'}checked="checked"{/if}>
                                     </div>
@@ -307,7 +307,7 @@ $("input[name=allowhtml]").change(function() {
 							{/if}
 							{if $prefs.feature_wiki_import_html eq 'y'}
                                 <div class="form-group">
-									<label for="suck_url" class="col-sm-2 control-label">{tr}Import HTML:{/tr}</label>
+									<label for="suck_url" class="col-sm-2 control-label">{tr}Import HTML{/tr}</label>
                                     <div class="col-sm-10 form-group">
                                         <div class="col-sm-4">
 									        <input class="form-control wikiedit" type="text" id="suck_url" name="suck_url" value="{$suck_url|escape}">
@@ -321,7 +321,7 @@ $("input[name=allowhtml]").change(function() {
 							
 							{if $prefs.feature_wiki_import_page eq 'y'}
 								<div class="form-group">
-									<label for="userfile1" class="col-sm-2 control-label">{tr}Import page:{/tr}</label>
+									<label for="userfile1" class="col-sm-2 control-label">{tr}Import page{/tr}</label>
                                     <div class="col-sm-10 form-group">
                                         <div class="col-sm-6">
     									    <input type="hidden" name="MAX_FILE_SIZE" value="1000000000">
@@ -346,16 +346,16 @@ $("input[name=allowhtml]").change(function() {
 										<input type="hidden" name="hasAlreadyInserted2" value="">
 										<input type="hidden" id="page2" name="page2" value="{$page}">
                                         <div class="form-group">
-                                            <label for="attach-upload" class="col-sm-2 control-label">{tr}Attachments:{/tr}</label>
+                                            <label for="attach-upload" class="col-sm-2 control-label">{tr}Attachments{/tr}</label>
                                             <div class="col-sm-10">
                                                 <div class="form-group">
-                                                    <label for="attach-comment" class="control-label col-sm-2">{tr}Upload file:{/tr}</label>
+                                                    <label for="attach-comment" class="control-label col-sm-2">{tr}Upload file{/tr}</label>
                                                     <div class="col-sm-10">
 		    								            <input name="userfile2" type="file" id="attach-upload" class="btn btn-default">
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="attach-comment" class="col-sm-2 control-label">{tr}Comment:{/tr}</label>
+                                                    <label for="attach-comment" class="col-sm-2 control-label">{tr}Comment{/tr}</label>
                                                     <div class="col-sm-8">
                                                         <input type="text" name="attach_comment" class="form-control" maxlength="250" id="attach-comment">
                                                     </div>
@@ -372,10 +372,10 @@ $("input[name=allowhtml]").change(function() {
 							{if $page|lower neq 'sandbox'}
 								{if $prefs.wiki_feature_copyrights  eq 'y'}
 									<div class="form-group">
-										<label for="" class="col-sm-2 control-label">{tr}Copyright:{/tr}</label>
+										<label for="" class="col-sm-2 control-label">{tr}Copyright{/tr}</label>
                                     <div class="col-sm-10">
 										<div class="form-group">
-											<label class="col-sm-2 control-label" for="copyrightTitle">{tr}Title:{/tr}</label>
+											<label class="col-sm-2 control-label" for="copyrightTitle">{tr}Title{/tr}</label>
                                             <div class="col-sm-10">
                                                 <input class="form-control wikiedit" type="text" id="copyrightTitle" name="copyrightTitle" value="{$copyrightTitle|escape}">
 												{if !empty($copyrights)}
@@ -384,19 +384,19 @@ $("input[name=allowhtml]").change(function() {
 											</div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="col-sm-2 control-label" for="copyrightYear">{tr}Year:{/tr}</label>
+                                            <label class="col-sm-2 control-label" for="copyrightYear">{tr}Year{/tr}</label>
                                             <div class="col-sm-10">
 												<input size="4" class="form-control wikiedit" type="text" id="copyrightYear" name="copyrightYear" value="{$copyrightYear|escape}">
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="col-sm-2 control-label" for="copyrightAuthors">{tr}Authors:{/tr}</label>
+                                            <label class="col-sm-2 control-label" for="copyrightAuthors">{tr}Authors{/tr}</label>
                                             <div class="col-sm-10">
     										    <input class="form-control wikiedit" id="copyrightAuthors" name="copyrightAuthors" type="text" value="{$copyrightAuthors|escape}">
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="col-sm-2 control-label" for="copyrightHolder">{tr}Copyright Holder :{/tr}</label>
+                                            <label class="col-sm-2 control-label" for="copyrightHolder">{tr}Copyright Holder{/tr}</label>
                                             <div class="col-sm-10">
 												<input class="form-control wikiedit" id="copyrightHolder" name="copyrightHolder" type="text" value="{$copyrightHolder|escape}">
 											</div>
@@ -453,7 +453,7 @@ $("input[name=allowhtml]").change(function() {
 								{/if}
 								{if $prefs.wiki_feature_copyrights  eq 'y'}
 									<div class="form-group">
-										<label class="col-sm-2 control-label">{tr}License:{/tr}</label>
+										<label class="col-sm-2 control-label">{tr}License{/tr}</label>
                                         <div class="col-sm-10">
 										    <a href="{$prefs.wikiLicensePage|sefurl}">{tr}{$prefs.wikiLicensePage}{/tr}</a>
 										    {if $prefs.wikiSubmitNotice neq ""}
@@ -476,9 +476,9 @@ $("input[name=allowhtml]").change(function() {
 							{if $prefs.feature_wiki_description eq 'y' or $prefs.metatag_pagedesc eq 'y'}
 								<div class="form-group">
 									{if $prefs.metatag_pagedesc eq 'y'}
-										<label for="" class="col-sm-2 control-label">{tr}Description (used for metatags):{/tr}</label>
+										<label for="" class="col-sm-2 control-label">{tr}Description (used for metatags){/tr}</label>
 									{else}
-                                    <label for="" class="col-sm-2 control-label">{tr}Description:{/tr}</label>
+                                    <label for="" class="col-sm-2 control-label">{tr}Description{/tr}</label>
 									{/if}
                                     <div class="col-sm-10">
     									<input style="width:98%;" type="text" id="description" name="description" value="{$description|escape}">
@@ -488,7 +488,7 @@ $("input[name=allowhtml]").change(function() {
 							{if $prefs.feature_wiki_footnotes eq 'y'}
 								{if $user}
 									<div class="form-group">
-										<label for="footnote" class="col-sm-2 control-label">{tr}My Footnotes:{/tr}</label>
+										<label for="footnote" class="col-sm-2 control-label">{tr}My Footnotes{/tr}</label>
                                         <div class="col-sm-10">
 										    <textarea id="footnote" name="footnote" class="form-control" rows="8">{$footnote|escape}</textarea>
                                         </div>
@@ -588,20 +588,25 @@ $("input[name=allowhtml]").change(function() {
 									<label for="" class="col-sm-2 control-label">{tr}Page display options{/tr}</label>
                                     <div class="col-sm-10">
 									    <ul>
-									        <li>{tr}Automatic Table of Contents generation{/tr}
-                                                <select name="pageAutoToc">
-    									            <option value="0" {if $pageAutoToc == 0}selected{/if}></option>
-	    								            {* <option value="1" {if $pageAutoToc == 1}selected{/if}>On</option> *}
-		    							            <option value="-1" {if $pageAutoToc == -1}selected{/if}>Off</option>
-			            						</select>
-						        			</li>
-        									<li>{tr}Show page title{/tr}
-                                                <select name="page_hide_title">
-									                <option value="0" {if $page_hide_title == 0}selected{/if}></option>
-									                {* <option value="1" {if $page_hide_title == 1}selected{/if}>On</option> *}
-									                <option value="-1" {if $page_hide_title == -1}selected{/if}>Off</option>
-									            </select>
-					        				</li>
+											{if $prefs.wiki_auto_toc eq 'y'}
+												<li>{tr}Automatic Table of Contents generation{/tr}
+													<select name="pageAutoToc">
+														<option value="0" {if $pageAutoToc == 0}selected{/if}></option>
+														{* <option value="1" {if $pageAutoToc == 1}selected{/if}>On</option> *}
+														<option value="-1" {if $pageAutoToc == -1}selected{/if}>Off</option>
+													</select>
+												</li>
+											{/if}
+		
+											{if $prefs.wiki_page_hide_title eq 'y' && $prefs.wiki_page_name_above eq 'y'}
+												<li>{tr}Show page title{/tr}
+													<select name="page_hide_title">
+														<option value="0" {if $page_hide_title == 0}selected{/if}></option>
+														{* <option value="1" {if $page_hide_title == 1}selected{/if}>On</option> *}
+														<option value="-1" {if $page_hide_title == -1}selected{/if}>Off</option>
+													</select>
+												</li>
+											{/if}
     									</ul>
                                     </div>
 								</div>

@@ -1235,6 +1235,23 @@ class MultilingualLib extends TikiLib
         return $default_lang;
     }
 
+	function setupBiDi() {
+		global $prefs;
+
+		if ($prefs['feature_multilingual'] === 'y') {
+			// Some languages need BiDi support. Add their code names here ...
+			if (Language::isRTL()) {
+				$prefs['feature_bidi'] =  'y';
+				TikiLib::lib('header')->add_cssfile('styles/BiDi/BiDi.css');
+				setCookie('rtl','y');
+			} else {
+				$prefs['feature_bidi'] =  'n';
+				TikiLib::lib('header')->drop_cssfile('styles/BiDi/BiDi.css');
+				setCookie('rtl','n');
+			}
+		}
+	}
+
 }
 
 $multilinguallib = new MultilingualLib;

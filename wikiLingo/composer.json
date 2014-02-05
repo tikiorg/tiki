@@ -5,7 +5,7 @@
 	"homepage": "https://tiki.org",
 	"minimum-stability": "stable",
 	"require": {
-		"twitter/bootstrap": "3.0.3",
+		"twitter/bootstrap": "3.1.0",
 
 		"adodb/adodb": "5.18",
 		"aFarkas/html5shiv": "3.6.2",
@@ -61,7 +61,8 @@
 		"simile_timeline/simile_timeline": "2.3.0",
 		"smarty/smarty": "3.1.14",
 		"svg-edit/svg-edit": "2.6",
-		"symfony/console": "2.2.0",
+		"symfony/console": "2.4.1",
+		"tijsverkoyen/css-to-inline-styles": "1.2.1",
         "wikilingo/wikilingo":"0.11",
 		"zetacomponents/base": "1.8",
 		"zetacomponents/webdav": "1.1.3"

@@ -34,6 +34,7 @@ class Tiki_Profile_InstallHandler_Tracker extends Tiki_Profile_InstallHandler
 			'email_simplified' => 'simpleEmail',
 			'default_status' => 'newItemStatus',
 			'modification_status' => 'modItemStatus',
+			'allow_user_see_own' => 'userCanSeeOwn',
 			'allow_creator_modification' => 'writerCanModify',
 			'allow_creator_deletion' => 'writerCanRemove',
 			'allow_creator_group_modification' => 'writerGroupCanModify',

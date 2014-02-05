@@ -1,6 +1,11 @@
 {* $Id$ *}
 {* ==> put in this file what is not displayed in the layout (javascript, debug..)*}
-<div id="bootstrap-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"></div>
+<div id="bootstrap-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+		</div>
+	</div>
+</div>
 {if (! isset($display) or $display eq '')}
 	{if count($phpErrors)}
 		{if ($prefs.error_reporting_adminonly eq 'y' and $tiki_p_admin eq 'y') or $prefs.error_reporting_adminonly eq 'n'}
@@ -20,3 +25,50 @@
 	{/if}
 
 {/if}
+{*needs to be in the footer.tpl so that it runs at the end rather than in antibot.tpl where it breaks tracker validation*}
+{jq}
+if ($("#antibotcode").parents('form').data("validator")) {
+    $( "#antibotcode" ).rules( "add", {
+        required: true,
+        remote: {
+            url: "validate-ajax.php",
+            type: "post",
+            data: {
+                validator: "captcha",
+                parameter: function() {
+                    return $jq("#captchaId").val();
+                },
+                input: function() {
+                    return $jq("#antibotcode").val();
+                }
+            }
+        }
+    });
+} else {
+    var form = $("#antibotcode").parents('form');
+    $("form[name="+ form.attr('name') +"]").validate({
+        rules: {
+            "captcha[input]": {
+                required: true,
+                remote: {
+                    url: "validate-ajax.php",
+                    type: "post",
+                    data: {
+                        validator: "captcha",
+                        parameter: function() {
+                            return $jq("#captchaId").val();
+                        },
+                        input: function() {
+                            return $jq("#antibotcode").val();
+                        }
+                    }
+                }
+            }
+        },
+        messages: {
+            "captcha[input]": { required: "This field is required"},
+        },
+        submitHandler: function(){form.submit();}
+    });
+}
+{/jq}

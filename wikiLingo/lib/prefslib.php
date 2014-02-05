@@ -653,7 +653,8 @@ class PreferencesLib
 		if ( isset( $options[$value] ) ) {
 			return $value;
 		} else {
-			return reset(array_keys($options));
+			$keys = array_keys($options);
+			return reset($keys);
 		}
 	}
 

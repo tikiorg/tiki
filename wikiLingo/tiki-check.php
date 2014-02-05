@@ -935,6 +935,22 @@ if (is_file('.svn/wc.db')) {
 	}
 }
 
+$s = extension_loaded('mcrypt');
+$msg = tra('Enable safe, encrypted storage of data, e.g. passwords.');
+if ($s) {
+	$php_properties['mcrypt'] = array(
+		'fitness' => tra('good'),
+		'setting' => 'Loaded',
+		'message' => $msg
+	);
+} else {
+	$php_properties['mcrypt'] = array(
+		'fitness' => tra('ugly'),
+		'setting' => 'Not available',
+		'message' => $msg
+	);
+}
+
 // Check for existence of eval()
 // eval() is a language construct and not a function
 // so function_exists() doesn't work

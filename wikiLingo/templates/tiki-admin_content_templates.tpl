@@ -16,7 +16,7 @@
 <form action="tiki-admin_content_templates.php" method="post" class="form-horizontal" role="form">
 	<input type="hidden" name="templateId" value="{$templateId|escape}">
 	<div class="form-group">
-        <label class="col-sm-3 control-label" for="name">{tr}Name:{/tr} *</label>
+        <label class="col-sm-3 control-label" for="name">{tr}Name{/tr} *</label>
         <div class="col-sm-9">
 			<input type="text" maxlength="255" class="form-control" id="name" name="name" value="{$info.name|escape}">
 				{if $emptyname}
@@ -25,7 +25,7 @@
         </div>
     </div>
     <div class="form-group">
-        <label class="col-sm-3 control-label" for="section_css">{tr}Use in:{/tr}</label>
+        <label class="col-sm-3 control-label" for="section_css">{tr}Use in{/tr}</label>
         <div class="col-sm-9">
 	    	{$toolbar_section='admin'}
 			{if $prefs.feature_cms_templates eq 'y'}
@@ -73,7 +73,7 @@
 		</div>
     </div>
     <div class="form-group">
-        <label class="col-sm-3 control-label" for="type-selector">{tr}Template Type:{/tr}</label>
+        <label class="col-sm-3 control-label" for="type-selector">{tr}Template Type{/tr}</label>
         <div class="col-sm-9">
 			<select name="template_type" id="type-selector" class="form-control">
 				<option value="static"{if $info.template_type eq 'static'} selected="selected"{/if}>{tr}Text area{/tr}</option>
@@ -88,7 +88,7 @@
 		</div>
 	</div>
     <div class="form-group type-cond for-page">
-		<label class="col-sm-3 control-label" for="page_name">{tr}Page Name:{/tr}</label>
+		<label class="col-sm-3 control-label" for="page_name">{tr}Page Name{/tr}</label>
         <div class="col-sm-9">
 			<input type="text" name="page_name" id="page_name" value="{$info.page_name}">
 			{autocomplete element='input[name=page_name]' type='pagename'}
@@ -96,7 +96,7 @@
 	</div>
 
     <div class="form-group type-cond for-static">
-	    <label class="col-sm-3 control-label" for="editwiki">{tr}Template:{/tr}</label>
+	    <label class="col-sm-3 control-label" for="editwiki">{tr}Template{/tr}</label>
         <div class="col-sm-9">
 		    {if $prefs.feature_wysiwyg eq 'y' and $info.section_wiki_html eq 'y'}
 			    {$use_wysiwyg='y'}

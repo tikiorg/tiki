@@ -26,6 +26,11 @@
 
 /***** XHTML Elements (body tag here, others follow Layout) *****/
 
+html[dir="rtl"] * {
+    direction: rtl;
+    text-align: start;
+}
+
 /* Hebrew and Arabic characters display smaller than latin characters */
 /* set here a different font size for RTL only - Note that latin char will look bigger than hebrew if mixed (numbers) */
 body {
@@ -33,13 +38,6 @@ body {
 }
 
 /***** Layout *****/
-/* This div encloses the whole Tiki application */
-DIV#tiki-main {
-    direction: rtl !important;
-}
-
-DIV#main {
-    text-align: right;}
 
 
 /* This div encloses the "clean" Tiki screens */
@@ -48,16 +46,6 @@ div#tiki-clean {
 }
 
 /* Col reversing; This is one col only specific and must be edited if otherwise */
-/* Note : margin width must be equal to col width in your rtl theme file */
-#col1.marginleft {
-    margin-left: 0px !important;
-    margin-right: 200px !important;
-}
-
-#c1c2 #wrapper #col1.marginright {
-	margin-left: 200px;
-	margin-right: 0;
-}
 
 #col2 {
     float: right !important;
@@ -66,6 +54,13 @@ div#tiki-clean {
 #col3 {
     float: left !important;
     margin-left:0 !important;
+}
+
+html[dir="rtl"] #showhide_left_column {
+    float: right !important;
+}
+html[dir="rtl"] #showhide_right_column {
+    float: left !important;
 }
 
 /***** Box *****/
@@ -515,3 +510,10 @@ table.normal th.auto {
     right: auto;
     left: .5em;
 }
+
+/* Overrides for main page content in non-RTL languages (only when lang attr is set on it) */
+#role_main[lang]:not([lang=ar]):not([lang=he]):not([lang=fa]):not([lang=ku]):not([lang=ug]) * {
+    direction: ltr;
+    text-align: start;
+}
+

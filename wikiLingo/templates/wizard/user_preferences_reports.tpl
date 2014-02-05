@@ -1,7 +1,6 @@
 {* $Id$ *}
 
-<h1 class="pagetitle">{tr}User Watches{/tr}: {tr}Report Preferences{/tr}</h1>
-<div class="userWizardIconleft"><img src="img/icons/large/user.png" alt="{tr}Report Preferences{/tr}" /></div>
+<div class="userWizardIconleft"><img src="img/icons/large/wizard_user48x48.png" alt="{tr}User Wizard{/tr}" /></div>
 {tr}Use "watches" to monitor wiki pages or other objects.{/tr} {tr}Watch new items by clicking the {icon _id=eye} button on specific pages.{/tr}<br/> 
 {tr}Use reports to summarise notifications about objects you are watching{/tr}.<br/><br/>
 
@@ -9,6 +8,7 @@
 <fieldset>
 {if $prefs.feature_daily_report_watches eq 'y'}
 	<legend>{tr}Report Preferences{/tr}</legend>
+		<div class="userWizardIconright"><img src="img/icons/large/stock_mail48x48.png" alt="{tr}Report Preferences{/tr}" /></div>
 		<table class="formcolor">
 
 		{if isset($remove_user_watch_error) && $remove_user_watch_error}

@@ -291,6 +291,9 @@ $itemObject = Tracker_Item::fromInfo($item_info);
 if (!isset($tracker_info["writerCanModify"]) or (isset($utid) and ($_REQUEST['trackerId'] != $utid['usersTrackerId']))) {
 	$tracker_info["writerCanModify"] = 'n';
 }
+if (!isset($tracker_info["userCanSeeOwn"]) or (isset($utid) and ($_REQUEST['trackerId'] != $utid['usersTrackerId']))) {
+	$tracker_info["userCanSeeOwn"] = 'n';
+}
 if (!isset($tracker_info["writerGroupCanModify"]) or (isset($gtid) and ($_REQUEST['trackerId'] != $gtid['groupTrackerId']))) {
 	$tracker_info["writerGroupCanModify"] = 'n';
 }

@@ -140,6 +140,97 @@ class PaypalLib extends TikiDb_Bridge
 
 		return 'VERIFIED' === $body;
 	}
+
+
+
+    /**
+     * Send HTTP POST Request
+     *
+     * @param    string    The API method name
+     * @param    string    The POST Message fields in &name=value pair format
+     * @return    array    Parsed HTTP Response body
+     */
+    function PayPalHttpPost($methodName_, $nvpStr_) {
+        global $prefs;
+        $environment = $prefs['payment_paypal_environment'];
+
+        // Set up your API credentials, PayPal end point, and API version.
+        $API_UserName = urlencode($prefs['payment_paypal_business']);
+        $API_Password = urlencode($prefs['payment_paypal_password']);
+        $API_Signature = urlencode($prefs['payment_paypal_signature']);
+        $API_Endpoint = "https://api-3t.paypal.com/nvp";
+        if("sandbox" === $environment || "beta-sandbox" === $environment) {
+            $API_Endpoint = "https://api-3t.$environment.paypal.com/nvp";
+        }
+        $version = urlencode('84.0');
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $API_Endpoint);
+        curl_setopt($ch, CURLOPT_VERBOSE, 1);
+
+        // Turn off the server and peer verification (TrustManager Concept).
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE);
+
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_POST, 1);
+
+        // Set the API operation, version, and API signature in the request.
+        $nvpreq = "METHOD=$methodName_&VERSION=$version&PWD=$API_Password&USER=$API_UserName&SIGNATURE=$API_Signature$nvpStr_";
+        // Set the request as a POST FIELD for curl.
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $nvpreq);
+
+        // Get response from the server.
+        $httpResponse = curl_exec($ch);
+
+        if(!$httpResponse) {
+            exit("$methodName_ failed: ".curl_error($ch).'('.curl_errno($ch).')');
+        }
+
+        // Extract the response details.
+        $httpResponseAr = explode("&", $httpResponse);
+
+        $httpParsedResponseAr = array();
+        foreach ($httpResponseAr as $i => $value) {
+            $tmpAr = explode("=", $value);
+            if(sizeof($tmpAr) > 1) {
+                $httpParsedResponseAr[$tmpAr[0]] = $tmpAr[1];
+            }
+        }
+
+        if((0 == sizeof($httpParsedResponseAr)) || !array_key_exists('ACK', $httpParsedResponseAr)) {
+            exit("Invalid HTTP Response for POST request($nvpreq) to $API_Endpoint.");
+        }
+
+        return $httpParsedResponseAr;
+    }
+
+    function PayPalLookupInvoice($invoiceId = "0", $startDate = "01/01/2010", $endDate = null) {
+        // Set request-specific fields.
+        //$transactionID = urlencode('example_transaction_id');
+        $invoice = urlencode($invoiceId);
+
+        // Add request-specific fields to the request string.
+        //$nvpStr = "&TRANSACTIONID=$transactionID";
+        $nvpStr = "&INVNUM=$invoice";
+
+        //Here, by setting a proper STARTDATE:
+
+        // Set additional request-specific fields and add them to the request string.
+        if(!empty($startDate)) {
+            $start_time = strtotime($startDate);
+            $iso_start = date('Y-m-d\T00:00:00\Z',  $start_time);
+            $nvpStr .= "&STARTDATE=$iso_start";
+        }
+
+        if(!empty($endDate)) {
+            $end_time = strtotime($endDate);
+            $iso_end = date('Y-m-d\T24:00:00\Z', $end_time);
+            $nvpStr .= "&ENDDATE=$iso_end";
+        }
+
+        // Execute the API operation; see the PayPalHttpPost function above.
+        return $this->PayPalHttpPost('TransactionSearch', $nvpStr);
+    }
 }
 
 global $paypallib;

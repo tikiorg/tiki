@@ -49,7 +49,7 @@ class ServiceLib
 			$url .= '?' . http_build_query($params, '', '&');
 		}
 
-		return $url;
+		return TikiLib::tikiUrlOpt($url);
 	}
 
 	private function getControllerMap()
@@ -83,6 +83,7 @@ class ServiceLib
 			'search_stored' => 'Services_Search_StoredController',
 			'showtikiorg' => 'Services_ShowTikiOrg_Controller',
 			'social' => 'Services_User_SocialController',
+			'suite' => 'Services_Suite_Controller',
 			'tracker' => 'Services_Tracker_Controller',
 			'tracker_sync' => 'Services_Tracker_SyncController',
 			'tracker_todo' => 'Services_Tracker_TodoController',

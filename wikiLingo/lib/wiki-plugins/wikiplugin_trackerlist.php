@@ -806,7 +806,7 @@ function wikiplugin_trackerlist($data, $params)
 		}
 		$userCreatorFieldId = $definition->getAuthorField();
 		$groupCreatorFieldId = $definition->getWriterGroupField();
-		if ($perms['tiki_p_view_trackers'] != 'y' && ! $definition->isEnabled('writerCanModify') && empty($userCreatorFieldId) && empty($groupCreatorFieldId)) {
+		if ($perms['tiki_p_view_trackers'] != 'y' && ! $definition->isEnabled('writerCanModify') && ! $definition->isEnabled('userCanSeeOwn') && empty($userCreatorFieldId) && empty($groupCreatorFieldId)) {
 			return;
 		}
 		$smarty->assign_by_ref('perms', $perms);
@@ -1257,7 +1257,7 @@ function wikiplugin_trackerlist($data, $params)
 					$exactvalue[] = $_REQUEST['tr_user'];
 					$smarty->assign_by_ref('tr_user', $exactvalue);
 				}
-				if ($definition->isEnabled('writerCanModify')) {
+				if ($definition->isEnabled('writerCanModify') or $definition->isEnabled('userCanSeeOwn')) {
 					$skip_status_perm_check = true;
 				}
 			}
@@ -1406,7 +1406,7 @@ function wikiplugin_trackerlist($data, $params)
 				}
 			}
 		}
-		if ($tiki_p_admin_trackers != 'y' && $perms['tiki_p_view_trackers'] != 'y' && $definition->isEnabled('writerCanModify') && $user && $userCreatorFieldId) { //patch this should be in list_items
+		if ($tiki_p_admin_trackers != 'y' && $perms['tiki_p_view_trackers'] != 'y' && ($definition->isEnabled('writerCanModify') or $definition->isEnabled('userCanSeeOwn')) && $user && $userCreatorFieldId) { //patch this should be in list_items
 			if ($filterfield != $userCreatorFieldId || (is_array($filterfield) && !in_array($$userCreatorFieldId, $filterfield))) {
 				if (is_array($filterfield))
 					$filterfield[] = $userCreatorFieldId;

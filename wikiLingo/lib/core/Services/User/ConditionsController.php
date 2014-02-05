@@ -80,16 +80,21 @@ class Services_User_ConditionsController
 
 		$origin = $input->origin->url() ?: $_SERVER['REQUEST_URI'];
 		$toApprove = $input->approve->word();
-		if ($_SERVER['REQUEST_METHOD'] == 'POST' && $input->decline->text()) {
-			$loginlib = TikiLib::lib('login');
-			$loginlib->logout();
-			TikiLib::lib('access')->redirect($origin);
-		} elseif ($_SERVER['REQUEST_METHOD'] == 'POST' && $toApprove) {
-			if ($toApprove == $hash) {
-				$this->approveVersion($hash);
+
+		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+			if ($input->decline->text()) {
+				$loginlib = TikiLib::lib('login');
+				$loginlib->logout();
 				TikiLib::lib('access')->redirect($origin);
+			} elseif ($toApprove) {
+				if ($toApprove == $hash) {
+					$this->approveVersion($hash);
+					TikiLib::lib('access')->redirect($origin);
+				} else {
+					TikiLib::lib('errorreport')->report(tr('The terms and conditions were modified while you were reading them.'));
+				}
 			} else {
-				TikiLib::lib('errorreport')->report(tr('The terms and conditions were modified while you were reading them.'));
+				TikiLib::lib('errorreport')->report(tr('You are required to approve the terms of use to continue.'));
 			}
 		}
 
@@ -98,6 +103,34 @@ class Services_User_ConditionsController
 			'origin' => $origin,
 			'content' => $pdata,
 			'hash' => $hash,
+		);
+	}
+
+	public function action_age_validation($input)
+	{
+		global $user;
+
+		$origin = $input->origin->url() ?: $_SERVER['REQUEST_URI'];
+		$inputBirthDate = $input->birth_date->text();
+
+		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+			if ($input->decline->text()) {
+				$loginlib = TikiLib::lib('login');
+				$loginlib->logout();
+				TikiLib::lib('access')->redirect($origin);
+			} elseif ($inputBirthDate && ! $this->getBirthDate($user)) {
+				$this->setBirthDate($user, $inputBirthDate);
+				TikiLib::lib('access')->redirect($origin);
+			} else {
+				TikiLib::lib('errorreport')->report(tr('You are required enter your birth date to continue.'));
+			}
+		}
+
+		return array(
+			'title' => tr('Age Validation'),
+			'origin' => $origin,
+			'birth_date' => $this->getBirthDate($user),
+			'hasRequiredAge' => $this->hasRequiredAge($user),
 		);
 	}
 
@@ -158,6 +191,45 @@ class Services_User_ConditionsController
 	private function generateHash($info, $user)
 	{
 		return md5($info['pageName'] . '--' . $info['version'] . '--' . TikiLib::lib('tiki')->get_site_hash() . '--' . $user);
+	}
+
+	public static function hasRequiredAge($user)
+	{
+		global $prefs;
+		$age = $prefs['conditions_minimum_age'];
+
+		if (! $age || ! $user || Perms::get()->admin) {
+			// No age condition, accept everyone
+			return true;
+		}
+
+		$lib = new self;
+		$birthDate = $lib->getBirthDate($user);
+
+		if (! $birthDate) {
+			return false;
+		}
+
+		$required = date('Y-m-d', strtotime("$age years ago"));
+
+		return $birthDate <= $required;
+	}
+
+	private function getBirthDate($user)
+	{
+		$tikilib = TikiLib::lib('tiki');
+		return $tikilib->get_user_preference($user, 'birth_date', '');
+	}
+
+	private function setBirthDate($user, $date)
+	{
+		if (preg_match('/^\d{4}\-\d{2}\-\d{2}$/', $date) // Basic format
+			&& false !== strtotime($date)                // Valid date
+			&& $date < date('Y-m-d')                     // Not in the future, that would be strange
+			) {
+			$tikilib = TikiLib::lib('tiki');
+			$tikilib->set_user_preference($user, 'birth_date', $date);
+		}
 	}
 }
 

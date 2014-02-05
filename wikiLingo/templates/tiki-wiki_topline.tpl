@@ -20,8 +20,7 @@
 
 			{if !isset($versioned)}
 				{if $print_page ne 'y'}
-					<div class="wikiactions" style="float: right; padding-left:10px;">
-						<div class="icons" style="float: left;">
+					<div class="wikiactions icons btn-group pull-right">
 							{if $pdf_export eq 'y'}
 								<a class="btn btn-default" href="tiki-print.php?{query display="pdf" page=$page}" title="{tr}PDF{/tr}">{icon _id='page_white_acrobat' alt="{tr}PDF{/tr}"}</a>
 							{/if}
@@ -89,9 +88,7 @@
 							{if !empty($user) and $prefs.feature_notepad eq 'y' and $tiki_p_notepad eq 'y'}
 								<a class="btn btn-default" title="{tr}Save to notepad{/tr}" href="tiki-index.php?page={$page|escape:"url"}&amp;savenotepad=1{if !empty($page_ref_id)}&amp;page_ref_id={$page_ref_id}{/if}">{icon _id='disk' alt="{tr}Save to notepad{/tr}"}</a>
 							{/if}
-							{if $prefs.monitor_enabled eq 'y'}
-								{monitor_link type="wiki page" object=$page}
-							{/if}
+							{monitor_link type="wiki page" object=$page}
 							{if !empty($user) and $prefs.feature_user_watches eq 'y'}
 								{if $user_watching_page eq 'n'}
 									<a class="btn btn-default" href="tiki-index.php?page={$page|escape:"url"}&amp;watch_event=wiki_page_changed&amp;watch_object={$page|escape:"url"}&amp;watch_action=add{if $structure eq 'y'}&amp;structure={$home_info.pageName|escape:'url'}{/if}" class="icon">{icon _id='eye' alt="{tr}Page is NOT being monitored. Click icon to START monitoring.{/tr}"}</a>
@@ -113,12 +110,15 @@
 									<a class="btn btn-default" href="tiki-object_watches.php?objectId={$page_info.page_ref_id|escape:"url"}&amp;watch_event=structure_changed&amp;objectType=structure&amp;objectName={$page|escape:"url"}&amp;objectHref={'tiki-index.php?page_ref_id='|cat:$page_ref_id|escape:"url"}" class="icon">{icon _id=eye_group_arrow_down alt="{tr}Group Monitor on Structure{/tr}"}</a>
 								{/if}
 							{/if}
+							{if $prefs.user_favorites eq 'y'}
+								{favorite type="wiki page" object=$page}
+							{/if}
                             {if $prefs.feature_multilingual eq 'y' && $prefs.show_available_translations eq 'y' && $machine_translate_to_lang eq ''}
                                 <!--span class="btn-i18n" -->
                                 {include file='translated-lang.tpl' object_type='wiki page'}
                                 <!--/span -->
                             {/if}
-
+							
                             {if $prefs.feature_backlinks eq 'y' and $backlinks and $tiki_p_view_backlink eq 'y'}
 								<div class="btn-group backlinks">
 									<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
@@ -162,7 +162,6 @@
 									</ul>
 								</div>
 							{/if}
-						</div><!-- END of icons -->
 					</div> {* END of wikiactions *}
 				{/if} {* <-- end of if $print_page ne 'y' *}
 			{/if}

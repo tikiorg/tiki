@@ -56,7 +56,8 @@ if (!empty($_REQUEST['show']) && $_REQUEST['show'] == 'view') {
 } elseif (!empty($_REQUEST['show']) && $_REQUEST['show'] == 'mod') {
 	$cookietab = '2';
 } elseif (empty($_REQUEST['cookietab'])) {
-	if (isset($tracker_info['writerCanModify']) && $tracker_info['writerCanModify'] == 'y' && $user) $cookietab = '1';
+	if ((isset($tracker_info['writerCanModify']) && $tracker_info['writerCanModify'] == 'y' && $user) or
+		(isset($tracker_info['userCanSeeOwn']) && $tracker_info['userCanSeeOwn'] == 'y' && $user)) $cookietab = '1';
 	elseif (!($tiki_p_view_trackers == 'y' || $tiki_p_admin == 'y' || $tiki_p_admin_trackers == 'y') && $tiki_p_create_tracker_items == 'y') $cookietab = "2";
 	else if (!isset($cookietab)) {
 		$cookietab = '1';
@@ -109,7 +110,9 @@ if ($tracker_info['adminOnlyViewEditItem'] === 'y') {
 if ($tiki_p_view_trackers != 'y') {
 	$userCreatorFieldId = $writerfield;
 	$groupCreatorFieldId = $writergroupfield;
-	if ($user && !$my and isset($tracker_info['writerCanModify']) and $tracker_info['writerCanModify'] == 'y' and !empty($userCreatorFieldId)) {
+	if ($user && !$my and ( (isset($tracker_info['writerCanModify']) and $tracker_info['writerCanModify'] == 'y') or
+							(isset($tracker_info['userCanSeeOwn']) and $tracker_info['userCanSeeOwn'] == 'y'))
+							 and !empty($userCreatorFieldId)) {
 		$my = $user;
 	} elseif ($user && !$ours and isset($tracker_info['writerGroupCanModify']) and $tracker_info['writerGroupCanModify'] == 'y' and !empty($groupCreatorFieldId)) {
 		$ours = $group;

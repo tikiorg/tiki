@@ -1,1 +1,1 @@
-ALTER TABLE `tiki_sheet_layout` ADD `metadata` longblob default '' AFTER `clonedSheetId`;
+ALTER TABLE `tiki_sheet_layout` ADD `metadata` longblob;

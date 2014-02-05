@@ -1,4 +1,4 @@
-<div class="activity" data-id="{$activityframe.activity.object_id|escape}">
+<div class="activity" data-id="{$activityframe.object.id|escape}">
 	<strong style="vertical-align: middle;">{$activityframe.activity.user|avatarize} {$activityframe.heading}</strong>
 	{if in_array($user, $activityframe.activity.user_followers)}
 	This user is your friend!
@@ -15,26 +15,26 @@
 			{$activityframe.activity.modification_date|tiki_short_datetime}
 		</span>
 		{if $activity_format neq 'extended'}
-			<a class="comment" href="{service controller=comment action=list type=activity objectId=$activityframe.activity.object_id modal=true}">
+			<a class="comment" href="{service controller=comment action=list type=$activityframe.object.type objectId=$activityframe.object.id modal=true}">
 				{tr}Comment{/tr}
 				{if $activityframe.activity.comment_count}({$activityframe.activity.comment_count|escape}){/if}
 			</a>
 		{/if}
 		{if $activityframe.like}
-			<a class="like" href="{service controller=social action=unlike type=activity id=$activityframe.activity.object_id}">
+			<a class="like" href="{service controller=social action=unlike type=$activityframe.object.type id=$activityframe.object.id}">
 				{tr}Unlike{/tr}
 				{if $activityframe.activity.like_list}({$activityframe.activity.like_list|count}){/if}
 			</a>
 		{else}
-			<a class="like" href="{service controller=social action=like type=activity id=$activityframe.activity.object_id}">
+			<a class="like" href="{service controller=social action=like type=$activityframe.object.type id=$activityframe.object.id}">
 				{tr}Like{/tr}
 				{if $activityframe.activity.like_list}({$activityframe.activity.like_list|count}){/if}
 			</a>
 		{/if}
 	</div>
 	{if $activity_format eq 'extended'}
-		<div class="comment-container" data-reload="{service controller=comment action=list type=activity objectId=$activityframe.activity.object_id}">
-			{service_inline controller=comment action=list type=activity objectId=$activityframe.activity.object_id}
+		<div class="comment-container" data-reload="{service controller=comment action=list type=$activityframe.object.type objectId=$activityframe.object.id}">
+			{service_inline controller=comment action=list type=$activityframe.object.type objectId=$activityframe.object.id _silent=true}
 		</div>
 	{/if}
 </div>

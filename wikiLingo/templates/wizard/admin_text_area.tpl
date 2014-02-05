@@ -1,7 +1,7 @@
 {* $Id$ *}
 
 {tr}Set up the text area environment (Editing and Plugins){/tr}.
-<div class="adminWizardIconleft"><img src="img/icons/large/editing48x48.png" alt="{tr}Set up the Text Area{/tr}" /></div>
+<div class="adminWizardIconleft"><img src="img/icons/large/wizard_admin48x48.png" alt="{tr}Admin Wizard{/tr}" title="{tr}Admin Wizard{/tr}" /></div><div class="adminWizardIconright"><img src="img/icons/large/editing48x48.png" alt="{tr}Set up the Text Area{/tr}" /></div>
 <div class="adminWizardContent">
 <fieldset>
 	<legend>{tr}General settings{/tr}</legend>

@@ -31,7 +31,7 @@ function prefs_global_list($partial = false)
 
 	return array(
 		'style' => array(
-			'name' => tra('Theme'),
+			'name' => tra('Style'),
             'description' => tra('Style of the site, sometimes called a skin or CSS. See http://themes.tiki.org for more Tiki themes.'),
             'type' => 'list',
 			'help' => 'Themes',

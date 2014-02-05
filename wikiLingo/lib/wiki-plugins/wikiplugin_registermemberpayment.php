@@ -68,6 +68,8 @@ function wikiplugin_registermemberpayment($data, $params, $offset)
 		$periods = '<select id="memberDuration' . $i . '" name="duration">' . $fixedperiodsDDL . '</select>';
 	}
 
+    //force current user to not be used
+    $params['currentuser'] = 'n';
 	$memberPayment = TikiLib::lib('parser')->parse_data(wikiplugin_memberpayment($data, $params, $offset), array('is_html' => true));
 	if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 		if (isset($_POST['msg'])) {
@@ -92,83 +94,81 @@ function wikiplugin_registermemberpayment($data, $params, $offset)
 
 	$group = $params['group'];
 
-	$headerlib->add_jq_onready(
-<<<JQ
-		var reg = $('#memberRegister$i'),
-			pay = $('#memberPayment$i'),
-			user = "$user";
+	$headerlib->add_jq_onready(<<<JS
+var reg = $('#memberRegister$i'),
+    pay = $('#memberPayment$i'),
+    user = "$user";
 
-		pay.find('.warning').insertAfter(pay); //just in case there are any warnings
+pay.find('.warning').insertAfter(pay); //just in case there are any warnings
 
-		var submitBtn = reg.find('input.registerSubmit'),
-			submitBtnTr = reg.find('tr.registerSubmitTr');
+var submitBtn = reg.find('input.registerSubmit'),
+    submitBtnTr = reg.find('tr.registerSubmitTr');
 
-		if (!user) {
-			$('<tr class="grpMmbChk">\
-				<td>$group Membership:</td>\
-				<td>\
-					<input type="checkbox" id="memberType$i" />\
-				</td>\
-			</tr>').insertBefore(submitBtnTr);
-		} else {
-			$('<tr>\
-				<td><b>$group Membership</b></td>\
-			</tr>').insertBefore(submitBtnTr);
-		}
+if (!user) {
+    $('<tr class="grpMmbChk">\
+        <td>$group Membership:</td>\
+        <td>\
+            <input type="checkbox" id="memberType$i" />\
+        </td>\
+    </tr>').insertBefore(submitBtnTr);
+} else {
+    $('<tr>\
+        <td><b>$group Membership</b></td>\
+    </tr>').insertBefore(submitBtnTr);
+}
 
-		$('<tr style="display: none;">\
-			<td>$periodslabel</td>\
-			<td>$periods</td>\
-		</tr>')
-			.insertBefore(submitBtnTr);
+$('<tr style="display: none;">\
+    <td>$periodslabel</td>\
+    <td>$periods</td>\
+</tr>')
+    .insertBefore(submitBtnTr);
 
-		$('#memberType$i')
-			.click(function() {
-				$('tr.grpMmbChk').next()
-					.stop()
-					.fadeToggle();
-			})
-			.click();
+$('#memberType$i')
+    .click(function() {
+        $('tr.grpMmbChk').next()
+            .stop()
+            .fadeToggle();
+    })
+    .click();
 
-		reg
-			.bind('continueToPurchase', function() {
-				pay.find('input[name="wp_member_users"]').val($('#memberRegister$i #name').val());
-				pay.find('input[name="wp_member_periods"]').val($('#memberDuration$i').val());
-				pay.find('input:last').click();
-			})
-			.find('input:last').click(function() {
-				var frmData = reg.find('form').serialize();
+reg
+    .bind('continueToPurchase', function() {
+        pay.find('input[name="wp_member_users"]').val($('#memberRegister$i #name').val());
+        pay.find('input[name="wp_member_periods"]').val($('#memberDuration$i').val());
+        pay.find('input:last').click();
+    })
+    .find('input:last').click(function() {
+        var frmData = reg.find('form').serialize();
 
-				if (frmData) {
-					$.post($.service('user', 'register') + '&' + frmData, function(data) {
-						data = $.parseJSON(data);
-						if (typeof data == "string") {
-							if ($('#memberType$i').is(':checked')) {
-								$('<input name="msg" />')
-									.val(data)
-									.prependTo(pay.find('form'));
+        if (frmData) {
+            $.getJSON($.service('user', 'register') + '&' + frmData + '&noTemplate', function(data) {
+                if (typeof data.result == "string") {
+                    if ($('#memberType$i').is(':checked')) {
+                        $('<input name="msg" />')
+                            .val(data.result)
+                            .prependTo(pay.find('form'));
 
-								reg.trigger('continueToPurchase');
-							} else { //registered
-								$.notify(data);
-								$.notify(tr('You will be redirected in 5 seconds'));
-								setTimeout(function() {
-									document.location = 'tiki-index.php';
-								}, 5000);
-							}
-						} else { //errors
-							$.each(data, function(i) {
-								$.notify(data[i]);
-							});
-						}
-					});
-				} else {
-					reg.trigger('continueToPurchase');
-				}
+                        reg.trigger('continueToPurchase');
+                    } else { //registered
+                        $.notify(data.result);
+                        $.notify(tr('You will be redirected in 5 seconds'));
+                        setTimeout(function() {
+                            document.location = 'tiki-index.php';
+                        }, 5000);
+                    }
+                } else { //errors
+                    $.each(data.result, function(i) {
+                        $.notify(data.result[i].msg);
+                    });
+                }
+            });
+        } else {
+            reg.trigger('continueToPurchase');
+        }
 
-				return false;
-			});
-JQ
+        return false;
+    });
+JS
 );
 
 	$paymentStyle = '';

@@ -22,7 +22,7 @@
 				{tab name="{tr}Properties{/tr}"}
                     <h2>{tr}Properties{/tr}</h2>
                     <div class="form-group">
-                        <label for="name" class="col-sm-4 control-label">{tr}Name:{/tr}</label>
+                        <label for="name" class="col-sm-4 control-label">{tr}Name{/tr}</label>
                         <div class="col-sm-8">
                             <p class="form-control-static">
                                 {if $galleryId eq $treeRootId or $gal_info.type eq 'user'}
@@ -37,7 +37,7 @@
                     </div>
 					{if $prefs.feature_file_galleries_templates eq 'y'}
                         <div class="form-group">
-                            <label for="fgal_template" class="col-sm-4 control-label">{tr}Template:{/tr}</label>
+                            <label for="fgal_template" class="col-sm-4 control-label">{tr}Template{/tr}</label>
                             <div class="col-sm-8">
 							    <select name="fgal_template" id="fgal_template">
 								    <option value=""{if !isset($templateId) or $templateId eq ""} selected="selected"{/if}>{tr}None{/tr}</option>
@@ -65,7 +65,7 @@ $('#fgal_template').change( function() {
                         </div>
 					{/if}
                     <div class="form-group">
-                        <label for="fgal_type" class="col-sm-4 control-label">{tr}Type:{/tr}</label>
+                        <label for="fgal_type" class="col-sm-4 control-label">{tr}Type{/tr}</label>
                         <div class="col-sm-8">
                             <p class="form-control-static">
 					    	    {if $galleryId eq $treeRootId or $gal_info.type eq 'user'}
@@ -88,7 +88,7 @@ $('#fgal_template').change( function() {
 						</div>
                     </div>
                     <div class="form-group">
-                        <label for="description" class="col-sm-4 control-label">{tr}Description:{/tr}</label>
+                        <label for="description" class="col-sm-4 control-label">{tr}Description{/tr}</label>
                         <div class="col-sm-8">
         			       	<textarea rows="5" cols="40" id="description" name="description" style="width:100%">{$gal_info.description|escape}</textarea>
 			        		<span class="help-block">{tr}Required for podcasts{/tr}.</span>
@@ -129,7 +129,7 @@ $('#fgal_template').change( function() {
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="archives" class="col-sm-4 text-right">{tr}Maximum number of archives for each file:{/tr}</label>
+                            <label for="archives" class="col-sm-4 text-right">{tr}Maximum number of archives for each file{/tr}</label>
                             <div class="col-sm-8">
 						        <input size="5" type="text" id="archives" name="archives" value="{$gal_info.archives|escape}">
 							    <br>
@@ -138,7 +138,7 @@ $('#fgal_template').change( function() {
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="parentId" class="col-sm-4 control-label">{tr}Parent gallery:{/tr}</label>
+                            <label for="parentId" class="col-sm-4 control-label">{tr}Parent gallery{/tr}</label>
                             <div class="col-sm-8">
                				    <select name="parentId" id="parentId">
 			            		    <option value="{$treeRootId}"{if $parentId eq $treeRootId} selected="selected"{/if}>{tr}none{/tr}</option>
@@ -156,7 +156,7 @@ $('#fgal_template').change( function() {
 						    {/if}
 						    {if $tiki_p_admin eq 'y' or $tiki_p_admin_file_galleries eq 'y'}
                                 <div class="form-group">
-                                    <label for="user" class="col-sm-4 text-right">{tr}Owner of the gallery:{/tr}</label>
+                                    <label for="user" class="col-sm-4 text-right">{tr}Owner of the gallery{/tr}</label>
                                     <div class="col-sm-8">
     								    {user_selector user=$creator id='user'}
                                     </div>
@@ -203,7 +203,7 @@ $('#fgal_template').change( function() {
 							{/if}
 						{/if}
                         <div class="form-group">
-                            <label for="image_max_size_x" class="col-sm-4 text-right">{tr}Maximum width for images in gallery:{/tr}</label>
+                            <label for="image_max_size_x" class="col-sm-4 text-right">{tr}Maximum width for images in gallery{/tr}</label>
                             <div class="col-sm-8">
     							<input size="5" type="text" name="image_max_size_x" id="image_max_size_x" value="{$gal_info.image_max_size_x|escape}"> px
 								<br>
@@ -211,14 +211,14 @@ $('#fgal_template').change( function() {
 							</div>
 						</div>
                         <div class="form-group">
-                            <label for="image_max_size_y" class="col-sm-4 text-right">{tr}Maximum height for images in gallery:{/tr}</label>
+                            <label for="image_max_size_y" class="col-sm-4 text-right">{tr}Maximum height for images in gallery{/tr}</label>
                             <div class="col-sm-8">
 								<input size="5" type="text" name="image_max_size_y" id="image_max_size_y" value="{$gal_info.image_max_size_y|escape}"> px
 								<span class="help-block">{tr}If an image is higher than this, it will be resized.{/tr} {tr}Attention: In this case, the original image will be lost.{/tr} (0={tr}unlimited{/tr})</span>
 							</div>
 						</div>
                         <div class="form-group">
-                            <label for="wiki_syntax" class="col-sm-4 text-right">{tr}Wiki markup to enter when image selected from "file gallery manager":{/tr}</label>
+                            <label for="wiki_syntax" class="col-sm-4 text-right">{tr}Wiki markup to enter when image selected from "file gallery manager"{/tr}</label>
                             <div class="col-sm-8">
 								<input size="80" type="text" name="wiki_syntax" id="wiki_syntax" value="{$gal_info.wiki_syntax|escape}">
 								<br>
@@ -236,7 +236,7 @@ $('#fgal_template').change( function() {
 <!-- display properties -->
 				{tab name="{tr}Display Properties{/tr}"}
             <div class="form-group">
-                <label for="sortorder" class="col-sm-4 text-right">{tr}Default sort order:{/tr}</label>
+                <label for="sortorder" class="col-sm-4 text-right">{tr}Default sort order{/tr}</label>
                 <div class="col-sm-8">
 					<select name="sortorder" id="sortorder">
 						{foreach from=$options_sortorder key=key item=item}
@@ -252,19 +252,19 @@ $('#fgal_template').change( function() {
 				</div>
             </div>
             <div class="form-group">
-				<label for="max_desc" class="col-sm-4 text-right">{tr}Max description display size:{/tr}</label>
+				<label for="max_desc" class="col-sm-4 text-right">{tr}Max description display size{/tr}</label>
                 <div class="col-sm-8">
 				    <input type="text" id="max_desc" name="max_desc" value="{$max_desc|escape}">
 				</div>
             </div>
             <div class="form-group">
-			    <label for="maxRows" class="col-sm-4 text-right">{tr}Max rows per page:{/tr}</label>
+			    <label for="maxRows" class="col-sm-4 text-right">{tr}Max rows per page{/tr}</label>
                 <div class="col-sm-8">
                     <input type="text" id="maxRows" name="maxRows" value="{$maxRows|escape}">
                 </div>
 		    </div>
             <div class="form-group">
-                <label for="">{tr}Select which items to display when listing galleries:{/tr}</label>
+                <label for="">{tr}Select which items to display when listing galleries{/tr}</label>
 				{include file='fgal_listing_conf.tpl'}
 			</div>
 				{/tab}

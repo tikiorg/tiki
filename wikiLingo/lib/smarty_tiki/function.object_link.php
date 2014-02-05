@@ -106,7 +106,7 @@ function smarty_function_object_link_default( $smarty, $object, $title = null, $
 	$escapedText = smarty_modifier_escape($text ? $text : tra('No title specified'));
 
 	if ($url) {
-		$escapedHref = smarty_modifier_escape($url);
+		$escapedHref = smarty_modifier_escape(TikiLib::tikiUrlOpt($url));
 	} else {
 		$escapedHref = smarty_modifier_escape(smarty_modifier_sefurl($object, $type));
 	}

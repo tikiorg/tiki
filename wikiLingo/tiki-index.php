@@ -375,6 +375,7 @@ if ( isset($_REQUEST['switchlang'])
 			&& $prefs['language'] != $info['lang']
 ) {
 	$prefs['language'] = $info['lang'];
+	TikiLib::lib('multilingual')->setupBiDi();
 }
 
 $page = $info['pageName'];

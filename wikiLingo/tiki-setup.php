@@ -20,7 +20,7 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
 	header('location: index.php');
 	exit;
 }
-if (version_compare(PHP_VERSION, '5.3.0', '<')) {
+if (version_compare(PHP_VERSION, '5.5.0', '<')) {
 	header('location: tiki-install.php');
 	exit;
 }
@@ -307,9 +307,6 @@ $headerlib->add_jsfile('lib/tiki-js.js');
 if ( $prefs['feature_cssmenus'] == 'y' ) {
 	$headerlib->add_cssfile('css/cssmenus.css');
 }
-if ( $prefs['feature_bidi'] == 'y' ) {
-	$headerlib->add_cssfile('styles/BiDi/BiDi.css');
-}
 
 // using jquery-migrate-1.2.1.js plugin for tiki 11, still required in tiki 12 LTS to support some 3rd party plugins
 
@@ -353,7 +350,28 @@ $headerlib->add_js('var zoomToFoundLocation = "'.$zoomToFoundLocation.'";');	// 
 
 $headerlib->add_jsfile('lib/jquery_tiki/tiki-maps.js');
 $headerlib->add_jsfile('vendor/jquery/plugins/jquery-json/jquery.json-2.4.js');
-$headerlib->add_jsfile('vendor/jquery/plugins/zoom/jquery.zoom.js');
+
+if ($prefs['feature_jquery_zoom'] === 'y') {
+	$headerlib->add_jsfile('vendor/jquery/plugins/zoom/jquery.zoom.js')
+		->add_css('
+.img_zoom {
+	display:inline-block;
+}
+.img_zoom:after {
+	content:"";
+	display:block;
+	width:33px;
+	height:33px;
+	position:absolute;
+	top:0;
+	right:0;
+	background:url(vendor/jquery/plugins/zoom/icon.png);
+}
+.img_zoom img {
+	display:block;
+}
+');
+}
 
 if ($prefs['feature_syntax_highlighter'] == 'y') {
 	//add codemirror stuff
@@ -370,6 +388,9 @@ if ($prefs['feature_syntax_highlighter'] == 'y') {
 	codemirrorModes($prefs['tiki_minify_javascript'] === 'y');
 }
 
+if ( $prefs['feature_jquery_carousel'] == 'y' ) {
+	$headerlib->add_jsfile('vendor/jquery/plugins/infinitecarousel/jquery.infinitecarousel3.js');
+}
 
 if ($prefs['mobile_feature'] === 'y' && $prefs['mobile_mode'] === 'y') {
 
@@ -388,7 +409,7 @@ if ($prefs['mobile_feature'] === 'y' && $prefs['mobile_mode'] === 'y') {
 
 	$headerlib->drop_cssfile('css/cssmenus.css');
 
-} else {
+} else {	// js includes that don't work or aren't needed in mobile mode
 
 	$headerlib->add_jsfile('lib/swfobject/swfobject.js');
 
@@ -492,10 +513,6 @@ if ($prefs['mobile_feature'] === 'y' && $prefs['mobile_mode'] === 'y') {
 		$headerlib->add_jsfile('vendor/jquery/plugins/colorbox/jquery.colorbox.js');
 		$headerlib->add_cssfile('vendor/jquery/plugins/colorbox/' . $prefs['jquery_colorbox_theme'] . '/colorbox.css');
 	}
-	if ( $prefs['feature_jquery_carousel'] == 'y' ) {
-		$headerlib->add_jsfile('vendor/jquery/plugins/infinitecarousel/jquery.infinitecarousel3.js');
-	}
-
 	if ( $prefs['feature_jquery'] != 'y' || $prefs['feature_jquery_tablesorter'] != 'y' ) {
 		$headerlib->add_jsfile('lib/tiki-js-sorttable.js');
 	}
@@ -686,9 +703,6 @@ if ($prefs['openpgp_gpg_pgpmimemail'] == 'y') {
 // ******************************************************************** //
 //////////////////////////////////////////////////////////////////////////
 
-$headerlib->add_jsfile('vendor/twitter/bootstrap/js/bootstrap.js');
-$headerlib->add_cssfile('vendor/twitter/bootstrap/css/bootstrap.min.css');
-
 if( $prefs['feature_hidden_links'] == 'y' ) {
 	$headerlib->add_js("$('body').find('h1, h2, h3, h4, h5, h6').each(function() {
 	var headerid = $(this).attr('id');
@@ -701,6 +715,12 @@ if( $prefs['feature_hidden_links'] == 'y' ) {
 $headerlib->lockMinifiedJs();
 
 if ( $prefs['conditions_enabled'] == 'y' ) {
+	if (! Services_User_ConditionsController::hasRequiredAge($user)) {
+		$servicelib = TikiLib::lib('service');
+		$broker = $servicelib->getBroker();
+		$broker->process('user_conditions', 'age_validation', $jitRequest);
+		exit;
+	}
 	if (Services_User_ConditionsController::requiresApproval($user)) {
 		$servicelib = TikiLib::lib('service');
 		$broker = $servicelib->getBroker();

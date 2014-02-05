@@ -91,14 +91,14 @@
 				<input type="hidden" name="no_bl" value="{$smarty.request.no_bl|escape}">
 			{/if}
             <div class="form-group">
-			    <label class="col-sm-2 control-label" for="attach-upload">{tr}Upload file:{/tr}</label><input type="hidden" name="MAX_FILE_SIZE" value="1000000000">
+			    <label class="col-sm-2 control-label" for="attach-upload">{tr}Upload file{/tr}</label><input type="hidden" name="MAX_FILE_SIZE" value="1000000000">
                 <div class="col-sm-10">
 				    <input class="form-control"  name="userfile1" type="file" id="attach-upload">
                 </div>
             </div>
 
             <div class="form-group">
-                <label class="col-sm-2 control-label" for="attach-comment">{tr}Comment:{/tr}</label>
+                <label class="col-sm-2 control-label" for="attach-comment">{tr}Comment{/tr}</label>
                 <div class="col-sm-8">
                     <input class="form-control" type="text" name="attach_comment" maxlength="250" id="attach-comment">
                 </div>

@@ -30,10 +30,18 @@ $smarty->assign_by_ref('cookie', $_COOKIE);
 
 // fix margins for hidden columns - css (still) doesn't work as it needs to know the "normal" margins FIXME
 if (getCookie('show_col2') == 'n') {
-	$headerlib->add_css('#c1c2 #wrapper #col1.marginleft { margin-left: 0; }', 100);
+	if (getCookie('rtl') == 'y') { // check if we are in RTL language mode
+		$headerlib->add_css('#c1c2 #wrapper #col1.marginright { margin-right: 0; }', 100);
+	} else {
+		$headerlib->add_css('#c1c2 #wrapper #col1.marginleft { margin-left: 0; }', 100);
+	}
 }
 if (getCookie('show_col3') == 'n') {
-	$headerlib->add_css('#c1c2 #wrapper #col1.marginright { margin-right: 0; }', 100);
+	if (getCookie('rtl') == 'y') {
+		$headerlib->add_css('#c1c2 #wrapper #col1.marginleft { margin-left: 0; }', 100);
+	} else {
+		$headerlib->add_css('#c1c2 #wrapper #col1.marginright { margin-right: 0; }', 100);
+	}
 }
 
 function getCookie($name, $section = null, $default = null)

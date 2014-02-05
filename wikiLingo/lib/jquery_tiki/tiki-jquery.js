@@ -458,6 +458,15 @@ $(function() { // JQuery's DOM is ready event - before onload
 		
 	}	// end if (jqueryTiki.colorbox)
 
+	if (jqueryTiki.zoom) {
+		$("a[rel=zoom]")
+			.wrap('<span class="img_zoom"></span>')
+			.parent()
+			.zoom({
+				url: $(this).attr("href")
+			});
+	}
+
 	$.fn.applyChosen = function () {
 		if (jqueryTiki.chosen) {
 			$("select:not(.allow_single_deselect):not(.nochosen)").tiki("chosen");
@@ -1616,6 +1625,7 @@ $.fn.tiki = function(func, type, options) {
 
 			//allow syntax highlighting
 			if ($.fn.flexibleSyntaxHighlighter) {
+				window.codeMirrorEditor = [];
 				form.find('textarea.wikiedit').flexibleSyntaxHighlighter();
 			}
 		});
@@ -2049,52 +2059,47 @@ $.fn.tiki = function(func, type, options) {
 
 	var favoriteList = [];
 	$.fn.favoriteToggle = function () {
-		this.find('a')
-			.each(function () {
-				var type, obj, isFavorite, link = this;
-				type = $(this).queryParam('type');
-				obj = $(this).queryParam('object');
-				
-
-				isFavorite = function () {
-					var ret = false;
-					$.each(favoriteList, function (k, v) {
-						if (v === type + ':' + obj) {
-							ret = true;
-							return false;
-						}
-					});
-
-					return ret;
-				}
-
-				$(this).empty();
-				$(this).append(tr('Favorite'));
-				$(this).prepend($('<img style="vertical-align: top; margin-right: .2em;" />').attr('src', isFavorite() ? 'img/icons/star.png' : 'img/icons/star_grey.png'));
-				// Toggle class of closest surrounding div for css customization
-				if (isFavorite()) {
-					$(this).closest('div').addClass( 'favorite_selected' );
-					$(this).closest('div').removeClass( 'favorite_unselected' ); 
-				} else {
-					$(this).closest('div').addClass( 'favorite_unselected' );
-					$(this).closest('div').removeClass( 'favorite_selected' );	
-				}
-				$(this)
-					.filter(':not(".register")')
-					.addClass('register')
-					.click(function () {
-						$.post($(this).attr('href'), {
-							target: isFavorite() ? 0 : 1
-						}, function (data) {
-							favoriteList = data.list;
-							$.localStorage.store('favorites', favoriteList);
-
-							$(link).parent().favoriteToggle();
-						}, 'json');
+		this.each(function () {
+			var type, obj, isFavorite, link = this;
+			type = $(this).queryParam('type');
+			obj = $(this).queryParam('object');
+	
+			isFavorite = function () {
+				var ret = false;
+				$.each(favoriteList, function (k, v) {
+					if (v === type + ':' + obj) {
+						ret = true;
 						return false;
-					});
-			});
+					}
+				});
+				return ret;
+			}
 
+			$(this).empty();
+			//$(this).append(tr('Favorite'));
+			$(this).prepend($('<span />').attr({'class' : isFavorite() ? 'glyphicon glyphicon-star' : 'glyphicon glyphicon-star-empty', 'title' : isFavorite() ? tr('Remove from favorites') : tr('Add to favorites')}));
+			// Toggle class for css customization
+			if (isFavorite()) {
+				$(this).addClass( 'favorite_selected' );
+				$(this).removeClass( 'favorite_unselected' ); 
+			} else {
+				$(this).addClass( 'favorite_unselected' );
+				$(this).removeClass( 'favorite_selected' );	
+			}
+			$(this)
+				.filter(':not(".register")')
+				.addClass('register')
+				.click(function () {
+					$.post($(this).attr('href'), {
+						target: isFavorite() ? 0 : 1
+					}, function (data) {
+						favoriteList = data.list;
+						$.localStorage.store('favorites', favoriteList);
+						$(link).favoriteToggle();
+					}, 'json');
+					return false;
+				});
+		});
 		return this;
 	};
 
@@ -2928,7 +2933,7 @@ $.fn.reload = function () {
 
 // Required for bootstrap to allow changing the content of a modal
 $(document).on('hidden.bs.modal', '#bootstrap-modal', function () {
-	$(this).removeData('bs.modal').empty();
+	$(this).removeData('bs.modal').find('.modal-content').empty();
 });
 
 $(document).on('submit', '.modal-body form:not(.no-ajax)', ajaxSubmitEventHandler(function (data) {
@@ -2936,12 +2941,8 @@ $(document).on('submit', '.modal-body form:not(.no-ajax)', ajaxSubmitEventHandle
 	document.location.reload();
 }));
 
-$(document).on('shown.bs.modal', '#bootstrap-modal', function () {
+$(document).on('loaded.bs.modal', '#bootstrap-modal', function () {
 	$(this).trigger('tiki.modal.redraw');
-	setTimeout(function () {
-		// Re-trigger after show as first load is sometimes slower.
-		$(this).trigger('tiki.modal.redraw');
-	}, 500);
 });
 
 $(document).on('tiki.modal.redraw', '#bootstrap-modal', function () {

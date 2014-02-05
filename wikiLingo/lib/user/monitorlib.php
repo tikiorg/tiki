@@ -9,6 +9,9 @@ class MonitorLib
 {
 	private $queue = [];
 
+	/**
+	 * Provides the list of priorities available for notifications.
+	 */
 	function getPriorities()
 	{
 		return array(
@@ -19,6 +22,15 @@ class MonitorLib
 		);
 	}
 
+	/**
+	 * Provides the complete list of notifications that can affect a
+	 * specific object in the system, including all of it's supported
+	 * structures, like translation sets.
+	 *
+	 * @param user login name
+	 * @param type standard object type
+	 * @param object full itemId
+	 */
 	function getOptions($user, $type, $object)
 	{
 		global $prefs;
@@ -26,11 +38,38 @@ class MonitorLib
 		$tikilib = TikiLib::lib('tiki');
 		$userId = $tikilib->get_user_id($user);
 
+		// Events applicable for this object
 		$events = $this->getApplicableEvents($type);
 		$options = [];
 
+		// Include object directly
 		$options[] = $this->gatherOptions($userId, $events, $type, $object);
+		
+		// Include translation set
+		if ($this->hasMultilingual($type)) {
+			// Using fake types - wiki page -> wiki page trans
+			//                    article   -> article trans
+			$options[] = $this->gatherOptions($userId, $events, "$type trans", $object);
+		}
 
+		if ($prefs['feature_wiki_structure'] == 'y' && $type == 'wiki page') {
+			$structlib = TikiLib::lib('struct');
+			$structures = $structlib->get_page_structures($object);
+			foreach ($structures as $row) {
+				$path = $structlib->get_structure_path($row['req_page_ref_id']);
+				$path = array_reverse($path);
+				foreach ($path as $level => $entry) {
+					$options[] = $this->gatherOptions($userId, $events, 'structure', $entry['page_ref_id'], $this->getStructureLabel($level, $entry));
+				}
+			}
+		}
+
+		if ($prefs['feature_forums'] == 'y' && $type == 'forum post') {
+			$post = TikiLib::lib('comments')->get_comment($object);
+			$options[] = $this->gatherOptions($userId, $events, 'forum', $post['object']);
+		}
+
+		// Include any category and parent category
 		if ($prefs['feature_categories'] == 'y') {
 			$categlib = TikiLib::lib('categ');
 			$categories = $categlib->get_object_categories($type, $object);
@@ -47,12 +86,73 @@ class MonitorLib
 			}
 		}
 
+		// Global / Catch-all always applicable, except for tiki.save, which would
+		// cause too much noise.
 		unset($events['tiki.save']); // Disallow global watch-all
 		$options[] = $this->gatherOptions($userId, $events, 'global', null);
 
 		return call_user_func_array('array_merge', $options);
 	}
 
+	/**
+	 * Method used to enumerate all targets being triggered by an event.
+	 * Used to generate a single lookup query on event trigger.
+	 */
+	private function collectTargets($args)
+	{
+		global $prefs;
+
+		$type = $args['type'];
+		$object = $args['object'];
+
+		if ($prefs['feature_categories'] == 'y') {
+			$categlib = TikiLib::lib('categ');
+			$categories = $categlib->get_object_categories($type, $object);
+			$categories = $categlib->get_with_parents($categories);
+			$targets = array_map(function ($categoryId) {
+				return "category:$categoryId";
+			}, $categories);
+		}
+		
+		list($type, $objectId) = $this->cleanObjectId($type, $object);
+		$targets[] = 'global';
+		$targets[] = "$type:$objectId";
+
+		if ($this->hasMultilingual($type)) {
+			$targets = array_merge($targets, $this->getMultilingualTargets($type, $objectId));
+		}
+
+		if ($prefs['feature_wiki_structure'] == 'y' && $type == 'wiki page') {
+			$structlib = TikiLib::lib('struct');
+			$structures = $structlib->get_page_structures($object);
+			foreach ($structures as $row) {
+				$path = $structlib->get_structure_path($row['req_page_ref_id']);
+				foreach ($path as $entry) {
+					$targets[] = "structure:{$entry['page_ref_id']}";
+				}
+			}
+		}
+
+		if ($prefs['feature_forums'] == 'y' && $type == 'forum post') {
+			if (! empty($args['forum_id'])) {
+				$targets[] = "forum:{$args['forum_id']}";
+			}
+			if (! empty($args['parent_id'])) {
+				$targets[] = "forum post:{$args['parent_id']}";
+			}
+		}
+
+		return $targets;
+	}
+
+	private function table()
+	{
+		return TikiDb::get()->table('tiki_user_monitors');
+	}
+
+	/**
+	 * Replaces the current priority for an event/target pair, for a specific user.
+	 */
 	function replacePriority($user, $event, $target, $priority)
 	{
 		$tikilib = TikiLib::lib('tiki');
@@ -130,28 +230,41 @@ class MonitorLib
 
 		$tx = TikiDb::get()->begin();
 
-		// TODO : Implement sendTo
 		// TODO : Shrink large events / truncate content ? 
 
+		$mailQueue = [];
+
+		$monitormail = TikiLib::lib('monitormail');
 		foreach ($queue as $item) {
 			list($args, $sendTo) = $this->finalHandleEvent($item['arguments'], $item['events']);
 
 			if ($args) {
 				$activitylib->recordEvent($item['event'], $args);
 			}
+
+			if (! empty($sendTo)) {
+				$monitormail->queue($item['event'], $args, $sendTo);
+			}
+				
 		}
 
 		$tx->commit();
+
+		// Send email (rather slow, dealing with external services) after Tiki's management is done
+		$monitormail->sendQueue();
 	}
 	
 	private function finalHandleEvent($args, $events)
 	{
+		$currentUser = TikiLib::lib('login')->getUserId();
+
 		$targets = $this->collectTargets($args);
 
 		$table = $this->table();
 		$results = $table->fetchAll(['priority', 'userId'], [
 			'event' => $table->in($events),
 			'target' => $table->in($targets),
+			'userId' => $table->not($currentUser),
 		]);
 
 		if (empty($results)) {
@@ -174,16 +287,21 @@ class MonitorLib
 		return [$args, array_unique($sendTo)];
 	}
 
-	private function gatherOptions($userId, $events, $type, $object)
+	/**
+	 * Create an option set for each event in the list.
+	 * Collects the appropriate object information for adequate display.
+	 */
+	private function gatherOptions($userId, $events, $type, $object, $title = null)
 	{
 		if ($object) {
-			$objectInfo = $this->getObjectInfo($type, $object);
+			$objectInfo = $this->getObjectInfo($type, $object, $title);
 		} else {
 			$objectInfo = array(
 				'type' => 'global',
 				'target' => 'global',
 				'title' => tr('Anywhere'),
 				'isContainer' => true,
+				'fetchTargets' => ['global'],
 			);
 		}
 
@@ -199,29 +317,50 @@ class MonitorLib
 		return $options;
 	}
 
-	private function getObjectInfo($type, $object)
+	private function getObjectInfo($type, $object, $title)
 	{
 		$objectlib = TikiLib::lib('object');
 
-		$title = $objectlib->get_title($type, $object);
+		list($realType, $objectId) = $this->cleanObjectId($type, $object);
 
-		list($type, $object) = $this->cleanObjectId($type, $object);
+		$title = $title ?: $objectlib->get_title($realType, $object);
+
+		$target = "$type:$objectId";
+
+		// For multilingual targets, collect all targets in the set as the event
+		// is bound for a single page, but needs to be displayed for all other pages
+		// as well to explain why the notification occurs.
+		if (substr($type, -6) == ' trans') {
+			$title = tr('translations of %0', $title);
+			$fetchTargets = $this->getMultilingualTargets($realType, $objectId);
+			$isTranslation = true;
+		} else {
+			$fetchTargets = [];
+			$isTranslation = false;
+		}
+
+		$fetchTargets[] = $target;
 
 		return array(
 			'type' => $type,
-			'object' => $object,
-			'target' => "$type:$object",
+			'object' => $objectId,
+			'target' => $target,
 			'title' => $title,
-			'isContainer' => $type == 'category',
+			'isContainer' => $isTranslation || in_array($realType, ['category', 'structure', 'forum']),
+			'fetchTargets' => $fetchTargets,
 		);
 	}
 
 	private function cleanObjectId($type, $object)
 	{
 		// Hash must be short, so never use page names or such, use IDs
-		if ($type == 'wiki page') {
+		if ($type == 'wiki page' || $type == 'wiki page trans') {
 			$tikilib = TikiLib::lib('tiki');
 			$object = $tikilib->get_page_id_from_name($object);
+		}
+
+		if (substr($type, -6) == ' trans') {
+			$type = substr($type, 0, -6);
 		}
 
 		return [$type, (int) $object];
@@ -229,14 +368,27 @@ class MonitorLib
 
 	private function createOption($userId, $eventName, $label, $objectInfo)
 	{
-		$conditions = ['userId' => $userId, 'event' => $eventName, 'target' => $objectInfo['target']];
-		$active = $this->table()->fetchOne('priority', $conditions);
-
-		return array(
-			'priority' => $active ?: 'none',
+		$table = $this->table();
+		$conditions = [
+			'userId' => $userId,
 			'event' => $eventName,
-			'target' => $objectInfo['target'],
-			'hash' => md5($eventName . $objectInfo['target']),
+			'target' => $table->in($objectInfo['fetchTargets']),
+		];
+		// Always fetch the oldest target possible, there would rarely be multiple
+		// But a case where two translation sets would be join could have multiple
+		// monitors active, only display the oldest one.
+		$active = $table->fetchRow(['target', 'priority'], $conditions, [
+			'monitorId' => 'ASC',
+		]);
+
+		// Because of the above rule, the active target may not be the requested one
+		// Still display everything as it is the requested one
+		$realTarget = $active ? $active['target'] : $objectInfo['target'];
+		return array(
+			'priority' => $active ? $active['priority'] : 'none',
+			'event' => $eventName,
+			'target' => $realTarget,
+			'hash' => md5($eventName . $realTarget),
 			'type' => $objectInfo['type'],
 			'object' => $objectInfo['object'],
 			'description' => $objectInfo['isContainer']
@@ -251,40 +403,48 @@ class MonitorLib
 		case 'wiki page':
 			return [
 				'tiki.save' => ['global' => false, 'label' => tr('Any activity')],
-				'tiki.wiki.save' => ['global' => true, 'label' => tr('Page modified')],
+				'tiki.wiki.save' => ['global' => false, 'label' => tr('Page modified')],
 				'tiki.wiki.create' => ['global' => true, 'label' => tr('Page created')],
+			];
+		case 'forum post':
+			return [
+				'tiki.save' => ['global' => false, 'label' => tr('Any activity')],
+				'tiki.forumpost.save' => ['global' => false, 'label' => tr('Any forum activity')],
+				'tiki.forumpost.create' => ['global' => true, 'label' => tr('New topics')],
 			];
 		default:
 			return [];
 		}
 	}
 
-	private function collectTargets($args)
+	private function hasMultilingual($type)
 	{
 		global $prefs;
+		return $prefs['feature_multilingual'] == 'y' && in_array($type, ['wiki page', 'article']);
+	}
 
-		$type = $args['type'];
-		$object = $args['object'];
-
-		if ($prefs['feature_categories'] == 'y') {
-			$categlib = TikiLib::lib('categ');
-			$categories = $categlib->get_object_categories($type, $object);
-			$categories = $categlib->get_with_parents($categories);
-			$targets = array_map(function ($categoryId) {
-				return "category:$categoryId";
-			}, $categories);
+	private function getMultilingualTargets($type, $objectId)
+	{
+		$targets = [];
+		$multilingual = TikiLib::lib('multilingual');
+		foreach ($multilingual->getTrads($type, $objectId) as $row) {
+			$targets[] = "$type trans:{$row['objId']}";
 		}
-		
-		list($type, $object) = $this->cleanObjectId($type, $object);
-		$targets[] = 'global';
-		$targets[] = "$type:$object";
 
 		return $targets;
 	}
 
-	private function table()
+	private function getStructureLabel($level, $entry)
 	{
-		return TikiDb::get()->table('tiki_user_monitors');
+		$page = $entry['pageName'];
+
+		if ($entry['parent_id'] == 0) {
+			return tr('%0 (%1 level up, entire structure)', $page, $level);
+		} elseif ($level) {
+			return tr('%0 (%1 level up)', $page, $level);
+		} else {
+			return tr('%0 (current subtree)', $page);
+		}
 	}
 }
 
