@@ -308,6 +308,15 @@
 		{/accordion_group}
 		{accordion_group title="{tr}Permissions{/tr}"}
 			<label>
+				<input type="checkbox" name="userCanSeeOwn" value="1"
+					{if $info.userCanSeeOwn eq 'y'}checked="checked"{/if}>
+				{tr}User can see his own items{/tr}
+				<div class="description">
+					{tr}The tracker needs a user field with the auto-assign activated{/tr}.
+					{tr}No extra pemission is needed at the tracker permissions level to allow a user to see just his own items through Plugin TrackerList with the param view=user{/tr}
+				</div>
+			</label>
+			<label>
 				<input type="checkbox" name="writerCanModify" value="1"
 					{if $info.writerCanModify eq 'y'}checked="checked"{/if}>
 				{tr}Item creator can modify his items{/tr}

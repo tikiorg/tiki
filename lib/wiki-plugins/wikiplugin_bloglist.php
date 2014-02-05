@@ -165,7 +165,7 @@ function wikiplugin_bloglist($data, $params)
 
 		$blogItems = $bloglib->list_blog_posts($params['Id'], false, $params['offset'], $params['Items'], $params['sort_mode'], $params['find'], $dateStartTS, $dateEndTS);
 
-		if ( $params['charCount'] > 0 ) {
+		if ( isset($params['charCount']) && $params['charCount'] > 0 ) {
 			$blogItems = $bloglib->mod_blog_posts($blogItems, $params['charCount'], $params['wordBoundary'], $params['ellipsis'], $params['more']);
 		}
 
