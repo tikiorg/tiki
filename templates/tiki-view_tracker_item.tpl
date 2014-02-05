@@ -15,7 +15,10 @@
 				<a class="btn btn-default" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}&amp;watch=stop" title="{tr}Stop Monitor{/tr}">{icon _id='no_eye' align="right" hspace="1" alt="{tr}Stop Monitor{/tr}"}</a>
 			{/if}
 		{/if}
-		{self_link print='y'}{icon _id='printer' align='right' hspace='1' alt="{tr}Print{/tr}"}{/self_link}
+		<div class="pull-right btn-group">
+			{self_link print='y' _class="btn btn-default"}{icon _id='printer' hspace='1' alt="{tr}Print{/tr}"}{/self_link}
+			{monitor_link type=trackeritem object=$itemId}
+		</div>
 		{if $item_info.logs.cant}
 			<a class="btn btn-default" class="link" href="tiki-tracker_view_history.php?itemId={$itemId}" title="{tr}History{/tr}">{icon _id='database' align='right' alt="{tr}History{/tr}"}</a>
 		{/if}

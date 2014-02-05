@@ -81,6 +81,11 @@ class MonitorLib
 			$options[] = $this->gatherOptions($userId, $events, 'forum', $post['object']);
 		}
 
+		if ($prefs['feature_trackers'] == 'y' && $type == 'trackeritem') {
+			$item = TikiLib::lib('trk')->get_item_info($object);
+			$options[] = $this->gatherOptions($userId, $events, 'tracker', $item['trackerId']);
+		}
+
 		// Include any category and parent category
 		if ($prefs['feature_categories'] == 'y') {
 			$categlib = TikiLib::lib('categ');
@@ -151,6 +156,12 @@ class MonitorLib
 			}
 			if (! empty($args['parent_id'])) {
 				$targets[] = "forum post:{$args['parent_id']}";
+			}
+		}
+
+		if ($prefs['feature_trackers'] == 'y' && $type == 'trackeritem') {
+			if (! empty($args['trackerId'])) {
+				$targets[] = "tracker:{$args['trackerId']}";
 			}
 		}
 
@@ -423,6 +434,12 @@ class MonitorLib
 				'tiki.save' => ['global' => false, 'label' => tr('Any activity')],
 				'tiki.forumpost.save' => ['global' => false, 'label' => tr('Any forum activity')],
 				'tiki.forumpost.create' => ['global' => true, 'label' => tr('New topics')],
+			];
+		case 'trackeritem':
+			return [
+				'tiki.save' => ['global' => false, 'label' => tr('Any activity')],
+				'tiki.trackeritem.save' => ['global' => false, 'label' => tr('Any item activity')],
+				'tiki.trackeritem.create' => ['global' => true, 'label' => tr('New items')],
 			];
 		default:
 			return [];

@@ -26,6 +26,8 @@
 								{/if}
 							{elseif $option.type eq 'structure'}
 								<span class="label label-info">{tr}Structure{/tr}</span>
+							{elseif $option.type eq 'tracker'}
+								<span class="label label-info">{tr}Type{/tr}</span>
 							{elseif $option.type eq 'forum'}
 								<span class="label label-info">{tr}Forum{/tr}</span>
 							{elseif $option.type eq 'global'}
