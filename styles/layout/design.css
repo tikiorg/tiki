@@ -3693,4 +3693,8 @@ h6 a.tiki_anchor:hover {
     font-weight: bold;
 }
 
+body.navbar-padding {
+	padding-top: 70px;
+}
+
 /* End of file */
