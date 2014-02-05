@@ -29,6 +29,17 @@
 				{preference name=feature_user_bookmarks}
 				{preference name=feature_contacts}
 				{preference name=monitor_enabled}
+				<div class="adminoptionboxchild" id="monitor_enabled_childcontainer">
+
+					{preference name=monitor_digest}
+					<div class="alert alert-warning">
+						<p>{tr}For the digest emails to be sent out, you will need to set-up a cron job.{/tr}</p>
+						<p>{tr}Adjust the command parameters for your digest frequency. Default frequency is 7 days.{/tr}</p>
+						<strong>{tr}Sample command:{/tr}</strong>
+						<code>/usr/bin/php {$monitor_command|escape}</code>
+					</div>
+				</div>
+				{preference name=feature_user_watches_translations}
 				{preference name=feature_user_watches}
 				{preference name=feature_group_watches}
 				{preference name=feature_daily_report_watches}

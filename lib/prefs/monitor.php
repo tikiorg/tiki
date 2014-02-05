@@ -14,6 +14,12 @@ function prefs_monitor_list()
 			'type' => 'flag',
 			'default' => 'n',
 		),
+		'monitor_digest' => array(
+			'name' => tr('Notification Digests'),
+			'description' => tr('Enable the digest notifications, requires cron job'),
+			'type' => 'flag',
+			'default' => 'n',
+		),
 	);
 }
 

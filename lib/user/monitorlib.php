@@ -14,12 +14,24 @@ class MonitorLib
 	 */
 	function getPriorities()
 	{
-		return array(
+		static $priorities;
+		if ($priorities) {
+			return $priorities;
+		}
+
+		$priorities = array(
 			'none' => ['label' => '', 'description' => null],
 			'critical' => ['label' => tr('Critical'), 'description' => tr('Immediate notification by email.')],
 			'high' => ['label' => tr('High'), 'description' => tr('Sent to you with the next periodic digest.')],
 			'low' => ['label' => tr('Low'), 'description' => tr('Included in your personalized recent changes feed.')],
 		);
+
+		global $prefs;
+		if ($prefs['monitor_digest'] != 'y') {
+			unset($priorities['high']);
+		}
+
+		return $priorities;
 	}
 
 	/**
