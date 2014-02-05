@@ -167,44 +167,39 @@ JS
 
 		$wysiwyglib = TikiLib::lib('wysiwyg');
 
-		if ($prefs['feature_jison_wiki_parser'] == 'y') {
-			$html .= $wysiwyglib->setUpJisonEditor($params['_is_html'], $as_id, $params, $auto_save_referrer);
-            if (!$included) $html .= '<input name="jisonWyisywg" type="hidden" value="true" />';
-			$html .= '<div class="wikiedit ui-widget-content" name="'.$params['name'].'" id="'.$as_id.'">' . ($content) . '</div>';
-		} else {
-			// set up ckeditor
-			if (!isset($params['name'])) {
-				$params['name'] = 'edit';
-			}
+        // set up ckeditor
+        if (!isset($params['name'])) {
+            $params['name'] = 'edit';
+        }
 
-			$ckoptions = $wysiwyglib->setUpEditor($params['_is_html'], $as_id, $params, $auto_save_referrer);
+        $ckoptions = $wysiwyglib->setUpEditor($params['_is_html'], $as_id, $params, $auto_save_referrer);
 
-			if (!$included) {
-				$html .= '<input type="hidden" name="wysiwyg" value="y" />';
-			}
-			$html .= '<textarea class="wikiedit" name="'.$params['name'].'" id="'.$as_id.'" style="visibility:hidden;';	// missing closing quotes, closed in condition
+        if (!$included) {
+            $html .= '<input type="hidden" name="wysiwyg" value="y" />';
+        }
+        $html .= '<textarea class="wikiedit" name="'.$params['name'].'" id="'.$as_id.'" style="visibility:hidden;';	// missing closing quotes, closed in condition
 
-			if (empty($params['cols'])) {
-				$html .= 'width:100%;'. (empty($params['rows']) ? 'height:500px;' : '') .'"';
-			} else {
-				$html .= '" cols="'.$params['cols'].'"';
-			}
-			if (!empty($params['rows'])) {
-				$html .= ' rows="'.$params['rows'].'"';
-			}
-			$html .= '>'.htmlspecialchars($content).'</textarea>';
+        if (empty($params['cols'])) {
+            $html .= 'width:100%;'. (empty($params['rows']) ? 'height:500px;' : '') .'"';
+        } else {
+            $html .= '" cols="'.$params['cols'].'"';
+        }
+        if (!empty($params['rows'])) {
+            $html .= ' rows="'.$params['rows'].'"';
+        }
+        $html .= '>'.htmlspecialchars($content).'</textarea>';
 
-			$headerlib->add_jq_onready(
-				'
+        $headerlib->add_jq_onready(
+            '
 CKEDITOR.replace( "'.$as_id.'",' . $ckoptions . ');
 CKEDITOR.on("instanceReady", function(event) {
-	if (typeof ajaxLoadingHide == "function") { ajaxLoadingHide(); }
-	this.instances.'.$as_id.'.resetDirty();
+if (typeof ajaxLoadingHide == "function") { ajaxLoadingHide(); }
+this.instances.'.$as_id.'.resetDirty();
 });
 ',
-				20
-			);	// after dialog tools init (10)
-		}
+            20
+        );	// after dialog tools init (10)
+
 
 	} else {
 		// end of if ( $params['_wysiwyg'] == 'y' && $params['_simple'] == 'n')

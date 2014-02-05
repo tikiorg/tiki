@@ -859,14 +859,7 @@ class ToolbarLineBased extends ToolbarInline // Will change in the future
 			break;
 		case 'indent':
 			global $prefs;
-			if ($prefs['feature_jison_wiki_parser'] === 'y') {	// leading spaces does nothing in the current parser, maybe it was for jison?
-				$label = tra('Indent');
-				$icon = tra('img/icons/arrow_right.png');
-				$wysiwyg = null;
-				$syntax = '  text';
-			} else {
-				return null;
-			}
+            return null;
 			break;
 		default:
 			return null;

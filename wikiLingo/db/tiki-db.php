@@ -72,13 +72,7 @@ unset($host_map, $db_tiki, $host_tiki, $user_tiki, $pass_tiki, $dbs_tiki, $shado
 global $systemConfiguration;
 $systemConfiguration = new Zend_Config(
 	array(
-		'preference' => array(
-			'feature_jison_wiki_parser' => 'n',		// hard code json parser off, as it's more than just "experimental"
-													// Developer Notice:
-													// if you want to help improve this feature then either comment out the line above
-													// or add 'feature_jison_wiki_parser' = 'y' to your tiki.ini file
-													// and enable that in your db/local.php
-		),
+		'preference' => array(),
 		'rules' => array(),
 	),
 	array('readOnly' => false)

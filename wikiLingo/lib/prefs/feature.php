@@ -2712,16 +2712,6 @@ function prefs_feature_list($partial = false)
 			),
 			'default' => 'off',
 		),
-		'feature_jison_wiki_parser' => array(
-			'name' => tra('Jison Wiki Parser'),
-            'description' => tra('Is a new strategy for parsing wiki pages more like a programming language'),
-			'type' => 'flag',
-			'help' => 'Jison+Wiki+Parser',
-			'keywords' => 'parser',
-			'default' => 'n',
-			'warning' => tra('Experimental'),
-			'tags' => array('experimental'),
-		),
         'feature_wikilingo' => array(
             'name' => tra('wikiLingo'),
             'description' => tra('A wiki content platform'),

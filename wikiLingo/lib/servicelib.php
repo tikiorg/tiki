@@ -71,7 +71,6 @@ class ServiceLib
 			'file_finder' => 'Services_File_FinderController',
 			'file' => 'Services_File_Controller',
 			'jcapture' => 'Services_JCapture_Controller',
-			'jison'=> 'Services_JisonParser_WikiPlugin',
 			'kaltura'=>  'Services_Kaltura_Controller',
 			'managestream' => 'Services_ActivityStream_ManageController',
 			'monitor' => 'Services_User_MonitorController',
