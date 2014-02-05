@@ -53,9 +53,6 @@ class Services_User_MonitorController
 		$loginlib = TikiLib::lib('login');
 
 		$userId = $loginlib->getUserId();
-		if (! $userId) {
-			throw new Services_Exception_Denied(tr('Authentication required'));
-		}
 
 		$critical = $input->critical->int();
 		$high = $input->high->int();
@@ -103,17 +100,27 @@ class Services_User_MonitorController
 			throw new Services_Exception_NotFound(tr('No notifications.'));
 		}
 
+		// Hacking around the horrible code generating urls in pagination
 		$_GET = [
-			'controller' => $_GET['controller'], 'action' => $_GET['action'],
 			'critical' => $critical, 'high' => $high, 'low' => $low,
 			'from' => $from, 'to' => $to,
 		];
+		$service = ['controller' => 'monitor', 'action' => 'stream'];
+
+		global $prefs;
+		$servicelib = TikiLib::lib('service');
+		if ($prefs['feature_sefurl'] == 'y') {
+			$_SERVER['PHP_SELF'] = $servicelib->getUrl($service);
+		} else {
+			$_GET += $service;
+			$_SERVER['PHP_SELF'] = 'tiki-ajax_services.php';
+		}
 
 		return [
 			'title' => tr('Notifications'),
 			'result' => $result,
 			'quantity' => $quantity,
-			'more_link' => TikiLib::lib('service')->getUrl($_GET),
+			'more_link' => $servicelib->getUrl($_GET + $service),
 		];
 	}
 }

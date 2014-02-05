@@ -49,6 +49,7 @@ class Perms_Context
 		$this->previousUser = $user;
 		$this->previousGroupList = $perms->getGroups();
 
+		$user = $this->user;
 		$perms->setGroups($this->groupList);
 
 		$globalperms = Perms::get();

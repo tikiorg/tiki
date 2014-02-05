@@ -70,7 +70,7 @@
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</button>
-					<a class="navbar-brand" href="index.php">{$prefs.sitetitle|escape}</a>
+					<a class="navbar-brand" href="./">{$prefs.sitetitle|escape}</a>
 				</div>
 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 					{if $prefs.feature_search eq 'y'}

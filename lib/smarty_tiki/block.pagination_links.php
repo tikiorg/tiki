@@ -209,6 +209,7 @@ function smarty_block_pagination_links($params, $url, $smarty, &$repeat)
 			global $smarty;
 
 			$link = '<a class="'.$class.'" ';
+			$url = TikiLib::tikiUrlOpt($url);
 			if ($params['_ajax'] == 'y') {
 				// setting javascript offset variable if requested
 				if (!empty($params['offset_jsvar'])) {
