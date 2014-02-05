@@ -98,11 +98,12 @@ class Search_GlobalSource_CategorySource implements Search_GlobalSource_Interfac
 		);
 
 		$self = $this;
+		$categlib = $this->categlib;
 		foreach ($this->categlib->getCustomFacets() as $rootId) {
 			$filtered = array_filter(
 				$categories,
-				function ($category) use ($self, $rootId) {
-					return $this->categlib->get_category_parent($category) == $rootId;
+				function ($category) use ($rootId, $categlib) {
+					return $categlib->get_category_parent($category) == $rootId;
 				}
 			);
 			$deepfiltered = array_filter(
