@@ -83,7 +83,7 @@
 					{/if}
 					<ul class="nav navbar-nav navbar-right">
 						{if $user}
-							<li><a href="{service controller=monitor action=stream high=1 critical=1 modal=true quantity=6}" data-toggle="modal" data-target="#bootstrap-modal">{glyph name=globe}</a></li>
+							<li><a href="{service controller=monitor action=stream high=1 critical=1 modal=true quantity=6 from="-7 days" to=now}" data-toggle="modal" data-target="#bootstrap-modal">{glyph name=globe}</a></li>
 							<li class="dropdown">
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown">{tr}Account{/tr} <b class="caret"></b></a>
 								<ul class="dropdown-menu">

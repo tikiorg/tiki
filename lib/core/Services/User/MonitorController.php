@@ -63,6 +63,9 @@ class Services_User_MonitorController
 
 		$quantity = $input->quantity->int();
 
+		$from = $input->from->text();
+		$to = $input->to->text();
+
 		if (! $critical && ! $high && ! $low) {
 			throw new Services_Exception_NotFound;
 		}
@@ -84,6 +87,10 @@ class Services_User_MonitorController
 			$sub->filterMultivalue("low$userId", "stream");
 		}
 
+		if ($from && $to) {
+			$query->filterRange($from, $to);
+		}
+
 		if ($quantity) {
 			$query->setRange(0, $quantity);
 		} else {
@@ -96,15 +103,17 @@ class Services_User_MonitorController
 			throw new Services_Exception_NotFound(tr('No notifications.'));
 		}
 
-		$_GET += ['critical' => $critical, 'high' => $high, 'low' => $low];
+		$_GET = [
+			'controller' => $_GET['controller'], 'action' => $_GET['action'],
+			'critical' => $critical, 'high' => $high, 'low' => $low,
+			'from' => $from, 'to' => $to,
+		];
 
 		return [
 			'title' => tr('Notifications'),
 			'result' => $result,
 			'quantity' => $quantity,
-			'critical' => $critical,
-			'high' => $high,
-			'low' => $low,
+			'more_link' => TikiLib::lib('service')->getUrl($_GET),
 		];
 	}
 }
