@@ -167,7 +167,13 @@ function wikiplugin_addtocart_info()
 
 function wikiplugin_addtocart( $data, $params )
 {
-	global $cartlib, $headerlib, $prefs; require_once 'lib/payment/cartlib.php';
+	global $cartlib, $prefs, $cartuserlist, $globalperms;
+	require_once 'lib/payment/cartlib.php';
+
+	$smarty = TikiLib::lib('smarty');
+	$userlib = TikiLib::lib('user');
+	$headerlib = TikiLib::lib('header');
+
 	$headerlib->add_jsfile('lib/payment/cartlib.js');
 
 	if ( ! session_id() ) {
@@ -178,6 +184,7 @@ function wikiplugin_addtocart( $data, $params )
 	}
 
 	$plugininfo = wikiplugin_addtocart_info();
+	$default = array();
 	foreach ($plugininfo['params'] as $key => $param) {
 		$default["$key"] = $param['default'];
 	}
@@ -191,25 +198,10 @@ function wikiplugin_addtocart( $data, $params )
 		$p = trim($p);			// remove some line ends picked up in pretty tracker
 	}
 
-	$code = $params['code'];
-	$product_class = $params['productclass'];
-	$product_type = $params['producttype'];
-	$product_bundle = $params['productbundle'];
-	$bundle_class = $params['bundleclass'];
-	$gift_certificate = $params['giftcertificate'];
-	$eventcode = $params['eventcode'];
-	$price = preg_replace('/[^\d^\.^,]/', '', $params['price']);
-	$add_label = $params['label'];
-	$ajax_add_to_cart = $params['ajaxaddtocart'];
+	$params['price'] = preg_replace('/[^\d^\.^,]/', '', $params['price']);
 
-	global $smarty;
-	$smarty->assign('code', $code);
-	$smarty->assign('productclass', $product_class);
-	$smarty->assign('giftcertificate', $gift_certificate);
-	$smarty->assign('price', $price);
-	$smarty->assign('add_label', $add_label);
+	$smarty->assign('params', $params);
 
-	global $cartuserlist, $userlib, $globalperms;
 	if (!isset($cartuserlist)) {
 		$cartuserlist = $userlib->get_users_light();
 	}
@@ -220,20 +212,18 @@ function wikiplugin_addtocart( $data, $params )
 	}
 
 	if (!empty($params['exchangeorderitemid']) && !empty($params['exchangetoproductid'])) {
-		$smarty->assign('exchangeorderitemid', $params['exchangeorderitemid']);
-		$smarty->assign('exchangetoproductid', $params['exchangetoproductid']);
 		$smarty->assign('hideamountfield', 'y');
 	} else {
 		$smarty->assign('hideamountfield', 'n');
 	}
 
-	if ( is_numeric($product_class) ) {
-		$information_form = $cartlib->get_missing_user_information_form($product_class, 'required');
-		$missing_information = $cartlib->get_missing_user_information_fields($product_class, 'required');
-		$skip_information_form = $cartlib->skip_user_information_form_if_not_missing($product_class) && empty($missing_information);
+	if ( is_numeric($params['productclass']) ) {
+		$information_form = $cartlib->get_missing_user_information_form($params['productclass'], 'required');
+		$missing_information = $cartlib->get_missing_user_information_fields($params['productclass'], 'required');
+		$skip_information_form = $cartlib->skip_user_information_form_if_not_missing($params['productclass']) && empty($missing_information);
 		if ( $information_form && !$skip_information_form ) {
 			$headerlib->add_jq_onready(
-				"$('form.addProductToCartForm$product_class')
+				"$('form.addProductToCartForm{$params['productclass']}')
 					.cartProductClassMissingForm({
 						informationForm: '$information_form'
 					});"
@@ -241,7 +231,7 @@ function wikiplugin_addtocart( $data, $params )
 		}
 	}
 
-	if ( $ajax_add_to_cart == 'y' ) {
+	if ( $params['ajaxaddtocart'] == 'y' ) {
 		$headerlib->add_jq_onready("$('.wp_addtocart_form').cartAjaxAdd();");
 	}
 
@@ -259,8 +249,6 @@ function wikiplugin_addtocart( $data, $params )
 		$quantity = $jitPost->quantity->int();
 		if ( $jitPost->code->text() == $params['code'] && $quantity > 0 && $correct_exchange ) {
 
-			$behaviors = array();
-
 			if ($prefs['payment_cart_anonymous'] === 'y' && (!$user || $params['forceanon'] == 'y') && empty($_SESSION['shopperinfo'])) {
 				$access->redirect($_SERVER['REQUEST_URI'], tr('Please enter your shopper information first'));
 			} // There needs to be a shopperinfo plugin on the page
@@ -272,7 +260,7 @@ function wikiplugin_addtocart( $data, $params )
 			}
 
 			$gift_certificate_error = tra("Invalid gift certificate: ");
-			if ( $_REQUEST['gift_certificate'] && isset($gift_certificate) ) {
+			if ( $_REQUEST['gift_certificate'] && !empty($params['giftcertificate']) ) {
 				if ( !$cartlib->add_gift_certificate($_REQUEST['gift_certificate']) ) {
 					$smarty->assign('gift_certificate', $_REQUEST['gift_certificate']);
 					$smarty->assign('gift_certificate_error', $gift_certificate_error);
@@ -282,15 +270,15 @@ function wikiplugin_addtocart( $data, $params )
 
 			$product_info = array(
 				'description' => $params['description'],
-                'price' => $price,
+                'price' => $params['price'],
                 'href' => $params['href'],
-                'behaviors' => $behaviors,
-                'eventcode' => $eventcode,
+                'behaviors' => array(),
+                'eventcode' => $params['eventcode'],
                 'onbehalf' => $onbehalf,
-				'producttype' => $product_type,
-				'productclass' => $product_class,
-				'productbundle' => $product_bundle,
-				'bundleclass' => $bundle_class
+				'producttype' => $params['producttype'],
+				'productclass' => $params['productclass'],
+				'productbundle' => $params['productbundle'],
+				'bundleclass' => $params['bundleclass']
 			);
 
 			// Generate behavior for exchanges
@@ -306,7 +294,7 @@ function wikiplugin_addtocart( $data, $params )
 				$product_info['exchangeorderamount'] = $exchangeorderamount;
 			}
 			// Generate behavior for gift certificate purchase
-			if (strtolower($product_type) == 'gift certificate') {
+			if (strtolower($params['producttype']) == 'gift certificate') {
 				if ($onbehalf) {
 					$giftcert_email = $userlib->get_user_email($onbehalf);
 				} elseif (!$user && !empty($_SESSION['shopperinfo']['email'])) {
@@ -314,7 +302,7 @@ function wikiplugin_addtocart( $data, $params )
 				} elseif ($user) {
 					$giftcert_email = $userlib->get_user_email($user);
 				}
-				$product_info['behaviors'][] = array('event' => 'complete', 'behavior' => 'cart_gift_certificate_purchase', 'arguments' => array($code, $giftcert_email));
+				$product_info['behaviors'][] = array('event' => 'complete', 'behavior' => 'cart_gift_certificate_purchase', 'arguments' => array($params['code'], $giftcert_email));
 			}
 			// Now add product to cart
 			$previous_cart_content = $cartlib->get_content();
