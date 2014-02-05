@@ -38,10 +38,18 @@ class Services_Broker
 			} else {
 				echo $this->render($controller, $action, $output, $request);
 			}
-		} catch (Services_Exception $e) {
-			$access->display_error(NULL, $e->getMessage(), $e->getCode());
 		} catch (Exception $e) {
-			$access->display_error(NULL, $e->getMessage(), $e->getCode());
+			if ($request->modal->int()) {
+				// Special handling for modal dialog requests
+				// Do not send an error code as bootstrap will just blank out
+				// Render the error as a modal
+				$smarty = TikiLib::lib('smarty');
+				$smarty->assign('title', tr('Oops'));
+				$smarty->assign('detail', ['message' => $e->getMessage()]);
+				$smarty->display("extends:internal/modal.tpl|error-ajax.tpl");
+			} else {
+				$access->display_error(NULL, $e->getMessage(), $e->getCode());
+			}
 		}
 	}
 
