@@ -653,14 +653,14 @@ class CartLib
 				}
 			}
 			if ($quantity > 0) {
-				if ($prefs['payment_cart_inventory'] == 'y') {
-					if ($quantity > $currentInventory) {
-						$quantity = $currentInventory;
-					}
-					if ($this->hold_inventory($code, $quantity)) {
-						$this->add_to_onhold_list($code, $quantity);
-					}
+				$currentInventory = $this->get_inventory($code);
+				if ($quantity > $currentInventory) {
+					$quantity = $currentInventory;
 				}
+				if ($this->hold_inventory($code, $quantity)) {
+					$this->add_to_onhold_list($code, $quantity);
+				}
+
 				if ($info['exchangetoproductid'] && $info['exchangeorderamount']) {
 					if ($this->hold_inventory($info['exchangetoproductid'], $info['exchangeorderamount'])) {
 	                                	$this->add_to_onhold_list('XC' . $info['exchangetoproductid'], $info['exchangeorderamount']);
