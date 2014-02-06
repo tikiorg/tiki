@@ -29,8 +29,8 @@
 			<span class="pull-right">
 				{$activityframe.activity.modification_date|tiki_short_datetime}
 			</span>
-			{if $activity_format neq 'extended'}
-				<a class="comment" href="{service controller=comment action=list type=$activityframe.object.type objectId=$activityframe.object.id modal=true}">
+			{if $activityframe.comment && $activity_format neq 'extended'}
+				<a class="comment" href="{service controller=comment action=list type=$activityframe.comment.type objectId=$activityframe.comment.id modal=true}">
 					{tr}Comment{/tr}
 					{if $activityframe.activity.comment_count}({$activityframe.activity.comment_count|escape}){/if}
 				</a>
@@ -50,9 +50,9 @@
 			{/if}
 		</div>
 	{/if}
-	{if $activity_format eq 'extended'}
-		<div class="comment-container" data-reload="{service controller=comment action=list type=$activityframe.object.type objectId=$activityframe.object.id}">
-			{service_inline controller=comment action=list type=$activityframe.object.type objectId=$activityframe.object.id _silent=true}
+	{if $activityframe.comment && $activity_format eq 'extended'}
+		<div class="comment-container" data-reload="{service controller=comment action=list type=$activityframe.comment.type objectId=$activityframe.comment.id}">
+			{service_inline controller=comment action=list type=$activityframe.comment.type objectId=$activityframe.comment.id _silent=true}
 		</div>
 	{/if}
 </div>
