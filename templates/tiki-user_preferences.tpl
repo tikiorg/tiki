@@ -316,7 +316,7 @@
 		<tr>
 			<td>{tr}Displayed time zone:{/tr}</td>
 			<td>
-				<select name="display_timezone" id="display_timezone">
+				<select name="display_timezone" id="display_timezone"{if $warning_site_timezone_set eq 'y'} disabled{/if}>
 					<option value="" style="font-style:italic;">
 						{tr}Detect user time zone if browser allows, otherwise site default{/tr}
 					</option>
