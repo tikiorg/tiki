@@ -4,10 +4,9 @@
 {tr}Set up basic information as a user on this site{/tr}.
 <div class="userWizardContent">
 <fieldset>
+<legend>{tr}Personal Information{/tr}</legend>
+<div class="userWizardIconright"><img src="img/icons/large/vcard48x48.png" alt="{tr}User Preferences{/tr}" /></div>
 {if $prefs.feature_userPreferences eq 'y'}
-	<legend>{tr}Personal Information{/tr}</legend>
-	<div class="userWizardIconright"><img src="img/icons/large/vcard48x48.png" alt="{tr}User Preferences{/tr}" /></div>
-
 		<table class="formcolor">
 			<tr>
 				<td>{tr}User:{/tr}</td>
@@ -155,8 +154,24 @@
 			</tr>
 		</table>
 {else}
-	{tr}The feature with the user preferences screen is disabled in this site{/tr}.<br/>
-	{tr}You might ask your site admin to enable it{/tr}.
+	{tr}The feature 'User Preferences' is currently disabled in this site{/tr}.<br/>
+	{if $userwatch=='admin'}
+	{remarksbox title="{tr}Enable the feature{/tr}" type="errors"}
+	<table>
+		<tr>
+			<td>
+				{tr}Enable it:{/tr}
+			</td>
+			<td>
+				{preference name=feature_userPreferences}
+			</td>
+		</tr>
+	</table>
+	{/remarksbox}
+	{else}
+		<br/><strong>{tr}You might ask your site admin to enable it{/tr}.</strong>
+		<br/><br/>
+	{/if}
 {/if}
 </fieldset>
 

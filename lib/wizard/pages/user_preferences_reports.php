@@ -24,6 +24,19 @@ class UserWizardPreferencesReports extends Wizard
 		return true;
 	}
 
+	function isVisible ()
+	{
+		global	$prefs;
+		
+		$linkVisible = false;
+
+		// Show if options is selected
+		if ($prefs['feature_user_watches'] === 'y' && $prefs['feature_daily_report_watches'] === 'y') {
+			$linkVisible = true;
+		}
+		return $linkVisible;
+	}
+
 	function onSetupPage ($homepageUrl) 
 	{
 		global	$user, $smarty, $prefs;
@@ -33,7 +46,7 @@ class UserWizardPreferencesReports extends Wizard
 		
 		$showPage = false;
 		
-		// Show if option is selected
+		// Show if options is selected
 		if ($prefs['feature_user_watches'] === 'y' && $prefs['feature_daily_report_watches'] === 'y') {
 			$showPage = true;
 		}
