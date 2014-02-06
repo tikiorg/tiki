@@ -58,8 +58,6 @@ class Services_User_MonitorController
 		$high = $input->high->int();
 		$low = $input->low->int();
 
-		$quantity = $input->quantity->int();
-
 		$from = $input->from->text();
 		$to = $input->to->text();
 
@@ -88,11 +86,7 @@ class Services_User_MonitorController
 			$query->filterRange($from, $to);
 		}
 
-		if ($quantity) {
-			$query->setRange(0, $quantity);
-		} else {
-			$query->setRange($input->offset->int());
-		}
+		$query->setRange($input->offset->int());
 
 		$result = $query->search($searchlib->getIndex());
 
@@ -119,8 +113,38 @@ class Services_User_MonitorController
 		return [
 			'title' => tr('Notifications'),
 			'result' => $result,
-			'quantity' => $quantity,
-			'more_link' => $servicelib->getUrl($_GET + $service),
+		];
+	}
+
+	function action_unread($input)
+	{
+		error_reporting(E_ALL);
+		$loginlib = TikiLib::lib('login');
+		$servicelib = TikiLib::lib('service');
+
+		$userId = $loginlib->getUserId();
+
+		$searchlib = TikiLib::lib('unifiedsearch');
+		$query = $searchlib->buildQuery([
+			'type' => 'activity',
+		]);
+		$query->filterMultivalue("critical$userId OR high$userId OR low$userId", 'stream');
+		$query->setOrder('modification_date_desc');
+		$query->setRange(0, 7);
+		$result = $query->search($searchlib->getIndex());
+
+		return [
+			'title' => tr('Unread Notifications'),
+			'result' => $result,
+			'more_link' => $servicelib->getUrl([
+				'controller' => 'monitor',
+				'action' => 'stream',
+				'from' => '-30 days',
+				'to' => 'now',
+				'critical' => 1,
+				'high' => 1,
+				'low' => 1,
+			]),
 		];
 	}
 }

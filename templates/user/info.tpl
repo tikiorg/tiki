@@ -19,7 +19,7 @@
 						{if $avatarHtml}
 							{$avatarHtml}
 						{else}
-							{icon _id='img/noavatar.png'}
+							{icon _id='img/noavatar.png' title=$fullname}
 						{/if}
 					</td>
 					<td>

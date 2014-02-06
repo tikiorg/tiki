@@ -19,9 +19,21 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
  * Purpose:  capitalize words in the string
  * -------------------------------------------------------------
  */
-function smarty_modifier_avatarize($user, $float = '')
+function smarty_modifier_avatarize($user, $float = '', $default = '')
 {
+	if (! $user) {
+		return;
+	}
+
 	$avatar = TikiLib::lib('tiki')->get_user_avatar($user, $float);
+
+	if (! $avatar && $default) {
+		$smarty = TikiLib::lib('smarty');
+		$smarty->loadPlugin('smarty_function_icon');
+		$name = TikiLib::lib('user')->clean_user($user);
+		$avatar = smarty_function_icon(['_id' => $default, 'title' => $name], $smarty);
+	}
+
 	if ( $avatar != '') {
 		$avatar = TikiLib::lib('user')->build_userinfo_tag($user, $avatar);
 	}

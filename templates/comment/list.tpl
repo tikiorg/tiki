@@ -18,12 +18,8 @@
 		<ol class="media-list">
 			{foreach from=$comments item=comment}
 				<li class="media comment {if $comment.archived eq 'y'}archived{/if} {if ! $parentId && $prefs.feature_wiki_paragraph_formatting eq 'y'}inline{/if}" data-comment-thread-id="{$comment.threadId|escape}">
-					<div class="pull-left" href="#">
-						{if $prefs.user_use_gravatar eq 'y'}
-							<span class="avatar">{$comment.userName|avatarize}</span>
-						{else}
-							{icon _id='img/noavatar.png'}
-						{/if}
+					<div class="pull-left">
+						<span class="avatar">{$comment.userName|avatarize:'':'img/noavatar.png'}</span>
 					</div>
 					<div class="media-body">
 						<div class="comment-item">

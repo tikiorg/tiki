@@ -12,11 +12,5 @@
 			<li class="invalid">{tr}No activity for you.{/tr}</li>
 		{/foreach}
 	</ol>
-	{if $quantity}
-		<div class="submit">
-			<a class="btn btn-primary" href="{$more_link|escape}">{tr}Show More{/tr}</a>
-		</div>
-	{else}
-		{pagination_links resultset=$result}{/pagination_links}
-	{/if}
+	{pagination_links resultset=$result}{/pagination_links}
 {/block}
