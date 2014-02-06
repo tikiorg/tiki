@@ -174,6 +174,7 @@
 {if $prefs.feature_tasks eq 'y' and $tiki_p_tasks eq 'y'}
 	<fieldset>
 		<legend>{tr}User Tasks{/tr}</legend>
+			<div class="userWizardIconright"><img src="img/icons/tasks.gif" alt="{tr}User Tasks{/tr}" /></div>
 			<table class="formcolor">
 	
 				<tr>
