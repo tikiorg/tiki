@@ -3822,3 +3822,10 @@ CREATE TABLE `tiki_user_monitors` (
 	UNIQUE `event_target_uq` (`event`, `target`, `userId`)
 ) ENGINE=MyISAM;
 
+DROP TABLE IF EXISTS `tiki_output`;
+CREATE TABLE `tiki_output` (
+  `entityId` varchar(160) NOT NULL default '',
+  `objectType` varchar(32) NOT NULL default '',
+  `outputType` varchar(32) NOT NULL default '',
+  `outputId` INT NOT NULL PRIMARY KEY AUTO_INCREMENT
+) ENGINE=MyISAM AUTO_INCREMENT=1;
