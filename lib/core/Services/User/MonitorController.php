@@ -118,9 +118,12 @@ class Services_User_MonitorController
 
 	function action_unread($input)
 	{
-		error_reporting(E_ALL);
+		global $user;
 		$loginlib = TikiLib::lib('login');
 		$servicelib = TikiLib::lib('service');
+		$tikilib = TikiLib::lib('tiki');
+
+		$lastread = $tikilib->get_user_preference($user, 'notification_read', 1388534400); // Jan 2014, as the feature did not exist prior to this date anyway
 
 		$userId = $loginlib->getUserId();
 
@@ -129,6 +132,7 @@ class Services_User_MonitorController
 			'type' => 'activity',
 		]);
 		$query->filterMultivalue("critical$userId OR high$userId OR low$userId", 'stream');
+		$query->filterRange($lastread, 'now');
 		$query->setOrder('modification_date_desc');
 		$query->setRange(0, 7);
 		$result = $query->search($searchlib->getIndex());
@@ -136,6 +140,7 @@ class Services_User_MonitorController
 		return [
 			'title' => tr('Unread Notifications'),
 			'result' => $result,
+			'timestamp' => TikiLib::lib('tiki')->now,
 			'more_link' => $servicelib->getUrl([
 				'controller' => 'monitor',
 				'action' => 'stream',
@@ -145,6 +150,23 @@ class Services_User_MonitorController
 				'high' => 1,
 				'low' => 1,
 			]),
+		];
+	}
+
+	function action_clearall($input)
+	{
+		global $user;
+
+		$tikilib = TikiLib::lib('tiki');
+		$timestamp = $input->timestamp->int();
+
+		if ($_SERVER['REQUEST_METHOD'] == 'POST' && $timestamp) {
+			$tikilib->set_user_preference($user, 'notification_read', $timestamp);
+		}
+
+		return [
+			'title' => tr('Mark all notifications as read'),
+			'timestamp' => $timestamp ?: $tikilib->now,
 		];
 	}
 }
