@@ -83,11 +83,11 @@ function smarty_function_payment( $params, $smarty )
 
 		if (!empty($smarty->tpl_vars['returnurl']->value)) {
 			$returl = $smarty->tpl_vars['returnurl'];
-			$info['returnurl'] = preg_match('|^https?://|', $returl) ? $returl : $tikilib->tikiUrl($returl);
+			$info['returnurl'] = TikiLib::tikiUrl($returl);
 		}
 
 		if (!empty($params['returnurl']) && empty($result)) {
-			$info['url'] = preg_match('|^https?://|', $params['returnurl']) ? $params['returnurl'] : $tikilib->tikiUrl($params['returnurl']);
+			$info['url'] = TikiLib::tikiUrl($params['returnurl']);
 			$info['url'] .= (strstr($params['returnurl'], '.php?') || !strstr($params['returnurl'], '.php')? '&':'?') . "invoice=$invoice";
 		}
 		$smarty->assign('payment_info', $info);

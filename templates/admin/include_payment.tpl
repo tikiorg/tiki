@@ -42,6 +42,11 @@
 						</div>
 						{preference name=payment_invoice_prefix}
 					</div>
+					<h2 style="padding-left:25px">{tr}Israel Post Payment Module{/tr}</h2>
+					<div class="admin payment">
+						{preference name=payment_israelpost_environment}
+						{preference name=payment_israelpost_business_id}
+					</div>
 					<h2 style="padding-left:25px">{tr}Cclite{/tr}</h2>
 					<div class="admin payment">
 						{remarksbox title="{tr}Experimental{/tr}" type="warning" icon="bricks"}
