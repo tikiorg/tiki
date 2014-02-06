@@ -144,6 +144,7 @@
 {if $prefs.feature_messages eq 'y' and $tiki_p_messages eq 'y'}
 	<fieldset>
 		<legend>{tr}User Messages{/tr}</legend>
+		<div class="userWizardIconright"><img src="img/icons/mail.gif" alt="{tr}User Messages{/tr}" /></div>
 			<table class="formcolor">
 	
 				{if $prefs.allowmsg_is_optional eq 'y'}
