@@ -388,6 +388,24 @@ if ($prefs['feature_syntax_highlighter'] == 'y') {
 	codemirrorModes($prefs['tiki_minify_javascript'] === 'y');
 }
 
+if ($prefs['feature_wysiwyg'] == 'y' && $prefs['feature_wikilingo'] && isset($jitRequest['edit'])) {
+    $headerlib
+        ->add_cssfile("vendor/medium.js/medium.js/medium.css")
+        ->add_cssfile("vendor/wikilingo/wikilingo/editor/bubble.css")
+        ->add_cssfile("vendor/wikilingo/wikilingo/editor/IcoMoon/sprites/sprites.css")
+
+        //add some javascript
+        ->add_jsfile("vendor/undo.js/undo.js/undo.js")
+        ->add_jsfile("vendor/rangy/rangy/uncompressed/rangy-core.js")
+        ->add_jsfile("vendor/rangy/rangy/uncompressed/rangy-cssclassapplier.js")
+        ->add_jsfile("vendor/medium.js/medium.js/medium.js")
+
+        ->add_jsfile("vendor/wikilingo/wikilingo/editor/WLPluginSyntaxGenerator.js")
+        ->add_jsfile("vendor/wikilingo/wikilingo/editor/WLPluginEditor.js")
+        ->add_jsfile("vendor/wikilingo/wikilingo/editor/WLPluginAssistant.js")
+        ->add_jsfile("vendor/wikilingo/wikilingo/editor/bubble.js");
+}
+
 if ( $prefs['feature_jquery_carousel'] == 'y' ) {
 	$headerlib->add_jsfile('vendor/jquery/plugins/infinitecarousel/jquery.infinitecarousel3.js');
 }
@@ -703,7 +721,7 @@ if ($prefs['openpgp_gpg_pgpmimemail'] == 'y') {
 // ******************************************************************** //
 //////////////////////////////////////////////////////////////////////////
 
-if( $prefs['feature_hidden_links'] == 'y' ) {
+if( $prefs['feature_hidden_links'] == 'y' && $jitRequest['wysiwyg'] != 'y') {
 	$headerlib->add_js("$('body').find('h1, h2, h3, h4, h5, h6').each(function() {
 	var headerid = $(this).attr('id');
 		if(headerid != undefined) {

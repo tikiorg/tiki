@@ -168,39 +168,145 @@ JS
 		$wysiwyglib = TikiLib::lib('wysiwyg');
 
         // set up ckeditor
-        if (!isset($params['name'])) {
-            $params['name'] = 'edit';
-        }
+        if ($prefs['feature_wikilingo'] != 'y') {
+            if (!isset($params['name'])) {
+                $params['name'] = 'edit';
+            }
 
-        $ckoptions = $wysiwyglib->setUpEditor($params['_is_html'], $as_id, $params, $auto_save_referrer);
+            $ckoptions = $wysiwyglib->setUpEditor($params['_is_html'], $as_id, $params, $auto_save_referrer);
 
-        if (!$included) {
-            $html .= '<input type="hidden" name="wysiwyg" value="y" />';
-        }
-        $html .= '<textarea class="wikiedit" name="'.$params['name'].'" id="'.$as_id.'" style="visibility:hidden;';	// missing closing quotes, closed in condition
+            if (!$included) {
+                $html .= '<input type="hidden" name="wysiwyg" value="y" />';
+            }
+            $html .= '<textarea class="wikiedit" name="'.$params['name'].'" id="'.$as_id.'" style="visibility:hidden;';	// missing closing quotes, closed in condition
 
-        if (empty($params['cols'])) {
-            $html .= 'width:100%;'. (empty($params['rows']) ? 'height:500px;' : '') .'"';
-        } else {
-            $html .= '" cols="'.$params['cols'].'"';
-        }
-        if (!empty($params['rows'])) {
-            $html .= ' rows="'.$params['rows'].'"';
-        }
-        $html .= '>'.htmlspecialchars($content).'</textarea>';
+            if (empty($params['cols'])) {
+                $html .= 'width:100%;'. (empty($params['rows']) ? 'height:500px;' : '') .'"';
+            } else {
+                $html .= '" cols="'.$params['cols'].'"';
+            }
+            if (!empty($params['rows'])) {
+                $html .= ' rows="'.$params['rows'].'"';
+            }
+            $html .= '>'.htmlspecialchars($content).'</textarea>';
 
-        $headerlib->add_jq_onready(
-            '
+            $headerlib->add_jq_onready(
+                '
 CKEDITOR.replace( "'.$as_id.'",' . $ckoptions . ');
 CKEDITOR.on("instanceReady", function(event) {
 if (typeof ajaxLoadingHide == "function") { ajaxLoadingHide(); }
 this.instances.'.$as_id.'.resetDirty();
 });
 ',
-            20
-        );	// after dialog tools init (10)
+                20
+            );	// after dialog tools init (10)
+
+        }
+        //setup wikiLingo
+        else
+        {
+            if (!$included) {
+                $html .= '<input type="hidden" name="wysiwyg" value="y" />';
+            }
+            $scripts = new WikiLingo\Utilities\Scripts("vendor/wikilingo/wikilingo/editor/");
+
+            $parserWYSIWYG = new WikiLingoWYSIWYG\Parser($scripts);
+            $contentSafe = $parserWYSIWYG->parse($content);
+            $expressionSyntaxes = new WikiLingoWYSIWYG\ExpressionSyntaxes($scripts);
+
+            //register expression types so that they can be turned into json and sent to browser
+            $expressionSyntaxes->registerExpressionTypes();
+
+            $expressionSyntaxesJson = json_encode($expressionSyntaxes->parsedExpressionSyntaxes);
+            $wLPlugins = json_encode($parserWYSIWYG->plugins);
+            $name = $params['name'];
+            $css = $parserWYSIWYG->scripts->renderCss();
+            $html .= <<<HTML
+$css
+<script>
+window.expressionSyntaxes = $expressionSyntaxesJson;
+window.wLPlugins = $wLPlugins;
+</script>
+<div
+    id="$as_id-wysiwyg"
+    class="wikiedit wikilingo"
+    contenteditable="true">$contentSafe</div><input type="hidden" name="$name" id="$as_id"/>
+HTML
+;
+            $headerlib
+                //->add_jsfile("vendor/wikilingo/wikilingo/editor/editor.js")
+                ->add_jq_onready(<<<JS
+(function($, el, input) {
+    var
+        WLPlugin = function(el) {
+            if (el.getAttribute('data-draggable') == 'true') {
+                new WLPluginAssistant(el, 'vendor/wikilingo/wikilingo/');
+            }
+        },
+        color = function(element) {
+            var newColor = prompt(tr('What color?'), element.style['color']);
+            if (newColor) {
+                element.style['color'] = newColor
+            }
+    	},
+        medium = new Medium({
+            element: el,
+            mode: 'rich',
+			placeholder: tr('Your Article'),
+            autoHR: false,
+			cssClasses: [],
+			attributes: {
+				remove: []
+			},
+			tags: {
+				paragraph: 'p',
+				outerLevel: ['pre','blockquote', 'figure', 'hr', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'div', 'ul', 'strong', 'code', 'br', 'b', 'span'],
+				innerLevel: ['a', 'b', 'u', 'i', 'img', 'div', 'strong', 'li', 'span', 'code', 'br']
+			},
+			modifiers: [],
+            beforeAddTag: function(tag, shouldFocus, isEditable, afterElement) {
+                var newEl;
+                switch (tag) {
+                    case 'br':
+                    case 'p':
+                        newEl = document.createElement('br');
+                        newEl.setAttribute('class', 'element');
+                        newEl.setAttribute('data-element', 'true');
+                        newEl.setAttribute('data-type', 'WikiLingo\\\\Expression\\\\Line');
+
+                        medium.insertHtml(newEl)
+                        return true;
+                }
+
+                return newEl;
+            }
+        });
+
+    el.onchange = function() {
+        input.value = el.innerHTML;
+    };
+
+    $('body')
+		.on('resetWLPlugins', function() {
+			for(var i = 0; i < window.wLPlugins.length; i++) {
+				new WLPlugin(document.getElementById(window.wLPlugins[i]));
+			}
+		})
+		.trigger('resetWLPlugins');
+})(jQuery, document.getElementById('$as_id-wysiwyg'), document.getElementById('$as_id'));
+JS
+);
 
 
+            //join wikiLingo's scripts with tiki's
+            foreach($scripts->scriptLocations as $scriptLocation) {
+                $headerlib->add_jsfile($scriptLocation);
+            }
+
+            foreach($scripts->scripts as $script) {
+                $headerlib->add_js($script);
+            }
+        }
 	} else {
 		// end of if ( $params['_wysiwyg'] == 'y' && $params['_simple'] == 'n')
 

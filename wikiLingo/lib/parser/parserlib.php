@@ -603,21 +603,9 @@ if ( \$('#$id') ) {
 		return WikiPlugin_Negotiator_Wiki::getList($includeReal, $includeAlias);
 	}
 
-	function zend_plugin_exists($className)
-	{
-		if (isset(self::$pluginInstances[$className])) {
-			return true;
-		}
-
-		return class_exists($className) == true;
-	}
 	//*
 	function plugin_exists( $name, $include = false )
 	{
-		if ($name != 'maketoc') {
-			$className = 'WikiPlugin_' . $name;
-			if ($this->zend_plugin_exists($className)) return true;
-		}
 		$php_name = 'lib/wiki-plugins/wikiplugin_';
 		$php_name .= TikiLib::strtolower($name) . '.php';
 
@@ -643,13 +631,6 @@ if ( \$('#$id') ) {
 
 		if ( isset( $known[$name] ) ) {
 			return $known[$name];
-		}
-
-		$className = 'WikiPlugin_' . $name;
-		$classExists = $this->zend_plugin_exists($className);
-		if ($classExists == true) {
-			$class = new $className;
-			return $known[$name] = $class->info();
 		}
 
 		if (! $this->plugin_exists($name, true)) {
@@ -976,14 +957,6 @@ if ( \$('#$id') ) {
 
 		//This is the class name for new simplified plugin system, if object does exist, it will use it, if not it uses old plugins
 		$classExists = false;
-		if ($name != 'maketoc') {
-			$className = 'WikiPlugin_' . $name;
-			$classExists = $this->zend_plugin_exists($className);
-			if ($classExists == true) {
-				$class = new $className;
-			}
-		}
-
 		$func_name = 'wikiplugin_' . $name;
 
 		if ( ! $validationPerformed ) {
@@ -1207,13 +1180,6 @@ if ( \$('#$id') ) {
 		$argsCopy = $args;
 		if ( ! isset( $info['extraparams'] ) && is_array($params) ) {
 			$args = array_intersect_key($args, $params);
-		}
-
-		//This gives us the ability to extend plugins with a standardized style method, style-css-style="style" => css-style:style; to the wrapper
-		foreach ($argsCopy as $possibleStyle => $possibleStyleSetting) {
-			if (isset(WikiPlugin_HtmlBase::$style[ltrim($possibleStyle, 'style-')])) {
-				$args[$possibleStyle] = $possibleStyleSetting;
-			}
 		}
 
 		// Apply filters on values individually
