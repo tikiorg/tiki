@@ -133,6 +133,7 @@ class Services_User_MonitorController
 		]);
 		$query->filterMultivalue("critical$userId OR high$userId OR low$userId", 'stream');
 		$query->filterRange($lastread, 'now');
+		$query->filterMultivalue("NOT \"$user\"", 'clear_list');
 		$query->setOrder('modification_date_desc');
 		$query->setRange(0, 7);
 		$result = $query->search($searchlib->getIndex());
@@ -168,6 +169,23 @@ class Services_User_MonitorController
 			'title' => tr('Mark all notifications as read'),
 			'timestamp' => $timestamp ?: $tikilib->now,
 		];
+	}
+
+	function action_clearone($input)
+	{
+		Services_Exception_Disabled::check('monitor_individual_clear');
+
+		global $user;
+		$relationlib = TikiLib::lib('relation');
+		$searchlib = TikiLib::lib('unifiedsearch');
+
+		$activity = $input->activity->int();
+
+		if ($_SERVER['REQUEST_METHOD'] == 'POST' && $activity) {
+			$relationlib->add_relation('tiki.monitor.cleared', 'user', $user, 'activity', $activity);
+			$searchlib->invalidateObject('activity', $activity);
+			$searchlib->processUpdateQueue();
+		}
 	}
 }
 

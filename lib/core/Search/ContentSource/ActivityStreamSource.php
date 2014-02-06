@@ -9,6 +9,7 @@ class Search_ContentSource_ActivityStreamSource implements Search_ContentSource_
 {
 	private $lib;
 	private $sociallib;
+	private $relationlib;
 	private $source;
 
 	function __construct($source = null)
@@ -17,6 +18,7 @@ class Search_ContentSource_ActivityStreamSource implements Search_ContentSource_
 		$this->lib = TikiLib::lib('activity');
 		$this->source = $source;
 		$this->sociallib = TikiLib::lib('social');
+		$this->relationlib = TikiLib::lib('relation');
 	}
 
 	function getDocuments()
@@ -65,19 +67,39 @@ class Search_ContentSource_ActivityStreamSource implements Search_ContentSource_
 		$list = $this->sociallib->getLikes('activity', $objectId);
 		$document['like_list'] = $typeFactory->multivalue($list);
 
+		if ($prefs['monitor_individual_clear'] == 'y') {
+			$clearList = $this->getClearList($objectId);
+			$document['clear_list'] = $typeFactory->multivalue($clearList);
+		} else {
+			$document['clear_list'] = $typeFactory->multivalue([]);
+		}
+
 		return $document;
 	}
 
 	function getProvidedFields()
 	{
 		$mapping = $this->lib->getMapping();
-		return array_merge(array('event_type', 'modification_date', 'like_list'), array_keys($mapping));
+		return array_merge(array('event_type', 'modification_date', 'like_list', 'clear_list'), array_keys($mapping));
 	}
 
 	function getGlobalFields()
 	{
 		return array(
 		);
+	}
+
+	private function getClearList($activityId)
+	{
+		$list = $this->relationlib->get_relations_to('activity', $activityId, 'tiki.monitor.cleared');
+		$out = [];
+		foreach ($list as $rel) {
+			if ($rel['type'] == 'user') {
+				$out[] = $rel['itemId'];
+			}
+		}
+
+		return $out;
 	}
 }
 

@@ -31,6 +31,7 @@
 				{preference name=monitor_enabled}
 				<div class="adminoptionboxchild" id="monitor_enabled_childcontainer">
 
+					{preference name=monitor_individual_clear}
 					{preference name=monitor_digest}
 					<div class="alert alert-warning">
 						<p>{tr}For the digest emails to be sent out, you will need to set-up a cron job.{/tr}</p>

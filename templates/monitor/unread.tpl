@@ -7,7 +7,12 @@
 {block name="content"}
 	<div class="notification-container">
 		{foreach $result as $activity}
-			{activity info=$activity format="summary"}
+			<div>
+				{if $prefs.monitor_individual_clear eq 'y'}
+					<a class="clearone pull-right close" href="{service controller=monitor action=clearone activity=$activity.object_id}">&times;</a>
+				{/if}
+				{activity info=$activity format="summary"}
+			</div>
 		{foreachelse}
 			<div class="alert alert-success">
 				{tr}Nothing left!{/tr}
@@ -40,6 +45,12 @@
 			setTimeout(function () {
 				$('#bootstrap-modal').modal('hide');
 			}, 100 * (last + 2));
+		});
+
+		$('.notification-container .close').click(function (e) {
+			e.preventDefault();
+			$(this).parent().slideUp('fast');
+			$.post($(this).attr('href'));
 		});
 	{/jq}
 {/block}
