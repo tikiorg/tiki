@@ -95,7 +95,7 @@
 		<tr>
 			<td>{tr}Displayed time zone:{/tr}</td>
 			<td>
-				<select name="display_timezone" id="display_timezone">
+				<select name="display_timezone" id="display_timezone"{if $warning_site_timezone_set eq 'y'} disabled{/if}>
 					<option value="" style="font-style:italic;">
 						{tr}Detect user time zone if browser allows, otherwise site default{/tr}
 					</option>
@@ -144,6 +144,7 @@
 {if $prefs.feature_messages eq 'y' and $tiki_p_messages eq 'y'}
 	<fieldset>
 		<legend>{tr}User Messages{/tr}</legend>
+		<div class="userWizardIconright"><img src="img/icons/mail.gif" alt="{tr}User Messages{/tr}" /></div>
 			<table class="formcolor">
 	
 				{if $prefs.allowmsg_is_optional eq 'y'}
@@ -173,6 +174,7 @@
 {if $prefs.feature_tasks eq 'y' and $tiki_p_tasks eq 'y'}
 	<fieldset>
 		<legend>{tr}User Tasks{/tr}</legend>
+			<div class="userWizardIconright"><img src="img/icons/tasks.gif" alt="{tr}User Tasks{/tr}" /></div>
 			<table class="formcolor">
 	
 				<tr>
