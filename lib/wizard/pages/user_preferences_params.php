@@ -24,6 +24,12 @@ class UserWizardPreferencesParams extends Wizard
 		return true;
 	}
 
+	function isVisible ()
+	{
+		global	$prefs;
+		return $prefs['feature_userPreferences'] === 'y';
+	}
+
 	function onSetupPage ($homepageUrl) 
 	{
 		global	$smarty, $userlib, $tikilib, $user, $prefs, $tiki_p_messages;

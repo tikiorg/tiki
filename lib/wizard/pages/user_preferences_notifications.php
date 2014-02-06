@@ -24,6 +24,12 @@ class UserWizardPreferencesNotifications extends Wizard
 		return true;
 	}
 
+	function isVisible ()
+	{
+		global	$prefs;
+		return $prefs['feature_user_watches'] === 'y';
+	}
+
 	function onSetupPage ($homepageUrl) 
 	{
 		global	$user, $smarty, $tikilib, $prefs; 

@@ -23,6 +23,14 @@ class UserWizardPreferencesInfo extends Wizard
 		return true;
 	}
 
+	function isVisible ()
+	{
+		global	$prefs;
+		//return $prefs['feature_userPreferences'] === 'y';
+		return true; // hardcoded to true since at least the first page is shown to tell the user that the user
+					 // preferences feature is disabled site-wide & he/she might want to ask the site admin to enable it 
+	}
+
 	function onSetupPage ($homepageUrl) 
 	{
 
