@@ -1,15 +1,16 @@
 <div class="activity" data-id="{$activityframe.object.id|escape}">
 	{if $activity_format eq 'summary'}
-		<div class="media">
+		<div class="media" data-href="{service controller=object action=infobox type=$activityframe.object.type object=$activityframe.object.id format=extended}">
 			<div class="pull-left">
 				{$activityframe.activity.user|avatarize:'':'img/noavatar.png'}
 			</div>
 			<div class="media-body">
-				<a href="{service controller=object action=infobox type=$activityframe.object.type object=$activityframe.object.id format=extended}">
-					{$activityframe.heading|strip_tags}
-				</a>
+				<h4 class="media-heading">{$activityframe.heading}</h4>
 				{if $activityframe.activity.type && $activityframe.activity.object}
-					<br>{object_link type=$activityframe.activity.type id=$activityframe.activity.object backuptitle=$object.activity.title}
+					<div>
+						{glyph name=link}
+						{object_link type=$activityframe.activity.type id=$activityframe.activity.object backuptitle=$object.activity.title}
+					</div>
 				{/if}
 			</div>
 		</div>

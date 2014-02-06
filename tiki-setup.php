@@ -619,7 +619,7 @@ if ($prefs['feature_sefurl'] != 'y') {
 	);
 }
 
-if ($prefs['feature_friends'] == 'y') {
+if ($prefs['feature_friends'] == 'y' || $prefs['monitor_enabled'] == 'y') {
 	$headerlib->add_jsfile('lib/jquery_tiki/social.js');
 }
 
