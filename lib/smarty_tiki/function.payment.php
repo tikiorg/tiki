@@ -29,12 +29,16 @@ function smarty_function_payment( $params, $smarty )
 		$objectperms->payment_view &&
 		(
 			(
-				$info['state'] == 'outstanding' ||
-				$info['state'] == 'overdue'
-			) &&
-			$prefs['payment_user_only_his_own'] != 'y' ||
-			$info['state'] == 'past' &&
-			$prefs['payment_user_only_his_own_past'] != 'y' ||
+				(
+					$info['state'] == 'outstanding' ||
+					$info['state'] == 'overdue'
+				) &&
+				$prefs['payment_user_only_his_own'] != 'y'
+			) ||
+			(
+				$info['state'] == 'past' &&
+				$prefs['payment_user_only_his_own_past'] != 'y'
+			) ||
 			$theguy
 		)
 	) {
