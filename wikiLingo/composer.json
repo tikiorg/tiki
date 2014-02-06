@@ -63,7 +63,7 @@
 		"svg-edit/svg-edit": "2.6",
 		"symfony/console": "2.4.1",
 		"tijsverkoyen/css-to-inline-styles": "1.2.1",
-        "wikilingo/wikilingo":"0.11",
+        "wikilingo/wikilingo":"dev-master",
 		"zetacomponents/base": "1.8",
 		"zetacomponents/webdav": "1.1.3"
 	},

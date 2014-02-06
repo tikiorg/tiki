@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "973730372b77d716db1347dee5d922e9",
+    "hash": "a4a00efe1f6fe036a8eb78f00a073c4b",
     "packages": [
         {
             "name": "aFarkas/html5shiv",
@@ -230,13 +230,13 @@
             "source": {
                 "type": "svn",
                 "url": "http://svn.code.sf.net/p/jcapture-applet/code",
-                "reference": "/trunk/@46"
+                "reference": "/trunk/@47"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/jcapture-applet-jcapture-applet-dev-trunk-f04408.zip",
+                "url": "https://composer.tiki.org/dist/jcapture-applet-jcapture-applet-dev-trunk-56537c.zip",
                 "reference": "dev-trunk",
-                "shasum": "99359f87c4472e26605dc4989fd7624506ed6701"
+                "shasum": "0f910540cf75ece6edf67ba09af420f9b6d01f04"
             },
             "type": "library",
             "license": [
@@ -264,7 +264,7 @@
                 "screencapture",
                 "screenshot"
             ],
-            "time": "2013-04-18 04:48:36"
+            "time": "2014-01-27 14:02:15"
         },
         {
             "name": "jquery/jquery",
@@ -1005,6 +1005,35 @@
             "time": "2014-01-30 16:30:37"
         },
         {
+            "name": "wikilingo/wikilingo",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/wikiLingo/wikiLingo.git",
+                "reference": "83b2c3226204a422f03cd1da995c48fd78e8cf4c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/wikiLingo/wikiLingo/zipball/83b2c3226204a422f03cd1da995c48fd78e8cf4c",
+                "reference": "83b2c3226204a422f03cd1da995c48fd78e8cf4c",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Types\\": "./",
+                    "WikiLingo\\": "./",
+                    "WikiLingoWYSIWYG\\": "./",
+                    "WYSIWYGWikiLingo\\": "./"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "time": "2014-02-05 18:57:36"
+        },
+        {
             "name": "zetacomponents/base",
             "version": "1.8",
             "source": {
@@ -1123,35 +1152,6 @@
             "description": "This component allows you to set up and run your own WebDAV (RFC 2518) server, to enable online content editing for the users of your system through the WebDAV HTTP extension.",
             "homepage": "https://github.com/zetacomponents",
             "time": "2009-11-09 05:34:07"
-        },
-		{
-            "name": "wikilingo/wikilingo",
-            "version": "0.11",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/wikiLingo/wikiLingo.git",
-                "reference": "84762b95a911f732f668829f1cc28aa3290464c5"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/wikiLingo/wikiLingo/zipball/84762b95a911f732f668829f1cc28aa3290464c5",
-                "reference": "84762b95a911f732f668829f1cc28aa3290464c5",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.4.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "Types\\": "./",
-                    "WikiLingo\\": "./",
-                    "WikiLingoWYSIWYG\\": "./",
-                    "WYSIWYGWikiLingo\\": "./"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "time": "2014-01-31 12:23:42"
         }
     ],
     "packages-dev": [
@@ -1192,7 +1192,8 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "jcapture-applet/jcapture-applet": 20,
-        "jquery/jquery-s5": 20
+        "jquery/jquery-s5": 20,
+        "wikilingo/wikilingo": 20
     },
     "platform": [
 
