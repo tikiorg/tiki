@@ -303,6 +303,9 @@ class TikiLib extends TikiDb_Bridge
 			case 'wizard':
 				require_once 'lib/wizard/wizardlib.php';
 				return self::$libraries[$name] = new WizardLib();
+			case 'cart':
+				require_once 'lib/payment/cartlib.php';
+				return self::$libraries[$name] = new CartLib();
 		}
 	}
 
