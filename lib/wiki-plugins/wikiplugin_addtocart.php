@@ -236,31 +236,17 @@ function wikiplugin_addtocart( $data, $params )
 	}
 
 	if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
-		global $jitPost, $access, $user;
-		if (!empty($params['exchangeorderitemid']) && !empty($params['exchangetoproductid'])) {
-			if ( $jitPost->exchangeorderitemid->int() == $params['exchangeorderitemid'] && $jitPost->exchangetoproductid->int() == $params['exchangetoproductid'] ) {
-				$correct_exchange = true;
-			} else {
-				$correct_exchange = false;
-			}
-		} else {
-			$correct_exchange = true;
-		}
-		$quantity = $jitPost->quantity->int();
-		if ( $jitPost->code->text() == $params['code'] && $quantity > 0 && $correct_exchange ) {
+		global $jitPost, $user;
 
-			if ($globalperms->payment_admin && !empty($_POST['buyonbehalf']) && $userlib->user_exists($jitPost->buyonbehalf->text())) {
-				$params['onbehalf'] = $jitPost->buyonbehalf->text();
-			} else {
-				$params['onbehalf'] = '';
-			}
+		$quantity = $jitPost->quantity->int();
+		if ( $jitPost->code->text() == $params['code'] && $quantity > 0) {
 
 			$previous_cart_content = $cartlib->get_content();
 
-			$cartlib->add_to_cart($params, $quantity);
+			$addedOk = $cartlib->add_to_cart($params, $jitPost);
 
 			global $access, $tikilib, $tikiroot, $prefs;
-			if ($params['autocheckout'] == 'y' && empty($previous_cart_content)) {
+			if ($addedOk && $params['autocheckout'] == 'y' && empty($previous_cart_content)) {
 				$invoice = $cartlib->request_payment();
 				if ( $invoice ) {
 					$paymenturl = 'tiki-payment.php?invoice=' . intval($invoice);

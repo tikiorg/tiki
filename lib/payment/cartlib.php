@@ -7,25 +7,59 @@
 
 class CartLib
 {
-	function add_to_cart($product_info, $quantity)
+	/**
+	 * Called when addtocart button clicked. Adds a quantity of a specified product to the cart
+	 *
+	 * @param array $product_info		wikiplugin_addtocart params
+	 * @param jitFilter $input			request input (POST)
+	 * @return bool						success
+	 */
+	function add_to_cart($product_info, $input)
 	{
-		global $prefs, $user;
+		global $prefs, $user, $globalperms;
 
 		$access = TikiLib::lib('access');
 		$userlib = TikiLib::lib('user');
 		$cartlib = TikiLib::lib('cart');
-		$smarty = TikiLib::lib('smarty');
+		$errorreport = TikiLib::lib('errorreport');
+
+		$quantity = $input->quantity->int();
+
+		if ($quantity < 1) {
+			$errorreport->report(tra('Cart: No quantity specified.'));
+			return false;
+		}
+
+		if ( $input->code->text() !== $product_info['code'] ) {
+			$errorreport->report(tra('Cart: Product code mismatch.'));
+			return false;
+		}
+
+		if (!empty($params['exchangeorderitemid']) && !empty($params['exchangetoproductid'])) {
+			if ( $input->exchangeorderitemid->int() !== $params['exchangeorderitemid'] ||
+					$input->exchangetoproductid->int() !== $params['exchangetoproductid'] ) {
+
+				$errorreport->report(tra('Cart: Product exchange mismatch.'));
+				return false;
+			}
+		}
+
+		if ($input->gift_certificate->text() && !empty($product_info['giftcertificate'])) {
+			if (!$cartlib->add_gift_certificate($_REQUEST['gift_certificate'])) {
+				$errorreport->report(tra('Invalid gift certificate: %0', $input->gift_certificate->text()));
+				return false;
+			}
+		}
 
 		if ($prefs['payment_cart_anonymous'] === 'y' && (!$user || $product_info['forceanon'] == 'y') && empty($_SESSION['shopperinfo'])) {
+			// There needs to be a shopperinfo plugin on the page
 			$access->redirect($_SERVER['REQUEST_URI'], tr('Please enter your shopper information first'));
-		} // There needs to be a shopperinfo plugin on the page
+		}
 
-		if ($_REQUEST['gift_certificate'] && !empty($product_info['giftcertificate'])) {
-			if (!$cartlib->add_gift_certificate($_REQUEST['gift_certificate'])) {
-				$smarty->assign('gift_certificate', $_REQUEST['gift_certificate']);
-				$smarty->assign('gift_certificate_error', tra("Invalid gift certificate: "));
-				return $smarty->fetch('wiki-plugins/wikiplugin_addtocart.tpl'); //TODO: Notify user if gift certificate is invalid
-			}
+		if ($globalperms->payment_admin && $input->buyonbehalf->text() && $userlib->user_exists($input->buyonbehalf->text())) {
+			$params['onbehalf'] = $input->buyonbehalf->text();
+		} else {
+			$params['onbehalf'] = '';
 		}
 
 		// Generate behavior for exchanges
@@ -58,7 +92,7 @@ class CartLib
 			);
 		}
 		// Now add product to cart
-		$cartlib->add_product($product_info['code'], $quantity, $product_info);
+		return $cartlib->add_product($product_info['code'], $quantity, $product_info);
 	}
 
 	//Used for putting new items in the cart, to modify an already existing item in the cart, use update_quantity
@@ -88,6 +122,7 @@ class CartLib
 		$this->add_bundle($code, $quantity, $info);
 
 		$this->update_quantity($code, $current, $info);
+		return true;
 	}
 
 	function get_product_info( $code )
