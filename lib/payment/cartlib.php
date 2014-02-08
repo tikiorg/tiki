@@ -44,8 +44,8 @@ class CartLib
 			}
 		}
 
-		if ($input->gift_certificate->text() && !empty($product_info['giftcertificate'])) {
-			if (!$cartlib->add_gift_certificate($_REQUEST['gift_certificate'])) {
+		if ($input->gift_certificate->text() && !empty($product_info['giftcertificate']) && $product_info['giftcertificate'] === 'y') {
+			if (!$cartlib->add_gift_certificate($input->gift_certificate->text())) {
 				$errorreport->report(tra('Invalid gift certificate: %0', $input->gift_certificate->text()));
 				return false;
 			}
