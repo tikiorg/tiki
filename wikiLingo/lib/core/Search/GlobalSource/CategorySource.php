@@ -96,11 +96,10 @@ class Search_GlobalSource_CategorySource implements Search_GlobalSource_Interfac
 			'deep_categories' => $typeFactory->multivalue($deepcategories),
 		);
 
-		$self = $this;
 		foreach ($this->categlib->getCustomFacets() as $rootId) {
 			$filtered = array_filter(
 				$categories,
-				function ($category) use ($self, $rootId) {
+				function ($category) use ($rootId) {
 					return $this->categlib->get_category_parent($category) == $rootId;
 				}
 			);

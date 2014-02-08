@@ -653,14 +653,14 @@ class CartLib
 				}
 			}
 			if ($quantity > 0) {
-				if ($prefs['payment_cart_inventory'] == 'y') {
-					if ($quantity > $currentInventory) {
-						$quantity = $currentInventory;
-					}
-					if ($this->hold_inventory($code, $quantity)) {
-						$this->add_to_onhold_list($code, $quantity);
-					}
+				$currentInventory = $this->get_inventory($code);
+				if ($quantity > $currentInventory) {
+					$quantity = $currentInventory;
 				}
+				if ($this->hold_inventory($code, $quantity)) {
+					$this->add_to_onhold_list($code, $quantity);
+				}
+
 				if ($info['exchangetoproductid'] && $info['exchangeorderamount']) {
 					if ($this->hold_inventory($info['exchangetoproductid'], $info['exchangeorderamount'])) {
 	                                	$this->add_to_onhold_list('XC' . $info['exchangetoproductid'], $info['exchangeorderamount']);
@@ -843,7 +843,7 @@ class CartLib
 
 	function process_item($invoice, $total, $info, $userInput, $cartuser, $profileinstaller, $orderitemprofile, $parentQuantity = 0, $parentCode = 0 )
 	{
-		global $user, $userlib, $paymentlib, $prefs;
+		global $user, $userlib, $paymentlib, $prefs, $record_profile_items_created;
 		if ($bundledProducts = $this->get_bundled_products($info['code'])) {
 			foreach ($bundledProducts as $i) {
 				$this->process_item($invoice, $total, $i, $userInput, $cartuser, $profileinstaller, $orderitemprofile, $info['quantity'], $info['code']);
@@ -1216,7 +1216,7 @@ class CartLib
 			$tocheck[$trackerId][] = $f;
 		}
 		foreach ($tocheck as $trackerId => $flds) {
-			$definition = Tracker_Definition::get($todo['objectId']);
+			$definition = Tracker_Definition::get($trackerId);
 			if ($fieldId = $definition->getUserField()) {
 				$item = $trklib->get_item($trackerId, $fieldId, $user);
 				foreach ($flds as $f) {

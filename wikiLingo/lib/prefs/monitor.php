@@ -14,6 +14,18 @@ function prefs_monitor_list()
 			'type' => 'flag',
 			'default' => 'n',
 		),
+		'monitor_digest' => array(
+			'name' => tr('Notification Digests'),
+			'description' => tr('Enable the digest notifications, requires cron job'),
+			'type' => 'flag',
+			'default' => 'n',
+		),
+		'monitor_individual_clear' => array(
+			'name' => tr('Clear individual notifications'),
+			'description' => tr('Allow users to selectively clear notifications instead of simply having a clear-all button.'),
+			'type' => 'flag',
+			'default' => 'n',
+		),
 	);
 }
 

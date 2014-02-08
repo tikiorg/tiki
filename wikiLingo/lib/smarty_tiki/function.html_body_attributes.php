@@ -16,7 +16,7 @@ function smarty_function_html_body_attributes($params, $smarty)
 	
 	$back = '';
 	$onload = '';
-	$class = '';
+	$class = isset($params['class']) ? $params['class'] : '';
 	
 	$dblclickedit = $smarty->getTemplateVars('dblclickedit');
 	
@@ -24,7 +24,7 @@ function smarty_function_html_body_attributes($params, $smarty)
 		$back .= ' ondblclick="location.href=\'tiki-editpage.php?page=' . rawurlencode($page) . '\';"';
 	}
 
-	$class .= 'tiki ';
+	$class .= ' tiki ';
 	
 	if (isset($section_class)) {
 		$class .= $section_class;

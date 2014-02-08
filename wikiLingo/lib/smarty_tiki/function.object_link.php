@@ -120,6 +120,11 @@ function smarty_function_object_link_default( $smarty, $object, $title = null, $
 	}
 
 	$metadata = TikiLib::lib('object')->get_metadata($type, $object, $classList);
+
+	if (! empty($params['class'])) {
+		$classList[] = $params['class'];
+	}
+
 	$class = ' class="' . implode(' ', $classList) . '"';
 
 	if (strpos($escapedHref, '://') === false) {

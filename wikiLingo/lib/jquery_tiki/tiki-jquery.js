@@ -459,12 +459,14 @@ $(function() { // JQuery's DOM is ready event - before onload
 	}	// end if (jqueryTiki.colorbox)
 
 	if (jqueryTiki.zoom) {
-		$("a[rel=zoom]")
-			.wrap('<span class="img_zoom"></span>')
-			.parent()
-			.zoom({
-				url: $(this).attr("href")
-			});
+		$("a[rel=zoom]").each(function () {
+			$(this)
+				.wrap('<span class="img_zoom"></span>')
+				.parent()
+				.zoom({
+					url: $(this).attr("href")
+				});
+		});
 	}
 
 	$.fn.applyChosen = function () {
@@ -2931,6 +2933,16 @@ $.fn.reload = function () {
 	return this;
 };
 
+$(document).on('mouseover', '.media[data-href]', function () {
+	$(this).css('cursor', 'pointer');
+});
+$(document).on('mouseout', '.media[data-href]', function () {
+	$(this).css('cursor', 'default');
+});
+$(document).on('click', '.media[data-href]', function () {
+	document.location.href = $(this).data('href');
+});
+
 // Required for bootstrap to allow changing the content of a modal
 $(document).on('hidden.bs.modal', '#bootstrap-modal', function () {
 	$(this).removeData('bs.modal').find('.modal-content').empty();
@@ -2949,15 +2961,20 @@ $(document).on('tiki.modal.redraw', '#bootstrap-modal', function () {
 	// On Modal show, find all buttons part of a .submit block and create
 	// proxies of them in the modal footer
 	$('#bootstrap-modal .modal-footer .auto-btn').remove();
-	$('div.submit .btn', this).hide().each(function () {
+	$('div.submit .btn', this).each(function () {
 		var $submit = $(this);
-		$button = $('<button>')
-			.text($submit.attr('value') || $submit.text())
-			.attr('class', $submit.attr('class'))
-			.addClass('auto-btn')
-			.click(function () {
-				$submit.click();
-			});
+		if ($submit.is('a:not(.custom-handling)')) {
+			$button = $submit;
+		} else {
+			$submit.hide();
+			$button = $('<button>')
+				.text($submit.val() || $submit.text())
+				.attr('class', $submit.attr('class'))
+				.addClass('auto-btn')
+				.click(function () {
+					$submit.click();
+				});
+		}
 		$('#bootstrap-modal .modal-footer').append($button);
 	});
 

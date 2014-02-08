@@ -31,6 +31,38 @@ class MonitorMailLib
 		$this->mailQueue = [];
 	}
 
+	function sendDigest($info, $from, $to)
+	{
+		global $prefs;
+		$out = false;
+		$servicelib = TikiLib::lib('service');
+
+		\TikiLib::setExternalContext(true);
+		// Override the user until the end of the function
+		$context = new Perms_Context($info['login']);
+		$prefs['language'] = $info['language'];
+
+		try {
+			$html = $servicelib->render('monitor', 'stream', [
+				'high' => 1,
+				'from' => $from,
+				'to' => $to,
+			]);
+
+			$html = $this->applyStyle($html);
+			$title = tr('Notification Digest');
+
+			$this->send($info['email'], $title, $html);
+
+			$out = true;
+		} catch (Services_Exception $e) {
+		}
+
+		unset($context);
+		\TikiLib::setExternalContext(false);
+		return $out;
+	}
+
 	/**
 	 * Ontain the list of email addresses and preferred language for each
 	 * user id to whom the notification email must be sent.
@@ -70,12 +102,7 @@ class MonitorMailLib
 		TikiLib::setExternalContext(true);
 		$html = $smarty->fetchLang($language, 'monitor/notification_email_body.tpl');
 		TikiLib::setExternalContext(false);
-		$css = $this->collectCss();
-
-		$processor = new \TijsVerkoyen\CssToInlineStyles\CssToInlineStyles($html, $css);
-
-		$html = $processor->convert();
-		return $html;
+		return $this->applyStyle($html);
 	}
 
 	private function collectCss()
@@ -115,13 +142,28 @@ class MonitorMailLib
 		$title = $this->renderTitle($language, $mail);
 		$html = $this->renderContent($language, $mail);
 
+		$this->send($email, $title, $html);
+
+		unset($context);
+	}
+
+	private function send($email, $title, $html)
+	{
 		require_once 'lib/webmail/tikimaillib.php';
 		$mail = new TikiMail;
 		$mail->setSubject($title);
 		$mail->setHtml($html);
 		$mail->send($email);
+	}
 
-		unset($context);
+	private function applyStyle($html)
+	{
+		$css = $this->collectCss();
+
+		$processor = new \TijsVerkoyen\CssToInlineStyles\CssToInlineStyles($html, $css);
+
+		$html = $processor->convert();
+		return $html;
 	}
 }
 

@@ -218,5 +218,5 @@
 		<li>	{tr}No pages matched the search criteria{/tr}</li>
 		{/section}
 	</ul>
-	{pagination_links cant=$cant step=$maxRecords offset=$offset}{/pagination_links}
+	{pagination_links cant=$cant step=$maxRecords offset=$offset _keepall=true}{/pagination_links}
 {/if}

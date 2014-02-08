@@ -18,12 +18,8 @@
 		<ol class="media-list">
 			{foreach from=$comments item=comment}
 				<li class="media comment {if $comment.archived eq 'y'}archived{/if} {if ! $parentId && $prefs.feature_wiki_paragraph_formatting eq 'y'}inline{/if}" data-comment-thread-id="{$comment.threadId|escape}">
-					<div class="pull-left" href="#">
-						{if $prefs.user_use_gravatar eq 'y'}
-							<span class="avatar">{$comment.userName|avatarize}</span>
-						{else}
-							{icon _id='img/noavatar.png'}
-						{/if}
+					<div class="pull-left">
+						<span class="avatar">{$comment.userName|avatarize:'':'img/noavatar.png'}</span>
 					</div>
 					<div class="media-body">
 						<div class="comment-item">
@@ -106,7 +102,7 @@
 		<div class="submit">
 			<h3>
 				<div class="button buttons comment-form {if $prefs.wiki_comments_form_displayed_default eq 'y'}autoshow{/if}">
-					<a class="btn btn-primary" href="{service controller=comment action=post type=$type objectId=$objectId}" data-target="#add-comment-zone-{$objectId|escape}">{tr}Post new comment{/tr}</a>
+					<a class="btn btn-primary custom-handling" href="{service controller=comment action=post type=$type objectId=$objectId}" data-target="#add-comment-zone-{$objectId|escape}">{tr}Post new comment{/tr}</a>
 				</div>
 		</div>
 		<div id="add-comment-zone-{$objectId|escape}">

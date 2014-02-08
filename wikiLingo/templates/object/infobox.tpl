@@ -1,14 +1,13 @@
 {extends 'layout_view.tpl'}
 
 {block name="title"}
-	{title}{$title|escape}{/title}
+	<h1>{object_link type=$type id=$object backuptitle="{tr}Information{/tr}"}</h1>
 {/block}
 
 {block name="content"}
 {if $plain}
 {$content}
 {else}
-<h5>{object_link type=$type id=$object}</h5>
 <div>{$content}</div>
 {/if}
 {/block}

@@ -7279,10 +7279,11 @@ class UsersLib extends TikiLib
 	{
 		global $tikilib, $prefs;
 		if ( $prefs['user_show_realnames'] == 'y' || $force_check_realnames) {
-			$realname = $tikilib->get_user_preference($u, 'realName', '');
+			// need to trim to prevent mustMatch failure
+			$realname = trim($tikilib->get_user_preference($u, 'realName', ''));
 		}
 		if (!empty($realname)) {
-			$u = trim($realname); // need to trim to prevent mustMatch failure
+			$u = $realname;
 		} elseif ($prefs['login_is_email_obscure'] == 'y' && $atsign = strpos($u, '@')) {
 			$u = substr($u, 0, $atsign);
 			if (!$login_fallback) {

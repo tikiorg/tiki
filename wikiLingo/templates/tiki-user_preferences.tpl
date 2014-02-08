@@ -318,7 +318,7 @@
 		<tr>
 			<td>{tr}Displayed time zone:{/tr}</td>
 			<td>
-				<select name="display_timezone" id="display_timezone">
+				<select name="display_timezone" id="display_timezone"{if $warning_site_timezone_set eq 'y'} disabled{/if}>
 					<option value="" style="font-style:italic;">
 						{tr}Detect user time zone if browser allows, otherwise site default{/tr}
 					</option>
@@ -334,6 +334,9 @@
 						</option>
 					{/foreach}
 				</select>
+				{if $warning_site_timezone_set eq 'y'}
+					<br/><strong>{tr}Warning:{/tr}</strong> <i>{tr _0=$display_timezone}Site timezone <strong>%0</strong> is enforced and overrides user preferences{/tr}</i>
+				{/if}
 			</td>
 		</tr>
 		<tr>

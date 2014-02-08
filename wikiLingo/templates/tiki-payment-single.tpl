@@ -108,6 +108,25 @@
 						<br><input type="image" style="display:block; margin-left: 15px" name="submit" border="0" src="https://www.paypal.com/en_US/i/btn/btn_paynow_LG.gif" alt="PayPal" title="{tr}Pay with Paypal{/tr}">
 						<br><input type="image" name="submit" border="0" src="https://www.paypal.com/en_US/i/bnr/horizontal_solution_PPeCheck.gif" border="0" alt="PayPal">
 					</form>
+				{elseif $prefs.payment_system eq 'israelpost' && $prefs.payment_israelpost_business_id neq ''}
+					<form id="israelpost_form" method="post" target="israelpost_iframe" action="{$prefs.payment_israelpost_environment|escape}">
+						<input type="hidden" name="business" value="{$prefs.payment_israelpost_business_id|escape}">
+						<input type="hidden" name="PreOrderID" value="{$payment_info.paymentRequestId|escape}">
+						<input type="hidden" name="item_number_1" value="{$payment_info.paymentRequestId|escape}">
+						<input type="hidden" name="item_name_1" value="{tr}Total{/tr}">
+						<input type="hidden" name="amount_1" value="{$payment_info.amount_remaining_raw|escape}">
+						<input type="hidden" name="quantity_1" value="1">
+						<input type="submit" value="{tr}Proceed to Israel Post{/tr}">
+					</form>
+					{* Note: width specified by specifications, not height *}
+					<iframe id="israelpost_iframe" name="israelpost_iframe" src="#" style="width: 445px; height: 300px; display: none; border: none;">
+					</iframe>
+					{jq}
+						$('#israelpost_form').submit(function () {
+							$(this).hide();
+							$('#israelpost_iframe').show();
+						});
+					{/jq}
 				{elseif $prefs.payment_system eq 'cclite' && $prefs.payment_cclite_gateway neq ''}
 					<legend style="font-style: italic">{tr}Pay With Cclite{/tr}</legend>
 					{if (!empty($ccresult) or !empty($ccresult2)) and $ccresult_ok}

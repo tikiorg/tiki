@@ -14,12 +14,24 @@ class MonitorLib
 	 */
 	function getPriorities()
 	{
-		return array(
+		static $priorities;
+		if ($priorities) {
+			return $priorities;
+		}
+
+		$priorities = array(
 			'none' => ['label' => '', 'description' => null],
 			'critical' => ['label' => tr('Critical'), 'description' => tr('Immediate notification by email.')],
 			'high' => ['label' => tr('High'), 'description' => tr('Sent to you with the next periodic digest.')],
 			'low' => ['label' => tr('Low'), 'description' => tr('Included in your personalized recent changes feed.')],
 		);
+
+		global $prefs;
+		if ($prefs['monitor_digest'] != 'y') {
+			unset($priorities['high']);
+		}
+
+		return $priorities;
 	}
 
 	/**
@@ -67,6 +79,11 @@ class MonitorLib
 		if ($prefs['feature_forums'] == 'y' && $type == 'forum post') {
 			$post = TikiLib::lib('comments')->get_comment($object);
 			$options[] = $this->gatherOptions($userId, $events, 'forum', $post['object']);
+		}
+
+		if ($prefs['feature_trackers'] == 'y' && $type == 'trackeritem') {
+			$item = TikiLib::lib('trk')->get_item_info($object);
+			$options[] = $this->gatherOptions($userId, $events, 'tracker', $item['trackerId']);
 		}
 
 		// Include any category and parent category
@@ -139,6 +156,12 @@ class MonitorLib
 			}
 			if (! empty($args['parent_id'])) {
 				$targets[] = "forum post:{$args['parent_id']}";
+			}
+		}
+
+		if ($prefs['feature_trackers'] == 'y' && $type == 'trackeritem') {
+			if (! empty($args['trackerId'])) {
+				$targets[] = "tracker:{$args['trackerId']}";
 			}
 		}
 
@@ -411,6 +434,12 @@ class MonitorLib
 				'tiki.save' => ['global' => false, 'label' => tr('Any activity')],
 				'tiki.forumpost.save' => ['global' => false, 'label' => tr('Any forum activity')],
 				'tiki.forumpost.create' => ['global' => true, 'label' => tr('New topics')],
+			];
+		case 'trackeritem':
+			return [
+				'tiki.save' => ['global' => false, 'label' => tr('Any activity')],
+				'tiki.trackeritem.save' => ['global' => false, 'label' => tr('Any item activity')],
+				'tiki.trackeritem.create' => ['global' => true, 'label' => tr('New items')],
 			];
 		default:
 			return [];
