@@ -7,6 +7,74 @@
 
 class CartLib
 {
+	function add_to_cart($params, $quantity)
+	{
+		global $prefs, $user;
+
+		$access = TikiLib::lib('access');
+		$userlib = TikiLib::lib('user');
+		$cartlib = TikiLib::lib('cart');
+		$smarty = TikiLib::lib('smarty');
+
+		if ($prefs['payment_cart_anonymous'] === 'y' && (!$user || $params['forceanon'] == 'y') && empty($_SESSION['shopperinfo'])) {
+			$access->redirect($_SERVER['REQUEST_URI'], tr('Please enter your shopper information first'));
+		} // There needs to be a shopperinfo plugin on the page
+
+		if ($_REQUEST['gift_certificate'] && !empty($params['giftcertificate'])) {
+			if (!$cartlib->add_gift_certificate($_REQUEST['gift_certificate'])) {
+				$smarty->assign('gift_certificate', $_REQUEST['gift_certificate']);
+				$smarty->assign('gift_certificate_error', tra("Invalid gift certificate: "));
+				return $smarty->fetch('wiki-plugins/wikiplugin_addtocart.tpl'); //TODO: Notify user if gift certificate is invalid
+			}
+		}
+
+		$product_info = array(
+			'description' => $params['description'],
+			'price' => $params['price'],
+			'href' => $params['href'],
+			'behaviors' => array(),
+			'eventcode' => $params['eventcode'],
+			'producttype' => $params['producttype'],
+			'productclass' => $params['productclass'],
+			'productbundle' => $params['productbundle'],
+			'bundleclass' => $params['bundleclass']
+		);
+
+		// Generate behavior for exchanges
+		if (!empty($params['exchangeorderitemid']) && !empty($params['exchangetoproductid'])) {
+			$product_info['behaviors'][] = array(
+				'event' => 'complete',
+				'behavior' => 'cart_exchange_product',
+				'arguments' => array($params["exchangeorderitemid"], $params["exchangetoproductid"])
+			);
+			$product_info['exchangeorderitemid'] = $params["exchangeorderitemid"];
+			$product_info['exchangetoproductid'] = $params["exchangetoproductid"];
+			if (!isset($params['exchangeorderamount']) || !$params['exchangeorderamount']) {
+				$exchangeorderamount = 1;
+			} else {
+				$exchangeorderamount = $params["exchangeorderamount"];
+			}
+			$product_info['exchangeorderamount'] = $exchangeorderamount;
+		}
+		// Generate behavior for gift certificate purchase
+		if (strtolower($params['producttype']) == 'gift certificate') {
+			if ($params['onbehalf']) {
+				$giftcert_email = $userlib->get_user_email($params['onbehalf']);
+			} elseif (!$user && !empty($_SESSION['shopperinfo']['email'])) {
+				$giftcert_email = $_SESSION['shopperinfo']['email'];
+			} elseif ($user) {
+				$giftcert_email = $userlib->get_user_email($user);
+			}
+			$product_info['behaviors'][] = array(
+				'event' => 'complete',
+				'behavior' => 'cart_gift_certificate_purchase',
+				'arguments' => array($params['code'], $giftcert_email)
+			);
+		}
+		// Now add product to cart
+		$cartlib->add_product($params['code'], $quantity, $product_info);
+	}
+
 	//Used for putting new items in the cart, to modify an already existing item in the cart, use update_quantity
 	function add_product( $code, $quantity, $info, $parentCode = 0, $childInputedPrice = 0 )
 	{
