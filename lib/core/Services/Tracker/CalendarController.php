@@ -57,8 +57,8 @@ class Services_Tracker_CalendarController
 				'description' => '',
 				'url' => smarty_modifier_sefurl($row['object_id'], $row['object_type']),
 				'allDay' => false,
-				'start' => strtotime($row[$start]),
-				'end' => strtotime($row[$end]),
+				'start' => $this->getTimestamp($row[$start]),
+				'end' => $this->getTimestamp($row[$end]),
 				'editable' => $item->canModify(),
 				'color' => $this->getColor(isset($row[$coloring]) ? $row[$coloring] : ''),
 				'textColor' => '#000',
@@ -67,6 +67,19 @@ class Services_Tracker_CalendarController
 		}
 
 		return $response;
+	}
+
+	private function getTimestamp($value)
+	{
+		if (preg_match('/^\d{14}$/', $value)) {
+			// Facing a date formated as YYYYMMDDHHIISS as indexed in lucene
+			// Always stored as UTC
+			return date_create_from_format('YmdHise', $value . 'UTC')->getTimestamp();
+		} elseif (is_numeric($value)) {
+			return $value;
+		} else {
+			return strtotime($value);
+		}
 	}
 
 	private function getColor($value)
