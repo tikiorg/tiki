@@ -1,5 +1,5 @@
 {* $Id$ *}
-<form method="post" action="{query _type=relative _keepall=y}" style="display: inline;" class="wp_addtocart_form">
+<form method="post" action="{query _type=relative _keepall=y}" style="display: inline;" class="wp_addtocart_form"{$form_data}>
 	<input type="hidden" name="code" value="{$params.code|escape}">
 	{if $onbehalf == 'y'}
 		{tr}Buy on behalf of:{/tr}
@@ -13,13 +13,6 @@
 	{/if}
 	
 	<table>
-		{if $gift_certificate_error}
-			<tr>
-				<th style="text-align: right;">{$gift_certificate_error}</th>
-				<td>{$gift_certificate}</td>
-			</tr>
-		{/if}
-		
 		{if $params.giftcertificate == 'y'}
 			<tr>
 				<th style="text-align: right;">{tr}Gift Certificate:{/tr}</th>

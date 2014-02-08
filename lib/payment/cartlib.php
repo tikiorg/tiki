@@ -18,20 +18,18 @@ class CartLib
 	{
 		global $prefs, $user, $globalperms;
 
-		$access = TikiLib::lib('access');
 		$userlib = TikiLib::lib('user');
 		$cartlib = TikiLib::lib('cart');
-		$errorreport = TikiLib::lib('errorreport');
 
 		$quantity = $input->quantity->int();
 
 		if ($quantity < 1) {
-			$errorreport->report(tra('Cart: No quantity specified.'));
+			$this->handle_error(tra('Cart: No quantity specified.'));
 			return false;
 		}
 
 		if ( $input->code->text() !== $product_info['code'] ) {
-			$errorreport->report(tra('Cart: Product code mismatch.'));
+			$this->handle_error(tra('Cart: Product code mismatch.'));
 			return false;
 		}
 
@@ -39,21 +37,22 @@ class CartLib
 			if ( $input->exchangeorderitemid->int() !== $params['exchangeorderitemid'] ||
 					$input->exchangetoproductid->int() !== $params['exchangetoproductid'] ) {
 
-				$errorreport->report(tra('Cart: Product exchange mismatch.'));
+				$this->handle_error(tra('Cart: Product exchange mismatch.'));
 				return false;
 			}
 		}
 
 		if ($input->gift_certificate->text() && !empty($product_info['giftcertificate']) && $product_info['giftcertificate'] === 'y') {
 			if (!$cartlib->add_gift_certificate($input->gift_certificate->text())) {
-				$errorreport->report(tra('Invalid gift certificate: %0', $input->gift_certificate->text()));
+				$this->handle_error(tra('Invalid gift certificate: %0', $input->gift_certificate->text()));
 				return false;
 			}
 		}
 
 		if ($prefs['payment_cart_anonymous'] === 'y' && (!$user || $product_info['forceanon'] == 'y') && empty($_SESSION['shopperinfo'])) {
 			// There needs to be a shopperinfo plugin on the page
-			$access->redirect($_SERVER['REQUEST_URI'], tr('Please enter your shopper information first'));
+			$this->handle_error(tr('Please enter your shopper information first'));
+			return false;
 		}
 
 		if ($globalperms->payment_admin && $input->buyonbehalf->text() && $userlib->user_exists($input->buyonbehalf->text())) {
@@ -82,7 +81,7 @@ class CartLib
 			} elseif ($user) {
 				$giftcert_email = $userlib->get_user_email($user);
 			} else {
-				TikiLib::lib('reporterrors')->report(tra('No email found for gift certificate recipient'));
+				$this->handle_error(tra('No email found for gift certificate recipient'));
 				return false;
 			}
 			$product_info['behaviors'][] = array(
@@ -565,8 +564,7 @@ class CartLib
 			$total += $productTotal;
 		} else {
 			$this->remove_gift_certificate();
-			global $access;
-			$access->redirect($_SERVER['REQUEST_URI'], tra('Gift card is not valid for products in cart'));
+			$this->handle_error(tra('Gift card is not valid for products in cart'));
 		}
 
 		return $total;
@@ -728,7 +726,7 @@ class CartLib
 				}
 				global $access;
 
-				$access->redirect($_SERVER['REQUEST_URI'], tra('There is not enough inventory left for your request'));
+				$this->handle_error(tra('There is not enough inventory left for your request'));
 			}
 
 			if ($currentQuantity > 0) {
@@ -1392,6 +1390,16 @@ class CartLib
 			$cost = $this->get_tracker_value_custom($prefs['payment_cart_orderitems_tracker_name'], 'Price paid', $orderItemId);
 		}
 		return $cost;
+	}
+
+	function handle_error($msg) {
+		$access = TikiLib::lib('access');
+
+		if ($access->is_xml_http_request()) {
+			throw new Services_Exception($msg);
+		} else {
+			$access->redirect($_SERVER['REQUEST_URI'], $msg);
+		}
 	}
 }
 
