@@ -7,7 +7,7 @@
 
 class CartLib
 {
-	function add_to_cart($params, $quantity)
+	function add_to_cart($product_info, $quantity)
 	{
 		global $prefs, $user;
 
@@ -16,11 +16,11 @@ class CartLib
 		$cartlib = TikiLib::lib('cart');
 		$smarty = TikiLib::lib('smarty');
 
-		if ($prefs['payment_cart_anonymous'] === 'y' && (!$user || $params['forceanon'] == 'y') && empty($_SESSION['shopperinfo'])) {
+		if ($prefs['payment_cart_anonymous'] === 'y' && (!$user || $product_info['forceanon'] == 'y') && empty($_SESSION['shopperinfo'])) {
 			$access->redirect($_SERVER['REQUEST_URI'], tr('Please enter your shopper information first'));
 		} // There needs to be a shopperinfo plugin on the page
 
-		if ($_REQUEST['gift_certificate'] && !empty($params['giftcertificate'])) {
+		if ($_REQUEST['gift_certificate'] && !empty($product_info['giftcertificate'])) {
 			if (!$cartlib->add_gift_certificate($_REQUEST['gift_certificate'])) {
 				$smarty->assign('gift_certificate', $_REQUEST['gift_certificate']);
 				$smarty->assign('gift_certificate_error', tra("Invalid gift certificate: "));
@@ -28,51 +28,37 @@ class CartLib
 			}
 		}
 
-		$product_info = array(
-			'description' => $params['description'],
-			'price' => $params['price'],
-			'href' => $params['href'],
-			'behaviors' => array(),
-			'eventcode' => $params['eventcode'],
-			'producttype' => $params['producttype'],
-			'productclass' => $params['productclass'],
-			'productbundle' => $params['productbundle'],
-			'bundleclass' => $params['bundleclass']
-		);
-
 		// Generate behavior for exchanges
-		if (!empty($params['exchangeorderitemid']) && !empty($params['exchangetoproductid'])) {
+		if (!empty($product_info['exchangeorderitemid']) && !empty($product_info['exchangetoproductid'])) {
 			$product_info['behaviors'][] = array(
 				'event' => 'complete',
 				'behavior' => 'cart_exchange_product',
-				'arguments' => array($params["exchangeorderitemid"], $params["exchangetoproductid"])
+				'arguments' => array($product_info["exchangeorderitemid"], $product_info["exchangetoproductid"])
 			);
-			$product_info['exchangeorderitemid'] = $params["exchangeorderitemid"];
-			$product_info['exchangetoproductid'] = $params["exchangetoproductid"];
-			if (!isset($params['exchangeorderamount']) || !$params['exchangeorderamount']) {
-				$exchangeorderamount = 1;
-			} else {
-				$exchangeorderamount = $params["exchangeorderamount"];
+			if (!isset($product_info['exchangeorderamount']) || !$product_info['exchangeorderamount']) {
+				$product_info['exchangeorderamount'] = 1;
 			}
-			$product_info['exchangeorderamount'] = $exchangeorderamount;
 		}
 		// Generate behavior for gift certificate purchase
-		if (strtolower($params['producttype']) == 'gift certificate') {
-			if ($params['onbehalf']) {
-				$giftcert_email = $userlib->get_user_email($params['onbehalf']);
+		if (strtolower($product_info['producttype']) == 'gift certificate') {
+			if ($product_info['onbehalf']) {
+				$giftcert_email = $userlib->get_user_email($product_info['onbehalf']);
 			} elseif (!$user && !empty($_SESSION['shopperinfo']['email'])) {
 				$giftcert_email = $_SESSION['shopperinfo']['email'];
 			} elseif ($user) {
 				$giftcert_email = $userlib->get_user_email($user);
+			} else {
+				TikiLib::lib('reporterrors')->report(tra('No email found for gift certificate recipient'));
+				return false;
 			}
 			$product_info['behaviors'][] = array(
 				'event' => 'complete',
 				'behavior' => 'cart_gift_certificate_purchase',
-				'arguments' => array($params['code'], $giftcert_email)
+				'arguments' => array($product_info['code'], $giftcert_email)
 			);
 		}
 		// Now add product to cart
-		$cartlib->add_product($params['code'], $quantity, $product_info);
+		$cartlib->add_product($product_info['code'], $quantity, $product_info);
 	}
 
 	//Used for putting new items in the cart, to modify an already existing item in the cart, use update_quantity
