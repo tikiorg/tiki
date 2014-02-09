@@ -56,9 +56,11 @@
 					</td>
 				</tr>
 			{elseif $edit_option[{$dompwdCount}] eq 'y'}
-				<td colspan="2">
-					<a href="javascript:submitform{$dompwdCount}(true)">Edit</a>
-				</td>
+				<tr>
+					<td colspan="2">
+						<a href="javascript:submitform{$dompwdCount}(true)">Edit</a>
+					</td>
+				</tr>
 			{/if}
 		{/if}
 	</table>
