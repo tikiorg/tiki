@@ -143,11 +143,10 @@
 						{strip}
 							{if (!isset($atts) or $atts|@count == 0) || $tiki_p_wiki_attach_files == 'y'
 								&& $tiki_p_wiki_view_attachments == 'n' && $tiki_p_wiki_admin_attachments == 'n'}
-								{tr}Attachments{/tr}
-							{elseif isset($atts) and $atts|@count == 1}
-								{tr}1 File Attached{/tr}
+								{tr}Files{/tr}
 							{else}
-								{tr}{$atts|@count} files attached{/tr}
+								{tr}Files{/tr}
+								&nbsp;<span class="atts_count badge">{$atts|@count}</span>
 							{/if}
 						{/strip}
 					{/capture}
