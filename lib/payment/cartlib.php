@@ -56,9 +56,9 @@ class CartLib
 		}
 
 		if ($globalperms->payment_admin && $input->buyonbehalf->text() && $userlib->user_exists($input->buyonbehalf->text())) {
-			$params['onbehalf'] = $input->buyonbehalf->text();
+			$product_info['onbehalf'] = $input->buyonbehalf->text();
 		} else {
-			$params['onbehalf'] = '';
+			$product_info['onbehalf'] = '';
 		}
 
 		// Generate behavior for exchanges
