@@ -14,14 +14,21 @@ class Services_Module_Controller
 
 		$modname = $input->module->text();
 		if ($modname) {
-			$params = $input->params->array();
+			$params = (array) $input->params->array();
 
-			$params = array_merge($params, array('nobox' => 'y'));
+			$moduleId = $input->moduleId->int();
 
-			$module_reference = array(
-				'name' => $modname,
-				'params' => $params,
-			);
+			if ($moduleId) {
+				$module_reference = $modlib->get_assigned_module($moduleId);
+				TikiLib::parse_str($module_reference['params'], $module_reference['params']);
+				$module_reference['params'] = array_merge($params, $module_reference['params']);
+			} else {
+				$module_reference = array(
+					'name' => $modname,
+					'params' => $params,
+				);
+			}
+
 
 			$result = $modlib->execute_module($module_reference);
 		}
