@@ -3,7 +3,7 @@
 <div class="btn-group">
 	{* For all object types: First show the world icon and on hover the language of the current object *}
 	<button type="button" class="btn btn-default btn-i18n dropdown-toggle" data-toggle="dropdown">
-		<span class="glyphicon glyphicon-globe" title="{tr}Current language:{/tr} {$trads[0].langName|escape} ({$trads[0].lang|escape})"}</span>
+		<span class="glyphicon glyphicon-globe" title="{tr}Current language:{/tr} {$trads[0].langName|escape} ({$trads[0].lang|escape})"}></span>
 	</button>
 	{* ..than on hover first show the list of translations including the current language highlighted *}
 	{if empty($trads[0].lang)}
