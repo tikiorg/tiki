@@ -19,6 +19,14 @@ function module_cart_info()
 		'name' => tra('Cart'),
 		'description' => tra('Displays the content of the cart, allows to modify quantities and proceed to payment.'),
 		'prefs' => array('payment_feature'),
+		'params' => array(
+			'ajax' => array(
+				'name' => tra('Use AJAX'),
+				'description' => tra('Use AJAX services for managing the cart') . ' ' . tra('(y/n Default n)'),
+				'filter' => 'alpha',
+				'default' => 'n',
+			),
+		),
 	);
 }
 
@@ -26,17 +34,28 @@ function module_cart_info()
  * @param $mod_reference
  * @param $module_params
  */
-function module_cart($mod_reference, $module_params)
+function module_cart($mod_reference, & $module_params)
 {
-	global $smarty, $access;
-	global $cartlib; require_once 'lib/payment/cartlib.php';
+	$smarty = TikiLib::lib('smarty');
+	$access = TikiLib::lib('access');
+	$cartlib = TikiLib::lib('cart');
+
+	$module_params = array_merge(array(
+		'ajax' => 'n',
+	), $module_params);
+
+	if ($module_params['ajax'] === 'y') {
+		TikiLib::lib('header')->add_jsfile('lib/payment/cartlib.js');
+	}
 
 	if (isset($_POST['update'], $_POST['cart'])) {
 		foreach ($_POST['cart'] as $code => $quantity) {
 			$cartlib->update_quantity($code, $quantity);
 		}
 
-		$access->redirect($_SERVER['REQUEST_URI'], tra('The quantities in your cart were updated.'));
+		if ($module_params['ajax'] !== 'y') {
+			$access->redirect($_SERVER['REQUEST_URI'], tra('The quantities in your cart were updated.'));
+		}
 	}
 
 	if (isset($_POST['checkout'])) {
