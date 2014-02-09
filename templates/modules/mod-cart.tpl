@@ -1,6 +1,6 @@
 {tikimodule error=$module_params.error title=$tpl_module_title name="cart" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
 {if !empty($cart_content)}
-	<form method="post" action="{query _keepall='y' _type='relative'}">
+	<form method="post" action="{if $module_params.ajax eq 'n'}{query _keepall='y' _type='relative'}{else}{service controller='module' action='execute'}{/if}"{if $module_params.ajax eq 'y'} class="mod-cart-form"{/if}>
 	<table>
 		<tr>
 			<th>{tr}Product{/tr}</th>
@@ -37,7 +37,7 @@
 		</tr>
 	</table>
 	</form>
-	
+
 	<form method="post" action="">
 		{if $has_gift_certificate}
 			<div class="gift_certificate">
