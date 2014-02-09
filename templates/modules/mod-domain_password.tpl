@@ -10,7 +10,7 @@
 	</script>
 {/literal}
 
-<form name="frmDomainPassword{$dompwdCount}" method="post" action="">
+<form name="frmDomainPassword{$dompwdCount}" method="post">
 	<input type="hidden" name="edit_form{$dompwdCount}" value="">
 	<input type="hidden" name="dompwdCount" value="{$dompwdCount}">
 	<table>
