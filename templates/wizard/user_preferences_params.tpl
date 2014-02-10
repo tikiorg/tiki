@@ -194,6 +194,7 @@
 		</table>
 	</fieldset>
 {/if}
+{if $prefs.feature_mytiki eq 'y'}
 <fieldset>
 	<legend>{tr}My Tiki{/tr}</legend>
 		<div class="userWizardIconright"><img src="img/icons/project.gif" alt="{tr}My Tiki{/tr}" /></div>
@@ -300,6 +301,7 @@
 
 	</table>
 </fieldset>
+{/if}
 {else}
 	<fieldset>
 		{tr}The feature with the user preferences screen is disabled in this site{/tr}.<br/>
