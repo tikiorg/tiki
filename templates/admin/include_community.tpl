@@ -49,6 +49,7 @@
 				{preference name=feature_group_transition}
 				{preference name=user_favorites}
 				{preference name=feature_invite}
+				{preference name=feature_wizard_user}
 			</div>
 		{/tab}
 		{tab name="{tr}Social Network{/tr}"}
