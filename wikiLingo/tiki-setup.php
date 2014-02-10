@@ -721,7 +721,7 @@ if ($prefs['openpgp_gpg_pgpmimemail'] == 'y') {
 // ******************************************************************** //
 //////////////////////////////////////////////////////////////////////////
 
-if( $prefs['feature_hidden_links'] == 'y' && $jitRequest['wysiwyg'] != 'y') {
+if( $prefs['feature_hidden_links'] == 'y' && isset($jitRequest['wysiwyg']) && $jitRequest['wysiwyg'] != 'y') {
 	$headerlib->add_js("$('body').find('h1, h2, h3, h4, h5, h6').each(function() {
 	var headerid = $(this).attr('id');
 		if(headerid != undefined) {
