@@ -8,6 +8,8 @@
  */
 // $Id$
 
+require_once ('check_composer_exists.php');
+
 $inputConfiguration = array(
 				array(
 					'staticKeyFilters' => array(
