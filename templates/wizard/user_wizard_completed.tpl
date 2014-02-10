@@ -8,7 +8,7 @@
 	<legend>{tr}Next?{/tr}</legend>
 
 <ul>
-	<li>{tr}Visit the Full <a href="tiki-user_preferences.php">User Preferences</a> page to set the rest of your user preferences{/tr}.</li>
+	<li>{tr _0="tiki-user_preferences.php"}Visit the Full <a href="%0">User Preferences</a> page to set the rest of your user preferences{/tr}.</li>
 	<li>{tr}Or click at the button <strong>Finish</strong> to end the user wizard and go back to the where you were{/tr}.</li>
 </ul>
 </fieldset>
