@@ -2894,5 +2894,12 @@ function prefs_feature_list($partial = false)
 			'type' => 'textarea',
 			'default' => 'n',
 		),
+		'feature_wizard_user' => array(
+			'name' => tra('User Wizard'),
+			'description' => tra('Wizard to help users to set up their basic settings and details'),
+			'help' => 'User+Wizard',
+			'type' => 'flag',
+			'default' => 'n',
+		),		
 	);
 }

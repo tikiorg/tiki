@@ -10,6 +10,14 @@
 
 require 'tiki-setup.php';
 
+// User preferences screen
+if ($prefs['feature_wizard_user'] != 'y') {
+	$smarty->assign('msg', tra("This feature is disabled") . ": feature_wizard_user");
+	$smarty->display("error.tpl");
+	die;
+}
+$access->check_user($user);
+
 require_once('lib/headerlib.php');
 $headerlib->add_cssfile('css/wizards.css');
 

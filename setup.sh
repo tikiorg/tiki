@@ -30,9 +30,18 @@ SEARCHPATH="/bin /usr/bin /sbin /usr/sbin /usr/local/bin /usr/local/sbin /opt/bi
 USE_CASES_FILE="usecases.bin"
 USE_CASES_PATH=${PERMISSIONCHECK_DIR}
 USE_CASES_NAME=${USE_CASES_PATH}/${USE_CASES_FILE}
-DEFAULT_WHAT='c'
 WHAT_NEXT_AFTER_c='f'
 WHAT_NEXT_AFTER_f='x'
+
+# Composer: If you are installing via a released Tiki package (zip, tar.gz,
+# tar.bz2, 7z), you can and should skip using Composer. If you are installing and
+# upgrading via SVN, you need to run Composer after 'svn checkout' and 'svn
+# upgrade'. More info at https://dev.tiki.org/Composer
+if [ -d ".svn" ]; then
+	DEFAULT_WHAT='c'
+else
+	DEFAULT_WHAT='f'
+fi
 
 define_path() {
 # define PATH for executable mode
@@ -883,7 +892,7 @@ EOF
 tiki_setup_default() {
 	dummy=foo
 	#WHAT='f' # old default
-	WHAT='c' # composer is recommended
+	WHAT=${DEFAULT_WHAT} # composer is recommended in case of an svn checkout
 	while true
 	do
 		tiki_setup_default_menu

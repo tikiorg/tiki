@@ -22,9 +22,27 @@ function module_cart_info()
 		'params' => array(
 			'ajax' => array(
 				'name' => tra('Use AJAX'),
-				'description' => tra('Use AJAX services for managing the cart') . ' ' . tra('(y/n Default n)'),
+				'description' => tra('Use AJAX services for managing the cart') . ' (y/n)',
 				'filter' => 'alpha',
 				'default' => 'n',
+			),
+			'showItems' => array(
+				'name' => tra('Show Items'),
+				'description' => tra('Shows the items in the cart as they are added') . ' (y/n)',
+				'filter' => 'alpha',
+				'default' => 'y',
+			),
+			'showCount' => array(
+				'name' => tra('Show Item Count'),
+				'description' => tra('Shows the number of items in the cart') . ' (y/n)',
+				'filter' => 'alpha',
+				'default' => 'n',
+			),
+			'checkoutURL' => array(
+				'name' => tra('Checkout URL'),
+				'description' => tra('Where to go to when the "Check-out" button is clicked (Default empty: Goes straight to tiki-payment.php)'),
+				'filter' => 'url',
+				'default' => '',
 			),
 		),
 	);
@@ -40,13 +58,20 @@ function module_cart($mod_reference, & $module_params)
 	$access = TikiLib::lib('access');
 	$cartlib = TikiLib::lib('cart');
 
-	$module_params = array_merge(array(
-		'ajax' => 'n',
-	), $module_params);
-
-	if ($module_params['ajax'] === 'y') {
-		TikiLib::lib('header')->add_jsfile('lib/payment/cartlib.js');
+	$info = module_cart_info();
+	$defaults = array();
+	foreach ($info['params'] as $key => $param) {
+		$defaults[$key] = $param['default'];
 	}
+
+	if (!empty($module_params['ajax']) && $module_params['ajax'] === 'y') {
+		TikiLib::lib('header')->add_jsfile('lib/payment/cartlib.js');
+		$smarty->assign('json_data', ' data-params=\'' . json_encode(array_filter($module_params)) . '\'');
+	} else {
+		$smarty->assign('json_data', '');
+	}
+
+	$module_params = array_merge($defaults, $module_params);
 
 	if (isset($_POST['update'], $_POST['cart'])) {
 		foreach ($_POST['cart'] as $code => $quantity) {
@@ -59,10 +84,14 @@ function module_cart($mod_reference, & $module_params)
 	}
 
 	if (isset($_POST['checkout'])) {
-		$invoice = $cartlib->request_payment();
+		if ($module_params['checkoutURL']) {
+			$access->redirect($module_params['checkoutURL']);
+		} else {
+			$invoice = $cartlib->request_payment();
 	
-		if ($invoice) {
-			$access->redirect('tiki-payment.php?invoice=' . intval($invoice), tr('The order was recorded and is now awaiting payment. Reference number is %0.', $invoice));
+			if ($invoice) {
+				$access->redirect('tiki-payment.php?invoice=' . intval($invoice), tr('The order was recorded and is now awaiting payment. Reference number is %0.', $invoice));
+			}
 		}
 	}
 	
