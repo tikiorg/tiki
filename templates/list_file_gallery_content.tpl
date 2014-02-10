@@ -189,7 +189,7 @@
 											{foreach item=tmp_prop key=tmp_propname from=$files[changes].share.data}
 												{$email[]=$tmp_prop.email}
 											{/foreach}
-											{assign var=propval value=$email|implode:','}
+											{if $email and is_array($email)}{assign var=propval value=$email|implode:','}{/if}
 										{else}
 											{assign var=propval value=$files[changes].$propname}
 										{/if}
