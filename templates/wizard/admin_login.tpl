@@ -6,17 +6,17 @@
 <fieldset>
 	<legend>{tr}Registration & Log in options{/tr}</legend>
 		<div style="position:relative;">
-			<div class="adminoptionbox">
+			<div class="adminoptionbox clearfix featurelist">
 				{preference name=allowRegister}
 				{preference name=validateUsers}
 				{preference name=validateRegistration}
+                {preference name=feature_banning}
                 {preference name=useRegisterPasscode}
                 <div class="adminoptionboxchild" id="useRegisterPasscode_childcontainer">
                     {preference name=registerPasscode}
                     {preference name=showRegisterPasscode}
                 </div>
-                {preference name=feature_banning}
-			</div>
+ 			</div>
 		</div>
 </fieldset>
 <table style="width:100%">

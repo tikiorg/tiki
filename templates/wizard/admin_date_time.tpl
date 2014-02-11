@@ -6,11 +6,12 @@
 <fieldset>
 	<legend>{tr}Date and Time setup{/tr}</legend>
 	<img src="img/icons/large/admin.gif" class="adminWizardIconright"/>
+	<div class="admin clearfix featurelist">
 	{preference name=server_timezone}
-	{preference name=users_prefs_display_timezone}
-	<br>
-	{preference name=display_field_order}
 	{preference name=users_prefs_display_12hr_clock}
+	{preference name=users_prefs_display_timezone}
+	{preference name=display_field_order}
+	</div>
 	<br>
 	<em>{tr}See also{/tr} <a href="tiki-admin.php?page=general&alt=General#content4" target="_blank">{tr}Date and Time admin panel{/tr}</a></em>
 </fieldset>
