@@ -5,6 +5,7 @@
 <div class="adminWizardContent">
 <fieldset>
 	<legend>{tr}Structures options{/tr}</legend>
+		<div class="admin clearfix featurelist">
 		{preference name=feature_wiki_open_as_structure}
 		{preference name=feature_wiki_make_structure}
 		{if $isCategories eq true}
@@ -13,6 +14,7 @@
 		{preference name=feature_wiki_multiprint}
 		{preference name=feature_listorphanStructure}
 		{preference name=feature_wiki_no_inherit_perms_structure}
+		</div>
 		<br>
 		<em>{tr}See also{/tr} <a href="https://doc.tiki.org/Structures" target="_blank">{tr}Structures{/tr} @ doc.tiki.org</a></em>
 </fieldset>

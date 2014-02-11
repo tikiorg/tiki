@@ -11,10 +11,14 @@
 </fieldset>
 <fieldset>
 	<legend>{tr}Dependencies{/tr}</legend>
-	{tr}Enable using the same wiki page name in different contexts{/tr}. {tr}E.g. ns1:_:MyPage and ns2:_:MyPage{/tr}.
-	{preference name=namespace_enabled}
-	{preference name=feature_perspective}
+	<div class="admin clearfix featurelist">
 	{preference name=feature_categories}
+	{preference name=feature_perspective}
+	{preference name=namespace_enabled}
+	<div class="adminoptionboxchild">
+		{tr}Enable using the same wiki page name in different contexts{/tr}. {tr}E.g. ns1:_:MyPage and ns2:_:MyPage{/tr}.
+	</div>
+	</div>
 	<br>
 	<em>{tr}See also{/tr} <a href="tiki-admin.php?page=workspace" target="_blank">{tr}Workspaces & Areas admin panel{/tr}</a></em>
 </fieldset>

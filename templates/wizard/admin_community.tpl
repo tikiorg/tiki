@@ -5,20 +5,26 @@
 <div class="adminWizardContent">
 <fieldset>
 	<legend>{tr}User Features{/tr}</legend>
-	{preference name=feature_mytiki}
-	{preference name=feature_userPreferences}
-	{preference name=feature_messages}
-	<br>
+		<div class="admin clearfix featurelist">
+		{preference name=feature_mytiki}
+		{preference name=feature_userPreferences}
+		{preference name=feature_messages}
+		{preference name=feature_wizard_user}
+		</div>
+		<br/>
+		<em>{tr}To set up the <strong>User Watches</strong> and their associated settings, visit the page to {/tr} <a href="tiki-wizard_admin.php?&stepNr=15&url={$homepageUrl}">{tr}Set up Main features{/tr}</a></em>
+	<br><br>
 	<em>{tr}See also{/tr} <a href="tiki-admin.php?page=community&cookietab=1" target="_blank">{tr}Community admin panel{/tr}</a> & <a href="https://doc.tiki.org/Community" target="_blank">{tr}Community in doc.tiki.org{/tr}</a></em>
 </fieldset>
 <fieldset>
 	<legend>{tr}Community General Settings{/tr}</legend>
-	{preference name=users_prefs_allowMsgs}
-	{preference name=users_prefs_user_information}
-	{preference name=feature_community_mouseover}
-	{preference name=users_prefs_show_mouseover_user_info}
-	{preference name=users_prefs_mailCharset}
-	
+		<div class="admin clearfix featurelist">
+		{preference name=users_prefs_allowMsgs}
+		{preference name=users_prefs_user_information}
+		{preference name=feature_community_mouseover}
+		{preference name=users_prefs_show_mouseover_user_info}
+		{preference name=users_prefs_mailCharset}
+		</div>	
 </fieldset>
 {if $prefs.feature_search eq 'y'}
 	<fieldset>
