@@ -295,7 +295,7 @@
 	{foreach from=$mysql_variables key=key item=item}
 		<tr class="{cycle}">
 			<td class="text">{$key}</td>
-			<td class="text">{$item.value}</td>
+			<td class="text">{$item.value|escape}</td>
 		</tr>
 	{foreachelse}
 		{norecords _colspan=2}
