@@ -380,6 +380,13 @@ if (isset($_REQUEST['comments_enabled']) && $_REQUEST['comments_enabled'] === 'o
 $hash = array();
 $hash['lock_it'] = $lock_it;
 $hash['comments_enabled'] = $comments_enabled;
+
+//delete colums from tiki_output if they're already created so new values can be inserted to use wikiLingo as the parser
+$tikilib->query("DELETE FROM `tiki_output` WHERE `entityId` = ? AND `objectType` = ?", array($page, 'wikiPage'));
+if (!empty($_REQUEST['wiki_parser'])){
+    $tikilib->query("INSERT INTO tiki_output (entityId, objectType, outputType) VALUES (?,?,?)", array($page, 'wikiPage', $_REQUEST['wiki_parser']));
+}
+
 if (!empty($_REQUEST['contributions'])) {
 	$hash['contributions'] = $_REQUEST['contributions'];
 }
@@ -1552,6 +1559,7 @@ $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 $smarty->assign('showtags', 'n');
 $smarty->assign('qtnum', '1');
 $smarty->assign('qtcycle', '');
+$smarty->assign('outputType', $info['outputType']);
 
 possibly_set_pagedata_to_pretranslation_of_source_page();
 

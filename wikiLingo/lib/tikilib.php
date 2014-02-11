@@ -4598,6 +4598,8 @@ class TikiLib extends TikiDb_Bridge
 				}
 			}
 
+            $row['outputType'] = $this->getOne ("SELECT `outputType` FROM `tiki_output` WHERE `entityId` = ? AND `objectType` = ?", array($row['pageName'], 'wikiPage'));
+
 			$this->cache_page_info[$pageNameEncode] = $row;
 			return $this->cache_page_info[$pageNameEncode];
 		}

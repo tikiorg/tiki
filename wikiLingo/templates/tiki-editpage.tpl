@@ -281,6 +281,17 @@
                                 </div>
                                </div>
 							{/if}
+                            {if $prefs.feature_wikilingo eq 'y'}
+                                <div class="form-group">
+                                    <label for="wiki-parser" class="col-sm-2 control-label">{tr}Choose your parser{/tr}</label>
+                                    <div class="col-sm-10 checkbox">
+                                        <select id="wiki-parser-choice" name="wiki_parser" >
+                                            <option value="">{tr}tiki Wiki Syntax Parser {/tr}</option>
+                                            <option value="wikiLingo" {if $outputType eq 'wikiLingo'}selected="selected"{/if}>{tr}wikiLingo{/tr}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            {/if}
 							{if $prefs.wiki_comments_allow_per_page neq 'n'}
                 <div class="form-group">
                                 <label for="comments_enabled" class="col-sm-2 control-label">{tr}Allow comments on this page{/tr}</label>
@@ -440,7 +451,7 @@ $("input[name=allowhtml]").change(function() {
 											{if $showstructs|@count gt 0}
 												<ul>
 													{foreach from=$showstructs item=page_info}
-														<li>{$page_info.pageName}{if !empty($page_info.page_alias)}({$page_info.page_alias}){/if}</li>
+														<li>{$page_info.pageName}{if !empty(${$page_info.outputType}.page_alias)}({$page_info.page_alias}){/if}</li>
 													{/foreach}
 												</ul>
 											{/if}
