@@ -174,6 +174,7 @@ if ($prefs['namespace_enabled'] == 'y' && isset($_REQUEST['namespace'])) {
 
 $smarty->assign('page', $page);
 $info = $tikilib->get_page_info($page);
+$smarty->assign('quickedit', isset($_GET['quickedit']));
 
 // String use to lock the page currently edit.
 $editLockPageId = 'edit_lock_' . (isset($info['page_id']) ? (int) $info['page_id'] : 0);

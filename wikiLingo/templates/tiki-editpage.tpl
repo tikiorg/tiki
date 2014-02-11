@@ -287,7 +287,7 @@
                                     <div class="col-sm-10 checkbox">
                                         <select id="wiki-parser-choice" name="wiki_parser" >
                                             <option value="">{tr}tiki Wiki Syntax Parser {/tr}</option>
-                                            <option value="wikiLingo" {if $outputType eq 'wikiLingo'}selected="selected"{/if}>{tr}wikiLingo{/tr}</option>
+                                            <option value="wikiLingo" {if $outputType eq 'wikiLingo' or $quickedit eq TRUE}selected="selected"{/if}>{tr}wikiLingo{/tr}</option>
                                         </select>
                                     </div>
                                 </div>
