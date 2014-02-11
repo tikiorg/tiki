@@ -216,16 +216,18 @@ if (($where == 'wikis' || $where == 'articles') && $prefs['feature_multilingual'
 	$smarty->assign_by_ref('languages', $languages);
 }
 
-array_walk(
-	$results['data'],
-	function (& $entry) {
-		if (strpos($entry['href'], '?') !== false) {
-			$entry['href'] .= '&highlight=' . rawurlencode($_REQUEST['words']);
-		} else {
-			$entry['href'] .= '?highlight=' . rawurlencode($_REQUEST['words']);
+if (isset($results['data']) && is_array($results['data'])) {
+	array_walk(
+		$results['data'],
+		function (& $entry) {
+			if (strpos($entry['href'], '?') !== false) {
+				$entry['href'] .= '&highlight=' . rawurlencode($_REQUEST['words']);
+			} else {
+				$entry['href'] .= '?highlight=' . rawurlencode($_REQUEST['words']);
+			}
 		}
-	}
-);
+	);
+}
 
 $smarty->assign_by_ref('where_list', $where_list);
 $smarty->assign_by_ref('results', $results["data"]);
