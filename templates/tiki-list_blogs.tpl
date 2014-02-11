@@ -107,7 +107,7 @@
 		{/if}
 	{/if}
 	{if $tiki_p_blog_admin eq 'y' and $listpages[changes].allow_comments eq 'y'}
-		<a class='icon' href='tiki-list_comments.php?types_section=blogs&blogId={$listpages[changes].blogId}'>{icon _id='comments' alt="{tr}List all comments{/tr}" title="{tr}List all comments{/tr}"}</a>
+		<a class='icon' href='tiki-list_comments.php?types_section=blogs&amp;blogId={$listpages[changes].blogId}'>{icon _id='comments' alt="{tr}List all comments{/tr}" title="{tr}List all comments{/tr}"}</a>
 	{/if}
 	{if $tiki_p_admin eq 'y' || $tiki_p_assign_perm_blog eq 'y'}
 	    {if isset($listpages[changes].individual) and $listpages[changes].individual eq 'y'}
