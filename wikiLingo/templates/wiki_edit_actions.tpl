@@ -3,13 +3,22 @@
 	<input type="hidden" name="no_bl" value="y">
 	<input type="submit" class="wikiaction btn btn-default" title="{tr}Preview your changes.{/tr}" name="preview" value="{tr}Preview{/tr}" onclick="needToConfirm=false;">
 {if $prefs.ajax_autosave eq "y"}
-	{jq} $("input[name=preview]").click(function(){
-auto_save('editwiki', autoSaveId);
+    {if $prefs.feature_wikilingo eq "y"}
+        {jq}
+            $("input[name=preview]").click(function(){
+                $(document).trigger('preview', [$('#editwiki'), $('#autosave_preview').slideDown('slow'), autoSaveId]);
+                return false;
+            });
+        {/jq}
+    {else}
+{jq} $("input[name=preview]").click(function(){
+auto_save('editwiki');
 if (!ajaxPreviewWindow) {
-	$('#autosave_preview').slideDown('slow', function(){ ajax_preview( 'editwiki', autoSaveId, true );});
+$('#autosave_preview').slideDown('slow', function(){ ajax_preview( 'editwiki', autoSaveId, true );});
 }
 return false;
 });{/jq}
+    {/if}
 {/if}
 {if $page|lower neq 'sandbox' or $tiki_p_admin eq 'y'}
 	{if ! isset($page_badchars_display) or $prefs.wiki_badchar_prevent neq 'y'}

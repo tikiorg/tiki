@@ -228,13 +228,31 @@ window.expressionSyntaxes = $expressionSyntaxesJson;
 window.wLPlugins = $wLPlugins;
 </script>
 <div
-    id="$as_id-wysiwyg"
+    id="$as_id"
     class="wikiedit wikilingo"
     contenteditable="true">$contentSafe</div><input type="hidden" name="$name" id="$as_id"/>
 HTML
 ;
             $headerlib
                 //->add_jsfile("vendor/wikilingo/wikilingo/editor/editor.js")
+                ->add_js(<<<JS
+$(document).bind('preview', function(e, editor, previewWindow, autoSaveId) {
+    $.post($.service("edit", "wysiwyg_wikiLingo"), {
+        data: editor.html(),
+        editorId: editor.attr('id'),
+        autoSaveId: autoSaveId,
+        preview: true
+    }, function(result){
+        result = $.parseJSON(result);
+        previewWindow.html(result.parsed);
+
+        $('body')
+            .append(result.css)
+            .append(result.script);
+    });
+});
+JS
+                )
                 ->add_jq_onready(<<<JS
 (function($, el, input) {
     var
@@ -293,7 +311,7 @@ HTML
 			}
 		})
 		.trigger('resetWLPlugins');
-})(jQuery, document.getElementById('$as_id-wysiwyg'), document.getElementById('$as_id'));
+})(jQuery, document.getElementById('$as_id'), document.getElementById('$as_id'));
 JS
 );
 

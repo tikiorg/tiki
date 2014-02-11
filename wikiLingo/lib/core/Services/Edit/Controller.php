@@ -209,4 +209,41 @@ $(window).load(function(){
 		}
 	}
 
+    function action_wysiwyg_wikiLingo(JitFilter $input)
+    {
+        global $user, $prefs, $tikiroot;
+        $tikilib = TikiLib::lib('tiki');
+
+        $autoSaveIdParts = explode(':', $input->autoSaveId->text());	// user, section, object id
+        foreach ($autoSaveIdParts as & $part) {
+            $part = urldecode($part);
+        }
+
+        $page = $autoSaveIdParts[2];	// plugins use global $page for approval
+
+        if (!Perms::get('wiki page', $page)->edit || $user != $tikilib->get_semaphore_user($page)) {
+            return '';
+        }
+
+        $info = $tikilib->get_page_info($page, false);
+        if (empty($info)) {
+            return '';	// no page info?
+        }
+
+        $scripts = new WikiLingo\Utilities\Scripts("vendor/wikilingo/wikilingo/");
+        $wikiLingo = new WikiLingo\Parser($scripts);
+        $toWikiLingo = new WYSIWYGWikiLingo\Parser();
+        $data = $input->data->unsafe();
+        $source = $toWikiLingo->parse($data);
+        $parsed = $wikiLingo->parse($source);
+
+        if ($input->preview->bool()) {
+            return array(
+                'parsed' => $parsed,
+                'script' => $scripts->renderScript(),
+                'css' => $scripts->renderCss()
+            );
+        }
+    }
+
 }

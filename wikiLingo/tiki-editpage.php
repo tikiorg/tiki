@@ -382,12 +382,6 @@ $hash = array();
 $hash['lock_it'] = $lock_it;
 $hash['comments_enabled'] = $comments_enabled;
 
-//delete colums from tiki_output if they're already created so new values can be inserted to use wikiLingo as the parser
-$tikilib->query("DELETE FROM `tiki_output` WHERE `entityId` = ? AND `objectType` = ?", array($page, 'wikiPage'));
-if (!empty($_REQUEST['wiki_parser'])){
-    $tikilib->query("INSERT INTO tiki_output (entityId, objectType, outputType) VALUES (?,?,?)", array($page, 'wikiPage', $_REQUEST['wiki_parser']));
-}
-
 if (!empty($_REQUEST['contributions'])) {
 	$hash['contributions'] = $_REQUEST['contributions'];
 }
@@ -894,9 +888,12 @@ if ( isset( $_REQUEST['translation_critical'] ) ) {
 	$smarty->assign('translation_critical', 0);
 }
 
+//override the feature if info tells us not to use it
+$prefs['feature_wikilingo'] = ($prefs['feature_wikilingo'] === 'y' && isset($info['outputType']) && $info['outputType'] === 'wikiLingo' ? 'y' : 'n');
+
 // Parse (or not) $edit_data into $parsed
 // Handles switching editor modes
-if ( !isset($_REQUEST['preview']) && !isset($_REQUEST['save']) ) {
+if ( !isset($_REQUEST['preview']) && !isset($_REQUEST['save']) && $prefs['feature_wikilingo'] == 'n') {
 	if (isset($_REQUEST['mode_normal']) && $_REQUEST['mode_normal'] ==='y') {
 		// Parsing page data as first time seeing html page in normal editor
 		$smarty->assign('msg', "Parsing html to wiki");
@@ -1247,6 +1244,12 @@ if (
 			}
 		}
 	}
+
+    //delete colums from tiki_output if they're already created so new values can be inserted to use wikiLingo as the parser
+    $tikilib->query("DELETE FROM `tiki_output` WHERE `entityId` = ? AND `objectType` = ?", array($page, 'wikiPage'));
+    if (!empty($_REQUEST['wiki_parser'])){
+        $tikilib->query("INSERT INTO tiki_output (entityId, objectType, outputType) VALUES (?,?,?)", array($page, 'wikiPage', $_REQUEST['wiki_parser']));
+    }
 
 	include_once("categorize.php");
 	include_once("poll_categorize.php");

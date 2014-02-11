@@ -25,4 +25,9 @@ class JitFilter_Element
 	{
 		return $this->filter($name);
 	}
+
+    function unsafe()
+    {
+        return $this->value;
+    }
 }

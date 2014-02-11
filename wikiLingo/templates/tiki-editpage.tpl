@@ -25,20 +25,29 @@
 {/if}
 	
 {if $prefs.ajax_autosave eq "y"}
-<div class="pull-right">
-	{self_link _icon="magnifier" _class="previewBtn" _ajax="n"}{tr}Preview your changes.{/tr}{/self_link}
-</div>
-{jq} $(".previewBtn").click(function(){
-	if ($('#autosave_preview:visible').length === 0) {
-		auto_save('editwiki', autoSaveId);
-		if (!ajaxPreviewWindow) {
-			$('#autosave_preview').slideDown('slow', function(){ ajax_preview( 'editwiki', autoSaveId, true );});
-		}
-	} else {
-		$('#autosave_preview').slideUp('slow');
-	}
-	return false;
-});{/jq}
+    <div class="pull-right">
+        {self_link _icon="magnifier" _class="previewBtn" _ajax="n"}{tr}Preview your changes.{/tr}{/self_link}
+    </div>
+    {if $prefs.feature_wikilingo eq "y"}
+        {jq}
+            $(".previewBtn").click(function(){
+                $(document).trigger('preview', [$('#editwiki'), $('#autosave_preview').slideDown('slow'), autoSaveId]);
+                return false;
+            });
+        {/jq}
+    {else}
+        {jq} $(".previewBtn").click(function(){
+            if ($('#autosave_preview:visible').length === 0) {
+                auto_save('editwiki', autoSaveId);
+                if (!ajaxPreviewWindow) {
+                    $('#autosave_preview').slideDown('slow', function(){ ajax_preview( 'editwiki', autoSaveId, true );});
+                }
+            } else {
+                $('#autosave_preview').slideUp('slow');
+            }
+            return false;
+        });{/jq}
+    {/if}
 {/if}
    
 {if isset($data.draft)}
