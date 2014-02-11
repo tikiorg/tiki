@@ -17,7 +17,7 @@
 						</a>
 					{/if}
 				</h1>
-				<h2 class="sitesubtitle">{if !empty($module_params.sitesubtitle)}{tr}{$module_params.sitesubtitle|escape}{/tr}{/if}</h3>
+				<h2 class="sitesubtitle">{if !empty($module_params.sitesubtitle)}{tr}{$module_params.sitesubtitle|escape}{/tr}{/if}</h2>
 			</div>
 		{/if}
 	{/tikimodule}
