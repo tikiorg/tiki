@@ -45,12 +45,14 @@
 			setTimeout(function () {
 				$('#bootstrap-modal').modal('hide');
 			}, 100 * (last + 2));
+			$('#notification-link').trigger('clear-all.monitor.tiki');
 		});
 
 		$('.notification-container .close').click(function (e) {
 			e.preventDefault();
 			$(this).parent().slideUp('fast');
 			$.post($(this).attr('href'));
+			$('#notification-link').trigger('clear-one.monitor.tiki');
 		});
 	{/jq}
 {/block}
