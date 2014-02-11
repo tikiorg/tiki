@@ -11,7 +11,9 @@
 		{preference name=feature_messages}
 		{preference name=feature_wizard_user}
 		</div>
-	<br>
+		<br/>
+		<em>{tr}To set up the <strong>User Watches</strong> and their associated settings, visit the page to {/tr} <a href="tiki-wizard_admin.php?&stepNr=15&url={$homepageUrl}">{tr}Set up Main features{/tr}</a></em>
+	<br><br>
 	<em>{tr}See also{/tr} <a href="tiki-admin.php?page=community&cookietab=1" target="_blank">{tr}Community admin panel{/tr}</a> & <a href="https://doc.tiki.org/Community" target="_blank">{tr}Community in doc.tiki.org{/tr}</a></em>
 </fieldset>
 <fieldset>
