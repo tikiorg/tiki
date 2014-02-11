@@ -330,7 +330,7 @@
 		<div class="adminoptionboxchild" id="namespace_enabled_childcontainer">
 			{tr}The namespace separator should not{/tr}
 			<ul>
-			<li>{tr}contain any of the characters not allowed in wiki page names, typically{/tr} /?#[]@$&+;=&lt;&gt;</li>
+			<li>{tr}contain any of the characters not allowed in wiki page names, typically{/tr} /?#[]@$&amp;+;=&lt;&gt;</li>
 			<li>{tr}conflict with wiki syntax tagging{/tr}</li>
 			</ul>
 			{preference name=namespace_separator}
