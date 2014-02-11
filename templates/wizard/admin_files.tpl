@@ -29,7 +29,7 @@
 			{preference name=feature_wiki_attachments}
 			{preference name=feature_use_fgal_for_wiki_attachments}
 			<br>
-			<em>{tr}See also{/tr} <a href="tiki-admin.php?page=wiki&alt=Wiki#content2" target="_blank">{tr}Wiki admin panel{/tr}</a></em>
+			<em>{tr}See also{/tr} <a href="tiki-admin.php?page=wiki&amp;alt=Wiki#content2" target="_blank">{tr}Wiki admin panel{/tr}</a></em>
 		</fieldset>
         </td>
     </tr>
