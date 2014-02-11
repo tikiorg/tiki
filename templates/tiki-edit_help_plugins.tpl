@@ -13,7 +13,7 @@
 {/if}</p>
 
 {if $tiki_p_admin eq 'y'}
-<a href="tiki-admin.php?page=textarea&cookietab=2" target="tikihelp" class="tikihelp">{tr}Activate/deactivate plugins{/tr}</a>
+<a href="tiki-admin.php?page=textarea&amp;cookietab=2" target="tikihelp" class="tikihelp">{tr}Activate/deactivate plugins{/tr}</a>
 {/if}
 
 {if isset($editorId)}
