@@ -1,5 +1,5 @@
 {* $Id$ *}
-<form action="tiki-admin.php?page=look" id="look" name="look" class="labelColumns" onreset="return(confirm("{tr}Cancel Edit{/tr}"))" class="admin" method="post">
+<form action="tiki-admin.php?page=look" id="look" name="look" class="labelColumns" onreset="return(confirm('{tr}Cancel Edit{/tr}'))" class="admin" method="post">
 	<div class="heading input_submit_container" style="text-align: right">
 		<input type="submit" class="btn btn-default" name="looksetup" value="{tr}Apply{/tr}" />
 		<input type="reset" class="btn btn-warning" name="looksetupreset" value="{tr}Reset{/tr}" />
