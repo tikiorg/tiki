@@ -803,6 +803,4 @@
 	</div>
 </footer>
 
-		</div>{* -- END of main -- *}
-	</div> {* -- END of outerwrapper -- *}
 </div> {* -- END of fixedwidth -- *}
