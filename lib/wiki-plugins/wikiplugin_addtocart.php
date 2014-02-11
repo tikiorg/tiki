@@ -177,7 +177,7 @@ function wikiplugin_addtocart( $data, $params )
 	$headerlib->add_jsfile('lib/payment/cartlib.js');
 
 	if ( ! session_id() ) {
-		return WikiParser_PluginOutput::internalError(tra('A session must be active to use the cart.'));
+		session_start();
 	}
 	if ( ! isset( $params['code'], $params['description'], $params['price'] ) ) {
 		return WikiParser_PluginOutput::argumentError(array_diff(array( 'code', 'description', 'price'), array_keys($params)));
