@@ -2,3 +2,7 @@
 	order deny,allow
 	deny from all
 </FilesMatch>
+<FilesMatch "\.png">
+    order deny,allow
+    allow from all
+</FilesMatch>
