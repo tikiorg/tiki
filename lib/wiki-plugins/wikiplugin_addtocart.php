@@ -76,7 +76,7 @@ function wikiplugin_addtocart_info()
 			'label' => array(
 				'required' => false,
 				'name' => tra('Button label'),
-				'description' => tra('Text for the submit button. default: "Add to cart"'),
+				'description' => tra('Text for the submit button. default:') . ' ' . '"' . tra('Add to cart') . '"',
 				'filter' => 'text',
 				'default' => 'Add to cart',
 			),

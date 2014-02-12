@@ -29,7 +29,7 @@
 		</tr>
 		{/if}
 	</table>
-	<input type="submit" class="btn btn-default" value="{$params.label|escape}">
+	<input type="submit" class="btn btn-default" value="{tr}{$params.label|escape}{/tr}">
 	{if $params.exchangeorderitemid}
 		<input type="hidden" value="{$params.exchangeorderitemid|escape}" name="exchangeorderitemid">
 		<input type="hidden" value="{$params.exchangetoproductid|escape}" name="exchangetoproductid">
