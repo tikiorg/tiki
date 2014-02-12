@@ -889,11 +889,11 @@ if ( isset( $_REQUEST['translation_critical'] ) ) {
 }
 
 //override the feature if info tells us not to use it
-$prefs['feature_wikilingo'] = ($prefs['feature_wikilingo'] === 'y' && isset($info['outputType']) && $info['outputType'] === 'wikiLingo' ? 'y' : 'n');
+$useWikiLingo = ($prefs['feature_wikilingo'] === 'y' && isset($info['outputType']) && $info['outputType'] === 'wikiLingo');
 
 // Parse (or not) $edit_data into $parsed
 // Handles switching editor modes
-if ( !isset($_REQUEST['preview']) && !isset($_REQUEST['save']) && $prefs['feature_wikilingo'] == 'n') {
+if ( !isset($_REQUEST['preview']) && !isset($_REQUEST['save']) && !$useWikiLingo) {
 	if (isset($_REQUEST['mode_normal']) && $_REQUEST['mode_normal'] ==='y') {
 		// Parsing page data as first time seeing html page in normal editor
 		$smarty->assign('msg', "Parsing html to wiki");
@@ -1190,19 +1190,8 @@ if (
 				$edit .= "\r\n";
 			$edit = substr($info['data'], 0, $real_start).$edit.substr($info['data'], $real_start + $real_len);
 		}
-		if (
-			isset($_REQUEST['jisonWyisywg']) &&
-			$_REQUEST['jisonWyisywg'] == 'true' &&
-			$prefs['feature_jison_wiki_parser'] == 'y' &&
-			$prefs['feature_wysiwyg'] === 'y'
-		) {
-			$parser = new JisonParser_Html_Handler();
-			print_r($edit);
-			$edit = $parser->parse($edit);
-			print_r($edit);
-			print_r(Tikilib::getOne('select data from tiki_pages where pageName = ?', array($page)));
-			die;
-		} else if ($_SESSION['wysiwyg'] === 'y' && $prefs['wysiwyg_wiki_parsed'] === 'y' && $prefs['wysiwyg_ckeditor'] === 'y') {
+
+        if ($_SESSION['wysiwyg'] === 'y' && $prefs['wysiwyg_wiki_parsed'] === 'y' && $prefs['wysiwyg_ckeditor'] === 'y') {
 			$edit = $editlib->partialParseWysiwygToWiki($edit);
 		}
 
@@ -1244,12 +1233,6 @@ if (
 			}
 		}
 	}
-
-    //delete colums from tiki_output if they're already created so new values can be inserted to use wikiLingo as the parser
-    $tikilib->query("DELETE FROM `tiki_output` WHERE `entityId` = ? AND `objectType` = ?", array($page, 'wikiPage'));
-    if (!empty($_REQUEST['wiki_parser'])){
-        $tikilib->query("INSERT INTO tiki_output (entityId, objectType, outputType) VALUES (?,?,?)", array($page, 'wikiPage', $_REQUEST['wiki_parser']));
-    }
 
 	include_once("categorize.php");
 	include_once("poll_categorize.php");

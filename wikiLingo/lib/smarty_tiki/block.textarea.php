@@ -205,11 +205,7 @@ this.instances.'.$as_id.'.resetDirty();
         //setup wikiLingo
         else
         {
-            if (!$included) {
-                $html .= '<input type="hidden" name="wysiwyg" value="y" />';
-            }
             $scripts = new WikiLingo\Utilities\Scripts("vendor/wikilingo/wikilingo/editor/");
-
             $parserWYSIWYG = new WikiLingoWYSIWYG\Parser($scripts);
             $contentSafe = $parserWYSIWYG->parse($content);
             $expressionSyntaxes = new WikiLingoWYSIWYG\ExpressionSyntaxes($scripts);
@@ -223,34 +219,54 @@ this.instances.'.$as_id.'.resetDirty();
             $css = $parserWYSIWYG->scripts->renderCss();
             $html .= <<<HTML
 $css
+<div
+    id="$as_id-ui"
+    class="wikiedit wikilingo"
+    contenteditable="true"
+    onchange="this.input.value = this.innerHTML">$contentSafe</div>
+<input type="hidden" name="$name" id="$as_id"/>
 <script>
+var ui = document.getElementById('$as_id-ui'),
+    input = document.getElementById('$as_id');
+
+ui.input = input;
+input.value = ui.innerHTML;
+
 window.expressionSyntaxes = $expressionSyntaxesJson;
 window.wLPlugins = $wLPlugins;
 </script>
-<div
-    id="$as_id"
-    class="wikiedit wikilingo"
-    contenteditable="true">$contentSafe</div><input type="hidden" name="$name" id="$as_id"/>
 HTML
 ;
             $headerlib
                 //->add_jsfile("vendor/wikilingo/wikilingo/editor/editor.js")
                 ->add_js(<<<JS
-$(document).bind('preview', function(e, editor, previewWindow, autoSaveId) {
-    $.post($.service("edit", "wysiwyg_wikiLingo"), {
-        data: editor.html(),
-        editorId: editor.attr('id'),
-        autoSaveId: autoSaveId,
-        preview: true
-    }, function(result){
-        result = $.parseJSON(result);
-        previewWindow.html(result.parsed);
+$(document)
+    .bind('previewWysiwygWikiLingo', function(e, data, form, previewWindow) {
+        $.post($.service("edit", "wysiwyg_wikiLingo"), {
+            data: data,
+            autoSaveId: autoSaveId,
+            page: autoSaveId.split(':').pop(),
+            preview: true
+        }, function(result){
+            result = $.parseJSON(result);
+            previewWindow.html(result.parsed);
 
-        $('body')
-            .append(result.css)
-            .append(result.script);
+            $('body')
+                .append(result.css)
+                .append(result.script);
+        });
+    })
+    .bind('saveWysiwygWikiLingo', function(e, data, form) {
+        var page;
+        $.post($.service("edit", "wysiwyg_wikiLingo"), {
+            data: data,
+            autoSaveId: autoSaveId,
+            page: page = autoSaveId.split(':').pop(),
+            save: 1
+        }, function(result){
+            document.location = 'tiki-index.php?page=' + page
+        });
     });
-});
 JS
                 )
                 ->add_jq_onready(<<<JS
@@ -267,7 +283,7 @@ JS
                 element.style['color'] = newColor
             }
     	},
-        medium = new Medium({
+        medium = el.medium = new Medium({
             element: el,
             mode: 'rich',
 			placeholder: tr('Your Article'),
@@ -292,7 +308,7 @@ JS
                         newEl.setAttribute('data-element', 'true');
                         newEl.setAttribute('data-type', 'WikiLingo\\\\Expression\\\\Line');
 
-                        medium.insertHtml(newEl)
+                        this.element.medium.insertHtml(newEl)
                         return true;
                 }
 
@@ -311,10 +327,9 @@ JS
 			}
 		})
 		.trigger('resetWLPlugins');
-})(jQuery, document.getElementById('$as_id'), document.getElementById('$as_id'));
+})(jQuery, document.getElementById('$as_id-ui'), document.getElementById('$as_id'));
 JS
 );
-
 
             //join wikiLingo's scripts with tiki's
             foreach($scripts->scriptLocations as $scriptLocation) {
