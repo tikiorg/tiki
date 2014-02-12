@@ -537,7 +537,7 @@ $("input[name=allowhtml]").change(function() {
 										</li>
 									{/if}
 
-									{if $prefs.wiki_page_hide_title eq 'y' && $prefs.wiki_page_name_above eq 'y'}
+									{if $prefs.wiki_page_hide_title eq 'y' && ($prefs.wiki_page_name_above eq 'y' or $prefs.feature_page_title eq 'y')}
 										<li>{tr}Show page title{/tr} <select name="page_hide_title">
 										<option value="0" {if $page_hide_title == 0}selected{/if}></option>
 										{* <option value="1" {if $page_hide_title == 1}selected{/if}>On</option> *}
