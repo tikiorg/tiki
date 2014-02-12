@@ -67,7 +67,7 @@
 							});
 							if (getCookie("wysiwyg_inline_edit", "preview")) { $("#wysiwyg_inline_edit").click(); }
 						{/jq}
-						<a class="btn btn-default" class="btn btn-default" title="{tr}Inline Edit{/tr}" href="#" id="wysiwyg_inline_edit">{icon _id='page' title="{tr}Inline Edit{/tr}"}</a>
+						<a class="btn btn-default" title="{tr}Inline Edit{/tr}" href="#" id="wysiwyg_inline_edit">{icon _id='page' title="{tr}Inline Edit{/tr}"}</a>
 					{/if}
 				{/if}
 			{/if}
