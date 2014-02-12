@@ -17,11 +17,11 @@
         {else}
             {jq}
                 $('input[name=preview]').click(function(){
-                    $(document).trigger('previewWikiLingo', [false, $('#editwiki-ui').html(), $('#editpageform'), $('#autosave_preview').slideDown('slow')]);
+                    $(document).trigger('previewWikiLingo', [false, $('#editwiki').val(), $('#editpageform'), $('#autosave_preview').slideDown('slow')]);
                     return false;
                 });
                 $('input.btn-primary').click(function() {
-                    $(document).trigger('saveWikiLingo', [false, $('#editwiki-ui').html(), $('#editpageform')]);
+                    $(document).trigger('saveWikiLingo', [false, $('#editwiki').val(), $('#editpageform')]);
                     return false;
                 });
             {/jq}
