@@ -28,7 +28,7 @@
 
 html[dir="rtl"] * {
     direction: rtl;
-    text-align: start;
+    text-align: right; /* If at least latest version of IE supported that, it would be better to use CSS3's text-align: start / end everywhere to avoid this */
 }
 
 /* Hebrew and Arabic characters display smaller than latin characters */
@@ -514,6 +514,6 @@ table.normal th.auto {
 /* Overrides for main page content in non-RTL languages (only when lang attr is set on it) */
 #role_main[lang]:not([lang=ar]):not([lang=he]):not([lang=fa]):not([lang=ku]):not([lang=ug]) * {
     direction: ltr;
-    text-align: start;
+    text-align: left;
 }
 
