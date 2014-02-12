@@ -1,4 +1,4 @@
-<form action="tiki-admin.php?page=metrics" onreset="return(confirm("{tr}Cancel Edit{/tr}"))" class="admin" method="post">
+<form action="tiki-admin.php?page=metrics" onreset="return(confirm('{tr}Cancel Edit{/tr}'))" class="admin" method="post">
 
     <div class="row">
         <div class="form-group col-lg-12 clearfix">

@@ -158,7 +158,7 @@ class PreferencesLib
 			}
 
 			if (!empty($info['plugin'])) {
-				$info['plugin'] = 'tiki-admin.php?page=textarea&cookietab=2&textFilter=' . urlencode($info['plugin']);
+				$info['plugin'] = 'tiki-admin.php?page=textarea&amp;cookietab=2&textFilter=' . urlencode($info['plugin']);
 			}
 
 			$smarty = TikiLib::lib('smarty');

@@ -91,9 +91,9 @@
 			</tr>
 		{foreachelse}
 			{if $find}
-				{norecords _colspan=7 _text="No records found with: $find"}
+				{norecords _colspan=6 _text="No records found with: $find"}
 			{else}
-				{norecords _colspan=7}
+				{norecords _colspan=6}
 			{/if}
 		{/foreach}
 	</table>

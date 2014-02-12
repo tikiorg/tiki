@@ -63,7 +63,7 @@ $wizardlib = TikiLib::lib('wizard');
 $wizardlib->showPages($pages, true);
 
 // Build the TOC
-$toc = '';
+$toc = '<ul class="wizard_toc">';
 $stepNr = 0;
 $reqStepNr = $wizardlib->wizard_stepNr;
 $homepageUrl = $_REQUEST['url'];
@@ -94,7 +94,7 @@ foreach ($pages as $page) {
 	$toc .= 'href="'.$url.'">'.$page->pageTitle().'</a></li>';
 	$stepNr++;
 }
-
+$toc .= '</ul>';
 	// Hide the left and right sidebars when the admin wizard is run
 	$headerlib = TikiLib::lib('header');
 	$headerlib->add_js(

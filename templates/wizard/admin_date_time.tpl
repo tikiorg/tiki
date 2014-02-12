@@ -13,7 +13,7 @@
 	{preference name=display_field_order}
 	</div>
 	<br>
-	<em>{tr}See also{/tr} <a href="tiki-admin.php?page=general&alt=General#content4" target="_blank">{tr}Date and Time admin panel{/tr}</a></em>
+	<em>{tr}See also{/tr} <a href="tiki-admin.php?page=general&amp;alt=General#content4" target="_blank">{tr}Date and Time admin panel{/tr}</a></em>
 </fieldset>
 <br>
 </div>

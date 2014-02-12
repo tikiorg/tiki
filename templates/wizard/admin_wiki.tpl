@@ -18,7 +18,7 @@
 	</div>
 	</div>
 	<br><br>
-	<em>{tr}See also{/tr} <a href="tiki-admin.php?page=wiki&alt=Wiki#content1" target="_blank">{tr}Wiki admin panel{/tr}</a></em>
+	<em>{tr}See also{/tr} <a href="tiki-admin.php?page=wiki&amp;alt=Wiki#content1" target="_blank">{tr}Wiki admin panel{/tr}</a></em>
 </fieldset>
 
 </div>
