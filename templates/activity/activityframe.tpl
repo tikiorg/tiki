@@ -7,6 +7,9 @@
 			<div class="media-body">
 				<h4 class="media-heading">{$activityframe.heading}</h4>
 				{if $activityframe.activity.type && $activityframe.activity.object}
+					<span class="pull-right">
+						{$activityframe.activity.modification_date|tiki_short_datetime}
+					</span>
 					<div>
 						{glyph name=link}
 						{object_link type=$activityframe.activity.type id=$activityframe.activity.object backuptitle=$object.activity.title}
@@ -15,6 +18,9 @@
 			</div>
 		</div>
 	{else}
+		<span class="pull-right">
+			{$activityframe.activity.modification_date|tiki_short_datetime}
+		</span>
 		<strong style="vertical-align: middle;">{$activityframe.activity.user|avatarize:'':'img/noavatar.png'} {$activityframe.heading}</strong>
 		{if in_array($user, $activityframe.activity.user_followers)}
 		This user is your friend!
@@ -27,16 +33,13 @@
 		{/if}
 		<div class="content">{$activityframe.content}</div>
 		<div class="footer">
-			<span class="pull-right">
-				{$activityframe.activity.modification_date|tiki_short_datetime}
-			</span>
 			{if $activityframe.comment && $activity_format neq 'extended'}
 				<a class="comment" href="{service controller=comment action=list type=$activityframe.comment.type objectId=$activityframe.comment.id modal=true}">
 					{tr}Comment{/tr}
 					{if $activityframe.activity.comment_count}({$activityframe.activity.comment_count|escape}){/if}
 				</a>
 			{/if}
-			{if $prefs.feature_friends eq 'y'}
+			{if $prefs.feature_friends eq 'y' && $activityframe.likeactive}
 				{if $activityframe.like}
 					<a class="like" href="{service controller=social action=unlike type=$activityframe.object.type id=$activityframe.object.id}">
 						{tr}Unlike{/tr}

@@ -20,6 +20,11 @@ function smarty_block_activityframe($params, $content, $smarty, &$repeat)
 		$commentMode = $params['comment'];
 	}
 
+	$likeMode = 'default';
+	if (isset($params['like']) && $params['like'] == 'disabled') {
+		$likeMode = 'disabled';
+	}
+
 	$likes = isset($params['activity']['like_list']) ? $params['activity']['like_list'] : array();
 	if (! is_array($likes)) {
 		$params['activity']['like_list'] = $likes = array();
@@ -85,6 +90,7 @@ function smarty_block_activityframe($params, $content, $smarty, &$repeat)
 			'comment' => $comment,
 			'heading' => $params['heading'],
 			'like' => in_array($GLOBALS['user'], $likes),
+			'likeactive' => $likeMode != 'disabled',
 			'sharedgroups' => $sharedGroups,
 		)
 	);
