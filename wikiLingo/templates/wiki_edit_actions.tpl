@@ -2,17 +2,30 @@
 <div class="actions">
 	<input type="hidden" name="no_bl" value="y">
 	<input type="submit" class="wikiaction btn btn-default" title="{tr}Preview your changes.{/tr}" name="preview" value="{tr}Preview{/tr}" onclick="needToConfirm=false;">
-    {if $prefs.feature_wikilingo eq "y" and $wysiwyg eq 'y'}
-        {jq}
-            $('input[name=preview]').click(function(){
-                $(document).trigger('previewWysiwygWikiLingo', [$('#editwiki-ui').html(), $('#editpageform'), $('#autosave_preview').slideDown('slow')]);
-                return false;
-            });
-            $('input.btn-primary').click(function() {
-                $(document).trigger('saveWysiwygWikiLingo', [$('#editwiki-ui').html(), $('#editpageform')]);
-                return false;
-            });
-        {/jq}
+    {if $prefs.feature_wikilingo eq "y"}
+        {if $wysiwyg eq 'y'}
+            {jq}
+                $('input[name=preview]').click(function(){
+                    $(document).trigger('previewWikiLingo', [true, $('#editwiki-ui').html(), $('#editpageform'), $('#autosave_preview').slideDown('slow')]);
+                    return false;
+                });
+                $('input.btn-primary').click(function() {
+                    $(document).trigger('saveWikiLingo', [true, $('#editwiki-ui').html(), $('#editpageform')]);
+                    return false;
+                });
+            {/jq}
+        {else}
+            {jq}
+                $('input[name=preview]').click(function(){
+                    $(document).trigger('previewWikiLingo', [false, $('#editwiki-ui').html(), $('#editpageform'), $('#autosave_preview').slideDown('slow')]);
+                    return false;
+                });
+                $('input.btn-primary').click(function() {
+                    $(document).trigger('saveWikiLingo', [false, $('#editwiki-ui').html(), $('#editpageform')]);
+                    return false;
+                });
+            {/jq}
+        {/if}
     {else}
     {if $prefs.ajax_autosave eq "y"}
 {jq} $("input[name=preview]").click(function(){

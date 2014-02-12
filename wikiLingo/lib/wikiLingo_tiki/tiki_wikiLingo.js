@@ -1,0 +1,97 @@
+var BindWikiLingo = (function(document, $, Medium) {
+    var Construct = function(el, input) {
+        var
+            WLPlugin = function(el) {
+                if (el.getAttribute('data-draggable') == 'true') {
+                    new WLPluginAssistant(el, 'vendor/wikilingo/wikilingo/');
+                }
+            },
+            color = function(element) {
+                var newColor = prompt(tr('What color?'), element.style['color']);
+                if (newColor) {
+                    element.style['color'] = newColor
+                }
+            },
+            medium = (Medium ? el.medium = new Medium({
+                element: el,
+                mode: 'rich',
+                placeholder: tr('Your Article'),
+                autoHR: false,
+                cssClasses: [],
+                attributes: {
+                    remove: []
+                },
+                tags: {
+                    paragraph: 'p',
+                    outerLevel: ['pre','blockquote', 'figure', 'hr', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'div', 'ul', 'strong', 'code', 'br', 'b', 'span'],
+                    innerLevel: ['a', 'b', 'u', 'i', 'img', 'div', 'strong', 'li', 'span', 'code', 'br']
+                },
+                modifiers: [],
+                beforeAddTag: function(tag, shouldFocus, isEditable, afterElement) {
+                    var newEl;
+                    switch (tag) {
+                        case 'br':
+                        case 'p':
+                            newEl = document.createElement('br');
+                            newEl.setAttribute('class', 'element');
+                            newEl.setAttribute('data-element', 'true');
+                            newEl.setAttribute('data-type', 'WikiLingo\\\\Expression\\\\Line');
+
+                            this.element.medium.insertHtml(newEl)
+                            return true;
+                    }
+
+                    return newEl;
+                }
+            }) : null);
+
+        $('body')
+            .on('resetWLPlugins', function() {
+                for(var i = 0; i < window.wLPlugins.length; i++) {
+                    new WLPlugin(document.getElementById(window.wLPlugins[i]));
+                }
+            })
+            .trigger('resetWLPlugins');
+
+        el.onchange = function() {
+            input.value = el.innerHTML;
+        };
+
+        this.el = el;
+        this.input = input;
+    };
+
+
+    return Construct;
+})(document, jQuery, window.Medium);
+
+$(document)
+    //wysiwyg events
+    .bind('previewWikiLingo', function(e, wysiwyg, data, form, previewWindow) {
+        $.post($.service("edit", "wikiLingo"), {
+            wysiwyg: (wysiwyg ? 1 : 0),
+            data: data,
+            autoSaveId: autoSaveId,
+            page: autoSaveId.split(':').pop(),
+            preview: true
+        }, function(result){
+            result = $.parseJSON(result);
+            previewWindow.html(result.parsed);
+
+            $('body')
+                .append(result.css)
+                .append(result.script);
+        });
+    })
+    .bind('saveWikiLingo', function(e, wysiwyg, data, form) {
+        var page;
+        $.post($.service("edit", "wikiLingo"), {
+            wysiwyg: (wysiwyg ? 1 : 0),
+            data: data,
+            autoSaveId: autoSaveId,
+            page: page = autoSaveId.split(':').pop(),
+            save: 1
+        }, function(result){
+            document.location = 'tiki-index.php?page=' + page
+        });
+    });

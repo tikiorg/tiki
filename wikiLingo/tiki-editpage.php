@@ -890,6 +890,7 @@ if ( isset( $_REQUEST['translation_critical'] ) ) {
 
 //override the feature if info tells us not to use it
 $useWikiLingo = ($prefs['feature_wikilingo'] === 'y' && isset($info['outputType']) && $info['outputType'] === 'wikiLingo');
+$smarty->assign('useWikiLingo', $useWikiLingo);
 
 // Parse (or not) $edit_data into $parsed
 // Handles switching editor modes

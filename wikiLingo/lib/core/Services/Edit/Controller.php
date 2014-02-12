@@ -209,7 +209,7 @@ $(window).load(function(){
 		}
 	}
 
-    function action_wysiwyg_wikiLingo(JitFilter $input)
+    function action_wikiLingo(JitFilter $input)
     {
         global $user, $prefs;
         $tikilib = TikiLib::lib('tiki');
@@ -222,9 +222,15 @@ $(window).load(function(){
 
         $scripts = new WikiLingo\Utilities\Scripts("vendor/wikilingo/wikilingo/");
         $wikiLingo = new WikiLingo\Parser($scripts);
-        $toWikiLingo = new WYSIWYGWikiLingo\Parser();
-        $data = $input->data->none();
-        $source = $toWikiLingo->parse($data);
+
+        if ($input->wysiwyg->int() == 1) {
+            $toWikiLingo = new WYSIWYGWikiLingo\Parser();
+            $data = $input->data->none();
+            $source = $toWikiLingo->parse($data);
+        } else {
+            $source = $input->data->none();
+        }
+
         $parsed = $wikiLingo->parse($source);
 
         $result = array();

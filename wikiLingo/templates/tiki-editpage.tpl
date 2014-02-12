@@ -28,13 +28,22 @@
     <div class="pull-right">
         {self_link _icon="magnifier" _class="previewBtn" _ajax="n"}{tr}Preview your changes.{/tr}{/self_link}
     </div>
-    {if $prefs.feature_wikilingo eq "y"}
-        {jq}
-            $(".previewBtn").click(function(){
-                $(document).trigger('previewWikiLingo', [$('#editwiki'), $('#autosave_preview').slideDown('slow'), autoSaveId]);
-                return false;
-            });
-        {/jq}
+    {if $prefs.feature_wikilingo eq "y" && $useWikiLingo eq TRUE}
+        {if $wysiwyg eq 'y'}
+            {jq}
+                $(".previewBtn").click(function(){
+                    $(document).trigger('previewWikiLingo', [true, $('#editwiki-ui'), $('#editpageform'), $('#autosave_preview').slideDown('slow')]);
+                    return false;
+                });
+            {/jq}
+        {else}
+            {jq}
+                $(".previewBtn").click(function(){
+                    $(document).trigger('previewWikiLingo', [false, $('#editwiki').val(), $('#editpageform'), $('#autosave_preview').slideDown('slow')]);
+                    return false;
+                });
+            {/jq}
+        {/if}
     {else}
         {jq} $(".previewBtn").click(function(){
             if ($('#autosave_preview:visible').length === 0) {
