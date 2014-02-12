@@ -18,7 +18,7 @@ class Search_Index_QueryAlertDecorator extends Search_Index_AbstractIndexDecorat
 				TikiLib::events()->trigger('tiki.query.' . $priority, array(
 					'query' => $id,
 					'priority' => $priority,
-					'user' => $raw['user'],
+					'user' => $GLOBALS['user'],
 					'type' => $raw['object_type'],
 					'object' => $raw['object_id'],
 				));
