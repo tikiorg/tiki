@@ -228,7 +228,7 @@ $listpages = $tikilib->list_pages(0, -1, 'pageName_asc', $find_objects, '', fals
 $smarty->assign_by_ref('listpages', $listpages["data"]);
 
 $structures = $structlib->list_structures(0, -1, 'pageName_asc');
-$smarty->assign_by_ref('structures', $structures['data']);
+$smarty->assign_by_ref('structures', array_filter($structures['data'], function($struct) { return $struct['editable'] === 'y'; }));
 
 $subtree = $structlib->get_subtree($structure_info["page_ref_id"]);
 foreach ($subtree as $i=>$s) { // dammed recursivite - acn not do a left join
