@@ -20,9 +20,12 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
 	header('location: index.php');
 	exit;
 }
-if (version_compare(PHP_VERSION, '5.5.0', '<')) {
+if (version_compare(PHP_VERSION, '5.5.0', '<') && php_sapi_name() != 'cli') {
 	header('location: tiki-install.php');
 	exit;
+} elseif (version_compare(PHP_VERSION, '5.5.0', '<') && php_sapi_name() == 'cli') {
+	// This is command-line. No 'location' command make sense here. Let admins access what works and deal with the rest.
+	echo "Warning: Tiki13 and above expects PHP 5.5.0 and above. You are running " . phpversion() . " at your own risk\n";
 }
 
 // Be sure that the user is not already defined by PHP on hosts that still have the php.ini config "register_globals = On"
