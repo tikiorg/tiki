@@ -303,21 +303,6 @@
                                 <div class="form-group">
                                     <label for="wiki-parser" class="col-sm-2 control-label">{tr}Choose your parser{/tr}</label>
                                     <div class="col-sm-10 checkbox">
-                                        <script>
-                                            window.update_output_type = function(select) {
-                                                $.get($.service('edit', 'update_output_type'), {
-                                                    page: autoSaveId.split(':').pop(),
-                                                    output_type: $(select).val()
-                                                },function(result){
-                                                    result = $.parseJSON(result);
-                                                    if (result.value) {
-                                                        $.notify(tr('Changed to:') + result.value);
-                                                    } else {
-                                                        $.notify(tr('Changed to default'));
-                                                    }
-                                                });
-                                            };
-                                        </script>
                                         <select id="wiki-parser-choice" name="wiki_parser" onchange="window.update_output_type(this);">
                                             <option value="">{tr}tiki Wiki Syntax Parser {/tr}</option>
                                             <option value="wikiLingo" {if $outputType eq 'wikiLingo' or $quickedit eq TRUE}selected="selected"{/if}>{tr}wikiLingo{/tr}</option>

@@ -294,6 +294,9 @@ $(window).load(function(){
             }
         }
 
+        $version = $result['version'] = $tikilib->getOne("SELECT version FROM `tiki_pages` WHERE pageName=? ORDER BY `version` DESC", array($page));
+        $tikilib->query("INSERT INTO tiki_output (entityId, objectType, outputType, version) VALUES (?,?,?,?)", array($page, 'wikiPage', 'wikiLingo', $version));
+
         if ($input->preview->bool()) {
             $result['parsed'] = $parsed;
             $result['script'] = $scripts->renderScript();
@@ -311,9 +314,10 @@ $(window).load(function(){
         if (self::page_editable(null, $page)) {
             $tikilib = TikiLib::lib('tiki');
             //delete colums from tiki_output if they're already created so new values can be inserted to use wikiLingo as the parser
-            $tikilib->query("DELETE FROM `tiki_output` WHERE `entityId` = ? AND `objectType` = ?", array($page, 'wikiPage'));
+            $version = $tikilib->getOne("SELECT version FROM `tiki_pages` WHERE pageName=? ORDER BY `version` DESC", array($page));
+            $tikilib->query("DELETE FROM `tiki_output` WHERE `entityId` = ? AND `objectType` = ? AND `version` = ?", array($page, 'wikiPage', $version));
             if (!empty($output_type)){
-                $tikilib->query("INSERT INTO tiki_output (entityId, objectType, outputType) VALUES (?,?,?)", array($page, 'wikiPage', $output_type));
+                $tikilib->query("INSERT INTO tiki_output (entityId, objectType, outputType, version) VALUES (?,?,?,?)", array($page, 'wikiPage', $output_type, $version));
             }
             return array(
                 'updated' => true,

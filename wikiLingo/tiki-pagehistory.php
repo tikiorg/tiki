@@ -314,14 +314,14 @@ if (isset($preview)) {
 	if ($preview == '' && isset($rversion)) {
 		$preview = $rversion;
 	}
-	if ($preview == $info["version"] || $preview == 0) {
-		$previewd = $tikilib->parse_data($info["data"], array('preview_mode' => true, 'is_html' => $info['is_html']));
+	if ($preview == $info['version'] || $preview == 0) {
+        $previewd = (new WikiLibOutput($info, $info['data'], array('preview_mode' => true, 'is_html' => $info['is_html'])))->parsedValue;
 		$smarty->assign('previewd', $previewd);
 		$smarty->assign('preview', $info['version']);
 	} else {
 		$version = $histlib->get_version($page, $preview);
 		if ($version) {
-			$previewd = $tikilib->parse_data($version["data"], array('preview_mode' => true, 'is_html' => $version['is_html']));
+            $previewd = (new WikiLibOutput($version, $version['data'], array('preview_mode' => true, 'is_html' => $version['is_html'])))->parsedValue;
 			$smarty->assign('previewd', $previewd);
 			$smarty->assign('preview', $preview);
 		}

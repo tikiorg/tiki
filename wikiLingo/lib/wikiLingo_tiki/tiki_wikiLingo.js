@@ -95,3 +95,17 @@ $(document)
             document.location = 'tiki-index.php?page=' + page
         });
     });
+
+window.update_output_type = function(select) {
+    $.get($.service('edit', 'update_output_type'), {
+        page: autoSaveId.split(':').pop(),
+        output_type: $(select).val()
+    },function(result){
+        result = $.parseJSON(result);
+        if (result.value) {
+            $.notify(tr('Changed to:') + result.value);
+        } else {
+            $.notify(tr('Changed to default'));
+        }
+    });
+};
