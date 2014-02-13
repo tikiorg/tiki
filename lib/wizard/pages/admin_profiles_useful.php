@@ -23,10 +23,12 @@ class AdminWizardProfilesUseful extends Wizard
 	
 	function onSetupPage ($homepageUrl) 
 	{
-		global	$smarty, $prefs;
+		global	$smarty, $prefs, $TWV;
 
 		// Run the parent first
 		parent::onSetupPage($homepageUrl);
+
+		$smarty->assign('tikiMajorVersion', substr($TWV->version, 0, 2));
 		
 		// Assign the page temaplte
 		$wizardTemplate = 'wizard/admin_profiles_useful.tpl';
