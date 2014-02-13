@@ -74,7 +74,12 @@
 		{/if}
 
 		{remarksbox type="note"  title="{tr}Note{/tr}"}
-			{tr _0=$prefs.sender_email|default:"this domain"|escape}If you use an email filter, be sure to add %0 to your accepted list{/tr}
+			{if $prefs.feature_wiki_protect_email eq 'y'}
+				{assign var=sender_email value=$prefs.sender_email|default:"this domain"|escape:'hexentity'}
+			{else}
+				{assign var=sender_email value=$prefs.sender_email|default:"this domain"|escape}
+			{/if}
+			{tr _0="$sender_email"}If you use an email filter, be sure to add %0 to your accepted list{/tr}
 		{/remarksbox}
 		</div>
 	{/if}
