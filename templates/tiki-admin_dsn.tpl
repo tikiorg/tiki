@@ -127,6 +127,8 @@ $('#source-form').each(function () {
 				$.each(entries, function (k, v) {
 					$(form.existing).append($('<option class="added"/>').text(v));
 				});
+
+				$(form.existing).trigger('chosen:updated');
 			});
 		},
 		addPostRow = function (name, value) {
@@ -221,6 +223,7 @@ $('#source-form').each(function () {
 			}
 
 			$(form.existing).val(data.identifier).change();
+			$(form.existing).trigger('chosen:updated');
 		});
 		return false;
 	});
