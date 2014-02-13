@@ -32,8 +32,7 @@ if (!($info = $tikilib->get_page_info($page))) {
 	die;
 }
 
-$tikilib->get_perm_object($page, 'wiki page', $info);
-$access->check_permission(array('tiki_p_remove', 'tiki_p_edit'));
+$access->check_permission(array('remove', 'edit'), '', 'wiki page', $page);
 
 if ($_REQUEST["version"] <> "last") {
 	$smarty->assign_by_ref('version', $_REQUEST["version"]);
