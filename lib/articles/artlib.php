@@ -1259,6 +1259,7 @@ class ArtLib extends TikiLib
 					'created',
 					'author',
 					'rating',
+					'nbreads',
 				)
 			);
 
