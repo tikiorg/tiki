@@ -867,14 +867,14 @@ if ($s) {
 		'fitness' => tra('good'),
 		'setting' => 'Loaded',
 		'message' => tra('This extension is needed for many features such as:') . '<br>' .
-			tra('bigbluebutton, machine translation, SCORM & meta-data in file galleries, wiki importers, custom search, Kalura and others.')
+			tra('bigbluebutton, machine translation, SCORM & meta-data in file galleries, wiki importers, custom search, Kaltura and others.')
 	);
 } else {
 	$php_properties['dom'] = array(
 		'fitness' => tra('bad'),
 		'setting' => 'Not available',
 		'message' => tra('This extension is needed for many features such as:') . '<br>' .
-			tra('bigbluebutton, machine translation, SCORM & meta-data in file galleries, wiki importers, custom search, Kalura and others.')
+			tra('bigbluebutton, machine translation, SCORM & meta-data in file galleries, wiki importers, custom search, Kaltura and others.')
 	);
 }
 
