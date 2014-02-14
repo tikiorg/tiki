@@ -34,11 +34,6 @@ function smarty_function_rating( $params, $smarty )
 					$commentslib = TikiLib::lib('comments');
 					$commentslib->vote_comment($id, $user, $value);
 				}
-			} elseif ($type == 'article' ) {
-				global $artlib, $user; require_once 'lib/articles/artlib.php';
-				if ( $user ) {
-				  $artlib->vote_comment($id, $user, $value);
-				}
 	        }
 
 			if ($prefs['feature_score'] == 'y' && $id) {
