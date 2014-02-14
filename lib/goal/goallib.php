@@ -20,11 +20,12 @@ class GoalLib
 			'to' => null,
 			'type' => 'user',
 			'conditions' => [
-				['label' => 'Modifications', 'operator' => 'atLeast', 'count' => 5, 'metric' => '(result-count
-					(filter (range "modification_date") (from (concat daySpan " days ago")) (to "now"))
-					(filter (content "tiki.wiki.update") (field "event_type"))
-					(filter (content user) (field "user"))
-				)'],
+				['label' => 'Modifications', 'operator' => 'atLeast', 'count' => 5, 'metric' => 'event-count', 'arguments' => [
+					'eventType' => "tiki.wiki.update",
+				]],
+				['label' => 'Creations', 'operator' => 'atLeast', 'count' => 2, 'metric' => 'event-count', 'arguments' => [
+					'eventType' => "tiki.wiki.create",
+				]],
 			],
 		];
 	}
@@ -34,10 +35,20 @@ class GoalLib
 		$this->prepareConditions($goal);
 		$runner = $this->getRunner();
 
+		$goal['complete'] = true;
+
 		foreach ($goal['conditions'] as & $cond) {
 			$runner->setFormula($cond['metric']);
-			$runner->setVariables(array_merge($goal, $context));
+			$runner->setVariables(array_merge($goal, $context, $cond['arguments']));
 			$cond['metric'] = min($cond['count'], $runner->evaluate());
+
+			if ($cond['operator'] == 'atLeast') {
+				$cond['complete'] = $cond['metric'] >= $cond['count'];
+			} else {
+				$cond['complete'] = $cond['metric'] <= $cond['count'];
+			}
+
+			$goal['complete'] = $goal['complete'] && $cond['complete'];
 		}
 
 		return $goal;
@@ -48,7 +59,8 @@ class GoalLib
 		$runner = $this->getRunner();
 
 		foreach ($goal['conditions'] as & $cond) {
-			$cond['metric'] = $runner->setFormula($cond['metric']);
+			$metric = $this->prepareMetric($cond['metric'], $goal);
+			$cond['metric'] = $runner->setFormula($metric);
 		}
 	}
 
@@ -64,6 +76,29 @@ class GoalLib
 		}
 
 		return self::$runner;
+	}
+
+	private function prepareMetric($metric, $goal)
+	{
+		switch ($metric) {
+		case 'event-count':
+			$metric = '(result-count
+				(filter-date)
+				(filter-target)
+				(filter (content eventType) (field "event_type"))
+			)';
+			break;
+		}
+
+		if ($goal['daySpan']) {
+			$metric = str_replace('(filter-date)', '(filter (range "modification_date") (from (concat daySpan " days ago")) (to "now"))', $metric);
+		} else {
+			$metric = str_replace('(filter-date)', '(filter (range "modification_date") (from from) (to to))', $metric);
+		}
+
+		$metric = str_replace('(filter-target)', '(filter (content user) (field "user"))', $metric);
+
+		return $metric;
 	}
 }
 
