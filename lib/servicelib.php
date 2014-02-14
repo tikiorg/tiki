@@ -37,6 +37,8 @@ class ServiceLib
 
 			if (isset($params['action'])) {
 				$url .= "-{$params['action']}";
+			} else {
+				$url .= "-x";
 			}
 
 			unset($params['controller']);
