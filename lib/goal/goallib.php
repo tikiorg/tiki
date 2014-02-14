@@ -19,9 +19,9 @@ class GoalLib
 			'from' => null,
 			'to' => null,
 			'type' => 'user',
-			'eligible' => ['Registered'],
+			'eligible' => ['Registered', 'Editors'],
 			'conditions' => [
-				['label' => 'Modifications', 'operator' => 'atLeast', 'count' => 5, 'metric' => 'event-count', 'arguments' => [
+				['label' => 'Modifications', 'operator' => 'atLeast', 'count' => 50, 'metric' => 'event-count', 'arguments' => [
 					'eventType' => "tiki.wiki.update",
 				]],
 				['label' => 'Creations', 'operator' => 'atLeast', 'count' => 2, 'metric' => 'event-count', 'arguments' => [
@@ -33,7 +33,13 @@ class GoalLib
 
 	function isEligible(array $goal, array $context)
 	{
-		return count(array_intersect($context['groups'], $goal['eligible'])) > 0;
+		if ($goal['type'] == 'user') {
+			return count(array_intersect($context['groups'], $goal['eligible'])) > 0;
+		} elseif ($context['group']) {
+			return in_array($context['group'], $goal['eligible']);
+		} else {
+			return false;
+		}
 	}
 
 	function evaluateConditions(array $goal, array $context)
@@ -102,7 +108,11 @@ class GoalLib
 			$metric = str_replace('(filter-date)', '(filter (range "modification_date") (from from) (to to))', $metric);
 		}
 
-		$metric = str_replace('(filter-target)', '(filter (content user) (field "user"))', $metric);
+		if ($goal['type'] == 'user') {
+			$metric = str_replace('(filter-target)', '(filter (content user) (field "user"))', $metric);
+		} else {
+			$metric = str_replace('(filter-target)', '(filter (multivalue group) (field "goal_groups"))', $metric);
+		}
 
 		return $metric;
 	}

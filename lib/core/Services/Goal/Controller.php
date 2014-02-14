@@ -27,6 +27,7 @@ class Services_Goal_Controller
 
 		$context = [
 			'user' => $user,
+			'group' => $input->group->groupname(),
 			'groups' => Perms::get()->getGroups(),
 		];
 
