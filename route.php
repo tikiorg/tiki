@@ -138,10 +138,16 @@ function tiki_route($path)
 		'|^tiki\-(\w+)\-(\w+)$|',
 		'tiki-ajax_services.php',
 		function ($parts) {
-			return array(
-				'controller' => $parts[1],
-				'action' => $parts[2],
-			);
+			if ($parts[2] == 'x') {
+				return array(
+					'controller' => $parts[1],
+				);
+			} else {
+				return array(
+					'controller' => $parts[1],
+					'action' => $parts[2],
+				);
+			}
 		}
 	);
 
