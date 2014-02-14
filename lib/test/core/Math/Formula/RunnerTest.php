@@ -310,6 +310,7 @@ class Math_Formula_RunnerTest extends TikiTestCase
 			array('(str a b)', 'a b'),
 			array('(str (mul 3 2)b)', '6 b'),
 			array('(str Say: (eval a b) !)', 'Say: hello world !'),
+			array('(concat "Say: " a " " b " !")', 'Say: hello world !'),
 		);
 	}
 }

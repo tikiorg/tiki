@@ -21,9 +21,9 @@ class GoalLib
 			'type' => 'user',
 			'conditions' => [
 				['label' => 'Modifications', 'operator' => 'atLeast', 'count' => 5, 'metric' => '(result-count
-					(filter (range (str modification_date)) (from (concat daySpan (str days ago))) (to (str now)))
-					(filter (content (str tiki.wiki.update)) (field (str event_type)))
-					(filter (content user) (field (str user)))
+					(filter (range "modification_date") (from (concat daySpan " days ago")) (to "now"))
+					(filter (content "tiki.wiki.update") (field "event_type"))
+					(filter (content user) (field "user"))
 				)'],
 			],
 		];
