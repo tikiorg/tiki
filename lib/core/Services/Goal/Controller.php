@@ -21,9 +21,20 @@ class Services_Goal_Controller
 		$goallib = TikiLib::lib('goal');
 		$info = $goallib->fetchGoal($input->goalId->int());
 
-		$info = $goallib->evaluateConditions($info, [
+		if (! $info) {
+			throw new Services_Exception_NotFound;
+		}
+
+		$context = [
 			'user' => $user,
-		]);
+			'groups' => Perms::get()->getGroups(),
+		];
+
+		if (! $goallib->isEligible($info, $context)) {
+			throw new Services_Exception_Denied(tr('Not eligible for this goal'));
+		}
+
+		$info = $goallib->evaluateConditions($info, $context);
 
 		return array(
 			'title' => $info['name'],

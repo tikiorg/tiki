@@ -19,6 +19,7 @@ class GoalLib
 			'from' => null,
 			'to' => null,
 			'type' => 'user',
+			'eligible' => ['Registered'],
 			'conditions' => [
 				['label' => 'Modifications', 'operator' => 'atLeast', 'count' => 5, 'metric' => 'event-count', 'arguments' => [
 					'eventType' => "tiki.wiki.update",
@@ -28,6 +29,11 @@ class GoalLib
 				]],
 			],
 		];
+	}
+
+	function isEligible(array $goal, array $context)
+	{
+		return count(array_intersect($context['groups'], $goal['eligible'])) > 0;
 	}
 
 	function evaluateConditions(array $goal, array $context)
