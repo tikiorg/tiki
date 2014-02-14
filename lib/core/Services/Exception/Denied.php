@@ -19,7 +19,7 @@ class Services_Exception_Denied extends Services_Exception
 	public static function checkAuth()
 	{
 		if (empty($GLOBALS['user'])) {
-			throw new self();
+			throw new self(tr('Authentication required'));
 		}
 	}
 }

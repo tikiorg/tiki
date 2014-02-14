@@ -9,26 +9,63 @@ class GoalLib
 {
 	static $runner;
 
-	function fetchGoal($goalId)
+	function listGoals()
 	{
-		// TODO : Create table, connect to database
-		return [
-			'name' => 'Simple Contributor',
-			'description' => 'Modify 5 wiki pages within 14 days',
+		$table = $this->table();
+
+		$list = $table->fetchAll(['goalId', 'enabled', 'name', 'description', 'type', 'eligible'], [], -1, -1, [
+			'name' => 'ASC',
+		]);
+
+		return array_map(function ($goal) {
+			$goal['eligible'] = json_decode($goal['eligible'], true);
+			return $goal;
+		}, $list);
+	}
+
+	function removeGoal($goalId)
+	{
+		$this->table()->delete(['goalId' => $goalId]);
+	}
+
+	function replaceGoal($goalId, array $data)
+	{
+		$data = array_merge([
+			'name' => 'No name',
+			'description' => '',
+			'type' => 'user',
+			'enabled' => 0,
 			'daySpan' => 14,
 			'from' => null,
 			'to' => null,
-			'type' => 'user',
-			'eligible' => ['Registered', 'Editors'],
-			'conditions' => [
-				['label' => 'Modifications', 'operator' => 'atLeast', 'count' => 50, 'metric' => 'event-count', 'arguments' => [
-					'eventType' => "tiki.wiki.update",
-				]],
-				['label' => 'Creations', 'operator' => 'atLeast', 'count' => 2, 'metric' => 'event-count', 'arguments' => [
-					'eventType' => "tiki.wiki.create",
-				]],
-			],
-		];
+			'eligible' => [],
+			'conditions' => [],
+			'rewards' => [],
+		], $data);
+
+		$data['eligible'] = json_encode((array) $data['eligible']);
+		$data['conditions'] = json_encode((array) $data['conditions']);
+		$data['rewards'] = json_encode((array) $data['rewards']);
+
+		if ($goalId) {
+			$this->table()->update($data, ['goalId' => $goalId]);
+			return $goalId;
+		} else {
+			return $this->table()->insert($data);
+		}
+	}
+
+	function fetchGoal($goalId)
+	{
+		$goal = $this->table()->fetchFullRow(['goalId' => $goalId]);
+
+		if ($goal) {
+			$goal['eligible'] = json_decode($goal['eligible'], true) ?: [];
+			$goal['conditions'] = json_decode($goal['conditions'], true) ?: [];
+			$goal['rewards'] = json_decode($goal['rewards'], true) ?: [];
+
+			return $goal;
+		}
 	}
 
 	function isEligible(array $goal, array $context)
@@ -115,6 +152,11 @@ class GoalLib
 		}
 
 		return $metric;
+	}
+	
+	private function table()
+	{
+		return TikiDb::get()->table('tiki_goals');
 	}
 }
 

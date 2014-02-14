@@ -10,9 +10,7 @@ class Services_User_MonitorController
 	function setUp()
 	{
 		Services_Exception_Disabled::check('monitor_enabled');
-		if (! $GLOBALS['user']) {
-			throw new Services_Exception_Denied(tr('Authentication required'));
-		}
+		Services_Exception_Denied::checkAuth();
 	}
 
 	function action_object($input)

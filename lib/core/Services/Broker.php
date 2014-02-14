@@ -106,10 +106,8 @@ class Services_Broker
 	private function render($controller, $action, $output, JitFilter $request, $internal = false)
 	{
 		if (isset($output['FORWARD'])) {
-			$loc = $_SERVER['PHP_SELF'];
-			$arguments = $output['FORWARD'];
-			header("Location: $loc?" . http_build_query($arguments, '', '&'));
-			exit;
+			$url = TikiLib::lib('service')->getUrl($output['FORWARD']);
+			TikiLib::lib('access')->redirect($url);
 		}
 
 		$smarty = TikiLib::lib('smarty');
