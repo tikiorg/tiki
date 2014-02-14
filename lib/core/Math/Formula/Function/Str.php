@@ -12,7 +12,9 @@ class Math_Formula_Function_Str extends Math_Formula_Function
 		$out = array();
 
 		foreach ( $element as $child ) {
-			if ($child instanceof Math_Formula_Element) {
+			if ($child instanceof Math_Formula_InternalString) {
+				$out[] = $child->getContent();
+			} elseif ($child instanceof Math_Formula_Element) {
 				$out[] = $this->evaluateChild($child);
 			} else {
 				$out[] = $child;
