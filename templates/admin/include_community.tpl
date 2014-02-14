@@ -127,6 +127,11 @@
 					{/jq}
 				</div>
 			</fieldset>
+
+			<fieldset>
+				<legend>{tr}Goal, Recognition and Rewards{/tr}</legend>
+				{preference name=goal_enabled}
+			</fieldset>
 		{/tab}
 		
 		{tab name="{tr}Plugins{/tr}"}

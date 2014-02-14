@@ -750,7 +750,7 @@ class UnifiedSearchLib
 		$this->initQueryPermissions($query);
 	}
 
-	function initQueryBase($query)
+	function initQueryBase($query, $applyJail = true)
 	{
 		global $prefs;
 
@@ -758,7 +758,7 @@ class UnifiedSearchLib
 		$query->setIdentifierFields($prefs['unified_identifier_fields']);
 
 		$categlib = TikiLib::lib('categ');
-		if ($jail = $categlib->get_jail()) {
+		if ($applyJail && $jail = $categlib->get_jail()) {
 			$query->filterCategory(implode(' or ', $jail), true);
 		}
 	}

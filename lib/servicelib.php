@@ -68,6 +68,7 @@ class ServiceLib
 			'draw' => 'Services_Draw_Controller',
 			'edit' => 'Services_Edit_Controller',
 			'favorite' => 'Services_User_FavoriteController',
+			'goal' => 'Services_Goal_Controller',
 			'file_finder' => 'Services_File_FinderController',
 			'file' => 'Services_File_Controller',
 			'jcapture' => 'Services_JCapture_Controller',
