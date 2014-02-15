@@ -8,6 +8,9 @@
 		{/section}
 		</span>
 	{/if}
+	{if $forum_info.vote_threads eq 'y' and ($tiki_p_ratings_view_results eq 'y' or $tiki_p_admin eq 'y')}
+		{rating_result_avg type=comment id=$comment.threadId }
+	{/if}
 	{if $forum_info.vote_threads eq 'y' and $tiki_p_forum_vote eq 'y'}
 		<span class="score">
 		<b>{tr}Score{/tr}</b>: {$comment.average|string_format:"%.2f"}
