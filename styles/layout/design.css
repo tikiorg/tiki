@@ -2934,6 +2934,10 @@ div.highlight {
 	padding: inherit;
 }
 
+.ratingResultAvg {
+	font-weight: bold;
+}
+
 .rbox > div.highlight {
 	display: block;
 	font-weight: bold;
