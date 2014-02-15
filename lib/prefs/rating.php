@@ -56,6 +56,16 @@ function prefs_rating_list()
 			),
 			'default' => ''
 		),
+		'rating_results_detailed' => array(
+			'name' => tr('Detailed Rating Results'),
+			'description' => tr('Displays a table with the result count and percentage per rating option.'),
+			'type' => 'flag',
+			'options' => array(
+				'' => tr('Disabled'),
+				'y' => tr('Enabled'),
+			),
+			'default' => ''
+		),
 	);
 }
 

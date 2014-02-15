@@ -16,6 +16,9 @@
 			{if $show_expdate eq 'y' && $expireDate}{tr}Expires At:{/tr} {$expireDate|tiki_short_datetime} - {/if}
 			{if $show_reads eq 'y'}({$reads} {tr}Reads{/tr}){/if}
 		</span>
+		{if $prefs.article_user_rating eq 'y' && $tiki_p_ratings_view_results eq 'y'}
+			- {rating_result_avg id=$articleId type=article}
+		{/if}
 	</header>
 
 	{if $use_ratings eq 'y'}
@@ -35,7 +38,10 @@
 			{rating type=article id=$articleId}
 		</form>
 	{/if}
-
+	{if $tiki_p_ratings_view_results or $tiki_p_admin eq 'y'}
+		{rating_result id=$articleId type=article}
+	{/if}
+	
 	{if $prefs.art_trailer_pos ne 'between'}{include file='article_trailer.tpl'}{/if}
 
 	<div class="articleheading">

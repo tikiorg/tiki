@@ -103,6 +103,9 @@
 					<input type="hidden" name="id" value="{$deliberation.threadId}">
 					<input type="hidden" name="type" value="comment">
 				</form>
+				{if $tiki_p_ratings_view_results eq 'y' or $tiki_p_admin eq 'y'}
+					{rating_result type="comment" id=$deliberation.threadId}
+				{/if}
 			</div>
 		{/foreach}
 		{jq}

@@ -63,7 +63,7 @@
 								{/if}
 								</td>
 
-								{if $prefs.wiki_comments_simple_ratings eq 'y'}
+								{if $prefs.wiki_comments_simple_ratings eq 'y' && $tiki_p_vote_comments eq 'y'}
 								<td>
 									<form class="commentRatingForm" method="post" action="" style="float: right;">
 										{rating type="comment" id=$comment.threadId}
@@ -82,6 +82,9 @@
 										});
 									{/jq}
 								</td>
+								{/if}
+								{if $prefs.wiki_comments_simple_ratings eq 'y' && $tiki_p_ratings_view_results eq 'y'}
+									{rating_result type="comment" id=$comment.threadId}
 								{/if}
 							</tr>
 						</table>

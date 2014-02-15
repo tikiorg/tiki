@@ -13,6 +13,7 @@ function smarty_function_rating_result( $params, $smarty )
 	$smiles = $ratinglib->get_options_smiles($params['type'], $params['id'], true);
 	$tableBody = "";
 
+	if ($prefs['rating_results_detailed'] == 'y') {
 	foreach ($votings as $vote => $voting) {
 		$tableBody .= '<td style="width:' . $voting['percent'] . '%; text-align: center;">
 			<div class="ui-widget-content">' .
@@ -21,8 +22,10 @@ function smarty_function_rating_result( $params, $smarty )
 				($prefs['rating_smileys'] == 'y' ? '<div style="background-color: ' . $smiles[$vote]['color'] . ';">&nbsp;</div>' : '').
 			'</div>
 		</td>';
+		}
+	} else {
+		$tableBody = '';
 	}
 
 	return "<table class='ratingDeliberationResultTable' style='width:100%;'><tr>" . $tableBody . "</tr></table>";
 }
-

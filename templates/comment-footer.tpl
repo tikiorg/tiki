@@ -25,6 +25,9 @@
 		{/if}
 		</span>
 	{/if}
+	{if $tiki_p_ratings_view_results eq 'y' or $tiki_p_admin eq 'y'}
+		{rating_result type=comment id=$comment.threadId }
+	{/if}
 	
 	{if isset($first) and $first eq 'y'}
                 <span class="post_reads"><b>{tr}Reads{/tr}</b>: {$comment.hits}</span>
