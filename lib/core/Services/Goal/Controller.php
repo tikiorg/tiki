@@ -29,6 +29,16 @@ class Services_Goal_Controller
 			'groups' => Perms::get()->getGroups(),
 		];
 
+		if ($info['type'] == 'group' && ! $context['group']) {
+			return [
+				'FORWARD' => [
+					'controller' => 'goal',
+					'action' => 'show_list',
+					'goalId' => $info['goalId'],
+				],
+			];
+		}
+
 		if (! $goallib->isEligible($info, $context)) {
 			throw new Services_Exception_Denied(tr('Not eligible for this goal'));
 		}
@@ -39,6 +49,21 @@ class Services_Goal_Controller
 			'title' => $info['name'],
 			'goal' => $info,
 		);
+	}
+
+	function action_show_list($input)
+	{
+		$goallib = TikiLib::lib('goal');
+		$info = $goallib->fetchGoal($input->goalId->int());
+
+		if (! $info) {
+			throw new Services_Exception_NotFound;
+		}
+		
+		return [
+			'title' => $info['name'],
+			'goal' => $info,
+		];
 	}
 
 	function action_admin($input)
@@ -134,6 +159,12 @@ class Services_Goal_Controller
 				$goal['to'] = $to;
 			}
 
+			$conditions = json_decode($input->conditions->none(), true);
+			if (is_array($conditions)) {
+				// Basic validation to make sure we have json
+				$goal['conditions'] = $conditions;
+			}
+
 			$goallib->replaceGoal($input->goalId->int(), $goal);
 		}
 
@@ -169,6 +200,67 @@ class Services_Goal_Controller
 			'removed' => $removed,
 			'goal' => $goal,
 			'groups' => TikiLib::lib('user')->list_all_groups(),
+		];
+	}
+
+	/**
+	 * Action is completely stateless. Renders the provided data.
+	 */
+	function action_render_conditions($input)
+	{
+		$perms = Perms::get();
+		if (! $perms->admin) {
+			throw new Services_Exception_Denied(tr('Reserved to administrators'));
+		}
+
+		$conditions = json_decode($input->conditions->none(), true);
+
+		if (! is_array($conditions)) {
+			throw new Services_Exception_MissingValue('conditions');
+		}
+
+		return [
+			'title' => tr('Conditions'),
+			'conditions' => array_filter($conditions),
+		];
+	}
+
+	/**
+	 * Action is completely stateless. Pass in parameters, get updated parameters.
+	 */
+	function action_edit_condition($input)
+	{
+		$condition = [
+			'label' => tr('Pages created'),
+			'operator' => 'atLeast',
+			'count' => 5,
+			'metric' => 'event-count',
+			'eventType' => 'tiki.wiki.create',
+		];
+
+		$metricList = TikiLib::lib('goal')->getMetricList();
+
+		$operator = $input->operator->word();
+		if (! in_array($operator, ['atLeast', 'atMost'])) {
+			$operator = null;
+		}
+
+		$metric = $input->metric->text();
+		if (! isset($metricList[$metric])) {
+			$metric = null;
+		}
+
+		$condition['label'] = $input->label->text() ?: $condition['label'];
+		$condition['count'] = $input->count->int() ?: $condition['count'];
+		$condition['operator'] = $operator ?: $condition['operator'];
+		$condition['metric'] = $metric ?: $condition['metric'];
+
+		$condition['eventType'] = $input->eventType->attribute_type() ?: $condition['eventType'];
+
+		return [
+			'title' => tr('Condition'),
+			'condition' => $condition,
+			'metrics' => $metricList,
 		];
 	}
 }

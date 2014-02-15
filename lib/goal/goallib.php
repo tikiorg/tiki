@@ -87,8 +87,15 @@ class GoalLib
 		$goal['complete'] = true;
 
 		foreach ($goal['conditions'] as & $cond) {
+			$arguments = [];
+			foreach (['eventType'] as $arg) {
+				if (isset($cond[$arg])) {
+					$arguments[$arg] = $cond[$arg];
+				}
+			}
+
 			$runner->setFormula($cond['metric']);
-			$runner->setVariables(array_merge($goal, $context, $cond['arguments']));
+			$runner->setVariables(array_merge($goal, $context, $arguments));
 			$cond['metric'] = min($cond['count'], $runner->evaluate());
 
 			if ($cond['operator'] == 'atLeast') {
@@ -153,7 +160,14 @@ class GoalLib
 
 		return $metric;
 	}
-	
+
+	function getMetricList()
+	{
+		return [
+			'event-count' => ['label' => tr('Event Count'), 'arguments' => ['eventType']],
+		];
+	}
+
 	private function table()
 	{
 		return TikiDb::get()->table('tiki_goals');

@@ -99,6 +99,75 @@
 						}
 					}).change();
 				{/jq}
+
+				<div id="conditions">
+					{service_inline controller=goal action=render_conditions conditions=$goal.conditions|json_encode}
+				</div>
+
+				{jq}
+					var updateConditions = function (updater, postLoad) {
+						var $input = $('input[name=conditions]');
+						var current = JSON.parse($input.val());
+						updater(current);
+
+						$('#conditions').load($.service('goal', 'render_conditions', {
+							conditions: JSON.stringify(current)
+						}), postLoad);
+					};
+
+					$('#conditions').on('click', '.add-condition', function (e) {
+						e.preventDefault();
+
+						$.openModal({
+							remote: $.service('goal', 'edit_condition', {
+								modal: 1
+							}),
+							open: function () {
+								$('form', this).submit(ajaxSubmitEventHandler(function (data) {
+									updateConditions(function (conditions) {
+										conditions.push(data.condition);
+									}, function () {
+										$('#bootstrap-modal').modal('hide');
+									});
+								}));
+							}
+						});
+					});
+
+					$('#conditions').on('click', '.edit-condition', function (e) {
+						e.preventDefault();
+
+						var key = $(this).data('condition');
+						updateConditions(function (conditions) {
+							// Read the selected condition, open an edit window
+							var condition = conditions[key];
+							condition.modal = 1;
+							$.openModal({
+								remote: $.service('goal', 'edit_condition', condition),
+								open: function () {
+									$('form', this).submit(ajaxSubmitEventHandler(function (data) {
+										updateConditions(function (conditions) {
+											// Store back at the same position
+											conditions[key] = data.condition;
+										}, function () {
+											$('#bootstrap-modal').modal('hide');
+										});
+									}));
+								}
+							});
+						});
+					});
+
+					$('#conditions').on('click', '.delete-condition', function (e) {
+						e.preventDefault();
+
+						var key = $(this).data('condition');
+						updateConditions(function (conditions) {
+							// Remove the selected condition - no warning, this is not saved yet
+							delete conditions[key];
+						});
+					});
+				{/jq}
 			{/tab}
 		{/tabset}
 		<div class="form-group">
