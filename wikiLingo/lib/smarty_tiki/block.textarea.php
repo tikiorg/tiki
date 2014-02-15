@@ -207,6 +207,9 @@ this.instances.'.$as_id.'.resetDirty();
         {
             $scripts = new WikiLingo\Utilities\Scripts("vendor/wikilingo/wikilingo/editor/");
             $parserWYSIWYG = new WikiLingoWYSIWYG\Parser($scripts);
+	        require_once('lib/wikiLingo_tiki/WikiLingoWYSIWYGEvents.php');
+	        (new WikiLingoWYIWYGEvents($parserWYSIWYG));
+
             $contentSafe = $parserWYSIWYG->parse($content);
             $expressionSyntaxes = new WikiLingoWYSIWYG\ExpressionSyntaxes($scripts);
 

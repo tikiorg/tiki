@@ -1809,6 +1809,8 @@ class WikiLibOutput
                 self::$init = true;
                 $scripts = self::$wikiLingoScripts = new WikiLingo\Utilities\Scripts(TikiLib::tikiUrl() . "vendor/wikiLingo/");
                 $wikiLingo = self::$wikiLingo = new WikiLingo\Parser($scripts);
+	            require_once('lib/wikiLingo_tiki/WikiLingoEvents.php');
+	            (new WikiLingoEvents($wikiLingo));
             }
 
             $this->parsedValue = $wikiLingo->parse($this->originalValue);

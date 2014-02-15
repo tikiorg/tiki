@@ -222,6 +222,8 @@ $(window).load(function(){
 
         $scripts = new WikiLingo\Utilities\Scripts("vendor/wikilingo/wikilingo/");
         $wikiLingo = new WikiLingo\Parser($scripts);
+	    require_once("lib/wikiLingo_tiki/WikiLingoEvents.php");
+	    (new WikiLingoEvents($wikiLingo));
 
         if ($input->wysiwyg->int() == 1) {
             $toWikiLingo = new WYSIWYGWikiLingo\Parser();
