@@ -16,7 +16,7 @@ function smarty_function_rating_result_avg( $params, $smarty )
 		$vote_sum += $vote * $voting['votes'];
 		$vote_count_total += $voting['votes'];
 	}
-	$vote_avg = $vote_sum / $vote_count_total; 
+	$vote_avg = number_format($vote_sum / $vote_count_total, 1); 
 	//Why $vote_collect yields a different value than $vote_avg?
 	//$vote_collect = $ratinglib->collect($params['type'], $params['id'], 'avg', array_filter($votings));
 
