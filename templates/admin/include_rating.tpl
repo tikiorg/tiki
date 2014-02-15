@@ -43,6 +43,7 @@
 
 	<fieldset>
 		<legend>{tr}User Interface{/tr}</legend>
+		{preference name=rating_results_detailed}
 		{preference name=rating_smileys}
 	</fieldset>
 	
