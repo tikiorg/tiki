@@ -25,7 +25,7 @@
 		{/if}
 		</span>
 	{/if}
-	{if $tiki_p_ratings_view_results eq 'y' or $tiki_p_admin eq 'y'}
+	{if $forum_info.vote_threads eq 'y' and ($tiki_p_ratings_view_results eq 'y' or $tiki_p_admin eq 'y')}
 		{rating_result type=comment id=$comment.threadId }
 	{/if}
 	

@@ -83,7 +83,7 @@
 									{/jq}
 								</td>
 								{/if}
-								{if $prefs.wiki_comments_simple_ratings eq 'y' && $tiki_p_ratings_view_results eq 'y'}
+								{if $prefs.wiki_comments_simple_ratings eq 'y' && ($tiki_p_ratings_view_results eq 'y' or $tiki_p_admin eq 'y')}
 									{rating_result type="comment" id=$comment.threadId}
 								{/if}
 							</tr>
