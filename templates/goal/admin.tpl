@@ -18,14 +18,14 @@
 				<tr {if $goal.enabled} class="success"{/if}>
 					<td>
 						<a href="{service controller=goal action=show goalId=$goal.goalId}">{$goal.name|escape}</a>
-						{if $type eq 'group'}
+						{if $goal.type eq 'group'}
 							<span class="label label-info">{tr}Group{/tr}</span>
 						{/if}
 
 						<div class="description">{$goal.description|escape}</div>
 					</td>
 					<td>
-						<ul class="list-unstyled">
+						<ul class="list-inline">
 							{foreach $goal.eligible as $groupName}
 								<li>{$groupName|escape}</li>
 							{foreachelse}

@@ -31,14 +31,13 @@
 			{/tab}
 			{tab name="{tr}Eligibility{/tr}"}
 				<div class="form-group">
-					<div class="radio col-md-offset-3">
-						<label>
+					<label class="control-label col-md-3">{tr}Goal Attribution{/tr}</label>
+					<div class="col-md-9">
+						<label class="radio-inline">
 							<input type="radio" name="type" value="user" {if $goal.type neq 'group'}checked{/if}>
 							{tr}Individual Goal{/tr}
 						</label>
-					</div>
-					<div class="radio col-md-offset-3">
-						<label>
+						<label class="radio-inline">
 							<input type="radio" name="type" value="group" {if $goal.type eq 'group'}checked{/if}>
 							{tr}Group Goal{/tr}
 						</label>
@@ -54,6 +53,52 @@
 						</select>
 					</div>
 				</div>
+			{/tab}
+			{tab name="{tr}Conditions{/tr}"}
+				<div class="form-group">
+					<label class="control-label col-md-3">{tr}Range Type{/tr}</label>
+					<div class="col-md-9">
+						<label class="radio-inline">
+							<input name="range_type" type="radio" value="rolling" {if $goal.daySpan} checked {/if} data-target="#date-span">
+							{tr}Rolling{/tr}
+						</label>
+						<label class="radio-inline">
+							<input name="range_type" type="radio" value="fixed" {if ! $goal.daySpan} checked {/if} data-target="#date-from,#date-to">
+							{tr}Fixed{/tr}
+						</label>
+					</div>
+				</div>
+				<div class="form-group" id="date-span">
+					<label class="control-label col-md-3" for="daySpan">{tr}Time span{/tr}</label>
+					<div class="col-md-9">
+						<input class="form-control" name="daySpan" type="number" value="{$goal.daySpan|escape}">
+						<div class="help-block">
+							{tr}In days{/tr}
+						</div>
+					</div>
+				</div>
+				<div class="form-group" id="date-from">
+					<label class="control-label col-md-3" for="from">{tr}From{/tr}</label>
+					<div class="col-md-9">
+						<input class="form-control" name="from" type="datetime" value="{$goal.from|escape}" placeholder="{tr}YYYY-MM-DD HH:MM:SS{/tr}">
+					</div>
+				</div>
+				<div class="form-group" id="date-to">
+					<label class="control-label col-md-3" for="to">{tr}To{/tr}</label>
+					<div class="col-md-9">
+						<input class="form-control" name="to" type="datetime" value="{$goal.to|escape}" placeholder="{tr}YYYY-MM-DD HH:MM:SS{/tr}">
+					</div>
+				</div>
+				{jq}
+					$(':radio[name=range_type]').change(function () {
+						if ($(this).is(':checked')) {
+							$(':radio[name=range_type]').each(function () {
+								$($(this).data('target')).hide();
+							});
+							$($(this).data('target')).show();
+						}
+					}).change();
+				{/jq}
 			{/tab}
 		{/tabset}
 		<div class="form-group">

@@ -119,6 +119,21 @@ class Services_Goal_Controller
 				$goal['type'] = $type;
 			}
 
+			$rangeType = $input->range_type->word();
+			$daySpan = $input->daySpan->int();
+			$from = $input->from->isodatetime();
+			$to = $input->to->isodatetime();
+
+			if ($rangeType == 'rolling' && $daySpan) {
+				$goal['daySpan'] = $daySpan;
+				$goal['from'] = null;
+				$goal['to'] = null;
+			} elseif ($rangeType == 'fixed' && $from && $to) {
+				$goal['daySpan'] = 0;
+				$goal['from'] = $from;
+				$goal['to'] = $to;
+			}
+
 			$goallib->replaceGoal($input->goalId->int(), $goal);
 		}
 
