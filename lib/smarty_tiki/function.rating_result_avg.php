@@ -21,5 +21,5 @@ function smarty_function_rating_result_avg( $params, $smarty )
 	//$vote_collect = $ratinglib->collect($params['type'], $params['id'], 'avg', array_filter($votings));
 
 
-	return "<span class='ratingResultAvg'>" . tra("User Rating: ") . $vote_avg . "/" . count($options) . "</span>";
+	return "<span class='ratingResultAvg'>" . tra("Users' Rate: ") . $vote_avg . "/" . count($options) . "</span>";
 }
