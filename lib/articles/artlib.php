@@ -1380,6 +1380,7 @@ class ArtLib extends TikiLib
 					'created',
 					'author',
 					'rating',
+					'nbreads',
 				));
 
 		$result = $this->query($query, $bindvars, $maxRecords, $offset);
