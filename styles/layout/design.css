@@ -2938,6 +2938,10 @@ div.highlight {
 	font-weight: bold;
 }
 
+.articletitle span.ratingResultAvg {
+	font-weight: normal;
+}
+
 table span.ratingResultAvg {
   visibility:hidden;
 }
