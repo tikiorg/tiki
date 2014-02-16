@@ -24,6 +24,10 @@ function smarty_function_rating_result_avg( $params, $smarty )
 	//Why $vote_collect yields a different value than $vote_avg?
 	//$vote_collect = $ratinglib->collect($params['type'], $params['id'], 'avg', array_filter($votings));
 
-
+	// if there are no votes yet, don't show zero to avoid confusion with users voting 0 for the article; show dash instead ('-')
+	if ($vote_count_total == '') {
+		$vote_avg = '-'; 
+	}
+	
 	return "<span class='ratingResultAvg'>" . tra("Users Rating"). "</span><span class='score'>: " . $vote_avg . " / " . count($options) . "</span>";
 }
