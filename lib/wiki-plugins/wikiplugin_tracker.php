@@ -406,9 +406,7 @@ function wikiplugin_tracker($data, $params)
 	}
 
 	//test for validation errors for registration tracker calls
-	if ($prefs['useRegisterPasscode'] == 'y' && !empty($prefs['registerPasscode']) && isset ($_REQUEST['register'])
-		&& ($_REQUEST['register'] == 'Register' || $_REQUEST['register'] == 'register'))
-	{
+	if (isset ($_REQUEST['register']) && ($_REQUEST['register'] == 'Register' || $_REQUEST['register'] == 'register')) {
 		$regtracker = $userlib->get_usertrackerid('Registered');
 		if ($trackerId == $regtracker['usersTrackerId'] && $_REQUEST['valerror'] !== false) {
 			if (is_array($_REQUEST['valerror'])) {
