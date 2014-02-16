@@ -404,12 +404,20 @@ function wikiplugin_tracker($data, $params)
 	if (!isset($trackerId)) {
 		return $smarty->fetch("wiki-plugins/error_tracker.tpl");
 	}
-	//test registration passcode if used and if this is the user tracker being called during a registration
-	if ($prefs['useRegisterPasscode'] == 'y' && !empty($prefs['registerPasscode']) && isset ($_REQUEST['register'])
-		&& $_REQUEST['register'] == 'Register') {
+	//test for validation errors for registration tracker calls
+	if (isset ($_REQUEST['register']) && ($_REQUEST['register'] == 'Register' || $_REQUEST['register'] == 'register')) {
 		$regtracker = $userlib->get_usertrackerid('Registered');
-		if ($trackerId == $regtracker['usersTrackerId'] && $_REQUEST['passcode'] != $prefs['registerPasscode']) {
-			return false;
+		if ($trackerId == $regtracker['usersTrackerId'] && $_REQUEST['valerror'] !== false) {
+			if (is_array($_REQUEST['valerror'])) {
+				foreach ($_REQUEST['valerror'] as $valerror) {
+					if (is_a($valerror, 'RegistrationError')) {
+						return false;
+						break;
+					}
+				}
+			} elseif (is_a($_REQUEST['valerror'], 'RegistrationError')) {
+				return false;
+			}
 		}
 	}
 
