@@ -17,9 +17,17 @@ function smarty_function_rating_result_avg( $params, $smarty )
 		$vote_count_total += $voting['votes'];
 	}
 	$vote_avg = number_format($vote_sum / $vote_count_total, 1); 
+	// if the average has zero as decimal, do not show the decimal.
+	if (floor($vote_avg) == $vote_avg) {
+		$vote_avg = $vote_sum / $vote_count_total; 
+	}
 	//Why $vote_collect yields a different value than $vote_avg?
 	//$vote_collect = $ratinglib->collect($params['type'], $params['id'], 'avg', array_filter($votings));
 
-
-	return "<span class='ratingResultAvg'>" . tra("Users' Rate: ") . $vote_avg . "/" . count($options) . "</span>";
+	// if there are no votes yet, don't show zero to avoid confusion with users voting 0 for the article; show dash instead ('-')
+	if ($vote_count_total == '') {
+		$vote_avg = '-'; 
+	}
+	
+	return "<span class='ratingResultAvg'>" . tra("Users Rating: "). "</span><span class='score'>" . $vote_avg . " / " . count($options) . "</span>";
 }

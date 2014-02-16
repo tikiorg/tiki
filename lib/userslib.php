@@ -5363,7 +5363,7 @@ class UsersLib extends TikiLib
 				'admin' => false,
 				'prefs' => array(),
 				'scope' => 'object',
-				'apply_to' => array('wiki', 'trackers', 'articles', 'comments'),
+				'apply_to' => array('wiki', 'trackers', 'articles', 'comments', 'forums'),
 			),
 			array(
 				'name' => 'tiki_p_view_referer_stats',
