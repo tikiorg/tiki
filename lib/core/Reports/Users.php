@@ -83,7 +83,7 @@ class Reports_Users
 								'view' => $view, 
 								'type' => $type,
 								'always_email' => $always_email, 
-								'last_report' => '',
+								'last_report' => '0000-00-00 00:00:00',
 							)
 			);
 		} else {
