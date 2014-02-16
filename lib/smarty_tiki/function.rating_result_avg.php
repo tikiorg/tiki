@@ -29,5 +29,5 @@ function smarty_function_rating_result_avg( $params, $smarty )
 		$vote_avg = '-'; 
 	}
 	
-	return "<span class='ratingResultAvg'>" . tra("Users Rating"). "</span><span class='score'>: " . $vote_avg . " / " . count($options) . "</span>";
+	return "<span class='ratingResultAvg'>" . tra("Users Rating: "). "</span><span class='score'>" . $vote_avg . " / " . count($options) . "</span>";
 }
