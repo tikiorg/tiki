@@ -457,6 +457,9 @@
 			{/if}
 			{if $forum_info.vote_threads eq 'y' and ($tiki_p_ratings_view_results eq 'y' or $tiki_p_admin eq 'y')}
 				<th>{tr}Users Rating{/tr}</th>
+				{if $prefs.rating_results_detailed eq 'y'}
+					<th>{tr}Detailed results{/tr}</th>
+				{/if}
 			{/if}
 			{if $forum_info.topics_list_pts eq 'y'}
 				<th>{self_link _sort_arg='thread_sort_mode' _sort_field='average'}{tr}pts{/tr}{/self_link}</th>
@@ -544,7 +547,10 @@
 					<td class="integer">{$comments_coms[ix].hits}</td>
 				{/if}
 				{if $forum_info.vote_threads eq 'y' and ($tiki_p_ratings_view_results eq 'y' or $tiki_p_admin eq 'y')}
-					<td class="integer">{rating_result_avg type=comment id=$comments_coms[ix].threadId }&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+					<td class="integer">{rating_result_avg type=comment id=$comments_coms[ix].threadId }&nbsp;&nbsp;&nbsp;</td>
+					{if $prefs.rating_results_detailed eq 'y'}
+						<td class="integer">{rating_result type=comment id=$comments_coms[ix].threadId }</td>
+					{/if}
 				{/if}
 				{if $forum_info.topics_list_pts eq 'y'}
 					<td class="integer">{$comments_coms[ix].average|string_format:"%.2f"}</td>

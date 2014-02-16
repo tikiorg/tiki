@@ -63,6 +63,9 @@
 						{if $listpages[ix].show_reads eq 'y'}
 							<span class="reads">({$listpages[ix].nbreads} {tr}Reads{/tr})</span>
 						{/if}
+						{if $prefs.article_user_rating eq 'y' && ($tiki_p_ratings_view_results eq 'y' or $tiki_p_admin eq 'y')}
+							- {rating_result_avg id=$listpages[ix].articleId type=article}
+						{/if}
 					</span><br>
 				{/if}
 			</header>
