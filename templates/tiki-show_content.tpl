@@ -158,7 +158,7 @@
 			{rating type="wiki page" id=$page_id}
 	    </form>
 	{/if}
-	{if $tiki_p_wiki_admin_ratings eq 'y' or $tiki_p_ratings_view_results eq 'y' or $tiki_p_admin eq 'y'}
+	{if $prefs.feature_wiki_ratings eq 'y' and ($tiki_p_wiki_admin_ratings eq 'y' or $tiki_p_ratings_view_results eq 'y' or $tiki_p_admin eq 'y')}
 		{rating_result_avg type="wiki page" id=$page_id}
 		{rating_result type="wiki page" id=$page_id}
 	{/if}
