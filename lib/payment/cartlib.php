@@ -860,7 +860,7 @@ class CartLib
 		$record_profile_items_created = array();
 
 		if ($user && $prefs['payment_cart_orders'] == 'y' || !$user && $prefs['payment_cart_anonymous'] == 'y') {
-			$profileinstaller->install($orderprofile);
+			$profileinstaller->install($orderprofile, 'none');
 		}
 
 		$content = $this->get_content();
@@ -968,7 +968,7 @@ class CartLib
 		if ($user && $prefs['payment_cart_orders'] == 'y' || !$user && $prefs['payment_cart_anonymous'] == 'y') {
 			$profileinstaller->setUserData($userInput);
 			$profileinstaller->forget($orderitemprofile);
-			$profileinstaller->install($orderitemprofile);
+			$profileinstaller->install($orderitemprofile, 'none');
 		}
 
 		$this->change_inventory($info['code'], -1 * $info['quantity'], false);
