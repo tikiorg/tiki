@@ -142,14 +142,14 @@ function wikiplugin_countdown($data, $params)
 	$nowstring = $nowobj->format('Y-m-d H:i:s');
 	//can replace the above line with the below when 5.3 becomes a minimum requirement
 //	$now = $nowobj->getTimestamp();
-	
+
 	//set then date & time
 	$tikidate->setDate(strtotime($enddate));
 	$thenobj = $tikidate->date;
 	$then = $tikidate->getTime();
 	//can replace the above line with the below when 5.3 becomes a minimum requirement
 //	$then = $thenobj->getTimestamp();
-	
+
 	$difference = $then - $now;
 	//get difference in time of day for use in determining calendar days
 	$tikidate->setDate(strtotime($nowstring));
@@ -159,7 +159,7 @@ function wikiplugin_countdown($data, $params)
 	//can replace the above line with the below when 5.3 becomes a minimum requirement
 //	$thentime2 = $thenadj->getTimestamp();
 	$timediff = $thentime - $now;
-	
+
 	//Set thousands separator
 	if (!empty($thousands)) {
 		switch ($thousands) {
@@ -406,8 +406,8 @@ function wikiplugin_countdown($data, $params)
 			}
 		}
 		//add text
-		if (!isset($text) || ($text && $text != 'silent')) {
-			if ($text == 'default' || strpos($text, '|') === false) {
+		if (empty($text) || ($text && $text != 'silent')) {
+			if (empty($text) || $text == 'default' || strpos($text, '|') === false) {
 				//if $ret is empty here, it means the time before/after the event is shorter than the smallest unit of time being shown
 				if (empty($ret)) {
 					$word = '';
@@ -456,13 +456,17 @@ function wikiplugin_countdown($data, $params)
 					}
 					$data = $data . ' ' . $nowtext;
 				} else {
-					if ($diff['invert'] == 1) {
-						$word = tra('until');
+					if (empty($text) || $text == 'default') {
+						if ($diff['invert'] == 1) {
+							$word = tra('until');
+						} else {
+							$word = tra('since');
+						}
 					} else {
-						$word = tra('since');
+						$word = $text;
 					}
 				}
-			} elseif (strpos($text, '|') !== false) {
+			} elseif (!empty($text) && strpos($text, '|') !== false) {
 				$custom = explode('|', $text);
 				//if $ret is empty here, it means the time before/after the event is shorter than the unit of time being shown
 				if (empty($ret)) {
