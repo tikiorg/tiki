@@ -113,7 +113,7 @@ function tf_export_submit(fm) {
 {if (!isset($action) || $action neq " ") or !empty($export_action)}
 <td>&nbsp;</td>
 <td>
-	<div id="trackerFilter{$iTrackerFilter}-result"><div>
+	<div id="trackerFilter{$iTrackerFilter}-result"></div>
 	{if !empty($export_action)}
 		<input class="button submit btn btn-default" type="submit" name="export_filter" value="{tr}{$export_action}{/tr}">
 	{elseif $action and $action neq " "}
