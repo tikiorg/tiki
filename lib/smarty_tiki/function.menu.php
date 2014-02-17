@@ -159,7 +159,7 @@ function get_menu_with_selections($params)
 	$channels = $menulib->setSelected($channels, isset($sectionLevel)?$sectionLevel:'', isset($toLevel)?$toLevel: '', $params);
 
 	foreach ($channels['data'] as & $item) {
-		if ($menu_info['parse'] === 'y') {
+		if (!empty($menu_info['parse']) && $menu_info['parse'] === 'y') {
 			if (TikiLib::lib('parser')->contains_html_block($item['name'])) {
 				$item['block'] = true;
 			} else {

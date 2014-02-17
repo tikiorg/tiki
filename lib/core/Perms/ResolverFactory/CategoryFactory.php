@@ -84,7 +84,7 @@ class Perms_ResolverFactory_CategoryFactory implements Perms_ResolverFactory
 
 		foreach ( $values as $v ) {
 			$key = $this->objectKey(array_merge($baseContext, array( 'object' => $v )));
-			if ( count($this->knownObjects[$key]) == 0 ) {
+			if ( ! isset($this->knownObjects[$key]) || count($this->knownObjects[$key]) == 0 ) {
 				$remaining[] = $v;
 			} else {
 				$add = true;
@@ -205,7 +205,11 @@ class Perms_ResolverFactory_CategoryFactory implements Perms_ResolverFactory
 
 		$key = $this->objectKey($context);
 
-		$categories = $this->knownObjects[$key];
+		if (isset($this->knownObjects[$key])) {
+			$categories = $this->knownObjects[$key];
+		} else {
+			$categories = array();
+		}
 
 		$perms = array();
 

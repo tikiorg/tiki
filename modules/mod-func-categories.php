@@ -130,7 +130,7 @@ function module_categories($mod_reference, &$module_params)
 		);
 	}
 	$res = '';
-	$tm = new BrowseTreeMaker('mod_categ' . $module_params['module_position'] . $module_params['module_ord']);
+	$tm = new BrowseTreeMaker('mod_categ' . $mod_reference['position'] . $mod_reference['ord']);
 	foreach ($categlib->findRoots($tree_nodes) as $node) {
 		$res .= $tm->make_tree($node, $tree_nodes);
 	}

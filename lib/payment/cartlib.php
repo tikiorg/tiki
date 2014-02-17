@@ -846,6 +846,10 @@ class CartLib
 			$orderitemprofile = Tiki_Profile::fromDb($prefs['payment_cart_orderitems_profile']);
 		}
 		if ($user && $prefs['payment_cart_orders'] == 'y' || !$user && $prefs['payment_cart_anonymous'] == 'y') {
+			if (! $orderprofile) {
+				TikiLib::lib('errorreport')->report(tra('Advanced Shopping Cart setup error: Orders profile missing.'));
+				return false;
+			}
 			$profileinstaller = new Tiki_Profile_Installer();
 			$profileinstaller->forget($orderprofile); // profile can be installed multiple times
 			$profileinstaller->setUserData($userInput);
