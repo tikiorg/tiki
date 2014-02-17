@@ -59,6 +59,17 @@ $isInstalled = $installer->isInstalled();
 if ($isInstalled) {
 	$bypass_siteclose_check = true;
 	require_once 'tiki-setup.php';
+
+	if (! $asUser = $input->getParameterOption(array('--as-user'))) {
+		$asUser = 'admin';
+	}
+
+	if (TikiLib::lib('user')->user_exists($asUser)) {
+		$permissionContext = new Perms_Context($asUser);
+	}
+}
+
+if ($isInstalled) {
 	$console->add(new Tiki\Command\CacheClearCommand);
 	$console->add(new Tiki\Command\BackupDBCommand);
 	$console->add(new Tiki\Command\BackupFilesCommand);
@@ -69,7 +80,6 @@ if ($isInstalled) {
 }
 
 if ($isInstalled && ! $installer->requiresUpdate()) {
-	require_once 'tiki-setup.php';
 	$console->add(new Tiki\Command\IndexRebuildCommand);
 	$console->add(new Tiki\Command\IndexOptimizeCommand);
 	$console->add(new Tiki\Command\IndexCatchUpCommand);

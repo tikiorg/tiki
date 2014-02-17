@@ -15,6 +15,7 @@ class Application extends SymfonyApplication
     {
 		$definition = parent::getDefaultInputDefinition();
 		$definition->addOption(new InputOption('--site', '', InputOption::VALUE_REQUIRED, 'Multi-Tiki instance'));
+		$definition->addOption(new InputOption('--as-user', '', InputOption::VALUE_REQUIRED, 'Run the command as a different user'));
 		
 		return $definition;
     }
