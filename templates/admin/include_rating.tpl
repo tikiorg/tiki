@@ -19,26 +19,116 @@
 
 	<fieldset>
 		<legend>{tr}Wiki{/tr}</legend>
+		<table>
+		<tr>
+		<td style="width:48%">
 		{preference name=wiki_simple_ratings}
 		<div class="adminoptionboxchild" id="wiki_simple_ratings_childcontainer">
 			{preference name=wiki_simple_ratings_options}
 		</div>
+				</td>
+				<td style="width:4%"><td>
+				<td style="width:48%"><div class="adminoptionboxchild" id="wiki_simple_ratings_perms_childcontainer">
+				{tr}Permissions involved:{/tr}
+				<ul>
+					<li>wiki > tiki_p_wiki_vote_ratings</li>
+					<li>tiki > tiki_p_ratings_view_results</li>
+				</ul>
+				</div>
+				</td>
+			</tr>
+		</table>							
 	</fieldset>
 
 	<fieldset>
 		<legend>{tr}Articles{/tr}</legend>
+		<table>
+		<tr>
+		<td style="width:48%">
 		{preference name=article_user_rating}
 		<div class="adminoptionboxchild" id="article_user_rating_childcontainer">
 			{preference name=article_user_rating_options}
 		</div>
+				</td>
+				<td style="width:4%"><td>
+				<td style="width:48%"><div class="adminoptionboxchild" id="articles_simple_ratings_perms_childcontainer">
+				{tr}Permissions involved:{/tr}
+				<ul>
+					<li>articles > tiki_p_rate_article</li>
+					<li>tiki > tiki_p_ratings_view_results</li>
+				</ul>
+				</div>
+				</td>
+			</tr>
+		</table>							
 	</fieldset>
 
 	<fieldset>
 		<legend>{tr}Comments{/tr}</legend>
+		<table>
+		<tr>
+		<td style="width:48%">
 		{preference name=wiki_comments_simple_ratings}
-		<div class="adminoptionboxchild" id="wiki_simple_ratings_childcontainer">
+		<div class="adminoptionboxchild" id="wiki_comments_simple_ratings_childcontainer">
 			{preference name=wiki_comments_simple_ratings_options}
 		</div>
+				</td>
+				<td style="width:4%"><td>
+				<td style="width:48%"><div class="adminoptionboxchild" id="wiki_comments_simple_ratings_perms_childcontainer">
+				{tr}Permissions involved:{/tr}
+				<ul>
+					<li>comments > tiki_p_vote_comments</li>
+					<li>tiki > tiki_p_ratings_view_results</li>
+				</ul>
+				</div>
+				</td>
+			</tr>
+		</table>					
+	</fieldset>
+
+	<fieldset>
+		<legend>{tr}Forums{/tr}</legend>
+		<table>
+			<tr>
+				<td style="width:48%">{tr}You need to enable the settings:{/tr} 
+				<ul>
+					<li>"{tr}Ratings{/tr}" > "{tr}Comments{/tr}" > "<strong>{tr}Simple wiki comment ratings{/tr}</strong>" {tr}and{/tr} "<strong>{tr}Wiki rating options:{/tr}</strong>" ({tr}see above{/tr})</li>
+					<li>{tr}Create or Edit a forum and enable:{/tr} "<strong>{tr}Posts can be rated{/tr}</strong>"</li>
+				</ul>
+				</td>
+				<td style="width:4%"><td>
+				<td style="width:48%"><div class="adminoptionboxchild" id="forums_ratings_perms_childcontainer">
+				{tr}Permissions involved:{/tr}
+				<ul>
+					<li>forums > tiki_p_forum_vote</li>
+					<li>tiki > tiki_p_ratings_view_results</li>
+				</ul>
+				</div>
+				</td>
+			</tr>
+		</table>					
+	</fieldset>
+
+	<fieldset>
+		<legend>{tr}Trackers{/tr}</legend>
+		<table style="width:100%">
+			<tr>
+				<td style="width:48%">{tr}You need to enable the settings:{/tr}
+				<div class="adminoptionboxchild" id="rating_trackers_settings_childcontainer">{tr}Tracker Field:{/tr}
+				{preference name=trackerfield_rating}</div>
+				</td>
+				<td style="width:4%"><td>
+				<td style="width:48%"><div class="adminoptionboxchild" id="trackers_ratings_perms_childcontainer">
+				{tr}Permissions involved:{/tr}
+				<ul>
+					<li>trackers > tiki_p_tracker_vote_ratings</li>
+					<li>trackers > tiki_p_tracker_revote_ratings</li>
+					<li>trackers > tiki_p_tracker_view_ratings</li>
+				</ul>
+				</div>
+				</td>
+			</tr>
+		</table>
 	</fieldset>
 
 	<fieldset>
