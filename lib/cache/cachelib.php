@@ -96,7 +96,7 @@ class Cachelib
 			array_map('unlink', $banner);
 
 			$this->flush_opcode_cache();
-			$prefs = $this->flush_memcache();
+			$this->flush_memcache();
 			$this->invalidate('global_preferences');
 			if (is_object($logslib)) {
 				$logslib->add_log($log_section, 'erased all cache content');
