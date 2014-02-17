@@ -28,7 +28,7 @@ function wikiplugin_countdown_info()
 				'description' => tra(
 								'Select: y=years, o=months, d=days, h=hours, m=minutes, s=seconds. 
 								Enter multiple values as: yodhms. Must be in the order of descending length, and a time unit should not be skipped. 
-								If blank, all non-zero date parts are shown.'
+								If blank, the time is shown down to the hour if not zero.'
 				),
 				'filter' => 'alpha',
 				'default' => '',
@@ -126,39 +126,24 @@ function wikiplugin_countdown_info()
 
 function wikiplugin_countdown($data, $params)
 {
-	global $tikilib, $tikidate;
 	extract($params, EXTR_SKIP);
-	$ret = '';
 	//must have an enddate
 	if (!isset($enddate)) {
 		return '<strong>' . tra('COUNTDOWN: Missing "enddate" parameter for plugin') . '</strong><br />';
 	}
-	//set user timezone
+	//set now date and time
+	global $tikilib, $tikidate;
 	$tz = $tikilib->get_display_timezone();
-	$tikidate->setTZbyID($tikilib->get_display_timezone());
-	//set now date & time
-	$nowobj = $tikidate->date;
-	$now = $tikidate->getTime();
-	$nowstring = $nowobj->format('Y-m-d H:i:s');
-	//can replace the above line with the below when 5.3 becomes a minimum requirement
-//	$now = $nowobj->getTimestamp();
-
+	$nowobj = new DateTime(null, new DateTimeZone($tz));
 	//set then date & time
-	$tikidate->setDate(strtotime($enddate));
-	$thenobj = $tikidate->date;
-	$then = $tikidate->getTime();
-	//can replace the above line with the below when 5.3 becomes a minimum requirement
-//	$then = $thenobj->getTimestamp();
+	$thenobj = new DateTime($enddate, new DateTimeZone($tz));
 
-	$difference = $then - $now;
+	$difference = $thenobj->format('U') - $nowobj->format('U');
+
 	//get difference in time of day for use in determining calendar days
-	$tikidate->setDate(strtotime($nowstring));
-	$thenadj = $tikidate->date;
-	$thenadj->setTime($thenobj->format('H'), $thenobj->format('i'), $thenobj->format('s'));
-	$thentime = $tikidate->getTime();
-	//can replace the above line with the below when 5.3 becomes a minimum requirement
-//	$thentime2 = $thenadj->getTimestamp();
-	$timediff = $thentime - $now;
+	$nowadj = new DateTime($nowobj->format('Y-m-d H:i:s'), new DateTimeZone($tz));
+	$nowadj->setTime($thenobj->format('H'), $thenobj->format('i'), $thenobj->format('s'));
+	$timediff = $nowadj->format('U') - $nowobj->format('U');
 
 	//Set thousands separator
 	if (!empty($thousands)) {
@@ -195,7 +180,6 @@ function wikiplugin_countdown($data, $params)
 			'invert' => $interval->invert,
 			'days' => $interval->days,
 		);
-	//TODO the following else section can be removed once PHP 5.3 becomes a minimum requirement
 	} else {
 		if ($difference > 0) {
 			$diff = array(
@@ -268,13 +252,13 @@ function wikiplugin_countdown($data, $params)
 	}
 	
 	if (empty($show)) {
-		// Set default. If no explicit SHOW, then show everything.
+		// Set default. If no explicit SHOW, then show down to the hour.
 		$show_years = true;
 		$show_months =  true;
 		$show_days = true;
 		$show_hours = true;
-		$show_minutes = true;
-		$show_seconds = true;
+		$show_minutes = false;
+		$show_seconds = false;
 	} else {
 		$show_years = (strpos($show, 'y') === false) ? false : true;
 		$show_months = (strpos($show, 'o') === false)  ? false : true;
@@ -300,7 +284,9 @@ function wikiplugin_countdown($data, $params)
 	}
 	
 	//create the countdown string
-	if ($diff['invert'] == 1 || $since == 'y') {
+	$ret = '';
+	$word = '';
+	if ($diff['invert'] == 1 || (isset($since) && $since == 'y')) {
 	//either before the event or if countdown also shown after the event
 		//calculate total time in hours, minutes or seconds
 		$diff['months'] = abs(($diff['y']*12) + $diff['o']);
@@ -406,11 +392,10 @@ function wikiplugin_countdown($data, $params)
 			}
 		}
 		//add text
-		if (empty($text) || ($text && $text != 'silent')) {
+		if (empty($text) || (!empty($text) && $text != 'silent')) {
 			if (empty($text) || $text == 'default' || strpos($text, '|') === false) {
 				//if $ret is empty here, it means the time before/after the event is shorter than the smallest unit of time being shown
 				if (empty($ret)) {
-					$word = '';
 					if ($diff['invert'] == 1) {
 						switch (substr($show, -1)) {
 							case 'y':
@@ -423,7 +408,7 @@ function wikiplugin_countdown($data, $params)
 								$nowtext = tra('will happen in less than a day');
     							break;
 							case 'h':
-								$nowtext = tra('will happen in less than a hour');
+								$nowtext = tra('will happen in less than an hour');
     							break;
 							case 'm':
 								$nowtext = tra('will happen in less than a minute');
@@ -470,21 +455,22 @@ function wikiplugin_countdown($data, $params)
 				$custom = explode('|', $text);
 				//if $ret is empty here, it means the time before/after the event is shorter than the unit of time being shown
 				if (empty($ret)) {
-					$word = '';
 					if ($diff['invert'] == 1) {
-						//$custom[1] = text to display before event occurs
-						$data = $data . ' ' . $custom[1];
+						//$custom[1] = text to display before event occurs when closer than the unit of time being shown
+						$cust1 = !empty($custom[1]) ? $custom[1] : '';
+						$data = $data . ' ' . $cust1;
 					} else {
-						//$custom[3] = text to display after event occurs
-						$data = $data . ' ' . $custom[3];
+						//$custom[3] = text to display after event occurs when closer than the unit of time being shown
+						$cust3 = !empty($custom[3]) ? $custom[3] : '';
+						$data = $data . ' ' . $cust3;
 					}
 				} else {
 					if ($diff['invert'] == 1) {
 						//$custom[0] = text to display before event occurs
-						$word = $custom[0];
+						$word = !empty($custom[0]) ? $custom[0] : '';
 					} else {
 						//$custom[2] = text to display after event occurs
-						$word = $custom[2];
+						$word = !empty($custom[2]) ? $custom[2] : '';
 					}
 				}
 			}
@@ -492,12 +478,12 @@ function wikiplugin_countdown($data, $params)
 		}
 	//if after the event and no countdown shown
 	} elseif (!empty($data)) {
-		if (strpos($text, '|') === false) {
+		if (empty($text) || strpos($text, '|') === false) {
 			$word = tra('is over');
-		} else {
+		} elseif (strpos($text, '|') !== false) {
 			$custom = explode('|', $text);
 			//$custom[4] = text to display after event occurs when no countdown is shown because since set to n
-			$word = $custom[4];
+			$word = !empty($custom[4]) ? $custom[4] : '';
 		}
 		$ret = $data . ' ' . $word;
 	}
