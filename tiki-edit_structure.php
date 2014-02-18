@@ -128,58 +128,22 @@ if ($perms->edit_structures) {
 	      	$after = $new_page_ref_id;      
 			}	
 		}
-		
-		if ($prefs['feature_wiki_categorize_structure'] == 'y') {      	
+
+		if ($prefs['feature_wiki_categorize_structure'] == 'y') {
 			global $categlib; include_once('lib/categories/categlib.php');
 			$pages_added = array();
-			if (!(empty($_REQUEST['name']))) { 
+			if (!(empty($_REQUEST['name']))) {
 				$pages_added[] = $_REQUEST['name'];
 			} elseif (!empty($_REQUEST['name2'])) {
 	  			foreach ($_REQUEST['name2'] as $name) {
 					$pages_added[] = $name;
 	  			}
 			}
-			$cat_type = 'wiki page';		
+			$cat_type = 'wiki page';
 			foreach ($pages_added as $name) {
-				$cat_objid = $name;
-				$cat_name = $cat_objid;
-				$cat_href = "tiki-index.php?page=".urlencode($cat_objid);
-			
-				$catObjectId = $categlib->is_categorized($cat_type, $structure_info["pageName"]);		
-				if (!$catObjectId) {
-		    		// we are not categorized
-					if ($categlib->is_categorized($cat_type, $cat_objid)) {
-						$alert_to_remove_cats[] = $cat_name;
-					}
-				} else {
-			    	// we are categorized
-					$catObjectId = $categlib->is_categorized($cat_type, $cat_objid);
-					$structure_cats = $categlib->get_object_categories($cat_type, $structure_info["pageName"]);
-					if (!$catObjectId) {
-						// added page is not categorized 
-						$catObjectId = $categlib->add_categorized_object($cat_type, $cat_objid, $cat_desc, $cat_name, $cat_href);
-						foreach ($structure_cats as $cat_acat) {						
-							$categlib->categorize($catObjectId, $cat_acat);
-						}			
-						$alert_categorized[] = $cat_name;
-					} else {
-						// added page is categorized				
-						$cats = $categlib->get_object_categories($cat_type, $cat_objid);						
-						$numberofcats = count($cats);
-						$alert_categorized[] = $cat_name;
-						foreach ($structure_cats as $cat_acat) {
-							if (!in_array($cat_acat, $cats, true)) {
-								$categlib->categorize($catObjectId, $cat_acat);
-								$numberofcats += 1;							
-							}
-						}
-						if ($numberofcats > count($_REQUEST["cat_categories"])) {
-							$alert_to_remove_extra_cats[] = $cat_name;
-						}
-					}
-				}
+				$structlib->categorizeNewStructurePage($name, $structure_info);
 			}
-		}	
+		}
 	}
 	
 	if (isset($_REQUEST["move_node"])) {
@@ -228,7 +192,10 @@ $listpages = $tikilib->list_pages(0, -1, 'pageName_asc', $find_objects, '', fals
 $smarty->assign_by_ref('listpages', $listpages["data"]);
 
 $structures = $structlib->list_structures(0, -1, 'pageName_asc');
-$smarty->assign_by_ref('structures', array_filter($structures['data'], function($struct) { return $struct['editable'] === 'y'; }));
+$structures_filtered = array_filter($structures['data'], function ($struct) {
+	return $struct['editable'] === 'y';
+});
+$smarty->assign_by_ref('structures', $structures_filtered);
 
 $subtree = $structlib->get_subtree($structure_info["page_ref_id"]);
 foreach ($subtree as $i=>$s) { // dammed recursivite - acn not do a left join

@@ -9,11 +9,11 @@
 					{/self_link}
 					{if $tiki_p_watch_structure eq 'y'}
 						{if !$structure_tree.event}
-							{self_link page_ref_id=$structure_tree.page_ref_id watch_object=$structure_tree.page_ref_id watch_action=add page=$structure_tree.pageName}
+							{self_link _script='tiki-edit_structure.php' page_ref_id=$structure_tree.page_ref_id watch_object=$structure_tree.page_ref_id watch_action=add page=$structure_tree.pageName}
 								{icon _id='eye_arrow_down' alt="{tr}Monitor the Sub-Structure{/tr}"}
 							{/self_link}
 						{else}
-							{self_link page_ref_id=$structure_tree.page_ref_id watch_object=$structure_tree.page_ref_id watch_action=remove}
+							{self_link _script='tiki-edit_structure.php' page_ref_id=$structure_tree.page_ref_id watch_object=$structure_tree.page_ref_id watch_action=remove}
 								{icon _id='no_eye_arrow_down' alt="{tr}Stop Monitoring the Sub-Structure{/tr}"}
 							{/self_link}
 						{/if}
@@ -27,13 +27,13 @@
 								{icon _id='page_edit' alt='{tr}Edit page{/tr}'}
 							{/self_link}
 						{/if}
-						{self_link _onclick="addNewPage(this);return false;"}
+						{self_link _script='tiki-edit_structure.php' _onclick="addNewPage(this);return false;"}
 							{icon _id='add' alt='{tr}Add new child page{/tr}'}
 						{/self_link}
-						{self_link _onclick="movePageToStructure(this);return false;"}
+						{self_link _script='tiki-edit_structure.php' _onclick="movePageToStructure(this);return false;"}
 							{icon _id='arrow_right' alt='{tr}Move{/tr}'}
 						{/self_link}
-						{self_link page_ref_id=$structure_tree.page_ref_id remove=$structure_tree.page_ref_id}
+						{self_link _script='tiki-edit_structure.php' page_ref_id=$structure_tree.page_ref_id remove=$structure_tree.page_ref_id}
 							{icon _id='cross' alt='{tr}Delete{/tr}' page_ref_id=$structure_tree.page_ref_id remove=$structure_tree.page_ref_id}
 						{/self_link}
 					{/if}

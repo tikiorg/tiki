@@ -314,6 +314,11 @@ class StructLib extends TikiLib
 				$query = 'update `tiki_structures` set `structure_id`=? where `page_ref_id`=?';
 				$this->query($query, array($ret, $ret));
 			}
+
+			if ($prefs['feature_wiki_categorize_structure'] == 'y') {
+				$this->categorizeNewStructurePage($name, $this->s_get_structure_info($parent_id));
+			}
+
 			if ($prefs['feature_user_watches'] == 'y') {
 				include_once('lib/notifications/notificationemaillib.php');
 				sendStructureEmailNotification(array('action'=>'add', 'page_ref_id'=>$ret, 'name'=>$name));
@@ -321,6 +326,43 @@ class StructLib extends TikiLib
 		}
 		return $ret;
 	}
+
+	/**
+	 * Categorizes a (new) page the same as the parent structure
+	 * Called from s_create_page if feature_wiki_categorize_structure = y
+	 *
+	 * @param string $page				name of new page
+	 * @param array $structure_info		structure info
+	 */
+	public function categorizeNewStructurePage ($page, $structure_info) {
+		$categlib = TikiLib::lib('categ');
+
+		$cat_type = 'wiki page';
+		$cat_href = "tiki-index.php?page=" . urlencode($page);
+
+		$structObjectId = $categlib->is_categorized($cat_type, $structure_info["pageName"]);
+		if ($structObjectId) {
+			// structure is categorized
+			$pageObjectId = $categlib->is_categorized($cat_type, $page);
+			$structure_cats = $categlib->get_object_categories($cat_type, $structure_info["pageName"]);
+			if (!$pageObjectId) {
+				// added page is not categorized
+				$pageObjectId = $categlib->add_categorized_object($cat_type, $page, '', $page, $cat_href);
+				foreach ($structure_cats as $cat_acat) {
+					$categlib->categorize($pageObjectId, $cat_acat);
+				}
+			} else {
+				// added page is already categorized (somehow?)
+				$cats = $categlib->get_object_categories($cat_type, $page);
+				foreach ($structure_cats as $cat_acat) {
+					if (!in_array($cat_acat, $cats, true)) {
+						$categlib->categorize($pageObjectId, $cat_acat);
+					}
+				}
+			}
+		}
+	}
+
 	public function get_subtree($page_ref_id, $level = 0, $parent_pos = '')
 	{
 		global $tikilib;
