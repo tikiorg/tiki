@@ -65,7 +65,7 @@ class Tracker_Field_Rating extends Tracker_Field_Abstract
 				),
 			),
 			's' => array(
-				'name' => tr('Stars (system)'),
+				'name' => tr('Stars (system - deprecated)'),
 				'description' => tr('Displays a star rating'),
 				'readonly' => true,
 				'deprecated' => true,
@@ -199,7 +199,8 @@ class Tracker_Field_Rating extends Tracker_Field_Abstract
 
 		$votings = TikiDb::get()->table('tiki_user_votings');
 
-		if ($field['type'] == 's' && $field['name'] == tra('Rating')) { // global rating to an item - value is the sum of the votes
+//		if ($field['type'] == 's' && $field['name'] == tra('Rating')) { // global rating to an item - value is the sum of the votes
+		if ($field['type'] == 's') { // global rating to an item - value is the sum of the votes. No need for hardcoded value Rating, internationalized or not: admins can replace for a more suited word for their use case.
 			$key = 'tracker.'.$trackerId.'.'.$itemId;
 		} elseif ($field['type'] == '*' || $field['type'] == 'STARS') { // field rating - value is the average of the votes
 			$key = "tracker.$trackerId.$itemId.".$field['fieldId'];

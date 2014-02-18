@@ -320,8 +320,27 @@ class Tiki_Profile_Writer
 	 */
 	function save()
 	{
-		file_put_contents($this->filePath, Horde_Yaml::dump($this->data));
+		file_put_contents($this->filePath, Horde_Yaml::dump($this->quoteArray($this->data)));
 		$this->externalWriter->apply();
+	}
+
+	/**
+	 * quote strings that may be problematic in YAML
+	 */
+	function quoteArray($arr)
+	{
+		array_walk_recursive($arr, 'Tiki_Profile_Writer::quoteString');
+		return ($arr);
+	}
+	function quoteString(&$data, $key)
+	{
+		if (strtolower($data) == 'yes' || strtolower($data) == 'no'
+			|| strpos($data, '{') !== false || strpos($data, '[') !== false
+		) {
+			if (strpos($data, '"') === false) {
+				$data = '"' . $data . '"';
+			}
+		}
 	}
 
 	/**

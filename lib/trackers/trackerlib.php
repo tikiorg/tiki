@@ -1016,9 +1016,9 @@ class TrackerLib extends TikiLib
 						';
 						break;
 					case 's':
-						if ($field['name'] == 'Rating' || $field['name'] == tra('Rating')) {
+//						if ($field['name'] == 'Rating' || $field['name'] == tra('Rating')) { // No need to have that string, isn't it? Admins can replace for a more suited string in their use case
 							$numsort = true;
-						}
+//						}
 						break;
 				}
 			} else {
