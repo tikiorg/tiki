@@ -183,7 +183,7 @@ class Tiki_Profile_InstallHandler_Menu extends Tiki_Profile_InstallHandler
 			return false;
 		}
 
-		$options = $menulib->list_menu_options($menuId, 0, -1, 'position_asc', '', true);
+		$options = $menulib->list_menu_options($menuId, 0, -1, 'position_asc', '', true, 0, true);
 
 		$menu['items'] = array_map(function ($entry) use ($writer) {
 			unset($entry['menuId']);
