@@ -42,12 +42,12 @@
 					<p>
 						{tr _0=$realpath_cache_size_ini}'realpath_cache_size setting': %0{/tr}
 						{tr _0=$realpath_cache_size_percent}(percentage used %0 %{/tr})
-						{help url='php.ini#Performance'
-							desc='realpath_cache_size : {tr}Determines the size of the realpath cache to be used by PHP.{/tr}'}
+						{help url="php.ini#Performance"
+							desc="realpath_cache_size : {tr}Determines the size of the realpath cache to be used by PHP.{/tr}"}
 					</p>
 					<p>{tr _0=$realpath_cache_ttl}'realpath_cache_ttl setting': %0 seconds{/tr}
-					{help url='php.ini#Performance'
-					desc='realpath_cache_ttl : {tr}Duration of time (in seconds) for which to cache realpath information for a given file or directory.{/tr}'}
+					{help url="php.ini#Performance"
+					desc="realpath_cache_ttl : {tr}Duration of time (in seconds) for which to cache realpath information for a given file or directory.{/tr}"}
 				</div>
 			</fieldset>
 		{/tab}
