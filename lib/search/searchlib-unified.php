@@ -640,17 +640,32 @@ class UnifiedSearchLib
 				$info[tr('Cluster Status')] = $cluster->status;
 				$info[tr('Cluster Node Count')] = $cluster->number_of_nodes;
 
-				$status = $connection->rawApi('/_status');
-				foreach ($status->indices as $indexName => $data) {
-					if (strpos($indexName, $prefs['unified_elastic_index_prefix']) === 0) {
-						$info[tr('Index %0', $indexName)] = tr('%0 documents, totaling %1', 
-							$data->docs->num_docs, $data->index->primary_size);
+				if (version_compare($root->version->number, '1.0.0') === -1) {
+					$status = $connection->rawApi('/_status');
+					foreach ($status->indices as $indexName => $data) {
+						if (strpos($indexName, $prefs['unified_elastic_index_prefix']) === 0) {
+							$info[tr('Index %0', $indexName)] = tr('%0 documents, totaling %1', 
+								$data->docs->num_docs, $data->index->primary_size);
+						}
 					}
-				}
 
-				$nodes = $connection->rawApi('/_nodes/jvm/stats');
-				foreach ($nodes->nodes as $node) {
-					$info[tr('Node %0', $node->name)] = tr('Using %0, since %1', $node->jvm->mem->heap_used, $node->jvm->uptime);
+					$nodes = $connection->rawApi('/_nodes/jvm/stats');
+					foreach ($nodes->nodes as $node) {
+						$info[tr('Node %0', $node->name)] = tr('Using %0, since %1', $node->jvm->mem->heap_used, $node->jvm->uptime);
+					}
+				} else {
+					$status = $connection->rawApi('/_status');
+					foreach ($status->indices as $indexName => $data) {
+						if (strpos($indexName, $prefs['unified_elastic_index_prefix']) === 0) {
+							$info[tr('Index %0', $indexName)] = tr('%0 documents, totaling %1 bytes', 
+								$data->docs->num_docs, number_format($data->index->primary_size_in_bytes));
+						}
+					}
+
+					$nodes = $connection->rawApi('/_nodes/stats');
+					foreach ($nodes->nodes as $node) {
+						$info[tr('Node %0', $node->name)] = tr('Using %0 bytes, since %1', number_format($node->jvm->mem->heap_used_in_bytes), date('Y-m-d H:i:s', $node->jvm->timestamp / 1000));
+					}
 				}
 			} catch (Search_Elastic_Exception $e) {
 				$info[tr('Information Missing')] = $e->getMessage();
