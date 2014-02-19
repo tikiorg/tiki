@@ -169,6 +169,12 @@ class Services_Goal_Controller
 				$goal['conditions'] = $conditions;
 			}
 
+			$rewards = json_decode($input->rewards->none(), true);
+			if (is_array($rewards)) {
+				// Basic validation to make sure we have json
+				$goal['rewards'] = $rewards;
+			}
+
 			$goallib->replaceGoal($input->goalId->int(), $goal);
 		}
 
@@ -267,6 +273,66 @@ class Services_Goal_Controller
 			'title' => tr('Condition'),
 			'condition' => $condition,
 			'metrics' => $metricList,
+		];
+	}
+
+	/**
+	 * Action is completely stateless. Renders the provided data.
+	 */
+	function action_render_rewards($input)
+	{
+		$perms = Perms::get();
+		if (! $perms->admin) {
+			throw new Services_Exception_Denied(tr('Reserved to administrators'));
+		}
+
+		$rewards = json_decode($input->rewards->none(), true);
+
+		if (! is_array($rewards)) {
+			throw new Services_Exception_MissingValue('rewards');
+		}
+
+		return [
+			'title' => tr('Rewards'),
+			'rewards' => array_filter($rewards),
+		];
+	}
+
+	/**
+	 * Action is completely stateless. Pass in parameters, get updated parameters.
+	 */
+	function action_edit_reward($input)
+	{
+		$reward = [
+			'label' => tr('Pages created'),
+			'rewardType' => 'credit',
+			'creditType' => 'default',
+			'creditQuantity' => 1,
+			'hidden' => 0,
+		];
+
+		$rewardList = TikiLib::lib('goal')->getRewardList();
+
+		$rewardType = $input->rewardType->text();
+		if (! isset($rewardList[$rewardType])) {
+			$rewardType = null;
+		}
+
+		$reward['rewardType'] = $rewardType ?: $reward['rewardType'];
+		$reward['hidden'] = $input->hidden->int();
+
+		$reward['creditType'] = $input->creditType->word();
+		$reward['creditQuantity'] = isset($input['creditQuantity']) ? $input->creditQuantity->int() : $reward['creditQuantity'];
+
+		$reward['eventType'] = $input->eventType->attribute_type() ?: $reward['eventType'];
+
+		$f = $rewardList[$reward['rewardType']]['format'];
+		$reward['label'] = $f($reward);
+
+		return [
+			'title' => tr('Reward'),
+			'reward' => $reward,
+			'rewards' => $rewardList,
 		];
 	}
 }

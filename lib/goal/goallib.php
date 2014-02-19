@@ -146,6 +146,12 @@ class GoalLib
 				'group' => $context['group'],
 			]);
 
+			if ($goal['type'] == 'group') {
+				$this->giveRewardsToMembers($context['group'], $goal['rewards']);
+			} else {
+				$this->giveRewardsToUser($context['user'], $goal['rewards']);
+			}
+
 			$tx->commit();
 		}
 
@@ -238,9 +244,48 @@ class GoalLib
 		];
 	}
 
+	function getRewardList()
+	{
+		return [
+			'credit' => [
+				'label' => tr('Credits'),
+				'arguments' => ['creditType', 'creditQuantity'],
+				'format' => function ($info) {
+					return tr('%0 credit(s) - %1', $info['creditQuantity'], $info['creditType']);
+				},
+				'apply' => function ($user, $reward) {
+					$userId = TikiLib::lib('tiki')->get_user_id($user);
+					$lib = TikiLib::lib('credits');
+					$lib->addCredits($userId, $reward['creditType'], $reward['creditQuantity']);
+				},
+			],
+		];
+	}
+
 	private function table()
 	{
 		return TikiDb::get()->table('tiki_goals');
+	}
+
+	private function giveRewardsToUser($user, $rewards)
+	{
+		$list = $this->getRewardList();
+
+		foreach ($rewards as $reward) {
+			$type = $reward['rewardType'];
+			$f = $list[$type]['apply'];
+			$f($user, $reward);
+		}
+	}
+
+	private function giveRewardsToMembers($group, $rewards)
+	{
+		$lib = TikiLib::lib('user');
+		$users = $lib->get_group_users($group);
+
+		foreach ($users as $user) {
+			$this->giveRewardsToUser($user, $rewards);
+		}
 	}
 }
 

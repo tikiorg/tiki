@@ -17,11 +17,11 @@
 					{$condition.count|escape}
 				</td>
 				<td>
-					<a class="edit-condition" href="#" data-condition="{$key|escape}">{$condition.label|escape}</a>
+					<a class="edit" href="#" data-element="{$key|escape}">{$condition.label|escape}</a>
 					{if $condition.hidden}
 						<span class="label label-info">{tr}Hidden{/tr}</span>
 					{/if}
-					<a class="delete-condition pull-right text-danger" href="#" data-condition="{$key|escape}">{glyph name=remove} {tr}Delete{/tr}</a>
+					<a class="delete pull-right text-danger" href="#" data-element="{$key|escape}">{glyph name=remove} {tr}Delete{/tr}</a>
 				</td>
 			</tr>
 		{foreachelse}
@@ -30,6 +30,6 @@
 			</tr>
 		{/foreach}
 	</table>
-	<button class="btn btn-default add-condition pull-right">{glyph name=plus} {tr}Add Condition{/tr}</button>
+	<button class="btn btn-default add pull-right">{glyph name=plus} {tr}Add Condition{/tr}</button>
 	<input type="hidden" name="conditions" value="{$conditions|json_encode|escape}">
 {/block}

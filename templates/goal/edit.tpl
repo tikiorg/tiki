@@ -103,29 +103,61 @@
 				<div id="conditions">
 					{service_inline controller=goal action=render_conditions conditions=$goal.conditions|json_encode}
 				</div>
+			{/tab}
+			{tab name="{tr}Rewards{/tr}"}
+				<p>{tr}Rewards are given to individuals achieving the goal or group members for group goals.{/tr}</p>
 
-				{jq}
-					var updateConditions = function (updater, postLoad) {
-						var $input = $('input[name=conditions]');
-						var current = JSON.parse($input.val());
-						updater(current);
+				<div id="rewards">
+					{service_inline controller=goal action=render_rewards rewards=$goal.rewards|json_encode}
+				</div>
+			{/tab}
+		{/tabset}
 
-						$('#conditions').load($.service('goal', 'render_conditions', {
-							conditions: JSON.stringify(current)
-						}), postLoad);
-					};
+		{jq}
+			var init = function (options) {
+				var $container = $(options.container);
+				var updateBlock = function (updater, postLoad) {
+					var $input = $(options.input);
+					var current = JSON.parse($input.val());
+					updater(current);
 
-					$('#conditions').on('click', '.add-condition', function (e) {
-						e.preventDefault();
+					$container.load(options.getUrl(current), postLoad);
+				};
 
+				$container.on('click', '.btn.add', function (e) {
+					e.preventDefault();
+
+					$.openModal({
+						remote: $.service('goal', options.editAction, {
+							modal: 1
+						}),
+						open: function () {
+							$('form', this).submit(ajaxSubmitEventHandler(function (data) {
+								updateBlock(function (current) {
+									current.push(data[options.dataKey]);
+								}, function () {
+									$('#bootstrap-modal').modal('hide');
+								});
+							}));
+						}
+					});
+				});
+
+				$container.on('click', 'a.edit', function (e) {
+					e.preventDefault();
+
+					var key = $(this).data('element');
+					updateBlock(function (current) {
+						// Read the selected element, open an edit window
+						var element = current[key];
+						element.modal = 1;
 						$.openModal({
-							remote: $.service('goal', 'edit_condition', {
-								modal: 1
-							}),
+							remote: $.service('goal', options.editAction, element),
 							open: function () {
 								$('form', this).submit(ajaxSubmitEventHandler(function (data) {
-									updateConditions(function (conditions) {
-										conditions.push(data.condition);
+									updateBlock(function (current) {
+										// Store back at the same position
+										current[key] = data[options.dataKey];
 									}, function () {
 										$('#bootstrap-modal').modal('hide');
 									});
@@ -133,43 +165,43 @@
 							}
 						});
 					});
+				});
 
-					$('#conditions').on('click', '.edit-condition', function (e) {
-						e.preventDefault();
+				$container.on('click', '.delete', function (e) {
+					e.preventDefault();
 
-						var key = $(this).data('condition');
-						updateConditions(function (conditions) {
-							// Read the selected condition, open an edit window
-							var condition = conditions[key];
-							condition.modal = 1;
-							$.openModal({
-								remote: $.service('goal', 'edit_condition', condition),
-								open: function () {
-									$('form', this).submit(ajaxSubmitEventHandler(function (data) {
-										updateConditions(function (conditions) {
-											// Store back at the same position
-											conditions[key] = data.condition;
-										}, function () {
-											$('#bootstrap-modal').modal('hide');
-										});
-									}));
-								}
-							});
-						});
+					var key = $(this).data('element');
+					updateBlock(function (current) {
+						// Remove the selected element - no warning, this is not saved yet
+						delete current[key];
 					});
+				});
+			};
 
-					$('#conditions').on('click', '.delete-condition', function (e) {
-						e.preventDefault();
-
-						var key = $(this).data('condition');
-						updateConditions(function (conditions) {
-							// Remove the selected condition - no warning, this is not saved yet
-							delete conditions[key];
-						});
+			init({
+				container: '#conditions',
+				input: 'input[name=conditions]',
+				editAction: 'edit_condition',
+				dataKey: 'condition',
+				getUrl: function (current) {
+					return $.service('goal', 'render_conditions', {
+						conditions: JSON.stringify(current)
 					});
-				{/jq}
-			{/tab}
-		{/tabset}
+				}
+			});
+
+			init({
+				container: '#rewards',
+				input: 'input[name=rewards]',
+				editAction: 'edit_reward',
+				dataKey: 'reward',
+				getUrl: function (current) {
+					return $.service('goal', 'render_rewards', {
+						rewards: JSON.stringify(current)
+					});
+				}
+			});
+		{/jq}
 		<div class="form-group">
 			<div class="col-md-offset-3 col-md-9">
 				<input type="submit" class="btn btn-primary" value="{tr}Save{/tr}">
