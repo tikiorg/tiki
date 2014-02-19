@@ -34,5 +34,8 @@
 		<input type="hidden" value="{$params.exchangeorderitemid|escape}" name="exchangeorderitemid">
 		<input type="hidden" value="{$params.exchangetoproductid|escape}" name="exchangetoproductid">
 	{/if}
+	{if not empty($params.weight)}
+		<input type="hidden" value="{$params.weight|escape}" name="weight">
+	{/if}
 </form>
 

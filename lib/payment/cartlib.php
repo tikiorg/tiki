@@ -707,6 +707,21 @@ class CartLib
 		return $wiki;
 	}
 
+	function get_total_weight()
+	{
+		$this->init_cart();
+
+		$total = 0;
+
+		foreach ( $_SESSION['cart'] as $info ) {
+			if (!empty($info['weight'])) {
+				$total += floatval($info['quantity']) * floatval($info['weight']);
+			}
+		}
+
+		return $total;
+	}
+
 	function product_in_cart( $code )
 	{
 		return isset( $_SESSION['cart'][$code] );

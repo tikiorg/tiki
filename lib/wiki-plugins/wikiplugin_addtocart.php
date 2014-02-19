@@ -161,6 +161,13 @@ function wikiplugin_addtocart_info()
 					array('text' => tra('No'), 'value' => 'n')
 				),
 			),
+			'weight' => array(
+				'required' => false,
+				'name' => tra('Weight'),
+				'description' => tra('The weight of the item.'),
+				'filter' => 'text',
+				'default' => '',
+			),
 		),
 	);
 }
