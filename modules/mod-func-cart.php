@@ -44,6 +44,18 @@ function module_cart_info()
 				'filter' => 'url',
 				'default' => '',
 			),
+			'showWeight' => array(
+				'name' => tra('Show Total Weight'),
+				'description' => tra('Shows the weight of the items in the cart') . ' (y/n)',
+				'filter' => 'alpha',
+				'default' => 'n',
+			),
+			'weightUnit' => array(
+				'name' => tra('Weight Unit'),
+				'description' => tra('Shown after the weight'),
+				'filter' => 'alpha',
+				'default' => 'g',
+			),
 		),
 	);
 }
@@ -121,5 +133,6 @@ function module_cart($mod_reference, & $module_params)
 
 	$smarty->assign('cart_total', $cartlib->get_total());
 	$smarty->assign('cart_content', $cartlib->get_content());
+	$smarty->assign('cart_weight', $cartlib->get_total_weight());
 }
 
