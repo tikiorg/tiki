@@ -130,6 +130,10 @@ function tiki_setup_events()
 		$events->bind("tiki.wiki.save", 'tiki_wiki_save_pastlink');
 	}
 
+	if ($prefs['goal_enabled'] == 'y') {
+		TikiLib::lib('goalevent')->bindEvents($events);
+	}
+
 	$events->bind('tiki.save', $defer('tiki', 'object_post_save'));
 
 	if ($prefs['activity_basic_events'] == 'y') {

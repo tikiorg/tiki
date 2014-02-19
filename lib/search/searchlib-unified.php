@@ -542,6 +542,10 @@ class UnifiedSearchLib
 			$aggregator->addContentSource('activity', new Search_ContentSource_ActivityStreamSource($aggregator instanceof Search_Indexer ? $aggregator : null));
 		}
 
+		if ($prefs['goal_enabled'] == 'y') {
+			$aggregator->addContentSource('goalevent', new Search_ContentSource_GoalEventSource);
+		}
+
 		// Global Sources
 		if ($prefs['feature_categories'] == 'y') {
 			$aggregator->addGlobalSource(new Search_GlobalSource_CategorySource);

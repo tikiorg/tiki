@@ -76,21 +76,13 @@ class Search_ContentSource_ActivityStreamSource implements Search_ContentSource_
 			$document['clear_list'] = $typeFactory->multivalue([]);
 		}
 
-		if ($prefs['goal_enabled'] == 'y' && isset($info['arguments']['user'])) {
-			$groups = $this->tikilib->get_user_groups($info['arguments']['user']);
-			$groups = array_diff($groups, ['Anonymous']);
-			$document['goal_groups'] = $typeFactory->multivalue($groups);
-		} else {
-			$document['goal_groups'] = $typeFactory->multivalue([]);
-		}
-
 		return $document;
 	}
 
 	function getProvidedFields()
 	{
 		$mapping = $this->lib->getMapping();
-		return array_merge(array('event_type', 'modification_date', 'like_list', 'clear_list', 'goal_groups'), array_keys($mapping));
+		return array_merge(['event_type', 'modification_date', 'like_list', 'clear_list'], array_keys($mapping));
 	}
 
 	function getGlobalFields()

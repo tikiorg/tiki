@@ -23,6 +23,19 @@ class GoalLib
 		}, $list);
 	}
 
+	function listConditions()
+	{
+		$table = $this->table();
+
+		$list = $table->fetchAll(['goalId', 'conditions'], [], -1, -1, [
+		]);
+
+		return array_map(function ($goal) {
+			$goal['conditions'] = json_decode($goal['conditions'], true);
+			return $goal;
+		}, $list);
+	}
+
 	function removeGoal($goalId)
 	{
 		$this->table()->delete(['goalId' => $goalId]);
@@ -46,6 +59,8 @@ class GoalLib
 		$data['eligible'] = json_encode((array) $data['eligible']);
 		$data['conditions'] = json_encode((array) $data['conditions']);
 		$data['rewards'] = json_encode((array) $data['rewards']);
+
+		TikiLib::lib('goalevent')->touch();
 
 		if ($goalId) {
 			$this->table()->update($data, ['goalId' => $goalId]);
@@ -142,6 +157,7 @@ class GoalLib
 				(filter-date)
 				(filter-target)
 				(filter (content eventType) (field "event_type"))
+				(filter (type "goalevent"))
 			)';
 			break;
 		}

@@ -328,6 +328,9 @@ class TikiLib extends TikiDb_Bridge
 			case 'goal':
 				require_once 'lib/goal/goallib.php';
 				return self::$libraries[$name] = new GoalLib();
+			case 'goalevent':
+				require_once 'lib/goal/eventlib.php';
+				return self::$libraries[$name] = new GoalEventLib();
 		}
 	}
 

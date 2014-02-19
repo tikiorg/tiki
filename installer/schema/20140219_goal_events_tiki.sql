@@ -1,0 +1,7 @@
+CREATE TABLE `tiki_goal_events` (
+	`eventId` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	`eventDate` INT NOT NULL,
+	`eventType` VARCHAR(50) NOT NULL,
+	`user` VARCHAR(200) NOT NULL,
+	`groups` BLOB NOT NULL
+) ENGINE=MyISAM;
