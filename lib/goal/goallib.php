@@ -39,6 +39,8 @@ class GoalLib
 	function removeGoal($goalId)
 	{
 		$this->table()->delete(['goalId' => $goalId]);
+
+		TikiLib::lib('goalevent')->touch();
 	}
 
 	function replaceGoal($goalId, array $data)
@@ -52,7 +54,15 @@ class GoalLib
 			'from' => null,
 			'to' => null,
 			'eligible' => [],
-			'conditions' => [],
+			'conditions' => [
+				[
+					'label' => tr('Goal achieved'),
+					'operator' => 'atMost',
+					'count' => 0,
+					'metric' => 'goal-count-unbounded',
+					'hidden' => 1,
+				],
+			],
 			'rewards' => [],
 		], $data);
 
@@ -60,14 +70,15 @@ class GoalLib
 		$data['conditions'] = json_encode((array) $data['conditions']);
 		$data['rewards'] = json_encode((array) $data['rewards']);
 
-		TikiLib::lib('goalevent')->touch();
-
 		if ($goalId) {
 			$this->table()->update($data, ['goalId' => $goalId]);
-			return $goalId;
 		} else {
-			return $this->table()->insert($data);
+			$goalId = $this->table()->insert($data);
 		}
+
+		TikiLib::lib('goalevent')->touch();
+
+		return $goalId;
 	}
 
 	function fetchGoal($goalId)
@@ -111,15 +122,31 @@ class GoalLib
 
 			$runner->setFormula($cond['metric']);
 			$runner->setVariables(array_merge($goal, $context, $arguments));
-			$cond['metric'] = min($cond['count'], $runner->evaluate());
+			$cond['metric'] = $runner->evaluate();
 
 			if ($cond['operator'] == 'atLeast') {
 				$cond['complete'] = $cond['metric'] >= $cond['count'];
+				$cond['metric'] = min($cond['count'], $cond['metric']);
 			} else {
 				$cond['complete'] = $cond['metric'] <= $cond['count'];
 			}
 
 			$goal['complete'] = $goal['complete'] && $cond['complete'];
+		}
+
+		if ($goal['complete']) {
+			$tx = TikiDb::get()->begin();
+
+			TikiLib::events()->trigger('tiki.goal.reached', [
+				'type' => 'goal',
+				'object' => $goal['goalId'],
+				'name' => $goal['name'],
+				'goalType' => $goal['type'],
+				'user' => $context['user'],
+				'group' => $context['group'],
+			]);
+
+			$tx->commit();
 		}
 
 		return $goal;
@@ -160,6 +187,30 @@ class GoalLib
 				(filter (type "goalevent"))
 			)';
 			break;
+		case 'event-count-unbounded':
+			$metric = '(result-count
+				(filter-target)
+				(filter (content eventType) (field "event_type"))
+				(filter (type "goalevent"))
+			)';
+			break;
+		case 'goal-count':
+			$metric = '(result-count
+				(filter-date)
+				(filter-target)
+				(filter (content "tiki.goal.reached") (field "event_type"))
+				(filter (type "goalevent"))
+				(filter (content (concat "goal:" goalId)) (field "target"))
+			)';
+			break;
+		case 'goal-count-unbounded':
+			$metric = '(result-count
+				(filter-target)
+				(filter (content "tiki.goal.reached") (field "event_type"))
+				(filter (type "goalevent"))
+				(filter (content (concat "goal:" goalId)) (field "target"))
+			)';
+			break;
 		}
 
 		if ($goal['daySpan']) {
@@ -181,6 +232,9 @@ class GoalLib
 	{
 		return [
 			'event-count' => ['label' => tr('Event Count'), 'arguments' => ['eventType']],
+			'event-count-unbounded' => ['label' => tr('Event Count (Forever)'), 'arguments' => ['eventType']],
+			'goal-count' => ['label' => tr('Goal Reached (Periodic)'), 'arguments' => []],
+			'goal-count-unbounded' => ['label' => tr('Goal Reached (Forever)'), 'arguments' => []],
 		];
 	}
 

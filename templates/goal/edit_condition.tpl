@@ -5,6 +5,9 @@
 {/block}
 
 {block name="content"}
+	{remarksbox title="{tr}Changes will not be saved{/tr}"}
+		{tr}Your changes to conditions are not saved until you save the goal.{/tr}
+	{/remarksbox}
 	<form class="form-horizontal condition-form" method="post" action="{service controller=goal action=edit_condition}">
 		<div class="form-group">
 			<label class="control-label col-md-3">{tr}Label{/tr}</label>
@@ -47,8 +50,14 @@
 				<input type="text" class="form-control" name="eventType" value="{$condition.eventType|escape}">
 			</div>
 		</div>
+		<div class="checkbox col-md-offset-3">
+			<label>
+				<input type="checkbox" name="hidden" value="1" {if $condition.hidden}checked{/if}>
+				{tr}Hide condition from users{/tr}
+			</label>
+		</div>
 		<div class="submit col-md-offset-3">
-			<input type="submit" class="btn btn-primary" value="{tr}Save{/tr}">
+			<input type="submit" class="btn btn-primary" value="{tr}Apply{/tr}">
 		</div>
 	</form>
 	{jq}

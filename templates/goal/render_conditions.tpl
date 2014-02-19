@@ -18,6 +18,9 @@
 				</td>
 				<td>
 					<a class="edit-condition" href="#" data-condition="{$key|escape}">{$condition.label|escape}</a>
+					{if $condition.hidden}
+						<span class="label label-info">{tr}Hidden{/tr}</span>
+					{/if}
 					<a class="delete-condition pull-right text-danger" href="#" data-condition="{$key|escape}">{glyph name=remove} {tr}Delete{/tr}</a>
 				</td>
 			</tr>

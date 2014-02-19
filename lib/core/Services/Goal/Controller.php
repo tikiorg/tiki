@@ -23,6 +23,10 @@ class Services_Goal_Controller
 			throw new Services_Exception_NotFound;
 		}
 
+		if (! $info['enabled']) {
+			throw new Services_Exception_Denied(tr('Goal currently disabled'));
+		}
+
 		$context = [
 			'user' => $user,
 			'group' => $input->group->groupname(),
@@ -236,6 +240,7 @@ class Services_Goal_Controller
 			'count' => 5,
 			'metric' => 'event-count',
 			'eventType' => 'tiki.wiki.create',
+			'hidden' => 0,
 		];
 
 		$metricList = TikiLib::lib('goal')->getMetricList();
@@ -251,9 +256,10 @@ class Services_Goal_Controller
 		}
 
 		$condition['label'] = $input->label->text() ?: $condition['label'];
-		$condition['count'] = $input->count->int() ?: $condition['count'];
+		$condition['count'] = isset($input['count']) ? $input->count->int() : $condition['count'];
 		$condition['operator'] = $operator ?: $condition['operator'];
 		$condition['metric'] = $metric ?: $condition['metric'];
+		$condition['hidden'] = $input->hidden->int();
 
 		$condition['eventType'] = $input->eventType->attribute_type() ?: $condition['eventType'];
 

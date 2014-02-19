@@ -17,19 +17,31 @@ class GoalEventLib
 	function bindEvents($manager)
 	{
 		foreach ($this->getGoalEvents() as $eventType) {
-			$manager->bind($eventType, function ($args) use ($eventType) {
+			$manager->bind($eventType, function ($args, $eventName) use ($eventType) {
 				if (isset($args['user'])) {
 					$tikilib = TikiLib::lib('tiki');
 
 					$user = $args['user'];
-					$groups = $tikilib->get_user_groups($user);
 
-					$id = $this->table()->insert([
+					if ($eventName == 'tiki.goal.reached') {
+						$groups = $args['group'] ? [$args['group']] : [];
+					} else {
+						$groups = $tikilib->get_user_groups($user);
+					}
+
+					$data = [
 						'eventType' => $eventType,
 						'eventDate' => $tikilib->now,
 						'user' => $user,
 						'groups' => json_encode($groups),
-					]);
+					];
+
+					if (! empty($args['type']) && ! empty($args['object'])) {
+						$data['targetType'] = $args['type'];
+						$data['targetObject'] = $args['object'];
+					}
+
+					$id = $this->table()->insert($data);
 
 					TikiLib::lib('unifiedsearch')->invalidateObject('goalevent', $id);
 				}
