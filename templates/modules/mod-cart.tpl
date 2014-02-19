@@ -45,7 +45,8 @@
 		<p class="item_count">{tr _0=count($cart_content)}Cart contains %0 items{/tr}</p>
 	{/if}
 	{if not empty($cart_weight)}
-		<p class="cart_weight">{tr _0=$cart_weight _1=$module_params.weightUnit}Total weight %0%1{/tr}</p>
+		<p class="cart_weight">{tr _0=$cart_weight _1=$module_params.weightUnit}Total weight %0 %1{/tr}</p>
+		<input type="hidden" name="cart_weight" value="{$cart_weight}">
 	{/if}
 
 	<form method="post" action=""{if $module_params.ajax eq 'y'} class="mod-cart-checkout-form"{$json_data}{/if}>
