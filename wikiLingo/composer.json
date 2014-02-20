@@ -67,7 +67,8 @@
         "undo.js/undo.js": "1",
         "wikilingo/wikilingo":"dev-master",
 		"zetacomponents/base": "1.8",
-		"zetacomponents/webdav": "1.1.3"
+		"zetacomponents/webdav": "1.1.3",
+		"flp/flp": "dev-master"
 	},
 	"require-dev": {
 		"mikey179/vfsStream": "1.1.0"
