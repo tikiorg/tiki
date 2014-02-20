@@ -1,5 +1,9 @@
 rangy.createModule("Phraser", function(api, module) {
-    api.requireModules( ["WrappedSelection", "WrappedRange"] );
+
+    // 2014-02-20 Koohiisan - requireModules isn't present in v1.3 of vendor/rangy
+    // so we'll comment this out and hope the WrappedSelection and WrappedRange modules
+    // are present...
+    // api.requireModules( ["WrappedSelection", "WrappedRange"] );
     
     function getParts(val, id) {
     	var words = [];
