@@ -5,6 +5,7 @@
 <div class="adminWizardContent">
 <fieldset>
 	<legend>{tr}User Features{/tr}</legend>
+		<div class="adminWizardIconright"><img src="img/icons/large/user.png" alt="{tr}Users{/tr}"></div>
 		<div class="admin clearfix featurelist">
 		{preference name=feature_mytiki}
 		{preference name=feature_userPreferences}
@@ -16,6 +17,7 @@
 </fieldset>
 <fieldset>
 	<legend>{tr}Community General Settings{/tr}</legend>
+		<div class="adminWizardIconright"><img src="img/icons/large/users48x48.png" alt="{tr}Community{/tr}"></div>
 		<div class="admin clearfix featurelist">
 		{preference name=users_prefs_allowMsgs}
 		{preference name=users_prefs_user_information}
@@ -49,6 +51,7 @@
 </fieldset>
 	<fieldset>
 		<legend>{tr}Sharing & Social Network{/tr}</legend>
+		<div class="adminWizardIconright"><img src="img/icons/large/socialnetworks48x48.png" alt="{tr}Social networks{/tr}"></div>
 		<div class="admin clearfix featurelist">
 		{preference name=feature_share}
 		{preference name=feature_socialnetworks}
