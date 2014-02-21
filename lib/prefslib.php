@@ -44,6 +44,7 @@ class PreferencesLib
 				'permission' => '',
 				'plugin' => '',
 				'view' => '',
+				'public' => false,
 			);
 			if ($data[$name]['type'] === 'textarea') {
 				$defaults['size'] = 10;

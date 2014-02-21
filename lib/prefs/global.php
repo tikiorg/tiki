@@ -45,6 +45,7 @@ function prefs_global_list($partial = false)
 			'type' => 'text',
 			'default' => '',
 			'tags' => array('basic'),
+			'public' => true,
 		),
 		'validateUsers' => array(
 			'name' => tra('Validate new user registrations by email'),
@@ -125,6 +126,7 @@ function prefs_global_list($partial = false)
 				'feature_help',
 			),
 			'default' => "http://doc.tiki.org/",
+			'public' => true,
 		),
 		'popupLinks' => array(
 			'name' => tra('Open external links in new window'),
@@ -237,6 +239,7 @@ function prefs_global_list($partial = false)
 			'size' => '50',
 			'default' => '',
 			'tags' => array('basic'),
+			'public' => true,
 		),
 		'sitesubtitle' => array(
 			'name' => tra('Subtitle'),
@@ -245,6 +248,7 @@ function prefs_global_list($partial = false)
 			'size' => '50',
 			'default' => '',
 			'tags' => array('basic'),
+			'public' => true,
 		),
 		'maxRecords' => array(
 			'name' => tra('Maximum number of records in listings'),
@@ -253,6 +257,7 @@ function prefs_global_list($partial = false)
 			'size' => '3',
 			'default' => 25,
 			'tags' => array('basic'),
+			'public' => true,
 		),
 		'maxVersions' => array(
 			'name' => tra('Maximum number of versions:'),
