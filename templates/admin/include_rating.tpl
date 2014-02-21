@@ -134,6 +134,9 @@
 	<fieldset>
 		<legend>{tr}User Interface{/tr}</legend>
 		{preference name=rating_results_detailed}
+		<div class="adminoptionboxchild" id="rating_results_detailed_childcontainer">
+			{preference name=rating_results_detailed_percent}
+		</div>
 		{preference name=rating_smileys}
 	</fieldset>
 	
