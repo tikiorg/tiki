@@ -303,22 +303,26 @@ class Services_Goal_Controller
 	 */
 	function action_edit_reward($input)
 	{
+		$rewardList = TikiLib::lib('goal')->getRewardList();
+
+		if (empty($rewardList)) {
+			throw new Services_Exception_NotAvailable(tr('No available rewards'));
+		}
+
 		$reward = [
 			'label' => tr('Pages created'),
-			'rewardType' => 'credit',
+			'rewardType' => key($rewardList),
 			'creditType' => 'default',
 			'creditQuantity' => 1,
 			'hidden' => 0,
 		];
 
-		$rewardList = TikiLib::lib('goal')->getRewardList();
-
 		$rewardType = $input->rewardType->text();
 		if (! isset($rewardList[$rewardType])) {
-			$rewardType = null;
+			$rewardType = key($rewardList);
 		}
 
-		$reward['rewardType'] = $rewardType ?: $reward['rewardType'];
+		$reward['rewardType'] = $rewardType;
 		$reward['hidden'] = $input->hidden->int();
 
 		$reward['creditType'] = $input->creditType->word();

@@ -246,20 +246,45 @@ class GoalLib
 
 	function getRewardList()
 	{
-		return [
-			'credit' => [
+		$creditTypes = $this->getCreditTypes();
+
+		$list = [];
+
+		if (! empty($creditTypes)) {
+			$list['credit'] = [
 				'label' => tr('Credits'),
 				'arguments' => ['creditType', 'creditQuantity'],
-				'format' => function ($info) {
-					return tr('%0 credit(s) - %1', $info['creditQuantity'], $info['creditType']);
+				'options' => $creditTypes,
+				'format' => function ($info) use ($creditTypes) {
+					return tr('%0 credit(s) - %1', $info['creditQuantity'], $creditTypes[$info['creditType']]);
 				},
 				'apply' => function ($user, $reward) {
 					$userId = TikiLib::lib('tiki')->get_user_id($user);
 					$lib = TikiLib::lib('credits');
 					$lib->addCredits($userId, $reward['creditType'], $reward['creditQuantity']);
 				},
-			],
-		];
+			];
+		}
+
+		return $list;
+	}
+
+	private function getCreditTypes()
+	{
+		global $prefs;
+		if ($prefs['feature_credits'] != 'y') {
+			return [];
+		}
+
+		$lib = TikiLib::lib('credits');
+		$types = $lib->getCreditTypes();
+
+		$out = [];
+		foreach ($types as $type) {
+			$out[$type['credit_type']] = $type['display_text'];
+		}
+
+		return $out;
 	}
 
 	private function table()

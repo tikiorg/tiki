@@ -19,18 +19,24 @@
 				</select>
 			</div>
 		</div>
-		<div class="form-group argument eventType">
-			<label class="control-label col-md-3">{tr}Credit Type{/tr}</label>
-			<div class="col-md-9">
-				<input type="text" class="form-control" name="creditType" value="{$reward.creditType|escape}">
+		{if $rewards.credit}
+			<div class="form-group argument eventType">
+				<label class="control-label col-md-3">{tr}Credit Type{/tr}</label>
+				<div class="col-md-9">
+					<select name="creditType" class="form-control">
+						{foreach $rewards.credit.options as $creditType => $creditLabel}
+							<option value="{$creditType|escape}" {if $creditType eq $reward.creditType} selected {/if}>{$creditLabel|escape}</option>
+						{/foreach}
+					</select>
+				</div>
 			</div>
-		</div>
-		<div class="form-group argument eventType">
-			<label class="control-label col-md-3">{tr}Credit Quantity{/tr}</label>
-			<div class="col-md-9">
-				<input type="text" class="form-control" name="creditQuantity" value="{$reward.creditQuantity|escape}">
+			<div class="form-group argument eventType">
+				<label class="control-label col-md-3">{tr}Credit Quantity{/tr}</label>
+				<div class="col-md-9">
+					<input type="text" class="form-control" name="creditQuantity" value="{$reward.creditQuantity|escape}">
+				</div>
 			</div>
-		</div>
+		{/if}
 		<div class="checkbox col-md-offset-3">
 			<label>
 				<input type="checkbox" name="hidden" value="1" {if $reward.hidden}checked{/if}>
