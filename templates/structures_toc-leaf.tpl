@@ -46,7 +46,7 @@
 				<span class="description">{$structure_tree.description|escape} :&nbsp;</span>
 			{/if}
 			<a href={if $toc_type eq 'admin'}
-						"{$smarty.server.PHP_SELF}?page_ref_id={$structure_tree.page_ref_id}"
+						"#"
 					{else}
 						"{sefurl page=$structure_tree.pageName structure=$structurePageName page_ref_id=$structure_tree.page_ref_id}"
 					{/if}
