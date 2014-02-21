@@ -37,6 +37,10 @@
 									<img src="img/icons/large/file-manager.png" alt="{tr}File Galleries{/tr}" title="{tr}File Galleries{/tr}">
 								{elseif $pos eq "files"}
 									<img src="img/icons/large/file-manager_new.png" alt="{tr}Files{/tr}" title="{tr}Files{/tr}">
+								{elseif $pos eq "imageGalleries"}
+									<img src="img/icons/large/stock_select-color.png" alt="{tr}Image Galleries{/tr}" title="{tr}Image Galleries{/tr}">
+								{elseif $pos eq "images"}
+									<img src="img/icons/large/stock_select-color_new.png" alt="{tr}Images{/tr}" title="{tr}Images{/tr}">
 								{elseif $pos eq "poll"}
 									<img src="img/icons/large/stock_missing-image.png" alt="{tr}Poll{/tr}" title="{tr}Poll{/tr}">
 								{elseif $pos eq "pages"}

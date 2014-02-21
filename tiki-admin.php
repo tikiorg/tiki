@@ -345,9 +345,11 @@ $icons = array(
 		'position' => '-300px -215px;',
 		'icon' => 'img/icons/large/rating.png',
 		'title' => tr('Rating'),
-		'help' => 'Advanced+Rating',
+		'help' => 'Rating',
 		'disabled' => $prefs['wiki_simple_ratings'] !== 'y' &&
+						$prefs['wiki_comments_simple_ratings'] !== 'y' &&
 						$prefs['rating_advanced'] !== 'y' &&
+						$prefs['trackerfield_rating'] !== 'y' &&
 						$prefs['article_user_rating'] !== 'y',
 	),
 	"search" => array(

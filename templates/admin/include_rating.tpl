@@ -8,7 +8,6 @@
 
 	<fieldset>
 		<legend>{tr}Global configuration{/tr}</legend>
-		{preference name=rating_advanced visible="always"}
 		{preference name=rating_recalculation}
 		<div class="rating_recalculation_childcontainer randomvote randomload">
 			{preference name=rating_recalculation_odd}
@@ -138,6 +137,11 @@
 			{preference name=rating_results_detailed_percent}
 		</div>
 		{preference name=rating_smileys}
+	</fieldset>
+
+	<fieldset>
+		<legend>{tr}Advanced{/tr}</legend>
+		{preference name=rating_advanced}
 	</fieldset>
 	
 	<div class="input_submit_container" style="margin-top: 5px; text-align: center">
