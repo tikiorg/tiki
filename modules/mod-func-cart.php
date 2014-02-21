@@ -66,6 +66,8 @@ function module_cart_info()
  */
 function module_cart($mod_reference, & $module_params)
 {
+	global $jitRequest;
+
 	$smarty = TikiLib::lib('smarty');
 	$access = TikiLib::lib('access');
 	$cartlib = TikiLib::lib('cart');
@@ -85,8 +87,8 @@ function module_cart($mod_reference, & $module_params)
 
 	$module_params = array_merge($defaults, $module_params);
 
-	if (isset($_POST['update'], $_POST['cart'])) {
-		foreach ($_POST['cart'] as $code => $quantity) {
+	if ($jitRequest->update->text() && $cart = $jitRequest->cart->array()) {
+		foreach ($cart as $code => $quantity) {
 			$cartlib->update_quantity($code, $quantity);
 		}
 
