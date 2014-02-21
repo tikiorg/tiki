@@ -10,6 +10,7 @@ class Tiki_Profile
 	const SHORT_PATTERN = '/^\$((([\w\.-]+):)?((\w+):))?(\w+)$/';
 	const LONG_PATTERN = '/\$profileobject:((([\w\.-]+):)?((\w+):))?(\w+)\$/';
 	const INFO_REQUEST = '/\$profilerequest:([^\$\|]+)(\|(\w+))?\$([^\$]*)\$/';
+	const PREFERENCE_PATTERN = '/\$preference:(\w+)\$/';
 
 	private $transport;
 	private $pageUrl;
@@ -511,19 +512,22 @@ class Tiki_Profile
 
 	public function replaceReferences( &$data, $suppliedUserData = false ) // {{{
 	{
-		if ( $suppliedUserData === false )
+		if ( $suppliedUserData === false ) {
 			$suppliedUserData = $this->getRequiredInput();
+		}
 
 		if ( is_array($data) ) {
-			foreach ( $data as &$sub )
+			foreach ( $data as &$sub ) {
 				$this->replaceReferences($sub, $suppliedUserData);
+			}
 
 			$toReplace = array();
 			foreach ( array_keys($data) as $key ) {
 				$newKey = $key;
 				$this->replaceReferences($newKey, $suppliedUserData);
-				if ( $newKey != $key )
+				if ( $newKey != $key ) {
 					$toReplace[$key] = $newKey;
+				}
 			}
 
 			foreach ( $toReplace as $old => $new ) {
@@ -540,43 +544,49 @@ class Tiki_Profile
 			$needles = array();
 			$replacements = array();
 
-			if ( preg_match_all(self::LONG_PATTERN, $data, $parts, PREG_SET_ORDER) )
+			if ( preg_match_all(self::LONG_PATTERN, $data, $parts, PREG_SET_ORDER) ) {
 				foreach ( $parts as $row ) {
 					$object = $this->convertReference($row);
 
 					$needles[] = $row[0];
 					$replacements[] = self::getObjectReference($object);
 				}
+			}
 
-			if ( preg_match_all(self::INFO_REQUEST, $data, $parts, PREG_SET_ORDER) )
+			if ( preg_match_all(self::INFO_REQUEST, $data, $parts, PREG_SET_ORDER) ) {
 				foreach ( $parts as $row ) {
 					list($full, $label, $junk, $filter, $default) = $row;
 
-					if ( ! array_key_exists($label, $suppliedUserData) )
+					if ( ! array_key_exists($label, $suppliedUserData) ) {
 						$value = $default;
-					else
+					} else {
 						$value = $suppliedUserData[$label];
+					}
 
-					if ( $filter )
+					if ( $filter ) {
 						$value = TikiFilter::get($filter)->filter($value);
-					else
+					} else {
 						$value = TikiFilter::get('xss')->filter($value);
+					}
 
-					if ( empty($value) )
+					if ( empty($value) ) {
 						$value = $default;
+					}
 
 					$needles[] = $full;
 					$replacements[] = $value;
 				}
+			}
 
-			if ( count($needles) )
+			if ( count($needles) ) {
 				$data = str_replace($needles, $replacements, $data);
+			}
 
 			$needles = array();
 			$replacements = array();
 
 			// Replace date formats D(...) to unix timestamps
-			if ( preg_match_all("/D\\(([^\\)]+)\\)/", $data, $parts, PREG_SET_ORDER) )
+			if ( preg_match_all("/D\\(([^\\)]+)\\)/", $data, $parts, PREG_SET_ORDER) ) {
 				foreach ( $parts as $row ) {
 					list($full, $date) = $row;
 
@@ -585,9 +595,23 @@ class Tiki_Profile
 						$replacements = $conv;
 					}
 				}
+			}
 
-			if ( count($needles) )
+			if ( preg_match_all(self::PREFERENCE_PATTERN, $data, $parts, PREG_SET_ORDER) ) {
+				foreach ( $parts as $row ) {
+					$preferenceName = $row[1];
+					$definition = TikiLib::lib('prefs')->getPreference($preferenceName);
+
+					if (! empty($definition['public'])) {
+						$needles[] = $row[0];
+						$replacements[] = $definition['value'];
+					}
+				}
+			}
+
+			if ( count($needles) ) {
 				$data = str_replace($needles, $replacements, $data);
+			}
 		}
 	} // }}}
 
