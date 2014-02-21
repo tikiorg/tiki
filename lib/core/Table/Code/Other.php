@@ -29,7 +29,7 @@ class Table_Code_Other extends Table_Code_Manager
 		$sr = '';
 		//reset sort button
 		$x = array('reset' => '', 'savereset' => '');
-		$s = parent::$s['sort'];
+		$s = parent::$s['sorts'];
 		$s = isset($s['type']) && $s['type'] !== true && array_key_exists($s['type'], $x) ? $s : false;
 		if ($s) {
 			if ($s['type'] === 'savereset') {

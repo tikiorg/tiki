@@ -22,11 +22,13 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
  */
 class Table_Code_Abstract
 {
+	protected static $s;
 	public static $id;
 	public static $tid;
-	protected static $s;
+	protected static $sorts;
+	protected static $sortcol;
 	protected static $filters;
-	protected static $sort;
+	protected static $filtercol;
 	protected static $group;
 	protected static $pager;
 	protected static $ajax;
@@ -55,16 +57,18 @@ class Table_Code_Abstract
 			self::$id = $settings['id'];
 			self::$tid = 'table#' . $settings['id'] . '_table';
 			//overall sort on unless sort type set to false
-			self::$sort = isset($settings['sort']['type']) && $settings['sort']['type'] === false ? false : true;
+			self::$sorts = isset($settings['sorts']['type']) && $settings['sorts']['type'] === false ? false : true;
+			self::$sortcol = isset(self::$s['columns']) && count(array_column(self::$s['columns'], 'sort')) > 0 ? true : false;
 
 			//filter, group, pager and ajax off unless type is set and is not false
 			self::$filters = empty($settings['filters']['type']) ? false : true;
+			self::$filtercol = isset(self::$s['columns']) && count(array_column(self::$s['columns'], 'filter')) > 0 ? true : false;
 			self::$pager = empty($settings['pager']['type']) ? false : true;
 			global $prefs;
 			self::$ajax = $settings['ajax']['type'] === true && $prefs['feature_ajax'] === 'y'? true : false;
 			//TODO allow for use of group headers with ajax when tablesorter bug 437 is fixed
-			self::$group = self::$sort && !self::$ajax && isset($settings['sort']['group'])
-			&& $settings['sort']['group'] === true ? true : false;
+			self::$group = self::$sorts && !self::$ajax && isset($settings['sorts']['group'])
+			&& $settings['sorts']['group'] === true ? true : false;
 		}
 	}
 
