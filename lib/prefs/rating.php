@@ -66,6 +66,16 @@ function prefs_rating_list()
 			),
 			'default' => ''
 		),
+		'rating_results_detailed_percent' => array(
+			'name' => tr('Include percentages in the detailed rating results'),
+			'description' => tr('Include percentages in the detailed rating results. Otherwise, only count numbers and bars are shown.'),
+			'type' => 'flag',
+			'options' => array(
+				'' => tr('Disabled'),
+				'y' => tr('Enabled'),
+			),
+			'default' => ''
+		),		
 	);
 }
 
