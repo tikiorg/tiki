@@ -20,7 +20,7 @@
 			</div>
 		</div>
 		{if $rewards.credit}
-			<div class="form-group argument eventType">
+			<div class="form-group argument creditType">
 				<label class="control-label col-md-3">{tr}Credit Type{/tr}</label>
 				<div class="col-md-9">
 					<select name="creditType" class="form-control">
@@ -30,10 +30,18 @@
 					</select>
 				</div>
 			</div>
-			<div class="form-group argument eventType">
+			<div class="form-group argument creditQuantity">
 				<label class="control-label col-md-3">{tr}Credit Quantity{/tr}</label>
 				<div class="col-md-9">
 					<input type="text" class="form-control" name="creditQuantity" value="{$reward.creditQuantity|escape}">
+				</div>
+			</div>
+		{/if}
+		{if $rewards.tracker_badge_add}
+			<div class="form-group argument trackerItemBadge">
+				<label class="control-label col-md-3">{tr}Badge{/tr}</label>
+				<div class="col-md-9">
+					{object_selector _name=trackerItemBadge _value="trackeritem:`$reward.trackerItemBadge`" tracker_id=$rewards.tracker_badge_add.tracker _class="form-control"}
 				</div>
 			</div>
 		{/if}
@@ -48,7 +56,7 @@
 		</div>
 	</form>
 	{jq}
-		$('.reward-form select[name=metric]').change(function () {
+		$('.reward-form select[name=rewardType]').change(function () {
 			$('.reward-form .form-group.argument').hide();
 
 			$.each(this.selectedOptions, function (key, item) {

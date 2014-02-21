@@ -315,6 +315,7 @@ class Services_Goal_Controller
 			'creditType' => 'default',
 			'creditQuantity' => 1,
 			'hidden' => 0,
+			'trackerItemBadge' => 0,
 		];
 
 		$rewardType = $input->rewardType->text();
@@ -327,6 +328,15 @@ class Services_Goal_Controller
 
 		$reward['creditType'] = $input->creditType->word();
 		$reward['creditQuantity'] = isset($input['creditQuantity']) ? $input->creditQuantity->int() : $reward['creditQuantity'];
+
+		if ($badge = $input->trackerItemBadge->int()) {
+			$reward['trackerItemBadge'] = $badge;
+		} elseif ($object = $input->trackerItemBadge->none()) {
+			list($type, $id) = explode(':', $object, 2);
+			if ($type == 'trackeritem' && intval($id)) {
+				$reward['trackerItemBadge'] = intval($id);
+			}
+		}
 
 		$reward['eventType'] = $input->eventType->attribute_type() ?: $reward['eventType'];
 

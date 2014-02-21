@@ -14,6 +14,16 @@ function prefs_goal_list()
 			'type' => 'flag',
 			'default' => 'n',
 		),
+		'goal_badge_tracker' => array(
+			'name' => tr('Reward Badge Tracker'),
+			'description' => tr('Tracker ID containing the list of badges to be awarded on goal completion. Each badge can be awarded only once per user.'),
+			'type' => 'text',
+			'filter' => 'int',
+			'default' => 0,
+			'hint' => tr('0 to disable'),
+			'profile_reference' => 'tracker',
+			'dependencies' => ['feature_trackers'],
+		),
 	);
 }
 
