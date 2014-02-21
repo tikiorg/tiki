@@ -49,6 +49,13 @@ class Services_Goal_Controller
 
 		$info = $goallib->evaluateConditions($info, $context);
 
+		$info['conditions'] = array_filter($info['conditions'], function ($item) {
+			return empty($item['hidden']);
+		});
+		$info['rewards'] = array_filter($info['rewards'], function ($item) {
+			return empty($item['hidden']);
+		});
+
 		return array(
 			'title' => $info['name'],
 			'goal' => $info,
@@ -312,7 +319,7 @@ class Services_Goal_Controller
 		$reward = [
 			'label' => tr('Pages created'),
 			'rewardType' => key($rewardList),
-			'creditType' => 'default',
+			'creditType' => null,
 			'creditQuantity' => 1,
 			'hidden' => 0,
 			'trackerItemBadge' => 0,

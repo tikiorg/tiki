@@ -289,7 +289,7 @@ class GoalLib
 				'arguments' => ['creditType', 'creditQuantity'],
 				'options' => $creditTypes,
 				'format' => function ($info) use ($creditTypes) {
-					if (! empty($creditTypes[$reward['creditType']])) {
+					if (! empty($creditTypes[$info['creditType']])) {
 						return tr('%0 credit(s) - %1', $info['creditQuantity'], $creditTypes[$info['creditType']]);
 					} else {
 						return tr('Unknown credit type');
