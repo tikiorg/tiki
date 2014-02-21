@@ -199,7 +199,8 @@ class StructLib extends TikiLib
 		global $user;
 
 		if (!empty($data)) {
-			$structure_info = $this->s_get_structure_info($data[0]->structure_id);	// "root"
+			$parent_ref_id = $data[0]->structure_id;
+			$structure_info = $this->s_get_structure_info($parent_ref_id);	// "root"
 
 			if (TikiLib::lib('tiki')->user_has_perm_on_object($user, $structure_info['pageName'], 'wiki page', 'tiki_p_edit_structures')) {
 
@@ -215,7 +216,7 @@ class StructLib extends TikiLib
 						} else {
 							$orders[$node->depth]++;
 						}
-						$node->parent_id = $node->parent_id == 'root' || empty($node->parent_id) ? $structure_info['page_ref_id'] : $node->parent_id;
+						$node->parent_id = $node->parent_id == 'root' || empty($node->parent_id) ? $parent_ref_id : $node->parent_id;
 						$fields = array(
 							'parent_id' => $node->parent_id,
 							'pos' => $orders[$node->depth],
