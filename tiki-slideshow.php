@@ -180,7 +180,7 @@ $headerlib->add_jq_onready(
 					theme = (theme ? theme : "default");
 					
 					window.s5Settings.themeName = theme;
-					$.modal(tr("Updating Theme..."));
+					$.tikiModal(tr("Updating Theme..."));
 					$.get("tiki-slideshow.php", {theme: theme}, function(o) {
 						$.s5.makeTheme($.parseJSON(o));
 						
@@ -195,11 +195,11 @@ $headerlib->add_jq_onready(
 								content: "~same~",
 								params: (window.slideshowSettings ? window.slideshowSettings : {})
 							}, function() {
-								$.modal();
+								$.tikiModal();
 								window.s5Busy = false;
 							});
 						} else {
-							$.modal();
+							$.tikiModal();
 							window.s5Busy = false;
 						}
 					}); 
