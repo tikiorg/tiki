@@ -172,9 +172,13 @@ function smarty_function_query($params, $smarty)
 			$params['_type'] = 'anchor';
 
 		}
-		if (isset($php_self) && basename($php_self) === 'route.php') {
-			global $inclusion;
-			$php_self = str_replace('route.php', $inclusion, $php_self);
+		if (!empty($php_self)) {
+			if (basename($php_self) === 'route.php') {
+				global $inclusion;
+				$php_self = str_replace('route.php', $inclusion, $php_self);
+			} else if (basename($php_self) === 'tiki-ajax_services.php' && !empty($_SERVER['HTTP_REFERER'])) {
+				$php_self = str_replace('tiki-ajax_services.php', basename($_SERVER['HTTP_REFERER']), $php_self);
+			}
 		}
 
 		switch ( $params['_type'] ) {
