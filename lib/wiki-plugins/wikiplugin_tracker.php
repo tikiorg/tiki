@@ -569,9 +569,9 @@ function wikiplugin_tracker($data, $params)
 					$wiki = $prefs["user_register_prettytracker_tpl"];
 				}
 				if (!empty($wiki)) {
-					$outf = $trklib->get_pretty_fieldIds($wiki, 'wiki', $outputPretty);
+					$outf = $trklib->get_pretty_fieldIds($wiki, 'wiki', $outputPretty, $trackerId);
 				} elseif (!empty($tpl)) {
-					$outf = $trklib->get_pretty_fieldIds($tpl, 'tpl', $outputPretty);
+					$outf = $trklib->get_pretty_fieldIds($tpl, 'tpl', $outputPretty, $trackerId);
 				} elseif (!empty($fields)) {
 					$outf = $fields;
 				}
@@ -1371,17 +1371,18 @@ function wikiplugin_tracker($data, $params)
 					}
 					if (!empty($tpl) || !empty($wiki)) {
 						if (!empty($outputPretty) && in_array($f['fieldId'], $outputPretty)) {
-							$smarty->assign('f_'.$f['fieldId'], '<span class="outputPretty" id="track_'.$f['fieldId'].'" name="track_'.$f['fieldId'].'">'. wikiplugin_tracker_render_value($f, $item) . '</span>');
+							$prettyout = '<span class="outputPretty" id="track_'.$f['fieldId'].'" name="track_'.$f['fieldId'].'">'. wikiplugin_tracker_render_value($f, $item) . '</span>';
+							$smarty->assign('f_'.$f['fieldId'], $prettyout);
+							$smarty->assign('f_'.$f['permName'], $prettyout);
 						} else {
 							$mand =  ($showmandatory == 'y' and $f['isMandatory'] == 'y')? "&nbsp;<strong class='mandatory_star'>*</strong>&nbsp;":'';
-							$smarty->assign(
-								'f_'.$f['fieldId'],
-								wikiplugin_tracker_render_input($f, $item, $dynamicSave) .
+							$prettyout = wikiplugin_tracker_render_input($f, $item, $dynamicSave) .
 								$mand .
 								'<div class="trackerplugindesc">' .
 								($f['descriptionIsParsed'] == 'y' ? $tikilib->parse_data($f['description']) : tra($f['description'])) .
-								'</div>'
-							);
+								'</div>';
+							$smarty->assign('f_'.$f['fieldId'], $prettyout);
+							$smarty->assign('f_'.$f['permName'], $prettyout);
 						}
 					} else {
 						$back.= '<tr><td class="tracker_input_label"';

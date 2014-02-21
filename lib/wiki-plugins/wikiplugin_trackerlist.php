@@ -848,11 +848,11 @@ function wikiplugin_trackerlist($data, $params)
 			}
 		} elseif (!empty($wiki) || !empty($tpl) || !empty($tplwiki)) {
 				if (!empty($wiki)) {
-					$listfields = $trklib->get_pretty_fieldIds($wiki, 'wiki', $outputPretty);
+					$listfields = $trklib->get_pretty_fieldIds($wiki, 'wiki', $outputPretty, $trackerId);
 				} elseif (!empty($tplwiki)) {
-					$listfields = $trklib->get_pretty_fieldIds($tplwiki, 'wiki', $outputPretty);
+					$listfields = $trklib->get_pretty_fieldIds($tplwiki, 'wiki', $outputPretty, $trackerId);
 				} else {
-					$listfields = $trklib->get_pretty_fieldIds($tpl, 'tpl', $outputPretty);
+					$listfields = $trklib->get_pretty_fieldIds($tpl, 'tpl', $outputPretty, $trackerId);
 				}
 		} else {
 			$listfields = '';
