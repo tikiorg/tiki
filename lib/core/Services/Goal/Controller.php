@@ -238,7 +238,7 @@ class Services_Goal_Controller
 
 		return [
 			'title' => tr('Conditions'),
-			'conditions' => array_filter($conditions),
+			'conditions' => array_values(array_filter($conditions)),
 		];
 	}
 
@@ -254,6 +254,7 @@ class Services_Goal_Controller
 			'metric' => 'event-count',
 			'eventType' => 'tiki.wiki.create',
 			'hidden' => 0,
+			'trackerItemBadge' => 0,
 		];
 
 		$metricList = TikiLib::lib('goal')->getMetricList();
@@ -275,6 +276,7 @@ class Services_Goal_Controller
 		$condition['hidden'] = $input->hidden->int();
 
 		$condition['eventType'] = $input->eventType->attribute_type() ?: $condition['eventType'];
+		$condition['trackerItemBadge'] = $this->getTrackerItemBadge($input);
 
 		return [
 			'title' => tr('Condition'),
@@ -301,7 +303,7 @@ class Services_Goal_Controller
 
 		return [
 			'title' => tr('Rewards'),
-			'rewards' => array_filter($rewards),
+			'rewards' => array_values(array_filter($rewards)),
 		];
 	}
 
@@ -336,14 +338,7 @@ class Services_Goal_Controller
 		$reward['creditType'] = $input->creditType->word();
 		$reward['creditQuantity'] = isset($input['creditQuantity']) ? $input->creditQuantity->int() : $reward['creditQuantity'];
 
-		if ($badge = $input->trackerItemBadge->int()) {
-			$reward['trackerItemBadge'] = $badge;
-		} elseif ($object = $input->trackerItemBadge->none()) {
-			list($type, $id) = explode(':', $object, 2);
-			if ($type == 'trackeritem' && intval($id)) {
-				$reward['trackerItemBadge'] = intval($id);
-			}
-		}
+		$reward['trackerItemBadge'] = $this->getTrackerItemBadge($input);
 
 		$reward['eventType'] = $input->eventType->attribute_type() ?: $reward['eventType'];
 
@@ -355,6 +350,20 @@ class Services_Goal_Controller
 			'reward' => $reward,
 			'rewards' => $rewardList,
 		];
+	}
+
+	private function getTrackerItemBadge($input)
+	{
+		if ($badge = $input->trackerItemBadge->int()) {
+			return $badge;
+		} elseif ($object = $input->trackerItemBadge->none()) {
+			list($type, $id) = explode(':', $object, 2);
+			if ($type == 'trackeritem' && intval($id)) {
+				return intval($id);
+			}
+		}
+
+		return 0;
 	}
 }
 

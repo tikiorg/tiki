@@ -114,7 +114,7 @@ class GoalLib
 
 		foreach ($goal['conditions'] as & $cond) {
 			$arguments = [];
-			foreach (['eventType'] as $arg) {
+			foreach (['eventType', 'trackerItemBadge'] as $arg) {
 				if (isset($cond[$arg])) {
 					$arguments[$arg] = $cond[$arg];
 				}
@@ -217,6 +217,13 @@ class GoalLib
 				(filter (content (concat "goal:" goalId)) (field "target"))
 			)';
 			break;
+		case 'has-badge':
+			$metric = '(relation-present
+				(qualifier "tiki.badge.received")
+				(from type (if (equals type "user") user group))
+				(to "trackeritem" trackerItemBadge)
+			)';
+			break;
 		}
 
 		if ($goal['daySpan']) {
@@ -241,6 +248,7 @@ class GoalLib
 			'event-count-unbounded' => ['label' => tr('Event Count (Forever)'), 'arguments' => ['eventType']],
 			'goal-count' => ['label' => tr('Goal Reached (Periodic)'), 'arguments' => []],
 			'goal-count-unbounded' => ['label' => tr('Goal Reached (Forever)'), 'arguments' => []],
+			'has-badge' => ['label' => tr('Has Badge'), 'arguments' => ['trackerItemBadge']],
 		];
 	}
 

@@ -50,6 +50,14 @@
 				<input type="text" class="form-control" name="eventType" value="{$condition.eventType|escape}">
 			</div>
 		</div>
+		{if $prefs.goal_badge_tracker}
+			<div class="form-group argument trackerItemBadge">
+				<label class="control-label col-md-3">{tr}Badge{/tr}</label>
+				<div class="col-md-9">
+					{object_selector _name=trackerItemBadge _value="trackeritem:`$condition.trackerItemBadge`" tracker_id=$prefs.goal_badge_tracker _class="form-control"}
+				</div>
+			</div>
+		{/if}
 		<div class="checkbox col-md-offset-3">
 			<label>
 				<input type="checkbox" name="hidden" value="1" {if $condition.hidden}checked{/if}>
