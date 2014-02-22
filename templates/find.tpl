@@ -49,7 +49,7 @@
 					</div>
 				{/if}
 				<div class="input-group-btn">
-					<input type="submit" class="btn btn-default" name="search" value="{tr}Find{/tr}">
+					<button type="submit" class="btn btn-default" name="search">{tr}Find{/tr}</button>
 				</div>
 			</div>
 			{if !empty($find) or !empty($find_type) or !empty($find_topic) or !empty($find_lang) or !empty($find_langOrphan) or !empty($find_categId) or !empty($find_orphans) or !empty($find_other_val) or $maxRecords ne $prefs.maxRecords}{*  $find_date_from & $find_date_to get set usually *}
