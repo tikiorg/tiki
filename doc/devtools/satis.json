@@ -780,9 +780,9 @@
 			"type": "package",
 			"package": {
 				"name": "jquery/plugins/tablesorter",
-				"version": "2.15.3",
+				"version": "2.15.4",
 				"dist": {
-					"url": "https://github.com/Mottie/tablesorter/archive/v2.15.3.zip",
+					"url": "https://github.com/Mottie/tablesorter/archive/v2.15.4.zip",
 					"type": "zip"
 				}
 			}
