@@ -91,8 +91,13 @@ $(document)
             autoSaveId: autoSaveId,
             page: page = autoSaveId.split(':').pop(),
             save: 1
-        }, function(result){
-            document.location = 'tiki-index.php?page=' + page
+        }, function(result) {
+	        var json = $.parseJSON(result);
+	        if (json) {
+                document.location = 'tiki-index.php?page=' + page
+	        } else {
+		        $.notify(result);
+	        }
         });
     });
 
