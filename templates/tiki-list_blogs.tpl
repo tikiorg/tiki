@@ -3,7 +3,7 @@
 
 {if $tiki_p_create_blogs eq 'y'}
   <div class="t_navbar">
-		{button href="tiki-edit_blog.php" _text="{tr}Create New Blog{/tr}"}
+		{button href="tiki-edit_blog.php" _text="{tr}Create New Blog{/tr}" _class="navbar-btn"}
 	</div>
 {/if}
 <div class="text-center">
