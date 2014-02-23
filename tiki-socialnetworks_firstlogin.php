@@ -5,6 +5,15 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
+$inputConfiguration = array(
+	array( 'staticKeyFilters' =>
+		array(
+			'userlogin' => 'striptags',
+			'userpass' => 'striptags',
+		)
+	)
+);
+
 require_once ('tiki-setup.php');
 $access->check_user($user);
 	
