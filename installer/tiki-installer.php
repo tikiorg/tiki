@@ -686,10 +686,23 @@ if (
 			$client_charset = '';
 		}
 
-		$dbcon = initTikiDB( $api_tiki, $_REQUEST['db'], $_REQUEST['host'], $_REQUEST['user'], $_REQUEST['pass'], $_REQUEST['name'], $client_charset, $dbTiki );
-	
+		$filters = array(
+			'db' => 'alpha',
+			'host' => 'striptags',
+			'user' => 'striptags',
+			'pass' => 'striptags',
+			'name' => 'striptags'
+		);
+		foreach ($filters as $key => $filter) {
+			if (array_key_exists($key, $_REQUEST)) {
+				$filtered[$key] = TikiFilter::get($filter)->filter($_REQUEST[$key]);
+			}
+		}
+
+		$dbcon = initTikiDB($api_tiki, $filtered['db'], $filtered['host'], $filtered['user'], $filtered['pass'], $filtered['name'], $client_charset, $dbTiki);
+
 		if ($dbcon) {
-			write_local_php( $_REQUEST['db'], $_REQUEST['host'], $_REQUEST['user'], $_REQUEST['pass'], $_REQUEST['name'], $client_charset );
+			write_local_php($filtered['db'], $filtered['host'], $filtered['user'], $filtered['pass'], $filtered['name'], $client_charset);
 			include $local;
 			// In case of replication, ignore it during installer.
 			unset( $shadow_dbs, $shadow_user, $shadow_pass, $shadow_host );
