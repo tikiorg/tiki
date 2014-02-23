@@ -26,6 +26,6 @@ class TikiWikiPluginBridge extends Base
 
 			return $output;
 		}
-		return $parser->syntax($plugin->parsed->loc);
+		return '';
 	}
 } 
