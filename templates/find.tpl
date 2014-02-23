@@ -193,17 +193,12 @@
 				</div>
 			{/if}
 			{if !empty($types) and isset($types_tag) and $types_tag eq 'checkbox'}
-				<div class="form-group findtypes">
-					<ul>
-						<li>
-							{tr}in:{/tr}
-						</li>
-						{foreach key=key item=value from=$types}
-							<li>
-								<input type="checkbox" name="types[]" value="{$key|escape}" {if is_array($find_type) && in_array($key, $find_type)}checked="checked"{/if}> {tr}{$value}{/tr}
-						</li>
+				<div class="form-group findtypes text-center">
+					{foreach key=key item=value from=$types}
+						<label class="checkbox-inline">
+							<input type="checkbox" name="types[]" value="{$key|escape}" {if is_array($find_type) && in_array($key, $find_type)}checked="checked"{/if}> {tr}{$value}{/tr}
+						</label>
 					{/foreach}
-					</ul>
 				</div>
 			{/if}
 			{if !empty($filters)}
