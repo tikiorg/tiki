@@ -121,10 +121,11 @@ class Tracker_Field_Category extends Tracker_Field_Abstract implements Tracker_F
 
 	public function renderInput($context = array())
 	{
+		$smarty = TikiLib::lib('smarty');
+		$smarty->assign('cat_tree', array());
 		if ($this->getOption('descendants') > 0 && $this->getOption('inputtype') === 'checkbox') {
 			$categories = $this->getConfiguration('list');
 			$selected_categories = $this->getConfiguration('selected_categories');
-			$smarty = TikiLib::lib('smarty');
 			$smarty->assign_by_ref('categories', $categories);
 			$cat_tree = TikiLib::lib('categ')->generate_cat_tree($categories, true, $selected_categories);
 			$cat_tree = str_replace('name="cat_categories[]"', 'name="' . $this->getInsertId() . '[]"', $cat_tree);
