@@ -106,6 +106,7 @@ $smarty->assign('show_reads', $article_data["show_reads"]);
 $smarty->assign('size', $article_data["size"]);
 $smarty->assign('show_size', $article_data["show_size"]);
 $smarty->assign('use_ratings', $article_data["use_ratings"]);
+$smarty->assign('comment_can_rate_article', $article_data["comment_can_rate_article"]);
 $smarty->assign('ispublished', $article_data["ispublished"]);
 if (strlen($article_data["image_data"]) > 0) {
 	$smarty->assign('hasImage', 'y');

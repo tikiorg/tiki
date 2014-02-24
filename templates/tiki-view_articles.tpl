@@ -78,19 +78,19 @@
 						{if $listpages[ix].show_reads eq 'y'}
 							<span class="reads">({$listpages[ix].nbreads} {tr}Reads{/tr})</span>
 						{/if}
-						{if $prefs.article_user_rating eq 'y' && ($tiki_p_ratings_view_results eq 'y' or $tiki_p_admin eq 'y')}
+						{if $listpages[ix].comment_can_rate_article eq 'y' && $prefs.article_user_rating eq 'y' && ($tiki_p_ratings_view_results eq 'y' or $tiki_p_admin eq 'y')}
 							- {rating_result_avg id=$listpages[ix].articleId type=article}
 						{/if}
 					</span><br>
 				{/if}
-				{if empty({$listpages[ix].body}) and !isset($preview) and $prefs.article_user_rating eq 'y' && $tiki_p_rate_article eq 'y'}
+				{if $listpages[ix].comment_can_rate_article eq 'y' and empty({$listpages[ix].body}) and !isset($preview) and $prefs.article_user_rating eq 'y' && $tiki_p_rate_article eq 'y'}
 					<div class="articleheading">
 					<form method="post" action="">
 						{rating type=article id=$listpages[ix].articleId}
 					</form>
 					</div>
 				{/if}
-				{if $prefs.article_user_rating eq 'y' && ($tiki_p_ratings_view_results eq 'y' or $tiki_p_admin eq 'y')}
+				{if $listpages[ix].comment_can_rate_article eq 'y' && $prefs.article_user_rating eq 'y' && ($tiki_p_ratings_view_results eq 'y' or $tiki_p_admin eq 'y')}
 					<div class="articleheading">
 					{rating_result id=$listpages[ix].articleId type=article}
 					</div>

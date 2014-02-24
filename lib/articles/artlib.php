@@ -1354,6 +1354,7 @@ class ArtLib extends TikiLib
 			`tiki_article_types`.`show_post_expire`,
 			`tiki_article_types`.`heading_only`,
 			`tiki_article_types`.`allow_comments`,
+			`tiki_article_types`.`comment_can_rate_article`,
 			`tiki_article_types`.`show_image`,
 			`tiki_article_types`.`show_avatar`,
 			`tiki_article_types`.`show_author`,
