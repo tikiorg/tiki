@@ -2942,10 +2942,6 @@ div.highlight {
 	font-weight: normal;
 }
 
-table span.ratingResultAvg {
-  visibility:hidden;
-}
-
 .rbox > div.highlight {
 	display: block;
 	font-weight: bold;
