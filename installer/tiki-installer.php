@@ -1057,7 +1057,7 @@ if ( isset($_REQUEST['general_settings']) && $_REQUEST['general_settings'] == 'y
 		. " ('language', ?)";
 
 	$installer->query($query, array($_REQUEST['browsertitle'], $_REQUEST['sender_email'], $_REQUEST['https_login'], $_REQUEST['https_port'], $_REQUEST['error_reporting_level'], $language));
-	$installer->query("UPDATE `users_users` SET `email` = '".$_REQUEST['admin_email']."' WHERE `users_users`.`userId`=1");
+	$installer->query("UPDATE `users_users` SET `email` = ? WHERE `users_users`.`userId`=1", array($_REQUEST['admin_email']));
 
 	if ( isset( $_REQUEST['admin_account'] ) && ! empty( $_REQUEST['admin_account'] ) ) {
 		fix_admin_account($_REQUEST['admin_account']);
