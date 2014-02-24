@@ -5,6 +5,19 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
+$inputConfiguration = array(
+	array( 'staticKeyFilters' =>
+		array(
+			'clean' => 'striptags',
+			'offset' => 'digits',
+			'numrows' => 'digits',
+			'maxRecords' => 'digits',
+			'find' => 'striptags',
+			'sort_mode' => 'striptags',
+		)
+	)
+);
+
 include_once ('tiki-setup.php');
 
 $access->check_permission('tiki_p_admin');
