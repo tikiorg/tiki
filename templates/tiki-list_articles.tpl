@@ -81,6 +81,12 @@
 					{self_link _sort_arg='sort_mode' _sort_field='rating'}{tr}Rating{/tr}{/self_link}
 				</th>
 			{/if}
+			{if $prefs.art_list_usersRating eq 'y'}
+				{assign var=numbercol value=$numbercol+1}
+				<th style="text-align:right;">
+					{self_link _sort_arg='sort_mode' _sort_field='usersRating'}{tr}Users Rating{/tr}{/self_link}
+				</th>
+			{/if}
 			{if $prefs.art_list_reads eq 'y'}
 				{assign var=numbercol value=$numbercol+1}
 				<th style="text-align:right;">
@@ -150,6 +156,9 @@
 				{/if}
 				{if $prefs.art_list_rating eq 'y'}
 					<td class="integer">{$listpages[changes].rating}</td>
+				{/if}
+				{if $prefs.art_list_usersRating eq 'y'}
+					<td class="text">{rating_result_avg id=$listpages[changes].articleId type=article}</td>
 				{/if}
 				{if $prefs.art_list_reads eq 'y'}
 					<td class="integer">{$listpages[changes].nbreads}</td>

@@ -95,6 +95,11 @@ function prefs_art_list()
 			'type' => 'flag',
 			'default' => 'n',
 		),
+		'art_list_usersRating' => array(
+			'name' => tra('Users Rating'),
+			'type' => 'flag',
+			'default' => 'n',
+		),
 		'art_list_reads' => array(
 			'name' => tra('Reads'),
 			'type' => 'flag',

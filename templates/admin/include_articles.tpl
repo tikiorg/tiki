@@ -139,6 +139,7 @@
 				{preference name=art_list_author}
 				{preference name=art_list_authorName}
 				{preference name=art_list_rating}
+				{preference name=art_list_usersRating}
 				{preference name=art_list_reads}
 				{preference name=art_list_size}
 				{preference name=art_list_img}
