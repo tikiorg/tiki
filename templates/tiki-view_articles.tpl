@@ -83,6 +83,18 @@
 						{/if}
 					</span><br>
 				{/if}
+				{if empty({$listpages[ix].body}) and !isset($preview) and $prefs.article_user_rating eq 'y' && $tiki_p_rate_article eq 'y'}
+					<div class="articleheading">
+					<form method="post" action="">
+						{rating type=article id=$listpages[ix].articleId}
+					</form>
+					</div>
+				{/if}
+				{if $prefs.article_user_rating eq 'y' && ($tiki_p_ratings_view_results eq 'y' or $tiki_p_admin eq 'y')}
+					<div class="articleheading">
+					{rating_result id=$listpages[ix].articleId type=article}
+					</div>
+				{/if}				
 			</header>
 			{if $listpages[ix].use_ratings eq 'y'}
 				<div class="articleheading">
@@ -151,7 +163,7 @@
 			<div class="articletrailer">
 				{if ($listpages[ix].size > 0) or (($prefs.feature_article_comments eq 'y') and ($tiki_p_read_comments eq 'y'))}
 					{if ($tiki_p_read_article eq 'y' and $listpages[ix].heading_only ne 'y' and (!isset($fullbody) or $fullbody ne "y"))}
-						{if ($listpages[ix].size > 0)}
+						{if ($listpages[ix].size > 0 and !empty($listpages[ix].body))}
 							<div class="status"> {* named to be similar to forum/blog item *}
 								<a href="{$smarty.capture.href}" class="more">{tr}Read More{/tr}</a>
 							</div>
