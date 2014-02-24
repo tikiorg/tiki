@@ -3,11 +3,15 @@
 {title help="Articles" admpage="articles"}{tr}Articles{/tr}{/title}
 
 <div class="navbar">
-	{if $tiki_p_edit_article eq 'y'}
+	{if $tiki_p_edit_article eq 'y' or $tiki_p_admin eq 'y' or $tiki_p_admin_cms eq 'y'}
 		{button href="tiki-edit_article.php" _text="{tr}New Article{/tr}"}
 	{/if}
-	{button href="tiki-view_articles.php" _text="{tr}View Articles{/tr}"}
-
+	{if $prefs.feature_submissions == 'y' && $tiki_p_edit_submission == "y" && $tiki_p_edit_article neq 'y' && $tiki_p_admin neq 'y' && $tiki_p_admin_cms neq 'y'}
+		{button href="tiki-edit_submission.php" _text="{tr}New Submission{/tr}"}
+	{/if}
+	{if $tiki_p_read_article eq 'y' or $tiki_p_articles_read_heading eq 'y' or $tiki_p_admin eq 'y' or $tiki_p_admin_cms eq 'y'}
+		{button href="tiki-view_articles.php" _text="{tr}View Articles{/tr}"}
+	{/if}
 	{if $prefs.feature_submissions == 'y' && ($tiki_p_approve_submission == "y" || $tiki_p_remove_submission == "y" || $tiki_p_edit_submission == "y")}
 		{button href="tiki-list_submissions.php" _text="{tr}View Submissions{/tr}"}
 	{/if}

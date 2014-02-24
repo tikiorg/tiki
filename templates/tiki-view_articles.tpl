@@ -6,6 +6,23 @@
 			{else}{tr}Articles{/tr}{/if}
 		{/title}
 	{/if}
+	{if !isset($actions) or $actions eq "y"}
+	<div class="navbar">
+		{if $tiki_p_edit_article eq 'y' or $tiki_p_admin eq 'y' or $tiki_p_admin_cms eq 'y'}
+			{button href="tiki-edit_article.php" _text="{tr}New Article{/tr}"}
+		{/if}
+		{if $prefs.feature_submissions == 'y' && $tiki_p_edit_submission == "y" && $tiki_p_edit_article neq 'y' && $tiki_p_admin neq 'y' && $tiki_p_admin_cms neq 'y'}
+			{button href="tiki-edit_submission.php" _text="{tr}New Submission{/tr}"}
+		{/if}		
+		{if $tiki_p_read_article eq 'y' or $tiki_p_articles_read_heading eq 'y' or $tiki_p_admin eq 'y' or $tiki_p_admin_cms eq 'y'}
+		{button href="tiki-list_articles.php" _text="{tr}List Articles{/tr}"}
+		{/if}
+	
+		{if $prefs.feature_submissions == 'y' && ($tiki_p_approve_submission == "y" || $tiki_p_remove_submission == "y" || $tiki_p_edit_submission == "y")}
+			{button href="tiki-list_submissions.php" _text="{tr}View Submissions{/tr}"}
+		{/if}
+	</div>
+	{/if}
 	<div class="clearfix" style="clear: both;">
 		<div style="float: right; padding-left:10px; white-space: nowrap">
 		{if $user and $prefs.feature_user_watches eq 'y'}
@@ -188,9 +205,16 @@
 	{/if}
 {sectionelse}
 	{if $quiet ne 'y'}{tr}No articles yet.{/tr}
-		{if $tiki_p_edit_article eq 'y'}<a href="tiki-edit_article.php">{tr}Add an article{/tr}</a>{/if}
 	{/if}
 {/section}
+{if !isset($actions) or $actions eq "y"}
+	{if $tiki_p_edit_article eq 'y' or $tiki_p_admin eq 'y' or $tiki_p_admin_cms eq 'y'}
+		<br/><img src="img/icons/add.png" alt="{tr}Add an article{/tr}"> <a href="tiki-edit_article.php">{tr}New article{/tr}</a>
+	{/if}
+	{if $prefs.feature_submissions == 'y' && $tiki_p_edit_submission == "y" && $tiki_p_edit_article neq 'y' && $tiki_p_admin neq 'y' && $tiki_p_admin_cms neq 'y'}
+		<br/><img src="img/icons/add.png" alt="{tr}New Submission{/tr}"> <a href="tiki-edit_submission.php">{tr}New Submission{/tr}</a>
+	{/if}
+{/if}
 {if !empty($listpages) && (!isset($usePagination) or $usePagination ne 'n')}
 	{pagination_links cant=$cant step=$maxArticles offset=$offset}{if isset($urlnext)}{$urlnext}{/if}{/pagination_links}
 {/if}
