@@ -158,7 +158,7 @@
 					<td class="integer">{$listpages[changes].rating}</td>
 				{/if}
 				{if $prefs.art_list_usersRating eq 'y'}
-					<td class="text">{rating_result_avg id=$listpages[changes].articleId type=article}</td>
+					<td class="integer">{rating_result_avg id=$listpages[changes].articleId type=article}</td>
 				{/if}
 				{if $prefs.art_list_reads eq 'y'}
 					<td class="integer">{$listpages[changes].nbreads}</td>
