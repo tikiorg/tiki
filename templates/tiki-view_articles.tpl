@@ -6,7 +6,6 @@
 			{else}{tr}Articles{/tr}{/if}
 		{/title}
 	{/if}
-	{if !isset($actions) or $actions eq "y"}
 	<div class="navbar">
 		{if $tiki_p_edit_article eq 'y' or $tiki_p_admin eq 'y' or $tiki_p_admin_cms eq 'y'}
 			{button href="tiki-edit_article.php" _text="{tr}New Article{/tr}"}
@@ -22,7 +21,6 @@
 			{button href="tiki-list_submissions.php" _text="{tr}View Submissions{/tr}"}
 		{/if}
 	</div>
-	{/if}
 	<div class="clearfix" style="clear: both;">
 		<div style="float: right; padding-left:10px; white-space: nowrap">
 		{if $user and $prefs.feature_user_watches eq 'y'}
