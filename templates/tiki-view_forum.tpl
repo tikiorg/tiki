@@ -551,7 +551,7 @@
 				{if $forum_info.vote_threads eq 'y' and ($tiki_p_ratings_view_results eq 'y' or $tiki_p_admin eq 'y')}
 					<td class="integer">{rating_result_avg type=comment id=$comments_coms[ix].threadId }&nbsp;&nbsp;&nbsp;</td>
 					{if $prefs.rating_results_detailed eq 'y'}
-						<td class="integer">{rating_result type=comment id=$comments_coms[ix].threadId }</td>
+						<td class="text">{rating_result type=comment id=$comments_coms[ix].threadId }</td>
 					{/if}
 				{/if}
 				{if $forum_info.topics_list_pts eq 'y'}

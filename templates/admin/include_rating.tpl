@@ -47,7 +47,10 @@
 		{preference name=article_user_rating}
 		<div class="adminoptionboxchild" id="article_user_rating_childcontainer">
 			{preference name=article_user_rating_options}
-		</div>
+		</div> 
+				<ul>
+					<li>{tr}You also need to set:{/tr} "{tr}Admin Types{/tr} > <strong>{tr}Comment can rate article{/tr}</strong>"</li>
+				</ul>
 				</td>
 				<td style="width:4%"><td>
 				<td style="width:48%"><div class="adminoptionboxchild" id="articles_simple_ratings_perms_childcontainer">
