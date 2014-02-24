@@ -79,7 +79,7 @@
 							<span class="reads">({$listpages[ix].nbreads} {tr}Reads{/tr})</span>
 						{/if}
 						{if $listpages[ix].comment_can_rate_article eq 'y' && $prefs.article_user_rating eq 'y' && ($tiki_p_ratings_view_results eq 'y' or $tiki_p_admin eq 'y')}
-							- {rating_result_avg id=$listpages[ix].articleId type=article}
+							- <span class="ratingResultAvg">{tr}Users Rating: {/tr}</span>{rating_result_avg id=$listpages[ix].articleId type=article}
 						{/if}
 					</span><br>
 				{/if}
