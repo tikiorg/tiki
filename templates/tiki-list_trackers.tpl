@@ -12,21 +12,28 @@
 {tab name="{tr}Trackers{/tr}"}
 <a name="view"></a>
     <h2>{tr}Trackers{/tr}</h2>
+	{if $tiki_p_admin_trackers eq 'y'}
+		<div class="navbar-btn">
+			<a class="btn btn-default" href="{service controller=tracker action=replace modal=true}" data-toggle="modal" data-target="#bootstrap-modal">
+				{glyph name="plus"} {tr}Create Tracker{/tr}
+			</a>
+		</div>
+	{/if}
 	{if ($trackers) or ($find)}
 		{include autocomplete='trackername' file='find.tpl' filters=''}
 		{if ($find) and ($trackers)}
-			<p>{tr}Found{/tr} {$trackers|@count} {tr}trackers:{/tr}</p>
+			<h4 class="find-results">{tr}Results{/tr} <span class="label label-default">{$trackers|@count}</span></h4>
 		{/if}
 	{/if}
-    <div class="table-responsive">
-	<table class="table normal">
+	<div class="table-responsive">
+	<table class="table table-condensed table-hover">
 		<tr>
 			<th>{self_link _sort_arg='sort_mode' _sort_field='trackerId'}{tr}Id{/tr}{/self_link}</th>
 			<th>{self_link _sort_arg='sort_mode' _sort_field='name'}{tr}Name{/tr}{/self_link}</th>
 			<th>{self_link _sort_arg='sort_mode' _sort_field='created'}{tr}Created{/tr}{/self_link}</th>
-			<th>{self_link _sort_arg='sort_mode' _sort_field='lastModif'}{tr}Last Modif{/tr}{/self_link}</th>
-			<th style="text-align:right;">{self_link _sort_arg='sort_mode' _sort_field='items'}{tr}Items{/tr}{/self_link}</th>
-			<th>{tr}Action{/tr}</th>
+			<th>{self_link _sort_arg='sort_mode' _sort_field='lastModif'}{tr}Last Modification{/tr}{/self_link}</th>
+			<th>{self_link _sort_arg='sort_mode' _sort_field='items'}{tr}Items{/tr}{/self_link}</th>
+			<th>{tr}Actions{/tr}</th>
 		</tr>
 
 		{foreach from=$trackers item=tracker}
@@ -46,7 +53,7 @@
 				</td>
 				<td class="date">{$tracker.created|tiki_short_date}</td>
 				<td class="date">{$tracker.lastModif|tiki_short_date}</td>
-				<td class="integer">{$tracker.items|escape}</td>
+				<td class="text-center"><a title="{tr}View{/tr}" href="tiki-view_tracker.php?trackerId={$tracker.trackerId}"><span class="badge">{$tracker.items|escape}</span></a></td>
 				<td class="action">
 					{if $tracker.permissions->export_tracker}
 						<a title="{tr _0=$tracker.name|escape}Export %0{/tr}" class="export dialog" href="{service controller=tracker action=export trackerId=$tracker.trackerId}">{icon _id='disk' alt="{tr}Export{/tr}"}</a>
@@ -99,9 +106,7 @@
 	</table>
     </div>
 	{pagination_links cant=$cant step=$maxRecords offset=$offset}{/pagination_links}
-	{if $tiki_p_admin_trackers eq 'y'}
-		<a class="btn btn-default" href="{service controller=tracker action=replace modal=true}" data-toggle="modal" data-target="#bootstrap-modal">{tr}Create tracker{/tr}</a>
-	{/if}
+
 	{if !empty($trackerId)}
 		<div id="trackeredit"></div>
 		{jq}
@@ -213,7 +218,7 @@
                 </div>
             </div>
             <div class="submit text-center">
-					<input type="submit" class="btn btn-default" value="{tr}Duplicate{/tr}">
+					<input type="submit" class="btn btn-primary" value="{tr}Duplicate{/tr}">
 				</div>
 			</form>
 		{/accordion_group}
@@ -250,7 +255,7 @@
                 </div>
 				{remarksbox close='n' title='{tr}Note{/tr}'}{tr}Use "Tracker -> Export -> Structure" to produce this data.{/tr}{/remarksbox}
 				<div class="text-center">
-					<input type="submit" class="btn btn-default" value="{tr}Import{/tr}">
+					<input type="submit" class="btn btn-primary" value="{tr}Import{/tr}">
 				</div>
 			</form>
 		{/accordion_group}
@@ -267,7 +272,7 @@
                     </div>
                 </div>
                 <div class="text-center">
-                    <input type="submit" class="btn btn-default" value="{tr}Import{/tr}">
+                    <input type="submit" class="btn btn-primary" value="{tr}Import{/tr}">
                 </div>
             </form>
         {/accordion_group}

@@ -9,10 +9,10 @@
 {tabset}
 	<a name="list"></a>
 	{tab name="{tr}Tracker fields{/tr}"}
-        <h2>{tr}Tracker fields{/tr}</h2>
+        <h2>{tr}Tracker fields{/tr}		</h2>
 		<form class="form add-field" method="post" action="{service controller=tracker action=add_field}" role="form">
 			<input type="hidden" name="trackerId" value="{$trackerId|escape}">
-			<input type="submit" class="btn btn-default btn-sm" value="{tr}Add Field{/tr}">
+			<button type="submit" class="btn btn-default">{glyph name="plus"} {tr}Add Field{/tr}</button>
 		</form>
 		<form class="form save-fields" method="post" action="{service controller=tracker action=save_fields}" role="form">
 			<table id="fields" class="table table-condensed table-hover">
@@ -35,7 +35,7 @@
 			</table>
 			<div class="form-group">
 				<div class="input-group col-sm-6">
-					<select name="action" class="form-control input-sm">
+					<select name="action" class="form-control">
 						<option value="save_fields">{tr}Save All{/tr}</option>
 						<option value="remove_fields">{tr}Remove Selected{/tr}</option>
 						<option value="export_fields">{tr}Export Selected{/tr}</option>
@@ -43,7 +43,7 @@
 					<span class="input-group-btn">
 						<input type="hidden" name="trackerId" value="{$trackerId|escape}">
 						<input type="hidden" name="confirm" value="0">
-						<button type="submit" class="btn btn-primary btn-sm" name="submit">{tr}Go{/tr}</button>
+						<button type="submit" class="btn btn-primary" name="submit">{tr}Go{/tr}</button>
 					</span>
 				</div>
 			</div>
@@ -145,7 +145,7 @@
 			</div>
 			<div class="form-group submit">
 				<input type="hidden" name="trackerId" value="{$trackerId|escape}">
-				<input type="submit" class="btn btn-primary btn-sm" value="{tr}Import{/tr}">
+				<input type="submit" class="btn btn-primary" value="{tr}Import{/tr}">
 			</div>
 		</form>
 	{/tab}
