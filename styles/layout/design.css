@@ -1584,7 +1584,9 @@ body.tiki_forums .normal {
 #comment-container .buttons table .button, #comment-container-below .buttons table .button {
 	margin: 0;
 }
-
+#comment-container .body { 
+	margin-top: 10px;
+}
 /* Comments (article, blogs) */
 
 #comment-container .actions, #comment-container-below .actions {
