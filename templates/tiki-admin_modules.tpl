@@ -348,7 +348,7 @@
 			<tr>
 				<td colspan="2" class="odd">{tr}Data{/tr}<br>
 					<a name="editcreate"></a>
-					{textarea name='um_data' id='um_data' rows="6" cols="80" _toolbars='y' _previewConfirmExit='n' _wysiwyg="n"}{$um_data}{/textarea}
+					{textarea name='um_data' id='um_data' _toolbars='y' _previewConfirmExit='n' _wysiwyg="n"}{$um_data}{/textarea}
 					<br>
 					<input type="submit" class="btn btn-default" name="um_update" value="{if empty($um_name)}{tr}Create{/tr}{else}{tr}Save{/tr}{/if}" onclick="needToConfirm=false">
 				</td>
