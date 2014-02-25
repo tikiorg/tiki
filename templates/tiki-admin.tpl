@@ -8,6 +8,10 @@
 	</div>
 {/if}
 
+{remarksbox type="note" title="{tr}Note{/tr}"}
+    <div style="float:left">&nbsp;&nbsp;<a href="tiki-wizard_admin.php?&stepNr=0&url=tiki-admin.php"><img src="img/icons/wizard22x22.png"></a></div>&nbsp;&nbsp;{tr _0="tiki-wizard_admin.php?&stepNr=0&url=tiki-admin.php"}Use the <a href="%0" class="rbox-link" >Configuration Wizards</a> to more easily set up your site.{/tr}
+{/remarksbox}
+
 <form method="post" action="">
 	<fieldset>
 		<legend>{tr}Preference Filters{/tr}</legend>
@@ -80,7 +84,6 @@
 		<label>{tr}Configuration search:{/tr} <input type="text" name="lm_criteria" value="{$lm_criteria|escape}"></label>
 		<input type="submit" value="{tr}Search{/tr}" {if $indexNeedsRebuilding} class="tips" title="{tr}Configuration search{/tr}|{tr}Note: The search index needs rebuilding, this will take a few minutes.{/tr}"{/if} />
 		<input type="hidden" name="filters">
-		<span class="adminWizardLink">{button _icon='wizard16x16' href='tiki-wizard_admin.php?url=tiki-admin.php' _text="{tr}Open Admin Wizard{/tr}"}</span>
 	</p>
 </form>
 {if $lm_error}
