@@ -22,7 +22,6 @@
 			{button href="tiki-list_submissions.php" _text="{tr}View Submissions{/tr}"}
 		{/if}
 	</div>
-	{/if}
 	<div class="clearfix" style="clear: both;">
 		<div style="float: right; padding-left:10px; white-space: nowrap" data-role="controlgroup" data-type="horizontal"> {* mobile *}
 		{if $user and $prefs.feature_user_watches eq 'y'}
@@ -37,6 +36,7 @@
 		{/if}
 		</div>
 	</div>
+	{/if}
 {/if}
 {section name=ix loop=$listpages}
 	{capture name=href}{if empty($urlparam)}{$listpages[ix].articleId|sefurl:article}{else}{$listpages[ix].articleId|sefurl:article:with_next}{$urlparam}{/if}{/capture}
