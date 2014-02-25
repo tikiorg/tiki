@@ -10,7 +10,7 @@
 
 <div class="alert alert-info alert-dismissable">
 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-    <a href="tiki-wizard_admin.php?&stepNr=0&url=tiki-admin.php"><img src="img/icons/large/wizard48x48.png"></a>Use the <a href="tiki-wizard_admin.php?&stepNr=0&url=tiki-admin.php" class="alert-link">Configuration Wizards</a> to more easily set up your site.
+    <a href="tiki-wizard_admin.php?&stepNr=0&url=tiki-admin.php"><img src="img/icons/large/wizard48x48.png"></a>{tr _0="tiki-wizard_admin.php?&stepNr=0&url=tiki-admin.php"}Use the <a href="%0" class="alert-link">Configuration Wizards</a> to more easily set up your site.{/tr}
 </div>
 
 <form method="post" action="" class="horizontal-form">

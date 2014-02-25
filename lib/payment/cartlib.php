@@ -852,6 +852,7 @@ class CartLib
 			'time' => $tikilib->now,
 			'total' => $total,
 			'invoice' => $invoice,
+			'weight' => $this->get_total_weight(),
 		);
 		if (!$user || isset($_SESSION['forceanon']) && $_SESSION['forceanon'] == 'y') {
 			$orderprofile = Tiki_Profile::fromDb($prefs['payment_cart_anonorders_profile']);
