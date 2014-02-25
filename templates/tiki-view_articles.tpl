@@ -6,6 +6,7 @@
 			{else}{tr}Articles{/tr}{/if}
 		{/title}
 	{/if}
+	{if $headerLinks eq "y"}
 	<div class="navbar">
 		{if $tiki_p_edit_article eq 'y' or $tiki_p_admin eq 'y' or $tiki_p_admin_cms eq 'y'}
 			{button href="tiki-edit_article.php" class="btn btn-default" _text="{tr}New Article{/tr}"}
@@ -35,6 +36,7 @@
 		{/if}
 		</div>
 	</div>
+	{/if}
 {/if}
 {section name=ix loop=$listpages}
 	{capture name=href}{if empty($urlparam)}{$listpages[ix].articleId|sefurl:article}{else}{$listpages[ix].articleId|sefurl:article:with_next}{$urlparam}{/if}{/capture}
