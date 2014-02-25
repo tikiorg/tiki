@@ -224,7 +224,7 @@ this.instances.'.$as_id.'.resetDirty();
 $css
 <div
     id="$as_id-ui"
-    class="wikiedit wikilingo"
+    class="wikiedit wikilingo ui-widget-content"
     contenteditable="true"
     onchange="this.input.value = this.innerHTML">$contentSafe</div>
 <input type="hidden" name="$name" id="$as_id"/>
