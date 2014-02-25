@@ -1,6 +1,7 @@
 var BindWikiLingo = (function(document, $, Medium) {
     var Construct = function(el, input) {
-        var
+	    var
+		    bubble = new WLBubble(window.expressionSyntaxes, el),
             WLPlugin = function(el) {
                 if (el.getAttribute('data-draggable') == 'true') {
                     new WLPluginAssistant(el, 'vendor/wikilingo/wikilingo/');
@@ -12,6 +13,9 @@ var BindWikiLingo = (function(document, $, Medium) {
                     element.style['color'] = newColor
                 }
             },
+		    table = function(element) {
+
+		    },
             medium = (Medium ? el.medium = new Medium({
                 element: el,
                 mode: 'rich',
@@ -52,6 +56,29 @@ var BindWikiLingo = (function(document, $, Medium) {
                 }
             })
             .trigger('resetWLPlugins');
+
+	    $(el)
+		    .on('mouseup', function(event) {
+			    if (document.activeElement === this) {
+				    bubble.goToSelection();
+			    }
+		    })
+		    .on('focus', function() {
+			    this.before = this.innerHTML;
+			    return this;
+		    })
+		    .on('blur keyup paste input', function() {
+			    var $this = $(this);
+			    if (this.before !== this.innerHTML) {
+				    this.before = this.innerHTML;
+				    setTimeout(function() {
+					    $this.trigger('change');
+				    }, 10);
+			    }
+			    return this;
+		    });
+
+	    bubble.staticToTop();
 
         el.onchange = function() {
             input.value = el.innerHTML;

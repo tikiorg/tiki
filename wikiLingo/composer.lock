@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "c1599763618560a05c327c2f71f259cc",
+    "hash": "e148358dfd48b916e77d0ef26ae92e99",
     "packages": [
         {
             "name": "aFarkas/html5shiv",
@@ -223,6 +223,50 @@
                 "html"
             ],
             "time": "2013-04-17 13:51:09"
+        },
+        {
+            "name": "flp/flp",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/FutureLink-Protocol/php.git",
+                "reference": "ec6f76bd560fc2e9bf57c16db2d4790ce0817a81"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/FutureLink-Protocol/php/zipball/ec6f76bd560fc2e9bf57c16db2d4790ce0817a81",
+                "reference": "ec6f76bd560fc2e9bf57c16db2d4790ce0817a81",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0",
+                "wikilingo/wikilingo": "dev-master"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "FLP": "",
+                    "Phraser": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "Robert Plummer",
+                    "email": "rplummer@visop-dev.com",
+                    "homepage": "http://visop-dev.com",
+                    "role": "Lead Developer"
+                },
+                {
+                    "name": "Luke Gerhardt",
+                    "email": "luke@totaldigitalconsulting.com",
+                    "homepage": "http://totaldigitalconsulting.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "FutureLink-Protocol implementation in PHP",
+            "homepage": "https://github.com/FutureLink-Protocol",
+            "time": "2014-02-20 15:39:48"
         },
         {
             "name": "jcapture-applet/jcapture-applet",
@@ -1032,12 +1076,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/wikiLingo/wikiLingo.git",
-                "reference": "3ef4a09a4a366d85d4e9725c75c0c62296e319b4"
+                "reference": "7f75e0ad42d6dda6eebdb0023d467de109d23abb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wikiLingo/wikiLingo/zipball/3ef4a09a4a366d85d4e9725c75c0c62296e319b4",
-                "reference": "3ef4a09a4a366d85d4e9725c75c0c62296e319b4",
+                "url": "https://api.github.com/repos/wikiLingo/wikiLingo/zipball/7f75e0ad42d6dda6eebdb0023d467de109d23abb",
+                "reference": "7f75e0ad42d6dda6eebdb0023d467de109d23abb",
                 "shasum": ""
             },
             "require": {
@@ -1064,7 +1108,7 @@
                     "role": "Lead Developer"
                 }
             ],
-            "time": "2014-02-06 13:49:46"
+            "time": "2014-02-25 01:00:23"
         },
         {
             "name": "zetacomponents/base",
@@ -1226,7 +1270,8 @@
     "stability-flags": {
         "jcapture-applet/jcapture-applet": 20,
         "jquery/jquery-s5": 20,
-        "wikilingo/wikilingo": 20
+        "wikilingo/wikilingo": 20,
+        "flp/flp": 20
     },
     "platform": [
 
