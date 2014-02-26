@@ -18,6 +18,9 @@
 			</td>
 		</tr>
 		<tr>
+			<td>{tr}Notification Email{/tr}</td><td>{tr}You will be able to add a notification email per article topic when you edit the topic after its creation{/tr}</td>
+		</tr>
+		<tr>
 			<td>&nbsp;</td>
 			<td>
 				<input type="submit" class="btn btn-default" name="addtopic" value="{tr}Add{/tr}">
