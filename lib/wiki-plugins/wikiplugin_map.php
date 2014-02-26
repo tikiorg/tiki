@@ -181,7 +181,7 @@ function wp_map_getscope($params)
 
 	switch ($scope) {
 		case 'center':
-			return '#tiki-center .geolocated';
+			return '#col1 .geolocated';
 		case 'all':
 			return '.geolocated';
 		default:
