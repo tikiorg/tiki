@@ -39,6 +39,7 @@
                             {if $prefs.feature_layoutshadows eq 'y'}<div id="tiki-center-shadow">{eval var=$prefs.center_shadow_start}{/if}
 							    {error_report}
 					            {block name=title}{/block}
+								{block name=navigation}{/block}
 					            {block name=content}{/block}
                             {if $prefs.feature_layoutshadows eq 'y'}{eval var=$prefs.center_shadow_end}</div>{/if}
 				        </div>
@@ -47,6 +48,7 @@
                             {if $prefs.feature_layoutshadows eq 'y'}<div id="tiki-center-shadow">{eval var=$prefs.center_shadow_start}{/if}
 							    {error_report}
 					            {block name=title}{/block}
+								{block name=navigation}{/block}
 					            {block name=content}{/block}
                             {if $prefs.feature_layoutshadows eq 'y'}{eval var=$prefs.center_shadow_end}</div>{/if}
 				        </div>
@@ -58,6 +60,7 @@
                             {if $prefs.feature_layoutshadows eq 'y'}<div id="tiki-center-shadow">{eval var=$prefs.center_shadow_start}{/if}
 							    {error_report}
 					            {block name=title}{/block}
+								{block name=navigation}{/block}
 					            {block name=content}{/block}
                             {if $prefs.feature_layoutshadows eq 'y'}{eval var=$prefs.center_shadow_end}</div>{/if}
 				        </div>
@@ -69,6 +72,7 @@
                             {if $prefs.feature_layoutshadows eq 'y'}<div id="tiki-center-shadow">{eval var=$prefs.center_shadow_start}{/if}
 				    			{error_report}
 					            {block name=title}{/block}
+								{block name=navigation}{/block}
 					            {block name=content}{/block}
                             {if $prefs.feature_layoutshadows eq 'y'}{eval var=$prefs.center_shadow_end}</div>{/if}
     		            </div>

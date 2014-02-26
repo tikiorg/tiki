@@ -4,6 +4,15 @@
 	{title}{$title}{/title}
 {/block}
 
+{block name="navigation"}
+	<div class="btn-group">
+		{permission name=admin}
+			<a class="btn btn-default" href="{service controller=goal action=admin}">{tr}Goal Administration{/tr}</a>
+			<a class="btn btn-default" href="{service controller=goal action=edit goalId=$goal.goalId}">{tr}Edit Goal{/tr}</a>
+		{/permission}
+	</div>
+{/block}
+
 {block name="content"}
 	<div class="well">
 		{$goal.description|escape}

@@ -4,10 +4,25 @@
 	{title}{$title}{/title}
 {/block}
 
-{block name="content"}
-	<div class="well">
-		{$goal.description|escape}
+{block name="navigation"}
+	<div class="btn-group">
+		{permission name=admin}
+			<a class="btn btn-default" href="{service controller=goal action=admin}">{tr}Goal Administration{/tr}</a>
+			<a class="btn btn-default" href="{service controller=goal action=edit goalId=$goal.goalId}">{tr}Edit Goal{/tr}</a>
+		{/permission}
+
+		{if $goal.type eq 'group'}
+			<a class="btn btn-default" href="{service controller=goal action=show goalId=$goal.goalId}">{tr}Group List{/tr}</a>
+		{/if}
 	</div>
+{/block}
+
+{block name="content"}
+	{if $goal.description}
+		<div class="well">
+			{$goal.description|escape}
+		</div>
+	{/if}
 	{foreach $goal.conditions as $condition}
 		<h4>{$condition.label|escape} <span class="badge">{$condition.metric|escape} / {$condition.count|escape}</span></h4>
 		<div class="progress">

@@ -27,12 +27,14 @@
 				{if zone_is_empty('left') and zone_is_empty('right')}
 					<div class="col-md-12" id="col1">
 						{block name=title}{/block}
+						{block name=navigation}{/block}
 						{error_report}
 						{block name=content}{/block}
 					</div>
 				{elseif zone_is_empty('left')}
 					<div class="col-md-10" id="col1">
 						{block name=title}{/block}
+						{block name=navigation}{/block}
 						{error_report}
 						{block name=content}{/block}
 					</div>
@@ -42,6 +44,7 @@
 				{elseif zone_is_empty('right')}
 					<div class="col-md-10 col-md-push-2" id="col1">
 						{block name=title}{/block}
+						{block name=navigation}{/block}
 						{error_report}
 						{block name=content}{/block}
 					</div>
@@ -51,6 +54,7 @@
 				{else}
 					<div class="col-md-8 col-md-push-2" id="col1">
 						{block name=title}{/block}
+						{block name=navigation}{/block}
 						{error_report}
 						{block name=content}{/block}
 					</div>
