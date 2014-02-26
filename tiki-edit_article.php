@@ -59,6 +59,18 @@ if (isset($_REQUEST['cancel_edit'])) {
 	die;
 }
 
+if (!empty($_REQUEST['topicId'])) {
+	$topicId = $_REQUEST['topicId'];
+} else {
+	$topicId = '';
+}
+
+if (!empty($_REQUEST['type'])) {
+	$type = $_REQUEST['type'];
+} else {
+	$type = '';
+}
+
 // We need separate numbering of previews, since we access preview images by this number
 if (isset($_REQUEST['previewId'])) {
 	$previewId = $_REQUEST['previewId'];
@@ -107,7 +119,8 @@ $smarty->assign('image_caption', '');
 $smarty->assign('lang', $prefs['language']);
 $authorName = $tikilib->get_user_preference($user, 'realName', $user);
 $smarty->assign('authorName', $authorName);
-$smarty->assign('topicId', '');
+$smarty->assign('topicId', $topicId);
+$smarty->assign('type', $type);
 $smarty->assign('useImage', 'n');
 $smarty->assign('isfloat', 'n');
 $hasImage = 'n';
@@ -633,7 +646,8 @@ $_SESSION['thedate'] = $tikilib->now;
 
 // get list of valid types
 $types = $artlib->list_types_byname();
-if (empty($article_data)) {
+
+if (empty($article_data) && empty($_REQUEST['type'])) {
 	// Select the first type as default selection
 	if (empty($types)) {
 		$type = '';

@@ -34,6 +34,18 @@ if (isset($_REQUEST['subId'])) {
 	$subId = 0;
 }
 
+if (!empty($_REQUEST['topicId'])) {
+	$topicId = $_REQUEST['topicId'];
+} else {
+	$topicId = '';
+}
+
+if (!empty($_REQUEST['type'])) {
+	$type = $_REQUEST['type'];
+} else {
+	$type = '';
+}
+
 // We need separate numbering of previews, since we access preview images by this number
 if (isset($_REQUEST['previewId'])) {
 	$previewId = $_REQUEST['previewId'];
@@ -75,7 +87,8 @@ $smarty->assign('image_caption', '');
 $smarty->assign('lang', $prefs['language']);
 $authorName = $tikilib->get_user_preference($user, 'realName', $user);
 $smarty->assign('authorName', $authorName);
-$smarty->assign('topicId', '');
+$smarty->assign('topicId', $topicId);
+$smarty->assign('type', $type);
 $smarty->assign('useImage', 'n');
 $smarty->assign('isfloat', 'n');
 $hasImage = 'n';
@@ -88,7 +101,7 @@ $smarty->assign('image_x', $prefs['article_image_size_x']);
 $smarty->assign('image_y', $prefs['article_image_size_y']);
 $smarty->assign('heading', '');
 $smarty->assign('body', '');
-$smarty->assign('type', 'Article');
+$smarty->assign('type', $type);
 $smarty->assign('rating', 7);
 $smarty->assign('edit_data', 'n');
 
@@ -501,6 +514,16 @@ $_SESSION['thedate'] = $tikilib->now;
 
 // get list of valid types
 $types = $artlib->list_types_byname();
+
+if (empty($article_data) && empty($_REQUEST['type'])) {
+	// Select the first type as default selection
+	if (empty($types)) {
+		$type = '';
+	} else {
+		$type = key($types);
+	}
+	$smarty->assign('type', $type);
+}
 
 if ($prefs['article_custom_attributes'] == 'y') {
 	$article_attributes = $artlib->get_article_attributes($subId, true);
