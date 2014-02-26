@@ -1370,7 +1370,7 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_cms_emails' => array(
 			'name' => tra('Specify notification emails when creating articles'),
-            'description' => tra('should a notification email be sent when creating an Article?'),
+            'description' => tra('Should a notification email be sent when creating an Article? Remember that you can also predefine notification emails for article topics when you re-edit the topic after its creation'),
 			'type' => 'flag',
 			'default' => 'n',
 		),
