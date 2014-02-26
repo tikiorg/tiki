@@ -18,33 +18,34 @@ class GoalEventLib
 	{
 		foreach ($this->getGoalEvents() as $eventType) {
 			$manager->bind($eventType, function ($args, $eventName) use ($eventType) {
-				if (isset($args['user'])) {
-					$tikilib = TikiLib::lib('tiki');
+				$tikilib = TikiLib::lib('tiki');
 
-					$user = $args['user'];
+				$user = $args['user'];
+				$group = $args['group'];
 
-					if ($eventName == 'tiki.goal.reached') {
-						$groups = $args['group'] ? [$args['group']] : [];
-					} else {
-						$groups = $tikilib->get_user_groups($user);
-					}
-
-					$data = [
-						'eventType' => $eventType,
-						'eventDate' => $tikilib->now,
-						'user' => $user,
-						'groups' => json_encode($groups),
-					];
-
-					if (! empty($args['type']) && ! empty($args['object'])) {
-						$data['targetType'] = $args['type'];
-						$data['targetObject'] = $args['object'];
-					}
-
-					$id = $this->table()->insert($data);
-
-					TikiLib::lib('unifiedsearch')->invalidateObject('goalevent', $id);
+				if ($eventName == 'tiki.goal.reached') {
+					$groups = $group ? [$group] : [];
+				} elseif ($args['goalType'] == 'user') {
+					$groups = $tikilib->get_user_groups($user);
+				} else {
+					$groups = [$group];
 				}
+
+				$data = [
+					'eventType' => $eventType,
+					'eventDate' => $tikilib->now,
+					'user' => $user ?: '',
+					'groups' => json_encode($groups),
+				];
+
+				if (! empty($args['type']) && ! empty($args['object'])) {
+					$data['targetType'] = $args['type'];
+					$data['targetObject'] = $args['object'];
+				}
+
+				$id = $this->table()->insert($data);
+
+				TikiLib::lib('unifiedsearch')->invalidateObject('goalevent', $id);
 			});
 		}
 	}

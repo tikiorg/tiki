@@ -158,13 +158,63 @@ class GoalLib
 		return $goal;
 	}
 
+	function evaluateAllGoals()
+	{
+		$tx = TikiDb::get()->begin();
+
+		foreach ($this->listGoals() as $goal) {
+			if ($goal['enabled']) {
+				$this->prepareConditions($goal);
+
+				foreach ($this->enumerateContexts($goal) as $context) {
+					$this->evaluateConditions($goal, $context);
+				}
+			}
+		}
+
+		$tx->commit();
+	}
+
 	private function prepareConditions(array & $goal)
 	{
+		if (isset($goal['prepared'])) {
+			return;
+		}
+
+		// listGoals does not extract all information, so when conditions are missing, reload
+		if (! isset($goal['conditions'])) {
+			$goal = $this->fetchGoal($goal['goalId']);
+		}
+
 		$runner = $this->getRunner();
 
 		foreach ($goal['conditions'] as & $cond) {
 			$metric = $this->prepareMetric($cond['metric'], $goal);
 			$cond['metric'] = $runner->setFormula($metric);
+		}
+
+		$goal['prepared'] = true;
+	}
+
+	private function enumerateContexts($goal)
+	{
+		if ($goal['type'] == 'group') {
+			foreach ($goal['eligible'] as $groupName) {
+				yield ['user' => null, 'group' => $groupName];
+			}
+		} else {
+			$userlib = TikiLib::lib('user');
+
+			$done = [];
+
+			foreach ($goal['eligible'] as $groupName) {
+				foreach ($userlib->get_group_users($groupName) as $user) {
+					if (! isset($done[$user])) {
+						yield ['user' => $user, 'group' => null];
+						$done[$user] = true;
+					}
+				}
+			}
 		}
 	}
 

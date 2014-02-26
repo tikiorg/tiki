@@ -80,6 +80,7 @@ if ($isInstalled) {
 }
 
 if ($isInstalled && ! $installer->requiresUpdate()) {
+	$console->add(new Tiki\Command\GoalCheckCommand);
 	$console->add(new Tiki\Command\IndexRebuildCommand);
 	$console->add(new Tiki\Command\IndexOptimizeCommand);
 	$console->add(new Tiki\Command\IndexCatchUpCommand);
@@ -88,6 +89,7 @@ if ($isInstalled && ! $installer->requiresUpdate()) {
 	$console->add(new Tiki\Command\ProfileInstallCommand);
 	$console->add(new Tiki\Command\ProfileExport\Init);
 } else {
+	$console->add(new Tiki\Command\UnavailableCommand('goal:check'));
 	$console->add(new Tiki\Command\UnavailableCommand('index:rebuild'));
 	$console->add(new Tiki\Command\UnavailableCommand('index:optimize'));
 	$console->add(new Tiki\Command\UnavailableCommand('index:catch-up'));
