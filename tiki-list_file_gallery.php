@@ -1030,6 +1030,8 @@ if ($prefs['fgal_show_explorer'] == 'y' || $prefs['fgal_show_path'] == 'y' || is
 			'label' => $gal['parentName'] . ' > ' . $gal['name'],
 			'id' => $gal['id'],
 			'perms' => $gal['perms'],
+			'public' => $gal['public'],
+			'user' => $gal['user'],
 		);
 	}
 	sort($gals);
