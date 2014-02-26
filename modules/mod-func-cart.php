@@ -40,7 +40,13 @@ function module_cart_info()
 			),
 			'checkoutURL' => array(
 				'name' => tra('Checkout URL'),
-				'description' => tra('Where to go to when the "Check-out" button is clicked (Default empty: Goes straight to tiki-payment.php)'),
+				'description' => tra('Where to go to when the "Check-out" button is clicked but before the payment invoice is generated') . ' ' . tr('(Default empty: Goes to tiki-payment.php)'),
+				'filter' => 'url',
+				'default' => '',
+			),
+			'postPaymentURL' => array(
+				'name' => tra('Post-Payment URL'),
+				'description' => tra('Where to go to once the payment has been generated, will append "?invoice=xx" parameter on the URL for use in pretty trackers etc.') . ' ' . tr('(Default empty: Goes to tiki-payment.php)'),
 				'filter' => 'url',
 				'default' => '',
 			),
@@ -104,7 +110,12 @@ function module_cart($mod_reference, & $module_params)
 			$invoice = $cartlib->request_payment();
 	
 			if ($invoice) {
-				$access->redirect('tiki-payment.php?invoice=' . intval($invoice), tr('The order was recorded and is now awaiting payment. Reference number is %0.', $invoice));
+				if ($module_params['postPaymentURL']) {
+					$delimiter = (strpos($module_params['postPaymentURL'], '?') === false) ? '?' : '&';
+					$access->redirect($module_params['postPaymentURL'] . $delimiter . 'invoice=' . intval($invoice), tr('The order was recorded and is now awaiting payment. Reference number is %0.', $invoice));
+				} else {
+					$access->redirect('tiki-payment.php?invoice=' . intval($invoice), tr('The order was recorded and is now awaiting payment. Reference number is %0.', $invoice));
+				}
 			}
 		}
 	}
