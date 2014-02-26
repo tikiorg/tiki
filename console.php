@@ -109,6 +109,8 @@ if (file_exists('profiles/info.ini')) {
 	$console->add(new Tiki\Command\ProfileExport\Category);
 	$console->add(new Tiki\Command\ProfileExport\FileGallery);
 	$console->add(new Tiki\Command\ProfileExport\Forum);
+	$console->add(new Tiki\Command\ProfileExport\Goal);
+	$console->add(new Tiki\Command\ProfileExport\GoalSet);
 	$console->add(new Tiki\Command\ProfileExport\Group);
 	$console->add(new Tiki\Command\ProfileExport\IncludeProfile);
 	$console->add(new Tiki\Command\ProfileExport\Menu);

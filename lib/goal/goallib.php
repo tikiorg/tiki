@@ -43,6 +43,16 @@ class GoalLib
 		TikiLib::lib('goalevent')->touch();
 	}
 
+	function preserveGoals(array $ids)
+	{
+		$table = $this->table();
+		return $table->deleteMultiple(
+			array(
+				'goalId' => $table->notIn($ids),
+			)
+		);
+	}
+
 	function replaceGoal($goalId, array $data)
 	{
 		$data = array_merge([
