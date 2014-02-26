@@ -1,12 +1,18 @@
 {* $Id$ *}
+{extends "layout_view.tpl"}
 
-{title help="Trackers" admpage="trackers"}{tr}Trackers{/tr}{/title}
+{block name="title"}
+	{title help="Trackers" admpage="trackers"}{tr}Trackers{/tr}{/title}
+{/block}
 
-<div class="t_navbar form-group">
-	{include file="tracker_actions.tpl"}
-</div>
+{block name="navigation"}
+	<div class="navbar form-group">
+		{include file="tracker_actions.tpl"}
+	</div>
+{/block}
 
-{tabset name='tabs_trackers'}
+{block name="content"}
+{tabset}
 
 {* --- tab with list --- *}
 {tab name="{tr}Trackers{/tr}"}
@@ -301,3 +307,4 @@
 		return false;
 	});
 {/jq}
+{/block}
