@@ -394,9 +394,17 @@ function wikiplugin_articles($data, $params)
 	$topics = $artlib->list_topics();
 	$smarty->assign_by_ref('topics', $topics);
 
+	if (empty($topicId)) {
+		$topicId = '';
+	}
+	if (empty($type)) {
+		$type = '';
+	}
+	
 	if (!empty($topic) && !strstr($topic, '!') && !strstr($topic, '+')) {
 		$smarty->assign_by_ref('topic', $topic);
 	} elseif (!empty($topicId) &&  is_numeric($topicId)) {
+		$smarty->assign_by_ref('topicId', $topicId);
 		if (!empty($listpages['data'][0]['topicName']))
 			$smarty->assign_by_ref('topic', $listpages['data'][0]['topicName']);
 		else {
@@ -404,8 +412,12 @@ function wikiplugin_articles($data, $params)
 			if (isset($topic_info['name']))
 				$smarty->assign_by_ref('topic', $topic_info['name']);
 		}
+	} elseif (empty($topicId)) {
+		$smarty->assign_by_ref('topicId', $topicId);
 	}
 	if (!empty($type) && !strstr($type, '!') && !strstr($type, '+')) {
+		$smarty->assign_by_ref('type', $type);
+	} elseif (empty($type)) {
 		$smarty->assign_by_ref('type', $type);
 	}
 

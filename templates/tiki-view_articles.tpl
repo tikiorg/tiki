@@ -220,13 +220,12 @@
 {/section}
 {if !isset($actions) or $actions eq "y"}
 	{if $tiki_p_edit_article eq 'y' or $tiki_p_admin eq 'y' or $tiki_p_admin_cms eq 'y'}
-		<br/><img src="img/icons/add.png" alt="{tr}Add an article{/tr}"> <a href="tiki-edit_article.php" class="alert-link">{tr}New article{/tr}</a>
+		<br/><img src="img/icons/add.png" alt="{tr}Add an article{/tr}"> <a href="tiki-edit_article.php{if (isset($topicId) && !empty($topicId)) or (isset($type) && !empty($type))}?{/if}{if isset($topicId) && !empty($topicId) and is_numeric($topicId)}topicId={$topicId|escape}{/if}{if isset($type) && !empty($type)}&type={$type|escape}{/if}" class="alert-link">{tr}New article{/tr}</a>
 	{/if}
 	{if $prefs.feature_submissions == 'y' && $tiki_p_edit_submission == "y" && $tiki_p_edit_article neq 'y' && $tiki_p_admin neq 'y' && $tiki_p_admin_cms neq 'y'}
-		<br/><img src="img/icons/add.png" alt="{tr}New Submission{/tr}"> <a href="tiki-edit_submission.php" class="alert-link">{tr}New Submission{/tr}</a>
+		<br/><img src="img/icons/add.png" alt="{tr}New Submission{/tr}"> <a href="tiki-edit_submission.php{if (isset($topicId) && !empty($topicId)) or (isset($type) && !empty($type))}?{/if}{if isset($topicId) && !empty($topicId) and is_numeric($topicId)}topicId={$topicId|escape}{/if}{if isset($type) && !empty($type)}&type={$type|escape}{/if}" class="alert-link">{tr}New Submission{/tr}</a>
 	{/if}
 {/if}
 {if !empty($listpages) && (!isset($usePagination) or $usePagination ne 'n')}
 	{pagination_links cant=$cant step=$maxArticles offset=$offset}{if isset($urlnext)}{$urlnext}{/if}{/pagination_links}
 {/if}
-
