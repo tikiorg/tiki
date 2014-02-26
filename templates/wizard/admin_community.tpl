@@ -54,13 +54,21 @@
 		<em>{tr}See also{/tr} {tr}Community{/tr} <a href="tiki-admin.php?page=community&amp;cookietab=1" target="_blank">{tr}admin panel{/tr}</a> & <a href="https://doc.tiki.org/Community" target="_blank">{tr}in doc.tiki.org{/tr}</a></em>
 </fieldset>
 	<fieldset>
-		<legend>{tr}Sharing & Social Network{/tr}</legend>
-		<table style="width:100%"><tr><td style="width:48%">
+		<legend>{tr}Sharing & Networking{/tr}</legend>
+		<table style="width:100%"><tr><td style="width:24%">
 			{preference name=feature_share}
 			<br>
 			<em>{tr}See also{/tr} {tr}Share{/tr} <a href="tiki-admin.php?page=share" target="_blank">{tr}admin panel{/tr}</a> & <a href="https://doc.tiki.org/Share" target="_blank">{tr}in doc.tiki.org{/tr}</a></em>.
-		</td><td style="width:4%">&nbsp;
-		</td><td style="width:48%">
+		</td><td style="width:2%">&nbsp;
+		</td><td style="width:43%">
+			{preference name=feature_friends}
+			<div class="adminoptionboxchild" id="feature_friends_childcontainer">
+			{preference name=social_network_type}
+			</div>
+			<br>
+			<em>{tr}See also{/tr} "{tr}Community{/tr} <a href="tiki-admin.php?page=community&cookietab=2" target="_blank">{tr}admin panel{/tr}</a> > {tr}Social Network{/tr} > {tr}Friendship and Followers{/tr}" & <a href="https://doc.tiki.org/Friendship+Network" target="_blank">{tr}in doc.tiki.org{/tr}</a></em>.
+		</td><td style="width:1%">&nbsp;
+		</td><td style="width:30%">
 			<div class="adminWizardIconright"><img src="img/icons/large/socialnetworks.png" alt="{tr}Social networks{/tr}"></div>
 			{preference name=feature_socialnetworks}
 			<br>
