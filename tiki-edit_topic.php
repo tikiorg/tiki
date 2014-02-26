@@ -42,7 +42,7 @@ if (isset($_REQUEST["edittopic"])) {
     $artlib->replace_topic_name($_REQUEST["topicid"], $_REQUEST["name"]);
 	$topic_info['name'] = $_REQUEST['name'];
   }
-	if (isset($_REQUEST['email'])) {
+	if (isset($_REQUEST['email']) && !empty($_REQUEST['email'])) {
 		if (!validate_email($_REQUEST['email'])) {
 			$errors[] = tra('Invalid email');
 			$smarty->assign('email', $_REQUEST['email']);
