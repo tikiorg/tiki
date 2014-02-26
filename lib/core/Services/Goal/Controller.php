@@ -312,7 +312,7 @@ class Services_Goal_Controller
 	 */
 	function action_edit_reward($input)
 	{
-		$rewardList = TikiLib::lib('goal')->getRewardList();
+		$rewardList = TikiLib::lib('goalreward')->getRewardList();
 
 		if (empty($rewardList)) {
 			throw new Services_Exception_NotAvailable(tr('No available rewards'));
