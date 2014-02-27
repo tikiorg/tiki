@@ -12,7 +12,7 @@
 	{tr}Click at the "Start" button above to launch it{/tr}
 	</p>
 	<p>
-	<b>Tiki version {$tiki_version}</b>. {tr}To learn more about this Tiki release, go to <a href="http://doc.tiki.org/tiki12">Tiki 12</a>{/tr}.<br/><br/>	
+	<b>Tiki version {$tiki_version}</b>. {tr}To learn more about this Tiki release, go to <a href="https://doc.tiki.org/Tiki{$tikiMajorVersion}">Tiki {$tikiMajorVersion}</a>{/tr}.<br/><br/>	
 	</p>
 </fieldset>
 </div>
