@@ -8,9 +8,12 @@
 	</div>
 {/if}
 
+{* Limit the wizard link to the home page, leave some screen space for the main content *}
+{if ! $smarty.get.page}
 {remarksbox type="note" title="{tr}Note{/tr}"}
     <div style="float:left">&nbsp;&nbsp;<a href="tiki-wizard_admin.php?&stepNr=0&url=tiki-admin.php"><img src="img/icons/wizard22x22.png"></a></div>&nbsp;&nbsp;{tr _0="tiki-wizard_admin.php?&stepNr=0&url=tiki-admin.php"}Use the <a href="%0" class="rbox-link" >Configuration Wizards</a> to more easily set up your site.{/tr}
 {/remarksbox}
+{/if}
 
 <form method="post" action="">
 	<fieldset>
