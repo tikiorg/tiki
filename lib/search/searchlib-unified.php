@@ -67,8 +67,21 @@ class UnifiedSearchLib
 				// make sure internal permission cache does not refer to the pre-update situation.
 				Perms::getInstance()->clear();
 
-				$indexer = $this->buildIndexer($this->getIndex());
+				$index = $this->getIndex();
+				$index = new Search_Index_TypeAnalysisDecorator($index);
+				$indexer = $this->buildIndexer($index);				
 				$indexer->update($toProcess);
+				
+				// Detect newly created identifier fields
+				$initial = array_flip($prefs['unified_identifier_fields']);
+				$collected = array_flip($index->getIdentifierFields());
+				$combined = array_merge($initial, $collected);
+
+				// Store preference only on change
+				if (count($combined) > count($initial)) {
+					$tikilib = TikiLib::lib('tiki');
+					$tikilib->set_preference('unified_identifier_fields', array_keys($combined));
+				}				
 			} catch (Exception $e) {
 				// Re-queue pulled messages for next update
 				foreach ($toProcess as $message) {
