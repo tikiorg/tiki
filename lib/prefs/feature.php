@@ -1924,6 +1924,7 @@ function prefs_feature_list($partial = false)
 			'help' => 'JQuery#UI',
 			'type' => 'list',
 			'options' => array(
+				'none' => tra('None'),
 				'black-tie' => 'black-tie',
 				'blitzer' => 'blitzer',
 				'cupertino' => 'cupertino',
