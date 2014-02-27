@@ -15,6 +15,19 @@
 			{preference name=feature_wizard_user}
 		</td></tr></table>	
 		<br/>
+		<em>{tr}Add a <b>User and Registration tracker</b>{/tr} 
+		<a href="http://doc.tiki.org/User+Tracker" target="tikihelp" class="tikihelp" title="{tr}User and Registration tracker: You can use trackers to collect additional information for users during registration or even later once they are registered users.{/tr} 
+		{tr}Some uses of this type of tracker could be{/tr}
+		<ul>
+		<li>{tr}To collect user information (such as mailing address or phone number){/tr}</li>
+		<li>{tr}To require the user to acknowledge a user agreement{/tr}</li>
+		<li>{tr}To prevent spammer registration, by asking new users to provide a reason why they want to join (the prompt should tell the user that his answer should indicate that he or she clearly understands what the site is about).{/tr}</li>
+		</ul>
+		{tr}The profile will enable the feature 'Trackers' for you and a few other settings required. Once the profile is applied, you will be provided with instructions about further steps that you need to perform manually.{/tr}">
+			<img src="img/icons/help.png" alt="" width="16" height="16" class="icon" />
+		</a> :
+		<a href="tiki-admin.php?profile=User_Trackers&show_details_for=User_Trackers&repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2" target="_blank">{tr}apply profile now{/tr}</a> ({tr}new window{/tr})</em>
+		<br/><br/>
 		<em>{tr}To set up the <strong>User Watches</strong> and their associated settings, visit the page to {/tr} <a href="tiki-wizard_admin.php?&stepNr=15&url={$homepageUrl}">{tr}Set up Main features{/tr}</a></em>
 </fieldset>
 <fieldset>
