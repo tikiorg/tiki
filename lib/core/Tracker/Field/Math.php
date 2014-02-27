@@ -80,7 +80,7 @@ class Tracker_Field_Math extends Tracker_Field_Abstract implements Tracker_Field
 	{
 		$baseKey = $this->getBaseKey();
 		return array(
-			$baseKey => $typeFactory->identifier($this->getValue()),
+			$baseKey => $typeFactory->identifier((string) $this->getValue()),
 		);
 	}
 
