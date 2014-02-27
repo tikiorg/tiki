@@ -423,7 +423,7 @@ if ($prefs['mobile_feature'] === 'y' && $prefs['mobile_mode'] === 'y') {
 		if ( isset($prefs['javascript_cdn']) && $prefs['javascript_cdn'] == 'google' ) {
 			$headerlib->add_jsfile_dependancy("$url_scheme://ajax.googleapis.com/ajax/libs/jqueryui/$headerlib->jqueryui_version/jquery-ui.min.js");
 		} else if ( isset($prefs['javascript_cdn']) && $prefs['javascript_cdn'] == 'jquery' ) {
-			$headerlib->add_jsfile_dependancy("http://code.jquery.com/ui/$headerlib->jqueryui_version/jquery-ui.min.js");
+			$headerlib->add_jsfile_dependancy("//code.jquery.com/ui/$headerlib->jqueryui_version/jquery-ui.min.js");
 		} else {
 			if ( $prefs['tiki_minify_javascript'] === 'y' ) {
 				$headerlib->add_jsfile_dependancy("vendor/jquery/jquery-ui/ui/minified/jquery-ui.min.js");
@@ -435,10 +435,12 @@ if ($prefs['mobile_feature'] === 'y' && $prefs['mobile_mode'] === 'y') {
 			$headerlib->add_jsfile('vendor/jquery/plugins/cluetip/lib/jquery.bgiframe.js');
 		}
 
-		if ( isset($prefs['javascript_cdn']) && $prefs['javascript_cdn'] == 'jquery' ) {
-			$headerlib->add_cssfile("http://code.jquery.com/ui/$headerlib->jqueryui_version/themes/{$prefs['feature_jquery_ui_theme']}/jquery-ui.css");
-		} else {
-			$headerlib->add_cssfile('vendor/jquery/jquery-ui-themes/themes/' . $prefs['feature_jquery_ui_theme'] . '/jquery-ui.css');
+		if ( $prefs['feature_jquery_ui_theme'] !== 'none' ) {
+			if ( isset($prefs['javascript_cdn']) && $prefs['javascript_cdn'] == 'jquery' ) {
+				$headerlib->add_cssfile("//code.jquery.com/ui/$headerlib->jqueryui_version/themes/{$prefs['feature_jquery_ui_theme']}/jquery-ui.css");
+			} else {
+				$headerlib->add_cssfile('vendor/jquery/jquery-ui-themes/themes/' . $prefs['feature_jquery_ui_theme'] . '/jquery-ui.css');
+			}
 		}
 
 		if ( $prefs['feature_jquery_autocomplete'] == 'y' ) {
