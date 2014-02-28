@@ -4938,13 +4938,22 @@ class TikiLib extends TikiDb_Bridge
 	{
 		global $prefs;
 
-		if ( isset( $data['content'] ) && $prefs['feature_file_galleries'] == 'y') {
-			$filegallib = TikiLib::lib('filegal');
-			$filegallib->syncFileBacklinks($data['content'], $context);
-		}
+		if (is_array($data)) {
+			if ( isset( $data['content'] ) && $prefs['feature_file_galleries'] == 'y') {
+				$filegallib = TikiLib::lib('filegal');
+				$filegallib->syncFileBacklinks($data['content'], $context);
+			}
 
-		if ( isset( $data['content'] ) ) {
-			$this->plugin_post_save_actions($context, $data);
+			if ( isset( $data['content'] ) ) {
+				$this->plugin_post_save_actions($context, $data);
+			}
+		} else {
+			if ( isset( $context['content'] ) && $prefs['feature_file_galleries'] == 'y') {
+				$filegallib = TikiLib::lib('filegal');
+				$filegallib->syncFileBacklinks($context['content'], $context);
+			}
+
+			$this->plugin_post_save_actions($context);
 		}
 	}
 
