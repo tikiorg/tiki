@@ -697,7 +697,7 @@ class TrackerLib extends TikiLib
 		}
 	}
 
-	public function concat_item_from_fieldslist($trackerId,$itemId,$fieldsId,$status='o',$separator=' ',$list_mode='')
+	public function concat_item_from_fieldslist($trackerId,$itemId,$fieldsId,$status='o',$separator=' ',$list_mode='', $strip_tags = false)
 	{
 		$res='';
 		if (is_string($fieldsId)) {
@@ -714,10 +714,13 @@ class TrackerLib extends TikiLib
 			}
 			$res .= trim($this->field_render_value(array('field' => $myfield, 'process' => 'y', 'list_mode' => $list_mode)));
 		}
+		if ($strip_tags) {
+			$res = strip_tags($res);
+		}
 		return $res;
 	}
 
-	public function concat_all_items_from_fieldslist($trackerId,$fieldsId,$status='o',$separator=' ')
+	public function concat_all_items_from_fieldslist($trackerId,$fieldsId,$status='o',$separator=' ', $strip_tags = false)
 	{
 		if (is_string($fieldsId)) {
 			$fieldsId = preg_split('/\|/', $fieldsId, -1, PREG_SPLIT_NO_EMPTY);
@@ -737,7 +740,7 @@ class TrackerLib extends TikiLib
 					}
 					if ($is_trackerlink && $options['displayFieldsList']) {
 						// If $options[3] is empty, concat_item_from_fieldslist returns nothing
-						$value=$this->concat_item_from_fieldslist($options['trackerId'], $value, $options['displayFieldsList']);
+						$value=$this->concat_item_from_fieldslist($options['trackerId'], $value, $options['displayFieldsList'], $strip_tags);
 					}
 					if (!empty($res[$key])) {
 						$res[$key].=$separator.$value;
