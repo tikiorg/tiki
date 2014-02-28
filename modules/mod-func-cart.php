@@ -147,5 +147,6 @@ function module_cart($mod_reference, & $module_params)
 	$smarty->assign('cart_total', $cartlib->get_total());
 	$smarty->assign('cart_content', $cartlib->get_content());
 	$smarty->assign('cart_weight', $cartlib->get_total_weight());
+	$smarty->assign('cart_count', $cartlib->get_count());
 }
 

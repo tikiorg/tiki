@@ -715,7 +715,22 @@ class CartLib
 
 		foreach ( $_SESSION['cart'] as $info ) {
 			if (!empty($info['weight'])) {
-				$total += floatval($info['quantity']) * floatval($info['weight']);
+				$total += intval($info['quantity']) * floatval($info['weight']);
+			}
+		}
+
+		return $total;
+	}
+
+	function get_count()
+	{
+		$this->init_cart();
+
+		$total = 0;
+
+		foreach ( $_SESSION['cart'] as $info ) {
+			if (!empty($info['quantity'])) {
+				$total += intval($info['quantity']);
 			}
 		}
 
