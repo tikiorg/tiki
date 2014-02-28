@@ -196,6 +196,11 @@ class Tiki_Profile_Writer
 	 */
 	function getReference($type, $id, array $parameters = array())
 	{
+		if (empty($id)) {
+			// Empty strings, id=0, ... not valid references skip
+			return $id;
+		}
+
 		// If we are provided with an anonymous function to handle special cases
 		if ($type instanceof Closure) {
 			return call_user_func($type, $this, $id, $parameters);
