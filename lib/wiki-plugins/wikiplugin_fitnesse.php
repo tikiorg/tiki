@@ -18,6 +18,7 @@ function wikiplugin_fitnesse_info()
 		'filter' => 'wikicontent',
 		'icon' => 'img/icons/text_list_bullets.png',
 		'tags' => array('advanced'),
+		'profile_reference' => 'fitnesse_content',
 		'params' => array(
 		),
 	);
@@ -62,7 +63,8 @@ function wikiplugin_fitnesse($data, $params)
 function wp_fixture_tracker_math($data, $params)
 {
 	$table = new FixtureTable($data);
-	$tracker = Tracker_Definition::get($params->trackerId->int());
+	$trackerId = $params->trackerId->int();
+	$tracker = Tracker_Definition::get($trackerId);
 
 	if (! $tracker) {
 		return '__' . tr('Tracker not found.') . '__';
