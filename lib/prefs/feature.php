@@ -2902,5 +2902,24 @@ function prefs_feature_list($partial = false)
 			'type' => 'flag',
 			'default' => 'n',
 		),		
+		'feature_userWizardDifferentUsersFieldIds' => array(
+			'name' => tra('Ask different fields in the User Wizard than the ones in Registration'),
+			'description' => tra('Ask a different set of fields for the User Details section in the User Wizard than the ones shown in the Registration form'),
+			'help' => 'User+Wizard',
+			'type' => 'flag',
+			'default' => 'y',
+		),
+		'feature_userWizardUsersFieldIds' => array(
+			'name' => tra('Tracker Fields Asked in the User Wizard as User Details'),
+			'description' => tra('Users Information Tracker Fields Asked in the User Wizard as User Details (fieldIds separated with colon)'),
+			'help' => 'User+Wizard',
+			'type' => 'text',
+			'size' => '50',
+			'dependencies' => array(
+				'userTracker',
+				'feature_wizard_user',
+			),
+			'default' => '',
+		),						
 	);
 }

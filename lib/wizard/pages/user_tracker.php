@@ -65,17 +65,25 @@ class UserWizardUserTracker extends Wizard
 		if ($registrationlib->merged_prefs['userTracker'] == 'y') {
 			$chosenGroup = 'Registered';
 			$re = $userlib->get_group_info($chosenGroup);
-			if (!empty($re['usersTrackerId']) && !empty($re['registrationUsersFieldIds'])) {
+
+			if (!empty($re['usersTrackerId']) && ( (!empty($re['registrationUsersFieldIds']) && $prefs['feature_userWizardDifferentUsersFieldIds'] != 'y') or ($prefs['feature_userWizardDifferentUsersFieldIds'] == 'y' && !empty($prefs['feature_userWizardUsersFieldIds'])) ) ) {
 				$needs_validation_js = false;
 				include_once ('lib/wiki-plugins/wikiplugin_tracker.php');
 				if (isset($_REQUEST['name'])) {
 					$user = $_REQUEST['name'];	// so that one can set user preferences at registration time
 					$_REQUEST['iTRACKER'] = 1;	// only one tracker plugin on registration
 				}
-				if (!is_array($re['registrationUsersFieldIds'])) {
-					$re['registrationUsersFieldIds'] = explode(':', $re['registrationUsersFieldIds']);
+				$userWizardDetailsFieldIds = '';
+				if ($prefs['feature_userWizardDifferentUsersFieldIds'] != 'y' or empty($prefs['feature_userWizardUsersFieldIds'])) {
+					$userWizardDetailsFieldIds = $re['registrationUsersFieldIds'];
+				} elseif ($prefs['feature_userWizardDifferentUsersFieldIds'] == 'y' and !empty($prefs['feature_userWizardUsersFieldIds'])) {
+					$userWizardDetailsFieldIds = $prefs['feature_userWizardUsersFieldIds'];
+				} 
+				
+				if (!is_array($userWizardDetailsFieldIds)) {
+					$userWizardDetailsFieldIds = explode(':', $userWizardDetailsFieldIds);
 				}
-				$userTrackerData = wikiplugin_tracker('', array('trackerId' => $re['usersTrackerId'], 'fields' => $re['registrationUsersFieldIds'], 'showdesc' => 'n', 'showmandatory' => 'y', 'embedded' => 'n', 'action' => 'Save_User_Details', 'registration' => 'n', 'userField' => $re['usersFieldId']));
+				$userTrackerData = wikiplugin_tracker('', array('trackerId' => $re['usersTrackerId'], 'fields' => $userWizardDetailsFieldIds, 'showdesc' => 'n', 'showmandatory' => 'y', 'embedded' => 'n', 'action' => 'Save_User_Details', 'registration' => 'n', 'userField' => $re['usersFieldId']));
 				$tr = TikiLib::lib('trk')->get_tracker($re['usersTrackerId']);
 		
 		
@@ -139,17 +147,24 @@ class UserWizardUserTracker extends Wizard
 		if ($registrationlib->merged_prefs['userTracker'] == 'y') {
 			$chosenGroup = 'Registered';
 			$re = $userlib->get_group_info($chosenGroup);
-			if (!empty($re['usersTrackerId']) && !empty($re['registrationUsersFieldIds'])) {
+			if (!empty($re['usersTrackerId']) && ( (!empty($re['registrationUsersFieldIds']) && $prefs['feature_userWizardDifferentUsersFieldIds'] != 'y') or ($prefs['feature_userWizardDifferentUsersFieldIds'] == 'y' && !empty($prefs['feature_userWizardUsersFieldIds'])) ) ) {
 				$needs_validation_js = false;
 				include_once ('lib/wiki-plugins/wikiplugin_tracker.php');
 				if (isset($_REQUEST['name'])) {
 					$user = $_REQUEST['name'];	// so that one can set user preferences at registration time
 					$_REQUEST['iTRACKER'] = 1;	// only one tracker plugin on registration
 				}
-				if (!is_array($re['registrationUsersFieldIds'])) {
-					$re['registrationUsersFieldIds'] = explode(':', $re['registrationUsersFieldIds']);
+				$userWizardDetailsFieldIds = '';
+				if ($prefs['feature_userWizardDifferentUsersFieldIds'] != 'y' or empty($prefs['feature_userWizardUsersFieldIds'])) {
+					$userWizardDetailsFieldIds = $re['registrationUsersFieldIds'];
+				} elseif ($prefs['feature_userWizardDifferentUsersFieldIds'] == 'y' and !empty($prefs['feature_userWizardUsersFieldIds'])) {
+					$userWizardDetailsFieldIds = $prefs['feature_userWizardUsersFieldIds'];
+				} 
+				
+				if (!is_array($userWizardDetailsFieldIds)) {
+					$userWizardDetailsFieldIds = explode(':', $userWizardDetailsFieldIds);
 				}
-				$userTrackerData = wikiplugin_tracker('', array('trackerId' => $re['usersTrackerId'], 'fields' => $re['registrationUsersFieldIds'], 'showdesc' => 'n', 'showmandatory' => 'y', 'embedded' => 'n', 'action' => 'Save_User_Details', 'registration' => 'n', 'userField' => $re['usersFieldId']));
+				$userTrackerData = wikiplugin_tracker('', array('trackerId' => $re['usersTrackerId'], 'fields' => $userWizardDetailsFieldIds, 'showdesc' => 'n', 'showmandatory' => 'y', 'embedded' => 'n', 'action' => 'Save_User_Details', 'registration' => 'n', 'userField' => $re['usersFieldId']));
 				$tr = TikiLib::lib('trk')->get_tracker($re['usersTrackerId']);
 		
 				$utid = $userlib->get_tracker_usergroup($user);
@@ -161,14 +176,7 @@ class UserWizardUserTracker extends Wizard
 		
 				$definition = Tracker_Definition::get($_REQUEST['trackerId']);
 				$xfields = array('data' => $definition->getFields());
-		
-		
-				if (isset($_REQUEST['user_calendar_watch_editor']) && $_REQUEST['user_calendar_watch_editor'] == 'on') {
-					$tikilib->set_user_preference($user, 'user_calendar_watch_editor', 'y');
-				} else {
-					$tikilib->set_user_preference($user, 'user_calendar_watch_editor', 'n');
-				}
-		
+				
 			}
 		}
 	}
