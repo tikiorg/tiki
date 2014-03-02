@@ -130,6 +130,33 @@ class Tiki_Profile_Writer_Helper
 		return $matches->getText();
 	}
 
+	public static function fitnesse_content(Tiki_Profile_Writer $writer, $content)
+	{
+		$searchlib = TikiLib::lib('unifiedsearch');
+
+		$argumentParser = new WikiParser_PluginArgumentParser;
+		$matches = WikiParser_PluginMatcher::match($content);
+
+		$justReplaced = false;
+		foreach ($matches as $match) {
+			if ($justReplaced) {
+				$justReplaced = false;
+				continue;
+			}
+
+			$name = $match->getName();
+			$args = $argumentParser->parse($match->getArguments());
+
+			if (isset($args['trackerId'])) {
+				$args['trackerId'] = $writer->getReference('tracker', $args['trackerId']);
+				$match->replaceWithPlugin($name, $args, $match->getBody());
+				$justReplaced = true;
+			}
+		}
+
+		return $matches->getText();
+	}
+
 	public static function search_urlencoded(Tiki_Profile_Writer $writer, $value)
 	{
 		$searchlib = TikiLib::lib('unifiedsearch');
