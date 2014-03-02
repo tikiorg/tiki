@@ -266,8 +266,9 @@ class Messu extends TikiLib
 	 */
 	function flag_message($user, $msgId, $flag, $val, $dbsource = 'messages')
 	{
-		if (!$msgId)
+		if (!$msgId || !(in_array($flag, array('isRead', 'isFlagged')))) {
 			return false;
+		}
 
 		if ($dbsource == '')
 			$dbsource = 'messages';
