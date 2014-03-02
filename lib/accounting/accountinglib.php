@@ -64,6 +64,7 @@ class AccountingLib extends LogsLib
 	 * @return	int/string					bookId on success, error message otherwise
 	 */
 	function createBook($bookName
+			, $bookClosed = 'n'
 			, $bookStartDate
 			, $bookEndDate
 			, $bookCurrency
@@ -75,7 +76,6 @@ class AccountingLib extends LogsLib
 			, $exportEOL
 			, $exportQuote
 			, $bookAutoTax = 'y'
-			, $bookClosed = 'n'
 			)
 	{
 		global $userlib, $user;
@@ -372,7 +372,9 @@ class AccountingLib extends LogsLib
 			$errors = array_merge($errors, $this->validateId('taxId', $accountTax, 'tiki_acct_tax', true, 'taxBookId', $bookId));
 		}
 
-		if (count($errors) != 0) return $errors;
+		if (!empty($errors)) {
+			return $errors;
+		}
 
 		$query = 'INSERT INTO tiki_acct_account' . 
 						' SET accountBookId=?, accountId=?, accountName=?,' . 
@@ -1384,26 +1386,44 @@ class AccountingLib extends LogsLib
 	{
 		$errors = array();
 		if (!is_numeric($id)) {
-			$errors[] = "$idname ($id) " . tra('is is not a number.');
+			$errors[] = htmlspecialchars($idname) . ' (' . htmlspecialchars($id) . ')'
+				. tra('is is not a number.');
 		} else {
 			if ($id <= 0) {
-				$errors[] = "$idname " . tra('must be >0.');
+				$errors[] = htmlspecialchars($idname) . ' ' . tra('must be > 0.');
 			} else {
-				$query = "SELECT $idname FROM $table WHERE $idname=$id";
-				if ($bookIdName != '') {
-					$query .= " AND $bookIdName=$bookId";
+				$rawtables = $this->fetchAll('show tables');
+				foreach ($rawtables as $table) {
+					$tables[] = reset($table);
+				}
+				if (strpos($table, 'tiki_acct_') === false || !in_array($table, $tables)) {
+					return false;
+				}
+				$colsinfo = $this->fetchAll("SHOW COLUMNS FROM $table");
+				foreach ($colsinfo as $col) {
+					$colnames[] = $col['Field'];
+				}
+				if (strpos($idname, 'Id') === false || !in_array($idname, $colnames)){
+					return false;
+				}
+				$query = "SELECT $idname FROM $table WHERE $idname = ?";
+				$bindvars = array($id);
+				if (strpos($bookIdName, 'Id') !== false && in_array($bookIdName, $colnames)) {
+					$query .= " AND $bookIdName = ?";
+					array_push($bindvars, $bookId);
 				}
 
-				$res = $this->query($query);
+				$res = $this->query($query, $bindvars);
 				if ($res === false) {
-					$errors[] = tra('Error checking') & " $idname: " . $this->ErrorNo() . ": " . $this->ErrorMsg() . "<br /><pre>$query</pre>";
+					$errors[] = tra('Error checking') .  htmlspecialchars($idname) . ': ' . $this->ErrorNo() . ': '
+						. $this->ErrorMsg() . '<br /><pre>' . htmlspecialchars($query) . '</pre>';
 				} else {
 					if ($exists) {
 						if ($res->numRows() == 0)
-							$errors[] = "$idname " . tra('does not exist.');
+							$errors[] = htmlspecialchars($idname) . ' ' . tra('does not exist.');
 					} else {
 						if ($res->numRows()>0)
-							$errors[] = "$idname $id " . tra('already exists');
+							$errors[] = htmlspecialchars($idname) . ' ' . tra('already exists');
 					} //existence
 				} // query
 			} // 0
