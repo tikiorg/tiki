@@ -25,11 +25,11 @@
 	{if $account.accountLocked==1}{tr}Yes{/tr}{else}{tr}No{/tr}{/if}</div>
 	{button href="tiki-accounting.php?bookId=$bookId" _text="Back to book page"} 
 	{if $tiki_p_acct_manage_accounts=='y'}
-		{button href="tiki-accounting_account.php?action=edit&bookId=$bookId&accountId=$accountId" _text="{tr}Edit this account{/tr}"}
-		{if $account.changeable==1}{button href="tiki-accounting_account.php?action=delete&bookId=$bookId&accountId=$accountId" _text="{tr}Delete this account{/tr}"}{/if}
+		{button href="tiki-accounting_account.php?action=edit&bookId=$bookId&accountId={$account.accountId}" _text="{tr}Edit this account{/tr}"}
+		{if $account.changeable==1}{button href="tiki-accounting_account.php?action=delete&bookId=$bookId&accountId={$account.accountId}" _text="{tr}Delete this account{/tr}"}{/if}
 	{/if}
 </div>
-{if isset($journal)}<div id="account_journal>
+{if isset($journal)}<div id="account_journal">
 {include file='tiki-accounting_journal.tpl'}
 </div>
 {/if}

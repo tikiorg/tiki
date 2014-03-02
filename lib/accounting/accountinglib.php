@@ -1388,27 +1388,28 @@ class AccountingLib extends LogsLib
 		if (!is_numeric($id)) {
 			$errors[] = htmlspecialchars($idname) . ' (' . htmlspecialchars($id) . ')'
 				. tra('is is not a number.');
+		} elseif ($id <= 0) {
+			$errors[] = htmlspecialchars($idname) . ' ' . tra('must be > 0.');
 		} else {
-			if ($id <= 0) {
-				$errors[] = htmlspecialchars($idname) . ' ' . tra('must be > 0.');
+			//static whitelist based on usage of the validateId function in accountinglib.php
+			$tablesWhitelist = array(
+				'tiki_acct_tax' => array(
+					'idname'     => 'taxId',
+					'bookIdName' => 'taxBookId'
+				),
+				'tiki_acct_account' => array(
+					'idname'     => 'accountId',
+					'bookIdName' => 'accountBookId'
+				)
+			);
+			if (!array_key_exists($table, $tablesWhitelist)) {
+				$errors[] = tra('Invalid transaction - please contact administrator.');
+			} elseif ($idname !== $tablesWhitelist[$table]['idname']){
+				$errors[] = tra('Invalid transaction - please contact administrator.');
 			} else {
-				$rawtables = $this->fetchAll('show tables');
-				foreach ($rawtables as $table) {
-					$tables[] = reset($table);
-				}
-				if (strpos($table, 'tiki_acct_') === false || !in_array($table, $tables)) {
-					return false;
-				}
-				$colsinfo = $this->fetchAll("SHOW COLUMNS FROM $table");
-				foreach ($colsinfo as $col) {
-					$colnames[] = $col['Field'];
-				}
-				if (strpos($idname, 'Id') === false || !in_array($idname, $colnames)){
-					return false;
-				}
 				$query = "SELECT $idname FROM $table WHERE $idname = ?";
 				$bindvars = array($id);
-				if (strpos($bookIdName, 'Id') !== false && in_array($bookIdName, $colnames)) {
+				if ($bookIdName === $tablesWhitelist[$table]['bookIdName']) {
 					$query .= " AND $bookIdName = ?";
 					array_push($bindvars, $bookId);
 				}
@@ -1426,7 +1427,7 @@ class AccountingLib extends LogsLib
 							$errors[] = htmlspecialchars($idname) . ' ' . tra('already exists');
 					} //existence
 				} // query
-			} // 0
+			}
 		} // numeric
 		return $errors;
 	} // validateId
