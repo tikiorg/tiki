@@ -30,8 +30,8 @@
 				<td style="width:48%"><div class="adminoptionboxchild" id="wiki_simple_ratings_perms_childcontainer">
 				{tr}Permissions involved:{/tr}
 				<ul>
-					<li>wiki > tiki_p_wiki_vote_ratings</li>
-					<li>tiki > tiki_p_ratings_view_results</li>
+					<li>{tr}wiki{/tr} > tiki_p_wiki_vote_ratings</li>
+					<li>{tr}tiki{/tr} > tiki_p_ratings_view_results</li>
 				</ul>
 				</div>
 				</td>
@@ -56,8 +56,8 @@
 				<td style="width:48%"><div class="adminoptionboxchild" id="articles_simple_ratings_perms_childcontainer">
 				{tr}Permissions involved:{/tr}
 				<ul>
-					<li>articles > tiki_p_rate_article</li>
-					<li>tiki > tiki_p_ratings_view_results</li>
+					<li>{tr}articles{/tr} > tiki_p_rate_article</li>
+					<li>{tr}tiki{/tr} > tiki_p_ratings_view_results</li>
 				</ul>
 				</div>
 				</td>
@@ -79,8 +79,8 @@
 				<td style="width:48%"><div class="adminoptionboxchild" id="wiki_comments_simple_ratings_perms_childcontainer">
 				{tr}Permissions involved:{/tr}
 				<ul>
-					<li>comments > tiki_p_vote_comments</li>
-					<li>tiki > tiki_p_ratings_view_results</li>
+					<li>{tr}comments{/tr} > tiki_p_vote_comments</li>
+					<li>{tr}tiki{/tr} > tiki_p_ratings_view_results</li>
 				</ul>
 				</div>
 				</td>
@@ -95,15 +95,15 @@
 				<td style="width:48%">{tr}You need to:{/tr} 
 				<ul>
 					<li>{tr}Create or Edit a forum and enable:{/tr} "<strong>{tr}Posts can be rated{/tr}</strong>"</li>
-					<li>Set the rating options at "{tr}Admin Home{/tr}" > {tr}Ratings{/tr}" > "{tr}Comments{/tr}" > "{tr}Simple wiki comment ratings{/tr}" > "<strong>{tr}Wiki rating options:{/tr}</strong>" ({tr}see above{/tr})</li>
+					<li>{tr}Set the rating options at{/tr} "{tr}Admin Home{/tr}" > {tr}Ratings{/tr}" > "{tr}Comments{/tr}" > "{tr}Simple wiki comment ratings{/tr}" > "<strong>{tr}Wiki rating options:{/tr}</strong>" ({tr}see above{/tr})</li>
 				</ul>
 				</td>
 				<td style="width:4%"><td>
 				<td style="width:48%"><div class="adminoptionboxchild" id="forums_ratings_perms_childcontainer">
 				{tr}Permissions involved:{/tr}
 				<ul>
-					<li>forums > tiki_p_forum_vote</li>
-					<li>tiki > tiki_p_ratings_view_results</li>
+					<li>{tr}forums{/tr} > tiki_p_forum_vote</li>
+					<li>{tr}tiki{/tr} > tiki_p_ratings_view_results</li>
 				</ul>
 				</div>
 				</td>
@@ -123,9 +123,9 @@
 				<td style="width:48%"><div class="adminoptionboxchild" id="trackers_ratings_perms_childcontainer">
 				{tr}Permissions involved:{/tr}
 				<ul>
-					<li>trackers > tiki_p_tracker_vote_ratings</li>
-					<li>trackers > tiki_p_tracker_revote_ratings</li>
-					<li>trackers > tiki_p_tracker_view_ratings</li>
+					<li>{tr}trackers{/tr} > tiki_p_tracker_vote_ratings</li>
+					<li>{tr}trackers{/tr} > tiki_p_tracker_revote_ratings</li>
+					<li>{tr}trackers{/tr} > tiki_p_tracker_view_ratings</li>
 				</ul>
 				</div>
 				</td>
