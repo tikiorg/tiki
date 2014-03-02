@@ -33,6 +33,18 @@ function wikiplugin_wantedpages_info()
 				'default' => '+',
 				'advanced' => true,
 			),
+			'skipalias' => array(
+				'required' => false,
+				'name' => tra('Skip Alias'),
+				'description' => tra('Whether to skip wanted pages that have a defined alias (not skipped by default)'),
+				'default' => 0,
+				'filter' => 'digits',
+				'options' => array(
+					array('text' => '', 'value' => ''),
+					array('text' => tra('Yes'), 'value' => 1),
+					array('text' => tra('No'), 'value' => 0),
+				),
+			),
 			'skipext' => array(
 				'required' => false,
 				'name' => tra('Skip Extension'),
@@ -109,6 +121,7 @@ class WikiPluginWantedPages extends PluginsLib
 	{
 		return array(	'ignore' => '', // originating pages to be ignored
 						'splitby' => '+', // split ignored pages by this character
+						'skipalias' => 0, // false, count a page alias as a wanted page
 						'skipext' => 0, // false, display external wiki links
 						'collect' => 'from', // display (and sort) wanted pages in the first column,
 						// collect originating pages in the second column (and separate them by table parameter)
@@ -144,6 +157,9 @@ class WikiPluginWantedPages extends PluginsLib
 		}
 		if (!isset($splitby)) {
 			$splitby = '+';
+		}
+		if (!isset($skipalias)) {
+			$skipalias = false;
 		}
 		if (!isset($skipext)) {
 			$skipext = false;
@@ -194,11 +210,17 @@ class WikiPluginWantedPages extends PluginsLib
 		// Wiki links in articles, blogs, etc are ignored.
 		$query = 'select distinct tl.`toPage`, tl.`fromPage` from `tiki_links` tl';
 		$query .= ' left join `tiki_pages` tp on (tl.`toPage` = tp.`pageName`)';
+		if ($skipalias) {
+			$query .= ' left join `tiki_object_relations` tor on (tl.`toPage` = tor.`target_itemId`)';
+		}
 
 		$categories = $this->get_jail();
 		if ($categories)
 			$query .= ' inner join `tiki_objects` as tob on (tob.`itemId`= tl.`fromPage` and tob.`type`= ?) inner join `tiki_category_objects` as tc on (tc.`catObjectId`=tob.`objectId` and tc.`categId` IN(' . implode(', ', array_fill(0, count($categories), '?')) . '))';
 		$query .= ' where tp.`pageName` is null';
+		if ($skipalias) {
+			$query .= ' and (tor.`relation` is null or tor.`relation` != \'tiki.link.alias\')';
+		}
 		$result = $this->query($query, $categories ? array_merge(array('wiki page'), $categories) : array());
 		$tmp = array();
 
@@ -314,9 +336,9 @@ class WikiPluginWantedPages extends PluginsLib
 			$endtable = '';
 		}
 
-		$sOutput = '||' . '&nbsp;&nbsp;__';
+		$sOutput = '||' . '__';
 		if ($collect == 'from') {
-			$sOutput .= $headerwant . '__&nbsp;&nbsp;|&nbsp;&nbsp;__' . $headerref . '__&nbsp;&nbsp;' . $rowbreak;
+			$sOutput .= $headerwant . '__|__' . $headerref . '__' . $rowbreak;
 			if ($break == 'sep') {
 				foreach ($out as $link) {
 					$sOutput .= $link[0] . ' | ' . $link[1] . $rowbreak;
@@ -327,7 +349,7 @@ class WikiPluginWantedPages extends PluginsLib
 				}
 			}
 		} else { // $collect == 'to'
-			$sOutput .= $headerref . '__&nbsp;&nbsp;|&nbsp;&nbsp;__' . $headerwant . '__&nbsp;&nbsp;' . $rowbreak;
+			$sOutput .= $headerref . '__|__' . $headerwant . '__' . $rowbreak;
 			if ($break == 'sep') {
 				foreach ($out as $link) {
 					$sOutput .= $link[0] . ' | ' . $link[1] . $rowbreak;
