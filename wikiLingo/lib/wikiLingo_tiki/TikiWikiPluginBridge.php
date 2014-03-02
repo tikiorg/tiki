@@ -10,7 +10,7 @@ class TikiWikiPluginBridge extends Base
 		$this->allowLines = true;
 	}
 
-	public function render(Plugin $plugin, $renderedChildren, $parser)
+	public function render(Plugin &$plugin, &$body, &$parser)
 	{
 		$name = strtolower($plugin->type);
 		$fileLocation = "lib/wiki-plugins/wikiplugin_" . $name . ".php";
@@ -20,7 +20,7 @@ class TikiWikiPluginBridge extends Base
 
 			//$arguments = $this->argumentsParser->parse($plugin->parsed->arguments[0]->text);
 
-			$output = $fn($renderedChildren, $plugin->parametersRaw);
+			$output = $fn($body, $plugin->parametersRaw);
 
 			//$output = TikiLib::lib("parser")->parse_data($output);
 
@@ -28,4 +28,4 @@ class TikiWikiPluginBridge extends Base
 		}
 		return '';
 	}
-} 
+}
