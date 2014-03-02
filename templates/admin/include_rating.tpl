@@ -95,6 +95,7 @@
 				<td style="width:48%">{tr}You need to:{/tr} 
 				<ul>
 					<li>{tr}Create or Edit a forum and enable:{/tr} "<strong>{tr}Posts can be rated{/tr}</strong>"</li>
+					<li>{tr}While editing the forum, choose whether to show the "User information display > <strong>Topic Rating</strong>{/tr}" by each user</li>					
 					<li>{tr}Set the rating options at{/tr} "{tr}Admin Home{/tr}" > {tr}Ratings{/tr}" > "{tr}Comments{/tr}" > "{tr}Simple wiki comment ratings{/tr}" > "<strong>{tr}Wiki rating options:{/tr}</strong>" ({tr}see above{/tr})</li>
 				</ul>
 				</td>

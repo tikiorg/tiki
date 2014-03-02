@@ -421,6 +421,11 @@
                         </label>
                     </div>
                     <div class="checkbox">
+                        <label for="ui_rating_choice_topic">
+                            <input type="checkbox" name="ui_rating_choice_topic" id="ui_rating_choice_topic" {if $ui_rating_choice_topic eq 'y'}checked="checked"{/if}> {tr}Topic Rating{/tr}
+                        </label>
+                    </div>
+                    <div class="checkbox">
                         <label for="ui_flag">
                             <input type="checkbox" name="ui_flag" id="ui_flag" {if $ui_flag eq 'y'}checked="checked"{/if}> {tr}Flag{/tr}
                         </label>

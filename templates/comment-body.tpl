@@ -14,6 +14,9 @@
 		<span class="author_info">
 
 			<span class="author_post_info">
+				{if $first neq 'y' and $forum_info.ui_rating_choice_topic eq 'y' }
+					{rating_choice comment_author=$comment.userName type=comment id=$comments_parentId }
+				{/if}
 				{if isset($comment.anonymous_name) and $comment.anonymous_name}
 					{tr}Posted by{/tr} <span class="author_post_info_by">{if $comment.website}<a href="{$comment.website}" target="_blank">{/if}{$comment.anonymous_name}{if $comment.website}</a>{/if}</span>
 				{elseif isset($comment.userName)}
