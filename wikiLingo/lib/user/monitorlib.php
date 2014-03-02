@@ -21,9 +21,9 @@ class MonitorLib
 
 		$priorities = array(
 			'none' => ['label' => '', 'description' => null],
-			'critical' => ['label' => tr('Critical'), 'description' => tr('Immediate notification by email.')],
-			'high' => ['label' => tr('High'), 'description' => tr('Sent to you with the next periodic digest.')],
-			'low' => ['label' => tr('Low'), 'description' => tr('Included in your personalized recent changes feed.')],
+			'critical' => ['label' => tr('Critical'), 'description' => tr('Immediate notification by email.'), 'class' => 'label-danger'],
+			'high' => ['label' => tr('High'), 'description' => tr('Sent to you with the next periodic digest.'), 'class' => 'label-warning'],
+			'low' => ['label' => tr('Low'), 'description' => tr('Included in your personalized recent changes feed.'), 'class' => 'label-info'],
 		);
 
 		global $prefs;
@@ -238,10 +238,24 @@ class MonitorLib
 				'event' => $originalEvent,
 				'arguments' => $args,
 				'events' => [],
+				'force' => null,
 			];
 		}
 
 		$this->queue[$eventId]['events'][] = $registeredEvent;
+	}
+	
+	function directNotification($priority, $userId, $event, $args)
+	{
+		$this->queue[$args['EVENT_ID']] = [
+			'event' => $event,
+			'arguments' => $args,
+			'events' => [],
+			'force' => [
+				'priority' => $priority,
+				'userId' => $userId,
+			],
+		];
 	}
 
 	private function finalEvent()
@@ -259,7 +273,7 @@ class MonitorLib
 
 		$monitormail = TikiLib::lib('monitormail');
 		foreach ($queue as $item) {
-			list($args, $sendTo) = $this->finalHandleEvent($item['arguments'], $item['events']);
+			list($args, $sendTo) = $this->finalHandleEvent($item['arguments'], $item['events'], $item['force']);
 
 			if ($args) {
 				$activitylib->recordEvent($item['event'], $args);
@@ -277,18 +291,25 @@ class MonitorLib
 		$monitormail->sendQueue();
 	}
 	
-	private function finalHandleEvent($args, $events)
+	private function finalHandleEvent($args, $events, $force)
 	{
 		$currentUser = TikiLib::lib('login')->getUserId();
 
-		$targets = $this->collectTargets($args);
+		if ($force) {
+			if ($currentUser != $force['userId']) {
+				// Direct notification, we know user and priority
+				$results = [$force];
+			}
+		} else {
+			$targets = $this->collectTargets($args);
 
-		$table = $this->table();
-		$results = $table->fetchAll(['priority', 'userId'], [
-			'event' => $table->in($events),
-			'target' => $table->in($targets),
-			'userId' => $table->not($currentUser),
-		]);
+			$table = $this->table();
+			$results = $table->fetchAll(['priority', 'userId'], [
+				'event' => $table->in($events),
+				'target' => $table->in($targets),
+				'userId' => $table->not($currentUser),
+			]);
+		}
 
 		if (empty($results)) {
 			return [null, []];

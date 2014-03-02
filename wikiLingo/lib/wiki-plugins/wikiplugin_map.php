@@ -181,7 +181,7 @@ function wp_map_getscope($params)
 
 	switch ($scope) {
 		case 'center':
-			return '#tiki-center .geolocated';
+			return '#col1 .geolocated';
 		case 'all':
 			return '.geolocated';
 		default:
@@ -264,6 +264,7 @@ function wp_map_plugin_searchlayer($body, $args)
 	$suffix = $args->suffix->word();
 	$maxRecords = $args->maxRecords->digits();
 	$sort_mode = $args->sort_mode->word();
+	$load_delay = $args->load_delay->int();
 
 	$args->replaceFilter('fields', 'word');
 	$fields = $args->asArray('fields', ',');
@@ -274,6 +275,7 @@ function wp_map_plugin_searchlayer($body, $args)
 	unset($args['maxRecords']);
 	unset($args['fields']);
 	unset($args['sort_mode']);
+	unset($args['load_delay']);
 
 	$args->setDefaultFilter('text');
 
@@ -300,7 +302,7 @@ function wp_map_plugin_searchlayer($body, $args)
 	$escapedLayer = smarty_modifier_escape($layer);
 	$escapedSuffix = smarty_modifier_escape($suffix);
 	return <<<OUT
-<form method="post" action="tiki-searchindex.php" class="search-box onload" style="display: none" data-result-refresh="$refresh" data-result-layer="$escapedLayer" data-result-suffix="$escapedSuffix">
+<form method="post" action="tiki-searchindex.php" class="search-box onload" style="display: none" data-result-refresh="$refresh" data-result-layer="$escapedLayer" data-result-suffix="$escapedSuffix" data-load-delay="$load_delay">
 	<p>$maxRecords$sort_mode$fieldList$filters<input type="submit" class="btn btn-default btn-sm" /></p>
 
 </form>

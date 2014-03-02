@@ -51,7 +51,7 @@
 			<div class="col-sm-12 fgallisting explorerDisplayed">
 		{/if}
 
-		<div style="{*overflow-x:auto;*} overflow-y:hidden;">
+		<div>
 			{if $maxRecords > 20 and $cant > $maxRecords}
 				<div class="clearboth" style="margin-bottom: 3px;">
 					{pagination_links cant=$cant step=$maxRecords offset=$offset}{/pagination_links}
@@ -101,7 +101,7 @@
 							{/if}
 							{if !isset($file_info)}
 								{if $offset}<input type="hidden" name="offset" value="{$offset}">{/if}
-								{if $tiki_p_admin_file_galleries eq 'y'}
+								{if $tiki_p_admin_file_galleries eq 'y' or $tiki_p_remove_files eq 'y'}
 									{icon _id='arrow_right' _tag='input_image' name='movesel' alt="{tr}Move{/tr}" title="{tr}Move Selected Files{/tr}" style='vertical-align: middle;'}
 								{/if}
 							{/if}
@@ -131,7 +131,8 @@
 								{tr}Move to:{/tr}
 								<select name="moveto">
 									{section name=ix loop=$all_galleries}
-										{if $all_galleries[ix].id ne $galleryId}
+										{if $all_galleries[ix].id ne $galleryId and $all_galleries[ix].perms.tiki_p_upload_files eq 'y' and
+													($all_galleries[ix].public eq 'y' or $all_galleries[ix].user eq $user)}
 											<option value="{$all_galleries[ix].id}">
 												{$all_galleries[ix].label|escape}
 											</option>

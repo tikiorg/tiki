@@ -71,25 +71,80 @@ $.fn.extend({
 		});
 	},
 	cartAjaxAdd: function() {
-		if (window.cartAjaxAdd) return this; //prevent multi calls
-		window.cartAjaxAdd = true;
-		
+
 		$(this).each(function() {
 			var form = $(this);
 			form.submit(function() {
-				var params = form.serialize();
-				
 				if (form.hasClass('hasMissingForm') && !form.attr('satisfied')) return false;
-				
-				$('div.box-cart').load('tiki-ajax_services.php?listonly=module&q=cart&' + params + ' div.box-cart > *', function(o){
+
+				$("div.box-cart").modal(" ");
+				var itemData = {}, params = form.data("params");
+				$.each(params, function (k, v) {
+					itemData["params~" + k] = v;
+				});
+
+				$("input[type!=submit]", form).each( function (k, el) {
+					itemData[$(el).attr("name")] = $(el).val();
+				});
+
+				$(document).trigger("cart.addtocart.start", [itemData]);
+
+				$.post($.service("payment", "addtocart"), itemData, function(data) {
+					if(data) {
+
+						$("div.box-cart").each(function () {
+							var $this = $(this);
+							$.get($.service("module", "execute"), {
+								module: "cart",
+								moduleId: $(this).attr("id").replace("module_", "")
+							}, function (html) {
+								$this.modal();
+								$this.replaceWith(html);
+								$(document).trigger("cart.addtocart.complete", [itemData]);
+							});
+						});
+					} else {
+						$("div.box-cart").modal();
+					}
 					if (window.formDialog) {
-						window.formDialog.dialog('destroy');
+						window.formDialog.dialog("destroy");
 						window.formDialog = null;
 					}
+				}, "json").error(function (jqxhr, error, type) {
+					$("div.box-cart").modal();
+					$(document).trigger("cart.addtocart.error", [itemData]);
 				});
 				
 				return false;
 			});
 		});
 	}
+});
+
+$(document).ready(function () {
+	$("form.mod-cart-item-form").on("submit", function () {
+		var data = {
+			module: "cart",
+			moduleId: $(this).parents("div.box-cart").attr("id").replace("module_", "")
+		};
+		var $form = $(this);
+		$form.modal(" ");
+		if (! $.trim(data.moduleId) || isNaN(data.moduleId)) {	// module in wikiplugin?
+			delete data.moduleId;	// get the params from the data on the form
+			var params = $(".mod-cart-checkout-form", $form.parent()).data("params");
+			$.each(params, function (k, v) {
+				data["params~" + k] = v;
+			});
+		}
+		$("input", $form).each(function (k, v) {
+			data[v['name']] = v['value'];
+		});
+		$.post($.service("module", "execute"), data, function (html) {
+			$form.modal();
+			$form.parents("div.box-cart").replaceWith(html);
+			$(document).trigger("cart.addtocart.complete");
+		}, "html");
+
+		return false;
+	});
 });

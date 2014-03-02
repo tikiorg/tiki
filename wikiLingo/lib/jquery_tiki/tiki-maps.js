@@ -174,74 +174,136 @@
 				OpenLayers.ImgPath = "lib/openlayers/theme/dark/";
 				var map = container.map = new OpenLayers.Map(id, {controls: []});
 				var layers = getBaseLayers();
+
+				// these functions attempt to retrieve values for the style attributes,
+				// falling back to others if not all options are specified
+				// e.g. if "select-fill-color" is not provided it will use "fill-color", or just "color" attributes
+
+				var getColor = function (feature, intent, type) {
+					return feature.attributes[intent + "-" + type + "-color"] ||
+						feature.attributes[intent + "-color"] ||
+						feature.attributes[type + "-color"] ||
+						feature.attributes["color"] ||
+						"#6699cc";
+				};
+
+				var getStyleAttribute = function (feature, intent, type, def) {
+					return feature.attributes[intent + "-" + type] ||
+						feature.attributes[type] ||
+						def;
+				}
+
 				container.defaultStyleMap = new OpenLayers.StyleMap({
 					"default": new OpenLayers.Style({
 						cursor: "pointer"
+					}, {
+						context: {
+							getFillColor: function (feature) {
+								return getColor(feature, "default", "fill");
+							},
+							getStrokeColor: function (feature) {
+								return getColor(feature, "default", "stroke");
+							},
+							getStrokeWidth: function (feature) {
+								return getStyleAttribute(feature, "default", "stroke-width", 3);
+							},
+							getStrokeDashstyle: function (feature) {
+								return getStyleAttribute(feature, "default", "stroke-dashstyle", "solid");
+							},
+							getPointRadius: function (feature) {
+								return getStyleAttribute(feature, "default", "point-radius", 5);
+							},
+							getFillOpacity: function (feature) {
+								return getStyleAttribute(feature, "default", "fill-opacity", 0.5);
+							},
+							getStrokeOpacity: function (feature) {
+								return getStyleAttribute(feature, "default", "stroke-opacity", 0.9);
+							}
+						}
 					}),
 					"select": new OpenLayers.Style({
 						cursor: "pointer"
+					}, {
+						context: {
+							getFillColor: function (feature) {
+								return getColor(feature, "select", "fill");
+							},
+							getStrokeColor: function (feature) {
+								return getColor(feature, "select", "stroke");
+							},
+							getStrokeWidth: function (feature) {
+								return getStyleAttribute(feature, "select", "stroke-width", 3);
+							},
+							getStrokeDashstyle: function (feature) {
+								return getStyleAttribute(feature, "select", "stroke-dashstyle", "solid");
+							},
+							getPointRadius: function (feature) {
+								return getStyleAttribute(feature, "select", "point-radius", 5);
+							},
+							getFillOpacity: function (feature) {
+								return getStyleAttribute(feature, "select", "fill-opacity", 0.9);
+							},
+							getStrokeOpacity: function (feature) {
+								return getStyleAttribute(feature, "select", "stroke-opacity", 0.9);
+							}
+						}
 					}),
 					"temporary": new OpenLayers.Style({ 	// highlighted features
 						cursor: "pointer"
+					}, {
+						context: {
+							getFillColor: function (feature) {
+								return getColor(feature, "temporary", "fill");
+							},
+							getStrokeColor: function (feature) {
+								return getColor(feature, "temporary", "stroke");
+							},
+							getStrokeWidth: function (feature) {
+								return getStyleAttribute(feature, "temporary", "stroke-width", 4);
+							},
+							getStrokeDashstyle: function (feature) {
+								return getStyleAttribute(feature, "temporary", "stroke-dashstyle", "solid");
+							},
+							getPointRadius: function (feature) {
+								return getStyleAttribute(feature, "temporary", "point-radius", 5);
+							},
+							getFillOpacity: function (feature) {
+								return getStyleAttribute(feature, "temporary", "fill-opacity", 0.3);
+							},
+							getStrokeOpacity: function (feature) {
+								return getStyleAttribute(feature, "temporary", "stroke-opacity", 0.9);
+							}
+						}
 					})
 				});
 
+				var markerStyle = {
+					externalGraphic: "${url}",
+					graphicWidth: "${width}",
+					graphicHeight: "${height}",
+					graphicXOffset: "${offsetx}",
+					graphicYOffset: "${offsety}",
+					graphicOpacity: 0.9
+				}, vectorStyle = {
+					fillColor: "${getFillColor}",
+					strokeColor: "${getStrokeColor}",
+					strokeDashstyle: "${getStrokeDashstyle}",
+					strokeWidth: "${getStrokeWidth}",
+					pointRadius: "${getPointRadius}",
+					fillOpacity: "${getFillOpacity}",
+					strokeOpacity: "${getStrokeOpacity}"
+				};
+
 				container.defaultStyleMap.addUniqueValueRules("default", "intent", {
-					"marker": {
-						externalGraphic: "${url}",
-						graphicWidth: "${width}",
-						graphicHeight: "${height}",
-						graphicXOffset: "${offsetx}",
-						graphicYOffset: "${offsety}",
-						graphicOpacity: 0.9
-					},
-					"vectors": {
-						fillColor: "${color}",
-						strokeColor: "${color}",
-						strokeDashstyle: 'solid',
-						strokeWidth: 3,
-						pointRadius: 5,
-						fillOpacity: 0.5
-					}
+					"marker": markerStyle, "vectors": vectorStyle
 				});
 
 				container.defaultStyleMap.addUniqueValueRules("select", "intent", {
-					"marker": {
-						externalGraphic: "${url}",
-						graphicWidth: "${width}",
-						graphicHeight: "${height}",
-						graphicXOffset: "${offsetx}",
-						graphicYOffset: "${offsety}",
-						graphicOpacity: 0.9,
-						graphicZIndex: 2
-					},
-					"vectors": {
-						fillColor: "${color}",
-						strokeColor: "${color}",
-						strokeDashstyle: 'longdashdot',
-						strokeWidth: 3,
-						pointRadius: 7,
-						fillOpacity: 0.6
-					}
+					"marker": markerStyle, "vectors": vectorStyle
 				});
 
 				container.defaultStyleMap.addUniqueValueRules("temporary", "intent", {
-					"marker": {
-						externalGraphic: "${url}",
-						graphicWidth: "${width}",
-						graphicHeight: "${height}",
-						graphicXOffset: "${offsetx}",
-						graphicYOffset: "${offsety}",
-						graphicOpacity: 1
-					},
-					"vectors": {
-						fillColor: "${color}",
-						strokeColor: "${color}",
-						strokeDashstyle: 'solid',
-						strokeWidth: 4,
-						pointRadius: 7,
-						fillOpacity: 0.3
-					}
+					"marker": markerStyle, "vectors": vectorStyle
 				});
 
 				container.layer = layers[0];
@@ -465,7 +527,7 @@
 							map.removePopup(container.tooltipPopup);
 							container.tooltipPopup = null;
 						}
-						if (feature.attributes.url === container.markerIcons.loadedMarker.default.url) {
+						if (feature.attributes.url === container.markerIcons.loadedMarker["default"].url) {
 							feature.attributes.url = container.markerIcons.loadedMarker.selection.url;
 							feature.layer.redraw();
 						}
@@ -507,7 +569,7 @@
 					},
 					onUnselect: function (feature) {
 						if (feature.attributes.url === container.markerIcons.loadedMarker.selection.url) {
-							feature.attributes.url = container.markerIcons.loadedMarker.default.url;
+							feature.attributes.url = container.markerIcons.loadedMarker["default"].url;
 							feature.layer.redraw();
 						}
 					}
@@ -589,11 +651,13 @@
 					if (name) {
 						if (! container.layers[name]) {
 							vectors = container.layers[name] = new OpenLayers.Layer.Vector(name, {
-								styleMap: container.defaultStyleMap
+								styleMap: container.defaultStyleMap,
+								rendererOptions: {zIndexing: true}
 							});
 
 							container.map.addLayer(vectors);
 							vectorLayerList.push(vectors);
+							container.map.setLayerZIndex(vectors, vectorLayerList.length * 1000);
 							setupLayerEvents(vectors);
 
 							if (selectControl.active) {
@@ -943,9 +1007,10 @@
 				searchboxes
 					.unbind('submit')
 					.submit(function () {
+						$(container).trigger("map.search.start");
 						var form = this;
 						$.post('tiki-searchindex.php?filter~geo_located=y', $(this).serialize(), function (data) {
-							var layer = $(form).data('result-layer'), suffix = $(form).data('result-suffix');
+							var layerName = $(form).data('result-layer'), suffix = $(form).data('result-suffix');
 
 							if (! form.autoLayers) {
 								form.autoLayers = [];
@@ -956,7 +1021,7 @@
 							});
 
 							$.each(data, function (k, i) {
-								var icon = $(i.link).data('icon-src'), layerName = layer;
+								var icon = $(i.link).data('icon-src');
 
 								if (! layerName) {
 									layerName = '';
@@ -981,11 +1046,12 @@
 										dataSource: i
 									});
 								} else if (i.geo_feature) {
-									var format = new OpenLayers.Format.GeoJSON
-										, wkt = new OpenLayers.Format.WKT
+									var  wkt = new OpenLayers.Format.WKT
 										, features
 										, layer = container.getLayer(layerName)
 										;
+
+									format = new OpenLayers.Format.GeoJSON;
 
 									try {
 										features = format.read(i.geo_feature);
@@ -1043,11 +1109,11 @@
 								} else if (i.geo_file) {	// load a file containing geometry, set using tracker Files indexGeometry option
 
 									var format,
-										layer = container.getLayer(layerName),
 										files = i.geo_file.split(","),
 										proj4326 = new OpenLayers.Projection("EPSG:4326"),
 										proj900913 = new OpenLayers.Projection("EPSG:900913");
 
+									layer = container.getLayer(layerName);
 
 									if (i.geo_file_format == "geojson") {
 										format = new OpenLayers.Format.GeoJSON;
@@ -1098,12 +1164,20 @@
 									}
 								}
 							});
-						}, 'json');
+						}, 'json').complete(function () {
+							$(container).trigger("map.search.stop");
+						});
 						return false;
 					})
 					.each(function () {
 						if ($(this).hasClass('onload')) {
-							$(this).submit();
+							var fm = this, layerLoadDelay = parseInt($(fm).data("load-delay"), 10);
+
+							if (layerLoadDelay) {
+								setTimeout(function () { $(fm).submit(); }, layerLoadDelay * 1000);
+							} else {
+								$(fm).submit();
+							}
 						}
 
 						var skip = false;

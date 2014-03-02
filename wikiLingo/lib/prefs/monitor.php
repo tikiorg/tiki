@@ -26,6 +26,16 @@ function prefs_monitor_list()
 			'type' => 'flag',
 			'default' => 'n',
 		),
+		'monitor_count_refresh_interval' => array(
+			'name' => tr('Notification count refresh interval'),
+			'description' => tr('Show unread notification count and refresh every [x] seconds.'),
+			'type' => 'text',
+			'filter' => 'int',
+			'default' => 0,
+			'shorthint' => tr('seconds'),
+			'size' => 5,
+			'hint' => tr('0 to disable, every refresh causes a hit on the server, try to leave this above 60 seconds.'),
+		),
 	);
 }
 

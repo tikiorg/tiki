@@ -32,6 +32,7 @@
 				<div class="adminoptionboxchild" id="monitor_enabled_childcontainer">
 
 					{preference name=monitor_individual_clear}
+					{preference name=monitor_count_refresh_interval}
 					{preference name=monitor_digest}
 					<div class="alert alert-warning">
 						<p>{tr}For the digest emails to be sent out, you will need to set-up a cron job.{/tr}</p>
@@ -68,6 +69,7 @@
 				{preference name=feature_group_transition}
 				{preference name=user_favorites}
 				{preference name=feature_invite}
+				{preference name=feature_wizard_user}
 			</div>
 		{/tab}
 		{tab name="{tr}Social Network{/tr}"}
@@ -124,6 +126,12 @@
 					});
 					{/jq}
 				</div>
+			</fieldset>
+
+			<fieldset>
+				<legend>{tr}Goal, Recognition and Rewards{/tr}</legend>
+				{preference name=goal_enabled}
+				{preference name=goal_badge_tracker}
 			</fieldset>
 		{/tab}
 		

@@ -39,6 +39,7 @@
                             {if $prefs.feature_layoutshadows eq 'y'}<div id="tiki-center-shadow">{eval var=$prefs.center_shadow_start}{/if}
 							    {error_report}
 					            {block name=title}{/block}
+								{block name=navigation}{/block}
 					            {block name=content}{/block}
                             {if $prefs.feature_layoutshadows eq 'y'}{eval var=$prefs.center_shadow_end}</div>{/if}
 				        </div>
@@ -47,16 +48,19 @@
                             {if $prefs.feature_layoutshadows eq 'y'}<div id="tiki-center-shadow">{eval var=$prefs.center_shadow_start}{/if}
 							    {error_report}
 					            {block name=title}{/block}
+								{block name=navigation}{/block}
 					            {block name=content}{/block}
                             {if $prefs.feature_layoutshadows eq 'y'}{eval var=$prefs.center_shadow_end}</div>{/if}
 				        </div>
 				        <div class="col-md-2">
 					        {modulelist zone=right}
+						</div>
 			        {elseif zone_is_empty('right')}
 				        <div class="col-md-10 col-md-push-2" id="col1">
                             {if $prefs.feature_layoutshadows eq 'y'}<div id="tiki-center-shadow">{eval var=$prefs.center_shadow_start}{/if}
 							    {error_report}
 					            {block name=title}{/block}
+								{block name=navigation}{/block}
 					            {block name=content}{/block}
                             {if $prefs.feature_layoutshadows eq 'y'}{eval var=$prefs.center_shadow_end}</div>{/if}
 				        </div>
@@ -68,6 +72,7 @@
                             {if $prefs.feature_layoutshadows eq 'y'}<div id="tiki-center-shadow">{eval var=$prefs.center_shadow_start}{/if}
 				    			{error_report}
 					            {block name=title}{/block}
+								{block name=navigation}{/block}
 					            {block name=content}{/block}
                             {if $prefs.feature_layoutshadows eq 'y'}{eval var=$prefs.center_shadow_end}</div>{/if}
     		            </div>
@@ -78,6 +83,7 @@
 	       		            {modulelist zone=right}
 			            </div>
 		            {/if}
+					</div>
 	            </div>
             </div>
             {if $prefs.feature_layoutshadows eq 'y'}<div id="footer-shadow">{eval var=$prefs.footer_shadow_start}{/if}

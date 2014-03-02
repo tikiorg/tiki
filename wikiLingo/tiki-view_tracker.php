@@ -233,6 +233,11 @@ foreach ($xfields['data'] as $i => $current_field) {
 	//exclude fields that should not be listed
 	if ($fieldIsVisible && ($current_field_ins['isTblVisible'] == 'y' or in_array($fid, $popupFields))) {
 		$listfields[$fid] = $current_field_ins;
+		if ($fieldIsEditable) {
+			$listfields[$fid]['editable'] = true;
+		} else {
+			$listfields[$fid]['editable'] = false;
+		}
 	}
 
 	if (! empty($current_field_ins)) {
@@ -242,11 +247,6 @@ foreach ($xfields['data'] as $i => $current_field) {
 		if ($fieldIsVisible) {
 			$fields['data'][$i] = $current_field_ins;
 		}
-	}
-	if ($fieldIsEditable) {
-		$listfields[$fid]['editable'] = true;
-	} else {
-		$listfields[$fid]['editable'] = false;
 	}
 }
 

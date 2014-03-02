@@ -65,7 +65,7 @@
 								{if $comment.can_edit}
 									<a class='btn btn-link btn-sm' href="{service controller=comment action=edit threadId=$comment.threadId}">{tr}Edit{/tr}</a>
 								{/if}
-								{if $prefs.wiki_comments_simple_ratings eq 'y'}
+								{if $prefs.wiki_comments_simple_ratings eq 'y' && $tiki_p_vote_comments eq 'y'}
 									<form class="commentRatingForm" method="post">
 										{rating type="comment" id=$comment.threadId}
 										<input type="hidden" name="id" value="{$comment.threadId}" />
@@ -83,6 +83,10 @@
 										});
 									{/jq}
 								{/if}
+								{if $prefs.wiki_comments_simple_ratings eq 'y' && ($tiki_p_ratings_view_results eq 'y' or $tiki_p_admin eq 'y')}
+									{rating_result type="comment" id=$comment.threadId}
+								{/if}
+
 							</div><!-- End of comment-footer -->
 						</div><!-- End of comment-item -->					
 						{if $comment.replies_info.numReplies gt 0}

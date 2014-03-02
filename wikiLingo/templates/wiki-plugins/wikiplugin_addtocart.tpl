@@ -1,5 +1,5 @@
 {* $Id$ *}
-<form method="post" action="{query _type=relative _keepall=y}" style="display: inline;" class="wp_addtocart_form">
+<form method="post" action="{query _type=relative _keepall=y}" style="display: inline;" class="wp_addtocart_form"{$form_data}>
 	<input type="hidden" name="code" value="{$params.code|escape}">
 	{if $onbehalf == 'y'}
 		{tr}Buy on behalf of:{/tr}
@@ -13,13 +13,6 @@
 	{/if}
 	
 	<table>
-		{if $gift_certificate_error}
-			<tr>
-				<th style="text-align: right;">{$gift_certificate_error}</th>
-				<td>{$gift_certificate}</td>
-			</tr>
-		{/if}
-		
 		{if $params.giftcertificate == 'y'}
 			<tr>
 				<th style="text-align: right;">{tr}Gift Certificate:{/tr}</th>
@@ -36,10 +29,13 @@
 		</tr>
 		{/if}
 	</table>
-	<input type="submit" class="btn btn-default" value="{$params.label|escape}">
+	<input type="submit" class="btn btn-default" value="{tr}{$params.label|escape}{/tr}">
 	{if $params.exchangeorderitemid}
 		<input type="hidden" value="{$params.exchangeorderitemid|escape}" name="exchangeorderitemid">
 		<input type="hidden" value="{$params.exchangetoproductid|escape}" name="exchangetoproductid">
+	{/if}
+	{if not empty($params.weight)}
+		<input type="hidden" value="{$params.weight|escape}" name="weight">
 	{/if}
 </form>
 

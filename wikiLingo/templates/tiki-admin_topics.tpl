@@ -19,6 +19,12 @@
 		</div>
 	</div>
     <div class="form-group">
+        <label class="col-sm-2 control-label" for="notificationemail">{tr}Notification Email{/tr}</label>
+        <div class="col-sm-10">
+			{tr}You will be able to add a notification email per article topic when you edit the topic after its creation{/tr}
+		</div>
+	</div>
+    <div class="form-group">
         <div class="col-sm-10 col-sm-offset-2">
 			<input type="submit" class="btn btn-default btn-sm" name="addtopic" value="{tr}Add{/tr}">
 	    </div>

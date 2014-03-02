@@ -32,7 +32,7 @@ class Tiki_Formula_Function_Attribute extends Math_Formula_Function
 
 		global $attributelib; require_once 'lib/attributes/attributelib.php';
 
-		if ( $type == 'wiki page' ) {
+		if ( $type == 'wiki page' && is_numeric($object) ) {
 			global $tikilib;
 			$object = $tikilib->get_page_name_from_id($object);
 		}

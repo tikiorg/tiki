@@ -137,6 +137,7 @@ function prefs_wiki_list($partial = false)
 		'wiki_cache' => array(
 			'name' => tra('Cache wiki pages (global)'),
 			'description' => tra('Enable page cache globally for wiki pages.'),
+			'warning' => tra("Wiki cache reduces server load but can cause some empty pages and other issues when using wiki plugins. Use only if you really need it, and it's perhaps better to use Individual wiki cache on only the pages that require it."),
 			'type' => 'list',
 			'options' => array(
 				0 => tra('no cache'),

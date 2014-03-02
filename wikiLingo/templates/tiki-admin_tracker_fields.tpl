@@ -1,17 +1,28 @@
 {* $Id$ *}
+{extends "layout_view.tpl"}
 
-{title help="Adding+fields+to+a+tracker" url="tiki-admin_tracker_fields.php?trackerId=$trackerId"}{tr}Admin Tracker:{/tr} {$tracker_info.name}{/title}
-{assign var='title' value="{tr}Admin Tracker:{/tr} "|cat:$tracker_info.name|escape}
-<div class="t_navbar">
-	{include file="tracker_actions.tpl"}
-</div>
+{block name="title"}
+	{title help="Adding+fields+to+a+tracker" url="tiki-admin_tracker_fields.php?trackerId=$trackerId"}{tr}Admin Tracker:{/tr} {$tracker_info.name}{/title}
+{/block}
 
+{block name="navigation"}
+	{assign var='title' value="{tr}Admin Tracker:{/tr} "|cat:$tracker_info.name|escape}
+	<div class="navbar">
+		{include file="tracker_actions.tpl"}
+	</div>
+{/block}
+
+{block name="content"}
 {tabset}
 	<a name="list"></a>
 	{tab name="{tr}Tracker fields{/tr}"}
-        <h2>{tr}Tracker fields{/tr}</h2>
-		<form class="save-fields" method="post" action="{service controller=tracker action=save_fields}">
-			<table id="fields" class="table normal">
+        <h2>{tr}Tracker fields{/tr}		</h2>
+		<form class="form add-field" method="post" action="{service controller=tracker action=add_field}" role="form">
+			<input type="hidden" name="trackerId" value="{$trackerId|escape}">
+			<button type="submit" class="btn btn-default">{glyph name="plus"} {tr}Add Field{/tr}</button>
+		</form>
+		<form class="form save-fields" method="post" action="{service controller=tracker action=save_fields}" role="form">
+			<table id="fields" class="table table-condensed table-hover">
 				<thead>
 					<tr>
 						<th>{select_all checkbox_names="fields[]"}</th>
@@ -29,22 +40,22 @@
 				<tbody>
 				</tbody>
 			</table>
-			<div>
-				<select name="action">
-					<option value="save_fields">{tr}Save All{/tr}</option>
-					<option value="remove_fields">{tr}Remove Selected{/tr}</option>
-					<option value="export_fields">{tr}Export Selected{/tr}</option>
-				</select>
-				<input type="submit" class="btn btn-default btn-sm" name="submit" value="{tr}Go{/tr}">
-				<input type="hidden" name="trackerId" value="{$trackerId|escape}">
-				<input type="hidden" name="confirm" value="0">
+			<div class="form-group">
+				<div class="input-group col-sm-6">
+					<select name="action" class="form-control">
+						<option value="save_fields">{tr}Save All{/tr}</option>
+						<option value="remove_fields">{tr}Remove Selected{/tr}</option>
+						<option value="export_fields">{tr}Export Selected{/tr}</option>
+					</select>
+					<span class="input-group-btn">
+						<input type="hidden" name="trackerId" value="{$trackerId|escape}">
+						<input type="hidden" name="confirm" value="0">
+						<button type="submit" class="btn btn-primary" name="submit">{tr}Go{/tr}</button>
+					</span>
+				</div>
 			</div>
 		</form>
-
-		<form class="add-field" method="post" action="{service controller=tracker action=add_field}">
-			<input type="hidden" name="trackerId" value="{$trackerId|escape}">
-			<input type="submit" class="btn btn-default btn-sm" value="{tr}Add Field{/tr}">
-		</form>
+		
 		{jq}
 			var trackerId = {{$trackerId|escape}};
 			$('.save-fields').submit(function () {
@@ -126,21 +137,24 @@
 	
 	{tab name="{tr}Import Tracker Fields{/tr}"}
         <h2>{tr}Import Tracker Fields{/tr}</h2>
-		<form class="simple import-fields" action="{service controller=tracker action=import_fields}" method="post">
-			<label>
-				{tr}Raw Fields{/tr}
-				<textarea name="raw" rows="30"></textarea>
-			</label>
-			
-			<label>
-				<input type="checkbox" name="preserve_ids" value="1">
-				{tr}Preserve Field IDs{/tr}
-			</label>
-
-			<div class="submit">
+		<form class="form simple import-fields" action="{service controller=tracker action=import_fields}" method="post" role="form">
+			<div class="form-group">
+				<label class="control-label">
+					{tr}Raw Fields{/tr}
+				</label>
+				<textarea class="form-control" name="raw" rows="30"></textarea>
+			</div>
+			<div class="form-group">
+				<label>
+					<input type="checkbox" name="preserve_ids" value="1">
+					{tr}Preserve Field IDs{/tr}
+				</label>
+			</div>
+			<div class="form-group submit">
 				<input type="hidden" name="trackerId" value="{$trackerId|escape}">
-				<input type="submit" class="btn btn-default btn-sm" value="{tr}Import{/tr}">
+				<input type="submit" class="btn btn-primary" value="{tr}Import{/tr}">
 			</div>
 		</form>
 	{/tab}
 {/tabset}
+{/block}

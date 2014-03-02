@@ -44,7 +44,7 @@ class Perms_Context
 
 	function activate($globalize = false)
 	{
-		global $user, $smarty;
+		global $user, $smarty, $globalperms;
 		$perms = Perms::getInstance();
 		$this->previousUser = $user;
 		$this->previousGroupList = $perms->getGroups();
@@ -62,10 +62,11 @@ class Perms_Context
 
 	function __destruct()
 	{
-		global $user;
+		global $user, $globalperms;
 		$user = $this->previousUser;
 
 		$perms = Perms::getInstance();
 		$perms->setGroups($this->previousGroupList);
+		$globalperms = Perms::get();
 	}
 }

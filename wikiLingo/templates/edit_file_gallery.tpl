@@ -103,12 +103,12 @@ $('#fgal_template').change( function() {
                             </div>
                     </div>
                     <div class="form-group">
-        			    <label for="public" class="col-sm-4 control-label">{tr}Gallery is public{/tr}.</label>
+        			    <label for="public" class="col-sm-4 control-label">{tr}Gallery is unlocked{/tr}.</label>
                         <div class="col-sm-8">
                             <div class="checkbox">
                                 <input type="checkbox" id="public" name="public" {if isset($gal_info.public) and $gal_info.public eq 'y'}checked="checked"{/if}>
                             </div>
-				        	<span class="help-block">{tr}Any user with permission (not only the gallery owner) can upload files{/tr}.</span>
+				        	<span class="help-block">{tr}Unless this option is checked the Gallery is locked and only the owner can upload - if it is checked other users with upload permission can add files to the gallery{/tr}.</span>
                         </div>
 				    </div>
 					{if $tiki_p_admin_file_galleries eq 'y' or $gal_info.type neq 'user'}

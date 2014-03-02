@@ -475,6 +475,8 @@ class ObjectLib extends TikiLib
 			case 'topic':
 				$meta=TikiLib::lib('art')->get_topic($id);
 				return $meta['name'];
+			case 'group':
+				return $id;
 		}
 
 		$title = $this->table('tiki_objects')->fetchOne(

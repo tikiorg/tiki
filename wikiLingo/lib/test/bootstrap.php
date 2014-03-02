@@ -6,6 +6,7 @@
 // $Id$
 
 define('TIKI_IN_TEST', 1);
+define('TIKI_PATH', realpath(__DIR__ . '/../../'));
 define('CUSTOM_ERROR_LEVEL', defined('E_DEPRECATED') ? E_ALL ^ E_DEPRECATED : E_ALL);
 
 ini_set('display_errors', 'on');

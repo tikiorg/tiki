@@ -79,6 +79,7 @@
 			        {/if}
 			    </div>
             </div>
+		</div>
                 <footer class="footer" id="footer">
                     <div class="footer_liner">
                         <div class="footerbgtrap container">

@@ -3,11 +3,15 @@
 {title help="Articles" admpage="articles"}{tr}Articles{/tr}{/title}
 
 <div class="t_navbar form-group">
-	{if $tiki_p_edit_article eq 'y'}
+	{if $tiki_p_edit_article eq 'y' or $tiki_p_admin eq 'y' or $tiki_p_admin_cms eq 'y'}
 		{button href="tiki-edit_article.php" class="btn btn-default" _text="{tr}New Article{/tr}"}
 	{/if}
-	{button href="tiki-view_articles.php" class="btn btn-default" _text="{tr}View Articles{/tr}"}
-
+	{if $prefs.feature_submissions == 'y' && $tiki_p_edit_submission == "y" && $tiki_p_edit_article neq 'y' && $tiki_p_admin neq 'y' && $tiki_p_admin_cms neq 'y'}
+		{button href="tiki-edit_submission.php" class="btn btn-default" _text="{tr}New Submission{/tr}"}
+	{/if}
+	{if $tiki_p_read_article eq 'y' or $tiki_p_articles_read_heading eq 'y' or $tiki_p_admin eq 'y' or $tiki_p_admin_cms eq 'y'}
+		{button href="tiki-view_articles.php" class="btn btn-default" _text="{tr}View Articles{/tr}"}
+	{/if}
 	{if $prefs.feature_submissions == 'y' && ($tiki_p_approve_submission == "y" || $tiki_p_remove_submission == "y" || $tiki_p_edit_submission == "y")}
 		{button href="tiki-list_submissions.php" class="btn btn-default" _text="{tr}View Submissions{/tr}"}
 	{/if}
@@ -76,6 +80,12 @@
 				{assign var=numbercol value=$numbercol+1}
 				<th style="text-align:right;">
 					{self_link _sort_arg='sort_mode' _sort_field='rating'}{tr}Rating{/tr}{/self_link}
+				</th>
+			{/if}
+			{if $prefs.art_list_usersRating eq 'y'}
+				{assign var=numbercol value=$numbercol+1}
+				<th style="text-align:right;">
+					{self_link _sort_arg='sort_mode' _sort_field='usersRating'}{tr}Users Rating{/tr}{/self_link}
 				</th>
 			{/if}
 			{if $prefs.art_list_reads eq 'y'}
@@ -147,6 +157,9 @@
 				{/if}
 				{if $prefs.art_list_rating eq 'y'}
 					<td class="integer">{$listpages[changes].rating}</td>
+				{/if}
+				{if $prefs.art_list_usersRating eq 'y'}
+					<td class="integer">{rating_result_avg id=$listpages[changes].articleId type=article}</td>
 				{/if}
 				{if $prefs.art_list_reads eq 'y'}
 					<td class="integer">{$listpages[changes].nbreads}</td>

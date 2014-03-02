@@ -28,14 +28,14 @@ class Table_Code_WidgetOptions extends Table_Code_Manager
 		$wo[] = 'stickyHeaders : \'tablesorter-stickyHeader\'';
 
 		//sort
-		if (parent::$sort) {
+		if (parent::$sorts) {
 			//row grouping
 			if (parent::$group) {
 				$wo[] = 'group_collapsible : true';
 				$wo[] = 'group_count : \' ({num})\'';
 			}
 			//saveSort
-			if (isset(parent::$s['sort']['type']) && strpos(parent::$s['sort']['type'], 'save') !== false) {
+			if (isset(parent::$s['sorts']['type']) && strpos(parent::$s['sorts']['type'], 'save') !== false) {
 				$wo[] = 'saveSort : true';
 			}
 		}
@@ -56,10 +56,11 @@ class Table_Code_WidgetOptions extends Table_Code_Manager
 				$wo[] = 'filter_reset : \'button#' . parent::$s['filters']['reset']['id'] . '\'';
 			}
 			//filter_functions and filter_formatter
-			if (isset(parent::$s['filters']['columns']) && is_array(parent::$s['filters']['columns'])) {
+			if (parent::$filtercol) {
 				$ffunc = '';
 				$fform = '';
-				foreach (parent::$s['filters']['columns'] as $col => $info) {
+				foreach (parent::$s['columns'] as $col => $info) {
+					$info = $info['filter'];
 					switch($info['type']) {
 						case 'dropdown' :
 							$o = '';

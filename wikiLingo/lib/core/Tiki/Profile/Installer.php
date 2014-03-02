@@ -140,6 +140,8 @@ class Tiki_Profile_Installer
 		'area_binding' => 'Tiki_Profile_InstallHandler_AreaBinding',
 		'activity_stream_rule' => 'Tiki_Profile_InstallHandler_ActivityStreamRule',
 		'activity_rule_set' => 'Tiki_Profile_InstallHandler_ActivityRuleSet',
+		'goal' => 'Tiki_Profile_InstallHandler_Goal',
+		'goal_set' => 'Tiki_Profile_InstallHandler_GoalSet',
 	);
 
 	private static $typeMap = array(

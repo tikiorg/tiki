@@ -49,6 +49,7 @@
 <div id="createbookform">
  <form action="tiki-accounting_books.php" method="post">
  	<input type="hidden" name="action" value="create">
+	 <input type="hidden" name="bookClosed" id="bookClosed" value="n">
  	<h1>{tr}Create a book{/tr}</h1>
 	<fieldset>
 		<legend>{tr}Book properties{/tr}</legend>
@@ -100,12 +101,12 @@
 		</select></div>
 	</fieldset>
 	<fieldset>
-		<legend>{tr}AutomTax{/tr}</legend>
+		<legend>{tr}Automatic Tax Calculation{/tr}</legend>
 		<div>
 			<div class="aclabel"><label class="aclabel">{tr}Allow automatic tax calculation{/tr}</label><br>&nbsp;</div>
 			<div>
-				<input type="radio" name="bookAutoTax" id="bookAutoTaxY"{if $bookAutoTax!='n'} checked="checked"{/if}>{tr}Yes{/tr}<br>
-				<input type="radio" name="bookAutoTax" id="bookAutoTaxN"{if $bookAutoTax=='n'} checked="checked"{/if}>{tr}No{/tr}<br>
+				<input type="radio" name="bookAutoTax" id="bookAutoTaxY"{if $bookAutoTax!='n'} checked="checked"{/if} value="y">{tr}Yes{/tr}<br>
+				<input type="radio" name="bookAutoTax" id="bookAutoTaxN"{if $bookAutoTax=='n'} checked="checked"{/if} value="n">{tr}No{/tr}<br>
 			</div>
 		</div>
 	</fieldset>

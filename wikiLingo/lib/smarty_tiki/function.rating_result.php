@@ -13,16 +13,25 @@ function smarty_function_rating_result( $params, $smarty )
 	$smiles = $ratinglib->get_options_smiles($params['type'], $params['id'], true);
 	$tableBody = "";
 
+	if ($prefs['rating_results_detailed'] == 'y') {
+
 	foreach ($votings as $vote => $voting) {
+		if ($prefs['rating_results_detailed_percent'] == 'y') {
+			$extra_info = '/' . $voting['percent'] . '%)';
+		} else {
+			$extra_info = ')';
+		}
 		$tableBody .= '<td style="width:' . $voting['percent'] . '%; text-align: center;">
 			<div class="ui-widget-content">' .
 				($prefs['rating_smileys'] == 'y' ? '<img src="' . $smiles[$vote]['img'] . '"/> ' : '<b>' . $vote . '</b> ') .
-				'( ' . $voting['votes'] . ' / ' . $voting['percent'] . '% )' .
+				'(' . $voting['votes'] . $extra_info .
 				($prefs['rating_smileys'] == 'y' ? '<div style="background-color: ' . $smiles[$vote]['color'] . ';">&nbsp;</div>' : '').
 			'</div>
 		</td>';
+		}
+	} else {
+		$tableBody = '';
 	}
 
 	return "<table class='ratingDeliberationResultTable' style='width:100%;'><tr>" . $tableBody . "</tr></table>";
 }
-

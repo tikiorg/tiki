@@ -16,7 +16,7 @@ class cssLib extends TikiLib
 	function list_layouts()
 	{
 		$available_layouts = array();
-		foreach (scandir('templates/layouts/') as $layoutName) {
+		foreach (scandir(TIKI_PATH . '/templates/layouts/') as $layoutName) {
 			if ($layoutName[0] != '.' && $layoutName != 'index.php') {
 				$available_layouts[$layoutName] = ucfirst($layoutName);
 			}   

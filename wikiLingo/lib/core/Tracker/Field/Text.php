@@ -240,8 +240,12 @@ class Tracker_Field_Text extends Tracker_Field_Abstract implements Tracker_Field
 		$baseKey = $this->getBaseKey();
 
 		if ($this->getConfiguration('isMultilingual') == 'y') {
-			$decoded = json_decode($value, true);
-			$value = implode("\n", $decoded);
+			if (!empty($value)) {
+				$decoded = json_decode($value, true);
+				$value = implode("\n", $decoded);
+			} else {
+				$decoded = array();
+			}
 
 			$data = array($baseKey => $typeFactory->$fieldType($value));
 			foreach ($decoded as $lang => $content) {

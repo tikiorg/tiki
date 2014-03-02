@@ -212,6 +212,11 @@ class Tiki_Profile_Writer
 	 */
 	function getReference($type, $id, array $parameters = array())
 	{
+		if (empty($id)) {
+			// Empty strings, id=0, ... not valid references skip
+			return $id;
+		}
+
 		// If we are provided with an anonymous function to handle special cases
 		if ($type instanceof Closure) {
 			return call_user_func($type, $this, $id, $parameters);
@@ -320,8 +325,27 @@ class Tiki_Profile_Writer
 	 */
 	function save()
 	{
-		file_put_contents($this->filePath, Horde_Yaml::dump($this->data));
+		file_put_contents($this->filePath, Horde_Yaml::dump($this->quoteArray($this->data)));
 		$this->externalWriter->apply();
+	}
+
+	/**
+	 * quote strings that may be problematic in YAML
+	 */
+	function quoteArray($arr)
+	{
+		array_walk_recursive($arr, 'Tiki_Profile_Writer::quoteString');
+		return ($arr);
+	}
+	function quoteString(&$data, $key)
+	{
+		if (strtolower($data) == 'yes' || strtolower($data) == 'no'
+			|| strpos($data, '{') !== false || strpos($data, '[') !== false
+		) {
+			if (strpos($data, '"') === false) {
+				$data = '"' . $data . '"';
+			}
+		}
 	}
 
 	/**

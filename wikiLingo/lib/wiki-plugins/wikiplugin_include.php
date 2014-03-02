@@ -48,6 +48,12 @@ function wikiplugin_include_info()
 				'description' => tra('Text to show when the page exists but is denied to the user.'),
 				'default' => '',
 			),
+			'page_edit_icon' => array(
+				'required' => false,
+				'name' => tra('Show the page edit icon'),
+				'description' => tra('y/n option to show the edit icon for the included page.'),
+				'default' => 'y',
+			),			
 		),
 	);
 }
@@ -59,7 +65,7 @@ function wikiplugin_include($dataIn, $params)
 
 	$killtoc = true;
 	$max_times = 5;
-	$params = array_merge(array( 'nopage_text' => '', 'pagedenied_text' => '' ), $params);
+	$params = array_merge(array( 'nopage_text' => '', 'pagedenied_text' => '', 'page_edit_icon' => 'y' ), $params);
 	extract($params, EXTR_SKIP);
 	if (!isset($page)) {
 		return ("<b>missing page for plugin INCLUDE</b><br />");
@@ -153,7 +159,8 @@ function wikiplugin_include($dataIn, $params)
 	$text = $parserlib->parse_data($text, $options);
 	$parserlib->setOptions($old_options);
 
-	// append an edit button
+	// append an edit button if page_edit_icon does not equal 'n'
+	if ($page_edit_icon != 'n') {
 	if (isset($perms) && $perms['tiki_p_edit'] === 'y' && strpos($_SERVER['PHP_SELF'], 'tiki-send_newsletters.php') === false) {
 		global $smarty;
 		$smarty->loadPlugin('smarty_block_ajax_href');
@@ -162,6 +169,7 @@ function wikiplugin_include($dataIn, $params)
 		$text .= '<a class="editplugin tips" '.	// ironically smarty_block_self_link doesn't work for this! ;)
 				smarty_block_ajax_href(array('template' => 'tiki-editpage.tpl'), 'tiki-editpage.php?page='.urlencode($page).'&returnto='.urlencode($GLOBALS['page']), $smarty, $tmp = false) . '>' .
 				smarty_function_icon(array( '_id' => 'page_edit', 'title' => $tip, 'class' => 'icon tips'), $smarty) . '</a>';
+	}
 	}
 	return $text;
 }

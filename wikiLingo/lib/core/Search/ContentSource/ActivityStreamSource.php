@@ -10,6 +10,7 @@ class Search_ContentSource_ActivityStreamSource implements Search_ContentSource_
 	private $lib;
 	private $sociallib;
 	private $relationlib;
+	private $tikilib;
 	private $source;
 
 	function __construct($source = null)
@@ -19,6 +20,7 @@ class Search_ContentSource_ActivityStreamSource implements Search_ContentSource_
 		$this->source = $source;
 		$this->sociallib = TikiLib::lib('social');
 		$this->relationlib = TikiLib::lib('relation');
+		$this->tikilib = TikiLib::lib('tiki');
 	}
 
 	function getDocuments()
@@ -80,7 +82,7 @@ class Search_ContentSource_ActivityStreamSource implements Search_ContentSource_
 	function getProvidedFields()
 	{
 		$mapping = $this->lib->getMapping();
-		return array_merge(array('event_type', 'modification_date', 'like_list', 'clear_list'), array_keys($mapping));
+		return array_merge(['event_type', 'modification_date', 'like_list', 'clear_list'], array_keys($mapping));
 	}
 
 	function getGlobalFields()

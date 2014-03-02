@@ -82,6 +82,7 @@
 				{preference name=wikiplugin_tag}
 				{preference name=wikiplugin_toc}
 				{preference name=wikiplugin_versions}
+				{preference name=wikiplugin_showpref}
 			</fieldset>			
 			
 			<fieldset>

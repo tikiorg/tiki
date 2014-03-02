@@ -46,5 +46,23 @@ class Math_Formula_TokenizerTest extends TikiTestCase
 		$tokenizer = new Math_Formula_Tokenizer;
 		$this->assertEquals(array('hello', '(', 'world', ')', 'foo-bar'), $tokenizer->getTokens('hello (world) foo-bar'));
 	}
+
+	function testQuotesAroundArguments()
+	{
+		$tokenizer = new Math_Formula_Tokenizer;
+		$this->assertEquals(array('hello', '(', 'world', '"test hello"', '"foo bar baz"', ')', 'foo-bar'), $tokenizer->getTokens('hello (world "test hello" "foo bar baz") foo-bar'));
+	}
+
+	function testUnterminatedString()
+	{
+		$tokenizer = new Math_Formula_Tokenizer;
+		$this->assertEquals(array('hello', '(', 'world', '"test hello) foo-bar'), $tokenizer->getTokens('hello (world "test hello) foo-bar'));
+	}
+
+	function testEndWithString()
+	{
+		$tokenizer = new Math_Formula_Tokenizer;
+		$this->assertEquals(array('hello', '(', 'world', '"(test hello)"'), $tokenizer->getTokens('hello (world "(test hello)"'));
+	}
 }
 

@@ -48,7 +48,7 @@ function getCookie($name, $section = null, $default = null)
 {
 	global $feature_no_cookie;
 
-	if ($feature_no_cookie || (empty($section) && isset($_SESSION['tiki_cookie_jar'][$name]))) {
+	if ($feature_no_cookie || (empty($section) && !isset($_COOKIE[$name]) && isset($_SESSION['tiki_cookie_jar'][$name]))) {
 		if (isset($_SESSION['tiki_cookie_jar'][$name])) {
 			return $_SESSION['tiki_cookie_jar'][$name];
 		} else {

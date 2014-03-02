@@ -200,9 +200,35 @@ include 'lib/setup/editmode.php';
 $auto_query_args = array('wysiwyg','page_id','page', 'returnto', 'lang', 'hdr');
 
 $smarty->assign('page', $page);
-// Permissions
+// Permissions - first is it a new page to be inserted into structure?
+if (isset($_REQUEST["current_page_id"]) && empty($info)) {
+	if (empty($_REQUEST['page'])) {
+		$smarty->assign('msg', tra("You must specify a page name, it will be created if it doesn't exist."));
+		$smarty->display("error.tpl");
+		die;
+	}
+
+	$structure_info = $structlib->s_get_structure_info($_REQUEST['current_page_id']);
+	if (($tiki_p_edit != 'y' && !$tikilib->user_has_perm_on_object($user, $structure_info["pageName"], 'wiki page', 'tiki_p_edit'))
+		||
+		(($tiki_p_edit_structures != 'y' &&
+			!$tikilib->user_has_perm_on_object($user, $structure_info["pageName"], 'wiki page', 'tiki_p_edit_structures')))) {
+		$smarty->assign('errortype', 401);
+		$smarty->assign('msg', tra("You do not have permission to edit this page."));
+		$smarty->display("error.tpl");
+		die;
+	}
+
+	$smarty->assign('current_page_id', $_REQUEST["current_page_id"]);
+	if (isset($_REQUEST["add_child"])) {
+		$smarty->assign('add_child', "true");
+	}
+} else {
+	$smarty->assign('current_page_id', 0);
+	$smarty->assign('add_child', false);
+}
 $tikilib->get_perm_object($page, 'wiki page', $info, true);
-if ($tiki_p_edit !== 'y') {
+if ($tiki_p_edit !== 'y' && !empty($info)) {
 	if (empty($user)) {
 		global $cachelib; include_once('lib/cache/cachelib.php');
 		$cacheName = $tikilib->get_ip_address().$tikilib->now;
@@ -230,33 +256,6 @@ if (isset($_REQUEST["page_ref_id"])) {
 }
 
 $smarty->assign('page_ref_id', $page_ref_id);
-//Is new page to be inserted into structure?
-if (isset($_REQUEST["current_page_id"])) {
-	if (empty($_REQUEST['page'])) {
-		$smarty->assign('msg', tra("You must specify a page name, it will be created if it doesn't exist."));
-		$smarty->display("error.tpl");
-		die;
-	}
-
-	$structure_info = $structlib->s_get_structure_info($_REQUEST['current_page_id']);
-	if (
-				($tiki_p_edit != 'y' && !$tikilib->user_has_perm_on_object($user, $structure_info["pageName"], 'wiki page', 'tiki_p_edit'))
-		|| (($tiki_p_edit_structures != 'y' && !$tikilib->user_has_perm_on_object($user, $structure_info["pageName"], 'wiki page', 'tiki_p_edit_structures')))
-	) {
-		$smarty->assign('errortype', 401);
-		$smarty->assign('msg', tra("You do not have permission to edit this page."));
-		$smarty->display("error.tpl");
-		die;
-	}
-
-	$smarty->assign('current_page_id', $_REQUEST["current_page_id"]);
-	if (isset($_REQUEST["add_child"])) {
-		$smarty->assign('add_child', "true");
-	}
-} else {
-	$smarty->assign('current_page_id', 0);
-	$smarty->assign('add_child', false);
-}
 
 /**
  * @param $a1

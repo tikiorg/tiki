@@ -697,7 +697,7 @@ class TrackerLib extends TikiLib
 		}
 	}
 
-	public function concat_item_from_fieldslist($trackerId,$itemId,$fieldsId,$status='o',$separator=' ',$list_mode='')
+	public function concat_item_from_fieldslist($trackerId,$itemId,$fieldsId,$status='o',$separator=' ',$list_mode='', $strip_tags = false)
 	{
 		$res='';
 		if (is_string($fieldsId)) {
@@ -714,10 +714,13 @@ class TrackerLib extends TikiLib
 			}
 			$res .= trim($this->field_render_value(array('field' => $myfield, 'process' => 'y', 'list_mode' => $list_mode)));
 		}
+		if ($strip_tags) {
+			$res = strip_tags($res);
+		}
 		return $res;
 	}
 
-	public function concat_all_items_from_fieldslist($trackerId,$fieldsId,$status='o',$separator=' ')
+	public function concat_all_items_from_fieldslist($trackerId,$fieldsId,$status='o',$separator=' ', $strip_tags = false)
 	{
 		if (is_string($fieldsId)) {
 			$fieldsId = preg_split('/\|/', $fieldsId, -1, PREG_SPLIT_NO_EMPTY);
@@ -737,7 +740,7 @@ class TrackerLib extends TikiLib
 					}
 					if ($is_trackerlink && $options['displayFieldsList']) {
 						// If $options[3] is empty, concat_item_from_fieldslist returns nothing
-						$value=$this->concat_item_from_fieldslist($options['trackerId'], $value, $options['displayFieldsList']);
+						$value=$this->concat_item_from_fieldslist($options['trackerId'], $value, $options['displayFieldsList'], $strip_tags);
 					}
 					if (!empty($res[$key])) {
 						$res[$key].=$separator.$value;
@@ -1016,9 +1019,9 @@ class TrackerLib extends TikiLib
 						';
 						break;
 					case 's':
-						if ($field['name'] == 'Rating' || $field['name'] == tra('Rating')) {
+//						if ($field['name'] == 'Rating' || $field['name'] == tra('Rating')) { // No need to have that string, isn't it? Admins can replace for a more suited string in their use case
 							$numsort = true;
-						}
+//						}
 						break;
 				}
 			} else {
@@ -3583,7 +3586,7 @@ class TrackerLib extends TikiLib
 	/* get the fields from the pretty tracker template
 	 * return a list of fieldIds
 	 */
-	public function get_pretty_fieldIds($resource, $type='wiki', &$outputPretty)
+	public function get_pretty_fieldIds($resource, $type='wiki', &$outputPretty, $trackerId = 0)
 	{
 		$tikilib = TikiLib::lib('tiki');
 		$smarty = TikiLib::lib('smarty');
@@ -3597,13 +3600,25 @@ class TrackerLib extends TikiLib
 			$f = file_get_contents($resource_name);
 		}
 		if (!empty($f)) {
-			preg_match_all('/\$f_([0-9]+)(\|output)?/', $f, $matches);
-			foreach ($matches[2] as $i => $val) {
-				if (!empty($val)) {
-					$outputPretty[] = $matches[1][$i];
+			preg_match_all('/\$f_(\w+)(\|output)?/', $f, $matches);
+			$ret = array();
+			foreach ($matches[1] as $i => $val) {
+				if (ctype_digit($val)) {
+					$ret[] = $val;
+				} elseif ($fieldId = $this->table('tiki_tracker_fields')->fetchOne('fieldId', array('permName' => $val))) {
+					$ret[] = $fieldId;
 				}
 			}
-			return $matches[1];
+			foreach ($matches[2] as $i => $val) {
+				if (!empty($val)) {
+					if (ctype_digit($val)) {
+						$outputPretty[] = $matches[1][$i];
+					} elseif ($fieldId = $this->table('tiki_tracker_fields')->fetchOne('fieldId', array('permName' => $matches[1][$i]))) {
+						$outputPretty[] = $fieldId;
+					}
+				}
+			}
+			return $ret;
 		}
 		return array();
 	}
@@ -3621,7 +3636,7 @@ class TrackerLib extends TikiLib
 			}
 		} else {
 			// array syntax for callback function needed for some versions of PHP (5.2.0?) - thanks to mariush on http://php.net/preg_replace_callback
-			$value = preg_replace_callback('/\{\$(f_\d+)\}/', array( &$this, '_pretty_tracker_replace_value'), $value);
+			$value = preg_replace_callback('/\{\$(f_\w+)\}/', array( &$this, '_pretty_tracker_replace_value'), $value);
 		}
 	}
 
@@ -4749,6 +4764,8 @@ class TrackerLib extends TikiLib
 			}
 
 			TikiLib::lib('smarty')->assign("f_$fieldId", $r);
+			$fieldPermName = $field['permName'];
+			TikiLib::lib('smarty')->assign("f_$fieldPermName", $r);
 			return $r;
 		}
 	}

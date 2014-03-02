@@ -1391,7 +1391,7 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_cms_emails' => array(
 			'name' => tra('Specify notification emails when creating articles'),
-            'description' => tra('should a notification email be sent when creating an Article?'),
+            'description' => tra('Should a notification email be sent when creating an Article? Remember that you can also predefine notification emails for article topics when you re-edit the topic after its creation'),
 			'type' => 'flag',
 			'default' => 'n',
 		),
@@ -1948,6 +1948,7 @@ function prefs_feature_list($partial = false)
 			'help' => 'JQuery#UI',
 			'type' => 'list',
 			'options' => array(
+				'none' => tra('None'),
 				'black-tie' => 'black-tie',
 				'blitzer' => 'blitzer',
 				'cupertino' => 'cupertino',
@@ -2894,5 +2895,31 @@ function prefs_feature_list($partial = false)
 			'type' => 'textarea',
 			'default' => 'n',
 		),
+		'feature_wizard_user' => array(
+			'name' => tra('User Wizard'),
+			'description' => tra('Wizard to help users to set up their basic settings and details'),
+			'help' => 'User+Wizard',
+			'type' => 'flag',
+			'default' => 'n',
+		),		
+		'feature_userWizardDifferentUsersFieldIds' => array(
+			'name' => tra('Ask different fields in the User Wizard than the ones in Registration'),
+			'description' => tra('Ask a different set of fields for the User Details section in the User Wizard than the ones shown in the Registration form'),
+			'help' => 'User+Wizard',
+			'type' => 'flag',
+			'default' => 'y',
+		),
+		'feature_userWizardUsersFieldIds' => array(
+			'name' => tra('Tracker Fields Asked in the User Wizard as User Details'),
+			'description' => tra('Users Information Tracker Fields Asked in the User Wizard as User Details (fieldIds separated with colon)'),
+			'help' => 'User+Wizard',
+			'type' => 'text',
+			'size' => '50',
+			'dependencies' => array(
+				'userTracker',
+				'feature_wizard_user',
+			),
+			'default' => '',
+		),						
 	);
 }

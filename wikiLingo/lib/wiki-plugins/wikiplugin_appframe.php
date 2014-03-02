@@ -442,11 +442,11 @@ function wikiplugin_appframe_mapcontrol($data, $params, $start)
 		$label = tr('Select/Modify');
 		break;
 	case 'draw_polygon':
-		$control = 'new OpenLayers.Control.DrawFeature(vlayer, OpenLayers.Handler.Polygon)';
+		$control = 'new OpenLayers.Control.DrawFeature(vlayer, OpenLayers.Handler.Polygon, {handlerOptions:{style:drawStyle}})';
 		$label = tr('Draw Polygon');
 		break;
 	case 'draw_path':
-		$control = 'new OpenLayers.Control.DrawFeature(vlayer, OpenLayers.Handler.Path)';
+		$control = 'new OpenLayers.Control.DrawFeature(vlayer, OpenLayers.Handler.Path, {handlerOptions:{style:drawStyle}})';
 		$label = tr('Draw Path');
 		break;
 	case 'reset_zoom':

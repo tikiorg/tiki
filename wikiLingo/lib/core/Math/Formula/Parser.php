@@ -49,7 +49,11 @@ class Math_Formula_Parser
 				}
 			}
 
-			$element->addChild($token);
+			if ( $token{0} === '"' ) {
+				$element->addChild(new Math_Formula_InternalString($token));
+			} else {
+				$element->addChild($token);
+			}
 		}
 
 		if ( $token != ')' ) {

@@ -141,7 +141,9 @@ function smarty_modifier_money_format($number, $local, $currency, $format = '%(#
 		}
 
 		$format = str_replace($fmatch[0], $value, $format);
-		$format = !empty($rightpad) ? $format .= '<span style="visibility:hidden">' . $rightpad . '</span>' : $format;
+		if (!empty($rightpad) && $display == 0) {
+			$format .= '<span style="visibility:hidden">' . $rightpad . '</span>';
+		}
 	}
 	return $format;
 }

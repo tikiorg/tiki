@@ -873,14 +873,14 @@ if ($s) {
 		'fitness' => tra('good'),
 		'setting' => 'Loaded',
 		'message' => tra('This extension is needed for many features such as:') . '<br>' .
-			tra('bigbluebutton, machine translation, SCORM & meta-data in file galleries, wiki importers, custom search, Kalura and others.')
+			tra('bigbluebutton, machine translation, SCORM & meta-data in file galleries, wiki importers, custom search, Kaltura and others.')
 	);
 } else {
 	$php_properties['dom'] = array(
 		'fitness' => tra('bad'),
 		'setting' => 'Not available',
 		'message' => tra('This extension is needed for many features such as:') . '<br>' .
-			tra('bigbluebutton, machine translation, SCORM & meta-data in file galleries, wiki importers, custom search, Kalura and others.')
+			tra('bigbluebutton, machine translation, SCORM & meta-data in file galleries, wiki importers, custom search, Kaltura and others.')
 	);
 }
 
@@ -1497,13 +1497,13 @@ if ($s == 1) {
 	$security['allow_url_fopen'] = array(
 		'setting' => 'Enabled',
 		'fitness' => tra('risky'),
-		'message' => tra('allow_url_fopen may potentially be used to upload remote data or scripts. '.$feature_blogs.'If you dont use the blog feature, you can switch it off.')
+		'message' => tra('allow_url_fopen may potentially be used to upload remote data or scripts. Also used by Composer to fetch dependencies. '.$feature_blogs.'If you dont use the blog feature, you can switch it off.')
 	);
 } else {
 	$security['allow_url_fopen'] = array(
 		'setting' => 'Disabled',
 		'fitness' => tra('safe'),
-		'message' => tra('allow_url_fopen may potentially be used to upload remote data or scripts. '.$feature_blogs.'If you dont use the blog feature, you can switch it off.')
+		'message' => tra('allow_url_fopen may potentially be used to upload remote data or scripts. Also used by Composer to fetch dependencies. '.$feature_blogs.'If you dont use the blog feature, you can switch it off.')
 	);
 }
 

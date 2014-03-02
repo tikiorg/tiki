@@ -199,7 +199,8 @@ class StructLib extends TikiLib
 		global $user;
 
 		if (!empty($data)) {
-			$structure_info = $this->s_get_structure_info($data[0]->structure_id);	// "root"
+			$parent_ref_id = $data[0]->structure_id;
+			$structure_info = $this->s_get_structure_info($parent_ref_id);	// "root"
 
 			if (TikiLib::lib('tiki')->user_has_perm_on_object($user, $structure_info['pageName'], 'wiki page', 'tiki_p_edit_structures')) {
 
@@ -215,7 +216,7 @@ class StructLib extends TikiLib
 						} else {
 							$orders[$node->depth]++;
 						}
-						$node->parent_id = $node->parent_id == 'root' || empty($node->parent_id) ? $structure_info['page_ref_id'] : $node->parent_id;
+						$node->parent_id = $node->parent_id == 'root' || empty($node->parent_id) ? $parent_ref_id : $node->parent_id;
 						$fields = array(
 							'parent_id' => $node->parent_id,
 							'pos' => $orders[$node->depth],
@@ -314,6 +315,11 @@ class StructLib extends TikiLib
 				$query = 'update `tiki_structures` set `structure_id`=? where `page_ref_id`=?';
 				$this->query($query, array($ret, $ret));
 			}
+
+			if ($prefs['feature_wiki_categorize_structure'] == 'y') {
+				$this->categorizeNewStructurePage($name, $this->s_get_structure_info($parent_id));
+			}
+
 			if ($prefs['feature_user_watches'] == 'y') {
 				include_once('lib/notifications/notificationemaillib.php');
 				sendStructureEmailNotification(array('action'=>'add', 'page_ref_id'=>$ret, 'name'=>$name));
@@ -321,6 +327,43 @@ class StructLib extends TikiLib
 		}
 		return $ret;
 	}
+
+	/**
+	 * Categorizes a (new) page the same as the parent structure
+	 * Called from s_create_page if feature_wiki_categorize_structure = y
+	 *
+	 * @param string $page				name of new page
+	 * @param array $structure_info		structure info
+	 */
+	public function categorizeNewStructurePage ($page, $structure_info) {
+		$categlib = TikiLib::lib('categ');
+
+		$cat_type = 'wiki page';
+		$cat_href = "tiki-index.php?page=" . urlencode($page);
+
+		$structObjectId = $categlib->is_categorized($cat_type, $structure_info["pageName"]);
+		if ($structObjectId) {
+			// structure is categorized
+			$pageObjectId = $categlib->is_categorized($cat_type, $page);
+			$structure_cats = $categlib->get_object_categories($cat_type, $structure_info["pageName"]);
+			if (!$pageObjectId) {
+				// added page is not categorized
+				$pageObjectId = $categlib->add_categorized_object($cat_type, $page, '', $page, $cat_href);
+				foreach ($structure_cats as $cat_acat) {
+					$categlib->categorize($pageObjectId, $cat_acat);
+				}
+			} else {
+				// added page is already categorized (somehow?)
+				$cats = $categlib->get_object_categories($cat_type, $page);
+				foreach ($structure_cats as $cat_acat) {
+					if (!in_array($cat_acat, $cats, true)) {
+						$categlib->categorize($pageObjectId, $cat_acat);
+					}
+				}
+			}
+		}
+	}
+
 	public function get_subtree($page_ref_id, $level = 0, $parent_pos = '')
 	{
 		global $tikilib;

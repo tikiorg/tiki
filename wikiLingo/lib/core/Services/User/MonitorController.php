@@ -10,9 +10,7 @@ class Services_User_MonitorController
 	function setUp()
 	{
 		Services_Exception_Disabled::check('monitor_enabled');
-		if (! $GLOBALS['user']) {
-			throw new Services_Exception_Denied(tr('Authentication required'));
-		}
+		Services_Exception_Denied::checkAuth();
 	}
 
 	function action_object($input)
@@ -135,11 +133,17 @@ class Services_User_MonitorController
 		$query->filterRange($lastread, 'now');
 		$query->filterMultivalue("NOT \"$user\"", 'clear_list');
 		$query->setOrder('modification_date_desc');
-		$query->setRange(0, 7);
+
+		if ($input->nodata->int()) {
+			$query->setRange(0, 1);
+		} else {
+			$query->setRange(0, 7);
+		}
 		$result = $query->search($searchlib->getIndex());
 
 		return [
 			'title' => tr('Unread Notifications'),
+			'count' => count($result),
 			'result' => $result,
 			'timestamp' => TikiLib::lib('tiki')->now,
 			'more_link' => $servicelib->getUrl([

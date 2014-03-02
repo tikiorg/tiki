@@ -177,6 +177,7 @@ function ajaxLoadingHide() {
 
 function ajaxSubmitEventHandler(successCallback) {
 	return function (e) {
+		e.preventDefault();
 		var form = this, act;
 		act = $(form).attr('action');
 
@@ -1121,13 +1122,24 @@ $.fn.tiki = function(func, type, options) {
 		case "chosen":
 			if (jqueryTiki.chosen) {
 				opts = { allow_single_deselect: true, search_contains: true };		// allow_single_deselect happens if first item is empty
+				$.map({		// translate the strings
+					placeholder_text_multiple: "Select Some Options",
+					placeholder_text_single: "Select an Option",
+					no_results_text: "No results match"
+				}, function (v, k) {
+					opts[k] = tr(v);
+				});
 				$.extend(opts, options);
 		 		return this.each(function() {
 					var opts2 = $.extend({}, opts);
 					if ($(this).is(":hidden") && !opts.width) {
 						// from https://github.com/harvesthq/chosen/pull/1580
 						var $hiddenElement = $(this).clone().appendTo("body");
-						opts2.width = $hiddenElement.outerWidth();
+						if ($(this).is('.form-control')) {
+							opts2.width = '100%';
+						} else {
+							opts2.width = $hiddenElement.outerWidth();
+						}
 						$hiddenElement.remove();
 					}
 
@@ -1668,7 +1680,7 @@ $.fn.tiki = function(func, type, options) {
 		if (action) {
 			return 'tiki-' + controller + '-' + action + append;
 		} else {
-			return 'tiki-' + controller + append;
+			return 'tiki-' + controller + '-x' + append;
 		}
 	};
 
@@ -1945,6 +1957,19 @@ $.fn.tiki = function(func, type, options) {
 
 				if (firstTime) {
 					$(input).after($select);
+
+					if ($(input).val()) {
+						$select.val($(input).val());
+					}
+
+					if ($(input).data('title') && ! $select.val()) {
+						$select.append(
+							$('<option/>')
+								.attr('value', $(input).val())
+								.text($(input).data('title'))
+						);
+						$select.val($(input).val());
+					}
 				}
 				$select.change(function () {
 					$(input).data('label', $select.find('option:selected').text());
@@ -2044,7 +2069,11 @@ $.fn.tiki = function(func, type, options) {
 	$.localStorage = {
 		store: function (key, value) {
 			if (window.localStorage) {
-				window.localStorage[key] = $.toJSON(value);
+				if (value) {
+					window.localStorage[key] = $.toJSON(value);
+				} else {
+					delete window.localStorage[key];
+				}
 			}
 		},
 		load: function (key, callback, fetch) {

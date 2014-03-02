@@ -84,14 +84,13 @@ function wikiplugin_box_info()
 				'name' => tra('CSS Class'),
 				'description' => tra('Apply custom CSS class to the box.'),
 			),
-                        'style' => array(
-                                'required' => false,
-                                'name' => tra('CSS Style'),
-                                'description' => tra('Enter CSS styling tags for the div type used.'),
-                                'filter' => 'text',
-//                              'advanced' => true,
-                                'default' => '',
-                        ),
+			'style' => array(
+					'required' => false,
+					'name' => tra('CSS Style'),
+					'description' => tra('Enter CSS styling tags for the div type used.'),
+					'filter' => 'text',
+					'default' => '',
+			),
 			'id' => array(
 				'required' => false,
 				'safe' => true,
@@ -105,7 +104,7 @@ function wikiplugin_box_info()
 
 function wikiplugin_box($data, $params)
 {
-	global $tikilib;
+//	global $tikilib;
 
 	// Remove first <ENTER> if exists...
 	// if (substr($data, 0, 2) == "\r\n") $data = substr($data, 2);
@@ -120,7 +119,7 @@ function wikiplugin_box($data, $params)
 	if (empty($float)) {
 	$begin = "<div class='panel panel-default$class' $id style='$bg;$f;margin:0;$w;$c;$style'>";
     } else {
-	$begin = "<div class='panel panel-default$class' $id style='$bg;$f;margin:1em;margin-$float:0;$w;$c;style'>";
+	$begin = "<div class='panel panel-default$class' $id style='$bg;$f;margin:1em;margin-$float:0;$w;$c;$style'>";
 	}
 
 	if (isset($title)) {

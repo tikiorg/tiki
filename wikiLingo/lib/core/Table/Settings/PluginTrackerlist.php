@@ -20,7 +20,7 @@ class Table_Settings_PluginTrackerlist extends Table_Settings_Abstract
 {
 	protected $ts = array(
 		'selflinks' => true,
-		'sort' => array(
+		'sorts' => array(
 			'multisort' => false,	//$trklib->list_items doesn't seem to support multisorts
 			'group' => true,
 		),

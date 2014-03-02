@@ -149,6 +149,8 @@ class StoredSearchLib
 
 	public function getPriorities()
 	{
+		global $prefs;
+
 		static $list;
 		if (! $list) {
 			$list = array(
@@ -161,21 +163,14 @@ class StoredSearchLib
 			);
 
 			$index = TikiLib::lib('unifiedsearch')->getIndex();
-			if ($index instanceof Search_Index_QueryRepository) {
-				$list = array_merge($list, array(
-					'moderate' => array(
-						'label' => tr('Moderate'),
-						'description' => tr('Results will be added to your watch-list.'),
-						'class' => 'label-warning',
-						'indexed' => true,
-					),
-					'high' => array(
-						'label' => tr('High'),
-						'description' => tr('You will receive an immediate notification every time a new result arrives.'),
-						'class' => 'label-danger',
-						'indexed' => true,
-					),
-				));
+			if ($prefs['monitor_enabled'] == 'y' && $index instanceof Search_Index_QueryRepository) {
+				$monitorlib = TikiLib::lib('monitor');
+				foreach ($monitorlib->getPriorities() as $priority => $info) {
+					if ($priority != 'none') {
+						$info['indexed'] = true;
+						$list[$priority] = $info;
+					}
+				}
 			}
 		}
 
@@ -251,37 +246,15 @@ class StoredSearchLib
 		return $indexed;
 	}
 
-	public function handleQueryHigh($args)
+	public function handleQueryNotification($args, $event)
 	{
 		if (! $query = $this->fetchQuery($args['query'])) {
 			return;
 		}
-		if (! $info = TikiLib::lib('user')->get_userid_info($query['userId'])) {
-			return;
-		}
 
-		include_once('lib/webmail/tikimaillib.php');
-		$mail = new TikiMail();
-		$mail->setUser($info['login']);
-		$mail->setSubject(tr('%0 - Match on %1', $args['document']['title'], $query['label']));
-		$mail->setText(tr("View the document:") . "\n" . TikiLib::tikiUrl($args['document']['url']));
-		$mail->send(array($info['email']));
-	}
+		$monitorlib = TikiLib::lib('monitor');
 
-	public function handleQueryModerate($args)
-	{
-		if (! $query = $this->fetchQuery($args['query'])) {
-			return;
-		}
-		if (! $info = TikiLib::lib('user')->get_userid_info($query['userId'])) {
-			return;
-		}
-
-		$relationlib = TikiLib::lib('relation');
-		$relationlib->add_relation('tiki.watchlist.contains', 'user', $info['login'], $args['document']['object_type'], $args['document']['object_id']);
-
-		$unifiedsearchlib = TikiLib::lib('unifiedsearch');
-		$unifiedsearchlib->invalidateObject($args['document']['object_type'], $args['document']['object_id']);
+		$monitorlib->directNotification($query['priority'], $query['userId'], $event, $args);
 	}
 }
 

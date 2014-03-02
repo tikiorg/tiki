@@ -68,6 +68,9 @@ function smarty_function_object_link( $params, $smarty )
 	case 'trackeritem':
 		$function = 'smarty_function_object_link_trackeritem';
 		break;
+	case 'group':
+		// Nowhere to link, at least, yet.
+		return $object;
 	default:
 		$function = 'smarty_function_object_link_default';
 		break;

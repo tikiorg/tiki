@@ -16,6 +16,9 @@
 			{if $show_expdate eq 'y' && $expireDate}{tr}Expires At:{/tr} {$expireDate|tiki_short_datetime} - {/if}
 			{if $show_reads eq 'y'}({$reads} {tr}Reads{/tr}){/if}
 		</span>
+		{if $comment_can_rate_article eq 'y' and $prefs.article_user_rating eq 'y' && ($tiki_p_ratings_view_results eq 'y' or $tiki_p_admin eq 'y')}
+			- <span class="ratingResultAvg">{tr}Users Rating: {/tr}</span>{rating_result_avg id=$articleId type=article}
+		{/if}
 	</header>
 
 	{if $use_ratings eq 'y'}
@@ -30,12 +33,15 @@
 			({$rating}/10)
 		</div>
 	{/if}
-	{if !isset($preview) and $prefs.article_user_rating eq 'y' && $tiki_p_rate_article eq 'y'}
+	{if $comment_can_rate_article eq 'y' and !isset($preview) and $prefs.article_user_rating eq 'y' && $tiki_p_rate_article eq 'y'}
 		<form method="post" action="">
 			{rating type=article id=$articleId}
 		</form>
 	{/if}
-
+	{if $comment_can_rate_article eq 'y' and $prefs.article_user_rating eq 'y' && ($tiki_p_ratings_view_results eq 'y' or $tiki_p_admin eq 'y')}
+		{rating_result id=$articleId type=article}
+	{/if}
+	
 	{if $prefs.art_trailer_pos ne 'between'}{include file='article_trailer.tpl'}{/if}
 
 	<div class="articleheading">

@@ -7,6 +7,93 @@
 
 class CartLib
 {
+	/**
+	 * Called when addtocart button clicked. Adds a quantity of a specified product to the cart
+	 *
+	 * @param array $product_info		wikiplugin_addtocart params
+	 * @param jitFilter $input			request input (POST)
+	 * @return bool						success
+	 */
+	function add_to_cart($product_info, $input)
+	{
+		global $prefs, $user, $globalperms;
+
+		$userlib = TikiLib::lib('user');
+		$cartlib = TikiLib::lib('cart');
+
+		$quantity = $input->quantity->int();
+
+		if ($quantity < 1) {
+			$this->handle_error(tra('Cart: No quantity specified.'));
+			return false;
+		}
+
+		if ( $input->code->text() !== $product_info['code'] ) {
+			$this->handle_error(tra('Cart: Product code mismatch.'));
+			return false;
+		}
+
+		if (!empty($params['exchangeorderitemid']) && !empty($params['exchangetoproductid'])) {
+			if ( $input->exchangeorderitemid->int() !== $params['exchangeorderitemid'] ||
+					$input->exchangetoproductid->int() !== $params['exchangetoproductid'] ) {
+
+				$this->handle_error(tra('Cart: Product exchange mismatch.'));
+				return false;
+			}
+		}
+
+		if ($input->gift_certificate->text() && !empty($product_info['giftcertificate']) && $product_info['giftcertificate'] === 'y') {
+			if (!$cartlib->add_gift_certificate($input->gift_certificate->text())) {
+				$this->handle_error(tra('Invalid gift certificate: %0', $input->gift_certificate->text()));
+				return false;
+			}
+		}
+
+		if ($prefs['payment_cart_anonymous'] === 'y' && (!$user || $product_info['forceanon'] == 'y') && empty($_SESSION['shopperinfo'])) {
+			// There needs to be a shopperinfo plugin on the page
+			$this->handle_error(tr('Please enter your shopper information first'));
+			return false;
+		}
+
+		if ($globalperms->payment_admin && $input->buyonbehalf->text() && $userlib->user_exists($input->buyonbehalf->text())) {
+			$product_info['onbehalf'] = $input->buyonbehalf->text();
+		} else {
+			$product_info['onbehalf'] = '';
+		}
+
+		// Generate behavior for exchanges
+		if (!empty($product_info['exchangeorderitemid']) && !empty($product_info['exchangetoproductid'])) {
+			$product_info['behaviors'][] = array(
+				'event' => 'complete',
+				'behavior' => 'cart_exchange_product',
+				'arguments' => array($product_info["exchangeorderitemid"], $product_info["exchangetoproductid"])
+			);
+			if (!isset($product_info['exchangeorderamount']) || !$product_info['exchangeorderamount']) {
+				$product_info['exchangeorderamount'] = 1;
+			}
+		}
+		// Generate behavior for gift certificate purchase
+		if (strtolower($product_info['producttype']) == 'gift certificate') {
+			if ($product_info['onbehalf']) {
+				$giftcert_email = $userlib->get_user_email($product_info['onbehalf']);
+			} elseif (!$user && !empty($_SESSION['shopperinfo']['email'])) {
+				$giftcert_email = $_SESSION['shopperinfo']['email'];
+			} elseif ($user) {
+				$giftcert_email = $userlib->get_user_email($user);
+			} else {
+				$this->handle_error(tra('No email found for gift certificate recipient'));
+				return false;
+			}
+			$product_info['behaviors'][] = array(
+				'event' => 'complete',
+				'behavior' => 'cart_gift_certificate_purchase',
+				'arguments' => array($product_info['code'], $giftcert_email)
+			);
+		}
+		// Now add product to cart
+		return $cartlib->add_product($product_info['code'], $quantity, $product_info);
+	}
+
 	//Used for putting new items in the cart, to modify an already existing item in the cart, use update_quantity
 	function add_product( $code, $quantity, $info, $parentCode = 0, $childInputedPrice = 0 )
 	{
@@ -34,6 +121,7 @@ class CartLib
 		$this->add_bundle($code, $quantity, $info);
 
 		$this->update_quantity($code, $current, $info);
+		return true;
 	}
 
 	function get_product_info( $code )
@@ -476,8 +564,7 @@ class CartLib
 			$total += $productTotal;
 		} else {
 			$this->remove_gift_certificate();
-			global $access;
-			$access->redirect($_SERVER['REQUEST_URI'], tra('Gift card is not valid for products in cart'));
+			$this->handle_error(tra('Gift card is not valid for products in cart'));
 		}
 
 		return $total;
@@ -620,6 +707,36 @@ class CartLib
 		return $wiki;
 	}
 
+	function get_total_weight()
+	{
+		$this->init_cart();
+
+		$total = 0;
+
+		foreach ( $_SESSION['cart'] as $info ) {
+			if (!empty($info['weight'])) {
+				$total += intval($info['quantity']) * floatval($info['weight']);
+			}
+		}
+
+		return $total;
+	}
+
+	function get_count()
+	{
+		$this->init_cart();
+
+		$total = 0;
+
+		foreach ( $_SESSION['cart'] as $info ) {
+			if (!empty($info['quantity'])) {
+				$total += intval($info['quantity']);
+			}
+		}
+
+		return $total;
+	}
+
 	function product_in_cart( $code )
 	{
 		return isset( $_SESSION['cart'][$code] );
@@ -639,7 +756,7 @@ class CartLib
 				}
 				global $access;
 
-				$access->redirect($_SERVER['REQUEST_URI'], tra('There is not enough inventory left for your request'));
+				$this->handle_error(tra('There is not enough inventory left for your request'));
 			}
 
 			if ($currentQuantity > 0) {
@@ -750,6 +867,7 @@ class CartLib
 			'time' => $tikilib->now,
 			'total' => $total,
 			'invoice' => $invoice,
+			'weight' => $this->get_total_weight(),
 		);
 		if (!$user || isset($_SESSION['forceanon']) && $_SESSION['forceanon'] == 'y') {
 			$orderprofile = Tiki_Profile::fromDb($prefs['payment_cart_anonorders_profile']);
@@ -759,6 +877,10 @@ class CartLib
 			$orderitemprofile = Tiki_Profile::fromDb($prefs['payment_cart_orderitems_profile']);
 		}
 		if ($user && $prefs['payment_cart_orders'] == 'y' || !$user && $prefs['payment_cart_anonymous'] == 'y') {
+			if (! $orderprofile) {
+				TikiLib::lib('errorreport')->report(tra('Advanced Shopping Cart setup error: Orders profile missing.'));
+				return false;
+			}
 			$profileinstaller = new Tiki_Profile_Installer();
 			$profileinstaller->forget($orderprofile); // profile can be installed multiple times
 			$profileinstaller->setUserData($userInput);
@@ -769,7 +891,7 @@ class CartLib
 		$record_profile_items_created = array();
 
 		if ($user && $prefs['payment_cart_orders'] == 'y' || !$user && $prefs['payment_cart_anonymous'] == 'y') {
-			$profileinstaller->install($orderprofile);
+			$profileinstaller->install($orderprofile, 'none');
 		}
 
 		$content = $this->get_content();
@@ -877,7 +999,7 @@ class CartLib
 		if ($user && $prefs['payment_cart_orders'] == 'y' || !$user && $prefs['payment_cart_anonymous'] == 'y') {
 			$profileinstaller->setUserData($userInput);
 			$profileinstaller->forget($orderitemprofile);
-			$profileinstaller->install($orderitemprofile);
+			$profileinstaller->install($orderitemprofile, 'none');
 		}
 
 		$this->change_inventory($info['code'], -1 * $info['quantity'], false);
@@ -1303,6 +1425,16 @@ class CartLib
 			$cost = $this->get_tracker_value_custom($prefs['payment_cart_orderitems_tracker_name'], 'Price paid', $orderItemId);
 		}
 		return $cost;
+	}
+
+	function handle_error($msg) {
+		$access = TikiLib::lib('access');
+
+		if ($access->is_xml_http_request()) {
+			throw new Services_Exception($msg);
+		} else {
+			$access->redirect($_SERVER['REQUEST_URI'], $msg);
+		}
 	}
 }
 

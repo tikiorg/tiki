@@ -38,7 +38,7 @@
 	</label>
 	{if $tiki_p_admin eq 'y'}
 		{remarksbox type=info title="{tr}More types available{/tr}"}
-			<p>{tr _0="tiki-admin.php?page=trackers"}More field types may be enabled from the <a href="%0">administration panel</a>.{/tr}</p>
+			<p>{tr _0="tiki-admin.php?page=trackers&cookietab=3"}More field types may be enabled from the <a href="%0">administration panel</a>.{/tr}</p>
 		{/remarksbox}
 	{else}
 		{remarksbox type=info title="{tr}More types available{/tr}"}

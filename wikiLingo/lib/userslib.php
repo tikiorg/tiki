@@ -5356,6 +5356,16 @@ class UsersLib extends TikiLib
 				'scope' => 'global',
 			),
 			array(
+				'name' => 'tiki_p_ratings_view_results',
+				'description' => tra('Can view results from user ratings'),
+				'level' => 'basic',
+				'type' => 'tiki',
+				'admin' => false,
+				'prefs' => array(),
+				'scope' => 'object',
+				'apply_to' => array('wiki', 'trackers', 'articles', 'comments', 'forums'),
+			),
+			array(
 				'name' => 'tiki_p_view_referer_stats',
 				'description' => tra('Can view referrer stats'),
 				'level' => 'editors',

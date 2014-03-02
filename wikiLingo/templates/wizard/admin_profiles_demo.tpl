@@ -11,7 +11,7 @@
 	<tr>
 	<td style="width:48%">
 	<div class="adminWizardIconright"><img src="img/icons/large/profile_bug_tracker48x48.png" alt="{tr}Bug Tracker{/tr}" /></div>
-	<b>{tr}Bug Tracker{/tr}</b> (<a href="tiki-admin.php?profile=Bug_Tracker&show_details_for=Bug_Tracker&categories%5B%5D=12.x&repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2" target="_blank">{tr}apply profile now{/tr}</a>)
+	<b>{tr}Bug Tracker{/tr}</b> (<a href="tiki-admin.php?profile=Bug_Tracker&show_details_for=Bug_Tracker&categories%5B%5D={$tikiMajorVersion}.x&repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2" target="_blank">{tr}apply profile now{/tr}</a>)
 	<br>
 	{tr}This profile allows you to see a tracker in action with some demo data, and a custom interface in a wiki page to add new items, as well as having them listed for you below.{/tr}
 	<ul>
@@ -26,7 +26,7 @@
 	</td>
 	<td style="width:48%">
 	<div class="adminWizardIconright"><img src="img/icons/large/profile_dynamic_items_list48x48.png" alt="{tr}Dynamic Items List{/tr}" /></div>
-	<b>{tr}Dynamic Items List{/tr}</b> (<a href="tiki-admin.php?profile=Dynamic_items_list_demo&show_details_for=Dynamic_items_list_demo&categories%5B%5D=12.x&repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2" target="_blank">{tr}apply profile now{/tr}</a>)<br/>
+	<b>{tr}Dynamic Items List{/tr}</b> (<a href="tiki-admin.php?profile=Dynamic_items_list_demo&show_details_for=Dynamic_items_list_demo&categories%5B%5D={$tikiMajorVersion}.x&repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2" target="_blank">{tr}apply profile now{/tr}</a>)<br/>
 	<br>
 	{tr}This profile creates two linked trackers. One that allow pre-selecting the items in a drop down list based on the items in a previous drop down field. And a second tracker that holds the options displayed in the drop down fields.{/tr}
 	<ul>
@@ -41,7 +41,7 @@
 	<tr>
 	<td style="width:48%">
 	<div class="adminWizardIconright"><img src="img/icons/large/profile_tracker_as_calendar48x48.png" alt="{tr}Tracker as Calendar{/tr}" /></div>
-	<b>{tr}Tracker as Calendar{/tr}</b>  (<a href="tiki-admin.php?profile=Tracker_as_Calendar_10&show_details_for=Tracker_as_Calendar_10&categories%5B%5D=12.x&repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2" target="_blank">{tr}apply profile now{/tr}</a>)
+	<b>{tr}Tracker as Calendar{/tr}</b>  (<a href="tiki-admin.php?profile=Tracker_as_Calendar_10&show_details_for=Tracker_as_Calendar_10&categories%5B%5D={$tikiMajorVersion}.x&repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2" target="_blank">{tr}apply profile now{/tr}</a>)
 	<br>
 	{tr}This profile creates a tracker with some demo data and wiki interface that will be used to display and manage a Calendar of events in a fancy visual way.{/tr} 
 	<ul>
@@ -57,7 +57,7 @@
 	</td>
 	<td style="width:48%">
 	<div class="adminWizardIconright"><img src="img/icons/large/profile_voting_system48x48.png" alt="{tr}Voting System{/tr}" /></div>
-	<b>{tr}Voting System{/tr}</b> (<a href="tiki-admin.php?profile=Voting_System&show_details_for=Voting_System&categories%5B%5D=12.x&repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2" target="_blank">{tr}apply profile now{/tr}</a>)
+	<b>{tr}Voting System{/tr}</b> (<a href="tiki-admin.php?profile=Voting_System&show_details_for=Voting_System&categories%5B%5D={$tikiMajorVersion}.x&repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2" target="_blank">{tr}apply profile now{/tr}</a>)
 	<br>
 	{tr}This profile sets up a Voting system in which only members of a group will be able to vote. It creates a tracker, 2 groups of users, one user in each group and a custom wiki page as interface to vote{/tr}. 
 	<ul>
@@ -71,7 +71,7 @@
 	</tr>
 	</table>
 	<br>
-	<em>{tr}See also{/tr} <a href="tiki-admin.php?page=profiles&alt=Profiles" target="_blank">{tr}Profiles admin panel{/tr}</a></em>
+	<em>{tr}See also{/tr} <a href="tiki-admin.php?page=profiles&amp;alt=Profiles" target="_blank">{tr}Profiles admin panel{/tr}</a></em>
 </fieldset>
 <br>
 </div>

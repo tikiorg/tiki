@@ -130,6 +130,10 @@ function tiki_setup_events()
 		$events->bind("tiki.wiki.save", 'tiki_wiki_save_pastlink');
 	}
 
+	if ($prefs['goal_enabled'] == 'y') {
+		TikiLib::lib('goalevent')->bindEvents($events);
+	}
+
 	$events->bind('tiki.save', $defer('tiki', 'object_post_save'));
 
 	if ($prefs['activity_basic_events'] == 'y') {
@@ -144,9 +148,8 @@ function tiki_setup_events()
 		}
 	}
 
-	if ($prefs['storedsearch_enabled'] == 'y') {
-		$events->bind('tiki.query.moderate', $defer('storedsearch', 'handleQueryModerate'));
-		$events->bind('tiki.query.high', $defer('storedsearch', 'handleQueryHigh'));
+	if ($prefs['storedsearch_enabled'] == 'y' && $prefs['monitor_enabled'] == 'y') {
+		$events->bind('tiki.query.hit', $defer('storedsearch', 'handleQueryNotification'));
 	}
 
 	if ($prefs['monitor_enabled'] == 'y') {
@@ -194,7 +197,9 @@ function tiki_setup_events()
 	$events->bind('tiki.social.relation.add', 'tiki.social.save');
 	$events->bind('tiki.social.relation.remove', 'tiki.social.save');
 
+	$events->bind('tiki.query.critical', 'tiki.query.hit');
 	$events->bind('tiki.query.high', 'tiki.query.hit');
+	$events->bind('tiki.query.low', 'tiki.query.hit');
 
 	if (function_exists('fastcgi_finish_request')) {
 		// If available, try to send everything to the user at this point

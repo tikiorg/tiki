@@ -54,7 +54,9 @@ class Math_Formula_Runner
 
 	function evaluateData( $data, array $variables = array() )
 	{
-		if ( $data instanceof Math_Formula_Element ) {
+		if ( $data instanceof Math_Formula_InternalString) {
+			return $data->getContent();
+		} elseif ( $data instanceof Math_Formula_Element ) {
 			$op = $this->getOperation($data);
 			
 			$current = $this->variables;

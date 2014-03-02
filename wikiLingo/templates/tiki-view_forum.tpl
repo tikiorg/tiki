@@ -455,6 +455,14 @@
 			{if $forum_info.topics_list_reads eq 'y'}
 				<th>{self_link _sort_arg='thread_sort_mode' _sort_field='hits'}{tr}Reads{/tr}{/self_link}</th>
 			{/if}
+			{if $forum_info.vote_threads eq 'y' and ($tiki_p_ratings_view_results eq 'y' or $tiki_p_admin eq 'y')}
+				<th>{tr}Rating <br/>(avg/max){/tr}</th>
+				{if $prefs.rating_results_detailed eq 'y' and $prefs.rating_results_detailed_percent eq 'n'}
+					<th>{tr}Detailed results <br/>(counts){/tr}</th>
+				{elseif $prefs.rating_results_detailed eq 'y' and $prefs.rating_results_detailed_percent eq 'y'}
+					<th>{tr}Detailed results <br/>(counts/%){/tr}</th>
+				{/if}
+			{/if}
 			{if $forum_info.topics_list_pts eq 'y'}
 				<th>{self_link _sort_arg='thread_sort_mode' _sort_field='average'}{tr}pts{/tr}{/self_link}</th>
 			{/if}
@@ -539,6 +547,12 @@
 				{/if}
 				{if $forum_info.topics_list_reads eq 'y'}
 					<td class="integer">{$comments_coms[ix].hits}</td>
+				{/if}
+				{if $forum_info.vote_threads eq 'y' and ($tiki_p_ratings_view_results eq 'y' or $tiki_p_admin eq 'y')}
+					<td class="integer">{rating_result_avg type=comment id=$comments_coms[ix].threadId }&nbsp;&nbsp;&nbsp;</td>
+					{if $prefs.rating_results_detailed eq 'y'}
+						<td class="text">{rating_result type=comment id=$comments_coms[ix].threadId }</td>
+					{/if}
 				{/if}
 				{if $forum_info.topics_list_pts eq 'y'}
 					<td class="integer">{$comments_coms[ix].average|string_format:"%.2f"}</td>

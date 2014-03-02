@@ -35,6 +35,10 @@ function smarty_function_error_report($params, $smarty)
 				$("ul", "#error_report").append($(error).find("li"));
 			}
 		}
+		$("#error_report .clear").on("click", function () {
+			$("#error_report").empty();
+			return false;
+		});
 	});
 	$("#error_report .clear").on("click", function () {
 		$("#error_report").empty();

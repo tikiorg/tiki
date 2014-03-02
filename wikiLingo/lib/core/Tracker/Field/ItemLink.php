@@ -477,7 +477,7 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 
 
 		if (count($parts)) {
-			return $trklib->concat_item_from_fieldslist($trackerId, $itemId, $parts, $status, ' ', $context['list_mode']); 
+			return $trklib->concat_item_from_fieldslist($trackerId, $itemId, $parts, $status, ' ', $context['list_mode'], $this->getOption('linkToItem'));
 		} else {
 			return TikiLib::lib('object')->get_title('trackeritem', $itemId);
 		}
@@ -489,7 +489,8 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 			$list = TikiLib::lib('trk')->concat_all_items_from_fieldslist(
 				$this->getOption('trackerId'),
 				$displayFieldsList,
-				$this->getOption('status', 'opc')
+				$this->getOption('status', 'opc'),
+				true
 			);
 		} else {
 			$list = TikiLib::lib('trk')->get_all_items(

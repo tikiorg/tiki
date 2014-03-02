@@ -41,6 +41,6 @@ lang = {
 "Change Highlighter" : "שינוי כלי הדגשה",
 "Toggle Highlighter" : "החלף מצב כלי הדגשה",
 "Are you sure you want to unassign this module?" : "האם אתה בטוח שאתה רוצה לבטל את הקצאת מודול זה?",
-"Select an Option" => "בחר אפשרות"
+"Select an Option" : "בחר אפשרות"
 	// remember the IE does not support ending comma on last item
 };

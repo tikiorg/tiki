@@ -45,13 +45,7 @@ class Search_Query_WikiBuilder
 			$name = $match->getName();
 			$arguments = $argumentParser->parse($match->getArguments());
 
-			foreach ($arguments as $key => $value) {
-				$function = "wpquery_{$name}_{$key}";
-
-				if (method_exists($this, $function)) {
-					call_user_func(array($this, $function), $this->query, $value, $arguments);
-				}
-			}
+			$this->addQueryArgument($name, $arguments);
 		}
 
 		$offsetArg = $this->paginationArguments['offset_arg'];
@@ -60,6 +54,17 @@ class Search_Query_WikiBuilder
 			$this->query->setRange($_REQUEST[$offsetArg], $maxRecords * $this->boost);
 		} else {
 			$this->query->setRange(0, $maxRecords * $this->boost);
+		}
+	}
+
+	function addQueryArgument($name, $arguments)
+	{
+		foreach ($arguments as $key => $value) {
+			$function = "wpquery_{$name}_{$key}";
+
+			if (method_exists($this, $function)) {
+				call_user_func(array($this, $function), $this->query, $value, $arguments);
+			}
 		}
 	}
 

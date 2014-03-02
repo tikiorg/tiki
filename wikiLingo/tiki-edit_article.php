@@ -59,6 +59,18 @@ if (isset($_REQUEST['cancel_edit'])) {
 	die;
 }
 
+if (!empty($_REQUEST['topicId'])) {
+	$topicId = $_REQUEST['topicId'];
+} else {
+	$topicId = '';
+}
+
+if (!empty($_REQUEST['type'])) {
+	$type = $_REQUEST['type'];
+} else {
+	$type = '';
+}
+
 // We need separate numbering of previews, since we access preview images by this number
 if (isset($_REQUEST['previewId'])) {
 	$previewId = $_REQUEST['previewId'];
@@ -107,7 +119,8 @@ $smarty->assign('image_caption', '');
 $smarty->assign('lang', $prefs['language']);
 $authorName = $tikilib->get_user_preference($user, 'realName', $user);
 $smarty->assign('authorName', $authorName);
-$smarty->assign('topicId', '');
+$smarty->assign('topicId', $topicId);
+$smarty->assign('type', $type);
 $smarty->assign('useImage', 'n');
 $smarty->assign('isfloat', 'n');
 $hasImage = 'n';
@@ -387,9 +400,33 @@ if (isset($_REQUEST['preview']) or !empty($errors)) {
 	$smarty->assign('edit_data', 'y');
 
 	if (isset($_REQUEST['allowhtml']) && $_REQUEST['allowhtml'] == 'on') {
-		$body = $jitRequest->body->purifier();
+		$body = $_REQUEST['body'];
+		$parserlib = TikiLib::lib('parser');
+		$noparsed = array();
+		$parserlib->plugins_remove($body, $noparsed);
 
-		$heading = $jitRequest->heading->purifier();
+		$body = TikiFilter::get('xss')->filter($body);
+
+		$parserlib->isEditMode = true;
+		$parserlib->plugins_replace($body, $noparsed, true);
+		$parserlib->isEditMode = false;
+
+		$heading = $_REQUEST['heading'];
+		$noparsed = array();
+		$parserlib->plugins_remove($heading, $noparsed);
+
+		$heading = TikiFilter::get('xss')->filter($heading);
+
+		$parserlib->isEditMode = true;
+		$parserlib->plugins_replace($heading, $noparsed, true);
+		$parserlib->isEditMode = false;
+
+		//html is stored encoded in wysiwyg
+		if (isset($jitRequest['wysiwyg']) && $jitRequest['wysiwyg'] == 'y') {
+			$body = html_entity_decode($body, ENT_QUOTES, 'UTF-8');
+			$heading = html_entity_decode($heading, ENT_QUOTES, 'UTF-8');
+		}
+
 	} else {
 		$body = strip_tags($_REQUEST['body'], '<a><pre><p><img><hr><b><i>');
 
@@ -447,9 +484,33 @@ if (isset($_REQUEST['save']) && empty($errors)) {
 	}
 
 	if (isset($_REQUEST['allowhtml']) && $_REQUEST['allowhtml'] == 'on' || $_SESSION['wysiwyg'] == 'y') {
-		$body = $jitRequest->body->purifier();
+		$body = $_REQUEST['body'];
+		$parserlib = TikiLib::lib('parser');
+		$noparsed = array();
+		$parserlib->plugins_remove($body, $noparsed);
 
-		$heading = $jitRequest->heading->purifier();
+		$body = TikiFilter::get('xss')->filter($body);
+
+		$parserlib->isEditMode = true;
+		$parserlib->plugins_replace($body, $noparsed, true);
+		$parserlib->isEditMode = false;
+
+		$heading = $_REQUEST['heading'];
+		$noparsed = array();
+		$parserlib->plugins_remove($heading, $noparsed);
+
+		$heading = TikiFilter::get('xss')->filter($heading);
+
+		$parserlib->isEditMode = true;
+		$parserlib->plugins_replace($heading, $noparsed, true);
+		$parserlib->isEditMode = false;
+
+		//html is stored encoded in wysiwyg
+		if (isset($jitRequest['wysiwyg']) && $jitRequest['wysiwyg'] == 'y') {
+			$body = html_entity_decode($body, ENT_QUOTES, 'UTF-8');
+			$heading = html_entity_decode($heading, ENT_QUOTES, 'UTF-8');
+		}
+
 	} else {
 		$body = strip_tags($_REQUEST['body'], '<a><pre><p><img><hr><b><i>');
 
@@ -633,7 +694,8 @@ $_SESSION['thedate'] = $tikilib->now;
 
 // get list of valid types
 $types = $artlib->list_types_byname();
-if (empty($article_data)) {
+
+if (empty($article_data) && empty($_REQUEST['type'])) {
 	// Select the first type as default selection
 	if (empty($types)) {
 		$type = '';

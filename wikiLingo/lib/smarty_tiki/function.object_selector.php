@@ -29,32 +29,43 @@ function smarty_function_object_selector( $params, $smarty )
 {
 	static $uniqid = 0;
 
+	$arguments = [
+		'name' => null,
+		'class' => null,
+		'id' => null,
+		'value' => null,
+		'filter' => [],
+		'title' => null,
+	];
+
 	// Handle reserved parameters
 	foreach (array('name', 'class', 'id', 'value', 'filter') as $var) {
-		$$var = '';
 		if (isset($params["_$var"])) {
-			$$var = $params["_$var"];
+			$arguments[$var] = $params["_$var"];
 		}
 		unset($params["_$var"]);
 	}
 
-	if (empty($id)) {
-		$id = 'object_selector_' . ++$uniqid;
+	if (empty($arguments['id'])) {
+		$arguments['id'] = 'object_selector_' . ++$uniqid;
 	}
 
-	if ($filter) {
-		$params = array_merge($filter, $params);
+	if ($arguments['filter']) {
+		$arguments['filter'] = array_merge($arguments['filter'], $params);
+	} else {
+		$arguments['filter'] = $params;
+	}
+
+	$arguments['filter'] = json_encode($arguments['filter']);
+
+	if ($arguments['value']) {
+		list($type, $object) = explode(':', $arguments['value'], 2);
+		$arguments['title'] = TikiLib::lib('object')->get_title($type, $object);
 	}
 
 	$smarty->assign(
 		'object_selector',
-		array(
-			'filter' => json_encode($params),
-			'id' => $id,
-			'name' => $name,
-			'class' => $class,
-			'value' => $value,
-		)
+		$arguments
 	);
 
 	return $smarty->fetch('object_selector.tpl');

@@ -30,6 +30,10 @@ class TikiFilter
 			return new Zend_Filter_Digits;
 		case 'int':
 			return new Zend_Filter_Int;
+		case 'isodate':
+			return new TikiFilter_IsoDate;
+		case 'isodatetime':
+			return new TikiFilter_IsoDate('Y-m-d H:i:s');
 		case 'username':
 		case 'groupname':
 		case 'pagename':

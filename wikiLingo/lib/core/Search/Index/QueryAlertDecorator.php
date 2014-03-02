@@ -17,7 +17,10 @@ class Search_Index_QueryAlertDecorator extends Search_Index_AbstractIndexDecorat
 				list($priority, $id) = explode('-', $match, 2);
 				TikiLib::events()->trigger('tiki.query.' . $priority, array(
 					'query' => $id,
-					'document' => $raw,
+					'priority' => $priority,
+					'user' => $GLOBALS['user'],
+					'type' => $raw['object_type'],
+					'object' => $raw['object_id'],
 				));
 			}
 		}

@@ -79,6 +79,7 @@
 			        {/if}
 			    </div>
             </div>
+		</div>
                 <footer class="footer" id="footer">
                     <div class="footer_liner">
                         <div class="footerbgtrap container">
@@ -90,7 +91,6 @@
                         </div>
 			        </div>
 		        </footer>
-
 		{include file='footer.tpl'}
 	</body>
 </html>

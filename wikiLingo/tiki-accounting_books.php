@@ -33,13 +33,13 @@ switch ($_REQUEST['action']) {
 			die;
 		}
 					$bookId=$accountinglib->createBook(
-						$_REQUEST['bookName'],
+						$_REQUEST['bookName'], 'n',
 						$_REQUEST['bookStartDate'], $_REQUEST['bookEndDate'],
 						$_REQUEST['bookCurrency'], $_REQUEST['bookCurrencyPos'],
 						$_REQUEST['bookDecimals'], $_REQUEST['bookDecPoint'],
 						$_REQUEST['bookThousand'], $_REQUEST['exportSeparator'],
 						$_REQUEST['exportEOL'], $_REQUEST['exportQuote'],
-						$_REQUEST['bookAutoTax'], false
+						$_REQUEST['bookAutoTax']
 					);
 					if (!is_numeric($bookId)) {
 						$errors[]=tra($bookId);

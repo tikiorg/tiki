@@ -76,7 +76,7 @@ function wikiplugin_addtocart_info()
 			'label' => array(
 				'required' => false,
 				'name' => tra('Button label'),
-				'description' => tra('Text for the submit button. default: "Add to cart"'),
+				'description' => tra('Text for the submit button. default:') . ' ' . '"' . tra('Add to cart') . '"',
 				'filter' => 'text',
 				'default' => 'Add to cart',
 			),
@@ -161,23 +161,30 @@ function wikiplugin_addtocart_info()
 					array('text' => tra('No'), 'value' => 'n')
 				),
 			),
+			'weight' => array(
+				'required' => false,
+				'name' => tra('Weight'),
+				'description' => tra('The weight of the item.'),
+				'filter' => 'text',
+				'default' => '',
+			),
 		),
 	);
 }
 
 function wikiplugin_addtocart( $data, $params )
 {
-	global $cartlib, $prefs, $cartuserlist, $globalperms;
-	require_once 'lib/payment/cartlib.php';
+	global $cartuserlist, $globalperms;
 
 	$smarty = TikiLib::lib('smarty');
 	$userlib = TikiLib::lib('user');
 	$headerlib = TikiLib::lib('header');
+	$cartlib = TikiLib::lib('cart');
 
 	$headerlib->add_jsfile('lib/payment/cartlib.js');
 
 	if ( ! session_id() ) {
-		return WikiParser_PluginOutput::internalError(tra('A session must be active to use the cart.'));
+		session_start();
 	}
 	if ( ! isset( $params['code'], $params['description'], $params['price'] ) ) {
 		return WikiParser_PluginOutput::argumentError(array_diff(array( 'code', 'description', 'price'), array_keys($params)));
@@ -233,83 +240,23 @@ function wikiplugin_addtocart( $data, $params )
 
 	if ( $params['ajaxaddtocart'] == 'y' ) {
 		$headerlib->add_jq_onready("$('.wp_addtocart_form').cartAjaxAdd();");
+		$smarty->assign('form_data', ' data-params=\'' . json_encode(array_filter($params)) . '\'');
+	} else {
+		$smarty->assign('form_data', '');
 	}
 
 	if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
-		global $jitPost, $access, $user;
-		if (!empty($params['exchangeorderitemid']) && !empty($params['exchangetoproductid'])) {
-			if ( $jitPost->exchangeorderitemid->int() == $params['exchangeorderitemid'] && $jitPost->exchangetoproductid->int() == $params['exchangetoproductid'] ) {
-				$correct_exchange = true;
-			} else {
-				$correct_exchange = false;
-			}
-		} else {
-			$correct_exchange = true;
-		}
+		global $jitPost, $user;
+
 		$quantity = $jitPost->quantity->int();
-		if ( $jitPost->code->text() == $params['code'] && $quantity > 0 && $correct_exchange ) {
+		if ( $jitPost->code->text() == $params['code'] && $quantity > 0) {
 
-			if ($prefs['payment_cart_anonymous'] === 'y' && (!$user || $params['forceanon'] == 'y') && empty($_SESSION['shopperinfo'])) {
-				$access->redirect($_SERVER['REQUEST_URI'], tr('Please enter your shopper information first'));
-			} // There needs to be a shopperinfo plugin on the page
-
-			if ($globalperms->payment_admin && !empty($_POST['buyonbehalf']) && $userlib->user_exists($_POST['buyonbehalf'])) {
-				$onbehalf = $_POST['buyonbehalf'];
-			} else {
-				$onbehalf = '';
-			}
-
-			$gift_certificate_error = tra("Invalid gift certificate: ");
-			if ( $_REQUEST['gift_certificate'] && !empty($params['giftcertificate']) ) {
-				if ( !$cartlib->add_gift_certificate($_REQUEST['gift_certificate']) ) {
-					$smarty->assign('gift_certificate', $_REQUEST['gift_certificate']);
-					$smarty->assign('gift_certificate_error', $gift_certificate_error);
-					return $smarty->fetch('wiki-plugins/wikiplugin_addtocart.tpl');//TODO: Notify user if gift certificate is invalid
-				}
-			}
-
-			$product_info = array(
-				'description' => $params['description'],
-                'price' => $params['price'],
-                'href' => $params['href'],
-                'behaviors' => array(),
-                'eventcode' => $params['eventcode'],
-                'onbehalf' => $onbehalf,
-				'producttype' => $params['producttype'],
-				'productclass' => $params['productclass'],
-				'productbundle' => $params['productbundle'],
-				'bundleclass' => $params['bundleclass']
-			);
-
-			// Generate behavior for exchanges
-			if (!empty($params['exchangeorderitemid']) && !empty($params['exchangetoproductid'])) {
-				$product_info['behaviors'][] = array('event' => 'complete', 'behavior' => 'cart_exchange_product', 'arguments' => array($params["exchangeorderitemid"], $params["exchangetoproductid"]));
-				$product_info['exchangeorderitemid'] = $params["exchangeorderitemid"];
-				$product_info['exchangetoproductid'] = $params["exchangetoproductid"];
-				if (!isset($params['exchangeorderamount']) || !$params['exchangeorderamount']) {
-					$exchangeorderamount = 1;
-				} else {
-					$exchangeorderamount = $params["exchangeorderamount"];
-				}
-				$product_info['exchangeorderamount'] = $exchangeorderamount;
-			}
-			// Generate behavior for gift certificate purchase
-			if (strtolower($params['producttype']) == 'gift certificate') {
-				if ($onbehalf) {
-					$giftcert_email = $userlib->get_user_email($onbehalf);
-				} elseif (!$user && !empty($_SESSION['shopperinfo']['email'])) {
-					$giftcert_email = $_SESSION['shopperinfo']['email'];
-				} elseif ($user) {
-					$giftcert_email = $userlib->get_user_email($user);
-				}
-				$product_info['behaviors'][] = array('event' => 'complete', 'behavior' => 'cart_gift_certificate_purchase', 'arguments' => array($params['code'], $giftcert_email));
-			}
-			// Now add product to cart
 			$previous_cart_content = $cartlib->get_content();
-			$cartlib->add_product($params['code'], $quantity, $product_info);
+
+			$addedOk = $cartlib->add_to_cart($params, $jitPost);
 
 			global $access, $tikilib, $tikiroot, $prefs;
-			if ($params['autocheckout'] == 'y' && empty($previous_cart_content)) {
+			if ($addedOk && $params['autocheckout'] == 'y' && empty($previous_cart_content)) {
 				$invoice = $cartlib->request_payment();
 				if ( $invoice ) {
 					$paymenturl = 'tiki-payment.php?invoice=' . intval($invoice);

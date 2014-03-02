@@ -6,6 +6,22 @@
 			{else}{tr}Articles{/tr}{/if}
 		{/title}
 	{/if}
+	{if $headerLinks eq "y"}
+	<div class="navbar">
+		{if $tiki_p_edit_article eq 'y' or $tiki_p_admin eq 'y' or $tiki_p_admin_cms eq 'y'}
+			{button href="tiki-edit_article.php" _text="{tr}New Article{/tr}"}
+		{/if}
+		{if $prefs.feature_submissions == 'y' && $tiki_p_edit_submission == "y" && $tiki_p_edit_article neq 'y' && $tiki_p_admin neq 'y' && $tiki_p_admin_cms neq 'y'}
+			{button href="tiki-edit_submission.php" _text="{tr}New Submission{/tr}"}
+		{/if}		
+		{if $tiki_p_read_article eq 'y' or $tiki_p_articles_read_heading eq 'y' or $tiki_p_admin eq 'y' or $tiki_p_admin_cms eq 'y'}
+		{button href="tiki-list_articles.php" _text="{tr}List Articles{/tr}"}
+		{/if}
+	
+		{if $prefs.feature_submissions == 'y' && ($tiki_p_approve_submission == "y" || $tiki_p_remove_submission == "y" || $tiki_p_edit_submission == "y")}
+			{button href="tiki-list_submissions.php" _text="{tr}View Submissions{/tr}"}
+		{/if}
+	</div>
 	<div class="clearfix" style="clear: both;">
 		<div style="float: right; padding-left:10px; white-space: nowrap" data-role="controlgroup" data-type="horizontal"> {* mobile *}
 		{if $user and $prefs.feature_user_watches eq 'y'}
@@ -20,6 +36,7 @@
 		{/if}
 		</div>
 	</div>
+	{/if}
 {/if}
 {section name=ix loop=$listpages}
 	{capture name=href}{if empty($urlparam)}{$listpages[ix].articleId|sefurl:article}{else}{$listpages[ix].articleId|sefurl:article:with_next}{$urlparam}{/if}{/capture}
@@ -63,8 +80,23 @@
 						{if $listpages[ix].show_reads eq 'y'}
 							<span class="reads">({$listpages[ix].nbreads} {tr}Reads{/tr})</span>
 						{/if}
+						{if $listpages[ix].comment_can_rate_article eq 'y' && $prefs.article_user_rating eq 'y' && ($tiki_p_ratings_view_results eq 'y' or $tiki_p_admin eq 'y')}
+							- <span class="ratingResultAvg">{tr}Users Rating: {/tr}</span>{rating_result_avg id=$listpages[ix].articleId type=article}
+						{/if}
 					</span><br>
 				{/if}
+				{if $listpages[ix].comment_can_rate_article eq 'y' and empty({$listpages[ix].body}) and !isset($preview) and $prefs.article_user_rating eq 'y' && $tiki_p_rate_article eq 'y'}
+					<div class="articleheading">
+					<form method="post" action="">
+						{rating type=article id=$listpages[ix].articleId}
+					</form>
+					</div>
+				{/if}
+				{if $listpages[ix].comment_can_rate_article eq 'y' && $prefs.article_user_rating eq 'y' && ($tiki_p_ratings_view_results eq 'y' or $tiki_p_admin eq 'y')}
+					<div class="articleheading">
+					{rating_result id=$listpages[ix].articleId type=article}
+					</div>
+				{/if}				
 			</header>
 			{if $listpages[ix].use_ratings eq 'y'}
 				<div class="articleheading">
@@ -133,7 +165,7 @@
 			<div class="articletrailer">
 				{if ($listpages[ix].size > 0) or (($prefs.feature_article_comments eq 'y') and ($tiki_p_read_comments eq 'y'))}
 					{if ($tiki_p_read_article eq 'y' and $listpages[ix].heading_only ne 'y' and (!isset($fullbody) or $fullbody ne "y"))}
-						{if ($listpages[ix].size > 0)}
+						{if ($listpages[ix].size > 0 and !empty($listpages[ix].body))}
 							<div class="status"> {* named to be similar to forum/blog item *}
 								<a {if $prefs.mobile_mode eq "y"}data-role="button" data-inline="true" {/if}href="{$smarty.capture.href}" class="more">{tr}Read More{/tr}</a> {* mobile *}
 							</div>
@@ -146,7 +178,7 @@
 					{/if}
 					{if ($prefs.feature_article_comments eq 'y') and ($tiki_p_read_comments eq 'y') and ($listpages[ix].allow_comments eq 'y')}
 						<span>
-							<a {if $prefs.mobile_mode eq "y"}data-role="button" data-inline="true" {/if}href="{$listpages[ix].articleId|sefurl:article:with_next}show_comzone=y{if !empty($urlparam)}&amp;{$urlparam}{/if}#comments"{if $listpages[ix].comments_cant > 0} class="highlight"{/if}> {* mobile *}
+							<a {if $prefs.mobile_mode eq "y"}data-role="button" data-inline="true" {/if}href="{$listpages[ix].articleId|sefurl:article:with_next}{if $prefs.feature_sefurl neq 'y'}&amp;{/if}show_comzone=y{if !empty($urlparam)}&amp;{$urlparam}{/if}#comments"{if $listpages[ix].comments_cant > 0} class="highlight"{/if}> {* mobile *}
 								{if $listpages[ix].comments_cant == 0 and $tiki_p_post_comments == 'y'}
 									{if !isset($actions) or $actions eq "y"}
 										{tr}Add Comment{/tr}
@@ -185,9 +217,16 @@
 	{/if}
 {sectionelse}
 	{if $quiet ne 'y'}{tr}No articles yet.{/tr}
-		{if $tiki_p_edit_article eq 'y'}<a {if $prefs.mobile_mode eq "y"}data-role="button" data-inline="true" {/if}href="tiki-edit_article.php">{tr}Add an article{/tr}</a>{/if} {* mobile *}
 	{/if}
 {/section}
+{if !isset($actions) or $actions eq "y"}
+	{if $tiki_p_edit_article eq 'y' or $tiki_p_admin eq 'y' or $tiki_p_admin_cms eq 'y'}
+		<br/><img src="img/icons/add.png" alt="{tr}Add an article{/tr}"> <a {if $prefs.mobile_mode eq "y"}data-role="button" data-inline="true" {/if}href="tiki-edit_article.php">{tr}New article{/tr}</a> {* mobile *}
+	{/if}
+	{if $prefs.feature_submissions == 'y' && $tiki_p_edit_submission == "y" && $tiki_p_edit_article neq 'y' && $tiki_p_admin neq 'y' && $tiki_p_admin_cms neq 'y'}
+		<br/><img src="img/icons/add.png" alt="{tr}New Submission{/tr}"> <a {if $prefs.mobile_mode eq "y"}data-role="button" data-inline="true" {/if}href="tiki-edit_submission.php">{tr}New Submission{/tr}</a> {* mobile *}
+	{/if}
+{/if}
 {if !empty($listpages) && (!isset($usePagination) or $usePagination ne 'n')}
 	{pagination_links cant=$cant step=$maxArticles offset=$offset}{if isset($urlnext)}{$urlnext}{/if}{/pagination_links}
 {/if}

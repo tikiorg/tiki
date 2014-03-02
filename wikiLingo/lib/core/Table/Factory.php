@@ -33,8 +33,7 @@ class Table_Factory
 	 */
 	static public function build($name, $settings = null, $type = 'manager')
 	{
-		global $prefs;
-		if ($prefs['disableJavascript'] == 'n' && $prefs['feature_jquery_tablesorter'] == 'y') {
+		if (Table_Check::perms()) {
 			switch ($type) {
 				case 'manager':
 					return new Table_Manager(Table_Factory::build($name, $settings, 'table')->s);

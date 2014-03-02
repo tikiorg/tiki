@@ -181,20 +181,20 @@ class Table_Plugin
 		switch ($sortable) {
 			case 'y':
 			case 'server':
-				$s['sort']['type'] = true;
+				$s['sorts']['type'] = true;
 				break;
 			case 'n':
-				$s['sort']['type'] = false;
+				$s['sorts']['type'] = false;
 				break;
 			default:
 				$sp = $this->parseParam($sortable);
 				if (isset($sp[0]['type'])) {
-					$s['sort']['type'] = $sp[0]['type'];
+					$s['sorts']['type'] = $sp[0]['type'];
 				}
 		}
 
 		//sortlist
-		if (!empty($sortList) && $s['sort']['type'] !== false) {
+		if (!empty($sortList) && (!isset($s['sorts']['type']) || $s['sorts']['type'] !== false)) {
 			$crop = substr($sortList, 1);
 			$crop = substr($crop, 0, -1);
 			$slarray = explode('],[', $crop);
@@ -216,16 +216,16 @@ class Table_Plugin
 								$dir = false;
 								break;
 							default:
-								if($s['sort']['type'] !== false) {
+								if($s['sorts']['type'] !== false) {
 									$dir = true;
 								} else {
 									$dir = false;
 								}
 						}
 						if ($dir === false || $dir === true) {
-							$s['sort']['columns'][$lpieces[0]]['type'] = $dir;
+							$s['columns'][$lpieces[0]]['sort']['type'] = $dir;
 						} else {
-							$s['sort']['columns'][$lpieces[0]]['dir'] = $dir;
+							$s['columns'][$lpieces[0]]['sort']['dir'] = $dir;
 						}
 					}
 				}
@@ -235,17 +235,17 @@ class Table_Plugin
 		if (!empty($tsortcolumns)) {
 			$tsc = $this->parseParam($tsortcolumns);
 			if (is_array($tsc)) {
-				foreach ($tsc as $col => $info) {
-					if (isset($s['sort']['columns'][$col])) {
-						$s['sort']['columns'][$col] = $s['sort']['columns'][$col] + $info;
+				foreach ($tsc as $col => $sortinfo) {
+					if (isset($s['columns'][$col]['sort'])) {
+						$s['columns'][$col]['sort'] = $s['columns'][$col]['sort'] + $sortinfo;
 					} else {
-						$s['sort']['columns'][$col] = $info;
+						$s['columns'][$col]['sort'] = $sortinfo;
 					}
 				}
-				ksort($s['sort']['columns']);
+				ksort($s['columns']);
 			}
 		} else {
-			$s['sort']['group'] = false;
+			$s['sorts']['group'] = false;
 		}
 
 		//tsfilters
@@ -260,7 +260,13 @@ class Table_Plugin
 				default:
 					$tsf = $this->parseParam($tsfilters);
 					if (is_array($tsf)) {
-						$s['filters']['columns'] = $this->parseParam($tsfilters);
+						foreach ($tsf as $col => $filterinfo) {
+							if (isset($s['columns'][$col]['filter'])) {
+								$s['columns'][$col]['filter'] = $s['columns'][$col]['filter'] + $filterinfo;
+							} else {
+								$s['columns'][$col]['filter'] = $filterinfo;
+							}
+						}
 					}
 			}
 		}

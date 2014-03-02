@@ -37,6 +37,8 @@ class ServiceLib
 
 			if (isset($params['action'])) {
 				$url .= "-{$params['action']}";
+			} else {
+				$url .= "-x";
 			}
 
 			unset($params['controller']);
@@ -68,14 +70,17 @@ class ServiceLib
 			'draw' => 'Services_Draw_Controller',
 			'edit' => 'Services_Edit_Controller',
 			'favorite' => 'Services_User_FavoriteController',
+			'goal' => 'Services_Goal_Controller',
 			'file_finder' => 'Services_File_FinderController',
 			'file' => 'Services_File_Controller',
 			'jcapture' => 'Services_JCapture_Controller',
 			'kaltura'=>  'Services_Kaltura_Controller',
 			'managestream' => 'Services_ActivityStream_ManageController',
+			'module' => 'Services_Module_Controller',
 			'monitor' => 'Services_User_MonitorController',
 			'oauth' => 'Services_AuthSource_OAuthController',
 			'object' => 'Services_Object_Controller',
+			'payment' => 'Services_Payment_Controller',
 			'rating'=>  'Services_Rating_Controller',
 			'report' => 'Services_Report_Controller',
 			'tracker_calendar' => 'Services_Tracker_CalendarController',

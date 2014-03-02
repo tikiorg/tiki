@@ -34,8 +34,9 @@ class Table_Code_MainOptions extends Table_Code_Manager
 		$orh = array();
 		/* First handle column-specific code since the array index is used for the column number */
 		//row grouping and sorter settings
-		if (parent::$sort && is_array(parent::$s['sort']['columns'])) {
-			foreach (parent::$s['sort']['columns'] as $col => $info) {
+		if (parent::$sorts && parent::$sortcol) {
+			foreach (parent::$s['columns'] as $col => $info) {
+				$info = $info['sort'];
 				//row grouping setting
 				if (parent::$group) {
 					if (!empty($info['group'])) {
@@ -55,8 +56,9 @@ class Table_Code_MainOptions extends Table_Code_Manager
 			}
 		}
 		//filters
-		if (parent::$filters && isset(parent::$s['filters']['columns']) && is_array(parent::$s['filters']['columns'])) {
-			foreach (parent::$s['filters']['columns'] as $col => $info) {
+		if (parent::$filters && parent::$filtercol) {
+			foreach (parent::$s['columns'] as $col => $info) {
+				$info = $info['filter'];
 				//set filter to false for no filter
 				if (isset($info['type']) && $info['type'] === false) {
 					$allcols[$col]['addClass'][] = 'filter-false';
@@ -93,7 +95,7 @@ class Table_Code_MainOptions extends Table_Code_Manager
 			$orh[] = '$(this).find(\'a\').replaceWith($(this).find(\'a\').text());';
 		}
 		//no sort on all columns
-		if (!parent::$sort) {
+		if (!parent::$sorts) {
 			$orh[] = '$(this).addClass(\'sorter-false\');';
 		}
 		if (count($orh) > 0) {
@@ -110,7 +112,7 @@ class Table_Code_MainOptions extends Table_Code_Manager
 			$w[] = 'group';
 		}
 		//saveSort
-		if (isset(parent::$s['sort']['type']) && strpos(parent::$s['sort']['type'], 'save') !== false) {
+		if (isset(parent::$s['sorts']['type']) && strpos(parent::$s['sorts']['type'], 'save') !== false) {
 			$w[] = 'saveSort';
 		}
 		//filter
@@ -127,19 +129,20 @@ class Table_Code_MainOptions extends Table_Code_Manager
 		/*** end widget section ***/
 
 		//server side sorting
-		if (parent::$sort && parent::$ajax) {
+		if (parent::$sorts && parent::$ajax) {
 			$mo[] = 'serverSideSorting: true';
 		}
 
 		//Turn multi-column sort off (on by default by shift-clicking column headers)
-		if (isset(parent::$s['sort']['multisort']) && parent::$s['sort']['multisort'] === false) {
+		if (isset(parent::$s['sorts']['multisort']) && parent::$s['sorts']['multisort'] === false) {
 			$mo[] =  'sortMultiSortKey : \'none\'';
 		}
 
 		//Sort list
-		if (parent::$sort && is_array(parent::$s['sort']['columns'])) {
+		if (parent::$sorts && parent::$sortcol) {
 			$sl = '';
-			foreach (parent::$s['sort']['columns'] as $col => $info) {
+			foreach (parent::$s['columns'] as $col => $info) {
+				$info = $info['sort'];
 				if (!empty($info['dir'])) {
 					if ($info['dir'] === 'asc') {
 						$sl[] = $col . ',' . '0';

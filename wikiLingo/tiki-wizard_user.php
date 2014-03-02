@@ -10,6 +10,14 @@
 
 require 'tiki-setup.php';
 
+// User preferences screen
+if ($prefs['feature_wizard_user'] != 'y') {
+	$smarty->assign('msg', tra("This feature is disabled") . ": feature_wizard_user");
+	$smarty->display("error.tpl");
+	die;
+}
+$access->check_user($user);
+
 require_once('lib/headerlib.php');
 $headerlib->add_cssfile('css/wizards.css');
 
@@ -22,6 +30,21 @@ $accesslib->check_user($user);
 
 // Create the template instances
 $pages = array();
+
+/// fetch the itemId for the user tracker ------------------------------------
+global	$user, $tikilib, $prefs, $userlib; 
+if ($prefs['userTracker'] === 'y') {
+	
+	$trklib = TikiLib::lib('trk');
+	
+	$utid = $userlib->get_tracker_usergroup($user);
+
+			if (isset($utid['usersTrackerId'])) {
+				$_REQUEST['trackerId'] = $utid['usersTrackerId'];
+				$_REQUEST["itemId"] = $trklib->get_item_id($_REQUEST['trackerId'], $utid['usersFieldId'], $user);
+			}
+}
+/// --------------------------------
 
 /////////////////////////////////////
 // BEGIN User Wizard page section
@@ -42,6 +65,9 @@ $pages[] = new UserWizardPreferencesReports();
 require_once('lib/wizard/pages/user_preferences_notifications.php'); 
 $pages[] = new UserWizardPreferencesNotifications();
 
+require_once('lib/wizard/pages/user_tracker.php'); 
+$pages[] = new UserWizardUserTracker();
+
 require_once('lib/wizard/pages/user_wizard_completed.php'); 
 $pages[] = new UserWizardCompleted();
 
@@ -55,7 +81,7 @@ $wizardlib = TikiLib::lib('wizard');
 $wizardlib->showPages($pages, true);
 
 // Build the TOC
-$toc = '';
+$toc = '<ul class="wizard_toc">';
 $stepNr = 0;
 $reqStepNr = $wizardlib->wizard_stepNr;
 $homepageUrl = $_REQUEST['url'];
@@ -86,7 +112,7 @@ foreach ($pages as $page) {
 	$toc .= 'href="'.$url.'">'.$page->pageTitle().'</a></li>';
 	$stepNr++;
 }
-
+$toc .= '</ul>';
 	// Hide the left and right sidebars when the admin wizard is run
 	$headerlib = TikiLib::lib('header');
 	$headerlib->add_js(
