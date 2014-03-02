@@ -172,8 +172,9 @@ class Messu extends TikiLib
 	 * Update message flagging
 	 */ 
 	function flag_message($user, $msgId, $flag, $val, $dbsource="messages") {
-		if (!$msgId)
+		if (!$msgId || !(in_array($flag, array('isRead', 'isFlagged')))) {
 			return false;
+		}
 		if ($dbsource=='') $dbsource="messages";
 		$query = "update `messu_".$dbsource."` set `$flag`=? where `user`=? and `msgId`=?";
 		$this->query($query,array($val,$user,(int)$msgId));
