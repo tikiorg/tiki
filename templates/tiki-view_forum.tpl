@@ -457,7 +457,7 @@
 			{/if}
 			{if $forum_info.vote_threads eq 'y' and ($tiki_p_ratings_view_results eq 'y' or $tiki_p_admin eq 'y')}
 				<th>{tr}Rating <br/>(avg/max){/tr}</th>
-				{if $prefs.rating_results_detailed eq 'y' and $prefs.rating_results_detailed_percent eq 'n'}
+				{if $prefs.rating_results_detailed eq 'y' and $prefs.rating_results_detailed_percent neq 'y'}
 					<th>{tr}Detailed results <br/>(counts){/tr}</th>
 				{elseif $prefs.rating_results_detailed eq 'y' and $prefs.rating_results_detailed_percent eq 'y'}
 					<th>{tr}Detailed results <br/>(counts/%){/tr}</th>

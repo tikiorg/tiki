@@ -142,11 +142,6 @@ if (!empty($_REQUEST['mass_ban_ip_actionlog'])) {
 $smarty->assign('banId', $_REQUEST['banId']);
 $smarty->assign_by_ref('info', $info);
 
-$where = '';
-$wheres = array();
-if (isset($_REQUEST['where'])) {
-	$where = $_REQUEST['where'];
-}
 if (!isset($_REQUEST["sort_mode"])) {
 	$sort_mode = 'created_desc';
 } else {
@@ -164,9 +159,8 @@ if (isset($_REQUEST["find"])) {
 	$find = '';
 }
 $smarty->assign('find', $find);
-$smarty->assign('where', $where);
 $smarty->assign_by_ref('sort_mode', $sort_mode);
-$items = $banlib->list_rules($offset, $maxRecords, $sort_mode, $find, $where);
+$items = $banlib->list_rules($offset, $maxRecords, $sort_mode, $find);
 
 if (isset($_REQUEST['export']) || isset($_REQUEST['csv'])) {
 	// export banning rules //
