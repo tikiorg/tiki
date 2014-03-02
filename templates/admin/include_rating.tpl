@@ -92,10 +92,10 @@
 		<legend>{tr}Forums{/tr}</legend>
 		<table>
 			<tr>
-				<td style="width:48%">{tr}You need to enable the settings:{/tr} 
+				<td style="width:48%">{tr}You need to:{/tr} 
 				<ul>
-					<li>"{tr}Ratings{/tr}" > "{tr}Comments{/tr}" > "<strong>{tr}Simple wiki comment ratings{/tr}</strong>" {tr}and{/tr} "<strong>{tr}Wiki rating options:{/tr}</strong>" ({tr}see above{/tr})</li>
 					<li>{tr}Create or Edit a forum and enable:{/tr} "<strong>{tr}Posts can be rated{/tr}</strong>"</li>
+					<li>Set the rating options at "{tr}Admin Home{/tr}" > {tr}Ratings{/tr}" > "{tr}Comments{/tr}" > "{tr}Simple wiki comment ratings{/tr}" > "<strong>{tr}Wiki rating options:{/tr}</strong>" ({tr}see above{/tr})</li>
 				</ul>
 				</td>
 				<td style="width:4%"><td>
