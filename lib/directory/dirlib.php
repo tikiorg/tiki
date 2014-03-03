@@ -750,8 +750,7 @@ class DirLib extends TikiLib
 
 		$bindvars = array('y');
 		for ($i = 0, $icount_words = count($words); $i < $icount_words; $i++) {
-			$words[$i] = trim($words[$i]);
-			$word = $words[$i];
+			$word = trim($words[$i]);
 			if (!empty($word)) {
 				// Check if the term is in the stats then add it or increment it
 				if ($this->getOne("select count(*) from `tiki_directory_search` where `term`=?", array($word))) {
@@ -762,16 +761,18 @@ class DirLib extends TikiLib
 					$this->query($query, array($word,1));
 				}
 			}
-			$words[$i] = " ((`name` like ?) or (`description` like ?) or (`url` like ?) or (`cache` like ?)) ";
+			$like[$i] = " ((`name` like ?) or (`description` like ?) or (`url` like ?) or (`cache` like ?)) ";
 			$bindvars[] = "%$word%";
 			$bindvars[] = "%$word%";
 			$bindvars[] = "%$word%";
 			$bindvars[] = "%$word%";
 		}
 
-		$words = implode($how, $words);
-		$query = "select * from `tiki_directory_sites` where `isValid`=? and $words  order by ".$this->convertSortMode($sort_mode);
-		$cant = $this->getOne("select count(*) from tiki_directory_sites where `isValid`=? and $words", $bindvars);
+		$how = in_array($how, array('or', 'and')) ? $how : 'or';
+		$likestr = implode($how, $like);
+		$query = "select * from `tiki_directory_sites` where `isValid`=? and $likestr  order by "
+			. $this->convertSortMode($sort_mode);
+		$cant = $this->getOne("select count(*) from tiki_directory_sites where `isValid`=? and $likestr", $bindvars);
 		$result = $this->query($query, $bindvars, $maxRecords, $offset);
 		$ret = array();
 		while ($res = $result->fetchRow()) {
@@ -800,8 +801,7 @@ class DirLib extends TikiLib
 		$words = explode(' ', $words);
 		$bindvars = array('y',(int)$parent);
 		for ($i = 0, $icount_words = count($words); $i < $icount_words; $i++) {
-			$words[$i] = trim($words[$i]);
-			$word = $words[$i];
+			$word = trim($words[$i]);
 			// Check if the term is in the stats then add it or increment it
 			if ($this->getOne("select count(*) from `tiki_directory_search` where `term`=?", array($word))) {
 				$query = "update `tiki_directory_search` set `hits`=`hits`+1 where `term`=?";
@@ -810,20 +810,24 @@ class DirLib extends TikiLib
 				$query = "insert into `tiki_directory_search`(`term`,`hits`) values(?,?)";
 				$this->query($query, array($word,1));
 			}
-			$words[$i] = " ((tds.`name` like ?) or (tds.`description` like ?) or (tds.`url` like ?) or (`cache` like ?)) ";
+			$like[$i] = " ((tds.`name` like ?) or (tds.`description` like ?) or (tds.`url` like ?) or (`cache` like ?)) ";
 			$bindvars[] = "%$word%";
 			$bindvars[] = "%$word%";
 			$bindvars[] = "%$word%";
 			$bindvars[] = "%$word%";
 		}
 
-		$words = implode($how, $words);
+		$how = in_array($how, array('or', 'and')) ? $how : 'or';
+		$likestr = implode($how, $like);
 		$query = "select distinct tds.`name`, tds.`siteId`, tds.`description`, tds.`url`, tds.`country`, tds.`hits`, ";
-		$query.= " tds.`created`, tds.`lastModif` from `tiki_directory_sites` tds, `tiki_category_sites` tcs, `tiki_directory_categories` tdc ";
-		$query.= " where tds.`siteId`=tcs.`siteId` and tcs.`categId`=tdc.`categId` and `isValid`=? and tdc.`categId`=? and $words order by ".$this->convertSortMode($sort_mode);
+		$query.= " tds.`created`, tds.`lastModif` from `tiki_directory_sites` tds, `tiki_category_sites` tcs,
+			`tiki_directory_categories` tdc ";
+		$query.= " where tds.`siteId`=tcs.`siteId` and tcs.`categId`=tdc.`categId` and `isValid`=? and tdc.`categId`=?
+			and $likestr order by ".$this->convertSortMode($sort_mode);
 		$cant = $this->getOne(
 			"select count(*) from `tiki_directory_sites` tds,`tiki_category_sites` tcs,`tiki_directory_categories` tdc
-			where tds.`siteId`=tcs.`siteId` and tcs.`categId`=tdc.`categId` and `isValid`=? and tdc.`categId`=? and $words",
+			where tds.`siteId`=tcs.`siteId` and tcs.`categId`=tdc.`categId` and `isValid`=? and tdc.`categId`=?
+			and $likestr",
 			$bindvars
 		);
 		$result = $this->query($query, $bindvars, $maxRecords, $offset);

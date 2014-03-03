@@ -9,10 +9,29 @@
 // $Id$
 
 $section = 'directory';
+
+$inputConfiguration = array(
+	array( 'staticKeyFilters' =>
+		array(
+			'offset' => 'digits',
+			'parent' => 'digits',
+			'find' => 'striptags',
+			'where' => 'word',
+			'how' => 'word',
+			'words' => 'striptags',
+			'sort_mode' => 'word',
+		)
+	)
+);
 require_once ('tiki-setup.php');
 include_once ('lib/directory/dirlib.php');
 $access->check_feature('feature_directory');
 $access->check_permission('tiki_p_view_directory');
+
+$_REQUEST['words'] = isset($_REQUEST['words']) ? $_REQUEST['words'] : '';
+$_REQUEST['where'] = isset($_REQUEST['where']) ? $_REQUEST['where'] : '';
+$_REQUEST['how'] = isset($_REQUEST['how']) ? $_REQUEST['how'] : '';
+$_REQUEST['parent'] = isset($_REQUEST['parent']) ? $_REQUEST['parent'] : '';
 $smarty->assign('words', $_REQUEST['words']);
 $smarty->assign('where', $_REQUEST['where']);
 $smarty->assign('how', $_REQUEST['how']);
@@ -34,7 +53,7 @@ if (isset($_REQUEST["find"])) {
 $smarty->assign_by_ref('offset', $offset);
 $smarty->assign_by_ref('sort_mode', $sort_mode);
 $smarty->assign('find', $find);
-if ($_REQUEST['where'] == 'all') {
+if (isset($_REQUEST['where']) && $_REQUEST['where'] == 'all') {
 	$items = $dirlib->dir_search($_REQUEST['words'], $_REQUEST['how'], $offset, $maxRecords, $sort_mode);
 } else {
 	$items = $dirlib->dir_search_cat($_REQUEST['parent'], $_REQUEST['words'], $_REQUEST['how'], $offset, $maxRecords, $sort_mode);
