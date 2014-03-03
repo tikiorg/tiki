@@ -26,6 +26,7 @@ class Tiki_Text_Diff_Renderer extends Text_Diff_Renderer
 	}
 	function render($diff)
 	{
+		$x0 = $y0 = 0;
 		$xi = $yi = 1;
 		$block = false;
 		$context = array();
