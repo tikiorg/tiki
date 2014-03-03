@@ -350,7 +350,9 @@ $icons = array(
 						$prefs['wiki_comments_simple_ratings'] !== 'y' &&
 						$prefs['rating_advanced'] !== 'y' &&
 						$prefs['trackerfield_rating'] !== 'y' &&
-						$prefs['article_user_rating'] !== 'y',
+						$prefs['article_user_rating'] !== 'y' &&
+						$prefs['rating_results_detailed'] !== 'y' &&
+						$prefs['rating_smileys'] !== 'y',
 	),
 	"search" => array(
 		'icon' => 'img/icons/large/xfce4-appfinder.png',
