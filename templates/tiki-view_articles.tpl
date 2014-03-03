@@ -196,7 +196,7 @@
 				{/if}
 				{if !isset($actions) or $actions eq "y"}
 					<div class="actions">
-						{if $tiki_p_edit_article eq 'y' or ($listpages[ix].author eq $user and $listpages[ix].creator_edit eq 'y')}
+						{if $tiki_p_edit_article eq 'y' or (!empty($user) and $listpages[ix].author eq $user and $listpages[ix].creator_edit eq 'y')}
 							<a class="icon" href="tiki-edit_article.php?articleId={$listpages[ix].articleId}">{icon _id='page_edit'}</a>
 						{/if}
 						{if $prefs.feature_cms_print eq 'y'}
