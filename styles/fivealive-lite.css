@@ -583,6 +583,7 @@ h3.box-title,
 	color: #fff;
 	background: url(fivealive/options/blueberry/siteheader.jpg) no-repeat -260px -200px;
 	border-radius: 6px;
+	min-height: 20px;
 }
 
 /*div.title br.clear {
