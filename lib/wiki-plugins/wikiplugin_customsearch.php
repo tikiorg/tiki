@@ -19,12 +19,18 @@ function wikiplugin_customsearch_info()
 		'tags' => array('advanced'),
 		'params' => array(
 			'wiki' => array(
-				'required' => true,
+				'required' => false,
 				'name' => tra('Template wiki page'),
 				'description' => tra('Wiki page where search user interface template is found'),
 				'filter' => 'pagename',
 				'default' => '',
 				'profile_reference' => 'wiki_page',
+			),
+			'tpl' => array(
+				'required' => false,
+				'name' => tra('Template file'),
+				'description' => tra('TPL file where search user interface template is found'),
+				'default' => '',
 			),
 			'id' => array(
 				'required' => false,
@@ -101,9 +107,9 @@ function wikiplugin_customsearch_info()
 function wikiplugin_customsearch($data, $params)
 {
 	global $prefs;
-	if (!isset($params['wiki'])) {
+	if (empty($params['wiki']) && empty($params['tpl'])) {
 		return tra('Template is not specified');
-	} elseif (!TikiLib::lib('tiki')->page_exists($params['wiki'])) {
+	} elseif (!empty($params['wiki']) && !TikiLib::lib('tiki')->page_exists($params['wiki'])) {
 		return tra('Template page not found');
 	}
 	if (isset($params['id'])) {
@@ -184,7 +190,11 @@ function wikiplugin_customsearch($data, $params)
 		'customsearch'
 	);
 
-	$wikitpl = "tplwiki:" . $params['wiki'];
+	if (!empty($params['wiki'])) {
+		$wikitpl = "tplwiki:" . $params['wiki'];
+	} else {
+		$wikitpl = $params['tpl'];
+	}
 	$wikicontent = TikiLib::lib('smarty')->fetch($wikitpl);
 	TikiLib::lib('parser')->parse_wiki_argvariable($wikicontent);
 
