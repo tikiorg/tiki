@@ -196,7 +196,7 @@
 				{/if}
 				{if !isset($actions) or $actions eq "y"}
 					<div class="actions" data-role="controlgroup" data-type="horizontal"> {* mobile *}
-						{if $tiki_p_edit_article eq 'y' or ($listpages[ix].author eq $user and $listpages[ix].creator_edit eq 'y')}
+						{if $tiki_p_edit_article eq 'y' or (!empty($user) and $listpages[ix].author eq $user and $listpages[ix].creator_edit eq 'y')}
 							<a {if $prefs.mobile_mode eq "y"}data-role="button" data-inline="true" {/if}class="icon" href="tiki-edit_article.php?articleId={$listpages[ix].articleId}">{icon _id='page_edit'}</a> {* mobile *}
 						{/if}
 						{if $prefs.feature_cms_print eq 'y'}
