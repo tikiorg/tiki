@@ -77,9 +77,9 @@ class TikiWikiEvents {
 		}
 	}
 
-    public function save($page, $version, $body) {
+    public function save() {
 
-        $flp_md = new FLPLookup($page);
+        $flp_md = new FLPLookup($this->title);
         $metadata = new FLP\Metadata();
 
         $metadata->answers = $flp_md->answers();
@@ -87,11 +87,11 @@ class TikiWikiEvents {
         $metadata->authorInstitution = $flp_md->authorBusinessName();
         $metadata->authorProfession = $flp_md->authorProfession();
         $metadata->categories = $flp_md->categories();
-        $metadata->count = $flp_md->countAll(); // correct count?
-        //$metadata->dateLastUpdated
+        $metadata->count = $flp_md->countAll(); // is this the correct count for use here? (LDG)
+        $metadata->dateLastUpdated = '';
         $metadata->dateOriginated = $flp_md->findDatePageOriginated();
-        //$metadata->hash = $flp_md->
-        //$metadata->href = $flp_md->
+        $metadata->hash = '';
+        $metadata->href = '';
         $metadata->keywords = $flp_md->keywords();
         $metadata->language = $flp_md->language();
         $metadata->minimumMathNeeded = $flp_md->minimumMathNeeded();
@@ -100,10 +100,10 @@ class TikiWikiEvents {
         $metadata->moderatorInstitution = $flp_md->moderatorBusinessName();
         $metadata->moderatorProfession = $flp_md->moderatorProfession();
         $metadata->scientificField = $flp_md->scientificField();
-        //$metadata->text = $flp_md->
-        //$metadata->websiteSubtitle = $flp_md->
-        //$metadata->websiteTitle =
+        $metadata->text = '';
+        $metadata->websiteSubtitle = '';
+        $metadata->websiteTitle = $this->title;
 
-        FLP\Data::createArticle($page, $body, $metadata, $version);
+        FLP\Data::createArticle($this->title, $this->body, $metadata, $this->version);
     }
 } 

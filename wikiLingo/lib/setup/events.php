@@ -6,6 +6,7 @@
 // $Id$
 
 use Phraser;
+use TikiLib;
 
 tiki_setup_events();
 
@@ -283,16 +284,14 @@ function wikilingo_flp_save($args)
 {
     require_once 'lib/wikiLingo_tiki/TikiWikiEvents.php';
 
-    global $groupPluginReturnAll;
-    $groupPluginReturnAll = true;
-    $groupPluginReturnAll = false;
-
     $page = $args['object'];
-    $version = $args['version'];
+    $tikilib = TikiLib::lib('tiki');
+    $info = $tikilib->get_page_info($page);
+    $version = $info['version'];
     $body = $args['data'];
 
     $events = new TikiWikiEvents($page, $version, $body);
 
-    $events->save($page, $version, $body);
+    $events->save();
 
 }
