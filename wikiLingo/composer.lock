@@ -230,12 +230,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FutureLink-Protocol/php.git",
-                "reference": "1bf8c5663a5041209df75cbcebc2d3aefc110adc"
+                "reference": "bfac2b2e9f5c8ed8ac21d5faf6f288201af18870"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FutureLink-Protocol/php/zipball/1bf8c5663a5041209df75cbcebc2d3aefc110adc",
-                "reference": "1bf8c5663a5041209df75cbcebc2d3aefc110adc",
+                "url": "https://api.github.com/repos/FutureLink-Protocol/php/zipball/bfac2b2e9f5c8ed8ac21d5faf6f288201af18870",
+                "reference": "bfac2b2e9f5c8ed8ac21d5faf6f288201af18870",
                 "shasum": ""
             },
             "require": {
@@ -267,7 +267,7 @@
             ],
             "description": "FutureLink-Protocol implementation in PHP",
             "homepage": "https://github.com/FutureLink-Protocol",
-            "time": "2014-03-03 00:37:47"
+            "time": "2014-03-04 13:41:10"
         },
         {
             "name": "gabordemooij/redbean",
@@ -1120,12 +1120,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/wikiLingo/wikiLingo.git",
-                "reference": "0c6256911d60e5c6332b17f2c90bceb826ffa2c7"
+                "reference": "3c471cdd0a98f0347183741f2732287fb00d9394"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wikiLingo/wikiLingo/zipball/0c6256911d60e5c6332b17f2c90bceb826ffa2c7",
-                "reference": "0c6256911d60e5c6332b17f2c90bceb826ffa2c7",
+                "url": "https://api.github.com/repos/wikiLingo/wikiLingo/zipball/3c471cdd0a98f0347183741f2732287fb00d9394",
+                "reference": "3c471cdd0a98f0347183741f2732287fb00d9394",
                 "shasum": ""
             },
             "require": {
@@ -1153,7 +1153,7 @@
                     "role": "Lead Developer"
                 }
             ],
-            "time": "2014-03-04 01:40:07"
+            "time": "2014-03-04 13:30:44"
         },
         {
             "name": "zetacomponents/base",

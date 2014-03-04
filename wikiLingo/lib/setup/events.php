@@ -246,7 +246,7 @@ function wikilingo_flp_view($args)
 	$page = $args['object'];
 	$version = $args['version'];
 	$body = $args['data'];
-	require_once '../wikiLingo_tiki/TikiWikiEvents.php';
+	require_once 'lib/wikiLingo_tiki/TikiWikiEvents.php';
 
 	$events = new TikiWikiEvents($page, $version, $body);
 
