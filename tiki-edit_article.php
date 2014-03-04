@@ -135,7 +135,7 @@ $smarty->assign('list_image_x', $prefs['article_default_list_image_size_x']);
 $smarty->assign('list_image_y', $prefs['article_default_list_image_size_y']);
 $smarty->assign('heading', '');
 $smarty->assign('body', '');
-$smarty->assign('author', '');
+$smarty->assign('author', $user);
 $smarty->assign('rating', 7);
 $smarty->assign('edit_data', 'n');
 $smarty->assign('emails', '');

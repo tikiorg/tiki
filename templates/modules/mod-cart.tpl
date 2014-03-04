@@ -6,7 +6,7 @@
 			<tr>
 				<th>{tr}Product{/tr}</th>
 				<th style="width:5em;">{tr}Unit cost{/tr}</th>
-				<th style="width:2em;">{tr}Qty{/tr}</th>
+				<th{if $module_params.showItemButtons eq 'n'} style="width:2em;"{/if}>{tr}Qty{/tr}</th>
 			</tr>
 	
 			{foreach from=$cart_content item=item} 
@@ -22,7 +22,17 @@
 							{/if}
 						</td>
 						<td style="width:5em;" align="right">{$item.price|escape}</td>
-						<td style="width:2em;"><input type="text" name="cart[{$item.code|escape}]" style="width:2em;text-align:right;" value="{$item.quantity|escape}"></td>
+						{if $module_params.showItemButtons eq 'n'}
+							<td style="width:2em;"><input type="text" name="cart[{$item.code|escape}]" style="width:2em;text-align:right;" value="{$item.quantity|escape}"></td>							</td>
+						{else}
+							<td style="white-space: nowrap">
+								{icon _id='bin' class='icon item_remove' onclick='$(this).nextAll("input").val("").parents("form:first").submit();return false;'}
+								{icon _id='add' class='icon item_plus' onclick='var $input = $(this).nextAll("input:first");$input.val(parseInt($input.val()) + 1).parents("form:first").submit();return false;'}
+								<input type="text" name="cart[{$item.code|escape}]" style="width:2em;text-align: right;" value="{$item.quantity|escape}">
+								{icon _id='delete' class='icon item_minus' onclick='var $input = $(this).prevAll("input:first");$input.val(parseInt($input.val()) - 1).parents("form:first").submit();return false;'}
+							</td>
+							{if $module_params.ajax eq 'n'}<input type="hidden" name="update" value="1">{/if}
+						{/if}
 					</tr>
 					{foreach from=$item.bundledproducts item=child_item}
 						<tr>

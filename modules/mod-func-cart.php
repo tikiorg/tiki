@@ -62,6 +62,12 @@ function module_cart_info()
 				'filter' => 'alpha',
 				'default' => 'g',
 			),
+			'showItemButtons' => array(
+				'name' => tra('Show Item Buttons'),
+				'description' => tra('Shows add, remove and delete buttons on items') . ' (y/n)',
+				'filter' => 'alpha',
+				'default' => 'n',
+			),
 		),
 	);
 }
