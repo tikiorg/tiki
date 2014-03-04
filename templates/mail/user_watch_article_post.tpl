@@ -3,10 +3,13 @@
 
 {if $mail_action neq 'Delete'}{tr}View the article at:{/tr} {$mail_machine_raw}/{$mail_postid|sefurl:article}{/if}
 
+
 {$mail_title}
 
 
 {$mail_current_data}
+
+
 
 -----------------------------------------------------------
 {tr}Publish Date:{/tr} {$mail_current_publish_date|tiki_short_datetime:"":"n"}
