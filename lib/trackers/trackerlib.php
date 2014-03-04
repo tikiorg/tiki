@@ -3596,6 +3596,9 @@ class TrackerLib extends TikiLib
 				$f = $wiki_info['data'];
 			}
 		} else {
+			if (strpos($resource, 'templates/') === 0) {
+				$resource = substr($resource, 10);
+			}
 			$resource_name = $smarty->get_filename($resource);
 			$f = file_get_contents($resource_name);
 		}
