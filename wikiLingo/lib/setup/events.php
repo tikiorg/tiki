@@ -127,7 +127,8 @@ function tiki_setup_events()
 
 	if ($prefs['feature_futurelinkprotocol'] == 'y') {
 		if ($prefs['feature_wikilingo'] == 'y') {
-
+			$events->bind("tiki.wiki.view", 'wikilingo_flp_view');
+			$events->bind("tiki.wiki.save", 'wikilingo_flp_save');
 		} else {
 			$events->bind("tiki.wiki.view", 'tiki_wiki_view_pastlink');
 			$events->bind("tiki.wiki.save", 'tiki_wiki_save_pastlink');
@@ -223,8 +224,13 @@ function tiki_save_refresh_index($args)
 
 function tiki_wiki_view_pastlink($args)
 {
+	//listener
 	FutureLink_ReceiveFromPast::wikiView($args);
+
+	//page link, not really used
 	FutureLink_PageLookup::wikiView($args);
+
+	//ui, and redirect
 	FutureLink_FutureUI::wikiView($args);
 	FutureLink_PastUI::wikiView($args);
 }
@@ -233,4 +239,45 @@ function tiki_wiki_save_pastlink($args)
 {
 	FutureLink_FutureUI::wikiSave($args);
 	FutureLink_PastUI::wikiSave($args);
+}
+
+function wikilingo_flp_view($args)
+{
+	$page = $args['object'];
+	$version = $args['version'];
+	$body = $args['data'];
+	require_once '../wikiLingo_tiki/TikiWikiEvents.php';
+
+	$events = new TikiWikiEvents($page, $version, $body);
+
+
+	//listener
+	$events->listen();
+
+
+	//redirect start
+	$events->direct();
+
+
+	//futurelink
+	$events->load();
+
+	//pastlink now happens inside of wikiLingo
+
+	/*
+	$headerlib
+		->add_jsfile('vendor/rangy/rangy/uncompressed/rangy-core.js')
+		->add_jsfile('vendor/rangy/rangy/uncompressed/rangy-cssclassapplier.js')
+		->add_jsfile('vendor/rangy/rangy/uncompressed/rangy-selectionsaverestore.js')
+		->add_jsfile('vendor/flp/Phraser/rangy-phraser.js')
+		->add_jsfile('lib/ZeroClipboard.js')
+		->add_jsfile('vendor/flp/Phraser/Phraser.js')
+		->add_jsfile('vendor/jquery/md5/js/md5.js');
+*/
+
+}
+
+function wikilingo_flp_save($args)
+{
+
 }
