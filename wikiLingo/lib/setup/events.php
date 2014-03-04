@@ -5,6 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
+use Phraser;
+
 tiki_setup_events();
 
 register_shutdown_function(function () {
@@ -279,5 +281,18 @@ function wikilingo_flp_view($args)
 
 function wikilingo_flp_save($args)
 {
+    require_once 'lib/wikiLingo_tiki/TikiWikiEvents.php';
+
+    global $groupPluginReturnAll;
+    $groupPluginReturnAll = true;
+    $groupPluginReturnAll = false;
+
+    $page = $args['object'];
+    $version = $args['version'];
+    $body = $args['data'];
+
+    $events = new TikiWikiEvents($page, $version, $body);
+
+    $events->save($page, $version, $body);
 
 }

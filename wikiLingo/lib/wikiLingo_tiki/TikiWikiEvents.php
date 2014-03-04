@@ -1,5 +1,7 @@
 <?php
 
+include 'lib/wikiLingo_tiki/FLPLookup.php';
+use FLPLookup;
 
 class TikiWikiEvents {
 
@@ -74,4 +76,34 @@ class TikiWikiEvents {
 			}
 		}
 	}
+
+    public function save($page, $version, $body) {
+
+        $flp_md = new FLPLookup($page);
+        $metadata = new FLP\Metadata();
+
+        $metadata->answers = $flp_md->answers();
+        $metadata->author = $flp_md->author();
+        $metadata->authorInstitution = $flp_md->authorBusinessName();
+        $metadata->authorProfession = $flp_md->authorProfession();
+        $metadata->categories = $flp_md->categories();
+        $metadata->count = $flp_md->countAll(); // correct count?
+        //$metadata->dateLastUpdated
+        $metadata->dateOriginated = $flp_md->findDatePageOriginated();
+        //$metadata->hash = $flp_md->
+        //$metadata->href = $flp_md->
+        $metadata->keywords = $flp_md->keywords();
+        $metadata->language = $flp_md->language();
+        $metadata->minimumMathNeeded = $flp_md->minimumMathNeeded();
+        $metadata->minimumStatisticsNeeded = $flp_md->minimumStatisticsNeeded();
+        $metadata->moderator = $flp_md->moderator();
+        $metadata->moderatorInstitution = $flp_md->moderatorBusinessName();
+        $metadata->moderatorProfession = $flp_md->moderatorProfession();
+        $metadata->scientificField = $flp_md->scientificField();
+        //$metadata->text = $flp_md->
+        //$metadata->websiteSubtitle = $flp_md->
+        //$metadata->websiteTitle =
+
+        FLP\Data::createArticle($page, $body, $metadata, $version);
+    }
 } 
