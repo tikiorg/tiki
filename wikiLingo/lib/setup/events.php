@@ -5,8 +5,6 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-use Phraser;
-use TikiLib;
 
 tiki_setup_events();
 
@@ -246,7 +244,7 @@ function tiki_wiki_save_pastlink($args)
 
 function wikilingo_flp_view($args)
 {
-	$page = $args['object'];
+    $page = $args['object'];
 	$version = $args['version'];
 	$body = $args['data'];
 	require_once 'lib/wikiLingo_tiki/TikiWikiEvents.php';

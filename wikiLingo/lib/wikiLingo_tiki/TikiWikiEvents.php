@@ -1,7 +1,6 @@
 <?php
 
 include 'lib/wikiLingo_tiki/FLPLookup.php';
-use FLPLookup;
 
 class TikiWikiEvents {
 
@@ -11,6 +10,12 @@ class TikiWikiEvents {
 
 	public function __construct($title, $version, $body)
 	{
+        global $host_tiki, $dbs_tiki, $user_tiki, $pass_tiki;
+
+        FLP\Data::$dbConnectionString = 'mysql:host=' . $host_tiki . ';dbname=' . $dbs_tiki;
+        FLP\Data::$dbUsername = $user_tiki;
+        FLP\Data::$dbPassword = $pass_tiki;
+
 		$this->title = $title;
 		$this->version = $version;
 		$this->body = $body;
