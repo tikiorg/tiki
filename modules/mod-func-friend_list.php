@@ -31,10 +31,6 @@ function module_friend_list_info()
  */
 function module_friend_list($mod_reference, $module_params)
 {
-	$servicelib = TikiLib::lib('service');
-	$out = $servicelib->internal('social', 'list_friends', array());
-
-	$smarty = TikiLib::lib('smarty');
-	$smarty->assign('mod_friend_list', $out);
+	// Template does everyting
 }
 
