@@ -987,7 +987,7 @@ if ( \$('#$id') ) {
 
 		$func_name = 'wikiplugin_' . $name;
 
-		if ( ! $validationPerformed ) {
+		if ( ! $validationPerformed && ! $this->option['ck_editor'] ) {
 			$this->plugin_apply_filters($name, $data, $args);
 		}
 
