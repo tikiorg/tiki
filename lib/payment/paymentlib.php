@@ -144,7 +144,10 @@ class PaymentLib extends TikiDb_Bridge
 				array('invoice' => $info['paymentRequestId'],)
 			);
 
-			$info['returnurl'] = $info['url'];
+			$info['returnurl'] = $tikilib->tikiUrl(
+				'tiki-payment.php',
+				array('invoice' => $info['paymentRequestId'], 'check' => 1,)
+			);
 
 			// Add token if feature is activated (need prefs
 			global $user;
@@ -209,6 +212,41 @@ class PaymentLib extends TikiDb_Bridge
 		}
 
 		return 'outstanding';
+	}
+
+	/**
+	 * Check if the payment has been received through the gateway's API.
+	 * Return false if this is not supported.
+	 */
+	public function check_payment($paymentId)
+	{
+		global $prefs;
+		if ($prefs['payment_system'] == 'israelpost') {
+			$wsdl = $prefs['payment_israelpost_environment'] . 'GetGenericStatus?wsdl';
+			$client = new Zend_Soap_Client($wsdl, array(
+				'soap_version' => SOAP_1_1,
+			));
+			$response = $client->INQUIRE($prefs['payment_israelpost_business_id'], $prefs['payment_israelpost_api_password'], $paymentId);
+			if (isset($response->ORDERS)) {
+				$payment = $this->get_payment($paymentId);
+				// Collect the payment ids already entered
+				$existing = array_map(function ($payment) {
+					return $payment['details']['ORDERID'];
+				}, $payment['payments']);
+
+				$entered = false;
+				foreach ($response->ORDERS as $order) {
+					if ($order->STATUS == 2 && ! in_array($order->ORDERID, $existing)) {
+						$this->enter_payment($paymentId, $order->TOTAL_PAID, 'israelpost', (array) $order);
+						$entered = true;
+					}
+				}
+
+				return $entered;
+			}
+		}
+
+		return false;
 	}
 
 	private function extract_actions( $actions )

@@ -109,13 +109,14 @@
 						<br><input type="image" name="submit" border="0" src="https://www.paypal.com/en_US/i/bnr/horizontal_solution_PPeCheck.gif" border="0" alt="PayPal">
 					</form>
 				{elseif $prefs.payment_system eq 'israelpost' && $prefs.payment_israelpost_business_id neq ''}
-					<form id="israelpost_form" method="post" target="israelpost_iframe" action="{$prefs.payment_israelpost_environment|escape}">
+					<form id="israelpost_form" method="post" target="israelpost_iframe" action="{$prefs.payment_israelpost_environment|escape}genericInit?OpenAgent{if $prefs.language neq 'he'}&amp;L=EN{/if}">
 						<input type="hidden" name="business" value="{$prefs.payment_israelpost_business_id|escape}">
 						<input type="hidden" name="PreOrderID" value="{$payment_info.paymentRequestId|escape}">
 						<input type="hidden" name="item_number_1" value="{$payment_info.paymentRequestId|escape}">
 						<input type="hidden" name="item_name_1" value="{tr}Total{/tr}">
 						<input type="hidden" name="amount_1" value="{$payment_info.amount_remaining_raw|escape}">
 						<input type="hidden" name="quantity_1" value="1">
+						<input type="hidden" name="return" value="{$payment_info.returnurl|escape}">
 						<input type="submit" value="{tr}Proceed to Israel Post{/tr}">
 					</form>
 					{* Note: width specified by specifications, not height *}

@@ -46,6 +46,7 @@
 					<div class="admin payment">
 						{preference name=payment_israelpost_environment}
 						{preference name=payment_israelpost_business_id}
+						{preference name=payment_israelpost_api_password}
 					</div>
 					<h2 style="padding-left:25px">{tr}Cclite{/tr}</h2>
 					<div class="admin payment">
