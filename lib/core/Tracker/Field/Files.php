@@ -46,6 +46,7 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 						'options' => array(
 							'' => tr('Links'),
 							'img' => tr('Images'),
+							'vimeo' => tr('Vimeo'),
 							'googleviewer' => tr('Google Viewer'),
 							'moodlescorm' => tr('Moodle Scorm Viewer'),
 						),
