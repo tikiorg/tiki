@@ -30,7 +30,7 @@ class FlinksLib extends TikiLib
 
 	function update_featured_link($url, $title, $description, $position = 0, $type = 'f')
 	{
-		$query = "update `tiki_featured_links` set `title`=?, `type`=?, `description`=?, `position`=? where `url`='$url'";
+		$query = "update `tiki_featured_links` set `title`=?, `type`=?, `description`=?, `position`=? where `url`=?";
 
 		$result = $this->query($query, array($title,$type,$description,$position,$url));
 	}
