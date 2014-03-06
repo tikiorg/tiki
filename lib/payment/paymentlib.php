@@ -146,7 +146,7 @@ class PaymentLib extends TikiDb_Bridge
 
 			$info['returnurl'] = $tikilib->tikiUrl(
 				'tiki-payment.php',
-				array('invoice' => $info['paymentRequestId'], 'check' => 1,)
+				array('invoice' => $info['paymentRequestId'],)
 			);
 
 			// Add token if feature is activated (need prefs
@@ -218,10 +218,15 @@ class PaymentLib extends TikiDb_Bridge
 	 * Check if the payment has been received through the gateway's API.
 	 * Return false if this is not supported.
 	 */
-	public function check_payment($paymentId)
+	public function check_payment($paymentId, $jitGet, $jitPost)
 	{
 		global $prefs;
 		if ($prefs['payment_system'] == 'israelpost') {
+			$combined = $prefs['payment_israelpost_business_id'] . $prefs['payment_israelpost_api_password'] . $jitGet->OrderID->digits() . $jitGet->CartID->word();
+			if (hash("sha256", $combined) !== $jitGet->OKauthentication->word()) {
+				return false;
+			}
+
 			$wsdl = $prefs['payment_israelpost_environment'] . 'GetGenericStatus?wsdl';
 			$client = new Zend_Soap_Client($wsdl, array(
 				'soap_version' => SOAP_1_1,

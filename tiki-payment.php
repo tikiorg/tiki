@@ -38,7 +38,6 @@ $inputConfiguration = array(
 				'daconfirm' => 'word',				// ticketlib
 				'ticket' => 'word',
 				'returnurl' => 'url',
-				'check' => 'int',
 			),
 			'staticKeyFiltersForArrays' => array('cart' => 'digits',),	// params for cart module
 			'catchAllUnset' => null,
@@ -90,10 +89,10 @@ if ( isset($ipn_data) ) {
 	exit;
 }
 
-if (! empty($_GET['check']) && isset($_GET['invoice'])) {
+if (isset($_GET['invoice']) && $jitGet->OKauthentication->word()) {
 	// Return URL - check payment right away through APIs
 	$id = $_GET['invoice'];
-	$verified = $paymentlib->check_payment($id);
+	$verified = $paymentlib->check_payment($id, $jitGet, $jitPost);
 
 	if ($verified) {
 		$access->redirect('tiki-payment.php?invoice=' . $id, tra('Payment has been confirmed.'));
