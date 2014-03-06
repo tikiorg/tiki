@@ -17,7 +17,7 @@
 	<legend>{tr}Notification Preferences{/tr}</legend>
 		<div class="userWizardIconright"><img src="img/icons/large/evolution48x48.png" alt="{tr}Notification Preferences{/tr}" /></div>
 		<table class="formcolor" style="width:80%">
-				{tr}Send notification when I am the editor{/tr}:
+				{tr}Send notification when I am the editor:{/tr}
 			    <tr>
 			        <td style="width:48%">
 					<p><input type="checkbox" name="user_wiki_watch_editor" {if $user_wiki_watch_editor eq 'y'}checked{/if}> {tr}Wiki{/tr}</p>

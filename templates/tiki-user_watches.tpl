@@ -193,7 +193,7 @@
 	
 	<form action="tiki-user_notifications.php" method="post">
 		<input type="hidden" name="notification_preferences" value="true">
-		<p>Send notification when I am the editor:</p>
+		<p>{tr}Send notification when I am the editor:{/tr}</p>
         {if $prefs.feature_wiki eq 'y'}
 		<p><input type="checkbox" name="user_wiki_watch_editor" value="true" {if $user_wiki_watch_editor eq 'y'}checked{/if}> {tr}Wiki{/tr}</p>
         {/if}
