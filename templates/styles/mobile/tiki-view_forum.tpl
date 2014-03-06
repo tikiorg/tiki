@@ -286,12 +286,12 @@
 					$('.forum_deliberation_add_item').click(function() {
 						var thisItem;
 						if (!itemMaster) {
-							$.modal(tr('Loading...'));
+							$.tikiModal(tr('Loading...'));
 							$.get('tiki-ajax_services', {controller: 'comment', action: "deliberation_item"}, function(itemInput) {
 								itemMaster = itemInput;
 								thisItem = $(itemMaster).insertBefore('div.forum_deliberation_items_toolbar');
 								configureDeliberationItemRatings(thisItem);
-								$.modal();
+								$.tikiModal();
 							});
 						} else {
 							thisItem = $(itemMaster).insertBefore('div.forum_deliberation_items_toolbar');

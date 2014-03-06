@@ -209,7 +209,7 @@ function smarty_function_treetable($params, $smarty)
 		$headerlib->add_jq_onready(
 			'
 $("#'.$id.'_openall").click( function () {
-	$this = $(this).modal(" ");
+	$this = $(this).tikiModal(" ");
 	var img = $("img:first", this)[0];
 	if (img.src.indexOf("ofolder.png") > -1) {
 
@@ -220,7 +220,7 @@ $("#'.$id.'_openall").click( function () {
 				$(this).click();
 			},
 			end: function ()  {
-				$this.modal();
+				$this.tikiModal();
 			}
 		});
 		img.src = img.src.replace("ofolder", "folder");
@@ -232,7 +232,7 @@ $("#'.$id.'_openall").click( function () {
 				$(this).click();
 			},
 			end: function ()  {
-				$this.modal();
+				$this.tikiModal();
 			}
 		});
 		img.src = img.src.replace("folder", "ofolder");

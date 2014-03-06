@@ -340,7 +340,7 @@ FORM;
 				this.save();
 			},
 			save: function(reload) {
-				$("#page-data").modal(tr("Loading..."));
+				$("#page-data").tikiModal(tr("Loading..."));
 
 				var needReload = reload != undefined;
 				var params = {
@@ -364,7 +364,7 @@ FORM;
 								$("#pluginConvene$i", "#page-data").replaceWith(newForm);
 							}
 							initConvene$i();
-							$("#page-data").modal();
+							$("#page-data").tikiModal();
 						}
 					});
 

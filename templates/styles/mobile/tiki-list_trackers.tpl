@@ -305,11 +305,11 @@
 		});
 	});
 	$('#forumImportFromProfile').submit(function() {
-		$.modal(tr('Loading...'));
+		$.tikiModal(tr('Loading...'));
 		$.post($(this).attr('action'), {yaml: $('#importFromProfileYaml').val()}, function(feedback) {
 			feedback = $.parseJSON(feedback);
 
-			$.modal();
+			$.tikiModal();
 			if (feedback.length) {
 				for(i in feedback) {
 					$.notify(feedback[i]);
