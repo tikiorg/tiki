@@ -178,13 +178,13 @@
             "source": {
                 "type": "svn",
                 "url": "http://svn.code.sf.net/p/jcapture-applet/code",
-                "reference": "/trunk/@46"
+                "reference": "/trunk/@47"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/jcapture-applet-jcapture-applet-dev-trunk-f04408.zip",
+                "url": "https://composer.tiki.org/dist/jcapture-applet-jcapture-applet-dev-trunk-56537c.zip",
                 "reference": "dev-trunk",
-                "shasum": "99359f87c4472e26605dc4989fd7624506ed6701"
+                "shasum": "0f910540cf75ece6edf67ba09af420f9b6d01f04"
             },
             "type": "library",
             "license": [
@@ -212,7 +212,7 @@
                 "screencapture",
                 "screenshot"
             ],
-            "time": "2013-04-18 04:48:36"
+            "time": "2014-01-27 14:02:15"
         },
         {
             "name": "jquery/jquery",
