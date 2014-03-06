@@ -3551,10 +3551,10 @@ class FileGalLib extends TikiLib
 			$size = function_exists('mb_strlen') ? mb_strlen($dataforsize, '8bit') : strlen($dataforsize);
 			$metadata = $this->extractMetadataJson($work_file);
 
-			if ($data) {					// image stored in $data so the file $work_file is temporary
-				$data = $dataforsize;
-				unlink($work_file);			// otherwise it's the actual filesystem version of the image so should not be deleted
-			}
+		}
+		if ($data) {					// image stored in $data so the file $work_file is temporary
+			$data = $dataforsize;
+			unlink($work_file);			// otherwise it's the actual filesystem version of the image so should not be deleted
 		}
 	}
 
