@@ -117,6 +117,7 @@
 						<input type="hidden" name="amount_1" value="{$payment_info.amount_remaining_raw|escape}">
 						<input type="hidden" name="quantity_1" value="1">
 						<input type="hidden" name="return" value="{$payment_info.returnurl|escape}">
+						<input type="hidden" name="currency_code" value="{$prefs.payment_currency|escape}">
 						<input type="submit" value="{tr}Proceed to Israel Post{/tr}">
 					</form>
 					{* Note: width specified by specifications, not height *}
