@@ -1,18 +1,16 @@
 {* $Id$ *}
 <table>
-	{if $header}
-		<tr>
-			{foreach from=$column item=col}
-				<th>
-					{if $col.sort}
-						{self_link _sort_arg='sort_mode' _sort_field=$col.sort}{$col.label|escape}{/self_link}
-					{else}
-						{$col.label|escape}
-					{/if}
-				</th>
-			{/foreach}
-		</tr>
-	{/if}
+	<tr>
+		{foreach from=$column item=col}
+			<th>
+				{if $col.sort}
+					{self_link _sort_arg='sort_mode' _sort_field=$col.sort}{$col.label|escape}{/self_link}
+				{else}
+					{$col.label|escape}
+				{/if}
+			</th>
+		{/foreach}
+	</tr>
 	{foreach from=$results item=row}
 		<tr>
 			{foreach from=$column item=col}
