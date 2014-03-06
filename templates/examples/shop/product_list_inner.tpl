@@ -1,7 +1,7 @@
 <div class="clearfix">
 	<ul class="product-list searchresults">
 		{foreach $results as $row}
-			<li style="float:left;width:220px;height:300px;padding: 4px;">{*<!-- itemId: "{$row.object_id}" -->*}
+			<li style="float:left;width:220px;height:450px;padding: 4px;">{*<!-- itemId: "{$row.object_id}" -->*}
 				<div style="padding-right:0.5em;width:120px;margin:0 auto;">
 					{$img = ','|explode:$row.images|nonp}
 					{if count({$img})}
@@ -15,7 +15,7 @@
 					{/if}
 				</div>
 				<div style="padding: 0 .5em;min-height:36px;text-align:center;">
-					<h3 class="list-title"><a href="product?itemId={$row.object_id}">{$row.title}</a></h3>
+					<h3 class="list-title"><a href="product?itemId={$row.object_id}">{$row.name}</a></h3>
 					<p itemprop="category" class="list-cat">{$row.category}</p>
 				</div>
 				<div style="padding:0 .5em;text-align:center;min-height:69px;">
