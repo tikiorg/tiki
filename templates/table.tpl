@@ -1,6 +1,13 @@
 {* $Id$ *}
 <table class="table">
 	<thead>
+	{$header=false}
+	{foreach from=$column item=col}
+		{if !empty($col.label) or !empty($col.sort)}
+			{$header=true}
+			{break}
+		{/if}
+	{/foreach}
 	{if $header}
 		<tr>
 			{foreach from=$column item=col}
