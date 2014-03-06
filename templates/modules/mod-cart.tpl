@@ -23,7 +23,7 @@
 						</td>
 						<td style="width:5em;" align="right">{$item.price|escape}</td>
 						{if $module_params.showItemButtons eq 'n'}
-							<td style="width:2em;"><input type="text" name="cart[{$item.code|escape}]" style="width:2em;text-align:right;" value="{$item.quantity|escape}"></td>							</td>
+							<td style="width:2em;"><input type="text" name="cart[{$item.code|escape}]" style="width:2em;text-align:right;" value="{$item.quantity|escape}"></td>
 						{else}
 							<td style="white-space: nowrap">
 								{icon _id='bin' class='icon item_remove' onclick='$(this).nextAll("input").val("").parents("form:first").submit();return false;'}
