@@ -90,6 +90,16 @@ class Search_Formatter_Plugin_SmartyTemplate implements Search_Formatter_Plugin_
 		$smarty->assign('offsetplusone', $entries->getOffset() + 1);
 		$smarty->assign('offsetplusmaxRecords', $entries->getOffset() + $entries->getMaxRecords());
 		$smarty->assign('maxRecords', $entries->getMaxRecords());
+		if (!empty($this->data['column'])) {
+			$header = false;
+			foreach ($this->data['column'] as $col) {
+				if (!empty($col['label']) || !empty($col['sort'])) {
+					$header = true;
+					break;
+				}
+			}
+		}
+		$smarty->assign('header', $header);
 
 		return $smarty->fetch($this->templateFile);
 	}
