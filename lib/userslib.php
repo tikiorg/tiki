@@ -5519,6 +5519,15 @@ class UsersLib extends TikiLib
 				'prefs' => array('workspace_ui'),
 				'scope' => 'object',
 			),
+			array(
+				'name' => 'tiki_p_goal_admin',
+				'description' => tr('Can manage all aspects of the goal'),
+				'level' => 'admin',
+				'type' => 'goal',
+				'admin' => true,
+				'prefs' => ['goal_enabled'],
+				'scope' => 'object',
+			),
 		);
 
 		$cachelib->cacheItem('rawpermissions' . $prefs['language'], serialize($permissions));

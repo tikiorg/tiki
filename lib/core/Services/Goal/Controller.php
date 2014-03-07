@@ -80,7 +80,7 @@ class Services_Goal_Controller
 	function action_admin($input)
 	{
 		$perms = Perms::get();
-		if (! $perms->admin) {
+		if (! $perms->goal_admin) {
 			throw new Services_Exception_Denied(tr('Reserved to administrators'));
 		}
 
@@ -97,7 +97,7 @@ class Services_Goal_Controller
 	function action_create($input)
 	{
 		$perms = Perms::get();
-		if (! $perms->admin) {
+		if (! $perms->goal_admin) {
 			throw new Services_Exception_Denied(tr('Reserved to administrators'));
 		}
 
@@ -131,8 +131,8 @@ class Services_Goal_Controller
 
 	function action_edit($input)
 	{
-		$perms = Perms::get();
-		if (! $perms->admin) {
+		$perms = Perms::get('goal', $input->goalId->int());
+		if (! $perms->goal_admin) {
 			throw new Services_Exception_Denied(tr('Reserved to administrators'));
 		}
 
@@ -194,8 +194,8 @@ class Services_Goal_Controller
 
 	function action_delete($input)
 	{
-		$perms = Perms::get();
-		if (! $perms->admin) {
+		$perms = Perms::get('goal', $input->goalId->int());
+		if (! $perms->goal_admin) {
 			throw new Services_Exception_Denied(tr('Reserved to administrators'));
 		}
 
@@ -225,10 +225,7 @@ class Services_Goal_Controller
 	 */
 	function action_render_conditions($input)
 	{
-		$perms = Perms::get();
-		if (! $perms->admin) {
-			throw new Services_Exception_Denied(tr('Reserved to administrators'));
-		}
+		// No need to check permissions, no actions possible
 
 		$conditions = json_decode($input->conditions->none(), true);
 
@@ -247,6 +244,8 @@ class Services_Goal_Controller
 	 */
 	function action_edit_condition($input)
 	{
+		// No need to check permissions, no actions possible
+
 		$condition = [
 			'label' => tr('Pages created'),
 			'operator' => 'atLeast',
@@ -290,10 +289,7 @@ class Services_Goal_Controller
 	 */
 	function action_render_rewards($input)
 	{
-		$perms = Perms::get();
-		if (! $perms->admin) {
-			throw new Services_Exception_Denied(tr('Reserved to administrators'));
-		}
+		// No need to check permissions, no actions possible
 
 		$rewards = json_decode($input->rewards->none(), true);
 
@@ -312,6 +308,8 @@ class Services_Goal_Controller
 	 */
 	function action_edit_reward($input)
 	{
+		// No need to check permissions, no actions possible
+
 		$rewardList = TikiLib::lib('goalreward')->getRewardList();
 
 		if (empty($rewardList)) {
