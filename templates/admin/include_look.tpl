@@ -92,6 +92,7 @@
 					{preference name=sitelogo_bgcolor}
 					{preference name=sitelogo_title}
 					{preference name=sitelogo_alt}
+					{preference name=sitelogo_icon}
 				</fieldset>
 
 				<fieldset>
