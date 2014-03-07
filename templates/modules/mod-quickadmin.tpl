@@ -26,7 +26,7 @@
 			{icon _id=wrench title="{tr}Modify the look &amp; feel (logo, theme, etc.){/tr}" href="tiki-admin.php?page=look&amp;cookietab=2"} 
 			{icon _id=user title="{tr}Users{/tr}" href="tiki-adminusers.php"}
 			{icon _id=group title="{tr}Groups{/tr}" href="tiki-admingroups.php"}			
-			{icon _id=key title="{tr}Permissions{/tr}" href="tiki-objectpermissions.php"}
+			{permission_link mode=icon label="{tr}Manage permissions{/tr}"}
 			{icon _id=application_side_tree title="{tr}Menus{/tr}" href="tiki-admin_menus.php"}
 			{if $prefs.lang_use_db eq "y"}
 				{if isset($smarty.session.interactive_translation_mode) && $smarty.session.interactive_translation_mode eq "on"}

@@ -11,23 +11,66 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
   exit;
 }
 
+/**
+ * Generates a link to the object permission screen, and verifies if there are
+ * active permissions to render the link differently as required.
+ *
+ * Important parameters: type and id, for the target object - otherwise global
+ *                       permType, if different from type
+ *                       title, the name of the object
+ *
+ * Almost mandatory: mode, display style of the button
+ *                      glyph: simple glyphicon
+ *                      icon: classic tiki icon
+ *                      link: plain text link (label)
+ *                      text: glyph + label
+ *                      button: button with label
+ *                      button_link: button with label (btn-link)
+ *
+ * Occasional: label, alter the displayed text from default
+               group, parameter to objectpermissions
+			   textFilter, parameter to objectpermissions
+			   showDisabled, parameter to objectpermissions
+ */
 function smarty_function_permission_link( $params, $smarty )
 {
-	if ( ! isset( $params['type'], $params['id'] )) {
-		return tra('No object information provided.');
-	}
-
 	$params = new JitFilter($params);
 	$type = $params->type->text();
 	$id = $params->id->text();
 
 	$objectlib = TikiLib::lib('object');
-	$link = 'tiki-objectpermissions.php?' . http_build_query([
-		'objectType' => $type,
-		'objectId' => $id,
-		'permType' => $params->permType->text() ?: $type,
-		'objectName' => $params->title->text() ?: $objectlib->get_title($type, $id),
-	], '', '&');
+	if (isset($params['type'], $params['id'])) {
+		$arguments = [
+			'objectType' => $type,
+			'objectId' => $id,
+			'permType' => $type,
+			'objectName' => $params->title->text() ?: $objectlib->get_title($type, $id),
+		];
+	} else {
+		$arguments = [];
+	}
+
+	if ($params->permType->text()) {
+		$arguments['permType'] = $params->permType->text();
+	}
+
+	if ($params->textFilter->text()) {
+		$arguments['textFilter'] = $params->textFilter->text();
+	}
+
+	if ($params->group->groupname()) {
+		$arguments['group'] = $params->group->groupname();
+	}
+
+	if ($params->showDisabled->word() == 'y') {
+		$arguments['show_disabled_features'] = 'y';
+	}
+
+	if (! empty($arguments)) {
+		$link = 'tiki-objectpermissions.php?' . http_build_query($arguments, '', '&');
+	} else {
+		$link = 'tiki-objectpermissions.php';
+	}
 
 	$perms = Perms::get($type, $id);
 	$source = $perms->getResolver()->from();
@@ -37,6 +80,7 @@ function smarty_function_permission_link( $params, $smarty )
 			'url' => $link,
 			'active' => $source == 'object',
 			'mode' => $params->mode->word() ?: 'glyph',
+			'label' => $params->label->text() ?: tr('Permissions'),
 		],
 	]);
 }

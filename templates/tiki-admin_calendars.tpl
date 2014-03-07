@@ -79,7 +79,7 @@
 						<td class="text">{$cal.customsubscription|yesno}</td>
 						<td class="text">{$cal.personal|yesno}</td>
 						<td class="text">
-							<a title="{tr}Permissions{/tr}" class="link" href="tiki-objectpermissions.php?objectName={$cal.name|escape:"url"}&amp;objectType=calendar&amp;permType=calendar&amp;objectId={$id}">{if $cal.individual gt 0}{icon _id='key_active' alt="{tr}Permissions{/tr}"}</a>&nbsp;{$cal.individual}{else}{icon _id='key' alt="{tr}Permissions{/tr}"}</a>{/if}
+							{permission_link mode=icon type=calendar id=$id title=$cal.name}
 						</td>
 						<td class="action">
 							<a title="{tr}Edit{/tr}" class="link" href="tiki-admin_calendars.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;calendarId={$id}&cookietab=2">{icon _id='page_edit'}</a>

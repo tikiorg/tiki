@@ -20,7 +20,7 @@
 {/if}
 
 {if $individual eq 'y'}
-  <a class="link" href="tiki-objectpermissions.php?objectName={$title|escape:"url"}&amp;objectType=blog&amp;permType=blogs&amp;objectId={$blogId}">{tr}There are individual permissions set for this blog{/tr}</a>
+  {permission_link mode=link type=blog permType=blogs id=$blogId title=$title label="{tr}There are individual permissions set for this blog{/tr}"}
 {/if}
 
 <form method="post" action="tiki-edit_blog.php" id="blog-edit-form" class="form-horizontal" role="form">

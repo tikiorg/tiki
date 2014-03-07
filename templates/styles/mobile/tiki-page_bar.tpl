@@ -50,7 +50,7 @@
 					{/if}
 
 					{if $tiki_p_admin_wiki eq 'y' or $tiki_p_assign_perm_wiki_page eq 'y'}
-						{button _keepall='y' href="tiki-objectpermissions.php" objectId=$page objectName=$page objectType="wiki+page" permType="wiki" _text="{tr}Permissions{/tr}"}
+						{permission_link mode=button type="wiki page" permType=wiki id=$page title=$page}
 					{/if}
 
 					{if $prefs.feature_history eq 'y' and $tiki_p_wiki_view_history eq 'y'}

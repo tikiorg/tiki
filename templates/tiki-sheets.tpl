@@ -50,9 +50,7 @@
 		{/if}
 		
 		{if $individual eq 'y'}
-			<a class="gallink" href="tiki-objectpermissions.php?objectName={$name|escape:"url"}&amp;objectType=sheet&amp;permType=sheet&amp;objectId={$sheetId}">
-				{tr}There are individual permissions set for this sheet{/tr}
-			</a>
+			{permission_link mode=link type=sheet id=$sheetId title=$name label="{tr}There are individual permissions set for this sheet{/tr}"}
 		{/if}
 		<form action="tiki-sheets.php" method="post">
 			<input type="hidden" name="sheetId" value="{$sheetId|escape}">

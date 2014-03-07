@@ -1,9 +1,7 @@
 {* $Id$ *}
 {if $tiki_p_create_file_galleries eq 'y' or ($user eq $gal_info.user and $gal_info.type eq 'user' and $tiki_p_userfiles)}
 	{if isset($individual) and $individual eq 'y'}
-		<a class="fgallink" href="tiki-objectpermissions.php?objectName={$name|escape:"url"}&amp;objectType=file+gallery&amp;permType=file+galleries&amp;objectId={$galleryId}">
-			{tr}There are individual permissions set for this file gallery{/tr}
-		</a>
+		{permission_link mode=button type="file gallery" permType="file galleries" id=$galleryId title=$name label="{tr}There are individual permissions set for this file gallery{/tr}"}
 	{/if}
 		<form class="form-horizontal" role="form" action="{$smarty.server.PHP_SELF}?{query}" method="post">
 			<input type="hidden" name="galleryId" value="{$galleryId|escape}">

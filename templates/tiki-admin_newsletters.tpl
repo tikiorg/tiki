@@ -43,13 +43,7 @@
 			<td class="integer">{$channels[user].drafts}</td>
 			<td class="date">{$channels[user].lastSent|tiki_short_datetime}</td>
 			<td class="action">
-				<a class="link" href="tiki-objectpermissions.php?objectName={$channels[user].name|escape:"url"}&amp;objectType=newsletter&amp;permType=newsletters&amp;objectId={$channels[user].nlId}" title="{tr}Assign Permissions{/tr}">
-					{if $channels[user].individual eq 'y'}
-						{icon _id='key_active' alt="{tr}Assign Permissions{/tr}"}
-					{else}
-						{icon _id='key' alt="{tr}Assign Permissions{/tr}"}
-					{/if}
-				</a>
+				{permission_link mode=icon type=newsletter permType=newsletters id=$channels[user].nlId title=$channels[user].name}
 				{self_link _icon='page_edit' cookietab='2' _anchor='anchor2' nlId=$channels[user].nlId}{tr}Edit{/tr}{/self_link}
 				<a class="link" href="tiki-admin_newsletter_subscriptions.php?nlId={$channels[user].nlId}" title="{tr}Subscriptions{/tr}">{icon _id='group' alt="{tr}Subscriptions{/tr}"}</a>
 				<a class="link" href="tiki-send_newsletters.php?nlId={$channels[user].nlId}" title="{tr}Send Newsletter{/tr}">{icon _id='email' alt="{tr}Send Newsletter{/tr}"}</a>
@@ -69,7 +63,7 @@
 {tab name="{tr}Create/Edit Newsletters{/tr}"}
     <h2>{tr}Create/Edit Newsletters{/tr}</h2>
 {if isset($individual) && $individual eq 'y'}
-	<a class="link" href="tiki-objectpermissions.php?objectName={$info.name|escape:"url"}&amp;objectType=newsletter&amp;permType=newsletters&amp;objectId={$info.nlId}">{tr}There are individual permissions set for this newsletter{/tr}</a><br><br>
+	{permission_link mode=link type=newsletter permType=newsletters id=$info.nlId title=$info.name label="{tr}There are individual permissions set for this newsletter{/tr}"}
 {/if}
 
 <form action="tiki-admin_newsletters.php" method="post">

@@ -6,7 +6,7 @@
 				<li>{button _keepall='y' href="tiki-removepage.php" page=$page _class="btn-link" version="last" _text="{tr}Remove{/tr}"}</li>
 			{/if}
 			{if $tiki_p_admin_wiki eq 'y' or $tiki_p_assign_perm_wiki_page eq 'y'}
-				<li>{button _keepall='y' href="tiki-objectpermissions.php" objectId=$page objectName=$page objectType="wiki+page" permType="wiki" _class="btn-link" _text="{tr}Permissions{/tr}"}</li>
+				<li>{permission_link mode=button_link type="wiki page" id=$page permType=wiki title=$page}</li>
 			{/if}
 			{if $prefs.feature_page_contribution eq 'y' and $tiki_p_page_contribution_view eq 'y'}
 				<li>{button _keepall='y' href="tiki-page_contribution.php" page=$page _class="btn-link" _text="{tr}Contributions by author{/tr}"}</li>

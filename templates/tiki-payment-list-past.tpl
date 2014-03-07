@@ -22,9 +22,7 @@
 			<td class="action">
 				{self_link invoice=$payment.paymentRequestId}{icon _id=page class=titletips title="{tr}View payment info{/tr}" alt="{tr}Invoice{/tr}"}{/self_link}
 				{permission type=payment object=$payment.paymentRequestId name=payment_admin}
-					<a class="link" href="tiki-objectpermissions.php?objectName={$payment.description|escape:url}&amp;objectType=payment&amp;permType=payment&amp;objectId={$payment.paymentRequestId|escape:"url"}">
-						{icon _id='key' class=titletips title="{tr}Assign permissions for payments{/tr}" alt="{tr}Permissions{/tr}"}
-					</a>
+					{permission_link mode=icon type=payment id=$payment.paymentRequestId title=$payment.description}
 				{/permission}
 				{if $cancel and ($payment.user eq $user or $tiki_p_payment_admin)}
 					{self_link _ajax=n cancel=$payment.paymentRequestId}{icon _id=cross class=titletips title="{tr}Cancel this payment request{/tr}" alt="{tr}Cancel{/tr}"}{/self_link}

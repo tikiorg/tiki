@@ -179,7 +179,7 @@
 						<a class="link" href="tiki-edit_article.php?articleId={$listpages[changes].articleId}">{icon _id='page_edit'}</a>
 					{/if}
 					{if $tiki_p_admin_cms eq 'y' or $tiki_p_assign_perm_cms eq 'y'}
-						<a class="link" href="tiki-objectpermissions.php?objectName={$listpages[changes].title|escape:'url'}&amp;objectType=article&amp;permType=articles&amp;objectId={$listpages[changes].articleId}">{icon _id='key' alt="{tr}Permissons{/tr}"}</a>
+						{permission_link mode=icon type=article permType=articles id=$listpages[changes].articleId title=$listpages[changes].title}
 					{/if}
 					{if $tiki_p_remove_article eq 'y'}
 						&nbsp;

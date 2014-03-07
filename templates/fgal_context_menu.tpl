@@ -22,15 +22,11 @@
 		{/if}
 
 		{if $files[$changes].perms.tiki_p_assign_perm_file_gallery eq 'y'}
-			<a href="tiki-objectpermissions.php?objectName={$files[$changes].name|escape:"url"}&amp;objectType=file+gallery&amp;permType=file+galleries&amp;objectId={$files[$changes].id}{if !empty($filegals_manager)}&amp;filegals_manager={$filegals_manager|escape}{/if}">
-				{if $files[$changes].public neq 'y'}
-					{icon _menu_text=$menu_text _menu_icon=$menu_icon _id='key_private' alt="{tr}Private Gallery{/tr}"}
-				{elseif $files[$changes].perms.has_special_perm eq 'y'}
-					{icon _menu_text=$menu_text _menu_icon=$menu_icon _id='key_active' alt="{tr}Active Perms{/tr}"}
-				{else}
-					{icon _menu_text=$menu_text _menu_icon=$menu_icon _id='key' alt="{tr}Perms{/tr}"}
-				{/if}
-			</a>
+			{if $files[$changes].public neq 'y'}
+				{permission_link mode=private_icon type="file gallery" permType="file galleries" id=$files[$changes].id title=$files[$changes].name}
+			{else}
+				{permission_link mode=icon type="file gallery" permType="file galleries" id=$files[$changes].id title=$files[$changes].name}
+			{/if}
 		{/if}
 		{if $prefs.feature_webdav eq 'y'}
 			{assign var=virtual_path value=$files[$changes].id|virtual_path:'filegal'}

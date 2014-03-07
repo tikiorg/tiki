@@ -52,7 +52,7 @@
 
 			<fieldset>
 				<legend>{tr}Permissions{/tr}</legend>
-					<a class="link" href="tiki-objectpermissions.php?textFilter=comment&amp;show_disabled_features=y" title="{tr}Permission{/tr}">{tr}Permissions{/tr} {icon _id="key" alt="{tr}Permission{/tr}"}</a>
+					{permission_link mode=button textFilter=comment showDisabled=y}
 			</fieldset>
 
 			<fieldset>

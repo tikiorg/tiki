@@ -3,7 +3,7 @@
 <div class="t_navbar btn-group form-group">
 	{button href="tiki-admingroups.php" class="btn btn-default" _text="{tr}Admin Groups{/tr}"}
 	{button href="tiki-adminusers.php" class="btn btn-default" _text="{tr}Admin Users{/tr}"}
-	{button href="tiki-objectpermissions.php" class="btn btn-default" _text="{tr}Manage permissions{/tr}"}
+	{permission_link mode=button label="{tr}Manage permissions{/tr}"}
 </div>
 
 <form action="tiki-admin.php?page=community" method="post">

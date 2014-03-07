@@ -207,7 +207,7 @@
 
 		{preference name=feature_wiki_pictures}
 		<div class="adminoptionboxchild" id="feature_wiki_pictures_childcontainer">
-			<a class="link" href="tiki-objectpermissions.php?permType=wiki&amp;textFilter=picture&amp;show_disabled_features=y" title="{tr}Permission{/tr}">{icon _id="key" alt="{tr}Permission{/tr}"}</a>
+			{permission_link mode=button permType=wiki textFilter=picture showDisabled=y}
 			{preference name=feature_filegals_manager}
 			{button href="tiki-admin.php?page=wiki&amp;rmvunusedpic=1" _text="{tr}Remove unused pictures{/tr}"}
 			{button href="tiki-admin.php?page=wiki&amp;moveWikiUp=1" _text="{tr}Move images from wiki_up to the home file gallery{/tr}"}
@@ -216,7 +216,8 @@
 
 		{preference name=feature_wiki_export}
 		<div class="adminoptionboxchild" id="feature_wiki_export_childcontainer">
-			<a class="link" href="tiki-objectpermissions.php?permType=wiki&amp;textFilter=export&amp;show_disabled_features=y" title="{tr}Permission{/tr}">{icon _id="key" alt="{tr}Permission{/tr}"}</a>
+			{permission_link mode=button permType=wiki textFilter=export showDisabled=y}
+			{permission_link mode=icon permType=wiki textFilter=picture showDisabled=y}
 			{button href="tiki-export_wiki_pages.php" _text="{tr}Export Wiki Pages{/tr}"}
 		</div>
 
@@ -228,7 +229,7 @@
 
 		{preference name=feature_history}
 		<div class="adminoptionboxchild" id="feature_history_childcontainer">
-			<a class="link" href="tiki-objectpermissions.php?permType=wiki&amp;textFilter=history&amp;show_disabled_features=y" title="{tr}Permission{/tr}">{icon _id="key" alt="{tr}Permission{/tr}"}</a>
+			{permission_link mode=button permType=wiki textFilter=history showDisabled=y}
 			{preference name=maxVersions}
 			{preference name=keep_versions}
 			{preference name=feature_wiki_history_ip}
@@ -240,17 +241,17 @@
 		{preference name=feature_wiki_discuss}
 		<div class="adminoptionboxchild" id="feature_wiki_discuss_childcontainer">
 			{preference name=wiki_forum_id}
-			<a class="link" href="tiki-objectpermissions.php?permType=forums" title="{tr}Permission{/tr}">{icon _id="key" alt="{tr}Permission{/tr}"}</a>
+			{permission_link mode=button permType=forums}
 		</div>
 
 		{preference name=feature_source}
 		<div class="adminoptionboxchild" id="feature_source_childcontainer">
-			<a class="link" href="tiki-objectpermissions.php?permType=wiki&amp;textFilter=source&amp;show_disabled_features=y" title="{tr}Permission{/tr}">{icon _id="key" alt="{tr}Permission{/tr}"}</a>
+			{permission_link mode=button permType=wiki textFilter=source showDisabled=y}
 		</div>
 
 		{preference name=feature_wiki_ratings}
 		<div class="adminoptionboxchild" id="feature_wiki_ratings_childcontainer">
-			<a class="link" href="tiki-objectpermissions.php?permType=wiki&amp;textFilter=ratings&amp;show_disabled_features=y" title="{tr}Permission{/tr}">{icon _id="key" alt="{tr}Permission{/tr}"}</a>
+			{permission_link mode=button permType=wiki textFilter=ratings showDisabled=y}
 		</div>
 		{preference name=wiki_simple_ratings}
 		<div class="adminoptionboxchild" id="wiki_simple_ratings_childcontainer">
@@ -260,7 +261,7 @@
 		{preference name=feature_backlinks}
 		<div class="adminoptionboxchild" id="feature_backlinks_childcontainer">
 			{preference name=wiki_backlinks_name_len}
-			<a class="link" href="tiki-objectpermissions.php?permType=wiki&amp;textFilter=backlinks&amp;show_disabled_features=y" title="{tr}Permission{/tr}">{icon _id="key" alt="{tr}Permission{/tr}"}</a>
+			{permission_link mode=button permType=wiki textFilter=backlinks showDisabled=y}
 		</div>
 
 		{preference name=feature_semantic}
@@ -303,7 +304,7 @@
 
 		{preference name=feature_wiki_usrlock}
 		<div class="adminoptionboxchild" id="feature_wiki_usrlock_childcontainer">
-			<a class="link" href="tiki-objectpermissions.php?permType=wiki&amp;textFilter=lock&amp;show_disabled_features=y" title="{tr}Permission{/tr}">{icon _id="key" alt="{tr}Permission{/tr}"}</a>
+			{permission_link mode=button permType=wiki textFilter=lock showDisabled=y}
 		</div>
 
 		{preference name=wiki_creator_admin}

@@ -340,13 +340,7 @@
 				{/if}
 
 				{if $listpages[changes].perms.tiki_p_assign_perm_wiki_page eq 'y'}
-					<a class="link" href="tiki-objectpermissions.php?objectName={$listpages[changes].pageName|escape:"url"}&amp;objectType=wiki+page&amp;permType=wiki&amp;objectId={$listpages[changes].pageName|escape:"url"}">
-						{if $listpages[changes].perms_active eq 'y'}
-							{icon _id='key_active' alt="{tr}Perms{/tr}"}
-						{else}
-							{icon _id='key' alt="{tr}Perms{/tr}"}
-						{/if}
-					</a>
+					{permission_link mode=icon type="wiki page" permType=wiki id=$listpages[changes].pageName title=$listpages[changes].pageName}
 				{/if}
 
 				{if $listpages[changes].perms.tiki_p_remove eq 'y'}

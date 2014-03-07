@@ -88,11 +88,7 @@
 					{if $tracker.permissions->admin_trackers}
 						<a title="{tr}Fields{/tr}" class="link" href="tiki-admin_tracker_fields.php?trackerId={$tracker.trackerId}">{icon _id='table' alt="{tr}Fields{/tr}"}</a>
 						<a title="{tr}Edit{/tr}" class="edit" data-toggle="modal" data-target="#bootstrap-modal" href="{service controller=tracker action=replace trackerId=$tracker.trackerId modal=true}">{icon _id='pencil' alt="{tr}Edit{/tr}"}</a>
-						{if $tracker.individual eq 'y'}
-							<a title="{tr}Active Permissions{/tr}" class="link" href="tiki-objectpermissions.php?objectName={$tracker.name|escape:"url"}&amp;objectType=tracker&amp;permType=trackers&amp;objectId={$tracker.trackerId}">{icon _id='key_active' alt="{tr}Active Permissions{/tr}"}</a>
-						{else}
-							<a title="{tr}Permissions{/tr}" class="link" href="tiki-objectpermissions.php?objectName={$tracker.name|escape:"url"}&amp;objectType=tracker&amp;permType=trackers&amp;objectId={$tracker.trackerId}">{icon _id='key' alt="{tr}Permissions{/tr}"}</a>
-						{/if}
+						{permission_link mode=icon type=tracker permType=trackers id=$tracker.trackerId title=$tracker.name}
 						{if $tracker.items > 0}
 							<a title="{tr}Clear{/tr}" class="link clear confirm-prompt" href="{service controller=tracker action=clear trackerId=$tracker.trackerId}">{icon _id='bin' alt="{tr}Clear{/tr}"}</a>
 						{else}

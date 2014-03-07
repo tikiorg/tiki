@@ -22,7 +22,7 @@
 							{self_link action=remove id=$persp.perspectiveId}{icon _id=cross alt="{tr}Delete{/tr}"}{/self_link}
 						{/if}
 						{if $persp.can_perms}
-							<a href="tiki-objectpermissions.php?objectName={$persp.name|escape:"url"}&objectType=perspective&permType=perspective&objectId={$persp.perspectiveId|escape:"url"}">{icon _id=key alt="{tr}Permissions{/tr}"}</a>
+							{permission_link mode=icon type="perspective" id=$persp.perspectiveId title=$persp.name}
 						{/if}
 					</td>
 				</tr>

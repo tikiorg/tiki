@@ -32,13 +32,7 @@
 			</a>
 		{/if}
 		{if $tiki_p_admin_sheet eq 'y'}
-			<a class="gallink" href="tiki-objectpermissions.php?objectName={$sheet.title|escape:"url"}&amp;objectType=sheet&amp;permType=sheet&amp;objectId={$sheet.sheetId}">
-			{if $sheet.individual eq 'y'}
-				{icon _id='key_active' alt="{tr}Active Perms{/tr}"}
-			{else}
-				{icon _id='key' alt="{tr}Perms{/tr}"}
-			{/if}
-			</a>
+			{permission_link mode=icon type=sheet id=$sheet.sheetId title=$sheet.title}
 		{/if}
 		{if $sheet.tiki_p_edit_sheet eq 'y'}
 			<a class="gallink" href="tiki-sheets.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;edit_mode=1&amp;sheetId={$sheet.sheetId}">

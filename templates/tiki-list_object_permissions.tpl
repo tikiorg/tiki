@@ -1,7 +1,7 @@
 {title}{tr}Object Permissions List{/tr}{/title}
 
 <div class="t_navbar">
-{button href="tiki-objectpermissions.php" class="btn btn-default" _text="{tr}Manage Permissions{/tr}"}
+	{permission_link mode=button label="{tr}Manage permissions{/tr}"}
 </div>
 
 {if !empty($feedbacks)}
@@ -97,7 +97,8 @@
 									<td class="text">{$special.perm|escape}</td>
 									<td class="text">
 										{if !empty($special.objectId)}
-											<a href="tiki-objectpermissions.php?objectId={$special.objectId}&amp;objectType={$special.objectType}&amp;objectName={$special.objectName|escape}">{$special.reason|escape}</a>
+											{* I doubt this link worked in the past, permType was not specified *}
+											{permission_link mode=link type=$special.objectType id=$special.objectId title=$special.objectName label=$special.reason}
 										{else}
 											{$special.reason|escape}
 										{/if}
@@ -142,7 +143,9 @@
 									<td class="text">{$special.perm|escape}</td>
 									<td class="text">
 										{if !empty($special.objectId)}
-											<a href="tiki-objectpermissions.php?objectId={$special.objectId}&amp;objectType={$special.objectType}&amp;objectName={$special.objectName|escape:url}">{tr}{$special.reason|escape}:{/tr} {$special.objectName|escape}</a>
+											{* I doubt this link worked in the past, permType was not specified *}
+											{permission_link mode=icon type=$special.objectType id=$special.objectId title=$special.objectName}
+											{tr}{$special.reason|escape}:{/tr} {$special.objectName|escape}
 										{else}
 											{$special.reason|escape}: {$special.objectName}
 										{/if}

@@ -111,11 +111,7 @@
 		<a class='icon' href='tiki-list_comments.php?types_section=blogs&amp;blogId={$listpages[changes].blogId}'>{icon _id='comments' alt="{tr}List all comments{/tr}" title="{tr}List all comments{/tr}"}</a>
 	{/if}
 	{if $tiki_p_admin eq 'y' || $tiki_p_assign_perm_blog eq 'y'}
-	    {if isset($listpages[changes].individual) and $listpages[changes].individual eq 'y'}
-		<a class="icon" href="tiki-objectpermissions.php?objectName={$listpages[changes].title|escape:"url"}&amp;objectType=blog&amp;permType=blogs&amp;objectId={$listpages[changes].blogId}">{icon _id='key_active' alt="{tr}Active Perms{/tr}"}</a>
-	    {else}
-		<a class="icon" href="tiki-objectpermissions.php?objectName={$listpages[changes].title|escape:"url"}&amp;objectType=blog&amp;permType=blogs&amp;objectId={$listpages[changes].blogId}">{icon _id='key' alt="{tr}Perms{/tr}"}</a>
-	    {/if}
+		{permission_link mode=icon type="blog" permType="blogs" id=$listpages[changes].blogId title=$listpages[changes].title}
 	{/if}
         {if ($user and $listpages[changes].user eq $user) or ($tiki_p_blog_admin eq 'y')}
                 {if ($tiki_p_admin eq 'y') or ($listpages[changes].individual eq 'n') or ($listpages[changes].individual_tiki_p_blog_create_blog eq 'y' )}
