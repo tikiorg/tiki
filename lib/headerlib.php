@@ -152,6 +152,7 @@ class HeaderLib
 
 	function drop_cssfile($file)
 	{
+		$out = array();
 		foreach ($this->cssfiles as $rank=>$data) {
 			foreach ($data as $f) {
 				if ($f != $file) {
