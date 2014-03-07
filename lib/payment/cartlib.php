@@ -33,6 +33,13 @@ class CartLib
 			return false;
 		}
 
+		// add product description in cart
+		$itemId = $input->code->text();
+		$item = $itemInfo = TikiLib::lib('trk')->get_tracker_item($itemId);
+		$description = $item[1]; // 'Title'
+		$product_info['description'] = $description;
+
+
 		if (!empty($params['exchangeorderitemid']) && !empty($params['exchangetoproductid'])) {
 			if ( $input->exchangeorderitemid->int() !== $params['exchangeorderitemid'] ||
 					$input->exchangetoproductid->int() !== $params['exchangetoproductid'] ) {
