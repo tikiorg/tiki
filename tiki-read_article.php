@@ -169,6 +169,17 @@ $smarty->assign('show_expdate', $article_data["show_expdate"]);
 $smarty->assign('edit_data', 'y');
 $body = $article_data["body"];
 $heading = $article_data["heading"];
+
+// We need to figure out in which theme we are before the page parsing
+// in case the page contains pluginModule in which cas the parser triggers tiki-modules.php
+// which needs $tc_theme for deciding on the visible modules everywhere in the page
+include_once ('tiki-section_options.php');
+if ($prefs['feature_theme_control'] == 'y') {
+	$cat_type = 'article';
+	$cat_objid = $_REQUEST["articleId"];
+	include ('tiki-tc.php');
+}
+
 $smarty->assign('parsed_body', $tikilib->parse_data($body, array('is_html' => $artlib->is_html($article_data))));
 $smarty->assign(
 	'parsed_heading',
@@ -220,12 +231,6 @@ if (isset($is_categorized) && $is_categorized) {
 	}
 } else {
 	$smarty->assign('is_categorized', 'n');
-}
-include_once ('tiki-section_options.php');
-if ($prefs['feature_theme_control'] == 'y') {
-	$cat_type = 'article';
-	$cat_objid = $_REQUEST["articleId"];
-	include ('tiki-tc.php');
 }
 
 if ($prefs['feature_multilingual'] == 'y' && $article_data['lang']) {
