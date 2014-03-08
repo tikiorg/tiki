@@ -8,24 +8,32 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
+$inputConfiguration = array(
+	array( 'staticKeyFilters' => array(
+			'table' => 'word',
+			'column' => 'word',
+		)
+	)
+);
+
 require_once ('tiki-setup.php');
-$access->check_permission(array('tiki_p_admin_wiki'));
+$access->check_permission(array('tiki_p_admin'));
 
 global $tikilib;
 try {
-	if (!empty($_REQUEST['string_in_db_search'])) {
-		$searchString = $_REQUEST['string_in_db_search'];
+	if (!empty($_POST['string_in_db_search'])) {
+		$searchString = $_POST['string_in_db_search'];
 		$result = searchAllDB($searchString);
 
-		$smarty->assign('searchString', htmlentities($searchString));
+		$smarty->assign('searchString', $searchString);
 		$smarty->assign('searchResult', $result);
 
-	} elseif (!empty($_REQUEST['query'])) {
-		$query = $_REQUEST['query'];
-		$table = $_REQUEST['table'];
+	} elseif (!empty($_POST['query'])) {
+		$query = $_POST['query'];
+		$table = $_POST['table'];
 		sanitizeTableName($table);
-		$column = $_REQUEST['column'];
-		sanitizeColumnName($column);
+		$column = $_POST['column'];
+		sanitizeColumnName($column, $table);
 
 		$headers = array();
 		$sql2 = "SHOW COLUMNS FROM ".$table;
@@ -105,16 +113,21 @@ function isTextType($type)
 
 function sanitizeTableName($table)
 {
-	$illigalChars = '/\\.<>%\'""';	// The character set should be checked more
-	if (!empty(strpbrk($table, $illigalChars))) {
-		throw new Exception("Invalid table name: ".htmlentities($table));
+	global $tikilib;
+	$validTables = $tikilib->listTables();
+	if (!in_array($table, $validTables)) {
+		throw new Exception(tra('Invalid table name:') . ' ' . htmlentities($table));
 	}
 }
 
-function sanitizeColumnName($column)
+function sanitizeColumnName($column, $table)
 {
-	$illigalChars = '/\\.<>%\'""';	// The character set should be checked more
-	if (!empty(strpbrk($column, $illigalChars))) {
-		throw new Exception("Invalid column name: ".htmlentities($column));
+	global $tikilib;
+	$colsinfo = $tikilib->fetchAll("SHOW COLUMNS FROM $table");
+	foreach ($colsinfo as $col) {
+		$colnames[] = $col['Field'];
+	}
+	if (!in_array($column, $colnames)) {
+		throw new Exception(tra('Invalid column name:') . ' ' . htmlentities($column));
 	}
 }
