@@ -11,6 +11,7 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
 	exit;
 }
 
+//comments lib and Comments class needed for use by tiki-forum_import.php
 require_once ('lib/comments/commentslib.php');
 
 /**
@@ -90,21 +91,33 @@ class Importer extends Comments
 			}
 
 			if ($dbType == 'TikiWiki') {
-				$query = "insert into
+				$query = 'insert into
 								`tiki_comments` (`objectType`, `object`, `commentDate`,
 								`userName`, `title`, `data`, `votes`, `points`, `hash`,
 								`parentId`, `average`, `hits`, `type`, `summary`, `user_ip`,
 								`message_id`, `in_reply_to`)
-								values ( 'forum', '$tF', " . $row["commentDate"] . 
-								", \"" . $row["userName"] . "\", \"" . $row["title"] . 
-								"\", \"" . $row["data"] . "\", " . (int) $row["votes"] .
-								", '" . $row["points"] . "', '" . $row["hash"] . 
-								"', $pid, \"" . $row["average"] . "\", " .
-								(int) $row["hits"] . ", '" . $row["type"] . "', \"" .
-								$row["summary"] . "\", '" . $row["user_ip"] . "', \"" .
-								$row["message_id"] . "\", \"" . $row["in_reply_to"] . "\")";
+								values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
 
-				$result = $this->query($query);
+				$result = $this->query($query, array(
+						'forum',
+						$tF,
+						$row["commentDate"],
+						$row["userName"],
+						$row["title"],
+						$row["data"],
+						(int) $row["votes"],
+						$row["points"],
+						$row["hash"],
+						$pid,
+						$row["average"],
+						(int) $row["hits"],
+						$row["type"],
+						$row["summary"],
+						$row["user_ip"],
+						$row["message_id"],
+						$row["in_reply_to"]
+					)
+				);
 
 				$abbb = $this->getOne("SELECT LAST_INSERT_ID() from $ftable");
 
@@ -147,7 +160,7 @@ class Importer extends Comments
 	function parseFields($record)
 	{
 		$fields = array();
-		$moo = '\'';
+		$moo = "\'";
 
 		while ($a = strpos($record, ',')) {
 			// If field is a string...
@@ -156,7 +169,9 @@ class Importer extends Comments
 				while ($b = strpos($record, "'", $offset)) {
 					// If close quote is not escaped
 					if (substr($record, $b - 1, 2) != $moo) {
-						array_push($fields, substr($record, 1, $b - 1));
+						$field = substr($record, 1, $b - 1);
+						$field = str_replace('\r\n', '%%%', $field);
+						$fields[] = $field;
 						$record = substr($record, $b + 2);
 						break;
 					} else {
@@ -165,7 +180,11 @@ class Importer extends Comments
 				}
 				// Otherwise, it is numeric.
 			} else {
-				array_push($fields, substr($record, 0, $a));
+				$field = substr($record, 0, $a);
+				if (strpos($field, 'NULL') !== false && strlen($field) == 4) {
+					$field = NULL;
+				}
+				array_push($fields, $field);
 				$record = substr($record, $a + 1);
 			}
 		}
@@ -229,6 +248,12 @@ class Importer extends Comments
 
 					if (count($records) < 1) {
 						$records[0] = $c;
+					}
+
+					//first row may have column names - get rid of these
+					if (strpos($records[0], ') VALUES (') !== false) {
+						$split = strpos($records[0], ') VALUES (');
+						$records[0] = substr($records[0], $split + 10);
 					}
 
 					for ($count = 0, $count_records = count($records); $count < $count_records; $count++) {

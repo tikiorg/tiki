@@ -42,6 +42,23 @@
  ****************************************************************************/
 
 // Initialization
+
+$inputConfiguration = array(
+	array( 'staticKeyFilters' =>
+		array(
+			'step1' => 'word',
+			'step2' => 'word',
+			'step3' => 'word',
+			'import' => 'word',
+			'fForumid' => 'digits',
+			'tForumid' => 'digits',
+			'ftype' => 'word',
+			'prefix' => 'word',
+			'server' => 'striptags',
+		)
+	)
+);
+
 require_once ('tiki-setup.php');
 
 $access->check_feature('feature_forums');
@@ -50,25 +67,27 @@ $access->check_permission('tiki_p_admin_forum');
 include_once ('lib/importerlib.php');
 $import = new Importer($dbTiki);
 
+global $prefs;
+
 // Which iteration of the process are we in?
 // Step 0 - Select Import Method
 // Step 1 - Test Import Method Succeeded
 // Step 2 - Select Forum to Import From/To
 // Step 3 - Migration Complete - Do Again?
-if (isset($_REQUEST["step4"])) {
-} else if (isset($_REQUEST["step3"])) {
-	if ($_REQUEST["import"] == 'same') {			// Same db and server
-	} else if ($_REQUEST["import"] == 'other') {	// Different db & server
-	} else if ($_REQUEST["import"] == 'sql') {		// Import from SQL file
-		if (!$_REQUEST["fForumid"] || !$_REQUEST["tForumid"]) {
+if (isset($_POST["step4"])) {
+} else if (isset($_POST["step3"])) {
+	if ($_POST["import"] == 'same') {			// Same db and server
+	} else if ($_POST["import"] == 'other') {	// Different db & server
+	} else if ($_POST["import"] == 'sql') {		// Import from SQL file
+		if (!$_POST["fForumid"] || !$_POST["tForumid"]) {
 			$smarty->assign('failed', 'true');
 		} else {
 			$moo = $import->importSQLForum(
-							$_REQUEST["ftype"],
-							$_REQUEST["prefix"],
-							$_REQUEST["server"],
-							$_REQUEST["fForumid"], 
-							$_REQUEST["tForumid"]
+				$_POST["ftype"],
+				$_POST["prefix"],
+				$_POST["server"],
+				$_POST["fForumid"],
+				$_POST["tForumid"]
 			);
 			$smarty->assign('failed', 'false');
 		}
@@ -79,21 +98,22 @@ if (isset($_REQUEST["step4"])) {
 	}
 
 	$smarty->assign('step', 'import');
-	$smarty->assign('iMethod', $_REQUEST["import"]);
-	$smarty->assign('fi_type', $_REQUEST["ftype"]);
-	$smarty->assign('fi_prefix', $_REQUEST["prefix"]);
-	$smarty->assign('server', $_REQUEST["server"]);
+	$smarty->assign('iMethod', $_POST["import"]);
+	$smarty->assign('fi_type', $_POST["ftype"]);
+	$smarty->assign('fi_prefix', $_POST["prefix"]);
+	$smarty->assign('server', $_POST["server"]);
 	$smarty->assign('tomove', $moo);
-	$smarty->assign('fF', $_REQUEST["fForumid"]);
-	$smarty->assign('tF', $_REQUEST["tForumid"]);
-} else if (isset($_REQUEST["step2"])) {
-	if ($_REQUEST["import"] == 'same') {			// Same db and server
-	} else if ($_REQUEST["import"] == 'other') {	// Different db & server
-	} else if ($_REQUEST["import"] == 'sql') {		// Import from SQL file
+	$smarty->assign('fF', $_POST["fForumid"]);
+	$smarty->assign('tF', $_POST["tForumid"]);
+} else if (isset($_POST["step2"])) {
+	if ($_POST["import"] == 'same') {			// Same db and server
+	} else if ($_POST["import"] == 'other') {	// Different db & server
+	} else if ($_POST["import"] == 'sql') {		// Import from SQL file
+		//read sql file to create forum list
 		$sqlForums = $import->parseForumList(
-						$_REQUEST["ftype"], 
-						$_REQUEST["prefix"],
-						$_REQUEST["server"]
+			$_POST["ftype"],
+			$_POST["prefix"],
+			$_POST["server"]
 		);
 		$smarty->assign('fromForums', $sqlForums);
 		if (count($sqlForums) == 0) {
@@ -116,25 +136,25 @@ if (isset($_REQUEST["step4"])) {
 	}
 
 	$smarty->assign('step', 'select');
-	$smarty->assign('iMethod', $_REQUEST["import"]);
-	$smarty->assign('fi_type', $_REQUEST["ftype"]);
-	$smarty->assign('fi_prefix', $_REQUEST["prefix"]);
-	$smarty->assign('server', $_REQUEST["server"]);
-} else if (isset($_REQUEST["step1"])) {
-	if (!isset($_REQUEST["import"])) {
+	$smarty->assign('iMethod', $_POST["import"]);
+	$smarty->assign('fi_type', $_POST["ftype"]);
+	$smarty->assign('fi_prefix', $_POST["prefix"]);
+	$smarty->assign('server', $_POST["server"]);
+} else if (isset($_POST["step1"])) {
+	if (!isset($_POST["import"])) {
 		$smarty->assign('msg', tra("Form error - no import method selected for some reason."));
 		$smarty->display("error.tpl");
 		die;
-	} else if ($_REQUEST["import"] == 'same') {		// Same db and server
-	} else if ($_REQUEST["import"] == 'other') {	// Different db & server
-	} else if ($_REQUEST["import"] == 'sql') {		// Import from SQL file
+	} else if ($_POST["import"] == 'same') {		// Same db and server
+	} else if ($_POST["import"] == 'other') {	// Different db & server
+	} else if ($_POST["import"] == 'sql') {		// Import from SQL file
 
-		/* Import from the SQL file will only look in $tikiroot/$tmpDir or 
-		 * $tikiroot/img/wiki_up for the speficied file.  Any path is 
+		/* Import from the SQL file will only look in $tikiroot/$tmpDir or
+		 * $tikiroot/img/wiki_up for the speficied file.  Any path is
 		 * stripped off the filename input by the user.  $tmpDir overrides
-		 * the wiki_up directory.  If the file exists, it then gets 
-		 * parsed to strip out just the SQL needed for the type of system 
-		 * being imported.  The relevant data is stored in /tmp in two 
+		 * the wiki_up directory.  If the file exists, it then gets
+		 * parsed to strip out just the SQL needed for the type of system
+		 * being imported.  The relevant data is stored in /tmp in two
 		 * temporary flatfiles.
 		 */
 		if (!isset($_REQUEST["server"])) {
@@ -146,16 +166,18 @@ if (isset($_REQUEST["step4"])) {
 		$server = basename($_REQUEST["server"]);
 		if ($server == '') {
 			$smarty->assign('passed', 'false');
-		} else if (file_exists($tmpDir . '/' . $server)) {
-			$smarty->assign('filecheck', $tmpDir);
+			$smarty->assign('filecheck', '');
+			$smarty->assign('server', '');
+		} else if (file_exists($prefs['tmpDir'] . '/' . $server)) {
+			$smarty->assign('filecheck', $prefs['tmpDir']);
 			$smarty->assign('passed', 'true');
-			$smarty->assign('server', $tmpDir . '/' . $server);
+			$smarty->assign('server', $prefs['tmpDir'] . '/' . $server);
 		} else if (file_exists('img/wiki_up/' . $server)) {
 			$smarty->assign('filecheck', "img/wiki_up");
 			$smarty->assign('passed', 'true');
 			$smarty->assign('server', "img/wiki_up" . $server);
 		} else {
-			$smarty->assign('filecheck', $tmpDir);
+			$smarty->assign('filecheck', $prefs['tmpDir']);
 			$smarty->assign('passed', 'false');
 		}
 	} else {	// Error
@@ -166,12 +188,12 @@ if (isset($_REQUEST["step4"])) {
 
 
 	$smarty->assign('step', 'test');
-	$smarty->assign('iMethod', $_REQUEST["import"]);
-	$smarty->assign('fi_type', $_REQUEST["ftype"]);
-	$smarty->assign('fi_prefix', $_REQUEST["prefix"]);
+	$smarty->assign('iMethod', $_POST["import"]);
+	$smarty->assign('fi_type', $_POST["ftype"]);
+	$smarty->assign('fi_prefix', $_POST["prefix"]);
 } else {
 	$smarty->assign('step', 'new');
-	$smarty->assign('tmpdir', $tmpDir);
+	$smarty->assign('tmpdir', isset($prefs['tmpDir']) ? $prefs['tmpDir'] : '');
 	$smarty->assign('fi_types', $import->fi_types);
 	$smarty->assign('fi_prefixes', $import->fi_prefixes);
 }
