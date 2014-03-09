@@ -780,29 +780,23 @@ if (
 			$client_charset = '';
 		}
 
-		$reqFilter = new DeclFilter;
-		if ((isset($prefs['tiki_allow_trust_input']) && $prefs['tiki_allow_trust_input'] ) !== 'y'
-			|| $tiki_p_trust_input != 'y')
-		{
-			$reqFilter->addStaticKeyFilters
-			(
-				array(
-					'db' => 'alpha',
-					'host' => 'striptags',
-					'user' => 'striptags',
-					'pass' => 'striptags',
-					'name' => 'striptags',
-				)
-			);
+		$filters = array(
+			'db' => 'alpha',
+			'host' => 'striptags',
+			'user' => 'striptags',
+			'pass' => 'striptags',
+			'name' => 'striptags'
+		);
+		foreach ($filters as $key => $filter) {
+			if (array_key_exists($key, $_REQUEST)) {
+				$filtered[$key] = TikiFilter::get($filter)->filter($_REQUEST[$key]);
+			}
 		}
-		$_REQUEST = $reqFilter->filter($_REQUEST);
 
-		$dbcon = initTikiDB($api_tiki, $_REQUEST['db'], $_REQUEST['host'], $_REQUEST['user'], $_REQUEST['pass'],
-			$_REQUEST['name'], $client_charset, $dbTiki);
+		$dbcon = initTikiDB($api_tiki, $filtered['db'], $filtered['host'], $filtered['user'], $filtered['pass'], $filtered['name'], $client_charset, $dbTiki);
 
 		if ($dbcon) {
-			write_local_php($_REQUEST['db'], $_REQUEST['host'], $_REQUEST['user'], $_REQUEST['pass'], $_REQUEST['name'],
-				$client_charset);
+			write_local_php($filtered['db'], $filtered['host'], $filtered['user'], $filtered['pass'], $filtered['name'], $client_charset);
 			include $local;
 			// In case of replication, ignore it during installer.
 			unset($shadow_dbs, $shadow_user, $shadow_pass, $shadow_host);
@@ -1057,7 +1051,7 @@ if ( isset($_REQUEST['general_settings']) && $_REQUEST['general_settings'] == 'y
 		. " ('language', ?)";
 
 	$installer->query($query, array($_REQUEST['browsertitle'], $_REQUEST['sender_email'], $_REQUEST['https_login'], $_REQUEST['https_port'], $_REQUEST['error_reporting_level'], $language));
-	$installer->query("UPDATE `users_users` SET `email` = ? WHERE `users_users`.`userId`=1", array($_REQUEST['admin_email']));
+	$installer->query("UPDATE `users_users` SET `email` = '".$_REQUEST['admin_email']."' WHERE `users_users`.`userId`=1");
 
 	if ( isset( $_REQUEST['admin_account'] ) && ! empty( $_REQUEST['admin_account'] ) ) {
 		fix_admin_account($_REQUEST['admin_account']);
