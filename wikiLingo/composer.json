@@ -52,6 +52,7 @@
 		"jquery/plugins/treetable": "3.0.2",
 		"jquery/plugins/sparkline": "2.1.1",
 		"jquery/plugins/zoom": "1.7.10",
+        "md5/md5": ">=1.1.0",
         "medium.js/medium.js": "1",
 		"phpcas/phpcas": "1.3.2",
 		"phpseclib/phpseclib": "0.3.1",
@@ -70,7 +71,8 @@
 		"flp/flp": "dev-master"
 	},
 	"require-dev": {
-		"mikey179/vfsStream": "1.1.0"
+		"mikey179/vfsStream": "1.1.0",
+        "bafs/testify": "dev-master"
 	},
 	"config": {
 		"process-timeout": 5000
