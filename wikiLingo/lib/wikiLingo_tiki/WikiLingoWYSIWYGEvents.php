@@ -11,8 +11,8 @@ class WikiLingoWYIWYGEvents
 
 	public function __construct(WikiLingoWYSIWYG\Parser &$wikiLingoParser)
 	{
-		require_once('lib/wikiLingo_tiki/TikiWikiPluginStub.php');
-		$stub = self::$bridge = new TikiWikiPluginStub();
+		require_once('lib/wikiLingo_tiki/WikiPluginStub.php');
+		$stub = self::$bridge = new WikiPluginStub();
 		Type::Events($wikiLingoParser->events)->bind(new Event\Expression\Plugin\Exists(function(Plugin &$plugin) use ($wikiLingoParser, $stub) {
 			if (!$plugin->exists) {
 				$plugin->exists = true;

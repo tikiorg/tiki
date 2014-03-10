@@ -243,7 +243,7 @@ HTML
             $headerlib
                 //->add_jsfile("vendor/wikilingo/wikilingo/editor/editor.js")
                 ->add_js(<<<JS
-(new BindWikiLingo(document.getElementById('$as_id-ui'), document.getElementById('$as_id')));
+(new WikiLingoEdit(document.getElementById('$as_id-ui'), document.getElementById('$as_id')));
 JS
 );
 

@@ -3,7 +3,7 @@
 use WikiLingo\Plugin\Base;
 use WikiLingo\Expression\Plugin;
 
-class TikiWikiPluginStub extends Base
+class WikiPluginStub extends Base
 {
 	public function __construct()
 	{

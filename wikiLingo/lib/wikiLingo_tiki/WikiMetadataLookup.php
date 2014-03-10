@@ -2,7 +2,7 @@
 
 use RedBean_Facade as R;
 
-class FLPLookup
+class WikiMetadataLookup
 {
 	public $page;
 

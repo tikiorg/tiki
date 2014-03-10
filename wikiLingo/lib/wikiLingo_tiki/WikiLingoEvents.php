@@ -12,8 +12,8 @@ class WikiLingoEvents
 
 	public function __construct(WikiLingo\Parser &$wikiLingoParser)
 	{
-		require_once('lib/wikiLingo_tiki/TikiWikiPluginBridge.php');
-		$bridge = self::$bridge = new TikiWikiPluginBridge();
+		require_once('lib/wikiLingo_tiki/WikiPluginBridge.php');
+		$bridge = self::$bridge = new WikiPluginBridge();
 		Type::Events($wikiLingoParser->events)->bind(new Event\Expression\Plugin\Exists(function(Plugin &$plugin) use ($wikiLingoParser, $bridge) {
 			if (!$plugin->exists) {
 				switch ($plugin->classType) {

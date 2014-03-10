@@ -244,12 +244,13 @@ function tiki_wiki_save_pastlink($args)
 
 function wikilingo_flp_view($args)
 {
+	global $headerlib;
     $page = $args['object'];
 	$version = $args['version'];
 	$body = $args['data'];
-	require_once 'lib/wikiLingo_tiki/TikiWikiEvents.php';
+	require_once 'lib/wikiLingo_tiki/WikiEvents.php';
 
-	$events = new TikiWikiEvents($page, $version, $body);
+	$events = new WikiEvents($page, $version, $body);
 
 
 	//listener
@@ -265,30 +266,33 @@ function wikilingo_flp_view($args)
 
 	//pastlink now happens inside of wikiLingo
 
-	/*
+	//view for wiki
+
+	//need partial metadata
+	$partialMetadata = $events->getPartialMetadata();
+
 	$headerlib
 		->add_jsfile('vendor/rangy/rangy/uncompressed/rangy-core.js')
 		->add_jsfile('vendor/rangy/rangy/uncompressed/rangy-cssclassapplier.js')
 		->add_jsfile('vendor/rangy/rangy/uncompressed/rangy-selectionsaverestore.js')
-		->add_jsfile('vendor/flp/Phraser/rangy-phraser.js')
-		->add_jsfile('lib/ZeroClipboard.js')
-		->add_jsfile('vendor/flp/Phraser/Phraser.js')
-		->add_jsfile('vendor/jquery/md5/js/md5.js');
-*/
-
+		->add_jsfile('vendor/flp/flp/Phraser/rangy-phraser.js')
+		->add_jsfile('vendor/flp/flp/Phraser/Parser.js')
+		->add_jsfile('vendor/jquery/md5/js/md5.js')
+		->add_jsfile('lib/wikiLingo_tiki/tiki_wikiLingo_flp_view.js')
+		->add_jq_onready('(new WikiLingoFLPView($("#page-data"), ' . json_encode($partialMetadata) . '));');
 }
 
 function wikilingo_flp_save($args)
 {
-    require_once 'lib/wikiLingo_tiki/TikiWikiEvents.php';
+	global $wikilib;
+    require_once 'lib/wikiLingo_tiki/WikiEvents.php';
 
     $page = $args['object'];
-    $tikilib = TikiLib::lib('tiki');
-    $info = $tikilib->get_page_info($page);
-    $version = $info['version'];
-    $body = $args['data'];
+	$version = $args['version'];
+	$output = new WikiLibOutput($args, $args['data']);
+    $body = $output->parsedValue;
 
-    $events = new TikiWikiEvents($page, $version, $body);
+    $events = new WikiEvents($page, $version, $body);
 
     $events->save();
 

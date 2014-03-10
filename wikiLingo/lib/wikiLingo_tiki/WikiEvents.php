@@ -1,8 +1,8 @@
 <?php
 
-include 'lib/wikiLingo_tiki/FLPLookup.php';
+include 'lib/wikiLingo_tiki/WikiMetadataLookup.php';
 
-class TikiWikiEvents {
+class WikiEvents {
 
 	public $title;
 	public $version;
@@ -61,6 +61,14 @@ class TikiWikiEvents {
 		}
 	}
 
+	public function getParsed()
+	{
+		global $smarty;
+		return $smarty->getTemplateVars('parsed')
+			?: $smarty->getTemplateVars('previewd')
+				?: '';
+	}
+
 	public function load() {
 		global $smarty;
 		//standard page
@@ -82,32 +90,37 @@ class TikiWikiEvents {
 		}
 	}
 
+	public function getPartialMetadata()
+	{
+		$metadata = new FLP\Metadata();
+
+		$flp_md = new WikiMetadataLookup($this->title);
+		$metadata->answers = $flp_md->answers();
+		$metadata->author = $flp_md->author();
+		$metadata->authorInstitution = $flp_md->authorBusinessName();
+		$metadata->authorProfession = $flp_md->authorProfession();
+		$metadata->categories = $flp_md->categories();
+		$metadata->count = $flp_md->countAll(); // is this the correct count for use here? (LDG)
+		$metadata->dateLastUpdated = '';
+		$metadata->dateOriginated = $flp_md->findDatePageOriginated();
+		$metadata->hash = '';
+		$metadata->href = '';
+		$metadata->keywords = $flp_md->keywords();
+		$metadata->language = $flp_md->language();
+		$metadata->minimumMathNeeded = $flp_md->minimumMathNeeded();
+		$metadata->minimumStatisticsNeeded = $flp_md->minimumStatisticsNeeded();
+		$metadata->moderator = $flp_md->moderator();
+		$metadata->moderatorInstitution = $flp_md->moderatorBusinessName();
+		$metadata->moderatorProfession = $flp_md->moderatorProfession();
+		$metadata->scientificField = $flp_md->scientificField();
+		$metadata->text = '';
+		$metadata->websiteSubtitle = '';
+		$metadata->websiteTitle = $this->title;
+		return $metadata;
+	}
+
     public function save() {
-
-        $flp_md = new FLPLookup($this->title);
-        $metadata = new FLP\Metadata();
-
-        $metadata->answers = $flp_md->answers();
-        $metadata->author = $flp_md->author();
-        $metadata->authorInstitution = $flp_md->authorBusinessName();
-        $metadata->authorProfession = $flp_md->authorProfession();
-        $metadata->categories = $flp_md->categories();
-        $metadata->count = $flp_md->countAll(); // is this the correct count for use here? (LDG)
-        $metadata->dateLastUpdated = '';
-        $metadata->dateOriginated = $flp_md->findDatePageOriginated();
-        $metadata->hash = '';
-        $metadata->href = '';
-        $metadata->keywords = $flp_md->keywords();
-        $metadata->language = $flp_md->language();
-        $metadata->minimumMathNeeded = $flp_md->minimumMathNeeded();
-        $metadata->minimumStatisticsNeeded = $flp_md->minimumStatisticsNeeded();
-        $metadata->moderator = $flp_md->moderator();
-        $metadata->moderatorInstitution = $flp_md->moderatorBusinessName();
-        $metadata->moderatorProfession = $flp_md->moderatorProfession();
-        $metadata->scientificField = $flp_md->scientificField();
-        $metadata->text = '';
-        $metadata->websiteSubtitle = '';
-        $metadata->websiteTitle = $this->title;
+	    $metadata = $this->getPartialMetadata();
 
         FLP\Data::createArticle($this->title, $this->body, $metadata, $this->version);
     }

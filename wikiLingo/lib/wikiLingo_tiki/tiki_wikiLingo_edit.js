@@ -1,4 +1,4 @@
-var BindWikiLingo = (function(document, $, Medium) {
+var WikiLingoEdit = (function(document, $, Medium) {
     var Construct = function(el, input) {
 	    var
 		    bubble = new WLBubble(window.expressionSyntaxes, el),

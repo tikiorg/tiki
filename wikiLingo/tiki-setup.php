@@ -410,7 +410,7 @@ if ($prefs['feature_wikilingo'] == 'y') {
             ->add_jsfile("vendor/wikilingo/wikilingo/editor/bubble.js");
     }
 
-    $headerlib->add_jsfile("lib/wikiLingo_tiki/tiki_wikiLingo.js");
+    $headerlib->add_jsfile("lib/wikiLingo_tiki/tiki_wikiLingo_edit.js");
 }
 
 if ( $prefs['feature_jquery_carousel'] == 'y' ) {
