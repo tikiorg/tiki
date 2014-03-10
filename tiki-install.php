@@ -57,6 +57,10 @@ session_set_cookie_params($session_params['lifetime'], $tikiroot);
 unset($session_params);
 session_start();
 
+$refered = isset($_SERVER['HTTP_REFERER']) ? strpos($_SERVER['HTTP_REFERER'], $tikiroot . '/tiki-install.php') : false;
+if (!$refered || ($refered && !isset($_REQUEST['install_step']))) {
+	unset ($_SESSION['accessible']);
+}
 // Were database details defined before? If so, load them
 if (file_exists('db/'.$tikidomainslash.'local.php')) {
 	include 'db/'.$tikidomainslash.'local.php';
@@ -68,6 +72,8 @@ if (file_exists('db/'.$tikidomainslash.'local.php')) {
 	if (isset($_POST['dbuser'], $_POST['dbpass'])) {
 		if (($_POST['dbuser'] == $user_tiki) && ($_POST['dbpass'] == $pass_tiki)) {
 			$_SESSION['accessible'] = true;
+			unset ($_POST['dbuser']);
+			unset ($_POST['dbpass']);
 		} else {
 			$_SESSION['installer_auth_failure'] = isset($_SESSION['installer_auth_failure']) ? $_SESSION['installer_auth_failure'] + 1 : 1;
 
@@ -95,7 +101,7 @@ if (isset($_SESSION['accessible'])) {
 							<p style="margin-top: 24px;">You are attempting to run the Tiki Installer. For your protection, this installer can be used only by a site administrator.</p>
 							<p>To verify that you are a site administrator, enter your <strong><em>database</em></strong> credentials (database username and password) here.</p>
 							<p>If you have forgotten your database credentials, find the directory where you have unpacked your Tiki and have a look inside the <strong><code>db</code></strong> folder into the <strong><code>local.php</code></strong> file.</p>
-							<form method="post" action="' . $_SERVER['REQUEST_URI'] . '">
+							<form method="post" action="tiki-install.php">
 								<p><label for="dbuser">Database username</label>: <input type="text" id="dbuser" name="dbuser" /></p>
 								<p><label for="dbpass">Database password</label>: <input type="password" id="dbpass" name="dbpass" /></p>
 								<p><input type="submit" value=" Validate and Continue " /></p>
