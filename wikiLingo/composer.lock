@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "68a1a75e57692687d8274cacf7843095",
+    "hash": "63c01d181292abd8e3e4031f1bc3408f",
     "packages": [
         {
             "name": "aFarkas/html5shiv",
@@ -26,6 +26,17 @@
                 "shasum": "82a31ec99c0c4dd28ebd5afc2a41cb971e9c376c"
             },
             "type": "library"
+        },
+        {
+            "name": "alvarotrigo/fullpage.js",
+            "version": "1",
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/alvarotrigo/fullPage.js/archive/master.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "component"
         },
         {
             "name": "bombayworks/zendframework1",
@@ -230,12 +241,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FutureLink-Protocol/php.git",
-                "reference": "9f49fe72208e36ea967975411e8c5d8ac6326287"
+                "reference": "1c678a33fc578cb17e8f7263542bbf11729d54bf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FutureLink-Protocol/php/zipball/9f49fe72208e36ea967975411e8c5d8ac6326287",
-                "reference": "9f49fe72208e36ea967975411e8c5d8ac6326287",
+                "url": "https://api.github.com/repos/FutureLink-Protocol/php/zipball/1c678a33fc578cb17e8f7263542bbf11729d54bf",
+                "reference": "1c678a33fc578cb17e8f7263542bbf11729d54bf",
                 "shasum": ""
             },
             "require": {
@@ -274,7 +285,7 @@
             ],
             "description": "FutureLink-Protocol implementation in PHP",
             "homepage": "https://github.com/FutureLink-Protocol",
-            "time": "2014-03-10 17:59:33"
+            "time": "2014-03-11 15:07:30"
         },
         {
             "name": "gabordemooij/redbean",
@@ -360,6 +371,17 @@
                 "screenshot"
             ],
             "time": "2014-01-27 14:02:15"
+        },
+        {
+            "name": "jcobb/basic-jquery-slider",
+            "version": "1",
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/jcobb/basic-jquery-slider/archive/master.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "component"
         },
         {
             "name": "jquery/jquery",
@@ -801,9 +823,9 @@
                 "type": "zip",
                 "url": "https://github.com/robertleeplummerjr/Medium.js/archive/master.zip",
                 "reference": null,
-                "shasum": ""
+                "shasum": null
             },
-            "type": "library"
+            "type": "component"
         },
         {
             "name": "phpcas/phpcas",
@@ -1131,6 +1153,17 @@
                 "shasum": ""
             },
             "type": "library"
+        },
+        {
+            "name": "wikilingo/codemirror",
+            "version": "1",
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/wikiLingo/CodeMirror/archive/master.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "component"
         },
         {
             "name": "wikilingo/wikilingo",
