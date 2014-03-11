@@ -255,4 +255,32 @@ class WikiMetadataLookup
 
 		return $this->language;
 	}
+
+    public function getPartial()
+    {
+        $metadata = new FLP\Metadata();
+
+        $metadata->answers = $this->answers();
+        $metadata->author = $this->authorName();
+        $metadata->authorInstitution = $this->authorBusinessName();
+        $metadata->authorProfession = $this->authorProfession();
+        $metadata->categories = $this->categories();
+        $metadata->count = $this->countAll(); // is this the correct count for use here? (LDG)
+        $metadata->dateLastUpdated = '';
+        $metadata->dateOriginated = $this->findDatePageOriginated();
+        $metadata->hash = '';
+        $metadata->href = '';
+        $metadata->keywords = $this->keywords();
+        $metadata->language = $this->language();
+        $metadata->minimumMathNeeded = $this->minimumMathNeeded();
+        $metadata->minimumStatisticsNeeded = $this->minimumStatisticsNeeded();
+        $metadata->moderator = $this->moderatorName();
+        $metadata->moderatorInstitution = $this->moderatorBusinessName();
+        $metadata->moderatorProfession = $this->moderatorProfession();
+        $metadata->scientificField = $this->scientificField();
+        $metadata->text = '';
+        $metadata->websiteSubtitle = '';
+        $metadata->websiteTitle = $this->page;
+        return $metadata;
+    }
 }

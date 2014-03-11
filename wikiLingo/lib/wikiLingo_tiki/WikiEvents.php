@@ -1,6 +1,6 @@
 <?php
 
-include 'lib/wikiLingo_tiki/WikiMetadataLookup.php';
+include_once 'lib/wikiLingo_tiki/WikiMetadataLookup.php';
 
 class WikiEvents {
 
@@ -70,12 +70,43 @@ class WikiEvents {
 	}
 
 	public function load() {
-		global $smarty;
+		global $smarty, $headerlib;
 		//standard page
 		$parsed = $smarty->getTemplateVars('parsed');
 		if (!empty($parsed)) {
 			$ui = new FLP\UI($parsed);
-			FLP\Data::GetPairsByTitleAndApplyToUI($this->title, $ui);
+			$pairs = FLP\Data::GetPairsByTitleAndApplyToUI($this->title, $ui);
+            $pairsJson = json_encode($pairs);
+            $counts = json_encode(FLP\PairAssembler::$counts);
+            $headerlib->add_js(<<<JS
+var counts = $counts,
+    flpData = $pairsJson,
+    phrases = $('span.phrases'),
+    phrasesLookupTable = {},
+    show = function(table) {
+        $('body')
+            .append(table);
+    };
+
+for(var x = 0; x < flpData.length; x++){
+    if(!phrasesLookupTable[flpData[x].pastText.sanitized]){
+        phrasesLookupTable[flpData[x].pastText.sanitized] = [];
+    }
+    phrasesLookupTable[flpData[x].pastText.sanitized].push(flpData[x]);
+}
+
+
+for(var i = 0; i < flpData.length; i++) {
+    var futureLink = new flp.Link({
+        beginning: phrases.filter('span.phraseBeginning' + i),
+        middle: phrases.filter('span.phrase' + i),
+        end: phrases.filter('span.phraseEnd' + i),
+        count: counts[flpData[i].pastText.sanitized],
+        pairs: phrasesLookupTable[flpData[i].pastText.sanitized]
+    });
+}
+JS
+);
 			$parsed = $ui->render();
 			$smarty->assign('parsed', $parsed);
 		} else {
@@ -90,37 +121,9 @@ class WikiEvents {
 		}
 	}
 
-	public function getPartialMetadata()
-	{
-		$metadata = new FLP\Metadata();
-
-		$flp_md = new WikiMetadataLookup($this->title);
-		$metadata->answers = $flp_md->answers();
-		$metadata->author = $flp_md->authorName();
-		$metadata->authorInstitution = $flp_md->authorBusinessName();
-		$metadata->authorProfession = $flp_md->authorProfession();
-		$metadata->categories = $flp_md->categories();
-		$metadata->count = $flp_md->countAll(); // is this the correct count for use here? (LDG)
-		$metadata->dateLastUpdated = '';
-		$metadata->dateOriginated = $flp_md->findDatePageOriginated();
-		$metadata->hash = '';
-		$metadata->href = '';
-		$metadata->keywords = $flp_md->keywords();
-		$metadata->language = $flp_md->language();
-		$metadata->minimumMathNeeded = $flp_md->minimumMathNeeded();
-		$metadata->minimumStatisticsNeeded = $flp_md->minimumStatisticsNeeded();
-		$metadata->moderator = $flp_md->moderator();
-		$metadata->moderatorInstitution = $flp_md->moderatorBusinessName();
-		$metadata->moderatorProfession = $flp_md->moderatorProfession();
-		$metadata->scientificField = $flp_md->scientificField();
-		$metadata->text = '';
-		$metadata->websiteSubtitle = '';
-		$metadata->websiteTitle = $this->title;
-		return $metadata;
-	}
-
     public function save() {
-	    $metadata = $this->getPartialMetadata();
+        $metadataLookup = new WikiMetadataLookup($this->title);
+        $metadata = $metadataLookup->getPartial();
 
         FLP\Data::createArticle($this->title, $this->body, $metadata, $this->version);
     }

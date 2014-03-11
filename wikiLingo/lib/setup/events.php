@@ -269,7 +269,8 @@ function wikilingo_flp_view($args)
 	//view for wiki
 
 	//need partial metadata
-	$partialMetadata = $events->getPartialMetadata();
+    $metadataLookup = new WikiMetadataLookup($page);
+	$partialMetadata = $metadataLookup->getPartial();
 
 	$headerlib
 		->add_jsfile('vendor/rangy/rangy/uncompressed/rangy-core.js')
@@ -280,8 +281,14 @@ function wikilingo_flp_view($args)
 		->add_jsfile('vendor/jquery/md5/js/md5.js')
 		->add_jsfile('lib/wikiLingo_tiki/tiki_wikiLingo_flp_view.js')
         ->add_jsfile('lib/ZeroClipboard.js')
+        ->add_jsfile('vendor/flp/flp/scripts/flp.js')
+        ->add_jsfile('vendor/flp/flp/scripts/flp.Link.js')
         ->add_jsfile('lib/wikiLingo_tiki/tiki_flp.Link.js')
-		->add_jq_onready('(new WikiLingoFLPView($("#page-data"), ' . json_encode($partialMetadata) . '));');
+		->add_jq_onready('(new WikiLingoFLPView($("#page-data"), ' . json_encode($partialMetadata) . '));')
+        ->add_js(<<<JS
+
+JS
+);
 }
 
 function wikilingo_flp_save($args)
