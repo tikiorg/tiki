@@ -138,5 +138,18 @@
 			}
 		},
 		{ "type": "composer", "url": "https://composer.tiki.org" }
+	,
+		{
+			"type": "package",
+			"package": {
+				"name": "md5/md5",
+				"type": "component",
+				"version": "1.1.0",
+				"dist": {
+					"url": "https://github.com/blueimp/JavaScript-MD5/archive/1.1.0.zip",
+					"type": "zip"
+				}
+			}
+		}
 	]
 }

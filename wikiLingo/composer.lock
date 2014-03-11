@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "97de65d1124aedbb8f915f226be05e40",
+    "hash": "68a1a75e57692687d8274cacf7843095",
     "packages": [
         {
             "name": "aFarkas/html5shiv",
@@ -792,7 +792,7 @@
                 "reference": null,
                 "shasum": null
             },
-            "type": "library"
+            "type": "component"
         },
         {
             "name": "medium.js/medium.js",
