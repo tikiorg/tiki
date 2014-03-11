@@ -276,9 +276,11 @@ function wikilingo_flp_view($args)
 		->add_jsfile('vendor/rangy/rangy/uncompressed/rangy-cssclassapplier.js')
 		->add_jsfile('vendor/rangy/rangy/uncompressed/rangy-selectionsaverestore.js')
 		->add_jsfile('vendor/flp/flp/Phraser/rangy-phraser.js')
-		->add_jsfile('vendor/flp/flp/Phraser/Parser.js')
+		->add_jsfile('vendor/flp/flp/Phraser/Phraser.js')
 		->add_jsfile('vendor/jquery/md5/js/md5.js')
 		->add_jsfile('lib/wikiLingo_tiki/tiki_wikiLingo_flp_view.js')
+        ->add_jsfile('lib/ZeroClipboard.js')
+        ->add_jsfile('lib/wikiLingo_tiki/tiki_flp.Link.js')
 		->add_jq_onready('(new WikiLingoFLPView($("#page-data"), ' . json_encode($partialMetadata) . '));');
 }
 

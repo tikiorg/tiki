@@ -96,7 +96,7 @@ class WikiEvents {
 
 		$flp_md = new WikiMetadataLookup($this->title);
 		$metadata->answers = $flp_md->answers();
-		$metadata->author = $flp_md->author();
+		$metadata->author = $flp_md->authorName();
 		$metadata->authorInstitution = $flp_md->authorBusinessName();
 		$metadata->authorProfession = $flp_md->authorProfession();
 		$metadata->categories = $flp_md->categories();
@@ -124,4 +124,4 @@ class WikiEvents {
 
         FLP\Data::createArticle($this->title, $this->body, $metadata, $this->version);
     }
-} 
+}

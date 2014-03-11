@@ -1,8 +1,10 @@
 var WikiLingoFLPView = (function() {
 	var Construct = function(el, partialWikiMetadata) {
 		this.busy = false;
+        partialWikiMetadata.href = document.location + '';
 		this.partialWikiMetadata = partialWikiMetadata;
 		this.box = null;
+        this.answers = [];
 
 		var _this = this,
 			createButton = $('<div>' + tr( 'Create PastLink & FutureLink' ) + '</div>')
@@ -49,17 +51,18 @@ var WikiLingoFLPView = (function() {
 								buttons = {};
 
 							if (suggestion == text) {
-								_this.getAnswers();
+								_this.getAnswers(o.text);
 							} else {
 								buttons[tr('Ok')] = function() {
 									text = suggestion;
 									_this.box.dialog('close');
-									_this.getAnswers();
+                                    console.log(_this);
+									_this.getAnswers(o.text);
 								};
 
 								buttons[tr('Cancel')] = function() {
 									_this.box.dialog('close');
-									_this.getAnswers();
+									_this.getAnswers(o.text);
 								};
 
 								_this.box = $('<div>\
@@ -86,126 +89,130 @@ var WikiLingoFLPView = (function() {
 						.appendTo('body');
 					});
 				});
-
-		Construct.prototype = {
-			encode: function (s){
-				for(var c, i = -1, l = (s = s.split("")).length, o = String.fromCharCode; ++i < l;
-				    s[i] = (c = s[i].charCodeAt(0)) >= 127 ? o(0xc0 | (c >>> 6)) + o(0x80 | (c & 0x3f)) : s[i]
-				){}
-				return s.join("");
-			},
-			makeClipboardData: function(metadata) {
-				var _this = this;
-				metadata.text = this.encode((o.text + '').replace(/\\n/g, ''));
-
-				metadata.hash = md5(
-					rangy.superSanitize(
-						metadata.author +
-						metadata.authorInstitution +
-						metadata.authorProfession
-					)
-					,
-					rangy.superSanitize(metadata.text)
-				);
-
-				this.busy = true;
-
-				var pastlinkCopy = $('<div></div>');
-				var pastlinkCopyButton = $('<div>' + tr('Click HERE to Copy to Clipboard') + '</div>')
-					.button()
-					.appendTo(pastlinkCopy);
-				var pastlinkCopyValue = $('<textarea style="width: 100%; height: 80%;"></textarea>')
-					.val(encodeURI(JSON.stringify(metadata)))
-					.appendTo(pastlinkCopy);
-
-				pastlinkCopy.dialog({
-					title: tr("Copy text and Metadata"),
-					modal: true,
-					close: function() {
-						_this.busy = false;
-						$(document).mousedown();
-					},
-					draggable: false
-				});
-
-				pastlinkCopyValue.select().focus();
-
-				var clip = new ZeroClipboard.Client();
-				clip.setHandCursor( true );
-
-				clip.addEventListener('complete', function(client, text) {
-					_this.pastlinkCreate.remove();
-					pastlinkCopy.dialog( "close" );
-					clip.hide();
-					_this.busy = false;
+    };
 
 
-					$.notify(tr('Text and Metadata copied to Clipboard'));
-					return false;
-				});
+    Construct.prototype = {
+        encode: function (s){
+            for(var c, i = -1, l = (s = s.split("")).length, o = String.fromCharCode; ++i < l;
+                s[i] = (c = s[i].charCodeAt(0)) >= 127 ? o(0xc0 | (c >>> 6)) + o(0x80 | (c & 0x3f)) : s[i]
+            ){}
+            return s.join("");
+        },
+        makeClipboardData: function(text) {
+            var metadata = this.partialWikiMetadata,
+                _this = this;
 
-				clip.glue( pastlinkCopyButton[0] );
+            metadata.text = this.encode((text + '').replace(/\\n/g, ''));
 
-				clip.setText(pastlinkCopyValue.val());
+            metadata.hash = md5(
+                rangy.superSanitize(
+                    metadata.author +
+                    metadata.authorInstitution +
+                    metadata.authorProfession
+                )
+                ,
+                rangy.superSanitize(metadata.text)
+            );
 
-				$('embed[id*="ZeroClipboard"]').parent().css('z-index', '9999999999');
-			},
-			getAnswers: function() {
-				var _this = this;
-				if (!this.answers.length) {
-					return this.acceptPhrase(partialWikiMetadata);
-				}
+            this.busy = true;
 
-				var answersDialog = $('<table width="100%;" />');
+            var pastlinkCopy = $('<div></div>');
+            var pastlinkCopyButton = $('<div>' + tr('Click HERE to Copy to Clipboard') + '</div>')
+                .button()
+                .appendTo(pastlinkCopy);
+            var pastlinkCopyValue = $('<textarea style="width: 100%; height: 80%;"></textarea>')
+                .val(encodeURI(JSON.stringify(metadata)))
+                .appendTo(pastlinkCopy);
 
-				$.each(this.answers, function() {
-					var tr = $('<tr />').appendTo(answersDialog);
-					$('<td style="font-weight: bold; text-align: left;" />')
-						.text(this.question)
-						.appendTo(tr);
+            pastlinkCopy.dialog({
+                title: tr("Copy text and Metadata"),
+                modal: true,
+                close: function() {
+                    _this.busy = false;
+                    $(document).mousedown();
+                },
+                draggable: false
+            });
 
-					$('<td style="text-align: right;"><input class="answerValues" style="width: inherit;"/></td>')
-						.appendTo(tr);
-				});
+            pastlinkCopyValue.select().focus();
 
-				var answersDialogButtons = {};
-				answersDialogButtons[tr("Ok")] = function() {
-					$.each(_this.answers, function(i) {
-						_this.answers[i].answer = escape(answersDialog.find('.answerValues').eq(i).val());
-					});
+            var clip = new ZeroClipboard.Client();
+            clip.setHandCursor( true );
 
-					answersDialog.dialog('close');
+            clip.addEventListener('complete', function(client, text) {
+                _this.pastlinkCreate.remove();
+                pastlinkCopy.dialog( "close" );
+                clip.hide();
+                _this.busy = false;
 
-					_this.acceptPhrase();
-				};
 
-				answersDialog.dialog({
-					title: tr("Please fill in the questions below"),
-					buttons: answersDialogButtons,
-					modal: true,
-					width: $(window).width() / 2
-				});
-				return true;
-			},
+                $.notify(tr('Text and Metadata copied to Clipboard'));
+                return false;
+            });
 
-			//var timestamp = '';
+            clip.glue( pastlinkCopyButton[0] );
 
-			acceptPhrase: function(metadata) {
-				/* Will integrate when timestamping works
-				 $.modal(tr("Please wait while we process your request..."));
-				 $.getJSON("tiki-index.php", {
-				 action: "timestamp",
-				 hash: hash,
-				 page: '$page'
-				 }, function(json) {
-				 timestamp = json;
-				 $.modal();
-				 makeClipboardData();
-				 });
-				 */
-				this.makeClipboardData(metadata);
-			}
-		}
-	};
+            clip.setText(pastlinkCopyValue.val());
+
+            $('embed[id*="ZeroClipboard"]').parent().css('z-index', '9999999999');
+        },
+        getAnswers: function(text) {
+            var _this = this;
+            if (!this.answers.length) {
+                return this.acceptPhrase(text);
+            }
+
+            var answersDialog = $('<table width="100%;" />');
+
+            $.each(this.answers, function() {
+                var tr = $('<tr />').appendTo(answersDialog);
+                $('<td style="font-weight: bold; text-align: left;" />')
+                    .text(this.question)
+                    .appendTo(tr);
+
+                $('<td style="text-align: right;"><input class="answerValues" style="width: inherit;"/></td>')
+                    .appendTo(tr);
+            });
+
+            var answersDialogButtons = {};
+            answersDialogButtons[tr("Ok")] = function() {
+                $.each(_this.answers, function(i) {
+                    _this.answers[i].answer = escape(answersDialog.find('.answerValues').eq(i).val());
+                });
+
+                answersDialog.dialog('close');
+
+                _this.acceptPhrase(text);
+            };
+
+            answersDialog.dialog({
+                title: tr("Please fill in the questions below"),
+                buttons: answersDialogButtons,
+                modal: true,
+                width: $(window).width() / 2
+            });
+            return true;
+        },
+
+        //var timestamp = '';
+
+        acceptPhrase: function(text) {
+            /* Will integrate when timestamping works
+             $.modal(tr("Please wait while we process your request..."));
+             $.getJSON("tiki-index.php", {
+             action: "timestamp",
+             hash: hash,
+             page: '$page'
+             }, function(json) {
+             timestamp = json;
+             $.modal();
+             makeClipboardData();
+             });
+             */
+            this.makeClipboardData(text);
+        }
+    };
+
 	return Construct;
 })();
