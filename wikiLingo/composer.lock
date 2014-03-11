@@ -28,41 +28,6 @@
             "type": "library"
         },
         {
-            "name": "bafs/testify",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/BafS/Testify.php.git",
-                "reference": "6a711b812a7b43bcbac649b4d11aa66508ea6f72"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/BafS/Testify.php/zipball/6a711b812a7b43bcbac649b4d11aa66508ea6f72",
-                "reference": "6a711b812a7b43bcbac649b4d11aa66508ea6f72",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "Testify": "lib/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "GPL"
-            ],
-            "description": "Testify makes writing unit tests fun again. It has an elegant syntax and keeps things simple",
-            "keywords": [
-                "framework",
-                "testing",
-                "unit"
-            ],
-            "time": "2013-10-21 21:48:13"
-        },
-        {
             "name": "bombayworks/zendframework1",
             "version": "v1.12.3",
             "source": {
@@ -265,22 +230,24 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FutureLink-Protocol/php.git",
-                "reference": "1eb4b1f2c239a030a97c49543904e14ba43f585e"
+                "reference": "9f49fe72208e36ea967975411e8c5d8ac6326287"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FutureLink-Protocol/php/zipball/1eb4b1f2c239a030a97c49543904e14ba43f585e",
-                "reference": "1eb4b1f2c239a030a97c49543904e14ba43f585e",
+                "url": "https://api.github.com/repos/FutureLink-Protocol/php/zipball/9f49fe72208e36ea967975411e8c5d8ac6326287",
+                "reference": "9f49fe72208e36ea967975411e8c5d8ac6326287",
                 "shasum": ""
             },
             "require": {
-                "bafs/testify": "dev-master",
                 "gabordemooij/redbean": ">=3.5.1",
                 "jquery/jquery": ">=1.10.2",
                 "jquery/jquery-ui": ">=1.10.3",
                 "md5/md5": ">=1.1.0",
                 "php": ">=5.4.0",
                 "rangy/rangy": ">=1.3"
+            },
+            "require-dev": {
+                "bafs/testify": "dev-master"
             },
             "type": "library",
             "autoload": {
@@ -307,7 +274,7 @@
             ],
             "description": "FutureLink-Protocol implementation in PHP",
             "homepage": "https://github.com/FutureLink-Protocol",
-            "time": "2014-03-10 15:41:48"
+            "time": "2014-03-10 17:59:33"
         },
         {
             "name": "gabordemooij/redbean",
@@ -1171,17 +1138,25 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/wikiLingo/wikiLingo.git",
-                "reference": "7de1ad687d036695628d6dbbcd2f43783ab9e3c3"
+                "reference": "ea5461895b4f14eb88bf1c5325bccf07b60fd50f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wikiLingo/wikiLingo/zipball/7de1ad687d036695628d6dbbcd2f43783ab9e3c3",
-                "reference": "7de1ad687d036695628d6dbbcd2f43783ab9e3c3",
+                "url": "https://api.github.com/repos/wikiLingo/wikiLingo/zipball/ea5461895b4f14eb88bf1c5325bccf07b60fd50f",
+                "reference": "ea5461895b4f14eb88bf1c5325bccf07b60fd50f",
                 "shasum": ""
             },
             "require": {
                 "flp/flp": "dev-master",
-                "php": ">=5.4.0"
+                "gabordemooij/redbean": ">=3.5.1",
+                "jquery/jquery": ">=1.10.2",
+                "jquery/jquery-ui": ">=1.10.3",
+                "md5/md5": ">=1.1.0",
+                "php": ">=5.4.0",
+                "rangy/rangy": ">=1.3"
+            },
+            "require-dev": {
+                "bafs/testify": "dev-master"
             },
             "type": "library",
             "autoload": {
@@ -1204,7 +1179,7 @@
                     "role": "Lead Developer"
                 }
             ],
-            "time": "2014-03-07 20:12:59"
+            "time": "2014-03-10 20:50:33"
         },
         {
             "name": "zetacomponents/base",
@@ -1328,6 +1303,41 @@
         }
     ],
     "packages-dev": [
+        {
+            "name": "bafs/testify",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/BafS/Testify.php.git",
+                "reference": "6a711b812a7b43bcbac649b4d11aa66508ea6f72"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/BafS/Testify.php/zipball/6a711b812a7b43bcbac649b4d11aa66508ea6f72",
+                "reference": "6a711b812a7b43bcbac649b4d11aa66508ea6f72",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Testify": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL"
+            ],
+            "description": "Testify makes writing unit tests fun again. It has an elegant syntax and keeps things simple",
+            "keywords": [
+                "framework",
+                "testing",
+                "unit"
+            ],
+            "time": "2013-10-21 21:48:13"
+        },
         {
             "name": "mikey179/vfsStream",
             "version": "v1.1.0",
