@@ -76,7 +76,8 @@
 	},
 	"require-dev": {
 		"mikey179/vfsStream": "1.1.0",
-        "bafs/testify": "dev-master"
+        "bafs/testify": "dev-master",
+        "tablesorter/tablesorter": "dev-master"
 	},
 	"config": {
 		"process-timeout": 5000

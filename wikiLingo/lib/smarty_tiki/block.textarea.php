@@ -219,14 +219,17 @@ this.instances.'.$as_id.'.resetDirty();
             $expressionSyntaxesJson = json_encode($expressionSyntaxes->parsedExpressionSyntaxes);
             $wLPlugins = json_encode($parserWYSIWYG->plugins);
             $name = $params['name'];
+            $parserWYSIWYG->scripts->addCss(".wikiedit.wikilingo{min-height:500px;}");
             $css = $parserWYSIWYG->scripts->renderCss();
             $html .= <<<HTML
 $css
+<div style="border-width:10px !important;">
 <div
     id="$as_id-ui"
     class="wikiedit wikilingo ui-widget-content"
     contenteditable="true"
     onchange="this.input.value = this.innerHTML">$contentSafe</div>
+    </div>
 <input type="hidden" name="$name" id="$as_id"/>
 <script>
 var ui = document.getElementById('$as_id-ui'),
