@@ -17,7 +17,13 @@
 {block name="content"}
 	<form class="form-horizontal" method="post" action="{service controller=goal action=edit_eligible goalId=$goal.goalId}">
 		<div class="form-group">
-			<label for="eligible" class="control-label col-md-3">{tr}Groups{/tr}</label>
+			<label for="eligible" class="control-label col-md-3">
+				{if $goal.type eq 'group'}
+					{tr}Groups{/tr}
+				{else}
+					{tr}Members of{/tr}
+				{/if}
+			</label>
 			<div class="col-md-9">
 				<select name="eligible[]" class="form-control" multiple>
 					{foreach $groups as $groupName}
