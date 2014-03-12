@@ -18,6 +18,7 @@ start merge for 8.x
 start merge for 9.x
 on the old sf.net repo (just checking)
 test
+this is mick's test
 check merge for 12.x
 this should cause some conflicts
 new lines on the end can also be tricky
