@@ -55,26 +55,36 @@ class GoalLib
 
 	function replaceGoal($goalId, array $data)
 	{
-		$data = array_merge([
-			'name' => 'No name',
-			'description' => '',
-			'type' => 'user',
-			'enabled' => 0,
-			'daySpan' => 14,
-			'from' => null,
-			'to' => null,
-			'eligible' => [],
-			'conditions' => [
-				[
-					'label' => tr('Goal achieved'),
-					'operator' => 'atMost',
-					'count' => 0,
-					'metric' => 'goal-count-unbounded',
-					'hidden' => 1,
+		$base = null;
+
+		if ($goalId) {
+			$base = $this->fetchGoal($goalId);
+		}
+
+		if (! $base) {
+			$base = [
+				'name' => 'No name',
+				'description' => '',
+				'type' => 'user',
+				'enabled' => 0,
+				'daySpan' => 14,
+				'from' => null,
+				'to' => null,
+				'eligible' => [],
+				'conditions' => [
+					[
+						'label' => tr('Goal achieved'),
+						'operator' => 'atMost',
+						'count' => 0,
+						'metric' => 'goal-count-unbounded',
+						'hidden' => 1,
+					],
 				],
-			],
-			'rewards' => [],
-		], $data);
+				'rewards' => [],
+			];
+		}
+
+		$data = array_merge($base, $data);
 
 		$data['eligible'] = json_encode((array) $data['eligible']);
 		$data['conditions'] = json_encode((array) $data['conditions']);

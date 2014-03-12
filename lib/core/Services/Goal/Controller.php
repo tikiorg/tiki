@@ -183,6 +183,13 @@ class Services_Goal_Controller
 			}
 
 			$goallib->replaceGoal($input->goalId->int(), $goal);
+
+			return [
+				'FORWARD' => [
+					'controller' => 'goal',
+					'action' => 'admin',
+				],
+			];
 		}
 
 		return [
@@ -347,6 +354,45 @@ class Services_Goal_Controller
 			'title' => tr('Reward'),
 			'reward' => $reward,
 			'rewards' => $rewardList,
+		];
+	}
+
+	function action_edit_eligible($input)
+	{
+		$perms = Perms::get('goal', $input->goalId->int());
+		if (! $perms->goal_modify_eligible) {
+			throw new Services_Exception_Denied(tr('Restricted access'));
+		}
+
+		$goalId = $input->goalId->int();
+
+		$goallib = TikiLib::lib('goal');
+		$goal = $goallib->fetchGoal($goalId);
+
+		if (! $goal) {
+			throw new Services_Exception_NotFound;
+		}
+
+		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+			$goal = [
+				'eligible' => $input->eligible->groupname(),
+			];
+
+			$goallib->replaceGoal($goalId, $goal);
+
+			return [
+				'FORWARD' => [
+					'controller' => 'goal',
+					'action' => 'show',
+					'goalId' => $goalId,
+				],
+			];
+		}
+
+		return [
+			'title' => tr('Modify Eligibility'),
+			'goal' => $goal,
+			'groups' => TikiLib::lib('user')->list_all_groups(),
 		];
 	}
 

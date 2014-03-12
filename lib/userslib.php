@@ -5528,6 +5528,15 @@ class UsersLib extends TikiLib
 				'prefs' => ['goal_enabled'],
 				'scope' => 'object',
 			),
+			array(
+				'name' => 'tiki_p_goal_modify_eligible',
+				'description' => tr('Can manage who is eligible to a goal'),
+				'level' => 'admin',
+				'type' => 'goal',
+				'admin' => false,
+				'prefs' => ['goal_enabled'],
+				'scope' => 'object',
+			),
 		);
 
 		$cachelib->cacheItem('rawpermissions' . $prefs['language'], serialize($permissions));
