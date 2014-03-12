@@ -22,6 +22,7 @@ function prefs_conditions_list()
 			'type' => 'text',
 			'filter' => 'pagename',
 			'default' => 'Terms',
+			'profile_reference' => 'wiki_page',
 		),
 		'conditions_minimum_age' => array(
 			'name' => tr('Minimal age'),

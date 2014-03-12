@@ -205,6 +205,7 @@ function prefs_payment_list()
 			'filter' => 'digits',
 			'size' => 3,
 			'default' => '',
+			'profile_reference' => 'tracker',
 		),
 		'payment_cart_product_tracker_name' => array(
 			'name' => tra('Products Tracker Name'),
@@ -364,6 +365,7 @@ function prefs_payment_list()
 			'filter' => 'digits',
 			'size' => 3,
 			'default' => '',
+			'profile_reference' => 'tracker',
 		),
 		'payment_cart_event_tracker_name' => array(
 			'name' => tra('Events Tracker Name'),
@@ -398,6 +400,7 @@ function prefs_payment_list()
 			'filter' => 'digits',
 			'size' => 3,
 			'default' => '',
+			'profile_reference' => 'tracker',
 		),
 		'payment_cart_giftcerts' => array(
 			'name' => tra('Gift certificates'),
@@ -414,6 +417,7 @@ function prefs_payment_list()
 			'filter' => 'digits',
 			'size' => 3,
 			'default' => '',
+			'profile_reference' => 'tracker',
 		),
 		'payment_cart_giftcert_tracker_name' => array(
 			'name' => tra('Gift Certificate Tracker Name'),
