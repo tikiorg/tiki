@@ -45,7 +45,7 @@ class WikiLingoEvents
             $metadataLookup = new WikiMetadataLookup($page);
 
             $metadataTemp = $metadataLookup->getPartial();
-            $metadataTemp->href = TikiLib::tikiUrl();
+            $metadataTemp->href = TikiLib::curPageURL();// TikiLib::tikiUrl();
             $metadataTemp->text = $metadata->text;
             $metadata = $metadataTemp;
         }));
