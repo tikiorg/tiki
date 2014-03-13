@@ -76,6 +76,7 @@
 		{preference name=wiki_comments_simple_ratings}
 		<div class="adminoptionboxchild" id="wiki_comments_simple_ratings_childcontainer">
 			{preference name=wiki_comments_simple_ratings_options}
+			{tr}This preference needs to be disabled:{/tr}{preference name=wiki_comments_form_displayed_default}
 		</div>
 				</td>
 				<td style="width:2%"><td>
