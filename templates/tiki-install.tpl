@@ -135,7 +135,7 @@
 						<input type="hidden" name="install_step" value="2">
 						<input type="hidden" name="perform_mail_test" value="y">
 						<div align="center">
-							<input type="submit" class="btn btn-warning btn-sm" value=" {tr}Send Test Message{/tr} ">
+							<input type="submit" class="btn btn-warning btn-sm" value="{tr}Send Test Message{/tr}">
 						</div>
 							{if $multi}		<input type="hidden" name="multi" value="{$multi}">{/if}
 							{if $lang}		<input type="hidden" name="lang" value="{$lang}">{/if}
@@ -387,7 +387,7 @@
 									<input type="hidden" name="useInnoDB" value="0">
 								{/if}
 								<p align="center">
-									<input type="submit" class="btn btn-warning" name="scratch" value=" {if $tikidb_created}{tr}Reinstall{/tr}{else}{tr}Install{/tr}{/if} " style="margin: 32px;">
+									<input type="submit" class="btn btn-warning" name="scratch" value="{if $tikidb_created}{tr}Reinstall{/tr}{else}{tr}Install{/tr}{/if}" style="margin: 32px;">
 								</p>
 								</div><!-- End of install-table -->
 							</div><!-- End of db-install -->
@@ -402,7 +402,7 @@
 									<p>{tr}Automatically upgrade your existing database to version{/tr}
 										<strong>{$tiki_version_name}</strong>.
 									</p>
-									<p align="center"><input type="submit" class="btn btn-primary" name="update" value=" {tr}Upgrade{/tr} "></p>
+									<p align="center"><input type="submit" class="btn btn-primary" name="update" value="{tr}Upgrade{/tr}"></p>
 								</div><!-- End of db-upgrade -->
 							{/if}
 						</form>
@@ -621,7 +621,7 @@
 				<input type="hidden" name="install_step" value="7">
 				<input type="hidden" name="install_type" value="{$install_type}">
 				<input type="hidden" name="general_settings" value="y">
-				<input type="submit" class="btn btn-primary" value=" {tr}Continue{/tr} ">
+				<input type="submit" class="btn btn-primary" value="{tr}Continue{/tr}">
 			</div>
 			</form>
 		</div><!-- End of install-step6 -->
@@ -652,8 +652,24 @@
 			{/if}
 			{if $tikidb_is20}
 				<div class="text-center">
-					<a href="tiki-install.php?lockenter&amp;{if $multi}multi={$multi|escape}&amp;{/if}install_type={$install_type}" class="btn btn-primary">{tr}Enter Tiki and Lock Installer{/tr} ({tr}Recommended{/tr})</a>
-					<a href="tiki-install.php?nolockenter&amp;{if $multi}multi={$multi|escape}&amp;{/if}install_type={$install_type}" class="btn btn-warning">{tr}Enter Tiki Without Locking Installer{/tr}</a>
+					<form method="post" action="tiki-install.php" style="float: left">
+						<input type="hidden" name="lockenter" value="1">
+						{if $multi}
+							<input type="hidden" name="multi" value="{$multi|escape}">
+						{/if}
+						<input type="hidden" name="install_type" value="{$install_type}">
+						<input type="hidden" name="install_step" value="8">
+						<input type="submit" value="{tr}Enter Tiki and Lock Installer{/tr} ({tr}Recommended{/tr})">
+					</form>
+					<form method="post" action="tiki-install.php">
+						<input type="hidden" name="nolockenter" value="1">
+						{if $multi}
+							<input type="hidden" name="multi" value="{$multi|escape}">
+						{/if}
+						<input type="hidden" name="install_type" value="{$install_type}">
+						<input type="hidden" name="install_step" value="8">
+						<input type="submit" value="{tr}Enter Tiki Without Locking Installer{/tr}">
+					</form>
 				</div>
 			{/if}
 			{if $install_type eq 'update'}

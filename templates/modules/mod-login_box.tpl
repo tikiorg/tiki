@@ -257,22 +257,21 @@ function doChallengeResponse() {
 				{/foreach}
 			</select>
 		{/if}
-		
+			{if $prefs.socialnetworks_facebook_login eq 'y' and $mode neq "header" and empty($user)}
+				<div style="text-align: center"><a href="tiki-socialnetworks.php?request_facebook=true"><img src="http://developers.facebook.com/images/devsite/login-button.png"></a></div>
+			{/if}
+			{if $prefs.auth_method eq 'openid' and !$user and (!isset($registration) || $registration neq 'y')}
+				<form method="get" action="tiki-login_openid.php">
+					<fieldset>
+						<legend>{tr}OpenID Log in{/tr}</legend>
+						<input class="openid_url" type="text" name="openid_url"/>
+						<input type="submit" class="btn btn-default" value="{tr}Go{/tr}"/>
+						<a class="linkmodule tikihelp" target="_blank" href="http://doc.tiki.org/OpenID">{tr}What is OpenID?{/tr}</a>
+					</fieldset>
+				</form>
+			{/if}		
 		{$close_tags}
 	</form>
-{/if}
-{if $prefs.auth_method eq 'openid' and !$user and (!isset($registration) || $registration neq 'y')}
-	<form method="get" action="tiki-login_openid.php">
-		<fieldset>
-			<legend>{tr}OpenID Log in{/tr}</legend>
-			<input class="openid_url" type="text" name="openid_url"/>
-			<input type="submit" class="btn btn-default btn-sm" value="{tr}Go{/tr}"/>
-			<a class="linkmodule tikihelp" target="_blank" href="http://doc.tiki.org/OpenID">{tr}What is OpenID?{/tr}</a>
-		</fieldset>
-	</form>
-{/if}
-{if $prefs.socialnetworks_facebook_login eq 'y' and $mode neq "header" and $mode neq "popup" and empty($user)}
-	<div class="text-center"><a href="tiki-socialnetworks.php?request_facebook=true"><img src="http://developers.facebook.com/images/devsite/login-button.png"></a></div>
 {/if}
 {if $mode eq "header"}</div>{/if}
 {/tikimodule}

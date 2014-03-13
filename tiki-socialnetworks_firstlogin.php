@@ -75,5 +75,5 @@ if (isset($_REQUEST["linkaccount"])) {
 	}
 }
 
-$smarty->assign('mid', 'tiki-socialnetworks_firstlogin.tpl');
-$smarty->display('tiki.tpl');
+$smarty->assign('mid_data', $smarty->fetch('tiki-socialnetworks_firstlogin.tpl'));
+$smarty->display('tiki_full.tpl');

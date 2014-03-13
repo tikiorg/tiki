@@ -438,7 +438,10 @@ function wikiplugin_appframe_mapcontrol($data, $params, $start)
 		$label = tr('Select');
 		break;
 	case 'modify_feature':
-		$control = 'new OpenLayers.Control.ModifyFeature(vlayer, {mode: OpenLayers.Control.ModifyFeature.DRAG | OpenLayers.Control.ModifyFeature.RESHAPE})';
+		$control = 'new OpenLayers.Control.ModifyFeature(vlayer, {
+			mode: OpenLayers.Control.ModifyFeature.DRAG | OpenLayers.Control.ModifyFeature.RESHAPE,
+			standalone: true
+		}), new OpenLayers.Control.SelectFeature(vlayer)';
 		$label = tr('Select/Modify');
 		break;
 	case 'draw_polygon':
