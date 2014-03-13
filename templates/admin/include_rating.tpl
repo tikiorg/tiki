@@ -21,6 +21,7 @@
 		<table>
 		<tr>
 		<td style="width:49%">
+		{preference name=feature_wiki_ratings}
 		{preference name=wiki_simple_ratings}
 		<div class="adminoptionboxchild" id="wiki_simple_ratings_childcontainer">
 			{preference name=wiki_simple_ratings_options}
@@ -31,6 +32,7 @@
 				{tr}Permissions involved:{/tr}
 				<ul>
 					<li>{tr}wiki{/tr} > wiki_vote_ratings</li>
+					<li>{tr}wiki{/tr} > wiki_view_ratings</li>
 					<li>{tr}tiki{/tr} > ratings_view_results</li>
 				</ul>
 				</div>
