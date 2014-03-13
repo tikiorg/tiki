@@ -265,11 +265,11 @@ function doChallengeResponse() {
 					<fieldset>
 						<legend>{tr}OpenID Log in{/tr}</legend>
 						<input class="openid_url" type="text" name="openid_url"/>
-						<input type="submit" class="btn btn-default" value="{tr}Go{/tr}"/>
+						<input type="submit" class="btn btn-default btn-sm" value="{tr}Go{/tr}"/>
 						<a class="linkmodule tikihelp" target="_blank" href="http://doc.tiki.org/OpenID">{tr}What is OpenID?{/tr}</a>
 					</fieldset>
 				</form>
-			{/if}		
+			{/if}
 		{$close_tags}
 	</form>
 {/if}

@@ -659,7 +659,7 @@
 						{/if}
 						<input type="hidden" name="install_type" value="{$install_type}">
 						<input type="hidden" name="install_step" value="8">
-						<input type="submit" value="{tr}Enter Tiki and Lock Installer{/tr} ({tr}Recommended{/tr})">
+						<input type="submit" class="btn btn-primary" value="{tr}Enter Tiki and Lock Installer{/tr} ({tr}Recommended{/tr})">
 					</form>
 					<form method="post" action="tiki-install.php">
 						<input type="hidden" name="nolockenter" value="1">
@@ -668,7 +668,7 @@
 						{/if}
 						<input type="hidden" name="install_type" value="{$install_type}">
 						<input type="hidden" name="install_step" value="8">
-						<input type="submit" value="{tr}Enter Tiki Without Locking Installer{/tr}">
+						<input type="submit" class="btn btn-warning" value="{tr}Enter Tiki Without Locking Installer{/tr}">
 					</form>
 				</div>
 			{/if}
