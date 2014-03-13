@@ -1,13 +1,15 @@
 {jq}
 {{if $mid != 'tiki-socialnetworks_firstlogin.tpl'}}
-	$jq("body").colorbox({
-	open: true,
-	href: "tiki-socialnetworks_firstlogin.php",
-	iframe: true,
-	scrolling: false,
-	width: 650,
-	height: 600
+if ($("form > input[name=origin]:hidden").length === 0) {	// lightweight fix to avoid clash of user_conditions and fb 1st login
+	$("body").colorbox({
+		open: true,
+		href: "tiki-socialnetworks_firstlogin.php",
+		iframe: true,
+		scrolling: false,
+		width: 650,
+		height: 600
 	});
+}
 {{/if}}
 {/jq}
 {literal}
