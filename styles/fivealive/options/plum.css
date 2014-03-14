@@ -2,6 +2,8 @@
 	Plum theme option for FiveAlive themes for Tiki Wiki CMS Groupware.
 */
 
+@import url("../jquery-ui/options/plum/jquery-ui.min.css");
+
 a,
 a:visited,tr.even a:link,
 tr.even a:visited,
@@ -285,7 +287,7 @@ form.admin fieldset,
 	border-bottom: none;
 }
 
-/* cluptip tooltips */
+/* cluetip tooltips */
 
 .cluetip-default {
 	background: #f3e1fb;
@@ -304,3 +306,13 @@ form.admin fieldset,
 	color: #f3e1fb;
 }
   
+
+.s5-slide {
+    background-color: #15001F !important;
+}
+.s5-slide:after {
+    box-shadow: -5rem -2rem 0 0 #03001D inset, 0 0 2rem rgba(0, 0, 0, 0.5);
+}
+.s5-slide-li-highlighted {
+    color: #7A04B5;
+}
