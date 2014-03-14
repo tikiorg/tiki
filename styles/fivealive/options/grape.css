@@ -299,7 +299,7 @@ form.admin fieldset,
 	border-bottom: none;
 }
 
-/* cluptip tooltips */
+/* cluetip tooltips */
 
 .cluetip-default {
 	background: #FBDCED;
@@ -323,9 +323,8 @@ form.admin fieldset,
     background-color: #A82A76 !important;
 }
 .s5-slide:after {
-    box-shadow: -5rem -2rem 0 0 #69285C inset;
+    box-shadow: -5rem -2rem 0 0 #69285C inset, 0 0 2rem rgba(0, 0, 0, 0.5);
 }
 .s5-slide-li-highlighted {
     color: #A82A76;
 }
-
