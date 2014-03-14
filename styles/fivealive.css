@@ -713,7 +713,7 @@ li.login_link ul li a {
 	margin-left: -.5em;
 }
 
-#main #tiki-top .cssmenu_horiz li a {
+#topbar_modules .cssmenu_horiz li a {
 	font-size: 13px;
 	padding: 17px 1em 15px;
 	background: url(fivealive/menu_divider.png) 100% 50% no-repeat;
@@ -750,33 +750,33 @@ li.login_link ul li a {
 }
 
 /* ul ul top compensation for padding */
-#tiki-top .cssmenu_horiz li:hover ul,
-#tiki-top .cssmenu_horiz li.sfHover ul {
+#topbar_modules .cssmenu_horiz li:hover ul,
+#topbar_modules .cssmenu_horiz li.sfHover ul {
 	top: 48px;
 }
 
 /* ul ul ul top compensation for padding */
-#tiki-top .cssmenu_horiz li:hover ul ul,
-#tiki-top .cssmenu_horiz li.sfHover ul ul {
+#topbar_modules .cssmenu_horiz li:hover ul ul,
+#topbar_modules .cssmenu_horiz li.sfHover ul ul {
 	top: 0;
 }
 
-#main #tiki-top .cssmenu_horiz li.menuSection a {
+#topbar_modules .cssmenu_horiz li.menuSection a {
 	padding-right: 30px;
 }
 
-#tiki-top .cssmenu_horiz ul li a {
+#topbar_modules .cssmenu_horiz ul li a {
 	text-transform: none;
 }
 
-#tiki-top .cssmenu_horiz ul li:hover a,
+#topbar_modules .cssmenu_horiz ul li:hover a,
 #secondary_site_menu .cssmenu_horiz ul li:hover a {
 	text-decoration: none;
 }
 
 #secondary_site_menu .cssmenu_horiz li a > .sf-sub-indicator {top: 13px}
-#tiki-top .cssmenu_horiz li a > .sf-sub-indicator {top: 24px}
-#tiki-top .cssmenu_horiz li li a > .sf-sub-indicator {top: 9px}
+#topbar_modules .cssmenu_horiz li a > .sf-sub-indicator {top: 24px}
+#topbar_modules .cssmenu_horiz li li a > .sf-sub-indicator {top: 9px}
 #col2 .cssmenu_vert li a > .sf-sub-indicator {top: 5px}
 
 .cssmenu_horiz li.selected a,

@@ -65,7 +65,7 @@
 								{if $comment.can_edit}
 									<a class='btn btn-link btn-sm' href="{service controller=comment action=edit threadId=$comment.threadId}">{tr}Edit{/tr}</a>
 								{/if}
-								{if $prefs.wiki_comments_simple_ratings eq 'y' && $tiki_p_vote_comments eq 'y'}
+								{if $comment.userName ne $user and $comment.approved eq 'y' and $prefs.wiki_comments_simple_ratings eq 'y' and ($tiki_p_vote_comments eq 'y' or $tiki_p_admin_comments eq 'y' )}
 									<form class="commentRatingForm" method="post">
 										{rating type="comment" id=$comment.threadId}
 										<input type="hidden" name="id" value="{$comment.threadId}" />

@@ -2464,6 +2464,9 @@ class UsersLib extends TikiLib
 
 		if ($this->get_user_preference($auser, 'user_information', 'public') == 'public' || $prefs['feature_friends'] == 'y') {
 			$id = $this->get_user_id($auser);
+			if ($id == -1 ) {
+				return $body;
+			}
 			include_once('tiki-sefurl.php');
 			$url = "tiki-user_information.php?userId=$id";
 			$url = filter_out_sefurl($url);
