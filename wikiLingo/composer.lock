@@ -241,12 +241,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FutureLink-Protocol/php.git",
-                "reference": "fe4ea683de81952b4cd55fa51c70af29989a861c"
+                "reference": "125b71e6ed61ee5037268fd4135247903e0e5d25"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FutureLink-Protocol/php/zipball/fe4ea683de81952b4cd55fa51c70af29989a861c",
-                "reference": "fe4ea683de81952b4cd55fa51c70af29989a861c",
+                "url": "https://api.github.com/repos/FutureLink-Protocol/php/zipball/125b71e6ed61ee5037268fd4135247903e0e5d25",
+                "reference": "125b71e6ed61ee5037268fd4135247903e0e5d25",
                 "shasum": ""
             },
             "require": {
@@ -286,7 +286,7 @@
             ],
             "description": "FutureLink-Protocol implementation in PHP",
             "homepage": "https://github.com/FutureLink-Protocol",
-            "time": "2014-03-11 18:42:11"
+            "time": "2014-03-13 20:37:46"
         },
         {
             "name": "gabordemooij/redbean",
@@ -815,7 +815,7 @@
                 "reference": null,
                 "shasum": null
             },
-            "type": "component"
+            "type": "library"
         },
         {
             "name": "medium.js/medium.js",
@@ -1172,12 +1172,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/wikiLingo/wikiLingo.git",
-                "reference": "72216a1fd5c3baab5493338c93642578583bb9c4"
+                "reference": "1c91cb147370eb9acfd9c3437c5246cbf58c2ccf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wikiLingo/wikiLingo/zipball/72216a1fd5c3baab5493338c93642578583bb9c4",
-                "reference": "72216a1fd5c3baab5493338c93642578583bb9c4",
+                "url": "https://api.github.com/repos/wikiLingo/wikiLingo/zipball/1c91cb147370eb9acfd9c3437c5246cbf58c2ccf",
+                "reference": "1c91cb147370eb9acfd9c3437c5246cbf58c2ccf",
                 "shasum": ""
             },
             "require": {
@@ -1213,7 +1213,7 @@
                     "role": "Lead Developer"
                 }
             ],
-            "time": "2014-03-11 13:57:10"
+            "time": "2014-03-13 18:53:20"
         },
         {
             "name": "zetacomponents/base",

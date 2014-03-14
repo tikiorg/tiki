@@ -41,11 +41,11 @@ class WikiLingoEvents
 
         //FutureLink-Protocol Events
         FLP\Events::bind(new FLP\Event\MetadataLookup(function($linkType, &$metadata) use ($page, $headerlib) {
-
+            global $page;
             $metadataLookup = new WikiMetadataLookup($page);
 
             $metadataTemp = $metadataLookup->getPartial();
-            $metadataTemp->href = TikiLib::curPageURL();// TikiLib::tikiUrl();
+            $metadataTemp->href = TikiLib::tikiUrl('tiki-index.php') . '?page=' . $page;
             $metadataTemp->text = $metadata->text;
             $metadata = $metadataTemp;
         }));
