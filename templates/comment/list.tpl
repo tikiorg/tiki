@@ -62,8 +62,7 @@
 									<div class="button">{self_link controller=comment action=edit threadId=$comment.threadId}{tr}Edit{/tr}{/self_link}</div>
 								{/if}
 								</td>
-
-								{if $prefs.wiki_comments_simple_ratings eq 'y' && $tiki_p_vote_comments eq 'y'}
+								{if $comment.userName ne $user and $comment.approved eq 'y' and $prefs.wiki_comments_simple_ratings eq 'y' and ($tiki_p_vote_comments eq 'y' or $tiki_p_admin_comments eq 'y' )}
 								<td>
 									<form class="commentRatingForm" method="post" action="" style="float: right;">
 										{rating type="comment" id=$comment.threadId}

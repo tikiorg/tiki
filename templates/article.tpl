@@ -33,7 +33,7 @@
 			({$rating}/10)
 		</div>
 	{/if}
-	{if $comment_can_rate_article eq 'y' and !isset($preview) and $prefs.article_user_rating eq 'y' && $tiki_p_rate_article eq 'y'}
+	{if $author ne $user and $comment_can_rate_article eq 'y' and !isset($preview) and $prefs.article_user_rating eq 'y' and ($tiki_p_rate_article eq 'y' or $tiki_p_admin_cms eq 'y')}
 		<form method="post" action="">
 			{rating type=article id=$articleId}
 		</form>
