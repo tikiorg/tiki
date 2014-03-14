@@ -3,6 +3,8 @@
 	Tiki Wiki CMS Groupware.
 */
 
+@import url("../jquery-ui/options/orange/jquery-ui.min.css");
+
 a,
 a:visited,tr.even a:link,
 tr.even a:visited,
@@ -281,7 +283,7 @@ form.admin fieldset,
 	border-bottom: none;
 }
 
-/* cluptip tooltips */
+/* cluetip tooltips */
 
 .cluetip-default {
 	background: #FEE3DD;
@@ -300,3 +302,13 @@ form.admin fieldset,
 	color: #FEE3DD;
 }
   
+
+.s5-slide {
+    background-color: #EC6223 !important;
+}
+.s5-slide:after {
+    box-shadow: -5rem -2rem 0 0 #942E1F inset, 0 0 2rem rgba(0, 0, 0, 0.5);
+}
+.s5-slide-li-highlighted {
+    color: #EC6223;
+}
