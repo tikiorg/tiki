@@ -9,6 +9,9 @@
 @import url("layout/layout.css");
 @import url("layout/design.css");
 
+/* Import matching jQuery-UI theme */
+@import url("fivealive/jquery-ui/jquery-ui.min.css");
+
 /* make sure whole browser viewport background is always set to white */
 html {
 	background-color: #fff;
@@ -1315,7 +1318,7 @@ td.calheadhighlight {
 /***** Ajax *****/
 /***** New (unsorted) *****/
 
-/* cluptip tooltips */
+/* cluetip tooltips */
 
 .cluetip-default {
 	background: #CBF4FA;
@@ -1339,6 +1342,93 @@ td.calheadhighlight {
 /*.cluetip-transparent {
 	top: 168px !important;
 }*/
+
+
+/* S5 slideshow matching theme */
+.s5-background {
+    box-shadow: 0 10vmin 10vmin -1rem rgba(0, 0, 0, .5) inset;
+    height: 100%;
+    left: 0;
+    opacity: .5;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 0;
+}
+.s5-slide {
+    background-color: #239FD5 !important;
+    box-shadow: 0 8vmin 0 #000000 inset;
+    height: 100%; width: 100% !important;
+    overflow: hidden;
+    padding: 0;
+    position: fixed;
+    top: 0;
+    z-index: 5;
+}
+.s5-slide:after {
+    background-color: #FFFFFF;
+    border-radius: 15rem;
+    border: 0.2rem solid #FFFFFF;
+    box-shadow: -5rem -2rem 0 0 #143C64 inset, 0 0 2rem rgba(0, 0, 0, 0.5);
+    content: "";
+    height: 2000px;
+    position: absolute;
+    right: 10%;
+    top: -250px;
+    transform: rotate(15deg);
+    width: 2000px;
+    z-index: -2;
+}
+.s5-slide:hover {
+    overflow-y: auto;
+}
+.s5-first td {
+    padding-top: 15vmin;
+}
+.s5-first td {
+    display: block;
+    margin: auto;
+}
+.s5-slide-left {
+    width: 90%;
+}
+.s5-slide-right > * {
+    display: flex !important;
+    margin: 1rem auto;
+}
+.s5-image {
+    float: none !important;
+}
+.s5-slide img[src^="img/smiles"] {
+    border-radius: 9rem;
+    box-shadow: 0 0 0.1rem 0.2rem inset, 0 0 0 0.2rem #FFCC00;
+    width: 3vmin;
+}
+.s5-slide img[src^="img/icons"] {
+    color: #000 !important;
+    border-radius: 9rem;
+    box-shadow: 0 0 0.1em 2em inset, 0 0.1em 0.2em rgba(0, 0, 0, 0.75), 0 0 0 0.1em rgba(0, 0, 0, 0.25);
+    height: 0.5em;
+    margin: auto 0.25em;
+    opacity: 0.75 !important;
+    width: 0.5em;
+}
+.s5-slide img[src^="img/icons"]:hover,
+.s5-slide img[src^="img/icons"]:focus
+{
+    opacity: 1 !important;
+}
+.s5-slide-li-highlighted {
+    color: #2098CD;
+}
+
+.s5-footer {
+    font-family: sans-serif;
+    font-size: 100%;
+}
+#s5-slide-num {
+    margin-right: 2rem;
+}
 
 
 /***** End New (unsorted) *****/
