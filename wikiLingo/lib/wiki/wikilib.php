@@ -1813,8 +1813,10 @@ class WikiLibOutput
 	            (new WikiLingoEvents($wikiLingo));
             }
 
-            if (isset($_POST['protocol']) && $_POST['protocol'] !== 'futurelink')
+            if (isset($_POST['protocol']) && $_POST['protocol'] === 'futurelink')
             {
+                $this->parsedValue = '';
+            } else {
                 $this->parsedValue = $wikiLingo->parse($this->originalValue);
 
                 //transfer scripts over to headerlib
