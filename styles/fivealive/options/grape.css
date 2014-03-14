@@ -3,6 +3,8 @@
 	Tiki Wiki CMS Groupware.
 */
 
+@import url("../jquery-ui/options/grape/jquery-ui.min.css");
+
 a,
 a:visited,
 tr.even a,
@@ -316,3 +318,14 @@ form.admin fieldset,
 	color: #FBDCED;
 }
   
+
+.s5-slide {
+    background-color: #A82A76 !important;
+}
+.s5-slide:after {
+    box-shadow: -5rem -2rem 0 0 #69285C inset;
+}
+.s5-slide-li-highlighted {
+    color: #A82A76;
+}
+
