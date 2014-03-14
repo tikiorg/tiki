@@ -47,7 +47,17 @@ class Tiki_Profile_Writer_Helper
 			$params = preg_replace(array('/^&quot;/', '/&quot;$/'), '', $params);
 			$body = $match->getBody();
 
-			if ($info = $parserlib->plugin_info($pluginName)) {
+			$info = $parserlib->plugin_info($pluginName);
+
+			if ($pluginName == 'module') {
+				$moduleInfo = TikiLib::lib('mod')->get_module_info($params['module']);
+
+				if ($moduleInfo) {
+					$info['params'] = array_merge($info['params'], $moduleInfo['params']);
+				}
+			}
+
+			if ($info) {
 				foreach ($params as $paramName => & $paramValue) {
 					if (isset($info['params'][$paramName]['profile_reference'])) {
 						$paramInfo = $info['params'][$paramName];
