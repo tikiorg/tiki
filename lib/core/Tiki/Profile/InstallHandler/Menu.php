@@ -119,6 +119,7 @@ class Tiki_Profile_InstallHandler_Menu extends Tiki_Profile_InstallHandler
 		$data = $this->getData();
 
 		$this->replaceReferences($data);
+		$data = Tiki_Profile::convertYesNo($data);
 		
 		$type = 'f';
 		if ( $data['collapse'] == 'collapsed' ) {
@@ -127,7 +128,7 @@ class Tiki_Profile_InstallHandler_Menu extends Tiki_Profile_InstallHandler
 			$type = 'e';
 		}
 
-		$menulib->replace_menu(0, $data['name'], $data['description'], $type, $data['icon']);
+		$menulib->replace_menu(0, $data['name'], $data['description'], $type, $data['icon'], $data['use_items_icons'], $data['parse']);
 		$result = $tikilib->query("SELECT MAX(`menuId`) FROM `tiki_menus`");
 		$menuId = reset($result->fetchRow());
 
