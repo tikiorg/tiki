@@ -76,6 +76,7 @@ class WikiEvents {
 		$parsed = $smarty->getTemplateVars('parsed');
 		if (!empty($parsed)) {
 			$ui = new FLP\UI($parsed);
+            $ui->setContextAsPast();
 			$pairs = FLP\Data::GetPairsByTitleAndApplyToUI($this->title, $ui);
             $pairsJson = json_encode($pairs);
             $counts = json_encode(FLP\PairAssembler::$counts);
@@ -99,9 +100,9 @@ for(var x = 0; x < flpData.length; x++){
 
 for(var i = 0; i < flpData.length; i++) {
     var futureLink = new flp.Link({
-        beginning: phrases.filter('span.phraseBeginning' + i),
-        middle: phrases.filter('span.phrase' + i),
-        end: phrases.filter('span.phraseEnd' + i),
+        beginning: phrases.filter('span.futurelink-beginning' + i),
+        middle: phrases.filter('span.futurelink' + i),
+        end: phrases.filter('span.futurelink-end' + i),
         count: counts[flpData[i].pastText.sanitized],
         pairs: phrasesLookupTable[flpData[i].pastText.sanitized]
     });
@@ -115,6 +116,7 @@ JS
 			$previewd = $smarty->getTemplateVars('previewd');
 			if (!empty($previewd)) {
 				$ui = new FLP\UI($previewd);
+                $ui->setContextAsPast();
 				FLP\Data::GetPairsByTitleAndApplyToUI($this->title, $ui);
 				$previewd = $ui->render();
 				$smarty->assign('previewd', $previewd);
