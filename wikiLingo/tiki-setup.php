@@ -410,7 +410,11 @@ if ($prefs['feature_wikilingo'] == 'y') {
             ->add_jsfile("vendor/wikilingo/wikilingo/editor/bubble.js");
     }
 
-    $headerlib->add_jsfile("lib/wikiLingo_tiki/tiki_wikiLingo_edit.js");
+    $headerlib
+        ->add_jsfile("lib/wikiLingo_tiki/tiki_wikiLingo_edit.js")
+        //flp stuff
+        ->add_cssfile('vendor/tablesorter/tablesorter/css/theme.dropbox.css')
+        ->add_jsfile('vendor/tablesorter/tablesorter/js/jquery.tablesorter.js');
 }
 
 if ( $prefs['feature_jquery_carousel'] == 'y' ) {

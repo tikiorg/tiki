@@ -32,6 +32,7 @@ class WikiEvents {
 	}
 
 	public function direct() {
+        global $headerlib;
 		//redirect start
 		if (isset($_GET['phrase'])) {
 			$phrase = (!empty($_GET['phrase']) ? $_GET['phrase'] : '');
@@ -46,6 +47,17 @@ class WikiEvents {
 		if (!empty($_SESSION['phrase'])) {
 			$phrase = $_SESSION['phrase'];
 			unset($_SESSION['phrase']);
+            $phraseSanitized = Phraser\Phraser::superSanitize($phrase);
+            $headerlib->add_jq_onready(<<<JS
+var phraseSanitized = '$phraseSanitized';
+setTimeout(function() {
+    if (!flp.selectAndScrollToFutureLink(phraseSanitized)) {
+        flp.selectAndScrollToPastLink(phraseSanitized);
+    }
+}, 50);
+JS
+);
+
 
 		}
 
@@ -58,7 +70,18 @@ class WikiEvents {
 				$_SESSION['phrase'] = $phrase;
 				header('Location: ' . TikiLib::tikiUrl() . 'tiki-pagehistory.php?page=' . $revision->title . '&preview=' . $revision->version . '&nohistory');
 				exit();
-			}
+			} else {
+                $phraseSanitized = Phraser\Phraser::superSanitize($phrase);
+                $headerlib->add_jq_onready(<<<JS
+var phraseSanitized = '$phraseSanitized';
+setTimeout(function() {
+    if (!flp.selectAndScrollToFutureLink(phraseSanitized)) {
+        flp.selectAndScrollToPastLink(phraseSanitized);
+    }
+}, 50);
+JS
+                );
+            }
 		}
 	}
 
@@ -106,6 +129,7 @@ for(var i = 0; i < flpData.length; i++) {
         count: counts[flpData[i].pastText.sanitized],
         pairs: phrasesLookupTable[flpData[i].pastText.sanitized]
     });
+    flp.addFutureLink(futureLink);
 }
 JS
 );
