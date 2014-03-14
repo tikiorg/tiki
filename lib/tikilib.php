@@ -5719,6 +5719,23 @@ class TikiLib extends TikiDb_Bridge
 	}
 
 	/**
+	 * Removes the protocol, host and path from a URL if they match
+	 *
+	 * @param string $url		URL to be converted
+	 * @return string			relative URL if possible
+	 */
+	static function makeAbsoluteLinkRelative($url) {
+		global $base_url;
+
+		if (strpos($url, $base_url) !== false) {
+			$out = substr($url, strlen($base_url));
+		} else {
+			$out = $url;
+		}
+		return $out;
+	}
+
+	/**
 	 * @param $lat1
 	 * @param $lon1
 	 * @param $lat2

@@ -116,6 +116,7 @@ class Tracker_Field_Icon extends Tracker_Field_Abstract
 
 	function handleSave($value, $oldValue)
 	{
+		$value = TikiLib::makeAbsoluteLinkRelative($value);
 		return array(
 			'value' => $value,
 		);
