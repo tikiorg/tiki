@@ -23,10 +23,11 @@ class WikiEvents {
 
 	public function listen() {
 		//listener start
-		if (isset($_POST['protocol'])) {
-			echo FLP\Service\Receiver::receive();
-			exit;
-		}
+		$received = FLP\Service\Receiver::receive();
+        if ($received != null) {
+            echo $received;
+            exit;
+        }
 		//listener end
 	}
 

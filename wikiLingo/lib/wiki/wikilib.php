@@ -1813,24 +1813,27 @@ class WikiLibOutput
 	            (new WikiLingoEvents($wikiLingo));
             }
 
-            $this->parsedValue = $wikiLingo->parse($this->originalValue);
+            if (isset($_POST['protocol']) && $_POST['protocol'] !== 'futurelink')
+            {
+                $this->parsedValue = $wikiLingo->parse($this->originalValue);
 
-            //transfer scripts over to headerlib
-            //css
-            foreach($scripts->css as $css) {
-                $headerlib->add_css($css);
-            }
-            //css files
-            foreach($scripts->cssLocations as $cssLocation) {
-                $headerlib->add_cssfile($cssLocation);
-            }
-            //js
-            foreach($scripts->scripts as $script) {
-                $headerlib->add_js($script);
-            }
-            //js files
-            foreach($scripts->scriptLocations as $scriptLocation) {
-                $headerlib->add_jsfile($scriptLocation);
+                //transfer scripts over to headerlib
+                //css
+                foreach($scripts->css as $css) {
+                    $headerlib->add_css($css);
+                }
+                //css files
+                foreach($scripts->cssLocations as $cssLocation) {
+                    $headerlib->add_cssfile($cssLocation);
+                }
+                //js
+                foreach($scripts->scripts as $script) {
+                    $headerlib->add_js($script);
+                }
+                //js files
+                foreach($scripts->scriptLocations as $scriptLocation) {
+                    $headerlib->add_jsfile($scriptLocation);
+                }
             }
         } else {
             $this->parsedValue = $tikilib->parse_data($this->originalValue, $this->options = $options);
