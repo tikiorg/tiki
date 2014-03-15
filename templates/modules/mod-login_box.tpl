@@ -70,7 +70,7 @@ if (jqueryTiki.no_cookie) {
 		{elseif $mode eq "header"}
 			<span style="white-space: nowrap">{$user|userlink}</span> <a href="tiki-logout.php" title="{tr}Log out{/tr}">{tr}Log out{/tr}</a>
 		{elseif $mode eq "popup"}
-			<div class="siteloginbar_popup dropdown">
+			<div class="siteloginbar_popup dropdown pull-right">
 				<a href="tiki-logout.php" class="login_link" data-toggle="dropdown">
 					{tr}Log out{/tr}
 				</a>
@@ -111,7 +111,7 @@ if (jqueryTiki.no_cookie) {
 	{else}
 		{assign var='close_tags' value=''}
 		{if $mode eq "popup"}
-			<div class="siteloginbar_popup dropdown">
+			<div class="siteloginbar_popup dropdown pull-right">
 				<a href="tiki-login.php" class="login_link btn" data-toggle="dropdown">
 					<span>{tr}Log in{/tr}</span>
 					<span class="caret"></span>
