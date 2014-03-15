@@ -105,7 +105,7 @@ $commands = array();
 $prefs['lang_use_db'] = 'n';
 
 // Which step of the installer
-if (empty($_REQUEST['install_step'])) {
+if (empty($_POST['install_step'])) {
 	$install_step = '0';
 
 	if (isset($_REQUEST['setdbversion'])) {
@@ -117,7 +117,7 @@ if (empty($_REQUEST['install_step'])) {
 		fclose($db);
 	}
 } else {
-	$install_step = $_REQUEST['install_step'];
+	$install_step = $_POST['install_step'];
 
 	if ($install_step == 3) {	// clear caches after system requirements page
 		global $cachelib; include 'lib/cache/cachelib.php';
@@ -126,8 +126,8 @@ if (empty($_REQUEST['install_step'])) {
 }
 
 // define the language to use, either from user-setting or default
-if (!empty($_REQUEST['lang'])) {
-	$language = $prefs['site_language'] = $prefs['language'] = $_REQUEST['lang'];
+if (!empty($_POST['lang'])) {
+	$language = $prefs['site_language'] = $prefs['language'] = $_POST['lang'];
 } else {
 	$language = $prefs['site_language'] = $prefs['language'] = 'en';
 }
@@ -655,8 +655,8 @@ $_SERVER = $serverFilter->filter($_SERVER);
 $multi = '';
 // If using multiple Tiki installations (MultiTiki)
 if ($virtuals) {
-	if (isset($_REQUEST['multi']) && in_array($_REQUEST['multi'], $virtuals)) {
-		$multi = $_REQUEST['multi'];
+	if (isset($_POST['multi']) && in_array($_POST['multi'], $virtuals)) {
+		$multi = $_POST['multi'];
 	} else {
 		if (isset($_SERVER['TIKI_VIRTUAL']) && is_file('db/'.$_SERVER['TIKI_VIRTUAL'].'/local.php')) {
 			$multi = $_SERVER['TIKI_VIRTUAL'];
@@ -745,16 +745,14 @@ include('lib/tikilib.php');
 $languages = TikiLib::list_languages(false, null, true);
 $smarty->assignByRef("languages", $languages);
 
+$logslib = TikiLib::lib('logs');
+
 $client_charset = '';
 
 // next block checks if there is a local.php and if we can connect through this.
 // sets $dbcon to false if there is no valid local.php
 $dbcon = (bool) TikiDb::get();
 $installer = null;
-$logslib = TikiLib::lib('logs');
-if (isset($_POST['enterinstall']) && $_POST['enterinstall'] == '1') {
-	Tikilib::lib('logs')->add_log('install', 'entering install with pre-existing database connection');
-}
 if ( file_exists($local) ) {
 	// include the file to get the variables
 	$default_api_tiki = $api_tiki;
@@ -792,7 +790,7 @@ if ( file_exists($local) ) {
 	$smarty->assign('resetdb', 'n');
 	if ( isset( $dbservers[$db_tiki] ) ) { // avoid errors in ADONewConnection() (wrong darabase driver etc...)
 		if ( $dbcon = initTikiDB($api_tiki, $db_tiki, $host_tiki, $user_tiki, $pass_tiki, $dbs_tiki, $client_charset, $dbTiki) ) {
-			$smarty->assign('resetdb', isset($_REQUEST['reset']) ? 'y' : 'n');
+			$smarty->assign('resetdb', isset($_POST['reset']) ? 'y' : 'n');
 
 			$installer = new Installer;
 			$installer->setServerType($db_tiki);
@@ -800,8 +798,8 @@ if ( file_exists($local) ) {
 			if ( ! $client_charset_forced ) {
 
 				write_local_php($db_tiki, $host_tiki, $user_tiki, $pass_tiki, $dbs_tiki, $client_charset, ($api_tiki_forced ? $api_tiki : ''), $dbversion_tiki);
-				$logslib->add_log('install', 'database credentials written to file: hostname-' . $host_tiki
-					. '; dbname-' . $dbs_tiki . '; dbuser-' . $user_tiki);
+				$logslib->add_log('install', 'database credentials written to file with hostname=' . $host_tiki
+					. '; dbname=' . $dbs_tiki . '; dbuser=' . $user_tiki);
 			}
 		}
 	}
@@ -860,8 +858,8 @@ if (
 		if ($dbcon) {
 			write_local_php($_POST['db'], $_POST['host'], $_POST['user'], $_POST['pass'], $_POST['name'],
 				$client_charset);
-			$logslib->add_log('install', 'database credentials updated to: hostname-' . $_POST['host'] . '; dbname-'
-				. $_POST['name'] .'; dbuser-' . $_POST['user']);
+			$logslib->add_log('install', 'database credentials updated with hostname=' . $_POST['host'] . '; dbname='
+				. $_POST['name'] .'; dbuser=' . $_POST['user']);
 			include $local;
 			// In case of replication, ignore it during installer.
 			unset($shadow_dbs, $shadow_user, $shadow_pass, $shadow_host);
@@ -907,7 +905,7 @@ if ($dbcon) {
 	$smarty->assign('tikidb_is20', has_tiki_db_20());
 }
 
-if (isset($_REQUEST['restart'])) {
+if (isset($_POST['restart'])) {
 	$_SESSION["install-logged-$multi"] = '';
 }
 
@@ -931,7 +929,12 @@ if (
 
 	if ( isset($_POST['scratch']) ) {
 		$installer->cleanInstall();
-		$logslib->add_log('install', 'clean install');
+		if ($has_tiki_db) {
+			$logmsg = 'database "' . $dbs_tiki . '" destroyed and reinstalled';
+		} else {
+			$logmsg = 'clean install of new database "' . $dbs_tiki . '"';
+		}
+		$logslib->add_log('install', $logmsg);
 		$smarty->assign('installer', $installer);
 		$smarty->assign('dbdone', 'y');
 		$install_type = 'scratch';
@@ -945,7 +948,7 @@ if (
 
 	if (isset($_POST['update'])) {
 		$installer->update();
-		$logslib->add_log('install', 'database upgraded to latest version');
+		$logslib->add_log('install', 'database "' . $dbs_tiki . '" upgraded to latest version');
 		$smarty->assign('installer', $installer);
 		$smarty->assign('dbdone', 'y');
 		$install_type = 'update';
@@ -965,8 +968,8 @@ if (
 }
 
 if (!isset($install_type)) {
-	if (isset($_REQUEST['install_type'])) {
-		$install_type = $_REQUEST['install_type'];
+	if (isset($_POST['install_type'])) {
+		$install_type = $_POST['install_type'];
 	} else {
 		$install_type = '';
 	}

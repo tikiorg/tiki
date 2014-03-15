@@ -58,7 +58,7 @@ unset($session_params);
 session_start();
 
 $refered = isset($_SERVER['HTTP_REFERER']) ? strpos($_SERVER['HTTP_REFERER'], $tikiroot . '/tiki-install.php') : false;
-if (!$refered || ($refered && !isset($_REQUEST['install_step']))) {
+if (!$refered || ($refered && !isset($_POST['install_step']))) {
 	unset ($_SESSION['accessible']);
 }
 // Were database details defined before? If so, load them
