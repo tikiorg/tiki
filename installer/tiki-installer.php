@@ -751,6 +751,10 @@ $client_charset = '';
 // sets $dbcon to false if there is no valid local.php
 $dbcon = (bool) TikiDb::get();
 $installer = null;
+$logslib = TikiLib::lib('logs');
+if (isset($_POST['enterinstall']) && $_POST['enterinstall'] == '1') {
+	Tikilib::lib('logs')->add_log('install', 'entering install with pre-existing database connection');
+}
 if ( file_exists($local) ) {
 	// include the file to get the variables
 	$default_api_tiki = $api_tiki;
@@ -796,6 +800,8 @@ if ( file_exists($local) ) {
 			if ( ! $client_charset_forced ) {
 
 				write_local_php($db_tiki, $host_tiki, $user_tiki, $pass_tiki, $dbs_tiki, $client_charset, ($api_tiki_forced ? $api_tiki : ''), $dbversion_tiki);
+				$logslib->add_log('install', 'database credentials written to file: hostname-' . $host_tiki
+					. '; dbname-' . $dbs_tiki . '; dbuser-' . $user_tiki);
 			}
 		}
 	}
@@ -854,6 +860,8 @@ if (
 		if ($dbcon) {
 			write_local_php($_POST['db'], $_POST['host'], $_POST['user'], $_POST['pass'], $_POST['name'],
 				$client_charset);
+			$logslib->add_log('install', 'database credentials updated to: hostname-' . $_POST['host'] . '; dbname-'
+				. $_POST['name'] .'; dbuser-' . $_POST['user']);
 			include $local;
 			// In case of replication, ignore it during installer.
 			unset($shadow_dbs, $shadow_user, $shadow_pass, $shadow_host);
@@ -923,6 +931,7 @@ if (
 
 	if ( isset($_POST['scratch']) ) {
 		$installer->cleanInstall();
+		$logslib->add_log('install', 'clean install');
 		$smarty->assign('installer', $installer);
 		$smarty->assign('dbdone', 'y');
 		$install_type = 'scratch';
@@ -936,6 +945,7 @@ if (
 
 	if (isset($_POST['update'])) {
 		$installer->update();
+		$logslib->add_log('install', 'database upgraded to latest version');
 		$smarty->assign('installer', $installer);
 		$smarty->assign('dbdone', 'y');
 		$install_type = 'update';
@@ -1115,12 +1125,16 @@ if ( isset($_POST['general_settings']) && $_POST['general_settings'] == 'y' ) {
 	$installer->query($query, array($_POST['browsertitle'], $_POST['sender_email'], $_POST['https_login'],
 		$_POST['https_port'], $_POST['error_reporting_level'], $language));
 	$installer->query("UPDATE `users_users` SET `email` = ? WHERE `users_users`.`userId`=1", array($_POST['admin_email']));
+	$logslib->add_log('install', 'updated preferences for browser title, sender email, https and SSL, '
+		. 'error reporting, etc.');
 
 	if ( isset( $_POST['admin_account'] ) && ! empty( $_POST['admin_account'] ) ) {
 		fix_admin_account($_POST['admin_account']);
+		$logslib->add_log('install', 'changed admin account user to ' . $_POST['admin_account']);
 	}
 	if (isset($_POST['fix_disable_accounts']) && $_POST['fix_disable_accounts'] == 'on') {
 		$ret = fix_disable_accounts();
+		$logslib->add_log('install', 'fixed disabled user accounts');
 	}
 
 }

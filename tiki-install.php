@@ -102,6 +102,7 @@ if (isset($_SESSION['accessible'])) {
 							<p>To verify that you are a site administrator, enter your <strong><em>database</em></strong> credentials (database username and password) here.</p>
 							<p>If you have forgotten your database credentials, find the directory where you have unpacked your Tiki and have a look inside the <strong><code>db</code></strong> folder into the <strong><code>local.php</code></strong> file.</p>
 							<form method="post" action="tiki-install.php">
+								<input type="hidden" name="enterinstall" value="1">
 								<p><label for="dbuser" class="sr-only">Database username</label> <input type="text" id="dbuser" name="dbuser" placeholder="Database username"/></p>
 								<p><label for="dbpass" class="sr-only">Database password</label> <input type="password" id="dbpass" name="dbpass" placeholder="Database password"/></p>
 								<p><input type="submit" class="btn btn-default btn-sm" value=" Validate and Continue " /></p>
