@@ -94,6 +94,11 @@ class CryptLib extends TikiLib
 			}
 		}
 	}
+	function makeCryptPhrase($username, $cleartextPwd)
+	{
+		return md5($username.$cleartextPwd);
+	}
+
 	function release()
 	{
 		if ($this->mcrypt != null) {
@@ -165,6 +170,34 @@ class CryptLib extends TikiLib
 		return $storedPwd64;
 	}
 
+	/*
+	 * Encrypt and save the data in the user preferences for the specified user.
+	 * The class specified prefix will be applied to the pref key.
+	 * So, is the paramName, if specified. Given...
+	 * $username = 'myuser'
+	 * $prefprefix = 'pwddom';
+	 * $userprefKey = 'test'
+	 * $paramName = ''
+	 * => pwddom.test
+	 * if $paramName = 'user', then
+	 * * => pwddom.test.user
+	 */
+	//
+	// Return false on failure otherwise the generated crypt text
+	function putUserData($username, $userprefKey, $cleartext, $paramName = '')
+	{
+		if (empty($cleartext)) {
+			return false;
+		}
+		$storedPwd64 = $this->encryptData($cleartext);
+		if (!empty($paramName)) {
+			$paramName = '.'.$paramName;
+		}
+		$this->set_user_preference($username, $this->prefprefix.'.'.$userprefKey.$paramName, $storedPwd64);
+
+		return $storedPwd64;
+	}
+
 	// Get the data from the user preferences.
 	// Decrypt and return cleartext
 	// Return false, if no stored data is found
@@ -192,6 +225,7 @@ class CryptLib extends TikiLib
 
 	// Recover the stored cleartext data from the user preferences.
 	// Return stored data in cleartext or false on error
+	/*
 	function recoverUserData($username, $cleartextPwd, $userprefKey, $paramName = '')
 	{
 		if (empty($cleartextPwd)) {
@@ -224,7 +258,7 @@ class CryptLib extends TikiLib
 
 		return $cleartext;
 	}
-
+*/
 	function getPasswordDomains($use_prefix = false)
 	{
 		global $prefs;
@@ -299,7 +333,7 @@ class CryptLib extends TikiLib
 		global $user;
 
 		// Encode the phrase
-		$phraseMD5 = md5($user.$cleartextPwd);
+		$phraseMD5 = $this->makeCryptPhrase($user.$cleartextPwd);
 
 		// Store the pass phrase in a session variable
 		$_SESSION['cryptphrase'] = $phraseMD5;
