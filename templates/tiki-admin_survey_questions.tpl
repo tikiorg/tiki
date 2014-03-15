@@ -17,7 +17,7 @@
 		<tr>
 			<td>{tr}Question:{/tr}</td>
 			<td>
-				<textarea name="question" rows="5" cols="40">{$info.question|escape}</textarea>
+				<textarea name="question" rows="5" cols="80">{$info.question|escape}</textarea>
 			</td>
 		</tr>
 		<tr>
