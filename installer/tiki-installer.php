@@ -14,6 +14,59 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 	exit;
 }
 
+$inputConfiguration = array(
+	array( 'staticKeyFilters' =>
+		array(
+			'admin_account' => 'striptags',
+			'admin_email' => 'striptags',
+			'browsertitle' => 'striptags',
+			'convert_to_utf8' => 'xss',
+			'db' => 'alpha',
+			'dbinfo' => 'alpha',
+			'email_test_cc' => 'digits',
+//			'email_test_to' => '',  //validated later
+			'error_reporting_adminonly' => 'alpha',
+			'error_reporting_level' => 'int',
+			'feature_switch_ssl_mode' => 'alpha',
+			'feature_show_stay_in_ssl_mode' => 'alpha',
+			'fix_disable_accounts' => 'alpha',
+			'fix_double_encoding' => 'xss',
+			'force_utf8' => 'alpha',
+			'general_settings' => 'alpha',
+//			'host' => '',   //validated later
+			'https_login' => 'word',
+			'https_port' => 'digits',
+			'install_step' => 'digits',
+			'install_type' => 'word',
+			'lang' => 'lang',
+			'log_tpl' => 'alpha',
+			'multi' => 'striptags',
+//			'name' => '',   //validated later
+//			'pass' => '',   //validated later
+			'perform_mail_test' => 'alpha',
+			'previous_encoding' => 'word',
+			'reset' => 'alpha',
+			'resetdb' => 'alpha',
+			'scratch' => 'word',
+			'sender_email' => 'striptags',
+//			'setdbversion' => '',  //not used as input
+			'smarty_notice_reporting' => 'alpha',
+			'test' => 'alnum',
+			'test2' => 'digits',
+			'test3' => 'int',
+			'test4' => 'word',
+			'update' => 'word',
+			'useInnoDB' => 'digits',
+//			'user' => '',   //validated later
+//			'validPatches' => '',   //paramterized in sql
+		)
+	)
+);
+$inputFilter = DeclFilter::fromConfiguration($inputConfiguration);
+$_GET = $inputFilter->filter($_GET);
+$_POST = $inputFilter->filter($_POST);
+$_REQUEST = array_merge($_GET, $_POST);
+
 require_once('tiki-filter-base.php');
 
 // Define and load Smarty components
@@ -51,7 +104,7 @@ $prefs = array(
 );
 
 // Which step of the installer
-if (empty($_REQUEST['install_step'])) {
+if (empty($_POST['install_step'])) {
 	$install_step = '0';
 	
 	if (isset($_REQUEST['setdbversion'])) {
@@ -63,12 +116,12 @@ if (empty($_REQUEST['install_step'])) {
 		fclose($db);
 	}
 } else {
-	$install_step = $_REQUEST['install_step'];
+	$install_step = $_POST['install_step'];
 }
 
 // define the language to use, either from user-setting or default
-if (!empty($_REQUEST['lang'])) {
-	$language = $prefs['site_language'] = $prefs['language'] = $_REQUEST['lang'];
+if (!empty($_POST['lang'])) {
+	$language = $prefs['site_language'] = $prefs['language'] = $_POST['lang'];
 } else {
 	$language = $prefs['site_language'] = $prefs['language'] = 'en';
 }
@@ -547,11 +600,26 @@ if (is_file('db/virtuals.inc')) {
 	$virtuals = false;
 }
 
+$serverFilter = new DeclFilter;
+if ( ( isset($prefs['tiki_allow_trust_input']) && $prefs['tiki_allow_trust_input'] ) !== 'y'
+	|| $tiki_p_trust_input != 'y')
+{
+	$serverFilter->addStaticKeyFilters(
+		array(
+			'TIKI_VIRTUAL' => 'striptags',
+			'SERVER_NAME' => 'striptags',
+			'HTTP_HOST' => 'striptags',
+		)
+	);
+}
+$jitServer = new JitFilter($_SERVER);
+$_SERVER = $serverFilter->filter($_SERVER);
+
 $multi = '';
 // If using multiple Tiki installations (MultiTiki)
 if ($virtuals) {
-	if (isset($_REQUEST['multi']) && in_array($_REQUEST['multi'], $virtuals)) {
-		$multi = $_REQUEST['multi'];
+	if (isset($_POST['multi']) && in_array($_POST['multi'], $virtuals)) {
+		$multi = $_POST['multi'];
 	} else {
 		if (isset($_SERVER['TIKI_VIRTUAL']) && is_file('db/'.$_SERVER['TIKI_VIRTUAL'].'/local.php')) {
 			$multi = $_SERVER['TIKI_VIRTUAL'];
@@ -643,6 +711,8 @@ include('lib/tikilib.php');
 $languages = TikiLib::list_languages(false, null, true);
 $smarty->assignByRef("languages", $languages);
 
+$logslib = TikiLib::lib('logs');
+
 $client_charset = '';
 
 // next block checks if there is a local.php and if we can connect through this.
@@ -688,7 +758,7 @@ if ( file_exists($local) ) {
 	$smarty->assign('resetdb', 'n');
 	if ( isset( $dbservers[$db_tiki] ) ) { // avoid errors in ADONewConnection() (wrong darabase driver etc...)
 		if ( $dbcon = initTikiDB($api_tiki, $db_tiki, $host_tiki, $user_tiki, $pass_tiki, $dbs_tiki, $client_charset, $dbTiki) ) {
-			$smarty->assign('resetdb', isset($_REQUEST['reset']) ? 'y' : 'n');
+			$smarty->assign('resetdb', isset($_POST['reset']) ? 'y' : 'n');
 
 			$installer = new Installer;
 			$installer->setServerType($db_tiki);
@@ -696,6 +766,8 @@ if ( file_exists($local) ) {
 			if ( ! $client_charset_forced ) {
 
 				write_local_php($db_tiki, $host_tiki, $user_tiki, $pass_tiki, $dbs_tiki, $client_charset, ($api_tiki_forced ? $api_tiki : ''), $dbversion_tiki);
+				$logslib->add_log('install', 'database credentials written to file with hostname=' . $host_tiki
+					. '; dbname=' . $dbs_tiki . '; dbuser=' . $user_tiki);
 			}
 		}
 	}
@@ -719,27 +791,31 @@ if (
 	(
 		!$dbcon
 		|| (
-			isset($_REQUEST['resetdb'])
-			&& $_REQUEST['resetdb'] == 'y'
+			isset($_POST['resetdb'])
+			&& $_POST['resetdb'] == 'y'
 			&& (
 				$admin_acc == 'n'
 				|| (isset($_SESSION["install-logged-$multi"])
 				&& $_SESSION["install-logged-$multi"] == 'y')
 			)
 		)
-	) && isset($_REQUEST['dbinfo'])
+	) && isset($_POST['dbinfo'])
 ) {
-	if ( ! empty($_REQUEST['name']) ) {
-		if ( isset( $_REQUEST['force_utf8'] ) ) {
+	if ( ! empty($_POST['name']) ) {
+		if ( isset( $_POST['force_utf8'] ) ) {
 			$client_charset = 'utf8';
 		} else {
 			$client_charset = '';
 		}
 
-		$dbcon = initTikiDB($api_tiki, $_REQUEST['db'], $_REQUEST['host'], $_REQUEST['user'], $_REQUEST['pass'], $_REQUEST['name'], $client_charset, $dbTiki);
+		$dbcon = initTikiDB($api_tiki, $_POST['db'], $_POST['host'], $_POST['user'], $_POST['pass'], $_POST['name'],
+			$client_charset, $dbTiki);
 
 		if ($dbcon) {
-			write_local_php($_REQUEST['db'], $_REQUEST['host'], $_REQUEST['user'], $_REQUEST['pass'], $_REQUEST['name'], $client_charset);
+			write_local_php($_POST['db'], $_POST['host'], $_POST['user'], $_POST['pass'], $_POST['name'],
+				$client_charset);
+			$logslib->add_log('install', 'database credentials updated with hostname=' . $_POST['host'] . '; dbname='
+				. $_POST['name'] .'; dbuser=' . $_POST['user']);
 			include $local;
 			// In case of replication, ignore it during installer.
 			unset($shadow_dbs, $shadow_user, $shadow_pass, $shadow_host);
@@ -752,8 +828,8 @@ if (
 	}
 }
 // Mark that InnoDB is to be used, if selected
-if (isset($_REQUEST['useInnoDB'])) {
-	if (intval($_REQUEST['useInnoDB']) > 0) {
+if (isset($_POST['useInnoDB'])) {
+	if (intval($_POST['useInnoDB']) > 0) {
 		if ($installer != null) {
 			$installer->useInnoDB = true;	
 		}
@@ -785,7 +861,7 @@ if ($dbcon) {
 	$smarty->assign('tikidb_is20', has_tiki_db_20());
 }
 
-if (isset($_REQUEST['restart'])) {
+if (isset($_POST['restart'])) {
 	$_SESSION["install-logged-$multi"] = '';
 }
 
@@ -808,8 +884,14 @@ if (
 ) {
 	$smarty->assign('logged', 'y');
 
-	if ( isset($_REQUEST['scratch']) ) {
+	if ( isset($_POST['scratch']) ) {
 		$installer->cleanInstall();
+		if ($has_tiki_db) {
+			$logmsg = 'database "' . $dbs_tiki . '" destroyed and reinstalled';
+		} else {
+			$logmsg = 'clean install of new database "' . $dbs_tiki . '"';
+		}
+		$logslib->add_log('install', $logmsg);
 		$smarty->assign('installer', $installer);
 		$smarty->assign('dbdone', 'y');
 		$install_type = 'scratch';
@@ -821,8 +903,9 @@ if (
 		$tikidate = new TikiDate();
 	}
 
-	if (isset($_REQUEST['update'])) {
+	if (isset($_POST['update'])) {
 		$installer->update();
+		$logslib->add_log('install', 'database "' . $dbs_tiki . '" upgraded to latest version');
 		$smarty->assign('installer', $installer);
 		$smarty->assign('dbdone', 'y');
 		$install_type = 'update';
@@ -842,15 +925,15 @@ if (
 }
 
 if (!isset($install_type)) {
-	if (isset($_REQUEST['install_type'])) {
-		$install_type = $_REQUEST['install_type'];
+	if (isset($_POST['install_type'])) {
+		$install_type = $_POST['install_type'];
 	} else {
 		$install_type = '';
 	}
 }
 
-if ( isset( $_GET['lockenter'] ) || isset( $_GET['nolockenter'] ) ) {
-	if (isset( $_GET['lockenter'])) {
+if ( isset( $_POST['lockenter'] ) || isset( $_POST['nolockenter'] ) ) {
+	if (isset( $_POST['lockenter'])) {
 		touch('db/'.$tikidomainslash.'lock');
 	}
 	
@@ -879,16 +962,16 @@ $smarty->assign('email_test_tw', $email_test_tw);
 //  Sytem requirements test.
 if ($install_step == '2') {
 	$smarty->assign('mail_test_performed', 'n');
-	if (isset($_REQUEST['perform_mail_test']) && $_REQUEST['perform_mail_test'] == 'y') {
+	if (isset($_POST['perform_mail_test']) && $_POST['perform_mail_test'] == 'y') {
 
 		$email_test_to = $email_test_tw;
 		$email_test_headers = '';
 		$email_test_ready = true;
 
-		if (!empty($_REQUEST['email_test_to'])) {
-			$email_test_to =  $_REQUEST['email_test_to'];
+		if (!empty($_POST['email_test_to'])) {
+			$email_test_to =  $_POST['email_test_to'];
 			
-			if (isset($_REQUEST['email_test_cc']) && $_REQUEST['email_test_cc'] == '1') {
+			if (isset($_POST['email_test_cc']) && $_POST['email_test_cc'] == '1') {
 				$email_test_headers .= "Cc: $email_test_tw\n";
 			}
 
@@ -900,7 +983,7 @@ if ($install_step == '2') {
 				$email_test_ready = false;
 			}
 		} else {	// no email supplied, check copy checkbox
-			if (!isset($_REQUEST['email_test_cc']) || $_REQUEST['email_test_cc'] != '1') {
+			if (!isset($_POST['email_test_cc']) || $_POST['email_test_cc'] != '1') {
 				$smarty->assign('email_test_err', tra('Email address empty and "copy" checkbox not set, test mail not sent'));
 				$email_test_ready = false;
 			}
@@ -959,8 +1042,8 @@ if ($install_step == '2') {
 		$gd_test = 'n';
 	}
 	$smarty->assign('gd_test', $gd_test);
-} elseif ($install_step == 6 && !empty($_REQUEST['validPatches'])) {
-	foreach ($_REQUEST['validPatches'] as $patch) {
+} elseif ($install_step == 6 && !empty($_POST['validPatches'])) {
+	foreach ($_POST['validPatches'] as $patch) {
 		global $installer;
 		$installer->recordPatch($patch);
 	}
@@ -969,10 +1052,12 @@ if ($install_step == '2') {
 unset($TWV);
 
 // write general settings
-if ( isset($_REQUEST['general_settings']) && $_REQUEST['general_settings'] == 'y' ) {
+if ( isset($_POST['general_settings']) && $_POST['general_settings'] == 'y' ) {
 	global $dbTiki;
-	$switch_ssl_mode = ( isset($_REQUEST['feature_switch_ssl_mode']) && $_REQUEST['feature_switch_ssl_mode'] == 'on' ) ? 'y' : 'n';
-	$show_stay_in_ssl_mode = ( isset($_REQUEST['feature_show_stay_in_ssl_mode']) && $_REQUEST['feature_show_stay_in_ssl_mode'] == 'on' ) ? 'y' : 'n';
+	$switch_ssl_mode = ( isset($_POST['feature_switch_ssl_mode']) && $_POST['feature_switch_ssl_mode'] == 'on' )
+		? 'y' : 'n';
+	$show_stay_in_ssl_mode = ( isset($_POST['feature_show_stay_in_ssl_mode'])
+		&& $_POST['feature_show_stay_in_ssl_mode'] == 'on' ) ? 'y' : 'n';
 
 	$installer->query(
 					"DELETE FROM `tiki_preferences` WHERE `name` IN " .
@@ -987,21 +1072,29 @@ if ( isset($_REQUEST['general_settings']) && $_REQUEST['general_settings'] == 'y
 		. " ('https_login', ?),"
 		. " ('https_port', ?),"
 		. " ('error_reporting_level', ?),"
-		. " ('error_reporting_adminonly', '" . (isset($_REQUEST['error_reporting_adminonly']) && $_REQUEST['error_reporting_adminonly'] == 'on' ? 'y' : 'n') . "'),"
-		. " ('smarty_notice_reporting', '" . (isset($_REQUEST['smarty_notice_reporting']) && $_REQUEST['smarty_notice_reporting'] == 'on' ? 'y' : 'n') . "'),"
-		. " ('log_tpl', '" . (isset( $_REQUEST['log_tpl']) && $_REQUEST['log_tpl'] == 'on' ? 'y' : 'n') . "'),"
+		. " ('error_reporting_adminonly', '" . (isset($_POST['error_reporting_adminonly'])
+			&& $_POST['error_reporting_adminonly'] == 'on' ? 'y' : 'n') . "'),"
+		. " ('smarty_notice_reporting', '" . (isset($_POST['smarty_notice_reporting'])
+			&& $_POST['smarty_notice_reporting'] == 'on' ? 'y' : 'n') . "'),"
+		. " ('log_tpl', '" . (isset( $_POST['log_tpl']) && $_POST['log_tpl'] == 'on' ? 'y' : 'n') . "'),"
 		. " ('feature_switch_ssl_mode', '$switch_ssl_mode'),"
 		. " ('feature_show_stay_in_ssl_mode', '$show_stay_in_ssl_mode'),"
 		. " ('language', ?)";
 
-	$installer->query($query, array($_REQUEST['browsertitle'], $_REQUEST['sender_email'], $_REQUEST['https_login'], $_REQUEST['https_port'], $_REQUEST['error_reporting_level'], $language));
-	$installer->query("UPDATE `users_users` SET `email` = ? WHERE `users_users`.`userId`=1", array($_REQUEST['admin_email']));
 
-	if ( isset( $_REQUEST['admin_account'] ) && ! empty( $_REQUEST['admin_account'] ) ) {
-		fix_admin_account($_REQUEST['admin_account']);
+	$installer->query($query, array($_POST['browsertitle'], $_POST['sender_email'], $_POST['https_login'],
+		$_POST['https_port'], $_POST['error_reporting_level'], $language));
+	$installer->query("UPDATE `users_users` SET `email` = ? WHERE `users_users`.`userId`=1", array($_POST['admin_email']));
+	$logslib->add_log('install', 'updated preferences for browser title, sender email, https and SSL, '
+		. 'error reporting, etc.');
+
+	if ( isset( $_POST['admin_account'] ) && ! empty( $_POST['admin_account'] ) ) {
+		fix_admin_account($_POST['admin_account']);
+		$logslib->add_log('install', 'changed admin account user to ' . $_POST['admin_account']);
 	}
-	if (isset($_REQUEST['fix_disable_accounts']) && $_REQUEST['fix_disable_accounts'] == 'on') {
+	if (isset($_POST['fix_disable_accounts']) && $_POST['fix_disable_accounts'] == 'on') {
 		$ret = fix_disable_accounts();
+		$logslib->add_log('install', 'fixed disabled user accounts');
 	}
 	
 }
