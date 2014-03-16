@@ -468,6 +468,7 @@
 	<legend>{tr}Secure Log in{/tr} <a href="http://doc.tiki.org/login+config" target="_blank" title="{tr}Help{/tr}">
 		<img src="pics/icons/help.png" alt="{tr}Help{/tr}" /></a>
 	</legend>
+	<img src="pics/icons/lock.png"> {tr}It is recommended to choose the "Require secure (https) login" option for better security. A security certificate and dedicated IP address are required to implement a secure login.{/tr}
 	<div style="padding:5px; clear:both"><label for="https_login">{tr}HTTPS login:{/tr}</label>
 		<select name="https_login" id="https_login" onchange="hidedisabled('httpsoptions',this.value);">
 			<option value="disabled"{if $prefs.https_login eq 'disabled'} selected="selected"{/if}>{tr}Disabled{/tr}</option>
@@ -587,23 +588,17 @@
 {/if}
 
 {if $tikidb_is20}
-	<form method="post" action="tiki-install.php" style="float: left">
-		<input type="hidden" name="lockenter" value="1">
-		{if $multi}
-			<input type="hidden" name="multi" value="{$multi|escape}">
-		{/if}
-		<input type="hidden" name="install_type" value="{$install_type}">
-		<input type="hidden" name="install_step" value="8">
-		<input type="submit" value="{tr}Enter Tiki and Lock Installer{/tr} ({tr}Recommended{/tr})">
-	</form>
+	<br>
 	<form method="post" action="tiki-install.php">
-		<input type="hidden" name="nolockenter" value="1">
 		{if $multi}
 			<input type="hidden" name="multi" value="{$multi|escape}">
 		{/if}
 		<input type="hidden" name="install_type" value="{$install_type}">
 		<input type="hidden" name="install_step" value="8">
-		<input type="submit" value="{tr}Enter Tiki Without Locking Installer{/tr}">
+		<input type="submit" value="{tr}Enter Your Tiki{/tr}" style="margin-left:200px"><br><br><br>
+		<input type="checkbox" name="nolockenter" value="1">
+		<label for="nolockenter">{tr}Enter without locking installer (not recommended for production sites){/tr}</label>
+		<br><em><img src="pics/icons/error.png" alt="{tr}Alert{/tr}" style="margin-left:25px"> {tr}Only suitable for development sites, not production sites, due to security risk{/tr}.</em>
 	</form>
 {/if}
 
