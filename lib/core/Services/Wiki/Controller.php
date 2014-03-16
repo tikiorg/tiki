@@ -39,8 +39,14 @@ class Services_Wiki_Controller
 
 	function action_get_page($input)
 	{
+		$wikilib = TikiLib::lib('wiki');
+		$page = $input->page->text();
+		$info = $wikilib->get_page_info($page);
+		if (!$info) {
+			throw new Services_Exception_NotFound(tr('Page "%0" not found', $page));
+		}
 		$canBeRefreshed = false;
-		$data = TikiLib::lib('wiki')->get_parse($input->page->text(), $canBeRefreshed);
+		$data = $wikilib->get_parse($page, $canBeRefreshed);
 		return array('data' => $data);
 	}
 }
