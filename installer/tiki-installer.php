@@ -975,8 +975,8 @@ if (!isset($install_type)) {
 	}
 }
 
-if ( isset( $_POST['lockenter'] ) || isset( $_POST['nolockenter'] ) ) {
-	if (isset( $_POST['lockenter'])) {
+if ($install_step == '8') {
+	if (!isset( $_POST['nolockenter'])) {
 		touch('db/'.$tikidomainslash.'lock');
 	}
 
