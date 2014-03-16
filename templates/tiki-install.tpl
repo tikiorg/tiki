@@ -692,23 +692,23 @@
 				<p>{tr}If this is an upgrade, clean the Tiki caches manually (the <strong>templates_c</strong> directory) or by using the <strong>Admin &gt; System</strong> option from the Admin menu.{/tr}</p>
 			{/if}
 			{if $tikidb_is20}
-				<div class="text-center">
-					<br>
-					<form method="post" action="tiki-install.php">
-						{if $multi}
-							<input type="hidden" name="multi" value="{$multi|escape}">
-						{/if}
-						<input type="hidden" name="install_type" value="{$install_type}">
-						<input type="hidden" name="install_step" value="8">
+				<br>
+				<form method="post" action="tiki-install.php">
+					{if $multi}
+						<input type="hidden" name="multi" value="{$multi|escape}">
+					{/if}
+					<input type="hidden" name="install_type" value="{$install_type}">
+					<input type="hidden" name="install_step" value="8">
+					<div class="text-center">
 						<input type="submit" value="{tr}Enter Your Tiki{/tr}">
-						<br><br><br>
-						<div>
-							<input type="checkbox" name="nolockenter" value="1">
-							<label for="nolockenter">{tr}Enter without locking installer (not recommended for production sites){/tr}</label>
-							<br><em><img src="img/icons/error.png" alt="{tr}Alert{/tr}" style="vertical-align:middle; margin-left:30px"> {tr}Only suitable for development sites, not production sites, due to security risk{/tr}.</em>
-						</div>
-					</form>
-				</div>
+					</div>
+					<br><br><br>
+					<div>
+						<input type="checkbox" name="nolockenter" value="1">
+						<span>{tr}Enter without locking installer (not recommended for production sites){/tr}</span>
+						<br><em><img src="img/icons/error.png" alt="{tr}Alert{/tr}" style="vertical-align:middle; margin-left:25px"> {tr}Only suitable for development sites, not production sites, due to security risk{/tr}.</em>
+					</div>
+				</form>
 			{/if}
 			{if $install_type eq 'update'}
 				{if $double_encode_fix_attempted eq 'y'}
