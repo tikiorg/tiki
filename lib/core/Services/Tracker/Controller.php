@@ -1067,29 +1067,34 @@ class Services_Tracker_Controller
 
 	function action_duplicate($input)
 	{
-		$trackerId = $input->trackerId->int();
-		$perms = Perms::get('tracker', $trackerId);
-		if (! $perms->admin_trackers || ! Perms::get()->admin_trackers) {
-			throw new Services_Exception_Denied(tr('Reserved to tracker administrators'));
+		$confirm = $input->confirm->int();
+		
+		if ($confirm) {
+			$trackerId = $input->trackerId->int();
+			$perms = Perms::get('tracker', $trackerId);
+				if (! $perms->admin_trackers || ! Perms::get()->admin_trackers) {
+					throw new Services_Exception_Denied(tr('Reserved to tracker administrators'));
+				}
+			$definition = Tracker_Definition::get($trackerId);
+				if (! $definition) {
+					throw new Services_Exception_NotFound;
+				}
+			$name = $input->name->text();
+			if (! $name) {
+				throw new Services_Exception_MissingValue('name');
+			}
+			$newId = $this->utilities->duplicateTracker($trackerId, $name, $input->dupCateg->int(), $input->dupPerms->int());
+			return array(
+				'trackerId' => $newId,
+				'name' => $name,
+			);
+		} else {
+			$trackers = $this->action_list_trackers();
+			return array(
+				'title' => tr('Duplicate Tracker'),
+				'trackers' => $trackers["data"],
+			);
 		}
-
-		$definition = Tracker_Definition::get($trackerId);
-		if (! $definition) {
-			throw new Services_Exception_NotFound;
-		}
-
-		$name = $input->name->text();
-
-		if (! $name) {
-			throw new Services_Exception_MissingValue('name');
-		}
-
-		$newId = $this->utilities->duplicateTracker($trackerId, $name, $input->dupCateg->int(), $input->dupPerms->int());
-
-		return array(
-			'trackerId' => $newId,
-			'name' => $name,
-		);
 	}
 
 	function action_export($input)
@@ -1336,29 +1341,41 @@ class Services_Tracker_Controller
 		if (! Perms::get()->admin_trackers) {
 			throw new Services_Exception_Denied(tr('Reserved to tracker administrators'));
 		}
+		
+		unset($success);
+		$confirm = $input->confirm->int();
+		
+		if ($confirm) {
+				
+			$raw = $input->raw->none();
+			$preserve = $input->preserve->int();
 
-		$raw = $input->raw->none();
-		$preserve = $input->preserve->int();
+			$data = TikiLib::lib('tiki')->read_raw($raw);
 
-		$data = TikiLib::lib('tiki')->read_raw($raw);
+			if (! $data || ! isset($data['tracker'])) {
+				throw new Services_Exception(tr('Invalid data provided'), 400);
+			}
 
-		if (! $data || ! isset($data['tracker'])) {
-			throw new Services_Exception(tr('Invalid data provided'), 400);
-		}
+			$data = $data['tracker'];
 
-		$data = $data['tracker'];
+			$trackerId = 0;
+			if ($preserve) {
+				$trackerId = (int) $data['trackerId'];
+			}
 
-		$trackerId = 0;
-		if ($preserve) {
-			$trackerId = (int) $data['trackerId'];
-		}
-
-		unset($data['trackerId']);
-		$trackerId = $this->utilities->updateTracker($trackerId, $data);
-
+			unset($data['trackerId']);
+			$trackerId = $this->utilities->updateTracker($trackerId, $data);
+			$success = 1;
+			
+			return array(
+				'trackerId' => $trackerId,
+				'name' => $data['name'],
+				'success' => $success,
+			);
+		} 
+		
 		return array(
-			'trackerId' => $trackerId,
-			'name' => $data['name'],
+			'title' => tr('Import Tracker Structure'),
 		);
 	}
 
@@ -1444,26 +1461,36 @@ class Services_Tracker_Controller
 		if (! $perms->admin) {
 			throw new Services_Exception_Denied(tr('Reserved for administrators'));
 		}
+		
+		unset($success);
+		$confirm = $input->confirm->int();
+		
+		if ($confirm) {
+		
+			$transaction = $tikilib->begin();
+			$installer = new Tiki_Profile_Installer;
 
-		$transaction = $tikilib->begin();
-		$installer = new Tiki_Profile_Installer;
+			$yaml = $input->yaml->string();
+			$name = "tracker_import:" . md5($yaml);
+			$profile = Tiki_Profile::fromString('{CODE(caption="yaml")}' . "\n" . $yaml . "\n" . '{CODE}', $name);
 
-		$yaml = $input->yaml->string();
-		$name = "tracker_import:" . md5($yaml);
-		$profile = Tiki_Profile::fromString('{CODE(caption="yaml")}' . "\n" . $yaml . "\n" . '{CODE}', $name);
+			if ($installer->isInstallable($profile) == true) {
+				if ($installer->isInstalled($profile) == true) {
+					$installer->forget($profile);
+				}
 
-		if ($installer->isInstallable($profile) == true) {
-			if ($installer->isInstalled($profile) == true) {
-				$installer->forget($profile);
+				$installer->install($profile);
+				$feedback = $installer->getFeedback();
+				$transaction->commit();
+				return $feedback;
+				$success=1;
+			} else {
+				return false;
 			}
-
-			$installer->install($profile);
-			$feedback = $installer->getFeedback();
-			$transaction->commit();
-			return $feedback;
-		} else {
-			return false;
 		}
+		return array(
+			'title' => tr('Import Tracker From Profile/YAML'),
+		);
 	}
 
 	private function getSortFields($definition)
