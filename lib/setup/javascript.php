@@ -159,7 +159,7 @@ jqueryTiki.infoboxTypes = ' . json_encode(Services_Object_Controller::supported(
 jqueryTiki.googleStreetView = '.($prefs['geo_google_streetview'] == 'y' ? 'true' : 'false') . ';
 jqueryTiki.googleStreetViewOverlay = '.($prefs['geo_google_streetview_overlay'] == 'y' ? 'true' : 'false') . ';
 jqueryTiki.structurePageRepeat = '.($prefs['page_n_times_in_a_structure'] == 'y' ? 'true' : 'false') . ';
-jqueryTiki.mobile = '.($prefs['mobile_mode'] == 'y' ? 'true' : 'false') . ';
+jqueryTiki.mobile = '.((isset($prefs['mobile_mode']) && $prefs['mobile_mode'] == 'y') ? 'true' : 'false') . ';
 jqueryTiki.jcapture = '.($prefs['feature_jcapture'] == 'y' ? 'true' : 'false') . ';
 //do not fix following line for notices -  appropriately throws off a notice when user has not
 //flushed prefs cache after upgrading - i.e. not running the updater
