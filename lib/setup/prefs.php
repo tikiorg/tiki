@@ -373,7 +373,7 @@ function initialize_prefs($force = false)
 
 		// Unserialize serialized preferences
 		foreach ( $serializedPreferences as $serializedPreference ) {
-			if ( isset($modified[$serializedPreference]) && ! is_array($modified[$serializedPreference]) ) {
+			if ( !empty($modified[$serializedPreference]) && ! is_array($modified[$serializedPreference]) ) {
 				$modified[$serializedPreference] = unserialize($modified[$serializedPreference]);
 			}
 		}
