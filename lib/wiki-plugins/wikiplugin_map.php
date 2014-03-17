@@ -331,7 +331,13 @@ function init() {
 		.dialog({
 			autoOpen: false,
 			width: 200,
-			title: $(dialog).data('title')
+			title: $(dialog).data('title'),
+			close: function (e) {
+				var editControl = container.map.getControlsByClass('OpenLayers.Control.ModifyFeature');
+				if (feature && editControl.length) {
+					editControl[0].unselectFeature(feature);
+				}
+			}
 		})
 		.append($('<div class="current" style="height: $size;"/>'));
 
@@ -362,7 +368,13 @@ function init() {
 		.dialog({
 			autoOpen: false,
 			width: 400,
-			title: $(dialog).data('title')
+			title: $(dialog).data('title'),
+			close: function (e) {
+				var editControl = container.map.getControlsByClass('OpenLayers.Control.ModifyFeature');
+				if (feature && editControl.length) {
+					editControl[0].unselectFeature(feature);
+				}
+			}
 		})
 		.ColorPicker({
 			flat: true,
@@ -386,6 +398,7 @@ $("#$target").closest('.map-container').bind('initialized', function () {
 		, vlayer
 		, feature
 		, dialog = '#$target'
+		, defaultRules
 		;
 
 	$methods
@@ -398,15 +411,14 @@ $("#$target").closest('.map-container').bind('initialized', function () {
 
 			feature = ev.feature;
 
-			if (feature.attributes.intent === 'marker') {
-				return false;
-			}
-
 			$.each(container.map.getControlsByClass('OpenLayers.Control.ModifyFeature'), function (k, control) {
 				active = active || control.active;
+				if (active) {
+					control.selectFeature(feature);
+				}
 			});
 
-			if (active) {
+			if (active && feature.attributes.intent !== 'marker') {
 				setColor(feature.attributes.color);
 				$(dialog).dialog('open');
 			}
@@ -414,6 +426,21 @@ $("#$target").closest('.map-container').bind('initialized', function () {
 		featureunselected: function (ev) {
 			feature = null;
 			$(dialog).dialog('close');
+
+			vlayer.styleMap = container.defaultStyleMap;
+			$.each(container.map.getControlsByClass('OpenLayers.Control.ModifyFeature'), function (k, control) {
+				if (ev.feature && control.active) {
+					control.unselectFeature(ev.feature);
+				}
+			});
+		},
+		beforefeaturemodified: function (ev) {
+			defaultRules = this.styleMap.styles["default"].rules;
+			this.styleMap.styles["default"].rules = [];
+		},
+		afterfeaturemodified: function (ev) {
+			this.styleMap.styles["default"].rules = defaultRules;
+			this.redraw();
 		}
 	});
 
