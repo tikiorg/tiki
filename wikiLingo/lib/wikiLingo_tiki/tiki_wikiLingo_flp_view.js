@@ -7,17 +7,15 @@ var WikiLingoFLPView = (function() {
         this.answers = [];
 
 		var _this = this,
-			createButton = $('<div>' + tr( 'Create PastLink & FutureLink' ) + '</div>')
+			createButton = $('<div);>' + tr( 'Create PastLink & FutureLink' ) + '</div>')
 			.button()
 			.css('position', 'fixed')
-			.css('left', '5px')
-			.css('top', '5px')
-			.fadeTo(0, 0.6)
-			.hover(function(){
-				createButton.addClass('ui-state-highlight');
-			}, function() {
-				createButton.removeClass('ui-state-highlight');
-			})
+			.css('left', '3px')
+			.css('top', '3px')
+			.css('padding', '5px')
+			.css('border-radius', '15px')
+            .css('color','#D1D1D1')
+            .css('background-color', '#424242')
 			.appendTo('body')
 			.click(function() {
 
@@ -45,6 +43,10 @@ var WikiLingoFLPView = (function() {
 						.css('top', o.y + 'px')
 						.css('left', o.x + 'px')
 						.css('font-size', '10px')
+                        .css('padding', '3px')
+                        .css('border-radius', '10px')
+                        .css('color','#FFFFFF')
+                        .css('background-color', '#000000')
 						.fadeTo(0,0.80)
 						.mousedown(function() {
 							var suggestion = $.trim(rangy.expandPhrase(text, '\\n', el[0])),
