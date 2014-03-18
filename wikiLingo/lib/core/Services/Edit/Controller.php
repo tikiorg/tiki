@@ -211,11 +211,12 @@ $(window).load(function(){
 
     function action_wikiLingo(JitFilter $input)
     {
-        global $user, $prefs;
+        global $user, $prefs, $page;
         $tikilib = TikiLib::lib('tiki');
         $globalPerms = Perms::get();
 
-        $page = null;
+        $page = urldecode($input->page->none());
+
         if (!self::page_editable($input->autoSaveId->text(), $page)) {
             return array();
         }

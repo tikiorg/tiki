@@ -16,6 +16,10 @@ class WikiLingoEvents
 	{
         global $prefs, $page, $headerlib;
 
+        if ($page == null) {
+            throw new \Exception("Page undefined");
+        }
+
 		require_once('lib/wikiLingo_tiki/WikiPluginBridge.php');
 		$bridge = self::$bridge = new WikiPluginBridge();
         $events = Type::Events($wikiLingoParser->events);
