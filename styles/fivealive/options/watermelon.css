@@ -112,18 +112,6 @@ span#genPass .button a:hover,
 	color: #fff;
 }
 
-#tiki-top .cssmenu_horiz li a {
-	background: #c61e3c url(watermelon/siteheader.png) no-repeat -600px -40px;
-}
-
-#tiki-top .cssmenu_horiz li a:hover,
-.cssmenu_vert li ul a:hover,
-.cssmenu_horiz li ul a:hover,
-.header .cssmenu_horiz li ul a:hover,
-#main #topbar_modules .cssmenu_horiz li ul a:hover  {
-	background: #fb999e;
-}
-
 .header .cssmenu_horiz li.selected a,
 #topbar_modules .cssmenu_horiz li.selected a,
 .cssmenu_horiz li.selected a,

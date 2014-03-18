@@ -118,18 +118,6 @@ input[type="submit"]:hover,
 	background: #e35c29;
 }
 
-#tiki-top .cssmenu_horiz li a {
-	background: #c94c23 url(orange/siteheader.png) no-repeat -600px -40px;
-}
-
-#tiki-top .cssmenu_horiz li a:hover,
-.header .cssmenu_horiz li.selected a,
-#topbar_modules .cssmenu_horiz li.selected a,
-.cssmenu_horiz li.selected a,
-.cssmenu_vert li.selected a {
-	background: #e88357;
-}
-
 .header .cssmenu_horiz li.selected li a,
 #topbar_modules .cssmenu_horiz li.selected li a,
 .cssmenu_horiz li.selected li a,

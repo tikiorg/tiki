@@ -74,11 +74,6 @@ body.fixed_width .fixedwidth {
 	background: none;
 }
 
-#tiki-top {
-	height: 50px;
-	width: 100%;
-}
-
 #topbar_modules {
 	min-height: 55px;
 }
@@ -567,22 +562,22 @@ select {
 	margin-top: 12px;
 }
 /* search form filter dropdown */
-#tiki-top #sitesearchbar form .cssmenu_horiz li a {
+#sitesearchbar form .cssmenu_horiz li a {
 	background: none;
 	width: 138px;
 	padding-top: 11px;
 	padding-left: 4px;
 }
 
-#tiki-top #sitesearchbar form .cssmenu_horiz li a input[type="text"] {
+#sitesearchbar form .cssmenu_horiz li a input[type="text"] {
 	font: bolder 12px Verdana, Geneva, Arial, Helvetica, sans-serif !important;
 }
 
-#tiki-top #sitesearchbar form .cssmenu_horiz li ul {
+#sitesearchbar form .cssmenu_horiz li ul {
 	width: 9em !important;
 }
 
-#tiki-top #sitesearchbar form .cssmenu_horiz li ul li {
+#sitesearchbar form .cssmenu_horiz li ul li {
 	background: #e3f7fb;
 	height: 210px !important;
 	color: #000;
@@ -765,11 +760,6 @@ li.login_link ul li a {
 }
 /* end Sitelogin Popup */
 
-#tiki-top[id] {
-	height: auto;
-	min-height: 50px;
-}
-
 /****** Menus, Links ******/
 /** CSS (suckerfish) menus **/
 
@@ -786,7 +776,7 @@ li.login_link ul li a {
 	padding: 8px 1em;
 }
 
-#tiki-top .cssmenu_horiz li a:hover,
+.cssmenu_horiz li a:hover,
 .cssmenu_vert li ul a:hover,
 .cssmenu_horiz li ul a:hover,
 .box-menu .cssmenu_horiz li ul a:hover,
