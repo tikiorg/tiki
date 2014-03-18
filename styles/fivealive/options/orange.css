@@ -117,10 +117,6 @@ hr {
 	background: #e35c29;
 }
 
-#tiki-top .cssmenu_horiz li a {
-	background: #c94c23 url(orange/siteheader.png) no-repeat -600px -40px;
-}
-
 #topbar_modules .dropdown-menu li.active a,
 .header .cssmenu_horiz li.selected a,
 #topbar_modules .cssmenu_horiz li.selected a,

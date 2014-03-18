@@ -104,23 +104,17 @@ hr {
 	color: #fff;
 }
 
-#topbar_modules .dropdown-menu,
-#tiki-top .cssmenu_horiz li a {
+#topbar_modules .dropdown-menu {
 	background: url(kiwi/siteheader.png) no-repeat -600px -40px;
 }
 
 #topbar_modules .dropdown-menu > li > a:hover,
 #topbar_modules .dropdown-menu > li > a:focus,
-#tiki-top .cssmenu_horiz li a:hover,
 .cssmenu_vert li ul a:hover,
 .cssmenu_horiz li ul a:hover,
 .header .cssmenu_horiz li ul a:hover,
 #main #topbar_modules .cssmenu_horiz li ul a:hover  {
 	background: #e1d518;
-}
-
-#tiki-top .cssmenu_horiz li a {
-	background: #c94c23 url(kiwi/siteheader.png) no-repeat -600px -40px;
 }
 
 #top_modules #secondary_site_menu .cssmenu_horiz li.selected a,

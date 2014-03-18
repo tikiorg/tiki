@@ -12,7 +12,7 @@ $('#appframe .map-container').bind('initialized', function () {
 			strokeColor: "#6699cc",
 			pointRadius: 5,
 			fillOpacity: ".3",
-			strokeDashstyle: "dashdot"
+			strokeDashstyle: "solid"
 		}
 		;
 	

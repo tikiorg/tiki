@@ -440,7 +440,9 @@ function wikiplugin_appframe_mapcontrol($data, $params, $start)
 	case 'modify_feature':
 		$control = 'new OpenLayers.Control.ModifyFeature(vlayer, {
 			mode: OpenLayers.Control.ModifyFeature.DRAG | OpenLayers.Control.ModifyFeature.RESHAPE,
-			standalone: true
+			standalone: true,
+			virtualStyle: drawStyle,
+			vertexRenderIntent: "vertex"
 		}), new OpenLayers.Control.SelectFeature(vlayer)';
 		$label = tr('Select/Modify');
 		break;

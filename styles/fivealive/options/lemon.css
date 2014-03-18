@@ -104,14 +104,12 @@ hr {
 	color: #fff;
 }
 
-#topbar_modules .dropdown-menu,
-#tiki-top .cssmenu_horiz li a {
+#topbar_modules .dropdown-menu {
 	background: url(lemon/siteheader.png) no-repeat -600px -40px;
 }
 
 #topbar_modules .dropdown-menu > li > a:hover,
 #topbar_modules .dropdown-menu > li > a:focus,
-#tiki-top .cssmenu_horiz li a:hover,
 .cssmenu_vert li ul a:hover,
 .cssmenu_horiz li ul a:hover,
 .header .cssmenu_horiz li ul a:hover,
