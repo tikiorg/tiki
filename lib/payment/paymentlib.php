@@ -222,6 +222,10 @@ class PaymentLib extends TikiDb_Bridge
 	{
 		global $prefs;
 		if ($prefs['payment_system'] == 'israelpost') {
+			if ($paymentId != $jitGet->PreOrderID->digits()) {
+				return false;
+			}
+
 			$combined = $prefs['payment_israelpost_business_id'] . $prefs['payment_israelpost_api_password'] . $jitGet->OrderID->digits() . $jitGet->CartID->word();
 			if (hash("sha256", $combined) !== $jitGet->OKauthentication->word()) {
 				return false;
@@ -241,7 +245,10 @@ class PaymentLib extends TikiDb_Bridge
 
 				$entered = false;
 				foreach ($response->ORDERS as $order) {
-					if ($order->STATUS == 2 && ! in_array($order->ORDERID, $existing)) {
+					if ($order->STATUS == 2 // Order approved
+						&& ! in_array($order->ORDERID, $existing) // Order not already entered
+						&& $order->CURRENCY_CODE == $payment['currency'] // Same currency - we do not deal with conversions
+					) {
 						$this->enter_payment($paymentId, $order->TOTAL_PAID, 'israelpost', (array) $order);
 						$entered = true;
 					}
