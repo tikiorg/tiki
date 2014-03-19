@@ -1583,13 +1583,17 @@ class TrackerLib extends TikiLib
 			}
 		}
 
+		// get permnames
+		$permNames = array();
+		foreach ($fil as $fieldId => $value) {
+			$field = $tracker_definition->getField($fieldId);
+			$permNames[$fieldId] = $field['permName'];
+		}
+
 		if (count($final)) {
 			$data = array();
 			foreach ($fil as $fieldId => $value) {
-				$field = $tracker_definition->getField($fieldId);
-				$permName = $field['permName'];
-
-				$data[$permName] = $value;
+				$data[$permNames[$fieldId]] = $value;
 			}
 
 			foreach ($final as $job) {
@@ -1597,6 +1601,15 @@ class TrackerLib extends TikiLib
 				$data[$job['field']['permName']] = $value;
 				$this->modify_field($currentItemId, $job['field']['fieldId'], $value);
 			}
+		}
+
+		$values_by_permname = array();
+		$old_values_by_permname = array();
+		foreach ($values as $fieldId => $value) {
+			$values_by_permname[$permNames[$fieldId]] = $value;
+		}
+		foreach ($old_values as $fieldId => $value) {
+			$old_values_by_permname[$permNames[$fieldId]] = $value;
 		}
 
 		TikiLib::events()->trigger(
@@ -1609,6 +1622,8 @@ class TrackerLib extends TikiLib
 				'trackerId' => $trackerId,
 				'values' => $fil,
 				'old_values' => $old_values,
+				'values_by_permname' => $values_by_permname,
+				'old_values_by_permname' => $old_values_by_permname,
 				'bulk_import' => $bulk_import,
 				'aggregate' => sha1("trackeritem/$currentItemId"),
 			)
