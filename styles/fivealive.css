@@ -481,6 +481,10 @@ select {
 	background: url(fivealive/options/blueberry/siteheader.jpg) no-repeat;
 }*/
 
+#top_modules .box-menu {
+	float: right;
+}
+
 #top_modules .box-quickadmin {
 	position: absolute;
 	right: 10px;
