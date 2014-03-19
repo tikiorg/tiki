@@ -1355,6 +1355,10 @@ td.calheadhighlight {
     top: 0;
     z-index: 5;
 }
+.s5-slide.transparent {
+    background-color: transparent !important;
+    box-shadow: none;
+}
 .s5-slide:after {
     background-color: #FFFFFF;
     border-radius: 15rem;
@@ -1368,6 +1372,9 @@ td.calheadhighlight {
     transform: rotate(15deg);
     width: 2000px;
     z-index: -2;
+}
+.s5-slide.transparent:after {
+    display: none;
 }
 .s5-slide:hover {
     overflow-y: auto;
