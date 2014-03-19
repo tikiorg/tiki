@@ -305,28 +305,12 @@ class Tiki_Profile_Installer
 
 	private function doInstall( Tiki_Profile $profile ) // {{{
 	{
-		global $tikilib, $prefs;
-
 		$this->setFeedback(tra('Applying profile').': '.$profile->profile);
 
 		$this->installed[$profile->getProfileKey()] = $profile;
 
 		$preferences = $profile->getPreferences();
-		$profile->replaceReferences($preferences, $this->userData);
-		foreach ( $preferences as $pref => $value ) {
-			if ($this->allowedGlobalPreferences === false || in_array($pref, $this->allowedGlobalPreferences)) {
-				global $prefslib; include_once('lib/prefslib.php');
-				$pinfo = $prefslib->getPreference($pref);
-				if (!empty($pinfo['separator']) && !is_array($value)) {
-					$value = explode($pinfo['separator'], $value);
-				}
-
-				if ($prefs[$pref] != $value) {
-					$this->setFeedback(tra('Preference set').': '.$pref.'='.$value);
-				}
-				$tikilib->set_preference($pref, $value);
-			}
-		}
+		$leftovers = $this->applyPreferences($profile, $preferences, true);
 
 		require_once 'lib/setup/events.php';
 		tiki_setup_events();
@@ -345,8 +329,39 @@ class Tiki_Profile_Installer
 			$this->setupGroup($groupName, $info['general'], $info['permissions'], $info['objects'], $groupMap);
 		}
 
+		$this->applyPreferences($profile, $leftovers);
 		tiki_setup_events();
 	} // }}}
+
+	private function applyPreferences($profile, $preferences, $leaveUnknown = false)
+	{
+		global $tikilib, $prefs;
+
+		$profile->replaceReferences($preferences, $this->userData, $leaveUnknown);
+		$leftovers = array();
+
+		foreach ( $preferences as $pref => $value ) {
+			if ($leaveUnknown && $profile->containsReferences($value)) {
+				$leftovers[$pref] = $value;
+				continue;
+			}
+
+			if ($this->allowedGlobalPreferences === false || in_array($pref, $this->allowedGlobalPreferences)) {
+				global $prefslib; include_once('lib/prefslib.php');
+				$pinfo = $prefslib->getPreference($pref);
+				if (!empty($pinfo['separator']) && !is_array($value)) {
+					$value = explode($pinfo['separator'], $value);
+				}
+
+				if ($prefs[$pref] != $value) {
+					$this->setFeedback(tra('Preference set').': '.$pref.'='.$value);
+				}
+				$tikilib->set_preference($pref, $value);
+			}
+		}
+
+		return $leftovers;
+	}
 
 	private function setupGroup( $groupName, $info, $permissions, $objects, $groupMap ) // {{{
 	{

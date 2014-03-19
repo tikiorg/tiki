@@ -460,6 +460,12 @@ class Tiki_Profile
 		return $array;
 	} // }}}
 
+	public function containsReferences($value) // {{{
+	{
+		$refs = $this->traverseForReferences($value);
+		return count($refs) > 0;
+	} // }}}
+
 	function convertReference( $parts ) // {{{
 	{
 		list($full, $null0, $null1, $domain, $null2, $profile, $object) = $parts;
@@ -510,7 +516,7 @@ class Tiki_Profile
 		return $profiles;
 	} // }}}
 
-	public function replaceReferences( &$data, $suppliedUserData = false ) // {{{
+	public function replaceReferences( &$data, $suppliedUserData = false, $leaveUnknown = false ) // {{{
 	{
 		if ( $suppliedUserData === false ) {
 			$suppliedUserData = $this->getRequiredInput();
@@ -518,13 +524,13 @@ class Tiki_Profile
 
 		if ( is_array($data) ) {
 			foreach ( $data as &$sub ) {
-				$this->replaceReferences($sub, $suppliedUserData);
+				$this->replaceReferences($sub, $suppliedUserData, $leaveUnknown);
 			}
 
 			$toReplace = array();
 			foreach ( array_keys($data) as $key ) {
 				$newKey = $key;
-				$this->replaceReferences($newKey, $suppliedUserData);
+				$this->replaceReferences($newKey, $suppliedUserData, $leaveUnknown);
 				if ( $newKey != $key ) {
 					$toReplace[$key] = $newKey;
 				}
@@ -537,7 +543,11 @@ class Tiki_Profile
 		} else {
 			if ( preg_match(self::SHORT_PATTERN, $data, $parts) ) {
 				$object = $this->convertReference($parts);
-				$data = self::getObjectReference($object);
+
+				$value = self::getObjectReference($object);
+				if (! is_null($value) || ! $leaveUnknown) {
+					$data = $value;
+				}
 				return;
 			}
 
@@ -548,8 +558,11 @@ class Tiki_Profile
 				foreach ( $parts as $row ) {
 					$object = $this->convertReference($row);
 
-					$needles[] = $row[0];
-					$replacements[] = self::getObjectReference($object);
+					$value = self::getObjectReference($object);
+					if (! is_null($value) || ! $leaveUnknown) {
+						$needles[] = $row[0];
+						$replacements[] = $value;
+					}
 				}
 			}
 
