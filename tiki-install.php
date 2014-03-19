@@ -57,7 +57,8 @@ session_set_cookie_params($session_params['lifetime'], $tikiroot);
 unset($session_params);
 session_start();
 
-$refered = isset($_SERVER['HTTP_REFERER']) ? strpos($_SERVER['HTTP_REFERER'], $tikiroot . '/tiki-install.php') : false;
+$rootcheck = empty($tikiroot) || $tikiroot === '/' ? '' : $tikiroot;
+$refered = isset($_SERVER['HTTP_REFERER']) ? strpos($_SERVER['HTTP_REFERER'], $rootcheck . '/tiki-install.php') : false;
 if (!$refered || ($refered && !isset($_POST['install_step']))) {
 	unset ($_SESSION['accessible']);
 }
