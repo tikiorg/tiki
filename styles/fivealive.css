@@ -775,7 +775,7 @@ li.login_link ul li a {
 	text-decoration: none;
 	padding: 8px 1em;
 }
-
+/*
 .cssmenu_horiz li a:hover,
 .cssmenu_vert li ul a:hover,
 .cssmenu_horiz li ul a:hover,
@@ -785,7 +785,7 @@ li.login_link ul li a {
 	text-decoration: none;
 	border-right: none;
 }
-
+*/
 .cssmenu_horiz a,
 .cssmenu_vert ul li a {
 	color: #fff;
