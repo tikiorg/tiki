@@ -226,12 +226,13 @@ class Tiki_Profile_InstallHandler_WikiPage extends Tiki_Profile_InstallHandler
 		$writer->addObject(
 			'wiki_page',
 			$page,
-			array(
+			array_filter(array(
 				'name' => $page,
 				'content' => "wikicontent:$page",
 				'description' => $info['description'],
 				'lang' => $info['lang'],
-			)
+				'wysiwyg' => $info['wysiwyg'],
+			))
 		);
 
 		return true;
