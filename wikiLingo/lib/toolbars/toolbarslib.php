@@ -105,6 +105,7 @@ abstract class Toolbar
 					'h2',
 					'h3',
 					'titlebar',
+					'pastlink',
 					'toc',
 					'list',
 					'numlist',
@@ -774,6 +775,12 @@ class ToolbarBlock extends ToolbarInline // Will change in the future
 			$wysiwyg = 'HorizontalRule';
 			$syntax = '---';
 			break;
+        case 'pastlink':
+            $label = tra('PastLink');
+            $icon = tra('img/icons/PastLink.svg');
+            $wysiwyg = 'PastLink';
+            $syntax = '@FLP(clipboarddata)text@)';
+            break;
 		case 'pagebreak':
             if ($isWikiLingo) {
                 return;
