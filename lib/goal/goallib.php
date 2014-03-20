@@ -323,6 +323,13 @@ class GoalLib
 		];
 	}
 
+	function listEligibleGroups()
+	{
+		global $prefs;
+		$groups = TikiLib::lib('user')->list_all_groups();
+		return array_diff($groups, $prefs['goal_group_blacklist']);
+	}
+
 	private function table()
 	{
 		return TikiDb::get()->table('tiki_goals');

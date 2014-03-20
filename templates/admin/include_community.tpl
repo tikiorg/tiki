@@ -132,6 +132,7 @@
 				<legend>{tr}Goal, Recognition and Rewards{/tr}</legend>
 				{preference name=goal_enabled}
 				{preference name=goal_badge_tracker}
+				{preference name=goal_group_blacklist}
 			</fieldset>
 		{/tab}
 		

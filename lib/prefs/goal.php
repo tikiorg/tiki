@@ -25,6 +25,15 @@ function prefs_goal_list($partial = false)
 			'profile_reference' => 'tracker',
 			'dependencies' => ['feature_trackers'],
 		),
+		'goal_group_blacklist' => array(
+			'name' => tr('Groups not eligible for goals'),
+			'description' => tr('List of system groups that will be eliminated from the eligible group lists.'),
+			'type' => 'text',
+			'separator' => ';',
+			'filter' => 'groupname',
+			'profile_reference' => 'group',
+			'default' => ['Admins', 'Anonymous'],
+		),
 	);
 }
 

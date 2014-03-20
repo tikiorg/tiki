@@ -195,7 +195,7 @@ class Services_Goal_Controller
 		return [
 			'title' => tr('Edit Goal'),
 			'goal' => $goal,
-			'groups' => TikiLib::lib('user')->list_all_groups(),
+			'groups' => $goallib->listEligibleGroups(),
 		];
 	}
 
@@ -223,7 +223,7 @@ class Services_Goal_Controller
 			'title' => tr('Remove Goal'),
 			'removed' => $removed,
 			'goal' => $goal,
-			'groups' => TikiLib::lib('user')->list_all_groups(),
+			'groups' => $goallib->listEligibleGroups(),
 		];
 	}
 
@@ -392,7 +392,7 @@ class Services_Goal_Controller
 		return [
 			'title' => tr('Modify Eligibility for %0', $goal['name']),
 			'goal' => $goal,
-			'groups' => TikiLib::lib('user')->list_all_groups(),
+			'groups' => $goallib->listEligibleGroups(),
 		];
 	}
 
