@@ -32,6 +32,9 @@ var WikiLingoEdit = (function(document, $, Medium) {
                 },
                 modifiers: [],
                 beforeAddTag: function(tag, shouldFocus, isEditable, afterElement) {
+                    if(typeof this.element.medium === 'undefined'){
+                        return false;
+                    }
                     var newEl;
                     switch (tag) {
                         case 'br':

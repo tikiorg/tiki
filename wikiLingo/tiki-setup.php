@@ -390,28 +390,16 @@ if ($prefs['feature_syntax_highlighter'] == 'y') {
 	require_once("lib/codemirror_tiki/tiki_codemirror.php");
 	codemirrorModes($prefs['tiki_minify_javascript'] === 'y');
 }
-
 if ($prefs['feature_wikilingo'] == 'y') {
-    if ($prefs['feature_wysiwyg'] == 'y' && isset($jitRequest['edit'])) {
+    if ($prefs['feature_wysiwyg'] == 'y' && (!empty($jitRequest['edit'])) || (isset($_SESSION['wysiwyg'])) && $_SESSION['wysiwyg'] === 'y'){
         $headerlib
             ->add_cssfile("vendor/medium.js/medium.js/medium.css")
-            ->add_cssfile("vendor/wikilingo/wikilingo/editor/bubble.css")
-            ->add_cssfile("vendor/wikilingo/wikilingo/editor/IcoMoon/sprites/sprites.css")
-
-            //add some javascript
-            ->add_jsfile("vendor/undo.js/undo.js/undo.js")
-            ->add_jsfile("vendor/rangy/rangy/uncompressed/rangy-core.js")
-            ->add_jsfile("vendor/rangy/rangy/uncompressed/rangy-cssclassapplier.js")
-            ->add_jsfile("vendor/medium.js/medium.js/medium.js")
-
-            ->add_jsfile("vendor/wikilingo/wikilingo/editor/WLPluginSyntaxGenerator.js")
-            ->add_jsfile("vendor/wikilingo/wikilingo/editor/WLPluginEditor.js")
-            ->add_jsfile("vendor/wikilingo/wikilingo/editor/WLPluginAssistant.js")
-            ->add_jsfile("vendor/wikilingo/wikilingo/editor/bubble.js");
+            ->add_cssfile("vendor/wikilingo/wikilingo/editor/bubble.css"
+            ->add_cssfile("vendor/wikilingo/wikilingo/editor/IcoMoon/sprites/pastLink.css")
+            ->add_cssfile("vendor/wikilingo/wikilingo/editor/IcoMoon/sprites/sprites.css");
     }
 
     $headerlib
-        ->add_jsfile("lib/wikiLingo_tiki/tiki_wikiLingo_edit.js")
         //flp stuff
         ->add_cssfile('vendor/tablesorter/tablesorter/css/theme.dropbox.css')
         ->add_jsfile('vendor/tablesorter/tablesorter/js/jquery.tablesorter.js');
@@ -759,4 +747,3 @@ if ( $prefs['conditions_enabled'] == 'y' ) {
 		exit;
 	}
 }
-

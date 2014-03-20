@@ -284,11 +284,9 @@ function wikilingo_flp_view($args)
         ->add_jsfile('vendor/flp/flp/scripts/flp.js')
         ->add_jsfile('vendor/flp/flp/scripts/flp.Link.js')
         ->add_jsfile('lib/wikiLingo_tiki/tiki_flp.Link.js')
-		->add_jq_onready('(new WikiLingoFLPView($("#page-data"), ' . json_encode($partialMetadata) . '));')
-        ->add_js(<<<JS
-
-JS
-);
+        ->add_jsfile('vendor/tablesorter/tablesorter/js/jquery.tablesorter.js')
+        ->add_cssfile('vendor/tablesorter/tablesorter/css/theme.dropbox.css')
+        ->add_jq_onready('(new WikiLingoFLPView($("#page-data"), ' . json_encode($partialMetadata) . '));');
 }
 
 function wikilingo_flp_save($args)

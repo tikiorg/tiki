@@ -245,6 +245,20 @@ HTML
 ;
             $headerlib
                 //->add_jsfile("vendor/wikilingo/wikilingo/editor/editor.js")
+                //add some javascript
+                ->add_jsfile("vendor/undo.js/undo.js/undo.js")
+                ->add_jsfile("vendor/rangy/rangy/uncompressed/rangy-core.js")
+                ->add_jsfile("vendor/rangy/rangy/uncompressed/rangy-cssclassapplier.js")
+                ->add_jsfile("vendor/medium.js/medium.js/medium.js")
+
+
+                ->add_jsfile("vendor/wikilingo/wikilingo/editor/WLPastLinkSyntaxGenerator.js")
+                ->add_jsfile("vendor/wikilingo/wikilingo/editor/WLPluginSyntaxGenerator.js")
+                ->add_jsfile("vendor/wikilingo/wikilingo/editor/WLPluginEditor.js")
+                ->add_jsfile("vendor/wikilingo/wikilingo/editor/WLPluginAssistant.js")
+                ->add_jsfile("vendor/wikilingo/wikilingo/editor/bubble.js")
+                ->add_jsfile("lib/wikiLingo_tiki/tiki_wikiLingo_edit.js")
+
                 ->add_js(<<<JS
 (new WikiLingoEdit(document.getElementById('$as_id-ui'), document.getElementById('$as_id')));
 JS

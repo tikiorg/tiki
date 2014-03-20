@@ -815,7 +815,7 @@
                 "reference": null,
                 "shasum": null
             },
-            "type": "library"
+            "type": "component"
         },
         {
             "name": "medium.js/medium.js",
@@ -1172,12 +1172,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/wikiLingo/wikiLingo.git",
-                "reference": "e695f4344a9a86fad66d48fc3af116c027b976d3"
+                "reference": "222f41a9f563e5e961f4f1b1011cce8bd319b145"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wikiLingo/wikiLingo/zipball/e695f4344a9a86fad66d48fc3af116c027b976d3",
-                "reference": "e695f4344a9a86fad66d48fc3af116c027b976d3",
+                "url": "https://api.github.com/repos/wikiLingo/wikiLingo/zipball/222f41a9f563e5e961f4f1b1011cce8bd319b145",
+                "reference": "222f41a9f563e5e961f4f1b1011cce8bd319b145",
                 "shasum": ""
             },
             "require": {
@@ -1213,7 +1213,7 @@
                     "role": "Lead Developer"
                 }
             ],
-            "time": "2014-03-14 20:29:49"
+            "time": "2014-03-19 19:53:06"
         },
         {
             "name": "zetacomponents/base",

@@ -10,7 +10,7 @@ class WikiPluginStub extends Base
 		$this->allowLines = true;
 	}
 
-	public function render(Plugin $plugin, $renderedChildren, WikiLingoWYSIWYG\Parser $parser)
+	public function render(WikiLingo\Expression\Plugin &$plugin, &$body, &$parser)
 	{
 		$element = $parser->element('WikiLingo\\Expression\\Plugin', 'span');
 		$element->detailedAttributes['data-plugin-type'] = $plugin->type;
