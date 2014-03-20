@@ -3832,8 +3832,8 @@ CREATE TABLE `tiki_goals` (
 	`daySpan` INT NOT NULL DEFAULT 14,
 	`from` DATETIME,
 	`to` DATETIME,
-	`eligible`,
-	`conditions`,
+	`eligible` BLOB,
+	`conditions` BLOB,
 	`rewards` BLOB
 ) ENGINE=MyISAM;
 
