@@ -121,7 +121,7 @@ class Tiki_Profile_InstallHandler_TrackerField extends Tiki_Profile_InstallHandl
 			'description' => 'description',
 			'descparsed' => 'descriptionIsParsed',
 			'errordesc' => 'errorMsg',
-			'list' => 'IsTblVisible',
+			'list' => 'isTblVisible',
 			'link' => 'isMain',
 			'searchable' => 'isSearchable',
 			'public' => 'isPublic',
