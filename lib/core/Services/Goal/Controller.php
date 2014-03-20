@@ -23,8 +23,16 @@ class Services_Goal_Controller
 			throw new Services_Exception_NotFound;
 		}
 
+		$messages = [];
+		$perms = Perms::get('goal', $input->goalId->int());
+		$isAdmin = $perms->goal_admin;
+
 		if (! $info['enabled']) {
-			throw new Services_Exception_Denied(tr('Goal currently disabled'));
+			if (! $isAdmin) {
+				throw new Services_Exception_Denied(tr('Goal currently disabled'));
+			} else {
+				$messages[] = tr('This goal is not enabled.');
+			}
 		}
 
 		$context = [
@@ -43,11 +51,17 @@ class Services_Goal_Controller
 			];
 		}
 
-		if (! $goallib->isEligible($info, $context)) {
-			throw new Services_Exception_Denied(tr('Not eligible for this goal'));
-		}
+		if ($info['enabled'] && $goallib->isEligible($info, $context)) {
+			$info = $goallib->evaluateConditions($info, $context);
+		} else {
+			if (! $isAdmin) {
+				throw new Services_Exception_Denied(tr('Not eligible for this goal'));
+			}
 
-		$info = $goallib->evaluateConditions($info, $context);
+			// Goal is only visible because user is admin, mock some of the data
+			$info = $goallib->unevaluateConditions($info);
+			$messages[] = tr('Goal has not been evaluated, administrator view.');
+		}
 
 		$info['conditions'] = array_filter($info['conditions'], function ($item) {
 			return empty($item['hidden']);
@@ -59,6 +73,7 @@ class Services_Goal_Controller
 		return array(
 			'title' => $info['name'],
 			'goal' => $info,
+			'messages' => $messages,
 		);
 	}
 

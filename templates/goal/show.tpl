@@ -23,6 +23,13 @@
 {/block}
 
 {block name="content"}
+	{if $messages}
+		<div class="alert alert-info">
+			{foreach $messages as $message}
+				<p>{$message|escape}</p>
+			{/foreach}
+		</div>
+	{/if}
 	{if $goal.description}
 		<div class="well">
 			{$goal.description|escape}

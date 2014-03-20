@@ -179,6 +179,18 @@ class GoalLib
 		return $goal;
 	}
 
+	function unevaluateConditions($goal)
+	{
+		$goal['complete'] = false;
+
+		foreach ($goal['conditions'] as & $cond) {
+			$cond['metric'] = 0;
+			$cond['complete'] = false;
+		}
+
+		return $goal;
+	}
+
 	function evaluateAllGoals()
 	{
 		$tx = TikiDb::get()->begin();
