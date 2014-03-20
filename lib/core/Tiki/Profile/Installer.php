@@ -390,8 +390,9 @@ class Tiki_Profile_Installer
 
 		foreach ( $objects as $data )
 			foreach ( $data['permissions'] as $perm => $v ) {
+				$data['id'] = trim($data['id']);
 				$data['type'] = self::convertType($data['type']);
-				$data['id'] = Tiki_Profile_Installer::convertObject($data['type'], $data['id'], array( 'groupMap' => $groupMap	));
+				$data['id'] = Tiki_Profile_Installer::convertObject($data['type'], $data['id'], array( 'groupMap' => $groupMap));
 
 				if ( $v == 'y' )
 					$userlib->assign_object_permission($groupName, $data['id'], $data['type'], $perm);
