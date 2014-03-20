@@ -127,7 +127,13 @@ class Tiki_Profile_InstallHandler_Menu extends Tiki_Profile_InstallHandler
 		} elseif ( $data['collapse'] == 'expanded' ) {
 			$type = 'e';
 		}
-
+		if ($data['use_items_icons'] == NULL) {
+			$data['use_items_icons'] = '';
+		}
+		if ($data['parse'] == NULL) {
+			$data['parse'] = '';
+		}
+		
 		$menulib->replace_menu(0, $data['name'], $data['description'], $type, $data['icon'], $data['use_items_icons'], $data['parse']);
 		$result = $tikilib->query("SELECT MAX(`menuId`) FROM `tiki_menus`");
 		$menuId = reset($result->fetchRow());
