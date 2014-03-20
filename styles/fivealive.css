@@ -1373,6 +1373,10 @@ td.calheadhighlight {
     position: absolute;
     right: 10%;
     top: -250px;
+    -webkit-transform: rotate(15deg);
+    -moz-transform: rotate(15deg);
+    -ms-transform: rotate(15deg);
+    -o-transform: rotate(15deg);
     transform: rotate(15deg);
     width: 2000px;
     z-index: -2;
