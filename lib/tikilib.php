@@ -324,6 +324,20 @@ class TikiLib extends TikiDb_Bridge
 	}
 
 	/**
+	 * @return Event_Manager
+	 */
+	public static function symbols()
+	{
+		static $symbols = null;
+
+		if (! $symbols) {
+			$symbols = new Tiki_Profile_SymbolLoader();
+		}
+
+		return $symbols;
+	}
+
+	/**
 	 * @return mixed
 	 */
 	public function get_site_hash()

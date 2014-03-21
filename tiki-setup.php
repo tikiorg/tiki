@@ -286,6 +286,8 @@ $smarty->assign('tiki_branch', $TWV->branch);
 $smarty->assign('tiki_star', $TWV->getStar());
 $smarty->assign('tiki_uses_svn', $TWV->svn);
 
+$smarty->assign('symbols', TikiLib::symbols());
+
 if ( isset( $_GET['msg'] ) ) {
 	$smarty->assign('display_msg', $_GET['msg']);
 } elseif ( isset( $_SESSION['msg'] ) ) {
