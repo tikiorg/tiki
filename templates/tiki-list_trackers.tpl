@@ -80,11 +80,11 @@
 				<td class="text-center"><a title="{tr}View{/tr}" href="tiki-view_tracker.php?trackerId={$tracker.trackerId}"><span class="badge">{$tracker.items|escape}</span></a></td>
 				<td class="action">
 					{if $tracker.permissions->export_tracker}
-						<a title="{tr _0=$tracker.name|escape}Export %0{/tr}" class="export dialog" href="{service controller=tracker action=export trackerId=$tracker.trackerId}">{icon _id='disk' alt="{tr}Export{/tr}"}</a>
+						<a title="{tr _0=$tracker.name|escape}Export %0{/tr}" data-toggle="modal" data-target="#bootstrap-modal" href="{service controller=tracker action=export trackerId=$tracker.trackerId modal=1}">{icon _id='disk' alt="{tr}Export{/tr}"}</a>
 					{/if}
 					{if $tracker.permissions->admin_trackers}
-						<a title="{tr _0=$tracker.name|escape}Import in %0{/tr}" class="import dialog" href="{service controller=tracker action=import_items trackerId=$tracker.trackerId}">{icon _id='upload' alt="{tr}Import{/tr}"}</a>
-						<a title="{tr _0=$tracker.name|escape}Events{/tr}" class="event dialog" href="{service controller=tracker_todo action=view trackerId=$tracker.trackerId}">{icon _id='clock' alt="{tr}Events{/tr}"}</a>
+						<a title="{tr _0=$tracker.name|escape}Import in %0{/tr}" data-toggle="modal" data-target="#bootstrap-modal" href="{service controller=tracker action=import_items trackerId=$tracker.trackerId modal=1}">{icon _id='upload' alt="{tr}Import{/tr}"}</a>
+						<a title="{tr _0=$tracker.name|escape}Events{/tr}" data-toggle="modal" data-target="#bootstrap-modal" href="{service controller=tracker_todo action=view trackerId=$tracker.trackerId modal=1}">{icon _id='clock' alt="{tr}Events{/tr}"}</a>
 					{/if}
 					<a title="{tr}View{/tr}" href="tiki-view_tracker.php?trackerId={$tracker.trackerId}">{icon _id='magnifier' alt="{tr}View{/tr}"}</a>
 
@@ -127,19 +127,6 @@
     </div>
 	{pagination_links cant=$cant step=$maxRecords offset=$offset}{/pagination_links}
 
-	{if !empty($trackerId)}
-		<div id="trackeredit"></div>
-		{jq}
-			$("#trackeredit").serviceDialog({
-				title:'{{$trackerInfo.name|escape:javascript}}',
-				data: {
-					controller: 'tracker',
-					action: 'replace',
-					trackerId: {{$trackerId}}
-				}
-			});
-		{/jq}
-	{/if}
 	{jq}
 		$('.remove.confirm-prompt').requireConfirm({
 			message: "{tr}Do you really remove this tracker?{/tr}",
@@ -152,48 +139,6 @@
 			success: function (data) {
 				history.go(0);	// reload
 			}
-		});
-
-		$('.export.dialog').click(function () {
-			var link = this;
-			$(this).serviceDialog({
-				title: $(link).attr('title'),
-				data: {
-					controller: 'tracker',
-					action: 'export',
-					trackerId: parseInt($(link).closest('tr').find('.id').text(), 10)
-				}
-			});
-
-			return false;
-		});
-
-		$('.event.dialog').click(function () {
-			var link = this;
-			$(this).serviceDialog({
-				title: $(link).attr('title'),
-				data: {
-					controller: 'tracker_todo',
-					action: 'view',
-					trackerId: parseInt($(link).closest('tr').find('.id').text(), 10)
-				}
-			});
-
-			return false;
-		});
-
-		$('.import.dialog').click(function () {
-			var link = this;
-			$(this).serviceDialog({
-				title: $(link).attr('title'),
-				data: {
-					controller: 'tracker',
-					action: 'import_items',
-					trackerId: parseInt($(link).closest('tr').find('.id').text(), 10)
-				}
-			});
-
-			return false;
 		});
 	{/jq}
 

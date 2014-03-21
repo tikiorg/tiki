@@ -5,7 +5,6 @@
 {/block}
 
 {block name="content"}
-<h4>{tr}Events{/tr}</h4>
 <div class="table-responsive">
 <table class="table normal">
 	<tr>
@@ -45,56 +44,60 @@
 	{/foreach}
 </table>
 </div>
-<form class="simple add-event no-ajax" method="post" action="{service controller=tracker_todo action=add trackerId=$trackerId}">
+<form class="add-event no-ajax" method="post" action="{service controller=tracker_todo action=add trackerId=$trackerId}">
 	<h4>{tr}New event{/tr}</h4>
-	<label>
-		{tr}From{/tr}
-		<select name="from">
+	<div class="form-group">
+		<label for="from">{tr}From{/tr}</label>
+		<select name="from" class="form-control">
 			{foreach key=st item=stdata from=$statusTypes}
 				<option value="{$st|escape}">{$stdata.label|escape}</option>
 			{/foreach}
 		</select>
-	</label>
-	<label>
-		{tr}To{/tr}
-		<select name="to">
+	</div>
+	<div class="form-group">
+		<label for="to">{tr}To{/tr}</label>
+		<select name="to" class="form-control">
 			{foreach key=st item=stdata from=$statusTypes}
 				<option value="{$st|escape}">{$stdata.label|escape}</option>
 			{/foreach}
 		</select>
-	</label>
-	<label>
-		{tr}Reference date{/tr}
-		<select name="event">
+	</div>
+	<div class="form-group">
+		<label for="event">{tr}Reference date{/tr}</label>
+		<select name="event" class="form-control">
 			<option value="creation">{tr}After creation{/tr}</option>
 			<option value="modification">{tr}After last modification{/tr}</option>
 		</select>
-	</label>
-	<label>
-		{tr}Delay{/tr}
-		{html_select_duration prefix='after'}
-	</label>
+	</div>
+	<div class="form-group">
+		<label>{tr}Delay{/tr}</label>
+		<div class="form-control">
+			{html_select_duration prefix='after'}
+		</div>
+	</div>
 	<fieldset>
 		<legend>{tr}Notification{/tr}</legend>
 
-		<label>
-			{tr}Delay prior to status change{/tr}
-			{html_select_duration prefix='notif'}
-		</label>
-		<label>
-			{tr}Mail subject text{/tr}
-			<input type="text" name="subject">
-		</label>
-		<label>
-			{tr}Mail body ressource{/tr}
-			<input type="text" name="body">
-			<div class="description help-block">
+		<div class="form-group">
+			<label>{tr}Delay prior to status change{/tr}</label>
+			<div class="form-control">
+				{html_select_duration prefix='notif'}
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="subject">{tr}Mail subject text{/tr}</label>
+			<input type="text" name="subject" class="form-control">
+		</div>
+		<div class="form-group">
+			<label for="body">{tr}Mail body ressource{/tr}</label>
+			<input type="text" name="body" class="form-control">
+			<div class="help-block">
 				{tr}wiki:pageName for a wiki page or tplName.tpl for a template{/tr}
 			</div>
-		</label>
+		</div>
 	</fieldset>
 	<div class="submit">
-		<input type="submit" class="btn btn-default btn-sm" value="{tr}Create{/tr}">
+		<input type="submit" class="btn btn-primary" value="{tr}Create{/tr}">
 	</div>
 </form>
 {jq}

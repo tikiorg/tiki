@@ -1127,6 +1127,7 @@ class Services_Tracker_Controller
 		}
 
 		return array(
+			'title' => tr('Export Items'),
 			'trackerId' => $trackerId,
 			'export' => $out,
 			'fields' => $definition->getFields(),
@@ -1426,6 +1427,7 @@ class Services_Tracker_Controller
 		}
 
 		return array(
+			'title' => tr('Import Items'),
 			'trackerId' => $trackerId,
 			'return' => '',
 		);
