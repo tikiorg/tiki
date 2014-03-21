@@ -4173,11 +4173,6 @@ textarea.tshoutbox{
 	color: #999;
 }
 
-/* jquery-ui in since_last_visit */
-li.ui-tabs-active a { 
-	background:#CCCCCC; 
-}
-
 #mytabs .ui-tabs-nav {
 	zoom: 0.70;
 }
