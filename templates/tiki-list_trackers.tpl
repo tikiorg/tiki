@@ -5,8 +5,7 @@
 	{title help="Trackers" admpage="trackers"}{tr}Trackers{/tr}{/title}
 {/block}
 
-{block name="content"}
-	<a name="view"></a>
+{block name="navigation"}
 	{if $tiki_p_admin_trackers eq 'y'}
 		<div class="navbar-btn">
 			<a class="btn btn-default" href="{service controller=tracker action=replace modal=true}" data-toggle="modal" data-target="#bootstrap-modal">
@@ -22,12 +21,12 @@
 				</button>
 				<ul class="dropdown-menu">
 					<li>
-						<a href="{service controller=tracker action=import}">
+						<a href="{service controller=tracker action=import modal=1}" data-toggle="modal" data-target="#bootstrap-modal">
 							{tr}Import Structure{/tr}
 						</a>
 					</li>
 					<li>
-						<a href="{service controller=tracker action=import_profile}">
+						<a href="{service controller=tracker action=import_profile modal=1}" data-toggle="modal" data-target="#bootstrap-modal">
 							{tr}Import From Profile/YAML{/tr}
 						</a>
 					</li>
@@ -40,6 +39,10 @@
 			{/if}
 		</div>
 	{/if}
+{/block}
+
+{block name="content"}
+	<a name="view"></a>
 	{if ($trackers) or ($find)}
 		{include autocomplete='trackername' file='find.tpl' filters=''}
 		{if ($find) and ($trackers)}

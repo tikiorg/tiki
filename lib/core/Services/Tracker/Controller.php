@@ -1376,6 +1376,7 @@ class Services_Tracker_Controller
 		
 		return array(
 			'title' => tr('Import Tracker Structure'),
+			'modal' => $input->modal->int(),
 		);
 	}
 
@@ -1490,6 +1491,7 @@ class Services_Tracker_Controller
 		}
 		return array(
 			'title' => tr('Import Tracker From Profile/YAML'),
+			'modal' => $input->modal->int(),
 		);
 	}
 

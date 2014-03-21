@@ -23,9 +23,7 @@
 	{jq}
 		$('#forumImportFromProfile').submit(function() {
 			$.tikiModal(tr('Loading...'));
-			$.post($(this).attr('action'), {yaml: $('#importFromProfileYaml').val()}, function(feedback) {
-				feedback = $.parseJSON(feedback);
-
+			$.post($(this).attr('action'), { yaml: $('#importFromProfileYaml').val()}, function(feedback) {
 				$.tikiModal();
 				if (feedback.length) {
 					for(i in feedback) {
@@ -35,7 +33,7 @@
 				} else {
 					$.notify(tr("Error, profile not applied"));
 				}
-			});
+			}, 'json');
 			return false;
 		});
 	{/jq}
