@@ -118,12 +118,17 @@ input[type="submit"]:hover,
 	background: #e35c29;
 }
 
-.header .cssmenu_horiz li.selected li a,
-#topbar_modules .cssmenu_horiz li.selected li a,
-.cssmenu_horiz li.selected li a,
-.cssmenu_vert li.selected li a {
-	font-style: normal;
+
+.header .cssmenu_horiz > li.selected > a,
+#topbar_modules .cssmenu_horiz > li.selected > a,
+.cssmenu_horiz li li.selected a,
+.cssmenu_vert li li.selected a {
 	color: #fff;
+}
+
+.cssmenu_horiz li.selected > a,
+.cssmenu_vert li.selected > a {
+	color: #c44a23;
 }
 
 .cssmenu_vert .sf-sub-indicator {
