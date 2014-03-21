@@ -22,11 +22,11 @@ class GoalEventLib
 					$tikilib = TikiLib::lib('tiki');
 
 					$user = $args['user'];
-					$group = $args['group'];
+					$group = isset($args['group']) ? $args['group'] : null;
 
 					if ($eventName == 'tiki.goal.reached') {
 						$groups = $group ? [$group] : [];
-					} elseif ($args['goalType'] == 'user') {
+					} elseif (isset($args['goalType']) && $args['goalType'] == 'user') {
 						$groups = $tikilib->get_user_groups($user);
 					} else {
 						$groups = [$group];
