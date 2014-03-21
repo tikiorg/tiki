@@ -241,6 +241,18 @@ function wikiplugin_articles_info()
 				'separator' => '|',
 				'default' => '',
 			),
+			'useLinktoURL' => array(
+				'required' => false,
+				'name' => tra('Use Source URL'),
+				'description' => tra('Use the external source URL as link for articles.') . ' (y|n)',
+				'filter' => 'alpha',
+				'default' => 'n',
+				'options' => array(
+					array('text' => '', 'value' => ''),
+					array('text' => tra('Yes'), 'value' => 'y'),
+					array('text' => tra('No'), 'value' => 'n'),
+				),
+			),
 		),
 	);
 }
@@ -249,7 +261,7 @@ function wikiplugin_articles($data, $params)
 {
 	global $smarty, $tikilib, $prefs, $tiki_p_read_article, $tiki_p_articles_read_heading, $dbTiki, $pageLang;
 	global $artlib; require_once 'lib/articles/artlib.php';
-	$default = array('max' => $prefs['maxRecords'], 'start' => 0, 'usePagination' => 'n', 'topicId' => '', 'topic' => '', 'sort' => 'publishDate_desc', 'type' => '', 'lang' => '', 'quiet' => 'n', 'categId' => '', 'largefirstimage' => 'n', 'urlparam' => '', 'actions' => 'n', 'translationOrphan' => '', 'headerLinks' => 'n', 'showtable' => 'n');
+	$default = array('max' => $prefs['maxRecords'], 'start' => 0, 'usePagination' => 'n', 'topicId' => '', 'topic' => '', 'sort' => 'publishDate_desc', 'type' => '', 'lang' => '', 'quiet' => 'n', 'categId' => '', 'largefirstimage' => 'n', 'urlparam' => '', 'actions' => 'n', 'translationOrphan' => '', 'headerLinks' => 'n', 'showtable' => 'n', 'useLinktoURL' => 'n');
 	$auto_args = array('lang', 'topicId', 'topic', 'sort', 'type', 'lang', 'categId');
 	$params = array_merge($default, $params);
 
@@ -281,6 +293,7 @@ function wikiplugin_articles($data, $params)
 	$smarty->assign_by_ref('quiet', $quiet);
 	$smarty->assign_by_ref('urlparam', $urlparam);
 	$smarty->assign_by_ref('urlnext', $urlnext);
+	$smarty->assign_by_ref('useLinktoURL', $useLinktoURL);
 
 	if (!isset($containerClass)) {
 		$containerClass = 'wikiplugin_articles';
@@ -397,7 +410,7 @@ function wikiplugin_articles($data, $params)
 	if (empty($type)) {
 		$type = '';
 	}
-	
+
 	if (!empty($topic) && !strstr($topic, '!') && !strstr($topic, '+')) {
 		$smarty->assign_by_ref('topic', $topic);
 	} elseif (!empty($topicId) &&  is_numeric($topicId)) {
@@ -444,7 +457,7 @@ function wikiplugin_articles($data, $params)
 	$smarty->assign('usePagination', $usePagination);
 	$smarty->assign_by_ref('actions', $actions);
 	$smarty->assign('headerLinks', $headerLinks);
-	
+
 	if (isset($titleonly) && $titleonly == 'y') {
 		return "~np~ ".$smarty->fetch('tiki-view_articles-titleonly.tpl')." ~/np~";
 	} else {

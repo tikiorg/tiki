@@ -39,7 +39,17 @@
 	{/if}
 {/if}
 {section name=ix loop=$listpages}
-	{capture name=href}{if empty($urlparam)}{$listpages[ix].articleId|sefurl:article}{else}{$listpages[ix].articleId|sefurl:article:with_next}{$urlparam}{/if}{/capture}
+	{capture name=href}{strip}
+		{if empty($urlparam)}
+			{if $useLinktoURL eq 'n' or empty($listpages[ix].linkto)}
+				{$listpages[ix].articleId|sefurl:article}
+			{else}
+				{$listpages[ix].linkto}
+			{/if}
+		{else}
+			{$listpages[ix].articleId|sefurl:article:with_next}{$urlparam}
+		{/if}
+	{/strip}{/capture}
 	{if $listpages[ix].disp_article eq 'y'}
 		{if $prefs.feature_freetags eq 'y' and $tiki_p_view_freetags eq 'y' and $listpages[ix].freetags.data|@count >0}
 			<div class="freetaglist">
