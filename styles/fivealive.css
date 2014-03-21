@@ -783,14 +783,18 @@ li.login_link ul li a {
 #topbar_modules .cssmenu_horiz li li a > .sf-sub-indicator {top: 9px}
 #col2 .cssmenu_vert li a > .sf-sub-indicator {top: 5px}
 
+.header .cssmenu_horiz > li.selected > a,
+#topbar_modules .cssmenu_horiz > li.selected > a,
 .cssmenu_horiz li.selected a,
 .cssmenu_vert li.selected a {
 	color: #c2eef8;
 }
-.cssmenu_horiz>li.selected a,
-.cssmenu_vert>li.selected a {
-        color: #153C64;
+
+.cssmenu_horiz li.selected > a,
+.cssmenu_vert li.selected > a {
+	color: #26A6DD;
 }
+
 .cssmenu_horiz li.selected li a,
 .cssmenu_vert li.selected li a {
 	font-style: normal;
