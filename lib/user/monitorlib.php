@@ -216,11 +216,11 @@ class MonitorLib
 		});
 
 		$db = TikiDb::get();
-		$events = $db->fetchAll('SELECT DISTINCT event FROM tiki_user_monitors', null, -1, -1, TikiDb::ERR_NONE);
+		$list = $db->fetchAll('SELECT DISTINCT event FROM tiki_user_monitors', null, -1, -1, TikiDb::ERR_NONE);
 
 		// Ignore errors to avoid locking out users
-		if ($events) {
-			foreach ($events as $row) {
+		if ($list) {
+			foreach ($list as $row) {
 				$event = $row['event'];
 				$events->bind($event, function ($args, $originalEvent) use ($event) {
 					$this->handleEvent($args, $originalEvent, $event);
