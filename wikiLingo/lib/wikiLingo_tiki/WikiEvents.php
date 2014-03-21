@@ -102,9 +102,11 @@ JS
             $ui->setContextAsPast();
 			$pairs = FLP\Data::GetPairsByTitleAndApplyToUI($this->title, $ui);
             $pairsJson = json_encode($pairs);
+            $length = count($pairs);
             $counts = json_encode(FLP\PairAssembler::$counts);
             $headerlib->add_js(<<<JS
 var counts = $counts,
+    length = $length,
     flpData = $pairsJson,
     phrases = $('span.phrases'),
     phrasesLookupTable = {},
@@ -113,7 +115,7 @@ var counts = $counts,
             .append(table);
     };
 
-for(var x = 0; x < flpData.length; x++){
+for(var x = 0; x < length; x++){
     if(!phrasesLookupTable[flpData[x].pastText.sanitized]){
         phrasesLookupTable[flpData[x].pastText.sanitized] = [];
     }
@@ -121,7 +123,7 @@ for(var x = 0; x < flpData.length; x++){
 }
 
 
-for(var i = 0; i < flpData.length; i++) {
+for(var i = 0; i < length; i++) {
     var futureLink = new flp.Link({
         beginning: phrases.filter('span.futurelink-beginning' + i),
         middle: phrases.filter('span.futurelink' + i),
