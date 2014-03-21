@@ -7,8 +7,8 @@
 
 class TikiDb_Pdo_Result
 {
-	var $result;
-	var $numrows;
+	public $result;
+	public $numrows;
 
 	function __construct ($result)
 	{
@@ -101,25 +101,21 @@ class TikiDb_Pdo extends TikiDb
 		}
 	} // }}}
 
-	function fetchAll($query = null, $values = null, $numrows = -1, $offset = -1, $reporterrors = true ) // {{{
+	function fetchAll($query = null, $values = null, $numrows = -1, $offset = -1, $reporterrors = parent::ERR_DIRECT ) // {{{
 	{
 		$result = $this->_query($query, $values, $numrows, $offset);
 		if (! is_array($result) ) {
-			if ($reporterrors) {
-				$this->handleQueryError($query, $values, $result);
-			}
+			$this->handleQueryError($query, $values, $result, $reporterrors);
 		}
 
 		return $result;
 	} // }}}
 
-	function query($query = null, $values = null, $numrows = -1, $offset = -1, $reporterrors = true ) // {{{
+	function query($query = null, $values = null, $numrows = -1, $offset = -1, $reporterrors = self::ERR_DIRECT ) // {{{
 	{
 		$result = $this->_query($query, $values, $numrows, $offset);
 		if ( $result === false ) {
-			if ($reporterrors) {
-				$this->handleQueryError($query, $values, $result);
-			}
+			$this->handleQueryError($query, $values, $result, $reporterrors);
 		}
 
 		return new TikiDb_Pdo_Result($result);

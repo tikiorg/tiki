@@ -7,6 +7,10 @@
 
 abstract class TikiDb
 {
+	const ERR_DIRECT = true;
+	const ERR_NONE = false;
+	const ERR_EXCEPTION = 'exception';
+
 	private static $instance;
 
 	private $errorHandler;
@@ -44,7 +48,7 @@ abstract class TikiDb
 
 	abstract function qstr($str);
 
-	abstract function query($query = null, $values = null, $numrows = -1, $offset = -1, $reporterrors = true);
+	abstract function query($query = null, $values = null, $numrows = -1, $offset = -1, $reporterrors = self::ERR_DIRECT);
 
 	function lastInsertId() // {{{
 	{
@@ -54,7 +58,7 @@ abstract class TikiDb
 	function queryError($query, &$error, $values = null, $numrows = -1, $offset = -1) // {{{
 	{
 		$this->errorMessage = '';
-		$result = $this->query($query, $values, $numrows, $offset, false);
+		$result = $this->query($query, $values, $numrows, $offset, self::ERR_NONE);
 		$error = $this->errorMessage;
 
 		return $result;
@@ -62,16 +66,10 @@ abstract class TikiDb
 
 	function queryException($query, $values = null, $numrows = -1, $offset = -1) // {{{
 	{
-		$result = $this->queryError($query, $error, $values, $numrows, $offset);
-
-		if ($error) {
-			throw TikiDb_Exception::classify($error);
-		}
-
-		return $result;
+		return $this->query($query, $values, $numrows, $offset, self::ERR_EXCEPTION);
 	} // }}}
 
-	function getOne($query, $values = null, $reporterrors = true, $offset = 0) // {{{
+	function getOne($query, $values = null, $reporterrors = self::ERR_DIRECT, $offset = 0) // {{{
 	{
 		$result = $this->query($query, $values, 1, $offset, $reporterrors);
 
@@ -88,7 +86,7 @@ abstract class TikiDb
 		return false;
 	} // }}}
 
-	function fetchAll($query = null, $values = null, $numrows = -1, $offset = -1, $reporterrors = true) // {{{
+	function fetchAll($query = null, $values = null, $numrows = -1, $offset = -1, $reporterrors = self::ERR_DIRECT) // {{{
 	{
 		$result = $this->query($query, $values, $numrows, $offset, $reporterrors);
 
@@ -102,7 +100,7 @@ abstract class TikiDb
 		return $rows;
 	} // }}}
 
-	function fetchMap($query = null, $values = null, $numrows = -1, $offset = -1, $reporterrors = true) // {{{
+	function fetchMap($query = null, $values = null, $numrows = -1, $offset = -1, $reporterrors = self::ERR_DIRECT) // {{{
 	{
 		$result = $this->fetchAll($query, $values, $numrows, $offset, $reporterrors);
 
@@ -153,12 +151,14 @@ abstract class TikiDb
 		$this->errorMessage = $message;
 	} // }}}
 
-	protected function handleQueryError($query, $values, $result) // {{{
+	protected function handleQueryError($query, $values, $result, $mode) // {{{
 	{
-		if ( $this->errorHandler )
+		if ($mode === self::ERR_NONE) {
+			return null;
+		} elseif ($mode === self::ERR_DIRECT && $this->errorHandler) {
 			$this->errorHandler->handle($this, $query, $values, $result);
-		else {
-			throw new TikiDb_Exception($this->getErrorMessage());
+		} elseif ($mode === self::ERR_EXCEPTION || ! $this->errorHandler) {
+			throw TikiDb_Exception::classify($error);
 		}
 	} // }}}
 

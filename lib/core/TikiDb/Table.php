@@ -10,12 +10,18 @@ class TikiDb_Table
 	protected $db;
 	protected $tableName;
 	protected $autoIncrement;
+	protected $errorMode = TikiDb::ERR_DIRECT;
 
 	function __construct($db, $tableName, $autoIncrement = true)
 	{
 		$this->db = $db;
 		$this->tableName = $tableName;
 		$this->autoIncrement = $autoIncrement;
+	}
+
+	function useExceptions()
+	{
+		$this->errorMode = TikiDb::ERR_EXCEPTION;
 	}
 
 	/**
@@ -189,7 +195,7 @@ class TikiDb_Table
 		$query .= $this->buildConditions($conditions, $bindvars);
 		$query .= $this->buildOrderClause($orderClause);
 
-		return $this->db->fetchAll($query, $bindvars, $numrows, $offset);
+		return $this->db->fetchAll($query, $bindvars, $numrows, $offset, $this->errorMode);
 	}
 
 	function expr($string, $arguments = array())

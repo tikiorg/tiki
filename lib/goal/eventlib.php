@@ -16,37 +16,41 @@ class GoalEventLib
 
 	function bindEvents($manager)
 	{
-		foreach ($this->getGoalEvents() as $eventType) {
-			$manager->bind($eventType, function ($args, $eventName) use ($eventType) {
-				$tikilib = TikiLib::lib('tiki');
+		try {
+			foreach ($this->getGoalEvents() as $eventType) {
+				$manager->bind($eventType, function ($args, $eventName) use ($eventType) {
+					$tikilib = TikiLib::lib('tiki');
 
-				$user = $args['user'];
-				$group = $args['group'];
+					$user = $args['user'];
+					$group = $args['group'];
 
-				if ($eventName == 'tiki.goal.reached') {
-					$groups = $group ? [$group] : [];
-				} elseif ($args['goalType'] == 'user') {
-					$groups = $tikilib->get_user_groups($user);
-				} else {
-					$groups = [$group];
-				}
+					if ($eventName == 'tiki.goal.reached') {
+						$groups = $group ? [$group] : [];
+					} elseif ($args['goalType'] == 'user') {
+						$groups = $tikilib->get_user_groups($user);
+					} else {
+						$groups = [$group];
+					}
 
-				$data = [
-					'eventType' => $eventType,
-					'eventDate' => $tikilib->now,
-					'user' => $user ?: '',
-					'groups' => json_encode($groups),
-				];
+					$data = [
+						'eventType' => $eventType,
+						'eventDate' => $tikilib->now,
+						'user' => $user ?: '',
+						'groups' => json_encode($groups),
+					];
 
-				if (! empty($args['type']) && ! empty($args['object'])) {
-					$data['targetType'] = $args['type'];
-					$data['targetObject'] = $args['object'];
-				}
+					if (! empty($args['type']) && ! empty($args['object'])) {
+						$data['targetType'] = $args['type'];
+						$data['targetObject'] = $args['object'];
+					}
 
-				$id = $this->table()->insert($data);
+					$id = $this->table()->insert($data);
 
-				TikiLib::lib('unifiedsearch')->invalidateObject('goalevent', $id);
-			});
+					TikiLib::lib('unifiedsearch')->invalidateObject('goalevent', $id);
+				});
+			}
+		} catch (TikiDb_Exception $e) {
+			// Prevent failures from locking-out users
 		}
 	}
 
@@ -58,6 +62,7 @@ class GoalEventLib
 			$list = [];
 
 			$goals = TikiLib::lib('goal')->listConditions();
+
 			foreach ($goals as $goal) {
 				foreach ($goal['conditions'] as $condition) {
 					$list[] = $condition['eventType'];

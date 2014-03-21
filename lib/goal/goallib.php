@@ -26,6 +26,7 @@ class GoalLib
 	function listConditions()
 	{
 		$table = $this->table();
+		$table->useExceptions();
 
 		$list = $table->fetchAll(['goalId', 'conditions'], [], -1, -1, [
 		]);
