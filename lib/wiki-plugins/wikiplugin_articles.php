@@ -7,6 +7,7 @@
 
 function wikiplugin_articles_info()
 {
+	global $prefs;
 	return array(
 		'name' => tra('Article List'),
 		'documentation' => 'PluginArticles',
@@ -30,9 +31,9 @@ function wikiplugin_articles_info()
 			'max' => array(
 				'required' => false,
 				'name' => tra('Maximum Displayed'),
-				'description' => tra('The number of articles to display in the list (no max set by default)') . '. ' . tra('If Pagination is set to y (Yes), this will determine the amount of articles per page'),
+				'description' => tra('The number of articles to display in the list (use -1 to show all)'),
 				'filter' => 'int',
-				'default' => -1,
+				'default' => $prefs['maxRecords'],
 			),
 			'topic' => array(
 				'required' => false,
@@ -248,7 +249,7 @@ function wikiplugin_articles($data, $params)
 {
 	global $smarty, $tikilib, $prefs, $tiki_p_read_article, $tiki_p_articles_read_heading, $dbTiki, $pageLang;
 	global $artlib; require_once 'lib/articles/artlib.php';
-	$default = array('max' => -1, 'start' => 0, 'usePagination' => 'n', 'topicId' => '', 'topic' => '', 'sort' => 'publishDate_desc', 'type' => '', 'lang' => '', 'quiet' => 'n', 'categId' => '', 'largefirstimage' => 'n', 'urlparam' => '', 'actions' => 'n', 'translationOrphan' => '', 'headerLinks' => 'n', 'showtable' => 'n');
+	$default = array('max' => $prefs['maxRecords'], 'start' => 0, 'usePagination' => 'n', 'topicId' => '', 'topic' => '', 'sort' => 'publishDate_desc', 'type' => '', 'lang' => '', 'quiet' => 'n', 'categId' => '', 'largefirstimage' => 'n', 'urlparam' => '', 'actions' => 'n', 'translationOrphan' => '', 'headerLinks' => 'n', 'showtable' => 'n');
 	$auto_args = array('lang', 'topicId', 'topic', 'sort', 'type', 'lang', 'categId');
 	$params = array_merge($default, $params);
 
@@ -268,10 +269,6 @@ function wikiplugin_articles($data, $params)
 			$start = $_REQUEST["offset"];
 		}
 
-		//Default to 10 when pagination is used
-		if (($max == -1)) {
-			$countPagination = 10;
-		}
 		foreach ($auto_args as $arg) {
 			if (!empty($$arg))
 				$paramsnext[$arg] = $$arg;
