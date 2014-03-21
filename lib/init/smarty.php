@@ -205,7 +205,7 @@ class Smarty_Tiki extends Smarty
 	 */
 	public function fetch($_smarty_tpl_file = null, $_smarty_cache_id = null, $_smarty_compile_id = null, $parent = null, $_smarty_display = false, $merge_tpl_vars = true, $no_output_filter = false)
 	{
-		global $prefs, $style_base, $tikidomain;
+		global $prefs, $style_base, $tikidomain, $inclusion;
 		$this->muteExpectedErrors();
 
 		if ( ($tpl = $this->getTemplateVars('mid')) && ( $_smarty_tpl_file == 'tiki.tpl' || $_smarty_tpl_file == 'tiki-print.tpl' || $_smarty_tpl_file == 'tiki_full.tpl' ) ) {
@@ -221,6 +221,9 @@ class Smarty_Tiki extends Smarty
 			// set the first part of the browser title for admin pages
 			if ( null === $this->getTemplateVars('headtitle') ) {
 				$script_name = basename($_SERVER['SCRIPT_NAME']);
+				if ($script_name === 'route.php' && !empty($inclusion)) {
+					$script_name = $inclusion;
+				}
 				if ($script_name != 'tiki-admin.php' && strpos($script_name, 'tiki-admin') === 0) {
 					$str = substr($script_name, 10, strpos($script_name, '.php') - 10);
 					$str = ucwords(trim(str_replace('_', ' ', $str)));
