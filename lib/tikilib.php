@@ -6597,6 +6597,13 @@ JS;
 
 		$result['themeName'] = $theme;
 		switch ($theme) {
+			case "none":
+				$result['backgroundColor'] = 'inherit';
+				$result['headerFontColor'] = 'inherit';
+				$result['headerBackgroundColor'] = 'inherit';
+				$result['slideFontColor'] = 'inherit';
+				$result['listItemHighlightColor'] = 'inherit';
+				break;
 			case "uilightness":
 				$result['backgroundColor'] = '#F6A828';
 				$result['backgroundImage'] = 'vendor/jquery/jquery-s5/images/bg.png';

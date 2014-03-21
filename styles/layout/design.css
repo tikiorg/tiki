@@ -1488,6 +1488,9 @@ table.treetable.objectperms td.removed {
 }
 
 /* jquery-ui dialogs help */
+.ui-dialog {
+	box-shadow: 0 0 1rem rgba(0, 0, 0, 0.25);
+}
 
 .ui-dialog label {
 	display: block;
@@ -3152,11 +3155,6 @@ a.freetag_7 {
 	margin-left: 10px;
 	margin-right: 10px;
 	color: #999;
-}
-
-/* jquery-ui in since_last_visit */
-li.ui-tabs-active a { 
-	background:#CCCCCC; 
 }
 
 #mytabs .ui-tabs-nav {
