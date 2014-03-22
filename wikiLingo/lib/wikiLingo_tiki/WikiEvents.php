@@ -105,34 +105,33 @@ JS
             $length = count($pairs);
             $counts = json_encode(FLP\PairAssembler::$counts);
             $headerlib->add_js(<<<JS
-var counts = $counts,
-    length = $length,
-    flpData = $pairsJson,
-    phrases = $('span.phrases'),
-    phrasesLookupTable = {},
-    show = function(table) {
-        $('body')
-            .append(table);
-    };
+(function(){
+    var counts = $counts,
+        length = $length,
+        flpData = $pairsJson,
+        phrases = $('span.phrases'),
+        phrasesLookupTable = {};
 
-for(var x = 0; x < length; x++){
-    if(!phrasesLookupTable[flpData[x].pastText.sanitized]){
-        phrasesLookupTable[flpData[x].pastText.sanitized] = [];
+    for(var x = 0; x < length; x++){
+        if(!phrasesLookupTable[flpData[x].pastText.sanitized]){
+            phrasesLookupTable[flpData[x].pastText.sanitized] = [];
+        }
+        phrasesLookupTable[flpData[x].pastText.sanitized].push(flpData[x]);
     }
-    phrasesLookupTable[flpData[x].pastText.sanitized].push(flpData[x]);
-}
 
 
-for(var i = 0; i < length; i++) {
-    var futureLink = new flp.Link({
-        beginning: phrases.filter('span.futurelink-beginning' + i),
-        middle: phrases.filter('span.futurelink' + i),
-        end: phrases.filter('span.futurelink-end' + i),
-        count: counts[flpData[i].pastText.sanitized],
-        pairs: phrasesLookupTable[flpData[i].pastText.sanitized]
-    });
-    flp.addFutureLink(futureLink);
-}
+    for(var i = 0; i < length; i++) {
+        var futureLink = new flp.Link({
+            beginning: phrases.filter('span.futurelink-beginning' + i),
+            middle: phrases.filter('span.futurelink' + i),
+            end: phrases.filter('span.futurelink-end' + i),
+            to: 'future',
+            count: counts[flpData[i].pastText.sanitized],
+            pairs: phrasesLookupTable[flpData[i].pastText.sanitized]
+        });
+        flp.addFutureLink(futureLink);
+    }
+})();
 JS
 );
 			$parsed = $ui->render();
