@@ -69,12 +69,13 @@ function module_categories($mod_reference, &$module_params)
 		$type = '';
 		$urlEnd = '';
 	}
-	if (isset($module_params['deep']))
+	if (isset($module_params['deep'])) {
 		$deep = $module_params['deep'];
-	else
+	} else {
 		$deep= 'on';
+	}
 	if ($deep === 'on') {
-		if (empty($urlEnd)) {
+		if (!empty($urlEnd)) {
 			$urlEnd .= '&amp;';
 		}
 		$urlEnd .= "deep=$deep";
