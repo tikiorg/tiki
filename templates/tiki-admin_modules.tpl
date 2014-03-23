@@ -156,7 +156,7 @@
 
 		{section name=user loop=$user_modules}
 			<tr>
-				<td class="text">{$user_modules[user].name|escape}</td>
+				<td class="text"><a class="link" href="tiki-admin_modules.php?um_edit={$user_modules[user].name|escape:'url'}&amp;cookietab=2#editcreate" title="{tr}Edit{/tr}">{$user_modules[user].name|escape}</a></td>
 				<td class="text">{$user_modules[user].title|escape}</td>
 				<td class="action">
 					<a class="link" href="tiki-admin_modules.php?um_edit={$user_modules[user].name|escape:'url'}&amp;cookietab=2#editcreate" title="{tr}Edit{/tr}">{icon _id='page_edit'}</a>
