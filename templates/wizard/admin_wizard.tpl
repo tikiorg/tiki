@@ -6,7 +6,7 @@
 	<img src="img/icons/tick.png" alt="{tr}Ok{/tr}" />{tr _0=$tiki_version}Congratulations! You now have a working instance of Tiki %0{/tr}. 
     {tr}You may <a href="tiki-index.php">start using it right away</a>, or you may configure it to better meet your needs, using one of the configuration helpers below.{/tr}
     <br>
-	<div style="width:85%">
+	<div style="width:90%">
 		{remarksbox type="tip" title="{tr}Tip{/tr}"}
 		{tr}Mouse over the icons with a question mark to know more about the features and preferences that are new for you{/tr}.
 		<div target="tikihelp" class="tikihelp" style="float:right" title="{tr}Help icon:{/tr} 
