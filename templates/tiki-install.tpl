@@ -632,17 +632,23 @@
 {/if}
 
 {if $tikidb_is20}
-	<br>
-	<form method="post" action="tiki-install.php">
+	<form method="post" action="tiki-install.php" style="float: left">
 		{if $multi}
 			<input type="hidden" name="multi" value="{$multi|escape}">
 		{/if}
 		<input type="hidden" name="install_type" value="{$install_type}">
 		<input type="hidden" name="install_step" value="8">
-		<input type="submit" value="{tr}Enter Your Tiki{/tr}" style="margin-left:200px"><br><br><br>
-		<input type="checkbox" name="nolockenter" value="1">
-		<label for="nolockenter">{tr}Enter without locking installer (not recommended for production sites){/tr}</label>
-		<br><em><img src="img/icons/error.png" alt="{tr}Alert{/tr}" style="vertical-align:middle; margin-left:30px"> {tr}Only suitable for development sites, not production sites, due to security risk{/tr}.</em>
+		<input type="submit" value="{tr}Enter Tiki and Lock Installer{/tr} ({tr}Recommended{/tr})">
+	</form>
+	<form method="post" action="tiki-install.php" style="margin-left: 20px; display: inline-block;">
+		<input type="hidden" name="nolockenter" value="1">
+		{if $multi}
+			<input type="hidden" name="multi" value="{$multi|escape}">
+		{/if}
+		<input type="hidden" name="install_type" value="{$install_type}">
+		<input type="hidden" name="install_step" value="8">
+		<input type="submit" value="{tr}Enter Tiki Without Locking Installer{/tr}" style="background: #909090;">
+		<br><em><img src="img/icons/error.png" alt="{tr}Alert{/tr}" style="vertical-align:middle; "> {tr}Not recommended due to security risk{/tr}.</em>
 	</form>
 {/if}
 
