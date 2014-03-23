@@ -805,7 +805,7 @@
 					{tr}Are you upgrading an existing Tiki site?{/tr}
 					{tr}Go directly to the <strong>Install/Upgrade</strong> step.{/tr}
 					{if $dbcon eq 'y' or isset($smarty.post.scratch) or isset($smarty.post.update)}
-						<a href="tiki-install.php?install_step=4{if $multi}&amp;multi={$multi}{/if}{if $lang}&amp;lang={$lang}{/if}" title="{tr}Install/Upgrade{/tr}">
+						<a href="#" onclick="$('#install_step4').submit();return false;" title="{tr}Install/Upgrade{/tr}">
 							<img src="img/icons/arrow_right.png" alt="{tr}Install/Upgrade{/tr}" height="16" width="16">
 						</a>
 					{/if}
