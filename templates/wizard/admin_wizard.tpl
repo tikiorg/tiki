@@ -25,8 +25,8 @@
                 {tr}You may start by applying some of our configuration templates through the <b>Configuration Profiles Wizard</b>{/tr}. {tr}They are like the <b>Macros</b> from many computer languages{/tr}.
 				<a href="http://doc.tiki.org/Profiles+Wizard" target="tikihelp" class="tikihelp" title="{tr}Configuration Profiles:{/tr} 
                 {tr}Each of these provides a shrink-wrapped solution that meets most of the needs of a particular kind of community or site (Personal Blog space, Company Intranet, ...) or that extends basic setup with extra features configured for you{/tr}.
-                {tr}If you are new to Tiki administration, we recommend that you start with this approach{/tr}.
-                {tr}If the profile you selected does not quite meet your needs, you will still have the option of customizing it further with one of the approaches below{/tr}">
+                <br><br>{tr}If you are new to Tiki administration, we recommend that you start with this approach{/tr}.
+                <br><br>{tr}If the profile you selected does not quite meet your needs, you will still have the option of customizing it further with one of the approaches below{/tr}">
 					<img src="img/icons/help.png" alt="" width="16" height="16" class="icon" />
 				</a>
                 <br>
