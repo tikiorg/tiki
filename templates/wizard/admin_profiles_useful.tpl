@@ -1,6 +1,6 @@
 {* $Id$ *}
 
-<div class="adminWizardIconleft"><img src="img/icons/large/wizard_profiles48x48.png" alt="{tr}Check out some potentially useful profiles{/tr}" title="{tr}Profiles Wizard{/tr}" /></div>
+<div class="adminWizardIconleft"><img src="img/icons/large/wizard_profiles48x48.png" alt="{tr}Check out some potentially useful profiles{/tr}" title="{tr}Configuration Profiles Wizard{/tr}" /></div>
 {tr}Check out some potentially useful profiles for your site{/tr}. </br></br>
 <div class="adminWizardContent">
 <fieldset>

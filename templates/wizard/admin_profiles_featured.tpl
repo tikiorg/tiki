@@ -1,6 +1,6 @@
 {* $Id$ *}
 
-<div class="adminWizardIconleft"><img src="img/icons/large/wizard_profiles48x48.png" alt="{tr}Profiles Wizard{/tr}" title="{tr}Profiles Wizard{/tr}" /></div>
+<div class="adminWizardIconleft"><img src="img/icons/large/wizard_profiles48x48.png" alt="{tr}Configuration Profiles Wizard{/tr}" title="{tr}Configuration Profiles Wizard{/tr}" /></div>
 {tr}Initialize Tiki as an application, e.g. a blog., by means of applying one of the 4 featured configuration profiles{/tr}. </br></br>
 <div class="adminWizardContent">
 <fieldset>
