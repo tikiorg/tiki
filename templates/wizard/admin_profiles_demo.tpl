@@ -32,7 +32,7 @@
 	</td>
 	<td style="width:48%">
 	<div class="adminWizardIconright"><img src="img/icons/large/profile_dynamic_items_list48x48.png" alt="{tr}Dynamic Items List{/tr}" /></div>
-	<b>{tr}Dynamic Items List{/tr}</b> (<a href="tiki-admin.php?profile=Dynamic_items_list_demo&show_details_for=Dynamic_items_list_demo&categories%5B%5D={$tikiMajorVersion}.x&repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2" target="_blank">{tr}apply profile now{/tr}</a>)<br/>
+	<b>{tr}Dynamic Items List{/tr}</b> (<a href="tiki-admin.php?profile=Dynamic_items_list_demo&show_details_for=Dynamic_items_list_demo&categories%5B%5D={$tikiMajorVersion}.x&repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2" target="_blank">{tr}apply profile now{/tr}</a>)
 	<br>
 	{tr}This profile creates two linked trackers. One that allow pre-selecting the items in a drop down list based on the items in a previous drop down field. And a second tracker that holds the options displayed in the drop down fields.{/tr}
 	<ul>
