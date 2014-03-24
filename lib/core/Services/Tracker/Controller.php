@@ -578,6 +578,7 @@ class Services_Tracker_Controller
 		$processedFields = array();
 
 		$trackerId = $input->trackerId->int();
+		$trackerName = $this->trackerName($trackerId);	
 		$definition = Tracker_Definition::get($trackerId);
 
 		if (! $definition) {
@@ -653,7 +654,9 @@ class Services_Tracker_Controller
 		}
 
 		return array(
+			'title' => tr('Create Item'),
 			'trackerId' => $trackerId,
+			'trackerName' => $trackerName,
 			'itemId' => $itemId,
 			'fields' => $processedFields,
 			'forced' => $forced,
@@ -1578,6 +1581,28 @@ class Services_Tracker_Controller
 		}
 
 		return $out;
+	}
+	
+	function action_select_tracker($input)
+	{
+		$confirm = $input->confirm->int();
+		
+		if ($confirm) {
+			$trackerId = $input->trackerId->int();
+			return array(
+				'FORWARD' => array(
+						'action' => 'insert_item',
+						'trackerId' => $trackerId,
+				),
+			);
+		}
+		else {
+			$trackers = $this->action_list_trackers();
+			return array(
+				'title' => tr('Select Tracker'),
+				'trackers' => $trackers["data"],
+			);
+		}
 	}
 }
 

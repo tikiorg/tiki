@@ -55,16 +55,14 @@
 					</div>
 				{/if}
 			</div>
-
-			<div class="row">
-				<div class="col-md-12 well">
-					{modulelist zone=bottom}
-				</div>
-			</div>
 		</div>
 
+		<div class="container-fluid well text-center">
+			{modulelist zone=bottom}
+		</div>
+		
 		<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
-			<div class="container-fluid">		
+			<div class="container">		
 				 <div class="navbar-header col-lg-2">
 					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#header-navbar-collapse-1">
 						<span class="sr-only">Toggle navigation</span>
@@ -83,6 +81,33 @@
 						{modulelist zone=top}
 					</ul>
 					<ul class="nav navbar-nav navbar-right">
+						{if $user}
+							<li>
+								<div class="btn-group">
+									<button type="button" class="btn btn-primary navbar-btn dropdown-toggle" data-toggle="dropdown">
+										{glyph name="plus"} {tr}Create{/tr}
+										<span class="caret"></span>
+									</button>
+									<ul class="dropdown-menu">
+										<li>
+											<a href="{service controller=wiki action=create_page modal=true}" data-toggle="modal" data-target="#bootstrap-modal">
+												{tr}Create Wiki Page{/tr}
+											</a>
+										</li>
+										<li>
+											<a href="tiki-blog_post.php">
+												{tr}Create Blog Post{/tr}
+											</a>
+										</li>
+										<li>
+											<a href="{service controller=tracker action=select_tracker}">
+												{tr}Create Tracker Item{/tr}
+											</a>
+										</li>
+									</ul>
+								</div>
+							</li>
+						{/if}
 						{if $prefs.feature_search eq 'y'}
 							<li>
 								<form class="navbar-form col-md-3" role="search" action="tiki-searchindex.php">
@@ -113,7 +138,6 @@
 				</div>
 			</div>
 		</nav>
-
 		{include file='footer.tpl'}
 	</body>
 </html>
