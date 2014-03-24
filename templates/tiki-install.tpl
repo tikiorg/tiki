@@ -692,22 +692,23 @@
 				<p>{tr}If this is an upgrade, clean the Tiki caches manually (the <strong>templates_c</strong> directory) or by using the <strong>Admin &gt; System</strong> option from the Admin menu.{/tr}</p>
 			{/if}
 			{if $tikidb_is20}
-				<br>
-				<form method="post" action="tiki-install.php">
+				<form method="post" action="tiki-install.php" style="float: left">
 					{if $multi}
 						<input type="hidden" name="multi" value="{$multi|escape}">
 					{/if}
 					<input type="hidden" name="install_type" value="{$install_type}">
 					<input type="hidden" name="install_step" value="8">
-					<div class="text-center">
-						<input type="submit" value="{tr}Enter Your Tiki{/tr}">
-					</div>
-					<br><br><br>
-					<div>
-						<input type="checkbox" name="nolockenter" value="1">
-						<span>{tr}Enter without locking installer (not recommended for production sites){/tr}</span>
-						<br><em><img src="img/icons/error.png" alt="{tr}Alert{/tr}" style="vertical-align:middle; margin-left:25px"> {tr}Only suitable for development sites, not production sites, due to security risk{/tr}.</em>
-					</div>
+					<input type="submit" value="{tr}Enter Tiki and Lock Installer{/tr} ({tr}Recommended{/tr})">
+				</form>
+				<form method="post" action="tiki-install.php" style="margin-left: 20px; display: inline-block;">
+					<input type="hidden" name="nolockenter" value="1">
+					{if $multi}
+						<input type="hidden" name="multi" value="{$multi|escape}">
+					{/if}
+					<input type="hidden" name="install_type" value="{$install_type}">
+					<input type="hidden" name="install_step" value="8">
+					<input type="submit" value="{tr}Enter Tiki Without Locking Installer{/tr}" style="background: #909090;">
+					<br><em><img src="img/icons/error.png" alt="{tr}Alert{/tr}" style="vertical-align:middle; "> {tr}Not recommended due to security risk{/tr}.</em>
 				</form>
 			{/if}
 			{if $install_type eq 'update'}
