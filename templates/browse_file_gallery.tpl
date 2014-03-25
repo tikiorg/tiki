@@ -1,5 +1,4 @@
-{if ($parentId gt 0 and $prefs.feature_use_fgal_for_user_files neq 'y' or $tiki_p_admin_file_galleries eq 'y'
-	or $gal_info.type neq 'user') && $view neq 'page'}
+{if $parentId gt 0 and $view neq 'page' and ($prefs.feature_use_fgal_for_user_files neq 'y' or $tiki_p_admin_file_galleries eq 'y' or $gal_info.type neq 'user')}
 	<div style="float:left;width:100%">
 		{self_link galleryId=$parentId}
 			{icon _id="arrow_left"} {tr}Parent Gallery{/tr}
