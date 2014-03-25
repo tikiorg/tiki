@@ -754,8 +754,12 @@ class ToolbarBlock extends ToolbarInline // Will change in the future
 		global $prefs;
 
         $isWikiLingo = false;
-        if ($prefs['feature_wikilingo']) {
+        if ($prefs['feature_wikilingo'] === 'y') {
             $isWikiLingo = true;
+        }
+        $isFutureLinkProtocol = false;
+        if ($prefs['feature_futurelinkprotocol'] === 'y') {
+            $isFutureLinkProtocol = true;
         }
 
 		switch( $tagName ) {
@@ -776,11 +780,16 @@ class ToolbarBlock extends ToolbarInline // Will change in the future
 			$syntax = '---';
 			break;
         case 'pastlink':
-            $label = tra('PastLink');
-            $icon = tra('img/icons/PastLink.svg');
-            $wysiwyg = 'PastLink';
-            $syntax = '@FLP(clipboarddata)text@)';
-            break;
+            if ($isWikiLingo && $isFutureLinkProtocol) {
+                $label = tra('PastLink');
+                $icon = tra('img/icons/PastLink.svg');
+                $wysiwyg = 'PastLink';
+                $syntax = '@FLP(clipboarddata)text@)';
+                break;
+            }
+            else{
+                break;
+            }
 		case 'pagebreak':
             if ($isWikiLingo) {
                 return;
