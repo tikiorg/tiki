@@ -13,10 +13,10 @@
 			{favorite type="article" object=$articleId}
 		{/if}
 		{if $tiki_p_edit_article eq 'y'}
-			<a class="btn btn-default icon" href="tiki-edit_article.php?articleId={$articleId}">{icon _id='page_edit'}</a>
+			<a class="btn btn-default" href="tiki-edit_article.php?articleId={$articleId}">{icon _id='page_edit'}</a>
 		{/if}
 		{if $prefs.feature_cms_print eq 'y'}
-			<a class="btn btn-default icon" href="tiki-print_article.php?articleId={$articleId}">{icon _id='printer' alt="{tr}Print{/tr}"}</a>
+			<a class="btn btn-default" href="tiki-print_article.php?articleId={$articleId}">{icon _id='printer' alt="{tr}Print{/tr}"}</a>
 		{/if}
 		{if $prefs.feature_share eq 'y' && $tiki_p_share eq 'y'}
 			<a class="btn btn-default" title="{tr}Share page{/tr}" href="tiki-share.php?url={$smarty.server.REQUEST_URI|escape:'url'}">{icon _id='share_link' alt="{tr}Share this page{/tr}"}</a>
