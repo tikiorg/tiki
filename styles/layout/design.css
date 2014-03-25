@@ -2836,6 +2836,10 @@ a.freetag_7 {
 	display: block;
 }
 
+.type_option {
+	display: none;
+}
+
 /***** Shoutbox *****/
 
 /***** Directory *****/

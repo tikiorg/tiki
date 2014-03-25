@@ -38,7 +38,7 @@
 					<td class="id">{$channels[user].questionId}</td>
 					<td class="integer">{$channels[user].position}</td>
 					<td class="text">{self_link questionId=$channels[user].questionId}{$channels[user].question|escape|nl2br}{/self_link}</td>
-					<td class="text">{$channels[user].type}</td>
+					<td class="text">{$types[$channels[user].type]}</td>
 					<td class="text">{$channels[user].options}</td>
 					<td class="action">
 						{self_link _icon='page_edit' questionId=$channels[user].questionId}{tr}Edit{/tr}{/self_link}
@@ -64,6 +64,12 @@
 					</td>
 				</tr>
 				<tr>
+					<td>{tr}Answer is mandatory:{/tr}</td>
+					<td>
+						<input type="checkbox" name="mandatory" {if $info.mandatory eq 'y'}checked="checked"{/if}>
+					</td>
+				</tr>
+				<tr>
 					<td>{tr}Position:{/tr}</td>
 					<td>
 						<select name="position">{html_options values=$positions output=$positions selected=$info.position}</select>
@@ -73,40 +79,14 @@
 					<td>{tr}Type:{/tr}</td>
 					<td>
 						<select name="type">
-							<option value='c' {if $info.type eq 'c'}selected=selected{/if}>
-								{tr}One choice{/tr}
-							</option>
-							<option value='m' {if $info.type eq 'm'}selected=selected{/if}>
-								{tr}Multiple choices{/tr}
-							</option>
-							<option value='g' {if $info.type eq 'g'}selected=selected{/if}>
-								{tr}Multiple choices of thumbnails from a file gallery{/tr}
-							</option>
-							<option value='t' {if $info.type eq 't'}selected=selected{/if}>
-								{tr}Short text{/tr}
-							</option>
-							<option value='x' {if $info.type eq 'x'}selected=selected{/if}>
-								{tr}Wiki textarea{/tr}</option>
-							<option value='r' {if $info.type eq 'r'}selected=selected{/if}>
-								{tr}Rate (1..5){/tr}
-							</option>
-							<option value='s' {if $info.type eq 's'}selected=selected{/if}>
-								{tr}Rate (1..10){/tr}
-							</option>
-							<option value='r' {if $info.type eq 'r'}selected=selected{/if}>
-								{tr}Rate{/tr}
-							</option>
+							{foreach $types as $initial => $label}
+								<option value="{$initial}"{if $info.type eq $initial} selected=selected{/if}>{$label}</option>
+							{/foreach}
 						</select>
 					</td>
 				</tr>
-				<tr>
-					<td>{tr}Answer is mandatory:{/tr}</td>
-					<td>
-						<input type="checkbox" name="mandatory" {if $info.mandatory eq 'y'}checked="checked"{/if}>
-					</td>
-				</tr>
-				<tr>
-					<td>{tr}Number of required answers (for multiple choices):{/tr}</td>
+				<tr class="type_option type_m type_g">
+					<td>{tr}Required answers:{/tr}</td>
 					<td>
 						{tr}Min:{/tr}<input type="text" name="min_answers" size="4" value="{$info.min_answers}">
 						{tr}Max:{/tr}<input type="text" name="max_answers" size="4" value="{$info.max_answers}">
@@ -116,16 +96,19 @@
 					<td>&nbsp;</td>
 					<td>
 						{remarksbox type="tip" title="{tr}Tip{/tr}"}
-							{tr}For a multiple answer question put the answers into the following field, separated by a comma. Example: one,two,many,lots{/tr}.
-							<br>
-							{tr}For a rate, you can give the maximum value.{/tr}
-							<br>
-							{tr}For the 'multiple choices of thumbnail from a file gallery' type, options are: Gallery ID. Example: 4{/tr}
-							<br>
-							{tr}For the 'wiki textarea' type, options are: rows,columns. Example: 10,60{/tr}
-							<br>
-							{tr}For the 'short text' type, options are: columns. Example: 60{/tr}
+							<p class="type_option type_c"><strong>{$types.c}:</strong> {tr}Single choice using radio buttons.{/tr}<br>{tr}Example: "one, two, many, lots".{/tr}<br>{tr}(Use "\," to include a comma.{/tr})</p>
+							<p class="type_option type_m"><strong>{$types.m}:</strong> {tr}Multiple choice using checkboxes.{/tr}<br>{tr}Example: "one, two, many, lots".{/tr}<br>{tr}(Use "\," to include a comma.{/tr})</p>
+							<p class="type_option type_r type_s"><strong>{$types.r}:</strong> {tr}For a rate, you can give the maximum value.{/tr}</p>
+							<p class="type_option type_g"><strong>{$types.g}:</strong> {tr}Multiple choices of thumbnail from a file gallery, options contains Gallery ID.{/tr}<br>{tr}Example: 4{/tr}</p>
+							<p class="type_option type_x"><strong>{$types.x}:</strong> {tr}For the 'wiki textarea' type, options are: rows,columns. Example: 10,60{/tr}</p>
+							<p class="type_option type_t"><strong>{$types.t}:</strong> {tr}For the 'short text' type, options are: columns. Example: 60{/tr}</p>
 						{/remarksbox}
+						{jq}
+$("select[name=type]").change(function () {
+	$(".type_option").hide();
+	$(".type_option.type_" + $(this).val()).show();
+}).change();
+						{/jq}
 					</td>
 				</tr>
 				<tr>

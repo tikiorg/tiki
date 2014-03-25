@@ -73,12 +73,11 @@
 			{elseif $questions[ix].type eq 'r' or $questions[ix].type eq 's'}
 				<div class="quizoptions">
 					{if $questions[ix].options}
+						1
 						{foreach from=$questions[ix].explode key=k item=j}
-							<label>
-								{$k}
-								<input type="radio" value="{$k}" name="{$questionId}"{if $answer eq $k} checked="checked"{/if}>
-							</label>
+							<input type="radio" value="{$k}" name="{$questionId}"{if $answer eq $k} checked="checked"{/if}>
 						{/foreach}
+						{count($questions[ix].explode)}
 					{elseif $questions[ix].type eq 'r'}
 						1
 						<input type="radio" value="1" name="{$questionId}"{if $answer eq 1} checked="checked"{/if}>

@@ -569,6 +569,21 @@ class SurveyLib extends TikiLib
 	}
 
 	/**
+	 * @return array question types: initial => translated label
+	 */
+	public function get_types() {
+		return array(
+			'c' => tra('One choice'),
+			'm' => tra('Multiple choices'),
+			'g' => tra('Thumbnails'),
+			't' => tra('Short text'),
+			'x' => tra('Wiki textarea'),
+			'r' => tra('Rate (1..5)'),
+			's' => tra('Rate (1..10)'),
+		);
+	}
+
+	/**
 	 * @param string $options	comma separated options string (use \, to include a comma)
 	 * @return array
 	 */

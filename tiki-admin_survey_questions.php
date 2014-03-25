@@ -89,6 +89,7 @@ $channels = $srvlib->list_survey_questions($_REQUEST["surveyId"], $offset, $maxR
 if (empty($info["position"])) {
 	$info["position"] = $channels["cant"] + 1;
 }
+$smarty->assign('types', $srvlib->get_types());
 $smarty->assign_by_ref('info', $info);
 $smarty->assign_by_ref('cant_pages', $channels["cant"]);
 $smarty->assign_by_ref('channels', $channels["data"]);
