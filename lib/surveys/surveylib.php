@@ -209,11 +209,7 @@ class SurveyLib extends TikiLib
 
 		}
 
-		if (!empty($options)) {
-			$options = explode(',', $options);
-		} else {
-			$options = array();
-		}
+		$options = $this->parse_options($options);
 
 		$query = "select `optionId`,`qoption` from `tiki_survey_question_options` where `questionId`=?";
 		$result = $this->query($query, array((int) $questionId));
@@ -312,7 +308,7 @@ class SurveyLib extends TikiLib
 		while ($res = $result->fetchRow()) {
 
 			// save user options
-			$options = explode(",", $res["options"]);
+			$options = $this->parse_options($res["options"]);
 
 			$questionId = $res["questionId"];
 			if ( ! empty($res['options']) ) {
@@ -340,14 +336,8 @@ class SurveyLib extends TikiLib
 			$votes = 0;
 			$total_votes = $this->getOne("select sum(`votes`) as sum from `tiki_survey_question_options` where `questionId`=?", array((int) $questionId));
 
-			// store user defined options indices
-			$opts = array();
-			for ($cpt = 0, $cpecount_options = count($options); $cpt < $cpecount_options; $cpt++) {
-				$opts[$options[$cpt]] = $cpt;
-			}
-
 			$ids = array();
-			include_once('lib/smarty_tiki/modifier.escape.php');
+			TikiLib::lib('smarty')->loadPlugin('smarty_modifier_escape');
 			while ($res2 = $result2->fetchRow()) {
 
 				if ($total_votes) {
@@ -359,6 +349,7 @@ class SurveyLib extends TikiLib
 				$votes += $res2["votes"];
 				$res2["average"] = $average;
 				$res2["width"] = $average * 2;
+				$res2['qoptionraw'] = $res2['qoption'];
 				if ($res['type'] == 'x') {
 					$res2['qoption'] = $tikilib->parse_data($res2['qoption']);
 				} else {
@@ -368,7 +359,7 @@ class SurveyLib extends TikiLib
 				// when question with multiple options
 				// we MUST respect the user defined order
 				if (in_array($res['type'], array('m', 'c'))) {
-					$ret2[$opts[$res2['qoption']]] = $res2;
+					$ret2[array_search($res2['qoptionraw'], $options)] = $res2;
 				} else {
 					$ret2[] = $res2;
 				}
@@ -569,5 +560,25 @@ class SurveyLib extends TikiLib
 
 		return true;
 	}
+
+	/**
+	 * @param string $options	comma separated options string (use \, to include a comma)
+	 * @return array
+	 */
+	private function parse_options($options)
+	{
+		if (!empty($options)) {
+			$comma = '~COMMA~';
+			$options = str_replace('\,', $comma, $options);
+			$options = explode(',', $options);
+			foreach ($options as & $option) {
+				$option = trim(str_replace($comma, ',', $option));
+			}
+		} else {
+			$options = array();
+		}
+		return $options;
+	}
 }
+
 $srvlib = new SurveyLib;
