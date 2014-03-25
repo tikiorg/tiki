@@ -9,14 +9,16 @@
 	{/if}
 	<div class="description help-block">{wiki}{$survey_info.description}{/wiki}</div>
 	{section name=ix loop=$questions}
+		{$questionId = 'question_'|cat:$questions[ix].questionId}
+		{if empty($smarty.request.$questionId)}{$answer=''}{else}{$answer = $smarty.request.$questionId}{/if}
 		<div class="questionblock">
 			<div class="quizquestion">{$questions[ix].question|escape|nl2br}</div>
 			{if $questions[ix].type eq 'c'}
 				<div class="quizoptions">
 					{section name=jx loop=$questions[ix].qoptions}
 						<label>
-							<input type="radio" value="{$questions[ix].qoptions[jx].optionId|escape}"
-								   name="question_{$questions[ix].questionId}">
+							<input type="radio" value="{$questions[ix].qoptions[jx].optionId|escape}" name="{$questionId}"
+								   {if $answer eq $questions[ix].qoptions[jx].optionId} checked="checked"{/if}>
 							{$questions[ix].qoptions[jx].qoption}
 						</label>
 					{/section}
@@ -28,7 +30,7 @@
 					{else}
 						{assign var='textcols' value=80}
 					{/if}
-					<input type="text" size="{$textcols}" name="question_{$questions[ix].questionId}">
+					<input type="text" size="{$textcols}" name="{$questionId}" value="{$answer}">
 				</div>
 			{elseif $questions[ix].type eq 'x'}
 				{assign var='area' value=$questions[ix].questionId}
@@ -52,9 +54,8 @@
 							</td>
 							<td valign="top">
 								{if $showToolBars}{toolbars area_id="question_$area" qtnum='2'}{/if}
-								<textarea id="question_{$questions[ix].questionId}"
-										  name="question_{$questions[ix].questionId}" rows="{$textrows}"
-										  cols="{$textcols}"></textarea>
+								<textarea id="{$questionId}"  name="{$questionId}" rows="{$textrows}"
+										  cols="{$textcols}">{$answer}</textarea>
 							</td>
 						</tr>
 					</table>
@@ -63,8 +64,8 @@
 				<div class="quizoptions">
 					{section name=jx loop=$questions[ix].qoptions}
 						<label>
-							<input type="checkbox" value="{$questions[ix].qoptions[jx].optionId|escape}"
-									   name="question_{$questions[ix].questionId}[{$questions[ix].qoptions[jx].optionId}]">
+							<input type="checkbox" value="{$questions[ix].qoptions[jx].optionId|escape}" name="{$questionId}[{$questions[ix].qoptions[jx].optionId}]"
+									{if in_array($questions[ix].qoptions[jx].optionId, $answer)}checked="checked"{/if}>
 							{$questions[ix].qoptions[jx].qoption}
 						</label>
 					{/section}
@@ -75,34 +76,34 @@
 						{foreach from=$questions[ix].explode key=k item=j}
 							<label>
 								{$k}
-								<input type="radio" value="{$k}" name="question_{$questions[ix].questionId}">
+								<input type="radio" value="{$k}" name="{$questionId}"{if $answer eq $k} checked="checked"{/if}>
 							</label>
 						{/foreach}
 					{elseif $questions[ix].type eq 'r'}
 						1
-						<input type="radio" value="1" name="question_{$questions[ix].questionId}">
-						<input type="radio" value="2" name="question_{$questions[ix].questionId}">
-						<input type="radio" value="3" name="question_{$questions[ix].questionId}">
-						<input type="radio" value="4" name="question_{$questions[ix].questionId}">
-						<input type="radio" value="5" name="question_{$questions[ix].questionId}">
+						<input type="radio" value="1" name="{$questionId}"{if $answer eq 1} checked="checked"{/if}>
+						<input type="radio" value="2" name="{$questionId}"{if $answer eq 2} checked="checked"{/if}>
+						<input type="radio" value="3" name="{$questionId}"{if $answer eq 3} checked="checked"{/if}>
+						<input type="radio" value="4" name="{$questionId}"{if $answer eq 4} checked="checked"{/if}>
+						<input type="radio" value="5" name="{$questionId}"{if $answer eq 5} checked="checked"{/if}>
 						5
 					{elseif $questions[ix].type eq 's'}
 						1
-						<input type="radio" value="1" name="question_{$questions[ix].questionId}">
-						<input type="radio" value="2" name="question_{$questions[ix].questionId}">
-						<input type="radio" value="3" name="question_{$questions[ix].questionId}">
-						<input type="radio" value="4" name="question_{$questions[ix].questionId}">
-						<input type="radio" value="5" name="question_{$questions[ix].questionId}">
-						<input type="radio" value="6" name="question_{$questions[ix].questionId}">
-						<input type="radio" value="7" name="question_{$questions[ix].questionId}">
-						<input type="radio" value="8" name="question_{$questions[ix].questionId}">
-						<input type="radio" value="9" name="question_{$questions[ix].questionId}">
-						<input type="radio" value="10" name="question_{$questions[ix].questionId}">
+						<input type="radio" value="1" name="{$questionId}"{if $answer eq 1} checked="checked"{/if}>
+						<input type="radio" value="2" name="{$questionId}"{if $answer eq 2} checked="checked"{/if}>
+						<input type="radio" value="3" name="{$questionId}"{if $answer eq 3} checked="checked"{/if}>
+						<input type="radio" value="4" name="{$questionId}"{if $answer eq 4} checked="checked"{/if}>
+						<input type="radio" value="5" name="{$questionId}"{if $answer eq 5} checked="checked"{/if}>
+						<input type="radio" value="6" name="{$questionId}"{if $answer eq 6} checked="checked"{/if}>
+						<input type="radio" value="7" name="{$questionId}"{if $answer eq 7} checked="checked"{/if}>
+						<input type="radio" value="8" name="{$questionId}"{if $answer eq 8} checked="checked"{/if}>
+						<input type="radio" value="9" name="{$questionId}"{if $answer eq 9} checked="checked"{/if}>
+						<input type="radio" value="10" name="{$questionId}"{if $answer eq 10} checked="checked"{/if}>
 						10
 					{/if}
 				</div>
 			{elseif $questions[ix].type eq 'g'}
-				{fgal_browse _id=$questions[ix].explode.0 show_selectall='n' show_infos='n' checkbox_label="{tr}Choose{/tr}" file_checkbox_name="question_"|cat:$questions[ix].questionId}
+				{fgal_browse _id=$questions[ix].explode.0 show_selectall='n' show_infos='n' checkbox_label="{tr}Choose{/tr}" file_checkbox_name=$questionId}
 			{/if}
 		</div>
 	{/section}
