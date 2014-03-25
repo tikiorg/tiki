@@ -1,7 +1,9 @@
 <form name="aform" formId='editpageform' action="{$form_action|default:'tiki-take_survey.php'}" method="post">
 	<input type="hidden" name="surveyId" value="{$surveyId|escape}">
 	<input type="hidden" name="vote" value="yes">
-	{if !isset($show_name) or $show_name eq 'y'}{title}{$survey_info.name}{/title}{/if}
+	{if !isset($show_name) or $show_name eq 'y'}
+		{title url="tiki-take_survey.php?surveyId=$surveyId"}{$survey_info.name}{/title}
+	{/if}
 	{if $error_msg neq ''}
 		{remarksbox type="warning" title="{tr}Warning{/tr}"}{$error_msg}{/remarksbox}
 	{/if}
@@ -12,9 +14,11 @@
 			{if $questions[ix].type eq 'c'}
 				<div class="quizoptions">
 					{section name=jx loop=$questions[ix].qoptions}
-						<input type="radio" value="{$questions[ix].qoptions[jx].optionId|escape}"
-							   name="question_{$questions[ix].questionId}">{$questions[ix].qoptions[jx].qoption}
-						<br>
+						<label>
+							<input type="radio" value="{$questions[ix].qoptions[jx].optionId|escape}"
+								   name="question_{$questions[ix].questionId}">
+							{$questions[ix].qoptions[jx].qoption}
+						</label>
 					{/section}
 				</div>
 			{elseif $questions[ix].type eq 't'}
@@ -56,15 +60,15 @@
 					</table>
 				</div>
 			{elseif $questions[ix].type eq 'm'}
-				{section name=jx loop=$questions[ix].qoptions}
-					<div class="quizoptions">
+				<div class="quizoptions">
+					{section name=jx loop=$questions[ix].qoptions}
 						<label>
 							<input type="checkbox" value="{$questions[ix].qoptions[jx].optionId|escape}"
 									   name="question_{$questions[ix].questionId}[{$questions[ix].qoptions[jx].optionId}]">
 							{$questions[ix].qoptions[jx].qoption}
 						</label>
-					</div>
-				{/section}
+					{/section}
+				</div>
 			{elseif $questions[ix].type eq 'r' or $questions[ix].type eq 's'}
 				<div class="quizoptions">
 					{if $questions[ix].options}

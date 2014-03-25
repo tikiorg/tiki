@@ -2830,6 +2830,12 @@ a.freetag_7 {
 	margin-bottom: 10px;
 }
 
+/***** Surveys *****/
+
+.quizoptions label {
+	display: block;
+}
+
 /***** Shoutbox *****/
 
 /***** Directory *****/
