@@ -167,7 +167,7 @@ JS
 
 		$wysiwyglib = TikiLib::lib('wysiwyg');
 
-        // set up ckeditor
+        // set up wikiLingo wysiwyg
         if ($prefs['feature_wikilingo'] != 'y') {
             if (!isset($params['name'])) {
                 $params['name'] = 'edit';
@@ -202,7 +202,7 @@ this.instances.'.$as_id.'.resetDirty();
             );	// after dialog tools init (10)
 
         }
-        //setup wikiLingo
+        //setup wikiLingo without wysiwyg
         else
         {
             $scripts = new WikiLingo\Utilities\Scripts("vendor/wikilingo/wikilingo/editor/");
@@ -277,6 +277,11 @@ JS
 		// end of if ( $params['_wysiwyg'] == 'y' && $params['_simple'] == 'n')
 
 		// setup for wiki editor
+
+        //when wikiLingo enabled
+        if ($prefs['feature_wikilingo'] === 'y') {
+            $headerlib->add_jsfile("lib/wikiLingo_tiki/tiki_wikiLingo_edit.js");
+        }
 
 		$params['rows'] = !empty($params['rows']) ? $params['rows'] : 20;
 //		$params['cols'] = !empty($params['cols']) ? $params['cols'] : 80;
