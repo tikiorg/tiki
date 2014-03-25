@@ -57,7 +57,7 @@
 		{if $category_watched eq 'y'}
 			{tr}Watched by categories:{/tr}
 			{section name=i loop=$watching_categories}
-				<a class="btn btn-default btn-small icon" href="tiki-browse_categories.php?parentId={$watching_categories[i].categId}">{$watching_categories[i].name|escape}</a>&nbsp;
+				<a class="btn btn-default btn-small" href="tiki-browse_categories.php?parentId={$watching_categories[i].categId}">{$watching_categories[i].name|escape}</a>&nbsp;
 			{/section}
 		{/if}	
 		{/if}
