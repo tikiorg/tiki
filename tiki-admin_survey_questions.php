@@ -38,6 +38,7 @@ if (!isset($_REQUEST["questionId"])) {
 $smarty->assign('questionId', $_REQUEST["questionId"]);
 if ($_REQUEST["questionId"]) {
 	$info = $srvlib->get_survey_question($_REQUEST["questionId"]);
+	$cookietab = 2;
 } else {
 	$info = array();
 	$info["question"] = '';
@@ -51,6 +52,7 @@ if ($_REQUEST["questionId"]) {
 if (isset($_REQUEST["remove"])) {
 	$access->check_authenticity();
 	$srvlib->remove_survey_question($_REQUEST["remove"]);
+	$cookietab = 1;
 }
 if (isset($_REQUEST["save"])) {
 	check_ticket('admin-survey-questions');
@@ -59,10 +61,11 @@ if (isset($_REQUEST["save"])) {
 	$info["type"] = '';
 	$info["position"] = '';
 	$info["options"] = '';
-	$info["mandatory"] = '';
+	$info["mandatory"] = !empty($_REQUEST['mandatory']) ? 'y' : '';
 	$info["min_answers"] = '';
 	$info["max_answers"] = '';
 	$smarty->assign('questionId', 0);
+	$cookietab = 1;
 }
 if (!isset($_REQUEST["sort_mode"])) {
 	$sort_mode = 'position_asc';

@@ -37,7 +37,7 @@
 				<tr>
 					<td class="id">{$channels[user].questionId}</td>
 					<td class="integer">{$channels[user].position}</td>
-					<td class="text">{$channels[user].question|escape|nl2br}</td>
+					<td class="text">{self_link questionId=$channels[user].questionId}{$channels[user].question|escape|nl2br}{/self_link}</td>
 					<td class="text">{$channels[user].type}</td>
 					<td class="text">{$channels[user].options}</td>
 					<td class="action">
