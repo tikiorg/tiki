@@ -65,6 +65,7 @@ function smarty_function_fgal_browse($params, $smarty)
 		$smarty->assignByRef('files', $files['data']);
 		$smarty->assign('cant', $files['cant']); ///FIXME
 	}
+	$smarty->assign('parentId', 0);
 
 	return '<div style="padding: 1px; overflow-y: hidden; overflow-x: auto;">'."\n".$smarty->fetch('browse_file_gallery.tpl')."\n</div>";
 }
