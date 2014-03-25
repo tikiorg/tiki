@@ -6,7 +6,7 @@
 		{button href="tiki-survey_stats.php" class="btn btn-default" _text="{tr}Survey stats{/tr}"}
 	{/if}
 	{if $tiki_p_admin_surveys eq 'y'}
-		{button href="tiki-admin_surveys.php" class="btn btn-default" _text="{tr}Create New Survey{/tr}"}
+		{button href="tiki-admin_surveys.php?cookietab=2" class="btn btn-default" _text="{tr}Create New Survey{/tr}"}
 	{/if}
 </div>
 
@@ -14,9 +14,7 @@
 	<table class="table normal">
 		<tr>
 			<th>
-				<a href="tiki-list_surveys.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">
-					{tr}Name{/tr}
-				</a>
+				{self_link _sort_arg='sort_mode' _sort_field='name'}{tr}Name{/tr}{/self_link}
 			</th>
 			<th>{tr}Questions{/tr}</th>
 			<th>{tr}Actions{/tr}</th>
@@ -27,7 +25,7 @@
 				<tr>
 					<td class="text">
 						{if ($tiki_p_admin_surveys eq 'y') or ($channels[user].status eq 'o' and $channels[user].taken_survey eq 'n')}
-							<a class="tablename" href="tiki-take_survey.php?surveyId={$channels[user].surveyId}">
+							<a class="tablename" href="{$channels[user].surveyId|sefurl:survey}">
 								{$channels[user].name|escape}
 							</a>
 						{else}
@@ -50,7 +48,7 @@
 						{/if}
 
 						{if ($tiki_p_admin_surveys eq 'y') or ($channels[user].status eq 'o' and $channels[user].taken_survey eq 'n')}
-							<a href="tiki-take_survey.php?surveyId={$channels[user].surveyId}">
+							<a href="{$channels[user].surveyId|sefurl:survey}">
 								{icon _id='control_play' alt="{tr}Take Survey{/tr}"}
 							</a>
 						{/if}

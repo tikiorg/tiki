@@ -141,6 +141,10 @@ function smarty_modifier_sefurl($source, $type='wiki', $with_next = '', $all_lan
 			$href = "tiki-newsletters.php?nlId=" . urlencode($source);
 			break;
 
+		case 'survey':
+			$href = "tiki-take_survey.php?surveyId=" . urlencode($source);
+			break;
+
 		default:
 			$href = $source;
 			break;
