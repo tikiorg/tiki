@@ -288,88 +288,95 @@ class SurveyLib extends TikiLib
      */
     public function list_survey_questions($surveyId, $offset, $maxRecords, $sort_mode, $find)
 	{
-		global $tikilib;
 		$filegallib = TikiLib::lib('filegal');
-		$bindvars = array((int) $surveyId);
+		$questionTable = $this->table('tiki_survey_questions');
+		$optionsTable = $this->table('tiki_survey_question_options');
+
+		$conditions = array('surveyId' => $surveyId);
 		if ($find) {
-			$findesc = '%' . $find . '%';
-			$mid = " where `surveyId`=? and (`question` like ?)";
-			$bindvars[] = $findesc;
-		} else {
-			$mid = " where `surveyId`=?";
+			$conditions['question'] = $questionTable->like('%' . $find . '%');
 		}
 
-		$query = "select * from `tiki_survey_questions` $mid order by ".$this->convertSortMode($sort_mode);
-		$query_cant = "select count(*) from `tiki_survey_questions` $mid";
-		$result = $this->query($query, $bindvars, $maxRecords, $offset);
-		$cant = $this->getOne($query_cant, $bindvars);
+		$questions = $questionTable->fetchAll(
+			$questionTable->all(),
+			$conditions, -1, -1,
+			$questionTable->sortMode($sort_mode)
+		);
 		$ret = array();
 
-		while ($res = $result->fetchRow()) {
+		foreach ($questions as & $question) {
 
 			// save user options
-			$options = $this->parse_options($res["options"]);
+			$userOptions = $this->parse_options($question["options"]);
 
-			$questionId = $res["questionId"];
-			if ( ! empty($res['options']) ) {
-				if (in_array($res['type'], array('g', 'x'))) {
-					$res['explode'] = $options;
-				} elseif (in_array($res['type'], array('r', 's')) ) {
-					$res['explode'] = array_fill(1, $res['options'], ' ');
-				} elseif (in_array($res['type'], array('t')) ) {
-					$res['cols'] = $res['options'];
+			$questionId = $question["questionId"];
+			if ( ! empty($question['options']) ) {
+				if (in_array($question['type'], array('g', 'x'))) {
+					$question['explode'] = $userOptions;
+				} elseif (in_array($question['type'], array('r', 's')) ) {
+					$question['explode'] = array_fill(1, $question['options'], ' ');
+				} elseif (in_array($question['type'], array('t')) ) {
+					$question['cols'] = $question['options'];
 				}
 			}
 
-			$res["options"] = $this->getOne("select count(*) from `tiki_survey_question_options` where `questionId`=?", array((int) $res["questionId"]));
-			$query2 = "select * from `tiki_survey_question_options` where `questionId`=? order by "
-				. ($res['type'] == 'g' ? '`votes` desc' : '`optionId`');
+			$questionOptions = $optionsTable->fetchAll(
+				$optionsTable->all(),
+				array('questionId' => $question["questionId"]), -1, -1,
+				$question['type'] === 'g' ?
+					array('votes' => 'desc') :
+					array('optionId' => 'asc')
+			);
+			$question["options"] = count($questionOptions);
 
-			if ($res["type"] == 'r') {
+			if ($question["type"] == 'r') {
 				$maxwidth = 5;
 			} else {
 				$maxwidth = 10;
 			}
-			$res["width"] = $res["average"] * 200 / $maxwidth;
-			$result2 = $this->query($query2, array((int) $questionId));
+			$question["width"] = $question["average"] * 200 / $maxwidth;
 			$ret2 = array();
 			$votes = 0;
-			$total_votes = $this->getOne("select sum(`votes`) as sum from `tiki_survey_question_options` where `questionId`=?", array((int) $questionId));
+			$total_votes = 0;
+			foreach ($questionOptions as & $questionOption) {
+				$total_votes += (int) $questionOption['votes'];
+			}
 
 			$ids = array();
 			TikiLib::lib('smarty')->loadPlugin('smarty_modifier_escape');
-			while ($res2 = $result2->fetchRow()) {
+
+			foreach ($questionOptions as & $questionOption) {
 
 				if ($total_votes) {
-					$average = ($res2["votes"] / $total_votes)*100;
+					$average = ($questionOption["votes"] / $total_votes)*100;
 				} else {
 					$average = 0;
 				}
 
-				$votes += $res2["votes"];
-				$res2["average"] = $average;
-				$res2["width"] = $average * 2;
-				$res2['qoptionraw'] = $res2['qoption'];
-				if ($res['type'] == 'x') {
-					$res2['qoption'] = $tikilib->parse_data($res2['qoption']);
+				$votes += $questionOption["votes"];
+				$questionOption["average"] = $average;
+				$questionOption["width"] = $average * 2;
+				$questionOption['qoptionraw'] = $questionOption['qoption'];
+				if ($question['type'] == 'x') {
+					$questionOption['qoption'] = TikiLib::lib('parser')->parse_data($questionOption['qoption']);
 				} else {
-					$res2['qoption'] = smarty_modifier_escape($res2['qoption']);
+					$questionOption['qoption'] = smarty_modifier_escape($questionOption['qoption']);
 				}
 
 				// when question with multiple options
 				// we MUST respect the user defined order
-				if (in_array($res['type'], array('m', 'c'))) {
-					$ret2[array_search($res2['qoptionraw'], $options)] = $res2;
+				if (in_array($question['type'], array('m', 'c'))) {
+					$ret2[array_search($questionOption['qoptionraw'], $userOptions)] = $questionOption;
 				} else {
-					$ret2[] = $res2;
+					$ret2[] = $questionOption;
 				}
 
-				$ids[$res2['qoption']] = true;
+				$ids[$questionOption['qoption']] = true;
 			}
 
 			// For a multiple choice from a file gallery, show all files in the stats results, even if there was no vote for those files
-			if ($res['type'] == 'g' && $res['options'] > 0) {
-				$files = $filegallib->get_files(0, -1, '', '', $options[0], false, false, false, true, false, false, false, false, '', false, false);
+			if ($question['type'] == 'g' && $question['options'] > 0) {
+				$files = $filegallib->get_files(0, -1, '', '', $userOptions[0], false, false, false, true, false, false, false, false, '', false, false);
 				foreach ($files['data'] as $f) {
 					if ( ! isset($ids[$f['id']]) ) {
 						$ret2[] = array(
@@ -383,14 +390,14 @@ class SurveyLib extends TikiLib
 				unset($files);
 			}
 
-			$res["qoptions"] = $ret2;
-			$res["ovotes"] = $votes;
-			$ret[] = $res;
+			$question["qoptions"] = $ret2;
+			$question["ovotes"] = $votes;
+			$ret[] = $question;
 		}
 
 		$retval = array();
 		$retval["data"] = $ret;
-		$retval["cant"] = $cant;
+		$retval["cant"] = count($questions);
 		return $retval;
 	}
 
