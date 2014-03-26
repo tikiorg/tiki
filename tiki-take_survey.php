@@ -46,11 +46,13 @@ if (isset($_REQUEST["ans"])) {
 	check_ticket('take-survey');
 	$error_msg = '';
 	$srvlib->register_answers($_REQUEST['surveyId'], $questions['data'], $_REQUEST, $error_msg);
-	if ($error_msg == '') header('Location: tiki-list_surveys.php');
-}
-
-if (empty($error_msg) && !empty($_REQUEST["vote"])) {
-	$srvlib->add_survey_hit($_REQUEST["surveyId"]);
+	if (empty($error_msg)) {
+		if (!empty($_REQUEST["vote"])) {
+			$srvlib->add_survey_hit($_REQUEST["surveyId"]);
+		}
+		header('Location: tiki-list_surveys.php');
+		die;
+	}
 }
 
 $showToolBars = false;

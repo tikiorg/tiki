@@ -36,6 +36,7 @@ if (isset($_REQUEST["save"])) {
 	$cat_href = "tiki-take_survey.php?surveyId=" . $cat_objid;
 	include_once ("categorize.php");
 	$cookietab = 1;
+	$_REQUEST["surveyId"] = 0;
 }
 if (!empty($_REQUEST["surveyId"])) {
 	$info = $srvlib->get_survey($_REQUEST["surveyId"]);
