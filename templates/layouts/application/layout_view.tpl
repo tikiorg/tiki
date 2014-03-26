@@ -120,6 +120,23 @@
 						{/if}
 						{if $user}
 							<li>{notification_link}</li>
+							{if $tiki_p_admin eq y}
+								<li class="dropdown">
+									<a href="#" class="dropdown-toggle" data-toggle="dropdown" title="{tr}System Administration{/tr}"><span class="glyphicon glyphicon-cog"></span> <b class="caret"></b></a>
+									<ul class="dropdown-menu">
+										{if $tiki_p_admin_users eq y}
+											<li><a href="tiki-adminusers.php">{tr}Users{/tr}</a></li>
+										{/if}
+										<li><a href="tiki-admingroups.php">{tr}Groups{/tr}</a></li>
+										<li><a href="tiki-objectpermissions.php">{tr}Permissions{/tr}</a></li>
+										<li class="divider"></li>
+										<li><a href="tiki-admin_modules.php">{tr}Modules{/tr}</a></li>
+										<li class="divider"></li>
+										<li><a href="tiki-admin.php">{tr}System{/tr}</a></li>
+										<li class="hidden">{module module=menu mode="module" id="42" type="vert" decorations="n" nobox="y" notitle="y"}</li>			
+									</ul>
+								</li>
+							{/if}
 							<li class="dropdown">
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown" title="{$userName}"><span class="glyphicon glyphicon-user"></span> <b class="caret"></b></a>
 								<ul class="dropdown-menu">
