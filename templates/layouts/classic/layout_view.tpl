@@ -52,7 +52,7 @@
 					            {block name=content}{/block}
                             {if $prefs.feature_layoutshadows eq 'y'}{eval var=$prefs.center_shadow_end}</div>{/if}
 				        </div>
-				        <div class="col-md-2">
+				        <div class="col-md-2" id="col3">
 					        {modulelist zone=right}
 						</div>
 			        {elseif zone_is_empty('right')}

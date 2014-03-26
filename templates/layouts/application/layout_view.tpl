@@ -27,7 +27,7 @@
 						{error_report}
 						{block name=content}{/block}
 					</div>
-					<div class="col-md-2">
+					<div class="col-md-2" id="col3">
 						{modulelist zone=right}
 					</div>
 				{elseif zone_is_empty('right')}
@@ -37,7 +37,7 @@
 						{error_report}
 						{block name=content}{/block}
 					</div>
-					<div class="col-md-2 col-md-pull-10">
+					<div class="col-md-2 col-md-pull-10" id="col2">
 						{modulelist zone=left}
 					</div>
 				{else}
@@ -47,10 +47,10 @@
 						{error_report}
 						{block name=content}{/block}
 					</div>
-					<div class="col-md-2 col-md-pull-8">
+					<div class="col-md-2 col-md-pull-8" id="col2">
 						{modulelist zone=left}
 					</div>
-					<div class="col-md-2">
+					<div class="col-md-2" id="col3">
 						{modulelist zone=right}
 					</div>
 				{/if}
