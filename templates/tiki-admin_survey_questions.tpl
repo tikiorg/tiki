@@ -13,7 +13,12 @@
 {tabset name='tabs_adminsurveyquestions'}
 	{tab name="{tr}Questions{/tr}"}
 		{include file='find.tpl'}
-		<table class="table normal">
+		{button _text="{tr}Save{/tr}" _style="display:none;" _class="save_list" _ajax="n" _auto_args="save_list"}
+		<form action="tiki-admin_survey_questions.php" method="post" id="reorderForm">
+			<input type="hidden" name="surveyId" value="{$surveyId|escape}">
+			<input type="hidden" name="questionIds" value="">
+		</form>
+		<table class="table normal surveyquestions">
 			<tr>
 				<th>
 					{self_link _sort_arg='sort_mode' _sort_field='questionId'}{tr}ID{/tr}{/self_link}
@@ -51,6 +56,8 @@
 		</table>
 
 		{pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}
+
+		{button _text="{tr}Save{/tr}" _style="display:none;" _class="save_list" _ajax="n" _auto_args="save_list"}
 	{/tab}
 	{tab name=$tablabel}
 		<form action="tiki-admin_survey_questions.php" method="post">

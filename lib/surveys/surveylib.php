@@ -580,6 +580,20 @@ class SurveyLib extends TikiLib
 		return true;
 	}
 
+	public function reorderQuestions($surveyId, $questionIds) {
+		$counter = 1;
+		foreach($questionIds as $id) {
+			$this->questionsTable->update(
+				array('position' => $counter),
+				array(
+					'questionId' => $id,
+					'surveyId' => $surveyId,
+				)
+			);
+			$counter++;
+		}
+	}
+
 	/**
 	 * @return array question types: initial => translated label
 	 */

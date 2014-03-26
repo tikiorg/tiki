@@ -67,6 +67,10 @@ if (isset($_REQUEST["save"])) {
 	$smarty->assign('questionId', 0);
 	$cookietab = 1;
 }
+if (!empty($_REQUEST['questionIds']) && !empty($_REQUEST['surveyId'])) {
+	$ids = explode(',', $_REQUEST['questionIds']);
+	$srvlib->reorderQuestions($_REQUEST['surveyId'], $ids);
+}
 if (!isset($_REQUEST["sort_mode"])) {
 	$sort_mode = 'position_asc';
 } else {
@@ -89,6 +93,9 @@ $channels = $srvlib->list_survey_questions($_REQUEST["surveyId"], $offset, $maxR
 if (empty($info["position"])) {
 	$info["position"] = $channels["cant"] + 1;
 }
+
+$headerlib->add_jsfile('lib/surveys/tiki-admin_survey_questions.js');
+
 $smarty->assign('types', $srvlib->get_types());
 $smarty->assign_by_ref('info', $info);
 $smarty->assign_by_ref('cant_pages', $channels["cant"]);
