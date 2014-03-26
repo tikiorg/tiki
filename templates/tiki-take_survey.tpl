@@ -12,7 +12,11 @@
 		{$questionId = 'question_'|cat:$questions[ix].questionId}
 		{if empty($smarty.request.$questionId)}{$answer=''}{else}{$answer = $smarty.request.$questionId}{/if}
 		<div class="questionblock">
-			<div class="quizquestion">{$questions[ix].question|escape|nl2br}</div>
+			{if $questions[ix].type eq 'h'}
+				<h3>{$questions[ix].question|escape|nl2br}</h3>
+			{else}
+				<div class="quizquestion">{$questions[ix].question|escape|nl2br}</div>
+			{/if}
 			{if $questions[ix].type eq 'c'}
 				<div class="quizoptions">
 					{section name=jx loop=$questions[ix].qoptions}

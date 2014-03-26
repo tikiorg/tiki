@@ -580,6 +580,7 @@ class SurveyLib extends TikiLib
 			'x' => tra('Wiki textarea'),
 			'r' => tra('Rate (1..5)'),
 			's' => tra('Rate (1..10)'),
+			'h' => tra('Heading'),
 		);
 	}
 

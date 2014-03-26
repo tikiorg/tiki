@@ -63,7 +63,7 @@
 						<textarea name="question" rows="5" cols="80">{$info.question|escape}</textarea>
 					</td>
 				</tr>
-				<tr>
+				<tr class="type_option type_c type_m type_r type_s type_x type_t">
 					<td>{tr}Answer is mandatory:{/tr}</td>
 					<td>
 						<input type="checkbox" name="mandatory" {if $info.mandatory eq 'y'}checked="checked"{/if}>
@@ -102,6 +102,7 @@
 							<p class="type_option type_g"><strong>{$types.g}:</strong> {tr}Multiple choices of thumbnail from a file gallery, options contains Gallery ID.{/tr}<br>{tr}Example: 4{/tr}</p>
 							<p class="type_option type_x"><strong>{$types.x}:</strong> {tr}For the 'wiki textarea' type, options are: rows,columns. Example: 10,60{/tr}</p>
 							<p class="type_option type_t"><strong>{$types.t}:</strong> {tr}For the 'short text' type, options are: columns. Example: 60{/tr}</p>
+							<p class="type_option type_h"><strong>{$types.h}:</strong> {tr}A heading to go between questions.{/tr}</p>
 						{/remarksbox}
 						{jq}
 $("select[name=type]").change(function () {
