@@ -40,7 +40,6 @@ if ($tiki_p_admin != 'y') {
 		die;
 	}
 }
-if ($_REQUEST["vote"]) $srvlib->add_survey_hit($_REQUEST["surveyId"]);
 $questions = $srvlib->list_survey_questions($_REQUEST["surveyId"], 0, -1, 'position_asc', '');
 $smarty->assign_by_ref('questions', $questions["data"]);
 if (isset($_REQUEST["ans"])) {
@@ -48,6 +47,10 @@ if (isset($_REQUEST["ans"])) {
 	$error_msg = '';
 	$srvlib->register_answers($_REQUEST['surveyId'], $questions['data'], $_REQUEST, $error_msg);
 	if ($error_msg == '') header('Location: tiki-list_surveys.php');
+}
+
+if (empty($error_msg) && !empty($_REQUEST["vote"])) {
+	$srvlib->add_survey_hit($_REQUEST["surveyId"]);
 }
 
 $showToolBars = false;
