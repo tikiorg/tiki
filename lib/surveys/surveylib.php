@@ -402,40 +402,6 @@ class SurveyLib extends TikiLib
 	}
 
     /**
-     * @param $offset
-     * @param $maxRecords
-     * @param $sort_mode
-     * @param $find
-     * @return array
-     */
-    public function list_all_questions($offset, $maxRecords, $sort_mode, $find)
-	{
-		$bindvars = array();
-		if ($find) {
-			$mid = " where `question` like ?";
-			$bindvars[] = '%' . $find . '%';
-		} else {
-			$mid = " ";
-		}
-
-		$query = "select * from `tiki_survey_questions` $mid order by ".$this->convertSortMode("$sort_mode");
-		$query_cant = "select count(*) from `tiki_survey_questions` $mid";
-		$result = $this->query($query, $bindvars, $maxRecords, $offset);
-		$cant = $this->getOne($query_cant, $bindvars);
-		$ret = array();
-
-		while ($res = $result->fetchRow()) {
-			$res["options"] = $this->getOne("select count(*) from `tiki_survey_question_options` where `questionId`=?", array((int) $res["questionId"]));
-			$ret[] = $res;
-		}
-
-		$retval = array();
-		$retval["data"] = $ret;
-		$retval["cant"] = $cant;
-		return $retval;
-	}
-
-    /**
      * @param $questionId
      * @return bool
      */
