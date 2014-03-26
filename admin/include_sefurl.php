@@ -32,7 +32,7 @@ $smarty->assign('httpd', $httpd);
 // Check if the URL rewriting configuration file is present and current
 $configurationFile = "missing";
 if (isset($enabledFileName)) {
-	$enabledFile = fopen($enabledFileName, "r");
+	$enabledFile = @fopen($enabledFileName, "r");
 	if ($enabledFile) {
 		$referenceFile = fopen($referenceFileName, "r");
 		if ($referenceFile) {
