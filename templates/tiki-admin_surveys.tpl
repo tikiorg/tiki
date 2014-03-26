@@ -1,6 +1,6 @@
 {* $Id$ *}
 
-{title help="Surveys"}{tr}Admin surveys{/tr}{/title}
+{title url='tiki-admin_surveys.php' help="Surveys"}{tr}Admin surveys{/tr}{/title}
 
 <div class="t_navbar btn-group form-group">
 	{button href="tiki-list_surveys.php" class="btn btn-default" _text="{tr}List Surveys{/tr}"}

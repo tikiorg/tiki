@@ -37,14 +37,15 @@ if (isset($_REQUEST["save"])) {
 	include_once ("categorize.php");
 	$cookietab = 1;
 }
-if ($_REQUEST["surveyId"]) {
+if (!empty($_REQUEST["surveyId"])) {
 	$info = $srvlib->get_survey($_REQUEST["surveyId"]);
+	$cookietab = 2;
 } else {
 	$info = array();
 	$info["name"] = '';
 	$info["description"] = '';
 	$info["status"] = 'o'; //check to see if survey is open
-	
+	$cookietab = 1;
 }
 $smarty->assign('info', $info);
 if (isset($_REQUEST["remove"])) {
