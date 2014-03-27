@@ -13,9 +13,9 @@
 		{if empty($smarty.request.$questionId)}{$answer=''}{else}{$answer = $smarty.request.$questionId}{/if}
 		<div class="questionblock">
 			{if $questions[ix].type eq 'h'}
-				<h3>{$questions[ix].question|escape|nl2br}</h3>
+				<h3>{$questions[ix].question|escape|nl2br}{if $questions[ix].mandatory eq 'y'} <em class="mandatory_star">*</em>{/if}</h3>
 			{else}
-				<div class="quizquestion">{$questions[ix].question|escape|nl2br}</div>
+				<div class="quizquestion">{$questions[ix].question|escape|nl2br}{if $questions[ix].mandatory eq 'y'} <em class="mandatory_star">*</em>{/if}</div>
 			{/if}
 			{if $questions[ix].type eq 'c'}
 				<div class="quizoptions">

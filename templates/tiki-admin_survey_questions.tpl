@@ -70,7 +70,7 @@
 						<textarea name="question" rows="5" cols="80">{$info.question|escape}</textarea>
 					</td>
 				</tr>
-				<tr class="type_option type_c type_m type_r type_s type_x type_t">
+				<tr>
 					<td>{tr}Answer is mandatory:{/tr}</td>
 					<td>
 						<input type="checkbox" name="mandatory" {if $info.mandatory eq 'y'}checked="checked"{/if}>
