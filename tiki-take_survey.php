@@ -41,6 +41,68 @@ if ($tiki_p_admin != 'y') {
 	}
 }
 $questions = $srvlib->list_survey_questions($_REQUEST["surveyId"], 0, -1, 'position_asc', '');
+$smarty->assign('pagination', false);
+foreach($questions['data'] as $question) {
+	if ($question['type'] === 'h' && !empty($question['explode']) && $question['explode'][0] === 'y') {
+		$smarty->assign('pagination', true);
+		$headerlib->add_css('.questionblock, .submit {display:none;}')
+			->add_jq_onready('
+(function($) {
+	var surveyPage, surveyPageCount = 0, surveyHeight = 0, h = 0, beenToLastPage = false;
+	$(".questionblock").each(function () {
+		h += $(this).outerHeight(true);
+		if ($(this).hasClass("page" + (surveyPageCount + 1))) {
+			surveyPageCount++;
+			if (h > surveyHeight) {
+				surveyHeight = h;
+			}
+			h = 0;
+		}
+	});
+	$(".surveyquestions").height(surveyHeight + $(".submit").outerHeight(true));
+	var showPage = function (page) {
+		if (page < 1) {
+			page = 0;
+		} else if (page > surveyPageCount) {
+			page = surveyPageCount;
+		}
+		if (page !== surveyPage) {
+			surveyPage = page;
+			$(".questionblock:visible").slideUp("fast");
+			$(".page" + surveyPage).slideDown("fast");
+			location.hash = "page" + surveyPage;
+			$(".pageNum").text(surveyPage + 1);
+			$(".pageCount").text(surveyPageCount + 1);
+			if (surveyPage === surveyPageCount) {
+				beenToLastPage = true;
+				$(".submit").show("fast");
+			} else if (!beenToLastPage) {
+				$(".submit").hide("fast");
+			}
+		}
+	};
+	showPage(0);
+	$(".btn-start").click(function () {
+		showPage(0);
+		return false;
+	});
+	$(".btn-prev").click(function () {
+		showPage(surveyPage - 1);
+		return false;
+	});
+	$(".btn-next").click(function () {
+		showPage(surveyPage + 1);
+		return false;
+	});
+	$(".btn-end").click(function () {
+		showPage(surveyPageCount);
+		return false;
+	});
+})(jQuery)
+			');
+		break;
+	}
+}
 $smarty->assign_by_ref('questions', $questions["data"]);
 $error_msg = '';
 if (isset($_REQUEST["ans"])) {

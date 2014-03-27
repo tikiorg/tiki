@@ -2832,6 +2832,10 @@ a.freetag_7 {
 
 /***** Surveys *****/
 
+.surveyquestions {
+	min-height: 30em;
+}
+
 .quizoptions label {
 	display: block;
 }
