@@ -80,18 +80,20 @@ class SurveyLib extends TikiLib
 		}
 	}
 
-    /**
-     * @param $questionId
-     * @param $value
-     */
-    public function register_survey_text_option_vote($questionId, $value)
+	/**
+	 * @param $questionId
+	 * @param $value
+	 * @return int
+	 */
+	public function register_survey_text_option_vote($questionId, $value)
 	{
 		$conditions = array(
 			'questionId' => $questionId,
 			'qoption' => $value,
 		);
 
-		if ($this->optionsTable->fetchOne($this->optionsTable->count(), $conditions)) {
+		$result = $this->optionsTable->fetchColumn('optionId', $conditions);
+		if (!empty($result['optionId'])) {
 			$this->optionsTable->update(
 				array(
 					'votes' => $this->optionsTable->increment(1),
@@ -99,7 +101,7 @@ class SurveyLib extends TikiLib
 				$conditions
 			);
 		} else {
-			$this->optionsTable->insert(
+			$optionId = $this->optionsTable->insert(
 				array(
 					'questionId' => $questionId,
 					'qoption' => $value,
@@ -107,6 +109,7 @@ class SurveyLib extends TikiLib
 				)
 			);
 		}
+		return $optionId;
 	}
 
     /**
@@ -357,7 +360,7 @@ class SurveyLib extends TikiLib
 			$userOptions = $this->parse_options($question["options"]);
 
 			if ( ! empty($question['options']) ) {
-				if (in_array($question['type'], array('g', 'x'))) {
+				if (in_array($question['type'], array('g', 'x', 'h'))) {
 					$question['explode'] = $userOptions;
 				} elseif (in_array($question['type'], array('r', 's')) ) {
 					$question['explode'] = array_fill(1, $question['options'], ' ');
@@ -496,6 +499,8 @@ class SurveyLib extends TikiLib
      */
     public function register_answers($surveyId, $questions, $answers, &$error_msg = null)
 	{
+		global $user;
+
 		if ($surveyId <= 0 || empty($questions)) {
 			return false;
 		}
@@ -524,7 +529,7 @@ class SurveyLib extends TikiLib
 				} elseif ($question['max_answers'] > 0 && $nb_answers > $question['max_answers']) {
 					$errors[] = sprintf(tra('You have to make less than %d choice(s) for the question'), $question['max_answers']).$q;
 				}
-			} elseif ($question['mandatory'] == 'y' && $nb_answers == 0) {
+			} elseif ($question['mandatory'] == 'y' && $nb_answers == 0 && $question["type"] !== 'h') {
 				$errors[] = sprintf(tra('You have to choose at least %d choice(s) for the question'), 1).$q;
 			}
 		}
@@ -535,6 +540,9 @@ class SurveyLib extends TikiLib
 			}
 			return false;
 		} else {
+			// no errors so record answers
+			$this->register_user_vote($user, 'survey' . $surveyId, 0);
+
 			foreach ($questions as $question) {
 				$questionId = $question["questionId"];
 
@@ -547,6 +555,7 @@ class SurveyLib extends TikiLib
 						// Now for each of the options we increase the number of votes
 						foreach ($ids as $optionId) {
 							$this->register_survey_option_vote($questionId, $optionId);
+							$this->register_user_vote($user, 'survey' . $surveyId . '.' . $questionId, $optionId);
 						}
 
 					} elseif ($question["type"] == 'g') {
@@ -557,25 +566,26 @@ class SurveyLib extends TikiLib
 						// Now for each of the options we increase the number of votes
 						foreach ($ids as $optionId) {
 							$this->register_survey_text_option_vote($questionId, $optionId);
+							$this->register_user_vote($user, 'survey' . $surveyId . '.' . $questionId, $optionId);
 						}
 
-					} else {
+					} else if ($question["type"] !== 'h') {
 						$value = $answers["question_" . $questionId];
 
 						if ($question["type"] == 'r' || $question["type"] == 's') {
 							$this->register_survey_rate_vote($questionId, $value);
+							$this->register_user_vote($user, 'survey' . $surveyId . '.' . $questionId, $value);
 						} elseif ($question["type"] == 't' || $question["type"] == 'x') {
-							$this->register_survey_text_option_vote($questionId, $value);
+							$optionId = $this->register_survey_text_option_vote($questionId, $value);
+							$this->register_user_vote($user, 'survey' . $surveyId . '.' . $questionId, $optionId);
 						} else {
 							$this->register_survey_option_vote($questionId, $value);
+							$this->register_user_vote($user, 'survey' . $surveyId . '.' . $questionId, $value);
 						}
 					}
 				}
 			}
 		}
-
-		global $user;
-		$this->register_user_vote($user, 'survey' . $surveyId, 0);
 
 		return true;
 	}
