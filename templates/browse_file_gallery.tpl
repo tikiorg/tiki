@@ -64,7 +64,8 @@
 										{assign var=propkey value="show_$propname"}
 									{/if}
 									{if isset($files[changes].$propname)}
-                    {if $propname == 'share' && isset($files[changes].share.data)}
+                    					{if $propname == 'share' && isset($files[changes].share.data)}
+											{$email = []}
 											{foreach item=tmp_prop key=tmp_propname from=$files[changes].share.data}
 												{$email[]=$tmp_prop.email}
 											{/foreach}

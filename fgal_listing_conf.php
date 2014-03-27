@@ -64,6 +64,7 @@ if ( isset($gal_info) && isset($gal_info['galleryId']) && isset($gal_info['locka
 	$fgal_listing_conf['lockedby']['value'] = 'n';
 }
 
+global $smarty;
 $smarty->assign_by_ref('fgal_listing_conf', $fgal_listing_conf);
 
 if (isset($section) && $section == 'admin') {
