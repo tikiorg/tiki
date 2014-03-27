@@ -94,7 +94,8 @@ class SurveyLib extends TikiLib
 		);
 
 		$result = $this->optionsTable->fetchColumn('optionId', $conditions);
-		if (!empty($result['optionId'])) {
+		if (!empty($result)) {
+			$optionId = $result[0];
 			$this->optionsTable->update(
 				array(
 					'votes' => $this->optionsTable->increment(1),
