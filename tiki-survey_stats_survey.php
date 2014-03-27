@@ -45,7 +45,12 @@ if (isset($_REQUEST["find"])) {
 }
 $smarty->assign('find', $find);
 $smarty->assign_by_ref('sort_mode', $sort_mode);
-$channels = $srvlib->list_survey_questions($_REQUEST["surveyId"], 0, -1, $sort_mode, $find);
+if (!empty($_REQUEST["uservoted"])) {
+	$uservoted = $_REQUEST["uservoted"];
+} else {
+	$uservoted = '';
+}
+$channels = $srvlib->list_survey_questions($_REQUEST["surveyId"], 0, -1, $sort_mode, $find, $uservoted);
 $cant_pages = ceil($channels["cant"] / $maxRecords);
 $smarty->assign_by_ref('cant_pages', $cant_pages);
 $smarty->assign('actual_page', 1 + ($offset / $maxRecords));

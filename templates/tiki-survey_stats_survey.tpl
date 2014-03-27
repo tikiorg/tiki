@@ -39,6 +39,7 @@
 			{section name=jx loop=$channels[ix].qoptions}
 				<tr>
 					<td class="odd">
+						{if $channels[ix].qoptions[jx].uservoted}**user voted**{/if}
 						{if $channels[ix].type eq 'g'}
 							<div style="float:left">
 								{thumb _id=$channels[ix].qoptions[jx].qoption _max=40 name='thumb' style='margin:3px;'}
