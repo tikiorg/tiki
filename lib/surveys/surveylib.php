@@ -540,7 +540,12 @@ class SurveyLib extends TikiLib
 			}
 			return false;
 		} else {
-			// no errors so record answers
+			// no errors, so record answers
+			//
+			// format for answers recorded in tiki_user_votings is "surveyX.YY"
+			//   where X is surveyId and YY is the questionId
+			//   and optionId is the id in tiki_survey_question_options
+
 			$this->register_user_vote($user, 'survey' . $surveyId, 0);
 
 			foreach ($questions as $question) {

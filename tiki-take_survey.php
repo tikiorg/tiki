@@ -42,9 +42,9 @@ if ($tiki_p_admin != 'y') {
 }
 $questions = $srvlib->list_survey_questions($_REQUEST["surveyId"], 0, -1, 'position_asc', '');
 $smarty->assign_by_ref('questions', $questions["data"]);
+$error_msg = '';
 if (isset($_REQUEST["ans"])) {
 	check_ticket('take-survey');
-	$error_msg = '';
 	$srvlib->register_answers($_REQUEST['surveyId'], $questions['data'], $_REQUEST, $error_msg);
 	if (empty($error_msg)) {
 		if (!empty($_REQUEST["vote"])) {

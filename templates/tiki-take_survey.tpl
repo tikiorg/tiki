@@ -29,7 +29,7 @@
 				</div>
 			{elseif $questions[ix].type eq 't'}
 				<div class="quizoptions">
-					{if $questions[ix].cols > 0}
+					{if !empty($questions[ix].cols)}
 						{assign var='textcols' value=$questions[ix].cols}
 					{else}
 						{assign var='textcols' value=80}
@@ -50,6 +50,12 @@
 				{else}
 					{assign var='textcols' value=80}
 				{/if}
+				{if !empty($questions[ix].explode.2)}
+					{$showToolBars = ($questions[ix].explode.2 neq 'n')}
+					{$commentToolBar = ($questions[ix].explode.2 eq 'c')?'y':'n'}
+				{else}
+					{$commentToolBar = 'n'}
+				{/if}
 				<div class="quizoptions">
 					<table class="formcolor">
 						<tr>
@@ -57,7 +63,7 @@
 
 							</td>
 							<td valign="top">
-								{if $showToolBars}{toolbars area_id="question_$area" qtnum='2'}{/if}
+								{if $showToolBars}{toolbars area_id="question_$area" comments=$commentToolBar}{/if}
 								<textarea id="{$questionId}"  name="{$questionId}" rows="{$textrows}"
 										  cols="{$textcols}">{$answer}</textarea>
 							</td>
@@ -65,6 +71,7 @@
 					</table>
 				</div>
 			{elseif $questions[ix].type eq 'm'}
+				{if empty($answer)}{$answer=[]}{/if}
 				<div class="quizoptions">
 					{section name=jx loop=$questions[ix].qoptions}
 						<label>
