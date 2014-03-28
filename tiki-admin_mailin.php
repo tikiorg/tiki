@@ -54,23 +54,23 @@ if (isset($_REQUEST['new_acc'])) {
 			$_REQUEST['username'],
 			$_REQUEST['pass'],
 			$_REQUEST['smtp'],
-			$_REQUEST['useAuth'],
+			isset($_REQUEST['useAuth']) ? 'y' : 'n',
 			$_REQUEST['smtpPort'],
 			$_REQUEST['type'],
-			$_REQUEST['active'],
-			$_REQUEST['anonymous'],
-			$_REQUEST['admin'],
-			$_REQUEST['attachments'],
-			$_REQUEST['routing'],
+			isset($_REQUEST['active']) ? 'y' : 'n',
+			isset($_REQUEST['anonymous']) ? 'y' : 'n',
+			isset($_REQUEST['admin']) ? 'y' : 'n',
+			isset($_REQUEST['attachments']) ? 'y' : 'n',
+			isset($_REQUEST['routing']) ? 'y' : 'n',
 			$_REQUEST['article_topicId'],
 			$_REQUEST['article_type'],
 			$_REQUEST['discard_after'],
-			$_REQUEST['show_inlineImages'],
-			$_REQUEST['save_html'],
+			isset($_REQUEST['show_inlineImages']) ? 'y' : 'n',
+			isset($_REQUEST['save_html']) ? 'y' : 'n',
 			$_REQUEST['categoryId'],
 			$_REQUEST['namespace'],
-			$_REQUEST['respond_email'],
-			$_REQUEST['leave_email']
+			isset($_REQUEST['respond_email']) ? 'y' : 'n',
+			isset($_REQUEST['leave_email']) ? 'y' : 'n'
 		);
 
 		$tikifeedback[] = array(
@@ -147,13 +147,13 @@ if (!is_object($artlib)) {
 }
 
 $topics = $artlib->list_topics();
-$smarty->assign_by_ref('topics', $topics);
+$smarty->assign('topics', $topics);
 $types = $artlib->list_types();
-$smarty->assign_by_ref('types', $types);
-$smarty->assign_by_ref('tikifeedback', $tikifeedback);
+$smarty->assign('types', $types);
+$smarty->assign('tikifeedback', $tikifeedback);
+$smarty->assign('mailin_types', $mailinlib->list_available_types());
 ask_ticket('admin-mailin');
 
 // disallow robots to index page:
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
-$smarty->assign('mid', 'tiki-admin_mailin.tpl');
-$smarty->display('tiki.tpl');
+$smarty->display('tiki-admin_mailin.tpl');

@@ -16,6 +16,29 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
  */
 class MailinLib extends TikiLib
 {
+	function list_available_types()
+	{
+		return [
+			'article-put' => [
+				'name' => tr('Create or update article'),
+			],
+			'wiki-get' => [
+				'name' => tr('Send page to user'),
+			],
+			'wiki-put' => [
+				'name' => tr('Create or update wiki page'),
+			],
+			'wiki-append' => [
+				'name' => tr('Append to wiki page'),
+			],
+			'wiki-prepend' => [
+				'name' => tr('Prepend to wiki page'),
+			],
+			'wiki' => [
+				'name' => tr('Wiki (multiple action)'),
+			],
+		];
+	}
 
     /**
      * @param $offset
@@ -196,4 +219,4 @@ class MailinLib extends TikiLib
 		return $plaintext;
 	}
 }
-$mailinlib = new MailinLib;
+global $mailinlib; $mailinlib = new MailinLib;
