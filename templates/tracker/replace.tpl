@@ -5,6 +5,7 @@
 {/block}
 
 {block name="content"}
+
 <form method="post" action="{service controller=tracker action=replace}">
 	{accordion}
 		{accordion_group title="{tr}General{/tr}"}
@@ -90,6 +91,13 @@
 			</fieldset>
 		{/accordion_group}
 		{accordion_group title="{tr}Display{/tr}"}
+			<div class="form-group">
+				<label class="control-label" for="logo">{tr}Logo{/tr}</label>
+				<input class="form-control" type="text" name="logo" value="{$info.logo|escape}">
+				<div class="help-block">
+					{tr}Recommended size: 64x64px.{/tr}
+				</div>
+			</div>
 			<div class="form-group">
 				<label for="sectionFormat">{tr}Section format{/tr}</label>
 				<select name="sectionFormat" class="form-control">
@@ -484,4 +492,4 @@
 		<input type="submit" class="btn btn-primary" value="{tr}Save{/tr}">
 	</div>
 </form>
-{/block}
+	{/block}

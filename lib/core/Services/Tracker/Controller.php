@@ -578,7 +578,7 @@ class Services_Tracker_Controller
 		$processedFields = array();
 
 		$trackerId = $input->trackerId->int();
-		$trackerName = $this->trackerName($trackerId);	
+		$trackerName = $this->trackerName($trackerId);
 		$definition = Tracker_Definition::get($trackerId);
 
 		if (! $definition) {
@@ -660,6 +660,7 @@ class Services_Tracker_Controller
 			'itemId' => $itemId,
 			'fields' => $processedFields,
 			'forced' => $forced,
+			'trackerLogo' => $definition->getConfiguration('logo'),
 		);
 	}
 
@@ -1026,6 +1027,7 @@ class Services_Tracker_Controller
 				'publishRSS' => $input->publishRSS->int() ? 'y' : 'n',
 				'sectionFormat' => $input->sectionFormat->word(),
 				'adminOnlyViewEditItem' => $input->adminOnlyViewEditItem->int() ? 'y' : 'n',
+				'logo' => $input->logo->text(),
 			);
 
 			$trackerId = $this->utilities->updateTracker($trackerId, $data);
