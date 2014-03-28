@@ -79,6 +79,7 @@ echo "Creating tarballs"
 tar -czf $MODULE-$VER.tar.gz $MODULE-$VER
 tar -cjf $MODULE-$VER.tar.bz2 $MODULE-$VER
 zip -r -q $MODULE-$VER.zip $MODULE-$VER
+7za a $MODULE-$VER.7z $MODULE-$VER
 
 ls $WORKDIR/$VER
 

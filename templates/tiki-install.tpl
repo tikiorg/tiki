@@ -792,7 +792,7 @@
 							<br>
 							<div><strong>{tr}Adding a new host:{/tr}</strong></div>
 							{tr}To add a new virtual host run the setup.sh with the domain name of the new host as a last parameter.{/tr}
-							{if $multi} <h2> ({tr}MultiTiki{/tr}) {$multi|default:"{tr}Default{/tr}"} </h2> {/if}
+							{if $multi} <h2> ({tr}MultiTiki{/tr})</h2> <h5>{$multi|default:"{tr}Default{/tr}"} </h5> {/if}
 						</div>
 					</div>
 				</div>

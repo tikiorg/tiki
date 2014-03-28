@@ -87,8 +87,11 @@
 		<li>{tr}Timesheet & Projects linked trackers already{/tr}</li>
 	    <li>{tr}Customize your project categories{/tr}</li>
 	    <li>{tr}Add or edit your timesheet fields as desired{/tr} </li> 
-		<br/><em>{tr}See also{/tr} <a href='https://doc.tiki.org/PluginTimesheet' target='_blank'>{tr}Plugin Timesheet in doc.tiki.org{/tr}</a></em>
 	</ul>">
+		<img src="img/icons/help.png" alt="" width="16" height="16" class="icon" />
+	</a>
+	<a href="https://doc.tiki.org/PluginTimesheet" target="tikihelp" class="tikihelp" title="{tr}Plugin Timesheet{/tr}: 
+	<em>{tr}See also{/tr} {tr}Plugin Timesheet in doc.tiki.org{/tr}</em>">
 		<img src="img/icons/help.png" alt="" width="16" height="16" class="icon" />
 	</a>
 	<div style="display:block; margin-left:auto; margin-right:auto; width:202px;">
