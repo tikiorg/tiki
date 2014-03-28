@@ -7,6 +7,7 @@
 	{/if}
 	{if $tiki_p_admin_surveys eq 'y'}
 		{button href="tiki-admin_surveys.php?cookietab=2" class="btn btn-default" _text="{tr}Create New Survey{/tr}"}
+		{button href="tiki-admin_surveys.php?cookietab=1" class="btn btn-default" _text="{tr}Admin Surveys{/tr}"}
 	{/if}
 </div>
 
