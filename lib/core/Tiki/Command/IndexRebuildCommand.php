@@ -31,6 +31,12 @@ class IndexRebuildCommand extends Command
 				null,
 				InputOption::VALUE_NONE,
 				'Generate a log of the indexed documents, useful to track down failures or memory issues'
+			)
+			->addOption(
+				'cron',
+				null,
+				InputOption::VALUE_NONE,
+				'Only output error messages'
 			);
 	}
 
@@ -42,30 +48,36 @@ class IndexRebuildCommand extends Command
 		} else {
 			$log = 0;
 		} 
+		$cron = $input->getOption('cron');
 
 		$unifiedsearchlib = \TikiLib::lib('unifiedsearch');
 
 		if ($force && $unifiedsearchlib->rebuildInProgress()) {
-			$output->writeln('<info>Removing leftovers...</info>');
+			if (!$cron) { $output->writeln('<info>Removing leftovers...</info>'); }
 			$unifiedsearchlib->stopRebuild();
 		}
 
-		$output->writeln('Started rebuilding index...');
+		if (!$cron) { $output->writeln('Started rebuilding index...'); }
 
 		$result = $unifiedsearchlib->rebuild($log);
 
 		if ($result) {
-			$output->writeln("Indexation");
-			foreach($result as $key => $val) {
-				$output->writeln("  $key: $val");
+			if (!$cron) {
+				$output->writeln("Indexation");
+				foreach($result as $key => $val) {
+					$output->writeln("  $key: $val");
+				}
+				$output->writeln('Rebuilding index done');
 			}
-			$output->writeln('Rebuilding index done');
+			return(0);
 		} else {
 			$errlib = \TikiLib::lib('errorreport');
 
 			foreach ($errlib->get_errors() as $message) {
-				$output->writeln("<error>$message</error>");
+				$output->writeln("<info>$message</info>");
 			}
+			$output->writeln("\n<error>Search index rebuild failed. Last messages shown above.</error>");
+			return(1);
 		}
 	}
 }
