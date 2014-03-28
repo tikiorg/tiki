@@ -12,6 +12,20 @@
 </div>
 <br>
 
+<div>
+<form method="post" action="tiki-survey_stats_survey.php">
+{tr}Select a user's responses{/tr} {tr}to be marked as{/tr} {icon _id="user" alt="{tr}User voted{/tr}"} 
+	<select name="uservoted">
+		<option value="" {if empty($uservoted)}selected="selected"{/if}></option>
+		{foreach from=$usersthatvoted item=usr}
+		<option value="{$usr|escape}" {if $uservoted == $usr}selected="selected"{/if}>{$usr|username}</option>
+		{/foreach}
+	</select>
+	<input type="hidden" name="surveyId" value="{$surveyId|escape}" /> 
+	<input type="submit" class="btn btn-default btn-sm" name="selectuservoted" value="{tr}Select User{/tr}" />
+</form>
+</div>
+
 {section name=ix loop=$channels}
 	<table class="formcolor">
 		<tr>
@@ -35,11 +49,11 @@
 				<td class="odd">{tr}Average:{/tr}</td>
 				<td class="odd">{$channels[ix].average|string_format:"%.2f"}/10</td>
 			</tr>
-		{else}
+		{elseif $channels[ix].type neq 'h'}
 			{section name=jx loop=$channels[ix].qoptions}
 				<tr>
 					<td class="odd">
-						{if $channels[ix].qoptions[jx].uservoted}**user voted**{/if}
+						{if $channels[ix].qoptions[jx].uservoted}{icon _id='user' alt="{tr}User voted{/tr}"}{/if}
 						{if $channels[ix].type eq 'g'}
 							<div style="float:left">
 								{thumb _id=$channels[ix].qoptions[jx].qoption _max=40 name='thumb' style='margin:3px;'}
@@ -48,6 +62,8 @@
 								{fileinfo _id=$channels[ix].qoptions[jx].qoption _field='name' _link='thumb'}
 								<br>{fileinfo _id=$channels[ix].qoptions[jx].qoption _field='description'}
 							</div>
+						{elseif !$channels[ix].qoptions[jx].qoption}
+							({tr}no answer{/tr})
 						{else}
 							{$channels[ix].qoptions[jx].qoption}
 						{/if}

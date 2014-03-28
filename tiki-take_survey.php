@@ -62,7 +62,7 @@ foreach($questions['data'] as $question) {
 	if (h > surveyHeight) {
 		surveyHeight = h;
 	}
-	$(".surveyquestions").height(surveyHeight + $(".submit").outerHeight(true));
+	//$(".surveyquestions").height(surveyHeight + $(".submit").outerHeight(true));
 	var showPage = function (page) {
 		if (page < 1) {
 			page = 0;

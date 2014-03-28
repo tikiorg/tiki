@@ -666,6 +666,17 @@ class SurveyLib extends TikiLib
 		}	
 		return $ret;
 	}
+
+	function list_users_that_voted($surveyId) {
+		$conditions['id'] = 'survey' . $surveyId;
+		$conditions['optionId'] = 0;
+		$result = $this->votesTable->fetchAll(array('user'), $conditions);
+		foreach ($result as $r) {
+			$ret[] = $r['user'];
+		}
+		return array_unique($ret);
+	}
+
 }
 
 $srvlib = new SurveyLib;
