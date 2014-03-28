@@ -347,7 +347,7 @@ class KalturaLib
 	{
 		if (count($movies) && $client = $this->getClient()) {
 			$kpager = new KalturaFilterPager();
-			$kpager->pageIndex = $page;
+			$kpager->pageIndex = 0;
 			$kpager->pageSize = count($movies);
 
 			$kfilter = new KalturaMixEntryFilter();
