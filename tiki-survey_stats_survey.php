@@ -12,8 +12,7 @@ include_once ('lib/surveys/surveylib.php');
 $access->check_feature('feature_surveys');
 
 $tikilib->get_perm_object($_REQUEST['surveyId'], 'survey');
-
-$access->check_permission('tiki_p_view_survey_stats');
+$access->check_permission('view_survey_stats', 'View Survey Statistics', 'survey', $_REQUEST['surveyId']);
 
 if (!isset($_REQUEST["surveyId"])) {
 	$smarty->assign('msg', tra("No survey indicated"));

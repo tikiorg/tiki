@@ -25,12 +25,11 @@ if (!isset($_REQUEST["surveyId"])) {
 	$smarty->display("error.tpl");
 	die;
 }
-$tikilib->get_perm_object($_REQUEST["surveyId"], 'survey');
+$access->check_permission('take_survey', 'Take Survey', 'survey', $_REQUEST['surveyId']);
 
 $smarty->assign('surveyId', $_REQUEST["surveyId"]);
 $survey_info = $srvlib->get_survey($_REQUEST["surveyId"]);
 $smarty->assign('survey_info', $survey_info);
-$access->check_permission('tiki_p_take_survey');
 
 // Check if user has taken this survey
 if ($tiki_p_admin != 'y') {
