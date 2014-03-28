@@ -12,7 +12,7 @@
 {if !empty($questionId)}{$tablabel='Edit Survey Question'|tr_if}{else}{$tablabel='Add a New Question to this survey'|tr_if}{/if}
 {tabset name='tabs_adminsurveyquestions'}
 	{tab name="{tr}Questions{/tr}"}
-		{include file='find.tpl'}
+		{include file='find.tpl' types='0'}
 		{button _text="{tr}Save{/tr}" _style="display:none;" _class="save_list" _ajax="n" _auto_args="save_list"}
 		<form action="tiki-admin_survey_questions.php" method="post" id="reorderForm">
 			<input type="hidden" name="surveyId" value="{$surveyId|escape}">
