@@ -70,11 +70,24 @@ foreach($questions['data'] as $question) {
 	var showPage = function (page) {
 		if (page < 1) {
 			page = 0;
-		} else if (page > surveyPageCount) {
+			$(".btn-prev").attr("disabled", true);
+			$(".btn-next").attr("disabled", false);
+		} else if (page >= surveyPageCount) {
 			page = surveyPageCount;
+			$(".btn-next").attr("disabled", true);
+			$(".btn-prev").attr("disabled", false);
+		} else {
+			$(".btn-next").attr("disabled", false);
+			$(".btn-prev").attr("disabled", false);
 		}
 		if (page != surveyPage) {
 			surveyPage = page;
+			var sTop = $(".surveyquestions").offset().top - 10;
+			if ($(window).scrollTop() > sTop) {
+				$(\'html, body\').animate({
+					scrollTop: sTop
+				}, 1000);
+			}
 			$(".questionblock:visible").slideUp("fast");
 			$(".page" + surveyPage).slideDown("fast");
 			location.hash = "page" + surveyPage;
@@ -88,20 +101,12 @@ foreach($questions['data'] as $question) {
 			}
 		}
 	};
-	$(".btn-start").click(function () {
-		showPage(0);
-		return false;
-	});
 	$(".btn-prev").click(function () {
 		showPage(surveyPage - 1);
 		return false;
 	});
 	$(".btn-next").click(function () {
 		showPage(surveyPage + 1);
-		return false;
-	});
-	$(".btn-end").click(function () {
-		showPage(surveyPageCount);
 		return false;
 	});
 	$(window).on("hashchange load", function () {
