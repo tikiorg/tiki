@@ -48,6 +48,9 @@ foreach($questions['data'] as $question) {
 			->add_jq_onready('
 (function($) {
 	var surveyPage, surveyPageCount = 0, surveyHeight = 0, h = 0, beenToLastPage = false;
+	if (typeof surveyKeepSameHeight === "undefined") {
+		surveyKeepSameHeight = false;
+	}
 	$(".questionblock").each(function () {
 		h += $(this).outerHeight(true);
 		if ($(this).hasClass("page" + (surveyPageCount + 1))) {
@@ -58,17 +61,19 @@ foreach($questions['data'] as $question) {
 			h = 0;
 		}
 	});
-	if (h > surveyHeight) {
-		surveyHeight = h;
+	if (surveyKeepSameHeight) {
+		if (h > surveyHeight) {
+			surveyHeight = h;
+		}
+		$(".surveyquestions").height(surveyHeight + $(".submit").outerHeight(true));
 	}
-	//$(".surveyquestions").height(surveyHeight + $(".submit").outerHeight(true));
 	var showPage = function (page) {
 		if (page < 1) {
 			page = 0;
 		} else if (page > surveyPageCount) {
 			page = surveyPageCount;
 		}
-		if (page !== surveyPage) {
+		if (page != surveyPage) {
 			surveyPage = page;
 			$(".questionblock:visible").slideUp("fast");
 			$(".page" + surveyPage).slideDown("fast");
@@ -83,7 +88,6 @@ foreach($questions['data'] as $question) {
 			}
 		}
 	};
-	showPage(0);
 	$(".btn-start").click(function () {
 		showPage(0);
 		return false;
@@ -99,6 +103,14 @@ foreach($questions['data'] as $question) {
 	$(".btn-end").click(function () {
 		showPage(surveyPageCount);
 		return false;
+	});
+	$(window).on("hashchange load", function () {
+		var goPage = location.hash.match(/page(\d+)/);
+		if (goPage) {
+			showPage(Number(goPage[1]));
+		} else {
+			showPage(0);
+		}
 	});
 })(jQuery)
 			');
