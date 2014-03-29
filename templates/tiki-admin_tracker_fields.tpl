@@ -13,12 +13,11 @@
 {/block}
 
 {block name="content"}
-	<a name="list"></a>
-	<div class="button-group">
+	<h2 id="list">{tr}Tracker fields{/tr}</h2>
+	<div class="btn-group">
 		<a href="{service controller=tracker action=add_field trackerId=$trackerId}" class="btn btn-default add-field">{glyph name="plus"} {tr}Add Field{/tr}</a>
 		<a href="{service controller=tracker action=import_fields trackerId=$trackerId modal=1}" class="btn btn-default" data-toggle="modal" data-target="#bootstrap-modal">{glyph name="import"} {tr}Import Fields{/tr}</a>
 	</div>
-	<h2>{tr}Tracker fields{/tr}</h2>
 	<form class="form save-fields" method="post" action="{service controller=tracker action=save_fields}" role="form">
 		<table id="fields" class="table table-condensed table-hover">
 			<thead>
