@@ -2841,9 +2841,9 @@ class TrackerLib extends TikiLib
 		}
 	}
 
-	public function get_field_id($trackerId,$name)
+	public function get_field_id($trackerId, $name, $lookup = 'name')
 	{
-		return $this->fields()->fetchOne('fieldId', array('trackerId' => (int) $trackerId, 'name' => $name));
+		return $this->fields()->fetchOne('fieldId', array('trackerId' => (int) $trackerId, $lookup => $name));
 	}
 
 	/**
