@@ -73,10 +73,10 @@ function prefs_kaltura_list()
 		),
 		'kaltura_kServiceUrl' => array(
 			'name' => tra('Kaltura Service URL'),
-			'description' => tra('e.g. http://www.kaltura.com/'),
+			'description' => tra('e.g. https://www.kaltura.com/'),
 			'type' => 'text',
 			'size' => 40,
-			'default' => 'http://www.kaltura.com/',
+			'default' => 'https://www.kaltura.com/',
 			'tags' => array('basic'),
 		),
 		'kaltura_legacyremix' => array(
