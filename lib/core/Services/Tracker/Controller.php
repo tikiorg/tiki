@@ -390,15 +390,18 @@ class Services_Tracker_Controller
 
 		$data = TikiLib::lib('tiki')->read_raw($raw);
 
-		if (! $data) {
-			throw new Services_Exception(tr('Invalid data provided'), 400);
-		}
+		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+			if (! $data) {
+				throw new Services_Exception(tr('Invalid data provided'), 400);
+			}
 
-		foreach ($data as $info) {
-			$this->utilities->importField($trackerId, new JitFilter($info), $preserve);
+			foreach ($data as $info) {
+				$this->utilities->importField($trackerId, new JitFilter($info), $preserve);
+			}
 		}
 
 		return array(
+			'title' => tr('Import Tracker Fields'),
 			'trackerId' => $trackerId,
 		);
 	}
