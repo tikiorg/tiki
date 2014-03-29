@@ -19,6 +19,7 @@ class Services_Tracker_Controller
 
 	function action_add_field($input)
 	{
+		$modal = $input->modal->int();
 		$trackerId = $input->trackerId->int();
 
 		$perms = Perms::get('tracker', $trackerId);
@@ -82,12 +83,14 @@ class Services_Tracker_Controller
 						'action' => 'edit_field',
 						'fieldId' => $fieldId,
 						'trackerId' => $trackerId,
+						'modal' => $modal,
 					),
 				);
 			}
 		}
 
 		return array(
+			'title' => tr('Add Field'),
 			'trackerId' => $trackerId,
 			'fieldId' => $fieldId,
 			'name' => $name,
@@ -96,6 +99,7 @@ class Services_Tracker_Controller
 			'types' => $types,
 			'description' => $description,
 			'descriptionIsParsed' => $wikiparse,
+			'modal' => $modal,
 		);
 	}
 
@@ -273,6 +277,7 @@ class Services_Tracker_Controller
 		}
 
 		return array(
+			'title' => tr('Edit %0', $field['name']),
 			'field' => $field,
 			'info' => $typeInfo,
 			'options' => $this->utilities->parseOptions($field['options'], $typeInfo),
@@ -360,6 +365,7 @@ class Services_Tracker_Controller
 		}
 
 		return array(
+			'title' => tr('Export Fields'),
 			'trackerId' => $trackerId,
 			'fields' => $fields,
 			'export' => $data,

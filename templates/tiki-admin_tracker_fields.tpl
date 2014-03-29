@@ -17,10 +17,7 @@
 	<a name="list"></a>
 	{tab name="{tr}Tracker fields{/tr}"}
         <h2>{tr}Tracker fields{/tr}		</h2>
-		<form class="form add-field" method="post" action="{service controller=tracker action=add_field}" role="form">
-			<input type="hidden" name="trackerId" value="{$trackerId|escape}">
-			<button type="submit" class="btn btn-default">{glyph name="plus"} {tr}Add Field{/tr}</button>
-		</form>
+		<a href="{service controller=tracker action=add_field trackerId=$trackerId}" class="btn btn-default add-field">{glyph name="plus"} {tr}Add Field{/tr}</a>
 		<form class="form save-fields" method="post" action="{service controller=tracker action=save_fields}" role="form">
 			<table id="fields" class="table table-condensed table-hover">
 				<thead>
@@ -71,12 +68,9 @@
 				}
 
 				if ($(form.action).val() === 'export_fields') {
-					$(form).serviceDialog({
-						controller: 'tracker',
-						action: 'export_fields',
-						title: tr('Export'),
-						data: $(form).serialize(),
-						load: function () {
+					$.openModal({
+						remote: $.service('tracker', 'export_fields') + '?' + $(form).serialize() + '&modal=1',
+						open: function () {
 							$('textarea', this).select();
 						}
 					});
@@ -105,16 +99,29 @@
 
 			$container.tracker_load_fields(trackerId);
 
-			$('.add-field').submit(function () {
-				var form = this;
-				$(form).tracker_add_field({
-					trackerId: trackerId,
-					success: function (data) {
-						$container.tracker_load_fields(trackerId);
-					}
-				});
+			$('.add-field').clickModal({
+				open: function () {
+					$(this).tracker_add_field({
+						trackerId: trackerId
+					});
+				},
+				success: function (data) {
+					$container.tracker_load_fields(trackerId);
 
-				return false;
+					$.closeModal({
+						done: function () {
+							if (! data.FORWARD) {
+								return false;
+							}
+
+							setTimeout(function () {
+								$.openModal({
+									remote: $.service(data.FORWARD.controller, data.FORWARD.action, data.FORWARD)
+								});
+							}, 0);
+						}
+					});
+				}
 			});
 
 			$('.import-fields').submit(function () {
