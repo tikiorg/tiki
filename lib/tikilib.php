@@ -3616,23 +3616,32 @@ class TikiLib extends TikiDb_Bridge
 	 */
 	function user_has_perm_on_object($usertocheck,$object,$objtype,$perm1,$perm2=null,$perm3=null)
 	{
-		global $user;
-		// Do not override perms for current users otherwise security tokens won't work
-		if ($usertocheck != $user) {
-			$groups = $this->get_user_groups($usertocheck);
-		}
-		$context = array( 'type' => $objtype, 'object' => $object );
-
-		$accessor = Perms::get($context);
-		if ($usertocheck != $user) {
-			$accessor->setGroups($groups);
-		}
+		$accessor = $tikilib->get_user_permission_accessor($usertocheck, $objtype, $object);
 
 		$chk1 = $perm1 != null ? $accessor->$perm1 : true;
 		$chk2 = $perm2 != null ? $accessor->$perm2 : true;
 		$chk3 = $perm3 != null ? $accessor->$perm3 : true;
 
-		return $chk1 && $chk2 & $chk3;
+		return $chk1 && $chk2 && $chk3;
+	}
+
+	function get_user_permission_accessor($usertocheck, $type = null, $object = null)
+	{
+		global $user;
+		if ($type && $object) {
+			$context = array( 'type' => $objtype, 'object' => $object );
+			$accessor = Perms::get($context);
+		} else {
+			$accessor = Perms::get();
+		}
+
+		// Do not override perms for current users otherwise security tokens won't work
+		if ($usertocheck != $user) {
+			$groups = $this->get_user_groups($usertocheck);
+			$accessor->setGroups($groups);
+		}
+
+		return $accessor;
 	}
 
 	/* get all the perm of an object either in a table or global+smarty set
