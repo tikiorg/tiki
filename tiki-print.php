@@ -31,7 +31,7 @@ if (!($info = $tikilib->get_page_info($page))) {
 }
 // Now check permissions to access this page
 $tikilib->get_perm_object($page, 'wiki page', $info);
-$access->check_permission('tiki_p_view');
+$access->check_permission('tiki_p_view', '', 'wiki page', $page);
 
 // Now increment page hits since we are visiting this page
 if ($prefs['count_admin_pvs'] == 'y' || $user != 'admin') {
