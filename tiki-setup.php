@@ -242,8 +242,10 @@ if ($prefs['feature_wysiwyg'] == 'y') {
 }
 
 
-if ($prefs['feature_antibot'] == 'y' && is_null($user)) {
-	$headerlib->add_jsfile('https://www.google.com/recaptcha/api/js/recaptcha_ajax.js');
+if ($prefs['feature_antibot'] == 'y' && empty($user)) {
+	if ($prefs['recaptcha_enabled'] === 'y') {
+		$headerlib->add_jsfile('https://www.google.com/recaptcha/api/js/recaptcha_ajax.js');
+	}
 	require_once('lib/captcha/captchalib.php');
 	$smarty->assign_by_ref('captchalib', $captchalib);
 }
