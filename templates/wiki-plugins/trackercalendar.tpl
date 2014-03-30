@@ -70,9 +70,11 @@
 							$(cal).fullCalendar('refetchEvents');
 						}
 					});
+					return false;
+				} else {
+					return true;
 				}
 
-				return false;
 			},
 			dayClick: function(date, allDay, jsEvent, view) {
 				if (data.canInsert) {
