@@ -1504,6 +1504,18 @@ h4.ui-accordion-header {
 	padding-left: 2.2em;
 }
 
+/* fine tuning for maps in dialogs */
+
+.ui-dialog .layersDiv label {
+	display: inline-block;
+	clear: none;
+	padding-top: 0;
+}
+
+.ui-dialog .olControlLayerSwitcher {
+	top: 0px;
+}
+
 /* Preferences        */
 .pref_dependency {
 	margin-left: 33px;
