@@ -2,22 +2,21 @@
 {extends "layout_view.tpl"}
 
 {block name="title"}
-	{title help="Adding+fields+to+a+tracker" url="tiki-admin_tracker_fields.php?trackerId=$trackerId"}{tr}Admin Tracker:{/tr} {$tracker_info.name}{/title}
+	{title help="Adding fields to a tracker" url="tiki-admin_tracker_fields.php?trackerId=$trackerId"}{tr}Tracker Fields{/tr}: {$tracker_info.name}{/title}
 {/block}
 
 {block name="navigation"}
 	{assign var='title' value="{tr}Admin Tracker:{/tr} "|cat:$tracker_info.name|escape}
 	<div class="navbar">
+		<div class="btn-group">
+			<a href="{service controller=tracker action=add_field trackerId=$trackerId}" class="btn btn-default add-field">{glyph name="plus"} {tr}Add Field{/tr}</a>
+			<a href="{service controller=tracker action=import_fields trackerId=$trackerId modal=1}" class="btn btn-default" data-toggle="modal" data-target="#bootstrap-modal">{glyph name="import"} {tr}Import Fields{/tr}</a>
+		</div>
 		{include file="tracker_actions.tpl"}
 	</div>
 {/block}
 
 {block name="content"}
-	<h2 id="list">{tr}Tracker fields{/tr}</h2>
-	<div class="btn-group">
-		<a href="{service controller=tracker action=add_field trackerId=$trackerId}" class="btn btn-default add-field">{glyph name="plus"} {tr}Add Field{/tr}</a>
-		<a href="{service controller=tracker action=import_fields trackerId=$trackerId modal=1}" class="btn btn-default" data-toggle="modal" data-target="#bootstrap-modal">{glyph name="import"} {tr}Import Fields{/tr}</a>
-	</div>
 	<form class="form save-fields" method="post" action="{service controller=tracker action=save_fields}" role="form">
 		<table id="fields" class="table table-condensed table-hover">
 			<thead>
