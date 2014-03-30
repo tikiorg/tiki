@@ -78,7 +78,7 @@ class SocialNetworksLib extends LogsLib
 
 
 		$this->options['callbackUrl'] = $this->getURL();
-		$this->options['siteUrl'] = 'http://api.twitter.com/oauth';
+		$this->options['siteUrl'] = 'https://api.twitter.com/oauth';
 		$this->options['consumerKey'] = $prefs['socialnetworks_twitter_consumer_key'];
 		$this->options['consumerSecret'] = $prefs['socialnetworks_twitter_consumer_secret'];
 
