@@ -695,7 +695,7 @@ if (isset($_REQUEST['user']) and $_REQUEST['user']) {
 						'num' => 0,
 						'mes' => sprintf(tra('%s changed from %s to %s'), tra('email'), $userinfo['email'], $_POST['email'])
 					);
-					$logslib->add_log('adminusers', 'changed email for' . $_POST['login'] . ' from ' . $userinfo['email'] . ' to ' . $_POST['email']);
+					$logslib->add_log('adminusers', 'changed email for ' . $_POST['login'] . ' from ' . $userinfo['email'] . ' to ' . $_POST['email']);
 				}
 				$userinfo['email'] = $_POST['email'];
 			} else {
