@@ -3528,6 +3528,7 @@ class FileGalLib extends TikiLib
 		} else {
 			$ry=0;
 		}
+		$dataforsize = null;
 		$ratio=max($rx, $ry);
 		if ($ratio>1) {	// Resizing will occur
 			$image_new_x=$image_x/$ratio;
@@ -3553,7 +3554,9 @@ class FileGalLib extends TikiLib
 
 		}
 		if ($data) {					// image stored in $data so the file $work_file is temporary
-			$data = $dataforsize;
+			if ($dataforsize) {			// replace data only if actually resized
+				$data = $dataforsize;
+			}
 			unlink($work_file);			// otherwise it's the actual filesystem version of the image so should not be deleted
 		}
 	}
