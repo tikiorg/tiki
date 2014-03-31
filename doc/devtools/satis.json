@@ -913,8 +913,8 @@
 			"url": "http://svn.code.sf.net/p/jcapture-applet/code/trunk@47"
 		},
 		{
-			"type": "svn",
-			"url": "http://jquerys5.googlecode.com/svn/trunk@65"
+			"type": "git",
+			"url": "https://github.com/robertleeplummerjr/jQuery.s5/archive/master.zip"
 		}
 	],
 	"require": {
@@ -931,7 +931,7 @@
 		"jcapture-applet/jcapture-applet": "dev-master",
 		"jquery/jquery": "*",
 		"jquery/jquery-min": "*",
-		"jquery/jquery-s5": "dev-master",
+		"jquery/jquery-s5": "*",
 		"jquery/jquery-sheet": "3.1",
 		"jquery/jquery-ui": "*",
 		"jquery/jquery-mobile": "*",
