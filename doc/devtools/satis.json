@@ -182,6 +182,17 @@
 				}
 			}
 		},
+ 		{
+ 			"type": "package",
+ 			"package": {
+				"name": "dompdf/dompdf",
+				"version": "0.6.1",
+				"dist": {
+					"url": "https://github.com/dompdf/dompdf/archive/v0.6.1.zip",
+					"type": "zip"
+				}
+			}
+		},
 		{
 			"type": "package",
 			"package": {
@@ -932,6 +943,7 @@
 		"ckeditor/ckeditor/skins/kama": "*",
 		"ckeditor/ckeditor/plugins/divarea": "*",
 		"codemirror/codemirror": "*",
+		"dompdf/dompdf": "0.6.1",
 		"ezyang/htmlpurifier": "4.5.0",
 		"fivefilters/php-readability": "1.0",
 		"jarnokurlin/fullcalendar": "*",
