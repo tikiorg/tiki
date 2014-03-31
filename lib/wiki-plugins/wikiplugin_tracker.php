@@ -1074,7 +1074,7 @@ function wikiplugin_tracker($data, $params)
 					} else {
 						// setting default value prevent dropdown default value working
 						$options = $flds['data'][$i]['options_array'];
-						if ($flds['data'][$i]['type'] !== 'd' || count($options) === count(array_unique($options))) {
+						if (! in_array($flds['data'][$i]['type'], array('d', 'D', 'R', 'M')) || count($options) === count(array_unique($options))) {
 							$flds['data'][$i]['value'] = ''; // initialize fields with blank values
 						}
 					}
