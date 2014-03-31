@@ -25,7 +25,13 @@
 		{section name=user loop=$channels}
 			<tr class="{cycle}">
 				<td class="text">{$channels[user].name|escape}</td>
-				<td class="text"><a class="link" href="{$url}?{if $nl_info}nlId={$channels[user].nlId}&amp;{/if}offset={$offset}&amp;sort_mode={$sort_mode}&amp;editionId={$channels[user].editionId}">{$channels[user].subject|escape}</a></td>
+				<td class="text">
+					{if $view_editions eq 'y'}
+						<a class="link" href="{$url}?{if $nl_info}nlId={$channels[user].nlId}&amp;{/if}offset={$offset}&amp;sort_mode={$sort_mode}&amp;editionId={$channels[user].editionId}&amp;resend=1">{$channels[user].subject|escape}</a>
+					{else}
+						<a class="link" href="{$url}?{if $nl_info}nlId={$channels[user].nlId}&amp;{/if}offset={$offset}&amp;sort_mode={$sort_mode}&amp;editionId={$channels[user].editionId}">{$channels[user].subject|escape}</a>
+					{/if}
+				</td>
 				{if $view_editions eq 'y'}
 					<td>{$channels[user].users}</td>
 					<td>{$channels[user].sent|tiki_short_datetime}</td>
@@ -43,7 +49,7 @@
 					{/if}
 					{if ($channels[user].tiki_p_send_newsletters eq 'y') or ($channels[user].tiki_p_admin_newsletters eq 'y')}
 						{if $view_editions eq 'y'}
-							<a class="link" href="tiki-send_newsletters.php?nlId={$channels[user].nlId}&amp;editionId={$channels[user].editionId}&resend=1">{icon _id='email_edit' alt="{tr}Resend Newsletter{/tr}"}</a>
+							<a class="link" href="tiki-send_newsletters.php?nlId={$channels[user].nlId}&amp;editionId={$channels[user].editionId}&amp;resend=1">{icon _id='email_edit' alt="{tr}Resend Newsletter{/tr}"}</a>
 						{else}
 							<a class="link" href="tiki-send_newsletters.php?nlId={$channels[user].nlId}&amp;editionId={$channels[user].editionId}">{icon _id='email' alt="{tr}Send Newsletter{/tr}"}</a>
 						{/if}
