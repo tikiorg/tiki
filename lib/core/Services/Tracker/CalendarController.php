@@ -46,15 +46,43 @@ class Services_Tracker_CalendarController
 
 		$response = array();
 
+		$fields = array();
+		if ($definition = Tracker_Definition::get($input->trackerId->int())) {
+			foreach ($definition->getPopupFields() as $fieldId) {
+				if ($field = $definition->getField($fieldId)) {
+					$fields[] = $field;
+				}
+			}
+		}
+
 		$smarty = TikiLib::lib('smarty');
 		$smarty->loadPlugin('smarty_modifier_sefurl');
+		$trklib = TikiLib::lib('trk');
 		foreach ($result as $row) {
 			$item = Tracker_Item::fromId($row['object_id']);
+			$description = '';
+			foreach ($fields as $field) {
+				if ($item->canViewField($field['fieldId'])) {
+					$val = trim($trklib->field_render_value(
+						array(
+							'field' => $field,
+							'item' => $item->getData(),
+							'process' => 'y',
+						)
+					));
+					if ($val) {
+						if (count($fields) > 1) {
+							$description .= "<h5>{$field['name']}</h5>";
+						}
+						$description .= $val;
+					}
+				}
+			}
 			$response[] = array(
 				'id' => $row['object_id'],
 				'trackerId' => isset($row['tracker_id']) ? $row['tracker_id'] : null,
 				'title' => $row['title'],
-				'description' => '',
+				'description' => $description,
 				'url' => smarty_modifier_sefurl($row['object_id'], $row['object_type']),
 				'allDay' => false,
 				'start' => $this->getTimestamp($row[$start]),
