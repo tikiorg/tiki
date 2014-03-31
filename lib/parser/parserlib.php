@@ -63,9 +63,21 @@ class ParserLib extends TikiDb_Bridge
 
 	static $pluginInstances = array();
 
-	function setOptions($option = array())
+	function setOptions($option = null)
 	{
 		global $page;
+
+		if (is_null($option)) {					// some options need to be preserved when options are "reset"
+			if (!empty($this->option)) {		// e.g. when a plugin is used in a newsletter
+				$option = array(
+					'absolute_links' => $this->option['absolute_links'],
+					'suppress_icons' => $this->option['suppress_icons'],
+					'inside_pretty' => $this->option['inside_pretty'],
+				);
+			} else {
+				$option = array();
+			}
+		}
 
 		$this->option = array_merge(
 			array(

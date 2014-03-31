@@ -637,9 +637,14 @@ function module_since_last_visit_new($mod_reference, $params = null)
 	// SUMMARY
 	//get the total of items
 	$ret['cant'] = 0;
+	$ret['nonempty'] = 0;
 	foreach ($ret['items'] as $item) {
 		$ret['cant'] += $item['count'];
+		if ($item['count'] > 0) {
+			$ret['nonempty']++;
+		}
 	}
+	$ret['li_width'] = min(22, (int) 90 / $ret['nonempty']);
 
 	$smarty->assign('slvn_info', $ret);
 }

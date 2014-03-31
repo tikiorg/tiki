@@ -2348,6 +2348,24 @@ a.flip:hover,
 	font-style: italic;
 }
 
+.box-since_last_visit_new .ui-tabs .ui-tabs-nav {
+	padding: 0;
+	border: none;
+}
+
+.box-since_last_visit_new .ui-tabs .ui-tabs-nav li {
+	margin-right: 0;
+	text-align: center;
+	width: 22%;
+}
+
+.box-since_last_visit_new .ui-tabs .ui-tabs-nav li a {
+	padding: .3em .2em;
+}
+
+.box-since_last_visit_new {
+	min-height: 10em;
+}
 /* Icons */
 a.icon,
 img.icon {
