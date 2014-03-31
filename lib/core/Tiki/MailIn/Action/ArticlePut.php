@@ -8,8 +8,9 @@
 namespace Tiki\MailIn\Action;
 use Tiki\MailIn\Account;
 use Tiki\MailIn\Source\Message;
+use TikiLib;
 
-class ArticlePut extends ActionInterface
+class ArticlePut implements ActionInterface
 {
 	private $topicId;
 	private $type;
@@ -24,7 +25,7 @@ class ArticlePut extends ActionInterface
 	{
 		global $prefs;
 
-		return $prefs['feature_articles'] == 'y';
+		return $prefs['feature_submissions'] == 'y';
 	}
 
 	function isAllowed(Account $account, Message $message)

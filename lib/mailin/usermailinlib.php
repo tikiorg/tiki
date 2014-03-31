@@ -167,4 +167,4 @@ order by mailin.username, p2.pageName, p.pageName
 		return false;
 	}	
 }
-$usermailinlib = new UserMailinLib;
+global $usermailinlib; $usermailinlib = new UserMailinLib;

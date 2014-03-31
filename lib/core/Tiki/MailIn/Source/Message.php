@@ -16,6 +16,8 @@ class Message
 	private $from;
 	private $subject;
 	private $body;
+	private $htmlBody;
+	private $attachments = [];
 
 	private $associatedUser;
 
@@ -35,8 +37,8 @@ class Message
 		$this->from = $from;
 		
 		if ($email = $this->getFromAddress()) {
-			$userlib = TikiLib::lib('user');
-			$this->associatedUser = $userlib->get_user_by_email($email_from);
+			$userlib = \TikiLib::lib('user');
+			$this->associatedUser = $userlib->get_user_by_email($email);
 		}
 	}
 
@@ -79,6 +81,51 @@ class Message
 	function getBody()
 	{
 		return $this->body;
+	}
+
+	function setHtmlBody($body)
+	{
+		$this->htmlBody = $body;
+	}
+
+	function getHtmlBody($fallback = true)
+	{
+		if ($fallback) {
+			return $this->htmlBody ?: $this->body;
+		} else {
+			return $this->htmlBody;
+		}
+	}
+
+	function addAttachment($contentId, $name, $type, $size, $data)
+	{
+		$this->attachments[$contentId] = [
+			'contentId' => $contentId,
+			'name' => $name,
+			'type' => $type,
+			'size' => $size,
+			'data' => $data,
+			'link' => null,
+		];
+	}
+
+	function setLink($contentId, $link)
+	{
+		if (isset($this->attachments[$contentId])) {
+			$this->attachments[$contentId]['link'] = $link;
+		}
+	}
+
+	function getAttachments()
+	{
+		return array_values($this->attachments);
+	}
+
+	function getAttachment($contentId)
+	{
+		if (isset($this->attachments[$contentId])) {
+			return $this->attachments[$contentId];
+		}
 	}
 }
 

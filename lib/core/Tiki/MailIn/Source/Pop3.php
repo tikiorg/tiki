@@ -25,58 +25,113 @@ class Pop3 implements SourceInterface
 	function getMessages()
 	{
 		$pop = $this->connect();
+		$toDelete = [];
 
-		$messageCount = $pop->numMsg();
-
-		$mimelib = new mime();
-
-		for ($i = 1; $i <= $messageCount; ++$i) {
-			$headers = $this->getParsedHeaders($i);
-			$body = $pop3->getMsg($i);
-
-			if (! $headers) {
-				continue; // Headers not parsable, skip message
-			}
-
-			$info = $mimelib->decode($message);
-
-			$message = new Message($i, function () use ($pop, $i) {
-				$pop->deleteMsg($i);
+		foreach ($pop as $i => $source) {
+			$message = new Message($i, function () use ($i, & $toDelete) {
+				$toDelete[] = $i;
 			});
-			$message->setMessageId(preg_replace(['<', ']'], '', $aux['Message-ID']));
-			$message->setRawFrom(isset($aux['From']) ? $aux['From'] : $aux['Return-path']);
-			$message->setSubject($info['header']['subject']);
-			$message->setBody($this->getBody($body));
+			$from = $source->from ?: $source->{'return-path'};
+			$message->setMessageId(preg_replace(['<', ']'], '', $source->{'message-id'}));
+			$message->setRawFrom($from);
+			$message->setSubject($source->subject);
+			$message->setHtmlBody($this->getBody($source, 'text/html'));
+			$message->setBody($this->getBody($source, 'text/plain'));
+
+			$this->handleAttachments($message, $source);
+
+			yield $message;
 		}
 
-		$pop->disconnect();
+		foreach ($toDelete as $i) {
+			$pop->removeMessage($i);
+		}
+
+		$pop->close();
 	}
 
 	private function connect()
 	{
-		$pop = new Net_Pop3;
+		try {
+			$pop = new \Zend_Mail_Storage_Pop3([
+				'host' => $this->host,
+				'port' => $this->port,
+				'user' => $this->username,
+				'password' => $this->password,
+				'ssl' => $this->port == 995,
+			]);
 
-		if (! $pop->connect($this->host, $this->port)) {
-			throw new TransportException(tr("Failed to connect to POP3 account on %0:%1", $this->host, $this->port));
-		}
-
-		if (false === $pop->login($this->username, $this->password, "USER")) {
+			return $pop;
+		} catch (Zend_Mail_Protocol_Exception $e) {
 			throw new TransportException(tr("Login failed for POP3 account on %0:%1 for user %2", $this->host, $this->password, $this->username));
 		}
-
-		return $pop;
 	}
 
-	private function getBody($output)
+	private function getBody($part, $type)
 	{
-		if (isset($output['text'][0])) {
-			$body = $output["text"][0];
-		} elseif (isset($output['parts'][0])) {
-			$body = $this->getBody($output['parts'][0]);
-		} else {
-			$body = '';
+		if (! $part->isMultipart() && 0 === strpos($part->getHeader('Content-Type'), $type)) {
+			return $part->getContent();
 		}
 
-		return $body;
+		if ($part->isMultipart()) {
+			for ($i = 1; $i <= $part->countParts(); ++$i) {
+				$p = $part->getPart($i);
+				if ($ret = $this->getBody($p, $type)) {
+					return $ret;
+				}
+			}
+		}
+	}
+
+	private function handleAttachments($message, $part)
+	{
+		$type = $part->getHeader('Content-Type');
+		if (0 === strpos($type, 'multipart/mixed') || 0 === strpos($type, 'multipart/related')) {
+			// Skip initial content
+			for ($i = 2; $i <= $part->countParts(); ++$i) {
+				$p = $part->getPart($i);
+				if ($p->isMultipart()) {
+					continue;
+				}
+				$headers = $p->getHeaders();
+
+				if (isset($headers['content-id'])) {
+					$contentId = $headers['content-id'];
+					$contentId = str_replace("<", "", $contentId);
+					$contentId = str_replace(">", "", $contentId);
+				} elseif (isset($headers['x-attachment-id'])) {
+					$contentId = $headers['x-attachment-id'];
+				} else {
+					$contentId = uniqid();
+				}
+				$fileName = '';
+				$fileType = '';
+				$fileData = base64_decode($p->getContent());
+				$fileSize = function_exists('mb_strlen') ? mb_strlen($fileData, '8bit') : strlen($fileData);
+
+				if (isset($headers['content-type'])) {
+					$type = $headers['content-type'];
+					$pos = strpos($type, ';');
+					if ($pos === false) {
+						$fileType = $type;
+					} else {
+						$fileType = substr($type, 0, $pos);
+					}
+
+					if (preg_match('/name="([^"]+)"/', $type, $parts)) {
+						$fileName = $parts[1];
+					}
+				}
+
+				if (! $fileName && isset($headers['content-disposition'])) {
+					$dispo = $headers['content-disposition'];
+					if (preg_match('/name="([^"]+)"/', $dispo, $parts)) {
+						$fileName = $parts[1];
+					}
+				}
+
+				$message->addAttachment($contentId, $fileName, $fileType, $fileSize, $fileData);
+			}
+		}
 	}
 }

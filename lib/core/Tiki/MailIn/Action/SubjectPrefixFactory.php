@@ -24,7 +24,7 @@ class SubjectPrefixFactory implements FactoryInterface
 		$subject = $message->getSubject();
 
 		foreach ($this->config as $prefix => $factory) {
-			if (strpos($subject, $prefix) === 0) {
+			if (strpos($subject, $prefix) === 0 || empty($prefix)) {
 				$subject = trim(substr($subject, strlen($prefix)));
 				$message->setSubject($subject);
 

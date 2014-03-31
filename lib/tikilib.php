@@ -337,6 +337,12 @@ class TikiLib extends TikiDb_Bridge
 			case 'credits':
 				global $creditslib; require_once 'lib/credits/creditslib.php';
 				return self::$libraries[$name] = $creditslib;
+			case 'mailin':
+				global $mailinlib; require_once 'lib/mailin/mailinlib.php';
+				return self::$libraries[$name] = $mailinlib;
+			case 'usermailin':
+				global $usermailinlib; require_once 'lib/mailin/usermailinlib.php';
+				return self::$libraries[$name] = $usermailinlib;
 		}
 	}
 
@@ -3616,7 +3622,7 @@ class TikiLib extends TikiDb_Bridge
 	 */
 	function user_has_perm_on_object($usertocheck,$object,$objtype,$perm1,$perm2=null,$perm3=null)
 	{
-		$accessor = $tikilib->get_user_permission_accessor($usertocheck, $objtype, $object);
+		$accessor = $this->get_user_permission_accessor($usertocheck, $objtype, $object);
 
 		$chk1 = $perm1 != null ? $accessor->$perm1 : true;
 		$chk2 = $perm2 != null ? $accessor->$perm2 : true;
