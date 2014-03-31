@@ -19,11 +19,11 @@
 	{else}
 		{if $prefs.feature_jquery_ui eq "y" and $use_jquery_ui eq "y"}
 			{assign var=fragment value=1}
-			<div id="mytabs">
+			<div id="mytabs" style="display: none;">
 	  		<ul>
 				{foreach key=pos item=slvn_item from=$slvn_info.items}
 					{if $slvn_item.count > 0}
-						<li>
+						<li style="width:{$slvn_info.li_width}%;">
 							<a href="#fragment-{$fragment}">
 								{if $pos eq "blogs"}
 									<img src="img/icons/large/blogs.png" alt="{tr}Blogs{/tr}" title="{tr}Blogs{/tr}">
@@ -128,6 +128,6 @@
 		{/foreach}
 		{if $prefs.feature_jquery_ui eq "y" and $use_jquery_ui eq "y"}</div>{/if}
 	{/if}
-	{if $prefs.feature_jquery_ui eq "y" and $use_jquery_ui eq "y"}{jq} $(function() {$("#mytabs").tabs({});}); {/jq}{/if}
+	{if $prefs.feature_jquery_ui eq "y" and $use_jquery_ui eq "y"}{jq} $(function() {$("#mytabs").tabs({}).show();}); {/jq}{/if}
 	{/tikimodule}
 {/if}
