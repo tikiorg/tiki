@@ -17,7 +17,7 @@ class WikiPut implements ActionInterface
 
 	function __construct(array $params)
 	{
-		$this->namespace = isset($params['namespace']) ? intval($params['namespace']) : null;
+		$this->namespace = isset($params['namespace']) ? $params['namespace'] : null;
 		$this->routing = ! empty($params['structure_routing']);
 	}
 
@@ -208,7 +208,7 @@ class WikiPut implements ActionInterface
 	private function categorize($pageName, $category, $user)
 	{
 		$categlib = TikiLib::lib('categ');
-		if ($categlib->get_category($categoryId)) {
+		if ($categlib->get_category($category)) {
 			$categlib->categorizePage($pageName, $category, $user);
 		}
 	}
