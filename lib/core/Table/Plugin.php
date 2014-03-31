@@ -46,7 +46,7 @@ class Table_Plugin
 				'name' => tra('Server Side Processing'),
 				'description' => tr(
 					'Enter %0y%1 to have the server do the sorting and filtering through Ajax and %0n%1 to have the
-					browser do it (n is the default). Set to y (and also set the %2Paginate%3 parameter) if you do not
+					browser do it (n is the default). Set to %0y%1 (and also set the %2Paginate%3 parameter) if you do not
 					want all rows fetched at once, but rather fetch rows as you paginate, filter or sort.',
 					'<b>', '</b>', '<em>', '</em>'
 				),
@@ -141,10 +141,11 @@ class Table_Plugin
 			'tspaginate' => array(
 				'required' => false,
 				'name' => tra('Paginate'),
-				'description' => tra(
-					'Enter y to set default values based on the site setting for maximum records in listings (on the
-				 	pagination table of the Look & Feel admin panel). Set custom values as in the following example: '
-				) .
+				'description' => tr(
+					'Enter %0y%1 to set default values based on the site setting for maximum records in listings (on the
+				 	pagination table of the Look & Feel admin panel). Set to %0n%1 (and %2server%3 cannot be set to
+				 	%0y%1) for no pagination. Set custom values as in the following example: ',
+						'<b>', '</b>', '<em>', '</em>') .
 					'<b>max</b>:40;<b>expand</b>:60;expand:100;expand:140',
 				'default' => '',
 				'filter' => 'striptags',
@@ -281,12 +282,22 @@ class Table_Plugin
 		//tspaginate
 		if (!empty($tspaginate)) {
 			$tsp = $this->parseParam($tspaginate);
-			if (is_array($tsp[0]) || $tsp[0] === 'y') {
+			//pagination must be on if server side processing is on ($server == 'y')
+			if (is_array($tsp[0]) || $tsp[0] !== 'n' || ($tsp[0] === 'n' && $server === 'y')) {
 				if (is_array($tsp[0])) {
 					$s['pager'] = $tsp[0];
+					if (is_array($s['pager']['expand'])) {
+						if (isset($s['pager']['max']) && $s['pager']['max'] > 0) {
+							$s['pager']['expand'] = array_merge(array($s['pager']['max']), $s['pager']['expand']);
+						} else {
+							$s['pager']['max'] = min($s['pager']['expand']);
+						}
+						$s['pager']['expand'] = array_unique($s['pager']['expand']);
+						sort($s['pager']['expand']);
+					}
 				}
 				$s['pager']['type'] = true;
-			} elseif ($tsp[0] === 'n') {
+			} elseif ($tsp[0] === 'n' && $server === 'n') {
 				$s['pager']['type'] = false;
 			}
 		}
