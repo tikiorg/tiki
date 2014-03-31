@@ -3635,7 +3635,7 @@ class TikiLib extends TikiDb_Bridge
 	{
 		global $user;
 		if ($type && $object) {
-			$context = array( 'type' => $objtype, 'object' => $object );
+			$context = array( 'type' => $type, 'object' => $object );
 			$accessor = Perms::get($context);
 		} else {
 			$accessor = Perms::get();

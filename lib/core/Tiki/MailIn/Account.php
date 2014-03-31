@@ -82,17 +82,12 @@ class Account
 	{
 	}
 
-	function getMessages()
-	{
-		return $this->source->getMessages();
-	}
-
-	function completeSuccess($message)
+	private function completeSuccess($message)
 	{
 		$message->delete();
 	}
 
-	function completeFailure($message)
+	private function completeFailure($message)
 	{
 		if ($this->deleteOnError) {
 			$message->delete();
@@ -101,10 +96,10 @@ class Account
 
 	function isAnyoneAllowed()
 	{
-		return $this->anonymous;
+		return $this->anonymousAllowed;
 	}
 
-	function canReceive(Source\Message $message)
+	private function canReceive(Source\Message $message)
 	{
 		$user = $message->getAssociatedUser();
 		$perms = TikiLib::lib('tiki')->get_user_permission_accessor($user, null, null);
@@ -119,12 +114,12 @@ class Account
 		}
 	}
 
-	function getAction(Source\Message $message)
+	private function getAction(Source\Message $message)
 	{
 		return $this->actionFactory->createAction($this, $message);
 	}
 
-	function prepareMessage(Source\Message $message)
+	private function prepareMessage(Source\Message $message)
 	{
 		// TODO : This is rather primitive and implies we control the message source, need to make smarter
 
@@ -232,6 +227,46 @@ class Account
 	function hasInlineAttach()
 	{
 		return $this->inline_attachments;
+	}
+
+	function check()
+	{
+		$messages = $this->source->getMessages();
+
+		foreach ($messages as $message) {
+			$success = false;
+
+			if (! $this->canReceive($message)) {
+				$this->sendFailureResponse($message);
+			} elseif ($action = $this->getAction($message)) {
+				if (! $action->isEnabled()) {
+					// Action configured, but not enabled
+				} elseif ($this->isAnyoneAllowed() || $action->isAllowed($this, $message)) {
+					$this->prepareMessage($message);
+					$success = $action->execute($this, $message);
+				} else {
+					// TODO : Send permission denied message
+				}
+			} else {
+				
+				// Send failure response for no suitable action found
+				$l = $prefs['language'];
+				$subject = $smarty->fetchLang($l, "mail/mailin_help_subject.tpl");
+				$smarty->assign('subject', $message->getSubject());
+				$mail_data = $smarty->fetchLang($l, "mail/mailin_help.tpl");
+
+				$mail = $this->getReplyMail($message);
+				$mail->setSubject($subject);
+				$mail->setText($mail_data);
+				$this->sendFailureReply($message, $mail);
+			}
+
+			if ($success) {
+				$this->completeSuccess($message);
+			} else {
+				$this->completeFailure($message);
+			}
+		}
 	}
 }
 
