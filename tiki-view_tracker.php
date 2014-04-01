@@ -101,7 +101,8 @@ if ($tiki_p_create_tracker_items == 'y' && !empty($t['end'])) {
 	}
 }
 
-$access->check_permission_either(array('tiki_p_view_trackers', 'tiki_p_create_tracker_items'));
+$access->check_permission_either(array('tiki_p_view_trackers', 'tiki_p_create_tracker_items'), tra('Create or view tracker'), 'tracker', $_REQUEST["trackerId"]);
+$tikilib->get_perm_object($_REQUEST['trackerId'], 'tracker', $tracker_info);
 
 if ($tracker_info['adminOnlyViewEditItem'] === 'y') {
 	$access->check_permission('tiki_p_admin_trackers', tra('Admin this tracker'), 'tracker', $tracker_info['trackerId']);

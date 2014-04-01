@@ -806,7 +806,7 @@ class TrackerLib extends TikiLib
 			$cachelib->cacheItem($cache, serialize($ret));
 		}
 		if ($needToCheckCategPerms) {
-			$ret = $this->filter_categ_items($ret);
+			$ret = $this->perm_filter_items($ret);
 		}
 		$definition = Tracker_Definition::get($trackerId);
 		if (!$definition) {
@@ -1271,7 +1271,7 @@ class TrackerLib extends TikiLib
 		$type = '';
 		$ret = array();
 		if ($needToCheckCategPerms) {
-			$ret1 = $this->filter_categ_items($ret1);
+			$ret1 = $this->perm_filter_items($ret1);
 		}
 
 		foreach ($ret1 as $res) {
@@ -1330,15 +1330,23 @@ class TrackerLib extends TikiLib
 		return $retval;
 	}
 
-	public function filter_categ_items($ret)
+	/**
+	 * Filter items according to Tracker_Item::canView
+	 *
+	 * @param array $items		list of item arrays
+	 * @return array			filtered array
+	 */
+	public function perm_filter_items(array $items)
 	{
-		// FIXME: this is an approximation - the perm should be function of the status
-		$categlib = TikiLib::lib('categ');
-		if (!empty($ret[0]['itemId']) && $categlib->is_categorized('trackeritem', $ret[0]['itemId'])) {
-			return Perms::filter(array('type' => 'trackeritem'), 'object', $ret, array('object' => 'itemId'), 'view_trackers');
-		} else {
-			return $ret;
+		$ret = array();
+
+		foreach ($items as $item) {
+			$itemObject = Tracker_Item::fromInfo($item);
+			if ($itemObject->canView()) {
+				$ret[] = $item;
+			}
 		}
+		return $ret;
 	}
 
 	/* listfields fieldId=>ooptions */
