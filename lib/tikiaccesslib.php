@@ -146,12 +146,15 @@ class TikiAccessLib extends TikiLib
 		}
 	}
 
-    /**
-     * @param $permissions
-     * @param string $permission_name
-     * @param bool $objectType
-     * @param bool $objectId
-     */
+	/**
+	 * Check permissions for current user and display an error if not granted
+	 * Multiple perms can be checked at once using an array and all those perms need to be granted to continue
+	 *
+	 * @param string|array $permissions		permission name or names (can be old style e.g. 'tiki_p_view' or just 'view')
+	 * @param string $permission_name		text used in warning if perm not granted
+	 * @param bool|string $objectType		optional object type (e.g. 'wiki page')
+	 * @param bool|string $objectId			optional object id (e.g. 'HomePage' or '42' depending on object type)
+	 */
     function check_permission($permissions, $permission_name = '', $objectType = false, $objectId = false)
 	{
 		require_once ('tiki-setup.php');
@@ -182,11 +185,17 @@ class TikiAccessLib extends TikiLib
 	}
 
 	/**
-	 * check for any one of the permission will be enough
+	 * Check permissions for current user and display an error if not granted
+	 * Multiple perms can be checked at once using an array and ANY ONE OF those perms only needs to be granted to continue
+	 *
 	 * NOTE that you do NOT have to use this to include admin perms, as admin perms automatically inherit the perms they are admin of
 	 *
+	 * @param string|array $permissions		permission name or names (can be old style e.g. 'tiki_p_view' or just 'view')
+	 * @param string $permission_name		text used in warning if perm not granted
+	 * @param bool|string $objectType		optional object type (e.g. 'wiki page')
+	 * @param bool|string $objectId			optional object id (e.g. 'HomePage' or '42' depending on object type)
 	 */
-	function check_permission_either($permissions, $permission_name = '')
+	function check_permission_either($permissions, $permission_name = '', $objectType = false, $objectId = false)
 	{
 		require_once ('tiki-setup.php');
 		$allowed = false;
@@ -196,9 +205,15 @@ class TikiAccessLib extends TikiLib
 		}
 
 		foreach ($permissions as $permission) {
-			global $$permission;
-			if ($$permission == 'y') {
+			if (false !== $objectType) {
+				$applicable = Perms::get($objectType, $objectId);
+			} else {
+				$applicable = Perms::get();
+			}
+
+			if ($applicable->$permission) {
 				$allowed = true;
+				break;
 			}
 		}
 
