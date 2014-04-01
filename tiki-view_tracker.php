@@ -253,10 +253,13 @@ foreach ($xfields['data'] as $i => $current_field) {
 
 // Collect information from the provided fields
 $newItemRateField = null;
-foreach ($ins_fields['data'] as $current_field) {
-	if ($current_field['type'] == 's' && $current_field['name'] == 'Rating') {
-		$newItemRateField = $current_field;
-		$newItemRate = $current_field['request_rate'];
+$newItemRate = null;
+if (!empty($ins_fields['data'])) {
+	foreach ($ins_fields['data'] as $current_field) {
+		if ($current_field['type'] == 's' && $current_field['name'] == 'Rating') {
+			$newItemRateField = $current_field;
+			$newItemRate = $current_field['request_rate'];
+		}
 	}
 }
 
