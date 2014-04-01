@@ -1613,7 +1613,7 @@ class TrackerLib extends TikiLib
 
 		$values_by_permname = array();
 		$old_values_by_permname = array();
-		foreach ($values as $fieldId => $value) {
+		foreach ($fil as $fieldId => $value) {
 			$values_by_permname[$permNames[$fieldId]] = $value;
 		}
 		foreach ($old_values as $fieldId => $value) {
