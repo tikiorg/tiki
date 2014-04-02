@@ -26,7 +26,7 @@ class Services_Payment_Controller
 	{
 		$perms = Perms::get();
 		if (! $perms->payment_admin) {
-			throw new Services_Exception_Denied(tr('Reserved to payment admnistrators'));
+			throw new Services_Exception_Denied(tr('Reserved to payment administrators'));
 		}
 
 		$paymentlib = TikiLib::lib('payment');
