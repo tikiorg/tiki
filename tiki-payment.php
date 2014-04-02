@@ -93,7 +93,7 @@ if ($prefs['payment_system'] == 'israelpost' && isset($_GET['invoice']) && $jitG
 	$gateway = $paymentlib->gateway('israelpost');
 	// Return URL - check payment right away through APIs
 	$id = $_GET['invoice'];
-	$verified = $israelpostlib->check_payment($id, $jitGet, $jitPost);
+	$verified = $gateway->check_payment($id, $jitGet, $jitPost);
 
 	if ($verified) {
 		$access->redirect('tiki-payment.php?invoice=' . $id, tra('Payment has been confirmed.'));
