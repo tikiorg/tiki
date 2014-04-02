@@ -143,7 +143,7 @@ if ( ! isset($_GET['thumbnail']) && ! isset($_GET['icon']) ) {
 
 session_write_close(); // close the session in case of large downloads to enable further browsing
 error_reporting(E_ALL);
-while (ob_get_level()) {
+while (ob_get_level()>1) {
 	ob_end_clean();
 }// Be sure output buffering is turned off
 
