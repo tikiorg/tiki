@@ -89,10 +89,12 @@ if ( isset($ipn_data) ) {
 	exit;
 }
 
-if (isset($_GET['invoice']) && $jitGet->OKauthentication->word()) {
+if ($prefs['payment_system'] == 'israelpost' && isset($_GET['invoice']) && $jitGet->OKauthentication->word()) {
+	require_once 'lib/payment/israelpostlib.php';
+	$israelpostlib = new IsraelPostLib($paymentlib);
 	// Return URL - check payment right away through APIs
 	$id = $_GET['invoice'];
-	$verified = $paymentlib->check_payment($id, $jitGet, $jitPost);
+	$verified = $israelpostlib->check_payment($id, $jitGet, $jitPost);
 
 	if ($verified) {
 		$access->redirect('tiki-payment.php?invoice=' . $id, tra('Payment has been confirmed.'));
