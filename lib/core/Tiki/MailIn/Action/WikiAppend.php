@@ -12,6 +12,11 @@ use TikiLib;
 
 class WikiAppend extends WikiPut
 {
+	function getName()
+	{
+		return tr('Wiki Append');
+	}
+
 	protected function handleContent($data, $info)
 	{
 		if ($info) {

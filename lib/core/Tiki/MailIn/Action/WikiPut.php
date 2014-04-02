@@ -21,6 +21,11 @@ class WikiPut implements ActionInterface
 		$this->routing = ! empty($params['structure_routing']);
 	}
 
+	function getName()
+	{
+		return tr('Wiki Create/Update');
+	}
+
 	function isEnabled()
 	{
 		global $prefs;

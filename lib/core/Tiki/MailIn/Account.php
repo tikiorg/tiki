@@ -200,8 +200,7 @@ class Account
 			$is_html = true;
 			$wysiwyg = 'y';
 		} elseif ($is_html) {
-			include_once "lib/wiki/editlib.php";
-			$editlib = new EditLib;
+			$editlib = TikiLib::lib('edit');
 			$body = $editlib->parseToWiki($body);
 			$is_html = false;
 			$wysiwyg = NULL;
@@ -231,6 +230,7 @@ class Account
 
 	function check()
 	{
+		$logs = TikiLib::lib('logs');
 		$messages = $this->source->getMessages();
 
 		foreach ($messages as $message) {
@@ -238,14 +238,18 @@ class Account
 
 			if (! $this->canReceive($message)) {
 				$this->sendFailureResponse($message);
+				$this->log($message, tr("Rejected message, user globally denied"));
 			} elseif ($action = $this->getAction($message)) {
 				if (! $action->isEnabled()) {
 					// Action configured, but not enabled
+					$this->log($message, tr("Rejected message, associated action disabled (%0)", $action->getName()));
 				} elseif ($this->isAnyoneAllowed() || $action->isAllowed($this, $message)) {
 					$this->prepareMessage($message);
 					$success = $action->execute($this, $message);
+					$this->log($message, tr("Performing action (%0)", $action->getName()));
 				} else {
 					// TODO : Send permission denied message
+					$this->log($message, tr("Rejected message, user locally denied (%0)", $action->getName()));
 				}
 			} else {
 				
@@ -259,6 +263,8 @@ class Account
 				$mail->setSubject($subject);
 				$mail->setText($mail_data);
 				$this->sendFailureReply($message, $mail);
+
+				$this->log($message, tr("Rejected message, no associated action."));
 			}
 
 			if ($success) {
@@ -267,6 +273,12 @@ class Account
 				$this->completeFailure($message);
 			}
 		}
+	}
+
+	private function log(Source\Message $message, $detail)
+	{
+		$lib = TikiLib::lib('logs');
+		$lib->add_log('mailin', $detail . ' - ' . $message->getSubject(), $message->getAssociatedUser());
 	}
 }
 

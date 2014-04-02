@@ -21,6 +21,11 @@ class ArticlePut implements ActionInterface
 		$this->type = isset($params['type']) ? intval($params['type']) : null;
 	}
 
+	function getName()
+	{
+		return tr('Submit Article');
+	}
+
 	function isEnabled()
 	{
 		global $prefs;

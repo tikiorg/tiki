@@ -12,6 +12,11 @@ use TikiLib;
 
 class WikiGet extends WikiPut
 {
+	function getName()
+	{
+		return tr('Wiki Get');
+	}
+
 	function isAllowed(Account $account, Message $message)
 	{
 		$user = $message->getAssociatedUser();

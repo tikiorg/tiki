@@ -11,6 +11,8 @@ use Tiki\MailIn\Source\Message;
 
 interface ActionInterface
 {
+	function getName();
+
 	function isEnabled();
 
 	function isAllowed(Account $account, Message $message);
