@@ -1826,14 +1826,9 @@ class WikiLibOutput
                         '<div class="ui-state-error">' . tr("wikiLingo markup could not be parsed.") . '</div>';
                 }
                 //transfer scripts over to headerlib
-                //css
-                foreach($scripts->css as $css) {
-                    $headerlib->add_css($css);
-                }
-                //css files
-                foreach($scripts->cssLocations as $cssLocation) {
-                    $headerlib->add_cssfile($cssLocation);
-                }
+                //css is already processed at this point, as it is in the header, at the top, so we expose it here
+                $this->parsedValue .= $scripts->renderCss();
+
                 //js
                 foreach($scripts->scripts as $script) {
                     $headerlib->add_js($script);
