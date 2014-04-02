@@ -23,11 +23,6 @@ class CartLib
 
 		$quantity = $input->quantity->int();
 
-		if ($quantity < 1) {
-			$this->handle_error(tra('Cart: No quantity specified.'));
-			return false;
-		}
-
 		if ( $input->code->text() !== $product_info['code'] ) {
 			$this->handle_error(tra('Cart: Product code mismatch.'));
 			return false;
