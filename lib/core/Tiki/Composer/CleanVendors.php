@@ -85,6 +85,16 @@ class CleanVendors
 		self::deleteDirectory($vendors . 'player/flv/mtasc');
 		self::deleteDirectory($vendors . 'player/mp3/classes');
 		self::deleteDirectory($vendors . 'player/mp3/mtasc');
+
+		// These are removed to avoid composer warnings caused by classes declared in multiple locations
+		self::deleteDirectory($vendors . 'adodb/adodb/datadict/datadict');
+		self::deleteDirectory($vendors . 'adodb/adodb/session/session');
+		self::deleteDirectory($vendors . 'adodb/adodb/perf/perf');
+		self::deleteDirectory($vendors . 'adodb/adodb/drivers/drivers');
+		self::deleteFile(     $vendors . 'adodb/adodb/adodb-active-recordx.inc.php');
+		self::deleteFile(     $vendors . 'adodb/adodb/drivers/adodb-informix.inc.php');
+		self::deleteFile(     $vendors . 'adodb/adodb/perf/perf-informix.inc.php');
+		self::deleteFile(     $vendors . 'adodb/adodb/datadict/datadict-informix.inc.php');
 	}
 
 	private static function deleteDirectory($path)
