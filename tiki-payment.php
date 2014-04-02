@@ -90,8 +90,7 @@ if ( isset($ipn_data) ) {
 }
 
 if ($prefs['payment_system'] == 'israelpost' && isset($_GET['invoice']) && $jitGet->OKauthentication->word()) {
-	require_once 'lib/payment/israelpostlib.php';
-	$israelpostlib = new IsraelPostLib($paymentlib);
+	$gateway = $paymentlib->gateway('israelpost');
 	// Return URL - check payment right away through APIs
 	$id = $_GET['invoice'];
 	$verified = $israelpostlib->check_payment($id, $jitGet, $jitPost);
@@ -206,6 +205,7 @@ fetch_payment_list('outstanding');
 fetch_payment_list('overdue');
 fetch_payment_list('past');
 fetch_payment_list('canceled');
+fetch_payment_list('authorized');
 
 $smarty->assign('mid', 'tiki-payment.tpl');
 $smarty->display('tiki.tpl');

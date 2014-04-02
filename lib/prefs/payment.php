@@ -477,6 +477,12 @@ function prefs_payment_list()
 			),
 			'default' => 'https://www.israelpost.co.il/extpay.nsf/',
 		),
+		'payment_israelpost_request_preauth' => array(
+			'name' => tra('Israel Post use pre-authorization'),
+			'description' => tra('Use the pre-authorization mechanism prior to processing the real transaction. Must match the account configuration at IsraelPost.'),
+			'type' => 'flag',
+			'default' => 'n',
+		),
 		'payment_israelpost_business_id' => array(
 			'name' => tra('Israel Post Business ID'),
 			'description' => tra('Provided by Israel Post, usually the business name.'),

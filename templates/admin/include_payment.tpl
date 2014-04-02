@@ -48,6 +48,7 @@
 						{preference name=payment_israelpost_environment}
 						{preference name=payment_israelpost_business_id}
 						{preference name=payment_israelpost_api_password}
+						{preference name=payment_israelpost_request_preauth}
 					</div>
 					{/accordion_group}
 					{accordion_group title="{tr}Ccline{/tr}"}

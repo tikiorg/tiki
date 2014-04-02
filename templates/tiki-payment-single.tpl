@@ -19,7 +19,16 @@
 						<td style="font-weight: bold">
 							{tr}{$payment_info.state|capitalize|escape}{/tr}
 						</td>
-						<td></td>
+						<td>
+							{if $payment_info.state eq 'authorized'}
+								{permission name=payment_admin}
+									<form method="post" action="{service controller=payment action=capture paymentId=$payment_info.paymentRequestId}">
+										<input type="submit" class="btn btn-xs btn-warning" value="{tr}Capture Payment{/tr}">
+										<input type="hidden" name="next" value="{$smarty.server.REQUEST_URI|escape}">
+									</form>
+								{/permission}
+							{/if}
+						</td>
 					</tr>
 				{if $payment_info.fullview and !empty($payment_detail)}
 					<tr>
@@ -207,6 +216,8 @@
 								{include file='tiki-payment-cclite.tpl' payment=$payment}
 							{elseif $payment.type eq 'tikicredits'}
 								{include file='tiki-payment-tikicredits.tpl' payment=$payment}
+							{elseif $payment.type eq 'israelpost'}
+								{include file='tiki-payment-israelpost.tpl' payment=$payment}
 							{/if}
 						</li>
 					{/foreach}
