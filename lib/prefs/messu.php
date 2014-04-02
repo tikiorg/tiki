@@ -50,7 +50,7 @@ function prefs_messu_list()
 			'dependencies' => array(
 				'feature_messages',
 			),
-			'default' => '250',
+			'default' => '2500',
 		),		
 	);
 }
