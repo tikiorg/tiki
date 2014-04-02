@@ -53,7 +53,7 @@ class PaymentLib extends TikiDb_Bridge
 	{
 		$conditions = '`amount_paid` < `amount` AND NOW() <= `due_date` AND `cancel_date` IS NULL';
 		if ($ofUser) {
-			$conditions .= " AND uu.`login` = '$ofUser'";
+			$conditions .= " AND uu.`login` = " . $this->qstr($ofUser);
 		}
 		return $this->get_payments($conditions, $offset, $max);
 	}
@@ -62,7 +62,7 @@ class PaymentLib extends TikiDb_Bridge
 	{
 		$conditions = 'tpr.`amount` <= tpr.`amount_paid` AND tpr.`cancel_date` IS NULL';
 		if ($ofUser) {
-			$conditions .= " AND uu.`login` = '$ofUser'";
+			$conditions .= " AND uu.`login` = " . $this->qstr($ofUser);
 		}
 
 		$count = 'SELECT COUNT(*) FROM `tiki_payment_requests` tpr LEFT JOIN `users_users` uu ON (uu.`userId` = tpr.`userId`) WHERE ' .
@@ -93,7 +93,7 @@ class PaymentLib extends TikiDb_Bridge
 	{
 		$conditions = '`amount_paid` < `amount` AND NOW() > `due_date` AND `cancel_date` IS NULL';
 		if ($ofUser) {
-			$conditions .= " AND uu.`login` = '$ofUser'";
+			$conditions .= " AND uu.`login` = " . $this->qstr($ofUser);
 		}
 		return $this->get_payments($conditions, $offset, $max);
 	}
@@ -102,7 +102,7 @@ class PaymentLib extends TikiDb_Bridge
 	{
 		$conditions = '`cancel_date` IS NOT NULL';
 		if ($ofUser) {
-			$conditions .= " AND uu.`login` = '$ofUser'";
+			$conditions .= " AND uu.`login` = " . $this->qstr($ofUser);
 		}
 		return $this->get_payments($conditions, $offset, $max);
 	}
