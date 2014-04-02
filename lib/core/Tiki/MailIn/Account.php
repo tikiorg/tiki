@@ -22,10 +22,21 @@ class Account
 	private $saveHtml;
 	private $auto_attachments;
 
+	private static function getSource(array $acc)
+	{
+		return new Source\Pop3($acc['pop'], $acc['port'], $acc['username'], $acc['pass']);
+	}
+
+	public static function test(array $acc)
+	{
+		$source = self::getSource($acc);
+		return $source->test();
+	}
+
 	public static function fromDb(array $acc)
 	{
 		$account = new self;
-		$account->source = new Source\Pop3($acc['pop'], $acc['port'], $acc['username'], $acc['pass']);
+		$account->source = self::getSource($acc);
 
 		$wikiParams = [
 			'namespace' => $acc['namespace'],

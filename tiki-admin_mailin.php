@@ -14,33 +14,12 @@ include_once ('lib/mailin/mailinlib.php');
 $access->check_feature('feature_mailin');
 $access->check_permission(array('tiki_p_admin_mailin'));
 
-/**
- * @param $pop
- * @param $user
- * @param $pass
- * @return bool
- */
-function account_ok($pop, $user, $pass)
-{
-	include_once ('lib/webmail/net_pop3.php');
-	$pop3 = new Net_POP3();
-	$pop3->connect($pop);
-	$pop3->login($user, $pass);
-	if (!$pop3) {
-		$pop3->disconnect();
-		return false;
-	} else {
-		$pop3->disconnect();
-		return true;
-	}
-}
-
 // Add a new mail account for the user here
 if (!isset($_REQUEST['accountId'])) $_REQUEST['accountId'] = 0;
 $smarty->assign('accountId', $_REQUEST['accountId']);
 if (isset($_REQUEST['new_acc'])) {
 	check_ticket('admin-mailin');
-	if (!account_ok($_REQUEST['pop'], $_REQUEST['username'], $_REQUEST['pass'])) {
+	if (! Tiki\MailIn\Account::test($_REQUEST)) {
 		$tikifeedback[] = array(
 			'num' => 1,
 			'mes' => sprintf(tra('Mail-in account %s incorrect'), $_REQUEST['account'])

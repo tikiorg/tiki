@@ -9,5 +9,7 @@ namespace Tiki\MailIn\Source;
 
 interface SourceInterface
 {
+	function test();
+
 	function getMessages();
 }

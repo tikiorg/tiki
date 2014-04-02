@@ -6,6 +6,7 @@
 // $Id$
 
 namespace Tiki\MailIn\Source;
+use Tiki\MailIn\Exception\TransportException;
 
 class Pop3 implements SourceInterface
 {
@@ -20,6 +21,18 @@ class Pop3 implements SourceInterface
 		$this->port = (int) $port;
 		$this->username = $username;
 		$this->password = $password;
+	}
+
+	function test()
+	{
+		try {
+			$pop = $this->connect();
+			$pop->close();
+
+			return true;
+		} catch (TransportException $e) {
+			return false;
+		}
 	}
 
 	function getMessages()
@@ -62,7 +75,7 @@ class Pop3 implements SourceInterface
 			]);
 
 			return $pop;
-		} catch (Zend_Mail_Protocol_Exception $e) {
+		} catch (\Zend_Mail_Protocol_Exception $e) {
 			throw new TransportException(tr("Login failed for POP3 account on %0:%1 for user %2", $this->host, $this->password, $this->username));
 		}
 	}
