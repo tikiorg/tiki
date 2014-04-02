@@ -1819,6 +1819,12 @@ class WikiLibOutput
             } else {
                 $this->parsedValue = $wikiLingo->parse($this->originalValue);
 
+                //recover from failure, but DO NOT just output
+                if ($this->parsedValue === null)
+                {
+                    $this->parsedValue = '<pre>' . htmlspecialchars($this->originalValue) . '</pre>' .
+                        '<div class="ui-state-error">' . tr("wikiLingo markup could not be parsed.") . '</div>';
+                }
                 //transfer scripts over to headerlib
                 //css
                 foreach($scripts->css as $css) {
