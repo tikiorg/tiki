@@ -5,10 +5,23 @@ use RedBean_Facade as R;
 class WikiMetadataLookup
 {
 	public $page;
+    public $language;
+    public $moderatorData;
+    public $findDatePageOriginated;
+    public $countAll;
+    public $categories = array();
+    public $scientificField;
+    public $minimumMathNeeded;
+    public $minimumStatisticsNeeded;
+
+    private $_language;
+
 
 	public function __construct($page)
 	{
+        global $prefs;
 		$this->page = $page;
+        $this->_language = $prefs['site_language'];
 	}
 
 	public function answers()
@@ -181,7 +194,7 @@ class WikiMetadataLookup
 			}
 		}
 
-		return $this->categories;
+		return (isset($this->categories) ? $this->categories : array());
 	}
 
 	public function scientificField($out = true)
@@ -246,7 +259,7 @@ class WikiMetadataLookup
 		if (empty($this->language)) {
 			//TODO: abstract
 			foreach (TikiLib::lib("tiki")->list_languages() as $listLanguage) {
-				if ($listLanguage['value'] == $this->lang) {
+				if ($listLanguage['value'] == $this->_language) {
 					$this->language = urlencode($listLanguage['name']);
 					break;
 				}
