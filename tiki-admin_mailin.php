@@ -53,9 +53,6 @@ if (isset($_REQUEST['new_acc'])) {
 			$_REQUEST['port'],
 			$_REQUEST['username'],
 			$_REQUEST['pass'],
-			$_REQUEST['smtp'],
-			isset($_REQUEST['useAuth']) ? 'y' : 'n',
-			$_REQUEST['smtpPort'],
 			$_REQUEST['type'],
 			isset($_REQUEST['active']) ? 'y' : 'n',
 			isset($_REQUEST['anonymous']) ? 'y' : 'n',
@@ -94,10 +91,7 @@ if ($_REQUEST['accountId']) {
 	$info['username'] = '';
 	$info['pass'] = '';
 	$info['pop'] = '';
-	$info['smtp'] = '';
-	$info['useAuth'] = 'n';
 	$info['port'] = 110;
-	$info['smtpPort'] = 25;
 	$info['type'] = 'wiki-put';
 	$info['active'] = 'y';
 	$info['anonymous'] = 'n';
@@ -141,10 +135,7 @@ if (isset($_REQUEST['mailin_autocheck'])) {
 	}
 }
 
-global $artlib;
-if (!is_object($artlib)) {
-	include_once ('lib/articles/artlib.php');
-}
+$artlib = TikiLib::lib('art');
 
 $topics = $artlib->list_topics();
 $smarty->assign('topics', $topics);

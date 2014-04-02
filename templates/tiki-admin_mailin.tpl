@@ -137,25 +137,6 @@
       <input type="password" name="pass" value="{$info.password|escape}" class="form-control">
     </div>
   </div>
-  <div class="form-group">
-    <label for="smtp" class="control-label col-md-3">{tr}SMTP server{/tr} / {tr}Port{/tr}</label>
-    <div class="col-md-4">
-      <input type="text" name="smtp" value="{$info.smtp|escape}" class="form-control" placeholder="{tr}Hostname{/tr}">
-    </div>
-    <div class="col-md-2">
-      <input type="text" name="smtpPort" value="{$info.smtpPort|escape}" class="form-control" placeholder="{tr}Port{/tr}">
-    </div>
-  </div>
-  <div class="form-group">
-    <div class="col-md-offset-3 col-md-9">
-      <div class="checkbox">
-        <label>
-          <input type="checkbox" name="useAuth" value="y" {if $info.useAuth eq 'y'}checked{/if}>
-          {tr}SMTP requires authentication{/tr}
-        </label>
-      </div>
-    </div>
-  </div>
   {if $prefs.feature_articles eq 'y'}
   <div class="form-group">
     <label for="article_topicId" class="control-label col-md-3">{tr}Article Topic{/tr}</label>

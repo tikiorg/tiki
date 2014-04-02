@@ -125,9 +125,6 @@ class MailinLib extends TikiLib
      * @param $port
      * @param $username
      * @param $pass
-     * @param $smtp
-     * @param $useAuth
-     * @param $smtpPort
      * @param $type
      * @param $active
      * @param $anonymous
@@ -140,7 +137,7 @@ class MailinLib extends TikiLib
 	*  @param 0 $categoryId
 	* @return bool
 	 */
-	function replace_mailin_account($accountId, $account, $pop, $port, $username, $clearpass, $smtp, $useAuth, $smtpPort, $type, $active, $anonymous, $admin, $attachments, $routing, $article_topicId = NULL, $article_type = NULL, $discard_after=NULL, $show_inlineImages='n', $save_html='y', $categoryId = 0, $namespace='', $respond_email = 'y', $leave_email = 'n')
+	function replace_mailin_account($accountId, $account, $pop, $port, $username, $clearpass, $type, $active, $anonymous, $admin, $attachments, $routing, $article_topicId = NULL, $article_type = NULL, $discard_after=NULL, $show_inlineImages='n', $save_html='y', $categoryId = 0, $namespace='', $respond_email = 'y', $leave_email = 'n')
 	{
 		// Fix values
 		if ($attachments == null) {
@@ -151,14 +148,14 @@ class MailinLib extends TikiLib
 		$pass = $this->encryptPassword($clearpass);
 		
 		if ($accountId) {
-			$bindvars = array($account,$pop,(int)$port,(int)$smtpPort,$username,$pass,$smtp,$useAuth,$type,$active,$anonymous,$admin,$attachments,$routing,(int)$article_topicId,$article_type,$discard_after,$show_inlineImages,$save_html,$categoryId, $namespace, $respond_email, $leave_email, (int)$accountId);
-			$query = "update `tiki_mailin_accounts` set `account`=?, `pop`=?, `port`=?, `smtpPort`=?, `username`=?, `pass`=?, `smtp`=?, `useAuth`=?, `type`=?, `active`=?, `anonymous`=?, `admin`=?, `attachments`=?,  `routing`=?, `article_topicId`=?, `article_type`=? , `discard_after`=?, `show_inlineImages`=?, `save_html`=?, `categoryId`=?, `namespace`=?, `respond_email`=?, `leave_email`=? where `accountId`=?";
+			$bindvars = array($account,$pop,(int)$port,$username,$pass,$type,$active,$anonymous,$admin,$attachments,$routing,(int)$article_topicId,$article_type,$discard_after,$show_inlineImages,$save_html,$categoryId, $namespace, $respond_email, $leave_email, (int)$accountId);
+			$query = "update `tiki_mailin_accounts` set `account`=?, `pop`=?, `port`=?, `username`=?, `pass`=?, `type`=?, `active`=?, `anonymous`=?, `admin`=?, `attachments`=?,  `routing`=?, `article_topicId`=?, `article_type`=? , `discard_after`=?, `show_inlineImages`=?, `save_html`=?, `categoryId`=?, `namespace`=?, `respond_email`=?, `leave_email`=? where `accountId`=?";
 			$result = $this->query($query, $bindvars);
 		} else {
-			$bindvars = array($account,$pop,(int)$port,(int)$smtpPort,$username,$pass,$smtp,$useAuth,$type,$active,$anonymous,$admin,$attachments,$routing,(int)$article_topicId,$article_type, $show_inlineImages, $save_html, $categoryId, $namespace, $respond_email, $leave_email);
-			$query = "delete from `tiki_mailin_accounts` where `account`=? and `pop`=? and `port`=? and `smtpPort`=? and `username`=? and `pass`=? and `smtp`=? and `useAuth`=? and `type`=? and `active`=? and `anonymous`=? and `admin`=? and `attachments`=? and `routing`=? and `article_topicId`=?, `article_type`=?, `show_inlineImages`=?, `save_html`=?, `categoryId`=?, `namespace`=?, `respond_email`=?, `leave_email`=?";
+			$bindvars = array($account,$pop,(int)$port,$username,$pass,$type,$active,$anonymous,$admin,$attachments,$routing,(int)$article_topicId,$article_type, $show_inlineImages, $save_html, $categoryId, $namespace, $respond_email, $leave_email);
+			$query = "delete from `tiki_mailin_accounts` where `account`=? and `pop`=? and `port`=? and `username`=? and `pass`=? and `type`=? and `active`=? and `anonymous`=? and `admin`=? and `attachments`=? and `routing`=? and `article_topicId`=?, `article_type`=?, `show_inlineImages`=?, `save_html`=?, `categoryId`=?, `namespace`=?, `respond_email`=?, `leave_email`=?";
 			$result = $this->query($query, $bindvars, -1, -1, false);
-			$query = "insert into `tiki_mailin_accounts`(`account`,`pop`,`port`,`smtpPort`,`username`,`pass`,`smtp`,`useAuth`,`type`,`active`,`anonymous`,`admin`,`attachments`,`routing`,`article_topicId`,`article_type`,`show_inlineImages`, `save_html`, `categoryId`, `namespace`, `respond_email`, `leave_email`) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+			$query = "insert into `tiki_mailin_accounts`(`account`,`pop`,`port`,`username`,`pass`,`type`,`active`,`anonymous`,`admin`,`attachments`,`routing`,`article_topicId`,`article_type`,`show_inlineImages`, `save_html`, `categoryId`, `namespace`, `respond_email`, `leave_email`) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 			$result = $this->query($query, $bindvars);
 		}
 		return true;
