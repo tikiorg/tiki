@@ -62,6 +62,7 @@ function wikiplugin_getaccesstoken( $data, $params )
 		$values = $params['values'];
 	}
 	$bindvars = array();
+	$bindvars[] = "%$entry%";
 	$querystringvars = array();
 	for ($i = 0, $count_keys = count($keys); $i < $count_keys; $i++) {
 		$querystringvars[$keys[$i]] = $values[$i];
@@ -71,7 +72,7 @@ function wikiplugin_getaccesstoken( $data, $params )
 		$mid = " and `parameters` = ?";
 		$bindvars[] = $encoded; 
 	}	
-	$query = "select `token` from `tiki_auth_tokens` where `entry` like '%$entry%' $mid";
+	$query = "select `token` from `tiki_auth_tokens` where `entry` like ? $mid";
 	if ($ret = $tikilib->getOne($query, $bindvars)) {
 		return $ret;
 	} else {
