@@ -10,7 +10,7 @@ class WikiPluginBridge extends Base
 		$this->allowLines = true;
 	}
 
-	public function render(Plugin &$plugin, &$body, &$parser)
+	public function render(Plugin &$plugin, &$body, &$renderer, &$parser)
 	{
 		$name = strtolower($plugin->type);
 		$fileLocation = "lib/wiki-plugins/wikiplugin_" . $name . ".php";
