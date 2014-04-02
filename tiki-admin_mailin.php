@@ -14,80 +14,6 @@ include_once ('lib/mailin/mailinlib.php');
 $access->check_feature('feature_mailin');
 $access->check_permission(array('tiki_p_admin_mailin'));
 
-// Add a new mail account for the user here
-if (!isset($_REQUEST['accountId'])) $_REQUEST['accountId'] = 0;
-$smarty->assign('accountId', $_REQUEST['accountId']);
-if (isset($_REQUEST['new_acc'])) {
-	check_ticket('admin-mailin');
-	if (! Tiki\MailIn\Account::test($_REQUEST)) {
-		$tikifeedback[] = array(
-			'num' => 1,
-			'mes' => sprintf(tra('Mail-in account %s incorrect'), $_REQUEST['account'])
-		);
-	} else {
-		$mailinlib->replace_mailin_account(
-			$_REQUEST['accountId'],
-			$_REQUEST['account'],
-			$_REQUEST['pop'],
-			$_REQUEST['port'],
-			$_REQUEST['username'],
-			$_REQUEST['pass'],
-			$_REQUEST['type'],
-			isset($_REQUEST['active']) ? 'y' : 'n',
-			isset($_REQUEST['anonymous']) ? 'y' : 'n',
-			isset($_REQUEST['admin']) ? 'y' : 'n',
-			isset($_REQUEST['attachments']) ? 'y' : 'n',
-			isset($_REQUEST['routing']) ? 'y' : 'n',
-			$_REQUEST['article_topicId'],
-			$_REQUEST['article_type'],
-			$_REQUEST['discard_after'],
-			isset($_REQUEST['show_inlineImages']) ? 'y' : 'n',
-			isset($_REQUEST['save_html']) ? 'y' : 'n',
-			$_REQUEST['categoryId'],
-			$_REQUEST['namespace'],
-			isset($_REQUEST['respond_email']) ? 'y' : 'n',
-			isset($_REQUEST['leave_email']) ? 'y' : 'n'
-		);
-
-		$tikifeedback[] = array(
-			'num' => 1,
-			'mes' => sprintf(tra('Mail-in account %s saved'), $_REQUEST['account'])
-		);
-	}
-} else {
-	$smarty->assign('confirmation', 0);
-}
-
-if (isset($_REQUEST['remove'])) {
-	$access->check_authenticity();
-	$mailinlib->remove_mailin_account($_REQUEST['remove']);
-}
-
-if ($_REQUEST['accountId']) {
-	$info = $mailinlib->get_mailin_account($_REQUEST['accountId']);
-} else {
-	$info['account'] = '';
-	$info['username'] = '';
-	$info['pass'] = '';
-	$info['pop'] = '';
-	$info['port'] = 110;
-	$info['type'] = 'wiki-put';
-	$info['active'] = 'y';
-	$info['anonymous'] = 'n';
-	$info['admin'] = 'y';
-	$info['attachments'] = 'y';
-	$info['routing'] = 'y';
-	$info['article_topicId'] = '';
-	$info['article_type'] = '';
-	$info['show_inlineImages'] = 'y';
-	$info['save_html'] = 'y';
-	$info['categoryId'] = 0;
-	$info['namespace'] = '';
-	$info['respond_email'] = 'y';
-	$info['leave_email'] = 'n';
-}
-$smarty->assign('info', $info);
-
 // List
 $accounts = $mailinlib->list_mailin_accounts(0, -1, 'account_asc', '');
 $smarty->assign('accounts', $accounts['data']);
@@ -116,10 +42,6 @@ if (isset($_REQUEST['mailin_autocheck'])) {
 
 $artlib = TikiLib::lib('art');
 
-$topics = $artlib->list_topics();
-$smarty->assign('topics', $topics);
-$types = $artlib->list_types();
-$smarty->assign('types', $types);
 $smarty->assign('tikifeedback', $tikifeedback);
 $smarty->assign('mailin_types', $mailinlib->list_available_types());
 ask_ticket('admin-mailin');

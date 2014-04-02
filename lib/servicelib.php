@@ -76,6 +76,7 @@ class ServiceLib
 			'jcapture' => 'Services_JCapture_Controller',
 			'jison'=> 'Services_JisonParser_WikiPlugin',
 			'kaltura'=>  'Services_Kaltura_Controller',
+			'mailin' => 'Services_MailIn_Controller',
 			'managestream' => 'Services_ActivityStream_ManageController',
 			'module' => 'Services_Module_Controller',
 			'monitor' => 'Services_User_MonitorController',
