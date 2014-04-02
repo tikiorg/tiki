@@ -219,7 +219,12 @@ this.instances.'.$as_id.'.resetDirty();
             $expressionSyntaxesJson = json_encode($expressionSyntaxes->parsedExpressionSyntaxes);
             $wLPlugins = json_encode($parserWYSIWYG->plugins);
             $name = $params['name'];
-            $parserWYSIWYG->scripts->addCss(".wikiedit.wikilingo{min-height:500px;}");
+            $parserWYSIWYG->scripts
+                ->addCssLocation("vendor/medium.js/medium.js/medium.css")
+                ->addCssLocation("vendor/wikilingo/wikilingo/editor/bubble.css")
+                ->addCssLocation("vendor/wikilingo/wikilingo/editor/IcoMoon/sprites/pastLink.css")
+                ->addCssLocation("vendor/wikilingo/wikilingo/editor/IcoMoon/sprites/sprites.css")
+                ->addCss(".wikiedit.wikilingo{min-height:500px;}");
             $css = $parserWYSIWYG->scripts->renderCss();
             $html .= <<<HTML
 $css

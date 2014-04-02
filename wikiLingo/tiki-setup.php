@@ -391,14 +391,6 @@ if ($prefs['feature_syntax_highlighter'] == 'y') {
 	codemirrorModes($prefs['tiki_minify_javascript'] === 'y');
 }
 if ($prefs['feature_wikilingo'] == 'y') {
-    if ($prefs['feature_wysiwyg'] == 'y' && (!empty($jitRequest['edit'])) || (isset($_SESSION['wysiwyg'])) && $_SESSION['wysiwyg'] === 'y'){
-        $headerlib
-            ->add_cssfile("vendor/medium.js/medium.js/medium.css")
-            ->add_cssfile("vendor/wikilingo/wikilingo/editor/bubble.css")
-            ->add_cssfile("vendor/wikilingo/wikilingo/editor/IcoMoon/sprites/pastLink.css")
-            ->add_cssfile("vendor/wikilingo/wikilingo/editor/IcoMoon/sprites/sprites.css");
-    }
-
     $headerlib
         //flp stuff
         ->add_cssfile('vendor/tablesorter/tablesorter/css/theme.dropbox.css')
