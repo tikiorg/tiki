@@ -10,10 +10,10 @@ use Tiki\MailIn\Exception\TransportException;
 
 class Pop3 implements SourceInterface
 {
-	private $host;
-	private $port;
-	private $username;
-	private $password;
+	protected $host;
+	protected $port;
+	protected $username;
+	protected $password;
 
 	function __construct($host, $port, $username, $password)
 	{
@@ -63,7 +63,7 @@ class Pop3 implements SourceInterface
 		$pop->close();
 	}
 
-	private function connect()
+	protected function connect()
 	{
 		try {
 			$pop = new \Zend_Mail_Storage_Pop3([

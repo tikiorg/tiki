@@ -14,7 +14,7 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 /**
  *
  */
-class MailinLib extends TikiLib
+class MailinLib extends TikiDb_Bridge
 {
 	function list_available_types()
 	{
@@ -121,7 +121,8 @@ class MailinLib extends TikiLib
     /**
      * @param $accountId
      * @param $account
-     * @param $pop
+	 * @param $protocol
+     * @param $host
      * @param $port
      * @param $username
      * @param $pass
@@ -137,7 +138,7 @@ class MailinLib extends TikiLib
 	*  @param 0 $categoryId
 	* @return bool
 	 */
-	function replace_mailin_account($accountId, $account, $pop, $port, $username, $clearpass, $type, $active, $anonymous, $admin, $attachments, $routing, $article_topicId = NULL, $article_type = NULL, $discard_after=NULL, $show_inlineImages='n', $save_html='y', $categoryId = 0, $namespace='', $respond_email = 'y', $leave_email = 'n')
+	function replace_mailin_account($accountId, $account, $protocol, $host, $port, $username, $clearpass, $type, $active, $anonymous, $admin, $attachments, $routing, $article_topicId = NULL, $article_type = NULL, $discard_after=NULL, $show_inlineImages='n', $save_html='y', $categoryId = 0, $namespace='', $respond_email = 'y', $leave_email = 'n')
 	{
 		// Fix values
 		if ($attachments == null) {
@@ -147,18 +148,39 @@ class MailinLib extends TikiLib
 		// Encrypt password
 		$pass = $this->encryptPassword($clearpass);
 		
+		$data = array(
+			'account' => $account,
+			'protocol' => $protocol,
+			'host' => $host,
+			'port' => (int) $port,
+			'username' => $username,
+			'pass' => $pass,
+			'type' => $type,
+			'active' => $active,
+			'anonymous' => $anonymous,
+			'admin' => $admin,
+			'attachments' => $attachments,
+			'routing' => $routing,
+			'article_topicId' => (int) $article_topicId,
+			'article_type' => $article_type,
+			'discard_after' => $discard_after,
+			'show_inlineImages' => $show_inlineImages,
+			'save_html' => $save_html,
+			'categoryId' => (int) $categoryId,
+			'namespace' => $namespace,
+			'respond_email' => $respond_email,
+			'leave_email' => $leave_email,
+		);
+		$table = $this->table('tiki_mailin_accounts');
 		if ($accountId) {
-			$bindvars = array($account,$pop,(int)$port,$username,$pass,$type,$active,$anonymous,$admin,$attachments,$routing,(int)$article_topicId,$article_type,$discard_after,$show_inlineImages,$save_html,$categoryId, $namespace, $respond_email, $leave_email, (int)$accountId);
-			$query = "update `tiki_mailin_accounts` set `account`=?, `pop`=?, `port`=?, `username`=?, `pass`=?, `type`=?, `active`=?, `anonymous`=?, `admin`=?, `attachments`=?,  `routing`=?, `article_topicId`=?, `article_type`=? , `discard_after`=?, `show_inlineImages`=?, `save_html`=?, `categoryId`=?, `namespace`=?, `respond_email`=?, `leave_email`=? where `accountId`=?";
-			$result = $this->query($query, $bindvars);
+			$table->update($data, [
+				'accountId' => $accountId,
+			]);
+
+			return $accountId;
 		} else {
-			$bindvars = array($account,$pop,(int)$port,$username,$pass,$type,$active,$anonymous,$admin,$attachments,$routing,(int)$article_topicId,$article_type, $show_inlineImages, $save_html, $categoryId, $namespace, $respond_email, $leave_email);
-			$query = "delete from `tiki_mailin_accounts` where `account`=? and `pop`=? and `port`=? and `username`=? and `pass`=? and `type`=? and `active`=? and `anonymous`=? and `admin`=? and `attachments`=? and `routing`=? and `article_topicId`=?, `article_type`=?, `show_inlineImages`=?, `save_html`=?, `categoryId`=?, `namespace`=?, `respond_email`=?, `leave_email`=?";
-			$result = $this->query($query, $bindvars, -1, -1, false);
-			$query = "insert into `tiki_mailin_accounts`(`account`,`pop`,`port`,`username`,`pass`,`type`,`active`,`anonymous`,`admin`,`attachments`,`routing`,`article_topicId`,`article_type`,`show_inlineImages`, `save_html`, `categoryId`, `namespace`, `respond_email`, `leave_email`) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-			$result = $this->query($query, $bindvars);
+			return $table->insert($data);
 		}
-		return true;
 	}
 
     /**

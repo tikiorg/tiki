@@ -24,7 +24,11 @@ class Account
 
 	private static function getSource(array $acc)
 	{
-		return new Source\Pop3($acc['pop'], $acc['port'], $acc['username'], $acc['pass']);
+		if ($acc['protocol'] == 'imap') {
+			return new Source\Imap($acc['host'], $acc['port'], $acc['username'], $acc['pass']);
+		} else {
+			return new Source\Pop3($acc['host'], $acc['port'], $acc['username'], $acc['pass']);
+		}
 	}
 
 	public static function test(array $acc)

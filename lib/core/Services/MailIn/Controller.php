@@ -24,7 +24,8 @@ class Services_MailIn_Controller
 
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			$account = [
-				'pop' => $input->pop->url(),
+				'protocol' => $input->protocol->word(),
+				'host' => $input->host->url(),
 				'port' => $input->port->int(),
 				'username' => $input->username->text(),
 				'pass' => $input->pass->none(),
@@ -36,7 +37,8 @@ class Services_MailIn_Controller
 			$mailinlib->replace_mailin_account(
 				$accountId,
 				$input->account->text(),
-				$input->pop->url(),
+				$input->protocol->word(),
+				$input->host->url(),
 				$input->port->int(),
 				$input->username->text(),
 				$input->pass->none(),
@@ -70,7 +72,8 @@ class Services_MailIn_Controller
 				'account' => '',
 				'username' => '',
 				'pass' => '',
-				'pop' => '',
+				'protocol' => 'pop',
+				'host' => '',
 				'port' => 110,
 				'type' => 'wiki-put',
 				'active' => 'y',

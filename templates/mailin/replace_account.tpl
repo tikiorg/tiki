@@ -1,7 +1,7 @@
 {extends "layout_view.tpl"}
 
 {block name="title"}
-	{title}{$title}{/title}
+    {title}{$title}{/title}
 {/block}
 
 {block name="content"}
@@ -37,9 +37,15 @@
     </div>
   </div>
   <div class="form-group">
-    <label for="pop" class="control-label col-md-3">{tr}POP server{/tr} / {tr}Port{/tr}</label>
+    <label for="host" class="control-label col-md-3">{tr}POP server{/tr} / {tr}Port{/tr}</label>
+    <div class="col-md-3">
+      <select name="protocol" class="form-control">
+      	<option value="pop" {if $info.protocol eq 'pop'}selected{/if}>{tr}POP{/tr}</option>
+      	<option value="imap" {if $info.protocol eq 'imap'}selected{/if}>{tr}IMAP{/tr}</option>
+      </select>
+    </div>
     <div class="col-md-4">
-      <input type="text" name="pop" value="{$info.pop|escape}" class="form-control" placeholder="{tr}Hostname{/tr}">
+      <input type="text" name="host" value="{$info.host|escape}" class="form-control" placeholder="{tr}Hostname{/tr}">
     </div>
     <div class="col-md-2">
       <input type="text" name="port" value="{$info.port|escape}" class="form-control" placeholder="{tr}Port{/tr}">
@@ -81,7 +87,7 @@
         <option value="">{tr}None{/tr}</option>
         {foreach $types as $type}
           <option value="{$type.type|escape}" {if $info.article_type eq $type.type}selected="selected"{/if}>{$type.type|escape}</option>
-          {/foreach}
+        {/foreach}
       </select>
       {if $tiki_p_admin_cms eq 'y'}
         <div class="help-block">
@@ -156,7 +162,7 @@
           <input type="checkbox" name="show_inlineImages" value="1" {if $info.show_inlineImages eq 'y'}checked{/if}>
           {tr}Show inline images{/tr}
         </label>
-	      <div class="help-block">
+          <div class="help-block">
           {tr}For HTML email, attempt to create a WYSIWYG wiki-page.{/tr}
         </div>
       </div>
@@ -173,7 +179,7 @@
           {tr}Keep HTML format{/tr}
         </label>
         <div class="help-block">
-	        {tr}Always save Email in HTML format as a wiki page in HTML format, regardless of editor availability or selection.{/tr}
+            {tr}Always save Email in HTML format as a wiki page in HTML format, regardless of editor availability or selection.{/tr}
         </div>
       </div>
     </div>
@@ -187,7 +193,7 @@
   <div class="form-group">
     <label for="cartegoryId" class="control-label col-md-3">{tr}Auto-assign category{/tr}</label>
     <div class="col-md-6">
-	    {if $prefs.feature_categories eq 'y'}
+      {if $prefs.feature_categories eq 'y'}
         <input type="text" name="categoryId" value="{$info.categoryId|escape}" class="form-control" placeholder="{tr}Category ID{/tr}">
         <div class="help-block">{tr}Only affects wiki-put, when creating a new wiki page{/tr}</div>
       {else}
@@ -198,7 +204,7 @@
   <div class="form-group">
     <label for="namespace" class="control-label col-md-3">{tr}Auto-assign namespace{/tr}</label>
     <div class="col-md-6">
-	    {if $prefs.namespace_enabled eq 'y'}
+        {if $prefs.namespace_enabled eq 'y'}
         <input type="text" name="namespace" value="{$info.namespace|escape}" class="form-control">
         <div class="help-block">{tr}Only affects wiki-put, when creating a new wiki page{/tr}</div>
       {else}
