@@ -234,8 +234,6 @@ $(window).load(function(){
             $source = $input->data->none();
         }
 
-        $parsed = $wikiLingo->parse($source);
-
         $result = array();
 
         //save a wiki page
@@ -301,7 +299,7 @@ $(window).load(function(){
         $tikilib->query("INSERT INTO tiki_output (entityId, objectType, outputType, version) VALUES (?,?,?,?)", array($page, 'wikiPage', 'wikiLingo', $version));
 
         if ($input->preview->bool()) {
-            $result['parsed'] = $parsed;
+            $result['parsed'] = $wikiLingo->parse($source);
             $result['script'] = $scripts->renderScript();
             $result['css'] = $scripts->renderCss();
         }
