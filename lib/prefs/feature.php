@@ -2074,7 +2074,7 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_wiki_allowhtml' => array(
 			'name' => tra('Allow HTML'),
-            'description' => tra('allow HTML in Wiki Pages'),
+            'description' => tra('Per-page option: HTML in Wiki Pages is parsed by the browser, instead of HTML tags being displayed as typed.'),
 			'type' => 'flag',
 			'default' => 'n',
 			'tags' => array('basic'),

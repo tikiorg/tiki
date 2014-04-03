@@ -320,12 +320,15 @@
 							{/if}
 				
 							{if $prefs.feature_wiki_allowhtml eq 'y' and $tiki_p_use_HTML eq 'y' and ($wysiwyg neq 'y' or $prefs.wysiwyg_htmltowiki eq 'y')}
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label" for="allowhtml">{tr}Allow HTML{/tr}</label>
-                                    <div class="col-sm-10 checkbox">
-                                        <input type="checkbox" name="allowhtml" {if $allowhtml eq 'y'}checked="checked"{/if}>
-                                    </div>
-                                </div>
+								<div class="form-group">
+									<label class="col-sm-2 control-label" for="allowhtml">{tr}Allow HTML{/tr}</label>
+									<div class="col-sm-10 checkbox">
+										<input type="checkbox" name="allowhtml" {if $allowhtml eq 'y'}checked="checked"{/if}>
+										{remarksbox type=tip title="{tr}Tip{/tr}"}
+											{tr }Per-page option: HTML in Wiki Pages is parsed by the browser, instead of HTML tags being displayed as typed.{/tr}
+										{/remarksbox}
+									</div>
+								</div>
 								{if $prefs.ajax_autosave eq "y"}{jq}
 $("input[name=allowhtml]").change(function() {
 	auto_save( "editwiki", autoSaveId );
