@@ -6,6 +6,10 @@ use WikiLingo\Expression\Plugin;
 
 include_once 'lib/wikiLingo_tiki/WikiMetadataLookup.php';
 
+/**
+ * Class WikiLingoEvents
+ * Used to extend the events system within wikiLingo
+ */
 class WikiLingoEvents
 {
 	public static $bridge = null;

@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "e85c0b69e969c5fd0c4618a627286276",
+    "hash": "9b3b2dae8c850890e679a37046eb54aa",
     "packages": [
         {
             "name": "aFarkas/html5shiv",
@@ -1185,12 +1185,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/wikiLingo/wikiLingo.git",
-                "reference": "787c8459c976ef17fbf36ab239d62a3c85b9c169"
+                "reference": "6c411338bc535304e9703a0b379e9edcba00fbd1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wikiLingo/wikiLingo/zipball/787c8459c976ef17fbf36ab239d62a3c85b9c169",
-                "reference": "787c8459c976ef17fbf36ab239d62a3c85b9c169",
+                "url": "https://api.github.com/repos/wikiLingo/wikiLingo/zipball/6c411338bc535304e9703a0b379e9edcba00fbd1",
+                "reference": "6c411338bc535304e9703a0b379e9edcba00fbd1",
                 "shasum": ""
             },
             "require": {
@@ -1229,7 +1229,7 @@
                     "role": "Lead Developer"
                 }
             ],
-            "time": "2014-04-02 20:04:14"
+            "time": "2014-04-02 21:44:37"
         },
         {
             "name": "zetacomponents/base",

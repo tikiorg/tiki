@@ -2,6 +2,10 @@
 
 include_once 'lib/wikiLingo_tiki/WikiMetadataLookup.php';
 
+/**
+ * Class WikiEvents
+ * Used for Tiki's "Wiki" feature
+ */
 class WikiEvents {
 
 	public $title;

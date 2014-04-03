@@ -128,11 +128,11 @@ function tiki_setup_events()
 
 	if ($prefs['feature_futurelinkprotocol'] == 'y') {
 		if ($prefs['feature_wikilingo'] == 'y') {
-			$events->bind("tiki.wiki.view", 'wikilingo_flp_view');
-			$events->bind("tiki.wiki.save", 'wikilingo_flp_save');
+			$events->bind("tiki.wiki.view", $defer('wlte', 'wikilingo_flp_view'));
+			$events->bind("tiki.wiki.save", $defer('wlte', 'wikilingo_flp_save'));
 		} else {
-			$events->bind("tiki.wiki.view", 'tiki_wiki_view_pastlink');
-			$events->bind("tiki.wiki.save", 'tiki_wiki_save_pastlink');
+			$events->bind("tiki.wiki.view", $defer('wlte', 'tiki_wiki_view_pastlink'));
+			$events->bind("tiki.wiki.save", $defer('wlte', 'tiki_wiki_save_pastlink'));
 		}
 	}
 
@@ -220,87 +220,4 @@ function tiki_save_refresh_index($args)
 		$isBulk = isset($args['bulk_import']) && $args['bulk_import'];
 		refresh_index($args['type'], $args['object'], ! $isBulk);
 	}
-}
-
-
-function tiki_wiki_view_pastlink($args)
-{
-	//listener
-	FutureLink_ReceiveFromPast::wikiView($args);
-
-	//page link, not really used
-	FutureLink_PageLookup::wikiView($args);
-
-	//ui, and redirect
-	FutureLink_FutureUI::wikiView($args);
-	FutureLink_PastUI::wikiView($args);
-}
-
-function tiki_wiki_save_pastlink($args)
-{
-	FutureLink_FutureUI::wikiSave($args);
-	FutureLink_PastUI::wikiSave($args);
-}
-
-function wikilingo_flp_view($args)
-{
-	global $headerlib;
-    $page = $args['object'];
-	$version = $args['version'];
-	$body = $args['data'];
-	require_once 'lib/wikiLingo_tiki/WikiEvents.php';
-
-	$events = new WikiEvents($page, $version, $body);
-
-
-	//listener
-	$events->listen();
-
-
-	//redirect start
-	$events->direct();
-
-
-	//futurelink
-	$events->load();
-
-	//pastlink now happens inside of wikiLingo
-
-	//view for wiki
-
-	//need partial metadata
-    $metadataLookup = new WikiMetadataLookup($page);
-	$partialMetadata = $metadataLookup->getPartial();
-
-	$headerlib
-		->add_jsfile('vendor/rangy/rangy/uncompressed/rangy-core.js')
-		->add_jsfile('vendor/rangy/rangy/uncompressed/rangy-cssclassapplier.js')
-		->add_jsfile('vendor/rangy/rangy/uncompressed/rangy-selectionsaverestore.js')
-		->add_jsfile('vendor/flp/flp/Phraser/rangy-phraser.js')
-		->add_jsfile('vendor/flp/flp/Phraser/Phraser.js')
-		->add_jsfile('vendor/jquery/md5/js/md5.js')
-		->add_jsfile('lib/wikiLingo_tiki/tiki_wikiLingo_flp_view.js')
-        ->add_jsfile('lib/ZeroClipboard.js')
-        ->add_jsfile('vendor/flp/flp/scripts/flp.js')
-        ->add_jsfile('vendor/flp/flp/scripts/flp.Link.js')
-        ->add_jsfile('lib/wikiLingo_tiki/tiki_flp.Link.js')
-        ->add_jsfile('vendor/tablesorter/tablesorter/js/jquery.tablesorter.js')
-        ->add_cssfile('vendor/tablesorter/tablesorter/css/theme.dropbox.css')
-        ->add_jq_onready('(new WikiLingoFLPView($("#page-data"), ' . json_encode($partialMetadata) . '));');
-}
-
-function wikilingo_flp_save($args)
-{
-	global $wikilib;
-    require_once 'lib/wikiLingo_tiki/WikiEvents.php';
-
-    $page = $args['object'];
-	$version = $args['version'];
-	$output = new WikiLibOutput($args, $args['data']);
-    $body = $output->parsedValue;
-
-    $events = new WikiEvents($page, $version, $body);
-
-    $events->save();
-
 }
