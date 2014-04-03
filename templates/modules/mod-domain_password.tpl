@@ -18,7 +18,7 @@
 			{if isset($domainDisplayPrompt[{$dompwdCount}]) and $domainDisplayPrompt[{$dompwdCount}] eq 'n'}
 				<td colspan="2" class="pwddom_domain_name">{$domain}</td>
 			{else}
-				<td>Domain</td>
+				<td>{tr}Domain{/tr}</td>
 				<td class="pwddom_domain_name">{$domain}</td>
 			{/if}
 		</tr>
@@ -35,7 +35,7 @@
 		{/if}
 		{if !empty($user)}
 			<tr>
-				<td>User</td>
+				<td>{tr}User{/tr}</td>
 				<td class="pwddom_username_name">
 					{if isset($can_update[{$dompwdCount}]) and $can_update[{$dompwdCount}] eq 'y' and $currentuser[{$dompwdCount}] neq 'y' and $edit_option[{$dompwdCount}] neq 'y'}
 						<input type="text" id="domUsername" name="domUsername" value="{$username[{$dompwdCount}]}">
@@ -46,19 +46,19 @@
 			</tr>
 			{if isset($can_update[{$dompwdCount}]) and $can_update[{$dompwdCount}] eq 'y' and $edit_option[{$dompwdCount}] neq 'y'}
 				<tr>
-					<td>Pass</td>
+					<td>{tr}Pass{/tr}</td>
 					<td><input type="password" id="domPassword" name="domPassword"></td>
 				</tr>
 				<tr>
 					<td colspan="2">
-						<input type="submit" name="saveButton{$dompwdCount}" value="Save">
-						<input type="reset" value="Cancel" onclick="javascript:submitform{$dompwdCount}(false)">
+						<input type="submit" name="saveButton{$dompwdCount}" value="{tr}Save{/tr}">
+						<input type="reset" value="{tr}Cancel{/tr}" onclick="javascript:submitform{$dompwdCount}(false)">
 					</td>
 				</tr>
 			{elseif $edit_option[{$dompwdCount}] eq 'y'}
 				<tr>
 					<td colspan="2">
-						<a href="javascript:submitform{$dompwdCount}(true)">Edit</a>
+						<a href="javascript:submitform{$dompwdCount}(true)">{tr}Edit{/tr}</a>
 					</td>
 				</tr>
 			{/if}
