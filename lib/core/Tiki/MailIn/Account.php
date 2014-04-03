@@ -75,6 +75,11 @@ class Account
 				'' => new Action\DirectFactory('Tiki\MailIn\Action\WikiPut', $wikiParams),
 			));
 			break;
+		case 'reply-handler':
+			$account->actionFactory = new Action\RecipientPlaceholderFactory(array(
+				'comment' => 'Tiki\MailIn\Action\Comment',
+			));
+			break;
 		default:
 			throw new Exception\MailInException("Action factory not found.");
 		}
@@ -139,19 +144,27 @@ class Account
 		// TODO : This is rather primitive and implies we control the message source, need to make smarter
 
 		if ($this->discardAfter) {
-			$body = $message->getBody();
-			$pos = strpos($body, $this->discardAfter);
-			if ($pos !== false) {
-				$body = substr($body, 0, $pos);
-				$message->setBody($body);
-			}
+			$this->discard($message, $this->discardAfter);
+		}
 
-			$body = $message->getHtmlBody(false);
-			$pos = strpos($body, $this->discardAfter);
-			if ($pos !== false) {
-				$body = substr($body, 0, $pos);
-				$message->setHtmlBody($body);
-			}
+		$this->discard($message, '<div class="gmail_quote">');
+		$this->discard($message, '<div class="gmail_extra">');
+	}
+
+	private function discard($message, $delimitor)
+	{
+		$body = $message->getBody();
+		$pos = strpos($body, $delimitor);
+		if ($pos !== false) {
+			$body = substr($body, 0, $pos);
+			$message->setBody($body);
+		}
+
+		$body = $message->getHtmlBody(false);
+		$pos = strpos($body, $delimitor);
+		if ($pos !== false) {
+			$body = substr($body, 0, $pos);
+			$message->setHtmlBody($body);
 		}
 	}
 
@@ -168,6 +181,7 @@ class Account
 
 	function getReplyMail(Source\Message $message)
 	{
+		require_once 'lib/webmail/tikimaillib.php';
 		$mail = new TikiMail();
 		$mail->setFrom($this->accountAddress);
 
@@ -197,7 +211,7 @@ class Account
 		return $this->defaultCategory;
 	}
 
-	function parseBody($body)
+	function parseBody($body, $canAllowHtml = true)
 	{
 		global $prefs;
 
@@ -208,9 +222,9 @@ class Account
 			$wysiwyg = 'y';
 		}
 
-		if ($is_html && $this->saveHtml) {
+		if ($is_html && $this->saveHtml && $canAllowHtml) {
 			// Keep HTML setting. Always save as HTML
-		} elseif ($prefs['feature_wysiwyg'] === 'y' && $prefs['wysiwyg_default'] === 'y' && $prefs['wysiwyg_htmltowiki'] !== 'y' ) {
+		} elseif ($prefs['feature_wysiwyg'] === 'y' && $prefs['wysiwyg_default'] === 'y' && $prefs['wysiwyg_htmltowiki'] !== 'y'  && $canAllowHtml) {
 			// WYSIWYG HTML editor is active
 			$is_html = true;
 			$wysiwyg = 'y';
@@ -245,6 +259,8 @@ class Account
 
 	function check()
 	{
+		global $prefs;
+
 		$logs = TikiLib::lib('logs');
 		$messages = $this->source->getMessages();
 
@@ -255,6 +271,7 @@ class Account
 				$this->sendFailureResponse($message);
 				$this->log($message, tr("Rejected message, user globally denied"));
 			} elseif ($action = $this->getAction($message)) {
+				$context = new \Perms_Context($message->getAssociatedUser());
 				if (! $action->isEnabled()) {
 					// Action configured, but not enabled
 					$this->log($message, tr("Rejected message, associated action disabled (%0)", $action->getName()));
@@ -266,8 +283,11 @@ class Account
 					// TODO : Send permission denied message
 					$this->log($message, tr("Rejected message, user locally denied (%0)", $action->getName()));
 				}
+
+				unset($context);
 			} else {
 				
+				$smarty = TikiLib::lib('smarty');
 				// Send failure response for no suitable action found
 				$l = $prefs['language'];
 				$subject = $smarty->fetchLang($l, "mail/mailin_help_subject.tpl");

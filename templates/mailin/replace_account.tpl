@@ -28,11 +28,12 @@
     <div class="col-md-9">
       <select name="type" class="form-control">
         {foreach $mailinTypes as $intype => $detail}
-          <option value="{$intype|escape}" {if $intype eq $info.type}selected{/if}>{$detail.name|escape}</option>
+          <option value="{$intype|escape}" {if $intype eq $info.type}selected{/if} {if ! $detail.enabled}disabled{/if}>{$detail.name|escape}</option>
         {/foreach}
       </select>
       <div class="help-block">
-        {tr}Wiki (multiple action) allows to prefix the subject with GET:, PREPEND: or APPEND:{/tr}
+        <p>{tr}Wiki (multiple action) allows to prefix the subject with GET:, PREPEND: or APPEND:{/tr}</p>
+		<p>{tr}Reply handler requires notifications to be enabled and the reply email pattern to be configured.{/tr}</p>
       </div>
     </div>
   </div>

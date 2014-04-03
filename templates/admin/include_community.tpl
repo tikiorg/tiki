@@ -33,6 +33,7 @@
 
 					{preference name=monitor_individual_clear}
 					{preference name=monitor_count_refresh_interval}
+					{preference name=monitor_reply_email_pattern}
 					{preference name=monitor_digest}
 					<div class="alert alert-warning">
 						<p>{tr}For the digest emails to be sent out, you will need to set-up a cron job.{/tr}</p>

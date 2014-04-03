@@ -403,7 +403,7 @@ class Services_Comment_Controller
 		return true;
 	}
 
-	private function canPost($type, $objectId)
+	public function canPost($type, $objectId)
 	{
 		global $prefs;
 
@@ -419,7 +419,7 @@ class Services_Comment_Controller
 		return true;
 	}
 
-	private function isEnabled($type, $objectId)
+	public function isEnabled($type, $objectId)
 	{
 		global $prefs;
 

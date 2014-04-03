@@ -142,17 +142,31 @@ class MonitorMailLib
 		$title = $this->renderTitle($language, $mail);
 		$html = $this->renderContent($language, $mail);
 
-		$this->send($email, $title, $html);
+		$this->send($email, $title, $html, $mail['args']);
 
 		unset($context);
 	}
 
-	private function send($email, $title, $html)
+	private function send($email, $title, $html, $args)
 	{
+		global $prefs;
+
 		require_once 'lib/webmail/tikimaillib.php';
 		$mail = new TikiMail;
 		$mail->setSubject($title);
 		$mail->setHtml($html);
+
+		if (! empty($prefs['monitor_reply_email_pattern']) && isset($args['reply_action'], $args['type'], $args['object'])) {
+			$data = Tiki_Security::get()->encode([
+				'u' => $GLOBALS['user'],
+				'a' => $args['reply_action'],
+				't' => $args['type'],
+				'o' => $args['object'],
+			]);
+			$reply = str_replace('PLACEHOLDER', $data, $prefs['monitor_reply_email_pattern']);
+			$mail->setReplyTo($reply);
+		}
+
 		$mail->send($email);
 	}
 

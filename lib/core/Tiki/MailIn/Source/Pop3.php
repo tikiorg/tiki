@@ -48,6 +48,7 @@ class Pop3 implements SourceInterface
 			$message->setMessageId(str_replace(['<', ']'], '', $source->{'message-id'}));
 			$message->setRawFrom($from);
 			$message->setSubject($source->subject);
+			$message->setRecipient($source->to);
 			$message->setHtmlBody($this->getBody($source, 'text/html'));
 			$message->setBody($this->getBody($source, 'text/plain'));
 
@@ -83,7 +84,7 @@ class Pop3 implements SourceInterface
 	private function getBody($part, $type)
 	{
 		if (! $part->isMultipart() && 0 === strpos($part->getHeader('Content-Type'), $type)) {
-			return $part->getContent();
+			return $this->decode($part);
 		}
 
 		if ($part->isMultipart()) {
@@ -119,7 +120,7 @@ class Pop3 implements SourceInterface
 				}
 				$fileName = '';
 				$fileType = '';
-				$fileData = base64_decode($p->getContent());
+				$fileData = $this->decode($p);
 				$fileSize = function_exists('mb_strlen') ? mb_strlen($fileData, '8bit') : strlen($fileData);
 
 				if (isset($headers['content-type'])) {
@@ -146,5 +147,28 @@ class Pop3 implements SourceInterface
 				$message->addAttachment($contentId, $fileName, $fileType, $fileSize, $fileData);
 			}
 		}
+	}
+
+	private function decode($part)
+	{
+		$content = $part->getContent();
+		if (isset($part->{'content-transfer-encoding'})) {
+			switch ($part->{'content-transfer-encoding'}) {
+			case 'base64':
+				$content = base64_decode($content);
+				break;
+			case 'quoted-printable':
+				$content = quoted_printable_decode($content);
+				break;
+			}
+		}
+
+		if (isset($part->{'content-type'})) {
+			if (preg_match('/charset="?iso-8859-1"?/i', $part->{'content-type'})) {
+				$content = utf8_encode($content); //convert to utf8
+			}
+		}
+
+		return $content;
 	}
 }

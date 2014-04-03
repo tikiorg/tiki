@@ -14,6 +14,7 @@ class Message
 
 	private $messageId;
 	private $from;
+	private $recipient;
 	private $subject;
 	private $body;
 	private $htmlBody;
@@ -47,6 +48,11 @@ class Message
 		preg_match('/<?([-!#$%&\'*+\.\/0-9=?A-Z^_`a-z{|}~]+@[-!#$%&\'*+\/0-9=?A-Z^_`a-z{|}~]+\.[-!#$%&\'*+\.\/0-9=?A-Z^_`a-z{|}~]+)>?/', $this->from, $mail);
 		
 		return $mail[1];
+	}
+
+	function setAssociatedUser($user)
+	{
+		$this->associatedUser = $user;
 	}
 
 	function getAssociatedUser()
@@ -126,6 +132,16 @@ class Message
 		if (isset($this->attachments[$contentId])) {
 			return $this->attachments[$contentId];
 		}
+	}
+
+	function getRecipient()
+	{
+		return $this->recipient;
+	}
+
+	function setRecipient($recipient)
+	{
+		$this->recipient = $recipient;
 	}
 }
 

@@ -36,6 +36,15 @@ function prefs_monitor_list()
 			'size' => 5,
 			'hint' => tr('0 to disable, every refresh causes a hit on the server, try to leave this above 60 seconds.'),
 		),
+		'monitor_reply_email_pattern' => array(
+			'name' => tr('Notification Reply-To email pattern'),
+			'description' => tr('Email model to use for the notification email reply-to address.'),
+			'type' => 'text',
+			'filter' => 'email',
+			'default' => '',
+			'hint' => tr('noreply+PLACEHOLDER@example.com'),
+			'dependencies' => ['feature_mailin'],
+		),
 	);
 }
 

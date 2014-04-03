@@ -5000,6 +5000,7 @@ class TikiLib extends TikiDb_Bridge
 			array(
 				'type' => 'wiki page',
 				'object' => $pageName,
+				'reply_action' => 'comment',
 				'user' => $GLOBALS['user'],
 				'page_id' => $info['page_id'],
 				'version' => $version,
