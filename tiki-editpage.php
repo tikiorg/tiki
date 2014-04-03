@@ -14,7 +14,7 @@
 // If you want to see the traces, set value below to true.
 // WARNING: DO NOT COMMIT WITH TRUE!!!!
 $dieInsteadOfForwardingWithHeader = false;
-
+global $prefs;
 require_once('lib/debug/Tracer.php');
 
 $inputConfiguration = array(
@@ -24,7 +24,7 @@ $inputConfiguration = array(
 		'watch' => 'digits',
 	) ),
 	array( 'staticKeyUnset' => array(
-		'edit',
+        ($prefs['feature_wikilingo'] == 'n' ? 'edit' : ''),
 	) ),
 );
 
@@ -174,6 +174,7 @@ if ($prefs['namespace_enabled'] == 'y' && isset($_REQUEST['namespace'])) {
 
 $smarty->assign('page', $page);
 $info = $tikilib->get_page_info($page);
+$smarty->assign('quickedit', isset($_GET['quickedit']));
 
 // String use to lock the page currently edit.
 $editLockPageId = 'edit_lock_' . (isset($info['page_id']) ? (int) $info['page_id'] : 0);
@@ -379,6 +380,7 @@ if (isset($_REQUEST['comments_enabled']) && $_REQUEST['comments_enabled'] === 'o
 $hash = array();
 $hash['lock_it'] = $lock_it;
 $hash['comments_enabled'] = $comments_enabled;
+
 if (!empty($_REQUEST['contributions'])) {
 	$hash['contributions'] = $_REQUEST['contributions'];
 }
@@ -885,9 +887,13 @@ if ( isset( $_REQUEST['translation_critical'] ) ) {
 	$smarty->assign('translation_critical', 0);
 }
 
+//override the feature if info tells us not to use it
+$useWikiLingo = ($prefs['feature_wikilingo'] === 'y' && isset($info['outputType']) && $info['outputType'] === 'wikiLingo');
+$smarty->assign('useWikiLingo', $useWikiLingo);
+
 // Parse (or not) $edit_data into $parsed
 // Handles switching editor modes
-if ( !isset($_REQUEST['preview']) && !isset($_REQUEST['save']) ) {
+if ( !isset($_REQUEST['preview']) && !isset($_REQUEST['save']) && !$useWikiLingo) {
 	if (isset($_REQUEST['mode_normal']) && $_REQUEST['mode_normal'] ==='y') {
 		// Parsing page data as first time seeing html page in normal editor
 		$smarty->assign('msg', "Parsing html to wiki");
@@ -1184,19 +1190,8 @@ if (
 				$edit .= "\r\n";
 			$edit = substr($info['data'], 0, $real_start).$edit.substr($info['data'], $real_start + $real_len);
 		}
-		if (
-			isset($_REQUEST['jisonWyisywg']) &&
-			$_REQUEST['jisonWyisywg'] == 'true' &&
-			$prefs['feature_jison_wiki_parser'] == 'y' &&
-			$prefs['feature_wysiwyg'] === 'y'
-		) {
-			$parser = new JisonParser_Html_Handler();
-			print_r($edit);
-			$edit = $parser->parse($edit);
-			print_r($edit);
-			print_r(Tikilib::getOne('select data from tiki_pages where pageName = ?', array($page)));
-			die;
-		} else if ($_SESSION['wysiwyg'] === 'y' && $prefs['wysiwyg_wiki_parsed'] === 'y' && $prefs['wysiwyg_ckeditor'] === 'y') {
+
+        if ($_SESSION['wysiwyg'] === 'y' && $prefs['wysiwyg_wiki_parsed'] === 'y' && $prefs['wysiwyg_ckeditor'] === 'y') {
 			$edit = $editlib->partialParseWysiwygToWiki($edit);
 		}
 
@@ -1551,6 +1546,7 @@ $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 $smarty->assign('showtags', 'n');
 $smarty->assign('qtnum', '1');
 $smarty->assign('qtcycle', '');
+$smarty->assign('outputType', $info['outputType']);
 
 possibly_set_pagedata_to_pretranslation_of_source_page();
 

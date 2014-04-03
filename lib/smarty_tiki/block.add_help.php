@@ -42,7 +42,9 @@ function smarty_block_add_help($params, $content, $smarty, &$repeat)
 
 	$help_sections[$params['id']] = $section;
 
-	if (!isset($params['show']) or $params['show'] == 'y') {
+    //TODO: add wikiLingo help
+
+	if (!isset($params['show']) or $params['show'] == 'y' and $prefs['feature_wikilingo'] != 'y') {
 		$smarty->loadPlugin('smarty_block_self_link');
 		$smarty->loadPlugin('smarty_function_icon');
 		$self_link_params['_alt'] = tra('Click for Help');

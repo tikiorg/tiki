@@ -3822,28 +3822,11 @@ CREATE TABLE `tiki_user_monitors` (
 	UNIQUE `event_target_uq` (`event`, `target`, `userId`)
 ) ENGINE=MyISAM;
 
-DROP TABLE IF EXISTS `tiki_goals`;
-CREATE TABLE `tiki_goals` (
-	`goalId` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-	`name` VARCHAR(50) NOT NULL,
-	`type` VARCHAR(10) NOT NULL DEFAULT 'user',
-	`description` TEXT,
-	`enabled` INT NOT NULL DEFAULT 0,
-	`daySpan` INT NOT NULL DEFAULT 14,
-	`from` DATETIME,
-	`to` DATETIME,
-	`eligible` BLOB,
-	`conditions` BLOB,
-	`rewards` BLOB
-) ENGINE=MyISAM;
-
-DROP TABLE IF EXISTS `tiki_goal_events`;
-CREATE TABLE `tiki_goal_events` (
-	`eventId` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-	`eventDate` INT NOT NULL,
-	`eventType` VARCHAR(50) NOT NULL,
-	`targetType` VARCHAR(50),
-	`targetObject` VARCHAR(255),
-	`user` VARCHAR(200) NOT NULL,
-	`groups` BLOB NOT NULL
-) ENGINE=MyISAM;
+DROP TABLE IF EXISTS `tiki_output`;
+CREATE TABLE `tiki_output` (
+  `entityId` varchar(160) NOT NULL default '',
+  `objectType` varchar(32) NOT NULL default '',
+  `outputType` varchar(32) NOT NULL default '',
+  `version` int(8) NOT NULL default '0',
+  `outputId` INT NOT NULL PRIMARY KEY AUTO_INCREMENT
+) ENGINE=MyISAM AUTO_INCREMENT=1;

@@ -58,7 +58,6 @@ class ParserLib extends TikiDb_Bridge
 		),
 	);
 
-	/*options for parser lib, called 'option' because we was to remain forward compatible with jison parser when we migrate, and options was already taken as a way to configure the parser and not the handler*/
 	public $option = array();
 
 	static $pluginInstances = array();
@@ -604,21 +603,9 @@ if ( \$('#$id') ) {
 		return WikiPlugin_Negotiator_Wiki::getList($includeReal, $includeAlias);
 	}
 
-	function zend_plugin_exists($className)
-	{
-		if (isset(self::$pluginInstances[$className])) {
-			return true;
-		}
-
-		return class_exists($className) == true;
-	}
 	//*
 	function plugin_exists( $name, $include = false )
 	{
-		if ($name != 'maketoc') {
-			$className = 'WikiPlugin_' . $name;
-			if ($this->zend_plugin_exists($className)) return true;
-		}
 		$php_name = 'lib/wiki-plugins/wikiplugin_';
 		$php_name .= TikiLib::strtolower($name) . '.php';
 
@@ -644,13 +631,6 @@ if ( \$('#$id') ) {
 
 		if ( isset( $known[$name] ) ) {
 			return $known[$name];
-		}
-
-		$className = 'WikiPlugin_' . $name;
-		$classExists = $this->zend_plugin_exists($className);
-		if ($classExists == true) {
-			$class = new $className;
-			return $known[$name] = $class->info();
 		}
 
 		if (! $this->plugin_exists($name, true)) {
@@ -977,14 +957,6 @@ if ( \$('#$id') ) {
 
 		//This is the class name for new simplified plugin system, if object does exist, it will use it, if not it uses old plugins
 		$classExists = false;
-		if ($name != 'maketoc') {
-			$className = 'WikiPlugin_' . $name;
-			$classExists = $this->zend_plugin_exists($className);
-			if ($classExists == true) {
-				$class = new $className;
-			}
-		}
-
 		$func_name = 'wikiplugin_' . $name;
 
 		if ( ! $validationPerformed && ! $this->option['ck_editor'] ) {
@@ -1212,13 +1184,6 @@ if ( \$('#$id') ) {
 			$args = array_intersect_key($args, $params);
 		}
 
-		//This gives us the ability to extend plugins with a standardized style method, style-css-style="style" => css-style:style; to the wrapper
-		foreach ($argsCopy as $possibleStyle => $possibleStyleSetting) {
-			if (isset(WikiPlugin_HtmlBase::$style[ltrim($possibleStyle, 'style-')])) {
-				$args[$possibleStyle] = $possibleStyleSetting;
-			}
-		}
-
 		// Apply filters on values individually
 		if (!empty($args)) {
 			foreach ( $args as $argKey => &$argValue ) {
@@ -1334,7 +1299,7 @@ if ( \$('#$id') ) {
 
 	// Replace hotwords in given line
 	//*
-	function replace_hotwords($line, $words) //TODO: needs put into jison
+	function replace_hotwords($line, $words)
 	{
 		global $prefs;
 		$hotw_nw = ($prefs['feature_hotwords_nw'] == 'y') ? "target='_blank'" : '';
@@ -1527,29 +1492,6 @@ if ( \$('#$id') ) {
 			$headerlib = TikiLib::lib('header');
 			$old_wysiwyg_parsing = $headerlib->wysiwyg_parsing;
 			$headerlib->wysiwyg_parsing = true;
-		}
-
-		if ($prefs['feature_jison_wiki_parser'] == 'y') {//The following will stop and return based off new parser
-			//Testing new parser ;)
-			$BOF = '';
-			if ($this->option['ck_editor']) {
-				$parser = new JisonParser_WikiCKEditor_Handler();
-				//ckeditor inserts an element at the beginning, which confuses the conversion back to wiki from html, this is to prevent that from happening
-				if ($this->Parser->parseDepth == 0) {
-					$BOF = $parser->createWikiHelper('BOF', 'span', '&shy;', array('contenteditable'=>'false'));
-				}
-			} else {
-				$parser = new JisonParser_Wiki_Handler();
-			}
-			$parser->setOption($this->option);
-			$data = $parser->parse($data);
-
-			if ($old_wysiwyg_parsing !== null) {
-				$headerlib->wysiwyg_parsing = $old_wysiwyg_parsing;
-			}
-
-			unset($parser);
-			return $BOF . $data;
 		}
 
 		// if simple_wiki is true, disable some wiki syntax
@@ -3332,4 +3274,3 @@ if ( \$('#$id') ) {
 
     }
 }
-

@@ -485,8 +485,8 @@ class WikiLib extends TikiLib
 			} else {
 				$jsFile1 = $headerlib->getJsfiles();
 				$js1 = $headerlib->getJs();
-
-				$content = $this->parse_data($info['data'], $parse_options);
+                $info['outputType'] = $tikilib->getOne ("SELECT `outputType` FROM `tiki_output` WHERE `entityId` = ? AND `objectType` = ? AND `version` = ?", array($info['page'], 'wikiPage', $info['version']));
+                $content = (new WikiLibOutput($info, $info['data'],$parse_options))->parsedValue;
 
 				// get any JS added to headerlib during parse_data and add to the bottom of the data to cache
 				$jsFile2 = $headerlib->getJsfiles();
@@ -501,8 +501,9 @@ class WikiLib extends TikiLib
 				$this->update_cache($page, $content . $jsFile . $js);
 			}
 		} else {
-			$content = $this->parse_data($info['data'], $parse_options);
+            $content = (new WikiLibOutput($info, $info['data'], $parse_options, $info['version']))->parsedValue;
 		}
+
 		return $content;
 	}
 
@@ -1801,4 +1802,72 @@ class convertToTiki9
 	}
 
 	//end conversion methods-->
+}
+
+
+class WikiLibOutput
+{
+    public $info;
+    public $originalValue;
+    public $parsedValue;
+    public $options;
+
+    private static $init = false;
+    private static $wikiLingo;
+    private static $wikiLingoScripts;
+
+    public function __construct($info, $originalValue, $options = array())
+    {
+        $tikilib = TikiLib::lib('tiki');
+        $prefslib = TikiLib::lib('prefs');
+        $headerlib = TikiLib::lib('header');
+
+        //TODO: info may have an override, we need to build it in using MYSQL
+        $this->info = $info;
+        $this->originalValue = $originalValue;
+        $this->options = $options;
+
+        if($prefslib->getPreference('feature_wikilingo')['value'] === 'y'
+            && isset($info['outputType']) && $info['outputType'] == 'wikiLingo') {
+
+            if (self::$init) {
+                $scripts = self::$wikiLingoScripts;
+                $wikiLingo = self::$wikiLingo;
+            } else {
+                self::$init = true;
+                $scripts = self::$wikiLingoScripts = new WikiLingo\Utilities\Scripts(TikiLib::tikiUrl() . "vendor/wikilingo/wikilingo/");
+                $wikiLingo = self::$wikiLingo = new WikiLingo\Parser($scripts);
+	            require_once('lib/wikiLingo_tiki/WikiLingoEvents.php');
+	            (new WikiLingoEvents($wikiLingo));
+            }
+
+            if (isset($_POST['protocol']) && $_POST['protocol'] === 'futurelink')
+            {
+                $this->parsedValue = '';
+            } else {
+                $this->parsedValue = $wikiLingo->parse($this->originalValue);
+
+                //recover from failure, but DO NOT just output
+                if ($this->parsedValue === null)
+                {
+                    $this->parsedValue = '<pre>' . htmlspecialchars($this->originalValue) . '</pre>' .
+                        '<div class="ui-state-error">' . tr("wikiLingo markup could not be parsed.") . '</div>';
+                }
+                //transfer scripts over to headerlib
+                //css is already processed at this point, as it is in the header, at the top, so we expose it here
+                $this->parsedValue .= $scripts->renderCss();
+
+                //js
+                foreach($scripts->scripts as $script) {
+                    $headerlib->add_js($script);
+                }
+                //js files
+                foreach($scripts->scriptLocations as $scriptLocation) {
+                    $headerlib->add_jsfile($scriptLocation);
+                }
+            }
+        } else {
+            $this->parsedValue = $tikilib->parse_data($this->originalValue, $this->options = $options);
+        }
+    }
 }

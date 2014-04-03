@@ -4605,6 +4605,7 @@ class TikiLib extends TikiDb_Bridge
 	 */
 	function get_page_info($pageName, $retrieve_datas = true, $skipCache = false)
 	{
+        global $prefs;
 		$pageNameEncode = urlencode($pageName);
 		if ( !$skipCache && isset($this->cache_page_info[$pageNameEncode])
 			&& ( ! $retrieve_datas || isset($this->cache_page_info[$pageNameEncode]['data']) )
@@ -4644,6 +4645,10 @@ class TikiLib extends TikiDb_Bridge
 					unset($this->cache_page_info[$keys[$num]]);
 				}
 			}
+            $row['outputType'] = '';
+            if ($prefs['feature_wikilingo'] == 'y') {
+                $row['outputType'] = $this->getOne ("SELECT `outputType` FROM `tiki_output` WHERE `entityId` = ? AND `objectType` = ? AND `version` = ?", array($row['pageName'], 'wikiPage', $row['version']));
+            }
 
 			$this->cache_page_info[$pageNameEncode] = $row;
 			return $this->cache_page_info[$pageNameEncode];

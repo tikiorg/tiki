@@ -25,20 +25,38 @@
 {/if}
 	
 {if $prefs.ajax_autosave eq "y"}
-<div class="pull-right">
-	{self_link _icon="magnifier" _class="previewBtn" _ajax="n"}{tr}Preview your changes.{/tr}{/self_link}
-</div>
-{jq} $(".previewBtn").click(function(){
-	if ($('#autosave_preview:visible').length === 0) {
-		auto_save('editwiki', autoSaveId);
-		if (!ajaxPreviewWindow) {
-			$('#autosave_preview').slideDown('slow', function(){ ajax_preview( 'editwiki', autoSaveId, true );});
-		}
-	} else {
-		$('#autosave_preview').slideUp('slow');
-	}
-	return false;
-});{/jq}
+    <div class="pull-right">
+        {self_link _icon="magnifier" _class="previewBtn" _ajax="n"}{tr}Preview your changes.{/tr}{/self_link}
+    </div>
+    {if $prefs.feature_wikilingo eq "y" && $useWikiLingo eq TRUE}
+        {if $wysiwyg eq 'y'}
+            {jq}
+                $(".previewBtn").click(function(){
+                    $(document).trigger('previewWikiLingo', [true, $('#editwiki-ui'), $('#editpageform'), $('#autosave_preview').slideDown('slow')]);
+                    return false;
+                });
+            {/jq}
+        {else}
+            {jq}
+                $(".previewBtn").click(function(){
+                    $(document).trigger('previewWikiLingo', [false, $('#editwiki').val(), $('#editpageform'), $('#autosave_preview').slideDown('slow')]);
+                    return false;
+                });
+            {/jq}
+        {/if}
+    {else}
+        {jq} $(".previewBtn").click(function(){
+            if ($('#autosave_preview:visible').length === 0) {
+                auto_save('editwiki', autoSaveId);
+                if (!ajaxPreviewWindow) {
+                    $('#autosave_preview').slideDown('slow', function(){ ajax_preview( 'editwiki', autoSaveId, true );});
+                }
+            } else {
+                $('#autosave_preview').slideUp('slow');
+            }
+            return false;
+        });{/jq}
+    {/if}
 {/if}
    
 {if isset($data.draft)}
@@ -150,7 +168,7 @@
 	
 	{if $preview or $prefs.wiki_actions_bar eq 'top' or $prefs.wiki_actions_bar eq 'both'}
 		<div class='top_actions'>
-			{include file='wiki_edit_actions.tpl'}
+			{include file='wiki_edit_actions.tpl' wysiwyg=$wysiwyg}
 		</div>
 	{/if}
     <div class="form-group">
@@ -281,6 +299,17 @@
                                 </div>
                                </div>
 							{/if}
+                            {if $prefs.feature_wikilingo eq 'y'}
+                                <div class="form-group">
+                                    <label for="wiki-parser" class="col-sm-2 control-label">{tr}Choose your parser{/tr}</label>
+                                    <div class="col-sm-10 checkbox">
+                                        <select id="wiki-parser-choice" name="wiki_parser" onchange="window.update_output_type(this);">
+                                            <option value="">{tr}tiki Wiki Syntax Parser {/tr}</option>
+                                            <option value="wikiLingo" {if $outputType eq 'wikiLingo' or $quickedit eq TRUE}selected="selected"{/if}>{tr}wikiLingo{/tr}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            {/if}
 							{if $prefs.wiki_comments_allow_per_page neq 'n'}
                 <div class="form-group">
                                 <label for="comments_enabled" class="col-sm-2 control-label">{tr}Allow comments on this page{/tr}</label>
@@ -440,7 +469,7 @@ $("input[name=allowhtml]").change(function() {
 											{if $showstructs|@count gt 0}
 												<ul>
 													{foreach from=$showstructs item=page_info}
-														<li>{$page_info.pageName}{if !empty($page_info.page_alias)}({$page_info.page_alias}){/if}</li>
+														<li>{$page_info.pageName}{if !empty(${$page_info.outputType}.page_alias)}({$page_info.page_alias}){/if}</li>
 													{/foreach}
 												</ul>
 											{/if}
@@ -666,7 +695,7 @@ $("input[name=allowhtml]").change(function() {
 		{if $prefs.wiki_actions_bar neq 'top'}
 			<div class="form-group">
 				<div class="text-center">
-					{include file='wiki_edit_actions.tpl'}
+					{include file='wiki_edit_actions.tpl' wysiwyg=$wysiwyg}
 				</div>
 		{/if}
 	</div>

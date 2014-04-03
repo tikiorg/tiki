@@ -62,27 +62,34 @@ if ($_SESSION['wysiwyg'] == 'y') {
 		}
 	}
 }
-if (isset($jitRequest['edit'])) {
-	// Restore the property for the rest of the script
-	if ($is_html) {
-		$data = $jitRequest->edit->none();
+if (
+    $prefs['feature_wikilingo'] == 'n'
+    || (
+        $prefs['feature_wikilingo'] == 'y'
+        && isset($_REQUEST['prevent_wikilingo'])
+    )
+) {
+    if (isset($jitRequest['edit'])) {
+        // Restore the property for the rest of the script
+        if ($is_html) {
+            $data = $jitRequest->edit->none();
+            $parserlib = TikiLib::lib('parser');
+            $noparsed = array();
+            $parserlib->plugins_remove($data, $noparsed);
 
-		$parserlib = TikiLib::lib('parser');
-		$noparsed = array();
-		$parserlib->plugins_remove($data, $noparsed);
+            $data = TikiFilter::get('xss')->filter($data);
 
-		$data = TikiFilter::get('xss')->filter($data);
+            $parserlib->isEditMode = true;
+            $parserlib->plugins_replace($data, $noparsed, true);
+            $parserlib->isEditMode = false;
+            $_REQUEST['edit'] = $data;
+        } else {
+            $_REQUEST['edit'] = $jitRequest->edit->wikicontent();
+        }
 
-		$parserlib->isEditMode = true;
-		$parserlib->plugins_replace($data, $noparsed, true);
-		$parserlib->isEditMode = false;
-		$_REQUEST['edit'] = $data;
-	} else {
-		$_REQUEST['edit'] = $jitRequest->edit->wikicontent();
-	}
-
-	//html is stored encoded in wysiwyg
-	if (isset($jitRequest['wysiwyg']) && $jitRequest['wysiwyg'] == 'y') {
-		$_REQUEST['edit'] = html_entity_decode($_REQUEST['edit'], ENT_QUOTES, 'UTF-8');
-	}
+        //html is stored encoded in wysiwyg
+        if (isset($jitRequest['wysiwyg']) && $jitRequest['wysiwyg'] == 'y') {
+            $_REQUEST['edit'] = html_entity_decode($_REQUEST['edit'], ENT_QUOTES, 'UTF-8');
+        }
+    }
 }

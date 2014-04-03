@@ -257,7 +257,7 @@ function get_default_prefs()
 				bold, italic, underline, strike, sub, sup,-, color, -, tikiimage, tikilink, link, unlink, anchor, -,
 				undo, redo, -, find, replace, -, removeformat, specialchar, smiley | help, switcheditor, autosave, admintoolbar /
 				format, templates, cut, copy, paste, pastetext, pasteword, -, h1, h2, h3, left, center, -,
-				blockquote, list, numlist, -, pagebreak, rule, -, table, -, source, showblocks, screencapture | fullscreen /
+				blockquote, list, numlist, -, pagebreak, rule, -, table, pastlink, -, source, showblocks, screencapture | fullscreen /
 				style, fontname, fontsize, outdent, indent /
 			',
 			'toolbar_global_comments' => '

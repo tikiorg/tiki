@@ -394,6 +394,12 @@ if ($prefs['feature_syntax_highlighter'] == 'y') {
 	require_once("lib/codemirror_tiki/tiki_codemirror.php");
 	codemirrorModes($prefs['tiki_minify_javascript'] === 'y');
 }
+if ($prefs['feature_wikilingo'] == 'y') {
+    $headerlib
+        //flp stuff
+        ->add_cssfile('vendor/tablesorter/tablesorter/css/theme.dropbox.css')
+        ->add_jsfile('vendor/tablesorter/tablesorter/js/jquery.tablesorter.js');
+}
 
 if ( $prefs['feature_jquery_carousel'] == 'y' ) {
 	$headerlib->add_jsfile('vendor/jquery/plugins/infinitecarousel/jquery.infinitecarousel3.js');
@@ -712,7 +718,7 @@ if ($prefs['openpgp_gpg_pgpmimemail'] == 'y') {
 // ******************************************************************** //
 //////////////////////////////////////////////////////////////////////////
 
-if( $prefs['feature_hidden_links'] == 'y' ) {
+if( $prefs['feature_hidden_links'] == 'y' && isset($jitRequest['wysiwyg']) && $jitRequest['wysiwyg'] != 'y') {
 	$headerlib->add_js("$('body').find('h1, h2, h3, h4, h5, h6').each(function() {
 	var headerid = $(this).attr('id');
 		if(headerid != undefined) {
@@ -737,4 +743,3 @@ if ( $prefs['conditions_enabled'] == 'y' ) {
 		exit;
 	}
 }
-

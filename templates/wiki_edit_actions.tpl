@@ -2,14 +2,40 @@
 <div class="actions">
 	<input type="hidden" name="no_bl" value="y">
 	<input type="submit" class="wikiaction btn btn-default" title="{tr}Preview your changes.{/tr}" name="preview" value="{tr}Preview{/tr}" onclick="needToConfirm=false;">
-{if $prefs.ajax_autosave eq "y"}
-	{jq} $("input[name=preview]").click(function(){
-auto_save('editwiki', autoSaveId);
+    {if $prefs.feature_wikilingo eq "y"}
+        {if $wysiwyg eq 'y'}
+            {jq}
+                $('input[name=preview]').click(function(){
+                    $(document).trigger('previewWikiLingo', [true, $('#editwiki-ui').html(), $('#editpageform'), $('#autosave_preview').slideDown('slow')]);
+                    return false;
+                });
+                $('input.btn-primary').click(function() {
+                    $(document).trigger('saveWikiLingo', [true, $('#editwiki-ui').html(), $('#editpageform')]);
+                    return false;
+                });
+            {/jq}
+        {else}
+            {jq}
+                $('input[name=preview]').click(function(){
+                    $(document).trigger('previewWikiLingo', [false, $('#editwiki').val(), $('#editpageform'), $('#autosave_preview').slideDown('slow')]);
+                    return false;
+                });
+                $('input.btn-primary').click(function() {
+                    $(document).trigger('saveWikiLingo', [false, $('#editwiki').val(), $('#editpageform')]);
+                    return false;
+                });
+            {/jq}
+        {/if}
+    {else}
+    {if $prefs.ajax_autosave eq "y"}
+{jq} $("input[name=preview]").click(function(){
+auto_save('editwiki');
 if (!ajaxPreviewWindow) {
-	$('#autosave_preview').slideDown('slow', function(){ ajax_preview( 'editwiki', autoSaveId, true );});
+$('#autosave_preview').slideDown('slow', function(){ ajax_preview( 'editwiki', autoSaveId, true );});
 }
 return false;
 });{/jq}
+    {/if}
 {/if}
 {if $page|lower neq 'sandbox' or $tiki_p_admin eq 'y'}
 	{if ! isset($page_badchars_display) or $prefs.wiki_badchar_prevent neq 'y'}

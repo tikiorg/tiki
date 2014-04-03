@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "efccd5ec0a7274016dbca3ae07108185",
+    "hash": "e85c0b69e969c5fd0c4618a627286276",
     "packages": [
         {
             "name": "aFarkas/html5shiv",
@@ -26,6 +26,17 @@
                 "shasum": "82a31ec99c0c4dd28ebd5afc2a41cb971e9c376c"
             },
             "type": "library"
+        },
+        {
+            "name": "alvarotrigo/fullpage.js",
+            "version": "1",
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/alvarotrigo/fullPage.js/archive/master.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "component"
         },
         {
             "name": "bombayworks/zendframework1",
@@ -225,6 +236,102 @@
             "time": "2013-04-17 13:51:09"
         },
         {
+            "name": "flp/flp",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/FutureLink-Protocol/php.git",
+                "reference": "77f6120c07f779c1a5a0d135e487e2fb8f94ca89"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/FutureLink-Protocol/php/zipball/77f6120c07f779c1a5a0d135e487e2fb8f94ca89",
+                "reference": "77f6120c07f779c1a5a0d135e487e2fb8f94ca89",
+                "shasum": ""
+            },
+            "require": {
+                "gabordemooij/redbean": ">=3.5.1",
+                "jquery/jquery": ">=1.10.2",
+                "jquery/jquery-ui": ">=1.10.3",
+                "md5/md5": ">=1.1.0",
+                "php": ">=5.4.0",
+                "rangy/rangy": ">=1.3"
+            },
+            "require-dev": {
+                "bafs/testify": "dev-master",
+                "tablesorter/tablesorter": "dev-master"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "FLP": "",
+                    "Phraser": "",
+                    "RedBean_": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "Robert Plummer",
+                    "email": "rplummer@visop-dev.com",
+                    "homepage": "http://visop-dev.com",
+                    "role": "Lead Developer"
+                },
+                {
+                    "name": "Luke Gerhardt",
+                    "email": "luke@totaldigitalconsulting.com",
+                    "homepage": "http://totaldigitalconsulting.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "FutureLink-Protocol implementation in PHP",
+            "homepage": "https://github.com/FutureLink-Protocol",
+            "time": "2014-04-02 21:03:56"
+        },
+        {
+            "name": "gabordemooij/redbean",
+            "version": "v3.5.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/gabordemooij/redbean.git",
+                "reference": "41bb293e2bc744c150e4ae30e30fb5083e047f53"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/gabordemooij/redbean/zipball/41bb293e2bc744c150e4ae30e30fb5083e047f53",
+                "reference": "41bb293e2bc744c150e4ae30e30fb5083e047f53",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.2.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "RedBean_": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD"
+            ],
+            "authors": [
+                {
+                    "name": "Gabor de Mooij",
+                    "email": "gabordemooij@gmail.com",
+                    "homepage": "http://www.redbeanphp.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Easy ORM for PHP",
+            "homepage": "http://github.com/gabordemooij/redbean",
+            "keywords": [
+                "Object Relational Mapping",
+                "orm"
+            ],
+            "time": "2013-10-30 22:13:02"
+        },
+        {
             "name": "jcapture-applet/jcapture-applet",
             "version": "dev-trunk",
             "source": {
@@ -267,6 +374,17 @@
             "time": "2014-01-27 14:02:15"
         },
         {
+            "name": "jcobb/basic-jquery-slider",
+            "version": "1",
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/jcobb/basic-jquery-slider/archive/master.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "component"
+        },
+        {
             "name": "jquery/jquery",
             "version": "1.10.2",
             "dist": {
@@ -301,40 +419,14 @@
         },
         {
             "name": "jquery/jquery-s5",
-            "version": "dev-trunk",
-            "source": {
-                "type": "svn",
-                "url": "http://jquerys5.googlecode.com/svn",
-                "reference": "/trunk/@65"
-            },
+            "version": "dev-master",
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/jquery-jquery-s5-dev-trunk-69fe1a.zip",
-                "reference": "dev-trunk",
-                "shasum": "6dc24d69e98599a3a8985f7b00c2c881e1973a28"
+                "url": "https://composer.tiki.org/dist/jquery-jquery-s5-dev-master.zip",
+                "reference": "dev-master",
+                "shasum": "09522c8dbcb677b77ee078784836598891adac60"
             },
-            "type": "library",
-            "license": [
-                "LGPL"
-            ],
-            "authors": [
-                {
-                    "name": "Robert Plummer",
-                    "homepage": "http://visop-dev.com/"
-                },
-                {
-                    "name": "Marc Laporte",
-                    "homepage": "http://marclaporte.com"
-                }
-            ],
-            "description": "jQuery's s5 implementation. Used to create sideshows in web browsers",
-            "homepage": "http://code.google.com/p/jquerys5/",
-            "keywords": [
-                "javascript",
-                "s5",
-                "slideshow"
-            ],
-            "time": "2013-04-18 22:40:40"
+            "type": "library"
         },
         {
             "name": "jquery/jquery-sheet",
@@ -689,6 +781,56 @@
             "type": "library"
         },
         {
+            "name": "md5/md5",
+            "version": "1.1.0",
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/blueimp/JavaScript-MD5/archive/1.1.0.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "library"
+        },
+        {
+            "name": "mediumjs/mediumjs",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jakiestfu/Medium.js.git",
+                "reference": "001f110b0171cc4e5b733c05a19a34f5baebbf0b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jakiestfu/Medium.js/zipball/001f110b0171cc4e5b733c05a19a34f5baebbf0b",
+                "reference": "001f110b0171cc4e5b733c05a19a34f5baebbf0b",
+                "shasum": ""
+            },
+            "require": {
+                "rangy/rangy": ">=1.3",
+                "undojs/undojs": ">=1"
+            },
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Robert Plummer",
+                    "email": "rplummer@visop-dev.com",
+                    "homepage": "http://visop-dev.com",
+                    "role": "Assistant Developer"
+                },
+                {
+                    "name": "Jacob Kelley",
+                    "email": "jakie8@gmail.com",
+                    "homepage": "http://jakiestfu.com",
+                    "role": "Lead Developer"
+                }
+            ],
+            "time": "2014-04-02 17:28:29"
+        },
+        {
             "name": "phpcas/phpcas",
             "version": "1.3.2",
             "dist": {
@@ -789,12 +931,12 @@
         },
         {
             "name": "rangy/rangy",
-            "version": "1.2.3",
+            "version": "1.3",
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/rangy-rangy-1.2.3.zip",
-                "reference": "1.2.3",
-                "shasum": "3e1798e4c1561d0ef36d8393eac9207d3e6e09dd"
+                "url": "http://rangy.googlecode.com/files/rangy-1.3alpha.804.zip",
+                "reference": "1.3",
+                "shasum": ""
             },
             "type": "library"
         },
@@ -1005,6 +1147,91 @@
             "time": "2014-02-13 17:24:59"
         },
         {
+            "name": "undojs/undojs",
+            "version": "1",
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/jzaefferer/undo/archive/master.zip",
+                "reference": null,
+                "shasum": ""
+            },
+            "type": "library"
+        },
+        {
+            "name": "wikilingo/codemirror",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/wikiLingo/CodeMirror.git",
+                "reference": "c35a89f1d15ec222ec152e260bf693be800a77e2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/wikiLingo/CodeMirror/zipball/c35a89f1d15ec222ec152e260bf693be800a77e2",
+                "reference": "c35a89f1d15ec222ec152e260bf693be800a77e2",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "description": "Syntax highlighter for wikiLingo",
+            "time": "2014-03-27 17:26:12"
+        },
+        {
+            "name": "wikilingo/wikilingo",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/wikiLingo/wikiLingo.git",
+                "reference": "787c8459c976ef17fbf36ab239d62a3c85b9c169"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/wikiLingo/wikiLingo/zipball/787c8459c976ef17fbf36ab239d62a3c85b9c169",
+                "reference": "787c8459c976ef17fbf36ab239d62a3c85b9c169",
+                "shasum": ""
+            },
+            "require": {
+                "codemirror/codemirror": "3.19",
+                "flp/flp": "dev-master",
+                "gabordemooij/redbean": ">=3.5.1",
+                "jquery/jquery": ">=1.10.2",
+                "jquery/jquery-ui": ">=1.10.3",
+                "md5/md5": ">=1.1.0",
+                "mediumjs/mediumjs": "dev-master",
+                "php": ">=5.4.0",
+                "rangy/rangy": ">=1.3",
+                "wikilingo/codemirror": "dev-master"
+            },
+            "require-dev": {
+                "bafs/testify": "dev-master"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Types\\": "./",
+                    "WikiLingo\\": "./",
+                    "WikiLingoWYSIWYG\\": "./",
+                    "WYSIWYGWikiLingo\\": "./"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Robert Plummer",
+                    "email": "rplummer@visop-dev.com",
+                    "homepage": "http://visop-dev.com",
+                    "role": "Lead Developer"
+                }
+            ],
+            "time": "2014-04-02 20:04:14"
+        },
+        {
             "name": "zetacomponents/base",
             "version": "1.8",
             "source": {
@@ -1127,6 +1354,41 @@
     ],
     "packages-dev": [
         {
+            "name": "bafs/testify",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/BafS/Testify.php.git",
+                "reference": "6a711b812a7b43bcbac649b4d11aa66508ea6f72"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/BafS/Testify.php/zipball/6a711b812a7b43bcbac649b4d11aa66508ea6f72",
+                "reference": "6a711b812a7b43bcbac649b4d11aa66508ea6f72",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Testify": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL"
+            ],
+            "description": "Testify makes writing unit tests fun again. It has an elegant syntax and keeps things simple",
+            "keywords": [
+                "framework",
+                "testing",
+                "unit"
+            ],
+            "time": "2013-10-21 21:48:13"
+        },
+        {
             "name": "mikey179/vfsStream",
             "version": "v1.1.0",
             "source": {
@@ -1155,6 +1417,37 @@
             ],
             "homepage": "http://vfs.bovigo.org/",
             "time": "2012-08-25 05:49:29"
+        },
+        {
+            "name": "tablesorter/tablesorter",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Mottie/tablesorter.git",
+                "reference": "261b009af12bea8d7e873636659b11b98556a066"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/Mottie/tablesorter/archive/master.zip",
+                "reference": "261b009af12bea8d7e873636659b11b98556a066",
+                "shasum": ""
+            },
+            "type": "library",
+            "license": [
+                "GPL",
+                "MIT"
+            ],
+            "description": "tablesorter is a jQuery plugin for turning a standard HTML table with THEAD and TBODY tags into a sortable table without page refreshes. tablesorter can successfully parse and sort many types of data including linked data in a cell.",
+            "keywords": [
+                "javascript",
+                "sort",
+                "table"
+            ],
+            "support": {
+                "source": "https://github.com/Mottie/tablesorter/tree/master",
+                "issues": "https://github.com/Mottie/tablesorter/issues"
+            },
+            "time": "2014-03-10 02:23:08"
         }
     ],
     "aliases": [
@@ -1163,7 +1456,13 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "jcapture-applet/jcapture-applet": 20,
-        "jquery/jquery-s5": 20
+        "jquery/jquery-s5": 20,
+        "mediumjs/mediumjs": 20,
+        "wikilingo/wikilingo": 20,
+        "flp/flp": 20,
+        "wikilingo/codemirror": 20,
+        "bafs/testify": 20,
+        "tablesorter/tablesorter": 20
     },
     "platform": [
 

@@ -105,6 +105,7 @@ abstract class Toolbar
 					'h2',
 					'h3',
 					'titlebar',
+					'pastlink',
 					'toc',
 					'list',
 					'numlist',
@@ -751,6 +752,16 @@ class ToolbarBlock extends ToolbarInline // Will change in the future
 	public static function fromName( $tagName ) // {{{
 	{
 		global $prefs;
+
+        $isWikiLingo = false;
+        if ($prefs['feature_wikilingo'] === 'y') {
+            $isWikiLingo = true;
+        }
+        $isFutureLinkProtocol = false;
+        if ($prefs['feature_futurelinkprotocol'] === 'y') {
+            $isFutureLinkProtocol = true;
+        }
+
 		switch( $tagName ) {
 		case 'center':
 			$label = tra('Align Center');
@@ -768,13 +779,32 @@ class ToolbarBlock extends ToolbarInline // Will change in the future
 			$wysiwyg = 'HorizontalRule';
 			$syntax = '---';
 			break;
+        case 'pastlink':
+            if ($isWikiLingo && $isFutureLinkProtocol) {
+                $label = tra('PastLink');
+                $icon = tra('img/icons/PastLink.svg');
+                $wysiwyg = 'PastLink';
+                $syntax = '@FLP(clipboarddata)text@)';
+                break;
+            }
+            else{
+                break;
+            }
 		case 'pagebreak':
+            if ($isWikiLingo) {
+                return;
+            }
+
 			$label = tra('Page Break');
 			$icon = tra('img/icons/page_break.png');
 			$wysiwyg = 'PageBreak';
 			$syntax = '...page...';
 			break;
 		case 'box':
+            if ($isWikiLingo) {
+                return;
+            }
+
 			$label = tra('Box');
 			$icon = tra('img/icons/box.png');
 			$wysiwyg = 'Box';
@@ -801,6 +831,9 @@ class ToolbarBlock extends ToolbarInline // Will change in the future
 			$syntax = '-=text=-';
 			break;
 		case 'toc':
+            if ($isWikiLingo) {
+                return;
+            }
 			$label = tra('Table of contents');
 			$icon = tra('img/icons/book.png');
 			$wysiwyg = 'TOC';
@@ -859,14 +892,7 @@ class ToolbarLineBased extends ToolbarInline // Will change in the future
 			break;
 		case 'indent':
 			global $prefs;
-			if ($prefs['feature_jison_wiki_parser'] === 'y') {	// leading spaces does nothing in the current parser, maybe it was for jison?
-				$label = tra('Indent');
-				$icon = tra('img/icons/arrow_right.png');
-				$wysiwyg = null;
-				$syntax = '  text';
-			} else {
-				return null;
-			}
+            return null;
 			break;
 		default:
 			return null;
@@ -902,6 +928,11 @@ class ToolbarPicker extends Toolbar
 	{
 		global $headerlib, $section, $prefs;
 
+        $isWikiLingo = false;
+        if ($prefs['feature_wikilingo'] === 'y') {
+            $isWikiLingo = true;
+        }
+
 		if ($prefs['mobile_mode'] === 'y') {
 			return '';
 		}
@@ -919,18 +950,23 @@ class ToolbarPicker extends Toolbar
 			$list = array_combine($list, $list);
 			break;
 		case 'smiley':
-			$wysiwyg = 'Smiley';
-			$label = tra('Smileys');
-			$icon = tra('img/smiles/icon_smile.gif');
-			$rawList = array( 'biggrin', 'confused', 'cool', 'cry', 'eek', 'evil', 'exclaim', 'frown', 'idea', 'lol', 'mad', 'mrgreen', 'neutral', 'question', 'razz', 'redface', 'rolleyes', 'sad', 'smile', 'surprised', 'twisted', 'wink', 'arrow', 'santa' );
-			$tool_prefs[] = 'feature_smileys';
+            if ($isWikiLingo) {
+                return;
+            }
 
-			$list = array();
-			global $headerlib;
-			foreach ( $rawList as $smiley ) {
-				$tra = htmlentities(tra($smiley), ENT_QUOTES, 'UTF-8');
-				$list["(:$smiley:)"] = '<img src="' . $headerlib->convert_cdn('img/smiles/icon_' .$smiley . '.gif') . '" alt="' . $tra . '" title="' . $tra . '" width="15" height="15" />';
-			}
+            $wysiwyg = 'Smiley';
+            $label = tra('Smileys');
+            $icon = tra('img/smiles/icon_smile.gif');
+            $rawList = array( 'biggrin', 'confused', 'cool', 'cry', 'eek', 'evil', 'exclaim', 'frown', 'idea', 'lol', 'mad', 'mrgreen', 'neutral', 'question', 'razz', 'redface', 'rolleyes', 'sad', 'smile', 'surprised', 'twisted', 'wink', 'arrow', 'santa' );
+            $tool_prefs[] = 'feature_smileys';
+
+            $list = array();
+            global $headerlib;
+            foreach ( $rawList as $smiley ) {
+                $tra = htmlentities(tra($smiley), ENT_QUOTES, 'UTF-8');
+                $list["(:$smiley:)"] = '<img src="' . $headerlib->convert_cdn('img/smiles/icon_' .$smiley . '.gif') . '" alt="' . $tra . '" title="' . $tra . '" width="15" height="15" />';
+            }
+
 			break;
 		case 'color':
 			$wysiwyg = 'TextColor';

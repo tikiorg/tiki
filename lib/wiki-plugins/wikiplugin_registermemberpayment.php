@@ -102,7 +102,10 @@ var reg = $('#memberRegister$i'),
 pay.find('.warning').insertAfter(pay); //just in case there are any warnings
 
 var submitBtn = reg.find('input.registerSubmit'),
-    submitBtnTr = reg.find('tr.registerSubmitTr');
+
+    //both with and without trackers
+    submitBtnTr = reg.find('tr.registerSubmitTr,div.input_submit_container'),
+    trackerForm = $('table.wikiplugin_tracker').parent('form');
 
 if (!user) {
     $('<tr class="grpMmbChk">\
@@ -138,32 +141,43 @@ reg
         pay.find('input:last').click();
     })
     .find('input:last').click(function() {
-        var frmData = reg.find('form').serialize();
+        var frmData = reg.find('form').serialize(),
+            invokeRegistration = function() {
+                if (frmData) {
+                    $.getJSON($.service('user', 'register') + '&' + frmData + '&noTemplate', function(data) {
+                        if (typeof data.result == "string") {
+                            if ($('#memberType$i').is(':checked')) {
+                                $('<input name="msg" />')
+                                    .val(data.result)
+                                    .prependTo(pay.find('form'));
 
-        if (frmData) {
-            $.getJSON($.service('user', 'register') + '&' + frmData + '&noTemplate', function(data) {
-                if (typeof data.result == "string") {
-                    if ($('#memberType$i').is(':checked')) {
-                        $('<input name="msg" />')
-                            .val(data.result)
-                            .prependTo(pay.find('form'));
-
-                        reg.trigger('continueToPurchase');
-                    } else { //registered
-                        $.notify(data.result);
-                        $.notify(tr('You will be redirected in 5 seconds'));
-                        setTimeout(function() {
-                            document.location = 'tiki-index.php';
-                        }, 5000);
-                    }
-                } else { //errors
-                    $.each(data.result, function(i) {
-                        $.notify(data.result[i].msg);
+                                reg.trigger('continueToPurchase');
+                            } else { //registered
+                                $.notify(data.result);
+                                $.notify(tr('You will be redirected in 5 seconds'));
+                                setTimeout(function() {
+                                    document.location = 'tiki-index.php';
+                                }, 5000);
+                            }
+                        } else { //errors
+                            $.each(data.result, function(i) {
+                                $.notify(data.result[i].msg);
+                            });
+                        }
                     });
+                } else {
+                    reg.trigger('continueToPurchase');
                 }
+            };
+
+        //this is from a tracker, lets go ahead and submit the tracker data, then we will submit the other
+        if (trackerForm.length > 0) {
+            $.post(trackerForm.attr('action'), trackerForm.serialize(), function(data) {
+                console.log(data);
+                invokeRegistration();
             });
         } else {
-            reg.trigger('continueToPurchase');
+            invokeRegistration();
         }
 
         return false;

@@ -209,4 +209,144 @@ $(window).load(function(){
 		}
 	}
 
+    function action_wikiLingo(JitFilter $input)
+    {
+        global $user, $prefs, $page;
+        $tikilib = TikiLib::lib('tiki');
+        $globalPerms = Perms::get();
+
+        $page = urldecode($input->page->none());
+
+        if (!self::page_editable($input->autoSaveId->text(), $page)) {
+            return array();
+        }
+
+        $scripts = new WikiLingo\Utilities\Scripts("vendor/wikilingo/wikilingo/");
+        $wikiLingo = new WikiLingo\Parser($scripts);
+	    require_once("lib/wikiLingo_tiki/WikiLingoEvents.php");
+	    (new WikiLingoEvents($wikiLingo));
+
+        if ($input->wysiwyg->int() == 1) {
+            $toWikiLingo = new WYSIWYGWikiLingo\Parser();
+            $data = $input->data->none();
+            $source = $toWikiLingo->parse($data);
+        } else {
+            $source = $input->data->none();
+        }
+
+        $result = array();
+
+        //save a wiki page
+        if ($input->save->int() === 1) {
+            $info = $tikilib->get_page_info($page, false);
+            $exists = $tikilib->page_exists($page);
+
+            $wiki_authors_style = '';
+            if ( $prefs['wiki_authors_style_by_page'] === 'y' ) {
+                $wiki_authors_style_updated = $input->wiki_authors_style->text();
+                if ( $globalPerms->admin_wiki && !empty($wiki_authors_style_updated)) {
+                    $wiki_authors_style = $wiki_authors_style_updated;
+                } elseif ( isset($info['wiki_authors_style']) ) {
+                    $wiki_authors_style = $info['wiki_authors_style'];
+                }
+            }
+
+            $hash = array(
+                'lock_it' => (!$input->lock_it->text() === 'on' ? 'y' : 'n'),
+                'comments_enabled' => ($input->comments_enabled->text() === 'on' ? 'y' : 'n'),
+                'contributions' => $input->contributions->text(),
+                'contributors' => $input->contributors->text()
+            );
+
+            if ($exists) {
+                $tikilib->update_page(
+                    $page,
+                    $source,
+                    $input->comment->text() ?: $info['comment'],
+                    $user,
+                    $tikilib->get_ip_address(),
+                    $input->description->text() ?: $info['description'],
+                    ($input->isminor->text() === 'on' ? 1 : 0),
+                    $input->lang->text() ?: $info['lang'],
+                    false,
+                    $hash,
+                    null,
+                    null,
+                    $wiki_authors_style
+                );
+                $result['status'] = 'updated';
+            } else {
+                $tikilib->create_page(
+                    $page,
+                    0,
+                    $source,
+                    $tikilib->now,
+                    $input->comment->text(),
+                    $user,
+                    $tikilib->get_ip_address(),
+                    $input->description->text(),
+                    $input->lang->text(),
+                    false,
+                    $hash,
+                    null,
+                    $wiki_authors_style
+                );
+                $result['status'] = 'created';
+            }
+        }
+
+        $version = $result['version'] = $tikilib->getOne("SELECT version FROM `tiki_pages` WHERE pageName=? ORDER BY `version` DESC", array($page));
+        $tikilib->query("INSERT INTO tiki_output (entityId, objectType, outputType, version) VALUES (?,?,?,?)", array($page, 'wikiPage', 'wikiLingo', $version));
+
+        if ($input->preview->bool()) {
+            $result['parsed'] = $wikiLingo->parse($source);
+            $result['script'] = $scripts->renderScript();
+            $result['css'] = $scripts->renderCss();
+        }
+
+        return $result;
+    }
+
+    function action_update_output_type(JitFilter $input)
+    {
+        $page = $input->page->text();
+        $output_type = $input->output_type->text();
+
+        if (self::page_editable(null, $page)) {
+            $tikilib = TikiLib::lib('tiki');
+            //delete colums from tiki_output if they're already created so new values can be inserted to use wikiLingo as the parser
+            $version = $tikilib->getOne("SELECT version FROM `tiki_pages` WHERE pageName=? ORDER BY `version` DESC", array($page));
+            $tikilib->query("DELETE FROM `tiki_output` WHERE `entityId` = ? AND `objectType` = ? AND `version` = ?", array($page, 'wikiPage', $version));
+            if (!empty($output_type)){
+                $tikilib->query("INSERT INTO tiki_output (entityId, objectType, outputType, version) VALUES (?,?,?,?)", array($page, 'wikiPage', $output_type, $version));
+            }
+            return array(
+                'updated' => true,
+                'value' => $output_type
+            );
+        }
+
+        return false;
+    }
+
+    public static function page_editable($autoSaveId = null, &$page = null)
+    {
+        global $user;
+        $tikilib = TikiLib::lib('tiki');
+
+        if ($autoSaveId !== null) {
+            $autoSaveIdParts = explode(':', $autoSaveId);	// user, section, object id
+            foreach ($autoSaveIdParts as & $part) {
+                $part = urldecode($part);
+            }
+
+            $page = $autoSaveIdParts[2];	// plugins use global $page for approval
+        }
+
+        if (!Perms::get('wiki page', $page)->edit || $user != $tikilib->get_semaphore_user($page)) {
+            return false;
+        }
+
+        return true;
+    }
 }

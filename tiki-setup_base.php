@@ -69,6 +69,7 @@ $needed_prefs = array(
 	'cookie_consent_name' => 'tiki_cookies_accepted',
 
 );
+
 // check that tiki_preferences is there
 if ($tikilib->query("SHOW TABLES LIKE 'tiki_preferences'")->numRows() == 0) {
 	// smarty not initialised at this point to do a polite message, sadly
@@ -636,5 +637,7 @@ if (function_exists('mb_internal_encoding')) {
 if (!isset($_SERVER['QUERY_STRING'])) {
 	$_SERVER['QUERY_STRING'] = '';
 }
+
+
 
 $smarty->assign("tikidomain", $tikidomain);
