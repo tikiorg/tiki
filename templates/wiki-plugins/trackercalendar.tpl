@@ -53,7 +53,7 @@
 			allDayText: "{tr}all-day{/tr}",
 			firstDay: data.firstDayofWeek,
 			slotMinutes: {{$prefs.calendar_timespan}},
-			defaultView: 'month',
+			defaultView: data.dView,
 			eventAfterRender : function( event, element, view ) {
 				element.attr('title',event.title +'|'+event.description);
 				element.cluetip({arrows: true, splitTitle: '|', clickThrough: true});

@@ -45,6 +45,94 @@ function wikiplugin_trackercalendar_info()
 				'required' => false,
 				'filter' => 'word',
 			),
+			'amonth' => array(
+				'required' => false,
+				'name' => tra('Agenda by Months'),
+				'description' => tra('Display the option to change the view to agenda by months'),
+				'filter' => 'alpha',
+				'default' => 'y',
+				'options' => array(
+					array('text' => '', 'value' => ''),
+					array('text' => tra('Yes'), 'value' => 'y'),
+					array('text' => tra('No'), 'value' => 'n')
+				)
+			),
+			'aweek' => array(
+				'required' => false,
+				'name' => tra('Agenda by Weeks'),
+				'description' => tra('Display the option to change the view to agenda by weeks'),
+				'filter' => 'alpha',
+				'default' => 'y',
+				'options' => array(
+					array('text' => '', 'value' => ''),
+					array('text' => tra('Yes'), 'value' => 'y'),
+					array('text' => tra('No'), 'value' => 'n')
+				)
+			),			
+			'aday' => array(
+				'required' => false,
+				'name' => tra('Agenda by Days'),
+				'description' => tra('Display the option to change the view to agenda by days'),
+				'filter' => 'alpha',
+				'default' => 'y',
+				'options' => array(
+					array('text' => '', 'value' => ''),
+					array('text' => tra('Yes'), 'value' => 'y'),
+					array('text' => tra('No'), 'value' => 'n')
+				)
+			),			
+			'rmonth' => array(
+				'required' => false,
+				'name' => tra('Resources by Months'),
+				'description' => tra('Display the option to change the view to resources by months'),
+				'filter' => 'alpha',
+				'default' => 'y',
+				'options' => array(
+					array('text' => '', 'value' => ''),
+					array('text' => tra('Yes'), 'value' => 'y'),
+					array('text' => tra('No'), 'value' => 'n')
+				)
+			),
+			'rweek' => array(
+				'required' => false,
+				'name' => tra('Resources by Weeks'),
+				'description' => tra('Display the option to change the view to resources by weeks'),
+				'filter' => 'alpha',
+				'default' => 'y',
+				'options' => array(
+					array('text' => '', 'value' => ''),
+					array('text' => tra('Yes'), 'value' => 'y'),
+					array('text' => tra('No'), 'value' => 'n')
+				)
+			),			
+			'rday' => array(
+				'required' => false,
+				'name' => tra('Resources by Days'),
+				'description' => tra('Display the option to change the view to resources by days'),
+				'filter' => 'alpha',
+				'default' => 'y',
+				'options' => array(
+					array('text' => '', 'value' => ''),
+					array('text' => tra('Yes'), 'value' => 'y'),
+					array('text' => tra('No'), 'value' => 'n')
+				)
+			),			
+			'dView' => array(
+				'required' => false,
+				'name' => tra('Default View'),
+				'description' => tra('Choose the default view for the Tracker Calendar'),
+				'filter' => 'alpha',
+				'default' => 'month',
+				'options' => array(
+					array('text' => '', 'value' => ''),
+					array('text' => tra('month'), 'value' => 'Agenda by Months'),
+					array('text' => tra('agendaWeek'), 'value' => 'Agenda by Weeks'),
+					array('text' => tra('agendaDay'), 'value' => 'Agenda by Days'),
+					array('text' => tra('resourceMonth'), 'value' => 'Resources by Months'),
+					array('text' => tra('resourceWeek'), 'value' => 'Resources by Weeks'),
+					array('text' => tra('resourceDay'), 'value' => 'Resources by Days')
+				)
+			),			
 		),
 	);
 }
@@ -71,16 +159,57 @@ function wikiplugin_trackercalendar($data, $params)
 		return WikiParser_PluginOutput::userError(tr('Fields not found.'));
 	}
 
-	$views = array('month', 'agendaWeek', 'agendaDay');
+	$views = array();
+	if (!empty($params['amonth']) and $params['amonth'] != y) {
+		$amonth = 'n';
+	} else {
+		$amonth = 'y';
+		$views[] = 'month';
+	}
+	if (!empty($params['aweek']) and $params['aweek'] != y) {
+		$aweek = 'n';
+	} else {
+		$aweek = 'y';
+		$views[] = 'agendaWeek';		
+	}
+	if (!empty($params['aday']) and $params['aday'] != y) {
+		$aday = 'n';
+	} else {
+		$aday = 'y';
+		$views[] = 'agendaDay';
+	}
 
 	$resources = array();
 	if ($resourceField = $jit->resource->word()) {
 		$field = $definition->getFieldFromPermName($resourceField);
 		$resources = wikiplugin_trackercalendar_get_resources($field);
-		$views[] = 'resourceMonth';
-		$views[] = 'resourceWeek';
-		$views[] = 'resourceDay';
+
+		if (!empty($params['rmonth']) and $params['rmonth'] != y) {
+			$rmonth = 'n';
+		} else {
+			$rmonth = 'y';
+			$views[] = 'resourceMonth';
+		}
+		if (!empty($params['rweek']) and $params['rweek'] != y) {
+			$rweek = 'n';
+		} else {
+			$rweek = 'y';
+			$views[] = 'resourceWeek';
+		}
+		if (!empty($params['rday']) and $params['rday'] != y) {
+			$rday = 'n';
+		} else {
+			$rday = 'y';
+			$views[] = 'resourceDay';
+		}
 	}
+
+	// Define the default View (dView)
+		if (!empty($params['dView'])) {
+			$dView = $params['dView'];
+		} else {
+			$dView = 'month';
+		}
 
 	$smarty = TikiLib::lib('smarty');
 	$smarty->assign(
@@ -104,6 +233,7 @@ function wikiplugin_trackercalendar($data, $params)
 			'maxHourOfDay' => 20,
 			'addTitle' => tr('Insert'),
 			'canInsert' => $itemObject->canModify(),
+			'dView' => $dView,
 			'body' => $data,
 		)
 	);
