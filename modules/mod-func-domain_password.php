@@ -18,12 +18,12 @@ function module_domain_password_info()
 {
 	return array(
 		'name' => tra('Domain Password'),
-		'description' => tra('Store personal passwords for other domains securely in Tiki.'),
+		'description' => tra('Store personal passwords for other domains securely in Tiki'),
 		'prefs' => array('feature_user_encryption'),
 		'params' => array(
 			'domain' => array(
 				'name' => tra('Domain'),
-				'description' => tra('System the credentials apply for. The name must match a defined Password Domain.'),
+				'description' => tra('System the credentials apply for. The name must match a defined Password Domain'),
 			),
 			'use_currentuser' => array(
 				'name' => tra('Use current user'),
@@ -35,7 +35,7 @@ function module_domain_password_info()
 			),
 			'show_domain_prompt' => array(
 				'name' => tra('Show domain prompt'),
-				'description' => tra('If "y" the word "domain" is show before the domain. Otherwise the domain name takes the full row (y/n). Default: y'),
+				'description' => tra('If "y" the word "domain" is shown before the domain. Otherwise the domain name takes the full row (y/n). Default: y'),
 			),
 		),
 		'common_params' => array('nonums', 'rows')
