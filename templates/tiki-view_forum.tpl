@@ -78,10 +78,11 @@
 		{/if}
 	</div>
 </div>
-
-<a class="link" href="tiki-forums.php">{tr}Forums{/tr}</a> {$prefs.site_crumb_seper} <a class="link" href="tiki-view_forum.php?forumId={$forumId}">{$forum_info.name|escape}</a>
-
-<br>
+<div class="breadcrumb">
+	<a class="link" href="tiki-forums.php">{tr}Forums{/tr}</a>
+	{$prefs.site_crumb_seper}
+	<a class="link" href="tiki-view_forum.php?forumId={$forumId}">{$forum_info.name|escape}</a>
+</div>
 
 {if !empty($errors)}
 	{remarksbox type="warning" title="{tr}Errors{/tr}"}
