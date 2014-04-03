@@ -16026,4 +16026,12 @@ $lang = array(
 "Failed to save password" => "Feil ved lagring av passord",
 "Failed to save user" => "Feil ved lagring av bruker",
 "Pass" => "Pass", // As in Password
+"Domain Password" => "Domene Passord",
+"Store personal passwords for other domains securely in Tiki" => "Sikker lagring av personlige passord for andre domener i Tiki",
+"System the credentials apply for. The name must match a defined Password Domain" => "Systemet bruker og passord gjelder for. Navnet må match et definert Passord Domene",
+"Use current user" => "Bruk nåværende bruker",
+"Use the currently logged in user. The username is not editable. (y/n) Default: y" => "Bruk den påloggede brukeren. Brukernavnet er ikke editerbart. (y/n) Default: y",
+"Can Update" => "Kan oppdatere",
+"Show domain prompt" => "Vis domene prompt",
+'If "y" the word "domain" is shown before the domain. Otherwise the domain name takes the full row (y/n). Default: y' => 'Hvis "y" er ordet "domene" vist før domenet, eller tar domene navnet hele linja (y/n). Default: y',
 );
