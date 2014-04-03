@@ -324,6 +324,13 @@ function wikiplugin_tracker_info()
 				'default' => '',
 				'profile_reference' => 'wiki_page',
 			),
+			'outputwikinamespace' => array(
+				'required' => false,
+				'name' => tra('Output Wiki Namespace'),
+				'description' => tra('Name of namespace to save the wiki page in.'),
+				'filter' => 'pagename',
+				'default' => '',
+			),
 			'fieldsfill' => array(
 				'required' => false,
 				'name' => tra('Multiple Fill Fields'),
@@ -798,13 +805,14 @@ function wikiplugin_tracker($data, $params)
 						$newpagefields[] = $fl["fieldId"];
 					}
 					if ($newpagename) {
+						if ($prefs['namespace_enabled'] == 'y' && !empty($outputwikinamespace)) {
+							$newpagename = $outputwikinamespace . $prefs['namespace_separator'] . $newpagename;
+						}
 						if ($tikilib->page_exists($newpagename)) {
 							$field_errors['err_outputwiki'] = tra('The page to output the results to already exists. Try another name.');
 						}
-						$page_badchars_display = ":/?#[]@!$&'()*+,;=<>";
-						$page_badchars = "/[:\/?#\[\]@!$&'()*+,;=<>]/";
-						$matches = preg_match($page_badchars, $newpagename);
-						if ($matches) {
+						$page_badchars_display = TikiLib::lib('wiki')->get_badchars();	
+						if (TikiLib::lib('wiki')->contains_badchars($newName)) {
 							$field_errors['err_outputwiki'] = tr("The page to output the results to contains the following prohibited characters: %0. Try another name.", $page_badchars_display);
 						}
 					} else {
@@ -877,9 +885,13 @@ function wikiplugin_tracker($data, $params)
 						// note that values will be raw - that is the limit of the capability of this feature for now
 						$newpageinfo = $tikilib->get_page_info($outputwiki);
 						$wikioutput = $newpageinfo["data"];
-						$newpagefields = $trklib->get_pretty_fieldIds($outputwiki, 'wiki', $outputPretty);
+						$newpagefields = $trklib->get_pretty_fieldIds($outputwiki, 'wiki', $outputPretty, $trackerId);
+						$tracker_definition = Tracker_Definition::get($trackerId);
 						foreach ($newpagefields as $lf) {
+							$field = $tracker_definition->getField($lf);
+							$lfpermname = $field['permName'];
 							$wikioutput = str_replace('{$f_' . $lf . '}', $trklib->get_item_value($trackerId, $rid, $lf), $wikioutput);
+							$wikioutput = str_replace('{$f_' . $lfpermname . '}', $trklib->get_item_value($trackerId, $rid, $lf), $wikioutput);
 						}
 						if (isset($registration)) {
 							 $wikioutput = str_replace('{$register_login}', $user, $wikioutput);
