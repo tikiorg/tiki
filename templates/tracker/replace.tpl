@@ -323,8 +323,12 @@
 					{tr}The tracker needs a group field with the auto-assign activated{/tr}
 				</div>
 			</label>
+			<br/>
 			<fieldset>
 				<legend>{tr}Creation date constraint{/tr}</legend>
+				<div class="description">
+					{tr}The tracker will be <strong>open</strong> for non-admin users through wiki pages with PluginTracker <strong>only</strong> during the period 'After' the start date and/or 'Before' the end date set below{/tr}.
+				</div>
 				<label>
 					<input type="checkbox" name="start" value="1"
 						{if $info.start}checked="checked"{/if}>
