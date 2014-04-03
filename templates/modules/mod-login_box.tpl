@@ -119,7 +119,7 @@ if (jqueryTiki.no_cookie) {
 				<div class="siteloginbar_poppedup panel panel-body dropdown-menu pull-right">
 						{capture assign="close_tags"}</div></div>{$close_tags}{/capture}
 		{/if}
-		<form name="loginbox" id="loginbox-{$module_logo_instance}" action="{$login_module.login_url|escape}"
+		<form name="loginbox" class="form" id="loginbox-{$module_logo_instance}" action="{$login_module.login_url|escape}"
 				method="post" {if $prefs.feature_challenge eq 'y'}onsubmit="doChallengeResponse()"{/if}
 				{if $prefs.desactive_login_autocomplete eq 'y'} autocomplete="off"{/if}> 
 		{if $prefs.feature_challenge eq 'y'}
@@ -152,25 +152,25 @@ function doChallengeResponse() {
 				{else}{$error_login|escape}{/if}
 			{/remarksbox}
 		{/if}
-		<div class="user">
+		<div class="user form-group">
 			{if !isset($module_logo_instance)}{assign var=module_logo_instance value=' '}{/if}
 			<label for="login-user_{$module_logo_instance}">{if $prefs.login_is_email eq 'y'}{tr}Email:{/tr}{else}{tr}Username:{/tr}{/if}</label>
 			{if !isset($loginuser) or $loginuser eq ''}
-				<input type="text" name="user" id="login-user_{$module_logo_instance}" size="{if empty($module_params.input_size)}15{else}{$module_params.input_size}{/if}" {if !empty($error_login)} value="{$error_user|escape}"{elseif !empty($adminuser)} value="{$adminuser|escape}"{/if}/>
+				<input class="form-control" type="text" name="user" id="login-user_{$module_logo_instance}" {*size="{if empty($module_params.input_size)}15{else}{$module_params.input_size}{/if}"*} {if !empty($error_login)} value="{$error_user|escape}"{elseif !empty($adminuser)} value="{$adminuser|escape}"{/if}/>
 				{jq}if ($('#login-user_{{$module_logo_instance}}:visible').length) {if ($("#login-user_{{$module_logo_instance}}").offset().top < $(window).height()) {$('#login-user_{{$module_logo_instance}}')[0].focus();} }{/jq}
 			{else}
-				<input type="hidden" name="user" id="login-user_{$module_logo_instance}" value="{$loginuser|escape}" /><b>{$loginuser|escape}</b>
+				<input class="form-control" type="hidden" name="user" id="login-user_{$module_logo_instance}" value="{$loginuser|escape}" /><b>{$loginuser|escape}</b>
 			{/if}
 		</div>
 		{if $prefs.feature_challenge eq 'y'} <!-- quick hack to make challenge/response work until 1.8 tiki auth overhaul -->
-			<div class="email">
+			<div class="email form-group">
 				<label for="login-email_{$module_logo_instance}">{tr}eMail:{/tr}</label>
-				<input type="text" name="email" id="login-email_{$module_logo_instance}" size="{if empty($module_params.input_size)}15{else}{$module_params.input_size}{/if}" />
+				<input class="form-control" type="text" name="email" id="login-email_{$module_logo_instance}" {*size="{if empty($module_params.input_size)}15{else}{$module_params.input_size}{/if}"*} />
 			</div>
 		{/if}
-		<div class="pass">
+		<div class="pass form-group">
 			<label for="login-pass_{$module_logo_instance}">{tr}Password:{/tr}</label>
-			<input onkeypress="capLock(event, this)" type="password" name="pass" id="login-pass_{$module_logo_instance}" size="{if empty($module_params.input_size)}15{else}{$module_params.input_size}{/if}" />
+			<input onkeypress="capLock(event, this)" type="password" name="pass" class="form-control" id="login-pass_{$module_logo_instance}" size="{if empty($module_params.input_size)}15{else}{$module_params.input_size}{/if}" />
 			<div class="divCapson" style="display:none;">
 				{icon _id=error style="vertical-align:middle"} {tr}CapsLock is on.{/tr}
 			</div>
@@ -214,7 +214,7 @@ function doChallengeResponse() {
 			<input class="btn btn-default btn-sm button submit" type="submit" name="login" value="{tr}Log in{/tr}" />
 		</div>
 		{if $module_params.show_forgot eq 'y' or $module_params.show_register eq 'y'}
-			<div {if $mode eq 'header'}class="text-right" display:inline"{/if}>
+			<div {if $mode eq 'header'}class="text-right" style="display:inline;"{/if}>
 				{strip}
 				{if $module_params.show_forgot eq 'y' && $prefs.forgotPass eq 'y'}
 					<div class="pass"><a {*class="linkmodule"*} href="tiki-remind_password.php" title="{tr}Click here if you've forgotten your password{/tr}">{tr}I forgot my password{/tr}</a></div>
