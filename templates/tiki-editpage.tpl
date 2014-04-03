@@ -288,6 +288,7 @@
 								<fieldset>
 									<legend>{tr}Allow HTML:{/tr}</legend>
 									<input type="checkbox" name="allowhtml" {if $allowhtml eq 'y'}checked="checked"{/if}>
+									{tr }Per-page option: HTML in Wiki Pages is parsed by the browser, instead of HTML tags being displayed as typed.{/tr}
 								</fieldset>
 								{if $prefs.ajax_autosave eq "y"}{jq}
 $("input[name=allowhtml]").change(function() {
