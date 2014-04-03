@@ -36,11 +36,11 @@
 							<a class="link" href="tiki-forum_queue.php?forumId={$forumId}">{tr}queued:{/tr}{$queued}</a>
 						</span>
 					</div>
-					<div class="actions">
+					<div class="actions form-inline">
 						{if $topics|@count > 1}
 							<span class="action">
 								{tr}Move to topic:{/tr}
-								<select name="moveto">
+								<select name="moveto" class="form-control">
 									{section name=ix loop=$topics}
 										{if $topics[ix].threadId ne $comments_parentId}
 											<option value="{$topics[ix].threadId|escape}">{$topics[ix].title|truncate:100|escape}</option>
