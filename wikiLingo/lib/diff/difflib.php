@@ -26,6 +26,7 @@ class Tiki_Text_Diff_Renderer extends Text_Diff_Renderer
 	}
 	function render($diff)
 	{
+		$x0 = $y0 = 0;
 		$xi = $yi = 1;
 		$block = false;
 		$context = array();
@@ -144,13 +145,13 @@ function diffChar($orig, $final, $words=0, $function='character')
 {
 	$glue = strpos($function, 'inline') !== false ? "<br />" : "\n";
 	if ($words) {
-		preg_match_all("/\w+\s+(?=\w)|\w+|\W/", implode($glue, $orig), $matches);
+		preg_match_all("/\w+\s+(?=\w)|\w+|\W/u", implode($glue, $orig), $matches);
 		$line1 = $matches[0];
-		preg_match_all("/\w+\s+(?=\w)|\w+|\W/", implode($glue, $final), $matches);
+		preg_match_all("/\w+\s+(?=\w)|\w+|\W/u", implode($glue, $final), $matches);
 		$line2 = $matches[0];
 	} else {
-		$line1 = preg_split('//', implode($glue, $orig), -1, PREG_SPLIT_NO_EMPTY);
-		$line2 = preg_split('//', implode($glue, $final), -1, PREG_SPLIT_NO_EMPTY);
+		$line1 = preg_split('//u', implode($glue, $orig), -1, PREG_SPLIT_NO_EMPTY);
+		$line2 = preg_split('//u', implode($glue, $final), -1, PREG_SPLIT_NO_EMPTY);
 	}
 	$z = new Text_Diff($line1, $line2);
 	if ($z->isEmpty())

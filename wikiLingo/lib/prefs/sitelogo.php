@@ -36,5 +36,12 @@ function prefs_sitelogo_list()
 			'default' => 'Site Logo',
 			'tags' => array('basic'),
 		),
+		'sitelogo_icon' => array(
+			'name' => tra('Site icon'),
+			'hint' => tra('Recommended image height: 32 pixel'),
+			'type' => 'text',
+			'default' => 'img/tiki/tikilogo_icon.png',
+			'tags' => array('basic'),
+		),
 	);	
 }

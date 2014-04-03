@@ -391,7 +391,7 @@
 {jq}
     $('#share-form').submit(function(e){
         if($('#addresses').val() !='') {
-            $(this).modal("Please wait....");
+            $(this).tikiModal("Please wait....");
             var postData = $(this).serializeArray();
             var formURL = 'tiki-share.php?send=share';
             $.ajax({
@@ -406,11 +406,11 @@
                     } else {
                         $('#ajaxmsg').html("<div class='alert alert-warning'>"+shrerror+"</div>");
                     }
-                    $('#share-form').modal("");
+                    $('#share-form').tikiModal("");
                     $('#addresses').val('');
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
-                    $('#share-form').modal("");
+                    $('#share-form').tikiModal("");
                 }
             });
         } else {

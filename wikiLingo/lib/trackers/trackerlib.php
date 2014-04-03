@@ -806,7 +806,7 @@ class TrackerLib extends TikiLib
 			$cachelib->cacheItem($cache, serialize($ret));
 		}
 		if ($needToCheckCategPerms) {
-			$ret = $this->filter_categ_items($ret);
+			$ret = $this->perm_filter_items($ret);
 		}
 		$definition = Tracker_Definition::get($trackerId);
 		if (!$definition) {
@@ -1271,7 +1271,7 @@ class TrackerLib extends TikiLib
 		$type = '';
 		$ret = array();
 		if ($needToCheckCategPerms) {
-			$ret1 = $this->filter_categ_items($ret1);
+			$ret1 = $this->perm_filter_items($ret1);
 		}
 
 		foreach ($ret1 as $res) {
@@ -1330,15 +1330,23 @@ class TrackerLib extends TikiLib
 		return $retval;
 	}
 
-	public function filter_categ_items($ret)
+	/**
+	 * Filter items according to Tracker_Item::canView
+	 *
+	 * @param array $items		list of item arrays
+	 * @return array			filtered array
+	 */
+	public function perm_filter_items(array $items)
 	{
-		// FIXME: this is an approximation - the perm should be function of the status
-		$categlib = TikiLib::lib('categ');
-		if (!empty($ret[0]['itemId']) && $categlib->is_categorized('trackeritem', $ret[0]['itemId'])) {
-			return Perms::filter(array('type' => 'trackeritem'), 'object', $ret, array('object' => 'itemId'), 'view_trackers');
-		} else {
-			return $ret;
+		$ret = array();
+
+		foreach ($items as $item) {
+			$itemObject = Tracker_Item::fromInfo($item);
+			if ($itemObject->canView()) {
+				$ret[] = $item;
+			}
 		}
+		return $ret;
 	}
 
 	/* listfields fieldId=>ooptions */
@@ -1583,13 +1591,17 @@ class TrackerLib extends TikiLib
 			}
 		}
 
+		// get permnames
+		$permNames = array();
+		foreach ($fil as $fieldId => $value) {
+			$field = $tracker_definition->getField($fieldId);
+			$permNames[$fieldId] = $field['permName'];
+		}
+
 		if (count($final)) {
 			$data = array();
 			foreach ($fil as $fieldId => $value) {
-				$field = $tracker_definition->getField($fieldId);
-				$permName = $field['permName'];
-
-				$data[$permName] = $value;
+				$data[$permNames[$fieldId]] = $value;
 			}
 
 			foreach ($final as $job) {
@@ -1597,6 +1609,15 @@ class TrackerLib extends TikiLib
 				$data[$job['field']['permName']] = $value;
 				$this->modify_field($currentItemId, $job['field']['fieldId'], $value);
 			}
+		}
+
+		$values_by_permname = array();
+		$old_values_by_permname = array();
+		foreach ($fil as $fieldId => $value) {
+			$values_by_permname[$permNames[$fieldId]] = $value;
+		}
+		foreach ($old_values as $fieldId => $value) {
+			$old_values_by_permname[$permNames[$fieldId]] = $value;
 		}
 
 		TikiLib::events()->trigger(
@@ -1609,6 +1630,8 @@ class TrackerLib extends TikiLib
 				'trackerId' => $trackerId,
 				'values' => $fil,
 				'old_values' => $old_values,
+				'values_by_permname' => $values_by_permname,
+				'old_values_by_permname' => $old_values_by_permname,
 				'bulk_import' => $bulk_import,
 				'aggregate' => sha1("trackeritem/$currentItemId"),
 			)
@@ -2826,9 +2849,9 @@ class TrackerLib extends TikiLib
 		}
 	}
 
-	public function get_field_id($trackerId,$name)
+	public function get_field_id($trackerId, $name, $lookup = 'name')
 	{
-		return $this->fields()->fetchOne('fieldId', array('trackerId' => (int) $trackerId, 'name' => $name));
+		return $this->fields()->fetchOne('fieldId', array('trackerId' => (int) $trackerId, $lookup => $name));
 	}
 
 	/**
@@ -3596,6 +3619,9 @@ class TrackerLib extends TikiLib
 				$f = $wiki_info['data'];
 			}
 		} else {
+			if (strpos($resource, 'templates/') === 0) {
+				$resource = substr($resource, 10);
+			}
 			$resource_name = $smarty->get_filename($resource);
 			$f = file_get_contents($resource_name);
 		}
@@ -3605,7 +3631,7 @@ class TrackerLib extends TikiLib
 			foreach ($matches[1] as $i => $val) {
 				if (ctype_digit($val)) {
 					$ret[] = $val;
-				} elseif ($fieldId = $this->table('tiki_tracker_fields')->fetchOne('fieldId', array('permName' => $val))) {
+				} elseif ($fieldId = $this->table('tiki_tracker_fields')->fetchOne('fieldId', array('permName' => $val, 'trackerId' => $trackerId))) {
 					$ret[] = $fieldId;
 				}
 			}
@@ -3613,7 +3639,7 @@ class TrackerLib extends TikiLib
 				if (!empty($val)) {
 					if (ctype_digit($val)) {
 						$outputPretty[] = $matches[1][$i];
-					} elseif ($fieldId = $this->table('tiki_tracker_fields')->fetchOne('fieldId', array('permName' => $matches[1][$i]))) {
+					} elseif ($fieldId = $this->table('tiki_tracker_fields')->fetchOne('fieldId', array('permName' => $matches[1][$i], 'trackerId' => $trackerId))) {
 						$outputPretty[] = $fieldId;
 					}
 				}

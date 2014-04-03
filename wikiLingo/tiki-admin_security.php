@@ -125,8 +125,15 @@ if ($prefs['feature_clear_passwords'] == 'y') {
 		'message' => tra('Store passwords in plain text is activated. You should never set this unless you know what you are doing.')
 	);
 }
+if ($prefs['https_login'] != 'required') {
+	$tikisettings['https_login'] = array(
+		'risk' => tra('risky') ,
+		'setting' => ucfirst($prefs['https_login']),
+		'message' => tra('To the extent secure logins are not required, data transmitted between the browser and server is not private.')
+	);
+}
 
-// Check if any of the mail-in accounts uses "Allow anonynous access"
+// Check if any of the mail-in accounts uses "Allow anonymous access"
 if ($prefs['feature_mailin'] == 'y') {
 	require_once('lib/mailin/mailinlib.php');
 	$accs = $mailinlib->list_active_mailin_accounts(0, -1, 'account_desc', '');
@@ -160,7 +167,43 @@ if ($prefs['feature_mailin'] == 'y') {
 			'message' => tra('One or more mail-in accounts have enabled "Allow admin access", which allows for incoming email from admins. Admins have all rights, and web pages can easily be overwitten / tampered with. Check tiki-admin_mailin.php')
 		);
 	}
+}
 
+//check to see if installer lock is being used
+//check multitiki
+if (is_file('db/virtuals.inc')) {
+	$virtuals = array_map('trim', file('db/virtuals.inc'));
+	foreach ($virtuals as $v) {
+		if ($v) {
+			if (is_file("db/$v/local.php") && is_readable("db/$v/local.php")) {
+				$virt[$v] = 'y';
+			} else {
+				$virt[$v] = 'n';
+			}
+		}
+	}
+} else {
+	$virt = false;
+	$virtuals = false;
+}
+$multi = '';
+if ($virtuals) {
+	if (isset($_SERVER['TIKI_VIRTUAL']) && is_file('db/'.$_SERVER['TIKI_VIRTUAL'].'/local.php')) {
+		$multi = $_SERVER['TIKI_VIRTUAL'];
+	} elseif (isset($_SERVER['SERVER_NAME']) && is_file('db/'.$_SERVER['SERVER_NAME'].'/local.php')) {
+		$multi = $_SERVER['SERVER_NAME'];
+	} elseif (isset($_SERVER['HTTP_HOST']) && is_file('db/'.$_SERVER['HTTP_HOST'].'/local.php')) {
+		$multi = $_SERVER['HTTP_HOST'];
+	}
+}
+$tikidomain = $multi;
+$tikidomainslash = (!empty($tikidomain) ? $tikidomain . '/' : '');
+if (!file_exists('db/'.$tikidomainslash.'lock')) {
+	$tikisettings['installer lock'] = array(
+		'risk' => tra('unsafe') ,
+		'setting' => tra('Unlocked') ,
+		'message' => tra('The installer is not locked. The installer could be accessed, putting the database at risk of being altered or destroyed.')
+	);
 }
 
 ksort($tikisettings);

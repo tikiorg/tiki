@@ -114,9 +114,9 @@
 		{jq}
 			var crf = $('form.forumDeliberationRatingForm').submit(function() {
 				var vals = $(this).serialize();
-				$.modal(tr('Loading...'));
+				$.tikiModal(tr('Loading...'));
 				$.get('tiki-ajax_services.php?controller=rating&action=vote&' + vals, function() {
-					$.modal();
+					$.tikiModal();
 					$.notify(tr('Thanks for deliberating!'));
 					if ($('div.ratingDeliberationResultTable').length) document.location = document.location + '';
 				});

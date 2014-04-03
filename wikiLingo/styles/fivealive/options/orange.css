@@ -3,6 +3,8 @@
 	Tiki Wiki CMS Groupware.
 */
 
+@import url("../jquery-ui/options/orange/jquery-ui.min.css");
+
 a,
 a:visited,
 tr.even a,
@@ -115,24 +117,17 @@ hr {
 	background: #e35c29;
 }
 
-#tiki-top .cssmenu_horiz li a {
-	background: #c94c23 url(orange/siteheader.png) no-repeat -600px -40px;
-}
 
-#topbar_modules .dropdown-menu li.active a,
-.header .cssmenu_horiz li.selected a,
-#topbar_modules .cssmenu_horiz li.selected a,
-.cssmenu_horiz li.selected a,
-.cssmenu_vert li.selected a {
-	background: #e88357;
-}
-
-.header .cssmenu_horiz li.selected li a,
-#topbar_modules .cssmenu_horiz li.selected li a,
-.cssmenu_horiz li.selected li a,
-.cssmenu_vert li.selected li a {
-	font-style: normal;
+.header .cssmenu_horiz > li.selected > a,
+#topbar_modules .cssmenu_horiz > li.selected > a,
+.cssmenu_horiz li li.selected a,
+.cssmenu_vert li li.selected a {
 	color: #fff;
+}
+
+.cssmenu_horiz li.selected > a,
+.cssmenu_vert li.selected > a {
+	color: #c44a23;
 }
 
 .cssmenu_vert .sf-sub-indicator {
@@ -271,7 +266,7 @@ form.admin fieldset,
 	border-bottom: none;
 }
 
-/* cluptip tooltips */
+/* cluetip tooltips */
 
 .cluetip-default {
 	background: #FEE3DD;
@@ -290,3 +285,13 @@ form.admin fieldset,
 	color: #FEE3DD;
 }
   
+
+.s5-slide {
+    background-color: #EC6223 !important;
+}
+.s5-slide:after {
+    box-shadow: -5rem -2rem 0 0 #942E1F inset, 0 0 2rem rgba(0, 0, 0, 0.5);
+}
+.s5-slide-li-highlighted {
+    color: #EC6223;
+}

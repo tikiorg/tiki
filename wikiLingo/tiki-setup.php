@@ -245,8 +245,10 @@ if ($prefs['feature_wysiwyg'] == 'y') {
 }
 
 
-if ($prefs['feature_antibot'] == 'y' && is_null($user)) {
-	$headerlib->add_jsfile('https://www.google.com/recaptcha/api/js/recaptcha_ajax.js');
+if ($prefs['feature_antibot'] == 'y' && empty($user)) {
+	if ($prefs['recaptcha_enabled'] === 'y') {
+		$headerlib->add_jsfile('https://www.google.com/recaptcha/api/js/recaptcha_ajax.js');
+	}
 	require_once('lib/captcha/captchalib.php');
 	$smarty->assign_by_ref('captchalib', $captchalib);
 }
@@ -288,6 +290,8 @@ $smarty->assign('tiki_version', $TWV->version);
 $smarty->assign('tiki_branch', $TWV->branch);
 $smarty->assign('tiki_star', $TWV->getStar());
 $smarty->assign('tiki_uses_svn', $TWV->svn);
+
+$smarty->assign('symbols', TikiLib::symbols());
 
 if ( isset( $_GET['msg'] ) ) {
 	$smarty->assign('display_msg', $_GET['msg']);

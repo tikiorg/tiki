@@ -233,7 +233,7 @@ $.fn.wysiwygPlugin = function (execution, page, ckoption) {
 										.text(tr("Save"))
 										.button()
 										.click(function (event) {
-											$(editorSelector).modal(tr("Saving..."));
+											$(editorSelector).tikiModal(tr("Saving..."));
 
 											var data = editor.getData();
 											data = data.replace(/<\/p>\n\n<p/g, "</p>\n<p");	// remove cke4 extra linefeeds

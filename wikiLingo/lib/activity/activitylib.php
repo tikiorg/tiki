@@ -11,7 +11,9 @@ class ActivityLib
 
 	function getRules()
 	{
-		return $this->rulesTable()->fetchAll(
+		$table = $this->rulesTable();
+		$table->useExceptions();
+		return $table->fetchAll(
 			array(
 				'ruleId',
 				'eventType',
@@ -133,11 +135,15 @@ class ActivityLib
 		$runner = $this->getRunner($manager);
 		$customizer = new Tiki_Event_Customizer;
 
-		foreach ($this->getRules() as $rule) {
-			$customizer->addRule($rule['eventType'], $rule['rule']);
-		}
+		try {
+			foreach ($this->getRules() as $rule) {
+				$customizer->addRule($rule['eventType'], $rule['rule']);
+			}
 
-		$customizer->bind($manager, $runner);
+			$customizer->bind($manager, $runner);
+		} catch (TikiDb_Exception $e) {
+			// Prevent failure while binding events to avoid locking out users
+		}
 	}
 
 	private function getRunner($manager)

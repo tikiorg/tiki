@@ -78,10 +78,11 @@
 		{/if}
 	</div>
 </div>
-
-<a class="link" href="tiki-forums.php">{tr}Forums{/tr}</a> {$prefs.site_crumb_seper} <a class="link" href="tiki-view_forum.php?forumId={$forumId}">{$forum_info.name|escape}</a>
-
-<br>
+<div class="breadcrumb">
+	<a class="link" href="tiki-forums.php">{tr}Forums{/tr}</a>
+	{$prefs.site_crumb_seper}
+	<a class="link" href="tiki-view_forum.php?forumId={$forumId}">{$forum_info.name|escape}</a>
+</div>
 
 {if !empty($errors)}
 	{remarksbox type="warning" title="{tr}Errors{/tr}"}
@@ -282,12 +283,12 @@
 					$('.forum_deliberation_add_item').click(function() {
 						var thisItem;
 						if (!itemMaster) {
-							$.modal(tr('Loading...'));
+							$.tikiModal(tr('Loading...'));
 							$.get('tiki-ajax_services', {controller: 'comment', action: "deliberation_item"}, function(itemInput) {
 								itemMaster = itemInput;
 								thisItem = $(itemMaster).insertBefore('div.forum_deliberation_items_toolbar');
 								configureDeliberationItemRatings(thisItem);
-								$.modal();
+								$.tikiModal();
 							});
 						} else {
 							thisItem = $(itemMaster).insertBefore('div.forum_deliberation_items_toolbar');
@@ -457,7 +458,7 @@
 			{/if}
 			{if $forum_info.vote_threads eq 'y' and ($tiki_p_ratings_view_results eq 'y' or $tiki_p_admin eq 'y')}
 				<th>{tr}Rating <br/>(avg/max){/tr}</th>
-				{if $prefs.rating_results_detailed eq 'y' and $prefs.rating_results_detailed_percent eq 'n'}
+				{if $prefs.rating_results_detailed eq 'y' and $prefs.rating_results_detailed_percent neq 'y'}
 					<th>{tr}Detailed results <br/>(counts){/tr}</th>
 				{elseif $prefs.rating_results_detailed eq 'y' and $prefs.rating_results_detailed_percent eq 'y'}
 					<th>{tr}Detailed results <br/>(counts/%){/tr}</th>

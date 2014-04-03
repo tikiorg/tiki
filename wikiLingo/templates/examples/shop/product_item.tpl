@@ -25,7 +25,7 @@
 			{/if}
 		</td>
 		<td colspan="2">
-			<h1 itemprop="name">{$row.title}</h1>
+			<h1 itemprop="name">{$row.name}</h1>
 		</td>
 	</tr>
 	<tr>
@@ -73,7 +73,7 @@
 		</th>
 		<td>
 			{if $row.stock|nonp gt 0}
-				{include file="templates/examples/shop/add_to_cart.tpl" prefs=$prefs}
+				{include file="templates/examples/shop/add_to_cart.tpl"}
 				<meta  itemprop="acceptedPaymentMethod" content="http://purl.org/goodrelations/v1#PayPal">
 			{/if}
 		</td>
@@ -90,7 +90,7 @@
 		<td colspan="3">
 			{if count($img) > 1}
 				{for $i = 1; $i< count($img); $i++}
-					<a class="item-thumb" href="display{$img[$i]}" title="{$row.title}" rel="[p]box">
+					<a class="item-thumb" href="display{$img[$i]}" title="{$row.name}" rel="[p]box">
 						<img src="thumbnail{$img[$i]}" width="120" height="120" />
 					</a>
 				{/for}

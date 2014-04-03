@@ -15,15 +15,55 @@
 				</div>
 				<div class="panel-body">
 					<ol>
-						<li>{if $install_step eq '0'}<strong>{else}<a href="tiki-install.php?reset=y{if $multi}&amp;multi={$multi}{/if}{if $lang}&amp;lang={$lang}{/if}" title="{tr}Welcome{/tr} / {tr}Restart the installer.{/tr}">{/if}{tr}Welcome{/tr}{if $install_step eq '0'}</strong>{else}</a>{/if}</li>
-						<li>{if $install_step eq '1'}<strong>{else}<a href="tiki-install.php?install_step=1{if $multi}&amp;multi={$multi}{/if}{if $lang}&amp;lang={$lang}{/if}" title="{tr}Read the License{/tr}">{/if}{tr}Read the License{/tr}{if $install_step eq '1'}</strong>{else}</a>{/if}</li>
-						<li>{if $install_step eq '2'}<strong>{elseif $install_step ge '3' or $dbcon eq 'y'}<a href="tiki-install.php?install_step=2{if $multi}&amp;multi={$multi}{/if}{if $lang}&amp;lang={$lang}{/if}" title="{tr}Review the System Requirements{/tr}">{/if}{tr}Review the System Requirements{/tr}{if $install_step eq '2'}</strong>{elseif $install_step ge '3' or $dbcon eq 'y'}</a>{/if}</li>
-						<li>{if $install_step eq '3'}<strong>{elseif $dbcon eq 'y'}<a href="tiki-install.php?install_step=3{if $multi}&amp;multi={$multi}{/if}{if $lang}&amp;lang={$lang}{/if}" title="{tr}Database Connection{/tr}">{/if}{if $dbcon eq 'y'}{tr}Reset the Database Connection{/tr}{else}{tr}Database Connection{/tr}{/if}{if $install_step eq '3'}</strong>{elseif $dbcon eq 'y'}</a>{/if}</li>
-						<li>{if $install_step eq '4'}<strong>{elseif $dbcon eq 'y' or isset($smarty.post.scratch) or isset($smarty.post.update)}<a href="tiki-install.php?install_step=4{if $multi}&amp;multi={$multi}{/if}{if $lang}&amp;lang={$lang}{/if}" title="{if $tikidb_created}{tr}Install/Upgrade{/tr}{else}{tr}Install{/tr}{/if}">{/if}{if $tikidb_created}<em>{tr}Install/Upgrade{/tr}</em>{else}{tr}Install{/tr}{/if}{if $install_step eq '4'}</strong>{elseif ($dbcon eq 'y') or (isset($smarty.post.scratch)) or (isset($smarty.post.update))}</a>{/if}</li>
-						<li>{if $install_step eq '5'}<strong>{elseif $tikidb_is20}<a href="tiki-install.php?install_step=5{if $multi}&amp;multi={$multi}{/if}{if $lang}&amp;lang={$lang}{/if}" title="{if isset($smarty.post.update)}{tr}Review the Upgrade{/tr}{else}{tr}Review the Installation{/tr}{/if}">{/if}{if isset($smarty.post.update)}{tr}Review the Upgrade{/tr}{else}{tr}Review the Installation{/tr}{/if}{if $install_step eq '5'}</strong>{elseif $tikidb_is20}</a>{/if}</li>
-						<li>{if $install_step eq '6'}<strong>{elseif $tikidb_is20 and !isset($smarty.post.update)}<a href="tiki-install.php?install_step=6{if $multi}&amp;multi={$multi}{/if}{if $lang}&amp;lang={$lang}{/if}" title="{tr}Configure the General Settings{/tr}">{/if}{tr}Configure the General Settings{/tr}{if $install_step eq '6'}</strong>{elseif $tikidb_is20 and !isset($smarty.post.update)}</a>{/if}</li>
-						<li>{if $install_step eq '7'}<strong>{elseif $tikidb_is20}<a href="tiki-install.php?install_step=7{if $multi}&amp;multi={$multi}{/if}{if $lang}&amp;lang={$lang}{/if}" title="{tr}Enter Your Tiki{/tr}">{/if}{tr}Enter Your Tiki{/tr}{if $install_step eq '7'}</strong>{elseif $tikidb_is20}</a>{/if}</li>
+						<li>{if $install_step eq '0'}<strong>{else}<a href="#" onclick="$('#install_step0').submit();return false;" title="{tr}Welcome{/tr} / {tr}Restart the installer.{/tr}">{/if}{tr}Welcome{/tr}{if $install_step eq '0'}</strong>{else}</a>{/if}</li>
+						<li>{if $install_step eq '1'}<strong>{else}<a href="#" onclick="$('#install_step1').submit();return false;" title="{tr}Read the License{/tr}">{/if}{tr}Read the License{/tr}{if $install_step eq '1'}</strong>{else}</a>{/if}</li>
+						<li>{if $install_step eq '2'}<strong>{elseif $install_step ge '3' or $dbcon eq 'y'}<a href="#" onclick="$('#install_step2').submit();return false;" title="{tr}Review the System Requirements{/tr}">{/if}{tr}Review the System Requirements{/tr}{if $install_step eq '2'}</strong>{elseif $install_step ge '3' or $dbcon eq 'y'}</a>{/if}</li>
+						<li>{if $install_step eq '3'}<strong>{elseif $dbcon eq 'y'}<a href="#" onclick="$('#install_step3').submit();return false;" title="{tr}Database Connection{/tr}">{/if}{if $dbcon eq 'y'}{tr}Reset the Database Connection{/tr}{else}{tr}Database Connection{/tr}{/if}{if $install_step eq '3'}</strong>{elseif $dbcon eq 'y'}</a>{/if}</li>
+						<li>{if $install_step eq '4'}<strong>{elseif $dbcon eq 'y' or isset($smarty.post.scratch) or isset($smarty.post.update)}<a href="#" onclick="$('#install_step4').submit();return false;" title="{if $tikidb_created}{tr}Install/Upgrade{/tr}{else}{tr}Install{/tr}{/if}">{/if}{if $tikidb_created}<em>{tr}Install/Upgrade{/tr}</em>{else}{tr}Install{/tr}{/if}{if $install_step eq '4'}</strong>{elseif ($dbcon eq 'y') or (isset($smarty.post.scratch)) or (isset($smarty.post.update))}</a>{/if}</li>
+						<li>{if $install_step eq '5'}<strong>{elseif $tikidb_is20}<a href="#" onclick="$('#install_step5').submit();return false;" title="{if isset($smarty.post.update)}{tr}Review the Upgrade{/tr}{else}{tr}Review the Installation{/tr}{/if}">{/if}{if isset($smarty.post.update)}{tr}Review the Upgrade{/tr}{else}{tr}Review the Installation{/tr}{/if}{if $install_step eq '5'}</strong>{elseif $tikidb_is20}</a>{/if}</li>
+						<li>{if $install_step eq '6'}<strong>{elseif $tikidb_is20 and !isset($smarty.post.update)}<a href="#" onclick="$('#install_step6').submit();return false;" title="{tr}Configure the General Settings{/tr}">{/if}{tr}Configure the General Settings{/tr}{if $install_step eq '6'}</strong>{elseif $tikidb_is20 and !isset($smarty.post.update)}</a>{/if}</li>
+						<li>{if $install_step eq '7'}<strong>{elseif $tikidb_is20}<a href="#" onclick="$('#install_step7').submit();return false;" title="{tr}Enter Your Tiki{/tr}">{/if}{tr}Enter Your Tiki{/tr}{if $install_step eq '7'}</strong>{elseif $tikidb_is20}</a>{/if}</li>
 					</ol>
+					<form method="post" action="tiki-install.php" id="install_step0">
+						<input type="hidden" name="reset" value="y">
+						{if $multi}<input type="hidden" name="multi" value="{$multi}">{/if}
+						{if $lang}<input type="hidden" name="lang" value="{$lang}">{/if}
+					</form>
+					<form method="post" action="tiki-install.php" id="install_step1">
+						<input type="hidden" name="install_step" value="1">
+						{if $multi}<input type="hidden" name="multi" value="{$multi}">{/if}
+						{if $lang}<input type="hidden" name="lang" value="{$lang}">{/if}
+					</form>
+					<form method="post" action="tiki-install.php" id="install_step2">
+						<input type="hidden" name="install_step" value="2">
+						{if $multi}<input type="hidden" name="multi" value="{$multi}">{/if}
+						{if $lang}<input type="hidden" name="lang" value="{$lang}">{/if}
+					</form>
+					<form method="post" action="tiki-install.php" id="install_step3">
+						<input type="hidden" name="install_step" value="3">
+						{if $multi}<input type="hidden" name="multi" value="{$multi}">{/if}
+						{if $lang}<input type="hidden" name="lang" value="{$lang}">{/if}
+					</form>
+					<form method="post" action="tiki-install.php" id="install_step4">
+						<input type="hidden" name="install_step" value="4">
+						{if $multi}<input type="hidden" name="multi" value="{$multi}">{/if}
+						{if $lang}<input type="hidden" name="lang" value="{$lang}">{/if}
+					</form>
+					<form method="post" action="tiki-install.php" id="install_step5">
+						<input type="hidden" name="install_step" value="5">
+						{if $multi}<input type="hidden" name="multi" value="{$multi}">{/if}
+						{if $lang}<input type="hidden" name="lang" value="{$lang}">{/if}
+					</form>
+					<form method="post" action="tiki-install.php" id="install_step6">
+						<input type="hidden" name="install_step" value="6">
+						{if $multi}<input type="hidden" name="multi" value="{$multi}">{/if}
+						{if $lang}<input type="hidden" name="lang" value="{$lang}">{/if}
+					</form>
+					<form method="post" action="tiki-install.php" id="install_step7">
+						<input type="hidden" name="install_step" value="7">
+						{if $multi}<input type="hidden" name="multi" value="{$multi}">{/if}
+						{if $lang}<input type="hidden" name="lang" value="{$lang}">{/if}
+					</form>
 				</div>
 			</div><!-- End of install-menu -->
 			<div class="install-help panel panel-default">
@@ -135,7 +175,7 @@
 						<input type="hidden" name="install_step" value="2">
 						<input type="hidden" name="perform_mail_test" value="y">
 						<div align="center">
-							<input type="submit" class="btn btn-warning btn-sm" value=" {tr}Send Test Message{/tr} ">
+							<input type="submit" class="btn btn-warning btn-sm" value="{tr}Send Test Message{/tr}">
 						</div>
 							{if $multi}		<input type="hidden" name="multi" value="{$multi}">{/if}
 							{if $lang}		<input type="hidden" name="lang" value="{$lang}">{/if}
@@ -387,7 +427,7 @@
 									<input type="hidden" name="useInnoDB" value="0">
 								{/if}
 								<p align="center">
-									<input type="submit" class="btn btn-warning" name="scratch" value=" {if $tikidb_created}{tr}Reinstall{/tr}{else}{tr}Install{/tr}{/if} " style="margin: 32px;">
+									<input type="submit" class="btn btn-warning" name="scratch" value="{if $tikidb_created}{tr}Reinstall{/tr}{else}{tr}Install{/tr}{/if}" style="margin: 32px;">
 								</p>
 								</div><!-- End of install-table -->
 							</div><!-- End of db-install -->
@@ -402,7 +442,7 @@
 									<p>{tr}Automatically upgrade your existing database to version{/tr}
 										<strong>{$tiki_version_name}</strong>.
 									</p>
-									<p align="center"><input type="submit" class="btn btn-primary" name="update" value=" {tr}Upgrade{/tr} "></p>
+									<p align="center"><input type="submit" class="btn btn-primary" name="update" value="{tr}Upgrade{/tr}"></p>
 								</div><!-- End of db-upgrade -->
 							{/if}
 						</form>
@@ -528,6 +568,7 @@
 				<legend>{tr}Secure Log in{/tr} <a href="http://doc.tiki.org/login+config" target="_blank" title="{tr}Help{/tr}">
 					<img src="img/icons/help.png" alt="{tr}Help{/tr}"></a>
 				</legend>
+				<img src="img/icons/lock.png"> {tr}It is recommended to choose the "Require secure (https) login" option for better security. A security certificate and dedicated IP address are required to implement a secure login.{/tr}
 				<div style="padding:5px; clear:both"><label for="https_login">{tr}HTTPS login:{/tr}</label>
 					<select name="https_login" id="https_login" onchange="hidedisabled('httpsoptions',this.value);">
 						<option value="disabled"{if $prefs.https_login eq 'disabled'} selected="selected"{/if}>{tr}Disabled{/tr}</option>
@@ -621,7 +662,7 @@
 				<input type="hidden" name="install_step" value="7">
 				<input type="hidden" name="install_type" value="{$install_type}">
 				<input type="hidden" name="general_settings" value="y">
-				<input type="submit" class="btn btn-primary" value=" {tr}Continue{/tr} ">
+				<input type="submit" class="btn btn-primary" value="{tr}Continue{/tr}">
 			</div>
 			</form>
 		</div><!-- End of install-step6 -->
@@ -651,10 +692,24 @@
 				<p>{tr}If this is an upgrade, clean the Tiki caches manually (the <strong>templates_c</strong> directory) or by using the <strong>Admin &gt; System</strong> option from the Admin menu.{/tr}</p>
 			{/if}
 			{if $tikidb_is20}
-				<div class="text-center">
-					<a href="tiki-install.php?lockenter&amp;{if $multi}multi={$multi|escape}&amp;{/if}install_type={$install_type}" class="btn btn-primary">{tr}Enter Tiki and Lock Installer{/tr} ({tr}Recommended{/tr})</a>
-					<a href="tiki-install.php?nolockenter&amp;{if $multi}multi={$multi|escape}&amp;{/if}install_type={$install_type}" class="btn btn-warning">{tr}Enter Tiki Without Locking Installer{/tr}</a>
-				</div>
+				<form method="post" action="tiki-install.php" style="float: left">
+					{if $multi}
+						<input type="hidden" name="multi" value="{$multi|escape}">
+					{/if}
+					<input type="hidden" name="install_type" value="{$install_type}">
+					<input type="hidden" name="install_step" value="8">
+					<input type="submit" value="{tr}Enter Tiki and Lock Installer{/tr} ({tr}Recommended{/tr})">
+				</form>
+				<form method="post" action="tiki-install.php" style="margin-left: 20px; display: inline-block;">
+					<input type="hidden" name="nolockenter" value="1">
+					{if $multi}
+						<input type="hidden" name="multi" value="{$multi|escape}">
+					{/if}
+					<input type="hidden" name="install_type" value="{$install_type}">
+					<input type="hidden" name="install_step" value="8">
+					<input type="submit" value="{tr}Enter Tiki Without Locking Installer{/tr}" style="background: #909090;">
+					<br><em><img src="img/icons/error.png" alt="{tr}Alert{/tr}" style="vertical-align:middle; "> {tr}Not recommended due to security risk{/tr}.</em>
+				</form>
 			{/if}
 			{if $install_type eq 'update'}
 				{if $double_encode_fix_attempted eq 'y'}
@@ -737,7 +792,7 @@
 							<br>
 							<div><strong>{tr}Adding a new host:{/tr}</strong></div>
 							{tr}To add a new virtual host run the setup.sh with the domain name of the new host as a last parameter.{/tr}
-							{if $multi} <h2> ({tr}MultiTiki{/tr}) {$multi|default:"{tr}Default{/tr}"} </h2> {/if}
+							{if $multi} <h2> ({tr}MultiTiki{/tr})</h2> <h5>{$multi|default:"{tr}Default{/tr}"} </h5> {/if}
 						</div>
 					</div>
 				</div>
@@ -751,7 +806,7 @@
 					{tr}Are you upgrading an existing Tiki site?{/tr}
 					{tr}Go directly to the <strong>Install/Upgrade</strong> step.{/tr}
 					{if $dbcon eq 'y' or isset($smarty.post.scratch) or isset($smarty.post.update)}
-						<a href="tiki-install.php?install_step=4{if $multi}&amp;multi={$multi}{/if}{if $lang}&amp;lang={$lang}{/if}" title="{tr}Install/Upgrade{/tr}">
+						<a href="#" onclick="$('#install_step4').submit();return false;" title="{tr}Install/Upgrade{/tr}">
 							<img src="img/icons/arrow_right.png" alt="{tr}Install/Upgrade{/tr}" height="16" width="16">
 						</a>
 					{/if}

@@ -47,7 +47,7 @@ class Text_Diff_Renderer_character extends Tiki_Text_Diff_Renderer
     {
     }
 
-	function _lines($type, $lines, $prefix = '')
+	function _lines($lines, $prefix = '', $suffix = '', $type = '')
 	{
 		if ($type == 'context') {
 	        foreach ($lines as $line) {
@@ -72,24 +72,24 @@ class Text_Diff_Renderer_character extends Tiki_Text_Diff_Renderer
 
     function _context($lines)
     {
-        $this->_lines('context', $lines);
+        $this->_lines($lines, '', '', 'context');
     }
 
     function _added($lines, $changemode = FALSE)
     {
         if ($changemode) {
-        	$this->_lines('change-added', $lines, '+');
+        	$this->_lines($lines, '+', '', 'change-added');
         } else {
-        	$this->_lines('added', $lines, '+');
+        	$this->_lines($lines, '+', '', 'added');
         }
     }
 
     function _deleted($lines, $changemode = FALSE)
     {
         if ($changemode) {
-        	$this->_lines('change-deleted', $lines, '-');
+        	$this->_lines($lines, '-', '', 'change-deleted');
         } else {
-	        $this->_lines('deleted', $lines, '-');
+	        $this->_lines($lines, '-', '', 'deleted');
         }
     }
 

@@ -153,6 +153,22 @@ class WikiLib extends TikiLib
 		return preg_match("/[$badchars]/", $name);
 	}
 
+	public function remove_badchars($page)
+	{
+		if ($this->contains_badchars($page)) {
+			$badChars = $this->get_badchars();
+
+			// Replace bad characters with a '_'
+			$iStrlenBadChars = strlen($badChars);
+			for ($j = 0; $j < $iStrlenBadChars; $j++) {
+				$char = $badChars[$j];
+				$page = str_replace($char, "_", $page);
+			}
+		}
+
+		return $page;
+	}
+
 	/**
 	 * Duplicate an existing page
 	 *
@@ -526,28 +542,29 @@ class WikiLib extends TikiLib
 	{
 		$comment = strip_tags($comment);
 		$now = empty($date)? $this->now: $date;
-		$query = 'insert into `tiki_wiki_attachments`' .
-						' (`page`,`filename`,`filesize`,`filetype`,`data`,`created`,`hits`,`user`,`comment`,`path`)' .
-						' values(?,?,?,?,?,?,?,?,?,?)';
-		$result = $this->query($query, array($page, $name, (int) $size, $type, $data, (int) $now, 0, $user, $comment, $fhash));
+		$attId = $this->table('tiki_wiki_attachments')->insert([
+			'page' => $page,
+			'filename' => $name,
+			'filesize' => (int) $size,
+			'filetype' => $type,
+			'data' => $data,
+			'created' => (int) $now,
+			'hits' => 0,
+			'user' => $user,
+			'comment' => $comment,
+			'path' => $fhash,
+		]);
 
 		global $prefs;
 		if ($prefs['feature_score'] == 'y') {
 			$this->score_event($user, 'wiki_attach_file');
 		}
-		$attId = 0;
 		if ($prefs['feature_user_watches'] = 'y') {
 			include_once('lib/notifications/notificationemaillib.php');
-			$query = 'select `attId` from `tiki_wiki_attachments` where `page`=? and `filename`=? and `created`=? and `user`=?';
-			$attId = $this->getOne($query, array($page, $name, $now, $user));
 			sendWikiEmailNotification('wiki_file_attached', $page, $user, $comment, '', $name, '', '', false, '', 0, $attId);
 		}
 		if ($prefs['feature_actionlog'] == 'y') {
 			global $logslib; include_once('lib/logs/logslib.php');
-			if (empty($attId)) {
-				$query = 'select `attId` from `tiki_wiki_attachments` where `page`=? and `filename`=? and `created`=? and `user`=?';
-				$attId = $this->getOne($query, array($page, $name, $now, $user));
-			}
 			$logslib->add_action('Created', $attId, 'wiki page attachment', '', $user);
 		}
 		return $attId;
@@ -1387,6 +1404,17 @@ class WikiLib extends TikiLib
 
 		if ($prefs['namespace_enabled'] == 'y' && ! empty($prefs['namespace_default'])) {
 			return $prefs['namespace_default'] . $prefs['namespace_separator'] . $pageName;
+		} else {
+			return $pageName;
+		}
+	}
+
+	public function include_namespace($pageName, $namespace)
+	{
+		global $prefs;
+
+		if ($prefs['namespace_enabled'] == 'y' && $namespace) {
+			return $namespace . $prefs['namespace_separator'] . $pageName;
 		} else {
 			return $pageName;
 		}

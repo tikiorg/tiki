@@ -1,6 +1,6 @@
 {* $Id$ *}
 
-{title help="Surveys"}{tr}Admin surveys{/tr}{/title}
+{title url='tiki-admin_surveys.php' help="Surveys"}{tr}Admin surveys{/tr}{/title}
 
 <div class="t_navbar btn-group form-group">
 	{button href="tiki-list_surveys.php" class="btn btn-default" _text="{tr}List Surveys{/tr}"}
@@ -52,13 +52,9 @@
 			<td class="integer">{$channels[user].questions}</td>
 			<td class="action">
 				{self_link _icon='page_edit' cookietab='2' _anchor='anchor2' surveyId=$channels[user].surveyId}{tr}Edit{/tr}{/self_link}
-				<a class="link" href="tiki-admin_survey_questions.php?surveyId={$channels[user].surveyId}">{icon _id='help' alt="{tr}Questions{/tr}" title="{tr}Questions{/tr}"}</a>
+				<a class="link" href="tiki-admin_survey_questions.php?surveyId={$channels[user].surveyId}">{icon _id='application_view_list' alt="{tr}Questions{/tr}" title="{tr}Questions{/tr}"}</a>
 				<a class="link" href="tiki-admin_surveys.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].surveyId}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
-				{if $channels[user].individual eq 'y'}
-					<a class="link" href="tiki-objectpermissions.php?objectName={$channels[user].name|escape:"url"}&amp;objectType=survey&amp;permType=surveys&amp;objectId={$channels[user].surveyId}">{icon _id='key_active' alt="{tr}Active Perms{/tr}"}</a>
-				{else}
-					<a class="link" href="tiki-objectpermissions.php?objectName={$channels[user].name|escape:"url"}&amp;objectType=survey&amp;permType=surveys&amp;objectId={$channels[user].surveyId}">{icon _id='key' alt="{tr}Perms{/tr}"}</a>
-				{/if}
+				{permission_link mode=icon type=survey permType=surveys id=$channels[user].surveyId title=$channels[user].name}
 				{if ($tiki_p_admin eq 'y') or ($channels[user].individual eq 'n' and $tiki_p_view_survey_stats eq 'y') or ($channels[user].individual_tiki_p_view_survey_stats eq 'y')}
 					<a class="link" href="tiki-survey_stats_survey.php?surveyId={$channels[user].surveyId}">{icon _id='chart_curve' alt="{tr}Stats{/tr}"}</a>
 				{/if}
@@ -81,7 +77,7 @@
 {/if}
 
 {if $individual eq 'y'}
-	<a class="link" href="tiki-objectpermissions.php?objectName={$info.name|escape:"url"}&amp;objectType=survey&amp;permType=surveys&amp;objectId={$info.surveyId}">{tr}There are individual permissions set for this survey{/tr}</a><br><br>
+	{permission_link mode=link type=survey permType=surveys id=$info.surveyId title=$info.name label="{tr}There are individual permissions set for this survey{/tr}"}
 {/if}
 
 <form action="tiki-admin_surveys.php" method="post" class="form-horizontal" role="form">

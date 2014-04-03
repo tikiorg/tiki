@@ -19,7 +19,16 @@
 						<td style="font-weight: bold">
 							{tr}{$payment_info.state|capitalize|escape}{/tr}
 						</td>
-						<td></td>
+						<td>
+							{if $payment_info.state eq 'authorized'}
+								{permission name=payment_admin}
+									<form method="post" action="{service controller=payment action=capture paymentId=$payment_info.paymentRequestId}">
+										<input type="submit" class="btn btn-xs btn-warning" value="{tr}Capture Payment{/tr}">
+										<input type="hidden" name="next" value="{$smarty.server.REQUEST_URI|escape}">
+									</form>
+								{/permission}
+							{/if}
+						</td>
 					</tr>
 				{if $payment_info.fullview and !empty($payment_detail)}
 					<tr>
@@ -109,13 +118,15 @@
 						<br><input type="image" name="submit" border="0" src="https://www.paypal.com/en_US/i/bnr/horizontal_solution_PPeCheck.gif" border="0" alt="PayPal">
 					</form>
 				{elseif $prefs.payment_system eq 'israelpost' && $prefs.payment_israelpost_business_id neq ''}
-					<form id="israelpost_form" method="post" target="israelpost_iframe" action="{$prefs.payment_israelpost_environment|escape}">
+					<form id="israelpost_form" method="post" target="israelpost_iframe" action="{$prefs.payment_israelpost_environment|escape}genericInit?OpenAgent{if $prefs.language neq 'he'}&amp;L=EN{/if}">
 						<input type="hidden" name="business" value="{$prefs.payment_israelpost_business_id|escape}">
 						<input type="hidden" name="PreOrderID" value="{$payment_info.paymentRequestId|escape}">
 						<input type="hidden" name="item_number_1" value="{$payment_info.paymentRequestId|escape}">
 						<input type="hidden" name="item_name_1" value="{tr}Total{/tr}">
 						<input type="hidden" name="amount_1" value="{$payment_info.amount_remaining_raw|escape}">
 						<input type="hidden" name="quantity_1" value="1">
+						<input type="hidden" name="return" value="{$payment_info.returnurl|escape}">
+						<input type="hidden" name="currency_code" value="{$prefs.payment_currency|escape}">
 						<input type="submit" value="{tr}Proceed to Israel Post{/tr}">
 					</form>
 					{* Note: width specified by specifications, not height *}
@@ -205,6 +216,8 @@
 								{include file='tiki-payment-cclite.tpl' payment=$payment}
 							{elseif $payment.type eq 'tikicredits'}
 								{include file='tiki-payment-tikicredits.tpl' payment=$payment}
+							{elseif $payment.type eq 'israelpost'}
+								{include file='tiki-payment-israelpost.tpl' payment=$payment}
 							{/if}
 						</li>
 					{/foreach}

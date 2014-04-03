@@ -6,6 +6,10 @@
     google_ad_width = 728;
     google_ad_height = 90;
     google_ad_format = "728x90_as";
+{elseif $display == '970*90_as'}
+    google_ad_width = 970;
+    google_ad_height = 90;
+    google_ad_format = "970x90_as";
 {elseif $display == '468*60_as'}
     google_ad_width = 468;
     google_ad_height = 60;

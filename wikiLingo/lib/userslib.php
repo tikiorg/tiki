@@ -2464,6 +2464,9 @@ class UsersLib extends TikiLib
 
 		if ($this->get_user_preference($auser, 'user_information', 'public') == 'public' || $prefs['feature_friends'] == 'y') {
 			$id = $this->get_user_id($auser);
+			if ($id == -1 ) {
+				return $body;
+			}
 			include_once('tiki-sefurl.php');
 			$url = "tiki-user_information.php?userId=$id";
 			$url = filter_out_sefurl($url);
@@ -5517,6 +5520,24 @@ class UsersLib extends TikiLib
 				'type' => 'workspace',
 				'admin' => false,
 				'prefs' => array('workspace_ui'),
+				'scope' => 'object',
+			),
+			array(
+				'name' => 'tiki_p_goal_admin',
+				'description' => tr('Can manage all aspects of the goal'),
+				'level' => 'admin',
+				'type' => 'goal',
+				'admin' => true,
+				'prefs' => ['goal_enabled'],
+				'scope' => 'object',
+			),
+			array(
+				'name' => 'tiki_p_goal_modify_eligible',
+				'description' => tr('Can manage who is eligible to a goal'),
+				'level' => 'admin',
+				'type' => 'goal',
+				'admin' => false,
+				'prefs' => ['goal_enabled'],
 				'scope' => 'object',
 			),
 		);

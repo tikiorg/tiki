@@ -82,9 +82,9 @@ class TikiDb_Bridge extends TikiDb
 		self::get()->setErrorMessage($message);
 	} // }}}
 
-	protected function handleQueryError( $query, $values, $result ) // {{{
+	protected function handleQueryError( $query, $values, $result, $mode ) // {{{
 	{
-		self::get()->handleQueryError($query, $values, $result);
+		self::get()->handleQueryError($query, $values, $result, $mode);
 	} // }}}
 
 	protected function convertQueryTablePrefixes( &$query ) // {{{

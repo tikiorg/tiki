@@ -2,7 +2,7 @@
 //
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: tiki-admin_modules.js 39475 2012-01-12 22:47:05Z sylvieg $
+// $Id$
 
 $(document).ready(function() {
 
@@ -26,8 +26,8 @@ $(document).ready(function() {
 			connectWith:"#page_list_container",
 
 			stop:function (event, ui) {
-				if ($(".save_structure a:visible").length === 0) {
-					$(".save_structure a").show("fast").parent().show("fast");
+				if ($(".save_structure:visible").length === 0) {
+					$(".save_structure").show("fast").parent().show("fast");
 					tocDirty = true;
 				}
 	//			$(this).removeClass("ui-state-active");
@@ -55,7 +55,7 @@ $(document).ready(function() {
 												'<div class="actions"><input type="text" class="page-alias-input" value="" placeholder="Page alias..."></div>' +
 												pageName + '</div></li>')
 								);
-								$(".save_structure a").show("fast").parent().show("fast");
+								$(".save_structure").show("fast").parent().show("fast");
 								tocDirty = true;
 							}
 						}
@@ -64,7 +64,7 @@ $(document).ready(function() {
 				.disableSelection();
 
 		$(".page-alias-input").on("change", function () {
-			$(".save_structure a").show("fast").parent().show("fast");
+			$(".save_structure").show("fast").parent().show("fast");
 			tocDirty = true;
 		}).on("click", function () {	// for Firefox
 			$(this).focus().selection($(this).val().length);
@@ -108,7 +108,7 @@ $(document).ready(function() {
 	$(".save_structure").click(function(){
 
 		var $sortable = $(this).parent().find(".admintoc:first");
-		$sortable.modal(tr("Saving..."));
+		$sortable.tikiModal(tr("Saving..."));
 
 		var fakeId = 1000000;
 		$(".admintoclevel.new").each(function() {
@@ -131,7 +131,7 @@ $(document).ready(function() {
 
 
 		$.post($.service("wiki", "save_structure"), {data: $.toJSON(ary), params: $.toJSON($sortable.data("params"))}, function (data) {
-			$sortable.modal();
+			$sortable.tikiModal();
 			if (data) {
 				$sortable.replaceWith(data.html);
 				setupStructure();

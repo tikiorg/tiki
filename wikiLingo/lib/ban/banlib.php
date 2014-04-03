@@ -56,10 +56,9 @@ class BanLib extends TikiLib
      * @param $maxRecords
      * @param $sort_mode
      * @param $find
-     * @param string $where
      * @return array
      */
-    function list_rules($offset, $maxRecords, $sort_mode, $find, $where = '')
+    function list_rules($offset, $maxRecords, $sort_mode, $find)
 	{
 
 		if ($find) {
@@ -70,15 +69,6 @@ class BanLib extends TikiLib
 		} else {
 			$mid = "";
 			$bindvars = array();
-		}
-
-		// DB abstraction: TODO
-		if ($where) {
-			if ($mid) {
-				$mid .= " and ($where) ";
-			} else {
-				$mid = "where ($where) ";
-			}
 		}
 
 		$query = "select * from `tiki_banning` $mid order by " . $this->convertSortMode($sort_mode);

@@ -24,6 +24,8 @@ function wikiplugin_slideshow_info()
 				'default' => tra('Tiki jQuery UI Theme'),
 				'since' => '7.0',
 				'options' => array(
+					array('text' => tra('None') . ' (' . tra('styled by current theme') . ')', 'value' => 'none'),
+					array('text' => tra('Site default') . ' (' . tra('by jQuery-UI choice') . ')', 'value' => 'default'),
 					array('text' => 'ui-lightness', 'value' => 'ui-lightness'),
 					array('text' => 'ui-darkness', 'value' => 'ui-darkness'),
 					array('text' => 'smoothness', 'value' => 'smoothness'),

@@ -11,47 +11,37 @@
 		 * 	success: function (data) {}
 		 */
 		tracker_add_field: function (options) {
-			this.serviceDialog({
-				title: tr('Add Field'),
-				data: {
-					controller: 'tracker',
-					action: 'add_field',
-					trackerId: options.trackerId
-				},
-				success: options.success,
-				load: function () {
-					var dialog = this;
-					$('select', dialog).change(function () {
-						var descriptions = $(this).closest('label').find('.description')
-							.hide();
+			var dialog = this;
+			$('select', dialog).change(function () {
+				var descriptions = $(this).closest('.form-group').find('.help-block')
+					.hide();
 
-						if ($(this).val()) {
-							descriptions
-								.filter('.' + $(this).val())
-								.show();
-						}
-					}).change();
-					$('form', dialog).each(function () {
-						var form = this;
-						$(form.name).keyup(function () {
-							var val = $(this).val();
-							val = val.replace(/[^\w]+/g, '_');
-							val = val.replace(/_+([a-zA-Z])/g, function (parts) {
-								return parts[1].toUpperCase();
-							});
-							val = val.replace(/^[A-Z]/, function (parts) {
-								return parts[0].toLowerCase();
-							});
-							val = val.replace(/_+$/, '');
-
-							$(form.permName).val(val);
-						});
-
-						$(form.submit_and_edit).click(function () {
-							$(form.next).val('edit');
-						});
-					});
+				if ($(this).val()) {
+					descriptions
+						.filter('.' + $(this).val())
+						.show();
 				}
+			}).change();
+
+			$('form', dialog).each(function () {
+				var form = this;
+				$(form.name).keyup(function () {
+					var val = $(this).val();
+					val = val.replace(/[^\w]+/g, '_');
+					val = val.replace(/_+([a-zA-Z])/g, function (parts) {
+						return parts[1].toUpperCase();
+					});
+					val = val.replace(/^[A-Z]/, function (parts) {
+						return parts[0].toLowerCase();
+					});
+					val = val.replace(/_+$/, '');
+
+					$(form.permName).val(val);
+				});
+
+				$(form.submit_and_edit).click(function () {
+					$(form.next).val('edit');
+				});
 			});
 		},
 		/**
@@ -117,15 +107,15 @@
 						$row.append($('<td/>').append($('<a/>')
 							.text(field.name == null?" ":field.name)
 							.attr('href', $.service('tracker', 'edit_field', {trackerId: trackerId, fieldId: field.fieldId}))
-							.click(function () {
-								$(this).tracker_edit_field({
+							.clickModal({
+								remote: $.service('controller', 'edit_field', {
 									trackerId: trackerId,
-									fieldId: field.fieldId,
-									success: function () {
-										$container.tracker_load_fields(trackerId);
-									}
-								});
-								return false;
+									fieldId: field.fieldId
+								}),
+								success: function () {
+									$container.tracker_load_fields(trackerId);
+									$.closeModal({});
+								}
 							})
 						));
 						if (data.types[field.type]) {

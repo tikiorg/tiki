@@ -182,6 +182,17 @@
 				}
 			}
 		},
+ 		{
+ 			"type": "package",
+ 			"package": {
+				"name": "dompdf/dompdf",
+				"version": "0.6.1",
+				"dist": {
+					"url": "https://github.com/dompdf/dompdf/archive/v0.6.1.zip",
+					"type": "zip"
+				}
+			}
+		},
 		{
 			"type": "package",
 			"package": {
@@ -780,9 +791,20 @@
 			"type": "package",
 			"package": {
 				"name": "jquery/plugins/tablesorter",
-				"version": "2.15.5",
+				"version": "2.15.9",
 				"dist": {
-					"url": "https://github.com/Mottie/tablesorter/archive/v2.15.5.zip",
+					"url": "https://github.com/Mottie/tablesorter/archive/v2.15.9.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/plugins/tablesorter",
+				"version": "2.15.12",
+				"dist": {
+					"url": "https://github.com/Mottie/tablesorter/archive/v2.15.12.zip",
 					"type": "zip"
 				}
 			}
@@ -902,8 +924,15 @@
 			"url": "http://svn.code.sf.net/p/jcapture-applet/code/trunk@47"
 		},
 		{
-			"type": "svn",
-			"url": "http://jquerys5.googlecode.com/svn/trunk@65"
+			"type": "package",
+			"package": {
+				"name": "jquery/jquery-s5",
+				"version": "dev-master",
+				"dist": {
+					"url": "https://github.com/robertleeplummerjr/jQuery.s5/archive/master.zip",
+					"type": "zip"
+				}
+			}
 		}
 	],
 	"require": {
@@ -914,6 +943,7 @@
 		"ckeditor/ckeditor/skins/kama": "*",
 		"ckeditor/ckeditor/plugins/divarea": "*",
 		"codemirror/codemirror": "*",
+		"dompdf/dompdf": "0.6.1",
 		"ezyang/htmlpurifier": "4.5.0",
 		"fivefilters/php-readability": "1.0",
 		"jarnokurlin/fullcalendar": "*",

@@ -5,7 +5,8 @@
 {/block}
 
 {block name="content"}
-<form method="post" class="simple" action="{service controller=tracker action=replace}">
+
+<form method="post" action="{service controller=tracker action=replace}">
 	{accordion}
 		{accordion_group title="{tr}General{/tr}"}
 			<div class="form-group">
@@ -90,6 +91,13 @@
 			</fieldset>
 		{/accordion_group}
 		{accordion_group title="{tr}Display{/tr}"}
+			<div class="form-group">
+				<label class="control-label" for="logo">{tr}Logo{/tr}</label>
+				<input class="form-control" type="text" name="logo" value="{$info.logo|escape}">
+				<div class="help-block">
+					{tr}Recommended size: 64x64px.{/tr}
+				</div>
+			</div>
 			<div class="form-group">
 				<label for="sectionFormat">{tr}Section format{/tr}</label>
 				<select name="sectionFormat" class="form-control">
@@ -225,9 +233,9 @@
 			</div>
 		{/accordion_group}
 		{accordion_group title="{tr}Status{/tr}"}
-			<label>
-				{tr}New item status{/tr}
-				<select name="newItemStatus">
+			<div class="form-group">
+				<label for="newItemStatus">{tr}New item status{/tr}</label>
+				<select name="newItemStatus" class="form-control">
 					{foreach key=st item=stdata from=$statusTypes}
 						<option value="{$st|escape}"
 							{if $st eq $info.newItemStatus} selected="selected"{/if}>
@@ -235,10 +243,10 @@
 						</option>
 					{/foreach}
 				</select>
-			</label>
-			<label>
-				{tr}Modified item status{/tr}
-				<select name="modItemStatus">
+			</div>
+			<div class="form-group">
+				<label for="modItemStatus">{tr}Modified item status{/tr}</label>
+				<select name="modItemStatus" class="form-control">
 					<option value="">{tr}No change{/tr}</option>
 					{foreach key=st item=stdata from=$statusTypes}
 						<option value="{$st|escape}"
@@ -247,39 +255,45 @@
 						</option>
 					{/foreach}
 				</select>
-			</label>
-			<fieldset>
-				<legend>{tr}Default status displayed in list mode{/tr}</legend>
-				{foreach key=st item=stdata from=$statusTypes}
-					<label>
-						<input type="checkbox" name="defaultStatus[]" value="{$st|escape}"{if in_array($st, $statusList)} checked="checked"{/if}>
-						{$stdata.label|escape}
-					</label>
-				{/foreach}
-			</fieldset>
+			</div>
+			<div class="form-group">
+				<label>{tr}Default status displayed in list mode{/tr}</label>
+				<div>
+					{foreach key=st item=stdata from=$statusTypes}
+						<label class="checkbox-inline">
+							<input type="checkbox" name="defaultStatus[]" value="{$st|escape}"{if in_array($st, $statusList)} checked="checked"{/if}>
+							{$stdata.label|escape}
+						</label>
+					{/foreach}
+				</div>
+			</div>
 		{/accordion_group}
 		{accordion_group title="{tr}Notifications{/tr}"}
-			<label>
-				{tr}Copy activity to email{/tr}
-				<input name="outboundEmail" value="{$info.outboundEmail|escape}" class="email_multi" size="60">
-				<div class="description help-block">
+			<div class="form-group">
+				<label for="outboundEmail">{tr}Copy activity to email{/tr}</label>
+				<input name="outboundEmail" value="{$info.outboundEmail|escape}" class="email_multi form-control" size="60">
+				<div class="help-block">
 					{tr}You can add several email addresses by separating them with commas.{/tr}
 				</div>
-			</label>
-			<label>
-				<input type="checkbox" name="simpleEmail" value="1"
-					{if $info.simpleEmail eq 'y'} checked="checked"{/if}>
-				{tr}Use simplified e-mail format{/tr}
-				<div class="description help-block">
+			</div>
+			<div class="checkbox">
+				<label>
+					<input type="checkbox" name="simpleEmail" value="1"
+						{if $info.simpleEmail eq 'y'} checked="checked"{/if}>
+					{tr}Use simplified e-mail format{/tr}
+				</label>
+				<div class="help-block">
 					{tr}The tracker will use the text field named Subject if any as subject and will use the user email or for anonymous the email field if any as sender{/tr}
 				</div>
-			</label>
-			<label>
-				<input type="checkbox" name="publishRSS" value="1"
-					{if $prefs.feed_tracker neq 'y'}disabled="disabled"{/if}
-					{if $info.publishRSS eq 'y'}checked="checked"{/if}>
-				{tr}Publish RSS feed for this tracker{/tr}
-				<div class="description help-block">
+			</div>
+			<div class="checkbox">
+				<label>
+					<input type="checkbox" name="publishRSS" value="1"
+						{if $prefs.feed_tracker neq 'y'}disabled="disabled"{/if}
+						{if $info.publishRSS eq 'y'}checked="checked"{/if}>
+					{tr}Publish RSS feed for this tracker{/tr}
+				</label>
+				<div class="help-block">
 					{tr}Requires "RSS per tracker" to be set in Admin/RSS{/tr}
 					{if $prefs.feed_tracker eq 'y'}
 						{tr}(Currently set){/tr}
@@ -287,10 +301,10 @@
 						{tr}(Currently not set){/tr}
 					{/if}
 				</div>
-			</label>
+			</div>
 
 			{if $prefs.feature_groupalert eq 'y'}
-				<label>
+				<div class="form-group">
 					{tr}Group alerted on item modification{/tr}
 					<select name="groupforAlert">
 						<option value=""></option>
@@ -298,97 +312,115 @@
 							<option value="{$g|escape}" {if $g eq $groupforAlert}selected="selected"{/if}>{$g|escape}</option>
 						{/foreach}
 					</select>
-				</label>
-				<label>
+				</div>
+				<div class="checkbox">
 					<input type="checkbox" name="showeachuser" value="1"
 						{if $showeachuser eq 'y'}checked="checked"{/if}>
 					{tr}Allow user selection for small groups{/tr}
-				</label>
+				</div>
 			{/if}
 		{/accordion_group}
 		{accordion_group title="{tr}Permissions{/tr}"}
-			<label>
-				<input type="checkbox" name="userCanSeeOwn" value="1"
-					{if $info.userCanSeeOwn eq 'y'}checked="checked"{/if}>
-				{tr}User can see his own items{/tr}
+			<div class="checkbox">
+				<label>
+					<input type="checkbox" name="userCanSeeOwn" value="1"
+						{if $info.userCanSeeOwn eq 'y'}checked="checked"{/if}>
+					{tr}User can see his own items{/tr}
+				</label>
 				<div class="description">
 					{tr}The tracker needs a user field with the auto-assign activated{/tr}.
 					{tr}No extra pemission is needed at the tracker permissions level to allow a user to see just his own items through Plugin TrackerList with the param view=user{/tr}
 				</div>
-			</label>
-			<label>
-				<input type="checkbox" name="writerCanModify" value="1"
-					{if $info.writerCanModify eq 'y'}checked="checked"{/if}>
-				{tr}Item creator can modify his items{/tr}
+			</div>
+			<div class="checkbox">
+				<label>
+					<input type="checkbox" name="writerCanModify" value="1"
+						{if $info.writerCanModify eq 'y'}checked="checked"{/if}>
+					{tr}Item creator can modify his items{/tr}
+				</label>
 				<div class="description help-block">
 					{tr}The tracker needs a user field with the auto-assign activated{/tr}
 				</div>
-			</label>
-			<label>
-				<input type="checkbox" name="writerCanRemove" value="1"
-					{if $info.writerCanRemove eq 'y'}checked="checked"{/if}>
-				{tr}Item creator can remove his items{/tr}
+			</div>
+			<div class="checkbox">
+				<label>
+					<input type="checkbox" name="writerCanRemove" value="1"
+						{if $info.writerCanRemove eq 'y'}checked="checked"{/if}>
+					{tr}Item creator can remove his items{/tr}
+				</label>
 				<div class="description help-block">
 					{tr}The tracker needs a user field with the auto-assign activated{/tr}
 				</div>
-			</label>
-			<label>
-				<input type="checkbox" name="userCanTakeOwnership" value="1"
-					{if $info.userCanTakeOwnership eq 'y'}checked="checked"{/if}>
-				{tr}User can take ownership of item created by anonymous{/tr}
-			</label>
-			<label>
-				<input type="checkbox" name="oneUserItem" value="1"
-					{if $info.oneUserItem eq 'y'}checked="checked"{/if}>
-				{tr}Only one item per user or IP{/tr}
+			</div>
+			<div class="checkbox">
+				<label>
+					<input type="checkbox" name="userCanTakeOwnership" value="1"
+						{if $info.userCanTakeOwnership eq 'y'}checked="checked"{/if}>
+					{tr}User can take ownership of item created by anonymous{/tr}
+				</label>
+			</div>
+			<div class="checkbox">
+				<label>
+					<input type="checkbox" name="oneUserItem" value="1"
+						{if $info.oneUserItem eq 'y'}checked="checked"{/if}>
+					{tr}Only one item per user or IP{/tr}
+				</label>
 				<div class="description help-block">
 					{tr}The tracker needs a user or IP address field with the auto-assign set to Creator{/tr}
 				</div>
-			</label>
-			<label>
-				<input type="checkbox" name="writerGroupCanModify" value="1"
-					{if $info.writerGroupCanModify eq 'y'}checked="checked"{/if}>
-				{tr}Members of the creator group can modify items{/tr}
+			</div>
+			<div class="checkbox">
+				<label>
+					<input type="checkbox" name="writerGroupCanModify" value="1"
+						{if $info.writerGroupCanModify eq 'y'}checked="checked"{/if}>
+					{tr}Members of the creator group can modify items{/tr}
+				</label>
 				<div class="description help-block">
 					{tr}The tracker needs a group field with the auto-assign activated{/tr}
 				</div>
-			</label>
-			<label>
-				<input type="checkbox" name="writerGroupCanRemove" value="1"
-					{if $info.writerGroupCanRemove eq 'y'}checked="checked"{/if}>
-				{tr}Members of the creator group can remove items{/tr}
+			</div>
+			<div class="checkbox">
+				<label>
+					<input type="checkbox" name="writerGroupCanRemove" value="1"
+						{if $info.writerGroupCanRemove eq 'y'}checked="checked"{/if}>
+					{tr}Members of the creator group can remove items{/tr}
+				</label>
 				<div class="description help-block">
 					{tr}The tracker needs a group field with the auto-assign activated{/tr}
 				</div>
-			</label>
+			</div>
 			<fieldset>
 				<legend>{tr}Creation date constraint{/tr}</legend>
-				<label>
-					<input type="checkbox" name="start" value="1"
-						{if $info.start}checked="checked"{/if}>
-					{tr}After{/tr}
-				</label>
-				<label class="depends" data-on="start">
-					Date
-					<input type="date" name="startDate" value="{$startDate|escape}">
-				</label>
-				<label class="depends" data-on="start">
-					Time
-					<input type="time" name="startTime" value="{$startTime|default:'00:00'|escape}">
-				</label>
-				<label>
-					<input type="checkbox" name="end" value="1"
-						{if $info.end}checked="checked"{/if}>
-					{tr}Before{/tr}
-				</label>
-				<label class="depends" data-on="end">
-					Date
-					<input type="date" name="endDate" value="{$endDate|escape}">
-				</label>
-				<label class="depends" data-on="end">
-					Time
-					<input type="time" name="endTime" value="{$endTime|default:'00:00'|escape}">
-				</label>
+				<div class="checkbox">
+					<label>
+						<input type="checkbox" name="start" value="1"
+							{if $info.start}checked="checked"{/if}>
+						{tr}After{/tr}
+					</label>
+				</div>
+				<div class="form-group depends" data-on="start">
+					<label for="startDate">{tr}Date{/tr}</label>
+					<input type="date" name="startDate" value="{$startDate|escape}" class="form-control">
+				</div>
+				<div class="form-group depends" data-on="start">
+					<label for="startTime">{tr}Time{/tr}</label>
+					<input type="time" name="startTime" value="{$startTime|default:'00:00'|escape}" class="form-control">
+				</div>
+				<div class="checkbox">
+					<label>
+						<input type="checkbox" name="end" value="1"
+							{if $info.end}checked="checked"{/if}>
+						{tr}Before{/tr}
+					</label>
+				</div>
+				<div class="form-group depends" data-on="end">
+					<label for="endDate">{tr}Date{/tr}</label>
+					<input type="date" name="endDate" value="{$endDate|escape}" class="form-control">
+				</div>
+				<div class="form-group depends" data-on="end">
+					<label for="endTime">{tr}Time{/tr}</label>
+					<input type="time" name="endTime" value="{$endTime|default:'00:00'|escape}" class="form-control">
+				</div>
 			</fieldset>
 		{/accordion_group}
 		{if $prefs.feature_categories eq 'y'}
@@ -460,4 +492,4 @@
 		<input type="submit" class="btn btn-primary" value="{tr}Save{/tr}">
 	</div>
 </form>
-{/block}
+	{/block}

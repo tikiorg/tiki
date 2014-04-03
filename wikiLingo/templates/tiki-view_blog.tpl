@@ -24,9 +24,9 @@
 
 			{if $user and $prefs.feature_user_watches eq 'y'}
 				{if $user_watching_blog eq 'n'}
-					<a href="tiki-view_blog.php?blogId={$blogId}&amp;watch_event=blog_post&amp;watch_object={$blogId}&amp;watch_action=add" class="btn btn-default btn-small icon">{icon _id='eye' alt="{tr}Monitor this Blog{/tr}"}</a>
+					<a href="tiki-view_blog.php?blogId={$blogId}&amp;watch_event=blog_post&amp;watch_object={$blogId}&amp;watch_action=add" class="btn btn-default btn-small">{icon _id='eye' alt="{tr}Monitor this Blog{/tr}"}</a>
 				{else}
-					<a href="tiki-view_blog.php?blogId={$blogId}&amp;watch_event=blog_post&amp;watch_object={$blogId}&amp;watch_action=remove" class="btn btn-default btn-small icon">{icon _id='no_eye' alt="{tr}Stop Monitoring this Blog{/tr}"}</a>
+					<a href="tiki-view_blog.php?blogId={$blogId}&amp;watch_event=blog_post&amp;watch_object={$blogId}&amp;watch_action=remove" class="btn btn-default btn-small">{icon _id='no_eye' alt="{tr}Stop Monitoring this Blog{/tr}"}</a>
 				{/if}
 			{/if}
 			{if $prefs.feature_group_watches eq 'y' and ( $tiki_p_admin_users eq 'y' or $tiki_p_admin eq 'y' )}
@@ -37,7 +37,7 @@
 			{if $category_watched eq 'y'}
 				{tr}Watched by categories:{/tr}
 				{section name=i loop=$watching_categories}
-					<a href="tiki-browse_categories.php?parentId={$watching_categories[i].categId}" class="btn btn-default btn-small icon">{$watching_categories[i].name|escape}</a>&nbsp;
+					<a href="tiki-browse_categories.php?parentId={$watching_categories[i].categId}" class="btn btn-default btn-small">{$watching_categories[i].name|escape}</a>&nbsp;
 				{/section}
 			{/if}
 		{/if}

@@ -8,7 +8,7 @@
 	{/if}
 	{button class="btn btn-default" _text="{tr}Admin Users{/tr}"}
 	{if $tiki_p_admin eq 'y'}
-	{button href="tiki-objectpermissions.php" class="btn btn-default" _text="{tr}Manage permissions{/tr}"}
+	{permission_link mode=button label="{tr}Manage permissions{/tr}"}
 	{/if}
 	{if isset($userinfo.userId)}
 		{button href="?add=1" class="btn btn-default" _text="{tr}Add a New User{/tr}"}

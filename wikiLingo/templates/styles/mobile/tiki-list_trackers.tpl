@@ -79,11 +79,7 @@
 						{if $tracker.permissions->admin_trackers}
 							<a data-role="button" title="{tr}Fields{/tr}" class="link" href="tiki-admin_tracker_fields.php?trackerId={$tracker.trackerId}">{icon _id='table' alt="{tr}Fields{/tr}"}</a>
 							<a data-role="button" title="{tr}Edit{/tr}" class="edit dialog" href="{service controller=tracker action=replace trackerId=$tracker.trackerId}">{icon _id='pencil' alt="{tr}Edit{/tr}"}</a>
-							{if $tracker.individual eq 'y'}
-								<a data-role="button" title="{tr}Active Permissions{/tr}" class="link" href="tiki-objectpermissions.php?objectName={$tracker.name|escape:"url"}&amp;objectType=tracker&amp;permType=trackers&amp;objectId={$tracker.trackerId}">{icon _id='key_active' alt="{tr}Active Permissions{/tr}"}</a>
-							{else}
-								<a data-role="button" title="{tr}Permissions{/tr}" class="link" href="tiki-objectpermissions.php?objectName={$tracker.name|escape:"url"}&amp;objectType=tracker&amp;permType=trackers&amp;objectId={$tracker.trackerId}">{icon _id='key' alt="{tr}Permissions{/tr}"}</a>
-							{/if}
+							{permission_link mode=icon type=tracker permType=trackers id=$tracker.trackerId title=$tracker.name}
 							{if $tracker.items > 0}
 								<a data-role="button" title="{tr}Clear{/tr}" class="link clear confirm-prompt" href="{service controller=tracker action=clear trackerId=$tracker.trackerId}">{icon _id='bin' alt="{tr}Clear{/tr}"}</a>
 							{else}
@@ -305,11 +301,11 @@
 		});
 	});
 	$('#forumImportFromProfile').submit(function() {
-		$.modal(tr('Loading...'));
+		$.tikiModal(tr('Loading...'));
 		$.post($(this).attr('action'), {yaml: $('#importFromProfileYaml').val()}, function(feedback) {
 			feedback = $.parseJSON(feedback);
 
-			$.modal();
+			$.tikiModal();
 			if (feedback.length) {
 				for(i in feedback) {
 					$.notify(feedback[i]);

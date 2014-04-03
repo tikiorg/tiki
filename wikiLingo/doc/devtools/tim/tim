@@ -12,11 +12,11 @@ usage()
 {
 cat << EOF
 TIM - Tiki Instance Manager
-usage: $0 -c <command> -u <user> -t <svn tag> -i <instance id>
+usage: $0 -c <command>[:subcommand] -u <user> -t <svn tag> -i <instance id>
 
 OPTIONS:
    -h      Show this message
-   -c      Command (one of: create, destroy, snapshot, debug, info, update, reset)
+   -c      Command (one of: create, destroy, snapshot, debug, info[:versions|diskspace], update, reset)
    -i      id of instance
    -u      username on Tiki.org 
    -U      userid on Tiki.org 
@@ -141,6 +141,8 @@ update()
 	svn up
 	log "Running setup.sh"
 	sh setup.sh -u $TIM_USER -g $TIM_GROUP -n fix
+	log "Running php console.php d:u (database upgrade)"
+	php console.php d:u
 	mk_info
 	rm $INSTANCE_LOCK
 }

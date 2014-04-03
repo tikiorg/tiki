@@ -19,13 +19,13 @@ class Tiki_Profile_Installer
 		$data = array(
 			'description' => $info['groupDesc'],
 			'home' => $info['groupHome'],
-			'user_tracker' => $info['userTrackerId'],
-			'group_tracker' => $info['groupTrackerId'],
-			'user_tracker_field' => $info['userTrackerFieldId'],
-			'group_tracker_field' => $info['groupTrackerFieldId'],
-			'registration_fields' => array_filter(explode(':', $info['registrationUsersFieldIds'])),
+			'user_tracker' => $writer->getReference('tracker', $info['userTrackerId']),
+			'group_tracker' => $writer->getReference('tracker', $info['groupTrackerId']),
+			'user_tracker_field' => $writer->getReference('tracker_field', $info['userTrackerFieldId']),
+			'group_tracker_field' => $writer->getReference('tracker_field', $info['groupTrackerFieldId']),
+			'registration_fields' => $writer->getReference('tracker_field', array_filter(explode(':', $info['registrationUsersFieldIds']))),
 			'user_signup' => $info['userChoice'],
-			'default_category' => $info['groupDefCat'],
+			'default_category' => $writer->getReference('category', $info['groupDefCat']),
 			'theme' => $info['groupTheme'],
 			'allow' => [],
 			'objects' => [],
@@ -400,28 +400,12 @@ class Tiki_Profile_Installer
 
 	private function doInstall( Tiki_Profile $profile ) // {{{
 	{
-		global $tikilib, $prefs;
-
 		$this->setFeedback(tra('Applying profile').': '.$profile->profile);
 
 		$this->installed[$profile->getProfileKey()] = $profile;
 
 		$preferences = $profile->getPreferences();
-		$profile->replaceReferences($preferences, $this->userData);
-		foreach ( $preferences as $pref => $value ) {
-			if ($this->allowedGlobalPreferences === false || in_array($pref, $this->allowedGlobalPreferences)) {
-				global $prefslib; include_once('lib/prefslib.php');
-				$pinfo = $prefslib->getPreference($pref);
-				if (!empty($pinfo['separator']) && !is_array($value)) {
-					$value = explode($pinfo['separator'], $value);
-				}
-
-				if ($prefs[$pref] != $value) {
-					$this->setFeedback(tra('Preference set').': '.$pref.'='.$value);
-				}
-				$tikilib->set_preference($pref, $value);
-			}
-		}
+		$leftovers = $this->applyPreferences($profile, $preferences, true);
 
 		require_once 'lib/setup/events.php';
 		tiki_setup_events();
@@ -440,8 +424,39 @@ class Tiki_Profile_Installer
 			$this->setupGroup($groupName, $info['general'], $info['permissions'], $info['objects'], $groupMap);
 		}
 
+		$this->applyPreferences($profile, $leftovers);
 		tiki_setup_events();
 	} // }}}
+
+	private function applyPreferences($profile, $preferences, $leaveUnknown = false)
+	{
+		global $tikilib, $prefs;
+
+		$profile->replaceReferences($preferences, $this->userData, $leaveUnknown);
+		$leftovers = array();
+
+		foreach ( $preferences as $pref => $value ) {
+			if ($leaveUnknown && $profile->containsReferences($value)) {
+				$leftovers[$pref] = $value;
+				continue;
+			}
+
+			if ($this->allowedGlobalPreferences === false || in_array($pref, $this->allowedGlobalPreferences)) {
+				global $prefslib; include_once('lib/prefslib.php');
+				$pinfo = $prefslib->getPreference($pref);
+				if (!empty($pinfo['separator']) && !is_array($value)) {
+					$value = explode($pinfo['separator'], $value);
+				}
+
+				if ($prefs[$pref] != $value) {
+					$this->setFeedback(tra('Preference set').': '.$pref.'='.$value);
+				}
+				$tikilib->set_preference($pref, $value);
+			}
+		}
+
+		return $leftovers;
+	}
 
 	private function setupGroup( $groupName, $info, $permissions, $objects, $groupMap ) // {{{
 	{
@@ -470,8 +485,9 @@ class Tiki_Profile_Installer
 
 		foreach ( $objects as $data )
 			foreach ( $data['permissions'] as $perm => $v ) {
+				$data['id'] = trim($data['id']);
 				$data['type'] = self::convertType($data['type']);
-				$data['id'] = Tiki_Profile_Installer::convertObject($data['type'], $data['id'], array( 'groupMap' => $groupMap	));
+				$data['id'] = Tiki_Profile_Installer::convertObject($data['type'], $data['id'], array( 'groupMap' => $groupMap));
 
 				if ( $v == 'y' )
 					$userlib->assign_object_permission($groupName, $data['id'], $data['type'], $perm);

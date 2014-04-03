@@ -151,7 +151,11 @@ class PreferencesLib
 			}
 
 			if (!empty($info['admin'])) {
-				$info['admin'] = 'tiki-admin.php?page=' . urlencode($info['admin']);
+				if (preg_match('/^\w+$/', $info['admin'])) {
+					$info['admin'] = 'tiki-admin.php?page=' . urlencode($info['admin']);
+				} else {
+					$info['admin'] = $info['admin'];
+				}
 			}
 
 			if (!empty($info['module'])) {

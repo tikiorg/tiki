@@ -1,92 +1,136 @@
 <form name="aform" formId='editpageform' action="{$form_action|default:'tiki-take_survey.php'}" method="post">
-<input type="hidden" name="surveyId" value="{$surveyId|escape}">
-<input type="hidden" name="vote" value="yes">
-  {if !isset($show_name) or $show_name eq 'y'}{title}{$survey_info.name}{/title}{/if}
+	<input type="hidden" name="surveyId" value="{$surveyId|escape}">
+	<input type="hidden" name="vote" value="yes">
+	{if !isset($show_name) or $show_name eq 'y'}
+		{title url="tiki-take_survey.php?surveyId=$surveyId"}{$survey_info.name}{/title}
+	{/if}
 	{if $error_msg neq ''}
 		{remarksbox type="warning" title="{tr}Warning{/tr}"}{$error_msg}{/remarksbox}
 	{/if}
-    <div class="description help-block">{wiki}{$survey_info.description}{/wiki}</div>
-    {section name=ix loop=$questions}
-    <div class="questionblock">
-      <div class="quizquestion">{$questions[ix].question|escape|nl2br}</div>
-      {if $questions[ix].type eq 'c'}
-        <div class="quizoptions">
-          {section name=jx loop=$questions[ix].qoptions}
-            <input type="radio" value="{$questions[ix].qoptions[jx].optionId|escape}" name="question_{$questions[ix].questionId}">{$questions[ix].qoptions[jx].qoption}<br>
-          {/section}
-        </div>  
-      {elseif $questions[ix].type eq 't'}
-        <div class="quizoptions">
-			{if $questions[ix].cols > 0}
-				{assign var='textcols' value=$questions[ix].cols}
-			{else}
-				{assign var='textcols' value=80}
+	<div class="surveyquestions">
+		<div class="description help-block questionblock page0">{wiki}{$survey_info.description}{/wiki}</div>
+		{$pageCount=0}
+		{section name=ix loop=$questions}
+			{$questionId = 'question_'|cat:$questions[ix].questionId}
+			{if empty($smarty.request.$questionId)}{$answer=''}{else}{$answer = $smarty.request.$questionId}{/if}
+			{if $questions[ix].type eq 'h' and not empty($questions[ix].explode.0) and $questions[ix].explode.0 eq 'y'}
+				{$pageCount=$pageCount+1}
 			{/if}
-			<input type="text" size="{$textcols}" name="question_{$questions[ix].questionId}">
-        </div>  
-      {elseif $questions[ix].type eq 'x'}
-        {assign var='area' value=$questions[ix].questionId}
-
-				{if $questions[ix].explode.0 > 0}
-					{assign var='textrows' value=$questions[ix].explode.0}
+			{$blockClass=' page'|cat:$pageCount}
+			<div class="questionblock{$blockClass}">
+				{if $questions[ix].type eq 'h'}
+					{$htag = (empty($questions[ix].explode.1)) ? 'h3' : $questions[ix].explode.1}
+					<{$htag}>{$questions[ix].question|escape|nl2br}{if $questions[ix].mandatory eq 'y'} <em class="mandatory_star">*</em>{/if}</{$htag}>
 				{else}
-					{assign var='textrows' value=20}
+					<div class="quizquestion">{$questions[ix].question|escape|nl2br}{if $questions[ix].mandatory eq 'y'} <em class="mandatory_star">*</em>{/if}</div>
 				{/if}
+				{if $questions[ix].type eq 'c'}
+					<div class="quizoptions">
+						{section name=jx loop=$questions[ix].qoptions}
+							<label>
+								<input type="radio" value="{$questions[ix].qoptions[jx].optionId|escape}" name="{$questionId}"
+									   {if $answer eq $questions[ix].qoptions[jx].optionId} checked="checked"{/if}>
+								{$questions[ix].qoptions[jx].qoption}
+							</label>
+						{/section}
+					</div>
+				{elseif $questions[ix].type eq 't'}
+					<div class="quizoptions">
+						{if !empty($questions[ix].cols)}
+							{assign var='textcols' value=$questions[ix].cols}
+						{else}
+							{assign var='textcols' value=80}
+						{/if}
+						<input type="text" size="{$textcols}" name="{$questionId}" value="{$answer}">
+					</div>
+				{elseif $questions[ix].type eq 'x'}
+					{assign var='area' value=$questions[ix].questionId}
 
-				{if $questions[ix].explode.1 > 0}
-					{assign var='textcols' value=$questions[ix].explode.1}
-				{else}
-					{assign var='textcols' value=80}
+					{if $questions[ix].explode.0 > 0}
+						{assign var='textrows' value=$questions[ix].explode.0}
+					{else}
+						{assign var='textrows' value=20}
+					{/if}
+
+					{if $questions[ix].explode.1 > 0}
+						{assign var='textcols' value=$questions[ix].explode.1}
+					{else}
+						{assign var='textcols' value=80}
+					{/if}
+					{if !empty($questions[ix].explode.2)}
+						{$showToolBars = ($questions[ix].explode.2 neq 'n')}
+						{$commentToolBar = ($questions[ix].explode.2 eq 'c')?'y':'n'}
+					{else}
+						{$commentToolBar = 'n'}
+					{/if}
+					<div class="quizoptions">
+						<table class="formcolor">
+							<tr>
+								<td valign="top">&nbsp;
+
+								</td>
+								<td valign="top">
+									{if $showToolBars}{toolbars area_id="question_$area" comments=$commentToolBar}{/if}
+									<textarea id="{$questionId}"  name="{$questionId}" rows="{$textrows}"
+											  cols="{$textcols}">{$answer}</textarea>
+								</td>
+							</tr>
+						</table>
+					</div>
+				{elseif $questions[ix].type eq 'm'}
+					{if empty($answer)}{$answer=[]}{/if}
+					<div class="quizoptions">
+						{section name=jx loop=$questions[ix].qoptions}
+							<label>
+								<input type="checkbox" value="{$questions[ix].qoptions[jx].optionId|escape}" name="{$questionId}[{$questions[ix].qoptions[jx].optionId}]"
+										{if in_array($questions[ix].qoptions[jx].optionId, $answer)}checked="checked"{/if}>
+								{$questions[ix].qoptions[jx].qoption}
+							</label>
+						{/section}
+					</div>
+				{elseif $questions[ix].type eq 'r' or $questions[ix].type eq 's'}
+					<div class="quizoptions">
+						{if $questions[ix].options}
+							1
+							{foreach from=$questions[ix].explode key=k item=j}
+								<input type="radio" value="{$k}" name="{$questionId}"{if $answer eq $k} checked="checked"{/if}>
+							{/foreach}
+							{count($questions[ix].explode)}
+						{elseif $questions[ix].type eq 'r'}
+							1
+							<input type="radio" value="1" name="{$questionId}"{if $answer eq 1} checked="checked"{/if}>
+							<input type="radio" value="2" name="{$questionId}"{if $answer eq 2} checked="checked"{/if}>
+							<input type="radio" value="3" name="{$questionId}"{if $answer eq 3} checked="checked"{/if}>
+							<input type="radio" value="4" name="{$questionId}"{if $answer eq 4} checked="checked"{/if}>
+							<input type="radio" value="5" name="{$questionId}"{if $answer eq 5} checked="checked"{/if}>
+							5
+						{elseif $questions[ix].type eq 's'}
+							1
+							<input type="radio" value="1" name="{$questionId}"{if $answer eq 1} checked="checked"{/if}>
+							<input type="radio" value="2" name="{$questionId}"{if $answer eq 2} checked="checked"{/if}>
+							<input type="radio" value="3" name="{$questionId}"{if $answer eq 3} checked="checked"{/if}>
+							<input type="radio" value="4" name="{$questionId}"{if $answer eq 4} checked="checked"{/if}>
+							<input type="radio" value="5" name="{$questionId}"{if $answer eq 5} checked="checked"{/if}>
+							<input type="radio" value="6" name="{$questionId}"{if $answer eq 6} checked="checked"{/if}>
+							<input type="radio" value="7" name="{$questionId}"{if $answer eq 7} checked="checked"{/if}>
+							<input type="radio" value="8" name="{$questionId}"{if $answer eq 8} checked="checked"{/if}>
+							<input type="radio" value="9" name="{$questionId}"{if $answer eq 9} checked="checked"{/if}>
+							<input type="radio" value="10" name="{$questionId}"{if $answer eq 10} checked="checked"{/if}>
+							10
+						{/if}
+					</div>
+				{elseif $questions[ix].type eq 'g'}
+					{fgal_browse _id=$questions[ix].explode.0 show_selectall='n' show_infos='n' checkbox_label="{tr}Choose{/tr}" file_checkbox_name=$questionId}
 				{/if}
-
-        <div class="quizoptions">
-          <table class="formcolor">
-            <tr>
-              <td valign="top">&nbsp;
-              	
-              </td>
-              <td valign="top">
-                {if $showToolBars}{toolbars area_id="question_$area" qtnum='2'}{/if}
-                <textarea id="question_{$questions[ix].questionId}" name="question_{$questions[ix].questionId}" rows="{$textrows}" cols="{$textcols}"></textarea>
-              </td>
-            </tr>
-          </table>
-        </div>  
-      {elseif $questions[ix].type eq 'm'}
-        <div class="quizoptions">
-          {section name=jx loop=$questions[ix].qoptions}
-            <input type="checkbox" value="{$questions[ix].qoptions[jx].optionId|escape}" name="question_{$questions[ix].questionId}[{$questions[ix].qoptions[jx].optionId}]">{$questions[ix].qoptions[jx].qoption}<br>
-          {/section}
-        </div>  
-      {elseif $questions[ix].type eq 'r' or $questions[ix].type eq 's'}
-        <div class="quizoptions">
-          {if $questions[ix].options}
-            {foreach from=$questions[ix].explode key=k item=j}
-              {$k}<input type="radio" value="{$k}" name="question_{$questions[ix].questionId}">
-            {/foreach}
-          {elseif $questions[ix].type eq 'r'}
-            1<input type="radio" value="1" name="question_{$questions[ix].questionId}">
-            <input type="radio" value="2" name="question_{$questions[ix].questionId}">
-            <input type="radio" value="3" name="question_{$questions[ix].questionId}">
-            <input type="radio" value="4" name="question_{$questions[ix].questionId}">
-            <input type="radio" value="5" name="question_{$questions[ix].questionId}">5
-          {elseif $questions[ix].type eq 's'}
-            1<input type="radio" value="1" name="question_{$questions[ix].questionId}">
-            <input type="radio" value="2" name="question_{$questions[ix].questionId}">
-            <input type="radio" value="3" name="question_{$questions[ix].questionId}">
-            <input type="radio" value="4" name="question_{$questions[ix].questionId}">
-            <input type="radio" value="5" name="question_{$questions[ix].questionId}">
-            <input type="radio" value="6" name="question_{$questions[ix].questionId}">
-            <input type="radio" value="7" name="question_{$questions[ix].questionId}">
-            <input type="radio" value="8" name="question_{$questions[ix].questionId}">
-            <input type="radio" value="9" name="question_{$questions[ix].questionId}">
-            <input type="radio" value="10" name="question_{$questions[ix].questionId}">10
-          {/if}
-        </div>
-      {elseif $questions[ix].type eq 'g'}
-        {fgal_browse _id=$questions[ix].explode.0 show_selectall='n' show_infos='n' checkbox_label="{tr}Choose{/tr}" file_checkbox_name="question_"|cat:$questions[ix].questionId}
-      {/if}
-    </div>
-  {/section}
-<input type="submit" class="btn btn-default btn-sm" value="{tr}Send Answers{/tr}" name="ans">
+			</div>
+		{/section}
+	</div>
+	<div class="navbar">
+		{if $pageCount gt 0}
+				{button _text='{tr}Previous{/tr}' _class='btn-sm btn-prev'}
+				{tr}Page{/tr} <span class="pageNum">0</span> / <span class="pageCount">0</span>
+				{button _text='{tr}Next{/tr}' _class='btn-sm btn-next'}
+		{/if}
+		<input type="submit" class="btn btn-default btn-sm submit" value="{tr}Send Answers{/tr}" name="ans">
+	</div>
 </form>

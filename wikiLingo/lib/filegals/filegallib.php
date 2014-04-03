@@ -3528,6 +3528,7 @@ class FileGalLib extends TikiLib
 		} else {
 			$ry=0;
 		}
+		$dataforsize = null;
 		$ratio=max($rx, $ry);
 		if ($ratio>1) {	// Resizing will occur
 			$image_new_x=$image_x/$ratio;
@@ -3551,10 +3552,12 @@ class FileGalLib extends TikiLib
 			$size = function_exists('mb_strlen') ? mb_strlen($dataforsize, '8bit') : strlen($dataforsize);
 			$metadata = $this->extractMetadataJson($work_file);
 
-			if ($data) {					// image stored in $data so the file $work_file is temporary
+		}
+		if ($data) {					// image stored in $data so the file $work_file is temporary
+			if ($dataforsize) {			// replace data only if actually resized
 				$data = $dataforsize;
-				unlink($work_file);			// otherwise it's the actual filesystem version of the image so should not be deleted
 			}
+			unlink($work_file);			// otherwise it's the actual filesystem version of the image so should not be deleted
 		}
 	}
 

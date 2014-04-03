@@ -78,6 +78,7 @@ class Services_Tracker_SyncController
 
 		return array(
 			'url' => $url,
+			'title' => tr('Clone Remote Tracker'),
 		);
 	}
 

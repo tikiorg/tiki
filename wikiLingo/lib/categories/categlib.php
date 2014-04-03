@@ -275,21 +275,10 @@ class CategLib extends ObjectLib
 	{
 		if ( empty($itemId) ) return 0;
 
-		if ( count($this->getCategories(NULL, false, false)) == 0 ) { // Optimization
-			return 0;
-		}
-
 		$query = "select o.`objectId` from `tiki_categorized_objects` c, `tiki_objects` o, `tiki_category_objects` tco where c.`catObjectId`=o.`objectId` and o.`type`=? and o.`itemId`=? and tco.`catObjectId`=c.`catObjectId`";
 		$bindvars = array($type,$itemId);
 		settype($bindvars["1"], "string");
-		$result = $this->query($query, $bindvars);
-
-		if ( $result->numRows() ) {
-			$res = $result->fetchRow();
-			return $res["objectId"];
-		} else {
-			return 0;
-		}
+		return $this->getOne($query, $bindvars);
 	}
 
 	// $type The object's type, which has to be one of those handled by ObjectLib's add_object().

@@ -31,7 +31,7 @@ $pages = array();
 require_once('lib/wizard/pages/admin_wizard.php'); 
 $pages[] = new AdminWizard();
 
-// If $useDefaultPrefs is set, the profiles "wizard" should be run. Otherwise the standard 
+// If $useDefaultPrefs is set, the "profiles wizard" should be run. Otherwise the "admin wizard". 
 $useDefaultPrefs = isset($_REQUEST['use-default-prefs']) ? true : false;
 if ($useDefaultPrefs) {
 	
@@ -44,8 +44,23 @@ if ($useDefaultPrefs) {
 	require_once('lib/wizard/pages/admin_profiles_useful.php');
 	$pages[] = new AdminWizardProfilesUseful();
 
+	require_once('lib/wizard/pages/admin_profiles_useful_2.php');
+	$pages[] = new AdminWizardProfilesUseful2();
+
+	require_once('lib/wizard/pages/admin_profiles_useful_3.php');
+	$pages[] = new AdminWizardProfilesUseful3();
+
 	require_once('lib/wizard/pages/admin_profiles_demo.php');
 	$pages[] = new AdminWizardProfilesDemo();
+
+	require_once('lib/wizard/pages/admin_profiles_demo_2.php');
+	$pages[] = new AdminWizardProfilesDemo2();
+
+	require_once('lib/wizard/pages/admin_profiles_demo_3.php');
+	$pages[] = new AdminWizardProfilesDemo3();
+
+	require_once('lib/wizard/pages/admin_profiles_specialized.php');
+	$pages[] = new AdminWizardProfilesSpecialized();
 
 	require_once('lib/wizard/pages/admin_profiles_completed.php'); 
 	$pages[] = new AdminWizardProfilesCompleted();

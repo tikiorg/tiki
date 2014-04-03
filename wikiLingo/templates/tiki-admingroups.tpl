@@ -13,7 +13,7 @@
 			{button href="tiki-admingroups.php?add=1&amp;cookietab=2" class="btn btn-default" _text="{tr}Add new group{/tr}"}
 		{/if}
 	{/if}
-	{button href="tiki-objectpermissions.php" class="btn btn-default" _text="{tr}Manage permissions{/tr}"}
+	{permission_link mode=button label="{tr}Manage permissions{/tr}"}
 	{if $prefs.feature_invite eq 'y' and $tiki_p_invite eq 'y'}
 		{button href="tiki-list_invite.php" class="btn btn-default" _text="{tr}Invitation List{/tr}"}
 	{/if}
@@ -79,7 +79,8 @@
 
 				<td class="text">{tr}{$users[user].userChoice}{/tr}</td>
 				<td class="text">
-					<a class="link" href="tiki-objectpermissions.php?group={$users[user].groupName|escape:"url"}" title="{tr}Permissions{/tr}">{icon _id='key' alt="{tr}Permissions{/tr}"} {$users[user].permcant}</a>
+					{permission_link mode=icon group=$users[user].groupName}
+					{$users[user].permcant|escape}
 				</td>
 				<td class="action">
 					<a class="link" href="tiki-admingroups.php?group={$users[user].groupName|escape:"url"}&amp;cookietab=2{if $prefs.feature_tabs ne 'y'}#tab2{/if}" title="{tr}Edit{/tr}">{icon _id='page_edit'}</a>
@@ -354,9 +355,7 @@ $("#userstracker").change(function () {
 						{tr}Assign group <em>management</em> permissions:{/tr}
 					</td>
 					<td>
-						{self_link _script="tiki-objectpermissions.php" objectType="group" objectId=$groupname objectName=$groupname permType="group"}
-							{icon _text="{tr}Assign Permissions{/tr}" _id="key"}
-						{/self_link}
+						{permission_link mode=icon type="group" id=$groupname title=$groupname}
 					</td>
 				</tr>
 				{/if}

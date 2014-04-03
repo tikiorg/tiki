@@ -40,7 +40,7 @@ function smarty_block_wikiplugin( $params, $content, $smarty, $repeat = false )
 		array(
 			'context_format' => 'html',
 			'ck_editor' => false,
-			'is_html' => 'y'
+			'is_html' => true
 		)
 	);
 	$parserlib->setOptions();

@@ -85,7 +85,7 @@
 						{/if}
 					</span><br>
 				{/if}
-				{if $listpages[ix].comment_can_rate_article eq 'y' and empty({$listpages[ix].body}) and !isset($preview) and $prefs.article_user_rating eq 'y' && $tiki_p_rate_article eq 'y'}
+				{if $author ne $user and $listpages[ix].comment_can_rate_article eq 'y' and empty({$listpages[ix].body}) and !isset($preview) and $prefs.article_user_rating eq 'y' and ($tiki_p_rate_article eq 'y' or $tiki_p_admin_cms eq 'y')}
 					<div class="articleheading">
 					<form method="post" action="">
 						{rating type=article id=$listpages[ix].articleId}
@@ -196,7 +196,7 @@
 				{/if}
 				{if !isset($actions) or $actions eq "y"}
 					<div class="actions" data-role="controlgroup" data-type="horizontal"> {* mobile *}
-						{if $tiki_p_edit_article eq 'y' or ($listpages[ix].author eq $user and $listpages[ix].creator_edit eq 'y')}
+						{if $tiki_p_edit_article eq 'y' or (!empty($user) and $listpages[ix].author eq $user and $listpages[ix].creator_edit eq 'y')}
 							<a {if $prefs.mobile_mode eq "y"}data-role="button" data-inline="true" {/if}class="icon" href="tiki-edit_article.php?articleId={$listpages[ix].articleId}">{icon _id='page_edit'}</a> {* mobile *}
 						{/if}
 						{if $prefs.feature_cms_print eq 'y'}

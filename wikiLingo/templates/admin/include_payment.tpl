@@ -29,8 +29,8 @@
 					{preference name=payment_user_only_his_own}
 					{preference name=payment_user_only_his_own_past}
 				</fieldset>
-				<div id="payment_systems">
-					<h2 style="padding-left:25px">{tr}PayPal{/tr}</h2>
+				{accordion}
+					{accordion_group title="{tr}PayPal{/tr}"}
 					<div class="admin payment">
 						{preference name=payment_paypal_business}
                         {preference name=payment_paypal_password}
@@ -42,12 +42,16 @@
 						</div>
 						{preference name=payment_invoice_prefix}
 					</div>
-					<h2 style="padding-left:25px">{tr}Israel Post Payment Module{/tr}</h2>
+					{/accordion_group}
+					{accordion_group title="{tr}Israel Post Payment Module{/tr}"}
 					<div class="admin payment">
 						{preference name=payment_israelpost_environment}
 						{preference name=payment_israelpost_business_id}
+						{preference name=payment_israelpost_api_password}
+						{preference name=payment_israelpost_request_preauth}
 					</div>
-					<h2 style="padding-left:25px">{tr}Cclite{/tr}</h2>
+					{/accordion_group}
+					{accordion_group title="{tr}Ccline{/tr}"}
 					<div class="admin payment">
 						{remarksbox title="{tr}Experimental{/tr}" type="warning" icon="bricks"}
 							{tr}Cclite is for creating and managing alternative or complementary trading currencies and groups{/tr}
@@ -64,17 +68,14 @@
 							{preference name=payment_cclite_notify}
 						</div>
 					</div>
-					<h2 style="padding-left:25px">{tr}Tiki User Credits{/tr}</h2>
+					{/accordion_group}
+					{accordion_group title="{tr}Tiki User Credits{/tr}"}
 					<div class="admin payment">
 						{preference name=payment_tikicredits_types}
 						{preference name=payment_tikicredits_xcrates}
 					</div>
-				</div>
-				{jq}if ($.ui) {
-	var idx = $("select[name=payment_system]").prop("selectedIndex");
-	$("#payment_systems").tiki("accordion", {heading: "h2"});
-	if (idx > 0) { $("#payment_systems").accordion("option", "active", idx); }
-}{/jq}
+					{/accordion_group}
+				{/accordion}
 			</div>
 		{/tab}
 		{tab name="{tr}Advanced Shopping Cart{/tr}"}

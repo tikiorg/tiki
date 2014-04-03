@@ -22,15 +22,15 @@
 	</div>
 	<br>
 {/if}
-
-<a class="link" href="tiki-forums.php">{tr}Forums{/tr}</a> 
-{$prefs.site_crumb_seper} 
-<a class="link" href="tiki-view_forum.php?forumId={$forumId}">{$forum_info.name|escape}</a>{if isset($thread_info.topic.threadId) and $thread_info.topic.threadId}
-{$prefs.site_crumb_seper} 
-<a class="link" href="tiki-view_forum_thread.php?comments_parentId={$thread_info.topic.threadId}{if $smarty.request.topics_offset}&amp;topics_offset={$smarty.request.topics_offset}{/if}{$topics_sort_mode_param}{$topics_threshold_param}{$topics_find_param}">{$thread_info.topic.title}</a>{/if}
-{$prefs.site_crumb_seper} 
-{$thread_info.title|escape}
-
+<div class="breadcrumb">
+	<a class="link" href="tiki-forums.php">{tr}Forums{/tr}</a>
+	{$prefs.site_crumb_seper} 
+	<a class="link" href="tiki-view_forum.php?forumId={$forumId}">{$forum_info.name|escape}</a>{if isset($thread_info.topic.threadId) and $thread_info.topic.threadId}
+	{$prefs.site_crumb_seper} 
+	<a class="link" href="tiki-view_forum_thread.php?comments_parentId={$thread_info.topic.threadId}{if $smarty.request.topics_offset}&amp;topics_offset={$smarty.request.topics_offset}{/if}{$topics_sort_mode_param}{$topics_threshold_param}{$topics_find_param}">{$thread_info.topic.title}</a>{/if}
+	{$prefs.site_crumb_seper} 
+	{$thread_info.title|escape}
+</div>
 <div style="text-align: right; margin-bottom: 15px;">
 {if empty($thread_info.topic.threadId)}
 	<span>

@@ -43,6 +43,7 @@ function smarty_block_accordion_group($params, $content, $smarty, $repeat)
 		$accordion_position = 0;
 	}
 
+	$smarty->loadPlugin('smarty_modifier_escape');
 	$title = smarty_modifier_escape($params['title']);
 	$id = $accordion_current_group . '-' . ++$accordion_position;
 

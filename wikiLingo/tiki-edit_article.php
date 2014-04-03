@@ -135,7 +135,7 @@ $smarty->assign('list_image_x', $prefs['article_default_list_image_size_x']);
 $smarty->assign('list_image_y', $prefs['article_default_list_image_size_y']);
 $smarty->assign('heading', '');
 $smarty->assign('body', '');
-$smarty->assign('author', '');
+$smarty->assign('author', $user);
 $smarty->assign('rating', 7);
 $smarty->assign('edit_data', 'n');
 $smarty->assign('emails', '');
@@ -210,8 +210,9 @@ if (!empty($_REQUEST['translationOf'])) {
 // Now check permissions to access this page
 if ($tiki_p_admin_cms != 'y'
 			&& !$tikilib->user_has_perm_on_object($user, $articleId, 'article', 'tiki_p_edit_article')
-			and ($article_data['author'] != $user
-			or $article_data['creator_edit'] != 'y')
+			&& ($article_data['author'] != $user
+			|| empty($user)
+			|| $article_data['creator_edit'] != 'y')
 ) {
 	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra('You do not have permission to edit this article'));

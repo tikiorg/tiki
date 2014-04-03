@@ -3,6 +3,8 @@
 	Tiki Wiki CMS Groupware.
 */
 
+@import url("../jquery-ui/options/kiwi/jquery-ui.min.css");
+
 a,
 a:visited,
 tr.even a,
@@ -102,23 +104,17 @@ hr {
 	color: #fff;
 }
 
-#topbar_modules .dropdown-menu,
-#tiki-top .cssmenu_horiz li a {
+#topbar_modules .dropdown-menu {
 	background: url(kiwi/siteheader.png) no-repeat -600px -40px;
 }
 
 #topbar_modules .dropdown-menu > li > a:hover,
 #topbar_modules .dropdown-menu > li > a:focus,
-#tiki-top .cssmenu_horiz li a:hover,
 .cssmenu_vert li ul a:hover,
 .cssmenu_horiz li ul a:hover,
 .header .cssmenu_horiz li ul a:hover,
 #main #topbar_modules .cssmenu_horiz li ul a:hover  {
 	background: #e1d518;
-}
-
-#tiki-top .cssmenu_horiz li a {
-	background: #c94c23 url(kiwi/siteheader.png) no-repeat -600px -40px;
 }
 
 #top_modules #secondary_site_menu .cssmenu_horiz li.selected a,
@@ -274,7 +270,7 @@ form.admin fieldset,
 	border-bottom: none;
 }
 
-/* cluptip tooltips */
+/* cluetip tooltips */
 
 .cluetip-default {
 	background: #F8F9D5;
@@ -291,4 +287,15 @@ form.admin fieldset,
 
 .cluetip-default #cluetip-title a {
 	color: #F8F9D5;
+}
+  
+
+.s5-slide {
+    background-color: #BCB923 !important;
+}
+.s5-slide:after {
+    box-shadow: -5rem -2rem 0 0 #638637 inset, 0 0 2rem rgba(0, 0, 0, 0.5);
+}
+.s5-slide-li-highlighted {
+    color: #BCB923;
 }

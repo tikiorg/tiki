@@ -107,11 +107,16 @@ class Tracker_Field_Icon extends Tracker_Field_Abstract
 
 	function renderInnerOutput($context = array())
 	{
-		return $this->renderTemplate('trackeroutput/icon.tpl', $context);
+		if ($context['list_mode'] === 'csv') {
+			return $this->getValue();
+		} else {
+			return $this->renderTemplate('trackeroutput/icon.tpl', $context);
+		}
 	}
 
 	function handleSave($value, $oldValue)
 	{
+		$value = TikiLib::makeAbsoluteLinkRelative($value);
 		return array(
 			'value' => $value,
 		);

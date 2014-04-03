@@ -81,15 +81,23 @@ class Tiki_Profile_InstallHandler_TrackerItem extends Tiki_Profile_InstallHandle
 			require_once 'lib/trackers/trackerlib.php';
 
 		$fields = $trklib->list_tracker_fields($data['tracker']);
+		$providedfields = array();
 		foreach ( $data['values'] as $row ) {
 			list( $f, $v) = $row;
 
 			foreach ( $fields['data'] as $key => $entry )
 				if ( $entry['fieldId'] == $f)
 					$fields['data'][$key]['value'] = $v;
+
+			$providedfields[] = $f;
 		}
 
 		if ($this->mode == 'update') {
+			foreach ($fields['data'] as $key => $entry) {
+				if (!in_array($entry['fieldId'], $providedfields)) {
+					unset($fields['data'][$key]);
+				}
+			}
 			return $trklib->replace_item($data['tracker'], $data['itemId'], $fields, $data['status']);
 		} else {
 			return $trklib->replace_item($data['tracker'], 0, $fields, $data['status']);

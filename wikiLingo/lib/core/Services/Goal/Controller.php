@@ -23,8 +23,16 @@ class Services_Goal_Controller
 			throw new Services_Exception_NotFound;
 		}
 
+		$messages = [];
+		$perms = Perms::get('goal', $input->goalId->int());
+		$isAdmin = $perms->goal_admin;
+
 		if (! $info['enabled']) {
-			throw new Services_Exception_Denied(tr('Goal currently disabled'));
+			if (! $isAdmin) {
+				throw new Services_Exception_Denied(tr('Goal currently disabled'));
+			} else {
+				$messages[] = tr('This goal is not enabled.');
+			}
 		}
 
 		$context = [
@@ -43,11 +51,17 @@ class Services_Goal_Controller
 			];
 		}
 
-		if (! $goallib->isEligible($info, $context)) {
-			throw new Services_Exception_Denied(tr('Not eligible for this goal'));
-		}
+		if ($info['enabled'] && $goallib->isEligible($info, $context)) {
+			$info = $goallib->evaluateConditions($info, $context);
+		} else {
+			if (! $isAdmin) {
+				throw new Services_Exception_Denied(tr('Not eligible for this goal'));
+			}
 
-		$info = $goallib->evaluateConditions($info, $context);
+			// Goal is only visible because user is admin, mock some of the data
+			$info = $goallib->unevaluateConditions($info);
+			$messages[] = tr('Goal has not been evaluated, administrator view.');
+		}
 
 		$info['conditions'] = array_filter($info['conditions'], function ($item) {
 			return empty($item['hidden']);
@@ -59,6 +73,7 @@ class Services_Goal_Controller
 		return array(
 			'title' => $info['name'],
 			'goal' => $info,
+			'messages' => $messages,
 		);
 	}
 
@@ -80,7 +95,7 @@ class Services_Goal_Controller
 	function action_admin($input)
 	{
 		$perms = Perms::get();
-		if (! $perms->admin) {
+		if (! $perms->goal_admin) {
 			throw new Services_Exception_Denied(tr('Reserved to administrators'));
 		}
 
@@ -97,7 +112,7 @@ class Services_Goal_Controller
 	function action_create($input)
 	{
 		$perms = Perms::get();
-		if (! $perms->admin) {
+		if (! $perms->goal_admin) {
 			throw new Services_Exception_Denied(tr('Reserved to administrators'));
 		}
 
@@ -131,8 +146,8 @@ class Services_Goal_Controller
 
 	function action_edit($input)
 	{
-		$perms = Perms::get();
-		if (! $perms->admin) {
+		$perms = Perms::get('goal', $input->goalId->int());
+		if (! $perms->goal_admin) {
 			throw new Services_Exception_Denied(tr('Reserved to administrators'));
 		}
 
@@ -183,19 +198,26 @@ class Services_Goal_Controller
 			}
 
 			$goallib->replaceGoal($input->goalId->int(), $goal);
+
+			return [
+				'FORWARD' => [
+					'controller' => 'goal',
+					'action' => 'admin',
+				],
+			];
 		}
 
 		return [
 			'title' => tr('Edit Goal'),
 			'goal' => $goal,
-			'groups' => TikiLib::lib('user')->list_all_groups(),
+			'groups' => $goallib->listEligibleGroups(),
 		];
 	}
 
 	function action_delete($input)
 	{
-		$perms = Perms::get();
-		if (! $perms->admin) {
+		$perms = Perms::get('goal', $input->goalId->int());
+		if (! $perms->goal_admin) {
 			throw new Services_Exception_Denied(tr('Reserved to administrators'));
 		}
 
@@ -216,7 +238,7 @@ class Services_Goal_Controller
 			'title' => tr('Remove Goal'),
 			'removed' => $removed,
 			'goal' => $goal,
-			'groups' => TikiLib::lib('user')->list_all_groups(),
+			'groups' => $goallib->listEligibleGroups(),
 		];
 	}
 
@@ -225,10 +247,7 @@ class Services_Goal_Controller
 	 */
 	function action_render_conditions($input)
 	{
-		$perms = Perms::get();
-		if (! $perms->admin) {
-			throw new Services_Exception_Denied(tr('Reserved to administrators'));
-		}
+		// No need to check permissions, no actions possible
 
 		$conditions = json_decode($input->conditions->none(), true);
 
@@ -247,6 +266,8 @@ class Services_Goal_Controller
 	 */
 	function action_edit_condition($input)
 	{
+		// No need to check permissions, no actions possible
+
 		$condition = [
 			'label' => tr('Pages created'),
 			'operator' => 'atLeast',
@@ -290,10 +311,7 @@ class Services_Goal_Controller
 	 */
 	function action_render_rewards($input)
 	{
-		$perms = Perms::get();
-		if (! $perms->admin) {
-			throw new Services_Exception_Denied(tr('Reserved to administrators'));
-		}
+		// No need to check permissions, no actions possible
 
 		$rewards = json_decode($input->rewards->none(), true);
 
@@ -312,6 +330,8 @@ class Services_Goal_Controller
 	 */
 	function action_edit_reward($input)
 	{
+		// No need to check permissions, no actions possible
+
 		$rewardList = TikiLib::lib('goalreward')->getRewardList();
 
 		if (empty($rewardList)) {
@@ -349,6 +369,45 @@ class Services_Goal_Controller
 			'title' => tr('Reward'),
 			'reward' => $reward,
 			'rewards' => $rewardList,
+		];
+	}
+
+	function action_edit_eligible($input)
+	{
+		$perms = Perms::get('goal', $input->goalId->int());
+		if (! $perms->goal_modify_eligible) {
+			throw new Services_Exception_Denied(tr('Restricted access'));
+		}
+
+		$goalId = $input->goalId->int();
+
+		$goallib = TikiLib::lib('goal');
+		$goal = $goallib->fetchGoal($goalId);
+
+		if (! $goal) {
+			throw new Services_Exception_NotFound;
+		}
+
+		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+			$goal = [
+				'eligible' => $input->eligible->groupname(),
+			];
+
+			$goallib->replaceGoal($goalId, $goal);
+
+			return [
+				'FORWARD' => [
+					'controller' => 'goal',
+					'action' => 'show',
+					'goalId' => $goalId,
+				],
+			];
+		}
+
+		return [
+			'title' => tr('Modify Eligibility for %0', $goal['name']),
+			'goal' => $goal,
+			'groups' => $goallib->listEligibleGroups(),
 		];
 	}
 

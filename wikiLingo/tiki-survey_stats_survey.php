@@ -12,8 +12,7 @@ include_once ('lib/surveys/surveylib.php');
 $access->check_feature('feature_surveys');
 
 $tikilib->get_perm_object($_REQUEST['surveyId'], 'survey');
-
-$access->check_permission('tiki_p_view_survey_stats');
+$access->check_permission('view_survey_stats', 'View Survey Statistics', 'survey', $_REQUEST['surveyId']);
 
 if (!isset($_REQUEST["surveyId"])) {
 	$smarty->assign('msg', tra("No survey indicated"));
@@ -45,7 +44,16 @@ if (isset($_REQUEST["find"])) {
 }
 $smarty->assign('find', $find);
 $smarty->assign_by_ref('sort_mode', $sort_mode);
-$channels = $srvlib->list_survey_questions($_REQUEST["surveyId"], 0, -1, $sort_mode, $find);
+if (!empty($_REQUEST["uservoted"])) {
+	$uservoted = $_REQUEST["uservoted"];
+} else {
+	$uservoted = '';
+}
+$smarty->assign('uservoted', $uservoted);
+$usersthatvoted = $srvlib->list_users_that_voted($_REQUEST["surveyId"]);
+$smarty->assign('usersthatvoted', $usersthatvoted);
+
+$channels = $srvlib->list_survey_questions($_REQUEST["surveyId"], 0, -1, $sort_mode, $find, $uservoted);
 $cant_pages = ceil($channels["cant"] / $maxRecords);
 $smarty->assign_by_ref('cant_pages', $cant_pages);
 $smarty->assign('actual_page', 1 + ($offset / $maxRecords));

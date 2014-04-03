@@ -56,13 +56,7 @@
 			{self_link _icon='page_edit' cookietab='2' _anchor='anchor2' quizId=$channels[user].quizId}{tr}Edit{/tr}{/self_link}
 				<a class="link" href="tiki-edit_quiz_questions.php?quizId={$channels[user].quizId}">{icon _id='help' alt="{tr}Questions{/tr}" title="{tr}Questions{/tr}"}</a>
 				<a class="link" href="tiki-edit_quiz_results.php?quizId={$channels[user].quizId}">{icon _id='application_form_magnify' alt="{tr}Results{/tr}" title="{tr}Results{/tr}"}</a>
-				<a class="link" href="tiki-objectpermissions.php?objectName={$channels[user].name|escape:"url"}&amp;objectType=quiz&amp;permType=quizzes&amp;objectId={$channels[user].quizId}">
-					{if $channels[user].individual eq 'y'}
-						{icon _id='key_active' alt="{tr}Active Perms{/tr}"}
-					{else}
-						{icon _id='key' alt="{tr}Perms{/tr}"}
-					{/if}
-				</a>
+				{permission_link mode=icon type=quiz permType=quizzes id=$channels[user].quizId title=$channels[user].name}
 				<a class="link" href="tiki-edit_quiz.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].quizId}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
 			</td>
 		</tr>
@@ -79,7 +73,7 @@
 {tab name="{tr}Create/edit quizzes{/tr}"}
     <h2>{tr}Create/edit quizzes{/tr}</h2>
 {if $individual eq 'y'}
-	<a class="link" href="tiki-objectpermissions.php?objectName={$name|escape:"url"}&amp;objectType=quiz&amp;permType=quizzes&amp;objectId={$quizId}">{tr}There are individual permissions set for this quiz{/tr}</a>
+	{permission_link mode=link type=quiz permType=quizzes id=$quizId title=$name label="{tr}There are individual permissions set for this quiz{/tr}"}
 	<br>
 	<br>
 {/if}

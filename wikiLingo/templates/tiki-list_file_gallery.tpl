@@ -124,7 +124,7 @@ $("#viewSwitcher").change(function() {
 			{/if}
 		{/if}
 		{if $tiki_p_assign_perm_file_gallery eq 'y'}
-			{button _keepall='y' _text="{tr}Permissions{/tr}" href="tiki-objectpermissions.php" objectName=$name objectType='file+gallery' permType='file+galleries' objectId=$galleryId}
+			{permission_link mode=button type="file gallery" permType="file galleries" id=$galleryId title=$name}
 		{/if}
 		{if $tiki_p_admin_file_galleries eq 'y' or $user eq $gal_info.user or $gal_info.public eq 'y'}
 			{if $tiki_p_upload_files eq 'y'}

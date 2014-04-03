@@ -162,16 +162,6 @@ function chgArtType() {
 	}
 }
 
-function chgMailinType() {
-	if (document.getElementById('mailin_type').value != 'article-put') {
-		document.getElementById('article_topic').style.display = "none";
-		document.getElementById('article_type').style.display = "none";
-	} else {
-		document.getElementById('article_topic').style.display = "";
-		document.getElementById('article_type').style.display = "";
-	}
-}
-
 function toggleSpan(id) {
 	$("#" + id).toggle();
 }
@@ -2009,14 +1999,14 @@ function adjustRating(element, data) {
 }
 
 function sendVote(element, itemId, fieldId, vote) {
-	$(element).parent().modal(" ");
+	$(element).parent().tikiModal(" ");
 	$.getJSON(
 		$.service(
 			'tracker',
 			'vote',
 			{i:itemId,f:fieldId,v:vote}
 		), function(data){
-			$(element).parent().modal();
+			$(element).parent().tikiModal();
 			adjustRating(element, data);
 		}
 	);

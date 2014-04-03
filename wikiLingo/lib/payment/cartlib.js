@@ -77,7 +77,7 @@ $.fn.extend({
 			form.submit(function() {
 				if (form.hasClass('hasMissingForm') && !form.attr('satisfied')) return false;
 
-				$("div.box-cart").modal(" ");
+				$("div.box-cart").tikiModal(" ");
 				var itemData = {}, params = form.data("params");
 				$.each(params, function (k, v) {
 					itemData["params~" + k] = v;
@@ -98,20 +98,20 @@ $.fn.extend({
 								module: "cart",
 								moduleId: $(this).attr("id").replace("module_", "")
 							}, function (html) {
-								$this.modal();
+								$this.tikiModal();
 								$this.replaceWith(html);
 								$(document).trigger("cart.addtocart.complete", [itemData]);
 							});
 						});
 					} else {
-						$("div.box-cart").modal();
+						$("div.box-cart").tikiModal();
 					}
 					if (window.formDialog) {
 						window.formDialog.dialog("destroy");
 						window.formDialog = null;
 					}
 				}, "json").error(function (jqxhr, error, type) {
-					$("div.box-cart").modal();
+					$("div.box-cart").tikiModal();
 					$(document).trigger("cart.addtocart.error", [itemData]);
 				});
 				
@@ -128,7 +128,7 @@ $(document).ready(function () {
 			moduleId: $(this).parents("div.box-cart").attr("id").replace("module_", "")
 		};
 		var $form = $(this);
-		$form.modal(" ");
+		$form.tikiModal(" ");
 		if (! $.trim(data.moduleId) || isNaN(data.moduleId)) {	// module in wikiplugin?
 			delete data.moduleId;	// get the params from the data on the form
 			var params = $(".mod-cart-checkout-form", $form.parent()).data("params");
@@ -140,7 +140,7 @@ $(document).ready(function () {
 			data[v['name']] = v['value'];
 		});
 		$.post($.service("module", "execute"), data, function (html) {
-			$form.modal();
+			$form.tikiModal();
 			$form.parents("div.box-cart").replaceWith(html);
 			$(document).trigger("cart.addtocart.complete");
 		}, "html");

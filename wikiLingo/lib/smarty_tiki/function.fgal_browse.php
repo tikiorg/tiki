@@ -32,11 +32,9 @@ function smarty_function_fgal_browse($params, $smarty)
 	if ( ! isset($params['thumbnail_size']) ) $params['thumbnail_size'] = $prefs['fgal_thumb_max_size'];
 	if ( ! isset($params['checkbox_label']) ) $params['checkbox_label'] = '';
 	if ( ! isset($params['file_checkbox_name']) ) $params['file_checkbox_name'] = '';
-
-	foreach ( $params as $k => $v ) {
-		if ( $k[0] == '_' ) continue;
-		$smarty->assign($k, $v);
-	}
+	if ( ! isset($params['parentId']) ) $params['parentId'] = 0;
+	if ( ! isset($params['view']) ) $params['view'] = '';
+	if ( ! isset($params['show_details']) ) $params['show_details'] = '';
 
 	if ( ! isset($params['_offset']) ) $params['_offset'] = 0;
 	if ( ! isset($params['_maxRecords']) ) $params['_maxRecords'] = -1;
@@ -64,6 +62,12 @@ function smarty_function_fgal_browse($params, $smarty)
 		$files = $filegallib->get_files($params['_offset'], $params['_maxRecords'], $params['_sort_mode'], $params['_find'], $params['_id']);
 		$smarty->assignByRef('files', $files['data']);
 		$smarty->assign('cant', $files['cant']); ///FIXME
+
+		foreach ( $params as $k => $v ) {
+			if ( $k[0] == '_' ) continue;
+			$smarty->assign($k, $v);
+		}
+
 	}
 
 	return '<div style="padding: 1px; overflow-y: hidden; overflow-x: auto;">'."\n".$smarty->fetch('browse_file_gallery.tpl')."\n</div>";

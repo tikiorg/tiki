@@ -84,28 +84,38 @@
 	{*remarksbox type="note" title="{tr}Development Notice{/tr}"}
 		{tr}This search feature and the <a class="alert-link" href="tiki-edit_perspective.php">perspectives GUI</a> need <a class="alert-link" href="http://dev.tiki.org/Dynamic+Preferences">dev.tiki.org/Dynamic+Preferences</a>. If you search for something and it's not appearing, please help improve keywords/descriptions.{/tr}
 	{/remarksbox*}
-	<p>
-		<label>{tr}Configuration search:{/tr} <input type="text" name="lm_criteria" value="{$lm_criteria|escape}"></label>
-		<input type="submit" class="btn btn-default btn-sm" value="{tr}Search{/tr}" {if $indexNeedsRebuilding} class="tips" title="{tr}Configuration search{/tr}|{tr}Note: The search index needs rebuilding, this will take a few minutes.{/tr}"{/if} />
-		<input type="hidden" name="filters">
-	</p>
+	<div class="form-group">
+		<div class="input-group">
+			<span class="input-group-addon">
+				<span class="glyphicon glyphicon-search"></span>
+			</span>
+			<input type="text" name="lm_criteria" value="{$lm_criteria|escape}" class="form-control" placeholder="{tr}Configuration search{/tr}">
+			<div class="input-group-btn">
+				<button type="submit" class="btn btn-default" {if $indexNeedsRebuilding} class="tips" title="{tr}Configuration search{/tr}|{tr}Note: The search index needs rebuilding, this will take a few minutes.{/tr}"{/if}>{tr}Search{/tr}</button>
+			</div>
+		</div>
+	</div>
+	<input type="hidden" name="filters">
 </form>
 {if $lm_error}
 	{remarksbox type="warning" title="{tr}Search error{/tr}"}{$lm_error}{/remarksbox}
 {elseif $lm_searchresults}
-
-<fieldset>
-<legend>{tr}Preferences Search Results{/tr}</legend>
-	<form method="post" action="" class="table">
-		<div class="pref_search_results panel">
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<h3 class="panel-title">{tr}Search Results{/tr}</h3>
+	</div>
+	<form method="post" action="" class="table" role="form">
+		<div class="pref_search_results panel-body">
 			{foreach from=$lm_searchresults item=prefName}
 				{preference name=$prefName get_pages="y"}
 			{/foreach}
 		</div>
-		<input class="btn btn-default" type="submit" value="{tr}Change{/tr}">
+		<div class="panel-footer text-center">
+			<input class="btn btn-primary" type="submit" value="{tr}Change{/tr}">
+		</div>
 		<input type="hidden" name="lm_criteria" value="{$lm_criteria|escape}">
 	</form>
-</fieldset>
+</div>
 {elseif $lm_criteria}
 	{remarksbox type="note" title="{tr}No results{/tr}" icon="magnifier"}{tr}No preferences were found for your search query.{/tr}{if $prefs.unified_engine eq 'lucene'}{tr} Not what you expected? Try {/tr}<a class="rbox-link" href="tiki-admin.php?prefrebuild">{tr}rebuild{/tr}</a> {tr}the preferences search index.{/tr}{/if}{/remarksbox}
 {/if}

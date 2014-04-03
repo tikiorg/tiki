@@ -258,7 +258,7 @@ class ArtLib extends TikiLib
 			'linkto' => $linkto,
 			'image_caption' => $image_caption,
 			'lang' => $lang,
-			'ispublished' => $ispublished,
+			//'ispublished' => $ispublished, // Does not exist
 		);
 
 		$article_table = $this->table('tiki_submissions');

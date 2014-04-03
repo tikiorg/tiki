@@ -71,7 +71,7 @@ JQ
 					->add_jq_onready(
 <<<JQ
 						function trackerForm(trackerId, itemId, tracker_fn_name, type, fn) {
-							$.modal(tr("Loading..."));
+							$.tikiModal(tr("Loading..."));
 
 							$.tracker_get_item_inputs({
 								trackerId: trackerId,
@@ -82,11 +82,11 @@ JQ
 									Type: type
 								}
 							}, function(item) {
-								$.modal();
+								$.tikiModal();
 
 								var frm = $('<form />')
 									.submit(function() {
-										$.modal(tr('Saving...'));
+										$.tikiModal(tr('Saving...'));
 
 										frm[tracker_fn_name]({
 											trackerId: trackerId,
@@ -109,7 +109,7 @@ JQ
 
 								fn(frm);
 
-								$.modal();
+								$.tikiModal();
 							});
 						}
 
@@ -457,14 +457,14 @@ JQ
 
 								function acceptPhrase() {
 									/* Will integrate when timestamping works
-									$.modal(tr("Please wait while we process your request..."));
+									$.tikiModal(tr("Please wait while we process your request..."));
 									$.getJSON("tiki-index.php", {
 										action: "timestamp",
 										hash: hash,
 										page: '$page'
 									}, function(json) {
 										timestamp = json;
-										$.modal();
+										$.tikiModal();
 										makeClipboardData();
 									});
 									*/

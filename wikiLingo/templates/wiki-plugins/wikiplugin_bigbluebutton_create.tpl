@@ -1,6 +1,6 @@
 {tr}Meeting ID:{/tr} {$bbb_meeting|escape} 
 {permission type=bigbluebutton object=$bbb_meeting name=tiki_p_assign_perm_bigbluebutton}
-	{button href="tiki-objectpermissions.php?objectId=`$bbb_meeting|escape:'url'`&amp;objectName=`$bbb_meeting|escape:'url'`&amp;objectType=bigbluebutton&amp;permType=bigbluebutton" _text="{tr}Permissions{/tr}"}
+	{permission_link mode=button type=bigbluebutton id=$bbb_meeting title=$bbb_meeting}
 {/permission}
 <p>{tr}Last time we checked, the room you requested did not exist.{/tr}</p>
 {permission name=bigbluebutton_create type=bigbluebutton object=$bbb_meeting}

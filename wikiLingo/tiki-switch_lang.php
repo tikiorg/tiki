@@ -35,7 +35,7 @@ $item_url = $item_url[query];
 if ($prefs['feature_sefurl'] == 'y' && !strstr($orig_url, '.php')) { 
 	if (preg_match('/cat[0-9]+-?/', $orig_url)) {
 		include_once('tiki-sefurl.php');
-		$orig_url = filter_out_sefurl(preg_replace('#(.*)\/cat([0-9]+)(.*)#', '/tiki-browse_categories.php?parentId=$2$3', $orig_url), 'category');
+		$orig_url = filter_out_sefurl(preg_replace('#(.*)\/cat([0-9]+)(.*)#', '$1/tiki-browse_categories.php?parentId=$2$3', $orig_url), 'category');
 	} elseif (preg_match('/article[0-9]+-?/', $orig_url)) {
 		$orig_url = preg_replace('#\/article([0-9]+)(.*)#', '/tiki-read_article.php?articleId=$1', $orig_url);
 	} else {

@@ -29,7 +29,7 @@
 			<select name="interval">
 					<option value="minute" {if $report_preferences.interval eq "minute"}selected{/if}>{tr}Every minute{/tr}</option>
 					<option value="hourly" {if $report_preferences.interval eq "hourly"}selected{/if}>{tr}Hourly{/tr}</option>
-					<option value="daily" {if $report_preferences.interval eq "daily"}selected{/if}>{tr}Daily{/tr}</option>
+					<option value="daily" {if $report_preferences.interval eq "daily" or !isset($report_preferences.interval)}selected{/if}>{tr}Daily{/tr}</option>
 					<option value="weekly" {if $report_preferences.interval eq "weekly"}selected{/if}>{tr}Weekly{/tr}</option>
 					<option value="monthly" {if $report_preferences.interval eq "monthly"}selected{/if}>{tr}Monthly{/tr}</option>
 			</select>
@@ -198,7 +198,7 @@
 	
 	<form action="tiki-user_notifications.php" method="post">
 		<input type="hidden" name="notification_preferences" value="true">
-		<p>Send notification when I am the editor:</p>
+		<p>{tr}Send notification when I am the editor:{/tr}</p>
         {if $prefs.feature_wiki eq 'y'}
 		<p><input type="checkbox" name="user_wiki_watch_editor" value="true" {if $user_wiki_watch_editor eq 'y'}checked{/if}> {tr}Wiki{/tr}</p>
         {/if}

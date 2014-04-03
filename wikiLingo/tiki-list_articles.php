@@ -193,7 +193,7 @@ if ($prefs['feature_multilingual'] == 'y') {
 }
 if ($tiki_p_edit_article != 'y' && $tiki_p_remove_article != 'y') { //check one editable
 	foreach ($listpages['data'] as $page) {
-		if ($page['author'] == $user && $page['creator_edit'] == 'y') {
+		if (!empty($user) && $page['author'] == $user && $page['creator_edit'] == 'y') {
 			$smarty->assign('oneEditPage', 'y');
 			break;
 		}

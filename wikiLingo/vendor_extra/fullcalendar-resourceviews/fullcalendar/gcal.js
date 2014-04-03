@@ -1,5 +1,5 @@
 /*!
- * FullCalendar-Resourceviews v1.6.1.2 Google Calendar Plugin
+ * FullCalendar-Resourceviews v1.6.1.6 Google Calendar Plugin
  * Docs & License: http://arshaw.com/fullcalendar/, http://tux.fi/~jarnok/fullcalendar-resourceviews
  * (c) 2013 Adam Shaw, 2013 Jarno Kurlin (Resource Views)
  */

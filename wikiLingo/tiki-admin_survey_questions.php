@@ -38,6 +38,7 @@ if (!isset($_REQUEST["questionId"])) {
 $smarty->assign('questionId', $_REQUEST["questionId"]);
 if ($_REQUEST["questionId"]) {
 	$info = $srvlib->get_survey_question($_REQUEST["questionId"]);
+	$cookietab = 2;
 } else {
 	$info = array();
 	$info["question"] = '';
@@ -48,10 +49,10 @@ if ($_REQUEST["questionId"]) {
 	$info["min_answers"] = '';
 	$info["max_answers"] = '';
 }
-$smarty->assign_by_ref('info', $info);
 if (isset($_REQUEST["remove"])) {
 	$access->check_authenticity();
 	$srvlib->remove_survey_question($_REQUEST["remove"]);
+	$cookietab = 1;
 }
 if (isset($_REQUEST["save"])) {
 	check_ticket('admin-survey-questions');
@@ -60,11 +61,15 @@ if (isset($_REQUEST["save"])) {
 	$info["type"] = '';
 	$info["position"] = '';
 	$info["options"] = '';
-	$info["mandatory"] = '';
+	$info["mandatory"] = !empty($_REQUEST['mandatory']) ? 'y' : '';
 	$info["min_answers"] = '';
 	$info["max_answers"] = '';
 	$smarty->assign('questionId', 0);
-	$smarty->assign('info', $info);
+	$cookietab = 1;
+}
+if (!empty($_REQUEST['questionIds']) && !empty($_REQUEST['surveyId'])) {
+	$ids = explode(',', $_REQUEST['questionIds']);
+	$srvlib->reorderQuestions($_REQUEST['surveyId'], $ids);
 }
 if (!isset($_REQUEST["sort_mode"])) {
 	$sort_mode = 'position_asc';
@@ -88,6 +93,11 @@ $channels = $srvlib->list_survey_questions($_REQUEST["surveyId"], $offset, $maxR
 if (empty($info["position"])) {
 	$info["position"] = $channels["cant"] + 1;
 }
+
+$headerlib->add_jsfile('lib/surveys/tiki-admin_survey_questions.js');
+
+$smarty->assign('types', $srvlib->get_types());
+$smarty->assign_by_ref('info', $info);
 $smarty->assign_by_ref('cant_pages', $channels["cant"]);
 $smarty->assign_by_ref('channels', $channels["data"]);
 // Fill array with possible number of questions per page

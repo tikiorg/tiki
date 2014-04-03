@@ -1,7 +1,7 @@
 {extends 'layout_view.tpl'}
 
 {block name="title"}
-	<h3>{tr}Comments{/tr}
+	<h3>{tr}Comments{/tr}</h3>
 		<span class="lock">
 			{if ! $parentId && $allow_lock}
 				{self_link controller=comment action=lock type=$type objectId=$objectId _icon=lock _class="confirm-prompt btn btn-default btn-sm" _confirm="{tr}Do you really want to lock comments?{/tr}"}{tr}Lock{/tr}{/self_link}
@@ -10,7 +10,6 @@
 				{self_link controller=comment action=unlock type=$type objectId=$objectId _icon=lock_break _class="confirm-prompt btn btn-default btn-sm" _confirm="{tr}Do you really want to unlock comments?{/tr}"}{tr}Unlock{/tr}{/self_link}
 			{/if}
 		</span>
-	</h3>
 {/block}
 
 {block name="content"}
@@ -65,7 +64,7 @@
 								{if $comment.can_edit}
 									<a class='btn btn-link btn-sm' href="{service controller=comment action=edit threadId=$comment.threadId}">{tr}Edit{/tr}</a>
 								{/if}
-								{if $prefs.wiki_comments_simple_ratings eq 'y' && $tiki_p_vote_comments eq 'y'}
+								{if $comment.userName ne $user and $comment.approved eq 'y' and $prefs.wiki_comments_simple_ratings eq 'y' and ($tiki_p_vote_comments eq 'y' or $tiki_p_admin_comments eq 'y' )}
 									<form class="commentRatingForm" method="post">
 										{rating type="comment" id=$comment.threadId}
 										<input type="hidden" name="id" value="{$comment.threadId}" />

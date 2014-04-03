@@ -333,7 +333,7 @@
 			{/if}
 
 		
-			{if $prefs.feature_cms_emails eq 'y' and $articleId eq 0}
+			{if $prefs.feature_cms_emails eq 'y'}
 				<div class="form-group">
 					<label for="emails">{tr}Emails to be notified (separated with commas){/tr}</label>
 					<div>

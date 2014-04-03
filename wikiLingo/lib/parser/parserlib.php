@@ -959,7 +959,7 @@ if ( \$('#$id') ) {
 		$classExists = false;
 		$func_name = 'wikiplugin_' . $name;
 
-		if ( ! $validationPerformed ) {
+		if ( ! $validationPerformed && ! $this->option['ck_editor'] ) {
 			$this->plugin_apply_filters($name, $data, $args);
 		}
 
@@ -1071,6 +1071,8 @@ if ( \$('#$id') ) {
 				$this->setOptions($oldOptions);
 				// reset the noparseplugins option, to allow for proper display in CkEditor
 				$this->option['noparseplugins'] = false;
+			} else {
+				$plugin_result = preg_replace('/~[\/]?np~/ms', '', $plugin_result);	// remove no parse tags otherwise they get nested later (bad)
 			}
 
 			if ( ! getCookie('wysiwyg_inline_edit', 'preview', false)) { // remove hrefs and onclicks

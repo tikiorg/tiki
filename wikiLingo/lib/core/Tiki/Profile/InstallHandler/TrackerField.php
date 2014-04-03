@@ -121,7 +121,7 @@ class Tiki_Profile_InstallHandler_TrackerField extends Tiki_Profile_InstallHandl
 			'description' => 'description',
 			'descparsed' => 'descriptionIsParsed',
 			'errordesc' => 'errorMsg',
-			'list' => 'IsTblVisible',
+			'list' => 'isTblVisible',
 			'link' => 'isMain',
 			'searchable' => 'isSearchable',
 			'public' => 'isPublic',
@@ -166,6 +166,10 @@ class Tiki_Profile_InstallHandler_TrackerField extends Tiki_Profile_InstallHandl
 		$trklib = TikiLib::lib('trk');
 
 		$fieldId = $trklib->get_field_id($data['tracker'], $data['name']);
+
+		if (! $fieldId && isset($data['permname'])) {
+			$fieldId = $trklib->get_field_id($data['tracker'], $data['name'], 'permName');
+		}
 
 		$factory = new Tracker_Field_Factory;
 		$fieldInfo = $factory->getFieldInfo($data['type']);

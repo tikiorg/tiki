@@ -75,6 +75,7 @@ class ServiceLib
 			'file' => 'Services_File_Controller',
 			'jcapture' => 'Services_JCapture_Controller',
 			'kaltura'=>  'Services_Kaltura_Controller',
+			'mailin' => 'Services_MailIn_Controller',
 			'managestream' => 'Services_ActivityStream_ManageController',
 			'module' => 'Services_Module_Controller',
 			'monitor' => 'Services_User_MonitorController',

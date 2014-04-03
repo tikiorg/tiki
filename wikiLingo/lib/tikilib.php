@@ -322,6 +322,9 @@ class TikiLib extends TikiDb_Bridge
 			case 'crypt':
 				global $cryptlib; require_once 'lib/crypt/cryptlib.php';
 				return self::$libraries[$name] = new CryptLib();
+			case 'payment':
+				global $paymentlib; require_once 'lib/payment/paymentlib.php';
+				return self::$libraries[$name] = $paymentlib;
 			case 'cart':
 				require_once 'lib/payment/cartlib.php';
 				return self::$libraries[$name] = new CartLib();
@@ -337,6 +340,12 @@ class TikiLib extends TikiDb_Bridge
 			case 'credits':
 				global $creditslib; require_once 'lib/credits/creditslib.php';
 				return self::$libraries[$name] = $creditslib;
+			case 'mailin':
+				global $mailinlib; require_once 'lib/mailin/mailinlib.php';
+				return self::$libraries[$name] = $mailinlib;
+			case 'usermailin':
+				global $usermailinlib; require_once 'lib/mailin/usermailinlib.php';
+				return self::$libraries[$name] = $usermailinlib;
 		}
 	}
 
@@ -352,6 +361,20 @@ class TikiLib extends TikiDb_Bridge
 		}
 
 		return $eventManager;
+	}
+
+	/**
+	 * @return Event_Manager
+	 */
+	public static function symbols()
+	{
+		static $symbols = null;
+
+		if (! $symbols) {
+			$symbols = new Tiki_Profile_SymbolLoader();
+		}
+
+		return $symbols;
 	}
 
 	/**
@@ -3602,23 +3625,32 @@ class TikiLib extends TikiDb_Bridge
 	 */
 	function user_has_perm_on_object($usertocheck,$object,$objtype,$perm1,$perm2=null,$perm3=null)
 	{
-		global $user;
-		// Do not override perms for current users otherwise security tokens won't work
-		if ($usertocheck != $user) {
-			$groups = $this->get_user_groups($usertocheck);
-		}
-		$context = array( 'type' => $objtype, 'object' => $object );
-
-		$accessor = Perms::get($context);
-		if ($usertocheck != $user) {
-			$accessor->setGroups($groups);
-		}
+		$accessor = $this->get_user_permission_accessor($usertocheck, $objtype, $object);
 
 		$chk1 = $perm1 != null ? $accessor->$perm1 : true;
 		$chk2 = $perm2 != null ? $accessor->$perm2 : true;
 		$chk3 = $perm3 != null ? $accessor->$perm3 : true;
 
-		return $chk1 && $chk2 & $chk3;
+		return $chk1 && $chk2 && $chk3;
+	}
+
+	function get_user_permission_accessor($usertocheck, $type = null, $object = null)
+	{
+		global $user;
+		if ($type && $object) {
+			$context = array( 'type' => $type, 'object' => $object );
+			$accessor = Perms::get($context);
+		} else {
+			$accessor = Perms::get();
+		}
+
+		// Do not override perms for current users otherwise security tokens won't work
+		if ($usertocheck != $user) {
+			$groups = $this->get_user_groups($usertocheck);
+			$accessor->setGroups($groups);
+		}
+
+		return $accessor;
 	}
 
 	/* get all the perm of an object either in a table or global+smarty set
@@ -5788,6 +5820,23 @@ class TikiLib extends TikiDb_Bridge
 	}
 
 	/**
+	 * Removes the protocol, host and path from a URL if they match
+	 *
+	 * @param string $url		URL to be converted
+	 * @return string			relative URL if possible
+	 */
+	static function makeAbsoluteLinkRelative($url) {
+		global $base_url;
+
+		if (strpos($url, $base_url) !== false) {
+			$out = substr($url, strlen($base_url));
+		} else {
+			$out = $url;
+		}
+		return $out;
+	}
+
+	/**
 	 * @param $lat1
 	 * @param $lon1
 	 * @param $lat2
@@ -6585,6 +6634,13 @@ JS;
 
 		$result['themeName'] = $theme;
 		switch ($theme) {
+			case "none":
+				$result['backgroundColor'] = 'inherit';
+				$result['headerFontColor'] = 'inherit';
+				$result['headerBackgroundColor'] = 'inherit';
+				$result['slideFontColor'] = 'inherit';
+				$result['listItemHighlightColor'] = 'inherit';
+				break;
 			case "uilightness":
 				$result['backgroundColor'] = '#F6A828';
 				$result['backgroundImage'] = 'vendor/jquery/jquery-s5/images/bg.png';

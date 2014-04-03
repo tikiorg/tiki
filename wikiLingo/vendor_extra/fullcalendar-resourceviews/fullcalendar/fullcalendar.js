@@ -1,5 +1,5 @@
 /*!
- * FullCalendar-Resourceviews v1.6.1.2
+ * FullCalendar-Resourceviews v1.6.1.6
  * Docs & License: http://arshaw.com/fullcalendar/, http://tux.fi/~jarnok/fullcalendar-resourceviews
  * (c) 2013 Adam Shaw, 2013 Jarno Kurlin (Resource Views)
  */
@@ -79,6 +79,8 @@ var defaults = {
 	buttonText: {
 		prev: "<span class='fc-text-arrow'>&lsaquo;</span>",
 		next: "<span class='fc-text-arrow'>&rsaquo;</span>",
+		largePrev: "<span class='fc-text-arrow'>&laquo;</span>",
+		largeNext: "<span class='fc-text-arrow'>&raquo;</span>",
 		prevYear: "<span class='fc-text-arrow'>&laquo;</span>",
 		nextYear: "<span class='fc-text-arrow'>&raquo;</span>",
 		today: 'today',
@@ -105,7 +107,13 @@ var defaults = {
 	
 	// ResourceNextWeeks week count
 	numberOfWeeks: 4,
-	weekPrefix: 'Week'
+	weekPrefix: 'Week',
+	
+	// resource views default paginate
+	paginateResourceWeek: 7,
+	paginateResourceNextWeeks: 7,
+	paginateResourceMonth: 'month'
+	
 	
 };
 
@@ -132,7 +140,7 @@ var rtlDefaults = {
 
 ;;
 
-var fc = $.fullCalendar = { version: "1.6.1.2" };
+var fc = $.fullCalendar = { version: "1.6.1.6" };
 var fcViews = fc.views = {};
 
 
@@ -219,6 +227,8 @@ function Calendar(element, options, eventSources, resourceSources) {
 	t.unselect = unselect;
 	t.prev = prev;
 	t.next = next;
+	t.largePrev = largePrev;
+	t.largeNext = largeNext;
 	t.prevYear = prevYear;
 	t.nextYear = nextYear;
 	t.today = today;
@@ -616,8 +626,15 @@ function Calendar(element, options, eventSources, resourceSources) {
 	function next() {
 		renderView(1);
 	}
+
+	function largePrev() {
+		renderView(-100);
+	}
 	
-	
+	function largeNext() {
+		renderView(100);
+	}
+
 	function prevYear() {
 		addYears(date, -1);
 		renderView();
@@ -4570,6 +4587,7 @@ function ResourceMonthView(element, calendar) {
 	var t = this;
 	
 	
+	
 	// exports
 	t.render = render;
 	
@@ -4583,13 +4601,27 @@ function ResourceMonthView(element, calendar) {
 	
 	
 	function render(date, delta) {
-		if (delta) {
-			addMonths(date, delta * 1);
-			date.setDate(1);
+		if (delta === 100 || delta === -100) {
+			// 100 means we want to skip full month (largePrev/largeNext pressed)
+			var start = addMonths(date, (delta > 0 ? 1 : -1));
+			var end = addMonths(cloneDate(start), 1);
 		}
-		var start = cloneDate(date, true);
-		start.setDate(1);
-		var end = addMonths(cloneDate(start), 1);
+		else if (delta) {
+			if(opt('paginateResourceMonth') === 'month') {
+				var start = addMonths(date, delta * 1);
+				start.setDate(1);
+				var end = addMonths(cloneDate(start), 1);				
+			}
+			else {
+				var start = addDays(date, delta * opt('paginateResourceMonth'));
+				var end = addMonths(cloneDate(start), 1);
+			}
+		}
+		else {	
+			var start = cloneDate(date.setDate(1), true);	
+			var end = addMonths(cloneDate(start.setDate(1), true), 1);	
+		}
+
 		var visStart = cloneDate(start);
 		var visEnd = cloneDate(end);
 		var weekends = opt('weekends');
@@ -4638,7 +4670,6 @@ function ResourceWeekView(element, calendar) {
 	// exports
 	t.render = render;
 	
-	
 	// imports
 	ResourceView.call(t, element, calendar, 'resourceWeek');
 	var opt = t.opt;
@@ -4648,11 +4679,20 @@ function ResourceWeekView(element, calendar) {
 	
 	
 	function render(date, delta) {
-		if (delta) {
-			addDays(date, delta * 7);
+		if (delta === 100 || delta === -100) {
+			// 100 means we want to skip full week (largePrev/largeNext pressed)
+			var start = addDays(date, (delta > 0 ? 7 : -7), false);
+			var end = addDays(cloneDate(start), 7);
 		}
-		var start = addDays(cloneDate(date), -((date.getDay() - opt('firstDay') + 7) % 7));
-		var end = addDays(cloneDate(start), 7);
+		else if (delta) {
+			var start = addDays(cloneDate(t.visStart), delta * opt('paginateResourceWeek'), false);
+			var end = addDays(cloneDate(start), 7);
+		}
+		else {
+			var start = addDays(cloneDate(date, true), -((date.getDay() - opt('firstDay') + 7) % 7));
+			var end = addDays(cloneDate(start), 7);
+		}
+
 		var visStart = cloneDate(start);
 		var visEnd = cloneDate(end);
 		var weekends = opt('weekends');
@@ -4671,8 +4711,6 @@ function ResourceWeekView(element, calendar) {
 		t.visEnd = visEnd;
 		renderBasic(getResources.length, getResources.length, weekends ? 7 : 5, false);
 	}
-	
-	
 }
 
 ;;
@@ -4699,14 +4737,23 @@ function ResourceNextWeeksView(element, calendar) {
 	
 	function render(date, delta) {
 		var weekends = opt('weekends');
+		var weekDays = weekends ? 7 : 5;
 		
+		if (delta === 100 || delta === -100) {
+			// 100 means we want to skip full view (largePrev/largeNext pressed)
+			var start = addDays(date, opt('numberOfWeeks') * (delta > 0 ? 7 : -7), false);
+			var end = addDays(cloneDate(start), opt('numberOfWeeks') * 7);
+		}
+		else 
 		if (delta) {
-			addDays(date, delta * (opt('numberOfWeeks') * weekends ? 7 : 5));
+			var start = addDays(cloneDate(t.visStart), delta * opt('paginateResourceNextWeeks'), false);
+			var end = addDays(cloneDate(start), opt('numberOfWeeks') * 7);
+		}
+		else {
+			var start = addDays(cloneDate(date), -((date.getDay() - opt('firstDay') + weekDays) % weekDays), false);
+			var end = addDays(cloneDate(start), opt('numberOfWeeks')*7);
 		}
 
-		var weekDays = weekends ? 7 : 5;
-		var start = addDays(cloneDate(date), -((date.getDay() - opt('firstDay') + weekDays) % weekDays));
-		var end = addWeeks(cloneDate(start), opt('numberOfWeeks'));
 		var visStart = cloneDate(start);
 		var visEnd = cloneDate(end);
 
@@ -4813,7 +4860,7 @@ function ResourceView(element, calendar, viewName) {
 	t.allDayBounds = allDayBounds;
 	t.getRowCnt = function() { return rowCnt };
 	t.getColCnt = function() { return colCnt };
-	t.getResources = calendar.fetchResources();
+	t.getResources = calendar.fetchResources(!calendar.options['refetchResources']);
 	t.getColWidth = function() { return colWidth };
 	t.getViewName = function() { return viewName };
 	t.getDaySegmentContainer = function() { return daySegmentContainer };
@@ -5298,36 +5345,8 @@ function ResourceView(element, calendar, viewName) {
 		if (viewName == 'resourceDay') {
 			col = timeOfDayCol(date);
 		}
-		else if (viewName == 'resourceNextWeeks') {
-			// Start from first slot and test every date
-			year = date.getFullYear();
-			month = date.getMonth();
-			day = date.getDate();
-
-			for (var i=0; i < colCnt; i++) {
-				cmpDate = _cellDate(i);
-				cmpYear = cmpDate.getFullYear();
-				cmpMonth = cmpDate.getMonth();
-				cmpDay = cmpDate.getDate();
-				
-				if (year == cmpYear && month == cmpMonth && day == cmpDay) {
-					col = i;
-					break;
-				}
-				else if (cmpDate > date && !weekends) {
-					// No weekends in the calendar, this must be the right column!
-					col = i-1;
-					break;
-				}
-			};
-			
-			if (typeof col == 'undefined') {
-				// date is in next weekview, select last column
-				col = i;
-			}
-		}
 		else {
-			col = dayOfWeekCol(date.getDay());
+			col = Math.round((cloneDate(date, true)-t.visStart)/1000/60/60/24); //  TODO: handle weekends: false
 		}
 		return { col: col };
 	}
@@ -5557,7 +5576,7 @@ function ResourceEventRenderer() {
 		else {
 			visEventsEnds = $.map(events, exclEndDay);
 		}
-		
+
 		for (i=0; i<rowCnt; i++) {
 			currentResource = resources[i].id;
 			row = sliceSegs(events, visEventsEnds, d1, d2);
@@ -5699,9 +5718,13 @@ function ResourceEventRenderer() {
 				}, ev, 'drag');
 			},
 			stop: function(ev, ui) {
-				hoverListener.stop();
+				var cell = hoverListener.stop();
 				clearOverlays();
 				trigger('eventDragStop', eventElement, event, ev, ui);
+				
+				if(!cell) {
+					trigger('eventDropOutside', eventElement, event, ev, ui);
+				}
 				if (viewName == 'resourceDay' && (minuteDelta || resourceDelta)) {
 					eventDrop(this, event, 0, minuteDelta, event.allDay, ev, ui, newResourceId);
 				}
@@ -5940,6 +5963,7 @@ function View(element, calendar, viewName) {
 	t.hideEvents = hideEvents;
 	t.eventDrop = eventDrop;
 	t.eventResize = eventResize;
+	t.getShownEvents = getShownEvents;
 	// t.title
 	// t.start, t.end
 	// t.visStart, t.visEnd
@@ -5957,17 +5981,19 @@ function View(element, calendar, viewName) {
 	var eventElementsByID = {};
 	var options = calendar.options;
 	
-	
+	// Get currently shown events
+	function getShownEvents() {
+		evs = [];
+		for (id in eventElementsByID){
+			evs.push(eventsByID[id]);
+		}
+		return evs;
+	}
 	
 	function opt(name, viewNameOverride) {
 		var v = options[name];
 		if (typeof v == 'object') {
-			if(name == 'resources') {
-				return v;
-			}
-			else {
-				return smartProperty(v, viewNameOverride || viewName);
-			}
+			return smartProperty(v, viewNameOverride || viewName);
 		}
 		return v;
 	}
@@ -6349,44 +6375,8 @@ function DayEventRenderer() {
 				right = seg.isEnd ? colContentRight(rightCol) : maxLeft;
 			}
 			
-			// TODO: better implementation for this one..
-			if (viewName == 'resourceMonth') {
-				// for resourceMonth view
-				leftCol = seg.start.getDate()-1;
-				rightCol = seg.end.getDate()-2;
-
-				if(!weekends) {
-					// Drop out weekends
-					weekendSumColStart=0	
-					weekendSumColEnd=0
-					
-					for(var j=0; j<=leftCol; j++) {
-						weekendTestDate = addDays(cloneDate(t.start), j);
-						
-						if(weekendTestDate.getDay() == 0 || weekendTestDate.getDay() == 6) {
-							weekendSumColStart++;
-						}
-					}
-					leftCol -= weekendSumColStart;
-					
-					if (seg.start.getDay() == 6 || seg.start.getDay() == 0) leftCol++;
-					
-					for(j=0; j<=rightCol; j++) {
-						weekendTestDate = addDays(cloneDate(t.start), j);
-						
-						if(weekendTestDate.getDay() == 0 || weekendTestDate.getDay() == 6) {
-							weekendSumColEnd++;
-						}
-					}
-					rightCol -= weekendSumColEnd;
-				}
-				
-				if(rightCol < 0) {
-					// end is in the next month so rightCol is the last column
-					rightCol = getColCnt()-1;
-				}
-			}
-			else if (viewName == 'resourceNextWeeks') {
+			// TODO: better implementation for this one.. 
+			if (viewName == 'resourceMonth' || viewName == 'resourceNextWeeks' || viewName == 'resourceWeek') {
 				leftCol = dateCell(seg.start).col;
 				rightCol = dateCell(seg.end).col-1;
 				if(!weekends) {

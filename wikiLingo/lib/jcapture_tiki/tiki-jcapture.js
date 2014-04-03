@@ -19,7 +19,7 @@ function openJCaptureDialog(area, page, event) {
 	} else {		// for IE
 		jCaptureButton = event.srcElement;
 	}
-	$(jCaptureButton).modal(" ");
+	$(jCaptureButton).tikiModal(" ");
 
 	var $appletDiv = $("#jCaptureAppletDiv");
 	if ($appletDiv.length) {
@@ -34,7 +34,7 @@ function openJCaptureDialog(area, page, event) {
 			page: page
 	}, function(data){
 		$appletDiv.html(data);
-		setTimeout(function () {$(jCaptureButton).modal();}, 5000);
+		setTimeout(function () {$(jCaptureButton).tikiModal();}, 5000);
 	});
 
 //	} else {	TODO later
@@ -46,7 +46,7 @@ function openJCaptureDialog(area, page, event) {
 function insertAtCarret( areaId, dokuTag ) {
 
 	if (jCaptureButton) {
-		$(jCaptureButton).modal(" ");
+		$(jCaptureButton).tikiModal(" ");
 	}
 
 	$("#jCaptureAppletDiv").hide();
@@ -59,7 +59,7 @@ function insertAtCarret( areaId, dokuTag ) {
 	}, function(data) {
 
 		if (jCaptureButton) {
-			$(jCaptureButton).modal();
+			$(jCaptureButton).tikiModal();
 			jCaptureButton = null;
 		}
 

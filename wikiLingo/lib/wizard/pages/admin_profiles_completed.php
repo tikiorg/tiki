@@ -14,7 +14,7 @@ class AdminWizardProfilesCompleted extends Wizard
 {
     function pageTitle ()
     {
-        return tra('Profiles Wizard Completed!');
+        return tra('Configuration Profiles Wizard Completed!');
     }
     function isEditable ()
 	{

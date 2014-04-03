@@ -6,7 +6,7 @@
 
 {block name="navigation"}
 	<div class="navbar btn-group">
-		{permission name=admin}
+		{permission name=goal_admin}
 			<a class="btn btn-default" href="{service controller=goal action=admin}">{tr}Goal Administration{/tr}</a>
 		{/permission}
 	</div>

@@ -29,6 +29,7 @@ class Services_User_SocialController
 		$outgoing = $this->lib->listOutgoingRequests($user);
 
 		return array(
+			'title' => tr('Friend List'),
 			'friends' => $friends,
 			'incoming' => $incoming,
 			'outgoing' => $outgoing,

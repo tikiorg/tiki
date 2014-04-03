@@ -142,7 +142,7 @@ include_once ('tiki-section_options.php');
 $headerlib->add_cssfile('vendor/jquery/jquery-s5/jquery.s5.css');
 $headerlib->add_jsfile('vendor/jquery/jquery-s5/jquery.s5.js');
 $headerlib->add_jq_onready(
-    '//slideshow corrupts s5 and is not needed in s5 at all
+    '
 	$("#toc,.cluetip-title").remove();
 	
 	window.s5Settings = (window.s5Settings ? window.s5Settings : {});
@@ -166,6 +166,12 @@ $headerlib->add_jq_onready(
 		},
 		themeName: (window.s5Settings.themeName ? window.s5Settings.themeName : "default")
 	}));
+
+	if (window.s5Settings.themeName != "none") {
+		$(".s5-slide").each(function() {
+			$(this).addClass("transparent");
+		});
+	}
 	
 	$("#main").hide();
 	
@@ -180,11 +186,22 @@ $headerlib->add_jq_onready(
 					theme = (theme ? theme : "default");
 					
 					window.s5Settings.themeName = theme;
+
+					if (window.s5Settings.themeName != "none") {
+						$(".s5-slide").each(function() {
+							$(this).addClass("transparent");
+						});
+					} else {
+						$(".s5-slide").each(function() {
+							$(this).removeClass("transparent");
+						});
+					}
+
 					$.tikiModal(tr("Updating Theme..."));
 					$.get("tiki-slideshow.php", {theme: theme}, function(o) {
 						$.s5.makeTheme($.parseJSON(o));
 						
-						if (window.slideshowSettings) {
+/* Commented out: Do not modify wikiplugin when no option to opt-out!						if (window.slideshowSettings) {
 							window.slideshowSettings.theme = theme;
 							
 							$.post("tiki-wikiplugin_edit.php", {
@@ -198,10 +215,10 @@ $headerlib->add_jq_onready(
 								$.tikiModal();
 								window.s5Busy = false;
 							});
-						} else {
+						} else {*/
 							$.tikiModal();
 							window.s5Busy = false;
-						}
+/*						}*/
 					}); 
 				})
 				.val(window.s5Settings.themeName);

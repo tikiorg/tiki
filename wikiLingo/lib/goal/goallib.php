@@ -26,6 +26,7 @@ class GoalLib
 	function listConditions()
 	{
 		$table = $this->table();
+		$table->useExceptions();
 
 		$list = $table->fetchAll(['goalId', 'conditions'], [], -1, -1, [
 		]);
@@ -55,26 +56,36 @@ class GoalLib
 
 	function replaceGoal($goalId, array $data)
 	{
-		$data = array_merge([
-			'name' => 'No name',
-			'description' => '',
-			'type' => 'user',
-			'enabled' => 0,
-			'daySpan' => 14,
-			'from' => null,
-			'to' => null,
-			'eligible' => [],
-			'conditions' => [
-				[
-					'label' => tr('Goal achieved'),
-					'operator' => 'atMost',
-					'count' => 0,
-					'metric' => 'goal-count-unbounded',
-					'hidden' => 1,
+		$base = null;
+
+		if ($goalId) {
+			$base = $this->fetchGoal($goalId);
+		}
+
+		if (! $base) {
+			$base = [
+				'name' => 'No name',
+				'description' => '',
+				'type' => 'user',
+				'enabled' => 0,
+				'daySpan' => 14,
+				'from' => null,
+				'to' => null,
+				'eligible' => [],
+				'conditions' => [
+					[
+						'label' => tr('Goal achieved'),
+						'operator' => 'atMost',
+						'count' => 0,
+						'metric' => 'goal-count-unbounded',
+						'hidden' => 1,
+					],
 				],
-			],
-			'rewards' => [],
-		], $data);
+				'rewards' => [],
+			];
+		}
+
+		$data = array_merge($base, $data);
 
 		$data['eligible'] = json_encode((array) $data['eligible']);
 		$data['conditions'] = json_encode((array) $data['conditions']);
@@ -164,6 +175,18 @@ class GoalLib
 			}
 
 			$tx->commit();
+		}
+
+		return $goal;
+	}
+
+	function unevaluateConditions($goal)
+	{
+		$goal['complete'] = false;
+
+		foreach ($goal['conditions'] as & $cond) {
+			$cond['metric'] = 0;
+			$cond['complete'] = false;
 		}
 
 		return $goal;
@@ -311,6 +334,13 @@ class GoalLib
 			'goal-count-unbounded' => ['label' => tr('Goal Reached (Forever)'), 'arguments' => []],
 			'has-badge' => ['label' => tr('Has Badge'), 'arguments' => ['trackerItemBadge']],
 		];
+	}
+
+	function listEligibleGroups()
+	{
+		global $prefs;
+		$groups = TikiLib::lib('user')->list_all_groups();
+		return array_diff($groups, $prefs['goal_group_blacklist']);
 	}
 
 	private function table()

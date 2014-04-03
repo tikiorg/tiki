@@ -61,22 +61,27 @@ class UserPrefsLib extends TikiLib
 		if ( $prefs['users_serve_avatar_static'] == 'y' ) {
 			$domain = '';
 			$hash = md5($user);
-			$files = glob("temp/public/{$tikidomainslash}avatar_$hash.{jpg,gif,png}", GLOB_BRACE);
+			$files = glob("temp/public/{$tikidomainslash}avatar_$hash.{jpg,jpeg,gif,png}", GLOB_BRACE);
 
 			if (! empty($files[0])) {
-				return $files[0];
+				$file = $files[0];
+			} else {
+				$file = $this->generate_avatar_file($user);
 			}
-
-			return $this->generate_avatar_file($user);
 		} else {
 			$info = $this->get_user_avatar_img($user);
 			$content = $info["avatarData"];
 			if (! empty($content)) {
-				return "tiki-show_user_avatar.php?user=" . urlencode($user);
+				$file = "tiki-show_user_avatar.php?user=" . urlencode($user);
+			} else {
+				$file = 'img/noavatar.png';
 			}
 		}
-
-		return 'img/noavatar.png';
+		if (TikiLib::lib('parser')->option['absolute_links']) {
+			global $base_url;
+			$file = $base_url . $file;
+		}
+		return $file;
 	}
 
 	private function generate_avatar_file($user)

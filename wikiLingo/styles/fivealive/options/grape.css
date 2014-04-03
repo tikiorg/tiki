@@ -3,6 +3,8 @@
 	Tiki Wiki CMS Groupware.
 */
 
+@import url("../jquery-ui/options/grape/jquery-ui.min.css");
+
 a,
 a:visited,
 tr.even a,
@@ -105,14 +107,12 @@ button:hover,
 	color: #fff;
 }
 
-#topbar_modules .dropdown-menu,
-#tiki-top .cssmenu_horiz li a {
+#topbar_modules .dropdown-menu {
 	background: url(grape/siteheader.png) no-repeat -600px -40px;
 }
 
 #topbar_modules .dropdown-menu > li > a:hover,
 #topbar_modules .dropdown-menu > li > a:focus,
-#tiki-top .cssmenu_horiz li a:hover,
 .cssmenu_vert li ul a:hover,
 .cssmenu_horiz li ul a:hover,
 .header .cssmenu_horiz li ul a:hover,
@@ -284,7 +284,7 @@ form.admin fieldset,
 	border-bottom: none;
 }
 
-/* cluptip tooltips */
+/* cluetip tooltips */
 
 .cluetip-default {
 	background: #FBDCED;
@@ -303,3 +303,13 @@ form.admin fieldset,
 	color: #FBDCED;
 }
   
+
+.s5-slide {
+    background-color: #A82A76 !important;
+}
+.s5-slide:after {
+    box-shadow: -5rem -2rem 0 0 #69285C inset, 0 0 2rem rgba(0, 0, 0, 0.5);
+}
+.s5-slide-li-highlighted {
+    color: #A82A76;
+}

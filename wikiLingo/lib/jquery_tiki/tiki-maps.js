@@ -194,9 +194,9 @@
 				}
 
 				container.defaultStyleMap = new OpenLayers.StyleMap({
-					"default": new OpenLayers.Style({
+					"default": new OpenLayers.Style(OpenLayers.Util.applyDefaults({
 						cursor: "pointer"
-					}, {
+					}, OpenLayers.Feature.Vector.style['default']), {
 						context: {
 							getFillColor: function (feature) {
 								return getColor(feature, "default", "fill");
@@ -221,9 +221,9 @@
 							}
 						}
 					}),
-					"select": new OpenLayers.Style({
+					"select": new OpenLayers.Style(OpenLayers.Util.applyDefaults({
 						cursor: "pointer"
-					}, {
+					}, OpenLayers.Feature.Vector.style['select']), {
 						context: {
 							getFillColor: function (feature) {
 								return getColor(feature, "select", "fill");
@@ -248,9 +248,9 @@
 							}
 						}
 					}),
-					"temporary": new OpenLayers.Style({ 	// highlighted features
+					"temporary": new OpenLayers.Style(OpenLayers.Util.applyDefaults({
 						cursor: "pointer"
-					}, {
+					}, OpenLayers.Feature.Vector.style['temporary']), {
 						context: {
 							getFillColor: function (feature) {
 								return getColor(feature, "temporary", "fill");
@@ -274,7 +274,14 @@
 								return getStyleAttribute(feature, "temporary", "stroke-opacity", 0.9);
 							}
 						}
-					})
+					}),
+					"vertex": new OpenLayers.Style(OpenLayers.Util.applyDefaults({
+						fillColor: "#6699cc",
+						strokeColor: "#6699cc",
+						pointRadius: 5,
+						fillOpacity: ".7",
+						strokeDashstyle: "solid"
+					}, OpenLayers.Feature.Vector.style['temporary']))
 				});
 
 				var markerStyle = {
@@ -494,8 +501,8 @@
 								var lonlat = map.getLonLatFromPixel(
 									new OpenLayers.Pixel(
 										// get mouse position
-										this.handlers.feature.evt.clientX - map.div.offsetLeft + $window.scrollLeft(),
-										this.handlers.feature.evt.clientY - map.div.offsetTop + $window.scrollTop()
+										this.handlers.feature.evt.clientX - map.viewPortDiv.offsetLeft + $window.scrollLeft(),
+										this.handlers.feature.evt.clientY - map.viewPortDiv.offsetTop + $window.scrollTop()
 									)
 								);
 								var popup = new OpenLayers.Popup.Anchored(
@@ -550,7 +557,8 @@
 								content: feature.attributes.content,
 								close: function () {
 									selectControl.unselect(feature);
-								}
+								},
+								feature: feature
 							});
 						}
 
@@ -660,13 +668,13 @@
 							container.map.setLayerZIndex(vectors, vectorLayerList.length * 1000);
 							setupLayerEvents(vectors);
 
-							if (selectControl.active) {
-								selectControl.deactivate();
-								selectControl.activate();
-							}
 							if (highlightControl && highlightControl.active) {
 								highlightControl.deactivate();
 								highlightControl.activate();
+							}
+							if (selectControl.active) {
+								selectControl.deactivate();
+								selectControl.activate();
 							}
 						}
 
@@ -1007,7 +1015,7 @@
 				searchboxes
 					.unbind('submit')
 					.submit(function () {
-						$(container).trigger("map.search.start");
+						$(container).trigger("start.map.search");
 						var form = this;
 						$.post('tiki-searchindex.php?filter~geo_located=y', $(this).serialize(), function (data) {
 							var layerName = $(form).data('result-layer'), suffix = $(form).data('result-suffix');
@@ -1043,7 +1051,8 @@
 										object: i.object_id,
 										icon: icon ? icon : null,
 										layer: layerName,
-										dataSource: i
+										dataSource: i,
+										form: form
 									});
 								} else if (i.geo_feature) {
 									var  wkt = new OpenLayers.Format.WKT
@@ -1078,6 +1087,9 @@
 										}
 										if (! feature.attributes.intent) {
 											feature.attributes.intent = "vectors";
+										}
+										if (! feature.attributes.popup_config) {
+											feature.attributes.popup_config = $(form).data("popup-config");
 										}
 
 										initial = wkt.write(feature) + feature.attributes.color;
@@ -1151,6 +1163,9 @@
 													if (! feature.attributes.intent) {
 														feature.attributes.intent = "vectors";
 													}
+													if (! feature.attributes.popup_config) {
+														feature.attributes.popup_config = $(form).data("popup-config");
+													}
 													// for some reason geometry needs to be in 900913 projection to correctly appear
 													// in the "Editable" vector layer, even though layer.projection === "EPSG:4326"
 													feature.geometry.transform(proj4326, proj900913);
@@ -1165,7 +1180,7 @@
 								}
 							});
 						}, 'json').complete(function () {
-							$(container).trigger("map.search.stop");
+							$(container).trigger("complete.map.search");
 						});
 						return false;
 					})
@@ -1386,6 +1401,9 @@
 					feature.attributes.type = options.type;
 					feature.attributes.object = options.object;
 				}
+				if (! feature.attributes.popup_config && options.form) {
+					feature.attributes.popup_config = $(options.form).data("popup-config");
+				}
 
 				var markerLayer = container.getLayer(options.layer), initial = writeCoordinates(lonlat.clone(), container.map, true);
 				markerLayer.addFeatures([feature]);
@@ -1594,6 +1612,7 @@
 					newPopup = handler.create(options.lonlat, content, options.hook, close);
 
 					newPopup.myclose = close;
+					newPopup.feature = options.feature;
 					$(container).setMapPopup(newPopup, popup);
 
 					content = $('#' + injectionId);
@@ -1679,7 +1698,12 @@
 						map.removePopup(popup);
 					},
 					resize: function (popup) {
-						popup.setSize(new OpenLayers.Size(300, 260));
+						var w = 300, h = 260;
+						if (popup.feature.attributes.popup_config) {
+							w = popup.feature.attributes.popup_config.width;
+							h = popup.feature.attributes.popup_config.height;
+						}
+						popup.setSize(new OpenLayers.Size(w, h));
 					}
 				};
 				break;

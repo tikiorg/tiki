@@ -72,7 +72,8 @@
 			<img src="img/icons/cross.png" alt="{tr}Exit{/tr}"></a>
 		<select class="tiki-slideshow-theme">
 			<option value="">{tr}Change Theme{/tr}</option>
-			<option value="default">default</option>
+			<option value="none">{tr}none{/tr} ({tr}styled by current theme{/tr})</option>
+			<option value="default">{tr}Site default{/tr} ({tr}by jQuery-UI choice{/tr})</option>
 			<option value="ui-lightness">ui-lightness</option>
 			<option value="ui-darkness">ui-darkness</option>
 			<option value="smoothness">smoothness</option>
@@ -132,7 +133,8 @@
 			<img src="img/icons/cross.png" alt="{tr}Exit{/tr}"></a>
 		<select class="tiki-slideshow-theme">
 			<option value="">{tr}Change Theme{/tr}</option>
-			<option value="default">default</option>
+			<option value="none">{tr}none{/tr} ({tr}styled by current theme{/tr})</option>
+			<option value="default">{tr}Site default{/tr} ({tr}by jQuery-UI choice{/tr})</option>
 			<option value="ui-lightness">ui-lightness</option>
 			<option value="ui-darkness">ui-darkness</option>
 			<option value="smoothness">smoothness</option>

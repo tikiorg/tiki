@@ -25,7 +25,8 @@ window.parent.location = 'tiki-index.php';
 </table>
 </form>
 
-<h4>{tr}Do you already have a local account for this site? Login to link to it using the following form instead{/tr}</h4>
+<h4>{tr}Do you already have a local account for this site?{/tr}</h4>
+<p>{tr}Login to link to it using the following form instead{/tr}</p>
 <form action="tiki-socialnetworks_firstlogin.php" method="post" name="RegForm2">
 <table class="formcolor">
 <tr>

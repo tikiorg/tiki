@@ -24,7 +24,7 @@
 
 		<div{* style="text-align: center"*}>
 			{if $individual eq 'y'}
-				<a class="gallink" href="tiki-objectpermissions.php?objectName={$name|escape:"url"}&amp;objectType=image+gallery&amp;permType=image+galleries&amp;objectId={$galleryId}">{tr}There are individual permissions set for this gallery{/tr}</a>
+				{permission_link mode=link type="image gallery" permType="image galleries" id=$galleryId title=$name label="{tr}There are individual permissions set for this gallery{/tr}"}
 			{/if}
 			<form action="tiki-galleries.php" method="post" id="gal-edit-form">
 				<input type="hidden" name="galleryId" value="{$galleryId|escape}">
@@ -281,11 +281,7 @@
 								{/if}
 							{/if}
 							{if ($tiki_p_admin eq 'y') or  ($galleries[changes].perms.tiki_p_assign_perm_image_gallery eq 'y' )}
-								{if $galleries[changes].perms.has_special_perm eq 'y'}
-									<a class="gallink" href="tiki-objectpermissions.php?objectName={$galleries[changes].name|escape:"url"}&amp;objectType=image+gallery&amp;permType=image+galleries&amp;objectId={$galleries[changes].galleryId}">{icon _id='key_active' alt="{tr}Active Perms{/tr}"}</a>
-								{else}
-									<a class="gallink" href="tiki-objectpermissions.php?objectName={$galleries[changes].name|escape:"url"}&amp;objectType=image+gallery&amp;permType=image+galleries&amp;objectId={$galleries[changes].galleryId}">{icon _id='key' alt="{tr}Perms{/tr}"}</a>
-								{/if}
+								{permission_link mode=icon type="image gallery" permType="image galleries" id=$galleries[changes].galleryId title=$galleries[changes].name}
 							{/if}
 							{if $tiki_p_admin_galleries eq 'y' or ($user and $galleries[changes].user eq $user)}
 								{if ($tiki_p_admin eq 'y') or ($galleries[changes].perms.has_special_perms eq 'n') or ($galleries[changes].perms.tiki_p_create_galleries eq 'y' )}

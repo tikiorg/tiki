@@ -7,16 +7,18 @@
 	{foreach from=$sections key=k item=sect}
 		<div id="{$k|escape}">
 			{foreach from=$sect.fields item=field}
-				<label>
+				<label for="trackerinput_{$field.fieldId|escape}">
 					{$field.name|escape}
 					{if $field.isMandatory eq 'y'}
 						<span class="mandatory_star">*</span>
 					{/if}
+				</label>
+				<div id="trackerinput_{$field.fieldId|escape}">
 					{trackerinput field=$field}
 					<div class="description help-block">
 						{$field.description|escape}
 					</div>
-				</label>
+				</div>
 			{/foreach}
 		</div>
 	{/foreach}
@@ -31,4 +33,7 @@
 		.css('margin', '0px')
 		.css('padding', '0px')
 		;
+	$('label').click(function() {
+		$('input, select, textarea', '#'+$(this).attr('for')).focus();
+	});
 {/jq}

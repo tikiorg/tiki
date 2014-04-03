@@ -1263,15 +1263,13 @@ CREATE TABLE `tiki_mailin_accounts` (
   `accountId` int(12) NOT NULL auto_increment,
   `user` varchar(200) NOT NULL default '',
   `account` varchar(50) NOT NULL default '',
-  `pop` varchar(255) default NULL,
+  `protocol` varchar(10) NOT NULL DEFAULT 'pop',
+  `host` varchar(255) default NULL,
   `port` int(4) default NULL,
   `username` varchar(100) default NULL,
   `pass` varchar(100) default NULL,
   `active` char(1) default NULL,
   `type` varchar(40) default NULL,
-  `smtp` varchar(255) default NULL,
-  `useAuth` char(1) default NULL,
-  `smtpPort` int(4) default NULL,
   `anonymous` char(1) NOT NULL default 'y',
   `admin` char(1) NOT NULL default 'y',
   `attachments` char(1) NOT NULL default 'n',
@@ -1324,7 +1322,7 @@ INSERT INTO `tiki_menu_options` (`menuId`, `type`, `name`, `url`, `position`, `s
 INSERT INTO `tiki_menu_options` (`menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (42,'o','Users Map','tiki-gmap_usermap.php',36,'feature_gmap','','',0);
 INSERT INTO `tiki_menu_options` (`menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (42,'o','Tiki Calendar','tiki-action_calendar.php',37,'feature_action_calendar','tiki_p_view_tiki_calendar','',0);
 INSERT INTO `tiki_menu_options` (`menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (42,'o','(debug)','javascript:toggle(\'debugconsole\')',40,'feature_debug_console','tiki_p_admin','',0);
-INSERT INTO `tiki_menu_options` (`menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (42,'o','User Wizard','tiki-wizard_user.php',45,'feature_wizard_user','','',0);
+INSERT INTO `tiki_menu_options` (`menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (42,'o','User Wizard','tiki-wizard_user.php',45,'feature_wizard_user','','Registered',0);
 INSERT INTO `tiki_menu_options` (`menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (42,'s','MyTiki','tiki-my_tiki.php',50,'feature_mytiki','','Registered',0);
 INSERT INTO `tiki_menu_options` (`menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (42,'o','MyTiki Home','tiki-my_tiki.php',51,'feature_mytiki','','Registered',0);
 INSERT INTO `tiki_menu_options` (`menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (42,'o','Preferences','tiki-user_preferences.php',55,'feature_mytiki,feature_userPreferences','','Registered',0);
@@ -3355,6 +3353,7 @@ CREATE TABLE `tiki_payment_requests` (
     `currency` CHAR(3) NOT NULL,
     `request_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `due_date` TIMESTAMP NOT NULL,
+	`authorized_until` TIMESTAMP NULL,
     `cancel_date` TIMESTAMP NULL,
     `description` VARCHAR(100) NOT NULL,
     `actions` TEXT,
@@ -3370,6 +3369,7 @@ CREATE TABLE `tiki_payment_received` (
     `payment_date` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     `amount` DECIMAL(7,2),
     `type` VARCHAR(15),
+	`status` VARCHAR(15) NOT NULL DEFAULT 'paid',
     `details` TEXT,
     `userId` int(8),
     PRIMARY KEY(`paymentReceivedId`),

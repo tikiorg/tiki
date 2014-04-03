@@ -229,6 +229,7 @@ function prefs_payment_list()
 			'filter' => 'digits',
 			'size' => 3,
 			'default' => '',
+			'profile_reference' => 'tracker',
 		),
 		'payment_cart_product_tracker_name' => array(
 			'name' => tra('Products Tracker Name'),
@@ -388,6 +389,7 @@ function prefs_payment_list()
 			'filter' => 'digits',
 			'size' => 3,
 			'default' => '',
+			'profile_reference' => 'tracker',
 		),
 		'payment_cart_event_tracker_name' => array(
 			'name' => tra('Events Tracker Name'),
@@ -422,6 +424,7 @@ function prefs_payment_list()
 			'filter' => 'digits',
 			'size' => 3,
 			'default' => '',
+			'profile_reference' => 'tracker',
 		),
 		'payment_cart_giftcerts' => array(
 			'name' => tra('Gift certificates'),
@@ -438,6 +441,7 @@ function prefs_payment_list()
 			'filter' => 'digits',
 			'size' => 3,
 			'default' => '',
+			'profile_reference' => 'tracker',
 		),
 		'payment_cart_giftcert_tracker_name' => array(
 			'name' => tra('Gift Certificate Tracker Name'),
@@ -468,14 +472,27 @@ function prefs_payment_list()
 			'description' => tra('Switch between test transactions and real transactions'),
 			'type' => 'list',
 			'options' => array(
-				'https://www.israelpost.co.il/extpay.nsf/genericInit?OpenAgent' => tr('Production'),
-				'https://test.israelpost.co.il/extpay.nsf/genericInit?OpenAgent' => tr('Test'),
+				'https://www.israelpost.co.il/extpay.nsf/' => tr('Production'),
+				'https://test.israelpost.co.il/extpay.nsf/' => tr('Test'),
 			),
-			'default' => 'https://www.israelpost.co.il/extpay.nsf/genericInit?OpenAgent',
+			'default' => 'https://www.israelpost.co.il/extpay.nsf/',
+		),
+		'payment_israelpost_request_preauth' => array(
+			'name' => tra('Israel Post use pre-authorization'),
+			'description' => tra('Use the pre-authorization mechanism prior to processing the real transaction. Must match the account configuration at IsraelPost.'),
+			'type' => 'flag',
+			'default' => 'n',
 		),
 		'payment_israelpost_business_id' => array(
 			'name' => tra('Israel Post Business ID'),
 			'description' => tra('Provided by Israel Post, usually the business name.'),
+			'type' => 'text',
+			'filter' => 'text',
+			'default' => '',
+		),
+		'payment_israelpost_api_password' => array(
+			'name' => tra('Israel Post API Password'),
+			'description' => tra('Provided by Israel Post.'),
 			'type' => 'text',
 			'filter' => 'text',
 			'default' => '',

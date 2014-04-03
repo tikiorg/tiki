@@ -26,7 +26,7 @@
 		
 		{if $tiki_p_assign_perm_image_gallery eq 'y'}
 			{assign var=thisname value=$name|escape:"url"}
-			{button href="tiki-objectpermissions.php?objectName=$thisname&amp;objectType=image+gallery&amp;permType=image+galleries&amp;objectId=$galleryId" class="btn btn-default" _text="{tr}Perms{/tr}"}
+			{permission_link mode=button type="image gallery" permType="image galleries" id=$galleryId title=$thisname}
 		{/if}
 	{/if}
 

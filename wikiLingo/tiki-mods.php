@@ -232,6 +232,27 @@ if (!empty($version)) { // filter out other versions
 					$mv = 8.0; // e.g. version= "Compatible with Tiki 8 releases." or "8+"
 					
 				}				
+
+				if (strpos($m->version[0], ' 9 ') !== false || strpos($m->version[0], ' 9+') !== false) {
+					$mv = 9.0; // e.g. version= "Compatible with Tiki 9 releases." or "9+"
+
+				}
+
+				if (strpos($m->version[0], ' 10 ') !== false || strpos($m->version[0], ' 10+') !== false) {
+					$mv = 10.0; // e.g. version= "Compatible with Tiki 10 releases." or "10+"
+
+				}
+
+				if (strpos($m->version[0], ' 11 ') !== false || strpos($m->version[0], ' 11+') !== false) {
+					$mv = 11.0; // e.g. version= "Compatible with Tiki 11 releases." or "11+"
+
+				}
+
+				if (strpos($m->version[0], ' 12 ') !== false || strpos($m->version[0], ' 12+') !== false) {
+					$mv = 12.0; // e.g. version= "Compatible with Tiki 12 releases." or "12+"
+
+				}
+
 				if ($mv >= $v) {
 					$filtmod[$k] = $m;
 				}

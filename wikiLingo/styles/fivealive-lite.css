@@ -466,6 +466,7 @@ select[multiple="multiple"] {
 	color: #fff;
 	background: url(fivealive/options/blueberry/siteheader.jpg) no-repeat -260px -200px;
 	border-radius: 6px;
+	min-height: 20px;
 }
 
 .title h2 {
