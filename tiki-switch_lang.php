@@ -22,7 +22,7 @@ if ($prefs['feature_sefurl'] == 'y' && !strstr($orig_url, '.php')) {
 	} elseif (preg_match('/article[0-9]+-?/', $orig_url)) {
 		$orig_url = preg_replace('#\/article([0-9]+)(.*)#', '/tiki-read_article.php?articleId=$1', $orig_url);
 	} else {
-		$orig_url = preg_replace('#\/([^\/\?]+)(\?.*)?$#', '/tiki-index.php?page=$1', $orig_url);
+		$orig_url = preg_replace('#\/([^\/\?]+)\?(.*)?$#', '/tiki-index.php?page=$1&$2', $orig_url);
 	}
 } elseif (!strstr($orig_url, '.php')) {
         $params = parse_url($orig_url);
