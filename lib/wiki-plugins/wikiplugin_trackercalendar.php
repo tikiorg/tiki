@@ -132,7 +132,39 @@ function wikiplugin_trackercalendar_info()
 					array('text' => tra('resourceWeek'), 'value' => 'Resources by Weeks'),
 					array('text' => tra('resourceDay'), 'value' => 'Resources by Days')
 				)
+			),
+			'dYear' => array(
+				'required' => false,
+				'name' => tra('Default Year'),
+				'description' => tra('Choose the default year (yyyy) to use for the display'),
+				'required' => false,
+				'default' => 0,
+				'filter' => 'int',
 			),			
+			'dMonth' => array(
+				'required' => false,
+				'name' => tra('Default Month'),
+				'description' => tra('Choose the default month (mm, as numeric value) to use for the display. Numeric values here are 1-based, meaning January=1, February=2, etc'),
+				'required' => false,
+				'default' => 0,
+				'filter' => 'int',
+			),
+			'dDay' => array(
+				'required' => false,
+				'name' => tra('Default Day'),
+				'description' => tra('Choose the default day (dd) to use for the display'),
+				'required' => false,
+				'default' => 0,
+				'filter' => 'int',
+			),
+			'fDayofWeek' => array(
+				'required' => false,
+				'name' => tra('First day of the Week'),
+				'description' => tra('Choose the day that each week begins with, for the tracker calendar display. The value must be a number that represents the day of the week: Sunday=0, Monday=1, Tuesday=2, etc. Default: 0 (Sunday)'),
+				'required' => false,
+				'default' => 0,
+				'filter' => 'int',
+			),
 		),
 	);
 }
@@ -203,12 +235,35 @@ function wikiplugin_trackercalendar($data, $params)
 			$views[] = 'resourceDay';
 		}
 	}
-
+	
 	// Define the default View (dView)
 		if (!empty($params['dView'])) {
 			$dView = $params['dView'];
 		} else {
 			$dView = 'month';
+		}
+
+	// Define the default date (dYear, dMonth, dDay)
+		if (!empty($params['dYear'])) {
+			$dYear = $params['dYear'];
+		} else {
+			$dYear = (int) date('Y');
+		}
+		if (!empty($params['dMonth']) and $params['dMonth'] > 0 and $params['dMonth'] < 13) {
+			$dMonth = $params['dMonth'];
+		} else {
+			$dMonth = (int) date('n');
+		}
+		if (!empty($params['dDay']) and $params['dDay'] > 0 and $params['dDay'] < 32) {
+			$dDay = $params['dDay'];
+		} else {
+			$dDay = (int) date('j');
+		}
+
+		if (!empty($params['fDayofWeek']) and $params['fDayofWeek'] > -1 and $params['fDayofWeek'] < 7) {
+			$firstDayofWeek = $params['fDayofWeek'];
+		} else {
+			$firstDayofWeek = 0;
 		}
 
 	$smarty = TikiLib::lib('smarty');
@@ -224,11 +279,11 @@ function wikiplugin_trackercalendar($data, $params)
 			'coloring' => $jit->coloring->word(),
 			'beginFieldName' => 'ins_' . $beginField['fieldId'],
 			'endFieldName' => 'ins_' . $endField['fieldId'],
-			'firstDayofWeek' => 0,
+			'firstDayofWeek' => $firstDayofWeek,
 			'views' => implode(',', $views),
-			'viewyear' => (int) date('Y'),
-			'viewmonth' => (int) date('n'),
-			'viewday' => (int) date('j'),
+			'viewyear' => $dYear,
+			'viewmonth' => $dMonth,
+			'viewday' => $dDay,
 			'minHourOfDay' => 7,
 			'maxHourOfDay' => 20,
 			'addTitle' => tr('Insert'),

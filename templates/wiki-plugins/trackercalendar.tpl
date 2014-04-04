@@ -96,5 +96,6 @@
 			eventResize: storeEvent,
 			eventDrop: storeEvent
 		});
+		$(this).fullCalendar( 'gotoDate', data.viewyear, data.viewmonth-1, data.viewday );
 	});
 {/jq}
