@@ -285,7 +285,7 @@ function wikiplugin_trackercalendar($data, $params)
 			'viewmonth' => $dMonth,
 			'viewday' => $dDay,
 			'minHourOfDay' => 7,
-			'maxHourOfDay' => 20,
+			'maxHourOfDay' => 24,
 			'addTitle' => tr('Insert'),
 			'canInsert' => $itemObject->canModify(),
 			'dView' => $dView,
