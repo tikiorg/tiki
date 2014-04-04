@@ -428,8 +428,11 @@ if ($isvalid) {
 			$error = tra('Invalid username or password.');
 	}
 	if (isset($extraButton)) $smarty->assign_by_ref('extraButton', $extraButton);
-	$smarty->assign('msg', $error);
-	$smarty->display('error.tpl');
+
+	//	Report error "inline" with the login module
+	$smarty->assign('error_login', $error);
+	$smarty->assign('mid', 'tiki-login.tpl');
+	$smarty->display('tiki.tpl');
 	exit;
 }
 

@@ -391,12 +391,8 @@
 			</div>
 			<fieldset>
 				<legend>{tr}Creation date constraint{/tr}</legend>
-				<div class="checkbox">
-					<label>
-						<input type="checkbox" name="start" value="1"
-							{if $info.start}checked="checked"{/if}>
-						{tr}After{/tr}
-					</label>
+				<div class="description">
+					{tr}The tracker will be <strong>open</strong> for non-admin users through wiki pages with PluginTracker <strong>only</strong> during the period 'After' the start date and/or 'Before' the end date set below{/tr}.
 				</div>
 				<div class="form-group depends" data-on="start">
 					<label for="startDate">{tr}Date{/tr}</label>
