@@ -98,20 +98,22 @@
 	</div>
 
 	{if count($listcals) >= 1}
-		<form id="filtercal" method="get" action="{$myurl}" name="f" style="display:none;">
-			<div class="caltitle">{tr}Group Calendars{/tr}</div>
-			<div class="caltoggle">
-				{select_all checkbox_names='calIds[]' label="{tr}Check / Uncheck All{/tr}"}				
-			</div>
-			{foreach item=k from=$listcals}
-				<div class="calcheckbox">
-					<input type="checkbox" name="calIds[]" value="{$k|escape}" id="groupcal_{$k}" {if $thiscal.$k}checked="checked"{/if}>
-					<label for="groupcal_{$k}" class="calId{$k}">{$infocals.$k.name|escape} (id #{$k})</label>
-				</div>
-			{/foreach}
-			<div class="calinput">
-				<input type="hidden" name="todate" value="{$focusdate}">
-				<input type="submit" class="btn btn-default btn-sm" name="refresh" value="{tr}Refresh{/tr}">
+		<form class="modal-content" id="filtercal" method="get" action="{$myurl}" name="f" style="display:none;">
+			<div class="modal-header caltitle">{tr}Group Calendars{/tr}</div>
+            <div class="modal-body">
+			    <div class="caltoggle">
+			    	{select_all checkbox_names='calIds[]' label="{tr}Check / Uncheck All{/tr}"}
+			    </div>
+			    {foreach item=k from=$listcals}
+				    <div class="calcheckbox">
+					    <input type="checkbox" name="calIds[]" value="{$k|escape}" id="groupcal_{$k}" {if $thiscal.$k}checked="checked"{/if}>
+					    <label for="groupcal_{$k}" class="calId{$k}">{$infocals.$k.name|escape} (id #{$k})</label>
+				    </div>
+			    {/foreach}
+			    <div class="calinput">
+				    <input type="hidden" name="todate" value="{$focusdate}">
+				    <input type="submit" class="btn btn-default btn-sm" name="refresh" value="{tr}Refresh{/tr}">
+                </div>
 			</div>
 		</form>
 	{/if}

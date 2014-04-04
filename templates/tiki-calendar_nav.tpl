@@ -6,11 +6,7 @@
 	{assign var='module' value='n'}
 {/if}
 {if empty($module_params.viewnavbar) || $module_params.viewnavbar eq 'y'}
-<div class="clearfix tabrow" {if $module eq 'y'}style="padding: 0pt"{/if}>
-{if $module neq 'y'}
-	<div class="tabrowRight"></div>
-	<div class="tabrowLeft"></div>
-{/if}
+<div class="clearfix tabrow" {if $module eq 'y'}style="padding: 0"{/if}>
 	<div class="viewmode clearfix">
 	{if !isset($calendar_type) or $calendar_type neq "tiki_actions"}
 			{if $module neq 'y'}
