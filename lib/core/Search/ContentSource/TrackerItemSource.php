@@ -66,6 +66,7 @@ class Search_ContentSource_TrackerItemSource implements Search_ContentSource_Int
 			array(
 				'title' => $typeFactory->sortable($this->trklib->get_isMain_value($item['trackerId'], $objectId)),
 				'modification_date' => $typeFactory->timestamp($item['lastModif']),
+				'creation_date' => $typeFactory->timestamp($item['created']),
 				'contributors' => $typeFactory->multivalue(array_unique(array($item['createdBy'], $item['lastModifBy']))),
 
 				'tracker_status' => $typeFactory->identifier($item['status']),
@@ -94,6 +95,7 @@ class Search_ContentSource_TrackerItemSource implements Search_ContentSource_Int
 			'title',
 			'language',
 			'modification_date',
+			'creation_date',
 			'contributors',
 
 			'tracker_status',
