@@ -5,7 +5,9 @@
 		<div class="col-sm-4">
 		    <input type="search" name="filter~content" class="form-control" value="{$filter_content|escape}">
 		</div>
-		{if $prefs.search_show_sort_order eq 'y'}
+    </div>
+	{if $prefs.search_show_sort_order eq 'y'}
+        <div class="form-group">
 			<label class="col-sm-2 control-label">{tr}Sort By{/tr}</label>
 			<div class="col-sm-3">
 				<select name="sort_mode" class="sort_mode form-control">
@@ -20,8 +22,9 @@
 			{else}
 				{icon _id='arrow_down' width='16' height='16' class='icon sort_invert' title="{tr}Sort direction{/tr}" href='#'}
 			{/if}
-		{else}
-			<input type="hidden" name="sort_mode" value="{$sort_mode}">
+        </div>
+	{else}
+		<input type="hidden" name="sort_mode" value="{$sort_mode}">
 		{/if}
 		{if $prefs.feature_search_show_object_filter eq 'y'}
 			<div class="form-group">
@@ -47,10 +50,10 @@
 
 		{if $prefs.feature_categories eq 'y' and $tiki_p_view_category eq 'y' and $prefs.search_show_category_filter eq 'y'}
 			<div class="form-group">
-				<label class="col-sm-2 control-label">{tr}Categories{/tr}</label>
+				<label class="col-sm-2 control-label" for="filter-categories">{tr}Categories{/tr}</label>
 				<div class="col-sm-4">
 					<a class="category-lookup btn btn-default" href="#">{tr}Lookup{/tr}</a>
-					<input type="text" name="filter~categories" class="category-wizard form-control" value="{$filter_categories|escape}">
+					<input type="text" name="filter~categories" id="filter-categories" class="category-wizard form-control" value="{$filter_categories|escape}">
 				</div>
 				<div class="col-sm-2 checkbox">
 					<label for="filter-deep">
@@ -97,7 +100,7 @@
 				<input type="hidden" name="filter~language_unspecified" value="1">
 			{/if}
 		{/if}
-	</div>
+	
 	<div class="text-center">
 		<input type="submit" class="btn btn-primary" value="{tr}Search{/tr}">
 		{if $prefs.storedsearch_enabled eq 'y' and $user}
@@ -116,7 +119,7 @@
 				});
 			{/jq}
 		{/if}
-	</form>
+	{*</form>*}
 		{add_help show='y' title="{tr}Search Help{/tr}" id="unified_search_help"}
 			{include file='unified_search_help.tpl'}
 		{/add_help}
