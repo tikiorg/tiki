@@ -393,7 +393,7 @@ if ($isvalid) {
 	}
 	switch ($error) {
 		case PASSWORD_INCORRECT:
-			$error = tra('Invalid username or password.');
+			$error = tra('Invalid username or password');
         		break;
 
 		case USER_NOT_FOUND:
@@ -425,7 +425,7 @@ if ($isvalid) {
         		break;
 
 		default:
-			$error = tra('Invalid username or password.');
+			$error = tra('Invalid username or password');
 	}
 	if (isset($extraButton)) $smarty->assign_by_ref('extraButton', $extraButton);
 
