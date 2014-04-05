@@ -737,7 +737,7 @@
 					<div><a href="#" onclick="$('#multi').submit();return false;">{tr}Default Installation{/tr}</a></div>
 					<form method="post" action="tiki-install.php" id="multi">
 						<input type="hidden" name="install_step" value="0">
-						<input type="hidden" name="multi" value="{$multi|escape}">
+						<input type="hidden" name="multi" value="">
 					</form>
 				{/if}
 {foreach key=k item=i from=$virt}
@@ -746,7 +746,7 @@
 {if $k eq $multi}
 					<strong>{$k}</strong>
 {else}
-	<a href="#" onclick="$("#virt{$i@index}").submit();return false;" class="linkmodule">{$k}</a>
+	<a href="#" onclick="$('#virt{$i@index}').submit();return false;" class="linkmodule">{$k}</a>
 	<form method="post" action="tiki-install.php" id="virt{$i@index}">
 		<input type="hidden" name="multi" value="{$k}">
 		<input type="hidden" name="install_step" value="0">
