@@ -16,12 +16,13 @@
             {/jq}
         {else}
             {jq}
+                {*the call to trigger sync is for ensuring we get the most up to date value form the editor, which could be using codemirror*}
                 $('input[name=preview]').click(function(){
-                    $(document).trigger('previewWikiLingo', [false, $('#editwiki').val(), $('#editpageform'), $('#autosave_preview').slideDown('slow')]);
+                    $(document).trigger('previewWikiLingo', [false, $('#editwiki').trigger('sync').val(), $('#editpageform'), $('#autosave_preview').slideDown('slow')]);
                     return false;
                 });
                 $('input.btn-primary').click(function() {
-                    $(document).trigger('saveWikiLingo', [false, $('#editwiki').val(), $('#editpageform')]);
+                    $(document).trigger('saveWikiLingo', [false, $('#editwiki').trigger('sync').val(), $('#editpageform')]);
                     return false;
                 });
             {/jq}
