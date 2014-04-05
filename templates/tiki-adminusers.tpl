@@ -126,7 +126,7 @@
 		{initials_filter_links}
 	{/if}
 
-	<form name="checkform" method="post" action="{$smarty.server.PHP_SELF}{if (!isset($group_management_mode) or $group_management_mode ne 'y') and (!isset($set_default_groups_mode) or $set_default_groups_mode ne 'y') and (!isset($email_mode) or $email_mode ne 'y')}#multiple{/if}">
+	<form name="checkform" method="post" action="{$smarty.server.PHP_SELF}">
 		<div id="usertable" {if $tsOn}style="visibility: hidden"{/if}>
 			<table id="usertable_table" class="table normal">
 				{* Note: for any changes in the logic determining which columns are shown, corresponding changes will
@@ -268,67 +268,120 @@
 			<table>
 				<tr>
 					<td colspan="18">
-						<a name="multiple"></a>
 						{if $users}
 							<p align="left"> {*on the left to have it close to the checkboxes*}
-								{if (!isset($group_management_mode) or $group_management_mode neq 'y')
-									&& (!isset($set_default_groups_mode) or $set_default_groups_mode neq 'y')
-									&& (!isset($email_mode) or $email_mode neq 'y')}
+								<div id="submit_mult">
 									<label>{tr}Perform action with checked:{/tr}
-									<select name="submit_mult">
-										<option value="" selected="selected">-</option>
-										<option value="remove_users" >{tr}Remove{/tr}</option>
-										{if $prefs.feature_wiki_userpage == 'y'}
-											<option value="remove_users_with_page">{tr}Remove Users and their Userpages{/tr}</option>
-										{/if}
-										<option value="assign_groups" >{tr}Manage Group Assignments{/tr}</option>
-										<option value="set_default_groups">{tr}Set Default Groups{/tr}</option>
-										{if $prefs.feature_wiki == 'y'}
-											<option value="emailChecked">{tr}Send a wiki page by Email{/tr}</option>
-										{/if}
-									</select>
+										<select class="submit_mult" name="submit_mult">
+											<option value="" selected="selected">-</option>
+											<option value="remove_users" >{tr}Remove{/tr}</option>
+											{if $prefs.feature_wiki_userpage == 'y'}
+												<option value="remove_users_with_page">{tr}Remove Users and their Userpages{/tr}</option>
+											{/if}
+											<option value="assign_groups" >{tr}Manage Group Assignments{/tr}</option>
+											<option value="set_default_groups">{tr}Set Default Groups{/tr}</option>
+											{if $prefs.feature_wiki == 'y'}
+												<option value="emailChecked">{tr}Send a wiki page by Email{/tr}</option>
+											{/if}
+										</select>
 									</label>
-									<input type="submit" class="btn btn-default btn-sm" value="{tr}OK{/tr}">
-								{elseif $group_management_mode eq 'y'}
-									<select name="group_management">
-										<option value="add">{tr}Assign selected to{/tr}</option>
-										<option value="remove">{tr}Remove selected from{/tr}</option>
-									</select></label>
-									<label>{tr}the following groups:{/tr}
+									<input type="submit" class="btn btn-default btn-sm submit_mult" value="{tr}OK{/tr}">
+									<button id="enable" type="button" style="display: none" class="btn btn-default btn-sm">{tr}Re-enable action choices{/tr}</button>
+								</div>
+							</p>
+							<div id="gm" style="display:none">
+								<select class="gm" name="group_management" disabled="disabled">
+									<option value="add">{tr}Assign selected to{/tr}</option>
+									<option value="remove">{tr}Remove selected from{/tr}</option>
+								</select></label>
+								<label>{tr}the following groups:{/tr}</label>
 									<br>
 									<select name="checked_groups[]" multiple="multiple" size="20">
 										{section name=ix loop=$all_groups}
 											{if $all_groups[ix] != 'Anonymous' && $all_groups[ix] != 'Registered'}
-											<option value="{$all_groups[ix]|escape}">{$all_groups[ix]|escape}</option>
+												<option value="{$all_groups[ix]|escape}">{$all_groups[ix]|escape}</option>
 											{/if}
 										{/section}
-									</select></label>
+									</select>
+								<br>
+								<input type="submit" class="btn btn-default gm" disabled="disabled" value="{tr}OK{/tr}">
+								{if $prefs.jquery_ui_chosen neq 'y'}{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Use Ctrl+Click to select multiple options{/tr}{/remarksbox}{/if}
+							</div>
+							<div id="dg" style="display:none">
+								<label>{tr}Set the default group of the selected users to:{/tr}
 									<br>
-									<input type="submit" class="btn btn-default btn-sm" value="{tr}OK{/tr}">
-									{if $prefs.jquery_ui_chosen neq 'y'}{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Use Ctrl+Click to select multiple options{/tr}{/remarksbox}{/if}
-								{elseif $set_default_groups_mode eq 'y'}
-									<label>{tr}Set the default group of the selected users to:{/tr}
-									<br>
-									<select name="checked_group" size="20">
+									<select class="dg" name="checked_group" disabled="disabled" size="20">
 										{section name=ix loop=$all_groups}
 											{if $all_groups[ix] != 'Anonymous'}
-											<option value="{$all_groups[ix]|escape}">{$all_groups[ix]|escape}</option>
+												<option value="{$all_groups[ix]|escape}">{$all_groups[ix]|escape}</option>
 											{/if}
 										{/section}
 									</select></label>
-									<br>
-									<input type="submit" class="btn btn-default btn-sm" value="{tr}OK{/tr}">
-									<input type="hidden" name="set_default_groups" value="{$set_default_groups_mode}">
-								{elseif $email_mode eq 'y'}
-									<label>{tr}Template wiki page{/tr}
-									<input type="text" name="wikiTpl"></label>
-									<br>
-									<label>{tr}bcc{/tr}
-									<input type="text" name="bcc"></label>
-									<input type="submit" class="btn btn-default btn-sm" value="{tr}OK{/tr}">
-									<input type="hidden" name="emailChecked" value="{$email_mode}">
-								{/if}
-							</p>
+								<br>
+								<input type="submit" disabled="disabled" class="btn btn-default btn-sm dg" value="{tr}OK{/tr}">
+								<input type="hidden" class="dg" disabled="disabled" name="set_default_groups" value="y">
+							</div>
+							<div id="emc" style="display:none">
+								<table>
+									<tr>
+										<td><label>{tr}Template wiki page{/tr}</label></td>
+										<td>
+											<input class="emc" type="text" disabled="disabled" name="wikiTpl">
+											<span class="tikihelp" title="{tr}Template wiki page:
+												The wiki page must have a page description, which is used as the subject of the email.
+												Enable the page descriptions feature at Admin Home > Wiki.{/tr}" style="">
+												<img src="img/icons/information.png" alt="" width="16" height="16" class="icon">
+											</span>
+										</td>
+									</tr>
+									<tr>
+										<td><label>{tr}Bcc{/tr}</label></td>
+										<td>
+											<input class="emc" disabled="disabled" type="text" name="bcc">
+											<span class="tikihelp" title="{tr}Bcc: Enter a valid email to send a blind copy to (optional).{/tr}" style="">
+												<img src="img/icons/information.png" alt="" width="16" height="16" class="icon">
+											</span>
+										</td>
+									</tr>
+									<tr>
+										<td colspan="2">
+											<input class="emc" type="submit" disabled="disabled" style="display: block;margin-left:auto;margin-right: auto" class="btn btn-default" value="{tr}OK{/tr}">
+										</td>
+									</tr>
+								</table>
+								<br>
+
+								<input class="emc" disabled="disabled" type="hidden" name="emailChecked" value="y">
+							</div>
+							<div id="bottom"></div>
+{jq}
+	$('select.submit_mult').change(function() {
+		if ($.inArray(this.value, ['assign_groups', 'set_default_groups', 'emailChecked']) > -1) {
+			$('.submit_mult').prop('disabled', true);
+			$('div#submit_mult label').css('opacity', 0.5);
+			$('button#enable').css('display', 'inline');
+			if (this.value == 'assign_groups') {
+				$('div#gm').css('display', 'block');
+				$('.gm').prop('disabled', false);
+			} else if (this.value == 'set_default_groups') {
+				$('div#dg').css('display', 'block');
+				$('.dg').prop('disabled', false);
+			} else if (this.value == 'emailChecked') {
+				$('div#emc').css('display', 'block');
+				$('input.emc').prop('disabled', false);
+			}
+		}
+	});
+
+	$('button#enable').click(function() {
+		$('div#gm, div#dg, div#emc').css('display', 'none');
+		$('.gm, dg, .emc').prop('disabled', 'disabled');
+		$('.submit_mult').prop('disabled', false);
+		$('select.submit_mult option:first').attr('selected','selected');
+		$('div#submit_mult label').css('opacity', 1);
+		$('button#enable').css('display', 'none');
+	});
+{/jq}
 						{/if}
 					</td>
 				</tr>
