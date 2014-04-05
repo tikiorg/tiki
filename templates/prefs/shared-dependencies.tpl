@@ -4,9 +4,9 @@
 		{if $dep.met}
 			{icon _id="accept" class="pref_dependency tips" title="{tr}Requires:{/tr} "|cat:$dep.label|escape|cat:" (OK)"}
 		{elseif $dep.type eq 'profile'}
-			<div class="pref_dependency highlight">{tr}You need apply profile{/tr} <a href="{$dep.link|escape}">{$dep.label|escape}</a></div>
+			<div class="alert alert-warning pref_dependency highlight">{tr}You need apply profile{/tr} <a href="{$dep.link|escape}" class="alert-link">{$dep.label|escape}</a></div>
 		{else}
-			<div class="pref_dependency highlight">{tr}You need to set{/tr} <a href="{$dep.link|escape}">{$dep.label|escape}</a></div>
+			<div class="alert alert-warning pref_dependency highlight">{tr}You need to set{/tr} <a href="{$dep.link|escape}" class="alert-link">{$dep.label|escape}</a></div>
 		{/if}
 	{/foreach}
 {/if}
