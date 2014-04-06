@@ -45,24 +45,23 @@ class Table_Code_Pager extends Table_Code_Manager
 			$p[] = $pre . 'ajaxUrl : \'' . parent::$s['ajax']['url'] . '\'';
 			$p[] = $pre . 'savePages: false';
 
-				//ajax processing - this part grabs the html, usually from the smarty template file
+			//ajax processing - this part grabs the html, usually from the smarty template file
 			$ap = array(
 				//set variables. parse data into array. data is the html that smarty returns for the entire page
 				//returning object r allows custom variables to be available elsewhere in tablesorter under
 				//table.config.pager.ajaxData
 				//variables tablesorter uses: rows, total and headers; all others are custom
 				'var parsedpage = $.parseHTML(data), r = {}, p = table.config.pager;',
-				//extract needed data from html returned by smarty template file
-				'r.rows = $(parsedpage).find(\'' . parent::$tid . ' tbody\').children();',
+				//extract table body rows from html returned by smarty template file
+				'r.rows = $(parsedpage).find(\'' . parent::$tid . ' tbody tr\');',
 				'r.total = \'' . parent::$s['total'] . '\';',
 				'if (r.rows.length > 0) {',
-				'	$(p.$size.selector).prop(\'aria-disabled\', false);',
+					//fetch number of filtered rows and offset embedded in HTML with hidden input fields added to tpl file
 				'	r.filtered = parseInt($(parsedpage).find(\'#' . parent::$s['ajax']['servercount']['id'] . '\').val());',
 				'	r.offset = parseInt($(parsedpage).find(\'#' . parent::$s['ajax']['serveroffset']['id'] . '\').val());',
-					//set other variables
+					//set pager text
 				'	r.fp = Math.ceil( r.filtered / p.size );',
 				'	r.end = r.offset + $(r.rows).length;',
-					//set pager text
 				'	if (r.filtered == 0) {r.start = tr(\'No records found\')}',
 				'	if (r.filtered == 1) {r.start = tr(\'Showing 1 of 1\')}',
 				'	if (r.filtered > 1) {r.start = tr(\'Showing \') + (r.offset + 1) + \' \' + tr(\'to\') + \' \'
