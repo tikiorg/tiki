@@ -276,20 +276,20 @@
 											<option value="" selected="selected">-</option>
 											<option value="remove_users" >{tr}Remove{/tr}</option>
 											{if $prefs.feature_wiki_userpage == 'y'}
-												<option value="remove_users_with_page">{tr}Remove Users and their Userpages{/tr}</option>
+												<option value="remove_users_with_page">{tr}Remove users and their userpages{/tr}</option>
 											{/if}
-											<option value="assign_groups" >{tr}Manage Group Assignments{/tr}</option>
-											<option value="set_default_groups">{tr}Set Default Groups{/tr}</option>
+											<option value="assign_groups" >{tr}Change group assignments{/tr}</option>
+											<option value="set_default_groups">{tr}Set default groups{/tr}</option>
 											{if $prefs.feature_wiki == 'y'}
-												<option value="emailChecked">{tr}Send a wiki page by Email{/tr}</option>
+												<option value="emailChecked">{tr}Send wiki page content by email{/tr}</option>
 											{/if}
 										</select>
 									</label>
-									<input type="submit" class="btn btn-default btn-sm submit_mult" value="{tr}OK{/tr}">
-									<button id="enable" type="button" style="display: none" class="btn btn-default btn-sm">{tr}Re-enable action choices{/tr}</button>
+									<button type="submit" style="display: none" class="btn btn-default submit_mult">{tr}OK{/tr}</button>
 								</div>
 							</p>
 							<div id="gm" style="display:none">
+								<h4>{tr}Change group assignments for selected users{/tr}</h4>
 								<select class="gm" name="group_management" disabled="disabled">
 									<option value="add">{tr}Assign selected to{/tr}</option>
 									<option value="remove">{tr}Remove selected from{/tr}</option>
@@ -304,10 +304,12 @@
 										{/section}
 									</select>
 								<br>
-								<input type="submit" class="btn btn-default gm" disabled="disabled" value="{tr}OK{/tr}">
+								<button type="submit" class="btn btn-default gm" disabled="disabled">{tr}OK{/tr}</button>
+								<button id="cancel-choice" type="button" style="display: none" class="btn btn-default">{tr}Cancel{/tr}</button>
 								{if $prefs.jquery_ui_chosen neq 'y'}{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Use Ctrl+Click to select multiple options{/tr}{/remarksbox}{/if}
 							</div>
 							<div id="dg" style="display:none">
+								<h4>{tr}Set default groups for selected users{/tr}</h4>
 								<label>{tr}Set the default group of the selected users to:{/tr}
 									<br>
 									<select class="dg" name="checked_group" disabled="disabled" size="20">
@@ -318,13 +320,15 @@
 										{/section}
 									</select></label>
 								<br>
-								<input type="submit" disabled="disabled" class="btn btn-default btn-sm dg" value="{tr}OK{/tr}">
+								<button type="submit" class="dg" disabled="disabled" class="btn btn-default">{tr}OK{/tr}</button>
+								<button id="cancel-choice" type="button" style="display: none" class="btn btn-default">{tr}Cancel{/tr}</button>
 								<input type="hidden" class="dg" disabled="disabled" name="set_default_groups" value="y">
 							</div>
 							<div id="emc" style="display:none">
+								<h4>{tr}Send wiki page content by email to selected users{/tr}</h4>
 								<table>
 									<tr>
-										<td><label>{tr}Template wiki page{/tr}</label></td>
+										<td><label>{tr}Wiki page to use for email content{/tr}</label></td>
 										<td>
 											<input class="emc" type="text" disabled="disabled" name="wikiTpl">
 											<span class="tikihelp" title="{tr}Template wiki page:
@@ -344,22 +348,20 @@
 										</td>
 									</tr>
 									<tr>
-										<td colspan="2">
-											<input class="emc" type="submit" disabled="disabled" style="display: block;margin-left:auto;margin-right: auto" class="btn btn-default" value="{tr}OK{/tr}">
+										<td colspan="2" style="display: block;margin-left:auto;margin-right: auto">
+											<button class="emc" type="submit" disabled="disabled" class="btn btn-default">{tr}OK{/tr}</button>
+											<button id="cancel-choice" type="button" style="display: none" class="btn btn-default">{tr}Cancel{/tr}</button>
+											<input class="emc" disabled="disabled" type="hidden" name="emailChecked" value="y">
 										</td>
 									</tr>
 								</table>
-								<br>
-
-								<input class="emc" disabled="disabled" type="hidden" name="emailChecked" value="y">
 							</div>
-							<div id="bottom"></div>
 {jq}
 	$('select.submit_mult').change(function() {
 		if ($.inArray(this.value, ['assign_groups', 'set_default_groups', 'emailChecked']) > -1) {
-			$('.submit_mult').prop('disabled', true);
-			$('div#submit_mult label').css('opacity', 0.5);
-			$('button#enable').css('display', 'inline');
+			$('div#submit_mult').css('display', 'none');
+			$('.submit_mult').prop('disabled', 'disabled');
+			$('button#cancel-choice').css('display', 'inline');
 			if (this.value == 'assign_groups') {
 				$('div#gm').css('display', 'block');
 				$('.gm').prop('disabled', false);
@@ -368,18 +370,20 @@
 				$('.dg').prop('disabled', false);
 			} else if (this.value == 'emailChecked') {
 				$('div#emc').css('display', 'block');
-				$('input.emc').prop('disabled', false);
+				$('.emc').prop('disabled', false);
 			}
+		} else if ($.inArray(this.value, ['remove_users', 'remove_users_with_page']) > -1) {
+			$('button.submit_mult').css('display', 'inline');
 		}
 	});
 
-	$('button#enable').click(function() {
+	$('button#cancel-choice').click(function() {
 		$('div#gm, div#dg, div#emc').css('display', 'none');
 		$('.gm, dg, .emc').prop('disabled', 'disabled');
 		$('.submit_mult').prop('disabled', false);
 		$('select.submit_mult option:first').attr('selected','selected');
-		$('div#submit_mult label').css('opacity', 1);
-		$('button#enable').css('display', 'none');
+		$('div#submit_mult').css('display', 'block');
+		$('button#cancel-choice').css('display', 'none');
 	});
 {/jq}
 						{/if}
