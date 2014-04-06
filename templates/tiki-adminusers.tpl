@@ -318,7 +318,7 @@
 										{/section}
 									</select></label>
 								<br>
-								<button type="submit" class="dg" disabled="disabled" class="btn btn-default">{tr}OK{/tr}</button>
+								<button type="submit" disabled="disabled" class="btn btn-default btn-sm dg">{tr}OK{/tr}</button>
 								<button type="button" style="display: none" class="btn btn-default cancel-choice">{tr}Cancel{/tr}</button>
 								<input type="hidden" class="dg" disabled="disabled" name="set_default_groups" value="y">
 							</div>
@@ -347,7 +347,7 @@
 									</tr>
 									<tr>
 										<td colspan="2" style="display: block;margin-left:auto;margin-right: auto">
-											<button class="emc" type="submit" disabled="disabled" class="btn btn-default">{tr}OK{/tr}</button>
+											<button type="submit" disabled="disabled" class="btn btn-default btn-sm emc">{tr}OK{/tr}</button>
 											<button type="button" style="display: none" class="btn btn-default cancel-choice">{tr}Cancel{/tr}</button>
 											<input class="emc" disabled="disabled" type="hidden" name="emailChecked" value="y">
 										</td>
