@@ -105,6 +105,10 @@ class KalturaLib
 		return $config->serviceUrl . "kwidget/wid/_{$prefs['kaltura_partnerId']}/uiconf_id/$playerId/entry_id/$entryId";
 	}
 
+	function getPlaylist($entryId) {
+		return $this->getClient()->playlist->get($entryId);
+	}
+
 	function testSetup() {
 		global $prefs;
 		if (empty($prefs['kaltura_partnerId']) || !is_numeric($prefs['kaltura_partnerId']) || empty($prefs['kaltura_secret']) || empty($prefs['kaltura_adminSecret'])) {
