@@ -698,7 +698,7 @@
 					{/if}
 					<input type="hidden" name="install_type" value="{$install_type}">
 					<input type="hidden" name="install_step" value="8">
-					<input type="submit" value="{tr}Enter Tiki and Lock Installer{/tr} ({tr}Recommended{/tr})">
+					<input type="submit" value="{tr}Enter Tiki and Lock Installer{/tr} ({tr}Recommended{/tr})" class="btn btn-primary">
 				</form>
 				<form method="post" action="tiki-install.php" style="margin-left: 20px; display: inline-block;">
 					<input type="hidden" name="nolockenter" value="1">
@@ -707,7 +707,7 @@
 					{/if}
 					<input type="hidden" name="install_type" value="{$install_type}">
 					<input type="hidden" name="install_step" value="8">
-					<input type="submit" value="{tr}Enter Tiki Without Locking Installer{/tr}" style="background: #909090;">
+					<input type="submit" value="{tr}Enter Tiki Without Locking Installer{/tr}" class="btn btn-default">
 					<br><em><img src="img/icons/error.png" alt="{tr}Alert{/tr}" style="vertical-align:middle; "> {tr}Not recommended due to security risk{/tr}.</em>
 				</form>
 			{/if}
@@ -777,31 +777,32 @@
 			<div class="box-shadow">
 				<div class="box">
 					<h3 class="box-title">{tr}MultiTiki Setup{/tr} <a title="{tr}Help{/tr}" href="http://doc.tiki.org/MultiTiki" target="help"><img style="border:0" src="img/icons/help.png" alt="{tr}Help{/tr}"></a></h3>
-					{if !empty({$multi})}
-						<div><a href="#" onclick="$('#multi').submit();return false;">{tr}Default Installation{/tr}</a></div>
-						<form method="post" action="tiki-install.php" id="multi">
-							<input type="hidden" name="install_step" value="0">
-							<input type="hidden" name="multi" value="">
-						</form>
-					{/if}
-							{foreach key=k item=i from=$virt}
-								<div>
-									<tt>{if $i eq 'y'}<strong style="color:#00CC00">{tr}DB OK{/tr}</strong>{else}<strong style="color:#CC0000">{tr}No DB{/tr}</strong>{/if}</tt>
-									{if $k eq $multi}
-										<strong>{$k}</strong>
-									{else}
-										<a href="#" onclick="$('#virt{$i@index}').submit();return false;" class="linkmodule">{$k}</a>
-										<form method="post" action="tiki-install.php" id="virt{$i@index}">
-											<input type="hidden" name="multi" value="{$k}">
-											<input type="hidden" name="install_step" value="0">
-										</form>
-									{/if}
-								</div>
-							{/foreach}
-							<br>
-							<div><strong>{tr}Adding a new host:{/tr}</strong></div>
-							{tr}To add a new virtual host run the setup.sh with the domain name of the new host as a last parameter.{/tr}
-							{if $multi} <h2> ({tr}MultiTiki{/tr})</h2> <h5>{$multi|default:"{tr}Default{/tr}"} </h5> {/if}
+					<div class="clearfix box-data">
+						{if !empty({$multi})}
+							<div><a href="#" onclick="$('#multi').submit();return false;">{tr}Default Installation{/tr}</a></div>
+							<form method="post" action="tiki-install.php" id="multi">
+								<input type="hidden" name="install_step" value="0">
+								<input type="hidden" name="multi" value="">
+							</form>
+						{/if}
+						{foreach key=k item=i from=$virt}
+							<div>
+								<tt>{if $i eq 'y'}<strong style="color:#00CC00">{tr}DB OK{/tr}</strong>{else}<strong style="color:#CC0000">{tr}No DB{/tr}</strong>{/if}</tt>
+								{if $k eq $multi}
+									<strong>{$k}</strong>
+								{else}
+									<a href="#" onclick="$('#virt{$i@index}').submit();return false;" class="linkmodule">{$k}</a>
+									<form method="post" action="tiki-install.php" id="virt{$i@index}">
+										<input type="hidden" name="multi" value="{$k}">
+										<input type="hidden" name="install_step" value="0">
+									</form>
+								{/if}
+							</div>
+						{/foreach}
+						<br>
+						<div><strong>{tr}Adding a new host:{/tr}</strong></div>
+						{tr}To add a new virtual host run the setup.sh with the domain name of the new host as a last parameter.{/tr}
+						{if $multi} <h3> ({tr}MultiTiki{/tr})</h3> <h5>{$multi|default:"{tr}Default{/tr}"} </h5> {/if}
 					</div>
 				</div>
 			</div>
