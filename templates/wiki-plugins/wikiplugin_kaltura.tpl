@@ -3,6 +3,10 @@
 	<param name="allowNetworking" value="all">
 	<param name="allowFullScreen" value="true">
 	<param name="movie" value="{$kaltura.media_url|escape}">
-	<param name="flashVars" value="entry_id={$kaltura.id|escape:'url'}&amp;ks={$kaltura.session|escape:'url'}">
+	{if $kaltura.playlistAPI}
+		<param name="flashVars" value="{$kaltura.playlistAPI}">
+	{else}
+		<param name="flashVars" value="entry_id={$kaltura.id|escape:'url'}&amp;ks={$kaltura.session|escape:'url'}">
+	{/if}
 	<param name="wmode" value="opaque">
 </object>

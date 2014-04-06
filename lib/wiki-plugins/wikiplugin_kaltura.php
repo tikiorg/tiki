@@ -211,8 +211,12 @@ REG
 	$params['session'] = $kalturalib->getSessionKey();
 	$params['media_url'] = $kalturalib->getMediaUrl($params['id'], $params['player_id']);
 
-	$smarty = TikiLib::lib('smarty');
-	$smarty->assign('kaltura', $params);
+	try {
+		$playlistObject = $kalturalib->getPlaylist($params['id']);
+	} catch (Exception $e) {
+		$playlistObject = null;
+	}
+
 	$style = '';
 	if (!empty($params['align'])) {
 		$style .= "text-align:{$params['align']};";
@@ -224,6 +228,14 @@ REG
 		$embedIframeJs = '/embedIframeJs';	// TODO add as params?
 		$leadWithHTML5 = 'true';
 		$autoPlay = 'false';
+
+		if ($playlistObject) {
+			parse_str(str_replace(array('k_pl_0_u', 'k_pl_0_n'), array('kpl0U', 'kpl0N'), $playlistObject->executeUrl), $playlistAPI);
+			$playlistAPI['kpl0Id'] = $params['id'];
+			$playlistAPI = '"playlistAPI": ' . json_encode($playlistAPI);
+		} else {
+			$playlistAPI = '';
+		}
 
 		TikiLib::lib('header')
 			->add_jsfile("{$prefs['kaltura_kServiceUrl']}/p/{$prefs['kaltura_partnerId']}/sp/{$prefs['kaltura_partnerId']}00{$embedIframeJs}/uiconf_id/{$params['player_id']}/partner_id/{$prefs['kaltura_partnerId']}")
@@ -238,6 +250,7 @@ kWidget.embed({
 	entry_id: '{$params['id']}',
 	flashvars: { // flashvars allows you to set runtime uiVar configuration overrides.
 		//autoPlay: $autoPlay
+		$playlistAPI
 	},
 	params: { // params allows you to set flash embed params such as wmode, allowFullScreen etc
 		wmode: 'transparent'
@@ -251,6 +264,15 @@ kWidget.embed({
 		return "<div id='kaltura_player$instance' style='width:{$params['width']}px;height:{$params['height']}px;$style'></div>";
 
 	} elseif ($params['type'] === 'kdp') {
+
+		if ($playlistObject) {
+			$params['playlistAPI'] = '&' . str_replace(array('k_pl_0_u', 'k_pl_0_n'), array('playlistAPI.kpl0U', 'playlistAPI.kpl0N'), $playlistObject->executeUrl);
+		} else {
+			$params['playlistAPI'] = '';
+		}
+
+		$smarty = TikiLib::lib('smarty');
+		$smarty->assign('kaltura', $params);
 		$code = $smarty->fetch('wiki-plugins/wikiplugin_kaltura.tpl');
 		if (!empty($style)) {
 			$code = "<div style='$style'>$code</div>";
