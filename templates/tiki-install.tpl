@@ -244,11 +244,11 @@
 						{if $multi}<input type="hidden" name="multi" value="{$multi}">{/if}
 						{if $lang}<input type="hidden" name="lang" value="{$lang}">{/if}
 						<input type="submit" class="btn btn-primary" value=" {tr}Use Existing Connection{/tr} ">
-					</form>	
+					</form>
 					<hr>
 					<a href="#" onclick="$('#installer_3_new_db_form').toggle();return false;" class="btn btn-link">{tr}Modify database connection{/tr}</a>
 				</div>
-			{/if}		
+			{/if}
 			{if $tikifeedback}
 				<br>
 				{section name=n loop=$tikifeedback}
@@ -265,7 +265,7 @@
 				<p>{tr}Use this page to create a new database connection, or use the <a href="http://doc.tiki.org/Manual+Installation" target="_blank" title="manual installation">manual installation process</a>.{/tr} <a href="http://doc.tiki.org/Manual+Installation" target="_blank" title="{tr}Help{/tr}"><img src="img/icons/help.png" alt="{tr}Help{/tr}"></a></p>
 				<form action="tiki-install.php" method="post" role="form">
 					<input type="hidden" name="install_step" value="4">
-					{if $multi}	
+					{if $multi}
 						<input type="hidden" name="multi" value="{$multi}">
 					{/if}
 					{if $lang}
@@ -275,7 +275,7 @@
 						<legend>{tr}Database information{/tr}</legend>
 						<p>{tr}Enter your database connection information.{/tr}</p>
 						<div class="form-group">
-							<label for="db">{tr}Database type:{/tr}</label> 
+							<label for="db">{tr}Database type:{/tr}</label>
 							<div style="margin-left:1em">
 							<select name="db" id="db">
 								{foreach key=dsn item=dbname from=$dbservers}
@@ -313,7 +313,7 @@
 									<a href="javascript:void(0)" onclick="flip('name_help');" title="{tr}Help{/tr}">
 										<img src="img/icons/help.png" alt="{tr}Help{/tr}">
 									</a>
-								<br><em>{tr}Enter the name of the database that Tiki will use (if already created) or create (if permitted).{/tr}</em> 
+								<br><em>{tr}Enter the name of the database that Tiki will use (if already created) or create (if permitted).{/tr}</em>
 								<div style="margin-left:1em;display:none;" id="name_help">
 									<p>{tr}You can create the database using Adminer, phpMyAdmin, cPanel, or ask your hosting provider. If the database doesn't exist and the supplied username has permissions, the database will be created.{/tr}</p>
 									<p>{tr}If you are using a database which is already being used for something else (not recommended), check db/tiki.sql to make sure the table names used by Tiki are not already used.{/tr}</p>
@@ -329,7 +329,7 @@
 							<label for="user">{tr}User name:{/tr}</label> <input type="text" id="user" name="user" value="{if (isset($smarty.request.user))}{$smarty.request.user|escape:"html"}{elseif isset($preconfiguser)}{$preconfiguser|escape:"html"}{/if}">
 						</div>
 						<div style="padding:5px;">
-							{if isset($preconfigpass)} 
+							{if isset($preconfigpass)}
 								<label for="pass">{tr}Password:{/tr}</label> <input type="text" id="pass" name="pass" value="{$preconfigpass|escape:"html"}" >
 							{else}
 								<label for="pass">{tr}Password:{/tr}</label> <input type="password" id="pass" name="pass" >
@@ -468,10 +468,10 @@
 		<div class="install-step5">
 			<h1>{if isset($smarty.post.update)}{tr}Review the Upgrade{/tr}{else}{tr}Review the Installation{/tr}{/if}</h1>
 			{remarksbox type=confirm title="{if isset($smarty.post.update)}{tr}Upgrade complete{/tr}{else}{tr}Installation complete{/tr}{/if}" close="n"}
-				<p>{tr}Your database has been configured and Tiki is ready to run!{/tr} 
+				<p>{tr}Your database has been configured and Tiki is ready to run!{/tr}
 					{if isset($smarty.post.scratch)}
 						{tr}If this is your first install, your admin password is <strong>admin</strong>.{/tr}
-					{/if} 
+					{/if}
 					{tr}You can now log in into Tiki as user <strong>admin</strong> and start configuring the application.{/tr}
 				</p>
 			{/remarksbox}
@@ -525,7 +525,7 @@
 
 		{if isset($htaccess_error) and $htaccess_error eq 'y'}
 		<h3>{tr}.htaccess File{/tr} <a title="{tr}Help{/tr}" href="http://doc.tiki.org/Installation" target="help"><img style="border:none" src='img/icons/help.png' alt="{tr}Help{/tr}"></a></h3>
-		{tr}We recommend enabling the <strong>.htaccess</strong> file for your Tiki{/tr}. {tr}This will enable you to use SEFURLs (search engine friendly URLs) and help improve site security{/tr}. 
+		{tr}We recommend enabling the <strong>.htaccess</strong> file for your Tiki{/tr}. {tr}This will enable you to use SEFURLs (search engine friendly URLs) and help improve site security{/tr}.
 		<p>{tr _0="<strong>_htaccess</strong>" _1="<strong>.htaccess</strong>"}To enable this file, simply copy the %0 file (located in the main directory of your Tiki installation) to %1.{/tr}</p>
 		{/if}
 
@@ -596,7 +596,7 @@
 			<fieldset>
 				<legend>{tr}Logging and Reporting{/tr}</legend>
 				<div class="adminoptionbox">
-					<label for="general-error">{tr}PHP error reporting level:{/tr}</label> 
+					<label for="general-error">{tr}PHP error reporting level:{/tr}</label>
 					<select name="error_reporting_level" id="general-error">
 						<option value="0" {if $prefs.error_reporting_level eq 0}selected="selected"{/if}>{tr}No error reporting{/tr}</option>
 						<option value="2047" {if $prefs.error_reporting_level eq 2047}selected="selected"{/if}>{tr}Report all PHP errors except strict{/tr}</option>
@@ -613,7 +613,7 @@
 							<label for="smarty_notice_reporting">{tr}Include Smarty notices{/tr}</label>.
 							<input type="checkbox" id="smarty_notice_reporting" name="smarty_notice_reporting"{if $prefs.smarty_notice_reporting eq 'y'} checked="checked"{/if}>
 						</div>
-						<div style="padding:5px;clear:both">	  
+						<div style="padding:5px;clear:both">
 							<label for="log_tpl">{tr}Add HTML comment at start and end of each Smarty template (TPL){/tr}.</label>
 							<input type="checkbox" id="log_tpl" name="log_tpl"{if $prefs.log_tpl eq 'y'} checked="checked"{/if}>
 							<br><em><img src="img/icons/error.png" alt="{tr}Alert{/tr}" style="vertical-align:middle"> {tr}Use only for development, not in production because these warnings are added to emails as well, and visible to the users{/tr}.</em>
@@ -666,7 +666,7 @@
 			</div>
 			</form>
 		</div><!-- End of install-step6 -->
-		
+
 		{elseif $install_step eq '7'}
 		<div class="install-step7">
 			<h1 class="pagetitle">{tr}Enter Your Tiki{/tr}</h1>
@@ -679,8 +679,8 @@
 			{/remarksbox}
 			<p>
 			{if isset($smarty.post.scratch)}
-				{tr}If this is your first install, your admin password is <strong>admin</strong>.{/tr} 
-			{/if} 
+				{tr}If this is your first install, your admin password is <strong>admin</strong>.{/tr}
+			{/if}
 			{tr}You can now log in into Tiki as user <strong>admin</strong> and start configuring the application.{/tr}
 			</p>
 			{if isset($smarty.post.scratch)}
@@ -777,15 +777,24 @@
 			<div class="box-shadow">
 				<div class="box">
 					<h3 class="box-title">{tr}MultiTiki Setup{/tr} <a title="{tr}Help{/tr}" href="http://doc.tiki.org/MultiTiki" target="help"><img style="border:0" src="img/icons/help.png" alt="{tr}Help{/tr}"></a></h3>
-					<div class="clearfix box-data">
-						<div><a href="tiki-install.php">{tr}Default Installation{/tr}</a></div>
+					{if !empty({$multi})}
+						<div><a href="#" onclick="$('#multi').submit();return false;">{tr}Default Installation{/tr}</a></div>
+						<form method="post" action="tiki-install.php" id="multi">
+							<input type="hidden" name="install_step" value="0">
+							<input type="hidden" name="multi" value="">
+						</form>
+					{/if}
 							{foreach key=k item=i from=$virt}
 								<div>
 									<tt>{if $i eq 'y'}<strong style="color:#00CC00">{tr}DB OK{/tr}</strong>{else}<strong style="color:#CC0000">{tr}No DB{/tr}</strong>{/if}</tt>
 									{if $k eq $multi}
 										<strong>{$k}</strong>
 									{else}
-										<a href="tiki-install.php?multi={$k}" class="linkmodule">{$k}</a>
+										<a href="#" onclick="$('#virt{$i@index}').submit();return false;" class="linkmodule">{$k}</a>
+										<form method="post" action="tiki-install.php" id="virt{$i@index}">
+											<input type="hidden" name="multi" value="{$k}">
+											<input type="hidden" name="install_step" value="0">
+										</form>
 									{/if}
 								</div>
 							{/foreach}
@@ -793,7 +802,6 @@
 							<div><strong>{tr}Adding a new host:{/tr}</strong></div>
 							{tr}To add a new virtual host run the setup.sh with the domain name of the new host as a last parameter.{/tr}
 							{if $multi} <h2> ({tr}MultiTiki{/tr})</h2> <h5>{$multi|default:"{tr}Default{/tr}"} </h5> {/if}
-						</div>
 					</div>
 				</div>
 			</div>
