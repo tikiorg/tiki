@@ -303,7 +303,7 @@
 									</select>
 								<br>
 								<button type="submit" class="btn btn-default gm" disabled="disabled">{tr}OK{/tr}</button>
-								<button id="cancel-choice" type="button" style="display: none" class="btn btn-default">{tr}Cancel{/tr}</button>
+								<button type="button" style="display: none" class="btn btn-default cancel-choice">{tr}Cancel{/tr}</button>
 								{if $prefs.jquery_ui_chosen neq 'y'}{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Use Ctrl+Click to select multiple options{/tr}{/remarksbox}{/if}
 							</div>
 							<div id="dg" style="display:none">
@@ -319,7 +319,7 @@
 									</select></label>
 								<br>
 								<button type="submit" class="dg" disabled="disabled" class="btn btn-default">{tr}OK{/tr}</button>
-								<button id="cancel-choice" type="button" style="display: none" class="btn btn-default">{tr}Cancel{/tr}</button>
+								<button type="button" style="display: none" class="btn btn-default cancel-choice">{tr}Cancel{/tr}</button>
 								<input type="hidden" class="dg" disabled="disabled" name="set_default_groups" value="y">
 							</div>
 							<div id="emc" style="display:none">
@@ -348,7 +348,7 @@
 									<tr>
 										<td colspan="2" style="display: block;margin-left:auto;margin-right: auto">
 											<button class="emc" type="submit" disabled="disabled" class="btn btn-default">{tr}OK{/tr}</button>
-											<button id="cancel-choice" type="button" style="display: none" class="btn btn-default">{tr}Cancel{/tr}</button>
+											<button type="button" style="display: none" class="btn btn-default cancel-choice">{tr}Cancel{/tr}</button>
 											<input class="emc" disabled="disabled" type="hidden" name="emailChecked" value="y">
 										</td>
 									</tr>
@@ -357,31 +357,31 @@
 {jq}
 	$('select.submit_mult').change(function() {
 		if ($.inArray(this.value, ['assign_groups', 'set_default_groups', 'emailChecked']) > -1) {
-			$('div#submit_mult').css('display', 'none');
-			$('.submit_mult').prop('disabled', 'disabled');
-			$('button#cancel-choice').css('display', 'inline');
+			$('div#submit_mult').hide();
+			$('.submit_mult').prop('disabled', true).trigger("chosen:updated");
+			$('button.cancel-choice').show();
 			if (this.value == 'assign_groups') {
-				$('div#gm').css('display', 'block');
-				$('.gm').prop('disabled', false);
+				$('div#gm').show();
+				$('.gm').prop('disabled', false).trigger("chosen:updated");
 			} else if (this.value == 'set_default_groups') {
-				$('div#dg').css('display', 'block');
-				$('.dg').prop('disabled', false);
+				$('div#dg').show();
+				$('.dg').prop('disabled', false).trigger("chosen:updated");
 			} else if (this.value == 'emailChecked') {
-				$('div#emc').css('display', 'block');
-				$('.emc').prop('disabled', false);
+				$('div#emc').show();
+				$('.emc').prop('disabled', false).trigger("chosen:updated");
 			}
 		} else if ($.inArray(this.value, ['remove_users', 'remove_users_with_page']) > -1) {
-			$('button.submit_mult').css('display', 'inline');
+			$('button.submit_mult').show();
 		}
 	});
 
-	$('button#cancel-choice').click(function() {
-		$('div#gm, div#dg, div#emc').css('display', 'none');
-		$('.gm, dg, .emc').prop('disabled', 'disabled');
-		$('.submit_mult').prop('disabled', false);
-		$('select.submit_mult option:first').attr('selected','selected');
-		$('div#submit_mult').css('display', 'block');
-		$('button#cancel-choice').css('display', 'none');
+	$('button.cancel-choice').click(function() {
+		$('div#gm, div#dg, div#emc').hide();
+		$('.gm, dg, .emc').prop('disabled', true).trigger("chosen:updated");
+		$('.submit_mult').prop('disabled', false).trigger("chosen:updated");
+		$('select.submit_mult').val('').trigger("chosen:updated");
+		$('div#submit_mult').show();
+		$('button.cancel-choice').hide();
 	});
 {/jq}
 						{/if}
