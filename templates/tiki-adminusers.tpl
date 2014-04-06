@@ -285,7 +285,7 @@
 											{/if}
 										</select>
 									</label>
-									<button type="submit" style="display: none" class="btn btn-default submit_mult">{tr}OK{/tr}</button>
+									<button type="submit" style="display: none" class="btn btn-default btn-sm submit_mult">{tr}OK{/tr}</button>
 								</div>
 							</p>
 							<div id="gm" style="display:none">
@@ -304,8 +304,8 @@
 										{/section}
 									</select>
 								<br>
-								<button type="submit" class="btn btn-default gm" disabled="disabled">{tr}OK{/tr}</button>
-								<button id="cancel-choice" type="button" style="display: none" class="btn btn-default">{tr}Cancel{/tr}</button>
+								<button type="submit" class="btn btn-default btn-sm gm" disabled="disabled">{tr}OK{/tr}</button>
+								<button id="cancel-choice" type="button" style="display: none" class="btn btn-default btn-sm">{tr}Cancel{/tr}</button>
 								{if $prefs.jquery_ui_chosen neq 'y'}{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Use Ctrl+Click to select multiple options{/tr}{/remarksbox}{/if}
 							</div>
 							<div id="dg" style="display:none">
@@ -320,13 +320,13 @@
 										{/section}
 									</select></label>
 								<br>
-								<button type="submit" class="dg" disabled="disabled" class="btn btn-default">{tr}OK{/tr}</button>
-								<button id="cancel-choice" type="button" style="display: none" class="btn btn-default">{tr}Cancel{/tr}</button>
+								<button type="submit" disabled="disabled" class="btn btn-default btn-sm dg">{tr}OK{/tr}</button>
+								<button id="cancel-choice" type="button" style="display: none" class="btn btn-default btn-sm">{tr}Cancel{/tr}</button>
 								<input type="hidden" class="dg" disabled="disabled" name="set_default_groups" value="y">
 							</div>
 							<div id="emc" style="display:none">
 								<h4>{tr}Send wiki page content by email to selected users{/tr}</h4>
-								<table>
+								<table class="table">
 									<tr>
 										<td><label>{tr}Wiki page to use for email content{/tr}</label></td>
 										<td>
@@ -349,8 +349,8 @@
 									</tr>
 									<tr>
 										<td colspan="2" style="display: block;margin-left:auto;margin-right: auto">
-											<button class="emc" type="submit" disabled="disabled" class="btn btn-default">{tr}OK{/tr}</button>
-											<button id="cancel-choice" type="button" style="display: none" class="btn btn-default">{tr}Cancel{/tr}</button>
+											<button type="submit" disabled="disabled" class="btn btn-default btn-sm emc">{tr}OK{/tr}</button>
+											<button id="cancel-choice" type="button" style="display: none" class="btn btn-default btn-sm">{tr}Cancel{/tr}</button>
 											<input class="emc" disabled="disabled" type="hidden" name="emailChecked" value="y">
 										</td>
 									</tr>
