@@ -206,6 +206,11 @@ div.tablesorter-pager span.last {
 	background-image: url('../../../img/icons/control_end.png');
 }
 
+.compare-select-wrapper {
+	min-width: 60%;
+	float: right;
+}
+
 /* row grouping widget */
 tr.group-header td {
 	background: #eee;

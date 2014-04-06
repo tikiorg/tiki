@@ -54,20 +54,27 @@ class Table_Code_Pager extends Table_Code_Manager
 				'var parsedpage = $.parseHTML(data), r = {}, p = table.config.pager;',
 				//extract needed data from html returned by smarty template file
 				'r.rows = $(parsedpage).find(\'' . parent::$tid . ' tbody\').children();',
-				'r.filtered = parseInt($(parsedpage).find(\'#' . parent::$s['ajax']['servercount']['id'] . '\').val());',
-				'r.offset = parseInt($(parsedpage).find(\'#' . parent::$s['ajax']['serveroffset']['id'] . '\').val());',
-				//set other variables
-				'r.fp = Math.ceil( r.filtered / p.size );',
 				'r.total = \'' . parent::$s['total'] . '\';',
-				'r.end = r.offset + $(r.rows).length;',
-				'r.headers = null;',
-				//set pager text
-				'if (r.filtered == 0) {r.start = tr(\'No records found\')}',
-				'if (r.filtered == 1) {r.start = tr(\'Showing 1 of 1\')}',
-				'if (r.filtered > 1) {r.start = tr(\'Showing \') + (r.offset + 1) + \' \' + tr(\'to\') + \' \'
-					+ r.end + \' \' + \' \' + tr(\'of\') + \' \' + r.filtered}',
-				'r.parens = r.filtered < r.total ? \' \' + \'(\' + tr(\'filtered from\') + \' \' + r.total + \' \'
+				'if (r.rows.length > 0) {',
+				'	$(p.$size.selector).prop(\'aria-disabled\', false);',
+				'	r.filtered = parseInt($(parsedpage).find(\'#' . parent::$s['ajax']['servercount']['id'] . '\').val());',
+				'	r.offset = parseInt($(parsedpage).find(\'#' . parent::$s['ajax']['serveroffset']['id'] . '\').val());',
+					//set other variables
+				'	r.fp = Math.ceil( r.filtered / p.size );',
+				'	r.end = r.offset + $(r.rows).length;',
+					//set pager text
+				'	if (r.filtered == 0) {r.start = tr(\'No records found\')}',
+				'	if (r.filtered == 1) {r.start = tr(\'Showing 1 of 1\')}',
+				'	if (r.filtered > 1) {r.start = tr(\'Showing \') + (r.offset + 1) + \' \' + tr(\'to\') + \' \'
+						+ r.end + \' \' + \' \' + tr(\'of\') + \' \' + r.filtered}',
+				'	r.parens = r.filtered < r.total ? \' \' + \'(\' + tr(\'filtered from\') + \' \' + r.total + \' \'
 					+ tr(\'records)\') : \' \' + tr(\'records\');',
+				'} else {',
+				'	r.start = tr(\'No records found\');',
+				'	r.parens = \'\';',
+				'	$(p.$size.selector).addClass(\'disabled\');',
+				'}',
+				'r.headers = null;',
 				//return object
 				'return r;'
 			);
