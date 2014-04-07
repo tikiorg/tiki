@@ -20,19 +20,17 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
  */
 class Table_Plugin
 {
+	/**
+	 * Standard tablesorter parameters for a plugin
+	 * @var array
+	 */
 	public $params = array();
+
+	/**
+	 * Holds the settings created by setSettings function below
+	 * @var
+	 */
 	public $settings;
-	public $perms = true;
-
-
-	public function __construct()
-	{
-		global $prefs;
-		if ($prefs['disableJavascript'] === 'y' || $prefs['feature_jquery_tablesorter'] === 'n') {
-			$this->perms = false;
-		}
-
-	}
 
 	/**
 	 * Creates parameters that can be appended to a plugin's native parameters so the user can

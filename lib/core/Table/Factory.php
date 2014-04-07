@@ -23,6 +23,12 @@ class Table_Factory
 {
 	/**
 	 * This is the public function called to apply jQuery Tablesorter to a table.
+	 * This function will then call itself to call the appropriate Table_Settings class to build the settings
+	 * Then this function calls the Table_Manager class, passing the table and user settings
+	 * The Table_Manager class calls the Table_Code_Manager class to generate the jQuery code based on the table settings
+	 * The Table_Code_Manager class will call this function to call various other the Table_Code classes to create
+	 *      the various sections of jQuery code and then put the sections together to create the final complete code
+	 * The Table_Manager class then loads the complete jQuery code into the header
 	 *
 	 * @param        $name			must correspond to a file in Table/Settings
 	 * @param null   $settings		optional user-defined settings array which will override defaults
