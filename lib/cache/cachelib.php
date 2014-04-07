@@ -112,7 +112,7 @@ class Cachelib
 		if (in_array('temp_cache', $dir_names)) {
 			$this->erase_dir_content("temp/cache/$tikidomain");
 			// Next case is needed to clean also cached data created through mod PluginR
-			if ($prefs['wikiplugin_rr'] == 'y' OR $prefs['wikiplugin_r'] == 'y') {
+			if ((isset($prefs['wikiplugin_rr']) && $prefs['wikiplugin_rr'] == 'y') OR (isset($prefs['wikiplugin_r']) && $prefs['wikiplugin_r'] == 'y')) {
 				$this->erase_dir_content("temp/cache/$tikidomain/R_*/");
 			}
 			if (is_object($logslib)) {
