@@ -33,7 +33,7 @@ class Table_Factory
 	 */
 	static public function build($name, $settings = null, $type = 'manager')
 	{
-		if (Table_Check::perms()) {
+		if (Table_Check::isEnabled()) {
 			switch ($type) {
 				case 'manager':
 					return new Table_Manager(Table_Factory::build($name, $settings, 'table')->s);

@@ -13,14 +13,20 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
 
 /**
  * Class Table_Check
- * This is the public class for checking whether necessary preferences are set to use tablesorter
+ * This is a public class for checking necessary preferences or tablesorter status
  *
  * @package Tiki
  * @subpackage Table
  */
 class Table_Check
 {
-	static public function perms($ajax = false)
+	/**
+	 * Checks to see if necessary preferences are set to allow tablesorter to be used either with or without ajax
+	 *
+	 * @param bool $ajax    if set to true will check that appropriate preference is set to be able to use ajax
+	 * @return bool
+	 */
+	static public function isEnabled($ajax = false)
 	{
 		global $prefs;
 		if ($prefs['disableJavascript'] == 'n' && $prefs['feature_jquery_tablesorter'] == 'y') {
@@ -33,6 +39,19 @@ class Table_Check
 			} else {
 				return true;
 			}
+		} else {
+			return false;
+		}
+	}
+
+	/**
+	 * Checks to see whether the file has been accessed through a tablesorter access call
+	 * @return bool
+	 */
+	static public function isAjaxCall()
+	{
+		if (isset($_GET['tsAjax']) && $_GET['tsAjax'] === 'y' && self::isEnabled(true)) {
+			return true;
 		} else {
 			return false;
 		}

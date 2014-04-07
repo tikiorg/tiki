@@ -7,7 +7,7 @@
 
 function wikiplugin_fancytable_info()
 {
-	$tsOn = Table_Check::perms();
+	$tsOn = Table_Check::isEnabled();
 	if ($tsOn === true) {
 		$ts = new Table_Plugin;
 		$ts->createParams();
@@ -86,7 +86,7 @@ function wikiplugin_fancytable($data, $params)
 	$msg = '';
 
 	if ((isset($sortable) && $sortable != 'n')) {
-		if (Table_Check::perms()) {
+		if (Table_Check::isEnabled()) {
 			$ts = new Table_Plugin;
 			$ts->setSettings(
 				'fancytable_' . $iFancytable,

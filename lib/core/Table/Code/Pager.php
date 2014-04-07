@@ -131,7 +131,7 @@ class Table_Code_Pager extends Table_Code_Manager
 						. parent::$s['ajax']['offset'] . '=\' + (p.page * size); ',
 					//build url, starting with no parameters
 					'newurl = url.slice(0,url.indexOf(\'?\'));',
-					'newurl = newurl + \'?numrows=\' + size + offset + \'&tsAjax=true\';',
+					'newurl = newurl + \'?numrows=\' + size + offset + \'&tsAjax=y\';',
 					'$.each(params, function(key, value) {',
 					'	newurl = newurl + \'&\' + value;',
 					'});',
@@ -151,7 +151,7 @@ class Table_Code_Pager extends Table_Code_Manager
 					'}',
 					'offset = (filter === true || ((p.page * size) >= filtered)) ? \'\' : \''
 						. parent::$s['ajax']['offset'] . '\' + \'=\' + (p.page * size);',
-					'return url + \'&tsAjax=true&\' + offset + \'&numrows=\' + size;'
+					'return url + \'&tsAjax=y&\' + offset + \'&numrows=\' + size;'
 				);
 			}
 			if (count($ca) > 0) {

@@ -755,10 +755,10 @@ if ($tiki_p_admin == 'y') {
 }
 
 //add tablesorter sorting and filtering
-$tsOn = Table_Check::perms(true);
+$tsOn = Table_Check::isEnabled(true);
 
 $smarty->assign('tsOn', $tsOn);
-$tsAjax = isset($_REQUEST['tsAjax']) && $_REQUEST['tsAjax'] ? true : false;
+$tsAjax = Table_Check::isAjaxCall();
 
 if ($tsOn) {
 	$ts_countid = 'usertable-count';
