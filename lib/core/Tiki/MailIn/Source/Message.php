@@ -28,6 +28,11 @@ class Message
 		$this->deleteCallback = $deleteCallback;
 	}
 
+	function getMessageId()
+	{
+		return $this->messageId;
+	}
+
 	function setMessageId($messageId)
 	{
 		$this->messageId = $messageId;

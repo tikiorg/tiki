@@ -45,7 +45,7 @@ class Pop3 implements SourceInterface
 				$toDelete[] = $i;
 			});
 			$from = $source->from ?: $source->{'return-path'};
-			$message->setMessageId(str_replace(['<', ']'], '', $source->{'message-id'}));
+			$message->setMessageId(str_replace(['<', '>'], '', $source->{'message-id'}));
 			$message->setRawFrom($from);
 			$message->setSubject($source->subject);
 			$message->setRecipient($source->to);

@@ -168,14 +168,24 @@ class Account
 		}
 	}
 
-	function sendFailureResponse(Source\Message $message)
+	function sendFailureResponse(Source\Message $message, $condition)
 	{
 		global $prefs;
 		$l = $prefs['language'];
 
 		$mail = $this->getReplyMail($message);
-		$mail->setSubject(tra('Tiki mail-in auto-reply', $l));
-		$mail->setText(tra("Sorry, you can't use this feature.", $l));
+		$pre = tra('Mail-in auto-reply', $l) . "\n\n";
+
+		if ($condition == 'cant_use') {
+			$mail->setText($pre . tra("Sorry, you can't use this feature.", $l));
+		} elseif ($condition == 'disabled') {
+			$mail->setText($pre . tra("The functionality you are trying to access is currently disabled.", $l));
+		} elseif ($condition == 'permission_denied') {
+			$mail->setText($pre . tra("Permission denied.", $l));
+		} elseif ($condition == 'nothing_to_do') {
+			$mail->setText($pre . tra("No required action found.", $l));
+		}
+
 		$this->sendFailureReply($message, $mail);
 	}
 
@@ -184,6 +194,8 @@ class Account
 		require_once 'lib/webmail/tikimaillib.php';
 		$mail = new TikiMail();
 		$mail->setFrom($this->accountAddress);
+		$mail->setHeader('In-Reply-To', "<{$message->getMessageId()}>");
+		$mail->setSubject("RE: {$message->getSubject()}");
 
 		return $mail;
 	}
@@ -268,37 +280,29 @@ class Account
 			$success = false;
 
 			if (! $this->canReceive($message)) {
-				$this->sendFailureResponse($message);
+				$this->sendFailureResponse($message, 'cant_use');
 				$this->log($message, tr("Rejected message, user globally denied"));
 			} elseif ($action = $this->getAction($message)) {
 				$context = new \Perms_Context($message->getAssociatedUser());
 				if (! $action->isEnabled()) {
 					// Action configured, but not enabled
 					$this->log($message, tr("Rejected message, associated action disabled (%0)", $action->getName()));
+					$this->sendFailureResponse($message, 'disabled');
 				} elseif ($this->isAnyoneAllowed() || $action->isAllowed($this, $message)) {
 					$this->prepareMessage($message);
 					$success = $action->execute($this, $message);
 					$this->log($message, tr("Performing action (%0)", $action->getName()));
 				} else {
-					// TODO : Send permission denied message
+					$this->sendFailureResponse($message, 'permission_denied');
 					$this->log($message, tr("Rejected message, user locally denied (%0)", $action->getName()));
 				}
 
 				unset($context);
 			} else {
 				
-				$smarty = TikiLib::lib('smarty');
-				// Send failure response for no suitable action found
-				$l = $prefs['language'];
-				$subject = $smarty->fetchLang($l, "mail/mailin_help_subject.tpl");
-				$smarty->assign('subject', $message->getSubject());
-				$mail_data = $smarty->fetchLang($l, "mail/mailin_help.tpl");
+				$success = false;
 
-				$mail = $this->getReplyMail($message);
-				$mail->setSubject($subject);
-				$mail->setText($mail_data);
-				$this->sendFailureReply($message, $mail);
-
+				$this->sendFailureResponse($message, 'nothing_to_do');
 				$this->log($message, tr("Rejected message, no associated action."));
 			}
 
