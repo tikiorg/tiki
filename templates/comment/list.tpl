@@ -22,7 +22,7 @@
 					</div>
 					<div class="media-body">
 						<div class="comment-item">
-							<div class="actions pull-right" style="display: none">
+							<div class="actions pull-right">
 								{if $allow_remove}
 									{self_link controller=comment action=remove threadId=$comment.threadId _icon=cross _class="confirm-prompt btn btn-default btn-sm" _confirm="{tr}Are you sure you want to remove this comment?{/tr}"}{tr}Remove{/tr}{/self_link}
 								{/if}
@@ -112,18 +112,12 @@
 		</div>
 	{/if}
 
-	{if ! $parentId && $prefs.feature_wiki_paragraph_formatting eq 'y'}
-		<a id="note-editor-comment" href="#" style="display:none;">{tr}Add Comment{/tr}</a>
+	{if ! $parentId && $prefs.feature_inline_comments eq 'y'}
+		<a id="note-editor-comment" href="#">{tr}Add Comment{/tr}</a>
 	{/if}
 
 	<script type="text/javascript">
 		var ajax_url = '{$base_url}';
 		var objectId = '{$objectId}';
 	</script>
-	{jq notonready=true}
-		$( ".comment-item" ).hover(
-			function() {
-			$ ( this ).find( ".actions" ).toggle();
-		});
-	{/jq}
 {/block}

@@ -61,9 +61,9 @@ class TikiMail
 		$this->mail->setFrom($email);
 	}
 
-	function setReplyTo($email)
+	function setReplyTo($email, $name = null)
 	{
-		$this->mail->setReplyTo($email);
+		$this->mail->setReplyTo($email, $name);
 	}
 
 	function setSubject($subject)

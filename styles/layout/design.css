@@ -840,6 +840,15 @@ body.tiki_forums .normal {
 	display: inline-block;
 }
 
+
+#comment-container .comment-item .actions {
+	display: none;
+}
+
+#comment-container .comment-item:hover .actions {
+	display: block;
+}
+
 /* Comment Annotations */
 
 dl.note-list {

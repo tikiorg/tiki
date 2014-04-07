@@ -164,7 +164,8 @@ class MonitorMailLib
 				'o' => $args['object'],
 			]);
 			$reply = str_replace('PLACEHOLDER', $data, $prefs['monitor_reply_email_pattern']);
-			$mail->setReplyTo($reply);
+			$name = tr("%0 Reply Handler", $prefs['sitetitle']);
+			$mail->setReplyTo($reply, $name);
 		}
 
 		$mail->send($email);
