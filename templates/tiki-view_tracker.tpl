@@ -86,7 +86,7 @@
 
 {include file='tracker_error.tpl'}
 
-{tabset name='tabs_view_tracker'}
+{tabset name='tabs_view_tracker' skipsingle=1}
 	
 	{if $tiki_p_view_trackers eq 'y' or (($tracker_info.writerCanModify eq 'y' or $tracker_info.userCanSeeOwn eq 'y' or $tracker_info.writerGroupCanModify eq 'y') and $user)}
 		{tab name="{tr}Tracker Items{/tr}"}

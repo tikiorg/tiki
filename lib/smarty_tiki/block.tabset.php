@@ -17,7 +17,7 @@
  *
  * usage:
  * \code
- *	{tabset name='tabs}
+ *	{tabset name='tabs' skipsingle=1}
  * 		{tab name='tab1'}tab content{/tab}
  * 		{tab name='tab2'}tab content{/tab}
  * 		{tab name='tab3'}tab content{/tab}
@@ -78,6 +78,11 @@ function smarty_block_tabset($params, $content, $smarty, &$repeat)
 		if (empty($content)) {
 			return '';
 		}
+
+		if (! empty($params['skipsingle']) && count($smarty_tabset[$tabset_index]['tabs']) == 1) {
+			return $content;
+		}
+
 		$ret = ''; $notabs = '';
 		//closing
 		if ( $prefs['feature_tabs'] == 'y') {
