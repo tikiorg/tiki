@@ -51,7 +51,7 @@
 		{/jq}
 	{/if}
 
-	{if $tiki_p_create_tracker_items eq 'y'}
+	{if $tiki_p_create_tracker_items eq 'y' && $prefs.tracker_legacy_insert neq 'y'}
 		<a class="btn btn-default" href="{service controller=tracker action=insert_item trackerId=$trackerId modal=1}" data-toggle="modal" data-target="#bootstrap-modal">
 			{glyph name=plus}
 			{tr}New Item{/tr}
@@ -226,7 +226,7 @@
 		{/tab}
 	{/if}
 	
-	{if $tiki_p_create_tracker_items eq 'y'}
+	{if $tiki_p_create_tracker_items eq 'y' && $prefs.tracker_legacy_insert eq 'y'}
 		{* --------------------------------------------------------------------------------- tab with edit --- *}
 		{tab name="{tr}Insert New Item{/tr}"}
             <h2>{tr}Insert New Item{/tr}</h2>

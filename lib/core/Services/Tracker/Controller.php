@@ -682,6 +682,7 @@ class Services_Tracker_Controller
 			'fields' => $processedFields,
 			'forced' => $forced,
 			'trackerLogo' => $definition->getConfiguration('logo'),
+			'modal' => $input->modal->int(),
 		);
 	}
 

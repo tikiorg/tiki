@@ -48,5 +48,11 @@ function prefs_tracker_list()
 			'type' => 'flag',
 			'default' => 'n',
 		),		
+		'tracker_legacy_insert' => array(
+			'name' => tr('Use legacy tracker insertion screen'),
+			'description' => tr('Use the legacy tracker insertion screen as a tab instead of the dialog.'),
+			'type' => 'flag',
+			'default' => 'n',
+		),		
 	);
 }

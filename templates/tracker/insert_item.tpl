@@ -18,12 +18,14 @@
 		{/if}
 		<form method="post" action="{service controller=tracker action=insert_item}" id="insertItemForm" {if ! $trackerId}display="hidden"{/if}>
 			{trackerfields trackerId=$trackerId fields=$fields}
-			<div class="checkbox">
-				<label>
-				  <input type="checkbox" name="next" value="{service controller=tracker action=insert_item trackerId=$trackerId}">
-				  {tr}Create another{/tr}
-				</label>
-			</div>
+			{if ! $modal}
+				<div class="checkbox">
+					<label>
+					  <input type="checkbox" name="next" value="{service controller=tracker action=insert_item trackerId=$trackerId}">
+					  {tr}Create another{/tr}
+					</label>
+				</div>
+			{/if}
 			<div class="submit">
 				<input type="hidden" name="trackerId" value="{$trackerId|escape}">
 				<input type="submit" class="btn btn-primary" value="{tr}Create{/tr}">

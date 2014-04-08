@@ -38,6 +38,7 @@
 		</div>
 		{preference name=tracker_change_field_type}
 		{preference name=tracker_show_comments_below}
+		{preference name=tracker_legacy_insert}
 	</fieldset>
 
 	<fieldset class="table">
