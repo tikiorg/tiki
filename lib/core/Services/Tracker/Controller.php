@@ -587,6 +587,13 @@ class Services_Tracker_Controller
 		$processedFields = array();
 
 		$trackerId = $input->trackerId->int();
+
+		if (! $trackerId) {
+			return [
+				'FORWARD' => ['controller' => 'tracker', 'action' => 'select_tracker'],
+			];
+		}
+
 		$trackerName = $this->trackerName($trackerId);
 		$definition = Tracker_Definition::get($trackerId);
 
@@ -655,6 +662,11 @@ class Services_Tracker_Controller
 
 			if ($itemId) {
 				TikiLib::lib('unifiedsearch')->processUpdateQueue();
+
+				if ($next = $input->next->url()) {
+					$access = TikiLib::lib('access');
+					$access->redirect($next, tr('Item created'));
+				}
 
 				return $this->utilities->getItem($trackerId, $itemId);
 			} else {
@@ -1608,7 +1620,8 @@ class Services_Tracker_Controller
 			);
 		}
 		else {
-			$trackers = $this->action_list_trackers();
+			$trklib = TikiLib::lib('trk');
+			$trackers = $trklib->list_trackers();
 			return array(
 				'title' => tr('Select Tracker'),
 				'trackers' => $trackers["data"],

@@ -1,13 +1,9 @@
-<div class="field-tabs">
-	<ul>
-		{foreach from=$sections key=k item=sect}
-			<li><a href="#{$k|escape}">{$sect.heading|escape}</a></li>
-		{/foreach}
-	</ul>
-	{foreach from=$sections key=k item=sect}
-		<div id="{$k|escape}">
+{tabset}
+	{foreach $sections as $sect}
+		{tab name=$sect.heading}
 			{foreach from=$sect.fields item=field}
-				<label for="trackerinput_{$field.fieldId|escape}">
+			<div class="form-group">
+				<label for="trackerinput_{$field.fieldId|escape}" class="control-label">
 					{$field.name|escape}
 					{if $field.isMandatory eq 'y'}
 						<span class="mandatory_star">*</span>
@@ -19,21 +15,9 @@
 						{$field.description|escape}
 					</div>
 				</div>
+			</div>
 			{/foreach}
-		</div>
+		{/tab}
 	{/foreach}
-</div>
-{jq}
-	$('.field-tabs')
-		.tabs()
-		.closest('.ui-dialog-content')
-		.css('margin', '0px')
-		.css('padding', '0px')
-		.closest('.ui-dialog')
-		.css('margin', '0px')
-		.css('padding', '0px')
-		;
-	$('label').click(function() {
-		$('input, select, textarea', '#'+$(this).attr('for')).focus();
-	});
-{/jq}
+{/tabset}
+{jq}$('label').click(function() {$('input, select, textarea', '#'+$(this).attr('for')).focus();});{/jq}
