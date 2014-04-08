@@ -19,7 +19,7 @@ class Tracker_Field_Email extends Tracker_Field_Abstract implements Tracker_Fiel
 		return array(
 			'm' => array(
 				'name' => tr('Email'),
-				'description' => tr('Allows to input an email address with options of making it active.'),
+				'description' => tr('Allows an email address to be input with options of making it active.'),
 				'help' => 'Email Tracker Field',				
 				'prefs' => array('trackerfield_email'),
 				'tags' => array('basic'),

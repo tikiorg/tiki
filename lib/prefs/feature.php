@@ -289,7 +289,7 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_freetags' => array(
 			'name' => tra('Freetags'),
-			'description' => tra('Allows to set tags on pages and various objects within the website and generate tag cloud navigation patterns.'),
+			'description' => tra('Allows tags on pages and various objects to be set within the website and generate tag cloud navigation patterns.'),
 			'help' => 'Tags',
 			'type' => 'flag',
 			'default' => 'n',
@@ -302,7 +302,7 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_actionlog' => array(
 			'name' => tra('Action Log'),
-			'description' => tra('Allows to keep track of what users are doing and produce reports on a per-user or per-category basis.'),
+			'description' => tra('Provides ability to track what users are doing and produce reports on a per-user or per-category basis.'),
 			'help' => 'Action+Log',
 			'type' => 'flag',
 			'view' => 'tiki-admin_actionlog.php',
@@ -894,7 +894,7 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_userlevels' => array(
 			'name' => tra('Menu User Levels'),
-			'description' => tra('Allows to control the menu options that can be seen by a user'),
+			'description' => tra('Allows the menu options that can be seen by a user to be controlled'),
 			'help' => 'User+Levels',
 			'type' => 'flag',
 			'default' => 'n',
@@ -1263,7 +1263,7 @@ function prefs_feature_list($partial = false)
 			'default' => 'n',
 		),
 		'feature_sefurl_title_article' => array(
-			'name' => tra('Display article title in the sefurl'),
+			'name' => tra('Display article title in the SEFURL'),
             'description' => tra(''),
 			'type' => 'flag',
 			'perspective' => false,
@@ -1518,7 +1518,7 @@ function prefs_feature_list($partial = false)
             'description' => tra(''),
 			'type' => 'flag',
 			'default' => 'n',
-			'warning' => tr('Using custom blog headings will use significantly more server resources. Unless you need per-blog templates, you should use a customize the template file.'),
+			'warning' => tr('Using custom blog headings will use significantly more server resources. Unless you need per-blog templates, you should customize the template file instead.'),
 		),
 		'feature_blog_edit_publish_date' => array(
 			'name' => tra('Publish dates can be modified'),
@@ -2511,7 +2511,7 @@ function prefs_feature_list($partial = false)
 			'default' => 'y',
 		),
 		'feature_community_mouseover_email' => array(
-			'name' => tra('E-mail'),
+			'name' => tra('Email'),
             'description' => tra(''),
 			'type' => 'flag',
 			'default' => 'y',
@@ -2768,7 +2768,7 @@ function prefs_feature_list($partial = false)
 			'tags' => array('experimental'),
 		),
 		'feature_htmlfeed' => array(
-			'name' => tra('Html Feed'),
+			'name' => tra('HTML Feed'),
             'description' => tra('A way to push and pull html bits around from one site to another'),
 			'type' => 'flag',
 			'help' => 'HtmlFeed',

@@ -13,7 +13,7 @@
 				<th>{tr}Timeout{/tr}</th>
 				<th>{tr}Hits{/tr}</th>
 				<th>{tr}Max hits{/tr}</th>
-				<th>{tr}E-mail{/tr}</th>
+				<th>{tr}Email{/tr}</th>
 				<th>{tr}Parameters{/tr}</th>
 				<th>{tr}Groups{/tr}</th>
 				<th>{tr}Actions{/tr}</th>
