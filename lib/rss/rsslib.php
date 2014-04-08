@@ -644,6 +644,24 @@ class RSSLib extends TikiDb_Bridge
 		}
 		if (!empty($source_categories)) {
 			$custominfo = $this->get_article_custom_info( $rssId );
+
+			$oldcats = array_keys($custominfo);
+
+			if ($newcats = array_diff($source_categories, $oldcats)) {
+				// send a notification if there are new categories
+				$nots = $tikilib->get_event_watches('article_submitted', '*');
+				if (count($nots)) {
+					$title = $this->modules->fetchOne('name', array('rssId' => $rssId));
+					include_once('lib/notifications/notificationemaillib.php');
+					global $smarty;
+					$smarty->assign('mail_site', $_SERVER['SERVER_NAME']);
+					$smarty->assign('rssId', $rssId);
+					$smarty->assign('title', $title);
+					$smarty->assign('newcats', $newcats);
+					sendEmailNotification($nots, 'watch', 'rss_new_source_category_subject.tpl', $_SERVER['SERVER_NAME'], 'rss_new_source_category.tpl');
+				}
+			}
+
 			$current_priority = 0;
 			foreach ($custominfo as $source_category => $settings) {
 				if (in_array($source_category, $source_categories)) {
