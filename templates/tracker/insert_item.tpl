@@ -11,11 +11,11 @@
 
 {block name="content"}
 	{if ! $itemId}
-		<div class="page-header media">
-			{if $trackerLogo}
+		{if $trackerLogo}
+			<div class="page-header media">
 				<img src="{$trackerLogo|escape}" class="pull-left img-responsive img-rounded" alt="{$trackerName|escape}" height="64px" width="64px">
-			{/if}
-		</div>
+			</div>
+		{/if}
 		<form method="post" action="{service controller=tracker action=insert_item}" id="insertItemForm" {if ! $trackerId}display="hidden"{/if}>
 			{trackerfields trackerId=$trackerId fields=$fields}
 			<div class="checkbox">

@@ -44,7 +44,7 @@ function smarty_block_tabset($params, $content, $smarty, &$repeat)
 			$smarty_tabset = array();
 		}
 		$tabset_index = count($smarty_tabset) + 1;
-		if ( isset($params['name']) and !empty($params['name']) ) {
+		if ( ! empty($params['name']) ) {
 			$smarty_tabset_name = $params['name'];	// names have to be unique
 		} else {
 			$short_name = str_replace(array('tiki-', '.php'), '', basename($_SERVER['SCRIPT_NAME']));
@@ -123,7 +123,7 @@ function smarty_block_tabset($params, $content, $smarty, &$repeat)
 
 			$ret .= '<ul class="nav nav-tabs">';
 			foreach ($smarty_tabset[$tabset_index]['tabs'] as $value) {
-				$ret .= '<li class="'.($count == $cookietab ? 'active' : '').'"><a href="#content' . $tabset_index . '-' . $count.'" data-toggle="tab">'.$value.'</a></li>';
+				$ret .= '<li class="'.($count == $cookietab ? 'active' : '').'"><a href="#content' . $smarty_tabset[$tabset_index]['name'] . $tabset_index . '-' . $count.'" data-toggle="tab">'.$value.'</a></li>';
 				++$count;
 			}
 			$ret .= '</ul>';
