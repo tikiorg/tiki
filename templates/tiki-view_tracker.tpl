@@ -235,7 +235,6 @@
 			<form enctype="multipart/form-data" action="tiki-view_tracker.php" id="newItemForm" method="post">
 			<input type="hidden" name="trackerId" value="{$trackerId|escape}">
 			
-			<h2>{tr}Insert New Item{/tr}</h2>
 			{remarksbox type="note"}<strong class='mandatory_note'>{tr}Fields marked with a * are mandatory.{/tr}</strong>{/remarksbox}
 			<div class="form-horizontal">
 			
