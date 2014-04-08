@@ -1358,7 +1358,8 @@ class TikiLib extends TikiDb_Bridge
 						break;
 				}
 
-				if ($res['perm']) {
+				if ($res['perm'] || empty($res['user']) && !empty($res['email'])) {
+					// Allow admin created email (non-user) watches
 					$ret[] = $res;
 				}
 			}
