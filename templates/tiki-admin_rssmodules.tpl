@@ -167,6 +167,7 @@
 					<label for="article_future_publish">{tr}Publish in the future{/tr}</label>
 					<input type="text" name="future_publish" id="article_future_publish" value="{$articleConfig.future_publish|escape}" size="4"> {tr}minutes{/tr} ({tr}-1 to use original publishing date from the feed{/tr})
 				</p>
+				<h3>{tr}Default Settings{/tr}</h3>
 				<p>
 					<label for="article_type">{tr}Type{/tr}</label>
 					<select name="type" id="article_type">
@@ -192,6 +193,59 @@
 						{/foreach}
 					</select>
 				</p>
+				<h3>{tr}Custom Settings for Source Categories{/tr}</h3>
+				{if !$sourcecats}
+				<p>{tr}No source categories detected for this feed{/tr}</p>
+				{/if}
+				<table>
+				<tr>
+				<th>{tr}Source Category{/tr}
+				<th>{tr}Type{/tr}</th>
+				<th>{tr}Topic{/tr}</th>
+				<th>{tr}Rating{/tr}</th>
+				<th>{tr}Priority (10 is highest){/tr}</th>
+				</tr>
+				{foreach $sourcecats as $sourcecat => $settings}
+				<tr>
+				<td>
+					{$sourcecat|escape}
+				</td>
+				<td>
+					<select name="custom_atype[{$sourcecat|escape}]">
+						<option value="">{tr}Default{/tr}</option>
+						{foreach from=$types item=t}
+						<option value="{$t.type|escape}"{if $t.type eq $article_custom_info[$sourcecat].atype} selected="selected"{/if}>{$t.type|escape}</option>
+						{/foreach}
+					</select>
+				</td>
+				<td>
+					<select name="custom_topic[{$sourcecat|escape}]">
+						<option value="">{tr}Default{/tr}</option>
+						<option value="0" {if $article_custom_info[$sourcecat].topic === "0"} selected="selected"{/if}>{tr}None{/tr}</option>
+						{foreach from=$topics item=t}
+						<option value="{$t.topicId|escape}"{if $t.topicId eq $article_custom_info[$sourcecat].topic} selected="selected"{/if}>{$t.name|escape}</option>
+						{/foreach}
+					</select>
+				</td>
+				<td>
+					<select name="custom_rating[{$sourcecat|escape}]">
+						<option value="">{tr}Default{/tr}</option>
+						{foreach from=$ratingOptions item=v}
+						<option value="{$v|escape}"{if $v === $article_custom_info[$sourcecat].rating} selected="selected"{/if}>{$v|escape}</option>			
+						{/foreach}
+					</select>
+				</td>
+				<td>
+                                        <select name="custom_priority[{$sourcecat|escape}]">
+                                                {foreach from=$ratingOptions item=v}
+                                                <option value="{$v|escape}"{if $v === $article_custom_info[$sourcecat].priority} selected="selected"{/if}>{$v|escape}</option>
+                                                {/foreach}
+                                        </select>
+				</td>
+				</tr>
+				{/foreach}
+				</table>
+				<h3>{tr}Categorize Created Articles{/tr}</h3>
 				<p>
 					{include file='categorize.tpl'}
 				</p>

@@ -81,11 +81,15 @@ if ( isset($_REQUEST['article']) && $prefs['feature_articles'] == 'y' ) {
 				'active' => isset( $_POST['enable'] ),
 				'expiry' => $jitPost->expiry->int(),
 				'atype' => $jitPost->type->text(),
+				'custom_atype' => $jitPost->custom_atype->asArray(),
 				'topic' => $jitPost->topic->int(),
+				'custom_topic' => $jitPost->custom_topic->asArray(),
 				'future_publish' => $jitPost->future_publish->int(),
 				'categories' => (array) $jitPost->cat_categories->int(),
 				'rating' => $jitPost->rating->int(),
+				'custom_rating' => $jitPost->custom_rating->asArray(),
 				'submission' => isset( $_POST['submission'] ),
+				'custom_priority' => $jitPost->custom_priority->asArray(),
 			)
 		);
 		$cookietab = 1;
@@ -95,7 +99,12 @@ if ( isset($_REQUEST['article']) && $prefs['feature_articles'] == 'y' ) {
 
 	$config = $rsslib->get_article_generator($_REQUEST['article']);
 	$smarty->assign('articleConfig', $config);
-	$smarty->assign('ratingOptions', range(0, 10));
+	$smarty->assign('ratingOptions', array_map('strval', range(0, 10)));
+
+	$sourcecats = $rsslib->get_feed_source_categories($_REQUEST["article"]);
+	$smarty->assign('sourcecats', $sourcecats);
+	$article_custom_info = $rsslib->get_article_custom_info($_REQUEST["article"]);
+	$smarty->assign('article_custom_info', $article_custom_info);
 
 	global $artlib; require_once 'lib/articles/artlib.php';
 	$smarty->assign('topics', $artlib->list_topics());

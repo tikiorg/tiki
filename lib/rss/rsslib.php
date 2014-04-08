@@ -508,6 +508,8 @@ class RSSLib extends TikiDb_Bridge
 
 			$authors = $entry->getAuthors();
 
+			$categories = $entry->getCategories();
+		
 			$data = $filter->filter(
 				array(
 					'title' => $entry->getTitle(),
@@ -515,6 +517,7 @@ class RSSLib extends TikiDb_Bridge
 					'description' => $entry->getDescription(),
 					'content' => $entry->getContent(),
 					'author' => $authors ? implode(', ', $authors->getValues()) : '',
+					'categories' => $categories ? json_encode($categories->getValues()) : json_encode(array()),
 				)
 			);
 
@@ -535,6 +538,51 @@ class RSSLib extends TikiDb_Bridge
 		}
 	}
 
+	function get_feed_source_categories( $rssId ) {
+		$feeds = $this->items->fetchAll(array('categories'), array('rssId' => $rssId));
+		$categories = array();
+		foreach ($feeds as $feed) {
+			if (isset($feed['categories'])) {
+				foreach (json_decode($feed['categories']) as $sourcecat) {
+					 $categories[$sourcecat] = array(); 
+				}
+			}
+		}
+		$custom_info = $this->get_article_custom_info( $rssId );
+		$categories = array_merge($categories, $custom_info);
+		ksort($categories, SORT_NATURAL);
+		return $categories;
+	}
+
+	function get_article_custom_info( $rssId ) {
+		$result = $this->modules->fetchOne('actions', array('rssId' => $rssId));
+		$actions = json_decode($result);
+		$categories = array();
+		foreach ($actions as $action) {
+			if (isset($action->custom_atype)) {
+				foreach ($action->custom_atype as $source_category => $atype) {
+					$categories[$source_category]['atype'] = $atype;	
+				}
+			}
+			if (isset($action->custom_topic)) {
+				foreach ($action->custom_topic as $source_category => $topic) {
+					$categories[$source_category]['topic'] = $topic;
+				}
+			}
+			if (isset($action->custom_rating)) {
+				foreach ($action->custom_rating as $source_category => $rating) {
+					$categories[$source_category]['rating'] = $rating;
+				}
+			}
+			if (isset($action->custom_priority)) {
+				foreach ($action->custom_priority as $source_category => $priority) {
+					$categories[$source_category]['priority'] = $priority;
+				}
+			}
+		}
+		return $categories;
+	}
+
 	private function insert_item( $rssId, $data, $actions )
 	{
 		$this->items->insert(
@@ -547,6 +595,7 @@ class RSSLib extends TikiDb_Bridge
 				'author' => $data['author'],
 				'description' => $data['description'],
 				'content' => $data['content'],
+				'categories' => $data['categories'],
 			)
 		);
 
@@ -561,7 +610,7 @@ class RSSLib extends TikiDb_Bridge
 				unset( $action['type'] );
 
 				if ( $action['active'] ) {
-					$this->$method( $action, $data );
+					$this->$method( $action, $data , $rssId );
 				}
 			}
 		}
@@ -583,11 +632,39 @@ class RSSLib extends TikiDb_Bridge
 		);
 	}
 
-	private function process_action_article( $configuration, $data )
+	private function process_action_article( $configuration, $data, $rssId )
 	{
 		$tikilib = TikiLib::lib('tiki');
 		$artlib = TikiLib::lib('art');
 		$publication = $data['publication_date'];
+
+		// First override with custom settings for source categories if any
+		if (isset($data['categories'])) {
+			$source_categories = json_decode($data['categories'], true);
+		}
+		if (!empty($source_categories)) {
+			$custominfo = $this->get_article_custom_info( $rssId );
+			$current_priority = 0;
+			foreach ($custominfo as $source_category => $settings) {
+				if (in_array($source_category, $source_categories)) {
+					if (isset($settings['priority']) && $settings['priority'] < $current_priority) {
+						continue;
+					}
+					if (!empty($settings['atype'])) {
+						$configuration['atype'] = $settings['atype'];
+					}
+					if (isset($settings['topic']) && $settings['topic'] > '') {
+						// need to match 0
+						$configuration['topic'] = $settings['topic'];
+					}
+					if (isset($settings['rating']) && $settings['rating'] > '') {
+						// need to match 0
+						$configuration['rating'] = $settings['rating'];
+					}
+					$current_priority = isset($settings['priority']) ? $settings['priority'] : 0;
+				}
+			}
+		}
 
 		if ( $configuration['future_publish'] > 0 ) {
 			$publication = $tikilib->now + $configuration['future_publish']*60;
@@ -688,6 +765,8 @@ class RSSLib extends TikiDb_Bridge
 					$categlib->categorize($objectId, $categId);
 				}
 			}
+	
+			TikiLib::lib('relation')->add_relation('tiki.rss.source', 'article', $id, 'rss', $rssId);
 		}
 	}
 

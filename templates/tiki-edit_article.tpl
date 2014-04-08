@@ -310,6 +310,7 @@
 					<option value="1.5" {if $rating eq "1.5"}selected="selected"{/if}>1.5</option>
 					<option value="1" {if $rating eq 1}selected="selected"{/if}>1</option>
 					<option value="0.5" {if $rating eq "0.5"}selected="selected"{/if}>0.5</option>
+					<option value="0" {if $rating eq "0"}selected="selected"{/if}>0</option>
 				</select>
 			</div>
 			{if $prefs.geo_locate_article eq 'y'}
