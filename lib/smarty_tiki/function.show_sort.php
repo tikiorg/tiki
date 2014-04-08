@@ -26,20 +26,17 @@ function smarty_function_show_sort($params, $smarty)
 		$order = substr($p, strrpos($p, '_') + 1);
 
 		if ( strtolower($prop) == strtolower(trim($params['var'])) ) {
-			$smarty->loadPlugin('smarty_function_icon');
-			$icon_params = array('alt' => tra('Invert Sort'), 'style' => 'vertical-align:middle');
+			$smarty->loadPlugin('smarty_function_glyph');
 
 			switch( $order ) {
 				case 'asc':
 				case 'nasc':
 					$icon_params['_id'] = 'resultset_up';
-					return smarty_function_icon($icon_params, $smarty);
-								break;
+					return ' ' . smarty_function_glyph(['name' => 'chevron-up'], $smarty);
 				case 'desc':
 				case 'ndesc':
 					$icon_params['_id'] = 'resultset_down';
-					return smarty_function_icon($icon_params, $smarty);
-								break;
+					return ' ' . smarty_function_glyph(['name' => 'chevron-down'], $smarty);
 			}
 		}
 	}
