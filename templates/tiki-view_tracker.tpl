@@ -54,7 +54,7 @@
 	{if $tiki_p_create_tracker_items eq 'y' && $prefs.tracker_legacy_insert neq 'y'}
 		<a class="btn btn-default" href="{service controller=tracker action=insert_item trackerId=$trackerId modal=1}" data-toggle="modal" data-target="#bootstrap-modal">
 			{glyph name=plus}
-			{tr}New Item{/tr}
+			{tr}Create Item{/tr}
 		</a>
 	{/if}
 
@@ -90,7 +90,7 @@
 	
 	{if $tiki_p_view_trackers eq 'y' or (($tracker_info.writerCanModify eq 'y' or $tracker_info.userCanSeeOwn eq 'y' or $tracker_info.writerGroupCanModify eq 'y') and $user)}
 		{tab name="{tr}Tracker Items{/tr}"}
-            <h2>{tr}Tracker Items{/tr}</h2>
+            <h2>{tr}Items{/tr} <span class="badge" style="vertical-align: middle">{$item_count}</span></h2>
 			{* -------------------------------------------------- tab with list --- *}
 			
 			{if (($tracker_info.showStatus eq 'y' and $tracker_info.showStatusAdminOnly ne 'y') or $tiki_p_admin_trackers eq 'y') or $show_filters eq 'y'}
@@ -98,9 +98,7 @@
 			{/if}
 			
 			{if (isset($cant_pages) && $cant_pages > 1) or $initial}{initials_filter_links}{/if}
-			
-			<div align='left'>{tr}Items found:{/tr} {$item_count}</div>
-			
+					
 			{if $items|@count ge '1'}
 				{* ------- list headings --- *}
 				<form name="checkform" method="post" action="{$smarty.server.PHP_SELF}">
@@ -205,19 +203,21 @@
                     </div>
 					
 					{if $tiki_p_admin_trackers eq 'y'}
-						<div style="text-align:left">
-							{tr}Perform action with checked:{/tr}
-							<select name="batchaction">
-								<option value="">{tr}...{/tr}</option>
-								<option value="delete">{tr}Delete{/tr}</option>
-								{if $tracker_info.showStatus eq 'y' or ($tracker_info.showStatusAdminOnly eq 'y' and $tiki_p_admin_trackers eq 'y')}
-									<option value="c">{tr}Close{/tr}</option>
-									<option value="o">{tr}Open{/tr}</option>
-									<option value="p">{tr}Pending{/tr}</option>
-								{/if}
-							</select>
-							<input type="hidden" name="trackerId" value="{$trackerId}">
-							<input type="submit" class="btn btn-default btn-sm" name="act" value="{tr}OK{/tr}">
+						<div class="form-group">
+							<div class="input-group col-sm-6">
+								<select name="batchaction" class="form-control">
+									<option value="delete">{tr}Delete Selected{/tr}</option>
+									{if $tracker_info.showStatus eq 'y' or ($tracker_info.showStatusAdminOnly eq 'y' and $tiki_p_admin_trackers eq 'y')}
+										<option value="c">{tr}Close{/tr}</option>
+										<option value="o">{tr}Open{/tr}</option>
+										<option value="p">{tr}Pending{/tr}</option>
+									{/if}
+								</select>
+								<span class="input-group-btn">
+									<input type="hidden" name="trackerId" value="{$trackerId}">
+									<input type="submit" class="btn btn-primary" name="act" value="{tr}Ok{/tr}">
+								</span>
+							</div>
 						</div>
 					{/if}
 				</form>
