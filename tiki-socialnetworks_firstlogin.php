@@ -39,11 +39,14 @@ if (count($registrationlib->merged_prefs['choosable_groups'])) {
 }
 
 if (isset($_REQUEST["localinfosubmit"])) {
-	if (empty($_REQUEST["name"]) || empty($_REQUEST["email"])) {
+	if ($prefs['login_is_email'] === 'y' && empty($_REQUEST["name"])) {
+		$smarty->assign('msg', tra('Email is mandatory'));
+	} else if (empty($_REQUEST["name"]) || (empty($_REQUEST["email"]) && $prefs['login_is_email'] !== 'y')) {
 		$smarty->assign('msg', tra('Username and email are mandatory'));
 	} elseif ($userlib->user_exists($_REQUEST["name"])) {
 		$smarty->assign('msg', tra('User already exists'));
-	} elseif (!preg_match('/^[_a-z0-9\.\-]+@[_a-z0-9\.\-]+\.[a-z]{2,4}$/i', $_REQUEST["email"])) {
+	} elseif (!preg_match('/^[_a-z0-9\.\-]+@[_a-z0-9\.\-]+\.[a-z]{2,4}$/i',
+				($prefs['login_is_email'] !== 'y') ? $_REQUEST['email'] : $_REQUEST['name'])) {
 		$smarty->assign('msg', tra('Email is invalid'));
 	} else {
 		$tikilib->set_user_preference($user, 'socialnetworks_user_firstlogin', 'n');

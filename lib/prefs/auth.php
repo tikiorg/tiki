@@ -275,7 +275,7 @@ function prefs_auth_list()
 			'default' => '',
 		),
 		'auth_ldap_emailattr' => array(
-			'name' => tra('E-mail attribute'),
+			'name' => tra('Email attribute'),
             'description' => tra(''),
 			'type' => 'text',
 			'size' => 20,
