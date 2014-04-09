@@ -1160,7 +1160,7 @@ class TrackerLib extends TikiLib
 						$mid .= " AND ttif{$i}_remote.`value` LIKE ? ";
 						$bindvars[] = $ev ? $ev : "%$fv%";
 					}
-				} elseif (!empty($ev)) {
+				} elseif ($ev > '') {
 					if (is_array($ev)) {
 						$keys = array_keys($ev);
 						if (in_array((string) $keys[0], array('<', '>'))) {
@@ -1182,10 +1182,10 @@ class TrackerLib extends TikiLib
 						$bindvars[] = $ev;
 					} else {
 						$mid.= " AND ttif$i.`value`=? ";
-						$bindvars[] = empty($ev)? $fv: $ev;
+						$bindvars[] = $ev == ''? $fv: $ev;
 					}
 
-				} elseif ( $fv ) {
+				} elseif ( $fv > '' ) {
 					if (!is_array($fv)) {
 						$value = array($fv);
 					}

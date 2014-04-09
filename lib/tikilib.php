@@ -6370,7 +6370,7 @@ JS;
 
 		foreach ($temp as $v) {
 			$filtered = str_replace($ignore_chars, '', $v);
-			if (empty($filtered)) {
+			if ($filtered == '') {	
 				if (! $keep) {
 					$array[count($array) - 1] .= $delimiter;
 				}
