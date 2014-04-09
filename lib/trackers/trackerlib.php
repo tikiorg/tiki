@@ -1246,6 +1246,13 @@ class TrackerLib extends TikiLib
 				$fieldIds[] = $k;	// sometimes filterfields are provided with the fieldId only on the array keys
 			}
 		}
+		if (!empty($filterfield)) {
+			foreach ($filterfield as $f) {
+				if (!in_array($f, $fieldIds)) {
+					$fieldIds[] = $f
+				}
+			}
+		}
 
 		if (!empty($fieldIds)) {
 			$mid .= ' AND ' . $this->in('ttif.fieldId', $fieldIds, $bindvars);
