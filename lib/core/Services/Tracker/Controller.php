@@ -752,6 +752,7 @@ class Services_Tracker_Controller
 		}
 
 		return array(
+			'title' => tr('Update'),
 			'trackerId' => $trackerId,
 			'itemId' => $itemId,
 			'fields' => $processedFields,

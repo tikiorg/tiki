@@ -22,6 +22,9 @@
 				<a class="btn btn-default" href="tiki-object_watches.php?objectId={$itemId|escape:"url"}&amp;watch_event=tracker_item_modified&amp;objectType=tracker+{$trackerId}&amp;objectName={$tracker_info.name|escape:"url"}&amp;objectHref={'tiki-view_tracker_item.php?trackerId='|cat:$trackerId|cat:'&itemId='|cat:$itemId|escape:"url"}" class="icon">{icon _id='eye_group' alt="{tr}Group Monitor{/tr}" align='right' hspace='1'}</a>
 			{/if}
 		</div>
+		{if $canModify && $prefs.tracker_legacy_insert neq 'y'}
+			<a class="btn btn-default" href="{service controller=tracker action=update_item trackerId=$trackerId itemId=$itemId modal=1}" data-toggle="modal" data-target="#bootstrap-modal">{glyph name=pencil} {tr}Edit{/tr}</a>
+		{/if}
 		{include file="tracker_actions.tpl"}
 	</div>
 
@@ -47,7 +50,7 @@
 	{include file='tracker_error.tpl'}
 {/if}{*print_page*}
 
-{tabset name='tabs_view_tracker_item'}
+{tabset name='tabs_view_tracker_item' skipsingle=1}
 
 	{tab name="{tr}View{/tr}"}
 		{* --- tab with view ------------------------------------------------------------------------- *}
@@ -169,7 +172,7 @@
 {/if}
 
 {* --------------------------------------------------------------- tab with edit --- *}
-{if (! isset($print_page) || $print_page ne 'y') && $canModify}
+{if (! isset($print_page) || $print_page ne 'y') && $canModify && $prefs.tracker_legacy_insert eq 'y'}
 	{tab name=$editTitle}
 		<h2>{tr}Edit Item{/tr}</h2>
 
