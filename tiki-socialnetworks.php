@@ -14,6 +14,8 @@ require_once ('lib/socialnetworkslib.php');
 $access->check_feature('feature_socialnetworks');
 $access->check_permission('tiki_p_socialnetworks', tra('Social networks'));
 
+$auto_query_args = array();
+
 if (isset($_REQUEST['request_twitter'])) {
 	$access->check_user($user);
 	if (!isset($_REQUEST['oauth_verifier'])) {
@@ -62,6 +64,7 @@ if (isset($_REQUEST['remove_facebook'])) {
 	$access->check_user($user);
 	// remove user token from tiki
 	$tikilib->set_user_preference($user, 'facebook_token', '');
+	$tikilib->set_user_preference($user, 'facebook_id', '');
 	$smarty->assign('show_removal', true);
 }
 
