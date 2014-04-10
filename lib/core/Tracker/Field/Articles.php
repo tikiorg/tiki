@@ -29,7 +29,13 @@ class Tracker_Field_Articles extends Tracker_Field_Abstract
 		global $prefs;
 		$ins_id = $this->getInsertId();
 		if (isset($requestData[$ins_id])) {
-			$articleIds = array_filter(explode(',', $requestData[$ins_id]));
+			if (is_string($requestData[$ins_id])) {
+				$articleIds = explode(',', $requestData[$ins_id]);
+			} else {
+				$articleIds = $requestData[$ins_id];
+			}
+
+			$articleIds = array_filter(array_map('intval', $articleIds));
 			$value = implode(',', $articleIds);
 		} else {
 			$value = $this->getValue();
@@ -46,7 +52,16 @@ class Tracker_Field_Articles extends Tracker_Field_Abstract
 
 	function renderInput($context = array())
 	{
+		$articleIds = $this->getConfiguration('articleIds');
+
 		return $this->renderTemplate('trackerinput/articles.tpl', $context, array(
+			'filter' => ['type' => 'article'],
+			'labels' => array_combine(
+				$articleIds,
+				array_map(function ($id) {
+					return TikiLib::lib('object')->get_title('article', $id);
+				}, $articleIds)
+			),
 		));
 	}
 
