@@ -7,7 +7,7 @@
 	</ul>
 	{object_selector _class=selector _filter=$data.filter}
 	{if $prefs.page_content_fetch eq 'y'}
-		<button name="{$field.ins_id|escape}_add" class="add-more btn btn-default btn-sm">{glyph name=plus} {tr}Add Article{/tr}</button>
+		<button name="{$field.ins_id|escape}_add" class="add-more btn btn-default btn-sm" data-topic="{$field.options_map.topicId|escape}" data-type="{$field.options_map.type|escape}">{glyph name=plus} {tr}Add Article{/tr}</button>
 	{/if}
 </div>
 {jq}
@@ -81,6 +81,8 @@
 					$(button).closest('form').showError(jqxhr);
 				},
 				data: {
+					topicId: $(button).data('topic'),
+					type: $(button).data('type'),
 					errorfield: $(button).attr('name'),
 					url: url
 				}

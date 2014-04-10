@@ -31,8 +31,8 @@ class Services_Article_Controller
 			$data['content'] = trim($data['content']) == '' ? $data['content'] : '~np~' . $data['content'] . '~/np~';
 			$data['description'] = '';
 			$data['author'] = '';
-			$topicId = 0;
-			$articleType = '';
+			$topicId = $input->topicId->int();
+			$articleType = $input->type->text();
 			$title = $data['title'];
 
 			$hash = md5($data['title'] . $data['description'] . $data['content']);
@@ -76,11 +76,17 @@ class Services_Article_Controller
 			}
 		}
 
+		$db = TikiDb::get();
+		$topics = $db->table('tiki_topics')->fetchMap('topicId', 'name', array(), -1, -1, 'name_asc');
+		$types = $db->table('tiki_article_types')->fetchColumn('type', array());
+
 		return [
 			'title' => tr('Create article from URL'),
 			'url' => $url,
 			'id' => $id,
 			'articleTitle' => $title,
+			'topics' => $topics,
+			'types' => $types,
 		];
 	}
 }

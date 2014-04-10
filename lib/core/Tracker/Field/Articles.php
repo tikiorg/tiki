@@ -9,6 +9,11 @@ class Tracker_Field_Articles extends Tracker_Field_Abstract
 {
 	public static function getTypes()
 	{
+		$db = TikiDb::get();
+		$topics = $db->table('tiki_topics')->fetchMap('topicId', 'name', array(), -1, -1, 'name_asc');
+		$types = $db->table('tiki_article_types')->fetchColumn('type', array());
+		$types = array_combine($types, $types);
+
 		$options = array(
 			'articles' => array(
 				'name' => tr('Articles'),
@@ -18,6 +23,20 @@ class Tracker_Field_Articles extends Tracker_Field_Abstract
 				'help' => 'Articles Tracker Field',
 				'default' => 'n',
 				'params' => array(
+					'topicId' => array(
+						'name' => tr('Topic'),
+						'description' => tr('Default article topic'),
+						'filter' => 'int',
+						'profile_reference' => 'article_topic',
+						'options' => $topics,
+					),
+					'type' => array(
+						'name' => tr('Article Type'),
+						'description' => tr('Default article type'),
+						'filter' => 'text',
+						'profile_reference' => 'article_type',
+						'options' => $types,
+					),
 				),
 			),
 		);
