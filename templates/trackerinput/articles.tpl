@@ -6,6 +6,9 @@
 		{/foreach}
 	</ul>
 	{object_selector _class=selector _filter=$data.filter}
+	{if $prefs.page_content_fetch eq 'y'}
+		<button name="{$field.ins_id|escape}_add" class="add-more btn btn-default btn-sm">{glyph name=plus} {tr}Add Article{/tr}</button>
+	{/if}
 </div>
 {jq}
 (function () {
@@ -57,6 +60,32 @@
 	$('.selector', container).change(function () {
 		createItem($(this).val().substring("article:".length), $(this).data('label'), true);
 		$('ul.related_items', container).sortList();
+	});
+
+	$('.add-more', container).click(function (e) {
+		e.preventDefault();
+
+		var url = prompt(tr('URL')), button = this;
+
+		if (url) {
+			$.ajax($.service('article', 'create_from_url'), {
+				method: 'POST',
+				dataType: 'json',
+				success: function (data) {
+					$(button).clearError();
+					if (data.id) {
+						createItem(data.id, data.articleTitle, true);
+					}
+				},
+				error: function (jqxhr) {
+					$(button).closest('form').showError(jqxhr);
+				},
+				data: {
+					errorfield: $(button).attr('name'),
+					url: url
+				}
+			});
+		}
 	});
 }());
 {/jq}
