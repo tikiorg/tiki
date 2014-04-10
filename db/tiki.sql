@@ -916,6 +916,7 @@ CREATE TABLE `tiki_forums` (
   `inbound_pop_password` varchar(80) default NULL,
   `topic_smileys` char(1) default NULL,
   `ui_avatar` char(1) default NULL,
+  `ui_rating_choice_topic` char(1) DEFAULT NULL,
   `ui_flag` char(1) default NULL,
   `ui_posts` char(1) default NULL,
   `ui_email` char(1) default NULL,
