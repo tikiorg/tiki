@@ -58,6 +58,7 @@ class ServiceLib
 	{
 		return array(
 			'activitystream' => 'Services_ActivityStream_Controller',
+			'article' => 'Services_Article_Controller',
 			'auth_source' => 'Services_AuthSource_Controller',
 			'autosave' => 'Services_AutoSave_Controller',
 			'bigbluebutton' => 'Services_BigBlueButton_Controller',

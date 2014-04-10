@@ -24,7 +24,8 @@ class PageContentLib
 
 	function grabContent($url)
 	{
-		$html = file_get_contents($url);
+		$tikilib = TikiLib::lib('tiki');
+		$html = $tikilib->httprequest($url);
 
 		// Note: PHP Readability expects UTF-8 encoded content.
 		// If your content is not UTF-8 encoded, convert it 
