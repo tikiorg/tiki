@@ -5,9 +5,14 @@
 			<li>{$label|escape}</li>
 		{/foreach}
 	</ul>
+	<h5>{tr}Existing Article{/tr}</h5>
 	{object_selector _class=selector _filter=$data.filter}
 	{if $prefs.page_content_fetch eq 'y'}
-		<button name="{$field.ins_id|escape}_add" class="add-more btn btn-default btn-sm" data-topic="{$field.options_map.topicId|escape}" data-type="{$field.options_map.type|escape}">{glyph name=plus} {tr}Add Article{/tr}</button>
+		<h5>{tr}New Article{/tr}</h5>
+		<div class="form-inline">
+			<input class="form-control" type="url" name="{$field.ins_id|escape}_add" placeholder="{tr}Article URL{/tr}" size="50">
+			<button name="{$field.ins_id|escape}_add" class="add-more btn btn-default" data-topic="{$field.options_map.topicId|escape}" data-type="{$field.options_map.type|escape}">{glyph name=plus} {tr}Add Article{/tr}</button>
+		</div>
 	{/if}
 </div>
 {jq}
@@ -62,10 +67,18 @@
 		$('ul.related_items', container).sortList();
 	});
 
-	$('.add-more', container).click(function (e) {
+	var urlField = $('input[type=url]', container), add = $('.add-more', container);
+	urlField.keypress(function (e) {
+		if (e.which == 13) {
+			e.preventDefault();
+			add.click();
+		}
+	});
+
+	add.click(function (e) {
 		e.preventDefault();
 
-		var url = prompt(tr('URL')), button = this;
+		var url = urlField.val(), button = this;
 
 		if (url) {
 			$.ajax($.service('article', 'create_from_url'), {
@@ -75,6 +88,7 @@
 					$(button).clearError();
 					if (data.id) {
 						createItem(data.id, data.articleTitle, true);
+						urlField.val('');
 					}
 				},
 				error: function (jqxhr) {
@@ -83,7 +97,7 @@
 				data: {
 					topicId: $(button).data('topic'),
 					type: $(button).data('type'),
-					errorfield: $(button).attr('name'),
+					errorfield: urlField.attr('name'),
 					url: url
 				}
 			});
