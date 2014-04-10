@@ -1,5 +1,5 @@
 {* $Id$ *}
-{title help="trackers"}{$tracker_info.name}{/title}
+{title help="trackers"}{$tracker_item_main_value}{/title}
 
 {if ! isset($print_page) || $print_page ne 'y'}
 
@@ -55,7 +55,7 @@
 	{tab name="{tr}View{/tr}"}
 		{* --- tab with view ------------------------------------------------------------------------- *}
 		{if empty($tracker_info.viewItemPretty)}
-			<h2>{tr}View Item{/tr}</h2>
+			<h2>{$tracker_info.name|escape}</h2>
 			{if $tracker_is_multilingual}
 				<div class="translations">
 					<a href="{service controller=translation action=manage type=trackeritem source=$itemId}">{tr}Translations{/tr}</a>
