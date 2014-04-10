@@ -333,7 +333,7 @@ class CryptLib extends TikiLib
 		global $user;
 
 		// Encode the phrase
-		$phraseMD5 = $this->makeCryptPhrase($user.$cleartextPwd);
+		$phraseMD5 = $this->makeCryptPhrase($user, $cleartextPwd);
 
 		// Store the pass phrase in a session variable
 		$_SESSION['cryptphrase'] = $phraseMD5;
