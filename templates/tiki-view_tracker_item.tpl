@@ -76,13 +76,14 @@
 					});
 				{/jq}
 			{/if}
-			<table class="formcolor">
+			<dl class="dl-horizontal">
 				{if $tracker_info.showStatus eq 'y' or ($tracker_info.showStatusAdminOnly eq 'y' and $tiki_p_admin_trackers eq 'y')}
 					{assign var=ustatus value=$info.status|default:"p"}
-					<tr>
-						<td class="formlabel">{tr}Status{/tr}</td><td>{$status_types.$ustatus.label}</td>
-						<td colspan="2">{html_image file=$status_types.$ustatus.image title=$status_types.$ustatus.label alt=$status_types.$ustatus.label}</td>
-					</tr>
+					<dt>{tr}Status{/tr}</dt>
+					<dd>
+						{html_image file=$status_types.$ustatus.image title=$status_types.$ustatus.label alt=$status_types.$ustatus.label}
+						{$status_types.$ustatus.label}
+					</dd>
 				{/if}
 				{assign var=stick value="n"}
 
@@ -91,41 +92,36 @@
 							$cur_field.type ne 's' and $cur_field.type ne 'STARS' and $cur_field.type ne 'h' and $cur_field.type ne 'l' and $cur_field.type ne 'W') and
 							!($cur_field.options_array[0] eq 'password' and $cur_field.type eq 'p')}
 					
-						<tr class="field{$cur_field.fieldId}">
-							{* Make adjustments for line breaks *}
-							{if ($cur_field.type eq 't' and $cur_field.options_array[0] eq '0') or
-								($cur_field.type eq 'a' and $cur_field.options_array[8] eq '0') or
-								($cur_field.type eq 'n' and $cur_field.options_array[0] eq '0') or
-								($cur_field.type eq 'b' and $cur_field.options_array[0] eq '0')
-							} 
-								<td colspan="2">
-									<span class="formlabel">{$cur_field.name|escape}</span><br/>
-									<span class="formcontent">{trackeroutput field=$cur_field item=$item_info showlinks=n list_mode=n inTable=y}</span>
-								</td>
-							{else}
-								<td class="formlabel" >
-									{$cur_field.name|escape}
-								</td>
-								<td class="formcontent">
-									{trackeroutput field=$cur_field item=$item_info showlinks=n list_mode=n inTable=y}
-								</td>
+						{if $cur_field.type eq 'h'} 
+							</dl>
+							<h3>{$cur_field.name|escape}</h3>
+							{if $cur_field.description}
+								<p>{$cur_field.description|escape}</p>
 							{/if}
-						</tr>
+							<dl class="dl-horizontal">
+						{* Make adjustments for line breaks *}
+						{elseif ($cur_field.type eq 't' and $cur_field.options_array[0] eq '0') or
+							($cur_field.type eq 'a' and $cur_field.options_array[8] eq '0') or
+							($cur_field.type eq 'n' and $cur_field.options_array[0] eq '0') or
+							($cur_field.type eq 'b' and $cur_field.options_array[0] eq '0')
+						} 
+							<dt>{$cur_field.name|escape}</dt>
+							<dd>{trackeroutput field=$cur_field item=$item_info showlinks=n list_mode=n}</dd>
+						{else}
+							<dt>{$cur_field.name|escape}</dt>
+							<dd>{trackeroutput field=$cur_field item=$item_info showlinks=n list_mode=n}</dd>
+						{/if}
 					{/if}
 				{/foreach}
 				{if $tracker_info.showCreatedView eq 'y'}
-					<tr>
-						<td class="formlabel">{tr}Created{/tr}</td>
-						<td colspan="3" class="formcontent">{$info.created|tiki_long_datetime}{if $tracker_info.showCreatedBy eq 'y'}<br>by {if $prefs.user_show_realnames eq 'y'}{if empty($info.createdBy)}Unknown{else}{$info.createdBy|username}{/if}{else}{if empty($info.createdBy)}Unknown{else}{$info.createdBy}{/if}{/if}{/if}</td>
-					</tr>
+					<dt>{tr}Created{/tr}</dt>
+					<dd>{$info.created|tiki_long_datetime}{if $tracker_info.showCreatedBy eq 'y'}<br>by {if $prefs.user_show_realnames eq 'y'}{if empty($info.createdBy)}Unknown{else}{$info.createdBy|username}{/if}{else}{if empty($info.createdBy)}Unknown{else}{$info.createdBy}{/if}{/if}{/if}</dd>
 				{/if}
 				{if $tracker_info.showLastModifView eq 'y'}
-					<tr>
-						<td class="formlabel">{tr}LastModif{/tr}</td>
-						<td colspan="3" class="formcontent">{$info.lastModif|tiki_long_datetime}{if $tracker_info.showLastModifBy eq 'y'}<br>by {if $prefs.user_show_realnames eq 'y'}{if empty($info.lastModifBy)}Unknown{else}{$info.lastModifBy|username}{/if}{else}{if empty($info.lastModifBy)}Unknown{else}{$info.lastModifBy}{/if}{/if}{/if}</td>
-					</tr>
+					<dt>{tr}LastModif{/tr}</dt>
+					<dd>{$info.lastModif|tiki_long_datetime}{if $tracker_info.showLastModifBy eq 'y'}<br>by {if $prefs.user_show_realnames eq 'y'}{if empty($info.lastModifBy)}Unknown{else}{$info.lastModifBy|username}{/if}{else}{if empty($info.lastModifBy)}Unknown{else}{$info.lastModifBy}{/if}{/if}{/if}</dd>
 				{/if}
-			</table>
+			</dl>
 
 		{else}
 			{if $canModify}

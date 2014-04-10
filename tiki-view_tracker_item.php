@@ -742,5 +742,6 @@ try {
 	}
 } catch (SmartyException $e) {
 	$message = tr('This element cannot be displayed appropriately. Template not found (%0). Contact the administrator.', $tracker_info['viewItemPretty']);
+	$smarty->loadPlugin('smarty_modifier_sefurl');
 	$access->redirect(smarty_modifier_sefurl($info['trackerId'], 'tracker'), $message);
 }
