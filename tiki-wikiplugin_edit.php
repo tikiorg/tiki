@@ -60,7 +60,13 @@ foreach ( $matches as $match ) {
 
 		$match->replaceWithPlugin($plugin, $params, $content);
 
-		$tikilib->update_page($page, $matches->getText(), $_POST['message'], $user, $tikilib->get_ip_address());
+		if ($prefs['wysiwyg_htmltowiki'] == 'y') {
+			$parsed = TikiLib::lib('edit')->parseToWiki($matches->getText());
+		} else {
+			$parsed = $matches->getText();
+		}
+
+		$tikilib->update_page($page, $parsed, $_POST['message'], $user, $tikilib->get_ip_address());
 		break;
 	}
 }
