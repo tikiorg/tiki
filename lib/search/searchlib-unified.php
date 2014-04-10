@@ -509,12 +509,15 @@ class UnifiedSearchLib
 		}
 
 		if (isset ($types['article'])) {
-			$aggregator->addContentSource('article', new Search_ContentSource_ArticleSource);
+			$articleSource = new Search_ContentSource_ArticleSource;
+			$aggregator->addContentSource('article', $articleSource);
+			$aggregator->addGlobalSource(new Search_GlobalSource_ArticleAttachmentSource($articleSource));
 		}
 
 		if (isset ($types['file'])) {
-			$aggregator->addContentSource('file', new Search_ContentSource_FileSource);
-			$aggregator->addGlobalSource(new Search_GlobalSource_FileAttachmentSource);
+			$fileSource = new Search_ContentSource_FileSource;
+			$aggregator->addContentSource('file', $fileSource);
+			$aggregator->addGlobalSource(new Search_GlobalSource_FileAttachmentSource($fileSource));
 		}
 
 		if (isset ($types['trackeritem'])) {

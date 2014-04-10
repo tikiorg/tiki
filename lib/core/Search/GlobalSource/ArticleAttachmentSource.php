@@ -5,50 +5,47 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-class Search_GlobalSource_FileAttachmentSource implements Search_GlobalSource_Interface
+class Search_GlobalSource_ArticleAttachmentSource implements Search_GlobalSource_Interface
 {
 	private $relationlib;
-	private $fileSource;
+	private $source;
 
 	function __construct(Search_ContentSource_Interface $source)
 	{
 		$this->relationlib = TikiLib::lib('relation');
-		$this->fileSource = $source;
+		$this->source = $source;
 	}
 
 	function getProvidedFields()
 	{
-		return array('attachment_contents', 'attachments');
+		return array('article_contents');
 	}
 
 	function getGlobalFields()
 	{
 		return array(
-			'attachment_contents' => false,
+			'article_contents' => false,
 		);
 	}
 
 	function getData($objectType, $objectId, Search_Type_Factory_Interface $typeFactory, array $data = array())
 	{
-		$relations = $this->relationlib->get_relations_from($objectType, $objectId, 'tiki.file.attach');
+		$relations = $this->relationlib->get_relations_from($objectType, $objectId, 'tiki.article.attach');
 
 		$textual = array();
-		$files = array();
 
 		foreach ($relations as $rel) {
-			if ($rel['type'] == 'file') {
-				$files[] = $rel['itemId'];
-				$data = $this->fileSource->getDocument($rel['itemId'], $typeFactory);
+			if ($rel['type'] == 'article') {
+				$data = $this->source->getDocument($rel['itemId'], $typeFactory);
 
-				foreach ($this->fileSource->getGlobalFields() as $name => $keep) {
+				foreach ($this->source->getGlobalFields() as $name => $keep) {
 					$textual[] = $data[$name]->getValue();
 				}
 			}
 		}
 
 		return array(
-			'attachments' => $typeFactory->multivalue($files),
-			'attachment_contents' => $typeFactory->plaintext(implode(' ', $textual)),
+			'article_contents' => $typeFactory->plaintext(implode(' ', $textual)),
 		);
 	}
 }
