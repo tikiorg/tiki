@@ -170,9 +170,9 @@
 				</div>
 			</div>
 			<div class="form-group">
-				<label for="articletype">{tr}Type{/tr}</label>
+				<label for="type">{tr}Type{/tr}</label>
 				<div>
-					<select name="articletype">
+					<select name="type">
 						{foreach $types as $typei => $prop}
 							<option value="{$typei|escape}" {if $type eq $typei}selected="selected"{/if}>{tr}{$typei|escape}{/tr}</option>
 						{/foreach}
