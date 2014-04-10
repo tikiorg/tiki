@@ -286,7 +286,7 @@
 									    </select>
                                         </div>
 									    {if $tiki_p_edit_content_templates eq 'y'}
-									        <a style="align=right;" href="tiki-admin_content_templates.php" class="btn btn-link" onclick="needToConfirm = true;">{tr}Admin Content Templates{/tr}</a>
+									        <a href="tiki-admin_content_templates.php" class="btn btn-default" onclick="needToConfirm = true;">{glyph name="cog"} {tr}Admin Content Templates{/tr}</a>
 									    {/if}
                                     </div>
                                 </div>
@@ -478,7 +478,7 @@ $("input[name=allowhtml]").change(function() {
 											{/if}
 
 											{if $tiki_p_edit_structures eq 'y'}
-												<a href="tiki-admin_structures.php">{tr}Manage structures{/tr} {icon _id='wrench'}</a>
+												<a href="tiki-admin_structures.php" class="btn btn-default">{glyph name="cog"} {tr}Manage structures{/tr}</a>
 											{/if}
 										</div>
                                     </div>
@@ -619,7 +619,7 @@ $("input[name=allowhtml]").change(function() {
 								<div class="form-group">
 									<label for="" class="col-sm-2 control-label">{tr}Page display options{/tr}</label>
                                     <div class="col-sm-10">
-									    <ul>
+									    <ul class="list-unstyled">
 											{if $prefs.wiki_auto_toc eq 'y'}
 												<li>{tr}Automatic Table of Contents generation{/tr}
 													<select name="pageAutoToc">
@@ -647,13 +647,15 @@ $("input[name=allowhtml]").change(function() {
 								<div class="form-group">
 									<label for="" class="col-sm-2 control-label">{tr}Namespace{/tr}</label>
                                     <div class="col-sm-10">
-									{remarksbox title="{tr}Advanced usage{/tr}"}
-										<p>{tr}The namespace for a page is guessed automatically from the page name. However, some exceptions may arise. This option allows to override the namespace.{/tr}</p>
-									{/remarksbox}
-									<label>
-										{tr}Explicit Namespace{/tr}
-										<input type="text" name="explicit_namespace" value="{$explicit_namespace|escape}">
-									</label>
+										{remarksbox title="{tr}Advanced usage{/tr}"}
+											<p>{tr}The namespace for a page is guessed automatically from the page name. However, some exceptions may arise. This option allows to override the namespace.{/tr}</p>
+										{/remarksbox}
+										<label for="explicit_namespace" class="col-sm-3 control-label">
+											{tr}Explicit Namespace{/tr}
+										</label>
+										<div class="col-sm-9">
+											<input type="text" class="form-control" name="explicit_namespace" value="{$explicit_namespace|escape}">
+										</div>
                                     </div>
 								</div>
 							{/if}
@@ -676,7 +678,7 @@ $("input[name=allowhtml]").change(function() {
                                 <div class="form-group">
                                     <label for="" class="col-sm-2 control-label">{tr}Wiki preferences{/tr}</label>
                                     <div class="col-sm-10">
-								        <a href="tiki-admin.php?page=wiki">{tr}Admin wiki preferences{/tr} {icon _id='wrench'}</a>
+								        <a href="tiki-admin.php?page=wiki" class="btn btn-default">{glyph name="cog"} {tr}Admin Wiki Preferences{/tr}</a>
                                     </div>
                                 </div>
 							{/if}
