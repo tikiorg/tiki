@@ -4740,7 +4740,15 @@ class TrackerLib extends TikiLib
 
 	public function field_render_value( $params )
 	{
-		$field = $params['field'];
+		if (isset($params['field'])) {
+			$field = $params['field'];
+		} elseif (isset($params['trackerId'], $params['permName'])) {
+			$definition = Tracker_Definition::get($params['trackerId']);
+			$field = $definition->getFieldFromPermName($params['permName']);
+		} else {
+			return tr('Field not specified');
+		}
+
 		$item = isset($params['item']) ? $params['item'] : array();
 
 		if (isset($field['value'])) {
