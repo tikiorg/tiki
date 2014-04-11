@@ -68,9 +68,7 @@
 			{if $prefs.feature_edit_templates ne 'y' or $tiki_p_edit_templates ne 'y'}
 				class="readonly" readonly="readonly"
 			{/if}
-		>
-			{$data|escape}
-		</textarea>
+		>{$data|escape}</textarea>
 		<div align="center">
 			<input type="hidden" name="template" value="{$template|escape}">
 			{if $prefs.feature_edit_templates eq 'y' and $tiki_p_edit_templates eq 'y'}
