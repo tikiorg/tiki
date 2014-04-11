@@ -184,6 +184,8 @@ class WikiParser_OutputLink
 
 	private function renderPageName($info)
 	{
+		global $prefs;
+
 		if (! isset($info['namespace_parts'])) {
 			return $info['pageName'];
 		}
@@ -196,6 +198,9 @@ class WikiParser_OutputLink
 
 		$last = count($info['namespace_parts']) - 1;
 		foreach ($info['namespace_parts'] as $key => $part) {
+			if ($prefs['namespace_force_links'] == 'y') {
+				break;
+			}
 			$class = 'namespace';
 			if ($key === 0) {
 				$class .= ' first';

@@ -434,7 +434,13 @@ if (!empty($multiprint_pages)) {
 	if ($access->is_serializable_request()) {
 		if (isset($_REQUEST['listonly']) && ($prefs['feature_jquery'] == 'y' && $prefs['feature_jquery_autocomplete'] == 'y')) {
 			$pages = array();
-			foreach ($listpages['data'] as $page) $pages[] = $page['pageName'];
+			foreach ($listpages['data'] as $page) {
+				if (isset($_REQUEST['nonamespace'])) {
+					$pages[] = TikiLib::lib('wiki')->get_without_namespace($page['pageName']);
+				} else {
+					$pages[] = $page['pageName'];
+				}
+			}	
 			$access->output_serialized($pages);
 		} else {
 			$pages = array();

@@ -4761,6 +4761,14 @@ class TikiLib extends TikiDb_Bridge
 	 */
 	function replace_link($pageFrom, $pageTo, $types = array())
 	{
+		global $prefs;
+		if ($prefs['namespace_enabled'] == 'y' && $prefs['namespace_force_links'] == 'y'
+			&& TikiLib::lib('wiki')->get_namespace($pageFrom)
+			&& !TikiLib::lib('wiki')->get_namespace($pageTo) ) {
+				$namespace = TikiLib::lib('wiki')->get_namespace($pageFrom);
+				$pageTo = $namespace . $prefs['namespace_separator'] . $pageTo;
+		}
+
 		$links = $this->table('tiki_links');
 		$links->insert(array('fromPage' => $pageFrom, 'toPage' => $pageTo), true);
 

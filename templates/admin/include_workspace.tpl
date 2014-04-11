@@ -25,6 +25,7 @@
 				<legend>{tr}Dependencies{/tr}</legend>
 				{preference name=namespace_enabled}
 				{preference name=namespace_separator}
+				{preference name=namespace_force_links}
 				{preference name=feature_perspective}
 				{preference name=feature_categories}
 				{preference name=feature_wiki}

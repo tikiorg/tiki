@@ -63,7 +63,7 @@ function wikiplugin_wysiwyg($data, $params)
 	} else {
 		$is_html = true;
 	}
-	$html = TikiLib::lib('edit')->parseToWysiwyg( $data, true, $is_html);
+	$html = TikiLib::lib('edit')->parseToWysiwyg( $data, true, $is_html, array('page' => $sourcepage) );
 
 	if ($tiki_p_edit === 'y') {
 		$class = "wp_wysiwyg";
@@ -76,7 +76,17 @@ function wikiplugin_wysiwyg($data, $params)
 		//$params['comments'] = true;
 		$ckoption = TikiLib::lib('wysiwyg')->setUpEditor(true, $exec_key, $params, '', false);
 
-		$html = "<div id='$exec_key' class='{$class}'$style>" . $html . '</div>';
+		if ($prefs['namespace_enabled'] == 'y' && $prefs['namespace_force_links'] == 'y') {
+			$namespace = TikiLib::lib('wiki')->get_namespace($sourcepage);
+			if ($namespace) {
+				$namespace .= $prefs['namespace_separator'];
+			}
+		} else {
+			$namespace = '';
+		}
+		$namespace = htmlspecialchars($namespace);
+
+		$html = "<div id='$exec_key' class='{$class}'$style data-initial='$namespace'>" . $html . '</div>';
 
 		$js = '$("#' . $exec_key . '").wysiwygPlugin("' . $execution . '", "' . $sourcepage . '", ' . $ckoption . ')';
 

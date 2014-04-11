@@ -348,6 +348,7 @@
 				{tr}If the page name display stripper conflicts with the namespace separator, the namespace is used and the page name display is not stripped.{/tr}
 				{preference name=wiki_pagename_strip}
 			</fieldset>
+			{preference name=namespace_force_links}
 		</div>
 	{/tab}
 

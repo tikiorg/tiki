@@ -766,7 +766,7 @@ class EditLib
 	 * @return string			html to send to ckeditor
 	 */
 
-	function parseToWysiwyg( $inData, $fromWiki = false, $isHtml = false )
+	function parseToWysiwyg( $inData, $fromWiki = false, $isHtml = false, $options = array() )
 	{
 		global $tikilib, $tikiroot, $prefs;
 		// Parsing page data for wysiwyg editor
@@ -776,7 +776,7 @@ class EditLib
 
 		$parsed = $tikilib->parse_data(
 			$parsed,
-			array(
+			array_merge( array(
 				'absolute_links'=>true,
 				'noheaderinc'=>true,
 				'suppress_icons' => true,
@@ -784,7 +784,7 @@ class EditLib
 				'is_html' => ($isHtml && !$fromWiki),
 				'process_wiki_paragraphs' => (!$isHtml || $fromWiki),
 				'process_double_brackets' => 'n'
-			)
+			), $options )
 		);
 
 		if ($fromWiki) {

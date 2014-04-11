@@ -2981,6 +2981,12 @@ if ( \$('#$id') ) {
 		// HTML entities encoding breaks page lookup
 		$pageLink = html_entity_decode($pageLink, ENT_COMPAT, 'UTF-8');
 
+		if ($prefs['namespace_enabled'] == 'y' && $prefs['namespace_force_links'] == 'y'
+			&& $wikilib->get_namespace($this->option['page'])
+			&& !$wikilib->get_namespace($pageLink) ) {
+				$pageLink = $wikilib->get_namespace($this->option['page']) . $prefs['namespace_separator'] . $pageLink;
+		}
+
 		$description = null;
 		$reltype = null;
 		$processPlural = false;
