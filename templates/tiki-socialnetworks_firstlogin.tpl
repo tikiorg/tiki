@@ -8,7 +8,10 @@ window.parent.location = 'tiki-index.php';
 <p>{tr}You will be redirected to the home page shortly.{/tr} <a href="tiki-index.php" target="_parent">{tr}Click here{/tr}</a> {tr}to go to the home page immediately.{/tr}</p>
 
 {else}
-
+{jq}
+$("#name").val("{{($prefs.login_is_email eq 'y' and $userinfo.login neq 'admin') ? {$userinfo.email|escape} : {$userinfo.login|escape} }}");
+$("#email").val("{{$userinfo.email|escape}}");
+{/jq}
 {if $msg}<p><strong>{$msg|escape}</strong></p>{/if}
 
 <h4>{tr}Please provide local account information{/tr}</h4>

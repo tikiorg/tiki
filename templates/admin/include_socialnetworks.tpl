@@ -43,6 +43,7 @@
 				{preference name=socialnetworks_facebook_manage_events}
 				{preference name=socialnetworks_facebook_manage_pages}
 				{preference name=socialnetworks_facebook_sms}
+				{preference name=socialnetworks_facebook_email}
 			</div>
 		{/tab}
 		{tab name="{tr}bit.ly{/tr}"}
