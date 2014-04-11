@@ -49,11 +49,11 @@ class Account
 		];
 
 		try {
-			$container = TikiInit::getContainer();
+			$container = \TikiInit::getContainer();
 			$type = str_replace('-', '', $acc['type']);
 			$provider = $container->get("tiki.mailin.provider.{$type}");
 
-			$this->actionFactory = $provider->getActionFactory($acc);
+			$account->actionFactory = $provider->getActionFactory($acc);
 		} catch (ServiceNotFoundException $e) {
 			throw new Exception\MailInException("Action factory not found.");
 		}

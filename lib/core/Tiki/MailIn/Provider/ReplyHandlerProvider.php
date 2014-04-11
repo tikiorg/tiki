@@ -6,6 +6,7 @@
 // $Id$
 
 namespace Tiki\MailIn\Provider;
+use Tiki\MailIn\Action;
 
 class ReplyHandlerProvider implements ProviderInterface
 {
