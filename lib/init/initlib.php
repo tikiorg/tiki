@@ -59,11 +59,14 @@ class TikiInit
 
 		$path = TIKI_PATH . '/db/config';
 		$container = new ContainerBuilder;
+		$container->addCompilerPass(new \Tiki\MailIn\Provider\CompilerPass);
+
 		$container->setParameter('kernel.root_dir', TIKI_PATH);
 		$loader = new XmlFileLoader($container, new FileLocator($path));
 
 		$loader->load('tiki.xml');
 		$loader->load('controllers.xml');
+		$loader->load('mailin.xml');
 
 		try {
 			$loader->load('custom.xml');

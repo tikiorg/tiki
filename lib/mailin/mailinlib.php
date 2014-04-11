@@ -18,37 +18,18 @@ class MailinLib extends TikiDb_Bridge
 {
 	function list_available_types()
 	{
-		global $prefs;
-		return [
-			'article-put' => [
-				'name' => tr('Create or update article'),
-				'enabled' => $prefs['feature_submissions'] == 'y',
-			],
-			'wiki-get' => [
-				'name' => tr('Send page to user'),
-				'enabled' => $prefs['feature_wiki'] == 'y',
-			],
-			'wiki-put' => [
-				'name' => tr('Create or update wiki page'),
-				'enabled' => $prefs['feature_wiki'] == 'y',
-			],
-			'wiki-append' => [
-				'name' => tr('Append to wiki page'),
-				'enabled' => $prefs['feature_wiki'] == 'y',
-			],
-			'wiki-prepend' => [
-				'name' => tr('Prepend to wiki page'),
-				'enabled' => $prefs['feature_wiki'] == 'y',
-			],
-			'wiki' => [
-				'name' => tr('Wiki (multiple action)'),
-				'enabled' => $prefs['feature_wiki'] == 'y',
-			],
-			'reply-handler' => [
-				'name' => tr('Reply handler'),
-				'enabled' => ! empty($prefs['monitor_reply_email_pattern']),
-			],
-		];
+		$container = TikiInit::getContainer();
+		$list = $container->get('tiki.mailin.providerlist');
+
+		$out = [];
+		foreach ($list->getList() as $provider) {
+			$out[$provider->getType()] = [
+				'name' => $provider->getLabel(),
+				'enabled' => $provider->isEnabled(),
+			];
+		}
+
+		return $out;
 	}
 
     /**

@@ -7,6 +7,7 @@
 
 namespace Tiki\MailIn;
 use TikiLib, TikiMail;
+use Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
 
 class Account
 {
@@ -47,40 +48,13 @@ class Account
 			'structure_routing' => $acc['routing'] == 'y',
 		];
 
-		switch ($acc['type']) {
-		case 'article-put':
-			$account->actionFactory = new Action\DirectFactory('Tiki\MailIn\Action\ArticlePut', array(
-				'topic' => $acc['article_topicId'],
-				'type' => $acc['article_type'],
-			));
-			break;
-		case 'wiki-put':
-			$account->actionFactory = new Action\DirectFactory('Tiki\MailIn\Action\WikiPut', $wikiParams);
-			break;
-		case 'wiki-get':
-			$account->actionFactory = new Action\DirectFactory('Tiki\MailIn\Action\WikiGet', $wikiParams);
-			break;
-		case 'wiki-append':
-			$account->actionFactory = new Action\DirectFactory('Tiki\MailIn\Action\WikiAppend', $wikiParams);
-			break;
-		case 'wiki-prepend':
-			$account->actionFactory = new Action\DirectFactory('Tiki\MailIn\Action\WikiPrepend', $wikiParams);
-			break;
-		case 'wiki':
-			$account->actionFactory = new Action\SubjectPrefixFactory(array(
-				'GET:' => new Action\DirectFactory('Tiki\MailIn\Action\WikiGet', $wikiParams),
-				'APPEND:' => new Action\DirectFactory('Tiki\MailIn\Action\WikiAppend', $wikiParams),
-				'PREPEND:' => new Action\DirectFactory('Tiki\MailIn\Action\WikiPrepend', $wikiParams),
-				'PUT:' => new Action\DirectFactory('Tiki\MailIn\Action\WikiPut', $wikiParams),
-				'' => new Action\DirectFactory('Tiki\MailIn\Action\WikiPut', $wikiParams),
-			));
-			break;
-		case 'reply-handler':
-			$account->actionFactory = new Action\RecipientPlaceholderFactory(array(
-				'comment' => 'Tiki\MailIn\Action\Comment',
-			));
-			break;
-		default:
+		try {
+			$container = TikiInit::getContainer();
+			$type = str_replace('-', '', $acc['type']);
+			$provider = $container->get("tiki.mailin.provider.{$type}");
+
+			$this->actionFactory = $provider->getActionFactory($acc);
+		} catch (ServiceNotFoundException $e) {
 			throw new Exception\MailInException("Action factory not found.");
 		}
 

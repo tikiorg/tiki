@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<container xmlns="http://symfony.com/schema/dic/services">
+	<!--
+
+	Important: This file is part of Tiki.
+	           If you want to load additional services, please create
+			   a 'custom.xml' file to avoid conflicts.
+
+	-->
+	<services>
+		<service id="tiki.mailin.providerlist" class="Tiki\MailIn\Provider\ProviderList">
+		</service>
+
+		<service id="tiki.mailin.provider.wikiput" class="Tiki\MailIn\Provider\BasicWikiProvider">
+			<argument>wiki-put</argument>
+			<argument>Create or update wiki page</argument>
+			<argument>Tiki\MailIn\Action\WikiPut</argument>
+			<tag name="tiki.mailin.provider"/>
+		</service>
+		<service id="tiki.mailin.provider.wikiget" class="Tiki\MailIn\Provider\BasicWikiProvider">
+			<argument>wiki-get</argument>
+			<argument>Send page to user</argument>
+			<argument>Tiki\MailIn\Action\WikiPut</argument>
+			<tag name="tiki.mailin.provider"/>
+		</service>
+		<service id="tiki.mailin.provider.wikiappend" class="Tiki\MailIn\Provider\BasicWikiProvider">
+			<argument>wiki-append</argument>
+			<argument>Append to wiki page</argument>
+			<argument>Tiki\MailIn\Action\WikiAppend</argument>
+			<tag name="tiki.mailin.provider"/>
+		</service>
+		<service id="tiki.mailin.provider.wikiprepend" class="Tiki\MailIn\Provider\BasicWikiProvider">
+			<argument>wiki-prepend</argument>
+			<argument>Prepend to wiki page</argument>
+			<argument>Tiki\MailIn\Action\WikiPrepend</argument>
+			<tag name="tiki.mailin.provider"/>
+		</service>
+		<service id="tiki.mailin.provider.wiki" class="Tiki\MailIn\Provider\WikiMultipleProvider">
+			<tag name="tiki.mailin.provider"/>
+		</service>
+		<service id="tiki.mailin.provider.replyhandler" class="Tiki\MailIn\Provider\ReplyHandlerProvider">
+			<tag name="tiki.mailin.provider"/>
+		</service>
+		<service id="tiki.mailin.provider.articleput" class="Tiki\MailIn\Provider\ArticlePutProvider">
+			<tag name="tiki.mailin.provider"/>
+		</service>
+	</services>
+</container>
