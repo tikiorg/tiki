@@ -182,8 +182,7 @@ class Tiki_Profile_InstallHandler_WikiPage extends Tiki_Profile_InstallHandler
 			TikiLib::lib('geo')->set_coordinates('wiki page', $this->name, $this->geolocation);
 		}
 
-		global $multilinguallib;
-		require_once 'lib/multilingual/multilinguallib.php';
+		$multilinguallib = TikiLib::lib('multilingual');
 
 		$current = $tikilib->get_page_id_from_name($finalName);
 		foreach ( $this->translations as $targetName ) {

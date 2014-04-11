@@ -337,7 +337,7 @@ class SemanticLib
 
 	function onlyKeepAliasesFromPageInLanguage($language, $aliases)
 	{
-		global $multilinguallib;
+		$multilinguallib = TikiLib::lib('multilingual');
 		if (!$language) {
 			return $aliases;
 		}

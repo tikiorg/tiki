@@ -339,7 +339,8 @@ class ObjectRenderer_MultilingualWiki extends ObjectRenderer // {{{
     function __construct($type, $object, $options = array())
 	{
 		parent::__construct($type, $object, $options);
-		global $multilinguallib, $tikilib; require_once 'lib/multilingual/multilinguallib.php';
+		$multilinguallib = TikiLib::lib('multilingual');
+		$tikilib = TikiLib::lib('tiki');
 
 		$languages = $options['languages'];
 		$this->renderers = array_fill_keys($languages, null);

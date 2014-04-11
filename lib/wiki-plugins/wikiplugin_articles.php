@@ -368,8 +368,7 @@ function wikiplugin_articles($data, $params)
 
 	$listpages = $artlib->list_articles($start, $max, $sort, '', $dateStartTS, $dateEndTS, 'admin', $type, $topicId, 'y', $topic, $categIds, '', '', $lang, '', '', ($overrideDates == 'y'), 'y', $filter);
 	if ($prefs['feature_multilingual'] == 'y' && empty($translationOrphan)) {
-		global $multilinguallib;
-		include_once("lib/multilingual/multilinguallib.php");
+		$multilinguallib = TikiLib::lib('multilingual');
 		$listpages['data'] = $multilinguallib->selectLangList('article', $listpages['data'], $pageLang);
 		foreach ($listpages['data'] as &$article) {
 			$article['translations'] = $multilinguallib->getTranslations('article', $article['articleId'], $article["title"], $article['lang']);

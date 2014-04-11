@@ -11,11 +11,12 @@
 global $prefs;
 
 require 'tiki-setup.php';
-include_once('lib/multilingual/multilinguallib.php');
-include_once('lib/wiki/wikilib.php');
 include_once('lib/wiki/renderlib.php');
 
 $access->check_feature(array('feature_multilingual', 'feature_multilingual_one_page'));
+
+$multilinguallib = TikiLib::lib('multilingual');
+$wikilib = TikiLib::lib('wiki');
 
 if ( !isset($_REQUEST['page']) ) {
 	header('Location: tiki-index.php');

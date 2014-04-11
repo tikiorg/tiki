@@ -50,7 +50,7 @@ class EditLib
 
 	function user_needs_to_specify_language_of_page_to_be_created($page, $page_info, $new_page_inherited_attributes = null)
 	{
-		global $_REQUEST, $multilinguallib, $prefs, $tikilib;
+		global $prefs;
 		if (isset($_REQUEST['need_lang']) && $_REQUEST['need_lang'] == 'n') {
 			return false;
 		}
@@ -680,7 +680,7 @@ class EditLib
 
 	function saveCompleteTranslation()
 	{
-		global $multilinguallib, $tikilib;
+		$multilinguallib = TikiLib::lib('multilingual');
 
 		$sourceInfo = $tikilib->get_page_info($this->sourcePageName);
 		$targetInfo = $tikilib->get_page_info($this->targetPageName);
@@ -697,7 +697,7 @@ class EditLib
 
 	function savePartialTranslation()
 	{
-		global $multilinguallib, $tikilib;
+		$multilinguallib = TikiLib::lib('multilingual');
 
 		$sourceInfo = $tikilib->get_page_info($this->sourcePageName);
 		$targetInfo = $tikilib->get_page_info($this->targetPageName);

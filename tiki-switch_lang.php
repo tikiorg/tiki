@@ -53,8 +53,7 @@ if ($prefs['feature_sefurl'] == 'y' && !strstr($orig_url, '.php')) {
 }
 
 if (strstr($orig_url, 'tiki-index.php') || strstr($orig_url, 'tiki-read_article.php')) {
-	global $multilinguallib;
-	include_once ("lib/multilingual/multilinguallib.php");
+	$multilinguallib = TikiLib::lib('multilingual');
 	$orig_url = urldecode($orig_url);
 	if (($txt = strstr($orig_url, '?')) == false) {
 		$txt = '';

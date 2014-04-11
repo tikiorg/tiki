@@ -218,7 +218,6 @@ if ($prefs['feature_lastup'] == 'y') {
 	require_once ('lib/setup/last_update.php');
 }
 if (!empty($_SESSION['interactive_translation_mode']) && ($_SESSION['interactive_translation_mode'] == 'on')) {
-	include_once ('lib/multilingual/multilinguallib.php');
 	$cachelib->empty_cache('templates_c');
 }
 if ($prefs['feature_freetags'] == 'y') {
@@ -444,7 +443,7 @@ if ($prefs['mobile_feature'] === 'y' && $prefs['mobile_mode'] === 'y') {
 				$headerlib->add_jsfile_dependancy("vendor/jquery/jquery-ui/ui/jquery-ui.js");
 			}
 		}
-		if (strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE 6') !== false) {
+		if (isset($_SERVER['HTTP_USER_AGENT']) && strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE 6') !== false) {
 			$headerlib->add_jsfile('vendor/jquery/plugins/cluetip/lib/jquery.bgiframe.js');
 		}
 

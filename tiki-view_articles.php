@@ -101,7 +101,7 @@ if (!isset($_REQUEST['lang'])) {
 // Get a list of last changes to the Wiki database
 $listpages = $artlib->list_articles($offset, $prefs['maxArticles'], $sort_mode, $find, $date_min, $date_max, $user, $type, $topic, 'y', $topicName, $categId, '', '', $_REQUEST['lang'], $min_rating, $max_rating, false, 'y');
 if ($prefs['feature_multilingual'] == 'y') {
-	include_once ("lib/multilingual/multilinguallib.php");
+	$multilinguallib = TikiLib::lib('multilingual');
 	$listpages['data'] = $multilinguallib->selectLangList('article', $listpages['data']);
 	foreach ($listpages['data'] as &$article) {
 		$article['translations'] = $multilinguallib->getTranslations('article', $article['articleId'], $article["title"], $article['lang']);

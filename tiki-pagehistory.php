@@ -341,7 +341,7 @@ if (isset($preview)) {
 	$smarty->assign('current', 0);
 }
 if ($prefs['feature_multilingual'] == 'y' && isset($_REQUEST['show_translation_history'])) {
-	include_once ("lib/multilingual/multilinguallib.php");
+	$multilinguallib = TikiLib::lib('multilingual');
 	$smarty->assign('show_translation_history', 1);
 	$sources = $multilinguallib->getSourceHistory($info['page_id']);
 	$targets = $multilinguallib->getTargetHistory($info['page_id']);
@@ -362,7 +362,7 @@ if (!isset($newver)) {
 	$newver = 0;
 }
 if ($prefs['feature_multilingual'] == 'y') {
-	include_once ("lib/multilingual/multilinguallib.php");
+	$multilinguallib = TikiLib::lib('multilingual');
 	$languages = $tikilib->list_languages();
 	$smarty->assign_by_ref('languages', $languages);
 	if (isset($_REQUEST["update_translation"])) {

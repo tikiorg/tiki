@@ -7,16 +7,15 @@
  * To change this template use File | Settings | File Templates.
  */
 
-require_once('lib/multilingual/multilinguallib.php');
-
 class MultilingualLibTest extends TikiTestCase
 {
     public $orig_user;
 
     protected function setUp()
     {
-        global $tikilib, $_SERVER, $user, $prefs, $multilinguallib;
-
+        global $user, $prefs;
+		$tikilib = TikiLib::lib('tiki');
+		$multilinguallib = TikiLib::lib('multilingual');
         $this->orig_user = $user;
 
         $prefs['site_language'] = 'en';
@@ -73,8 +72,7 @@ class MultilingualLibTest extends TikiTestCase
      */
     public function test_translateLinksInPageContent($src_content, $targ_lang, $exp_translated_content, $message)
     {
-        global $multilinguallib;
-
+		$multilinguallib = TikiLib::lib('multilingual');
         $got_translated_content = $multilinguallib->translateLinksInPageContent($src_content, $targ_lang);
 
         $this->assertEquals($exp_translated_content, $got_translated_content,
@@ -111,7 +109,7 @@ class MultilingualLibTest extends TikiTestCase
     function test_defaultTargetLanguageForNewTranslation($src_lang, $langs_already_translated,
                                                     $user_langs, $exp_lang, $message)
     {
-        global $multilinguallib;
+        $multilinguallib = TikiLib::lib('multilingual');
 
         $got_lang = $multilinguallib->defaultTargetLanguageForNewTranslation($src_lang, $langs_already_translated, $user_langs);
         $this->assertEquals($got_lang, $exp_lang, $message."\nThe default target language was not as expected.");
@@ -139,7 +137,7 @@ class MultilingualLibTest extends TikiTestCase
      */
     function test_partiallyPretranslateContentOfPage($source_page, $targ_lang, $exp_pretranslation, $message)
     {
-        global $multilinguallib;
+        $multilinguallib = TikiLib::lib('multilingual');
 
         $got_pretranslation = $multilinguallib->partiallyPretranslateContentOfPage($source_page, $targ_lang);
         $this->assertEquals($got_pretranslation, $exp_pretranslation, "$message\nSource page was not properly pretranslated.");

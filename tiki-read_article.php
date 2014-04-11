@@ -233,7 +233,7 @@ if (isset($is_categorized) && $is_categorized) {
 }
 
 if ($prefs['feature_multilingual'] == 'y' && $article_data['lang']) {
-	include_once ("lib/multilingual/multilinguallib.php");
+	$multilinguallib = TikiLib::lib('multilingual');
 	$trads = $multilinguallib->getTranslations('article', $article_data['articleId'], $article_data["title"], $article_data['lang']);
 	$smarty->assign('trads', $trads);
 }

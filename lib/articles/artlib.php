@@ -1055,7 +1055,7 @@ class ArtLib extends TikiLib
 		if (!empty($filter)) {
 			foreach ($filter as $typeF=>$val) {
 				if ($typeF == 'translationOrphan') {
-					global $multilinguallib; include_once('lib/multilingual/multilinguallib.php');
+					$multilinguallib = TikiLib::lib('multilingual');
 					$multilinguallib->sqlTranslationOrphan('article', '`tiki_articles`', 'articleId', $val, $join, $mid, $bindvars);
 					$mid = ' where '.$mid;
 				}

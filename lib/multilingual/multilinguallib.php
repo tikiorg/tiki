@@ -1153,18 +1153,8 @@ class MultilingualLib extends TikiLib
         $callback =
             function($match) use ($targ_lang)
             {
-                /* For some reason, we are not able to use $this in the callback, even if we write
-
-                     use ($this)
-
-                   in the function header. So instead, we just use the global $multilinguallib, which
-                   is actually the same instance as $this.
-                */
-                global $multilinguallib;
-
-
                 $link_src_page = $match[1];
-                $link_targ_page = $multilinguallib->getTranslation('wiki page', $link_src_page, $targ_lang);
+                $link_targ_page = $this->getTranslation('wiki page', $link_src_page, $targ_lang);
                 if (isset($link_targ_page) && $link_targ_page != '')
                 {
                     $anchor_text = "";
@@ -1254,4 +1244,3 @@ class MultilingualLib extends TikiLib
 
 }
 
-$multilinguallib = new MultilingualLib;

@@ -56,8 +56,7 @@ if (isset($_REQUEST['mapview'])
 }
 
 if ($prefs['feature_multilingual'] == 'y' && isset($_REQUEST['lang']) && isset($_REQUEST['term_srch'])) {
-	global $multilinguallib;
-	include_once ('lib/multilingual/multilinguallib.php');
+	$multilinguallib = TikiLib::lib('multilingual');
 	if (isset($_REQUEST['term_srch'])) {
 		$multilinguallib->storeCurrentTermSearchLanguageInSession($_REQUEST['lang']);
 	}
@@ -475,8 +474,10 @@ if (!empty($multiprint_pages)) {
  */
 function setLangFilter($filter)
 {
-	global $smarty, $prefs, $multilinguallib;
-	include_once ('lib/multilingual/multilinguallib.php');
+	global $prefs;
+	$multilinguallib = TikiLib::lib('multilingual');
+	$smarty = TikiLib::lib('smarty');
+
 	$lang = $multilinguallib->currentPageSearchLanguage();
 	if (isset($_REQUEST['listonly']) && $prefs['feature_jquery_autocomplete'] == 'y' && strlen($lang) > 2) {
 		$lang = substr($lang, 0, 2);		// for autocomplete - use only language filter, not culture as well

@@ -10,7 +10,7 @@
 
 require_once('tiki-setup.php');
 
-include_once('lib/multilingual/multilinguallib.php');
+$multilinguallib = TikiLib::lib('multilingual');
 include_once('modules/mod-func-translation.php');
 
 require_once('lib/debug/Tracer.php');
@@ -138,7 +138,9 @@ function execute_module_translation()
 
 function smarty_assign_default_target_lang($src_lang, $targ_lang_requested, $existing_translations, $user_langs)
 {
-    global $multilinguallib, $smarty, $tracer;
+    global $tracer;
+	$multilinguallib = TikiLib::lib('multilingual');
+	$smarty = TikiLib::lib('smarty');
 
     $default_target_lang = $targ_lang_requested;
     if (! isset($default_target_lang))

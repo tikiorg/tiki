@@ -48,7 +48,7 @@ class DCSLib extends TikiLib
 		$info = $this->get_page_info($page);
 
 		if ( $prefs['feature_multilingual'] == 'y' ) {
-			global $multilinguallib; require_once 'lib/multilingual/multilinguallib.php';
+			$multilinguallib = TikiLib::lib('multilingual');
 
 			if ( $lang && $info['lang'] && $lang != $info['lang'] ) {
 				$bestLangPageId = $multilinguallib->selectLangObj('wiki page', $info['page_id'], $lang);

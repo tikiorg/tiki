@@ -1535,9 +1535,7 @@ class FreetagLib extends ObjectLib
 	 */
 	function translate_tag( $srcLang, $srcTagId, $dstLang, $content )
 	{
-		global $multilinguallib;
-		if ( !$multilinguallib )
-			die('Internal error: Multilingual library not imported.');
+		$multilinguallib = TikiLib::lib('multilingual');
 
 		if ( empty( $content ) )
 			return;

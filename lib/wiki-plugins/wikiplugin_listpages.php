@@ -259,8 +259,7 @@ function wikiplugin_listpages($data, $params)
 		$filter['structHead'] = $structHead;
 	}
 	if (!empty($translations) && $prefs['feature_multilingual'] == 'y') {
-		global $multilinguallib;
-		require_once 'lib/multilingual/multilinguallib.php';
+		$multilinguallib = TikiLib::lib('multilingual');
 		if ($translations == 'user') {
 			$translations = $multilinguallib->preferredLangs();
 		} else {

@@ -533,7 +533,7 @@ class StructLib extends TikiLib
 
 	public function use_user_language_preferences( $langContext = null )
 	{
-		global $prefs, $multilinguallib;
+		global $prefs;
 		if ( $prefs['feature_multilingual'] != 'y' ) {
 			return;
 		}
@@ -541,9 +541,7 @@ class StructLib extends TikiLib
 			return;
 		}
 
-		if ( !$multilinguallib ) {
-			include_once('lib/multilingual/multilinguallib.php');
-		}
+		$multilinguallib = TikiLib::lib('multilingual');
 
 		$this->displayLanguageOrder = $multilinguallib->preferredLangs($langContext);
 	}

@@ -65,7 +65,9 @@ class GoalEventLib
 
 			foreach ($goals as $goal) {
 				foreach ($goal['conditions'] as $condition) {
-					$list[] = $condition['eventType'];
+					if (! empty($condition['eventType'])) {
+						$list[] = $condition['eventType'];
+					}
 
 					if ($condition['metric'] == 'goal-count-unbounded' || $condition['metric'] == 'goal-count') {
 						$list[] = 'tiki.goal.reached';

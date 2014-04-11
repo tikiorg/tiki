@@ -36,12 +36,10 @@ function wikiplugin_alink_info()
 
 function wikiplugin_alink($data, $params)
 {
-	global $multilinguallib, $tikilib, $prefs;
-
-	if ( ! isset( $multilinguallib ) || !is_object($multilinguallib) ) {
-		include_once('lib/multilingual/multilinguallib.php');// must be done even in feature_multilingual not set
-	}
-        extract($params, EXTR_SKIP);
+	global $prefs;
+	$multilinguallib = TikiLib::lib('multilingual');
+	$tikilib = TikiLib::lib('tiki');
+	extract($params, EXTR_SKIP);
 
 	if (!isset($aname)) {
 		return ("<b>missing parameter for aname</b><br />");

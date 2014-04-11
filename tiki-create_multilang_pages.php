@@ -12,7 +12,7 @@ include_once('tiki-setup.php');
 include_once('lib/tikilib.php');
 include_once('lib/wiki/wikilib.php');
 include_once 'lib/wiki/semanticlib.php';
-include_once ('lib/multilingual/multilinguallib.php');
+$multilinguallib = TikiLib::lib('multilingual');
 
 $access->check_feature(array( 'feature_wiki', 'feature_multilingual' ));
 $access->check_permission('tiki_p_edit');
@@ -23,7 +23,7 @@ display();
 
 function create_pages_if_necessary()
 {
-	global $smarty, $_REQUEST;
+	$smarty = TikiLib::lib('smarty');
 	$template_name = null;
 	if (isset($_REQUEST['template_name'])) {
 		$template_name = $_REQUEST['template_name'];	
@@ -51,8 +51,9 @@ function create_pages_if_necessary()
  */
 function create_page($page_name, $lang, $template_name=null)
 {
-	global $tikilib, $multilinguallib, $user;
-
+	global $user;
+	$multilinguallib = TikiLib::lib('multilingual');
+	$tikilib = TikiLib::lib('tiki');
 	$content = '';
 	if ($template_name != null) {
 		$template_id = $multilinguallib->getTemplateIDInLanguage('wiki', $template_name, $lang);
@@ -67,7 +68,8 @@ function create_page($page_name, $lang, $template_name=null)
  */
 function make_pages_translations_of_each_other($pages)
 {
-	global $tikilib, $multilinguallib;
+	$multilinguallib = TikiLib::lib('multilingual');
+	$tikilib = TikiLib::lib('tiki');
 	if (count($pages) == 0) return;
 	$first_page_id = null;
 	foreach ($pages as $this_page_lang => $this_page_name) {
@@ -87,7 +89,9 @@ function make_pages_translations_of_each_other($pages)
  */
 function compute_relevant_languages()
 {
-	global $multilinguallib, $smarty, $_REQUEST, $prefs;
+	global $prefs;
+	$multilinguallib = TikiLib::lib('multilingual');
+	$smarty = TikiLib::lib('smarty');
 	
 	$all_languages_with_country_codes = $prefs['available_languages'];
 	$all_languages = strip_country_code_from_lang_ids($all_languages_with_country_codes);	
@@ -112,7 +116,6 @@ function compute_relevant_languages()
  */
 function get_pages_to_create()
 {
-	global $_REQUEST;
 	$pages_to_create = array();
 	foreach ($_REQUEST as $arg_name => $arg_val) {
 		if (preg_match('/page_name_([\s\S]*)/', $arg_name, $matches)) {
@@ -132,7 +135,8 @@ function get_pages_to_create()
  */
 function check_for_existence_of_pages($pages_to_create)
 {
-	global $tikilib, $semanticlib;
+	$tikilib = TikiLib::lib('tiki');
+	$semantic = TikiLib::lib('semantic');
 	$non_existant_pages = array();
 	$existing_pages = array();
 	
@@ -162,7 +166,8 @@ function check_for_existence_of_pages($pages_to_create)
  */
 function set_smarty_page_links($page_names)
 {
-	global $wikilib, $smarty;
+	$smarty = TikiLib::lib('smarty');
+	$wikilib = TikiLib::lib('wiki');
 	
 	$page_links = array();
 	foreach ($page_names as $a_page_name) {
@@ -176,7 +181,7 @@ function set_smarty_page_links($page_names)
 
 function display()
 {
-	global $smarty;
+	$smarty = TikiLib::lib('smarty');
 	// disallow robots to index page:
 	$smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 	$smarty->assign('mid', 'tiki-create_multilang_pages.tpl');

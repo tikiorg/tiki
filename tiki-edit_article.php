@@ -579,7 +579,7 @@ if (isset($_REQUEST['save']) && empty($errors)) {
 				&& isset($_REQUEST['lang'])
 				&& $article_data['lang'] != $_REQUEST['lang']
 	) {
-		include_once('lib/multilingual/multilinguallib.php');
+		$multilinguallib = TikiLib::lib('multilingual');
 		if ($multilinguallib->updateObjectLang('article', $article_data['articleId'], $_REQUEST['lang'], true)) {
 			$_REQUEST['lang'] = $article_data['lang'];
 			$smarty->assign('msg', tra("The language can't be changed as its set of translations has already this language"));
@@ -653,7 +653,7 @@ if (isset($_REQUEST['save']) && empty($errors)) {
 		$translatedArticle = $artlib->get_article($translationOf);
 		// Quietly fail if translated article does not exist.
 		if (!empty($translatedArticle) && $translatedArticle['lang'] && $_REQUEST['lang'] != $translatedArticle['lang']) {
-			include_once('lib/multilingual/multilinguallib.php');
+			$multilinguallib = TikiLib::lib('multilingual');
 			$multilinguallib->insertTranslation('article', $translatedArticle['articleId'], $translatedArticle['lang'], $artid, $_REQUEST["lang"]);
 		}
 	}
@@ -740,7 +740,7 @@ if ($prefs['feature_multilingual'] == 'y') {
 	$smarty->assign_by_ref('languages', $languages);
 	// get translations
 	if ($articleId) {
-		include_once('lib/multilingual/multilinguallib.php');
+		$multilinguallib = TikiLib::lib('multilingual');
 		$translations = $multilinguallib->getTranslations('article', $articleId);
 	} else {
 		$translations = array();

@@ -78,9 +78,7 @@ function guess_new_page_attributes_from_parent_pages($page, $page_info)
  */
 function translationsToThisPageAreInProgress($page_id)
 {
-	global $multilinguallib;
-
-	include_once("lib/multilingual/multilinguallib.php");
+	$multilinguallib = TikiLib::lib('multilingual');
 
 	$translations_in_progress = $multilinguallib->getTranslationsInProgressFlags($page_id);
 	$answer = count($translations_in_progress) > 0;
@@ -109,7 +107,10 @@ function execute_module_translation()
 
 function possibly_set_pagedata_to_pretranslation_of_source_page()
 {
-    global $smarty, $multilinguallib, $editlib, $tracer;
+    global $tracer;
+	$multilinguallib = TikiLib::lib('multilingual');
+	$smarty = TikiLib::lib('smarty');
+	$editlib = TikiLib::lib('edit');
 
     if ($editlib->isNewTranslationMode())
     {
@@ -124,7 +125,7 @@ $access->check_feature('feature_wiki');
 
 if ($editlib->isNewTranslationMode() || $editlib->isUpdateTranslationMode()) {
 	$translation_mode = 'y';
-	include_once("lib/multilingual/multilinguallib.php");
+	$multilinguallib = TikiLib::lib('multilingual');
 } else {
 	$translation_mode = 'n';
 }
@@ -447,7 +448,7 @@ if (isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_na
 						if ($prefs['feature_multilingual'] === 'y') {
 							$info = $tikilib->get_page_info($pagename);
 							if ($info['lang'] !== $pageLang) {
-								include_once("lib/multilingual/multilinguallib.php");
+								$multilinguallib = TikiLib::lib('multilingual');
 								if ($multilinguallib->updateObjectLang('wiki page', $info['page_id'], $pageLang, true)) {
 									$pageLang = $info['lang'];
 									$smarty->assign('msg', tra("The language can't be changed as its set of translations has already this language"));
@@ -465,7 +466,7 @@ if (isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_na
 					// Handle the translation bits after actual creation/update
 					// This path is never used by minor updates
 					if ($prefs['feature_multilingual'] === 'y') {
-						include_once("lib/multilingual/multilinguallib.php");
+						$multilinguallib = TikiLib::lib('multilingual');
 						$tikilib->cache_page_info = array();
 
 						if ( $editlib->isNewTranslationMode() ) {
@@ -667,7 +668,7 @@ if ((isset($_REQUEST["template_name"]) || isset($_REQUEST["templateId"])) && !is
 	if (isset($_REQUEST["templateId"])) {
 		$templateId = $_REQUEST["templateId"];
 	} else {
-		include_once ('lib/multilingual/multilinguallib.php');
+		$multilinguallib = TikiLib::lib('multilingual');
 		$templateId = $multilinguallib->getTemplateIDInLanguage('wiki', $_REQUEST["template_name"], $templateLang);
 	}
 	$template_data = $templateslib->get_template($templateId, $templateLang);
@@ -859,7 +860,7 @@ if ($prefs['wiki_comments_allow_per_page'] !== 'n') {
 }
 if (isset($_REQUEST["lang"])) {
 	if ($prefs['feature_multilingual'] === 'y' && isset($info["lang"]) && $info['lang'] !== $_REQUEST["lang"]) {
-		include_once("lib/multilingual/multilinguallib.php");
+		$multilinguallib = TikiLib::lib('multilingual');
 		if ($multilinguallib->updateObjectLang('wiki page', $info['page_id'], $_REQUEST["lang"], true)) {
 			$pageLang = $info['lang'];
 			$smarty->assign('msg', tra("The language can't be changed as its set of translations has already this language"));
@@ -1140,7 +1141,7 @@ if (
 		$info_new = $tikilib->get_page_info($page);
 
 		if ($editlib->isNewTranslationMode() && ! empty( $pageLang)) {
-			include_once("lib/multilingual/multilinguallib.php");
+			$multilinguallib = TikiLib::lib('multilingual');
 			$infoSource = $tikilib->get_page_info($editlib->sourcePageName);
 			$infoCurrent = $tikilib->get_page_info($editlib->targetPageName);
 			if ($multilinguallib->insertTranslation('wiki page', $infoSource['page_id'], $infoSource['lang'], $infoCurrent['page_id'], $pageLang)) {
@@ -1152,7 +1153,7 @@ if (
 		}
 
 		if ($prefs['feature_multilingual'] === 'y') {
-			include_once("lib/multilingual/multilinguallib.php");
+			$multilinguallib = TikiLib::lib('multilingual');
 
 			$tikilib->cache_page_info = array();
 			if ( $editlib->isNewTranslationMode() ) {
@@ -1214,7 +1215,7 @@ if (
 
 		// Handle translation bits
 		if ($prefs['feature_multilingual'] === 'y' && !$minor) {
-			global $multilinguallib; include_once("lib/multilingual/multilinguallib.php");
+			$multilinguallib = TikiLib::lib('multilingual');
 			$tikilib->cache_page_info = array();
 
 			if ($editlib->isUpdateTranslationMode()) {
@@ -1404,7 +1405,7 @@ if ($prefs['feature_multilingual'] === 'y') {
 			die;
 		}
 
-		global $multilinguallib; include_once("lib/multilingual/multilinguallib.php");
+		$multilinguallib = TikiLib::lib('multilingual');
 		$sourceInfo = $tikilib->get_page_info($editlib->sourcePageName);
 		if ($multilinguallib->getTranslation('wiki page', $sourceInfo['page_id'], $_REQUEST['lang'])) {
 			// Display an error if the page already exists
@@ -1502,7 +1503,7 @@ if ( ! empty($prefs['geo_locate_wiki']) && $prefs['geo_locate_wiki'] == 'y' ) {
 }
 
 if ( $prefs['feature_multilingual'] === 'y' ) {
-	global $multilinguallib; include_once('lib/multilingual/multilinguallib.php');
+	$multilinguallib = TikiLib::lib('multilingual');
 	$trads = $multilinguallib->getTranslations('wiki page', $info['page_id'], $page, $info['lang']);
 	$smarty->assign('trads', $trads);
 }

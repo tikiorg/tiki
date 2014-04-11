@@ -46,7 +46,7 @@ function module_terminology($mod_reference, $module_params)
 	$smarty = TikiLib::lib('smarty');
 	init_from_parameters($module_params);
 	
-	global $multilinguallib; include_once('lib/multilingual/multilinguallib.php');
+	$multilinguallib = TikiLib::lib('multilingual');
 	
 	$search_terms_in_lang = $multilinguallib->currentTermSearchLanguage();
 	$smarty->assign('search_terms_in_lang', $search_terms_in_lang);

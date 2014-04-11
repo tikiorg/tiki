@@ -17,8 +17,9 @@ class WikiPlugin_TranslationOfTest extends TikiTestCase
 
     protected function setUp()
     {
-        global $tikilib, $_SERVER, $user, $prefs, $multilinguallib;
-
+        global $user, $prefs;
+		$multilinguallib = TikiLib::lib('multilingual');
+		$tikilib = TikiLib::lib('tiki');
         $this->orig_user = $user;
 
         $prefs['site_language'] = 'en';

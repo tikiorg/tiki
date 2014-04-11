@@ -1510,7 +1510,7 @@ class CategLib extends ObjectLib
 		$this->applyManipulator($manip, $objType, $objId, $desc, $name, $href);
 
 		if ( $prefs['category_i18n_sync'] != 'n' && $prefs['feature_multilingual'] == 'y' ) {
-			global $multilinguallib; require_once 'lib/multilingual/multilinguallib.php';
+			$multilinguallib = TikiLib::lib('multilingual');
 			$targetCategories = $this->get_object_categories($objType, $objId, -1, false);
 
 			if ( $objType == 'wiki page' ) {

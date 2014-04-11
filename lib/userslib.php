@@ -2279,7 +2279,7 @@ class UsersLib extends TikiLib
 		}
 
 		$info = $this->get_page_info($page);
-		global $multilinguallib; include_once ('lib/multilingual/multilinguallib.php');
+		$multilinguallib = TikiLib::lib('multilingual');
 		$bestLangPageId = $multilinguallib->selectLangObj('wiki page', $info['page_id'], $prefs['language']);
 
 		if ($info['page_id'] == $bestLangPageId) {

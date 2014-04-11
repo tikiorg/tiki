@@ -24,7 +24,7 @@ if ($cat_type != 'wiki page' && $cat_type != 'article') {
 }
 
 include_once "lib/freetag/freetaglib.php";
-include_once "lib/multilingual/multilinguallib.php";
+$multilinguallib = TikiLib::lib('multilingual');
 
 if ( $cat_objId ) {
 	$info = $tikilib->get_page_info($cat_objId);

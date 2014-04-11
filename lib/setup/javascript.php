@@ -212,7 +212,7 @@ var syntaxHighlighter = {
 
 	$headerlib->add_js($js);
 
-	if (strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE 6') !== false) {
+	if (isset($_SERVER['HTTP_USER_AGENT']) && strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE 6') !== false) {
 
 		$smarty->assign('ie6', true);
 
