@@ -51,6 +51,13 @@ function wikiplugin_wysiwyg($data, $params)
 	global $tiki_p_edit, $page, $prefs;
 	static $execution = 0;
 
+	global $wikiplugin_included_page;
+	if (!empty($wikiplugin_included_page)) {
+		$sourcepage = $wikiplugin_included_page;
+	} else {
+		$sourcepage = $page;
+	}
+
 	if ($prefs['wysiwyg_htmltowiki'] == 'y') {
 		$is_html = false;
 	} else {
@@ -71,7 +78,7 @@ function wikiplugin_wysiwyg($data, $params)
 
 		$html = "<div id='$exec_key' class='{$class}'$style>" . $html . '</div>';
 
-		$js = '$("#' . $exec_key . '").wysiwygPlugin("' . $execution . '", "' . $page . '", ' . $ckoption . ')';
+		$js = '$("#' . $exec_key . '").wysiwygPlugin("' . $execution . '", "' . $sourcepage . '", ' . $ckoption . ')';
 
 		TikiLib::lib('header')
 			->add_jsfile('lib/ckeditor_tiki/tiki-ckeditor.js')

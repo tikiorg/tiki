@@ -70,6 +70,11 @@ function wikiplugin_include($dataIn, $params)
 	if (!isset($page)) {
 		return ("<b>missing page for plugin INCLUDE</b><br />");
 	}
+
+	// This variable is for accessing included page name within plugins in that page
+	global $wikiplugin_included_page;
+	$wikiplugin_included_page = $page;
+
 	$memo = $page;
 	if (isset($start)) $memo .= "/$start";
 	if (isset($end)) $memo .= "/$end";
