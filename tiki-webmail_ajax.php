@@ -186,12 +186,13 @@ function refreshWebmail($destDiv = 'mod-webmail_inbox', $inStart = 0, $inReload 
  */
 function takeGroupMail($destDiv = 'mod-webmail_inbox', $msgId = 1)
 {
-	global $prefs, $trklib, $user, $webmaillib, $contactlib, $dbTiki, $tikilib, $categlib, $module_params;
+	global $prefs, $user, $webmaillib, $contactlib, $module_params;
 
 	include_once ('lib/webmail/webmaillib.php');
 	include_once ('lib/webmail/contactlib.php');
-	include_once('lib/trackers/trackerlib.php');
-	include_once('lib/categories/categlib.php');
+	$categlib = TikiLib::lib('categ');
+	$tikilib = TikiLib::lib('tiki');
+	$trklib = TikiLib::lib('trk');
 
 	if (isset($_SESSION['webmailinbox'][$destDiv]['module_params'])) {
 		$module_params = $_SESSION['webmailinbox'][$destDiv]['module_params'];
@@ -302,7 +303,7 @@ function takeGroupMail($destDiv = 'mod-webmail_inbox', $msgId = 1)
  */
 function putBackGroupMail($destDiv = 'mod-webmail_inbox', $msgId = 1)
 {
-	global $prefs, $trklib, $user, $webmaillib, $dbTiki, $module_params;
+	global $prefs, $trklib, $user, $webmaillib, $module_params;
 
 	if (!isset($webmaillib)) {
 		include_once ('lib/webmail/webmaillib.php');

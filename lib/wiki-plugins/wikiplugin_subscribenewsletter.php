@@ -55,7 +55,10 @@ function wikiplugin_subscribenewsletter_info()
 }
 function wikiplugin_subscribenewsletter($data, $params)
 {
-	global $prefs, $user, $userlib, $smarty, $tikilib;
+	global $prefs, $user;
+	$userlib = TikiLib::lib('user');
+	$tikilib = TikiLib::lib('tiki');
+	$smarty = TikiLib::lib('smarty');
 	global $nllib; include_once('lib/newsletters/nllib.php');
 	extract($params, EXTR_SKIP);
 	if ($prefs['feature_newsletters'] != 'y') {

@@ -308,7 +308,7 @@ class TikiImporter_Blog extends TikiImporter
 	 */
 	function createCategories($categories)
 	{
-		global $categlib; require_once('lib/categories/categlib.php');
+		$categlib = TikiLib::lib('categ');
 
 		foreach ($categories as $categ) {
 			if (!empty($categ['parent'])) {
@@ -331,7 +331,7 @@ class TikiImporter_Blog extends TikiImporter
 	 */
 	function linkObjectWithCategories($objId, $type, $categories)
 	{
-		global $categlib; require_once('lib/categories/categlib.php');
+		$categlib = TikiLib::lib('categ');
 
 		foreach ($categories as $categName) {
 			$categId = $categlib->get_category_id($categName);

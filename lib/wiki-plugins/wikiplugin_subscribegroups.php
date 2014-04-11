@@ -127,7 +127,9 @@ function wikiplugin_subscribegroups_info()
 
 function wikiplugin_subscribegroups($data, $params)
 {
-	global $tiki_p_subscribe_groups, $userlib, $user, $smarty;
+	global $tiki_p_subscribe_groups, $user;
+	$userlib = TikiLib::lib('user');
+	$smarty = TikiLib::lib('smarty');
 	if ($tiki_p_subscribe_groups != 'y' || empty($user)) {
 		return tra('You do not have permission to subscribe to groups.');
 	}

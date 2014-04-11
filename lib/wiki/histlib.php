@@ -1238,7 +1238,11 @@ function histlib_strip_irrelevant( $data )
 
 function rollback_page_to_version($page, $version, $check_key = true, $keep_lastModif = false)
 {
-	global $prefs, $histlib, $tikilib, $categlib, $access;
+	global $prefs;
+	$histlib = TikiLib::lib('hist');
+	$tikilib = TikiLib::lib('tiki');
+	$access = TikiLib::lib('access');
+
 	if ($check_key) {
 		$access->check_authenticity();
 	}		

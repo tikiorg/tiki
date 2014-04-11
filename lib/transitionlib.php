@@ -260,10 +260,10 @@ class TransitionLib
 	{
 		switch( $this->transitionType ) {
 			case 'group':
-				global $userlib;
+				$userlib = TikiLib::lib('user');
 				return $userlib->get_user_groups($object);
 			case 'category':
-				global $categlib; require_once 'lib/categories/categlib.php';
+				$categlib = TikiLib::lib('categ');
 				return $categlib->get_object_categories($type, $object);
 		}
 	}
@@ -277,11 +277,11 @@ class TransitionLib
 	{
 		switch ( $this->transitionType ) {
 		case 'group':
-			global $userlib;
+			$userlib = TikiLib::lib('user');
 			$userlib->assign_user_to_group($object, $state);
 			return;
 		case 'category':
-			global $categlib; require_once 'lib/categories/categlib.php';
+			$categlib = TikiLib::lib('categ');
 			$categlib->categorize_any($type, $object, $state);
 			return;
 		}
@@ -296,11 +296,11 @@ class TransitionLib
 	{
 		switch ( $this->transitionType ) {
 		case 'group':
-			global $userlib;
+			$userlib = TikiLib::lib('user');
 			$userlib->remove_user_from_group($object, $state);
 			return;
 		case 'category':
-			global $categlib; require_once 'lib/categories/categlib.php';
+			$categlib = TikiLib::lib('categ');
 			if ( $catobj = $categlib->is_categorized($type, $object) ) {
 				$categlib->uncategorize($catobj, $state);
 			}

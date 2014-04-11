@@ -9,7 +9,7 @@
 // $Id$
 
 require_once 'tiki-setup.php';
-require_once 'lib/categories/categlib.php';
+$categlib = TikiLib::lib('categ');
 
 $access->check_feature('feature_print_indexed');
 

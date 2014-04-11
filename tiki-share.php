@@ -338,8 +338,9 @@ $smarty->display('tiki.tpl');
 function checkAddresses($recipients, $error = true)
 {
 	global $errors, $prefs, $user;
-	global $registrationlib, $userlib, $logslib;
-	include_once ('lib/registration/registrationlib.php');
+	$userlib = TikiLib::lib('user');
+	$registrationlib = TikiLib::lib('registration');
+	$logslib = TikiLib::lib('logs');
 
 	$e = array();
 
@@ -383,8 +384,11 @@ function checkAddresses($recipients, $error = true)
  */
 function sendMail($sender, $recipients, $subject, $tokenlist = array())
 {
-	global $errors, $prefs, $smarty, $user, $userlib, $logslib;
-	global $registrationlib; include_once ('lib/registration/registrationlib.php');
+	global $errors, $prefs, $user;
+	$userlib = TikiLib::lib('user');
+	$smarty = TikiLib::lib('smarty');
+	$registrationlib = TikiLib::lib('registration');
+	$logslib = TikiLib::lib('logs');
 
 	if (empty($sender)) {
 		$errors[] = tra('Your email is mandatory');
@@ -456,8 +460,12 @@ function sendMail($sender, $recipients, $subject, $tokenlist = array())
  */
 function sendMessage($recipients, $subject)
 {
-	global $errors, $prefs, $smarty, $user, $userlib, $tikilib;
-	global $messulib, $logslib;
+	global $errors, $prefs, $user;
+	global $messulib;
+	$userlib = TikiLib::lib('user');
+	$tikilib = TikiLib::lib('tiki');
+	$smarty = TikiLib::lib('smarty');
+	$logslib = TikiLib::lib('logs');
 
 	$ok = true;
 	if (!is_array($recipients)) {
@@ -538,9 +546,12 @@ function sendMessage($recipients, $subject)
  */
 function postForum($forumId, $subject)
 {
-	global $errors, $prefs, $smarty, $user, $userlib, $tikilib, $_REQUEST;
-	global $commentslib;
+	global $errors, $prefs, $user;
 	global $feedbacks;
+	$userlib = TikiLib::lib('user');
+	$tikilib = TikiLib::lib('tiki');
+	$smarty = TikiLib::lib('smarty');
+	$commentslib = TikiLib::lib('comments');
 
 	$forum_info = $commentslib->get_forum($forumId);
 	$forumperms = Perms::get(array( 'type' => 'forum', 'object' => $forumId ));

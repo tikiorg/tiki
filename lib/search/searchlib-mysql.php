@@ -68,15 +68,14 @@ class SearchLib extends TikiLib
 					$searchDate = 0,
 					$categId = 0)
 	{
-		global $tiki_p_admin, $prefs, $userlib, $user, $categlib;
+		global $tiki_p_admin, $prefs, $user;
+		$userlib = TikiLib::lib('user');
 
 		if (!is_int($searchDate) && !ctype_digit($searchDate)) {
 			exit("Error: searchDate not an integer");
 		}
 
-		if (!is_object($categlib)) {
-			require_once('lib/categories/categlib.php');
-		}
+		$categlib = TikiLib::lib('categ');
 
 		$words = trim($words);
 

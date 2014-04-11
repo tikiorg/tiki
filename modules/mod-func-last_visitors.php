@@ -44,8 +44,8 @@ function module_last_visitors_info()
  */
 function module_last_visitors($mod_reference, $module_params)
 {
-	global $smarty;
-	global $userlib; include_once('lib/userslib.php');
+	$smarty = TikiLib::lib('smarty');
+	$userlib = TikiLib::lib('user');
 
 	$last_visitors = $userlib->get_users(0, $mod_reference["rows"], 'currentLogin_desc');
 	$smarty->assign('modLastVisitors', $last_visitors['data']);

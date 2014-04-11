@@ -17,7 +17,7 @@ $inputConfiguration = array(array(
 ));
 
 require_once 'tiki-setup.php';
-require_once 'lib/categories/categlib.php';
+$categlib = TikiLib::lib('categ');
 require_once 'lib/tree/BrowseTreeMaker.php';
 
 $access->check_feature('feature_categories');

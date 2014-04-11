@@ -23,7 +23,7 @@ if ( isset($_POST['PHPSESSID']) && $_POST['PHPSESSID'] != '' ) {
 
 require_once ('tiki-setup.php');
 if ($prefs['feature_categories'] == 'y') {
-	include_once ('lib/categories/categlib.php');
+	$categlib = TikiLib::lib('categ');
 }
 
 $access->check_feature('feature_file_galleries');

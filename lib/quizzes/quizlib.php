@@ -1400,7 +1400,7 @@ class Quiz
 	public function Quiz()
 	{
 		global $user;
-		global $userlib;
+		$userlib = TikiLib::lib('user');
 		$this->dbFields = array(
 				"id",
 				"bDeleted",
@@ -1474,7 +1474,7 @@ class Quiz
      */
     public function show_html()
 	{
-		global $userlib;
+		$userlib = TikiLib::lib('user');
 		$lines = array();
 		$lines[] = "id = " . $this->id . "<br />";
 		$lines[] = "deleted = " . $this->deleted . "<br />";

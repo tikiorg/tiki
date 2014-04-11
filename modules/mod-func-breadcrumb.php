@@ -43,8 +43,9 @@ function module_breadcrumb_info()
  */
 function module_breadcrumb($mod_reference, $module_params)
 {
-	global $smarty, $prefs;
-	global $categlib; include_once ('lib/categories/categlib.php');
+	global $prefs;
+	$smarty = TikiLib::lib('smarty');
+	$categlib = TikiLib::lib('categ');
 	if (!isset($_SESSION["breadCrumb"])) {
 		$_SESSION["breadCrumb"] = array();
 	}

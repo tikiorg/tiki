@@ -751,12 +751,16 @@ function wikiplugin_trackerlist_info()
 
 function wikiplugin_trackerlist($data, $params)
 {
-	global $smarty, $tikilib, $dbTiki, $userlib, $tiki_p_admin_trackers, $prefs, $_REQUEST, $tiki_p_view_trackers, $user,
-		   $page, $tiki_p_tracker_vote_ratings, $tiki_p_tracker_view_ratings, $trklib,
+	global $tiki_p_admin_trackers, $prefs, $tiki_p_view_trackers, $user,
+		   $page, $tiki_p_tracker_vote_ratings, $tiki_p_tracker_view_ratings,
 		   $tiki_p_export_tracker, $tiki_p_watch_trackers, $tiki_p_edit;
 
-	require_once("lib/trackers/trackerlib.php");
-	global $notificationlib;  include_once('lib/notifications/notificationlib.php');//needed if plugin tracker after plugin trackerlist
+	$userlib = TikiLib::lib('user');
+	$tikilib = TikiLib::lib('tiki');
+	$trk = TikiLib::lib('trk');
+	$smarty = TikiLib::lib('smarty');
+	$notificationlib = TikiLib::lib('notification');
+
 	static $iTRACKERLIST = 0;
 	++$iTRACKERLIST;
 	$smarty->assign('iTRACKERLIST', $iTRACKERLIST);
@@ -1333,7 +1337,7 @@ function wikiplugin_trackerlist($data, $params)
 							if (is_array($evs[$i])) { // already processed
 								$exactvalue[] = $evs[$i];
 							} elseif (preg_match('/(not)?categories\(([0-9]+)\)/', $evs[$i], $matches)) {
-								global $categlib; include_once('lib/categories/categlib.php');
+								$categlib = TikiLib::lib('categ');
 								if (ctype_digit($matches[2]) && $matches[2] > 0) {
 									$cfilter = array('identifier'=>$matches[2], 'type'=>'descendants');
 								} else {
@@ -1364,7 +1368,6 @@ function wikiplugin_trackerlist($data, $params)
 										$t_i = $trklib->get_tracker($matches[6]);
 										$matches[4] = $trklib->get_user_item($matches[6], $t_i, $user);
 									} elseif ($prefs['userTracker'] == 'y') { //pick the generic user tracker
-										global $userlib;
 										$utid = $userlib->get_tracker_usergroup($user);
 										$matches[4] = $trklib->get_item_id($utid['usersTrackerId'], $utid['usersFieldId'], $user);
 									}

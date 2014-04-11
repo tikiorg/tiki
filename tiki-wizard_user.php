@@ -32,7 +32,9 @@ $accesslib->check_user($user);
 $pages = array();
 
 /// fetch the itemId for the user tracker ------------------------------------
-global	$user, $tikilib, $prefs, $userlib; 
+global $user, $prefs;
+$userlib = TikiLib::lib('user');
+$tikilib = TikiLib::lib('tiki');
 if ($prefs['userTracker'] === 'y') {
 	
 	$trklib = TikiLib::lib('trk');

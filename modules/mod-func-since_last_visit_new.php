@@ -101,7 +101,9 @@ function module_since_last_visit_new($mod_reference, $params = null)
 
 	$resultCount = $mod_reference['rows'];
 
-	global $tikilib, $userlib, $prefs;
+	global $prefs;
+	$userlib = TikiLib::lib('user');
+	$tikilib = TikiLib::lib('tiki');
 	$ret = array();
 	if ($params == null) {
 		$params = array();

@@ -92,7 +92,9 @@ function wikiplugin_userlist_info()
 
 function wikiplugin_userlist($data, $params)
 {
-	global $tikilib, $userlib, $prefs, $tiki_p_admin, $tiki_p_admin_users, $user;
+	global $prefs, $tiki_p_admin, $tiki_p_admin_users, $user;
+	$userlib = TikiLib::lib('user');
+	$tikilib = TikiLib::lib('tiki');
 
 	extract($params, EXTR_SKIP);
 

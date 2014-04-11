@@ -398,7 +398,8 @@ class ReferencesLib extends TikiLib
 
 	public function get_permission($perm)
 	{
-		global $user, $userlib, $tiki_p_admin;
+		global $user, $tiki_p_admin;
+		$userlib = TikiLib::lib('user');
 
 		if (isset($tiki_p_admin) && $tiki_p_admin == 'y') {
 			return 'y';

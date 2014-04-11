@@ -82,7 +82,7 @@ class FlaggedRevisionLib extends TikiDb_Bridge
 		}
 
 		if ($prefs['feature_categories'] == 'y') {
-			global $categlib; require_once 'lib/categories/categlib.php';
+			$categlib = TikiLib::lib('categ');
 			$approvalCategories = $tikilib->get_preference('flaggedrev_approval_categories', array(), true);
 
 			$objectCategories = $categlib->get_object_categories('wiki page', $pageName);

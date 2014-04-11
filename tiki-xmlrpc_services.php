@@ -9,7 +9,7 @@
 // $Id$
 
 include_once('tiki-setup.php');
-include_once('lib/blogs/bloglib.php');
+$bloglib = TikiLib::lib('blog');
 
 if ($prefs['feature_xmlrpc'] != 'y') {
 	die;
@@ -37,7 +37,7 @@ $s = new XML_RPC_Server($map);
  */
 function check_individual($user, $blogid, $permName)
 {
-	global $userlib;
+	$userlib = TikiLib::lib('user');
 
 	// If the user is admin he can do everything
 	if ($userlib->user_has_permission($user, 'tiki_p_blog_admin'))
@@ -63,7 +63,8 @@ function check_individual($user, $blogid, $permName)
  */
 function getUserInfo($params)
 {
-	global $tikilib, $userlib;
+	$userlib = TikiLib::lib('user');
+	$tikilib = TikiLib::lib('tiki');
 
 	$appkeyp = $params->getParam(0);
 	$appkey = $appkeyp->scalarval();
@@ -99,7 +100,9 @@ function getUserInfo($params)
  */
 function newPost($params)
 {
-	global $tikilib, $userlib, $bloglib;
+	$userlib = TikiLib::lib('user');
+	$tikilib = TikiLib::lib('tiki');
+	$bloglib = TikiLib::lib('blog');
 
 	$appkeyp = $params->getParam(0);
 	$appkey = $appkeyp->scalarval();
@@ -131,7 +134,7 @@ function newPost($params)
 			return new XML_RPC_Response(0, 101, 'User is not allowed to post');
 		}
 
-		require_once('lib/blogs/bloglib.php');
+		$bloglib = TikiLib::lib('blog');
 		$blog_info = $bloglib->get_blog($blogid);
 
 		if ($blog_info['public'] != 'y') {
@@ -154,7 +157,9 @@ function newPost($params)
  */
 function editPost($params)
 {
-	global $tikilib, $userlib, $bloglib;
+	$userlib = TikiLib::lib('user');
+	$tikilib = TikiLib::lib('tiki');
+	$bloglib = TikiLib::lib('blog');
 
 	$appkeyp = $params->getParam(0);
 	$appkey = $appkeyp->scalarval();
@@ -211,7 +216,9 @@ function editPost($params)
  */
 function deletePost($params)
 {
-	global $tikilib, $userlib, $bloglib;
+	$userlib = TikiLib::lib('user');
+	$tikilib = TikiLib::lib('tiki');
+	$bloglib = TikiLib::lib('blog');
 
 	$appkeyp = $params->getParam(0);
 	$appkey = $appkeyp->scalarval();
@@ -258,7 +265,9 @@ function deletePost($params)
  */
 function getPost($params)
 {
-	global $tikilib, $userlib, $bloglib;
+	$userlib = TikiLib::lib('user');
+	$tikilib = TikiLib::lib('tiki');
+	$bloglib = TikiLib::lib('blog');
 
 	$appkeyp = $params->getParam(0);
 	$appkey = $appkeyp->scalarval();
@@ -317,7 +326,9 @@ function getPost($params)
  */
 function getRecentPosts($params)
 {
-	global $tikilib, $userlib, $bloglib;
+	$userlib = TikiLib::lib('user');
+	$tikilib = TikiLib::lib('tiki');
+	$bloglib = TikiLib::lib('blog');
 
 	$appkeyp = $params->getParam(0);
 	$appkey = $appkeyp->scalarval();
@@ -387,7 +398,9 @@ function getRecentPosts($params)
  */
 function getUserBlogs($params)
 {
-	global $tikilib, $userlib, $bloglib;
+	$userlib = TikiLib::lib('user');
+	$tikilib = TikiLib::lib('tiki');
+	$bloglib = TikiLib::lib('blog');
 
 	$appkeyp = $params->getParam(0);
 	$appkey = $appkeyp->scalarval();
@@ -398,7 +411,6 @@ function getUserBlogs($params)
 
 	$arrayVal = array();
 
-	global $bloglib; require_once('lib/blogs/bloglib.php');
 	$blogs = $bloglib->list_user_blogs($username, true);
 	$foo = parse_url($_SERVER['REQUEST_URI']);
 	$foo1 = $tikilib->httpPrefix() . str_replace('xmlrpc', 'tiki-view_blog', $foo['path']);

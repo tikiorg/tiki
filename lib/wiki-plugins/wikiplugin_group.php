@@ -80,7 +80,7 @@ function wikiplugin_group($data, $params)
 	if (!empty($params['pending']) || !empty($params['notpending'])) {
 		$attributelib = TikiLib::lib('attribute');
 		$attributes = $attributelib->get_attributes('user', $user);
-		global $userlib;
+		$userlib = TikiLib::lib('user');
 		if (!empty($params['pending'])) {
 			$pending = explode('|', $params['pending']);
 			foreach ($pending as $pgrp) {

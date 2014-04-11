@@ -960,7 +960,9 @@ class CartLib
 
 	function process_item($invoice, $total, $info, $userInput, $cartuser, $profileinstaller, $orderitemprofile, $parentQuantity = 0, $parentCode = 0 )
 	{
-		global $user, $userlib, $paymentlib, $prefs, $record_profile_items_created;
+		global $user, $prefs, $record_profile_items_created;
+		$userlib = TikiLib::lib('user');
+		$paymentlib = TikiLib::lib('payment');
 		if ($bundledProducts = $this->get_bundled_products($info['code'])) {
 			foreach ($bundledProducts as $i) {
 				$this->process_item($invoice, $total, $i, $userInput, $cartuser, $profileinstaller, $orderitemprofile, $info['quantity'], $info['code']);
@@ -1371,7 +1373,8 @@ class CartLib
 	function get_group_discount()
 	{
 		// TOTALLY CUSTOM until proper feature is ready
-		global $user, $userlib;
+		global $user;
+		$userlib = TikiLib::lib('user');
 		if (!$user) return 0;
 		$userGroups = $userlib->get_user_groups($user);
 		if (in_array('Shop Free', $userGroups)) {

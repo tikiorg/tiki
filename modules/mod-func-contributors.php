@@ -31,7 +31,11 @@ function module_contributors_info()
  */
 function module_contributors($mod_reference, $module_params)
 {
-	global $smarty, $userlib, $wikilib, $tikilib, $headerlib;
+	$userlib = TikiLib::lib('user');
+	$tikilib = TikiLib::lib('tiki');
+	$smarty = TikiLib::lib('smarty');
+	$headerlib = TikiLib::lib('header');
+	$wikilib = TikiLib::lib('wiki');
 	$currentObject = current_object();
 	if ($currentObject['type'] == 'wiki page') {
 		$objectperms = Perms::get(array('type' => 'wiki page', 'object' => $currentObject['object']));

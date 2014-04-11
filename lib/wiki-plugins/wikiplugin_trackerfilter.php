@@ -540,7 +540,7 @@ function wikiplugin_trackerFilter_get_filters($trackerId=0, $listfields='', &$fo
 		if (empty($formats[$fieldId])) { // default format depends on field type
 			switch ($field['type']){
 			case 'e':// category
-				global $categlib; include_once('lib/categories/categlib.php');
+				$categlib = TikiLib::lib('categ');
 				if (ctype_digit($field['options_array'][0]) && $field['options_array'][0] > 0) {
 					if (isset($field['options_array'][3]) && $field['options_array'][3] == 1) {
 						$type = 'descendants';
@@ -576,7 +576,7 @@ function wikiplugin_trackerFilter_get_filters($trackerId=0, $listfields='', &$fo
 		}
 		if ($field['type'] == 'e' && ($formats[$fieldId] == 't' || $formats[$fieldId] == 'T' || $formats[$fieldId] == 'i')) { // do not accept a format text for a categ for the moment
 			if (empty($res)) {
-				global $categlib; include_once('lib/categories/categlib.php');
+				$categlib = TikiLib::lib('categ');
 				if (ctype_digit($field['options_array'][0]) && $field['options_array'][0] > 0) {
 					$filter = array('identifier'=>$field['options_array'][0], 'type'=>'children');
 					$res = $categlib->getCategories($filter, true, false);
@@ -594,7 +594,7 @@ function wikiplugin_trackerFilter_get_filters($trackerId=0, $listfields='', &$fo
 			switch ($field['type']){
 			case 'e': // category
 				if (empty($res)) {
-					global $categlib; include_once('lib/categories/categlib.php');
+					$categlib = TikiLib::lib('categ');
 					if (ctype_digit($field['options_array'][0]) && $field['options_array'][0] > 0) {
 						$filter = array('identifier'=>$field['options_array'][0], 'type'=>'children');
 						$res = $categlib->getCategories($filter, true, false);

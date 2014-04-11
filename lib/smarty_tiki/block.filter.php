@@ -63,7 +63,7 @@ function smarty_block_filter($params, $content, $smarty, &$repeat)
 		$smarty->assign('filter_categmap', json_encode(TikiDb::get()->fetchMap('SELECT categId, name FROM tiki_categories')));
 
 		// Generate the category tree {{{
-		global $categlib; require_once 'lib/categories/categlib.php';
+		$categlib = TikiLib::lib('categ');
 		require_once 'lib/tree/BrowseTreeMaker.php';
 		$ctall = $categlib->getCategories();
 

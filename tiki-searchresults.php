@@ -129,8 +129,7 @@ if ($prefs['feature_categories'] == 'y') {
 		$smarty->assign('find_categId', $_REQUEST['categId']);
 	}
 
-	global $categlib;
-	include_once ('lib/categories/categlib.php');
+	$categlib = TikiLib::lib('categ');
 	$categories = $categlib->getCategories();
 	$smarty->assign_by_ref('categories', $categories);
 	$smarty->assign('cat_tree', $categlib->generate_cat_tree($categories, true, $selectedCategories));

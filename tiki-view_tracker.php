@@ -19,7 +19,7 @@ if ($prefs['feature_groupalert'] == 'y') {
 }
 include_once ('lib/notifications/notificationlib.php');
 if ($prefs['feature_categories'] == 'y') {
-	include_once ('lib/categories/categlib.php');
+	$categlib = TikiLib::lib('categ');
 }
 $auto_query_args = array(
 	'offset',

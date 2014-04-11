@@ -69,10 +69,7 @@ $auto_query_args = array(
 );
 
 if ($prefs['feature_categories'] == 'y') {
-	global $categlib;
-	if (!is_object($categlib)) {
-		include_once('lib/categories/categlib.php');
-	}
+	$categlib = TikiLib::lib('categ');
 }
 
 if (!empty($_REQUEST['machine_translate_to_lang'])) {

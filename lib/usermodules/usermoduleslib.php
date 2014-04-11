@@ -159,7 +159,8 @@ class UserModulesLib extends TikiLib
 	// Return the list of modules that can be assigned by the user
 	function get_user_assignable_modules($user)
 	{
-		global $prefs,$userlib;
+		global $prefs;
+		$userlib = TikiLib::lib('user');
 
 		$query = "select * from `tiki_modules`";
 		$result = $this->query($query, array());

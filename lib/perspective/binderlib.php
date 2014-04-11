@@ -15,7 +15,7 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 
 
 require_once('lib/perspectivelib.php');
-require_once('lib/categories/categlib.php');
+$categlib = TikiLib::lib('categ');
 
 class AreasLib extends CategLib
 {

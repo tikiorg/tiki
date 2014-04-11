@@ -65,12 +65,6 @@ class TikiLib extends TikiDb_Bridge
 			case 'tiki':
 				global $tikilib;
 				return self::$libraries[$name] = $tikilib;
-			case 'user':
-				global $userlib;
-				return self::$libraries[$name] = $userlib;
-			case 'categ':
-				global $categlib; include_once ('lib/categories/categlib.php');
-				return self::$libraries[$name] = $categlib;
 			case 'multilingual':
 				global $multilinguallib; include_once("lib/multilingual/multilinguallib.php");
 				return self::$libraries[$name] = $multilinguallib;

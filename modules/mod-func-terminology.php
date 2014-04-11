@@ -38,11 +38,12 @@ function module_terminology_info()
  */
 function module_terminology($mod_reference, $module_params)
 {
-	global $smarty, $prefs;
+	global $prefs;
 	if ($prefs['feature_multilingual'] != 'y') {
 		return;
 	}
 	
+	$smarty = TikiLib::lib('smarty');
 	init_from_parameters($module_params);
 	
 	global $multilinguallib; include_once('lib/multilingual/multilinguallib.php');
@@ -62,14 +63,13 @@ function module_terminology($mod_reference, $module_params)
  */
 function init_from_parameters($module_params)
 {
-	global $smarty, $categlib;
-
 	$root_category = 'Term';
 	if (isset($module_params['root_category']) && $module_params['root_category'] != '') {
 		$root_category = $module_params['root_category'];
 	}
 
-	include_once('lib/categories/categlib.php');
+	$smarty = TikiLib::lib('smarty');
+	$categlib = TikiLib::lib('categ');
 	$root_category_id = $categlib->get_category_id($root_category);
 
 	if ($root_category_id == null) {

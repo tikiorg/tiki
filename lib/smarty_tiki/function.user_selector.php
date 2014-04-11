@@ -25,8 +25,10 @@
  */
 function smarty_function_user_selector($params, $smarty)
 {
-	global $prefs, $user, $userlib, $headerlib, $tikilib, $tiki_p_admin;
-	require_once 'lib/userslib.php';
+	global $prefs, $user, $tiki_p_admin;
+	$tikilib = TikiLib::lib('tiki');
+	$headerlib = TikiLib::lib('header');
+	$userlib = TikiLib::lib('user');
 	$smarty->loadPlugin('smarty_modifier_username');
 	
 	static $iUserSelector = 0;

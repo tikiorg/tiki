@@ -1372,7 +1372,7 @@ if ($prefs['feature_wiki_templates'] === 'y' && $tiki_p_use_content_templates ==
 }
 if ($prefs['feature_polls'] ==='y' and $prefs['feature_wiki_ratings'] === 'y' && $tiki_p_wiki_admin_ratings === 'y') {
 	if (!isset($polllib) or !is_object($polllib)) include("lib/polls/polllib_shared.php");
-	if (!isset($categlib) or !is_object($categlib)) include("lib/categories/categlib.php");
+	$categlib = TikiLib::lib('categ');
 	if (isset($_REQUEST['removepoll'])) {
 		$catObjectId = $categlib->is_categorized($cat_type, $cat_objid);
 		$polllib->remove_object_poll($cat_type, $cat_objid, $_REQUEST['removepoll']);

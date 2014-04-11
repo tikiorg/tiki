@@ -363,8 +363,7 @@ if (!empty($_REQUEST['group']) && isset($_REQUEST['import'])) {
 	$cookietab = 4;
 }
 if ($prefs['feature_categories'] == 'y') {
-	global $categlib;
-	include_once ('lib/categories/categlib.php');
+	$categlib = TikiLib::lib('categ');
 	$categories = $categlib->getCategories();
 	$smarty->assign_by_ref('categories', $categories);
 }
@@ -423,7 +422,7 @@ $smarty->display("tiki.tpl");
  */
 function indirectly_inherited_groups($direct_groups)
 {
-	global $userlib;
+	$userlib = TikiLib::lib('user');
 	$indirect_groups = array();
 	foreach ($direct_groups as $a_direct_group => $does_inherit) {
 		if ($does_inherit === 'y') {

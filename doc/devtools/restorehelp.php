@@ -11,7 +11,7 @@
 include_once("lib/init/initlib.php");
 require_once("db/tiki-db.php");
 require_once("lib/tikilib.php");
-require_once("lib/categories/categlib.php");
+$categlib = TikiLib::lib('categ');
 require_once("lib/structures/structlib.php");
 
 /**

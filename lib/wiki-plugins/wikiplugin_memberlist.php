@@ -105,7 +105,8 @@ function wikiplugin_memberlist_info()
 
 function wikiplugin_memberlist( $data, $params )
 {
-	global $prefs, $userlib, $user;
+	global $prefs, $user;
+	$userlib = TikiLib::lib('user');
 	static $execution = 0;
 	$exec_key = 'memberlist-execution-' . ++ $execution;
 
@@ -248,7 +249,7 @@ function wikiplugin_memberlist( $data, $params )
 
 function wikiplugin_memberlist_get_members( $groupName, $maxRecords = -1, $sort_mode = 'login_asc')
 {
-	global $userlib;
+	$userlib = TikiLib::lib('user');
 
 	$raw = $userlib->get_users(0, $maxRecords, $sort_mode, '', '', false, $groupName);
 	$users = array();
@@ -264,7 +265,8 @@ function wikiplugin_memberlist_get_members( $groupName, $maxRecords = -1, $sort_
 
 function wikiplugin_memberlist_get_group_details( $groups, $maxRecords = -1, $sort_mode = 'login_asc', $readOnly = false )
 {
-	global $user, $prefs, $userlib;
+	global $user, $prefs;
+	$userlib = TikiLib::lib('user');
 	$validGroups = array();
 	foreach ( $groups as $groupName ) {
 		if ( ! $userlib->group_exists($groupName) ) {
@@ -310,7 +312,8 @@ function wikiplugin_memberlist_get_group_details( $groups, $maxRecords = -1, $so
 
 function wikiplugin_memberlist_join( $groups, $joins )
 {
-	global $user, $userlib;
+	global $user;
+	$userlib = TikiLib::lib('user');
 	foreach ( $joins as $group ) {
 		if ( isset( $groups[$group] ) ) {
 			if ( $groups[$group]['can_join'] ) {
@@ -322,7 +325,8 @@ function wikiplugin_memberlist_join( $groups, $joins )
 
 function wikiplugin_memberlist_leave( $groups, $leaves )
 {
-	global $user, $userlib;
+	global $user;
+	$userlib = TikiLib::lib('user');
 	foreach ( $leaves as $group ) {
 		if ( isset( $groups[$group] ) ) {
 			if ( $groups[$group]['can_leave'] ) {
@@ -334,7 +338,7 @@ function wikiplugin_memberlist_leave( $groups, $leaves )
 
 function wikiplugin_memberlist_add( $groups, $adds, $asdefault=false )
 {
-	global $userlib;
+	$userlib = TikiLib::lib('user');
 
 	foreach ( $adds as $group => $members ) {
 		if ( isset( $groups[$group] ) ) {
@@ -359,7 +363,7 @@ function wikiplugin_memberlist_add( $groups, $adds, $asdefault=false )
 
 function wikiplugin_memberlist_remove( $groups, $removes )
 {
-	global $userlib;
+	$userlib = TikiLib::lib('user');
 
 	foreach ( $removes as $group=> $members ) {
 		if ( isset( $groups[$group] ) ) {

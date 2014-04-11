@@ -19,7 +19,9 @@ class Messu extends TikiLib
 	 */
 	function save_sent_message($user, $from, $to, $cc, $subject, $body, $priority, $replyto_hash = '')
 	{
-		global $smarty, $userlib, $prefs;
+		global $prefs;
+		$userlib = TikiLib::lib('user');
+		$smarty = TikiLib::lib('smarty');
 
 		$subject = strip_tags($subject);
 		$body = strip_tags($body, '<a><b><img><i>');
@@ -77,7 +79,9 @@ class Messu extends TikiLib
 	 */
 	function post_message($user, $from, $to, $cc, $subject, $body, $priority, $replyto_hash = '', $replyto_email = '', $bcc_sender = '')
 	{
-		global $smarty, $userlib, $prefs;
+		global $prefs;
+		$userlib = TikiLib::lib('user');
+		$smarty = TikiLib::lib('smarty');
 
 		$subject = strip_tags($subject);
 		$body = strip_tags($body, '<a><b><img><i>');

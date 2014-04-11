@@ -10,7 +10,7 @@
 
 $section = 'calendar';
 require_once ('tiki-setup.php');
-require_once ('lib/categories/categlib.php');
+$categlib = TikiLib::lib('categ');
 include_once ('lib/calendar/calendarlib.php');
 if ($prefs['feature_groupalert'] == 'y') {
 	include_once ('lib/groupalert/groupalertlib.php');

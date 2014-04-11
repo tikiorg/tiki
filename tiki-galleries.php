@@ -9,7 +9,7 @@ $section = 'galleries';
 require_once ('tiki-setup.php');
 
 global $imagegallib; include_once ('lib/imagegals/imagegallib.php');
-global $categlib; include_once ('lib/categories/categlib.php');
+$categlib = TikiLib::lib('categ');
 include_once ('lib/map/usermap.php');
 $access->check_feature('feature_galleries');
 

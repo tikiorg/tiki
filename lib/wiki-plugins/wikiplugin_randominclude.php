@@ -19,7 +19,9 @@ function wikiplugin_randominclude_info()
 
 function wikiplugin_randominclude($data, $params)
 {
-	global $tikilib,$userlib,$user,$page;
+	global $user, $page;
+	$userlib = TikiLib::lib('user');
+	$tikilib = TikiLib::lib('tiki');
 	static $included_pages, $data;
 
 	$params=array($page);

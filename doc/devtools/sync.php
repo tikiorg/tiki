@@ -16,10 +16,9 @@ $tikidomain2 = "cc.tikiwiki.org";
 
 require_once("db/tiki-db.php");
 require_once("lib/tikilib.php");
-require_once("lib/userslib.php");
+$userlib = TikiLib::lib('user');
 
 $tikilib = new TikiLib;
-$userlib = new UsersLib;
 
 $users = $userlib->get_group_users('CC');
 

@@ -31,8 +31,8 @@ function upgrade_999999991_decode_pages_sources_tiki($installer)
 	global $user_overrider_prefs, $systemConfiguration;
 	set_time_limit(60 * 60); // Set maximum execution time to 1 hour since this runs on all pages
 	include_once('tiki-setup_base.php');
-	include_once ('lib/categories/categlib.php');	// needed for cat_jail fn in list_pages()
-	include_once('lib/wiki/wikilib.php');
+	$categlib = TikiLib::lib('categ');
+	$wikilib = TikiLib::lib('wiki');
 
 	$converter = new convertToTiki9();
 	$converter->convertPages();

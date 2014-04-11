@@ -129,7 +129,7 @@ class LogsLib extends TikiLib
 		}
 
 		if ($logCateg) {
-			global $categlib; include_once('lib/categories/categlib.php');
+			$categlib = TikiLib::lib('categ');
 			if ($objectType == 'comment') {
 				preg_match('/type=([^&]*)/', $param, $matches);
 				$categs = $categlib->get_object_categories($matches[1], $object);
@@ -185,7 +185,7 @@ class LogsLib extends TikiLib
 		}
 
 		if ($logCateg) {
-			global $categlib; include_once('lib/categories/categlib.php');
+			$categlib = TikiLib::lib('categ');
 			if ($objectType == 'comment') {
 				preg_match('/type=([^&]*)/', $param, $matches);
 				$categs = $categlib->get_object_categories($matches[1], $object);
@@ -501,7 +501,7 @@ class LogsLib extends TikiLib
 			}
 
 			if ($res['objectType'] == 'comment' && empty($res['categId'])) {
-				global $categlib; include_once('lib/categories/categlib.php');
+				$categlib = TikiLib::lib('categ');
 				preg_match('/type=([^&]*)/', $res['comment'], $matches);
 				$categs = $categlib->get_object_categories($matches[1], $res['object']);
 				$i = 0;

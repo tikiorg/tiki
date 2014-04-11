@@ -107,7 +107,9 @@ function wikiplugin_flash_info()
 
 function wikiplugin_flash($data, $params)
 {
-	global $tikilib, $prefs, $userlib, $user;
+	global $prefs, $user;
+	$userlib = TikiLib::lib('user');
+	$tikilib = TikiLib::lib('tiki');
 	
 	// Handle file from a podcast file gallery
 	if (isset($params['fileId']) && !isset($params['movie'])) {

@@ -6996,7 +6996,8 @@ class UsersLib extends TikiLib
 	/* send via XML_RPC user info to the main */
 	function interSendUserInfo($remote, $user)
 	{
-		global $prefs, $userlib;
+		global $prefs;
+		$userlib = TikiLib::lib('user');
 		include_once('XML/RPC.php');
 		$remote['path'] = preg_replace('/^\/?/', '/', $remote['path']);
 		$client = new XML_RPC_Client($remote['path'], $remote['host'], $remote['port']);
@@ -7018,7 +7019,8 @@ class UsersLib extends TikiLib
 	/* interpret the XML_RPC answer about user info */
 	function interSetUserInfo($user, $response_value)
 	{
-		global $userlib, $tikilib;
+		$userlib = TikiLib::lib('user');
+		$tikilib = TikiLib::lib('tiki');
 
 		if ($response_value->kindOf() == 'struct') {
 			for (;;) {

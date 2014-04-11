@@ -367,7 +367,9 @@ function wikiplugin_img_info()
 
 function wikiplugin_img( $data, $params )
 {
-	global $tikidomain, $prefs, $smarty, $userlib, $user;
+	global $tikidomain, $prefs, $user;
+	$userlib = TikiLib::lib('user');
+	$smarty = TikiLib::lib('smarty');
 
 	$imgdata = array();
 

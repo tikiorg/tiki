@@ -43,6 +43,9 @@ class DbgPermissions extends DebuggerCommand
 	/// Execute command with given set of arguments.
 	function execute($params)
 	{
+		$userlib = TikiLib::lib('user');
+		$smarty = TikiLib::lib('smarty');
+
 		$this->set_result_type(TPL_RESULT);
 
 		$this->set_result_tpl('debug/tiki-debug_permissions.tpl');
@@ -50,10 +53,8 @@ class DbgPermissions extends DebuggerCommand
 		$p = explode(' ', trim($params));
 		$mask = count($p) > 0 ? str_replace('$', '', trim($p[0])) : '';
 		// Get list of all vars
-		global $smarty;
 		$tpl_vars = $smarty->getTemplateVars();
 		// Get descriptions for all permissions
-		global $userlib;
 		$pd = $userlib->get_permissions();
 		$descriptions = array();
 

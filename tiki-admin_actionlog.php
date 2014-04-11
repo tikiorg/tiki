@@ -14,7 +14,7 @@ if (empty($prefs['feature_jpgraph'])) {
 	$prefs['feature_jpgraph'] = 'n'; //optional package does not go througp prefs
 }
 
-include_once ('lib/categories/categlib.php');
+$categlib = TikiLib::lib('categ');
 include_once ('lib/contribution/contributionlib.php');
 
 $commentslib = TikiLib::lib('comments');

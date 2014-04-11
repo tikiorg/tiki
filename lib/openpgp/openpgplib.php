@@ -581,8 +581,8 @@ class OpenPGPLib
 	function getPublickeyArmorBlock($req_priority,$req_to,$req_cc)
 	{
 
-		global $user, $userlib;
-		include_once('lib/userslib.php');
+		global $user;
+		$userlib = TikiLib::lib('user');
 
 		// get user email for publickey armor block retrieval
 		$user_email = '';
@@ -699,7 +699,10 @@ class OpenPGPLib
 							$user_pubkeyarmor,   // NOTE this
 							$priority, $replyto_hash='', $replyto_email='', $bcc_sender = '')
 	{
-		global $smarty, $tikilib, $userlib, $prefs;
+		global $prefs;
+		$userlib = TikiLib::lib('user');
+		$tikilib = TikiLib::lib('tiki');
+		$smarty = TikiLib::lib('smarty');
 
 		$subject = strip_tags($subject);
 		$body = strip_tags($body, '<a><b><img><i>');

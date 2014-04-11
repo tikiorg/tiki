@@ -11,5 +11,11 @@
 		<service id="tiki.lib.service" class="ServiceLib">
 			<file>%kernel.root_dir%/lib/servicelib.php</file>
 		</service>
+		<service id="tiki.lib.user" class="UsersLib">
+			<file>%kernel.root_dir%/lib/userslib.php</file>
+		</service>
+		<service id="tiki.lib.categ" class="CategLib">
+			<file>%kernel.root_dir%/lib/categories/categlib.php</file>
+		</service>
 	</services>
 </container>

@@ -78,7 +78,8 @@ class AccountingLib extends LogsLib
 			, $bookAutoTax = 'y'
 			)
 	{
-		global $userlib, $user;
+		global $user;
+		$userlib = TikiLib::lib('user');
 		if (strlen($bookName) == 0) {
 			return "The book must have a name";
 		}

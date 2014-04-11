@@ -209,7 +209,7 @@ class TikiImporter_Wiki extends TikiImporter
 				$first = false;
 			}
 			if (!empty($rev['categories'])) {
-				global $categlib; include_once('lib/categories/categlib.php');
+				$categlib = TikiLib::lib('categ');
 				foreach ($rev['categories'] as $cat) {
 					$categId = $categlib->get_category_id($cat);
 					if (empty($categId)) {

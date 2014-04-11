@@ -30,7 +30,11 @@ class UserWizardUserTracker extends Wizard
 
 	function onSetupPage ($homepageUrl) 
 	{
-		global	$user, $smarty, $tikilib, $prefs, $registrationlib, $userlib; 
+		global $user, $prefs;
+		$userlib = TikiLib::lib('user');
+		$tikilib = TikiLib::lib('tiki');
+		$smarty = TikiLib::lib('smarty');
+		$registrationlib = TikiLib::lib('registration');
 
 		$trklib = TikiLib::lib('trk');
 
@@ -130,15 +134,14 @@ class UserWizardUserTracker extends Wizard
 
 	function onContinue ($homepageUrl) 
 	{
-		global $tikilib, $user, $prefs, $registrationlib, $userlib; 
-
+		global $user, $prefs;
+		$userlib = TikiLib::lib('user');
+		$tikilib = TikiLib::lib('tiki');
+		$registrationlib = TikiLib::lib('registration');
 		$trklib = TikiLib::lib('trk');
 
 		// Run the parent first
 		parent::onContinue($homepageUrl);
-		
-		include_once('lib/registration/registrationlib.php');
-		
 		
 		//get custom fields
 		$customfields = $registrationlib->get_customfields();

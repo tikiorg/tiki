@@ -205,7 +205,9 @@ class RegistrationLib extends TikiLib
 	 */
 	private function local_check_registration($registration, $from_intertiki = false)
 	{
-		global $_SESSION, $prefs, $userlib, $captchalib;
+		global $prefs;
+		$userlib = TikiLib::lib('user');
+		$captchalib = TikiLib::lib('captcha');
 
 		$errors = array();
 
@@ -312,7 +314,12 @@ class RegistrationLib extends TikiLib
 	 */
 	private function register_new_user_local($registration, $from_intertiki)
 	{
-		global $_SESSION, $tikilib, $logslib, $userlib, $notificationlib, $prefs, $smarty;
+		global $prefs;
+		$userlib = TikiLib::lib('user');
+		$tikilib = TikiLib::lib('tiki');
+		$smarty = TikiLib::lib('smarty');
+		$logslib = TikiLib::lib('logs');
+		$notificationlib = TikiLib::lib('notification');
 
 		$result = '';
 
@@ -634,7 +641,8 @@ class RegistrationLib extends TikiLib
 
 	private function init_registration_prefs()
 	{
-		global $userlib, $prefs;
+		global $prefs;
+		$userlib = TikiLib::lib('user');
 
 		if (!is_array($this->merged_prefs)) {
 			// local tiki prefs

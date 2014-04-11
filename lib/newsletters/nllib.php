@@ -172,7 +172,8 @@ class NlLib extends TikiLib
 
 	public function get_all_subscribers($nlId, $genUnsub)
 	{
-		global $userlib, $prefs, $user;
+		global $prefs, $user;
+		$userlib = TikiLib::lib('user');
 		$return = array();
 		$all_users = array();
 		$group_users = array();
@@ -389,7 +390,10 @@ class NlLib extends TikiLib
 
 	public function newsletter_subscribe($nlId, $add, $isUser='n', $validateAddr='', $addEmail='')
 	{
-		global $smarty, $tikilib, $user, $prefs, $userlib;
+		global $user, $prefs;
+		$userlib = TikiLib::lib('user');
+		$tikilib = TikiLib::lib('tiki');
+		$smarty = TikiLib::lib('smarty');
 		if (empty($add)) {
 			return false;
 		}
@@ -493,7 +497,10 @@ class NlLib extends TikiLib
 
 	public function confirm_subscription($code)
 	{
-		global $smarty, $tikilib, $prefs, $userlib;
+		global $prefs;
+		$userlib = TikiLib::lib('user');
+		$tikilib = TikiLib::lib('tiki');
+		$smarty = TikiLib::lib('smarty');
 		$foo = parse_url($_SERVER["REQUEST_URI"]);
 		$url_subscribe = $tikilib->httpPrefix(true) . $foo["path"];
 		$query = "select * from `tiki_newsletter_subscriptions` where `code`=?";
@@ -571,7 +578,10 @@ class NlLib extends TikiLib
 
 	public function unsubscribe($code, $mailit = false)
 	{
-		global $smarty, $prefs, $userlib, $tikilib;
+		global $prefs;
+		$userlib = TikiLib::lib('user');
+		$tikilib = TikiLib::lib('tiki');
+		$smarty = TikiLib::lib('smarty');
 		$foo = parse_url($_SERVER["REQUEST_URI"]);
 		$url_subscribe = $tikilib->httpPrefix(true). $foo["path"];
 		$query = "select * from `tiki_newsletter_subscriptions` where `code`=?";
@@ -962,7 +972,10 @@ class NlLib extends TikiLib
 
 	public function get_unsub_msg($nlId, $email, $lang, $code='', $user='')
 	{
-		global $smarty, $userlib, $tikilib, $prefs;
+		global $prefs;
+		$userlib = TikiLib::lib('user');
+		$tikilib = TikiLib::lib('tiki');
+		$smarty = TikiLib::lib('smarty');
 		$pth = $tikilib->httpPrefix(true). substr($_SERVER["REQUEST_URI"], 0, strpos($_SERVER["REQUEST_URI"], 'tiki-'));
 		$foo = parse_url($_SERVER["REQUEST_URI"]);
 		 $smarty->assign('url', $pth);

@@ -56,8 +56,7 @@ include_once ('lib/stats/statslib.php');
 global $artlib;
 include_once ('lib/articles/artlib.php');
 if ($prefs['feature_categories'] == 'y') {
-	global $categlib;
-	include_once ('lib/categories/categlib.php');
+	$categlib = TikiLib::lib('categ');
 }
 //This is basicaly a copy of part of the freetag code from tiki-setup.php and should be only there. The problem is that the section name for articles is "cms" and the object name for article in the table tiki_objects is "article". Maybe it is a good idea to use "cms" on tiki_objects instead "article" and then this block of code can be removed. Another solution?
 if ($prefs['feature_freetags'] == 'y') {

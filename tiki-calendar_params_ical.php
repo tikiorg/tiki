@@ -15,7 +15,7 @@ $access->check_feature('feature_calendar');
 $access->check_permission('tiki_p_view_events');
 
 include_once ('lib/calendar/calendarlib.php');
-include_once ('lib/categories/categlib.php');
+$categlib = TikiLib::lib('categ');
 include_once ('lib/newsletters/nllib.php');
 
 $smarty->assign('edit', false);

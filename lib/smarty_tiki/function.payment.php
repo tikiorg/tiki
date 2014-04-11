@@ -9,8 +9,10 @@
 // @params url $returnurl: optional return url
 function smarty_function_payment( $params, $smarty )
 {
-	global $tikilib, $prefs, $userlib, $user, $globalperms;
-	global $paymentlib; require_once 'lib/payment/paymentlib.php';
+	global $prefs, $user, $globalperms;
+	$userlib = TikiLib::lib('user');
+	$tikilib = TikiLib::lib('tiki');
+	$paymentlib = TikiLib::lib('payment');
 	$invoice = (int) $params['id'];
 
 	$objectperms = Perms::get('payment', $invoice);

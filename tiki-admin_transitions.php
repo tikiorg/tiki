@@ -9,7 +9,7 @@
 // $Id$
 
 require_once 'tiki-setup.php';
-require_once 'lib/categories/categlib.php';
+$categlib = TikiLib::lib('categ');
 require_once 'lib/transitionlib.php';
 
 $auto_query_args = array();
@@ -181,7 +181,8 @@ $smarty->display('tiki.tpl');
  */
 function transition_label_finder( $state )
 {
-	global $available_states, $transition_mode, $categlib;
+	global $available_states, $transition_mode;
+	$categlib = TikiLib::lib('categ');
 
 	if ( isset($available_states[$state]) ) {
 		return $available_states[$state];

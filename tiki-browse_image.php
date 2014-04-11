@@ -16,10 +16,7 @@ include_once ('lib/stats/statslib.php');
 $access->check_feature('feature_galleries');
 
 if ($prefs['feature_categories'] == 'y') {
-	global $categlib;
-	if (!is_object($categlib)) {
-		include_once ('lib/categories/categlib.php');
-	}
+	$categlib = TikiLib::lib('categ');
 }
 
 if (!isset($_REQUEST['imageId'])) {

@@ -1153,7 +1153,7 @@ class WikiLib extends TikiLib
 		global $user, $prefs;
 		if ($prefs['useGroupHome'] == 'y') {
 			global $user;
-			global $userlib; include_once('lib/userslib.php');
+			$userlib = TikiLib::lib('user');
 			if ($groupHome = $userlib->get_user_default_homepage($user)) {
 				return $groupHome;
 			} else {
@@ -1261,7 +1261,7 @@ class WikiLib extends TikiLib
 		$jail_where = '';
 
 		if ($categFilter) {
-			global $categlib; require_once( 'lib/categories/categlib.php' );
+			$categlib = TikiLib::lib('categ');
 			$categlib->getSqlJoin($categFilter, 'wiki page', '`tiki_pages`.`pageName`', $jail_join, $jail_where, $jail_bind);
 		}
 

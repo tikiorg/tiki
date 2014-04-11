@@ -13,9 +13,7 @@ function prefs_feature_list($partial = false)
 	$catree = $catlist = array('-1' => tra('None'));
 
 	if (! $partial && isset($prefs['feature_categories']) && $prefs['feature_categories'] == 'y') {
-		global $categlib;
-
-		include_once ('lib/categories/categlib.php');
+		$categlib = TikiLib::lib('categ');
 		$all_categs = $categlib->getCategories(NULL, true, false);
 
 		$catree['0'] = tra('All');

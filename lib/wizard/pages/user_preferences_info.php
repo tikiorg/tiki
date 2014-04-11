@@ -34,7 +34,10 @@ class UserWizardPreferencesInfo extends Wizard
 	function onSetupPage ($homepageUrl) 
 	{
 
-		global	$smarty, $userlib, $tikilib, $user, $prefs, $user_preferences;
+		global $user, $prefs, $user_preferences;
+		$userlib = TikiLib::lib('user');
+		$tikilib = TikiLib::lib('tiki');
+		$smarty = TikiLib::lib('smarty');
 
 		// Run the parent first
 		parent::onSetupPage($homepageUrl);

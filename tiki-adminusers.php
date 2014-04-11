@@ -51,7 +51,11 @@ function discardUser($u, $reason)
 
 function batchImportUsers()
 {
-	global $userlib, $smarty, $logslib, $tiki_p_admin, $prefs, $userGroups, $tikilib;
+	global $tiki_p_admin, $prefs, $userGroups;
+	$userlib = TikiLib::lib('user');
+	$tikilib = TikiLib::lib('tiki');
+	$smarty = TikiLib::lib('smarty');
+	$logslib = TikiLib::lib('logs');
 
 	$fname = $_FILES['csvlist']['tmp_name'];
 	$fhandle = fopen($fname, 'r');

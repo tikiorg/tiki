@@ -23,7 +23,9 @@ function wikiplugin_userlastlogged_info()
 
 function wikiplugin_userlastlogged($data, $params)
 {
-	global $tikilib, $user, $userlib;
+	global $user;
+	$userlib = TikiLib::lib('user');
+	$tikilib = TikiLib::lib('tiki');
 	
 	if (!empty($params['user'])) {
 		$info = $userlib->get_user_info($params['user']);

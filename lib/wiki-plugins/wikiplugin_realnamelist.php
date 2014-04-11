@@ -79,7 +79,9 @@ function wikiplugin_realnamelist_info()
 
 function wikiplugin_realnamelist($data, $params)
 {
-	global $tikilib, $userlib, $prefs, $tiki_p_admin, $tiki_p_admin_users;
+	global $prefs, $tiki_p_admin, $tiki_p_admin_users;
+	$userlib = TikiLib::lib('user');
+	$tikilib = TikiLib::lib('tiki');
 
 	extract($params, EXTR_SKIP);
 

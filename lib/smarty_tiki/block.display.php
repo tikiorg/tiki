@@ -24,7 +24,8 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 
 function smarty_block_display($params, $content, $smarty, &$repeat)
 {
-	global $prefs, $user, $userlib;
+	global $prefs, $user;
+	$userlib = TikiLib::lib('user');
 	
 	if ( $repeat ) return;
 	$ok = true;

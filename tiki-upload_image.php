@@ -10,7 +10,7 @@
 
 $section = 'galleries';
 require_once ('tiki-setup.php');
-include_once ('lib/categories/categlib.php');
+$categlib = TikiLib::lib('categ');
 include_once ('lib/imagegals/imagegallib.php');
 
 $access->check_feature('feature_galleries');

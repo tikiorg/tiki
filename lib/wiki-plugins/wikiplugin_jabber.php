@@ -44,7 +44,7 @@ function wikiplugin_jabber_info()
 
 function wikiplugin_jabber($data,$params)
 {
-  global $userlib;
+  $userlib = TikiLib::lib('user');
   global $user;
   extract($params, EXTR_SKIP);
 

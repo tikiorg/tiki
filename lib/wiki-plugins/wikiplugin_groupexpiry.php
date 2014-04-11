@@ -24,7 +24,9 @@ function wikiplugin_groupexpiry_info()
 
 function wikiplugin_groupexpiry($data, $params)
 {
-	global $tikilib, $userlib, $user;
+	global $user;
+	$userlib = TikiLib::lib('user');
+	$tikilib = TikiLib::lib('tiki');
 	extract($params, EXTR_SKIP);	
 	$groups = $userlib->get_user_groups($user);
 	if (!in_array($group, $groups)) {

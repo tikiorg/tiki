@@ -52,8 +52,7 @@ if (!empty($_REQUEST['categId'])) {
 	$smarty->assign('find_categId', '');
 }
 if ($prefs['feature_categories'] == 'y') {
-	global $categlib;
-	include_once ('lib/categories/categlib.php');
+	$categlib = TikiLib::lib('categ');
 	$categories = $categlib->getCategories(NULL, true, false);
 	$smarty->assign('categories', $categories);
 }

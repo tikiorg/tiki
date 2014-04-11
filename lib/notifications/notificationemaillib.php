@@ -29,7 +29,10 @@ function sendForumEmailNotification(
 				$contributions='',
 				$postId = '')
 {
-	global $tikilib, $prefs, $smarty, $userlib;
+	global $prefs;
+	$userlib = TikiLib::lib('user');
+	$tikilib = TikiLib::lib('tiki');
+	$smarty = TikiLib::lib('smarty');
 
 	// Per-forum From address overrides global default.
 	if ( $forum_info['outbound_from'] ) {
@@ -209,8 +212,11 @@ function sendWikiEmailNotification(
 				$lang = ''
 	)
 {
-	global $tikilib, $prefs, $smarty, $userlib;
-	global $notificationlib; include_once('lib/notifications/notificationlib.php');
+	global $prefs;
+	$userlib = TikiLib::lib('user');
+	$tikilib = TikiLib::lib('tiki');
+	$smarty = TikiLib::lib('smarty');
+	$notificationlib = TikiLib::lib('notification');
 	$nots = array();
 	$defaultLanguage = $prefs['site_language'];
 	if ($wikiEvent == 'wiki_file_attached') {
@@ -492,7 +498,10 @@ function sendErrorEmailNotification($errno, $errstr, $errfile='?', $errline= '?'
 
 function sendFileGalleryEmailNotification($event, $galleryId, $galleryName, $name, $filename, $description, $action, $user, $fileId)
 {
-	global $tikilib, $prefs, $smarty, $userlib;
+	global $prefs;
+	$userlib = TikiLib::lib('user');
+	$tikilib = TikiLib::lib('tiki');
+	$smarty = TikiLib::lib('smarty');
 
 	$nots = array();
 	$defaultLanguage = $prefs['site_language'];
@@ -581,7 +590,10 @@ function sendCategoryEmailNotification($values)
 		$objectUrl = $values['objectUrl'];
 	}
 
-	global $tikilib, $prefs, $smarty, $userlib, $user;
+	global $prefs, $user;
+	$userlib = TikiLib::lib('user');
+	$tikilib = TikiLib::lib('tiki');
+	$smarty = TikiLib::lib('smarty');
 
 	$nots = array();
 	$defaultLanguage = $prefs['site_language'];

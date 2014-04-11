@@ -362,7 +362,7 @@ class PollLibShared extends TikiLib
      */
     function get_poll_categories($pollId)
 	{
-		global $categlib; include_once('lib/categories/categlib.php');
+		$categlib = TikiLib::lib('categ');
 
 		$query = "select tco.`categId`, tc.`name`" .
 							" from `tiki_poll_objects` tpo, `tiki_category_objects` tco, `tiki_categories` tc" .

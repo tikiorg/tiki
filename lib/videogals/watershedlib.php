@@ -17,7 +17,7 @@ class watershedLib
 {
 	function storeSessionId( $u, $sessionId )
 	{
-		global $tikilib;
+		$tikilib = TikiLib::lib('tiki');
 		$tikilib->set_user_preference($u, 'watershed_sessionId', $sessionId);
 		$tikilib->set_user_preference($u, 'watershed_sessionId_time', $tikilib->now);
 		return true;
@@ -25,7 +25,8 @@ class watershedLib
 
 	function getSessionId( $u )
 	{
-		global $tikilib, $userlib;
+		$userlib = TikiLib::lib('user');
+		$tikilib = TikiLib::lib('tiki');
 		$userinfo = $userlib->get_user_info($u);
 		if ($tikilib->get_user_preference($u, 'watershed_sessionId_time', 0) > $userinfo['lastLogin']) {
 			$sessionId = $tikilib->get_user_preference($u, 'watershed_sessionId', '');

@@ -107,7 +107,10 @@ function module_users_list_info()
  */
 function module_users_list($module_params)
 {
-	global $userlib, $tikilib, $prefs, $smarty;
+	global $prefs;
+	$userlib = TikiLib::lib('user');
+	$tikilib = TikiLib::lib('tiki');
+	$smarty = TikiLib::lib('smarty');
 	
 	if (isset($module_params['params']['group'])) {
 		$group = array($module_params['params']['group']);

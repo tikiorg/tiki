@@ -940,8 +940,7 @@ if (
 		$install_type = 'scratch';
 		require_once 'lib/tikilib.php';
 		$tikilib = new TikiLib;
-		require_once 'lib/userslib.php';
-		$userlib = new UsersLib;
+		$userlib = TikiLib::lib('user');
 		require_once 'lib/tikidate.php';
 		$tikidate = new TikiDate();
 	}
@@ -980,7 +979,8 @@ if ($install_step == '8') {
 		touch('db/'.$tikidomainslash.'lock');
 	}
 
-	global $userlib, $cachelib;
+	$userlib = TikiLib::lib('user');
+	$cachelib = TikiLib::lib('cache');
 	if (session_id()) {
 		session_destroy();
 	}

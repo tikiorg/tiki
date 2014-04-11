@@ -184,7 +184,8 @@ class SocialNetworksLib extends LogsLib
 	 */
 	function getFacebookAccessToken()
 	{
-		global $prefs, $user, $userlib;
+		global $prefs, $user;
+		$userlib = TikiLib::lib('user');
 		if ($prefs['socialnetworks_facebook_application_id'] == '' or $prefs['socialnetworks_facebook_application_secr'] == '') {
 			return false;
 		}

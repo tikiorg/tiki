@@ -57,7 +57,7 @@ class WikiRenderer
 
 	function applyPermissions() // {{{
 	{
-		global $userlib;
+		$userlib = TikiLib::lib('user');
 		$permNames = $userlib->get_permission_names_for('wiki');
 		$objectperms = Perms::get(array( 'type' => 'wiki page', 'object' => $this->page ));
 
@@ -448,8 +448,10 @@ class WikiRenderer
 
 	private function setupWatch() // {{{
 	{
-		global $prefs, $tikilib, $categlib, $userlib;
-		require_once 'lib/categories/categlib.php';
+		global $prefs;
+		$tikilib = TikiLib::lib('tiki');
+		$categlib = TikiLib::lib('categ');
+		$userlib = TikiLib::lib('user');
 		if ($prefs['feature_user_watches'] != 'y')
 			return;
 
@@ -481,8 +483,8 @@ class WikiRenderer
 
 	private function setupCategories() // {{{
 	{
-		global $prefs, $categlib;
-		require_once 'lib/categories/categlib.php';
+		global $prefs;
+		$categlib = TikiLib::lib('categ');
 
 		$cats = array();
 		if ($prefs['feature_categories'] == 'y' && $categlib->is_categorized('wiki page', $this->page)) {

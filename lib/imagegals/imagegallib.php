@@ -1600,7 +1600,8 @@ class ImageGalsLib extends TikiLib
 		$cant = $this->getOne($query_cant, $bindvars);
 		$ret = array();
 
-		global $prefs, $userlib, $user, $tiki_p_admin;
+		global $prefs, $user, $tiki_p_admin;
+		$userlib = TikiLib::lib('user');
 		while ($res = $result->fetchRow()) {
 			$res['perms'] = $this->get_perm_object($res['galleryId'], 'image gallery', $res, false);
 			if ($res['perms']['tiki_p_view_image_gallery'] == 'y') {

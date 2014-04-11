@@ -212,8 +212,8 @@ global $smarty; require_once ('lib/init/smarty.php');
 $maxRecords = $prefs['maxRecords'];
 $smarty->assignByRef('maxRecords', $maxRecords);
 
-require_once ('lib/userslib.php'); global $userlib;
-$userlib = new UsersLib;
+global $userlib;
+$userlib = TikiLib::lib('user');
 require_once ('lib/tikiaccesslib.php');
 $access = new TikiAccessLib;
 require_once ('lib/breadcrumblib.php');

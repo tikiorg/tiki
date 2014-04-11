@@ -7,15 +7,15 @@
 
 function smarty_function_user_registration($params, $smarty)
 {
-	global $prefs, $userlib, $https_mode, $base_url_https, $registrationlib, $user;
+	global $prefs, $https_mode, $base_url_https, $user;
+	$registrationlib = TikiLib::lib('registration');
+	$userlib = TikiLib::lib('user');
 
 	if ($prefs['allowRegister'] != 'y') {
 		return;
 	}
 
 	$errorreportlib = TikiLib::lib('errorreport');
-
-	include_once('lib/registration/registrationlib.php');
 
 	$_VALID = tra("Please enter a valid %s.  No spaces, more than %d characters and contain %s");
 	$smarty->assign('_PROMPT_UNAME', sprintf($_VALID, tra("username"), $registrationlib->merged_prefs['min_username_length'], "0-9,a-z,A-Z"));

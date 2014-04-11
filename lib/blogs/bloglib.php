@@ -36,8 +36,8 @@ class BlogLib extends TikiDb_Bridge
 	 */
 	function list_blogs($offset = 0, $maxRecords = -1, $sort_mode = 'created_desc', $find = '', $ref='', $with = '')
 	{
-		global $tikilib, $categlib;
-		if (!$categlib) require_once 'lib/categories/categlib.php';
+		$tikilib = TikiLib::lib('tiki');
+		$categlib = TikiLib::lib('categ');
 		$bindvars = array();
 		$join = '';
 		$where = '';
@@ -90,8 +90,9 @@ class BlogLib extends TikiDb_Bridge
 	 */
 	function get_blog($blogId)
 	{
-		global $tikilib, $prefs, $user, $categlib; if (!$categlib) require_once 'lib/categories/categlib.php';
-
+		global $prefs, $user;
+		$tikilib = TikiLib::lib('tiki');
+		$categlib = TikiLib::lib('categ');
 		$bindvars = array();
 
 		if ( $jail = $categlib->get_jail() ) {
@@ -596,7 +597,9 @@ class BlogLib extends TikiDb_Bridge
 	 */
 	function list_blog_post_comments($approved = 'y', $maxRecords = -1)
 	{
-		global $user, $tikilib, $userlib, $tiki_p_admin, $tiki_p_blog_admin, $tiki_p_blog_post;
+		global $user, $tiki_p_admin, $tiki_p_blog_admin, $tiki_p_blog_post;
+		$userlib = TikiLib::lib('user');
+		$tikilib = TikiLib::lib('tiki');
 
 		// TODO: use commentslib instead of querying database directly
 		// Blog Recent Comments

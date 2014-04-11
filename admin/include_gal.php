@@ -155,7 +155,7 @@ $smarty->assign('gdlib', $gdlib);
 $smarty->assign('imagicklib', $imagicklib);
 
 if ($prefs['feature_categories'] == 'y') {
-	include_once ('lib/categories/categlib.php');
+	$categlib = TikiLib::lib('categ');
 	$catree = $categlib->getCategories(null, true, false);
 	$smarty->assign('catree', $catree);
 }

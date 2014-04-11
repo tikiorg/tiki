@@ -48,14 +48,14 @@ $pageCache = Tiki_PageCache::create()
 	->addKeys($_REQUEST, array( 'locale', 'forumId', 'comments_parentId' ))
 	->checkMeta(
 		'forum-page-output-meta-time', array(
-			'forumId'           => @$_REQUEST['forumId'],
-			'comments_parentId' => @$_REQUEST['comments_parentId']
+			'forumId'           => $jitRequest->forumId->int(),
+			'comments_parentId' => $jitRequest->comments_parentId->int(),
 		)
 	)
 	->applyCache();
 
 if ($prefs['feature_categories'] == 'y') {
-	global $categlib; include_once ('lib/categories/categlib.php');
+	$categlib = TikiLib::lib('categ');
 }
 if (!isset($_REQUEST['topics_offset'])) {
 	$_REQUEST['topics_offset'] = 0;

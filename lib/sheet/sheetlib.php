@@ -183,7 +183,9 @@ class SheetLib extends TikiLib
 
 	function list_sheets( $offset = 0, $maxRecord = -1, $sort_mode = 'title_desc', $find = '') // {{{2
 	{
-		global $user, $tikilib, $userlib;
+		global $user;
+		$userlib = TikiLib::lib('user');
+		$tikilib = TikiLib::lib('tiki');
 		switch( $sort_mode )
 		{
 			case "author_asc":

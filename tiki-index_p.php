@@ -17,10 +17,7 @@ include_once('lib/wiki/wikilib.php');
 $parserlib = TikiLib::lib('parser');
 
 if ($prefs['feature_categories'] == 'y') {
-	global $categlib;
-	if (!is_object($categlib)) {
-		include_once('lib/categories/categlib.php');
-	}
+	$categlib = TikiLib::lib('categ');
 }
 
 $access->check_feature('feature_wiki');

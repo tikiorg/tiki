@@ -30,8 +30,8 @@ function module_whats_related_info()
  */
 function module_whats_related($mod_reference, $module_params)
 {
-	global $smarty;
-	global $categlib; require_once ('lib/categories/categlib.php');
+	$smarty = TikiLib::lib('smarty');
+	$categlib = TikiLib::lib('categ');
 	
 	$WhatsRelated=$categlib->get_link_related($_SERVER["REQUEST_URI"]);
 	$smarty->assign_by_ref('WhatsRelated', $WhatsRelated);

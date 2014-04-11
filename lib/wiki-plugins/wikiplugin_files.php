@@ -402,11 +402,14 @@ function wikiplugin_files_info()
 }
 function wikiplugin_files($data, $params)
 {
-	global $prefs, $tikilib, $smarty, $tiki_p_admin, $tiki_p_admin_files_galleries, $user;
+	global $prefs, $tiki_p_admin, $tiki_p_admin_files_galleries, $user;
 	if ($prefs['feature_file_galleries'] != 'y') {
 		return('');
 	}
-	global $filegallib; include_once('lib/filegals/filegallib.php');
+	$filegallib = TikiLib::lib('filegal');
+	$tikilib = TikiLib::lib('tiki');
+	$smarty = TikiLib::lib('smarty');
+
 	$default = array('showfind'=>'n', 'showtitle'=>'y', 'showupload' => 'n', 'showgallery' => 'n', 'max' => -1, 'showthumb' => 'n', 'recursive' => 'n', 'withsubgals'=>'y');
 	$params = array_merge($default, $params);
 	$filter = '';
@@ -416,7 +419,7 @@ function wikiplugin_files($data, $params)
 		if (isset($categId))
 			unset($categId);
 	} else {
-		global $categlib; include_once('lib/categories/categlib.php');
+		$categlib = TikiLib::lib('categ');
 	}
 
 	$files = array();

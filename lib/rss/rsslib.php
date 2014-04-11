@@ -157,7 +157,10 @@ class RSSLib extends TikiDb_Bridge
 			, $fromcache=false
 			)
 	{
-		global $tikilib, $tiki_p_admin, $prefs, $userlib, $prefs, $smarty;
+		global $tiki_p_admin, $prefs;
+		$userlib = TikiLib::lib('user');
+		$tikilib = TikiLib::lib('tiki');
+		$smarty = TikiLib::lib('smarty');
 
 		// both title and description fields cannot be null
 		if (empty($title) || empty($desc)) {
@@ -304,7 +307,8 @@ class RSSLib extends TikiDb_Bridge
 	 */
 	function process_item_author($login)
 	{
-		global $userlib, $tikilib;
+		$userlib = TikiLib::lib('user');
+		$tikilib = TikiLib::lib('tiki');
 
 		$author = array();
 

@@ -43,7 +43,10 @@ function wikiplugin_cclite_info()
 
 function wikiplugin_cclite( $data, $params )
 {
-	global $smarty, $userlib, $prefs, $user, $headerlib;
+	global $prefs, $user;
+	$userlib = TikiLib::lib('user');
+	$smarty = TikiLib::lib('smarty');
+	$headerlib = TikiLib::lib('header');
 	//global $paymentlib; require_once 'lib/payment/paymentlib.php';
 	global $cclitelib;  require_once 'lib/payment/cclitelib.php';
 	

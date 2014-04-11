@@ -384,12 +384,13 @@ class CategLib extends ObjectLib
 
 	function list_category_objects($categId, $offset, $maxRecords, $sort_mode='pageName_asc', $type='', $find='', $deep=false, $and=false, $filter=null)
 	{
-		global $userlib, $prefs;
+		global $prefs;
+		$userlib = TikiLib::lib('user');
 		if ($prefs['feature_sefurl'] == 'y') {
 			include_once('tiki-sefurl.php');
 		}
 		if ($prefs['feature_trackers'] == 'y') {
-			global $trklib;require_once('lib/trackers/trackerlib.php');
+			$trklib = TikiLib::lib('trk');
 		}
 
 	    // Build the condition to restrict which categories objects must be in to be returned.
@@ -1155,7 +1156,8 @@ class CategLib extends ObjectLib
 	// Gets a list of categories that will block objects to be seen by user, recursive
 	function list_forbidden_categories($parentId=0, $parentAllowed='', $perm='tiki_p_view_categorized')
 	{
-		global $user, $userlib;
+		global $user;
+		$userlib = TikiLib::lib('user');
 		if (empty($parentAllowed)) {
 		    global $tiki_p_view_categorized;
 		    $parentAllowed = $tiki_p_view_categorized;
@@ -1410,7 +1412,7 @@ class CategLib extends ObjectLib
 	 */
 	function has_edit_permission($user, $categoryId)
 	{
-		global $userlib;
+		$userlib = TikiLib::lib('user');
 		return ($userlib->user_has_permission($user, 'tiki_p_admin')
 				|| ($userlib->user_has_permission($user, 'tiki_p_edit') && !$userlib->object_has_one_permission($categoryId, "category"))
 				|| $userlib->object_has_permission($user, $categoryId, "category", "tiki_p_edit")
@@ -1479,7 +1481,8 @@ class CategLib extends ObjectLib
 	// $objId: A unique identifier of an object of the given type, for example "Foo" for Wiki page Foo.
 	function update_object_categories($categories, $objId, $objType, $desc=NULL, $name=NULL, $href=NULL, $managedCategories = null, $override_perms = false)
 	{
-		global $prefs, $user, $userlib;
+		global $prefs, $user;
+		$userlib = TikiLib::lib('user');
 
 		if (empty($categories)) {
 			$forcedcat = $userlib->get_user_group_default_category($user);
@@ -1806,4 +1809,4 @@ class CategLib extends ObjectLib
 		return $this->parentCategories[$categId];
 	}
 }
-$categlib = new CategLib;
+

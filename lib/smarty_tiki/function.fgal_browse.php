@@ -23,7 +23,9 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 function smarty_function_fgal_browse($params, $smarty)
 {
 	if ( ! is_array($params) || ! isset($params['_id']) ) return;
-	global $tikilib, $userlib, $tiki_p_view_file_gallery, $prefs;
+	global $tiki_p_view_file_gallery, $prefs;
+	$userlib = TikiLib::lib('user');
+	$tikilib = TikiLib::lib('tiki');
 
 	if ( ! isset($params['nbCols']) ) $params['nbCols'] = 0;
 	if ( ! isset($params['show_selectall']) ) $params['show_selectall'] = 'y';

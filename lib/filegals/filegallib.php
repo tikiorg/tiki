@@ -632,7 +632,7 @@ class FileGalLib extends TikiLib
 		}
 
 		if ($prefs['feature_categories'] == 'y') {
-			global $categlib; require_once('lib/categories/categlib.php');
+			$categlib = TikiLib::lib('categ');
 			$categlib->uncategorize_object('file', $id);
 		}
 
@@ -1485,7 +1485,9 @@ class FileGalLib extends TikiLib
 	// not the best optimisation as using a library using files and not content
 	function zip($fileIds, &$error, $zipName='')
 	{
-		global $tiki_p_admin_file_galleries, $userlib, $tikilib, $prefs, $user;
+		global $tiki_p_admin_file_galleries, $prefs, $user;
+		$userlib = TikiLib::lib('user');
+		$tikilib = TikiLib::lib('tiki');
 		$list = array();
 		$temp = 'temp/'.md5($tikilib->now).'/';
 		if (!mkdir($temp)) {

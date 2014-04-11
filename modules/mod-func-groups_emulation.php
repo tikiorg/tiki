@@ -32,7 +32,9 @@ function module_groups_emulation_info()
  */
 function module_groups_emulation($mod_reference, $module_params)
 {
-	global $smarty, $user, $tiki_p_admin, $userlib;
+	global $user, $tiki_p_admin;
+	$userlib = TikiLib::lib('user');
+	$smarty = TikiLib::lib('smarty');
 	
 	$smarty->assign('groups_are_emulated', isset($_SESSION['groups_are_emulated']) ? $_SESSION['groups_are_emulated'] : 'n');
 	if (isset($_SESSION['groups_emulated']))

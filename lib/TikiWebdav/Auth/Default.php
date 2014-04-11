@@ -53,7 +53,7 @@ class TikiWebdav_Auth_Default extends ezcWebdavBasicAuth implements ezcWebdavAut
 				print_debug("Login Anonymous User=".$data->username." Already logged\n");
 				return true;
 			}
-			global $userlib; include_once('lib/userslib.php');
+			$userlib = TikiLib::lib('user');
 			if ($prefs['auth_method'] == 'cas') {
 				// Workaround : Webdav doesn't work with cas
 				$prefs['auth_method'] = 'ldap';
@@ -82,7 +82,7 @@ class TikiWebdav_Auth_Default extends ezcWebdavBasicAuth implements ezcWebdavAut
 				$user = $_SESSION['webdav_user'] = 'Anonymous';
 				return true;
 			}
-			global $userlib; include_once('lib/userslib.php');
+			$userlib = TikiLib::lib('user');
 			list($isvalid, $user, $error) = $userlib->validate_user($data->username, 'tototi');
 			print_debug("Login Digest User=" . $data->username . " " . ($isvalid ? 'OK' : 'FAILED') . " " . print_r($data, true) . "\n");
 			if ($isvalid) {

@@ -68,7 +68,10 @@ $s = new XML_RPC_Server($map);
  */
 function validate($params)
 {
-	global $tikilib, $userlib, $prefs, $logslib;
+	global $prefs;
+	$userlib = TikiLib::lib('user');
+	$tikilib = TikiLib::lib('tiki');
+	$logslib = TikiLib::lib('logs');
 
 	$key = $params->getParam(0);
 	$key = $key->scalarval(); 
@@ -123,7 +126,6 @@ function validate($params)
 
 	if ($slave) {
 		$logslib->add_log('intertiki', 'auth granted from ' . $prefs['known_hosts'][$key]['name'], $login);
-		global $userlib;
 
 		$user_details = $userlib->get_user_details($login);
 		$user_info = $userlib->get_user_info($login);
@@ -143,7 +145,9 @@ function validate($params)
  */
 function set_user_info($params)
 {
-	global $tikilib, $userlib, $prefs;
+	global $prefs;
+	$userlib = TikiLib::lib('user');
+	$tikilib = TikiLib::lib('tiki');
 
 	if ($prefs['feature_userPreferences'] != 'y') {
 		return new XML_RPC_Response(new XML_RPC_Value(1, 'boolean'));
@@ -173,7 +177,10 @@ function set_user_info($params)
  */
 function logout($params)
 {
-	global $tikilib, $userlib,$logslib,$prefs;
+	global $prefs;
+	$userlib = TikiLib::lib('user');
+	$tikilib = TikiLib::lib('tiki');
+	$logslib = TikiLib::lib('logs');
 
 	$key = $params->getParam(0); 
 	$key = $key->scalarval();
@@ -209,7 +216,9 @@ function logout($params)
  */
 function cookie_check($params)
 {
-	global $tikilib, $userlib,$prefs;
+	global $prefs;
+	$userlib = TikiLib::lib('user');
+	$tikilib = TikiLib::lib('tiki');
 
 	$key = $params->getParam(0); 
 	$key = $key->scalarval();
@@ -251,7 +260,9 @@ function get_version($params)
  */
 function get_user_info($params)
 {
-	global $tikilib, $prefs, $userlib;
+	global $prefs;
+	$userlib = TikiLib::lib('user');
+	$tikilib = TikiLib::lib('tiki');
 
 	$key = $params->getParam(0);
 	$key = $key->scalarval(); 

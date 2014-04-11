@@ -130,7 +130,7 @@ if ($perms->edit_structures) {
 		}
 
 		if ($prefs['feature_wiki_categorize_structure'] == 'y') {
-			global $categlib; include_once('lib/categories/categlib.php');
+			$categlib = TikiLib::lib('categ');
 			$pages_added = array();
 			if (!(empty($_REQUEST['name']))) {
 				$pages_added[] = $_REQUEST['name'];
@@ -300,7 +300,7 @@ if ($prefs['feature_wiki_categorize_structure'] == 'y' && $all_editable == 'y') 
  	$cat_type='wiki page'; 		
 	include_once("categorize_list.php");
 } elseif ($prefs['feature_categories'] == 'y') {
-	global $categlib; include_once('lib/categories/categlib.php');
+	$categlib = TikiLib::lib('categ');
 	$categories = $categlib->getCategories();
 	$smarty->assign_by_ref('categories', $categories);
 }

@@ -32,7 +32,8 @@ class WizardLib extends TikiLib
 	 */
 	public function onLogin($user, $homePageUrl, $force = false)
 	{
-		global $base_url, $userlib;
+		global $base_url;
+		$userlib = TikiLib::lib('user');
 		
 		// Check the user status
 		$isAdmin = $userlib->user_has_permission($user, 'tiki_p_admin');

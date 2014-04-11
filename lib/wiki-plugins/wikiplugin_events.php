@@ -82,11 +82,11 @@ function wikiplugin_events_info()
 
 function wikiplugin_events($data,$params)
 {
-	global $calendarlib, $userlib, $tikilib, $tiki_p_admin, $tiki_p_view_calendar, $smarty, $user;
-
-	if (!isset($calendarlib)) {
-		include_once ('lib/calendar/calendarlib.php');
-	}
+	global $tiki_p_admin, $tiki_p_view_calendar, $user;
+	$userlib = TikiLib::lib('user');
+	$tikilib = TikiLib::lib('tiki');
+	$smarty = TikiLib::lib('smarty');
+	$calendarlib = TikiLib::lib('calendar');
 
 	extract($params, EXTR_SKIP);
 

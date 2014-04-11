@@ -7,7 +7,7 @@
 
 function payment_behavior_extend_membership( $users, $group, $periods = 1, $groupId = 0 )
 {
-	global $userlib;
+	$userlib = TikiLib::lib('user');
 
 	$users = (array) $users;
 

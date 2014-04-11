@@ -25,13 +25,13 @@ class Perms_Reflection_Global implements Perms_Reflection_Container
 
 	function add( $group, $permission )
 	{
-		global $userlib;
+		$userlib = TikiLib::lib('user');
 		$userlib->assign_permission_to_group($permission, $group);
 	}
 
 	function remove( $group, $permission )
 	{
-		global $userlib;
+		$userlib = TikiLib::lib('user');
 		if ($group != 'Admins' || $permission != 'tiki_p_admin') {
 			$userlib->remove_permission_from_group($permission, $group);
 		}

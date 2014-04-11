@@ -57,7 +57,10 @@ function wikiplugin_groupstat_info()
 
 function wikiplugin_groupstat($data, $params)
 {
-	global $smarty, $prefs, $userlib, $tikilib;
+	global $prefs;
+	$userlib = TikiLib::lib('user');
+	$tikilib = TikiLib::lib('tiki');
+	$smarty = TikiLib::lib('smarty');
 
 	if (isset($params['groups'])) {
 		$groups = explode(':', $params['groups']);

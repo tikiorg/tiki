@@ -16,7 +16,10 @@ if (isset($_REQUEST['connectprefs'])) {
 }
 
 ask_ticket('admin-inc-connect');
-global $userlib, $prefs, $base_url, $headerlib, $smarty;
+global $prefs, $base_url;
+$userlib = TikiLib::lib('user');
+$headerlib = TikiLib::lib('header');
+$smarty = TikiLib::lib('smarty');
 
 $headerlib->add_jsfile('lib/jquery_tiki/tiki-connect.js');
 

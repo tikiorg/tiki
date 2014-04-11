@@ -28,7 +28,7 @@ function prefs_highlight_list($partial = false)
  */
 function highlight_group_values($partial)
 {
-	global $userlib;
+	$userlib = TikiLib::lib('user');
 
 	if ($partial) {
 		return false;

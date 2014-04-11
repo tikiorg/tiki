@@ -619,7 +619,9 @@ class Comments extends TikiLib
 	//Approve queued message -> post as new comment
 	function approve_queued($qId)
 	{
-		global $userlib, $tikilib, $prefs;
+		global $prefs;
+		$userlib = TikiLib::lib('user');
+		$tikilib = TikiLib::lib('tiki');
 		$info = $this->queue_get($qId);
 
 		$message_id = '';
@@ -793,7 +795,7 @@ class Comments extends TikiLib
 			$bind_time[] = $type;
 		}
 
-		global $categlib; require_once 'lib/categories/categlib.php';
+		$categlib = TikiLib::lib('categ');
 		if ($jail = $categlib->get_jail()) {
 			$categlib->getSqlJoin($jail, 'forum', '`a`.`object`', $join, $where, $bind_vars);
 		} else {
@@ -1930,7 +1932,8 @@ class Comments extends TikiLib
 												$approved='y'
 	)
 	{
-		global $userlib, $tiki_p_admin_comments, $prefs;
+		global $tiki_p_admin_comments, $prefs;
+		$userlib = TikiLib::lib('user');
 
 		$orig_maxRecords = $maxRecords;
 		$orig_offset = $offset;
@@ -2261,7 +2264,7 @@ class Comments extends TikiLib
 			$left = ', tc.`title` as parentTitle';
 		}
 
-		global $categlib; require_once 'lib/categories/categlib.php';
+		$categlib = TikiLib::lib('categ');
 		if ($jail = $categlib->get_jail()) {
 			$categlib->getSqlJoin($jail, '`objectType`', 'tc.`object`', $jail_join, $jail_where, $jail_bind, 'tc.`objectType`');
 		} else {

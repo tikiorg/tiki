@@ -269,7 +269,7 @@ class TikiImporter_Blog_Test extends TikiImporter_TestCase
 	
 	public function testCreateCategories()
 	{
-		global $categlib; require_once('lib/categories/categlib.php');
+		$categlib = TikiLib::lib('categ');
 		$categlib = $this->getMock('CategLib', array('add_category', 'get_category_id'));
 		$categlib->expects($this->exactly(3))->method('add_category');
 		$categlib->expects($this->exactly(1))->method('get_category_id');
@@ -296,7 +296,7 @@ class TikiImporter_Blog_Test extends TikiImporter_TestCase
 	
 	public function testLinkObjectWithCategories()
 	{
-		global $categlib; require_once('lib/categories/categlib.php');
+		$categlib = TikiLib::lib('categ');
 		$categlib = $this->getMock('CategLib', array('get_category_id', 'get_object_id', 'categorize', 'add_categorized_object'));
 		$categlib->expects($this->exactly(4))->method('get_category_id');
 		$categlib->expects($this->exactly(4))->method('get_category_id');

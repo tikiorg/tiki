@@ -15,10 +15,10 @@ $access->check_script($_SERVER["SCRIPT_NAME"], basename(__FILE__));
 
 global $prefs;
 if ($prefs['feature_polls'] == 'y') {
-	global $categlib, $polllib;
 	#echo '<div>hier</div>';
-	if (!is_object($categlib))  include_once('lib/categories/categlib.php');
-	if (!is_object($polllib))  include_once('lib/polls/polllib.php');
+	$polllib = TikiLib::lib('poll');
+	$categlib = TikiLib::lib('categ');
+
 	if (!isset($_REQUEST['poll_title'])) {
 		$_REQUEST['poll_title'] = 'rate it!';
 	}

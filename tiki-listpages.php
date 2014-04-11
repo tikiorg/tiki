@@ -264,8 +264,7 @@ if (!empty($multiprint_pages)) {
 		$smarty->assign('findSelectedCategoriesNumber', count($_REQUEST['cat_categories']));
 
 		if (!empty($_REQUEST['category'])) {
-			global $categlib;
-			include_once ('lib/categories/categlib.php');
+			$categlib = TikiLib::lib('categ');
 			$filter['categId'] = $categlib->get_category_id($_REQUEST['category']);
 			$smarty->assign('find_categId', $filter['categId']);
 			$selectedCategories = array((int) $filter['categId']);
@@ -379,8 +378,7 @@ if (!empty($multiprint_pages)) {
 		$smarty->assign('prev_offset', -1);
 
 	if ($prefs['feature_categories'] == 'y') {
-		global $categlib;
-		include_once ('lib/categories/categlib.php');
+		$categlib = TikiLib::lib('categ');
 		$categories = $categlib->getCategories();
 		$smarty->assign('notable', 'y');
 		$smarty->assign('cat_tree', $categlib->generate_cat_tree($categories, true, $selectedCategories));

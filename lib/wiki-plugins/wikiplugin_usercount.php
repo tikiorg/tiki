@@ -21,7 +21,7 @@ function wikiplugin_usercount_info()
 
 function wikiplugin_usercount($data, $params)
 {
-	global $tikilib, $userlib;
+	$userlib = TikiLib::lib('user');
 
 	extract($params, EXTR_SKIP);
 

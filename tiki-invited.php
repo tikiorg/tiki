@@ -12,7 +12,10 @@ $access->check_feature('feature_invite');
 
 function tiki_invited()
 {
-	global $smarty, $tikilib, $user, $userlib;
+	global $user;
+	$userlib = TikiLib::lib('user');
+	$tikilib = TikiLib::lib('tiki');
+	$smarty = TikiLib::lib('smarty');
 
 	$invite=(int)isset($_REQUEST['invite']) ? $_REQUEST['invite'] : 0;
 	$email=isset($_REQUEST['email']) ? $_REQUEST['email'] : null;

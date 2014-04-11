@@ -394,9 +394,13 @@ function wikiplugin_tracker_name($fieldId, $name, $field_errors)
 
 function wikiplugin_tracker($data, $params)
 {
-	global $tikilib, $userlib, $user, $group, $page, $smarty, $prefs, $captchalib;
+	global $user, $group, $page, $prefs;
 	$parserlib = TikiLib::lib('parser');
 	$trklib = TikiLib::lib('trk');
+	$userlib = TikiLib::lib('user');
+	$tikilib = TikiLib::lib('tiki');
+	$smarty = TikiLib::lib('smarty');
+	$captchalib = TikiLib::lib('captcha');
 
 	static $iTRACKER = 0;
 	++$iTRACKER;
@@ -716,7 +720,7 @@ function wikiplugin_tracker($data, $params)
 							} else {
 								$filter = NULL;
 							}
-							global $categlib; include_once('lib/categories/categlib.php');
+							$categlib = TikiLib::lib('categ');
 							$categs = $categlib->getCategories($filter, true, false);
 							$_REQUEST["ins_$f"][] = $categs[0]['categId'];
 						} elseif (preg_match('/preference\((.*)\)/', $autosavevalues[$i], $matches)) {

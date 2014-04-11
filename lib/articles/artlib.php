@@ -1045,7 +1045,8 @@ class ArtLib extends TikiLib
 												)
 	{
 
-		global $userlib, $user, $prefs;
+		global $user, $prefs;
+		$userlib = TikiLib::lib('user');
 
 		$mid = $join = '';
 		$bindvars = array();
@@ -1203,7 +1204,7 @@ class ArtLib extends TikiLib
 			$bindvars[] = $max_rating;
 		}
 
-		global $categlib; require_once('lib/categories/categlib.php');
+		$categlib = TikiLib::lib('categ');
 		if ( $categId ) {
 			$jail = $categId;
 		} else {

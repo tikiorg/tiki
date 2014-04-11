@@ -38,11 +38,11 @@ function wikiplugin_catpath_info()
 
 function wikiplugin_catpath($data, $params)
 {
-	global $dbTiki, $smarty, $tikilib, $prefs, $categlib;
+	global $prefs;
 
-	if (!is_object($categlib)) {
-		require_once ("lib/categories/categlib.php");
-	}
+	$smarty = TikiLib::lib('smarty');
+	$tikilib = TikiLib::lib('tiki');
+	$categlib = TikiLib::lib('categ');
 
 	if ($prefs['feature_categories'] != 'y') {
 		return "<span class='warn'>" . tra("Categories are disabled"). "</span>";

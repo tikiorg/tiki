@@ -10,7 +10,7 @@
 
 $section = 'categories';
 require_once ('tiki-setup.php');
-include_once ('lib/categories/categlib.php');
+$categlib = TikiLib::lib('categ');
 include_once ('lib/tree/BrowseTreeMaker.php');
 $access->check_feature('feature_categories');
 $access->check_permission('tiki_p_view_category');
@@ -229,7 +229,9 @@ function add_watch_icons($descendants, $usercatwatches, $requestid, $categid, $d
 	if (!$user || $prefs["feature_user_watches"] != 'y') {
 		 return false;
 	}
-	global $prefsgroups, $tiki_p_admin_users, $tiki_p_admin, $categlib;
+	global $prefsgroups, $tiki_p_admin_users, $tiki_p_admin;
+	$categlib = TikiLib::lib('categ');
+
 	$section = 'categories';
 	$nodesc = count($descendants);
 	$watch_desc = 'n';

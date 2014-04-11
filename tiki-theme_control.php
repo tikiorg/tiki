@@ -10,7 +10,7 @@
 
 require_once ('tiki-setup.php');
 include_once ('lib/themecontrol/tcontrol.php');
-include_once ('lib/categories/categlib.php');
+$categlib = TikiLib::lib('categ');
 $access->check_feature('feature_theme_control');
 $access->check_permission('tiki_p_admin');
 

@@ -36,7 +36,10 @@ function wikiplugin_invite_info()
 }
 function wikiplugin_invite( $data, $params)
 {
-	global $prefs, $tikilib, $userlib, $user, $smarty, $tiki_p_invite_to_my_groups;
+	global $prefs, $user, $tiki_p_invite_to_my_groups;
+	$userlib = TikiLib::lib('user');
+	$tikilib = TikiLib::lib('tiki');
+	$smarty = TikiLib::lib('smarty');
 
 	if ($tiki_p_invite_to_my_groups != 'y') {
 		return;

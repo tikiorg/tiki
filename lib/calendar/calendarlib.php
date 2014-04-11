@@ -50,7 +50,7 @@ class CalendarLib extends TikiLib
 			$bindvars[] = '%'.$find.'%';
 		}
 
-		global $categlib; require_once( 'lib/categories/categlib.php' );
+		$categlib = TikiLib::lib('categ');
 
 		$join = '';
 		if ( $jail = $categlib->get_jail() ) {
@@ -207,7 +207,7 @@ class CalendarLib extends TikiLib
 		$query = "delete from `tiki_calendar_locations` where `calendarId`=?";
 		$this->query($query, array($calendarId));
 		// uncategorize calendar
-		global $categlib; require_once('lib/categories/categlib.php');
+		$categlib = TikiLib::lib('categ');
 		$categlib->uncategorize_object('calendar', $calendarId);
 		// now remove the calendar itself:
 		$query = "delete from `tiki_calendars` where `calendarId`=?";

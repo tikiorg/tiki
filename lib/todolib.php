@@ -204,7 +204,10 @@ class TodoLib
      */
     function mailTodo($todo, $to, $default_subject='Change notification', $default_body='')
 	{
-		global $userlib, $tikilib, $prefs, $smarty;
+		global $prefs;
+		$userlib = TikiLib::lib('user');
+		$tikilib = TikiLib::lib('tiki');
+		$smarty = TikiLib::lib('smarty');
 		if (empty($to['email']) && !empty($to['user'])) {
 			$to['email'] = $userlib->get_user_email($to['user']);
 		}

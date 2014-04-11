@@ -73,10 +73,8 @@ if (isset($_REQUEST["save"])) {
 	include_once ("categorize.php");
 }
 if (isset($_REQUEST['addPoll']) && !empty($_REQUEST['poll_template']) && !empty($_REQUEST['pages'])) {
-	global $wikilib;
-	include_once ('lib/wiki/wikilib.php');
-	global $categlib;
-	include_once ('lib/categories/categlib.php');
+	$wikilib = TikiLib::lib('wiki');
+	$categlib = TikiLib::lib('categ');
 	$cat_type = 'wiki page';
 	foreach ($_REQUEST['pages'] as $cat_objid) {
 		if (!$catObjectId = $categlib->is_categorized($cat_type, $cat_objid)) {

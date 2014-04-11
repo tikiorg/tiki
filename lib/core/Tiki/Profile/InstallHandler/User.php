@@ -59,7 +59,7 @@ class Tiki_Profile_InstallHandler_User extends Tiki_Profile_InstallHandler
 	function _install()
 	{
 		if ($this->canInstall()) {
-			global $userlib; if (!$userlib) require_once 'lib/userslib.php';
+			$userlib = TikiLib::lib('user');
 
 			$user = $this->getData();
 				

@@ -133,8 +133,7 @@ if (isset($_REQUEST["save"])) {
 if (!empty($_REQUEST['duplicate']) && !empty($_REQUEST['name']) && !empty($_REQUEST['forumId'])) {
 	$newForumId = $commentslib->duplicate_forum($_REQUEST['forumId'], $_REQUEST['name'], isset($_REQUEST['description']) ? $_REQUEST['description'] : '');
 	if (isset($_REQUEST['dupCateg']) && $_REQUEST['dupCateg'] == 'on' && $prefs['feature_categories'] == 'y') {
-		global $categlib;
-		include_once ('lib/categories/categlib.php');
+		$categlib = TikiLib::lib('categ');
 		$cats = $categlib->get_object_categories('forum', $_REQUEST['forumId']);
 		$catObjectId = $categlib->add_categorized_object('forum', $newForumId, isset($_REQUEST['description']) ? $_REQUEST['description'] : '', $_REQUEST['name'], "tiki-view_forum.php?forumId=$newForumId");
 		foreach ($cats as $cat) {
@@ -142,8 +141,7 @@ if (!empty($_REQUEST['duplicate']) && !empty($_REQUEST['name']) && !empty($_REQU
 		}
 	}
 	if (isset($_REQUEST['dupPerms']) && $_REQUEST['dupPerms'] == 'on') {
-		global $userlib;
-		include_once ('lib/userslib.php');
+		$userlib = TikiLib::lib('user');
 		$userlib->copy_object_permissions($_REQUEST['forumId'], $newForumId, 'forum');
 	}
 	$_REQUEST['forumId'] = $newForumId;

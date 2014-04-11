@@ -118,7 +118,7 @@ if ($_REQUEST['objectType'] == 'wiki page') {
 }
 
 if ( $_REQUEST['objectType'] == 'category' && isset($_REQUEST['propagate_category']) ) {
-	global $categlib; require_once 'lib/categories/categlib.php';
+	$categlib = TikiLib::lib('categ');
 	$descendants = $categlib->get_category_descendants($_REQUEST['objectId']);
 
 	foreach ( $descendants as $child ) {
@@ -652,7 +652,7 @@ function quickperms_get_filegal()
  */
 function quickperms_get_generic()
 {
-	global $userlib;
+	$userlib = TikiLib::lib('user');
 
 	$databaseperms = $userlib->get_permissions(0, -1, 'permName_asc', '', $_REQUEST['permType'], '', true);
 	foreach ($databaseperms['data'] as $perm) {
@@ -707,7 +707,7 @@ function quickperms_get_generic()
  */
 function perms_get_restrictions()
 {
-	global $userlib;
+	$userlib = TikiLib::lib('user');
 	$perms = Perms::get();
 
 	if ( $perms->admin_objects ) {

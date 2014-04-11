@@ -86,14 +86,13 @@ chdir(dirname(__FILE__) . '/../..');
 global $smarty;
 require_once 'lib/init/smarty.php';
 $smarty->addPluginsDir('../smarty_tiki/');
-require_once 'lib/cache/cachelib.php';
-require_once 'lib/wiki/wikilib.php';
-require_once 'lib/userslib.php';
-require_once 'lib/headerlib.php';
+$cachelib = TikiLib::lib('cache');
+$wikilib = TikiLib::lib('wiki');
+$userlib = TikiLib::lib('user');
+$headerlib = TikiLib::lib('header');
 require_once 'lib/init/tra.php';
 require_once 'lib/tikiaccesslib.php';
 
-$userlib = new UsersLib;
 $_SESSION = array(
 		'u_info' => array(
 			'login' => null

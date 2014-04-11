@@ -7,7 +7,7 @@
 
 function validator_password($input, $parameter = '', $message = '')
 {
-	global $userlib;
+	$userlib = TikiLib::lib('user');
 	$errors = $userlib->check_password_policy($input);
 	if (!$errors) {
 		return true;
