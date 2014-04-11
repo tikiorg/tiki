@@ -49,6 +49,8 @@ class WikiGet extends WikiPut
 			$mail->setSubject($mail_data . $page);
 			$account->sendReply($message, $mail);
 		}
+
+		return true;
 	}
 }
 

@@ -82,6 +82,8 @@ class ArticlePut implements ActionInterface
 		if ($perms->autoapprove_submission) {
 			$artlib->approve_submission($subid);
 		}
+
+		return true;
 	}
 }
 
