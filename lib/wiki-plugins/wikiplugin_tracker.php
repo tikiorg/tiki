@@ -331,6 +331,18 @@ function wikiplugin_tracker_info()
 				'filter' => 'pagename',
 				'default' => '',
 			),
+			'outputwikirelation' => array(
+				'required' => false,
+				'name' => tra('Store relation to wiki page'),
+				'description' => tra('Store tiki.wiki.linkeditem and tiki.wiki.linkedfield relation from the created wiki page.'),
+				'filter' => 'alpha',
+				'default' => 'n',
+				'options' => array(
+					array('text' => '', 'value' => ''),
+					array('text' => tra('Yes'), 'value' => 'y'),
+					array('text' => tra('No'), 'value' => 'n')
+				)
+			),
 			'fieldsfill' => array(
 				'required' => false,
 				'name' => tra('Multiple Fill Fields'),
@@ -914,7 +926,10 @@ function wikiplugin_tracker($data, $params)
 						}
 						if ($discarditem == 'y') {
 							$trklib->remove_tracker_item($rid);
-						}
+						} elseif ($outputwikirelation == 'y') {
+							TikiLib::lib('relation')->add_relation('tiki.wiki.linkeditem', 'wiki page', $newpagename, 'trackeritem', $rid);
+							TikiLib::lib('relation')->add_relation('tiki.wiki.linkedfield', 'wiki page', $newpagename, 'trackerfield', $outputtowiki);
+						}	
 						if (empty($url)) {
 							global $wikilib;
 							$url[0] = $wikilib->sefurl($newpagename);
