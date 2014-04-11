@@ -36,6 +36,8 @@ if ($prefs['feature_theme_control'] == 'y') {
 		$tc_theme = $tcontrollib->tc_get_theme_by_section($section);
 		list($tc_theme, $tc_theme_option) = $tcontrollib->parse_theme_option_string($tc_theme);
 	}
+	if (!isset($cat_type) ) $cat_type = '';
+	if (!isset($cat_objid) ) $cat_objid = '';
 	$tcontrollib->get_theme($cat_type, $cat_objid, $tc_theme, $tc_theme_option);
 	if ($cat_type == 'trackeritem' && empty($tc_theme)) {
 		$trackerId = $tcontrollib->table('tiki_tracker_items')->fetchOne('trackerId', array('itemId' => $cat_objid));
@@ -62,5 +64,6 @@ if ($prefs['feature_theme_control'] == 'y') {
 		$style_ie9_css = $tikilib->get_style_path($tc_theme, $tc_theme_option, 'ie9.css');
 
 		$style_base = $tikilib->get_style_base($tc_theme);
+#echo "……JML debug in tc <pre>".print_r(array('tc_theme'=>$tc_theme,'style_base'=>$style_base),1)."</pre> <br>\n";
 	}
 }
