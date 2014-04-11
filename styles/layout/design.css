@@ -24,6 +24,12 @@
 	background-color: #fff;
 }
 
+#topbar_modules .box-search {
+	position: absolute;
+	right: 1rem;
+	bottom: 50%;
+}
+
 /***** Misc. *****/
 .mod-share-item {
 	float: left;
