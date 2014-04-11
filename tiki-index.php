@@ -192,6 +192,16 @@ $smarty->assign_by_ref('page', $page);
 $cat_type = 'wiki page';
 $cat_objid = $page;
 
+if ($prefs['tracker_wikirelation_redirectpage'] == 'y' && !isset($_REQUEST['admin'])) {
+	$relatedItems = TikiLib::lib('relation')->get_object_ids_with_relations_from( 'wiki page', $page, 'tiki.wiki.linkeditem' );
+	$relatedItem = reset($relatedItems);
+	if ($relatedItem) {
+		$url = 'tiki-view_tracker_item.php?itemId=' . $relatedItem;
+		include_once('tiki-sefurl.php');
+		header('location: '. filter_out_sefurl($url, 'trackeritem'));
+	}
+}
+
 // Inline Ckeditor editor
 if ($prefs['wysiwyg_inline_editing'] == 'y' && $page &&
 		(	($tikilib->user_has_perm_on_object($user, $_REQUEST['page'], 'wiki page', 'edit')) ||

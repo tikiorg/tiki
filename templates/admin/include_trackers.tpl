@@ -41,6 +41,13 @@
 		{preference name=tracker_legacy_insert}
 	</fieldset>
 
+	<fieldset class="admin">
+		<legend>{tr}Linked wiki pages{/tr}</legend>
+		{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Wiki pages are linked to tracker items, and their page names to tracker fields, via the tiki.wiki.linkeditem and tiki.wiki.linkedfield relations. You need to be familiar with the Relations tracker field or use the outputwiki option in the TRACKER plugin to make use of these features.{/tr}{/remarksbox}
+		{preference name=tracker_wikirelation_synctitle}
+		{preference name=tracker_wikirelation_redirectpage}
+	</fieldset>
+
 	<fieldset class="table">
 	  <legend>{tr}Tracker attachment preferences{/tr}</legend>
 		  <table class="table">

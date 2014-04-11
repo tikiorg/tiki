@@ -54,5 +54,20 @@ function prefs_tracker_list()
 			'type' => 'flag',
 			'default' => 'n',
 		),		
+		'tracker_wikirelation_synctitle' => array(
+			'name' => tr('Sync wiki page name to linked tracker field'),
+			'description' => tr('When wiki page is renamed or when the value of the trackerfield that is linked to the wiki page is changed, make the corresponding change as well to the other linked via tiki.wiki.linkedfield relation.'),
+			'type' => 'flag',
+			'tags' => array('advanced'),
+			'default' => 'n',
+		),
+		'tracker_wikirelation_redirectpage' => array(
+			'name' => tr('Redirect page views to linked tracker item'),
+			'description' => tr('Redirect the user to the tracker item when trying to view a wiki page that has a linked tracker item via tiki.wiki.linkeditem relation. Can be bypassed by adding &admin (?admin in sefurl) to the URL.'),
+			'warning' => tra('To get to the wiki page after activation, you can add &admin (?admin in sefurl) to the URL.'),
+			'type' => 'flag',
+			'tags' => array('advanced'),
+			'default' => 'n',
+		),
 	);
 }

@@ -47,6 +47,36 @@ class RelationLib extends TikiDb_Bridge
 	}
 
 	/**
+	 * This is a convenience function to get all the matching IDs from
+	 * get_relations_from without caring about the object type which might be assumed
+	 */
+
+	function get_object_ids_with_relations_from( $type, $object, $relation = null )
+	{
+		$ret = array();
+		$relations = $this->get_relations_from($type, $object, $relation);
+		foreach ($relations as $r) {
+			$ret[] = $r['itemId'];
+		}
+		return $ret;
+	}
+
+	/**
+	 * This is a convenience function to get all the matching IDs from
+	 * get_relations_to without caring about the object type which might be assumed
+	 */
+
+	function get_object_ids_with_relations_to( $type, $object, $relation = null )
+	{
+		$ret = array();
+		$relations = $this->get_relations_to($type, $object, $relation);
+		foreach ($relations as $r) {
+			$ret[] = $r['itemId'];
+		}
+		return $ret;
+	}
+
+	/**
 	 * @param $type
 	 * @param $object
 	 * @param null $relation

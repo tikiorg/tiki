@@ -104,6 +104,10 @@ function tiki_setup_events()
 		if ($prefs['tracker_refresh_itemlink_detail'] == 'y') {
 			$events->bind('tiki.trackeritem.update', $defer('trk', 'refresh_index_on_master_update'));
 		}
+
+		if ($prefs['tracker_wikirelation_synctitle'] == 'y') {
+			$events->bind('tiki.trackeritem.save', $defer('trk', 'rename_linked_page'));
+		}
 	}
 
 	if ($prefs['feature_search'] == 'y' && $prefs['unified_incremental_update'] == 'y') {

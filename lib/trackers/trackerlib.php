@@ -3563,6 +3563,51 @@ class TrackerLib extends TikiLib
 	{
 		$query = "update `tiki_tracker_item_fields` ttif left join `tiki_tracker_fields` ttf on (ttif.fieldId = ttf.fieldId) set ttif.`value`=? where ttif.`value`=? and ttf.`type` = ?";
 		$this->query($query, array($new, $old, 'k'));
+
+		if ($prefs['tracker_wikirelation_synctitle'] == 'y') {
+			$relationlib = TikiLib::lib('relation');
+			$wikilib = TikiLib::lib('wiki');
+			$relatedfields = $relationlib->get_object_ids_with_relations_from( 'wiki page', $new, 'tiki.wiki.linkedfield' ); // $new because attributes have been changed 
+			$relateditems = $relationlib->get_object_ids_with_relations_from( 'wiki page', $new, 'tiki.wiki.linkeditem' );
+			foreach ($relateditems as $itemId) {
+				foreach ($relatedfields as $fieldId) {
+					$value = $this->get_item_value(0, $itemId, $fieldId);
+					if ($wikilib->get_namespace($value) && $value != $new) {
+						$this->modify_field($itemId, $fieldId, $new);
+					} elseif (!$wikilib->get_namespace($value) && $value != $wikilib->get_without_namespace($new)) {
+						$this->modify_field($itemId, $fieldId, $wikilib->get_without_namespace($new));
+					}
+				}
+			}
+		}
+	}
+
+	/**
+	 * Note that this is different from function rename_page 
+	 */
+	public function rename_linked_page( $args )
+	{
+		global $prefs;
+		$relationlib = TikiLib::lib('relation');
+		$wikilib = TikiLib::lib('wiki');
+		$wikipages = $relationlib->get_object_ids_with_relations_to( 'trackeritem', $args['object'], 'tiki.wiki.linkeditem' );
+		foreach ($wikipages as $pageName) {
+			// determine if field has changed
+			$relatedfields = $relationlib->get_object_ids_with_relations_from( 'wiki page', $pageName, 'tiki.wiki.linkedfield' );
+			foreach ($relatedfields as $fieldId) {
+				if ( isset($args['values'][$fieldId]) and isset($args['old_values'][$fieldId])
+					&& $args['values'][$fieldId] != $args['old_values'][$fieldId] ) {
+					if ($wikilib->get_namespace($args['values'][$fieldId])) {
+						$newname = $args['values'][$fieldId];
+					} elseif ($namespace = $wikilib->get_namespace($pageName)) {
+						$newname = $namespace . $prefs['namespace_separator'] . $wikilib->get_without_namespace($args['values'][$fieldId]);
+					} else {
+						$newname = $args['values'][$fieldId];
+					}
+					$wikilib->wiki_rename_page($pageName, $newname, false);
+				}
+			}
+		}
 	}
 
 	public function build_date($input, $format, $ins_id)
