@@ -8,7 +8,10 @@ window.parent.location = 'tiki-index.php';
 <p>{tr}You will be redirected to the home page shortly.{/tr} <a href="tiki-index.php" target="_parent">{tr}Click here{/tr}</a> {tr}to go to the home page immediately.{/tr}</p>
 
 {else}
-
+{jq}
+$("#name").val("{{($prefs.login_is_email eq 'y' and $userinfo.login neq 'admin') ? {$userinfo.email|escape} : {$userinfo.login|escape} }}");
+$("#email").val("{{$userinfo.email|escape}}");
+{/jq}
 {if $msg}<p><strong>{$msg|escape}</strong></p>{/if}
 
 <h4>{tr}Please provide local account information{/tr}</h4>
@@ -45,24 +48,3 @@ window.parent.location = 'tiki-index.php';
 </form>
 
 {/if}
-
-{literal}
-<style type="text/css">
-#col1 { width: 580px; }
-#col2, #col3, #header, #footer, #header-shadow, #footer-shadow {display: none;}
-body {
-    background: white none;
-}
-</style>
-{/literal}
-
-{jq notonready=true}
-function check_name() {
-//	xajax.config.requestURI = "tiki-socialnetworks_firstlogin.php";
-//	xajax_chkRegName(xajax.$('name').value);
-}
-function check_mail() {
-//	xajax.config.requestURI = "tiki-socialnetworks_firstlogin.php";
-//	xajax_chkRegEmail(xajax.$('email').value);
-}
-{/jq}

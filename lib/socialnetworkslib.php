@@ -159,6 +159,9 @@ class SocialNetworksLib extends LogsLib
 		if ($prefs['socialnetworks_facebook_manage_pages'] == 'y') {
 			$scopes[] = 'manage_pages';
 		}
+		if ($prefs['socialnetworks_facebook_email'] === 'y') {
+			$scopes[] = 'email';
+		}
 		$scope = implode(',', $scopes);
 		$url = $this->getURL();
 		if (strpos($url, '?') != 0) {
@@ -221,6 +224,7 @@ class SocialNetworksLib extends LogsLib
 			if (empty($fb_profile->id)) {
 				return false;
 			}
+			// echo '<!-- $ret=' . var_export($fb_profile, true) . '-->';
 			if (!$user) {
 				if ($prefs['socialnetworks_facebook_login'] != 'y') {
 					return false;
@@ -230,8 +234,13 @@ class SocialNetworksLib extends LogsLib
 					$user = $local_user;
 				} elseif ($prefs['socialnetworks_facebook_autocreateuser'] == 'y') {
 					$randompass = $userlib->genPass();
-					$user = 'fb_' . $fb_profile->id;
-					$userlib->add_user($user, $randompass, '');
+					$email = $prefs['socialnetworks_facebook_email'] === 'y' ? $fb_profile->email : '';
+					if ($prefs['login_is_email'] == 'y' && $email) {
+						$user = $email;
+					} else {
+						$user = 'fb_' . $fb_profile->id;
+					}
+					$userlib->add_user($user, $randompass, $email);
 					$this->set_user_preference($user, 'realName', $fb_profile->name);
 					if ($prefs['socialnetworks_facebook_firstloginpopup'] == 'y') {
 						$this->set_user_preference($user, 'socialnetworks_user_firstlogin', 'y');

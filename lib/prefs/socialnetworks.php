@@ -103,6 +103,13 @@ function prefs_socialnetworks_list()
 			'type' => 'flag',
 			'default' => 'n',
 		),
+		'socialnetworks_facebook_email' => array(
+			'name' => tra('Tiki can get email'),
+			'description' => tra("Tiki can request the user's email"),
+			'keywords' => 'social networks',
+			'type' => 'flag',
+			'default' => 'n',
+		),
 		'socialnetworks_bitly_login' => array(
 			'name' => tra('bit.ly Login'),
 			'description' => tra('Site wide login (username) for bit.ly'),

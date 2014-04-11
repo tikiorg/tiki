@@ -19,16 +19,11 @@ $inputConfiguration = array(
 
 require_once ('tiki-setup.php');
 $access->check_user($user);
-	
-//if (0 and $prefs['feature_ajax'] == 'y') {	// AJAX_TODO
-//	include_once ('register_ajax.php');
-//	$ajaxlib->registerFunction('chkRegName');
-//	$ajaxlib->registerFunction('chkRegEmail');
-//	$ajaxlib->registerTemplate('tiki-register.tpl');
-//}
 
 $smarty->assign('msg', '');
 $smarty->assign('alldone', false);
+
+$smarty->assign('userinfo', $userlib->get_user_info($user));
 
 //groups choice
 if (count($registrationlib->merged_prefs['choosable_groups'])) {
@@ -43,7 +38,7 @@ if (isset($_REQUEST["localinfosubmit"])) {
 		$smarty->assign('msg', tra('Email is mandatory'));
 	} else if (empty($_REQUEST["name"]) || (empty($_REQUEST["email"]) && $prefs['login_is_email'] !== 'y')) {
 		$smarty->assign('msg', tra('Username and email are mandatory'));
-	} elseif ($userlib->user_exists($_REQUEST["name"])) {
+	} elseif ($user !== $_REQUEST['name'] && $userlib->user_exists($_REQUEST['name'])) {
 		$smarty->assign('msg', tra('User already exists'));
 	} elseif (!preg_match('/^[_a-z0-9\.\-]+@[_a-z0-9\.\-]+\.[a-z]{2,4}$/i',
 				($prefs['login_is_email'] !== 'y') ? $_REQUEST['email'] : $_REQUEST['name'])) {
@@ -77,6 +72,8 @@ if (isset($_REQUEST["linkaccount"])) {
 		$smarty->assign('alldone', true);
 	}
 }
+
+TikiLib::lib('registration')->addRegistrationFormValidationJs();
 
 $smarty->assign('mid_data', $smarty->fetch('tiki-socialnetworks_firstlogin.tpl'));
 $smarty->display('tiki_full.tpl');
