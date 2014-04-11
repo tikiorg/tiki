@@ -48,24 +48,3 @@ $("#email").val("{{$userinfo.email|escape}}");
 </form>
 
 {/if}
-
-{literal}
-<style type="text/css">
-#col1 { width: 580px; }
-#col2, #col3, #header, #footer, #header-shadow, #footer-shadow {display: none;}
-body {
-    background: white none;
-}
-</style>
-{/literal}
-
-{jq notonready=true}
-function check_name() {
-//	xajax.config.requestURI = "tiki-socialnetworks_firstlogin.php";
-//	xajax_chkRegName(xajax.$('name').value);
-}
-function check_mail() {
-//	xajax.config.requestURI = "tiki-socialnetworks_firstlogin.php";
-//	xajax_chkRegEmail(xajax.$('email').value);
-}
-{/jq}

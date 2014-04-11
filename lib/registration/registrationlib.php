@@ -544,6 +544,94 @@ class RegistrationLib extends TikiLib
 		return $result;
 	}
 
+	/**
+	 * Adds jquery validation javascript to the page to validate the registration form inputs
+	 */
+	public function addRegistrationFormValidationJs()
+	{
+		global $prefs, $user;
+
+		if ($prefs['feature_jquery_validation'] === 'y') {
+			$js_m = '';
+			$js = '
+			$("form[name=RegForm]").validate({
+				rules: {
+					name: {
+						required: true,';
+			if ($prefs['login_is_email'] === 'y') {
+				$js .= '
+						email: true,';
+			}
+			$js .= '
+						remote: {
+							url: "validate-ajax.php",
+							type: "post",
+							data: {
+								validator: "username",
+								input: function() { return $("#name").val(); }
+							}
+						}
+					},
+					email: {
+						required: true,
+						email: true
+					},
+					pass: {
+						required: true,
+						remote: {
+							url: "validate-ajax.php",
+							type: "post",
+							data: {
+								validator: "password",
+								input: function() { return $("#pass1").val(); }
+							}
+						}
+					},
+					passAgain: { equalTo: "#pass1" }';
+
+			if ($prefs['user_must_choose_group'] === 'y') {
+				$choosable_groups = $this->merged_prefs['choosable_groups'];
+				$js .= ',
+					chosenGroup: {
+						required: true
+					}';
+				$js_m .= ' "chosenGroup": { required: "' . tra('One of these groups is required') . '"}, ';
+			}
+
+			if (extension_loaded('gd') && function_exists('imagepng') && function_exists('imageftbbox') && $prefs['feature_antibot'] == 'y' && empty($user) && $prefs['recaptcha_enabled'] != 'y') {
+				// antibot validation
+				$js .= ',
+			"captcha[input]": {
+				required: true,
+				remote: {
+					url: "validate-ajax.php",
+					type: "post",
+					data: {
+						validator: "captcha",
+						parameter: function() { return $jq("#captchaId").val(); },
+						input: function() { return $jq("#antibotcode").val(); }
+					}
+				}
+			}
+		';
+				$js_m .= ' "captcha[input]": { required: "' . tra('This field is required') . '"}, ';
+			}
+
+			$js .= '
+				},
+				messages: {' . $js_m . '
+					name: { required: "This field is required"},
+					email: { email: "Invalid email", required: "This field is required"},
+					pass: { required: "This field is required"},
+					passAgain: { equalTo: "Passwords do not match"}
+				},
+				submitHandler: function(){process_submit(this.currentForm);}
+			});
+		';
+			TikiLib::lib('header')->add_jq_onready($js);
+		}
+	}
+
 	private function init_registration_prefs()
 	{
 		global $userlib, $prefs;

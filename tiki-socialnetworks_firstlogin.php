@@ -19,13 +19,6 @@ $inputConfiguration = array(
 
 require_once ('tiki-setup.php');
 $access->check_user($user);
-	
-//if (0 and $prefs['feature_ajax'] == 'y') {	// AJAX_TODO
-//	include_once ('register_ajax.php');
-//	$ajaxlib->registerFunction('chkRegName');
-//	$ajaxlib->registerFunction('chkRegEmail');
-//	$ajaxlib->registerTemplate('tiki-register.tpl');
-//}
 
 $smarty->assign('msg', '');
 $smarty->assign('alldone', false);
@@ -79,6 +72,8 @@ if (isset($_REQUEST["linkaccount"])) {
 		$smarty->assign('alldone', true);
 	}
 }
+
+TikiLib::lib('registration')->addRegistrationFormValidationJs();
 
 $smarty->assign('mid_data', $smarty->fetch('tiki-socialnetworks_firstlogin.tpl'));
 $smarty->display('tiki_full.tpl');
