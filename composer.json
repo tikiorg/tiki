@@ -71,7 +71,9 @@
 		"flp/flp": "dev-master",
 		"wikilingo/codemirror": "dev-master",
 		"alvarotrigo/fullpage.js": "1",
-		"jcobb/basic-jquery-slider": "1"
+		"jcobb/basic-jquery-slider": "1",
+		"symfony/dependency-injection": "2.4.3",
+		"symfony/config": "2.4.3"
 	},
 	"require-dev": {
 		"mikey179/vfsStream": "1.1.0",

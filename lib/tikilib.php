@@ -54,6 +54,12 @@ class TikiLib extends TikiDb_Bridge
 			return self::$libraries[$name];
 		}
 
+		$container = TikiInit::getContainer();
+		$service = "tiki.lib.$name";
+		if ($lib = $container->get($service, \Symfony\Component\DependencyInjection\ContainerInterface::NULL_ON_INVALID_REFERENCE)) {
+			return $lib;
+		}
+
 		// One-time inits of the libraries provided
 		switch ($name) {
 			case 'tiki':
@@ -271,9 +277,6 @@ class TikiLib extends TikiDb_Bridge
 			case 'references':
 				global $referenceslib; require_once 'lib/references/referenceslib.php';
 				return self::$libraries[$name] = $referenceslib;
-			case 'service':
-				require_once 'lib/servicelib.php';
-				return self::$libraries[$name] = new ServiceLib;
 			case 'tcontrol':
 				global $tcontrollib; require_once 'lib/themecontrol/tcontrol.php';
 				return self::$libraries[$name] = $tcontrollib;

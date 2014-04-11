@@ -5,13 +5,15 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
+use Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
+
 class Services_Broker
 {
-	private $controllerMap;
+	private $container;
 
-	function __construct(array $controllerMap)
+	function __construct(array $container)
 	{
-		$this->controllerMap = $controllerMap;
+		$this->container = $container;
 	}
 
 	function process($controller, $action, JitFilter $request)
@@ -74,9 +76,8 @@ class Services_Broker
 
 	private function attemptProcess($controller, $action, $request)
 	{
-		if (isset($this->controllerMap[$controller])) {
-			$controllerClass = $this->controllerMap[$controller];
-			$handler = new $controllerClass;
+		try {
+			$handler = $this->container->get("tiki.controller.$controller");
 			$method = 'action_' . $action;
 
 			if (method_exists($handler, $method)) {
@@ -88,7 +89,7 @@ class Services_Broker
 			} else {
 				throw new Services_Exception(tr('Action not found (%0 in %1)', $action, $controller), 404);
 			}
-		} else {
+		} catch (ServiceNotFoundException $e) {
 			throw new Services_Exception(tr('Controller not found (%0)', $controller), 404);
 		}
 	}

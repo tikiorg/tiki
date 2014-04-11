@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<container xmlns="http://symfony.com/schema/dic/services">
+	<!--
+
+	Important: This file is part of Tiki.
+	           If you want to load additional services, please create
+			   a 'custom.xml' file to avoid conflicts.
+
+	-->
+	<services>
+		<service id="tiki.lib.service" class="ServiceLib">
+			<file>%kernel.root_dir%/lib/servicelib.php</file>
+		</service>
+	</services>
+</container>

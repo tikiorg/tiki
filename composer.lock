@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "1791a538c973ce45d417cca3128b384c",
+    "hash": "e14f374fe36a92e3e11dd3a1b228b2fc",
     "packages": [
         {
             "name": "aFarkas/html5shiv",
@@ -1013,6 +1013,56 @@
             "type": "library"
         },
         {
+            "name": "symfony/config",
+            "version": "v2.4.3",
+            "target-dir": "Symfony/Component/Config",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/Config.git",
+                "reference": "e98693981385224bd31667e56204f311d9e0f98e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://composer.tiki.org/dist/symfony-config-e98693981385224bd31667e56204f311d9e0f98e-zip-ea9d67.zip",
+                "reference": "v2.4.3",
+                "shasum": "d5127b7dd29dbd6124ebc56e4dcab6f54e0faf6c"
+            },
+            "require": {
+                "php": ">=5.3.3",
+                "symfony/filesystem": "~2.3"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.4-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Symfony\\Component\\Config\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com",
+                    "homepage": "http://fabien.potencier.org",
+                    "role": "Lead Developer"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "http://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony Config Component",
+            "homepage": "http://symfony.com",
+            "time": "2014-03-26 11:35:33"
+        },
+        {
             "name": "symfony/console",
             "version": "v2.4.1",
             "target-dir": "Symfony/Component/Console",
@@ -1054,7 +1104,9 @@
             "authors": [
                 {
                     "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com"
+                    "email": "fabien@symfony.com",
+                    "homepage": "http://fabien.potencier.org",
+                    "role": "Lead Developer"
                 },
                 {
                     "name": "Symfony Community",
@@ -1064,6 +1116,114 @@
             "description": "Symfony Console Component",
             "homepage": "http://symfony.com",
             "time": "2014-01-01 08:14:50"
+        },
+        {
+            "name": "symfony/dependency-injection",
+            "version": "v2.4.3",
+            "target-dir": "Symfony/Component/DependencyInjection",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/DependencyInjection.git",
+                "reference": "5f17442aaa47610fcff7daeb635c834be71df204"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://composer.tiki.org/dist/symfony-dependency-injection-5f17442aaa47610fcff7daeb635c834be71df204-zip-27a0bb.zip",
+                "reference": "v2.4.3",
+                "shasum": "b5a33769c37c222f5af49fc11ce0e4038dbafbf0"
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "require-dev": {
+                "symfony/config": "~2.2",
+                "symfony/expression-language": "~2.4",
+                "symfony/yaml": "~2.0"
+            },
+            "suggest": {
+                "symfony/config": "",
+                "symfony/proxy-manager-bridge": "Generate service proxies to lazy load them",
+                "symfony/yaml": ""
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.4-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Symfony\\Component\\DependencyInjection\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com",
+                    "homepage": "http://fabien.potencier.org",
+                    "role": "Lead Developer"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "http://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony DependencyInjection Component",
+            "homepage": "http://symfony.com",
+            "time": "2014-03-27 14:53:17"
+        },
+        {
+            "name": "symfony/filesystem",
+            "version": "v2.4.3",
+            "target-dir": "Symfony/Component/Filesystem",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/Filesystem.git",
+                "reference": "b717952487176a993e9b12a08b87beae25ae419c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/Filesystem/zipball/b717952487176a993e9b12a08b87beae25ae419c",
+                "reference": "b717952487176a993e9b12a08b87beae25ae419c",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.4-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Symfony\\Component\\Filesystem\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com",
+                    "homepage": "http://fabien.potencier.org",
+                    "role": "Lead Developer"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "http://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony Filesystem Component",
+            "homepage": "http://symfony.com",
+            "time": "2014-03-26 11:55:03"
         },
         {
             "name": "tijsverkoyen/css-to-inline-styles",
@@ -1185,12 +1345,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/wikiLingo/wikiLingo.git",
-                "reference": "62d08daf17cca21f2d2bebf3348f54163baeafd6"
+                "reference": "f786702f96b1b9eb9770de143b5b21f7ef12da93"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wikiLingo/wikiLingo/zipball/62d08daf17cca21f2d2bebf3348f54163baeafd6",
-                "reference": "62d08daf17cca21f2d2bebf3348f54163baeafd6",
+                "url": "https://api.github.com/repos/wikiLingo/wikiLingo/zipball/f786702f96b1b9eb9770de143b5b21f7ef12da93",
+                "reference": "f786702f96b1b9eb9770de143b5b21f7ef12da93",
                 "shasum": ""
             },
             "require": {
@@ -1229,7 +1389,7 @@
                     "role": "Lead Developer"
                 }
             ],
-            "time": "2014-04-04 19:57:14"
+            "time": "2014-04-10 14:53:06"
         },
         {
             "name": "zetacomponents/base",
