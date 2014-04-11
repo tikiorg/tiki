@@ -10,7 +10,7 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 	header("location: index.php");
 	exit;
 }
-include_once ('lib/score/scorelib.php');
+$scorelib = TikiLib::lib('score');
 if (isset($_REQUEST["scoreevents"])) {
 	check_ticket('admin-inc-score');
 	if (isset($_REQUEST['events']) && is_array($_REQUEST['events'])) {

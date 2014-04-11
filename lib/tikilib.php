@@ -65,9 +65,6 @@ class TikiLib extends TikiDb_Bridge
 			case 'tiki':
 				global $tikilib;
 				return self::$libraries[$name] = $tikilib;
-			case 'score':
-				global $scorelib; include_once("lib/score/scorelib.php");
-				return self::$libraries[$name] = $scorelib;
 			case 'object':
 				global $objectlib; require_once('lib/objectlib.php');
 				return self::$libraries[$name] = $objectlib;
@@ -1565,7 +1562,7 @@ class TikiLib extends TikiDb_Bridge
 	 */
 	function score_event($user, $event_type, $id = '', $multiplier=false)
 	{
-		global $prefs, $trklib;
+		global $prefs;
 		$trklib = TikiLib::lib('trk');
 		$scorelib = TikiLib::lib('score');
 

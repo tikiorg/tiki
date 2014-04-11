@@ -8,17 +8,20 @@
 
 	-->
 	<services>
-		<service id="tiki.lib.service" class="ServiceLib">
-			<file>%kernel.root_dir%/lib/servicelib.php</file>
-		</service>
-		<service id="tiki.lib.user" class="UsersLib">
-			<file>%kernel.root_dir%/lib/userslib.php</file>
-		</service>
 		<service id="tiki.lib.categ" class="CategLib">
 			<file>%kernel.root_dir%/lib/categories/categlib.php</file>
 		</service>
 		<service id="tiki.lib.multilingual" class="MultilingualLib">
 			<file>%kernel.root_dir%/lib/multilingual/multilinguallib.php</file>
+		</service>
+		<service id="tiki.lib.score" class="ScoreLib">
+			<file>%kernel.root_dir%/lib/score/scorelib.php</file>
+		</service>
+		<service id="tiki.lib.service" class="ServiceLib">
+			<file>%kernel.root_dir%/lib/servicelib.php</file>
+		</service>
+		<service id="tiki.lib.user" class="UsersLib">
+			<file>%kernel.root_dir%/lib/userslib.php</file>
 		</service>
 	</services>
 </container>
