@@ -332,6 +332,9 @@ class TikiLib extends TikiDb_Bridge
 				global $usermailinlib; require_once 'lib/mailin/usermailinlib.php';
 				return self::$libraries[$name] = $usermailinlib;
 		}
+
+		unlink('temp/cache/container.php'); // Remove the container cache to help transition
+		throw new Exception(tr("%0 library not found. It may be a typo or caused by a recent update.", $name));
 	}
 
 	/**
