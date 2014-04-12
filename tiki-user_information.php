@@ -12,7 +12,7 @@ require_once ('tiki-setup.php');
 include_once ('lib/messu/messulib.php');
 include_once ('lib/userprefs/scrambleEmail.php');
 include_once ('lib/registration/registrationlib.php');
-include_once ('lib/trackers/trackerlib.php');
+$trklib = TikiLib::lib('trk');
 if (isset($_REQUEST['userId'])) {
 	$userwatch = $tikilib->get_user_login($_REQUEST['userId']);
 	if ($userwatch === false) {

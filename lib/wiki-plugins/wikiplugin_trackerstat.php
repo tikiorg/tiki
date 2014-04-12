@@ -110,8 +110,10 @@ function wikiplugin_trackerstat_info()
 
 function wikiplugin_trackerstat($data, $params)
 {
-	global $smarty, $prefs, $tiki_p_admin_trackers, $trklib, $tikilib;
-	include_once('lib/trackers/trackerlib.php');
+	global $prefs, $tiki_p_admin_trackers;
+	$trklib = TikiLib::lib('trk');
+	$tikilib = TikiLib::lib('tiki');
+	$smarty = TikiLib::lib('smarty');
 	extract($params, EXTR_SKIP);
 
 	if ($prefs['feature_trackers'] != 'y' || !isset($trackerId) || !($tracker_info = $trklib->get_tracker($trackerId))) {

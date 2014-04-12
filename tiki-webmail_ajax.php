@@ -303,14 +303,12 @@ function takeGroupMail($destDiv = 'mod-webmail_inbox', $msgId = 1)
  */
 function putBackGroupMail($destDiv = 'mod-webmail_inbox', $msgId = 1)
 {
-	global $prefs, $trklib, $user, $webmaillib, $module_params;
+	global $prefs, $user, $webmaillib, $module_params;
 
 	if (!isset($webmaillib)) {
 		include_once ('lib/webmail/webmaillib.php');
 	}
-	if (!isset($trklib)) {
-		include_once('lib/trackers/trackerlib.php');
-	}
+	$trklib = TikiLib::lib('trk');
 
 	if (isset($_SESSION['webmailinbox'][$destDiv]['module_params'])) {
 		$module_params = $_SESSION['webmailinbox'][$destDiv]['module_params'];

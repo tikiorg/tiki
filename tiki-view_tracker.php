@@ -13,7 +13,7 @@ require_once ('tiki-setup.php');
 
 $access->check_feature('feature_trackers');
 
-global $trklib; include_once ('lib/trackers/trackerlib.php');
+$trklib = TikiLib::lib('trk');
 if ($prefs['feature_groupalert'] == 'y') {
 	include_once ('lib/groupalert/groupalertlib.php');
 }

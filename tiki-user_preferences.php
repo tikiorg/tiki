@@ -405,7 +405,7 @@ $useritemId = false;
 if ($prefs['userTracker'] == 'y') {
 	$re = $userlib->get_usertracker($userinfo["userId"]);
 	if (isset($re['usersTrackerId']) and $re['usersTrackerId']) {
-		include_once ('lib/trackers/trackerlib.php');
+		$trklib = TikiLib::lib('trk');
 		$info = $trklib->get_item_id($re['usersTrackerId'], $trklib->get_field_id($re['usersTrackerId'], 'Login'), $userwatch);
 		$usertrackerId = $re['usersTrackerId'];
 		$useritemId = $info;

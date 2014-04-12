@@ -65,15 +65,6 @@ class TikiLib extends TikiDb_Bridge
 			case 'tiki':
 				global $tikilib;
 				return self::$libraries[$name] = $tikilib;
-			case 'tikidate':
-				require_once('lib/tikidate.php');
-				return self::$libraries[$name] = new TikiDate;
-			case 'css':
-				global $csslib; include_once("lib/csslib.php");
-				return self::$libraries[$name] = $csslib;
-			case 'trk':
-				global $trklib; require_once('lib/trackers/trackerlib.php');
-				return self::$libraries[$name] = $trklib;
 			case 'wiki':
 				global $wikilib; include_once('lib/wiki/wikilib.php');
 				return self::$libraries[$name] = $wikilib;

@@ -103,13 +103,10 @@ if (isset($prefs['session_protected']) && $prefs['session_protected'] == 'y' && 
 	exit;
 }
 
-global $cachelib;
-require_once ('lib/cache/cachelib.php');
-global $logslib;
-require_once ('lib/logs/logslib.php');
+$cachelib = TikiLib::lib('cache');
+$logslib = TikiLib::lib('logs');
 include_once ('lib/init/tra.php');
-require_once ('lib/tikidate.php');
-$tikidate = new TikiDate();
+$tikidate = TikiLib::lib('tiki');
 // set session lifetime
 if (isset($prefs['session_lifetime']) && $prefs['session_lifetime'] > 0) {
 	ini_set('session.gc_maxlifetime', $prefs['session_lifetime'] * 60);

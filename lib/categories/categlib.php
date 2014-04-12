@@ -80,7 +80,7 @@ class CategLib extends ObjectLib
 		    return $this->getOne("select `name` from `tiki_trackers` where `trackerId`=?", array((int) $trackerId));
 		}
 		if (preg_match('/^Tracker Item ([0-9]+)$/', $res['name'])) {
-		    global $trklib;require_once('lib/trackers/trackerlib.php');
+		    $trklib = TikiLib::lib('trk');
 		    $itemId=preg_replace('/^Tracker Item ([0-9]+)$/', "$1", $res['name']);
 		    return $trklib->get_isMain_value(-1, $itemId);
 		}
@@ -523,7 +523,7 @@ class CategLib extends ObjectLib
 		foreach ( $result as $res ) {
 			if (!in_array($res['catObjectId'].'-'.$res['categId'], $objs)) { // same object and same category
 				if (preg_match('/trackeritem/', $res['type'])&&$res['description']=='') {
-					global $trklib; include_once('lib/trackers/trackerlib.php');
+					$trklib = TikiLib::lib('trk');
 					$trackerId=preg_replace('/^.*trackerId=([0-9]+).*$/', '$1', $res['href']);
 					$res['name']=$trklib->get_isMain_value($trackerId, $res['itemId']);
 					$filed=$trklib->get_field_id($trackerId, "description");

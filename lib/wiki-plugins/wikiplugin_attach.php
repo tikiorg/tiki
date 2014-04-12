@@ -146,7 +146,7 @@ function wikiplugin_attach($data, $params)
 
 		// See if we're being called from a tracker page.
 		if ( $section == 'trackers' ) {
-			global $trklib; include_once('lib/trackers/trackerlib.php');
+			$trklib = TikiLib::lib('trk');
 			$atts_item_name = $_REQUEST["itemId"];
 			$tracker_info = $trklib->get_tracker($atts_item_name);
 			$tracker_info = array_merge($tracker_info, $trklib->get_tracker_options($atts_item_name));

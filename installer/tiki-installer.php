@@ -941,8 +941,7 @@ if (
 		require_once 'lib/tikilib.php';
 		$tikilib = new TikiLib;
 		$userlib = TikiLib::lib('user');
-		require_once 'lib/tikidate.php';
-		$tikidate = new TikiDate();
+		$tikidate = TikiLib::lib('tikidate');
 	}
 
 	if (isset($_POST['update'])) {

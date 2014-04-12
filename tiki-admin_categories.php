@@ -437,7 +437,7 @@ if ($prefs['feature_search'] !== 'y' || $prefs['unified_add_to_categ_search'] !=
 	}
 
 	if ( $prefs['feature_trackers'] == 'y' ) {
-		include_once ('lib/trackers/trackerlib.php');
+		$trklib = TikiLib::lib('trk');
 		$trackers = $trklib->list_trackers($offset, -1, 'name_asc', $find_objects);
 	}
 

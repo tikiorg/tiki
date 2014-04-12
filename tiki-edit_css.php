@@ -15,7 +15,7 @@ $inputConfiguration = array(
 );
 
 include_once ("tiki-setup.php");
-include_once ("lib/csslib.php");
+$csslib = TikiLib::lib('css');
 
 $access->check_feature('feature_editcss');
 $access->check_permission('tiki_p_create_css');

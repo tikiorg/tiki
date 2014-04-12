@@ -111,6 +111,7 @@
 		},
 		"classmap": [
 			"vendor_extra/pear/",
+			"lib/tikidate.php",
 			"lib/openpgp/",
 			"lib/language/",
 			"lib/TikiWebdav/",

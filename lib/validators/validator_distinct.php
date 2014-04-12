@@ -7,9 +7,7 @@
 
 function validator_distinct($input, $parameter = '', $message = '')
 {
-	global $trklib;
-	include_once 'lib/trackers/trackerlib.php';
-	
+	$trklib = TikiLib::lib('trk');
 	parse_str($parameter, $arr);
 	
 	if (count($arr) < 2 || !isset($arr['trackerId']) || !isset($arr['fieldId'])) {

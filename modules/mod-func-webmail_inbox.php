@@ -156,8 +156,8 @@ function module_webmail_inbox($mod_reference, $module_params)
 
 function webmail_refresh() 	// called in ajax mode
 {
-	global $webmaillib, $user, $smarty, $webmail_list_page, $webmail_account, $webmail_reload, $webmail_start, $module_params, $trklib, $contactlib;
-	include_once('lib/trackers/trackerlib.php');
+	global $webmaillib, $user, $smarty, $webmail_list_page, $webmail_account, $webmail_reload, $webmail_start, $module_params, $contactlib;
+	$trklib = TikiLib::lib('trk');
 	include_once ('lib/webmail/contactlib.php');
 
 	$accountid = isset($module_params['accountid']) ? $module_params['accountid'] : 0;

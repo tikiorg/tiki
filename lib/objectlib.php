@@ -141,7 +141,7 @@ class ObjectLib extends TikiLib
 						break;
 
 					case 'tracker':
-						global $trklib; include_once('lib/trackers/trackerlib.php');
+						$trklib = TikiLib::lib('trk');
 						$info = $trklib->get_tracker($itemId);
 
 						$description = $info['description'];
@@ -150,7 +150,7 @@ class ObjectLib extends TikiLib
 						break;
 
 					case 'trackeritem':
-						global $trklib; include_once('lib/trackers/trackerlib.php');
+						$trklib = TikiLib::lib('trk');
 						$info = $trklib->get_tracker_item($itemId);
 
 						$description = '';

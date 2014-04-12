@@ -17,7 +17,7 @@ if (!isset($_REQUEST['trackerId'])) {
 	$smarty->display('error.tpl');
 	die;
 }
-include_once('lib/trackers/trackerlib.php');
+$trklib = TikiLib::lib('trk');
 @ini_set('max_execution_time', 0); //will not work in safe_mode is on
 
 $tracker_info = $trklib->get_tracker($_REQUEST['trackerId']);

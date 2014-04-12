@@ -2086,7 +2086,7 @@ if ( \$('#$id') ) {
 							break;	
 						}
 					case 'lastItemVersion':
-						global $trklib; include_once ('lib/trackers/trackerlib.php');
+						$trklib = TikiLib::lib('trk');
 						$auto_query_args = array('itemId');
 						if (!empty($_REQUEST['itemId'])) {
 							$item_info = $trklib->get_item_info($_REQUEST['itemId']);
@@ -2113,7 +2113,7 @@ if ( \$('#$id') ) {
 							break;	
 						}
 					case 'lastItemAuthor':
-						global $trklib; include_once ('lib/trackers/trackerlib.php');
+						$trklib = TikiLib::lib('trk');
 						$auto_query_args = array('itemId');
 						if (!empty($_REQUEST['itemId'])) {
 							$item_info = $trklib->get_item_info($_REQUEST['itemId']);
@@ -2140,7 +2140,7 @@ if ( \$('#$id') ) {
 							break;	
 						}
 					case 'lastItemModif':
-						global $trklib; include_once ('lib/trackers/trackerlib.php');
+						$trklib = TikiLib::lib('trk');
 						$auto_query_args = array('itemId');
 						if (!empty($_REQUEST['itemId'])) {
 							$item_info = $trklib->get_item_info($_REQUEST['itemId']);

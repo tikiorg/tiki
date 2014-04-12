@@ -199,4 +199,3 @@ class cssLib extends TikiLib
 		return $version;
 	}
 }
-$csslib = new cssLib;

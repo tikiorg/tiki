@@ -194,9 +194,8 @@ class ObjectRenderer_TrackerItem extends ObjectRenderer // {{{
     function __construct($type, $object, $options = array())
 	{
 		parent::__construct($type, $object, $options);
-		global $trklib;
 
-		require_once 'lib/trackers/trackerlib.php';
+		$trklib = TikiLib::lib('trk');
 
 		$info = $trklib->get_tracker_item($object);
 		$trackerId = $info['trackerId'];

@@ -502,8 +502,8 @@ class CartLib
 
 	function has_gift_certificate()
 	{
-		global $trklib, $prefs;
-		require_once('lib/trackers/trackerlib.php');
+		global $prefs;
+		$trklib = TikiLib::lib('trk');
 		return ($trklib->get_tracker_by_name($prefs['payment_cart_giftcert_tracker_name']) ? true : false );
 	}
 
@@ -1103,8 +1103,7 @@ class CartLib
 		global $prefs;
 		$productTrackerId = $prefs['payment_cart_product_tracker'];
 		$inventoryTypeFieldId = $prefs['payment_cart_inventory_type_field'];
-		global $trklib;
-		require_once('lib/trackers/trackerlib.php');
+		$trklib = TikiLib::lib('trk');
 		return $trklib->get_item_value($productTrackerId, $productId, $inventoryTypeFieldId);
 	}
 
@@ -1128,8 +1127,7 @@ class CartLib
 		} else {
 			$inventoryFieldId = $inventoryTotalFieldId;
 		}
-		global $trklib;
-		require_once('lib/trackers/trackerlib.php');
+		$trklib = TikiLib::lib('trk');
 		return $trklib->get_item_value($productTrackerId, $productId, $inventoryFieldId);
 	}
 
@@ -1216,8 +1214,7 @@ class CartLib
 
 	private function modify_tracker_item( $trackerId, $itemId, $trackerFields )
 	{
-		global $trklib;
-		require_once('lib/trackers/trackerlib.php');
+		$trklib = TikiLib::lib('trk');
 		$tracker_fields_info = $trklib->list_tracker_fields($trackerId);
 		$fieldTypes = array();
 		foreach ($tracker_fields_info['data'] as $t) {
@@ -1319,8 +1316,7 @@ class CartLib
 	function get_missing_user_information_fields( $product_class_id, $type = 'required' )
 	{
 		global $user, $prefs;
-		global $trklib;
-		require_once('lib/trackers/trackerlib.php');
+		$trklib = TikiLib::lib('trk');
 		if ($type == 'required') {
 			$fields_str = $this->get_tracker_value_custom($prefs['payment_cart_productclasses_tracker_name'], 'Required Field IDs', $product_class_id);
 		} else if ($type == 'postpurchase') {

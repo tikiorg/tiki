@@ -232,7 +232,7 @@ if (!empty($_REQUEST["group"])) {
 	if (isset($re['prorateInterval'])) $prorateInterval = $re['prorateInterval'];
 	if ($prefs['userTracker'] == 'y') {
 		if (isset($re["usersTrackerId"]) and $re["usersTrackerId"]) {
-			include_once ('lib/trackers/trackerlib.php');
+			$trklib = TikiLib::lib('trk');
 			$userstrackerid = $re["usersTrackerId"];
 			$smarty->assign('userstrackerid', $userstrackerid);
 			$usersFields = $trklib->list_tracker_fields($userstrackerid, 0, -1, 'position_asc', '');
@@ -247,7 +247,7 @@ if (!empty($_REQUEST["group"])) {
 	if ($prefs['groupTracker'] == 'y') {
 		$groupFields = array();
 		if (isset($re["groupTrackerId"]) and $re["groupTrackerId"]) {
-			include_once ('lib/trackers/trackerlib.php');
+			$trklib = TikiLib::lib('trk');
 			$grouptrackerid = $re["groupTrackerId"];
 			$smarty->assign('grouptrackerid', $grouptrackerid);
 			$groupFields = $trklib->list_tracker_fields($grouptrackerid, 0, -1, 'position_asc', '');

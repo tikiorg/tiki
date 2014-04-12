@@ -47,7 +47,7 @@ function wikiplugin_trackercomments_info()
 }
 function wikiplugin_trackercomments($data, $params)
 {
-	global $trklib; include_once('lib/trackers/trackerlib.php');
+	$trklib = TikiLib::lib('trk');
 	global $user;
 	extract($params, EXTR_SKIP);
 	$ret = '';

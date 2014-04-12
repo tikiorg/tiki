@@ -145,8 +145,9 @@ function wikiplugin_trackerfilter_info()
 
 function wikiplugin_trackerfilter($data, $params)
 {
-	global $smarty, $prefs;
-	global $trklib;	include_once('lib/trackers/trackerlib.php');
+	global $prefs;
+	$trklib = TikiLib::lib('trk');
+	$smarty = TikiLib::lib('smarty');
 	static $iTrackerFilter = 0;
 	if ($prefs['feature_trackers'] != 'y') {
 		return $smarty->fetch("wiki-plugins/error_tracker.tpl");
@@ -376,7 +377,7 @@ function wikiplugin_trackerfilter($data, $params)
 
 function wikiplugin_trackerfilter_build_trackerlist_filter($input, $formats, &$ffs, &$values, &$exactValues, Tracker_Definition $tracker_definition)
 {
-	global $trklib;
+	$trklib = TikiLib::lib('trk');
 
 	foreach ($input as $key =>$val) {
 		if (substr($key, 0, 2) == 'f_' && !empty($val) && (!is_array($val) || !empty($val[0]))) {
@@ -495,8 +496,10 @@ function wikiplugin_trackerFilter_split_filters($filters)
 
 function wikiplugin_trackerFilter_get_filters($trackerId=0, $listfields='', &$formats, $status='opc')
 {
-	global $tiki_p_admin_trackers, $smarty, $tikilib;
-	global $trklib;	include_once('lib/trackers/trackerlib.php');
+	global $tiki_p_admin_trackers;
+	$trklib = TikiLib::lib('trk');
+	$tikilib = TikiLib::lib('tiki');
+	$smarty = TikiLib::lib('smarty');
 	$filters = array();
 	if (empty($trackerId) && !empty($listfields[0])) {
 		$field = $trklib->get_tracker_field($listfields[0]);

@@ -14,6 +14,9 @@
 		<service id="tiki.lib.comments" class="Comments">
 			<file>%kernel.root_dir%/lib/comments/commentslib.php</file>
 		</service>
+		<service id="tiki.lib.css" class="cssLib">
+			<file>%kernel.root_dir%/lib/csslib.php</file>
+		</service>
 		<service id="tiki.lib.filegal" class="FileGalLib">
 			<file>%kernel.root_dir%/lib/filegals/filegallib.php</file>
 		</service>
@@ -28,6 +31,10 @@
 		</service>
 		<service id="tiki.lib.service" class="ServiceLib">
 			<file>%kernel.root_dir%/lib/servicelib.php</file>
+		</service>
+		<service id="tiki.lib.tikidate" class="TikiDate"/>
+		<service id="tiki.lib.trk" class="TrackerLib">
+			<file>%kernel.root_dir%/lib/trackers/trackerlib.php</file>
 		</service>
 		<service id="tiki.lib.user" class="UsersLib">
 			<file>%kernel.root_dir%/lib/userslib.php</file>

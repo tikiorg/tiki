@@ -50,8 +50,7 @@ function module_last_tracker_comments($mod_reference, $module_params)
 	
 	$itemId = isset($module_params["itemId"]) ? $module_params["itemId"] : 0;
 
-	global $trklib;
-	require_once ('lib/trackers/trackerlib.php');
+	$trklib = TikiLib::lib('trk');
 		
 	$ranking = $trklib->list_last_comments($trackerId, $itemId, 0, $mod_reference["rows"]);
 	$smarty->assign('modLastModifComments', isset($ranking['data']) ? $ranking["data"] : array());

@@ -714,7 +714,7 @@ if (isset($_REQUEST['user']) and $_REQUEST['user']) {
 	if ($prefs['userTracker'] == 'y') {
 		$re = $userlib->get_usertracker($_REQUEST['user']);
 		if ($re['usersTrackerId']) {
-			include_once ('lib/trackers/trackerlib.php');
+			$trklib = TikiLib::lib('trk');
 			$userstrackerid = $re['usersTrackerId'];
 			$smarty->assign('userstrackerid', $userstrackerid);
 			$usersFields = $trklib->list_tracker_fields($usersTrackerId, 0, -1, 'position_asc', '');

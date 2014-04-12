@@ -10,7 +10,7 @@
 
 $section = 'trackers';
 require_once ('tiki-setup.php');
-include_once ('lib/trackers/trackerlib.php');
+$trklib = TikiLib::lib('trk');
 $access->check_feature('feature_trackers');
 $auto_query_args = array('sort_mode', 'offset', 'find');
 

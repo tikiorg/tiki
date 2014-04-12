@@ -76,9 +76,7 @@ class Tiki_Profile_InstallHandler_TrackerItem extends Tiki_Profile_InstallHandle
 
 		$data = array_merge($this->getDefaultValues(), $data);
 
-		global $trklib;
-		if ( ! $trklib )
-			require_once 'lib/trackers/trackerlib.php';
+		$trklib = TikiLib::lib('trk');
 
 		$fields = $trklib->list_tracker_fields($data['tracker']);
 		$providedfields = array();

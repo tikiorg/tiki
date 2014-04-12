@@ -61,7 +61,7 @@ function module_last_tracker_items_info()
 function module_last_tracker_items($mod_reference, $module_params)
 {
 	global $prefs, $tikilib, $smarty, $user;
-	global $trklib; include_once('lib/trackers/trackerlib.php');
+	$trklib = TikiLib::lib('trk');
 	
 	$smarty->assign('module_error', '');
 	if ($tikilib->user_has_perm_on_object($user, $module_params['trackerId'], 'tracker', 'tiki_p_view_trackers')) {

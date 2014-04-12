@@ -239,7 +239,7 @@ class TodoLib
     function listObjectsTodo_tracker($todo, $except=null)
 	{
 		global $tikilib;
-		global $trklib; include_once('lib/trackers/trackerlib.php');
+		$trklib = TikiLib::lib('trk');
 
 		switch ($todo['event']) {
 			case 'creation':
@@ -287,7 +287,7 @@ class TodoLib
      */
     function applyTodo_tracker($todo, $objects)
 	{
-		global $trklib; include_once('lib/trackers/trackerlib.php');
+		$trklib = TikiLib::lib('trk');
 		$trklib->change_status($objects, $todo['to']['status']);
 	}
 
@@ -298,7 +298,7 @@ class TodoLib
     function notifyTodo_tracker($todo, $objects)
 	{
 		global $smarty, $tikilib, $prefs;
-		global $trklib; include_once('lib/trackers/trackerlib.php');
+		$trklib = TikiLib::lib('trk');
 		foreach ($objects as $object) {
 			// get the creator
 			$u = $object['field_values'][0]['value'];

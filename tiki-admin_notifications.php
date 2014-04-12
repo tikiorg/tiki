@@ -127,8 +127,7 @@ $channels = $tikilib->list_watches($offset, $maxRecords, $sort_mode, $find);
 $smarty->assign_by_ref('cant', $channels['cant']);
 $smarty->assign_by_ref('channels', $channels["data"]);
 if ($prefs['feature_trackers'] == 'y') {
-	global $trklib;
-	include_once ('lib/trackers/trackerlib.php');
+	$trklib = TikiLib::lib('trk');
 	$trackers = $trklib->get_trackers_options(0, 'outboundemail', $find, 'empty');
 	$smarty->assign_by_ref('trackers', $trackers);
 }

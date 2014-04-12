@@ -39,7 +39,7 @@ class watershedLib
 	function getAllViewableChannels( $channelName = '', $brandId = '')
 	{
 		global $prefs;
-		global $trklib; include_once ('lib/trackers/trackerlib.php');
+		$trklib = TikiLib::lib('trk');
 		$channels = array();
 
 		if ($channelName && $brandId) {
@@ -88,7 +88,7 @@ class watershedLib
 	function filterChannels( $channels, $mode = 'viewer' )
 	{
 		global $prefs, $tikilib;
-		global $trklib; include_once ('lib/trackers/trackerlib.php');
+		$trklib = TikiLib::lib('trk');
 		$tracker_info = $trklib->get_tracker($prefs['watershed_channel_trackerId']);
 
 		if ($t = $trklib->get_tracker_options($prefs['watershed_channel_trackerId'])) {
@@ -121,7 +121,7 @@ class watershedLib
 	function checkArchiveViewable( $videoId, $channels )
 	{
 		global $prefs, $tikilib;
-		global $trklib; include_once ('lib/trackers/trackerlib.php');
+		$trklib = TikiLib::lib('trk');
 
 		$archive = $trklib->get_item($prefs['watershed_archive_trackerId'], $prefs['watershed_archive_fieldId'], $videoId);
 		$archiveChannelCode = $archive[$prefs['watershed_archive_channel_fieldId']];
@@ -156,7 +156,7 @@ class watershedLib
 	function storeArchive( $recording )
 	{
 		global $prefs;
-		global $trklib; include_once ('lib/trackers/trackerlib.php');
+		$trklib = TikiLib::lib('trk');
 		$fields = array();
 		if (empty($prefs['watershed_archive_trackerId'])) {
 			return false;

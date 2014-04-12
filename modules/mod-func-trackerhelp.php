@@ -45,7 +45,7 @@ function module_trackerhelp($mod_reference, &$module_params)
 	$default = array('height' => 4, 'cols' => 23);
 	$module_params = array_merge($default, $module_params);
 	if (!empty($_REQUEST['trackerhelp'])) {
-		global $trklib; include_once('lib/trackers/trackerlib.php');
+		$trklib = TikiLib::lib('trk');
 		$trackerId = $trklib->get_tracker_by_name($_REQUEST['trackerhelp_name']);
 		if (empty($trackerId)) {
 			$tracker_info = $trklib->get_tracker($_REQUEST['trackerhelp_name']);

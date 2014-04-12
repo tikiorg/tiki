@@ -80,7 +80,7 @@ function wikiplugin_hasticket( $data, $params )
 		$data = substr($data, 0, strpos($data, '{ELSE}'));
 	}
 	// check code
-	global $trklib; require_once("lib/trackers/trackerlib.php");
+	$trklib = TikiLib::lib('trk');
 	$correctcode = $trklib->get_item_value($params['trackerId'], $params['itemId'], $params['fieldId']);
 	if ($_SESSION['wikiplugin_trackerpasscode'][$key] == $correctcode) {
 		return $data;

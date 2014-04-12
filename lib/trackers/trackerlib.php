@@ -4965,5 +4965,3 @@ class TrackerLib extends TikiLib
 	}
 }
 
-global $trklib;
-$trklib = new TrackerLib;

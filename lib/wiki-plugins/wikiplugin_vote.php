@@ -139,8 +139,10 @@ function wikiplugin_vote_info()
 
 function wikiplugin_vote($data, $params)
 {
-	global $smarty, $tikilib, $user, $prefs, $tiki_p_admin_trackers, $tiki_p_view_trackers, $trklib;
-	include_once('lib/trackers/trackerlib.php');
+	global $user, $prefs, $tiki_p_admin_trackers, $tiki_p_view_trackers;
+	$trklib = TikiLib::lib('trk');
+	$tikilib = TikiLib::lib('tiki');
+	$smarty = TikiLib::lib('smarty');
 	extract($params, EXTR_SKIP);
 
 	if ($prefs['feature_trackers'] != 'y' || !isset($trackerId) || !($tracker = $trklib->get_tracker($trackerId))) {

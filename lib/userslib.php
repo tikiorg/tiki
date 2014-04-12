@@ -6718,7 +6718,7 @@ class UsersLib extends TikiLib
 			if (!empty($chosenGroup)) {
 				$smarty->assign_by_ref('chosenGroup', $chosenGroup);
 				if ($prefs['userTracker'] == 'y') {
-					global $trklib; include_once('lib/trackers/trackerlib.php');
+					$trklib = TikiLib::lib('trk');
 					$re = $this->get_group_info(isset($chosenGroup)? $chosenGroup: 'Registered');
 					$fields = $trklib->list_tracker_fields(
 						$re['usersTrackerId'],

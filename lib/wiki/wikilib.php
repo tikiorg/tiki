@@ -408,7 +408,7 @@ class WikiLib extends TikiLib
 			$tikilib->set_preference('wikiHomePage', $newName);
 		}
 		if ($prefs['feature_trackers'] == 'y') {
-			global $trklib; include_once('lib/trackers/trackerlib.php');
+			$trklib = TikiLib::lib('trk');
 			$trklib->rename_page($oldName, $newName);
 		}
 

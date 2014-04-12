@@ -11,7 +11,7 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
 	exit;
 }
 
-include_once ('lib/trackers/trackerlib.php');
+$trklib = TikiLib::lib('trk');
 
 if (isset($_REQUEST['trkset'])) {
 	check_ticket('admin-inc-trackers');

@@ -11,7 +11,7 @@
 $force_no_compression = true;
 require_once ('tiki-setup.php');
 
-include_once ('lib/trackers/trackerlib.php');
+$trklib = TikiLib::lib('trk');
 
 if (empty($_REQUEST['attId']) && !empty($_REQUEST['itemId']) && !empty($_REQUEST['fieldId'])) {
 	$_REQUEST['attId'] = $trklib->get_item_value(0, $_REQUEST['itemId'], $_REQUEST['fieldId']);

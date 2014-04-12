@@ -839,7 +839,7 @@ class SearchLib extends TikiLib
      */
     function find_trackers($words = '', $offset = 0, $maxRecords = -1, $fulltext = false, $filter='', $boolean='n', $searchDate = 0, $categId = 0)
 	{
-		global $trklib; require_once('lib/trackers/trackerlib.php');
+		$trklib = TikiLib::lib('trk');
 		global $tiki_p_view_trackers_pending; global $tiki_p_view_trackers_closed;
 
 		static $search_trackers = array(
