@@ -10,7 +10,7 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 	header("location: index.php");
 	exit;
 }
-require_once 'lib/wiki/semanticlib.php';
+$semanticlib = TikiLib::lib('semantic');
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	check_ticket('admin-inc-semantic');
 	if (isset($_POST['save'])) {

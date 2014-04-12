@@ -178,7 +178,7 @@ class WikiLib extends TikiLib
 	 */
 	public function wiki_duplicate_page($name, $copyName = null)
 	{
-		global $tikilib;
+		$tikilib = TikiLib::lib('tiki');
 
 		$info = $tikilib->get_page_info($name);
 
@@ -208,7 +208,8 @@ class WikiLib extends TikiLib
 	// If you think this is easy you are very very wrong
 	public function wiki_rename_page($oldName, $newName, $renameHomes = true, $user = '')
 	{
-		global $prefs, $tikilib;
+		global $prefs;
+		$tikilib = TikiLib::lib('tiki');
 		// if page already exists, stop here
 		$newName = trim($newName);
 		if ($this->get_page_info($newName, false, true)) {
@@ -269,7 +270,7 @@ class WikiLib extends TikiLib
 			}
 
 			$quotedOldName = preg_quote($oldName, '/');
-			global $semanticlib; require_once 'lib/wiki/semanticlib.php';
+			$semanticlib = TikiLib::lib('semantic');
 
 			foreach ($semanticlib->getAllTokens() as $sem) {
 				$data = str_replace("($sem($oldName", "($sem($newName", $data);
@@ -364,9 +365,9 @@ class WikiLib extends TikiLib
 		}
 
 		global $prefs;
-		global $tikilib;
-		global $smarty;
 		global $user;
+		$tikilib = TikiLib::lib('tiki');
+		$smarty = TikiLib::lib('smarty');
 		if ($prefs['feature_use_fgal_for_wiki_attachments'] == 'y') {
 			$query = 'update `tiki_file_galleries` set `name`=? where `name`=?';
 			$this->query($query, array( $newName, $oldName ));
@@ -439,7 +440,8 @@ class WikiLib extends TikiLib
 
 	public function get_parse($page, &$canBeRefreshed = false, $suppress_icons = false)
 	{
-		global $prefs, $user, $headerlib;
+		global $prefs, $user;
+		$headerlib = TikiLib::lib('header');
 		$content = '';
 		$canBeRefreshed = false;
 
@@ -764,14 +766,11 @@ class WikiLib extends TikiLib
 			// We have a version
 			$res = $result->fetchRow();
 
-			global $histlib;
-			if (!is_object($histlib)) {
-				include_once('lib/wiki/histlib.php');
-			}
+			$histlib = TikiLib::lib('hist');
 
 			$histlib->use_version($res['pageName'], $res['version']);
 			if ($prefs['feature_contribution'] == 'y') {
-				global $contributionlib; include_once('lib/contribution/contributionlib.php');
+				$contributionlib = TikiLib::lib('contribution');
 				$tikilib = TikiLib::lib('tiki');
 				$info = $tikilib->get_page_info($res['pageName']);
 
@@ -842,7 +841,9 @@ class WikiLib extends TikiLib
 	// Like pages are pages that share a word in common with the current page
 	public function get_like_pages($page)
 	{
-		global $user, $tikilib, $prefs, $semanticlib;
+		global $user, $prefs;
+		$semanticlib = TikiLib::lib('semantic');
+		$tikilib = TikiLib::lib('tiki');
 
 		preg_match_all("/([A-Z])([a-z]+)/", $page, $words);
 
@@ -965,7 +966,8 @@ class WikiLib extends TikiLib
 
 	public function unlock_page($page)
 	{
-		global $user, $tikilib;
+		global $user;
+		$tikilib = TikiLib::lib('tiki');
 
 		$query = "update `tiki_pages` set `flag`='' where `pageName`=?";
 		$result = $this->query($query, array($page));
@@ -1088,7 +1090,7 @@ class WikiLib extends TikiLib
 	//
 	public function get_plugin_description($name, &$enabled, $area_id = 'editwiki')
 	{
-		global $tikilib;
+		$tikilib = TikiLib::lib('tiki');
 		$parserlib = TikiLib::lib('parser');
 
 		if ( ( ! $info = $parserlib->plugin_info($name) ) && $parserlib->plugin_exists($name, true) ) {
@@ -1102,7 +1104,7 @@ class WikiLib extends TikiLib
 			$ret = $func_name();
 			return $tikilib->parse_data($ret);
 		} else {
-			global $smarty;
+			$smarty = TikiLib::lib('smarty');
 			$enabled = true;
 
 			$ret = $info;
@@ -1153,7 +1155,6 @@ class WikiLib extends TikiLib
 	{
 		global $user, $prefs;
 		if ($prefs['useGroupHome'] == 'y') {
-			global $user;
 			$userlib = TikiLib::lib('user');
 			if ($groupHome = $userlib->get_user_default_homepage($user)) {
 				return $groupHome;
@@ -1166,7 +1167,8 @@ class WikiLib extends TikiLib
 
 	public function sefurl($page, $with_next='', $all_langs='')
 	{
-		global $prefs, $smarty, $info;
+		global $prefs, $info;
+		$smarty = TikiLib::lib('smarty');
 		$script_name = 'tiki-index.php';
 
 		 if ($prefs['feature_multilingual_one_page'] == 'y') {
@@ -1234,7 +1236,8 @@ class WikiLib extends TikiLib
 
 	public function refresh_backlinks()
 	{
-		global $tikilib, $prefs;
+		global $prefs;
+		$tikilib = TikiLib::lib('tiki');
 		$tikilib->query('delete from tiki_links', array());
 
 		if ($prefs['feature_backlinks'] == 'n') {
@@ -1436,7 +1439,8 @@ class WikiLib extends TikiLib
 	//////////////////////////
 	public function processPageDisplayOptions()
 	{
-		global	$prefs, $headerlib;
+		global	$prefs;
+		$headerlib = TikiLib::lib('header');
 
 		$currPage = isset($_REQUEST['page']) ? $_REQUEST['page'] : '';
 		if (!empty($currPage) &&

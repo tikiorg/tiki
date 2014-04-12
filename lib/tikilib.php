@@ -68,12 +68,6 @@ class TikiLib extends TikiDb_Bridge
 			case 'smarty':
 				global $smarty;
 				return self::$libraries[$name] = $smarty;
-			case 'menu':
-				global $menulib; include_once('lib/menubuilder/menulib.php');
-				return self::$libraries[$name] = $menulib;
-			case 'semantic':
-				global $semanticlib; require_once('lib/wiki/semanticlib.php');
-				return self::$libraries[$name] = $semanticlib;
 			case 'relation':
 				global $relationlib; require_once 'lib/attributes/relationlib.php';
 				return self::$libraries[$name] = $relationlib;

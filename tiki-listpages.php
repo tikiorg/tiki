@@ -494,7 +494,8 @@ function setLangFilter($filter)
  */
 function possibly_look_for_page_aliases($query)
 {
-	global $prefs, $smarty, $semanticlib, $_REQUEST;
+	global $prefs;
+	$smarty = TikiLib::lib('smarty');
 
 	$lang = NULL;
 	if (isset($_REQUEST['lang'])) {
@@ -502,8 +503,7 @@ function possibly_look_for_page_aliases($query)
 	}
 
 	if ($prefs['feature_wiki_pagealias'] == 'y' && $query) {
-		global $semanticlib;
-		require_once 'lib/wiki/semanticlib.php';
+		$semanticlib = TikiLib::lib('semantic');
 		$aliases = $semanticlib->getAliasContaining($query, false, $lang);
 		$smarty->assign('aliases', $aliases);
 	} else {
@@ -531,7 +531,8 @@ function possibly_look_for_page_aliases($query)
 
 function set_category_for_new_page_creation()
 {
-	global $_REQUEST, $prefs, $smarty;
+	global $prefs;
+	$smarty = TikiLib::lib('smarty');
 
 	$create_page_with_categId = '';
 	if (isset($_REQUEST['create_page_with_search_category'])) {

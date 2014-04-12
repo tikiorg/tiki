@@ -315,10 +315,7 @@ if (empty($info) && !($user && $prefs['feature_wiki_userpage'] == 'y' && strcase
 				if (!ctype_digit($suffix) && $suffix) {
 					// allow escaped numerics as text
 					$suffix = stripslashes($suffix);
-					global $semanticlib;
-					if (!is_object($semanticlib)) {
-						require_once 'lib/wiki/semanticlib.php';
-					}
+					$semanticlib = TikiLib::lib('semantic');
 					$items = $semanticlib->getItemsFromTracker($newPage, $suffix);
 					if (count($items) > 1) {
 						$msg = tra('There is more than one item in the tracker with this title');

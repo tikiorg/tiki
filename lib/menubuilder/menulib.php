@@ -504,7 +504,8 @@ class MenuLib extends TikiLib
 
 	public function import_menu_options()
 	{
-		global $smarty;
+		$smarty = TikiLib::lib('smarty');
+
 		$options = array();
 		$fname = $_FILES['csvfile']['tmp_name'];
 		$fhandle = fopen($fname, "r");
@@ -761,4 +762,3 @@ class MenuLib extends TikiLib
 		}
 	}
 }
-$menulib = new MenuLib;

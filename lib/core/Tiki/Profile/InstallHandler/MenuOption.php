@@ -32,7 +32,7 @@ class Tiki_Profile_InstallHandler_MenuOption extends Tiki_Profile_InstallHandler
 		$this->replaceReferences($data);
 
 		if (!empty($data['menuId']) && !empty($data['url'])) {
-		   global $menulib; require_once 'lib/menubuilder/menulib.php';
+		   $menulib = TikiLib::lib('menu');
 		   $data['optionId'] = $menulib->get_option($data['menuId'], $data['url']);
 		}
 		return $this->data = $data;
@@ -48,7 +48,7 @@ class Tiki_Profile_InstallHandler_MenuOption extends Tiki_Profile_InstallHandler
 	}
 	function _install()
 	{
-		global $menulib; require_once 'lib/menubuilder/menulib.php';
+		$menulib = TikiLib::lib('menu');
 
 		$data = $this->getData();
 

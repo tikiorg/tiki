@@ -9,7 +9,7 @@
 // $Id$
 
 require_once ('tiki-setup.php');
-include_once ('lib/menubuilder/menulib.php');
+$menulib = TikiLib::lib('menu');
 $access->check_permission(array('tiki_p_edit_menu_option'));
 if (!isset($_REQUEST["menuId"])) {
 	$smarty->assign('msg', tra("No menu indicated"));
@@ -90,7 +90,7 @@ if (isset($_REQUEST["save"])) {
 	if (!isset($_REQUEST['groupname'])) $_REQUEST['groupname'] = '';
 	elseif (is_array($_REQUEST['groupname'])) $_REQUEST['groupname'] = implode(',', $_REQUEST['groupname']);
 	if (!isset($_REQUEST['level'])) $_REQUEST['level'] = 0;
-	include_once ('lib/modules/modlib.php');
+	$modlib = TikiLib::lib('mod');
 	check_ticket('admin-menu-options');
 	$menulib->replace_menu_option($_REQUEST["menuId"], $_REQUEST["optionId"], $_REQUEST["name"], $_REQUEST["url"], $_REQUEST["type"], $_REQUEST["position"], $_REQUEST["section"], $_REQUEST["perm"], $_REQUEST["groupname"], $_REQUEST['level'], $_REQUEST['icon']);
 	$modlib->clear_cache();

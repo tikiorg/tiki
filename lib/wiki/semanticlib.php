@@ -15,7 +15,7 @@ class SemanticLib
 		if ( is_array($this->knownTokens) )
 			return;
 
-		global $tikilib;
+		$tikilib = TikiLib::lib('tiki');
 
 		$this->knownTokens = array();
 
@@ -154,7 +154,7 @@ class SemanticLib
 		if ( false === $this->getToken($invert) || $invert == $newName )
 			$invert = null;
 
-		global $tikilib;
+		$tikilib = TikiLib::lib('tiki');
 
 		if ( $exists ) {
 			$tikilib->query("DELETE FROM tiki_semantic_tokens WHERE token = ?", array( $oldName ));
@@ -185,7 +185,7 @@ class SemanticLib
 
 	private function replaceReferences( $oldName, $newName = null ) // {{{
 	{
-		global $tikilib;
+		$tikilib = TikiLib::lib('tiki');
 
 		if ( ! $this->isValid($oldName) )
 			return tra('Invalid semantic token name') . ": $oldName";
@@ -227,7 +227,7 @@ class SemanticLib
 
 	function removeToken( $token, $removeReferences = false ) // {{{
 	{
-		global $tikilib;
+		$tikilib = TikiLib::lib('tiki');
 
 		if ( false === $this->getToken($token) )
 			return tra("Semantic token not found") . ": $token";
@@ -302,7 +302,9 @@ class SemanticLib
 
 	function getAliasContaining( $query, $exact_match = false, $in_lang = NULL ) // {{{
 	{
-		global $tikilib, $prefs;
+		global $prefs;
+		$tikilib = TikiLib::lib('tiki');
+
 		$orig_query = $query;
 		if (!$exact_match) {
 			$query = "%$query%";
@@ -370,5 +372,3 @@ class SemanticLib
 	}
 }
 
-global $semanticlib;
-$semanticlib = new SemanticLib;
