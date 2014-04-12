@@ -15,7 +15,7 @@ if (empty($prefs['feature_jpgraph'])) {
 }
 
 $categlib = TikiLib::lib('categ');
-include_once ('lib/contribution/contributionlib.php');
+$contributionlib = TikiLib::lib('contribution');
 
 $commentslib = TikiLib::lib('comments');
 $access->check_user($user);

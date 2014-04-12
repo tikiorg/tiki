@@ -231,7 +231,7 @@ if ( function_exists('utf8_encode') ) {
 if (!$info || isset($_REQUEST['date']) || isset($_REQUEST['version'])) {
 	if ($prefs['feature_wiki_use_date'] == 'y' && isset($_REQUEST['date'])) {
 		// Date is required
-		include_once ('lib/wiki/histlib.php');
+		$histlib = TikiLib::lib('hist');
 
 		try {
 			$page_view_date = $histlib->get_view_date($_REQUEST['date']);
@@ -252,7 +252,7 @@ if (!$info || isset($_REQUEST['date']) || isset($_REQUEST['version'])) {
 
 	if ($prefs['feature_wiki_use_date'] == 'y' && isset($_REQUEST['version'])) {
 		// Version is required
-		include_once ('lib/wiki/histlib.php');
+		$histlib = TikiLib::lib('hist');
 
 		try {
 			$info = $histlib->get_page_info($page, $_REQUEST['version']);

@@ -288,4 +288,3 @@ class ContributionLib extends TikiLib
 		return true;
 	}
 }
-$contributionlib = new ContributionLib;

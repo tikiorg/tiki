@@ -765,7 +765,7 @@ class BlogLib extends TikiDb_Bridge
 				$smarty->assign('mail_data', $data);
 
 				if ($prefs['feature_contribution'] == 'y' && !empty($contributions)) {
-					global $contributionlib; include_once('lib/contribution/contributionlib.php');
+					$contributionlib = TikiLib::lib('contribution');
 					$smarty->assign('mail_contributions', $contributionlib->print_contributions($contributions));
 				}
 				sendEmailNotification($nots, "watch", "user_watch_blog_post_subject.tpl", $_SERVER["SERVER_NAME"], "user_watch_blog_post.tpl");

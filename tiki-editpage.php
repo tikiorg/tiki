@@ -1416,7 +1416,7 @@ if ($prefs['feature_multilingual'] === 'y') {
 	}
 
 	if ( $editlib->isTranslationMode() ) {
-		include_once('lib/wiki/histlib.php');
+		$histlib = TikiLib::lib('hist');
 		histlib_helper_setup_diff($editlib->sourcePageName, $editlib->oldSourceVersion, $editlib->newSourceVersion);
 		$smarty->assign('diff_oldver', (int) $editlib->oldSourceVersion);
 		$smarty->assign('diff_newver', (int) $editlib->newSourceVersion);

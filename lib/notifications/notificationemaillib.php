@@ -151,7 +151,7 @@ function sendForumEmailNotification(
 		$smarty->assign('mail_message', $data);
 		$smarty->assign('mail_author', $author);
 		if ($prefs['feature_contribution'] == 'y' && !empty($contributions)) {
-			global $contributionlib; include_once('lib/contribution/contributionlib.php');
+			$contributionlib = TikiLib::lib('contribution');
 			$smarty->assign('mail_contributions', $contributionlib->print_contributions($contributions));
 		}
 		$foo = parse_url($_SERVER["REQUEST_URI"]);
@@ -326,7 +326,7 @@ function sendWikiEmailNotification(
 		$smarty->assign('mail_machine', $machine);
 
 		if ($prefs['feature_contribution'] == 'y' && !empty($contributions)) {
-			global $contributionlib; include_once('lib/contribution/contributionlib.php');
+			$contributionlib = TikiLib::lib('contribution');
 			$smarty->assign('mail_contributions', $contributionlib->print_contributions($contributions));
 		}
 

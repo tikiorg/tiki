@@ -222,7 +222,7 @@ class XmlLib extends TikiLib
 		}
 
 		if ($prefs['feature_history'] == 'y' && $this->config['history']) {
-			global $histlib; include_once ('lib/wiki/histlib.php');
+			$histlib = TikiLib::lib('hist');
 			$history = $histlib->get_page_history($page, false);
 			foreach ($history as $key=>$hist) {
 				$all = $histlib->get_version($page, $hist['version']); // can be optimised if returned in the list

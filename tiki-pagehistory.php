@@ -8,7 +8,7 @@
 $section = 'wiki page';
 $section_class = "tiki_wiki_page manage";	// This will be body class instead of $section
 require_once ('tiki-setup.php');
-include_once ('lib/wiki/histlib.php');
+$histlib = TikiLib::lib('hist');
 require_once ('lib/wiki/renderlib.php');
 
 $access->check_feature('feature_wiki');
@@ -81,8 +81,7 @@ if (isset($_REQUEST["delete"]) && isset($_REQUEST["hist"]) && $info["flag"] != '
 	}
 }
 if ($prefs['feature_contribution'] == 'y') {
-	global $contributionlib;
-	include_once ('lib/contribution/contributionlib.php');
+	$contributionlib = TikiLib::lib('contribution');
 	$contributions = $contributionlib->get_assigned_contributions($page, 'wiki page');
 	$smarty->assign_by_ref('contributions', $contributions);
 	if ($prefs['feature_contributor_wiki'] == 'y') {

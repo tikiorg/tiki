@@ -1491,7 +1491,7 @@ class TikiSheetDatabaseHandler extends TikiSheetDataHandler
 					$del += strlen($old[$values[2].'-'.$values[3]]);
 			}
 			if ($prefs['feature_contribution'] == 'y' && isset($_REQUEST['contributions'])) {
-				global $contributionlib; include_once('lib/contribution/contributionlib.php');
+				$contributionlib = TikiLib::lib('contribution');
 				$contributionlib->assign_contributions($_REQUEST['contributions'], $this->id, 'sheet', '', '', '');
 			}
 			if (isset($_REQUEST['contributions']))

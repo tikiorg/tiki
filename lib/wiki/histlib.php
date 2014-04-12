@@ -496,7 +496,7 @@ class Document
 	 */
 	function __construct($page, $lastversion=0, $process=1, $showpopups=true, $startmarker='', $endmarker='')
 	{
-		global $histlib;		
+		$histlib = TikiLib::lib('hist');
 
 		$this->_document=array();
 		$this->_history=false;
@@ -1012,7 +1012,7 @@ class Document
 	 */
 	function mergeDiff($newpage, $newauthor)
 	{
-		global $tikilib;
+		$tikilib = TikiLib::lib('tiki');
 		$this->_history=false;
 		$author=$newauthor;
 		$deleted=false;
@@ -1131,11 +1131,13 @@ class Document
 	}
 }
 
-$histlib = new HistLib;
 
 function histlib_helper_setup_diff( $page, $oldver, $newver )
 {
-	global $smarty, $histlib, $tikilib, $prefs;
+	global $prefs;
+	$smarty = TikiLib::lib('smarty');
+	$histlib = TikiLib::lib('hist');
+	$tikilib = TikiLib::lib('tiki');
 	$prefs['wiki_edit_section'] = 'n';
 	
 	$info = $tikilib->get_page_info($page);

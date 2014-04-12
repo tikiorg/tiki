@@ -383,8 +383,9 @@ class LogsLib extends TikiLib
 			, $end=0, $categId='', $all=false
 			)
 	{
-		global $prefs, $section, $tikilib, $contributionlib;
-		include_once('lib/contribution/contributionlib.php');
+		global $prefs, $section;
+		$tikilib = TikiLib::lib('tiki');
+		$contributionlib = TikiLib::lib('contribution');
 
 		$bindvars = array();
 		$bindvarsU = array();
