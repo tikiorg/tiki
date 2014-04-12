@@ -388,7 +388,7 @@ class UsersLib extends TikiLib
 
 		// If preference login_multiple_forbidden is set, don't let user login if already logged in
 		if ($result == USER_VALID && $prefs['login_multiple_forbidden'] == 'y' && $user != 'admin' ) {
-			global $tikilib;
+			$tikilib = TikiLib::lib('tiki');
 			$tikilib->update_session();
 			if ( $tikilib->is_user_online($user) ) {
 				$result = USER_ALREADY_LOGGED;
@@ -585,7 +585,7 @@ class UsersLib extends TikiLib
 			if ($userTikiPresent && $validafil) {
 				return array($this->sync_and_update_lastlogin($user, $pass), $user, USER_VALID);
 			} else {
-				global $smarty;
+				$smarty = TikiLib::lib('smarty');
 				// see if we can create a new account
 				if ($shib_create_tiki) {
 
@@ -809,7 +809,8 @@ class UsersLib extends TikiLib
 	// validate the user through PAM
 	function validate_user_pam($user, $pass)
 	{
-		global $tikilib, $prefs;
+		global $prefs;
+		$tikilib = TikiLib::lib('tiki');
 
 		// just make sure we're supposed to be here
 		if ($prefs['auth_method'] != 'pam')
@@ -830,7 +831,8 @@ class UsersLib extends TikiLib
 
 	function check_cas_authentication($user_cookie_site)
 	{
-		global $tikilib, $prefs, $webdav_access;
+		global $prefs, $webdav_access;
+		$tikilib = TikiLib::lib('tiki');
 
 		// Avoid CAS authentication check if the client is not able to handle HTTP redirects to another domain. This includes:
 		//  - WebDAV requests
@@ -909,7 +911,8 @@ class UsersLib extends TikiLib
 	// validate the user through CAS
 	function validate_user_cas(&$user, $checkOnly = false)
 	{
-		global $tikilib, $prefs, $base_url;
+		global $prefs, $base_url;
+		$tikilib = TikiLib::lib('tiki');
 
 		// just make sure we're supposed to be here
 		if (!$this->_init_cas_client()) {
@@ -1522,7 +1525,8 @@ class UsersLib extends TikiLib
 	function create_user_ldap($user, $pass)
 	{
 		// todo: kein pear::auth mehr! alles in pead::ldap2 abbilden
-		global $tikilib, $prefs;
+		global $prefs;
+		$tikilib = TikiLib::lib('tiki');
 
 		$options = array();
 		$options['url'] = $prefs['auth_ldap_url'];
@@ -6248,7 +6252,7 @@ class UsersLib extends TikiLib
 
 	private function generate_provisional_password()
 	{
-		global $tikilib;
+		$tikilib = TikiLib::lib('tiki');
 		require_once 'lib/phpsec/phpsec/phpsec.rand.php';
 
 		$site_hash = $tikilib->get_site_hash();
@@ -6373,7 +6377,7 @@ class UsersLib extends TikiLib
 		$theme = '', $ufield = 0, $gfield = 0,$isexternal = 'n',
 		$expireAfter = 0, $emailPattern = '', $anniversary = '', $prorateInterval = '')
 	{
-		global $tikilib;
+		$tikilib = TikiLib::lib('tiki');
 		$group = trim($group);
 
 		if ( $this->group_exists($group) )
@@ -6674,7 +6678,9 @@ class UsersLib extends TikiLib
 	function send_validation_email($name, $apass, $email, $again = '', $second = '',
 		$chosenGroup = '', $mailTemplate = '', $pass = '')
 	{
-		global $tikilib, $prefs, $smarty;
+		global $prefs;
+		$tikilib = TikiLib::lib('tiki');
+		$smarty = TikiLib::lib('smarty');
 
 		// mail_machine kept for BC, use $validation_url
 		$machine = TikiLib::tikiUrl('tiki-login_validate.php');
@@ -6874,7 +6880,7 @@ class UsersLib extends TikiLib
 
 	function confirm_email($user, $pass)
 	{
-		global $tikilib;
+		$tikilib = TikiLib::lib('tiki');
 		$query = 'select `provpass`, `login`, `unsuccessful_logins` from `users_users` where `login`=?';
 		$result = $this->query($query, array($user));
 		if (!($res = $result->fetchRow())) {
@@ -6908,7 +6914,10 @@ class UsersLib extends TikiLib
 
 	function send_confirm_email($user,$tpl='confirm_user_email')
 	{
-		global $smarty, $prefs, $tikilib;
+		global $prefs;
+		$tikilib = TikiLib::lib('tiki');
+		$smarty = TikiLib::lib('smarty');
+
 		include_once ('lib/webmail/tikimaillib.php');
 		$languageEmail = $this->get_user_preference($_REQUEST['username'], 'language', $prefs['site_language']);
 		$apass = $this->renew_user_password($user);
@@ -7052,7 +7061,7 @@ class UsersLib extends TikiLib
 		$tikilib->set_user_preferences($user, $user_details['preferences']);
 
 		if (isset($avatarData)) {
-			global $userprefslib; include_once('lib/userprefs/userprefslib.php');
+			$userprefslib = TikiLib::lib('userprefs');
 			$userprefslib->set_user_avatar(
 				$user,
 				'u',
@@ -7089,7 +7098,7 @@ class UsersLib extends TikiLib
 
 	function update_expired_groups()
 	{
-		global $tikilib;
+		$tikilib = TikiLib::lib('tiki');
 		$this->update_anniversary_expiry();
 		$query = 'SELECT uu.* FROM `users_usergroups` uu' .
 						' LEFT JOIN `users_groups` ug ON (uu.`groupName`= ug.`groupName`)' .
@@ -7121,7 +7130,7 @@ class UsersLib extends TikiLib
 
 	function extend_membership($user, $group, $periods = 1, $date = null )
 	{
-		global $tikilib;
+		$tikilib = TikiLib::lib('tiki');
 		$this->update_expired_groups();
 
 		if ( ! $this->user_is_in_group($user, $group) ) {
@@ -7321,7 +7330,8 @@ class UsersLib extends TikiLib
 
 	function clean_user($u, $force_check_realnames = false, $login_fallback = true)
 	{
-		global $tikilib, $prefs;
+		global $prefs;
+		$tikilib = TikiLib::lib('tiki');
 		if ( $prefs['user_show_realnames'] == 'y' || $force_check_realnames) {
 			// need to trim to prevent mustMatch failure
 			$realname = trim($tikilib->get_user_preference($u, 'realName', ''));
@@ -7340,7 +7350,7 @@ class UsersLib extends TikiLib
 
 	private function categorize_user_tracker_item($user, $group)
 	{
-		global $tikilib;
+		$tikilib = TikiLib::lib('tiki');
 		$userid = $this->get_user_id($user);
 		$tracker = $this->get_usertracker($userid);
 		if ( $tracker && $tracker['usersTrackerId'] ) {
@@ -7364,7 +7374,7 @@ class UsersLib extends TikiLib
 
 	private function uncategorize_user_tracker_item($user, $group)
 	{
-		global $tikilib;
+		$tikilib = TikiLib::lib('tiki');
 		$userid = $this->get_user_id($user);
 		$tracker = $this->get_usertracker($userid);
 

@@ -6,9 +6,10 @@
 // $Id$
 
 require_once ('tiki-setup.php');
-include_once ('lib/quizzes/quizlib.php');
 
 $access->check_feature('feature_quizzes');
+
+$quizlib = TikiLib::lib('quiz');
 
 if (!isset($_REQUEST["quizId"])) {
 	$_REQUEST["quizId"] = 0;
@@ -31,7 +32,7 @@ $auto_query_args = array(
 
 $_REQUEST["questionsPerPage"] = 999;
 //Use 12- or 24-hour clock for $publishDate time selector based on admin and user preferences
-include_once ('lib/userprefs/userprefslib.php');
+$userprefslib = TikiLib::lib('userprefs');
 $smarty->assign('use_24hr_clock', $userprefslib->get_user_clock_pref($user));
 
 

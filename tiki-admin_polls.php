@@ -9,17 +9,15 @@
 // $Id$
 
 require_once ('tiki-setup.php');
-include_once ('lib/polls/polllib.php');
-if (!isset($polllib)) {
-	$polllib = new PollLib;
-}
 $access->check_feature('feature_polls');
 $access->check_permission('tiki_p_admin_polls');
+
+$polllib = TikiLib::lib('poll');
 
 $auto_query_args = array('pollId', 'sort_mode', 'offset', 'find');
 
 //Use 12- or 24-hour clock for $publishDate time selector based on admin and user preferences
-include_once ('lib/userprefs/userprefslib.php');
+$userprefslib = TikiLib::lib('userprefs');
 $smarty->assign('use_24hr_clock', $userprefslib->get_user_clock_pref($user));
 
 if (!isset($_REQUEST["pollId"])) {

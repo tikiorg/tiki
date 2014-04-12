@@ -12,8 +12,8 @@ require 'tiki-setup.php';
 
 $access->check_feature('feature_userPreferences');
 
-global $userprefslib, $tikidomain;
-include_once ('lib/userprefs/userprefslib.php');
+global $tikidomain;
+$userprefslib = TikiLib::lib('userprefs');
 // application to display an image from the database with
 // option to resize the image dynamically creating a thumbnail on the fly.
 // you have to check if the user has permission to see this gallery

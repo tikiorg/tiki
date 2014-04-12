@@ -628,7 +628,7 @@ for ($i = 0; $i <= 100; $i+= 10) {
 	$percs[] = $i;
 }
 //Use 12- or 24-hour clock for $publishDate time selector based on admin and user preferences
-include_once ('lib/userprefs/userprefslib.php');
+$userprefslib = TikiLib::lib('userprefs');
 $smarty->assign('use_24hr_clock', $userprefslib->get_user_clock_pref($user));
 
 $smarty->assign_by_ref('percs', $percs);

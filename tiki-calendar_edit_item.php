@@ -507,7 +507,7 @@ if ($calendar['customlocations'] == 'y') {
 $smarty->assign('listlocs', $listlocs);
 $smarty->assign('changeCal', isset($_REQUEST['changeCal']));
 
-include_once ('lib/userprefs/userprefslib.php');
+$userprefslib = TikiLib::lib('userprefs');
 $smarty->assign('use_24hr_clock', $userprefslib->get_user_clock_pref($user));
 
 if ($calendar['customcategories'] == 'y') {

@@ -15,9 +15,9 @@ $access->check_feature('feature_trackers');
 
 $trklib = TikiLib::lib('trk');
 if ($prefs['feature_groupalert'] == 'y') {
-	include_once ('lib/groupalert/groupalertlib.php');
+	$groupalertlib = TikiLib::lib('groupalert');
 }
-include_once ('lib/notifications/notificationlib.php');
+$notificationlib = TikiLib::lib('notification');
 if ($prefs['feature_categories'] == 'y') {
 	$categlib = TikiLib::lib('categ');
 }
@@ -340,7 +340,7 @@ if ($prefs['feature_user_watches'] == 'y' and $tiki_p_watch_trackers == 'y') {
 
 if (isset($_REQUEST["save"])) {
 	if ($itemObject->canModify()) {
-		global $captchalib; include_once 'lib/captcha/captchalib.php';
+		$captchalib = TikiLib::lib('captcha');
 		if (empty($user) && $prefs['feature_antibot'] == 'y' && !$captchalib->validate()) {
 			$smarty->assign('msg', $captchalib->getErrors());
 			$smarty->assign('errortype', 'no_redirect_login');
@@ -548,13 +548,12 @@ ask_ticket('view-trackers');
 
 // Generate validation js
 if ($prefs['feature_jquery'] == 'y' && $prefs['feature_jquery_validation'] == 'y') {
-	global $validatorslib;
-	include_once('lib/validatorslib.php');
+	$validatorslib = TikiLib::lib('validators');
 	$validationjs = $validatorslib->generateTrackerValidateJS($fields['data']);
 	$smarty->assign('validationjs', $validationjs);
 }
 //Use 12- or 24-hour clock for $publishDate time selector based on admin and user preferences
-include_once ('lib/userprefs/userprefslib.php');
+$userprefslib = TikiLib::lib('userprefs');
 $smarty->assign('use_24hr_clock', $userprefslib->get_user_clock_pref($user));
 
 // Display the template

@@ -10,11 +10,11 @@
 
 require_once ('tiki-setup.php');
 include_once ('lib/commcenter/commlib.php');
-include_once ('lib/articles/artlib.php');
 $access->check_feature('feature_comm');
 $access->check_permission('tiki_p_admin_received_articles');
 //Use 12- or 24-hour clock for $publishDate time selector based on admin and user preferences
-include_once ('lib/userprefs/userprefslib.php');
+$artlib = TikiLib::lib('art');
+$userprefslib = TikiLib::lib('userprefs');
 $smarty->assign('use_24hr_clock', $userprefslib->get_user_clock_pref($user));
 
 if (!isset($_REQUEST["receivedArticleId"])) {

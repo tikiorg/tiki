@@ -26,11 +26,11 @@ If you leave the data field blank, the default is to use all the questions from 
 You can also set the same option under the Generl Options section.
 */
 require_once ('tiki-setup.php');
-include_once ('lib/quizzes/quizlib.php');
 
 $access->check_feature('feature_quizzes');
 //Use 12- or 24-hour clock for $publishDate time selector based on admin and user preferences
-include_once ('lib/userprefs/userprefslib.php');
+$quizlib = TikiLib::lib('quiz');
+$userprefslib = TikiLib::lib('userprefs');
 $smarty->assign('use_24hr_clock', $userprefslib->get_user_clock_pref($user));
 
 // quizId of 0 is used as a placeholder; There should NEVER be a row in the

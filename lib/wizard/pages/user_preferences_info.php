@@ -7,7 +7,7 @@
 
 
 require_once('lib/wizard/wizard.php');
-include_once('lib/userprefs/userprefslib.php');
+$userprefslib = TikiLib::lib('userprefs');
 /**
  * Set up the Basic User Information
  */

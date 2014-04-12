@@ -10,7 +10,6 @@
 
 $section = 'mytiki';
 require_once ('tiki-setup.php');
-//include_once ('lib/userprefs/userprefslib.php');
 
 $auto_query_args = array('userId', 'view_user');
 

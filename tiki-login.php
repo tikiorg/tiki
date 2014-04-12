@@ -161,8 +161,7 @@ if (isset($_REQUEST['intertiki']) and in_array($_REQUEST['intertiki'], array_key
 				$userlib->set_user_fields($user_details['info']);
 				$user = $requestedUser;
 				if ($prefs['feature_userPreferences'] == 'y' && $prefs['feature_intertiki_import_preferences'] == 'y') {
-					global $userprefslib;
-					include_once ('lib/userprefs/userprefslib.php');
+					$userprefslib = TikiLib::lib('userprefs');
 					$userprefslib->set_user_avatar($user, 'u', '', $user_details['avatarName'], $user_details['avatarSize'], $user_details['avatarFileType'], $avatarData);
 					$userlib->set_user_preferences($user, $user_details['preferences']);
 				}

@@ -11,7 +11,7 @@
 require_once ('tiki-setup.php');
 include_once ('lib/messu/messulib.php');
 include_once ('lib/userprefs/scrambleEmail.php');
-include_once ('lib/registration/registrationlib.php');
+$registrationlib = TikiLib::lib('registration');
 $trklib = TikiLib::lib('trk');
 if (isset($_REQUEST['userId'])) {
 	$userwatch = $tikilib->get_user_login($_REQUEST['userId']);
@@ -132,7 +132,7 @@ if ($prefs['feature_display_my_to_others'] == 'y') {
 		$smarty->assign_by_ref('user_items', $user_items);
 	}
 	if ($prefs['feature_articles'] == 'y') {
-		include_once ('lib/articles/artlib.php');
+		$artlib = TikiLib::lib('art');
 		$user_articles = $artlib->get_user_articles($userwatch, -1);
 		$smarty->assign_by_ref('user_articles', $user_articles);
 	}
@@ -170,10 +170,7 @@ if ($prefs['feature_display_my_to_others'] == 'y') {
 				$mystuff[] = array( 'object' => $obj["object"], 'objectType' => $stuffType, 'comment' => $forum_comment );
 			}
 		}
-		global $logslib;
-		if (!is_object($logslib)) {
-			require_once("lib/logs/logslib.php");		
-		}
+		$logslib = TikiLib::lib('logs');
 		$whoviewed = $logslib->get_who_viewed($mystuff, false);
 		$smarty->assign('whoviewed', $whoviewed);
 	}
@@ -194,7 +191,7 @@ if ($prefs['user_tracker_infos']) {
 ask_ticket('user-information');
 // Get full user picture if it is set
 if ($prefs["user_store_file_gallery_picture"] == 'y') {
-	require_once ('lib/userprefs/userprefslib.php');
+	$userprefslib = TikiLib::lib('userprefs');
 	if ($user_picture_id = $userprefslib->get_user_picture_id($userwatch)) {	
 		$smarty->assign('user_picture_id', $user_picture_id);
 	}	

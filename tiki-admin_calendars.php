@@ -11,9 +11,9 @@
 $section = 'calendar';
 require_once ('tiki-setup.php');
 $categlib = TikiLib::lib('categ');
-include_once ('lib/calendar/calendarlib.php');
+$calendarlib = TikiLib::lib('calendar');
 if ($prefs['feature_groupalert'] == 'y') {
-	include_once ('lib/groupalert/groupalertlib.php');
+	$groupalertlib = TikiLib::lib('groupalert');
 }
 $auto_query_args = array('calendarId', 'sort_mode', 'find', 'offset');
 if (!isset($_REQUEST["calendarId"])) {
@@ -208,7 +208,7 @@ $smarty->assign('personal', $info["personal"]);
 $smarty->assign('startday', $info["startday"] < 0 ? 0 : $info['startday']);
 $smarty->assign('endday', $info["endday"] < 0 ? 0 : $info['endday']);
 //Use 12- or 24-hour clock for $publishDate time selector based on admin and user preferences
-include_once ('lib/userprefs/userprefslib.php');
+$userprefslib = TikiLib::lib('userprefs');
 $smarty->assign('use_24hr_clock', $userprefslib->get_user_clock_pref($user));
 
 $smarty->assign('defaulteventstatus', $info['defaulteventstatus']);

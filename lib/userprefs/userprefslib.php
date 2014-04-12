@@ -124,7 +124,8 @@ class UserPrefsLib extends TikiLib
      */
 	function set_file_gallery_image($u, $filename, $size, $type, $data)
 	{
-		global $prefs, $tikilib;
+		global $prefs;
+		$tikilib = TikiLib::lib('tiki');
 		$filegallib = TikiLib::lib('filegal');
 		if (!$prefs["user_picture_gallery_id"]) {
 			return false;
@@ -146,7 +147,8 @@ class UserPrefsLib extends TikiLib
      */
     function remove_file_gallery_image($u)
 	{
-		global $prefs, $tikilib;
+		global $prefs;
+		$tikilib = TikiLib::lib('tiki');
 		$filegallib = TikiLib::lib('filegal');
 		if ($user_image_id = $tikilib->get_user_preference($u, 'user_fg_image_id')) {
 			$file_info = $filegallib->get_file_info($user_image_id, false, false);
@@ -164,7 +166,7 @@ class UserPrefsLib extends TikiLib
      */
     function get_user_picture_id($u)
 	{
-		global $tikilib;
+		$tikilib = TikiLib::lib('tiki');
 		return $tikilib->get_user_preference($u, 'user_fg_image_id');		
 	}
 
@@ -219,7 +221,8 @@ class UserPrefsLib extends TikiLib
      */
     function get_user_clock_pref($user)
 	{
-		global $prefs; global $tikilib;
+		global $prefs;
+		$tikilib = TikiLib::lib('tiki');
 		$userclock = $tikilib->get_user_preference($user, 'display_12hr_clock');
 		$use_24hr_clock = true;
 		if ((isset($userclock) && $userclock == 'y') || (!isset($userclock) && $prefs['users_prefs_display_12hr_clock'] == 'y')) {
@@ -228,4 +231,4 @@ class UserPrefsLib extends TikiLib
 		return $use_24hr_clock;
 	}
 }
-$userprefslib = new UserPrefsLib;
+

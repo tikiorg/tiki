@@ -23,6 +23,9 @@
 		<service id="tiki.lib.filegal" class="FileGalLib">
 			<file>%kernel.root_dir%/lib/filegals/filegallib.php</file>
 		</service>
+		<service id="tiki.lib.memcache" class="Memcachelib">
+			<file>%kernel.root_dir%/lib/cache/memcachelib.php</file>
+		</service>
 		<service id="tiki.lib.multilingual" class="MultilingualLib">
 			<file>%kernel.root_dir%/lib/multilingual/multilinguallib.php</file>
 		</service>
@@ -41,6 +44,9 @@
 		</service>
 		<service id="tiki.lib.user" class="UsersLib">
 			<file>%kernel.root_dir%/lib/userslib.php</file>
+		</service>
+		<service id="tiki.lib.userprefs" class="UserPrefsLib">
+			<file>%kernel.root_dir%/lib/userprefs/userprefslib.php</file>
 		</service>
 		<service id="tiki.lib.wiki" class="WikiLib">
 			<file>%kernel.root_dir%/lib/wiki/wikilib.php</file>

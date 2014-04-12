@@ -10,13 +10,13 @@
 
 require_once ('tiki-setup.php');
 
-require_once ('lib/tikilib.php'); # httpScheme()
+$tikilib = TikiLib::lib('tiki');
 $bannerlib = TikiLib::lib('banner');
 
 $access->check_feature('feature_banners');
 $access->check_permission('tiki_p_admin_banners');
 //Use 12- or 24-hour clock for $publishDate time selector based on admin and user preferences
-include_once ('lib/userprefs/userprefslib.php');
+$userprefslib = TikiLib::lib('userprefs');
 $smarty->assign('use_24hr_clock', $userprefslib->get_user_clock_pref($user));
 
 if (isset($_REQUEST["bannerId"]) && $_REQUEST["bannerId"] > 0) {

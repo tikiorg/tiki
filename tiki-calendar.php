@@ -422,7 +422,7 @@ foreach ($cell as $w=>$weeks) {
 	}
 }
 //Use 12- or 24-hour clock for times listed in day or week view based on admin and user preferences
-include_once ('lib/userprefs/userprefslib.php');
+$userprefslib = TikiLib::lib('userprefs');
 $user_24hr_clock = $userprefslib->get_user_clock_pref($user);
 
 $hrows = array();

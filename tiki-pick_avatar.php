@@ -10,8 +10,8 @@
 
 $section = 'mytiki';
 require_once ('tiki-setup.php');
-include_once ('lib/userprefs/userprefslib.php');
-include_once ('lib/imagegals/imagegallib.php');
+$userprefslib = TikiLib::lib('userprefs');
+$imagegallib = TikiLib::lib('imagegal');
 $access->check_feature('feature_userPreferences');
 $access->check_user($user);
 $auto_query_args = array('view_user');
