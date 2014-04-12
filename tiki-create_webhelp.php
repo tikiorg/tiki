@@ -9,7 +9,7 @@
 // $Id$
 
 require_once ('tiki-setup.php');
-include_once ('lib/structures/structlib.php');
+$structlib = TikiLib::lib('struct');
 
 /**
  * @param $source

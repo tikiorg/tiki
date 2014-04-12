@@ -65,6 +65,9 @@
 		<service id="tiki.lib.service" class="ServiceLib">
 			<file>%kernel.root_dir%/lib/servicelib.php</file>
 		</service>
+		<service id="tiki.lib.struct" class="StructLib">
+			<file>%kernel.root_dir%/lib/structures/structlib.php</file>
+		</service>
 		<service id="tiki.lib.tikidate" class="TikiDate"/>
 		<service id="tiki.lib.trk" class="TrackerLib">
 			<file>%kernel.root_dir%/lib/trackers/trackerlib.php</file>

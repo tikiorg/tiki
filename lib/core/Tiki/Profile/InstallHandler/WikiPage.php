@@ -194,7 +194,7 @@ class Tiki_Profile_InstallHandler_WikiPage extends Tiki_Profile_InstallHandler
 		}
 
 		if (!empty($this->structure)) {
-			global $structlib; include_once 'lib/structures/structlib.php';
+			$structlib = TikiLib::lib('struct');
 			$structlib->s_create_page($this->structure, 0, $finalName, '', $this->structure);
 		}
 

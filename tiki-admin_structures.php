@@ -10,7 +10,7 @@
 
 $section = 'wiki page';
 require_once ('tiki-setup.php');
-include_once ('lib/structures/structlib.php');
+$structlib = TikiLib::lib('struct');
 $categlib = TikiLib::lib('categ');
 include_once ("lib/ziplib.php");
 $access->check_feature(array('feature_wiki', 'feature_wiki_structure'));

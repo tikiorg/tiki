@@ -91,13 +91,13 @@ function module_menu_info()
  */
 function module_menu($mod_reference, $module_params)
 {
-	global $smarty;
+	$smarty = TikiLib::lib('smarty');
 	$smarty->assign('module_error', '');
 	if (empty($module_params['id']) && empty($module_params['structureId'])) {
 		$smarty->assign('module_error', tr('One of these parameters has to be set:') . ' ' . tr('Menu') . ', ' . tr('Structure') . '.');
 	}
 	if (!empty($module_params['structureId'])) {
-		global $structlib; include_once('lib/structures/structlib.php');
+		$structlib = TikiLib::lib('struct');
 
 		if (empty($module_params['title'])) {
 			$smarty->assign('tpl_module_title', $module_params['structureId']);

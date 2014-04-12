@@ -38,8 +38,7 @@ function smarty_function_object_link( $params, $smarty )
 		}
 		global $prefs;
 		if ($prefs['feature_wiki_structure'] === 'y') {
-			global $structlib;
-			include_once ('lib/structures/structlib.php');
+			$structlib = TikiLib::lib('struct');
 			$page_id = $structlib->get_struct_ref_id($title);
 			if ($page_id) {
 				$alias = $structlib->get_page_alias($page_id);

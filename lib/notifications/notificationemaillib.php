@@ -230,7 +230,7 @@ function sendWikiEmailNotification(
 	}
 
 	if ($prefs['feature_user_watches'] == 'y' && $event == 'wiki_page_changed') {
-		global $structlib; include_once('lib/structures/structlib.php');
+		$structlib = TikiLib::lib('struct');
 		$nots2 = $structlib->get_watches($pageName);
 		if (!empty($nots2)) {
 			$nots = array_merge($nots, $nots2);
@@ -250,7 +250,7 @@ function sendWikiEmailNotification(
 	}
 
 	if ($prefs['feature_user_watches'] == 'y' && $event == 'wiki_page_created' && $structure_parent_id) {
-		global $structlib; include_once('lib/structures/structlib.php');
+		$structlib = TikiLib::lib('struct');
 		$nots = array_merge($nots, $structlib->get_watches('', $structure_parent_id));
 	}
 
@@ -690,8 +690,10 @@ function sendCategoryEmailNotification($values)
 
 function sendStructureEmailNotification($params)
 {
-	global $tikilib, $smarty, $prefs;
-	global $structlib; include_once('lib/structures/structlib.php');
+	global $prefs;
+	$tikilib = TikiLib::lib('tiki');
+	$smarty = TikiLib::lib('smarty');
+	$structlib = TikiLib::lib('struct');
 
 	$params['event'] = 'structure_' . $params['action'];
 

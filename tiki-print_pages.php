@@ -10,7 +10,7 @@
 
 $section = 'wiki page';
 require_once ('tiki-setup.php');
-include_once ('lib/structures/structlib.php');
+$structlib = TikiLib::lib('struct');
 $auto_query_args = array('page_ref_id', 'page', 'find', 'pageName', 'structureId', 'offset', 'printpages', 'printstructures');
 
 $access->check_feature('feature_wiki_multiprint');

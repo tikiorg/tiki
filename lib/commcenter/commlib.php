@@ -19,8 +19,8 @@ class CommLib extends TikiLib
 		$info = $this->get_received_page($receivedPageId);
 
 		if ($info['structureName'] == $info['pageName']) {
-			global $tikilib;
-			global $structlib; include_once('lib/structures/structlib.php');
+			$tikilib = TikiLib::lib('tiki');
+			$structlib = TikiLib::lib('struct');
 			$pages = $tikilib->list_received_pages(0, -1, 'pageName_asc', '', 's', $info['structureName']);
 
 			foreach ($pages['data'] as $page) {

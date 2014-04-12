@@ -68,9 +68,6 @@ class TikiLib extends TikiDb_Bridge
 			case 'smarty':
 				global $smarty;
 				return self::$libraries[$name] = $smarty;
-			case 'struct':
-				global $structlib; include_once('lib/structures/structlib.php');
-				return self::$libraries[$name] = $structlib;
 			case 'rating':
 				global $ratinglib; require_once 'lib/rating/ratinglib.php';
 				return self::$libraries[$name] = $ratinglib;

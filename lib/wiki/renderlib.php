@@ -74,7 +74,8 @@ class WikiRenderer
 
 	function restoreAll() // {{{
 	{
-		global $smarty, $prefs;
+		global $prefs;
+		$smarty = TikiLib::lib('smarty');
 		foreach ( $this->toRestore as $name => $value ) {
 			$GLOBALS[$name] = $value;
 		}
@@ -117,7 +118,9 @@ class WikiRenderer
 		if ( ! $this->structureInfo )
 			return;
 
-		global $structlib, $tikilib, $structure, $structure_path;
+		global $structure, $structure_path;
+		$structlib = TikiLib::lib('struct');
+		$tikilib = TikiLib::lib('tiki');
 
 		$structure = 'y';
 		$this->smartyassign('structure', $structure);
@@ -504,7 +507,7 @@ class WikiRenderer
 				$cats = $categlib->get_object_categories('wiki page', $this->page);
 			}
 			if ($prefs['category_morelikethis_algorithm'] != '') {
-				global $freetaglib; include_once('lib/freetag/freetaglib.php');
+				$freetaglib = TikiLib::lib('freetag');
 				$category_related_objects = $freetaglib->get_similar('wiki page', $this->page, empty($prefs['category_morelikethis_mincommon_max'])?$prefs['maxRecords']: $prefs['category_morelikethis_mincommon_max'], null, 'category');
 				$this->smartyassign('category_related_objects', $category_related_objects);
 			}
@@ -524,7 +527,9 @@ class WikiRenderer
 
 	private function setupPoll() // {{{
 	{
-		global $prefs, $polllib, $tikilib, $tiki_p_wiki_view_ratings;
+		global $prefs, $tiki_p_wiki_view_ratings;
+		$polllib = TikiLib::lib('poll');
+		$tikilib = TikiLib::lib('tiki');
 
 		if ($prefs['feature_polls'] !='y' || $prefs['feature_wiki_ratings'] != 'y' || $tiki_p_wiki_view_ratings != 'y')
 			return;
@@ -578,7 +583,7 @@ class WikiRenderer
 
 	private function smartyassign( $name, $value ) // {{{
 	{
-		global $smarty;
+		$smarty = TikiLib::lib('smarty');
 		if ( ! array_key_exists($name, $this->smartyRestore) )
 			$this->smartyRestore[$name] = $smarty->getTemplateVars($name);
 

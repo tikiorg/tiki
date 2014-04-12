@@ -104,8 +104,8 @@ function wikiplugin_toc( $data, $params )
 	$params = array_merge($defaults, $params);
 	extract($params, EXTR_SKIP);
 
-	global $structlib, $page_ref_id;
-	include_once ("lib/structures/structlib.php");
+	global $page_ref_id;
+	$structlib = TikiLib::lib('struct');
 
 	global $prefs;
 	if ($prefs['feature_jquery_ui'] === 'y' && $type === 'admin') {

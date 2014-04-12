@@ -9,10 +9,11 @@
 // See http://doc.tiki.org/Restore+Help+Pages
 
 include_once("lib/init/initlib.php");
+include_once("lib/tikilib.php");
 require_once("db/tiki-db.php");
-require_once("lib/tikilib.php");
+$tikilib = TikiLib::lib('tiki');
 $categlib = TikiLib::lib('categ');
-require_once("lib/structures/structlib.php");
+$structlib = TikiLib::lib('struct');
 
 /**
  * @param $s

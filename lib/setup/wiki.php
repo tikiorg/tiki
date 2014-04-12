@@ -53,7 +53,7 @@ if (strstr($_SERVER['SCRIPT_NAME'], 'tiki-index.php')
 					$info = $tikilib->get_page_info($_REQUEST['page']);
 					$_REQUEST['page_id'] = $info['page_id'];
 				} elseif (!empty($_REQUEST['page_ref_id'])) {
-					global $structlib; include_once('lib/structures/structlib.php');
+					$structlib = TikiLib::lib('struct');
 					$info = $structlib->s_get_page_info($_REQUEST['page_ref_id']);
 					$_REQUEST['page_id'] = $info['page_id'];
 				}

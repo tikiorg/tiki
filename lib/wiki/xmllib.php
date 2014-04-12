@@ -69,7 +69,7 @@ class XmlLib extends TikiLib
 		}
 
 		if (!empty($structure)) {
-			global $structlib; include_once('lib/structures/structlib.php');
+			$structlib = TikiLib::lib('struct');
 			$pages = $structlib->s_get_structure_pages($structure);
 			$stack = array();
 			foreach ($pages as $page) {
@@ -466,7 +466,7 @@ class XmlLib extends TikiLib
 		}
 
 		if ($prefs['feature_wiki_structure'] == 'y' && !empty($info['structure'])) {
-			global $structlib; include_once('lib/structures/structlib.php');
+			$structlib = TikiLib::lib('struct');
 			//TODO alias
 			if ($info['structure'] == 1) {
 				$this->structureStack[$info['structure']] = $structlib->s_create_page(null, null, $info['name'], '');

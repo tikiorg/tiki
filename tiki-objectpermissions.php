@@ -99,8 +99,7 @@ if ( $restrictions = perms_get_restrictions() ) {
 }
 
 if ($_REQUEST['objectType'] == 'wiki page') {
-	global $structlib;
-	include_once ('lib/structures/structlib.php');
+	$structlib = TikiLib::lib('struct');
 	$pageInfoTree = $structlib->s_get_structure_pages($structlib->get_struct_ref_id($_REQUEST['objectId']));
 	if (count($pageInfoTree) > 1) {
 		$smarty->assign('inStructure', 'y');

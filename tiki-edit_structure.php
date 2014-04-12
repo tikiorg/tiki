@@ -12,7 +12,7 @@ $section = 'wiki page';
 $auto_query_args = array('page_ref_id');
 require_once ('tiki-setup.php');
 
-include_once ('lib/structures/structlib.php');
+$structlib = TikiLib::lib('struct');
 $access->check_feature(array('feature_wiki','feature_wiki_structure'));
 if (!isset($_REQUEST["page_ref_id"])) {
 	$smarty->assign('msg', tra("No structure indicated"));
@@ -312,7 +312,7 @@ include_once ('tiki-section_options.php');
 if ($prefs['feature_jquery_ui'] === 'y') {
 	$headerlib->add_jsfile('lib/structures/tiki-edit_structure.js');
 	$headerlib->add_jsfile('vendor/jquery/plugins/nestedsortable/jquery.ui.nestedSortable.js');
-	global $structlib; include_once('lib/structures/structlib.php');
+	$structlib = TikiLib::lib('struct');
 
 	$structure_id = $structure_info['structure_id'];
 	if (!$structure_id) {
