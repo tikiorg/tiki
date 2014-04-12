@@ -11,8 +11,7 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
 	exit;
 }
 
-global $wikilib;
-include_once ('lib/wiki/wikilib.php');
+$wikilib = TikiLib::lib('wiki');
 $auto_query_args = array('sort_mode', 'page');
 
 if (isset($_REQUEST['action']) and isset($_REQUEST['attId'])) {

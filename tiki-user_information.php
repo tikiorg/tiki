@@ -111,12 +111,12 @@ $exist = $tikilib->page_exists($userPage);
 $smarty->assign("userPage_exists", $exist);
 if ($prefs['feature_display_my_to_others'] == 'y') {
 	if ($prefs['feature_wiki'] == 'y') {
-		include_once ('lib/wiki/wikilib.php');
+		$wikilib = TikiLib::lib('wiki');
 		$user_pages = $wikilib->get_user_all_pages($userwatch, 'pageName_asc');
 		$smarty->assign_by_ref('user_pages', $user_pages);
 	}
 	if ($prefs['feature_blogs'] == 'y') {
-		require_once('lib/blogs/bloglib.php');
+		$bloglib = TikiLib::lib('blog');
 		$user_blogs = $bloglib->list_user_blogs($userwatch, false);
 		$smarty->assign_by_ref('user_blogs', $user_blogs);
 		$user_blog_posts = $bloglib->list_posts(0, -1, 'created_desc', '', -1, $userwatch);

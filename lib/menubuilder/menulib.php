@@ -292,12 +292,12 @@ class MenuLib extends TikiLib
 			$option['url'] = preg_replace('/&structure=.*/', '', $option['url']);
 		}
 		if (preg_match('/.*tiki.index.php$/', $url)) {
-			global $wikilib; include_once('lib/wiki/wikilib.php');
+			$wikilib = TikiLib::lib('wiki');
 			$homePage = $wikilib->get_default_wiki_page();
 			$url .= "?page=$homePage";
 		}
 		if (preg_match('/.*tiki.index.php$/', $option['url'])) {
-			global $wikilib; include_once('lib/wiki/wikilib.php');
+			$wikilib = TikiLib::lib('wiki');
 			$homePage = $wikilib->get_default_wiki_page();
 			$option['url'] .= "?page=$homePage";
 		}

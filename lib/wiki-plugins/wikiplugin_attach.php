@@ -131,9 +131,10 @@ function wikiplugin_attach($data, $params)
 {
 	global $atts;
 	global $mimeextensions;
-	global $wikilib; include_once('lib/wiki/wikilib.php');
-	global $tikilib;
 	global $user, $section, $section_class;
+
+	$wikilib = TikiLib::lib('wiki');
+	$tikilib = TikiLib::lib('tiki');
 
 	extract($params, EXTR_SKIP);
 

@@ -65,9 +65,6 @@ class TikiLib extends TikiDb_Bridge
 			case 'tiki':
 				global $tikilib;
 				return self::$libraries[$name] = $tikilib;
-			case 'wiki':
-				global $wikilib; include_once('lib/wiki/wikilib.php');
-				return self::$libraries[$name] = $wikilib;
 			case 'smarty':
 				global $smarty;
 				return self::$libraries[$name] = $smarty;
@@ -4432,7 +4429,7 @@ class TikiLib extends TikiDb_Bridge
 		$page_id = $pages->insert($insertData);
 
 		//update status, page storage was updated in tiki 9 to be non html encoded
-		require_once('lib/wiki/wikilib.php');
+		$wikilib = TikiLib::lib('wiki');
 		$converter = new convertToTiki9();
 		$converter->saveObjectStatus($page_id, 'tiki_pages');
 
@@ -4521,7 +4518,7 @@ class TikiLib extends TikiDb_Bridge
 		$id = $this->lastInsertId();
 
 		//update status, we don't want the page to be decoded later
-		require_once('lib/wiki/wikilib.php');
+		$wikilib = TikiLib::lib('wiki');
 		$converter = new convertToTiki9();
 		$converter->saveObjectStatus($id, 'tiki_history');
 
@@ -4901,7 +4898,7 @@ class TikiLib extends TikiDb_Bridge
 		}
 
 		//update status, page storage was updated in tiki 9 to be non html encoded
-		require_once('lib/wiki/wikilib.php');
+		$wikilib = TikiLib::lib('wiki');
 		$converter = new convertToTiki9();
 		$converter->saveObjectStatus($this->getOne("SELECT page_id FROM tiki_pages WHERE pageName = ?", array($pageName)), 'tiki_pages');
 

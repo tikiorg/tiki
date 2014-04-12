@@ -582,7 +582,7 @@ if ($calitem['allday']) {
 if (array_key_exists('CalendarViewGroups', $_SESSION) && count($_SESSION['CalendarViewGroups']) == 1)
 	$smarty->assign('calendarView', $_SESSION['CalendarViewGroups'][0]);
 
-global $wikilib; include_once('lib/wiki/wikilib.php');
+$wikilib = TikiLib::lib('wiki');
 $plugins = $wikilib->list_plugins(true, 'editwiki');
 $smarty->assign_by_ref('plugins', $plugins);
 $smarty->assign('impossibleDates', $impossibleDates);

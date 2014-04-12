@@ -9,9 +9,9 @@
 // $Id$
 
 include_once('tiki-setup.php');
-include_once('lib/tikilib.php');
-include_once('lib/wiki/wikilib.php');
-include_once 'lib/wiki/semanticlib.php';
+$tikilib = TikiLib::lib('tiki');
+$wikilib = TikiLib::lib('wiki');
+$semanticlib = TikiLib::lib('semantic');
 $multilinguallib = TikiLib::lib('multilingual');
 
 $access->check_feature(array( 'feature_wiki', 'feature_multilingual' ));

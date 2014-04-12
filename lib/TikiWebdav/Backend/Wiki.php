@@ -381,8 +381,8 @@ class TikiWebdav_Backends_Wiki extends ezcWebdavSimpleBackend
 
 	protected function performCopy($fromPath, $toPath, $depth = ezcWebdavRequest::DEPTH_INFINITY)
 	{
-		global $tikilib, $wikilib;
-		include_once ('lib/wiki/wikilib.php');
+		$wikilib = TikiLib::lib('wiki');
+		$tikilib = TikiLib::lib('tiki');
 
 		print_debug('performCopy ' . $fromPath . " -> " . $toPath . "\n");
 

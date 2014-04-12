@@ -21,7 +21,7 @@ $inputConfiguration = array(
 
 require_once ('tiki-setup.php');
 
-include_once ('lib/wiki/wikilib.php');
+$wikilib = TikiLib::lib('wiki');
 
 $access->check_feature(array('feature_wiki'));
 $access->check_permission(array('tiki_p_admin_wiki'));

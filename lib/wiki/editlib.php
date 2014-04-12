@@ -29,8 +29,11 @@ class EditLib
 
 	function make_sure_page_to_be_created_is_not_an_alias($page, $page_info)
 	{
-		global $_REQUEST, $semanticlib, $access, $wikilib, $tikilib;
-		require_once 'lib/wiki/semanticlib.php';
+		$access = TikiLib::lib('access');
+		$tikilib = TikiLib::lib('tiki');
+		$wikilib = TikiLib::lib('wiki');
+		$semanticlib = TikiLib::lib('semantic');
+
 		$aliases = $semanticlib->getAliasContaining($page, true);
 		if (!$page_info && count($aliases) > 0) {
 			$error_title = tra("Cannot create aliased page");
@@ -1220,7 +1223,9 @@ class EditLib
 
 	function get_new_page_attributes_from_parent_pages($page, $page_info)
 	{
-		global $wikilib, $tikilib;
+		$tikilib = TikiLib::lib('tiki');
+		$wikilib = TikiLib::lib('wiki');
+
 		$new_page_attrs = array();
 		$parent_pages = $wikilib->get_parent_pages($page);
 		$parent_pages_info = array();

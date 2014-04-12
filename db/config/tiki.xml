@@ -39,5 +39,8 @@
 		<service id="tiki.lib.user" class="UsersLib">
 			<file>%kernel.root_dir%/lib/userslib.php</file>
 		</service>
+		<service id="tiki.lib.wiki" class="WikiLib">
+			<file>%kernel.root_dir%/lib/wiki/wikilib.php</file>
+		</service>
 	</services>
 </container>

@@ -13,7 +13,7 @@
 require_once('tiki-setup.php');  
 $access->check_script($_SERVER["SCRIPT_NAME"], basename(__FILE__));
 
-global $wikilib; include_once('lib/wiki/wikilib.php');
+$wikilib = TikiLib::lib('wiki');
 $plugins = $wikilib->list_plugins(true);
 
 $smarty->assign_by_ref('plugins', $plugins);

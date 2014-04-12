@@ -260,7 +260,8 @@ class SemanticLib
 
 	function getRelationList( $page ) // {{{
 	{
-		global $tikilib, $wikilib;
+		$wikilib = TikiLib::lib('wiki');
+		$tikilib = TikiLib::lib('tiki');
 		$relations = array();
 
 		$result = $tikilib->fetchAll("SELECT `target_itemId` `toPage`, SUBSTR(`relation` FROM 11) `reltype` FROM tiki_object_relations WHERE `source_itemId` = ? AND `source_type` = 'wiki page' AND `target_type` = 'wiki page' AND `relation` LIKE 'tiki.link.%'", array($page));

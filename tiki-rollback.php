@@ -6,8 +6,8 @@
 // $Id$
 
 require_once ('tiki-setup.php');
-include_once ('lib/wiki/histlib.php');
-include_once ('lib/wiki/wikilib.php');
+$histlib = TikiLib::lib('hist');
+$wikilib = TikiLib::lib('wiki');
 
 $access->check_feature('feature_wiki');
 

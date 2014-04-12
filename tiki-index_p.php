@@ -10,9 +10,9 @@
 
 $section = 'wiki page';
 require_once('tiki-setup.php');
-include_once('lib/structures/structlib.php');
+$structlib = TikiLib::lib('struct');
 
-include_once('lib/wiki/wikilib.php');
+$wikilib = TikiLib::lib('wiki');
 
 $parserlib = TikiLib::lib('parser');
 

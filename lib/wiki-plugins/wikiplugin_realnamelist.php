@@ -144,7 +144,7 @@ function wikiplugin_realnamelist($data, $params)
 		if (isset($link)) {
 			if ($link == 'userpage') {
 				if ($prefs['feature_wiki_userpage'] == 'y') {
-					global $wikilib; include_once('lib/wiki/wikilib.php');
+					$wikilib = TikiLib::lib('wiki');
 					$page = $prefs['feature_wiki_userpage_prefix'].$row['login'];
 					if ($tikilib->page_exists($page)) {
 						$res = '<a href="'.$wikilib->sefurl($page).'" title="'.tra('Page').'">';

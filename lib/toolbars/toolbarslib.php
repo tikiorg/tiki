@@ -1392,9 +1392,10 @@ class ToolbarHelptool extends Toolbar
 
 	function getWikiHtml( $areaId ) // {{{
 	{
-		global $wikilib, $smarty, $plugins, $section;
+		global $plugins, $section;
+		$smarty = TikiLib::lib('smarty');
 		if (!isset($plugins)) {
-			include_once ('lib/wiki/wikilib.php');
+			$wikilib = TikiLib::lib('wiki');
 			$plugins = $wikilib->list_plugins(true, $areaId);
 		}
 
@@ -1415,9 +1416,10 @@ class ToolbarHelptool extends Toolbar
 	function getWysiwygToken( $areaId ) // {{{
 	{
 
-		global $wikilib, $smarty, $plugins;
+		global $plugins;
 
-		include_once ('lib/wiki/wikilib.php');
+		$wikilib = TikiLib::lib('wiki');
+		$smarty = TikiLib::lib('smarty');
 		$plugins = $wikilib->list_plugins(true, $areaId);
 
 		$smarty->assign_by_ref('plugins', $plugins);

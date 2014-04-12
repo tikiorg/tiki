@@ -130,8 +130,7 @@ if (!empty($_REQUEST['submit_mult']) && isset($_REQUEST['checked'])) {
 		case 'unlock_pages':
 			$access->check_feature('feature_wiki_usrlock');
 			$access->check_authenticity(tr('Are you sure you want to unlock the %0 selected pages?', count($_REQUEST['checked'])));
-			global $wikilib;
-			include_once ('lib/wiki/wikilib.php');
+			$wikilib = TikiLib::lib('wiki');
 			foreach ($_REQUEST['checked'] as $check) {
 				$info = $tikilib->get_page_info($check);
 				if ($info['flag'] == 'L'
@@ -148,8 +147,7 @@ if (!empty($_REQUEST['submit_mult']) && isset($_REQUEST['checked'])) {
 		case 'lock_pages':
 			$access->check_feature('feature_wiki_usrlock');
 			$access->check_authenticity(tr('Are you sure you want to lock the %0 selected pages?', count($_REQUEST['checked'])));
-			global $wikilib;
-			include_once ('lib/wiki/wikilib.php');
+			$wikilib = TikiLib::lib('wiki');
 			foreach ($_REQUEST['checked'] as $check) {
 				$info = $tikilib->get_page_info($check);
 				$perms = Perms::get(array( 'type' => 'wiki page', 'object' => $check ));
@@ -422,7 +420,7 @@ if (!empty($multiprint_pages)) {
 	if ( count($listpages['data']) == 1 ) {
 		$result = reset($listpages['data']);
 		if ( TikiLib::strtolower($find) == TikiLib::strtolower($result['pageName']) ) {
-			require_once 'lib/wiki/wikilib.php';
+			$wikilib = TikiLib::lib('wiki');
 			header('Location: ' . $wikilib->sefurl($result['pageName'], '', $all_langs));
 			exit;
 		}
@@ -441,7 +439,7 @@ if (!empty($multiprint_pages)) {
 			$access->output_serialized($pages);
 		} else {
 			$pages = array();
-			require_once 'lib/wiki/wikilib.php';
+			$wikilib = TikiLib::lib('wiki');
 			foreach ($listpages['data'] as $page) {
 				$pages[] = array(
 						'page_id' => $page['page_id'],

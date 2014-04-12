@@ -73,8 +73,7 @@ if (strstr($orig_url, 'tiki-index.php') || strstr($orig_url, 'tiki-read_article.
 		$pageId = $info['page_id'];
 		$type = 'wiki page';
 	} else {
-		global $wikilib;
-		include_once ('lib/wiki/wikilib.php');
+		$wikilib = TikiLib::lib('wiki');
 		$page = $wikilib->get_default_wiki_page();
 		$info = $tikilib->get_page_info($page);
 		$pageId = $info['page_id'];

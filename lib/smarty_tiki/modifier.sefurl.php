@@ -15,8 +15,10 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 
 function smarty_modifier_sefurl($source, $type='wiki', $with_next = '', $all_langs='', $with_title='y', $title='' )
 {
-	global $prefs, $tikilib, $wikilib, $smarty;
-	require_once('lib/wiki/wikilib.php');
+	global $prefs;
+	$wikilib = TikiLib::lib('wiki');
+	$tikilib = TikiLib::lib('tiki');
+	$smarty = TikiLib::lib('smarty');
 
 	$sefurl = $prefs['feature_sefurl'] == 'y';
 

@@ -94,8 +94,7 @@ class StructLib extends TikiLib
 			$page_info = $this->s_get_page_info($page_ref_id);
   			$query = 'select count(*) from `tiki_structures` where `page_id`=?';
 	  		$count = $this->getOne($query, array((int) $page_info['page_id']));
-			global $wikilib;
-			include_once('lib/wiki/wikilib.php');
+			$wikilib = TikiLib::lib('wiki');
 			if ($count == 1 && $wikilib->is_editable($page_info['pageName'], $user)) {
 				$this->remove_all_versions($page_info['pageName']);
 			}
@@ -366,7 +365,7 @@ class StructLib extends TikiLib
 
 	public function get_subtree($page_ref_id, $level = 0, $parent_pos = '')
 	{
-		global $tikilib;
+		$tikilib = TikiLib::lib('tiki');
 		$ret = array();
 		$pos = 1;
 		//The structure page is used as a title
@@ -378,7 +377,7 @@ class StructLib extends TikiLib
 			$aux['page_ref_id'] = $struct_info['page_ref_id'];
 			$aux['pageName']    = $struct_info['pageName'];
 			$aux['page_alias']  = $struct_info['page_alias'];
-			global $wikilib; include_once('lib/wiki/wikilib.php');
+			$wikilib = TikiLib::lib('wiki');
 			$is_locked = $wikilib->is_locked($struct_info['pageName']);
 			if ($is_locked) {
 				$aux['flag'] = 'L';

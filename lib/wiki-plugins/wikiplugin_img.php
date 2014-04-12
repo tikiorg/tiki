@@ -571,8 +571,7 @@ function wikiplugin_img( $data, $params )
 				$basepath = $prefs['fgal_use_dir'];
 			} else {					//only attachments left
 				global $atts;
-				global $wikilib;
-				include_once('lib/wiki/wikilib.php');
+				$wikilib = TikiLib::lib('wiki');
 				$dbinfo = $wikilib->get_item_attachment($imgdata['attId']);
 				$basepath = $prefs['w_use_dir'];
 			}

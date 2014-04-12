@@ -935,7 +935,7 @@ function wikiplugin_tracker($data, $params)
 							TikiLib::lib('relation')->add_relation('tiki.wiki.linkedfield', 'wiki page', $newpagename, 'trackerfield', $outputtowiki);
 						}	
 						if (empty($url)) {
-							global $wikilib;
+							$wikilib = TikiLib::lib('wiki');
 							$url[0] = $wikilib->sefurl($newpagename);
 						}
 					}

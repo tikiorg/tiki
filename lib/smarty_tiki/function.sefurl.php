@@ -15,7 +15,7 @@ if (!function_exists('smarty_function_sefurl')) {
 	function smarty_function_sefurl($params, $smarty)
 	{
 		global $prefs;
-		global $wikilib; include_once('lib/wiki/wikilib.php');
+		$wikilib = TikiLib::lib('wiki');
 	
 		// structure only yet
 		if (isset($params['structure'])) {

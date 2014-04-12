@@ -9,10 +9,10 @@
 // $Id$
 
 require_once ('tiki-setup.php');
-require_once ('lib/tikilib.php');
-require_once ('lib/wiki/histlib.php');
-require_once('lib/wiki/wikilib.php');
-require_once ('lib/rss/rsslib.php');
+$tikilib = TikiLib::lib('tiki');
+$histlib = TikiLib::lib('hist');
+$wikilib = TikiLib::lib('wiki');
+$rsslib = TikiLib::lib('rss');
 
 $access->check_feature('feature_wiki');
 

@@ -325,8 +325,7 @@ if ($prefs['feature_actionlog'] == 'y') {
 }
 ask_ticket('view-forum');
 if ($prefs['feature_forum_parse'] == 'y') {
-	global $wikilib;
-	include_once ('lib/wiki/wikilib.php');
+	$wikilib = TikiLib::lib('wiki');
 	$plugins = $wikilib->list_plugins(true, 'editpost2');
 	$smarty->assign_by_ref('plugins', $plugins);
 }

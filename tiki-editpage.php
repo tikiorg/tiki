@@ -31,10 +31,10 @@ $inputConfiguration = array(
 $section = "wiki page";
 $section_class = "tiki_wiki_page manage";	// This will be body class instead of $section
 require_once ('tiki-setup.php');
-include_once ('lib/wiki/wikilib.php');
-include_once ('lib/structures/structlib.php');
-include_once ('lib/notifications/notificationlib.php');
-require_once ("lib/wiki/editlib.php");
+$wikilib = TikiLib::lib('wiki');
+$structlib = TikiLib::lib('struct');
+$notificationlib = TikiLib::lib('notification');
+$editlib = TikiLib::lib('edit');
 
 /**
  * @param $page
@@ -1076,7 +1076,7 @@ if (
 	if (isset($_REQUEST['wiki_cache'])) {
 		$wikilib->set_page_cache($_REQUEST['page'], $_REQUEST['wiki_cache']);
 	}
-	include_once("lib/imagegals/imagegallib.php");
+	$imagegallib = TikiLib::lib('imagegal');
 	$cat_desc = ($prefs['feature_wiki_description'] === 'y') ? substr($_REQUEST["description"], 0, 200) : '';
 	$cat_name = $_REQUEST["page"];
 	$cat_href = "tiki-index.php?page=" . urlencode($cat_objid);

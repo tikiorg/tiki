@@ -7,7 +7,7 @@
 
 require_once ('tiki-setup.php');
 include_once ('lib/commcenter/commlib.php');
-include_once ('lib/wiki/wikilib.php');
+$wikilib = TikiLib::lib('wiki');
 $auto_query_args = array('receivedPageId', 'sort_mode', 'offset', 'find', 'sort_modes');
 $access->check_feature('feature_comm');
 $access->check_permission('tiki_p_admin_received_pages');

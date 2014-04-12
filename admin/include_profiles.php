@@ -46,8 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		$transaction->commit();
 
 		if ($target = $profile->getInstructionPage()) {
-			global $wikilib;
-			require_once 'lib/wiki/wikilib.php';
+			$wikilib = TikiLib::lib('wiki');
 			$target = $wikilib->sefurl($target);
 			header('Location: ' . $target);
             exit;
@@ -75,8 +74,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		$installer->install($profile);
 
 		if (($profile != null) && ($target = $profile->getInstructionPage())) {
-			global $wikilib;
-			require_once 'lib/wiki/wikilib.php';
+			$wikilib = TikiLib::lib('wiki');
 			$target = $wikilib->sefurl($target);
 			header('Location: ' . $target);
             exit;
@@ -107,8 +105,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		$installer->install($profile, $empty_cache);
 
 		if ($target = $profile->getInstructionPage()) {
-			global $wikilib;
-			require_once 'lib/wiki/wikilib.php';
+			$wikilib = TikiLib::lib('wiki');
 			$target = $wikilib->sefurl($target);
 			header('Location: ' . $target);
             exit;

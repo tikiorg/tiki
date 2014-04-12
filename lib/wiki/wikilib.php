@@ -1445,8 +1445,7 @@ class WikiLib extends TikiLib
 			// Determine the auto TOC setting
 			$isAutoTocActive = isset($prefs['wiki_auto_toc']) ? $prefs['wiki_auto_toc'] === 'y' : false;
 			if ($isAutoTocActive) {
-				$wikilib = TikiLib::lib('wiki');
-				$isPageAutoToc = $wikilib->get_page_auto_toc($currPage);
+				$isPageAutoToc = $this->get_page_auto_toc($currPage);
 				if ($isPageAutoToc != 0) {
 					// Use page specific setting
 					$isAutoTocActive = $isPageAutoToc > 0 ? true : false;
@@ -1487,8 +1486,7 @@ class WikiLib extends TikiLib
 			if ($isHideTitlePerPage) {
 				$isHideTitle = false;
 				if (!empty($currPage)) {
-					$wikilib = TikiLib::lib('wiki');
-					$isPageHideTitle = $wikilib->get_page_hide_title($currPage);
+					$isPageHideTitle = $this->get_page_hide_title($currPage);
 					if ($isPageHideTitle != 0) {
 						// Use page specific setting
 						$isHideTitle = $isPageHideTitle < 0 ? true : false;
@@ -1502,10 +1500,6 @@ class WikiLib extends TikiLib
 		}
 	}
 }
-
-global $wikilib;
-$wikilib = new WikiLib;
-
 
 class convertToTiki9
 {

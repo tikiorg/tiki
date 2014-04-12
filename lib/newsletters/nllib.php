@@ -1134,9 +1134,9 @@ class NlLib extends TikiLib
 
 	public function get_emails_from_page($wikiPageName)
 	{
-		global $prefs, $wikilib;
+		global $prefs;
 
-		include_once 'lib/wiki/wikilib.php';
+		$wikilib = TikiLib::lib('wiki');
 		$emails = false;
 
 		$canBeRefreshed = false;

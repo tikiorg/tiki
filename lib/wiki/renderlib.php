@@ -159,7 +159,8 @@ class WikiRenderer
 
 	private function setupContributors() // {{{
 	{
-		global $prefs, $wikilib;
+		global $prefs;
+		$wikilib = TikiLib::lib('wiki');
 
 		if ( $prefs['wiki_authors_style'] != 'classic' ) {
 			$contributors = $wikilib->get_contributors($this->page, $this->info['user']);
@@ -169,7 +170,7 @@ class WikiRenderer
 
 	private function setupCreator() // {{{
 	{
-		global $wikilib;
+		$wikilib = TikiLib::lib('wiki');
 
 		if (isset($this->info['creator'])) {
 			$creator = $this->info['creator'];
@@ -216,7 +217,8 @@ class WikiRenderer
 
 	private function setupBacklinks() // {{{
 	{
-		global $prefs, $wikilib, $tiki_p_view_backlink;
+		global $prefs, $tiki_p_view_backlink;
+		$wikilib = TikiLib::lib('wiki');
 
 		if ( $prefs['feature_backlinks'] == 'y' && $tiki_p_view_backlink == 'y') {
 			$backlinks = $wikilib->get_backlinks($this->page);
@@ -226,7 +228,8 @@ class WikiRenderer
 
 	private function setupActions() // {{{
 	{
-		global $prefs, $wikilib, $tiki_p_edit, $tiki_p_remove, $tiki_p_admin_wiki;
+		global $prefs, $tiki_p_edit, $tiki_p_remove, $tiki_p_admin_wiki;
+		$wikilib = TikiLib::lib('wiki');
 
 		// Verify lock status
 		if ( $prefs['feature_wiki_usrlock'] == 'y' ) {
@@ -272,7 +275,9 @@ class WikiRenderer
 
 	private function setupPage() // {{{
 	{
-		global $prefs, $tikilib, $wikilib, $user;
+		global $prefs, $user;
+		$wikilib = TikiLib::lib('wiki');
+		$tikilib = TikiLib::lib('tiki');
 
 		$this->smartyassign('page', $this->page);
 		$this->smartyassign('show_page', 'y');
@@ -412,14 +417,18 @@ class WikiRenderer
 
 	private function setupAttachments() // {{{
 	{
-		global $prefs, $wikilib;
-		if ( $prefs['feature_wiki_attachments'] != 'y' || $prefs['feature_use_fgal_for_wiki_attachments'] == 'y' )
+		global $prefs;
+		$wikilib = TikiLib::lib('wiki');
+
+		if ( $prefs['feature_wiki_attachments'] != 'y' || $prefs['feature_use_fgal_for_wiki_attachments'] == 'y' ) {
 			return;
+		}
 
 		// If anything below here is changed, please change lib/wiki-plugins/wikiplugin_attach.php as well.
 		$this->smartyassign('sort_mode', $this->sortMode);
-		if ( $this->showAttachments !== false )
+		if ( $this->showAttachments !== false ) {
 			$this->smartyassign('atts_show', $this->showAttachments);
+		}
 
 		$atts = $wikilib->list_wiki_attachments($this->page, 0, -1, $this->sortMode, '');
 		$this->smartyassign('atts', $atts["data"]);
@@ -428,7 +437,9 @@ class WikiRenderer
 
 	private function setupFootnotes() // {{{
 	{
-		global $prefs, $wikilib, $tikilib;
+		global $prefs;
+		$wikilib = TikiLib::lib('wiki');
+		$tikilib = TikiLib::lib('tiki');
 
 		$this->smartyassign('footnote', '');
 		$this->smartyassign('has_footnote', 'n');

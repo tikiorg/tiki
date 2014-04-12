@@ -36,7 +36,9 @@ class WikiPluginPluginManager extends PluginsLib
 	}
 	function run($data, $params)
 	{
-		global $wikilib, $helpurl, $tikilib;
+		global $helpurl;
+		$wikilib = TikiLib::lib('wiki');
+		$tikilib = TikiLib::lib('tiki');
 		if (!is_dir(PLUGINS_DIR)) {
 			return $this->error('No plugin directory defined');
 		}

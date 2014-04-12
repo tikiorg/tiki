@@ -72,7 +72,7 @@ class ModLib extends TikiLib
 			global $cachelib; require_once("lib/cache/cachelib.php");
 			$cachelib->invalidate("user_modules_$name");
 
-			require_once("lib/wiki/wikilib.php");
+			$wikilib = TikiLib::lib('wiki');
 			$converter = new convertToTiki9();
 			$converter->saveObjectStatus($name, 'tiki_user_modules', 'new9.0+');
 

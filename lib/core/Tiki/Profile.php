@@ -211,8 +211,8 @@ class Tiki_Profile
 
 	public static function fromDb( $pageName ) // {{{
 	{
-		global $tikilib, $wikilib;
-		require_once 'lib/wiki/wikilib.php';
+		$tikilib = TikiLib::lib('tiki');
+		$wikilib = TikiLib::lib('wiki');
 		$parserlib = TikiLib::lib('parser');
 
 		$profile = new self;

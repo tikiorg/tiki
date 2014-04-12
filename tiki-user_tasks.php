@@ -272,8 +272,7 @@ if (isset($_REQUEST['tiki_view_mode']) and $_REQUEST['tiki_view_mode'] == 'view'
 if (isset($_REQUEST['tiki_view_mode']) and $_REQUEST['tiki_view_mode'] == 'edit') {
 	$show_form = true;
 	$smarty->assign('show_form', $show_form);
-	global $wikilib;
-	include_once ('lib/wiki/wikilib.php');
+	$wikilib = TikiLib::lib('wiki');
 	$plugins = $wikilib->list_plugins(true, 'description');
 	$smarty->assign_by_ref('plugins', $plugins);
 }

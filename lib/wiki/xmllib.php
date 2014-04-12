@@ -197,7 +197,7 @@ class XmlLib extends TikiLib
 		$smarty->assign_by_ref('images', $images);
 
 		if ($prefs['feature_wiki_attachments'] == 'y' && $this->config['attachments']) {
-			global $wikilib; include_once('lib/wiki/wikilib.php');
+			$wikilib = TikiLib::lib('wiki');
 			$attachments = $wikilib->list_wiki_attachments($page, 0, -1);
 			if (!empty($attachments['cant'])) {
 				foreach ($attachments['data'] as $key=>$att) {
@@ -293,7 +293,8 @@ class XmlLib extends TikiLib
 	/* create a page from an xml parsing result */
 	function create_page($info)
 	{
-		global $tikilib, $wikilib, $prefs, $tiki_p_wiki_attach_files, $tiki_p_edit_comments, $dbTiki, $tikidomain;
+		global $prefs, $tiki_p_wiki_attach_files, $tiki_p_edit_comments, $tikidomain;
+		$tikilib = TikiLib::lib('tiki');
 
 		if (($info['data'] = $this->zip->getFromName($info['zip'])) === false) {
 			$this->errors[] = 'Can not unzip';
@@ -391,7 +392,7 @@ class XmlLib extends TikiLib
 					}
 				}
 
-				global $wikilib; include_once('lib/wiki/wikilib.php');
+				$wikilib = TikiLib::lib('wiki');
 				$wikilib->wiki_attach_file(
 					$info['name'],
 					$attachment['filename'],
@@ -403,8 +404,6 @@ class XmlLib extends TikiLib
 					$fhash,
 					$attachment['created']
 				);
-				//change the page data attach is needed $res['attId']
-				//$res = $wikilib->get_wiki_attach_file($info['name'], $attachment['filename'], $attachment['type'], $attachment['size']);
 			}
 		}
 
