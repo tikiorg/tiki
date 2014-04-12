@@ -354,7 +354,7 @@ class TikiImporter_Blog extends TikiImporter
 	 */
 	function insertPage($page)
 	{
-		global $objectlib; require_once('lib/objectlib.php');
+		$objectlib = TikiLib::lib('object');
 
 		$this->instantiateImporterWiki();
 		$pageName = $this->importerWiki->insertPage($page);
@@ -376,7 +376,7 @@ class TikiImporter_Blog extends TikiImporter
 	function insertPost($post)
 	{
 		global $bloglib;
-		global $objectlib; require_once('lib/objectlib.php');
+		$objectlib = TikiLib::lib('object');
 
 		$post = array_merge(array('content' => '', 'excerpt' => '', 'author' => '', 'name' => '', 'created' => 0), $post);	// set defaults
 

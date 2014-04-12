@@ -11,8 +11,17 @@
 		<service id="tiki.lib.categ" class="CategLib">
 			<file>%kernel.root_dir%/lib/categories/categlib.php</file>
 		</service>
+		<service id="tiki.lib.comments" class="Comments">
+			<file>%kernel.root_dir%/lib/comments/commentslib.php</file>
+		</service>
+		<service id="tiki.lib.filegal" class="FileGalLib">
+			<file>%kernel.root_dir%/lib/filegals/filegallib.php</file>
+		</service>
 		<service id="tiki.lib.multilingual" class="MultilingualLib">
 			<file>%kernel.root_dir%/lib/multilingual/multilinguallib.php</file>
+		</service>
+		<service id="tiki.lib.object" class="ObjectLib">
+			<file>%kernel.root_dir%/lib/objectlib.php</file>
 		</service>
 		<service id="tiki.lib.score" class="ScoreLib">
 			<file>%kernel.root_dir%/lib/score/scorelib.php</file>

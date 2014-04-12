@@ -128,7 +128,7 @@ function wikiplugin_file( $data, $params )
 {
 	global $tikilib, $prefs, $info, $page_view_date;
 	if (isset($params['fileId'])) {
-		global $filegallib; include_once ('lib/filegals/filegallib.php');
+		$filegallib = TikiLib::lib('filegal');
 		if ($prefs['feature_file_galleries'] != 'y') {
 			return;
 		}

@@ -10,7 +10,7 @@
 
 $section = 'file_galleries';
 require_once ('tiki-setup.php');
-include_once ('lib/filegals/filegallib.php');
+$filegallib = TikiLib::lib('filegal');
 $access->check_feature(array('feature_file_galleries', 'feature_file_galleries_batch'));
 //get_strings tra('Directory batch')
 // Now check permissions to access this page

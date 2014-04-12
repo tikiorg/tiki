@@ -15,7 +15,7 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
   exit;
 }
 
-global $objectlib;require_once("lib/objectlib.php");
+$objectlib = TikiLib::lib('object');
 
 class CategLib extends ObjectLib
 {
@@ -312,7 +312,7 @@ class CategLib extends ObjectLib
 	 */	
 	function categorizePage($pageName, $categId, $user = '')
 	{
-		global $objectlib;
+		$objectlib = TikiLib::lib('object');
 
 		// Categorize the new page
 		$objectId = $objectlib->add_object('wiki page', $pageName);
@@ -1444,7 +1444,7 @@ class CategLib extends ObjectLib
 	 */
 	function get_categorized_object($cat_type, $cat_objid)
 	{
-	    global $objectlib;
+	    $objectlib = TikiLib::lib('object');
 		return $objectlib->get_object($cat_type, $cat_objid);
 	}
 
@@ -1453,7 +1453,7 @@ class CategLib extends ObjectLib
 	 */
 	function get_categorized_object_via_category_object_id($cat_objid)
 	{
-	    global $objectlib;
+	    $objectlib = TikiLib::lib('object');
 		return $objectlib->get_object_via_objectid($cat_objid);
 	}
 

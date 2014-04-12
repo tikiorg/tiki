@@ -365,7 +365,7 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 	 */
 	function downloadAttachments()
 	{
-		global $filegallib; require_once('lib/filegals/filegallib.php');
+		$filegallib = TikiLib::lib('filegal');
 
 		$attachments = $this->extractAttachmentsInfo();
 
@@ -455,7 +455,7 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 	 */
 	function createFileGallery()
 	{
-		global $filegallib; require_once('lib/filegals/filegallib.php');
+		$filegallib = TikiLib::lib('filegal');
 		global $user;
 
 		$gal_info = array(
@@ -637,7 +637,7 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 	 */
 	function parseContentAttachmentsUrl($content)
 	{
-		global $filegallib;
+		$filegallib = TikiLib::lib('filegal');
 
 		if (!empty($this->newFiles)) {
 			foreach ($this->newFiles as $file) {

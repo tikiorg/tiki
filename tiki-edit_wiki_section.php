@@ -9,7 +9,7 @@
 // $Id$
 
 require_once ('tiki-setup.php');
-global $objectlib; include_once('lib/objectlib.php');
+$objectlib = TikiLib::lib('object');
 if (isset($_REQUEST['type']))
 	$section = $_REQUEST['type'];
 

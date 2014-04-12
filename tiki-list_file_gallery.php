@@ -17,7 +17,7 @@ $inputConfiguration = array(
 $section = 'file_galleries';
 require_once ('tiki-setup.php');
 $access->check_feature(array('feature_file_galleries', 'feature_jquery_tooltips'));
-include_once ('lib/filegals/filegallib.php');
+$filegallib = TikiLib::lib('filegal');
 include_once ('lib/stats/statslib.php');
 
 if ($prefs['feature_categories'] == 'y') {

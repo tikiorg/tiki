@@ -388,7 +388,7 @@ if ($prefs['feature_search'] !== 'y' || $prefs['unified_add_to_categ_search'] !=
 	}
 
 	if ( $prefs['feature_file_galleries'] == 'y' ) {
-		include_once ('lib/filegals/filegallib.php');
+		$filegallib = TikiLib::lib('filegal');
 		$file_galleries = $filegallib->list_file_galleries($offset, -1, 'name_desc', 'admin', $find_objects, $prefs['fgal_root_id']);
 	}
 

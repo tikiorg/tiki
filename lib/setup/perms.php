@@ -73,7 +73,7 @@ if ( $prefs['auth_token_access'] == 'y' && isset($_REQUEST['TOKEN']) ) {
 					// If file Gallery
 					$smarty->assign('filegallery', 'n');
 					if (preg_match("/\btiki-download_file.php\b/i", $notificationPage)) {
-						include_once 'lib/filegals/filegallib.php';
+						$filegallib = TikiLib::lib('filegal');
 						$smarty->assign('filegallery', 'y');
 						$aParams = (array) json_decode($detailtoken['parameters']);
 						$smarty->assign('fileId', $aParams['fileId']);

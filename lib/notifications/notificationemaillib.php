@@ -76,7 +76,7 @@ function sendForumEmailNotification(
 			$mail->setHeader("In-Reply-To", "<" . $inReplyTo . ">");
 		}
 
-		global $commentslib;
+		$commentslib = TikiLib::lib('comments');
 		$attachments = $commentslib->get_thread_attachments($event == 'forum_post_topic'? $threadId: $object, 0);
 
 		if ( count($attachments) > 0) {

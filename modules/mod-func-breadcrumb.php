@@ -51,7 +51,7 @@ function module_breadcrumb($mod_reference, $module_params)
 	}
 
 	if ($jail = $categlib->get_jail()) {
-		global $objectlib; include_once ('lib/objectlib.php');//
+		$objectlib = TikiLib::lib('object');
 		$objectIds=$objectlib->get_object_ids("wiki page", $_SESSION["breadCrumb"]);
 
 		$breadIds=array();

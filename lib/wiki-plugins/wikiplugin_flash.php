@@ -113,7 +113,7 @@ function wikiplugin_flash($data, $params)
 	
 	// Handle file from a podcast file gallery
 	if (isset($params['fileId']) && !isset($params['movie'])) {
-		global $filegallib; include_once ('lib/filegals/filegallib.php');
+		$filegallib = TikiLib::lib('filegal');
 		$file_info = $filegallib->get_file_info($params['fileId']);
 		if (!$userlib->user_has_perm_on_object($user, $file_info['galleryId'], 'file gallery', 'tiki_p_view_file_gallery')) {
 			return tra('Permission denied');

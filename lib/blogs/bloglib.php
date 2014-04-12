@@ -819,7 +819,7 @@ class BlogLib extends TikiDb_Bridge
 	function remove_post($postId)
 	{
 		global $tikilib;
-		global $objectlib; require_once('lib/objectlib.php');
+		$objectlib = TikiLib::lib('object');
 
 		$query = "select `blogId`, `data` from `tiki_blog_posts` where `postId`=?";
 		$result = $this->query($query, array((int) $postId));

@@ -28,7 +28,7 @@ if ($prefs['feature_categories'] == 'y') {
 
 $access->check_feature('feature_file_galleries');
 
-include_once ('lib/filegals/filegallib.php');
+$filegallib = TikiLib::lib('filegal');
 if ($prefs['feature_groupalert'] == 'y') {
 	include_once ('lib/groupalert/groupalertlib.php');
 }

@@ -13,7 +13,7 @@ if ( $prefs['feature_file_galleries'] != 'y' || $prefs['feature_jquery'] != 'y' 
 	/* echo '{}'; */
 	exit;
 }
-global $filegallib; include_once('lib/filegals/filegallib.php');
+$filegallib = TikiLib::lib('filegal');
 if (empty($_REQUEST['fileId'])) {
 	/* echo '{}'; */
 	exit;

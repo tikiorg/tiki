@@ -5,8 +5,6 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-require_once 'lib/comments/commentslib.php';
-
 class CommentsTest extends TikiTestCase
 {
 
@@ -14,7 +12,7 @@ class CommentsTest extends TikiTestCase
 
 	function setUp()
 	{
-		$this->lib = new Comments();
+		$this->lib = TikiLib::lib('comments');
 	}
 
 	function testGetHref()

@@ -431,7 +431,7 @@ Estou a disposição para te ajudar com mais informações. Abraços, Rodrigo.',
 
 	public function testDownloadAttachmentsShouldDisplayMessageIfNoAttachments()
 	{
-		global $filegallib; require_once('lib/filegals/filegallib.php');
+		$filegallib = TikiLib::lib('filegal');
 
 		$filegallib = $this->getMock('FileGalLib', array('insert_file',));
 		$filegallib->expects($this->exactly(0))->method('insert_file')->will($this->returnValue(1));
@@ -443,7 +443,7 @@ Estou a disposição para te ajudar com mais informações. Abraços, Rodrigo.',
 
 	function testCreateFileGallery()
 	{
-		global $filegallib; require_once('lib/filegals/filegallib.php');
+		$filegallib = TikiLib::lib('filegal');
 
 		$filegallib = $this->getMock('FileGalLib', array('replace_file_gallery'));
 		$filegallib->expects($this->once())->method('replace_file_gallery')->will($this->returnValue(3));
@@ -455,7 +455,7 @@ Estou a disposição para te ajudar com mais informações. Abraços, Rodrigo.',
 
 	public function testDownloadAttachment()
 	{
-		global $filegallib; require_once('lib/filegals/filegallib.php');
+		$filegallib = TikiLib::lib('filegal');
 
 		$filegallib = $this->getMock('FileGalLib', array('insert_file'));
 		$filegallib->expects($this->exactly(3))->method('insert_file')->will($this->returnValue(1));
@@ -539,7 +539,7 @@ Estou a disposição para te ajudar com mais informações. Abraços, Rodrigo.',
 
 	public function testDownloadAttachmentShouldNotCallInsertFileWhenZendHttpClientFails()
 	{
-		global $filegallib; require_once('lib/filegals/filegallib.php');
+		$filegallib = TikiLib::lib('filegal');
 
 		$filegallib = $this->getMock('FileGalLib', array('insert_file'));
 		$filegallib->expects($this->exactly(0))->method('insert_file');
@@ -563,7 +563,7 @@ Estou a disposição para te ajudar com mais informações. Abraços, Rodrigo.',
 
 	public function testDownloadAttachmentShouldNotCallInsertFileWhen404()
 	{
-		global $filegallib; require_once('lib/filegals/filegallib.php');
+		$filegallib = TikiLib::lib('filegal');
 
 		$filegallib = $this->getMock('FileGalLib', array('insert_file'));
 		$filegallib->expects($this->exactly(0))->method('insert_file');

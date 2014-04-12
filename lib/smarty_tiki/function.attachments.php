@@ -27,7 +27,7 @@ function s_f_attachments_actionshandler( $params )
 		$objectperms = $pageRenderer->applyPermissions();
 	}
 
-	global $filegallib; include_once('lib/filegals/filegallib.php');
+	$filegallib = TikiLib::lib('filegal');
 
 	foreach ( $params as $k => $v ) {
 		switch ( $k ) {
@@ -89,7 +89,7 @@ function smarty_function_attachments($params, $template)
 	if ( ! is_array($params) || ! isset($params['_id']) || ! isset($params['_type']) ) return tra('Missing _id or _type params');
 
 	global $smarty, $prefs, $page;
-	global $filegallib; include_once('lib/filegals/filegallib.php');
+	$filegallib = TikiLib::lib('filegal');
 
 	/*** For the moment, only wiki attachments are handled through file galleries ***/
 	if ( $prefs['feature_wiki_attachments'] != 'y' ) return;

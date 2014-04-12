@@ -1575,7 +1575,7 @@ class LogsLib extends TikiLib
 					}
 
 					if (!isset($fileGalleryNames)) {
-						global $filegallib; include_once('lib/filegals/filegallib.php');
+						$filegallib = TikiLib::lib('filegal');
 						$objects = $filegallib->list_file_galleries(0, -1, 'name_asc', 'admin', '', $prefs['fgal_root_id']);
 						foreach ($objects['data'] as $object) {
 							$fileGalleryNames[$object['galleryId']] = $object['name'];

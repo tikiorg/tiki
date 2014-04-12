@@ -10,7 +10,7 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
 	header('location: index.php');
 	exit;
 }
-include_once ('lib/filegals/filegallib.php');
+$filegallib = TikiLib::lib('filegal');
 if (isset($_REQUEST["filegalset"])) {
 	simple_set_value("home_file_gallery");
 }

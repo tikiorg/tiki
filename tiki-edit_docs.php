@@ -10,7 +10,7 @@
 $section = 'docs';
 
 require_once ('tiki-setup.php');
-include_once ('lib/filegals/filegallib.php');
+$filegallib = TikiLib::lib('filegal');
 include_once ('lib/mime/mimetypes.php');
 global $mimetypes;
 

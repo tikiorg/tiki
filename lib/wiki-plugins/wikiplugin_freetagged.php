@@ -217,7 +217,7 @@ function wikiplugin_freetagged($data, $params)
 					}
     				break;
 				case 'file':
-					global $filegallib; include_once('lib/filegals/filegallib.php');
+					$filegallib = TikiLib::lib('filegal');
 					$info = $filegallib->get_file($obj['itemId']);
 					$obj['description'] = $info['description'];
 					$obj['date'] = $info['lastModif'];

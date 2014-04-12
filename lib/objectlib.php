@@ -577,5 +577,4 @@ class ObjectLib extends TikiLib
 		return $metadata;
 	}
 }
-global $objectlib;
-$objectlib = new ObjectLib;
+

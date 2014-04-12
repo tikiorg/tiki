@@ -64,7 +64,7 @@ function wikiplugin_draw_info()
 function wikiplugin_draw($data, $params)
 {
 	global $dbTiki, $tiki_p_edit, $tiki_p_admin,$tiki_p_upload_files, $prefs, $user, $page, $tikilib, $smarty, $headerlib, $globalperms;
-	global $filegallib; include_once ('lib/filegals/filegallib.php');
+	$filegallib = TikiLib::lib('filegal');
 	extract(array_merge($params, array()), EXTR_SKIP);
 
 	static $drawIndex = 0;

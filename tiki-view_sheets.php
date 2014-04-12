@@ -155,7 +155,7 @@ if ( isset($_REQUEST['relate']) && isset($_REQUEST['trackerId']) ) {
 		$smarty->assign('msg', tra('File removed'));
 	}
 } elseif ( isset($_REQUEST['fileId']) ) {
-	include_once('lib/filegals/filegallib.php');
+	$filegallib = TikiLib::lib('filegal');
 	$access->check_feature('feature_file_galleries');
 	$fileInfo = $filegallib->get_file_info($_REQUEST['fileId']);
 	$handler = new TikiSheetCSVHandler($fileInfo);

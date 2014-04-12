@@ -65,15 +65,6 @@ class TikiLib extends TikiDb_Bridge
 			case 'tiki':
 				global $tikilib;
 				return self::$libraries[$name] = $tikilib;
-			case 'object':
-				global $objectlib; require_once('lib/objectlib.php');
-				return self::$libraries[$name] = $objectlib;
-			case 'comments':
-				require_once 'lib/comments/commentslib.php';
-				return self::$libraries[$name] = new Comments;
-			case 'filegal':
-				global $filegallib; require_once 'lib/filegals/filegallib.php';
-				return self::$libraries[$name] = $filegallib;
 			case 'tikidate':
 				require_once('lib/tikidate.php');
 				return self::$libraries[$name] = new TikiDate;

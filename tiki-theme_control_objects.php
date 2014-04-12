@@ -11,7 +11,7 @@
 require_once ('tiki-setup.php');
 include_once ('lib/themecontrol/tcontrol.php');
 $categlib = TikiLib::lib('categ');
-include_once ('lib/filegals/filegallib.php');
+$filegallib = TikiLib::lib('filegal');
 include_once ('lib/htmlpages/htmlpageslib.php');
 /**
  * @param $arr

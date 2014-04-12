@@ -187,7 +187,7 @@ class TikiImporter_Blog_Test extends TikiImporter_TestCase
 	{
         $this->markTestSkipped("As of 2013-09-30, this test is broken. Skipping it for now.");
 
-        global $commentslib; require_once('lib/comments/commentslib.php');
+        $commentslib = TikiLib::lib('comments');
 		
 		$commentslib = $this->getMock('Comments', array('post_new_comment'));
 		$commentslib->expects($this->exactly(2))
@@ -206,7 +206,7 @@ class TikiImporter_Blog_Test extends TikiImporter_TestCase
 	{
         $this->markTestSkipped("As of 2013-09-30, this test is broken. Skipping it for now.");
 
-        global $commentslib; require_once('lib/comments/commentslib.php');
+        $commentslib = TikiLib::lib('comments');
 		
 		$commentslib = $this->getMock('Comments', array('post_new_comment', 'approve_comment'));
 		$commentslib->expects($this->exactly(2))
@@ -224,7 +224,7 @@ class TikiImporter_Blog_Test extends TikiImporter_TestCase
 	
 	public function testInsertPage()
 	{
-		global $objectlib; require_once('lib/objectlib.php');
+		$objectlib = TikiLib::lib('object');
 		
 		$objectlib = $this->getMock('ObjectLib', array('insert_object'));
 		$objectlib->expects($this->once())->method('insert_object');
@@ -242,7 +242,7 @@ class TikiImporter_Blog_Test extends TikiImporter_TestCase
 	
 	public function testInsertPost()
 	{
-		global $objectlib; require_once('lib/objectlib.php');
+		$objectlib = TikiLib::lib('object');
 		global $bloglib; require_once('lib/blogs/bloglib.php');
 		
 		$bloglib = $this->getMock('BlogLib', array('blog_post'));

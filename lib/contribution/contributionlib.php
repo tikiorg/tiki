@@ -105,7 +105,7 @@ class ContributionLib extends TikiLib
      */
     function assign_contributions($contributions, $itemId, $objectType, $description='', $name='', $href='')
 	{
-		global $objectlib; include_once('lib/objectlib.php');
+		$objectlib = TikiLib::lib('object');
 
 		if (($objectId = $objectlib->get_object_id($objectType, $itemId)) == 0) {
 			$objectId = $objectlib->insert_object($objectType, $itemId, $description, $name, $href);
@@ -156,7 +156,7 @@ class ContributionLib extends TikiLib
     function change_assigned_contributions($itemIdOld, $objectTypeOld, $itemIdNew, $objectTypeNew, $description, $name, $href)
 	{
 		if ($this->get_assigned_contributions($itemIdOld, $objectTypeOld)) {
-			global $objectlib; include_once('lib/objectlib.php');
+			$objectlib = TikiLib::lib('object');
 			if (($objectId = $objectlib->get_object_id($objectTypeNew, $itemIdNew)) == 0)// create object
 				$objectId = $objectlib->insert_object($objectTypeNew, $itemIdNew, $description, $name, $href);
 
@@ -177,7 +177,7 @@ class ContributionLib extends TikiLib
 		// works only if mysql> 4
 		// $query = 'delete tca from `tiki_contributions_assigned` tca left join `tiki_objects`tob on tob.`objectId`=tca.`objectId` where tob.`itemId`= ? and tob.`type`= ?';
 
-		global $objectlib; include_once('lib/objectlib.php');
+		$objectlib = TikiLib::lib('object');
 		$objectId = $objectlib->get_object_id($objectType, $itemId);
 		$query = 'delete from `tiki_contributions_assigned` where `objectId`= ?';
 		$this->query($query, array($objectId));
@@ -188,7 +188,7 @@ class ContributionLib extends TikiLib
      */
     function remove_page($page)
 	{
-		global $objectlib; include_once('lib/objectlib.php');
+		$objectlib = TikiLib::lib('object');
 		$query = 'select * from `tiki_history` where `pageName` = ?';
 		$result = $this->query($query, array($page));
 
@@ -205,7 +205,7 @@ class ContributionLib extends TikiLib
     function remove_history($historyId)
 	{
 			//history object only created for contribution yet. You can remove object
-		global $objectlib; include_once('lib/objectlib.php');
+		$objectlib = TikiLib::lib('object');
 
 		$this->remove_assigned_contributions($historyId, 'history');
 		$objectlib->delete_object('history', $historyId);
@@ -217,7 +217,7 @@ class ContributionLib extends TikiLib
     function remove_comment($commentId)
 	{
 			//history object only created for contribution yet. You can remove object
-		global $objectlib; include_once('lib/objectlib.php');
+		$objectlib = TikiLib::lib('object');
 
 		$this->remove_assigned_contributions($commentId, 'comment');
 		$objectlib->delete_object('comment', $commentId);

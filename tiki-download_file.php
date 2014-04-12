@@ -38,7 +38,7 @@ if ( isset($_GET['fileId']) && isset($_GET['thumbnail']) && isset($_COOKIE[ sess
 
 if (!$skip) {
 	require_once('tiki-setup.php');
-	include_once('lib/filegals/filegallib.php');
+	$filegallib = TikiLib::lib('filegal');
 	$access->check_feature('feature_file_galleries');
 }
 

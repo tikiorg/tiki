@@ -2006,7 +2006,7 @@ class FileGalLib extends TikiLib
 		foreach ($objects as $object) {
 			$pobjects[$object['type']][] = $object;
 		}
-		include_once('lib/objectlib.php');
+		$objectlib = TikiLib::lib('object');
 		$map = ObjectLib::map_object_type_to_permission();
 		foreach ($pobjects as $type=>$list) {
 			if ($type == 'blog post') {
@@ -4112,4 +4112,4 @@ class FileGalLib extends TikiLib
 		}
 	}
 }
-$filegallib = new FileGalLib;
+
