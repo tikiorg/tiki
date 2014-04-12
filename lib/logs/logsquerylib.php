@@ -107,7 +107,7 @@ class LogsQueryLib
 
 	static function listTypes()
 	{
-		global $tikilib;
+		$tikilib = TikiLib::lib('tiki');
 		$result = array();
 
 		foreach ($tikilib->fetchAll("SELECT objectType FROM tiki_actionlog GROUP By objectType") as $row) {
@@ -119,7 +119,7 @@ class LogsQueryLib
 
 	static function listActions()
 	{
-		global $tikilib;
+		$tikilib = TikiLib::lib('tiki');
 		$result = array();
 
 		foreach ($tikilib->fetchAll("SELECT action FROM tiki_actionlog GROUP By action") as $row) {
@@ -201,7 +201,7 @@ class LogsQueryLib
 
 	function countByDateFilterId($ids = array())
 	{
-		global $tikilib;
+		$tikilib = TikiLib::lib('tiki');
 
 		$this->countByDate();
 
@@ -219,7 +219,7 @@ class LogsQueryLib
 
 	function countUsersFilterId($ids = array())
 	{
-		global $tikilib;
+		$tikilib = TikiLib::lib('tiki');
 
 		$this->groupType = "";
 
@@ -238,7 +238,7 @@ class LogsQueryLib
 
 	function countUsersIPFilterId($ids = array())
 	{
-		global $tikilib;
+		$tikilib = TikiLib::lib('tiki');
 
 		$this->groupType = "";
 
@@ -255,7 +255,7 @@ class LogsQueryLib
 
 	function fetchAll()
 	{
-		global $tikilib;
+		$tikilib = TikiLib::lib('tiki');
 
 		if (empty($this->type))
 			return array();
@@ -312,4 +312,3 @@ class LogsQueryLib
 	}
 }
 
-$logsqrylib = new LogsQueryLib;

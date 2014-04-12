@@ -63,7 +63,7 @@ class UpdateCommand extends Command
 				}
 			}
 
-			$cachelib = TikiLib::lib('cache');
+			$cachelib = \TikiLib::lib('cache');
 			$cachelib->empty_cache();
 		} else {
 			$output->writeln('<error>Database not found.</error>');
