@@ -303,7 +303,7 @@ class SheetLib extends TikiLib
 		$this->remove_related_sheet( $sheetId );
 
 		if ($prefs['feature_actionlog'] == 'y') {
-			global $logslib; include_once('lib/logs/logslib.php');
+			$logslib = TikiLib::lib('logs');
 			$logslib->add_action('Removed', $sheetId, 'sheet');
 		}
 	}
@@ -318,7 +318,7 @@ class SheetLib extends TikiLib
 
 			$sheetId = $this->getOne( "SELECT MAX(`sheetId`) FROM `tiki_sheets` WHERE `author` = ?", array( $author ) );
 			if ($prefs['feature_actionlog'] == 'y') {
-				global $logslib; include_once('lib/logs/logslib.php');
+				$logslib = TikiLib::lib('logs');
 				$query = 'select `sheetId` from `tiki_sheets` where `title`=? and `description`= ? and `author`=?';
 				$id = $this->getOne($query, array($title, $description, $author ) );
 				$logslib->add_action('Created', $id, 'sheet');
@@ -444,7 +444,7 @@ class SheetLib extends TikiLib
 		}
 
 		if ($prefs['feature_actionlog'] == 'y') {
-			global $logslib; include_once('lib/logs/logslib.php');
+			$logslib = TikiLib::lib('logs');
 			$logslib->add_action('Spreadsheet-Rollback', $id, 'sheet');
 		}
 
@@ -508,7 +508,7 @@ class SheetLib extends TikiLib
 		}
 
 		if ($prefs['feature_actionlog'] == 'y') {
-			global $logslib; include_once('lib/logs/logslib.php');
+			$logslib = TikiLib::lib('logs');
 			$logslib->add_action('Cloning', $sheetId, 'sheet');
 			$logslib->add_action('Cloned', $newSheetId, 'sheet');
 		}

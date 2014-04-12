@@ -1797,4 +1797,3 @@ class LogsLib extends TikiLib
 	}
 }
 
-$logslib = new LogsLib;

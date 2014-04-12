@@ -59,10 +59,10 @@ class TikiLdapLib
 	public function __construct($options)
 	{
 		// debug setting
-		global $logslib;
+		$logslib = TikiLib::lib('logs');
 		if (isset($options['debug']) && ($options['debug']===true || $options['debug']=='y' )&& ($logslib instanceof LogsLib)) {
 			$this->options['debug'] = true;
-			$this->logslib = &$logslib;
+			$this->logslib = $logslib;
 		}
 		// Configure the connection
 

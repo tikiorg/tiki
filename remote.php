@@ -40,7 +40,7 @@ function lograw($file, $line)
  */
 function logit($file, $txt, $user, $code, $from)
 {
-	global $tikilib;
+	$tikilib = TikiLib::lib('tiki');
 	$line = $tikilib->get_ip_address() . " - $user - " . date('[m/d/Y:H:i:s]') . " \"$txt\" $code \"$from\"";
 	lograw($file, $line);
 }
@@ -303,7 +303,10 @@ function get_user_info($params)
  */
 function get_registration_prefs($params)
 {
-	global $tikilib, $prefs, $registrationlib, $logslib;
+	global $prefs;
+	$logslib = TikiLib::lib('logs');
+	$tikilib = TikiLib::lib('tiki');
+	$registrationlib = TikiLib::lib('registration');
 
 	$key = $params->getParam(0);
 	$key = $key->scalarval();
@@ -323,8 +326,6 @@ function get_registration_prefs($params)
 	)
 		return new XML_RPC_Response(0, 101, 'Users are not allowed to register via intertiki on this master.');
 
-	require_once 'lib/registration/registrationlib.php';
-
 	return new XML_RPC_Response(XML_RPC_encode($registrationlib->merged_prefs));
 }
 
@@ -334,7 +335,10 @@ function get_registration_prefs($params)
  */
 function register_user($params)
 {
-	global $tikilib, $prefs, $registrationlib, $logslib;
+	global $prefs;
+	$logslib = TikiLib::lib('logs');
+	$tikilib = TikiLib::lib('tiki');
+	$registrationlib = TikiLib::lib('registration');
 
 	$key = $params->getParam(0);
 	$key = $key->scalarval(); 
@@ -353,8 +357,6 @@ function register_user($params)
 			|| ($prefs['known_hosts'][$key]['allowusersregister'] != 'y')
 	)
 		return new XML_RPC_Response(0, 101, 'Users are not allowed to register via intertiki on this master.');
-
-	require_once 'lib/registration/registrationlib.php';
 
 	$result=$registrationlib->register_new_user_from_intertiki(XML_RPC_decode($params->getParam(1)));
 

@@ -533,7 +533,7 @@ class WikiLib extends TikiLib
 		$query = "delete from `tiki_wiki_attachments` where `attId`=?";
 		$result = $this->query($query, array($attId));
 		if ($prefs['feature_actionlog'] == 'y') {
-			global $logslib; include_once('lib/logs/logslib.php');
+			$logslib = TikiLib::lib('logs');
 			$logslib->add_action('Removed', $attId, 'wiki page attachment');
 		}
 	}
@@ -564,7 +564,7 @@ class WikiLib extends TikiLib
 			sendWikiEmailNotification('wiki_file_attached', $page, $user, $comment, '', $name, '', '', false, '', 0, $attId);
 		}
 		if ($prefs['feature_actionlog'] == 'y') {
-			global $logslib; include_once('lib/logs/logslib.php');
+			$logslib = TikiLib::lib('logs');
 			$logslib->add_action('Created', $attId, 'wiki page attachment', '', $user);
 		}
 		return $attId;
@@ -789,7 +789,7 @@ class WikiLib extends TikiLib
 		} else {
 			$this->remove_all_versions($page);
 		}
-		global $logslib; include_once('lib/logs/logslib.php');
+		$logslib = TikiLib::lib('logs');
 		$logslib->add_action('Removed last version', $page, 'wiki page', $comment);
 		//get_strings tra("Removed last version");
 	}
@@ -807,8 +807,8 @@ class WikiLib extends TikiLib
 	 */
 	public function get_pages_by_alias($alias)
 	{
-		global $prefs, $semanticlib;
-		require_once 'lib/wiki/semanticlib.php';
+		global $prefs;
+		$semanticlib = TikiLib::lib('semantic');
 
 		$pages = array();
 

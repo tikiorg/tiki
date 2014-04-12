@@ -121,7 +121,7 @@ if (isset($attributes['tiki.content.url'])) {
 // Add hits ( if download or display only ) + lock if set
 if ( ! isset($_GET['thumbnail']) && ! isset($_GET['icon']) ) {
 
-	require_once('lib/stats/statslib.php');
+	$statslib = TikiLib::lib('stats');
 	$filegallib = TikiLib::lib('filegal');
 	if ( ! $filegallib->add_file_hit($info['fileId']) ) {
 		$access->display_error('', tra('You cannot download this file right now. Your score is low or file limit was reached.'), 401);
@@ -129,7 +129,7 @@ if ( ! isset($_GET['thumbnail']) && ! isset($_GET['icon']) ) {
 	$statslib->stats_hit($info['filename'], 'file', $info['fileId']);
 
 	if ( $prefs['feature_actionlog'] == 'y' ) {
-		global $logslib; require_once('lib/logs/logslib.php');
+		$logslib = TikiLib::lib('logs');
 		$logslib->add_action('Downloaded', $info['galleryId'], 'file gallery', 'fileId='.$info['fileId']);
 	}
 

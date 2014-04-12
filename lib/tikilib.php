@@ -68,9 +68,6 @@ class TikiLib extends TikiDb_Bridge
 			case 'smarty':
 				global $smarty;
 				return self::$libraries[$name] = $smarty;
-			case 'logs':
-				global $logslib; include_once('lib/logs/logslib.php');
-				return self::$libraries[$name] = $logslib;
 			case 'logsqry':
 				global $logsqrylib; include_once('lib/logs/logsquerylib.php');
 				return self::$libraries[$name] = $logsqrylib;

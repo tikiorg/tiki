@@ -124,8 +124,7 @@ if (!empty($_REQUEST['mass_ban_ip'])) {
 // Handle case when coming from tiki-admin_actionlog with a list of IPs to ban
 if (!empty($_REQUEST['mass_ban_ip_actionlog'])) {
 	check_ticket('admin-banning');
-	include_once ('lib/logs/logslib.php');
-	$actionslib = new LogsLib;
+	$logslib = TikiLib::lib('logs');
 	$smarty->assign('mass_ban_ip', $_REQUEST['mass_ban_ip_actionlog']);
 	$info['mode'] = 'mass_ban_ip';
 	$info['title'] = tr('Multiple IP Banning');
@@ -133,7 +132,7 @@ if (!empty($_REQUEST['mass_ban_ip_actionlog'])) {
 	$info['date_to'] = $tikilib->now + 365 * 24 * 3600;
 	$banId_list = explode('|', $_REQUEST['mass_ban_ip_actionlog']);
 	foreach ($banId_list as $id) {
-		$ban_actions=$actionslib->get_info_action($id);
+		$ban_actions=$logslib->get_info_action($id);
 		$ban_comments_list[$ban_actions['ip']][$id]['userName'] = $ban_actions['user'];
 	}
 	$smarty->assign_by_ref('ban_comments_list', $ban_comments_list);

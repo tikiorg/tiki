@@ -777,7 +777,7 @@ class BlogLib extends TikiDb_Bridge
 		}
 
 		if ($prefs['feature_actionlog'] == 'y') {
-			global $logslib; include_once('lib/logs/logslib.php');
+			$logslib = TikiLib::lib('logs');
 			$logslib->add_action('Posted', $blogId, 'blog', "blogId=$blogId&amp;postId=$id&amp;add=" . strlen($data) . "#postId$id", '', '', '', '', $contributions);
 		}
 
@@ -818,7 +818,7 @@ class BlogLib extends TikiDb_Bridge
 	 */
 	function remove_post($postId)
 	{
-		global $tikilib;
+		$tikilib = TikiLib::lib('tiki');
 		$objectlib = TikiLib::lib('object');
 
 		$query = "select `blogId`, `data` from `tiki_blog_posts` where `postId`=?";
@@ -831,7 +831,7 @@ class BlogLib extends TikiDb_Bridge
 
 		global $prefs;
 		if ($prefs['feature_actionlog'] == 'y') {
-			global $logslib; include_once('lib/logs/logslib.php');
+			$logslib = TikiLib::lib('logs');
 			$param = "blogId=$blogId&amp;postId=$postId";
 			if ($blogId)
 				$param .= "&amp;del=" . strlen($res['data']);
@@ -986,7 +986,7 @@ class BlogLib extends TikiDb_Bridge
 			$result = $this->query($query, array($blogId, $data, $excerpt, $user, $title, $priv, $wysiwyg, $postId));
 		}
 		if ($prefs['feature_actionlog'] == 'y') {
-			global $logslib; include_once('lib/logs/logslib.php');
+			$logslib = TikiLib::lib('logs');
 			$logslib->add_action('Updated', $blogId, 'blog', "blogId=$blogId&amp;postId=$postId#postId$postId", '', '', '', '', $contributions);
 		}
 

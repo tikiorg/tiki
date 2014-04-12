@@ -22,7 +22,7 @@ class HistLib extends TikiLib
 	{
 		global $prefs;
 		if ($prefs['feature_contribution'] == 'y') {
-			global $contributionlib; include_once('lib/contribution/contributionlib.php');
+			$contributionlib = TikiLib::lib('contribution');
 			if ($historyId == '') {
 				$query = 'select `historyId` from `tiki_history` where `pageName`=? and `version`=?';
 				$historyId = $this->getOne($query, array($page, $version));
@@ -31,7 +31,7 @@ class HistLib extends TikiLib
 		}
 		$query = "delete from `tiki_history` where `pageName`=? and `version`=?";
 		$result = $this->query($query, array($page,$version));
-		global $logslib; include_once('lib/logs/logslib.php');
+		$logslib = TikiLib::lib('logs');
 		$logslib->add_action("Removed version", $page, 'wiki page', "version=$version");
 		//get_strings tra("Removed version $version")
 		return true;
@@ -101,7 +101,7 @@ class HistLib extends TikiLib
 
 		global $prefs;
 		if ($prefs['feature_actionlog'] == 'y') {
-			global $logslib; include_once('lib/logs/logslib.php');
+			$logslib = TikiLib::lib('logs');
 			$logslib->add_action("Rollback", $page, 'wiki page', "version=$version");
 		}
 		//get_strings tra("Changed actual version to $version");
@@ -231,9 +231,9 @@ class HistLib extends TikiLib
 			$aux["is_html"] = $res["is_html"];
 			//$aux["percent"] = levenshtein($res["data"],$actual);
 			if ($prefs['feature_contribution'] == 'y') {
-				global $contributionlib; include_once('lib/contribution/contributionlib.php');
+				$contributionlib = TikiLib::lib('contribution');
 				$aux['contributions'] = $contributionlib->get_assigned_contributions($res['historyId'], 'history');
-				global $logslib; include_once('lib/logs/logslib.php');
+				$logslib = TikiLib::lib('logs');
 				$aux['contributors'] = $logslib->get_wiki_contributors($aux);
 			}
 			$ret[] = $aux;

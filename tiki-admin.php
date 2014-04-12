@@ -11,13 +11,13 @@
 $section = 'admin';
 
 require_once ('tiki-setup.php');
-include_once ('lib/admin/adminlib.php');
+$adminlib = TikiLib::lib('admin');
 
 $tikifeedback = array();
 $auto_query_args = array('page');
 
 $access->check_permission('tiki_p_admin');
-global $logslib; include_once('lib/logs/logslib.php');
+$logslib = TikiLib::lib('logs');
 
 /**
  * Display feedback on prefs changed
@@ -51,7 +51,10 @@ function add_feedback( $name, $message, $st, $num = null )
  */
 function simple_set_toggle($feature)
 {
-	global $_REQUEST, $tikilib, $smarty, $prefs, $logslib;
+	global $prefs;
+	$logslib = TikiLib::lib('logs');
+	$tikilib = TikiLib::lib('tiki');
+	$smarty = TikiLib::lib('smarty');
 	if (isset($_REQUEST[$feature]) && $_REQUEST[$feature] == 'on') {
 		if ((!isset($prefs[$feature]) || $prefs[$feature] != 'y')) {
 			// not yet set at all or not set to y
@@ -84,7 +87,10 @@ function simple_set_toggle($feature)
  */
 function simple_set_value($feature, $pref = '', $isMultiple = false)
 {
-	global $_REQUEST, $tikilib, $prefs, $logslib;
+	global $prefs;
+	$logslib = TikiLib::lib('logs');
+	$tikilib = TikiLib::lib('tiki');
+	$smarty = TikiLib::lib('smarty');
 	$old = $prefs[$feature];
 	if (isset($_REQUEST[$feature])) {
 		if ($pref != '') {
@@ -122,7 +128,10 @@ function simple_set_value($feature, $pref = '', $isMultiple = false)
  */
 function simple_set_int($feature)
 {
-	global $_REQUEST, $tikilib, $prefs, $logslib;
+	global $prefs;
+	$logslib = TikiLib::lib('logs');
+	$tikilib = TikiLib::lib('tiki');
+	$smarty = TikiLib::lib('smarty');
 	if (isset($_REQUEST[$feature]) && is_numeric($_REQUEST[$feature])) {
 		$old = $prefs[$feature];
 		if ($old != $_REQUEST[$feature]) {
@@ -143,7 +152,6 @@ function simple_set_int($feature)
  */
 function byref_set_value($feature, $pref = '')
 {
-	global $_REQUEST, $tikilib, $smarty, $logslib;
 	simple_set_value($feature, $pref);
 }
 
@@ -155,7 +163,7 @@ $helpDescription = $description = '';
 $url = 'tiki-admin.php';
 $adminPage = '';
 
-global $prefslib; require_once 'lib/prefslib.php';
+$prefslib = TikiLib::lib('prefs');
 
 if ( isset ($_REQUEST['pref_filters']) ) {
 	$prefslib->setFilters($_REQUEST['pref_filters']);
@@ -667,7 +675,7 @@ if ($prefs['feature_version_checks'] == 'y' || $forcecheck) {
 }
 
 if (isset($_REQUEST['lm_criteria']) && isset($_REQUEST['exact'])) {
-	global $headerlib;
+	$headerlib = TikiLib::lib('header');
 	$headerlib->add_jq_onready(
 		"$('body,html')
 			.animate({scrollTop: $('." . htmlspecialchars($_REQUEST['lm_criteria']). "')

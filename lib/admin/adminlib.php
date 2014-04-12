@@ -355,7 +355,7 @@ class AdminLib extends TikiLib
 
 		$query = "delete from `tiki_tags` where `tagName`=?";
 		$result = $this->query($query, array($tagname));
-		global $logslib; include_once('lib/logs/logslib.php');
+		$logslib = TikiLib::lib('logs');
 		$logslib->add_log('dump', "removed tag: $tagname");
 		return true;
 	}
@@ -417,7 +417,7 @@ class AdminLib extends TikiLib
 			);
 		}
 
-		global $logslib; include_once('lib/logs/logslib.php');
+		$logslib = TikiLib::lib('logs');
 		$logslib->add_log('dump', "created tag: $tagname");
 		return true;
 	}
@@ -459,7 +459,7 @@ class AdminLib extends TikiLib
 			);
 		}
 
-		global $logslib; include_once('lib/logs/logslib.php');
+		$logslib = TikiLib::lib('logs');
 		$logslib->add_log('dump', "recovered tag: $tagname");
 		return true;
 	}
@@ -509,7 +509,7 @@ class AdminLib extends TikiLib
 
 		$tar->toTar("$dump_path/new.tar", FALSE);
 		unset ($tar);
-		global $logslib; include_once('lib/logs/logslib.php');
+		$logslib = TikiLib::lib('logs');
 		$logslib->add_log('dump', 'dump created');
 	}
 

@@ -543,7 +543,7 @@ function wikiplugin_tracker($data, $params)
 	}
 
 	if (!empty($itemId)) {
-		global $logslib; include_once('lib/logs/logslib.php');
+		$logslib = TikiLib::lib('logs');
 		$logslib->add_action('Viewed', $itemId, 'trackeritem', $_SERVER['REQUEST_URI']);
 	}
 
@@ -566,7 +566,7 @@ function wikiplugin_tracker($data, $params)
 	if (!isset($_REQUEST["ok"]) || $_REQUEST["ok"]  == "n" || !$thisIsThePlugin || isset($_REQUEST['tr_preview'])) {
 		$field_errors = array('err_mandatory'=>array(), 'err_value'=>array());
 
-			global $notificationlib; include_once('lib/notifications/notificationlib.php');
+			$notificationlib = TikiLib::lib('notification');
 			$tracker = $trklib->get_tracker($trackerId);
 			$tracker = array_merge($tracker, $trklib->get_tracker_options($trackerId));
 			if ((!empty($tracker['start']) && $tikilib->now < $tracker['start']) || (!empty($tracker['end']) && $tikilib->now > $tracker['end']))

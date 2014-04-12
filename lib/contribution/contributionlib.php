@@ -251,8 +251,8 @@ class ContributionLib extends TikiLib
      */
     function update($action, $contributions, $delay=15)
 	{
-		global $tikilib;
-		global $logslib; include_once('lib/logs/logslib.php');
+		$tikilib = TikiLib::lib('tiki');
+		$logslib = TikiLib::lib('logs');
 
 		if ($action['objectType'] == 'wiki page' && $action['action'] != 'Removed') {
 			// try to find an history

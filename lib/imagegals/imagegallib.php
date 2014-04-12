@@ -1034,7 +1034,7 @@ class ImageGalsLib extends TikiLib
 		}
 
 		if ($prefs['feature_actionlog'] == 'y') {
-			global $logslib; include_once('lib/logs/logslib.php');
+			$logslib = TikiLib::lib('logs');
 			$logslib->add_action('Uploaded', $galleryId, 'image gallery', 'imageId=' . $imageId);
 		}
 

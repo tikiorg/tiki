@@ -53,7 +53,7 @@ if (empty($_REQUEST['report']) || $_REQUEST['report'] != 'y') {
 	// message related
 	if (isset($prefs['feature_messages']) and $prefs['feature_messages'] == 'y') {
 		include_once ('lib/messu/messulib.php');
-		include_once ('lib/logs/logslib.php');
+		$logslib = TikiLib::lib('logs');
 
 		$smarty->assign('priority', (isset($_REQUEST['priority'])?$_REQUEST['priority']:3));
 		$smarty->assign('do_message', (isset($_REQUEST['do_message'])?$_REQUEST['do_message']:true));

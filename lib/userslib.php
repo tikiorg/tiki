@@ -232,7 +232,7 @@ class UsersLib extends TikiLib
 	 */
 	function user_logout($user, $remote = false, $redir = '')
 	{
-		global $prefs, $logslib, $lslib, $user_cookie_site;
+		global $prefs, $user_cookie_site;
 
 		$logslib->add_log('login', 'logged out');
 
@@ -260,7 +260,8 @@ class UsersLib extends TikiLib
 
 		// go offline in Live Support
 		if ($prefs['feature_live_support'] == 'y') {
-			global $access; include_once ('lib/live_support/lslib.php');
+			$access = TikiLib::lib('access');
+			global $lslib; include_once ('lib/live_support/lslib.php');
 			if ($lslib->get_operator_status($user) != 'offline') {
 				$lslib->set_operator_status($user, 'offline');
 			}
@@ -792,7 +793,7 @@ class UsersLib extends TikiLib
 					// would probably be better do flag the user as not active? How do you do that?
 					// and it also would be better to check if the user is active first.. :)
 					$this->invalidate_account($user);
-					global $logslib;
+					$logslib = TikiLib::lib('logs');
 					$logslib->add_log('auth_phpbb', 'NOTICE: Invalidated user ' . $user . ' due to missing phpBB account.');
 				}
 				return array(false, $user, ACCOUNT_DISABLED);
@@ -991,7 +992,7 @@ class UsersLib extends TikiLib
 		}
 
 		global $prefs;
-		global $logslib;
+		$logslib = TikiLib::lib('logs');
 
 		// First connection on the ldap server in anonymous, now we can search the real name of the $user
 		// It's required to pass in param the username & password because the username is used to determine the realname (dn)
@@ -1080,7 +1081,7 @@ class UsersLib extends TikiLib
 	function ldap_sync_all_users()
 	{
 		global $prefs;
-		global $logslib;
+		$logslib = TikiLib::lib('logs');
 
 		if ($prefs['syncUsersWithDirectory'] != 'y') {
 			return false;
@@ -1176,7 +1177,7 @@ class UsersLib extends TikiLib
 		if ( $user == 'admin' ) return true;
 
 		global $prefs;
-		global $logslib;
+		$logslib = TikiLib::lib('logs');
 		$ret = true;
 		$this->init_ldap($user, $pass);
 
@@ -1224,7 +1225,7 @@ class UsersLib extends TikiLib
 		if ( $user == 'admin' ) return true;
 
 		global $prefs;
-		global $logslib;
+		$logslib = TikiLib::lib('logs');
 		static $ldap_group_options = array();
 		static $ext_dir = null;
 		$ret = true;
@@ -1308,7 +1309,7 @@ class UsersLib extends TikiLib
 	function ldap_sync_group_data($user, $ldapgroups)
 	{
 		global $prefs;
-		global $logslib;
+		$logslib = TikiLib::lib('logs');
 
 		if (!count($ldapgroups)) {
 			return;
@@ -6896,7 +6897,7 @@ class UsersLib extends TikiLib
 
 			$this->query($query, array('', $tikilib->now, 0, $this->now, $user, $res['provpass']));
 			if (!empty($GLOBALS['user'])) {
-				global $logslib; include_once('lib/logs/logslib.php');
+				$logslib = TikiLib::lib('logs');
 				$logslib->add_log('login', 'confirm email '.$user);
 			}
 			TikiLib::lib('user')->set_unsuccessful_logins($_REQUEST['user'], 0);

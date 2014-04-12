@@ -2516,11 +2516,12 @@ class Comments extends TikiLib
 			if ($prefs['feature_actionlog'] == 'y') {
 				include_once('lib/diff/difflib.php');
 				$bytes = diff2($comment['data'], $data, 'bytes');
-				global $logslib; include_once('lib/logs/logslib.php');
-				if ($comment['objectType'] == 'forum')
+				$logslib = TikiLib::lib('logs');
+				if ($comment['objectType'] == 'forum') {
 					$logslib->add_action('Updated', $comment['object'], $comment['objectType'], "comments_parentId=$threadId&amp;$bytes#threadId$threadId", '', '', '', '', $contributions);
-				else
+				} else {
 					$logslib->add_action('Updated', $comment['object'], 'comment', "type=".$comment['objectType']."&amp;$bytes#threadId$threadId", '', '', '', '', $contributions);
+				}
 			}
 			$comments->update(
 				array(
@@ -2729,12 +2730,13 @@ class Comments extends TikiLib
 		global $prefs;
 		if ($prefs['feature_actionlog'] == 'y') {
 			$logslib = TikiLib::lib('logs');
-			global $tikilib;
-			if ($parentId == 0)
+			$tikilib = TikiLib::lib('tiki');
+			if ($parentId == 0) {
 				$l = strlen($data);
-			else
+			} else {
 				$l = $tikilib->strlen_quoted($data);
-			if ($object[0] == 'forum')
+			}
+			if ($object[0] == 'forum') {
 				$logslib->add_action(
 					($parentId == 0)? 'Posted': 'Replied',
 					$object[1],
@@ -2746,7 +2748,7 @@ class Comments extends TikiLib
 					'',
 					$contributions
 				);
-			else
+			} else {
 				$logslib->add_action(
 					($parentId == 0)? 'Posted': 'Replied',
 					$object[1],
@@ -2758,6 +2760,7 @@ class Comments extends TikiLib
 					'',
 					$contributions
 				);
+			}
 		}
 
 		if ($prefs['feature_contribution'] == 'y') {

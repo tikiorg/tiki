@@ -78,7 +78,9 @@ class Cachelib
 	 */
 	function empty_cache( $dir_names = array('all'), $log_section = 'system' )
 	{
-		global $tikidomain, $logslib, $tikilib, $prefs;
+		global $tikidomain, $prefs;
+		$logslib = TikiLib::lib('logs');
+		$tikilib = TikiLib::lib('tiki');
 
 		if (!is_array($dir_names)) {
 			$dir_names = array($dir_names);
@@ -271,7 +273,8 @@ class Cachelib
 
 	function cache_templates($path,$newlang)
 	{
-		global $prefs, $smarty, $tikidomain;
+		global $prefs, $tikidomain;
+		$smarty = TikiLib::lib('smarty');
 
 		$oldlang = $prefs['language'];
 		$prefs['language'] = $newlang;

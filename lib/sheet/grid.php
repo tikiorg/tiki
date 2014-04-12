@@ -1482,7 +1482,7 @@ class TikiSheetDatabaseHandler extends TikiSheetDataHandler
 			}
 
 		if ($prefs['feature_actionlog'] == 'y') {
-			global $logslib; include_once('lib/logs/logslib.php');
+			$logslib = TikiLib::lib('logs');
 			$add = 0;
 			$del = 0;
 			foreach( $inserts as $values ) {

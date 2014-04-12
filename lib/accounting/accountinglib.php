@@ -11,7 +11,7 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 	exit;
 }
 
-require_once ('lib/logs/logslib.php');
+$logslib = TikiLib::lib('logs');
 
 /**
  * Basic functions used by the accounting feature

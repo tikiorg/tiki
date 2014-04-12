@@ -465,17 +465,10 @@ class Watershed_SoapServer
 
 	private function loginBySession( $sessionId )
 	{
-		require ('db/local.php');
-		$watersheddb = mysql_connect($host_tiki, $user_tiki, $pass_tiki);
-		mysql_select_db($dbs_tiki, $watersheddb);
-		$query = "SELECT `user` FROM `tiki_user_preferences` WHERE prefName = 'watershed_sessionId' AND value = '$sessionId'";
-		$result = mysql_query($query, $watersheddb);
-		if (is_resource($result)) {
-			while ($res = mysql_fetch_assoc($result)) {
-				$u = $res['user'];
-			}
-		}
-		if (isset($u)) {
+		$db = TikiDb::get();
+		$table = $db->table('tiki_user_preferences');
+		$u = $this->fetchOne('user', array('prefName' => 'watershed_sessionId', 'value' => $sessionId));
+		if ($u) {
 			$this->user = $this->loginUser($u);
 		} else {
 			$this->user = '';
@@ -485,26 +478,8 @@ class Watershed_SoapServer
 
 	private function loginUser( $u )
 	{
-		require ('db/local.php');
-		$watersheddb = mysql_connect($host_tiki, $user_tiki, $pass_tiki);
-		mysql_select_db($dbs_tiki, $watersheddb);
-		$query = "SELECT `value` FROM `tiki_preferences` WHERE name = 'cookie_name'";
-		$result = mysql_query($query, $watersheddb);
-
-		if (is_resource($result)) {
-			while ($res = mysql_fetch_assoc($result)) {
-				$cookie_name = $res['value'];
-			}
-		}
-
-		if (empty($cookie_name)) {
-			$cookie_name = 'tikiwiki';
-		}
-
-		$cookie_site = preg_replace('/[^a-zA-Z0-9]/', '', $cookie_name);
-		$user_cookie_site = 'tiki-user-' . $cookie_site;
+		TikiLib::lib('login')->activateSession($u);
 		session_start();
-		$_SESSION[$user_cookie_site] = $u;
 		global $user;
 		$user = $u;
 		return $u;
@@ -512,7 +487,7 @@ class Watershed_SoapServer
 
 	function initiateEnv()
 	{
-		global $prefs, $watershedlib, $tikilib, $smarty;
+		global $prefs;
 		require_once ('lib/setup/third_party.php');
 		require_once ('tiki-setup_base.php');
 		require_once ('lib/setup/sections.php');
@@ -562,7 +537,7 @@ class Watershed_SoapServer
 			$ret->authMessage = tra('No permission to broadcast to any channel');
 		}
 		if ($prefs['watershed_log_errors'] == 'y') {
-			global $logslib;
+			$logslib = TikiLib::lib('logs');
 			$logslib->add_log('watershed', $ret->authMessage);
 		}
 		return $ret;
@@ -574,7 +549,7 @@ class Watershed_SoapServer
 		global $prefs;
 
 		if ($prefs['watershed_log_errors'] == 'y') {
-			global $logslib;
+			$logslib = TikiLib::lib('logs');
 			$error = $message->brandId . ': ' . $message->message . ' (' . $message->priority . ')';
 			$logslib->add_log('watershed', $error);
 		}
@@ -613,7 +588,7 @@ class Watershed_SoapServer
 			$ret->authMessage = tra('Failed to log in mobile broadcaster');
 		}
 		if ($prefs['watershed_log_errors'] == 'y') {
-			global $logslib;
+			$logslib = TikiLib::lib('logs');
 			$logslib->add_log('watershed', $ret->authMessage);
 		}
 		return $ret;
@@ -623,7 +598,8 @@ class Watershed_SoapServer
 	{
 		// This is used for Flash Media Encoder shared secret authentication only
 		$this->initiateEnv();
-		global $prefs, $watershedlib, $tikilib;
+		global $prefs, $watershedlib;
+		$tikilib = TikiLib::lib('tiki');
 		$ret = new Watershed_SoapServer_loginBroadcasterByChannelTokenResponse;
 		if (isset($prefs['watershed_fme_key']) && $token->channelToken == $prefs['watershed_fme_key']) {
 			$ret->sessionId = md5('watershedfmeuser' . $tikilib->now . rand(100000, 999999));
@@ -633,7 +609,7 @@ class Watershed_SoapServer
 			$ret->authMessage = tra('Failed to log in FME');
 		}
 		if ($prefs['watershed_log_errors'] == 'y') {
-			global $logslib;
+			$logslib = TikiLib::lib('logs');
 			$logslib->add_log('watershed', $ret->authMessage);
 		}
 		return $ret;
@@ -644,7 +620,7 @@ class Watershed_SoapServer
 		$this->initiateEnv();
 		global $prefs;
 		if ($prefs['watershed_log_errors'] == 'y') {
-			global $logslib;
+			$logslib = TikiLib::lib('logs');
 			$error = $status->brandId . ': ' . $status->channelCode . ': ' . $status->status;
 			$logslib->add_log('watershed', $error);
 		}
@@ -684,7 +660,7 @@ class Watershed_SoapServer
 			$ret->authMessage = tra('No permission to view any channel');
 		}
 		if ($prefs['watershed_log_errors'] == 'y') {
-			global $logslib;
+			$logslib = TikiLib::lib('logs');
 			$logslib->add_log('watershed', $ret->authMessage);
 		}
 		return $ret;
@@ -702,7 +678,7 @@ class Watershed_SoapServer
 		}
 
 		if ($prefs['watershed_log_errors'] == 'y') {
-			global $logslib;
+			$logslib = TikiLib::lib('logs');
 			$logslib->add_log('watershed', $error);
 		}
 		return new Watershed_SoapServer_AcknowledgeResponse;
