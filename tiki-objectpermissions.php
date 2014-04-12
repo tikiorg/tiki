@@ -113,7 +113,7 @@ if ($_REQUEST['objectType'] == 'wiki page') {
 			$permissionApplier->addObject($sub);
 		}
 	}
-	global $cachelib; include_once('lib/cache/cachelib.php');
+	$cachelib = TikiLib::lib('cache');
 	$cachelib->empty_type_cache('menu_'); $cachelib->empty_type_cache('structure_');
 }
 

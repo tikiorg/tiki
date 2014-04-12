@@ -122,11 +122,11 @@ function module_users_list($module_params)
 	 }
 	$users = $userlib->get_users(0, -1, 'login_asc', '',!empty($module_params['initial'])? $module_params['initial']:'', isset($module_params['groups'])?true: false, $group);
 	if (isset($_REQUEST["realName"]) && ($prefs['auth_ldap_nameattr'] == '' || $prefs['auth_method'] != 'ldap')) {
-     $tikilib->set_user_preference($userwatch, 'realName', $_REQUEST["realName"]);
-     if ( $prefs['user_show_realnames'] == 'y' ) {
-       global $cachelib;
-       $cachelib->invalidate('userlink.'.$user.'0');
-     }
+		$tikilib->set_user_preference($userwatch, 'realName', $_REQUEST["realName"]);
+		if ( $prefs['user_show_realnames'] == 'y' ) {
+			$cachelib = TikiLib::lib('cache');
+			$cachelib->invalidate('userlink.'.$user.'0');
+		}
 	}
 
 	for ($i = 0; $i < $users['cant']; ++$i) {

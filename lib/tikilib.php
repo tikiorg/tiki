@@ -68,9 +68,6 @@ class TikiLib extends TikiDb_Bridge
 			case 'smarty':
 				global $smarty;
 				return self::$libraries[$name] = $smarty;
-			case 'cache':
-				global $cachelib; include_once('lib/cache/cachelib.php');
-				return self::$libraries[$name] = $cachelib;
 			case 'memcache':
 				global $memcachelib; include_once('lib/cache/memcachelib.php');
 				return self::$libraries[$name] = $memcachelib;

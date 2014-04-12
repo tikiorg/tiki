@@ -226,7 +226,7 @@ if ( isset($_GET['preview']) || isset($_GET['thumbnail']) || isset($_GET['displa
 	$cacheName = '';
 	$cacheType = '';
 	if ( ( isset($_GET['thumbnail']) || isset($_GET['preview']) ) && ! isset($_GET['display']) && ! isset($_GET['icon']) && ! isset($_GET['scale']) && ! isset($_GET['x']) && ! isset($_GET['y']) && ! isset($_GET['format']) && ! isset($_GET['max']) ) {
-		global $cachelib; include_once('lib/cache/cachelib.php');
+		$cachelib = TikiLib::lib('cache');
 		$cacheName = $md5;
 		$cacheType = ( isset($_GET['thumbnail']) ? 'thumbnail_' : 'preview_' ) . ((int)$_REQUEST['fileId']).'_';
 		$use_cache = true;

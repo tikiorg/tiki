@@ -16,7 +16,7 @@ class MenuLib extends TikiLib
 
 	public function empty_menu_cache($menuId = 0)
 	{
-		global $cachelib; include_once('lib/cache/cachelib.php');
+		$cachelib = TikiLib::lib('cache');
 		if ( $menuId > 0 ) {
 			$cachelib->empty_type_cache('menu_'.$menuId.'_');
 		} else {

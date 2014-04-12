@@ -119,9 +119,10 @@ function compare_menu_options($a, $b)
 
 function get_menu_with_selections($params)
 {
-	global $tikilib, $user, $prefs;
-	global $menulib; include_once('lib/menubuilder/menulib.php');
-	global $cachelib; include_once('lib/cache/cachelib.php');
+	global $user, $prefs;
+	$tikilib = TikiLib::lib('tiki');
+	$menulib = TikiLib::lib('menu');
+	$cachelib = TikiLib::lib('cache');
 	$cacheName = isset($prefs['mylevel']) ? $prefs['mylevel'] : 0;
 	$cacheName .= '_'.$prefs['language'].'_'.md5(implode("\n", $tikilib->get_user_groups($user)));
 
@@ -136,7 +137,7 @@ function get_menu_with_selections($params)
 	if ( $cdata = $cachelib->getSerialized($cacheName, $cacheType) ) {
 		list($menu_info, $channels) = $cdata;
 	} elseif (!empty($structureId)) {
-		global $structlib; include_once('lib/structures/structlib.php');
+		$structlib = TikiLib::lib('struct');
 
 		if (!is_numeric($structureId)) {
 			$structureId = $structlib->get_struct_ref_id($structureId);

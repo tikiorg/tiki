@@ -120,7 +120,7 @@ if (empty($_POST['install_step'])) {
 	$install_step = $_POST['install_step'];
 
 	if ($install_step == 3) {	// clear caches after system requirements page
-		global $cachelib; include 'lib/cache/cachelib.php';
+		$cachelib = TikiLib::lib('cache');
 		$cachelib->empty_cache();
 	}
 }

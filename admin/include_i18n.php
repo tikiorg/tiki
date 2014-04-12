@@ -55,7 +55,7 @@ if (!empty($_REQUEST['custom_save'])) {
 				$smarty->assign('custom_error', 'file');
 			}
 			fclose($fp);
-			global $cachelib; include_once ('lib/cache/cachelib.php');
+			$cachelib = TikiLib::lib('cache');
 			$cachelib->empty_cache('templates_c');
 			$smarty->assign('custom_ok', 'y');
 		}

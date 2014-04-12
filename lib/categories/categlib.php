@@ -90,7 +90,7 @@ class CategLib extends ObjectLib
 	// WARNING: This removes not only the specified category, but also all its descendants.
 	function remove_category($categId)
 	{
-		global $cachelib; include_once('lib/cache/cachelib.php');
+		$cachelib = TikiLib::lib('cache');
 
 		$parentId=$this->get_category_parent($categId);
 		$categoryName=$this->get_category_name($categId);
@@ -155,7 +155,7 @@ class CategLib extends ObjectLib
 	// Throws an Exception if the category name conflicts
 	function update_category($categId, $name, $description, $parentId)
 	{
-		global $cachelib; include_once('lib/cache/cachelib.php');
+		$cachelib = TikiLib::lib('cache');
 
 		$oldCategory=$this->get_category($categId);
 		$oldCategoryName=$oldCategory['name'];
@@ -211,7 +211,7 @@ class CategLib extends ObjectLib
 		if ($this->exist_child_category($parentId, $name)) {
 			throw new Exception(tr('A category named %0 already exists in %1.', $name, $this->get_category_name($parentId)));
 		}
-		global $cachelib; include_once('lib/cache/cachelib.php');
+		$cachelib = TikiLib::lib('cache');
 
 		// Make sure the description fits the column width
 		// TODO: remove length constraint then remove this. See "Quiet truncation of data in database" thread on the development list
@@ -295,7 +295,7 @@ class CategLib extends ObjectLib
 			$query = "insert into `tiki_categorized_objects` (`catObjectId`) values (?)";
 			$this->query($query, array($id));
 
-			global $cachelib; include_once('lib/cache/cachelib.php');
+			$cachelib = TikiLib::lib('cache');
 			$cachelib->empty_type_cache('allcategs');
 			$cachelib->empty_type_cache('fgals_perms');
 		}
@@ -338,11 +338,10 @@ class CategLib extends ObjectLib
 		$query = "insert into `tiki_category_objects`(`catObjectId`,`categId`) values(?,?)";
 		$result = $this->query($query, array((int) $catObjectId,(int) $categId));
 
-		global $cachelib;
 		$cachelib->empty_type_cache("allcategs");
 		$info = TikiLib::lib('object')->get_object_via_objectid($catObjectId);
 		if ($prefs['feature_actionlog'] == 'y') {
-			global $logslib; include_once('lib/logs/logslib.php');
+			$logslib = TikiLib::lib('logs');
 			$logslib->add_action('Categorized', $info['itemId'], $info['type'], "categId=$categId", $user);
 		}
 		require_once 'lib/search/refresh-functions.php';
@@ -355,11 +354,10 @@ class CategLib extends ObjectLib
 		$query = "delete from `tiki_category_objects` where `catObjectId`=? and `categId`=?";
 		$result = $this->query($query, array((int) $catObjectId,(int) $categId), -1, -1, false);
 
-		global $cachelib;
 		$cachelib->empty_type_cache("allcategs");
 		$info = TikiLib::lib('object')->get_object_via_objectid($catObjectId);
 		if ($prefs['feature_actionlog'] == 'y') {
-			global $logslib; include_once('lib/logs/logslib.php');
+			$logslib = TikiLib::lib('logs');
 			$logslib->add_action('Uncategorized', $info['itemId'], $info['type'], "categId=$categId");
 		}
 		require_once 'lib/search/refresh-functions.php';
@@ -633,7 +631,7 @@ class CategLib extends ObjectLib
 	function remove_object_from_categories($catObjectId, $categIds)
 	{
 		if (!empty($categIds)) {
-			global $cachelib; include_once('lib/cache/cachelib.php');
+			$cachelib = TikiLib::lib('cache');
 			$query = "delete from `tiki_category_objects` where `catObjectId`=? and `categId` in (".implode(',', array_fill(0, count($categIds), '?')).")";
 			$result = $this->query($query, array_merge(array($catObjectId), $categIds));
 			$query = "select count(*) from `tiki_category_objects` where `catObjectId`=?";
@@ -712,7 +710,8 @@ class CategLib extends ObjectLib
 	*/
 	function getCategories($filter = array('type'=>'all'), $considerCategoryFilter = true, $considerPermissions = true, $localized = true)
 	{
-		global $cachelib, $prefs;
+		global $prefs;
+		$cachelib = TikiLib::lib('cache');
 		$cacheKey = 'all' . ($localized ? '_' . $prefs['language'] : '');
 		if ( ! $ret = $cachelib->getSerialized($cacheKey, 'allcategs') ) {
 			// This generates different caches for each language. The empty key is used when no localization was requested.
@@ -936,7 +935,7 @@ class CategLib extends ObjectLib
 			// must keep tiki_categorized object because poll or ... can use it
 
 		    // Refresh categories
-		    global $cachelib; include_once('lib/cache/cachelib.php');
+		    $cachelib = TikiLib::lib('cache');
 		    $cachelib->empty_type_cache('allcategs');
         	$cachelib->empty_type_cache('fgals_perms');
 		}

@@ -69,8 +69,7 @@ function simple_set_toggle($feature)
 			}
 		}
 	}
-	global $cachelib;
-	require_once ('lib/cache/cachelib.php');
+	$cachelib = TikiLib::lib('cache');
 	$cachelib->invalidate('allperms');
 }
 
@@ -110,8 +109,7 @@ function simple_set_value($feature, $pref = '', $isMultiple = false)
 		add_feedback($feature, ($_REQUEST[$feature]) ? tr('%0 set', $feature) : tr('%0 unset', $feature), 2);
 		$logslib->add_action('feature', $feature, 'system', $old .'=>'.isset($_REQUEST['feature'])?$_REQUEST['feature']:'');
 	}
-	global $cachelib;
-	require_once ('lib/cache/cachelib.php');
+	$cachelib = TikiLib::lib('cache');
 	$cachelib->invalidate('allperms');
 }
 

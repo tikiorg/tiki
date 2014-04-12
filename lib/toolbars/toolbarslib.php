@@ -254,13 +254,10 @@ abstract class Toolbar
 
 	public static function deleteAllCustomTools()
 	{
-		global $tikilib;
+		$tikilib = TikiLib::lib('tiki');
 
 		$tikilib->query('DELETE FROM `tiki_preferences` WHERE `name` LIKE \'toolbar_tool_%\'');
 		$tikilib->delete_preference('toolbar_custom_list');
-
-		//global $cachelib; require_once("lib/cache/cachelib.php");
-		//$cachelib->invalidate('tiki_preferences_cache');
 	}
 
 

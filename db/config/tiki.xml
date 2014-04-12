@@ -8,6 +8,9 @@
 
 	-->
 	<services>
+		<service id="tiki.lib.cache" class="CacheLib">
+			<file>%kernel.root_dir%/lib/cache/cachelib.php</file>
+		</service>
 		<service id="tiki.lib.categ" class="CategLib">
 			<file>%kernel.root_dir%/lib/categories/categlib.php</file>
 		</service>

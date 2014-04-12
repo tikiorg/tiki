@@ -42,7 +42,7 @@ class BigBlueButtonLib
      */
     public function getMeetings()
 	{
-		global $cachelib;
+		$cachelib = TikiLib::lib('cache');
 
 		if ( ! $meetings = $cachelib->getSerialized('bbb_meetinglist') ) {
 			$meetings = array();
@@ -122,8 +122,9 @@ class BigBlueButtonLib
      */
     public function createRoom( $room, array $params = array() )
 	{
-		global $tikilib, $cachelib, $prefs;
-
+		global $prefs;
+		$cachelib = TikiLib::lib('cache');
+		$tikilib = TikiLib::lib('tiki');
 		$params = array_merge(
 			array('logout' => $tikilib->tikiUrl(''),),
 			$params

@@ -15,7 +15,7 @@ class MembershipTest extends TikiTestCase
 	function setUp()
 	{
 		parent::setUp();
-		global $cachelib;
+		$cachelib = TikiLib::lib('cache');
 
 		$this->userlib = new UsersLib();
 

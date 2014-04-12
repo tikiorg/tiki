@@ -193,8 +193,8 @@ function smarty_function_object_link_user( $smarty, $user, $title = null )
 
 function smarty_function_object_link_external( $smarty, $link_orig, $title = null, $type = null )
 {
-	global $cachelib; require_once 'lib/cache/cachelib.php';
-	global $tikilib;
+	$cachelib = TikiLib::lib('cache');
+	$tikilib = TikiLib::lib('tiki');
 
 	if (substr($link_orig, 0, 4) === 'www.') {
 		$link = 'http://' . $link_orig;
@@ -242,9 +242,9 @@ function smarty_function_object_link_relation_target($smarty, $relationId, $titl
 
 function smarty_function_object_link_relation_end( $smarty, $end, $relationId, $title = null )
 {
-	global $relationlib; require_once 'lib/attributes/relationlib.php';
-	global $attributelib; require_once 'lib/attributes/attributelib.php';
-	global $cachelib; require_once 'lib/cache/cachelib.php';
+	$relationlib = TikiLib::lib('relation');
+	$attributelib = TikiLib::lib('attribute');
+	$cachelib = TikiLib::lib('cache');
 
 	$cacheKey = "$relationId:$end:$title";
 

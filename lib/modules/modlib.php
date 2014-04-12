@@ -69,7 +69,7 @@ class ModLib extends TikiLib
 
 			$result = $this->query($query, array($name,$title,$data,$parse));
 
-			global $cachelib; require_once("lib/cache/cachelib.php");
+			$cachelib = TikiLib::lib('cache');
 			$cachelib->invalidate("user_modules_$name");
 
 			$wikilib = TikiLib::lib('wiki');
@@ -293,7 +293,7 @@ class ModLib extends TikiLib
 		$query = " delete from `tiki_user_modules` where `name`=?";
 		$result = $this->query($query, array($name));
 
-		global $cachelib; require_once("lib/cache/cachelib.php");
+		$cachelib = TikiLib::lib('cache');
 		$cachelib->invalidate('user_modules');
 
 		return true;

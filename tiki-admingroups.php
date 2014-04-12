@@ -176,8 +176,7 @@ if (!empty($_REQUEST['submit_mult']) && !empty($_REQUEST['checked'])) {
 	}
 }
 if (isset($_REQUEST['clean'])) {
-	global $cachelib;
-	require_once ("lib/cache/cachelib.php");
+	$cachelib = TikiLib::lib('cache');
 	check_ticket('admin-groups');
 	$cachelib->invalidate('grouplist');
 	$cachelib->invalidate('groupIdlist');

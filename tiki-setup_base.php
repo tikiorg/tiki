@@ -457,8 +457,7 @@ if (isset($_SESSION["$user_cookie_site"])) {
 	// Example : If using the same PHP SESSION cookies for more than one tiki.
 	$user_details = $userlib->get_user_details($user);
 	if (!is_array($user_details) || !is_array($user_details['info']) || (int) $user_details['info']['lastLogin'] <= 0) {
-		global $cachelib;
-		require_once ('lib/cache/cachelib.php');
+		$cachelib = TikiLib::lib('cache');
 		$cachelib->invalidate('user_details_' . $user);
 		$user_details = $userlib->get_user_details($user);
 		if (!is_array($user_details) || !is_array($user_details['info'])) {

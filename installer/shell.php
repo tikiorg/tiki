@@ -85,6 +85,6 @@ else {
 	
 # Clear caches, since patches often manipulate the database directly without using the functions normally available outside the installer.
 # All caches, even though scripts and patches surely don't affect them all.
-require_once 'lib/cache/cachelib.php';
+$cachelib = TikiLib::lib('cache');
 $cachelib->empty_cache();
 

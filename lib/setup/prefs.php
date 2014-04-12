@@ -38,10 +38,11 @@ initialize_prefs();
 function get_default_prefs()
 {
 	static $prefs;
-	if ( is_array($prefs) )
+	if ( is_array($prefs) ) {
 		return $prefs;
+	}
 
-	global $cachelib; require_once 'lib/cache/cachelib.php';
+	$cachelib = TikiLib::lib('cache');
 	if ( $prefs = $cachelib->getSerialized('tiki_default_preferences_cache') ) {
 		return $prefs;
 	}
@@ -357,7 +358,7 @@ function initialize_prefs($force = false)
 		// Find which preferences need to be serialized/unserialized, based on the default
 		//  values (those with arrays as values) and preferences with special serializations
 		$serializedPreferences = array();
-		global $prefslib; require_once 'lib/prefslib.php';
+		$prefslib = TikiLib::lib('prefs');
 		foreach ( $defaults as $preference => $value ) {
 			if ( is_array($value) || in_array($preference, array('category_defaults', 'memcache_servers'))) {
 				$serializedPreferences[] = $preference;
@@ -394,7 +395,7 @@ function initialize_prefs($force = false)
 
 	if ( $prefs['feature_perspective'] == 'y') {
 		if ( ! isset( $section ) || $section != 'admin' ) {
-			global $perspectivelib; require_once 'lib/perspectivelib.php';
+			$perspectivelib = TikiLib::lib('perspective');
 			if ( $persp = $perspectivelib->get_current_perspective($prefs) ) {
 				$perspectivePreferences = $perspectivelib->get_preferences($persp);
 				$prefs = $perspectivePreferences + $prefs;

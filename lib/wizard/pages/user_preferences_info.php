@@ -98,7 +98,8 @@ class UserWizardPreferencesInfo extends Wizard
 
 	function onContinue ($homepageUrl) 
 	{
-		global $tikilib, $user, $prefs;
+		global $user, $prefs;
+		$tikilib = TikiLib::lib('tiki');
 		
 		$userwatch = $user;
 		
@@ -106,11 +107,11 @@ class UserWizardPreferencesInfo extends Wizard
 		parent::onContinue($homepageUrl);
 		
 		if (isset($_REQUEST["realName"]) && ($prefs['auth_ldap_nameattr'] == '' || $prefs['auth_method'] != 'ldap')) {
-	     $tikilib->set_user_preference($userwatch, 'realName', $_REQUEST["realName"]);
-	     if ( $prefs['user_show_realnames'] == 'y' ) {
-	       global $cachelib;
-	       $cachelib->invalidate('userlink.'.$user.'0');
-	     }
+			$tikilib->set_user_preference($userwatch, 'realName', $_REQUEST["realName"]);
+			if ( $prefs['user_show_realnames'] == 'y' ) {
+				$cachelib = TikiLib::lib('cache');
+				$cachelib->invalidate('userlink.'.$user.'0');
+			}
 		}
 		if ($prefs['feature_community_gender'] == 'y') {
 			if (isset($_REQUEST["gender"])) $tikilib->set_user_preference($userwatch, 'gender', $_REQUEST["gender"]);

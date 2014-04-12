@@ -437,5 +437,3 @@ class CacheLibNoCache
 	}
 }
 
-global $cachelib;
-$cachelib = new Cachelib();

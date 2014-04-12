@@ -14,7 +14,9 @@
  */
 function simple_set_toggle($feature)
 {
-	global $_REQUEST, $tikilib, $prefs, $logslib;
+	global $prefs;
+	$tikilib = TikiLib::lib('tiki');
+	$logslib = TikiLib::lib('logs');
 	if (isset($_REQUEST[$feature]) && $_REQUEST[$feature] == 'on') {
 		if ((!isset($prefs[$feature]) || $prefs[$feature] != 'y')) {
 			// not yet set at all or not set to y
@@ -32,8 +34,8 @@ function simple_set_toggle($feature)
 			}
 		}
 	}
-	global $cachelib;
-	require_once ('lib/cache/cachelib.php');
+
+	$cachelib = TikiLib::lib('cache');
 	$cachelib->invalidate('allperms');
 }
 

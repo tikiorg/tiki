@@ -28,10 +28,13 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
  */
 function smarty_function_icon($params, $smarty)
 {
-	if ( ! is_array($params) )
+	if ( ! is_array($params) ) {
 		$params = array();
+	}
 
-	global $prefs, $tc_theme, $tc_theme_option, $cachelib, $url_path, $base_url, $tikipath, $tikilib;
+	global $prefs, $tc_theme, $tc_theme_option, $url_path, $base_url, $tikipath;
+	$tikilib = TikiLib::lib('tiki');
+	$cachelib = TikiLib::lib('cache');
 
 	if (empty($tc_theme)) {
 		$current_style = $prefs['style'];

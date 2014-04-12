@@ -1644,7 +1644,9 @@ class FileGalLib extends TikiLib
 			$useCache = true;
 		}
 
-		global $cachelib, $user;
+		global $user;
+		$cachelib = TikiLib::lib('cache');
+
 		if ( $useCache ) {
 			$cacheName = 'pid' . $parentId . '_' . $this->get_all_galleries_cache_name($user);
 			$cacheType = $this->get_all_galleries_cache_type();

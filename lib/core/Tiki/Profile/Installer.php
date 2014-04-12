@@ -335,8 +335,9 @@ class Tiki_Profile_Installer
 	 */
 	function install( Tiki_Profile $profile, $empty_cache = 'all' ) // {{{
 	{
-		global $cachelib, $tikidomain, $tikilib;
-		require_once 'lib/cache/cachelib.php';
+		global $tikidomain;
+		$cachelib = TikiLib::lib('cache');
+		$tikilib = TikiLib::lib('tiki');
 
 		try {
 			if ( ! $profiles = $this->getInstallOrder($profile) ) {
