@@ -5,7 +5,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-require_once 'lib/attributes/attributelib.php';
+$attributelib = TikiLib::lib('attribute');
 
 class AttributeTest extends TikiTestCase
 {

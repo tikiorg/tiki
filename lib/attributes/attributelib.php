@@ -100,6 +100,3 @@ class AttributeLib extends TikiDb_Bridge
 	}
 }
 
-global $attributelib;
-$attributelib = new AttributeLib;
-

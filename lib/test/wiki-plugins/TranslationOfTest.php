@@ -7,7 +7,7 @@
 
 require_once('lib/wiki-plugins/wikiplugin_translationof.php');
 require_once('lib/test/TestHelpers.php');
-require_once('lib/attributes/relationlib.php');
+$relationlib = TikiLib::lib('relation');
 
 class WikiPlugin_TranslationOfTest extends TikiTestCase
 {
@@ -68,7 +68,9 @@ class WikiPlugin_TranslationOfTest extends TikiTestCase
 
     public function test_create_page_that_contains_a_TranslationOf_plugin_generates_an_object_relation()
     {
-        global $testhelpers, $tikilib, $relationlib;
+        global $testhelpers;
+		$tikilib = TikiLib::lib('tiki');
+		$relationlib = TikiLib::lib('relation');
 
         // Make sure the page doesn't exist to start with.
         $tikilib->remove_all_versions($this->page_containing_plugin);

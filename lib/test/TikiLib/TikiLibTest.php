@@ -36,7 +36,9 @@ class TikiLibTest extends TikiTestCase {
 
     public function test__remove_all_versions__Removes_all_relations_also()
     {
-        global $tikilib, $testhelpers, $relationlib;
+        global $testhelpers;
+		$relationlib = TikiLib::lib('relation');
+		$tikilib = TikiLib::lib('tiki');
 
         $testhelpers->create_page($this->some_page_name1, 0, "Hello from ".$this->some_page_name1);
         $testhelpers->create_page($this->some_page_name2, 0, "Hello from ".$this->some_page_name2);

@@ -102,7 +102,9 @@ class ArtLib extends TikiLib
 
 	function remove_article($articleId, $article_data ='')
 	{
-		global $smarty, $tikilib, $user, $prefs;
+		global $user, $prefs;
+		$smarty = TikiLib::lib('smarty');
+		$tikilib = TikiLib::lib('tiki');
 
 		if ($articleId) {
 			if (empty($article_data)) $article_data = $this->get_article($articleId);
@@ -213,7 +215,9 @@ class ArtLib extends TikiLib
 														, $isfloat = 'n'
 														)
 	{
-		global $smarty, $tiki_p_autoapprove_submission, $tikilib, $dbTiki, $prefs;
+		global $tiki_p_autoapprove_submission, $prefs;
+		$smarty = TikiLib::lib('smarty');
+		$tikilib = TikiLib::lib('tiki');
 
 		if ($expireDate < $publishDate) {
 			$expireDate = $publishDate;
@@ -222,10 +226,7 @@ class ArtLib extends TikiLib
 		if (empty($imgdata))
 			$imgdata = '';
 
-		global $notificationlib;
-		if (!is_object($notificationlib)) {
-			require_once('lib/notifications/notificationlib.php');
-		}
+		$notificationlib = TikiLib::lib('notification');
 		$hash = md5($title . $heading . $body);
 		$query = 'select `name` from `tiki_topics` where `topicId` = ?';
 		$topicName = $this->getOne($query, array((int) $topicId));
@@ -304,7 +305,7 @@ class ArtLib extends TikiLib
 				sendEmailNotification($nots, 'watch', 'submission_notification_subject.tpl', $_SERVER['SERVER_NAME'], 'submission_notification.tpl');
 			}
 		}
-		global $tikilib;
+		$tikilib = TikiLib::lib('tiki');
 		$tikilib->object_post_save(
 			array(
 				'type' => 'submission',
@@ -351,7 +352,8 @@ class ArtLib extends TikiLib
 												)
 	{
 
-		global $smarty, $tikilib;
+		$tikilib = TikiLib::lib('tiki');
+		$smarty = TikiLib::lib('smarty');
 
 		if ($expireDate < $publishDate) {
 			$expireDate = $publishDate;
@@ -496,7 +498,7 @@ class ArtLib extends TikiLib
 		require_once('lib/search/refresh-functions.php');
 		refresh_index('articles', $articleId);
 
-		global $tikilib;
+		$tikilib = TikiLib::lib('tiki');
 		$tikilib->object_post_save(
 			array(
 				'type' => 'article',
@@ -1219,7 +1221,7 @@ class ArtLib extends TikiLib
 		}
 
 		if ( $prefs['rating_advanced'] == 'y' ) {
-			global $ratinglib; require_once 'lib/rating/ratinglib.php';
+			$ratinglib = TikiLib::lib('rating');
 			$fromSql .= $ratinglib->convert_rating_sort($sort_mode, 'article', '`articleId`');
 		}
 
@@ -1483,13 +1485,9 @@ class ArtLib extends TikiLib
 
 	function add_article_type_attribute($artType, $attributeName)
 	{
-		global $relationlib, $attributelib;
-		if (!is_object($relationlib)) {
-			include_once('lib/attributes/relationlib.php');
-		}
-		if (!is_object($attributelib)) {
-			include_once('lib/attributes/attributelib.php');
-		}
+		$relationlib = TikiLib::lib('relation');
+		$attributelib = TikiLib::lib('attribute');
+
 		$fullAttributeName = TikiFilter::get('attribute_type')->filter(trim('tiki.article.' . $attributeName));
 		$relationId = $relationlib->add_relation('tiki.article.attribute', 'articletype', $artType, 'attribute', $fullAttributeName);
 		if (!$relationId) {
@@ -1502,10 +1500,7 @@ class ArtLib extends TikiLib
 
 	function delete_article_type_attribute($artType, $relationId)
 	{
-		global $relationlib;
-		if (!is_object($relationlib)) {
-			include_once('lib/attributes/relationlib.php');
-		}
+		$relationlib = TikiLib::lib('relation');
 		// double check relation is associated with article type before deleting
 		$currentAttributes = $relationlib->get_relations_from('articletype', $artType, 'tiki.article.attribute');
 		foreach ($currentAttributes as $att) {
@@ -1518,14 +1513,8 @@ class ArtLib extends TikiLib
 
 	function get_article_type_attributes($artType, $orderby = '')
 	{
-		global $relationlib, $attributelib;
-
-		if (!is_object($relationlib)) {
-			include_once('lib/attributes/relationlib.php');
-		}
-		if (!is_object($attributelib)) {
-			include_once('lib/attributes/attributelib.php');
-		}
+		$relationlib = TikiLib::lib('relation');
+		$attributelib = TikiLib::lib('attribute');
 
 		$attributes = $relationlib->get_relations_from('articletype', $artType, 'tiki.article.attribute', $orderby);
 		$ret = array();
@@ -1541,10 +1530,7 @@ class ArtLib extends TikiLib
 	function set_article_attributes($articleId, $attributeArray, $isSubmission = false)
 	{
 		// expects attributeArray in the form of $key=>$val where $key is tiki.article.xxxx and $val is value
-		global $attributelib;
-		if (!is_object($attributelib)) {
-			include_once('lib/attributes/attributelib.php');
-		}
+		$attributelib = TikiLib::lib('attribute');
 		if ($isSubmission) {
 			$type = 'submission';
 		} else {
@@ -1552,19 +1538,16 @@ class ArtLib extends TikiLib
 		}
 		$currentAtt = $this->get_article_attributes($articleId);
 		foreach ($attributeArray as $name => $value) {
-				if ( !in_array($name, array_keys($currentAtt)) || $value != $currentAtt[$name]['value'] ) {
-					$attributelib->set_attribute($type, $articleId, $name, $value);
-				}
+			if ( !in_array($name, array_keys($currentAtt)) || $value != $currentAtt[$name]['value'] ) {
+				$attributelib->set_attribute($type, $articleId, $name, $value);
+			}
 		}
 		return true;
 	}
 
 	function get_article_attributes($articleId, $isSubmission = false)
 	{
-		global $attributelib;
-		if (!is_object($attributelib)) {
-			include_once('lib/attributes/attributelib.php');
-		}
+		$attributelib = TikiLib::lib('attribute');
 
 		if ($isSubmission) {
 			$type = 'submission';
@@ -1599,7 +1582,7 @@ class ArtLib extends TikiLib
 	 */
 	function get_related_articles($articleId, $maxResults = 5)
 	{
-		global $freetaglib;
+		$freetaglib = TikiLib::lib('freetag');
 		$relatedArticles = $freetaglib->get_similar('article', $articleId);
 
 		foreach ($relatedArticles as $key => $article) {

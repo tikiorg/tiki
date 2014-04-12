@@ -54,12 +54,12 @@ class SheetLib extends TikiLib
 
 	//general relationships management
 	function add_relate($type, $sheetId, $childId) {
-		global $relationlib; require_once('lib/attributes/relationlib.php');
+		$relationlib = TikiLib::lib('relation');
 		$relationlib->add_relation("tiki.sheet.".$type, "sheetId", $sheetId, $type."Id", $childId);
 	}
 
 	function remove_relate($type, $sheetId, $childId) {
-		global $relationlib; require_once('lib/attributes/relationlib.php');
+		$relationlib = TikiLib::lib('relation');
 		foreach ($relationlib->get_relations_from("sheetId", $sheetId, "tiki.sheet.".$type) as $result) {
 			if ($result['itemId'] == $childId) {
 				$relationlib->remove_relation($result['relationId']);
@@ -68,7 +68,7 @@ class SheetLib extends TikiLib
 	}
 
 	function get_relate_all($type, $sheetId, $inverted = false) {
-		global $relationlib; require_once('lib/attributes/relationlib.php');
+		$relationlib = TikiLib::lib('relation');
 		$entityIds = array();
 		if ($inverted == true) {
 			foreach ($relationlib->get_relations_to("sheetId", $sheetId, "tiki.sheet.".$type) as $result) {

@@ -140,7 +140,8 @@ class RatingLib extends TikiDb_Bridge
 
 	function record_user_vote( $user, $type, $objectId, $score, $time = null )
 	{
-		global $tikilib, $prefs;
+		global $prefs;
+		$tikilib = TikiLib::lib('tiki');
 		if ( ! $this->is_valid($type, $score, $objectId) ) {
             return false;
 		}
@@ -203,7 +204,7 @@ class RatingLib extends TikiDb_Bridge
 				break;
 		}
 
-		global $tikilib;
+		$tikilib = TikiLib::lib('tiki');
 
 		$override = $this->get_override($type, $objectId);
 
@@ -216,7 +217,6 @@ class RatingLib extends TikiDb_Bridge
 
 	function set_override($type, $objectId, $value)
 	{
-		global $attributelib;
 		$options = $this->override_array($type);
 
 		$attributelib->set_attribute($type, $objectId, $type.".rating.override", $options[$value - 1]);
@@ -224,8 +224,7 @@ class RatingLib extends TikiDb_Bridge
 
 	function get_override($type, $objectId)
 	{
-		global $attributelib;
-		require_once('lib/attributes/attributelib.php');
+		$attributelib = TikiLib::lib('attribute');
 		$attrs = $attributelib->get_attributes($type, $objectId);
 		end($attrs);
 		$key = key($attrs);
@@ -517,7 +516,7 @@ class RatingLib extends TikiDb_Bridge
 
 	private function internal_refresh_rating( $type, $object, $runner, $configurations )
 	{
-		global $ratingconfiglib; require_once 'lib/rating/configlib.php';
+		$ratingconfiglib = TikiLib::lib('ratingconfig');
 		$runner->setVariables(array('type' => $type, 'object-id' => $object));
 
 		foreach ( $configurations as $config ) {

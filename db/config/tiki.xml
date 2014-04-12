@@ -8,6 +8,9 @@
 
 	-->
 	<services>
+		<service id="tiki.lib.attribute" class="AttributeLib">
+			<file>%kernel.root_dir%/lib/attributes/attributelib.php</file>
+		</service>
 		<service id="tiki.lib.cache" class="CacheLib">
 			<file>%kernel.root_dir%/lib/cache/cachelib.php</file>
 		</service>
@@ -40,6 +43,9 @@
 		</service>
 		<service id="tiki.lib.object" class="ObjectLib">
 			<file>%kernel.root_dir%/lib/objectlib.php</file>
+		</service>
+		<service id="tiki.lib.relation" class="RelationLib">
+			<file>%kernel.root_dir%/lib/attributes/relationlib.php</file>
 		</service>
 		<service id="tiki.lib.score" class="ScoreLib">
 			<file>%kernel.root_dir%/lib/score/scorelib.php</file>

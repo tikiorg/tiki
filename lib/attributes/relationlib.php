@@ -221,5 +221,3 @@ class RelationLib extends TikiDb_Bridge
 	}
 }
 
-global $relationlib;
-$relationlib = new RelationLib;

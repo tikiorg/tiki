@@ -991,7 +991,8 @@ class CategLib extends ObjectLib
 	// Format a list of objects in the given categories, returning HTML code.
 	function get_categoryobjects($catids,$types="*",$sort='created_desc',$split=true,$sub=false,$and=false, $maxRecords = 500, $filter=null, $displayParameters = array())
 	{
-		global $smarty, $prefs, $user;
+		global $prefs, $user;
+		$smarty = TikiLib::lib('smarty');
 
 		$typetokens = array(
 			"article" => "article",
@@ -1237,7 +1238,7 @@ class CategLib extends ObjectLib
 	 */
 	function watch_category($user, $categId, $categName)
 	{
-		global $tikilib;
+		$tikilib = TikiLib::lib('tiki');
 		if ($categId != 0) {
 			$name = $this->get_category_path_string_with_root($categId);
 			$tikilib->add_user_watch(
@@ -1258,7 +1259,7 @@ class CategLib extends ObjectLib
 	 */
 	function watch_category_and_descendants($user, $categId, $categName)
 	{
-		global $tikilib;
+		$tikilib = TikiLib::lib('tiki');
 
 		if ($categId != 0) {
 			$tikilib->add_user_watch(
@@ -1289,7 +1290,7 @@ class CategLib extends ObjectLib
 
 	function group_watch_category_and_descendants($group, $categId, $categName = NULL, $top = true)
 	{
-		global $tikilib;
+		$tikilib = TikiLib::lib('tiki');
 
 		if ($categId != 0 && $top == true) {
 			$tikilib->add_group_watch(
@@ -1327,7 +1328,7 @@ class CategLib extends ObjectLib
 	 */
 	function unwatch_category($user, $categId)
 	{
-		global $tikilib;
+		$tikilib = TikiLib::lib('tiki');
 
 		$tikilib->remove_user_watch($user, 'category_changed', $categId, 'Category');
 	}
@@ -1339,7 +1340,7 @@ class CategLib extends ObjectLib
 	 */
 	function unwatch_category_and_descendants($user, $categId)
 	{
-		global $tikilib;
+		$tikilib = TikiLib::lib('tiki');
 
 		$tikilib->remove_user_watch($user, 'category_changed', $categId, 'Category');
 		$descendants = $this->get_category_descendants($categId);
@@ -1350,7 +1351,7 @@ class CategLib extends ObjectLib
 
 	function group_unwatch_category_and_descendants($group, $categId, $top = true)
 	{
-		global $tikilib;
+		$tikilib = TikiLib::lib('tiki');
 
 		if ($categId != 0 && $top == true) {
 			$tikilib->remove_group_watch($group, 'category_changed', $categId, 'Category');
@@ -1461,7 +1462,7 @@ class CategLib extends ObjectLib
 	 */
 	function get_watching_categories($objId, $objType, $user)
 	{
-		global $tikilib;
+		$tikilib = TikiLib::lib('tiki');
 
 		$categories=$this->get_object_categories($objType, $objId);
 		$watchedCategories=$tikilib->get_user_watches($user, "category_changed");
@@ -1608,16 +1609,10 @@ class CategLib extends ObjectLib
 						$geonames = explode('::', $g["name"]);
 						$geonames = array_reverse($geonames);
 						$geoloc = implode(',', $geonames);
-						global $geolib;
-						if (!is_object($geolib)) {
-							include_once('lib/geo/geolib.php');
-						}
+						$geolib = TikiLib::lib('geo');
 						$geocode = $geolib->geocode($geoloc);
 						if ($geocode) {
-							global $attributelib;
-							if (!is_object($attributelib)) {
-								include_once('lib/attributes/attributelib.php');
-							}
+							$attributelib = TikiLib::lib('attribute');
 							if ($prefs["category_autogeocode_replace"] != 'y') {
 								$attributes = $attributelib->get_attributes($objType, $objId);
 								if ( !isset($attributes['tiki.geo.lon']) || !isset($attributes['tiki.geo.lat']) ) {
@@ -1721,7 +1716,7 @@ class CategLib extends ObjectLib
 	// generate category tree for use in various places (like categorize_list.php)
 	function generate_cat_tree($categories, $canchangeall = false, $forceincat = null)
 	{
-		global $smarty;
+		$smarty = TikiLib::lib('smarty');
 		include_once ('lib/tree/BrowseTreeMaker.php');
 		$tree_nodes = array();
 		$roots = $this->findRoots($categories);

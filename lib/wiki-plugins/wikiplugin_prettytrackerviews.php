@@ -51,7 +51,7 @@ function wikiplugin_prettytrackerviews_info()
 
 function wikiplugin_prettytrackerviews( $data, $params )
 {
-	global $attributelib; require_once 'lib/attributes/attributelib.php';
+	$attributelib = TikiLib::lib('attribute');
 	if (empty($params['itemId']) && !is_int($params['itemId'])) {
 		return '';
 	}

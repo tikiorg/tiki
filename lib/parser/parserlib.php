@@ -775,7 +775,8 @@ if ( \$('#$id') ) {
 	//*
 	function plugin_fingerprint_check( $fp, $dont_modify = false )
 	{
-		global $tikilib, $user;
+		global $user;
+		$tikilib = TikiLib::lib('tiki');
 		$limit = date('Y-m-d H:i:s', time() - 15*24*3600);
 		$result = $this->query("SELECT `status`, if (`status`='pending' AND `last_update` < ?, 'old', '') flag FROM `tiki_plugin_security` WHERE `fingerprint` = ?", array( $limit, $fp ));
 
@@ -820,7 +821,8 @@ if ( \$('#$id') ) {
 	//*
 	function plugin_fingerprint_store( $fp, $type )
 	{
-		global $tikilib, $prefs, $user;
+		global $prefs, $user;
+		$tikilib = TikiLib::lib('tiki');
 		if ( $this->option['page'] ) {
 			$objectType = 'wiki page';
 			$objectId = $this->option['page'];
@@ -839,7 +841,7 @@ if ( \$('#$id') ) {
 	//*
 	function plugin_clear_fingerprint( $fp )
 	{
-		global $tikilib;
+		$tikilib = TikiLib::lib('tiki');
 		$pluginSecurity = $tikilib->table('tiki_plugin_security');
 		$pluginSecurity->delete(array('fingerprint' => $fp));
 	}
@@ -847,14 +849,15 @@ if ( \$('#$id') ) {
 	//*
 	function list_plugins_pending_approval()
 	{
-		global $tikilib;
+		$tikilib = TikiLib::lib('tiki');
 		return $tikilib->fetchAll("SELECT `fingerprint`, `added_by`, `last_update`, `last_objectType`, `last_objectId` FROM `tiki_plugin_security` WHERE `status` = 'pending' ORDER BY `last_update` DESC");
 	}
 
 	//*
 	function approve_all_pending_plugins()
 	{
-		global $tikilib, $user;
+		global $user;
+		$tikilib = TikiLib::lib('tiki');
 
 		$pluginSecurity = $tikilib->table('tiki_plugin_security');
 		$pluginSecurity->updateMultiple(array('status' => 'accept', 'approval_by' => $user), array('status' => 'pending',));
@@ -863,7 +866,8 @@ if ( \$('#$id') ) {
 	//*
 	function approve_selected_pending_plugings($fp)
 	{
-		global $tikilib, $user;
+		global $user;
+		$tikilib = TikiLib::lib('tiki');
 
 		$pluginSecurity = $tikilib->table('tiki_plugin_security');
 		$pluginSecurity->update(array('status' => 'accept', 'approval_by' => $user), array('fingerprint' => $fp));
@@ -1155,7 +1159,7 @@ if ( \$('#$id') ) {
 	//*
 	private function plugin_apply_filters( $name, & $data, & $args )
 	{
-		global $tikilib;
+		$tikilib = TikiLib::lib('tiki');
 
 		$info = $this->plugin_info($name);
 
@@ -1267,7 +1271,7 @@ if ( \$('#$id') ) {
 	//*
 	function quotesplit( $splitter = ',', $repl_string = '' )
 	{
-		global $tikilib;
+		$tikilib = TikiLib::lib('tiki');
 		$matches = preg_match_all('/"[^"]*"/', $repl_string, $quotes);
 
 		$quote_keys = array();
@@ -1323,7 +1327,9 @@ if ( \$('#$id') ) {
 	//*
 	function autolinks($text)
 	{
-		global $tikilib, $prefs, $smarty;
+		global $prefs;
+		$smarty = TikiLib::lib('smarty');
+		$tikilib = TikiLib::lib('tiki');
 		//	check to see if autolinks is enabled before calling this function
 		//		if ($prefs['feature_autolinks'] == "y") {
 		$attrib = '';
@@ -1469,7 +1475,7 @@ if ( \$('#$id') ) {
 	//*
 	function parse_data($data, $option = array())
 	{
-		global $tikilib;
+		$tikilib = TikiLib::lib('tiki');
 		// Don't bother if there's nothing...
 		if (function_exists('mb_strlen')) {
 			if ( mb_strlen($data) < 1 ) {
@@ -1772,7 +1778,8 @@ if ( \$('#$id') ) {
 
 	private function parse_data_externallinks( $data, $suppress_icons = false )
 	{
-		global $tikilib, $prefs;
+		global $prefs;
+		$tikilib = TikiLib::lib('tiki');
 
 		// *****
 		// This section handles external links of the form [url] and such.
@@ -1992,7 +1999,10 @@ if ( \$('#$id') ) {
 	//*
 	function parse_wiki_argvariable(&$data)
 	{
-		global $prefs, $user, $smarty, $tikilib;
+		global $prefs, $user;
+		$tikilib = TikiLib::lib('tiki');
+		$smarty = TikiLib::lib('smarty');
+
 		if ( $prefs['feature_wiki_argvariable'] == 'y' && !$this->option['ck_editor'] ) {
 			if (preg_match_all("/\\{\\{((\w+)(\\|([^\\}]*))?)\\}\\}/", $data, $args, PREG_SET_ORDER)) {
 				$needles = array();
@@ -2044,8 +2054,7 @@ if ( \$('#$id') ) {
 							break;	
 						}
 					case 'lastVersion':
-						global $histlib;
-						include_once ('lib/wiki/histlib.php');
+						$histlib = TikiLib::lib('hist');
 						// get_page_history arguments: page name, page contents (set to "false" to save memory), history_offset (none, therefore "0"), max. records (just one for this case);
 						$history = $histlib->get_page_history($this->option['page'], false, 0, 1);
 						if ($history[0]['version'] != null) {
@@ -2056,8 +2065,7 @@ if ( \$('#$id') ) {
 							break;	
 						}
 					case 'lastAuthor':
-				        global $histlib;
-				        include_once ('lib/wiki/histlib.php');
+				        $histlib = TikiLib::lib('hist');
    				        
 				        // get_page_history arguments: page name, page contents (set to "false" to save memory), history_offset (none, therefore "0"), max. records (just one for this case);
 				        $history = $histlib->get_page_history($this->option['page'], false, 0, 1);
@@ -2074,8 +2082,7 @@ if ( \$('#$id') ) {
 				            break;  
 				        }
 					case 'lastModif':
-						global $histlib;
-						include_once ('lib/wiki/histlib.php');
+						$histlib = TikiLib::lib('hist');
 						// get_page_history arguments: page name, page contents (set to "false" to save memory), history_offset (none, therefore "0"), max. records (just one for this case);
 						$history = $histlib->get_page_history($this->option['page'], false, 0, 1);
 						if ($history[0]['lastModif'] != null) {
@@ -2232,7 +2239,7 @@ if ( \$('#$id') ) {
 	//*
 	private function get_dynamic_variable( $name, $lang = null )
 	{
-		global $tikilib;
+		$tikilib = TikiLib::lib('tiki');
 		$result = $tikilib->table('tiki_dynamic_variables')->fetchAll(array('data', 'lang'), array('name' => $name));
 
 		$value = "NaV";
@@ -2254,7 +2261,8 @@ if ( \$('#$id') ) {
 	private function parse_data_process_maketoc( &$data, $noparsed)
 	{
 
-		global $tikilib, $prefs;
+		global $prefs;
+		$tikilib = TikiLib::lib('tiki');
 
 		$this->makeTocCount++;
 
@@ -2967,8 +2975,9 @@ if ( \$('#$id') ) {
 	//*
 	function get_wiki_link_replacement( $pageLink, $extra = array(), $ck_editor = false )
 	{
-		global $tikilib, $prefs;
+		global $prefs;
 		$wikilib = TikiLib::lib('wiki');
+		$tikilib = TikiLib::lib('tiki');
 
 		// Fetch all externals once
 		static $externals = false;
@@ -3147,7 +3156,8 @@ if ( \$('#$id') ) {
 	//*
 	function get_pages($data,$withReltype = false)
 	{
-		global $page_regex, $prefs, $tikilib;
+		global $page_regex, $prefs;
+		$tikilib = TikiLib::lib('tiki');
 
 		$matches = WikiParser_PluginMatcher::match($data);
 		foreach ( $matches as $match ) {
@@ -3252,7 +3262,7 @@ if ( \$('#$id') ) {
 
 	private function get_hotwords()
 	{
-		global $tikilib;
+		$tikilib = TikiLib::lib('tiki');
 		static $cache_hotwords;
 		if ( isset($cache_hotwords) ) {
 			return $cache_hotwords;
@@ -3274,7 +3284,7 @@ if ( \$('#$id') ) {
      */
     public function add_translationof_relation($data, $arguments, $page_being_parsed)
     {
-        global $relationlib;
+        $relationlib = TikiLib::lib('relation');
 
         $relationlib->add_relation('tiki.wiki.translationof', 'wiki page', $page_being_parsed, 'wiki page', $arguments['translation_page']);
 
