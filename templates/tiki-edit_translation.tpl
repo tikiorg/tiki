@@ -1,6 +1,6 @@
 {title help="i18n" admpage="i18n"}{tr}Translate:{/tr} {$name}{if isset($languageName)} ({$languageName}, {$langpage}){/if}{/title}
 
-<div class="t_navbar">
+<div class="navbar">
 	{if $type eq 'wiki page'}
 		{assign var=thisname value=$name|escape:'url'}
 		{button href="tiki-index.php?page=$thisname&no_bl=y" _text="{tr}View Page{/tr}"}
@@ -118,37 +118,40 @@ function validate_translation_request() {
 
 <a name="change_language"></a>
 <h3>{tr}Change language for this page{/tr}</h3>
-<form method="post" action="tiki-edit_translation.php">
-<div>
-	<select name="langpage">
-		<option value="">{tr}Unspecified{/tr}</option>
-		{foreach item=lang from=$languages}
-		<option value="{$lang.value|escape}">{$lang.name}</option>
-		{/foreach}
-	</select>
-	<input type="hidden" name="id" value="{$id}">
-	<input type="hidden" name="type" value="{$type}">
-	<input type="submit" class="btn btn-default btn-sm" name="switch" value="{tr}Change Language{/tr}">
-</div>
+<form method="post" action="tiki-edit_translation.php" class="form">
+	<div class="input-group">
+		<select name="langpage" class="form-control">
+			<option value="">{tr}Unspecified{/tr}</option>
+			{foreach item=lang from=$languages}
+				<option value="{$lang.value|escape}">{$lang.name}</option>
+			{/foreach}
+		</select>
+		<div class="input-group-btn">
+			<input type="hidden" name="id" value="{$id}">
+			<input type="hidden" name="type" value="{$type}">
+			<input type="submit" class="btn btn-primary" name="switch" value="{tr}Change Language{/tr}">
+		</div>
+	</div>
 </form>
 
 {else}
-	<div class="panel panel-default"><div class="panel-body">
-		{icon _id=delete alt="{tr}Alert{/tr}" style="vertical-align:middle"} 
+	{remarksbox type="error" title="{tr}Error{/tr}"}
 		{tr}No language is assigned to this page.{/tr}
-	</div></div>
-	<p>{tr}Please select a language before performing translation.{/tr}</p>
-	<form method="post" action="tiki-edit_translation.php">
-		<p>
-			<select name="langpage">
+	{/remarksbox}
+	<strong>{tr}Please select a language before performing translation.{/tr}</strong>
+	<form method="post" action="tiki-edit_translation.php" class="form">
+		<div class="input-group">
+			<select name="langpage" class="form-control">
 				{foreach item=lang from=$languages}
-				<option value="{$lang.value|escape}">{$lang.name}</option>
+					<option value="{$lang.value|escape}">{$lang.name}</option>
 				{/foreach}
 			</select>
-			<input type="hidden" name="id" value="{$id}">
-			<input type="hidden" name="type" value="{$type|escape}">
-			<input type="submit" class="btn btn-default btn-sm" value="{tr}Set Current Page's Language{/tr}">
-		</p>
+			<div class="input-group-btn">
+				<input type="hidden" name="id" value="{$id}">
+				<input type="hidden" name="type" value="{$type|escape}">
+				<input type="submit" class="btn btn-primary" value="{tr}Set Page Language{/tr}">
+			</div>
+		</div>
 	</form>
 {/if}
 {jq}
