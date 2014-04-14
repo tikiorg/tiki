@@ -923,10 +923,10 @@ tiki_setup_default() {
 			o)	WHAT=${DEFAULT_WHAT} ; command_open ;;
 			c)	WHAT=$WHAT_NEXT_AFTER_c ; composer ;;
 			C)	WHAT=$WHAT_NEXT_AFTER_c ; composer ;;
-			q)	exit ;;
-			Q)	exit ;;
-			x)	exit ;;
-			X)	exit ;;
+			q)	echo ""; exit ;;
+			Q)	echo ""; exit ;;
+			x)	echo ""; exit ;;
+			X)	echo ""; exit ;;
 			*)	WHAT='x'; echo 'no such command' ;;
 		esac
 	done
