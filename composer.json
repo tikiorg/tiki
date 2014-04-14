@@ -13,6 +13,7 @@
 		"ckeditor/ckeditor/skins/kama": "4.3.0",
 		"ckeditor/ckeditor/plugins/divarea": "4.3.0",
 		"codemirror/codemirror": "3.19",
+		"dompdf/dompdf": "0.6.1",
 		"ezyang/htmlpurifier": "4.5.0",
 		"fivefilters/php-readability": "1.0",
 		"jcapture-applet/jcapture-applet": "dev-master",
