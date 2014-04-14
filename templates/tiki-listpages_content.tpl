@@ -370,7 +370,7 @@
 {if $checkboxes_on eq 'y' && count($listpages) > 0} {* what happens to the checked items? *}
 	<p align="left"> {*on the left to have it close to the checkboxes*}
 		<label for="submit_mult">{tr}Perform action with checked:{/tr}</label>
-		<select name="submit_mult" id="submit_mult" onchange="this.form.submit();">
+		<select name="submit_mult" class="form-control" id="submit_mult" onchange="this.form.submit();">
 			<option value="" selected="selected">...</option>
 			{if $tiki_p_remove eq 'y'} 
 				<option value="remove_pages" >{tr}Remove{/tr}</option>
