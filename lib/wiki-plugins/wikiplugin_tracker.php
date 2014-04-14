@@ -1299,7 +1299,7 @@ function wikiplugin_tracker($data, $params)
 				}
 			}
 			if ($params['formtag'] == 'y') {
-				$back .= '<form name="editItemForm' . $iTRACKER . '" id="editItemForm' . $iTRACKER . '" enctype="multipart/form-data" method="post"'.(isset($target)?' target="'.$target.'"':'').' action="'. $_SERVER['REQUEST_URI'] .'"><input type="hidden" name="trackit" value="'.$trackerId.'" />';
+				$back .= '<form class="form-horizontal" name="editItemForm' . $iTRACKER . '" id="editItemForm' . $iTRACKER . '" enctype="multipart/form-data" method="post"'.(isset($target)?' target="'.$target.'"':'').' action="'. $_SERVER['REQUEST_URI'] .'"><input type="hidden" name="trackit" value="'.$trackerId.'" />';
 				$back .= '<input type="hidden" name="refresh" value="1" />';
 			}
 			$back .= '<input type="hidden" name="iTRACKER" value="'.$iTRACKER.'" />';
@@ -1373,9 +1373,9 @@ function wikiplugin_tracker($data, $params)
 
 			// Loop on tracker fields and display form
 			if (empty($tpl) && empty($wiki)) {
-				$back.= '<table class="wikiplugin_tracker">';
+			$back.= '<div class="wikiplugin_tracker">';
 				if (!empty($showstatus) && $showstatus == 'y') {
-					$back .= '<tr><td>'.tra('Status').'</td><td>'.$status_input.'</td></tr>';
+					$back .= '<div class="alert alert-info">'.tra('Status').$status_input.'</div>'; // <tr><td>'.tra('Status').'</td><td>'.$status_input.'</td></tr>
 				}
 				if ($registration == 'y' && $prefs["user_register_prettytracker"] != 'y') {
 					$back .= $smarty->fetch('register-form.tpl');
@@ -1416,7 +1416,7 @@ function wikiplugin_tracker($data, $params)
 							$smarty->assign('f_'.$f['permName'], $prettyout);
 						}
 					} else {
-						$back.= '<tr><td class="tracker_input_label"';
+						$back.= '<div class="form-group tracker_input_label"'; // <tr><td class="tracker_input_label"
 
 						// If type is has a samerow param and samerow is "No", show text on one line and the input field on the next
 						$isTextOnSameRow = true;
@@ -1452,20 +1452,21 @@ function wikiplugin_tracker($data, $params)
 						if (!empty($colwidth)) {
 							$back .= " width='".$colwidth."'";
 						}
-						$back .= '><label for="' . $f['ins_id'] . '">'
-									. wikiplugin_tracker_name($f['fieldId'], tra($f['name']), $field_errors) . '</label>';
+						$back .= '><label class="col-md-3 control-label" for="' . $f['ins_id'] . '">' // ><label for="'
+									. wikiplugin_tracker_name($f['fieldId'], tra($f['name']), $field_errors); //
 						if ($showmandatory == 'y' and $f['isMandatory'] == 'y') {
 							$back.= "&nbsp;<strong class='mandatory_star'>*</strong>&nbsp;";
 						}
+                        $back .= '</label>';
 						// If use different lines, add a line break.
 						// Otherwise a new column
 						if (!$isTextOnSameRow) {
 							$back.= "<br/>";
 						} else {
-							$back.= '</td><td class="tracker_input_value">';
+							$back.= '<div class="col-md-9 tracker_input_value">'; // '</td><td class="tracker_input_value">';
 						}
 
-						$back .= wikiplugin_tracker_render_input($f, $item, $dynamicSave);
+						$back .= wikiplugin_tracker_render_input($f, $item, $dynamicSave)."</div></div>"; // chibaguy added /divs
 					}
 
 					if ($f['type'] != 'S' && empty($tpl) && empty($wiki)) {
@@ -1485,18 +1486,18 @@ function wikiplugin_tracker($data, $params)
 			}
 			if ( isset($params['fieldsfill']) && !empty($params['fieldsfill']) && empty($itemId) ) {
 				// $back.= '<tr><td><label for="ins_fill">' . tra("Create multiple items (one per line).") . '</label>';
-				$back.= '<tr><td><label for="ins_fill">' . tra("Insert one item per line:")
+				$back.= '<div class="form-group"><label class="col-md-3" for="ins_fill">' . tra("Insert one item per line:") // <tr><td><label for="ins_fill">
 					. '<br />'
 					. '<br />'
 					. '<br />'
 					. '</label>';
 				$back.= <<<FILL
-</td><td>
+// </td><td>
 <input type="hidden" value="" name="mode_wysiwyg"/>
 <input type="hidden" value="" name="mode_normal"/>
 <div class="edit-zone">
-<textarea id="ins_fill" class="wikiedit" style="width: 99%;" data-syntax="" data-codemirror="" onkeyup="" rows="15" cols="50" name="ins_fill" >
-</textarea >
+<textarea id="ins_fill" class="wikiedit class="form-control" data-syntax="" data-codemirror="" onkeyup="" rows="15" name="ins_fill" >
+</textarea>
 </div>
 <input type="hidden" value="n" name="wysiwyg"/>
 <div name="ins_fill_desc" class="trackerplugindesc" >
@@ -1504,7 +1505,7 @@ FILL;
 				$back.= sprintf(tra('Each line is a list of %d field values separated with: %s'), $fill_line_cant, htmlspecialchars($fieldsfillseparator));
 				$back .= '</div><div name="ins_fill_desc2" class="trackerplugindesc" >' . htmlspecialchars(implode($fieldsfillseparator, $fieldsfillnames));
 				$back .= '</div>';
-				$back .= '</td></tr>';
+			//	$back .= '</td></tr>';
 			}
 			if ($prefs['feature_antibot'] == 'y' && (empty($user) || (!empty($user) && isset($_REQUEST['error']) && $_REQUEST['error'] == 'y'))) {
 				$smarty->assign('showantibot', true);
@@ -1537,13 +1538,13 @@ FILL;
 				$back .= $smarty->fetch('antibot.tpl');
 			}
 			if (empty($tpl) && empty($wiki)) {
-				$back.= "</table>";
+			$back.= "</table>";
 			} else {
 				$back .= '</div>';
 			}
 
 			if ($params['formtag'] == 'y') {
-				$back .= '<div class="input_submit_container">';
+				$back .= '<div class="input_submit_container text-center btn-bar">';
 
 				if (!empty($reset)) {
 					$back .= '<input class="button submit preview" type="reset" name="tr_reset" value="'.tra($reset).'" />';
@@ -1557,7 +1558,7 @@ FILL;
 				$back .= '</div>';
 			}
 			if ($showmandatory == 'y' and $onemandatory) {
-				$back.= "<em class='mandatory_note'>".tra("Fields marked with a * are mandatory.")."</em>";
+				$back.= "<div class='text-center'><em class='mandatory_note'>".tra("Fields marked with a * are mandatory.")."</em></div>";
 			}
 			if ($params['formtag'] == 'y') {
 				$back.= '</form>';
