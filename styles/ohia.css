@@ -1,4 +1,4 @@
-/* $Id$ Ohia theme stylesheet - DON'T EDIT DIRECTLY. Edit ohia/custom-variables.less and ohia/custom-other.less and compile to produce this file. */
+/* $Id$ */
 /*! normalize.css v3.0.0 | MIT License | git.io/normalize */
 html {
   font-family: sans-serif;
@@ -4945,7 +4945,7 @@ a.list-group-item-danger.active:focus {
   border-color: #333333;
 }
 .panel-default > .panel-heading {
-  color: #555555;
+  color: #f4f4f4;
   background-color: #5e0000;
   border-color: #333333;
 }
@@ -5701,7 +5701,7 @@ button.close {
   margin-top: 18px;
 }
 .navbar-collapse {
-  background: navbar-default-bg;
+  background: #030511;
 }
 #top_modules {
   background-image: url('ohia/header.png');
@@ -5717,8 +5717,8 @@ button.close {
 .glyphicon {
   color: #eeeeee;
 }
-.panel-title {
-  color: #f4f4f4;
+.panel-title,
+.panel-heading {
   font-weight: bold;
 }
 .nav-tabs > li > a {
