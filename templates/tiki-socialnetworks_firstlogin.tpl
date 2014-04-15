@@ -8,8 +8,19 @@ window.parent.location = 'tiki-index.php';
 <p>{tr}You will be redirected to the home page shortly.{/tr} <a href="tiki-index.php" target="_parent">{tr}Click here{/tr}</a> {tr}to go to the home page immediately.{/tr}</p>
 
 {else}
+{$name = ($prefs.login_is_email eq 'y' and $userinfo.login neq 'admin') ? {$userinfo.email|escape} : {$userinfo.login|escape} }
 {jq}
-$("#name").val("{{($prefs.login_is_email eq 'y' and $userinfo.login neq 'admin') ? {$userinfo.email|escape} : {$userinfo.login|escape} }}");
+$("#name").val("{{$name}}")
+	.rules("add", {
+		remote: {
+			url: "validate-ajax.php",
+			type: "post",
+			data: {
+				validator: "username",
+				input: function() { if ($("#name").val() !== "{{$name}}") { return $("#name").val();} else { return false; } }
+			}
+		}
+	});
 $("#email").val("{{$userinfo.email|escape}}");
 {/jq}
 {if $msg}<p><strong>{$msg|escape}</strong></p>{/if}
