@@ -14,10 +14,18 @@ tiki-check.php is designed to run in 2 modes
 2) Stand-alone mode. Used to check a server pre-Tiki installation, by copying (only) tiki-check.php onto the server and pointing your browser to it.
 tiki-check.php should not crash but rather avoid running tests which lead to tiki-check crashes.
 */
+
+// TODO : Create sane 3rd mode for Monitoring Software like Nagios, Icinga, Shinken
+// * needs authentication, if not standalone
+isset($_REQUEST['nagios']) ? $nagios = true : $nagios = false;
+
 if (file_exists('./db/local.php') && file_exists('./templates/tiki-check.tpl')) {
 	$standalone = false;
 	require_once ('tiki-setup.php');
-	$access->check_permission('tiki_p_admin');
+	// TODO : Proper authentication
+	if (!$nagios) {
+		$access->check_permission('tiki_p_admin');
+	}
 } else {
 	$standalone = true;
 	$render = "";
@@ -1548,7 +1556,7 @@ if (!$standalone) {
 	$smarty->assign_by_ref('dirsWritable', $dirsWritable);
 }
 
-if ($standalone) {
+if ($standalone && !$nagios) {
 	$render .= '<style type="text/css">td, th { border: 1px solid #000000; vertical-align: baseline;}</style>';
 //	$render .= '<h1>Tiki Server Compatibility</h1>';
 	$render .= '<h2>MySQL or MariaBD Database Properties</h2>';
@@ -1646,6 +1654,54 @@ if ($standalone) {
 		$render .= '<a href="'.$_SERVER['SCRIPT_NAME'].'?'.$_SERVER['QUERY_STRING'].'&phpinfo=y">Append phpinfo();</a>';
 	}
 	createPage('Tiki Server Compatibility', $render);
+} elseif ($nagios) {
+//  0	OK
+//  1	WARNING
+//  2	CRITICAL
+//  3	UNKNOWN
+	$monitoring_info = array( 'state' => 0,
+			 'message' => '');
+
+	function update_overall_status($check_group, $check_group_name) {
+		global $monitoring_info;
+		$state = 0;
+
+		foreach ($check_group as $property => $values) {
+			switch($values['fitness']) {
+				case 'ugly':
+				case 'risky':
+					$state = max($state, 1);
+					$message .= "$property"."->ugly, ";
+					break;
+				case 'bad':
+					$state = max($state, 2);
+					$message .= "$property"."->BAD, ";
+					break;
+				case 'info':
+				case 'good':
+				case 'safe':
+					break;
+			}
+		}
+		$monitoring_info['state'] = max($monitoring_info['state'], $state);
+		if ($state != 0) {
+			$monitoring_info['message'] .= $check_group_name.": ".trim($message, ' ,')." -- ";
+		}
+	}
+
+	update_overall_status($mysql_properties, "MySQL");
+
+	update_overall_status($server_properties, "Server");
+	if ($apache_properties) {
+		update_overall_status($apache_properties, "Apache");
+	}
+	if ($iis_properties) {
+		update_overall_status($iis_properties, "IIS");
+	}
+	update_overall_status($php_properties, "PHP");
+	update_overall_status($security, "PHP Security");
+	$return = json_encode($monitoring_info);
+	echo $return;
 } else {
 	$smarty->assign_by_ref('server_information', $server_information);
 	$smarty->assign_by_ref('server_properties', $server_properties);
