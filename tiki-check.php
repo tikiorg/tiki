@@ -1689,8 +1689,10 @@ if ($standalone && !$nagios) {
 		}
 	}
 
-	update_overall_status($mysql_properties, "MySQL");
-
+	// Might not be set, i.e. in standalone mode
+	if ($mysql_properties) {
+		update_overall_status($mysql_properties, "MySQL");
+	}
 	update_overall_status($server_properties, "Server");
 	if ($apache_properties) {
 		update_overall_status($apache_properties, "Apache");
