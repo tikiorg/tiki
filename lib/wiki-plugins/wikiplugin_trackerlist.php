@@ -757,7 +757,7 @@ function wikiplugin_trackerlist($data, $params)
 
 	$userlib = TikiLib::lib('user');
 	$tikilib = TikiLib::lib('tiki');
-	$trk = TikiLib::lib('trk');
+	$trklib = TikiLib::lib('trk');
 	$smarty = TikiLib::lib('smarty');
 	$notificationlib = TikiLib::lib('notification');
 
