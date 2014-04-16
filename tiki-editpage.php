@@ -225,11 +225,12 @@ if (isset($_REQUEST["current_page_id"]) && empty($info)) {
 		$smarty->assign('add_child', "true");
 	}
 } else {
+	$structure_info = array();
 	$smarty->assign('current_page_id', 0);
 	$smarty->assign('add_child', false);
 }
 $tikilib->get_perm_object($page, 'wiki page', $info, true);
-if ($tiki_p_edit !== 'y' && !empty($info)) {
+if ($tiki_p_edit !== 'y' && (!empty($info) || empty($structure_info))) {
 	if (empty($user)) {
 		$cachelib = TikiLib::lib('cache');
 		$cacheName = $tikilib->get_ip_address().$tikilib->now;

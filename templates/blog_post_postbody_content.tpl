@@ -2,7 +2,7 @@
 {if $blog_post_context eq 'view_blog' && $use_excerpt eq 'y' && !empty($post_info.excerpt)}
 	<div class="postbody-content postbody-excerpt panel-body">
         {include file='blog_post_author_info.tpl'}
-    	{$post_info.excerpt}
+    	{$post_info.parsed_excerpt}
 	</div>
 	{self_link _script=$post_info.postId|sefurl:blogpost _noauto='y'}{tr}Read more{/tr}{/self_link}
 {else}

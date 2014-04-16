@@ -59,7 +59,7 @@
 			{/if}>
 
 			{if $myurl eq "tiki-action_calendar.php" or ($cell[w][d].items[item].startTimeStamp >= $cell[w][d].day or $smarty.section.d.index eq '0' or $cell[w][d].firstDay or $infocals[$cell[w][d].items[item].calendarId].nameoneachday eq 'y')}
-		<a style="padding:1px 3px;color:#{$infocals.$calendarId.customfgcolor}{if $cell[w][d].items[item].status eq '2'}text-decoration:line-through;{/if}"
+		<a style="padding:1px 3px;{if $infocals.$calendarId.customfgcolor}color:#{$infocals.$calendarId.customfgcolor}{/if}{if $cell[w][d].items[item].status eq '2'} text-decoration:line-through;{/if}"
 			{if $myurl eq "tiki-action_calendar.php"}
 				{if $cell[w][d].items[item].modifiable eq "y" || $cell[w][d].items[item].visible eq 'y'}href="{$cell[w][d].items[item].url}"{/if}
 			{elseif $prefs.calendar_sticky_popup neq 'y'}
@@ -67,7 +67,7 @@
 			{else}
 				href="#"
 			{/if}
-			>{$cell[w][d].items[item].name|truncate:$trunc:".."|escape|default:"..."|unescape:"htmlall"}</a>
+			>{$cell[w][d].items[item].name|truncate:$trunc:".."|escape|default:"..."|unescape:"html"}</a>
 			{if $cell[w][d].items[item].web}
 			<a {if $prefs.mobile_mode eq "y"}data-role="button" data-mini="true" {/if}href="{$cell[w][d].items[item].web}" target="_other" class="calweb" title="{$cell[w][d].items[item].web}"><img src="img/icons/external_link.gif" width="7" height="7" alt="&gt;"></a>
 			{/if}

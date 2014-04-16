@@ -353,7 +353,7 @@ class WikiParser_PluginMatcher_Match
 		$candidate = $this->matcher->getChunkFrom($this->start + 1, self::NAME_MAX_LENGTH);
 		$name = strtok($candidate, " (}\n\r,");
 
-		if (empty($name) || !ctype_alpha($name)) {
+		if (empty($name) || !ctype_alnum($name)) {
 			$this->invalidate();
 			return false;
 		}

@@ -42,6 +42,7 @@ if (!isset($_REQUEST["sort_mode"])) {
 	$sort_mode = 'name_asc';
 } else {
 	$sort_mode = $_REQUEST["sort_mode"];
+	$sort_mode = str_replace('created', 'o.`created`', $sort_mode);
 }
 if (isset($_REQUEST["find"])) {
 	$find = $_REQUEST["find"];

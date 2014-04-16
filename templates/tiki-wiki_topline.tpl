@@ -129,7 +129,7 @@
 					<ul class="dropdown-menu" role="menu">
 						<li role="presentation">
 							{section name=back loop=$backlinks}
-								<a role="menuitem" tabindex="-1" href="tiki-index.php?page={$backlinks[back].fromPage|escape:url}" title="{$backlinks[back].fromPage|escape}">
+								<a role="menuitem" tabindex="-1" href="{$backlinks[back].fromPage|sefurl:'wiki'}" title="{$backlinks[back].fromPage|escape}">
 										{if $prefs.wiki_backlinks_name_len ge '1'}{$backlinks[back].fromPage|truncate:$prefs.wiki_backlinks_name_len:"...":true|escape}{else}{$backlinks[back].fromPage|escape}{/if}
 								</a>
 							{/section}
