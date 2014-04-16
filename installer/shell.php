@@ -17,6 +17,7 @@ if ( isset( $_SERVER['argv'][1] ) && $_SERVER['argv'][1] != 'install' && $_SERVE
 }
 
 require_once('lib/init/initlib.php');
+require_once('lib/tikilib.php');
 $tikipath = dirname(__FILE__) . '/../';
 TikiInit::appendIncludePath($tikipath);
 require_once('lib/setup/tikisetup.class.php');
