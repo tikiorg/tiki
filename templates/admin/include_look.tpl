@@ -10,12 +10,13 @@
 		{tab name="{tr}Theme{/tr}"}
             <h2>{tr}Theme{/tr}</h2>
 
-			<div style="position:relative;">
-				<div style="position:absolute;right:.5em;top:0.5em;">
-					<img src="{$thumbfile}" alt="{tr}Theme Screenshot{/tr}" id="style_thumb" width="160px" height="120px">
-				</div>
-
-				<div class="adminoptionbox">
+			<div class="row">
+                <div class="col-md-3 col-md-push-9">
+                    <div  class="thumbnail">
+                        <img src="{$thumbfile}" alt="{tr}Theme Screenshot{/tr}" id="style_thumb">
+                    </div>
+                </div>
+               	<div class="col-md-9 col-md-pull-3 adminoptionbox">
 					{preference name=theme_active}
 
 					<div class="adminoptionbox theme_active_childcontainer custom">
@@ -37,7 +38,7 @@
 						<input type="submit" class="btn btn-default btn-sm" name="changestyle" value="{tr}Go{/tr}" />
 					{/if}
 				</div>
-			</div>
+            </div>
 			<div class="adminoptionbox">
 				{if $prefs.feature_jquery_ui eq 'y'}
 					{preference name=feature_jquery_ui_theme}
