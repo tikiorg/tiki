@@ -39,11 +39,11 @@ if (!isset($_REQUEST['tag']) && $prefs['freetags_preload_random_search'] == 'y')
 	}
 }
 if (!isset($_REQUEST["sort_mode"])) {
-	$sort_mode = 'name_asc';
+	$sort_mode = $prefs['freetags_sort_mode'];
 } else {
 	$sort_mode = $_REQUEST["sort_mode"];
-	$sort_mode = str_replace('created', 'o.`created`', $sort_mode);
 }
+$query_sort_mode = str_replace('created', 'o.`created`', $sort_mode);
 if (isset($_REQUEST["find"])) {
 	$find = $_REQUEST["find"];
 } else {
@@ -133,7 +133,7 @@ if ($broaden == 'last') {
 		$tagArray[count($tagArray) - 1]
 	);
 }
-$objects = $freetaglib->get_objects_with_tag_combo($tagArray, $type, $view_user, $offset, $maxRecords, $sort_mode, $find, $broaden, $objectId);
+$objects = $freetaglib->get_objects_with_tag_combo($tagArray, $type, $view_user, $offset, $maxRecords, $query_sort_mode, $find, $broaden, $objectId);
 
 $smarty->assign_by_ref('objects', $objects["data"]);
 $smarty->assign_by_ref('cantobjects', $objects["cant"]);

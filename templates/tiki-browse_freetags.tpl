@@ -130,7 +130,7 @@
 				
 					{assign var=thistype value=$objectType|escape:'url'}
 					{capture name="fl"}{tr}{$feature_label}{/tr}{/capture}
-					{button _text=$smarty.capture.fl _class=$thisclass href="tiki-browse_freetags.php?tag=$tagString$thisbroaden&amp;type=$thistype"}
+					{button _text=$smarty.capture.fl _class=$thisclass href="tiki-browse_freetags.php?tag=$tagString$thisbroaden&amp;type=$thistype&amp;sort_mode=$sort_mode"}
 					{assign var=cpt value=$cpt+1}
 				{/if}
 
@@ -156,7 +156,7 @@
 
 					{assign var=thistype value=$objectType|escape:'url'}
 					{capture name="fl"}{tr}{$feature_label}{/tr}{/capture}
-					{button _text=$smarty.capture.fl _class=$thisclass href="tiki-browse_freetags.php?tag=$tagString$thisbroaden&amp;type=$thistype"}
+					{button _text=$smarty.capture.fl _class=$thisclass href="tiki-browse_freetags.php?tag=$tagString$thisbroaden&amp;type=$thistype&amp;sort_mode=$sort_mode"}
 					{assign var=cpt value=$cpt+1}
 				{/if}
 			{/foreach}
@@ -172,6 +172,7 @@
 			</div>
 		{/if}
 
+		<input type="hidden" name="sort_mode" value="{$sort_mode|escape}">
 		<input type="hidden" name="old_type" value="{$type|escape}">
 		<input type="text" name="find" value="{$find|escape}">
 		<input type="submit" class="btn btn-default btn-sm" value="{tr}Filter{/tr}">

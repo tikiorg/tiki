@@ -7,6 +7,28 @@
 
 function prefs_freetags_list()
 {
+
+	$freetags_sort_orders = array(
+		'name_asc' => tra('Name') . ' ' . tra('ascending'),
+		'name_desc' => tra('Name') . ' ' . tra('descending'),
+		'created_asc' => tra('Created') . ' ' . tra('ascending'),
+		'created_desc' => tra('Created') . ' ' . tra('descending'),
+		'description_asc' => tra('Description') . ' ' . tra('ascending'),
+		'description_desc' => tra('Description') . ' ' . tra('descending'),
+		'hits_asc' => tra('Hits') . ' ' . tra('ascending'),
+		'hits_desc' => tra('Hits') . ' ' . tra('descending'),
+		'href_asc' => tra('Href') . ' ' . tra('ascending'),
+		'href_desc' => tra('Href') . ' ' . tra('descending'),
+		'itemid_asc' => tra('Item ID') . ' ' . tra('ascending'),
+		'itemid_desc' => tra('Item ID') . ' ' . tra('descending'),
+		'objectid_asc' => tra('Object ID') . ' ' . tra('ascending'),
+		'objectid_desc' => tra('Object ID') . ' ' . tra('descending'),
+		'type_asc' => tra('Type') . ' ' . tra('ascending'),
+		'type_desc' => tra('Type') . ' ' . tra('descending'),
+		'comments_locked_asc' => tra('Comments Locked') . ' ' . tra('ascending'),
+		'comments_locked_desc' => tra('Comments Locked') . ' ' . tra('descending'),
+	);
+
 	return array (
 			'freetags_multilingual' => array(
 			'name' => tra('Multilingual tags'),
@@ -18,6 +40,13 @@ function prefs_freetags_list()
 				'feature_freetags',
 			),
 			'default' => 'n',
+		),
+		'freetags_sort_mode' => array(
+			'name' => tra('Tagged objects ordering'),
+			'description' => tra('Default sort mode for the tagged objects listing'),
+			'type' => 'list',
+			'options' => $freetags_sort_orders,
+			'default' => 'name_asc',
 		),
 		'freetags_browse_show_cloud' => array(
 			'name' => tra('Show tag cloud'),

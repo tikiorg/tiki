@@ -33,8 +33,6 @@
 
 				{preference name=freetags_3d_autoload}
 				{preference name=freetags_show_middle}
-				{preference name=freetags_preload_random_search}
-				<em>{tr}When arriving on <a href="tiki-browse_freetags.php">freetag search page</a>{/tr}.</em>
 
 				<div class="adminoptionbox">
 					<div class="adminoptionlabel">
@@ -57,6 +55,13 @@
 				{preference name=freetags_multilingual}
 				{preference name=morelikethis_algorithm}
 				{preference name=morelikethis_basic_mincommon}
+			</fieldset>
+	
+			<fieldset class="admin">
+				<legend>{tr}Freetag search page{/tr}</legend>
+				{preference name=freetags_sort_mode}
+				{preference name=freetags_preload_random_search}
+				<em>{tr}When arriving on <a href="tiki-browse_freetags.php">freetag search page</a>{/tr}.</em>
 			</fieldset>
 
 			<fieldset>
