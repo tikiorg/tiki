@@ -812,5 +812,32 @@ class Tiki_Profile
 	{
 		return self::getProfileKeyfor($this->domain, $this->withPrefix($this->profile));
 	} // }}}
+	
+	function getObjectSymbolDetails($type, $value) // Based on an objectType (eg: menu) and an objectId (eg: Id of a menu) query tiki_profile_symbols table and return domain, profile and object information
+	{
+		global $tikilib;
+				
+		if (!$type) {
+			return false;
+		}
+		elseif (!$value) {
+			return false;
+		}
+		else {
+			$query = 'select * from `tiki_profile_symbols` where `type`=? and `value`=?';
+			$result = $tikilib->fetchAll($query, array($type, $value));
+		
+			if (empty ($result)) {
+				return null;
+			} else {
+				$symbolDetails = array (
+					'domain' => $result["0"]["domain"],
+					'profile' => $result["0"]["profile"],
+					'object' => $result["0"]["object"],
+					);
+				return $symbolDetails;
+			}
+		}
+	}
 }
 
