@@ -586,7 +586,7 @@ class BlogLib extends TikiDb_Bridge
 			$ret[] = $res;
 		}
 
-		$ret = Perms::filter(array( 'type' => 'blog post' ), 'object', $ret, array( 'object' => 'postId' ), array('read_blog'));
+		$ret = Perms::filter(array( 'type' => 'blog post' ), 'object', $ret, array( 'object' => 'postId' ), array('read_blog', 'blog_post_view_ref'));
 
 		$retval = array();
 		$retval['data'] = $ret;
