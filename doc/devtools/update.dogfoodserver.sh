@@ -17,8 +17,8 @@ DOGFOODMYSQLDB="changi_9x"
 #Be careful, this user need to have the right to drop the database.
 MYSQLUSER="changi"
 MYSQLPASS="changi"
-MYSQLCOMMAND="mysql -u $MYSQLUSER -p $MYSQLPASS"
-MYSQLDUMPCOMMAND="mysqldump -u $MYSQLUSER -p $MYSQLPASS"
+MYSQLCOMMAND="mysql -u $MYSQLUSER -p$MYSQLPASS"
+MYSQLDUMPCOMMAND="mysqldump -u $MYSQLUSER -p$MYSQLPASS"
 
 pushd $DOCROOTDOGFOODVERSION
 echo "Update checkout"
