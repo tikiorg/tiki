@@ -333,10 +333,16 @@ function init() {
 			width: 200,
 			title: $(dialog).data('title'),
 			close: function (e) {
-				var editControl = container.map.getControlsByClass('OpenLayers.Control.ModifyFeature');
-				if (feature && editControl.length) {
-					editControl[0].unselectFeature(feature);
-				}
+				$.each(container.map.getControlsByClass('OpenLayers.Control.ModifyFeature'), function (k, control) {
+					if (feature && control) {
+						control.unselectFeature(feature);
+					}
+				});
+				$.each(container.map.getControlsByClass('OpenLayers.Control.SelectFeature'), function (k, control) {
+					if (feature && control) {
+						control.unselect(feature);
+					}
+				});
 			}
 		})
 		.append($('<div class="current" style="height: $size;"/>'));
@@ -370,10 +376,16 @@ function init() {
 			width: 400,
 			title: $(dialog).data('title'),
 			close: function (e) {
-				var editControl = container.map.getControlsByClass('OpenLayers.Control.ModifyFeature');
-				if (feature && editControl.length) {
-					editControl[0].unselectFeature(feature);
-				}
+				$.each(container.map.getControlsByClass('OpenLayers.Control.ModifyFeature'), function (k, control) {
+					if (feature && control) {
+						control.unselectFeature(feature);
+					}
+				});
+				$.each(container.map.getControlsByClass('OpenLayers.Control.SelectFeature'), function (k, control) {
+					if (feature && control) {
+						control.unselect(feature);
+					}
+				});
 			}
 		})
 		.ColorPicker({
@@ -420,6 +432,7 @@ $("#$target").closest('.map-container').bind('initialized', function () {
 
 			if (active && feature.attributes.intent !== 'marker') {
 				setColor(feature.attributes.color);
+				vlayer.redraw();
 				$(dialog).dialog('open');
 			}
 		},

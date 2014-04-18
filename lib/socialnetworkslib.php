@@ -258,6 +258,7 @@ class SocialNetworksLib extends LogsLib
 				$userlib->update_expired_groups();
 				$this->set_user_preference($user, 'facebook_id', $fb_profile->id);
 				$this->set_user_preference($user, 'facebook_token', $access_token);
+				$userlib->update_lastlogin($user);
 				header('Location: tiki-index.php');
 				die;
 			} else {

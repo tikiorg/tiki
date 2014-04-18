@@ -503,6 +503,7 @@ class BlogLib extends TikiDb_Bridge
 		global $tikilib, $tiki_p_admin, $tiki_p_blog_admin, $tiki_p_blog_post, $user, $prefs;
 
 		$parserlib = TikiLib::lib('parser');
+		$categlib = TikiLib::lib('categ');
 
 		$mid = array();
 		$bindvars = array();
@@ -555,8 +556,14 @@ class BlogLib extends TikiDb_Bridge
 		}
 
 		$mid = empty($mid) ? '' : 'where ' . implode(' and ', $mid);
-		$query = "select tbp.*,tb.title as blogTitle from `tiki_blog_posts` as tbp, `tiki_blogs` as tb $mid order by ".$this->convertSortMode($sort_mode);
-		$query_cant = "select count(*) from `tiki_blog_posts` as tbp, `tiki_blogs` as tb $mid";
+
+		$join = '';
+		if ( $jail = $categlib->get_jail() ) {
+			$categlib->getSqlJoin($jail, 'blog post', '`tbp`.`postId`', $join, $mid, $bindvars);
+		}
+
+		$query = "select tbp.*,tb.title as blogTitle from `tiki_blog_posts` as tbp, `tiki_blogs` as tb $join $mid order by ".$this->convertSortMode($sort_mode);
+		$query_cant = "select count(*) from `tiki_blog_posts` as tbp, `tiki_blogs` as tb $join $mid";
 		$result = $this->query($query, $bindvars, $maxRecords, $offset);
 		$cant = $this->getOne($query_cant, $bindvars);
 		$ret = array();
@@ -579,6 +586,8 @@ class BlogLib extends TikiDb_Bridge
 
 			$ret[] = $res;
 		}
+
+		$ret = Perms::filter(array( 'type' => 'blog post' ), 'object', $ret, array( 'object' => 'postId' ), array('read_blog', 'blog_post_view_ref'));
 
 		$retval = array();
 		$retval['data'] = $ret;

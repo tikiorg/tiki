@@ -804,4 +804,8 @@ a.admbox.off,
 }
 ***** end border radius definitions  *****/
 
+a.fc-event:hover {
+	color: #ccc;
+}
+
 /* End of File */
