@@ -229,7 +229,7 @@ function prefs_fgal_list()
 		),
 		'fgal_source_refresh_frequency' => array(
 			'name' => tra('Remote source refresh frequency limit'),
-			'description' => tra('Minimum amount of seconds to be ellapsed between source checks to prevent flooding servers.'),
+			'description' => tra('Minimum amount of seconds to be elapsed between source checks to prevent flooding servers.'),
 			'type' => 'text',
 			'filter' => 'int',
 			'size' => 5,

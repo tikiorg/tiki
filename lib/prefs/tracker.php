@@ -10,7 +10,7 @@ function prefs_tracker_list()
 	return array(
 		'tracker_remote_sync' => array(
 			'name' => tr('Synchronize Remote Tracker'),
-			'description' => tr('Allows to clone a tracker on a remote host and synchronize the data locally on demand.'),
+			'description' => tr('Allows a tracker to be cloned on a remote host and synchronize the data locally on demand.'),
 			'type' => 'flag',
 			'default' => 'n',
 		),

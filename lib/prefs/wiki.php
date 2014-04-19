@@ -96,7 +96,7 @@ function prefs_wiki_list($partial = false)
 		),
 		'wiki_authors_style_by_page' => array(
 			'name' => tra('Specify wiki author list style per page'),
-			'description' => tra('Allows to modify the style in which the author list is displayed on a per-page basis.'),
+			'description' => tra('Allows the style in which the author list is displayed to be modified on a per-page basis.'),
 			'type' => 'flag',
 			'default' => 'n',
 		),

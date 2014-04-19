@@ -1173,7 +1173,7 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_semantic' => array(
 			'name' => tra('Semantic links'),
-			'description' => tra('Going beyond Backlinks, allows to define some semantic relationships between wiki pages'),
+			'description' => tra('Going beyond Backlinks, allows some semantic relationships to be defined between wiki pages'),
 			'help' => 'Semantic',
 			'type' => 'flag',
 			'dependencies' => array(
@@ -2791,7 +2791,7 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_htmlfeed' => array(
 			'name' => tra('HTML Feed'),
-            'description' => tra('A way to push and pull html bits around from one site to another'),
+            'description' => tra('A way to push and pull HTML bits around from one site to another'),
 			'type' => 'flag',
 			'help' => 'HtmlFeed',
 			'keywords' => 'html feed ads ad share',

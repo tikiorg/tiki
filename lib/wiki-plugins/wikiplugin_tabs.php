@@ -32,7 +32,7 @@ function wikiplugin_tabs_info()
 			'toggle' => array(
 				'required' => false,
 				'name' => tra('Toggle Tabs'),
-				'description' => tra('Allows to toggle from tabs to no tabs view'),
+				'description' => tra('Allow toggling from tabs to no tabs view'),
 				'default' => 'y',
 				'options' => array (
 					array('value' => 'y' , 'text' => tra('Yes')),

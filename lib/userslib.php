@@ -3552,7 +3552,7 @@ class UsersLib extends TikiLib
 			),
 			array(
 				'name' => 'tiki_p_admin_faqs',
-				'description' => tra('Can admin faqs'),
+				'description' => tra('Can admin FAQs'),
 				'level' => 'editors',
 				'type' => 'faqs',
 				'admin' => true,
@@ -3561,7 +3561,7 @@ class UsersLib extends TikiLib
 			),
 			array(
 				'name' => 'tiki_p_suggest_faq',
-				'description' => tra('Can suggest faq questions'),
+				'description' => tra('Can suggest FAQ questions'),
 				'level' => 'basic',
 				'type' => 'faqs',
 				'admin' => false,
@@ -3570,7 +3570,7 @@ class UsersLib extends TikiLib
 			),
 			array(
 				'name' => 'tiki_p_view_faqs',
-				'description' => tra('Can view faqs'),
+				'description' => tra('Can view FAQs'),
 				'level' => 'basic',
 				'type' => 'faqs',
 				'admin' => false,
@@ -4110,7 +4110,7 @@ class UsersLib extends TikiLib
 			),
 			array(
 				'name' => 'tiki_p_batch_subscribe_email',
-				'description' => tra('Can subscribe many e-mails at once (requires tiki_p_subscribe email)'),
+				'description' => tra('Can subscribe many emails at once (requires tiki_p_subscribe email)'),
 				'level' => 'editors',
 				'type' => 'newsletters',
 				'admin' => false,

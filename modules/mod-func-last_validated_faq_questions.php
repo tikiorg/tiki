@@ -23,8 +23,8 @@ function module_last_validated_faq_questions_info()
 		'prefs' => array("feature_faqs"),
 		'params' => array(
 			'faqId' => array(
-				'name' => tra('Faq identifier'),
-				'description' => tra('If set to a faq identifier, restricts the chosen questions to those in the identified faq.') . " " . tra('Example value: 13.') . " " . tra('Not set by default.'),
+				'name' => tra('FAQ identifier'),
+				'description' => tra('If set to a FAQ identifier, restricts the chosen questions to those in the identified FAQ.') . " " . tra('Example value: 13.') . " " . tra('Not set by default.'),
 				'profile_reference' => 'faq',
 				'filter' => 'int',
 			),

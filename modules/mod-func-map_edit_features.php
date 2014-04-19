@@ -18,7 +18,7 @@ function module_map_edit_features_info()
 {
 	return array(
 		'name' => tra('Map Feature Editor'),
-		'description' => tra('Allows to draw shapes over the map.'),
+		'description' => tra('Allows shapes to be drawn over the map.'),
 		'prefs' => array(),
 		'params' => array(
 			'trackerId' => array(

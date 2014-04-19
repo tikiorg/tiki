@@ -113,7 +113,7 @@ function prefs_payment_list()
 		'payment_cclite_currencies' => array(
 			'name' => tra('Cclite Registry Currencies'),
 			'description' => tra('Currencies in Cclite.'),
-			'hint' => tra('Each registry in Cclite can have it\'s own currency. Must be one per registry. (case sensitive)'),
+			'hint' => tra('Each registry in Cclite can have its own currency. Must be one per registry. (case sensitive)'),
 			'type' => 'text',
 			'dependencies' => array( 'payment_feature' ),
 			'size' => 40,
