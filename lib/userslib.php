@@ -3559,7 +3559,7 @@ class UsersLib extends TikiLib
 			),
 			array(
 				'name' => 'tiki_p_view_faqs',
-				'description' => tra('Can view faqs'),
+				'description' => tra('Can view FAQs'),
 				'level' => 'basic',
 				'type' => 'faqs',
 				'admin' => false,
@@ -4099,7 +4099,7 @@ class UsersLib extends TikiLib
 			),
 			array(
 				'name' => 'tiki_p_batch_subscribe_email',
-				'description' => tra('Can subscribe many e-mails at once (requires tiki_p_subscribe email)'),
+				'description' => tra('Can subscribe many emails at once (requires tiki_p_subscribe email)'),
 				'level' => 'editors',
 				'type' => 'newsletters',
 				'admin' => false,

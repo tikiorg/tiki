@@ -17,7 +17,7 @@ function module_cart_info()
 {
 	return array(
 		'name' => tra('Cart'),
-		'description' => tra('Displays the content of the cart, allows to modify quantities and proceed to payment.'),
+		'description' => tra('Displays the content of the cart, allows quantities to be modified and proceeds to payment.'),
 		'prefs' => array('payment_feature'),
 		'params' => array(
 			'ajax' => array(
