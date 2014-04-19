@@ -102,7 +102,7 @@ function prefs_site_list()
 		),
 		'site_terminal_active' => array(
 			'name' => tra('Site Terminal'),
-			'description' => tra('Allows to direct users to a specific perspective depending on the origin IP address. Can be used inside intranets to use different configurations for users depending on their departements or discriminate people in web contexts. Unspecified IPs will fall back to default behavior, including multi-domain handling. Manually selected perspectives take precedence over this.'),
+			'description' => tra('Allows users to be directed to a specific perspective depending on the origin IP address. Can be used inside intranets to use different configurations for users depending on their departements or discriminate people in web contexts. Unspecified IPs will fall back to default behavior, including multi-domain handling. Manually selected perspectives take precedence over this.'),
 			'type' => 'flag',
 			'dependencies' => array(
 				'feature_perspective',

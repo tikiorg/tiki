@@ -79,7 +79,7 @@ function prefs_feed_list()
 		),
 		'feed_basic_auth' => array(
 			'name' => tra('RSS basic Authentication'),
-			'description' => tra('Propose basic http authentication if the user has no permission to see the feed'),
+			'description' => tra('Propose basic HTTP authentication if the user has no permission to see the feed'),
 			'type' => 'flag',
 			'default' => 'n',
 		),

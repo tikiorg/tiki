@@ -3541,7 +3541,7 @@ class UsersLib extends TikiLib
 			),
 			array(
 				'name' => 'tiki_p_admin_faqs',
-				'description' => tra('Can admin faqs'),
+				'description' => tra('Can admin FAQs'),
 				'level' => 'editors',
 				'type' => 'faqs',
 				'admin' => true,
@@ -3550,7 +3550,7 @@ class UsersLib extends TikiLib
 			),
 			array(
 				'name' => 'tiki_p_suggest_faq',
-				'description' => tra('Can suggest faq questions'),
+				'description' => tra('Can suggest FAQ questions'),
 				'level' => 'basic',
 				'type' => 'faqs',
 				'admin' => false,
