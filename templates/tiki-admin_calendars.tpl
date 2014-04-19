@@ -284,7 +284,7 @@
 						</td>
 					</tr>
 					<tr>
-						<td>{tr}Allows to select each user for small groups{/tr}</td>
+						<td>{tr}Allows each user to be selected for small groups{/tr}</td>
 						<td>
 							<input type="checkbox" name="showeachuser" {if $showeachuser eq 'y'}checked="checked"{/if}>
 						</td>

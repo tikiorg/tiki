@@ -48,7 +48,7 @@
    </select>
   </div>
   <br>
-  <div>{tr}Fill this box with the list of e-mails you want to invite :{/tr}</div>
+  <div>{tr}Fill this box with the list of emails you want to invite :{/tr}</div>
   <div><textarea name='emailslist' style='width: 100%; height: 150px;'>{$smarty.request.emailslist|escape}</textarea></div>
 
   <div>{tr}Format of the list above :{/tr}

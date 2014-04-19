@@ -322,10 +322,10 @@
 						<td>{tr}Watch for replies{/tr}</td>
 						<td>
 							<input type="radio" name="set_thread_watch" value="y" id="thread_watch_yes" checked="checked">
-							<label for="thread_watch_yes">{tr}Send me an e-mail when someone replies to my topic{/tr}</label>
+							<label for="thread_watch_yes">{tr}Send me an email when someone replies to my topic{/tr}</label>
 							<br>
 							<input type="radio" name="set_thread_watch" value="n" id="thread_watch_no">
-							<label for="thread_watch_no">{tr}Don't send me any e-mails{/tr}</label>
+							<label for="thread_watch_no">{tr}Don't send me any emails{/tr}</label>
 						</td>
 					</tr>
 				{/if}

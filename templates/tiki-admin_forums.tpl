@@ -307,7 +307,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td>{tr}Originating e-mail address for mails from this forum{/tr}</td>
+				<td>{tr}Originating email address for mails from this forum{/tr}</td>
 				<td>
 					<input type="text" name="outbound_from" size="50" value="{$outbound_from|escape}">
 				</td>

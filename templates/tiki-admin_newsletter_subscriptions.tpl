@@ -264,7 +264,7 @@
 				<td colspan="2">
 					<input type="file" name="batch_subscription">
 					<br>
-					<i>{tr}txt file, one e-mail per line{/tr}</i>
+					<i>{tr}txt file, one email per line{/tr}</i>
 				</td>
 			</tr> 	 
 			{if $nl_info.validateAddr eq "y"}
@@ -294,7 +294,7 @@
 				<td colspan="2">
 					<input type="text" name="wikiPageName" value="" size="60">
 					<br>
-					<i>{tr}Wiki page, one e-mail per line{/tr}</i>
+					<i>{tr}Wiki page, one email per line{/tr}</i>
 				</td>
 			</tr>
 			{if $nl_info.validateAddr eq "y"}
@@ -383,7 +383,7 @@
 			<td colspan="2">
 				<input type="text" name="wikiPageName" value="" size="60">
 				<br>
-				<i>{tr}Emails on a wiki page which will be added at each newsletter sending, one e-mail per line{/tr}</i>
+				<i>{tr}Emails on a wiki page which will be added at each newsletter sending, one email per line{/tr}</i>
 				{autocomplete element='input[name=wikiPageName]' type='pagename'}
 			</td>
 		</tr>

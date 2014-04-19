@@ -1080,11 +1080,11 @@
 							</label><br>
 							<input type="radio" id="id_affectMan" name="affect" value="manually">
 							<label for="id_affectMan">
-								{tr}Update every unchanged events of this recurrence rule{/tr}
+								{tr}Update every unchanged event in this recurrence series{/tr}
 							</label><br>
 								<input type="radio" id="id_affectAll" name="affect" value="all">
 								<label for="id_affectAll">
-									{tr}Update every events of this recurrence rule{/tr}
+									{tr}Update every event in this recurrence series{/tr}
 								</label>
 						</td>
 					</tr>
@@ -1103,7 +1103,7 @@
 						{/if}
 						{if $recurrence.id}
 							&nbsp;
-							<input type="submit" class="btn btn-default" onclick="needToConfirm=false;document.location='tiki-calendar_edit_item.php?recurrenceId={$recurrence.id}&amp;delete=y';return false;" value="{tr}Delete Recurrent events{/tr}">
+							<input type="submit" class="btn btn-default" onclick="needToConfirm=false;document.location='tiki-calendar_edit_item.php?recurrenceId={$recurrence.id}&amp;delete=y';return false;" value="{tr}Delete recurrent events{/tr}">
 						{/if}
 						&nbsp;
 						{if $prefs.calendar_fullcalendar eq 'y'}
