@@ -255,6 +255,17 @@ if ($isvalid) {
 		TikiLib::lib('login')->activateSession($user);
 		if (isset($_SESSION['openid_url'])) $userlib->assign_openid($user, $_SESSION['openid_url']);
 		$url = $_SESSION['loginfrom'];
+
+		// When logging into a multi-lingual Tiki, $_SESSION['loginfrom'] contains the main-language page, and not the translated one
+		//	This only applies if feature_best_language and only seems to affect SEFURL
+		if (($prefs['feature_best_language'] == 'y')&&($prefs['feature_sefurl'] == 'y')) {
+			// If the URL contains the 'main' home page, remove the page name and let Tiki choose the correct home page upon reload
+			$homePageUrl = urlencode($prefs['wikiHomePage']);
+			if (strpos($url, $homePageUrl) !== false) {
+				$url = str_replace($homePageUrl, '', $url);
+			}
+		}
+
 		$logslib->add_log('login', 'logged from ' . $url);
 		// Special '?page=...' case. Accept only some values to avoid security problems
 		if ( isset($_REQUEST['page']) and $_REQUEST['page'] === 'tikiIndex') {
