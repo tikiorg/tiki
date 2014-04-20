@@ -55,7 +55,7 @@ if (isset($_REQUEST['send'])) {
 		if (!$hasContent) {
 			$message = tra("You must include a subject or a message.");
 		} elseif (empty($from)) {
-			$message = tra("You must make sure to have a valid e-mail address in the From field.");
+			$message = tra("You must make sure to have a valid email address in the From field.");
 		} else {
 			$message = $captchalib->getErrors();
 		}

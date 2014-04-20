@@ -230,7 +230,7 @@
 			<label>
 				<input type="checkbox" name="simpleEmail" value="1"
 					{if $info.simpleEmail eq 'y'} checked="checked"{/if}>
-				{tr}Use simplified e-mail format{/tr}
+				{tr}Use simplified email format{/tr}
 				<div class="description">
 					{tr}The tracker will use the text field named Subject if any as subject and will use the user email or for anonymous the email field if any as sender{/tr}
 				</div>

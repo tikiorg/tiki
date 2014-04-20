@@ -1009,7 +1009,7 @@ class CategLib extends ObjectLib
 			"wiki" => "wiki page",
 			"calendar" => "calendar",
 			"img" => "image"
-		);	//get_strings tra("article");tra("blog");tra("directory");tra("faq");tra("file gallery");tra("forum");tra("image gallery");tra("newsletter");
+		);	//get_strings tra("article");tra("blog");tra("directory");tra("faq");tra("FAQ");tra("file gallery");tra("forum");tra("image gallery");tra("newsletter");
 			//get_strings tra("poll");tra("quiz");tra("survey");tra("tracker");tra("wiki page");tra("image");tra("calendar");
 
 		$typetitles = array(

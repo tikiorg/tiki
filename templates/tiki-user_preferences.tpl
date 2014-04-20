@@ -215,7 +215,7 @@
 						{/section}
 					</select>
 				{else}
-					{tr}Unavailable - please set your e-mail below{/tr}
+					{tr}Unavailable - please set your email below{/tr}
 				{/if}
 			</td>
 		</tr>

@@ -288,7 +288,7 @@
 			</tr>
 			<tr>
 				<td>
-					{tr}Forward messages to this forum to this e-mail address, in a format that can be used for sending back to the inbound forum e-mail address{/tr}
+					{tr}Forward messages to this forum to this email address, in a format that can be used for sending back to the inbound forum email address{/tr}
 				</td>
 				<td>
 					<input type="text" name="outbound_address" size="50" value="{$outbound_address|escape}">
