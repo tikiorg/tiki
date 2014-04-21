@@ -26,7 +26,7 @@
 	&nbsp;
 	</td>
 	<td style="width:48%">
-	<div class="adminWizardIconright"><img src="img/icons/large/profile_groupmail48x48.png" alt="{tr}Groupmail{/tr}" /></div>
+<!--	<div class="adminWizardIconright"><img src="img/icons/large/profile_groupmail48x48.png" alt="{tr}Groupmail{/tr}" /></div>
 	<b>{tr}Groupmail{/tr}</b> (<a href="tiki-admin.php?profile=Groupmail&show_details_for=Groupmail&categories%5B%5D={$tikiMajorVersion}.x&repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2" target="_blank">{tr}apply profile now{/tr}</a>)<br/>
 	<br>
 	{tr}This profile allows to provide a way for a team (a Tiki group) to process email contact requests, save them in contact lists and act on them and record the process in wiki pages{/tr}
@@ -38,7 +38,7 @@
     <li>{tr}A system to review communication logs from that group mail account{/tr}</li>
 	<br/><em>{tr}See also{/tr} <a href="https://doc.tiki.org/Groupmail" target="_blank">{tr}Groupmail in doc.tiki.org{/tr}</a></em>
 	</ul>
-	</td>
+-->	</td>
 	</tr>
 	<tr>
 	<td style="width:48%">
