@@ -142,7 +142,10 @@ function wikiplugin_colorbox($data, $params)
 			return tra('Permission denied');
 		}
 		if (empty($params['sort_mode'])) $params['sort_mode'] = 'created_desc';
-		$filter = empty($params['fileId'])? '': array('fileId'=> $params['fileId']);
+		$filter = empty($params['fileId'])? array(): array('fileId'=> $params['fileId']);
+		if (!is_array($filter['fileId'])) {
+			$filter['fileId'] = explode(':', $filter['fileId']);
+		}
 
 		$filegallib = TikiLib::lib('filegal');
 		$files = $filegallib->get_files(0, -1, $params['sort_mode'], '', $params['fgalId'], false, false, false, true, false, false, false, false, '', true, false, false, $filter);
