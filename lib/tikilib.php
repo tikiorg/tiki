@@ -1870,7 +1870,7 @@ class TikiLib extends TikiDb_Bridge
 		$data['xdata'][] = tra('file-g');
 		$data['ydata'][] = $this->getOne('select sum(`hits`) from `tiki_file_galleries`', array());
 
-		$data['xdata'][] = tra('faqs');
+		$data['xdata'][] = tra('FAQs');
 		$data['ydata'][] = $this->getOne('select sum(`hits`) from `tiki_faqs`', array());
 
 		$data['xdata'][] = tra('quizzes');

@@ -246,7 +246,7 @@
 
 						{if $user and $prefs.feature_user_watches eq 'y'}
     						<div id="watch_thread_on_reply">
-								<input id="watch_thread" type="checkbox" name="watch" value="y"{if $user_watching_topic eq 'y' or $smarty.request.watch eq 'y'} checked="checked"{/if}> <label for="watch_thread">{tr}Send me an e-mail when someone replies{/tr}</label>
+								<input id="watch_thread" type="checkbox" name="watch" value="y"{if $user_watching_topic eq 'y' or $smarty.request.watch eq 'y'} checked="checked"{/if}> <label for="watch_thread">{tr}Send me an email when someone replies{/tr}</label>
 							</div>
 						{/if}
                     </div>

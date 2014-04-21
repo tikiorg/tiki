@@ -48,7 +48,7 @@ function wikiplugin_map_info()
 			'center' => array(
 				'requied' => false,
 				'name' => tra('Center'),
-				'description' => tr('Format: x,y,zoom where x is the longitude, and y is the latitude. Zoom is between 0(view Earth) and 19.'),
+				'description' => tr('Format: x,y,zoom where x is the longitude, and y is the latitude. Zoom is between 0 (view Earth) and 19.'),
 				'filter' => 'text',
 			),
 			'popupstyle' => array(

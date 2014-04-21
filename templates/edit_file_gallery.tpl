@@ -191,7 +191,7 @@ $('#fgal_template').change( function() {
 									</div>
 								</div>
                                 <div class="form-group">
-                                    <label for="showeachuser" class="col-sm-4 control-label">{tr}Allows to select each user for small groups{/tr}</label>
+                                    <label for="showeachuser" class="col-sm-4 control-label">{tr}Allows each user to be selected for small groups{/tr}</label>
                                     <div class="col-sm-8">
                                         <div class="checkbox">
                                             <input type="checkbox" name="showeachuser" id="showeachuser" {if $showeachuser eq 'y'}checked="checked"{/if}>

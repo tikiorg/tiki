@@ -9,7 +9,7 @@
 		{tr}Page shared:{/tr}<br>
 		{if isset($emailSent)}
 			<div>
-				{tr}The link was sent via e-Mail to the following addresses:{/tr} {$addresses|escape}
+				{tr}The link was sent via email to the following addresses:{/tr} {$addresses|escape}
 			</div>
 		{/if}
 		{if isset($tweetId)}
@@ -86,9 +86,9 @@
 	
 			<tr>
 				<td rowspan="2">
-					<img src="img/icons/large/evolution48x48.png" alt="{tr}e-Mail{/tr}">
+					<img src="img/icons/large/evolution48x48.png" alt="{tr}email{/tr}">
 					<br>
-					{tr}Send via e-Mail{/tr}
+					{tr}Send via email{/tr}
 				</td>
 				<td>
 					{if $report !='y' && !$twitterRegistered && !$facebookRegistered && !$prefs.feature_forums}

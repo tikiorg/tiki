@@ -123,7 +123,7 @@
 						href="tiki-list_file_gallery.php?galleryId={$files[changes].id}{if !empty($filegals_manager)}&amp;filegals_manager={$filegals_manager|escape}{/if}&amp;view=browse"
 					{else}
 						{if !empty($filegals_manager)}
-							href="#" onclick="window.opener.insertAt('{$filegals_manager}','{$files[changes].wiki_syntax|escape}');checkClose();return false;" title="{tr}Click Here to Insert in Wiki Syntax{/tr}"
+							href="#" onclick="window.opener.insertAt('{$filegals_manager}','{$files[changes].wiki_syntax|escape}');checkClose();return false;" title="{tr}Click here to use the file{/tr}"
 						{elseif $tiki_p_download_files eq 'y'}
 							{if $gal_info.type eq 'podcast' or $gal_info.type eq 'vidcast'}
 								href="{$prefs.fgal_podcast_dir}{$files[changes].path}"

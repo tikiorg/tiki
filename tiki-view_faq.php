@@ -18,7 +18,7 @@ if ($prefs['feature_categories'] == 'y') {
 $access->check_feature('feature_faqs');
 
 if (!isset($_REQUEST["faqId"])) {
-	$smarty->assign('msg', tra("No faq indicated"));
+	$smarty->assign('msg', tra("No FAQ indicated"));
 	$smarty->display("error.tpl");
 	die;
 }

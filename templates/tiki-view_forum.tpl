@@ -320,10 +320,10 @@
 						<label class="col-sm-2 control-label">{tr}Watch for replies{/tr}</label>
 						<div class="col-sm-10">
 							<input type="radio" name="set_thread_watch" value="y" id="thread_watch_yes" checked="checked">
-							<label for="thread_watch_yes">{tr}Send me an e-mail when someone replies to my topic{/tr}</label>
+							<label for="thread_watch_yes">{tr}Send me an email when someone replies to my topic{/tr}</label>
 							<br>
 							<input type="radio" name="set_thread_watch" value="n" id="thread_watch_no">
-							<label for="thread_watch_no">{tr}Don't send me any e-mails{/tr}</label>
+							<label for="thread_watch_no">{tr}Don't send me any emails{/tr}</label>
 						</div>
 					</div>
 				{/if}

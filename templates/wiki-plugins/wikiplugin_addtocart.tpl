@@ -12,23 +12,27 @@
 		<br>
 	{/if}
 	
-	<table>
-		{if $params.giftcertificate == 'y'}
-			<tr>
-				<th style="text-align: right;">{tr}Gift Certificate:{/tr}</th>
-				<td><input type="text" name="gift_certificate" size="2"></td>
-			</tr>
-		{/if}
+	{if $params.giftcertificate eq 'y' or $hideamountfield eq 'y'}
+		<table>
+			{if $params.giftcertificate == 'y'}
+				<tr>
+					<th style="text-align: right;">{tr}Gift Certificate:{/tr}</th>
+					<td><input type="text" name="gift_certificate" size="2"></td>
+				</tr>
+			{/if}
 
-		{if $hideamountfield eq 'y'}
-		<input type="hidden" name="quantity" value="1">
-		{else}			
-		<tr>
-			<th style="text-align: right;">{tr}Qty:{/tr}</th>
-			<td><input type="text" name="quantity" value="1" size="2"></td>
-		</tr>
-		{/if}
-	</table>
+			{if $hideamountfield eq 'y'}
+			<input type="hidden" name="quantity" value="1">
+			{else}
+			<tr>
+				<th style="text-align: right;">{tr}Qty:{/tr}</th>
+				<td><input type="text" name="quantity" value="1" size="2"></td>
+			</tr>
+			{/if}
+		</table>
+	{else}
+		{tr}Qty:{/tr} <input type="text" name="quantity" value="1" size="2">
+	{/if}
 	<input type="submit" class="btn btn-default" value="{tr}{$params.label|escape}{/tr}">
 	{if $params.exchangeorderitemid}
 		<input type="hidden" value="{$params.exchangeorderitemid|escape}" name="exchangeorderitemid">

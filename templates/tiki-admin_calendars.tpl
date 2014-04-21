@@ -299,7 +299,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-2 control-label" for="customcategories">{tr}Allows to select each user for small groups{/tr}</label>
+                    <label class="col-sm-2 control-label" for="customcategories">{tr}Allows each user to be selected for small groups{/tr}</label>
                     <div class="col-sm-10 checkbox-inline">
 					    <input type="checkbox" name="showeachuser" {if $showeachuser eq 'y'}checked="checked"{/if}>
 			    	</div>

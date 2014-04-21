@@ -41,7 +41,7 @@
 			minTime: data.minHourOfDay,
 			maxTime: data.maxHourOfDay,
 			monthNames: [ "{tr}January{/tr}", "{tr}February{/tr}", "{tr}March{/tr}", "{tr}April{/tr}", "{tr}May{/tr}", "{tr}June{/tr}", "{tr}July{/tr}", "{tr}August{/tr}", "{tr}September{/tr}", "{tr}October{/tr}", "{tr}November{/tr}", "{tr}December{/tr}"], 
-			monthNamesShort: [ "{tr}Jan{/tr}", "{tr}Feb{/tr}", "{tr}Mar{/tr}", "{tr}Apr{/tr}", "{tr}May{/tr}", "{tr}Jun{/tr}", "{tr}Jul{/tr}", "{tr}Aug{/tr}", "{tr}Sep{/tr}", "{tr}Oct{/tr}", "{tr}Nov{/tr}", "{tr}Dec{/tr}"], 
+			monthNamesShort: [ "{tr}Jan.{/tr}", "{tr}Feb.{/tr}", "{tr}Mar.{/tr}", "{tr}Apr.{/tr}", "{tr}May{/tr}", "{tr}June{/tr}", "{tr}July{/tr}", "{tr}Aug.{/tr}", "{tr}Sep.{/tr}", "{tr}Oct.{/tr}", "{tr}Nov.{/tr}", "{tr}Dec.{/tr}"], 
 			dayNames: ["{tr}Sunday{/tr}", "{tr}Monday{/tr}", "{tr}Tuesday{/tr}", "{tr}Wednesday{/tr}", "{tr}Thursday{/tr}", "{tr}Friday{/tr}", "{tr}Saturday{/tr}"],
 			dayNamesShort: ["{tr}Sun{/tr}", "{tr}Mon{/tr}", "{tr}Tue{/tr}", "{tr}Wed{/tr}", "{tr}Thu{/tr}", "{tr}Fri{/tr}", "{tr}Sat{/tr}"],
 			buttonText: {

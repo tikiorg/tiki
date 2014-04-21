@@ -244,7 +244,7 @@
     <fieldset>
         <legend>{tr}Forum-Mailing list synchronization{/tr}</legend>
         <div class="form-group">
-            <label class="col-sm-4 control-label" for="outbound_address">{tr}Forward messages to this forum to this e-mail address, in a format that can be used for sending back to the inbound forum e-mail address{/tr}</label>
+            <label class="col-sm-4 control-label" for="outbound_address">{tr}Forward messages to this forum to this email address, in a format that can be used for sending back to the inbound forum email address{/tr}</label>
             <div class="col-sm-8">
                 <input type="text" name="outbound_address" id="outbound_address" class="form-control" value="{$outbound_address|escape}">
 			</div>
@@ -262,7 +262,7 @@
             </div>
         </div>
         <div class="form-group">
-            <label class="col-sm-4 control-label" for="outbound_from">{tr}Originating e-mail address for mails from this forum{/tr}</label>
+            <label class="col-sm-4 control-label" for="outbound_from">{tr}Originating email address for mails from this forum{/tr}</label>
             <div class="col-sm-8">
 		    	<input type="text" name="outbound_from" id="outbound_from" class="form-control" value="{$outbound_from|escape}">
             </div>

@@ -5,7 +5,7 @@
 {/if}
 {if !empty($filegals_manager)}
 	{assign var=seturl value=$fileId|sefurl:display}
-	{capture name=alink assign=alink}href="#" onclick="window.opener.insertAt('{$filegals_manager}','{$syntax|escape}');checkClose();return false;" title="{tr}Click Here to Insert in Wiki Syntax{/tr}" class="tips"{/capture}
+	{capture name=alink assign=alink}href="#" onclick="window.opener.insertAt('{$filegals_manager}','{$syntax|escape}');checkClose();return false;" title="{tr}Click here to use the file{/tr}" class="tips"{/capture}
 {else}
 	{assign var=alink value=''}
 {/if}
@@ -14,7 +14,7 @@
 		{if $view neq 'page'}
 			<td style="text-align: center">
 				{if !empty($filegals_manager)}
-					<a {$alink}><img src="{$fileId|sefurl:thumbnail}"><br><span class="thumbcaption">{tr}Click Here to Insert in Wiki Syntax{/tr}</span></a>
+					<a {$alink}><img src="{$fileId|sefurl:thumbnail}"><br><span class="thumbcaption">{tr}Click here to use the file{/tr}</span></a>
 				{else}
 					<img src="{$fileId|sefurl:thumbnail}">
 				{/if}

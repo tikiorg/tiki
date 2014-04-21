@@ -17,7 +17,7 @@ function module_tracker_input_info()
 {
 	return array(
 		'name' => tra('Tracker Input'),
-		'description' => tra('Allows to open a dialog to create new tracker items.'),
+		'description' => tra('Allows a dialog to be opened to create new tracker items.'),
 		'prefs' => array('feature_trackers'),
 		'params' => array(
 			'trackerId' => array(

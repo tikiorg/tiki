@@ -42,7 +42,7 @@
 	{tabset  name='tabs_webmail_settings'}
 		{tab name="{tr}List{/tr}"}
 			{if count($accounts) != 0}
-				<h2>{tr}Personal e-mail accounts{/tr}</h2>
+				<h2>{tr}Personal email accounts{/tr}</h2>
                 <div class="table-responsive">
 				<table class="table normal">
 					<tr>
@@ -96,7 +96,7 @@
 			
 			{if $tiki_p_use_group_webmail eq 'y'}
 				{if count($pubAccounts) != 0}
-					<h2>{tr}Group e-mail accounts{/tr}</h2>
+					<h2>{tr}Group email accounts{/tr}</h2>
                     <div class="table-responsive">
 					<table class="table normal">
 						<tr>
