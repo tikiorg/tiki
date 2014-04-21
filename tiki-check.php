@@ -19,6 +19,7 @@ tiki-check.php should not crash but rather avoid running tests which lead to tik
 // * needs authentication, if not standalone
 isset($_REQUEST['nagios']) ? $nagios = true : $nagios = false;
 file_exists('tiki-check.php.lock') ? $locked = true : $locked = false;
+$font = 'lib/captcha/DejaVuSansMono.ttf';
 
 if (file_exists('./db/local.php') && file_exists('./templates/tiki-check.tpl')) {
 	$standalone = false;
@@ -291,6 +292,12 @@ if ( PHP_OS == 'Linux' && function_exists('exec') ) {
 		$server_information['Release'] = array(
 			'value' => str_replace('Description:', '', $output[0])
 		);
+		# Check for FreeType fails without a font, i.e. standalone mode
+		# Using a URL as font source doesn't work on all PHP installs
+		# So let's try to gracefully fall back to some locally installed font at least on Linux
+		if (!file_exists($font)) {
+			$font = exec('find /usr/share/fonts/ -type f -name "*.ttf" | head -n 1', $output);
+		}
 	} else {
 		$server_information['Release'] = array(
 			'value' => tra('N/A')
@@ -738,7 +745,7 @@ if ( $s && function_exists('gd_info') ) {
 		$im = @imagecreate(110, 20);
 	}
 	if (function_exists('imageftbbox')) {
-		$ft = @imageftbbox(12, 0, './lib/captcha/DejaVuSansMono.ttf', 'test');
+		$ft = @imageftbbox(12, 0, $font, 'test');
 	}
 	if ($im && $ft) {
 		$php_properties['gd'] = array(
