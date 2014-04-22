@@ -37,6 +37,7 @@
 		<service id="tiki.controller.rating" class="Services_Rating_Controller"/>
 		<service id="tiki.controller.report" class="Services_Report_Controller"/>
 		<service id="tiki.controller.tracker_calendar" class="Services_Tracker_CalendarController"/>
+		<service id="tiki.controller.search" class="Services_Search_Controller"/>
 		<service id="tiki.controller.search_customsearch" class="Services_Search_CustomSearchController"/>
 		<service id="tiki.controller.search_stored" class="Services_Search_StoredController"/>
 		<service id="tiki.controller.showtikiorg" class="Services_ShowTikiOrg_Controller"/>

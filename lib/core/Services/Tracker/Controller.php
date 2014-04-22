@@ -1630,5 +1630,12 @@ class Services_Tracker_Controller
 			);
 		}
 	}
+
+	function action_search_help($input)
+	{
+		return [
+			'title' => tr('Help'),
+		];
+	}
 }
 

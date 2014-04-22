@@ -1,3 +1,10 @@
+{extends "layout_view.tpl"}
+
+{block name="title"}
+	{title}{$title}{/title}
+{/block}
+
+{block name="content"}
 {strip}
 
 <div class="help_section">
@@ -30,3 +37,4 @@
 
 </div>
 {/strip}
+{/block}

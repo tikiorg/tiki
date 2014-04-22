@@ -119,10 +119,7 @@
 				});
 			{/jq}
 		{/if}
-	{*</form>*}
-		{add_help show='y' title="{tr}Search Help{/tr}" id="unified_search_help"}
-			{include file='unified_search_help.tpl'}
-		{/add_help}
+		<a href="{service controller=search action=help modal=1}" data-toggle="modal" data-target="#bootstrap-modal">{tr}Search Help{/tr} {icon _id=help}</a>
 	</div>
 </form>
 {jq}

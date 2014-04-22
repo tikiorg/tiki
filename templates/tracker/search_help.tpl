@@ -1,4 +1,11 @@
 {* $Id$ *}
+{extends "layout_view.tpl"}
+
+{block name="title"}
+	{title}{$title}{/title}
+{/block}
+
+{block name="content"}
 {strip}
 
 <h3>{tr}Non Advanced Search or Natural Search{/tr}</h3>
@@ -63,3 +70,4 @@
 	</p>
 </div>
 {/strip}
+{/block}

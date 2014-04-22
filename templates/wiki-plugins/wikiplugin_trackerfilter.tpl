@@ -77,13 +77,7 @@ function tf_export_submit(fm) {
 			<input id="f_{$filter.fieldId}" type="text" name="f_{$filter.fieldId}" value="{$filter.selected}">
 {*------sqlsearch *}
 		{elseif $filter.format eq 'sqlsearch'}
-			{capture name=tpl_advanced_search_help}
-				{include file='advanced_search_help.tpl'}
-			{/capture}
-			<input id="f_{$filter.fieldId}" type="text" name="f_{$filter.fieldId}" value="{$filter.selected}">
-			{add_help show='y' title="{tr}Help{/tr}" id="advanced_search_help_filter"}
-				{$smarty.capture.tpl_advanced_search_help}
-			{/add_help}
+			<a href="{service controller=tracker action=search_help modal=1}" data-toggle="modal" data-target="#bootstrap-modal">{icon _id=help}</a>
 {*------rating *}
 		{elseif $filter.format eq '*'}
 			<select id="f_{$filter.fieldId}" name="f_{$filter.fieldId}">
