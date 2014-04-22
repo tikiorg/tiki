@@ -1,6 +1,7 @@
-<form method="post" action="tiki-admin.php?page=webservices">
+{* $ID:$ *}
+<form method="post" action="tiki-admin.php?page=webservices" class="form-horizontal">
 
-	<fieldset class="table">
+	<fieldset>
 		<legend>{tr}Activate the feature{/tr}</legend>
 		{preference name=feature_webservices visible="always"}
 	</fieldset>		
@@ -32,25 +33,19 @@
 	{/if}
 	{if $url}
 		<h3>{tr}Parameters{/tr}</h3>
-		<table class="formcolor">
 			{if $params|@count}
 				{foreach from=$params key=name item=value}
-					<tr>
-						<td>{$name|escape}</td>
-						<td><input type="text" name="params[{$name|escape}]" value="{$value|escape}" /></td>
-					</tr>
+					<div class="form-group">
+						<label>{$name|escape}
+						<input type="text" name="params[{$name|escape}]" value="{$value|escape}" /></label>
+					</div>
 				{/foreach}
 			{else}
-				<tr>
-					<td colspan="2">{tr}{$url} requires no parameter.{/tr}</td>
-				</tr>
+					<div>{tr}{$url} requires no parameter.{/tr}</div>
 			{/if}
-			<tr>
-				<td colspan="2">
+			<div class="form-group">
 					<input type="submit" class="btn btn-default btn-sm" name="test" value="{tr}Test Input{/tr}" />
-				</td>
-			</tr>
-		</table>
+			</div>
 	{/if}
 	{if $data}
 		<h3>{tr}Response Information{/tr}</h3>
@@ -108,7 +103,8 @@
 			</p>
 		{else}
 			<h3>{tr}Registered Templates{/tr}</h3>
-			<table class="formcolor">
+        <div class="table-responsive">
+			<table>
 				<tr>
 					<th>{tr}Name{/tr}</th>
 					<th>{tr}Engine{/tr}</th>
@@ -138,6 +134,7 @@
 				<tr><td colspan="4"><textarea name="nt_content" rows="10">{$nt_content|escape}</textarea></td></tr>
 				<tr><td colspan="4"><input type="submit" class="btn btn-default btn-sm" name="create_template" value="{tr}Register Template{/tr}"/></td></tr>
 			</table>
+        </div>
 		{/if}
 	{/if}
 </form>
