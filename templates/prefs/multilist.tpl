@@ -1,5 +1,5 @@
 <div class="adminoptionbox preference clearfix {$p.tagstring|escape}{if isset($smarty.request.highlight) and $smarty.request.highlight eq $p.preference} highlight{/if}" style="text-align: left;">
-	<label class="col-md-4 control-label" for="{$p.id|escape}">{$p.name|escape}:</label>
+	<label class="col-md-4 control-label" for="{$p.id|escape}">{$p.name|escape}</label>
     <div class="col-md-8">
 	<select class="form-control" name="{$p.preference|escape}[]" id="{$p.id|escape}" multiple="multiple">
 		{foreach from=$p.options key=value item=label}

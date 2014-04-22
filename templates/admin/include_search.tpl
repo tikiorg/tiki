@@ -111,6 +111,7 @@
 					{preference name="allocate_time_unified_rebuild"}
 					
 					{preference name="unified_engine"}
+
 					{remarksbox type=tip title="{tr}About Unified Search Engines{/tr}"}
 						<b>{tr}MySQL Full Text Search{/tr}: </b></br>
 						{tr}Advantages{/tr}: {tr}Fast performance. Works out of the box with Tiki and even on most basic server setups{/tr}.</br>
@@ -122,6 +123,7 @@
 						{tr}Advantages{/tr}: {tr}Most advanced, fast and scalable search engine. Enables some very advanced/new features of Tiki{/tr}.</br>
 						{tr}Disadvantages{/tr}: {tr}Needs to be separately installed from Tiki and requires more configuration{/tr} (See this <a class='alert-link' href='http://doc.tiki.org/ElasticSearch'>{tr}link{/tr}</a> {tr}for more information) {/tr}</br>
 					{/remarksbox}
+
 					{if ! empty($engine_info)}
 						<div class="adminoptionboxchild">
 							<ul>

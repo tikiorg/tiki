@@ -1,5 +1,5 @@
 <div class="adminoptionbox preference clearfix multicheckbox {$p.tagstring|escape}{if isset($smarty.request.highlight) and $smarty.request.highlight eq $p.preference} highlight{/if}" style="text-align: left;">
-	<label for="{$p.id|escape}">{$p.name|escape}:</label>
+	<label for="{$p.id|escape}">{$p.name|escape}</label>
 	<ul>
 		{foreach from=$p.options key=value item=label}
 			<li><input type="checkbox" name="{$p.preference|escape}[]" value="{$value|escape}"{if in_array($value, $p.value)} checked="checked"{/if} {$p.params}>{$label|escape}</li>
