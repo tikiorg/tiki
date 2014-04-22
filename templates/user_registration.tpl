@@ -1,3 +1,4 @@
+{* $Id:$ *}
 {if empty($user)}
 
 	{jq notonready=true} {* test for caps lock*}
@@ -60,16 +61,13 @@
 		{if $userTrackerData}
 			{$userTrackerData}
 		{else}
-			<form action="tiki-register.php" method="post" name="RegForm">
+			<form action="tiki-register.php" class="form-horizontal" method="post" name="RegForm">
 				{if $smarty.request.invite}<input type='hidden' name='invite' value='{$smarty.request.invite|escape}'>{/if}
-				<table class="formcolor">
 				{include file="register-form.tpl"}
 					{if $merged_prefs.feature_antibot eq 'y'}{include file='antibot.tpl' td_style='formcolor'}{/if}
-					<tr class="registerSubmitTr">
-						<td>&nbsp;</td>
-						<td><input class="registerSubmit" type="submit" class="btn btn-default" name="register" value="{tr}Register{/tr}"></td>
-					</tr>
-				</table>
+					<div class="form-group text-center">
+						<button class="btn btn-primary registerSubmit submit" name="register" type="submit">{tr}Register{/tr} <!--span class="glyphicon glyphicon-ok"></span--></button>
+					</div>
 			</form>
 		{/if}
 

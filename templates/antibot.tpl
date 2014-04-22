@@ -1,5 +1,6 @@
+{* $Id$ *}
 {if empty($user) || $user eq 'anonymous' || (isset($showantibot) and $showantibot)}
-	{if $antibot_table ne 'y'}
+	{*if $antibot_table ne 'y'}
 		<tr{if !empty($tr_style)} class="{$tr_style}"{/if}>
 		<td{if !empty($td_style)} class="{$td_style}"{/if}>
 	{else}
@@ -11,7 +12,9 @@
 	{else}
 		</div>
 		<div class="antibot2">
-	{/if}
+	{/if*}
+		<div class="form-group">
+			<div class="col-md-4 col-md-offset-4">
 			{if $captchalib->type eq 'recaptcha'}
 				{$captchalib->render()}
 			{else}
@@ -23,36 +26,44 @@
 					{$captchalib->render()}
 				{/if}
 			{/if}
-	{if $antibot_table ne 'y'}
+			</div>
+		</div>
+	{*if $antibot_table ne 'y'}
 		</td>
 	</tr>
 	{else}
 		</div>
-	{/if}
+	{/if*}
 	{if $captchalib->type ne 'recaptcha'}
-		{if $antibot_table ne 'y'}
+		{*if $antibot_table ne 'y'}
 		<tr{if !empty($tr_style)} class="{$tr_style}"{/if}>
 			<td{if !empty($td_style)} class="{$td_style}"{/if}>
 		{else}
 			<div class="antibot3">
-		{/if}
-			<label for="antibotcode">{tr}Enter the code you see above{/tr}{if $showmandatory eq 'y'}<span class="attention"> *</span>{/if}</label>
-		{if $antibot_table ne 'y'}
+		{/if*}
+			<div class="form-group">
+				<label class="col-md-4 control-label" for="antibotcode">{tr}Enter the code you see above:{/tr}{if $showmandatory eq 'y'}<span class="attention"> *</span>{/if}</label>
+		{*if $antibot_table ne 'y'}
 			</td>
 			<td{if !empty($td_style)} class="{$td_style}"{/if}>
 		{else}
 			</div>
 			<div class="antibot4">
-		{/if}
-				<input type="text" maxlength="8" size="22" name="captcha[input]" id="antibotcode">
+		{/if*}
+				<div class="col-md-4">
+					<input class="form-control" type="text" maxlength="8" size="22" name="captcha[input]" id="antibotcode">
+				</div>
+				<div class="col-md-2">
 			{if $captchalib->type eq 'default'}
 				{button _id='captchaRegenerate' href='#antibot' _text="{tr}Try another code{/tr}" _onclick="generateCaptcha()"}
 			{/if}
-		{if $antibot_table ne 'y'}
+				</div>
+			</div>
+		{*if $antibot_table ne 'y'}
 			</td>
 		</tr>
 		{else}
 			</div>
-		{/if}
+		{/if*}
 	{/if}
 {/if}

@@ -1,14 +1,13 @@
+{* $Id$ *}
 {if $prefs.user_register_prettytracker eq 'y' and $prefs.user_register_prettytracker_tpl and $prefs.socialnetworks_user_firstlogin != 'y'}
 	<input type="text" name="name" id="name">
 	&nbsp;<strong class='mandatory_star'>*</strong>
 {else}
-	<tr>
-		<td>
-			<label for="name">{if $prefs.login_is_email eq 'y'}{tr}Email:{/tr}{else}{tr}Username:{/tr}{/if}</label>
+		<div class="form-group">
+			<label class="col-md-4 control-label" for="name">{if $prefs.login_is_email eq 'y'}{tr}Email:{/tr}{else}{tr}Username:{/tr}{/if}</label>
 			{if $trackerEditFormId}&nbsp;<strong class='mandatory_star'>*</strong>&nbsp;{/if}
-		</td>
-		<td>
-			<input type="text" name="name" id="name" value="{if !empty($smarty.post.name)}{$smarty.post.name}{/if}">
+			<div class="col-md-4">
+				<input class="form-control" type="text" name="name" id="name" value="{if !empty($smarty.post.name)}{$smarty.post.name}{/if}">
 			{if $prefs.login_is_email eq 'y'}
 				<br><em>{tr}Use your email as login{/tr}</em>.
 			{else}
@@ -21,6 +20,6 @@
 					<div class="highlight"><em>{tr}Lowercase only{/tr}</em></div>
 				{/if}
 			{/if}
-		</td>
-	</tr>
+			</div>
+		</div>
 {/if}
