@@ -11,7 +11,7 @@ class Services_Broker
 {
 	private $container;
 
-	function __construct(array $container)
+	function __construct($container)
 	{
 		$this->container = $container;
 	}
