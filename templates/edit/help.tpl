@@ -5,7 +5,7 @@
 {/block}
 
 {block name="content"}
-	{tabset}
+	{tabset skipsingle=1}
 		{foreach item=help from=$help_sections}
 			{tab name=$help.title}
 				{$help.content}
