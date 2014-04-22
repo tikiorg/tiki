@@ -1,7 +1,3 @@
-/* $Id$
-	FiveAlive theme (fivealive.css) for Tiki Wiki CMS Groupware.
-	Visit http://themes.tiki.org for more information.
-*/
 /*! normalize.css v3.0.0 | MIT License | git.io/normalize */
 html {
   font-family: sans-serif;
@@ -5696,11 +5692,14 @@ button.close {
   }
 }
 #col2 .panel,
-#col3 .panel {
+#col3 .panel,
+#bottom_modules .panel {
+  background: none;
   border: none;
 }
 #col2 .panel-heading,
-#col3 .panel-heading {
+#col3 .panel-heading,
+#bottom_modules .panel-heading {
   background: none;
   border-bottom: none;
 }
@@ -5723,11 +5722,40 @@ button.close {
   margin: 0;
   border-bottom: none;
 }
+.form-control,
+select,
+input[type="text"],
+input[type="password"],
+input[type="file"],
+input[type="email"],
+input[type="file"],
+input[type="search"],
+input[type="number"],
+input#login-pass,
+textarea,
+.adminoptionbox option {
+  background-color: #d6f3fa;
+  color: #000;
+  border: 1px solid;
+  border-color: #9ae8fa #e3f7fb #e3f7fb #9ae8fa;
+}
 .middle_outer {
   background: url('fivealive/topbar.jpg') repeat-x;
 }
 .navbar-collapse {
   border: none;
+}
+#footer {
+  background: black;
+  color: #696969;
+  padding: 1px 0 2px 0;
+  width: 100%;
+}
+.footer_liner {
+  border-top: 1px solid #28aae1;
+  border-bottom: 1px solid #28aae1;
+  margin-bottom: 2px;
+  padding-bottom: 2px;
 }
 .clearfix:before,
 .clearfix:after,
