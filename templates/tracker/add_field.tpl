@@ -5,7 +5,7 @@
 {/block}
 
 {block name="content"}
-<form class="simple" method="post" action="{service controller=tracker action=add_field}">
+<form method="post" action="{service controller=tracker action=add_field}">
 	<div class="form-group">
 		<label for="name" class="control-label">{tr}Name{/tr}</label>
 		<input type="text" name="name" value="{$name|escape}" required="required" class="form-control">

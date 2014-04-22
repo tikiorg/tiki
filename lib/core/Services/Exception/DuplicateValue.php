@@ -5,11 +5,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-class Services_Exception_DuplicateValue extends Services_Exception
+class Services_Exception_DuplicateValue extends Services_Exception_FieldError
 {
-	function __construct($field, $value)
-	{
-		parent::__construct("<!--field[$field]-->" . tr('"%0" already exists', $value), 409);
-	}
 }
 

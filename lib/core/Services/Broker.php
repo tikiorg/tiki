@@ -40,6 +40,8 @@ class Services_Broker
 			} else {
 				echo $this->render($controller, $action, $output, $request);
 			}
+		} catch (Services_Exception_FieldError $e) {
+			$access->display_error(NULL, $e->getMessage(), $e->getCode());
 		} catch (Exception $e) {
 			if ($request->modal->int()) {
 				// Special handling for modal dialog requests
