@@ -1558,7 +1558,7 @@ FILL;
 				$back .= '</div>';
 			}
 			if ($showmandatory == 'y' and $onemandatory) {
-				$back.= "<div class='text-center'><em class='mandatory_note'>".tra("Fields marked with a * are mandatory.")."</em></div>";
+				$back.= "<div class='text-center'><em class='mandatory_note'>".tra("Fields marked with an * are mandatory.")."</em></div>";
 			}
 			if ($params['formtag'] == 'y') {
 				$back.= '</form>';

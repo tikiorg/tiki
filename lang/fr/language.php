@@ -7492,6 +7492,7 @@ $lang = array(
 "Passwords do not match" => "Les mots de passe ne correspondent pas",
 "Insert one item per line:" => "Crée une entrée par ligne",
 "Fields marked with a * are mandatory." => "Les champs marqués d'un astérisque (*) sont obligatoires.",
+"Fields marked with an * are mandatory." => "Les champs marqués d'un astérisque (*) sont obligatoires.",
 // "Tracker Calendar" => "Tracker Calendar",
 // "Uses full calendar to render the content of a tracker" => "Uses full calendar to render the content of a tracker",
 // "Tracker to search from" => "Tracker to search from",

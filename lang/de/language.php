@@ -7494,6 +7494,7 @@ $lang = array(
 "Passwords do not match" => "Passwörter stimmen nicht überein",
 "Insert one item per line" => "Füge einen Eintrag pro Zeile hinzu",
 "Fields marked with a * are mandatory." => "Mit * markierte Felder sind zwingend.",
+"Fields marked with an * are mandatory." => "Mit * markierte Felder sind zwingend.",
 // "Tracker Calendar" => "Tracker Calendar",
 // "Uses full calendar to render the content of a tracker" => "Uses full calendar to render the content of a tracker",
 // "Tracker to search from" => "Tracker to search from",

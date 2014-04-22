@@ -7494,6 +7494,7 @@ $lang = array(
 "Passwords do not match" => "비밀번호가 일치하지 않습니다",
 "Insert one item per line" => "한 줄 당 한 항목 삽입",
 "Fields marked with a * are mandatory." => "* 표시된 필드는 필수",
+"Fields marked with an * are mandatory." => "* 표시된 필드는 필수",
 "Tracker Calendar" => "트래커 달력",
 "Uses full calendar to render the content of a tracker" => "트래커의 컨텐츠를 렌더할 전체 달력을 사용",
 "Tracker to search from" => "검색을 할 트래커",

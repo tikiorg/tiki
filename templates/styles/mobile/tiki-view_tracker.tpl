@@ -235,7 +235,7 @@
 			<input type="hidden" name="trackerId" value="{$trackerId|escape}">
 			
 			<h2>{tr}Insert New Item{/tr}</h2>
-			{remarksbox type="note"}<strong class='mandatory_note'>{tr}Fields marked with a * are mandatory.{/tr}</strong>{/remarksbox}
+			{remarksbox type="note"}<strong class='mandatory_note'>{tr}Fields marked with an * are mandatory.{/tr}</strong>{/remarksbox}
 			<table class="formcolor">
 			
 			{if $tracker_info.showStatus eq 'y' and ($tracker_info.showStatusAdminOnly ne 'y' or $tiki_p_admin_trackers eq 'y')}
