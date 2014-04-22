@@ -7495,6 +7495,7 @@ $lang = array(
 // "Passwords do not match" => "Passwords do not match",
 // "Insert one item per line" => "Insert one item per line",
 "Fields marked with a * are mandatory." => "Velden aangeduid met een * zijn verplicht.",
+"Fields marked with an * are mandatory." => "Velden aangeduid met een * zijn verplicht.",
 // "Tracker Calendar" => "Tracker Calendar",
 // "Uses full calendar to render the content of a tracker" => "Uses full calendar to render the content of a tracker",
 // "Tracker to search from" => "Tracker to search from",

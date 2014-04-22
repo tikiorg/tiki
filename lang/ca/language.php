@@ -7497,6 +7497,7 @@ $lang = array(
 "Passwords do not match" => "Les contrasenyes no coincideixen",
 "Insert one item per line" => "Inseriu un ítem per línia",
 "Fields marked with a * are mandatory." => "Els camps marcats amb un asterisc (*) són obligatoris.",
+"Fields marked with an * are mandatory." => "Els camps marcats amb un asterisc (*) són obligatoris.",
 "Tracker Calendar" => "Calendari del Formulari-bd",
 "Uses full calendar to render the content of a tracker" => "Utilitza un calendari per a representar el contingut d'un formulari-bd",
 "Tracker to search from" => "Formulari-bd a emprar",
