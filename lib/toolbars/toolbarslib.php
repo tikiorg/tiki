@@ -1389,46 +1389,45 @@ class ToolbarHelptool extends Toolbar
 
 	function getWikiHtml( $areaId ) // {{{
 	{
-		global $plugins, $section;
 		$smarty = TikiLib::lib('smarty');
-		if (!isset($plugins)) {
-			$wikilib = TikiLib::lib('wiki');
-			$plugins = $wikilib->list_plugins(true, $areaId);
-		}
+		$servicelib = TikiLib::lib('service');
 
-		$sheethelp = '';
+		$params = ['controller' => 'edit', 'action' => 'help', 'modal' => 1];
+		$params['wiki'] = 1;
+		$params['plugins'] = 1;
+		$params['areaId'] = $areaId;
 
 		if ($section == 'sheet') {
-			$sheethelp .= $smarty->fetch('tiki-edit_help_sheet.tpl');
-			$sheethelp .= $smarty->fetch('tiki-edit_help_sheet_interface.tpl');
+			$params['sheet'] = 1;
 		}
 
-		$smarty->assign_by_ref('plugins', $plugins);
-		return  $smarty->fetch('tiki-edit_help.tpl') .
-				$smarty->fetch('tiki-edit_help_plugins.tpl') .
-				$sheethelp;
+		$smarty->loadPlugin('smarty_function_icon');
+		$icon = smarty_function_icon(array('_id' => 'help'), $smarty);
+		$url = $servicelib->getUrl($params);
 
+		return "<a href=\"$url\" data-toggle=\"modal\" data-target=\"#bootstrap-modal\">$icon</a>";
 	} // }}}
 
 	function getWysiwygToken( $areaId ) // {{{
 	{
 
-		global $plugins;
-
-		$wikilib = TikiLib::lib('wiki');
 		$smarty = TikiLib::lib('smarty');
-		$plugins = $wikilib->list_plugins(true, $areaId);
+		$servicelib = TikiLib::lib('service');
 
-		$smarty->assign_by_ref('plugins', $plugins);
+		$params = ['controller' => 'edit', 'action' => 'help', 'modal' => 1];
+		$params['wysiwyg'] = 1;
+		$params['plugins'] = 1;
+		$params['areaId'] = $areaId;
 
-		$unused = $smarty->fetch('tiki-edit_help_wysiwyg.tpl') . $smarty->fetch('tiki-edit_help_plugins.tpl');
-		$this->setLabel(tra('Wysiwyg Help'));
+		if ($section == 'sheet') {
+			$params['sheet'] = 1;
+		}
 
-		$name = 'tikihelp';
+		$smarty->loadPlugin('smarty_function_icon');
+		$icon = smarty_function_icon(array('_id' => 'help'), $smarty);
+		$url = $servicelib->getUrl($params);
 
-		$this->setupCKEditorTool('$.openEditHelp();', $name, $this->label, $this->icon);
-
-		return $name;
+		return "<a href=\"$url\" data-toggle=\"modal\" data-target=\"#bootstrap-modal\">$icon</a>";
 	}
 
 	function getWysiwygWikiToken( $areaId ) // {{{ // wysiwyg_htmltowiki

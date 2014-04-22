@@ -2,8 +2,6 @@
 {* \brief Show plugins help 
  * included by tiki-show_help.tpl via smarty_block_add_help() *}
 
-{add_help show='n' id="plugin_help" title="{tr}Plugin Help{/tr}"}
-
 {if count($plugins) ne 0}
 
 <h3>{tr}Plugins{/tr}</h3>
@@ -38,4 +36,3 @@
 </table>
 </div>
 {/if}
-{/add_help}

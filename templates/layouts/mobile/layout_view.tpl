@@ -116,7 +116,6 @@
 											{if $prefs.module_zones_pagebottom eq 'fixed' or ($prefs.module_zones_pagebottom ne 'n' && ! zone_is_empty('pagebottom'))}
 												{modulelist zone=pagebottom}
 											{/if}
-											{show_help}
 										</div>{* end #tiki-center *}
 										{if $prefs.feature_layoutshadows eq 'y'}{eval var=$prefs.center_shadow_end}</div>{/if}
 									</div>

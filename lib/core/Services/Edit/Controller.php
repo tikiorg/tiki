@@ -349,4 +349,53 @@ $(window).load(function(){
 
         return true;
     }
+
+	public function action_help($input)
+	{
+		$smarty = TikiLib::lib('smarty');
+
+		$help_sections = [];
+
+		if ($input->wiki->int()) {
+			$help_sections[] = [
+				'id' => 'wiki-help',
+				'title' => tr('Syntax Help'),
+				'content' => $smarty->fetch('tiki-edit_help.tpl'),
+			];
+		}
+
+		if ($input->wysiwyg->int()) {
+			$help_sections[] = [
+				'id' => 'wysiwyg-help',
+				'title' => tr('WYSIWYG Help'),
+				'content' => $smarty->fetch('tiki-edit_help_wysiwyg.tpl'),
+			];
+		}
+
+		if ($input->plugins->int()) {
+			$areaId = $input->areaId->word();
+			$wikilib = TikiLib::lib('wiki');
+			$plugins = $wikilib->list_plugins(true, $areaId);
+
+			$smarty->assign('plugins', $plugins);
+			$help_sections[] = [
+				'id' => 'plugin-help',
+				'title' => tr('Plugin Help'),
+				'content' => $smarty->fetch('tiki-edit_help_plugins.tpl'),
+			];
+		}
+
+		if ($input->sheet->int()) {
+			$help_sections[] = [
+				'id' => 'sheet-help',
+				'title' => tr('Sheet Help'),
+				'content' => $smarty->fetch('tiki-edit_help_sheet.tpl'),
+			];
+		}
+
+		return array(
+			'title' => tr('Edit Help'),
+			'help_sections' => $help_sections,
+		);
+	}
 }

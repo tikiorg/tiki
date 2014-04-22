@@ -2,8 +2,6 @@
 {* \brief Show wysiwyg help 
  * included by tiki-show_help.tpl via smarty_block_add_help() *}
 
-{add_help show='y' title="{tr}Wysiwyg Help{/tr}" id="wiki_help"}
-
 <h3>{tr}Wysiwyg Help{/tr}</h3>
 <div class="help_section">
 {if $prefs.feature_help eq 'y'} 
@@ -62,4 +60,3 @@
 
 </div>
 
-{/add_help}

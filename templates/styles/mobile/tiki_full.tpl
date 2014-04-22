@@ -16,7 +16,6 @@
 	<div id="tiki-center">
 		<div id="role_main">
 			{$mid_data}
-			{show_help}
 		</div>
 	</div>
 </div>
