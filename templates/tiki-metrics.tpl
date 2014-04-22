@@ -1,4 +1,4 @@
-<div class="page-header">
+<div class="page_header">
 	<div class="metrics-range-update">
 		<form method="GET">
 		<span class="metrics-range-text">{tr}Change to:{/tr}</span>

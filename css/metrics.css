@@ -92,7 +92,7 @@ textarea#metric_query, textarea#tab_content {
 	display: none;
 }
 
-.page-header {
+.page_header {
 	padding: 0 20px;
 	margin-top: -10px;
 }

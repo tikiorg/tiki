@@ -12,7 +12,7 @@
 {block name="content"}
 	{if ! $itemId}
 		{if $trackerLogo}
-			<div class="page-header media">
+			<div class="page_header media">
 				<img src="{$trackerLogo|escape}" class="pull-left img-responsive img-rounded" alt="{$trackerName|escape}" height="64px" width="64px">
 			</div>
 		{/if}
