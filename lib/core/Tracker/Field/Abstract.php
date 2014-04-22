@@ -259,6 +259,17 @@ abstract class Tracker_Field_Abstract implements Tracker_Field_Interface, Tracke
 		return isset($this->itemData[$key]) ? $this->itemData[$key] : $default;
 	}
 
+	protected function getItemField($permName)
+	{
+		$field = $this->trackerDefinition->getFieldFromPermName($permName);
+
+		if ($field) {
+			$id = $field['fieldId'];
+
+			return $this->getData($id);
+		}
+	}
+
 	/**
 	 * Returns an option from the options array based on the numeric position.
 	 * For the list of options for a particular field check its getTypes() method.
