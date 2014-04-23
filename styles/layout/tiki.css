@@ -838,7 +838,6 @@ dl.note-list {
 }
 
 img.athumb {
-	border: 0;
 	margin: auto
 }
 
@@ -893,96 +892,17 @@ body.filegal_popup #tiki-center {
 	height: 15px;
 }
 
-/* also for categorize.tpl */
-.multiselect {
-	vertical-align: middle;
-	padding: 0;
-	height: auto;
-	overflow: visible;
-	border: 1px solid transparent;
-}
-
-.multiselect table {
-	width: 100%
-}
-
-.multiselect .option {
-	white-space: nowrap;
-	width: 33.33%;
-	display: inline-block;
-	overflow: hidden;
-	margin: -1px;
-}
-
-.multiselect .selection span {
-	display: inline;
-}
-
-.multiselect ul {
-	list-style: none outside none;
-	text-align: left;
-	margin: 0;
-	padding: 0;
-}
-
-.multiselect li {
-	margin-left: 3em;
-}
-
-.multiselect  ul.root > li {
-	margin: 0 1em 0.5em .5em;
-	display: block;
-	float: left;
-	width: auto;
-	min-width: 20%;
-}
-
-.multiselect img {
-	vertical-align: middle;
-}
 
 .multiselect .selection {
 	display: none;
 	overflow: auto;
 	position: relative;
 	height: auto;
-	max-height: 7em;
 	z-index: 1000;
 	width: 100%;
-	left: -1px;
 	float: left;
 	margin: 0;
 	padding: 0;
-	border: 1px solid transparent;
-	background: #fff;
-}
-
-.multiselect .odd {
-	color: #000;
-	background: #f4f6f7;
-}
-
-.multiselect .odd:hover {
-	background: #fff7e6;
-}
-
-.multiselect .even {
-	color: #000;
-	background: #e7e9ea;
-}
-
-.multiselect .even:hover {
-	background: #f0f2f3;
-}
-
-.multiselect div.odd,
-.multiselect div.even {
-	border: 1px solid #80b1e2;
-}
-
-.multiselect:hover,
-.multiselect .selection:hover {
-	border: 1px solid #80b1e2;
 }
 
 /***** Categories, Tags *****/
