@@ -761,21 +761,11 @@ body.tiki_forums .normal {
 /* Comment Annotations */
 
 dl.note-list {
-	background: #fff;
-	color: #000;
-	border: solid thin black;
 	margin: .5em;
 }
 
 #note-editor-comment {
-	background: yellow;
-	color: #000;
-	border: #999 1px solid;
-}
-
-.note-editor-text {
-	background: #eee;
-	color: #000;
+	padding: 0;
 }
 
 .note-list .postbody-title {
@@ -802,12 +792,6 @@ dl.note-list {
 }
 
 
-/* applied mainly to titles : option ? help-inline-level user defined  */
-.simple_comment {
-	font-style: italic;
-	font-size: x-small;
-}
-
 #note-editor-comment,
 .note-list .postbody-title {
 	padding: .5em;
@@ -829,10 +813,6 @@ dl.note-list {
 }
 
 /* Comments moderation */
-
-textarea#editpost2 {
-	width: 98%;
-}
 
 .subcomment {
 	margin-left: 10px;
