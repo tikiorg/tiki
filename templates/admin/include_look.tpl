@@ -1,22 +1,24 @@
 {* $Id$ *}
 <form action="tiki-admin.php?page=look" id="look" name="look" class="form-horizontal labelColumns" onreset="return(confirm('{tr}Cancel Edit{/tr}'))" class="admin" method="post">
-<div class="text-center">
-	<div class="btn-group form-group">
-		<input type="submit" class="btn btn-primary btn-sm" name="looksetup" value="{tr}Apply{/tr}" />
-		<input type="reset" class="btn btn-warning btn-sm" name="looksetupreset" value="{tr}Reset{/tr}" />
+	<div class="row">
+		<div class="form-group col-lg-12">
+			<div class="pull-right">
+				<input type="reset" class="btn btn-link btn-sm" name="looksetupreset" title="{tr}Reset Changes{/tr}" value="{tr}Reset{/tr}" />
+				<input type="submit" class="btn btn-primary btn-sm" name="looksetup" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}" />
+			</div>
+		</div>
 	</div>
-</div>
 	{tabset name="admin_look"}
 		{tab name="{tr}Theme{/tr}"}
-            <h2>{tr}Theme{/tr}</h2>
+			<h2>{tr}Theme{/tr}</h2>
 
 			<div class="row">
-                <div class="col-md-3 col-md-push-9">
-                    <div  class="thumbnail">
-                        <img src="{$thumbfile}" alt="{tr}Theme Screenshot{/tr}" id="style_thumb">
-                    </div>
-                </div>
-               	<div class="col-md-9 col-md-pull-3 adminoptionbox">
+				<div class="col-md-3 col-md-push-9">
+					<div  class="thumbnail">
+						<img src="{$thumbfile}" alt="{tr}Theme Screenshot{/tr}" id="style_thumb">
+					</div>
+				</div>
+				<div class="col-md-9 col-md-pull-3 adminoptionbox">
 					{preference name=theme_active}
 
 					<div class="adminoptionbox theme_active_childcontainer custom">
@@ -38,7 +40,7 @@
 						<input type="submit" class="btn btn-default btn-sm" name="changestyle" value="{tr}Go{/tr}" />
 					{/if}
 				</div>
-            </div>
+			</div>
 			<div class="adminoptionbox">
 				{if $prefs.feature_jquery_ui eq 'y'}
 					{preference name=feature_jquery_ui_theme}
@@ -77,7 +79,7 @@
 		{/tab}
 
 		{tab name="{tr}General Layout{/tr}"}
-            <h2>{tr}General Layout{/tr}</h2>
+			<h2>{tr}General Layout{/tr}</h2>
 
 			{remarksbox type="tip" title="{tr}Tip{/tr}"}
 				{tr}&quot;Modules&quot; are the items of content at the top &amp; bottom and in the right &amp; left columns of the site.{/tr} {tr}Select{/tr}
@@ -129,7 +131,7 @@
 		{/tab}
 
 		{tab name="{tr}Shadow layer{/tr}"}
-            <h2>{tr}Shadow layer{/tr}</h2>
+			<h2>{tr}Shadow layer{/tr}</h2>
 			{preference name=feature_layoutshadows}
 			<div class="adminoptionboxchild" id="feature_layoutshadows_childcontainer">
 				{preference name=main_shadow_start}
@@ -153,7 +155,7 @@
 		{/tab}
 
 		{tab name="{tr}Pagination{/tr}"}
-            <h2>{tr}Pagination{/tr}</h2>
+			<h2>{tr}Pagination{/tr}</h2>
 			{preference name=user_selector_threshold}
 			{preference name=maxRecords}
 			{preference name=nextprev_pagination}
@@ -170,7 +172,7 @@
 		{/tab}
 
 		{tab name="{tr}UI Effects{/tr}"}
-            <h2>{tr}UI Effects{/tr}</h2>
+			<h2>{tr}UI Effects{/tr}</h2>
 			<div class="adminoptionbox">
 				<fieldset class="table">
 					<legend>{tr}Standard UI effects{/tr}</legend>
@@ -197,13 +199,13 @@
 							{preference name=jquery_colorbox_theme}
 						</div>
 					{preference name=feature_jscalendar}
-                    {preference name=feature_hidden_links}
+					{preference name=feature_hidden_links}
 				</div>
 			</fieldset>
 		{/tab}
 
 		{tab name="{tr}Customization{/tr}"}
-            <h2>{tr}Customization{/tr}</h2>
+			<h2>{tr}Customization{/tr}</h2>
 			<fieldset>
 				<legend>{tr}Theme Generator{/tr} <em>({tr}Experimental{/tr})</em></legend>
 				{preference name="themegenerator_feature"}
@@ -294,7 +296,7 @@
 		{/tab}
 
 		{tab name="{tr}Miscellaneous{/tr}"}
-            <h2>{tr}Miscellaneous{/tr}</h2>
+			<h2>{tr}Miscellaneous{/tr}</h2>
 			{preference name=feature_tabs}
 			<div class="adminoptionboxchild" id="feature_tabs_childcontainer">
 				{preference name=layout_tabs_optional}
@@ -348,11 +350,12 @@
 
 		{/tab}
 	{/tabset}
-
-<div class="text-center">
-	<div class="btn-group form-group">
-		<input type="submit" class="btn btn-primary btn-sm" name="looksetup" value="{tr}Apply{/tr}" />
-		<input type="reset" class="btn btn-warning btn-sm" name="looksetupreset" value="{tr}Reset{/tr}" />
-	</div>
-</div>
+	<div class="row">
+		<div class="form-group col-lg-12">
+			<div class="text-center">
+				<input type="reset" class="btn btn-link btn-sm" name="looksetupreset" title="{tr}Reset Changes{/tr}" value="{tr}Reset{/tr}" />
+				<input type="submit" class="btn btn-primary btn-sm" name="looksetup" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}" />
+			</div>
+		</div>
+	</div
 </form>
