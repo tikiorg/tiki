@@ -4,9 +4,9 @@
 	&nbsp;<strong class='mandatory_star'>*</strong>
 {else}
 		<div class="form-group">
-			<label class="col-md-4 control-label" for="name">{if $prefs.login_is_email eq 'y'}{tr}Email:{/tr}{else}{tr}Username:{/tr}{/if}</label>
+			<label class="col-md-4 col-sm-3 control-label" for="name">{if $prefs.login_is_email eq 'y'}{tr}Email:{/tr}{else}{tr}Username:{/tr}{/if}</label>
 			{if $trackerEditFormId}&nbsp;<strong class='mandatory_star'>*</strong>&nbsp;{/if}
-			<div class="col-md-4">
+			<div class="col-md-4 col-sm-6">
 				<input class="form-control" type="text" name="name" id="name" value="{if !empty($smarty.post.name)}{$smarty.post.name}{/if}">
 			{if $prefs.login_is_email eq 'y'}
 				<br><em>{tr}Use your email as login{/tr}</em>.

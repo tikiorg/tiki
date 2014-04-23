@@ -5,9 +5,9 @@
 {else}
 	{if $openid_associate neq 'y'}
 		<div class="form-group">
-			<label class="col-md-4 control-label" for="pass2">{tr}Repeat password:{/tr}</label>
+			<label class="col-md-4 col-sm-3 control-label" for="pass2">{tr}Repeat password:{/tr}</label>
 			{if $trackerEditFormId}&nbsp;<strong class='mandatory_star'>*</strong>&nbsp;{/if}
-			<div class="col-md-4">
+			<div class="col-md-4 col-sm-6">
 				<input class="form-control" id='pass2' type="password" name="passAgain" onkeypress="regCapsLock(event)" value="{if !empty($smarty.post.passAgain)}{$smarty.post.passAgain}{/if}"
 					   onkeyup="{if $prefs.feature_jquery_validation neq 'y' && !$userTrackerData}checkPasswordsMatch('#pass2', '#pass1', '#mypassword2_text');{/if}">
 				<div style="float:right;margin-left:5px;">
