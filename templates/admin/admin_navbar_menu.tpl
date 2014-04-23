@@ -131,6 +131,9 @@
 			{if $prefs.payment_feature eq "y"}
 				<li><a href="tiki-admin_credits.php">{tr}User Credits{/tr}</a></li>
 			{/if}
+			{if $prefs.feature_theme_control eq "y" and $tiki_p_admin eq "y"}
+				<li><a href="tiki-theme_control.php">{tr}Theme Control{/tr}</a></li>
+			{/if}	
 			{if $tiki_p_admin_toolbars eq "y"}
 				<li><a href="tiki-admin_toolbars.php">{tr}Toolbars{/tr}</a></li>
 			{/if}
@@ -184,9 +187,6 @@
 				<li><a href="tiki-admin_system.php">{tr}System Cache{/tr}</a></li>
 			{/if}
 			<li><a href="tiki-syslog.php">{tr}System Logs{/tr}</a></li>
-			{if $prefs.feature_theme_control eq "y" and $tiki_p_admin eq "y"}
-				<li><a href="tiki-admin_system.php">{tr}Theme Control{/tr}</a></li>
-			{/if}			
 			<li class="divider"></li>
 			<li><a href="tiki-wizard_admin.php">{tr}Wizards{/tr}</a>
 			</li></li>
