@@ -53,6 +53,28 @@
 		{
 			"type": "package",
 			"package": {
+				"name": "ckeditor/ckeditor/skins/kama",
+				"version": "4.1.1",
+				"dist": {
+					"url": "http://download.ckeditor.com/kama/releases/kama_4.1.1.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "ckeditor/ckeditor/plugins/divarea",
+				"version": "4.1.1",
+				"dist": {
+					"url": "http://download.ckeditor.com/divarea/releases/divarea_4.1.1.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
 				"name": "ckeditor/ckeditor",
 				"version": "4.2.1",
 				"dist": {
@@ -64,10 +86,54 @@
 		{
 			"type": "package",
 			"package": {
+				"name": "ckeditor/ckeditor/skins/kama",
+				"version": "4.2.1",
+				"dist": {
+					"url": "http://download.ckeditor.com/kama/releases/kama_4.2.1.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "ckeditor/ckeditor/plugins/divarea",
+				"version": "4.2.1",
+				"dist": {
+					"url": "http://download.ckeditor.com/divarea/releases/divarea_4.2.1.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "ckeditor/ckeditor/skins/kama",
+				"version": "4.2.3",
+				"dist": {
+					"url": "http://download.ckeditor.com/kama/releases/kama_4.2.3.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
 				"name": "ckeditor/ckeditor",
 				"version": "4.2.3",
 				"dist": {
 					"url": "https://github.com/ckeditor/ckeditor-releases/archive/4.2.3/full.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "ckeditor/ckeditor/plugins/divarea",
+				"version": "4.2.3",
+				"dist": {
+					"url": "http://download.ckeditor.com/divarea/releases/divarea_4.2.3.zip",
 					"type": "zip"
 				}
 			}
@@ -87,75 +153,9 @@
 			"type": "package",
 			"package": {
 				"name": "ckeditor/ckeditor/skins/kama",
-				"version": "4.1.1",
-				"dist": {
-					"url": "http://download.ckeditor.com/kama/releases/kama_4.1.1.zip",
-					"type": "zip"
-				}
-			}
-		},
-		{
-			"type": "package",
-			"package": {
-				"name": "ckeditor/ckeditor/skins/kama",
-				"version": "4.2.1",
-				"dist": {
-					"url": "http://download.ckeditor.com/kama/releases/kama_4.2.1.zip",
-					"type": "zip"
-				}
-			}
-		},
-		{
-			"type": "package",
-			"package": {
-				"name": "ckeditor/ckeditor/skins/kama",
-				"version": "4.2.3",
-				"dist": {
-					"url": "http://download.ckeditor.com/kama/releases/kama_4.2.3.zip",
-					"type": "zip"
-				}
-			}
-		},
-		{
-			"type": "package",
-			"package": {
-				"name": "ckeditor/ckeditor/skins/kama",
 				"version": "4.3.0",
 				"dist": {
 					"url": "http://download.ckeditor.com/kama/releases/kama_4.3.zip",
-					"type": "zip"
-				}
-			}
-		},
-		{
-			"type": "package",
-			"package": {
-				"name": "ckeditor/ckeditor/plugins/divarea",
-				"version": "4.1.1",
-				"dist": {
-					"url": "http://download.ckeditor.com/divarea/releases/divarea_4.1.1.zip",
-					"type": "zip"
-				}
-			}
-		},
-		{
-			"type": "package",
-			"package": {
-				"name": "ckeditor/ckeditor/plugins/divarea",
-				"version": "4.2.1",
-				"dist": {
-					"url": "http://download.ckeditor.com/divarea/releases/divarea_4.2.1.zip",
-					"type": "zip"
-				}
-			}
-		},
-		{
-			"type": "package",
-			"package": {
-				"name": "ckeditor/ckeditor/plugins/divarea",
-				"version": "4.2.3",
-				"dist": {
-					"url": "http://download.ckeditor.com/divarea/releases/divarea_4.2.3.zip",
 					"type": "zip"
 				}
 			}
