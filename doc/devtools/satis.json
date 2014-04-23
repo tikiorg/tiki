@@ -295,6 +295,28 @@
 		{
 			"type": "package",
 			"package": {
+				"name": "jquery/jquery",
+				"version": "1.11.0",
+				"dist": {
+					"url": "http://code.jquery.com/jquery-1.11.0.js",
+					"type": "file"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/jquery-min",
+				"version": "1.11.0",
+				"dist": {
+					"url": "http://code.jquery.com/jquery-1.11.0.min.js",
+					"type": "file"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
 				"name": "jquery/jquery-sheet",
 				"version": "3.1-rc-5",
 				"dist": {
