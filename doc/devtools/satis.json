@@ -922,7 +922,7 @@
 		"ckeditor/ckeditor/plugins/divarea": "*",
 		"codemirror/codemirror": "*",
 		"dompdf/dompdf": "0.6.1",
-		"ezyang/htmlpurifier": "4.5.0",
+		"ezyang/htmlpurifier": ">=4.5.0",
 		"fivefilters/php-readability": "1.0",
 		"jarnokurlin/fullcalendar": "*",
 		"jcapture-applet/jcapture-applet": "dev-master",
