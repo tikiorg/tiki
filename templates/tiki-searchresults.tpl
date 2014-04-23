@@ -4,10 +4,6 @@
 	{title admpage="search" help="Search"}{tr}Search{/tr}{/title}
 {/if}
 
-{capture name=advanced_search_help}
-	{include file='advanced_search_help.tpl'}	 
-{/capture}
-
 <div class="nohighlight">
 	{if $searchStyle neq "menu" && $prefs.feature_search_show_object_filter eq 'y'}
 		<div class="t_navbar">
