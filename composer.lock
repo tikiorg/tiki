@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "26e3966a389329e95dbc912f191b94be",
+    "hash": "799977f485e1ad791ecafc3fd44cde7c",
     "packages": [
         {
             "name": "aFarkas/html5shiv",
@@ -427,23 +427,23 @@
         },
         {
             "name": "jquery/jquery",
-            "version": "1.10.2",
+            "version": "1.11.0",
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/jquery-jquery-1.10.2.zip",
-                "reference": "1.10.2",
-                "shasum": "5543443bdb8dd82298ac7c2e85c72a983e4ef534"
+                "url": "https://composer.tiki.org/dist/jquery-jquery-1.11.0.zip",
+                "reference": "1.11.0",
+                "shasum": "32ecccc68855e17da715ae66129f620b9d218fb6"
             },
             "type": "library"
         },
         {
             "name": "jquery/jquery-min",
-            "version": "1.10.2",
+            "version": "1.11.0",
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/jquery-jquery-min-1.10.2.zip",
-                "reference": "1.10.2",
-                "shasum": "c22f415473dc48c4b16616e33f312cc9975fed47"
+                "url": "https://composer.tiki.org/dist/jquery-jquery-min-1.11.0.zip",
+                "reference": "1.11.0",
+                "shasum": "5aec82e9482beb426bc5ac0273ae29d87f59c34e"
             },
             "type": "library"
         },
@@ -1179,9 +1179,7 @@
             "authors": [
                 {
                     "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com",
-                    "homepage": "http://fabien.potencier.org",
-                    "role": "Lead Developer"
+                    "email": "fabien@symfony.com"
                 },
                 {
                     "name": "Symfony Community",
