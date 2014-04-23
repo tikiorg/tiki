@@ -15,26 +15,35 @@
 	{if $showmsg eq 'e'}</span>{/if}
 	<br><br>
 {/if}
-
 {if $showfrm eq 'y'}
-	<form action="tiki-remind_password.php" method="post">
-		<table class="formcolor">
-			{if $prefs.login_is_email ne 'y'}
-				<tr>
-					<td><label for="name">{tr}Username:{/tr}</label></td>
-					<td><input type="text" name="name" id="name"></td>
-				</tr>
-				<tr><td colspan="2">{tr}or{/tr}</td></tr>
-			{/if}
-			<tr>
-				<td><label for="email">{tr}Email:{/tr}</label></td>
-				<td>{if $prefs.login_is_email ne 'y'}<input type="text" name="email" id="email">{else}<input type="text" name="name">{/if}</td>
-			</tr>
-			<tr>
-				<td colspan="2">
-					<input type="submit" class="btn btn-default btn-sm" name="remind" value="{if $prefs.feature_clear_passwords eq 'y'}{tr}Send me my Password{/tr}{else}{tr}Request Password Reset{/tr}{/if}">
-				</td>
-			</tr>  
+    <form class="form-horizontal col-md-10" action="tiki-remind_password.php" method="post">
+		{if $prefs.login_is_email ne 'y'}
+            <div class="form-group">
+                <label class="col-sm-3 col-md-2 control-label" for="name">Username</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" placeholder="Username" name="name" id="name">
+                </div>
+            </div>
+        <div class="col-sm-offset-3 col-md-offset-2 col-sm-10">
+            <p><strong>OR</strong></p>
+            </div>
+
+        {/if}
+        <div class="form-group">
+            <label class="col-sm-3 col-md-2 control-label" for="email">Email</label>
+            <div class="col-sm-6">
+                {if $prefs.login_is_email ne 'y'}
+                    <input type="email" class="form-control" placeholder="Email" name="email" id="email">
+                {else}
+                    <input type="email" class="form-control" placeholder="Email" name="name" id="name">
+                {/if}
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-3 col-md-offset-2 col-sm-10">
+                <input type="submit" class="btn btn-default" name="remind" value="{if $prefs.feature_clear_passwords eq 'y'}{tr}Send me my Password{/tr}{else}{tr}Request Password Reset{/tr}{/if}">
+            </div>
+        </div>
 		</table>
 	</form>
 {/if}
