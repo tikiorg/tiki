@@ -126,9 +126,6 @@ Note: The show content block must be defined at root level to use the include. A
 			{$parsed}
 		{/if}
 	</div>
-	
-	{* Information below the wiki content must not overlap the wiki content that could contain floated elements *}
-	<hr class="hrwikibottom" /> 
 
 	{if $structure eq 'y' and (($prefs.wiki_structure_bar_position eq 'bottom') or ($prefs.wiki_structure_bar_position eq 'both'))}
 		{include file='tiki-wiki_structure_bar.tpl'}
