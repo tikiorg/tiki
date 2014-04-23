@@ -31,6 +31,17 @@
 		{
 			"type": "package",
 			"package": {
+				"name": "aFarkas/html5shiv",
+				"version": "3.7.1",
+				"dist": {
+					"url": "https://github.com/aFarkas/html5shiv/archive/3.7.1.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
 				"name": "ckeditor/ckeditor",
 				"version": "4.1.1",
 				"dist": {
@@ -904,7 +915,7 @@
 	],
 	"require": {
 		"adodb/adodb": "5.18",
-		"aFarkas/html5shiv": "3.6.2",
+		"aFarkas/html5shiv": "*",
 		"bombayworks/zendframework1": "1.12.3",
 		"ckeditor/ckeditor": "*",
 		"ckeditor/ckeditor/skins/kama": "*",
