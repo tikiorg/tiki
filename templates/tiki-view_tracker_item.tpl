@@ -148,8 +148,6 @@
 	{if $tracker_info.useComments eq 'y' and ($tiki_p_tracker_view_comments ne 'n' or $tiki_p_comment_tracker_items ne 'n') and $prefs.tracker_show_comments_below ne 'y'}
 
 		{tab name="{tr}Comments{/tr}"}
-            <h2>{tr}Comments{/tr}</h2>
-
 			<div id="comment-container" data-target="{service controller=comment action=list type=trackeritem objectId=$itemId}"></div>
 			{jq}
 				var id = '#comment-container';
@@ -162,7 +160,6 @@
 {* ---------------------------------------- tab with attachments --- *}
 {if $tracker_info.useAttachments eq 'y' and $tiki_p_tracker_view_attachments eq 'y'}
 	{tab name="{tr}Attachments{/tr} (`$attCount`)"}
-        <h2>{tr}Attachments{/tr}</h2>
 		{include file='attachments_tracker.tpl'}
 	{/tab}
 {/if}
