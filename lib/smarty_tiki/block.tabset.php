@@ -48,7 +48,7 @@ function smarty_block_tabset($params, $content, $smarty, &$repeat)
 			$smarty_tabset_name = $params['name'];	// names have to be unique
 		} else {
 			$short_name = str_replace(array('tiki-', '.php'), '', basename($_SERVER['SCRIPT_NAME']));
-			$smarty_tabset_name = 't_' . $short_name . $tabset_index;
+			$smarty_tabset_name = '_' . $short_name . $tabset_index;
 		}
 		$smarty_tabset_name = TikiLib::remove_non_word_characters_and_accents($smarty_tabset_name);
 		$smarty_tabset[$tabset_index] = array( 'name' => $smarty_tabset_name, 'tabs' => array());
@@ -128,7 +128,7 @@ function smarty_block_tabset($params, $content, $smarty, &$repeat)
 
 			$ret .= '<ul class="nav nav-tabs">';
 			foreach ($smarty_tabset[$tabset_index]['tabs'] as $value) {
-				$ret .= '<li class="'.($count == $cookietab ? 'active' : '').'"><a href="#content' . $smarty_tabset[$tabset_index]['name'] . $tabset_index . '-' . $count.'" data-toggle="tab">'.$value.'</a></li>';
+				$ret .= '<li class="'.($count == $cookietab ? 'active' : '').'"><a href="#' . $value['id'] . '" data-toggle="tab">'.$value['label'].'</a></li>';
 				++$count;
 			}
 			$ret .= '</ul>';

@@ -38,17 +38,32 @@ function smarty_block_tab($params, $content, $smarty, &$repeat)
 		$print_page = $smarty->getTemplateVars('print_page');
 
 		$name = $smarty_tabset[$tabset_index]['name'];
+		$id = null;
 		if ($print_page != 'y') {
-			$smarty_tabset_i_tab = count($smarty_tabset[$tabset_index]['tabs']) + 1;
-			if ( !empty($params['name'])) {
-				$smarty_tabset[$tabset_index]['tabs'][] = $params['name'];
-			} else {
-				$smarty_tabset[$tabset_index]['tabs'][] = $params['name'] = "tab"+$smarty_tabset_i_tab;
+			$smarty_tabset_i_tab = count($smarty_tabset[$tabset_index]['tabs']);
+
+			if (empty($params['name'])) {
+				$params['name'] = "tab" . $smarty_tabset_i_tab;
 			}
+
+			if (empty($params['key'])) {
+				$params['key'] = $smarty_tabset_i_tab;
+			}
+
+			if (empty($name)) {
+				$name = $tabset_index;
+			}
+
+			$id = $id = "content$name-{$params['key']}";
+			$def = [
+				'label' => $params['name'],
+				'id' => $id,
+			];
+			$smarty_tabset[$tabset_index]['tabs'][] = $def;
 		}
 		
 		$active = ($smarty_tabset_i_tab == $cookietab) ? 'active' : '';
-		$ret = "<div id='content$name$tabset_index-$smarty_tabset_i_tab' class='tab-pane $active'>$content</div>";
+		$ret = "<div id='{$id}' class='tab-pane $active'>$content</div>";
 		
 		return $ret;
 	}

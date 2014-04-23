@@ -19,7 +19,7 @@
  * sections and add a configuration icon to the sections list
  *}
 {* ---------- Main features ------------ *}
-{tab name="{tr}Global features{/tr}"}
+{tab name="{tr}Global features{/tr}" key=global}
     <h2>{tr}Global features{/tr}</h2>
 
 		<fieldset>
@@ -143,7 +143,7 @@
 		
 {/tab}
 			
-{tab name="{tr}Interface{/tr}"}
+{tab name="{tr}Interface{/tr}" key=interface}
     <h2>{tr}Interface{/tr}</h2>
 			<fieldset class="table clearfix featurelist">
 				<legend> {tr}Ajax{/tr} </legend>	
@@ -197,7 +197,7 @@
 
 {/tab}
 
-{tab name="{tr}Programmer{/tr}"}
+{tab name="{tr}Programmer{/tr}" key=programmer}
     <h2>{tr}Programmer{/tr}</h2>
 			<div class="admin clearfix featurelist">
 				{preference name=feature_integrator}
