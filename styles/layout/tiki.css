@@ -170,20 +170,6 @@ a.toolbar {			/* each tool button */
 	height: 100%;
 }
 
-.help_sections {
-	width: 360px;
-	overflow: hidden !important;	/* override jq-ui's scroll bar as we use one on the div inside so the tabs stay in view */
-	height: 500px;
-	padding:  2px;
-	background: #aac9e9;
-}
-
-.help_sections > div {
-	font-size: .9em;
-	height: 90%;
-	overflow: auto;
-}
-
 .box-share > div {
 	text-align: center;
 }
@@ -2294,18 +2280,6 @@ a.flip:hover,
 
 .help_close_icon {
 	margin-right: 20px;
-}
-
-.help_section_select {
-	font-weight: bold;
-	font-size: 120%;
-	background: #e7e9ea;
-	color: #000;
-}
-
-.help_section {
-	background: #eee;
-	color: #000;
 }
 
 .site_report a {
