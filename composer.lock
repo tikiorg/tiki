@@ -578,12 +578,12 @@
         },
         {
             "name": "jquery/minicart",
-            "version": "2.6",
+            "version": "2.6.1",
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/jquery-minicart-2.6.zip",
-                "reference": "2.6",
-                "shasum": "5d36c9822b65a08eb7922205d09cb34b4b83cbbd"
+                "url": "https://composer.tiki.org/dist/jquery-minicart-2.6.1.zip",
+                "reference": "2.6.1",
+                "shasum": "964660a3306972f30a622ff01fa71d200d954cd7"
             },
             "type": "library"
         },
