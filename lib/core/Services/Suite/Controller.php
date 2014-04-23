@@ -18,7 +18,7 @@ class Services_Suite_Controller
 			'controller' => 'suite',
 			'action' => 'jitsi',
 		]);
-		return TikiLib::tikiUrl($url) . '?username=${username}&password=${password}';
+		return TikiLib::tikiUrl($url) . '&username=${username}&password=${password}';
 	}
 
 	function action_jitsi($input)
