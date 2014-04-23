@@ -384,20 +384,6 @@ table.wikiplugin_tracker td {
 	height: 150px;
 }
 
-ul.floatleft {
-	display: block;
-	list-style: none;
-	padding: 0;
-	text-align: left;
-	height: 20px;
-	margin-top: 0;
-}
-
-ul.floatleft li {
-	float: left;
-	padding: 4px 2px;
-}
-
 .editplugin {
     vertical-align: bottom;
 }
