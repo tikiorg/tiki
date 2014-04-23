@@ -234,6 +234,7 @@ class UsersLib extends TikiLib
 	{
 		global $prefs, $user_cookie_site;
 
+		$logslib = TikiLib::lib('logs');
 		$logslib->add_log('login', 'logged out');
 
 		$userInfo = $this->get_user_info($user);
