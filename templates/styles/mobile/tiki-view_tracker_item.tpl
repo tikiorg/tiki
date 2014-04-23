@@ -133,7 +133,7 @@
 		{* -------------------------------------------------- section with comments --- *}
 		{if $tracker_info.useComments eq 'y' and ($tiki_p_tracker_view_comments ne 'n' or $tiki_p_comment_tracker_items ne 'n') and $prefs.tracker_show_comments_below eq 'y'}
 		
-			<div id="comment-container-below" data-target="{service controller=comment action=list type=trackeritem objectId=$itemId}"></div>
+			<div id="comment-container-below" class="well well-sm" data-target="{service controller=comment action=list type=trackeritem objectId=$itemId}"></div>
 			{jq}
 				var id = '#comment-container-below';
 				$(id).comment_load($(id).data('target'));
