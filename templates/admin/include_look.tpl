@@ -357,5 +357,5 @@
 				<input type="submit" class="btn btn-primary btn-sm" name="looksetup" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}" />
 			</div>
 		</div>
-	</div
+	</div>
 </form>
