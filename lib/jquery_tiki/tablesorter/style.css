@@ -32,7 +32,7 @@
 }
 
 /* Zebra Widget */
-/* follows base odd/even colors from syles/layout/design.css */
+/* follows base odd/even colors from syles/layout/tiki.css */
 .tablesorter tr.odd td {
 	background: #f0f0f0;
 	color: #000;

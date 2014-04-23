@@ -2,7 +2,7 @@
  * See http://themes.tikwiki.org for more information. -- */
 
 /* import default layout and styles: */
-@import url("layout/design.css");
+@import url("layout/tiki.css");
 
 /* XHTML Elements */
 body {

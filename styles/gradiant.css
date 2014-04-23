@@ -3,7 +3,7 @@
 	No images were harmed during creation of this theme.
 	Lots of CSS3 going on here ! ;)
 */
-@import url("layout/design.css");
+@import url("layout/tiki.css");
 * {
 	vertical-align: middle !important;
 }
@@ -158,7 +158,7 @@ nav ul.cssmenu_horiz.sf-shadow ul li:first-child:before {
 }
 
 /* Login pop-up */
-#top_modules .box-login_box { /* workaround for Opera; for some reason on hover it does funny dance when the design.css's setting bottom: 1px was applied) */
+#top_modules .box-login_box { /* workaround for Opera; for some reason on hover it does funny dance when the tiki.css's setting bottom: 1px was applied) */
 	bottom: auto;
 	top: 100%;
 	min-height: 2em;

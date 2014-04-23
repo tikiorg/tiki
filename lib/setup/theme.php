@@ -20,11 +20,11 @@ if ( isset($_SESSION['try_style']) ) {
 $headerlib->add_jsfile('vendor/twitter/bootstrap/dist/js/bootstrap.js');
 
 if (empty($prefs['theme_active']) || $prefs['theme_active'] == 'default') {
-	$headerlib->add_cssfile('styles/layout/design.css');
+	$headerlib->add_cssfile('styles/layout/tiki.css');
 
 	$headerlib->add_cssfile('vendor/twitter/bootstrap/dist/css/bootstrap.min.css');
 } elseif ($prefs['theme_active'] == 'custom') {
-	$headerlib->add_cssfile('styles/layout/design.css');
+	$headerlib->add_cssfile('styles/layout/tiki.css');
 
 	$custom_theme = $prefs['theme_custom'];
 	// Use external link if url begins with http://, https://, or // (auto http/https)
@@ -72,7 +72,7 @@ if (empty($prefs['theme_active']) || $prefs['theme_active'] == 'default') {
 	// TODO : Handle normal registered themes
 
 	// Will need this
-	$headerlib->add_cssfile('styles/layout/design.css');
+	$headerlib->add_cssfile('styles/layout/tiki.css');
 }
 
 // Allow to have a IE specific CSS files for the theme's specific hacks

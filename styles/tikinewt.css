@@ -1,8 +1,8 @@
 /* Tikinewt theme stylesheet (tikinewt.css);
- (imports design.css)
+ (imports tiki.css)
 
 /* Import layout and default styles: */
-@import url("layout/design.css");
+@import url("layout/tiki.css");
  
 /***** XHTML Elements (body tag here,
 			others follow Layout) *****/

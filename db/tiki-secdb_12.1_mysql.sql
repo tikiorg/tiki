@@ -3320,7 +3320,7 @@ INSERT INTO `tiki_secdb` (`filename`, `md5_value`, `tiki_version`, `severity`) V
 INSERT INTO `tiki_secdb` (`filename`, `md5_value`, `tiki_version`, `severity`) VALUES('./styles/jqui/options/trontastic/index.php', '7823cb368f84cabdc1a7bd8d343c641f', '12.1alpha', 0);
 INSERT INTO `tiki_secdb` (`filename`, `md5_value`, `tiki_version`, `severity`) VALUES('./styles/jqui/options/trontastic/pics/icons/index.php', '64b4f2cc5042aaaba746ae964d8fe36d', '12.1alpha', 0);
 INSERT INTO `tiki_secdb` (`filename`, `md5_value`, `tiki_version`, `severity`) VALUES('./styles/jqui/options/trontastic/pics/index.php', 'da4444a527d0513c0bf7537c150b044d', '12.1alpha', 0);
-INSERT INTO `tiki_secdb` (`filename`, `md5_value`, `tiki_version`, `severity`) VALUES('./styles/layout/design.css', 'e041c35f6bdda5c8aa46193d7eacf4b2', '12.1alpha', 0);
+INSERT INTO `tiki_secdb` (`filename`, `md5_value`, `tiki_version`, `severity`) VALUES('./styles/layout/tiki.css', 'e041c35f6bdda5c8aa46193d7eacf4b2', '12.1alpha', 0);
 INSERT INTO `tiki_secdb` (`filename`, `md5_value`, `tiki_version`, `severity`) VALUES('./styles/layout/index.php', '4d6815af52f08003f0b74ecb74e9fe7d', '12.1alpha', 0);
 INSERT INTO `tiki_secdb` (`filename`, `md5_value`, `tiki_version`, `severity`) VALUES('./styles/layout/layout.css', 'f438573e7c3473919b4060e81dc78a61', '12.1alpha', 0);
 INSERT INTO `tiki_secdb` (`filename`, `md5_value`, `tiki_version`, `severity`) VALUES('./styles/lite/index.php', '89c6ad9e88593b53aa70741513642b17', '12.1alpha', 0);
