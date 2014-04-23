@@ -4,13 +4,6 @@
 */
 
 /***** Site Header & Identity *****/
-#top_modules .box-quickadmin {
-	position: absolute;
-	right: 1em;
-	top: 40%;
-	padding: 0 .5em .2em 0;
-}
-
 .box-quickadmin li {
 	font-size: 0.9em;
 }
@@ -22,12 +15,6 @@
 .box-quickadmin .cssmenu_horiz ul li {
 	padding-left: 1em;
 	background-color: #fff;
-}
-
-#topbar_modules .box-search {
-	position: absolute;
-	right: 1rem;
-	bottom: 50%;
 }
 
 /***** Misc. *****/
@@ -310,36 +297,6 @@ tr.diffheader {
 	text-align: center;
 }
 
-/** Tabs **/
-
-.tabstoggle {
-	font-size: .8em;
-}
-
-.tabstoggle .button {
-	position: relative;
-	top: 8px;
-	padding: 0;
-}
-.tabstoggle.floatright {
-	float: none;
-	text-align: right;
-	width: auto;
-}
-
-.tabs .tabstoggle.floatright {
-	float: right;
-	width: 15%;
-	position: relative;
-	clear: none;
-}
-
-.tabs .tabstoggle.floatright .button {
-	position: absolute;
-	top: 0;
-	right: 0;
-}
-
 /***** Wiki *****/
 
 #pageid {
@@ -351,21 +308,8 @@ tr.diffheader {
 	clear: both;
 }
 
-#page-bar {
-/*	display: block;
-	margin-top: 0; */
-}
-
 #page-bar > span {
 	float: left;
-}
-
-/*Information below the wiki content must not overlap the wiki
-		content that could contain floated elements */
-.hrwikibottom {
-	clear: both;
-	height: 0;
-	visibility: hidden;
 }
 
 /* Wiki plugins */
