@@ -187,7 +187,7 @@ if (jqueryTiki.chosen) {
 						{if $tiki_p_remove eq 'y'}
 							<td>&nbsp;</td>
 						{/if}
-						<td class="left">
+						<td class="text-left">
 							{$info.lastModif|tiki_short_datetime}
 							{tr _0=$info.user|userlink}by %0{/tr}
 							{if $prefs.feature_wiki_history_ip ne 'n'}{tr _0=$info.ip}from %0{/tr}{/if}
@@ -246,7 +246,7 @@ if (jqueryTiki.chosen) {
 						{if $tiki_p_remove eq 'y'}
 							<td class="button_container"><input type="checkbox" name="hist[{$element.version}]"></td>
 						{/if}
-						<td class="left">
+						<td class="text-left">
 							{$element.lastModif|tiki_short_datetime}
 							{tr _0=$element.user|userlink}by %0{/tr}
 							{if $prefs.feature_wiki_history_ip ne 'n'}{tr _0=$element.ip}from %0{/tr}{/if}
@@ -327,7 +327,7 @@ if (jqueryTiki.chosen) {
 				{/foreach}
 				{if $prefs.feature_multilingual eq 'y' and $tiki_p_edit eq 'y'}
 				<tr>
-					<td colspan="9" class="right">
+					<td colspan="9" class="text-right">
 						<select name="tra_lang">
 							{section name=ix loop=$languages}
 								<option value="{$languages[ix].value|escape}"{if $lang eq $languages[ix].value} selected="selected"{/if}>{$languages[ix].name}</option>

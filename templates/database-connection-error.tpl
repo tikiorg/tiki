@@ -27,7 +27,7 @@
 			<div style="margin:10px 30px;">
 				{if $prefs.error_reporting_level and ( $tiki_p_admin eq 'y' or $prefs.error_reporting_adminonly ne 'y' )}
 					<h1>{tr}System error.{/tr}</h1>
-					<div class="left">
+					<div class="text-left">
 						<p>{tr}The following error message was returned:{/tr}</p>
 						<strong>
 							<pre>{$msg|escape|nl2br}</pre>

@@ -22,7 +22,7 @@
 		{if $plugin_details}
 			{assign var=thisplugin_name value=$plugin_name|escape}
 			{assign var=thisplugin_index value=$plugin_index|escape}
-			{button href="javascript:void(0)" _onclick="toggle('sec-$thisplugin_name-$thisplugin_index')" _class="right" _text="{tr}View Details{/tr}"}
+			{button href="javascript:void(0)" _onclick="toggle('sec-$thisplugin_name-$thisplugin_index')" _class="text-right" _text="{tr}View Details{/tr}"}
 			<div id="sec-{$plugin_name|escape}-{$plugin_index|escape}" style="display:none">
 				<div><h3>{tr}Details:{/tr} {$plugin_name|upper|escape}</h3></div>
 				{if $plugin_args|@count > 0}

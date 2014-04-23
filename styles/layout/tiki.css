@@ -1009,22 +1009,6 @@ ul.freetagged li {
 	text-align: center;
 }
 
-/***** Admin *****/
-
-.justify {
-	text-align: justify;
-}
-
-.right {
-	text-align: right;
-}
-
-.left {
-	text-align: left;
-}
-
-/* admin boxes etc (.admbox) now defined in css/admin.css */
-
 /***** Ajax, jquery. etc. *****/
 
 /* Ajax Loading Overlay */
