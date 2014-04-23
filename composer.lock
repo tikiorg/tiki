@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "260bffdaa33950b9bf1f46321ccf7cb4",
+    "hash": "de83cf839fab152c6e0aa0f57c710fcc",
     "packages": [
         {
             "name": "aFarkas/html5shiv",
@@ -1198,7 +1198,9 @@
             "authors": [
                 {
                     "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com"
+                    "email": "fabien@symfony.com",
+                    "homepage": "http://fabien.potencier.org",
+                    "role": "Lead Developer"
                 },
                 {
                     "name": "Symfony Community",
