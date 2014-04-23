@@ -15,11 +15,9 @@
 				</div>
 				{if $prefs.feature_jquery_validation neq 'y' && !$userTrackerData}<span id="checkpass"></span>{/if}
 			</div>
-		</div>
 		{if $prefs.generate_password eq 'y'}
-			<tr>
-				{if !$reg_in_module}<td>&nbsp;</td>{/if}
-				<td{if $reg_in_module} colspan="2" {/if}>
+				{*if !$reg_in_module}<td>&nbsp;</td>{/if*}
+				<div class="col-md-4 col-sm-3 text-center{*if $reg_in_module} inmodule{/if*}">
 					<input id='genepass' name="genepass" type="text" tabindex="0" style="display: none">
 					<span id="genPass">
 						{if 0 and $prefs.feature_ajax eq 'y'}
@@ -28,8 +26,8 @@
 							{button href="#" _onclick="" _text="{tr}Generate a password{/tr}"}
 						{/if}
 					</span>
-				</td>
-			</tr>
+				</div>
 		{/if}
+		</div>
 	{/if}
 {/if}
