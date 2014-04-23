@@ -1,6 +1,6 @@
 /*!
  * elFinder - file manager for web
- * Version 2.x github.com/jonnybradley/elFinder (2013-08-23)
+ * Version 2.x github.com/jonnybradley/elFinder (2014-04-23)
  * http://elfinder.org
  * 
  * Copyright 2009-2013, Studio 42
@@ -475,6 +475,7 @@
 	height:80px;
 	padding-bottom:2px;
 	cursor:default;
+	border:none;
 /*	overflow:hidden;*/
 /*	position:relative;*/
 }
@@ -1443,6 +1444,9 @@ embed.elfinder-quicklook-preview-audio {
 	overflow:hidden;
 	position:relative;
 	border:0 solid;
+	-webkit-box-sizing: content-box;
+	-moz-box-sizing: content-box;
+	box-sizing: content-box;
 }
 
 .elfinder .ui-icon-search { cursor:pointer;}
