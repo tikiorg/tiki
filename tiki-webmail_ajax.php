@@ -101,11 +101,6 @@ function cancelRefreshWebmail() {
 function initWebmail() {
 	clearWebmailMessage();
 	\$('#$divId .mod_webmail_list').show('slow');
-	if (jqueryTiki.tooltips) {
-		//\$('a.tips').cluetip({splitTitle: '|', showTitle: false, width: '150px', cluezIndex: 400});
-		\$('a.tips300').cluetip({splitTitle: '|', showTitle: false, width: '300px', cluezIndex: 400});
-		//\$('a.titletips').cluetip({splitTitle: '|', cluezIndex: 400});
-	}
 }
 
 function clearWebmailMessage() {

@@ -171,29 +171,29 @@ class PreferencesLib
 
 			if (!empty($info['admin']) || !empty($info['permission']) || !empty($info['view']) || !empty($info['module']) || !empty($info['plugin'])) {
 
-				$info['popup_html'] = '<div class="opaque"><div class="box-title">'.tra('Actions').'</div><div class="box-data adminoptionpopup">';
+				$info['popup_html'] = '<ul class="list-unstyled">';
 
 				if (!empty($info['admin'])) {
 					$icon = smarty_function_icon(array( '_id' => 'wrench', 'title' => tra('Admin')), $smarty);
-					$info['popup_html'] .= '<a class="icon" href="'.$info['admin'].'">' . $icon . ' ' . tra('Admin') .'</a>';
+					$info['popup_html'] .= '<li><a class="icon" href="'.$info['admin'].'">' . $icon . ' ' . tra('Admin') .'</a></li>';
 				}
 				if (!empty($info['permission'])) {
 					$icon = smarty_function_icon(array( '_id' => 'key', 'title' => tra('Permissions')), $smarty);
-					$info['popup_html'] .= '<a class="icon" href="'.$info['permission'].'">' . $icon . ' ' . tra('Permissions').'</a>';
+					$info['popup_html'] .= '<li><a class="icon" href="'.$info['permission'].'">' . $icon . ' ' . tra('Permissions').'</a></li>';
 				}
 				if (!empty($info['view'])) {
 					$icon = smarty_function_icon(array( '_id' => 'magnifier', 'title' => tra('View')), $smarty);
-					$info['popup_html'] .= '<a class="icon" href="'.$info['view'].'">' . $icon . ' ' . tra('View').'</a>';
+					$info['popup_html'] .= '<li><a class="icon" href="'.$info['view'].'">' . $icon . ' ' . tra('View').'</a></li>';
 				}
 				if (!empty($info['module'])) {
 					$icon = smarty_function_icon(array( '_id' => 'module', 'title' => tra('Module')), $smarty);
-					$info['popup_html'] .= '<a class="icon" href="'.$info['module'].'">' . $icon . ' ' . tra('Module').'</a>';
+					$info['popup_html'] .= '<li><a class="icon" href="'.$info['module'].'">' . $icon . ' ' . tra('Module').'</a></li>';
 				}
 				if (!empty($info['plugin'])) {
 					$icon = smarty_function_icon(array( '_id' => 'plugin', 'title' => tra('Plugin')), $smarty);
-					$info['popup_html'] .= '<a class="icon" href="'.$info['plugin'].'">' . $icon . ' ' . tra('Plugin').'</a>';
+					$info['popup_html'] .= '<li><a class="icon" href="'.$info['plugin'].'">' . $icon . ' ' . tra('Plugin').'</a></li>';
 				}
-				$info['popup_html'] .= '</div></div>';
+				$info['popup_html'] .= '</ul>';
 			}
 
 			if (isset($prefs['connect_feature']) && $prefs['connect_feature'] === 'y') {

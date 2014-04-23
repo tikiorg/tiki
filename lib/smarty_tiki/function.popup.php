@@ -33,7 +33,7 @@
 function smarty_function_popup($params, $smarty)
 {
 	$options = array();
-    $options['activation'] = 'mouseover';
+    $trigger = 'hover';
 	$body = '';
 	$title = '';
 
@@ -46,7 +46,7 @@ function smarty_function_popup($params, $smarty)
 				switch ($value) {
 					case 'onclick':
 					case 'onClick':
-						$options['activation'] = 'click';
+						$trigger = 'click';
 						break;
 					default:
 						break;
@@ -55,41 +55,6 @@ function smarty_function_popup($params, $smarty)
 			case 'caption':
 				$title = $value;
 				break;
-
-			case 'width':
-			case 'height':
-				$options[$key] = $value;
-				break;
-			case 'sticky':
-				$options[$key] = !empty($value);
-				$options['mouseOutClose'] = false;
-				break;
-			case 'fullhtml':
-				$options['escapeTitle'] = true;
-				$options['cluetipClass'] = 'fullhtml';
-				break;
-			case 'background':
-				$options['showTitle'] = false;
-				$options['cluetipClass'] = 'fullhtml';
-				if (!empty($params['width'])) {
-					$body = '<div style="background-image:url(' . $value . ');width:' . $params['width'] . 'px;height:100%;">' . $body . '</div>';
-					unset($params['width']);
-					unset($options['width']);
-				} else {
-					$body = '<div style="background-image:url(' . $value . ');width:100%;height:100%;">' . $body . '</div>';
-				}
-				break;
-
-			case 'left':
-			case 'right':
-			case 'center':
-			case 'hauto':
-			case 'vauto':
-			case 'mouseoff':
-				break;
-
-			default:
-				trigger_error("[popup] unknown parameter $key", E_USER_WARNING);
 		}
 	}
 
@@ -102,20 +67,18 @@ function smarty_function_popup($params, $smarty)
 	$body = str_replace('\&#039;', '&#039;', $body);	// unescape previous js escapes
 	$body = str_replace('\&quot;', '&quot;', $body);
 	$body = str_replace('&lt;\/', '&lt;/', $body);
-	$retval = '';
+	$retval = ' data-toggle="popover" data-container="body" class="tips" ';
 	if (isset($options['activation']) && $options['activation'] !== 'click') {
-		$retval = ' class="tips"';		// adds default ct options including 'hover' activation
+		$retval = ' data-trigger="hover" ';
+	} else {
+		$retval = ' data-trigger="click" ';
 	}
 	if ($title) {
 		$retval .= ' title="' . $title . '"';
-	} else {
-		$options['showTitle'] = false;
 	}
 	if ($body) {
-		$retval .= ' data-cluetip-body=\'' . $body . '\'';
-		$options['attribute'] = 'data-cluetip-body';
+		$retval .= ' data-content="' . $body . '" ';
 	}
-	$retval .= ' data-cluetip-options=\'' . json_encode($options) . '\'';
 
 	return $retval;
 }

@@ -68,7 +68,7 @@ function smarty_block_title($params, $content, $template, &$repeat)
 			} else {
 				$html .= '<a href="' ;
 			}
-			$html .= $prefs['helpurl'] . rawurlencode($params['help']) . '" class="titletips" title="' . tra('Help page:') . ' ' . htmlspecialchars($content) . '" target="tikihelp">'
+			$html .= $prefs['helpurl'] . rawurlencode($params['help']) . '" class="tips" title="' . htmlspecialchars($content) . '|' . tra('Help page') . '" target="tikihelp">'
 			. smarty_function_icon(array('_id' => 'help'), $template)
 			. "</a>\n";
 		}
@@ -79,7 +79,7 @@ function smarty_block_title($params, $content, $template, &$repeat)
 			} else {
 				$html .= '<a href="tiki-edit_templates.php?template=' ;
 			}
-			$html .= $tpl . '" class="titletips" title="' . tra('View or edit tpl:') . ' ' . htmlspecialchars($content) . '">'
+			$html .= $tpl . '" class="tips" title="' . tra('View or edit tpl') . '|' . htmlspecialchars($content) . '">'
 			. smarty_function_icon(array('_id' => 'shape_square_edit', 'alt' => tra('Edit Template')), $template)
 			. "</a>\n";
 		} elseif ($prefs['feature_view_tpl'] == 'y' &&  $tiki_p_view_templates == 'y' && ($tpl = $template->getTemplateVars('mid'))) {
@@ -88,7 +88,7 @@ function smarty_block_title($params, $content, $template, &$repeat)
 			} else {
 				$html .= '<a href="tiki-edit_templates.php?template=' ;
 			}
-			$html .= $tpl . '" class="titletips" title="' . tra('View tpl:') . ' ' . htmlspecialchars($content) . '">'
+			$html .= $tpl . '" class="tips" title="' . tra('View tpl') . '|' . htmlspecialchars($content) . '">'
 			. smarty_function_icon(array('_id' => 'shape_square', 'alt' => tra('View Template')), $template)
 			. "</a>\n";
 			
@@ -96,11 +96,11 @@ function smarty_block_title($params, $content, $template, &$repeat)
 
 		if ( $tiki_p_admin == 'y' && $params['admpage'] != '' ) {
 			if ($prefs['mobile_mode']== 'y') {
-				$html .= '<a data-role="button" data-inline="true" class="titletips" href="tiki-admin.php?page=' ;
+				$html .= '<a data-role="button" data-inline="true" class="tips" href="tiki-admin.php?page=' ;
 			} else {
-				$html .= '<a class="titletips" href="tiki-admin.php?page=' ;
+				$html .= '<a class="tips" href="tiki-admin.php?page=' ;
 			}
-			$html .= $params['admpage'] . '" title="' . tra('Admin page:') . ' ' . htmlspecialchars($content) . '">'
+			$html .= $params['admpage'] . '" title="' . tra('Admin page') . '|' . htmlspecialchars($content) . '">'
 			. smarty_function_icon(array('_id' => 'wrench', 'alt' => tra('Admin Feature')), $template)
 			. "</a>\n";
 		}

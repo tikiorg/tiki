@@ -27,8 +27,8 @@
 		<td class="integer">{$discount.max|escape}</td>
 		<td class="text">{$discount.comment|escape}</td>
 		<td class="action">
-			{self_link id=$discount.id cookietab=2}{icon _id=page_edit class=titletips title="{tr}Edit{/tr}" alt="{tr}Edit{/tr}"}{/self_link}
-			{self_link del=$discount.id}{icon _id=cross class=titletips title="{tr}Delete{/tr}" alt="{tr}Delete{/tr}"}{/self_link}
+			{self_link id=$discount.id cookietab=2}{icon _id=page_edit class=tips title="{tr}Edit{/tr}" alt="{tr}Edit{/tr}"}{/self_link}
+			{self_link del=$discount.id}{icon _id=cross class=tips title="{tr}Delete{/tr}" alt="{tr}Delete{/tr}"}{/self_link}
 		</td>
 	</tr>
 	{foreachelse}
