@@ -659,18 +659,6 @@ a.pagetitle:hover {
 	border: 1px solid #999;
 	border-collapse: collapse}
 
-ul.floatleft {
-	display: block;
-	list-style: none;
-	padding: 0;
-	text-align: left;
-	height: 20px;
-	margin-top: 0}
-
-ul.floatleft li {
-	float: left;
-	padding: 4px 2px}
-
 .wiki-edithelp {
 	display: none;
 }

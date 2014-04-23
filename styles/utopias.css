@@ -632,28 +632,11 @@ div.titlebar {
 	font-weight: bold;
 }
 
-ul.floatleft {
-	display: block;
-	list-style: none;
-	padding: 0;
-	text-align: left;
-	height: 2em;
-	margin-top: 0;
-}
-
-ul.floatleft li {
-	float: left;
-	padding: .4em .2em;
-}
-
 .t_navbar {
 	line-height: 150%;
 	margin-bottom: 1em;
 	margin-top: .5em;
 }
-
-
-
 
 .tab1 form {
 	display: inline;
