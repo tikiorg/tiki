@@ -664,7 +664,7 @@ if ( isset($_REQUEST["customTip"]) && !isset($_REQUEST['preview']) && !isset($_R
 	}
 }
 if ( isset($_REQUEST["wikiHeaderTpl"]) && !isset($_REQUEST['preview']) && !isset($_REQUEST['save'])) {
-	$smarty->assign('wikiHeaderTpl', $_REQUEST['wikiHeaderTpl']);
+	$smarty->assign('wikiHeaderTpl', $smarty->fetch("wiki:{$_REQUEST['wikiHeaderTpl']}"));
 }
 if ((isset($_REQUEST["template_name"]) || isset($_REQUEST["templateId"])) && !isset($_REQUEST['preview']) && !isset($_REQUEST['save'])) {
 	global $templateslib; require_once 'lib/templates/templateslib.php';

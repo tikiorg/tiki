@@ -21,7 +21,7 @@
 	{/remarksbox}
 {/if}
 {if isset($wikiHeaderTpl)}
-	{include file="wiki:$wikiHeaderTpl"}
+	{$wikiHeaderTpl}
 {/if}
 	
 {if $prefs.ajax_autosave eq "y"}
