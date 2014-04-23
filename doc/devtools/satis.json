@@ -417,9 +417,9 @@
 			"type": "package",
 			"package": {
 				"name": "jquery/jquery-timepicker-addon",
-				"version": "1.2.2",
+				"version": "1.4",
 				"dist": {
-					"url": "http://github.com/trentrichardson/jQuery-Timepicker-Addon/archive/v1.2.2.zip",
+					"url": "http://github.com/trentrichardson/jQuery-Timepicker-Addon/archive/v1.4.zip",
 					"type": "zip"
 				}
 			}
@@ -428,9 +428,9 @@
 			"type": "package",
 			"package": {
 				"name": "jquery/jquery-timepicker-addon",
-				"version": "1.4",
+				"version": "1.4.4",
 				"dist": {
-					"url": "http://github.com/trentrichardson/jQuery-Timepicker-Addon/archive/v1.4.zip",
+					"url": "http://github.com/trentrichardson/jQuery-Timepicker-Addon/archive/v1.4.4.zip",
 					"type": "zip"
 				}
 			}
