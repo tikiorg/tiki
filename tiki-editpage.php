@@ -42,7 +42,11 @@ $editlib = TikiLib::lib('edit');
  */
 function guess_new_page_attributes_from_parent_pages($page, $page_info)
 {
-	global $editlib, $smarty, $_REQUEST, $tikilib, $prefs, $need_lang;
+	global $prefs, $need_lang;
+	$editlib = TikiLib::lib('edit');
+	$tikilib = TikiLib::lib('tiki');
+	$smarty = TikiLib::lib('smarty');
+
 	if (!$page_info) {
 		//
 		// This is a new page being created. See if we can guess some of its attributes
@@ -99,7 +103,7 @@ function execute_module_translation()
 			'params' => array( 'show_language' => $params['show_language'], 'from_edit_page' => $params['from_edit_page'], 'nobox' => $params['nobox'] )
 	);
 
-	global $modlib; require_once 'lib/modules/modlib.php';
+	$modlib = TikiLib::lib('mod');
 
 	$out = $modlib->execute_module($module_reference);
 	$smarty->assign('content_of_update_translation_section', $out);
@@ -520,7 +524,7 @@ if (isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_na
 
 
 		if ($prefs['flaggedrev_approval'] == 'y' && $tiki_p_wiki_approve == 'y') {
-			global $flaggedrevisionlib; require_once 'lib/wiki/flaggedrevisionlib.php';
+			$flaggedrevisionlib = TikiLib::lib('flaggedrevision');
 
 			if ($flaggedrevisionlib->page_requires_approval($page)) {
 				$url .= (strpos($url, '?') === false ? '?' : '&') . 'latest=1';
@@ -1348,7 +1352,7 @@ if (
 	}
 
 	if ($prefs['flaggedrev_approval'] == 'y' && $tiki_p_wiki_approve == 'y') {
-		global $flaggedrevisionlib; require_once 'lib/wiki/flaggedrevisionlib.php';
+		$flaggedrevisionlib = TikiLib::lib('flaggedrevision');
 
 		if ($flaggedrevisionlib->page_requires_approval($page)) {
 			$url .= (strpos($url, '?') === false ? '?' : '&') . 'latest=1';
@@ -1373,7 +1377,7 @@ if ($prefs['feature_wiki_templates'] === 'y' && $tiki_p_use_content_templates ==
 	$smarty->assign_by_ref('templates', $templates["data"]);
 }
 if ($prefs['feature_polls'] ==='y' and $prefs['feature_wiki_ratings'] === 'y' && $tiki_p_wiki_admin_ratings === 'y') {
-	if (!isset($polllib) or !is_object($polllib)) include("lib/polls/polllib_shared.php");
+	$polllib = TikiLib::lib('poll');
 	$categlib = TikiLib::lib('categ');
 	if (isset($_REQUEST['removepoll'])) {
 		$catObjectId = $categlib->is_categorized($cat_type, $cat_objid);

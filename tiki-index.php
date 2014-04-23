@@ -87,7 +87,7 @@ if (!isset($_SESSION['thedate'])) {
 }
 
 // Check if a WS is active
-global $perspectivelib; require_once 'lib/perspectivelib.php';
+$perspectivelib = TikiLib::lib('perspective');
 $activeWS = $perspectivelib->get_current_perspective(null);
 
 // If there's a WS active and the WS has a homepage, then load the WS homepage
@@ -394,7 +394,7 @@ $page = $info['pageName'];
 //}
 
 if (isset($_REQUEST['approve'], $_REQUEST['revision']) && $_REQUEST['revision'] <= $info['version']) {
-	global $flaggedrevisionlib; require_once 'lib/wiki/flaggedrevisionlib.php';
+	$flaggedrevisionlib = TikiLib::lib('flaggedrevision');
 
 	if ($flaggedrevisionlib->page_requires_approval($page)) {
 		$perms = Perms::get('wiki page', $page);
@@ -740,7 +740,9 @@ function translate_text($text, $sourceLang, $targetLang)
  */
 function make_sure_machine_translation_is_enabled()
 {
-	global $access, $_REQUEST, $prefs;
+	global $prefs;
+
+	$access = TikiLib::lib('access');
 	if ($prefs['feature_machine_translation'] != 'y' || $prefs['lang_machine_translate_wiki' != 'y']) {
 		$error_msg = tra('You have requested that this page be machine translated:') .
 						' <b>' .

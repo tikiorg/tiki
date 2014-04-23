@@ -117,4 +117,3 @@ class FlaggedRevisionLib extends TikiDb_Bridge
 	}
 }
 
-global $flaggedrevisionlib; $flaggedrevisionlib = new FlaggedRevisionLib;

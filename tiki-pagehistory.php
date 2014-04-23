@@ -65,7 +65,7 @@ if (isset($_REQUEST['preview'], $_REQUEST['flaggedrev'], $_REQUEST['page']) && $
 	}
 
 	if ($targetFlag) {
-		global $flaggedrevisionlib; require_once 'lib/wiki/flaggedrevisionlib.php';
+		$flaggedrevisionlib = TikiLib::lib('flaggedrevision');
 
 		$flaggedrevisionlib->flag_revision($info['pageName'], $targetVersion, 'moderation', $targetFlag);
 	}
@@ -116,7 +116,7 @@ if(!$paginate) {
 $smarty->assign('history_cant', $histlib->get_nb_history($page) - 1);
 
 if ($prefs['flaggedrev_approval'] == 'y') {
-	global $flaggedrevisionlib; require_once 'lib/wiki/flaggedrevisionlib.php';
+	$flaggedrevisionlib = TikiLib::lib('flaggedrevision');
 
 	if ($flaggedrevisionlib->page_requires_approval($page)) {
 		$approved_versions = $flaggedrevisionlib->get_versions_with($page, 'moderation', 'OK');

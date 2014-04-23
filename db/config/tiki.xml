@@ -26,6 +26,9 @@
 		<service id="tiki.lib.css" class="cssLib">
 			<file>%kernel.root_dir%/lib/csslib.php</file>
 		</service>
+		<service id="tiki.lib.flaggedrevision" class="FlaggedRevisionLib">
+			<file>%kernel.root_dir%/lib/wiki/flaggedrevisionlib.php</file>
+		</service>
 		<service id="tiki.lib.filegal" class="FileGalLib">
 			<file>%kernel.root_dir%/lib/filegals/filegallib.php</file>
 		</service>
