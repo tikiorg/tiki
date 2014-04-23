@@ -626,9 +626,9 @@
 			"type": "package",
 			"package": {
 				"name": "jquery/plugins/colorbox",
-				"version": "1.4.14",
+				"version": "1.4.31",
 				"dist": {
-					"url": "https://github.com/jackmoore/colorbox/archive/1.4.14.zip",
+					"url": "https://github.com/jackmoore/colorbox/archive/1.4.31.zip",
 					"type": "zip"
 				}
 			}
@@ -637,9 +637,9 @@
 			"type": "package",
 			"package": {
 				"name": "jquery/plugins/colorbox",
-				"version": "1.4.31",
+				"version": "1.5.8",
 				"dist": {
-					"url": "https://github.com/jackmoore/colorbox/archive/1.4.31.zip",
+					"url": "https://github.com/jackmoore/colorbox/archive/1.5.8.zip",
 					"type": "zip"
 				}
 			}
