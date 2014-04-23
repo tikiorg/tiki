@@ -78,7 +78,7 @@
 			<h2>{tr}Batch upload (CSV file){/tr}<a {popup text='category,description,parent&lt;br /&gt;vegetable,vegetable&lt;br /&gt;potato,,vegetable'}>{icon _id='help'}</a></h2>
 			<form action="tiki-admin_categories.php" method="post" enctype="multipart/form-data" class="form-horizontal" role="form">
                 <div class="form-group">
-                    <div class="col-sm-3 col-sm-offset-3">
+                    <div class="col-sm-6 col-sm-offset-3">
     				    <input type="file" class="form-control" name="csvlist">
                     </div>
                 </div>

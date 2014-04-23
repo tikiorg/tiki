@@ -234,7 +234,7 @@
                     <div class="form-group">
                         <label class="col-sm-2 control-label" for="comments-title">{tr}Title{/tr} <span class="text-danger">*</span> </label>
                         <div class="col-sm-10">
-                            <input type="text" name="comments_title" id="comments-title" value="{$comment_title|escape}">
+                            <input type="text" class="form-control" name="comments_title" id="comments-title" value="{$comment_title|escape}">
                         </div>
                     </div>
                 {/if}

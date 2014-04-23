@@ -670,128 +670,110 @@
     </div>
 	<br>
 {/if}
-
-<div id="page-bar" class="btn-group">
-	{button href="javascript:flip('filteroptions');" _flip_id="filteroptions" _text="{tr}Filter Posts{/tr}"}
-	{if $prefs.feature_forum_quickjump eq 'y' and count($all_forums) > 1}
-		<form id='quick' method="post" action="tiki-view_forum.php" style="float:right;">
-			<small>{tr}Jump to forum:{/tr}</small>
-			<select name="forumId" onchange="javascript:document.getElementById('quick').submit();">
-				{section name=ix loop=$all_forums}
-					<option value="{$all_forums[ix].forumId|escape}" {if $all_forums[ix].forumId eq $forumId}selected="selected"{/if}>{$all_forums[ix].name}</option>
-				{/section}
-			</select>
-		</form>
-	{/if}
+<div class="col-md-8" styles="padding-top:15px">
+    <div class="panel panel-default" id="filter-panel">
+        <div class="panel-heading filter-panel-heading">
+            <h4 class="panel-title">
+                <a data-toggle="collapse" data-target="#filterCollapse"
+                   href="#filterCollapse" class="collapsed">
+                    Filter Posts 
+                </a>
+            </h4>
+        </div>
+        <div id="filterCollapse" class="panel-collapse collapse">
+            <div class="panel-body">
+                <form id='time_control' class="form-horizontal" method="post" action="tiki-view_forum.php">
+                    {if $comments_offset neq 0}
+                        <input type="hidden" name="comments_offset" value="{$comments_offset|escape}">
+                    {/if}
+                    {if $comments_threadId neq 0}
+                        <input type="hidden" name="comments_threadId" value="{$comments_threadId|escape}">
+                    {/if}
+                    {if $comments_threshold neq 0}
+                        <input type="hidden" name="comments_threshold" value="{$comments_threshold|escape}">
+                    {/if}
+                    <input type="hidden" name="thread_sort_mode" value="{$thread_sort_mode|escape}">
+                    <input type="hidden" name="forumId" value="{$forumId|escape}">
+                    <div class="form-group">
+                        <label class="col-md-4 control-label input-sm" for="filter_time">{tr}Last post date{/tr}</label>
+                        <div class="col-md-8">
+                            <select id="filter_time" name="time_control" class="form-control input-sm">
+                                <option value="" {if $smarty.request.time_control eq ''}selected="selected"{/if}>{tr}All posts{/tr}</option>
+                                <option value="3600" {if $smarty.request.time_control eq 3600}selected="selected"{/if}>{tr}Last hour{/tr}</option>
+                                <option value="86400" {if $smarty.request.time_control eq 86400}selected="selected"{/if}>{tr}Last 24 hours{/tr}</option>
+                                <option value="172800" {if $smarty.request.time_control eq 172800}selected="selected"{/if}>{tr}Last 48 hours{/tr}</option>
+                            </select>
+                        </div>
+                    </div>
+                    {if $prefs.feature_forum_topics_archiving eq 'y'}
+                        <div class="form-group">
+                            <label class="col-md-4 control-label input-sm" for="show_archived">Show archived posts</label>
+                            <div class="col-md-8">
+                                <input type="checkbox" id="show_archived" name="show_archived" {if $show_archived eq 'y'}checked="checked"{/if}>
+                            </div>
+                        </div>
+                    {/if}
+                    {if $user}
+                        <div class="form-group">
+                            <label class="col-md-4 control-label input-sm" for="filter_poster">Containing posts by</label>
+                            <div class="col-md-8">
+                                <select id="filter_poster" class="form-control input-sm" name="poster">
+                                    <option value=""{if empty($smarty.request.poster)} selected="selected"{/if}>
+                                        All posts
+                                    </option>
+                                    <option value="_me" {if isset($smarty.request.poster) and $smarty.request.poster eq '_me'} selected="selected"{/if}>
+                                        Me
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                    {/if}
+                    <div class="form-group">
+                        <label class="col-md-4 control-label input-sm" for="filter_type">Type</label>
+                        <div class="col-md-8">
+                            <select id="filter_type" name="filter_type" class="form-control input-sm">
+                                <option value=""{if empty($smarty.request.filter_type)}selected="selected"{/if}>
+                                    {tr}All posts{/tr}
+                                </option>
+                                <option value="n" {if isset($smarty.request.filter_type) and $smarty.request.filter_type eq 'n'} selected="selected"{/if}>
+                                    {tr}normal{/tr}
+                                </option>
+                                <option value="a" {if isset($smarty.request.filter_type) and $smarty.request.filter_type eq 'a'} selected="selected"{/if}>
+                                    {tr}announce{/tr}
+                                </option>
+                                <option value="h"{if isset($smarty.request.filter_type) and $smarty.request.filter_type eq 'h'} selected="selected"{/if}>
+                                    {tr}hot{/tr}
+                                </option>
+                                <option value="s"{if isset($smarty.request.filter_type) and $smarty.request.filter_type eq 's'} selected="selected"{/if}>
+                                    {tr}sticky{/tr}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-4 control-label input-sm" for="filter_replies">Replies</label>
+                        <div class="col-md-8">
+                            <select id="filter_replies" name="reply_state" class="form-control input-sm">
+                                <option value=""{if empty($smarty.request.reply_state)} selected="selected"{/if}>
+                                    {tr}All posts{/tr}
+                                </option>
+                                <option value="none"{if isset($smarty.request.reply_state) and $smarty.request.reply_state eq 'none'} selected="selected"{/if}>
+                                    {tr}Posts with no replies{/tr}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-4">
+                            <input type="submit" class="btn btn-default btn-sm" id="filter_submit" value="{tr}Filter{/tr}">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+</div>
 </div>
 
-<div id="filteroptions" style="display:none;">
-			<form id='time_control' method="post" action="tiki-view_forum.php">
-				{if $comments_offset neq 0}
-					<input type="hidden" name="comments_offset" value="{$comments_offset|escape}">
-				{/if}
-				{if $comments_threadId neq 0}
-					<input type="hidden" name="comments_threadId" value="{$comments_threadId|escape}">
-				{/if}
-				{if $comments_threshold neq 0}
-					<input type="hidden" name="comments_threshold" value="{$comments_threshold|escape}">
-				{/if}
-				<input type="hidden" name="thread_sort_mode" value="{$thread_sort_mode|escape}">
-				<input type="hidden" name="forumId" value="{$forumId|escape}">
-				<table>
-					<tr>
-						<th colspan="2">
-							{tr}Posts Filtering{/tr}
-						</th>
-					</tr>
-					<tr>
-						<th>
-							<label for="filter_time">{tr}Last post date{/tr}</label>
-						</th>
-						<td>
-							<select id="filter_time" name="time_control">
-							<option value="" {if $smarty.request.time_control eq ''}selected="selected"{/if}>{tr}All posts{/tr}</option>
-							<option value="3600" {if $smarty.request.time_control eq 3600}selected="selected"{/if}>{tr}Last hour{/tr}</option>
-							<option value="86400" {if $smarty.request.time_control eq 86400}selected="selected"{/if}>{tr}Last 24 hours{/tr}</option>
-							<option value="172800" {if $smarty.request.time_control eq 172800}selected="selected"{/if}>{tr}Last 48 hours{/tr}</option>
-							</select>
-						</td>
-					</tr>
-				{if $prefs.feature_forum_topics_archiving eq 'y'}
-					<tr>
-						<th>
-							<label for="show_archived">{tr}Show archived posts{/tr}</label>
-						</th>
-						<td>
-							<input style="margin-left:20px" type="checkbox" id="show_archived" name="show_archived" {if $show_archived eq 'y'}checked="checked"{/if}>
-						</td>
-					</tr>
-				{/if}
-				{if $user}
-					<tr>
-						<th>
-							<label for="filter_poster">{tr}Containing posts by{/tr}</label>
-						</th>
-						<td>
-							<select id="filter_poster" name="poster">
-							<option value=""{if empty($smarty.request.poster)} selected="selected"{/if}>
-								{tr}All posts{/tr}
-							</option>
-							<option value="_me" {if isset($smarty.request.poster) and $smarty.request.poster eq '_me'} selected="selected"{/if}>
-								{tr}Me{/tr}
-							</option>
-							</select>
-						</td>
-					</tr>
-				{/if}				
-				<tr>
-					<th>
-						<label for="filter_type">{tr}Type{/tr}</label>
-					</th>
-					<td>
-						<select id="filter_type" name="filter_type">
-							<option value=""{if empty($smarty.request.filter_type)}selected="selected"{/if}>
-								{tr}All posts{/tr}
-							</option>
-							<option value="n" {if isset($smarty.request.filter_type) and $smarty.request.filter_type eq 'n'} selected="selected"{/if}>
-								{tr}normal{/tr}
-							</option>
-							<option value="a" {if isset($smarty.request.filter_type) and $smarty.request.filter_type eq 'a'} selected="selected"{/if}>
-								{tr}announce{/tr}
-							</option>
-							<option value="h"{if isset($smarty.request.filter_type) and $smarty.request.filter_type eq 'h'} selected="selected"{/if}>
-								{tr}hot{/tr}
-							</option>
-							<option value="s"{if isset($smarty.request.filter_type) and $smarty.request.filter_type eq 's'} selected="selected"{/if}>
-								{tr}sticky{/tr}
-							</option>
-						</select>
-					</td>
-				</tr>
-				<tr>
-					<th>
-						<label for="filter_replies">{tr}Replies{/tr}</label>
-					</th>
-					<td>
-						<select id="filter_replies" name="reply_state">
-							<option value=""{if empty($smarty.request.reply_state)} selected="selected"{/if}>
-								{tr}All posts{/tr}
-							</option>
-							<option value="none"{if isset($smarty.request.reply_state) and $smarty.request.reply_state eq 'none'} selected="selected"{/if}>
-								{tr}Posts with no replies{/tr}
-							</option>
-						</select>
-					</td>
-				</tr>
-				<tr>
-					<td>&nbsp;</td>
-					<td>
-						<input type="submit" class="btn btn-default btn-sm" id="filter_submit" value="{tr}Filter{/tr}">
-					</td>
-				</tr>
-				</table>
-			</form>
-</div>
 {if empty($user) and $prefs.javascript_enabled eq "y"}
 	{jq}
 		var js_anonymous_name = getCookie('anonymous_name');

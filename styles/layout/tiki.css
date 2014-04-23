@@ -3468,4 +3468,16 @@ body.navbar-padding {
 	padding-top: 70px;
 }
 
+/*Forum filter collapsible panel. Adds +/-*/
+
+.filter-panel-heading a:after {
+    font-family: 'Glyphicons Halflings';
+    content: "\2212";
+    float: left;
+    margin-right: 15px; 
+    color: grey; 
+}
+.filter-panel-heading a.collapsed:after {
+    content: "\2b";    
+}
 /* End of file */
