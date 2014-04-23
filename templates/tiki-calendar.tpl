@@ -182,8 +182,9 @@ $('#calendar').fullCalendar({
 			slotMinutes: {{$prefs.calendar_timespan}},
 			defaultView: {{if $prefs.calendar_view_mode === 'week'}}'agendaWeek'{{else if $prefs.calendar_view_mode === 'day'}}'agendaDay'{{else}}'month'{{/if}},
 			eventAfterRender : function( event, element, view ) {
-				element.attr('title',event.title +'|'+event.description);
-				element.cluetip({arrows: true, splitTitle: '|', clickThrough: true});
+				element.attr('title',event.title);
+				element.data('content', event.description);
+				element.popover({ trigger: 'hover' });
 			},
 			eventClick: function(event) {
         if (event.url && event.editable) {

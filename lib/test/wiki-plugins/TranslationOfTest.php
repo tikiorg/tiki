@@ -57,10 +57,10 @@ class WikiPlugin_TranslationOfTest extends TikiTestCase
 	public function provider()
 	{
 		return array(
-			array('', '<a href="tiki-index.php?page=SomePage"   class="tips"" data-cluetip-body=\'<a href="tiki-edit_translation.php?page=SomePage&target_lang=fr#new_translation">Translate this link</a>\' data-cluetip-options=\'{"activation":"mouseover","sticky":true,"mouseOutClose":false,"showTitle":false,"attribute":"data-cluetip-body"}\'>SomePage</a>',
+			array('', '<a href="tiki-index.php?page=SomePage"   class="tips"" data-content=\'<a href="tiki-edit_translation.php?page=SomePage&target_lang=fr#new_translation">Translate this link</a>\'>SomePage</a>',
                   array('orig_page' => 'SomePage', 'translation_lang' => 'fr'),
                   "Happy Path Case"),
-            array('', '<a href="tiki-index.php?page=SomePage"   class="tips"" data-cluetip-body=\'<a href="tiki-edit_translation.php?page=SomePage&target_lang=fr&translation_name=UnePage#new_translation">Translate this link</a>\' data-cluetip-options=\'{"activation":"mouseover","sticky":true,"mouseOutClose":false,"showTitle":false,"attribute":"data-cluetip-body"}\'>UnePage</a>',
+            array('', '<a href="tiki-index.php?page=SomePage"   class="tips"" data-content=\'<a href="tiki-edit_translation.php?page=SomePage&target_lang=fr&translation_name=UnePage#new_translation">Translate this link</a>\'>UnePage</a>',
                   array('orig_page' => 'SomePage', 'translation_lang' => 'fr', 'translation_page' => 'UnePage'),
                   "Case with name of translated page provided"),
 		);

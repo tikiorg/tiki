@@ -20,7 +20,7 @@
  * @author   Jonny Bradley, replacing Smarty original (by Monte Ohrt <monte at ohrt dot com>)
  * @param    array
  * @param    Smarty
- * @return   string now formatted to use cluetips natively
+ * @return   string now formatted to use popover natively
  *
  * params still relevant:
  *
@@ -59,7 +59,7 @@ function smarty_function_popup($params, $smarty)
 	}
 
     if (empty($title) && empty($body)) {
-		trigger_error("cluetips: attribute 'text' or 'caption' required");
+		trigger_error("popover: attribute 'text' or 'caption' required");
         return false;
 	}
 

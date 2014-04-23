@@ -101,7 +101,8 @@
 							handle: 'label',
 							axis: 'y',
 							helper: 'clone'
-						} ).find('.tikihelp').cluetip({splitTitle: ':', width: '150px', cluezIndex: 400, fx: {open: 'fadeIn', openSpeed: 'fast'}, clickThrough: true});
+						} );
+						$(this).tiki_popover();
 						if (typeof ajaxLoadingHide == 'function') { ajaxLoadingHide(); }
 					} );
 				} );

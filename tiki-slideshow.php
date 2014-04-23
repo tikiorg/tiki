@@ -144,7 +144,7 @@ $headerlib->add_cssfile('vendor/jquery/jquery-s5/jquery.s5.css');
 $headerlib->add_jsfile('vendor/jquery/jquery-s5/jquery.s5.js');
 $headerlib->add_jq_onready(
     '
-	$("#toc,.cluetip-title").remove();
+	$("#toc").remove();
 	
 	window.s5Settings = (window.s5Settings ? window.s5Settings : {});
 	

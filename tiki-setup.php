@@ -443,9 +443,6 @@ if ($prefs['mobile_feature'] === 'y' && $prefs['mobile_mode'] === 'y') {
 				$headerlib->add_jsfile_dependancy("vendor/jquery/jquery-ui/js/jquery-ui-$headerlib->jqueryui_version.js");
 			}
 		}
-		if (isset($_SERVER['HTTP_USER_AGENT']) && strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE 6') !== false) {
-			$headerlib->add_jsfile('vendor/jquery/plugins/cluetip/lib/jquery.bgiframe.js');
-		}
 
 		if ( $prefs['feature_jquery_ui_theme'] !== 'none' ) {
 			if ( isset($prefs['javascript_cdn']) && $prefs['javascript_cdn'] == 'jquery' ) {
@@ -482,14 +479,6 @@ if ($prefs['mobile_feature'] === 'y' && $prefs['mobile_mode'] === 'y') {
 		}
 		$headerlib->add_jsfile('vendor/jquery/jquery-timepicker-addon/dist/jquery-ui-timepicker-addon.js');
 		$headerlib->add_cssfile('vendor/jquery/jquery-timepicker-addon/dist/jquery-ui-timepicker-addon.css');
-	}
-
-	if ( $prefs['feature_jquery_tooltips'] == 'y' ) {
-		if ( $prefs['feature_jquery_ui'] !== 'y' ) {
-			$headerlib->add_jsfile('vendor/jquery/plugins/cluetip/lib/jquery.bgiframe.min.js');
-		}
-		$headerlib->add_jsfile('vendor/jquery/plugins/cluetip/jquery.cluetip.js');
-		$headerlib->add_cssfile('vendor/jquery/plugins/cluetip/jquery.cluetip.css');
 	}
 
 	if ( $prefs['feature_jquery_superfish'] == 'y' ) {

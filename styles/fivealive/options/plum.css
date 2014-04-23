@@ -271,26 +271,6 @@ form.admin fieldset,
 	border-bottom: none;
 }
 
-/* cluetip tooltips */
-
-.cluetip-default {
-	background: #f3e1fb;
-	color: #000;
-}
-
-.cluetip-default #cluetip-outer {
-	background: #f3e1fb;
-}
-.cluetip-default h3#cluetip-title {
-	background: #852a1c;
-	color: #fff;
-}
-
-.cluetip-default #cluetip-title a {
-	color: #f3e1fb;
-}
-  
-
 .s5-slide {
     background-color: #15001F !important;
 }

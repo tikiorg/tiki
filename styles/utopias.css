@@ -1120,34 +1120,6 @@ td.calheadhighlight {
 #shadowbox_title_inner {}
 #shadowbox_content {}*/
 
-/* Cluetip - JQuery tooltips
-   =cluetipClass: 'default' */
-
-.cluetip-default {
-	background: #aaa;
-	color: #000;
-}
-
-.cluetip-default #cluetip-outer {background: #aaa}
-.cluetip-default h3#cluetip-title {
-	background: #555;
-	color: #fff;
-}
-
-.cluetip-default #cluetip-title a {
-	color: #eee;
-	font-size: 0.95em;
-}
-
-.cluetip-default #cluetip-inner {padding: .9em}
-
-.cluetip-default div#cluetip-close {
-	text-align: right;
-	margin: -10px 0 0 0;
-	color: #900;
-}
-
-
 /***** File Galleries *****/
 
 /* TODO */

@@ -52,8 +52,6 @@ class CleanVendors
 		self::deleteDirectory($vendors . 'jquery/photoswipe/examples');
 		self::deleteDirectory($vendors . 'jquery/plugins/anythingslider/demos');
 		self::deleteDirectory($vendors . 'jquery/plugins/brosho/__MACOSX');
-		self::deleteDirectory($vendors . 'jquery/plugins/cluetip/demo');
-		self::deleteDirectory($vendors . 'jquery/plugins/cluetip/test');
 		self::deleteDirectory($vendors . 'jquery/plugins/colorbox/content');
 		self::deleteDirectory($vendors . 'jquery/plugins/superfish/examples');
 		self::deleteDirectory($vendors . 'jquery/plugins/superfish/src');

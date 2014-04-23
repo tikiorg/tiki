@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "71133ad05279fb6db7d49cff1da70f87",
+    "hash": "5de9ee3179fceb0dc6fa6dbdeeefbfd3",
     "packages": [
         {
             "name": "aFarkas/html5shiv",
@@ -613,17 +613,6 @@
             "type": "library"
         },
         {
-            "name": "jquery/plugins/cluetip",
-            "version": "1.2.10",
-            "dist": {
-                "type": "zip",
-                "url": "https://composer.tiki.org/dist/jquery-plugins-cluetip-1.2.10.zip",
-                "reference": "1.2.10",
-                "shasum": "7747a3225edfcf184c8a99b70d87a8918227b5d3"
-            },
-            "type": "library"
-        },
-        {
             "name": "jquery/plugins/colorbox",
             "version": "1.4.31",
             "dist": {
@@ -1179,7 +1168,9 @@
             "authors": [
                 {
                     "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com"
+                    "email": "fabien@symfony.com",
+                    "homepage": "http://fabien.potencier.org",
+                    "role": "Lead Developer"
                 },
                 {
                     "name": "Symfony Community",

@@ -1048,26 +1048,6 @@ a.admbox.off:active {
 
 /* MiniChat  */
 
-/* ClueTip tooltips */
-
-.cluetip-default {
-	background: #ccc;
-	color: #000;
-}
-
-.cluetip-default #cluetip-outer {
-	background: #ccc;
-}
-.cluetip-default h3#cluetip-title {
-	background: #444;
-	color: #fff;
-}
-
-.cluetip-default #cluetip-title a {
-	color: #ccc;
-	font-size: 0.95em;
-}
-
 body.fixed_width {
 	background: #424242 url(mono/body-bg_fw.gif) repeat-x !important
 }
