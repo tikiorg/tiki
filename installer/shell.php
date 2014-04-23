@@ -5,4 +5,19 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-die('Deprecated: use console.php');
+die('Deprecated: use console.php instead
+
+To update the database:
+php installer/shell.php 
+
+has become:
+php console.php -n database:update
+
+
+To re-install the database and erase all data:
+php installer/shell.php install
+
+has become:
+php console.php database:install --force
+
+');
