@@ -27,7 +27,7 @@ class HeaderLib
 	public $lockMinifiedJs;
 
 	public $jquery_version = '1.11.0';
-	public $jqueryui_version = '1.10.3';
+	public $jqueryui_version = '1.10.4';
 	public $jquerymobile_version = '1.3.2';
 
 

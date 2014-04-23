@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "799977f485e1ad791ecafc3fd44cde7c",
+    "hash": "204c13f9d76fe411a3aee4c350eca493",
     "packages": [
         {
             "name": "aFarkas/html5shiv",
@@ -493,12 +493,12 @@
         },
         {
             "name": "jquery/jquery-ui",
-            "version": "1.10.3",
+            "version": "1.10.4",
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/jquery-jquery-ui-1.10.3.zip",
-                "reference": "1.10.3",
-                "shasum": "a5d79cc04f528f82468d986c043a29f2f051d155"
+                "url": "https://composer.tiki.org/dist/jquery-jquery-ui-1.10.4.zip",
+                "reference": "1.10.4",
+                "shasum": "5d6d8ffe7592657356f206f3f56a53ff32964230"
             },
             "type": "library"
         },
@@ -515,12 +515,12 @@
         },
         {
             "name": "jquery/jquery-ui-themes",
-            "version": "1.10.3",
+            "version": "1.10.4",
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/jquery-jquery-ui-themes-1.10.3.zip",
-                "reference": "1.10.3",
-                "shasum": "31705cf3ad9869bafde574f823b869fd75aa0e88"
+                "url": "https://composer.tiki.org/dist/jquery-jquery-ui-themes-1.10.4.zip",
+                "reference": "1.10.4",
+                "shasum": "47b818d17a4cb527a3a3f83a9ce59a027bcbea60"
             },
             "type": "library"
         },

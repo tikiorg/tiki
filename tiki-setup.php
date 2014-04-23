@@ -438,9 +438,9 @@ if ($prefs['mobile_feature'] === 'y' && $prefs['mobile_mode'] === 'y') {
 			$headerlib->add_jsfile_dependancy("//code.jquery.com/ui/$headerlib->jqueryui_version/jquery-ui.min.js");
 		} else {
 			if ( $prefs['tiki_minify_javascript'] === 'y' ) {
-				$headerlib->add_jsfile_dependancy("vendor/jquery/jquery-ui/ui/minified/jquery-ui.min.js");
+				$headerlib->add_jsfile_dependancy("vendor/jquery/jquery-ui/js/jquery-ui-$headerlib->jqueryui_version.min.js");
 			} else {
-				$headerlib->add_jsfile_dependancy("vendor/jquery/jquery-ui/ui/jquery-ui.js");
+				$headerlib->add_jsfile_dependancy("vendor/jquery/jquery-ui/js/jquery-ui-$headerlib->jqueryui_version.js");
 			}
 		}
 		if (isset($_SERVER['HTTP_USER_AGENT']) && strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE 6') !== false) {

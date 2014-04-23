@@ -47,9 +47,8 @@ class CleanVendors
 		self::deleteFile(     $vendors . 'jquery/jquery-timepicker-addon/package.json');
 		self::deleteDirectory($vendors . 'jquery/jquery-ui-selectmenu/demos');
 		self::deleteDirectory($vendors . 'jquery/jquery-ui-selectmenu/tests');
-		self::deleteDirectory($vendors . 'jquery/jquery-ui/demos');
-		self::deleteDirectory($vendors . 'jquery/jquery-ui/tests');
-		self::deleteDirectory($vendors . 'jquery/jquery-ui/themes');
+		self::deleteDirectory($vendors . 'jquery/jquery-ui/development-bundle');
+		self::deleteFile     ($vendors . 'jquery/jquery-ui/js/jquery-1.10.2.js');
 		self::deleteDirectory($vendors . 'jquery/photoswipe/examples');
 		self::deleteDirectory($vendors . 'jquery/plugins/anythingslider/demos');
 		self::deleteDirectory($vendors . 'jquery/plugins/brosho/__MACOSX');
