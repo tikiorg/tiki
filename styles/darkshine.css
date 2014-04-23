@@ -173,11 +173,6 @@ tt {font-size: 110%}
 	padding-top: 66px;
 	background: url(darkshine/title_background.jpg) no-repeat 0 100%;
 }
-
-#top_modules .box-logo .floatleft {
-	float: none !important;
-}
-
 #top_modules .sitetitle {
 	display: block;
 	margin: 0 auto;
