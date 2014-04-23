@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "0985e5aad37fc12faeeb073755064af6",
+    "hash": "26e3966a389329e95dbc912f191b94be",
     "packages": [
         {
             "name": "aFarkas/html5shiv",
@@ -1028,17 +1028,17 @@
         },
         {
             "name": "smarty/smarty",
-            "version": "v3.1.14",
+            "version": "v3.1.17",
             "source": {
                 "type": "svn",
                 "url": "http://smarty-php.googlecode.com/svn",
-                "reference": "/tags/v3.1.14/@4752"
+                "reference": "/tags/v3.1.17/@4818"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/smarty-smarty-v3.1.14-a8f22b.zip",
-                "reference": "v3.1.14",
-                "shasum": "69a262b46a1821222eb3ba5847b46ac335457205"
+                "url": "https://composer.tiki.org/dist/smarty-smarty-v3.1.17-5bfebf.zip",
+                "reference": "v3.1.17",
+                "shasum": "244b1ba3cd68c1257d7f1183121ca001f334dd9c"
             },
             "require": {
                 "php": ">=5.2"
@@ -1074,7 +1074,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2013-07-02 16:38:47"
+            "time": "2014-03-12 20:51:46"
         },
         {
             "name": "svg-edit/svg-edit",
@@ -1420,12 +1420,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/wikiLingo/wikiLingo.git",
-                "reference": "f786702f96b1b9eb9770de143b5b21f7ef12da93"
+                "reference": "181b0a3ba64e4b1c267b8b09f59b673bda1acd4b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wikiLingo/wikiLingo/zipball/f786702f96b1b9eb9770de143b5b21f7ef12da93",
-                "reference": "f786702f96b1b9eb9770de143b5b21f7ef12da93",
+                "url": "https://api.github.com/repos/wikiLingo/wikiLingo/zipball/181b0a3ba64e4b1c267b8b09f59b673bda1acd4b",
+                "reference": "181b0a3ba64e4b1c267b8b09f59b673bda1acd4b",
                 "shasum": ""
             },
             "require": {
@@ -1464,7 +1464,7 @@
                     "role": "Lead Developer"
                 }
             ],
-            "time": "2014-04-10 14:53:06"
+            "time": "2014-04-23 03:06:23"
         },
         {
             "name": "zetacomponents/base",
