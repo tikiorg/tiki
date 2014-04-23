@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "a20823afd1e4ac8f4a60212ff6e85229",
+    "hash": "486d22385d83cf28962e4714d4ce661c",
     "packages": [
         {
             "name": "aFarkas/html5shiv",
@@ -249,40 +249,14 @@
         },
         {
             "name": "jquery/jquery-s5",
-            "version": "dev-trunk",
-            "source": {
-                "type": "svn",
-                "url": "http://jquerys5.googlecode.com/svn",
-                "reference": "/trunk/@65"
-            },
+            "version": "dev-master",
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/jquery-jquery-s5-dev-trunk-69fe1a.zip",
-                "reference": "dev-trunk",
-                "shasum": "6dc24d69e98599a3a8985f7b00c2c881e1973a28"
+                "url": "https://composer.tiki.org/dist/jquery-jquery-s5-dev-master.zip",
+                "reference": "dev-master",
+                "shasum": "09522c8dbcb677b77ee078784836598891adac60"
             },
-            "type": "library",
-            "license": [
-                "LGPL"
-            ],
-            "authors": [
-                {
-                    "name": "Robert Plummer",
-                    "homepage": "http://visop-dev.com/"
-                },
-                {
-                    "name": "Marc Laporte",
-                    "homepage": "http://marclaporte.com"
-                }
-            ],
-            "description": "jQuery's s5 implementation. Used to create sideshows in web browsers",
-            "homepage": "http://code.google.com/p/jquerys5/",
-            "keywords": [
-                "javascript",
-                "s5",
-                "slideshow"
-            ],
-            "time": "2013-04-18 22:40:40"
+            "type": "library"
         },
         {
             "name": "jquery/jquery-sheet",
@@ -363,12 +337,12 @@
         },
         {
             "name": "jquery/minicart",
-            "version": "2.6",
+            "version": "2.6.1",
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/jquery-minicart-2.6.zip",
-                "reference": "2.6",
-                "shasum": "5d36c9822b65a08eb7922205d09cb34b4b83cbbd"
+                "url": "https://composer.tiki.org/dist/jquery-minicart-2.6.1.zip",
+                "reference": "2.6.1",
+                "shasum": "964660a3306972f30a622ff01fa71d200d954cd7"
             },
             "type": "library"
         },
