@@ -128,7 +128,7 @@ function smarty_block_tabset($params, $content, $smarty, &$repeat)
 
 			$ret .= '<ul class="nav nav-tabs">';
 			foreach ($smarty_tabset[$tabset_index]['tabs'] as $value) {
-				$ret .= '<li class="'.($count == $cookietab ? 'active' : '').'"><a href="#' . $value['id'] . '" data-toggle="tab">'.$value['label'].'</a></li>';
+				$ret .= '<li class="'. $value['active'] .'"><a href="#' . $value['id'] . '" data-toggle="tab">'.$value['label'].'</a></li>';
 				++$count;
 			}
 			$ret .= '</ul>';

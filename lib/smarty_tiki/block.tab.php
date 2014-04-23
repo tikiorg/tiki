@@ -39,6 +39,7 @@ function smarty_block_tab($params, $content, $smarty, &$repeat)
 
 		$name = $smarty_tabset[$tabset_index]['name'];
 		$id = null;
+		$active = null;
 		if ($print_page != 'y') {
 			$smarty_tabset_i_tab = count($smarty_tabset[$tabset_index]['tabs']);
 
@@ -55,14 +56,15 @@ function smarty_block_tab($params, $content, $smarty, &$repeat)
 			}
 
 			$id = $id = "content$name-{$params['key']}";
+			$active = ($smarty_tabset_i_tab == $cookietab) ? 'active' : '';
 			$def = [
 				'label' => $params['name'],
 				'id' => $id,
+				'active' => $active,
 			];
 			$smarty_tabset[$tabset_index]['tabs'][] = $def;
 		}
 		
-		$active = ($smarty_tabset_i_tab == $cookietab) ? 'active' : '';
 		$ret = "<div id='{$id}' class='tab-pane $active'>$content</div>";
 		
 		return $ret;
