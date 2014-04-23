@@ -902,6 +902,7 @@ class Services_Tracker_Controller
 		}
 
 		return array(
+			'title' => tr('Remove'),
 			'trackerId' => $trackerId,
 			'itemId' => $itemId,
 		);

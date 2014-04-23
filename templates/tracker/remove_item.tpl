@@ -10,7 +10,7 @@
 	<div class="submit">
 		<input type="hidden" name="trackerId" value="{$trackerId|escape}">
 		<input type="hidden" name="itemId" value="{$itemId|escape}">
-		<input type="submit" class="btn btn-default btn-sm" value="{tr}Delete item{/tr}">
+		<input type="submit" class="btn btn-danger" value="{tr}Delete item{/tr}">
 	</div>
 </form>
 {/block}

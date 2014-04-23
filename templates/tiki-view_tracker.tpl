@@ -195,7 +195,7 @@
 										{else}
 											<a class="link" href="tiki-view_tracker_item.php?itemId={$items[user].itemId}&amp;show=mod" title="{tr}View/Edit{/tr}">{icon _id='pencil' alt="{tr}View/Edit{/tr}"}</a>
 										{/if}
-										<a class="link" href="tiki-view_tracker.php?status={$status}&amp;trackerId={$trackerId}{if $offset}&amp;offset={$offset}{/if}{if $sort_mode ne ''}&amp;sort_mode={$sort_mode}{/if}&amp;remove={$items[user].itemId}" title="{tr}Delete{/tr}">{icon _id='cross' alt="{tr}Delete{/tr}"}</a>
+										<a class="link" href="{service controller=tracker action=remove_item trackerId=$trackerId itemId=$items[user].itemId modal=1}" title="{tr}Delete{/tr}" data-toggle="modal" data-target="#bootstrap-modal">{icon _id='cross' alt="{tr}Delete{/tr}"}</a>
 										{if $tiki_p_admin_trackers eq 'y'}
 											<a class="link" href="tiki-tracker_view_history.php?itemId={$items[user].itemId}" title="{tr}History{/tr}">{icon _id='database' alt="{tr}History{/tr}"}</a>
 										{/if}
