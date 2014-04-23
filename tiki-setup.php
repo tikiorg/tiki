@@ -304,7 +304,7 @@ if ( isset( $_GET['msg'] ) ) {
 require_once 'lib/setup/events.php';
 
 if ( $prefs['rating_advanced'] == 'y' && $prefs['rating_recalculation'] == 'randomload' ) {
-	global $ratinglib; require_once 'lib/rating/ratinglib.php';
+	$ratinglib = TikiLib::lib('rating');
 	$ratinglib->attempt_refresh();
 }
 

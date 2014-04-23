@@ -5,7 +5,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-require_once 'lib/rating/ratinglib.php';
+$ratinglib = TikiLib::lib('rating');
 
 class Rating_RegisterVoteTest extends TikiTestCase
 {

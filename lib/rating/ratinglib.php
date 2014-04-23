@@ -562,5 +562,3 @@ class RatingLib extends TikiDb_Bridge
 	}
 }
 
-global $ratinglib; $ratinglib = new RatingLib;
-

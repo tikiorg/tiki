@@ -56,7 +56,7 @@ class Tiki_Formula_Function_RatingAverage extends Math_Formula_Function
 			}
 		}
 
-		global $ratinglib; require_once 'lib/rating/ratinglib.php';
+		$ratinglib = TikiLib::lib('rating');
 		return $ratinglib->collect($type, $object, $this->mode, $params);
 	}
 }

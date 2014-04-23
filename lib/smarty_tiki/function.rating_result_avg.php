@@ -7,8 +7,8 @@
 
 function smarty_function_rating_result_avg( $params, $smarty )
 {
-	global $prefs, $ratinglib;
-	require_once 'lib/rating/ratinglib.php';
+	global $prefs;
+	$ratinglib = TikiLib::lib('rating');
 	$votings = $ratinglib->votings($params['id'], $params['type']);
 	$options = $ratinglib->get_options($params['type'], $params['id']);
 

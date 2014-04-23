@@ -53,6 +53,9 @@
 		<service id="tiki.lib.quantify" class="QuantifyLib">
 			<file>%kernel.root_dir%/lib/wiki/quantifylib.php</file>
 		</service>
+		<service id="tiki.lib.rating" class="RatingLib">
+			<file>%kernel.root_dir%/lib/rating/ratinglib.php</file>
+		</service>
 		<service id="tiki.lib.relation" class="RelationLib">
 			<file>%kernel.root_dir%/lib/attributes/relationlib.php</file>
 		</service>

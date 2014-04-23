@@ -1684,7 +1684,7 @@ class Comments extends TikiLib
 
 		$initial_sort_mode = $sort_mode;
 		if ($prefs['rating_advanced'] == 'y') {
-			global $ratinglib; require_once 'lib/rating/ratinglib.php';
+			$ratinglib = TikiLib::lib('rating');
 			$query .= $ratinglib->convert_rating_sort($sort_mode, 'comment', '`threadId`');
 		}
 
@@ -2010,7 +2010,7 @@ class Comments extends TikiLib
 
 		$initial_sort_mode = $sort_mode;
 		if ($prefs['rating_advanced'] == 'y') {
-			global $ratinglib; require_once 'lib/rating/ratinglib.php';
+			$ratinglib = TikiLib::lib('rating');
 			$join = $ratinglib->convert_rating_sort($sort_mode, 'comment', '`tc1`.`threadId`');
 		} else {
 			$join = '';
@@ -3485,8 +3485,7 @@ class Comments extends TikiLib
 			);
 
 			if (isset($rating_override[$i])) {
-				global $ratinglib;
-				require_once('lib/rating/ratinglib.php');
+				$ratinglib = TikiLib::lib('rating');
 				$ratinglib->set_override('comment', $deliberation_id, $rating_override[$i]);
 			}
 		}
@@ -3499,8 +3498,7 @@ class Comments extends TikiLib
      */
     function get_forum_deliberations($threadId)
 	{
-		global $ratinglib;
-		require_once 'lib/rating/ratinglib.php';
+		$ratinglib = TikiLib::lib('rating');
 
 		$deliberations = $this->fetchAll('SELECT * from tiki_comments WHERE object = ? AND objectType = "forum_deliberation"', array($threadId));
 
