@@ -179,8 +179,10 @@ function doChallengeResponse() {
 			{if $prefs.rememberme eq 'always'}
 				<input type="hidden" name="rme" id="login-remember-module-input_{$module_logo_instance}" value="on" />
 			{else}
-				<div class="text-center rme">
-					<label for="login-remember-module_{$module_logo_instance}">{tr}Remember me{/tr}
+			<div class="form-group">
+				<div class="checkbox rme">
+					<label for="login-remember-module_{$module_logo_instance}"><input type="checkbox" name="rme" id="login-remember-module_{$module_logo_instance}" value="on" />
+{tr}Remember me{/tr}
 					({tr}for{/tr}
 					{if $prefs.remembertime eq 300}
 						5 {tr}minutes{/tr})
@@ -206,8 +208,8 @@ function doChallengeResponse() {
 						1 {tr}year{/tr})
 					{/if}
 					</label>
-					<input type="checkbox" name="rme" id="login-remember-module_{$module_logo_instance}" value="on" />
-					{capture assign="close_tags"}</div>{$close_tags}{/capture}
+				</div>
+			</div>
 			{/if}
 		{/if}
 		<div class="form-group text-center">
