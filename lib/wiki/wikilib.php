@@ -441,6 +441,7 @@ class WikiLib extends TikiLib
 	public function get_parse($page, &$canBeRefreshed = false, $suppress_icons = false)
 	{
 		global $prefs, $user;
+		$tikilib = TikiLib::lib('tiki');
 		$headerlib = TikiLib::lib('header');
 		$content = '';
 		$canBeRefreshed = false;
