@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "204c13f9d76fe411a3aee4c350eca493",
+    "hash": "71133ad05279fb6db7d49cff1da70f87",
     "packages": [
         {
             "name": "aFarkas/html5shiv",
@@ -482,12 +482,12 @@
         },
         {
             "name": "jquery/jquery-timepicker-addon",
-            "version": "1.4",
+            "version": "1.4.4",
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/jquery-jquery-timepicker-addon-1.4.zip",
-                "reference": "1.4",
-                "shasum": "c7418133384bc29c9799a2b7f01e83e26a4eaf13"
+                "url": "https://composer.tiki.org/dist/jquery-jquery-timepicker-addon-1.4.4.zip",
+                "reference": "1.4.4",
+                "shasum": "5d13f97c5d1184c6a62265c87f6e9444683270f0"
             },
             "type": "library"
         },
