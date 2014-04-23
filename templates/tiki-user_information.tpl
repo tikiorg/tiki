@@ -183,10 +183,10 @@
 <div>
 	<div class="panel panel-default"><div class="panel-body">
 		{if ($user_pages|@count > 0) or ($user_galleries|@count > 0) or ($user_blogs|@count > 0) or ($user_blog_posts|@count > 0) or ($user_articles|@count > 0) or ($user_forum_comments|@count > 0) or ($user_forum_topics|@count > 0) or ($user_items|@count > 0)}
-			<h2 class="center">{tr}User{/tr} {$userinfo.login|userlink}</h2>
+			<h2 class="text-center">{tr}User{/tr} {$userinfo.login|userlink}</h2>
 			<p><em>{tr}has contributed to the following content{/tr}&hellip;</em></p>
 		{else}
-			<h2 class="center">{tr}User{/tr} {$userinfo.login|userlink}</h2>
+			<h2 class="text-center">{tr}User{/tr} {$userinfo.login|userlink}</h2>
 			<p><em>{tr}has not contributed to any content yet{/tr}</em></p>
 		{/if}
 
@@ -317,7 +317,7 @@
 	{if $prefs.feature_actionlog eq 'y' and $prefs.user_who_viewed_my_stuff eq 'y' and !empty($user) and ($prefs.user_who_viewed_my_stuff_show_others eq 'y' or $user eq $userinfo.login or $tiki_p_admin eq "y") and $infoPublic eq "y"}
 		{tab name="{tr}Who Looks At Stuff?{/tr}"}
 			<div class="panel panel-default"><div class="panel-body">
-				<h2 class="center">{if $user eq $userinfo.login}{tr}Who Looks At Your Stuff?{/tr}{else}{tr}Who Looks At His Stuff?{/tr}{/if}</h2>
+				<h2 class="text-center">{if $user eq $userinfo.login}{tr}Who Looks At Your Stuff?{/tr}{else}{tr}Who Looks At His Stuff?{/tr}{/if}</h2>
 
 				{section name=ix loop=$whoviewed}
 					<div class="clearfix {cycle}">
@@ -340,7 +340,7 @@
 			{if $sent}
 				{$message}
 			{else}
-				<h2 class="center">{tr}Send me a message !{/tr}</h2>
+				<h2 class="text-center">{tr}Send me a message !{/tr}</h2>
 				<form method="post" action="tiki-user_information.php" name="f" class="form-horizontal">
 					<input type="hidden" name="to" value="{$userwatch|escape}">
 					<input type="hidden" name="view_user" value="{$userwatch|escape}">

@@ -75,10 +75,10 @@
 }
 
 #attzoneopen,
-#comzoneopen {
-	display: block;
+#comzoneopen,
+#pollopen {
+    display: block;
 }
-
 /* New Toolbars */
 
 .textarea-toolbar img.icon {
@@ -908,7 +908,7 @@ body.filegal_popup #tiki-center {
 /***** Categories, Tags *****/
 
 .catlists .catitems {
-	display :inline-block;
+	display: inline-block;
 }
 
 .catlists_block  .catitems_block  li {
@@ -945,87 +945,6 @@ a.categpath {
 	display: inline;
 }
 
-/***** Tags (freetags) *****
-.freetaglist {
-	padding: 0 20px 8px;
-	text-align: right;
-}
-
-.freetagsearch {
-  margin: 10px 0;
-  text-align: center;
- }
-
-.freetagskeywords {
-	margin: 10px 0;
-}
-
-.freetagsort {
-	margin: 10px 0;
-}
-
-.freetagresult {
-	margin-left: 10%;
-	width: 70%;
-}
-
-.freetagitemlist {
-	margin-top: 10px;
-	padding: 0;
-	text-align: left;
-}
-
-.freetagitemlist h3 {
-	margin: 0;
-	padding: 0;
-}
-
-.freetagitemlist a {
-	text-decoration: none;
-}
-
-.freetagitemlist img {
-	float: right
-}
-
-.freetagitemlist a:hover {
-	text-decoration: none;
-}
-
-li.freetag {
-	list-style: none;
-	margin: 0;
-	padding: 0;
-}
-
-ul.freetag {
-	margin: 0;
-	padding: 0;
-	display: inline;
-}
-
-.freetag a {display: inline}
-
-.freetagObjectOdd {
-	margin: 2px;
-	position: relative;
-}
-
-.freetagObjectEven {
-	margin: 2px;
-	position: relative;
-}
-
-.freetagObjectType {
-	position: absolute;
-	top: 0;
-	right: 0;
-}
-
-.freetagObjectName a {
-	text-decoration: none;
-}
-************/
 /* freetegged plugin */
 
 ul.freetagged li {
@@ -1049,21 +968,6 @@ ul.freetagged li {
 	width: 100%;
 }
 
-#pollopen {
-	display: block;
-}
-
-/***** FAQs *****/
-/***** Quizzes *****/
-/***** Shoutbox *****/
-
-.box-shoutbox table td {
-	font-size: .8em;
-}
-
-/***** Directory *****/
-/***** Messages *****/
-
 /***** TikiSheets *****/
 .tiki_sheet * {
     line-height: normal;
@@ -1086,11 +990,7 @@ ul.freetagged li {
 }
 
 /***** Calendar *****/
-/* Properties are in css/calendar.css,
-	which can be overridden
-	in theme stylesheets.  */
-	
-.viewmode { 
+.viewmode {
 	line-height: 1em;
 	padding: 1px;
 	text-align: center;
@@ -1110,10 +1010,6 @@ ul.freetagged li {
 }
 
 /***** Admin *****/
-
-.center {
-	text-align: center;
-}
 
 .justify {
 	text-align: justify;

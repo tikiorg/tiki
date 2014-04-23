@@ -17,7 +17,7 @@
 {/if}
 {/if}
 
-	<div class="center">
+	<div class="text-center">
 		<object name="mykdp" id="mykdp" type="application/x-shockwave-flash" height="365" width="595" data="{$prefs.kaltura_kServiceUrl}index.php/kwidget/wid/_{$prefs.kaltura_partnerId}/uiconf_id/{$prefs.kaltura_kdpUIConf}/entry_id/{$videoInfo->id}">
 			<param name="allowScriptAccess" value="always">
 			<param name="allowNetworking" value="all">

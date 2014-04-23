@@ -5,7 +5,7 @@
 </div>
 <div class="intertrans" id="intertrans-form">
 	<form method="post" action="tiki-interactive_trans.php">
-		<div class="center" id="intertrans-empty" style="display: none">
+		<div class="text-center" id="intertrans-empty" style="display: none">
 			<strong>{tr}Couldn't find any translatable string.{/tr}</strong>
 		</div>
 		<table>

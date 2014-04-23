@@ -42,7 +42,7 @@
 	{if $tiki_p_edit == 'y'}
 		{tab name="{tr}Create a Wiki Page{/tr}"}
             <h2>{tr}Create a Wiki Page{/tr}</h2>
-<div class="center" style="text-align: center">
+<div class="text-center" style="text-align: center">
 	<strong>{tr}Insert name of the page you wish to create{/tr}</strong>
 	<form method="get" action="tiki-editpage.php">
 		<input id="pagename" type="text" size="30" name="page"><br>
