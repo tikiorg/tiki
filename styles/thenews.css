@@ -1,7 +1,3 @@
-/*	$Id$
- * The News theme for Tiki Wiki CMS Groupware -- This file is produced by the Less pre-compiler. Don't edit this file directly. Edit the styles/thenews/*.less files to make changes.
- * For more information, please visit http://themes.tiki.org.
- * Released under LPGL license. */
 /*! normalize.css v3.0.0 | MIT License | git.io/normalize */
 html {
   font-family: sans-serif;
@@ -2371,8 +2367,8 @@ input[type="button"].btn-block {
 }
 @font-face {
   font-family: 'Glyphicons Halflings';
-  src: url('../fonts/glyphicons-halflings-regular.eot');
-  src: url('../fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('../fonts/glyphicons-halflings-regular.woff') format('woff'), url('../fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('../fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
+  src: url('../vendor/twitter/bootstrap/fonts/glyphicons-halflings-regular.eot');
+  src: url('../vendor/twitter/bootstrap/fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('../vendor/twitter/bootstrap/fonts/glyphicons-halflings-regular.woff') format('woff'), url('../vendor/twitter/bootstrap/fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('../vendor/twitter/bootstrap/fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
 }
 .glyphicon {
   position: relative;
@@ -5725,9 +5721,7 @@ h3.panel-title {
   color: black;
   font: 90% "Arial", "Helvetica", sans-serif;
   font-weight: bold;
-  /*  height: 18px;
-  margin: 0px 0px 7px 1em;
-  padding: 0px;*/
+  /*  height: 18px;  margin: 0px 0px 7px 1em;  padding: 0px;*/
   text-transform: uppercase;
 }
 #col2 .panel-default,
