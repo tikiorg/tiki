@@ -277,7 +277,7 @@
 						<div class="form-group">
 							<label for="db">{tr}Database type:{/tr}</label>
 							<div style="margin-left:1em">
-							<select name="db" id="db">
+							<select class=form-control name="db" id="db">
 								{foreach key=dsn item=dbname from=$dbservers}
 									{if $dsn|stristr:"mysql"}
 										<option value="{$dsn}"{if isset($smarty.request.db) and $smarty.request.db eq $dsn} selected="selected"{/if}>{$dbname}</option>
@@ -295,7 +295,7 @@
 						<div class="form-group">
 							<label for="host">{tr}Host name:{/tr}</label>
 							<div style="margin-left:1em">
-								<input type="text" name="host" id="host" value="{if isset($smarty.request.host)}{$smarty.request.host|escape:"html"}{elseif isset($preconfighost)}{$preconfighost|escape:"html"}{else}localhost{/if}" size="40" />
+								<input type="text" class=form-control name="host" id="host" value="{if isset($smarty.request.host)}{$smarty.request.host|escape:"html"}{elseif isset($preconfighost)}{$preconfighost|escape:"html"}{else}localhost{/if}" size="40" />
 									<a href="javascript:void(0)" onclick="flip('host_help');" title="{tr}Help{/tr}">
 										<img src="img/icons/help.png" alt="{tr}Help{/tr}">
 									</a>
@@ -309,7 +309,7 @@
 						<div class="form-group">
 							<label for="name">{tr}Database name:{/tr}</label>
 							<div style="margin-left:1em;">
-								<input type="text" id="name" name="name" size="40" value="{if isset($smarty.request.name)}{$smarty.request.name|escape:"html"}{elseif isset($preconfigname)}{$preconfigname|escape:"html"}{/if}" />
+								<input type="text" class=form-control id="name" name="name" size="40" value="{if isset($smarty.request.name)}{$smarty.request.name|escape:"html"}{elseif isset($preconfigname)}{$preconfigname|escape:"html"}{/if}" />
 									<a href="javascript:void(0)" onclick="flip('name_help');" title="{tr}Help{/tr}">
 										<img src="img/icons/help.png" alt="{tr}Help{/tr}">
 									</a>
@@ -326,13 +326,13 @@
 						<legend>{tr}Database user{/tr}</legend>
 						<p>{tr}Enter a database user with administrator permission for the Database.{/tr}</p>
 						<div style="padding:5px;">
-							<label for="user">{tr}User name:{/tr}</label> <input type="text" id="user" name="user" value="{if (isset($smarty.request.user))}{$smarty.request.user|escape:"html"}{elseif isset($preconfiguser)}{$preconfiguser|escape:"html"}{/if}">
+							<label for="user">{tr}User name:{/tr}</label> <input type="text" class=form-control id="user" name="user" value="{if (isset($smarty.request.user))}{$smarty.request.user|escape:"html"}{elseif isset($preconfiguser)}{$preconfiguser|escape:"html"}{/if}">
 						</div>
 						<div style="padding:5px;">
 							{if isset($preconfigpass)}
-								<label for="pass">{tr}Password:{/tr}</label> <input type="text" id="pass" name="pass" value="{$preconfigpass|escape:"html"}" >
+								<label for="pass">{tr}Password:{/tr}</label> <input type="text" class=form-control id="pass" name="pass" value="{$preconfigpass|escape:"html"}" >
 							{else}
-								<label for="pass">{tr}Password:{/tr}</label> <input type="password" id="pass" name="pass" >
+								<label for="pass">{tr}Password:{/tr}</label> <input type="password" class=form-control id="pass" name="pass" >
 							{/if}
 						</div>
 					</fieldset>
@@ -554,11 +554,11 @@
 				<br>
 				<fieldset><legend>{tr}General{/tr} <a href="http://doc.tiki.org/general+admin" target="_blank" title="{tr}Help{/tr}"><img src="img/icons/help.png" alt="{tr}Help{/tr}"></a></legend>
 			<div style="padding:5px; clear:both"><label for="browsertitle">{tr}Browser title:{/tr}</label>
-					<div style="margin-left:1em"><input type="text" size="40" name="browsertitle" id="browsertitle" onclick="if (this.value=='{tr}My Tiki{/tr}') this.value='';" onfocus="origval=this.value;" onblur="if (this.value=='') this.value=origval;" value="{if $prefs.browsertitle eq ''}{tr}My Tiki{/tr}{else}{$prefs.browsertitle|escape}{/if}">
+					<div style="margin-left:1em"><input class="form-control" type="text" size="40" name="browsertitle" id="browsertitle" onclick="if (this.value=='{tr}My Tiki{/tr}') this.value='';" onfocus="origval=this.value;" onblur="if (this.value=='') this.value=origval;" value="{if $prefs.browsertitle eq ''}{tr}My Tiki{/tr}{else}{$prefs.browsertitle|escape}{/if}">
 						<br><em>{tr}This will appear in the browser title bar.{/tr}</em></div>
 					</div>
 					<div style="padding:5px; clear:both"><label for="sender_email">{tr}Sender email:{/tr}</label>
-						<div style="margin-left:1em"><input type="text" size="40" name="sender_email" id="sender_email" value="{$prefs.sender_email|escape}">
+						<div style="margin-left:1em"><input type="text" class="form-control" size="40" name="sender_email" id="sender_email" value="{$prefs.sender_email|escape}">
 						<br><em>{tr}Email sent by your site will use this address.{/tr}</em>
 						</div>
 					</div>
@@ -570,7 +570,7 @@
 				</legend>
 				<img src="img/icons/lock.png"> {tr}It is recommended to choose the "Require secure (https) login" option for better security. A security certificate and dedicated IP address are required to implement a secure login.{/tr}
 				<div style="padding:5px; clear:both"><label for="https_login">{tr}HTTPS login:{/tr}</label>
-					<select name="https_login" id="https_login" onchange="hidedisabled('httpsoptions',this.value);">
+					<select class="form-control" name="https_login" id="https_login" onchange="hidedisabled('httpsoptions',this.value);">
 						<option value="disabled"{if $prefs.https_login eq 'disabled'} selected="selected"{/if}>{tr}Disabled{/tr}</option>
 						<option value="allowed"{if $prefs.https_login eq 'allowed'} selected="selected"{/if}>{tr}Allow secure (https) login{/tr}</option>
 						<option value="encouraged"{if $prefs.https_login eq 'encouraged' or ($prefs.https_login eq '' and $detected_https eq 'on' )} selected="selected"{/if}>{tr}Encourage secure (https) login{/tr}</option>
@@ -580,7 +580,7 @@
 				</div>
 				<div id="httpsoptions" style="display:{if $prefs.https_login eq 'disabled' or ( $prefs.https_login eq '' and $detected_https eq '')}none{else}block{/if};">
 					<div style="padding:5px">
-						<label for="https_port">{tr}HTTPS port:{/tr}</label> <input type="text" name="https_port" id="https_port" size="5" value="{$prefs.https_port|escape}">
+						<label for="https_port">{tr}HTTPS port:{/tr}</label> <input type="text" class="form-control" name="https_port" id="https_port" size="5" value="{$prefs.https_port|escape}">
 					</div>
 					<div style="padding:5px;clear:both">
 						<div style="float:left"><input type="checkbox" id="feature_show_stay_in_ssl_mode" name="feature_show_stay_in_ssl_mode" {if $prefs.feature_show_stay_in_ssl_mode eq 'y'}checked="checked"{/if}></div>
@@ -597,7 +597,7 @@
 				<legend>{tr}Logging and Reporting{/tr}</legend>
 				<div class="adminoptionbox">
 					<label for="general-error">{tr}PHP error reporting level:{/tr}</label>
-					<select name="error_reporting_level" id="general-error">
+					<select class="form-control" name="error_reporting_level" id="general-error">
 						<option value="0" {if $prefs.error_reporting_level eq 0}selected="selected"{/if}>{tr}No error reporting{/tr}</option>
 						<option value="2047" {if $prefs.error_reporting_level eq 2047}selected="selected"{/if}>{tr}Report all PHP errors except strict{/tr}</option>
 						<option value="-1" {if $prefs.error_reporting_level eq -1}selected="selected"{/if}>{tr}Report all PHP errors{/tr}</option>
@@ -624,7 +624,7 @@
 			<br>
 				<fieldset><legend>{tr}Administrator{/tr}</legend>
 					<div style="padding:5px"><label for="admin_email">{tr}Admin email:{/tr}</label>
-						<div style="margin-left:1em"><input type="text" size="40" name="admin_email" id="admin_email" value="{if isset($admin_email)}{$admin_email}{/if}">
+						<div style="margin-left:1em"><input type="text" class="form-control" size="40" name="admin_email" id="admin_email" value="{if isset($admin_email)}{$admin_email}{/if}">
 						<br><em>{tr}This is the email address for your administrator account.{/tr}</em></div>
 					</div>
 				</fieldset>

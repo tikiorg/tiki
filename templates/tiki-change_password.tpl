@@ -47,10 +47,10 @@
         <div class="alert alert-warning" id="divRegCapson" style="visibility:hidden">{icon _id=error style="vertical-align:middle"} {tr}CapsLock is on.{/tr}</div>
     </fieldset>
     <div class="form-group">
-        <label class="col-sm-3 col-md-2 control-label" for="user">Username</label>
+        <label class="col-sm-3 col-md-2 control-label" for="user">{tr}Username{/tr}</label>
         <div class="col-sm-7 col-md-6">
             {if empty($userlogin)}
-                <input type="text" id="user" name="user">
+                <input type="text" class="form-control" id="user" name="user">
             {else}
                 <input type="hidden" id="user" name="user" value="{$userlogin|escape}">
                 <div class="form-control-static"><strong>{$userlogin|escape}</strong></div>
@@ -59,14 +59,14 @@
     </div>
     {if empty($smarty.request.actpass) and $new_user_validation neq 'y'}
     <div class="form-group">
-        <label class="col-sm-3 col-md-2 control-label" for="oldpass">Old Password</label>
+        <label class="col-sm-3 col-md-2 control-label" for="oldpass">{tr}Old Password{/tr}</label>
         <div class="col-sm-7 col-md-6">
             <input type="password" class="form-control" name="oldpass" id="oldpass" placeholder="Old Password">
         </div>
     </div>
     {/if}
     <div class="form-group">
-        <label class="col-sm-3 col-md-2 control-label" for="pass1">New Password</label>
+        <label class="col-sm-3 col-md-2 control-label" for="pass1">{tr}New Password{/tr}</label>
         <div class="col-sm-7 col-md-6">
             <input type="password" class="form-control" placeholder="New Password" name="pass" id="pass1"
                    onkeypress="regCapsLock(event)" onkeyup="runPassword(this.value, 'mypassword');{if 0 and $prefs.feature_ajax eq 'y'}check_pass();{/if}">
@@ -75,17 +75,17 @@
             <div id="mypassword_text"></div>
             <div id="mypassword_bar" style="font-size: 5px; height: 2px; width: 0px;"></div>
         </div>
-        <p class="col-md-4 col-sm-10 help-block">Minimum 5 characters long.</p>
+        <p class="col-md-4 col-sm-10 help-block">{tr}Minimum 5 characters long.{/tr}</p>
     </div>
     <div class="form-group">
-        <label class="col-sm-3 col-md-2 control-label" for="pass2">Repeat Password</label>
+        <label class="col-sm-3 col-md-2 control-label" for="pass2">{tr}Repeat Password{/tr}</label>
         <div class="col-sm-7 col-md-6">
             <input type="password" class="form-control" name="pass2" id="pass2" placeholder="Repeat Password">
         </div>
     </div>
     {if empty($email)}
         <div class="form-group">
-            <label class="col-sm-3 col-md-2 control-label" for="email">E-mail</label>
+            <label class="col-sm-3 col-md-2 control-label" for="email">{tr}E-mail{/tr}</label>
             <div class="col-sm-7 col-md-6">
                 <input type="email" class="form-control" name="email" id="email" placeholder="E-mail">
             </div>
