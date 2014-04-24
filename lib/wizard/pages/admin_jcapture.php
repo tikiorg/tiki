@@ -47,12 +47,14 @@ class AdminWizardJCapture extends Wizard
 			$galleryName = $gallery['name'];
 		}
 		$smarty->assign('jcaptureFileGalleryName', $galleryName);
-
-		// Assign the page template
-		$wizardTemplate = 'wizard/admin_jcapture.tpl';
-		$smarty->assign('wizardBody', $wizardTemplate);
 		
 		return true;
+	}
+
+	function getTemplate()
+	{
+		$wizardTemplate = 'wizard/admin_jcapture.tpl';
+		return $wizardTemplate;
 	}
 
 	function onContinue ($homepageUrl) 

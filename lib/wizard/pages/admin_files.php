@@ -27,12 +27,14 @@ class AdminWizardFiles extends Wizard
 
 		// Run the parent first
 		parent::onSetupPage($homepageUrl);
-
-		// Assign the page temaplte
-		$wizardTemplate = 'wizard/admin_files.tpl';
-		$smarty->assign('wizardBody', $wizardTemplate);
 		
 		return true;		
+	}
+
+	function getTemplate()
+	{
+		$wizardTemplate = 'wizard/admin_files.tpl';
+		return $wizardTemplate;
 	}
 
 	function onContinue ($homepageUrl) 

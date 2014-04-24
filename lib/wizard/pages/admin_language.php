@@ -30,12 +30,14 @@ class AdminWizardLanguage extends Wizard
 		parent::onSetupPage($homepageUrl);
 		
 		$showPage = true;
-
-		// Assign the page tempalte
-		$wizardTemplate = 'wizard/admin_language.tpl';
-		$smarty->assign('wizardBody', $wizardTemplate);
 		
 		return $showPage;
+	}
+
+	function getTemplate()
+	{
+		$wizardTemplate = 'wizard/admin_language.tpl';
+		return $wizardTemplate;
 	}
 
 	function onContinue ($homepageUrl) 

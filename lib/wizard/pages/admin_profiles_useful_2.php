@@ -30,11 +30,13 @@ class AdminWizardProfilesUseful2 extends Wizard
 
 		$smarty->assign('tikiMajorVersion', substr($TWV->version, 0, 2));
 		
-		// Assign the page temaplte
-		$wizardTemplate = 'wizard/admin_profiles_useful_2.tpl';
-		$smarty->assign('wizardBody', $wizardTemplate);
-		
 		return true;		
+	}
+
+	function getTemplate()
+	{
+		$wizardTemplate = 'wizard/admin_profiles_useful_2.tpl';
+		return $wizardTemplate;
 	}
 
 	function onContinue ($homepageUrl) 

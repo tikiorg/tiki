@@ -28,11 +28,13 @@ class AdminWizardProfilesCompleted extends Wizard
 		// Run the parent first
 		parent::onSetupPage($homepageUrl);
 		
-		// Assign the page template
-		$wizardTemplate = 'wizard/admin_profiles_completed.tpl';
-		$smarty->assign('wizardBody', $wizardTemplate);
-		
 		return true;
+	}
+
+	function getTemplate()
+	{
+		$wizardTemplate = 'wizard/admin_profiles_completed.tpl';
+		return $wizardTemplate;
 	}
 
 	function onContinue ($homepageUrl) 

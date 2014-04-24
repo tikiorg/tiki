@@ -179,6 +179,8 @@ class WizardLib extends TikiLib
 					
 						// Do not show page, if it doesn't return a boolean
 						if ($show === true) {
+							$template = $pages[$stepNr]->getTemplate();
+							$smarty->assign('wizardBody', $smarty->fetch($template));
 							$next = false;
 							break;
 						}
@@ -200,6 +202,8 @@ class WizardLib extends TikiLib
 
 					// Do not show page, if it doesn't return a boolean
 					if ($show === true) {
+						$template = $pages[$stepNr]->getTemplate();
+						$smarty->assign('wizardBody', $smarty->fetch($template));
 						$next = false;
 					}
 

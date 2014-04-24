@@ -131,5 +131,4 @@ if ($reqStepNr > 0) {
 // disallow robots to index page:
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 
-$smarty->assign('mid', 'tiki-wizard_user.tpl');
-$smarty->display("tiki.tpl");
+$smarty->display('tiki-wizard_user.tpl');

@@ -38,11 +38,13 @@ class AdminWizardAutoTOC extends Wizard
 			return false;
 		}
 
-		// Assign the page template
-		$wizardTemplate = 'wizard/admin_auto_toc.tpl';
-		$smarty->assign('wizardBody', $wizardTemplate);
-		
 		return true;
+	}
+
+	function getTemplate()
+	{
+		$wizardTemplate = 'wizard/admin_auto_toc.tpl';
+		return $wizardTemplate;
 	}
 
 	function onContinue ($homepageUrl) 

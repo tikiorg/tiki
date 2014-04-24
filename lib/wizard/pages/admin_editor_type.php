@@ -33,12 +33,13 @@ class AdminWizardEditorType extends Wizard
 		$editorType = isset($prefs['feature_wysiwyg']) && $prefs['feature_wysiwyg'] === 'y' ? 'wysiwyg' : 'text';
 		$smarty->assign('editorType', $editorType);
 		
-		
-		// Assign the page tempalte
-		$wizardTemplate = 'wizard/admin_editor_type.tpl';
-		$smarty->assign('wizardBody', $wizardTemplate);
-		
 		return $showPage;
+	}
+
+	function getTemplate()
+	{
+		$wizardTemplate = 'wizard/admin_editor_type.tpl';
+		return $wizardTemplate;
 	}
 
 	function onContinue ($homepageUrl) 

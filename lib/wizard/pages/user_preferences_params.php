@@ -163,12 +163,14 @@ class UserWizardPreferencesParams extends Wizard
 			if ($tikilib->page_exists($prefs['feature_wiki_userpage_prefix'] . $user)) $smarty->assign('userPageExists', 'y');
 		}
 		$smarty->assign_by_ref('tikifeedback', $tikifeedback);
-
-		// Assign the page template
-		$wizardTemplate = 'wizard/user_preferences_params.tpl';
-		$smarty->assign('wizardBody', $wizardTemplate);
 		
 		return true;		
+	}
+
+	function getTemplate()
+	{
+		$wizardTemplate = 'wizard/user_preferences_params.tpl';
+		return $wizardTemplate;
 	}
 
 	function onContinue ($homepageUrl) 

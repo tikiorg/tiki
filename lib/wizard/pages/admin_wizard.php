@@ -38,10 +38,14 @@ class AdminWizard extends Wizard
 		
 		// Assign the page template
         $smarty->assign('pageTitle', $this->pageTitle());
-		$wizardTemplate = 'wizard/admin_wizard.tpl';
-		$smarty->assign('wizardBody', $wizardTemplate);
 		
 		return true;
+	}
+
+	function getTemplate()
+	{
+		$wizardTemplate = 'wizard/admin_wizard.tpl';
+		return $wizardTemplate;
 	}
 
 	function onContinue ($homepageUrl) 

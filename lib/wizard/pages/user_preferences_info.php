@@ -88,12 +88,14 @@ class UserWizardPreferencesInfo extends Wizard
 		}
 		$smarty->assign('usertrackerId', $usertrackerId);
 		$smarty->assign('useritemId', $useritemId);
-
-		// Assign the page template
-		$wizardTemplate = 'wizard/user_preferences_info.tpl';
-		$smarty->assign('wizardBody', $wizardTemplate);
 		
 		return $showPage;		
+	}
+
+	function getTemplate()
+	{
+		$wizardTemplate = 'wizard/user_preferences_info.tpl';
+		return $wizardTemplate;
 	}
 
 	function onContinue ($homepageUrl) 

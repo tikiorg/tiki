@@ -27,12 +27,14 @@ class AdminWizardWiki extends Wizard
 
 		// Run the parent first
 		parent::onSetupPage($homepageUrl);
-
-		// Assign the page temaplte
-		$wizardTemplate = 'wizard/admin_wiki.tpl';
-		$smarty->assign('wizardBody', $wizardTemplate);
 		
 		return true;		
+	}
+
+	function getTemplate()
+	{
+		$wizardTemplate = 'wizard/admin_wiki.tpl';
+		return $wizardTemplate;
 	}
 
 	public function onContinue ($homepageUrl) 

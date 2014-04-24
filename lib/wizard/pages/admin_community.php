@@ -27,12 +27,14 @@ class AdminWizardCommunity extends Wizard
 
 		// Run the parent first
 		parent::onSetupPage($homepageUrl);
-
-		// Assign the page temaplte
-		$wizardTemplate = 'wizard/admin_community.tpl';
-		$smarty->assign('wizardBody', $wizardTemplate);
 		
 		return true;		
+	}
+
+	function getTemplate()
+	{
+		$wizardTemplate = 'wizard/admin_community.tpl';
+		return $wizardTemplate;
 	}
 
 	public function onContinue ($homepageUrl) 

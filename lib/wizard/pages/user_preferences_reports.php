@@ -55,12 +55,14 @@ class UserWizardPreferencesReports extends Wizard
 		$reportsUsers = Reports_Factory::build('Reports_Users');
 		$reportsUsersUser = $reportsUsers->get($user);
 		$smarty->assign_by_ref('report_preferences', $reportsUsersUser);
-
-		// Assign the page template
-		$wizardTemplate = 'wizard/user_preferences_reports.tpl';
-		$smarty->assign('wizardBody', $wizardTemplate);
 		
 		return $showPage;
+	}
+
+	function getTemplate()
+	{
+		$wizardTemplate = 'wizard/user_preferences_reports.tpl';
+		return $wizardTemplate;
 	}
 
 	function onContinue ($homepageUrl) 

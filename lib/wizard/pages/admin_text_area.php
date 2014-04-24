@@ -42,12 +42,14 @@ class AdminWizardTextArea extends Wizard
 		require_once('lib/language/Language.php');
 		$isRTL = Language::isRTL();
 		$smarty->assign('isRTL', $isRTL);
-
-		// Assign the page temaplte
-		$wizardTemplate = 'wizard/admin_text_area.tpl';
-		$smarty->assign('wizardBody', $wizardTemplate);
 		
 		return $showPage;		
+	}
+
+	function getTemplate()
+	{
+		$wizardTemplate = 'wizard/admin_text_area.tpl';
+		return $wizardTemplate;
 	}
 
 	public function onContinue ($homepageUrl) 

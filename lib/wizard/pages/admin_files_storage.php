@@ -67,13 +67,14 @@ class AdminWizardFileStorage extends Wizard
 			$showPage = true;
 			$smarty->assign('promptAttachmentStorage', 'y');
 		}
-
-		
-		// Assign the page template
-		$wizardTemplate = 'wizard/admin_files_storage.tpl';
-		$smarty->assign('wizardBody', $wizardTemplate);
 		
 		return $showPage;
+	}
+
+	function getTemplate()
+	{
+		$wizardTemplate = 'wizard/admin_files_storage.tpl';
+		return $wizardTemplate;
 	}
 
 	function onContinue ($homepageUrl) 

@@ -28,12 +28,14 @@ class AdminWizardLogin extends Wizard
 
 		// Run the parent first
 		parent::onSetupPage($homepageUrl);
-
-		// Assign the page template
-		$wizardTemplate = 'wizard/admin_login.tpl';
-		$smarty->assign('wizardBody', $wizardTemplate);
 		
 		return true;
+	}
+
+	function getTemplate()
+	{
+		$wizardTemplate = 'wizard/admin_login.tpl';
+		return $wizardTemplate;
 	}
 
 	function onContinue ($homepageUrl) 

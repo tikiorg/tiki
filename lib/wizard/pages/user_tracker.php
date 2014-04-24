@@ -124,12 +124,14 @@ class UserWizardUserTracker extends Wizard
 			}
 			
 		}
-
-		// Assign the page template
-		$wizardTemplate = 'wizard/user_tracker.tpl';
-		$smarty->assign('wizardBody', $wizardTemplate);
 		
 		return $showPage;		
+	}
+
+	function getTemplate()
+	{
+		$wizardTemplate = 'wizard/user_tracker.tpl';
+		return $wizardTemplate;
 	}
 
 	function onContinue ($homepageUrl) 

@@ -33,10 +33,14 @@ class UserWizard extends Wizard
 				
 		// Assign the page template
         $smarty->assign('pageTitle', $this->pageTitle());
-		$wizardTemplate = 'wizard/user_wizard.tpl';
-		$smarty->assign('wizardBody', $wizardTemplate);
 		
 		return true;		
+	}
+
+	function getTemplate()
+	{
+		$wizardTemplate = 'wizard/user_wizard.tpl';
+		return $wizardTemplate;
 	}
 
 	function onContinue ($homepageUrl) 

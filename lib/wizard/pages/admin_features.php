@@ -33,11 +33,13 @@ class AdminWizardFeatures extends Wizard
 			$smarty->assign('isMultiLanguage', $isMultiLanguage);
 		}
 		
-		// Assign the page template
-		$wizardTemplate = 'wizard/admin_features.tpl';
-		$smarty->assign('wizardBody', $wizardTemplate);
-		
 		return true;
+	}
+
+	function getTemplate()
+	{
+		$wizardTemplate = 'wizard/admin_features.tpl';
+		return $wizardTemplate;
 	}
 
 	function onContinue ($homepageUrl) 

@@ -43,12 +43,14 @@ class AdminWizardWysiwyg extends Wizard
 		$smarty->assign('useWysiwygDefault', isset($prefs['wysiwyg_default']) && $prefs['wysiwyg_default'] === 'y' ? 'y' : 'n');
 		$smarty->assign('useInlineEditing', isset($prefs['wysiwyg_inline_editing']) && $prefs['wysiwyg_inline_editing'] === 'y' ? 'y'  : 'n');
 		$smarty->assign('editorType', isset($prefs['wysiwyg_htmltowiki']) && $prefs['wysiwyg_htmltowiki'] === 'y' ? 'wiki' : 'html');
-
-		// Assign the page temaplte
-		$wizardTemplate = 'wizard/admin_wysiwyg.tpl';
-		$smarty->assign('wizardBody', $wizardTemplate);
 		
 		return true;		
+	}
+
+	function getTemplate()
+	{
+		$wizardTemplate = 'wizard/admin_wysiwyg.tpl';
+		return $wizardTemplate;
 	}
 
 	function onContinue ($homepageUrl) 
