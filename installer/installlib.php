@@ -96,8 +96,23 @@ class Installer extends TikiDb_Bridge
 		$TWV = new TWVersion;
 		$dbversion_tiki = $TWV->getBaseVersion();
 
+		// If a Mysql data file exists, use that. Very fast
+		//	If data file is missing or the batch loader is not available, use the single insert method
 		$secdb = dirname(__FILE__) . '/../db/tiki-secdb_' . $dbversion_tiki . '_mysql.sql';
-		if ( file_exists($secdb) ) {
+		$secdbData = dirname(__FILE__) . '/../db/tiki-secdb_' . $dbversion_tiki . '_mysql.data';
+		if ( file_exists($secdbData) ) {
+			// A MySQL datafile exists
+			$truncateTable = true;
+			$rc = $this->runDataFile($secdbData, 'tiki_secdb', $truncateTable);
+			if ($rc == false) {
+				// The batch loader failed
+				if ( file_exists($secdb) ) {
+					// Run single inserts
+					$this->runFile($secdb);
+				}
+			}
+		} else if ( file_exists($secdb) ) {
+			// Run single inserts
 			$this->runFile($secdb);
 		}
 		
@@ -206,7 +221,37 @@ class Installer extends TikiDb_Bridge
 		$tx->commit();
 	}
 
-    /**
+	/**
+	 * Batch insert from a mysql data file
+	 *
+	 * @param $file				MySQL export file
+	 * @param $targetTable		Target table
+	 * @param $clearTable=true	Flag saying if the target table should be truncated or not
+	 * @return bool
+	 */
+	function runDataFile( $file, $targetTable, $clearTable=true ) // {{{
+	{
+		if ( !is_file($file) || !$command = file_get_contents($file) ) {
+			print('Fatal: Cannot open '.$file);
+			exit(1);
+		}
+
+		if ($clearTable == true) {
+			$statement = 'truncate table '.$targetTable;
+			$this->query($statement);
+		}
+
+		// LOAD DATA INFILE doesn't like single \ directory separators. Replace with \\
+		$inFile = str_replace('\\', '\\\\', $file);
+
+		$status = true;
+		$statement = 'LOAD DATA INFILE "'.$inFile.'" INTO TABLE '.$targetTable;
+		if ($this->query($statement) === false) {
+			$status = false;
+		}
+		return $status;
+	}
+		/**
      * @param $file
      * @return bool
      */
