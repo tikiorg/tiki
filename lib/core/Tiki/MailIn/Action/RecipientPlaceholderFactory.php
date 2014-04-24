@@ -21,7 +21,7 @@ class RecipientPlaceholderFactory implements FactoryInterface
 		$pattern = $prefs['monitor_reply_email_pattern'];
 		$pattern = preg_quote($pattern, '/');
 		$pattern = str_replace('PLACEHOLDER', '(?P<DATA>.+)', $pattern);
-		$pattern = "/^$pattern$/";
+		$pattern = "/$pattern/";
 
 		$this->pattern = $pattern;
 		$this->actionMap = $actionMap;
