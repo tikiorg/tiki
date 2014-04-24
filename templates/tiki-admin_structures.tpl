@@ -147,31 +147,32 @@
 	{if $tiki_p_edit_structures == 'y'}
 		{tab name="{tr}Create New Structure{/tr}"}
             <h2>{tr}Create New Structure{/tr}</h2>
-			<form action="tiki-admin_structures.php" method="post">
-				<table class="formcolor">
-					<tr>
-						<td><label for="name">{tr}Structure ID:{/tr}</label></td>
-						<td><input type="text" name="name" id="name"></td>
-					</tr>
-					<tr>
-						<td><label for="alias">{tr}Alias:{/tr}</label></td>
-						<td><input type="text" name="alias" id="alias"></td>
-					</tr>
-					<tr>
-						<td><label for="tree">{tr}Tree:{/tr}</label><br>(optional)</td>
-						<td colspan="2">
-							<textarea rows="5" cols="60" id="tree" name="tree" style="width:95%"></textarea>
-							{remarksbox type="tip" title="{tr}Note{/tr}"}{tr}Use single spaces to indent structure levels{/tr}{/remarksbox}
-						</td>
-					</tr>
-					{include file='categorize.tpl'}
-					<tr>
-						<td>&nbsp;</td>
-						<td colspan="2">
-							<input type="submit" class="btn btn-default btn-sm" value="{tr}Create New Structure{/tr}" name="create">
-						</td>
-					</tr>
-				</table>
+			<form class="form-horizontal" action="tiki-admin_structures.php" method="post">
+				<div class="form-group">
+					<label class="control-label col-md-3">{tr}Structure ID{/tr}</label>
+					<div class="col-md-9">
+						<input type="text" name="name" id="name" class="form-control">
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label col-md-3">{tr}Alias{/tr}</label>
+					<div class="col-md-9">
+						<input type="text" name="alias" id="alias" class="form-control">
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label col-md-3">{tr}Tree{/tr}</label>
+					<div class="col-md-9">
+						<textarea rows="5" cols="60" id="tree" name="tree" class="form-control"></textarea>
+						<div class="help-block">{tr}Use single spaces to indent structure levels{/tr}</div>
+					</div>
+				</div>
+				{include file='categorize.tpl'}
+				<div class="form-group">
+					<div class="submit col-md-9 col-md-push-3">
+						<input type="submit" class="btn btn-primary" value="{tr}Create New Structure{/tr}" name="create">
+					</div>
+				</div>
 			</form>
 		{/tab}
 	{/if}
