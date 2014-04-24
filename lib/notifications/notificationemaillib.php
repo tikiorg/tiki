@@ -85,7 +85,7 @@ function sendForumEmailNotification(
 				if ($att_data['dir'] . $att_data['path'] == "") { // no path to file on disk
 					$file = $att_data['data']; // read file from database
 				} else {
-					$file = $mail->getFile($att_data['dir'].$att_data['path']); // read file from disk
+					$file = file_get_contents($att_data['dir'].$att_data['path']); // read file from disk
 				}
 				$mail->addAttachment($file, $att_data['filename'], $att_data['filetype']);
 			}

@@ -14,7 +14,7 @@
 		"ckeditor/ckeditor/plugins/divarea": "4.3.4",
 		"codemirror/codemirror": "3.19",
 		"dompdf/dompdf": "0.6.1",
-		"ezyang/htmlpurifier": "4.5.0",
+		"ezyang/htmlpurifier": "4.6.0",
 		"fivefilters/php-readability": "1.0",
 		"jcapture-applet/jcapture-applet": "dev-master",
 		"jquery/jquery": "1.11.0",

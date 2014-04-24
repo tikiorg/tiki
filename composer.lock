@@ -212,17 +212,17 @@
         },
         {
             "name": "ezyang/htmlpurifier",
-            "version": "v4.5.0",
+            "version": "v4.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ezyang/htmlpurifier.git",
-                "reference": "v4.5.0"
+                "reference": "6f389f0f25b90d0b495308efcfa073981177f0fd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/ezyang-htmlpurifier-v4.5.0-v4.5.0-7aaaa0.zip",
-                "reference": "v4.5.0",
-                "shasum": "eb80571c5396656e933ae00ddbf74c661e9a5407"
+                "url": "https://composer.tiki.org/dist/ezyang-htmlpurifier-6f389f0f25b90d0b495308efcfa073981177f0fd-zip-4891c9.zip",
+                "reference": "v4.6.0",
+                "shasum": "5d679aa08acc680ca371d3a656cdcebe3b196d6e"
             },
             "require": {
                 "php": ">=5.2"
@@ -244,7 +244,8 @@
                 {
                     "name": "Edward Z. Yang",
                     "email": "admin@htmlpurifier.org",
-                    "homepage": "http://ezyang.com"
+                    "homepage": "http://ezyang.com",
+                    "role": "Developer"
                 }
             ],
             "description": "Standards compliant HTML filter written in PHP",
@@ -252,7 +253,7 @@
             "keywords": [
                 "html"
             ],
-            "time": "2013-02-18 00:04:08"
+            "time": "2013-11-30 08:25:19"
         },
         {
             "name": "fivefilters/php-readability",

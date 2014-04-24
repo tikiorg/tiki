@@ -204,6 +204,7 @@ class TWVersion
 				'12.0beta',
 				'12.0',
 				'12.1alpha',
+				'12.1beta',
 			);
 	}
 
