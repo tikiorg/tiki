@@ -150,7 +150,7 @@
 				{remarksbox type="note" title="{tr}Advanced configuration warning{/tr}"}
 					{tr}Note that storing session data in the database is an advanced systems administration option, and is for admins who have comprehensive access and understanding of the database, in order to deal with any unexpected effects.{/tr}
 				{/remarksbox}
-				<div style="padding:.5em;" align="left">
+				<div style="padding:.5em; text-align:left;">
 					{icon _id=information style="vertical-align:middle"} {tr}Changing this feature will immediately log you out when you save this preference.{/tr} {if $prefs.forgotPass ne 'y'}If there is a chance you have forgotten your password, enable "Forget password" feature.<a href="tiki-admin.php?page=features" title="{tr}Features{/tr}">{tr}Enable now{/tr}</a>.{/if}
 				</div>
 				{preference name=session_storage}
@@ -371,7 +371,7 @@
 
 		{tab name="{tr}Change admin password{/tr}"}
             <h2>{tr}Change admin password{/tr}</h2>
-			<div style="padding:1em;" align="left">
+			<div style="padding:1em; text-align:left;">
 				<p>{tr}Change the <strong>Admin</strong> password:{/tr} <a href="tiki-adminusers.php?find=admin">{tr}User administration{/tr}</a></p>
 			</div>
 		{/tab}
