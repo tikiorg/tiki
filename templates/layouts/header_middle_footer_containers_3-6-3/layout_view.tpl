@@ -35,17 +35,29 @@
    			        {if zone_is_empty('left') and zone_is_empty('right')}
                         {if $prefs.feature_layoutshadows eq 'y'}<div id="tiki-center-shadow">{eval var=$prefs.center_shadow_start}{/if}
     			        <div class="col-md-12" id="col1">
+                            {if $prefs.module_zones_pagetop eq 'fixed' or ($prefs.module_zones_pagetop ne 'n' && ! zone_is_empty('pagetop'))}
+                                {modulelist zone=pagetop}
+                            {/if}
 							{error_report}
 					        {block name=title}{/block}
 					        {block name=content}{/block}
+                            {if $prefs.module_zones_pagebottom eq 'fixed' or ($prefs.module_zones_pagebottom ne 'n' && ! zone_is_empty('pagebottom'))}
+                                {modulelist zone=pagebottom}
+                            {/if}
 				        </div>
                         {if $prefs.feature_layoutshadows eq 'y'}{eval var=$prefs.center_shadow_end}</div>{/if}
 			        {elseif zone_is_empty('left')}
                     {if $prefs.feature_layoutshadows eq 'y'}<div id="tiki-center-shadow">{eval var=$prefs.center_shadow_start}{/if}
 				        <div class="col-md-9" id="col1">
+                            {if $prefs.module_zones_pagetop eq 'fixed' or ($prefs.module_zones_pagetop ne 'n' && ! zone_is_empty('pagetop'))}
+                                {modulelist zone=pagetop}
+                            {/if}
 							{error_report}
 					        {block name=title}{/block}
 					        {block name=content}{/block}
+                            {if $prefs.module_zones_pagebottom eq 'fixed' or ($prefs.module_zones_pagebottom ne 'n' && ! zone_is_empty('pagebottom'))}
+                                {modulelist zone=pagebottom}
+                            {/if}
 				        </div>
                     {if $prefs.feature_layoutshadows eq 'y'}{eval var=$prefs.center_shadow_end}</div>{/if}
 				        <div class="col-md-3" id="col3">
@@ -54,21 +66,33 @@
 			        {elseif zone_is_empty('right')}
                         {if $prefs.feature_layoutshadows eq 'y'}<div id="tiki-center-shadow">{eval var=$prefs.center_shadow_start}{/if}
 				        <div class="col-md-9 col-md-push-3" id="col1">
+                            {if $prefs.module_zones_pagetop eq 'fixed' or ($prefs.module_zones_pagetop ne 'n' && ! zone_is_empty('pagetop'))}
+                                {modulelist zone=pagetop}
+                            {/if}
 							{error_report}
 					        {block name=title}{/block}
 					        {block name=content}{/block}
+                            {if $prefs.module_zones_pagebottom eq 'fixed' or ($prefs.module_zones_pagebottom ne 'n' && ! zone_is_empty('pagebottom'))}
+                                {modulelist zone=pagebottom}
+                            {/if}
 				        </div>
                         {if $prefs.feature_layoutshadows eq 'y'}{eval var=$prefs.center_shadow_end}</div>{/if}
                         <div class="col-md-3 col-md-pull-9" id="col2">
                             {modulelist zone=left}
                             </div>
 			        {else}
-                            {if $prefs.feature_layoutshadows eq 'y'}<div id="tiki-center-shadow">{eval var=$prefs.center_shadow_start}{/if}
+                    {if $prefs.feature_layoutshadows eq 'y'}<div id="tiki-center-shadow">{eval var=$prefs.center_shadow_start}{/if}
 			        <div class="col-md-6 col-md-push-3" id="col1">
-							{error_report}
+                        {if $prefs.module_zones_pagetop eq 'fixed' or ($prefs.module_zones_pagetop ne 'n' && ! zone_is_empty('pagetop'))}
+                            {modulelist zone=pagetop}
+                        {/if}
+						{error_report}
 					        {block name=title}{/block}
 					        {block name=content}{/block}
-				        </div>
+                        {if $prefs.module_zones_pagebottom eq 'fixed' or ($prefs.module_zones_pagebottom ne 'n' && ! zone_is_empty('pagebottom'))}
+                            {modulelist zone=pagebottom}
+                        {/if}
+				    </div>
                         {if $prefs.feature_layoutshadows eq 'y'}{eval var=$prefs.center_shadow_end}</div>{/if}
                         <div class="col-md-3 col-md-pull-6" id="col2">
                             {modulelist zone=left}
