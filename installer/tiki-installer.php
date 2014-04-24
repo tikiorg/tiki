@@ -989,7 +989,7 @@ if ($install_step == '8') {
 	if ($install_type == 'scratch') {
 		initialize_prefs(true);
 		TikiLib::lib('unifiedsearch')->rebuild();
-		$u = 'tiki-change_password.php?user=admin&oldpass=admin';
+		$u = 'tiki-change_password.php?user=admin&oldpass=admin&newuser=y';
 	} else {
 		$u = '';
 	}

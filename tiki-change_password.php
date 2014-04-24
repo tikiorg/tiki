@@ -31,6 +31,10 @@ if (empty($_REQUEST['user']) || !$userlib->user_exists($_REQUEST['user'])) {
 if (!isset($_REQUEST["oldpass"]))
 	$_REQUEST["oldpass"] = '';
 
+if (isset($_REQUEST["newuser"]) && $_REQUEST["newuser"] == 'y') {
+	$smarty->assign('new_user_validation', 'y');
+}
+
 $smarty->assign('userlogin', $_REQUEST["user"]);
 $smarty->assign('oldpass', $_REQUEST["oldpass"]);
 
