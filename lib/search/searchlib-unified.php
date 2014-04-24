@@ -453,7 +453,7 @@ class UnifiedSearchLib
 	{
 		global $prefs;
 
-		if (! $this->isRebuildingNow && $index instanceof Search_Index_QueryRepository && $prefs['storedsearch_enabled'] == 'y') {
+		if (! $this->isRebuildingNow && $index->getRealIndex() instanceof Search_Index_QueryRepository && $prefs['storedsearch_enabled'] == 'y') {
 			$index = new Search_Index_QueryAlertDecorator($index);
 		}
 

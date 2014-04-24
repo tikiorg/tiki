@@ -53,5 +53,29 @@ class Search_Index_AbstractIndexDecorator implements Search_Index_Interface
 	{
 		return $this->parent->exists();
 	}
+
+	function getMatchingQueries(array $document)
+	{
+		return $this->parent->getMatchingQueries($document);
+	}
+
+	function store($name, Search_Expr_Interface $expr)
+	{
+		return $this->parent->store($name, $expr);
+	}
+
+	function unstore($name)
+	{
+		return $this->parent->unstore($name);
+	}
+
+	function getRealIndex()
+	{
+		if ($this->parent instanceof self) {
+			return $this->parent->getRealIndex();
+		} else {
+			return $this->parent;
+		}
+	}
 }
 
