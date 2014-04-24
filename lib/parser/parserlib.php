@@ -578,7 +578,7 @@ if ( \$('#$id') ) {
 		}
 	}
 
-	private function strip_unparsed_block(& $data, & $noparsed)
+	private function strip_unparsed_block(& $data, & $noparsed, $protect = false)
 	{
 		$tikilib = TikiLib::lib('tiki');
 
@@ -586,7 +586,9 @@ if ( \$('#$id') ) {
 		while (false !== $start = strpos($data, '~np~', $start + 1)) {
 			if (false !== $end = strpos($data, '~/np~', $start)) {
 				$content = substr($data, $start + 4, $end - $start - 4);
-
+				if ($protect) {
+					$content = $this->protectSpecialChars($content, $this->option['is_html']);
+				}
 				// ~pp~ type "plugins"
 				$key = "§".md5($tikilib->genPass())."§";
 				$noparsed["key"][] = preg_quote($key);
@@ -1535,7 +1537,7 @@ if ( \$('#$id') ) {
 		// Handle pre- and no-parse sections and plugins
 		$preparsed = array('data'=>array(),'key'=>array());
 		$noparsed = array('data'=>array(),'key'=>array());
-		$this->strip_unparsed_block($data, $noparsed);
+		$this->strip_unparsed_block($data, $noparsed, true);
 		if (!$this->option['noparseplugins'] || $this->option['stripplugins']) {
 			$this->parse_first($data, $preparsed, $noparsed);
 			$this->parse_wiki_argvariable($data);
