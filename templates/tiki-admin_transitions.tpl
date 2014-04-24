@@ -9,12 +9,16 @@
 
 				<p>
 					{if $prefs.feature_categories eq 'y'}
-					<input type="radio" name="transition_mode" value="category" id="transition-mode-category"{if $transition_mode eq 'category'} checked="checked"{/if}>
-					<label for="transition-mode-category">{tr}Category{/tr}</label>
+						<label class="checkbox-inline">
+							<input type="radio" name="transition_mode" value="category" id="transition-mode-category"{if $transition_mode eq 'category'} checked="checked"{/if}>
+							{tr}Category{/tr}
+						</label>
 					{/if}
 
-					<input type="radio" name="transition_mode" value="group" id="transition-mode-group"{if $transition_mode eq 'group' or $prefs.feature_categories ne 'y'} checked="checked"{/if}>
-					<label for="transition-mode-group">{tr}Group{/tr}</label>
+					<label class="checkbox-inline">
+						<input type="radio" name="transition_mode" value="group" id="transition-mode-group"{if $transition_mode eq 'group' or $prefs.feature_categories ne 'y'} checked="checked"{/if}>
+						{tr}Group{/tr}
+					</label>
 				</p>
 			</fieldset>
 
@@ -38,14 +42,20 @@
 						{/foreach}
 					{/if}
 				</ul>
-				<p>
-					<label for="transition-group-auto">{tr}Type in a group name and click "enter"{/tr}</label>
+				<div class="form-group">
+					<label for="transition-group-auto">{tr}Add Group{/tr}</label>
 					<input type="text" id="transition-group-auto">
-				</p>
+					<div class="help-block">
+						{tr}Press Enter for each group{/tr}
+					</div>
+				</div>
 			</fieldset>
 
 			<p>
-				{tr}Once you have selected at least two, click:{/tr} <input type="submit" class="btn btn-default btn-sm" value="{tr}Select{/tr}"> {tr}and then, click the "New/Edit" tab which will appear above.{/tr}
+				<input type="submit" class="btn btn-primary" value="{tr}Select{/tr}">
+				<div class="help-block">
+					{tr}At least two elements are required to create transitions. Additional tabs appear once the selection is completed.{/tr}
+				</div>
 			</p>
 		</form>
 		{jq}
@@ -107,7 +117,7 @@
 				{foreach from=$transitions item=trans}
 					<tr>
 						<td class="text">{$trans.name|escape}</td>
-						<td class="text">{$trans.from_label|escape} {if $trans.preserve} - <em>{tr}preserved{/tr}</em>{/if}</td>
+						<td class="text">{$trans.from_label|escape} {if $trans.preserve}<span class="label label-info">{tr}preserved{/tr}</span>{/if}</td>
 						<td class="text">{$trans.to_label|escape}</td>
 						<td class="integer">{self_link transitionId=$trans.transitionId action=edit cookietab=4}{$trans.guards|@count|escape}{/self_link}</td>
 						<td class="action">
@@ -139,37 +149,48 @@
 			{/if}
 			<fieldset>
 				<legend>{tr}General{/tr}</legend>
-				<p>
-					<label for="new-transition-name">{tr}Label{/tr}</label>
-					<br/>
-					<input type="text" name="label" {if $selected_transition}value="{$selected_transition.name|escape}"{/if}>
-				</p>
-				<p>
-					<input type="checkbox" name="preserve" value="y" id="new-transition-preserve" {if $selected_transition && $selected_transition.preserve}checked="checked"{/if}>
-					<label for="new-transition-preserve">{tr}Upon trigger, preserve the initial state{/tr}</label>
-				</p>
+				<div class="form-group">
+					<label class="control-label" for="new-transition-name">{tr}Label{/tr}</label>
+					<input type="text" name="label" {if $selected_transition}value="{$selected_transition.name|escape}"{/if} class="form-control">
+				</div>
+				<div class="checkbox">
+					<label>
+						<input type="checkbox" name="preserve" value="y" id="new-transition-preserve" {if $selected_transition && $selected_transition.preserve}checked="checked"{/if}>
+						{tr}Upon trigger, preserve the initial state{/tr}
+					</label>
+				</div>
 			</fieldset>
-			<fieldset style="float: left; width: 48%;">
-				<legend>{tr}From{/tr}</legend>
-				{foreach from=$available_states item=label key=value}
-					<p>
-						<input type="radio" name="from" value="{$value|escape}" id="state-from-{$value|escape}"{if $selected_transition && $selected_transition.from eq $value} checked="checked"{/if}>
-						<label for="state-from-{$value|escape}">{$label|escape}</label>
-					</p>
-				{/foreach}
-			</fieldset>
-			<fieldset style="float: left; width: 48%;">
-				<legend>{tr}To{/tr}</legend>
-				{foreach from=$available_states item=label key=value}
-					<p>
-						<input type="radio" name="to" value="{$value|escape}" id="state-to-{$value|escape}"{if $selected_transition && $selected_transition.to eq $value} checked="checked"{/if}>
-						<label for="state-to-{$value|escape}">{$label|escape}</label>
-					</p>
-				{/foreach}
-			</fieldset>
-			<p>
-				<input type="submit" class="btn btn-default btn-sm" value="{tr}Save{/tr}">
-			</p>
+			<div class="row">
+				<div class="col-md-6">
+					<fieldset>
+						<legend>{tr}From{/tr}</legend>
+						{foreach from=$available_states item=label key=value}
+							<div class="checkbox">
+								<label for="state-from-{$value|escape}">
+									<input type="radio" name="from" value="{$value|escape}" id="state-from-{$value|escape}"{if $selected_transition && $selected_transition.from eq $value} checked="checked"{/if}>
+									{$label|escape}
+								</label>
+							</div>
+						{/foreach}
+					</fieldset>
+				</div>
+				<div class="col-md-6">
+					<fieldset>
+						<legend>{tr}To{/tr}</legend>
+						{foreach from=$available_states item=label key=value}
+							<div class="checkbox">
+								<label for="state-to-{$value|escape}">
+									<input type="radio" name="to" value="{$value|escape}" id="state-to-{$value|escape}"{if $selected_transition && $selected_transition.to eq $value} checked="checked"{/if}>
+									{$label|escape}
+								</label>
+							</div>
+						{/foreach}
+					</fieldset>
+				</div>
+			</div>
+			<div class="submit">
+				<input type="submit" class="btn btn-primary" value="{tr}Save{/tr}">
+			</div>
 		</form>
 	{/tab}
 
@@ -214,31 +235,33 @@
 				<h2>{tr}New Guard{/tr}</h2>
 				<fieldset>
 					<legend>{tr}General{/tr}</legend>
-					<p>
-						<label for="guard-type">{tr}Type{/tr}</label>
-						<select id="guard-type" name="type">
+					<div class="form-group">
+						<label class="control-label" for="guard-type">{tr}Type{/tr}</label>
+						<select id="guard-type" name="type" class="form-control">
 							<option value="exactly">{tr}Exactly{/tr}</option>
 							<option value="atLeast">{tr}At Least{/tr}</option>
 							<option value="atMost">{tr}At Most{/tr}</option>
 						</select>
-					</p>
-					<p>
-						<label for="guard-count">{tr}Count{/tr}</label>
-						<input type="text" name="count">
-					</p>
+					</div>
+					<div class="form-group">
+						<label for="guard-count" class="control-label">{tr}Count{/tr}</label>
+						<input type="text" name="count" class="form-control">
+					</div>
 				</fieldset>
 				<fieldset>
 					<legend>{tr}States{/tr}</legend>
 					{foreach from=$available_states item=label key=value}
-						<p>
-							<input type="checkbox" name="states[]" value="{$value|escape}" id="guard-state-{$value|escape}">
-							<label for="guard-state-{$value|escape}">{$label|escape}</label>
-						</p>
+						<div class="checkbox">
+							<label for="guard-state-{$value|escape}">
+								<input type="checkbox" name="states[]" value="{$value|escape}" id="guard-state-{$value|escape}">
+								{$label|escape}
+							</label>
+						</div>
 					{/foreach}
 				</fieldset>
-				<p>
-					<input type="submit" class="btn btn-default btn-sm" value="{tr}Add{/tr}">
-				</p>
+				<div class="submit">
+					<input type="submit" class="btn btn-primary" value="{tr}Add{/tr}">
+				</div>
 			</form>
 		{/tab}
 	{/if}
