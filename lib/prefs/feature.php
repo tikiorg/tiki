@@ -2362,18 +2362,6 @@ function prefs_feature_list($partial = false)
 			'type' => 'flag',
 			'default' => 'n',
 		),
-		'feature_metrics_dashboard' => array(
-			'name' => tra('Metrics Dashboard'),
-			'description' => tra('Generate automated statistics from configured database queries.'),
-			'type' => 'flag',
-			'dependencies' => array(
-				'feature_jquery_ui',
-			),
-			'default' => 'n',
-			'tags' => array('experimental'),
-			'view' => 'tiki-admin_metrics.php',
-			'admin' => 'metrics',
-		),
 		'feature_wiki_argvariable' => array(
 			'name' => tra('Wiki argument variables'),
 			'description' => tra('Allow to write request variables inside wiki content using {{paramname}} or {{paramname|default}} - special case {{page}} {{user}}'),
