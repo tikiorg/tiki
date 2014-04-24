@@ -3,7 +3,7 @@
 	{assign var='sort_arg' value='sort_mode'}
 {/if}
 <div class="table-responsive">
-<table class="table table-bordered">
+<table class="table">
 	<tr>
 		{if $prefs.fgal_checked ne 'n' and ($tiki_p_admin_file_galleries eq 'y' or $tiki_p_upload_files eq 'y')}
 			{assign var=nbCols value=$nbCols+1}
