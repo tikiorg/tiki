@@ -587,6 +587,7 @@ if ( \$('#$id') ) {
 		while (false !== $start = strpos($data, '~np~', $start + 1)) {
 			if (false !== $end = strpos($data, '~/np~', $start)) {
 				$content = substr($data, $start + 4, $end - $start - 4);
+				$content = $this->protectSpecialChars($content, $this->option['is_html']);
 
 				// ~pp~ type "plugins"
 				$key = "§".md5($tikilib->genPass())."§";
