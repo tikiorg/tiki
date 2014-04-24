@@ -285,7 +285,7 @@
 				{/if}
 				{if $editFileId}
 					<div class="form-group">
-						<label for="filetype" class="col-sm-2 form-label">File Type:</label>
+						<label for="filetype" class="col-sm-2 control-label">{tr}File Type{/tr}</label>
 						<div class="col-sm-10">
 							<select id="filetype" name="filetype[]">
 								{foreach $mimetypes as $type}

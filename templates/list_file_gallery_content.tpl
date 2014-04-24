@@ -101,16 +101,11 @@
 		{if !empty($other_columns)}
 			{capture name=over_other_columns}
 				{strip}
-					<div class='opaque'>
-						<div class='box-title'>{tr}Other Sorts{/tr}</div>
-						<div class='box-data'>
-							{if !empty($other_columns_selected)}
-								{self_link sort_mode='NULL'}{tr}No Additional Sort{/tr}{/self_link}
-								<hr>
-							{/if}
-							{$other_columns}
-						</div>
-					</div>
+					{if !empty($other_columns_selected)}
+						{self_link sort_mode='NULL'}{tr}No Additional Sort{/tr}{/self_link}
+						<hr>
+					{/if}
+					{$other_columns}
 				{/strip}
 			{/capture}
 		{/if}
@@ -154,12 +149,7 @@
 				and (!isset($gal_info.show_action) or $gal_info.show_action eq 'y')}
 				{capture name=over_actions}
 					{strip}
-						<div class='opaque'>
-							<div class='box-title'>{tr}Actions{/tr}</div>
-							<div class='box-data'>
-								{include file='fgal_context_menu.tpl' menu_icon=$prefs.use_context_menu_icon menu_text=$prefs.use_context_menu_text changes=$smarty.section.changes.index}
-							</div>
-						</div>
+						{include file='fgal_context_menu.tpl' menu_icon=$prefs.use_context_menu_icon menu_text=$prefs.use_context_menu_text changes=$smarty.section.changes.index}
 					{/strip}
 				{/capture}
 			{/if}
@@ -175,60 +165,55 @@
 			{assign var=nb_over_infos value=0}
 			{capture name=over_infos}
 				{strip}
-					<div class='opaque'>
-						<div class='box-title'>{tr}Properties{/tr}</div>
-						<div class='box-data'>
-							<table>
-								{foreach item=prop key=propname from=$fgal_listing_conf}
-									{if isset($item.key)}
-										{assign var=propkey value=$item.key}
-									{else}
-										{assign var=propkey value="show_$propname"}
-									{/if}
-									{if isset($files[changes].$propname)}
-										{if $propname == 'share' && isset($files[changes].share.data)}
-											{foreach item=tmp_prop key=tmp_propname from=$files[changes].share.data}
-												{$email[]=$tmp_prop.email}
-											{/foreach}
-											{if $email and is_array($email)}{assign var=propval value=$email|implode:','}{/if}
-										{else}
-											{assign var=propval value=$files[changes].$propname}
-										{/if}
-									{/if}
-									{* Format property values *}
-									{if isset($propname) and ($propname eq 'created' or $propname eq 'lastModif'
-										or $propname eq 'lastDownload')}
-										{if empty($propval)}
-											{assign var=propval value=''}
-										{else}
-											{assign var=propval value=$propval|tiki_long_date}
-										{/if}
-									{elseif $propname eq 'last_user' or $propname eq 'author' or $propname eq 'creator'}
-										{assign var=propval value=$propval|username}
-									{elseif $propname eq 'size'}
-										{assign var=propval value=$propval|kbsize:true}
-									{elseif $propname eq 'backlinks' and isset($files[changes].nbBacklinks)}
-										{assign var=propval value=$files[changes].nbBacklinks}
-									{elseif $propname eq 'description'}
-							    	   {assign var=propval value=$propval|nl2br}
-									{/if}
+					<table class="table table-condensed">
+						{foreach item=prop key=propname from=$fgal_listing_conf}
+							{if isset($item.key)}
+								{assign var=propkey value=$item.key}
+							{else}
+								{assign var=propkey value="show_$propname"}
+							{/if}
+							{if isset($files[changes].$propname)}
+								{if $propname == 'share' && isset($files[changes].share.data)}
+									{foreach item=tmp_prop key=tmp_propname from=$files[changes].share.data}
+										{$email[]=$tmp_prop.email}
+									{/foreach}
+									{if $email and is_array($email)}{assign var=propval value=$email|implode:','}{/if}
+								{else}
+									{assign var=propval value=$files[changes].$propname}
+								{/if}
+							{/if}
+							{* Format property values *}
+							{if isset($propname) and ($propname eq 'created' or $propname eq 'lastModif'
+								or $propname eq 'lastDownload')}
+								{if empty($propval)}
+									{assign var=propval value=''}
+								{else}
+									{assign var=propval value=$propval|tiki_long_date}
+								{/if}
+							{elseif $propname eq 'last_user' or $propname eq 'author' or $propname eq 'creator'}
+								{assign var=propval value=$propval|username}
+							{elseif $propname eq 'size'}
+								{assign var=propval value=$propval|kbsize:true}
+							{elseif $propname eq 'backlinks' and isset($files[changes].nbBacklinks)}
+								{assign var=propval value=$files[changes].nbBacklinks}
+							{elseif $propname eq 'description'}
+							   {assign var=propval value=$propval|nl2br}
+							{/if}
 
-									{if isset($gal_info.$propkey) and $propval neq '' and ( $gal_info.$propkey eq 'a'
-										or $gal_info.$propkey eq 'o' )}
-										<tr>
-											<td>
-												<b>{$fgal_listing_conf.$propname.name}</b>:
-											</td>
-											<td>
-												{$propval}
-											</td>
-										</tr>
-										{assign var=nb_over_infos value=$nb_over_infos+1}
-									{/if}
-								{/foreach}
-							</table>
-						</div>
-					</div>
+							{if isset($gal_info.$propkey) and $propval neq '' and ( $gal_info.$propkey eq 'a'
+								or $gal_info.$propkey eq 'o' )}
+								<tr>
+									<th class="text-right">
+										{$fgal_listing_conf.$propname.name|escape}
+									</th>
+									<td>
+										{$propval|escape}
+									</td>
+								</tr>
+								{assign var=nb_over_infos value=$nb_over_infos+1}
+							{/if}
+						{/foreach}
+					</table>
 				{/strip}
 			{/capture}
 
@@ -241,21 +226,12 @@
 			{assign var=nb_over_share value=0}
 			{capture name=over_share}
 				{strip}
-					<div class='opaque'>
-						<div class='box-title'>
-							{tr}Share with:{/tr}
-						</div>
-						<div class='box-data'>
-							<div>
-								{if isset($files[changes].share.data)}
-									{foreach item=prop key=propname from=$files[changes].share.data}
-										<b>{$prop.email}</b>: {$prop.visit} / {$prop.maxhits}<br>
-										{assign var=nb_over_share value=$nb_over_share+1}
-									{/foreach}
-								{/if}
-							</div>
-						</div>
-					</div>
+					{if isset($files[changes].share.data)}
+						{foreach item=prop key=propname from=$files[changes].share.data}
+							<b>{$prop.email}</b>: {$prop.visit} / {$prop.maxhits}<br>
+							{assign var=nb_over_share value=$nb_over_share+1}
+						{/foreach}
+					{/if}
 				{/strip}
 			{/capture}
 			
@@ -284,7 +260,7 @@
 			{if ( $prefs.use_context_menu_icon eq 'y' or $prefs.use_context_menu_text eq 'y' )
 				and (!isset($gal_info.show_action) or $gal_info.show_action neq 'n') and $prefs.javascript_enabled eq 'y'}
 				<td style="white-space: nowrap">
-					<a class="fgalname" title="{tr}Actions{/tr}" href="#" {popup trigger="onClick" sticky=1 mouseoff=1 fullhtml="1" center=true text=$smarty.capture.over_actions|escape:"javascript"|escape:"html"} style="padding:0; margin:0; border:0">{icon _id='wrench' alt="{tr}Actions{/tr}"}</a>
+					<a class="fgalname tips" title="{tr}Actions{/tr}" href="#" {popup trigger="onClick" sticky=1 mouseoff=1 fullhtml="1" center=true text=$smarty.capture.over_actions|escape:"javascript"|escape:"html"} style="padding:0; margin:0; border:0">{icon _id='wrench' alt="{tr}Actions{/tr}"}</a>
 				</td>
 			{/if}
 
@@ -412,7 +388,7 @@
 							{assign var=share_nb value=$files[changes].share.nb}
 							{capture assign=share_capture}
 								{strip}
-									<a class='fgalname' href='#' {popup fullhtml=1 text=$over_share|escape:'javascript'|escape:'html' left=true} style='cursor:help'>
+									<a class='fgalname tips' title="{tr}Share{/tr}" href='#' {popup fullhtml=1 text=$over_share|escape:'javascript'|escape:'html' left=true} style='cursor:help'>
 										{icon _id='group_link' alt=''}
 									</a> ({$share_nb}) {$share_string}
 								{/strip}
@@ -470,7 +446,7 @@
 						{if $over_infos eq ''}
 							{icon _id='information_gray' class='' alt="{tr}No information{/tr}"}
 						{else}
-							<a class="fgalname" href="#" {popup fullhtml="1" text=$over_infos|escape:"javascript"|escape:"html" left=true} style="cursor:help">{icon _id='information' class='' title=''}</a>
+							<a class="fgalname tips left" href="#" title="{tr}Information{/tr}" {popup fullhtml="1" text=$over_infos|escape:"javascript"|escape:"html" left=true} style="cursor:help">{icon _id='information' class='' title=''}</a>
 						{/if}
 					{/if}
 				</td>
