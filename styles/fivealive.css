@@ -5758,6 +5758,31 @@ textarea,
   margin-bottom: 2px;
   padding-bottom: 2px;
 }
+.footer_liner h3.panel-title {
+  color: #fff;
+  border-bottom: 1px dotted #28aae1;
+}
+.footer_liner legend,
+.footer_liner a,
+.footer_liner a:visited {
+  color: #a9a9a9;
+}
+/*#top_modules .sitetitles {
+  font-family: Paneuropa, "Bitstream Vera Sans", Arial, Helvetica, sans-serif;
+}*/
+#top_modules .sitetitles {
+  font-family: Paneuropa, "Bitstream Vera Sans", Arial, Helvetica, sans-serif;
+}
+#top_modules .sitetitle,
+#top_modules .sitesubtitle {
+  color: #fff;
+  text-shadow: #143c64 3px 2px 0;
+}
+#top_modules a,
+#top_modules a:visited {
+  color: #fff;
+  text-decoration: none;
+}
 .clearfix:before,
 .clearfix:after,
 .container:before,
