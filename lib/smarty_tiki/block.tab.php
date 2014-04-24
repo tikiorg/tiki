@@ -41,7 +41,7 @@ function smarty_block_tab($params, $content, $smarty, &$repeat)
 		$id = null;
 		$active = null;
 		if ($print_page != 'y') {
-			$smarty_tabset_i_tab = count($smarty_tabset[$tabset_index]['tabs']);
+			$smarty_tabset_i_tab = count($smarty_tabset[$tabset_index]['tabs']) + 1;
 
 			if (empty($params['name'])) {
 				$params['name'] = "tab" . $smarty_tabset_i_tab;
