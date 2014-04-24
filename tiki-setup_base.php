@@ -106,7 +106,7 @@ if (isset($prefs['session_protected']) && $prefs['session_protected'] == 'y' && 
 $cachelib = TikiLib::lib('cache');
 $logslib = TikiLib::lib('logs');
 include_once ('lib/init/tra.php');
-$tikidate = TikiLib::lib('tiki');
+$tikidate = TikiLib::lib('tikidate');
 // set session lifetime
 if (isset($prefs['session_lifetime']) && $prefs['session_lifetime'] > 0) {
 	ini_set('session.gc_maxlifetime', $prefs['session_lifetime'] * 60);

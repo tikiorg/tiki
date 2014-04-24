@@ -24,16 +24,16 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
  */
 class TikiDate
 {
-	var $trad = array(
+	public $trad = array(
 					'January','February','March','April','May','June','July','August','September','October','November','December',
 					'Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec',
 					'Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday',
 					'Mon','Tue','Wed','Thu','Fri','Sat','Sun','of'
 	);
 
-	var $translated_trad = array();
-	var $date;
-	var	$translation_array = array (
+	public $translated_trad = array();
+	public $date;
+	public $translation_array = array (
 				'%a' => 'D',
 				'%A' => 'l',
 				'%b' => 'M',
@@ -69,28 +69,25 @@ class TikiDate
 				'%W' => 'W',
 				'%y' => 'y',
 				'%Y' => 'Y',
-				'%Z' => 'T'
+				'%Z' => 'T',
 	);
 
 	/**
 	 * Default constructor
 	 */
-	function TikiDate()
+	function __construct()
 	{
 
-		if (function_exists('date_default_timezone_set')) {			// function not available < PHP 5.1
-
-			if (isset($_SERVER['TZ']) && !empty($_SERVER['TZ'])) {	// apache - can be set in .htaccess
-				$tz = $_SERVER['TZ'];
-			} else if (ini_get('date.timezone')) {					// set in php.ini
-				$tz = ini_get('date.timezone');
-			} else if (getenv('TZ')) {								// system env setting
-				$tz = getenv('TZ');
-			} else {
-				$tz = 'UTC';
-			}
-			date_default_timezone_set($tz);
+		if (isset($_SERVER['TZ']) && !empty($_SERVER['TZ'])) {	// apache - can be set in .htaccess
+			$tz = $_SERVER['TZ'];
+		} else if (ini_get('date.timezone')) {					// set in php.ini
+			$tz = ini_get('date.timezone');
+		} else if (getenv('TZ')) {								// system env setting
+			$tz = getenv('TZ');
+		} else {
+			$tz = 'UTC';
 		}
+		date_default_timezone_set($tz);
 
 		$this->date = new DateTime();	// was: DateTime(date("Y-m-d H:i:s Z"))
 										// the Z (timezone) param was causing an error
