@@ -262,18 +262,22 @@ function doChallengeResponse() {
 			{if $prefs.socialnetworks_facebook_login eq 'y' and $mode neq "header" and empty($user)}
 				<div style="text-align: center"><a href="tiki-socialnetworks.php?request_facebook=true"><img src="http://developers.facebook.com/images/devsite/login-button.png"></a></div>
 			{/if}
+		{$close_tags}
+	</form>
 			{if $prefs.auth_method eq 'openid' and !$user and (!isset($registration) || $registration neq 'y')}
 				<form method="get" action="tiki-login_openid.php">
 					<fieldset>
 						<legend>{tr}OpenID Log in{/tr}</legend>
-						<input class="openid_url" type="text" name="openid_url"/>
-						<input type="submit" class="btn btn-default" value="{tr}Go{/tr}"/>
-						<a class="linkmodule tikihelp" target="_blank" href="http://doc.tiki.org/OpenID">{tr}What is OpenID?{/tr}</a>
+						<div class="form-group">
+							<div class="input-group input-group-sm">
+								<input class="form-control" type="text" name="openid_url"/>
+								<span class="input-group-btn"><button type="submit" class="btn btn-default" title="{tr}Go{/tr}"><img alt="{tr}OpenID Login{/tr}" class="img-circle" src="img/icons/login-OpenID-bg.gif"></button></span>
+							</div>
+							<span class="help-block"><a class="linkmodule tikihelp" target="_blank" href="http://doc.tiki.org/OpenID">{tr}What is OpenID?{/tr}</a></span>
+						</div>
 					</fieldset>
 				</form>
 			{/if}
-		{$close_tags}
-	</form>
 {/if}
 {if $mode eq "header"}</div>{/if}
 {/tikimodule}
