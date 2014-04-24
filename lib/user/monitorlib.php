@@ -395,7 +395,7 @@ class MonitorLib
 			'object' => $objectId,
 			'target' => $target,
 			'title' => $title,
-			'isContainer' => $isTranslation || in_array($realType, ['category', 'structure', 'forum']),
+			'isContainer' => $isTranslation || in_array($realType, ['category', 'structure', 'forum', 'tracker']),
 			'fetchTargets' => $fetchTargets,
 		);
 	}
