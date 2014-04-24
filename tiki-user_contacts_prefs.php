@@ -10,7 +10,7 @@
 
 $section = 'mytiki';
 require_once ('tiki-setup.php');
-require_once ('lib/webmail/contactlib.php');
+$contactlib = TikiLib::lib('contact');
 
 $access->check_feature('feature_contacts', '', 'community');
 $access->check_user($user);

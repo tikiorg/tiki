@@ -8,8 +8,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-global $headerlib, $access;
 require_once ('tiki-setup.php');
+$headerlib = TikiLib::lib('header');
 
 $access->check_feature(array('feature_webmail', 'feature_ajax' ));	// AJAX_TODO
 $access->check_permission_either(array('tiki_p_use_webmail', 'tiki_p_use_group_webmail'));
@@ -181,10 +181,10 @@ function refreshWebmail($destDiv = 'mod-webmail_inbox', $inStart = 0, $inReload 
  */
 function takeGroupMail($destDiv = 'mod-webmail_inbox', $msgId = 1)
 {
-	global $prefs, $user, $webmaillib, $contactlib, $module_params;
+	global $prefs, $user, $webmaillib, $module_params;
 
 	include_once ('lib/webmail/webmaillib.php');
-	include_once ('lib/webmail/contactlib.php');
+	$contactlib = TikiLib::lib('contact');
 	$categlib = TikiLib::lib('categ');
 	$tikilib = TikiLib::lib('tiki');
 	$trklib = TikiLib::lib('trk');

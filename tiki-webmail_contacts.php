@@ -7,7 +7,7 @@
 
 require_once ('tiki-setup.php');
 include_once ('lib/webmail/webmaillib.php');
-include_once ('lib/webmail/contactlib.php');
+$contactlib = TikiLib::lib('contact');
 
 $access->check_feature('feature_webmail');
 

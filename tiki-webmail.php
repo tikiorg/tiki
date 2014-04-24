@@ -11,7 +11,7 @@
 $section = 'webmail';
 require_once ('tiki-setup.php');
 include_once ('lib/webmail/webmaillib.php');
-include_once ('lib/webmail/contactlib.php');
+$contactlib = TikiLib::lib('contact');
 
 $access->check_feature('feature_webmail');
 $access->check_permission_either(array('tiki_p_use_webmail', 'tiki_p_use_group_webmail'));

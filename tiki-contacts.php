@@ -12,7 +12,7 @@ $section = 'mytiki';
 require_once ('tiki-setup.php');
 
 $access->check_feature('feature_contacts');
-include_once ('lib/webmail/contactlib.php');
+$contactlib = TikiLib::lib('contact');
 
 $auto_query_args = array(
     'contactId',

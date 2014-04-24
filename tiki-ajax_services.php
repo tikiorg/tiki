@@ -148,7 +148,7 @@ if ($access->is_serializable_request() && isset($_REQUEST['listonly'])) {
 				
 		$access->output_serialized($finalusers);
 	} elseif ( $_REQUEST['listonly'] == 'tags' ) {
-		global $freetaglib; require_once 'lib/freetag/freetaglib.php';
+		$freetaglib = TikiLib::lib('freetag');
 
 		$tags = $freetaglib->get_tags_containing($_REQUEST['q']);
 		$access->output_serialized($tags);

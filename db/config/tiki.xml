@@ -20,6 +20,9 @@
 		<service id="tiki.lib.comments" class="Comments">
 			<file>%kernel.root_dir%/lib/comments/commentslib.php</file>
 		</service>
+		<service id="tiki.lib.contact" class="ContactLib">
+			<file>%kernel.root_dir%/lib/webmail/contactlib.php</file>
+		</service>
 		<service id="tiki.lib.contribution" class="ContributionLib">
 			<file>%kernel.root_dir%/lib/contribution/contributionlib.php</file>
 		</service>

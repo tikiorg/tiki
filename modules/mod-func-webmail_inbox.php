@@ -103,7 +103,9 @@ function module_webmail_inbox_info()
  */
 function module_webmail_inbox($mod_reference, $module_params)
 {
-	global $prefs, $webmaillib, $headerlib, $user, $webmail_reload, $webmail_start, $webmail_list_page, $smarty;
+	global $prefs, $webmaillib, $user, $webmail_reload, $webmail_start, $webmail_list_page;
+	$headerlib = TikiLib::lib('header');
+	$smarty = TikiLib::lib('smarty');
 	if (!$user) {
 		$smarty->assign('tpl_module_title', tra('Webmail error'));
 		$smarty->assign('error', 'You are not logged in');
@@ -156,9 +158,10 @@ function module_webmail_inbox($mod_reference, $module_params)
 
 function webmail_refresh() 	// called in ajax mode
 {
-	global $webmaillib, $user, $smarty, $webmail_list_page, $webmail_account, $webmail_reload, $webmail_start, $module_params, $contactlib;
+	global $webmaillib, $user, $webmail_list_page, $webmail_account, $webmail_reload, $webmail_start, $module_params;
 	$trklib = TikiLib::lib('trk');
-	include_once ('lib/webmail/contactlib.php');
+	$contactlib = TikiLib::lib('contact');
+	$smarty = TikiLib::lib('smarty');
 
 	$accountid = isset($module_params['accountid']) ? $module_params['accountid'] : 0;
 	$webmail_account = $webmaillib->get_webmail_account($user, $accountid);
