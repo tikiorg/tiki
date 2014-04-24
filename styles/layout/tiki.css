@@ -870,16 +870,6 @@ when module used without decorations. */
 	padding-right: 2px;
 }
 
-.opaque .box-title,
-.opaque .box-data {
-	width: auto;
-}
-
-.opaque .iconmenu {
-	display: block;
-	white-space: nowrap;
-}
-
 body.filegal_popup #tiki-center {
 	margin: 0 1em;
 }
@@ -2341,21 +2331,6 @@ p.norecords {
 }
 
 /***** File Galleries *****/
-
-.opaque {
-	border: 1px solid;
-	background: #fff;
-	color: #000;
-}
-
-.opaque .box-title {
-	padding: .5em .5em .2em;
-	font-weight: bold;
-}
-
-.opaque .box-data {
-	padding: .2em .5em;
-}
 
 .thumbinfosothers {
 	color: #888;

@@ -50,7 +50,7 @@ var account='';
  		{if $tiki_p_account_manage=='y'}
  		<tr><td colspan="2"><a href="tiki-accounting_account.php?bookId={$bookId}&action=new">{tr}Create account{/tr}</a></td></tr>{/if}
 {foreach from=$accounts item=a}
-		<tr class="{cycle values="odd,even"}"  {popup caption='{tr}Notes{/tr}' text=$a.accountNotes}>
+		<tr class="{cycle values="odd,even"} tips"  {popup caption='{tr}Notes{/tr}' text=$a.accountNotes}>
  			<td class="accompactlist">
  				{if $tiki_p_account_manage=='y'}
  				<a href="tiki-accounting_account.php?bookId={$bookId}&action=edit&accountId={$a.accountId}"><img src="img/icons/edit.gif" alt="edit" border="0"></a>

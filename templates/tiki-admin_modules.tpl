@@ -225,7 +225,7 @@
 									<a class="link" href="javascript:setUserModuleFromCombo('list_polls', 'um_data');" title="{tr}Use Poll{/tr}">{icon _id='add' alt="{tr}Use{/tr}"}</a>
 								</td>
 								<td>
-									<a {popup text="Params: id= rate=" width=100 center=true}>{icon _id='help'}</a>
+									<a title="{tr}Help{/tr}" {popup text="Params: id= rate=" width=100 center=true}>{icon _id='help'}</a>
 								</td>
 							</tr>
 						{/if}
@@ -246,7 +246,7 @@
 									<a class="link" href="javascript:setUserModuleFromCombo('list_galleries', 'um_data');" title="{tr}Use Gallery{/tr}">{icon _id='add' alt="{tr}Use{/tr}"}</a>
 								</td>
 								<td>
-									<a {popup text="Params: id= showgalleryname=1 hideimgname=1 hidelink=1" width=100 center=true}>{icon _id='help'}</a>
+									<a title="{tr}Help{/tr}" {popup text="Params: id= showgalleryname=1 hideimgname=1 hidelink=1" width=100 center=true}>{icon _id='help'}</a>
 								</td>
 							</tr>
 						{/if}
@@ -266,7 +266,7 @@
 									<a class="link" href="javascript:setUserModuleFromCombo('list_contents', 'um_data');" title="{tr}Use Dynamic Content{/tr}">{icon _id='add' alt="{tr}Use{/tr}"}</a>
 								</td>
 								<td>
-									<a {popup text="Params: id=" width=100 center=true}>{icon _id='help'}</a>
+									<a title="{tr}Help{/tr}" {popup text="Params: id=" width=100 center=true}>{icon _id='help'}</a>
 								</td>
 							</tr>
 						{/if}
@@ -286,7 +286,7 @@
 									<a class="link" href="javascript:setUserModuleFromCombo('list_rsss', 'um_data');" title="{tr}Use RSS Module{/tr}">{icon _id='add' alt="{tr}Use{/tr}"}</a>
 								</td>
 								<td>
-									<a {popup text="Params: id= max= skip=x,y " width=100 center=true}>{icon _id='help'}</a>
+									<a title="{tr}Help{/tr}" {popup text="Params: id= max= skip=x,y " width=100 center=true}>{icon _id='help'}</a>
 								</td>
 							</tr>
 						{/if}
@@ -307,7 +307,7 @@
 									<a class="link" href="javascript:setUserModuleFromCombo('list_banners', 'um_data');" title="{tr}Use Banner Zone{/tr}">{icon _id='add' alt="{tr}Use{/tr}"}</a>
 								</td>
 								<td>
-									<a {popup text="Params: zone= target=_blank|_self|" width=100 center=true}>{icon _id='help'}</a>
+									<a title="{tr}Help{/tr}" {popup text="Params: zone= target=_blank|_self|" width=100 center=true}>{icon _id='help'}</a>
 								</td>
 							</tr>
 						{/if}
@@ -328,7 +328,7 @@
 									<a class="link" href="javascript:setUserModuleFromCombo('list_wikistructures', 'um_data');" title="{tr}Use Wiki Structure{/tr}">{icon _id='add' alt="{tr}Use{/tr}"}</a>
 								</td>
 								<td>
-									<a {popup text="Params: id=" width=100 center=true}>{icon _id='help'}</a>
+									<a title="{tr}Help{/tr}" {popup text="Params: id=" width=100 center=true}>{icon _id='help'}</a>
 								</td>
 							</tr>
 						{/if}

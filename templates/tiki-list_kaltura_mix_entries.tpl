@@ -17,7 +17,7 @@
 					    
 		    {include file='tiki-list_kaltura_entries_actions.tpl'}
 		    
-			<td class="text"><a href="#" {popup trigger="onclick" sticky=1 fullhtml="1" text=$smarty.capture.actions|escape:"javascript"|escape:"html"}><img class="athumb" src="{$item->thumbnailUrl}" alt="{$item->description}" height="80" width="120"></a></td>
+			<td class="text"><a href="#" title="{tr}Thumbnail{/tr}" {popup trigger="onclick" sticky=1 fullhtml="1" text=$smarty.capture.actions|escape:"javascript"|escape:"html"}><img class="athumb" src="{$item->thumbnailUrl}" alt="{$item->description}" height="80" width="120"></a></td>
 			<td class="text"><a href="tiki-kaltura_video.php?{$entryType}Id={$item->id}"><img src="img/icons/application_form_magnify.png" class="icon"> {$item->name}</a></td>
 			<td class="text">{$item->createdAt}</td>
 			<td class="text">{$item->tags}</td>
@@ -28,7 +28,7 @@
 			{/if}
 			</td>
 			{include file='tiki-list_kaltura_entries_add_info.tpl'}
-			<td class="text"><a href="#" {popup trigger="onmouseover" fullhtml="1" sticky=true text=$smarty.capture.add_info|escape:"javascript"|escape:"html" left=true}>{icon _id='information' class='' title=''}</a></td>
+			<td class="text"><a href="#" title="{tr}Information{/tr}" {popup trigger="onmouseover" fullhtml="1" sticky=true text=$smarty.capture.add_info|escape:"javascript"|escape:"html" left=true}>{icon _id='information' class='' title=''}</a></td>
 		</tr>
 		{/if}
 		{/foreach}

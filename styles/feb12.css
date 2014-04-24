@@ -1277,18 +1277,6 @@ td.calheadhighlight {
 	font-size: 90%;
 }
 
-.opaque {
-	background: #fff;
-	border-left: 1px solid #A9A9A9;
-	border-top: 1px solid #A9A9A9;
-	border-right: 1px solid #696969;
-	border-bottom: 1px solid #696969;
-}
-
-.opaque .box-title {
-	border-bottom: 1px solid black;
-}
-
 .searchresults li .objecttype,
 .searchresults li .parentname,
 .searchresults li .objectname  {

@@ -1,6 +1,3 @@
-<div class='opaque'>
-<div class='box-title'>{tr}Information{/tr}</div>
-<div class='box-data'>
 {if $showname eq 'y' and $file_info.name neq ''}<i>{$file_info.name}</i><br><br>{/if}
 {if $showfilename eq 'y' and $file_info.filename neq ''}{tr}Filename:{/tr} {$file_info.filename}<br>{/if}
 {if $showimageid eq 'y' and $file_info.imageId neq ''}{tr}ID:{/tr} {$file_info.imageId}<br>{/if}
@@ -10,5 +7,3 @@
 {if $showxysize eq 'y' and $file_info.xsize neq ''}{tr}Size (width x height):{/tr} {$file_info.xsize}x{$file_info.ysize}<br>{/if}
 {if $showfilesize eq 'y' and $file_info.filesize neq ''}{tr}Filesize:{/tr} {$file_info.filesize} {tr}bytes{/tr}<br>{/if}
 {if $showhits eq 'y' and $file_info.hits neq ''}{tr}Hits:{/tr} {$file_info.hits}{/if}
-</div>
-</div>

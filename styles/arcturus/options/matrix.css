@@ -646,14 +646,6 @@ td.calheadhighlight {
 	border: 1px outset #00ff00 !important;
 }
 
-.opaque {
-	background: #000;
-}
-
-.opaque span.box-title {
-	color: #00a000;
-}
-
 .focus a,
 .focus a:visited,
 .calmodfocus a,

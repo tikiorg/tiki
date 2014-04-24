@@ -48,33 +48,21 @@
 	{section name=ix loop=$comments}{assign var=id value=$comments[ix].threadId}
 		{capture name=over_actions}
 			{strip}
-				<div class='opaque'>
-					<div class='box-title'>{tr}Actions{/tr}</div>
-					<div class='box-data'>
-						<a href="{$comments[ix].href}">{icon _id='magnifier' alt="{tr}Display{/tr}"}</a>
-						<a href="{$comments[ix].href|cat:"&amp;comments_threadId=$id&amp;edit_reply=1#form"}">{icon _id='page_edit' alt="{tr}Edit{/tr}"}</a>
-						{self_link remove=1 checked=$id _icon='cross'}{tr}Delete{/tr}{/self_link}
-					</div>
-				</div>
+				<a href="{$comments[ix].href}">{icon _id='magnifier' alt="{tr}Display{/tr}"}</a>
+				<a href="{$comments[ix].href|cat:"&amp;comments_threadId=$id&amp;edit_reply=1#form"}">{icon _id='page_edit' alt="{tr}Edit{/tr}"}</a>
+				{self_link remove=1 checked=$id _icon='cross'}{tr}Delete{/tr}{/self_link}
 			{/strip}
 		{/capture}
 
 		{capture name=over_more_info}
 			{strip}
-				<div class='opaque'>
-					<div class='box-title'>{tr}More info{/tr}</div>
-					<div class='box-data'>
-						<div>
-							{foreach from=$more_info_headers key=headerKey item=headerName}
-								{if (isset($comments[ix].$headerKey))}
-									{assign var=val value=$comments[ix].$headerKey}
-									<b>{tr}{$headerName}{/tr}</b>: {$val}
-									<br>
-								{/if}
-							{/foreach}
-						</div>
-					</div>
-				</div>
+				{foreach from=$more_info_headers key=headerKey item=headerName}
+					{if (isset($comments[ix].$headerKey))}
+						{assign var=val value=$comments[ix].$headerKey}
+						<b>{tr}{$headerName}{/tr}</b>: {$val}
+						<br>
+					{/if}
+				{/foreach}
 			{/strip}
 		{/capture}
 

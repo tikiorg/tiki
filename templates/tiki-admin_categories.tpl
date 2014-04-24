@@ -75,7 +75,7 @@
 
 	{if $categId <= 0}
 		{tab name="{tr}Batch upload{/tr}"}
-			<h2>{tr}Batch upload (CSV file){/tr}<a {popup text='category,description,parent&lt;br /&gt;vegetable,vegetable&lt;br /&gt;potato,,vegetable'}>{icon _id='help'}</a></h2>
+			<h2>{tr}Batch upload (CSV file){/tr}<a title="{tr}Help{/tr}" {popup text='category,description,parent&lt;br /&gt;vegetable,vegetable&lt;br /&gt;potato,,vegetable'}>{icon _id='help'}</a></h2>
 			<form action="tiki-admin_categories.php" method="post" enctype="multipart/form-data" class="form-horizontal" role="form">
                 <div class="form-group">
                     <div class="col-sm-6 col-sm-offset-3">

@@ -531,7 +531,7 @@ $("#userstracker").change(function () {
 			<table class="formcolor">
 				<tr>
 					<td class="auto">
-						{tr}CSV File{/tr}<a {popup text='user<br>user1<br>user2'}>{icon _id='help'}</a>
+						{tr}CSV File{/tr}<a title="{tr}Help{/tr}" {popup text='user<br>user1<br>user2'}>{icon _id='help'}</a>
 					</td>
 					<td class="auto"><input name="csvlist" type="file"></td>
 				</tr>

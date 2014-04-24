@@ -29,15 +29,8 @@
 				and (!isset($gal_info.show_action) or $gal_info.show_action neq 'n')}
 				{capture name=over_actions}
 					{strip}
-						<div class='opaque'>
-							<div class='box-title'>
-								{tr}Actions{/tr}
-							</div>
-							<div class='box-data'>
-								{include file='fgal_context_menu.tpl' menu_icon=$prefs.use_context_menu_icon menu_text=$prefs.use_context_menu_text changes=$smarty.section.changes.index}
-							</div>
-						</div>
-					  {/strip}
+						{include file='fgal_context_menu.tpl' menu_icon=$prefs.use_context_menu_icon menu_text=$prefs.use_context_menu_text changes=$smarty.section.changes.index}
+					{/strip}
 				{/capture}
 			{/if}
 

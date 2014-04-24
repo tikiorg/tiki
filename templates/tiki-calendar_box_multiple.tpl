@@ -1,9 +1,4 @@
 <div class='opaque' style="position:absolute;top:10px;left:50%;margin-left:-150px;width:300px">
-{if $prefs.calendar_sticky_popup eq "y"}
-	<div style="float:right"><a href="#" onClick="nd();nd();return false;">
-		<a href="#" onclick="nd();nd();return false;">{icon _id="minus_small" alt="{tr}Close{/tr}" width="11" height="8"}</a>
-	</div><br>
-{/if}
 {foreach key=k2 item=evt from=$currHrows}
 		{assign var=calendarId value=$evt.calendarId}
 	  <div style="position:relative">

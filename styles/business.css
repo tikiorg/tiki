@@ -787,11 +787,6 @@ body.tiki_blogs .postbody {
 	padding: 3px;
 }
 
-.opaque .box-title {
-	padding-bottom: 2px;
-	border-bottom: 0;
-}
-
 /***** Trackers *****/
 /***** Categories, Tags *****/
 /***** Tags (freetags) *****/

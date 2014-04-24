@@ -2029,22 +2029,6 @@ td.calheadhighlight {
 }
 
 /* Style for OverBox */
-.opaque {
-	background: #fff;
-	width: auto;
-	border: 1px solid #666;
-	padding: 5px;
-	text-align: left;
-}
-
-.opaque .box-title,
-.opaque .box-data {
-	width: auto;
-}
-
-.opaque a {
-	text-decoration: none;
-}
 
 .sub {
 	padding-left: 5em !important;

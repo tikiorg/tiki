@@ -2,7 +2,7 @@
 	<div class="panel panel-default">
 		<table class="table-bordered item">
 			{foreach from=$popupFields item=field}
-				 <tr><th>{$field.name}</th><td>{trackeroutput field=$field item=$popupItem showpopup=n showlinks=n}</td></tr>
+				 <tr><th>{$field.name|escape}</th><td>{trackeroutput field=$field item=$popupItem showpopup=n showlinks=n}</td></tr>
 			{/foreach}
 		</table>
 	</div>

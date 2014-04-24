@@ -1,17 +1,6 @@
 {* $Id$ *}
 {title help="Kaltura" admpage="video"}{if $entryType eq "mix"}{tr}Remix Entries{/tr}{else}{if $view ne "browse"}{tr}List Media{/tr}{else}{tr}Browse Media{/tr}{/if}{/if}{/title}
 
-{capture name=other_sorts}{strip}
-	<div class='opaque'>
-		<div class='box-title'><strong>{tr}Other Sorts{/tr}</strong></div>
-		<div class='box-data'>
- 			<a href="tiki-list_kaltura_entries.php?list={$entryType}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq '-views'}asc_views{else}desc_views{/if}">{tr}Loads{/tr}</a>
-			<br>
- 			<a href="tiki-list_kaltura_entries.php?list={$entryType}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq '-plays'}asc_plays{else}desc_plays{/if}">{tr}Plays{/tr}</a>
-		</div>
-	</div>
-{/strip}{/capture}
-
 <div class="row form-group">
     <form method="post" action="{$smarty.server.PHP_SELF}" class="col-md-12 form-inline form-horizontal" role="form">
         <label class="control-label col-sm-2" for="find">{tr}Find{/tr}</label>

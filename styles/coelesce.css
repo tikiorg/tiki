@@ -1591,19 +1591,6 @@ a.freetag_7:hover {
 	font-size: 90%;
 }
 
-.opaque {
-	border: 1px solid #ccdceb;
-	background: #f8f8ff;
-}
-
-.opaque .box-title {
-	border-bottom: 1px solid #ccdceb;
-}
-
-.opaque a {
-	text-decoration: none;
-}
-
 .searchresults li .objecttype,
 .searchresults li .parentname ,
 .searchresults li .objectname  {

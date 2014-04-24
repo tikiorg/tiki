@@ -21,7 +21,7 @@
 			{assign var=calendarId value=$event.calendarId}
 			{assign var=over value=$event.over}
 			{if $event.calitemId neq ''}
-			<div id="event_{$event.calitemId}" {if $hrows[$h][hr].calname ne ""}class="Cal{$event.type} vevent"{/if} style="position:absolute;z-index:100;top:{$event.top}px;left:{$event.left}%;width:{$event.width}%;height:{$event.duree}px;background-color:#{$infocals.$calendarId.custombgcolor};border-color:#{$infocals.$calendarId.customfgcolor};opacity:{if $event.status eq '0'}0.8{else}1{/if};filter:alpha(opacity={if $event.status eq '0'}80{else}100{/if});text-align:center;overflow:hidden;cursor:pointer"
+			<div id="event_{$event.calitemId}" title="{tr}Details{/tr}" {if $hrows[$h][hr].calname ne ""}class="tips Cal{$event.type} vevent"{/if} style="position:absolute;z-index:100;top:{$event.top}px;left:{$event.left}%;width:{$event.width}%;height:{$event.duree}px;background-color:#{$infocals.$calendarId.custombgcolor};border-color:#{$infocals.$calendarId.customfgcolor};opacity:{if $event.status eq '0'}0.8{else}1{/if};filter:alpha(opacity={if $event.status eq '0'}80{else}100{/if});text-align:center;overflow:hidden;cursor:pointer"
 				{if $prefs.calendar_sticky_popup eq "y"}
 					{popup vauto=true hauto=true sticky=true trigger="onClick" fullhtml="1" text=$over|escape:"javascript"|escape:"html"}
 				{else}

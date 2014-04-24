@@ -128,11 +128,6 @@
 	vertical-align: middle;
 }
 
-.opaque .box-title,
-.opaque .box-data {
-	width: auto;
-}
-
 .calcontent {
 	min-height: 60px;
 	height: auto;

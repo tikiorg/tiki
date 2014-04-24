@@ -62,7 +62,8 @@
 						{assign var=calendarId value=$event.calendarId}
 						{assign var=over value=$event.over|escape:"javascript"|escape:"html"}
 						{if !empty($event.calitemId)}
-							<div id="event_{$h}_{$smarty.section.weekday.index}_{$event.calitemId}" {if $event.calname ne ""}class="Cal{$event.type} vevent"{/if} style="overflow:visible;position:absolute;top:{$event.top}px;height:{$event.duree-1}px;left:{$event.left}%;width:{$event.width}%;background-color:#{$infocals.$calendarId.custombgcolor};border-color:#{$infocals.$calendarId.customfgcolor};color:#{$infocals.$cellcalendarId.customfgcolor};opacity:{if $event.status eq '0'}0.8{else}1{/if};filter:alpha(opacity={if $event.status eq '0'}80{else}100{/if});text-align:center;overflow:hidden;cursor:pointer;{if $prefs.feature_jquery_ui eq 'y'}display:none;{/if}"
+							<div id="event_{$h}_{$smarty.section.weekday.index}_{$event.calitemId}" {if $event.calname ne ""}class="Cal{$event.type} vevent tips"{/if} style="overflow:visible;position:absolute;top:{$event.top}px;height:{$event.duree-1}px;left:{$event.left}%;width:{$event.width}%;background-color:#{$infocals.$calendarId.custombgcolor};border-color:#{$infocals.$calendarId.customfgcolor};color:#{$infocals.$cellcalendarId.customfgcolor};opacity:{if $event.status eq '0'}0.8{else}1{/if};filter:alpha(opacity={if $event.status eq '0'}80{else}100{/if});text-align:center;overflow:hidden;cursor:pointer;{if $prefs.feature_jquery_ui eq 'y'}display:none;{/if}"
+								title="{tr}Details{/tr}"
 								{if $prefs.calendar_sticky_popup eq "y"}
 									{popup vauto=true hauto=true sticky=true fullhtml="1" trigger="onClick" text=$over}
 								{else}
@@ -114,6 +115,7 @@
 							{else}
 								{popup vauto=true hauto=true sticky=false fullhtml="1" text=$overMany}
 							{/if}
+							title="{tr}Details{/tr}"
 						>
 							<div style="position:absolute;top:50%;left:50%;margin-left:-40px;margin-top:-30px">
 								<a style="padding:0 3px;" href="{$myurl}?viewmode=day&todate={$viewWeekDays[weekday]}">
