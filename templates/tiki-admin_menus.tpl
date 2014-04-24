@@ -71,82 +71,76 @@
 			<h2>{tr}Create new Menu{/tr}</h2>
 		{/if}
 
-		<form action="tiki-admin_menus.php?cookietab=1" method="post">
+		<form class="form-horizontal" action="tiki-admin_menus.php?cookietab=1" method="post">
 			{ticket}
-			<input type="hidden" name="menuId" value="{$menuId|escape}">
-			<table class="formcolor">
-				<tr>
-					<td>
-						<label for="menus_name">{tr}Name:{/tr}</label>
-					</td>
-					<td>
-						<input type="text" name="name" id="menus_name" value="{$info.name|escape}" style="width:95%">
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<label for="menus_desc">{tr}Description:{/tr}</label>
-					</td>
-					<td>
-						<textarea name="description" id="menus_desc" rows="4" cols="40" style="width:95%">{$info.description|escape}</textarea>
-					</td>
-				</tr>
-				<tr>
-					<td><label for="menus_type">{tr}Type:{/tr}</label></td>
-					<td>
-						<select name="type" id="menus_type">
-							<option value="d" {if $info.type eq 'd'}selected="selected"{/if}>{tr}dynamic collapsed{/tr} (d)</option>
-							<option value="e" {if $info.type eq 'e'}selected="selected"{/if}>{tr}dynamic extended{/tr} (e)</option>
-							<option value="f" {if $info.type eq 'f'}selected="selected"{/if}>{tr}fixed{/tr} (f)</option>
-						</select>
-					</td>
-				</tr>
-				<tr>
-					<td><label for="menus_parse">{tr}Wiki Parse:{/tr}</label></td>
-					<td>
-						<input type="checkbox" name="parse" id="menus_parse"{if $info.parse eq 'y'} checked="checked"{/if}>
-						<em>{tr}Labels of all options will be wiki parsed.{/tr}</em>
-					</td>
-				</tr>
-				{if $prefs.feature_menusfolderstyle eq 'y'}
-					<tr>
-						<td rowspan="2"><label for="icon">{tr}Icons:{/tr}</label></td>
-						<td>
-							<div>{tr}Folder Icon{/tr}</div>
-							<input type="text" id="icon" name="icon" value="{$info.icon|escape}" style="width:95%">
+			<div class="form-group">
+				<label class="control-label col-md-3" for="menus_name">{tr}Name{/tr}</label>
+				<div class="col-md-9">
+					<input type="text" name="name" id="menus_name" value="{$info.name|escape}" class="form-control">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-md-3" for="menus_desc">{tr}Description{/tr}</label>
+				<div class="col-md-9">
+					<textarea name="description" id="menus_desc" rows="4" cols="40" class="form-control">{$info.description|escape}</textarea>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-md-3" for="menus_type">{tr}Type{/tr}</label>
+				<div class="col-md-9">
+					<select name="type" id="menus_type" class="form-control">
+						<option value="d" {if $info.type eq 'd'}selected="selected"{/if}>{tr}dynamic collapsed{/tr} (d)</option>
+						<option value="e" {if $info.type eq 'e'}selected="selected"{/if}>{tr}dynamic extended{/tr} (e)</option>
+						<option value="f" {if $info.type eq 'f'}selected="selected"{/if}>{tr}fixed{/tr} (f)</option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-md-9 col-md-push-3">
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" name="parse" id="menus_parse"{if $info.parse eq 'y'} checked="checked"{/if}>
+							{tr}Wiki Parse{/tr}
+						</label>
+					</div>
+				</div>
+			</div>
+			{if $prefs.feature_menusfolderstyle eq 'y'}
+				<div class="form-group">
+					<label class="control-label col-md-3" for="icon">{tr}Folder Icon{/tr}</label>
+					<div class="col-md-9">
+						<input type="text" id="icon" name="icon" value="{$info.icon|escape}" class="form-control">
+						<div class="help-block">
+							{tr}To use custom folder icons in menus, enter the path to the icon for the <strong>closed</strong> folder.{/tr} {tr}In the same directory, include an icon for the opened folder.{/tr} {tr}The "opened folder" icon name must be identical to the "closed folder" icon name, prefixed with the letter <strong>o</strong>.{/tr}
+							<hr>
+							{tr}For example, the default icon is: img/icons/folder.png{/tr} {icon _id="folder"}
 							<br>
-							<em>{tr}Path and filename of closed folder icon{/tr}</em>.
-
-							{remarksbox type="tip" title="{tr}Note{/tr}"}
-								{tr}To use custom folder icons in menus, enter the path to the icon for the <strong>closed</strong> folder.{/tr} {tr}In the same directory, include an icon for the opened folder.{/tr} {tr}The "opened folder" icon name must be identical to the "closed folder" icon name, prefixed with the letter <strong>o</strong>.{/tr}
-								<hr>
-								{tr}For example, the default icon is: img/icons/folder.png{/tr} {icon _id="folder"}
-								<br>
-								{tr}The name of the "open folder" icon is: img/icons/ofolder.png{/tr} {icon _id="ofolder"}
-							{/remarksbox}
-						</td>
-					</tr>
-				{/if}
-				{if $prefs.menus_items_icons eq 'y'}
-					<tr>
-						<td>
-							<label for="use_items_icons">
+							{tr}The name of the "open folder" icon is: img/icons/ofolder.png{/tr} {icon _id="ofolder"}
+						</div>
+					</div>
+				</div>
+			{/if}
+			{if $prefs.menus_items_icons eq 'y'}
+				<div class="form-group">
+					<div class="col-md-9 col-md-push-3">
+						<div class="checkbox">
+							<label>
 								<input type="checkbox" id="use_items_icons" name="use_items_icons"{if $info.use_items_icons eq 'y'} checked="checked"{/if}>
 								{tr}Configure icons for menu entries{/tr}
 							</label>
-						</td>
-					</tr>
-				{/if}
-			<tr>
-				<td>&nbsp;</td>
-				<td>
-					<input type="submit" class="btn btn-default btn-sm" name="save" value="{tr}Save{/tr}">
+						</div>
+					</div>
+				</div>
+			{/if}
+			<div class="submit form-group">
+				<div class="col-md-9 col-md-push-3">
+					<input type="submit" class="btn btn-primary" name="save" value="{tr}Save{/tr}">
+					<input type="hidden" name="menuId" value="{$menuId|escape}">
 					{if $prefs.menus_items_icons neq 'y'}
 						<input type="hidden" name="use_items_icons" value="{$info.use_items_icons}">
 					{/if}
-				</td>
-			</tr>
-		</table>
+				</div>
+			</div>
 
 		{remarksbox type="tip" title="{tr}Tip{/tr}"}
 			
