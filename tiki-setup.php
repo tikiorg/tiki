@@ -524,12 +524,6 @@ if ($prefs['mobile_feature'] === 'y' && $prefs['mobile_mode'] === 'y') {
 		$headerlib->add_jsfile('lib/swfobject/swfobject.js');
 	}
 
-	if ( $prefs['feature_metrics_dashboard'] == 'y' ) {
-		$headerlib->add_cssfile("css/metrics.css");
-		$headerlib->add_jsfile("vendor/jquery/plugins/sparkline/jquery.sparkline.min.js");
-		$headerlib->add_jsfile("lib/metrics.js");
-	}
-
 	// include and setup themegen editor if already open
 	if (! empty($tiki_p_admin) && $tiki_p_admin === 'y' && !empty($prefs['themegenerator_feature']) && $prefs['themegenerator_feature'] === 'y' && !empty($_COOKIE['themegen']) &&
 			(strpos($_SERVER['SCRIPT_NAME'], 'tiki-admin.php') === false || strpos($_SERVER['QUERY_STRING'], 'page=look') === false)) {

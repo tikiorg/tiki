@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "264aebe7b197c3bb33824676926c4f0f",
+    "hash": "9561cffaacfee6723c02afc7fc10e9a7",
     "packages": [
         {
             "name": "aFarkas/html5shiv",
@@ -787,17 +787,6 @@
             "type": "library"
         },
         {
-            "name": "jquery/plugins/sparkline",
-            "version": "2.1.1",
-            "dist": {
-                "type": "zip",
-                "url": "https://composer.tiki.org/dist/jquery-plugins-sparkline-2.1.1.zip",
-                "reference": "2.1.1",
-                "shasum": "1c201e3344717864f986d9f9b9ad3139b6350e04"
-            },
-            "type": "library"
-        },
-        {
             "name": "jquery/plugins/superfish",
             "version": "1.7.4",
             "dist": {
@@ -1199,9 +1188,7 @@
             "authors": [
                 {
                     "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com",
-                    "homepage": "http://fabien.potencier.org",
-                    "role": "Lead Developer"
+                    "email": "fabien@symfony.com"
                 },
                 {
                     "name": "Symfony Community",
