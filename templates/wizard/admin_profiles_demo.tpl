@@ -33,7 +33,7 @@
 			<img src="http://tiki.org/display520"  width="100" style="display:block; margin-left:auto; margin-right:auto;border:1px solid darkgray;" alt="Click to expand" class="regImage pluginImg" title="{tr}Click to expand{/tr}" />
 		</a>
 		<div class="mini">
-			<div class="thumbcaption">{tr}Click to expand{/tr}</div>
+			<div class="thumbcaption text-center">{tr}Click to expand{/tr}</div>
 		</div>
 	</div>
 	</td>
@@ -59,7 +59,7 @@
 			<img src="http://tiki.org/display521"  width="100" style="display:block; margin-left:auto; margin-right:auto;border:1px solid darkgray;" alt="Click to expand" class="regImage pluginImg" title="{tr}Click to expand{/tr}" />
 		</a>
 		<div class="mini">
-			<div class="thumbcaption">{tr}Click to expand{/tr}</div>
+			<div class="thumbcaption text-center">{tr}Click to expand{/tr}</div>
 		</div>
 	</div>
 	</td>
@@ -84,7 +84,7 @@
 			<img src="http://doc.tiki.org/display722"  width="100" style="display:block; margin-left:auto; margin-right:auto;border:1px solid darkgray;" alt="Click to expand" class="regImage pluginImg" title="{tr}Click to expand{/tr}" />
 		</a>
 		<div class="mini">
-			<div class="thumbcaption">{tr}Click to expand{/tr}</div>
+			<div class="thumbcaption text-center">{tr}Click to expand{/tr}</div>
 		</div>
 	</div>
 	</td>
@@ -110,7 +110,7 @@
 			<img src="http://tiki.org/display522"  width="100" style="display:block; margin-left:auto; margin-right:auto;border:1px solid darkgray;" alt="Click to expand" class="regImage pluginImg" title="{tr}Click to expand{/tr}" />
 		</a>
 		<div class="mini">
-			<div class="thumbcaption">{tr}Click to expand{/tr}</div>
+			<div class="thumbcaption text-center">{tr}Click to expand{/tr}</div>
 		</div>
 	</div>
 	</td>
