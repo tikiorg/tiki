@@ -47,8 +47,8 @@
       <td>{if $account.leave_email eq 'y'}{glyph name="ok"}{/if}</td>
 
       <td class="action">
-        <a data-toggle="modal" data-target="#bootstrap-modal" href="{service controller=mailin action=replace_account accountId=$account.accountId modal=1}">{icon _id='page_edit'}</a>
-        <a data-toggle="modal" data-target="#bootstrap-modal" href="{service controller=mailin action=remove_account accountId=$account.accountId modal=1}" >{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
+        <a class="btn btn-xs btn-default" data-toggle="modal" data-target="#bootstrap-modal" href="{service controller=mailin action=replace_account accountId=$account.accountId modal=1}">{glyph name=edit} {tr}Edit{/tr}</a>
+        <a class="btn btn-xs btn-danger" data-toggle="modal" data-target="#bootstrap-modal" href="{service controller=mailin action=remove_account accountId=$account.accountId modal=1}" >{glyph name=remove} <span class="sr-only">{tr}Remove{/tr}</span></a>
       </td>
     </tr>
   {/foreach}
