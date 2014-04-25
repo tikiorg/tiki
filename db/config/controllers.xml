@@ -29,6 +29,7 @@
 		<service id="tiki.controller.kaltura" class="Services_Kaltura_Controller"/>
 		<service id="tiki.controller.mailin" class="Services_MailIn_Controller"/>
 		<service id="tiki.controller.managestream" class="Services_ActivityStream_ManageController"/>
+		<service id="tiki.controller.menu" class="Services_Menu_Controller"/>
 		<service id="tiki.controller.module" class="Services_Module_Controller"/>
 		<service id="tiki.controller.monitor" class="Services_User_MonitorController"/>
 		<service id="tiki.controller.oauth" class="Services_AuthSource_OAuthController"/>

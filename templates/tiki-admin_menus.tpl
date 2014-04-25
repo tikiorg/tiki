@@ -1,162 +1,66 @@
-{title help="Menus" admpage="general&amp;cookietab=3"}{tr}Admin Menus{/tr}{/title}
+{title help="Menus" admpage="general&amp;cookietab=3"}{tr}Menus{/tr}{/title}
 
 {if $tiki_p_admin eq 'y'}
-	<div class="t_navbar">
-		{button href="tiki-admin_modules.php" _text="{tr}Admin Modules{/tr}"}
+	<div class="navbar">
+		<a class="btn btn-default" href="{service controller=menu action=manage modal=true}" data-toggle="modal" data-target="#bootstrap-modal">
+			{glyph name="plus"} {tr}Create Menu{/tr}
+		</a>
+		{button href="tiki-admin_modules.php" _text="{glyph name="cog"} {tr}Admin Modules{/tr}"}
 	</div>
 {/if}
+{include file='find.tpl'}
+<div class="table-responsive">
+	<table class="table table-hover">
+		<tr>
+			<th>{self_link _sort_arg='sort_mode' _sort_field='menuId'}{tr}ID{/tr}{/self_link}</th>
+			<th>{self_link _sort_arg='sort_mode' _sort_field='name'}{tr}Name{/tr}{/self_link}</th>
+			<th>{self_link _sort_arg='sort_mode' _sort_field='type'}{tr}Type{/tr}{/self_link}</th>
+			<th>{tr}Options{/tr}</th>
+			<th>{tr}Action{/tr}</th>
+		</tr>
 
-{tabset name="admin_menus"}
-	{tab name="{tr}Menus{/tr}"}
-        <h2>{tr}Menus{/tr}</h2>
-		{include file='find.tpl'}
-        <div class="table-responsive">
-		<table class="table normal">
+		{section name=user loop=$channels}
 			<tr>
-				<th>{self_link _sort_arg='sort_mode' _sort_field='menuId'}{tr}ID{/tr}{/self_link}</th>
-				<th>{self_link _sort_arg='sort_mode' _sort_field='name'}{tr}Name{/tr}{/self_link}</th>
-				<th>{self_link _sort_arg='sort_mode' _sort_field='type'}{tr}Type{/tr}{/self_link}</th>
-				<th>{tr}Options{/tr}</th>
-				<th>{tr}Action{/tr}</th>
-			</tr>
-
-			{section name=user loop=$channels}
-				<tr>
-					<td class="id">{$channels[user].menuId}</td>
-					<td class="text">
-						{if $tiki_p_edit_menu_option eq 'y' and $channels[user].menuId neq 42}
-							<a class="link" href="tiki-admin_menu_options.php?menuId={$channels[user].menuId}" title="{tr}Configure/Options{/tr}">{$channels[user].name|escape}</a>
-						{else}
-							{$channels[user].name|escape}
+				<td class="id">{$channels[user].menuId}</td>
+				<td class="text">
+					{if $tiki_p_edit_menu_option eq 'y' and $channels[user].menuId neq 42}
+						<a class="link" href="tiki-admin_menu_options.php?menuId={$channels[user].menuId}" title="{tr}Configure/Options{/tr}">{$channels[user].name|escape}</a>
+					{else}
+						{$channels[user].name|escape}
+					{/if}
+					<br>
+					{$channels[user].description|escape|nl2br}
+				</td>
+				<td class="text">{$channels[user].type}</td>
+				<td><span class="badge">{$channels[user].options}</span></td>
+				<td class="action">
+					{if $channels[user].menuId neq 42}
+						{if $tiki_p_edit_menu eq 'y'}
+							<a class="btn btn-default btn-sm" href="{service controller=menu action=manage menuId={$channels[user].menuId} modal=true}" data-toggle="modal" data-target="#bootstrap-modal" title="{tr}Edit Menu{/tr}">
+								{glyph name="edit"}
+							</a>
 						{/if}
-						<br>
-						{$channels[user].description|escape|nl2br}
-					</td>
-					<td class="text">{$channels[user].type}</td>
-					<td class="integer">{$channels[user].options}&nbsp;</td>
-					<td class="action">
-						{if $channels[user].menuId neq 42}
-							{if $tiki_p_edit_menu eq 'y'}
-								{self_link menuId=$channels[user].menuId cookietab="2" _title="{tr}Edit{/tr}"}{icon _id='page_edit'}{/self_link}
-							{/if}
-							{if $tiki_p_edit_menu_option eq 'y'}
-								<a class="link" href="tiki-admin_menu_options.php?menuId={$channels[user].menuId}" title="{tr}Configure/Options{/tr}">{icon _id='table' alt="{tr}Configure/Options{/tr}"}</a>
-							{/if}
-							{if $tiki_p_edit_menu eq 'y'}
-								{self_link remove=$channels[user].menuId _title="{tr}Delete{/tr}"}{icon _id='cross' alt="{tr}Delete{/tr}"}{/self_link}
-							{/if}
-						{else}
-							{if $tiki_p_admin eq 'y'}
-								{button reset="y" menuId=$channels[user].menuId _text="{tr}RESET{/tr}" _auto_args="reset,menuId"}
-							{/if}
+						{if $tiki_p_edit_menu_option eq 'y'}
+							<a class="btn btn-default btn-sm" href="tiki-admin_menu_options.php?menuId={$channels[user].menuId}" title="{tr}Menu Options{/tr}">{glyph name="list"}</a>
 						{/if}
 						{if $tiki_p_edit_menu eq 'y'}
-							{self_link  menuId=$channels[user].menuId clone="y" _title="{tr}Clone this menu and its options{/tr}" _icon="page_copy"}{/self_link}
+							{self_link remove=$channels[user].menuId _title="{tr}Delete{/tr}" _class="btn btn-default btn-sm"}{glyph name="remove"}{/self_link}
 						{/if}
-					</td>
-				</tr>
-			{sectionelse}
-				{norecords _colspan=5}
-			{/section}
-		</table>
-        </div>
-		{pagination_links cant=$cant step=$maxRecords offset=$offset}{/pagination_links} 
-	{/tab}
-
-	{tab name="{tr}Create/Edit Menu{/tr}"}
-		{if $menuId > 0}
-			<h2>{tr}Edit this Menu:{/tr} {$info.name}</h2>
-			{button href="tiki-admin_menus.php" _text="{tr}Create new Menu{/tr}"}
-		{else}
-			<h2>{tr}Create new Menu{/tr}</h2>
-		{/if}
-
-		<form class="form-horizontal" action="tiki-admin_menus.php?cookietab=1" method="post">
-			{ticket}
-			<div class="form-group">
-				<label class="control-label col-md-3" for="menus_name">{tr}Name{/tr}</label>
-				<div class="col-md-9">
-					<input type="text" name="name" id="menus_name" value="{$info.name|escape}" class="form-control">
-				</div>
-			</div>
-			<div class="form-group">
-				<label class="control-label col-md-3" for="menus_desc">{tr}Description{/tr}</label>
-				<div class="col-md-9">
-					<textarea name="description" id="menus_desc" rows="4" cols="40" class="form-control">{$info.description|escape}</textarea>
-				</div>
-			</div>
-			<div class="form-group">
-				<label class="control-label col-md-3" for="menus_type">{tr}Type{/tr}</label>
-				<div class="col-md-9">
-					<select name="type" id="menus_type" class="form-control">
-						<option value="d" {if $info.type eq 'd'}selected="selected"{/if}>{tr}dynamic collapsed{/tr} (d)</option>
-						<option value="e" {if $info.type eq 'e'}selected="selected"{/if}>{tr}dynamic extended{/tr} (e)</option>
-						<option value="f" {if $info.type eq 'f'}selected="selected"{/if}>{tr}fixed{/tr} (f)</option>
-					</select>
-				</div>
-			</div>
-			<div class="form-group">
-				<div class="col-md-9 col-md-push-3">
-					<div class="checkbox">
-						<label>
-							<input type="checkbox" name="parse" id="menus_parse"{if $info.parse eq 'y'} checked="checked"{/if}>
-							{tr}Wiki Parse{/tr}
-						</label>
-					</div>
-				</div>
-			</div>
-			{if $prefs.feature_menusfolderstyle eq 'y'}
-				<div class="form-group">
-					<label class="control-label col-md-3" for="icon">{tr}Folder Icon{/tr}</label>
-					<div class="col-md-9">
-						<input type="text" id="icon" name="icon" value="{$info.icon|escape}" class="form-control">
-						<div class="help-block">
-							{tr}To use custom folder icons in menus, enter the path to the icon for the <strong>closed</strong> folder.{/tr} {tr}In the same directory, include an icon for the opened folder.{/tr} {tr}The "opened folder" icon name must be identical to the "closed folder" icon name, prefixed with the letter <strong>o</strong>.{/tr}
-							<hr>
-							{tr}For example, the default icon is: img/icons/folder.png{/tr} {icon _id="folder"}
-							<br>
-							{tr}The name of the "open folder" icon is: img/icons/ofolder.png{/tr} {icon _id="ofolder"}
-						</div>
-					</div>
-				</div>
-			{/if}
-			{if $prefs.menus_items_icons eq 'y'}
-				<div class="form-group">
-					<div class="col-md-9 col-md-push-3">
-						<div class="checkbox">
-							<label>
-								<input type="checkbox" id="use_items_icons" name="use_items_icons"{if $info.use_items_icons eq 'y'} checked="checked"{/if}>
-								{tr}Configure icons for menu entries{/tr}
-							</label>
-						</div>
-					</div>
-				</div>
-			{/if}
-			<div class="submit form-group">
-				<div class="col-md-9 col-md-push-3">
-					<input type="submit" class="btn btn-primary" name="save" value="{tr}Save{/tr}">
-					<input type="hidden" name="menuId" value="{$menuId|escape}">
-					{if $prefs.menus_items_icons neq 'y'}
-						<input type="hidden" name="use_items_icons" value="{$info.use_items_icons}">
+					{else}
+						{if $tiki_p_admin eq 'y'}
+							{button reset="y" menuId=$channels[user].menuId _text="{tr}RESET{/tr}" _auto_args="reset,menuId" _class="btn btn-warning btn-sm"}
+						{/if}
 					{/if}
-				</div>
-			</div>
-
-		{remarksbox type="tip" title="{tr}Tip{/tr}"}
-			
-			{tr}You can use menus by assigning the menu <a href="tiki-admin_modules.php">module</a> (to the top, left, right, etc.), or you can customize a template, using {literal}{menu id=x}{/literal}, where x is the ID of the menu.{/tr}
-			<hr>
-			{tr}To use a menu in a tiki format:{/tr} {literal}{menu id=X}{/literal}
-			<br>
-			{if $prefs.feature_cssmenus eq 'y'}
-				{tr}To use menu in a css/suckerfish format:{/tr}
-				<ul>
-					<li>{literal}{menu id=X css=y type=vert}{/literal}</li>
-					<li>{literal}{menu id=X css=y type=horiz}{/literal}</li>
-				</ul>
-			{/if}
-			{tr}To customize the menu's CSS id (#):{/tr} {literal}{menu id=X css_id=custom_name}{/literal}
-		{/remarksbox}
-		</form>
-	{/tab}
-{/tabset}
+					{if $tiki_p_edit_menu eq 'y'}
+						<a class="btn btn-default btn-sm" href="{service controller=menu action=clone menuId={$channels[user].menuId} modal=true}" data-toggle="modal" data-target="#bootstrap-modal" title="{tr}Clone Menu{/tr}">
+								{glyph name="flash"}
+							</a>
+					{/if}
+				</td>
+			</tr>
+		{sectionelse}
+			{norecords _colspan=5}
+		{/section}
+	</table>
+</div>
+{pagination_links cant=$cant step=$maxRecords offset=$offset}{/pagination_links}
