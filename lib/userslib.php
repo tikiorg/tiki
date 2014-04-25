@@ -2473,8 +2473,6 @@ class UsersLib extends TikiLib
 		if (!$body) {
 			$body = $realn;
 		}
-		$class .= ' ajaxtips';
-
 		if ($this->get_user_preference($auser, 'user_information', 'public') == 'public' || $prefs['feature_friends'] == 'y') {
 			$id = $this->get_user_id($auser);
 			if ($id == -1 ) {
@@ -2493,6 +2491,8 @@ class UsersLib extends TikiLib
 					'username' => $auser,
 				));
 				$extra .= ' rel="' . htmlspecialchars($rel, ENT_QUOTES) . '"';
+				$class .= ' ajaxtips';
+
 				if ($auser === $user) {
 					$title = tra('Your Information');
 				} else {
