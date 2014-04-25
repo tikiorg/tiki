@@ -644,7 +644,11 @@ function module_since_last_visit_new($mod_reference, $params = null)
 			$ret['nonempty']++;
 		}
 	}
-	$ret['li_width'] = min(22, (int) 90 / $ret['nonempty']);
+	if ($ret['nonempty'] > 0) {
+		$ret['li_width'] = min(22, (int)90 / $ret['nonempty']);
+	} else {
+		$ret['li_width'] = 90;
+	}
 
 	$smarty->assign('slvn_info', $ret);
 }
