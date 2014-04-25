@@ -34,7 +34,7 @@
 			{/if}
 			
 			<li class="option{$chdata.optionId} menuSection menuSection{$opensec} menuLevel{$opensec}{if isset($chdata.selected) and $chdata.selected} selected{/if}{if isset($chdata.selectedAscendant) and $chdata.selectedAscendant} selectedAscendant{/if}">
-			{if not $chdata.block}
+			{if empty($chdata.block)}
 				<a{if !empty($chdata.url)} href="{if $prefs.feature_sefurl eq 'y' and $chdata.sefurl}
 							{if $prefs.menus_item_names_raw eq 'n'}
 								{$chdata.sefurl|escape}
@@ -75,7 +75,7 @@
 		{* ----------------------------- option *}
 		{elseif $chdata.type eq 'o'}
 			<li class="option{$chdata.optionId} menuOption menuLevel{$opensec}{if isset($chdata.selected) and $chdata.selected} selected{/if}{if isset($chdata.selectedAscendant) and $chdata.selectedAscendant} selectedAscendant{/if}">
-				{if not $chdata.block}
+				{if empty($chdata.block)}
 					<a href="{if $prefs.feature_sefurl eq 'y' and $chdata.sefurl}
 							{if $prefs.menus_item_names_raw eq 'n'}
 								{$chdata.sefurl|escape}
