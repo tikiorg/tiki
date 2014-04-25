@@ -1,4 +1,4 @@
-{tabset name="tracker_section_select"}
+{tabset name="tracker_section_output"}
 	{foreach $sections as $sect}
 		{tab name=$sect.heading}
 			{foreach from=$sect.fields item=field}
