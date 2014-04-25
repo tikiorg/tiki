@@ -71,55 +71,57 @@
 {tab name="{tr}Users{/tr}"}
 	<h2>{tr}Users{/tr}</h2>
 	{if !$tsOn}
-		<form method="get" action="tiki-adminusers.php">
-			<table class="text-center">
-				<tr>
-					<td><label for="find">{tr}Find{/tr}</label></td>
-					<td><input type="text" id="find" name="find" value="{$find|escape}"></td>
-					<td><input type="submit" class="btn btn-default btn-sm" value="{tr}Find{/tr}" name="search"></td>
-					<td><label for="numrows">{tr}Number of displayed rows{/tr}</label></td>
-					<td><input type="text" size="4" id="numrows" name="numrows" value="{$numrows|escape}"></td>
-				</tr>
-				<tr>
-					<td colspan="2"></td>
-					<td colspan="3">
-						<a href="javascript:toggleBlock('search')" class="link">{icon _id='add' alt="{tr}more{/tr}"}&nbsp;{tr}More Criteria{/tr}</a>
-					</td>
-				</tr>
-			</table>
+        <form method="get" class="form-horizontal col-sm-6 col-sm-offset-6 small" action="tiki-adminusers.php">
+			<div class="form-group">
+                <label class="control-label col-sm-6" for="find">{tr}Find{/tr}</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control input-sm" id="find" name="find" value="{$find|escape}">
+                </div>
+			</div>
+            <div class="form-group">
+                <label class="control-label col-sm-6" for="numrows">{tr}Number of displayed rows{/tr}</label>
+                <div class="col-sm-3">
+                    <input class="form-control input-sm" type="number" id="numrows" name="numrows" value="{$numrows|escape}">
+                </div>
+            </div>
+            <div class="col-sm-12 form-group" style="text-align:center;">
+                <a href="javascript:toggleBlock('search')" class="link">{icon _id='add' alt="{tr}more{/tr}"}&nbsp;{tr}More Criteria{/tr}</a>
+                </div>
 			{autocomplete element='#find' type='username'}
-
-			<div id="search" {if $filterGroup or $filterEmail}style="display:block;"{else}style="display:none;"{/if}>
-				<table class="text-center">
-					<tr>
-						<td><label for="filterGroup">{tr}Group (direct){/tr}</label></td>
-						<td>
-							<select name="filterGroup" id="filterGroup">
-								<option value=""></option>
-								{section name=ix loop=$all_groups}
-									{if $all_groups[ix] != 'Registered' && $all_groups[ix] != 'Anonymous'}
-										<option value="{$all_groups[ix]|escape}" {if $filterGroup eq $all_groups[ix]}selected{/if}>{$all_groups[ix]|escape}</option>
-									{/if}
-								{/section}
-							</select>
-						</td>
-						<td><label for="filterEmailNotConfirmed">{tr}Email not confirmed{/tr}</label></td>
-						<td><input id="filterEmailNotConfirmed" name="filterEmailNotConfirmed" type="checkbox"{if !empty($smarty.request.filterEmailNotConfirmed)} checked="checked"{/if}></td>
-						<td><label for="filterNeverLoggedIn">{tr}Never logged in{/tr}</label></td>
-						<td><input id="filterNeverLoggedIn" name="filterNeverLoggedIn" type="checkbox"{if !empty($smarty.request.filterNeverLoggedIn)} checked="checked"{/if}></td>
-					</tr>
-					<tr>
-						<td><label for="filterEmail">{tr}Email{/tr}</label></td>
-						<td><input type="text" id="filterEmail" name="filterEmail" value="{$filterEmail}"></td>
-						<td><label for="filterNotValidated">{tr}User not validated{/tr}</label></td>
-						<td><input id="filterNotValidated" name="filterNotValidated" type="checkbox"{if !empty($smarty.request.filterNotValidated)} checked="checked"{/if}></td>
-						<td></td>
-						<td></td>
-					</tr>
-				</table>
-
+            <div class="col-sm-12" id="search" {if $filterGroup or $filterEmail}style="display:block;"{else}style="display:none;"{/if}>
+				<div class="form-group">
+                    <label class="control-label col-sm-6" for="filterGroup">{tr}Group (direct){/tr}</label>
+                    <div class="col-sm-6">
+                        <select class="form-control input-sm" name="filterGroup" id="filterGroup">
+                            <option value=""></option>
+                            {section name=ix loop=$all_groups}
+                                {if $all_groups[ix] != 'Registered' && $all_groups[ix] != 'Anonymous'}
+                                    <option value="{$all_groups[ix]|escape}" {if $filterGroup eq $all_groups[ix]}selected{/if}>{$all_groups[ix]|escape}</option>
+                                {/if}
+                            {/section}
+                        </select>
+                    </div>
+				</div>
+                <div class="checkbox col-sm-offset-4 ">
+                    <label>
+                        <input id="filterEmailNotConfirmed" name="filterEmailNotConfirmed" type="checkbox"{if !empty($smarty.request.filterEmailNotConfirmed)} checked="checked"{/if}>{tr}Email not confirmed{/tr}
+                    </label>
+                </div>
+                <div class="checkbox col-sm-offset-4">
+                    <label>
+                        <input id="filterNeverLoggedIn" name="filterNeverLoggedIn" type="checkbox"{if !empty($smarty.request.filterNeverLoggedIn)} checked="checked"{/if}>{tr}Never logged in{/tr}
+                    </label>
+                </div>
+                <div class="checkbox col-sm-offset-4">
+                    <label>
+                        <input id="filterNotValidated" name="filterNotValidated" type="checkbox"{if !empty($smarty.request.filterNotValidated)} checked="checked"{/if}>{tr}User not validated{/tr}
+                    </label>
+                </div>
 				<input type="hidden" name="sort_mode" value="{$sort_mode|escape}">
 			</div>
+            <div class="col-sm-12 form-group" style="text-align:center;">
+                <input type="submit" class="btn btn-default btn-sm" value="{tr}Find{/tr}" name="search">
+            </div>
 		</form>
 	{/if}
 	{if ($cant > $numrows or !empty($initial)) && !$tsOn}

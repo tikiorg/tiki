@@ -175,7 +175,7 @@ function smarty_function_treetable($params, $smarty)
 		$_sortColumn = $_groupColumn;
 	}
 
-	$class = empty($class) ? 'treetable' : $class;	// treetable
+	$class = empty($class) ? 'table table-striped' : $class;	// treetable
 
 /*
 	if ($prefs['feature_jquery_tablesorter'] == 'y' && strpos($class, 'sortable') === false) {

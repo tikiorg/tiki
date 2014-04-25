@@ -1,4 +1,4 @@
-<?php
+a<?php
 /**
  * @package tikiwiki
  */
