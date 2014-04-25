@@ -14,11 +14,9 @@
 					<a href="javascript:addTag('{$smarty.capture.tagurl|escape:'javascript'|escape}');" onclick="javascript:needToConfirm=false">{$t|escape}</a> 
 				{/foreach}
                 {if $prefs.feature_help eq 'y'}
-                    {remarksbox type=info title="{tr}Tip{/tr}"}
-						<span class="help-block">
-							{tr}Put tags separated by spaces. For tags with more than one word, use no spaces and put words together or enclose them with double quotes.{/tr}
-						</span>
-					{/remarksbox}
+					<div class="help-block">
+						{tr}Put tags separated by spaces. For tags with more than one word, use no spaces and put words together or enclose them with double quotes.{/tr}
+					</div>
                 {/if}
 			</div>
 		</div>
