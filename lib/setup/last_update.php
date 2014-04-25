@@ -50,6 +50,9 @@ if (is_readable('.svn')) {
 					$strDT = $dt->format(DateTime::ISO8601);
 					$smarty->assign('lastup', $strDT);
 				}
+
+				// Release/Unlock the database afterwards
+				$handle->close();
 			}
 		}
 	}
