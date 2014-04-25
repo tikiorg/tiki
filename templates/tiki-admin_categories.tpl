@@ -34,7 +34,7 @@
 		{else}
 			<h2>{tr}Add new category{/tr}</h2>
 		{/if}
-		<form action="tiki-admin_categories.php" method="post" class="form-horizontal role="form">
+		<form action="tiki-admin_categories.php" method="post" class="form-horizontal" role="form">
 			<input type="hidden" name="categId" value="{$categId|escape}">
 			<div class="form-group">
                 <label class="col-sm-3 control-label" for="parentId">{tr}Parent{/tr}</label>
@@ -61,30 +61,45 @@
             </div>
 			{if $tiki_p_admin_categories == 'y'}
                 <div class="form-group">
-                <label class="col-sm-5 control-label" for="parentPerms">{tr}Apply parent category permissions{/tr}</label>
-                    <div class="col-sm-7 checkbox-inline">
-					    <input type="checkbox" name="parentPerms" {if empty($categId)}checked="checked"{/if}>
+					<div class="col-sm-9 col-sm-offset-3">
+						<div class="checkbox">
+							<label>
+								<input type="checkbox" name="parentPerms" {if empty($categId)}checked="checked"{/if}>
+								{tr}Apply parent category permissions{/tr}
+							</label>
+						</div>
 				    </div>
                 </div>
 			{/if}
-            <div class="text-center">
-			    <input type="submit" class="btn btn-default" name="save" value="{tr}Save{/tr}">
+            <div class="form-group">
+				<div class="col-sm-9 col-sm-offset-3">
+					<input type="submit" class="btn btn-primary" name="save" value="{tr}Save{/tr}">
+				</div>
             </div>
 		</form>
 	{/tab}
 
 	{if $categId <= 0}
 		{tab name="{tr}Batch upload{/tr}"}
-			<h2>{tr}Batch upload (CSV file){/tr}<a title="{tr}Help{/tr}" {popup text='category,description,parent&lt;br /&gt;vegetable,vegetable&lt;br /&gt;potato,,vegetable'}>{icon _id='help'}</a></h2>
+			<h2>{tr}Batch upload{/tr}</h2>
 			<form action="tiki-admin_categories.php" method="post" enctype="multipart/form-data" class="form-horizontal" role="form">
                 <div class="form-group">
-                    <div class="col-sm-6 col-sm-offset-3">
+					<label class="control-label col-sm-3">{tr}CSV File{/tr}</label>
+                    <div class="col-sm-9">
     				    <input type="file" class="form-control" name="csvlist">
+						<div class="help-block">
+{tr}Sample file content{/tr}
+<pre>
+category,description,parent
+vegetable,vegetable
+potato,,vegetable
+</pre>
+						</div>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-sm-3 col-sm-offset-3">
-    				    <input type="submit" class="btn btn-default" name="import" value="{tr}Add{/tr}">
+    				    <input type="submit" class="btn btn-primary" name="import" value="{tr}Upload{/tr}">
                     </div>
                 </div>
             </form>
