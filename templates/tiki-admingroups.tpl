@@ -38,7 +38,6 @@
 			<th style="width: 20px;">{select_all checkbox_names='checked[]'}</th>
 			<th>{self_link _sort_arg='sort_mode' _sort_field='id'}{tr}ID{/tr}{/self_link}</th>
 			<th>{self_link _sort_arg='sort_mode' _sort_field='groupName'}{tr}Name{/tr}{/self_link}</th>
-			<th>{self_link _sort_arg='sort_mode' _sort_field='groupDesc'}{tr}Description{/tr}{/self_link}</th>
 			<th>{tr}Inherits Permissions from{/tr}</th>
 
 			{if $prefs.useGroupHome eq 'y'}
@@ -46,8 +45,7 @@
 			{/if}			
 
 			<th>{self_link _sort_arg='sort_mode' _sort_field='userChoice'}{tr}User Choice{/tr}{/self_link}</th>
-			<th>{tr}Permissions{/tr}</th>
-			<th style="width: 20px;">&nbsp;</th>
+			<th>{tr}Actions{/tr}</th>
 		</tr>
 
 		{section name=user loop=$users}
@@ -60,8 +58,8 @@
 				<td class="id">{$users[user].id|escape}</td>
 				<td class="text">
 					<a class="link" href="tiki-admingroups.php?group={$users[user].groupName|escape:"url"}&amp;cookietab=2{if $prefs.feature_tabs ne 'y'}#tab2{/if}" title="{tr}Edit{/tr}">{$users[user].groupName|escape}</a>
+					<div class="text">{tr}{$users[user].groupDesc|escape|nl2br}{/tr}</div>
 				</td>
-				<td class="text">{tr}{$users[user].groupDesc|escape|nl2br}{/tr}</td>
 				<td class="text">
 					{section name=ix loop=$users[user].included}
 						{if !in_array($users[user].included[ix], $users[user].included_direct)}<i>{/if}
@@ -78,14 +76,11 @@
 				{/if}
 
 				<td class="text">{tr}{$users[user].userChoice}{/tr}</td>
-				<td class="text">
-					{permission_link mode=icon group=$users[user].groupName}
-					{$users[user].permcant|escape}
-				</td>
 				<td class="action">
-					<a class="link" href="tiki-admingroups.php?group={$users[user].groupName|escape:"url"}&amp;cookietab=2{if $prefs.feature_tabs ne 'y'}#tab2{/if}" title="{tr}Edit{/tr}">{icon _id='page_edit'}</a>
+					{permission_link mode=button_compact group=$users[user].groupName count=$users[user].permcant}
+					<a class="link" href="tiki-admingroups.php?group={$users[user].groupName|escape:"url"}&amp;cookietab=2{if $prefs.feature_tabs ne 'y'}#tab2{/if}" title="{tr}Edit{/tr}">{glyph name='edit'} <span class="sr-only">{tr}Edit{/tr}</span></a>
 					{if $users[user].groupName ne 'Anonymous' and $users[user].groupName ne 'Registered' and $users[user].groupName ne 'Admins'}
-						<a class="link" href="tiki-admingroups.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;action=delete&amp;group={$users[user].groupName|escape:"url"}" title="{tr}Delete{/tr}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
+						<a class="link text-danger" href="tiki-admingroups.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;action=delete&amp;group={$users[user].groupName|escape:"url"}" title="{tr}Delete{/tr}">{glyph name='remove'} <span class="sr-only">{tr}Remove{/tr}"}</span></a>
 					{/if}
 				</td>
 			</tr>
@@ -158,7 +153,7 @@
 						{/foreach}
 						<br>
 					{/if}
-					<select name="include_groups[]" id="groups_inc" multiple="multiple" size="8">
+					<select name="include_groups[]" id="groups_inc" multiple="multiple" size="8" class="form-control">
 						{if !empty($groupname)}<option value="">{tr}None{/tr}</option>{/if}
 						{foreach key=gr item=yn from=$inc}
 							<option value="{$gr|escape}" {if $yn eq 'y'} selected="selected"{/if}>{$gr|truncate:"52"|escape}</option>

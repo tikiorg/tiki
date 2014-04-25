@@ -81,6 +81,7 @@ function smarty_function_permission_link( $params, $smarty )
 			'active' => $source == 'object',
 			'mode' => $params->mode->word() ?: 'glyph',
 			'label' => $params->label->text() ?: tr('Permissions'),
+			'count' => $params->count->int(),
 		],
 	]);
 }
