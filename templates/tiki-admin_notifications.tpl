@@ -157,7 +157,7 @@
 	<table class="table normal">
 		{section name=ix loop=$forums}
 			<tr>
-				<td><a href="tiki-admin_forums.php?forumId={$forums[ix].forumId}">{$forums[ix].outbound_address|escape}</a><br/></td>
+				<td><a href="tiki-admin_forums.php?forumId={$forums[ix].forumId}&amp;cookietab=2">{$forums[ix].outbound_address|escape}</a><br/></td>
 			</tr>
 		{/section}
 	</table>
