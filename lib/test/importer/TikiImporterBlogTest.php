@@ -258,7 +258,7 @@ class TikiImporter_Blog_Test extends TikiImporter_TestCase
 	
 	public function testCreateTags()
 	{
-		global $freetaglib; require_once('lib/freetag/freetaglib.php');
+		$freetaglib = TikiLib::lib('freetag');
 		$freetaglib = $this->getMock('FreetagLib', array('find_or_create_tag'));
 		$freetaglib->expects($this->exactly(4))->method('find_or_create_tag');
 		
@@ -285,7 +285,7 @@ class TikiImporter_Blog_Test extends TikiImporter_TestCase
 
 	public function testLinkObjectWithTags()
 	{
-		global $freetaglib; require_once('lib/freetag/freetaglib.php');
+		$freetaglib = TikiLib::lib('freetag');
 		$freetaglib = $this->getMock('FreetagLib', array('_tag_object_array'));
 		$freetaglib->expects($this->once())->method('_tag_object_array');
 		

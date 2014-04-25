@@ -135,8 +135,10 @@ function wikiplugin_freetagged_info()
 
 function wikiplugin_freetagged($data, $params)
 {
-	global $freetaglib, $smarty, $tikilib, $headerlib;
-	include_once('lib/freetag/freetaglib.php');
+	$smarty = TikiLib::lib('smarty');
+	$tikilib = TikiLib::lib('tiki');
+	$headerlib = TikiLib::lib('header');
+	$freetaglib = TikiLib::lib('freetag');
 
 	$defaults =  array(
         'tags' => '',

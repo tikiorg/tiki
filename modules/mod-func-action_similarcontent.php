@@ -42,9 +42,8 @@ function module_action_similarcontent_info()
  */
 function module_action_similarcontent($mod_reference, $module_params)
 {
-	global $smarty, $freetaglib;
-
-	include_once ('lib/freetag/freetaglib.php');
+	$smarty = TikiLib::lib('smarty');
+	$freetaglib = TikiLib::lib('freetag');
 
 	$filterType = '';
 	if (isset($module_params['contentType'])) {

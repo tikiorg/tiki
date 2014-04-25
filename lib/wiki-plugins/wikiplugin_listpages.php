@@ -203,7 +203,9 @@ function wikiplugin_listpages_info()
 
 function wikiplugin_listpages($data, $params)
 {
-	global $prefs, $tiki_p_view, $tikilib, $smarty;
+	global $prefs, $tiki_p_view;
+	$tikilib = TikiLib::lib('tiki');
+	$smarty = TikiLib::lib('smarty');
 
 	if ( isset($prefs) ) {
 		// Handle 1.10.x prefs
@@ -295,8 +297,7 @@ function wikiplugin_listpages($data, $params)
 		} else {
 			$aExcludetag[] = $excludetag;
 		}
-		global $freetaglib;
-		require_once 'lib/freetag/freetaglib.php';
+		$freetaglib = TikiLib::lib('freetag');
 		$i = 0;
 
 		foreach ( $listpages['data'] as $page ) {

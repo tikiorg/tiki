@@ -5,7 +5,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-require_once 'lib/freetag/freetaglib.php';
+$freetaglib = TikiLib::lib('freetag');
 
 class FreetagTest extends TikiTestCase
 {

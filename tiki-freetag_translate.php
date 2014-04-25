@@ -23,7 +23,7 @@ if ($cat_type != 'wiki page' && $cat_type != 'article') {
 	die;
 }
 
-include_once "lib/freetag/freetaglib.php";
+$freetaglib = TikiLib::lib('freetag');
 $multilinguallib = TikiLib::lib('multilingual');
 
 if ( $cat_objId ) {

@@ -92,7 +92,7 @@ if (isset($post_info['priv']) && ($post_info['priv'] == 'y')) {
 
 if ($prefs['feature_freetags'] == 'y') {
 	// Get Tags
-	include_once ('lib/freetag/freetaglib.php');
+	$freetaglib = TikiLib::lib('freetag');
 	$post_info['freetags'] = $freetaglib->get_tags_on_object($postId, "blog post");
 
 	if ($blog_data['show_related'] == 'y' && !empty($post_info['freetags'])) {

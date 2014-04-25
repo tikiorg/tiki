@@ -30,10 +30,9 @@ function module_freetags_current_info()
  */
 function module_freetags_current($mod_reference, $module_params)
 {
-	global $user, $page, $smarty;
-	global $freetaglib;
-
-	include_once 'lib/freetag/freetaglib.php';
+	global $user, $page;
+	$smarty = TikiLib::lib('smarty');
+	$freetaglib = TikiLib::lib('freetag');
 
 	$objectperms = Perms::get(array('type' => 'wiki page', 'object' => $page));
 	if (! empty($page) && $objectperms->view) {

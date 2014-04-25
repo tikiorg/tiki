@@ -96,7 +96,7 @@ BODY;
 	}
 
 	if ($prefs['feature_freetags'] == 'y') {
-		global $freetaglib; require_once 'lib/freetag/freetaglib.php';
+		$freetaglib = TikiLib::lib('freetag');
 
 		$smarty->assign('filter_tags', isset($filter['tags']) ? $filter['tags'] : '');
 		$smarty->assign('filter_tagmap', json_encode(TikiDb::get()->fetchMap('SELECT tagId, tag FROM tiki_freetags')));

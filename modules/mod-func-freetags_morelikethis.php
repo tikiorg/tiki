@@ -38,8 +38,8 @@ function module_freetags_morelikethis_info()
  */
 function module_freetags_morelikethis($mod_reference, $module_params)
 {
-	global $smarty;
-	global $freetaglib; include_once 'lib/freetag/freetaglib.php';
+	$smarty = TikiLib::lib('smarty');
+	$freetaglib = TikiLib::lib('freetag');
 
 	$out = null;
 	if (isset($module_params['type'])) {

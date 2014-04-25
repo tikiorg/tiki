@@ -11,8 +11,8 @@
 $section = 'blogs';
 require_once ('tiki-setup.php');
 $categlib = TikiLib::lib('categ');
-include_once ('lib/blogs/bloglib.php');
-include_once ('lib/wiki/editlib.php');
+$bloglib = TikiLib::lib('blog');
+$editlib = TikiLib::lib('edit');
 
 $access->check_feature('feature_blogs');
 
@@ -80,7 +80,7 @@ if (isset($_REQUEST["publish_Hour"])) {
 }
 
 if ($prefs['feature_freetags'] == 'y') {
-	include_once ('lib/freetag/freetaglib.php');
+	$freetaglib = TikiLib::lib('freetag');
 
 	if ($prefs['feature_multilingual'] == 'y') {
 		$languages = array();
@@ -209,7 +209,7 @@ if (isset($_REQUEST['save']) && $prefs['feature_contribution'] == 'y' && $prefs[
 }
 
 if (isset($_REQUEST['save']) && !$contribution_needed) {
-	include_once ("lib/imagegals/imagegallib.php");
+	$imagegallib = TikiLib::lib('imagegal');
 	$smarty->assign('individual', 'n');
 
 	$edit_data = $imagegallib->capture_images($edit_data);

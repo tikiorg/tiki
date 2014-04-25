@@ -15,10 +15,7 @@ if (isset($_REQUEST["freetagsfeatures"])) {
 
 if (isset($_REQUEST["cleanup"])) {
 	check_ticket('admin-inc-freetags');
-	global $freetaglib;
-	if (!is_object($freetaglib)) {
-		include_once ('lib/freetag/freetaglib.php');
-	}
+	$freetaglib = TikiLib::lib('freetag');
 	$freetaglib->cleanup_tags();
 }
 

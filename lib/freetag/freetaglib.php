@@ -1651,4 +1651,3 @@ class FreetagLib extends ObjectLib
 	}
 }
 
-$freetaglib = new FreetagLib;

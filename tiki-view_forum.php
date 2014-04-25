@@ -14,7 +14,7 @@ if ($prefs['feature_categories'] == 'y') {
 	$categlib = TikiLib::lib('categ');
 }
 if ($prefs['feature_freetags'] == 'y') {
-	include_once ('lib/freetag/freetaglib.php');
+	$freetaglib = TikiLib::lib('freetag');
 }
 
 $access->check_feature('feature_forums');

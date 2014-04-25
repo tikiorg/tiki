@@ -10,7 +10,7 @@
 
 $section = 'freetags';
 require_once ('tiki-setup.php');
-include_once ('lib/freetag/freetaglib.php');
+$freetaglib = TikiLib::lib('freetag');
 $access->check_feature('feature_freetags');
 $access->check_permission('tiki_p_view_freetags');
 

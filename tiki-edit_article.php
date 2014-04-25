@@ -15,12 +15,11 @@ $inputConfiguration = array(
 
 require_once ('tiki-setup.php');
 $categlib = TikiLib::lib('categ');
-include_once ('lib/articles/artlib.php');
+$artlib = TikiLib::lib('art');
 
 //get_strings tra('New Article')
 if ($prefs['feature_freetags'] == 'y') {
-	global $freetaglib;
-	include_once('lib/freetag/freetaglib.php');
+	$freetaglib = TikiLib::lib('freetag');
 }
 $access->check_feature('feature_articles');
 

@@ -11,9 +11,9 @@
 $section = 'cms';
 //get_strings tra('Articles Home');
 require_once ('tiki-setup.php');
-include_once ('lib/articles/artlib.php');
+$artlib = TikiLib::lib('art');
 if ($prefs['feature_freetags'] == 'y') {
-	include_once ('lib/freetag/freetaglib.php');
+	$freetaglib = TikiLib::lib('freetag');
 }
 if ($prefs['feature_categories'] == 'y') {
 	$categlib = TikiLib::lib('categ');

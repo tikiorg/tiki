@@ -32,9 +32,9 @@ function module_freetags_prefered_info()
 function module_freetags_prefered($mod_reference, $module_params)
 {
 	global $user;
-	global $smarty;
+	$smarty = TikiLib::lib('smarty');
 	if ($user) {
-		global $freetaglib;	require_once("lib/freetag/freetaglib.php");
+		$freetaglib = TikiLib::lib('freetag');
 		$preferred_tags = $freetaglib->get_most_popular_tags($user, 0, $mod_reference["rows"]);
 		$smarty->assign('preferred_tags', $preferred_tags);
 		$smarty->assign('tpl_module_title', tra('My preferred tags'));

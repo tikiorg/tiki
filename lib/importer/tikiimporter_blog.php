@@ -15,7 +15,6 @@
  */
 
 require_once('tikiimporter.php');
-require_once('lib/blogs/bloglib.php');
 
 /**
  * Class to provide basic functionalities to blog importers. So far
@@ -278,7 +277,7 @@ class TikiImporter_Blog extends TikiImporter
 	 */
 	function createTags($tags)
 	{
-		global $freetaglib; require_once('lib/freetag/freetaglib.php');
+		$freetaglib = TikiLib::lib('freetag');
 		foreach ($tags as $tag) {
 			$freetaglib->find_or_create_tag($tag);
 		}
@@ -294,7 +293,7 @@ class TikiImporter_Blog extends TikiImporter
 	 */
 	function linkObjectWithTags($objId, $type, $tags)
 	{
-		global $freetaglib; require_once('lib/freetag/freetaglib.php');
+		$freetaglib = TikiLib::lib('freetag');
 		global $user;
 
 		$freetaglib->_tag_object_array($user, $objId, $type, $tags);
@@ -375,7 +374,7 @@ class TikiImporter_Blog extends TikiImporter
 	 */
 	function insertPost($post)
 	{
-		global $bloglib;
+		$bloglib = TikiLib::lib('blog');
 		$objectlib = TikiLib::lib('object');
 
 		$post = array_merge(array('content' => '', 'excerpt' => '', 'author' => '', 'name' => '', 'created' => 0), $post);	// set defaults

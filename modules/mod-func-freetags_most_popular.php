@@ -71,10 +71,10 @@ function module_freetags_most_popular_info()
  */
 function module_freetags_most_popular($mod_reference, $module_params)
 {
-	global $smarty;
+	$smarty = TikiLib::lib('smarty');
 	$globalperms = Perms::get();
 	if ($globalperms->view_freetags) {
-		global $freetaglib; require_once 'lib/freetag/freetaglib.php';
+		$freetaglib = TikiLib::lib('freetag');
 		$most_popular_tags = $freetaglib->get_most_popular_tags('', 0, empty($module_params['max']) ? $mod_reference["rows"] : $module_params['max'], empty($module_params['where'])?'': $module_params['where'], empty($module_params['objectId'])?'': $module_params['objectId']);
 		$smarty->assign_by_ref('most_popular_tags', $most_popular_tags);
 		$smarty->assign('type', (isset($module_params['type']) && $module_params['type'] == 'cloud') ? 'cloud' : 'list');

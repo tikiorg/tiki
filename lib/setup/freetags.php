@@ -9,7 +9,7 @@
 $access->check_script($_SERVER['SCRIPT_NAME'], basename(__FILE__));
 
 if ( isset($section) and isset($sections[$section])) {
-	include_once ('lib/freetag/freetaglib.php');
+	$freetaglib = TikiLib::lib('freetag');
 	$here = $sections[$section];
 	if ( $tiki_p_freetags_tag == 'y' && isset($_POST['addtags']) && trim($_POST['addtags']) != '' ) {
 		if ( ! isset($user) ) $userid = 0;

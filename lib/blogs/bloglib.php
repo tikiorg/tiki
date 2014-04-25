@@ -152,7 +152,7 @@ class BlogLib extends TikiDb_Bridge
 	 */
 	function list_user_blogs($user, $include_public = false)
 	{
-		global $tikilib;
+		$tikilib = TikiLib::lib('tiki');
 
 		$query = "select * from `tiki_blogs` where `user`=? ";
 		$bindvars=array($user);
@@ -180,7 +180,9 @@ class BlogLib extends TikiDb_Bridge
 	 */
 	function list_blogs_user_can_post()
 	{
-		global $tikilib, $tiki_p_blog_admin, $user;
+		global $tiki_p_blog_admin, $user;
+		$tikilib = TikiLib::lib('tiki');
+
 		$query = "select * from `tiki_blogs` order by `title` asc";
 		$result = $this->fetchAll($query);
 		$ret = array();
@@ -209,7 +211,7 @@ class BlogLib extends TikiDb_Bridge
 	 */
 	function list_posts($offset = 0, $maxRecords = -1, $sort_mode = 'created_desc', $find = '', $filterByBlogId = -1, $author='', $ref='', $date_min = 0, $date_max = 0)
 	{
-		global $tikilib;
+		$tikilib = TikiLib::lib('tiki');
 
 		$authorized_blogs = $this->list_blogs(0, -1, 'created_desc', '', $ref);
 		$permit_blogs = array();
@@ -380,7 +382,7 @@ class BlogLib extends TikiDb_Bridge
 	 */
 	function get_post_images($postId)
 	{
-		global $tikilib;
+		$tikilib = TikiLib::lib('tiki');
 		$query = "select `postId`,`filename`,`filesize`,`imgId` from `tiki_blog_posts_images` where `postId`=?";
 
 		$result = $this->query($query, array((int) $postId));
@@ -446,7 +448,8 @@ class BlogLib extends TikiDb_Bridge
 	)
 	{
 		//TODO: all the display parameters can be one single array parameter
-		global $tikilib, $prefs;
+		global $prefs;
+		$tikilib = TikiLib::lib('tiki');
 
 		if ($lastModif == 0) {
 			$lastModif = $tikilib->now;
@@ -500,10 +503,11 @@ class BlogLib extends TikiDb_Bridge
 							$date_min = '', $date_max = '', $approved = 'y'
 	)
 	{
-		global $tikilib, $tiki_p_admin, $tiki_p_blog_admin, $tiki_p_blog_post, $user, $prefs;
+		global $tiki_p_admin, $tiki_p_blog_admin, $tiki_p_blog_post, $user, $prefs;
 
 		$parserlib = TikiLib::lib('parser');
 		$categlib = TikiLib::lib('categ');
+		$tikilib = TikiLib::lib('tiki');
 
 		$mid = array();
 		$bindvars = array();
@@ -724,7 +728,9 @@ class BlogLib extends TikiDb_Bridge
 	function blog_post($blogId, $data, $excerpt, $user, $title = '', $contributions = '', $priv = 'n', $created = 0, $is_wysiwyg=FALSE)
 	{
 		// update tiki_blogs and call activity functions
-		global $smarty, $tikilib, $prefs;
+		global $prefs;
+		$tikilib = TikiLib::lib('tiki');
+		$smarty = TikiLib::lib('smarty');
 
 		$wysiwyg=$is_wysiwyg==TRUE?'y':'n';
 		if (!$created) {
@@ -882,7 +888,7 @@ class BlogLib extends TikiDb_Bridge
 	 */
 	function get_post($postId, $adjacent = false)
 	{
-		global $tikilib;
+		$tikilib = TikiLib::lib('tiki');
 
 		$query = "select * from `tiki_blog_posts` where `postId`=?";
 		$result = $this->query($query, array((int) $postId));
@@ -908,7 +914,7 @@ class BlogLib extends TikiDb_Bridge
 	 */
 	function get_related_posts($postId, $maxResults = 5)
 	{
-		global $freetaglib;
+		$freetaglib = TikiLib::lib('freetag');
 		$related_posts = $freetaglib->get_similar('blog post', $postId, $maxResults);
 
 		// extract 'postId' from href to be able to use {self_link}
@@ -976,7 +982,8 @@ class BlogLib extends TikiDb_Bridge
 						$contributions = '', $priv='n', $created = 0, $is_wysiwyg=FALSE
 	)
 	{
-		global $tikilib, $prefs;
+		global $prefs;
+		$tikilib = TikiLib::lib('tiki');
 
 		if ($is_wysiwyg) {
 			$data = TikiFilter::get('purifier')->filter($data);
@@ -1054,7 +1061,7 @@ class BlogLib extends TikiDb_Bridge
 	 */
 	function add_blog_activity($blogId)
 	{
-		global $tikilib;
+		$tikilib = TikiLib::lib('tiki');
 
 		//Caclulate activity, update tiki_blogs and purge activity table
 		$today = $tikilib->make_time(0, 0, 0, $tikilib->date_format("%m"), $tikilib->date_format("%d"), $tikilib->date_format("%Y"));
@@ -1126,7 +1133,7 @@ class BlogLib extends TikiDb_Bridge
 	 */
 	function check_blog_exists($blogId)
 	{
-		global $smarty;
+		$smarty = TikiLib::lib('smarty');
 
 		if (!$this->blog_exists($blogId)) {
 			$msg = tra('Blog cannot be found');
@@ -1169,7 +1176,7 @@ class BlogLib extends TikiDb_Bridge
 	}
 	function mod_blog_posts(&$blogItems, $charCount, $wordBoundary='y', $ellipsis='y', $more='y')
 	{
-		global $smarty;
+		$smarty = TikiLib::lib('smarty');
 
 		/* The function takes an argument asking if the break should occur on a
 		   word boundary. The truncate function asks if words can be broken.
