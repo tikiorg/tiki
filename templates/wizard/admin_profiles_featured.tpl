@@ -25,7 +25,7 @@
 		<a href="http://tiki.org/display524" class="internal" rel="box" title="{tr}Click to expand{/tr}">
 			<img src="http://tiki.org/display524"  width="100" style="display:block; margin-left:auto; margin-right:auto;border:1px solid darkgray;" alt="Click to expand" class="regImage pluginImg" title="{tr}Click to expand{/tr}" />
 		</a>
-		<div class="mini" style="width:100px;">
+		<div class="mini">
 			<div class="thumbcaption">{tr}Click to expand{/tr}</div>
 		</div>
 	</div>
@@ -51,7 +51,7 @@
 		<a href="http://tiki.org/display525" class="internal" rel="box" title="{tr}Click to expand{/tr}">
 			<img src="http://tiki.org/display525"  width="100" style="display:block; margin-left:auto; margin-right:auto;border:1px solid darkgray;" alt="Click to expand" class="regImage pluginImg" title="{tr}Click to expand{/tr}" />
 		</a>
-		<div class="mini" style="width:100px;">
+		<div class="mini">
 			<div class="thumbcaption">{tr}Click to expand{/tr}</div>
 		</div>
 	</div>
@@ -76,7 +76,7 @@
 		<a href="http://tiki.org/display526" class="internal" rel="box" title="{tr}Click to expand{/tr}">
 			<img src="http://tiki.org/display526"  width="100" style="display:block; margin-left:auto; margin-right:auto;border:1px solid darkgray;" alt="Click to expand" class="regImage pluginImg" title="{tr}Click to expand{/tr}" />
 		</a>
-		<div class="mini" style="width:100px;">
+		<div class="mini">
 			<div class="thumbcaption">{tr}Click to expand{/tr}</div>
 		</div>
 	</div>
@@ -102,7 +102,7 @@
 		<a href="http://tiki.org/display527" class="internal" rel="box" title="{tr}Click to expand{/tr}">
 			<img src="http://tiki.org/display527"  width="100" style="display:block; margin-left:auto; margin-right:auto;border:1px solid darkgray;" alt="Click to expand" class="regImage pluginImg" title="{tr}Click to expand{/tr}" />
 		</a>
-		<div class="mini" style="width:100px;">
+		<div class="mini">
 			<div class="thumbcaption">{tr}Click to expand{/tr}</div>
 		</div>
 	</div>
