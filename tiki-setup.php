@@ -516,9 +516,6 @@ if ($prefs['mobile_feature'] === 'y' && $prefs['mobile_mode'] === 'y') {
 		$headerlib->add_jsfile('vendor/jquery/plugins/colorbox/jquery.colorbox.js');
 		$headerlib->add_cssfile('vendor/jquery/plugins/colorbox/' . $prefs['jquery_colorbox_theme'] . '/colorbox.css');
 	}
-	if ( $prefs['feature_jquery'] != 'y' || $prefs['feature_jquery_tablesorter'] != 'y' ) {
-		$headerlib->add_jsfile('lib/tiki-js-sorttable.js');
-	}
 
 	if ( $prefs['wikiplugin_flash'] == 'y' ) {
 		$headerlib->add_jsfile('lib/swfobject/swfobject.js');
