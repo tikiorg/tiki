@@ -1,24 +1,22 @@
 {* $Id$ *}
 <form action="tiki-admin.php?page=workspace" method="post">
-	<div class="heading input_submit_container" style="text-align: right">
-		<input type="submit" class="btn btn-default btn-sm" name="workspacesetprefs" value="{tr}Change preferences{/tr}" />
+	<div class="row">
+		<div class="form-group col-lg-12">
+			<a class="btn btn-default" href="{service controller=workspace action=list_templates}" title="{tr}List{/tr}">
+				{glyph name="list"} {tr}Workspace Templates{/tr}
+			</a>
+			<div class="pull-right">
+				<input type="submit" class="btn btn-primary btn-sm" name="workspacesetprefs" value="{tr}Apply{/tr}" />
+			</div>
+		</div>
 	</div>
-	{tabset}
+	{tabset name="admin_workspaces_areas"}
 		{tab name="{tr}Workspaces{/tr}"}
             <h2>{tr}Workspaces{/tr}</h2>
 
 			<fieldset class="table">
 				<legend>{tr}Activate the feature{/tr}</legend>
 				{preference name=workspace_ui visible="always"}
-			</fieldset>
-
-			<fieldset class="table">
-				<legend>{tr}Administration{/tr}</legend>
-				<a class="button service-dialog" href="{service controller=workspace action=create}">{tr}Create a workspace{/tr}</a>
-
-				<div id="template-list">
-				</div>
-				<a class="button service-dialog reload" href="{service controller=workspace action=add_template}">{tr}Create a workspace template{/tr}</a>
 			</fieldset>
 
 			<fieldset class="table">
@@ -106,8 +104,8 @@ $(".enabledChecks").click(function() {
                 </div>
 			</fieldset>
 			{remarksbox type="info" title="{tr}Hint{/tr}"}{tr}This tab shows you an overview of categories affected by the areas feature. <br> More help here: <a href="http://doc.tiki.org/Areas" target="tikihelp">doc.tiki.org/Areas</a> {/tr}{/remarksbox}
-			<div class="heading input_submit_container" style="text-align: center">
-				<input type="submit" class="btn btn-default btn-sm" name="update_areas" value="{tr}Update areas{/tr}" />
+			<div class="form-group heading input_submit_container" style="text-align: center">
+				<input type="submit" class="btn btn-primary btn-sm" name="update_areas" value="{tr}Update areas{/tr}" />
 			</div>
 			<div class="adminoptionboxchild" id="feature_areas_childcontainer">
 				{preference name=areas_root}
@@ -115,7 +113,11 @@ $(".enabledChecks").click(function() {
 
 		{/tab}
 	{/tabset}
-	<div class="heading input_submit_container" style="text-align: center">
-		<input type="submit" class="btn btn-default btn-sm" name="workspacesetprefs" value="{tr}Change preferences{/tr}" />
+	<div class="row">
+		<div class="form-group col-lg-12">
+			<div class="text-center">
+				<input type="submit" class="btn btn-primary btn-sm" name="workspacesetprefs" value="{tr}Apply{/tr}" />
+			</div>
+		</div>
 	</div>
 </form>

@@ -5,14 +5,15 @@
 {/block}
 
 {block name="content"}
-<form method="post" action="{service controller=workspace action=add_template}">
-	<label>
-		{tr}Name{/tr}
-		<input type="text" name="name">
-	</label>
-
-	<div class="submit">
-		<input type="submit" class="btn btn-default btn-sm" value="{tr}Add template{/tr}">
-	</div>
-</form>
+	<form method="post" action="{service controller=workspace action=add_template}" class="form" role="form">
+		<div class="form-group">
+			<label for="name" class="control-label">
+				{tr}Name{/tr}
+			</label>
+			<input type="text" name="name" class="form-control">
+		</div>
+		<div class="submit">
+			<input type="submit" class="btn btn-primary" value="{tr}Create{/tr}">
+		</div>
+	</form>
 {/block}
