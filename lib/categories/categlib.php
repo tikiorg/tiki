@@ -338,7 +338,7 @@ class CategLib extends ObjectLib
 		$query = "insert into `tiki_category_objects`(`catObjectId`,`categId`) values(?,?)";
 		$result = $this->query($query, array((int) $catObjectId,(int) $categId));
 
-		$cachelib->empty_type_cache("allcategs");
+		TikiLib::lib('cache')->empty_type_cache("allcategs");
 		$info = TikiLib::lib('object')->get_object_via_objectid($catObjectId);
 		if ($prefs['feature_actionlog'] == 'y') {
 			$logslib = TikiLib::lib('logs');
