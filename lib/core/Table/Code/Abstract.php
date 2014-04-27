@@ -54,8 +54,8 @@ class Table_Code_Abstract
 		$class = get_class($this);
 		if ($class == 'Table_Code_Manager') {
 			self::$s = $settings;
-			self::$id = $settings['id'];
-			self::$tid = 'table#' . $settings['id'] . '_table';
+			self::$id = $settings['id'] . '-div';
+			self::$tid = 'table#' . $settings['id'];
 			//overall sort on unless sort type set to false
 			self::$sorts = isset($settings['sorts']['type']) && $settings['sorts']['type'] === false ? false : true;
 			self::$sortcol = isset(self::$s['columns']) && count(array_column(self::$s['columns'], 'sort')) > 0 ? true : false;

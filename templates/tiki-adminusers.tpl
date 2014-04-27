@@ -129,8 +129,8 @@
 	{/if}
 
 	<form name="checkform" method="post" action="{$smarty.server.PHP_SELF}">
-		<div id="usertable" {if $tsOn}style="visibility: hidden"{/if}>
-			<table id="usertable_table" class="table normal">
+		<div id="adminusers-div" {if $tsOn}style="visibility: hidden"{/if}>
+			<table id="adminusers" class="table normal">
 				{* Note: for any changes in the logic determining which columns are shown, corresponding changes will
 				need to be made in the getTableSettings function at /lib/core/Table/Settings/Adminusers.php *}
 				<thead>

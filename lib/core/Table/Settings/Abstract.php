@@ -69,6 +69,7 @@ abstract class Table_Settings_Abstract
 			'type' => false,
 //			'url' => 'tiki-adminusers.php?{sort:sort}&{filter:filter}',
 //			'offset' => 'offset'
+//			'custom' => false,		//url sort and filter params manipulated on the server side if set to false
 		),
 /*
 		//Set individual sort and filter settings for each column

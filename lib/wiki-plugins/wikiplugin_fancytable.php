@@ -89,7 +89,7 @@ function wikiplugin_fancytable($data, $params)
 		if (Table_Check::isEnabled()) {
 			$ts = new Table_Plugin;
 			$ts->setSettings(
-				'fancytable_' . $iFancytable,
+				'wpfancytable' . $iFancytable,
 				'n',
 				$sortable,
 				isset($sortList) ? $sortList : null,
@@ -124,8 +124,8 @@ function wikiplugin_fancytable($data, $params)
 
 	//Start the table
 	$style = $sort === true ? ' style="visibility:hidden"' : '';
-	$wret = '<div id="fancytable_' . $iFancytable . '"' . $style . '>' . "\r\t";
-	$wret .= '<table class="normal" id="fancytable_' . $iFancytable . '_table">' . "\r\t";
+	$wret = '<div id="wpfancytable' . $iFancytable . '-div"' . $style . '>' . "\r\t";
+	$wret .= '<table class="table normal" id="wpfancytable' . $iFancytable . '">' . "\r\t";
 
 	//Header
 	if (isset($head)) {

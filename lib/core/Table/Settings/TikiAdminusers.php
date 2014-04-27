@@ -23,7 +23,7 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
 class Table_Settings_TikiAdminusers extends Table_Settings_Abstract
 {
 	protected $ts = array(
-		'id' => 'usertable',
+		'id' => 'adminusers',
 		'selflinks' => true,
 		'sorts' => array(
 			'type' => 'reset',
