@@ -29,70 +29,121 @@ abstract class Table_Settings_Abstract
 	protected $default = array(
 		//this is the id of the table
 		'id' => 'tsTable',
-		//TODO choosing themes is not yet implemented
-		'theme' => 'tiki',
-		'total' => '',
 //		'selflinks' => true,				//if smarty self_links need to be removed
+		//overall sort settings for the table - individual column settings are under columns below
 		'sorts' => array(
-			'group' => true,
 			'type' => 'reset',				//choices: boolean true, boolean false, save, reset, savereset.
-/*			'columns' => array(				//zero-based column index, used only if column-specific settings
+			'group' => true,				//overall switch to allow or disallow group headings
+//			'multisort' => false,				//multisort on by default - set to false to disable
+		),
+		//overall filter settings for the table or external filters - individual column settings are under columns below
+		'filters' => array(
+			'type' => 'reset',						//choices: boolean true, boolean false, reset
+			'external' => false,
+/*
+			'hide' => false,					//to hide filters. choices: true, false (default)
+			//for filters external to the table
+			'external' => array(
 				0 => array(
+					'type' => 'dropdown',
+					'options' => array(
+						//label => url parameter value
+						'Email not confirmed' => 'filterEmailNotConfirmed=on',
+						'User not validated' => 'filterNotValidated=on',
+						'Never logged in' => 'filterNeverLoggedIn=on',
+					),
+				),
+			),
+*/
+		),
+/*
+		//to add pagination controls
+		'pager' => array(
+			'type' => true,					//choices: boolean true, boolean false
+			'max' => 25,
+			'expand' => array(50, 100, 250, 500),
+		),
+*/
+		//set whether filtering and sorting will be done server-side or client side
+		'ajax' => array(
+			'type' => false,
+//			'url' => 'tiki-adminusers.php?{sort:sort}&{filter:filter}',
+//			'offset' => 'offset'
+		),
+/*
+		//Set individual sort and filter settings for each column
+		//No need to set if overall sorts and filters settings for the table are set to false above
+		'columns' => array(				//zero-based column index, used only if column-specific settings
+			0 => array(
+				//sort settings for the 1st column
+				'sort' => array(
 					'type' => true,			//choices: boolean true, boolean false, text, digit, currency, percent,
 											//usLongDate, shortDate, isoDate, dateFormat-ddmmyyyy, ipAddress, url, time
 											//also string-min (sort strings in a numeric column as large negative number)
 											//empty-top (sorts empty cells to the top)
 					'dir' => 'asc',			//asc for ascending and desc for descending
-					'ajax' => 'login',
+					'ajax' =>'email',		//parameter name that is used when querying the database for this field value
+											//when ajax is used
 					'group' => 'letter'		//choices: letter (first letter), word (first word), number, date, date-year,
 											//date-month, date-day, date-week, date-time. letter and word can be
 											//extended, e.g., word-2 shows first 2 words. number-10 will group rows
 											//in blocks of ten.
 				),
-			),
-			'multisort' => false,				//multisort on by default - set to false to disable
-*/
-		),
-		'filters' => array(
-			'type' => 'reset',						//choices: boolean true, boolean false, reset
-			'external' => false,
-/*			'hide' => false,					//to hide filters. choices: true, false (default)
-			'columns' => array(
-				0 => array(
-					'type' => 'text',					//choices: text, dropdown, date, range, none
-					'placeholder' => 'Enter a value'	//override default placeholder text
+				//filter settings for the 1st column
+				'filter' => array(
+					//for a text input box where user can type to filter
+					'type' => 'text',							//choices: text, dropdown, date, range, non
+					'placeholder' => 'Enter valid email...',	//override default placeholder text
+					'ajax' => 'filterEmail',
 				),
-				4 => array(
+			),
+			1 => array(
+				//sort settings for the 2nd column
+				'sort' => array(
+					'type' => false,
+				),
+				//filter settings for the 2nd column
+				'filter' => array(
+					//for a dropdown list for filtering
 					'type' => 'dropdown',
-					'options' => array(		//options optional; automatically generated from column values if not set
+					//options are optional -  automatically generated from column values if not set
+					//but automatic values will only reflect rows returned from server if ajax is used
+					'options' => array(
 						'first filter',
 						'second filter'
 					)
 				),
-				2 => array(
+			),
+			2 => array(
+				//sort settings for the 3rd column
+				'sort' => array(
+					'type' => false,
+				),
+				//filter settings for the 3rd column
+				'filter' => array(
+					//a sliding range filter for numeric fields
 					'type' => 'range',
 					'from' => 10,
 					'to' => 100,
-					'style' => popup				//choices: popup or inline
+					'style' => 'popup'				//choices: popup or inline
 				),
-				3 => array(
+			),
+			3 => array(
+				//sort settings for the 4th column
+				'sort' => array(
+					'type' => false,
+				),
+				//filter settings for the 4th column
+				'filter' => array(
+					//produces from and to date fields for filtering
 					'type' => 'date',
 					'from' => '2013-12-15',
 					'to' => '2013-12-16',
 					'format' => 'yy-mm-dd'
-				)
+				),
 			),
-*/
 		),
-/*		'pager' => array(
-			'type' => true,					//choices: true, false
-			'max' => 25,
-			'expand' => array(50, 100, 250, 500),
-		),*/
-		'ajax' => array(
-			'type' => false,
-//			'url' => 'tiki-adminusers.php?{sort:sort}&{filter:filter}',
-		)
+*/
 	);
 
 	/**
