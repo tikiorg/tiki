@@ -802,17 +802,6 @@
 			"type": "package",
 			"package": {
 				"name": "jquery/plugins/tablesorter",
-				"version": "2.15.14",
-				"dist": {
-					"url": "https://github.com/Mottie/tablesorter/archive/v2.15.14.zip",
-					"type": "zip"
-				}
-			}
-		},
-		{
-			"type": "package",
-			"package": {
-				"name": "jquery/plugins/tablesorter",
 				"version": "2.16.2",
 				"dist": {
 					"url": "https://github.com/Mottie/tablesorter/archive/v2.16.2.zip",

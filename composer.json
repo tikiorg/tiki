@@ -48,7 +48,7 @@
 		"jquery/plugins/pxem": "0.1",
 		"jquery/plugins/reflection-jquery": "1.1",
 		"jquery/plugins/superfish": "1.7.4",
-		"jquery/plugins/tablesorter": "2.15.14",
+		"jquery/plugins/tablesorter": "2.16.2",
 		"jquery/plugins/treetable": "3.0.2",
 		"jquery/plugins/zoom": "1.7.10",
         "md5/md5": ">=1.1.0",
@@ -76,8 +76,7 @@
 	},
 	"require-dev": {
 		"mikey179/vfsStream": "1.1.0",
-        "bafs/testify": "dev-master",
-        "tablesorter/tablesorter": "dev-master"
+        "bafs/testify": "dev-master"
 	},
 	"config": {
 		"process-timeout": 5000

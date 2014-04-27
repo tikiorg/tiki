@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "9561cffaacfee6723c02afc7fc10e9a7",
+    "hash": "5c1c18a71ee4e29afe9e604ca80bfa9a",
     "packages": [
         {
             "name": "aFarkas/html5shiv",
@@ -799,12 +799,12 @@
         },
         {
             "name": "jquery/plugins/tablesorter",
-            "version": "2.15.14",
+            "version": "2.16.2",
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/jquery-plugins-tablesorter-2.15.14.zip",
-                "reference": "2.15.14",
-                "shasum": "7039e15ac55f05539b05c1b9706016b73ec1d33e"
+                "url": "https://composer.tiki.org/dist/jquery-plugins-tablesorter-2.16.2.zip",
+                "reference": "2.16.2",
+                "shasum": "53725950a327d584f0bfe25d7915a8475b38f50a"
             },
             "type": "library"
         },
@@ -1188,7 +1188,9 @@
             "authors": [
                 {
                     "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com"
+                    "email": "fabien@symfony.com",
+                    "homepage": "http://fabien.potencier.org",
+                    "role": "Lead Developer"
                 },
                 {
                     "name": "Symfony Community",
@@ -1260,17 +1262,17 @@
         },
         {
             "name": "symfony/filesystem",
-            "version": "v2.4.3",
+            "version": "v2.4.4",
             "target-dir": "Symfony/Component/Filesystem",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Filesystem.git",
-                "reference": "b717952487176a993e9b12a08b87beae25ae419c"
+                "reference": "a3af8294bcce4a7c1b2892363b0c9d8109affad4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Filesystem/zipball/b717952487176a993e9b12a08b87beae25ae419c",
-                "reference": "b717952487176a993e9b12a08b87beae25ae419c",
+                "url": "https://api.github.com/repos/symfony/Filesystem/zipball/a3af8294bcce4a7c1b2892363b0c9d8109affad4",
+                "reference": "a3af8294bcce4a7c1b2892363b0c9d8109affad4",
                 "shasum": ""
             },
             "require": {
@@ -1305,7 +1307,7 @@
             ],
             "description": "Symfony Filesystem Component",
             "homepage": "http://symfony.com",
-            "time": "2014-03-26 11:55:03"
+            "time": "2014-04-16 10:34:31"
         },
         {
             "name": "tijsverkoyen/css-to-inline-styles",
@@ -1659,37 +1661,6 @@
             ],
             "homepage": "http://vfs.bovigo.org/",
             "time": "2012-08-25 05:49:29"
-        },
-        {
-            "name": "tablesorter/tablesorter",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/Mottie/tablesorter.git",
-                "reference": "261b009af12bea8d7e873636659b11b98556a066"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://github.com/Mottie/tablesorter/archive/master.zip",
-                "reference": "261b009af12bea8d7e873636659b11b98556a066",
-                "shasum": ""
-            },
-            "type": "library",
-            "license": [
-                "GPL",
-                "MIT"
-            ],
-            "description": "tablesorter is a jQuery plugin for turning a standard HTML table with THEAD and TBODY tags into a sortable table without page refreshes. tablesorter can successfully parse and sort many types of data including linked data in a cell.",
-            "keywords": [
-                "javascript",
-                "sort",
-                "table"
-            ],
-            "support": {
-                "source": "https://github.com/Mottie/tablesorter/tree/master",
-                "issues": "https://github.com/Mottie/tablesorter/issues"
-            },
-            "time": "2014-03-10 02:23:08"
         }
     ],
     "aliases": [
@@ -1703,8 +1674,7 @@
         "wikilingo/wikilingo": 20,
         "flp/flp": 20,
         "wikilingo/codemirror": 20,
-        "bafs/testify": 20,
-        "tablesorter/tablesorter": 20
+        "bafs/testify": 20
     },
     "platform": [
 
