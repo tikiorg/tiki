@@ -120,7 +120,7 @@ class Table_Code_MainOptions extends Table_Code_Manager
 			$w[] = 'filter';
 		}
 		//pager
-		if (parent::$ajax) {
+		if (parent::$pager) {
 			$w[] = 'pager';
 		}
 		if (count($w) > 0) {

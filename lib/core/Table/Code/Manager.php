@@ -34,7 +34,6 @@ class Table_Code_Manager extends Table_Code_Abstract
 			'mainOptions' => '',
 			'widgetOptions' => '',
 		),
-		'pager' => '',
 	);
 
 	/**
@@ -63,11 +62,8 @@ class Table_Code_Manager extends Table_Code_Abstract
 		//put sections together into final overall code
 		self::$code['main'] = $this->iterate(
 			self::$code['main'], $this->nt . '$(\''. self::$tid
-			. '\').tablesorter({', $this->nt . '})', '', ''
+			. '\').tablesorter({', $this->nt . '});', '', ''
 		);
-		if (empty(self::$code['pager'])) {
-			self::$code['main'] .= ';';
-		}
 		$parts = '';
 		foreach (self::$code as $section) {
 			$parts .= $section;

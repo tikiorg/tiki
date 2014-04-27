@@ -40,17 +40,16 @@ class Table_Code_WidgetOptions extends Table_Code_Manager
 			}
 		}
 
-		//filter
-		$wof = Table_Factory::build('WidgetOptionsFilter', parent::$s, 'code')->getOptionArray();
-		$wo = $wof === false ? $wo : $wo + $wof;
+		//now incorporate options which are handled child classes
+		$classes = ['Filter', 'Pager'];
+		foreach ($classes as $option) {
+			$optarray = Table_Factory::build('WidgetOptions' . $option, parent::$s, 'code')->getOptionArray();
+			$wo = $optarray === false ? $wo : array_merge($wo, $optarray);
+		}
 
 		if (count($wo) > 0) {
-			if (!parent::$ajax) {
-				$code = $this->iterate($wo, $this->nt2 . 'widgetOptions : {', $this->nt2 . '}', $this->nt3, '');
-				parent::$code[self::$level1][self::$level2] = $code;
-			} else {
-				parent::$tempcode['wo'] = $wo;
-			}
+			$code = $this->iterate($wo, $this->nt2 . 'widgetOptions : {', $this->nt2 . '}', $this->nt3, '');
+			parent::$code[self::$level1][self::$level2] = $code;
 		}
 	}
 

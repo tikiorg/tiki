@@ -20,19 +20,24 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
  * @subpackage Table
  * @uses Table_Code_Manager
  */
-class Table_Code_Pager extends Table_Code_Manager
+class Table_Code_WidgetOptionsPager extends Table_Code_WidgetOptions
 {
 
-	public function setCode()
+	public function getOptionArray()
 	{
 		$p = array();
-		$pre = parent::$ajax ? 'pager_' : '';
+		$pre = 'pager_';
 		//add pager controls
 		if (parent::$pager) {
 			$p[] = $pre . 'size: ' . parent::$s['pager']['max'];
+			//pager css
+			$pc[] = 'container: \'ts-pager\'';
+			$p[] = $this->iterate($pc, $pre . 'css: {', $this->nt3 . '}', $this->nt4, '');
+			//pager selectors
+			$ps[] = 'container : \'div#' . parent::$s['pager']['controls']['id'] . '\'';
+			$p[] = $this->iterate($ps, $pre . 'selectors: {', $this->nt3 . '}', $this->nt4, '');
 			if (!parent::$ajax) {
-				$p[] = 'container: $(\'div#' . parent::$s['pager']['controls']['id'] . '\')';
-				$p[] = 'output: tr(\'Showing \') + \'{startRow} \' + tr(\'to\') + \' {endRow} \' + tr(\'of\')
+				$p[] = $pre . 'output: tr(\'Showing \') + \'{startRow} \' + tr(\'to\') + \' {endRow} \' + tr(\'of\')
 					+ \' {filteredRows} \' + \'(\' + tr(\'filtered from\') + \' {totalRows} \' + tr(\'records\') + \')\'';
 			} else {
 				$p[] = $pre . 'output: \'{start} {parens}\'';
@@ -164,25 +169,11 @@ class Table_Code_Pager extends Table_Code_Manager
 					''
 				);
 			}
-			if (parent::$pager) {
-				//pager css
-				$pc[] = 'container: \'ts-pager\'';
-				$p[] = $this->iterate($pc, $pre . 'css: {', $this->nt3 . '}', $this->nt4, '');
-				//pager selectors
-				$ps[] = 'container : \'div#' . parent::$s['pager']['controls']['id'] . '\'';
-				$p[] = $this->iterate($ps, $pre . 'selectors: {', $this->nt3 . '}', $this->nt4, '');
-			}
 		}
 		if (count($p) > 0) {
-			if (!parent::$ajax) {
-				$code = $this->iterate($p, '.tablesorterPager({', $this->nt . '});', $this->nt2, '');
-				parent::$code[self::$level1] = $code;
-			} else {
-				$wo = array_merge(parent::$tempcode['wo'], $p);
-				parent::$code['main']['widgetOptions'] = $this->iterate($wo, $this->nt2
-					. 'widgetOptions : {', $this->nt2 . '}', $this->nt3, '');
-				unset(parent::$tempcode['wo']);
-			}
+			return $p;
+		} else {
+			return false;
 		}
 	}
 }
