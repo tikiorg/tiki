@@ -25,7 +25,7 @@ class Table_Code_WidgetOptions extends Table_Code_Manager
 
 	public function setCode()
 	{
-		$wo[] = 'stickyHeaders : \'tablesorter-stickyHeader\'';
+		$wo[] = 'stickyHeaders : \'ts-stickyHeader\'';
 
 		//sort
 		if (parent::$sorts) {
@@ -42,7 +42,7 @@ class Table_Code_WidgetOptions extends Table_Code_Manager
 
 		//filter
 		if (parent::$filters) {
-			$wo[] = 'filter_cssFilter : \'tablesorter-filter\'';
+			$wo[] = 'filter_cssFilter : \'ts-filter\'';
 			//server side filtering
 			if (parent::$ajax) {
 				$wo[] = 'filter_serversideFiltering : true';

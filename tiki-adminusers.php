@@ -765,8 +765,8 @@ $smarty->assign('tsOn', $tsOn);
 $tsAjax = Table_Check::isAjaxCall();
 
 if ($tsOn) {
-	$ts_countid = 'usertable-count';
-	$ts_offsetid = 'usertable-offset';
+	$ts_countid = 'adminusers-count';
+	$ts_offsetid = 'adminusers-offset';
 	$smarty->assign('ts_countid', $ts_countid);
 	$smarty->assign('ts_offsetid', $ts_offsetid);
 }

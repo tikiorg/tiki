@@ -166,7 +166,7 @@ class Table_Code_Pager extends Table_Code_Manager
 			}
 			if (parent::$pager) {
 				//pager css
-				$pc[] = 'container: \'tablesorter-pager\'';
+				$pc[] = 'container: \'ts-pager\'';
 				$p[] = $this->iterate($pc, $pre . 'css: {', $this->nt3 . '}', $this->nt4, '');
 				//pager selectors
 				$ps[] = 'container : \'div#' . parent::$s['pager']['controls']['id'] . '\'';

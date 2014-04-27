@@ -67,9 +67,20 @@ abstract class Table_Settings_Abstract
 		//set whether filtering and sorting will be done server-side or client side
 		'ajax' => array(
 			'type' => false,
-//			'url' => 'tiki-adminusers.php?{sort:sort}&{filter:filter}',
-//			'offset' => 'offset'
-//			'custom' => false,		//url sort and filter params manipulated on the server side if set to false
+/*
+			'url' => 'tiki-adminusers.php?{sort:sort}&{filter:filter}',
+			'offset' => 'offset'
+			//url sort and filter params manipulated on the server side if set to false
+			'custom' => false,
+			//total count of all records - needs to be a hidden input returned by ajax in order for pager to work
+			'servercount' => array(
+				'id' => $ts_countid,
+			),
+			//record offset - needs to be a hidden input returned by ajax in order for pager to work properly
+			'serveroffset' => array(
+				'id' => $ts_offsetid,
+			),
+*/
 		),
 /*
 		//Set individual sort and filter settings for each column
