@@ -41,68 +41,8 @@ class Table_Code_WidgetOptions extends Table_Code_Manager
 		}
 
 		//filter
-		if (parent::$filters) {
-			$wo[] = 'filter_cssFilter : \'ts-filter\'';
-			//server side filtering
-			if (parent::$ajax) {
-				$wo[] = 'filter_serversideFiltering : true';
-			}
-			//hide filters
-			if (isset(parent::$s['filters']['hide']) && parent::$s['filters']['hide'] === true) {
-				$wo[] = 'filter_hideFilters : true';
-			}
-			//filter reset
-			if (isset(parent::$s['filters']['type']) && parent::$s['filters']['type'] === 'reset') {
-				$wo[] = 'filter_reset : \'button#' . parent::$s['filters']['reset']['id'] . '\'';
-			}
-			//filter_functions and filter_formatter
-			if (parent::$filtercol) {
-				$ffunc = '';
-				$fform = '';
-				foreach (parent::$s['columns'] as $col => $info) {
-					$info = $info['filter'];
-					switch($info['type']) {
-						case 'dropdown' :
-							$o = '';
-							if (array_key_exists('options', $info)) {
-								foreach ($info['options'] as $key => $val) {
-									$label = is_numeric($key) ? $val : $key;
-									$o[] = parent::$ajax ? '\'' . $label . '\' : function() {}' :
-										'\'' . $label . '\' : function(e, n, f, i) { return /' . $val . '/.test(e);}';
-								}
-								$options = $this->iterate($o, '{', $this->nt4 . '}', $this->nt5, '', ',');
-								$ffunc[] = $col . ' : ' . $options;
-							//TODO should work with ajax too when bug 436 is fixed: https://github.com/Mottie/tablesorter/issues/436
-							} elseif (!parent::$ajax) {
-								$ffunc[] = $col . ' : true';
-							}
-							break;
-						case 'range' :
-							$min = isset($info['from']) ? $info['from'] : 0;
-							$max = isset($info['to']) ? $info['to'] : 100;
-							$valtohead = isset($info['style']) && $info['style'] == 'popup' ? 'false' : 'true';
-							$fform[] = $col . ' : function($cell, indx){return $.tablesorter.filterFormatter.uiRange('
-								. '$cell, indx, {values: [' . $min . ', ' . $max . '], min: ' . $min . ', max: ' . $max
-								. ', delayed: false, valueToHeader: ' . $valtohead . ', exactMatch: true});}';
-							break;
-						case 'date' :
-							$fm = isset($info['from']) ? $info['from'] : '';
-							$to = isset($info['to']) ? $info['to'] : '';
-							$format = isset($info['format']) ? $info['format'] : 'yy-mm-dd';
-							$fform[] = $col . ' : function($cell, indx){return $.tablesorter.filterFormatter.uiDatepicker('
-								. '$cell, indx, {from: \'' . $fm . '\', to: \'' . $to . '\', dateFormat: \'' . $format
-								. '\', changeMonth: true, changeYear: true});}';
-							break;
-					}
-				}
-				if (is_array($ffunc)) {
-					$wo[] = $this->iterate($ffunc, 'filter_functions : {', $this->nt3 . '}', $this->nt4, '');
-				}
-				if (is_array($fform)) {
-					$wo[] = $this->iterate($fform, 'filter_formatter : {', $this->nt3 . '}', $this->nt4, '');
-				}
-			}
-		}
+		$wof = Table_Factory::build('WidgetOptionsFilter', parent::$s, 'code')->getOptionArray();
+		$wo = $wof === false ? $wo : $wo + $wof;
 
 		if (count($wo) > 0) {
 			if (!parent::$ajax) {

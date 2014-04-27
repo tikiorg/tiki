@@ -80,6 +80,14 @@ class Table_Code_Abstract
 	}
 
 	/**
+	 * Used by some sub-classes to generate array of code to add to the parent class
+	 */
+	protected function getOptionArray()
+	{
+	}
+
+
+	/**
 	 * Utility to generate lines of code within a section
 	 *
 	 * @param array  $data			raw variable data
