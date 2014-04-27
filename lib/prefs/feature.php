@@ -2838,6 +2838,7 @@ function prefs_feature_list($partial = false)
 			),
 			'type' => 'flag',
 			'default' => 'n',
+			'help' => 'Inline+comments',
 		),
 		'feature_hidden_links' => array(
 			'name' => tra('Hidden anchors/links shown on mouseover of headers'),

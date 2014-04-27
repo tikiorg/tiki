@@ -1,15 +1,11 @@
 {* $Id: include_comments.tpl 44059 2012-11-22 16:13:24Z lphuberdeau $ *}
 
-<div class="t_navbar">
-	{button href="tiki-list_comments.php" class="btn btn-default" _text="{tr}List comments{/tr}"}
-</div>
-
-
 <form action="tiki-admin.php?page=comments" method="post">
     <div class="row">
-        <div class="form-group col-lg-12 clearfix">
+        <div class="form-group col-lg-12">
+			<a href="tiki-list_comments.php" class="btn btn-default" title="{tr}List{/tr}">{glyph name="list"} {tr}Comments{/tr}</a>
             <div class="pull-right">
-                <input type="submit" class="btn btn-default btn-sm" name="commentssetprefs" value="{tr}Change preferences{/tr}">
+                <input type="submit" class="btn btn-primary btn-sm" name="commentssetprefs" value="{tr}Apply{/tr}">
             </div>
         </div>
     </div>
@@ -57,7 +53,6 @@
 
 			<fieldset>
 				<legend>{tr}Inline comments{/tr}</legend>
-					<a class="link" href="{$prefs.helpurl}Inline+comments">{tr}Inline comments{/tr}</a>
 				{preference name=feature_inline_comments}
 
 				{tr}The feature below must be activated for this feature to work.{/tr}
@@ -95,8 +90,10 @@
 
     <br>{* I cheated. *}
     <div class="row">
-        <div class="form-group col-lg-12 text-center">
-            <input type="submit" class="btn btn-default btn-sm" value="{tr}Change preferences{/tr}">
+        <div class="form-group col-lg-12">
+            <div class="text-center">
+                <input type="submit" class="btn btn-primary btn-sm" name="commentssetprefs" value="{tr}Apply{/tr}">
+            </div>
         </div>
     </div>
 </form>
