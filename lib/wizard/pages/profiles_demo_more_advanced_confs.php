@@ -10,11 +10,11 @@ require_once('lib/wizard/wizard.php');
 /**
  * Show the profiles choices
  */
-class AdminWizardProfilesDemo extends Wizard 
+class ProfilesWizardDemoMoreAdvancedConfs extends Wizard
 {
     function pageTitle ()
     {
-        return tra('Demo Profiles');
+        return tra('Demo of More Advanced Configurations');
     }
 	function isEditable ()
 	{
@@ -35,7 +35,7 @@ class AdminWizardProfilesDemo extends Wizard
 
 	function getTemplate()
 	{
-		$wizardTemplate = 'wizard/admin_profiles_demo.tpl';
+		$wizardTemplate = 'wizard/profiles_demo_more_advanced_confs.tpl';
 		return $wizardTemplate;
 	}
 

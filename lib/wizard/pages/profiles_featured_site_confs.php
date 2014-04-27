@@ -8,13 +8,13 @@
 require_once('lib/wizard/wizard.php');
 
 /**
- * Show the profiles choices
+ * Show the initial featured profile choices
  */
-class AdminWizardProfilesDemo3 extends Wizard 
+class ProfilesWizardFeaturedSiteConfs extends Wizard
 {
     function pageTitle ()
     {
-        return tra('Demo Profiles (iii)');
+        return tra('Featured Site Configurations');
     }
 	function isEditable ()
 	{
@@ -35,7 +35,7 @@ class AdminWizardProfilesDemo3 extends Wizard
 
 	function getTemplate()
 	{
-		$wizardTemplate = 'wizard/admin_profiles_demo_3.tpl';
+		$wizardTemplate = 'wizard/profiles_featured_site_confs.tpl';
 		return $wizardTemplate;
 	}
 

@@ -38,31 +38,34 @@ if ($useDefaultPrefs) {
 	// Store the default prefs selection in the wizard bar
 	$smarty->assign('useDefaultPrefs', $useDefaultPrefs);
 
-	require_once('lib/wizard/pages/admin_profiles_featured.php');
-	$pages[] = new AdminWizardProfilesFeatured();
+	require_once('lib/wizard/pages/profiles_featured_site_confs.php');
+	$pages[] = new ProfilesWizardFeaturedSiteConfs();
 
-	require_once('lib/wizard/pages/admin_profiles_useful.php');
-	$pages[] = new AdminWizardProfilesUseful();
+    require_once('lib/wizard/pages/profiles_useful_micro_confs.php');
+    $pages[] = new ProfilesWizardUsefulMicroConfs();
 
-	require_once('lib/wizard/pages/admin_profiles_useful_2.php');
-	$pages[] = new AdminWizardProfilesUseful2();
+	require_once('lib/wizard/pages/profiles_useful_changes_in_display.php');
+	$pages[] = new ProfilesWizardUsefulChangesInDisplay();
 
-	require_once('lib/wizard/pages/admin_profiles_useful_3.php');
-	$pages[] = new AdminWizardProfilesUseful3();
+    require_once('lib/wizard/pages/profiles_useful_new_tech_confs.php');
+    $pages[] = new ProfilesWizardUsefulNewTechConfs();
 
-	require_once('lib/wizard/pages/admin_profiles_demo.php');
-	$pages[] = new AdminWizardProfilesDemo();
+    require_once('lib/wizard/pages/profiles_useful_admin_confs.php');
+    $pages[] = new ProfilesWizardUsefulAdminConfs();
 
-	require_once('lib/wizard/pages/admin_profiles_demo_2.php');
-	$pages[] = new AdminWizardProfilesDemo2();
+    require_once('lib/wizard/pages/profiles_demo_common_confs.php');
+    $pages[] = new ProfilesWizardDemoCommonConfs();
 
-	require_once('lib/wizard/pages/admin_profiles_demo_3.php');
-	$pages[] = new AdminWizardProfilesDemo3();
+	require_once('lib/wizard/pages/profiles_demo_interesting_use_cases.php');
+	$pages[] = new ProfilesWizardDemoInterestingUseCases();
 
-	require_once('lib/wizard/pages/admin_profiles_specialized.php');
-	$pages[] = new AdminWizardProfilesSpecialized();
+	require_once('lib/wizard/pages/profiles_demo_more_advanced_confs.php');
+	$pages[] = new ProfilesWizardDemoMoreAdvancedConfs();
 
-	require_once('lib/wizard/pages/admin_profiles_completed.php'); 
+	require_once('lib/wizard/pages/profiles_demo_highly_specialized_confs.php');
+	$pages[] = new ProfilesWizardHighlySpecializedConfs();
+
+	require_once('lib/wizard/pages/profiles_completed.php');
 	$pages[] = new AdminWizardProfilesCompleted();
 
 } else {

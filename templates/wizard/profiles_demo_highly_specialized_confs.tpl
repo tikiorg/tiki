@@ -1,10 +1,19 @@
 {* $Id$ *}
 
-<div class="adminWizardIconleft"><img src="img/icons/large/wizard_profiles48x48.png" alt="{tr}Check out the highly specialized some profiles{/tr}" title="{tr}Check out the highly specialized some profiles{/tr}" /></div>
+<div class="adminWizardIconleft"><img src="img/icons/large/wizard_profiles48x48.png" alt="{tr}Configuration Profiles Wizard{/tr}" title="{tr}Configuration Profiles Wizard{/tr}" /></div>
 {tr}Some profiles are highly customized for very specialized use cases, and they are listed in this special category.{/tr} </br></br>
+{remarksbox type="warning" title="{tr}Warning{/tr}"}
+    <div target="tikihelp" class="tikihelp" style="float:right" title="{tr}Demo Profiles:{/tr}
+		{tr}They are initially intended for testing environments, so that, after you have played with the feature, you don't have to deal with removing the created objects, nor with restoring the potentially changed settings in your site{/tr}.
+		{tr}Once you know what they do, you can also apply them in your production site, in order to have working templates of the underlying features, that you can further adapt to your site later on{/tr}.">
+        <img src="img/icons/help.png" alt="" width="16" height="16" class="icon" />
+    </div>
+{tr}These configuration profiles <strong>require extra software</strong> to be installed in your server to function as expected{/tr}.
+{tr}See details in the instructions page shown in your site once each profile is applied{/tr}.
+{/remarksbox}
 <div class="adminWizardContent">
 <fieldset>
-	<legend>{tr}Highly specialized Profiles{/tr}</legend>
+	<legend>{tr}Profiles:{/tr}</legend>
 	<table style="width:100%">
 	<tr>
 	<td style="width:48%">

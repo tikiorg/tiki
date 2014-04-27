@@ -10,11 +10,11 @@ require_once('lib/wizard/wizard.php');
 /**
  * Show the profiles choices
  */
-class AdminWizardProfilesUseful2 extends Wizard 
+class ProfilesWizardUsefulMicroConfs extends Wizard
 {
     function pageTitle ()
     {
-        return tra('Useful Profiles (ii)');
+        return tra('Useful Micro Configurations');
     }
 	function isEditable ()
 	{
@@ -35,7 +35,7 @@ class AdminWizardProfilesUseful2 extends Wizard
 
 	function getTemplate()
 	{
-		$wizardTemplate = 'wizard/admin_profiles_useful_2.tpl';
+		$wizardTemplate = 'wizard/profiles_useful_micro_confs.tpl';
 		return $wizardTemplate;
 	}
 

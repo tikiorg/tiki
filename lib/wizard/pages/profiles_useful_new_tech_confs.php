@@ -8,39 +8,39 @@
 require_once('lib/wizard/wizard.php');
 
 /**
- * The Admin Profiles last screen
+ * Show the profiles choices
  */
-class AdminWizardProfilesCompleted extends Wizard 
+class ProfilesWizardUsefulNewTechConfs extends Wizard
 {
     function pageTitle ()
     {
-        return tra('Configuration Profiles Wizard Completed!');
+        return tra('Useful New Technology Configurations');
     }
-    function isEditable ()
+	function isEditable ()
 	{
 		return false;
 	}
 	
-	public function onSetupPage ($homepageUrl) 
+	function onSetupPage ($homepageUrl) 
 	{
-		global	$smarty;
+		global	$smarty, $prefs, $TWV;
 
 		// Run the parent first
 		parent::onSetupPage($homepageUrl);
+
+		$smarty->assign('tikiMajorVersion', substr($TWV->version, 0, 2));
 		
-		return true;
+		return true;		
 	}
 
 	function getTemplate()
 	{
-		$wizardTemplate = 'wizard/admin_profiles_completed.tpl';
+		$wizardTemplate = 'wizard/profiles_useful_new_tech_confs.tpl';
 		return $wizardTemplate;
 	}
 
 	function onContinue ($homepageUrl) 
 	{
-		global $tikilib; 
-
 		// Run the parent first
 		parent::onContinue($homepageUrl);
 	}
