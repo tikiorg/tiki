@@ -16,9 +16,11 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 function upgrade_20120429_fix_collation_tiki($installer)
 {
 	global $dbs_tiki;
+	require(TikiInit::getCredentialsFile());
 	$installer->query("ALTER DATABASE `" . $dbs_tiki . "` CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci'");
-	$results= $installer->query('SHOW TABLES') ;
-	while ( $table = $results->fetch_row() ) {
-		$installer->query("ALTER TABLE ".$table[0]." convert to character set DEFAULT COLLATE DEFAULT");
+	unset($dbs_tiki);
+	$results = $installer->fetchAll('SHOW TABLES');
+	foreach ( $results as $table ) {
+		$installer->query('ALTER TABLE ' . reset($table) . ' convert to character set DEFAULT COLLATE DEFAULT');
 	}
 }
