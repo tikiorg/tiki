@@ -127,32 +127,36 @@ class Table_Code_Other extends Table_Code_Manager
 		}
 
 		if (parent::$ajax) {
-			//bind to ajax event to show processing
 			$bind = array(
-				'if (e.type === \'ajaxSend\') {',
-				'	$(\'' . parent::$tid . ' tbody tr td\').css(\'opacity\', 0.25);',
-				'}',
-				'if (e.type === \'ajaxComplete\') {',
-				'	$(\'' . parent::$tid . ' tbody tr td\').css(\'opacity\', 1);',
-				'}'
+				//dim rows while processing when using ajax
+				'	if ($.inArray(e.type, [\'filterStart\', \'sortStart\', \'pageMoved\']) > -1) {',
+				'		$(\'' . parent::$tid . ' tbody tr td\').css(\'opacity\', 0.25);',
+				'	}',
+				//note when filter is in place - used for setting offset when simplified ajax url is used
+				'	if (e.type === \'filterStart\') {',
+				'		if (typeof this.config.pager.ajaxData !== \'undefined\') {',
+				'			this.config.pager.ajaxData.filter = true;',
+				'		}',
+				'	}',
 			);
-			$jq[] = $this->iterate(
+			$prejq[] = $this->iterate(
 				$bind,
-				'$(document).bind(\'ajaxSend ajaxComplete\', function(e){',
-				$this->nt . '});',
-				$this->nt2,
+				'$(\'' . parent::$tid . '\').bind(\'filterStart sortStart pageMoved\', function(e){',
+				$this->nt2 . '});',
+				$this->nt3,
 				'',
 				''
 			);
-			//note when filter is in place - used for setting offset when simplified ajax url is used
-			$bind = array(
-				'if (typeof this.config.pager.ajaxData !== \'undefined\') {',
-				'	this.config.pager.ajaxData.filter = true;',
-				'}',
-			);
+			//un-dim rows after ajax processing and make sure odd/even row formatting is applied
+			$bind = array_merge($prejq, array(
+				'if (e.type === \'ajaxComplete\') {',
+				'	$(\'' . parent::$tid . ' tbody tr td\').css(\'opacity\', 1);',
+				'	$(\'' . parent::$tid . ' tbody tr td\').trigger(\'applyWidgetId\', [\'zebra\']);',
+				'}'
+			));
 			$jq[] = $this->iterate(
 				$bind,
-				'$(\'' . parent::$tid . '\').bind(\'filterStart\', function(){',
+				'$(document).bind(\'ajaxSend ajaxComplete\', function(e){',
 				$this->nt . '});',
 				$this->nt2,
 				'',
