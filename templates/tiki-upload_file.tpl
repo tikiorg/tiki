@@ -281,7 +281,7 @@
 					{/if}
 					{if $editFileId}
 						<tr><td>
-							<label for="filetype">File Type:</label>
+							<label for="filetype">{tr}File Type:{/tr}</label>
 						</td><td width="80%">
 							<select id="filetype" name="filetype[]">
 								{foreach $mimetypes as $type}
