@@ -26,7 +26,7 @@
             </a>
             <div style="display:block; margin-left:auto; margin-right:auto; width:202px;">
                 <a href="http://doc.tiki.org/display942" class="internal" rel="box" title="{tr}Click to expand{/tr}">
-                    <img src="http://doc.tiki.org/display942"  width="100" style="display:block; margin-left:auto; margin-right:auto;border:1px solid darkgray;" alt="Click to expand" class="regImage pluginImg" title="{tr}Click to expand{/tr}" />
+                    <img src="http://doc.tiki.org/display942"  width="150" style="display:block; margin-left:auto; margin-right:auto;border:1px solid darkgray;" alt="Click to expand" class="regImage pluginImg" title="{tr}Click to expand{/tr}" />
                 </a>
                 <div class="mini" style="width:100px;">
                     <div class="thumbcaption text-center">{tr}Click to expand{/tr}</div>
@@ -55,8 +55,8 @@
                 <img src="img/icons/help.png" alt="" width="16" height="16" class="icon" />
             </a>
             <div style="display:block; margin-left:auto; margin-right:auto; width:202px;">
-                <a href="img/icons/large/profiles48x48.png" class="internal" rel="box" title="{tr}Click to expand{/tr}">
-                    <img src="img/icons/large/profiles48x48.png"  width="100" style="display:block; margin-left:auto; margin-right:auto;border:1px solid darkgray;" alt="Click to expand" class="regImage pluginImg" title="{tr}Click to expand{/tr}" />
+                <a href="http://tiki.org/display541" class="internal" rel="box" title="{tr}Click to expand{/tr}">
+                    <img src="http://tiki.org/display541"  width="250" style="display:block; margin-left:auto; margin-right:auto;border:1px solid darkgray;" alt="Click to expand" class="regImage pluginImg" title="{tr}Click to expand{/tr}" />
                 </a>
                 <div class="mini" style="width:100px;">
                     <div class="thumbcaption text-center">{tr}Click to expand{/tr}</div>

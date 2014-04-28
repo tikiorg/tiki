@@ -8,7 +8,9 @@
 	<table style="width:100%">
 	<tr>
 	<td style="width:48%">
-	<div class="adminWizardIconright"><img src="img/icons/large/profile_collaborative_community48x48.png" alt="{tr}Collaborative Community{/tr}" /></div>
+		<!--
+		<div class="adminWizardIconright"><img src="img/icons/large/profile_collaborative_community48x48.png" alt="{tr}Collaborative Community{/tr}" /></div>
+		-->
 	<b>{tr}Collaborative Community{/tr}</b> (<a href="tiki-admin.php?profile=Collaborative_Community_12x&show_details_for=Collaborative_Community_12x&categories%5B%5D={$tikiMajorVersion}.x&categories%5B%5D=Featured+profiles&repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2" target="_blank">{tr}apply profile now{/tr}</a>)
 	<br>
 {tr}Setup to help subject experts and enthusiasts work together to build a Knowledge Base{/tr}
@@ -24,7 +26,7 @@
 	</div>
 	<div style="display:block; margin-left:auto; margin-right:auto; width:202px;">
 		<a href="http://tiki.org/display524" class="internal" rel="box" title="{tr}Click to expand{/tr}">
-			<img src="http://tiki.org/display524"  width="100" style="display:block; margin-left:auto; margin-right:auto;border:1px solid darkgray;" alt="Click to expand" class="regImage pluginImg" title="{tr}Click to expand{/tr}" />
+			<img src="http://tiki.org/display524"  width="150" style="display:block; margin-left:auto; margin-right:auto;border:1px solid darkgray;" alt="Click to expand" class="regImage pluginImg" title="{tr}Click to expand{/tr}" />
 		</a>
 		<div class="mini" style="width:100px;">
 			<div class="thumbcaption text-center">{tr}Click to expand{/tr}</div>
@@ -36,7 +38,9 @@
 	&nbsp;
 	</td>
 	<td style="width:48%">
-	<div class="adminWizardIconright"><img src="img/icons/large/profile_company_intranet48x48.png" alt="{tr}Company Intranet{/tr}" /></div>
+		<!--
+		<div class="adminWizardIconright"><img src="img/icons/large/profile_company_intranet48x48.png" alt="{tr}Company Intranet{/tr}" /></div>
+		-->
 	<b>{tr}Company Intranet{/tr}</b> (<a href="tiki-admin.php?profile=Company_Intranet_12x&show_details_for=Company_Intranet_12x&categories%5B%5D={$tikiMajorVersion}.x&categories%5B%5D=Featured+profiles&repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2" target="_blank">{tr}apply profile now{/tr}</a>)
 	<br>
 {tr}Setup for a Corporate Intranet of a typical medium-sized business{/tr}. 
@@ -52,7 +56,7 @@
 	</div>
 	<div style="display:block; margin-left:auto; margin-right:auto; width:202px;">
 		<a href="http://tiki.org/display525" class="internal" rel="box" title="{tr}Click to expand{/tr}">
-			<img src="http://tiki.org/display525"  width="100" style="display:block; margin-left:auto; margin-right:auto;border:1px solid darkgray;" alt="Click to expand" class="regImage pluginImg" title="{tr}Click to expand{/tr}" />
+			<img src="http://tiki.org/display525"  width="150" style="display:block; margin-left:auto; margin-right:auto;border:1px solid darkgray;" alt="Click to expand" class="regImage pluginImg" title="{tr}Click to expand{/tr}" />
 		</a>
 		<div class="mini" style="width:100px;">
 			<div class="thumbcaption text-center">{tr}Click to expand{/tr}</div>
@@ -63,7 +67,9 @@
 	</tr>
 	<tr>
 	<td style="width:48%">
-	<div class="adminWizardIconright"><img src="img/icons/large/profile_personal_blog_and_profile48x48.png" alt="{tr}Personal Blog and Profile{/tr}" /></div>
+		<!--
+		<div class="adminWizardIconright"><img src="img/icons/large/profile_personal_blog_and_profile48x48.png" alt="{tr}Personal Blog and Profile{/tr}" /></div>
+		-->
 	<b>{tr}Personal Blog and Profile{/tr}</b>  (<a href="tiki-admin.php?profile=Personal_Blog_and_Profile_12x&show_details_for=Personal_Blog_and_Profile_12x&categories%5B%5D={$tikiMajorVersion}.x&categories%5B%5D=Featured+profiles&repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2" target="_blank">{tr}apply profile now{/tr}</a>)
 	<br>
 {tr}Setup with many cool features to help you integrate the Social Web and establish a strong presence in the Blogosphere{/tr} 
@@ -79,7 +85,7 @@
 	</div>
 	<div style="display:block; margin-left:auto; margin-right:auto; width:202px;">
 		<a href="http://tiki.org/display526" class="internal" rel="box" title="{tr}Click to expand{/tr}">
-			<img src="http://tiki.org/display526"  width="100" style="display:block; margin-left:auto; margin-right:auto;border:1px solid darkgray;" alt="Click to expand" class="regImage pluginImg" title="{tr}Click to expand{/tr}" />
+			<img src="http://tiki.org/display526"  width="150" style="display:block; margin-left:auto; margin-right:auto;border:1px solid darkgray;" alt="Click to expand" class="regImage pluginImg" title="{tr}Click to expand{/tr}" />
 		</a>
 		<div class="mini" style="width:100px;">
 			<div class="thumbcaption text-center">{tr}Click to expand{/tr}</div>
@@ -91,7 +97,9 @@
 	&nbsp;
 	</td>
 	<td style="width:48%">
+	<!--
 	<div class="adminWizardIconright"><img src="img/icons/large/profile_small_org_web_presence48x48.png" alt="{tr}Small Organization Web Presence{/tr}" /></div>
+	-->
 	<b>{tr}Small Organization Web Presence{/tr}</b> (<a href="tiki-admin.php?profile=Small_Organization_Web_Presence_12x&show_details_for=Small_Organization_Web_Presence_12x&categories%5B%5D={$tikiMajorVersion}.x&categories%5B%5D=Featured+profiles&repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2" target="_blank">{tr}apply profile now{/tr}</a>)
 	<br>
 {tr}Setup for a Web Presence of a typical small business or non-profit{/tr}. 
@@ -107,7 +115,7 @@
 	</div>
 	<div style="display:block; margin-left:auto; margin-right:auto; width:202px;">
 		<a href="http://tiki.org/display527" class="internal" rel="box" title="{tr}Click to expand{/tr}">
-			<img src="http://tiki.org/display527"  width="100" style="display:block; margin-left:auto; margin-right:auto;border:1px solid darkgray;" alt="Click to expand" class="regImage pluginImg" title="{tr}Click to expand{/tr}" />
+			<img src="http://tiki.org/display527"  width="200" style="display:block; margin-left:auto; margin-right:auto;border:1px solid darkgray;" alt="Click to expand" class="regImage pluginImg" title="{tr}Click to expand{/tr}" />
 		</a>
 		<div class="mini" style="width:100px;">
 			<div class="thumbcaption text-center">{tr}Click to expand{/tr}</div>

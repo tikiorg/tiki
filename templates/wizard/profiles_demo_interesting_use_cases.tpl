@@ -34,7 +34,7 @@
             </a>
             <div style="display:block; margin-left:auto; margin-right:auto; width:202px;">
                 <a href="http://tiki.org/display520" class="internal" rel="box" title="{tr}Click to expand{/tr}">
-                    <img src="http://tiki.org/display520"  width="100" style="display:block; margin-left:auto; margin-right:auto;border:1px solid darkgray;" alt="Click to expand" class="regImage pluginImg" title="{tr}Click to expand{/tr}" />
+                    <img src="http://tiki.org/display520"  width="150" style="display:block; margin-left:auto; margin-right:auto;border:1px solid darkgray;" alt="Click to expand" class="regImage pluginImg" title="{tr}Click to expand{/tr}" />
                 </a>
                 <div class="mini" style="width:100px;">
                     <div class="thumbcaption text-center">{tr}Click to expand{/tr}</div>
@@ -50,14 +50,14 @@
             -->
             <b>{tr}Timesheet{/tr}</b> (<a href="tiki-admin.php?profile=Time_Sheet&show_details_for=Time_Sheet&categories%5B%5D={$tikiMajorVersion}.x&repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2" target="_blank">{tr}apply profile now{/tr}</a>)
             <br>
-            {tr}This profile allows recording time spent on projects. It creates two trackers: one to hold the time spent, and the other with the project names. Both trackers are linked, so that project names can be chosen when entering items to the timesheet tracker{/tr}.
+            {tr}This profile allows recording time spent on projects. It creates two trackers: one to hold the time spent, and the other with the project names{/tr}.
             <br/><a href="https://doc.tiki.org/Timesheet" target="tikihelp" class="tikihelp" title="{tr}Timesheet{/tr}:
            	{tr}More details{/tr}:
         	<ul>
         	    <li>{tr}Allows to track your time spent on projects{/tr}</li>
-        		<li>{tr}Timesheet & Projects linked trackers already{/tr}</li>
         	    <li>{tr}Customize your project categories{/tr}</li>
         	    <li>{tr}Add or edit your timesheet fields as desired{/tr} </li>
+        	    <li>{tr}Both trackers are linked, so that project names can be chosen when entering items to the timesheet tracker{/tr}</li>
 	        </ul>
            	{tr}Click to read more{/tr}">
                 <img src="img/icons/help.png" alt="" width="16" height="16" class="icon" />
@@ -98,7 +98,7 @@
             </a>
             <div style="display:block; margin-left:auto; margin-right:auto; width:202px;">
                 <a href="http://doc.tiki.org/display722" class="internal" rel="box" title="{tr}Click to expand{/tr}">
-                    <img src="http://doc.tiki.org/display722"  width="100" style="display:block; margin-left:auto; margin-right:auto;border:1px solid darkgray;" alt="Click to expand" class="regImage pluginImg" title="{tr}Click to expand{/tr}" />
+                    <img src="http://doc.tiki.org/display722"  width="150" style="display:block; margin-left:auto; margin-right:auto;border:1px solid darkgray;" alt="Click to expand" class="regImage pluginImg" title="{tr}Click to expand{/tr}" />
                 </a>
                 <div class="mini" style="width:100px;">
                     <div class="thumbcaption text-center">{tr}Click to expand{/tr}</div>

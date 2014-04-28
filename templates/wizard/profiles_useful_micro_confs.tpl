@@ -25,8 +25,8 @@
                 <img src="img/icons/help.png" alt="" width="16" height="16" class="icon" />
             </a>
             <div style="display:block; margin-left:auto; margin-right:auto; width:202px;">
-                <a href="img/icons/large/profiles48x48.png" class="internal" rel="box" title="{tr}Click to expand{/tr}">
-                    <img src="img/icons/large/profiles48x48.png"  width="100" style="display:block; margin-left:auto; margin-right:auto;border:1px solid darkgray;" alt="Click to expand" class="regImage pluginImg" title="{tr}Click to expand{/tr}" />
+                <a href="http://tiki.org/display538" class="internal" rel="box" title="{tr}Click to expand{/tr}">
+                    <img src="http://tiki.org/display538"  width="150" style="display:block; margin-left:auto; margin-right:auto;border:1px solid darkgray;" alt="Click to expand" class="regImage pluginImg" title="{tr}Click to expand{/tr}" />
                 </a>
                 <div class="mini" style="width:100px;">
                     <div class="thumbcaption text-center">{tr}Click to expand{/tr}</div>
@@ -43,7 +43,7 @@
             -->
             <b>{tr}Random header images{/tr}</b>  (<a href="tiki-admin.php?profile=Random_header_images&show_details_for=Random_header_images&categories%5B%5D={$tikiMajorVersion}.x&repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2" target="_blank">{tr}apply profile now{/tr}</a>)
             <br/>
-            {tr}This profile adds a module in the top zone that displays a random image from a File Gallery.{/tr}
+            {tr}This profile adds a module in the top zone that displays a random image from a File Gallery{/tr}.
             <br/><a href="https://doc.tiki.org/PluginImg"  target="tikihelp" class="tikihelp" title="{tr}Random header images{/tr}:
             {tr}Some sample images to fit the default configuration are also provided as a starting point:{/tr}
             <ul>
@@ -56,8 +56,8 @@
                 <img src="img/icons/help.png" alt="" width="16" height="16" class="icon" />
             </a>
             <div style="display:block; margin-left:auto; margin-right:auto; width:202px;">
-                <a href="img/icons/large/profiles48x48.png" class="internal" rel="box" title="{tr}Click to expand{/tr}">
-                    <img src="img/icons/large/profiles48x48.png"  width="100" style="display:block; margin-left:auto; margin-right:auto;border:1px solid darkgray;" alt="Click to expand" class="regImage pluginImg" title="{tr}Click to expand{/tr}" />
+                <a href="http://tiki.org/display539" class="internal" rel="box" title="{tr}Click to expand{/tr}">
+                    <img src="http://tiki.org/display539"  width="200" style="display:block; margin-left:auto; margin-right:auto;border:1px solid darkgray;" alt="Click to expand" class="regImage pluginImg" title="{tr}Click to expand{/tr}" />
                 </a>
                 <div class="mini" style="width:100px;">
                     <div class="thumbcaption text-center">{tr}Click to expand{/tr}</div>
@@ -85,8 +85,8 @@
                 <img src="img/icons/help.png" alt="" width="16" height="16" class="icon" />
             </a>
             <div style="display:block; margin-left:auto; margin-right:auto; width:202px;">
-                <a href="img/icons/large/profiles48x48.png" class="internal" rel="box" title="{tr}Click to expand{/tr}">
-                    <img src="img/icons/large/profiles48x48.png"  width="100" style="display:block; margin-left:auto; margin-right:auto;border:1px solid darkgray;" alt="Click to expand" class="regImage pluginImg" title="{tr}Click to expand{/tr}" />
+                <a href="http://tiki.org/display516" class="internal" rel="box" title="{tr}Click to expand{/tr}">
+                    <img src="http://tiki.org/display516"  width="200" style="display:block; margin-left:auto; margin-right:auto;border:1px solid darkgray;" alt="Click to expand" class="regImage pluginImg" title="{tr}Click to expand{/tr}" />
                 </a>
                 <div class="mini" style="width:100px;">
                     <div class="thumbcaption text-center">{tr}Click to expand{/tr}</div>
@@ -98,10 +98,13 @@
             &nbsp;
         </td>
         <td style="width:48%">
+			<!--
             <div class="adminWizardIconright"><img src="img/icons/large/profile_countries_by_region48x48.png" alt="{tr}Timesheet{/tr}" /></div>
+            -->
             <b>{tr}Countries By Region{/tr}</b> (<a href="tiki-admin.php?profile=Countries_By_Region&show_details_for=Countries_By_Region&categories%5B%5D={$tikiMajorVersion}.x&repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2" target="_blank">{tr}apply profile now{/tr}</a>)
-            <br/>
-            {tr}This profile will create a set of categories and subcategories in your site with the names of countries grouped by these regions:{/tr}
+            {tr}This profile will create a set of categories and subcategories in your site with the names of countries grouped by regions{/tr}.
+            <br/><a href="https://profiles.tiki.org/Countries+By+Region"  target="tikihelp" class="tikihelp" title="{tr}Countries By Region{/tr}:
+            {tr}The regions listed with their countries are{/tr}:
             <ul>
                 <li>{tr}Saharan, Sub-Saharan Africa{/tr}</li>
                 <li>{tr}Middle East, North Africa{/tr}</li>
@@ -111,6 +114,18 @@
                 <li>{tr}Oceania{/tr}</li>
                 <li>{tr}South America{/tr}</li>
             </ul>
+        	{tr}Click to read more{/tr}">
+                <img src="img/icons/help.png" alt="" width="16" height="16" class="icon" />
+            </a>
+            <div style="display:block; margin-left:auto; margin-right:auto; width:202px;">
+                <a href="http://tiki.org/display540" class="internal" rel="box" title="{tr}Click to expand{/tr}">
+                    <img src="http://tiki.org/display540"  width="200" style="display:block; margin-left:auto; margin-right:auto;border:1px solid darkgray;" alt="Click to expand" class="regImage pluginImg" title="{tr}Click to expand{/tr}" />
+                </a>
+                <div class="mini" style="width:100px;">
+                    <div class="thumbcaption text-center">{tr}Click to expand{/tr}</div>
+                </div>
+            </div>
+            <br/>
         </td>
 	</tr>
 	</table>

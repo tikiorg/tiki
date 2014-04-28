@@ -36,8 +36,8 @@
                 <img src="img/icons/help.png" alt="" width="16" height="16" class="icon" />
             </a>
             <div style="display:block; margin-left:auto; margin-right:auto; width:202px;">
-                <a href="img/icons/large/profiles48x48.png" class="internal" rel="box" title="{tr}Click to expand{/tr}">
-                    <img src="img/icons/large/profiles48x48.png"  width="100" style="display:block; margin-left:auto; margin-right:auto;border:1px solid darkgray;" alt="Click to expand" class="regImage pluginImg" title="{tr}Click to expand{/tr}" />
+                <a href="http://tiki.org/display545" class="internal" rel="box" title="{tr}Click to expand{/tr}">
+                    <img src="http://tiki.org/display545"  width="200" style="display:block; margin-left:auto; margin-right:auto;border:1px solid darkgray;" alt="Click to expand" class="regImage pluginImg" title="{tr}Click to expand{/tr}" />
                 </a>
                 <div class="mini" style="width:100px;">
                     <div class="thumbcaption text-center">{tr}Click to expand{/tr}</div>
@@ -55,8 +55,9 @@
             <b>{tr}R demo{/tr}</b> (<a href="tiki-admin.php?profile=R_demo&show_details_for=R_demo&categories%5B%5D={$tikiMajorVersion}.x&repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2" target="_blank">{tr}apply profile now{/tr}</a>)
             <br/>
             {tr}This profile demostrates common uses of R language for statistics to produce advanced and/or interactive graphs and reports in web 2.0 pages.{/tr}
-            {tr}This is achieved through the usage of the R Project for Statistical Computing software & PluginR in Tiki (both of which are not bundled within a default Tiki installation and they need to be installed in the same server as Tiki).{/tr}
             <br/><a href="https://doc.tiki.org/PluginR"  target="tikihelp" class="tikihelp" title="{tr}R demo{/tr}:
+            {tr}It uses the R Project for Statistical Computing software & PluginR in Tiki (both of which are not bundled within a default Tiki installation and they need to be installed in the same server as Tiki).{/tr}
+            <br/><br/>
             {tr}The profile creates many demo pages, which comprise:{/tr}
 	        <ul>
 	            <li>{tr}Simple R syntax in wiki pages to produce interactive charts{/tr}</li>
@@ -73,8 +74,8 @@
                 <img src="img/icons/help.png" alt="" width="16" height="16" class="icon" />
             </a>
             <div style="display:block; margin-left:auto; margin-right:auto; width:202px;">
-                <a href="img/icons/large/profiles48x48.png" class="internal" rel="box" title="{tr}Click to expand{/tr}">
-                    <img src="img/icons/large/profiles48x48.png"  width="100" style="display:block; margin-left:auto; margin-right:auto;border:1px solid darkgray;" alt="Click to expand" class="regImage pluginImg" title="{tr}Click to expand{/tr}" />
+                <a href="http://r.tiki.org/tiki-download_file.php?fileId=23&display&max=800" class="internal" rel="box" title="{tr}Click to expand{/tr}">
+                    <img src="http://r.tiki.org/tiki-download_file.php?fileId=23&display&max=800"  width="200" style="display:block; margin-left:auto; margin-right:auto;border:1px solid darkgray;" alt="Click to expand" class="regImage pluginImg" title="{tr}Click to expand{/tr}" />
                 </a>
                 <div class="mini" style="width:100px;">
                     <div class="thumbcaption text-center">{tr}Click to expand{/tr}</div>
@@ -109,8 +110,8 @@
                 <img src="img/icons/help.png" alt="" width="16" height="16" class="icon" />
             </a>
             <div style="display:block; margin-left:auto; margin-right:auto; width:202px;">
-                <a href="img/icons/large/profiles48x48.png" class="internal" rel="box" title="{tr}Click to expand{/tr}">
-                    <img src="img/icons/large/profiles48x48.png"  width="100" style="display:block; margin-left:auto; margin-right:auto;border:1px solid darkgray;" alt="Click to expand" class="regImage pluginImg" title="{tr}Click to expand{/tr}" />
+                <a href="http://tiki.org/display546" class="internal" rel="box" title="{tr}Click to expand{/tr}">
+                    <img src="http://tiki.org/display546"  width="200" style="display:block; margin-left:auto; margin-right:auto;border:1px solid darkgray;" alt="Click to expand" class="regImage pluginImg" title="{tr}Click to expand{/tr}" />
                 </a>
                 <div class="mini" style="width:100px;">
                     <div class="thumbcaption text-center">{tr}Click to expand{/tr}</div>

@@ -22,7 +22,7 @@
             <b>{tr}Shopping Cart{/tr}</b> (<a href="tiki-admin.php?profile=Shopping_Cart&show_details_for=Shopping_Cart&categories%5B%5D={$tikiMajorVersion}.x&repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2" target="_blank">{tr}apply profile now{/tr}</a>)
             <br>
             {tr}This profile provides a Shopping Cart and the corresponding basic payment system.{/tr}
-            {tr}Currently this profile uses the PayPal shopping cart rather than the built in Tiki.{/tr}
+            {tr}It currently uses the PayPal shopping cart rather than the built in Tiki{/tr}.
             <br/><a href="https://doc.tiki.org/Shopping+Cart"  target="tikihelp" class="tikihelp" title="{tr}Shopping Cart{/tr}:
         	{tr}It creates:{/tr}
         	<ul>
@@ -35,8 +35,8 @@
                 <img src="img/icons/help.png" alt="" width="16" height="16" class="icon" />
             </a>
             <div style="display:block; margin-left:auto; margin-right:auto; width:202px;">
-                <a href="img/icons/large/profiles48x48.png" class="internal" rel="box" title="{tr}Click to expand{/tr}">
-                    <img src="img/icons/large/profiles48x48.png"  width="100" style="display:block; margin-left:auto; margin-right:auto;border:1px solid darkgray;" alt="Click to expand" class="regImage pluginImg" title="{tr}Click to expand{/tr}" />
+                <a href="http://tiki.org/display544" class="internal" rel="box" title="{tr}Click to expand{/tr}">
+                    <img src="http://tiki.org/display544"  width="150" style="display:block; margin-left:auto; margin-right:auto;border:1px solid darkgray;" alt="Click to expand" class="regImage pluginImg" title="{tr}Click to expand{/tr}" />
                 </a>
                 <div class="mini" style="width:100px;">
                     <div class="thumbcaption text-center">{tr}Click to expand{/tr}</div>
@@ -68,8 +68,8 @@
                 <img src="img/icons/help.png" alt="" width="16" height="16" class="icon" />
             </a>
             <div style="display:block; margin-left:auto; margin-right:auto; width:202px;">
-                <a href="img/icons/large/profiles48x48.png" class="internal" rel="box" title="{tr}Click to expand{/tr}">
-                    <img src="img/icons/large/profiles48x48.png"  width="100" style="display:block; margin-left:auto; margin-right:auto;border:1px solid darkgray;" alt="Click to expand" class="regImage pluginImg" title="{tr}Click to expand{/tr}" />
+                <a href="http://tiki.org/display512" class="internal" rel="box" title="{tr}Click to expand{/tr}">
+                    <img src="http://tiki.org/display512"  width="200" style="display:block; margin-left:auto; margin-right:auto;border:1px solid darkgray;" alt="Click to expand" class="regImage pluginImg" title="{tr}Click to expand{/tr}" />
                 </a>
                 <div class="mini" style="width:100px;">
                     <div class="thumbcaption text-center">{tr}Click to expand{/tr}</div>
