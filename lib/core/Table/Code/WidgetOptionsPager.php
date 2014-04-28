@@ -12,13 +12,13 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
 }
 
 /**
- * Class Table_Code_Pager
+ * Class Table_Code_WidgetOptionsPager
  *
- * Creates code for the pager section of the Tablesorter code, including the code for ajax
+ * Creates code for the pager widget of the Tablesorter code, including the code for ajax
  *
  * @package Tiki
  * @subpackage Table
- * @uses Table_Code_Manager
+ * @uses Table_Code_WidgetOptions
  */
 class Table_Code_WidgetOptionsPager extends Table_Code_WidgetOptions
 {

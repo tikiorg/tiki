@@ -12,13 +12,13 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
 }
 
 /**
- * Class Table_Code_WidgetOptions
+ * Class Table_Code_WidgetOptionsFilter
  *
- * Creates the code for the widget options portion of the Tablesorter jQuery code
+ * Creates the code for the filter widget options portion of the Tablesorter jQuery code
  *
  * @package Tiki
  * @subpackage Table
- * @uses Table_Code_Manager
+ * @uses Table_Code_WidgetOptions
  */
 class Table_Code_WidgetOptionsFilter extends Table_Code_WidgetOptions
 {
