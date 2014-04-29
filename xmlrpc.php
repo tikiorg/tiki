@@ -7,7 +7,7 @@
 
 include_once('tiki-setup.php');
 require_once('XML/Server.php');
-include_once('lib/blogs/bloglib.php');
+$bloglib = TikiLib::lib('blog');
 
 if ($prefs['feature_xmlrpc'] != 'y') {
 	die;
@@ -141,7 +141,7 @@ function newPost($params)
 			return new XML_RPC_Response(0, 101, 'User is not allowed to post');
 		}
 
-		global $bloglib; require_once('lib/blogs/bloglib.php');
+		$bloglib = TikiLib::lib('blog');
 		$blog_info = $bloglib->get_blog($blogid);
 
 		if ($blog_info['public']!='y') {
@@ -436,7 +436,7 @@ function getUserBlogs($params)
 
 	$arrayVal = Array();
 
-	require_once('lib/blogs/bloglib.php');
+	$bloglib = TikiLib::lib('blog');
 	$blogs = $bloglib->list_user_blogs($username, true);
 	$foo = parse_url($_SERVER['REQUEST_URI']);
 	$foo1 = $tikilib->httpPrefix() . str_replace('xmlrpc', 'tiki-view_blog', $foo['path']);

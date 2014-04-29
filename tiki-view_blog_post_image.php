@@ -12,7 +12,7 @@ require_once ('tiki-setup.php');
 
 $access->check_feature('feature_blogs');
 
-include_once ('lib/blogs/bloglib.php');
+$bloglib = TikiLib::lib('blog');
 if (!isset($_REQUEST['imgId'])) {
 	die;
 }

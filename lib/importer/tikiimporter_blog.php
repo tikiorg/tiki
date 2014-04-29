@@ -105,7 +105,7 @@ class TikiImporter_Blog extends TikiImporter
 	 */
 	function setupTiki()
 	{
-		global $tikilib;
+		$tikilib = TikiLib::lib('tiki');
 
 		$tikilib->set_preference('feature_blogs', 'y');
 	}
@@ -225,7 +225,9 @@ class TikiImporter_Blog extends TikiImporter
 	 */
 	function createBlog()
 	{
-		global $bloglib, $user, $tikilib;
+		global $user;
+		$bloglib = TikiLib::lib('blog');
+		$tikilib = TikiLib::lib('tiki');
 
 		//TODO: refactor replace_blog() to have default values
 		//TODO: blog user can be different that the user logged in the system

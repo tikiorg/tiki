@@ -126,7 +126,9 @@ function wikiplugin_bloglist_info()
 
 function wikiplugin_bloglist($data, $params)
 {
-	global $tikilib, $smarty, $user;
+	global $user;
+	$tikilib = TikiLib::lib('tiki');
+	$smarty = TikiLib::lib('smarty');
 
 	if (!isset($params['Id'])) {
 		TikiLib::lib('errorreport')->report(tra('missing blog Id for BLOGLIST plugins'));
@@ -156,12 +158,12 @@ function wikiplugin_bloglist($data, $params)
 	$smarty->assign('container_class', $params['containerClass']);
 
 	if ($params['simpleList'] == 'y') {
-		global $bloglib; require_once('lib/blogs/bloglib.php');
+		$bloglib = TikiLib::lib('blog');
 		$blogItems = $bloglib->list_posts($params['offset'], $params['Items'], $params['sort_mode'], $params['find'], $params['Id'], $params['author'], '', $dateStartTS, $dateEndTS);
 		$smarty->assign_by_ref('blogItems', $blogItems['data']);
 		$template = 'wiki-plugins/wikiplugin_bloglist.tpl';
 	} else {
-		global $bloglib; include_once('lib/blogs/bloglib.php');
+		$bloglib = TikiLib::lib('blog');
 
 		$blogItems = $bloglib->list_blog_posts($params['Id'], false, $params['offset'], $params['Items'], $params['sort_mode'], $params['find'], $dateStartTS, $dateEndTS);
 

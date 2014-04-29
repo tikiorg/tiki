@@ -39,16 +39,16 @@ class Tiki_Profile_InstallHandler_BlogPost extends Tiki_Profile_InstallHandler
 
 	function _install()
 	{
-		global $bloglib, $prefs;
-		if ( ! $bloglib ) require_once 'lib/blogs/bloglib.php';
+		global $prefs;
+		$bloglib = TikiLib::lib('blog');
 
 		$data = $this->getData();
 
 		$this->replaceReferences($data);
 
 		if ( isset( $data['blog'] ) && empty( $data['user'] ) ) {
-			global $bloglib, $tikilib;
-			if ( ! $bloglib ) require_once 'lib/blogs/bloglib.php';
+			$tikilib = TikiLib::lib('tiki');
+			$bloglib = TikiLib::lib('blog');
 
 			$result = $tikilib->query("SELECT `user` FROM `tiki_blogs` WHERE `blogId` = ?", array( $data['blog'] ));
 

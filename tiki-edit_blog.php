@@ -10,7 +10,7 @@
 
 $section = 'blogs';
 require_once ('tiki-setup.php');
-include_once ('lib/blogs/bloglib.php');
+$bloglib = TikiLib::lib('blog');
 
 $access->check_feature('feature_blogs');
 $access->check_permission('tiki_p_create_blogs');

@@ -684,7 +684,7 @@ class LogsLib extends TikiLib
 
 	function get_stat_contributions_per_group($actions, $selectedGroups)
 	{
-		global $tikilib;
+		$tikilib = TikiLib::lib('tiki');
 		$statGroups = array();
 		foreach ($actions as $action) {
 			if (!empty($previousAction) &&
@@ -1613,7 +1613,7 @@ class LogsLib extends TikiLib
 
 				case 'sheet':
 					if (!isset($sheetNames)) {
-						global $sheetlib; include_once('lib/sheet/grid.php');
+						$sheetlib = TikiLib::lib('sheet');
 						$objects = $sheetlib->list_sheets();
 						foreach ($objects['data'] as $object) {
 							$sheetNames[$object['sheetId']] = $object['title'];
@@ -1630,7 +1630,7 @@ class LogsLib extends TikiLib
 				case 'blog':
 
 					if (!isset($blogNames)) {
-						global $bloglib; require_once('lib/blogs/bloglib.php');
+						$bloglib = TikiLib::lib('blog');
 						$objects = $bloglib->list_blogs();
 						foreach ($objects['data'] as $object) {
 							$blogNames[$object['blogId']] = $object['title'];

@@ -31,8 +31,8 @@ function module_top_active_blogs_info()
  */
 function module_top_active_blogs($mod_reference, $module_params)
 {
-	global $smarty;
-	global $bloglib; require_once('lib/blogs/bloglib.php');
+	$smarty = TikiLib::lib('smarty');
+	$bloglib = TikiLib::lib('blog');
 	$ranking = $bloglib->list_blogs(0, $mod_reference["rows"], 'activity_desc', '');
 	
 	$smarty->assign('modTopActiveBlogs', $ranking["data"]);

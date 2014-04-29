@@ -433,7 +433,8 @@ function prefs_global_list($partial = false)
  */
 function feature_home_pages($partial = false)
 {
-	global $prefs, $tikilib;
+	global $prefs;
+	$tikilib = TikiLib::lib('tiki');
 	$tikiIndex = array();
 
 	//wiki
@@ -446,7 +447,7 @@ function feature_home_pages($partial = false)
 	// Blog
 	if (! $partial && $prefs['feature_blogs'] == 'y') {
 		if ( $prefs['home_blog'] != '0' ) {
-			global $bloglib; require_once('lib/blogs/bloglib.php');
+			$bloglib = TikiLib::lib('blog');
 			$hbloginfo = $bloglib->get_blog($prefs['home_blog']);
 			$home_blog_name = substr($hbloginfo['title'], 0, 20);
 		} else {
@@ -489,5 +490,5 @@ function feature_home_pages($partial = false)
 	// Custom home
 	$tikiIndex['tiki-custom_home.php'] = tra('Custom home');
 
-		return $tikiIndex;
+	return $tikiIndex;
 }

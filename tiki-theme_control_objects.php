@@ -62,7 +62,7 @@ switch ($_REQUEST['type']) {
     	break;
 
 	case 'blog':
-		require_once('lib/blogs/bloglib.php');
+		$bloglib = TikiLib::lib('blog');
 		$objects = $bloglib->list_blogs(0, -1, 'title_asc', $find_objects);
 		$smarty->assign_by_ref('objects', $objects["data"]);
 		$objects = $objects['data'];

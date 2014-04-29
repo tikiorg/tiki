@@ -10,7 +10,7 @@
 
 $section = 'blogs';
 require_once ('tiki-setup.php');
-include_once ('lib/blogs/bloglib.php');
+$bloglib = TikiLib::lib('blog');
 
 $auto_query_args = array(
 	'postId',

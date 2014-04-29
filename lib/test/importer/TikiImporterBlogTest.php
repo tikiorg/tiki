@@ -243,7 +243,7 @@ class TikiImporter_Blog_Test extends TikiImporter_TestCase
 	public function testInsertPost()
 	{
 		$objectlib = TikiLib::lib('object');
-		global $bloglib; require_once('lib/blogs/bloglib.php');
+		$bloglib = TikiLib::lib('blog');
 		
 		$bloglib = $this->getMock('BlogLib', array('blog_post'));
 		$bloglib->expects($this->once())->method('blog_post')->will($this->returnValue(1));
@@ -310,8 +310,7 @@ class TikiImporter_Blog_Test extends TikiImporter_TestCase
 	
 	public function testCreateBlog()
 	{
-		global $bloglib;
-		
+		$bloglib = TikiLib::lib('blog');
 		$bloglib = $this->getMock('BlogLib', array('replace_blog'));
 		$bloglib->expects($this->once())->method('replace_blog');
 
@@ -322,8 +321,7 @@ class TikiImporter_Blog_Test extends TikiImporter_TestCase
 	
 	public function testCreateBlogShouldSetBlogAsHomepage()
 	{
-		global $bloglib, $tikilib;
-		
+		$bloglib = TikiLib::lib('blog');
 		$bloglib = $this->getMock('BlogLib', array('replace_blog'));
 		$bloglib->expects($this->once())->method('replace_blog');
 		

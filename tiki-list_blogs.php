@@ -10,7 +10,7 @@
 
 $section = 'blogs';
 require_once ('tiki-setup.php');
-include_once ('lib/blogs/bloglib.php');
+$bloglib = TikiLib::lib('blog');
 //get_strings tra('List Blog Posts')
 if ($prefs['feature_categories'] == 'y') {
 	$categlib = TikiLib::lib('categ');

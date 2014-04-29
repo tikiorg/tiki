@@ -32,9 +32,10 @@ function module_user_blogs_info()
  */
 function module_user_blogs($mod_reference, $module_params)
 {
-	global $user, $tikilib, $smarty;
+	global $user;
 	if ($user) {
-		global $bloglib; require_once('lib/blogs/bloglib.php');
+		$smarty = TikiLib::lib('smarty');
+		$bloglib = TikiLib::lib('blog');
 		$ranking = $bloglib->list_user_blogs($user, false);
 		
 		$smarty->assign('modUserBlogs', $ranking);

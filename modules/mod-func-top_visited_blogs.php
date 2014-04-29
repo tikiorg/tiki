@@ -44,8 +44,8 @@ function module_top_visited_blogs_info()
  */
 function module_top_visited_blogs($mod_reference, $module_params)
 {
-	global $smarty;
-	global $bloglib; require_once('lib/blogs/bloglib.php');
+	$smarty = TikiLib::lib('smarty');
+	$bloglib = TikiLib::lib('blog');
 	$with = '';
 	if (isset($mod_reference['params']['showlastpost']) && $mod_reference['params']['showlastpost'] == 'y') {
 		$with = array('showlastpost'=>'y');

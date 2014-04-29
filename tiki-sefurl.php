@@ -67,8 +67,7 @@ function filter_out_sefurl($tpl_output, $type = null, $title = '', $with_next = 
 	}
 	if ($type == 'blog' && empty($with_next) && $with_title == 'y') {
 		if ($prefs['feature_sefurl_title_blog'] == 'y') {
-			global $bloglib;
-			include_once ('lib/blogs/bloglib.php');
+			$bloglib = TikiLib::lib('blog');
 			if (preg_match('/blogId=([0-9]+)/', $tpl_output, $matches) || preg_match('/blog([0-9]+)/', $tpl_output, $matches)) {
 				if (empty($title)) $title = $bloglib->get_title($matches[1]);
 				$title = preg_replace(PATTERN_TO_CLEAN_TEXT, CLEAN_CHAR, $tikilib->take_away_accent($title));

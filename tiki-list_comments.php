@@ -13,7 +13,7 @@ require_once ('tiki-setup.php');
 $auto_query_args = array('types_section', 'types', 'show_types', 'sort_mode', 'offset', 'find', 'findfilter_approved');
 
 if (isset($_REQUEST['blogId'])) {
-	require_once('lib/blogs/bloglib.php');
+	$bloglib = TikiLib::lib('blog');
 	$blogId = $_REQUEST['blogId'];
 	$access->check_feature('feature_blogs');
 	$bloglib->check_blog_exists($blogId);

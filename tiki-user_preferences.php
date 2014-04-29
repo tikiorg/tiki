@@ -58,7 +58,7 @@ if (isset($_REQUEST['userId']) || isset($_REQUEST['view_user'])) {
 	$userwatch = $user;
 }
 // Custom fields
-include_once ('lib/registration/registrationlib.php');
+$registrationlib = TikiLib::lib('registration');
 $customfields = $registrationlib->get_customfields();
 foreach ($customfields as $i => $c) {
 	$customfields[$i]['value'] = $tikilib->get_user_preference($userwatch, $c['prefName']);
@@ -380,7 +380,7 @@ $languages = $tikilib->list_languages();
 $smarty->assign_by_ref('languages', $languages);
 $user_pages = $tikilib->get_user_pages($userwatch, -1);
 $smarty->assign_by_ref('user_pages', $user_pages);
-require_once('lib/blogs/bloglib.php');
+$bloglib = TikiLib::lib('blog');
 $user_blogs = $bloglib->list_user_blogs($userwatch, false);
 $smarty->assign_by_ref('user_blogs', $user_blogs);
 $user_galleries = $tikilib->get_user_galleries($userwatch, -1);

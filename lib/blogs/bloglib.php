@@ -1225,5 +1225,3 @@ class BlogLib extends TikiDb_Bridge
 	}
 }
 
-global $bloglib;
-$bloglib = new BlogLib;

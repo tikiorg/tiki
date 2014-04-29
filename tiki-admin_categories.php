@@ -403,7 +403,7 @@ if ($prefs['feature_search'] !== 'y' || $prefs['unified_add_to_categ_search'] !=
 	}
 
 	if ( $prefs['feature_blogs'] == 'y' ) {
-		require_once('lib/blogs/bloglib.php');
+		$bloglib = TikiLib::lib('blog');
 		$blogs = $bloglib->list_blogs($offset, -1, 'title_asc', $find_objects);
 	}
 

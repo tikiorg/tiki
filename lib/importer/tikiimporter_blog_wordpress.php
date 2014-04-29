@@ -967,7 +967,8 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 	 */
 	function replaceInternalLinks($items)
 	{
-		global $tikilib, $bloglib;
+		$bloglib = TikiLib::lib('blog');
+		$tikilib = TikiLib::lib('tiki');
 
 		foreach ($items as $item) {
 			if ($item['hasInternalLinks']) {
