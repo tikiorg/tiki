@@ -41,7 +41,7 @@
 		&nbsp;
 		<label>
 			{tr}Other:{/tr}
-			<input type="text" class="group_{$field.ins_id|escape}" name="other_{$field.ins_id}" value="{if !isset($field.possibilities[$field.value])}{$field.value|escape}{/if}">
+			<input type="text" class="group_{$field.ins_id|escape} form-control" name="other_{$field.ins_id}" value="{if !isset($field.possibilities[$field.value])}{$field.value|escape}{/if}">
 		</label>
 		{jq}
 {{if !isset($field.possibilities[$field.value]) && $field.value}}
