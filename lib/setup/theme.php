@@ -19,6 +19,8 @@ if ( isset($_SESSION['try_style']) ) {
 // Always include default bootstrap JS
 $headerlib->add_jsfile('vendor/twitter/bootstrap/dist/js/bootstrap.js');
 
+$prefs['jquery_ui_chosen_css'] = 'y';
+
 if (empty($prefs['theme_active']) || $prefs['theme_active'] == 'default') {
 	$headerlib->add_cssfile('styles/layout/tiki.css');
 
@@ -69,10 +71,8 @@ if (empty($prefs['theme_active']) || $prefs['theme_active'] == 'default') {
 	}
 	// End legacy
 } else {
-	// TODO : Handle normal registered themes
-
-	// Will need this
-	$headerlib->add_cssfile('styles/layout/tiki.css');
+	$headerlib->add_cssfile("themes/{$prefs['theme_active']}/css/tiki.css");
+	$prefs['jquery_ui_chosen_css'] = 'n';
 }
 
 // Allow to have a IE specific CSS files for the theme's specific hacks

@@ -7,146 +7,107 @@
 
 namespace Tiki\Composer;
 use Composer\Script\Event;
+use Composer\Util\FileSystem;
 
 class CleanVendors
 {
 	public static function clean(Event $event)
 	{
+		$themes = __DIR__ . '/../../../../themes/';
 		$vendors = __DIR__ . '/../../../../vendor/';
 
+		$fs = new FileSystem;
+		$fs->ensureDirectoryExists($themes);
+
+		self::addIndexFile($themes);
 		self::addIndexFile($vendors);
 
-		self::deleteDirectory($vendors . 'adodb/adodb/docs');
-		self::deleteDirectory($vendors . 'adodb/adodb/tests');
-		self::deleteDirectory($vendors . 'aFarkas/html5shiv/build');
-		self::deleteDirectory($vendors . 'aFarkas/html5shiv/test');
-		self::deleteDirectory($vendors . 'alvarotrigo/fullpage.js/examples');
-		self::deleteDirectory($vendors . 'bombayworks/zendframework1/library/Zend/Service/WindowsAzure/CommandLine/Scaffolders');
-		self::deleteDirectory($vendors . 'codemirror/codemirror/demo');
-		self::deleteDirectory($vendors . 'codemirror/codemirror/doc');
-		self::deleteDirectory($vendors . 'codemirror/codemirror/test');
-		self::deleteDirectory($vendors . 'codemirror/codemirror/mode/tiki');
-		self::deleteDirectory($vendors . 'dompdf/dompdf/www');
-		self::deleteDirectory($vendors . 'gabordemooij/redbean/testing');
-		self::deleteDirectory($vendors . 'jarnokurlin/fullcalendar/demos');
-		self::deleteDirectory($vendors . 'jcapture-applet/jcapture-applet/src');
-		self::deleteDirectory($vendors . 'jquery/jquery-mobile/demos');
-		self::deleteDirectory($vendors . 'jquery/jquery-s5/lib/dompdf/www');
-		self::deleteFile(     $vendors . 'jquery/jquery-sheet/jquery-1.5.2.js');
-		self::deleteFile(     $vendors . 'jquery/jquery-sheet/jquery-1.5.2.min.js');
-		self::deleteDirectory($vendors . 'jquery/jquery-sheet/jquery-ui');
-		self::deleteDirectory($vendors . 'jquery/jquery-timepicker-addon/lib');
-		self::deleteDirectory($vendors . 'jquery/jquery-timepicker-addon/src');
-		self::deleteDirectory($vendors . 'jquery/jquery-timepicker-addon/test');
-		self::deleteFile(     $vendors . 'jquery/jquery-timepicker-addon/.gitignore');
-		self::deleteFile(     $vendors . 'jquery/jquery-timepicker-addon/.jshintrc');
-		self::deleteFile(     $vendors . 'jquery/jquery-timepicker-addon/bower.json');
-		self::deleteFile(     $vendors . 'jquery/jquery-timepicker-addon/composer.json');
-		self::deleteFile(     $vendors . 'jquery/jquery-timepicker-addon/Gruntfile.js');
-		self::deleteFile(     $vendors . 'jquery/jquery-timepicker-addon/jquery-ui-timepicker-addon.json');
-		self::deleteFile(     $vendors . 'jquery/jquery-timepicker-addon/package.json');
-		self::deleteDirectory($vendors . 'jquery/jquery-ui-selectmenu/demos');
-		self::deleteDirectory($vendors . 'jquery/jquery-ui-selectmenu/tests');
-		self::deleteDirectory($vendors . 'jquery/jquery-ui/development-bundle');
-		self::deleteFile     ($vendors . 'jquery/jquery-ui/js/jquery-1.10.2.js');
-		self::deleteDirectory($vendors . 'jquery/photoswipe/examples');
-		self::deleteDirectory($vendors . 'jquery/plugins/anythingslider/demos');
-		self::deleteDirectory($vendors . 'jquery/plugins/brosho/__MACOSX');
-		self::deleteDirectory($vendors . 'jquery/plugins/colorbox/content');
-		self::deleteDirectory($vendors . 'jquery/plugins/superfish/examples');
-		self::deleteDirectory($vendors . 'jquery/plugins/superfish/src');
-		self::deleteDirectory($vendors . 'jquery/plugins/superfish/test');
-		self::deleteFile(     $vendors . 'jquery/plugins/superfish/Gruntfile.coffee');
-		self::deleteFile(     $vendors . 'jquery/plugins/superfish/.gitignore');
-		self::deleteFile(     $vendors . 'jquery/plugins/superfish/bower.json');
-		self::deleteFile(     $vendors . 'jquery/plugins/superfish/package.json');
-		self::deleteFile(     $vendors . 'jquery/plugins/superfish/superfish.jquery.json');
-		self::deleteDirectory($vendors . 'jquery/plugins/tablesorter/docs');
-		self::deleteDirectory($vendors . 'jquery/plugins/tablesorter/testing');
-		self::deleteFile(     $vendors . 'jquery/plugins/tablesorter/test.html');
-		self::deleteDirectory($vendors . 'jquery/plugins/jquery-validation/demo');
-		self::deleteDirectory($vendors . 'jquery/plugins/jquery-validation/lib');
-		self::deleteDirectory($vendors . 'jquery/plugins/jquery-validation/test');
-		self::deleteDirectory($vendors . 'ezyang/htmlpurifier/docs');
-		self::deleteDirectory($vendors . 'ezyang/htmlpurifier/tests');
-		self::deleteDirectory($vendors . 'phpcas/phpcas/CAS-1.3.2/docs');
-		self::deleteDirectory($vendors . 'phpseclib/phpseclib/tests');
-		self::deleteFile     ($vendors . 'player/mp3/template_default/test.mp3');
-		self::deleteFile     ($vendors . 'player/mp3/template_mini/test.mp3');
-		self::deleteFile     ($vendors . 'player/mp3/template_maxi/test.mp3');
-		self::deleteFile     ($vendors . 'player/mp3/template_js/test.mp3');
-		self::deleteFile     ($vendors . 'player/mp3/template_multi/test.mp3');
-		self::deleteDirectory($vendors . 'smarty/smarty/development');
-		self::deleteDirectory($vendors . 'smarty/smarty/documentation');
-		self::deleteDirectory($vendors . 'smarty/smarty/distribution/demo');
-		self::deleteDirectory($vendors . 'twitter/bootstrap/docs');
-		self::deleteDirectory($vendors . 'zetacomponents/base/design');
-		self::deleteDirectory($vendors . 'zetacomponents/base/docs');
-		self::deleteDirectory($vendors . 'zetacomponents/base/tests');
-		self::deleteDirectory($vendors . 'zetacomponents/webdav/design');
-		self::deleteDirectory($vendors . 'zetacomponents/webdav/docs');
-		self::deleteDirectory($vendors . 'zetacomponents/webdav/tests');
-		self::deleteDirectory($vendors . 'player/flv/base');
-		self::deleteDirectory($vendors . 'player/flv/classes');
-		self::deleteDirectory($vendors . 'player/flv/html5');
-		self::deleteDirectory($vendors . 'player/flv/mtasc');
-		self::deleteDirectory($vendors . 'player/mp3/classes');
-		self::deleteDirectory($vendors . 'player/mp3/mtasc');
+		$fs->remove($vendors . 'adodb/adodb/docs');
+		$fs->remove($vendors . 'adodb/adodb/tests');
+		$fs->remove($vendors . 'aFarkas/html5shiv/build');
+		$fs->remove($vendors . 'aFarkas/html5shiv/test');
+		$fs->remove($vendors . 'alvarotrigo/fullpage.js/examples');
+		$fs->remove($vendors . 'bombayworks/zendframework1/library/Zend/Service/WindowsAzure/CommandLine/Scaffolders');
+		$fs->remove($vendors . 'codemirror/codemirror/demo');
+		$fs->remove($vendors . 'codemirror/codemirror/doc');
+		$fs->remove($vendors . 'codemirror/codemirror/test');
+		$fs->remove($vendors . 'codemirror/codemirror/mode/tiki');
+		$fs->remove($vendors . 'dompdf/dompdf/www');
+		$fs->remove($vendors . 'gabordemooij/redbean/testing');
+		$fs->remove($vendors . 'jarnokurlin/fullcalendar/demos');
+		$fs->remove($vendors . 'jcapture-applet/jcapture-applet/src');
+		$fs->remove($vendors . 'jquery/jquery-mobile/demos');
+		$fs->remove($vendors . 'jquery/jquery-s5/lib/dompdf/www');
+		$fs->remove($vendors . 'jquery/jquery-sheet/jquery-1.5.2.js');
+		$fs->remove($vendors . 'jquery/jquery-sheet/jquery-1.5.2.min.js');
+		$fs->remove($vendors . 'jquery/jquery-sheet/jquery-ui');
+		$fs->remove($vendors . 'jquery/jquery-timepicker-addon/lib');
+		$fs->remove($vendors . 'jquery/jquery-timepicker-addon/src');
+		$fs->remove($vendors . 'jquery/jquery-timepicker-addon/test');
+		$fs->remove($vendors . 'jquery/jquery-timepicker-addon/.gitignore');
+		$fs->remove($vendors . 'jquery/jquery-timepicker-addon/.jshintrc');
+		$fs->remove($vendors . 'jquery/jquery-timepicker-addon/bower.json');
+		$fs->remove($vendors . 'jquery/jquery-timepicker-addon/composer.json');
+		$fs->remove($vendors . 'jquery/jquery-timepicker-addon/Gruntfile.js');
+		$fs->remove($vendors . 'jquery/jquery-timepicker-addon/jquery-ui-timepicker-addon.json');
+		$fs->remove($vendors . 'jquery/jquery-timepicker-addon/package.json');
+		$fs->remove($vendors . 'jquery/jquery-ui-selectmenu/demos');
+		$fs->remove($vendors . 'jquery/jquery-ui-selectmenu/tests');
+		$fs->remove($vendors . 'jquery/jquery-ui/development-bundle');
+		$fs->remove($vendors . 'jquery/jquery-ui/js/jquery-1.10.2.js');
+		$fs->remove($vendors . 'jquery/photoswipe/examples');
+		$fs->remove($vendors . 'jquery/plugins/anythingslider/demos');
+		$fs->remove($vendors . 'jquery/plugins/brosho/__MACOSX');
+		$fs->remove($vendors . 'jquery/plugins/colorbox/content');
+		$fs->remove($vendors . 'jquery/plugins/superfish/examples');
+		$fs->remove($vendors . 'jquery/plugins/superfish/src');
+		$fs->remove($vendors . 'jquery/plugins/superfish/test');
+		$fs->remove($vendors . 'jquery/plugins/superfish/Gruntfile.coffee');
+		$fs->remove($vendors . 'jquery/plugins/superfish/.gitignore');
+		$fs->remove($vendors . 'jquery/plugins/superfish/bower.json');
+		$fs->remove($vendors . 'jquery/plugins/superfish/package.json');
+		$fs->remove($vendors . 'jquery/plugins/superfish/superfish.jquery.json');
+		$fs->remove($vendors . 'jquery/plugins/tablesorter/docs');
+		$fs->remove($vendors . 'jquery/plugins/tablesorter/testing');
+		$fs->remove($vendors . 'jquery/plugins/tablesorter/test.html');
+		$fs->remove($vendors . 'jquery/plugins/jquery-validation/demo');
+		$fs->remove($vendors . 'jquery/plugins/jquery-validation/lib');
+		$fs->remove($vendors . 'jquery/plugins/jquery-validation/test');
+		$fs->remove($vendors . 'ezyang/htmlpurifier/docs');
+		$fs->remove($vendors . 'ezyang/htmlpurifier/tests');
+		$fs->remove($vendors . 'phpcas/phpcas/CAS-1.3.2/docs');
+		$fs->remove($vendors . 'phpseclib/phpseclib/tests');
+		$fs->remove($vendors . 'player/mp3/template_default/test.mp3');
+		$fs->remove($vendors . 'player/mp3/template_mini/test.mp3');
+		$fs->remove($vendors . 'player/mp3/template_maxi/test.mp3');
+		$fs->remove($vendors . 'player/mp3/template_js/test.mp3');
+		$fs->remove($vendors . 'player/mp3/template_multi/test.mp3');
+		$fs->remove($vendors . 'smarty/smarty/development');
+		$fs->remove($vendors . 'smarty/smarty/documentation');
+		$fs->remove($vendors . 'smarty/smarty/distribution/demo');
+		$fs->remove($vendors . 'twitter/bootstrap/docs');
+		$fs->remove($vendors . 'zetacomponents/base/design');
+		$fs->remove($vendors . 'zetacomponents/base/docs');
+		$fs->remove($vendors . 'zetacomponents/base/tests');
+		$fs->remove($vendors . 'zetacomponents/webdav/design');
+		$fs->remove($vendors . 'zetacomponents/webdav/docs');
+		$fs->remove($vendors . 'zetacomponents/webdav/tests');
+		$fs->remove($vendors . 'player/flv/base');
+		$fs->remove($vendors . 'player/flv/classes');
+		$fs->remove($vendors . 'player/flv/html5');
+		$fs->remove($vendors . 'player/flv/mtasc');
+		$fs->remove($vendors . 'player/mp3/classes');
+		$fs->remove($vendors . 'player/mp3/mtasc');
 
 		// These are removed to avoid composer warnings caused by classes declared in multiple locations
-		self::deleteDirectory($vendors . 'adodb/adodb/datadict/datadict');
-		self::deleteDirectory($vendors . 'adodb/adodb/session/session');
-		self::deleteDirectory($vendors . 'adodb/adodb/perf/perf');
-		self::deleteDirectory($vendors . 'adodb/adodb/drivers/drivers');
-		self::deleteFile(     $vendors . 'adodb/adodb/adodb-active-recordx.inc.php');
-		self::deleteFile(     $vendors . 'adodb/adodb/drivers/adodb-informix.inc.php');
-		self::deleteFile(     $vendors . 'adodb/adodb/perf/perf-informix.inc.php');
-		self::deleteFile(     $vendors . 'adodb/adodb/datadict/datadict-informix.inc.php');
-	}
-
-	private static function deleteDirectory($path)
-	{
-		if (! file_exists($path)) {
-			return;
-		}
-
-		if (! is_readable($path)) {
-			return;
-		}
-
-		foreach (scandir($path) as $file) {
-			if ($file === '.' || $file === '..') {
-				continue;
-			}
-
-			$full = "$path/$file";
-
-			if (is_link($full)) {
-				self::deleteFile($full);
-			} elseif (is_dir($full)) {
-				self::deleteDirectory($full);
-			} else {
-				self::deleteFile($full);
-			}
-		}
-
-		$remaining = scandir($path);
-		$remaining = array_filter($remaining, function ($file) {
-			return $file !== '.' && $file !== '..';
-		});
-
-		if (is_writable($path) && ! count($remaining)) {
-			rmdir($path);
-		}
-	}
-
-	private static function deleteFile($path)
-	{
-		if (! file_exists($path) || ! is_writable($path)) {
-			return;
-		}
-
-		unlink($path);
+		$fs->remove($vendors . 'adodb/adodb/datadict/datadict');
+		$fs->remove($vendors . 'adodb/adodb/session/session');
+		$fs->remove($vendors . 'adodb/adodb/perf/perf');
+		$fs->remove($vendors . 'adodb/adodb/drivers/drivers');
+		$fs->remove($vendors . 'adodb/adodb/adodb-active-recordx.inc.php');
+		$fs->remove($vendors . 'adodb/adodb/drivers/adodb-informix.inc.php');
+		$fs->remove($vendors . 'adodb/adodb/perf/perf-informix.inc.php');
+		$fs->remove($vendors . 'adodb/adodb/datadict/datadict-informix.inc.php');
 	}
 
 	private static function addIndexFile($path)

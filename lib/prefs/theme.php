@@ -7,6 +7,18 @@
 
 function prefs_theme_list()
 {
+	$themes = [
+		'default' => tr('Bootstrap Default'),
+		'custom' => tr('Custom theme location, see below'),
+		'legacy' => tr('Use legacy styles'),
+	];
+
+	foreach (glob("themes/*/css/tiki.css") as $css) {
+		$css = dirname(dirname($css));
+		$theme = basename($css);
+		$themes[$theme] = tr($theme);
+	}
+
 	// TODO : Include pre-defined themes
 	return array(
 		'theme_active' => array(
@@ -14,11 +26,7 @@ function prefs_theme_list()
 			'description' => tr('Select the theme to be used.'),
 			'type' => 'list',
 			'default' => 'default',
-			'options' => array(
-				'default' => tr('Bootstrap Default'),
-				'custom' => tr('Custom theme location, see below'),
-				'legacy' => tr('Use legacy styles'),
-			),
+			'options' => $themes,
 		),
 		'theme_custom' => array(
 			'name' => tr('Custom theme location'),

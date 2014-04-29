@@ -75,6 +75,7 @@
 		"symfony/config": "2.4.3"
 	},
 	"require-dev": {
+		"oyejorge/less.php": "1.7.0.1",
 		"mikey179/vfsStream": "1.1.0",
         "bafs/testify": "dev-master"
 	},
@@ -123,27 +124,21 @@
 		]
 	},
 	"scripts": {
+		"pre-install-cmd": [
+			"Tiki\\Composer\\ThemeInstaller::setup"
+		],
 		"post-install-cmd": [
 			"Tiki\\Composer\\CleanVendors::clean"
+		],
+		"pre-update-cmd": [
+			"Tiki\\Composer\\ThemeInstaller::setup"
 		],
 		"post-update-cmd": [
 			"Tiki\\Composer\\CleanVendors::clean"
 		]
 	},
 	"repositories": [
-		{
-			"type": "package",
-			"package": {
-				"name": "twitter/bootstrap",
-				"version": "3.0.3",
-				"dist": {
-					"url": "https://github.com/twbs/bootstrap/releases/download/v3.0.3/bootstrap-3.0.3-dist.zip",
-					"type": "zip"
-				}
-			}
-		},
-		{ "type": "composer", "url": "https://composer.tiki.org" }
-	,
+		{ "type": "composer", "url": "https://composer.tiki.org" },
 		{
 			"type": "package",
 			"package": {
