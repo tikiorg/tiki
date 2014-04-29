@@ -9,7 +9,7 @@
 // $Id$
 
 require_once ('tiki-setup.php');
-include_once ('lib/rss/rsslib.php');
+$rsslib = TikiLib::lib('rss');
 //get_strings tra('External Feeds')
 $auto_query_args = array(
 	'rssId',
@@ -18,9 +18,7 @@ $auto_query_args = array(
 	'sort_mode',
 	'find'
 );
-if (!isset($rsslib)) {
-	$rsslib = new RssLib;
-}
+
 $access->check_permission('tiki_p_admin_rssmodules');
 
 if (isset($_REQUEST["rssId"])) {
@@ -106,7 +104,7 @@ if ( isset($_REQUEST['article']) && $prefs['feature_articles'] == 'y' ) {
 	$article_custom_info = $rsslib->get_article_custom_info($_REQUEST["article"]);
 	$smarty->assign('article_custom_info', $article_custom_info);
 
-	global $artlib; require_once 'lib/articles/artlib.php';
+	$artlib = TikiLib::lib('art');
 	$smarty->assign('topics', $artlib->list_topics());
 	$smarty->assign('types', $artlib->list_types());
 

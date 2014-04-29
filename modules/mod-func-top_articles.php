@@ -31,8 +31,10 @@ function module_top_articles_info()
  */
 function module_top_articles($mod_reference, $module_params)
 {
-	global $tikilib, $smarty, $user;
-	global $artlib; require_once 'lib/articles/artlib.php';
+	global $user;
+	$tikilib = TikiLib::lib('tiki');
+	$smarty = TikiLib::lib('smarty');
+	$artlib = TikiLib::lib('art');
 
 	$lang = '';
 	if (isset($module_params['lang'])) {

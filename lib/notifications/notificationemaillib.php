@@ -787,7 +787,7 @@ function sendCommentNotification($type, $id, $title, $content, $commentId=null)
 		if ($type == 'wiki') {
 			$smarty->assign('mail_objectname', $id);
 		} elseif ($type == 'article') {
-			global $artlib;	include_once ('lib/articles/artlib.php');
+			$artlib = TikiLib::lib('art');
 			$smarty->assign('mail_objectname', $artlib->get_title($id));
 			$smarty->assign('mail_objectid', $id);
 		} elseif ($type == 'trackeritem') {

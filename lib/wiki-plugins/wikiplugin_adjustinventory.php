@@ -49,19 +49,20 @@ function wikiplugin_adjustinventory( $data, $params )
 	if (!isset($params['subtract'])) {
 		$params['subtract'] = 'y';
 	}
-	global $smarty;
+	$smarty = TikiLib::lib('smarty');
 	$smarty->assign('code', $params['code']);
 	$smarty->assign('add', $params['add']);
 	$smarty->assign('subtract', $params['subtract']);
 	$form = $smarty->fetch('wiki-plugins/wikiplugin_adjustinventory.tpl');
 
 	if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
-		global $jitPost, $access;
+		global $jitPost;
+		$access = TikiLib::lib('access');
 		$add_quantity = $jitPost->add_quantity->int();
 		$subtract_quantity = $jitPost->subtract_quantity->int();
 		$quantity = $add_quantity - $subtract_quantity;
 		if ( $jitPost->code->text() == $params['code'] && $quantity != 0 ) {
-			global $cartlib; require_once 'lib/payment/cartlib.php';
+			$cartlib = TikiLib::lib('cart');
 			$cartlib->change_inventory($params['code'], $quantity);
 		}
 		$access->redirect($_SERVER['REQUEST_URI'], tr('Inventory was adjusted by %0', $quantity));	

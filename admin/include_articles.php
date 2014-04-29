@@ -18,8 +18,7 @@ if (isset($_REQUEST["articlecomprefs"])) {
 	check_ticket('admin-inc-cms');
 }
 if (isset($_REQUEST['import'])) {
-	global $artlib;
-	include_once ('lib/articles/artlib.php');
+	$artlib = TikiLib::lib('art');
 	check_ticket('admin-inc-cms');
 	$fname = $_FILES['csvlist']['tmp_name'];
 	$msgs = array();

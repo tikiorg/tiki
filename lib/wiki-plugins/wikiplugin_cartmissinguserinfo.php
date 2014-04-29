@@ -37,8 +37,8 @@ function wikiplugin_cartmissinguserinfo_info()
 
 function wikiplugin_cartmissinguserinfo($data, $params)
 {
-	global $smarty;
-	global $cartlib; require_once 'lib/payment/cartlib.php';
+	$smarty = TikiLib::lib('smarty');
+	$cartlib = TikiLib::lib('cart');
 	if (empty($params['product_class_id']) || empty($params['info_type'])) {
 		return tra('Missing parameters');
 	}

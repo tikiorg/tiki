@@ -1092,8 +1092,8 @@ class NlLib extends TikiLib
 
 	public function clip_articles($nlId)
 	{
-		global $artlib, $smarty;
-		require_once 'lib/articles/artlib.php';
+		$smarty = TikiLib::lib('smarty');
+		$artlib = TikiLib::lib('art');
 		$query = 'select `articleClipTypes`, `articleClipRange` from `tiki_newsletters` where nlId = ?';
 		$result = $this->fetchAll($query, array($nlId));
 		$articleClipTypes = unserialize($result[0]['articleClipTypes']);

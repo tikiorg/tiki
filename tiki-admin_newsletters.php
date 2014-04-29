@@ -12,8 +12,7 @@ $section = 'newsletters';
 require_once ('tiki-setup.php');
 $access->check_feature('feature_newsletters');
 
-global $nllib;
-include_once ('lib/newsletters/nllib.php');
+global $nllib; include_once ('lib/newsletters/nllib.php');
 $auto_query_args = array(
 	'nlId',
 	'offset',
@@ -184,7 +183,7 @@ $channels = $nllib->list_newsletters(
 // get Article types for clippings feature
 $articleTypes = array();
 if ($prefs["feature_articles"] == 'y') {
-	include_once ('lib/articles/artlib.php');
+	$artlib = TikiLib::lib('art');
 	$allTypes = $artlib->list_types();
 	foreach ($allTypes as $t) {
 		$articleTypes[] = $t["type"];

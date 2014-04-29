@@ -177,7 +177,7 @@ if (isset($_REQUEST['send'])) {
 			}
 		}
 	}
-	global $artlib; require_once 'lib/articles/artlib.php';
+	$artlib = TikiLib::lib('art');
 	foreach ($sendarticles as $article) {
 		$page_info = $artlib->get_article($article);
 		if ($page_info) {
@@ -246,7 +246,7 @@ $pages = $tikilib->list_pageNames(0, -1, 'pageName_asc', $find);
 $smarty->assign('pages', $pages['data']);
 
 if ( $prefs['feature_articles'] == 'y' ) {
-	global $artlib; require_once 'lib/articles/artlib.php';
+	$artlib = TikiLib::lib('art');
 	$articles = $artlib->list_articles(0, -1, 'publishDate_desc', $find, 0, $tikilib->now, $user);
 	$smarty->assign('articles', $articles['data']);
 }

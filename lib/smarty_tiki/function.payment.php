@@ -45,9 +45,9 @@ function smarty_function_payment( $params, $smarty )
 		)
 	) {
 		if ($prefs['payment_system'] == 'cclite' && isset($_POST['cclite_payment_amount']) && $_POST['cclite_payment_amount'] == $info['amount_remaining']) {
-			global $access, $cclitelib, $cartlib;
-			require_once 'lib/payment/cclitelib.php';
-			require_once 'lib/payment/cartlib.php';
+			global $cclitelib; require_once 'lib/payment/cclitelib.php';
+			$access = TikiLib::lib('access');
+			$cartlib = TikiLib::lib('cart');
 
 			//$access->check_authenticity( tr('Transfer currency? %0 %1?', $info['amount'], $info['currency'] ));
 

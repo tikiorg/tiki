@@ -46,7 +46,7 @@ if ($prefs['feature_wiki'] == 'y') {
 if ($prefs['feature_blogs'] == 'y') {
 	$mytiki_blogs = $tikilib->get_user_preference($user, 'mytiki_blogs', 'y');
 	if ($mytiki_blogs == 'y') {
-		require_once('lib/blogs/bloglib.php');
+		$bloglib = TikiLib::lib('blog');
 		$user_blogs = $bloglib->list_user_blogs($userwatch, false);
 		$smarty->assign_by_ref('user_blogs', $user_blogs);
 		$smarty->assign('mytiki_blogs', 'y');
@@ -111,7 +111,7 @@ if ($prefs['feature_messages'] == 'y' && $tiki_p_messages == 'y') {
 if ($prefs['feature_articles'] == 'y') {
 	$mytiki_articles = $tikilib->get_user_preference($user, 'mytiki_articles', 'y');
 	if ($mytiki_articles == 'y') {
-		include_once ('lib/articles/artlib.php');
+		$artlib = TikiLib::lib('art');
 		$user_articles = $artlib->get_user_articles($userwatch, -1);
 		$smarty->assign_by_ref('user_articles', $user_articles);
 		$smarty->assign('mytiki_articles', 'y');

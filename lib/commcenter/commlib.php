@@ -101,7 +101,7 @@ class CommLib extends TikiLib
 
 	function accept_article($receivedArticleId, $topic)
 	{
-		global $artlib; require_once 'lib/articles/artlib.php';
+		$artlib = TikiLib::lib('art');
 		$info = $this->get_received_article($receivedArticleId);
 
 		$artlib->replace_article(

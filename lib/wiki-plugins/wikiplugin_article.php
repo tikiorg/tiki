@@ -40,11 +40,11 @@ function wikiplugin_article($data, $params)
 	$userlib = TikiLib::lib('user');
 	$tikilib = TikiLib::lib('tiki');
 	$statslib = TikiLib::lib('stats');
+	$artlib = TikiLib::lib('art');
 
 	extract($params, EXTR_SKIP);
 
 	if (empty($Id)) {
-		$artlib = TikiLib::lib('art');
 
 		$Id = $artlib->get_most_recent_article_id();
 	}
@@ -58,7 +58,6 @@ function wikiplugin_article($data, $params)
 		$add="";
 	}
 
-	global $artlib; require_once 'lib/articles/artlib.php';
 	$article_data = $artlib->get_article($Id);
 	if (isset($article_data[$Field])) {
 		return $tikilib->parse_data($article_data[$Field]) . $add;

@@ -95,8 +95,10 @@ function module_articles_info()
  */
 function module_articles($mod_reference, $module_params)
 {
-	global $smarty, $tikilib, $user;
-	global $artlib; require_once 'lib/articles/artlib.php';
+	global $user;
+	$tikilib = TikiLib::lib('tiki');
+	$smarty = TikiLib::lib('smarty');
+	$artlib = TikiLib::lib('art');
 	
 	$urlParams = array(
 		'topicId' => 'topic',

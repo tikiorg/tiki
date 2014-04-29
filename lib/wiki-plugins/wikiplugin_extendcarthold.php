@@ -22,7 +22,7 @@ function wikiplugin_extendcarthold_info()
 
 function wikiplugin_extendcarthold( $data, $params )
 {
-	global $cartlib; require_once 'lib/payment/cartlib.php';
+	$cartlib = TikiLib::lib('cart');
 	$cartlib->extend_onhold_list(); 
 } 
 			

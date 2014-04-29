@@ -67,7 +67,7 @@ function payment_behavior_cart_exchange_product( $exchangeorderitemid = 0, $exch
 	$trklib->replace_item($orderitemsTrackerId, $orderItemId, $ins_fields);
 
 	// Replace inventory for original product
-	global $cartlib; require_once 'lib/payment/cartlib.php';
+	$cartlib = TikiLib::lib('cart');
 	$cartlib->change_inventory($fromproductId, $amountBought);
 
 	return true;

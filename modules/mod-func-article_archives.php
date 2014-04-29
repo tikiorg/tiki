@@ -60,8 +60,9 @@ function module_article_archives_info()
  */
 function module_article_archives($mod_reference, $module_params)
 {
-	global $tikilib, $smarty;
-	global $artlib; require_once 'lib/articles/artlib.php';
+	$tikilib = TikiLib::lib('tiki');
+	$smarty = TikiLib::lib('smarty');
+	$artlib = TikiLib::lib('art');
 	
 	$urlParams = array(
 		'topicId' => 'topic',

@@ -31,8 +31,8 @@ function module_article_topics_info()
  */
 function module_article_topics($mod_reference, $module_params)
 {
-	global $smarty;
-	global $artlib; include_once('lib/articles/artlib.php');
+	$smarty = TikiLib::lib('smarty');
+	$artlib = TikiLib::lib('art');
 	
 	$listTopics = $artlib->list_topics();
 	/* To renumber array keys from 0 since smarty 3 doesn't seem to like arrays

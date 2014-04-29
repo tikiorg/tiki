@@ -9,7 +9,7 @@
 // $Id$
 $section = 'cms';
 require_once ('tiki-setup.php');
-include_once ('lib/articles/artlib.php');
+$artlib = TikiLib::lib('art');
 $access->check_feature('feature_articles');
 $access->check_permission('tiki_p_read_article');
 $auto_query_args = array('sort_mode', 'category', 'offset', 'maxRecords', 'find', 'find_from_Month', 'find_from_Day', 'find_from_Year', 'find_to_Month', 'find_to_Day', 'find_to_Year', 'type', 'topic', 'cat_categories', 'categId', 'lang', 'mode', 'mapview', 'searchmap', 'searchlist');

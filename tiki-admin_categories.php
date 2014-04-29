@@ -442,7 +442,7 @@ if ($prefs['feature_search'] !== 'y' || $prefs['unified_add_to_categ_search'] !=
 	}
 
 	if ( $prefs['feature_articles'] == 'y' ) {
-		global $artlib; require_once 'lib/articles/artlib.php';
+		$artlib = TikiLib::lib('art');
 		$articles = $artlib->list_articles($offset, -1, 'title_asc', $find_objects, '', '', $user, '', '', 'n');
 	}
 

@@ -99,7 +99,7 @@ switch ($_REQUEST['type']) {
     	break;
 
 	case 'article':
-		global $artlib; require_once 'lib/articles/artlib.php';
+		$artlib = TikiLib::lib('art');
 		$objects = $artlib->list_articles(0, -1, 'title_asc', $find_objects, 0, 0, $user);
 		$smarty->assign_by_ref('objects', $objects["data"]);
 		$objects = $objects['data'];

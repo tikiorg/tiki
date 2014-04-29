@@ -7,7 +7,7 @@
 
 function payment_behavior_replace_inventory( $code, $quantity )
 {
-	global $cartlib; require_once 'lib/payment/cartlib.php';	
+	$cartlib = TikiLib::lib('cart');
 	$cartlib->change_inventory($code, $quantity);
 	return true;
 }

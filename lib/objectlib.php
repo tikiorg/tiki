@@ -38,7 +38,7 @@ class ObjectLib extends TikiLib
 			if (is_null($description)) {
 				switch ($type) {
 					case 'article':
-						global $artlib; require_once 'lib/articles/artlib.php';
+						$artlib = TikiLib::lib('art');
 						$info = $artlib->get_article($itemId);
 
 						$description = $info['heading'];
@@ -47,7 +47,7 @@ class ObjectLib extends TikiLib
 						break;
 
 					case 'blog':
-						global $bloglib; require_once('lib/blogs/bloglib.php');
+						$bloglib = TikiLib::lib('blog');
 						$info = $bloglib->get_blog($itemId);
 
 						$description = $info['description'];
@@ -56,7 +56,7 @@ class ObjectLib extends TikiLib
 						break;
 
 					case 'calendar':
-						global $calendarlib; require_once('lib/calendar/calendarlib.php');
+						$calendarlib = TikiLib::lib('calendar');
 						$info = $calendarlib->get_calendar($itemId);
 
 						$description = $info['description'];
@@ -394,12 +394,12 @@ class ObjectLib extends TikiLib
 		switch ($objectType) {
 			case 'wiki':
 			case 'wiki page':
-				global $tikilib; include_once('lib/tikilib.php');
+				$tikilib = TikiLib::lib('tiki');
 				$info = $tikilib->get_page_info($object);
 				return array('title'=>$object, 'data'=>$info['data'], 'is_html'=>$info['is_html']);
 
 			case 'article':
-				global $artlib; require_once 'lib/articles/artlib.php';
+				$artlib = TikiLib::lib('art');
 				$info = $artlib->get_article($object);
 				return array('title'=>$info['title'], 'data'=>$info['body']);
 
@@ -434,8 +434,8 @@ class ObjectLib extends TikiLib
 		switch ($objectType) {
 			case 'wiki':
 			case 'wiki page':
-				global $tikilib; include_once('lib/tikilib.php');
 				global $user;
+				$tikilib = TikiLib::lib('tiki');
 				$tikilib->update_page($object, $data, tra('section edit'), $user, $tikilib->get_ip_address());
 				break;
 		}
@@ -550,7 +550,7 @@ class ObjectLib extends TikiLib
 
 	function get_metadata($type, $object, & $classList)
 	{
-		global $smarty;
+		$smarty = TikiLib::lib('smarty');
 		$smarty->loadPlugin('smarty_modifier_escape');
 
 		$escapedType = smarty_modifier_escape($type);

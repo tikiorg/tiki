@@ -10,7 +10,7 @@
 
 $section = 'cms';
 require_once ('tiki-setup.php');
-include_once ('lib/articles/artlib.php');
+$artlib = TikiLib::lib('art');
 $access->check_feature('feature_submissions');
 $access->check_permission('tiki_p_submit_article');
 //get_strings tra('View submissions')

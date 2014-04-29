@@ -259,8 +259,10 @@ function wikiplugin_articles_info()
 
 function wikiplugin_articles($data, $params)
 {
-	global $smarty, $tikilib, $prefs, $tiki_p_read_article, $tiki_p_articles_read_heading, $dbTiki, $pageLang;
-	global $artlib; require_once 'lib/articles/artlib.php';
+	global $prefs, $tiki_p_read_article, $tiki_p_articles_read_heading, $pageLang;
+	$smarty = TikiLib::lib('smarty');
+	$tikilib = TikiLib::lib('tiki');
+	$artlib = TikiLib::lib('art');
 	$default = array('max' => $prefs['maxRecords'], 'start' => 0, 'usePagination' => 'n', 'topicId' => '', 'topic' => '', 'sort' => 'publishDate_desc', 'type' => '', 'lang' => '', 'quiet' => 'n', 'categId' => '', 'largefirstimage' => 'n', 'urlparam' => '', 'actions' => 'n', 'translationOrphan' => '', 'headerLinks' => 'n', 'showtable' => 'n', 'useLinktoURL' => 'n');
 	$auto_args = array('lang', 'topicId', 'topic', 'sort', 'type', 'lang', 'categId');
 	$params = array_merge($default, $params);
@@ -398,7 +400,6 @@ function wikiplugin_articles($data, $params)
 		$listpages["data"][$i]["comments_cant"] = TikiLib::lib('comments')->count_comments($comments_objectId);
 		//print_r($listpages["data"][$i]['title']);
 	}
-	global $artlib; require_once ('lib/articles/artlib.php');
 
 	$topics = $artlib->list_topics();
 	$smarty->assign_by_ref('topics', $topics);

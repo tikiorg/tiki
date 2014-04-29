@@ -30,8 +30,8 @@ function module_num_submissions_info()
  */
 function module_num_submissions($mod_reference, $module_params)
 {
-	global $artlib, $smarty; require_once 'lib/articles/artlib.php';
+	$smarty = TikiLib::lib('smarty');
+	$artlib = TikiLib::lib('art');
 	$ranking = $artlib->list_submissions(0, -1, 'created_desc', '', '');
-	
 	$smarty->assign('modNumSubmissions', $ranking["cant"]);
 }

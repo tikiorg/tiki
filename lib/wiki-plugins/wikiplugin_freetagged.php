@@ -185,7 +185,7 @@ function wikiplugin_freetagged($data, $params)
 		if ($titles_only == 'n') {
 			switch ($obj['type']) {
 				case  'article':
-					global $artlib; include_once('lib/articles/artlib.php');
+					$artlib = TikiLib::lib('art');
 					$info = $artlib->get_article($obj['itemId']);
 					$obj['date'] = $info['publishDate'];
 					$obj['description'] = $tikilib->parse_data($info['heading']);
