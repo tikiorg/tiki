@@ -47,6 +47,9 @@
 		<service id="tiki.lib.imagegal" class="ImageGalsLib">
 			<file>%kernel.root_dir%/lib/imagegals/imagegallib.php</file>
 		</service>
+		<service id="tiki.lib.ldap" class="LdapLib">
+			<file>%kernel.root_dir%/lib/ldap/ldaplib.php</file>
+		</service>
 		<service id="tiki.lib.logs" class="LogsLib">
 			<file>%kernel.root_dir%/lib/logs/logslib.php</file>
 		</service>

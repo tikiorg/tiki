@@ -57,4 +57,3 @@ class LdapLib extends TikiLib
 	}
 }
 
-$ldaplib = new LdapLib();
