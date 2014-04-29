@@ -831,54 +831,6 @@
             "type": "library"
         },
         {
-            "name": "lphuberdeau/tiki-bootstrap",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/lphuberdeau/tiki-bootstrap.git",
-                "reference": "672f2b1fb1c013f37ad76ded58f8306aca12cdc3"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/lphuberdeau/tiki-bootstrap/zipball/672f2b1fb1c013f37ad76ded58f8306aca12cdc3",
-                "reference": "672f2b1fb1c013f37ad76ded58f8306aca12cdc3",
-                "shasum": ""
-            },
-            "type": "tiki-theme",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "3.1.x-dev"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Jacob Thornton",
-                    "email": "jacobthornton@gmail.com"
-                },
-                {
-                    "name": "Mark Otto",
-                    "email": "markdotto@gmail.com"
-                }
-            ],
-            "description": "Fork of the popular twbs/bootstrap for use within Tiki Wiki CMS Groupware",
-            "homepage": "http://tiki.org",
-            "keywords": [
-                "JS",
-                "css",
-                "framework",
-                "front-end",
-                "less",
-                "mobile-first",
-                "responsive",
-                "web"
-            ],
-            "time": "2014-04-29 16:39:43"
-        },
-        {
             "name": "md5/md5",
             "version": "1.1.0",
             "dist": {
@@ -1781,7 +1733,6 @@
         "wikilingo/wikilingo": 20,
         "flp/flp": 20,
         "wikilingo/codemirror": 20,
-        "lphuberdeau/tiki-bootstrap": 20,
         "bafs/testify": 20
     },
     "platform": [

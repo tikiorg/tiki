@@ -72,8 +72,7 @@
 		"alvarotrigo/fullpage.js": "1",
 		"jcobb/basic-jquery-slider": "1",
 		"symfony/dependency-injection": "2.4.3",
-		"symfony/config": "2.4.3",
-		"lphuberdeau/tiki-bootstrap": "dev-master"
+		"symfony/config": "2.4.3"
 	},
 	"require-dev": {
 		"oyejorge/less.php": "1.7.0.1",
