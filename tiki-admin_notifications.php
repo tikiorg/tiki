@@ -31,8 +31,9 @@ $inputConfiguration = array(
 );
 // Initialization
 require_once ('tiki-setup.php');
-include_once ('lib/notifications/notificationlib.php');
 $access->check_permission(array('tiki_p_admin_notifications'));
+
+$notificationlib = TikiLib::lib('notification');
 
 $auto_query_args = array(
 	'offset',

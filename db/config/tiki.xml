@@ -56,6 +56,9 @@
 		<service id="tiki.lib.multilingual" class="MultilingualLib">
 			<file>%kernel.root_dir%/lib/multilingual/multilinguallib.php</file>
 		</service>
+		<service id="tiki.lib.notification" class="NotificationLib">
+			<file>%kernel.root_dir%/lib/notifications/notificationlib.php</file>
+		</service>
 		<service id="tiki.lib.object" class="ObjectLib">
 			<file>%kernel.root_dir%/lib/objectlib.php</file>
 		</service>

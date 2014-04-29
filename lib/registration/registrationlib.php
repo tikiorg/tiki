@@ -22,7 +22,6 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
 require_once('lib/tikilib.php'); // httpScheme(), get_user_preference
 require_once('lib/webmail/tikimaillib.php');
 require_once('lib/db/tiki_registration_fields.php');
-require_once('lib/notifications/notificationlib.php');
 
 if (!isset($Debug)) {
 	$Debug = false;

@@ -190,4 +190,3 @@ class NotificationLib extends TikiLib
 
 }
 
-$GLOBALS['notificationlib'] = new NotificationLib;

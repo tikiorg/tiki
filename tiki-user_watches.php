@@ -19,7 +19,7 @@ if ($prefs['feature_user_watches_translations']) {
 	$smarty->assign_by_ref('languages', $languages);
 }
 
-require_once('lib/notifications/notificationlib.php');
+$notificationlib = TikiLib::lib('notification');
 
 $notification_types = $notificationlib->get_global_watch_types(true);
 if ($prefs['feature_user_watches_translations'] == 'y') {

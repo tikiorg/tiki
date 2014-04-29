@@ -6,8 +6,6 @@
 // $Id$
 
 require_once('lib/wizard/wizard.php');
-require_once('lib/notifications/notificationlib.php');
-$userprefslib = TikiLib::lib('userprefs');
 
 /**
  * Set up the wysiwyg editor, including inline editing
@@ -32,7 +30,10 @@ class UserWizardPreferencesNotifications extends Wizard
 
 	function onSetupPage ($homepageUrl) 
 	{
-		global	$user, $smarty, $tikilib, $prefs; 
+		global	$user, $prefs; 
+
+		$tikilib = TikiLib::lib('tiki');
+		$smarty = TikiLib::lib('smarty');
 
 		// Run the parent first
 		parent::onSetupPage($homepageUrl);
@@ -63,7 +64,9 @@ class UserWizardPreferencesNotifications extends Wizard
 
 	function onContinue ($homepageUrl) 
 	{
-		global $tikilib, $user, $prefs;
+		global $user, $prefs;
+
+		$tikilib = TikiLib::lib('tiki');
 		
 		// Run the parent first
 		parent::onContinue($homepageUrl);
