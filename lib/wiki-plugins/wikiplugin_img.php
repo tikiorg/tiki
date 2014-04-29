@@ -556,8 +556,7 @@ function wikiplugin_img( $data, $params )
 		) {
 			//Try to get image from database
 			if (!empty($imgdata['id'])) {
-				global $imagegallib;
-				include_once('lib/imagegals/imagegallib.php');
+				$imagegallib = TikiLib::lib('imagegal');
 				$dbinfo = $imagegallib->get_image_info($imgdata['id'], 'o');
 				$dbinfo2 = $imagegallib->get_image($imgdata['id'], 'o');
 				$dbinfo = isset($dbinfo) && isset($dbinfo2) ? array_merge($dbinfo, $dbinfo2) : array();

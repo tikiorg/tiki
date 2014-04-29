@@ -10,7 +10,7 @@
 
 require_once ('tiki-setup.php');
 
-include_once ('lib/imagegals/imagegallib.php');
+$imagegallib = TikiLib::lib('imagegal');
 
 if ($prefs['feature_categories'] == 'y') {
 	$categlib = TikiLib::lib('categ');

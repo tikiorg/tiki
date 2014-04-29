@@ -52,8 +52,7 @@ function prefs_home_list($partial = false)
  */
 function listimgal_pref()
 {
-	include_once ('lib/imagegals/imagegallib.php');
-	global $imagegallib;
+	$imagegallib = TikiLib::lib('imagegal');
 
 	$allimgals = $imagegallib->list_visible_galleries(0, -1, 'name_desc', 'admin', '');
 
@@ -129,7 +128,7 @@ function listforum_pref()
  */
 function listblog_pref()
 {
-	global $bloglib; require_once('lib/blogs/bloglib.php');
+	$bloglib = TikiLib::lib('blog');
 
 	$allblogs = $bloglib->list_blogs(0, -1, 'created_desc', '');
 	$listblogs = array('' => 'None');

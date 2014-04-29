@@ -163,7 +163,7 @@ function wikiplugin_colorbox($data, $params)
 		if (!$tikilib->user_has_perm_on_object($user, $params['galId'], 'gallery', 'tiki_p_view_image_gallery')) {
 			return tra('Permission denied');
 		}
-		global $imagegallib; include_once ('lib/imagegals/imagegallib.php');
+		$imagegallib = TikiLib::lib('imagegal');
 		if (empty($params['sort_mode'])) $params['sort_mode'] = 'created_desc';
 		$files = $imagegallib->get_images(0, -1, $params['sort_mode'], '', $params['galId']);
 		$smarty->assign('colorboxUrl', 'show_image.php?id=');

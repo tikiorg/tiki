@@ -43,7 +43,7 @@ if (!isset($_REQUEST['view'])) {
 	die;
 } elseif ($_REQUEST['view'] == 'image') {
 	include_once ("tiki-setup.php");
-	include_once ("lib/imagegals/imagegallib.php");
+	$imagegallib = TikiLib::lib('imagegal');
 	if ($prefs['feature_galleries'] != 'y') {
 		header("HTTP/1.0 404 Not Found");
 		die;

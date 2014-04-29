@@ -11,7 +11,7 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
 	exit;
 }
 
-include_once ('lib/imagegals/imagegallib.php');
+$imagegallib = TikiLib::lib('imagegal');
 
 if (isset($_REQUEST['galset'])) {
 	check_ticket('admin-inc-gal');

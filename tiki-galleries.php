@@ -8,7 +8,7 @@
 $section = 'galleries';
 require_once ('tiki-setup.php');
 
-global $imagegallib; include_once ('lib/imagegals/imagegallib.php');
+$imagegallib = TikiLib::lib('imagegal');
 $categlib = TikiLib::lib('categ');
 include_once ('lib/map/usermap.php');
 $access->check_feature('feature_galleries');
@@ -438,10 +438,7 @@ if (!isset($_REQUEST['offset'])) {
 $smarty->assign_by_ref('offset', $offset);
 
 // Get the list of libraries available for this user (or public galleries)
-global $imagegallib;
-if (!is_object($imagegallib)) {
-	require_once('lib/imagegals/imagegallib.php');
-}
+$imagegallib = TikiLib::lib('imagegal');
 
 $galleries = $imagegallib->list_galleries($offset, $maxRecords, $sort_mode, 'admin', $find);
 Perms::bulk(array( 'type' => 'image gallery' ), 'object', $galleries, 'galleryId');

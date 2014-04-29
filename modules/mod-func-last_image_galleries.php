@@ -31,8 +31,9 @@ function module_last_image_galleries_info()
  */
 function module_last_image_galleries($mod_reference, $module_params)
 {
-	global $smarty, $user;
-	global $imagegallib; include_once 'lib/imagegals/imagegallib.php';
+	global $user;
+	$smarty = TikiLib::lib('smarty');
+	$imagegallib = TikiLib::lib('imagegal');
 	$ranking = $imagegallib->list_visible_galleries(0, $mod_reference["rows"], 'lastModif_desc', $user, '');
 	
 	$smarty->assign('modLastGalleries', $ranking["data"]);

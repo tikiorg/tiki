@@ -8,7 +8,7 @@
 $section = 'galleries';
 require_once ('tiki-setup.php');
 $categlib = TikiLib::lib('categ');
-include_once ('lib/imagegals/imagegallib.php');
+$imagegallib = TikiLib::lib('imagegal');
 $access->check_feature(array('feature_galleries', 'feature_gal_batch'));
 
 // Now check permissions to access this page

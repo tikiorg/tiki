@@ -1450,7 +1450,7 @@ class LogsLib extends TikiLib
 	function insert_image($galleryId, $graph, $ext, $title, $period)
 	{
 		global $prefs, $user;
-		global $imagegallib; include_once('lib/imagegals/imagegallib.php');
+		$imagegallib = TikiLib::lib('imagegal');
 
 		$filename = $prefs['tmpDir'] . '/' . md5(rand() . time()) . '.' . $ext;
 		$graph->Stroke($filename);
@@ -1556,7 +1556,7 @@ class LogsLib extends TikiLib
 					}
 
 					if (!isset($imageGalleryNames)) {
-						global $imagegallib; include_once('lib/imagegals/imagegallib.php');
+						$imagegallib = TikiLib::lib('imagegal');
 						$objects = $imagegallib->list_galleries(0, -1, 'name_asc', 'admin');
 						foreach ($objects['data'] as $object) {
 							$imageGalleryNames[$object['galleryId']] = $object['name'];

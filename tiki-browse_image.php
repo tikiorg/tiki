@@ -10,8 +10,8 @@
 
 $section = "galleries";
 require_once ('tiki-setup.php');
-include_once ("lib/imagegals/imagegallib.php");
-include_once ('lib/stats/statslib.php');
+$imagegallib = TikiLib::lib('imagegal');
+$statslib = TikiLib::lib('stats');
 
 $access->check_feature('feature_galleries');
 

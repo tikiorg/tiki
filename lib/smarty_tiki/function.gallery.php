@@ -13,10 +13,8 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 
 function smarty_function_gallery($params, $smarty)
 {
-	global $tikilib;
-	global $dbTiki;
-	global $imagegallib;
-	include_once('lib/imagegals/imagegallib.php');
+	$tikilib = TikiLib::lib('tiki');
+	$imagegallib = TikiLib::lib('imagegal');
 	extract($params);
 	// Param = id
 

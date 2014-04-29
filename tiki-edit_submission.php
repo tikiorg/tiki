@@ -355,7 +355,7 @@ if (isset($_REQUEST['preview']) || !empty($errors)) {
 // Pro
 if ((isset($_REQUEST['save']) || isset($_REQUEST['submitarticle'])) && empty($errors)) {
 	check_ticket('edit-submission');
-	include_once ('lib/imagegals/imagegallib.php');
+	$imagegallib = TikiLib::lib('imagegal');
 
 	# convert from the displayed 'site' time to UTC time
 	//Convert 12-hour clock hours to 24-hour scale to compute time

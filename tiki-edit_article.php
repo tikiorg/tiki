@@ -447,7 +447,7 @@ if (isset($_REQUEST['preview']) or !empty($errors)) {
 
 if (isset($_REQUEST['save']) && empty($errors)) {
 	check_ticket('edit-article');
-	include_once ('lib/imagegals/imagegallib.php');
+	$imagegallib = TikiLib::lib('imagegal');
 
 	# convert from the displayed 'site' time to 'server' time
 	if (isset($_REQUEST['publish_Hour'])) {

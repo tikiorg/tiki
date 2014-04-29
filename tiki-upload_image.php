@@ -11,7 +11,7 @@
 $section = 'galleries';
 require_once ('tiki-setup.php');
 $categlib = TikiLib::lib('categ');
-include_once ('lib/imagegals/imagegallib.php');
+$imagegallib = TikiLib::lib('imagegal');
 
 $access->check_feature('feature_galleries');
 

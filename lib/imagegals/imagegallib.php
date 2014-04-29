@@ -2712,5 +2712,3 @@ class ImageGalsLib extends TikiLib
 		}
 	}
 }
-global $imagegallib;
-$imagegallib = new ImageGalsLib;

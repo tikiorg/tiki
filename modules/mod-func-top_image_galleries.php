@@ -31,8 +31,8 @@ function module_top_image_galleries_info()
  */
 function module_top_image_galleries($mod_reference, $module_params)
 {
-	global $smarty;
-	global $imagegallib; include_once ('lib/imagegals/imagegallib.php');
+	$smarty = TikiLib::lib('smarty');
+	$imagegallib = TikiLib::lib('imagegal');
 	$ranking = $imagegallib->list_visible_galleries(0, $mod_reference["rows"], 'hits_desc', 'admin', '');
 	
 	$smarty->assign('modTopGalleries', $ranking["data"]);

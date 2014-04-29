@@ -36,8 +36,8 @@ function module_top_images_info()
  */
 function module_top_images($mod_reference, $module_params)
 {
-	global $smarty;
-	global $imagegallib; include_once ("lib/imagegals/imagegallib.php");
+	$smarty = TikiLib::lib('smarty');
+	$imagegallib = TikiLib::lib('imagegal');
 	
 	$smarty->assign("content", isset($module_params["content"]) ? $module_params["content"] : "names");
 

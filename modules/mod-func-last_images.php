@@ -42,8 +42,8 @@ function module_last_images_info()
  */
 function module_last_images($mod_reference, $module_params)
 {
-	global $smarty;
-	global $imagegallib; include_once ("lib/imagegals/imagegallib.php");
+	$smarty = TikiLib::lib('smarty');
+	$imagegallib = TikiLib::lib('imagegal');
 	
 	$smarty->assign("content", isset($module_params["content"]) ? $module_params["content"] : "names");
 	$galleryId = isset($module_params["galleryId"]) ? $module_params["galleryId"] : -1;

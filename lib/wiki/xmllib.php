@@ -14,12 +14,12 @@ define('WIKI_XML', 'wiki.xml');
 
 class XmlLib extends TikiLib
 {
-	var $errors = array();
-	var $errorsArgs = array();
-	var $xml = '';
-	var $zip = '';
-	var $config = array('comments'=>true, 'attachments'=>true, 'history'=>true, 'images'=>true, 'debug'=>false);
-	var $structureStack = array();
+	public $errors = array();
+	public $errorsArgs = array();
+	public $xml = '';
+	public $zip = '';
+	public $config = array('comments'=>true, 'attachments'=>true, 'history'=>true, 'images'=>true, 'debug'=>false);
+	public $structureStack = array();
 
 	function get_error()
 	{
@@ -105,7 +105,9 @@ class XmlLib extends TikiLib
 	/* export one page */
 	function export_page($page)
 	{
-		global $tikilib, $prefs, $smarty, $tikidomain;
+		global $prefs, $tikidomain;
+		$tikilib = TikiLib::lib('tiki');
+		$smarty = TikiLib::lib('smarty');
 		$parserlib = TikiLib::lib('parser');
 		$info = $tikilib->get_page_info($page);
 
@@ -150,7 +152,7 @@ class XmlLib extends TikiLib
 						return false;
 					}
 				} elseif (! empty($args['src']) && preg_match('|show_image.php\?(.*)|', $args['src'], $m)) {
-					global $imagegallib; include_once('lib/imagegals/imagegallib.php');
+					$imagegallib = TikiLib::lib('imagegal');
 					if (($i = strpos($args['src'], 'tiki-download_file.php')) > 0) {
 						$path = $_SERVER['HTTP_HOST'].$tikiroot.substr($args['src'], $i);
 					} else {

@@ -13,7 +13,7 @@ if (!isset($_REQUEST["nocache"]))
 
 //include_once ("tiki-setup_base.php");
 include_once ("tiki-setup.php");
-include_once ("lib/imagegals/imagegallib.php");
+$imagegallib = TikiLib::lib('imagegal');
 
 // show_image.php
 // application to display an image from the database with 
