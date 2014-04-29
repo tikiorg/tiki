@@ -84,7 +84,7 @@ class TodoLib
 		$db = TikiDb::get();
 		$query = 'DELETE FROM `tiki_todo` WHERE `todoId`=? OR (`objectId`=? AND `objectType`=?)';
 		$db->query($query, array($id, $id, 'todo'));
-		TodoLib::cleanNotif();
+		self::cleanNotif();
 	}
 
     /**
@@ -98,7 +98,7 @@ class TodoLib
 		$db->query($query, array($objectType, $objectId));
 		$query = 'DELETE FROM `tiki_todo` WHERE `objectType`=? AND `objectId`=?';
 		$db->query($query, array($objectType, $objectId));
-		TodoLib::cleanNotif();
+		self::cleanNotif();
 	}
 
 	// apply a todo
@@ -320,5 +320,3 @@ class TodoLib
 		}
 	}
 }
-global $todolib;
-$todolib = new TodoLib;
