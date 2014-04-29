@@ -60,7 +60,7 @@ function smarty_function_rating( $params, $smarty )
 	}
 
 	$vote = $ratinglib->get_vote($type, $id);
-	$options = $ratinglib->get_options($type, $id);
+	$options = $ratinglib->get_options($type, $id, false, $hasLabels);
 
 	if ($prefs['rating_smileys'] == 'y') {
 		$smiles = $ratinglib->get_options_smiles($type, $id);
@@ -71,6 +71,7 @@ function smarty_function_rating( $params, $smarty )
 	$smarty->assign('rating_id', $id);
 	$smarty->assign('rating_options', $options);
 	$smarty->assign('current_rating', $vote);
+	$smarty->assign('rating_has_labels', $hasLabels);
 	return $smarty->fetch('rating.tpl');
 }
 

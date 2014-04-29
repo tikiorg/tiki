@@ -140,8 +140,7 @@ class RatingLib extends TikiDb_Bridge
 
 	function record_user_vote( $user, $type, $objectId, $score, $time = null )
 	{
-		global $prefs;
-		$tikilib = TikiLib::lib('tiki');
+		global $tikilib, $prefs;
 		if ( ! $this->is_valid($type, $score, $objectId) ) {
             return false;
 		}
@@ -180,15 +179,19 @@ class RatingLib extends TikiDb_Bridge
 
 	function is_valid( $type, $value, $objectId )
 	{
-		$options = $this->get_options($type, $objectId);
+		$options = $this->get_options($type, $objectId, false, $hasLabel);
 
-		return in_array($value, $options);
+        if($hasLabel){
+            return array_key_exists($value, $options);
+        }
+		    return in_array($value, $options);
+
 	}
 
-	function get_options( $type, $objectId, $skipOverride = false )
+	function get_options( $type, $objectId, $skipOverride = false, &$hasLabels = false )
 	{
 		$pref = 'rating_default_options';
-
+        $expectedArray = true;
 		switch( $type ) {
 			case 'wiki page':
 				$pref = 'wiki_simple_ratings_options';
@@ -201,10 +204,12 @@ class RatingLib extends TikiDb_Bridge
 				break;
 			case 'forum':
 				$pref = 'wiki_comments_simple_ratings_options';
+                $expectedArray = false;
 				break;
 		}
 
-		$tikilib = TikiLib::lib('tiki');
+		global $tikilib,
+               $prefs;
 
 		$override = $this->get_override($type, $objectId);
 
@@ -212,11 +217,21 @@ class RatingLib extends TikiDb_Bridge
 			return $override;
 		}
 
-		return $tikilib->get_preference($pref, range(1, 5), true);
+        $value = $prefs[$pref];
+
+        if ( is_string($value) && strpos($value, '=') !== false ){
+            $hasLabels = true;
+            $parser = new WikiLingo\Utilities\Parameters\Parser();
+            $parsedPref = $parser->parse($value);
+            return $parsedPref;
+        }
+
+		return $tikilib->get_preference($pref, range(1, 5), $expectedArray);
 	}
 
 	function set_override($type, $objectId, $value)
 	{
+		global $attributelib;
 		$options = $this->override_array($type);
 
 		$attributelib->set_attribute($type, $objectId, $type.".rating.override", $options[$value - 1]);
@@ -310,14 +325,23 @@ class RatingLib extends TikiDb_Bridge
 			$votings[$user_voting['optionId']]++;
 		}
 
-		$voteOptionsOverride = $this->get_options($type, $threadId);
+		$voteOptionsOverride = $this->get_options($type, $threadId, false, $hasLabels);
 		ksort($voteOptionsOverride);
 		$voteOptionsGeneral = $this->get_options($type, $threadId, true);
 		ksort($voteOptionsGeneral);
 
-
-		$overrideMin = (int)$voteOptionsOverride[0];
-		$overrideMax = (int)$voteOptionsOverride[count($voteOptionsOverride) - 1];
+        if ($hasLabels){
+            ksort($voteOptionsOverride);
+            $overrideMin = key($voteOptionsOverride);
+            end($voteOptionsOverride);
+            $overrideMax = key($voteOptionsOverride);
+        }
+        else
+        {
+            ksort($voteOptionsOverride);
+            $overrideMin = reset($voteOptionsOverride);
+            $overrideMax = end($voteOptionsOverride);
+        }
 
 		//$generalMin = (int)$voteOptionsGeneral[0];
 		//$generalMax = (int)$voteOptionsGeneral[count($voteOptionsGeneral) - 1];
@@ -468,7 +492,7 @@ class RatingLib extends TikiDb_Bridge
 
 	function get_options_smiles($type, $objectId = 0, $sort = false)
 	{
-		$options = $this->get_options($type, $objectId);
+		$options = $this->get_options($type, $objectId, false, $hasLabels);
 		$colors = $this->get_options_smiles_colors();
 
 		$optionsAsKeysSorted = array();
@@ -516,7 +540,7 @@ class RatingLib extends TikiDb_Bridge
 
 	private function internal_refresh_rating( $type, $object, $runner, $configurations )
 	{
-		$ratingconfiglib = TikiLib::lib('ratingconfig');
+		global $ratingconfiglib; require_once 'lib/rating/configlib.php';
 		$runner->setVariables(array('type' => $type, 'object-id' => $object));
 
 		foreach ( $configurations as $config ) {
@@ -561,4 +585,6 @@ class RatingLib extends TikiDb_Bridge
 		return $this->configurations = $configurations;
 	}
 }
+
+global $ratinglib; $ratinglib = new RatingLib;
 

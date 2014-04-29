@@ -40,7 +40,7 @@ function smarty_function_preference( $params, $smarty )
 			if (count($info['pages']) > 0) {
 			foreach ($info['pages'] as $pg) {
 				$ct_string = $pg[1] > 1 ? '&amp;cookietab=' . $pg[1] : '';
-				$pages_string .= '<a class="lm_result label label-default" href="tiki-admin.php?page=' . $pg[0] . $ct_string . '&amp;highlight=' . $info['preference'] . '">' . $pg[0] . '</a> ';
+				$pages_string = '<a class="lm_result label label-default" href="tiki-admin.php?page=' . $pg[0] . $ct_string . '&amp;highlight=' . $info['preference'] . '">' . $pg[0] . '</a> ';
 			}
 			} else {
 				$pages_string = tra('(not found in an admin panel)');
@@ -74,7 +74,11 @@ function smarty_function_preference( $params, $smarty )
 			$smarty->assign('syntax', $params['syntax']);
 		}
 
-		return $smarty->fetch('prefs/' . $info['type'] . '.tpl', $params['name']);
+        if (file_exists('templates/prefs/' . $info['type'] . '.tpl')) {
+		    return $smarty->fetch('prefs/' . $info['type'] . '.tpl', $params['name']);
+        } else {
+            return $smarty->fetch('prefs/text.tpl');
+        }
 	} else {
 		$info = array(
 			'value' => tra('Error'),

@@ -292,9 +292,7 @@ function prefs_wiki_list($partial = false)
 			'name' => tra('Wiki rating options'),
 			'description' => tra('List of options available for the rating of wiki comments.'),
 			'type' => 'text',
-			'separator' => ',',
-			'filter' => 'int',
-			'default' => range(1, 5),
+			'default' => "1,2,3,4,5",
 		),
 		'wiki_uses_slides' => array(
 			'name' => tra('Add a slideshow button on wiki pages'),
