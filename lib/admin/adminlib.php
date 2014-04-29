@@ -669,4 +669,3 @@ class AdminLib extends TikiLib
 		return $opcode_stats;
 	}
 }
-global $adminlib; $adminlib = new AdminLib;

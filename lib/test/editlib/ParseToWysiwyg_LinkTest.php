@@ -37,9 +37,7 @@ class EditLib_ParseToWysiwyg_LinkTest extends TikiTestCase
 		global $prefs;
 		$prefs['feature_sefurl'] = 'n'; // default
 
-		require_once 'lib/wiki/editlib.php';
-		require_once 'lib/admin/adminlib.php';
-		$this->el = new EditLib();
+		$this->el = TikiLib::lib('edit');
 
 		chdir($this->dir);
 		chdir('../../'); // the tiki installation directory
@@ -53,7 +51,7 @@ class EditLib_ParseToWysiwyg_LinkTest extends TikiTestCase
 		/*
 		 * remove the external Wikis defined in the tests 
 		 */
-		global $tikilib;
+		$tikilib = TikiLib::lib('tiki');
 
 		$query = 'SELECT `name`, `extwikiId` FROM `tiki_extwiki`';
 		$wikis = $tikilib->fetchMap($query);
@@ -81,7 +79,7 @@ class EditLib_ParseToWysiwyg_LinkTest extends TikiTestCase
 		/*
 		 * setup the external wikis and the parser
 		 */
-		global $tikilib;
+		$tikilib = TikiLib::lib('tiki');
 		$tikilib->lib('admin')->replace_extwiki(0, 'http://tikiwiki.org/tiki-index.php?page=$page', $this->ext1);
 		$p = $tikilib->lib('parser');
 
@@ -329,7 +327,7 @@ class EditLib_ParseToWysiwyg_LinkTest extends TikiTestCase
 	function testWikiPage()
 	{
 
-		global $tikilib;
+		$tikilib = TikiLib::lib('tiki');
 
         $this->markTestSkipped("As of 2013-10-02, this test is broken, and nobody knows how to fix it. Mark as Skipped for now.");
 

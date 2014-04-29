@@ -71,9 +71,6 @@ class TikiLib extends TikiDb_Bridge
 			case 'header':
 				global $headerlib; require_once 'lib/headerlib.php';
 				return self::$libraries[$name] = $headerlib;
-			case 'admin':
-				global $adminlib; include_once 'lib/admin/adminlib.php';
-				return self::$libraries[$name] = $adminlib;
 			case 'ldap':
 				global $ldaplib; include_once 'lib/ldap/ldaplib.php';
 				return self::$libraries[$name] = $ldaplib;

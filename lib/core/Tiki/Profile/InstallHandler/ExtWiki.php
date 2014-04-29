@@ -25,7 +25,7 @@ class Tiki_Profile_InstallHandler_ExtWiki extends Tiki_Profile_InstallHandler
 
 	function _install()
 	{
-		global $adminlib; require_once 'lib/admin/adminlib.php';
+		$adminlib = TikiLib::lib('admin');
 
 		$data = $this->getData();
 
