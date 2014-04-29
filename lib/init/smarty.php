@@ -446,8 +446,14 @@ class Smarty_Tiki extends Smarty
 				$style_base = TikiLib::lib('tiki')->get_style_base($prefs['style']);
 			}
 		}
+
 		if ($tikidomain) {
 			$tikidomain.= '/';
+		}
+
+		$theme_active = null;
+		if (! in_array($prefs['theme_active'], ['custom', 'legacy', 'default'])) {
+			$theme_active = $prefs['theme_active'];
 		}
 
 		if (empty($prefs['site_layout'])) {
@@ -467,6 +473,11 @@ class Smarty_Tiki extends Smarty
 		}
 
 		$this->setTemplateDir(null);
+
+		if ($theme_active) {
+			$this->addTemplateDir(TIKI_PATH . "/themes/$theme_active/templates/");
+		}
+
 		if ( !empty($tikidomain) && $tikidomain !== '/' ) {
 			$this->addTemplateDir($this->main_template_dir.'/'.$tikidomain.'/styles/'.$style_base.'/');
 			$this->addTemplatedir($this->main_template_dir.'/'.$tikidomain.'/');
