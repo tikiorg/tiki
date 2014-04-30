@@ -1850,12 +1850,19 @@ class WikiLibOutput
                 //recover from failure, but DO NOT just output
                 if ($this->parsedValue === null)
                 {
+                    $possibleCause = '';
+                    if (!empty($wikiLingo->pluginStack)) {
+                        foreach ($wikiLingo->pluginStack as $pluginName) {
+                            $possibleCause .= "<li>" . tr('Unclosed Plugin: ') . $pluginName . "</li>";
+                        }
+                    }
                     $errors = htmlspecialchars(implode($wikiLingo->lexerErrors + $wikiLingo->parserErrors, "\n"));
 
                     $this->parsedValue = '<pre><code>' . htmlspecialchars($this->originalValue) . '</code></pre>' .
                         '<div class="ui-state-error">' . tr("wikiLingo markup could not be parsed.") .
                             '<br />' .
-                            tr('Error: ') . '<pre><code>' . $errors . '</code></pre>' .
+                            (!empty($possibleCause) ? "<ul>" . $possibleCause . "</ul>" : '') .
+                            tr('Error Details: ') . '<pre><code>' . $errors . '</code></pre>' .
                         '</div>';
                 }
                 //transfer scripts over to headerlib
