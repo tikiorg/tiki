@@ -640,41 +640,77 @@
 {tab name="{tr}Import{/tr}"}
 	<h2>{tr}Batch upload (CSV file){/tr}</h2>
 
-	<form action="tiki-adminusers.php" method="post" enctype="multipart/form-data">
+	<form class="form-horizontal" action="tiki-adminusers.php" method="post" enctype="multipart/form-data">
 		{ticket}
-		<table class="formcolor">
-			<tr>
-				<td>
-					<label for="csvlist">
-						{tr}CSV File{/tr}
-						{help url="Users+Management#Adding_new_users_in_bulk" desc="{tr}CSV file layout{/tr} {tr}login,password,email,groups,default_group,realName<br>user1,pass1,email1,group1,group1<br>user2,pass2,email2,\"group1,group2\",group1{/tr}<br><br>{tr}Only login, password, email are mandatory.Use an empty password for automatic password generation. Use same login and email if the login use email. Groups are separated by comma. With group name with comma, double the comma.{/tr}"}
+		<div class="form-group">
+			<label for="csvlist" class="control-label col-md-3">{tr}CSV File{/tr}</label>
+			<div class="col-md-9">
+				<input type="file" id="csvlist" name="csvlist">
+				<div class="help-block">
+					{tr}CSV file layout{/tr} {tr}login,password,email,groups,default_group,realName<br>user1,pass1,email1,group1,group1<br>user2,pass2,email2,"group1,group2",group1{/tr}<br><br>{tr}Only login, password, email are mandatory.Use an empty password for automatic password generation. Use same login and email if the login use email. Groups are separated by comma. With group name with comma, double the comma.{/tr}
+				</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-md-3 control-label">{tr}Existing Users{/tr}</label>
+			<div class="col-md-9">
+				<label class="radio-inline">
+					<input type="radio" name="overwrite" value="y">
+					{tr}Overwrite{/tr}
+				</label>
+				<label class="radio-inline">
+					<input type="radio" name="overwrite" value="n" checked>
+					{tr}Don't overwrite{/tr}
+				</label>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="col-md-9 col-md-offset-3">
+				<div class="checkbox">
+					<label>
+						<input type="checkbox" name="overwriteGroup">
+						{tr}Overwrite groups{/tr}
 					</label>
-				</td>
-				<td>
-					<input type="file" id="csvlist" name="csvlist">
-					<br>
-					<label><input type="radio" name="overwrite" value="y">&nbsp;{tr}Overwrite{/tr}</label>
-					<br>
-					<label><input type="radio" name="overwrite" value="n" checked="checked">&nbsp;{tr}Don't overwrite{/tr}</label>
-					<br>
-					<label>{tr}Overwrite groups{/tr} <input type="checkbox" name="overwriteGroup"></label>
-					<br>
-					<label>{tr}Create groups{/tr} <input type="checkbox" name="createGroup"></label>
-					<br>
-					{if $prefs.change_password neq 'n'}
-						 <label>{tr}User must change password at first login{/tr} <input type="checkbox" name="forcePasswordChange"></label>
-						<br>
-					{/if}
-                    <label>{tr}Send an email to the user in order to allow him to validate his account.{/tr} <input type="checkbox" name="notification"></label>
-				</td>
-			</tr>
-			<tr>
-				<td>&nbsp;</td>
-				<td>
-					<input type="submit" class="btn btn-default btn-sm" name="batch" value="{tr}Add{/tr}">
-				</td>
-			</tr>
-		</table>
+				</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="col-md-9 col-md-offset-3">
+				<div class="checkbox">
+					<label>
+						<input type="checkbox" name="createGroup">
+						{tr}Create groups{/tr}
+					</label>
+				</div>
+			</div>
+		</div>
+		{if $prefs.change_password neq 'n'}
+			<div class="form-group">
+				<div class="col-md-9 col-md-offset-3">
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" name="forcePasswordChange">
+							{tr}User must change password at first login{/tr}
+						</label>
+					</div>
+				</div>
+			</div>
+		{/if}
+		<div class="form-group">
+			<div class="col-md-9 col-md-offset-3">
+				<div class="checkbox">
+					<label>
+						<input type="checkbox" name="notification">
+						{tr}Send an email to the user in order to allow him to validate his account.{/tr}
+					</label>
+				</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="col-md-9 col-md-offset-3">
+				<input type="submit" class="btn btn-primary" name="batch" value="{tr}Add{/tr}">
+			</div>
+		</div>
 	</form>
 	{if $tiki_p_admin eq 'y'} {* only full admins can manage groups, not tiki_p_admin_users *}
 		{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}You can export users of a group by clicking on that group at <a href="tiki-admingroups.php">admin->groups</a>{/tr}{/remarksbox}
