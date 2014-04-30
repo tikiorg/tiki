@@ -238,6 +238,7 @@ $(window).load(function(){
 
         //save a wiki page
         if ($input->save->int() === 1) {
+            $wysiwyg = $input->wysiwyg->int();
             $info = $tikilib->get_page_info($page, false);
             $exists = $tikilib->page_exists($page);
 
@@ -271,7 +272,7 @@ $(window).load(function(){
                     false,
                     $hash,
                     null,
-                    'y',
+                    ($wysiwyg == 0 ? 'n' : 'y'),
                     $wiki_authors_style
                 );
                 $result['status'] = 'updated';
@@ -288,7 +289,7 @@ $(window).load(function(){
                     $input->lang->text(),
                     false,
                     $hash,
-                    'y',
+                    ($wysiwyg == 0 ? 'n' : 'y'),
                     $wiki_authors_style
                 );
                 $result['status'] = 'created';
