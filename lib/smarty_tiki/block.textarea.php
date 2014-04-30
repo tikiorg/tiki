@@ -228,13 +228,11 @@ this.instances.'.$as_id.'.resetDirty();
             $css = $parserWYSIWYG->scripts->renderCss();
             $html .= <<<HTML
 $css
-<div style="border-width:10px !important;">
 <div
     id="$as_id-ui"
     class="wikiedit wikilingo ui-widget-content"
     contenteditable="true"
     onchange="this.input.value = this.innerHTML">$contentSafe</div>
-    </div>
 <input type="hidden" name="$name" id="$as_id"/>
 <script>
 var ui = document.getElementById('$as_id-ui'),
@@ -266,6 +264,12 @@ HTML
 
                 ->add_js(<<<JS
 (new WikiLingoEdit(document.getElementById('$as_id-ui'), document.getElementById('$as_id')));
+$(function() {
+    $('#$as_id-ui').after(
+        $('<a class="ui-button" style="float:right;" href="' + document.location + '&wysiwyg=n">' + tr('Edit Source') + '</a>')
+            .button()
+    );
+});
 JS
 );
 
