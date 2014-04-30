@@ -513,7 +513,9 @@
 				</div>
 				{if ! ( $prefs.auth_method eq 'ldap' and ( $prefs.ldap_create_user_tiki eq 'n' or $prefs.ldap_skip_admin eq 'y' ) and $prefs.ldap_create_user_ldap eq 'n' )}
 					<div class="form-group">
-						<span id="genPass">{button href="#" _onclick="genPass('genepass');runPassword(document.RegForm.genepass.value, 'mypassword');checkPasswordsMatch('#pass2', '#pass1', '#mypassword2_text');return false;" _text="{tr}Generate a password{/tr}"}</span>
+						<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2">
+							<span id="genPass">{button href="#" _onclick="genPass('genepass');runPassword(document.RegForm.genepass.value, 'mypassword');checkPasswordsMatch('#pass2', '#pass1', '#mypassword2_text');return false;" _text="{tr}Generate a password{/tr}"}</span>
+						</div>
 					</div>
 					<div id="genepass_div" class="form-group" style="display: none">
 						<label class="col-sm-3 col-md-2 control-label" for="pass2">{tr}Generated Password{/tr}</label>
@@ -536,8 +538,16 @@
 					{/jq}
 				{/if}
 				{if $userinfo.login neq 'admin' && $prefs.change_password neq 'n'}
-					<label><input type="checkbox" name="pass_first_login"{if isset($userinfo.pass_confirm) && $userinfo.pass_confirm eq '0'} checked="checked"{/if}>
-						{tr}User must change password at next login{/tr}.</label>
+					<div class="form-group">
+						<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2">
+							<div class="checkbox">
+								<label>
+									<input type="checkbox" name="pass_first_login"{if isset($userinfo.pass_confirm) && $userinfo.pass_confirm eq '0'} checked="checked"{/if}>
+									{tr}User must change password at next login{/tr}
+								</label>
+							</div>
+						</div>
+					</div>
 				{/if}
 			{/if}
 			{if $prefs.login_is_email neq 'y'}
@@ -549,12 +559,18 @@
 				</div>
 			{/if}
 			{if $userinfo.login neq 'admin' and ($prefs.validateUsers eq 'y' or $prefs.validateRegistration eq 'y')}
-				<div class="checkbox">
-					<label>
-						<input type="checkbox" name="need_email_validation" {if ($userinfo.login eq '' and ($prefs.validateUsers eq 'y' or $prefs.validateRegistration eq 'y')) or $userinfo.provpass neq ''}checked="checked" {/if}>
-						{tr}Send an email to the user in order to allow him to validate his account.{/tr}
-					</label>
-					{if empty($prefs.sender_email)}<br><span class="highlight">{tr}You need to set <a href="tiki-admin.php?page=general">Sender Email</a>{/tr}</span>{/if}
+				<div class="form-group">
+					<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2">
+						<div class="checkbox">
+							<label>
+								<input type="checkbox" name="need_email_validation" {if ($userinfo.login eq '' and ($prefs.validateUsers eq 'y' or $prefs.validateRegistration eq 'y')) or $userinfo.provpass neq ''}checked="checked" {/if}>
+								{tr}Send an email to the user in order to allow him to validate his account.{/tr}
+							</label>
+							{if empty($prefs.sender_email)}
+								<div class="help-block"><span class="highlight">{tr}You need to set <a href="tiki-admin.php?page=general">Sender Email</a>{/tr}</span></div>
+							{/if}
+						</div>
+					</div>
 				</div>
 			{/if}
 			{if isset($userinfo.userId) && $userinfo.userId != 0}
@@ -597,13 +613,15 @@
 			{/if}
 
 			<div class="form-group">
-				{if isset($userinfo.userId) && $userinfo.userId}
-					<input type="hidden" name="user" value="{$userinfo.userId|escape}">
-					<input type="hidden" name="edituser" value="1">
-					<input type="submit" class="btn btn-default" name="save" value="{tr}Save{/tr}">
-				{else}
-					<input type="submit" class="btn btn-default" name="newuser" value="{tr}Add{/tr}">
-				{/if}
+				<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2">
+					{if isset($userinfo.userId) && $userinfo.userId}
+						<input type="hidden" name="user" value="{$userinfo.userId|escape}">
+						<input type="hidden" name="edituser" value="1">
+						<input type="submit" class="btn btn-primary" name="save" value="{tr}Save{/tr}">
+					{else}
+						<input type="submit" class="btn btn-primary" name="newuser" value="{tr}Add{/tr}">
+					{/if}
+				</div>
 			</div>
 
 			{if $prefs.userTracker eq 'y'}
