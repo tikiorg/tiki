@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "d0a6ea19e6c232c436a38b44342d7a66",
+    "hash": "fa8772c23f26cbe50e31e60837e0b6a1",
     "packages": [
         {
             "name": "aFarkas/html5shiv",
@@ -1188,9 +1188,7 @@
             "authors": [
                 {
                     "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com",
-                    "homepage": "http://fabien.potencier.org",
-                    "role": "Lead Developer"
+                    "email": "fabien@symfony.com"
                 },
                 {
                     "name": "Symfony Community",
@@ -1429,12 +1427,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/wikiLingo/wikiLingo.git",
-                "reference": "181b0a3ba64e4b1c267b8b09f59b673bda1acd4b"
+                "reference": "d0227b42c02992b968110de33857abb70dd42a56"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wikiLingo/wikiLingo/zipball/181b0a3ba64e4b1c267b8b09f59b673bda1acd4b",
-                "reference": "181b0a3ba64e4b1c267b8b09f59b673bda1acd4b",
+                "url": "https://api.github.com/repos/wikiLingo/wikiLingo/zipball/d0227b42c02992b968110de33857abb70dd42a56",
+                "reference": "d0227b42c02992b968110de33857abb70dd42a56",
                 "shasum": ""
             },
             "require": {
@@ -1473,7 +1471,7 @@
                     "role": "Lead Developer"
                 }
             ],
-            "time": "2014-04-23 03:06:23"
+            "time": "2014-04-29 01:25:42"
         },
         {
             "name": "zetacomponents/base",

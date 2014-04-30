@@ -271,7 +271,7 @@ $(window).load(function(){
                     false,
                     $hash,
                     null,
-                    null,
+                    'y',
                     $wiki_authors_style
                 );
                 $result['status'] = 'updated';
@@ -288,7 +288,7 @@ $(window).load(function(){
                     $input->lang->text(),
                     false,
                     $hash,
-                    null,
+                    'y',
                     $wiki_authors_style
                 );
                 $result['status'] = 'created';
