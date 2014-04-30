@@ -21,7 +21,7 @@ function wikiplugin_comment_info()
 				'description' => tra('Object Type'),
 				'filter' => 'text',
 				'options' => array(
-					array('text' => tr('Tracker'), 'value' => 'tracker'),
+					array('text' => tr('Tracker Item'), 'value' => 'trackeritem'),
 					array('text' => tr('Image Gallery'), 'value' => 'image gallery'),
 					array('text' => tr('Image'), 'value' => 'image'),
 					array('text' => tr('File Gallery'), 'value' => 'file gallery'),
