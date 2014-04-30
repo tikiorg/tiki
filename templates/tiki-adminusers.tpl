@@ -144,7 +144,7 @@
 		{initials_filter_links}
 	{/if}
 
-	<form name="checkform" method="post" action="{$smarty.server.PHP_SELF|escape}">
+	<form class="form-horizontal" name="checkform" method="post" action="{$smarty.server.PHP_SELF|escape}">
 		<div id="adminusers-div" {if $tsOn}style="display: none;"{/if}>
 			<table id="adminusers" class="table normal">
 				{* Note: for any changes in the logic determining which columns are shown, corresponding changes will
@@ -220,19 +220,15 @@
 								{foreach from=$users[user].groups key=grs item=what name=gr}
 									<div style="white-space:nowrap">
 										{if $grs != "Anonymous" and ($tiki_p_admin eq 'y' || in_array($grs, $all_groups))}
-											{if $what eq 'included'}<i>{/if}
 											{if $tiki_p_admin eq 'y'}
-												<a class="link" {if isset($link_style)}{$link_style}{/if} href="tiki-admingroups.php?group={$grs|escape:"url"}" title={if $what eq 'included'}"{tr}Edit Included Group{/tr}"{else}"{tr}Edit Group{/tr} {$grs|escape}"{/if}>
+												<a class="link" {if isset($link_style)}{$link_style}{/if} href="tiki-admingroups.php?group={$grs|escape:"url"}" title={if $what eq 'included'}"{tr}Edit Included Group{/tr}"{else}"{tr}Edit Group{/tr} {$grs|escape}"{/if}>{$grs|escape}</a>
+											{else}
+												{$grs|escape}
 											{/if}
-											{$grs|escape}
-											{if $tiki_p_admin eq 'y'}
-												</a>
-											{/if}
-											{if $what eq 'included'}</i>{/if}
+											{if $what eq 'included'}<span class="label label-info">{tr}Included{/tr}</span>{/if}
 											{if $grs eq $users[user].default_group}<small>({tr}default{/tr})</small>{/if}
 											{if $what ne 'included' and $grs != "Registered"}
-												{capture assign=grse}{$grs|escape}{/capture}
-												{capture assign=title}{tr _0=$username _1=$grse}Remove %0 from %1{/tr}{/capture}{*FIXME*}
+												{capture assign=title}{tr _0=$username _1=$grs|escape}Remove %0 from %1{/tr}{/capture}{*FIXME*}
 												{self_link _class='link' user=$users[user].user action='removegroup' group=$grs _icon='cross' _title=$title}{/self_link}
 											{else}
 												{icon _id='bullet_white'}
@@ -283,97 +279,103 @@
 				{/section}
 				</tbody>
 			</table>
-			<table>
-				<tr>
-					<td colspan="18">
-						{if $users}
-							<p align="left"> {*on the left to have it close to the checkboxes*}
-								<div id="submit_mult">
-									<label>{tr}Perform action with checked{/tr}
-										<select class="submit_mult" name="submit_mult">
-											<option value="" selected="selected">-</option>
-											<option value="remove_users" >{tr}Remove{/tr}</option>
-											{if $prefs.feature_wiki_userpage == 'y'}
-												<option value="remove_users_with_page">{tr}Remove users and their userpages{/tr}</option>
-											{/if}
-											<option value="assign_groups" >{tr}Change group assignments{/tr}</option>
-											<option value="set_default_groups">{tr}Set default groups{/tr}</option>
-											{if $prefs.feature_wiki == 'y'}
-												<option value="emailChecked">{tr}Send wiki page content by email{/tr}</option>
-											{/if}
-										</select>
-									</label>
-									<button type="submit" style="display: none" class="btn btn-default btn-sm submit_mult">{tr}OK{/tr}</button>
-								</div>
-							</p>
-							<div id="gm" style="display:none">
-								<h4>{tr}Change group assignments for selected users{/tr}</h4>
-								<select class="gm" name="group_management" disabled="disabled">
-									<option value="add">{tr}Assign selected to{/tr}</option>
-									<option value="remove">{tr}Remove selected from{/tr}</option>
-								</select></label>
-								<label>{tr}the following groups{/tr}</label>
-									<br>
-									<select name="checked_groups[]" multiple="multiple" size="20">
-										{section name=ix loop=$all_groups}
-											{if $all_groups[ix] != 'Anonymous' && $all_groups[ix] != 'Registered'}
-												<option value="{$all_groups[ix]|escape}">{$all_groups[ix]|escape}</option>
-											{/if}
-										{/section}
-									</select>
-								<br>
-								<button type="submit" class="btn btn-default btn-sm gm" disabled="disabled">{tr}OK{/tr}</button>
-								<button type="button" style="display: none" class="btn btn-default cancel-choice">{tr}Cancel{/tr}</button>
-								{if $prefs.jquery_ui_chosen neq 'y'}{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Use Ctrl+Click to select multiple options{/tr}{/remarksbox}{/if}
+			{if $users}
+				<div class="form-group" id="submit_mult">
+					<label>{tr}Perform action with checked{/tr}</label>
+					<select class="submit_mult" name="submit_mult">
+						<option value="" selected="selected">-</option>
+						<option value="remove_users" >{tr}Remove{/tr}</option>
+						{if $prefs.feature_wiki_userpage == 'y'}
+							<option value="remove_users_with_page">{tr}Remove users and their userpages{/tr}</option>
+						{/if}
+						<option value="assign_groups" >{tr}Change group assignments{/tr}</option>
+						<option value="set_default_groups">{tr}Set default groups{/tr}</option>
+						{if $prefs.feature_wiki == 'y'}
+							<option value="emailChecked">{tr}Send wiki page content by email{/tr}</option>
+						{/if}
+					</select>
+					<button type="submit" style="display: none" class="btn btn-default btn-sm submit_mult">{tr}OK{/tr}</button>
+				</div>
+				<div id="gm" style="display:none">
+					<h4>{tr}Change group assignments for selected users{/tr}</h4>
+					<div class="form-group">
+						<label class="control-label col-sm-2">{tr}Action{/tr}</label>
+						<div class="col-sm-4">
+							<select class="gm" name="group_management" disabled="disabled" class="form-control">
+								<option value="add">{tr}Assign selected{/tr}</option>
+								<option value="remove">{tr}Remove selected{/tr}</option>
+							</select>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-sm-2">{tr}Groups{/tr}</label>
+						<div class="col-sm-10">
+							<select name="checked_groups[]" multiple="multiple" size="20" class="form-control">
+								{section name=ix loop=$all_groups}
+									{if $all_groups[ix] != 'Anonymous' && $all_groups[ix] != 'Registered'}
+										<option value="{$all_groups[ix]|escape}">{$all_groups[ix]|escape}</option>
+									{/if}
+								{/section}
+							</select>
+							{if $prefs.jquery_ui_chosen neq 'y'}<div class="help-block">{tr}Use Ctrl+Click to select multiple options{/tr}</div>{/if}
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="submit col-sm-4 col-sm-offset-2">
+							<button type="submit" class="btn btn-default btn-sm gm" disabled="disabled">{tr}OK{/tr}</button>
+							<button type="button" style="display: none" class="btn btn-default cancel-choice">{tr}Cancel{/tr}</button>
+						</div>
+					</div>
+				</div>
+				<div id="dg" style="display:none">
+					<h4>{tr}Set default groups for selected users{/tr}</h4>
+					<div class="form-group">
+						<label class="control-label col-sm-2">{tr}Group{/tr}</label>
+						<div class="col-sm-4">
+							<select class="dg" name="checked_group" disabled="disabled" size="20" class="form-control">
+								{section name=ix loop=$all_groups}
+									{if $all_groups[ix] != 'Anonymous'}
+										<option value="{$all_groups[ix]|escape}">{$all_groups[ix]|escape}</option>
+									{/if}
+								{/section}
+							</select>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="submit col-sm-4 col-sm-offset-2">
+							<button type="submit" disabled="disabled" class="btn btn-default btn-sm dg">{tr}OK{/tr}</button>
+							<button type="button" style="display: none" class="btn btn-default cancel-choice">{tr}Cancel{/tr}</button>
+							<input type="hidden" class="dg" disabled="disabled" name="set_default_groups" value="y">
+						</div>
+					</div>
+				</div>
+				<div id="emc" style="display:none">
+					<h4>{tr}Send wiki page content by email to selected users{/tr}</h4>
+					<div class="form-group">
+						<label class="control-label col-sm-2">{tr}Email Template{/tr}</label>
+						<div class="col-sm-10">
+							<input class="emc form-control" type="text" disabled="disabled" name="wikiTpl">
+							<div class="help-block">{tr}Template wiki page:
+									The wiki page must have a page description, which is used as the subject of the email.
+									Enable the page descriptions feature at Admin Home &gt; Wiki.{/tr}
 							</div>
-							<div id="dg" style="display:none">
-								<h4>{tr}Set default groups for selected users{/tr}</h4>
-								<label>{tr}Set the default group of the selected users to{/tr}
-									<br>
-									<select class="dg" name="checked_group" disabled="disabled" size="20">
-										{section name=ix loop=$all_groups}
-											{if $all_groups[ix] != 'Anonymous'}
-												<option value="{$all_groups[ix]|escape}">{$all_groups[ix]|escape}</option>
-											{/if}
-										{/section}
-									</select></label>
-								<br>
-								<button type="submit" disabled="disabled" class="btn btn-default btn-sm dg">{tr}OK{/tr}</button>
-								<button type="button" style="display: none" class="btn btn-default cancel-choice">{tr}Cancel{/tr}</button>
-								<input type="hidden" class="dg" disabled="disabled" name="set_default_groups" value="y">
-							</div>
-							<div id="emc" style="display:none">
-								<h4>{tr}Send wiki page content by email to selected users{/tr}</h4>
-								<table class="table">
-									<tr>
-										<td><label>{tr}Wiki page to use for email content{/tr}</label></td>
-										<td>
-											<input class="emc" type="text" disabled="disabled" name="wikiTpl">
-											<span class="tikihelp" title="{tr}Template wiki page:
-												The wiki page must have a page description, which is used as the subject of the email.
-												Enable the page descriptions feature at Admin Home > Wiki.{/tr}" style="">
-												<img src="img/icons/information.png" alt="" width="16" height="16" class="icon">
-											</span>
-										</td>
-									</tr>
-									<tr>
-										<td><label>{tr}Bcc{/tr}</label></td>
-										<td>
-											<input class="emc" disabled="disabled" type="text" name="bcc">
-											<span class="tikihelp" title="{tr}Bcc: Enter a valid email to send a blind copy to (optional).{/tr}" style="">
-												<img src="img/icons/information.png" alt="" width="16" height="16" class="icon">
-											</span>
-										</td>
-									</tr>
-									<tr>
-										<td colspan="2" style="display: block;margin-left:auto;margin-right: auto">
-											<button type="submit" disabled="disabled" class="btn btn-default btn-sm emc">{tr}OK{/tr}</button>
-											<button type="button" style="display: none" class="btn btn-default cancel-choice">{tr}Cancel{/tr}</button>
-											<input class="emc" disabled="disabled" type="hidden" name="emailChecked" value="y">
-										</td>
-									</tr>
-								</table>
-							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-sm-2">{tr}Bcc{/tr}</label>
+						<div class="col-sm-10">
+							<input class="emc form-control" disabled="disabled" type="text" name="bcc">
+							<div class="help-block">{tr}Enter a valid email to send a blind copy to (optional).{/tr}</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-10 col-sm-offset-2 submit">
+							<button type="submit" disabled="disabled" class="btn btn-default btn-sm emc">{tr}OK{/tr}</button>
+							<button type="button" style="display: none" class="btn btn-default cancel-choice">{tr}Cancel{/tr}</button>
+							<input class="emc" disabled="disabled" type="hidden" name="emailChecked" value="y">
+						</div>
+					</div>
+				</div>
 {jq}
 	$('select.submit_mult').change(function() {
 		if ($.inArray(this.value, ['assign_groups', 'set_default_groups', 'emailChecked']) > -1) {
@@ -404,10 +406,7 @@
 		$('button.cancel-choice').hide();
 	});
 {/jq}
-						{/if}
-					</td>
-				</tr>
-			</table>
+			{/if}
 		</div>
 		<input type="hidden" name="find" value="{$find|escape}">
 		<input type="hidden" name="numrows" value="{$numrows|escape}">
