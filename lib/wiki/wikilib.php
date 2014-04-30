@@ -1850,8 +1850,13 @@ class WikiLibOutput
                 //recover from failure, but DO NOT just output
                 if ($this->parsedValue === null)
                 {
-                    $this->parsedValue = '<pre>' . htmlspecialchars($this->originalValue) . '</pre>' .
-                        '<div class="ui-state-error">' . tr("wikiLingo markup could not be parsed.") . '</div>';
+                    $errors = htmlspecialchars(implode($wikiLingo->lexerErrors + $wikiLingo->parserErrors, "\n"));
+
+                    $this->parsedValue = '<pre><code>' . htmlspecialchars($this->originalValue) . '</code></pre>' .
+                        '<div class="ui-state-error">' . tr("wikiLingo markup could not be parsed.") .
+                            '<br />' .
+                            tr('Error: ') . '<pre><code>' . $errors . '</code></pre>' .
+                        '</div>';
                 }
                 //transfer scripts over to headerlib
                 //css is already processed at this point, as it is in the header, at the top, so we expose it here

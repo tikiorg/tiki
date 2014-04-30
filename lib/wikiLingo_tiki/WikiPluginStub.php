@@ -12,7 +12,7 @@ class WikiPluginStub extends Base
 
 	public function render(WikiLingo\Expression\Plugin &$plugin, &$body = '', &$renderer, &$parser)
 	{
-		$element = $parser->element('WikiLingo\\Expression\\Plugin', 'span');
+		$element = new WikiLingo\Renderer\Element('WikiLingo\\Expression\\Plugin', 'span');
 		$element->detailedAttributes['data-plugin-type'] = $plugin->type;
 		$element->detailedAttributes['data-plugin-parameters'] = urlencode(json_encode($plugin->parametersRaw));
 		$element->useDetailedAttributes = true;
