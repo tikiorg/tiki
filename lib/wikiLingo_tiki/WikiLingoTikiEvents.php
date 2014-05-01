@@ -67,8 +67,8 @@ class WikiLingoTikiEvents
             ->add_jsfile('vendor/flp/flp/scripts/flp.js')
             ->add_jsfile('vendor/flp/flp/scripts/flp.Link.js')
             ->add_jsfile('lib/wikiLingo_tiki/tiki_flp.Link.js')
-            ->add_jsfile('vendor/tablesorter/tablesorter/js/jquery.tablesorter.js')
-            ->add_cssfile('vendor/tablesorter/tablesorter/css/theme.dropbox.css')
+            ->add_jsfile('vendor/jquery/plugins/tablesorter/js/jquery.tablesorter.js')
+            ->add_cssfile('vendor/jquery/plugins/tablesorter/css/theme.dropbox.css')
             ->add_jq_onready('(new WikiLingoFLPView($("#page-data"), ' . json_encode($partialMetadata) . '));');
     }
 
