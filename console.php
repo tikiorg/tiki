@@ -91,6 +91,7 @@ if ($isInstalled && ! $installer->requiresUpdate()) {
 	$console->add(new Tiki\Command\ProfileForgetCommand);
 	$console->add(new Tiki\Command\ProfileInstallCommand);
 	$console->add(new Tiki\Command\ProfileExport\Init);
+	$console->add(new Tiki\Command\RefreshRssCommand);
 } else {
 	$console->add(new Tiki\Command\UnavailableCommand('goal:check'));
 	$console->add(new Tiki\Command\UnavailableCommand('index:rebuild'));
@@ -101,6 +102,7 @@ if ($isInstalled && ! $installer->requiresUpdate()) {
 	$console->add(new Tiki\Command\UnavailableCommand('profile:forget'));
 	$console->add(new Tiki\Command\UnavailableCommand('profile:apply'));
 	$console->add(new Tiki\Command\UnavailableCommand('profile:export:init'));
+	$console->add(new Tiki\Command\UnavailableCommand('rss:refresh'));
 }
 
 if (file_exists('profiles/info.ini')) {
