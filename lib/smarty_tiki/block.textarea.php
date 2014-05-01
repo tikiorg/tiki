@@ -222,7 +222,7 @@ this.instances.'.$as_id.'.resetDirty();
             $parserWYSIWYG->scripts
                 ->addCssLocation("vendor/medium.js/medium.js/medium.css")
                 ->addCssLocation("vendor/wikilingo/wikilingo/editor/bubble.css")
-                ->addCssLocation("vendor/wikilingo/wikilingo/editor/IcoMoon/sprites/pastLink.css")
+                ->addCssLocation("vendor/wikilingo/wikilingo/editor/pastLink.css")
                 ->addCssLocation("vendor/wikilingo/wikilingo/editor/IcoMoon/sprites/sprites.css")
                 ->addCss(".wikiedit.wikilingo{min-height:500px;}");
             $css = $parserWYSIWYG->scripts->renderCss();
