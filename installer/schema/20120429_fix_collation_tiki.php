@@ -16,13 +16,11 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 function upgrade_20120429_fix_collation_tiki($installer)
 {
 	global $dbs_tiki;
+	require(TikiInit::getCredentialsFile());
 	$installer->query("ALTER DATABASE `" . $dbs_tiki . "` CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci'");
-	if ( $results= $installer->fetchAll('SHOW TABLES')
-	) {
-		$index = "Tables_in_$dbs_tiki";
-		foreach ( $results as $table ) 
-			$installer->query("ALTER TABLE ".$table["$index"]." convert to character set DEFAULT COLLATE DEFAULT");
-	} else {
-		die('MySQL INFORMATION_SCHEMA not available. Your MySQL version is too old to perform this operation. (upgrade_20120429_fix_collation_tiki)');
+	unset($dbs_tiki);
+	$results = $installer->fetchAll('SHOW TABLES');
+	foreach ( $results as $table ) {
+		$installer->query('ALTER TABLE ' . reset($table) . ' convert to character set DEFAULT COLLATE DEFAULT');
 	}
 }
