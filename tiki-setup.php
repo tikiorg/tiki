@@ -396,8 +396,8 @@ if ($prefs['feature_syntax_highlighter'] == 'y') {
 if ($prefs['feature_wikilingo'] == 'y') {
     $headerlib
         //flp stuff
-        ->add_cssfile('vendor/tablesorter/tablesorter/css/theme.dropbox.css')
-        ->add_jsfile('vendor/tablesorter/tablesorter/js/jquery.tablesorter.js');
+        ->add_cssfile('vendor/jquery/plugins/tablesorter/css/theme.dropbox.css')
+        ->add_jsfile('vendor/jquery/plugins/tablesorter/js/jquery.tablesorter.js');
 }
 
 if ( $prefs['feature_jquery_carousel'] == 'y' ) {
