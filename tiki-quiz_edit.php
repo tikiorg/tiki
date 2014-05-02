@@ -160,8 +160,7 @@ $smarty->assign('quiz', $quiz);
  */
 function setup_options(&$tpl)
 {
-	global $tikilib;
-	global $user;
+	global $prefs;
 	$tpl['online_choices'] = array('online' => 'Online', 'offline' => 'Offline');
 	$optionsGrading = array();
 	$optionsGrading[] = "machine";
