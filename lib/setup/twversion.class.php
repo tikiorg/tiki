@@ -27,7 +27,7 @@ class TWVersion
 		$this->branch 	= 'stable';
 
 		// Set everything else, including defaults.
-		$this->version 	= '9.8svn';	// Never ever put any spaces in this value.  This will appear in tiki-admin.php?page=general
+		$this->version 	= '9.8';	// Never ever put any spaces in this value.  This will appear in tiki-admin.php?page=general
 		$this->star	= 'Herbig Haro';
 		$this->releases	= array();
 
@@ -51,13 +51,13 @@ class TWVersion
  	function tikiStars()
 	{
 		return array(
-				1=>'Spica',			// 0.9
+				1=>'Spica',		// 0.9
 				2=>'Shaula',		// 0.95
 				3=>'Ras Algheti',	// 1.0.x
 				4=>'Capella',		// 1.1.x
 				5=>'Antares',		// 1.2.x
 				6=>'Pollux',		// 1.3.x
-				7=>'Mira',			// 1.4.x
+				7=>'Mira',		// 1.4.x
 				8=>'Regulus',		// 1.5.x
 				9=>'Tau Ceti',		// 1.6.x
 				10=>'Era Carinae',	// 1.7.x
@@ -70,7 +70,10 @@ class TWVersion
 				17=>'Rigel',		// 6.x
 				18=>'Electra',		// 7.x
 				19=>'Acubens',		// 8.x
-				20=>'Herbig Haro'	// 9.x
+				20=>'Herbig Haro',	// 9.x
+				21=>'Sun',		// 10.x
+				22=>'Vega',		// 11.x
+				23=>'Altair'		// 12.x
 		);
 	}
 
@@ -186,6 +189,7 @@ class TWVersion
 				'9.5',
 				'9.6',
 				'9.7',
+				'9.8',
 				'10.0alpha',
 				'10.0beta',
 				'10.0',
@@ -195,7 +199,14 @@ class TWVersion
 				'10.4',
 				'11.0beta',
 				'11.0',
+				'11.1',
+				'11.2',
 				'12.0alpha',
+				'12.0beta',
+				'12.0',
+				'12.1alpha',
+				'12.1beta',
+				'12.1'
 			);
 	}
 
