@@ -25,6 +25,95 @@ When possible, it's also nice to indicate what feature is concerned by the chang
 Before 2.0, there was only [MOD] for both [ENH] and [MOD]:
 
 ----------------------------------------------------------------------
+Version 6.14
+<http://tiki.org/ReleaseNotes614>
+------------------
+
+----------------------------------------------
+r50560 | lindonb | 2014-03-29 03:56:46 +0100 (ds, 29 mar 2014) | 1 line
+
+[bp/r50557][SEC] tiki-print: enhance permission check (thanks luci)
+----------------------------------------------
+r50555 | lindonb | 2014-03-29 03:07:03 +0100 (ds, 29 mar 2014) | 1 line
+
+[bp/r50461][SEC] installer: Convert $_GET parameters related to multitiki to $_POST. Please test as I don't have a multiki running to test with.
+----------------------------------------------
+r50458 | jyhem | 2014-03-24 00:40:11 +0100 (dl, 24 mar 2014) | 1 line
+
+[ENH][bp/r50456] Improve usability and user-friendliness of last page
+----------------------------------------------
+r50453 | lindonb | 2014-03-23 22:56:52 +0100 (dg, 23 mar 2014) | 1 line
+
+[bp/r50450][SEC] installer: Convert shortcut to step 4 into a $_POST instead of a $_GET so that it works (thanks Arild for testing)
+----------------------------------------------
+r50379 | lindonb | 2014-03-19 04:46:52 +0100 (dc, 19 mar 2014) | 1 line
+
+[bp/r50376][SEC] installer: [SEC] installer: Handle case when $tikiroot is blank (thanks geoff)
+----------------------------------------------
+r50357 | lindonb | 2014-03-16 22:53:50 +0100 (dg, 16 mar 2014) | 1 line
+
+[bp/r50353][SEC] installer: make locking the installer the default option; add warning to encourage use of secure login; (excludes portion of r30353 already backported to 6x in r50349)
+----------------------------------------------
+r50349 | lindonb | 2014-03-15 23:36:09 +0100 (ds, 15 mar 2014) | 1 line
+
+[bp/r50277, r50339 & r50345][SEC] installer:  Replace $_REQUEST with $_POST where possible; Filter input where necessary; require credentials each time installer is entered regardless of session values; Log actions at key points during install
+----------------------------------------------
+r50275 | lindonb | 2014-03-09 04:20:40 +0100 (dg, 09 mar 2014) | 1 line
+
+[bp/r50269][SEC] installer: Revert r50036 in favor of a different approach to database connection security
+----------------------------------------------
+r50274 | lindonb | 2014-03-09 04:16:45 +0100 (dg, 09 mar 2014) | 1 line
+
+[bp/r50268][SEC] installer: Revert r50040 in favor of a different approach to database connection security
+----------------------------------------------
+r50263 | lindonb | 2014-03-08 17:09:14 +0100 (ds, 08 mar 2014) | 3 lines
+
+[bp/r50260]
+[FIX] forum import: Use proper variable for temp folder so that file to be imported can be found; handle null values causing server errors for some fields; improve parsing which was mangling forums posts; keep php line breaks from displaying in the imported forum posts. 
+[SEC] forum import: parameterize database insert; change $_REQUEST to $_POST and filter
+----------------------------------------------
+r50211 | lindonb | 2014-03-05 03:29:57 +0100 (dc, 05 mar 2014) | 3 lines
+
+[bp/r50208]
+[SEC] featured links: parameterize query used to update links
+[FIX] featured links: faulty logic and missing hidden input from the form was causing the update function to never be called - a new link was being added instead, causing the hits history to be lost
+----------------------------------------------
+r50176 | lindonb | 2014-03-03 04:42:26 +0100 (dl, 03 mar 2014) | 1 line
+
+[bp/r50173][SEC] directory search: Filter inputs; refactor slightly to make it more obvious which variables are based on user input; fix some notices
+----------------------------------------------
+r50172 | lindonb | 2014-03-03 01:25:49 +0100 (dl, 03 mar 2014) | 1 line
+
+[bp/r50163][SEC] banning: Remove where parameter since it doesn't seem to be used and would likely need reworking to function
+----------------------------------------------
+r50144 | lindonb | 2014-03-02 01:52:22 +0100 (dg, 02 mar 2014) | 1 line
+
+[bp/r50141][SEC] user messages: validate flag parameter
+----------------------------------------------
+r50051 | lindonb | 2014-02-24 07:30:15 +0100 (dl, 24 feb 2014) | 1 line
+
+[bp/r50047 and r41704][SEC] installer: filter more user inputs
+----------------------------------------------
+r50045 | lindonb | 2014-02-24 06:23:05 +0100 (dl, 24 feb 2014) | 1 line
+
+[bp/r50042][SEC] sql log: filter user input
+----------------------------------------------
+r50040 | lindonb | 2014-02-24 01:34:35 +0100 (dl, 24 feb 2014) | 1 line
+
+[bp/r50037][SEC] installer: Check prefs before filtering user input. Changes filtering logic added in r50025
+----------------------------------------------
+r50036 | lindonb | 2014-02-23 22:25:08 +0100 (dg, 23 feb 2014) | 1 line
+
+[bp/r50025][SEC] installer: filter user input
+----------------------------------------------
+r49026 | marclaporte | 2013-12-08 23:03:22 +0100 (dg, 08 des 2013) | 1 line
+
+[bp/r45249] [ENH] Additional defense against session collisions
+----------------------------------------------
+r48219 | changi67 | 2013-10-29 21:04:32 +0100 (dt, 29 oct 2013) | 1 line
+
+[FIX] Copyright
+----------------------------------------------
 Version 6.13
 <http://tiki.org/ReleaseNotes613>
 ------------------
