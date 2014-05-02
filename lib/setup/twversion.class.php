@@ -26,7 +26,7 @@ class TWVersion
 		$this->branch 	= 'stable';
 
 		// Set everything else, including defaults.
-		$this->version 	= '6.14svn';
+		$this->version 	= '6.14';
 		$this->star	= 'Rigel';
 		$this->releases	= array();
 
@@ -69,7 +69,9 @@ class TWVersion
 				18=>'Electra',		// 7.x
 				19=>'Acubens',	// 8.x
 				20=>'Herbig Haro',	// 9.x
-				21=>'Sun'			// 10.x
+				21=>'Sun',			// 10.x
+				22=>'Vega',			// 11.x
+				23=>'Altair'		// 12.x
 		);
 	}
 
@@ -155,6 +157,7 @@ class TWVersion
 				'6.11',
 				'6.12',
 				'6.13',
+				'6.14',
 				'7.0beta1',
 				'7.0beta2',
 				'7.0RC1',
@@ -183,6 +186,8 @@ class TWVersion
 				'9.4',
 				'9.5',
 				'9.6',
+				'9.7',
+				'9.8',
 				'10.0alpha',
 				'10.0beta',
 				'10.0',
@@ -190,9 +195,16 @@ class TWVersion
 				'10.2',
 				'10.3',
 				'10.4',
+				'10.5',
+				'10.6',
 				'11.0beta',
 				'11.0',
-				'12.0alpha',
+				'11.1',
+				'11.2',
+				'12.0',
+				'12.1alpha',
+				'12.1beta',
+				'12.1',
 			);
 	}
 
