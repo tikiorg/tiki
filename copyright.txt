@@ -1514,7 +1514,7 @@ Nickname: jonnybradley
 Name: jonny Bradley
 First Commit: 2007-08-15
 Last Commit: 2014-05-02
-Number of Commits: 6745
+Number of Commits: 6747
 SF Role: Admin
     
     
@@ -3321,7 +3321,7 @@ Nickname: xavidp
 Name: Xavier de Pedro
 First Commit: 2005-07-08
 Last Commit: 2014-05-02
-Number of Commits: 1387
+Number of Commits: 1389
 SF Role: Admin
     
     
