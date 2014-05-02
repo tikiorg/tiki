@@ -31,6 +31,7 @@ class CleanVendors
 		self::deleteFile(     $vendors . 'jquery/jquery-sheet/jquery-1.5.2.js');
 		self::deleteFile(     $vendors . 'jquery/jquery-sheet/jquery-1.5.2.min.js');
 		self::deleteDirectory($vendors . 'jquery/jquery-sheet/jquery-ui');
+		self::deleteFile(     $vendors . 'jquery/jquery-sheet/parser.php');
 		self::deleteDirectory($vendors . 'jquery/jquery-timepicker-addon/lib');
 		self::deleteDirectory($vendors . 'jquery/jquery-timepicker-addon/src');
 		self::deleteDirectory($vendors . 'jquery/jquery-timepicker-addon/test');
