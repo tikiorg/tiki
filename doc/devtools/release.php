@@ -356,6 +356,7 @@ function display_progress_percentage($alreadyDone, $toDo, $message)
 
 /**
  * @param $error_msg
+ * @return bool
  */
 function check_smarty_syntax(&$error_msg)
 {
@@ -371,88 +372,32 @@ function check_smarty_syntax(&$error_msg)
 	);
 
 	// Load Tiki Smarty
-	$prefs['smarty_compilation'] = 'always';
-	$prefs['smarty_security'] = 'y';
-	$prefs['maxRecords'] = 25;
-	$prefs['log_tpl'] = 'y';
-	$prefs['feature_sefurl_filter'] = 'y';
 	require_once 'vendor/smarty/smarty/distribution/libs/Smarty.class.php';
 	require_once 'lib/init/smarty.php';
 	set_error_handler('check_smarty_syntax_error_handler');
 
-	$smarty->compileAllTemplates('.tpl', true);
-}
-
-/**
- * @param $error_msg
- * @return bool
- */
-function check_smarty_syntax2(&$error_msg)
-{
-	global $tikidomain, $prefs, $smarty;
-	$tikidomain = '';
-
-	// Initialize $prefs with some variables needed by the tra() function and smarty autosave plugin
-	$prefs = array(
-		'lang_use_db' => 'n',
-		'language' => 'en',
-		'site_language' => 'en',
-		'feature_ajax' => 'n'
-	);
-
-	// Load Tiki Smarty
-	require_once 'lib/init/smarty.php';
-	set_error_handler('check_smarty_syntax_error_handler');
-
-	$templates_dir = $smarty->template_dir;
-	$templates_dir_length = strlen($templates_dir);
-	if ($templates_dir_length > 1 && $templates_dir{$templates_dir_length - 1} == '/') {
-		$templates_dir = substr($templates_dir, 0, --$templates_dir_length);
-	}
-	$temp_compile_file = TEMP_DIR . 'smarty_compiled_content';
+	$templates_dir = $smarty->main_template_dir;
 
 	$entries = array();
 	get_files_list($templates_dir, $entries, '/\.tpl$/');
+	echo "Checking {$templates_dir}\n";
 
 	$nbEntries = count($entries);
 	for ($i = 0; $i < $nbEntries; $i++) {
 		display_progress_percentage($i, $nbEntries, '%d%% of files passed the Smarty syntax check');
 
-		//		try {
-		if (strpos($entries[$i], 'tiki-mods.tpl') === false) {
-			ob_start();
-			$template_file = substr($entries[$i], $templates_dir_length + 1);
-			$smarty->_compile_resource($template_file, $temp_compile_file);
-			$compilation_output = ob_get_clean();
+		$template_file = substr($entries[$i], strlen($templates_dir) + 1);
 
-			unlink($temp_compile_file);
-		}
-		//		} catch (Exception $e) {
-		//			$msg = $e->getMessage();
-		//			if (0 or strpos($msg, 'tiki-mods.tpl') !== false && strpos($msg, 'revision_compare') !== false) {
-		//				print(color("\nNote: ignoring error in tiki-mods.tpl:\n        $msg", 'yellow'));
-		//			} else {
-		//				$compilation_output = "\n*** " . $e->getMessage();
-		//			}
-		//		}
-
-		/* This is most odd (jonnyb aug 2010 tiki 5.1)
-		 *
-		 * There is an "error" in tiki-mods.tpl that causes an error that the existing code (pre r28273) couldn't trap
-		 * I added an Exception which works fine in the debugger but dies in the commend line (unless you supply all
-		 * the "skip" params --no-check-php --no-check-php-warnings etc), when it works as expected.
-		 *
-		 * Nasty fix now by not checking that file
-		 * Better fix (or TODO KIL mods) required so leaving commented code behond - excuse the mess ;)
-		 */
-
-		if (! empty($compilation_output)) {
-			$error_msg = "\nError while compiling {$entries[$i]}."
-				. "\nThis may happen if one of the tiki smarty plugins (located in lib/smarty_tiki)"
-				. " used in the template outputs something when loaded (using php include)."
-				. "\nFor example, a white space after the PHP closing TAG of a smarty plugin can cause this.\n"
-				. trim($compilation_output);
-			return false;
+		try {
+			$_tpl = $smarty->createTemplate($template_file, null, null, null, false);
+			$_tpl->compileTemplateSource();
+			unlink($_tpl->compiled->filepath);
+		} catch (Exception $e) {
+			$msg = $e->getMessage();
+			if (strpos($msg, 'unknown function &quot;zone_is_empty&quot;') === false ) {
+				echo color("\nError: " . html_entity_decode($msg, ENT_COMPAT, 'utf-8'), 'red') . "\n";
+				flush();
+			}
 		}
 	}
 	restore_error_handler();
@@ -471,7 +416,7 @@ function check_smarty_syntax2(&$error_msg)
 function check_smarty_syntax_error_handler($errno, $errstr, $errfile = '', $errline = 0, $errcontext = array())
 {
 	//	throw new Exception($errstr);
-	error($errstr);
+	color("\n" . $errstr . "\n", 'red');
 }
 
 /**
