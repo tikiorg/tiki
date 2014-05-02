@@ -41,6 +41,7 @@ class CleanVendors
 		$fs->remove($vendors . 'jquery/jquery-sheet/jquery-1.5.2.js');
 		$fs->remove($vendors . 'jquery/jquery-sheet/jquery-1.5.2.min.js');
 		$fs->remove($vendors . 'jquery/jquery-sheet/jquery-ui');
+		$fs->remove($vendors . 'jquery/jquery-sheet/parser.php');
 		$fs->remove($vendors . 'jquery/jquery-timepicker-addon/lib');
 		$fs->remove($vendors . 'jquery/jquery-timepicker-addon/src');
 		$fs->remove($vendors . 'jquery/jquery-timepicker-addon/test');

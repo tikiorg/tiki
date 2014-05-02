@@ -482,7 +482,8 @@ composer()
 	N=0
 	if exists php;
 	then
-		until php temp/composer.phar install --prefer-dist
+		until php -dmemory_limit=-1 temp/composer.phar install --prefer-dist
+		# setting memory_limit here prevents suhosin ALERT - script tried to increase memory_limit to 536870912 bytes
 		do
 			if [ $N -eq 7 ];
 			then
