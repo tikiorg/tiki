@@ -27,7 +27,7 @@ class TWVersion
 		$this->branch 	= 'stable';
 
 		// Set everything else, including defaults.
-		$this->version 	= '11.2svn';	// needs to have no spaces and use the format X.YabcZ see tikiVersions fn below for examples
+		$this->version 	= '11.2';	// needs to have no spaces and use the format X.YabcZ see tikiVersions fn below for examples
 		$this->star	= 'Vega';
 		$this->releases	= array();
 
@@ -72,7 +72,8 @@ class TWVersion
 				19=>'Acubens',		// 8.x
 				20=>'Herbig Haro',	// 9.x
 				21=>'Sun',			// 10.x
-				22=>'Vega'			// 11.x
+				22=>'Vega',			// 11.x
+				23=>'Altair'		// 12.x
 		);
 	}
 
@@ -199,7 +200,12 @@ class TWVersion
 				'11.0beta',
 				'11.0',
 				'11.1',
+				'11.2',
 				'12.0alpha',
+				'12.0beta',
+				'12.0',
+				'12.1alpha',
+				'12.1beta',
 			);
 	}
 
