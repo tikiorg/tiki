@@ -70,7 +70,7 @@ class Reports_CacheTest extends TikiDatabaseTestCase
 		
 		$cacheData = array('event' => 'wiki_page_changed');
 		
-		$this->obj->add(&$watches, $cacheData, $users);
+		$this->obj->add($watches, $cacheData, $users);
 		
 		$queryTable = $this->getConnection()->createQueryTable('tiki_user_reports_cache', 'SELECT * FROM tiki_user_reports_cache');
 		
