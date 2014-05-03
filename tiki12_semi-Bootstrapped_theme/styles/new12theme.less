@@ -1,0 +1,14 @@
+// $Id$
+// This file and the files below are to partially implement the Bootstrap CSS framework in version 12 of Tiki Wiki
+// CMS Groupware. The Bootstrap package needs to be in the vendor directory just as in the trunk/Tiki 13 version. To make a
+// new theme, copy these files and replace "new12theme" with the theme name. The file "layout/tiki12.less" is meant to be imported
+// as an unedited base file, similar to design.css, which it replaces. It contains rules from design.css but omits redundant or
+// obsolete rules from design.css. Edit the variables in "custom-variables.less" (which is a copy of the default Bootstrap
+// "variables.less" file - unused variables are commented out) and add rules in custom-other.less to create the new theme's design.
+// This is a work in progress. Visit http://themes.tiki.org for more information.
+
+@import "../vendor/twitter/bootstrap/less/bootstrap_for_tiki12.less";
+@import "new12theme/custom-variables.less";
+@import "new12theme/custom-other.less";
+@import "layout/tiki12.less";
+@import "../vendor/twitter/bootstrap/less/utilities.less";
