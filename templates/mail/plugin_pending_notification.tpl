@@ -1,4 +1,4 @@
-{tr _0=$plugin_name _1={object_link type=$type id=$objectId}}Plugin %0 is pending approval on %1.{/tr}
+{tr _0=$plugin_name _1="{object_link type=$type id=$objectId}"}Plugin %0 is pending approval on %1.{/tr}
 
 {tr _0="{$base_url}tiki-plugins.php"}See all the pending plugins in the <a href='%0'>plugin approval page</a>.{/tr}
 
