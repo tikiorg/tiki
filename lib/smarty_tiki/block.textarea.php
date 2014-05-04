@@ -220,7 +220,7 @@ this.instances.'.$as_id.'.resetDirty();
             $wLPlugins = json_encode($parserWYSIWYG->plugins);
             $name = $params['name'];
             $parserWYSIWYG->scripts
-                ->addCssLocation("vendor/medium.js/medium.js/medium.css")
+                ->addCssLocation("vendor/mediumjs/mediumjs/medium.css")
                 ->addCssLocation("vendor/wikilingo/wikilingo/editor/bubble.css")
                 ->addCssLocation("vendor/wikilingo/wikilingo/editor/pastLink.css")
                 ->addCssLocation("vendor/wikilingo/wikilingo/editor/IcoMoon/sprites/sprites.css")
@@ -249,10 +249,10 @@ HTML
             $headerlib
                 //->add_jsfile("vendor/wikilingo/wikilingo/editor/editor.js")
                 //add some javascript
-                ->add_jsfile("vendor/undo.js/undo.js/undo.js")
+                ->add_jsfile("vendor/undojs/undojs/undo.js")
                 ->add_jsfile("vendor/rangy/rangy/uncompressed/rangy-core.js")
                 ->add_jsfile("vendor/rangy/rangy/uncompressed/rangy-cssclassapplier.js")
-                ->add_jsfile("vendor/medium.js/medium.js/medium.js")
+                ->add_jsfile("vendor/mediumjs/mediumjs/medium.js")
 
 
                 ->add_jsfile("vendor/wikilingo/wikilingo/editor/WLPastLinkSyntaxGenerator.js")
