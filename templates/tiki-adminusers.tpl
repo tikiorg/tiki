@@ -542,7 +542,7 @@
 						<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2">
 							<div class="checkbox">
 								<label>
-									<input type="checkbox" name="pass_first_login"{if isset($userinfo.pass_confirm) && $userinfo.pass_confirm eq '0'} checked="checked"{/if}>
+									<input type="checkbox" name="pass_first_login"{if isset($userinfo.pass_confirm) && $userinfo.pass_confirm eq '0'} checked="checked"{/if}{if !empty($userinfo.login)}disabled{/if}>
 									{tr}User must change password at next login{/tr}
 								</label>
 							</div>
