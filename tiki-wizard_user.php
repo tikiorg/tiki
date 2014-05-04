@@ -31,6 +31,21 @@ $accesslib->check_user($user);
 // Create the template instances
 $pages = array();
 
+/// fetch the itemId for the user tracker ------------------------------------
+global	$user, $tikilib, $prefs, $userlib; 
+if ($prefs['userTracker'] === 'y') {
+	
+	$trklib = TikiLib::lib('trk');
+	
+	$utid = $userlib->get_tracker_usergroup($user);
+
+			if (isset($utid['usersTrackerId'])) {
+				$_REQUEST['trackerId'] = $utid['usersTrackerId'];
+				$_REQUEST["itemId"] = $trklib->get_item_id($_REQUEST['trackerId'], $utid['usersFieldId'], $user);
+			}
+}
+/// --------------------------------
+
 /////////////////////////////////////
 // BEGIN User Wizard page section
 /////////////////////////////////////
@@ -49,6 +64,9 @@ $pages[] = new UserWizardPreferencesReports();
 
 require_once('lib/wizard/pages/user_preferences_notifications.php'); 
 $pages[] = new UserWizardPreferencesNotifications();
+
+require_once('lib/wizard/pages/user_tracker.php'); 
+$pages[] = new UserWizardUserTracker();
 
 require_once('lib/wizard/pages/user_wizard_completed.php'); 
 $pages[] = new UserWizardCompleted();

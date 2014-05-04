@@ -16,4 +16,4 @@ function prefs_wizard_list()
 			'tags' => array('basic'),
 		),
 	);			
-}
+} 

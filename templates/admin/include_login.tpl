@@ -84,6 +84,10 @@
 				</div>
 				{preference name=userTracker}
 				<div class="adminoptionboxchild" id="userTracker_childcontainer">
+				{preference name=feature_userWizardDifferentUsersFieldIds}
+					<div class="adminoptionboxchild" id="feature_userWizardDifferentUsersFieldIds_childcontainer">
+							{preference name=feature_userWizardUsersFieldIds}
+					</div>					
 				{preference name=user_register_prettytracker}
 					<div class="adminoptionboxchild" id="user_register_prettytracker_childcontainer">
 					{preference name=user_register_prettytracker_tpl}

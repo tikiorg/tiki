@@ -309,6 +309,12 @@ $("#userstracker").change(function () {
 					<td>{tr}Users Information Tracker Fields Asked at Registration Time<br>(fieldIds separated with :){/tr}</td>
 					<td><input type="text" style="width:95%" name="registrationUsersFieldIds" value="{$registrationUsersFieldIds|escape}"></td>
 				</tr>
+				{if $prefs.feature_wizard_user eq 'y' and $groupname == 'Registered'}
+				<tr>
+					<td>{tr}Users Information Tracker Fields Asked in the User Wizard:{/tr}</td>
+					<td>{tr}By default, the same fields as in Registration{/tr}. {tr _0="tiki-admin.php?page=login"}You can choose in the <a href="%0">Login admin panel</a> to show different fields in User Wizard than the ones asked at Registration Time{/tr}.</td>
+				</tr>
+				{/if}				
 			{/if}
 
 		{if $groupname neq 'Anonymous' and $groupname neq 'Registered' and $groupname neq 'Admins'}
