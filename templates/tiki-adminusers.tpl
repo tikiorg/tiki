@@ -513,7 +513,7 @@
 						<tr>
 							<td>&nbsp;</td>
 							<td>
-								<label><input type="checkbox" name="pass_first_login"{if isset($userinfo.pass_confirm) && $userinfo.pass_confirm eq '0'} checked="checked"{/if}>
+								<label><input type="checkbox" name="pass_first_login"{if isset($userinfo.pass_confirm) && $userinfo.pass_confirm eq '0'} checked="checked"{/if}{if !empty($userinfo.login)}disabled{/if}>
 								{tr}User must change password at next login{/tr}.</label>
 							</td>
 						</tr>
