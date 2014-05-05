@@ -225,7 +225,7 @@ function doChallengeResponse() {
 						{if $mode eq 'header' && $module_params.show_forgot eq 'y' && $prefs.forgotPass eq 'y'}
 							&nbsp;|&nbsp;
 						{/if}
-					<div class="register"><a {*class="linkmodule"*} href="tiki-register.php" title="{tr}Click here to register{/tr}">{tr}Register{/tr}</a></div>
+					<div class="register"><a {*class="linkmodule"*} href="tiki-register.php{if !empty($prefs.registerKey)}?key={$prefs.registerKey|escape:'url'}{/if}" title="{tr}Click here to register{/tr}">{tr}Register{/tr}</a></div>
 				{/if}
 				{/strip}
 			</div>

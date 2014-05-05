@@ -36,6 +36,10 @@ if ($prefs['allowRegister'] != 'y') {
 	die;
 }
 
+if (!empty($prefs['registerKey']) && (empty($_GET['key']) || $_GET['key'] !== $prefs['registerKey'])) {
+	$access->redirect('', '', 404);
+}
+
 global $user, $prefs;
 if (!empty($prefs['feature_alternate_registration_page']) && $prefs['feature_alternate_registration_page'] !== 'tiki-register.php') {
 	header("location: " . $prefs['feature_alternate_registration_page']);

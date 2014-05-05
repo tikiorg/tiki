@@ -65,7 +65,7 @@
 			<li>Visit the <a href="tiki-forums.php" class="link">forums</a>, write a topic or reply to an existing topic if you want</li>
 			<li>At the <a href="tiki-galleries.php" class="link">images galleries</a> section you can see some images try <a href="tiki-upload_image.php" class="link">uploading images</a></li>
 			<li>Visit the <a href="tiki-browse_categories.php" class="link">category browser</a> to test the tiki categorizing system</li>
-			<li>If you are not logged you can <a href="tiki-register.php" class="link">register</a> as a new user and test features available to registered users
+			<li>If you are not logged you can <a href="tiki-register.php{if !empty($prefs.registerKey)}?key={$prefs.registerKey|escape:'url'}{/if}" class="link">register</a> as a new user and test features available to registered users
 			such as setting user preferences, user bookmarks or configuring modules</li>
 			<li>If you are curious visit the <a href="tiki-stats.php" class="link">stats</a> page</li>
 			<li>The <a href="tiki-view_articles.php" class="link">articles</a> section will show a demo article that you can read and comment</li>

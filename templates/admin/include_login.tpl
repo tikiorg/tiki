@@ -60,6 +60,7 @@
 						</span>
 						{preference name=showRegisterPasscode}
 					</div>
+					{preference name=registerKey}
 
 					{if $gd_lib_found neq 'y'}
 						<div class="highlight">

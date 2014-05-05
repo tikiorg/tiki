@@ -312,6 +312,15 @@ function prefs_global_list($partial = false)
 			'default' => 'n',
 			'tags' => array('basic'),
 		),
+		'registerKey' => array(
+			'name' => tra('Registration Page Key'),
+            'hint' => tra('Key required to be on included the URL to access the registration page (if not empty).'),
+			'description' =>  tra('e.g. To register users need to go to: tiki-register.php?key=yourregistrationkeyvalue'),
+			'type' => 'text',
+			'size' => 15,
+			'default' => '',
+			'tags' => array('basic'),
+		),
 		'userTracker' => array(
 			'name' => tra('Use tracker to collect more user information'),
             'description' => tra('Display a tracker (form) for the user to complete, as part of the registration process. Use this tracker to store additional information about each user.'),
