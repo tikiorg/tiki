@@ -542,7 +542,7 @@
 						<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2">
 							<div class="checkbox">
 								<label>
-									<input type="checkbox" name="pass_first_login"{if isset($userinfo.pass_confirm) && $userinfo.pass_confirm eq '0'} checked="checked"{/if}{if !empty($userinfo.login)}disabled{/if}>
+									<input type="checkbox" name="pass_first_login"{if isset($userinfo.pass_confirm) && $userinfo.pass_confirm eq '0'} checked="checked"{/if}>
 									{tr}User must change password at next login{/tr}
 								</label>
 							</div>
@@ -563,7 +563,7 @@
 					<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2">
 						<div class="checkbox">
 							<label>
-								<input type="checkbox" name="need_email_validation" {if ($userinfo.login eq '' and ($prefs.validateUsers eq 'y' or $prefs.validateRegistration eq 'y')) or $userinfo.provpass neq ''}checked="checked" {/if}>
+								<input type="checkbox" name="need_email_validation" {if ($userinfo.login eq '' and ($prefs.validateUsers eq 'y' or $prefs.validateRegistration eq 'y')) or $userinfo.provpass neq ''}checked="checked" {/if}{if !empty($userinfo.login)} disabled="disabled"{/if}>
 								{tr}Send an email to the user in order to allow him to validate his account.{/tr}
 							</label>
 							{if empty($prefs.sender_email)}
