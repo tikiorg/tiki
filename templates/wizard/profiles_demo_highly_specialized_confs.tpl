@@ -17,9 +17,6 @@
 	<table style="width:100%">
 	<tr>
         <td style="width:48%">
-            <!--
-            <div class="adminWizardIconright"><img src="img/icons/large/profile_cartograf48x48.png" alt="{tr}CartoGraf{/tr}" /></div>
-            -->
             <b>{tr}CartoGraf{/tr}</b> (<a href="tiki-admin.php?profile=CartoGraf&show_details_for=CartoGraf&categories%5B%5D={$tikiMajorVersion}.x&repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2" target="_blank">{tr}apply profile now{/tr}</a>)
             <br>
             {tr}CartoGraf is an interactive web-based mapping application to enhance learning in history and geography classes in high schools.{/tr}
@@ -49,9 +46,6 @@
             &nbsp;
         </td>
         <td style="width:48%">
-            <!--
-            <div class="adminWizardIconright"><img src="img/icons/large/profile_r_demo48x40.png" alt="{tr}R demo{/tr}" /></div>
-            -->
             <b>{tr}R demo{/tr}</b> (<a href="tiki-admin.php?profile=R_demo&show_details_for=R_demo&categories%5B%5D={$tikiMajorVersion}.x&repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2" target="_blank">{tr}apply profile now{/tr}</a>)
             <br/>
             {tr}This profile demostrates common uses of R language for statistics to produce advanced and/or interactive graphs and reports in web 2.0 pages.{/tr}
@@ -86,9 +80,6 @@
 	</tr>
 	<tr>
         <td style="width:48%">
-            <!--
-            <div class="adminWizardIconright"><img src="img/icons/large/profile_r_heatmaps48x48.png" alt="{tr}R Heatmaps{/tr}" /></div>
-            -->
             <b>{tr}R Heatmaps{/tr}</b> (<a href="tiki-admin.php?profile=R_Heatmaps&show_details_for=R_Heatmaps&categories%5B%5D={$tikiMajorVersion}.x&repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2" target="_blank">{tr}apply profile now{/tr}</a>)
             <br/>
             {tr}This profile adds a web interface for an R package called EasyHeatMap (link to package provided in the instructions page once the profile is applied).{/tr}

@@ -8,9 +8,6 @@
 	<table style="width:100%">
 	<tr>
         <td style="width:48%">
-            <!--
-            <div class="adminWizardIconright"><img src="img/icons/large/profile_wiki_pagemenu48x48.png" alt="{tr}Menu on Wiki page{/tr}" /></div>
-            -->
             <b>{tr}Menu on Wiki page{/tr}</b> (<a href="tiki-admin.php?profile=Collaborative_Community_Wiki_menupage&show_details_for=Collaborative_Community_Wiki_menupage&categories%5B%5D={$tikiMajorVersion}.x&repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2" target="_blank">{tr}apply profile now{/tr}</a>)
             <br/>
             {tr}This profile sets up a side module with a menu based on a wiki page in the right hand-side column.{/tr}
@@ -38,9 +35,6 @@
             &nbsp;
         </td>
         <td style="width:48%">
-            <!--
-            <div class="adminWizardIconright"><img src="img/icons/large/profile_random_header_images48x48.png" alt="{tr}Random header images{/tr}" /></div>
-            -->
             <b>{tr}Random header images{/tr}</b>  (<a href="tiki-admin.php?profile=Random_header_images&show_details_for=Random_header_images&categories%5B%5D={$tikiMajorVersion}.x&repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2" target="_blank">{tr}apply profile now{/tr}</a>)
             <br/>
             {tr}This profile adds a module in the top zone that displays a random image from a File Gallery{/tr}.
@@ -68,9 +62,6 @@
 	</tr>
 	<tr>
         <td style="width:48%">
-            <!--
-            <div class="adminWizardIconright"><img src="img/icons/large/i18n48x48.png" alt="{tr}Multilingual Wiki{/tr}" /></div>
-            -->
             <b>{tr}Multilingual Wiki{/tr}</b> (<a href="tiki-admin.php?profile=Multilingual_Wiki_12x&show_details_for=Multilingual_Wiki_12x&categories%5B%5D={$tikiMajorVersion}.x&repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2" target="_blank">{tr}apply profile now{/tr}</a>)
             <br/>
             {tr}This profile allows Tiki content translation, and sets up modules to change language and to display links to page translations with their percentage of completion.{/tr}
@@ -98,9 +89,6 @@
             &nbsp;
         </td>
         <td style="width:48%">
-			<!--
-            <div class="adminWizardIconright"><img src="img/icons/large/profile_countries_by_region48x48.png" alt="{tr}Timesheet{/tr}" /></div>
-            -->
             <b>{tr}Countries By Region{/tr}</b> (<a href="tiki-admin.php?profile=Countries_By_Region&show_details_for=Countries_By_Region&categories%5B%5D={$tikiMajorVersion}.x&repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2" target="_blank">{tr}apply profile now{/tr}</a>)
             {tr}This profile will create a set of categories and subcategories in your site with the names of countries grouped by regions{/tr}.
             <br/><a href="https://profiles.tiki.org/Countries+By+Region"  target="tikihelp" class="tikihelp" title="{tr}Countries By Region{/tr}:

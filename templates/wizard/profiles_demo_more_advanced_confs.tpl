@@ -16,9 +16,6 @@
 	<table style="width:100%">
 	<tr>
         <td style="width:48%">
-            <!--
-	<div class="adminWizardIconright"><img src="img/icons/large/profile_shopping_cart48x48.png" alt="{tr}Shopping Cart{/tr}" /></div>
-	-->
             <b>{tr}Shopping Cart{/tr}</b> (<a href="tiki-admin.php?profile=Shopping_Cart&show_details_for=Shopping_Cart&categories%5B%5D={$tikiMajorVersion}.x&repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2" target="_blank">{tr}apply profile now{/tr}</a>)
             <br>
             {tr}This profile provides a Shopping Cart and the corresponding basic payment system.{/tr}
@@ -48,9 +45,6 @@
             &nbsp;
         </td>
         <td style="width:48%">
-            <!--
-            <div class="adminWizardIconright"><img src="img/icons/large/profile_easy_geoblog48x48.png" alt="{tr}Easy GeoBlog{/tr}" /></div>
-            -->
             <b>{tr}Easy GeoBlog{/tr}</b> (<a href="tiki-admin.php?profile=Easy+GeoBlog&show_details_for=Easy+GeoBlog&categories%5B%5D={$tikiMajorVersion}.x&repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2" target="_blank">{tr}apply profile now{/tr}</a>)<br/>
             <br>
             {tr}This profile demonstrates the geolocation of Blog posts, in conjunction with other associated features{/tr}
@@ -80,7 +74,7 @@
 	</tr>
 	<tr>
 	<td style="width:48%">
-        <!--	<div class="adminWizardIconright"><img src="img/icons/large/profile_groupmail48x48.png" alt="{tr}Groupmail{/tr}" /></div>
+<!--
 	<b>{tr}Groupmail{/tr}</b> (<a href="tiki-admin.php?profile=Groupmail&show_details_for=Groupmail&categories%5B%5D={$tikiMajorVersion}.x&repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2" target="_blank">{tr}apply profile now{/tr}</a>)<br/>
 	<br>
 	{tr}This profile allows to provide a way for a team (a Tiki group) to process email contact requests, save them in contact lists and act on them and record the process in wiki pages{/tr}
@@ -97,7 +91,7 @@
 	&nbsp;
 	</td>
 	<td style="width:48%">
-<!--	<div class="adminWizardIconright"><img src="img/icons/large/wizard_profiles48x48.png" alt="{tr}Profile X{/tr}" /></div>
+<!--
 	<b>{tr}Profile X{/tr}</b> (<a href="tiki-admin.php?profile=Profile_X&show_details_for=Profile_X&categories%5B%5D={$tikiMajorVersion}.x&repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2" target="_blank">{tr}apply profile now{/tr}</a>)<br/>
 	<br>
 	{tr}This profile allows to {/tr}

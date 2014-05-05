@@ -8,9 +8,6 @@
 	<table style="width:100%">
 	<tr>
         <td style="width:48%">
-            <!--
-            <div class="adminWizardIconright"><img src="img/icons/large/profile_mobile48x48.png" alt="{tr}Mobile{/tr}" /></div>
-            -->
             <b>{tr}Mobile{/tr}</b> (<a href="tiki-admin.php?profile=Mobile&show_details_for=Mobile&categories%5B%5D={$tikiMajorVersion}.x&repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2" target="_blank">{tr}apply profile now{/tr}</a>)
             <br/>
             {tr}This profile allows to switch the site layout, text and icons to users with smartphones and tablets{/tr}
@@ -37,9 +34,6 @@
             &nbsp;
         </td>
         <td style="width:48%">
-            <!--
-            <div class="adminWizardIconright"><img src="img/icons/large/profile_slideshow48x48.png" alt="{tr}Slideshow demo{/tr}" /></div>
-            -->
             <b>{tr}Slideshow demo{/tr}</b>  (<a href="tiki-admin.php?profile=Slideshow_demo&show_details_for=Slideshow_demo&categories%5B%5D={$tikiMajorVersion}.x&repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2" target="_blank">{tr}apply profile now{/tr}</a>)
             <br/>
             {tr}This profile sets up a slideshow from a simple wiki page, which you can use to learn the basics of how easily the JqueryS5 slideshow system in Tiki works.{/tr}

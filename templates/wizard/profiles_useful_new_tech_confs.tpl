@@ -8,9 +8,6 @@
 	<table style="width:100%">
 	<tr>
         <td style="width:48%">
-            <!--
-            <div class="adminWizardIconright"><img src="img/icons/large/profile_together48x48.png" alt="{tr}Together{/tr}" /></div>
-            -->
             <b>{tr}Write Together{/tr}</b>  (<a href="tiki-admin.php?profile=Together&show_details_for=Together&categories%5B%5D={$tikiMajorVersion}.x&repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2" target="_blank">{tr}apply profile now{/tr}</a>)
             <br/>
             {tr}This profile adds a simple wiki page on a side module (using the Module menupage), showing the button to start co-writing with TogetherJS.{/tr}
@@ -37,9 +34,6 @@
             &nbsp;
         </td>
         <td style="width:48%">
-            <!--
-            <div class="adminWizardIconright"><img src="img/icons/large/profile_post-it48x48.png" alt="{tr}Post-it Sticky Note{/tr}" /></div>
-            -->
             <b>{tr}Post-it Sticky Note{/tr}</b> (<a href="tiki-admin.php?profile=Post-it_Sticky_Note&show_details_for=Post-it_Sticky_Note&categories%5B%5D={$tikiMajorVersion}.x&repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2" target="_blank">{tr}apply profile now{/tr}</a>)
             <br>
             {tr}This profile allows to display a sticky note (a "post-it") in your tiki site{/tr}.
@@ -66,8 +60,7 @@
 	</tr>
 	<tr>
 	<td style="width:48%">
-<!--	<div class="adminWizardIconright"><img src="img/icons/large/wizard_profiles48x48.png" alt="{tr}Profile X{/tr}" /></div>
-	<b>{tr}Profile X{/tr}</b> (<a href="tiki-admin.php?profile=Profile_X&show_details_for=Profile_X&categories%5B%5D={$tikiMajorVersion}.x&repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2" target="_blank">{tr}apply profile now{/tr}</a>)<br/>
+<!--	<b>{tr}Profile X{/tr}</b> (<a href="tiki-admin.php?profile=Profile_X&show_details_for=Profile_X&categories%5B%5D={$tikiMajorVersion}.x&repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2" target="_blank">{tr}apply profile now{/tr}</a>)<br/>
 	<br>
 	{tr}This profile allows to {/tr}
 	<ul>
@@ -81,8 +74,7 @@
 	&nbsp;
 	</td>
 	<td style="width:48%">
-<!--	<div class="adminWizardIconright"><img src="img/icons/large/wizard_profiles48x48.png" alt="{tr}Profile X{/tr}" /></div>
-	<b>{tr}Profile X{/tr}</b> (<a href="tiki-admin.php?profile=Profile_X&show_details_for=Profile_X&categories%5B%5D={$tikiMajorVersion}.x&repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2" target="_blank">{tr}apply profile now{/tr}</a>)<br/>
+<!--    <b>{tr}Profile X{/tr}</b> (<a href="tiki-admin.php?profile=Profile_X&show_details_for=Profile_X&categories%5B%5D={$tikiMajorVersion}.x&repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2" target="_blank">{tr}apply profile now{/tr}</a>)<br/>
 	<br>
 	{tr}This profile allows to {/tr}
 	<ul>
