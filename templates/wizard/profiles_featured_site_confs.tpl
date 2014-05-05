@@ -23,7 +23,7 @@
 	</div>
 	<div style="display:block; margin-left:auto; margin-right:auto; width:202px;">
 		<a href="http://tiki.org/display524" class="internal" rel="box" title="{tr}Click to expand{/tr}">
-			<img src="http://tiki.org/display524"  width="150" style="display:block; margin-left:auto; margin-right:auto;border:1px solid darkgray;" alt="Click to expand" class="regImage pluginImg" title="{tr}Click to expand{/tr}" />
+			<img src="img/profiles/profile_thumb_collaborative_community.png"  width="150" style="display:block; margin-left:auto; margin-right:auto;border:1px solid darkgray;" alt="Click to expand" class="regImage pluginImg" title="{tr}Click to expand{/tr}" />
 		</a>
 		<div class="mini" style="width:100px;">
 			<div class="thumbcaption text-center">{tr}Click to expand{/tr}</div>
@@ -50,7 +50,7 @@
 	</div>
 	<div style="display:block; margin-left:auto; margin-right:auto; width:202px;">
 		<a href="http://tiki.org/display525" class="internal" rel="box" title="{tr}Click to expand{/tr}">
-			<img src="http://tiki.org/display525"  width="150" style="display:block; margin-left:auto; margin-right:auto;border:1px solid darkgray;" alt="Click to expand" class="regImage pluginImg" title="{tr}Click to expand{/tr}" />
+			<img src="img/profiles/profile_thumb_company_intranet.png"  width="150" style="display:block; margin-left:auto; margin-right:auto;border:1px solid darkgray;" alt="Click to expand" class="regImage pluginImg" title="{tr}Click to expand{/tr}" />
 		</a>
 		<div class="mini" style="width:100px;">
 			<div class="thumbcaption text-center">{tr}Click to expand{/tr}</div>
@@ -76,7 +76,7 @@
 	</div>
 	<div style="display:block; margin-left:auto; margin-right:auto; width:202px;">
 		<a href="http://tiki.org/display526" class="internal" rel="box" title="{tr}Click to expand{/tr}">
-			<img src="http://tiki.org/display526"  width="150" style="display:block; margin-left:auto; margin-right:auto;border:1px solid darkgray;" alt="Click to expand" class="regImage pluginImg" title="{tr}Click to expand{/tr}" />
+			<img src="img/profiles/profile_thumb_personal_blog_and_profile.png"  width="150" style="display:block; margin-left:auto; margin-right:auto;border:1px solid darkgray;" alt="Click to expand" class="regImage pluginImg" title="{tr}Click to expand{/tr}" />
 		</a>
 		<div class="mini" style="width:100px;">
 			<div class="thumbcaption text-center">{tr}Click to expand{/tr}</div>
@@ -103,7 +103,7 @@
 	</div>
 	<div style="display:block; margin-left:auto; margin-right:auto; width:202px;">
 		<a href="http://tiki.org/display527" class="internal" rel="box" title="{tr}Click to expand{/tr}">
-			<img src="http://tiki.org/display527"  width="200" style="display:block; margin-left:auto; margin-right:auto;border:1px solid darkgray;" alt="Click to expand" class="regImage pluginImg" title="{tr}Click to expand{/tr}" />
+			<img src="img/profiles/profile_thumb_small_org_web_presence.png"  width="200" style="display:block; margin-left:auto; margin-right:auto;border:1px solid darkgray;" alt="Click to expand" class="regImage pluginImg" title="{tr}Click to expand{/tr}" />
 		</a>
 		<div class="mini" style="width:100px;">
 			<div class="thumbcaption text-center">{tr}Click to expand{/tr}</div>

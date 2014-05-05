@@ -23,7 +23,7 @@
             </a>
             <div style="display:block; margin-left:auto; margin-right:auto; width:202px;">
                 <a href="http://tiki.org/display542" class="internal" rel="box" title="{tr}Click to expand{/tr}">
-                    <img src="http://tiki.org/display542"  width="150" style="display:block; margin-left:auto; margin-right:auto;border:1px solid darkgray;" alt="Click to expand" class="regImage pluginImg" title="{tr}Click to expand{/tr}" />
+                    <img src="img/profiles/profile_thumb_user_and_registration_tracker.png"  width="150" style="display:block; margin-left:auto; margin-right:auto;border:1px solid darkgray;" alt="Click to expand" class="regImage pluginImg" title="{tr}Click to expand{/tr}" />
                 </a>
                 <div class="mini" style="width:100px;">
                     <div class="thumbcaption text-center">{tr}Click to expand{/tr}</div>
@@ -50,7 +50,7 @@
             </a>
             <div style="display:block; margin-left:auto; margin-right:auto; width:202px;">
                 <a href="http://tiki.org/display543" class="internal" rel="box" title="{tr}Click to expand{/tr}">
-                    <img src="http://tiki.org/display543"  width="150" style="display:block; margin-left:auto; margin-right:auto;border:1px solid darkgray;" alt="Click to expand" class="regImage pluginImg" title="{tr}Click to expand{/tr}" />
+                    <img src="img/profiles/profile_thumb_custom_contact_form.png"  width="150" style="display:block; margin-left:auto; margin-right:auto;border:1px solid darkgray;" alt="Click to expand" class="regImage pluginImg" title="{tr}Click to expand{/tr}" />
                 </a>
                 <div class="mini" style="width:100px;">
                     <div class="thumbcaption text-center">{tr}Click to expand{/tr}</div>
@@ -77,7 +77,7 @@
             </a>
             <div style="display:block; margin-left:auto; margin-right:auto; width:202px;">
                 <a href="http://tiki.org/display521" class="internal" rel="box" title="{tr}Click to expand{/tr}">
-                    <img src="http://tiki.org/display521"  width="150" style="display:block; margin-left:auto; margin-right:auto;border:1px solid darkgray;" alt="Click to expand" class="regImage pluginImg" title="{tr}Click to expand{/tr}" />
+                    <img src="img/profiles/profile_thumb_dynamic_items_list.png"  width="150" style="display:block; margin-left:auto; margin-right:auto;border:1px solid darkgray;" alt="Click to expand" class="regImage pluginImg" title="{tr}Click to expand{/tr}" />
                 </a>
                 <div class="mini" style="width:100px;">
                     <div class="thumbcaption text-center">{tr}Click to expand{/tr}</div>
