@@ -165,14 +165,12 @@ abstract class Table_Settings_Abstract
 	protected $defaultFilters = array(
 		'text' => array(
 			'type' => 'text',
-			//tra('Type to filter...')
-			'placeholder' => 'Type to filter...'
+			'placeholder' => ''
 		),
 		//tra('Select a value')
 		'dropdown' => array(
 			'type' => 'dropdown',
-			//tra('Select a value')
-			'placeholder' => 'Select a value'
+			'placeholder' => ''
 		),
 		'date'	=> array(
 			'type' => 'date',

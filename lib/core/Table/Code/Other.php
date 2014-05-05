@@ -37,7 +37,7 @@ class Table_Code_Other extends Table_Code_Manager
 			}
 			$jq[] = '$(\'button#' . $s['reset']['id'] . '\').click(function(){$(\'' . parent::$tid
 				.'\').trigger(\'sortReset\')' . $sr . ';});';
-			$html[] = '<button id="' . $s['reset']['id'] . '" type="button">' . $s['reset']['text'] . '</button>';
+			$htmlbefore[] = '<button id="' . $s['reset']['id'] . '" type="button" class="btn btn-xs">' . $s['reset']['text'] . '</button>';
 		}
 
 		//filters
@@ -45,7 +45,7 @@ class Table_Code_Other extends Table_Code_Manager
 			$f = parent::$s['filters'];
 			//reset button
 			if ($f['type'] === 'reset') {
-				$html[] = '<button id="' . $f['reset']['id'] . '" type="button">' . $f['reset']['text'] . '</button>';
+				$htmlbefore[] = '<button id="' . $f['reset']['id'] . '" type="button" class="btn btn-xs">' . $f['reset']['text'] . '</button>';
 			}
 
 			//external dropdowns
@@ -86,7 +86,7 @@ class Table_Code_Other extends Table_Code_Manager
 						''
 					);
 				}
-				$html[] = $this->iterate($divr, '<div style="float:right">', '</div>', '', '', '');
+				$htmlbefore[] = $this->iterate($divr, '<div style="float:right">', '</div>', '', '', '');
 			}
 		}
 
@@ -94,52 +94,73 @@ class Table_Code_Other extends Table_Code_Manager
 		$p = parent::$s['pager'];
 		//pager controls
 		if (parent::$pager) {
-			$div = array(
+			$htmlbefore[] = $this->iterate('', '<div id="' . parent::$s['id'] . '_pager_info_top" class="pagedisplay-top">', '</div>', '', '', '');
+			$pagerdiv = array(
+				'<span style="float:right">',
 				'Page: <select class="gotoPage"></select>',
-				'<span class="first arrow">mg</span>',
-				'<span class="prev arrow">img</span>',
+				'<button type="button" class="btn btn-xs first">',
+				'<i class="glyphicon glyphicon-step-backward"></i></button>',
+				'<button type="button" class="btn btn-xs prev">',
+				'<i class="glyphicon glyphicon-backward"></i></button>',
 				'<span class="pagedisplay"></span>',
-				'<span class="next arrow">img</span>',
-				'<span class="last arrow">mg</span>',
+				'<button type="button" class="btn btn-xs next">',
+				'<i class="glyphicon glyphicon-forward"></i></button>',
+				'<button type="button" class="btn btn-xs last">',
+				'<i class="glyphicon glyphicon-step-forward"></i></button>',
+				'</span>'
 			);
 			foreach ($p['expand'] as $option) {
 				$sel = $p['max'] === $option ? ' selected="selected"' : '';
 				$opt[] = $sel . ' value="' . $option . '">' . $option;
 			}
 			if (isset($opt)) {
-				$div[] = $this->iterate($opt, '<select class="pagesize">', '</select>', '<option', '</option>', '');
+				$pagerdiv[] = $this->iterate($opt, '<span class="pagesizelabel">Max rows:</span><select class="pagesize">', '</select>', '<option', '</option>', '');
 			}
 			//put all pager controls in a div
-			$html[] = $this->iterate(
-				$div,
-				'<div id="' . $p['controls']['id'] . '" class="tablesorter-pager">',
-				'</div>',
+			$htmlafter[] = $this->iterate(
+				$pagerdiv,
+				'<div id="' . $p['controls']['id'] . '" class="form-horizontal"><small>',
+				'</small></div>',
 				'',
+				'',
+				''
+			);
+			$bind = array('$(\'div#' . parent::$s['id'] . '_pager_info_top\').text($(\'span#' . parent::$s['id']
+				. '_pager_info\').text());');
+			$jq[] = $this->iterate(
+				$bind,
+				'$(\'' . parent::$tid . '\').bind(\'pagerInitialized pagerComplete\', function(e, c){',
+				$this->nt . '});',
+				$this->nt2,
 				'',
 				''
 			);
 		}
 
 		//add any reset/disable buttons just above the table
-		if (isset($html)) {
-			$allhtml = $this->iterate($html, '', '', '', '', '');
-			array_unshift($jq, '$(\'' . parent::$tid . '\').before(\'' . $allhtml . '\'' . $this->nt . ');');
+		if (isset($htmlbefore)) {
+			$allhtmlbefore = $this->iterate($htmlbefore, '', '', '', '', '');
+			$allhtmlafter = $this->iterate($htmlafter, '', '', '', '', '');
+			array_unshift($jq, '$(\'' . parent::$tid . '\').before(\'' . $allhtmlbefore . '\'' . $this->nt
+				. ').after(\'' . $allhtmlafter . '\'' . $this->nt . ');');
 		}
-
 		if (parent::$ajax) {
 			$bind = array(
 				//dim rows while processing when using ajax
 				'	if ($.inArray(e.type, [\'filterStart\', \'sortStart\', \'pageMoved\']) > -1) {',
-				'		$(\'' . parent::$tid . ' tbody tr td\').css(\'opacity\', 0.25);',
-				'	}',
-				//note when filter is in place - used for setting offset when simplified ajax url is used
-				'	if (e.type === \'filterStart\') {',
-				'		if (typeof this.config.pager.ajaxData !== \'undefined\') {',
-				'			this.config.pager.ajaxData.filter = true;',
+				'		if (e.type === \'filterStart\') {',
+							//need this test since filter seems to start when table intializes with no ending ajaxComplete
+				'			if (typeof this.config.pager.ajaxData !== \'undefined\') {',
+				'				$(\'' . parent::$tid . ' tbody tr td\').css(\'opacity\', 0.25);',
+								//note when filter is in place - used for setting offset when simplified ajax url is used
+				'				this.config.pager.ajaxData.filter = true;',
+				'			}',
+				'		} else {',
+				'			$(\'' . parent::$tid . ' tbody tr td\').css(\'opacity\', 0.25);',
 				'		}',
 				'	}',
 			);
-			$prejq[] = $this->iterate(
+			$jq[] = $this->iterate(
 				$bind,
 				'$(\'' . parent::$tid . '\').bind(\'filterStart sortStart pageMoved\', function(e){',
 				$this->nt2 . '});',
@@ -148,15 +169,12 @@ class Table_Code_Other extends Table_Code_Manager
 				''
 			);
 			//un-dim rows after ajax processing and make sure odd/even row formatting is applied
-			$bind = array_merge($prejq, array(
-				'if (e.type === \'ajaxComplete\') {',
+			$bind = array(
 				'	$(\'' . parent::$tid . ' tbody tr td\').css(\'opacity\', 1);',
-				'	$(\'' . parent::$tid . ' tbody tr td\').trigger(\'applyWidgetId\', [\'zebra\']);',
-				'}'
-			));
+			);
 			$jq[] = $this->iterate(
 				$bind,
-				'$(document).bind(\'ajaxSend ajaxComplete\', function(e){',
+				'$(document).bind(\'ajaxComplete\', function(e){',
 				$this->nt . '});',
 				$this->nt2,
 				'',

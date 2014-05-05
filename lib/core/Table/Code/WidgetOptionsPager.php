@@ -37,8 +37,8 @@ class Table_Code_WidgetOptionsPager extends Table_Code_WidgetOptions
 			$ps[] = 'container : \'div#' . parent::$s['pager']['controls']['id'] . '\'';
 			$p[] = $this->iterate($ps, $pre . 'selectors: {', $this->nt3 . '}', $this->nt4, '');
 			if (!parent::$ajax) {
-				$p[] = $pre . 'output: tr(\'Showing \') + \'{startRow} \' + tr(\'to\') + \' {endRow} \' + tr(\'of\')
-					+ \' {filteredRows} \' + \'(\' + tr(\'filtered from\') + \' {totalRows} \' + tr(\'records\') + \')\'';
+				$p[] = $pre . 'output: \'{startRow} \' + tr(\'to\') + \' {endRow} \' + tr(\'of\')
+					+ \' {filteredRows} \' + \'(\' + tr(\'filtered from\') + \' {totalRows}\' + \')\'';
 			} else {
 				$p[] = $pre . 'output: \'{start} {parens}\'';
 			}
@@ -68,11 +68,10 @@ class Table_Code_WidgetOptionsPager extends Table_Code_WidgetOptions
 				'	r.fp = Math.ceil( r.filtered / p.size );',
 				'	r.end = r.offset + $(r.rows).length;',
 				'	if (r.filtered == 0) {r.start = tr(\'No records found\')}',
-				'	if (r.filtered == 1) {r.start = tr(\'Showing 1 of 1\')}',
-				'	if (r.filtered > 1) {r.start = tr(\'Showing \') + (r.offset + 1) + \' \' + tr(\'to\') + \' \'
+				'	if (r.filtered == 1) {r.start = tr(\'1 of 1\')}',
+				'	if (r.filtered > 1) {r.start = (r.offset + 1) + \' \' + tr(\'to\') + \' \'
 						+ r.end + \' \' + \' \' + tr(\'of\') + \' \' + r.filtered}',
-				'	r.parens = r.filtered < r.total ? \' \' + \'(\' + tr(\'filtered from\') + \' \' + r.total + \' \'
-					+ tr(\'records)\') : \' \' + tr(\'records\');',
+				'	r.parens = r.filtered < r.total ? \' \' + \'(\' + tr(\'filtered from\') + \' \' + r.total + \') \' : \' \';',
 				'} else {',
 				'	r.start = tr(\'No records found\');',
 				'	r.parens = \'\';',

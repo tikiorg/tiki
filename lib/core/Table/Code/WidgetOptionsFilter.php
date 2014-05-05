@@ -26,7 +26,6 @@ class Table_Code_WidgetOptionsFilter extends Table_Code_WidgetOptions
 	protected function getOptionArray()
 	{
 		if (parent::$filters) {
-			$wof[] = 'filter_cssFilter : \'ts-filter\'';
 			//server side filtering
 			if (parent::$ajax) {
 				$wof[] = 'filter_serversideFiltering : true';
