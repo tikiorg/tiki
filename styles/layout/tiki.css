@@ -3,6 +3,13 @@
 	and layout properties, is to be imported by theme stylesheets.
 */
 
+#top_modules,
+#topbar_modules,
+#pagebottom_modules {
+	margin-left: -15px;
+	margin-right: -15px;
+}
+
 /***** Site Header & Identity *****/
 .box-quickadmin li {
 	font-size: 0.9em;

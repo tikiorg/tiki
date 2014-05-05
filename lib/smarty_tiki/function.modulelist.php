@@ -16,7 +16,7 @@ function smarty_function_modulelist($params, $smarty)
 
 	$zone = $params['zone'];
 
-	$class = 'content clearfix modules row';
+	$class = 'content clearfix modules';
 	if (! empty($params['class'])) {
 		$class = $params['class'];
 	}
