@@ -573,9 +573,9 @@ $("input[name=allowhtml]").change(function() {
 										<label for="" class="col-sm-2 control-label">{tr}Language{/tr}</label>
 										<div class="col-sm-10">
 										<select name="lang" id="lang" class="form-control">
-											<option value="">{tr}Unknown{/tr}</option>
+											<option value=""{if empty($lang)} selected="selected"{/if}>{tr}Unknown{/tr}</option>
 											{section name=ix loop=$languages}
-												<option value="{$languages[ix].value|escape}"{if $lang eq $languages[ix].value or (!($data.page_id) and $lang eq '' and $languages[ix].value eq $prefs.language)} selected="selected"{/if}>{$languages[ix].name}</option>
+												<option value="{$languages[ix].value|escape}"{if $lang eq $languages[ix].value} selected="selected"{/if}>{$languages[ix].name}</option>
 											{/section}
 										</select>
 										{remarksbox type=tip title="{tr}Tip{/tr}"}
