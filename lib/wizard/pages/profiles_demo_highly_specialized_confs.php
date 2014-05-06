@@ -3,18 +3,18 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id$
+// $Id: profiles_demo_highly_specialized_confs.php 51026 2014-04-27 17:18:07Z xavidp $
 
 require_once('lib/wizard/wizard.php');
 
 /**
  * Show the profiles choices
  */
-class AdminWizardProfilesDemo extends Wizard 
+class ProfilesWizardHighlySpecializedConfs extends Wizard
 {
     function pageTitle ()
     {
-        return tra('Demo Profiles');
+        return tra('Demo of Highly Specialized Configurations');
     }
 	function isEditable ()
 	{
@@ -29,13 +29,13 @@ class AdminWizardProfilesDemo extends Wizard
 		parent::onSetupPage($homepageUrl);
 
 		$smarty->assign('tikiMajorVersion', substr($TWV->version, 0, 2));
-		
-		// Assign the page temaplte
-		$wizardTemplate = 'wizard/admin_profiles_demo.tpl';
-		$smarty->assign('wizardBody', $wizardTemplate);
-		
-		return true;		
-	}
+
+        // Assign the page template
+        $wizardTemplate = 'wizard/profiles_demo_highly_specialized_confs.tpl';
+        $smarty->assign('wizardBody', $wizardTemplate);
+
+        return true;
+    }
 
 	function onContinue ($homepageUrl) 
 	{

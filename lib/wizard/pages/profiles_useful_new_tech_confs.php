@@ -3,18 +3,18 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id$
+// $Id: profiles_useful_new_tech_confs.php 51026 2014-04-27 17:18:07Z xavidp $
 
 require_once('lib/wizard/wizard.php');
 
 /**
  * Show the profiles choices
  */
-class AdminWizardProfilesUseful extends Wizard 
+class ProfilesWizardUsefulNewTechConfs extends Wizard
 {
     function pageTitle ()
     {
-        return tra('Useful Profiles');
+        return tra('Useful New Technology Configurations');
     }
 	function isEditable ()
 	{
@@ -29,15 +29,15 @@ class AdminWizardProfilesUseful extends Wizard
 		parent::onSetupPage($homepageUrl);
 
 		$smarty->assign('tikiMajorVersion', substr($TWV->version, 0, 2));
-		
-		// Assign the page temaplte
-		$wizardTemplate = 'wizard/admin_profiles_useful.tpl';
-		$smarty->assign('wizardBody', $wizardTemplate);
-		
-		return true;		
+
+        // Assign the page template
+        $wizardTemplate = 'wizard/profiles_useful_new_tech_confs.tpl';
+        $smarty->assign('wizardBody', $wizardTemplate);
+
+        return true;
 	}
 
-	function onContinue ($homepageUrl) 
+	function onContinue ($homepageUrl)
 	{
 		// Run the parent first
 		parent::onContinue($homepageUrl);

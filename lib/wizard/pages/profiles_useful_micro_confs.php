@@ -3,42 +3,42 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id$
+// $Id: profiles_useful_micro_confs.php 51026 2014-04-27 17:18:07Z xavidp $
 
 require_once('lib/wizard/wizard.php');
 
 /**
- * The Admin Profiles last screen
+ * Show the profiles choices
  */
-class AdminWizardProfilesCompleted extends Wizard 
+class ProfilesWizardUsefulMicroConfs extends Wizard
 {
     function pageTitle ()
     {
-        return tra('Configuration Profiles Wizard Completed!');
+        return tra('Useful Micro Configurations');
     }
-    function isEditable ()
+	function isEditable ()
 	{
 		return false;
 	}
 	
-	public function onSetupPage ($homepageUrl) 
+	function onSetupPage ($homepageUrl) 
 	{
-		global	$smarty;
+		global	$smarty, $prefs, $TWV;
 
 		// Run the parent first
 		parent::onSetupPage($homepageUrl);
-		
-		// Assign the page template
-		$wizardTemplate = 'wizard/admin_profiles_completed.tpl';
-		$smarty->assign('wizardBody', $wizardTemplate);
-		
+
+		$smarty->assign('tikiMajorVersion', substr($TWV->version, 0, 2));
+
+        // Assign the page template
+        $wizardTemplate = 'wizard/profiles_useful_micro_confs.tpl';
+        $smarty->assign('wizardBody', $wizardTemplate);
+
 		return true;
 	}
 
 	function onContinue ($homepageUrl) 
 	{
-		global $tikilib; 
-
 		// Run the parent first
 		parent::onContinue($homepageUrl);
 	}

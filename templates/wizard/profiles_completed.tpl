@@ -1,4 +1,4 @@
-{* $Id$ *}
+{* $Id: profiles_completed.tpl 51026 2014-04-27 17:18:07Z xavidp $ *}
 
 <div class="adminWizardIconleft"><img src="img/icons/large/wizard_profiles48x48.png" alt="{tr}Configuration Profiles Wizard completed{/tr}" title="{tr}Configuration Profiles Wizard{/tr}" /></div>
 <div class="adminWizardContent">
