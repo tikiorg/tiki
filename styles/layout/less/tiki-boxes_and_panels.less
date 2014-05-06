@@ -1,0 +1,119 @@
+// $Id$
+// Boxes
+.error .rbox-data .adminoption,
+.error .rbox-data .adminoptionlabel {
+  display: inline;
+}
+
+.error.icon {
+  font-weight: bold;
+  color: #090;
+}
+
+// Modules
+.modules {
+  position: relative;
+}
+
+// To do: replace with something Bootstrap grid-compatible
+#role_main .module {
+  max-width: 180px;
+}
+
+h3.panel-title {
+  display: block;
+  padding-top: 0;
+  position: relative; // Needed for module shading icon to work.
+}
+
+.moduleflip,
+.moduleflip img {
+  display: none;
+  position: absolute;
+  right: 1%;
+  top: 0;
+}
+
+.panel:hover .moduleflip,
+.panel:hover .moduleflip img {
+  display: block;
+}
+
+.panel-body table {
+  width: 100%;
+}
+
+.panel-body a.linkmenu {
+  display: block;
+}
+
+.panel-body ol,
+.panel-body ul {
+  padding-left: 1.5em;
+  padding-right: .6em;
+  overflow: hidden;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.panel-body ul {
+  padding-left: 1.3em;
+}
+
+.box-months_links ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.box-months_links ul li {
+  list-style-type: none;
+  padding-left: 0.5em;
+}
+
+.box-months_links ul li li {
+  list-style-type: none;
+  padding-left: 1.3em;
+}
+
+.modcontrols {
+  display: block;
+  float: right;
+  width: 64px;
+  height: 16px;
+}
+
+// MiniChat
+.box-minichat {
+  width: 100%;
+}
+
+.minichat,
+.minichatdiv,
+.minichatchan {
+  overflow: auto;
+}
+
+// mod-switch_lang
+.box-switch_lang .panel-body img {
+  padding: .2em;
+  vertical-align: middle;
+}
+
+#autosave_preview > div {
+  height: 30ex;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+// Remarks boxes (To do: replace with variables.
+
+#error {
+  background: yellow;
+  color: red;
+}
+
+.warning a,
+.warning a:link,
+.warning a:visited {
+  color: #b93c2e;
+}
