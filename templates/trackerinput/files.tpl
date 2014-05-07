@@ -10,7 +10,7 @@
 			{if $prefs.vimeo_upload eq 'y' and $field.options_map.displayMode eq 'vimeo'}
 				<img src="img/icons/vimeo.png" width="16" height="16">
 			{elseif $field.options_map.displayMode eq 'img'}
-				<img src="tiki-download_file.php?fileId={$info.fileId|escape}&display&height=24" height="24">
+				<img src="tiki-download_file.php?fileId={$info.fileId|escape}&display&y=24" height="24">
 			{else}
 				<img src="tiki-download_file.php?fileId={$info.fileId|escape}&icon" width="32" height="32">
 			{/if}
