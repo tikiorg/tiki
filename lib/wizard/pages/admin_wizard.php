@@ -35,7 +35,13 @@ class AdminWizard extends Wizard
 		if (isset($_REQUEST['use-default-prefs'])) {
 			$smarty->clear_assign('useDefaultPrefs');
 		}
-		
+
+		// If the user steps back after having selected, "Use Upgrade Wizard",
+		//	then starts the wizard steps (presses "Start"), the Upgrade Wizard should no longer be used.
+		if (isset($_REQUEST['use-upgrade-wizard'])) {
+			$smarty->clear_assign('useUpgradeWizard');
+		}
+
 		// Assign the page template
         $smarty->assign('pageTitle', $this->pageTitle());
 		

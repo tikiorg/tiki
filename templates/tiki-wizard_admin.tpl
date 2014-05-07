@@ -12,7 +12,7 @@
 	<div class="row">
 		{if !empty($wizard_toc)}
 			<div class="col-sm-4">
-				<span class="adminWizardTOCTitle">{tr}Wizard Steps{/tr}</span>
+				<span class="adminWizardTOCTitle">{if $useDefaultPrefs}{tr}Profiles Wizard{/tr}{elseif $useUpgradeWizard}{tr}Upgrade Wizard{/tr}{else}{tr}Admin Wizard{/tr}{/if} - {tr}steps{/tr}:</span>
 				<ol>
 					{$wizard_toc}
 				</ol>

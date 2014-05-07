@@ -51,6 +51,23 @@
         </tr>
 
         <tr>
+            <td><div class="adminWizardIconleft"><img src="img/icons/large/wizard_upgrade48x48.png" alt="{tr}Upgrade Wizard{/tr}" title="Upgrade Wizard" /><br/><br/></div></td>
+            <td>
+                {tr}Or you may use the <b>Upgrade Wizard</b>{/tr}.
+                {tr}This will guide you through the most common new settings and informations in order to upgrade your site{/tr}.
+				<a href="http://doc.tiki.org/Upgrade+Wizard" target="tikihelp" class="tikihelp" title="{tr}Upgrade Wizard:{/tr} 
+                {tr}Use this wizard if you are upgrading from previous versions of Tiki, specially if you come from the previous Long Term Support (LTS) version.{/tr}
+                <br/><br/>
+                {tr}Some of these settings are also available through the Admin Wizard, and all of them are available through Admin Panels{/tr}. 
+                {tr}But this wizard will let you learn about them as well as enable/disable them easily according to your needs and interests for your site{/tr}.">
+					<img src="img/icons/help.png" alt="" width="16" height="16" class="icon" />
+				</a>
+                <br>
+                <input type="submit" class="btn btn-default" name="use-upgrade-wizard" value="{tr}Start Upgrade Wizard{/tr}" /><br><br>
+            </td>
+        </tr>
+
+        <tr>
             <td><div class="adminWizardIconleft"><img src="img/icons/large/admin_panel48x48.png" alt="{tr}Admin Panel{/tr}" /></div></td>
             <td>
                 {tr}Use the <b>Admin Panel</b> to manually browse through the full list of preferences{/tr}.

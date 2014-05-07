@@ -29,6 +29,9 @@
 	{if isset($useDefaultPrefs)}
 		<input type="hidden" name="use-default-prefs" value="{$useDefaultPrefs}">
 	{/if}
+	{if isset($useUpgradeWizard)}
+		<input type="hidden" name="use-upgrade-wizard" value="{$useUpgradeWizard}">
+	{/if}
 	<input type="submit" class="btn btn-default btn-sm" name="{if isset($firstWizardPage)}use-default-prefs{else}continue{/if}" value="{if isset($lastWizardPage)}{tr}Finish{/tr}{elseif isset($firstWizardPage)}{tr}Start{/tr}{else}{if $isEditable eq true}{tr}Save and Continue{/tr}{else}{tr}Next{/tr}{/if}{/if}" />
 </div>
     </div>
