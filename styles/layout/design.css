@@ -4737,4 +4737,12 @@ div#outerToc-static ul {
 .chosen-container .chosen-results li.highlighted, .chosen-container .chosen-results li.active-result {
     width: 90%;
 }
+
+/* Password domain module */
+.pwddom_domain_name {
+    font-weight: bold;
+}
+.pwddom_username_name {
+    font-weight: bold;
+}
 /* End of file */

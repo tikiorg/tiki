@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2013 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -12,6 +12,11 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 }
 if (isset($_REQUEST["security"])) {
 	check_ticket('admin-inc-security');
+}
+
+if (!extension_loaded('mcrypt')) {
+	global $smarty;
+	$smarty->assign('no_mcrypt', 'y');
 }
 
 ask_ticket('admin-inc-security');

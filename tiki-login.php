@@ -84,7 +84,7 @@ if (isset($_REQUEST['su'])) {
 		if ($userlib->user_exists($_REQUEST['username'])) {
 			$loginlib->switchUser($_REQUEST['username']);
 		}
-		
+
 		$access->redirect($_SESSION['loginfrom']);
 	}
 }
@@ -358,7 +358,7 @@ if ($isvalid) {
 	$smarty->assign('module_params', $module_params);
 	if ($error == PASSWORD_INCORRECT && ($prefs['unsuccessful_logins'] >= 0 || $prefs['unsuccessful_logins_invalid'] >= 0)) {
 		$nb_bad_logins = $userlib->unsuccessful_logins($requestedUser);
-		$nb_bad_logins++ ; 
+		$nb_bad_logins++ ;
 		$userlib->set_unsuccessful_logins($requestedUser, $nb_bad_logins);
 		if ($prefs['unsuccessful_logins_invalid'] > 0 && ($nb_bad_logins >= $prefs['unsuccessful_logins_invalid'])) {
 			$info = $userlib->get_user_info($requestedUser);
@@ -422,7 +422,7 @@ if ($isvalid) {
 			$error = tra('You did not validate your account.');
 			$extraButton = array('href'=>'tiki-send_mail.php?user='. urlencode($_REQUEST['user']), 'text'=>tra('Resend'), 'comment'=>tra('You should have received an email. Check your mailbox and your spam box. Otherwise click on the button to resend the email'));
         		break;
- 
+
 		case USER_AMBIGOUS:
 			$error = tra('You must use the right case for your user name.');
         		break;
@@ -469,6 +469,14 @@ $url.= ((strpos($url, '?') === false) ? '?' : '&') . SID;
 // If a wizard is run, it will return to the $url location when it has completed. Thus no code after $wizardlib->onLogin will be executed
 // The user must be actually logged in before onLogin is called. If $isdue is set, then: "Note that the user is not logged in he's just validated to change his password"
 if (!$isdue) {
+
+	if ($prefs['feature_user_encryption'] === 'y') {
+		// Notify CryptLib about the login
+		$cryptlib = TikiLib::lib('crypt');
+		$cryptlib->onUserLogin($pass);
+	}
+
+	// Process wizard
 	$wizardlib = TikiLib::lib('wizard');
 	$wizardlib->onLogin($user, $url);
 }

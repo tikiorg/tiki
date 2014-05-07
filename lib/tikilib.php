@@ -306,6 +306,9 @@ class TikiLib extends TikiDb_Bridge
 			case 'cart':
 				require_once 'lib/payment/cartlib.php';
 				return self::$libraries[$name] = new CartLib();
+			case 'crypt':
+				global $cryptlib; require_once 'lib/crypt/cryptlib.php';
+				return self::$libraries[$name] = new CryptLib();
 		}
 	}
 
@@ -6370,7 +6373,7 @@ JS;
 
 		foreach ($temp as $v) {
 			$filtered = str_replace($ignore_chars, '', $v);
-			if ($filtered == '') {	
+			if ($filtered == '') {
 				if (! $keep) {
 					$array[count($array) - 1] .= $delimiter;
 				}

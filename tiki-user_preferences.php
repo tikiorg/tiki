@@ -304,6 +304,12 @@ if (isset($_REQUEST['chgadmin'])) {
 			die;
 		}
 		$userlib->change_user_password($userwatch, $_REQUEST["pass1"]);
+		if ($prefs['feature_user_encryption'] === 'y') {
+			// Notify CryptLib about the login
+			$cryptlib = TikiLib::lib('crypt');
+			$cryptlib->onChangeUserPassword($_REQUEST["pass"], $_REQUEST["pass1"]);
+		}
+
 		$tikifeedback[] = array('num' => 1, 'mes' => sprintf(tra('Password has been changed')));
 	}
 }
