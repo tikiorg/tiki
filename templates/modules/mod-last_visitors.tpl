@@ -13,7 +13,7 @@
 							<td>
 				{/if}
 				{if $prefs.allowRegister eq 'y'}
-							<a class="linkmodule" href="tiki-register.php" title="{tr}Register{/tr}">{/if}{tr}You{/tr}{if $prefs.allowRegister eq 'y'}</a>
+							<a class="linkmodule" href="tiki-register.php{if !empty($prefs.registerKey)}?key={$prefs.registerKey|escape:'url'}{/if}" title="{tr}Register{/tr}">{/if}{tr}You{/tr}{if $prefs.allowRegister eq 'y'}</a>
 				{/if}
 							<div align="right">{$currentLogin|tiki_short_datetime}</div>
 				{if $showavatars eq 'y'}

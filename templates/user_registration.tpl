@@ -60,10 +60,10 @@
 		{if $userTrackerData}
 			{$userTrackerData}
 		{else}
-			<form action="tiki-register.php" method="post" name="RegForm">
+			<form action="tiki-register.php{if !empty($prefs.registerKey)}?key={$prefs.registerKey|escape:'url'}{/if}" method="post" name="RegForm">
 				{if $smarty.request.invite}<input type='hidden' name='invite' value='{$smarty.request.invite|escape}'>{/if}
 				<table class="formcolor">
-				{include file="register-form.tpl"}
+					{include file="register-form.tpl"}
 					{if $merged_prefs.feature_antibot eq 'y'}{include file='antibot.tpl' td_style='formcolor'}{/if}
 					<tr class="registerSubmitTr">
 						<td>&nbsp;</td>
