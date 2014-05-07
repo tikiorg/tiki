@@ -86,6 +86,9 @@ class AdminWizardFileStorage extends Wizard
 		if (isset($_REQUEST['useElFinderAsDefault']) && $_REQUEST['useElFinderAsDefault'] === 'on') {
 			// Set ElFinder view as the default File Gallery view
 			$tikilib->set_preference('fgal_default_view', 'finder');
-		}		
+        } else {
+            // Re-set back default File Gallery view to list
+            $tikilib->set_preference('fgal_default_view', 'list');
+        }
 	}
 }
