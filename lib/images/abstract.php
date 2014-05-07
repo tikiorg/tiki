@@ -244,17 +244,15 @@ class ImageAbstract
 	{
 		$keep_original = ( $x == 0 && $y == 0 );
 
-		// This method is not necessarily called through an instance
-		$class = isset($this) ? $this->classname : 'Image';
-		$format = call_user_func(array($class, 'get_icon_default_format'));
+		$format = $this->get_icon_default_format();
+		$icon_format = '';
 
-		if ( ! $keep_original && class_exists($class) ) {
+		if ( ! $keep_original ) {
 			$icon_format = $format;
-			$class = 'Image';
 
-			if ( call_user_func(array($class, 'is_supported'), 'png') ) {
+			if ( $this->is_supported('png') ) {
 				$format = 'png';
-			} elseif ( call_user_func(array($class, 'is_supported'), 'svg') ) {
+			} elseif ( $this->is_supported('svg') ) {
 				$format = 'svg';
 			} else {
 				return false;
@@ -267,7 +265,7 @@ class ImageAbstract
 		}
 
 		if ( ! $keep_original && $format != 'svg' ) {
-			$icon = new $class($name, true);
+			$icon = new Image($name, true, $format);
 			if ( $format != $icon_format ) {
 				$icon->convert($icon_format);
 			}
@@ -275,7 +273,7 @@ class ImageAbstract
 
 			return $icon->display();
 		} else {
-			return ImageAbstract::get_from_file($name);
+			return $this->get_from_file($name);
 		}
 
 	}
