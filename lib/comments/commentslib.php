@@ -908,6 +908,7 @@ class Comments extends TikiLib
      * @param string $topic_smileys
      * @param string $topic_summary
      * @param string $ui_avatar
+     * @param string $ui_rating_choice_topic
      * @param string $ui_flag
      * @param string $ui_posts
      * @param string $ui_level
@@ -943,7 +944,7 @@ class Comments extends TikiLib
 			$inbound_pop_user='', $inbound_pop_password='', $outbound_address='',
 			$outbound_mails_for_inbound_mails='n', $outbound_mails_reply_link='n',
 			$outbound_from='', $topic_smileys='n', $topic_summary='n', $ui_avatar='y',
-			$ui_flag='y', $ui_posts='n', $ui_level='n', $ui_email='n', $ui_online='n',
+            $ui_rating_choice_topic='y', $ui_flag='y', $ui_posts='n', $ui_level='n', $ui_email='n', $ui_online='n',
 			$approval_type='all_posted', $moderator_group='', $forum_password='',
 			$forum_use_password='n', $att='att_no', $att_store='db', $att_store_dir='',
 			$att_max_size=1000000, $forum_last_n=0, $commentsPerPage='', $threadStyle='',
@@ -980,7 +981,8 @@ class Comments extends TikiLib
 			'topic_smileys' => $topic_smileys,
 			'topic_summary' => $topic_summary,
 			'ui_avatar' => $ui_avatar,
-			'ui_flag' => $ui_flag,
+            'ui_rating_choice_topic' => $ui_rating_choice_topic,
+            'ui_flag' => $ui_flag,
 			'ui_posts' => $ui_posts,
 			'ui_level' => $ui_level,
 			'ui_email' => $ui_email,
@@ -3083,6 +3085,7 @@ class Comments extends TikiLib
 			$forum_info['topic_smileys'],
 			$forum_info['topic_summary'],
 			$forum_info['ui_avatar'],
+            $forum_info['ui_rating_choice_topic'],
 			$forum_info['ui_flag'],
 			$forum_info['ui_posts'],
 			$forum_info['ui_level'],

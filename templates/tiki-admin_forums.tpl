@@ -356,6 +356,7 @@
 					<table class="formcolor">
 						<tr>
 							<td>{tr}Avatar{/tr}</td>
+                            <td>{tr}Topic Rating{/tr}</td>
 							<td>{tr}Flag{/tr}</td>
 							<td>{tr}Posts{/tr}</td>
 							<td>{tr}User Level{/tr}</td>
@@ -366,6 +367,9 @@
 						<td>
 							<input type="checkbox" name="ui_avatar" {if $ui_avatar eq 'y'}checked="checked"{/if}>
 						</td>
+                        <td>
+                            <input type="checkbox" name="ui_rating_choice_topic" {if $ui_rating_choice_topic eq 'y'}checked="checked"{/if}>
+                        </td>
 						<td>
 							<input type="checkbox" name="ui_flag" {if $ui_flag eq 'y'}checked="checked"{/if}>
 						</td>

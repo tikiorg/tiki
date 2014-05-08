@@ -27,6 +27,11 @@ class RatingLib extends TikiDb_Bridge
 		return $this->get_user_vote($target, $type, $objectId);
 	}
 
+	function get_vote_comment_author( $comment_author, $type, $objectId )
+	{
+		return $this->get_user_vote($comment_author, $type, $objectId);
+ 	}
+
 	function convert_rating_sort( & $sort_mode, $type, $objectKey )
 	{
 		if ( preg_match('/^adv_rating_(\d+)_(asc|desc)$/', $sort_mode, $parts) ) {
