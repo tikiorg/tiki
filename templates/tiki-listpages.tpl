@@ -42,10 +42,14 @@
 	{if $tiki_p_edit == 'y'}
 		{tab name="{tr}Create a Wiki Page{/tr}"}
             <h2>{tr}Create a Wiki Page{/tr}</h2>
-<div class="text-center" style="text-align: center">
+<div class="text-center">
 	<strong>{tr}Insert name of the page you wish to create{/tr}</strong>
 	<form method="get" action="tiki-editpage.php">
-		<input id="pagename" type="text" size="30" name="page"><br>
+        <div class="form-group clearfix">
+            <div class="col-md-8 col-md-push-2">
+		        <input class="form-control" id="pagename" type="text" name="page">
+            </div>
+        </div>
 		{if $prefs.namespace_enabled == 'y' && $prefs.namespace_default}
 			<div>
 				<label>
