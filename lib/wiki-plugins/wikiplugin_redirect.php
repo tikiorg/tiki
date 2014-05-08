@@ -95,28 +95,35 @@ function wikiplugin_redirect($data, $params)
 			}
 			$areturn = '';	// errors set above not relevant if using perspective
 		}
-		/* SEO: Redirect with HTTP status 301 - Moved Permanently than default 302 - Found */
-		if (isset($page)) {
-			TikiLib::lib('access')->redirect("tiki-index.php?page=$page&redirectpage=".$_REQUEST['page'], '', 301);
-		}
-		if (isset($url)) {
 
-			global $base_url, $url_path;		// try to detect redirect loop to server root
-			if (
-				$url == $base_url ||			// whole site url
-				$url . '/' == $base_url ||		// optional trailing /
-				$url == $url_path ||			// just the path?
-				$url . '/' == $url_path ||
-				preg_match('/[\.]?\/$/', $url)	// either ./ or / current dir or root
-			) {
+		// Make it possible to edit the plugin in wysiwyg
+		// Do not redirect if the page is being edited
+		$isEditMode = (strpos($_SERVER['SCRIPT_NAME'], 'tiki-editpage.php') !== false) || (isset($_REQUEST['controller']) && $_REQUEST['controller'] == 'edit');
+		if ($isEditMode == false) {
 
-				$hp = TikiLib::lib('wiki')->get_default_wiki_page();
-
-				if ($_REQUEST['page'] === $hp && !isset($_GET['page']) && !isset($_POST['page'])) {
-					return '';						// don't redirect if we've already been redirected to the "home page"
-				}
+			/* SEO: Redirect with HTTP status 301 - Moved Permanently than default 302 - Found */
+			if (isset($page)) {
+				TikiLib::lib('access')->redirect("tiki-index.php?page=$page&redirectpage=".$_REQUEST['page'], '', 301);
 			}
-			TikiLib::lib('access')->redirect($url);
+			if (isset($url)) {
+
+				global $base_url, $url_path;		// try to detect redirect loop to server root
+				if (
+					$url == $base_url ||			// whole site url
+					$url . '/' == $base_url ||		// optional trailing /
+					$url == $url_path ||			// just the path?
+					$url . '/' == $url_path ||
+					preg_match('/[\.]?\/$/', $url)	// either ./ or / current dir or root
+				) {
+
+					$hp = TikiLib::lib('wiki')->get_default_wiki_page();
+
+					if ($_REQUEST['page'] === $hp && !isset($_GET['page']) && !isset($_POST['page'])) {
+						return '';						// don't redirect if we've already been redirected to the "home page"
+					}
+				}
+				TikiLib::lib('access')->redirect($url);
+			}
 		}
 	}
 	return $areturn;
