@@ -9,7 +9,7 @@
     			<input class="form-control" id="search_mod_input_{$search_mod_usage_counter}" name="{if $smod_params.search_action eq 'tiki-searchindex.php'}filter~content{else}find{/if}" {if !empty($smod_params.input_size)}size="{$smod_params.input_size}" style="width: auto"{/if} type="text" accesskey="s" value="{$smod_params.input_value|escape}" />
             </div>
 		 	{if $smod_params.show_object_filter eq 'y'}
-                <div class="form-group">
+                <div class="form-group clearfix">
                     <div class="col-md-2 control-label">
 				        {tr}in:{/tr}
                     </div>
