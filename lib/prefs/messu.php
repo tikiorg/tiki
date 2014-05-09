@@ -43,7 +43,7 @@ function prefs_messu_list()
 		),
 		'messu_truncate_internal_message' => array(
 			'name' => tra('Truncate internal message notification to number of characters'),
-			'description' => tra('Truncate internal message notification to number of characters'),
+			'description' => tra('Number of characters to show in the message notification sent through e-mail, with a link to read the full message in the Internal Messaging feature in Tiki'),
 			'type' => 'text',
 			'size' => '10',
 			'filter' => 'digits',

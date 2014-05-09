@@ -116,7 +116,7 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_reports' => array(
 			'name' => tra('Reports'),
-			'description' => tra('Reports Generator'),
+			'description' => tra('Reports Generator based on data from Tiki Trackers or from the Tiki Action Log. You take control of designing the report through a simple user interface that is generated from a set of definitions'),
 			'help' => 'Reports',
 			'type' => 'flag',
 			'keywords' => 'report trackers logs builder',
@@ -1928,7 +1928,7 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_jquery_reflection' => array(
 			'name' => tra('Reflection'),
-            'description' => tra('Allows images to have a reflection effect below them. See the admin icons above for an example.'),
+            'description' => tra('Allows images to have a reflection effect below them. Used inside the Plugin Img with the parameter class=reflect'),
 			'type' => 'flag',
 			'help' => 'JQuery#Reflection',
 			'default' => 'n',		// reflection effects on images
@@ -1983,14 +1983,14 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_jquery_carousel' => array(
 			'name' => tra('jQuery Infinite Carousel'),
-            'description' => tra('Image "carousel" plugin (coming soon)'),
+            'description' => tra('Provides a slideshow effect (like an image carousel) for file galleries. Used in Plugin Carousel'),
 			'type' => 'flag',
-			'help' => 'JQuery#Carousel',
+			'help' => 'PluginCarousel',
 			'default' => 'n',		// slideshow/carousel for file gals etc
 		),
 		'feature_jquery_tablesorter' => array(
 			'name' => tra('jQuery Sortable Tables'),
-            'description' => tra('Sort in fancytable plugin'),
+            'description' => tra('Provides an interactive way to sort and filter data in tables produced through Plugin FancyTable as well as through Plugin TrackerList'),
 			'type' => 'flag',
 			'help' => 'JQuery#TableSorter',
 			'warning' => tra('This feature can cause problems with JS minify on some systems.'),
@@ -1998,16 +1998,16 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_jquery_media' => array(
 			'name' => tra('jQuery Media'),
-            'description' => tra('Media player'),
+            'description' => tra('It provides a Media Player which can be used in wiki pages or any other wiki-syntax enabled feature to play a FLV or MP3 file, or any other type of media file, like MP4, SWF, AVI, WMV, RAM, MOV, MPEG, PDF, ... It calls on a flash based open source media player to play them. Used in Plugin MediaPlayer'),
 			'type' => 'flag',
-			'help' => 'JQuery#Media',
+			'help' => 'PluginMediaPlayer',
 			'default' => 'n',
 		),
 		'feature_jquery_zoom' => array(
 			'name' => tra('jQuery Zoom'),
-            'description' => tra('Enlarge images plugin'),
+            'description' => tra('Provides the capability to zoom in images on mouseover or mousedown. Used inside the Plugin Img with the parameter thumb=zoombox'),
 			'type' => 'flag',
-			'help' => 'JQuery#Zoom',
+			'help' => 'PluginImg#Zoombox',
 			'default' => 'n',
 		),
 		'feature_tabs' => array(

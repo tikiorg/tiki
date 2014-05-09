@@ -9,7 +9,17 @@
         <legend>{tr}Ratings in Forums{/tr}</legend>
         <div class="adminWizardIconright"><img src="img/icons/large/rating48x48.png" alt="{tr}Ratings{/tr}" title="{tr}Ratings{/tr}"/></div>
         <ul>
-            <li>{tr}New option per forum: "User information display > <strong>Topic Rating</strong>" by each user{/tr}</li>
+            <li>{tr}New option per forum: "User information display > <strong>Topic Rating</strong>" by each user{/tr}
+                <a href="http://doc.tiki.org/Rating" target="tikihelp" class="tikihelp" title="{tr}Topic Rating by each user:{/tr}
+                {tr}Since Tiki12.2, there is a new forum setting to allow the optional display of the Rating by each user to that forum thread topic in each reply{/tr}.
+                <br/><br/>
+                {tr}This setting is useful to ease the task to reach consensus on deliberations (in forum threads) by identifying in a more clear way the position (topic rating) of each person on that topic at each moment on the discussion{/tr}.
+                <br/><br/>
+                {tr}Click to read more{/tr}
+	    	">
+                    <img src="img/icons/help.png" alt="" width="16" height="16" class="icon" />
+                </a>
+            </li>
         </ul>
     </fieldset>
 
