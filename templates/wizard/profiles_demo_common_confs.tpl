@@ -64,6 +64,7 @@
             <b>{tr}Dynamic Items List{/tr}</b> (<a href="tiki-admin.php?profile=Dynamic_items_list_demo&show_details_for=Dynamic_items_list_demo&categories%5B%5D={$tikiMajorVersion}.x&repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2" target="_blank">{tr}apply profile now{/tr}</a>)
             <br>
             {tr}This profile creates two linked trackers. One that allow pre-selecting the items in a drop down list based on the items in a previous drop down field. And a second tracker that holds the options displayed in the drop down fields.{/tr}
+            <br/>
             <a href="https://doc.tiki.org/Dynamic+items+list" target="tikihelp" class="tikihelp" title="{tr}Dynamic Items List{/tr}:
            	{tr}More details{/tr}:
         	<ul>
@@ -88,8 +89,30 @@
             &nbsp;
         </td>
         <td style="width:48%">
+            <b>{tr}Sortable Tables{/tr}</b> (<a href="tiki-admin.php?profile=Sortable+Tables&show_details_for=Sortable+Tables&categories%5B%5D={$tikiMajorVersion}.x&repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2" target="_blank">{tr}apply profile now{/tr}</a>)
+            <br/>
+            {tr}This profile creates a few examples of tables with data that can be sorted and filtered interactively in real time, using the JQuery Sortable Tables feature{/tr}.
+            <br/>
+            <a href="https://doc.tiki.org/PluginFancyTable" target="tikihelp" class="tikihelp" title="{tr}Sortable Tables{/tr}:
+           	{tr}More details{/tr}:
+        	<ul>
+		        <li>{tr}Useful to sort and filter data in real time{/tr}</li>
+	            <li>{tr}Same approach for FancyTable and TrackerList Plugins{/tr}</li>
+	            <li>{tr}Sorting can be server-side or client-side based {/tr}</li>
+	        </ul>
+        	{tr}Click to read more{/tr}">
+                <img src="img/icons/help.png" alt="" width="16" height="16" class="icon" />
+            </a>
+            <div style="display:block; margin-left:auto; margin-right:auto; width:202px;">
+                <a href="http://tiki.org/display548" class="internal" rel="box" title="{tr}Click to expand{/tr}">
+                    <img src="img/profiles/profile_thumb_sortable_tables.png"  width="150" style="display:block; margin-left:auto; margin-right:auto;border:1px solid darkgray;" alt="Click to expand" class="regImage pluginImg" title="{tr}Click to expand{/tr}" />
+                </a>
+                <div class="mini" style="width:100px;">
+                    <div class="thumbcaption text-center">{tr}Click to expand{/tr}</div>
+                </div>
+            </div>
         </td>
-	</tr>
+    </tr>
 	</table>
 </fieldset>
 <br>
