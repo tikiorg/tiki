@@ -33,12 +33,29 @@ class Search_ContentSource_ArticleSource implements Search_ContentSource_Interfa
 		
 		$article = $artlib->get_article($objectId, false);
 
+		$rss_relations = TikiLib::lib('relation')->get_object_ids_with_relations_from('article', $objectId, 'tiki.rss.source');
+		$sitetitle = '';
+ 		$siteurl = '';
+ 		if ($rss_relations) {
+ 			$rssId = reset($rss_relations);	
+ 			$rssModule = TikiLib::lib('relation')->get_rss_module($rssId);
+			if ($rssModule['sitetitle']) { 
+ 				$sitetitle = $rssModule['sitetitle'];
+ 			}
+ 			if ($rssModule['siteurl']) {
+ 				$siteurl = $rssModule['siteurl'];
+ 			}
+ 		}
+
 		$data = array(
 			'title' => $typeFactory->sortable($article['title']),
 			'language' => $typeFactory->identifier($article['lang'] ? $article['lang'] : 'unknown'),
 			'modification_date' => $typeFactory->timestamp($article['publishDate']),
 			'contributors' => $typeFactory->multivalue(array($article['author'])),
 			'description' => $typeFactory->plaintext($article['heading']),
+
+			'sitetitle' => $typeFactory->plaintext($sitetitle),
+ 			'siteurl' => $typeFactory->plaintext($siteurl),
 
 			'topic_id' => $typeFactory->identifier($article['topicId']),
 			'article_type' => $typeFactory->identifier($article['type']),
@@ -64,6 +81,9 @@ class Search_ContentSource_ArticleSource implements Search_ContentSource_Interfa
 			'modification_date',
 			'contributors',
 			'description',
+
+			'sitetitle',
+ 			'siteurl',
 
 			'topic_id',
 			'article_content',
