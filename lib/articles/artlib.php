@@ -1341,8 +1341,8 @@ class ArtLib extends TikiLib
 		$text = $check_heading ? $article['heading'] : $article['body'];
 
 		return $prefs['feature_wysiwyg'] === 'y' &&
-				($prefs['wysiwyg_htmltowiki'] !== 'y' ||
-						preg_match('/(<\/p>|<\/span>|<\/div>|<\/?br>)/', $text));
+				$prefs['wysiwyg_htmltowiki'] !== 'y' ||
+						preg_match('/(<\/p>|<\/span>|<\/div>|<\/?br>)/', $text);
 	}
 
 	function list_submissions($offset = 0, $maxRecords = -1, $sort_mode = 'publishDate_desc', $find = '', $date = '', $type = '', $topicId = '', $lang = '')
