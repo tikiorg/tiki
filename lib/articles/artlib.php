@@ -428,6 +428,22 @@ class ArtLib extends TikiLib
 			$nots = $tikilib->get_event_watches('article_submitted', '*');
 			$nots2 = $tikilib->get_event_watches('topic_article_created', $topicId);
 			$smarty->assign('mail_action', 'New');
+
+			// Create tracker item as well if feature is enabled 
+ 			if ($prefs['tracker_article_tracker'] == 'y' && $trackerId = $prefs['tracker_article_trackerId']) {
+ 				$trklib = TikiLib::lib('trk');
+ 				$definition = Tracker_Definition::get($trackerId);
+ 				if ($fieldId = $definition->getArticleField()) {
+					$addit = array();
+ 					$addit[] = array(
+ 						'fieldId' => $fieldId,
+ 						'type' => 'articles',
+ 						'value' => $articleId,
+ 					);
+ 					$itemId = $trklib->replace_item($trackerId, 0, array('data' => $addit));
+					TikiLib::lib('relation')->add_relation('tiki.article.attach', 'trackeritem', $itemId, 'article', $articleId);
+				}
+ 			}
 		}
 
 		$nots3 = array();

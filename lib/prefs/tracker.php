@@ -69,5 +69,23 @@ function prefs_tracker_list()
 			'tags' => array('advanced'),
 			'default' => 'n',
 		),
+		'tracker_article_tracker' => array(
+ 			'name' => tr('Tracker for articles'),
+ 			'description' => tr('Have a tracker to supplement article information'),
+ 			'type' => 'flag',
+			'tags' => array('advanced'),
+ 			'default' => 'n', 
+ 			'dependencies' => array('feature_articles', 'feature_trackers', 'tracker_article_trackerId'), 
+ 		),
+ 		'tracker_article_trackerId' => array(
+ 			'name' => tr('Tracker ID of tracker for articles'),
+ 			'description' => tr('The tracker that is for articles, must contain an Articles field'),
+ 			'type' => 'text',
+			'tags' => array('advanced'),
+ 			'size' => '3',
+ 			'filter' => 'digits',
+ 			'default' => '',
+ 			'profile_reference' => 'tracker',
+ 		),
 	);
 }

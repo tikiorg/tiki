@@ -197,6 +197,15 @@ class Tracker_Definition
 		}
 	}
 
+	function getArticleField()
+ 	{
+ 		foreach ($this->getFields() as $field) {
+ 			if ($field['type'] == 'articles') { 
+ 				return $field['fieldId'];
+ 			}
+ 		}
+ 	}
+
 	function getGeolocationField()
 	{
 		foreach ($this->getFields() as $field) {

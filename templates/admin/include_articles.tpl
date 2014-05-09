@@ -71,6 +71,11 @@
 				
 				{preference name=article_related_articles}
 
+				{preference name=tracker_article_tracker}
+ 				<div class="adminoptionboxchild" id="tracker_article_tracker_container">
+ 					{preference name=tracker_article_trackerId}
+ 				</div>
+
 				<input type="hidden" name="articlesfeatures" />
 			</fieldset>
 			
