@@ -3373,6 +3373,7 @@ CREATE TABLE `tiki_rss_items` (
     `author` VARCHAR(255),
     `description` TEXT,
     `content` TEXT,
+    `categories` TEXT,
     KEY `tiki_rss_items_rss` (`rssId`),
     KEY `tiki_rss_items_item` (`rssId`, `guid`(200))
 ) ENGINE=MyISAM;
