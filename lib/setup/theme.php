@@ -21,6 +21,14 @@ $headerlib->add_jsfile('vendor/twitter/bootstrap/dist/js/bootstrap.js');
 
 $prefs['jquery_ui_chosen_css'] = 'y';
 
+if ($prefs['feature_fixed_width'] === 'y') {
+    $headerlib->add_css(
+        '.container { width:' .
+        (!empty($prefs['layout_fixed_width']) ? $prefs['layout_fixed_width'] : '1170px') .
+        '; }'
+    );
+}
+
 if (empty($prefs['theme_active']) || $prefs['theme_active'] == 'default') {
 	$headerlib->add_cssfile('styles/layout/tiki.css');
 
@@ -35,16 +43,8 @@ if (empty($prefs['theme_active']) || $prefs['theme_active'] == 'default') {
 	} else {
 		$headerlib->add_cssfile($custom_theme);
 	}
-} elseif ($prefs['theme_active'] == 'legacy') {
-	// Use legacy styles
-	if ($prefs['feature_fixed_width'] === 'y') {
-		$headerlib->add_css(
-			'.fixed_width .fixedwidth, .fixed_width .fixedwidth .fixedwidth { width:' .
-			(!empty($prefs['layout_fixed_width']) ? $prefs['layout_fixed_width'] : '990px') .
-			'; }'
-		);
-	}
-
+}   elseif ($prefs['theme_active'] == 'legacy') {
+    // use legacy styles
 	if ( $prefs['useGroupTheme'] == 'y' && $group_style = $userlib->get_user_group_theme()) {
 		$prefs['style'] = $group_style;
 		$smarty->assign_by_ref('group_style', $group_style);
