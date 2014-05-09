@@ -25,7 +25,7 @@
 		{if !empty($errors[{$dompwdCount}])}
 			<tr>
 				<td colspan="2">
-					<span id="error">
+					<span id="error" class="alert-warning">
 						{foreach from=$errors[{$dompwdCount}] item=error}
 							{$error|escape}<br>
 						{/foreach}
@@ -66,7 +66,7 @@
 	</table>
 </form>
 {if !empty($result[{$dompwdCount}])}
-	<span id="error">
+	<span id="error" class="alert-warning">
 		{$result[{$dompwdCount}]}
 	</span>
 {/if}
