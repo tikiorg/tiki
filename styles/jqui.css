@@ -1,3 +1,5 @@
+/* $Id$ */
+/* jqui.css - The jqui theme for Tiki Wiki CMS Groupware. */
 /*! normalize.css v3.0.0 | MIT License | git.io/normalize */
 html {
   font-family: sans-serif;
@@ -5690,6 +5692,14 @@ button.close {
   .hidden-print {
     display: none !important;
   }
+}
+.page-header {
+  border-bottom: none;
+  margin: auto;
+  padding-bottom: 0;
+}
+body.navbar-padding {
+  padding-top: 70px;
 }
 .panel-heading,
 .navbar-default .navbar-collapse,
