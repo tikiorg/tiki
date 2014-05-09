@@ -22,4 +22,17 @@ class Services_Payment_Controller
 		return $cartlib->add_to_cart($params, $input);
 	}
 
+	function action_capture($input)
+	{
+		$perms = Perms::get();
+		if (! $perms->payment_admin) {
+			throw new Services_Exception_Denied(tr('Reserved to payment admnistrators'));
+		}
+
+		$paymentlib = TikiLib::lib('payment');
+		$paymentlib->capture_payment($input->paymentId->int());
+
+		$access = TikiLib::lib('access');
+		$access->redirect($input->next->url());
+	}
 }

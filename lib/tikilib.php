@@ -309,6 +309,9 @@ class TikiLib extends TikiDb_Bridge
 			case 'crypt':
 				global $cryptlib; require_once 'lib/crypt/cryptlib.php';
 				return self::$libraries[$name] = new CryptLib();
+			case 'payment':
+				global $paymentlib; require_once 'lib/payment/paymentlib.php';
+				return self::$libraries[$name] = $paymentlib;
 		}
 	}
 

@@ -25,6 +25,7 @@ function prefs_payment_list()
 			'type' => 'list',
 			'options' => array(
 				'paypal' => tra('PayPal'),
+				'israelpost' => tra('Israel Post'),
 				'cclite' => tra('Cclite'),
 				'tikicredits' => tra('Tiki User Credits'),
 			),
@@ -441,6 +442,36 @@ function prefs_payment_list()
 			'name' => tra('Product Classes Tracker Name'),
 			'description' => tra('Name of tracker that is the Product Classes tracker'),
 			'type' => 'text',
+			'default' => '',
+		),
+		'payment_israelpost_environment' => array(
+			'name' => tra('Israel Post Payment Environment'),
+			'description' => tra('Switch between test transactions and real transactions'),
+			'type' => 'list',
+			'options' => array(
+				'https://www.israelpost.co.il/extpay.nsf/' => tr('Production'),
+				'https://test.israelpost.co.il/extpay.nsf/' => tr('Test'),
+			),
+			'default' => 'https://www.israelpost.co.il/extpay.nsf/',
+		),
+		'payment_israelpost_request_preauth' => array(
+			'name' => tra('Israel Post use pre-authorization'),
+			'description' => tra('Use the pre-authorization mechanism prior to processing the real transaction. Must match the account configuration at IsraelPost.'),
+			'type' => 'flag',
+			'default' => 'n',
+		),
+		'payment_israelpost_business_id' => array(
+			'name' => tra('Israel Post Business ID'),
+			'description' => tra('Provided by Israel Post, usually the business name.'),
+			'type' => 'text',
+			'filter' => 'text',
+			'default' => '',
+		),
+		'payment_israelpost_api_password' => array(
+			'name' => tra('Israel Post API Password'),
+			'description' => tra('Provided by Israel Post.'),
+			'type' => 'text',
+			'filter' => 'text',
 			'default' => '',
 		),
 	);
