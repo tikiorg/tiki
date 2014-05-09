@@ -48,8 +48,8 @@
 					<input type="text" name="name" value="{$perspective_info.name|escape}">
 					<input type="hidden" name="id" value="{$perspective_info.perspectiveId|escape}">
 				</p>
-				<fieldset id="preferences" class="dropzone" style="text-align: left;">
-					<p>{tr}Configurations:{/tr}</p>
+				<fieldset id="preferences" class="panel panel-default dropzone" style="text-align: left;">
+					<p class="panel-heading">{tr}Configurations:{/tr}</p>
 					{foreach from=$perspective_info.preferences key=name item=val}
 						{preference name=$name source=$perspective_info.preferences}
 					{/foreach}
