@@ -28,7 +28,23 @@ class Search_Formatter_ValueFormatter_Trackerrender extends Search_Formatter_Val
 
 	function render($name, $value, array $entry)
 	{
-		if (substr($name, 0, 14) !== 'tracker_field_') {
+		if ($name === 'tracker_status') {
+			switch ($value) {
+			case 'o':
+				$status = 'open';
+				break;
+			case 'p':
+				$status = 'pending';
+				break;
+			default:
+			case 'c':
+				$status = 'closed';
+				break;
+			}
+
+			$alt = tr($status);
+			return "<img src=\"img/icons/status_$status.gif\" alt=\"$status\"/>";
+		} elseif (substr($name, 0, 14) !== 'tracker_field_') {
 			return $value;
 		}
 
