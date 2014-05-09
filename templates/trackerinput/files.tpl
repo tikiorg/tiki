@@ -83,7 +83,9 @@ $field.hide();
 
 var handleFiles = function (files) {
 	$fileinput.clearError();
-	var uploadUrl = $.service('file', 'upload');
+	var uploadUrl = $.service('file', 'upload', {
+		XDEBUG_PROFILE: 1
+	});
 	$.each(files, function (k, file) {
 		var reader = new FileReader();
 		var li = $('<li/>').appendTo($files);
@@ -92,7 +94,7 @@ var handleFiles = function (files) {
 
 		$(window).queue('process-upload', function () {
 			reader.onloadend = function (e) {
-				var xhr, provider;
+				var xhr, provider, sendData, data;
 
 				xhr = jQuery.ajaxSettings.xhr();
 				if (xhr.upload) {
@@ -106,10 +108,7 @@ var handleFiles = function (files) {
 					return xhr;
 				};
 
-				var data = e.target.result;
-				data = data.substr(data.indexOf('base64') + 7);
-
-				$.ajax({
+				sendData = {
 					type: 'POST',
 					url: uploadUrl,
 					xhr: provider,
@@ -155,16 +154,32 @@ var handleFiles = function (files) {
 					},
 					complete: function () {
 						$(window).dequeue('process-upload');
-					},
-					data: {
+					}
+				};
+
+				if (window.FormData) {
+					console.log('Attempting upload');
+					sendData.processData = false;
+					sendData.contentType = false;
+					sendData.cache = false;
+
+					sendData.data = new FormData;
+					sendData.data.append('fileId', replaceFile ? $self.data('firstfile') : null);
+					sendData.data.append('galleryId', $self.data('galleryid'));
+					sendData.data.append('data', file);
+				} else {
+					data = e.target.result;
+					sendData.data = {
 						name: file.name,
 						size: file.size,
 						type: file.type,
-						data: data,
+						data: data.substr(data.indexOf('base64') + 7),
 						fileId: replaceFile ? $self.data('firstfile') : null,
 						galleryId: $self.data('galleryid') 
-					}
-				});
+					};
+				}
+
+				$.ajax(sendData);
 			};
 			reader.readAsDataURL(file);
 		});

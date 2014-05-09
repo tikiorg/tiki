@@ -25,14 +25,28 @@ class Services_File_Controller
 	{
 		$gal_info = $this->checkTargetGallery($input);
 
-		$size = $input->size->int();
-		$name = $input->name->text();
-		$type = $input->type->text();
-		$data = $input->data->none();
 		$fileId = $input->fileId->int();
 		$asuser = $input->user->text();
 
-		$data = base64_decode($data);
+		if (isset($_FILES['data'])) {
+			if (is_uploaded_file($_FILES['data']['tmp_name'])) {
+				$file = new JitFilter($_FILES['data']);
+				$name = $file->name->text();
+				$size = $file->size->int();
+				$type = $file->type->text();
+
+				$data = file_get_contents($_FILES['data']['tmp_name']);
+			} else {
+				throw new Services_Exception_NotAvailable(tr('File could not be uploaded.'));
+			}
+		} else {
+			$name = $input->name->text();
+			$size = $input->size->int();
+			$type = $input->type->text();
+
+			$data = $input->data->none();
+			$data = base64_decode($data);
+		}
 
 		$mimelib = TikiLib::lib('mime');
 		$type = $mimelib->from_content($name, $data);
