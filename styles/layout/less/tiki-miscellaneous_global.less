@@ -107,18 +107,18 @@ input:-webkit-autofill {
 
 // cookie consent style
 #cookie_consent_div {
-  padding: 1em;
+  padding: @alert-padding;
   margin: 1em;
-  border: 1px solid #999;
-  color: #666;
-  background-color: #fff;
+  border: 1px solid alert-info-border;
+  color: @alert-info-text;
+  background-color: @alert-info-bg;
 }
 
 #cookie_consent_div.banner {
   position: fixed;
-  padding: 1em;
+  padding: @alert-padding;
   margin: 0;
-  border: 1px solid #999;
+  border: 1px solid alert-info-border;
   width: 100%;
   top: 0;
   left: 0;
@@ -172,7 +172,7 @@ body.fullscreen {
 }
 
 .attention {
-  color: red;
+  color: @alert-danger-text;
 }
 
 .openid_url {
@@ -237,5 +237,5 @@ div #metadata fieldset.tabcontent, div #metadata div.tabs {
 }
 
 #captchaImg {
-  border: 1px solid black;
+  border: 1px solid @panel-default-border;
 }

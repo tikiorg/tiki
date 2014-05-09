@@ -5,11 +5,6 @@
   display: inline;
 }
 
-.error.icon {
-  font-weight: bold;
-  color: #090;
-}
-
 // Modules
 .modules {
   position: relative;
@@ -105,15 +100,9 @@ h3.panel-title {
   overflow-x: hidden;
 }
 
-// Remarks boxes (To do: replace with variables.
-
-#error {
-  background: yellow;
-  color: red;
-}
-
 .warning a,
 .warning a:link,
 .warning a:visited {
-  color: #b93c2e;
+  color: @alert-warning-text; // #b93c2e
+
 }

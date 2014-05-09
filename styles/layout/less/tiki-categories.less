@@ -57,30 +57,33 @@ a.categpath {
 }
 
 /* Fancy filter */
-.filter .fancyfilter {
-  min-height: 1.5em;
-  min-width: 20em;
-  float: left;
-  margin-right: 5px;
-  border: thin solid black;
-  padding: 0.1em;
-  cursor: text;
+.filter {
+  .category-picker {
+    display: none;
+  }
+  .fancyfilter {
+    min-height: 1.5em;
+    min-width: 20em;
+    float: left;
+    margin-right: 5px;
+    border: thin solid @btn-default-border/*black*/;
+    padding: 0.1em;
+    cursor: text;
+    .token {
+      display: inline-block;
+      background: #ccc;
+      cursor: default;
+      .ui-icon-close {
+        float: right;
+        cursor: pointer;
+        }
+      }
+  }
 }
 
-.filter .fancyfilter .token {
-  display: inline-block;
-  background: #ccc;
-  cursor: default;
-}
 
-.filter .fancyfilter .token .ui-icon-close {
-  float: right;
-  cursor: pointer;
-}
 
-.filter .category-picker {
-  display: none;
-}
+
 
 .Zend_Tag_Cloud li, .Zend_Tag_Cloud {
   display: inline-block;
@@ -98,5 +101,4 @@ a.categpath {
   font-weight: bold;
   margin-left: 10px;
   margin-right: 10px;
-  color: #999;
 }

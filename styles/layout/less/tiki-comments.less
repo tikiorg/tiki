@@ -82,17 +82,17 @@ dl.note-list {
 }
 
 .note-list .postbody-title {
-  background: #ccc;
-  color: #000;
+  background: @panel-bg;/*#ccc*/
+  color: @panel-default-text;/*#000*/
 }
 
 // Comments moderation
 .post-approved-n {
-  border-left: 3px dotted blue;
+  border-left: 3px dotted @alert-success-text;// blue
 }
 
 .post-approved-r {
-  border-left: 3px double red;
+  border-left: 3px double @alert-warning-text; // red
 }
 
 .post-approved-r .content * {
@@ -116,7 +116,6 @@ dl.note-list {
 .note-list .title a {
   font-size: larger;
   font-weight: bold;
-  color: #000;
 }
 
 .note-list .actions {

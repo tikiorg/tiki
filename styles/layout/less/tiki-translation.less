@@ -8,8 +8,8 @@
   height: 40px;
   padding: 1em;
   z-index: 1000;
-  background-color: #ade;
-  color: #000;
+  background-color: @alert-success-bg;
+  color: @alert-success-text;
 }
 
 #intertrans-form {
@@ -22,9 +22,9 @@
   display: none;
   z-index: 2000;
   padding: 1em;
-  background-color: #eff;
-  border: #799 solid 2px;
-  color: #000;
+  background-color: @panel-bg;
+  border: 1px solid @panel-default-border;
+  color: @panel-default-text;
 }
 
 #intertrans-form table {
@@ -50,7 +50,7 @@
 }
 
 #edit_translations tr.last {
-  border-bottom: #74C0E2 solid 2px;
+  border-bottom: 2px solid @alert-success-border;
 }
 
 // /* all_languages */
@@ -60,7 +60,7 @@ ul.all_languages {
 }
 
 ul.all_languages > li {
-  border: #aaa 1px solid;
+  border: 1px solid @alert-success-border;
   padding: 1em;
   margin-bottom: 1ex;
 }

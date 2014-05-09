@@ -2,7 +2,7 @@
 
 form.simple label.error {
   background : url('../../img/icons/error.png') no-repeat 0 4px;
-  color:red;
+  color: @state-danger-text;
   padding: 4px 0 0 20px;
   margin-left: 0.5em;
 }
@@ -22,7 +22,7 @@ form.simple label .description {
 
 form.simple label .warning {
   padding-top: 12px;
-  color: #800;
+  color: @state-danger-text;
 }
 
 form.simple textarea,
@@ -48,7 +48,7 @@ form.simple textarea.export {
 }
 .tiki-modal .mask {
   position: absolute;
-  background-color: #fff;
+  background-color: @page-bg;
   display: none;
   width: 100%;
   height: auto;

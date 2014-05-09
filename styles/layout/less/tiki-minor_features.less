@@ -68,12 +68,13 @@
 
 .dirsitetrail {
   font-size: 95%;
-  color: lightgray;
+  color: @breadcrumb-bg; // lightgray
+
 }
 
 .dirsitecats {
   font-size: 95%;
-  color: lightgray;
+  color: @breadcrumb-bg;// lightgray
 }
 // Kaltura
 // Kaltura browse entries
@@ -90,14 +91,9 @@
 }
 
 // Perspectives (edit)
-.dropzone {
-  color: #000;
-  background-color: #fff;
-  border: #999 solid 2px;
-  border-bottom-color: #ccc;
-  border-right-color: #ccc;
-}
 
-.dropzone > div:hover {
-  background-color: #eee;
+fieldset.dropzone {min-height: 120px;}
+
+#resultzone > div:hover {
+  background: @panel-success-heading-bg;
 }
