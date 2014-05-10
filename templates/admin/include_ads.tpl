@@ -1,8 +1,4 @@
 {* $Id$ *}
-{remarksbox type="tip" title="{tr}Tip{/tr}"}
-	{tr}Use the <a class="alert-link" href="tiki-list_banners.php" title="List">Banners</a> form to create and edit banner zones.{/tr}
-{/remarksbox}
-
 <form action="tiki-admin.php?page=ads" onreset="return(confirm("{tr}Cancel Edit{/tr}"))" class="admin" method="post">
     <div class="row">
         <div class="form-group col-lg-12 clearfix">

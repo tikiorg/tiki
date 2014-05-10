@@ -2,7 +2,7 @@
 <form action="tiki-admin.php?page=payment" method="post">
 	<div class="row">
         <div class="form-group col-lg-12 clearfix">
-			<a role="button" class="btn btn-default btn-sm" href="tiki-payment.php" title="{tr}List Payments{/tr}">
+			<a role="button" class="btn btn-default btn-sm" href="tiki-payment.php" title="{tr}List{/tr}">
 				{glyph name="list"} {tr}Payments{/tr}
 			</a>
 			<div class="pull-right">

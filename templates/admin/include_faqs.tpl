@@ -1,12 +1,14 @@
-{remarksbox type="tip" title="{tr}Tip{/tr}"}
-	{tr}To add/remove FAQs, look for "Admin FAQs" under "FAQs" on the application menu, or{/tr} <a class="rbox-link" href="tiki-list_faqs.php">{tr}Click Here{/tr}</a>.
-{/remarksbox}
-
 <form action="tiki-admin.php?page=faqs" method="post">
-	<div class="heading input_submit_container" style="text-align: right">
-		<input type="submit" class="btn btn-default btn-sm" name="faqcomprefs" value="{tr}Change settings{/tr}" />
-	</div>
-
+    <div class="row">
+        <div class="form-group col-lg-12 clearfix">
+			<a role="button" class="btn btn-default btn-sm" href="tiki-list_faqs.php" title="{tr}List{/tr}">
+				{glyph name="list"} {tr}FAQs{/tr}
+			</a>
+            <div class="pull-right">
+                <input type="submit" class="btn btn-primary btn-sm" name="faqcomprefs" value="{tr}Apply{/tr}" />
+            </div>
+        </div>
+    </div>
 	<fieldset class="table">
 		<legend>{tr}Activate the feature{/tr}</legend>
 		{preference name=feature_faqs visible="always"}
@@ -22,7 +24,11 @@
 			{preference name=faq_comments_default_ordering}
 		</div>
 	</fieldset>
-	<div class="heading input_submit_container" style="text-align: center">
-		<input type="submit" class="btn btn-default btn-sm" name="faqcomprefs" value="{tr}Change settings{/tr}" />
-	</div>
+    <div class="row">
+        <div class="form-group col-lg-12 clearfix">
+            <div class="text-center">
+                <input type="submit" class="btn btn-primary btn-sm" name="faqcomprefs" value="{tr}Apply{/tr}" />
+            </div>
+        </div>
+    </div>
 </form>

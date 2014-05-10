@@ -1,7 +1,10 @@
 <form action="tiki-admin.php?page=webmail" method="post">
 	<div class="row">
         <div class="form-group col-lg-12 clearfix">
-            <div class="pull-right">
+			<a role="button" class="btn btn-default btn-sm" href="tiki-webmail.php" title="{tr}Webmail{/tr}">
+				{glyph name="inbox"} {tr}Webmail{/tr}
+			</a>
+			<div class="pull-right">
                 <input type="submit" class="btn btn-primary btn-sm" name="webmail" value="{tr}Apply{/tr}" />
             </div>
         </div>
