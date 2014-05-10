@@ -23,9 +23,9 @@ $prefs['jquery_ui_chosen_css'] = 'y';
 
 if ($prefs['feature_fixed_width'] === 'y') {
     $headerlib->add_css(
-        '.container { width:' .
+        '@media (min-width: 1200px) { .container { min-width:' .
         (!empty($prefs['layout_fixed_width']) ? $prefs['layout_fixed_width'] : '1170px') .
-        '; }'
+        '; } }'
     );
 }
 
@@ -55,7 +55,7 @@ if (empty($prefs['theme_active']) || $prefs['theme_active'] == 'default') {
 
 	if (!empty($prefs['style_admin']) && ($section === 'admin' || empty($section))) {		// use admin theme if set
 		$prefs['style'] = $prefs['style_admin'];
-		$prefs['style_option'] = $prefs['style_admin_option'];								// and it's option
+		$prefs['style_option'] = $prefs['style_admin_option'];								// and its option
 		$prefs['themegenerator_theme'] = '';												// and disable theme generator
 	}
 
@@ -71,7 +71,7 @@ if (empty($prefs['theme_active']) || $prefs['theme_active'] == 'default') {
 	}
 	// End legacy
 } else {
-	$headerlib->add_cssfile("themes/{$prefs['theme_active']}/css/tiki.css");
+//	$headerlib->add_cssfile("themes/{$prefs['theme_active']}/css/tiki.css");
 	$prefs['jquery_ui_chosen_css'] = 'n';
 }
 
@@ -86,6 +86,7 @@ $custom_css = $tikilib->get_style_path($prefs['style'], $prefs['style_option'], 
 if ( !empty($custom_css)) {
 	$headerlib->add_cssfile($custom_css, 53);
 }
-
+// Always use tiki.css.
+$headerlib->add_cssfile("styles/layout/tiki.css");
 $smarty->initializePaths();
 
