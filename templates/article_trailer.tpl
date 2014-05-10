@@ -39,7 +39,7 @@
 			<a class="btn btn-default" title="{tr}Send a link{/tr}" href="tiki-tell_a_friend.php?url={$smarty.server.REQUEST_URI|escape:'url'}">{icon _id='email_link' alt="{tr}Send a link{/tr}"}</a>
 		{/if}
 		{if $tiki_p_remove_article eq 'y'}
-			<a class="icon btn btn-default" href="tiki-list_articles.php?remove={$articleId}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
+			<a class="btn btn-default" href="tiki-list_articles.php?remove={$articleId}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
 		{/if}
 		</div>
 	</div>
