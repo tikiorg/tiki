@@ -1,6 +1,14 @@
 {* $ID:$ *}
 <form method="post" action="tiki-admin.php?page=webservices" class="form-horizontal">
-
+	
+	<div class="row">
+        <div class="form-group col-lg-12 clearfix">
+            <div class="pull-right">
+                <input type="submit" class="btn btn-primary btn-sm" value="{tr}Apply{/tr}">
+            </div>
+        </div>
+    </div>
+	
 	<fieldset>
 		<legend>{tr}Activate the feature{/tr}</legend>
 		{preference name=feature_webservices visible="always"}
@@ -18,9 +26,9 @@
 	{if $storedName}
 		<p><strong>{$storedName|escape}</strong>: {$url|escape}<input type="hidden" name="name" value="{$storedName|escape}"/> <a href="tiki-admin.php?page=webservices&amp;name={$storedName|escape}&amp;delete">{icon _id='cross'}</a></p>
 	{else}
-		<p>
+		{remarksbox type="tip" title="{tr}Tip{/tr}"}
 			{tr}Enter the URL of a web services returning either JSON or YAML. Parameters can be specified by enclosing a name between percentage signs. For example: %name%. %service% and %template% are reserved keywords and cannot be used.{/tr}
-		</p>
+		{/remarksbox}
 		<p>{tr}URL:{/tr}<input type="text" name="url" size="75" value="{$url|escape}" /></p>
 		<p>{tr}Type:{/tr}<select name="wstype">
 		{foreach from=$webservicesTypes item=_type}
@@ -137,4 +145,12 @@
         </div>
 		{/if}
 	{/if}
+	
+	<div class="row">
+        <div class="form-group col-lg-12 clearfix">
+            <div class="text-center">
+                <input type="submit" class="btn btn-primary btn-sm" value="{tr}Apply{/tr}">
+            </div>
+        </div>
+    </div>
 </form>

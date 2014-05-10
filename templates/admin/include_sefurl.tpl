@@ -1,14 +1,14 @@
 {* $Id$ *}
 
 {remarksbox type="tip" title="{tr}Tip{/tr}"}
-	{tr}See also{/tr} <a class="rbox-link" href="tiki-admin.php?page=metatags">{tr}Meta tags{/tr}</a>.
+	{tr}See also{/tr} <a class="alert-link" class="rbox-link" href="tiki-admin.php?page=metatags">{tr}Meta tags{/tr}</a>.
 {/remarksbox}
 
 <form class="admin" method="post" action="tiki-admin.php?page=sefurl">
     <div class="row">
         <div class="form-group col-lg-12 clearfix">
             <div class="pull-right">
-                <input type="submit" class="btn btn-default btn-sm" name="save" value="{tr}Change preferences{/tr}">
+                <input type="submit" class="btn btn-primary btn-sm" name="save" value="{tr}Apply{/tr}">
             </div>
         </div>
     </div>
@@ -20,7 +20,7 @@
 		{if $httpd eq 'IIS' and !$IIS_UrlRewriteModule}
 			{remarksbox type="warning" title="{tr}Warning{/tr}"}
 			{tr}SEFURL requires the <strong>URL Rewrite module</strong> for IIS. You do not seem to have this module installed.{/tr}
-			{tr}Please see <a href="http://doc.tiki.org/Windows+Server+Install">Windows Server Install</a> on tiki.org for more information.{/tr}
+			{tr}Please see <a class="alert-link" href="http://doc.tiki.org/Windows+Server+Install">Windows Server Install</a> on tiki.org for more information.{/tr}
 			{/remarksbox}
 		{else}
 			{if $configurationFile eq 'missing'}
@@ -81,9 +81,12 @@
 		{preference name=feature_canonical_url}
 	</fieldset>
     <br>{* I cheated. *}
-    <div class="row">
-        <div class="form-group col-lg-12 text-center">
-            <input type="submit" class="btn btn-default btn-sm" value="{tr}Change preferences{/tr}">
+    
+	<div class="row">
+        <div class="form-group col-lg-12 clearfix">
+            <div class="text-center">
+                <input type="submit" class="btn btn-primary btn-sm" name="save" value="{tr}Apply{/tr}">
+            </div>
         </div>
     </div>
 </form>

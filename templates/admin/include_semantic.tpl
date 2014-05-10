@@ -1,10 +1,15 @@
-<h2>{tr}Settings{/tr}</h2>
 <form action="tiki-admin.php?page=semantic" method="post">
+	<div class="row">
+        <div class="form-group col-lg-12 clearfix">
+			<div class="pull-right">
+                <input type="submit" class="btn btn-primary btn-sm" name="semantic" value="{tr}Apply{/tr}" />
+            </div>
+        </div>
+    </div>
 	<fieldset class="table">
 		<legend>{tr}Activate the feature{/tr}</legend>
 		{preference name=feature_semantic visible="always"}
 		{preference name=feature_backlinks}
-		<div class="input_submit_container center"><input type="submit" class="btn btn-default btn-sm" name="semantic" value="{tr}Change preferences{/tr}" /></div>
 	</fieldset>
 </form>
 <table width="100%">
