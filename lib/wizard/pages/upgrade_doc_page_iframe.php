@@ -19,7 +19,7 @@ class UpgradeWizardDocPageIframe extends Wizard
 
 	function isEditable ()
 	{
-		return true;
+		return false;
 	}
 	
 	function onSetupPage ($homepageUrl) 
