@@ -71,7 +71,14 @@ class Services_Article_Controller
 					$url,
 					'',
 					'',
-					$rating
+					$rating,
+					'n',
+					'',
+					'',
+					'',
+					'',
+					'y',
+					true
 				);
 			}
 		}

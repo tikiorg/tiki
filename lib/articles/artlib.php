@@ -349,6 +349,7 @@ class ArtLib extends TikiLib
 													, $list_image_x = ''
 													, $list_image_y = ''
 													, $ispublished='y'
+													, $fromurl = false
 												)
 	{
 
@@ -430,7 +431,7 @@ class ArtLib extends TikiLib
 			$smarty->assign('mail_action', 'New');
 
 			// Create tracker item as well if feature is enabled 
- 			if ($prefs['tracker_article_tracker'] == 'y' && $trackerId = $prefs['tracker_article_trackerId']) {
+ 			if (!$fromurl && $prefs['tracker_article_tracker'] == 'y' && $trackerId = $prefs['tracker_article_trackerId']) {
  				$trklib = TikiLib::lib('trk');
  				$definition = Tracker_Definition::get($trackerId);
  				if ($fieldId = $definition->getArticleField()) {
