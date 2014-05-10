@@ -1,9 +1,16 @@
 {* $Id$ *}
 <form action="tiki-admin.php?page=payment" method="post">
-	<div class="t_navbar form-group">
-		{button href="tiki-payment.php" class="btn btn-default" _text="{tr}Payments{/tr}"}
-		<input type="submit" class="btn btn-default btn-sm" name="paymentprefs" value="{tr}Change settings{/tr}" style="float:right;" />
-	</div>
+	<div class="row">
+        <div class="form-group col-lg-12 clearfix">
+			<a role="button" class="btn btn-default btn-sm" href="tiki-payment.php" title="{tr}List Payments{/tr}">
+				{glyph name="list"} {tr}Payments{/tr}
+			</a>
+			<div class="pull-right">
+                <input type="submit" class="btn btn-primary btn-sm" name="paymentprefs" value="{tr}Apply{/tr}" />
+            </div>
+        </div>
+    </div>
+	
 	{if $prefs.payment_feature neq "y"}
 		<fieldset class="table">
 			<legend>{tr}Activate the feature{/tr}</legend>
@@ -16,7 +23,7 @@
 			{remarksbox title="{tr}Choose payment system{/tr}"}
 				{tr}You can use only one payment method: PayPal or Cclite or Tiki User Credits{/tr}<br>
 				{tr}PayPal is working at the moment. See PayPal.com{/tr}<br>
-				{tr}Cclite: Community currency accounting for local exchange trading systems (LETS). See {/tr}<a href="http://sourceforge.net/projects/cclite/">{tr}sourceforge.net{/tr}</a><br>
+				{tr}Cclite: Community currency accounting for local exchange trading systems (LETS). See {/tr}<a class="alert-link" href="http://sourceforge.net/projects/cclite/">{tr}sourceforge.net{/tr}</a><br>
 				{tr}Tiki User Credits: Requires this other feature to be configured{/tr}
 			{/remarksbox}
 
@@ -180,7 +187,12 @@
 				{preference name=shipping_custom_provider}
 		{/tab}
 	{/tabset}
-	<div class="heading input_submit_container" style="text-align: center">
-		<input type="submit" class="btn btn-default btn-sm" name="paymentprefs" value="{tr}Change settings{/tr}" />
-	</div>
+	
+	<div class="row">
+        <div class="form-group col-lg-12 clearfix">
+			<div class="text-center">
+                <input type="submit" class="btn btn-primary btn-sm" name="paymentprefs" value="{tr}Apply{/tr}" />
+            </div>
+        </div>
+    </div
 </form>
