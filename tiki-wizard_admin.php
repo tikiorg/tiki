@@ -96,6 +96,9 @@ if ($useDefaultPrefs) {
     require_once('lib/wizard/pages/upgrade_doc_page_iframe.php');
     $pages[] = new UpgradeWizardDocPageIframe();
 
+    require_once('lib/wizard/pages/upgrade_send_feedback.php');
+    $pages[] = new UpgradeWizardSendFeedback();
+
 	require_once('lib/wizard/pages/upgrade_wizard_completed.php');
 	$pages[] = new UpgradeWizardCompleted();
 
