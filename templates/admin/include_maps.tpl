@@ -1,9 +1,10 @@
 <form action="tiki-admin.php?page=maps" method="post" role="form">
 
     <div class="row">
-        <div class="form-group col-lg-12 text-center">
-            <input type="submit" class="btn btn-primary btn-sm" name="mapsset" value="{tr}Apply{/tr}">
-			<input type="submit" class="btn btn-default btn-sm" name="mapuser" value="{tr}Generate User Map{/tr}" />
+        <div class="form-group col-lg-12 clearfix">
+			<div class="pull-right">
+				<input type="submit" class="btn btn-primary btn-sm" name="mapsset" value="{tr}Apply{/tr}">
+			</div>
         </div>
     </div>
 
@@ -71,9 +72,11 @@
 
         <br>{* I cheated. *}
         <div class="row">
-            <div class="form-group col-lg-12 text-center">
-                <input type="submit" class="btn btn-primary btn-sm" name="mapsset" value="{tr}Apply{/tr}" />
-                <input type="submit" class="btn btn-default btn-sm" name="mapuser" value="{tr}Generate User Map{/tr}" />
+            <div class="form-group col-lg-12 clearfix">
+				<div class="text-center">
+					<input type="submit" class="btn btn-default btn-sm" name="mapuser" value="{tr}Generate User Map{/tr}" />
+					<input type="submit" class="btn btn-primary btn-sm" name="mapsset" value="{tr}Apply{/tr}" />
+				</div>
             </div>
         </div>
     </fieldset>

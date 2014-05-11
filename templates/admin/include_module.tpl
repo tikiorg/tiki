@@ -1,6 +1,6 @@
 {remarksbox type="tip" title="{tr}Tip{/tr}"}
 	{tr}&quot;Modules&quot; are the items of content at the top &amp; bottom and in the right &amp; left columns of the site.{/tr} {tr}Select{/tr}
-	<a class="rbox-link" href="tiki-admin_modules.php">{tr}Admin &gt; Modules{/tr}</a> {tr}from the menu to create and edit modules{/tr}.
+	<a class="alert-link" href="tiki-admin_modules.php">{tr}Admin &gt; Modules{/tr}</a> {tr}from the menu to create and edit modules{/tr}.
 {/remarksbox}
 
 <form action="tiki-admin.php?page=module" method="post">
@@ -8,8 +8,11 @@
 
     <div class="row">
         <div class="form-group col-lg-12 clearfix">
-            <div class="pull-right">
-                <input type="submit" class="btn btn-default btn-sm" value="{tr}Change preferences{/tr}">
+	        <a role="button" class="btn btn-default btn-sm" href="tiki-admin_modules.php" title="{tr}List{/tr}">
+				{glyph name="cog"} {tr}Modules{/tr}
+			</a>
+			<div class="pull-right">
+                <input type="submit" class="btn btn-primary btn-sm" value="{tr}Apply{/tr}">
             </div>
         </div>
     </div>
@@ -46,8 +49,10 @@
 	</fieldset>
     <br>{* I cheated. *}
     <div class="row">
-        <div class="form-group col-lg-12 text-center">
-            <input type="submit" class="btn btn-default btn-sm" value="{tr}Change preferences{/tr}">
+        <div class="form-group col-lg-12 clearfix">
+			<div class="text-center">
+                <input type="submit" class="btn btn-primary btn-sm" value="{tr}Apply{/tr}">
+            </div>
         </div>
-    </div>
+    </div
 </form>
