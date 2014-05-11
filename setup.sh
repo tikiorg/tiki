@@ -378,14 +378,15 @@ set_permission_dirs_special_write() {
 }
 
 set_permission_data() {
-	if [ ${DEBUG} = '1' ] ; then
-		echo ${DEBUG_PREFIX}
-		echo ${DEBUG_PREFIX} ${FIND} . -type d -exec ${CHMOD} ${MODEL_PERMS_SUBDIRS} {} \;
-		echo ${DEBUG_PREFIX} ${FIND} . -type f -exec ${CHMOD} ${MODEL_PERMS_FILES} {} \;
-	fi
+	for DEFAULT_DIR in ${DIR_LIST_DEFAULT} ; do
+		if [ ${DEBUG} = '1' ] ; then
+			echo ${DEBUG_PREFIX}
+			echo ${DEBUG_PREFIX} ${FIND} ${DEFAULT_DIR} -type d -exec ${CHMOD} ${MODEL_PERMS_SUBDIRS} {} \;
+			echo ${DEBUG_PREFIX} ${FIND} ${DEFAULT_DIR} -type f -exec ${CHMOD} ${MODEL_PERMS_FILES} {} \;
+		fi
 	#debug_breakpoint
-	${FIND} . -type d -exec ${CHMOD} ${MODEL_PERMS_SUBDIRS} {} \;
-	${FIND} . -type f -exec ${CHMOD} ${MODEL_PERMS_FILES} {} \;
+	${FIND} ${DEFAULT_DIR} -type d -exec ${CHMOD} ${MODEL_PERMS_SUBDIRS} {} \;
+	${FIND} ${DEFAULT_DIR} -type f -exec ${CHMOD} ${MODEL_PERMS_FILES} {} \;
 	#set_permission_dirs_special_write
 	for WRITABLE in $DIRS ; do
 		if [ -d ${WRITABLE} ] ; then
