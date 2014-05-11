@@ -26,14 +26,28 @@
 {/if}
 
 {remarksbox type="tip" title="{tr}Tip{/tr}"}
-	{tr}Use the 'Quick Edit' module to easily create or edit wiki pages.{/tr} {tr}Select <a class="rbox-link" href="tiki-admin_modules.php">Admin &gt; Modules</a> to add this (or other) modules.{/tr}
+	{tr}Use the 'Quick Edit' module to easily create or edit wiki pages.{/tr} {tr}Select <a class="alert-link" href="tiki-admin_modules.php">Admin &gt; Modules</a> to add this (or other) modules.{/tr}
 {/remarksbox}
 
 <form action="tiki-admin.php?page=wiki" method="post">
 	<div class="heading input_submit_container" style="text-align: right">
-		<input type="submit" class="btn btn-default btn-sm" name="wikisetprefs" value="{tr}Change preferences{/tr}" />
-	</div>
 
+	</div>
+    <div class="row">
+        <div class="form-group col-lg-12 clearfix">
+			<a role="button" class="btn btn-default btn-sm" href="tiki-listpages.php" title="{tr}List{/tr}">
+				{glyph name="list"} {tr}Wiki Pages{/tr}
+			</a>
+			{if $prefs.feature_wiki_structure eq "y" and $tiki_p_view eq "y"}
+				<a role="button" class="btn btn-default btn-sm" href="tiki-admin_structures.php" title="{tr}List{/tr}">
+					{glyph name="wrench"} {tr}Wiki Structures{/tr}
+				</a>
+			{/if}
+            <div class="pull-right">
+				<input type="submit" class="btn btn-primary btn-sm" name="wikisetprefs" value="{tr}Apply{/tr}" />
+            </div>
+        </div>
+    </div>
 	{tabset name="admin_wiki"}
 		{tab name="{tr}General Preferences{/tr}"}
             <h2>{tr}General Preferences{/tr}</h2>
@@ -460,8 +474,11 @@
 		<a href="tiki-report_direct_object_perms.php">{tr}Report wiki pages with direct object permissions{/tr}</a><br>
 	{/tab}
 {/tabset}
-
-<div class="heading input_submit_container" style="text-align: center">
-	<input type="submit" class="btn btn-default btn-sm" name="wikisetprefs" value="{tr}Change preferences{/tr}" />
-</div>
+    <div class="row">
+        <div class="form-group col-lg-12 clearfix">
+            <div class="text-center">
+				<input type="submit" class="btn btn-primary btn-sm" name="wikisetprefs" value="{tr}Apply{/tr}" />
+            </div>
+        </div>
+    </div>
 </form>

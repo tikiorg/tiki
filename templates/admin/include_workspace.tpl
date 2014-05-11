@@ -2,7 +2,7 @@
 <form action="tiki-admin.php?page=workspace" method="post">
 	<div class="row">
 		<div class="form-group col-lg-12">
-			<a class="btn btn-default" href="{service controller=workspace action=list_templates}" title="{tr}List{/tr}">
+			<a class="btn btn-default btn-sm" href="{service controller=workspace action=list_templates}" title="{tr}List{/tr}">
 				{glyph name="list"} {tr}Workspace Templates{/tr}
 			</a>
 			<div class="pull-right">

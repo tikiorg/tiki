@@ -1,11 +1,12 @@
-{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}To configure your trackers, select "Trackers" in the application menu, or{/tr} <a class="rbox-link" href="tiki-list_trackers.php">{tr}Click Here{/tr}</a>.{/remarksbox}
-
 <form action="tiki-admin.php?page=trackers" method="post">
 
     <div class="row">
-        <div class="form-group col-lg-12 clearfix">
-            <div class="pull-right">
-                <input type="submit" class="btn btn-default btn-sm" name="trkset" value="{tr}Change preferences{/tr}">
+        <div class="form-group col-lg-12 clearfix">            
+			<a role="button" class="btn btn-default btn-sm" href="tiki-list_trackers.php" title="{tr}List{/tr}">
+				{glyph name="list"} {tr}Trackers{/tr}
+			</a>
+			<div class="pull-right">
+                <input type="submit" class="btn btn-primary btn-sm" name="trkset" value="{tr}Apply{/tr}">
             </div>
         </div>
     </div>
@@ -107,9 +108,13 @@
 	
 	{/tab}
 {/tabset}
-	<div class="heading input_submit_container" style="text-align: center">
-		<input type="submit" class="btn btn-default btn-sm" name="trkset" value="{tr}Change preferences{/tr}" />
-	</div>
+	<div class="row">
+        <div class="form-group col-lg-12 clearfix">            
+			<div class="text-center">
+                <input type="submit" class="btn btn-primary btn-sm" name="trkset" value="{tr}Apply{/tr}">
+            </div>
+        </div>
+    </div>
 </form>
 
 
