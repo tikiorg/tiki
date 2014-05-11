@@ -35,8 +35,7 @@
 		<fieldset>
 			<legend><strong>{tr}Help improve Tiki{/tr}</strong></legend>
 			<p>
-				{tr}Submit a feature request or bug report.{/tr}
-				<a href="http://dev.tiki.org/Report+a+Bug">{tr}Click here to go to our development site{/tr}</a>
+				{tr}Submit a feature request or bug report.{/tr} {button _text="{tr}Visit Tiki development site{/tr}" href="http://dev.tiki.org/Report+a+Bug"}
 			</p>
 		</fieldset>
 		<fieldset>
@@ -103,8 +102,12 @@
 
 			</fieldset>
 
-			<div class="heading input_submit_container" style="text-align: center;">
-				<input type="submit" class="btn btn-default btn-sm" name="connectprefs" value="{tr}Change preferences{/tr}" />
+			<div class="row">
+				<div class="form-group col-lg-12 clearfix">
+					<div class="text-center">
+						<input type="submit" class="btn btn-primary btn-sm" name="connectprefs" value="{tr}Apply{/tr}" />
+					</div>
+				</div>
 			</div>
 		</form>
 	{/tab}
@@ -165,8 +168,12 @@
 				{preference name=suite_jitsi_configuration}
 			</fieldset>
 
-			<div class="heading input_submit_container" style="text-align: center;">
-				<input type="submit" class="btn btn-default btn-sm" name="connectprefs" value="{tr}Change preferences{/tr}" />
+			<div class="row">
+				<div class="form-group col-lg-12 clearfix">
+					<div class="text-center">
+						<input type="submit" class="btn btn-primary btn-sm" name="connectprefs" value="{tr}Apply{/tr}" />
+					</div>
+				</div>
 			</div>
 		</form>
 	{/tab}

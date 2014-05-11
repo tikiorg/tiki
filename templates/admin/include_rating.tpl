@@ -1,10 +1,14 @@
 {* $Id$ *}
 
 <form class="admin" id="performance" name="performance" action="tiki-admin.php?page=rating" method="post">
-	<div class="heading input_submit_container" style="text-align: right">
-		<input type="submit" class="btn btn-default btn-sm" value="{tr}Apply{/tr}" />
-		<input type="reset" class="btn btn-warning" value="{tr}Reset{/tr}" />
-	</div>
+	<div class="row">
+        <div class="form-group col-lg-12 clearfix">
+            <div class="pull-right">
+            	<input type="reset" class="btn btn-link btn-sm" value="{tr}Reset{/tr}" />
+				<input type="submit" class="btn btn-primary btn-sm" value="{tr}Apply{/tr}" />
+            </div>
+        </div>
+    </div>
 
 	<fieldset>
 		<legend>{tr}Global configuration{/tr}</legend>
@@ -153,9 +157,13 @@
 		{preference name=rating_advanced}
 	</fieldset>
 	
-	<div class="input_submit_container" style="margin-top: 5px; text-align: center">
-		<input type="submit" class="btn btn-default btn-sm" value="{tr}Apply{/tr}" />
-	</div>
+	<div class="row">
+        <div class="form-group col-lg-12 clearfix">
+            <div class="text-center">
+				<input type="submit" class="btn btn-primary btn-sm" value="{tr}Apply{/tr}" />
+            </div>
+        </div>
+    </div>
 </form>
 <div id="rating_advanced_childcontainer">
 	{foreach from=$configurations item=config}

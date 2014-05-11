@@ -1,12 +1,16 @@
 {* $Id$ *}
 
-{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Please see the <a class='rbox-link' target='tikihelp' href='http://dev.tiki.org/Performance'>Performance page</a> on Tiki's developer site.{/tr}{/remarksbox}
+{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Please see the <a class='alert-link' target='tikihelp' href='http://dev.tiki.org/Performance'>Performance page</a> on Tiki's developer site.{/tr}{/remarksbox}
 
 <form class="admin" id="performance" name="performance" action="tiki-admin.php?page=performance" method="post">
-	<div class="heading input_submit_container" style="text-align: right">
-		<input type="submit" class="btn btn-default btn-sm" name="performance" value="{tr}Apply{/tr}" />
-		<input type="reset" class="btn btn-warning" name="performancereset" value="{tr}Reset{/tr}" />
-	</div>
+	<div class="row">
+        <div class="form-group col-lg-12 clearfix">
+			<div class="pull-right">
+				<input type="reset" class="btn btn-link btn-sm" name="performancereset" value="{tr}Reset{/tr}" />
+                <input type="submit" class="btn btn-primary btn-sm" name="performance" value="{tr}Apply{/tr}" />
+            </div>
+        </div>
+    </div>
 {tabset}
 
 		{tab name="{tr}Performance{/tr}"}
@@ -185,8 +189,11 @@
 		{/tab}		
 		
 {/tabset}
-		
-	<div class="input_submit_container" style="margin-top: 5px; text-align: center">
-		<input type="submit" class="btn btn-default btn-sm" name="performance" value="{tr}Apply{/tr}" />
-	</div>
+	<div class="row">
+        <div class="form-group col-lg-12 clearfix">
+			<div class="text-center">
+                <input type="submit" class="btn btn-primary btn-sm" name="performance" value="{tr}Apply{/tr}" />
+            </div>
+        </div>
+    </div>
 </form>
