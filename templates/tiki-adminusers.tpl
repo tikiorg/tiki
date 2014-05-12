@@ -451,7 +451,7 @@
 				<label class="col-sm-3 col-md-2 control-label" for="login">{if $prefs.login_is_email eq 'y'}{tr}Email{/tr}{else}{tr}User{/tr}{/if}</label>
 				<div class="col-sm-7 col-md-6">
 					{if empty($userlogin)}
-						<input type="text" class="form-control" id="user" name="user">
+						<input type="text" class="form-control" id="login" name="login">
 					{else}
 						{if $userinfo.login neq 'admin'}
 							<input type="text" id='login' class="form-control" name='login' value="{$userinfo.login|escape}">
