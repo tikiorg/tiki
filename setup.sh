@@ -173,6 +173,7 @@ set_debug() {
 OPT_AUSER=
 OPT_AGROUP=
 OPT_VIRTUALS=
+# XXX The -n option is deprecated. Use a modelname option instead.
 OPT_NOTINTERACTIVE=
 
 while getopts "hu:g:v:nd:" OPTION; do
@@ -185,6 +186,9 @@ while getopts "hu:g:v:nd:" OPTION; do
 		d) set_debug ;;
 		?) usage ; exit 1 ;;
 	esac
+	if [ -n "$OPT_NOTINTERACTIVE" ]; then
+		echo "WARNING: the -n option is deprecated. Use a modelname instead, such as mixed, as an option."
+	fi
 	if [ ${DEBUG} = '1' ] ; then
 		if [ ${ECHOFLAG} = '1' ] ; then
 			ECHOFLAG=0
