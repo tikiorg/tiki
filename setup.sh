@@ -94,10 +94,13 @@ CAT=`which cat`
 CHGRP=`which chgrp`
 CHMOD=`which chmod`
 CHOWN=`which chown`
+CUT=`which cut`
 FIND=`which find`
+GREP=`which grep`
 ID=`which id`
 MKDIR=`which mkdir`
 MV=`which mv`
+PHPCLI=`which php`
 RM=`which rm`
 SORT=`which sort`
 TOUCH=`which touch`
@@ -126,7 +129,7 @@ POSSIBLE_COMMANDS="fix|insane|mixed|morepain|moreworry|nothing|open|pain|paranoi
 HINT_FOR_USER="\nType 'fix', 'nothing' or 'open' as command argument.
 \nIf you used Tiki Permission Check via PHP, you know which of the following commands will probably work:
 \ninsane mixed morepain moreworry pain paranoia paranoia-suphp risky sbox worry
-\nMore documentation: http://doc.tiki.org/Permission+Check\n"
+\nMore documentation: https://doc.tiki.org/Permission+Check\n"
 
 hint_for_users() {
 	${CAT} <<EOF
@@ -135,7 +138,7 @@ If you used Tiki Permission Check via PHP, you know which of the following comma
 insane mixed morepain moreworry pain paranoia paranoia-suphp workaround risky sbox worry
 
 There are some other commands recommended for advanced users only.
-More documentation about this: http://doc.tiki.org/Permission+Check
+More documentation about this: https://doc.tiki.org/Permission+Check
 EOF
 }
 
@@ -154,7 +157,7 @@ usage: $0 [<switches>] ${POSSIBLE_COMMANDS}
 -d off|on    disable|enable debugging mode (override script default)
 
 There are some other commands recommended for advanced users only.
-More documentation about this: http://doc.tiki.org/Permission+Check
+More documentation about this: https://doc.tiki.org/Permission+Check
 EOF
 }
 
@@ -254,10 +257,12 @@ fi
 
 check_distribution
 
-# part 3 - writable subdirs
-# -------------------------
+# part 3 - default and writable subdirs
+# -------------------------------------
 
-DIRS="db dump img/wiki img/wiki_up img/trackers modules/cache temp temp/cache temp/public templates_c templates styles maps whelp mods files tiki_tests/tests temp/unified-index"
+DIR_LIST_DEFAULT="admin css db doc dump files img installer lang lib maps modules permissioncheck styles temp templates templates_c tests tiki_tests vendor vendor_extra whelp"
+DIR_LIST_WRITABLE="db dump img/wiki img/wiki_up img/trackers modules/cache temp temp/cache temp/public templates_c templates styles maps whelp mods files tiki_tests/tests temp/unified-index"
+DIRS=${DIR_LIST_WRITABLE}
 
 # part 4 - several functions
 # --------------------------
@@ -376,15 +381,17 @@ set_permission_dirs_special_write() {
 }
 
 set_permission_data() {
-	if [ ${DEBUG} = '1' ] ; then
-		echo ${DEBUG_PREFIX}
-		echo ${DEBUG_PREFIX} ${FIND} . -type d -exec ${CHMOD} ${MODEL_PERMS_SUBDIRS} {} \;
-		echo ${DEBUG_PREFIX} ${FIND} . -type f -exec ${CHMOD} ${MODEL_PERMS_FILES} {} \;
-	fi
-	#debug_breakpoint
-	${FIND} . -type d -exec ${CHMOD} ${MODEL_PERMS_SUBDIRS} {} \;
-	${FIND} . -type f -exec ${CHMOD} ${MODEL_PERMS_FILES} {} \;
-	#set_permission_dirs_special_write
+	for DEFAULT_DIR in ${DIR_LIST_DEFAULT} ; do
+		if [ ${DEBUG} = '1' ] ; then
+			echo ${DEBUG_PREFIX}
+			echo ${DEBUG_PREFIX} ${FIND} ${DEFAULT_DIR} -type d -exec ${CHMOD} ${MODEL_PERMS_SUBDIRS} {} \;
+			echo ${DEBUG_PREFIX} ${FIND} ${DEFAULT_DIR} -type f -exec ${CHMOD} ${MODEL_PERMS_FILES} {} \;
+		fi
+		#debug_breakpoint
+		${FIND} ${DEFAULT_DIR} -type d -exec ${CHMOD} ${MODEL_PERMS_SUBDIRS} {} \;
+		${FIND} ${DEFAULT_DIR} -type f -exec ${CHMOD} ${MODEL_PERMS_FILES} {} \;
+		#set_permission_dirs_special_write
+	done
 	for WRITABLE in $DIRS ; do
 		if [ -d ${WRITABLE} ] ; then
 			if [ ${DEBUG} = '1' ] ; then
@@ -398,11 +405,25 @@ set_permission_data() {
 	done
 }
 
+permission_via_php_check() {
+	# model was chosen by Tiki Permission Check (TPC)
+	get_permission_data
+	# set permissions
+#	if [ ${DEBUG} = '2' ] ; then
+#		echo
+#		${FIND} . -type d -exec echo ${CHMOD} ${MODEL_PERMS_SUBDIRS} {} \;
+#		${FIND} . -type f -exec echo ${CHMOD} ${MODEL_PERMS_FILES} {} \;
+#	fi
+	set_permission_data
+}
+
 set_permission_data_workaround_general() {
-	# this is quick 'n dirty
-	${CHMOD} -R o+r ./
-	${FIND} . -name "*.php" -exec ${CHMOD} o-r {} \;
-	${FIND} . -type d -exec ${CHMOD} o-r {} \;
+	for DEFAULT_DIR in ${DIR_LIST_DEFAULT} ; do
+		# this is quick 'n dirty
+		${CHMOD} -R o+r ${DEFAULT_DIR}/
+		${FIND} ${DEFAULT_DIR} -name "*.php" -exec ${CHMOD} o-r {} \;
+		${FIND} ${DEFAULT_DIR} -type d -exec ${CHMOD} o-r {} \;
+	done
 }
 
 set_permission_data_workaround_sbox() {
@@ -455,7 +476,7 @@ exists()
 	fi
 }
 
-composer()
+composer_core()
 {
 	if [ ! -f temp/composer.phar ];
 	then
@@ -498,6 +519,24 @@ composer()
 	fi
 	#exit
 	return
+}
+
+composer()
+{
+	# insert php cli version check here
+	# http://dev.tiki.org/item4721
+	PHP_OPTION="--version"
+	REQUIRED_PHP_VERSION=53 # minimal version PHP 5.3 but no decimal seperator, no floating point data
+	#${PHPCLI} ${PHP_OPTION}
+	LOCAL_PHP_VERSION=`${PHPCLI} ${PHP_OPTION} | ${GREP} ^PHP | ${CUT} -c5,7`
+	#echo ${LOCAL_PHP_VERSION}
+	if [ "${LOCAL_PHP_VERSION}" -ge "${REQUIRED_PHP_VERSION}" ] ; then
+		echo "local PHP version ${LOCAL_PHP_VERSION} >= required PHP version ${REQUIRED_PHP_VERSION} - good"
+		composer_core
+	else
+		echo "wrong PHP version ${LOCAL_PHP_VERSION} but >= ${REQUIRED_PHP_VERSION} necessary"
+		exit 1
+	fi
 }
 
 
@@ -658,18 +697,6 @@ command_open() {
 	if [ -n "$OPT_NOTINTERACTIVE" ]; then
 		composer
 	fi
-}
-
-permission_via_php_check() {
-	# model was chosen by Tiki Permission Check (TPC)
-	get_permission_data
-	# set permissions
-#	if [ ${DEBUG} = '2' ] ; then
-#		echo
-#		${FIND} . -type d -exec echo ${CHMOD} ${MODEL_PERMS_SUBDIRS} {} \;
-#		${FIND} . -type f -exec echo ${CHMOD} ${MODEL_PERMS_FILES} {} \;
-#	fi
-	set_permission_data
 }
 
 set_group_minus_execute() {
@@ -885,7 +912,7 @@ For all Tiki instances (via SVN or via a released package):
  q quit                                  x exit
 
 There are some other commands recommended for advanced users only.
-More documentation about this: http://doc.tiki.org/Permission+Check
+More documentation about this: https://doc.tiki.org/Permission+Check
 
 EOF
 }
