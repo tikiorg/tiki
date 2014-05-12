@@ -473,7 +473,7 @@ exists()
 	fi
 }
 
-composer()
+composer_core()
 {
 	if [ ! -f temp/composer.phar ];
 	then
@@ -516,6 +516,13 @@ composer()
 	fi
 	#exit
 	return
+}
+
+composer()
+{
+	# insert php cli version check here
+	# http://dev.tiki.org/item4721
+	composer_core
 }
 
 
