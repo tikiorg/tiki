@@ -1374,14 +1374,16 @@ function wikiplugin_tracker($data, $params)
 							$smarty->assign('f_'.$f['fieldId'], '<span class="outputPretty" id="track_'.$f['fieldId'].'" name="track_'.$f['fieldId'].'">'. wikiplugin_tracker_render_value($f, $item) . '</span>');
 						} else {
 							$mand =  ($showmandatory == 'y' and $f['isMandatory'] == 'y')? "&nbsp;<strong class='mandatory_star'>*</strong>&nbsp;":'';
+							if (!empty($f['description'])) {
+								$desc = $f['descriptionIsParsed'] == 'y' ? $tikilib->parse_data($f['description']) : tra($f['description']);
+								$desc = '<div class="trackerplugindesc">' . $desc . '</div>';
+							} else {
+								$desc = '';
+							}
 							$smarty->assign(
 								'f_'.$f['fieldId'],
 								wikiplugin_tracker_render_input($f, $item, $dynamicSave) .
-								$mand .
-								'<div class="trackerplugindesc">' .
-								($f['descriptionIsParsed'] == 'y' ? $tikilib->parse_data($f['description']) : tra($f['description'])) .
-								'</div>'
-							);
+								$mand . $desc);
 						}
 					} else {
 						$back.= '<tr><td class="tracker_input_label"';
