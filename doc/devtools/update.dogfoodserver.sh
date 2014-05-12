@@ -28,7 +28,7 @@ rm -rf temp/public/minified*
 
 bash doc/devtools/svnup.sh
 echo "Fix permission"
-bash setup.sh -n
+bash setup.sh mixed
 echo "Drop and recreate database"
 $MYSQLCOMMAND -e "drop database $DOGFOODMYSQLDB;create database $DOGFOODMYSQLDB"
 echo "Populate $DOGFOODMYSQLDB with $OLDMYSQLDB data"
