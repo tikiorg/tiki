@@ -415,10 +415,12 @@ permission_via_php_check() {
 }
 
 set_permission_data_workaround_general() {
-	# this is quick 'n dirty
-	${CHMOD} -R o+r ./
-	${FIND} . -name "*.php" -exec ${CHMOD} o-r {} \;
-	${FIND} . -type d -exec ${CHMOD} o-r {} \;
+	for DEFAULT_DIR in ${DIR_LIST_DEFAULT} ; do
+		# this is quick 'n dirty
+		${CHMOD} -R o+r ${DEFAULT_DIR}/
+		${FIND} ${DEFAULT_DIR} -name "*.php" -exec ${CHMOD} o-r {} \;
+		${FIND} ${DEFAULT_DIR} -type d -exec ${CHMOD} o-r {} \;
+	done
 }
 
 set_permission_data_workaround_sbox() {
