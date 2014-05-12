@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "fa8772c23f26cbe50e31e60837e0b6a1",
+    "hash": "acda311db27aa8793256484efd48707c",
     "packages": [
         {
             "name": "aFarkas/html5shiv",
@@ -313,12 +313,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FutureLink-Protocol/php.git",
-                "reference": "77f6120c07f779c1a5a0d135e487e2fb8f94ca89"
+                "reference": "da9b50048a454929dd0c2bcf4551c81d83d92de2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FutureLink-Protocol/php/zipball/77f6120c07f779c1a5a0d135e487e2fb8f94ca89",
-                "reference": "77f6120c07f779c1a5a0d135e487e2fb8f94ca89",
+                "url": "https://api.github.com/repos/FutureLink-Protocol/php/zipball/da9b50048a454929dd0c2bcf4551c81d83d92de2",
+                "reference": "da9b50048a454929dd0c2bcf4551c81d83d92de2",
                 "shasum": ""
             },
             "require": {
@@ -358,7 +358,7 @@
             ],
             "description": "FutureLink-Protocol implementation in PHP",
             "homepage": "https://github.com/FutureLink-Protocol",
-            "time": "2014-04-02 21:03:56"
+            "time": "2014-05-02 21:11:50"
         },
         {
             "name": "gabordemooij/redbean",
@@ -1037,17 +1037,11 @@
         },
         {
             "name": "smarty/smarty",
-            "version": "v3.1.17",
+            "version": "v3.1.18",
             "source": {
                 "type": "svn",
                 "url": "http://smarty-php.googlecode.com/svn",
-                "reference": "/tags/v3.1.17/@4818"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://composer.tiki.org/dist/smarty-smarty-v3.1.17-5bfebf.zip",
-                "reference": "v3.1.17",
-                "shasum": "244b1ba3cd68c1257d7f1183121ca001f334dd9c"
+                "reference": "/tags/v3.1.18/@4839"
             },
             "require": {
                 "php": ">=5.2"
@@ -1083,7 +1077,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2014-03-12 20:51:46"
+            "time": "2014-05-08 18:38:30"
         },
         {
             "name": "svg-edit/svg-edit",
@@ -1429,12 +1423,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/wikiLingo/wikiLingo.git",
-                "reference": "712c7c40c1eeadecd67b47763f8e175fe011d00b"
+                "reference": "dc71dd16f2b766d0edc4e4568394abf8177b6dbc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wikiLingo/wikiLingo/zipball/712c7c40c1eeadecd67b47763f8e175fe011d00b",
-                "reference": "712c7c40c1eeadecd67b47763f8e175fe011d00b",
+                "url": "https://api.github.com/repos/wikiLingo/wikiLingo/zipball/dc71dd16f2b766d0edc4e4568394abf8177b6dbc",
+                "reference": "dc71dd16f2b766d0edc4e4568394abf8177b6dbc",
                 "shasum": ""
             },
             "require": {
@@ -1473,7 +1467,7 @@
                     "role": "Lead Developer"
                 }
             ],
-            "time": "2014-04-30 22:24:07"
+            "time": "2014-05-10 19:46:29"
         },
         {
             "name": "zetacomponents/base",
