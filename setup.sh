@@ -401,6 +401,18 @@ set_permission_data() {
 	done
 }
 
+permission_via_php_check() {
+	# model was chosen by Tiki Permission Check (TPC)
+	get_permission_data
+	# set permissions
+#	if [ ${DEBUG} = '2' ] ; then
+#		echo
+#		${FIND} . -type d -exec echo ${CHMOD} ${MODEL_PERMS_SUBDIRS} {} \;
+#		${FIND} . -type f -exec echo ${CHMOD} ${MODEL_PERMS_FILES} {} \;
+#	fi
+	set_permission_data
+}
+
 set_permission_data_workaround_general() {
 	# this is quick 'n dirty
 	${CHMOD} -R o+r ./
@@ -661,18 +673,6 @@ command_open() {
 	if [ -n "$OPT_NOTINTERACTIVE" ]; then
 		composer
 	fi
-}
-
-permission_via_php_check() {
-	# model was chosen by Tiki Permission Check (TPC)
-	get_permission_data
-	# set permissions
-#	if [ ${DEBUG} = '2' ] ; then
-#		echo
-#		${FIND} . -type d -exec echo ${CHMOD} ${MODEL_PERMS_SUBDIRS} {} \;
-#		${FIND} . -type f -exec echo ${CHMOD} ${MODEL_PERMS_FILES} {} \;
-#	fi
-	set_permission_data
 }
 
 set_group_minus_execute() {
