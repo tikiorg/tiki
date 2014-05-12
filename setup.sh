@@ -384,10 +384,11 @@ set_permission_data() {
 			echo ${DEBUG_PREFIX} ${FIND} ${DEFAULT_DIR} -type d -exec ${CHMOD} ${MODEL_PERMS_SUBDIRS} {} \;
 			echo ${DEBUG_PREFIX} ${FIND} ${DEFAULT_DIR} -type f -exec ${CHMOD} ${MODEL_PERMS_FILES} {} \;
 		fi
-	#debug_breakpoint
-	${FIND} ${DEFAULT_DIR} -type d -exec ${CHMOD} ${MODEL_PERMS_SUBDIRS} {} \;
-	${FIND} ${DEFAULT_DIR} -type f -exec ${CHMOD} ${MODEL_PERMS_FILES} {} \;
-	#set_permission_dirs_special_write
+		#debug_breakpoint
+		${FIND} ${DEFAULT_DIR} -type d -exec ${CHMOD} ${MODEL_PERMS_SUBDIRS} {} \;
+		${FIND} ${DEFAULT_DIR} -type f -exec ${CHMOD} ${MODEL_PERMS_FILES} {} \;
+		#set_permission_dirs_special_write
+	done
 	for WRITABLE in $DIRS ; do
 		if [ -d ${WRITABLE} ] ; then
 			if [ ${DEBUG} = '1' ] ; then
