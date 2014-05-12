@@ -93,11 +93,11 @@
 				{/if}
 
 				{if $opcode_stats.warning_starve}
-					<p>{tr}Little memory available. Thrashing likely to occur.{/tr} {tr}The values to increase are apc.shm_size, (for APC) xcache.size, (for XCache) or opcache.memory_consumption. (for OpCache){/tr}</p>
+					<p>{tr}Little memory available. Thrashing likely to occur.{/tr} {tr}The values to increase are apc.shm_size (for APC), xcache.size (for XCache) or opcache.memory_consumption (for OPcache).{/tr}</p>
 				{/if}
 
 				{if $opcode_stats.warning_low}
-					<p>{tr _0=$opcode_cache}Small amount of memory allocated to %0. Verify the configuration.{/tr} {tr}The values to increase are apc.shm_size (for APC) or xcache.size (for XCache).{/tr}</p>
+					<p>{tr _0=$opcode_cache}Small amount of memory allocated to %0. Verify the configuration.{/tr} {tr}The values to increase are apc.shm_size (for APC), xcache.size (for XCache) or opcache.memory_consumption (for OPcache).{/tr}</p>
 				{/if}
 
 				{if $opcode_stats.warning_check}
