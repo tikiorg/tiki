@@ -34,7 +34,7 @@ $MYSQLCOMMAND -e "drop database $DOGFOODMYSQLDB;create database $DOGFOODMYSQLDB"
 echo "Populate $DOGFOODMYSQLDB with $OLDMYSQLDB data"
 $MYSQLDUMPCOMMAND --single-transaction $OLDMYSQLDB | $MYSQLCOMMAND $DOGFOODMYSQLDB
 echo "Upgrade schema"
-php installer/shell.php
+php console.php -n database:update
 echo "Update search index"
 php lib/search/shell.php rebuild log 1>/dev/null 2>/dev/null
 echo "Update memcache prefix"
