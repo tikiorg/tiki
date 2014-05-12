@@ -106,7 +106,7 @@ class TikiMail
 
 	function send($recipients, $type = 'mail')
 	{
-		global $prefs;
+		global $tikilib, $prefs;
 		$logslib = TikiLib::lib('logs');
 
 		$this->mail->clearHeader('To');
@@ -114,19 +114,26 @@ class TikiMail
 			$this->mail->addTo($to);
 		}
 
-		try {
-			$this->mail->send();
+        if ($prefs['zend_mail_queue'] == 'y') {
+            $query = "INSERT INTO `tiki_mail_queue` (message) VALUES (?)";
+		    $bindvars = array(serialize($this->mail));
+			$tikilib->query($query, $bindvars, -1, 0);
+            $title = 'mail';
+        } else {
+        	try {
+    			$this->mail->send();
 
-			$title = 'mail';
-		} catch (Zend_Mail_Exception $e) {
-			$title = 'mail error';
-		}
+    			$title = 'mail';
+    		} catch (Zend_Mail_Exception $e) {
+    			$title = 'mail error';
+    		}
 
-		if ($title == 'mail error' || $prefs['log_mail'] == 'y') {
-			foreach ($recipients as $u) {
-				$logslib->add_log($title, $u . '/' . $this->mail->getSubject());
-			}
-		}
+    		if ($title == 'mail error' || $prefs['log_mail'] == 'y') {
+    			foreach ($recipients as $u) {
+    				$logslib->add_log($title, $u . '/' . $this->mail->getSubject());
+    			}
+    		}
+        }
 		return $title == 'mail';
 	}
 
