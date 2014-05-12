@@ -68,6 +68,7 @@ class Search_ContentSource_ArticleSource implements Search_ContentSource_Interfa
 			'parent_object_type' => $typeFactory->identifier('topic'),
 			'parent_object_id' => $typeFactory->identifier($article['topicId']),
 			'parent_view_permission' => $typeFactory->identifier('tiki_p_read_topic'),
+			'published' => ($article['ispublished'] == 'y') ? $typeFactory->identifier('y') : $typeFactory->identifier('n'),
 		);
 
 		return $data;
@@ -96,6 +97,7 @@ class Search_ContentSource_ArticleSource implements Search_ContentSource_Interfa
 			'parent_view_permission',
 			'parent_object_id',
 			'parent_object_type',
+			'published',
 		);
 	}
 
