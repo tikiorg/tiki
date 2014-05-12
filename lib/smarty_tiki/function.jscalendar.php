@@ -142,7 +142,7 @@ var tm = { hour: dt.getHours(), minute: dt.getMinutes(), second: dt.getSeconds()
 			$command . '", "jscalendar", ' . $datepicker_options . ');'
 		);
 	}
-	return $html;
+	return '<span class="jscal">' . $html . '</span>';
 }
 
 function smarty_function_jscalendar_tra($str)
