@@ -15,56 +15,47 @@ error_reporting(E_ALL);
 ini_set("display_errors", 'stdout');
 
 require_once ("tiki-setup.php");
+require_once ("lib/mail/maillib.php");
 
+tiki_mail_setup();
 echo ("Mail queue processor starting...\n");
 
-if ($prefs['zend_mail_handler'] == 'smtp') {
+$query = "SELECT messageId, message FROM `tiki_mail_queue`";
+$messages = $tikilib->fetchAll($query);
 
-	$params = array();
-	$params["host"] = $prefs['zend_mail_smtp_server'];
-	$params["port"] = $prefs['zend_mail_smtp_port'];
-	$params["helo"] = $prefs['zend_mail_smtp_helo'];
-	$params["user"] = $prefs['zend_mail_smtp_user'];
-	$params["pass"] = $prefs['zend_mail_smtp_pass'];
-	$params["security"] = $prefs['zend_mail_smtp_security'];
+foreach ( $messages as $message ) {
 
-	if ($prefs['zend_mail_smtp_auth'] == 'login') {
-		$params["auth"] = true;
-	} else {
-		$params["auth"] = false;
-	}
+    echo("Sending message ".$message["messageId"]."...");
 
-	echo ("Connecting to the mail server...");
+    $mail = unserialize($message["message"]);
+    if ($mail) {
+        try {
+  	        $mail->send();
+            $title = 'mail';
+  	    } catch (Zend_Mail_Exception $e) {
+  			$title = 'mail error';
+  		}
 
-	$mailer   = new smtp($params);
+  		if ($title == 'mail error' || $prefs['log_mail'] == 'y') {
+  			foreach ($recipients as $u) {
+  				$logslib->add_log($title, $u . '/' . $mail->getSubject());
+  			}
+  		}
 
-	if (!$mailer->connect()) {
-		echo ("Failed.");
-		print_r($smtp->errors);
-		echo ("\n");
-		die;
-	} else {
-		echo ("Connected!\n");
-	}
+  		if ($title == 'mail error') {
+  			$query = "UPDATE `tiki_mail_queue` SET attempts = attempts + 1 WHERE messageId = ?";
+  			echo ("Failed.\n");
+  			print_r($mailer->errors);
+  			echo ("\n");
+  		} else {
+  			$query = "DELETE FROM `tiki_mail_queue` WHERE messageId = ?";
+  			echo ("Sent.\n");
+  		}
 
-	$query = "SELECT messageId, message FROM `tiki_mail_queue`";
-	$messages = $tikilib->fetchAll($query);
+  		$tikilib->query($query, array($message["messageId"]));
+    } else {
+        echo ("ERROR: Unable to unserialize the mailer object\n");
+    }
 
-	foreach ( $messages as $message ) {
-		echo("Sending message ".$message["messageId"]."...");
-
-		if (!$mailer->send(json_decode($message["message"]))) {
-			$query = "UPDATE `tiki_mail_queue` SET attempts = attempts + 1 WHERE messageId = ?";
-			echo ("Failed.\n");
-			print_r($mailer->errors);
-			echo ("\n");
-		} else {
-			$query = "DELETE FROM `tiki_mail_queue` WHERE messageId = ?";
-			echo ("Sent.\n");
-		}
-
-		$tikilib->query($query, array($message["messageId"]));
-
-	}
 }
 echo ("Mail queue processed...\n");
