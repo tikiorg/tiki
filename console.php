@@ -87,6 +87,7 @@ if ($isInstalled && ! $installer->requiresUpdate()) {
 	$console->add(new Tiki\Command\IndexOptimizeCommand);
 	$console->add(new Tiki\Command\IndexCatchUpCommand);
 	$console->add(new Tiki\Command\MailInPollCommand);
+    $console->add(new Tiki\Command\MailQueueSendCommand);
 	$console->add(new Tiki\Command\NotificationDigestCommand);
 	$console->add(new Tiki\Command\ProfileForgetCommand);
 	$console->add(new Tiki\Command\ProfileInstallCommand);
@@ -98,6 +99,7 @@ if ($isInstalled && ! $installer->requiresUpdate()) {
 	$console->add(new Tiki\Command\UnavailableCommand('index:optimize'));
 	$console->add(new Tiki\Command\UnavailableCommand('index:catch-up'));
 	$console->add(new Tiki\Command\UnavailableCommand('mail-in:poll'));
+	$console->add(new Tiki\Command\UnavailableCommand('mail-queue:send'));
 	$console->add(new Tiki\Command\UnavailableCommand('notification:digest'));
 	$console->add(new Tiki\Command\UnavailableCommand('profile:forget'));
 	$console->add(new Tiki\Command\UnavailableCommand('profile:apply'));
