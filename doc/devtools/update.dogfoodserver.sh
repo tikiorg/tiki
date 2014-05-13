@@ -21,11 +21,9 @@ MYSQLCOMMAND="mysql -u $MYSQLUSER -p$MYSQLPASS"
 MYSQLDUMPCOMMAND="mysqldump -u $MYSQLUSER -p$MYSQLPASS"
 
 pushd $DOCROOTDOGFOODVERSION
+echo "Clear cache"
+php console.php -n cache:clear
 echo "Update checkout"
-rm -rf templates_c/*.tpl.php
-rm -rf temp/cache/*
-rm -rf temp/public/minified*
-
 bash doc/devtools/svnup.sh
 echo "Fix permission"
 bash setup.sh mixed
