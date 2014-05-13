@@ -16,6 +16,7 @@ function prefs_ajax_list()
 			'type' => 'flag',
 			'dependencies' => array(
 				'feature_ajax',
+				'feature_warn_on_edit',
 			),
 			'default' => 'y',
 		),
