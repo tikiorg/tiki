@@ -36,7 +36,7 @@ $MYSQLDUMPCOMMAND --single-transaction $OLDMYSQLDB | $MYSQLCOMMAND $DOGFOODMYSQL
 echo "Upgrade schema"
 php console.php -n database:update
 echo "Update search index"
-php lib/search/shell.php rebuild log 1>/dev/null 2>/dev/null
+php console.php -n index:rebuild
 echo "Update memcache prefix"
 $MYSQLCOMMAND $DOGFOODMYSQLDB -e "update tiki_preferences set value = \"DOGFOODtiki_\" where name = \"memcache_prefix\";"
 echo "Remove cdn"
