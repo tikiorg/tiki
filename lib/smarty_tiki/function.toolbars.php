@@ -11,34 +11,19 @@
 
 function smarty_function_toolbars($params, $smarty)
 {
-	global $prefs, $is_html, $tiki_p_admin;
-	$default = array('comments' => '', 'is_html' => $is_html);
+	global $prefs, $is_html, $tiki_p_admin, $section;
+	$default = array(
+		'comments' => 'n',
+		'is_html' => $is_html,
+		'section' => $section,
+	);
 	$params = array_merge($default, $params);
 
 	if ($prefs['javascript_enabled'] != 'y') {
 		return '';
 	}
-	if ( ! isset( $params['section'] ) ) {
-		global $section;
-		if ( ! empty($section) ) {
-			$params['section'] = $section;
-		} else {
-			return '';	// proper features set $section, contact us (possibly others) don't
-		}
-	}
-
-	if ( isset( $params['comments'] ) && $params['comments'] == 'y' ) {
-		$comments = true;
-	} else {
-		$comments = false;
-	}
-
 	// some tool filters to help roll out textarea & toolbars to more sections quickly (for 4.0)
-
 	$hidden = array();
-//	if ($params['section'] != 'wiki page' && $params['section'] != 'blogs' && $params['section'] != 'newsletters' && $params['section'] != 'trackers') {
-//		$hidden[] = 'fullscreen';
-//	}
 	if ( (!isset( $params['switcheditor'] ) && !in_array($params['section'], array('wiki page', 'blogs', 'newsletters', 'cms', 'webmail'))) || $params['switcheditor'] !== 'y') {
 		$hidden[] = 'switcheditor';
 	}
@@ -52,7 +37,7 @@ function smarty_function_toolbars($params, $smarty)
 	}
 
 	include_once( 'lib/toolbars/toolbarslib.php' );
-	$list = ToolbarsList::fromPreference($params['section'] . ($comments ? '_comments' : ''), $hidden);
+	$list = ToolbarsList::fromPreference($params, $hidden);
 	if ( isset($params['_wysiwyg']) && $params['_wysiwyg'] == 'y') {
 		return $list->getWysiwygArray("'+CurrentEditorName+'", $params['is_html']);
 	} else {

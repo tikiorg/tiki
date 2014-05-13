@@ -172,7 +172,11 @@ foreach ( $qtlist as $name ) {
 
 	$tag = Toolbar::getTag($name);
 	if ( ! $tag ) {
-		continue;
+		$tag = Toolbar::getTag($name, true);
+		if ( ! $tag ) {
+			$tag = Toolbar::getTag($name, true, true);
+			continue;
+		}
 	}
 
 	$wys = strlen($tag->getWysiwygToken('dummy', false)) ? 'qt-wys' : '';
