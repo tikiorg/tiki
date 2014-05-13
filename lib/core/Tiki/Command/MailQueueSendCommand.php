@@ -28,7 +28,7 @@ class MailQueueSendCommand extends Command
     {
       require_once ("lib/mail/maillib.php");
       global $prefs;
-      
+      $logslib = TikiLib::lib('logs'); 
       tiki_mail_setup();
       echo ("Mail queue processor starting...\n");
 
@@ -48,7 +48,7 @@ class MailQueueSendCommand extends Command
             }
 
             if ($title == 'mail error' || $prefs['log_mail'] == 'y') {
-            	foreach ($recipients as $u) {
+            	foreach ($mail->getRecipients() as $u) {
             		$logslib->add_log($title, $u . '/' . $mail->getSubject());
             	}
             }
