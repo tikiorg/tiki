@@ -153,11 +153,13 @@ usage: $0 [<switches>] ${POSSIBLE_COMMANDS}
 -u user      owner of files (default: $AUSER)
 -g group     group of files (default: $AGROUP)
 -v virtuals  list of virtuals (for multitiki, example: "www1 www2")
--n           not interactive mode
+-n           not prompt for user and group, assume current
 -d off|on    disable|enable debugging mode (override script default)
 
 There are some other commands recommended for advanced users only.
 More documentation about this: https://doc.tiki.org/Permission+Check
+
+Example: sh `basename $0` -n fix
 EOF
 }
 
@@ -173,8 +175,7 @@ set_debug() {
 OPT_AUSER=
 OPT_AGROUP=
 OPT_VIRTUALS=
-# XXX The -n option is deprecated. Use a modelname option instead.
-OPT_NOTINTERACTIVE=
+OPT_USE_CURRENT_USER_GROUP=
 
 while getopts "hu:g:v:nd:" OPTION; do
 	case $OPTION in
@@ -182,13 +183,10 @@ while getopts "hu:g:v:nd:" OPTION; do
 		u) OPT_AUSER=$OPTARG ;;
 		g) OPT_AGROUP=$OPTARG ;;
 		v) OPT_VIRTUALS=$OPTARG ;;
-		n) OPT_NOTINTERACTIVE=1 ;;
+		n) OPT_USE_CURRENT_USER_GROUP=1 ;;
 		d) set_debug ;;
 		?) usage ; exit 1 ;;
 	esac
-	if [ -n "$OPT_NOTINTERACTIVE" ]; then
-		echo "WARNING: the -n option is deprecated. Use a modelname instead, such as mixed, as an option."
-	fi
 	if [ ${DEBUG} = '1' ] ; then
 		if [ ${ECHOFLAG} = '1' ] ; then
 			ECHOFLAG=0
@@ -550,14 +548,14 @@ command_fix() {
 	if [ "$USER" = 'root' ]; then
 		if [ -n "$OPT_AUSER" ]; then
 			AUSER=$OPT_AUSER
-		elif [ -z "$OPT_NOTINTERACTIVE" ]; then
+		elif [ -z "$OPT_USE_CURRENT_USER_GROUP" ]; then
 			read -p "User [$AUSER]: " REPLY
 			if [ -n "$REPLY" ]; then
 				AUSER=$REPLY
 			fi
 		fi
 	else
-		if [ -z "$OPT_NOTINTERACTIVE" ]; then
+		if [ -z "$OPT_USE_CURRENT_USER_GROUP" ]; then
 			echo "You are not root or you are on a shared hosting account. You can now:
 
 1- ctrl-c to break now.
@@ -576,7 +574,7 @@ what to answer, just press enter to each question (to use default value)"
 
 	if [ -n "$OPT_AGROUP" ]; then
 		AGROUP=$OPT_AGROUP
-	elif [ -z "$OPT_NOTINTERACTIVE" ]; then
+	elif [ -z "$OPT_USE_CURRENT_USER_GROUP" ]; then
 		read -p "> Group [$AGROUP]: " REPLY
 		if [ -n "$REPLY" ]; then
 			AGROUP=$REPLY
@@ -586,7 +584,7 @@ what to answer, just press enter to each question (to use default value)"
 	touch db/virtuals.inc
 	if [ -n "$OPT_VIRTUALS" ]; then
 		VIRTUALS=$OPT_VIRTUALS
-	elif [ -n "$OPT_NOTINTERACTIVE" ]; then
+	elif [ -n "$OPT_USE_CURRENT_USER_GROUP" ]; then
 		VIRTUALS=$(cat db/virtuals.inc)
 	else
 		read -p "> Multi [$(cat -s db/virtuals.inc | tr '\n' ' ')]: " VIRTUALS
@@ -669,7 +667,7 @@ what to answer, just press enter to each question (to use default value)"
 
 	echo " done."
 
-	if [ -n "$OPT_NOTINTERACTIVE" ]; then
+	if [ -n "$OPT_USE_CURRENT_USER_GROUP" ]; then
 		composer
 	fi
 }
@@ -683,7 +681,7 @@ command_open() {
 	if [ "$USER" = 'root' ]; then
 		if [ -n "$OPT_AUSER" ]; then
 			AUSER=$OPT_AUSER
-		elif [ -z "$OPT_NOTINTERACTIVE" ]; then
+		elif [ -z "$OPT_USE_CURRENT_USER_GROUP" ]; then
 			read -p "User [$AUSER]: " REPLY
 			if [ -n "$REPLY" ]; then
 				AUSER=$REPLY
@@ -698,7 +696,7 @@ command_open() {
 
 	echo " done"
 
-	if [ -n "$OPT_NOTINTERACTIVE" ]; then
+	if [ -n "$OPT_USE_CURRENT_USER_GROUP" ]; then
 		composer
 	fi
 }
