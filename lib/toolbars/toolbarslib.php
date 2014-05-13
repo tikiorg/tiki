@@ -24,11 +24,13 @@ abstract class Toolbar
 
 	private $requiredPrefs = array();
 
-	public static function getTag( $tagName ) // {{{
+	public static function getTag( $tagName, $wysiwyg = false, $is_html = false ) // {{{
 	{
 		global $section;
 		//we detect sheet first because it has unique buttons
 		if ( $section == 'sheet' && $tag = ToolbarSheet::fromName($tagName) )
+			return $tag;
+		elseif ( $wysiwyg && $tag = ToolbarCkOnly::fromName($tagName, $is_html) )
 			return $tag;
 		elseif ( $tag = Toolbar::getCustomTool($tagName) )
 			return $tag;
@@ -37,8 +39,6 @@ abstract class Toolbar
 		elseif ( $tag = ToolbarBlock::fromName($tagName) )
 			return $tag;
 		elseif ( $tag = ToolbarLineBased::fromName($tagName) )
-			return $tag;
-		elseif ( $tag = ToolbarCkOnly::fromName($tagName) )
 			return $tag;
 		elseif ( $tag = ToolbarWikiplugin::fromName($tagName) )
 			return $tag;
@@ -501,7 +501,7 @@ class ToolbarCkOnly extends Toolbar
 				->setType('CkOnly');
 	} // }}}
 
-	public static function fromName( $name ) // {{{
+	public static function fromName( $name, $is_html ) // {{{
 	{
 		global $prefs;
 
@@ -546,8 +546,6 @@ class ToolbarCkOnly extends Toolbar
 			return new self( 'Indent' );
 		case 'outdent':
 			return new self( 'Outdent' );
-		case 'unlink':
-			return new self( 'Unlink' );
 		case 'style':
 			return new self( 'Styles' );
 		case 'fontname':
@@ -574,8 +572,6 @@ class ToolbarCkOnly extends Toolbar
 			return new self( 'Subscript' );
 		case 'sup':
 			return new self( 'Superscript' );
-		case 'showblocks':
-			return new self( 'ShowBlocks' );
 		case 'anchor':
 			return new self( 'Anchor' );
 		case 'bidiltr':
@@ -585,9 +581,9 @@ class ToolbarCkOnly extends Toolbar
 		case 'image':
 			return new self( 'Image' );
 		case 'table':
-			return new self( 'Table' );
+			return $is_html ? new self( 'Table' ) : null;
 		case 'link':
-			return new self( 'Link' );
+			return $is_html ? new self( 'Link' ) : null;
 		case 'unlink':
 			return new self( 'Unlink' );
 		}
@@ -622,6 +618,7 @@ class ToolbarCkOnly extends Toolbar
 			case 'ShowBlocks':
 			case 'Source':
 			case 'Undo':
+			case 'Unlink':
 				return $this->wysiwyg;
 				break;
 			default:
@@ -1308,6 +1305,9 @@ class ToolbarDialog extends Toolbar
 			case 'table':
 				$this->wysiwyg = 'tikitable';
 				break;
+			case 'link':
+				$this->wysiwyg = 'externallink';
+				break;
 			default:
 				return $this->wysiwyg;
 		}
@@ -1887,35 +1887,44 @@ class ToolbarSheet extends Toolbar
 class ToolbarsList
 {
 	private $lines = array();
+	private $wysiwyg = false;
+	private $is_html = false;
 
 	private function __construct()
 	{
 	}
 
-	public static function fromPreference( $section, $tags_to_hide = array() ) // {{{
+	/***
+	 * @param array $params            params from smarty_function_toolbars
+	 * @param array $tags_to_hide      list of tools not to show
+	 * @return ToolbarsList
+	 */
+	public static function fromPreference( $params, $tags_to_hide = array() ) // {{{
 	{
 		global $tikilib;
 
-		$global = $tikilib->get_preference('toolbar_global' . (strpos($section, '_comments') !== false ? '_comments' : ''));
-		$local = $tikilib->get_preference('toolbar_'.$section, $global);
+		$global = $tikilib->get_preference('toolbar_global' . ($params['comments'] === 'y' ? '_comments' : ''));
+		$local = $tikilib->get_preference('toolbar_'.$params['section'] . ($params['comments'] === 'y' ? '_comments' : ''), $global);
 
 		foreach ($tags_to_hide as $name) {
 			$local = str_replace($name, '', $local);
 		}
-		if ($section === 'wysiwyg_plugin') {	// quick fix to prevent nested wysiwyg plugins (messy)
+		if ($params['section'] === 'wysiwyg_plugin') {	// quick fix to prevent nested wysiwyg plugins (messy)
 			$local = str_replace('wikiplugin_wysiwyg', '', $local);
 		}
 
 		$local = str_replace(array(',,', '|,', ',|', ',/', '/,'), array(',', '|', '|', '/', '/'), $local);
 
-		return self::fromPreferenceString($local);
+		return self::fromPreferenceString($local, $params);
 	} // }}}
 
-	public static function fromPreferenceString( $string ) // {{{
+	public static function fromPreferenceString( $string, $params ) // {{{
 	{
 		global $toolbarPickerIndex;
 		$toolbarPickerIndex = -1;
 		$list = new self;
+		$list->wysiwyg = ($params['_wysiwyg'] === 'y');
+		$list->is_html = !empty($params['_is_html']);
 
 		$string = preg_replace('/\s+/', '', $string);
 
@@ -1970,7 +1979,7 @@ class ToolbarsList
 						$group = array();
 					}
 				} else {
-					if ( ( $tag = Toolbar::getTag($tagName) )
+					if ( ( $tag = Toolbar::getTag($tagName, $this->wysiwyg, $this->is_html) )
 						&& $tag->isAccessible() ) {
 
 						$group[] = $tag;
