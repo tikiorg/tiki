@@ -413,6 +413,12 @@ if ( function_exists('apc_sma_info') && ini_get('apc.enabled') ) {
 		'setting' => 'xCache',
 		'message' => tra('You are using xCache as your ByteCode Cache which increases performance, if correctly configured. See Admin->Performance in your Tiki for more details.')
 	);
+} elseif ( function_exists('opcache_get_configuration') && ( ini_get('opcache.enable') == 1 || ini_get('opcache.enable') == '1') ) {
+	$php_properties['ByteCode Cache'] = array(
+		'fitness' => tra('good'),
+		'setting' => 'OpCache',
+		'message' => tra('You are using OpCache as your ByteCode Cache which increases performance, if correctly configured. See Admin->Performance in your Tiki for more details.')
+	);
 } elseif ( function_exists('wincache_ocache_fileinfo') && ( ini_get('wincache.ocenabled') == '1') ) {
 	$sapi_type = php_sapi_name();
 	if ($sapi_type == 'cgi-fcgi') {
@@ -439,7 +445,7 @@ if ( function_exists('apc_sma_info') && ini_get('apc.enabled') ) {
 		$php_properties['ByteCode Cache'] = array(
 			'fitness' => tra('info'),
 			'setting' => 'N/A',
-			'message' => tra('You are using neither APC nor xCache as your ByteCode Cache which would increase performance, if correctly configured. See Admin->Performance in your Tiki for more details.')
+			'message' => tra('You are using neither APC, nor xCache, nor OpCache as your ByteCode Cache which would increase performance, if correctly configured. See Admin->Performance in your Tiki for more details.')
 		);
 	}
 }
