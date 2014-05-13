@@ -27,6 +27,7 @@ class MailQueueSendCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
       require_once ("lib/mail/maillib.php");
+      global $prefs;
 
       tiki_mail_setup();
       echo ("Mail queue processor starting...\n");
