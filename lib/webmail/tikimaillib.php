@@ -114,7 +114,7 @@ class TikiMail
 			$this->mail->addTo($to);
 		}
 
-        if ($prefs['zend_mail_queue'] == 'y') {
+        if ($prefs['zend_mail_handler'] == 'smtp' && $prefs['zend_mail_queue'] == 'y') {
             $query = "INSERT INTO `tiki_mail_queue` (message) VALUES (?)";
 		    $bindvars = array(serialize($this->mail));
 			$tikilib->query($query, $bindvars, -1, 0);
