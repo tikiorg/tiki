@@ -11,6 +11,7 @@ class Services_AutoSave_Controller
 	{
 		Services_Exception_Disabled::check('feature_ajax');
 		Services_Exception_Disabled::check('ajax_autosave');
+		Services_Exception_Disabled::check('feature_warn_on_edit');
 	}
 
 	/**

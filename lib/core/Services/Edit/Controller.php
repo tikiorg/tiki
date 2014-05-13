@@ -68,6 +68,8 @@ class Services_Edit_Controller
 	function action_preview($input)
 	{
 
+		Services_Exception_Disabled::check('feature_warn_on_edit');
+
 		global $user, $prefs, $tikiroot;
 		$tikilib = TikiLib::lib('tiki');
 
