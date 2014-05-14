@@ -124,7 +124,7 @@ fi
 
 # hint for users
 #POSSIBLE_COMMANDS='open|fix|nothing'
-POSSIBLE_COMMANDS="fix|insane|mixed|morepain|moreworry|nothing|open|pain|paranoia|paranoia-suphp|risky|sbox|worry"
+POSSIBLE_COMMANDS="composer|fix|insane|mixed|morepain|moreworry|nothing|open|pain|paranoia|paranoia-suphp|risky|sbox|sboxworkaround|suphpworkaround|worry"
 #HINT_FOR_USER="Type 'fix', 'nothing' or 'open' as command argument."
 HINT_FOR_USER="\nType 'fix', 'nothing' or 'open' as command argument.
 \nIf you used Tiki Permission Check via PHP, you know which of the following commands will probably work:
