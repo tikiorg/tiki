@@ -130,36 +130,37 @@
 						<li role="presentation">
 							{section name=back loop=$backlinks}
 								<a role="menuitem" tabindex="-1" href="{$backlinks[back].fromPage|sefurl:'wiki'}" title="{$backlinks[back].fromPage|escape}">
-										{if $prefs.wiki_backlinks_name_len ge '1'}{$backlinks[back].fromPage|truncate:$prefs.wiki_backlinks_name_len:"...":true|escape}{else}{$backlinks[back].fromPage|escape}{/if}
+									{if $prefs.wiki_backlinks_name_len ge '1'}{$backlinks[back].fromPage|truncate:$prefs.wiki_backlinks_name_len:"...":true|escape}{else}{$backlinks[back].fromPage|escape}{/if}
 								</a>
 							{/section}
 						</li>
 					</ul>
 				</div>
 			{/if}
-			{if ( $structure eq 'y' and count($showstructs) gt 1 ) or ( $structure eq 'n' and count($showstructs) neq 0 )}
-				<div class="structure_select">
-					<ul class="clearfix cssmenu_horiz">
-						<li class="tabmark">
-							{icon _id=chart_organisation title="{tr}Structures{/tr}" class="icon"}
-							<ul class="structure_poppedup">
-								<li class="tabcontent">
-									{section name=struct loop=$showstructs}
-										<a href="tiki-index.php?page={$page}&structure={$showstructs[struct].pageName|escape}" {if $showstructs[struct].pageName eq $structure_path[0].pageName} title="Current structure: {$showstructs[struct].pageName|escape}" class="selected" {else} title="Show structure: {$showstructs[struct].pageName|escape}"{/if}>
-											{if $showstructs[struct].page_alias}														
-												{$showstructs[struct].page_alias}
-											{else}
-												{$showstructs[struct].pageName}
-											{/if}
-										</a>
-									{/section}
-									{if $showstructs[struct].pageName neq $structure_path[0].pageName}
-										<a href="tiki-index.php?page={$page|escape:url}" title="{tr}Hide structure bar{/tr}">
-											{tr}Hide structure{/tr}
-										</a>
-									{/if}	
+			{if $structure eq 'y' or ( $structure eq 'n' and count($showstructs) neq 0 )}
+				<div class="btn-group structures">
+					<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+						{icon _id=chart_organisation title="{tr}Structures{/tr}" class="icon"}							
+					</button>
+					<ul class="structure_poppedup dropdown-menu" role="menu">
+						<li role="presentation">
+							{section name=struct loop=$showstructs}
+								<a href="tiki-index.php?page={$page}&structure={$showstructs[struct].pageName|escape}" {if $showstructs[struct].pageName eq $structure_path[0].pageName} title="Current structure: {$showstructs[struct].pageName|escape}" class="selected" {else} title="Show structure: {$showstructs[struct].pageName|escape}"{/if}>
+									{if $showstructs[struct].page_alias}														
+										{$showstructs[struct].page_alias}
+									{else}
+										{$showstructs[struct].pageName}
+									{/if}
+								</a>
+							{/section}
+							{if $showstructs[struct].pageName neq $structure_path[0].pageName}
+								<li role="presentation" class="divider"></li>
+								<li role="presentation">
+									<a href="tiki-index.php?page={$page|escape:url}" title="{tr}Hide structure bar{/tr}">
+										{tr}Hide structure{/tr}
+									</a>
 								</li>
-							</ul>
+							{/if}	
 						</li>
 					</ul>
 				</div>
