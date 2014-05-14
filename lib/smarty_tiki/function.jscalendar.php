@@ -114,7 +114,6 @@ function smarty_function_jscalendar($params, $smarty)
 	if ( $display_tz == '' ) {
 		$display_tz = 'UTC';
 	}
-	$html .= '<span class="description">' . tra('Time zone') . ': ' . $display_tz . '</span>';
 
 	// TODO use a parsed version of $prefs['short_date_format']
 	// Note: JS timestamp is in milliseconds - php is seconds
@@ -128,6 +127,8 @@ function smarty_function_jscalendar($params, $smarty)
 		);
 
 	} else {
+		// add timezone info if showing the time
+		$html .= '<span class="description">' . tra('Time zone') . ': ' . $display_tz . '</span>';
 		// datetime picker
 
 		$command = 'datetimepicker';
