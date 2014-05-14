@@ -985,6 +985,8 @@ case ${COMMAND} in
 	sboxworkaround)		set_permission_data_workaround_sbox ;;
 	suphpworkaround)	set_permission_data_workaround_suphp ;;
 	worry)			permission_via_php_check ;;
+	# composer
+	composer)		composer ;;
 	# plain chmod
 	gmr)			set_group_minus_read ;;
 	gmw)			set_group_minus_write ;;
