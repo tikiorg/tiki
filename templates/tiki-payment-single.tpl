@@ -130,7 +130,7 @@
 						<input type="submit" value="{tr}Proceed to Israel Post{/tr}">
 					</form>
 					{* Note: width specified by specifications, not height *}
-					<iframe id="israelpost_iframe" name="israelpost_iframe" src="#" style="width: 445px; height: 300px; display: none; border: none;">
+					<iframe id="israelpost_iframe" name="israelpost_iframe" src="" style="width: 445px; height: 700px; display: none; border: none;">
 					</iframe>
 					{jq}
 						$('#israelpost_form').submit(function () {
