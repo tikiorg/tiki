@@ -100,8 +100,8 @@ class TikiLdapLib
 			$this->options['version'] = intval($options['version']);
 		}
 
-		if (isset($options['startls']) && !empty($options['startls'])) {
-			$this->options['startls'] = ($options['startls'] === true || $options['startls'] == 'y');
+		if (isset($options['starttls']) && !empty($options['starttls'])) {
+			$this->options['starttls'] = ($options['starttls'] === true || $options['starttls'] == 'y');
 		}
 
 		if (isset($options['groupmemberisdn']) && !empty($options['groupmemberisdn'])) {
