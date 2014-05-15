@@ -33,6 +33,10 @@ function smarty_function_html_body_attributes($params, $smarty)
 	if ($prefs['feature_fixed_width'] == 'y') {
 		$class .= ' fixed_width ';
 	}
+
+    if ($prefs['site_layout']) {
+        $class .= layout_.$prefs['site_layout'];
+    }
 	
 	if (!empty($_REQUEST['filegals_manager'])) {
 		$class .= ' filegal_popup ';
