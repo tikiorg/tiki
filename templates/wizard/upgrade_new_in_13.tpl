@@ -23,30 +23,16 @@
     <fieldset class="table clearfix featurelist">
         <legend>{tr}Goal, Recognition and Rewards{/tr}</legend>
         {preference name=goal_enabled}
-        {preference name=goal_badge_tracker}
-        {preference name=goal_group_blacklist}
-    </fieldset>
-
-    <fieldset class="table clearfix featurelist">
-        <legend>{tr}Jitsi{/tr}</legend>
-        <div class="form-row">
-            <label for="jitsi-url">{tr}Provision URL{/tr}</label>
-            <input id="jitsi-url" readonly type="text" value="{$jitsi_url|escape}" class="form-control">
-        </div>
-        {preference name=suite_jitsi_provision}
-        {preference name=suite_jitsi_configuration}
-    </fieldset>
-
-    <fieldset class="table clearfix featurelist">
-        <legend>{tr}Must reads{/tr}</legend>
-        {tr}Some information (to come) about the must reads feature. In the meantime, see http://dev.tiki.org/Must+Reads+Feature{/tr}
+            <div class="adminoptionboxchild" id="goal_enabled_childcontainer">
+		        {preference name=goal_badge_tracker}
+		        {preference name=goal_group_blacklist}
+	        </div>
     </fieldset>
 
     <fieldset class="table clearfix featurelist">
         <legend>{tr}Notifications{/tr}</legend>
         {preference name=monitor_enabled}
         <div class="adminoptionboxchild" id="monitor_enabled_childcontainer">
-
             {preference name=monitor_individual_clear}
             {preference name=monitor_count_refresh_interval}
             {preference name=monitor_reply_email_pattern}
@@ -58,6 +44,16 @@
                 <code>/usr/bin/php {$monitor_command|escape}</code>
             </div>
         </div>
+    </fieldset>
+
+    <fieldset class="table clearfix featurelist">
+        <legend>{tr}Jitsi{/tr}</legend>
+        <div class="form-row">
+            <label for="jitsi-url">{tr}Provision URL{/tr}</label>
+            <input id="jitsi-url" readonly type="text" value="{$jitsi_url|escape}" class="form-control">
+        </div>
+        {preference name=suite_jitsi_provision}
+        {preference name=suite_jitsi_configuration}
     </fieldset>
 
 </div>
