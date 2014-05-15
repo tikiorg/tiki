@@ -12,10 +12,10 @@
 		{/if}
 		
 		<div class="container">
-			<div class="row">
+            <div class="row page-header">
 				<div class="col-md-12">
 					{modulelist zone=top}
-				</div>
+                </div>
 			</div>
 			<div class="row">
 				<div class="col-md-12">
