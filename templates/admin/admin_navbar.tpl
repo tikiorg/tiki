@@ -110,7 +110,7 @@
 		</ul>
 	</div>
 	{if $include != "list_sections"}
-		<div class="adminanchors clearfix">{include file='admin/include_anchors.tpl'}</div>
+		<div class="adminanchors panel-body clearfix">{include file='admin/include_anchors.tpl'}</div>
 	{/if}
 </nav>
 
