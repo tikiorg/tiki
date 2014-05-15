@@ -51,10 +51,16 @@ class Tracker_Field_JsCalendar extends Tracker_Field_DateTime
 
 		$ins_id = $this->getInsertId();
 
+		$value = (isset($requestData[$ins_id]))
+			? $requestData[$ins_id]
+			: $this->getValue();
+
+		if (!empty($value) && !is_int((int) $value)) {	// prevent corrupted date values getting saved (e.g. from inline edit sometimes)
+			$value = '';
+			TikiLib::lib('errorreport')->report(tr('Date Picker Field: "%0" is not a valid internal date value', $value));
+		}
 		return array(
-			'value' => (isset($requestData[$ins_id]))
-				? $requestData[$ins_id]
-				: $this->getValue(),
+			'value' => $value,
 		);
 	}
 
