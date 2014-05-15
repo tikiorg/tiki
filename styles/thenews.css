@@ -5580,87 +5580,6 @@ button.close {
     bottom: 20px;
   }
 }
-.clearfix:before,
-.clearfix:after,
-.container:before,
-.container:after,
-.container-fluid:before,
-.container-fluid:after,
-.row:before,
-.row:after,
-.form-horizontal .form-group:before,
-.form-horizontal .form-group:after,
-.btn-toolbar:before,
-.btn-toolbar:after,
-.btn-group-vertical > .btn-group:before,
-.btn-group-vertical > .btn-group:after,
-.nav:before,
-.nav:after,
-.navbar:before,
-.navbar:after,
-.navbar-header:before,
-.navbar-header:after,
-.navbar-collapse:before,
-.navbar-collapse:after,
-.pager:before,
-.pager:after,
-.panel-body:before,
-.panel-body:after,
-.modal-footer:before,
-.modal-footer:after {
-  content: " ";
-  display: table;
-}
-.clearfix:after,
-.container:after,
-.container-fluid:after,
-.row:after,
-.form-horizontal .form-group:after,
-.btn-toolbar:after,
-.btn-group-vertical > .btn-group:after,
-.nav:after,
-.navbar:after,
-.navbar-header:after,
-.navbar-collapse:after,
-.pager:after,
-.panel-body:after,
-.modal-footer:after {
-  clear: both;
-}
-.center-block {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-}
-.pull-right {
-  float: right !important;
-}
-.pull-left {
-  float: left !important;
-}
-.hide {
-  display: none !important;
-}
-.show {
-  display: block !important;
-}
-.invisible {
-  visibility: hidden;
-}
-.text-hide {
-  font: 0/0 a;
-  color: transparent;
-  text-shadow: none;
-  background-color: transparent;
-  border: 0;
-}
-.hidden {
-  display: none !important;
-  visibility: hidden !important;
-}
-.affix {
-  position: fixed;
-}
 @-ms-viewport {
   width: device-width;
 }
@@ -5778,8 +5697,70 @@ button.close {
   margin: auto;
   padding-bottom: 0;
 }
+.row.page-header {
+  margin-left: -15px;
+  margin-right: -15px;
+}
 body.navbar-padding {
   padding-top: 70px;
+}
+.dropdown-menu {
+  padding: 0;
+}
+body > .container {
+  border: 1px solid #aaa;
+  margin-top: 18px;
+  margin-bottom: 18px;
+}
+.container {
+  background: #fff;
+  border-left: 1px solid #aaa;
+  border-right: 1px solid #aaa;
+}
+#col1 {
+  margin-left: -1px;
+  margin-right: -1px;
+}
+#col2 {
+  margin-right: -1px;
+  margin-left: 1px;
+}
+#col2 .content {
+  margin-left: -15px;
+  margin-right: -15px;
+}
+#col3 {
+  margin-right: 0;
+}
+#col3 .content {
+  margin-left: -15px;
+  margin-right: -15px;
+}
+#col1,
+#col2,
+#col3 {
+  border: 1px solid #aaa;
+  /*border-width: 0 1px;*/
+}
+#col3 {
+  border-right-width: 0;
+}
+h3.panel-title {
+  color: black;
+  font: 90% "Arial", "Helvetica", sans-serif;
+  font-weight: bold;
+  /*  height: 18px;  margin: 0px 0px 7px 1em;  padding: 0px;*/
+  text-transform: uppercase;
+}
+#col2 .panel-default,
+#col3 .panel-default,
+#col2 .panel-default > .panel-heading,
+#col3 .panel-default > .panel-heading {
+  border: none;
+}
+#col2 .panel-heading,
+#col3 .panel-heading {
+  padding: 10px 15px 0 10px;
 }
 /* becomes height using padding (so it's divided by 2) */
 /* url(icons/loading.gif); */
@@ -5933,58 +5914,84 @@ span.pagesizelabel {
   float: left;
   margin-right: 4px;
 }
-body > .container {
-  border: 1px solid #aaa;
-  margin-top: 18px;
-  margin-bottom: 18px;
+.clearfix:before,
+.clearfix:after,
+.container:before,
+.container:after,
+.container-fluid:before,
+.container-fluid:after,
+.row:before,
+.row:after,
+.form-horizontal .form-group:before,
+.form-horizontal .form-group:after,
+.btn-toolbar:before,
+.btn-toolbar:after,
+.btn-group-vertical > .btn-group:before,
+.btn-group-vertical > .btn-group:after,
+.nav:before,
+.nav:after,
+.navbar:before,
+.navbar:after,
+.navbar-header:before,
+.navbar-header:after,
+.navbar-collapse:before,
+.navbar-collapse:after,
+.pager:before,
+.pager:after,
+.panel-body:before,
+.panel-body:after,
+.modal-footer:before,
+.modal-footer:after {
+  content: " ";
+  display: table;
 }
-.container {
-  background: #fff;
-  border-left: 1px solid #aaa;
-  border-right: 1px solid #aaa;
+.clearfix:after,
+.container:after,
+.container-fluid:after,
+.row:after,
+.form-horizontal .form-group:after,
+.btn-toolbar:after,
+.btn-group-vertical > .btn-group:after,
+.nav:after,
+.navbar:after,
+.navbar-header:after,
+.navbar-collapse:after,
+.pager:after,
+.panel-body:after,
+.modal-footer:after {
+  clear: both;
 }
-#col1 {
-  margin-left: -1px;
-  margin-right: -1px;
+.center-block {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
-#col2 {
-  margin-right: -1px;
-  margin-left: 1px;
+.pull-right {
+  float: right !important;
 }
-#col2 .content {
-  margin-left: -15px;
-  margin-right: -15px;
+.pull-left {
+  float: left !important;
 }
-#col3 {
-  margin-right: 0;
+.hide {
+  display: none !important;
 }
-#col3 .content {
-  margin-left: -15px;
-  margin-right: -15px;
+.show {
+  display: block !important;
 }
-#col1,
-#col2,
-#col3 {
-  border: 1px solid #aaa;
-  /*border-width: 0 1px;*/
+.invisible {
+  visibility: hidden;
 }
-#col3 {
-  border-right-width: 0;
+.text-hide {
+  font: 0/0 a;
+  color: transparent;
+  text-shadow: none;
+  background-color: transparent;
+  border: 0;
 }
-h3.panel-title {
-  color: black;
-  font: 90% "Arial", "Helvetica", sans-serif;
-  font-weight: bold;
-  /*  height: 18px;  margin: 0px 0px 7px 1em;  padding: 0px;*/
-  text-transform: uppercase;
+.hidden {
+  display: none !important;
+  visibility: hidden !important;
 }
-#col2 .panel-default,
-#col3 .panel-default,
-#col2 .panel-default > .panel-heading,
-#col3 .panel-default > .panel-heading {
-  border: none;
-}
-#col2 .panel-heading,
-#col3 .panel-heading {
-  padding: 10px 15px 0 10px;
+.affix {
+  position: fixed;
 }
