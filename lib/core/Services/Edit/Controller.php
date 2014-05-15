@@ -70,7 +70,7 @@ class Services_Edit_Controller
 
 		Services_Exception_Disabled::check('feature_warn_on_edit');
 
-		global $user, $prefs, $tikiroot;
+		global $user, $prefs, $page;
 		$tikilib = TikiLib::lib('tiki');
 
 		$autoSaveIdParts = explode(':', $input->autoSaveId->text());	// user, section, object id
@@ -86,7 +86,9 @@ class Services_Edit_Controller
 
 		$info = $tikilib->get_page_info($page, false);
 		if (empty($info)) {
-			return '';	// no page info?
+			$info = array(		// new page
+				'data' => '',
+			);
 		}
 
 		$info['is_html'] = $input->allowHtml->int();
@@ -97,7 +99,8 @@ class Services_Edit_Controller
 		$options = array(
 			'is_html' => $info['is_html'],
 			'preview_mode' => true,
-			'process_wiki_paragraphs' => ($prefs['wysiwyg_htmltowiki'] === 'y' || $info['wysiwyg'] == 'n'), 'page' => $autoSaveIdParts[2],
+			'process_wiki_paragraphs' => ($prefs['wysiwyg_htmltowiki'] === 'y' || $info['wysiwyg'] == 'n'),
+			'page' => $page,
 		);
 
 		if (count($autoSaveIdParts) === 3 && !empty($user) && $user === $autoSaveIdParts[0] && $autoSaveIdParts[1] === 'wiki_page') {
@@ -118,39 +121,39 @@ class Services_Edit_Controller
 				);
 				TikiLib::lib('smarty')->assign('diff_style', $diffstyle);
 				if ($diffstyle) {
-					$info = $tikilib->get_page_info($autoSaveIdParts[2]);
-					if (!empty($info)) {
-						if ($input->hdr->int()) {		// TODO refactor with code in editpage
-							if ($input->hdr->int() === 0) {
-								list($real_start, $real_len) = $tikilib->get_wiki_section($info['data'], 1);
-								$real_len = $real_start;
-								$real_start = 0;
-							} else {
-								list($real_start, $real_len) = $tikilib->get_wiki_section($info['data'], $input->hdr->int());
-							}
-							$info['data'] = substr($info['data'], $real_start, $real_len);
-						}
-						require_once('lib/diff/difflib.php');
-						if ($info['is_html'] == 1) {
-							$diffold = $tikilib->htmldecode($info['data']);
-						} else {
-							$diffold = $info['data'];
-						}
-						if ($info['is_html']) {
-							$diffnew = $tikilib->htmldecode($data);
-						} else {
-							$diffnew = $data;
-						}
-						if ($diffstyle === 'htmldiff') {
-							$diffnew = $tikilib->parse_data($diffnew, $options);
-							$diffold = $tikilib->parse_data($diffold, $options);
-						}
-						$data = diff2($diffold, $diffnew, $diffstyle);
-						$smarty->assign_by_ref('diffdata', $data);
-
-						$smarty->assign('translation_mode', 'y');
-						$data = $smarty->fetch('pagehistory.tpl');
+					if (!empty($info['created'])) {
+						$info = $tikilib->get_page_info($page); // get page with data this time
 					}
+					if ($input->hdr->int()) {		// TODO refactor with code in editpage
+						if ($input->hdr->int() === 0) {
+							list($real_start, $real_len) = $tikilib->get_wiki_section($info['data'], 1);
+							$real_len = $real_start;
+							$real_start = 0;
+						} else {
+							list($real_start, $real_len) = $tikilib->get_wiki_section($info['data'], $input->hdr->int());
+						}
+						$info['data'] = substr($info['data'], $real_start, $real_len);
+					}
+					require_once('lib/diff/difflib.php');
+					if ($info['is_html'] == 1) {
+						$diffold = $tikilib->htmldecode($info['data']);
+					} else {
+						$diffold = $info['data'];
+					}
+					if ($info['is_html']) {
+						$diffnew = $tikilib->htmldecode($data);
+					} else {
+						$diffnew = $data;
+					}
+					if ($diffstyle === 'htmldiff') {
+						$diffnew = $tikilib->parse_data($diffnew, $options);
+						$diffold = $tikilib->parse_data($diffold, $options);
+					}
+					$data = diff2($diffold, $diffnew, $diffstyle);
+					$smarty->assign_by_ref('diffdata', $data);
+
+					$smarty->assign('translation_mode', 'y');
+					$data = $smarty->fetch('pagehistory.tpl');
 				} else {
 					$data = $tikilib->parse_data($data, $options);
 				}
