@@ -43,7 +43,7 @@
             <ul>
                 <li>{tr}Enables Trackers and sets up a few fields to create a basic 'contact us' form as a starting point{/tr}</li>
                 <li>{tr}New fields can be added asking questions specific for the site{/tr}</li>
-                <li>{tr}You decide where and when to display the link to the constact us form in your Tiki menus and pages{/tr}</li>
+                <li>{tr}You decide where and when to display the link to the contact us form in your Tiki menus and pages{/tr}</li>
             </ul>
             {tr}Click to read more{/tr}">
                 <img src="img/icons/help.png" alt="" width="16" height="16" class="icon" />
