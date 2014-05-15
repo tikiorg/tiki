@@ -1,4 +1,4 @@
-{if $wiki_authors_style eq 'business'}
+<em>{if $wiki_authors_style eq 'business'}
 	{tr}Last edited by{/tr} {$lastUser|userlink}
 	{section name=author loop=$contributors}
 		{if $smarty.section.author.first}
@@ -53,3 +53,4 @@
 		{tr _0=$revision_approval_info.user|userlink _1=$revision_approval_info.lastModif|tiki_long_datetime}Page approved by %0 on %1{/tr}
 	{/if}
 {/if}
+</em>
