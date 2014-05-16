@@ -66,7 +66,7 @@ if ($("#antibotcode").parents('form').data("validator")) {
             }
         },
         messages: {
-            "captcha[input]": { required: "This field is required"},
+            "captcha[input]": { required: "This field is required"}
         },
         submitHandler: function(){form.submit();}
     });
