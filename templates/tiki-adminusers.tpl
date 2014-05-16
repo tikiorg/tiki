@@ -450,30 +450,27 @@
 			<div class="form-group">
 				<label class="col-sm-3 col-md-2 control-label" for="login">{if $prefs.login_is_email eq 'y'}{tr}Email{/tr}{else}{tr}User{/tr}{/if}</label>
 				<div class="col-sm-7 col-md-6">
-					{if empty($userlogin)}
-						<input type="text" class="form-control" id="login" name="login">
-					{else}
-						{if $userinfo.login neq 'admin'}
-							<input type="text" id='login' class="form-control" name='login' value="{$userinfo.login|escape}">
+					{if $userinfo.login neq 'admin'}
+						<input type="text" id='login' class="form-control" name='login' value="{$userinfo.login|escape}">
+						{if $prefs.login_is_email eq 'y'}
 							<br>
-							{if $prefs.login_is_email eq 'y'}
-								<em>{tr}Use the email as username{/tr}.</em>
-							{elseif $prefs.lowercase_username eq 'y'}
-								<em>{tr}Lowercase only{/tr}</em>.
-							{/if}
+							<em>{tr}Use the email as username{/tr}.</em>
+						{elseif $prefs.lowercase_username eq 'y'}
 							<br>
-							{if isset($userinfo.userId) && $userinfo.userId}
-								<p>
-									{icon _id='exclamation' alt="{tr}Warning{/tr}" style="vertical-align:middle"}
-									<em>{tr}Warning: changing the username could require the user to change his password (for user registered with an old Tiki&lt;=1.8){/tr}</em>
-								</p>
+							<em>{tr}Lowercase only{/tr}</em>.
+						{/if}
+						{if isset($userinfo.userId) && $userinfo.userId}
+							<p>
+								{icon _id='exclamation' alt="{tr}Warning{/tr}" style="vertical-align:middle"}
+								<em>{tr}Warning: changing the username could require the user to change his password (for user registered with an old Tiki&lt;=1.8){/tr}</em>
 								{if $prefs.feature_intertiki_server eq 'y'}
+									<br>
 									<i>{tr}Warning: it will mess with slave intertiki sites that use this one as master{/tr}</i>
 								{/if}
-							{/if}
-						{else}
-							<input type="hidden" class="form-control" name='login' value="{$userinfo.login|escape}">{$userinfo.login}
+							</p>
 						{/if}
+					{else}
+						<input type="hidden" class="form-control" name='login' value="{$userinfo.login|escape}">{$userinfo.login}
 					{/if}
 				</div>
 			</div>
