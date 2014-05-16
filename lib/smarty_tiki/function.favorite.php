@@ -26,7 +26,8 @@ function smarty_function_favorite($params, $smarty)
 	));
 
 	$url = smarty_modifier_escape($url);
+	$e_user = smarty_modifier_escape($user);
 
-	return '<a class="btn btn-default favorite-toggle" href="' . $url . '">' . tr('Favorite') . '</a>';
+	return '<a class="btn btn-default favorite-toggle" href="' . $url . '" data-key="favorite_' . $e_user . '">' . tr('Favorite') . '</a>';
 }
 
