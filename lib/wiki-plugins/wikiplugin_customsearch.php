@@ -100,6 +100,17 @@ function wikiplugin_customsearch_info()
 				'filter' => 'digits',
 				'default' => '0',
 			),
+			'forcesortmode' => array(
+				'required' => false,
+				'name' => tra('Force sort mode overriding result relevance'),
+				'description' => tra('Force the use of specified sort mode in place of search relevance even when there is a text search query'),
+				'options' => array(
+					array('text' => tra('No'), 'value' => '0'),
+					array('text' => tra('Yes'), 'value' => '1'),
+				),
+				'filter' => 'digits',
+				'default' => '0',
+			),
 		),
 	);
 }
@@ -129,6 +140,9 @@ function wikiplugin_customsearch($data, $params)
 	}
 	if (!isset($params['requireinput'])) {
 		$params['requireinput'] = 0;
+	}
+	if (!isset($params['forcesortmode'])) {
+		$params['forcesortmode'] = 0;
 	}
 	if (!isset($_REQUEST["offset"])) {
 		$offset = 0;
@@ -221,6 +235,7 @@ function wikiplugin_customsearch($data, $params)
 		'searchonload' => (int) $params['searchonload'],
 		'requireinput' => (bool) $params['requireinput'],
 		'origrequireinput' => (bool) $params['requireinput'],
+		'forcesortmode' => (bool) $params['forcesortmode'],
 	);
 
 	/**
@@ -376,6 +391,9 @@ customsearch._load = function (receive) {
 		page: " . json_encode($page) . ",
 		recalllastsearch: $recalllastsearch
 	};
+	if (!customsearch.options.forcesortmode && $('#customsearch_$id').find(':text').val() && $('#customsearch_$id').find(':text').val().indexOf('...') <= 0) {
+		customsearch.sort_mode = 'score_desc';
+	}
 	if (customsearch.sort_mode) {
 		// blank sort_mode is not allowed by Tiki input filter
 		datamap.sort_mode = customsearch.sort_mode;
