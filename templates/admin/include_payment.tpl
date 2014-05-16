@@ -88,6 +88,10 @@
 		{tab name="{tr}Advanced Shopping Cart{/tr}"}
             <h2>{tr}Advanced Shopping Cart{/tr}</h2>
 			<fieldset>
+				<label>{tr}Cart Settings{/tr}</label>
+				{preference name=payment_cart_heading}
+			</fieldset>
+			<fieldset>
 				<legend>{tr}Advanced Cart Tracker Names Setup{/tr}</legend>
 				{preference name=payment_cart_product_tracker_name}
 				{preference name=payment_cart_orders_tracker_name}
