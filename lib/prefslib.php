@@ -226,7 +226,7 @@ class PreferencesLib
 		return array(
 			'_id' => 'connect_' . $vote,
 			'title' => $label,
-			'href' => '#', 'onclick' => 'connectVote("' . $pref . '", "'. $vote .'", this);return false;',
+			'href' => '#', 'onclick' => 'connectVote(\'' . $pref . '\', \''. $vote .'\', this);return false;',
 			'class' => 'icon connectVoter',
 			'style' => 'display:none',
 		);
