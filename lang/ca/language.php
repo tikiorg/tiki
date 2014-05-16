@@ -14652,7 +14652,7 @@ $lang = array(
 "Allow user selection for small groups" => "Permetre la selecció d'usuari per a grups petits",
 "User can see his own items" => "L'usuari pot veure els seus propis ítems",
 "The tracker needs a user field with the auto-assign activated" => "El formulari-bd té un camp d'usuari que té activada l'auto-assignació",
-"No extra pemission is needed at the tracker permissions level to allow a user to see just his own items through Plugin TrackerList with the param view=user" => "No cal cap permís extra a nivell de permisos de formulari-bd per a permetre a un usuari de veure només els seus ítems a través del connector (plugin) TrackerList amb el paràmetre view=user",
+"No extra permission is needed at the tracker permissions level to allow a user to see just his own items through Plugin TrackerList with the param view=user" => "No cal cap permís extra a nivell de permisos de formulari-bd per a permetre a un usuari de veure només els seus ítems a través del connector (plugin) TrackerList amb el paràmetre view=user",
 "Item creator can modify his items" => "El creador de l'ítem pot modificar els seus ítems",
 "Item creator can remove his items" => "El creador de l'ítem pot eliminar els seus ítems",
 "User can take ownership of item created by anonymous" => "L'usuari pot prendre possessió de l'objecte creat per usuaris anònims",
