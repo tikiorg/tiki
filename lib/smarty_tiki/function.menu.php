@@ -20,6 +20,8 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
  * - menu_cookie=y|n (default y) n, it will automatically open the submenu the url is in
  * - sectionLevel: displays from this level only
  * - toLevel : displays to this level only
+ * - drilldown ??
+ * - bootstrap : navbar|basic (equates to horiz or vert in old menus)
  */
 function smarty_function_menu($params, $smarty)
 {
@@ -48,6 +50,9 @@ function smarty_function_menu($params, $smarty)
 	$smarty->assignByRef('menu_cookie', $menu_cookie);
 	if (empty($drilldown)) {
 		$drilldown = 'n';
+	}
+	if (!isset($css)) {
+		$css = 'y';
 	}
 	if ($css !== 'n' && $prefs['feature_cssmenus'] == 'y' && $drilldown != 'y') {
 		static $idCssmenu = 0;

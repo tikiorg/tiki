@@ -37,9 +37,19 @@ function module_menu_info()
 				'description' => tra('Direction for menu: horiz or vert (default vert)'),
 				'filter' => 'text',
 			),
+			'bootstrap' => array(
+				'name' => tra('Use Bootstrap menus'),
+				'description' => tra('').' ( y / n )',
+				'default' => 'y'
+			),
+			'navbar_toggle' => array(
+				'name' => tra('Show Navbar Toggle Button'),
+				'description' => tra('Used in Bootstrap navbar menus when viewport is too narrow for menu items').' ( y / n )',
+				'default' => 'y'
+			),
 			'css' => array(
 				'name' => tra('CSS/Superfish'),
-				'description' => tra('Use CSS Superfish menu. y|n (default y)'),
+				'description' => tra('Use CSS Superfish menu (if bootstrap = n). y|n (default y)'),
 				'filter' => 'alpha',
 			),
 			'menu_id' => array(
@@ -80,7 +90,7 @@ function module_menu_info()
 				'name' => tra('Show Namespace'),
 				'description' => tra('Show namespace prefix in page names').' ( y / n )',	// Do not translate y/n	
 				'default' => 'y'
-				),
+			),
 		)
 	);
 }
