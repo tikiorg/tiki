@@ -532,7 +532,7 @@
 					<tr>
 						<td>&nbsp;</td>
 						<td>
-							<label><input type="checkbox" name="need_email_validation" {if ($userinfo.login eq '' and ($prefs.validateUsers eq 'y' or $prefs.validateRegistration eq 'y')) or $userinfo.provpass neq ''}checked="checked" {/if}{if !empty($userinfo.login)} disabled="disabled"{/if}> 
+							<label><input type="checkbox" name="need_email_validation" {if ($userinfo.login eq '' and ($prefs.validateUsers eq 'y' or $prefs.validateRegistration eq 'y')) or $userinfo.provpass neq ''}checked="checked"{/if}>
 							{tr}Send an email to the user in order to allow him to validate his account.{/tr}</label> 
 							
 							{if empty($prefs.sender_email)}<br><span class="highlight">{tr}You need to set <a href="tiki-admin.php?page=general">Sender Email</a>{/tr}</span>{/if}						

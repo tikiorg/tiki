@@ -169,6 +169,7 @@ function batchImportUsers()
 				(!empty($_REQUEST['notification']) ? 'u' : NULL)
 			);
 
+			global $user;
 			$logslib->add_log('adminusers', sprintf(tra('Created account %s <%s>'), $u['login'], $u['email']), $user);
 			if (!empty($_REQUEST['notification'])) {
 				$realpass = $pass_first_login ? '' : $u['password'];
@@ -704,6 +705,13 @@ if (isset($_REQUEST['user']) and $_REQUEST['user']) {
 				);
 			}
 		}
+		// check need_email_validation
+		if (!empty($_POST['login']) && !empty($_POST['email']) && !empty($_POST['need_email_validation'])) {
+			$userlib->invalidate_account($_POST['login']);
+			$userinfo = $userlib->get_user_info($_POST['login']);
+			$userlib->send_validation_email($_POST['login'], $userinfo['valid'], $_POST['email'], 'y');
+		}
+
 		$cookietab = '1';
 	}
 
