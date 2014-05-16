@@ -807,12 +807,12 @@ class CartLib
 				$shopperinfo_descvar = 'email'; // TODO: make this a pref
 				if (!empty($_SESSION['shopperinfo'][$shopperinfo_descvar])) {
 					$shopperinfo_desc = $_SESSION['shopperinfo'][$shopperinfo_descvar];
-					$description = tra('Registration Check-Out') . " ($shopperinfo_desc)";
+					$description = tra($prefs['payment_cart_heading']) . " ($shopperinfo_desc)";
 				} else {
-					$description = tra('Registration Check-Out');
+					$description = tra($prefs['payment_cart_heading']);
 				}
 			} else {
-				$description = tra('Registration Check-Out') . " ($user)";
+				$description = tra($prefs['payment_cart_heading']) . " ($user)";
 			}
 			$invoice = $paymentlib->request_payment($description, $total, $prefs['payment_default_delay'], $this->get_description());
 			foreach ( $this->get_behaviors() as $behavior ) {

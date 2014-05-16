@@ -444,6 +444,13 @@ function prefs_payment_list()
 			'type' => 'text',
 			'default' => '',
 		),
+		'payment_cart_heading' => array(
+			'name' => tra('Payment Heading'),
+			'description' => tra('Heading displayed on payment form'),
+			'type' => 'text',
+			'filter' => 'text',
+			'default' => 'Cart Check-Out',
+		),
 		'payment_israelpost_environment' => array(
 			'name' => tra('Israel Post Payment Environment'),
 			'description' => tra('Switch between test transactions and real transactions'),
