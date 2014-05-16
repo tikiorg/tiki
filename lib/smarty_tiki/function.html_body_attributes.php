@@ -12,7 +12,7 @@
 
 function smarty_function_html_body_attributes($params, $smarty)
 {
-	global $section, $prefs, $cookietab, $page, $smarty, $tiki_p_edit, $section_class, $user;
+	global $section, $prefs, $page, $smarty, $tiki_p_edit, $section_class, $user;
 	
 	$back = '';
 	$onload = '';
@@ -35,7 +35,7 @@ function smarty_function_html_body_attributes($params, $smarty)
 	}
 
     if ($prefs['site_layout']) {
-        $class .= layout_.$prefs['site_layout'];
+        $class .= 'layout_' . $prefs['site_layout'];
     }
 	
 	if (!empty($_REQUEST['filegals_manager'])) {
