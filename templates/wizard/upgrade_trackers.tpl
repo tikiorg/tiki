@@ -66,7 +66,7 @@
             <br/>
         <li>{tr}User can see his own items{/tr}
             <a href="http://doc.tiki.org/Trackers" target="tikihelp" class="tikihelp" title="{tr}User can see his own items:{/tr}
-                {tr}The tracker needs a user field with the auto-assign activated. No extra pemission is needed at the tracker permissions level to allow a user to see just his own items through Plugin TrackerList with the param view=user{/tr}.
+                {tr}The tracker needs a user field with the auto-assign activated{/tr}. {tr}No extra permission is needed at the tracker permissions level to allow a user to see just his own items through Plugin TrackerList with the param view=user{/tr}.
                 <br/><br/>
                 {tr}You can set it in{/tr} <em>'{tr}tracker edition{/tr} > {tr}Permissions{/tr} > {tr}User can see his own items{/tr}'</em>.
 	    	">
