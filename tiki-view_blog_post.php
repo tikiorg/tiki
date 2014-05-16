@@ -131,6 +131,7 @@ if ($prefs['feature_user_watches'] == 'y') {
 
 	// Check, if the user is watching this blog by a category.
 	if ($prefs['feature_categories'] == 'y') {
+		$categlib = TikiLib::lib('categ');
 		$watching_categories_temp = $categlib->get_watching_categories($_REQUEST['postId'], 'blog', $user);
 		$smarty->assign('category_watched', 'n');
 		if (count($watching_categories_temp) > 0) {
