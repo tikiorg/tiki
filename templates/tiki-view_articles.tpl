@@ -204,10 +204,10 @@
 				{if !isset($actions) or $actions eq "y"}
 					<div class="actions">
 						{if $tiki_p_edit_article eq 'y' or (!empty($user) and $listpages[ix].author eq $user and $listpages[ix].creator_edit eq 'y')}
-							<a class="icon" href="tiki-edit_article.php?articleId={$listpages[ix].articleId}">{icon _id='page_edit'}</a>
+							<a class="btn btn-default" href="tiki-edit_article.php?articleId={$listpages[ix].articleId}">{icon _id='page_edit'}</a>
 						{/if}
 						{if $prefs.feature_cms_print eq 'y'}
-							<a class="icon" href="tiki-print_article.php?articleId={$listpages[ix].articleId}">{icon _id='printer' alt="{tr}Print{/tr}"}</a>
+							<a class="btn btn-default" href="tiki-print_article.php?articleId={$listpages[ix].articleId}">{icon _id='printer' alt="{tr}Print{/tr}"}</a>
 						{/if}
 						{if $prefs.feature_multilingual eq 'y' and $tiki_p_edit_article eq 'y'}
 							<span class="btn-i18n">
@@ -215,7 +215,7 @@
 							</span>
 						{/if}
 						{if $tiki_p_remove_article eq 'y'}
-							<a class="icon" href="tiki-list_articles.php?remove={$listpages[ix].articleId}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
+							<a class="btn btn-default" href="tiki-list_articles.php?remove={$listpages[ix].articleId}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
 						{/if}
 					</div>
 				{/if}
