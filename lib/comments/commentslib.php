@@ -2291,6 +2291,7 @@ class Comments extends TikiLib
 	 */
 	function getHref($type, $object, $threadId)
 	{
+        global $prefs;
 		switch ($type) {
 			case 'wiki page':
 				$href = 'tiki-index.php?page=';
@@ -2332,7 +2333,11 @@ class Comments extends TikiLib
 		}
 
 		if ($type == 'trackeritem') {
-			$href .= $object . "&threadId=$threadId&cookietab=2#threadId$threadId";
+            if ( $prefs['tracker_show_comments_below'] == 'y' ) {
+                $href .= $object . "&threadId=$threadId&cookietab=1#threadId$threadId";
+            } else {
+                $href .= $object . "&threadId=$threadId&cookietab=2#threadId$threadId";
+            }
 		} else {
 			$href .= $object . "&amp;threadId=$threadId&amp;comzone=show#threadId$threadId";
 		}
