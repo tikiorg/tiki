@@ -5,6 +5,7 @@
 {remarksbox type="warning" title="{tr}Warning{/tr}"}
     <div target="tikihelp" class="tikihelp" style="float:right" title="{tr}Demo Profiles:{/tr}
 		{tr}They are initially intended for testing environments, so that, after you have played with the feature, you don't have to deal with removing the created objects, nor with restoring the potentially changed settings in your site{/tr}. 
+		<br/><br/>
 		{tr}Once you know what they do, you can also apply them in your production site, in order to have working templates of the underlying features, that you can further adapt to your site later on{/tr}.">
         <img src="img/icons/help.png" alt="" width="16" height="16" class="icon" />
     </div>
