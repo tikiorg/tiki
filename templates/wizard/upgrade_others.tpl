@@ -1,7 +1,7 @@
 {* $Id$ *}
 
 <div class="adminWizardIconleft"><img src="img/icons/large/wizard_upgrade48x48.png" alt="{tr}Upgrade Wizard{/tr}" title="{tr}Upgrade Wizard{/tr}"/></div>
-{tr}Other features and settings{/tr}.
+{tr}Here you can see listed other features and settings that were not included in the previous sections{/tr}.
 <br/><br/>
 <div class="adminWizardContent">
 

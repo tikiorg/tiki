@@ -5,7 +5,7 @@
 <a href="http://doc.tiki.org/Interface" target="tikihelp" class="tikihelp" title="{tr}User Interface:{/tr}
 	{tr}They are proven to be useful enhancements in some production environments{/tr}.
 	<br/><br/>
-	{tr}The ones still tagged as <em>experimental</em> might have failed to work under some environments, but they are very likely to work as-is in your environment also, so you might like to give them a try{/tr}.
+	{tr}The ones still tagged as <em>experimental</em> <img src=img/icons/error.png> might have failed to work under some environments, but they are very likely to work as-is in your environment also, so you might like to give them a try{/tr}.
 	">
     <img src="img/icons/help.png" alt="" width="16" height="16" class="icon" />
 </a>
