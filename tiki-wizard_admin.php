@@ -78,8 +78,8 @@ if ($useDefaultPrefs) {
 	require_once('lib/wizard/pages/upgrade_ui.php');
 	$pages[] = new UpgradeWizardUI();
 
-	require_once('lib/wizard/pages/upgrade_usability.php');
-	$pages[] = new UpgradeWizardUsability();
+	require_once('lib/wizard/pages/upgrade_novice_admin_assistance.php');
+	$pages[] = new UpgradeWizardNoviceAdminAssistance();
 
 	require_once('lib/wizard/pages/upgrade_trackers.php');
 	$pages[] = new UpgradeWizardTrackers();

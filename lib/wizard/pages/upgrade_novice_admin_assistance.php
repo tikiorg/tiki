@@ -10,11 +10,11 @@ require_once('lib/wizard/wizard.php');
 /**
  * The Wizard's language handler 
  */
-class UpgradeWizardUsability extends Wizard
+class UpgradeWizardNoviceAdminAssistance extends Wizard
 {
     function pageTitle ()
     {
-        return tra('Usability');
+        return tra('Novice Admin Assistance');
     }
 
 	function isEditable ()
@@ -36,7 +36,7 @@ class UpgradeWizardUsability extends Wizard
 
 	function getTemplate()
 	{
-		$wizardTemplate = 'wizard/upgrade_usability.tpl';
+		$wizardTemplate = 'wizard/upgrade_novice_admin_assistance.tpl';
 		return $wizardTemplate;
 	}
 

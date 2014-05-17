@@ -1,6 +1,6 @@
 {* $Id$ *}
 
-<div class="adminWizardIconleft"><img src="img/icons/large/wizard_upgrade48x48.png" alt="{tr}Upgrade Wizard{/tr}" title="{tr}Upgrade Wizard{/tr}"/></div><div class="adminWizardIconright"><img src="img/icons/large/usability48x48.png" alt="{tr}Usability{/tr}" title="{tr}Usability{/tr}"/></div>
+<div class="adminWizardIconleft"><img src="img/icons/large/wizard_upgrade48x48.png" alt="{tr}Upgrade Wizard{/tr}" title="{tr}Upgrade Wizard{/tr}"/></div><div class="adminWizardIconright"><img src="img/icons/large/admin_assistance48x48.png" alt="{tr}Novice Admin Assistance{/tr}" title="{tr}Novice Admin Assistance{/tr}"/></div>
 {tr}Improvements that can help novice admins to set up their tiki sites more easily and improve their usability{/tr}.
 <br/><br/>
 <div class="adminWizardContent">
