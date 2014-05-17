@@ -1,4 +1,4 @@
-{* $Id *}
+{* $Id$ *}
 {tikimodule error=$module_params.error title=$tpl_module_title name="users_list" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
 <table class="normal">
 	{if $module_params_users_list.heading ne 'n'}
