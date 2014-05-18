@@ -373,8 +373,8 @@ set_permission_dirs_special_write() {
 		if [ -d ${WRITABLE} ] ; then
 			if [ ${DEBUG} = '1' ] ; then
 				echo ${DEBUG_PREFIX}
-				echo ${DEBUG_PREFIX} ${FIND} ${WRITABLE} -type d -exec ${CHMOD} ${MODEL_PERMS_WRITE_SUBDIRS} {} \;
-				echo ${DEBUG_PREFIX} ${FIND} ${WRITABLE} -type f -exec ${CHMOD} ${MODEL_PERMS_WRITE_FILES} {} \;
+				echo ${DEBUG_PREFIX} "${FIND} ${WRITABLE} -type d -exec ${CHMOD} ${MODEL_PERMS_WRITE_SUBDIRS} {} \;"
+				echo ${DEBUG_PREFIX} "${FIND} ${WRITABLE} -type f -exec ${CHMOD} ${MODEL_PERMS_WRITE_FILES} {} \;"
 			fi
 			${FIND} ${WRITABLE} -type d -exec ${CHMOD} ${MODEL_PERMS_WRITE_SUBDIRS} {} \;
 			${FIND} ${WRITABLE} -type f -exec ${CHMOD} ${MODEL_PERMS_WRITE_FILES} {} \;
@@ -386,11 +386,11 @@ set_permission_data() {
 	for DEFAULT_DIR in ${DIR_LIST_DEFAULT} ; do
 		if [ ${DEBUG} = '1' ] ; then
 			echo ${DEBUG_PREFIX}
-			echo ${DEBUG_PREFIX} ${FIND} ${DEFAULT_DIR} -type d -exec ${CHMOD} ${MODEL_PERMS_SUBDIRS} {} \;
-			echo ${DEBUG_PREFIX} ${FIND} ${DEFAULT_DIR} -type f -exec ${CHMOD} ${MODEL_PERMS_FILES} {} \;
-			echo 'for PHP_FILES in "./*.php" ; do'
-			echo "	${CHMOD} ${MODEL_PERMS_FILES}" '${PHP_FILES}'
-			echo "done"
+			echo ${DEBUG_PREFIX} "${FIND} ${DEFAULT_DIR} -type d -exec ${CHMOD} ${MODEL_PERMS_SUBDIRS} {} \;"
+			echo ${DEBUG_PREFIX} "${FIND} ${DEFAULT_DIR} -type f -exec ${CHMOD} ${MODEL_PERMS_FILES} {} \;"
+			echo ${DEBUG_PREFIX} 'for PHP_FILES in "./*.php" ; do'
+			echo ${DEBUG_PREFIX} "	${CHMOD} ${MODEL_PERMS_FILES}" '${PHP_FILES}'
+			echo ${DEBUG_PREFIX} "done"
 		fi
 		#debug_breakpoint
 		${FIND} ${DEFAULT_DIR} -type d -exec ${CHMOD} ${MODEL_PERMS_SUBDIRS} {} \;
@@ -404,8 +404,8 @@ set_permission_data() {
 		if [ -d ${WRITABLE} ] ; then
 			if [ ${DEBUG} = '1' ] ; then
 				echo ${DEBUG_PREFIX}
-				echo ${DEBUG_PREFIX} ${FIND} ${WRITABLE} -type d -exec ${CHMOD} ${MODEL_PERMS_WRITE_SUBDIRS} {} \;
-				echo ${DEBUG_PREFIX} ${FIND} ${WRITABLE} -type f -exec ${CHMOD} ${MODEL_PERMS_WRITE_FILES} {} \;
+				echo ${DEBUG_PREFIX} "${FIND} ${WRITABLE} -type d -exec ${CHMOD} ${MODEL_PERMS_WRITE_SUBDIRS} {} \;"
+				echo ${DEBUG_PREFIX} "${FIND} ${WRITABLE} -type f -exec ${CHMOD} ${MODEL_PERMS_WRITE_FILES} {} \;"
 			fi
 			${FIND} ${WRITABLE} -type d -exec ${CHMOD} ${MODEL_PERMS_WRITE_SUBDIRS} {} \;
 			${FIND} ${WRITABLE} -type f -exec ${CHMOD} ${MODEL_PERMS_WRITE_FILES} {} \;
@@ -776,7 +776,7 @@ special_dirs_set_permissions_files() {
 		if [ -d ${WRITABLE} ] ; then
 			if [ ${DEBUG} = '1' ] ; then
 				echo ${DEBUG_PREFIX}
-				echo ${DEBUG_PREFIX} ${FIND} ${WRITABLE} -type f -exec ${CHMOD} ${MODEL_PERMS_WRITE_FILES} {} \;
+				echo ${DEBUG_PREFIX} "${FIND} ${WRITABLE} -type f -exec ${CHMOD} ${MODEL_PERMS_WRITE_FILES} {} \;"
 			fi
 			${FIND} ${WRITABLE} -type f -exec ${CHMOD} ${MODEL_PERMS_WRITE_FILES} {} \;
 		fi
@@ -788,7 +788,7 @@ special_dirs_set_permissions_subdirs() {
 		if [ -d ${WRITABLE} ] ; then
 			if [ ${DEBUG} = '1' ] ; then
 				echo ${DEBUG_PREFIX}
-				echo ${DEBUG_PREFIX} ${FIND} ${WRITABLE} -type d -exec ${CHMOD} ${MODEL_PERMS_WRITE_SUBDIRS} {} \;
+				echo ${DEBUG_PREFIX} "${FIND} ${WRITABLE} -type d -exec ${CHMOD} ${MODEL_PERMS_WRITE_SUBDIRS} {} \;"
 			fi
 			${FIND} ${WRITABLE} -type d -exec ${CHMOD} ${MODEL_PERMS_WRITE_SUBDIRS} {} \;
 		fi
