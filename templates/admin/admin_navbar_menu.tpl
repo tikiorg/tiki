@@ -69,7 +69,7 @@
 			{if $prefs.feature_quizzes eq "y" and $tiki_p_admin_quizzes eq "y"}
 				<li><a href="tiki-edit_quiz.php">{tr}Quizzes{/tr}</a></li>
 			{/if}
-			{if $prefs.feature_sheets eq "y" and $tiki_p_view_sheet eq "y"}
+			{if $prefs.feature_sheet eq "y" and $tiki_p_view_sheet eq "y"}
 				<li><a href="tiki-sheets.php">{tr}Spreadsheets{/tr}</a></li>
 			{/if}
 			{if $prefs.feature_surveys eq "y" and $tiki_p_admin_surveys eq "y"}
