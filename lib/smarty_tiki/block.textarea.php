@@ -255,8 +255,7 @@ HTML
                 ->add_jsfile("vendor/mediumjs/mediumjs/medium.js")
 
 
-                ->add_jsfile("vendor/wikilingo/wikilingo/editor/WLPastLinkSyntaxGenerator.js")
-                ->add_jsfile("vendor/wikilingo/wikilingo/editor/WLPluginSyntaxGenerator.js")
+                ->add_jsfile("vendor/wikilingo/wikilingo/editor/WLExpressionUI.js")
                 ->add_jsfile("vendor/wikilingo/wikilingo/editor/WLPluginEditor.js")
                 ->add_jsfile("vendor/wikilingo/wikilingo/editor/WLPluginAssistant.js")
                 ->add_jsfile("vendor/wikilingo/wikilingo/editor/bubble.js")

@@ -1,4 +1,4 @@
-<?php
+	<?php
 /**
  * brings Smarty functionality into Tiki
  * 
@@ -452,7 +452,7 @@ class Smarty_Tiki extends Smarty
 		}
 
 		$theme_active = null;
-		if (! in_array($prefs['theme_active'], ['custom', 'legacy', 'default'])) {
+		if (isset($prefs['theme_active']) && ! in_array($prefs['theme_active'], ['custom', 'legacy', 'default'])) {
 			$theme_active = $prefs['theme_active'];
 		}
 
