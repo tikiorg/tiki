@@ -383,21 +383,25 @@ set_permission_dirs_special_write() {
 }
 
 set_permission_data() {
+	if [ ${DEBUG} = '1' ] ; then
+		echo ${DEBUG_PREFIX} 'for PHP_FILES in "./*.php" ; do'
+		echo ${DEBUG_PREFIX} "	${CHMOD} ${MODEL_PERMS_FILES}" '${PHP_FILES}'
+		echo ${DEBUG_PREFIX} "done"
+		echo ${DEBUG_PREFIX} "${CHMOD} . ${MODEL_PERMS_SUBDIRS}"
+	fi
+	for PHP_FILES in "./*.php" ; do
+		${CHMOD} ${MODEL_PERMS_FILES} ${PHP_FILES}
+	done
+	${CHMOD} . ${MODEL_PERMS_SUBDIRS}
 	for DEFAULT_DIR in ${DIR_LIST_DEFAULT} ; do
 		if [ ${DEBUG} = '1' ] ; then
 			echo ${DEBUG_PREFIX}
 			echo ${DEBUG_PREFIX} "${FIND} ${DEFAULT_DIR} -type d -exec ${CHMOD} ${MODEL_PERMS_SUBDIRS} {} \;"
 			echo ${DEBUG_PREFIX} "${FIND} ${DEFAULT_DIR} -type f -exec ${CHMOD} ${MODEL_PERMS_FILES} {} \;"
-			echo ${DEBUG_PREFIX} 'for PHP_FILES in "./*.php" ; do'
-			echo ${DEBUG_PREFIX} "	${CHMOD} ${MODEL_PERMS_FILES}" '${PHP_FILES}'
-			echo ${DEBUG_PREFIX} "done"
 		fi
 		#debug_breakpoint
 		${FIND} ${DEFAULT_DIR} -type d -exec ${CHMOD} ${MODEL_PERMS_SUBDIRS} {} \;
 		${FIND} ${DEFAULT_DIR} -type f -exec ${CHMOD} ${MODEL_PERMS_FILES} {} \;
-		for PHP_FILES in "./*.php" ; do
-			${CHMOD} ${MODEL_PERMS_FILES} ${PHP_FILES}
-		done
 		#set_permission_dirs_special_write
 	done
 	for WRITABLE in $DIRS ; do
