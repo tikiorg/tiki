@@ -194,8 +194,7 @@
 			{/if}
 			<li><a href="tiki-syslog.php">{tr}System Logs{/tr}</a></li>
 			<li class="divider"></li>
-			<li><a href="tiki-wizard_admin.php">{tr}Wizards{/tr}</a>
-			<li></li>
+			<li><a href="tiki-wizard_admin.php">{tr}Wizards{/tr}</a></li>
 		</ul>
 	</li>
 </ul>
