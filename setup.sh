@@ -388,10 +388,16 @@ set_permission_data() {
 			echo ${DEBUG_PREFIX}
 			echo ${DEBUG_PREFIX} ${FIND} ${DEFAULT_DIR} -type d -exec ${CHMOD} ${MODEL_PERMS_SUBDIRS} {} \;
 			echo ${DEBUG_PREFIX} ${FIND} ${DEFAULT_DIR} -type f -exec ${CHMOD} ${MODEL_PERMS_FILES} {} \;
+			echo 'for PHP_FILES in "./*.php" ; do'
+			echo "	${CHMOD} ${MODEL_PERMS_FILES}" '${PHP_FILES}'
+			echo "done"
 		fi
 		#debug_breakpoint
 		${FIND} ${DEFAULT_DIR} -type d -exec ${CHMOD} ${MODEL_PERMS_SUBDIRS} {} \;
 		${FIND} ${DEFAULT_DIR} -type f -exec ${CHMOD} ${MODEL_PERMS_FILES} {} \;
+		for PHP_FILES in "./*.php" ; do
+			${CHMOD} ${MODEL_PERMS_FILES} ${PHP_FILES}
+		done
 		#set_permission_dirs_special_write
 	done
 	for WRITABLE in $DIRS ; do
