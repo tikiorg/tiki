@@ -1423,12 +1423,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/wikiLingo/wikiLingo.git",
-                "reference": "dc71dd16f2b766d0edc4e4568394abf8177b6dbc"
+                "reference": "b1e5b14935f62738958782b5d6bdafb198c18782"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wikiLingo/wikiLingo/zipball/dc71dd16f2b766d0edc4e4568394abf8177b6dbc",
-                "reference": "dc71dd16f2b766d0edc4e4568394abf8177b6dbc",
+                "url": "https://api.github.com/repos/wikiLingo/wikiLingo/zipball/b1e5b14935f62738958782b5d6bdafb198c18782",
+                "reference": "b1e5b14935f62738958782b5d6bdafb198c18782",
                 "shasum": ""
             },
             "require": {
@@ -1467,7 +1467,7 @@
                     "role": "Lead Developer"
                 }
             ],
-            "time": "2014-05-10 19:46:29"
+            "time": "2014-05-15 18:16:09"
         },
         {
             "name": "zetacomponents/base",

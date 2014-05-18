@@ -10,6 +10,13 @@ class WikiPluginBridge extends Base
 		$this->allowLines = true;
 	}
 
+	/**
+	 * @param Plugin $plugin
+	 * @param string $body
+	 * @param \WikiLingo\Renderer $renderer
+	 * @param \WikiLingo\Parser $parser
+	 * @return mixed|string
+	 */
 	public function render(Plugin &$plugin, &$body, &$renderer, &$parser)
 	{
 		$name = strtolower($plugin->type);
@@ -18,11 +25,14 @@ class WikiPluginBridge extends Base
 			require_once($fileLocation);
 			$fn = "wikiplugin_" . $name;
 
+			if ($plugin->parsed->type === 'Plugin') {
+				$body = $parser->syntaxBetween($plugin->parsed->arguments[0]->loc, $plugin->parsed->stateEnd->loc);
+			}
+
 			//$arguments = $this->argumentsParser->parse($plugin->parsed->arguments[0]->text);
 
 			$output = $fn($body, $plugin->parametersRaw);
-
-			//$output = TikiLib::lib("parser")->parse_data($output);
+			$output = TikiLib::lib("parser")->parse_data($output, array('is_html' => true));
 
 			return $output;
 		}
