@@ -387,12 +387,12 @@ set_permission_data() {
 		echo ${DEBUG_PREFIX} 'for PHP_FILES in "./*.php" ; do'
 		echo ${DEBUG_PREFIX} "	${CHMOD} ${MODEL_PERMS_FILES}" '${PHP_FILES}'
 		echo ${DEBUG_PREFIX} "done"
-		echo ${DEBUG_PREFIX} "${CHMOD} . ${MODEL_PERMS_SUBDIRS}"
+		echo ${DEBUG_PREFIX} "${CHMOD} ${MODEL_PERMS_SUBDIRS} ."
 	fi
 	for PHP_FILES in "./*.php" ; do
 		${CHMOD} ${MODEL_PERMS_FILES} ${PHP_FILES}
 	done
-	${CHMOD} . ${MODEL_PERMS_SUBDIRS}
+	${CHMOD} ${MODEL_PERMS_SUBDIRS} .
 	for DEFAULT_DIR in ${DIR_LIST_DEFAULT} ; do
 		if [ ${DEBUG} = '1' ] ; then
 			echo ${DEBUG_PREFIX}
