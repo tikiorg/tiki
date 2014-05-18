@@ -22,8 +22,6 @@ class WikiPluginBridge extends Base
 				$body = $parser->syntaxBetween($plugin->parsed->arguments[0]->loc, $plugin->parsed->stateEnd->loc);
 			}
 
-			//$arguments = $this->argumentsParser->parse($plugin->parsed->arguments[0]->text);
-
 			$output = $fn($body, $plugin->parametersRaw);
 			$output = TikiLib::lib("parser")->parse_data($output, array('is_html' => true));
 
