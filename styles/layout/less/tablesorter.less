@@ -1,10 +1,13 @@
-@theme                 : tablesorter;
+@ts-theme                 : tablesorter;
 
-.ts-bg() when (@table-bg = transparent) {
+.ts-bg() when not (@table-bg = transparent) and (iscolor(@table-bg)) {
+  @ts-bg: @table-bg;
+}
+.ts-bg() when not (@body-bg = transparent) and (iscolor(@body-bg)) {
   @ts-bg: @body-bg;
 }
-.ts-bg() when not (@table-bg = transparent) {
-  @ts-bg: @table-bg;
+.ts-bg() when ((default())) {
+  @ts-bg: #fff;
 }
 
 @borderAndBackground   : @table-border-color;
@@ -56,24 +59,23 @@
 .sortDesc (@a) when (lightness(@a) < 50%) {
   background-image: @sortDescWhite;
 }
-.filter-bg (@a) when (lightness(@a) >= 50%) {
-  background-color: darken(spin(@a, -5), 3%);;
+.filter-bg() when (lightness(@input-bg) >= 50%) {
+  background-color: darken(spin(@input-bg, -5), 3%);;
 }
-.filter-bg (@a) when (lightness(@a) < 50%) {
-  background-color: lighten(spin(@a, -5), 5%);;
+.filter-bg() when (lightness(@input-bg) < 50%) {
+  background-color: lighten(spin(@input-bg, -5), 5%);;
 }
 .tsFilterInput {
   border: none;
-  .ts-bg();
-  .filter-bg(@ts-bg);
+  .filter-bg;
 }
 
-.@{theme} {
+.@{ts-theme} {
   width: 100%;
   margin-bottom: 2px;
 
   /* style header */
-  .tablesorter-header {
+  &-header {
 	.ts-bg();
 	.unsorted(@ts-bg);
 	background-repeat: no-repeat;
@@ -93,33 +95,28 @@
 	  }
   }
 
-  .tablesorter-header.sorter-false {
+  &-header.sorter-false {
 	background-image: none;
 	cursor: default;
   }
-
-	.ts-test {
-	  .ts-bg();
-	  background-color: @ts-bg;
-	}
 
   .bootstrap-icon-unsorted {
 	.ts-bg();
 	.unsorted(@ts-bg);
   }
 
-  .tablesorter-headerAsc {
+  &-headerAsc {
 	.ts-bg();
 	.sortAsc(@ts-bg);
   }
 
-  .tablesorter-headerDesc {
+  &-headerDesc {
 	.ts-bg();
 	.sortDesc(@ts-bg);
   }
 
   /* table processing indicator - indeterminate spinner */
-  .tablesorter-processing {
+  &-processing {
 	background-image: @processingIcon;
 	background-position: center center;
 	background-repeat: no-repeat;
@@ -128,8 +125,8 @@
   }
 
   /* filter widget */
-  .tablesorter-filter-row input,
-  .tablesorter-filter-row select{
+  &-filter-row input,
+  &-filter-row select{
 	width: 98%;
 	height: auto;
 	margin: 0;
@@ -138,7 +135,7 @@
 	box-sizing: border-box;
 	.filterWidgetTransition;
   }
-  .tablesorter-filter-row td {
+  &-filter-row td {
 	text-align: center;
 	line-height: normal;
 	text-align: center; /* center the input */
@@ -150,13 +147,13 @@
 	}
   }
   /* hidden filter row */
-  .tablesorter-filter-row.hideme td {
+  &-filter-row.hideme td {
 	padding: @filterRowHiddenHeight / 2;
 	margin: 0;
 	line-height: 0;
 	cursor: pointer;
   }
-  .tablesorter-filter-row.hideme .tablesorter-filter {
+  &-filter-row.hideme &-filter {
 	height: 1px;
 	min-height: 0;
 	border: 0;
@@ -175,7 +172,7 @@
 	display: none;
   }
 
-  input.tablesorter-filter {
+  input&-filter {
 	.tsFilterInput;
   }
 
