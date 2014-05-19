@@ -3,19 +3,8 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "acda311db27aa8793256484efd48707c",
+    "hash": "7b95314aaa85dbcf742ed26c53849fc9",
     "packages": [
-        {
-            "name": "aFarkas/html5shiv",
-            "version": "3.6.2",
-            "dist": {
-                "type": "zip",
-                "url": "https://composer.tiki.org/dist/afarkas-html5shiv-3.6.2.zip",
-                "reference": "3.6.2",
-                "shasum": "0d97a15270ac17492daa8a6df676154d43a22726"
-            },
-            "type": "library"
-        },
         {
             "name": "adodb/adodb",
             "version": "5.18",
@@ -26,6 +15,40 @@
                 "shasum": "82a31ec99c0c4dd28ebd5afc2a41cb971e9c376c"
             },
             "type": "library"
+        },
+        {
+            "name": "afarkas/html5shiv",
+            "version": "3.7.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/aFarkas/html5shiv.git",
+                "reference": "40df868a76f1f19ea23b123d1480d44a7195f349"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://composer.tiki.org/dist/afarkas-html5shiv-40df868a76f1f19ea23b123d1480d44a7195f349-zip-5bdfcf.zip",
+                "reference": "3.7.2",
+                "shasum": "172b4357d72fc7c4d26af19e684e56c0796b6e80"
+            },
+            "require": {
+                "robloach/component-installer": "*"
+            },
+            "type": "component",
+            "extra": {
+                "component": {
+                    "scripts": [
+                        "dist/html5shiv.js"
+                    ]
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT",
+                "GPL-2.0"
+            ],
+            "description": "Defacto way to enable use of HTML5 sectioning elements in legacy Internet Explorer.",
+            "homepage": "http://paulirish.com/2011/the-history-of-the-html5-shiv/",
+            "time": "2014-05-03 10:11:35"
         },
         {
             "name": "alvarotrigo/fullpage.js",
@@ -160,12 +183,12 @@
         },
         {
             "name": "codemirror/codemirror",
-            "version": "3.19.0",
+            "version": "3.24.0",
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/codemirror-codemirror-3.19.0.zip",
-                "reference": "3.19.0",
-                "shasum": "295a61adc7c494e6f963355b250941265d8d2965"
+                "url": "https://composer.tiki.org/dist/codemirror-codemirror-3.24.0.zip",
+                "reference": "3.24.0",
+                "shasum": "f69131fd232f661b23656922ebeccc10b0e93bad"
             },
             "type": "library"
         },
@@ -810,25 +833,96 @@
         },
         {
             "name": "jquery/plugins/treetable",
-            "version": "3.0.2",
+            "version": "3.1.0",
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/jquery-plugins-treetable-3.0.2.zip",
-                "reference": "3.0.2",
-                "shasum": "c245ade681e528d650d858dbd2ad4c368f8d0338"
+                "url": "https://composer.tiki.org/dist/jquery-plugins-treetable-3.1.0.zip",
+                "reference": "3.1.0",
+                "shasum": "3fe6db1b2fc9a7352329e5356905319e69327676"
             },
             "type": "library"
         },
         {
             "name": "jquery/plugins/zoom",
-            "version": "1.7.10",
+            "version": "1.7.13",
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/jquery-plugins-zoom-1.7.10.zip",
-                "reference": "1.7.10",
-                "shasum": "4f2bb52f56bc72f588347ff27c6bf786174ab06a"
+                "url": "https://composer.tiki.org/dist/jquery-plugins-zoom-1.7.13.zip",
+                "reference": "1.7.13",
+                "shasum": "6ad0d248b780c3596a17521462d556c131869608"
             },
             "type": "library"
+        },
+        {
+            "name": "kriswallsmith/assetic",
+            "version": "v1.1.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kriswallsmith/assetic.git",
+                "reference": "735cffd3982c6e8cdebe292d5db39d077f65890f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kriswallsmith/assetic/zipball/735cffd3982c6e8cdebe292d5db39d077f65890f",
+                "reference": "735cffd3982c6e8cdebe292d5db39d077f65890f",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.1",
+                "symfony/process": "~2.1"
+            },
+            "require-dev": {
+                "cssmin/cssmin": "*",
+                "joliclic/javascript-packer": "*",
+                "kamicane/packager": "*",
+                "leafo/lessphp": "*",
+                "leafo/scssphp": "*",
+                "leafo/scssphp-compass": "*",
+                "mrclay/minify": "*",
+                "phpunit/phpunit": "~3.7",
+                "ptachoire/cssembed": "*",
+                "twig/twig": "~1.6"
+            },
+            "suggest": {
+                "leafo/lessphp": "Assetic provides the integration with the lessphp LESS compiler",
+                "leafo/scssphp": "Assetic provides the integration with the scssphp SCSS compiler",
+                "leafo/scssphp-compass": "Assetic provides the integration with the SCSS compass plugin",
+                "ptachoire/cssembed": "Assetic provides the integration with phpcssembed to embed data uris",
+                "twig/twig": "Assetic provides the integration with the Twig templating engine"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.1-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Assetic": "src/"
+                },
+                "files": [
+                    "src/functions.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Kris Wallsmith",
+                    "email": "kris.wallsmith@gmail.com",
+                    "homepage": "http://kriswallsmith.net/"
+                }
+            ],
+            "description": "Asset Management for PHP",
+            "homepage": "https://github.com/kriswallsmith/assetic",
+            "keywords": [
+                "assets",
+                "compression",
+                "minification"
+            ],
+            "time": "2013-07-19 00:03:27"
         },
         {
             "name": "md5/md5",
@@ -927,34 +1021,46 @@
         },
         {
             "name": "phpseclib/phpseclib",
-            "version": "0.3.1",
+            "version": "0.3.6",
             "source": {
                 "type": "git",
-                "url": "https://github.com/phpseclib/phpseclib",
-                "reference": "0.3.1"
+                "url": "https://github.com/phpseclib/phpseclib.git",
+                "reference": "0ea31d9b65d49a8661e93bec19f44e989bd34c69"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/phpseclib-phpseclib-0.3.1-0.3.1-7668ac.zip",
-                "reference": "0.3.1",
-                "shasum": "82063eb9067f58cefe4de8cf5ec19c3f8068e6d4"
+                "url": "https://composer.tiki.org/dist/phpseclib-phpseclib-0ea31d9b65d49a8661e93bec19f44e989bd34c69-zip-f0d13e.zip",
+                "reference": "0.3.6",
+                "shasum": "343838a980873afda2b4f88508a3f4e474f6a956"
             },
             "require": {
                 "php": ">=5.0.0"
             },
+            "require-dev": {
+                "squizlabs/php_codesniffer": "1.*"
+            },
             "suggest": {
                 "ext-gmp": "Install the GMP (GNU Multiple Precision) extension in order to speed up arbitrary precision integer arithmetic operations.",
                 "ext-mcrypt": "Install the Mcrypt extension in order to speed up a wide variety of cryptographic operations.",
-                "pear-pear/PHP_Compat": "Install PHP_Compat to get phpseclib working on PHP >= 4.3.3."
+                "pear-pear/PHP_Compat": "Install PHP_Compat to get phpseclib working on PHP < 4.3.3."
             },
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.3-dev"
+                }
+            },
             "autoload": {
                 "psr-0": {
                     "Crypt": "phpseclib/",
                     "File": "phpseclib/",
                     "Math": "phpseclib/",
-                    "Net": "phpseclib/"
-                }
+                    "Net": "phpseclib/",
+                    "System": "phpseclib/"
+                },
+                "files": [
+                    "phpseclib/Crypt/Random.php"
+                ]
             },
             "notification-url": "https://packagist.org/downloads/",
             "include-path": [
@@ -967,6 +1073,21 @@
                 {
                     "name": "Jim Wigginton",
                     "email": "terrafrost@php.net",
+                    "role": "Lead Developer"
+                },
+                {
+                    "name": "Patrick Monnerat",
+                    "email": "pm@datasphere.ch",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Andreas Fischer",
+                    "email": "bantu@phpbb.com",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Hans-Jürgen Petrich",
+                    "email": "petrich@tronic-media.com",
                     "role": "Developer"
                 }
             ],
@@ -977,6 +1098,7 @@
                 "aes",
                 "asn.1",
                 "asn1",
+                "blowfish",
                 "crypto",
                 "cryptography",
                 "encryption",
@@ -986,10 +1108,11 @@
                 "signature",
                 "signing",
                 "ssh",
+                "twofish",
                 "x.509",
                 "x509"
             ],
-            "time": "2012-11-20 03:10:22"
+            "time": "2014-02-28 16:05:05"
         },
         {
             "name": "player/flv",
@@ -1023,6 +1146,50 @@
                 "shasum": ""
             },
             "type": "library"
+        },
+        {
+            "name": "robloach/component-installer",
+            "version": "0.0.12",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/RobLoach/component-installer.git",
+                "reference": "1864f25db21fc173e02a359f646acd596c1b0460"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/RobLoach/component-installer/zipball/1864f25db21fc173e02a359f646acd596c1b0460",
+                "reference": "1864f25db21fc173e02a359f646acd596c1b0460",
+                "shasum": ""
+            },
+            "require": {
+                "kriswallsmith/assetic": "1.*",
+                "php": ">=5.3.2"
+            },
+            "require-dev": {
+                "composer/composer": "1.*"
+            },
+            "type": "composer-installer",
+            "extra": {
+                "class": "ComponentInstaller\\Installer"
+            },
+            "autoload": {
+                "psr-0": {
+                    "ComponentInstaller": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Rob Loach",
+                    "email": "robloach@gmail.com",
+                    "homepage": "http://robloach.net"
+                }
+            ],
+            "description": "Allows installation of Components via Composer.",
+            "time": "2013-08-31 23:46:48"
         },
         {
             "name": "simile_timeline/simile_timeline",
@@ -1142,18 +1309,18 @@
         },
         {
             "name": "symfony/console",
-            "version": "v2.4.1",
+            "version": "v2.4.4",
             "target-dir": "Symfony/Component/Console",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Console.git",
-                "reference": "4c1ed2ff514bd85ee186eebb010ccbdeeab05af7"
+                "reference": "2e452005b1e1d003d23702d227e23614679eb5ca"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/symfony-console-4c1ed2ff514bd85ee186eebb010ccbdeeab05af7-zip-04e417.zip",
-                "reference": "v2.4.1",
-                "shasum": "ec0b2553af4a8d2bfad8519588eb2bf9575f872c"
+                "url": "https://composer.tiki.org/dist/symfony-console-2e452005b1e1d003d23702d227e23614679eb5ca-zip-5f12ae.zip",
+                "reference": "v2.4.4",
+                "shasum": "602d7bcebe40fcda6763c73dedef6d7ecf8381f0"
             },
             "require": {
                 "php": ">=5.3.3"
@@ -1193,7 +1360,7 @@
             ],
             "description": "Symfony Console Component",
             "homepage": "http://symfony.com",
-            "time": "2014-01-01 08:14:50"
+            "time": "2014-04-27 13:34:57"
         },
         {
             "name": "symfony/dependency-injection",
@@ -1302,6 +1469,55 @@
             "description": "Symfony Filesystem Component",
             "homepage": "http://symfony.com",
             "time": "2014-04-16 10:34:31"
+        },
+        {
+            "name": "symfony/process",
+            "version": "v2.4.4",
+            "target-dir": "Symfony/Component/Process",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/Process.git",
+                "reference": "8721f1476d5d38a43c7d6ccb6435b351cf8f3bb7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/Process/zipball/8721f1476d5d38a43c7d6ccb6435b351cf8f3bb7",
+                "reference": "8721f1476d5d38a43c7d6ccb6435b351cf8f3bb7",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.4-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Symfony\\Component\\Process\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com",
+                    "homepage": "http://fabien.potencier.org",
+                    "role": "Lead Developer"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "http://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony Process Component",
+            "homepage": "http://symfony.com",
+            "time": "2014-04-27 13:34:57"
         },
         {
             "name": "tijsverkoyen/css-to-inline-styles",
@@ -1423,16 +1639,16 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/wikiLingo/wikiLingo.git",
-                "reference": "dc71dd16f2b766d0edc4e4568394abf8177b6dbc"
+                "reference": "ee36077f5b7c2ad191c00731bec7ca270182c055"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wikiLingo/wikiLingo/zipball/dc71dd16f2b766d0edc4e4568394abf8177b6dbc",
-                "reference": "dc71dd16f2b766d0edc4e4568394abf8177b6dbc",
+                "url": "https://api.github.com/repos/wikiLingo/wikiLingo/zipball/ee36077f5b7c2ad191c00731bec7ca270182c055",
+                "reference": "ee36077f5b7c2ad191c00731bec7ca270182c055",
                 "shasum": ""
             },
             "require": {
-                "codemirror/codemirror": "3.19",
+                "codemirror/codemirror": ">=3.19",
                 "flp/flp": "dev-master",
                 "gabordemooij/redbean": ">=3.5.1",
                 "jquery/jquery": ">=1.10.2",
@@ -1467,7 +1683,7 @@
                     "role": "Lead Developer"
                 }
             ],
-            "time": "2014-05-10 19:46:29"
+            "time": "2014-05-19 19:50:07"
         },
         {
             "name": "zetacomponents/base",
