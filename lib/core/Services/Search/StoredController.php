@@ -68,7 +68,7 @@ class Services_Search_StoredController
 		}
 
 		return array(
-			'title' => $query['label'] ?: tr('Stored Queries'),
+			'title' => $query['label'] ?: tr('Saved Searches'),
 			'priorities' => $lib->getPriorities(),
 			'queries' => $lib->getUserQueries(),
 			'queryId' => $queryId,
