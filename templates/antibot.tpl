@@ -1,5 +1,5 @@
 {* $Id$ *}
-{if empty($user) || $user eq 'anonymous' || (isset($showantibot) and $showantibot)}
+{if empty($user) || $user eq 'anonymous' || !empty($showantibot)}
 	{*if $antibot_table ne 'y'}
 		<tr{if !empty($tr_style)} class="{$tr_style}"{/if}>
 		<td{if !empty($td_style)} class="{$td_style}"{/if}>
@@ -67,3 +67,48 @@
 		{/if*}
 	{/if}
 {/if}
+{jq}
+if($("#antibotcode").parents('form').data("validator")) {
+	$( "#antibotcode" ).rules( "add", {
+		required: true,
+		remote: {
+			url: "validate-ajax.php",
+			type: "post",
+			data: {
+				validator: "captcha",
+				parameter: function() {
+					return $jq("#captchaId").val();
+				},
+				input: function() {
+					return $jq("#antibotcode").val();
+				} 
+			} 
+		}
+	});
+} else {
+    $("#antibotcode").parents('form').validate({
+		rules: {
+			"captcha[input]": {
+				required: true,
+				remote: {
+					url: "validate-ajax.php",
+					type: "post",
+					data: {
+						validator: "captcha",
+						parameter: function() {
+							return $jq("#captchaId").val();
+						},
+						input: function() {
+							return $jq("#antibotcode").val();
+						} 
+					} 
+				}
+			}
+		},
+		messages: {
+			"captcha[input]": { required: "This field is required"}
+		},
+		submitHandler: function(){form.submit();}
+	});
+}
+{/jq}
