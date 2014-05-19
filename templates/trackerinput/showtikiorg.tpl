@@ -56,6 +56,7 @@
 {/remarksbox}
 Version: <select name="svntag">
 <option selected="selected">trunk</option>
+<option>13.x</option>
 <option>12.x</option>
 <option>11.0</option>
 <option>10.4</option>
