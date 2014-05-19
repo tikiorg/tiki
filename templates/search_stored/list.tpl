@@ -16,7 +16,7 @@
 <table class="table">
 	<thead>
 		<tr>
-			<th>{tr}Query{/tr}</th>
+			<th>{tr}Label{/tr}</th>
 			<th>{tr}Last Modification{/tr}</th>
 			<th>{tr}Actions{/tr}</th>
 		</tr>

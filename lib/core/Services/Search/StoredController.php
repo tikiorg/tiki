@@ -43,7 +43,7 @@ class Services_Search_StoredController
 		}
 
 		return array(
-			'title' => tr('Select Query'),
+			'title' => tr('Save Search'),
 			'priorities' => $lib->getPriorities(),
 			'queries' => $lib->getUserQueries(),
 			'queryId' => $queryId,
@@ -92,7 +92,7 @@ class Services_Search_StoredController
 		}
 
 		$out = array(
-			'title' => tr('Delete User Query'),
+			'title' => tr('Delete Saved Search'),
 			'success' => false,
 			'queryId' => $data['queryId'],
 			'label' => $data['label'],
@@ -122,7 +122,7 @@ class Services_Search_StoredController
 		}
 
 		$out = array(
-			'title' => tr('Edit User Query'),
+			'title' => tr('Edit Saved Search'),
 			'success' => false,
 			'queryId' => $data['queryId'],
 			'label' => $data['label'],

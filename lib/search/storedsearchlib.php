@@ -156,7 +156,7 @@ class StoredSearchLib
 			$list = array(
 				'manual' => array(
 					'label' => tr('On Demand'),
-					'description' => tr('You can revisit the results of this query on demand.'),
+					'description' => tr('You can revisit the results of this saved search on demand.'),
 					'class' => 'label-default',
 					'indexed' => false,
 				),

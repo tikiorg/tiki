@@ -44,8 +44,8 @@
 		<table class="table">
 			<thead>
 				<tr>
-					<th>Query</th>
-					<th>Last Modification</th>
+					<th>{tr}Label{/tr}</th>
+					<th>{tr}Last Modification{/tr}</th>
 				</tr>
 			</thead>
 			<tbody>
