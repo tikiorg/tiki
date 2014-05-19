@@ -9,6 +9,8 @@ namespace Tiki\MailIn\Source;
 
 class Message
 {
+	const EXTRACT_EMAIL_REGEX = '/<?([-!#$%&\'*+\.\/0-9=?A-Z^_`a-z{|}~]+@[-!#$%&\'*+\/0-9=?A-Z^_`a-z{|}~]+\.[-!#$%&\'*+\.\/0-9=?A-Z^_`a-z{|}~]+)>?/';
+
 	private $id;
 	private $deleteCallback;
 
@@ -50,7 +52,7 @@ class Message
 
 	function getFromAddress()
 	{
-		preg_match('/<?([-!#$%&\'*+\.\/0-9=?A-Z^_`a-z{|}~]+@[-!#$%&\'*+\/0-9=?A-Z^_`a-z{|}~]+\.[-!#$%&\'*+\.\/0-9=?A-Z^_`a-z{|}~]+)>?/', $this->from, $mail);
+		preg_match(self::EXTRACT_EMAIL_REGEX, $this->from, $mail);
 		
 		return $mail[1];
 	}
@@ -147,6 +149,13 @@ class Message
 	function setRecipient($recipient)
 	{
 		$this->recipient = $recipient;
+	}
+
+	function getRecipientAddress()
+	{
+		preg_match(self::EXTRACT_EMAIL_REGEX, $this->recipient, $mail);
+		
+		return $mail[1];
 	}
 }
 
