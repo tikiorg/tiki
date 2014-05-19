@@ -129,11 +129,13 @@ function prefs_site_list()
 			'description' => tr('Changes the overall site layout templates'),
 			'type' => 'list',
 			'default' => 'classic',
+			'tags' => array('experimental'),
 			'options' => $available_layouts,
 		),  
 		'site_layout_per_object' => array(
 			'name' => tr('Allow per-object layout'),
 			'description' => tr('Allows objects to define an alternate layout for their rendering.'),
+			'tags' => array('experimental'),
 			'type' => 'flag',
 			'default' => 'n',
 		),
