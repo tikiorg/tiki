@@ -1,4 +1,4 @@
-{if empty($user) || $user eq 'anonymous' || (isset($showantibot) and $showantibot)}
+{if empty($user) || $user eq 'anonymous' || !empty($showantibot)}
 	{if $antibot_table ne 'y'}
 		<tr{if !empty($tr_style)} class="{$tr_style}"{/if}>
 		<td{if !empty($td_style)} class="{$td_style}"{/if}>
@@ -75,8 +75,7 @@ if($("#antibotcode").parents('form').data("validator")) {
 		}
 	});
 } else {
-    var form = $("#antibotcode").parents('form');
-	$("form[name="+ form.attr('name') +"]").validate({
+    $("#antibotcode").parents('form').validate({
 		rules: {
 			"captcha[input]": {
 				required: true,
