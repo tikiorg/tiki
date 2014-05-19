@@ -62,11 +62,25 @@ class ModLib extends TikiLib
      */
     function replace_user_module($name, $title, $data, $parse=NULL)
 	{
+        global $prefs;
+
 		if ((!empty($name)) && (!empty($data))) {
 			$query = "delete from `tiki_user_modules` where `name`=?";
 			$result = $this->query($query, array($name), -1, -1, false);
 			$query = "insert into `tiki_user_modules`(`name`,`title`,`data`, `parse`) values(?,?,?,?)";
 
+            //BEGIN wikiLingo integration
+            if ($prefs['feature_wikilingo'] == 'y') {
+                $this->query("DELETE FROM `tiki_output` WHERE `objectType` = ? AND `entityId` = ?", array("userModule", $name));
+
+                switch (strtolower($parse))
+                {
+                    case 'wikilingo':
+                        $this->query("INSERT INTO `tiki_output` (`objectType`, `entityId`, `version`) VALUES  (?, ?, ?)", array("userModule", $name, 1));
+                        $parse = 'y';
+                }
+            }
+            //END wikiLingo integration
 			$result = $this->query($query, array($name,$title,$data,$parse));
 
 			$cachelib = TikiLib::lib('cache');
@@ -1162,10 +1176,8 @@ class ModLib extends TikiLib
 				$smarty->assign('module_type', 'cssmenu');
 			}
 
-			if (isset($info['parse']) && $info['parse'] == 'y') {
-				$info['data'] = $tikilib->parse_data($info['data'], array('is_html' => true, 'suppress_icons' => true));
-				$info['title'] = $tikilib->parse_data($info['title'], array('noparseplugins' => true, 'is_html' => true));
-			}
+            $info = $this->parse($info);
+
 			// re-assign module_params for the custom module in case a module plugin is used inside it
 			$smarty->assign_by_ref('module_params', $module_params);
 			$smarty->assign('user_title', tra($info['title']));
@@ -1175,6 +1187,26 @@ class ModLib extends TikiLib
 			return $smarty->fetch('modules/user_module.tpl');
 		}
 	}
+
+    function parse($info)
+    {
+        global $tikilib, $prefs;
+
+        //allow for wikiLingo parsing, will only return 'y' if turned on AND enabled for this particular module
+        if (isset($info['wikiLingo']) && $info['wikiLingo'] == 'y' && $prefs['feature_wikilingo'] == 'y') {
+            //TODO: corrent the paths for scripts and output them to the header
+            $scripts = new WikiLingo\Utilities\Scripts();
+            $parser = new WikiLingo\Parser($scripts);
+            $info['data'] = $parser->parse($info['data']);
+            $info['title'] = $parser->parse($info['title']);
+
+        } else if (isset($info['parse']) && $info['parse'] == 'y') {
+            $info['data'] = $tikilib->parse_data($info['data'], array('is_html' => true, 'suppress_icons' => true));
+            $info['title'] = $tikilib->parse_data($info['title'], array('noparseplugins' => true, 'is_html' => true));
+        }
+
+        return $info;
+    }
 
     /**
      * @param $mod_reference
@@ -1374,7 +1406,18 @@ class ModLib extends TikiLib
      */
     function get_user_module($name)
 	{
-		return $this->table('tiki_user_modules')->fetchFullRow(array('name' => $name));
+        global $prefs;
+
+		$info = $this->table('tiki_user_modules')
+            ->fetchFullRow(array('name' => $name));
+
+        if ($prefs['feature_wikilingo'] == 'y') {
+            if ($this->getOne('SELECT 1 FROM `tiki_output` WHERE `objectType` = ? AND `entityId` = ?', array('userModule', $name)) != null) {
+                $info['wikiLingo'] = 'y';
+            }
+        }
+
+        return $info;
 	}
 
 	/**

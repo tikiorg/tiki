@@ -53,6 +53,7 @@ $smarty->assign('um_name', '');
 $smarty->assign('um_title', '');
 $smarty->assign('um_data', '');
 $smarty->assign('um_parse', '');
+$smarty->assign('um_wikiLingo', '');
 $smarty->assign('assign_name', '');
 //$smarty->assign('assign_title','');
 $smarty->assign('assign_position', '');
@@ -169,7 +170,14 @@ if (isset($_REQUEST['um_update'])) {
 	$smarty->assign_by_ref('um_name', $_REQUEST['um_name']);
 	$smarty->assign_by_ref('um_title', $_REQUEST['um_title']);
 	$smarty->assign_by_ref('um_data', $_REQUEST['um_data']);
-	$smarty->assign_by_ref('um_parse', $_REQUEST['um_parse']);
+
+    //wikiLingo integration
+    if ($_REQUEST['um_parse'] == 'wikiLingo' && $prefs['feature_wikilingo'] == 'y') {
+	    $smarty->assign('um_wikiLingo', 'y');
+	    $smarty->assign('um_parse', 'y');
+    } else {
+        $smarty->assign_by_ref('um_parse', $_REQUEST['um_parse']);
+    }
 	$modlib->replace_user_module($_REQUEST['um_name'], $_REQUEST['um_title'], $_REQUEST['um_data'], $_REQUEST['um_parse']);
 	$logslib->add_log('adminmodules', 'changed custom module ' . $_REQUEST['um_name']);
 }
@@ -216,12 +224,15 @@ if (isset($_REQUEST['preview'])) {
 	if ($modlib->is_user_module($_REQUEST['assign_name'])) {
 		$info = $modlib->get_user_module($_REQUEST['assign_name']);
 		$smarty->assign_by_ref('user_title', $info['title']);
-		if ($info['parse'] == 'y') {
-			$parse_data = $tikilib->parse_data($info['data'], array('is_html' => true, 'suppress_icons' => true));
-			$smarty->assign_by_ref('user_data', $parse_data);
-		} else {
-			$smarty->assign_by_ref('user_data', $info['data']);
-		}
+
+        $infoParsed = $modlib->parse($info);
+
+        if (isset($um_info['wikiLingo'])) {
+            $smarty->assign('um_wikiLingo', $infoParsed['wikiLingo']);
+        }
+
+        $smarty->assign_by_ref('user_data', $infoParsed['data']);
+
 		try {
 			$data = $smarty->fetch('modules/user_module.tpl');
 		} catch (Exception $e) {
@@ -354,6 +365,10 @@ if (isset($_REQUEST['um_edit'])) {
 	$smarty->assign('um_title', $um_info['title']);
 	$smarty->assign('um_data', $um_info['data']);
 	$smarty->assign('um_parse', $um_info['parse']);
+
+    if (isset($um_info['wikiLingo'])) {
+        $smarty->assign('um_wikiLingo', $um_info['wikiLingo']);
+    }
 }
 $user_modules = $modlib->list_user_modules();
 $smarty->assign('user_modules', $user_modules['data']);

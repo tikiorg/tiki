@@ -196,9 +196,15 @@
 							<td><input type="text" id="um_title" name="um_title" value="{$um_title|escape}"></td>
 						</tr>
 						<tr>
-							<td></td>
+							<td><label for="um_parse">{tr}Parse using{/tr}</label></td>
 							<td>
-								<label><input type="checkbox" name="um_parse" value="y" {if $um_parse eq "y"}checked="checked"{/if}> {tr}Must be wiki parsed{/tr}.</label>
+                                <select name="um_parse" id="um_parse">
+                                    <option value=""{if $um_parse eq "" and $um_wikiLingo eq ""} selected="selected"{/if}>{tr}None{/tr}</option>
+                                    <option value="y"{if $um_parse eq "y" and $um_wikiLingo eq ""} selected="selected"{/if}>{tr}Wiki Markup{/tr}</option>
+                                    {if $prefs.feature_wikilingo eq 'y'}
+                                        <option value="wikiLingo"{if $um_wikiLingo eq "y" and $um_parse eq "y"} selected="selected"{/if}>{tr}wikiLingo{/tr}</option>
+                                    {/if}
+                                </select>
 							</td>
 						</tr>
 					</table>
