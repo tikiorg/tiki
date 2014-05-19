@@ -2690,6 +2690,7 @@ function prefs_feature_list($partial = false)
             'description' => tra('Code Mirror Themes (clear cache when you change)'),
 			'help' => 'Syntax+Highlighter',
 			'type' => 'list',
+			'tags' => array('experimental'),
 			'dependencies' => array(
 				'feature_syntax_highlighter',
 			),
