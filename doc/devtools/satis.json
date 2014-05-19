@@ -834,6 +834,17 @@
 		{
 			"type": "package",
 			"package": {
+				"name": "jquery/plugins/treetable",
+				"version": "3.1.0",
+				"dist": {
+					"url": "https://github.com/ludo/jquery-treetable/archive/3.1.0.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
 				"name": "jquery/plugins/sparkline",
 				"version": "2.1.1",
 				"dist": {
