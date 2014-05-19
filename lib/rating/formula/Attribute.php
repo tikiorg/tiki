@@ -30,14 +30,20 @@ class Tiki_Formula_Function_Attribute extends Math_Formula_Function
 			$this->error(tra('Invalid property.'));
 		}
 
-		$attributelib = TikiLib::lib('attribute');
+		if ($property instanceof Math_Formula_Element) {
+			$property = $this->evaluateChild($property);
+		}
 
 		if ( $type == 'wiki page' && is_numeric($object) ) {
 			$tikilib = TikiLib::lib('tiki');
 			$object = $tikilib->get_page_name_from_id($object);
 		}
 
+		$attributelib = TikiLib::lib('attribute');
 		$values = $attributelib->get_attributes($type, $object);
+
+		// Attributes are always lowercase
+		$property = strtolower($property);
 
 		if ( isset( $values[$property] ) ) {
 			return $values[$property];
