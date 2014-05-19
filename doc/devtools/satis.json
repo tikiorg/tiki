@@ -160,6 +160,17 @@
 				}
 			}
 		},
+		{
+			"type": "package",
+			"package": {
+				"name": "codemirror/codemirror",
+				"version": "3.24.0",
+				"dist": {
+					"url": "https://github.com/marijnh/CodeMirror/archive/3.24.0.zip",
+					"type": "zip"
+				}
+			}
+		},
  		{
  			"type": "package",
  			"package": {
