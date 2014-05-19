@@ -1,4 +1,4 @@
-	<?php
+<?php
 /**
  * brings Smarty functionality into Tiki
  * 
