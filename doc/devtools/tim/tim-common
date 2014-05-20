@@ -11,7 +11,7 @@ if [[ -f /etc/tim.conf ]]; then . /etc/tim.conf ;fi
 if [[ -f ~/.tim.conf ]]; then . ~/.tim.conf ;fi
 
 # SVN uppable stuff
-BRANCHES="trunk 12.x"
+BRANCHES="trunk 12.x 13.x"
 
 # Set our common variables
 TIM_LOCK="$LOCKSDIR/tim.lock"
