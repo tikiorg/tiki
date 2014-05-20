@@ -158,14 +158,21 @@ EOF
 
 	chown $TIM_USER.$TIM_GROUP $INSTANCE_DIR/db/local.php
 
-	if [[ -f $INSTANCE_DIR/installer/shell.php ]]
+	if [[ -f $INSTANCE_DIR/console.php ]]
 	then
-		log "Running 'php installer/shell.php'"
+		log "Running 'php console.php'"
 		cd $INSTANCE_DIR
-		/usr/bin/php installer/shell.php install
+		php console.php database:install --force
 	else
-		log "Old Tiki - populating database via tiki.sql"
-		mysql $DB < $INSTANCE_DIR/db/tiki.sql
+		if [[ -f $INSTANCE_DIR/installer/shell.php ]]
+		then
+			log "Running 'php installer/shell.php'"
+			cd $INSTANCE_DIR
+			/usr/bin/php installer/shell.php install
+		else
+			log "Old Tiki - populating database via tiki.sql"
+			mysql $DB < $INSTANCE_DIR/db/tiki.sql
+		fi
 	fi
 
 	#########################################
@@ -198,7 +205,6 @@ EOT
 UPDATE tiki_pages SET data=CONCAT('{REMARKSBOX(type="information" title="Show community server" close="y")}${infotext}{REMARKSBOX}\n',data) WHERE page_id=1;
 EOQ
 
-	/bin/rm $LOCKSDIR/lock_${TUSERID}_${ID} || (echo "FAIL: Failed to suppress lock file $LOCKSDIR/lock_${TUSERID}_${ID}"; exit 1)
 }
 
 echo "CREATION START - watch ${SUBDOMAIN}.show.tikiwiki.org "
