@@ -199,11 +199,7 @@ EOT
 	echo "Creating file http://${SUBDOMAIN}.show.tikiwiki.org/info.txt with extra info for developers"
 	INFOFILE=$INSTANCE_DIR/info.txt
 	echo "$infotext" > ${INFOFILE}
-	# Inject data useful to developers as remarksbox on top of homepage
-	echo "Inserting extra info for developers in a box at the beginning of homepage"
-	mysql $DB <<EOQ
-UPDATE tiki_pages SET data=CONCAT('{REMARKSBOX(type="information" title="Show community server" close="y")}${infotext}{REMARKSBOX}\n',data) WHERE page_id=1;
-EOQ
+	# Cannot inject data useful to developers as remarksbox on top of homepage because page is not created et until first login
 
 }
 
