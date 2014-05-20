@@ -56,33 +56,8 @@
 {/remarksbox}
 Version: <select name="svntag">
 <option selected="selected">trunk</option>
+<option>13.x</option>
 <option>12.x</option>
-<option>11.0</option>
-<option>10.4</option>
-<option>10.3</option>
-<option>10.2</option>
-<option>10.1</option>
-<option>10.0</option>
-<option>9.6</option>
-<option>9.5</option>
-<option>9.4</option>
-<option>9.3</option>
-<option>9.2</option>
-<option>9.1</option>
-<option>9.0</option>
-<option>6.12</option>
-<option>6.11</option>
-<option>6.10</option>
-<option>6.9</option>
-<option>6.8</option>
-<option>6.7</option>
-<option>6.6</option>
-<option>6.5</option>
-<option>6.4</option>
-<option>6.3</option>
-<option>6.2</option>
-<option>6.1</option>
-<option>6.0</option>
 </select>
 {button href="#showtikiorg{$field.fieldId}_{$item.itemId}{if isset($context.list_mode)}_view{/if}" _onclick="showtikiorg_process{$field.fieldId}_{$item.itemId}('create');"  _text="{tr}Create show.tiki.org instance{/tr}"}
 </div>
