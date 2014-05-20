@@ -48,7 +48,7 @@ function wikiplugin_wysiwyg($data, $params)
 	}
 	$params = array_merge($defaults, $params);
 
-	global $tiki_p_edit, $page, $prefs;
+	global $tiki_p_edit, $page, $prefs, $user;
 	static $execution = 0;
 
 	global $wikiplugin_included_page;
@@ -65,7 +65,7 @@ function wikiplugin_wysiwyg($data, $params)
 	}
 	$html = TikiLib::lib('edit')->parseToWysiwyg( $data, true, $is_html, array('page' => $sourcepage) );
 
-	if ($tiki_p_edit === 'y') {
+	if (TikiLib::lib('tiki')->user_has_perm_on_object( $user, $sourcepage, 'wiki page', 'tiki_p_edit')) {
 		$class = "wp_wysiwyg";
 		$exec_key = $class . '_' . ++ $execution;
 		$style = " style='min-width:{$params['width']};min-height:{$params['height']}'";
