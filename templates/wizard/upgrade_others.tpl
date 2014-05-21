@@ -46,15 +46,38 @@
         <ul>
             <li>{tr}Starting in Tiki11, <b>console.php</b> script exists to help you administer your Tiki instance via the command line{/tr}.
                 <a href="http://doc.tiki.org/Console" target="tikihelp" class="tikihelp" title="{tr}Console (console.php script):{/tr}
-                {tr}All the other command line scripts from before Tiki11 (ex.: php installer/shell.php) will continue to work, but all future developments will be on this new console.php script{/tr}.
+                {tr}All the other command line scripts from before Tiki11 (ex.: php installer/shell.php) will continue to work in Tiki12, but may not work anymore since Tiki13 so you will need to switch to use console.php script instead{/tr}.
                 <br/><br/>
                 {tr}Example: Database update{/tr}
                 <pre>php console.php database:update</pre>
+                {tr}Or:{/tr}
+                <pre>php console.php d:u</pre>
+                <br/><br/>
                 {tr}Click to read more{/tr}
 	    	">
                     <img src="img/icons/help.png" alt="" width="16" height="16" class="icon" />
                 </a>
             </li>
+        </ul>
+        <div class="adminWizardIconright"><img src="img/icons/large/mail_queue48x48.png" alt="{tr}Mail Queue{/tr}" title="{tr}Mail Queue{/tr}"/></div>
+        <b>{tr}Mail Queue{/tr}</b>:
+        <ul>
+            <li>{tr}Starting in Tiki12.2, console.php also handles the feature <strong>Mail Queue</strong>, which has been also fixed, and it is a very useful feature in Tikis with heavy load of notification email sending{/tr}.
+                <a href="http://doc.tiki.org/Mail+Queue" target="tikihelp" class="tikihelp" title="{tr}Mail Queue:{/tr}
+                {tr}When Tiki has many notification emails to send upon new changes in your site (e.g. a new calendar event), the site may seem unresponsive for some seconds until the whole mail delivery is finished{/tr}.
+                {tr}The more users or groups subscribed to receive notification emails for changes in that object, the longer that unresponsive time just after the user has clicked the submit button{/tr}.
+                <br/><br/>
+                {tr}You can prevent that unresponsive time by means of setting Tiki to store notification emails in an email queue (see <strong>Admin home > General > General Preferences > Mail > Mail Sender > STMP</strong>, and <strong>Mail Delivery > Queue</strong>), and request the server to process the email sending based on a cron job{/tr}.
+                <br/><br/>
+                {tr}Example: Send the Mail Queue{/tr}
+                <pre>php console.php mail-queue:send</pre>
+                {tr}Or:{/tr}
+                <pre>php console.php m:s</pre>
+                <br/><br/>
+                {tr}Click to read more{/tr}
+	    	">
+                    <img src="img/icons/help.png" alt="" width="16" height="16" class="icon" />
+                </a>
         </ul>
     </fieldset>
 
