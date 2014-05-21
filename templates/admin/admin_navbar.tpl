@@ -30,12 +30,12 @@
 									<input type="checkbox" id="connect_feedback_cbx" {if !empty($connect_feedback_showing)}checked="checked"{/if}>
 									{tr}Provide Feedback{/tr}
 									<a href="http://doc.tiki.org/Connect" target="tikihelp" class="tikihelp" title="{tr}Provide Feedback:{/tr}
-										{tr}Once selected, some icons will be shown next to all features so that you can provide some on-site feedback about them{/tr}.
+										{tr}Once selected, some icon/s will be shown next to all features so that you can provide some on-site feedback about them{/tr}.
 										<br/><br/>
 										<ul>
 											<li>{tr}Icon for 'Like'{/tr} <img src=img/icons/connect_like.png></li>
-											<li>{tr}Icon for 'Fix me'{/tr} <img src=img/icons/connect_fix.png></li>
-											<li>{tr}Icon for 'What is this for?'{/tr} <img src=img/icons/connect_wtf.png></li>
+<!--											<li>{tr}Icon for 'Fix me'{/tr} <img src=img/icons/connect_fix.png></li> -->
+<!--											<li>{tr}Icon for 'What is this for?'{/tr} <img src=img/icons/connect_wtf.png></li> -->
 										</ul>
 										<br/>
 										{tr}Your votes will be sent when you connect with mother.tiki.org (currently only by clicking the 'Connect > <strong>Send Info</strong>' button){/tr}
