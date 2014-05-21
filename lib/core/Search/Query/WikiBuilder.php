@@ -145,7 +145,7 @@ class Search_Query_WikiBuilder
 
 	function wpquery_filter_favorite($query, $value)
 	{
-		wpquery_filter_relation($query, $value, array('qualifier' => 'tiki.user.favorite.invert', 'objecttype' => 'user'));
+		$this->wpquery_filter_relation($query, $value, array('qualifier' => 'tiki.user.favorite.invert', 'objecttype' => 'user'));
 	}
 
 	function wpquery_filter_range($query, $value, array $arguments)
