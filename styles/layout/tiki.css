@@ -2569,4 +2569,10 @@ body.navbar-padding {
 .dropdown-menu {
   padding: 0;
 }
+/* Structures drill-down menu */
+div.drillshow {
+    border: 1px solid;
+    padding: 3px;
+    border-color: lightgrey;
+}
 /* End of file */
