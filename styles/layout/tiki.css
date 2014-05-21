@@ -195,7 +195,7 @@ div #metadata div.tabs {
 }
 .box-quickadmin .cssmenu_horiz ul li {
   padding-left: 1em;
-  background-color: #fff;
+  background-color: #ffffff;
 }
 .mod-share-item {
   float: left;
@@ -222,10 +222,10 @@ li.archivedate {
 }
 .box-switch_lang .box-data img.highlight {
   padding: .1em;
-  border: .1em solid #f00;
+  border: 0.1em solid #ebccd1;
 }
 .box-switch_lang .box-data .highlight {
-  border: .1em solid #f00;
+  border: 0.1em solid #ebccd1;
 }
 .box-switch_lang li {
   list-style: none;
@@ -366,7 +366,7 @@ a.flip:hover,
 .helptool-admin {
   padding-left: 8px;
   margin-left: 8px;
-  border-left: medium double #bfbfbf;
+  border-left: medium double #999999;
 }
 a.toolbar {
   padding: 4px 2px;
@@ -375,16 +375,16 @@ a.toolbar {
 .toolbar-list {
   padding: 0 0 0 .5em;
   line-height: 20px;
-  border-left: medium double #bfbfbf;
+  border-left: medium double #999999;
 }
 .toolbars-picker {
   position: absolute;
   width: 128px;
   z-index: 300;
   line-height: 12px;
-  background: #fff;
-  border: thin solid #000;
-  color: #000;
+  background: #ffffff;
+  border: thin solid #333333;
+  color: #333333;
   padding: 4px;
 }
 .toolbars-picker.specialchar {
@@ -394,9 +394,9 @@ a.toolbar {
   padding: 4px 0 4px 4px;
   margin: 0;
   display: inline-block;
-  border: #fff 1px solid;
+  border: 1px solid #ffffff;
   overflow: hidden;
-  color: #000;
+  color: #333333;
 }
 .toolbars-picker.color a,
 .toolbars-picker.bgcolor a {
@@ -405,9 +405,9 @@ a.toolbar {
   padding: 0;
 }
 .toolbars-picker a:hover {
-  border: #f00 1px solid;
-  background: #ccc;
-  color: #000;
+  border: 1px solid #a94442;
+  background: #999999;
+  color: #333333;
 }
 .toolbars-picker-reset {
   width: 100% !important;
@@ -420,8 +420,8 @@ a.toolbar {
   height: 12px;
 }
 .textarea-toolbar > div {
-  background-color: #eee;
-  border: #eee outset 1px;
+  background-color: #eeeeee;
+  border: outset 1px #eeeeee;
 }
 /* tiki-admin_toolbars.php toolbar icon alignment */
 a.cke_button span.cke_icon {
@@ -464,14 +464,9 @@ h3.panel-title {
 }
 .panel-body ol,
 .panel-body ul {
-  padding-left: 1.5em;
-  padding-right: .6em;
   overflow: hidden;
   margin-top: 0;
   margin-bottom: 0;
-}
-.panel-body ul {
-  padding-left: 1.3em;
 }
 .box-months_links ul {
   list-style-type: none;
@@ -582,8 +577,12 @@ td.numeric {
   padding: .2em .5em;
 }
 .odd {
-  background: #f0f0f0;
-  color: #000;
+  background: transparent;
+  color: #333333;
+}
+.even {
+  background: #f9f9f9;
+  color: #333333;
 }
 #pageid {
   float: left;
@@ -1942,7 +1941,7 @@ a.categpath {
 }
 .tiki_sheet table td {
   padding: 0;
-  border: 1px solid #909090;
+  border: 1px solid #dddddd;
 }
 .jSBarTopParent .jSBarController {
   height: 0px ! important;
@@ -1984,8 +1983,8 @@ label.aclabel {
   height: 40px;
   padding: 1em;
   z-index: 1000;
-  background-color: #ade;
-  color: #000;
+  background-color: #dff0d8;
+  color: #3c763d;
 }
 #intertrans-form {
   position: fixed;
@@ -1997,9 +1996,9 @@ label.aclabel {
   display: none;
   z-index: 2000;
   padding: 1em;
-  background-color: #eff;
-  border: #799 solid 2px;
-  color: #000;
+  background-color: #ffffff;
+  border: 1px solid #dddddd;
+  color: #333333;
 }
 #intertrans-form table {
   width: 98%;
@@ -2018,14 +2017,14 @@ label.aclabel {
   margin: 2px 0 2px 0;
 }
 #edit_translations tr.last {
-  border-bottom: #74C0E2 solid 2px;
+  border-bottom: 2px solid #d6e9c6;
 }
 ul.all_languages {
   list-style: none;
   padding-left: 0;
 }
 ul.all_languages > li {
-  border: #aaa 1px solid;
+  border: 1px solid #d6e9c6;
   padding: 1em;
   margin-bottom: 1ex;
 }
@@ -2210,7 +2209,7 @@ fieldset.dropzone {
 .prio3,
 .prio4,
 .prio5 {
-  border: 1px solid #a9a9a9;
+  border: 1px solid #dddddd;
   padding-left: 2px;
 }
 .prio1 {
@@ -2246,7 +2245,7 @@ fieldset.dropzone {
 }
 .webmail_item {
   font-size: .9em;
-  border: #999 solid 1px;
+  border: 1px solid #dddddd;
   margin: 1px 0;
   padding: 0 1px;
 }
@@ -2434,7 +2433,7 @@ form.simple textarea.export {
 }
 .tiki-modal .mask {
   position: absolute;
-  background-color: #;
+  background-color: #ffffff;
   display: none;
   width: 100%;
   height: auto;
@@ -2560,7 +2559,14 @@ div.form-group label.error {
   margin: auto;
   padding-bottom: 0;
 }
+.row.page-header {
+  margin-left: -15px;
+  margin-right: -15px;
+}
 body.navbar-padding {
   padding-top: 70px;
+}
+.dropdown-menu {
+  padding: 0;
 }
 /* End of file */
