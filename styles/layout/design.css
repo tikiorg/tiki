@@ -4745,4 +4745,12 @@ div#outerToc-static ul {
 .pwddom_username_name {
     font-weight: bold;
 }
+
+/* Structures drill-down menu */
+div.drillshow {
+    border: 1px solid;
+    padding: 3px;
+    border-color: lightgrey;
+}
+
 /* End of file */
