@@ -203,16 +203,16 @@ class PreferencesLib
 				} else {
 					$info['voting_html'] .= smarty_function_icon($this->getVoteIconParams($info['preference'], 'unlike', tra("Don't like")), $smarty);
 				}
-				if (!in_array('fix', $currentVote)) {
-					$info['voting_html'] .= smarty_function_icon($this->getVoteIconParams($info['preference'], 'fix', tra('Fix me')), $smarty);
-				} else {
-					$info['voting_html'] .= smarty_function_icon($this->getVoteIconParams($info['preference'], 'unfix', tra("Don't fix me")), $smarty);
-				}
-				if (!in_array('wtf', $currentVote)) {
-					$info['voting_html'] .= smarty_function_icon($this->getVoteIconParams($info['preference'], 'wtf', tra("What's this for?")), $smarty);
-				} else {
-					$info['voting_html'] .= smarty_function_icon($this->getVoteIconParams($info['preference'], 'unwtf', tra("What's this for?")), $smarty);
-				}
+//				if (!in_array('fix', $currentVote)) {
+//					$info['voting_html'] .= smarty_function_icon($this->getVoteIconParams($info['preference'], 'fix', tra('Fix me')), $smarty);
+//				} else {
+//					$info['voting_html'] .= smarty_function_icon($this->getVoteIconParams($info['preference'], 'unfix', tra("Don't fix me")), $smarty);
+//				}
+//				if (!in_array('wtf', $currentVote)) {
+//					$info['voting_html'] .= smarty_function_icon($this->getVoteIconParams($info['preference'], 'wtf', tra("What's this for?")), $smarty);
+//				} else {
+//					$info['voting_html'] .= smarty_function_icon($this->getVoteIconParams($info['preference'], 'unwtf', tra("What's this for?")), $smarty);
+//				}
 			}
 
 			return $info;
