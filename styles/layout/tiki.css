@@ -1296,6 +1296,12 @@ body.tiki_wiki #comments {
 .ui-tabs .ui-tabs-nav li a {
   padding: 0.3em 0.8em 0.1em;
 }
+/* Structures drill-down menu */
+div.drillshow {
+  border: 1px solid;
+  padding: 3px;
+  border-color: lightgrey;
+}
 .article {
   margin-bottom: 40px;
 }

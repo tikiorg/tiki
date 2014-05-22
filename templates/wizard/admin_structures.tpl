@@ -14,6 +14,8 @@
 		{preference name=feature_wiki_multiprint}
 		{preference name=feature_listorphanStructure}
 		{preference name=feature_wiki_no_inherit_perms_structure}
+        {preference name=feature_wiki_structure_drilldownmenu}
+        {preference name=wiki_structure_bar_position}
 		</div>
 		<br>
 		<em>{tr}See also{/tr} <a href="https://doc.tiki.org/Structures" target="_blank">{tr}Structures{/tr} @ doc.tiki.org</a></em>
