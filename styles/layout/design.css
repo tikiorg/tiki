@@ -3456,8 +3456,9 @@ body.tiki_wiki #comments {
 	overflow: auto;
 	max-width: 990px;
 }
-.CodeMirror.codelisting {
-	position: static; /* fix the "double height with scrollbar" issue in codelisting with CodeMirror */
+.codelisting .CodeMirror-vscrollbar {
+	display: none !important;
+	/* we do not need to display vertical scrollbars in code listings - workaround for the "wrongly computed height with scrollbar" bug in CodeMirror */
 }
 
 /* wikiplugin_fade */
