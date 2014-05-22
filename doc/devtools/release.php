@@ -235,10 +235,12 @@ function write_secdb($file, $root, $version)
 
 	if (! empty($queries)) {
 		sort($queries);
+		fwrite($fp, "start transaction;\n");
 		fwrite($fp, "DELETE FROM `tiki_secdb` WHERE `tiki_version` = '$version';\n\n");
 		foreach ($queries as $q) {
 			fwrite($fp, "$q\n");
 		}
+		fwrite($fp, "commit;\n");
 	}
 
 	fclose($fp);
