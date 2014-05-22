@@ -19,9 +19,15 @@ function smarty_function_rating_result_avg( $params, $smarty )
 
 	if (count($votings)) {
 		foreach ($votings as $vote => $voting) {
-			$vote_sum += $vote * $voting['votes'];
-			$vote_count_total += $voting['votes'];
+            if ($vote != 0){
+                $vote_sum += $vote * $voting['votes'];
+            }
+            else{
+               continue;
+            }
+            $vote_count_total += $voting['votes'];
 		}
+
 		$vote_avg = number_format($vote_sum / $vote_count_total, 1);
 		// if the average has zero as decimal, do not show the decimal.
 		if (floor($vote_avg) == $vote_avg) {
@@ -31,5 +37,17 @@ function smarty_function_rating_result_avg( $params, $smarty )
 	//Why $vote_collect yields a different value than $vote_avg?
 	//$vote_collect = $ratinglib->collect($params['type'], $params['id'], 'avg', array_filter($votings));
 
-	return "<span class='score'>" . $vote_avg . " / " . count($options) . "</span>";
+
+
+    if (isset($options[0]) && is_string($options[0])) {
+        unset($options[0]);
+    }
+
+
+    if ($vote_avg != 0){
+        return "<span class='score'>" . $vote_avg . " / " . count($options) . "</span>";
+    }
+    else{
+        return "<span class='score'>" . "-" . " / " . count($options) . "</span>";
+    }
 }
