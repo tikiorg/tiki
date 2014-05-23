@@ -76,12 +76,14 @@
 					<input type = "submit" class="btn btn-default tips{if $smod_params.default_button eq 'search'} button_default{/if}"
 						   name = "search" value = "{$smod_params.search_submit|escape}"
 							title="{tr}Search{/tr}|{tr}Search for text throughout the site.{/tr}"
+							data-placement="bottom"
 							onclick = "$('#search-module-form{$search_mod_usage_counter}').attr('action', '{$smod_params.search_action|escape:javascript}').attr('page_selected','');" />
 				{/if}
 			{if $smod_params.show_go_button eq 'y'}
 					<input type = "submit" class="btn btn-default tips{if $smod_params.default_button eq 'go'} button_default{/if}"
 						   name = "go" value = "{$smod_params.go_submit|escape}"
 							title="{tr}Search{/tr}|{tr}Go directly to a page, or search in page titles if exact match is not found.{/tr}"
+							data-placement="bottom"
 							onclick = "$('#search-module-form{$search_mod_usage_counter}').attr('action', '{$smod_params.go_action|escape:javascript}').attr('page_selected','');
 										{if $smod_params.search_action eq 'tiki-searchindex.php'}
 											$('#search-module-form{$search_mod_usage_counter} input[name=\'filter~content\']').attr('name', 'find');
@@ -92,6 +94,7 @@
 					<input type = "submit" class = "btn btn-default tips{if $smod_params.default_button eq 'edit'} button_default{/if}"
 						   name = "edit" value = "{$smod_params.edit_submit|escape}"
 							title="{tr}Search{/tr}|{tr}Edit existing page or create a new one.{/tr}"
+							data-placement="bottom"
 							onclick = "$('#search-module-form{$search_mod_usage_counter} input[name!={if $smod_params.search_action eq 'tiki-searchindex.php'}\'filter~content\'{else}\'find\'{/if}]').attr('name', '');
 										$('#search-module-form{$search_mod_usage_counter} input[name={if $smod_params.search_action eq 'tiki-searchindex.php'}\'filter~content\'{else}\'find\'{/if}]').attr('name', 'page');
 										$('#search-module-form{$search_mod_usage_counter}').attr('action', '{$smod_params.edit_action|escape:javascript}').attr('page_selected','');" />
