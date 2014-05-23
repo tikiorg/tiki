@@ -97,7 +97,6 @@
             "WikiPlugin": "lib/core/",
 			"Multilingual": "lib/core/",
 			"Tracker": "lib/core/",
-			"Event": "lib/core/",
 			"Services": "lib/core/",
             "Table": "lib/core/",
 			"Tiki": "lib/core/",
@@ -105,8 +104,7 @@
             "Type": "lib/core/",
 			"Report": "lib/core/",
 			"Feed": "lib/core/",
-			"FutureLink": "lib/core/",
-			"FileGallery": "lib/core/"
+			"FutureLink": "lib/core/"
 		},
 		"classmap": [
 			"vendor_extra/pear/",
