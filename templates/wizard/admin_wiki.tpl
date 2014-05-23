@@ -16,6 +16,10 @@
 	<div class="adminoptionboxchild">
 		{tr}Look for the <img src="img/icons/camera.png" /> icon in the editor toolbar{/tr}. {tr}Requires Java{/tr}.<br/><a href="https://www.java.com/verify/" target="_blank">{tr}Verify your Java installation{/tr}</a>.<br>
 	</div>
+    {preference name=flaggedrev_approval}
+    <div id="flaggedrev_approval_childcontainer">
+        {preference name=flaggedrev_approval_categories}
+    </div>
 	</div>
 	<br><br>
 	<em>{tr}See also{/tr} <a href="tiki-admin.php?page=wiki&amp;alt=Wiki#content1" target="_blank">{tr}Wiki admin panel{/tr}</a></em>
