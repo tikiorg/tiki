@@ -192,9 +192,12 @@ $('#calendar').fullCalendar({
 					dataType: 'html',
 					url: event.url,
 					success: function(data){
-						$( "#calendar_dialog" ).html(data);
+						//$( "#calendar_dialog" ).html(data);
+						$( "#calendar_dialog_content" ).html(data);
 						$( "#calendar_dialog h1, #calendar_dialog .navbar" ).remove();
-						$( "#calendar_dialog" ).dialog({ modal: true, title: event.title, width: 'auto', height: 'auto', position: 'center' });
+						$( "#calendar_dialog .modal-title" ).html(event.title);
+						$( "#calendar_dialog" ).modal();
+						//$( "#calendar_dialog" ).dialog({ modal: true, title: event.title, width: 'auto', height: 'auto', position: 'center' });
 					}
 				});
 //						$('#calendar_dialog').load(event.url + ' .wikitext');
@@ -207,9 +210,12 @@ $('#calendar').fullCalendar({
 					dataType: 'html',
 					url: 'tiki-calendar_edit_item.php?fullcalendar=y&todate=' + date.getTime()/1000,
 					success: function(data){
-						$( "#calendar_dialog" ).html(data);
+						//$( "#calendar_dialog" ).html(data);
+						$( "#calendar_dialog_content" ).html(data);
 						$( "#calendar_dialog h1, #calendar_dialog .navbar" ).remove();
-						$( "#calendar_dialog" ).dialog({ modal: true, title: '{tr}Add Event{/tr}', width: 'auto', height: 'auto', position: 'center' });
+						$( "#calendar_dialog .modal-title" ).html('{tr}Add Event{/tr}');
+						$( "#calendar_dialog" ).modal();
+						//$( "#calendar_dialog" ).dialog({ modal: true, title: '{tr}Add Event{/tr}', width: 'auto', height: 'auto', position: 'center' });
 					}
 				});
         return false;
@@ -240,7 +246,29 @@ $('#calendar').fullCalendar({
 	}
 </style>
 <div id='calendar'></div>
-<div id='calendar_dialog'></div>
+
+<!--<div id='calendar_dialog'></div>-->
+
+<div id="calendar_dialog" class="modal fade">
+	<div class="modal-dialog">
+		<div class="modal-content" id="calendar_dialog_content">
+
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title">Modal title</h4>
+			</div>
+
+			<div class="modal-body">
+			</div>
+
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				<button type="button" class="btn btn-primary">Save changes</button>
+			</div>
+
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 {/if}
 <p>&nbsp;</p>
 </div>
