@@ -20,7 +20,6 @@
     <fieldset class="table clearfix featurelist">
         <legend> {tr}Wizards settings{/tr} </legend>
         <div class="adminWizardIconright"><img src="img/icons/large/wizard48x48.png" alt="{tr}Wizards{/tr}" title="{tr}Wizards{/tr}"/></div>
-        {preference name=wizard_admin_hide_on_login}
         {preference name=feature_wizard_user}
         {preference name=userTracker}
         <div class="adminoptionboxchild" id="userTracker_childcontainer">
@@ -29,14 +28,15 @@
                 {preference name=feature_userWizardUsersFieldIds}
             </div>
         </div>
+        {preference name=wizard_admin_hide_on_login}
 
     </fieldset>
 
     <fieldset class="table clearfix featurelist">
         <legend> {tr}Email{/tr} </legend>
         <div class="adminWizardIconright"><img src="img/icons/large/stock_mail48x48.png" alt="{tr}Email{/tr}" title="{tr}Email{/tr}"/></div>
-        {preference name=messu_truncate_internal_message}
         {preference name=email_footer}
+        {preference name=messu_truncate_internal_message}
     </fieldset>
 
 </div>
