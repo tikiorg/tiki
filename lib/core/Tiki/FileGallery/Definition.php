@@ -27,6 +27,11 @@ class Definition
 		$this->handler->delete($data, $path);
 	}
 
+	function getInfo()
+	{
+		return $this->info;
+	}
+
 	private function getHandler($info)
 	{
 		switch ($info['type']) {

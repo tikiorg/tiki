@@ -13,6 +13,8 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 
 use Tiki\FileGallery\FileWrapper\WrapperInterface as FileWrapper;
 use Tiki\FileGallery\Definition as GalleryDefinition;
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
 class FileGalLib extends TikiLib
 {
@@ -227,11 +229,11 @@ class FileGalLib extends TikiLib
 		$definition = $this->getGalleryDefinition($fileInfo['galleryId']);
 
 		$this->deleteBacklinks(null, $fileId);
-		$this->delete($fileInfo['data'], $fileInfo['path']);
+		$definition->delete($fileInfo['data'], $fileInfo['path']);
 
 		$archives = $this->get_archives($fileId);
 		foreach ($archives['data'] as $archive) {
-			$this->delete($archive['data'], $archive['path']);
+			$definition->delete($archive['data'], $archive['path']);
 			$this->remove_object('file', $archive['fileId']);
 		}
 
@@ -1181,9 +1183,8 @@ class FileGalLib extends TikiLib
 			}
 
 			if ( $didFileReplace && !empty($oldPath) ) {
-				$savedir = $this->get_gallery_save_dir($gal_info['galleryId'], $gal_info);
-
-				unlink($savedir . $oldPath);
+				$definition = $this->getGalleryDefinition($gal_info['galleryId']);
+				$definition->delete(null, $oldPath);
 			}
 
 			TikiLib::events()->trigger(
@@ -2380,20 +2381,19 @@ class FileGalLib extends TikiLib
 	{
 		global $prefs, $smarty;
 		include_once('lib/webmail/tikimaillib.php');
-		$query = 'select * from `tiki_files` where `deleteAfter` < '.$this->now.' - `lastModif` and `deleteAfter` is not NULL and `deleteAfter` != \'\' order by galleryId asc';
-		$files = $this->fetchAll($query, array());
+		$query = 'select * from `tiki_files` where `deleteAfter` < ? - `lastModif` and `deleteAfter` is not NULL and `deleteAfter` != \'\' order by galleryId asc';
+		$files = $this->fetchAll($query, array($this->now));
 		foreach ($files as $fileInfo) {
-			if (empty($galInfo) || $galInfo['galleryId'] != $fileInfo['galleryId']) {
-				$galInfo = $this->get_file_gallery_info($fileInfo['galleryId']);
-				if (!empty($prefs['fgal_delete_after_email'])) {
-					$smarty->assign_by_ref('galInfo', $galInfo);
-				}
-			}
-			if (!empty($prefs['fgal_delete_after_email'])) {
-				$savedir = $this->get_gallery_save_dir($galInfo['galleryId'], $galInfo);
-				$fileInfo['data'] = file_get_contents($savedir.$fileInfo['path']);
+			$definition = $this->getGalleryDefinition($fileInfo['galleryId']);
+			$galInfo = $definition->getInfo();
 
-				$smarty->assign_by_ref('fileInfo', $fileInfo);
+			if (!empty($prefs['fgal_delete_after_email'])) {
+				$wrapper = $definition->getFileWrapper($fileInfo['data'], $fileInfo['path']);
+
+				$fileInfo['data'] = $wrapper->getContent();
+
+				$smarty->assign('fileInfo', $fileInfo);
+				$smarty->assign('galInfo', $galInfo);
 				$mail = new TikiMail();
 				$mail->setSubject(tra('Old File deleted:', $prefs['site_language']).' '.$fileInfo['filename']);
 				$mail->setText($smarty->fetchLang($prefs['site_language'], 'mail/fgal_old_file_deleted.tpl'));
