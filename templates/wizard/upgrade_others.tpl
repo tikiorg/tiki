@@ -49,9 +49,9 @@
                 {tr}All the other command line scripts from before Tiki11 (ex. php installer/shell.php) will continue to work in Tiki12, but may not work anymore since Tiki13 so you will need to switch to use console.php script instead{/tr}.
                 <br/><br/>
                 {tr}Example. Database update{/tr}
-                <pre>php console.php database[colon]update</pre>
+                <pre>php console.php database[{tr}colon{/tr}]update</pre>
                 {tr}Or{/tr}
-                <pre>php console.php d[colon]u</pre>
+                <pre>php console.php d[{tr}colon{/tr}]u</pre>
                 <br/><br/>
                 {tr}Click to read more{/tr}
 	    	">
@@ -70,9 +70,9 @@
                 {tr}You can prevent that unresponsive time by means of setting Tiki to store notification emails in an email queue (see <strong>Admin home > General > General Preferences > Mail > Mail Sender > STMP</strong>, and <strong>Mail Delivery > Queue</strong>), and request the server to process the email sending based on a cron job{/tr}.
                 <br/><br/>
                 {tr}Example. Send the Mail Queue{/tr}
-                <pre>php console.php mail-queue[colon]send</pre>
+                <pre>php console.php mail-queue[{tr}colon{/tr}]send</pre>
                 {tr}Or{/tr}
-                <pre>php console.php m[colon]s</pre>
+                <pre>php console.php m[{tr}colon{/tr}]s</pre>
                 <br/><br/>
                 {tr}Click to read more{/tr}
 	    	">
