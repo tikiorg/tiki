@@ -356,7 +356,7 @@
 			</tr>
 		{/section}
 	</table>
-    </div<
+    </div>
 {/if}
 
 {if $best_objects_stats_lastweek}
