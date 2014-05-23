@@ -33,6 +33,8 @@ $pages[] = new AdminWizard();
 
 // If $useDefaultPrefs is set, the profiles "wizard" should be run. Otherwise the standard 
 $useDefaultPrefs = isset($_REQUEST['use-default-prefs']) ? true : false;
+// If $useUpgradeWizard is set, the "upgrade wizard" should be run. Otherwise the "admin wizard".
+$useUpgradeWizard = isset($_REQUEST['use-upgrade-wizard']) ? true : false;
 if ($useDefaultPrefs) {
 	
 	// Store the default prefs selection in the wizard bar
@@ -67,6 +69,35 @@ if ($useDefaultPrefs) {
 
     require_once('lib/wizard/pages/profiles_completed.php');
     $pages[] = new AdminWizardProfilesCompleted();
+
+} elseif ($useUpgradeWizard) {
+
+    // Store the use Upgrade Wizard selection in the wizard bar
+    $smarty->assign('useUpgradeWizard', $useUpgradeWizard);
+
+    require_once('lib/wizard/pages/upgrade_ui.php');
+    $pages[] = new UpgradeWizardUI();
+
+    require_once('lib/wizard/pages/upgrade_novice_admin_assistance.php');
+    $pages[] = new UpgradeWizardNoviceAdminAssistance();
+
+    require_once('lib/wizard/pages/upgrade_trackers.php');
+    $pages[] = new UpgradeWizardTrackers();
+
+    require_once('lib/wizard/pages/upgrade_permissions_and_logs.php');
+    $pages[] = new UpgradeWizardPermissionsAndLogs();
+
+    require_once('lib/wizard/pages/upgrade_others.php');
+    $pages[] = new UpgradeWizardOthers();
+
+    require_once('lib/wizard/pages/upgrade_doc_page_iframe.php');
+    $pages[] = new UpgradeWizardDocPageIframe();
+
+    require_once('lib/wizard/pages/upgrade_send_feedback.php');
+    $pages[] = new UpgradeWizardSendFeedback();
+
+    require_once('lib/wizard/pages/upgrade_wizard_completed.php');
+    $pages[] = new UpgradeWizardCompleted();
 
 } else {
 	require_once('lib/wizard/pages/admin_language.php');
@@ -160,6 +191,9 @@ foreach ($pages as $page) {
 	$url = $base_url.'tiki-wizard_admin.php?&amp;stepNr=' . $stepNr . '&amp;url=' . rawurlencode($homepageUrl);
 	if ($useDefaultPrefs) {
 		$url .= '&amp;use-default-prefs=1';
+    }
+    if ($useUpgradeWizard) {
+        $url .= '&amp;use-upgrade-wizard=1';
 	}
 	$cnt = 	$stepNr+1;
 	if ($cnt <= 9) {

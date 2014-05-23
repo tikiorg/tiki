@@ -34,7 +34,10 @@
 	{if isset($useDefaultPrefs)}
 		<input type="hidden" name="use-default-prefs" value="{$useDefaultPrefs}">
 	{/if}
-	<input type="submit" data-icon="check" data-theme="a" name="continue" value="{if isset($lastWizardPage)}{tr}Finish{/tr}{elseif isset($firstWizardPage)}{tr}Start{/tr}{else}{if $isEditable eq true}{tr}Save and Continue{/tr}{else}{tr}Next{/tr}{/if}{/if}" /> {* mobile *}
+    {if isset($useUpgradeWizard)}
+        <input type="hidden" name="use-upgrade-wizard" value="{$useUpgradeWizard}">
+    {/if}
+    <input type="submit" data-icon="check" data-theme="a" name="continue" value="{if isset($lastWizardPage)}{tr}Finish{/tr}{elseif isset($firstWizardPage)}{tr}Start{/tr}{else}{if $isEditable eq true}{tr}Save and Continue{/tr}{else}{tr}Next{/tr}{/if}{/if}" /> {* mobile *}
 </td>
 </tr>
 </table>

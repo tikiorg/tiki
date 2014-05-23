@@ -9,7 +9,7 @@
 	<tr>
 	{if !empty($wizard_toc)}
 		<td class="adminWizardTOC">
-			<span class="adminWizardTOCTitle">{tr}Wizard Steps{/tr}</span><br>
+			<span class="adminWizardTOCTitle">{if $useDefaultPrefs}{tr}Profiles Wizard{/tr}{elseif $useUpgradeWizard}{tr}Upgrade Wizard{/tr}{else}{tr}Admin Wizard{/tr}{/if} - {tr}steps{/tr}:</span>
 			{$wizard_toc}
 		</td>
 	{/if}
