@@ -6,15 +6,15 @@
 // $Id$
 
 namespace Tiki\FileGallery\Handler;
-use Tiki\FileGallery\FileWrapper\PhysicalFile;
 
-class Podcast implements HandlerInterface
+class Podcast extends FileSystem
 {
-	function getFileWrapper($data, $path)
+	private $directory;
+
+	function __construct()
 	{
 		global $prefs;
-
-		return new PhysicalFile($prefs['fgal_podcast_dir'], $path);
+		parent::__construct($prefs['fgal_podcast_dir']);
 	}
 }
 

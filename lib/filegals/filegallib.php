@@ -224,17 +224,14 @@ class FileGalLib extends TikiLib
 
 		}
 
-		$savedir = $this->get_gallery_save_dir($fileInfo['galleryId'], $galInfo);
+		$definition = $this->getGalleryDefinition($fileInfo['galleryId']);
 
 		$this->deleteBacklinks(null, $fileId);
-		if ($fileInfo['path']) {
-			unlink($savedir . $fileInfo['path']);
-		}
+		$this->delete($fileInfo['data'], $fileInfo['path']);
+
 		$archives = $this->get_archives($fileId);
 		foreach ($archives['data'] as $archive) {
-			if ($archive['path']) {
-				unlink($savedir . $archive['path']);
-			}
+			$this->delete($archive['data'], $archive['path']);
 			$this->remove_object('file', $archive['fileId']);
 		}
 
@@ -246,7 +243,9 @@ class FileGalLib extends TikiLib
 		$this->remove_object('file', $fileId);
 
 		//Watches
-		if ( ! $disable_notifications ) $this->notify($fileInfo['galleryId'], $fileInfo['name'], $fileInfo['filename'], '', 'remove file', $user);
+		if ( ! $disable_notifications ) {
+			$this->notify($fileInfo['galleryId'], $fileInfo['name'], $fileInfo['filename'], '', 'remove file', $user);
+		}
 
 		if ($prefs['feature_actionlog'] == 'y') {
 			$logslib = TikiLib::lib('logs');

@@ -22,6 +22,11 @@ class Definition
 		return $this->handler->getFileWrapper($data, $path);
 	}
 
+	function delete($data, $path)
+	{
+		$this->handler->delete($data, $path);
+	}
+
 	private function getHandler($info)
 	{
 		switch ($info['type']) {
