@@ -7,34 +7,38 @@
 <div class="adminWizardContent">
     <fieldset>
         <legend>{tr}Tracker settings{/tr}</legend>
-        {preference name=feature_reports}
-        {preference name="tracker_refresh_itemlink_detail"}
-        {preference name="tracker_clone_item"}
-        {preference name=ajax_inline_edit}
-        <div class="adminoptionboxchild" id="ajax_inline_edit_childcontainer">
-            {preference name=ajax_inline_edit_trackerlist}
+        <div class="admin clearfix featurelist">
+            {preference name=tracker_clone_item}
+            {preference name=tracker_change_field_type}
+            {preference name=tracker_show_comments_below}
+            {preference name=tracker_refresh_itemlink_detail}
+            {preference name=feature_reports}
+            {preference name=ajax_inline_edit}
+            <div class="adminoptionboxchild" id="ajax_inline_edit_childcontainer">
+                {preference name=ajax_inline_edit_trackerlist}
+            </div>
         </div>
-        {preference name=tracker_change_field_type}
-        {preference name=tracker_show_comments_below}
     </fieldset>
 
     <fieldset>
         <legend>{tr}Tracker Field Types{/tr}</legend>
-        {preference name=trackerfield_rating}
-        <ul>
-            <li>
-                {tr}Former ways to manage ratings in trackers are <b>deprecated</b>{/tr}
-                <a href="http://doc.tiki.org/Ratings" target="tikihelp" class="tikihelp" title="{tr}Deprecated Rating Systems in Trackers:{/tr}
-    	    	<ul>
-	    	        <li>{tr}Tracker field types{/tr} > {tr}Stars (deprecated){/tr}</li>
-		            <li>{tr}Tracker field types{/tr} > {tr}Stars (system - deprecated){/tr}</li>
-		            <li>{tr}edit Tracker{/tr} > {tr}Features{/tr} > {tr}Allow ratings (deprecated, use rating field){/tr}</li>
-	    	    </ul>">
-                <img src="img/icons/help.png" alt="" width="16" height="16" class="icon" />
-                </a>
-            </li>
-        </ul>
-        {preference name=trackerfield_kaltura}
+        <div class="admin clearfix featurelist">
+            {preference name=trackerfield_rating}
+            <ul>
+                <li>
+                    {tr}Former ways to manage ratings in trackers are <b>deprecated</b>{/tr}
+                    <a href="http://doc.tiki.org/Ratings" target="tikihelp" class="tikihelp" title="{tr}Deprecated Rating Systems in Trackers:{/tr}
+                    <ul>
+                        <li>{tr}Tracker field types{/tr} > {tr}Stars (deprecated){/tr}</li>
+                        <li>{tr}Tracker field types{/tr} > {tr}Stars (system - deprecated){/tr}</li>
+                        <li>{tr}edit Tracker{/tr} > {tr}Features{/tr} > {tr}Allow ratings (deprecated, use rating field){/tr}</li>
+                    </ul>">
+                    <img src="img/icons/help.png" alt="" width="16" height="16" class="icon" />
+                    </a>
+                </li>
+            </ul>
+            {preference name=trackerfield_kaltura}
+        </div>
     </fieldset>
 
     <fieldset>
@@ -53,7 +57,6 @@
             </a> :
             <a href="tiki-admin.php?profile=User_Trackers&show_details_for=User_Trackers&repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2" target="_blank">{tr}apply profile now{/tr}</a> ({tr}new window{/tr})</em>
             </li>
-            <br/>
         <li>{tr}Display last comment author and date{/tr}
             <a href="http://doc.tiki.org/Trackers" target="tikihelp" class="tikihelp" title="{tr}Display last comment author and date:{/tr}
                 {tr}In lists of tracker items, through the interface of the tracker feature as well as through list in tracker related plugins{/tr}.
@@ -63,7 +66,6 @@
                 <img src="img/icons/help.png" alt="" width="16" height="16" class="icon" />
             </a>
             </li>
-            <br/>
         <li>{tr}User can see his own items{/tr}
             <a href="http://doc.tiki.org/Trackers" target="tikihelp" class="tikihelp" title="{tr}User can see his own items:{/tr}
                 {tr}The tracker needs a user field with the auto-assign activated{/tr}. {tr}No extra permission is needed at the tracker permissions level to allow a user to see just his own items through Plugin TrackerList with the param view=user{/tr}.
@@ -74,6 +76,5 @@
             </a>
             </li>
         </ul>
-        <br/>
     </fieldset>
 </div>

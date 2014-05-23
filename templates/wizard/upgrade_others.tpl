@@ -83,22 +83,24 @@
 
     <fieldset>
         <legend>{tr}Other Features{/tr}</legend>
-        {preference name=conditions_enabled}
-        <div class="adminoptionboxchild" id="conditions_enabled_childcontainer">
-            {preference name=conditions_page_name}
-            {preference name=conditions_minimum_age}
-        </div>
-        {preference name=feature_jcapture}
-        <div class="adminoptionboxchild" id="feature_jcapture_childcontainer">
-            {preference name=fgal_for_jcapture}
-        </div>
-        {preference name=feature_docs}
-        {preference name=feature_draw}
-        <div class="adminoptionboxchild" id="feature_draw_childcontainer">
-            {preference name=feature_draw_hide_buttons}
-            {preference name=feature_draw_separate_base_image}
-            <div class="adminoptionboxchild" id="feature_draw_separate_base_image_childcontainer">
-                {preference name=feature_draw_in_userfiles}
+        <div class="admin clearfix featurelist">
+            {preference name=conditions_enabled}
+            <div class="adminoptionboxchild" id="conditions_enabled_childcontainer">
+                {preference name=conditions_page_name}
+                {preference name=conditions_minimum_age}
+            </div>
+            {preference name=feature_docs}
+            {preference name=feature_jcapture}
+            <div class="adminoptionboxchild" id="feature_jcapture_childcontainer">
+                {preference name=fgal_for_jcapture}
+            </div>
+            {preference name=feature_draw}
+            <div class="adminoptionboxchild" id="feature_draw_childcontainer">
+                {preference name=feature_draw_hide_buttons}
+                {preference name=feature_draw_separate_base_image}
+                <div class="adminoptionboxchild" id="feature_draw_separate_base_image_childcontainer">
+                    {preference name=feature_draw_in_userfiles}
+                </div>
             </div>
         </div>
     </fieldset>
