@@ -111,6 +111,3 @@ class RatingConfigLib extends TikiDb_Bridge
 	}
 }
 
-global $ratingconfiglib;
-$ratingconfiglib = new RatingConfigLib;
-

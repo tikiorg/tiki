@@ -28,7 +28,8 @@ class Tiki_Profile_InstallHandler_Sheet extends Tiki_Profile_InstallHandler
 	function _install()
 	{
 		if ($this->canInstall()) {
-			global $user, $sheetlib;
+			global $user;
+			$sheetlib = TikiLib::lib('sheet');
 			require_once ('lib/sheet/grid.php');
 			
 			//here we convert the array to that of what is acceptable to the sheet lib

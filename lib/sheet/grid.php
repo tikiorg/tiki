@@ -332,7 +332,8 @@ class TikiSheet
 	 */
 	function getTableHtml( $incsubs = true, $date = null )
 	{
-		global $prefs, $sheetlib;
+		global $prefs;
+		$sheetlib = TikiLib::lib('sheet');
 
 		$filegallib = TikiLib::lib("filegal");
 
@@ -1039,7 +1040,7 @@ class TikiSheetTrackerHandler extends TikiSheetDataHandler
 	 */
 	function __construct( $trackerId )
 	{
-		global $tikilib;
+		$tikilib = TikiLib::lib('tiki');
 		$trklib = TikiLib::lib("trk");
 
 		$this->id = $trackerId;
@@ -1051,7 +1052,7 @@ class TikiSheetTrackerHandler extends TikiSheetDataHandler
 
 	// _load
 	function _load( &$sheet ) {
-		global $tikilib;
+		$tikilib = TikiLib::lib('tiki');
 
 		$i = 0;
 		$trackerName = $this->info['name'];
@@ -1341,7 +1342,7 @@ class TikiSheetDatabaseHandler extends TikiSheetDataHandler
 	 */
 	function __construct( $id , $date = null, $metadata = null )
 	{
-		global $sheetlib;
+		$sheetlib = TikiLib::lib('sheet');
 
 		$this->id = $id;
 		$this->readDate = ( $date ? $date : time() );
@@ -1356,7 +1357,8 @@ class TikiSheetDatabaseHandler extends TikiSheetDataHandler
 	// _load
 	function _load( TikiSheet &$sheet )
 	{
-		global $tikilib, $sheetlib;
+		$sheetlib = TikiLib::lib('sheet');
+		$tikilib = TikiLib::lib('tiki');
 
 		$result = $tikilib->query( "
 			SELECT `rowIndex`, `columnIndex`, `value`, `calculation`, `width`, `height`, `format`, `style`, `class`, `user`
@@ -1408,7 +1410,9 @@ class TikiSheetDatabaseHandler extends TikiSheetDataHandler
 	// _save
 	function _save( TikiSheet &$sheet )
 	{
-		global $tikilib, $user, $prefs;
+		global $user, $prefs;
+		$tikilib = TikiLib::lib('tiki');
+
 		// Load the current database state {{{3
 		$current = new TikiSheet;
 		$handler = new TikiSheetDatabaseHandler( $this->id, null, $this->metadata );
@@ -1735,7 +1739,7 @@ class TikiSheetWikiTableHandler extends TikiSheetDataHandler
 	// _load
 	function _load( TikiSheet &$sheet )
 	{
-		global $tikilib;
+		$tikilib = TikiLib::lib('tiki');
 
 		$result = $tikilib->query( "SELECT `data` FROM `tiki_pages` WHERE `pageName` = ?", array( $this->pageName ) );
 		if ( $row = $result->fetchRow() )
@@ -1928,7 +1932,7 @@ class TikiSheetOutputHandler extends TikiSheetDataHandler
 	 */
 	function drawRows( TikiSheet &$sheet )
 	{
-		global $sheetlib;
+		$sheetlib = TikiLib::lib('sheet');
 
 		$beginRow = $sheet->getRangeBeginRow();
 		$endRow = $sheet->getRangeEndRow();
@@ -2038,7 +2042,7 @@ class TikiSheetOutputHandler extends TikiSheetDataHandler
 	 */
 	function drawCols( TikiSheet &$sheet )
 	{
-		global $sheetlib;
+		$sheetlib = TikiLib::lib('sheet');
 
 		if (isset($sheet->metadata) && isset($sheet->metadata->widths)) {
 			foreach($sheet->metadata->widths as $width) {
@@ -2116,7 +2120,7 @@ class TikiSheetLabeledOutputHandler extends TikiSheetDataHandler
 	 */
 	function drawRows( &$sheet )
 	{
-		global $sheetlib;
+		$sheetlib = TikiLib::lib('sheet');
 
 		$beginRow = $sheet->getRangeBeginRow();
 		$endRow = $sheet->getRangeEndRow();

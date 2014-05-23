@@ -83,6 +83,9 @@
 		<service id="tiki.lib.rating" class="RatingLib">
 			<file>%kernel.root_dir%/lib/rating/ratinglib.php</file>
 		</service>
+		<service id="tiki.lib.ratingconfig" class="RatingConfigLib">
+			<file>%kernel.root_dir%/lib/rating/configlib.php</file>
+		</service>
 		<service id="tiki.lib.relation" class="RelationLib">
 			<file>%kernel.root_dir%/lib/attributes/relationlib.php</file>
 		</service>
@@ -94,6 +97,9 @@
 		</service>
 		<service id="tiki.lib.service" class="ServiceLib">
 			<file>%kernel.root_dir%/lib/servicelib.php</file>
+		</service>
+		<service id="tiki.lib.sheet" class="SheetLib">
+			<file>%kernel.root_dir%/lib/sheet/sheetlib.php</file>
 		</service>
 		<service id="tiki.lib.struct" class="StructLib">
 			<file>%kernel.root_dir%/lib/structures/structlib.php</file>

@@ -119,7 +119,7 @@ function wikiplugin_sheet_info()
 
 function wikiplugin_sheet($data, $params)
 {
-	global $dbTiki, $tiki_p_edit_sheet, $tiki_p_edit, $tiki_p_admin_sheet, $tiki_p_admin, $prefs, $user, $sheetlib, $page, $tikilib, $smarty;
+	global $tiki_p_edit_sheet, $tiki_p_edit, $tiki_p_admin_sheet, $tiki_p_admin, $prefs, $user, $page;
 	extract($params, EXTR_SKIP);
 	$style = (isset($height)) ? "height: $height !important;" : '';
 	$style .= (isset($width)) ? "width: $width;" : '';
@@ -132,6 +132,8 @@ function wikiplugin_sheet($data, $params)
 	$class = (isset($class)) ? " $class"  : '';
 
 	$sheetlib = TikiLib::lib("sheet");
+	$tikilib = TikiLib::lib('tiki');
+	$smarty = TikiLib::lib('smarty');
 
 	static $index = 0;
 	++$index;
@@ -236,7 +238,7 @@ EOF;
 	}
 
 	if (!isset($simple) || $simple != 'y') {
-		global $headerlib;
+		$headerlib = TikiLib::lib('header');
 		$sheetlib->setup_jquery_sheet();
 		$headerlib->add_jq_onready(
 			'$("div.tiki_sheet").each(function() {
