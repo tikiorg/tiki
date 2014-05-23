@@ -21,7 +21,7 @@
 
 <h2 id="site_stats">{tr}Site Stats{/tr}</h2>
 {cycle values="odd,even" print=false advance=false}
-<table class="formcolor">
+<table class="formcolor table table-striped">
 	<tr>
 		<td>{tr}Date of first pageview{/tr}</td>
 		<td style="text-align:right;">{$site_stats.started|tiki_long_date}</td>
@@ -50,7 +50,7 @@
 {if $wiki_stats}
 	<h2 id="wiki_stats">{tr}Wiki Stats{/tr}</h2>
 	{cycle values="odd,even" print=false advance=false}
-	<table class="formcolor">
+	<table class="formcolor table table-striped">
 		<tr>
 			<td>{tr}Wiki Pages{/tr}</td>
 			<td style="text-align:right;">{$wiki_stats.pages}</td>
@@ -89,7 +89,7 @@
 {if $igal_stats}
 	<h2 id="igal_stats">{tr}Image galleries Stats{/tr}</h2>
 	{cycle values="odd,even" print=false advance=false}
-	<table class="formcolor">
+	<table class="formcolor table table-striped">
 		<tr>
 			<td>{tr}Galleries{/tr}</td>
 			<td style="text-align:right;">{$igal_stats.galleries}</td>
@@ -120,7 +120,7 @@
 {if $fgal_stats}
 	<h2 id="fgal_stats">{tr}File galleries Stats{/tr}</h2>
 	{cycle values="odd,even" print=false advance=false}
-	<table class="formcolor">
+	<table class="formcolor table table-striped">
 		<tr>
 			<td>{tr}Galleries{/tr}</td>
 			<td style="text-align:right;">{$fgal_stats.galleries}</td>
@@ -155,7 +155,7 @@
 {if $cms_stats}
 	<h2 id="cms_stats">{tr}Articles Stats{/tr}</h2>
 	{cycle values="odd,even" print=false advance=false}
-	<table class="formcolor">
+	<table class="formcolor table table-striped">
 		<tr>
 			<td>{tr}Articles{/tr}</td>
 			<td style="text-align:right;">{$cms_stats.articles}</td>
@@ -186,7 +186,7 @@
 {if $forum_stats}
 	{cycle values="odd,even" print=false advance=false}
 	<h2 id="forum_stats">{tr}Forum Stats{/tr}</h2>
-	<table class="formcolor">
+	<table class="formcolor table table-striped">
 		<tr>
 			<td>{tr}Forums{/tr}</td>
 			<td style="text-align:right;">{$forum_stats.forums}</td>
@@ -217,7 +217,7 @@
 {if $blog_stats}
 	<h2 id="blog_stats">{tr}Blog Stats{/tr}</h2>
 	{cycle values="odd,even" print=false advance=false}
-	<table class="formcolor">
+	<table class="formcolor table table-striped">
 		<tr>
 			<td>{tr}Weblogs{/tr}</td>
 			<td style="text-align:right;">{$blog_stats.blogs}</td>
@@ -248,7 +248,7 @@
 {if $poll_stats}
 	<h2 id="poll_stats">{tr}Poll Stats{/tr}</h2>
 	{cycle values="odd,even" print=false advance=false}
-	<table class="formcolor">
+	<table class="formcolor table table-striped">
 		<tr>
 			<td>{tr}Polls{/tr}</td>
 			<td style="text-align:right;">{$poll_stats.polls}</td>
@@ -267,7 +267,7 @@
 {if $faq_stats}
 	<h2 id="faq_stats">{tr}FAQ Stats{/tr}</h2>
 	{cycle values="odd,even" print=false advance=false}
-	<table class="formcolor">
+	<table class="formcolor table table-striped">
 		<tr>
 			<td>{tr}FAQs{/tr}</td>
 			<td style="text-align:right;">{$faq_stats.faqs}</td>
@@ -286,7 +286,7 @@
 {if $user_stats}
 	<h2 id="user_stats">{tr}User Stats{/tr}</h2>
 	{cycle values="odd,even" print=false advance=false}
-	<table class="formcolor">
+	<table class="formcolor table table-striped">
 		<tr>
 			<td>{tr}Users{/tr}</td>
 			<td style="text-align:right;">{$user_stats.users}</td>
@@ -305,7 +305,7 @@
 {if $quiz_stats}
 	<h2 id="quiz_stats">{tr}Quiz Stats{/tr}</h2>
 	{cycle values="odd,even" print=false advance=false}
-	<table class="formcolor">
+	<table class="formcolor table table-striped">
 		<tr>
 			<td>{tr}Quizzes{/tr}</td>
 			<td style="text-align:right;">{$quiz_stats.quizzes}</td>
@@ -341,7 +341,7 @@
 		<input type="submit" class="btn btn-default btn-sm" name="modify" value="{tr}Filter{/tr}">
 	</form>
     <div class="table-responsive">
-	<table class="table normal">
+	<table class="table table-striped normal">
 		<tr>
 			<th>{tr}Object{/tr}</th>
 			<th>{tr}Section{/tr}</th>
@@ -356,14 +356,14 @@
 			</tr>
 		{/section}
 	</table>
-    </div<
+    </div>
 {/if}
 
 {if $best_objects_stats_lastweek}
 	<h2 id="best_objects_stats_lastweek">{tr}Most viewed objects in the last 7 days{/tr}</h2>
 
     <div class="table-responsive">
-	<table class="table normal">
+	<table class="table table-striped normal">
 		<tr>
 			<th>{tr}Object{/tr}</th>
 			<th>{tr}Section{/tr}</th>
