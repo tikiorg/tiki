@@ -6,11 +6,13 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
+use Tiki\FileGallery;
+
 class TikiSecure
 {
-	var $certName = "Tiki Secure Certificate";
-	var $bits = 1024;
-	var $type = "file";
+	private $certName = "Tiki Secure Certificate";
+	private $bits = 1024;
+	private $type = "file";
 	
 	function __construct($certName = "", $bits = 0)
 	{
@@ -59,7 +61,7 @@ class TikiSecure
 	function hasKeys()
 	{
 		if ($this->type == "filegallery")
-			return FileGallery_File::filename($this->certName)->exists();
+			return FileGallery\File::filename($this->certName)->exists();
 		
 		if ($this->type == "file") {
 			return file_exists("temp/" . $this->certName);
@@ -71,7 +73,7 @@ class TikiSecure
 		//Get existing certificate if it exists
 		if ($this->hasKeys()) {
 			if ($this->type == "filegallery") {
-				$keys = json_decode(FileGallery_File::filename($this->certName)->data());
+				$keys = json_decode(FileGallery\File::filename($this->certName)->data());
 			}
 			
 			if ($this->type == "file") {
@@ -95,7 +97,7 @@ class TikiSecure
 		set_include_path($path);
 		
 		if ($this->type == "filegallery") {
-			FileGallery_File::filename($this->certName)
+			FileGallery\File::filename($this->certName)
 				->setParam("description", $this->certName)
 				->replace(json_encode($keys));
 		}

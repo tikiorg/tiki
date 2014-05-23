@@ -11,6 +11,9 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
   exit;
 }
 
+use Tiki\FileGallery\FileWrapper\WrapperInterface as FileWrapper;
+use Tiki\FileGallery\Definition as GalleryDefinition;
+
 class FileGalLib extends TikiLib
 {
 	function isPodCastGallery($galleryId, $gal_info=null)
@@ -1265,21 +1268,21 @@ class FileGalLib extends TikiLib
 	{
 		switch ($type) {
 		case 'text/plain':
-			return function (FileGallery_Wrapper $wrapper) {
+			return function (FileWrapper $wrapper) {
 				return $wrapper->getContents();
 			};
 		case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
-			return function (FileGallery_Wrapper $wrapper) {
+			return function (FileWrapper $wrapper) {
 				$document = Zend_Search_Lucene_Document_Docx::loadDocxFile($wrapper->getReadableFile(), true);
 				return $document->getField('body')->getUtf8Value();
 			};
 		case 'application/vnd.openxmlformats-officedocument.presentationml.presentation':
-			return function (FileGallery_Wrapper $wrapper) {
+			return function (FileWrapper $wrapper) {
 				$document = Zend_Search_Lucene_Document_Pptx::loadPptxFile($wrapper->getReadableFile(), true);
 				return $document->getField('body')->getUtf8Value();
 			};
 		case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
-			return function (FileGallery_Wrapper $wrapper) {
+			return function (FileWrapper $wrapper) {
 				$document = Zend_Search_Lucene_Document_Xlsx::loadXlsxFile($wrapper->getReadableFile(), true);
 				return $document->getField('body')->getUtf8Value();
 			};
@@ -1351,8 +1354,10 @@ class FileGalLib extends TikiLib
 
 		for ($offset = 0, $maxRecords = 10; ; $offset += $maxRecords) {
 			$rows = $files->fetchAll(array('fileId', 'filename', 'filesize', 'filetype', 'data', 'path', 'galleryId'), array('archiveId' => 0), $maxRecords, $offset);
-			if (empty($rows))
+			if (empty($rows)) {
 				break;
+			}
+
 			foreach ($rows as $row) {
 				$search_text = $this->get_search_text_for_data($row['data'], $row['path'], $row['filetype'], $row['galleryId']);
 				if ($search_text!==false) {
@@ -1403,7 +1408,7 @@ class FileGalLib extends TikiLib
 			};
 		}
 
-		return function (FileGallery_Wrapper $wrapper) use ($command) {
+		return function (FileWrapper $wrapper) use ($command) {
 			$tmpfname = $wrapper->getReadableFile();
 
 			$cmd = str_replace('%1', escapeshellarg($tmpfname), $command);
@@ -1420,8 +1425,9 @@ class FileGalLib extends TikiLib
 		};
 	}
 
-	function get_search_text_for_data($data,$path,$type, $galleryId)
+	private function get_search_text_for_data($data, $path, $type, $galleryId)
 	{
+		$definition = $this->getGalleryDefinition($galleryId);
 
 		if (!isset($data) && !isset($path)) {
 			return false;
@@ -1432,7 +1438,20 @@ class FileGalLib extends TikiLib
 		if (empty($parseApp))
 			return '';
 
-		return $parseApp(new FileGallery_Wrapper($data, $path, $galleryId));
+		$wrapper = $definition->getFileWrapper($data, $path);
+		return $parseApp($wrapper);
+	}
+
+	private function getGalleryDefinition($galleryId)
+	{
+		static $loaded = [];
+
+		if (! isset($loaded[$galleryId])) {
+			$info = $this->get_file_gallery_info($galleryId);
+			$loaded[$galleryId] = new GalleryDefinition($info);
+		}
+
+		return $loaded[$galleryId];
 	}
 
 	function notify ($galleryId, $name, $filename, $description, $action, $user, $fileId=false)

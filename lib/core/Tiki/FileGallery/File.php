@@ -5,9 +5,13 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-class FileGallery_File
+namespace Tiki\FileGallery;
+
+use TikiLib;
+
+class File
 {
-	var $param = array(
+	public $param = array(
 		"fileId" 	=> 0,
 		"galleryId" 	=> 1,
 		"name"		=> "",
@@ -37,7 +41,7 @@ class FileGallery_File
 		"deleteAfter" 	=> 0,
 		"backlinkPerms"	=> "",
 	);
-	var $exists = false;
+	public $exists = false;
 
 	function __construct()
 	{
@@ -51,12 +55,12 @@ class FileGallery_File
 
 	static function filename($filename = "")
 	{
-		global $tikilib;
+		$tikilib = TikiLib::lib('tiki');
 
 		$id = $tikilib->getOne("SELECT fileId FROM tiki_files WHERE filename = ? AND archiveId  < 1", array($filename));
 
 		if (!empty($id)) {
-			return FileGallery_File::id($id);
+			return self::id($id);
 		}
 
 		//always use ->exists() to check if the file was found, if the above is returned, a file was found, if below, there wasent
@@ -92,7 +96,7 @@ class FileGallery_File
 	function archive($archive = 0)
 	{
 		$archives = $this->listArchives();
-		return FileGallery_File::id($archives[$archive]['id']);
+		return self::id($archives[$archive]['id']);
 	}
 
 	function archiveFromLastModif ($lastModif)
@@ -117,7 +121,7 @@ class FileGallery_File
 	function listArchives()
 	{
 		$archives = TikiLib::lib("filegal")->get_archives((int)$this->getParam('fileId'));
-		$archives = array_reverse($archives['data']);
+		$archives = \array_reverse($archives['data']);
 		return $archives;
 	}
 
@@ -165,8 +169,8 @@ class FileGallery_File
 	{
 		include_once ( "lib/diff/Diff.php" );
 
-		$textDiff =  new Text_Diff(
-			FileGallery_File::id($this->getParam('fileId'))
+		$textDiff =  new \Text_Diff(
+			self::id($this->getParam('fileId'))
 			->archive($archive)
 			->data(),
 			$this->data()
