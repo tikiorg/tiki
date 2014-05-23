@@ -538,7 +538,7 @@ composer()
 	# insert php cli version check here
 	# http://dev.tiki.org/item4721
 	PHP_OPTION="--version"
-	REQUIRED_PHP_VERSION=53 # minimal version PHP 5.3 but no decimal seperator, no floating point data
+	REQUIRED_PHP_VERSION=55 # minimal version PHP 5.5 but no decimal seperator, no floating point data
 	#${PHPCLI} ${PHP_OPTION}
 	LOCAL_PHP_VERSION=`${PHPCLI} ${PHP_OPTION} | ${GREP} ^PHP | ${CUT} -c5,7`
 	#echo ${LOCAL_PHP_VERSION}
