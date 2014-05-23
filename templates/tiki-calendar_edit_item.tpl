@@ -733,9 +733,11 @@
 						<label class="control-label col-md-3">{tr}Description{/tr}</label>
 						<div class="col-md-9">
 							{if $edit}
-								{textarea name="save[description]" id="editwiki" cols=40 rows=10}
-									{$calitem.description}
-								{/textarea}
+								{strip}
+									{textarea name="save[description]" id="editwiki" cols=40 rows=10}
+										{$calitem.description}
+									{/textarea}
+								{/strip}
 							{else}
 								<span{if $prefs.calendar_description_is_html neq "y"} class="description"{/if}>
 									{$calitem.parsed|default:"<i>{tr}No description{/tr}</i>"}
