@@ -70,7 +70,7 @@ function createPage($title, $content)
 						</h1>
 					</div>
 				</div>
-				<div id="middle" style="width: 960px; text-align: left; ">
+				<div id="middle" style="width: 960px; text-align: left; padding: 3em;">
 					$content
 				</div>
 			</div>
