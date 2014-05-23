@@ -178,7 +178,7 @@
 <h1>{tr}Set the Database Connection{/tr}</h1>
 <div style="float:left; width:60px"><img src="img/icons/large/stock_line-in48x48.png" alt="{tr}Database{/tr}"></div>
 <div class="clearfix">
-	<p>{tr}Tiki requires an active database connection.{/tr} {tr}You must create the database and user <em>before</em> completing this page.{/tr}</p>
+	<p>{tr}Tiki requires an active database connection.{/tr} {tr}You must create the database and user <em>before</em> completing this page, unless your database user has also permissions to create new databases and not just use them.{/tr}</p>
 {if $dbcon ne 'y'}
 	<div align="center" style="padding:1em">
 		<img src="img/icons/delete.png" alt="{tr}Alert{/tr}" style="vertical-align:middle"> <span style="font-weight:bold">{tr}Tiki cannot find a database connection.{/tr}</span> {tr}This is normal for a new installation.{/tr}
