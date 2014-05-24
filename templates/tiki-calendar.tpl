@@ -190,10 +190,10 @@ $('#calendar').fullCalendar({
         if (event.url && event.editable) {
 			$.ajax({
 					dataType: 'html',
-					url: event.url,
+					url: event.url + '&isModal=1',
 					success: function(data){
 						//$( "#calendar_dialog" ).html(data);
-						$( "#calendar_dialog_content .modal-body" ).html(data);
+						$( "#calendar_dialog_content" ).html(data);
 						$( "#calendar_dialog h1, #calendar_dialog .navbar" ).remove();
 						$( "#calendar_dialog .modal-title" ).html(event.title);
 						$( "#calendar_dialog" ).modal();
@@ -208,10 +208,10 @@ $('#calendar').fullCalendar({
 			dayClick: function(date, allDay, jsEvent, view) {
 			$.ajax({
 					dataType: 'html',
-					url: 'tiki-calendar_edit_item.php?fullcalendar=y&todate=' + date.getTime()/1000,
+					url: 'tiki-calendar_edit_item.php?fullcalendar=y&todate=' + date.getTime()/1000 + '&isModal=1',
 					success: function(data){
 						//$( "#calendar_dialog" ).html(data);
-						$( "#calendar_dialog_content .modal-body" ).html(data);
+						$( "#calendar_dialog_content" ).html(data);
 						$( "#calendar_dialog h1, #calendar_dialog .navbar" ).remove();
 						$( "#calendar_dialog .modal-title" ).html('{tr}Add Event{/tr}');
 						$( "#calendar_dialog" ).modal();
@@ -250,22 +250,8 @@ $('#calendar').fullCalendar({
 <!--<div id='calendar_dialog'></div>-->
 
 <div id="calendar_dialog" class="modal fade">
-	<div class="modal-dialog modal-lg">
+	<div class="modal-dialog">
 		<div class="modal-content" id="calendar_dialog_content">
-
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				<h4 class="modal-title"></h4>
-			</div>
-
-			<div class="modal-body">
-			</div>
-
-			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				<button type="button" class="btn btn-primary">Save changes</button>
-			</div>
-
 		</div><!-- /.modal-content -->
 	</div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
