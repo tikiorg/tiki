@@ -193,7 +193,7 @@ $('#calendar').fullCalendar({
 					url: event.url,
 					success: function(data){
 						//$( "#calendar_dialog" ).html(data);
-						$( "#calendar_dialog_content" ).html(data);
+						$( "#calendar_dialog_content .modal-body" ).html(data);
 						$( "#calendar_dialog h1, #calendar_dialog .navbar" ).remove();
 						$( "#calendar_dialog .modal-title" ).html(event.title);
 						$( "#calendar_dialog" ).modal();
@@ -211,7 +211,7 @@ $('#calendar').fullCalendar({
 					url: 'tiki-calendar_edit_item.php?fullcalendar=y&todate=' + date.getTime()/1000,
 					success: function(data){
 						//$( "#calendar_dialog" ).html(data);
-						$( "#calendar_dialog_content" ).html(data);
+						$( "#calendar_dialog_content .modal-body" ).html(data);
 						$( "#calendar_dialog h1, #calendar_dialog .navbar" ).remove();
 						$( "#calendar_dialog .modal-title" ).html('{tr}Add Event{/tr}');
 						$( "#calendar_dialog" ).modal();
@@ -250,12 +250,12 @@ $('#calendar').fullCalendar({
 <!--<div id='calendar_dialog'></div>-->
 
 <div id="calendar_dialog" class="modal fade">
-	<div class="modal-dialog">
+	<div class="modal-dialog modal-lg">
 		<div class="modal-content" id="calendar_dialog_content">
 
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				<h4 class="modal-title">Modal title</h4>
+				<h4 class="modal-title"></h4>
 			</div>
 
 			<div class="modal-body">
