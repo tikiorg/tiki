@@ -1,38 +1,41 @@
 	{title admpage="calendar"}{tr}Calendar event : {/tr}{$calitem.name|escape}{/title}
-
-	<form action="{$myurl|escape}" method="post" name="f" id="editcalitem" class="form-horizontal">
-	<div class="col-md-12">
-		<div class="row">
-			<div class="col-md-12">
-				<br>
-				<div class="t_navbar btn-group form-group">
-					{if $tiki_p_view_calendar eq 'y'}
-						{button href="tiki-calendar.php" class="btn btn-default" _text="{tr}View Calendars{/tr}"}
-					{/if}
-					{if $tiki_p_admin_calendar eq 'y'}
-						{button href="tiki-admin_calendars.php?calendarId=$calendarId" class="btn btn-default" _text="{tr}Edit Calendar{/tr}"}
-					{/if}
-					{if $tiki_p_add_events eq 'y' and $id}
-						{button href="tiki-calendar_edit_item.php" class="btn btn-default" _text="{tr}New event{/tr}"}
-					{/if}
-					{if $id}
-						{if $edit}
-							{button href="tiki-calendar_edit_item.php?viewcalitemId=$id" class="btn btn-default" _text="{tr}View event{/tr}"}
-						{elseif $tiki_p_change_events eq 'y'}
-							{button href="tiki-calendar_edit_item.php?calitemId=$id" class="btn btn-default" _text="{tr}Edit/Delete event{/tr}"}
-						{/if}
-					{/if}
-					{if $tiki_p_admin_calendar eq 'y'}
-						{button href="tiki-admin_calendars.php" class="btn btn-default" _text="{tr}Admin Calendars{/tr}"}
-					{/if}
-					{if $prefs.calendar_fullcalendar neq 'y' or not $edit}
-						{if $prefs.calendar_export_item == 'y' and $tiki_p_view_calendar eq 'y'}
-							{button href='tiki-calendar_export_ical.php? export=y&calendarItem='|cat:$id class="btn btn-default" _text='{tr}Export Event as iCal{/tr}'}
-						{/if}
-					{/if}
-				</div>
-			</div>
+	
+	{if $smarty.get.isModal}
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+			<h4 class="modal-title"></h4>
 		</div>
+	{/if}
+	<form action="{$myurl|escape}" method="post" name="f" id="editcalitem" class="form-horizontal">
+	<div class="modal-body">
+		{if !$smarty.get.isModal}
+			<div class="t_navbar btn-group form-group">
+				{if $tiki_p_view_calendar eq 'y'}
+					{button href="tiki-calendar.php" class="btn btn-default" _text="{tr}View Calendars{/tr}"}
+				{/if}
+				{if $tiki_p_admin_calendar eq 'y'}
+					{button href="tiki-admin_calendars.php?calendarId=$calendarId" class="btn btn-default" _text="{tr}Edit Calendar{/tr}"}
+				{/if}
+				{if $tiki_p_add_events eq 'y' and $id}
+					{button href="tiki-calendar_edit_item.php" class="btn btn-default" _text="{tr}New event{/tr}"}
+				{/if}
+				{if $id}
+					{if $edit}
+						{button href="tiki-calendar_edit_item.php?viewcalitemId=$id" class="btn btn-default" _text="{tr}View event{/tr}"}
+					{elseif $tiki_p_change_events eq 'y'}
+						{button href="tiki-calendar_edit_item.php?calitemId=$id" class="btn btn-default" _text="{tr}Edit/Delete event{/tr}"}
+					{/if}
+				{/if}
+				{if $tiki_p_admin_calendar eq 'y'}
+					{button href="tiki-admin_calendars.php" class="btn btn-default" _text="{tr}Admin Calendars{/tr}"}
+				{/if}
+				{if $prefs.calendar_fullcalendar neq 'y' or not $edit}
+					{if $prefs.calendar_export_item == 'y' and $tiki_p_view_calendar eq 'y'}
+						{button href='tiki-calendar_export_ical.php? export=y&calendarItem='|cat:$id class="btn btn-default" _text='{tr}Export Event as iCal{/tr}'}
+					{/if}
+				{/if}
+			</div>
+		{/if}
 		
 		<div class="wikitext">
 			{if $edit}
@@ -60,103 +63,90 @@
 			{if $prefs.calendar_addtogooglecal == 'y'}
 				{wikiplugin _name="addtogooglecal" calitemid=$id}{/wikiplugin}
 			{/if}
-				<div class="row">
-					<div class="col-md-10 col-md-push-1">
-						<div class="form-group form-horizontal">
-							<label for="calid" class="control-label col-md-2">{tr}Calendar{/tr}</label>
+					<div class="form-group">
+						<label for="calid" class="control-label col-md-3">{tr}Calendar{/tr}</label>
+						<div class="col-md-9">
 							{if $edit}
 								{if $prefs.javascript_enabled eq 'n'}
 									{$calendar.name|escape}<br>{tr}or{/tr}&nbsp;
 									<input type="submit" class="btn btn-default btn-sm" name="changeCal" value="{tr}Go to{/tr}">
 								{/if}
-								<div class="col-md-10">
-									<select name="save[calendarId]" id="calid" onchange="javascript:needToConfirm=false;document.getElementById('editcalitem').submit();" class="form-control">
-										{foreach item=it key=itid from=$listcals}
-											{if $it.tiki_p_add_events eq 'y'}
-												<option value="{$it.calendarId}" style="background-color:#{$it.custombgcolor};color:#{$it.customfgcolor};"
-													{if isset($calitem.calendarId)}
-														{if $calitem.calendarId eq $itid}
+								<select name="save[calendarId]" id="calid" onchange="javascript:needToConfirm=false;document.getElementById('editcalitem').submit();" class="form-control">
+									{foreach item=it key=itid from=$listcals}
+										{if $it.tiki_p_add_events eq 'y'}
+											<option value="{$it.calendarId}" style="background-color:#{$it.custombgcolor};color:#{$it.customfgcolor};"
+												{if isset($calitem.calendarId)}
+													{if $calitem.calendarId eq $itid}
+														 selected="selected"
+													{/if}
+												{elseif $calendarView}
+													{if $calendarView eq $itid}
+														 selected="selected"
+													{/if}
+												{else}
+													{if $calendarId}
+														{if $calendarId eq $itid}
 															 selected="selected"
-														{/if}
-													{elseif $calendarView}
-														{if $calendarView eq $itid}
-															 selected="selected"
-														{/if}
-													{else}
-														{if $calendarId}
-															{if $calendarId eq $itid}
-																 selected="selected"
-															{/if}
 														{/if}
 													{/if}
-												>
-													{$it.name|escape}
-												</option>
-											{/if}
-										{/foreach}
-									</select>
-								</div>
+												{/if}
+											>
+												{$it.name|escape}
+											</option>
+										{/if}
+									{/foreach}
+								</select>
 							{else}
 								{$listcals[$calitem.calendarId].name|escape}
 							{/if}
 						</div>
 					</div>
-				</div>
 				
-				<div class="row">
-					<div class="col-md-10 col-md-push-1">
-						<div class="form-group form-horizontal">
-							<label class="control-label col-md-2" for="nameInput">{tr}Title{/tr}</label>
-							<div class="col-md-10">
-								{if $edit}
-									<input type="text" name="save[name]" value="{$calitem.name|escape}" size="32" class="form-control" id="nameInput">
-								{else}
-									<span class="summary">
-										{$calitem.name|escape}
-									</span>
-								{/if}
-							</div>
+					<div class="form-group">
+						<label class="control-label col-md-3">{tr}Title{/tr}</label>
+						<div class="col-md-9">
+							{if $edit}
+								<input type="text" name="save[name]" value="{$calitem.name|escape}" size="32" class="form-control">
+							{else}
+								<span class="summary">
+									{$calitem.name|escape}
+								</span>
+							{/if}
 						</div>
 					</div>
-				</div> <!-- /.row -->
 				{if $edit or $recurrence.id gt 0}
-					<div class="row">
-						<div class="col-md-10 col-md-push-1">
-							<div class="form-group form-horizontal">
-								<label class="control-label col-md-2">{tr}Recurrence{/tr}</label>
-								<div class="col-md-10">
-									{if $edit}
-										{if $recurrence.id gt 0}
-											<input type="hidden" name="recurrent" value="1">
-											{tr}This event depends on a recurrence rule{/tr}
-										{else}
-											<div class="checkbox">
-											<label>
-												<input type="checkbox" id="id_recurrent" name="recurrent" value="1" onclick="toggle('recurrenceRules');toggle('startdate');toggle('enddate');togglereminderforrecurrence();"
-													{if $calitem.recurrenceId gt 0 or $recurrent eq 1}
-														checked="checked"
-													{/if}
-												>
-												{tr}This event depends on a recurrence rule{/tr}
-											</label>
-											</div>
-										{/if}
-									{else}
-										<span class="summary">
-											{if $calitem.recurrenceId gt 0}
-												{tr}This event depends on a recurrence rule{/tr}
-											{else}
-												{tr}This event is not recurrent{/tr}
+					<div class="form-group">
+						<label class="control-label col-md-3">{tr}Recurrence{/tr}</label>
+						<div class="col-md-9">
+							{if $edit}
+								{if $recurrence.id gt 0}
+									<input type="hidden" name="recurrent" value="1">
+									{tr}This event depends on a recurrence rule{/tr}
+								{else}
+									<div class="checkbox">
+									<label>
+										<input type="checkbox" id="id_recurrent" name="recurrent" value="1" onclick="toggle('recurrenceRules');toggle('startdate');toggle('enddate');togglereminderforrecurrence();"
+											{if $calitem.recurrenceId gt 0 or $recurrent eq 1}
+												checked="checked"
 											{/if}
-										</span>
+										>
+										{tr}This event depends on a recurrence rule{/tr}
+									</label>
+									</div>
+								{/if}
+							{else}
+								<span class="summary">
+									{if $calitem.recurrenceId gt 0}
+										{tr}This event depends on a recurrence rule{/tr}
+									{else}
+										{tr}This event is not recurrent{/tr}
 									{/if}
-								</div>
-							</div>
+								</span>
+							{/if}
 						</div>
-					</div> <!-- /.row -->
-					
+					</div>
 					<div class="row">
-						<div class="col-md-7 col-md-push-3">
+						<div class="col-md-9 col-md-push-3">
 							{if $edit}
 								<div id="recurrenceRules" style="
 									{if ( !($calitem.recurrenceId gt 0) and $recurrent neq 1 ) && $prefs.javascript_enabled eq 'y'}
@@ -415,50 +405,44 @@
 											{html_select_date prefix="startPeriod_" time=$recurrence.startPeriod field_order=$prefs.display_field_order start_year=$prefs.calendar_start_year end_year=$prefs.calendar_end_year}
 										{/if}
 										<br><hr/>
-
-										<div class="form-inline">
-											<input type="radio" id="id_endTypeNb" name="endType" value="nb"
-												{if $recurrence.nbRecurrences or $calitem.calitemId eq 0}
-													checked="checked"
-												{/if}
-											>
-											&nbsp;
-											<label for="id_endTypeNb">
-												{tr}End after{/tr}&nbsp;
-											</label>
-											<input type="text" class="form-control" name="nbRecurrences" size="3" value="{strip}
-												{if $recurrence.nbRecurrences gt 0}
-													{$recurrence.nbRecurrences}
-													{assign var='occurnumber' value="{tr}occurrences{/tr}"}
-												{elseif $calitem.calitemId eq 0 or $recurrence.nbRecurrences eq 0}
-													1
-													{assign var='occurnumber' value="{tr}occurrence{/tr}"}
-												{else}
-													{assign var='occurnumber' value="{tr}occurrences{/tr}"}
-												{/if}
-											{/strip}">&nbsp;
-											<label for="id_endTypeNb">
-												{$occurnumber}
-											</label>
-										</div>
-
-										<br>
-										<div class="form-inline">
-											<input type="radio" id="id_endTypeDt" name="endType" value="dt"
-												{if $recurrence.endPeriod gt 0}
-													checked="checked"
-												{/if}
-											>
-											&nbsp;
-											<label for="id_endTypeDt">
-												{tr}End before{/tr}&nbsp;
-											</label>
-											{if $prefs.feature_jscalendar eq 'y' and $prefs.javascript_enabled eq 'y'}
-												{jscalendar id="endPeriod" date=$recurrence.endPeriod fieldname="endPeriod" align="Bc" showtime='n'}
-											{else}
-												{html_select_date prefix="endPeriod_" time=$recurrence.endPeriod field_order=$prefs.display_field_order start_year=$prefs.calendar_start_year end_year=$prefs.calendar_end_year}
+										<input type="radio" id="id_endTypeNb" name="endType" value="nb"
+											{if $recurrence.nbRecurrences or $calitem.calitemId eq 0}
+												checked="checked"
 											{/if}
-										</div>
+										>
+										&nbsp;
+										<label for="id_endTypeNb">
+											{tr}End after{/tr}&nbsp;
+										</label>
+										<input type="text" name="nbRecurrences" size="3" value="
+											{if $recurrence.nbRecurrences gt 0}
+												{$recurrence.nbRecurrences}
+												{assign var='occurnumber' value="{tr}occurrences{/tr}"}
+											{elseif $calitem.calitemId eq 0 or $recurrence.nbRecurrences eq 0}
+												1
+												{assign var='occurnumber' value="{tr}occurrence{/tr}"}
+											{else}
+												{assign var='occurnumber' value="{tr}occurrences{/tr}"}
+											{/if}
+										">&nbsp;
+										<label for="id_endTypeNb">
+											{$occurnumber}
+										</label>
+										<br>
+										<input type="radio" id="id_endTypeDt" name="endType" value="dt"
+											{if $recurrence.endPeriod gt 0}
+												checked="checked"
+											{/if}
+										>
+										&nbsp;
+										<label for="id_endTypeDt">
+											{tr}End before{/tr}&nbsp;
+										</label>
+										{if $prefs.feature_jscalendar eq 'y' and $prefs.javascript_enabled eq 'y'}
+											{jscalendar id="endPeriod" date=$recurrence.endPeriod fieldname="endPeriod" align="Bc" showtime='n'}
+										{else}
+											{html_select_date prefix="endPeriod_" time=$recurrence.endPeriod field_order=$prefs.display_field_order start_year=$prefs.calendar_start_year end_year=$prefs.calendar_end_year}
+										{/if}
 									{/if}
 									<br>&nbsp;
 								</div>
@@ -488,604 +472,556 @@
 								{/if}
 							{/if}
 						</div>
-					</div> <!-- /.row -->
+					</div>
 				{/if}{* end recurrence *}
-				<div class="row">
-					<div class="col-md-10 col-md-push-1">
-						<div class="form-group form-horizontal">
-							<label class="control-label col-md-2">{tr}Start{/tr}</label>
-							<div class="col-md-10">
-								{if $edit}
-									<table>
-										<tr>
-											<td>
-												{if $prefs.feature_jscalendar neq 'y' or $prefs.javascript_enabled neq 'y'}
-													<a href="#" onclick="document.f.Time_Hour.selectedIndex=(document.f.Time_Hour.selectedIndex+1);return false;">
-														{icon _id='plus_small' align='left' width='11' height='8'}
-													</a>
-												{/if}
-											</td>
-											<td rowspan="2">
-												<div id="startdate">
-													{if $prefs.feature_jscalendar eq 'y' and $prefs.javascript_enabled eq 'y'}
-														{jscalendar id="start" date=$calitem.start fieldname="save[date_start]" align="Bc" showtime='n'}
-													{else}
-														{html_select_date prefix="start_date_" time=$calitem.start field_order=$prefs.display_field_order start_year=$prefs.calendar_start_year end_year=$prefs.calendar_end_year}
-													{/if}
-												</div>
-											</td>
-											<td>
-												<span id="starttimehourplus"{$hidden_if_all_day}>
-													<a href="#" onclick="document.f.start_Hour.selectedIndex=(document.f.start_Hour.selectedIndex+1);return false;">
-														{icon _id='plus_small' align='left' width='11' height='8'}
-													</a>
-												</span>
-											</td>
-											<td rowspan="2" class="html_select_time">
-												<span id="starttime"{$hidden_if_all_day}>
-													{html_select_time prefix="start_" display_seconds=false time=$calitem.start minute_interval=$prefs.calendar_timespan 
-														hour_minmax=$hour_minmax use_24_hours=$use_24hr_clock}
-												</span>
-											</td>
-											<td style="">
-												<span id="starttimeminplus"{$hidden_if_all_day}>
-													<a href="#" onclick="document.f.start_Minute.selectedIndex=(document.f.start_Minute.selectedIndex+1);return false;">
-														{icon _id='plus_small' align='left' width='11' height='8'}
-													</a>
-												</span>
-											</td>
-											<td style="border:0;padding-top:2px;vertical-align:middle;" rowspan="2">
-												<label for="alldayid">
-													<input type="checkbox" id="alldayid" name="allday" 
-														onclick="toggleSpan('starttimehourplus');
-															toggleSpan('starttimehourminus');
-															toggleSpan('starttime');
-															toggleSpan('starttimeminplus');
-															toggleSpan('starttimeminminus');
-															toggleSpan('endtimehourplus');
-															toggleSpan('endtimehourminus');
-															toggleSpan('endtime');
-															toggleSpan('endtimeminplus');
-															toggleSpan('endtimeminminus');
-															toggleSpan('durhourplus');
-															toggleSpan('durhourminus');
-															toggleSpan('duration');
-															toggleSpan('duratione');
-															toggleSpan('durminplus');
-															toggleSpan('durminminus');"
-														value="true" 
-														{if $calitem.allday}
-															 checked="checked" 
-														{/if}
-													 >
-													{tr}All day{/tr}
-												</label>
-											</td>
-										</tr>
-										<tr>
-											<td style="border:0;vertical-align:middle">
-												{if $prefs.feature_jscalendar neq 'y' or $prefs.javascript_enabled neq 'y'}
-													<a href="#" onclick="document.f.Time_Hour.selectedIndex=(document.f.Time_Hour.selectedIndex-1);return false;">
-														{icon _id='minus_small' align='left' width='11' height='8'}
-													</a>
-												{/if}
-											</td>
-											<td style="border:0;vertical-align:middle">
-												<span id="starttimehourminus"{$hidden_if_all_day}>
-													<a href="#" onclick="document.f.start_Hour.selectedIndex=(document.f.start_Hour.selectedIndex-1);return false;">
-														{icon _id='minus_small' align='left' width='11' height='8'}
-													</a>
-												</span>
-											</td>
-											<td style="border:0;vertical-align:middle">
-												<span id="starttimeminminus"{$hidden_if_all_day}>
-													<a href="#" onclick="document.f.start_Minute.selectedIndex=(document.f.start_Minute.selectedIndex-1);return false;">
-														{icon _id='minus_small' align='left' width='11' height='8'}
-													</a>
-												</span>
-											</td>
-										</tr>
-									</table>
-								{else}
-									{if $calitem.allday}
-										<abbr class="dtstart" title="{$calitem.start|tiki_short_date}">
-											{$calitem.start|tiki_long_date}
-										</abbr>
-									{else}
-										<abbr class="dtstart" title="{$calitem.start|isodate}">
-											{$calitem.start|tiki_long_datetime}
-										</abbr>
-									{/if}
-								{/if}
-							</div>
-						</div>
-					</div>
-				</div> <!-- /.row -->
-				<div class="row">
-					<div class="col-md-10 col-md-push-1">
-						<div class="form-group form-horizontal">
-							<label class="control-label col-md-2">{tr}End{/tr}</label>
-							<div class="col-md-10">
-								{if $edit}
-									<input type="hidden" name="save[end_or_duration]" value="end" id="end_or_duration">
-									<div id="end_date">
-										 {* the display:block inline style used here is needed to make toggle() function work properly *}
-										<table cellpadding="0" cellspacing="0" border="0">
-											<tr>
-												<td style="border:0;padding-top:2px;vertical-align:middle">
-													{if $prefs.feature_jscalendar neq 'y' or $prefs.javascript_enabled neq 'y'}
-														<a href="#" onclick="document.f.Time_Hour.selectedIndex=(document.f.Time_Hour.selectedIndex+1);return false;">
-															{icon _id='plus_small' align='left' width='11' height='8'}
-														</a>
-													{/if}
-												</td>
-												<td rowspan="2" style="border:0;vertical-align:middle">
-													<div id="enddate">
-														{if $prefs.feature_jscalendar eq 'y' and $prefs.javascript_enabled eq 'y'}
-															{jscalendar id="end" date=$calitem.end fieldname="save[date_end]" align="Bc" showtime='n'}
-														{else}
-															{html_select_date prefix="end_date_" time=$calitem.end field_order=$prefs.display_field_order  start_year=$prefs.calendar_start_year end_year=$prefs.calendar_end_year}
-														{/if}
-													</div>
-												</td>
-												<td style="border:0;padding-top:2px;vertical-align:middle">
-													<span id="endtimehourplus"{$hidden_if_all_day}>
-														<a href="#" onclick="document.f.end_Hour.selectedIndex=(document.f.end_Hour.selectedIndex+1);return false;">
-															{icon _id='plus_small' align='left' width='11' height='8'}
-														</a>
-													</span>
-												</td>
-												<td rowspan="2" style="border:0;vertical-align:middle" class="html_select_time">
-													<span id="endtime"{$hidden_if_all_day}>
-														{html_select_time prefix="end_" display_seconds=false time=$calitem.end minute_interval=$prefs.calendar_timespan 
-															hour_minmax=$hour_minmax use_24_hours=$use_24hr_clock}
-													</span>
-												</td>
-												<td style="border:0;padding-top:2px;vertical-align:middle">
-													<span id="endtimeminplus"{$hidden_if_all_day}>
-														<a href="#" onclick="document.f.end_Minute.selectedIndex=(document.f.end_Minute.selectedIndex+1);return false;">
-															{icon _id='plus_small' align='left' width='11' height='8'}
-														</a>
-													</span>
-												</td>
-												<td rowspan="2" style="border:0;padding-top:2px;vertical-align:middle">
-													<span id="duration"{$hidden_if_all_day}>
-														<a href="#" onclick="document.getElementById('end_or_duration').value='duration';flip('end_duration');flip('end_date');return false;return false;">
-															{tr}Show duration{/tr}
-														</a>
-													</span>
-												</td>
-											</tr>
-											<tr>
-												<td style="border:0;vertical-align:middle">
-													{if $prefs.feature_jscalendar neq 'y' or $prefs.javascript_enabled neq 'y'}
-														<a href="#" onclick="document.f.Time_Hour.selectedIndex=(document.f.Time_Hour.selectedIndex-1);return false;">
-															{icon _id='minus_small' align='left' width='11' height='8'}
-														</a>
-													{/if}
-												</td>
-												<td style="border:0;vertical-align:middle">
-													<span id="endtimehourminus"{$hidden_if_all_day}>
-														<a href="#" onclick="document.f.end_Hour.selectedIndex=(document.f.end_Hour.selectedIndex-1);return false;">
-															{icon _id='minus_small' align='left' width='11' height='8'}
-														</a>
-													</span>
-												</td>
-												<td style="border:0;vertical-align:middle">
-													<span id="endtimeminminus"{$hidden_if_all_day}>
-														<a href="#" onclick="document.f.end_Minute.selectedIndex=(document.f.end_Minute.selectedIndex-1);return false;">
-															{icon _id='minus_small' align='left' width='11' height='8'}
-														</a>
-													</span>
-												</td>
-											</tr>
-										</table>
-									</div>
-									<div id="end_duration" style="display:none;">
-										<table cellpadding="0" cellspacing="0" border="0">
-											<tr>
-												<td style="border:0;padding-top:2px;vertical-align:middle">
-													<span id="durhourplus"{$hidden_if_all_day}>
-														<a href="#" onclick="document.f.duration_Hour.selectedIndex=(document.f.duration_Hour.selectedIndex+1);return false;">
-															{icon _id='plus_small' align='left' width='11' height='8'}
-														</a>
-													</span>
-												</td>
-												<td style="border:0;vertical-align:middle" rowspan="2" class="html_select_time">
-													<span id="duratione"{$hidden_if_all_day}>
-														{html_select_time prefix="duration_" display_seconds=false time=$calitem.duration|default:'01:00' minute_interval=$prefs.calendar_timespan}
-													</span>
-												</td>
-												<td style="border:0;padding-top:2px;vertical-align:middle">
-													<span id="durminplus"{$hidden_if_all_day}>
-														<a href="#" onclick="document.f.duration_Minute.selectedIndex=(document.f.duration_Minute.selectedIndex+1);return false;">
-															{icon _id='plus_small' align='left' width='11' height='8'}
-														</a>
-													</span>
-												</td>
-												<td rowspan="2" style="border:0;padding-top:2px;vertical-align:middle">
-													<a href="#" onclick="document.getElementById('end_or_duration').value='end';flip('end_date');flip('end_duration');return false;">
-														{tr}Show end date and time{/tr}
-													</a>
-												</td>
-											</tr>
-											<tr>
-												<td style="border:0;vertical-align:middle">
-													<span id="durhourminus"{$hidden_if_all_day}>
-														<a href="#" onclick="document.f.duration_Hour.selectedIndex=(document.f.duration_Hour.selectedIndex-1);return false;">
-															{icon _id='minus_small' align='left' width='11' height='8'}
-														</a>
-													</span>
-												</td>
-												<td style="border:0;vertical-align:middle">
-													<span id="durminminus"{$hidden_if_all_day}>
-														<a href="#" onclick="document.f.duration_Minute.selectedIndex=(document.f.duration_Minute.selectedIndex-1);return false;">
-															{icon _id='minus_small' align='left' width='11' height='8'}
-														</a>
-													</span>
-												</td>
-											</tr>
-										</table>
-									</div>
-								{else}
-									{if $calitem.allday}
-										{if $calitem.end}
-											<abbr class="dtend" title="{$calitem.end|tiki_short_date}">
+				<div class="form-group">
+					<label class="control-label col-md-3">{tr}Start{/tr}</label>
+					<div class="col-md-9">
+						{if $edit}
+							<table>
+								<tr>
+									<td>
+										{if $prefs.feature_jscalendar neq 'y' or $prefs.javascript_enabled neq 'y'}
+											<a href="#" onclick="document.f.Time_Hour.selectedIndex=(document.f.Time_Hour.selectedIndex+1);return false;">
+												{icon _id='plus_small' align='left' width='11' height='8'}
+											</a>
 										{/if}
-										{$calitem.end|tiki_long_date}
-										{if $calitem.end}
-											</abbr>
-										{/if}
-									{else}
-										{if $calitem.end}
-											<abbr class="dtend" title="{$calitem.end|isodate}">
-										{/if}
-										{$calitem.end|tiki_long_datetime}
-										{if $calitem.end}
-											</abbr>
-										{/if}
-									{/if}
-								{/if}
-								{if $impossibleDates}
-									<br>
-									<span style="color:#900;">
-										{tr}Events cannot end before they start{/tr}
-									</span>
-								{/if}
-							</div>
-						</div>
-					</div>
-				</div> <!-- /.row -->
-				{if $edit or !empty($calitem.parsed)}
-					<div class="row">
-						<div class="col-md-10 col-md-push-1">
-							<div class="form-group form-horizontal">
-								<label for="editwiki" class="control-label col-md-2">{tr}Description{/tr}</label>
-								<div class="col-md-10">
-									{if $edit}
-										{strip}
-											{textarea name="save[description]" id="editwiki" rows=10 cols=60}
-												{$calitem.description}
-											{/textarea}
-										{/strip}
-									{else}
-										<span{if $prefs.calendar_description_is_html neq "y"} class="description"{/if}>
-											{$calitem.parsed|default:"<i>{tr}No description{/tr}</i>"}
+									</td>
+									<td rowspan="2">
+										<div id="startdate">
+											{if $prefs.feature_jscalendar eq 'y' and $prefs.javascript_enabled eq 'y'}
+												{jscalendar id="start" date=$calitem.start fieldname="save[date_start]" align="Bc" showtime='n'}
+											{else}
+												{html_select_date prefix="start_date_" time=$calitem.start field_order=$prefs.display_field_order start_year=$prefs.calendar_start_year end_year=$prefs.calendar_end_year}
+											{/if}
+										</div>
+									</td>
+									<td>
+										<span id="starttimehourplus"{$hidden_if_all_day}>
+											<a href="#" onclick="document.f.start_Hour.selectedIndex=(document.f.start_Hour.selectedIndex+1);return false;">
+												{icon _id='plus_small' align='left' width='11' height='8'}
+											</a>
 										</span>
-									{/if}
-								</div>
+									</td>
+									<td rowspan="2" class="html_select_time">
+										<span id="starttime"{$hidden_if_all_day}>
+											{html_select_time prefix="start_" display_seconds=false time=$calitem.start minute_interval=$prefs.calendar_timespan 
+												hour_minmax=$hour_minmax use_24_hours=$use_24hr_clock}
+										</span>
+									</td>
+									<td style="border:0;padding-top:2px;vertical-align:middle">
+										<span id="starttimeminplus"{$hidden_if_all_day}>
+											<a href="#" onclick="document.f.start_Minute.selectedIndex=(document.f.start_Minute.selectedIndex+1);return false;">
+												{icon _id='plus_small' align='left' width='11' height='8'}
+											</a>
+										</span>
+									</td>
+									<td style="border:0;padding-top:2px;vertical-align:middle;" rowspan="2">
+										<label for="alldayid">
+											<input type="checkbox" id="alldayid" name="allday" 
+												onclick="toggleSpan('starttimehourplus');
+													toggleSpan('starttimehourminus');
+													toggleSpan('starttime');
+													toggleSpan('starttimeminplus');
+													toggleSpan('starttimeminminus');
+													toggleSpan('endtimehourplus');
+													toggleSpan('endtimehourminus');
+													toggleSpan('endtime');
+													toggleSpan('endtimeminplus');
+													toggleSpan('endtimeminminus');
+													toggleSpan('durhourplus');
+													toggleSpan('durhourminus');
+													toggleSpan('duration');
+													toggleSpan('duratione');
+													toggleSpan('durminplus');
+													toggleSpan('durminminus');"
+												value="true" 
+												{if $calitem.allday}
+													 checked="checked" 
+												{/if}
+											 >
+											{tr}All day{/tr}
+										</label>
+									</td>
+								</tr>
+								<tr>
+									<td style="border:0;vertical-align:middle">
+										{if $prefs.feature_jscalendar neq 'y' or $prefs.javascript_enabled neq 'y'}
+											<a href="#" onclick="document.f.Time_Hour.selectedIndex=(document.f.Time_Hour.selectedIndex-1);return false;">
+												{icon _id='minus_small' align='left' width='11' height='8'}
+											</a>
+										{/if}
+									</td>
+									<td style="border:0;vertical-align:middle">
+										<span id="starttimehourminus"{$hidden_if_all_day}>
+											<a href="#" onclick="document.f.start_Hour.selectedIndex=(document.f.start_Hour.selectedIndex-1);return false;">
+												{icon _id='minus_small' align='left' width='11' height='8'}
+											</a>
+										</span>
+									</td>
+									<td style="border:0;vertical-align:middle">
+										<span id="starttimeminminus"{$hidden_if_all_day}>
+											<a href="#" onclick="document.f.start_Minute.selectedIndex=(document.f.start_Minute.selectedIndex-1);return false;">
+												{icon _id='minus_small' align='left' width='11' height='8'}
+											</a>
+										</span>
+									</td>
+								</tr>
+							</table>
+						{else}
+							{if $calitem.allday}
+								<abbr class="dtstart" title="{$calitem.start|tiki_short_date}">
+									{$calitem.start|tiki_long_date}
+								</abbr>
+							{else}
+								<abbr class="dtstart" title="{$calitem.start|isodate}">
+									{$calitem.start|tiki_long_datetime}
+								</abbr>
+							{/if}
+						{/if}
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label col-md-3">{tr}End{/tr}</label>
+					<div class="col-md-9">
+						{if $edit}
+							<input type="hidden" name="save[end_or_duration]" value="end" id="end_or_duration">
+							<div id="end_date">
+								 {* the display:block inline style used here is needed to make toggle() function work properly *}
+								<table cellpadding="0" cellspacing="0" border="0">
+									<tr>
+										<td style="border:0;padding-top:2px;vertical-align:middle">
+											{if $prefs.feature_jscalendar neq 'y' or $prefs.javascript_enabled neq 'y'}
+												<a href="#" onclick="document.f.Time_Hour.selectedIndex=(document.f.Time_Hour.selectedIndex+1);return false;">
+													{icon _id='plus_small' align='left' width='11' height='8'}
+												</a>
+											{/if}
+										</td>
+										<td rowspan="2" style="border:0;vertical-align:middle">
+											<div id="enddate">
+												{if $prefs.feature_jscalendar eq 'y' and $prefs.javascript_enabled eq 'y'}
+													{jscalendar id="end" date=$calitem.end fieldname="save[date_end]" align="Bc" showtime='n'}
+												{else}
+													{html_select_date prefix="end_date_" time=$calitem.end field_order=$prefs.display_field_order  start_year=$prefs.calendar_start_year end_year=$prefs.calendar_end_year}
+												{/if}
+											</div>
+										</td>
+										<td style="border:0;padding-top:2px;vertical-align:middle">
+											<span id="endtimehourplus"{$hidden_if_all_day}>
+												<a href="#" onclick="document.f.end_Hour.selectedIndex=(document.f.end_Hour.selectedIndex+1);return false;">
+													{icon _id='plus_small' align='left' width='11' height='8'}
+												</a>
+											</span>
+										</td>
+										<td rowspan="2" style="border:0;vertical-align:middle" class="html_select_time">
+											<span id="endtime"{$hidden_if_all_day}>
+												{html_select_time prefix="end_" display_seconds=false time=$calitem.end minute_interval=$prefs.calendar_timespan 
+													hour_minmax=$hour_minmax use_24_hours=$use_24hr_clock}
+											</span>
+										</td>
+										<td style="border:0;padding-top:2px;vertical-align:middle">
+											<span id="endtimeminplus"{$hidden_if_all_day}>
+												<a href="#" onclick="document.f.end_Minute.selectedIndex=(document.f.end_Minute.selectedIndex+1);return false;">
+													{icon _id='plus_small' align='left' width='11' height='8'}
+												</a>
+											</span>
+										</td>
+										<td rowspan="2" style="border:0;padding-top:2px;vertical-align:middle">
+											<span id="duration"{$hidden_if_all_day}>
+												<a href="#" onclick="document.getElementById('end_or_duration').value='duration';flip('end_duration');flip('end_date');return false;return false;">
+													{tr}Show duration{/tr}
+												</a>
+											</span>
+										</td>
+									</tr>
+									<tr>
+										<td style="border:0;vertical-align:middle">
+											{if $prefs.feature_jscalendar neq 'y' or $prefs.javascript_enabled neq 'y'}
+												<a href="#" onclick="document.f.Time_Hour.selectedIndex=(document.f.Time_Hour.selectedIndex-1);return false;">
+													{icon _id='minus_small' align='left' width='11' height='8'}
+												</a>
+											{/if}
+										</td>
+										<td style="border:0;vertical-align:middle">
+											<span id="endtimehourminus"{$hidden_if_all_day}>
+												<a href="#" onclick="document.f.end_Hour.selectedIndex=(document.f.end_Hour.selectedIndex-1);return false;">
+													{icon _id='minus_small' align='left' width='11' height='8'}
+												</a>
+											</span>
+										</td>
+										<td style="border:0;vertical-align:middle">
+											<span id="endtimeminminus"{$hidden_if_all_day}>
+												<a href="#" onclick="document.f.end_Minute.selectedIndex=(document.f.end_Minute.selectedIndex-1);return false;">
+													{icon _id='minus_small' align='left' width='11' height='8'}
+												</a>
+											</span>
+										</td>
+									</tr>
+								</table>
 							</div>
+							<div id="end_duration" style="display:none;">
+								<table cellpadding="0" cellspacing="0" border="0">
+									<tr>
+										<td style="border:0;padding-top:2px;vertical-align:middle">
+											<span id="durhourplus"{$hidden_if_all_day}>
+												<a href="#" onclick="document.f.duration_Hour.selectedIndex=(document.f.duration_Hour.selectedIndex+1);return false;">
+													{icon _id='plus_small' align='left' width='11' height='8'}
+												</a>
+											</span>
+										</td>
+										<td style="border:0;vertical-align:middle" rowspan="2" class="html_select_time">
+											<span id="duratione"{$hidden_if_all_day}>
+												{html_select_time prefix="duration_" display_seconds=false time=$calitem.duration|default:'01:00' minute_interval=$prefs.calendar_timespan}
+											</span>
+										</td>
+										<td style="border:0;padding-top:2px;vertical-align:middle">
+											<span id="durminplus"{$hidden_if_all_day}>
+												<a href="#" onclick="document.f.duration_Minute.selectedIndex=(document.f.duration_Minute.selectedIndex+1);return false;">
+													{icon _id='plus_small' align='left' width='11' height='8'}
+												</a>
+											</span>
+										</td>
+										<td rowspan="2" style="border:0;padding-top:2px;vertical-align:middle">
+											<a href="#" onclick="document.getElementById('end_or_duration').value='end';flip('end_date');flip('end_duration');return false;">
+												{tr}Show end date and time{/tr}
+											</a>
+										</td>
+									</tr>
+									<tr>
+										<td style="border:0;vertical-align:middle">
+											<span id="durhourminus"{$hidden_if_all_day}>
+												<a href="#" onclick="document.f.duration_Hour.selectedIndex=(document.f.duration_Hour.selectedIndex-1);return false;">
+													{icon _id='minus_small' align='left' width='11' height='8'}
+												</a>
+											</span>
+										</td>
+										<td style="border:0;vertical-align:middle">
+											<span id="durminminus"{$hidden_if_all_day}>
+												<a href="#" onclick="document.f.duration_Minute.selectedIndex=(document.f.duration_Minute.selectedIndex-1);return false;">
+													{icon _id='minus_small' align='left' width='11' height='8'}
+												</a>
+											</span>
+										</td>
+									</tr>
+								</table>
+							</div>
+						{else}
+							{if $calitem.allday}
+								{if $calitem.end}
+									<abbr class="dtend" title="{$calitem.end|tiki_short_date}">
+								{/if}
+								{$calitem.end|tiki_long_date}
+								{if $calitem.end}
+									</abbr>
+								{/if}
+							{else}
+								{if $calitem.end}
+									<abbr class="dtend" title="{$calitem.end|isodate}">
+								{/if}
+								{$calitem.end|tiki_long_datetime}
+								{if $calitem.end}
+									</abbr>
+								{/if}
+							{/if}
+						{/if}
+						{if $impossibleDates}
+							<br>
+							<span style="color:#900;">
+								{tr}Events cannot end before they start{/tr}
+							</span>
+						{/if}
+					</div>
+				</div>
+				{if $edit or !empty($calitem.parsed)}
+					<div class="form-group">
+						<label class="control-label col-md-3">{tr}Description{/tr}</label>
+						<div class="col-md-9">
+							{if $edit}
+								{strip}
+									{textarea name="save[description]" id="editwiki" cols=40 rows=10}
+										{$calitem.description}
+									{/textarea}
+								{/strip}
+							{else}
+								<span{if $prefs.calendar_description_is_html neq "y"} class="description"{/if}>
+									{$calitem.parsed|default:"<i>{tr}No description{/tr}</i>"}
+								</span>
+							{/if}
 						</div>
-					</div> <!-- /.row -->
+					</div>
 				{/if}
 				{if $calendar.customstatus ne 'n'}
-					<div class="row">
-						<div class="col-md-10 col-md-push-1">
-							<div class="form-group form-horizontal">
-								<label class="control-label col-md-2">{tr}Status{/tr}</label>
-								<div class="col-md-10">
-									<div class="statusbox	{if $calitem.status eq 0}status0{/if}">
-										{if $edit}
-											<input id="status0" type="radio" name="save[status]" value="0"
-												{if (!empty($calitem) and $calitem.status eq 0) or (empty($calitem) and $calendar.defaulteventstatus eq 0)}
-													 checked="checked"
-												{/if}
-											 >
-											<label for="status0">
-												{tr}Tentative{/tr}
-											</label>
-										{else}
-											{tr}Tentative{/tr}
+					<div class="form-group">
+						<label class="control-label col-md-3">{tr}Status{/tr}</label>
+						<div class="col-md-9">
+							<div class="statusbox	{if $calitem.status eq 0}status0{/if}">
+								{if $edit}
+									<input id="status0" type="radio" name="save[status]" value="0"
+										{if (!empty($calitem) and $calitem.status eq 0) or (empty($calitem) and $calendar.defaulteventstatus eq 0)}
+											 checked="checked"
 										{/if}
-									</div>
-									<div class="statusbox	{if $calitem.status eq 1}status1{/if}">
-										{if $edit}
-											<input id="status1" type="radio" name="save[status]" value="1"
-												{if $calitem.status eq 1}
-													 checked="checked"
-												{/if}
-											 >
-											<label for="status1">
-												{tr}Confirmed{/tr}
-											</label>
-										{else}
-											{tr}Confirmed{/tr}
+									 >
+									<label for="status0">
+										{tr}Tentative{/tr}
+									</label>
+								{else}
+									{tr}Tentative{/tr}
+								{/if}
+							</div>
+							<div class="statusbox	{if $calitem.status eq 1}status1{/if}">
+								{if $edit}
+									<input id="status1" type="radio" name="save[status]" value="1"
+										{if $calitem.status eq 1}
+											 checked="checked"
 										{/if}
-									</div>
-									<div class="statusbox {if $calitem.status eq 2}status2{/if}">
-										{if $edit}
-											<input id="status2" type="radio" name="save[status]" value="2"
-												{if $calitem.status eq 2}
-													 checked="checked"
-												{/if}
-											 >
-											<label for="status2">
-												{tr}Cancelled{/tr}
-											</label>
-										{else}
-											{tr}Cancelled{/tr}
+									 >
+									<label for="status1">
+										{tr}Confirmed{/tr}
+									</label>
+								{else}
+									{tr}Confirmed{/tr}
+								{/if}
+							</div>
+							<div class="statusbox {if $calitem.status eq 2}status2{/if}">
+								{if $edit}
+									<input id="status2" type="radio" name="save[status]" value="2"
+										{if $calitem.status eq 2}
+											 checked="checked"
 										{/if}
-									</div>
-								</div>
+									 >
+									<label for="status2">
+										{tr}Cancelled{/tr}
+									</label>
+								{else}
+									{tr}Cancelled{/tr}
+								{/if}
 							</div>
 						</div>
-					</div> <!-- /.row -->
+					</div>
 				{/if}
 				{if $calendar.custompriorities eq 'y'}
-					<div class="row">
-						<div class="col-md-10 col-md-push-1">
-							<div class="form-group form-horizontal">
-								<label for="priorityInput" class="control-label col-md-2">{tr}Priority{/tr}</label>
-								<div class="col-md-10">
-									{if $edit}
-										<select id="priorityInput" name="save[priority]" style="background-color:#{$listprioritycolors[$calitem.priority]};font-size:150%;"
-											onchange="this.style.bacgroundColor='#'+this.selectedIndex.value;"
+					<div class="form-group">
+						<label for="control-label col-md-3">{tr}Priority{/tr}</label>
+						<div class="col-md-9">
+							{if $edit}
+								<select name="save[priority]" style="background-color:#{$listprioritycolors[$calitem.priority]};font-size:150%;"
+									onchange="this.style.bacgroundColor='#'+this.selectedIndex.value;"
+								>
+									{foreach item=it from=$listpriorities}
+										<option value="{$it}" style="background-color:#{$listprioritycolors[$it]};"
+											{if $calitem.priority eq $it}
+												 selected="selected"
+											{/if}
 										>
-											{foreach item=it from=$listpriorities}
-												<option value="{$it}" style="background-color:#{$listprioritycolors[$it]};"
-													{if $calitem.priority eq $it}
-														 selected="selected"
-													{/if}
-												>
-													{$it}
-												</option>
-											{/foreach}
-										</select>
-									{else}
-										<span style="background-color:#{$listprioritycolors[$calitem.priority]};font-size:150%;width:90%;padding:1px 4px">
-											{$calitem.priority}
-										</span>
-									{/if}
-								</div>
-							</div>
-						</div>
-					</div> <!-- /.row -->
-				{/if}
-				<div class="row">
-					<div class="col-md-10 col-md-push-1">
-						<div class="form-group form-horizontal" style="display:{if $calendar.customcategories eq 'y'}block{else}none{/if};" id="calcat">
-							<label class="control-label col-md-2">
-								{tr}Classification{/tr}
-							</label>
-							<div class="col-md-10">
-								{if $edit}
-									{if count($listcats)}
-										<select name="save[categoryId]" class="form-control">
-											<option value="">
-											</option>
-											{foreach item=it from=$listcats}
-												<option value="{$it.categoryId}"
-													{if $calitem.categoryId eq $it.categoryId}
-														 selected="selected"
-													{/if}
-												>
-													{$it.name|escape}
-												</option>
-											{/foreach}
-										</select>
-										{tr}or new{/tr} 
-									{/if}
-									<input type="text" name="save[newcat]" value="" class="form-control">
-								{else}
-									<span class="category">
-										{$calitem.categoryName|escape}
-									</span>
-								{/if}
-							</div>
-						</div>
-					</div>
-				</div> <!-- /.row -->
-				<div class="row">
-					<div class="col-md-10 col-md-push-1">
-						<div class="form-group form-horizontal" style="display:{if $calendar.customlocations eq 'y'}block{else}none{/if};" id="calloc">
-							<label class="control-label col-md-2">{tr}Location{/tr}</label>
-							<div class="col-md-10">
-								{if $edit}
-									{if count($listlocs)}
-										<select name="save[locationId]" class="form-control">
-											<option value="">
-											</option>
-												{foreach item=it from=$listlocs}
-													<option value="{$it.locationId}"
-														{if $calitem.locationId eq $it.locationId}
-															 selected="selected"
-														{/if}
-													>
-														{$it.name|escape}
-													</option>
-												{/foreach}
-										</select>
-										{tr}or new{/tr} 
-									{/if}
-									<input type="text" name="save[newloc]" value="" class="form-control">
-								{else}
-									<span class="location">
-										{$calitem.locationName|escape}
-									</span>
-								{/if}
-							</div>
-						</div>
-					</div>
-				</div> <!-- /.row -->
-				{if $calendar.customurl ne 'n'}
-				<div class="row">
-					<div class="col-md-10 col-md-push-1">
-						<div class="form-group form-horizontal">
-							<label for="urlInput" class="control-label col-md-2">{tr}URL{/tr}</label>
-							<div class="col-md-10">
-								{if $edit}
-									<input type="text" name="save[url]" value="{$calitem.url}" size="32" class="form-control" id="urlInput">
-								{else}
-									<a class="url" href="{$calitem.url}">
-										{$calitem.url|escape}
-									</a>
-								{/if}
-							</div>
-						</div>
-					</div>
-				</div> <!-- /.row -->
-				{/if}
-				<div class="row">
-					<div class="col-md-10 col-md-push-1">
-						<div class="form-group form-horizontal" style="display:{if $calendar.customlanguages eq 'y'}block{else}none{/if};" id="callang">
-							<label class="control-label col-md-2">{tr}Language{/tr}</label>
-							<div class="col-md-10">
-								{if $edit}
-									<select name="save[lang]" class="form-control">
-										<option value="">
+											{$it}
 										</option>
-											{foreach item=it from=$listlanguages}
-												<option value="{$it.value}"
-													{if $calitem.lang eq $it.value}
-														 selected="selected"
-													{/if}
-												>
-													{$it.name}
-												</option>
-											{/foreach}
-									</select>
-								{else}
-									{$calitem.lang|langname}
-								{/if}
-							</div>
+									{/foreach}
+								</select>
+							{else}
+								<span style="background-color:#{$listprioritycolors[$calitem.priority]};font-size:150%;width:90%;padding:1px 4px">
+									{$calitem.priority}
+								</span>
+							{/if}
 						</div>
 					</div>
-				</div> <!-- /.row -->
-				{if !empty($groupforalert) && $showeachuser eq 'y'}
-					<div class="row">
-						<div class="col-md-10 col-md-push-1">
-							<div class="form-group form-horizontal">
-								<label class="control-label col-md-2">{tr}Choose users to alert{/tr}</label>
-								<div class="col-md-10">
-									{section name=idx loop=$listusertoalert}
-										{if $showeachuser eq 'n'}
-											<input type="hidden"  name="listtoalert[]" value="{$listusertoalert[idx].user}">
-										{else}
-											<input type="checkbox" name="listtoalert[]" value="{$listusertoalert[idx].user}"> {$listusertoalert[idx].user}
-										{/if}
-									{/section}
-								</div>
-							</div>
-						</div>
-					</div> <!-- /.row -->
 				{/if}
-				<div class="row">
-					<div class="col-md-10 col-md-push-1">
-						<div class="form-group form-horizontal" style="display:{if $calendar.customparticipants eq 'y'}block{else}none{/if};" id="calorg">
-							<label class="control-label col-md-2">{tr}Organized by{/tr}</label>
-							<div class="col-md-10">
-								{if isset($calitem.organizers)}
-									{if $edit}
-										{if $preview or $changeCal}
-											<input type="text" name="save[organizers]" value="{$calitem.organizers|escape}" style="width:90%;" class="form-control">
-										{else}
-											<input type="text" name="save[organizers]" value="
-												{foreach item=org from=$calitem.organizers name=organizers}
-													{if $org neq ''}
-														{$org|escape}
-														{if !$smarty.foreach.organizers.last}
-															,
-														{/if}
-													{/if}
-												{/foreach}
-											" style="width:90%;" class="form-control">
-										{/if}
-									{else}
-										{foreach item=org from=$calitem.organizers}
-											{$org|userlink}<br>
+				<div class="form-group" style="display:{if $calendar.customcategories eq 'y'}block{else}none{/if};" id="calcat">
+					<label class="control-label col-md-3">
+						{tr}Classification{/tr}
+					</label>
+					<div class="col-md-9">
+						{if $edit}
+							{if count($listcats)}
+								<select name="save[categoryId]" class="form-control">
+									<option value="">
+									</option>
+									{foreach item=it from=$listcats}
+										<option value="{$it.categoryId}"
+											{if $calitem.categoryId eq $it.categoryId}
+												 selected="selected"
+											{/if}
+										>
+											{$it.name|escape}
+										</option>
+									{/foreach}
+								</select>
+								{tr}or new{/tr} 
+							{/if}
+							<input type="text" name="save[newcat]" value="">
+						{else}
+							<span class="category">
+								{$calitem.categoryName|escape}
+							</span>
+						{/if}
+					</div>
+				</div>
+				<div class="form-group" style="display:{if $calendar.customlocations eq 'y'}block{else}none{/if};" id="calloc">
+					<label class="control-label col-md-3">{tr}Location{/tr}</label>
+					<div class="col-md-9">
+						{if $edit}
+							{if count($listlocs)}
+								<select name="save[locationId]" class="form-control">
+									<option value="">
+									</option>
+										{foreach item=it from=$listlocs}
+											<option value="{$it.locationId}"
+												{if $calitem.locationId eq $it.locationId}
+													 selected="selected"
+												{/if}
+											>
+												{$it.name|escape}
+											</option>
 										{/foreach}
-									{/if}
+								</select>
+								{tr}or new{/tr} 
+							{/if}
+							<input type="text" name="save[newloc]" value="">
+						{else}
+							<span class="location">
+								{$calitem.locationName|escape}
+							</span>
+						{/if}
+					</div>
+				</div>
+				{if $calendar.customurl ne 'n'}
+				<div class="form-group">
+					<label class="control-label col-md-3">{tr}URL{/tr}</label>
+					<div class="col-md-9">
+						{if $edit}
+							<input type="text" name="save[url]" value="{$calitem.url}" size="32" class="form-control">
+						{else}
+							<a class="url" href="{$calitem.url}">
+								{$calitem.url|escape}
+							</a>
+						{/if}
+					</div>
+				</div>
+				{/if}
+				<div class="form-group" style="display:{if $calendar.customlanguages eq 'y'}block{else}none{/if};" id="callang">
+					<label class="control-label col-md-3">{tr}Language{/tr}</label>
+					<div class="col-md-9">
+						{if $edit}
+							<select name="save[lang]">
+								<option value="">
+								</option>
+									{foreach item=it from=$listlanguages}
+										<option value="{$it.value}"
+											{if $calitem.lang eq $it.value}
+												 selected="selected"
+											{/if}
+										>
+											{$it.name}
+										</option>
+									{/foreach}
+							</select>
+						{else}
+							{$calitem.lang|langname}
+						{/if}
+					</div>
+				</div>
+				{if !empty($groupforalert) && $showeachuser eq 'y'}
+					<div class="form-group">
+						<label class="control-label col-md-3">{tr}Choose users to alert{/tr}</label>
+						<div class="col-md-9">
+							{section name=idx loop=$listusertoalert}
+								{if $showeachuser eq 'n'}
+									<input type="hidden"  name="listtoalert[]" value="{$listusertoalert[idx].user}">
+								{else}
+									<input type="checkbox" name="listtoalert[]" value="{$listusertoalert[idx].user}"> {$listusertoalert[idx].user}
 								{/if}
-							</div>
+							{/section}
 						</div>
 					</div>
-				</div> <!-- /.row -->
-				<div class="row">
-					<div class="col-md-10 col-md-push-1">
-						<div class="form-group form-horizontal" style="display:{if $calendar.customparticipants eq 'y'}block{else}none{/if};" id="calpart">
-							<label class="control-label col-md-2">{tr}Participants{/tr}</label>
-							<div class="col-md-10">
-								{if $edit}
-									<a href="#" onclick="flip('calparthelp');return false;">
-										{icon _id='help'}
-									</a>
-								{/if}
-								{if isset($calitem.participants)}
-									{if $edit}
-										{if $preview or $changeCal}
-											<input type="text" name="save[participants]" value="{$calitem.participants}" class="form-control">
-										{else}
-											<input type="text" name="save[participants]" value="
-												{foreach item=ppl from=$calitem.participants name=participants}
-													{if $ppl.name neq ''}
-														{if $ppl.role}{$ppl.role}
-															:
-														{/if}
-														{$ppl.name}
-														{if !$smarty.foreach.participants.last}
-															,
-														{/if}
-													{/if}
-												{/foreach}
-											" class="form-control">
-										{/if}
-									{else}
-										{assign var='in_particip' value='n'}
-										{foreach item=ppl from=$calitem.participants}
-											{$ppl.name|userlink} 
-											{if $listroles[$ppl.role]}
-												({$listroles[$ppl.role]})
-											{/if}
-											<br>
-											{if $ppl.name eq $user}
-												{assign var='in_particip' value='y'}
+				{/if}
+				<div class="form-group" style="display:{if $calendar.customparticipants eq 'y'}block{else}none{/if};" id="calorg">
+					<label class="control-label col-md-3">{tr}Organized by{/tr}</label>
+					<div class="col-md-9">
+						{if isset($calitem.organizers)}
+							{if $edit}
+								{if $preview or $changeCal}
+									<input type="text" name="save[organizers]" value="{$calitem.organizers|escape}" style="width:90%;">
+								{else}
+									<input type="text" name="save[organizers]" value="
+										{foreach item=org from=$calitem.organizers name=organizers}
+											{if $org neq ''}
+												{$org|escape}
+												{if !$smarty.foreach.organizers.last}
+													,
+												{/if}
 											{/if}
 										{/foreach}
-										{if $tiki_p_calendar_add_my_particip eq 'y'}
-											{if $in_particip eq 'y'}
-												{button _text="{tr}Withdraw me from the list of participants{/tr}" href="?del_me=y&viewcalitemId=$id"}
-											{else}
-												{button _text="{tr}Add me to the list of participants{/tr}" href="?add_me=y&viewcalitemId=$id"}
+									" style="width:90%;">
+								{/if}
+							{else}
+								{foreach item=org from=$calitem.organizers}
+									{$org|userlink}<br>
+								{/foreach}
+							{/if}
+						{/if}
+					</div>
+				</div>
+				<div class="form-group" style="display:{if $calendar.customparticipants eq 'y'}block{else}none{/if};" id="calpart">
+					<label class="control-label col-md-3">{tr}Participants{/tr}</label>
+					<div class="col-md-9">
+						{if $edit}
+							<a href="#" onclick="flip('calparthelp');return false;">
+								{icon _id='help'}
+							</a>
+						{/if}
+						{if isset($calitem.participants)}
+							{if $edit}
+								{if $preview or $changeCal}
+									<input type="text" name="save[participants]" value="{$calitem.participants}">
+								{else}
+									<input type="text" name="save[participants]" value="
+										{foreach item=ppl from=$calitem.participants name=participants}
+											{if $ppl.name neq ''}
+												{if $ppl.role}{$ppl.role}
+													:
+												{/if}
+												{$ppl.name}
+												{if !$smarty.foreach.participants.last}
+													,
+												{/if}
 											{/if}
-										{/if}
-										{if $tiki_p_calendar_add_guest_particip eq 'y'}
-											{* Nested forms do not work
-											<form action="tiki-calendar_edit_item.php" method="post">
-												<input type ="hidden" name="viewcalitemId" value="{$id}">
-												<input type="text" name="guests" class="form-control">{help desc="{tr}Format:{/tr} {tr}Participant names separated by comma{/tr}" url='calendar'}
-												<input type="submit" class="btn btn-default btn-sm" name="add_guest" value="Add guests">
-											</form>
-											*}
-										{/if}
+										{/foreach}
+									">
+								{/if}
+							{else}
+								{assign var='in_particip' value='n'}
+								{foreach item=ppl from=$calitem.participants}
+									{$ppl.name|userlink} 
+									{if $listroles[$ppl.role]}
+										({$listroles[$ppl.role]})
+									{/if}
+									<br>
+									{if $ppl.name eq $user}
+										{assign var='in_particip' value='y'}
+									{/if}
+								{/foreach}
+								{if $tiki_p_calendar_add_my_particip eq 'y'}
+									{if $in_particip eq 'y'}
+										{button _text="{tr}Withdraw me from the list of participants{/tr}" href="?del_me=y&viewcalitemId=$id"}
+									{else}
+										{button _text="{tr}Add me to the list of participants{/tr}" href="?add_me=y&viewcalitemId=$id"}
 									{/if}
 								{/if}
-							</div>
-						</div>
+								{if $tiki_p_calendar_add_guest_particip eq 'y'}
+									{* Nested forms do not work
+									<form action="tiki-calendar_edit_item.php" method="post">
+										<input type ="hidden" name="viewcalitemId" value="{$id}">
+										<input type="text" name="guests">{help desc="{tr}Format:{/tr} {tr}Participant names separated by comma{/tr}" url='calendar'}
+										<input type="submit" class="btn btn-default btn-sm" name="add_guest" value="Add guests">
+									</form>
+									*}
+								{/if}
+							{/if}
+						{/if}
 					</div>
-				</div> <!-- /.row -->
+				</div>
 
 				{if $edit}
-					<div style="display: {if $calendar.customparticipants eq 'y' and (isset($cookie.show_calparthelp) and $cookie.show_calparthelp eq 'y')}block{else}none{/if};" id="calparthelp" class="col-md-10 col-md-push-1">
+					<div style="display: {if $calendar.customparticipants eq 'y' and (isset($cookie.show_calparthelp) and $cookie.show_calparthelp eq 'y')}block{else}none{/if};" id="calparthelp">
 						{tr}Roles{/tr}<br>
 						0: {tr}chair{/tr} ({tr}default role{/tr})<br>
 						1: {tr}required participant{/tr}<br>
@@ -1145,6 +1081,6 @@
 							<input type="submit" class="btn btn-link" onclick="needToConfirm=false;document.location='{$referer|escape:'html'}';return false;" value="{tr}Cancel{/tr}">
 						</div>
 					</div>
-				{/if}
+		{/if}
 	</div>
-	</form>
+	<form>
