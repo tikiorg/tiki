@@ -273,7 +273,7 @@ function smarty_block_pagination_links($params, $url, $smarty, &$repeat)
 						$html .= '<li>' . $make_prevnext_link($url.$url_k, $k+1, $params, 'prevnext', $url_k_val) . '</li>';
 						$last_dots = false;
 					} elseif ( ! $last_dots ) {
-						$html .= '<li class="disabled">&hellip;</span>';
+						$html .= '<li class="disabled"><span>&hellip;</span>';
 						$last_dots = true;
 					}
 				}
