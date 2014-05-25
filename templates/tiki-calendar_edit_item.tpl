@@ -1,37 +1,41 @@
 	{title admpage="calendar"}{tr}Calendar event : {/tr}{$calitem.name|escape}{/title}
 	
-	<div class="modal-header">
-		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-		<h4 class="modal-title">Modal title</h4>
-	</div>
+	{if $smarty.get.isModal}
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+			<h4 class="modal-title"></h4>
+		</div>
+	{/if}
 	<form action="{$myurl|escape}" method="post" name="f" id="editcalitem" class="form-horizontal">
 	<div class="modal-body">
-		<div class="t_navbar btn-group form-group">
-			{if $tiki_p_view_calendar eq 'y'}
-				{button href="tiki-calendar.php" class="btn btn-default" _text="{tr}View Calendars{/tr}"}
-			{/if}
-			{if $tiki_p_admin_calendar eq 'y'}
-				{button href="tiki-admin_calendars.php?calendarId=$calendarId" class="btn btn-default" _text="{tr}Edit Calendar{/tr}"}
-			{/if}
-			{if $tiki_p_add_events eq 'y' and $id}
-				{button href="tiki-calendar_edit_item.php" class="btn btn-default" _text="{tr}New event{/tr}"}
-			{/if}
-			{if $id}
-				{if $edit}
-					{button href="tiki-calendar_edit_item.php?viewcalitemId=$id" class="btn btn-default" _text="{tr}View event{/tr}"}
-				{elseif $tiki_p_change_events eq 'y'}
-					{button href="tiki-calendar_edit_item.php?calitemId=$id" class="btn btn-default" _text="{tr}Edit/Delete event{/tr}"}
+		{if !$smarty.get.isModal}
+			<div class="t_navbar btn-group form-group">
+				{if $tiki_p_view_calendar eq 'y'}
+					{button href="tiki-calendar.php" class="btn btn-default" _text="{tr}View Calendars{/tr}"}
 				{/if}
-			{/if}
-			{if $tiki_p_admin_calendar eq 'y'}
-				{button href="tiki-admin_calendars.php" class="btn btn-default" _text="{tr}Admin Calendars{/tr}"}
-			{/if}
-			{if $prefs.calendar_fullcalendar neq 'y' or not $edit}
-				{if $prefs.calendar_export_item == 'y' and $tiki_p_view_calendar eq 'y'}
-					{button href='tiki-calendar_export_ical.php? export=y&calendarItem='|cat:$id class="btn btn-default" _text='{tr}Export Event as iCal{/tr}'}
+				{if $tiki_p_admin_calendar eq 'y'}
+					{button href="tiki-admin_calendars.php?calendarId=$calendarId" class="btn btn-default" _text="{tr}Edit Calendar{/tr}"}
 				{/if}
-			{/if}
-		</div>
+				{if $tiki_p_add_events eq 'y' and $id}
+					{button href="tiki-calendar_edit_item.php" class="btn btn-default" _text="{tr}New event{/tr}"}
+				{/if}
+				{if $id}
+					{if $edit}
+						{button href="tiki-calendar_edit_item.php?viewcalitemId=$id" class="btn btn-default" _text="{tr}View event{/tr}"}
+					{elseif $tiki_p_change_events eq 'y'}
+						{button href="tiki-calendar_edit_item.php?calitemId=$id" class="btn btn-default" _text="{tr}Edit/Delete event{/tr}"}
+					{/if}
+				{/if}
+				{if $tiki_p_admin_calendar eq 'y'}
+					{button href="tiki-admin_calendars.php" class="btn btn-default" _text="{tr}Admin Calendars{/tr}"}
+				{/if}
+				{if $prefs.calendar_fullcalendar neq 'y' or not $edit}
+					{if $prefs.calendar_export_item == 'y' and $tiki_p_view_calendar eq 'y'}
+						{button href='tiki-calendar_export_ical.php? export=y&calendarItem='|cat:$id class="btn btn-default" _text='{tr}Export Event as iCal{/tr}'}
+					{/if}
+				{/if}
+			</div>
+		{/if}
 		
 		<div class="wikitext">
 			{if $edit}
@@ -884,7 +888,7 @@
 					<label class="control-label col-md-3">{tr}URL{/tr}</label>
 					<div class="col-md-9">
 						{if $edit}
-							<input type="text" name="save[url]" value="{$calitem.url}" size="32">
+							<input type="text" name="save[url]" value="{$calitem.url}" size="32" class="form-control">
 						{else}
 							<a class="url" href="{$calitem.url}">
 								{$calitem.url|escape}
