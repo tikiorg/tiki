@@ -59,8 +59,8 @@
 			</small>
 			{icon _id='help' title=$smarty.capture.stat}
 		{/if}
-		{if $tiki_p_tracker_revote_ratings eq 'y' and  isset($field.my_rate) and in_array($field.my_rate, $field.options_array)}
-			<a href="{$smarty.server.REQUEST_URI}" onclick="sendVote(this,{$item.itemId},{$field.fieldId},'NULL');return false;">x</a>
+		{if $tiki_p_tracker_revote_ratings eq 'y'}
+			<a href="{$smarty.server.REQUEST_URI}" onclick="sendVote(this,{$item.itemId},{$field.fieldId},'NULL');return false;" {if empty($field.my_rate) or not in_array($field.my_rate, $field.rating_options)} style="display:none;"{/if}>x</a>
 		{/if}
 		</span>
 	{/if}
