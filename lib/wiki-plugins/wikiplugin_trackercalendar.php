@@ -125,19 +125,18 @@ function wikiplugin_trackercalendar_info()
 				'default' => 'month',
 				'options' => array(
 					array('text' => '', 'value' => ''),
-					array('text' => tra('month'), 'value' => 'Agenda by Months'),
-					array('text' => tra('agendaWeek'), 'value' => 'Agenda by Weeks'),
-					array('text' => tra('agendaDay'), 'value' => 'Agenda by Days'),
-					array('text' => tra('resourceMonth'), 'value' => 'Resources by Months'),
-					array('text' => tra('resourceWeek'), 'value' => 'Resources by Weeks'),
-					array('text' => tra('resourceDay'), 'value' => 'Resources by Days')
+					array('text' => tra('Agenda by Months'), 'value' => 'month'),
+					array('text' => tra('Agenda by Weeks'), 'value' => 'agendaWeek'),
+					array('text' => tra('Agenda by Days'), 'value' => 'agendaDay'),
+					array('text' => tra('Resources by Months'), 'value' => 'resourceMonth'),
+					array('text' => tra('Resources by Weeks'), 'value' => 'resourceWeek'),
+					array('text' => tra('Resources by Days'), 'value' => 'resourceDay')
 				)
 			),
 			'dYear' => array(
 				'required' => false,
 				'name' => tra('Default Year'),
 				'description' => tra('Choose the default year (yyyy) to use for the display'),
-				'required' => false,
 				'default' => 0,
 				'filter' => 'int',
 			),			
@@ -145,7 +144,6 @@ function wikiplugin_trackercalendar_info()
 				'required' => false,
 				'name' => tra('Default Month'),
 				'description' => tra('Choose the default month (mm, as numeric value) to use for the display. Numeric values here are 1-based, meaning January=1, February=2, etc'),
-				'required' => false,
 				'default' => 0,
 				'filter' => 'int',
 			),
@@ -153,7 +151,6 @@ function wikiplugin_trackercalendar_info()
 				'required' => false,
 				'name' => tra('Default Day'),
 				'description' => tra('Choose the default day (dd) to use for the display'),
-				'required' => false,
 				'default' => 0,
 				'filter' => 'int',
 			),
@@ -161,7 +158,6 @@ function wikiplugin_trackercalendar_info()
 				'required' => false,
 				'name' => tra('First day of the Week'),
 				'description' => tra('Choose the day that each week begins with, for the tracker calendar display. The value must be a number that represents the day of the week: Sunday=0, Monday=1, Tuesday=2, etc. Default: 0 (Sunday)'),
-				'required' => false,
 				'default' => 0,
 				'filter' => 'int',
 			),
@@ -192,19 +188,19 @@ function wikiplugin_trackercalendar($data, $params)
 	}
 
 	$views = array();
-	if (!empty($params['amonth']) and $params['amonth'] != y) {
+	if (!empty($params['amonth']) and $params['amonth'] != 'y') {
 		$amonth = 'n';
 	} else {
 		$amonth = 'y';
 		$views[] = 'month';
 	}
-	if (!empty($params['aweek']) and $params['aweek'] != y) {
+	if (!empty($params['aweek']) and $params['aweek'] != 'y') {
 		$aweek = 'n';
 	} else {
 		$aweek = 'y';
 		$views[] = 'agendaWeek';		
 	}
-	if (!empty($params['aday']) and $params['aday'] != y) {
+	if (!empty($params['aday']) and $params['aday'] != 'y') {
 		$aday = 'n';
 	} else {
 		$aday = 'y';
@@ -216,19 +212,19 @@ function wikiplugin_trackercalendar($data, $params)
 		$field = $definition->getFieldFromPermName($resourceField);
 		$resources = wikiplugin_trackercalendar_get_resources($field);
 
-		if (!empty($params['rmonth']) and $params['rmonth'] != y) {
+		if (!empty($params['rmonth']) and $params['rmonth'] != 'y') {
 			$rmonth = 'n';
 		} else {
 			$rmonth = 'y';
 			$views[] = 'resourceMonth';
 		}
-		if (!empty($params['rweek']) and $params['rweek'] != y) {
+		if (!empty($params['rweek']) and $params['rweek'] != 'y') {
 			$rweek = 'n';
 		} else {
 			$rweek = 'y';
 			$views[] = 'resourceWeek';
 		}
-		if (!empty($params['rday']) and $params['rday'] != y) {
+		if (!empty($params['rday']) and $params['rday'] != 'y') {
 			$rday = 'n';
 		} else {
 			$rday = 'y';
