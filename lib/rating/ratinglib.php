@@ -230,7 +230,6 @@ class RatingLib extends TikiDb_Bridge
             $hasLabels = true;
             $parser = new WikiLingo\Utilities\Parameters\Parser();
             $parsedPref = $parser->parse($value);
-            $parsedPref = array_filter($parsedPref, "is_numeric");
             return $parsedPref;
         }
 
