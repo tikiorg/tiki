@@ -39,7 +39,7 @@ function smarty_function_rating_result_avg( $params, $smarty )
 
 
 
-    if (isset($options[0]) && is_string($options[0])) {
+    if (isset($options[0]) && $options[0] = "0") {
         unset($options[0]);
     }
 
