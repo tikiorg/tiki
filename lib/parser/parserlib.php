@@ -2211,6 +2211,78 @@ if ( \$('#$id') ) {
                             $value='';
                             break;
                         }
+                    case 'lastApprover':
+                        global $prefs, $user;
+                        $tikilib = TikiLib::lib('tiki');
+
+                        if ($prefs['flaggedrev_approval'] == 'y') {
+                            $flaggedrevisionlib = TikiLib::lib('flaggedrevision');
+
+                            if ($flaggedrevisionlib->page_requires_approval($this->option['page'])) {
+                                if ($version_info = $flaggedrevisionlib->get_version_with($this->option['page'], 'moderation', 'OK')) {
+                                    if ($this->content_to_render === null) {
+                                        $revision_displayed = $version_info['version'];
+                                        $approval = $flaggedrevisionlib->find_approval_information($this->option['page'], $revision_displayed);
+                                    }
+                                }
+                            }
+                        }
+
+                        if ($approval['user'] != null ) {
+                            if ($prefs['user_show_realnames']== 'y') {
+                                $value = TikiLib::lib('user')->clean_user($approval['user']);
+                                break;
+                            } else {
+                                $value = $approval['user'];
+                                break;
+                            }
+                        } else {
+                            $value='';
+                            break;
+                        }
+                    case 'lastApproval':
+                        global $prefs, $user;
+                        $tikilib = TikiLib::lib('tiki');
+
+                        if ($prefs['flaggedrev_approval'] == 'y') {
+                            $flaggedrevisionlib = TikiLib::lib('flaggedrevision');
+
+                            if ($flaggedrevisionlib->page_requires_approval($this->option['page'])) {
+                                if ($version_info = $flaggedrevisionlib->get_version_with($this->option['page'], 'moderation', 'OK')) {
+                                    if ($this->content_to_render === null) {
+                                        $revision_displayed = $version_info['version'];
+                                        $approval = $flaggedrevisionlib->find_approval_information($this->option['page'], $revision_displayed);
+                                    }
+                                }
+                            }
+                        }
+
+                        if ($approval['lastModif'] != null ) {
+                            $value = $tikilib->get_short_datetime($approval['lastModif']);
+                            break;
+                        } else {
+                            $value='';
+                            break;
+                        }
+                    case 'lastApprovedVersion':
+                        global $prefs, $user;
+                        $tikilib = TikiLib::lib('tiki');
+
+                        if ($prefs['flaggedrev_approval'] == 'y') {
+                            $flaggedrevisionlib = TikiLib::lib('flaggedrevision');
+
+                            if ($flaggedrevisionlib->page_requires_approval($this->option['page'])) {
+                                $version_info = $flaggedrevisionlib->get_version_with($this->option['page'], 'moderation', 'OK');
+                            }
+                        }
+
+                        if ($version_info['version'] != null ) {
+                            $value = $version_info['version'];
+                            break;
+                        } else {
+                            $value='';
+                            break;
+                        }
 					default:
 						if ( isset($_GET[$name]) )
 							$value = $_GET[$name];
