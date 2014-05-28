@@ -404,4 +404,27 @@ $(window).load(function(){
 			'help_sections' => $help_sections,
 		);
 	}
+
+	function action_inline_dialog($input)
+	{
+		$smarty = TikiLib::lib('smarty');
+		$smarty->loadPlugin('smarty_function_service_inline');
+
+		$display = [];
+		foreach ($input->fields as $field) {
+			$html = smarty_function_service_inline($field->fetch->text(), $smarty);
+			$display[] = [
+				'label' => $field->label->text(),
+				'field' => new Tiki_Render_Editable($html, [
+					'layout' => 'dialog',
+					'object_store_url' => $field->store->text(),
+				]),
+			];
+		}
+
+		return [
+			'title' => tr('Edit'),
+			'fields' => $display,
+		];
+	}
 }

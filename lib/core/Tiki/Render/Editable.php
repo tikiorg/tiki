@@ -10,6 +10,7 @@ class Tiki_Render_Editable
 	private $inner;
 	private $layout = 'inline';
 	private $group = false;
+	private $label = null;
 	private $fieldFetchUrl;
 	private $objectStoreUrl;
 
@@ -23,6 +24,10 @@ class Tiki_Render_Editable
 
 		if (! empty($parameters['group'])) {
 			$this->group = $parameters['group'];
+		}
+
+		if (! empty($parameters['label'])) {
+			$this->label = $parameters['label'];
 		}
 
 		if (empty($parameters['object_store_url'])) {
@@ -49,6 +54,7 @@ class Tiki_Render_Editable
 		$tag = ($this->layout == 'block') ? 'div' : 'span';
 		$fieldFetch = smarty_modifier_escape(json_encode($this->fieldFetchUrl));
 		$objectStore = smarty_modifier_escape(json_encode($this->objectStoreUrl));
+		$label = smarty_modifier_escape($this->label);
 
 		$value = $this->inner;
 		if (trim(strip_tags($value)) == '') {
@@ -61,12 +67,12 @@ class Tiki_Render_Editable
 			$class = "editable-dialog";
 		}
 
-		if (! $fieldFetch) {
+		if (! $this->fieldFetchUrl) {
 			$class .= ' loaded';
 		}
 
 		$group = smarty_modifier_escape($this->group);
-		return "<$tag class=\"$class\" data-field-fetch-url=\"$fieldFetch\" data-object-store-url=\"$objectStore\" data-group=\"$group\">$value</$tag>";
+		return "<$tag class=\"$class\" data-field-fetch-url=\"$fieldFetch\" data-object-store-url=\"$objectStore\" data-group=\"$group\" data-label=\"$label\">$value</$tag>";
 	}
 }
 
