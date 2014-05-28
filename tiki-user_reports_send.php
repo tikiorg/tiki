@@ -14,6 +14,8 @@ if (php_sapi_name() != 'cli') {
 	$access->check_permission('tiki_p_admin');
 }
 
+echo("This script is deprecated and does not work in Multitiki installations.\nPlease use 'console.php daily-report:send' instead.");
+
 $access->check_feature('feature_daily_report_watches');
 
 $reportsManager = Reports_Factory::build('Reports_Manager');
