@@ -266,6 +266,8 @@ class WikiParser_PluginMatcher implements Iterator, Countable
 		foreach ($matches as $key => $m) {
 			if ($m->inside($match)) {
 				$toRemove[] = $m;
+			} elseif ($match->inside($m)) {
+				// Boundaries should not be extended for wrapping plugins
 			} elseif ($key > $end) {
 				unset($this->ends[$m->getEnd()]);
 				unset($this->starts[$m->getStart()]);
