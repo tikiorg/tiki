@@ -158,7 +158,6 @@ var handleFiles = function (files) {
 				};
 
 				if (window.FormData) {
-					console.log('Attempting upload');
 					sendData.processData = false;
 					sendData.contentType = false;
 					sendData.cache = false;
