@@ -26,18 +26,18 @@ class MailQueueSendCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-      require_once ("lib/mail/maillib.php");
+      require_once ('lib/mail/maillib.php');
       global $prefs;
       $logslib = TikiLib::lib('logs'); 
       tiki_mail_setup();
-      echo ("Mail queue processor starting...\n");
+      $output->writeln('Mail queue processor starting...');
 
-      $messages = \TikiDb::get()->fetchAll("SELECT messageId, message FROM `tiki_mail_queue`");
+        $messages = \TikiDb::get()->fetchAll('SELECT messageId, message FROM tiki_mail_queue');
 
       foreach ( $messages as $message ) {
 
-          echo("Sending message ".$message["messageId"]."...");
-          $mail = unserialize($message["message"]);
+          $output->writeln('Sending message '.$message['messageId'].'...');
+          $mail = unserialize($message['message']);
 
           if ($mail) {
             try {
@@ -54,20 +54,19 @@ class MailQueueSendCommand extends Command
             }
 
             if ($title == 'mail error') {
-            	$query = "UPDATE `tiki_mail_queue` SET attempts = attempts + 1 WHERE messageId = ?";
-            	echo ("Failed.\n");
+            	$query = 'UPDATE tiki_mail_queue SET attempts = attempts + 1 WHERE messageId = ?';
+            	$output->writeln('Failed.');
             	print_r($mailer->errors);
-            	echo ("\n");
             } else {
-            	$query = "DELETE FROM `tiki_mail_queue` WHERE messageId = ?";
-            	echo ("Sent.\n");
+            	$query = 'DELETE FROM tiki_mail_queue WHERE messageId = ?';
+            	$output->writeln('Sent.');
             }
 
-            \TikiDb::get()->query($query, array($message["messageId"]));
+            \TikiDb::get()->query($query, array($message['messageId']));
           } else {
-              echo ("ERROR: Unable to unserialize the mailer object\n");
+              $output->writeln('ERROR: Unable to unserialize the mailer object.');
           }
       }
-      echo ("Mail queue processed...\n");
+      $output->writeln('Mail queue processed...');
     }
 }
