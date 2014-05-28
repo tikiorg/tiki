@@ -5729,6 +5729,25 @@ class TikiLib extends TikiDb_Bridge
 		self::$isExternalContext = (bool) $isExternal;
 	}
 
+	static function contextualizeKey($key, $param1 = null, $param2 = null)
+	{
+		global $prefs;
+
+		$args = func_get_args();
+		array_shift($args);
+
+		foreach ($args as $arg) {
+			if ($arg == 'language') {
+				$language = isset($prefs['language']) ? $prefs['language'] : 'en';
+				$key .= "_{$language}";
+			} elseif ($arg == 'external') {
+				$key .= (int) self::$isExternalContext;
+			}
+		}
+
+		return $key;
+	}
+
 	/**
 	 * Removes the protocol, host and path from a URL if they match
 	 *

@@ -70,11 +70,6 @@ if (strpos($base_uri, $tikiroot . 'route.php') !== false && !empty($inclusion)) 
 	}
 }
 
-global $smarty;
-if (!empty($base_uri) && is_object($smarty)) {
-	$smarty->assign('base_uri', $base_uri);
-}
-
 // SSL options
 
 if ( isset($_REQUEST['stay_in_ssl_mode_present']) || isset($_REQUEST['stay_in_ssl_mode']) ) {
