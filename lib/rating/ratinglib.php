@@ -156,6 +156,11 @@ class RatingLib extends TikiDb_Bridge
 			return false;
 		}
 
+        $this->query(
+            'DELETE FROM `tiki_user_votings` WHERE `user` = ? AND `id` = ?',
+            array($user, $token)
+        );
+
 		$this->query(
 			'INSERT INTO `tiki_user_votings` ( `user`, `ip`, `id`, `optionId`, `time` ) VALUES( ?, ?, ?, ?, ? )',
 			array($user, $ip, $token, $score, $time)
@@ -214,6 +219,8 @@ class RatingLib extends TikiDb_Bridge
 		$override = $this->get_override($type, $objectId);
 
 		if (!empty($override) && $skipOverride == false) {
+
+            $override = array_filter($override, "is_numeric");
 			return $override;
 		}
 
@@ -226,7 +233,13 @@ class RatingLib extends TikiDb_Bridge
             return $parsedPref;
         }
 
-		return $tikilib->get_preference($pref, range(1, 5), $expectedArray);
+		$result = $tikilib->get_preference($pref, range(1, 5), $expectedArray);
+
+        if ($expectedArray == true && !is_array($result)) {
+            $result = explode(',', $value);
+        }
+        $result = array_filter($result, "is_numeric");
+        return $result;
 	}
 
 	function set_override($type, $objectId, $value)
@@ -318,6 +331,7 @@ class RatingLib extends TikiDb_Bridge
 		$votings = array();
 		$voteCount = count($user_votings);
 		$percent = ( $voteCount > 0 ? 100 / $voteCount : 0 );
+        $hasLabels = false;
 
 		foreach ($user_votings as $user_voting) {
 			if (!isset($votings[$user_voting['optionId']])) $votings[$user_voting['optionId']] = 0;

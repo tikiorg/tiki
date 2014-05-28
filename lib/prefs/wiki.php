@@ -667,9 +667,7 @@ function prefs_wiki_list($partial = false)
 			'name' => tra('Wiki rating options'),
 			'description' => tra('List of options available for the rating of wiki pages.'),
 			'type' => 'text',
-			'separator' => ',',
-			'filter' => 'int',
-			'default' => range(1, 5),
+			'default' => "1,2,3,4,5",
 		),
 		'wiki_pagealias_tokens' => array(
 			'name' => tra('Semantic link types to use as page alias markers'),
