@@ -14,6 +14,17 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 	exit;
 }
 require_once ('tiki-filter-base.php');
+
+if (!isset($_SERVER['QUERY_STRING'])) {
+	$_SERVER['QUERY_STRING'] = '';
+}
+if (empty($_SERVER['REQUEST_URI'])) {
+	$_SERVER['REQUEST_URI'] = $_SERVER['PHP_SELF'] . '?' . $_SERVER['QUERY_STRING'];
+}
+if (empty($_SERVER['SERVER_NAME'])) {
+	$_SERVER['SERVER_NAME'] = isset($_SERVER['HTTP_HOST'])?$_SERVER['HTTP_HOST']: '';
+}
+
 // ---------------------------------------------------------------------
 // basic php conf adjustment
 // xhtml compliance
@@ -202,6 +213,11 @@ if (isset($prefs['feature_fullscreen']) && $prefs['feature_fullscreen'] == 'y') 
 }
 // Retrieve all preferences
 require_once ('lib/setup/prefs.php');
+
+require_once ('lib/tikiaccesslib.php');
+$access = new TikiAccessLib;
+
+require_once ('lib/setup/absolute_urls.php');
 // Smarty needs session since 2.6.25
 global $smarty; require_once ('lib/init/smarty.php');
 
@@ -211,8 +227,6 @@ $smarty->assignByRef('maxRecords', $maxRecords);
 
 global $userlib;
 $userlib = TikiLib::lib('user');
-require_once ('lib/tikiaccesslib.php');
-$access = new TikiAccessLib;
 require_once ('lib/breadcrumblib.php');
 // ------------------------------------------------------
 // DEAL WITH XSS-TYPE ATTACKS AND OTHER REQUEST ISSUES
@@ -368,15 +382,6 @@ if (!empty($_REQUEST['highlight'])) {
 	$_REQUEST['highlight'] = str_replace('&lt;x&gt;', '<x>', $_REQUEST['highlight']);
 }
 // ---------------------------------------------------------------------
-if (!isset($_SERVER['QUERY_STRING'])) {
-	$_SERVER['QUERY_STRING'] = '';
-}
-if (empty($_SERVER['REQUEST_URI'])) {
-	$_SERVER['REQUEST_URI'] = $_SERVER['PHP_SELF'] . '?' . $_SERVER['QUERY_STRING'];
-}
-if (empty($_SERVER['SERVER_NAME'])) {
-	$_SERVER['SERVER_NAME'] = isset($_SERVER['HTTP_HOST'])?$_SERVER['HTTP_HOST']: '';
-}
 
 /*
  * Clean variables past in _GET & _POST & _COOKIE
@@ -388,7 +393,10 @@ if ($magic_quotes_gpc) {
 	remove_gpc($_COOKIE);
 }
 
-require_once ('lib/setup/absolute_urls.php');
+global $base_uri;
+if (!empty($base_uri) && is_object($smarty)) {
+	$smarty->assign('base_uri', $base_uri);
+}
 
 // in the case of tikis on same domain we have to distinguish the realm
 // changed cookie and session variable name by a name made with browsertitle
