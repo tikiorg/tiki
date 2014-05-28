@@ -29,6 +29,7 @@ class Tiki_Render_Editable
 			throw new Exception(tr('Internal error: mandatory parameter object_store_url is missing'));
 		}
 
+		$servicelib = TikiLib::lib('service');
 		if (! empty($parameters['field_fetch_url'])) {
 			$this->fieldFetchUrl = $parameters['field_fetch_url'];
 		}
@@ -46,8 +47,8 @@ class Tiki_Render_Editable
 
 		// block = dialog goes to span as well
 		$tag = ($this->layout == 'block') ? 'div' : 'span';
-		$fieldFetch = htmlspecialchars($this->fieldFetchUrl);
-		$objectStore = htmlspecialchars($this->objectStoreUrl);
+		$fieldFetch = smarty_modifier_escape(json_encode($this->fieldFetchUrl));
+		$objectStore = smarty_modifier_escape(json_encode($this->objectStoreUrl));
 
 		$value = $this->inner;
 		if (trim(strip_tags($value)) == '') {

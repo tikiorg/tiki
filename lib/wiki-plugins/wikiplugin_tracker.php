@@ -1615,18 +1615,15 @@ function wikiplugin_tracker_render_input($f, $item, $dynamicSave)
 	$input = $handler->renderInput(array('inTable' => 'y', 'pluginTracker' => 'y'));
 
 	if ($dynamicSave && $item['itemId']) {
-		$servicelib = TikiLib::lib('service');
 		$input = new Tiki_Render_Editable(
 			$input,
 			array(
 				'layout' => 'block',
-				'object_store_url' => $servicelib->getUrl(
-					array(
-						'controller' => 'tracker',
-						'action' => 'update_item',
-						'trackerId' => $f['trackerId'],
-						'itemId' => $item['itemId'],
-					)
+				'object_store_url' => array(
+					'controller' => 'tracker',
+					'action' => 'update_item',
+					'trackerId' => $f['trackerId'],
+					'itemId' => $item['itemId'],
 				),
 			)
 		);
