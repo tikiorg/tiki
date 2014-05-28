@@ -376,6 +376,44 @@ class WikiParser_PluginMatcherTest extends TikiTestCase
 
 		$this->assertEquals('{$f_13}X', $matches->getText());
 	}
+
+	function testReplacePluginInsideOther()
+	{
+		$init = <<<CONTENT
+{BOX(a=1)}
+  {LIST()}
+    {filter categories=12}
+  {LIST}
+{BOX}
+CONTENT;
+		$expect = <<<CONTENT
+{BOX(a="1")}
+  {LIST()}
+    {filter categories="abc1234567890abc1234567890"}
+  {LIST}
+{BOX}
+CONTENT;
+		$matches = WikiParser_PluginMatcher::match($init);
+		$justReplaced = false;
+		foreach ($matches as $m) {
+			if ($justReplaced) {
+				$justReplaced = false;
+				continue;
+			}
+			if ($m->getName() == 'box') {
+				$m->replaceWithPlugin('box', array('a' => 1), $m->getBody());
+				$justReplaced = true;
+			} elseif ($m->getName() == 'list') {
+				$m->replaceWithPlugin('list', array(), "\n    {filter categories=abc1234567890abc1234567890}\n  ");
+				$justReplaced = true;
+			} elseif ($m->getName() == 'filter') {
+				$m->replaceWithPlugin('filter', array('categories' => 'abc1234567890abc1234567890'), "");
+				$justReplaced = true;
+			}
+		}
+
+		$this->assertEquals($expect, $matches->getText());
+	}
 /*
 	// TODO : Replacement re-find existing
 	// TODO : Replacement original vs generated
