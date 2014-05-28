@@ -323,6 +323,8 @@
 					<p>
 						<input type="submit" class="btn btn-default" name="convert_to_utf8" value="{tr}Convert database and tables to UTF-8{/tr}">
 						<input type="hidden" name="install_step" value="4">
+						{if $multi}<input type="hidden" name="multi" value="{$multi}">{/if}
+						{if $lang}<input type="hidden" name="lang" value="{$lang}">{/if}
 					</p>
 				</fieldset>
 			</form>
