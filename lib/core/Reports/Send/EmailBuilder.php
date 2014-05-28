@@ -26,7 +26,11 @@ class Reports_Send_EmailBuilder
 
     public function emailBody($user_data, $report_preferences, $report_cache)
     {
-        $base_url = $report_cache[0]['data']['base_url'];
+        if (isset($report_cache[0])) {
+            $base_url = $report_cache[0]['data']['base_url'];
+        } else {
+            $base_url = "";
+        }
 
         $smarty = TikiLib::lib('smarty');
 

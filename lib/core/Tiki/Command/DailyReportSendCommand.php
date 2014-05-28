@@ -30,7 +30,12 @@ class DailyReportSendCommand extends Command
 
       $access->check_feature('feature_daily_report_watches');
 
+      $output->writeln('Generating reports...');
       $reportsManager = Reports_Factory::build('Reports_Manager');
+
+      $output->writeln('Sending...');
       $reportsManager->send();
+
+      $output->writeln('Finished.');
     }
 }
