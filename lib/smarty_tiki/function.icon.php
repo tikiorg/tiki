@@ -56,8 +56,7 @@ function smarty_function_icon($params, $smarty)
 	if ($prefs['mobile_feature'] === 'y') {
 		$serialized_params .=  $prefs['mobile_mode'];
 	}
-	$language = isset($prefs['language']) ? $prefs['language'] : 'en';
-	$cache_key = 'icons_' . $language . '_' . md5($serialized_params);
+	$cache_key = TikiLib::contextualizeKey('icons_' . '_' . md5($serialized_params), 'language', 'external');
 	if ( $cached = $cachelib->getCached($cache_key) ) {
 		return $cached;
 	}
@@ -198,16 +197,17 @@ function smarty_function_icon($params, $smarty)
 		}
 
 		if ( $tag != 'img' ) {
-			$params['src'] = $params['file'];
+			$params['src'] = TikiLib::tikiUrlOpt($params['file']);
 			unset($params['file']);
 			foreach ( $params as $k => $v ) {
 				$html .= ' ' . htmlspecialchars($k, ENT_QUOTES, 'UTF-8') . '="' . htmlspecialchars($v, ENT_QUOTES, 'UTF-8') . '"';
 			}
 		}
 
-		$headerlib = TikiLib::lib('header');
-		if (!empty($params['file']) && $headerlib) {
+		if (!empty($params['file'])) {
+			$headerlib = TikiLib::lib('header');
 			$params['file'] = $headerlib->convert_cdn($params['file']);
+			$params['file'] = TikiLib::tikiUrlOpt($params['file']);
 		}
 
 		switch ( $tag ) {
