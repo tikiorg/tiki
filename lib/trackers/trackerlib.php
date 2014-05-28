@@ -4828,6 +4828,8 @@ class TrackerLib extends TikiLib
 					$r,
 					array(
 						'layout' => $params['editable'],
+						'label' => $field['name'],
+						'group' => ! empty($params['editgroup']) ? $params['editgroup'] : false,
 						'object_store_url' => $servicelib->getUrl(
 							array(
 								'controller' => 'tracker',

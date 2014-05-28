@@ -9,6 +9,7 @@ class Tiki_Render_Editable
 {
 	private $inner;
 	private $layout = 'inline';
+	private $group = false;
 	private $fieldFetchUrl;
 	private $objectStoreUrl;
 
@@ -16,8 +17,12 @@ class Tiki_Render_Editable
 	{
 		$this->inner = $html;
 		
-		if (! empty($parameters['layout']) && in_array($parameters['layout'], array('inline', 'block'))) {
+		if (! empty($parameters['layout']) && in_array($parameters['layout'], array('inline', 'block', 'dialog'))) {
 			$this->layout = $parameters['layout'];
+		}
+
+		if (! empty($parameters['group'])) {
+			$this->group = $parameters['group'];
 		}
 
 		if (empty($parameters['object_store_url'])) {
@@ -39,6 +44,7 @@ class Tiki_Render_Editable
 			return $this->inner === null ? '' : $this->inner;
 		}
 
+		// block = dialog goes to span as well
 		$tag = ($this->layout == 'block') ? 'div' : 'span';
 		$fieldFetch = htmlspecialchars($this->fieldFetchUrl);
 		$objectStore = htmlspecialchars($this->objectStoreUrl);
@@ -50,12 +56,16 @@ class Tiki_Render_Editable
 		}
 
 		$class = "editable-inline";
+		if ($this->layout == 'dialog') {
+			$class = "editable-dialog";
+		}
 
 		if (! $fieldFetch) {
 			$class .= ' loaded';
 		}
 
-		return "<$tag class=\"$class\" data-field-fetch-url=\"$fieldFetch\" data-object-store-url=\"$objectStore\">$value</$tag>";
+		$group = smarty_modifier_escape($this->group);
+		return "<$tag class=\"$class\" data-field-fetch-url=\"$fieldFetch\" data-object-store-url=\"$objectStore\" data-group=\"$group\">$value</$tag>";
 	}
 }
 

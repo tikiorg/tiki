@@ -10,6 +10,7 @@ class Search_Formatter_ValueFormatter_Trackerrender extends Search_Formatter_Val
 	private $list_mode = 'n';
 	private $cancache = null;
 	private $editable = false;
+	private $group = false;
 
 	function __construct($arguments)
 	{
@@ -21,8 +22,15 @@ class Search_Formatter_ValueFormatter_Trackerrender extends Search_Formatter_Val
 			}
 		}
 
-		if (isset($arguments['editable']) && in_array($arguments['editable'], array('block', 'inline'))) {
-			$this->editable = $arguments['editable'];
+		if (isset($arguments['editable'])) {
+			$parts = explode(' ', $arguments['editable']);
+			$editable = array_shift($parts);
+			$group = array_shift($parts);
+
+			if (in_array($editable, array('block', 'inline', 'dialog'))) {
+				$this->editable = $editable;
+				$this->group = $group;
+			}
 		}
 	}
 
@@ -71,6 +79,7 @@ class Search_Formatter_ValueFormatter_Trackerrender extends Search_Formatter_Val
 				'search_render' => 'y',
 				'list_mode' => $this->list_mode,
 				'editable' => $this->editable,
+				'editgroup' => $this->group,
 			)
 		);
 		return '~np~' . $rendered . '~/np~';
