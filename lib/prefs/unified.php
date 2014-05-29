@@ -146,7 +146,7 @@ function prefs_unified_list()
 			'description' => tra('Search formatters to cache the output of'),
 			'type' => 'text',
 			'separator' => ',',
-			'default' => array('trackerrender','categorylist'),
+			'default' => array('categorylist'),
 		),
 		'unified_trackerfield_keys' => array(
 			'name' => tra('Format to use for tracker field keys'),
