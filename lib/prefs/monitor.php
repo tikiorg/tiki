@@ -13,12 +13,14 @@ function prefs_monitor_list()
 			'description' => tr('Allows users to control the notifications they receive based on content changes.'),
 			'type' => 'flag',
 			'default' => 'n',
-		),
+            'help' => 'Notifications',
+        ),
 		'monitor_digest' => array(
 			'name' => tr('Notification Digests'),
 			'description' => tr('Enable the digest notifications, requires cron job'),
 			'type' => 'flag',
 			'default' => 'n',
+            'help' => 'Notifications#Digests',
 		),
 		'monitor_individual_clear' => array(
 			'name' => tr('Clear individual notifications'),
