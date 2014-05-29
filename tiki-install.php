@@ -106,7 +106,7 @@ if (isset($_SESSION['accessible'])) {
 								<input type="hidden" name="enterinstall" value="1">
 								<p><label for="dbuser" class="sr-only">Database username</label> <input type="text" id="dbuser" name="dbuser" placeholder="Database username"/></p>
 								<p><label for="dbpass" class="sr-only">Database password</label> <input type="password" id="dbpass" name="dbpass" placeholder="Database password"/></p>
-								<p><input type="submit" class="btn btn-default btn-sm" value=" Validate and Continue " /></p>
+								<p><input type="submit" class="btn btn-primary btn-sm" value=" Validate and Continue " /></p>
 							</form>
 							<p>&nbsp;</p>';
 	createPage($title, $content);
