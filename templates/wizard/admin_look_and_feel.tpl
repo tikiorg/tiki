@@ -5,26 +5,44 @@
 <div class="adminWizardContent">
 <fieldset>
 	<legend>{tr}Look & Feel options{/tr}</legend>
-		<div style="position:relative;">
-			<div class="adminWizardlookandfell">
-				<img src="{$thumbfile}" alt="{tr}Theme Screenshot{/tr}" id="style_thumb" width="160px" height="120px">
-			</div>
+    <div class="row">
+        <div class="col-md-3 col-md-push-9">
+            <div  class="thumbnail">
+                <img src="{$thumbfile}" alt="{tr}Theme Screenshot{/tr}" id="style_thumb">
+            </div>
+        </div>
+        <div class="col-md-9 col-md-pull-3 adminoptionbox">
+            {preference name=theme_active}
 
-			<div class="adminoptionbox">
-				{preference name=style}
-				{preference name=style_option}
-				{preference name=feature_fixed_width}
-				<div class="adminoptionboxchild" id="feature_fixed_width_childcontainer">
-					{preference name=layout_fixed_width}
-				</div>
+            <div class="adminoptionbox theme_active_childcontainer custom">
+                {preference name=theme_custom}
+            </div>
 
-				{if $prefs.javascript_enabled eq 'n' or $prefs.feature_jquery eq 'n'}
-					<input type="submit" class="btn btn-default btn-sm" name="changestyle" value="{tr}Go{/tr}" />
-				{/if}
-			</div>
-		</div>
-		<br>
-		<em>{tr}See also{/tr} <a href="tiki-admin.php?page=look&amp;alt=Look+%26+Feel" target="_blank">{tr}Look & Feel admin panel{/tr}</a></em>
+            <div class="adminoptionbox theme_active_childcontainer legacy">
+                {preference name=style}
+                {preference name=style_option}
+
+                {preference name=style_admin}
+                {preference name=style_admin_option}
+            </div>
+
+            {preference name=site_layout}
+            {preference name=site_layout_per_object}
+
+        </div>
+    </div>
+<!--
+    <div style="position:relative;">
+        <div class="adminoptionbox">
+            {preference name=feature_fixed_width}
+            <div class="adminoptionboxchild" id="feature_fixed_width_childcontainer">
+                {preference name=layout_fixed_width}
+            </div>
+        </div>
+    </div>
+-->
+    <br>
+    <em>{tr}See also{/tr} <a href="tiki-admin.php?page=look&amp;alt=Look+%26+Feel" target="_blank">{tr}Look & Feel admin panel{/tr}</a></em>
 </fieldset>
 
 <fieldset>
