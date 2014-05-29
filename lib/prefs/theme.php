@@ -10,7 +10,7 @@ function prefs_theme_list()
 	$themes = [
 		'default' => tr('Bootstrap Default'),
 		'custom' => tr('Custom theme location, see below'),
-		'legacy' => tr('Use legacy styles'),
+		'legacy' => tr('Use legacy styles + styles from Bootswatch.com'),
 	];
 
 	foreach (glob("themes/*/css/tiki.css") as $css) {
@@ -23,10 +23,11 @@ function prefs_theme_list()
 	return array(
 		'theme_active' => array(
 			'name' => tr('Theme'),
-			'description' => tr('Select the theme to be used.').' '.tr('You can choose from many new themes taken from Bootswatch.com if you select <em>Theme: <b>Use legacy styles</b> > Style: <b>bootswatch_themes</b> > Theme options: <code>Amelia</code>, <code>Cerulean</code>, <code>Cosmo</code>, ..., <code>Yeti</code></em>'),
+			'description' => tr('Select the theme to be used.').' '.tr('You can choose from many new themes taken from Bootswatch.com if you select <ul><li><em>Theme: <b>Use legacy styles + styles from Bootswatch.com</b></li><li>Style: <b>bootswatch_themes</b></li><li>Theme options: <code>Amelia</code>, <code>Cerulean</code>, <code>Cosmo</code>, ..., <code>Yeti</code></li></ul></em>'),
 			'type' => 'list',
 			'default' => 'default',
 			'options' => $themes,
+            'help' => 'Tiki13#Themes',
 		),
 		'theme_custom' => array(
 			'name' => tr('Custom theme location'),
