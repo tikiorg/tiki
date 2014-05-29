@@ -6,3 +6,19 @@
     order deny,allow
     allow from all
 </FilesMatch>
+<FilesMatch "\.pdf">
+    order deny,allow
+    allow from all
+</FilesMatch>
+<FilesMatch "\.html">
+    order deny,allow
+    allow from all
+</FilesMatch>
+<FilesMatch "\.css">
+    order deny,allow
+    allow from all
+</FilesMatch>
+<FilesMatch "\.js">
+    order deny,allow
+    allow from all
+</FilesMatch>
