@@ -23,7 +23,7 @@ function prefs_theme_list()
 	return array(
 		'theme_active' => array(
 			'name' => tr('Theme'),
-			'description' => tr('Select the theme to be used.'),
+			'description' => tr('Select the theme to be used.').' '.tr('You can choose from many new themes taken from Bootswatch.com if you select <em>Theme: <b>Use legacy styles</b> > Style: <b>bootswatch_themes</b> > Theme options: <code>Amelia</code>, <code>Cerulean</code>, <code>Cosmo</code>, ..., <code>Yeti</code></em>'),
 			'type' => 'list',
 			'default' => 'default',
 			'options' => $themes,
