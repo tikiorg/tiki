@@ -34,7 +34,7 @@
                 <br/><br/>
                 {tr}Starting in Tiki11, the syntax to rebuild the search index changed{/tr}.
                 {tr}Example{/tr}
-                <pre>0 0 * * * cd /path_to_tiki;php console.php index:rebuild</pre>
+                <pre>0 0 * * * cd /path_to_tiki;php console.php index[{tr}colon{/tr}]rebuild</pre>
                 {tr}Click to read more{/tr}
 	    	">
                     <img src="img/icons/help.png" alt="" width="16" height="16" class="icon" />
