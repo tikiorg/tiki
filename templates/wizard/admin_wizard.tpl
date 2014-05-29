@@ -31,7 +31,7 @@
 					<img src="img/icons/help.png" alt="" width="16" height="16" class="icon" />
 				</a>
                 <br>
-                <input  type="submit" class="btn btn-default" name="use-default-prefs" value="{tr}Start Configuration Profiles Wizard (Macros){/tr}" />
+                <input  type="submit" class="btn btn-primary" name="use-default-prefs" value="{tr}Start Configuration Profiles Wizard (Macros){/tr}" />
                 <br><br>
             </td>
         </tr>
@@ -46,7 +46,7 @@
 					<img src="img/icons/help.png" alt="" width="16" height="16" class="icon" />
 				</a>
                 <br>
-                <input type="submit" class="btn btn-default" name="continue" value="{tr}Start Admin Wizard{/tr}" /><br><br>
+                <input type="submit" class="btn btn-primary" name="continue" value="{tr}Start Admin Wizard{/tr}" /><br><br>
             </td>
         </tr>
 
@@ -63,7 +63,7 @@
 					<img src="img/icons/help.png" alt="" width="16" height="16" class="icon" />
 				</a>
                 <br>
-                <input type="submit" class="btn btn-default" name="use-upgrade-wizard" value="{tr}Start Upgrade Wizard{/tr}" /><br><br>
+                <input type="submit" class="btn btn-primary" name="use-upgrade-wizard" value="{tr}Start Upgrade Wizard{/tr}" /><br><br>
             </td>
         </tr>
 
