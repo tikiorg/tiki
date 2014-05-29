@@ -15,9 +15,23 @@
 
 <div class="adminWizardContent">
     <fieldset class="table clearfix featurelist">
-        <legend> {tr}Site layouts (based on 'Bootstrap' display templates){/tr} </legend>
+        <legend>{tr}New Themes{/tr} & {tr}Site layouts (based on 'Bootstrap'){/tr}</legend>
+        {preference name=theme_active}
+        <div class="adminoptionbox theme_active_childcontainer custom">
+            {preference name=theme_custom}
+        </div>
+
+        <div class="adminoptionbox theme_active_childcontainer legacy">
+            {preference name=style}
+            {preference name=style_option}
+
+            {preference name=style_admin}
+            {preference name=style_admin_option}
+        </div>
+
         {preference name=site_layout}
         {preference name=site_layout_per_object}
+
     </fieldset>
 
     <fieldset class="table clearfix featurelist">
