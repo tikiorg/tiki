@@ -65,6 +65,11 @@ class Search_Formatter_ValueFormatter_Trackerrender extends Search_Formatter_Val
 
 		$this->cancache = ! in_array($field['type'], array('STARS', 's'));	// don't cache ratings fields
 
+		if ($this->editable) {
+			// Caching breaks inline editing
+			$this->cancache = false;
+		}
+
 		$item = array();
 		if ($entry['object_type'] == 'trackeritem') {
 			$item['itemId'] = $entry['object_id'];
