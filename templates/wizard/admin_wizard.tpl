@@ -4,17 +4,22 @@
 <fieldset>
 	<legend>{tr}Get Started{/tr}</legend>
 
-	<img src="img/icons/tick.png" alt="{tr}Ok{/tr}" />{tr _0=$tiki_version}Congratulations! You now have a working instance of Tiki %0{/tr}. 
+	<img src="img/icons/tick.png" alt="{tr}Ok{/tr}" />{tr _0=$tiki_version}Congratulations! You now have a working instance of Tiki %0{/tr}.
     {tr}You may <a href="tiki-index.php">start using it right away</a>, or you may configure it to better meet your needs, using one of the configuration helpers below.{/tr}
     <br>
 	<div style="width:90%">
 		{remarksbox type="tip" title="{tr}Tip{/tr}"}
-		{tr}Mouse over the icons with a question mark to know more about the features and preferences that are new for you{/tr}.
-		<a href="http://doc.tiki.org/Wizards" target="tikihelp" class="tikihelp" style="float:right" title="{tr}Help icon:{/tr} 
+		{tr}Mouse over the icons to know more about the features and preferences that are new for you{/tr}.
+		<a href="http://doc.tiki.org/Wizards" target="tikihelp" class="tikihelp" style="float:right" title="{tr}Help icon:{/tr}
 			{tr}You will get more information about the features and preferences whenever this icon is available and you pass your mouse over it{/tr}. 
 			<br/><br/>{tr}Moreover, if you click on it, you'll be directed in a new window to the corresponding documentation page for further information on that feature or topic{/tr}.">
 			<img src="img/icons/help.png" alt="" width="16" height="16" class="icon" />
 		</a>
+        <div target="tikihelp" class="tikihelp" style="float:right" title="{tr}Information icon:{/tr}
+        {tr}You will get more information about the features and preferences whenever this icon is available and you pass your mouse over it{/tr}.
+        ">
+            <img src="img/icons/information.png" alt="" width="16" height="16" class="icon" />
+        </div>
 		{tr}Example: {/tr}
 		{/remarksbox}
 	</div>
