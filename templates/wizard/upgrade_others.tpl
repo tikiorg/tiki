@@ -44,7 +44,7 @@
         <div class="adminWizardIconright"><img src="img/icons/large/console.png" alt="{tr}Console{/tr}" title="{tr}Console{/tr}"/></div>
         <b>{tr}Console{/tr}</b>:
         <ul>
-            <li>{tr}Starting in Tiki11, <b>console.php</b> script exists to help you administer your Tiki instance via the command line{/tr}.
+            <li>{tr}Starting in Tiki11, <b>console.php</b> script exists to help you administer your Tiki or <em>MultiTiki</em> instance via the command line{/tr}.
                 <a href="http://doc.tiki.org/Console" target="tikihelp" class="tikihelp" title="{tr}Console (console.php script):{/tr}
                 {tr}All the other command line scripts from before Tiki11 (ex. php installer/shell.php) will continue to work in Tiki12, but may not work anymore since Tiki13 so you will need to switch to use console.php script instead{/tr}.
                 <br/><br/>
@@ -53,14 +53,18 @@
                 {tr}Or{/tr}
                 <pre>php console.php d[{tr}colon{/tr}]u</pre>
                 <br/><br/>
+                {tr}In case of Tikis with domains <code>site1.example.com</code> & <code>site2.example.com</code>, in a <em>MultiTiki</em> setup, append an argument like <code> --site=sitename.example.com</code>{/tr}
+                <pre>php console.php d[{tr}colon{/tr}]u --site=site1.example.com</pre>
+                <pre>php console.php d[{tr}colon{/tr}]u --site=site2.example.com</pre>
+                <br/><br/>
                 {tr}Click to read more{/tr}
-	    	">
+    	    	">
                     <img src="img/icons/help.png" alt="" width="16" height="16" class="icon" />
                 </a>
             </li>
         </ul>
         <div class="adminWizardIconright"><img src="img/icons/large/mail_queue48x48.png" alt="{tr}Mail Queue{/tr}" title="{tr}Mail Queue{/tr}"/></div>
-        <b>{tr}Mail Queue{/tr}</b>:
+        <b>{tr}Mail Queue{/tr}</b> & <b>{tr}Daily Reports for User Watches{/tr}</b>:
         <ul>
             <li>{tr}Starting in Tiki12.2, console.php also handles the feature <strong>Mail Queue</strong>, which has been also fixed, and it is a very useful feature in Tikis with heavy load of notification email sending{/tr}.
                 <a href="http://doc.tiki.org/Mail+Queue" target="tikihelp" class="tikihelp" title="{tr}Mail Queue:{/tr}
@@ -73,6 +77,21 @@
                 <pre>php console.php mail-queue[{tr}colon{/tr}]send</pre>
                 {tr}Or{/tr}
                 <pre>php console.php m[{tr}colon{/tr}]s</pre>
+                <br/><br/>
+                {tr}Click to read more{/tr}
+	    	">
+                    <img src="img/icons/help.png" alt="" width="16" height="16" class="icon" />
+                </a>
+            <li>{tr}And since Tiki12.3, console.php also handles <strong>Daily Reports for User Watches</strong>, which finally allows this feature to be used in '<em>MultiTiki</em>' setups{/tr}.
+                <a href="http://doc.tiki.org/Daily+Reports" target="tikihelp" class="tikihelp" title="{tr}Daily Reports for User Watches:{/tr}
+                {tr}This feature which allows users to choose to received notification emails grouped in a periodic digest with the frequency they choose (daily, weekly, ...){/tr}.
+                <br/><br/>
+                {tr}Example. Send the Daily Report{/tr}
+                <pre>php console.php daily-report[{tr}colon{/tr}]send --site==site1.example.com</pre>
+                <pre>php console.php daily-report[{tr}colon{/tr}]send --site==site2.example.com</pre>
+                {tr}Or{/tr}
+                <pre>php console.php d[{tr}colon{/tr}]s --site==site1.example.com</pre>
+                <pre>php console.php d[{tr}colon{/tr}]s --site==site2.example.com</pre>
                 <br/><br/>
                 {tr}Click to read more{/tr}
 	    	">
