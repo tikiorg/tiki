@@ -1,20 +1,24 @@
 {* $Id$ *}
 
-<div class="adminWizardIconleft"><img src="img/icons/large/wizard_admin48x48.png" alt="{tr}Admin Wizard{/tr}" title="{tr}Admin Wizard{/tr}" /></div><div class="adminWizardIconright"><img src="img/icons/large/users48x48.png" alt="{tr}Set up your User & Community features{/tr}"></div>
+<img class="pull-right" src="img/icons/large/users48x48.png" alt="{tr}Set up your User & Community features{/tr}">
 {tr}Configure general user & community features and settings related to sharing and social networks{/tr}.
-<div class="adminWizardContent">
-<fieldset>
-	<legend>{tr}User Features{/tr}</legend>
-		<table style="width:100%"><tr><td style="width:48%">
-			{preference name=feature_mytiki}
-			{preference name=feature_messages}
-		</td><td style="width:4%">&nbsp;
-		</td><td style="width:48%">
-			<div class="adminWizardIconright"><img src="img/icons/large/user.png" width="32" alt="{tr}Users{/tr}"></div>
-			{preference name=feature_userPreferences}
-			{preference name=feature_wizard_user}
-		</td></tr></table>	
-		<br/>
+<div class="media">
+    <img class="pull-left" src="img/icons/large/wizard_admin48x48.png" alt="{tr}Admin Wizard{/tr}" title="{tr}Admin Wizard{/tr}" />
+    <div class="media-body">
+        <fieldset>
+	        <legend>{tr}User Features{/tr}</legend>
+		    <div class="row">
+                <div class="col-lg-6">
+        			{preference name=feature_mytiki}
+	        		{preference name=feature_messages}
+                </div>
+                <div class="col-lg-6">
+        			<img class="pull-right" src="img/icons/large/user.png" width="32" alt="{tr}Users{/tr}">
+		    	    {preference name=feature_userPreferences}
+			        {preference name=feature_wizard_user}
+                </div>
+            </div>
+			<br>
 		<em>{tr}Add a <b>User and Registration tracker</b>{/tr} 
 		<a href="http://doc.tiki.org/User+Tracker" target="tikihelp" class="tikihelp" title="{tr}User and Registration tracker: You can use trackers to collect additional information for users during registration or even later once they are registered users.{/tr} 
 		{tr}Some uses of this type of tracker could be{/tr}
@@ -32,7 +36,8 @@
 </fieldset>
 <fieldset>
 	<legend>{tr}Community General Settings{/tr}</legend>
-		<table style="width:100%"><tr><td style="width:48%">
+    <div class="row">
+        <div class="col-lg-6">
 			{preference name=users_prefs_allowMsgs}
 			{preference name=feature_community_mouseover}
 			<div class="adminoptionboxchild" id="feature_community_mouseover_childcontainer">				
@@ -51,8 +56,8 @@
 				{preference name=contact_anon}
 				{preference name=contact_priority_onoff}
 			</div>
-		</td><td style="width:4%">&nbsp;
-		</td><td style="width:48%">
+        </div>
+        <div class="col-lg-6">
 			<div class="adminWizardIconright"><img src="img/icons/large/users.png" alt="{tr}Community{/tr}"></div>
 			{preference name=users_prefs_user_information}
 			{preference name=users_prefs_mailCharset}
@@ -62,31 +67,33 @@
 				{preference name=user_selector_realnames_messu}
 				{preference name=user_selector_realnames_tracker}
 			</div>
-		</td></tr></table>	
+		</div>
 		<br>
 		<em>{tr}See also{/tr} {tr}Community{/tr} <a href="tiki-admin.php?page=community&amp;cookietab=1" target="_blank">{tr}admin panel{/tr}</a> & <a href="https://doc.tiki.org/Community" target="_blank">{tr}in doc.tiki.org{/tr}</a></em>
 </fieldset>
 	<fieldset>
 		<legend>{tr}Sharing & Networking{/tr}</legend>
-		<table style="width:100%"><tr><td style="width:24%">
-			{preference name=feature_share}
-			<br>
-			<em>{tr}See also{/tr} {tr}Share{/tr} <a href="tiki-admin.php?page=share" target="_blank">{tr}admin panel{/tr}</a> & <a href="https://doc.tiki.org/Share" target="_blank">{tr}in doc.tiki.org{/tr}</a></em>.
-		</td><td style="width:2%">&nbsp;
-		</td><td style="width:43%">
-			{preference name=feature_friends}
-			<div class="adminoptionboxchild" id="feature_friends_childcontainer">
-			{preference name=social_network_type}
-			</div>
-			<br>
-			<em>{tr}See also{/tr} "{tr}Community{/tr} <a href="tiki-admin.php?page=community&cookietab=2" target="_blank">{tr}admin panel{/tr}</a> > {tr}Social Network{/tr} > {tr}Friendship and Followers{/tr}" & <a href="https://doc.tiki.org/Friendship+Network" target="_blank">{tr}in doc.tiki.org{/tr}</a></em>.
-		</td><td style="width:1%">&nbsp;
-		</td><td style="width:30%">
-			<div class="adminWizardIconright"><img src="img/icons/large/socialnetworks.png" alt="{tr}Social networks{/tr}"></div>
-			{preference name=feature_socialnetworks}
-			<br>
-			<em>{tr}See also{/tr} {tr}Social networks{/tr} <a href="tiki-admin.php?page=socialnetworks&amp;cookietab=1" target="_blank">{tr}admin panel{/tr}</a> & <a href="https://doc.tiki.org/Social+Networks" target="_blank">{tr}in doc.tiki.org{/tr}</a></em>
-		</td></tr></table>
+		<div class="row">
+            <div class="col-lg-3">
+			    {preference name=feature_share}
+			    <br>
+			    <em>{tr}See also{/tr} {tr}Share{/tr} <a href="tiki-admin.php?page=share" target="_blank">{tr}admin panel{/tr}</a> & <a href="https://doc.tiki.org/Share" target="_blank">{tr}in doc.tiki.org{/tr}</a></em>.
+		    </div>
+            <div class="col-lg-6">
+    			{preference name=feature_friends}
+	    		<div class="adminoptionboxchild" id="feature_friends_childcontainer">
+		        	{preference name=social_network_type}
+			    </div>
+			    <br>
+			    <em>{tr}See also{/tr} "{tr}Community{/tr} <a href="tiki-admin.php?page=community&cookietab=2" target="_blank">{tr}admin panel{/tr}</a> > {tr}Social Network{/tr} > {tr}Friendship and Followers{/tr}" & <a href="https://doc.tiki.org/Friendship+Network" target="_blank">{tr}in doc.tiki.org{/tr}</a></em>.
+            </div>
+            <div class="col-lg-3">
+    			<div class="adminWizardIconright"><img src="img/icons/large/socialnetworks.png" alt="{tr}Social networks{/tr}"></div>
+	    		{preference name=feature_socialnetworks}
+		    	<br>
+			    <em>{tr}See also{/tr} {tr}Social networks{/tr} <a href="tiki-admin.php?page=socialnetworks&amp;cookietab=1" target="_blank">{tr}admin panel{/tr}</a> & <a href="https://doc.tiki.org/Social+Networks" target="_blank">{tr}in doc.tiki.org{/tr}</a></em>
+            </div>
+        </div>
 	</fieldset>
-
+    </div>
 </div>
