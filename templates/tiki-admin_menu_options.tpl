@@ -2,7 +2,7 @@
 {title help="Menus" url="tiki-admin_menu_options.php?menuId=$menuId" admpage="general&amp;cookietab=3"}{tr}Admin Menu:{/tr} {$editable_menu_info.name}{/title}
 
 <div class="t_navbar btn-group form-group">
-	{button href="tiki-admin_menus.php" class="btn btn-default" _text="{tr}List menus{/tr}"}
+	{button href="tiki-admin_menus.php" class="btn btn-default" _text="<span class=\"glyphicon glyphicon-list\"></span> {tr}List menus{/tr}"}
 	<a class="btn btn-default" href="{service controller=menu action=manage menuId={$menuId} modal=true}" data-toggle="modal" data-target="#bootstrap-modal">
 		{glyph name="edit"} {tr}Edit This Menu{/tr}
 	</a>
