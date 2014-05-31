@@ -1,4 +1,4 @@
-/*  newtheme.css - the new theme style sheet for Tiki Wiki CMS Groupware. */
+/*  fivealive-lite.css - the FiveAlive-lite theme style sheet for Tiki Wiki CMS Groupware. */
 /*! normalize.css v3.0.0 | MIT License | git.io/normalize */
 html {
   font-family: sans-serif;
@@ -5734,13 +5734,13 @@ body.navbar-padding {
   /*no formatting on filter row when filter-false*/
   /* rows hidden by filtering (needed for child rows) */
 }
-.tablesorter .tablesorter-header {
+.tablesorter-header {
   background-image: url(data:image/gif;base64,R0lGODlhFQAJAIAAACMtMP///yH5BAEAAAEALAAAAAAVAAkAAAIXjI+AywnaYnhUMoqt3gZXPmVg94yJVQAAOw==);
   background-repeat: no-repeat;
   background-position: center right;
   cursor: pointer;
 }
-.tablesorter .tablesorter-header i {
+.tablesorter-header i {
   font-weight: 400;
   position: absolute;
   right: 2px;
@@ -5753,31 +5753,28 @@ body.navbar-padding {
   line-height: 14px;
   display: inline-block;
 }
-.tablesorter .tablesorter-header.sorter-false {
+.tablesorter-header.sorter-false {
   background-image: none;
   cursor: default;
-}
-.tablesorter .ts-test {
-  background-color: #ffffff;
 }
 .tablesorter .bootstrap-icon-unsorted {
   background-image: url(data:image/gif;base64,R0lGODlhFQAJAIAAACMtMP///yH5BAEAAAEALAAAAAAVAAkAAAIXjI+AywnaYnhUMoqt3gZXPmVg94yJVQAAOw==);
 }
-.tablesorter .tablesorter-headerAsc {
+.tablesorter-headerAsc {
   background-image: url(data:image/gif;base64,R0lGODlhFQAEAIAAACMtMP///yH5BAEAAAEALAAAAAAVAAQAAAINjI8Bya2wnINUMopZAQA7);
 }
-.tablesorter .tablesorter-headerDesc {
+.tablesorter-headerDesc {
   background-image: url(data:image/gif;base64,R0lGODlhFQAEAIAAACMtMP///yH5BAEAAAEALAAAAAAVAAQAAAINjB+gC+jP2ptn0WskLQA7);
 }
-.tablesorter .tablesorter-processing {
+.tablesorter-processing {
   background-image: url('data:image/gif;base64,R0lGODlhFAAUAKEAAO7u7lpaWgAAAAAAACH/C05FVFNDQVBFMi4wAwEAAAAh+QQBCgACACwAAAAAFAAUAAACQZRvoIDtu1wLQUAlqKTVxqwhXIiBnDg6Y4eyx4lKW5XK7wrLeK3vbq8J2W4T4e1nMhpWrZCTt3xKZ8kgsggdJmUFACH5BAEKAAIALAcAAAALAAcAAAIUVB6ii7jajgCAuUmtovxtXnmdUAAAIfkEAQoAAgAsDQACAAcACwAAAhRUIpmHy/3gUVQAQO9NetuugCFWAAAh+QQBCgACACwNAAcABwALAAACE5QVcZjKbVo6ck2AF95m5/6BSwEAIfkEAQoAAgAsBwANAAsABwAAAhOUH3kr6QaAcSrGWe1VQl+mMUIBACH5BAEKAAIALAIADQALAAcAAAIUlICmh7ncTAgqijkruDiv7n2YUAAAIfkEAQoAAgAsAAAHAAcACwAAAhQUIGmHyedehIoqFXLKfPOAaZdWAAAh+QQFCgACACwAAAIABwALAAACFJQFcJiXb15zLYRl7cla8OtlGGgUADs=');
   background-position: center center;
   background-repeat: no-repeat;
   position: absolute;
   z-index: 1000;
 }
-.tablesorter .tablesorter-filter-row input,
-.tablesorter .tablesorter-filter-row select {
+.tablesorter-filter-row input,
+.tablesorter-filter-row select {
   width: 98%;
   height: auto;
   margin: 0;
@@ -5789,7 +5786,7 @@ body.navbar-padding {
   -o-transition: line-height 0.1s ease;
   transition: line-height 0.1s ease;
 }
-.tablesorter .tablesorter-filter-row td {
+.tablesorter-filter-row td {
   line-height: normal;
   text-align: center;
   /* center the input */
@@ -5798,18 +5795,18 @@ body.navbar-padding {
   -o-transition: line-height 0.1s ease;
   transition: line-height 0.1s ease;
 }
-.tablesorter .tablesorter-filter-row td label {
+.tablesorter-filter-row td label {
   float: left;
   clear: both;
   font-size: 70%;
 }
-.tablesorter .tablesorter-filter-row.hideme td {
+.tablesorter-filter-row.hideme td {
   padding: 2px;
   margin: 0;
   line-height: 0;
   cursor: pointer;
 }
-.tablesorter .tablesorter-filter-row.hideme .tablesorter-filter {
+.tablesorter-filter-row.hideme .tablesorter-filter {
   height: 1px;
   min-height: 0;
   border: 0;
@@ -5825,7 +5822,7 @@ body.navbar-padding {
 .tablesorter .filtered {
   display: none;
 }
-.tablesorter input.tablesorter-filter {
+input.tablesorter-filter {
   border: none;
   background-color: #f7f7f7;
 }
@@ -5862,16 +5859,20 @@ span.pagesizelabel {
 header.page-header .navbar-collapse {
   border-top: 6px solid #1390ff;
 }
+.btn {
+  border-radius: 8px;
+}
 .panel-heading,
 .postbody-title {
   border: 1px solid transparent;
   font-weight: 500;
-  border-radius: 3px;
   background: url('fivealive/options/blueberry/siteheader.jpg') no-repeat -260px -200px;
+}
+h3.panel-title {
+  color: #fff;
 }
 .navbar-default .navbar-nav > li > a {
   background: url('fivealive/options/blueberry/siteheader.jpg') -260px -200px no-repeat transparent;
-  border-radius: 4px;
   margin-right: 1em;
 }
 .clearfix:before,
