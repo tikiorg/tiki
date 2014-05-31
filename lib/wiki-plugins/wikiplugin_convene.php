@@ -231,7 +231,9 @@ function wikiplugin_convene($data, $params)
 
 	$result = <<<FORM
 			<form id='pluginConvene$i'>
-				<table cellpadding="2" cellspacing="2" border="0" style="width: 100%;">$result</table>
+			    <div class="table-responsive">
+    				<table class="table table-bordered">$result</table>
+    		    </div>
 			</form>
 FORM;
 
