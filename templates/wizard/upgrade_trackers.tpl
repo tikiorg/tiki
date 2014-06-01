@@ -1,10 +1,12 @@
 {* $Id$ *}
 
-<div class="adminWizardIconleft"><img src="img/icons/large/wizard_upgrade48x48.png" alt="{tr}Upgrade Wizard{/tr}" title="{tr}Upgrade Wizard{/tr}"/></div><div class="adminWizardIconright"><img src="img/icons/large/gnome-settings-font48x48.png" alt="{tr}Trackers{/tr}" title="{tr}Trackers{/tr}"/></div>
-{tr}Here you can set up a few options and features related to Trackers which were added across several versions of Tiki{/tr}.
-{tr}You might have not specially noticed when they appeared but you should know about these enhancements since you might be interested in using some of them in your site{/tr}.
-<br/><br/>
-<div class="adminWizardContent">
+<img class="pull-right" src="img/icons/large/gnome-settings-font48x48.png" alt="{tr}Trackers{/tr}" title="{tr}Trackers{/tr}"/>
+<div class="media">
+    <img class="pull-left" src="img/icons/large/wizard_upgrade48x48.png" alt="{tr}Upgrade Wizard{/tr}" title="{tr}Upgrade Wizard{/tr}"/>
+    <div class="media-body">
+    {tr}Here you can set up a few options and features related to Trackers which were added across several versions of Tiki{/tr}.
+    {tr}You might have not specially noticed when they appeared but you should know about these enhancements since you might be interested in using some of them in your site{/tr}.
+    <br/><br/>
     <fieldset>
         <legend>{tr}Tracker settings{/tr}</legend>
         <div class="admin clearfix featurelist">
@@ -56,7 +58,7 @@
             <img src="img/icons/help.png" alt="" width="16" height="16" class="icon" />
             </a> :
             <a href="tiki-admin.php?profile=User_Trackers&show_details_for=User_Trackers&repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2" target="_blank">{tr}apply profile now{/tr}</a> ({tr}new window{/tr})</em>
-            </li>
+        </li>
         <li>{tr}Display last comment author and date{/tr}
             <a href="http://doc.tiki.org/Trackers" target="tikihelp" class="tikihelp" title="{tr}Display last comment author and date:{/tr}
                 {tr}In lists of tracker items, through the interface of the tracker feature as well as through list in tracker related plugins{/tr}.
@@ -65,7 +67,7 @@
 		    ">
                 <img src="img/icons/help.png" alt="" width="16" height="16" class="icon" />
             </a>
-            </li>
+        </li>
         <li>{tr}User can see his own items{/tr}
             <a href="http://doc.tiki.org/Trackers" target="tikihelp" class="tikihelp" title="{tr}User can see his own items:{/tr}
                 {tr}The tracker needs a user field with the auto-assign activated{/tr}. {tr}No extra permission is needed at the tracker permissions level to allow a user to see just his own items through Plugin TrackerList with the param view=user{/tr}.
@@ -74,7 +76,8 @@
 	    	">
                 <img src="img/icons/help.png" alt="" width="16" height="16" class="icon" />
             </a>
-            </li>
-        </ul>
+        </li>
+    </ul>
     </fieldset>
+</div>
 </div>
