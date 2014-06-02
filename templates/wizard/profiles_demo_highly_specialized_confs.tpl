@@ -35,7 +35,7 @@
                     <img src="img/icons/help.png" alt="" width="16" height="16" class="icon" />
                     </a>
                     <div style="display:block; margin-left:auto; margin-right:auto; width:202px;">
-                        <a href="http://tiki.org/display545" class="internal" rel="box" title="{tr}Click to expand{/tr}">
+                        <a href="http://tiki.org/display545" class="thumbnail internal" rel="box" title="{tr}Click to expand{/tr}">
                         <img src="img/profiles/profile_thumb_cartograf.png"  width="200" style="display:block; margin-left:auto; margin-right:auto;border:1px solid darkgray;" alt="Click to expand" class="regImage pluginImg" title="{tr}Click to expand{/tr}" />
                         </a>
                         <div class="mini" style="width:100px;">
@@ -67,7 +67,7 @@
                     <img src="img/icons/help.png" alt="" width="16" height="16" class="icon" />
                     </a>
                     <div style="display:block; margin-left:auto; margin-right:auto; width:202px;">
-                        <a href="http://r.tiki.org/tiki-download_file.php?fileId=23&display&max=800" class="internal" rel="box" title="{tr}Click to expand{/tr}">
+                        <a href="http://r.tiki.org/tiki-download_file.php?fileId=23&display&max=800" class="thumbnail internal" rel="box" title="{tr}Click to expand{/tr}">
                         <img src="img/profiles/profile_thumb_r_demo.png"  width="200" style="display:block; margin-left:auto; margin-right:auto;border:1px solid darkgray;" alt="Click to expand" class="regImage pluginImg" title="{tr}Click to expand{/tr}" />
                         </a>
                         <div class="mini" style="width:100px;">
@@ -100,7 +100,7 @@
                     <img src="img/icons/help.png" alt="" width="16" height="16" class="icon" />
                     </a>
                     <div style="display:block; margin-left:auto; margin-right:auto; width:202px;">
-                        <a href="http://tiki.org/display546" class="internal" rel="box" title="{tr}Click to expand{/tr}">
+                        <a href="http://tiki.org/display546" class="thumbnail internal" rel="box" title="{tr}Click to expand{/tr}">
                         <img src="img/profiles/profile_thumb_r_heatmaps.png"  width="200" style="display:block; margin-left:auto; margin-right:auto;border:1px solid darkgray;" alt="Click to expand" class="regImage pluginImg" title="{tr}Click to expand{/tr}" />
                         </a>
                         <div class="mini" style="width:100px;">

@@ -33,7 +33,7 @@
                     <img src="img/icons/help.png" alt="" width="16" height="16" class="icon" />
                     </a>
                     <div style="display:block; margin-left:auto; margin-right:auto; width:202px;">
-                        <a href="http://tiki.org/display544" class="internal" rel="box" title="{tr}Click to expand{/tr}">
+                        <a href="http://tiki.org/display544" class="thumbnail internal" rel="box" title="{tr}Click to expand{/tr}">
                         <img src="img/profiles/profile_thumb_shopping_cart.png"  width="150" style="display:block; margin-left:auto; margin-right:auto;border:1px solid darkgray;" alt="Click to expand" class="regImage pluginImg" title="{tr}Click to expand{/tr}" />
                         </a>
                         <div class="mini" style="width:100px;">
@@ -60,7 +60,7 @@
                     <img src="img/icons/help.png" alt="" width="16" height="16" class="icon" />
                     </a>
                     <div style="display:block; margin-left:auto; margin-right:auto; width:202px;">
-                        <a href="http://tiki.org/display512" class="internal" rel="box" title="{tr}Click to expand{/tr}">
+                        <a href="http://tiki.org/display512" class="thumbnail internal" rel="box" title="{tr}Click to expand{/tr}">
                             <img src="img/profiles/profile_thumb_easy_geoblog.png"  width="200" style="display:block; margin-left:auto; margin-right:auto;border:1px solid darkgray;" alt="Click to expand" class="regImage pluginImg" title="{tr}Click to expand{/tr}" />
                         </a>
                         <div class="mini" style="width:100px;">
