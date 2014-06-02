@@ -4,44 +4,42 @@
 <div class="media">
     <img class="pull-left" src="img/icons/large/wizard_upgrade48x48.png" alt="{tr}Upgrade Wizard{/tr}" title="{tr}Upgrade Wizard{/tr}"/>
     <div class="media-body">
-    {tr}Here you can set up a few options and features related to Trackers which were added across several versions of Tiki{/tr}.
-    {tr}You might have not specially noticed when they appeared but you should know about these enhancements since you might be interested in using some of them in your site{/tr}.
-    <br/><br/>
-    <fieldset>
-        <legend>{tr}Tracker settings{/tr}</legend>
-        <div class="admin clearfix featurelist">
-            {preference name=tracker_clone_item}
-            {preference name=tracker_change_field_type}
-            {preference name=tracker_show_comments_below}
-            {preference name=tracker_refresh_itemlink_detail}
-            {preference name=feature_reports}
-            {preference name=ajax_inline_edit}
-            <div class="adminoptionboxchild" id="ajax_inline_edit_childcontainer">
-                {preference name=ajax_inline_edit_trackerlist}
+        <p>{tr}Here you can set up a few options and features related to Trackers which were added across several versions of Tiki{/tr}.
+        {tr}You might have not specially noticed when they appeared but you should know about these enhancements since you might be interested in using some of them in your site{/tr}.
+        </p>
+        <fieldset>
+            <legend>{tr}Tracker settings{/tr}</legend>
+            <div class="admin clearfix featurelist">
+                {preference name=tracker_clone_item}
+                {preference name=tracker_change_field_type}
+                {preference name=tracker_show_comments_below}
+                {preference name=tracker_refresh_itemlink_detail}
+                {preference name=feature_reports}
+                {preference name=ajax_inline_edit}
+                <div class="adminoptionboxchild" id="ajax_inline_edit_childcontainer">
+                    {preference name=ajax_inline_edit_trackerlist}
+                </div>
             </div>
-        </div>
-    </fieldset>
-
-    <fieldset>
-        <legend>{tr}Tracker Field Types{/tr}</legend>
-        <div class="admin clearfix featurelist">
-            {preference name=trackerfield_rating}
-            <ul>
-                <li>
-                    {tr}Former ways to manage ratings in trackers are <b>deprecated</b>{/tr}
-                    <a href="http://doc.tiki.org/Ratings" target="tikihelp" class="tikihelp" title="{tr}Deprecated Rating Systems in Trackers:{/tr}
-                    <ul>
-                        <li>{tr}Tracker field types{/tr} > {tr}Stars (deprecated){/tr}</li>
-                        <li>{tr}Tracker field types{/tr} > {tr}Stars (system - deprecated){/tr}</li>
-                        <li>{tr}edit Tracker{/tr} > {tr}Features{/tr} > {tr}Allow ratings (deprecated, use rating field){/tr}</li>
-                    </ul>">
-                    <img src="img/icons/help.png" alt="" width="16" height="16" class="icon" />
-                    </a>
-                </li>
-            </ul>
-            {preference name=trackerfield_kaltura}
-        </div>
-    </fieldset>
+        </fieldset>
+        <fieldset>
+            <legend>{tr}Tracker Field Types{/tr}</legend>
+            <div class="admin clearfix featurelist">
+                {preference name=trackerfield_rating}
+                <ul>
+                    <li>{tr}Former ways to manage ratings in trackers are <b>deprecated</b>{/tr}
+                        <a href="http://doc.tiki.org/Ratings" target="tikihelp" class="tikihelp" title="{tr}Deprecated Rating Systems in Trackers:{/tr}
+                        <ul>
+                            <li>{tr}Tracker field types{/tr} > {tr}Stars (deprecated){/tr}</li>
+                            <li>{tr}Tracker field types{/tr} > {tr}Stars (system - deprecated){/tr}</li>
+                            <li>{tr}edit Tracker{/tr} > {tr}Features{/tr} > {tr}Allow ratings (deprecated, use rating field){/tr}</li>
+                        </ul>">
+                        <img src="img/icons/help.png" alt="" width="16" height="16" class="icon" />
+                        </a>
+                    </li>
+                </ul>
+                {preference name=trackerfield_kaltura}
+            </div>
+        </fieldset>
 
     <fieldset>
         <legend>{tr}Other options to be set elsewhere{/tr}</legend>

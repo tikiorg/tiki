@@ -5,19 +5,20 @@
     <div class="media">
         {tr}Check out these more advanced configurations that demonstrate some other Tiki Features that you might be interested in for your site{/tr}. </br></br>
         {remarksbox type="warning" title="{tr}Warning{/tr}"}
-            <div target="tikihelp" class="tikihelp" style="float:right" title="{tr}Demo Profiles:{/tr}
+            <a target="tikihelp" class="tikihelp" style="float:right" title="{tr}Demo Profiles:{/tr}
 		        {tr}They are initially intended for testing environments, so that, after you have played with the feature, you don't have to deal with removing the created objects, nor with restoring the potentially changed settings in your site{/tr}.
 		        <br/><br/>
 		        {tr}Once you know what they do, you can also apply them in your production site, in order to have working templates of the underlying features, that you can further adapt to your site later on{/tr}.">
                 <img src="img/icons/help.png" alt="" width="16" height="16" class="icon" />
-            </div>
+            </a>
             {tr}They are not to be initially applied in production environments since they cannot be easily reverted and changes and new objects in your site are created for real{/tr}
         {/remarksbox}
         <fieldset>
 	        <legend>{tr}Profiles:{/tr}</legend>
 	        <div class="row">
                 <div class="col-md-6">
-                    <b>{tr}Shopping Cart{/tr}</b> (<a href="tiki-admin.php?profile=Shopping_Cart&show_details_for=Shopping_Cart&categories%5B%5D={$tikiMajorVersion}.x&repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2" target="_blank">{tr}apply profile now{/tr}</a>)
+                    <h4>{tr}Shopping Cart{/tr}</h4>
+                    (<a href="tiki-admin.php?profile=Shopping_Cart&show_details_for=Shopping_Cart&categories%5B%5D={$tikiMajorVersion}.x&repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2" target="_blank">{tr}apply profile now{/tr}</a>)
                     <br>
                     {tr}This profile provides a Shopping Cart and the corresponding basic payment system.{/tr}
                     {tr}It currently uses the PayPal shopping cart rather than the built in Tiki{/tr}.
@@ -32,18 +33,20 @@
                     {tr}Click to read more{/tr}">
                     <img src="img/icons/help.png" alt="" width="16" height="16" class="icon" />
                     </a>
-                    <div style="display:block; margin-left:auto; margin-right:auto; width:202px;">
-                        <a href="http://tiki.org/display544" class="thumbnail internal" rel="box" title="{tr}Click to expand{/tr}">
-                        <img src="img/profiles/profile_thumb_shopping_cart.png"  width="150" style="display:block; margin-left:auto; margin-right:auto;border:1px solid darkgray;" alt="Click to expand" class="regImage pluginImg" title="{tr}Click to expand{/tr}" />
-                        </a>
-                        <div class="mini" style="width:100px;">
-                            <div class="thumbcaption text-center">{tr}Click to expand{/tr}</div>
+                    <div class="row">
+                        <div class="col-md-8 col-md-offset-2">
+                            <a href="http://tiki.org/display544" class="thumbnail internal" rel="box" title="{tr}Click to expand{/tr}">
+                            <img src="img/profiles/profile_thumb_shopping_cart.png" alt="Click to expand" class="regImage pluginImg" title="{tr}Click to expand{/tr}" />
+                            </a>
+                            <div class="small text-center">
+                                {tr}Click to expand{/tr}
+                            </div>
                         </div>
                     </div>
-                    <br/>
                 </div>
                 <div class="col-md-6">
-                    <b>{tr}Easy GeoBlog{/tr}</b> (<a href="tiki-admin.php?profile=Easy+GeoBlog&show_details_for=Easy+GeoBlog&categories%5B%5D={$tikiMajorVersion}.x&repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2" target="_blank">{tr}apply profile now{/tr}</a>)<br/>
+                    <h4>{tr}Easy GeoBlog{/tr}</h4>
+                    (<a href="tiki-admin.php?profile=Easy+GeoBlog&show_details_for=Easy+GeoBlog&categories%5B%5D={$tikiMajorVersion}.x&repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2" target="_blank">{tr}apply profile now{/tr}</a>)
                     <br>
                     {tr}This profile demonstrates the geolocation of Blog posts, in conjunction with other associated features{/tr}
                     <br/><a href="https://doc.tiki.org/Geolocation"  target="tikihelp" class="tikihelp" title="{tr}Easy GeoBlog{/tr}:
@@ -59,15 +62,16 @@
         	        {tr}Click to read more{/tr}">
                     <img src="img/icons/help.png" alt="" width="16" height="16" class="icon" />
                     </a>
-                    <div style="display:block; margin-left:auto; margin-right:auto; width:202px;">
-                        <a href="http://tiki.org/display512" class="thumbnail internal" rel="box" title="{tr}Click to expand{/tr}">
-                            <img src="img/profiles/profile_thumb_easy_geoblog.png"  width="200" style="display:block; margin-left:auto; margin-right:auto;border:1px solid darkgray;" alt="Click to expand" class="regImage pluginImg" title="{tr}Click to expand{/tr}" />
-                        </a>
-                        <div class="mini" style="width:100px;">
-                            <div class="thumbcaption text-center">{tr}Click to expand{/tr}</div>
+                    <div class="row">
+                        <div class="col-md-8 col-md-offset-2">
+                            <a href="http://tiki.org/display512" class="thumbnail internal" rel="box" title="{tr}Click to expand{/tr}">
+                                <img src="img/profiles/profile_thumb_easy_geoblog.png" alt="Click to expand" class="regImage pluginImg" title="{tr}Click to expand{/tr}" />
+                            </a>
+                            <div class="small text-center">
+                                {tr}Click to expand{/tr}
+                            </div>
                         </div>
                     </div>
-                    <br/>
                 <div class="row">
                     <div class="col-md-6">
 	                    <!--
@@ -99,6 +103,5 @@
                     </div>
                 </div>
             </fieldset>
-            <br>
         </div>
     </div>

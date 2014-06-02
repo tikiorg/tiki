@@ -14,11 +14,11 @@
 			<br/><br/>{tr}Moreover, if you click on it, you'll be directed in a new window to the corresponding documentation page for further information on that feature or topic{/tr}.">
 			<img src="img/icons/help.png" alt="" width="16" height="16" class="icon" />
 		</a>
-        <div target="tikihelp" class="tikihelp" style="float:right" title="{tr}Information icon:{/tr}
+        <a target="tikihelp" class="tikihelp" style="float:right" title="{tr}Information icon:{/tr}
         {tr}You will get more information about the features and preferences whenever this icon is available and you pass your mouse over it{/tr}.
         ">
             <img src="img/icons/information.png" alt="" width="16" height="16" class="icon" />
-        </div>
+        </a>
 		{tr}Example: {/tr}
 		{/remarksbox}
 

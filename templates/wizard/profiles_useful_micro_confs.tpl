@@ -8,7 +8,8 @@
 	        <legend>{tr}Profiles:{/tr}</legend>
 	        <div class="row">
                 <div class="col-md-6">
-                    <b>{tr}Menu on Wiki page{/tr}</b> (<a href="tiki-admin.php?profile=Collaborative_Community_Wiki_menupage&show_details_for=Collaborative_Community_Wiki_menupage&categories%5B%5D={$tikiMajorVersion}.x&repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2" target="_blank">{tr}apply profile now{/tr}</a>)
+                    <h4>{tr}Menu on Wiki page{/tr}</h4>
+                    (<a href="tiki-admin.php?profile=Collaborative_Community_Wiki_menupage&show_details_for=Collaborative_Community_Wiki_menupage&categories%5B%5D={$tikiMajorVersion}.x&repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2" target="_blank">{tr}apply profile now{/tr}</a>)
                     <br/>
                     {tr}This profile sets up a side module with a menu based on a wiki page in the right hand-side column.{/tr}
                     <br/><a href="https://doc.tiki.org/Module+menupage" target="tikihelp" class="tikihelp" title="{tr}Menu on Wiki page{/tr}:
@@ -21,18 +22,20 @@
         	        {tr}Click to read more{/tr}">
                     <img src="img/icons/help.png" alt="" width="16" height="16" class="icon" />
                     </a>
-                    <div style="display:block; margin-left:auto; margin-right:auto; width:202px;">
-                        <a href="http://tiki.org/display538" class="thumbnail internal" rel="box" title="{tr}Click to expand{/tr}">
-                            <img src="img/profiles/profile_thumb_menu_on_wiki_page.png"  width="150" style="display:block; margin-left:auto; margin-right:auto;border:1px solid darkgray;" alt="Click to expand" class="regImage pluginImg" title="{tr}Click to expand{/tr}" />
-                        </a>
-                        <div class="mini" style="width:100px;">
-                            <div class="thumbcaption text-center">{tr}Click to expand{/tr}</div>
+                    <div class="row">
+                        <div class="col-md-8 col-md-offset-2">
+                            <a href="http://tiki.org/display538" class="thumbnail internal" rel="box" title="{tr}Click to expand{/tr}">
+                                <img src="img/profiles/profile_thumb_menu_on_wiki_page.png" class="image-responsive" alt="Click to expand" class="regImage pluginImg" title="{tr}Click to expand{/tr}" />
+                            </a>
+                            <div class="mini text-center">
+                                <div class="thumbcaption text-center">{tr}Click to expand{/tr}</div>
+                            </div>
                         </div>
                     </div>
-                    <br/><br/>
                 </div>
                 <div class="col-md-6">
-                    <b>{tr}Random header images{/tr}</b>  (<a href="tiki-admin.php?profile=Random_header_images&show_details_for=Random_header_images&categories%5B%5D={$tikiMajorVersion}.x&repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2" target="_blank">{tr}apply profile now{/tr}</a>)
+                    <h4>{tr}Random header images{/tr}</h4>
+                    (<a href="tiki-admin.php?profile=Random_header_images&show_details_for=Random_header_images&categories%5B%5D={$tikiMajorVersion}.x&repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2" target="_blank">{tr}apply profile now{/tr}</a>)
                     <br/>
                     {tr}This profile adds a module in the top zone that displays a random image from a File Gallery{/tr}.
                     <br/><a href="https://doc.tiki.org/PluginImg"  target="tikihelp" class="tikihelp" title="{tr}Random header images{/tr}:
@@ -46,20 +49,22 @@
         	        {tr}Click to read more{/tr}">
                     <img src="img/icons/help.png" alt="" width="16" height="16" class="icon" />
                     </a>
-                    <div style="display:block; margin-left:auto; margin-right:auto; width:202px;">
-                        <a href="http://tiki.org/display539" class="thumbnail internal" rel="box" title="{tr}Click to expand{/tr}">
-                            <img src="img/profiles/profile_thumb_random_header_images.png"  width="200" style="display:block; margin-left:auto; margin-right:auto;border:1px solid darkgray;" alt="Click to expand" class="regImage pluginImg" title="{tr}Click to expand{/tr}" />
-                        </a>
-                        <div class="mini" style="width:100px;">
-                            <div class="thumbcaption text-center">{tr}Click to expand{/tr}</div>
+                    <div class="row">
+                        <div class="col-md-8 col-md-offset-2">
+                            <a href="http://tiki.org/display539" class="thumbnail internal" rel="box" title="{tr}Click to expand{/tr}">
+                                <img src="img/profiles/profile_thumb_random_header_images.png"  alt="Click to expand" class="regImage pluginImg" title="{tr}Click to expand{/tr}" />
+                            </a>
+                            <div class="mini text-center">
+                                <div class="thumbcaption text-center">{tr}Click to expand{/tr}</div>
+                            </div>
                         </div>
                     </div>
-                    <br/>
                 </div>
 	        </div>
 	        <div class="row">
                 <div class="col-md-6">
-                    <b>{tr}Multilingual Wiki{/tr}</b> (<a href="tiki-admin.php?profile=Multilingual_Wiki_12x&show_details_for=Multilingual_Wiki_12x&categories%5B%5D={$tikiMajorVersion}.x&repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2" target="_blank">{tr}apply profile now{/tr}</a>)
+                    <h4>{tr}Multilingual Wiki{/tr}</h4>
+                    (<a href="tiki-admin.php?profile=Multilingual_Wiki_12x&show_details_for=Multilingual_Wiki_12x&categories%5B%5D={$tikiMajorVersion}.x&repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2" target="_blank">{tr}apply profile now{/tr}</a>)
                     <br/>
                     {tr}This profile allows Tiki content translation, and sets up modules to change language and to display links to page translations with their percentage of completion.{/tr}
                     <br/><a href="https://doc.tiki.org/Multilingual+Wiki"  target="tikihelp" class="tikihelp" title="{tr}Multilingual Wiki{/tr}:
@@ -72,18 +77,21 @@
         	        {tr}Click to read more{/tr}">
                     <img src="img/icons/help.png" alt="" width="16" height="16" class="icon" />
                     </a>
-                    <div style="display:block; margin-left:auto; margin-right:auto; width:202px;">
-                        <a href="http://tiki.org/display516" class="thumbnail internal" rel="box" title="{tr}Click to expand{/tr}">
-                            <img src="img/profiles/profile_thumb_multilingual_wiki.png"  width="200" style="display:block; margin-left:auto; margin-right:auto;border:1px solid darkgray;" alt="Click to expand" class="regImage pluginImg" title="{tr}Click to expand{/tr}" />
-                        </a>
-                        <div class="mini" style="width:100px;">
-                            <div class="thumbcaption text-center">{tr}Click to expand{/tr}</div>
+                    <div class="row">
+                        <div class="col-md-8 col-md-offset-2">
+                            <a href="http://tiki.org/display516" class="thumbnail internal" rel="box" title="{tr}Click to expand{/tr}">
+                                <img src="img/profiles/profile_thumb_multilingual_wiki.png"  alt="Click to expand" class="regImage pluginImg" title="{tr}Click to expand{/tr}" />
+                            </a>
+                            <div class="mini text-center">
+                                <div class="thumbcaption text-center">{tr}Click to expand{/tr}</div>
+                            </div>
                         </div>
                     </div>
-                    <br/>
                 </div>
                 <div class="col-md-6">
-                    <b>{tr}Countries By Region{/tr}</b> (<a href="tiki-admin.php?profile=Countries_By_Region&show_details_for=Countries_By_Region&categories%5B%5D={$tikiMajorVersion}.x&repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2" target="_blank">{tr}apply profile now{/tr}</a>)
+                    <h4>{tr}Countries By Region{/tr}</h4>
+                    (<a href="tiki-admin.php?profile=Countries_By_Region&show_details_for=Countries_By_Region&categories%5B%5D={$tikiMajorVersion}.x&repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2" target="_blank">{tr}apply profile now{/tr}</a>)
+                    <br>
                     {tr}This profile will create a set of categories and subcategories in your site with the names of countries grouped by regions{/tr}.
                     <br/><a href="https://profiles.tiki.org/Countries+By+Region"  target="tikihelp" class="tikihelp" title="{tr}Countries By Region{/tr}:
                     {tr}The regions listed with their countries are{/tr}:
@@ -99,18 +107,18 @@
         	        {tr}Click to read more{/tr}">
                     <img src="img/icons/help.png" alt="" width="16" height="16" class="icon" />
                     </a>
-                    <div style="display:block; margin-left:auto; margin-right:auto; width:202px;">
-                        <a href="http://tiki.org/display540" class="thumbnail internal" rel="box" title="{tr}Click to expand{/tr}">
-                            <img src="img/profiles/profile_thumb_countries_by_region.png"  width="200" style="display:block; margin-left:auto; margin-right:auto;border:1px solid darkgray;" alt="Click to expand" class="regImage pluginImg" title="{tr}Click to expand{/tr}" />
-                        </a>
-                        <div class="mini" style="width:100px;">
-                            <div class="thumbcaption text-center">{tr}Click to expand{/tr}</div>
+                    <div class="row">
+                        <div class="col-md-8 col-md-offset-2">
+                            <a href="http://tiki.org/display540" class="thumbnail internal" rel="box" title="{tr}Click to expand{/tr}">
+                                <img src="img/profiles/profile_thumb_countries_by_region.png"  alt="Click to expand" class="regImage pluginImg" title="{tr}Click to expand{/tr}" />
+                            </a>
+                            <div class="mini text-center">
+                                <div class="thumbcaption text-center">{tr}Click to expand{/tr}</div>
+                            </div>
                         </div>
                     </div>
-                    <br/>
                 </div>
 	        </div>
 	    </fieldset>
-        <br>
     </div>
 </div>

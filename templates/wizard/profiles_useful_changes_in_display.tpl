@@ -8,7 +8,8 @@
 	        <legend>{tr}Profiles:{/tr}</legend>
 	        <div class="row">
                 <div class="col-md-6">
-                    <b>{tr}Mobile{/tr}</b> (<a href="tiki-admin.php?profile=Mobile&show_details_for=Mobile&categories%5B%5D={$tikiMajorVersion}.x&repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2" target="_blank">{tr}apply profile now{/tr}</a>)
+                    <h4>{tr}Mobile{/tr}</h4>
+                    (<a href="tiki-admin.php?profile=Mobile&show_details_for=Mobile&categories%5B%5D={$tikiMajorVersion}.x&repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2" target="_blank">{tr}apply profile now{/tr}</a>)
                     <br/>
                     {tr}This profile allows to switch the site layout, text and icons to users with smartphones and tablets{/tr}
                     <br/><a href="https://doc.tiki.org/Mobile" target="tikihelp" class="tikihelp" title="{tr}Mobile{/tr}:
@@ -21,17 +22,20 @@
            	        {tr}Click to read more{/tr}">
                     <img src="img/icons/help.png" alt="" width="16" height="16" class="icon" />
                     </a>
-                    <div style="display:block; margin-left:auto; margin-right:auto; width:202px;">
-                        <a href="http://doc.tiki.org/display942" class="thumbnail internal" rel="box" title="{tr}Click to expand{/tr}">
-                            <img src="img/profiles/profile_thumb_mobile.png"  width="150" style="display:block; margin-left:auto; margin-right:auto;border:1px solid darkgray;" alt="Click to expand" class="regImage pluginImg" title="{tr}Click to expand{/tr}" />
-                        </a>
-                        <div class="mini" style="width:100px;">
-                            <div class="thumbcaption text-center">{tr}Click to expand{/tr}</div>
+                    <div class="row">
+                        <div class="col-md-8 col-md-offset-2">
+                            <a href="http://doc.tiki.org/display942" class="thumbnail internal" rel="box" title="{tr}Click to expand{/tr}">
+                                <img src="img/profiles/profile_thumb_mobile.png" alt="Click to expand" class="regImage pluginImg" title="{tr}Click to expand{/tr}" />
+                            </a>
+                            <div class="mini text-center">
+                                <div class="thumbcaption text-center">{tr}Click to expand{/tr}</div>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <b>{tr}Slideshow demo{/tr}</b>  (<a href="tiki-admin.php?profile=Slideshow_demo&show_details_for=Slideshow_demo&categories%5B%5D={$tikiMajorVersion}.x&repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2" target="_blank">{tr}apply profile now{/tr}</a>)
+                    <h4>{tr}Slideshow demo{/tr}</h4>
+                    (<a href="tiki-admin.php?profile=Slideshow_demo&show_details_for=Slideshow_demo&categories%5B%5D={$tikiMajorVersion}.x&repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2" target="_blank">{tr}apply profile now{/tr}</a>)
                     <br/>
                     {tr}This profile sets up a slideshow from a simple wiki page, which you can use to learn the basics of how easily the JqueryS5 slideshow system in Tiki works.{/tr}
                     <br/><a href="https://doc.tiki.org/Slideshow"  target="tikihelp" class="tikihelp" title="{tr}Slideshow demo{/tr}:
@@ -45,15 +49,16 @@
         	        {tr}Click to read more{/tr}">
                     <img src="img/icons/help.png" alt="" width="16" height="16" class="icon" />
                     </a>
-                    <div style="display:block; margin-left:auto; margin-right:auto; width:202px;">
-                        <a href="http://tiki.org/display541" class="thumbnail internal" rel="box" title="{tr}Click to expand{/tr}">
-                            <img src="img/profiles/profile_thumb_slideshow_demo.png"  width="250" style="display:block; margin-left:auto; margin-right:auto;border:1px solid darkgray;" alt="Click to expand" class="regImage pluginImg" title="{tr}Click to expand{/tr}" />
-                        </a>
-                        <div class="mini" style="width:100px;">
-                            <div class="thumbcaption text-center">{tr}Click to expand{/tr}</div>
+                    <div class="row">
+                        <div class="col-md-8 col-md-offset-2">
+                            <a href="http://tiki.org/display541" class="thumbnail internal" rel="box" title="{tr}Click to expand{/tr}">
+                                <img src="img/profiles/profile_thumb_slideshow_demo.png" alt="Click to expand" class="regImage pluginImg" title="{tr}Click to expand{/tr}" />
+                            </a>
+                            <div class="mini text-center">
+                                <div class="thumbcaption text-center">{tr}Click to expand{/tr}</div>
+                            </div>
                         </div>
                     </div>
-                    <br/>
                 </div>
 	        </div>
         <div class="row">
@@ -65,6 +70,5 @@
             </div>
         </div>
     </fieldset>
-    <br>
     </div>
 </div>

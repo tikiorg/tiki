@@ -5,12 +5,12 @@
     <div class="media-body">
         {tr}Some profiles are highly customized for very specialized use cases, and they are listed in this special category.{/tr} </br></br>
         {remarksbox type="warning" title="{tr}Warning{/tr}"}
-            <div target="tikihelp" class="tikihelp" style="float:right" title="{tr}Demo Profiles:{/tr}
+            <a target="tikihelp" class="tikihelp" style="float:right" title="{tr}Demo Profiles:{/tr}
 		        {tr}They are initially intended for testing environments, so that, after you have played with the feature, you don't have to deal with removing the created objects, nor with restoring the potentially changed settings in your site{/tr}.
 		        <br/><br/>
 		        {tr}Once you know what they do, you can also apply them in your production site, in order to have working templates of the underlying features, that you can further adapt to your site later on{/tr}.">
                 <img src="img/icons/help.png" alt="" width="16" height="16" class="icon" />
-            </div>
+            </a>
             {tr}These configuration profiles <strong>require extra software</strong> to be installed in your server to function as expected{/tr}.
             {tr}See details in the instructions page shown in your site once each profile is applied{/tr}.
         {/remarksbox}
@@ -18,7 +18,8 @@
     	    <legend>{tr}Profiles:{/tr}</legend>
 	        <div class="row">
                 <div class="col-md-6">
-                    <b>{tr}CartoGraf{/tr}</b> (<a href="tiki-admin.php?profile=CartoGraf&show_details_for=CartoGraf&categories%5B%5D={$tikiMajorVersion}.x&repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2" target="_blank">{tr}apply profile now{/tr}</a>)
+                    <h4>{tr}CartoGraf{/tr}</h4>
+                    (<a href="tiki-admin.php?profile=CartoGraf&show_details_for=CartoGraf&categories%5B%5D={$tikiMajorVersion}.x&repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2" target="_blank">{tr}apply profile now{/tr}</a>)
                     <br>
                     {tr}CartoGraf is an interactive web-based mapping application to enhance learning in history and geography classes in high schools.{/tr}
                     {tr}CartoGraf is a great example of how to use profiles in a general purpose app (Tiki) to make a very specific application.{/tr}
@@ -34,18 +35,19 @@
                     {tr}Click to read more{/tr}">
                     <img src="img/icons/help.png" alt="" width="16" height="16" class="icon" />
                     </a>
-                    <div style="display:block; margin-left:auto; margin-right:auto; width:202px;">
-                        <a href="http://tiki.org/display545" class="thumbnail internal" rel="box" title="{tr}Click to expand{/tr}">
-                        <img src="img/profiles/profile_thumb_cartograf.png"  width="200" style="display:block; margin-left:auto; margin-right:auto;border:1px solid darkgray;" alt="Click to expand" class="regImage pluginImg" title="{tr}Click to expand{/tr}" />
-                        </a>
-                        <div class="mini" style="width:100px;">
-                            <div class="thumbcaption text-center">{tr}Click to expand{/tr}</div>
+                    <div class="row">
+                        <div class="col-md-8 col-md-offset-2">
+                            <a href="http://tiki.org/display545" class="thumbnail internal" rel="box" title="{tr}Click to expand{/tr}">
+                                <img src="img/profiles/profile_thumb_cartograf.png" alt="Click to expand" class="regImage pluginImg" title="{tr}Click to expand{/tr}" />
+                            </a>
+                            <div class="small text-center">
+                                {tr}Click to expand{/tr}
+                            </div>
                         </div>
                     </div>
-                    <br/>
                 </div>
                 <div class="col-md-6">
-                    <b>{tr}R demo{/tr}</b> (<a href="tiki-admin.php?profile=R_demo&show_details_for=R_demo&categories%5B%5D={$tikiMajorVersion}.x&repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2" target="_blank">{tr}apply profile now{/tr}</a>)
+                    <h4>{tr}R demo{/tr}</h4> (<a href="tiki-admin.php?profile=R_demo&show_details_for=R_demo&categories%5B%5D={$tikiMajorVersion}.x&repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2" target="_blank">{tr}apply profile now{/tr}</a>)
                     <br/>
                     {tr}This profile demonstrates common uses of R language for statistics to produce advanced and/or interactive graphs and reports in web 2.0 pages.{/tr}
                     <br/><a href="https://doc.tiki.org/PluginR"  target="tikihelp" class="tikihelp" title="{tr}R demo{/tr}:
@@ -66,20 +68,22 @@
                     {tr}Click to read more{/tr}">
                     <img src="img/icons/help.png" alt="" width="16" height="16" class="icon" />
                     </a>
-                    <div style="display:block; margin-left:auto; margin-right:auto; width:202px;">
-                        <a href="http://r.tiki.org/tiki-download_file.php?fileId=23&display&max=800" class="thumbnail internal" rel="box" title="{tr}Click to expand{/tr}">
-                        <img src="img/profiles/profile_thumb_r_demo.png"  width="200" style="display:block; margin-left:auto; margin-right:auto;border:1px solid darkgray;" alt="Click to expand" class="regImage pluginImg" title="{tr}Click to expand{/tr}" />
-                        </a>
-                        <div class="mini" style="width:100px;">
-                            <div class="thumbcaption text-center">{tr}Click to expand{/tr}</div>
+                    <div class="row">
+                        <div class="col-md-8 col-md-offset-2">
+                            <a href="http://r.tiki.org/tiki-download_file.php?fileId=23&display&max=800" class="thumbnail internal" rel="box" title="{tr}Click to expand{/tr}">
+                                <img src="img/profiles/profile_thumb_r_demo.png" alt="Click to expand" class="regImage pluginImg" title="{tr}Click to expand{/tr}" />
+                            </a>
+                            <div class="small text-center">
+                                {tr}Click to expand{/tr}
+                            </div>
                         </div>
                     </div>
-                    <br/>
                 </div>
 	        </div>
 	        <div class="row">
-                <div class="col-md-6">
-                    <b>{tr}R Heatmaps{/tr}</b> (<a href="tiki-admin.php?profile=R_Heatmaps&show_details_for=R_Heatmaps&categories%5B%5D={$tikiMajorVersion}.x&repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2" target="_blank">{tr}apply profile now{/tr}</a>)
+                <div class="col-md-6 col-md-offset-3">
+                    <h4>{tr}R Heatmaps{/tr}</h4>
+                    (<a href="tiki-admin.php?profile=R_Heatmaps&show_details_for=R_Heatmaps&categories%5B%5D={$tikiMajorVersion}.x&repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2" target="_blank">{tr}apply profile now{/tr}</a>)
                     <br/>
                     {tr}This profile adds a web interface for an R package called EasyHeatMap (link to package provided in the instructions page once the profile is applied).{/tr}
                     {tr}This R package allows the creation and edition of HeatMap graphics (as used in Bioinformatics).{/tr}
@@ -99,18 +103,18 @@
                     {tr}Click to read more{/tr}">
                     <img src="img/icons/help.png" alt="" width="16" height="16" class="icon" />
                     </a>
-                    <div style="display:block; margin-left:auto; margin-right:auto; width:202px;">
-                        <a href="http://tiki.org/display546" class="thumbnail internal" rel="box" title="{tr}Click to expand{/tr}">
-                        <img src="img/profiles/profile_thumb_r_heatmaps.png"  width="200" style="display:block; margin-left:auto; margin-right:auto;border:1px solid darkgray;" alt="Click to expand" class="regImage pluginImg" title="{tr}Click to expand{/tr}" />
-                        </a>
-                        <div class="mini" style="width:100px;">
-                            <div class="thumbcaption text-center">{tr}Click to expand{/tr}</div>
+                    <div class="row">
+                        <div class="col-md-8 col-md-offset-2">
+                            <a href="http://tiki.org/display546" class="thumbnail internal" rel="box" title="{tr}Click to expand{/tr}">
+                                <img src="img/profiles/profile_thumb_r_heatmaps.png" alt="Click to expand" class="regImage pluginImg" title="{tr}Click to expand{/tr}" />
+                            </a>
+                            <div class="small text-center">
+                                {tr}Click to expand{/tr}
+                            </div>
                         </div>
                     </div>
-                    <br/>
                 </div>
             </div>
         </fieldset>
-        <br>
     </div>
 </div>
