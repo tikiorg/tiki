@@ -1,5 +1,5 @@
 <div class="table-responsive">
-<table class="table normal">
+<table class="table table-bordered">
 	{if $params.caption}
 		<caption>{$params.caption|escape}</caption>
 	{/if}

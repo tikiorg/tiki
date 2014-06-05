@@ -50,7 +50,7 @@ if (empty($prefs['theme_active']) || $prefs['theme_active'] == 'default') {
 		$smarty->assign_by_ref('group_style', $group_style);
 	}
 	if (empty($prefs['style']) || $tikilib->get_style_path('', '', $prefs['style']) == '') {
-		$prefs['style'] = 'fivealive.css';
+		$prefs['style'] = 'fivealive-lite.css';
 	}
 
 	if (!empty($prefs['style_admin']) && ($section === 'admin' || empty($section))) {		// use admin theme if set

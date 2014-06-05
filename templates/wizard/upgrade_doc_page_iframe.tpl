@@ -1,11 +1,11 @@
 {* $Id$ *}
 
-<div class="adminWizardIconleft"><img src="img/icons/large/wizard_upgrade48x48.png" alt="{tr}Upgrade Wizard{/tr}" title="{tr}Upgrade Wizard{/tr}"/></div>
-<div class="adminWizardIconright"><img src="img/icons/large/doc_site_logo.png" width="70" alt="{tr}Documentation site{/tr}" title="{tr}Documentation site{/tr}"/></div>
-{tr}Related pages from the Official Documentation site <em>https://doc.tiki.org</em>{/tr}.
-<br/><br/><br/>
-<div class="adminWizardContent">
-
+<div class="media">
+    <img class="pull-left" src="img/icons/large/wizard_upgrade48x48.png" alt="{tr}Upgrade Wizard{/tr}" title="{tr}Upgrade Wizard{/tr}"/>
+    <div class="media-body">
+        <img class="pull-right" src="img/icons/large/doc_site_logo.png" width="70" alt="{tr}Documentation site{/tr}" title="{tr}Documentation site{/tr}"/>
+        {tr}Related pages from the Official Documentation site <em>https://doc.tiki.org</em>{/tr}.
+        <br/><br/><br/>
             <div>
                 <div class="simplebox"><div class='titlebar'><b>doc.t.o/Tiki12from9</b>: {tr}To see it in full size out of this frame{/tr}, <a class="wiki external" target="_blank" href="http://doc.tiki.org/tiki-index_p.php?page=Tiki12from9" rel="external nofollow">{tr}click here{/tr}</a>
                      <img src="img/icons/external_link.gif" alt="" width="15" height="14" class="icon" />
@@ -30,3 +30,4 @@
                     </p>
                 </div>
 </div>
+</div></div>

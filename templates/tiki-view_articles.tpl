@@ -173,7 +173,7 @@
 				{if ($listpages[ix].size > 0) or (($prefs.feature_article_comments eq 'y') and ($tiki_p_read_comments eq 'y'))}
 					{if ($tiki_p_read_article eq 'y' and $listpages[ix].heading_only ne 'y' and (!isset($fullbody) or $fullbody ne "y"))}
 						{if ($listpages[ix].size > 0 and !empty($listpages[ix].body))}
-							<div class="status"> {* named to be similar to forum/blog item *}
+							<div class="pull-left status"> {* named to be similar to forum/blog item *}
 								<a href="{$smarty.capture.href}" class="more">{tr}Read More{/tr}</a>
 							</div>
 							{if ($listpages[ix].show_size eq 'y')}
@@ -202,7 +202,7 @@
 					{/if}
 				{/if}
 				{if !isset($actions) or $actions eq "y"}
-					<div class="actions">
+					<div class="pull-right actions">
 						{if $tiki_p_edit_article eq 'y' or (!empty($user) and $listpages[ix].author eq $user and $listpages[ix].creator_edit eq 'y')}
 							<a class="btn btn-default" href="tiki-edit_article.php?articleId={$listpages[ix].articleId}">{icon _id='page_edit'}</a>
 						{/if}

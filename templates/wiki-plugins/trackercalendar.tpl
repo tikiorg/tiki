@@ -1,4 +1,4 @@
-<div id="{$trackercalendar.id|escape}"></div>
+<div id="{$trackercalendar.id|escape} class="table-responsive"></div>
 {jq}
 	var data = {{$trackercalendar|json_encode}};
 	$('#' + data.id).each(function () {

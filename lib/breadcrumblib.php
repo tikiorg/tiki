@@ -337,7 +337,7 @@ function _breadcrumb_getTitle($crumbs, $loc)
 			}
 		}
 
-		$ret = '<strong><a class="'.$class.'"' . $metadata . ' title="'.tra("refresh").'" href="' . $escapedHref . '">';
+		$ret = '<a class="'.$class.'"' . $metadata . ' title="'.tra("refresh").'" href="' . $escapedHref . '">';
 	} else {
 		$class = "crumblink";
 		$ret = '<a class="'.$class.'" title="';

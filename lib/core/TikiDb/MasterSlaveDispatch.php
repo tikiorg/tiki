@@ -19,6 +19,11 @@ class TikiDb_MasterSlaveDispatch extends TikiDb
 		$this->lastUsed = $slave;
 	}
 
+	function getReal()
+	{
+		return $this->slave;
+	}
+
 	function startTimer() // {{{
 	{
 		$this->getApplicable()->startTimer();

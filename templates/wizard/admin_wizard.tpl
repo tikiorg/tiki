@@ -1,13 +1,12 @@
 {* $Id$ *}
 
-
+<div class="col-lg-10 col-lg-offset-1">
 <fieldset>
 	<legend>{tr}Get Started{/tr}</legend>
 
-	<img src="img/icons/tick.png" alt="{tr}Ok{/tr}" />{tr _0=$tiki_version}Congratulations! You now have a working instance of Tiki %0{/tr}.
-    {tr}You may <a href="tiki-index.php">start using it right away</a>, or you may configure it to better meet your needs, using one of the configuration helpers below.{/tr}
-    <br>
-	<div style="width:90%">
+    <p><img src="img/icons/tick.png" alt="{tr}Ok{/tr}" /> {tr _0=$tiki_version}Congratulations! You now have a working instance of Tiki %0{/tr}.
+    {tr}You may <a href="tiki-index.php">start using it right away</a>, or you may configure it to better meet your needs, using one of the configuration helpers below.{/tr}</p>
+
 		{remarksbox type="tip" title="{tr}Tip{/tr}"}
 		{tr}Mouse over the icons to know more about the features and preferences that are new for you{/tr}.
 		<a href="http://doc.tiki.org/Wizards" target="tikihelp" class="tikihelp" style="float:right" title="{tr}Help icon:{/tr}
@@ -15,77 +14,70 @@
 			<br/><br/>{tr}Moreover, if you click on it, you'll be directed in a new window to the corresponding documentation page for further information on that feature or topic{/tr}.">
 			<img src="img/icons/help.png" alt="" width="16" height="16" class="icon" />
 		</a>
-        <div target="tikihelp" class="tikihelp" style="float:right" title="{tr}Information icon:{/tr}
+        <a target="tikihelp" class="tikihelp" style="float:right" title="{tr}Information icon:{/tr}
         {tr}You will get more information about the features and preferences whenever this icon is available and you pass your mouse over it{/tr}.
         ">
             <img src="img/icons/information.png" alt="" width="16" height="16" class="icon" />
-        </div>
+        </a>
 		{tr}Example: {/tr}
 		{/remarksbox}
-	</div>
-	<br>
-    <table>
-        <tr>
-            <td><div class="adminWizardIconleft"><img src="img/icons/large/wizard_profiles48x48.png" alt="{tr}Configuration Profiles Wizard{/tr}" title="{tr}Configuration Profiles Wizard{/tr}" /></div></td>
-            <td>
-                {tr}You may start by applying some of our configuration templates through the <b>Configuration Profiles Wizard</b>{/tr}. {tr}They are like the <b>Macros</b> from many computer languages{/tr}.
-				<a href="http://doc.tiki.org/Profiles+Wizard" target="tikihelp" class="tikihelp" title="{tr}Configuration Profiles:{/tr} 
-                {tr}Each of these provides a shrink-wrapped solution that meets most of the needs of a particular kind of community or site (Personal Blog space, Company Intranet, ...) or that extends basic setup with extra features configured for you{/tr}.
-                <br><br>{tr}If you are new to Tiki administration, we recommend that you start with this approach{/tr}.
-                <br><br>{tr}If the profile you selected does not quite meet your needs, you will still have the option of customizing it further with one of the approaches below{/tr}">
-					<img src="img/icons/help.png" alt="" width="16" height="16" class="icon" />
-				</a>
-                <br>
-                <input  type="submit" class="btn btn-primary" name="use-default-prefs" value="{tr}Start Configuration Profiles Wizard (Macros){/tr}" />
-                <br><br>
-            </td>
-        </tr>
 
-        <tr>
-            <td><div class="adminWizardIconleft"><img src="img/icons/large/wizard_admin48x48.png" alt="{tr}Configuration Walkthrough{/tr}" title="Configuration Walkthrough" /><br/><br/></div></td>
-            <td>
-                {tr}Alternatively, you may use the <b>Admin Wizard</b>{/tr}.
+    <div class="media">
+        <img class="pull-left" src="img/icons/large/wizard_profiles48x48.png" alt="{tr}Configuration Profiles Wizard{/tr}" title="{tr}Configuration Profiles Wizard{/tr}" />
+        <div class="media-body">
+            <p>{tr}You may start by applying some of our configuration templates through the <b>Configuration Profiles Wizard</b>{/tr}. {tr}They are like the <b>Macros</b> from many computer languages{/tr}.
+				<a href="http://doc.tiki.org/Profiles+Wizard" target="tikihelp" class="tikihelp" title="{tr}Configuration Profiles:{/tr} 
+                {tr}Each of these provides a shrink-wrapped solution that meets most of the needs of a particular kind of community or site (Personal Blog space, Company Intranet, ...) or that extends basic setup with extra features configured for you{/tr}.</p>
+
+             <p>{tr}If you are new to Tiki administration, we recommend that you start with this approach{/tr}.</p>
+
+             <p>{tr}If the profile you selected does not quite meet your needs, you will still have the option of customizing it further with one of the approaches below{/tr}">
+					<img src="img/icons/help.png" alt="" width="16" height="16" class="icon" />
+				</a></p>
+
+                <input  type="submit" class="btn btn-primary" name="use-default-prefs" value="{tr}Start Configuration Profiles Wizard (Macros){/tr}" />
+        </div>
+    </div>
+    <div class="media">
+        <img class="pull-left" src="img/icons/large/wizard_admin48x48.png" alt="{tr}Configuration Walkthrough{/tr}" title="Configuration Walkthrough" />
+        <div class="media-body">
+            <p>{tr}Alternatively, you may use the <b>Admin Wizard</b>{/tr}.
                 {tr}This will guide you through the most common preference settings in order to customize your site{/tr}.
-				<a href="http://doc.tiki.org/Admin+Wizard" target="tikihelp" class="tikihelp" title="{tr}Admin Wizard:{/tr} 
+				<a href="http://doc.tiki.org/Admin+Wizard" target="tikihelp" class="tikihelp" title="{tr}Admin Wizard:{/tr}
                 {tr}Use this wizard if none of the <b>Configuration Profiles</b> look like a good starting point, or if you need to customize your site further{/tr}">
 					<img src="img/icons/help.png" alt="" width="16" height="16" class="icon" />
-				</a>
-                <br>
-                <input type="submit" class="btn btn-primary" name="continue" value="{tr}Start Admin Wizard{/tr}" /><br><br>
-            </td>
-        </tr>
-
-        <tr>
-            <td><div class="adminWizardIconleft"><img src="img/icons/large/wizard_upgrade48x48.png" alt="{tr}Upgrade Wizard{/tr}" title="Upgrade Wizard" /><br/><br/></div></td>
-            <td>
-                {tr}Or you may use the <b>Upgrade Wizard</b>{/tr}.
+				</a></p>
+                <input type="submit" class="btn btn-primary" name="continue" value="{tr}Start Admin Wizard{/tr}" />
+        </div>
+    </div>
+    <div class="media">
+        <img class="pull-left" src="img/icons/large/wizard_upgrade48x48.png" alt="{tr}Upgrade Wizard{/tr}" title="Upgrade Wizard" />
+        <div class="media-body">
+            <p>{tr}Or you may use the <b>Upgrade Wizard</b>{/tr}.
                 {tr}This will guide you through the most common new settings and informations in order to upgrade your site{/tr}.
 				<a href="http://doc.tiki.org/Upgrade+Wizard" target="tikihelp" class="tikihelp" title="{tr}Upgrade Wizard:{/tr} 
-                {tr}Use this wizard if you are upgrading from previous versions of Tiki, specially if you come from the previous Long Term Support (LTS) version.{/tr}
-                <br/><br/>
-                {tr}Some of these settings are also available through the Admin Wizard, and all of them are available through Admin Panels{/tr}. 
+                {tr}Use this wizard if you are upgrading from previous versions of Tiki, specially if you come from the previous Long Term Support (LTS) version.{/tr}</p>
+
+            <p>{tr}Some of these settings are also available through the Admin Wizard, and all of them are available through Admin Panels{/tr}.
                 {tr}But this wizard will let you learn about them as well as enable/disable them easily according to your needs and interests for your site{/tr}.">
 					<img src="img/icons/help.png" alt="" width="16" height="16" class="icon" />
-				</a>
-                <br>
-                <input type="submit" class="btn btn-primary" name="use-upgrade-wizard" value="{tr}Start Upgrade Wizard{/tr}" /><br><br>
-            </td>
-        </tr>
+				</a></p>
 
-        <tr>
-            <td><div class="adminWizardIconleft"><img src="img/icons/large/admin_panel48x48.png" alt="{tr}Admin Panel{/tr}" /></div></td>
-            <td>
-                {tr}Use the <b>Admin Panel</b> to manually browse through the full list of preferences{/tr}.
-                <br>
-                {button href="tiki-admin.php" _text="{tr}Go to the Admin Panel{/tr}"}
-                <br><br>
-            </td>
-        </tr>
-    </table>
+                <input type="submit" class="btn btn-primary" name="use-upgrade-wizard" value="{tr}Start Upgrade Wizard{/tr}" />
+        </div>
+    </div>
+    <div class="media">
+        <img class="pull-left" src="img/icons/large/admin_panel48x48.png" alt="{tr}Admin Panel{/tr}" />
+        <div class="media-body">
+            <p>{tr}Use the <b>Admin Panel</b> to manually browse through the full list of preferences{/tr}.</p>
+
+            {button href="tiki-admin.php" _text="{tr}Go to the Admin Panel{/tr}"}
+        </div>
+    </div>
 </fieldset>
 
 <fieldset>
 <legend>{tr}Server Fitness{/tr}</legend>
 	{tr _0=$tiki_version}To check if your server meets the requirements for running Tiki version %0, please visit <a href="tiki-check.php" target="_blank">Tiki Server Compatibility Check</a>{/tr}.
 </fieldset>
-
+</div>

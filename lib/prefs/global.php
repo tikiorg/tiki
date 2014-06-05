@@ -31,12 +31,12 @@ function prefs_global_list($partial = false)
 
 	return array(
 		'style' => array(
-			'name' => tra('Style'),
-            'description' => tra('Style of the site, sometimes called a skin or CSS. See http://themes.tiki.org for more Tiki themes.'),
+			'name' => tra('Theme'),
+            'description' => tra('Theme of the site, sometimes called a style, skin or CSS. See http://themes.tiki.org for more information.'),
             'type' => 'list',
 			'help' => 'Themes',
 			'options' => $styles,
-			'default' => 'fivealive.css',
+			'default' => 'fivealive-lite.css',
 			'tags' => array('basic'),
 		),
 		'browsertitle' => array(

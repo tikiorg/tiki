@@ -9,7 +9,6 @@
 {/title}
 
 <div id="calscreen">
-
 	<div class="t_navbar form-group">
 		{if $prefs.mobile_mode eq "y"}<div data-role="controlgroup" data-type="horizontal" style="float:right">{/if} {* mobile *}
 			{if $displayedcals|@count eq 1 and $prefs.feature_group_watches eq 'y' and ( $tiki_p_admin_users eq 'y' or $tiki_p_admin eq 'y' )}
@@ -141,6 +140,12 @@
 		</form>
 	{/if}
 
+{if $prefs.display_12hr_clock eq 'y'}
+	{assign var="timeFormat" value="h(:mm)TT"}
+{else}
+	{assign var="timeFormat" value="HH:mm"}
+{/if}
+
 {if $prefs.calendar_fullcalendar neq 'y' or $viewlist eq 'list'}
   {include file='tiki-calendar_nav.tpl'}
   {if $viewlist eq 'list'}
@@ -154,7 +159,11 @@
   {/if}
 {else}
 {jq}
+
 $('#calendar').fullCalendar({
+      timeFormat: {
+		'': '{{$timeFormat}}'
+	},
       header: {
         left: 'prev,next today',
         center: 'title',
@@ -184,7 +193,7 @@ $('#calendar').fullCalendar({
 			eventAfterRender : function( event, element, view ) {
 				element.attr('title',event.title);
 				element.data('content', event.description);
-				element.popover({ trigger: 'hover' });
+				element.popover({ trigger: 'hover', html: true, 'container': 'body' });
 			},
 			eventClick: function(event) {
         if (event.url && event.editable) {
