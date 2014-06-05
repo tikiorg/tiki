@@ -93,13 +93,6 @@ class PreferencesLib
 				$info['dependencies'] = $this->getDependencies($info['dependencies']);
 			}
 
-			$info['params'] = '';
-			if (!empty($info['parameters'])) {
-				foreach ($info['parameters'] as $param => $value) {
-					$info['params'] .= ' ' . $param . '="' . $value . '"';
-				}
-			}
-
 			$info['available'] = true;
 
 			if (! $this->checkExtensions($info['extensions']) ) {
@@ -217,6 +210,17 @@ class PreferencesLib
 //				} else {
 //					$info['voting_html'] .= smarty_function_icon($this->getVoteIconParams($info['preference'], 'unwtf', tra("What's this for?")), $smarty);
 //				}
+			}
+
+			if (! $info['available']) {
+				$info['parameters']['disabled'] = 'disabled';
+			}
+
+			$info['params'] = '';
+			if (!empty($info['parameters'])) {
+				foreach ($info['parameters'] as $param => $value) {
+					$info['params'] .= ' ' . $param . '="' . $value . '"';
+				}
 			}
 
 			return $info;
