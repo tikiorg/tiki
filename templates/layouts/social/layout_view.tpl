@@ -86,7 +86,11 @@
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</button>
-					<a class="navbar-brand" href="./">{$prefs.sitetitle|escape}</a>
+					<a class="navbar-brand" href="./">
+                        {if $prefs.sitelogo_icon}
+                            <img src="{$prefs.sitelogo_icon}" style="max-height: 100%;" /> 
+                        {/if}
+                        {$prefs.sitetitle|escape}</a>
 				</div>
 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 					{if $prefs.feature_search eq 'y'}
@@ -105,6 +109,7 @@
 								<ul class="dropdown-menu">
 									{* TODO : Add more links here *}
 									<li class="divider"></li>
+                                    <li><a href="tiki-user_preferences.php">{tr}Preferences{/tr}</a></li>
 									<li><a href="{if $prefs.feature_sefurl eq 'y'}logout{else}tiki-logout.php{/if}">{tr}Log out{/tr}</a></li>
 								</ul>
 							</li>
