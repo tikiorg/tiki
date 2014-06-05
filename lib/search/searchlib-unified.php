@@ -699,9 +699,16 @@ class UnifiedSearchLib
 
 	private function getElasticConnection()
 	{
+		static $connection;
+
+		if ($connection) {
+			return $connection;
+		}
+
 		global $prefs;
 		$connection = new Search_Elastic_Connection($prefs['unified_elastic_url']);
 		$connection->startBulk();
+		$connection->persistDirty(TikiLib::events());
 
 		return $connection;
 	}
