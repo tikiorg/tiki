@@ -118,7 +118,7 @@
 	{/if}
 
 	{if $tiki_p_view_events eq 'y'}
-		<form id="exportcal" method="post" action="{$exportUrl}" name="f" style="display:none;">
+		<form id="exportcal" class="modal-content" method="post" action="{$exportUrl}" name="f" style="display:none;">
 			<input type="hidden" name="export" value="y">
 			<div class="caltitle">{tr}Export calendars{/tr}</div>
 			<div class="caltoggle">

@@ -146,139 +146,141 @@
 
 	<form class="form-horizontal" name="checkform" method="post" action="{$smarty.server.PHP_SELF|escape}">
 		<div id="adminusers-div" {if $tsOn}style="visibility:hidden;"{/if}>
-			<table id="adminusers" class="table normal table-striped table-hover">
-				{* Note: for any changes in the logic determining which columns are shown, corresponding changes will
-				need to be made in the getTableSettings function at /lib/core/Table/Settings/Adminusers.php *}
-				<thead>
-					<tr>
-						<th {if $prefs.mobile_mode eq "y"}style="width:40px;"{else}class="auto"{/if}>
-							{if $users}
-							   {select_all checkbox_names='checked[]'}
-							{/if}
-						</th>
-						<th>{self_link _sort_arg='sort_mode' _sort_field='login'}{tr}User{/tr}{/self_link}</th>
-						{if $prefs.login_is_email neq 'y'}
-							<th>{self_link _sort_arg='sort_mode' _sort_field='email'}{tr}Email{/tr}{/self_link}</th>
-						{/if}
-						{if $prefs.auth_method eq 'openid'}
-							<th>{self_link _sort_arg='sort_mode' _sort_field='openID'}{tr}OpenID{/tr}{/self_link}</th>
-						{/if}
-						<th>{self_link _sort_arg='sort_mode' _sort_field='currentLogin'}{tr}Last login{/tr}{/self_link}</th>
-						<th>{self_link _sort_arg='sort_mode' _sort_field='created'}{tr}Registered{/tr}{/self_link}</th>
-						<th>{tr}Groups{/tr}</th>
-						<th>{tr}Actions{/tr}</th>
-					</tr>
-				</thead>
-				<tbody>
-				<input type="hidden" name="rows" value="{$cant|escape}">
-				{section name=user loop=$users}
-					{if $users[user].editable}
-						{capture assign=username}{$users[user].user|escape}{/capture}
+			<div class="table-responsive">
+				<table id="adminusers" class="table normal table-striped table-hover">
+					{* Note: for any changes in the logic determining which columns are shown, corresponding changes will
+					need to be made in the getTableSettings function at /lib/core/Table/Settings/Adminusers.php *}
+					<thead>
 						<tr>
-							<td class="checkbox-cell">
-								{if $users[user].user ne 'admin'}
-									<input type="checkbox" name="checked[]" value="{$users[user].user|escape}" {if isset($users[user].checked) && $users[user].checked eq 'y'}checked="checked" {/if}>
+							<th {if $prefs.mobile_mode eq "y"}style="width:40px;"{else}class="auto"{/if}>
+								{if $users}
+								   {select_all checkbox_names='checked[]'}
 								{/if}
-							</td>
-
-							<td class="username">
-								{capture name=username}{$users[user].user|username}{/capture}
-								<a class="link" href="tiki-adminusers.php?offset={$offset}&amp;numrows={$numrows}&amp;sort_mode={$sort_mode}&amp;user={$users[user].userId}{if $prefs.feature_tabs ne 'y'}#2{/if}" title="{tr}Edit Account Settings{/tr} {$smarty.capture.username}">
-								   {$users[user].user|escape}
-								</a>
-								{if $prefs.user_show_realnames eq 'y' and $smarty.capture.username ne $users[user].user}
-									<div class="subcomment">
-										{$smarty.capture.username|escape}
-									</div>
-								{/if}
-							</td>
-
-							{if $prefs.login_is_email ne 'y'}
-								<td class="email">{$users[user].email}</td>
+							</th>
+							<th>{self_link _sort_arg='sort_mode' _sort_field='login'}{tr}User{/tr}{/self_link}</th>
+							{if $prefs.login_is_email neq 'y'}
+								<th>{self_link _sort_arg='sort_mode' _sort_field='email'}{tr}Email{/tr}{/self_link}</th>
 							{/if}
 							{if $prefs.auth_method eq 'openid'}
-								<td class="text">{$users[user].openid_url|default:"{tr}N{/tr}"}</td>
+								<th>{self_link _sort_arg='sort_mode' _sort_field='openID'}{tr}OpenID{/tr}{/self_link}</th>
 							{/if}
-							<td class="text">
-								{if $users[user].currentLogin eq ''}
-									{capture name=when}{$users[user].age|duration_short}{/capture}
-									{tr}Never{/tr} <em>({tr _0=$smarty.capture.when}Registered %0 ago{/tr})</em>
-								{else}
-									{$users[user].currentLogin|tiki_short_datetime}
-								{/if}
-
-								{if $users[user].waiting eq 'u'}
-									<br>
-									{tr}Need to validate email{/tr}
-								{/if}
-							</td>
-							<td class="text">
-								{$users[user].registrationDate|tiki_short_datetime}
-							</td>
-
-							<td class="text">
-								{foreach from=$users[user].groups key=grs item=what name=gr}
-									<div style="white-space:nowrap">
-										{if $grs != "Anonymous" and ($tiki_p_admin eq 'y' || in_array($grs, $all_groups))}
-											{if $tiki_p_admin eq 'y'}
-												<a class="link" {if isset($link_style)}{$link_style}{/if} href="tiki-admingroups.php?group={$grs|escape:"url"}" title={if $what eq 'included'}"{tr}Edit Included Group{/tr}"{else}"{tr}Edit Group{/tr} {$grs|escape}"{/if}>{$grs|escape}</a>
-											{else}
-												{$grs|escape}
-											{/if}
-											{if $what eq 'included'}<span class="label label-info">{tr}Included{/tr}</span>{/if}
-											{if $grs eq $users[user].default_group}<small>({tr}default{/tr})</small>{/if}
-											{if $what ne 'included' and $grs != "Registered"}
-												{capture assign=title}{tr _0=$username _1=$grs|escape}Remove %0 from %1{/tr}{/capture}{*FIXME*}
-												{self_link _class='link' user=$users[user].user action='removegroup' group=$grs _icon='cross' _title=$title}{/self_link}
-											{else}
-												{icon _id='bullet_white'}
-											{/if}
-											{if !$smarty.foreach.gr.last}<br>{/if}
-										{/if}
-									</div>
-								{/foreach}
-							</td>
-
-							<td class="action">
-								{if $prefs.mobile_mode eq "y"}<div class="actions" data-role="controlgroup" data-type="horizontal">{/if} {* mobile *}
-								<a class="link" {if $prefs.mobile_mode eq "y"}data-role="button" data-inline="true" {/if}href="tiki-assignuser.php?assign_user={$users[user].user|escape:url}" title="{tr}Assign to group{/tr}">{capture assign=alt}{tr _0=$username}Assign %0 to groups{/tr}{/capture}{*FIXME*}{icon _id='group_key' alt=$alt}</a> {* mobile *}
-								
-								<a class="link" {if $prefs.mobile_mode eq "y"}data-role="button" data-inline="true" {/if}href="tiki-user_preferences.php?userId={$users[user].userId}" title="{tr _0=$username}Change user preferences: %0{/tr}">{capture assign=alt}{tr _0=$username}Change user preferences: %0{/tr}{/capture}{icon _id='wrench' alt=$alt}</a> {* mobile *}
-								
-								<a class="link" {if $prefs.mobile_mode eq "y"}data-role="button" data-inline="true" {/if}href="{query _type='relative' user=$users[user].userId}" title="{tr _0=$username}Edit Account Settings: %0{/tr}">{capture assign=alt}{tr _0=$username}Edit Account Settings: %0{/tr}{/capture}{*FIXME*}{icon _id='page_edit' alt=$alt}</a> {* mobile *}
-								
-								{if $prefs.feature_userPreferences eq 'y' || $user eq 'admin'}
-									<a class="link" {if $prefs.mobile_mode eq "y"}data-role="button" data-inline="true" {/if}href="tiki-user_preferences.php?userId={$users[user].userId}" title="{tr _0=$username}Change user preferences: %0{/tr}">{capture assign=alt}{tr _0=$username}Change user preferences: %0{/tr}{/capture}{icon _id='wrench' alt=$alt}</a> {* mobile *}
-								{/if}
-								{if $users[user].user eq $user or $users[user].user_information neq 'private' or $tiki_p_admin eq 'y'}
-									{capture assign=title}{tr _0=$username}User Information: %0{/tr}{/capture}{*FIXME*}
-									<a class="link" {if $prefs.mobile_mode eq "y"}data-role="button" data-inline="true" {/if}href="tiki-user_information.php?userId={$users[user].userId}" title="{$title}"{if $users[user].user_information eq 'private'} style="opacity:0.5;"{/if}>{icon _id='help' alt=$title}</a> {* mobile *}
-								{/if}
-
-								{if $users[user].user ne 'admin'}
-									<a class="link" {if $prefs.mobile_mode eq "y"}data-role="button" data-inline="true" {/if}href="{$smarty.server.PHP_SELF}?{query action=delete user=$users[user].user}" title="{tr}Delete{/tr}">{icon _id='cross' alt="{tr}Delete{/tr}"}</a> {* mobile *}
-									{if $users[user].waiting eq 'a'}
-										<a class="link" {if $prefs.mobile_mode eq "y"}data-role="button" data-inline="true" {/if}href="tiki-login_validate.php?user={$users[user].user|escape:url}&amp;pass={$users[user].valid|escape:url}" title="{tr _0=$users[user].user|username}Validate user: %0{/tr}">{capture assign=alt}{tr _0=$users[user].user|username}Validate user: %0{/tr}{/capture}{*FIXME*}{icon _id='accept' alt=$alt}</a> {* mobile *}
-									{/if}
-									{if $users[user].waiting eq 'u'}
-										<a class="link" {if $prefs.mobile_mode eq "y"}data-role="button" data-inline="true" {/if}href="tiki-confirm_user_email.php?user={$users[user].user|escape:url}&amp;pass={$users[user].provpass|md5|escape:url}" title="{tr _0=$users[user].user|username}Confirm user email: %0{/tr}">{capture assign=alt}{tr _0=$username}Confirm user email: %0{/tr}{/capture}{*FIXME*}{icon _id='email_go' alt=$alt}</a> {* mobile *}
-									{/if}
-									{if $prefs.email_due > 0 and $users[user].waiting ne 'u' and $users[user].waiting ne 'a'}
-										<a class="link" {if $prefs.mobile_mode eq "y"}data-role="button" data-inline="true" {/if}href="tiki-adminusers.php?user={$users[user].user|escape:url}&amp;action=email_due" title="{tr}Invalidate email{/tr}">{icon _id='email_cross' alt="{tr}Invalidate email{/tr}"}</a> {* mobile *}
-									{/if}
-								{/if}
-								{if !empty($users[user].openid_url)}
-									{self_link userId=$users[user].userId action='remove_openid' _title="{tr}Remove link with OpenID account{/tr}" _icon="img/icons/openid_remove"}{/self_link}
-								{/if}
-								{if $prefs.mobile_mode eq "y"}</div>{/if} {* mobile *}
-							</td>
+							<th>{self_link _sort_arg='sort_mode' _sort_field='currentLogin'}{tr}Last login{/tr}{/self_link}</th>
+							<th>{self_link _sort_arg='sort_mode' _sort_field='created'}{tr}Registered{/tr}{/self_link}</th>
+							<th>{tr}Groups{/tr}</th>
+							<th>{tr}Actions{/tr}</th>
 						</tr>
-					{/if}
-				{sectionelse}
-					{norecords _colspan=8}
-				{/section}
-				</tbody>
-			</table>
+					</thead>
+					<tbody>
+					<input type="hidden" name="rows" value="{$cant|escape}">
+					{section name=user loop=$users}
+						{if $users[user].editable}
+							{capture assign=username}{$users[user].user|escape}{/capture}
+							<tr>
+								<td class="checkbox-cell">
+									{if $users[user].user ne 'admin'}
+										<input type="checkbox" name="checked[]" value="{$users[user].user|escape}" {if isset($users[user].checked) && $users[user].checked eq 'y'}checked="checked" {/if}>
+									{/if}
+								</td>
+
+								<td class="username">
+									{capture name=username}{$users[user].user|username}{/capture}
+									<a class="link" href="tiki-adminusers.php?offset={$offset}&amp;numrows={$numrows}&amp;sort_mode={$sort_mode}&amp;user={$users[user].userId}{if $prefs.feature_tabs ne 'y'}#2{/if}" title="{tr}Edit Account Settings{/tr} {$smarty.capture.username}">
+									   {$users[user].user|escape}
+									</a>
+									{if $prefs.user_show_realnames eq 'y' and $smarty.capture.username ne $users[user].user}
+										<div class="subcomment">
+											{$smarty.capture.username|escape}
+										</div>
+									{/if}
+								</td>
+
+								{if $prefs.login_is_email ne 'y'}
+									<td class="email">{$users[user].email}</td>
+								{/if}
+								{if $prefs.auth_method eq 'openid'}
+									<td class="text">{$users[user].openid_url|default:"{tr}N{/tr}"}</td>
+								{/if}
+								<td class="text">
+									{if $users[user].currentLogin eq ''}
+										{capture name=when}{$users[user].age|duration_short}{/capture}
+										{tr}Never{/tr} <em>({tr _0=$smarty.capture.when}Registered %0 ago{/tr})</em>
+									{else}
+										{$users[user].currentLogin|tiki_short_datetime}
+									{/if}
+
+									{if $users[user].waiting eq 'u'}
+										<br>
+										{tr}Need to validate email{/tr}
+									{/if}
+								</td>
+								<td class="text">
+									{$users[user].registrationDate|tiki_short_datetime}
+								</td>
+
+								<td class="text">
+									{foreach from=$users[user].groups key=grs item=what name=gr}
+										<div style="white-space:nowrap">
+											{if $grs != "Anonymous" and ($tiki_p_admin eq 'y' || in_array($grs, $all_groups))}
+												{if $tiki_p_admin eq 'y'}
+													<a class="link" {if isset($link_style)}{$link_style}{/if} href="tiki-admingroups.php?group={$grs|escape:"url"}" title={if $what eq 'included'}"{tr}Edit Included Group{/tr}"{else}"{tr}Edit Group{/tr} {$grs|escape}"{/if}>{$grs|escape}</a>
+												{else}
+													{$grs|escape}
+												{/if}
+												{if $what eq 'included'}<span class="label label-info">{tr}Included{/tr}</span>{/if}
+												{if $grs eq $users[user].default_group}<small>({tr}default{/tr})</small>{/if}
+												{if $what ne 'included' and $grs != "Registered"}
+													{capture assign=title}{tr _0=$username _1=$grs|escape}Remove %0 from %1{/tr}{/capture}{*FIXME*}
+													{self_link _class='link' user=$users[user].user action='removegroup' group=$grs _icon='cross' _title=$title}{/self_link}
+												{else}
+													{icon _id='bullet_white'}
+												{/if}
+												{if !$smarty.foreach.gr.last}<br>{/if}
+											{/if}
+										</div>
+									{/foreach}
+								</td>
+
+								<td class="action">
+									{if $prefs.mobile_mode eq "y"}<div class="actions" data-role="controlgroup" data-type="horizontal">{/if} {* mobile *}
+									<a class="link" {if $prefs.mobile_mode eq "y"}data-role="button" data-inline="true" {/if}href="tiki-assignuser.php?assign_user={$users[user].user|escape:url}" title="{tr}Assign to group{/tr}">{capture assign=alt}{tr _0=$username}Assign %0 to groups{/tr}{/capture}{*FIXME*}{icon _id='group_key' alt=$alt}</a> {* mobile *}
+									
+									<a class="link" {if $prefs.mobile_mode eq "y"}data-role="button" data-inline="true" {/if}href="tiki-user_preferences.php?userId={$users[user].userId}" title="{tr _0=$username}Change user preferences: %0{/tr}">{capture assign=alt}{tr _0=$username}Change user preferences: %0{/tr}{/capture}{icon _id='wrench' alt=$alt}</a> {* mobile *}
+									
+									<a class="link" {if $prefs.mobile_mode eq "y"}data-role="button" data-inline="true" {/if}href="{query _type='relative' user=$users[user].userId}" title="{tr _0=$username}Edit Account Settings: %0{/tr}">{capture assign=alt}{tr _0=$username}Edit Account Settings: %0{/tr}{/capture}{*FIXME*}{icon _id='page_edit' alt=$alt}</a> {* mobile *}
+									
+									{if $prefs.feature_userPreferences eq 'y' || $user eq 'admin'}
+										<a class="link" {if $prefs.mobile_mode eq "y"}data-role="button" data-inline="true" {/if}href="tiki-user_preferences.php?userId={$users[user].userId}" title="{tr _0=$username}Change user preferences: %0{/tr}">{capture assign=alt}{tr _0=$username}Change user preferences: %0{/tr}{/capture}{icon _id='wrench' alt=$alt}</a> {* mobile *}
+									{/if}
+									{if $users[user].user eq $user or $users[user].user_information neq 'private' or $tiki_p_admin eq 'y'}
+										{capture assign=title}{tr _0=$username}User Information: %0{/tr}{/capture}{*FIXME*}
+										<a class="link" {if $prefs.mobile_mode eq "y"}data-role="button" data-inline="true" {/if}href="tiki-user_information.php?userId={$users[user].userId}" title="{$title}"{if $users[user].user_information eq 'private'} style="opacity:0.5;"{/if}>{icon _id='help' alt=$title}</a> {* mobile *}
+									{/if}
+
+									{if $users[user].user ne 'admin'}
+										<a class="link" {if $prefs.mobile_mode eq "y"}data-role="button" data-inline="true" {/if}href="{$smarty.server.PHP_SELF}?{query action=delete user=$users[user].user}" title="{tr}Delete{/tr}">{icon _id='cross' alt="{tr}Delete{/tr}"}</a> {* mobile *}
+										{if $users[user].waiting eq 'a'}
+											<a class="link" {if $prefs.mobile_mode eq "y"}data-role="button" data-inline="true" {/if}href="tiki-login_validate.php?user={$users[user].user|escape:url}&amp;pass={$users[user].valid|escape:url}" title="{tr _0=$users[user].user|username}Validate user: %0{/tr}">{capture assign=alt}{tr _0=$users[user].user|username}Validate user: %0{/tr}{/capture}{*FIXME*}{icon _id='accept' alt=$alt}</a> {* mobile *}
+										{/if}
+										{if $users[user].waiting eq 'u'}
+											<a class="link" {if $prefs.mobile_mode eq "y"}data-role="button" data-inline="true" {/if}href="tiki-confirm_user_email.php?user={$users[user].user|escape:url}&amp;pass={$users[user].provpass|md5|escape:url}" title="{tr _0=$users[user].user|username}Confirm user email: %0{/tr}">{capture assign=alt}{tr _0=$username}Confirm user email: %0{/tr}{/capture}{*FIXME*}{icon _id='email_go' alt=$alt}</a> {* mobile *}
+										{/if}
+										{if $prefs.email_due > 0 and $users[user].waiting ne 'u' and $users[user].waiting ne 'a'}
+											<a class="link" {if $prefs.mobile_mode eq "y"}data-role="button" data-inline="true" {/if}href="tiki-adminusers.php?user={$users[user].user|escape:url}&amp;action=email_due" title="{tr}Invalidate email{/tr}">{icon _id='email_cross' alt="{tr}Invalidate email{/tr}"}</a> {* mobile *}
+										{/if}
+									{/if}
+									{if !empty($users[user].openid_url)}
+										{self_link userId=$users[user].userId action='remove_openid' _title="{tr}Remove link with OpenID account{/tr}" _icon="img/icons/openid_remove"}{/self_link}
+									{/if}
+									{if $prefs.mobile_mode eq "y"}</div>{/if} {* mobile *}
+								</td>
+							</tr>
+						{/if}
+					{sectionelse}
+						{norecords _colspan=8}
+					{/section}
+					</tbody>
+				</table>
+			</div>
 			{if $users}
 				<div class="form-group" id="submit_mult">
 					<label>{tr}Perform action with checked{/tr}</label>
