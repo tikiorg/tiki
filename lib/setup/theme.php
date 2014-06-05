@@ -71,7 +71,7 @@ if (empty($prefs['theme_active']) || $prefs['theme_active'] == 'default') {
 	}
 	// End legacy
 } else {
-//	$headerlib->add_cssfile("themes/{$prefs['theme_active']}/css/tiki.css");
+	$headerlib->add_cssfile("themes/{$prefs['theme_active']}/css/tiki.css");
 	$prefs['jquery_ui_chosen_css'] = 'n';
 }
 
