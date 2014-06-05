@@ -133,7 +133,7 @@ class Search_Query_WikiBuilder
 		$query->filterContent($value, $fields);
 	}
 
-	function wpquery_filter_identifier($query, $value, array $arguments)
+	function wpquery_filter_exact($query, $value, array $arguments)
 	{
 		if (isset($arguments['field'])) {
 			$fields = explode(',', $arguments['field']);
