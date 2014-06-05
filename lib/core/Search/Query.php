@@ -55,6 +55,11 @@ class Search_Query implements Search_Query_Interface
 		$this->addPart($query, 'plaintext', $field);
 	}
 
+	function filterIdentifier($query, $field)
+	{
+		$this->addPart(new Search_Expr_Token($query), 'identifier', $field);
+	}
+
 	function filterType($types)
 	{
 		if (is_array($types)) {
