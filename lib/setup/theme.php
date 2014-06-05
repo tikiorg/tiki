@@ -43,7 +43,7 @@ if (empty($prefs['theme_active']) || $prefs['theme_active'] == 'default') {
 	} else {
 		$headerlib->add_cssfile($custom_theme);
 	}
-}   elseif ($prefs['theme_active'] == 'legacy') {
+} elseif ($prefs['theme_active'] == 'legacy') {
     // use legacy styles
 	if ( $prefs['useGroupTheme'] == 'y' && $group_style = $userlib->get_user_group_theme()) {
 		$prefs['style'] = $group_style;
