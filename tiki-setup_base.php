@@ -124,9 +124,14 @@ if (isset($prefs['session_lifetime']) && $prefs['session_lifetime'] > 0) {
 }
 // is session data  stored in DB or in filesystem?
 if (isset($prefs['session_storage']) && $prefs['session_storage'] == 'db') {
-	if ($api_tiki == 'adodb') {
+	$db = TikiDb::get();
+	if ($db instanceof TikiDb_MasterSlaveDispatch) {
+		$db->getReal();
+	}
+
+	if ($db instanceof TikiDb_AdoDb) {
 		require_once ('lib/tikisession-adodb.php');
-	} elseif ($api_tiki == 'pdo') {
+	} elseif ($db instanceof TikiDb_Pdo) {
 		require_once ('lib/tikisession-pdo.php');
 	}
 } elseif ( isset($prefs['session_storage']) && $prefs['session_storage'] == 'memcache' && TikiLib::lib("memcache")->isEnabled() ) {
