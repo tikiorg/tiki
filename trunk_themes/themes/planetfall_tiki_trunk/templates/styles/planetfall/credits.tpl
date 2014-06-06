@@ -1,1 +1,0 @@
-<a href="http://zukakakina.com" title="Adapted by Gary Cunningham-Lee aka chibaguy">{tr}Theme{/tr}</a>: <a href="http://mambo.rhuk.net/" title="{tr}Design by{/tr} Rhuk">Planetfall</a>

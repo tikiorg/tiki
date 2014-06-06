@@ -1,1 +1,0 @@
-<a href="http://zukakakina.com" title="Adapted by Gary Cunningham-Lee aka chibaguy">{tr}Theme{/tr}</a>: <a href="http://demusdesign.com/" title="{tr}Design by DemusDesign{/tr}">Faulkner</a>

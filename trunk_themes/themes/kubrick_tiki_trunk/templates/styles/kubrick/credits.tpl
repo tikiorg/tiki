@@ -1,1 +1,0 @@
-<a href="http://zukakakina.com" title="Adapted by Gary Cunningham-Lee aka chibaguy">{tr}Theme{/tr}</a>: <a href="http://binarybonsai.com/wordpress/kubrick/" title="{tr}Design by{/tr} Michael Heilemann">Kubrick</a>
