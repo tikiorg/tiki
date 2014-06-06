@@ -71,6 +71,11 @@
 				{preference name=user_favorites}
 				{preference name=feature_invite}
 				{preference name=feature_wizard_user}
+
+				{preference name=mustread_enabled}
+				<div class="adminoptionboxchild" id="mustread_enabled_childcontainer">
+					{preference name=mustread_tracker}
+				</div>
 			</div>
 		{/tab}
 		{tab name="{tr}Social Network{/tr}"}

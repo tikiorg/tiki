@@ -624,6 +624,10 @@ if ($prefs['ajax_inline_edit'] == 'y') {
 	$headerlib->add_jsfile('lib/jquery_tiki/inline_edit.js');
 }
 
+if ($prefs['mustread_enabled'] == 'y') {
+	$headerlib->add_jsfile('lib/jquery_tiki/mustread.js');
+}
+
 if (true) {
 	// Before being clever and moving this close to where you think it's needed (again),
 	// consider there are more places that you think.

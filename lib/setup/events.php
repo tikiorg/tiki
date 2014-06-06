@@ -166,6 +166,10 @@ function tiki_setup_events()
 		TikiLib::lib('monitor')->bindEvents($events);
 	}
 
+	if ($prefs['mustread_enabled'] == 'y') {
+		$events->bind('tiki.trackeritem.create', ['Services_MustRead_Controller', 'handleItemCreation']);
+	}
+
 	// Chain events
 	$events->bind('tiki.wiki.update', 'tiki.wiki.save');
 	$events->bind('tiki.wiki.create', 'tiki.wiki.save');

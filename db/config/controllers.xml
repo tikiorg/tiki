@@ -32,6 +32,7 @@
 		<service id="tiki.controller.menu" class="Services_Menu_Controller"/>
 		<service id="tiki.controller.module" class="Services_Module_Controller"/>
 		<service id="tiki.controller.monitor" class="Services_User_MonitorController"/>
+		<service id="tiki.controller.mustread" class="Services_MustRead_Controller"/>
 		<service id="tiki.controller.oauth" class="Services_AuthSource_OAuthController"/>
 		<service id="tiki.controller.object" class="Services_Object_Controller"/>
 		<service id="tiki.controller.payment" class="Services_Payment_Controller"/>
