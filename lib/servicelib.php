@@ -86,6 +86,7 @@ class ServiceLib
 			'search_customsearch' => 'Services_Search_CustomSearchController',
 			'showtikiorg' => 'Services_ShowTikiOrg_Controller',
 			'social' => 'Services_User_SocialController',
+			'suite' => 'Services_Suite_Controller',
 			'tracker' => 'Services_Tracker_Controller',
 			'tracker_sync' => 'Services_Tracker_SyncController',
 			'tracker_todo' => 'Services_Tracker_TodoController',
