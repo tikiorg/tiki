@@ -5,11 +5,11 @@
 {/block}
 
 {block name="content"}
-	{tabset id=mustread_detail}
+	{tabset id=mustread_detail toggle=n}
 		{tab key=notification name="{tr}Notifications{/tr}"}
 			<div class="row">
 				<div class="col-md-4">
-					{object_link type=trackeritem id=$item.itemId}:
+					<strong>{object_link type=trackeritem id=$item.itemId}:</strong>
 					{$item.creation_date|tiki_long_date}
 					<ol class="list-unstyled">
 						<li><a href="">123</a> {tr}Sent{/tr}</li>
@@ -17,6 +17,8 @@
 						<li><a href="">123</a> {tr}Logged In{/tr}</li>
 						<li><a href="">123</a> {tr}Unopened{/tr}</li>
 					</ol>
+
+					<a href="{service controller=mustread action=circulate modal=1 id=$item.itemId}" class="btn btn-default" data-toggle="modal" data-target="#bootstrap-modal">{tr}Circulate{/tr}</a>
 				</div>
 				<div class="col-md-8">
 				</div>

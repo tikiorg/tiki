@@ -305,6 +305,11 @@ class Tracker_Item
 		}
 	}
 
+	public function getId()
+	{
+		return $this->info['itemId'];
+	}
+
 	private function isNew()
 	{
 		return $this->isNew;

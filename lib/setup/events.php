@@ -215,6 +215,8 @@ function tiki_setup_events()
 	$events->bind('tiki.query.high', 'tiki.query.hit');
 	$events->bind('tiki.query.low', 'tiki.query.hit');
 
+	$events->bind('tiki.mustread.addgroup', 'tiki.save');
+
 	if (function_exists('fastcgi_finish_request')) {
 		// If available, try to send everything to the user at this point
 		$events->bindPriority(-10, 'tiki.process.shutdown', 'fastcgi_finish_request');

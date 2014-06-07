@@ -20,6 +20,8 @@
 					<td>
 						{if $entry.reason eq 'owner'}
 							{tr}None (Owner){/tr}
+						{elseif $entry.reason eq 'read'}
+							{tr}Read{/tr}
 						{/if}
 					</td>
 					<td><input type="checkbox" name="complete[]" value="{$entry.object_id|escape}"></td>

@@ -111,7 +111,7 @@ class RelationLib extends TikiDb_Bridge
 	 * relation naming, and document new tiki.*.* names that you add.
 	 * (also grep "add_relation" just in case there are undocumented names already used)
 	 */
-	function add_relation( $relation, $src_type, $src_object, $target_type, $target_object )
+	function add_relation( $relation, $src_type, $src_object, $target_type, $target_object, $ignoreExisting = false )
 	{
 		$relation = TikiFilter::get('attribute_type')->filter($relation);
 
@@ -130,7 +130,10 @@ class RelationLib extends TikiDb_Bridge
 						'target_itemId' => $target_object,
 					)
 				);
+			} elseif ( $ignoreExisting ) {
+				return 0;
 			}
+
 			return $id;
 		} else {
 			return 0;
