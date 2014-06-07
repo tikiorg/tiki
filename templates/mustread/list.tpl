@@ -14,8 +14,8 @@
 				<th>{tr}Complete{/tr}</th>
 			</tr>
 			{foreach $list as $entry}
-				<tr>
-					<td><a class="detail-link" href="{service controller=mustread action=detail id=$entry.object_id plain=1}" data-target=".mustread-container">{$entry.title|escape}</a></td>
+				<tr {if $selection eq $entry.object_id}class="active"{/if}>
+					<td><a href="{service controller=mustread action=list id=$entry.object_id}">{$entry.title|escape}</a></td>
 					<td>{$entry.creation_date|tiki_short_datetime}</td>
 					<td>
 						{if $entry.reason eq 'owner'}
@@ -26,9 +26,29 @@
 					</td>
 					<td><input type="checkbox" name="complete[]" value="{$entry.object_id|escape}"></td>
 				</tr>
+			{foreachelse}
+				<tr>
+					<td colspan="4">{tr}Nothing to do.{/tr}</td>
+				</tr>
 			{/foreach}
+			<tr>
+				<td colspan="3">
+					{if $canAdd}
+						<a class="btn btn-default add-mustread-item" href="{service controller=tracker action=insert_item trackerId=$prefs.mustread_tracker modal=1}">{glyph name=plus} {tr}Add Item{/tr}</a>
+					{/if}
+					&nbsp;
+				</td>
+				<td>
+					{if $list|count > 0}
+						<input class="btn btn-primary" type="submit" value="{tr}Save{/tr}">
+					{/if}
+				</td>
+			</tr>
 		</table>
 	</form>
 	<div class="mustread-container">
+		{if $selection}
+			{service_inline controller=mustread action=detail id=$selection}
+		{/if}
 	</div>
 {/block}

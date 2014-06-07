@@ -17,13 +17,22 @@ class Services_MustRead_Controller
 	{
 		global $prefs, $user;
 
+		$selection = null;
+
+		if ($id = $input->id->int()) {
+			$selection = $this->getItem($input->id->int());
+		}
+
 		$owner = Search_Query_Relation::token('tiki.mustread.owns.invert', 'user', $user);
 		$required = Search_Query_Relation::token('tiki.mustread.required.invert', 'user', $user);
+		$complete = Search_Query_Relation::token('tiki.mustread.complete.invert', 'user', $user);
 
 		$lib = TikiLib::lib('unifiedsearch');
 		$query = $lib->buildQuery([
 			'tracker_id' => $prefs['mustread_tracker'],
 		]);
+		$query->filterRelation("NOT $complete");
+
 		$sub = $query->getSubQuery('relations');
 		$sub->filterRelation($owner);
 		$sub->filterRelation($required);
@@ -47,6 +56,44 @@ class Services_MustRead_Controller
 		return [
 			'title' => tr('Must Read'),
 			'list' => $result,
+			'canAdd' => Tracker_Item::newItem($prefs['mustread_tracker'])->canModify(),
+			'selection' => $selection ? $selection->getId() : null,
+		];
+	}
+
+	function action_mark($input)
+	{
+		global $user;
+
+		if ($_SERVER['REQUEST_METHOD'] != 'POST') {
+			throw new Services_Exception_NotAvailable(tr('Invalid request method'));
+		}
+
+		$tx = TikiDb::get()->begin();
+
+		$complete = $input->complete->int();
+		$completed = [];
+
+		foreach ($complete as $item) {
+			$this->getItem($item); // Validate the item exists
+
+			$result = $this->markComplete($item, $user);
+
+			if ($result) {
+				$completed[] = $item;
+
+				TikiLib::events()->trigger('tiki.mustread.complete', array(
+					'type' => 'trackeritem',
+					'object' => $item,
+					'user' => $user,
+				));
+			}
+		}
+
+		$tx->commit();
+		
+		return [
+			'FORWARD' => ['action' => 'list'],
 		];
 	}
 
@@ -106,12 +153,12 @@ class Services_MustRead_Controller
 			TikiLib::events()->trigger('tiki.mustread.addgroup', array(
 				'type' => 'trackeritem',
 				'object' => $item->getId(),
+				'user' => $GLOBALS['user'],
 				'group' => $group,
 				'added' => $add,
 				'skipped' => $skip,
 			));
 		}
-
 
 		$tx->commit();
 
@@ -126,6 +173,12 @@ class Services_MustRead_Controller
 	{
 		$relationlib = TikiLib::lib('relation');
 		return (bool) $relationlib->add_relation('tiki.mustread.required', 'user', $user, 'trackeritem', $item, true);
+	}
+
+	private function markComplete($item, $user)
+	{
+		$relationlib = TikiLib::lib('relation');
+		return (bool) $relationlib->add_relation('tiki.mustread.complete', 'user', $user, 'trackeritem', $item, true);
 	}
 
 	private function getItem($id)

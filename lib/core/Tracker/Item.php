@@ -420,7 +420,7 @@ class Tracker_Item
 
 		return array(
 			'itemId' => $this->isNew() ? null : $this->info['itemId'],
-			'status' => $this->isNew() ? 'o' : $this->data['status'],
+			'status' => $this->isNew() ? 'o' : $this->info['status'],
 			'creation_date' => $this->info['created'],
 			'fields' => $out,
 		);

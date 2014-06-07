@@ -16,7 +16,7 @@
 			{autocomplete element='#group' type='groupname'}
 		</div>
 		<div class="form-group">
-			<input type="submit" class="btn btn-primary" value="{tr}All all members{/tr}">
+			<input type="submit" class="btn btn-primary" value="{tr}Add all members{/tr}">
 		</div>
 	</form>
 {/block}
