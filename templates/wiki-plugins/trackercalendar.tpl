@@ -1,4 +1,4 @@
-<div id="{$trackercalendar.id|escape} class="table-responsive"></div>
+<div id="{$trackercalendar.id|escape}" class="table-responsive"></div>
 {jq}
 	var data = {{$trackercalendar|json_encode}};
 	$('#' + data.id).each(function () {
@@ -57,7 +57,7 @@
 			eventAfterRender : function( event, element, view ) {
 				element.attr('title',event.title);
 				element.data('content', event.description);
-				element.popover({ trigger: 'hover' });
+				element.popover({ trigger: 'hover', html: true,'container': 'body' });
 			},
 			eventClick: function(event) {
 				if (event.editable && event.trackerId) {
