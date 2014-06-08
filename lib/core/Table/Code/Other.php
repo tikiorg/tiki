@@ -184,7 +184,7 @@ class Table_Code_Other extends Table_Code_Manager
 			$bind = array(
 				'var ret = c.pager.ajaxData;',
 				'var opts = $(c.pager.$goto.selector + \' option\').length;',
-				'if (ret.rows.length > 0) {',
+				'if (ret.filtered > 0) {',
 				'	if (ret.fp != opts && opts != 0) {',
 				'		$(c.pager.$goto.selector).empty();',
 				'		for (var i = 1; i <= ret.fp; i++) {',
@@ -196,14 +196,16 @@ class Table_Code_Other extends Table_Code_Manager
 				'	var page = ret.offset == 0 ? 0 : Math.ceil(ret.offset / c.pager.size);',
 				'	$(c.pager.$goto.selector + \' option\')[page].selected = true;',
 				'	if (ret.end == ret.filtered) {',
-				'		$(\'button.next\').addClass(\'disabled\');',
-				'		$(\'button.last\').addClass(\'disabled\');',
+				'		$(c.pager.$container.selector + \' button.next\').addClass(\'disabled\');',
+				'		$(c.pager.$container.selector + \' button.last\').addClass(\'disabled\');',
 				'	}',
 				'	if (page != c.pager.page) {',
 				'		$(\'' . parent::$tid . '\').trigger(\'pageSet\', page);',
 				'	}',
 				'} else {',
 				'	$(c.pager.$goto.selector).empty();',
+				'	$(c.pager.$container.selector + \' button.next\').addClass(\'disabled\');',
+				'	$(c.pager.$container.selector + \' button.last\').addClass(\'disabled\');',
 				'}',
 			);
 			$jq[] = $this->iterate(
