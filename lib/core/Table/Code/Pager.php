@@ -84,7 +84,7 @@ class Table_Code_Pager extends Table_Code_Manager
 			//be used by Tiki
 			if (!isset(parent::$s['ajax']['custom']) || parent::$s['ajax']['custom'] !== false) {
 				$ca = array(
-					'var vars = {}, hashes, hash, size, sort, sorts, filter, filtered, colfilters, extfilters,
+					'var vars = {}, hashes, hash, size, sort, sorts, filtered, offset, colfilters, extfilters,
 						params = [], dir, newurl, p = table.config.pager;',
 					//parse out url parameters
 					'hashes = url.slice(url.indexOf(\'?\') + 1).split(\'&\');',
@@ -106,10 +106,8 @@ class Table_Code_Pager extends Table_Code_Manager
 					'	}',
 						//handle column and external filter parameters
 					'	if ($.inArray(value, extfilters) > -1) {',
-					'		filter = true;',
 					'		params.push(decodeURIComponent(value));',
 					'	} else if (key in colfilters) {',
-					'		filter = true;',
 					'		colfilters[key][value] ? params.push(colfilters[key][value]) : params.push(colfilters[key]
 								+ \'=\' + value);',
 					'	}',
@@ -121,7 +119,7 @@ class Table_Code_Pager extends Table_Code_Manager
 					//offset parameter
 					'size = parseInt(p.$size.val());',
 					'filtered = typeof p.ajaxData === \'undefined\' ? 0 : p.ajaxData.filtered;',
-					'offset = filter || ((p.page * size) >= filtered) ? \'\' : offset = \'&'
+					'offset = ((p.page * size) >= filtered) ? \'\' : offset = \'&'
 						. parent::$s['ajax']['offset'] . '=\' + (p.page * size); ',
 					//build url, starting with no parameters
 					'newurl = url.slice(0,url.indexOf(\'?\'));',
@@ -133,17 +131,14 @@ class Table_Code_Pager extends Table_Code_Manager
 				);
 			} else {
 				$ca = array(
-					'var p = table.config.pager, size = parseInt(p.$size.val()), filter, filtered, offset, total;',
+					'var p = table.config.pager, size = parseInt(p.$size.val()), filtered, offset, total;',
 					'if (typeof p.ajaxData === \'undefined\') {',
 					'	filtered = 0;',
-					'	filter = false;',
 					'} else {',
 					'	filtered = typeof p.ajaxData.filtered === \'undefined\' ? 0 : p.ajaxData.filtered;',
-					'	filter = typeof p.ajaxData.filter === \'undefined\' ? false : true;',
 					'	total = typeof p.ajaxData.total === \'undefined\' ? 0 : p.ajaxData.total;',
-					'	filter = filter === false || filtered == total ? false : true;',
 					'}',
-					'offset = (filter === true || ((p.page * size) >= filtered)) ? \'\' : \''
+					'offset = ((p.page * size) >= filtered) ? \'\' : \''
 						. parent::$s['ajax']['offset'] . '\' + \'=\' + (p.page * size);',
 					'return url + \'&tsAjax=true&\' + offset + \'&numrows=\' + size;'
 				);
