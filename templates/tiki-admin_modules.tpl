@@ -81,7 +81,7 @@
 								<td style="font-size:smaller;">{$module.params_presentable}</td>
 								<td style="font-size:smaller;">{$module.module_groups}</td>
 								<td>
-									<a class="link" href="tiki-admin_modules.php?edit_assign={$module.moduleId}&cookietab=2" title="{tr}Edit{/tr}">{icon _id='page_edit'}</a>
+									<a class="link" href="tiki-admin_modules.php?edit_assign={$module.moduleId}&cookietab=2#content_admin_modules1-2" title="{tr}Edit{/tr}">{icon _id='page_edit'}</a>
 									{if !$smarty.foreach.assigned_foreach.first}
 										<a class="link" href="tiki-admin_modules.php?modup={$module.moduleId}" title="{tr}Move Up{/tr}">{icon _id='resultset_up'}</a>
 									{/if}
