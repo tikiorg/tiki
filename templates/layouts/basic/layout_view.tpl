@@ -38,7 +38,7 @@
                         {/if}
 					</div>
 				{elseif zone_is_empty('left')}
-					<div class="col-md-10" id="col1">
+					<div class="col-md-9" id="col1">
                         {if $prefs.module_zones_pagetop eq 'fixed' or ($prefs.module_zones_pagetop ne 'n' && ! zone_is_empty('pagetop'))}
                             {modulelist zone=pagetop}
                         {/if}
@@ -50,11 +50,11 @@
                             {modulelist zone=pagebottom}
                         {/if}
 					</div>
-					<div class="col-md-2" id="col3">
+					<div class="col-md-3" id="col3">
 						{modulelist zone=right}
 					</div>
 				{elseif zone_is_empty('right')}
-					<div class="col-md-10 col-md-push-2" id="col1">
+					<div class="col-md-9 col-md-push-3" id="col1">
                         {if $prefs.module_zones_pagetop eq 'fixed' or ($prefs.module_zones_pagetop ne 'n' && ! zone_is_empty('pagetop'))}
                             {modulelist zone=pagetop}
                         {/if}
@@ -66,7 +66,7 @@
                             {modulelist zone=pagebottom}
                         {/if}
 					</div>
-					<div class="col-md-2 col-md-pull-10" id="col2">
+					<div class="col-md-3 col-md-pull-9" id="col2">
 						{modulelist zone=left}
 					</div>
 				{else}
