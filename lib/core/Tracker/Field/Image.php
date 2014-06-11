@@ -295,5 +295,14 @@ class Tracker_field_Image extends Tracker_Field_File
 		return in_array($mimeType, $this->imgMimeTypes);
 	}
 
+	function getDocumentPart(Search_Type_Factory_Interface $typeFactory)
+	{
+		$value = $this->getValue();
+		$baseKey = $this->getBaseKey();
+
+		return array(
+			$baseKey => $typeFactory->plaintext($value),
+		);
+	}
 }
 
