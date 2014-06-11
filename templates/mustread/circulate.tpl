@@ -16,7 +16,20 @@
 			{autocomplete element='#group' type='groupname'}
 		</div>
 		<div class="form-group">
-			<input type="submit" class="btn btn-primary" value="{tr}Add all members{/tr}">
+			<button class="select-members btn btn-default">{tr}Select Members{/tr}</button>
+			<button class="btn btn-primary">{tr}Add all members{/tr}</button>
+		</div>
+	</form>
+	<form method="post" class="no-ajax add-users" action="{service controller=mustread action=circulate_users id=$item.itemId}">
+		<div class="alert alert-success hidden">
+			<strong class="groupname"></strong>
+			{tr}<span class="add-count">0</span> have been added. <span class="skip-count">0</span> were skipped.{/tr}
+		</div>
+		<ul class="user-list list-unstyled">
+			<li class="empty">{tr}No members to select from.{/tr}</li>
+		</ul>
+		<div class="form-group">
+			<button class="btn btn-primary">{tr}Add selected members{/tr}</button>
 		</div>
 	</form>
 {/block}

@@ -65,10 +65,15 @@ class Search_ContentSource_UserSource implements Search_ContentSource_Interface
 
 		$loc = $this->geo->build_location_string($detail['preferences']);
 
+		$country = '';
+		if (isset($detail['preferences']['country'])) {
+			$country = $detail['preferences']['country'];
+		}
+
 		$data = array(
 			'title' => $typeFactory->sortable($name),
 			'wiki_content' => $typeFactory->wikitext($content),
-			'user_country' => $typeFactory->sortable($detail['preferences']['country']),
+			'user_country' => $typeFactory->sortable($country),
 			'geo_located' => $typeFactory->identifier(empty($loc) ? 'n' : 'y'),
 			'geo_location' => $typeFactory->identifier($loc),
 			'_extra_groups' => array('Registered'), // Add all registered to allowed groups

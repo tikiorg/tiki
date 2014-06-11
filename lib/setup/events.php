@@ -216,6 +216,7 @@ function tiki_setup_events()
 	$events->bind('tiki.query.low', 'tiki.query.hit');
 
 	$events->bind('tiki.mustread.addgroup', 'tiki.save');
+	$events->bind('tiki.mustread.adduser', 'tiki.save');
 	$events->bind('tiki.mustread.complete', 'tiki.save');
 
 	if (function_exists('fastcgi_finish_request')) {

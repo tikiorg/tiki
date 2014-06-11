@@ -5,7 +5,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-class Search_ResultSet extends ArrayObject
+class Search_ResultSet extends ArrayObject implements JsonSerializable
 {
 	private $count;
 	private $estimate;
@@ -156,6 +156,16 @@ class Search_ResultSet extends ArrayObject
 		}
 
 		$this->exchangeArray($out);
+	}
+
+	function jsonSerialize()
+	{
+		return [
+			'count' => $this->count,
+			'offset' => $this->offset,
+			'maxRecords' => $this->maxRecords,
+			'result' => array_values($this->getArrayCopy()),
+		];
 	}
 }
 

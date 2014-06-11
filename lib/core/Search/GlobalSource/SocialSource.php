@@ -34,7 +34,7 @@ class Search_GlobalSource_SocialSource implements Search_GlobalSource_Interface
 		$groups = array();
 		$followers = array();
 
-		foreach ($this->getUsers($data) as $user) {
+		foreach ($this->getUsers($data, $objectType, $objectId) as $user) {
 			$groups = array_merge($groups, $this->userlib->get_user_groups_inclusion($user));
 			$userfollowers = $this->getFollowers($user);
 			if (is_array($userfollowers)) {
@@ -50,7 +50,7 @@ class Search_GlobalSource_SocialSource implements Search_GlobalSource_Interface
 		);
 	}
 
-	private function getUsers($data)
+	private function getUsers($data, $objectType, $objectId)
 	{
 		$users = array();
 		if (isset($data['contributors'])) {
@@ -59,6 +59,10 @@ class Search_GlobalSource_SocialSource implements Search_GlobalSource_Interface
 
 		if (isset($data['user'])) {
 			$users[] = $this->read($data['user']);
+		}
+
+		if ($objectType == 'user') {
+			$users[] = $objectId;
 		}
 
 		return $users;

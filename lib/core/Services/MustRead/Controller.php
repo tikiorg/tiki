@@ -107,6 +107,31 @@ class Services_MustRead_Controller
 		];
 	}
 
+	function action_list_members($input)
+	{
+		$group = $input->group->groupname();
+
+		$lib = TikiLib::lib('unifiedsearch');
+		$query = $lib->buildQuery([
+			'object_type' => 'user',
+		]);
+		$query->filterMultivalue($group, 'user_groups');
+		$query->setRange(0, 500);
+
+		$current = (array) $input->current->username();
+		foreach ($current as $user) {
+			$query->filterContent("NOT \"$user\"", 'object_id');
+		}
+
+		$result = $query->search($lib->getIndex());
+
+		return [
+			'title' => tr('List Members'),
+			'group' => $group,
+			'resultset' => $result,
+		];
+	}
+
 	function action_circulate($input)
 	{
 		$item = $this->getItem($input->id->int());
@@ -166,6 +191,50 @@ class Services_MustRead_Controller
 			'group' => $group,
 			'add' => $add,
 			'skip' => $skip,
+		];
+	}
+
+	function action_circulate_users($input)
+	{
+		if ($_SERVER['REQUEST_METHOD'] != 'POST') {
+			throw new Services_Exception_NotAvailable(tr('Invalid request method'));
+		}
+
+		$item = $this->getItem($input->id->int());
+
+		$users = array_filter((array) $input->user->username());
+
+		$add = [];
+		$skip = [];
+
+		$tx = TikiDb::get()->begin();
+
+		foreach ($users as $user) {
+			$result = $this->requestAction($item->getId(), $user);
+
+			if ($result) {
+				$add[] = $user;
+			} else {
+				$skip[] = $user;
+			}
+		}
+
+		if (count($add) > 0) {
+			TikiLib::events()->trigger('tiki.mustread.adduser', array(
+				'type' => 'trackeritem',
+				'object' => $item->getId(),
+				'user' => $GLOBALS['user'],
+				'added' => $add,
+				'skipped' => $skip,
+			));
+		}
+
+		$tx->commit();
+
+		return [
+			'selection' => $users,
+			'add' => count($add),
+			'skip' => count($skip),
 		];
 	}
 
