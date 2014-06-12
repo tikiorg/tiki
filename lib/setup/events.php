@@ -219,6 +219,9 @@ function tiki_setup_events()
 	$events->bind('tiki.mustread.adduser', 'tiki.save');
 	$events->bind('tiki.mustread.complete', 'tiki.save');
 
+	$events->bind('tiki.mustread.completed', 'tiki.save');
+	$events->bind('tiki.mustread.required', 'tiki.save');
+
 	if (function_exists('fastcgi_finish_request')) {
 		// If available, try to send everything to the user at this point
 		$events->bindPriority(-10, 'tiki.process.shutdown', 'fastcgi_finish_request');

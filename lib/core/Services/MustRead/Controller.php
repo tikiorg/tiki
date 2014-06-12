@@ -48,6 +48,7 @@ class Services_MustRead_Controller
 			'list' => $result,
 			'canAdd' => Tracker_Item::newItem($prefs['mustread_tracker'])->canModify(),
 			'selection' => $selection ? $selection->getId() : null,
+			'notification' => $input->notification->word(),
 		];
 	}
 
@@ -80,6 +81,14 @@ class Services_MustRead_Controller
 			}
 		}
 
+		if (count($completed) > 0) {
+			TikiLib::events()->trigger('tiki.mustread.completed', array(
+				'type' => 'user',
+				'object' => $user,
+				'targets' => $completed,
+			));
+		}
+
 		$tx->commit();
 		
 		return [
@@ -90,12 +99,14 @@ class Services_MustRead_Controller
 	function action_detail($input)
 	{
 		$item = $this->getItem($input->id->int());
+
 		return [
 			'title' => tr('Must Read'),
 			'item' => $item->getData(),
 			'reason' => $this->findReason($item->getId()),
 			'canCirculate' => $this->canCirculate($item),
 			'plain' => $input->plain->int(),
+			'resultset' => $this->getUsers($item->getId(), $input->notification->word()),
 		];
 	}
 
@@ -245,7 +256,18 @@ class Services_MustRead_Controller
 	private function requestAction($item, $user)
 	{
 		$relationlib = TikiLib::lib('relation');
-		return (bool) $relationlib->add_relation('tiki.mustread.required', 'user', $user, 'trackeritem', $item, true);
+		$ret = (bool) $relationlib->add_relation('tiki.mustread.required', 'user', $user, 'trackeritem', $item, true);
+
+		if ($ret) {
+			TikiLib::events()->trigger('tiki.mustread.required', array(
+				'type' => 'user',
+				'object' => $user,
+				'user' => $GLOBALS['user'],
+				'target' => $item,
+			));
+		}
+
+		return $ret;
 	}
 
 	private function markComplete($item, $user)
@@ -299,6 +321,29 @@ class Services_MustRead_Controller
 
 		$reason = $this->findReason($itemId);
 		return $reason === 'owner';
+	}
+
+	private function getUsers($itemId, $list)
+	{
+		$lib = TikiLib::lib('unifiedsearch');
+		$query = $lib->buildQuery([]);
+
+		$required = Search_Query_Relation::token('tiki.mustread.required', 'trackeritem', $itemId);
+		$complete = Search_Query_Relation::token('tiki.mustread.complete', 'trackeritem', $itemId);
+
+		$relations = $query->getSubQuery('relations');
+		if ($list == 'sent') {
+			$relations->filterRelation($required);
+		} elseif ($list == 'open') {
+			$relations->filterRelation($complete);
+		} elseif ($list == 'unopen') {
+			$relations->filterRelation($required);
+			$query->filterRelation("NOT \"$complete\"");
+		} else {
+			return false;
+		}
+
+		return $query->search($lib->getIndex());
 	}
 
 	/**

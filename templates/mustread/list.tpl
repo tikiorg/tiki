@@ -48,7 +48,7 @@
 	</form>
 	<div class="mustread-container">
 		{if $selection}
-			{service_inline controller=mustread action=detail id=$selection}
+			{service_inline controller=mustread action=detail id=$selection notification=$notification}
 		{/if}
 	</div>
 {/block}
