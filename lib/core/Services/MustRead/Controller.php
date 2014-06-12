@@ -99,14 +99,23 @@ class Services_MustRead_Controller
 	function action_detail($input)
 	{
 		$item = $this->getItem($input->id->int());
+		$itemId = $item->getId();
+
+		$lib = TikiLib::lib('unifiedsearch');
+		$query = $this->getUsers($itemId, $input->notification->word());
 
 		return [
 			'title' => tr('Must Read'),
 			'item' => $item->getData(),
-			'reason' => $this->findReason($item->getId()),
+			'reason' => $this->findReason($itemId),
 			'canCirculate' => $this->canCirculate($item),
 			'plain' => $input->plain->int(),
-			'resultset' => $this->getUsers($item->getId(), $input->notification->word()),
+			'resultset' => $query ? $query->search($lib->getIndex()) : false,
+			'counts' => [
+				'sent' => $this->getUserCount($itemId, 'sent'),
+				'open' => $this->getUserCount($itemId, 'open'),
+				'unopen' => $this->getUserCount($itemId, 'unopen'),
+			],
 		];
 	}
 
@@ -332,18 +341,29 @@ class Services_MustRead_Controller
 		$complete = Search_Query_Relation::token('tiki.mustread.complete', 'trackeritem', $itemId);
 
 		$relations = $query->getSubQuery('relations');
+		$relations->filterRelation($required);
+
 		if ($list == 'sent') {
-			$relations->filterRelation($required);
+			// All, no additional filtering
 		} elseif ($list == 'open') {
-			$relations->filterRelation($complete);
+			$query->filterRelation($complete);
 		} elseif ($list == 'unopen') {
-			$relations->filterRelation($required);
 			$query->filterRelation("NOT \"$complete\"");
 		} else {
 			return false;
 		}
 
-		return $query->search($lib->getIndex());
+		return $query;
+	}
+
+	private function getUserCount($itemId, $list)
+	{
+		$lib = TikiLib::lib('unifiedsearch');
+		$query = $this->getUsers($itemId, $list);
+		$query->setRange(0, 0);
+		$resultset = $query->search($lib->getIndex());
+
+		return $resultset->count();
 	}
 
 	/**
