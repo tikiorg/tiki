@@ -123,11 +123,14 @@ class Services_MustRead_Controller
 	{
 		$group = $input->group->groupname();
 
+		$users = $this->getUsers($input->id->int(), 'sent');
+
 		$lib = TikiLib::lib('unifiedsearch');
 		$query = $lib->buildQuery([
 			'object_type' => 'user',
 		]);
 		$query->filterMultivalue($group, 'user_groups');
+		$query->filterRelation(new Search_Expr_Not($users->getExpr()));
 		$query->setRange(0, 500);
 
 		$current = (array) $input->current->username();

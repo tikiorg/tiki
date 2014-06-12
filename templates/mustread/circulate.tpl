@@ -16,7 +16,7 @@
 			{autocomplete element='#group' type='groupname'}
 		</div>
 		<div class="form-group">
-			<button class="select-members btn btn-default">{tr}Select Members{/tr}</button>
+			<button class="select-members btn btn-default" data-id="{$item.itemId|escape}">{tr}Select Members{/tr}</button>
 			<button class="btn btn-primary">{tr}Add all members{/tr}</button>
 		</div>
 	</form>
