@@ -39,18 +39,8 @@ class Services_MustRead_Controller
 
 		$result = $query->search($lib->getIndex());
 
-		$lib = TikiLib::lib('relation');
-		$relations = array_map(function ($item) {
-			return Search_Query_Relation::token($item['relation'], $item['type'], $item['itemId']);
-		}, $lib->get_relations_from('user', $user, 'tiki.mustread.'));
-		$relations = array_fill_keys($relations, 1);
-
 		foreach ($result as & $row) {
-			if (isset($relations[Search_Query_Relation::token('tiki.mustread.owns', $row['object_type'], $row['object_id'])])) {
-				$row['reason'] = 'owner';
-			} elseif (isset($relations[Search_Query_Relation::token('tiki.mustread.required', $row['object_type'], $row['object_id'])])) {
-				$row['reason'] = 'read';
-			}
+			$row['reason'] = $this->findReason($row['object_id']);
 		}
 
 		return [
@@ -103,6 +93,8 @@ class Services_MustRead_Controller
 		return [
 			'title' => tr('Must Read'),
 			'item' => $item->getData(),
+			'reason' => $this->findReason($item->getId()),
+			'canCirculate' => $this->canCirculate($item),
 			'plain' => $input->plain->int(),
 		];
 	}
@@ -136,6 +128,10 @@ class Services_MustRead_Controller
 	{
 		$item = $this->getItem($input->id->int());
 
+		if (! $this->canCirculate($item)) {
+			throw new Services_Exception_Denied(tr('Cannot circulate'));
+		}
+
 		return [
 			'title' => tr('Circulate'),
 			'item' => $item->getData(),
@@ -149,6 +145,10 @@ class Services_MustRead_Controller
 		}
 
 		$item = $this->getItem($input->id->int());
+
+		if (! $this->canCirculate($item)) {
+			throw new Services_Exception_Denied(tr('Cannot circulate'));
+		}
 
 		$group = $input->group->groupname();
 
@@ -201,6 +201,10 @@ class Services_MustRead_Controller
 		}
 
 		$item = $this->getItem($input->id->int());
+
+		if (! $this->canCirculate($item)) {
+			throw new Services_Exception_Denied(tr('Cannot circulate'));
+		}
 
 		$users = array_filter((array) $input->user->username());
 
@@ -260,7 +264,41 @@ class Services_MustRead_Controller
 			throw new Services_Exception_NotFound(tr('Must Read Item not found'));
 		}
 
+		if (! $item->canView()) {
+			throw new Services_Exception_Denied(tr('Permission denied'));
+		}
+
 		return $item;
+	}
+
+	private function findReason($itemId)
+	{
+		global $user;
+		static $relations = [];
+
+		if (! isset($relations[$user])) {
+			$lib = TikiLib::lib('relation');
+			$rels = array_map(function ($item) {
+				return Search_Query_Relation::token($item['relation'], $item['type'], $item['itemId']);
+			}, $lib->get_relations_from('user', $user, 'tiki.mustread.'));
+			$relations[$user] = array_fill_keys($rels, 1);
+		}
+
+		if (isset($relations[$user][Search_Query_Relation::token('tiki.mustread.owns', 'trackeritem', $itemId)])) {
+			return 'owner';
+		} elseif (isset($relations[$user][Search_Query_Relation::token('tiki.mustread.required', 'trackeritem', $itemId)])) {
+			return 'read';
+		}
+	}
+
+	private function canCirculate($itemId)
+	{
+		if ($itemId instanceof Tracker_Item) {
+			$itemId = $itemId->getId();
+		}
+
+		$reason = $this->findReason($itemId);
+		return $reason === 'owner';
 	}
 
 	/**

@@ -21,15 +21,15 @@
 						<li><a href="">123</a> {tr}Unopened{/tr}</li>
 					</ol>
 
-					<a href="{service controller=mustread action=circulate modal=1 id=$item.itemId}" class="btn btn-default" data-toggle="modal" data-target="#bootstrap-modal">{tr}Circulate{/tr}</a>
+					{if $canCirculate}
+						<a href="{service controller=mustread action=circulate modal=1 id=$item.itemId}" class="btn btn-default" data-toggle="modal" data-target="#bootstrap-modal">{tr}Circulate{/tr}</a>
+					{/if}
 				</div>
 				<div class="col-md-8">
 				</div>
 			</div>
 		{/tab}
 		{tab key=actions name="{tr}Actions{/tr}"}
-		{/tab}
-		{tab key=notes name="{tr}Notes{/tr}"}
 		{/tab}
 	{/tabset}
 {/block}
