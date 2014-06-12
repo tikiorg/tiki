@@ -6,6 +6,9 @@
 
 {block name="content"}
 	{tabset id=mustread_detail toggle=n}
+		{tab key=detail name="{tr}Detail{/tr}"}
+			{service_inline controller=tracker action=view id=$item.itemId}
+		{/tab}
 		{tab key=notification name="{tr}Notifications{/tr}"}
 			<div class="row">
 				<div class="col-md-4">
