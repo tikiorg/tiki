@@ -11,6 +11,14 @@
 			{tr}<span class="add-count">0</span> have been added. <span class="skip-count">0</span> were skipped.{/tr}
 		</div>
 		<div class="form-group">
+			<label for="required_action" class="control-label">{tr}Required Action{/tr}</label>
+			<select name="required_action" class="form-control" data-copy-into="#selection-action">
+				{foreach $actions as $action => $label}
+					<option value="{$action|escape}">{$label|escape}</option>
+				{/foreach}
+			</select>
+		</div>
+		<div class="form-group">
 			<label for="group" class="control-label">{tr}Group{/tr}</label>
 			<input type="text" id="group" name="group" value="" class="form-control">
 			{autocomplete element='#group' type='groupname'}
@@ -30,6 +38,7 @@
 		</ul>
 		<div class="form-group">
 			<button class="btn btn-primary">{tr}Add selected members{/tr}</button>
+			<input id="selection-action" name="required_action" type="hidden" value="required">
 		</div>
 	</form>
 {/block}

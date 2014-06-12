@@ -20,6 +20,8 @@
 					<td>
 						{if $entry.reason eq 'owner'}
 							{tr}None (Owner){/tr}
+						{elseif $entry.reason eq 'circulation'}
+							{tr}Circulate{/tr}
 						{elseif $entry.reason eq 'read'}
 							{tr}Read{/tr}
 						{/if}
