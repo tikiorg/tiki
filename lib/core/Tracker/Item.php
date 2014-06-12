@@ -328,6 +328,18 @@ class Tracker_Item
 		return array_filter($output);
 	}
 
+	public function prepareOutput()
+	{
+		$fields = $this->definition->getFields();
+		$output = array();
+
+		foreach ($fields as $field) {
+			$output[] = $this->prepareFieldOutput($field);
+		}
+
+		return array_filter($output);
+	}
+
 	public function prepareFieldInput($field, $input)
 	{
 		$fid = $field['fieldId'];
@@ -338,6 +350,19 @@ class Tracker_Item
 			$factory = $this->definition->getFieldFactory();
 			$handler = $factory->getHandler($field, $this->info);
 			return array_merge($field, $handler->getFieldData($input));
+		}
+	}
+
+	public function prepareFieldOutput($field)
+	{
+		$fid = $field['fieldId'];
+
+		if ($this->canViewField($fid)) {
+			$field['ins_id'] = "ins_$fid";
+
+			$factory = $this->definition->getFieldFactory();
+			$handler = $factory->getHandler($field, $this->info);
+			return array_merge($field, $handler->getFieldData([]));
 		}
 	}
 
