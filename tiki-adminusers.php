@@ -771,10 +771,14 @@ $tsOn = Table_Check::isEnabled(true);
 
 $smarty->assign('tsOn', $tsOn);
 $tsAjax = Table_Check::isAjaxCall();
+static $iid = 0;
+++$iid;
+$ts_tableid = 'adminusers' . $iid;
+$smarty->assign('ts_tableid', $ts_tableid);
 
 if ($tsOn) {
-	$ts_countid = 'adminusers-count';
-	$ts_offsetid = 'adminusers-offset';
+	$ts_countid = $ts_tableid . '-count';
+	$ts_offsetid = $ts_tableid . '-offset';
 	$smarty->assign('ts_countid', $ts_countid);
 	$smarty->assign('ts_offsetid', $ts_offsetid);
 }
@@ -804,8 +808,9 @@ if ($tsOn && !$tsAjax) {
 	Table_Factory::build(
 		'TikiAdminusers',
 		array(
-			 'total' => $users['cant'],
-			 'columns' => array(
+			'id' => $ts_tableid,
+			'total' => $users['cant'],
+			'columns' => array(
 				 6 => array(
 					 'filter' => array(
 						 'options' => $ts_groups
