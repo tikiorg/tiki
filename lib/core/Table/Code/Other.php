@@ -37,7 +37,8 @@ class Table_Code_Other extends Table_Code_Manager
 			}
 			$jq[] = '$(\'button#' . $s['reset']['id'] . '\').click(function(){$(\'' . parent::$tid
 				.'\').trigger(\'sortReset\')' . $sr . ';});';
-			$htmlbefore[] = '<button id="' . $s['reset']['id'] . '" type="button" class="btn btn-xs">' . $s['reset']['text'] . '</button>';
+			$htmlbefore[] = '<button id="' . $s['reset']['id'] . '" type="button" class="btn btn-default btn-xs">'
+				. $s['reset']['text'] . '</button>';
 		}
 
 		//filters
@@ -45,7 +46,8 @@ class Table_Code_Other extends Table_Code_Manager
 			$f = parent::$s['filters'];
 			//reset button
 			if ($f['type'] === 'reset') {
-				$htmlbefore[] = '<button id="' . $f['reset']['id'] . '" type="button" class="btn btn-xs">' . $f['reset']['text'] . '</button>';
+				$htmlbefore[] = '<button id="' . $f['reset']['id'] . '" type="button" class="btn btn-default btn-xs">'
+					. $f['reset']['text'] . '</button>';
 			}
 
 			//external dropdowns
@@ -94,47 +96,61 @@ class Table_Code_Other extends Table_Code_Manager
 		$p = parent::$s['pager'];
 		//pager controls
 		if (parent::$pager) {
-			$htmlbefore[] = $this->iterate('', '<div id="' . parent::$s['id'] . '_pager_info_top" class="pagedisplay-top">', '</div>', '', '', '');
 			$pagerdiv = array(
-				'<span style="float:right">',
-				'Page: <select class="gotoPage"></select>',
-				'<button type="button" class="btn btn-xs first">',
-				'<i class="glyphicon glyphicon-step-backward"></i></button>',
-				'<button type="button" class="btn btn-xs prev">',
-				'<i class="glyphicon glyphicon-backward"></i></button>',
-				'<span class="pagedisplay"></span>',
-				'<button type="button" class="btn btn-xs next">',
-				'<i class="glyphicon glyphicon-forward"></i></button>',
-				'<button type="button" class="btn btn-xs last">',
-				'<i class="glyphicon glyphicon-step-forward"></i></button>',
-				'</span>'
+				'<div class="btn-group">',
+				'	<span class="selectlabels">Page</span>',
+				'	<select class="gotoPage"></select>',
+				'</div>',
+				'<div class="btn-group">',
+				'	<button type="button" class="btn btn-default btn-sm first">',
+				'		<i class="glyphicon glyphicon-step-backward"></i>',
+				'	</button>',
+				'	<button type="button" class="btn btn-default btn-sm prev">',
+				'		<i class="glyphicon glyphicon-backward"></i>',
+				'	</button>',
+				'	<button class="btn btn-default btn-sm disabled pagedisplay">',
+				'	</button>',
+				'	<button type="button" class="btn btn-default btn-sm next">',
+				'		<i class="glyphicon glyphicon-forward"></i>',
+				'	</button>',
+				'	<button type="button" class="btn btn-default btn-sm last">',
+				'		<i class="glyphicon glyphicon-step-forward"></i>',
+				'	</button>',
+				'</div>',
 			);
 			foreach ($p['expand'] as $option) {
 				$sel = $p['max'] === $option ? ' selected="selected"' : '';
 				$opt[] = $sel . ' value="' . $option . '">' . $option;
 			}
 			if (isset($opt)) {
-				$pagerdiv[] = $this->iterate($opt, '<span class="pagesizelabel">Max rows:</span><select class="pagesize">', '</select>', '<option', '</option>', '');
+				$pagerdiv[] = $this->iterate(
+					$opt,
+					'<div class="btn-group"><span class="selectlabels">Rows</span><select class="pagesize">',
+					'</select></div>',
+					'<option',
+					'</option>',
+					''
+				);
 			}
 			//put all pager controls in a div
-			$htmlafter[] = $this->iterate(
+			$pagerstring = $this->iterate(
 				$pagerdiv,
-				'<div id="' . $p['controls']['id'] . '" class="form-horizontal"><small>',
-				'</small></div>',
+				'<div class="' . $p['controls']['id'] . ' ts-pager ts-pager-top btn-toolbar">',
+				'</div>',
 				'',
 				'',
 				''
 			);
-			$bind = array('$(\'div#' . parent::$s['id'] . '_pager_info_top\').text($(\'span#' . parent::$s['id']
-				. '_pager_info\').text());');
-			$jq[] = $this->iterate(
-				$bind,
-				'$(\'' . parent::$tid . '\').bind(\'pagerInitialized pagerComplete\', function(e, c){',
-				$this->nt . '});',
-				$this->nt2,
+			$htmlbefore[] = $pagerstring;
+			$pagerstring = $this->iterate(
+				$pagerdiv,
+				'<div class="' . $p['controls']['id'] . ' ts-pager ts-pager-bottom btn-toolbar">',
+				'</div>',
+				'',
 				'',
 				''
 			);
+			$htmlafter[] = $pagerstring;
 		}
 
 		//add any reset/disable buttons just above the table
@@ -183,7 +199,8 @@ class Table_Code_Other extends Table_Code_Manager
 			//change pages dropdown when filtering to show only filtered pages
 			$bind = array(
 				'var ret = c.pager.ajaxData;',
-				'var opts = $(c.pager.$goto.selector + \' option\').length;',
+				//divide by 2 because to handle both top and bottom page dropdowns
+				'var opts = $(c.pager.$goto.selector + \' option\').length / 2;',
 				'if (ret.filtered > 0) {',
 				'	if (ret.fp != opts && opts != 0) {',
 				'		$(c.pager.$goto.selector).empty();',

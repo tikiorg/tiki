@@ -2679,26 +2679,34 @@ body.navbar-padding {
   float: right;
 }
 /*pager*/
-div .ts-pager {
-  margin-top: 3px;
-  margin-bottom: 20px;
-  margin-right: 3px;
+div.ts-pager {
+  height: 24px;
   float: right;
-  width: 100%;
+  clear: both;
 }
-span .pagedisplay {
-  display: none;
+div.ts-pager div.btn-group {
+  margin-top: 2px;
 }
-div .pagedisplay-top {
-  float: right;
-  margin-right: 3px;
+div.ts-pager div.btn-group button {
+  padding-top: 2px;
+  height: 24px;
 }
-select.pagesize {
-  float: left;
+div.ts-pager div.btn-group span.selectlabels {
+  margin-top: 2px;
+  margin-right: 5px;
+  font-size: smaller;
 }
-span.pagesizelabel {
-  float: left;
-  margin-right: 4px;
+div.ts-pager div.btn-group select.gotopage,
+div.ts-pager div.btn-group select.pagesize {
+  margin-top: 2px;
+}
+div.ts-pager div.btn-group select.gotopage option,
+div.ts-pager div.btn-group select.pagesize option {
+  font-size: smaller;
+}
+div.ts-pager-top {
+  margin-top: 5px;
+  margin-bottom: 7px;
 }
 /* black */
 /* white */
