@@ -208,7 +208,7 @@
 //## Dropdown menu container and contents.
 
 //** Background for the dropdown menu.
-@dropdown-bg:                    #fff;
+@dropdown-bg:                    #1376a8; // #143b62; //url('@{imagePath}options/blueberry/siteheader.jpg') -260px -200px no-repeat transparent;
 //** Dropdown menu `border-color`.
 @dropdown-border:                rgba(0,0,0,.15);
 //** Dropdown menu `border-color` **for IE8**.
@@ -217,11 +217,11 @@
 @dropdown-divider-bg:            #e5e5e5;
 
 //** Dropdown link text color.
-@dropdown-link-color:            @gray-dark;
+@dropdown-link-color:            @gray-lighter;
 //** Hover color for dropdown links.
-@dropdown-link-hover-color:      darken(@gray-dark, 5%);
+@dropdown-link-hover-color:      darken(@gray-lighter, 5%);
 //** Hover background for dropdown links.
-@dropdown-link-hover-bg:         #f5f5f5;
+@dropdown-link-hover-bg:         darken(#1376a8, 10%);//#658838;
 
 //** Active dropdown menu item text color.
 @dropdown-link-active-color:     @component-active-color;
@@ -235,7 +235,7 @@
 @dropdown-header-color:          @gray-light;
 
 // Note: Deprecated @dropdown-caret-color as of v3.1.0
-@dropdown-caret-color:           #000;
+@dropdown-caret-color:           #fff;
 
 
 //-- Z-index master list
@@ -340,8 +340,8 @@
 @navbar-default-border:            none; // darken(@navbar-default-bg, 6.5%);
 
 // Navbar links
-@navbar-default-link-color:                #fff;
-@navbar-default-link-hover-color:          #f9f9f9;
+@navbar-default-link-color:                #efefef;
+@navbar-default-link-hover-color:          #fff;
 @navbar-default-link-hover-bg:             transparent;
 @navbar-default-link-active-color:         #fff;
 @navbar-default-link-active-bg:            darken(@navbar-default-bg, 6.5%);
