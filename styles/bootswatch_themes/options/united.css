@@ -5788,6 +5788,9 @@ body.navbar-padding {
 .dropdown-menu {
   padding: 0;
 }
+.alert-dismissable input[type='checkbox'] {
+  float: none;
+}
 .navbar-default .badge {
   background-color: #fff;
   color: #dd4814;

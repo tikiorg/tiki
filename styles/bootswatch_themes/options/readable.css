@@ -5788,6 +5788,9 @@ body.navbar-padding {
 .dropdown-menu {
   padding: 0;
 }
+.alert-dismissable input[type='checkbox'] {
+  float: none;
+}
 .navbar {
   font-family: "Raleway", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }

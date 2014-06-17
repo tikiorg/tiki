@@ -5787,6 +5787,9 @@ body.navbar-padding {
 .dropdown-menu {
   padding: 0;
 }
+.alert-dismissable input[type='checkbox'] {
+  float: none;
+}
 .navbar {
   background-image: -webkit-linear-gradient(#484e55, #3a3f44 60%, #313539);
   background-image: linear-gradient(#484e55, #3a3f44 60%, #313539);
