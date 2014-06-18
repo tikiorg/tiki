@@ -42,7 +42,7 @@ class Services_Comment_Controller
 			'cant' => $comments['cant'],
 			'offset' => $offset,
 			'per_page' => $per_page,
-			'allow_post' => $this->canPost($type, $objectId),
+			'allow_post' => $this->canPost($type, $objectId) && ! $input->hidepost->int(),
 			'allow_remove' => $this->canRemove($type, $objectId),
 			'allow_lock' => $this->canLock($type, $objectId),
 			'allow_unlock' => $this->canUnlock($type, $objectId),

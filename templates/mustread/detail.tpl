@@ -10,6 +10,7 @@
 			{service_inline controller=tracker action=view id=$item.itemId}
 
 			{if $reason eq 'comment'}
+				<h4>{tr}Respond{/tr}</h4>
 				{service_inline controller=comment action=post type=trackeritem objectId=$item.itemId return_url=$smarty.server.REQUEST_URI}
 			{/if}
 		{/tab}
@@ -40,6 +41,8 @@
 										<p>...</p>
 									</div>
 								</div>
+							{foreachelse}
+								<p>{tr}Empty list.{/tr}</p>
 							{/foreach}
 							{pagination_links resultset=$resultset}{/pagination_links}
 						{/if}
@@ -48,8 +51,8 @@
 			{/tab}
 		{/if}
 		{if $reason eq 'owner'}
-			{tab key=actions name="{tr}Comments{/tr}"}
-				{service_inline controller=comment action=list type=trackeritem objectId=$item.itemId}
+			{tab key=actions name="{tr}Responses{/tr}"}
+				{service_inline controller=comment action=list type=trackeritem objectId=$item.itemId hidepost=1}
 			{/tab}
 		{/if}
 	{/tabset}

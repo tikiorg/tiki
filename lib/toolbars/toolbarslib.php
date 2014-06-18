@@ -1397,7 +1397,7 @@ class ToolbarHelptool extends Toolbar
 		$params['plugins'] = 1;
 		$params['areaId'] = $areaId;
 
-		if ($section == 'sheet') {
+		if ($GLOBALS['section'] == 'sheet') {
 			$params['sheet'] = 1;
 		}
 
@@ -1957,7 +1957,7 @@ class ToolbarsList
 		global $toolbarPickerIndex;
 		$toolbarPickerIndex = -1;
 		$list = new self;
-		$list->wysiwyg = ($params['_wysiwyg'] === 'y');
+		$list->wysiwyg = isset($params['_wysiwyg']) && $params['_wysiwyg'] === 'y';
 		$list->is_html = !empty($params['_is_html']);
 
 		$string = preg_replace('/\s+/', '', $string);

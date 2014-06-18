@@ -390,7 +390,7 @@ class Services_MustRead_Controller
 	{
 		return [
 			'required' => tr('Read'),
-			'comment' => tr('Comment'),
+			'comment' => tr('Respond'),
 			'circulation' => tr('Circulate'),
 		];
 	}
