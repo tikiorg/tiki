@@ -33,7 +33,7 @@
 					{if $context.search_render eq 'y'}
 						<a href="{$smarty.server.REQUEST_URI}" onclick="sendVote(this,{$item.itemId},{$field.fieldId},{$field.rating_options[i]});return false;">
 					{else}
-						<a href="{$smarty.server.REQUEST_URI}{if empty($smarty.server.QUERY_STRING)}?{else}&amp;{/if}itemId={$item.itemId}&amp;ins_{$field.fieldId}={$field.rating_options[i]}&amp;vote=y">
+						<a href="{$smarty.server.REQUEST_URI}{if empty($smarty.server.QUERY_STRING)}?{else}&amp;{/if}itemId={$item.itemId}&amp;ins_{$field.fieldId}={$field.rating_options[i]}&amp;vote=y" rel="nofollow">
 					{/if}
 				{/if}
 				{if $field.numvotes && $field.voteavg >= $field.rating_options[i]}
@@ -59,7 +59,7 @@
 			{if $context.search_render eq 'y'}
 				<a href="{$smarty.server.REQUEST_URI}" onclick="sendVote(this,{$item.itemId},{$field.fieldId},'NULL');return false;">x</a>
 			{else}
-				<a href="{$smarty.server.REQUEST_URI}{if empty($smarty.server.QUERY_STRING)}?{else}&amp;{/if}itemId={$item.itemId}&amp;ins_{$field.fieldId}=NULL&amp;vote=y" title="{tr}Click to delete your vote{/tr}">x</a>
+				<a href="{$smarty.server.REQUEST_URI}{if empty($smarty.server.QUERY_STRING)}?{else}&amp;{/if}itemId={$item.itemId}&amp;ins_{$field.fieldId}=NULL&amp;vote=y" rel="nofollow" title="{tr}Click to delete your vote{/tr}">x</a>
 			{/if}
 		{/if}
 		<span>
