@@ -13,5 +13,48 @@ class Services_Search_Controller
 			'title' => tr('Help'),
 		];
 	}
+
+	function action_rebuild($input)
+	{
+		Services_Exception_Denied::checkGlobal('admin');
+
+		$unifiedsearchlib = TikiLib::lib('unifiedsearch');
+		$stat = null;
+
+		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+			$stat = $unifiedsearchlib->rebuild(isset($_REQUEST['loggit']));
+
+			TikiLib::lib('cache')->empty_type_cache('search_valueformatter');
+		}
+
+		return [
+			'title' => tr('Rebuild Index'),
+			'stat' => $stat,
+			'queue_count' => $unifiedsearchlib->getQueueCount(),
+		];
+	}
+
+	function action_process_queue($input)
+	{
+		Services_Exception_Denied::checkGlobal('admin');
+
+		$batch = $input->batch->int() ?: 50;
+
+		$unifiedsearchlib = TikiLib::lib('unifiedsearch');
+		$stat = null;
+
+		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+			@ini_set('max_execution_time', 0);
+			@ini_set('memory_limit', -1);
+			$stat = $unifiedsearchlib->processUpdateQueue($batch);
+		}
+
+		return [
+			'title' => tr('Process Update Queue'),
+			'stat' => $stat,
+			'queue_count' => $unifiedsearchlib->getQueueCount(),
+			'batch' => $batch,
+		];
+	}
 }
 
