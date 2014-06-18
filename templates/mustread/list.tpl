@@ -22,7 +22,9 @@
 							{tr}None (Owner){/tr}
 						{elseif $entry.reason eq 'circulation'}
 							{tr}Circulate{/tr}
-						{elseif $entry.reason eq 'read'}
+						{elseif $entry.reason eq 'comment'}
+							{tr}Comment{/tr}
+						{elseif $entry.reason eq 'required'}
 							{tr}Read{/tr}
 						{/if}
 					</td>

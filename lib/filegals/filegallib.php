@@ -13,8 +13,6 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 
 use Tiki\FileGallery\FileWrapper\WrapperInterface as FileWrapper;
 use Tiki\FileGallery\Definition as GalleryDefinition;
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
 
 class FileGalLib extends TikiLib
 {

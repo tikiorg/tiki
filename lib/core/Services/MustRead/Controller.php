@@ -24,8 +24,6 @@ class Services_MustRead_Controller
 		}
 
 		$owner = Search_Query_Relation::token('tiki.mustread.owns.invert', 'user', $user);
-		$required = Search_Query_Relation::token('tiki.mustread.required.invert', 'user', $user);
-		$circulation = Search_Query_Relation::token('tiki.mustread.circulation.invert', 'user', $user);
 		$complete = Search_Query_Relation::token('tiki.mustread.complete.invert', 'user', $user);
 
 		$lib = TikiLib::lib('unifiedsearch');
@@ -35,9 +33,13 @@ class Services_MustRead_Controller
 		$query->filterRelation("NOT $complete");
 
 		$sub = $query->getSubQuery('relations');
+
 		$sub->filterRelation($owner);
-		$sub->filterRelation($required);
-		$sub->filterRelation($circulation);
+
+		foreach ($this->getAvailableActions() as $key => $label) {
+			$token = Search_Query_Relation::token("tiki.mustread.$key.invert", 'user', $user);
+			$sub->filterRelation($token);
+		}
 
 		$result = $query->search($lib->getIndex());
 
@@ -160,10 +162,7 @@ class Services_MustRead_Controller
 		return [
 			'title' => tr('Circulate'),
 			'item' => $item->getData(),
-			'actions' => [
-				'required' => tr('Read'),
-				'circulation' => tr('Circulate'),
-			],
+			'actions' => $this->getAvailableActions(),
 		];
 	}
 
@@ -331,10 +330,12 @@ class Services_MustRead_Controller
 
 		if (isset($relations[$user][Search_Query_Relation::token('tiki.mustread.owns', 'trackeritem', $itemId)])) {
 			return 'owner';
-		} elseif (isset($relations[$user][Search_Query_Relation::token('tiki.mustread.circulation', 'trackeritem', $itemId)])) {
-			return 'circulation';
-		} elseif (isset($relations[$user][Search_Query_Relation::token('tiki.mustread.required', 'trackeritem', $itemId)])) {
-			return 'read';
+		}
+
+		foreach ($this->getAvailableActions() as $key => $label) {
+			if (isset($relations[$user][Search_Query_Relation::token("tiki.mustread.$key", 'trackeritem', $itemId)])) {
+				return $key;
+			}
 		}
 	}
 
@@ -353,13 +354,14 @@ class Services_MustRead_Controller
 		$lib = TikiLib::lib('unifiedsearch');
 		$query = $lib->buildQuery([]);
 
-		$required = Search_Query_Relation::token('tiki.mustread.required', 'trackeritem', $itemId);
-		$circulation = Search_Query_Relation::token('tiki.mustread.circulation', 'trackeritem', $itemId);
 		$complete = Search_Query_Relation::token('tiki.mustread.complete', 'trackeritem', $itemId);
 
 		$relations = $query->getSubQuery('relations');
-		$relations->filterRelation($required);
-		$relations->filterRelation($circulation);
+
+		foreach ($this->getAvailableActions() as $key => $label) {
+			$token = Search_Query_Relation::token("tiki.mustread.$key", 'trackeritem', $itemId);
+			$relations->filterRelation($token);
+		}
 
 		if ($list == 'sent') {
 			// All, no additional filtering
@@ -384,10 +386,19 @@ class Services_MustRead_Controller
 		return $resultset->count();
 	}
 
+	private function getAvailableActions()
+	{
+		return [
+			'required' => tr('Read'),
+			'comment' => tr('Comment'),
+			'circulation' => tr('Circulate'),
+		];
+	}
+
 	private function getAction($input)
 	{
 		$action = $input->required_action->word();
-		if (in_array($action, ['required', 'circulation'])) {
+		if (isset($this->getAvailableActions()[$action])) {
 			return $action;
 		} else {
 			return 'required';

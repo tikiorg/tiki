@@ -8,6 +8,10 @@
 	{tabset name=mustread_detail toggle=n skipsingle=1}
 		{tab key=detail name="{tr}Detail{/tr}"}
 			{service_inline controller=tracker action=view id=$item.itemId}
+
+			{if $reason eq 'comment'}
+				{service_inline controller=comment action=post type=trackeritem objectId=$item.itemId return_url=$smarty.server.REQUEST_URI}
+			{/if}
 		{/tab}
 		{if $canCirculate}
 			{tab key=notification name="{tr}Notifications{/tr}"}
@@ -43,7 +47,10 @@
 				</div>
 			{/tab}
 		{/if}
-		{tab key=actions name="{tr}Actions{/tr}"}
-		{/tab}
+		{if $reason eq 'owner'}
+			{tab key=actions name="{tr}Comments{/tr}"}
+				{service_inline controller=comment action=list type=trackeritem objectId=$item.itemId}
+			{/tab}
+		{/if}
 	{/tabset}
 {/block}
