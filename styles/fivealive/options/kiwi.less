@@ -1,0 +1,17 @@
+// $Id$ - kiwi.less; compile to make
+/*  kiwi.css - the Kiwi theme option file for the FiveAlive and FiveAlive-lite themes of Tiki Wiki CMS Groupware. */
+
+@import "kiwi/custom-variables.less"; // A copy of the Bootstrap variables.less file but using only color settings.
+@import "kiwi/custom-other.less"; // Some CSS sections to expose the variables for the theme option to define.
+@import "less/fivealive-option-custom-other.less"; // Contains relevant Bootstrap .less file sections to expose variables for the theme options to provide values for.]
+
+// This comes last to enable site title color of theme options under FiveAlive-lite to have priority over the default set by FiveAlive.
+#top_modules {
+  .sitetitle,
+  .sitesubtitle {
+    color: @brand-primary;
+    text-shadow: none;}
+  a,
+  a:visited {color: @brand-primary;
+  }
+}

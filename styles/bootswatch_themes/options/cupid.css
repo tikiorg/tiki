@@ -15,6 +15,9 @@ body.navbar-padding {
 .dropdown-menu {
   padding: 0;
 }
+.alert-dismissable input[type='checkbox'] {
+  float: none;
+}
 /*!
  * Bootswatch v3.1.1
  * Homepage: http://bootswatch.com
