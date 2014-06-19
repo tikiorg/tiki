@@ -168,6 +168,7 @@ function tiki_setup_events()
 
 	if ($prefs['mustread_enabled'] == 'y') {
 		$events->bind('tiki.trackeritem.create', ['Services_MustRead_Controller', 'handleItemCreation']);
+		$events->bind('tiki.user.create', ['Services_MustRead_Controller', 'handleUserCreation']);
 	}
 
 	// Chain events

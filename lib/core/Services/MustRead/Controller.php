@@ -418,5 +418,14 @@ class Services_MustRead_Controller
 			$lib = TikiLib::lib('relation')->add_relation('tiki.mustread.owns', 'user', $user, $args['type'], $args['object']);
 		}
 	}
+
+	public static function handleUserCreation(array $args)
+	{
+		global $prefs;
+		if ($prefs['monitor_enabled'] == 'y') {
+			// All users created get auto-assigned notifications on must read required events, they are free to adjust the level themselves later
+			TikiLib::lib('monitor')->replacePriority($args['object'], 'tiki.mustread.required', "user:{$args['userId']}", 'critical');
+		}
+	}
 }
 

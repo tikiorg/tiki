@@ -6019,7 +6019,7 @@ class UsersLib extends TikiLib
 		}
 		$new_email_confirm = $this->now;
 		$userTable = $this->table('users_users');
-		$userTable->insert(
+		$userId = $userTable->insert(
 			array(
 				'login' => $user,
 				'password' => $pass,
@@ -6056,7 +6056,11 @@ class UsersLib extends TikiLib
 
 		$cachelib->invalidate('userslist');
 
-		TikiLib::events()->trigger('tiki.user.create', array('type' => 'user', 'object' => $user));
+		TikiLib::events()->trigger('tiki.user.create', array(
+			'type' => 'user',
+			'object' => $user,
+			'userId' => $userId,
+		));
 
 		return true;
 	}
