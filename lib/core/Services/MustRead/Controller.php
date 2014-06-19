@@ -107,6 +107,10 @@ class Services_MustRead_Controller
 
 		$lib = TikiLib::lib('unifiedsearch');
 		$query = $this->getUsers($itemId, $input->notification->word());
+		$result = false;
+		if ($query) {
+			$result = $query->search($lib->getIndex());
+		}
 
 		return [
 			'title' => tr('Must Read'),
@@ -114,7 +118,7 @@ class Services_MustRead_Controller
 			'reason' => $this->findReason($itemId),
 			'canCirculate' => $this->canCirculate($item),
 			'plain' => $input->plain->int(),
-			'resultset' => $query ? $query->search($lib->getIndex()) : false,
+			'resultset' => $result,
 			'counts' => [
 				'sent' => $this->getUserCount($itemId, 'sent'),
 				'open' => $this->getUserCount($itemId, 'open'),
@@ -352,7 +356,9 @@ class Services_MustRead_Controller
 	private function getUsers($itemId, $list)
 	{
 		$lib = TikiLib::lib('unifiedsearch');
-		$query = $lib->buildQuery([]);
+		$query = $lib->buildQuery([
+			'object_type' => 'user',
+		]);
 
 		$complete = Search_Query_Relation::token('tiki.mustread.complete', 'trackeritem', $itemId);
 
