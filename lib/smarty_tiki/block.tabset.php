@@ -134,6 +134,15 @@ function smarty_block_tabset($params, $content, $smarty, &$repeat)
 			$ret .= '</ul>';
 		}
 		$ret .= "</div>";
+		if ($tabset_index === 1) {
+            // override cookie with query cookietab
+            $headerlib->add_jq_onready(
+            'var ctab = location.search.match(/cookietab=(\d+)/);
+            if (ctab) {
+                setCookie("'.$smarty_tabset_name.'", ctab[1],"tabs");
+            }'
+            );
+		}
 		$tabset_index--;
 
 		return $ret . '<div class="tab-content">' . $content . '</div>';

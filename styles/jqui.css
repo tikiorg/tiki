@@ -5707,9 +5707,6 @@ body.navbar-padding {
 .dropdown-menu {
   padding: 0;
 }
-.alert-dismissable input[type='checkbox'] {
-  float: none;
-}
 .panel-heading,
 .navbar-default .navbar-collapse,
 .navbar-default .navbar-form {

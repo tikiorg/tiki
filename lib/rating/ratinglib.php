@@ -512,8 +512,8 @@ class RatingLib extends TikiDb_Bridge
 		$optionsAsKeysSorted = array();
 
 
-		foreach ($options as $option) {
-			$optionsAsKeysSorted[$option] = array();
+		foreach ($options as $key => &$option) {
+			$optionsAsKeysSorted[$key] = array();
 		}
 
 		ksort($optionsAsKeysSorted);
@@ -531,7 +531,7 @@ class RatingLib extends TikiDb_Bridge
 		if ($sort == false) {
 			$result = array();
 			foreach ($options as $key => &$option) {
-				$result[$key] = $optionsAsKeysSorted[$option];
+				$result[$key] = $optionsAsKeysSorted[$key];
 			}
 		} else {
 			$result = $optionsAsKeysSorted;

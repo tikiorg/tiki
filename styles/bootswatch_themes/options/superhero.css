@@ -5781,9 +5781,6 @@ body.navbar-padding {
 .dropdown-menu {
   padding: 0;
 }
-.alert-dismissable input[type='checkbox'] {
-  float: none;
-}
 .navbar {
   -webkit-box-shadow: none;
   box-shadow: none;
