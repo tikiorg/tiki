@@ -19,16 +19,23 @@ Note: The show content block must be defined at root level to use the include. A
 			{breadcrumbs type="pagetitle" loc="page" crumbs=$crumbs machine_translate=$machine_translate_to_lang source_lang=$pageLang target_lang=$machine_translate_to_lang}
 		{/if}
 	{/if}
+
+	{if $prefs.feature_page_title eq 'y'}
+		<h1 class="pagetitle">{breadcrumbs type="pagetitle" loc="page" crumbs=$crumbs machine_translate=$machine_translate_to_lang source_lang=$pageLang target_lang=$machine_translate_to_lang}</h1>
+	{/if}
+
 {/if}
+{/block}
+
+{block name="quicknav"}
+	{if !$prefs.wiki_topline_position or $prefs.wiki_topline_position eq 'top' or $prefs.wiki_topline_position eq 'both'}
+		{include file='tiki-wiki_topline.tpl'}
+	{/if}
 {/block}
 
 {block name=content}
 {if !isset($hide_page_header) or !$hide_page_header}
 	{include file='tiki-flaggedrev_approval_header.tpl'}
-{/if}
-
-{if !$prefs.wiki_topline_position or $prefs.wiki_topline_position eq 'top' or $prefs.wiki_topline_position eq 'both'}
-	{include file='tiki-wiki_topline.tpl'}
 {/if}
 
 {if $print_page ne 'y'}
@@ -96,10 +103,6 @@ Note: The show content block must be defined at root level to use the include. A
 
 				<a href="tiki-index.php?{if $page_info}page_ref_id={$page_info.page_ref_id}{else}page={$page|escape:"url"}{/if}&amp;pagenum={$last_page}">{icon _id='resultset_last' alt="{tr}Last page{/tr}"}</a>
 			</div>
-		{/if}
-
-		{if $prefs.feature_page_title eq 'y'}
-			<h1 class="pagetitle">{breadcrumbs type="pagetitle" loc="page" crumbs=$crumbs machine_translate=$machine_translate_to_lang source_lang=$pageLang target_lang=$machine_translate_to_lang}</h1>
 		{/if}
 
 		{if $structure eq 'y' and ($prefs.wiki_structure_bar_position ne 'bottom')}

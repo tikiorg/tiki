@@ -16,6 +16,7 @@
 			<div class="row">
 				{if zone_is_empty('left') and zone_is_empty('right')}
 					<div class="col-md-12" id="col1">
+						<div class="pull-right">{block name=quicknav}{/block}</div>
 						{block name=title}{/block}
 						{block name=navigation}{/block}
 						{error_report}
@@ -26,6 +27,7 @@
 					</div>
 				{elseif zone_is_empty('left')}
 					<div class="col-md-9" id="col1">
+						<div class="pull-right">{block name=quicknav}{/block}</div>
 						{block name=title}{/block}
 						{block name=navigation}{/block}
 						{error_report}
@@ -39,6 +41,7 @@
 					</div>
 				{elseif zone_is_empty('right')}
 					<div class="col-md-9 col-md-push-3" id="col1">
+						<div class="pull-right">{block name=quicknav}{/block}</div>
 						{block name=title}{/block}
 						{block name=navigation}{/block}
 						{error_report}
@@ -52,6 +55,7 @@
 					</div>
 				{else}
 					<div class="col-md-8 col-md-push-2" id="col1">
+						<div class="pull-right">{block name=quicknav}{/block}</div>
 						{block name=title}{/block}
 						{block name=navigation}{/block}
 						{error_report}
