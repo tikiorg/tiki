@@ -15,7 +15,7 @@ class Services_Object_Controller
 			$supported[] = 'trackeritem';
 		}
 
-		if ($prefs['activity_basic_events'] == 'y' || $prefs['activity_custom_events'] == 'y') {
+		if ($prefs['activity_basic_events'] == 'y' || $prefs['activity_custom_events'] == 'y' || $prefs['monitor_enabled']) {
 			$supported[] = 'activity';
 		}
 
