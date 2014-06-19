@@ -5707,9 +5707,6 @@ body.navbar-padding {
 .dropdown-menu {
   padding: 0;
 }
-.alert-dismissable input[type='checkbox'] {
-  float: none;
-}
 #top_modules {
   background-image: url('ohia/header.png');
 }

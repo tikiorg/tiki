@@ -5707,9 +5707,6 @@ body.navbar-padding {
 .dropdown-menu {
   padding: 0;
 }
-.alert-dismissable input[type='checkbox'] {
-  float: none;
-}
 body {
   background-image: url('darkroom/474747_5e5e5e_40.png');
 }
