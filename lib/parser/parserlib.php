@@ -1920,7 +1920,7 @@ if ( \$('#$id') ) {
 
 				$temp_max3 = count($tables[0]);
 				for ($i = 0; $i < $temp_max3; $i++) {
-					$repl = '<table class="wikitable">';
+					$repl = '<table class="wikitable table table-striped table-hover">';
 
 					$temp_max4 = count($cols[$i]);
 					for ($j = 0; $j < $temp_max4; $j++) {
@@ -1969,7 +1969,7 @@ if ( \$('#$id') ) {
 
 					$temp_max7 = count($tables[0]);
 					for ($i = 0; $i < $temp_max7; $i++) {
-						$repl = '<table class="wikitable">';
+						$repl = '<table class="wikitable table table-striped table-hover">';
 						$temp_max8 = count($cols[$i]);
 						for ($j = 0; $j < $temp_max8; $j++) {
 							$ncols = count($cols[$i][$j]);
