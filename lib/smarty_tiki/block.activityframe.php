@@ -92,6 +92,7 @@ function smarty_block_activityframe($params, $content, $smarty, &$repeat)
 			'like' => in_array($GLOBALS['user'], $likes),
 			'likeactive' => $likeMode != 'disabled',
 			'sharedgroups' => $sharedGroups,
+			'summary' => isset($params['summary']) ? $params['summary'] : null,
 		)
 	);
 	$out = $smarty->fetch('activity/activityframe.tpl');

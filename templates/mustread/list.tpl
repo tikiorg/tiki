@@ -4,6 +4,10 @@
 	{title}{$title}{/title}
 {/block}
 
+{block name="quicknav"}
+	{monitor_link type=user object=$user}
+{/block}
+
 {block name="content"}
 	<form method="post" action="{service controller=mustread action=mark}">
 		<table class="table">

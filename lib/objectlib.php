@@ -480,6 +480,11 @@ class ObjectLib extends TikiLib
 				return $meta['name'];
 			case 'group':
 				return $id;
+			case 'user':
+				if (is_int($id)) {
+					$id = TikiLib::lib('tiki')->get_user_login($id);
+				}
+				return TikiLib::lib('user')->clean_user($id);
 		}
 
 		$title = $this->table('tiki_objects')->fetchOne(
