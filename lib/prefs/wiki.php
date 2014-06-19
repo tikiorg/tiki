@@ -294,7 +294,7 @@ function prefs_wiki_list($partial = false)
 			'type' => 'text',
 			'separator' => ',',
 			'filter' => 'int',
-			'default' => range(1, 5),
+			'default' => "0,5,4,3,2,1",
 		),
 		'wiki_uses_slides' => array(
 			'name' => tra('Add a slideshow button on wiki pages'),
@@ -671,7 +671,7 @@ function prefs_wiki_list($partial = false)
 			'type' => 'text',
 			'separator' => ',',
 			'filter' => 'int',
-			'default' => range(1, 5),
+			'default' => "0,5,4,3,2,1",
 		),
 		'wiki_pagealias_tokens' => array(
 			'name' => tra('Semantic link types to use as page alias markers'),

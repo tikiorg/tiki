@@ -61,7 +61,7 @@ function prefs_article_list()
 			'type' => 'text',
 			'separator' => ',',
 			'filter' => 'int',
-			'default' => range(1, 5),
+			'default' => "0,5,4,3,2,1",
 		),
 		'article_image_size_x' => array(
 			'name' => tra('Default maximum width for custom article images'),
