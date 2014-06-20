@@ -5707,6 +5707,10 @@ body.navbar-padding {
 .dropdown-menu {
   padding: 0;
 }
+#col2 .panel-title,
+#col3 .panel-title {
+  color: #000;
+}
 #col2 .panel,
 #col3 .panel,
 #bottom_modules .panel {
@@ -5803,9 +5807,11 @@ textarea,
 .navbar-nav > li > a {
   background: transparent;
 }
-.navbar-default .navbar-nav > li > a {
-  border-radius: none;
-  background: transparent !important;
+@media (min-width: 992px) {
+  .navbar-default .navbar-nav > li > a {
+    border-radius: none;
+    background: transparent !important;
+  }
 }
 /* black */
 /* white */
