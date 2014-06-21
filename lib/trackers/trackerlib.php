@@ -4809,6 +4809,7 @@ class TrackerLib extends TikiLib
 				$requestData = $field;
 			}
 			$field = array_merge($field, $handler->getFieldData($requestData));
+			$field['ins_id'] = 'ins_' . $field['fieldId'];
 			$handler = $this->get_field_handler($field, $item);
 		}
 
@@ -4820,9 +4821,23 @@ class TrackerLib extends TikiLib
 			if (empty($context['list_mode'])) {
 				$context['list_mode'] = 'n';
 			}
-			$r = $handler->renderOutput($context);
 
 			if (! empty($params['editable'])) {
+				if ($params['editable'] == 'direct') {
+					$r = $handler->renderInput($context);
+					$params['editable'] = 'block';
+					$fetchUrl = null;
+				} else {
+					$r = $handler->renderOutput($context);
+					$fetchUrl = array(
+						'controller' => 'tracker',
+						'action' => 'fetch_item_field',
+						'trackerId' => $field['trackerId'],
+						'itemId' => $item['itemId'],
+						'fieldId' => $field['fieldId'],
+					);
+				}
+
 				$r = new Tiki_Render_Editable(
 					$r,
 					array(
@@ -4835,15 +4850,11 @@ class TrackerLib extends TikiLib
 							'trackerId' => $field['trackerId'],
 							'itemId' => $item['itemId'],
 						),
-						'field_fetch_url' => array(
-							'controller' => 'tracker',
-							'action' => 'fetch_item_field',
-							'trackerId' => $field['trackerId'],
-							'itemId' => $item['itemId'],
-							'fieldId' => $field['fieldId'],
-						),
+						'field_fetch_url' => $fetchUrl,
 					)
 				);
+			} else {
+				$r = $handler->renderOutput($context);
 			}
 
 			TikiLib::lib('smarty')->assign("f_$fieldId", $r);
