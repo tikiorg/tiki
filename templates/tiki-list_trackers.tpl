@@ -10,7 +10,7 @@
 		<div class="navbar-btn">
 			<a class="btn btn-default" href="{service controller=tracker action=replace modal=true}" data-toggle="modal" data-target="#bootstrap-modal">
 				{glyph name="plus"} {tr}Create{/tr}
-			</a>	
+			</a>
 			<a class="btn btn-default" href="{service controller=tracker action=duplicate modal=true}" data-toggle="modal" data-target="#bootstrap-modal">
 				{glyph name="flash"} {tr}Duplicate{/tr}
 			</a>
@@ -126,12 +126,6 @@
 	</table>
     </div>
 	{pagination_links cant=$cant step=$maxRecords offset=$offset}{/pagination_links}
-
-	{if $tiki_p_admin_trackers eq 'y'}
-		<form class="create-tracker" method="post" action="{service controller=tracker action=replace}">
-			<input type="submit" class="btn btn-default" value="{tr}Create tracker{/tr}">
-		</form>
-	{/if}
 
 	{jq}
 		$('.remove.confirm-prompt').requireConfirm({
