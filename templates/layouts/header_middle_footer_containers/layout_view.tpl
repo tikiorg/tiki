@@ -10,7 +10,6 @@
 		{if $prefs.feature_ajax eq 'y'}
 			{include file='tiki-ajax_header.tpl'}
 		{/if}
-			{include file='tiki-admin_leftflip.tpl'}
 
         <div class="header_outer">
             <div class="header_container">

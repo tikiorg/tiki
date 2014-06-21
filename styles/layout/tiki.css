@@ -2740,35 +2740,4 @@ input.tablesorter-filter {
   background-color: #f7f7f7;
 }
 
-/* leftflip admin */
-#tiki-admin_leftflip {position: absolute; top:100; left:-140px; width:140px; min-height:100%; background:black;overflow:visible;z-index:30000000;
-    -webkit-transition: all 1s ease-in-out;
-    -moz-transition: all 1s ease-in-out;
-    -o-transition: all 1s ease-in-out;
-    -ms-transition: all 1s ease-in-out;
-    transition: all 1s ease-in-out;
-}
-#tiki-admin_leftflip:hover {position: absolute; top:100; left:0px; width:140px; min-height:100%; background:black; z-index:2000000;
-    -webkit-transition: all 1s ease-in-out;
-    -moz-transition: all 1s ease-in-out;
-    -o-transition: all 1s ease-in-out;
-    -ms-transition: all 1s ease-in-out;
-    transition: all 1s ease-in-out;
-}
-
-#tiki-admin_leftflip img {
-	max-width: 200px;
-}
-
-#tiki-admin_leftflip a.icon, #tiki-admin_leftflip img.icon {
-	border: 0;
-	background: transparent;
-	width: 1.2em;
-	margin: 1%;
-}
-
-#tiki-admin_leftflip .cssmenu_horiz a, #tiki-admin_leftflip .cssmenu_vert a {
-	background: #ffffff;
-	padding: 3px;
-}
 /* End of file */
