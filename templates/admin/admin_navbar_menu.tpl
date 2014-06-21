@@ -125,9 +125,6 @@
 			{if $prefs.feature_perspective eq "y"}
 				<li><a href="tiki-edit_perspective.php">{tr}Perspectives{/tr}</a></li>
 			{/if}
-			{if $tiki_p_admin eq "y"}
-				<li><a href="tiki-ajax_services.php?controller=screen&action=listScreens">{tr}Screens{/tr}</a></li>
-			{/if}
 			{if $prefs.feature_shoutbox eq "y" and $tiki_p_admin_shoutbox eq "y"}
 				<li><a href="tiki-shoutbox.php">{tr}Shoutbox{/tr}</a></li>
 			{/if}

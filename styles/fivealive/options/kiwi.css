@@ -1,77 +1,5 @@
+@import url("../jquery-ui/options/kiwi/jquery-ui.min.css");
 /*  kiwi.css - the Kiwi theme option file for the FiveAlive and FiveAlive-lite themes of Tiki Wiki CMS Groupware. */
-#col2 .panel,
-#col3 .panel,
-#bottom_modules .panel {
-  border: none;
-}
-#col2 .panel-heading,
-#col3 .panel-heading,
-#bottom_modules .panel-heading {
-  background: #e1d518 url('kiwi/siteheader.png') no-repeat -1000px -200px;
-  border-bottom: none;
-}
-.header_outer {
-  /* whole width div containing the header strip */
-  background: url('kiwi/siteheadertile.png') 0 0 no-repeat;
-}
-.header_container > .header {
-  /* inner <header> element that gets .fixedwidth class applied */
-  background: url('kiwi/siteheader.png') 0 0 no-repeat;
-}
-#header #top_modules .module.secondary_site_menu {
-  background: none;
-}
-.page-header {
-  margin-top: 0;
-  margin-bottom: 0;
-  border-bottom: none;
-}
-.form-control,
-select,
-input[type="text"],
-input[type="password"],
-input[type="file"],
-input[type="email"],
-input[type="file"],
-input[type="search"],
-input[type="number"],
-input#login-pass,
-textarea,
-.adminoptionbox option {
-  background-color: #f8f9d4;
-  border-color: #F5FB86 #FBFBEE #FBFBEE #F5FB86;
-}
-.navbar-collapse {
-  border: none;
-}
-#footer {
-  background: black;
-  color: #696969;
-  padding: 1px 0 2px 0;
-  width: 100%;
-}
-.footer_liner {
-  border-top: 1px solid #ebdc14;
-  border-bottom: 1px solid #ebdc14;
-}
-.footer_liner h3.panel-title {
-  color: #fff;
-  border-bottom: 1px dotted #ebdc14;
-}
-.footer_liner legend,
-.footer_liner a,
-.footer_liner a:visited {
-  color: #a9a9a9;
-}
-.navbar-default .navbar-nav > li > a {
-  background: #cdbe23;
-}
-.navbar-default .navbar-nav > li > a:hover {
-  background: #dbcc2e;
-}
-.postbody-title {
-  background: url('kiwi/siteheader.png') no-repeat -480px -200px;
-}
 a {
   color: #638637;
 }
@@ -283,27 +211,25 @@ hr {
   background-color: #a09d1e;
   color: #ffffff;
 }
-@media (max-width: 767px) {
-  .navbar-default .navbar-nav .open .dropdown-menu > li > a {
-    color: #ffffff;
-  }
-  .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover,
-  .navbar-default .navbar-nav .open .dropdown-menu > li > a:focus {
-    color: #f9f9f9;
-    background-color: #a09d1e;
-  }
-  .navbar-default .navbar-nav .open .dropdown-menu > .active > a,
-  .navbar-default .navbar-nav .open .dropdown-menu > .active > a:hover,
-  .navbar-default .navbar-nav .open .dropdown-menu > .active > a:focus {
-    color: #ffffff;
-    background-color: #a09d1e;
-  }
-  .navbar-default .navbar-nav .open .dropdown-menu > .disabled > a,
-  .navbar-default .navbar-nav .open .dropdown-menu > .disabled > a:hover,
-  .navbar-default .navbar-nav .open .dropdown-menu > .disabled > a:focus {
-    color: #ffffff;
-    background-color: transparent;
-  }
+.navbar-default .navbar-nav .open .dropdown-menu > li > a {
+  color: #ffffff;
+}
+.navbar-default .navbar-nav .open .dropdown-menu > li > a:hover,
+.navbar-default .navbar-nav .open .dropdown-menu > li > a:focus {
+  color: #f9f9f9;
+  background-color: #a09d1e;
+}
+.navbar-default .navbar-nav .open .dropdown-menu > .active > a,
+.navbar-default .navbar-nav .open .dropdown-menu > .active > a:hover,
+.navbar-default .navbar-nav .open .dropdown-menu > .active > a:focus {
+  color: #ffffff;
+  background-color: #a09d1e;
+}
+.navbar-default .navbar-nav .open .dropdown-menu > .disabled > a,
+.navbar-default .navbar-nav .open .dropdown-menu > .disabled > a:hover,
+.navbar-default .navbar-nav .open .dropdown-menu > .disabled > a:focus {
+  color: #ffffff;
+  background-color: transparent;
 }
 .navbar-default .navbar-link {
   color: #ffffff;
@@ -429,13 +355,10 @@ hr {
   border-color: #dddddd;
 }
 .panel {
-  margin-bottom: 20px;
   background-color: #ffffff;
 }
 .panel-heading {
   border-bottom: 1px solid transparent;
-  border-top-right-radius: 3px;
-  border-top-left-radius: 3px;
 }
 .panel-heading > .dropdown .dropdown-toggle {
   color: inherit;
@@ -583,6 +506,79 @@ hr {
 .label-danger[href]:focus {
   background-color: #c9302c;
 }
+#col2 .panel,
+#col3 .panel,
+#bottom_modules .panel {
+  border: none;
+}
+#col2 .panel-heading,
+#col3 .panel-heading,
+#bottom_modules .panel-heading {
+  background: #e1d518 url('kiwi/siteheader.png') no-repeat -1000px -200px;
+  border-bottom: none;
+}
+.header_outer {
+  /* whole width div containing the header strip */
+  background: url('kiwi/siteheadertile.png') 0 0 no-repeat;
+}
+.header_container > .header {
+  /* inner <header> element that gets .fixedwidth class applied */
+  background: url('kiwi/siteheader.png') 0 0 no-repeat;
+}
+#header #top_modules .module.secondary_site_menu {
+  background: none;
+}
+.page-header {
+  margin-top: 0;
+  margin-bottom: 0;
+  border-bottom: none;
+}
+.form-control,
+select,
+input[type="text"],
+input[type="password"],
+input[type="file"],
+input[type="email"],
+input[type="file"],
+input[type="search"],
+input[type="number"],
+input#login-pass,
+textarea,
+.adminoptionbox option {
+  background-color: #f8f9d4;
+  border-color: #f5fb86 #fbfbee #fbfbee #f5fb86;
+}
+.navbar-collapse {
+  border: none;
+}
+#footer {
+  background: black;
+  color: #696969;
+  padding: 1px 0 2px 0;
+  width: 100%;
+}
+.footer_liner {
+  border-top: 1px solid #ebdc14;
+  border-bottom: 1px solid #ebdc14;
+}
+.footer_liner h3.panel-title {
+  color: #fff;
+  border-bottom: 1px dotted #ebdc14;
+}
+.footer_liner legend,
+.footer_liner a,
+.footer_liner a:visited {
+  color: #a9a9a9;
+}
+.navbar-default .navbar-nav > li > a {
+  background: #cdbe23;
+}
+.navbar-default .navbar-nav > li > a:hover {
+  background: #dbcc2e;
+}
+.postbody-title {
+  background: url('kiwi/siteheader.png') no-repeat -480px -200px;
+}
 #top_modules .sitetitle,
 #top_modules .sitesubtitle {
   color: #638637;
@@ -591,5 +587,4 @@ hr {
 #top_modules a,
 #top_modules a:visited {
   color: #638637;
-  text-decoration: none;
 }

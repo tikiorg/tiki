@@ -3930,7 +3930,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   }
 }
 .navbar-default {
-  background-color: transparent;
+  background-color: #ff0000;
   border-color: #ffffff;
 }
 .navbar-default .navbar-brand {
@@ -5708,33 +5708,19 @@ body.navbar-padding {
 .dropdown-menu {
   padding: 0;
 }
-.alert-dismissable input[type='checkbox'] {
-  float: none;
-}
 .header_outer {
-  /* whole width div containing the header strip */
   background: none !important;
 }
 .header_container {
-  /* 2nd whole width div for background image tricks */
   background: none;
 }
 .header_container > .header {
   /* inner <header> element that gets .fixedwidth class applied */
   background: none !important;
 }
-header.page-header .navbar-collapse {
-  border-top: 6px solid #1390ff;
-}
 #top_modules .sitetitle,
 #top_modules .sitesubtitle {
-  color: #1174a5;
   text-shadow: none;
-}
-#top_modules a,
-#top_modules a:visited {
-  color: #1174a5;
-  text-decoration: none;
 }
 .btn {
   border-radius: 8px;
@@ -5742,11 +5728,6 @@ header.page-header .navbar-collapse {
 .navbar-default .navbar-nav > li > a {
   margin-right: 1em;
 }
-/*.navbar-nav {
-  > li > a {
-    background: white;
-  }
-}*/
 .navbar-default .navbar-nav > li > a {
   border-radius: 6px;
   background: #1377a9;
@@ -5754,6 +5735,14 @@ header.page-header .navbar-collapse {
 .navbar-default .navbar-nav > li > a:hover {
   border-radius: 6px;
   background: #10628b;
+}
+.navbar-nav .open .dropdown-menu li {
+  background: #1377a9;
+}
+@media (min-width: 500px) {
+  .navbar-default {
+    background: transparent;
+  }
 }
 .postbody-title {
   border: 1px solid transparent;
@@ -5766,6 +5755,9 @@ header.page-header .navbar-collapse {
 .dropdown-menu label,
 .dropdown-menu strong {
   color: #ffffff;
+}
+.navbar-nav .open .dropdown-menu {
+  background: #1376a8;
 }
 /* black */
 /* white */

@@ -127,6 +127,12 @@
     </div>
 	{pagination_links cant=$cant step=$maxRecords offset=$offset}{/pagination_links}
 
+	{if $tiki_p_admin_trackers eq 'y'}
+		<form class="create-tracker" method="post" action="{service controller=tracker action=replace}">
+			<input type="submit" class="btn btn-default" value="{tr}Create tracker{/tr}">
+		</form>
+	{/if}
+
 	{jq}
 		$('.remove.confirm-prompt').requireConfirm({
 			message: "{tr}Do you really remove this tracker?{/tr}",
