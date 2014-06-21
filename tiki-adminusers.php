@@ -1,4 +1,4 @@
-a<?php
+<?php
 /**
  * @package tikiwiki
  */
@@ -173,7 +173,6 @@ function batchImportUsers()
 				(!empty($_REQUEST['notification']) ? 'u' : NULL)
 			);
 
-			global $user;
 			$logslib->add_log('adminusers', sprintf(tra('Created account %s <%s>'), $u['login'], $u['email']), $user);
 			if (!empty($_REQUEST['notification'])) {
 				$realpass = $pass_first_login ? '' : $u['password'];
@@ -709,13 +708,6 @@ if (isset($_REQUEST['user']) and $_REQUEST['user']) {
 				);
 			}
 		}
-		// check need_email_validation
-		if (!empty($_POST['login']) && !empty($_POST['email']) && !empty($_POST['need_email_validation'])) {
-			$userlib->invalidate_account($_POST['login']);
-			$userinfo = $userlib->get_user_info($_POST['login']);
-			$userlib->send_validation_email($_POST['login'], $userinfo['valid'], $_POST['email'], 'y');
-		}
-
 		$cookietab = '1';
 	}
 
@@ -771,14 +763,10 @@ $tsOn = Table_Check::isEnabled(true);
 
 $smarty->assign('tsOn', $tsOn);
 $tsAjax = Table_Check::isAjaxCall();
-static $iid = 0;
-++$iid;
-$ts_tableid = 'adminusers' . $iid;
-$smarty->assign('ts_tableid', $ts_tableid);
 
 if ($tsOn) {
-	$ts_countid = $ts_tableid . '-count';
-	$ts_offsetid = $ts_tableid . '-offset';
+	$ts_countid = 'usertable-count';
+	$ts_offsetid = 'usertable-offset';
 	$smarty->assign('ts_countid', $ts_countid);
 	$smarty->assign('ts_offsetid', $ts_offsetid);
 }
@@ -808,9 +796,8 @@ if ($tsOn && !$tsAjax) {
 	Table_Factory::build(
 		'TikiAdminusers',
 		array(
-			'id' => $ts_tableid,
-			'total' => $users['cant'],
-			'columns' => array(
+			 'total' => $users['cant'],
+			 'columns' => array(
 				 6 => array(
 					 'filter' => array(
 						 'options' => $ts_groups
