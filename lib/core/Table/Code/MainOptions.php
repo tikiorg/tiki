@@ -107,6 +107,7 @@ class Table_Code_MainOptions extends Table_Code_Manager
 		/*** widgets ***/
 		//standard ones
 		$w[] = 'stickyHeaders';
+		$w[] = 'resizable';
 		if (parent::$group) {
 			$w[] = 'group';
 		}

@@ -26,6 +26,7 @@ class Table_Code_WidgetOptions extends Table_Code_Manager
 	public function setCode()
 	{
 		$wo[] = 'stickyHeaders : \'ts-stickyHeader\'';
+		$wo[] = 'resizable : true';
 
 		//sort
 		if (parent::$sorts) {
