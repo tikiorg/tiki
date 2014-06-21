@@ -171,7 +171,6 @@
 						</tr>
 					</thead>
 					<tbody>
-					<input type="hidden" name="rows" value="{$cant|escape}">
 					{section name=user loop=$users}
 						{if $users[user].editable}
 							{capture assign=username}{$users[user].user|escape}{/capture}
