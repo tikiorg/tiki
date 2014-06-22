@@ -1665,7 +1665,7 @@ function wikiplugin_trackerlist($data, $params)
 				$itemcount = $trkritems->fetchCount(array('trackerId' => $trackerId));
 				$ts = new Table_Plugin;
 				$ts->setSettings(
-					'wptrackerlist' . $trackerId . '-' . $iTRACKERLIST,
+					$ts_id,
 					isset($server) ? $server : null,
 					$sortable,
 					isset($sortList) ? $sortList : null,

@@ -47,7 +47,7 @@ function wikiplugin_group_info()
 			),
 			'notpending' => array(
 				'required' => false,
-				'name' => tra('Denied Groups'),
+				'name' => tra('Allowed Groups Full Membership'),
 				'description' => tra('User allowed to view block if membership in the group (or pipe-separated list of groups) is not pending.'),
 				'filter' => 'groupname',
 				'default' => ''
