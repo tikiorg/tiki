@@ -1634,8 +1634,9 @@ function wikiplugin_trackerlist($data, $params)
 
 
 			if ($tsOn) {
-				$ts_countid = 'trackerlist' . $iTRACKERLIST . '-count';
-				$ts_offsetid = 'trackerlist' . $iTRACKERLIST . '-offset';
+				$ts_id = 'wptrackerlist' . $trackerId . '-' . $iTRACKERLIST;
+				$ts_countid = $ts_id . '-count';
+				$ts_offsetid = $ts_id . '-offset';
 				$smarty->assign('ts_countid', $ts_countid);
 				$smarty->assign('ts_offsetid', $ts_offsetid);
 			}
@@ -1661,10 +1662,10 @@ function wikiplugin_trackerlist($data, $params)
 			}
 			if($tsOn && ! $tsAjax) {
 				$trkritems = $tikilib->table('tiki_tracker_items');
-				$itemcount = $trkritems->fetchCount(array('trackerId' => $iTRACKERLIST));
+				$itemcount = $trkritems->fetchCount(array('trackerId' => $trackerId));
 				$ts = new Table_Plugin;
 				$ts->setSettings(
-					'wptrackerlist' . $iTRACKERLIST,
+					'wptrackerlist' . $trackerId . '-' . $iTRACKERLIST,
 					isset($server) ? $server : null,
 					$sortable,
 					isset($sortList) ? $sortList : null,
