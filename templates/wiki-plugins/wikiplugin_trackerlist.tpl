@@ -56,10 +56,10 @@
 {if isset($displaysheet) && $displaysheet eq 'true'}
 <div class='trackercontainer' style='height: 250px ! important;'>
 {/if}
-		<div id="trackerlist_{$iTRACKERLIST}" {if $tsOn}style="visibility:hidden"{/if}>
+		<div id="wptrackerlist{$listTrackerId}-{$iTRACKERLIST}" {if $tsOn}style="visibility:hidden"{/if}>
 			<input type="hidden" {if $tsOn}id="{$ts_offsetid|escape}" {/if}name="offset" value="{$tr_offset{$iTRACKERLIST}}">
 			<input type="hidden" {if $tsOn}id="{$ts_countid|escape}" {/if}name="count" value="{$count_item}">
-			<table class="table normal wikiplugin_trackerlist" id="trackerlist_{$iTRACKERLIST}_table"
+			<table class="table normal wikiplugin_trackerlist" id="wptrackerlist{$listTrackerId}-{$iTRACKERLIST}_table"
 	{if isset($displaysheet) && $displaysheet eq 'true'}title="{$tracker_info.name}" readonly="true"{/if}
 	{if isset($tableassheet) && $tableassheet eq 'true'}title="{tr}Tracker - {/tr}{$tracker_info.name}" readonly="true"{/if}
 	>
