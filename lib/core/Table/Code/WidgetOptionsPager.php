@@ -65,12 +65,11 @@ class Table_Code_WidgetOptionsPager extends Table_Code_WidgetOptions
 				'	r.filtered = parseInt($(parsedpage).find(\'#' . parent::$s['ajax']['servercount']['id'] . '\').val());',
 				'	r.offset = parseInt($(parsedpage).find(\'#' . parent::$s['ajax']['serveroffset']['id'] . '\').val());',
 					//set pager text
-				'	r.fp = Math.ceil( r.filtered / p.size );',
 				'	r.end = r.offset + $(r.rows).length;',
 				'	if (r.filtered == 0) {r.start = tr(\'No records found\')}',
 				'	if (r.filtered == 1) {r.start = tr(\'1 of 1\')}',
 				'	if (r.filtered > 1) {r.start = (r.offset + 1) + \' \' + tr(\'to\') + \' \'
-						+ r.end + \' \' + \' \' + tr(\'of\') + \' \' + r.filtered}',
+						+ r.end + \' \' + tr(\'of\') + \' \' + r.filtered}',
 				'	r.parens = r.filtered < r.total ? \' \' + \'(\' + tr(\'filtered from\') + \' \' + r.total + \') \' : \' \';',
 				'} else {',
 				'	r.start = tr(\'No records found\');',
