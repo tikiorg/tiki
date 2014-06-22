@@ -55,7 +55,9 @@ abstract class Tracker_Field_Abstract implements Tracker_Field_Interface, Tracke
 				'href' => $href,
 			);
 			if (!empty($context['url'])) {
-				if (strpos($context['url'], 'itemId') !== false) {
+				if ($context['url'] == 'sefurl') {
+					$context['url'] = 'item' . $itemId;
+				} elseif (strpos($context['url'], 'itemId') !== false) {
 					$context['url'] = preg_replace('/([&|\?])itemId=?[^&]*/', '\\1itemId=' . $itemId, $context['url']);
 				} elseif (isset($context['reloff']) && strpos($context['url'], 'offset') !== false) {
 					global $smarty;
