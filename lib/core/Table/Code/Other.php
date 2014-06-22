@@ -129,30 +129,35 @@ class Table_Code_Other extends Table_Code_Manager
 		if (parent::$ajax) {
 			//bind to ajax event to show processing
 			$bind = array(
-				'if (e.type === \'ajaxSend\') {',
-				'	$(\'' . parent::$tid . ' tbody tr td\').css(\'opacity\', 0.25);',
-				'}',
-				'if (e.type === \'ajaxComplete\') {',
-				'	$(\'' . parent::$tid . ' tbody tr td\').css(\'opacity\', 1);',
-				'}'
+				//dim rows while processing when using ajax
+				'	if ($.inArray(e.type, [\'filterStart\', \'sortStart\', \'pageMoved\']) > -1) {',
+				'		if (e.type === \'filterStart\') {',
+				//need this test since filter seems to start when table intializes with no ending ajaxComplete
+				'			if (typeof this.config.pager.ajaxData !== \'undefined\') {',
+				'				$(\'' . parent::$tid . ' tbody tr td\').css(\'opacity\', 0.25);',
+				//note when filter is in place - used for setting offset when simplified ajax url is used
+				'				this.config.pager.ajaxData.filter = true;',
+				'			}',
+				'		} else {',
+				'			$(\'' . parent::$tid . ' tbody tr td\').css(\'opacity\', 0.25);',
+				'		}',
+				'	}',
 			);
 			$jq[] = $this->iterate(
 				$bind,
-				'$(document).bind(\'ajaxSend ajaxComplete\', function(e){',
-				$this->nt . '});',
-				$this->nt2,
+				'$(\'' . parent::$tid . '\').bind(\'filterStart sortStart pageMoved\', function(e){',
+				$this->nt2 . '});',
+				$this->nt3,
 				'',
 				''
 			);
-			//note when filter is in place - used for setting offset when simplified ajax url is used
+			//un-dim rows after ajax processing and make sure odd/even row formatting is applied
 			$bind = array(
-				'if (typeof this.config.pager.ajaxData !== \'undefined\') {',
-				'	this.config.pager.ajaxData.filter = true;',
-				'}',
+				'	$(\'' . parent::$tid . ' tbody tr td\').css(\'opacity\', 1);',
 			);
 			$jq[] = $this->iterate(
 				$bind,
-				'$(\'' . parent::$tid . '\').bind(\'filterStart\', function(){',
+				'$(document).bind(\'ajaxComplete\', function(e){',
 				$this->nt . '});',
 				$this->nt2,
 				'',
