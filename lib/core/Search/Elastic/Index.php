@@ -73,7 +73,7 @@ class Search_Elastic_Index implements Search_Index_Interface, Search_Index_Query
 						"fields" => array(
 							"sort" => array(
 								"type" => "string",
-								"index" => "not_analyzed",
+								"analyzer" => "sortable",
 							),
 							"nsort" => array(
 								"type" => "float",
@@ -100,7 +100,7 @@ class Search_Elastic_Index implements Search_Index_Interface, Search_Index_Query
 						"fields" => array(
 							"sort" => array(
 								"type" => "string",
-								"index" => "not_analyzed",
+								"analyzer" => "sortable",
 								"ignore_above" => 200,
 							),
 							"nsort" => array(

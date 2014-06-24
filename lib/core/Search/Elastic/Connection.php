@@ -212,6 +212,10 @@ class Search_Elastic_Connection
 									'tokenizer' => 'standard',
 									'filter' => array('standard', 'lowercase', 'asciifolding', 'tiki_stop', 'porterStem'),
 								),
+								'sortable' => array(
+									'tokenizer' => 'keyword',
+									'filter' => array('lowercase'),
+								),
 							),
 							'filter' => array(
 								'tiki_stop' => array(
