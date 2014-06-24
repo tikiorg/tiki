@@ -25,8 +25,10 @@ abstract class Search_Index_SortTest extends PHPUnit_Framework_TestCase
 			array('numeric_field_nasc', 'ACB'),
 			array('numeric_field_ndesc', 'BCA'),
 			array('numeric_field_asc', 'ABC'),
-			array('text_field_asc', 'CAB'),
-			array('text_field_desc', 'BAC'),
+			array('text_field_asc', 'CBA'),
+			array('text_field_desc', 'ABC'),
+			array('other_field_asc', 'CAB'),
+			array('other_field_desc', 'BAC'),
 			array('object_id_asc', 'ABC'),
 			array('object_id_desc', 'CBA'),
 		);

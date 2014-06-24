@@ -23,7 +23,7 @@ abstract class Search_Index_BaseTest extends PHPUnit_Framework_TestCase
 				'title' => $typeFactory->sortable('HomePage'),
 				'language' => $typeFactory->identifier('en'),
 				'modification_date' => $typeFactory->timestamp(self::DOCUMENT_DATE),
-				'description' => $typeFactory->plaintext('a description for the page'),
+				'description' => $typeFactory->sortable('a description for the page'),
 				'categories' => $typeFactory->multivalue(array(1, 2, 5, 6)),
 				'allowed_groups' => $typeFactory->multivalue(array('Project Lead', 'Editor', 'Admins')),
 				'contents' => $typeFactory->plaintext('a description for the page Bonjour world!'),
@@ -156,7 +156,10 @@ abstract class Search_Index_BaseTest extends PHPUnit_Framework_TestCase
 
 	function testMatchInitial()
 	{
-		$this->assertResultCount(1, 'filterInitial', 'HomePag');
+		$this->assertResultCount(1, 'filterInitial', 'a description for', 'description');
+		$this->assertResultCount(0, 'filterInitial', 'a description in', 'description');
+
+		$this->assertResultCount(1, 'filterInitial', 'HomePage');
 		$this->assertResultCount(1, 'filterInitial', 'Home');
 		$this->assertResultCount(0, 'filterInitial', 'Fuzzy');
 		$this->assertResultCount(0, 'filterInitial', 'Ham');
