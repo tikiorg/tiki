@@ -169,7 +169,7 @@ if ($access->is_serializable_request() && isset($_REQUEST['listonly'])) {
 		$access->output_serialized($shippinglib->getRates($_REQUEST['from'], $_REQUEST['to'], $_REQUEST['packages']));
 	} elseif (  $_REQUEST['listonly'] == 'trackername' ) {
 		$trackers = TikiLib::lib('trk')->get_trackers_containing($_REQUEST['q']);
-                $access->output_serialized($trackers);
+		$access->output_serialized($trackers);
 	}
 } elseif ($access->is_serializable_request() && isset($_REQUEST['zotero_tags'])) { // Handle Zotero Requests
 	$access->check_feature(array( 'zotero_enabled' ));

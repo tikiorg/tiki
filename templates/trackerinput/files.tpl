@@ -309,7 +309,7 @@ $search.keypress(function (e) {
 			"filter~gallery_id": $self.data('galleryid')
 		}, function (data) {
 			$search.removeAttr('disabled').clearError();
-			$.each(data, function () {
+			$.each(data.result, function () {
 				var item = $('<li/>').append(this.link), icon = $('<label>{{icon _id=add}}</label>'), data = this;
 				item.append(icon);
 				icon.click(function () {
