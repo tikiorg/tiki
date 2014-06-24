@@ -39,7 +39,12 @@ class Search_Elastic_Connection
 	function getStatus()
 	{
 		try {
-			return $this->get('/');
+			$result = $this->get('/');
+			if (! isset($result->ok)) {
+				$result->ok = $result->status === 200;
+			}
+
+			return $result;
 		} catch (Exception $e) {
 			return (object) array(
 				'ok' => false,
