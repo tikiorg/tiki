@@ -113,7 +113,7 @@ class Search_Elastic_QueryBuilder
 			);
 		} elseif ($node instanceof Initial) {
 			return array(
-				'text_phrase_prefix' => array(
+				'match_phrase_prefix' => array(
 					$node->getField() => array(
 						"query" => $this->getTerm($node),
 						"boost" => $node->getWeight(),
