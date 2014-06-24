@@ -570,6 +570,8 @@ textarea,
 .footer_liner a:visited {
   color: #a52873;
 }
+.navbar-nav .open .dropdown-menu,
+.navbar-nav .open .dropdown-menu li,
 .navbar-default .navbar-nav > li > a {
   background: #a82a76;
 }
