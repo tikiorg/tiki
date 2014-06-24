@@ -87,12 +87,12 @@ class Search_Elastic_Connection
 
 	function storeQuery($index, $name, $query)
 	{
-		return $this->rawIndex('_percolator', $index, $name, $query);
+		return $this->rawIndex($index, '.percolator', $name, $query);
 	}
 
 	function unstoreQuery($index, $name)
 	{
-		return $this->delete("/_percolator/$index/$name");
+		return $this->delete("/$index/.percolator/$name");
 	}
 
 	function percolate($index, $type, $document)

@@ -220,7 +220,9 @@ class Search_Elastic_Index implements Search_Index_Interface, Search_Index_Query
 	{
 		list($type, $object, $document) = $this->generateDocument($document);
 		$result = $this->connection->percolate($this->index, $type, $document);
-		return $result->matches;
+		return array_map(function ($item) {
+			return $item->_id;
+		}, $result->matches);
 	}
 
 	function store($name, Search_Expr_Interface $expr)
