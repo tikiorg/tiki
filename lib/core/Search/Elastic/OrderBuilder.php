@@ -15,15 +15,11 @@ class Search_Elastic_OrderBuilder
 		if ($field !== Search_Query_Order::FIELD_SCORE) {
 			if ($order->getMode() == Search_Query_Order::MODE_NUMERIC) {
 				$component = array(
-					"_script" => array(
-						"script" => "doc['$field'].value * 1",
-						"type" => "number",
-						"order" => $order->getOrder(),
-					),
+					"$field.nsort" => $order->getOrder(),
 				);
 			} else {
 				$component = array(
-					$field => $order->getOrder(),
+					"$field.sort" => $order->getOrder(),
 				);
 			}
 		}

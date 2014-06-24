@@ -64,6 +64,45 @@ class Search_Elastic_Index implements Search_Index_Interface
 					return array(
 						"type" => "string",
 						"index" => "not_analyzed",
+						"fields" => array(
+							"sort" => array(
+								"type" => "string",
+								"index" => "not_analyzed",
+							),
+							"nsort" => array(
+								"type" => "float",
+								"null_value" => 0.0,
+								"ignore_malformed" => true,
+							),
+						),
+					);
+				} elseif ($entry instanceof Search_Type_DateTime) {
+					return array(
+						"type" => "date",
+						"fields" => array(
+							"sort" => array(
+								"type" => "date",
+							),
+							"nsort" => array(
+								"type" => "date",
+							),
+						),
+					);
+				} else {
+					return array(
+						"type" => "string",
+						"fields" => array(
+							"sort" => array(
+								"type" => "string",
+								"index" => "not_analyzed",
+								"ignore_above" => 200,
+							),
+							"nsort" => array(
+								"type" => "float",
+								"null_value" => 0.0,
+								"ignore_malformed" => true,
+							),
+						),
 					);
 				}
 			}, array_diff_key($data, $this->providedMappings[$type])

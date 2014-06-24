@@ -14,8 +14,8 @@ abstract class Search_Index_SortTest extends PHPUnit_Framework_TestCase
 
 	protected function populate($index)
 	{
-		$this->add($index, 'A', '1', 'Hello', 'foobar');
-		$this->add($index, 'B', '10', 'foobar', 'Hello');
+		$this->add($index, 'A', '1', 'Hello', 'Hello Foobar');
+		$this->add($index, 'B', '10', 'foobar', 'Hello World Foobar');
 		$this->add($index, 'C', '2', 'Baz', 'Baz');
 	}
 
@@ -25,8 +25,10 @@ abstract class Search_Index_SortTest extends PHPUnit_Framework_TestCase
 			array('numeric_field_nasc', 'ACB'),
 			array('numeric_field_ndesc', 'BCA'),
 			array('numeric_field_asc', 'ABC'),
-			array('text_field_asc', 'CBA'),
-			array('text_field_desc', 'ABC'),
+			array('text_field_asc', 'CAB'),
+			array('text_field_desc', 'BAC'),
+			array('object_id_asc', 'ABC'),
+			array('object_id_desc', 'CBA'),
 		);
 	}
 
