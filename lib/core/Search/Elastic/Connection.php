@@ -38,7 +38,12 @@ class Search_Elastic_Connection
 	function getStatus()
 	{
 		try {
-			return $this->get('/');
+			$result = $this->get('/');
+			if (! isset($result->ok)) {
+				$result->ok = $result->status === 200;
+			}
+
+			return $result;
 		} catch (Exception $e) {
 			return (object) array(
 				'ok' => false,
@@ -176,6 +181,10 @@ class Search_Elastic_Connection
 								'default' => array(
 									'tokenizer' => 'standard',
 									'filter' => array('standard', 'lowercase', 'asciifolding', 'tiki_stop', 'porterStem'),
+								),
+								'sortable' => array(
+									'tokenizer' => 'keyword',
+									'filter' => array('lowercase'),
 								),
 							),
 							'filter' => array(

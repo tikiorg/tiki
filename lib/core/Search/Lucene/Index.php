@@ -371,7 +371,8 @@ class Search_Lucene_Index implements Search_Index_Interface
 			if ($child instanceof Zend_Search_Lucene_Search_Query_Boolean) {
 				$signs = $child->getSigns();
 				if (count($signs) === 1 && $signs[0] === false) {
-					$result->addSubquery(reset($child->getSubqueries()), false);
+					$subs = $child->getSubqueries();
+					$result->addSubquery(reset($subs), false);
 					continue;
 				}
 			}
