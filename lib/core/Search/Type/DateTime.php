@@ -5,14 +5,19 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-class Search_Type_DateTime extends Search_Type_PlainText
+class Search_Type_DateTime implements Search_Type_Interface
 {
+	private $value;
+
 	function __construct($value)
 	{
 		if (is_numeric($value)) {
-			parent::__construct(gmdate(DateTime::W3C, $value));
-		} else {
-			parent::__construct(null);
+			$this->value = gmdate(DateTime::W3C, $value);
 		}
+	}
+
+	function getValue()
+	{
+		return $this->value;
 	}
 }
