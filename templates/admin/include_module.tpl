@@ -29,20 +29,12 @@
 
 		<div class="adminoptionbox">
 			<fieldset>
-				<legend>{tr}Module zone visibility{/tr}</legend>			
-				{preference name=module_zones_top}
-				{preference name=module_zones_topbar}
-				{preference name=module_zones_pagetop}
-				{preference name=feature_left_column}
-				{preference name=feature_right_column}
-				{preference name=module_zones_pagebottom}
-				{preference name=module_zones_bottom}			
+				<legend>{tr}Module zone visibility{/tr}</legend>	
+				{preference name=module_file}
+				{preference name=module_zone_available_extra}	
 			</fieldset>
 		</div>
-		
-		{preference name=module_file}
-		{preference name=module_zone_available_extra}		
-		
+				
 		{remarksbox type="tip" title="{tr}Hint{/tr}"}
 			{tr}If you lose your login module, use tiki-login_scr.php to be able to login!{/tr}
 		{/remarksbox}

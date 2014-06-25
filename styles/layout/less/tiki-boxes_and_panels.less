@@ -10,9 +10,23 @@
   position: relative;
 }
 
-// To do: replace with something Bootstrap grid-compatible
-#role_main .module {
-  max-width: 180px;
+@media(min-width: 992px) {
+  #col1.col-md-6 .module {
+    max-width: 50%;
+  }
+  #col1.col-md-8 .module,
+  #col1.col-md-9 .module {
+    max-width: 33.33333%;
+  }
+  #col1.col-md-12 .module {
+    max-width: 25%;
+  }
+  #col1.col-md-12 > .alert,
+  #col1.col-md-12 > .module {
+    width: 33.333333%;
+    margin-left: auto;
+    margin-right: auto;
+  }
 }
 
 h3.panel-title {

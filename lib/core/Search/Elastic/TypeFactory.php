@@ -19,11 +19,7 @@ class Search_Elastic_TypeFactory implements Search_Type_Factory_Interface
 
 	function timestamp($value)
 	{
-		if (is_numeric($value)) {
-			return new Search_Type_PlainText(gmdate(DateTime::W3C, $value));
-		} else {
-			return new Search_Type_PlainText(null);
-		}
+		return new Search_Type_DateTime($value);
 	}
 
 	function identifier($value)
@@ -43,7 +39,7 @@ class Search_Elastic_TypeFactory implements Search_Type_Factory_Interface
 
 	function sortable($value)
 	{
-		return new Search_Type_PlainText($value);
+		return new Search_Type_PlainShortText($value);
 	}
 }
 

@@ -70,6 +70,45 @@ class Search_Elastic_Index implements Search_Index_Interface, Search_Index_Query
 					return array(
 						"type" => "string",
 						"index" => "not_analyzed",
+						"fields" => array(
+							"sort" => array(
+								"type" => "string",
+								"analyzer" => "sortable",
+							),
+							"nsort" => array(
+								"type" => "float",
+								"null_value" => 0.0,
+								"ignore_malformed" => true,
+							),
+						),
+					);
+				} elseif ($entry instanceof Search_Type_DateTime) {
+					return array(
+						"type" => "date",
+						"fields" => array(
+							"sort" => array(
+								"type" => "date",
+							),
+							"nsort" => array(
+								"type" => "date",
+							),
+						),
+					);
+				} else {
+					return array(
+						"type" => "string",
+						"fields" => array(
+							"sort" => array(
+								"type" => "string",
+								"analyzer" => "sortable",
+								"ignore_above" => 200,
+							),
+							"nsort" => array(
+								"type" => "float",
+								"null_value" => 0.0,
+								"ignore_malformed" => true,
+							),
+						),
 					);
 				}
 			}, array_diff_key($data, $this->providedMappings[$type])
@@ -181,7 +220,9 @@ class Search_Elastic_Index implements Search_Index_Interface, Search_Index_Query
 	{
 		list($type, $object, $document) = $this->generateDocument($document);
 		$result = $this->connection->percolate($this->index, $type, $document);
-		return $result->matches;
+		return array_map(function ($item) {
+			return $item->_id;
+		}, $result->matches);
 	}
 
 	function store($name, Search_Expr_Interface $expr)

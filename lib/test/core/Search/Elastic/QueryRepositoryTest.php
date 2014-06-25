@@ -16,6 +16,10 @@ class Search_Elastic_QueryRepositoryTest extends PHPUnit_Framework_TestCase
 			$this->markTestSkipped('ElasticSearch needs to be available on localhost:9200 for the test to run.');
 		}
 
+		if (version_compare($status->version->number, '1.1.0') < 0) {
+			$this->markTestSkipped('ElasticSearch 1.1+ required');
+		}
+
 		$this->index = new Search_Elastic_Index($connection, 'test_index');
 		$this->index->destroy();
 		$factory = $this->index->getTypeFactory();
