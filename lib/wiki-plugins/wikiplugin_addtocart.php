@@ -240,7 +240,7 @@ function wikiplugin_addtocart( $data, $params )
 
 	if ( $params['ajaxaddtocart'] == 'y' ) {
 		$headerlib->add_jq_onready("$('.wp_addtocart_form').cartAjaxAdd();");
-		$smarty->assign('form_data', ' data-params=\'' . json_encode(array_filter($params)) . '\'');
+		$smarty->assign('form_data', ' data-params=\'' . str_replace("'", "\u0027", json_encode(array_filter($params))) . '\'');
 	} else {
 		$smarty->assign('form_data', '');
 	}
