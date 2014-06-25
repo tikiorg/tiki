@@ -263,7 +263,15 @@ if (!$info || isset($_REQUEST['date']) || isset($_REQUEST['version'])) {
 
 // If the page doesn't exist then display an error
 if (empty($info) && !($user && $prefs['feature_wiki_userpage'] == 'y' && strcasecmp($prefs['feature_wiki_userpage_prefix'].$user, $page) == 0)) {
-	if (!empty($prefs['url_anonymous_page_not_found']) && empty($user)) {
+	$isprefixed = false;
+	$prefixes = explode(',', $prefs['wiki_prefixalias_tokens']);
+	foreach ($prefixes as $p) {
+		$p = trim($p);
+		if (strlen($p) > 0 && TikiLib::strtolower(substr($page, 0, strlen($p))) == TikiLib::strtolower($p)) {
+			$isprefixed = true;
+		}
+	}
+	if (!$isprefixed && !empty($prefs['url_anonymous_page_not_found']) && empty($user)) {
 		$access->redirect($prefs['url_anonymous_page_not_found']);
 	}
 	if ($user && $prefs['feature_wiki_userpage'] == 'y' && strcasecmp($prefs['feature_wiki_userpage_prefix'], $page) == 0) {
