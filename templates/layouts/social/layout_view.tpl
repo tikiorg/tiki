@@ -75,7 +75,6 @@
 
 			<div class="row">
 				<div class="col-md-12 well">
-					<!-- content modules col-md-3 -->
 					{modulelist zone=bottom}
 				</div>
 			</div>
@@ -109,30 +108,6 @@
 					<ul class="nav navbar-nav navbar-right">
 						{if $user}
 							<li>{notification_link}</li>
-
-							{if $prefs.feature_multilingual eq 'y'}
-								<li class="dropdown">
-									<a href="#" class="dropdown-toggle" data-toggle="dropdown">{tr}Language{/tr} <b class="caret"></b></a>
-									<ul class="dropdown-menu">
-									</ul>
-								</li>
-							{/if}
-							<li class="dropdown">
-								<a href="#" class="dropdown-toggle" data-toggle="dropdown">{tr}Navigation{/tr} <b class="caret"></b></a>
-								<ul class="dropdown-menu">
-									{* TODO : Add more links here *}
-									{if $prefs.feature_wiki eq 'y'}
-										<li><a href="tiki-index.php">{tr}Wiki Home{/tr}</a></li>
-										<li><a href="tiki-listpages.php?sort_mode=lastModif_desc">{tr}List Pages{/tr}</a></li>
-									
-									{/if}
-									{if $prefs.feature_trackers eq 'y'}<li><a href="tiki-list_trackers.php">{tr}List Trackers{/tr}</a></li>{/if}
-									{if $prefs.feature_blogs eq 'y'}<li><a href="tiki-list_blogs.php">{tr}List Blogs{/tr}</a></li>{/if}
-									{if $prefs.feature_file_gallery eq 'y'}<li><a href="tiki-list_file_gallery.php">{tr}List galleries{/tr}</a></li>{/if}
-									{if $prefs.feature_forums eq 'y'}<li><a href="tiki-forums.php">{tr}List forums{/tr}</a></li>{/if}
-								</ul>
-							</li>
-
 							<li class="dropdown">
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown">{tr}Account{/tr} <b class="caret"></b></a>
 								<ul class="dropdown-menu">
