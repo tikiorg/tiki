@@ -403,6 +403,7 @@ class ParserLib extends TikiDb_Bridge
 	{
 		global $tikilib, $tiki_p_edit, $prefs, $pluginskiplist;
 		$smarty = TikiLib::lib('smarty');
+		$smarty->loadPlugin('smarty_function_glyph');
 
 		if ( ! is_array($pluginskiplist) )
 			$pluginskiplist = array();
@@ -2736,7 +2737,8 @@ if ( \$('#$id') ) {
 							if (!empty($this->option['page'])) {
 								$button .= 'page='.urlencode($this->option['page']).'&amp;';
 							}
-							$button .= 'hdr='.$nb_hdrs.'">'.smarty_function_icon(array('_id'=>'page_edit_section', 'alt'=>tra('Edit Section')), $smarty).'</a></div>';
+							$button .= 'hdr='.$nb_hdrs.'">' . smarty_function_glyph(array('name' => 'edit', 'title' => tra('Edit Section'))).'</a></div>';
+							//$button .= 'hdr='.$nb_hdrs.'">'.smarty_function_icon(array('_id'=>'page_edit_section', 'alt'=>tra('Edit Section')), $smarty).'</a></div>';
 						} else {
 							$button = '';
 						}
@@ -3026,7 +3028,7 @@ if ( \$('#$id') ) {
 			if (!empty($this->option['page'])) {
 				$button .= 'page='.urlencode($this->option['page']).'&amp;';
 			}
-			$button .= 'hdr=0">'.smarty_function_icon(array('_id'=>'page_edit_section', 'alt'=>tra('Edit Section')), $smarty).'</a></div>';
+			$button .= 'hdr=0">'.smarty_function_glyph(array('name' => 'edit','_id'=>'page_edit_section', 'title'=>tra('Edit Section')), $smarty).'</a></div>';
 			$data = $button.$data;
 		}
 	}

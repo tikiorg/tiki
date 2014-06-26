@@ -7,8 +7,27 @@
 
 function smarty_function_glyph($params)
 {
-	if (! empty($params['name'])) {
-		return "<span class=\"glyphicon glyphicon-{$params['name']}\"></span>";
+	if (empty($params['name']))
+		return;
+	$has_title = (! empty($params['alt']) || ! empty($params['title']));
+	$title = "";
+	if ($has_title) {
+		if (! empty($params['alt']))
+			$title = $params['alt'];
+		else
+			$title = $params['title'];
 	}
+	$cssclass = "glyphicon glyphicon-{$params['name']}";
+	if (! empty($params['class']))
+		$cssclass .= " " . $params['class'];
+	if ($has_title)
+		$cssclass .= " tooltips";
+
+	$html = "<span class=\"$cssclass\"";
+	if (! empty($params['_id']))
+		$html .= " id=\"" . $params['_id'] . "\"";
+	if ($has_title)
+		$html .= " title=\"" . $title . "\""
+	return $html;
 }
 
