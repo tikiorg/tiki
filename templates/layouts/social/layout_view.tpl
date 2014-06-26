@@ -74,10 +74,12 @@
 			</div>
 		</div>
 
-		<div class="row">
-			<footer class="col-md-12 main-footer">
-				<!-- content modules col-md-3 -->
-				{modulelist zone=bottom}
+		<div class="">
+			<footer class="main-footer">
+				<div class="container">
+					<!-- content modules col-md-3 -->
+					{modulelist zone=bottom}
+				</div>
 			</footer>
 		</div>
 
