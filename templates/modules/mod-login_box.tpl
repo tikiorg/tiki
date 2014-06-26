@@ -111,13 +111,14 @@ if (jqueryTiki.no_cookie) {
 	{else}
 		{assign var='close_tags' value=''}
 		{if $mode eq "popup"}
-			<div class="siteloginbar_popup dropdown pull-right">
-				<a href="tiki-login.php" class="login_link btn" data-toggle="dropdown">
-					<span>{tr}Log in{/tr}</span>
-					<span class="caret"></span>
-				</a>
-				<div class="siteloginbar_poppedup panel panel-body dropdown-menu pull-right">
-						{capture assign="close_tags"}</div></div>{$close_tags}{/capture}
+			<div class="siteloginbar_popup dropdown btn-group pull-right">
+                <button type="button" class="btn btn-link dropdown-toggle" data-toggle="dropdown">
+				    <a href="tiki-login.php"></a>
+					    {tr}Log in{/tr}
+					    <span class="caret"></span>
+                </button>
+				<div class="siteloginbar_poppedup {*panel panel-body*} dropdown-menu pull-right">
+						{capture assign="close_tags"}</div></div></div></div>{$close_tags}{/capture}
 		{/if}
 		<form name="loginbox" class="form" id="loginbox-{$module_logo_instance}" action="{$login_module.login_url|escape}"
 				method="post" {if $prefs.feature_challenge eq 'y'}onsubmit="doChallengeResponse()"{/if}
@@ -219,13 +220,13 @@ function doChallengeResponse() {
 			<div {if $mode eq 'header'}class="text-right" style="display:inline;"{/if}>
 				{strip}
 				{if $module_params.show_forgot eq 'y' && $prefs.forgotPass eq 'y'}
-					<div class="pass"><a {*class="linkmodule"*} href="tiki-remind_password.php" title="{tr}Click here if you've forgotten your password{/tr}">{tr}I forgot my password{/tr}</a></div>
+					<div class="navbar-default"><ul {if $mode eq 'popup'}class="navbar-nav"{/if}><li class="pass"><a {*class="linkmodule"*} href="tiki-remind_password.php" title="{tr}Click here if you've forgotten your password{/tr}">{tr}I forgot my password{/tr}</a></li>
 				{/if}
 				{if $module_params.show_register eq 'y' && $prefs.allowRegister eq 'y'}
 						{if $mode eq 'header' && $module_params.show_forgot eq 'y' && $prefs.forgotPass eq 'y'}
 							&nbsp;|&nbsp;
 						{/if}
-					<div class="register"><a {*class="linkmodule"*} href="tiki-register.php{if !empty($prefs.registerKey)}?key={$prefs.registerKey|escape:'url'}{/if}" title="{tr}Click here to register{/tr}">{tr}Register{/tr}</a></div>
+					<li class="register"><a {*class="linkmodule"*} href="tiki-register.php{if !empty($prefs.registerKey)}?key={$prefs.registerKey|escape:'url'}{/if}" title="{tr}Click here to register{/tr}">{tr}Register{/tr}</a></li></ul></div>
 				{/if}
 				{/strip}
 			</div>
