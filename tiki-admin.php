@@ -312,7 +312,7 @@ $icons = array(
 		'title' => tr('i18n'),
 		'description' => tr('Internationalization and localization - multilingual features'),
 		'help' => 'i18n',
-		'icon_class' => 'glyphicon glyphicon-globe',
+		'icon_class' => 'glyphicon glyphicon-flag',
 	),
 	"maps" => array(
 		'icon' => 'img/icons/large/maps.png',
