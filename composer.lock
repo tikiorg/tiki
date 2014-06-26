@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "416dfc12a3f3beeb8017fadb8e4fe81d",
+    "hash": "2b8441f30953cca1b02322e9ffd6535a",
     "packages": [
         {
             "name": "adodb/adodb",
@@ -942,12 +942,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/jakiestfu/Medium.js.git",
-                "reference": "0b190e7e67080c052f80e4200401f2727b522e9d"
+                "reference": "32674f32b9fc5fb03f8909807876e79fefab519f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jakiestfu/Medium.js/zipball/0b190e7e67080c052f80e4200401f2727b522e9d",
-                "reference": "0b190e7e67080c052f80e4200401f2727b522e9d",
+                "url": "https://api.github.com/repos/jakiestfu/Medium.js/zipball/32674f32b9fc5fb03f8909807876e79fefab519f",
+                "reference": "32674f32b9fc5fb03f8909807876e79fefab519f",
                 "shasum": ""
             },
             "require": {
@@ -973,7 +973,7 @@
                     "role": "Lead Developer"
                 }
             ],
-            "time": "2014-06-17 18:30:22"
+            "time": "2014-05-31 18:09:10"
         },
         {
             "name": "phenx/php-font-lib",
@@ -1210,12 +1210,6 @@
                 "type": "svn",
                 "url": "http://smarty-php.googlecode.com/svn",
                 "reference": "/tags/v3.1.18/@4839"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://composer.tiki.org/dist/smarty-smarty-v3.1.18-17a6e2.zip",
-                "reference": "v3.1.18",
-                "shasum": "ae2d06617491f5adf39f14559feb29aa4c2e960d"
             },
             "require": {
                 "php": ">=5.2"
@@ -1646,12 +1640,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/wikiLingo/wikiLingo.git",
-                "reference": "fbf8dbc859fe8d701198b4ad39ab051e817e3532"
+                "reference": "10b4c87173f58c1d85e126f05e5a4dc73481276c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wikiLingo/wikiLingo/zipball/fbf8dbc859fe8d701198b4ad39ab051e817e3532",
-                "reference": "fbf8dbc859fe8d701198b4ad39ab051e817e3532",
+                "url": "https://api.github.com/repos/wikiLingo/wikiLingo/zipball/10b4c87173f58c1d85e126f05e5a4dc73481276c",
+                "reference": "10b4c87173f58c1d85e126f05e5a4dc73481276c",
                 "shasum": ""
             },
             "require": {
@@ -1690,7 +1684,7 @@
                     "role": "Lead Developer"
                 }
             ],
-            "time": "2014-06-13 18:16:11"
+            "time": "2014-06-03 21:27:26"
         },
         {
             "name": "zetacomponents/base",
