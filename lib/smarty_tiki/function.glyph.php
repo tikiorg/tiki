@@ -27,7 +27,9 @@ function smarty_function_glyph($params)
 	if (! empty($params['_id']))
 		$html .= " id=\"" . $params['_id'] . "\"";
 	if ($has_title)
-		$html .= " title=\"" . $title . "\""
+		$html .= " title=\"" . $title . "\"";
+	if ($has_title)
+		$html .= " alt=\"" . $title . "\"";
 	return $html;
 }
 
