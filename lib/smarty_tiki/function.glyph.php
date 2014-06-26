@@ -30,6 +30,7 @@ function smarty_function_glyph($params)
 		$html .= " title=\"" . $title . "\"";
 	if ($has_title)
 		$html .= " alt=\"" . $title . "\"";
+	$html .= "></span>";
 	return $html;
 }
 
