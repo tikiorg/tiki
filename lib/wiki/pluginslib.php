@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2013 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -15,7 +15,7 @@
  * - add the lines
  * <code>
  * include "pluginslib.php";
- * 
+ *
  * function wikiplugin_backlinks($data, $params) {
  *    $plugin = new BackLinks();
  *    return $plugin->run($data, $params);
@@ -57,8 +57,8 @@ class PluginsLib extends TikiLib
 	 * @var array
 	 */
 	var $aInfoPresetNames = array(
-			'hits' => 'Hits', 'lastModif' => 'Last mod', 'user' => 'Last author', 'len' => 'Size', 'comment' => 'Com', 
-			'creator' => 'Creator', 'version' => 'Last ver', 'flag' => 'Status', 'versions' => 'Vers', 'links' => 'Links', 
+			'hits' => 'Hits', 'lastModif' => 'Last mod', 'user' => 'Last author', 'len' => 'Size', 'comment' => 'Com',
+			'creator' => 'Creator', 'version' => 'Last ver', 'flag' => 'Status', 'versions' => 'Vers', 'links' => 'Links',
 			'backlinks' => 'Backlinks');
 	/**
 	 * Process the params, in this order:
@@ -98,7 +98,7 @@ class PluginsLib extends TikiLib
 				} else {
 					$args[$arg]=array();
 				}
-			} 
+			}
 		}
 		return $args;
 	}
@@ -162,7 +162,7 @@ class PluginsLib extends TikiLib
 
 	function error ($message)
 	{
-		return '~np~<span class="warn">' . tra('Plugin ') . $this->getName() . ' ' . tra('failed') 
+		return '~np~<span class="warn">' . tra('Plugin ') . $this->getName() . ' ' . tra('failed')
 			. ' : ' . tra($message) . '</span>~/np~';
 	}
 
@@ -186,11 +186,11 @@ class PluginsLibUtil
 	 * Create a table with information from pages
 	 * @param array key ["data"] from one of the functions that retrieve informaci�n about pages
 	 * @param array list of keys to show.
-	 * @param array definition of the principal field. By default: 
+	 * @param array definition of the principal field. By default:
 	 *              array("field"=>"pageName","name"=>"Page")
 	 * @return string
 	 */
-	function createTable($aData, $aInfo = false, $aPrincipalField = false)
+	static function createTable($aData, $aInfo = false, $aPrincipalField = false)
 	{
 		// contract
 		if (!$aPrincipalField or !is_array($aPrincipalField)) {
@@ -209,7 +209,7 @@ class PluginsLibUtil
 				$sOutput .= '<em>'. tra('Required parameters are in</em> <b>bold</b>') . '<br />';
 			}
 			// Header for info
-			$sOutput .= '<table class="normal">' . "\n\t" . '<tr>' . "\n\t\t" . '<td class="heading"' . $sStyle. '>' 
+			$sOutput .= '<table class="normal">' . "\n\t" . '<tr>' . "\n\t\t" . '<td class="heading"' . $sStyle. '>'
 				. tra($aPrincipalField['name']) . '</td>';
 			foreach ($aInfo as $iInfo => $sHeader) {
 				if ($sHeader == 'paraminfo') {
@@ -247,7 +247,7 @@ class PluginsLibUtil
 				}
 				$sClass = ($iCounter%2) ? 'odd' : 'even';
 
-				$sOutput .= "\n\t" . '<tr>' . "\n\t\t" . '<td class="' . $sClass . '"' . $rowspan . '>' 
+				$sOutput .= "\n\t" . '<tr>' . "\n\t\t" . '<td class="' . $sClass . '"' . $rowspan . '>'
 					. $openlink . $fieldval . $closelink . '</td>';
 				$colcounter = 2;
 				//Subsequent columns
@@ -290,7 +290,7 @@ class PluginsLibUtil
 										$sOutput .= "\n\t\t" . '<td class="' . $sClass . '">';
 										if (count($aPage['parameters']) > 0) {
 											$sOutput .= $sInfoitem;
-										} 
+										}
 										$sOutput .= '</td>';
 									}
 								}
@@ -316,7 +316,7 @@ class PluginsLibUtil
 		return $sOutput;
 	}
 
-	function createList($aData)
+	static function createList($aData)
 	{
 		$aPrincipalField = array('field' => 'pageName', 'name' => 'Pages');
 
