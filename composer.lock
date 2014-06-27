@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "416dfc12a3f3beeb8017fadb8e4fe81d",
+    "hash": "b5e6afdc84e7b2b1331bc014b10aa352",
     "packages": [
         {
             "name": "adodb/adodb",
@@ -337,12 +337,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FutureLink-Protocol/php.git",
-                "reference": "da9b50048a454929dd0c2bcf4551c81d83d92de2"
+                "reference": "6b5d7332bf592ef28c61f399beb383ae3481dc1e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FutureLink-Protocol/php/zipball/da9b50048a454929dd0c2bcf4551c81d83d92de2",
-                "reference": "da9b50048a454929dd0c2bcf4551c81d83d92de2",
+                "url": "https://api.github.com/repos/FutureLink-Protocol/php/zipball/6b5d7332bf592ef28c61f399beb383ae3481dc1e",
+                "reference": "6b5d7332bf592ef28c61f399beb383ae3481dc1e",
                 "shasum": ""
             },
             "require": {
@@ -382,7 +382,55 @@
             ],
             "description": "FutureLink-Protocol implementation in PHP",
             "homepage": "https://github.com/FutureLink-Protocol",
-            "time": "2014-05-02 21:11:50"
+            "time": "2014-06-24 17:15:33"
+        },
+        {
+            "name": "fortawesome/font-awesome",
+            "version": "4.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/FortAwesome/Font-Awesome.git",
+                "reference": "2649d91d18629bab071449b3bc4cb02761037a57"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/FortAwesome/Font-Awesome/zipball/2649d91d18629bab071449b3bc4cb02761037a57",
+                "reference": "2649d91d18629bab071449b3bc4cb02761037a57",
+                "shasum": ""
+            },
+            "require-dev": {
+                "jekyll": "1.0.2",
+                "lessc": "1.4.2"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "4.0.x-dev"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "OFL-1.1",
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Dave Gandy",
+                    "email": "dave@fontawesome.io",
+                    "homepage": "http://twitter.com/davegandy",
+                    "role": "Developer"
+                }
+            ],
+            "description": "The iconic font and CSS framework",
+            "homepage": "http://fontawesome.io/",
+            "keywords": [
+                "FontAwesome",
+                "awesome",
+                "bootstrap",
+                "font",
+                "icon"
+            ],
+            "time": "2014-05-14 20:37:30"
         },
         {
             "name": "gabordemooij/redbean",
@@ -942,12 +990,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/jakiestfu/Medium.js.git",
-                "reference": "0b190e7e67080c052f80e4200401f2727b522e9d"
+                "reference": "9b5f066679a71aeb3b3f3be52a9ddd1bfe191d1d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jakiestfu/Medium.js/zipball/0b190e7e67080c052f80e4200401f2727b522e9d",
-                "reference": "0b190e7e67080c052f80e4200401f2727b522e9d",
+                "url": "https://api.github.com/repos/jakiestfu/Medium.js/zipball/9b5f066679a71aeb3b3f3be52a9ddd1bfe191d1d",
+                "reference": "9b5f066679a71aeb3b3f3be52a9ddd1bfe191d1d",
                 "shasum": ""
             },
             "require": {
@@ -973,7 +1021,7 @@
                     "role": "Lead Developer"
                 }
             ],
-            "time": "2014-06-17 18:30:22"
+            "time": "2014-06-26 20:01:29"
         },
         {
             "name": "phenx/php-font-lib",
@@ -1646,12 +1694,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/wikiLingo/wikiLingo.git",
-                "reference": "fbf8dbc859fe8d701198b4ad39ab051e817e3532"
+                "reference": "42004a7a718441d2f13fb9b92041ed20e7bfc416"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wikiLingo/wikiLingo/zipball/fbf8dbc859fe8d701198b4ad39ab051e817e3532",
-                "reference": "fbf8dbc859fe8d701198b4ad39ab051e817e3532",
+                "url": "https://api.github.com/repos/wikiLingo/wikiLingo/zipball/42004a7a718441d2f13fb9b92041ed20e7bfc416",
+                "reference": "42004a7a718441d2f13fb9b92041ed20e7bfc416",
                 "shasum": ""
             },
             "require": {
@@ -1690,7 +1738,7 @@
                     "role": "Lead Developer"
                 }
             ],
-            "time": "2014-06-13 18:16:11"
+            "time": "2014-06-27 00:06:41"
         },
         {
             "name": "zetacomponents/base",
@@ -1939,7 +1987,9 @@
             "time": "2014-03-17 04:51:51"
         }
     ],
-    "aliases": [],
+    "aliases": [
+
+    ],
     "minimum-stability": "stable",
     "stability-flags": {
         "jcapture-applet/jcapture-applet": 20,
@@ -1950,6 +2000,10 @@
         "wikilingo/codemirror": 20,
         "bafs/testify": 20
     },
-    "platform": [],
-    "platform-dev": []
+    "platform": [
+
+    ],
+    "platform-dev": [
+
+    ]
 }
