@@ -581,9 +581,26 @@ textarea,
 .postbody-title {
   background: url('watermelon/siteheader.png') no-repeat -480px -200px;
 }
+.secondary_site_menu .navbar-default .navbar-nav > li > a:hover,
+.secondary_site_menu .navbar-default .navbar-nav > li > a:focus,
+.secondary_site_menu .navbar-nav .open .dropdown-menu li,
+.secondary_site_menu .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover,
+.secondary_site_menu .navbar-nav .open .dropdown-menu,
+.secondary_site_menu .navbar-default .navbar-nav li a {
+  background: transparent;
+  color: #c21e3b;
+}
 #top_modules .sitetitle,
 #top_modules .sitesubtitle {
   color: #c21e3b;
   text-shadow: none;
 }
-
+#top_modules .sitetitle,
+#top_modules .sitesubtitle {
+  color: #c21e3b;
+  text-shadow: none;
+}
+#top_modules a,
+#top_modules a:visited {
+  color: #c21e3b;
+}
