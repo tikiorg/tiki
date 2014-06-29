@@ -1,4 +1,12 @@
 {foreach from=$fields item=field}
+	{if $status}
+		<div class="form-group">
+			<label for="trackerinput_status" class="control-label">{tr}Status{/tr}</label>
+			<div id="trackerinput_status">
+				{include 'trackerinput/status.tpl' status_types=$status_types status=$status}
+			</div>
+		</div>
+	{/if}
 	<div class="form-group">
 		<label for="trackerinput_{$field.fieldId|escape}" class="control-label">
 			{$field.name|escape}

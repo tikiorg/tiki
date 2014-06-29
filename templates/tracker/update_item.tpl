@@ -6,7 +6,7 @@
 
 {block name="content"}
 <form method="post" action="{service controller=tracker action=update_item}" id="updateItemForm">
-	{trackerfields trackerId=$trackerId fields=$fields}
+	{trackerfields trackerId=$trackerId fields=$fields status=$status}
 	<div class="submit">
 		<input type="hidden" name="itemId" value="{$itemId|escape}">
 		<input type="hidden" name="trackerId" value="{$trackerId|escape}">

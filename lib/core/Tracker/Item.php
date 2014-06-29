@@ -430,7 +430,11 @@ class Tracker_Item
 		if ($this->definition->getConfiguration('showStatus', 'n') == 'y'
 			|| ($this->definition->getConfiguration('showStatusAdminOnly', 'n') == 'y' && $this->perms->admin_trackers)) {
 
-			switch ($this->info['status']) {
+			$status = $this->isNew()
+				? $this->definition->getConfiguration('newItemStatus', 'o')
+				: $this->info['status'];
+
+			switch ($status) {
 				case 'o':
 					return 'open';
 				case 'p':

@@ -26,6 +26,8 @@ function smarty_function_trackerfields($params, $smarty)
 	}
 
 	$sectionFormat = $definition->getConfiguration('sectionFormat', 'flat');
+	$smarty->assign('tracker_info', $definition->getInformation());
+	$smarty->assign('status_types', TikiLib::lib('trk')->status_types());
 
 	switch ($sectionFormat) {
 	case 'tab':
@@ -48,7 +50,7 @@ function smarty_function_trackerfields($params, $smarty)
 			);
 		}
 
-		$smarty->assign('sections', $out);
+		$smarty->assign('sections', array_values($out));
 		if ($params['mode'] == 'view') {
 			return $smarty->fetch('trackeroutput/layout_tab.tpl');
 		} else {
