@@ -525,7 +525,7 @@ hr {
   /* inner <header> element that gets .fixedwidth class applied */
   background: url('raspberry/siteheader.png') 0 0 no-repeat;
 }
-#header #top_modules .module.secondary_site_menu {
+header.header .module.secondary_site_menu {
   background: none;
 }
 .page-header {
@@ -581,26 +581,36 @@ textarea,
 .postbody-title {
   background: url('raspberry/siteheader.png') no-repeat -480px -200px;
 }
+.secondary_site_menu .navbar-default .navbar-nav > li > a,
 .secondary_site_menu .navbar-default .navbar-nav > li > a:hover,
 .secondary_site_menu .navbar-default .navbar-nav > li > a:focus,
-.secondary_site_menu .navbar-nav .open .dropdown-menu li,
-.secondary_site_menu .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover,
-.secondary_site_menu .navbar-nav .open .dropdown-menu,
-.secondary_site_menu .navbar-default .navbar-nav li a {
+.secondary_site_menu .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover {
   background: transparent;
   color: #b51360;
 }
-#top_modules .sitetitle,
-#top_modules .sitesubtitle {
+.secondary_site_menu .navbar-default .navbar-nav li ul li a {
+  background: #e60b7f;
+  color: #fff;
+}
+.secondary_site_menu .navbar-default .navbar-nav li ul li a:hover,
+.secondary_site_menu .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover {
+  background: #c90a6f;
+  color: #fff;
+}
+.siteloginbar_popup .dropdown-menu > li > a {
+  color: #fff;
+}
+header.header .sitetitle,
+header.header .sitesubtitle {
   color: #b51360;
   text-shadow: none;
 }
-#top_modules .sitetitle,
-#top_modules .sitesubtitle {
+header.header .sitetitle,
+header.header .sitesubtitle {
   color: #b51360;
   text-shadow: none;
 }
-#top_modules a,
-#top_modules a:visited {
+header.header a,
+header.header a:visited {
   color: #b51360;
 }
