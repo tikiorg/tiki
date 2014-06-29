@@ -50,7 +50,7 @@
 	{include file='tracker_error.tpl'}
 {/if}{*print_page*}
 
-{tabset name='tabs_view_tracker_item' skipsingle=1}
+{tabset name='tabs_view_tracker_item' skipsingle=1 toggle=n}
 
 	{tab name="{tr}View{/tr}"}
 		{* --- tab with view ------------------------------------------------------------------------- *}
