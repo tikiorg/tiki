@@ -32,7 +32,7 @@
   background: @header_container_header-background; // url('@{imagePath}siteheader.png') 0 0 no-repeat;
 }
 
-#header #top_modules .module.secondary_site_menu {
+header.header .module.secondary_site_menu {
   background: none;
 }
 
@@ -95,4 +95,42 @@ textarea,
 
 .postbody-title {
   background: @postbody-title-background; //url('@{imagePath}siteheader.png') no-repeat -480px -200px;
+}
+
+.secondary_site_menu .navbar {margin-bottom: 0;}
+.secondary_site_menu .navbar-nav {float: right;}
+
+.secondary_site_menu .navbar-default .navbar-nav > li > a, // sets link color
+.secondary_site_menu .navbar-default .navbar-nav > li > a:hover,
+.secondary_site_menu .navbar-default .navbar-nav > li > a:focus,
+.secondary_site_menu .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover //,
+//.secondary_site_menu .navbar-nav .open .dropdown-menu,
+//.secondary_site_menu .navbar-nav .open .dropdown-menu li
+{
+  background: transparent;
+  color: @brand-primary-of-option;
+}
+
+.secondary_site_menu .navbar-default .navbar-nav li ul li a {
+  background: @navbar-default-navbar-nav-li-a-background;
+  color: #fff;
+}
+
+.secondary_site_menu .navbar-default .navbar-nav li ul li a:hover,
+.secondary_site_menu .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover {
+  background: darken(@navbar-default-navbar-nav-li-a-background, 6%);
+  color: #fff;
+}
+
+.siteloginbar_popup .dropdown-menu > li > a {color: #fff;}
+
+// This comes last to enable site title color of theme options under FiveAlive-lite to have priority over the default set by FiveAlive.
+header.header {
+  .sitetitle,
+  .sitesubtitle {
+    color: @brand-primary;
+    text-shadow: none;}
+  //  a,
+  //  a:visited {color: @brand-primary;
+  //  }
 }

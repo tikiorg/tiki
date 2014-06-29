@@ -7,7 +7,7 @@
 
 function prefs_site_list()
 {
-    $available_layouts = TikiLib::lib('css')->list_layouts();
+    $available_layouts = TikiLib::lib('css')->list_user_selectable_layouts();
 
 	return array (
 		'site_closed' => array(

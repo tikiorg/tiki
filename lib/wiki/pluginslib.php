@@ -190,7 +190,7 @@ class PluginsLibUtil
 	 *              array("field"=>"pageName","name"=>"Page")
 	 * @return string
 	 */
-	function createTable($aData, $aInfo = false, $aPrincipalField = false)
+	static function createTable($aData, $aInfo = false, $aPrincipalField = false)
 	{
 		// contract
 		if (!$aPrincipalField or !is_array($aPrincipalField)) {
@@ -316,7 +316,7 @@ class PluginsLibUtil
 		return $sOutput;
 	}
 
-	function createList($aData)
+	static function createList($aData)
 	{
 		$aPrincipalField = array('field' => 'pageName', 'name' => 'Pages');
 

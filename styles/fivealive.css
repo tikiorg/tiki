@@ -3941,7 +3941,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   background-color: transparent;
 }
 .navbar-default .navbar-text {
-  color: #ffffff;
+  color: #333333;
 }
 .navbar-default .navbar-nav > li > a {
   color: #efefef;
@@ -5757,8 +5757,11 @@ body.navbar-padding {
   }
 }
 #col2 .panel-title,
-#col3 .panel-title {
-  color: #000;
+#col3 .panel-title,
+.topbar .navbar-default .navbar-nav > li > a,
+.topbar .navbar-default .navbar-nav > li > a:hover,
+.topbar .navbar-default .navbar-nav > li > a:focus {
+  color: #fff;
 }
 #col2 .panel,
 #col3 .panel,
@@ -5784,7 +5787,7 @@ body.navbar-padding {
   /* inner <header> element that gets .fixedwidth class applied */
   background: url('fivealive/options/blueberry/siteheader.jpg') 0 0 no-repeat;
 }
-#header #top_modules .module.secondary_site_menu {
+header.header .module.secondary_site_menu {
   background: none;
 }
 .page-header {
@@ -5836,17 +5839,17 @@ textarea,
 .footer_liner a:visited {
   color: #a9a9a9;
 }
-/*#top_modules .sitetitles {  font-family: Paneuropa, "Bitstream Vera Sans", Arial, Helvetica, sans-serif;}*/
-#top_modules .sitetitles {
+/*header.header .sitetitles {  font-family: Paneuropa, "Bitstream Vera Sans", Arial, Helvetica, sans-serif;}*/
+header.header .sitetitles {
   font-family: Paneuropa, "Bitstream Vera Sans", Arial, Helvetica, sans-serif;
 }
-#top_modules .sitetitle,
-#top_modules .sitesubtitle {
+header.header .sitetitle,
+header.header .sitesubtitle {
   color: #fff !important;
   text-shadow: #143c64 3px 2px 0 !important;
 }
-#top_modules a,
-#top_modules a:visited {
+header.header a,
+header.header a:visited {
   color: #fff !important;
   text-decoration: none;
 }

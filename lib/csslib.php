@@ -25,6 +25,35 @@ class cssLib extends TikiLib
 		return $available_layouts;
 	}
 
+	function list_user_selectable_layouts()
+	{
+		$selectable_layouts = array();
+		$available_layouts = $this->list_layouts();
+		foreach ($available_layouts as $layoutName => $layoutLabel) {
+			if ($layoutName == 'mobile'
+				|| $layoutName == 'layout_plain.tpl'
+				|| $layoutName == 'internal'
+			) {
+				// hide layouts that are for internal use only
+				continue;
+			} elseif ($layoutName == 'basic') {
+				$selectable_layouts[$layoutName] = tra('Standard Bootstrap');
+			} elseif ($layoutName == 'classic') {
+				$selectable_layouts[$layoutName] = tra('Classic Tiki with shadows');
+			} elseif ($layoutName == 'header_middle_footer_containers') {
+				$selectable_layouts[$layoutName] = tra('3 separate header, middle, footer containers');
+			} elseif ($layoutName == 'header_middle_footer_containers_3-6-3') {
+				$selectable_layouts[$layoutName] = tra('3 separate header, middle, footer containers with 3-6-3 columns');
+			} elseif ($layoutName == 'social') {
+				$selectable_layouts[$layoutName] = tra('Social networking style');
+			} else {
+				$selectable_layouts[$layoutName] = $layoutLabel;
+			} 
+		}
+
+		return $selectable_layouts;		
+	}
+
 	function list_css($path, $recursive = false)
 	{
 		$files = $this->list_files($path, '.css', $recursive);

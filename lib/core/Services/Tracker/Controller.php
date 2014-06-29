@@ -708,6 +708,7 @@ class Services_Tracker_Controller
 			'forced' => $forced,
 			'trackerLogo' => $definition->getConfiguration('logo'),
 			'modal' => $input->modal->int(),
+			'status' => $itemObject->getDisplayedStatus(),
 		);
 	}
 
@@ -781,6 +782,7 @@ class Services_Tracker_Controller
 			'trackerId' => $trackerId,
 			'itemId' => $itemId,
 			'fields' => $processedFields,
+			'status' => $itemObject->getDisplayedStatus(),
 		);
 	}
 

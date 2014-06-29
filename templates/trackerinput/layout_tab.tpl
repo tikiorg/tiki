@@ -1,6 +1,14 @@
 {tabset name="tracker_section_output"}
-	{foreach $sections as $sect}
+	{foreach $sections as $pos => $sect}
 		{tab name=$sect.heading}
+			{if ! $pos && $status}
+				<div class="form-group">
+					<label for="trackerinput_status" class="control-label">{tr}Status{/tr}</label>
+					<div id="trackerinput_status">
+						{include 'trackerinput/status.tpl' status_types=$status_types status=$status}
+					</div>
+				</div>
+			{/if}
 			{foreach from=$sect.fields item=field}
 			<div class="form-group">
 				<label for="trackerinput_{$field.fieldId|escape}" class="control-label">

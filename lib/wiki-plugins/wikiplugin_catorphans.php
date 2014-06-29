@@ -43,8 +43,8 @@ function wikiplugin_catorphans_info()
 function wikiplugin_catorphans($data, $params)
 {
 	global $prefs;
+	$access = TikiLib::lib('access');
 	$access->check_feature('feature_categories');
-	$access = TikiLib::lib('tiki');
 	$smarty = TikiLib::lib('smarty');
 	$tikilib = TikiLib::lib('tiki');
 	$categlib = TikiLib::lib('categ');

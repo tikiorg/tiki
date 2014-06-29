@@ -525,7 +525,7 @@ hr {
   /* inner <header> element that gets .fixedwidth class applied */
   background: url('grape/siteheader.png') 0 0 no-repeat;
 }
-#header #top_modules .module.secondary_site_menu {
+header.header .module.secondary_site_menu {
   background: none;
 }
 .page-header {
@@ -581,12 +581,33 @@ textarea,
 .postbody-title {
   background: url('grape/siteheader.png') no-repeat -480px -200px;
 }
-#top_modules .sitetitle,
-#top_modules .sitesubtitle {
+.secondary_site_menu .navbar {
+  margin-bottom: 0;
+}
+.secondary_site_menu .navbar-nav {
+  float: right;
+}
+.secondary_site_menu .navbar-default .navbar-nav > li > a,
+.secondary_site_menu .navbar-default .navbar-nav > li > a:hover,
+.secondary_site_menu .navbar-default .navbar-nav > li > a:focus,
+.secondary_site_menu .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover {
+  background: transparent;
+  color: #8e286a;
+}
+.secondary_site_menu .navbar-default .navbar-nav li ul li a {
+  background: #a82a76;
+  color: #fff;
+}
+.secondary_site_menu .navbar-default .navbar-nav li ul li a:hover,
+.secondary_site_menu .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover {
+  background: #902465;
+  color: #fff;
+}
+.siteloginbar_popup .dropdown-menu > li > a {
+  color: #fff;
+}
+header.header .sitetitle,
+header.header .sitesubtitle {
   color: #8e286a;
   text-shadow: none;
-}
-#top_modules a,
-#top_modules a:visited {
-  color: #8e286a;
 }
