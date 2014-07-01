@@ -2003,6 +2003,9 @@ label.aclabel {
   padding: 4px;
   text-align: center;
 }
+.calhighlight {
+  background: #ddf4ef;
+}
 #intertrans-indicator {
   position: fixed;
   left: 0;

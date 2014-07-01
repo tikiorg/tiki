@@ -5841,6 +5841,9 @@ input {
 .jtrack-form {
   background: #292929 !important;
 }
+.box-quickadmin .cssmenu_horiz ul li {
+  background-color: #474747;
+}
 /* black */
 /* white */
 /* automatically choose the correct arrow/text color */

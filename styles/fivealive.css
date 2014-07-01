@@ -5865,6 +5865,9 @@ header.header a:visited {
     background: transparent !important;
   }
 }
+.calhighlight {
+  background: #ddf4ef;
+}
 /* black */
 /* white */
 /* automatically choose the correct arrow/text color */
