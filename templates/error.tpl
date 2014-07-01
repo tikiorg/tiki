@@ -71,7 +71,7 @@ close();
 					{tr}Permission denied{/tr}
 				{/remarksbox}
 				{include file='tiki-login.tpl'}
-			{elseif !isset($user) and $errortype != 'no_redirect_login' and $errortype != 'login'}
+			{elseif !isset($user) and $errortype != 'no_redirect_login' and $errortype != 'login' and empty($msg)}
 				{remarksbox type='errors' title=$errortitle}
 					{tr}You are not logged in.{/tr} <a href="tiki-login_scr.php">{tr}Go to Log in Page{/tr}</a>
 				{/remarksbox}
