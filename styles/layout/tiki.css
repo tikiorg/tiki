@@ -2003,6 +2003,9 @@ label.aclabel {
   padding: 4px;
   text-align: center;
 }
+.calhighlight {
+  background: #ddf4ef;
+}
 #intertrans-indicator {
   position: fixed;
   left: 0;
@@ -2809,8 +2812,5 @@ input.tablesorter-filter {
 .tablesorter input.dateTo {
   border: none;
   background-color: #f7f7f7;
-}
-.calhighlight{
-  background: #ddf4ef;
 }
 /* End of file */
