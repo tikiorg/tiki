@@ -264,3 +264,6 @@ a.prev img,
 a.next img {
 	vertical-align: middle;
 }
+.calhighlight{
+  background: #ddf4ef;
+}
