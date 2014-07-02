@@ -2820,22 +2820,18 @@ class UsersLib extends TikiLib
 
 	private function get_raw_permissions()
 	{
-		global $prefs;
 		static $permissions;
 
 		// Avoid multiple unserialize per page
-		if (isset($permissions[$prefs['language']])) {
-			return $permissions[$prefs['language']];
+		if ($permissions) {
+			return $permissions;
 		}
 
+		global $prefs;
 		$cachelib = TikiLib::lib('cache');
 
-		if (!is_array($permissions)) {
-			$permissions = array();
-		}
-
-		if ($permissions[$prefs['language']] = $cachelib->getSerialized('rawpermissions' . $prefs['language'])) {
-			return $permissions[$prefs['language']];
+		if ($permissions = $cachelib->getSerialized('rawpermissions' . $prefs['language'])) {
+			return $permissions;
 		}
 
 		/**
@@ -2846,7 +2842,7 @@ class UsersLib extends TikiLib
 		 *
 		 */
 
-		$permissions[$prefs['language']] = array(
+		$permissions = array(
 			array(
 				'name' => 'tiki_p_acct_create_book',
 				'description' => tra('Can create/close a book'),
