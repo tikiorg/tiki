@@ -530,6 +530,11 @@ h3.panel-title {
 .warning a:visited {
   color: #8a6d3b;
 }
+.tab-content .ui-wrapper,
+.tab-content #um_data {
+  height: auto !important;
+  width: 100% !important;
+}
 .ui-accordion .normal,
 .ui-accordion .normalnoborder,
 .ui-accordion .admin {
@@ -983,10 +988,6 @@ body.wikitext {
   z-index: 100 !important;
 }
 .TextArea-fullscreen #editwiki_toolbar {
-  width: 100% !important;
-}
-.tab-content .ui-wrapper,.tab-content #um_data {
-  height: auto !important;
   width: 100% !important;
 }
 .TextArea-fullscreen .ui-wrapper {
