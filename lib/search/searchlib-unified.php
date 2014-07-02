@@ -520,6 +520,7 @@ class UnifiedSearchLib
 
 		if (isset ($types['trackeritem'])) {
 			$aggregator->addContentSource('trackeritem', new Search_ContentSource_TrackerItemSource);
+			$aggregator->addContentSource('tracker', new Search_ContentSource_TrackerSource);
 		}
 
 		if (isset ($types['sheet'])) {

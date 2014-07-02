@@ -2424,6 +2424,7 @@ class TrackerLib extends TikiLib
 
 		$logOption = 'Updated';
 		if ($trackerId) {
+			$finalEvent = 'tiki.tracker.update';
 			$conditions = array('trackerId' => (int) $trackerId);
 			if ($trackers->fetchCount($conditions)) {
 				$trackers->update($data, $conditions);
@@ -2435,6 +2436,7 @@ class TrackerLib extends TikiLib
 				$logOption = 'Created';
 			}
 		} else {
+			$finalEvent = 'tiki.tracker.create';
 			$data['created'] = $this->now;
 			$trackerId = $trackers->insert($data);
 		}
@@ -2473,13 +2475,11 @@ class TrackerLib extends TikiLib
 			);
 		}
 
-		require_once('lib/search/refresh-functions.php');
-		refresh_index('trackers', $trackerId);
-
-		if ($descriptionIsParsed == 'y') {
-			$tikilib = TikiLib::lib('tiki');
-			$tikilib->object_post_save(array('type'=>'tracker', 'object'=>$trackerId, 'href'=>"tiki-view_tracker.php?trackerId=$trackerId", 'description'=>$description), array('content' => $description));
-		}
+		TikiLib::events()->trigger($finalEvent, [
+			'type' => 'tracker',
+			'object' => $trackerId,
+			'user' => $GLOBALS['user'],
+		]);
 
 		return $trackerId;
 	}
@@ -2737,6 +2737,13 @@ class TrackerLib extends TikiLib
 		$logslib->add_action('Removed', $trackerId, 'tracker');
 
 		$this->clear_tracker_cache($trackerId);
+
+		TikiLib::events()->trigger('tiki.tracker.delete', [
+			'type' => 'tracker',
+			'object' => $trackerId,
+			'user' => $GLOBALS['user'],
+		]);
+
 		$transaction->commit();
 
 		return true;

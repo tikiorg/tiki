@@ -183,6 +183,11 @@ function tiki_setup_events()
 	$events->bind('tiki.trackeritem.delete', 'tiki.save');
 	$events->bind('tiki.trackeritem.rating', 'tiki.rating');
 
+	$events->bind('tiki.tracker.update', 'tiki.tracker.save');
+	$events->bind('tiki.tracker.create', 'tiki.tracker.save');
+	$events->bind('tiki.tracker.delete', 'tiki.save');
+	$events->bind('tiki.tracker.save', 'tiki.save');
+
 	$events->bind('tiki.file.update', 'tiki.file.save');
 	$events->bind('tiki.file.create', 'tiki.file.save');
 	$events->bind('tiki.file.delete', 'tiki.file.save');

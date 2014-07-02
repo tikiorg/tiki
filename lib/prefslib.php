@@ -22,184 +22,186 @@ class PreferencesLib
 		static $id = 0;
 		$data = $this->loadData($name);
 
-		if ( isset( $data[$name] ) ) {
-			$defaults = array(
-				'type' => '',
-				'helpurl' => '',
-				'help' => '',
-				'dependencies' => array(),
-				'extensions' => array(),
-				'dbfeatures' => array(),
-				'options' => array(),
-				'description' => '',
-				'size' => 40,
-				'detail' => '',
-				'warning' => '',
-				'hint' => '',
-				'shorthint' => '',
-				'perspective' => true,
-				'parameters' => array(),
-				'admin' => '',
-				'module' => '',
-				'permission' => '',
-				'plugin' => '',
-				'view' => '',
-				'public' => false,
-			);
-			if ($data[$name]['type'] === 'textarea') {
-				$defaults['size'] = 10;
-			}
+		if ( ! isset( $data[$name] ) ) {
+			return false;
+		}
+		$defaults = array(
+			'type' => '',
+			'helpurl' => '',
+			'help' => '',
+			'dependencies' => array(),
+			'extensions' => array(),
+			'dbfeatures' => array(),
+			'options' => array(),
+			'description' => '',
+			'size' => 40,
+			'detail' => '',
+			'warning' => '',
+			'hint' => '',
+			'shorthint' => '',
+			'perspective' => true,
+			'parameters' => array(),
+			'admin' => '',
+			'module' => '',
+			'permission' => '',
+			'plugin' => '',
+			'view' => '',
+			'public' => false,
+		);
+		if ($data[$name]['type'] === 'textarea') {
+			$defaults['size'] = 10;
+		}
 
-			$info = array_merge($defaults, $data[$name]);
+		$info = array_merge($defaults, $data[$name]);
 
-			if ( $source == null ) {
-				$source = $prefs;
-			}
+		if ( $source == null ) {
+			$source = $prefs;
+		}
 
-			$value = isset($source[$name]) ? $source[$name] : null;
-			if ( !empty($value) && is_string($value) && (strlen($value) > 1 && $value{1} == ':') && false !== $unserialized = unserialize($value) ) {
-				$value = $unserialized;
-			}
+		$value = isset($source[$name]) ? $source[$name] : null;
+		if ( !empty($value) && is_string($value) && (strlen($value) > 1 && $value{1} == ':') && false !== $unserialized = unserialize($value) ) {
+			$value = $unserialized;
+		}
 
-			$info['preference'] = $name;
-			if ( isset( $info['serialize'] ) ) {
-				$fnc = $info['serialize'];
-				$info['value'] = $fnc($value);
+		$info['preference'] = $name;
+		if ( isset( $info['serialize'] ) ) {
+			$fnc = $info['serialize'];
+			$info['value'] = $fnc($value);
+		} else {
+			$info['value'] = $value;
+		}
+
+		if (! isset($info['tags'])) {
+			$info['tags'] = array('advanced');
+		}
+
+		$info['tags'][] = $name;
+		$info['tags'][] = 'all';
+
+		$info['notes'] = array();
+
+		$info['raw'] = isset($source[$name]) ? $source[$name] : null;
+		$info['id'] = 'pref-' . ++$id;
+
+		if ( !empty($info['help']) && isset($prefs['feature_help']) && $prefs['feature_help'] == 'y' ) {
+			if ( preg_match('/^https?:/i', $info['help']) ) {
+				$info['helpurl'] = $info['help'];
 			} else {
-				$info['value'] = $value;
+				$info['helpurl'] = $prefs['helpurl'] . $info['help'];
 			}
+		}
 
-			if (! isset($info['tags'])) {
-				$info['tags'] = array('advanced');
-			}
+		if ( $deps && isset( $info['dependencies'] ) ) {
+			$info['dependencies'] = $this->getDependencies($info['dependencies']);
+		}
 
-			$info['tags'][] = $name;
-			$info['tags'][] = 'all';
+		$info['available'] = true;
 
-			$info['notes'] = array();
+		if (! $this->checkExtensions($info['extensions']) ) {
+			$info['available'] = false;
+			$info['notes'][] = tr('Unmatched system requirement. Missing php extension among %0', implode(', ', $info['extensions']));
+		}
 
-			$info['raw'] = isset($source[$name]) ? $source[$name] : null;
-			$info['id'] = 'pref-' . ++$id;
+		if (! $this->checkDatabaseFeatures($info['dbfeatures']) ) {
+			$info['available'] = false;
+			$info['notes'][] = tr('Unmatched system requirement. The database you are using does not support this feature.');
+		}
 
-			if ( !empty($info['help']) && isset($prefs['feature_help']) && $prefs['feature_help'] == 'y' ) {
-				if ( preg_match('/^https?:/i', $info['help']) ) {
-					$info['helpurl'] = $info['help'];
-				} else {
-					$info['helpurl'] = $prefs['helpurl'] . $info['help'];
-				}
-			}
+		if (!isset($info['default'])) {	// missing default in prefs definition file?
+			$info['modified'] = false;
+			trigger_error(tr('Missing default for preference "%0"', $name), E_USER_WARNING);
+		} else {
+			$info['modified'] = str_replace("\r\n", "\n", $info['value']) != $info['default'];
+		}
 
-			if ( $deps && isset( $info['dependencies'] ) ) {
-				$info['dependencies'] = $this->getDependencies($info['dependencies']);
-			}
+		if ($get_pages) {
+			$info['pages'] = $this->getPreferenceLocations($name);
+		}
 
-			$info['available'] = true;
+		if ( isset( $systemConfiguration->preference->$name ) ) {
+			$info['available'] = false;
+			$info['notes'][] = tr('Configuration forced by host.');
+		}
 
-			if (! $this->checkExtensions($info['extensions']) ) {
-				$info['available'] = false;
-				$info['notes'][] = tr('Unmatched system requirement. Missing php extension among %0', implode(', ', $info['extensions']));
-			}
+		if ( $this->preferenceDisabled($info['tags']) ) {
+			$info['available'] = false;
+			$info['notes'][] = tr('Disabled by host.');
+		}
 
-			if (! $this->checkDatabaseFeatures($info['dbfeatures']) ) {
-				$info['available'] = false;
-				$info['notes'][] = tr('Unmatched system requirement. The database you are using does not support this feature.');
-			}
+		if ( ! $info['available'] ) {
+			$info['tags'][] = 'unavailable';
+		}
 
-			if (!isset($info['default'])) {	// missing default in prefs definition file?
-				$info['modified'] = false;
-				trigger_error(tr('Missing default for preference "%0"', $name), E_USER_WARNING);
+		if ($info['modified'] && $info['available']) {
+			$info['tags'][] = 'modified';
+		}
+
+		$info['tagstring'] = implode(' ', $info['tags']);
+
+		$info = array_merge($defaults, $info);
+
+		if (!empty($info['permission'])) {
+			$info['permission']['show_disabled_features'] = 'y';
+			$info['permission'] = 'tiki-objectpermissions.php?' . http_build_query($info['permission'], '', '&');
+		}
+
+		if (!empty($info['admin'])) {
+			if (preg_match('/^\w+$/', $info['admin'])) {
+				$info['admin'] = 'tiki-admin.php?page=' . urlencode($info['admin']);
 			} else {
-				$info['modified'] = str_replace("\r\n", "\n", $info['value']) != $info['default'];
+				$info['admin'] = $info['admin'];
 			}
+		}
 
-			if ($get_pages) {
-				$info['pages'] = $this->getPreferenceLocations($name);
-			}
+		if (!empty($info['module'])) {
+			$info['module'] = 'tiki-admin_modules.php?cookietab=3&textFilter=' . urlencode($info['module']);
+		}
 
-			if ( isset( $systemConfiguration->preference->$name ) ) {
-				$info['available'] = false;
-				$info['notes'][] = tr('Configuration forced by host.');
-			}
+		if (!empty($info['plugin'])) {
+			$info['plugin'] = 'tiki-admin.php?page=textarea&amp;cookietab=2&textFilter=' . urlencode($info['plugin']);
+		}
 
-			if ( $this->preferenceDisabled($info['tags']) ) {
-				$info['available'] = false;
-				$info['notes'][] = tr('Disabled by host.');
-			}
+		$smarty = TikiLib::lib('smarty');
+		$smarty->loadPlugin('smarty_function_icon');
 
-			if ( ! $info['available'] ) {
-				$info['tags'][] = 'unavailable';
-			}
+		if (!empty($info['admin']) || !empty($info['permission']) || !empty($info['view']) || !empty($info['module']) || !empty($info['plugin'])) {
 
-			if ($info['modified'] && $info['available']) {
-				$info['tags'][] = 'modified';
-			}
-
-			$info['tagstring'] = implode(' ', $info['tags']);
-
-			$info = array_merge($defaults, $info);
-
-			if (!empty($info['permission'])) {
-				$info['permission']['show_disabled_features'] = 'y';
-				$info['permission'] = 'tiki-objectpermissions.php?' . http_build_query($info['permission'], '', '&');
-			}
+			$info['popup_html'] = '<ul class="list-unstyled">';
 
 			if (!empty($info['admin'])) {
-				if (preg_match('/^\w+$/', $info['admin'])) {
-					$info['admin'] = 'tiki-admin.php?page=' . urlencode($info['admin']);
-				} else {
-					$info['admin'] = $info['admin'];
-				}
+				$icon = smarty_function_icon(array( '_id' => 'wrench', 'title' => tra('Admin')), $smarty);
+				$info['popup_html'] .= '<li><a class="icon" href="'.$info['admin'].'">' . $icon . ' ' . tra('Admin') .'</a></li>';
 			}
-
+			if (!empty($info['permission'])) {
+				$icon = smarty_function_icon(array( '_id' => 'key', 'title' => tra('Permissions')), $smarty);
+				$info['popup_html'] .= '<li><a class="icon" href="'.$info['permission'].'">' . $icon . ' ' . tra('Permissions').'</a></li>';
+			}
+			if (!empty($info['view'])) {
+				$icon = smarty_function_icon(array( '_id' => 'magnifier', 'title' => tra('View')), $smarty);
+				$info['popup_html'] .= '<li><a class="icon" href="'.$info['view'].'">' . $icon . ' ' . tra('View').'</a></li>';
+			}
 			if (!empty($info['module'])) {
-				$info['module'] = 'tiki-admin_modules.php?cookietab=3&textFilter=' . urlencode($info['module']);
+				$icon = smarty_function_icon(array( '_id' => 'module', 'title' => tra('Module')), $smarty);
+				$info['popup_html'] .= '<li><a class="icon" href="'.$info['module'].'">' . $icon . ' ' . tra('Module').'</a></li>';
 			}
-
 			if (!empty($info['plugin'])) {
-				$info['plugin'] = 'tiki-admin.php?page=textarea&amp;cookietab=2&textFilter=' . urlencode($info['plugin']);
+				$icon = smarty_function_icon(array( '_id' => 'plugin', 'title' => tra('Plugin')), $smarty);
+				$info['popup_html'] .= '<li><a class="icon" href="'.$info['plugin'].'">' . $icon . ' ' . tra('Plugin').'</a></li>';
 			}
+			$info['popup_html'] .= '</ul>';
+		}
 
-			$smarty = TikiLib::lib('smarty');
-			$smarty->loadPlugin('smarty_function_icon');
+		if (isset($prefs['connect_feature']) && $prefs['connect_feature'] === 'y') {
+			$connectlib = TikiLib::lib('connect');
+			$currentVote = $connectlib->getVote($info['preference']);
 
-			if (!empty($info['admin']) || !empty($info['permission']) || !empty($info['view']) || !empty($info['module']) || !empty($info['plugin'])) {
+			$info['voting_html'] = '';
 
-				$info['popup_html'] = '<ul class="list-unstyled">';
-
-				if (!empty($info['admin'])) {
-					$icon = smarty_function_icon(array( '_id' => 'wrench', 'title' => tra('Admin')), $smarty);
-					$info['popup_html'] .= '<li><a class="icon" href="'.$info['admin'].'">' . $icon . ' ' . tra('Admin') .'</a></li>';
-				}
-				if (!empty($info['permission'])) {
-					$icon = smarty_function_icon(array( '_id' => 'key', 'title' => tra('Permissions')), $smarty);
-					$info['popup_html'] .= '<li><a class="icon" href="'.$info['permission'].'">' . $icon . ' ' . tra('Permissions').'</a></li>';
-				}
-				if (!empty($info['view'])) {
-					$icon = smarty_function_icon(array( '_id' => 'magnifier', 'title' => tra('View')), $smarty);
-					$info['popup_html'] .= '<li><a class="icon" href="'.$info['view'].'">' . $icon . ' ' . tra('View').'</a></li>';
-				}
-				if (!empty($info['module'])) {
-					$icon = smarty_function_icon(array( '_id' => 'module', 'title' => tra('Module')), $smarty);
-					$info['popup_html'] .= '<li><a class="icon" href="'.$info['module'].'">' . $icon . ' ' . tra('Module').'</a></li>';
-				}
-				if (!empty($info['plugin'])) {
-					$icon = smarty_function_icon(array( '_id' => 'plugin', 'title' => tra('Plugin')), $smarty);
-					$info['popup_html'] .= '<li><a class="icon" href="'.$info['plugin'].'">' . $icon . ' ' . tra('Plugin').'</a></li>';
-				}
-				$info['popup_html'] .= '</ul>';
+			if (!in_array('like', $currentVote)) {
+				$info['voting_html'] .= smarty_function_icon($this->getVoteIconParams($info['preference'], 'like', tra('Like')), $smarty);
+			} else {
+				$info['voting_html'] .= smarty_function_icon($this->getVoteIconParams($info['preference'], 'unlike', tra("Don't like")), $smarty);
 			}
-
-			if (isset($prefs['connect_feature']) && $prefs['connect_feature'] === 'y') {
-				$connectlib = TikiLib::lib('connect');
-				$currentVote = $connectlib->getVote($info['preference']);
-
-				$info['voting_html'] = '';
-
-				if (!in_array('like', $currentVote)) {
-					$info['voting_html'] .= smarty_function_icon($this->getVoteIconParams($info['preference'], 'like', tra('Like')), $smarty);
-				} else {
-					$info['voting_html'] .= smarty_function_icon($this->getVoteIconParams($info['preference'], 'unlike', tra("Don't like")), $smarty);
-				}
 //				if (!in_array('fix', $currentVote)) {
 //					$info['voting_html'] .= smarty_function_icon($this->getVoteIconParams($info['preference'], 'fix', tra('Fix me')), $smarty);
 //				} else {
@@ -210,23 +212,38 @@ class PreferencesLib
 //				} else {
 //					$info['voting_html'] .= smarty_function_icon($this->getVoteIconParams($info['preference'], 'unwtf', tra("What's this for?")), $smarty);
 //				}
-			}
-
-			if (! $info['available']) {
-				$info['parameters']['disabled'] = 'disabled';
-			}
-
-			$info['params'] = '';
-			if (!empty($info['parameters'])) {
-				foreach ($info['parameters'] as $param => $value) {
-					$info['params'] .= ' ' . $param . '="' . $value . '"';
-				}
-			}
-
-			return $info;
 		}
 
-		return false;
+		if (! $info['available']) {
+			$info['parameters']['disabled'] = 'disabled';
+		}
+
+		$info['params'] = '';
+		if (!empty($info['parameters'])) {
+			foreach ($info['parameters'] as $param => $value) {
+				$info['params'] .= ' ' . $param . '="' . $value . '"';
+			}
+		}
+
+		/**
+		 * If the unified index is enabled, replace simple object selection preferences with object selectors
+		 */
+		if ($info['type'] == 'text' && ! empty($info['profile_reference']) && empty($info['separator']) && $prefs['feature_search'] == 'y') {
+			$filters = [
+				'tracker' => 'tracker',
+			];
+			if (isset($filters[$info['profile_reference']])) {
+				$type = $info['profile_reference'];
+
+				$info['type'] = 'selector';
+				$info['selector_type'] = $type;
+				if (! empty($info['value'])) {
+					$info['selector_value'] = "$type:{$info['value']}";
+				}
+			}
+		}
+
+		return $info;
 	}
 
 	private function getVoteIconParams( $pref, $vote, $label )
@@ -598,6 +615,20 @@ class PreferencesLib
 		}
 
 		return $ret;
+	}
+
+	private function _getSelectorValue( $info, $data )
+	{
+		$name = $info['preference'];
+		if (! empty($data[$name])) {
+			list($type, $value) = explode(':', $data[$name]);
+
+			if ( isset($info['filter']) && $filter = TikiFilter::get($info['filter']) ) {
+				return $filter->filter($value);
+			} else {
+				return $value;
+			}
+		}
 	}
 
 	private function _getTextValue( $info, $data )
