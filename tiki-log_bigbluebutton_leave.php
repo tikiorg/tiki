@@ -9,6 +9,8 @@
 // $Id$
 require_once ('tiki-setup.php');
 
+$access->check_feature('bigbluebutton_feature');
+
 $bigbluebuttonlib = TikiLib::lib('bigbluebutton');
 $loglib = TikiLib::lib('logs');
 $user_count = $users = $rooms = $join_log = $total_log = $log_out = $log_in = array();
