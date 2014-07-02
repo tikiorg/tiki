@@ -36,6 +36,10 @@ header.header .module.secondary_site_menu {
   background: none;
 }
 
+.secondary_site_menu .navbar-default .navbar-collapse,
+.secondary_site_menu .navbar-default .navbar-form,
+.secondary_site_menu .navbar-default {background: @secondary_site_menu_navbar_background;}
+
 .middle_outer {
   background: @middle_outer_background;
 }
@@ -150,6 +154,9 @@ h2 {
   padding-left: @h2-padding-left;
 }
 
+h1.sitetitle {background: @sitetitle-background;}
+h2.sitesubtitle {background: @sitesubtitle-background;}
+
 .btn,
 .btn-default,
 input[type="reset"],
@@ -157,6 +164,9 @@ input[type="submit"],
 .button input {
   background: @button-background-gradient;
   text-transform: @button-text-transform;}
+
+.btn.btn-link,
+input[type="submit"].btn-link {background: none;}
 
 .btn:hover,
 .btn-default:hover,

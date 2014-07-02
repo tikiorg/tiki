@@ -89,7 +89,7 @@ fieldset[disabled] .btn-primary.active {
   background-color: #ffffff;
 }
 hr {
-  border-top: 1px solid #18a3bb;
+  border-top: 1px solid #eeeeee;
 }
 /*
 .alert-success {
@@ -150,7 +150,7 @@ hr {
   background-color: #f5f5f5;
 }
 .form-control {
-  color: #ffffff;
+  color: #363636;
   background-color: #f8f9d4;
   background-image: none;
   border: 1px solid #e0e0e0;
@@ -300,7 +300,7 @@ hr {
 .dropdown-menu > li > a:hover,
 .dropdown-menu > li > a:focus {
   color: #f2f2f2;
-  background-color: #003c4a;
+  background-color: #6d9f26;
 }
 .dropdown-menu > .active > a,
 .dropdown-menu > .active > a:hover,
@@ -359,7 +359,7 @@ hr {
   border-color: #dddddd;
 }
 .panel {
-  background-color: #f2f2f2;
+  background-color: #ffffff;
 }
 .panel-heading {
   border-bottom: 1px solid transparent;
@@ -382,7 +382,7 @@ hr {
 }
 .panel-default > .panel-heading {
   color: #333333;
-  background-color: #8bbb47;
+  background-color: #f2f2f2;
   border-color: #dddddd;
 }
 .panel-default > .panel-heading + .panel-collapse .panel-body {
@@ -518,7 +518,7 @@ hr {
 #col2 .panel-heading,
 #col3 .panel-heading,
 #bottom_modules .panel-heading {
-  background: transparent;
+  background: #f2f2f2;
   border-bottom: none;
 }
 .header_outer {
@@ -530,6 +530,11 @@ hr {
   background: transparent;
 }
 header.header .module.secondary_site_menu {
+  background: none;
+}
+.secondary_site_menu .navbar-default .navbar-collapse,
+.secondary_site_menu .navbar-default .navbar-form,
+.secondary_site_menu .navbar-default {
   background: none;
 }
 .middle_outer {
@@ -628,6 +633,12 @@ h2 {
   background: url('didiem/h_bullet.jpg') no-repeat 0 50%;
   padding-left: 19px;
 }
+h1.sitetitle {
+  background: none;
+}
+h2.sitesubtitle {
+  background: none;
+}
 .btn,
 .btn-default,
 input[type="reset"],
@@ -635,6 +646,10 @@ input[type="submit"],
 .button input {
   background: linear-gradient(to bottom, #a1bb87 0%, #8fa872 50%, #a1bb87 100%);
   text-transform: uppercase;
+}
+.btn.btn-link,
+input[type="submit"].btn-link {
+  background: none;
 }
 .btn:hover,
 .btn-default:hover,
