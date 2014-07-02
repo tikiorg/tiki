@@ -188,6 +188,11 @@ function tiki_setup_events()
 	$events->bind('tiki.tracker.delete', 'tiki.save');
 	$events->bind('tiki.tracker.save', 'tiki.save');
 
+	$events->bind('tiki.category.update', 'tiki.category.save');
+	$events->bind('tiki.category.create', 'tiki.category.save');
+	$events->bind('tiki.category.delete', 'tiki.category.save');
+	$events->bind('tiki.category.save', 'tiki.save');
+
 	$events->bind('tiki.file.update', 'tiki.file.save');
 	$events->bind('tiki.file.create', 'tiki.file.save');
 	$events->bind('tiki.file.delete', 'tiki.file.save');

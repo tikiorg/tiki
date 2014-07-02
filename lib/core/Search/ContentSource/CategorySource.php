@@ -5,7 +5,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-class Search_ContentSource_TrackerSource implements Search_ContentSource_Interface
+class Search_ContentSource_CategorySource implements Search_ContentSource_Interface
 {
 	private $db;
 
@@ -21,19 +21,17 @@ class Search_ContentSource_TrackerSource implements Search_ContentSource_Interfa
 
 	function getDocument($objectId, Search_Type_Factory_Interface $typeFactory)
 	{
-		$lib = TikiLib::lib('trk');
+		$lib = TikiLib::lib('categ');
 		
-		$tracker = $lib->get_tracker($objectId);
+		$item = $lib->get_category($objectId);
 
 		$data = array(
-			'title' => $typeFactory->sortable($tracker['name']),
-			'modification_date' => $typeFactory->timestamp($tracker['lastModif']),
-			'creation_date' => $typeFactory->timestamp($tracker['created']),
-			'description' => $typeFactory->plaintext($tracker['description']),
+			'title' => $typeFactory->sortable($item['name']),
+			'description' => $typeFactory->plaintext($item['description']),
 
 			'searchable' => $typeFactory->identifier('n'),
 
-			'view_permission' => $typeFactory->identifier('tiki_p_view_trackers'),
+			'view_permission' => $typeFactory->identifier('tiki_p_view_category'),
 		);
 
 		return $data;
@@ -43,8 +41,6 @@ class Search_ContentSource_TrackerSource implements Search_ContentSource_Interfa
 	{
 		return array(
 			'title',
-			'modification_date',
-			'creation_date',
 			'description',
 
 			'searchable',

@@ -149,6 +149,12 @@ class CategLib extends ObjectLib
 			)
 		);
 
+		TikiLib::events()->trigger('tiki.category.delete', [
+			'type' => 'category',
+			'object' => $id,
+			'user' => $GLOBALS['user'],
+		]);
+
 		return true;
 	}
 
@@ -203,6 +209,12 @@ class CategLib extends ObjectLib
 				'name' => $name,
 			)
 		);
+
+		TikiLib::events()->trigger('tiki.category.update', [
+			'type' => 'category',
+			'object' => $id,
+			'user' => $GLOBALS['user'],
+		]);
 	}
 
 	// Throws an Exception if the category name conflicts
@@ -247,6 +259,12 @@ class CategLib extends ObjectLib
 				'name' => $name,
 			)
 		);
+
+		TikiLib::events()->trigger('tiki.category.create', [
+			'type' => 'category',
+			'object' => $id,
+			'user' => $GLOBALS['user'],
+		]);
 
 		return $id;
 	}

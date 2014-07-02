@@ -564,6 +564,7 @@ class UnifiedSearchLib
 		// Global Sources
 		if ($prefs['feature_categories'] == 'y') {
 			$aggregator->addGlobalSource(new Search_GlobalSource_CategorySource);
+			$aggregator->addContentSource('category', new Search_ContentSource_CategorySource);
 		}
 
 		if ($prefs['feature_freetags'] == 'y') {

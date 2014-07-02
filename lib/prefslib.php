@@ -231,9 +231,11 @@ class PreferencesLib
 		if ($info['type'] == 'text' && ! empty($info['profile_reference']) && empty($info['separator']) && $prefs['feature_search'] == 'y') {
 			$filters = [
 				'tracker' => 'tracker',
+				'category' => 'category',
+				'wiki_page' => 'wiki page',
 			];
 			if (isset($filters[$info['profile_reference']])) {
-				$type = $info['profile_reference'];
+				$type = $filters[$info['profile_reference']];
 
 				$info['type'] = 'selector';
 				$info['selector_type'] = $type;
