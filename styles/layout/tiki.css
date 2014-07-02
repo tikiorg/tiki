@@ -447,8 +447,8 @@ a.cke_button span.cke_icon {
   }
   #col1.col-md-8 > .module,
   #col1.col-md-9 > .module,
-  #col1.col-md-8 .wikitext .module,
-  #col1.col-md-9 .wikitext .module {
+  #col1.col-md-8 .wikitext > .module,
+  #col1.col-md-9 .wikitext > .module {
     max-width: 50%;
   }
   #col1.col-md-12 > .module,
@@ -2474,6 +2474,10 @@ form.simple textarea.export {
   top: 50%;
   left: 50%;
   font-weight: bold;
+}
+.ui-dialog {
+  background: #ffffff;
+  color: #333333;
 }
 .olControlNavToolbar {
   top: 345px !important;
