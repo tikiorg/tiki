@@ -10,15 +10,13 @@
 
 $section = 'mytiki';
 require_once ('tiki-setup.php');
-//include_once ('lib/userprefs/userprefslib.php');
 
 $auto_query_args = array('userId', 'view_user');
 
 $access->check_user($user);
+$access->check_feature('feature_user_watches');
 
 $headerlib->add_map();
-
-//$userwatch = $tikilib->get_user_login($_REQUEST['userId']);
 
 if (isset($_REQUEST['user_calendar_watch_editor']) && $_REQUEST['user_calendar_watch_editor'] == true) {
 	$tikilib->set_user_preference($user, 'user_calendar_watch_editor', 'y');
