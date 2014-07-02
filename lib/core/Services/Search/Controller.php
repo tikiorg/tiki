@@ -56,5 +56,33 @@ class Services_Search_Controller
 			'batch' => $batch,
 		];
 	}
+
+	function action_lookup($input)
+	{
+		try {
+			$lib = TikiLib::lib('unifiedsearch');
+			$query = $lib->buildQuery($input->filter->none());
+			$query->setRange($input->offset->int(), $input->maxRecords->int() ?: $prefs['maxRecords']);
+
+			$result = $query->search($lib->getIndex());
+
+			$result->exchangeArray(array_map(function ($item) {
+				return [
+					'object_type' => $item['object_type'],
+					'object_id' => $item['object_id'],
+					'title' => $item['title'],
+				];
+			}, $result->getArrayCopy()));
+
+			return [
+				'title' => tr('Lookup Result'),
+				'resultset' => $result,
+			];
+		} catch (Search_Elastic_TransportException $e) {
+			throw new Services_Exception_NotAvailable('Search functionality currently unavailable.');
+		} catch (Exception $e) {
+			throw new Services_Exception_NotAvailable($e->getMessage());
+		}
+	}
 }
 
