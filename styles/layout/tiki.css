@@ -985,6 +985,10 @@ body.wikitext {
 .TextArea-fullscreen #editwiki_toolbar {
   width: 100% !important;
 }
+.tab-content .ui-wrapper,.tab-content #um_data {
+  height: auto !important;
+  width: 100% !important;
+}
 .TextArea-fullscreen .ui-wrapper {
   width: auto !important;
   height: 100% !important;

@@ -117,7 +117,7 @@
 			<h3>{tr}Preview{/tr}</h3>
 			{$preview_data}
 		{/if}
-		<form method="post" action="tiki-admin_modules.php{if empty($assign_name)}#assign{/if}">
+		<form method="post" action="tiki-admin_modules.php{if empty($assign_name)}?cookietab=2#assign{/if}">
 			{* on the initial selection of a new module, reload the page to the #assign anchor *}
 			{if !empty($info.moduleId)}
 				<input type="hidden" name="moduleId" value="{$info.moduleId}">
