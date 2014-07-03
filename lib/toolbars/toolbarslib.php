@@ -1389,6 +1389,8 @@ class ToolbarHelptool extends Toolbar
 
 	function getWikiHtml( $areaId ) // {{{
 	{
+		global $section;
+
 		$smarty = TikiLib::lib('smarty');
 		$servicelib = TikiLib::lib('service');
 
@@ -1410,8 +1412,8 @@ class ToolbarHelptool extends Toolbar
 
 	function getWysiwygToken( $areaId ) // {{{
 	{
+		global $section;
 
-		$smarty = TikiLib::lib('smarty');
 		$servicelib = TikiLib::lib('service');
 
 		$params = ['controller' => 'edit', 'action' => 'help', 'modal' => 1];
@@ -1423,11 +1425,14 @@ class ToolbarHelptool extends Toolbar
 			$params['sheet'] = 1;
 		}
 
-		$smarty->loadPlugin('smarty_function_icon');
-		$icon = smarty_function_icon(array('_id' => 'help'), $smarty);
-		$url = $servicelib->getUrl($params);
+		$this->setLabel(tra('Wysiwyg Help'));
+		$name = 'tikihelp';
 
-		return "<a href=\"$url\" data-toggle=\"modal\" data-target=\"#bootstrap-modal\">$icon</a>";
+		$js = '$("#bootstrap-modal").modal({show: true, remote: "' . $servicelib->getUrl($params) . '"});';
+
+		$this->setupCKEditorTool($js, $name, $this->label, $this->icon);
+
+		return $name;
 	}
 
 	function getWysiwygWikiToken( $areaId ) // {{{ // wysiwyg_htmltowiki
