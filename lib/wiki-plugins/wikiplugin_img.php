@@ -1073,6 +1073,45 @@ function wikiplugin_img( $data, $params )
 		//Final link string
 		$replimg = "\r\t" . '<a href="' . $link . '" class="internal"' . $linkrel . $imgtarget . $linktitle
 					. $mouseover . '>' ."\r\t\t" . $replimg . "\r\t" . '</a>';
+		if ($imgdata['thumb'] == 'mouseover') {
+			$mouseevent = "$('.internal').popover({ 
+						  html : true,
+						  placement :wheretoplace
+						  });
+							function wheretoplace(pop, dom_el) {
+						      var width = window.innerWidth;
+						      if (width<500) return 'bottom';
+						      var left_pos = $(dom_el).offset().left;
+						      if (width - left_pos > 400) return 'right';
+						      return 'left';
+						    }
+							";
+			TikiLib::lib('header')->add_jq_onready($mouseevent);
+		} else {
+			$mousefocus = "$('.internal').popover({ 
+						  html : true,
+						  placement :wheretoplace,
+						  trigger: 'click',
+						  title: function(){
+								return '<span class=close>&times;</span>';
+							}
+						  }).on('shown.bs.popover', function(e){
+							var popover = $(this);
+							$(this).parent().find('div.popover .close').on('click', function(e){
+								popover.popover('hide');
+							});
+							});
+							function wheretoplace(pop, dom_el) {
+							      var width = window.innerWidth;
+							      if (width<500) return 'bottom';
+							      var left_pos = $(dom_el).offset().left;
+							      if (width - left_pos > 400) return 'right';
+							      return 'left';
+							}
+							";
+			TikiLib::lib('header')->add_jq_onready($mousefocus);
+		}
+		
 	}
 
 	//Add link string to rest of string

@@ -2822,4 +2822,12 @@ input.tablesorter-filter {
   border: none;
   background-color: #f7f7f7;
 }
+.popover{
+  max-width: 600px;
+  height: auto;
+}
+.popover-title{
+  background-color: transparent;
+  border-bottom: none;
+}
 /* End of file */
