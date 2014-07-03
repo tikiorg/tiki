@@ -100,17 +100,7 @@
                         {$prefs.sitetitle|escape}</a>
 				</div>
 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-					{if $prefs.feature_search eq 'y'}
-						<form class="navbar-form navbar-left" role="search" action="tiki-searchindex.php">
-							<div class="input-group">
-								<input name="filter~content" type="search" class="form-control" placeholder="{tr}Search{/tr}">
-								<span class="input-group-btn">
-									<button type="submit" class="btn btn-default">{glyph name=search}</button>
-								</span>
-							</div>
-						</form>
-					{/if}
-					<ul class="nav navbar-nav navbar-right">
+					<ul class="nav navbar-nav navbar-left">
 						{if $user}
 							<li>{notification_link}</li>
 							<li class="dropdown">
@@ -122,6 +112,9 @@
 									{if $prefs.feature_blogs eq 'y'}<li><a href="tiki-list_blogs.php">{tr}List Blogs{/tr}</a></li>{/if}
 									{if $prefs.feature_file_gallery eq 'y'}<li><a href="tiki-list_file_gallery.php">{tr}List galleries{/tr}</a></li>{/if}
 									{if $prefs.feature_forums eq 'y'}<li><a href="tiki-forums.php">{tr}List forums{/tr}</a></li>{/if}
+									{if $prefs.feature_calendar eq 'y'}<li><a href="tiki-calendar.php">{tr}Calendar{/tr}</a></li>{/if}
+									<li class="divider"></li>
+									{if $tiki_p_admin eq 'y'}<li><a href="tiki-admin.php">{tr}Administration{/tr}</a></li>{/if}
 								</ul>
 							</li>
 
@@ -135,14 +128,45 @@
 								</ul>
 							</li>
 						{else}
-							<li><a href="{if $prefs.feature_sefurl eq 'y'}login{else}tiki-login_scr.php{/if}">{tr}Log in{/tr}</a></li>
+							<!--<li><a href="{if $prefs.feature_sefurl eq 'y'}login{else}tiki-login_scr.php{/if}">{tr}Log in{/tr}</a></li>-->
+							<li class="dropdown">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown">{tr}Log in{/tr} <span class="caret"></span></a>
+								<ul class="dropdown-menu">
+									<li>
+										<div>
+											{module
+												module=login_box
+											    mode="module"
+												show_register=""
+												show_forgot=""
+												error=""
+												flip=""
+												decorations="n"
+												nobox="y"
+												notitle="y"
+											}
+										</div>
+									</li>
+								</ul>
+							</li>
 							{if $prefs.allowRegister eq 'y'}
 								<li><a href="{if $prefs.feature_sefurl eq 'y'}register{else}tiki-register.php{/if}">{tr}Register{/tr}</a></li>
 							{/if}
 						{/if}
 					</ul>
+					{if $prefs.feature_search eq 'y'}
+						<form class="navbar-form navbar-right" role="search" action="tiki-searchindex.php">
+							<div class="input-group">
+								<input name="filter~content" type="search" class="form-control" placeholder="{tr}Search{/tr}">
+								<span class="input-group-btn">
+									<button type="submit" class="btn btn-default">{glyph name=search}</button>
+								</span>
+							</div>
+						</form>
+					{/if}
 				</div>
 			</div>
+
 		</nav>
 
 		{include file='footer.tpl'}
