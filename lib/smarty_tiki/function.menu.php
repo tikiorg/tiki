@@ -79,7 +79,7 @@ function smarty_function_menu($params, $smarty)
 	$smarty->assign('menu_info', $menu_info);
 	$smarty->assign('escape_menu_labels', ($prefs['menus_item_names_raw'] === 'n' && isset($menu_info['parse']) && $menu_info['parse'] === 'n'));
 
-	if (isset($params['bootstrap'])) {
+	if (isset($params['bootstrap']) && $params['bootstrap'] !== 'n') {
 		$structured = array();
 		$activeSection = null;
 		foreach ($channels['data'] as $element) {
