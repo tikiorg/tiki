@@ -22,7 +22,7 @@
 <h2>{tr}Gallery Images{/tr}</h2>
 <div class="text-center">
 <div class="table-responsive">
-<table class="table normal">
+<table class="table table-striped normal">
 <tr>
 <th><a href="tiki-list_gallery.php?galleryId={$galleryId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'imageId_desc'}imageId_asc{else}imageId_desc{/if}">{tr}ID{/tr}</a></th>
 <th><a href="tiki-list_gallery.php?galleryId={$galleryId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}Name{/tr}</a></th>

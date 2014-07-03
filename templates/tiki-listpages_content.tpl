@@ -26,7 +26,7 @@
 {assign var='pagefound' value='n'}
 
 <div class="table-responsive">
-<table class="table normal">
+<table class="table table-striped normal">
 	<tr>
 		{if isset($checkboxes_on) and $checkboxes_on eq 'y' && count($listpages) > 0}
 			<th>
