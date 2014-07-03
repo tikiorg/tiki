@@ -131,8 +131,10 @@ class HeaderLib
 		return $this;
 	}
 
-	function add_cssfile($file,$rank=0)
+	function add_cssfile($file, $rank=-1)
 	{
+		if ($rank == -1)
+			$rank = count($this->cssfiles);
 		if (empty($this->cssfiles[$rank]) or !in_array($file, $this->cssfiles[$rank])) {
 			$this->cssfiles[$rank][] = $file;
 		}

@@ -29,13 +29,13 @@ if ($prefs['feature_fixed_width'] === 'y') {
     );
 }
 
-if (empty($prefs['theme_active']) || $prefs['theme_active'] == 'default') {
-	$headerlib->add_cssfile('styles/layout/tiki.css');
+// Always use tiki.css.
+// Add it first, so that it can be overriden in the custom themes
+$headerlib->add_cssfile("styles/layout/tiki.css");
 
+if (empty($prefs['theme_active']) || $prefs['theme_active'] == 'default') {
 	$headerlib->add_cssfile('vendor/twitter/bootstrap/dist/css/bootstrap.min.css');
 } elseif ($prefs['theme_active'] == 'custom') {
-	$headerlib->add_cssfile('styles/layout/tiki.css');
-
 	$custom_theme = $prefs['theme_custom'];
 	// Use external link if url begins with http://, https://, or // (auto http/https)
 	if (preg_match('/^(http(s)?:)?\/\//', $custom_theme)) {
@@ -88,7 +88,5 @@ $custom_css = $tikilib->get_style_path($prefs['style'], $prefs['style_option'], 
 if ( !empty($custom_css)) {
 	$headerlib->add_cssfile($custom_css, 53);
 }
-// Always use tiki.css.
-$headerlib->add_cssfile("styles/layout/tiki.css");
 $smarty->initializePaths();
 
