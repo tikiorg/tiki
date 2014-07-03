@@ -264,7 +264,7 @@ $icons = array(
 		'title' => tr('Community'),
 		'description' => tr('User specific features and settings'),
 		'help' => 'Community',
-		'icon_class' => '',
+		'icon_class' => 'fa fa-users',
 	),
 	"profiles" => array(
 		'position' => '-400px -15px;',
@@ -288,7 +288,7 @@ $icons = array(
 		'title' => tr('Editing and Plugins'),
 		'description' => tr('Text editing settings applicable to many areas. Plugin activation and plugin alias management'),
 		'help' => 'Text+area',
-		'class_area' => 'glyphicon glyphicon-edit',
+		'icon_class' => 'glyphicon glyphicon-edit',
 	),
 	"module" => array(
 		'position' => '-200px -115px;',
@@ -439,6 +439,7 @@ $icons = array(
 		'disabled' => $prefs['feature_forums'] != 'y',
 		'description' => tr('Settings and features for forums'),
 		'help' => 'Forum',
+		'icon_class' => 'fa fa-comments'
 	),
 	"trackers" => array(
 		'icon' => 'img/icons/large/gnome-settings-font.png',
@@ -447,6 +448,7 @@ $icons = array(
 		'disabled' => $prefs['feature_trackers'] != 'y',
 		'description' => tr('Settings and features for trackers'),
 		'help' => 'Trackers',
+		'icon_class' => 'fa fa-check-square-o'
 	),
 	"polls" => array(
 		'icon' => 'img/icons/large/stock_missing-image.png',
@@ -472,6 +474,7 @@ $icons = array(
 		'disabled' => $prefs['feature_categories'] != 'y',
 		'description' => tr('Settings and features for categories'),
 		'help' => 'Category',
+		'icon_class' => 'fa fa-database'
 	),
 	"workspace" => array(
 		'icon' => 'img/icons/large/areas.png',
@@ -556,6 +559,7 @@ $icons = array(
 		'disabled' => $prefs['feature_wysiwyg'] != 'y',
 		'description' => tr('Options for WYSIWYG editor'),
 		'help' => 'Wysiwyg',
+		'icon_class' => 'fa fa-file-code-o'
 	),
 	"ads" => array(
 		'icon' => 'img/icons/large/ads.png',
@@ -596,6 +600,7 @@ $icons = array(
 		'disabled' => $prefs['feature_sefurl'] != 'y',
 		'description' => tr('Search Engine Friendly URLs'),
 		'help' => 'Rewrite+Rules',
+		'icon_class' => 'fa fa-compress'
 	),
 	"video" => array(
 		'icon' => 'img/icons/large/gnome-camera-video-32.png',
