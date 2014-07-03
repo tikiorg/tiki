@@ -27,7 +27,7 @@ class TWVersion
 		$this->branch 	= 'trunk';
 
 		// Set everything else, including defaults.
-		$this->version 	= '13.0svn';	// needs to have no spaces for releases
+		$this->version 	= '14.0svn';	// needs to have no spaces for releases
 		$this->star	= '?';
 		$this->releases	= array();
 
@@ -207,6 +207,7 @@ class TWVersion
 				'12.1alpha',
 				'12.1beta',
 				'12.1',
+				'13.0beta',
 			);
 	}
 

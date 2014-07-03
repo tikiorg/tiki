@@ -33,7 +33,11 @@
 function smarty_function_popup($params, $smarty)
 {
 	$options = array();
-    $trigger = 'hover';
+	if ($params['sticky']) {
+		$trigger = 'click';
+	} else {
+		$trigger = 'hover';
+	}
 	$body = '';
 	$title = '';
 
@@ -55,6 +59,29 @@ function smarty_function_popup($params, $smarty)
 			case 'caption':
 				$title = $value;
 				break;
+			case 'width':
+			case 'height':
+				$options[$key] = $value;
+				break;
+			case 'sticky':
+				$options[$key] = !empty($value);
+				$options['mouseOutClose'] = false;
+				break;
+			case 'fullhtml':
+				$options['escapeTitle'] = true;
+				$options['cluetipClass'] = 'fullhtml';
+				break;
+			case 'background':
+				$options['showTitle'] = false;
+				$options['cluetipClass'] = 'fullhtml';
+				if (!empty($params['width'])) {
+					$body = "&lt;div style='background-image:url(" . $value . ");background-repeat:no-repeat;width:" . $params["width"] . "px;height:300px;'&gt;" . $body . "&lt;/div&gt;";
+					unset($params['width']);
+					unset($options['width']);
+				} else {
+					$body = "&lt;div style='background-image:url(" . $value . ");width:100%;height:100%;'&gt;" . $body . "&lt;/div&gt;";
+				}
+				break;
 		}
 	}
 
@@ -68,7 +95,7 @@ function smarty_function_popup($params, $smarty)
 	$body = str_replace('\&quot;', '&quot;', $body);
 	$body = str_replace('&lt;\/', '&lt;/', $body);
 	$retval = ' data-toggle="popover" data-container="body" class="tips" ';
-	if (isset($options['activation']) && $options['activation'] !== 'click') {
+	if (isset($trigger) && $trigger !== 'click') {
 		$retval = ' data-trigger="hover" ';
 	} else {
 		$retval = ' data-trigger="click" ';
