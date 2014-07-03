@@ -304,7 +304,7 @@ if (! $itemObject->canView()) {
 	$smarty->display("error.tpl");
 	die;
 }
-if ($tracker_info['adminOnlyViewEditItem'] === 'y') {
+if (isset($tracker_info['adminOnlyViewEditItem']) && $tracker_info['adminOnlyViewEditItem'] === 'y') {
 	$access->check_permission('tiki_p_admin_trackers', tra('Admin this tracker'), 'tracker', $tracker_info['trackerId']);
 }
 
