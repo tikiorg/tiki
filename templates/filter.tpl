@@ -90,9 +90,11 @@
 							{/foreach}
 						</select>
 					</div>
-					<div class="col-sm-5 checkbox-inline">
-						<input type="checkbox" name="filter~language_unspecified"{if $filter_language_unspecified} checked="checked"{/if}>
-						{tr}Include objects without a specified language{/tr}
+					<div class="col-sm-5">
+						<label for="filter-language-unspecified-checkbox" class="checkbox-inline">
+							<input type="checkbox" id="filter-language-unspecified-checkbox" name="filter~language_unspecified"{if $filter_language_unspecified} checked="checked"{/if}>
+							{tr}Include objects without a specified language{/tr}
+						</label>
 					</div>
 				</div>
 			{else}
