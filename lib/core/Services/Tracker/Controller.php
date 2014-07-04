@@ -569,7 +569,6 @@ class Services_Tracker_Controller
 
 			$itemObject = Tracker_Item::fromId($id);
 
-			$trklib = TikiLib::lib('trk');
 			foreach ($trklib->get_child_items($itemId) as $info) {
 				$childItem = Tracker_Item::fromId($info['itemId']);
 
@@ -897,27 +896,6 @@ class Services_Tracker_Controller
 		}
 
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-
-			$trklib = TikiLib::lib('trk');
-			foreach ($trklib->get_child_items($itemId) as $info) {
-				$childItem = Tracker_Item::fromId($info['itemId']);
-
-				if ($childItem->canRemove()) {
-					$data = $childItem->getData();
-
-					$childDefinition = $childItem->getDefinition();
-
-					// handle specific deleting actions
-					foreach ($childDefinition->getFields() as $field) {
-						$handler = $childDefinition->getFieldFactory()->getHandler($field, $data);
-						if (method_exists($handler, 'handleDelete')) {
-							$handler->handleDelete();
-						}
-					}
-
-					$this->utilities->removeItem($info['itemId']);
-				}
-			}
 
 			foreach ($definition->getFields() as $field) {
 				$itemData = $itemObject->getData();

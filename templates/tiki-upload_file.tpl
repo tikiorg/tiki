@@ -263,7 +263,7 @@
 							<input type="text" id="author"name="author[]" value="{$fileInfo.author|escape}"><br>
 							<span class="description">{tr}Creator of file, if different from the 'Uploaded by' user{/tr}</span>
 						</div>
-					</td></tr>
+					</div>
 				{/if}
 				{if !empty($groupforalert)}
 					{if $showeachuser eq 'y'}
