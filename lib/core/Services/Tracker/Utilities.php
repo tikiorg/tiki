@@ -221,6 +221,20 @@ class Services_Tracker_Utilities
 
 		return $item;
 	}
+	
+	function getTitle($definition, $item)
+	{
+		$parts = [];
+
+		foreach ($definition->getFields() as $field) {
+			if ($field['isMain'] == 'y') {
+				$permName = $field['permName'];
+				$parts[] = $item['fields'][$permName];
+			}
+		}
+
+		return implode(' ', $parts);
+	}
 
 	function processValues($definition, $item)
 	{

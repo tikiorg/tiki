@@ -1,4 +1,5 @@
 {* $Id$ *}
+<div class="item-link">
 <select name="{$field.ins_id}{if $data.selectMultipleValues}[]{/if}" {if $data.preselection and $data.crossSelect neq 'y'}disabled="disabled"{/if} {if $data.selectMultipleValues}multiple="multiple"{/if} class="form-control">
 	{if $field.isMandatory ne 'y' || empty($field.value)}
 		<option value=""></option>
@@ -19,3 +20,21 @@
 	{/foreach}
 	{/if}
 </select>
+{if $field.options_map.addItems}
+	<a class="btn btn-default insert-tracker-item" href="{service controller=tracker action=insert_item trackerId=$field.options_map.trackerId}">{$field.options_map.addItems|escape}</a>
+	{jq}
+	$("select[name={{$field.ins_id}}]")
+		.next()
+		.clickModal({
+			success: function (data) {
+				$('<option>')
+					.attr('value', data.itemId)
+					.text(data.itemTitle)
+					.appendTo($(this).prev());
+				$(this).prev().val(data.itemId);
+				$.closeModal({});
+			}
+		});
+	{/jq}
+{/if}
+</div>

@@ -189,101 +189,6 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 			'list' => $this->getItemList(),
 		);
 
-		if ($this->getOption('addItems') && empty($context['in_ajax_form'])) {
-
-			$context['in_ajax_form'] = true;
-
-			require_once 'lib/wiki-plugins/wikiplugin_tracker.php';
-
-			$params = array(
-				'trackerId' => $this->getOption('trackerId'),
-				'ignoreRequestItemId' => 'y',
-				'_ajax_form_ins_id' => $this->getInsertId(),
-			);
-
-			if ($this->getOption('addItemsWikiTpl')) {
-				$params['wiki'] = $this->getOption('addItemsWikiTpl');
-			}
-			$form = wikiplugin_tracker('', $params);
-
-			$form = preg_replace(array('/<!--.*?-->/', '/\s+/', '/^~np~/', '/~\/np~/'), array('', ' ', '', ''), $form);	// remove comments etc
-
-			if ($displayFieldsList = $this->getDisplayFieldsListArray()) {
-				$displayFieldId = $displayFieldsList[0];
-				if (is_string($displayFieldId) && strpos($displayFieldId, '|') !== false) {
-					$displayFieldId = substr($displayFieldId, 0, strpos($displayFieldId, '|'));
-				}
-			} else {
-				$displayFieldId = $this->getOption('fieldId');
-			}
-
-			TikiLib::lib('header')->add_jq_onready(
-				'$("select[name=' . $this->getInsertId() . ']").change(function(e, val) {
-	var $select = $(this);
-	if ($select.val() == -1) {
-		var $d = $("<div id=\'add_dialog_' . $this->getInsertId() . '\' style=\'display:none\'/>")
-			.html(' . json_encode($form) . ')
-			.appendTo(document.body);
-
-		var w = $d.width() * 1.4;
-		var h = $d.height() * 2.0;
-		if ($(document.body).width() < w) {
-			w = $(document.body).width() * 0.8;
-		}
-		if ($(document.body).height() < h) {
-			h = $(document.body).height() * 0.8;
-		}
-
-		$d.dialog({
-				width: w,
-				height: h,
-				title: '.json_encode($this->getOption('addItems')).',
-				modal: true,
-				buttons: {
-					"Add": function() {
-						var $f = $("form", this).append($("<input type=\'hidden\' name=\'ajax_add\' value=\'1\' />"));
-						if (typeof $f.valid === "function" && $f.valid()) {
-							ajaxLoadingShow($f);
-							$.post( $f.attr("action"), $f.serialize(), function(data, status) {
-								if (data && data.data) {
-									$.each(data.data, function (i, a) {
-										if ( a && a.fieldId == '. intval($displayFieldId) .' ) {
-											if ("string" !== typeof a.value && a.pvalue) {
-												a.value = a.pvalue;
-											}
-
-											var $o = $("<option/>")
-												.val(data.itemId)
-												.text(a.value);
-											$select
-												.append($o)
-												.val(data.itemId);
-										}
-									});
-								}
-								ajaxLoadingHide();
-								$d.dialog( "close" );
-								$select.trigger("chosen:updated");
-								return;
-							}, "json");
-						}
-					},
-					Cancel: function() {
-						$select.val("");
-						$( this ).dialog( "close" );
-					}
-				},
-				create: function(event, ui) {
-					 ajaxTrackerFormInit_' . $this->getInsertId() . '();
-				}
-			}).find(".input_submit_container").remove();
-	}
-});
-'
-);
-
-		}
-
 		$data['selectMultipleValues'] = (bool) $this->getOption('selectMultipleValues');
 
 		// 'crossSelect' overrides the preselection reference, which is enabled, when a cross reference Item Link <-> Item Link
@@ -502,10 +407,6 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 		}
 
 		$list = $this->handleDuplicates($list);
-
-		if ($this->getOption('addItems')) {
-			$list['-1'] = $this->getOption('addItems');
-		}
 
 		return $list;
 	}

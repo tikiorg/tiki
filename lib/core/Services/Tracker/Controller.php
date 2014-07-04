@@ -693,7 +693,10 @@ class Services_Tracker_Controller
 					$access->redirect($next, tr('Item created'));
 				}
 
-				return $this->utilities->getItem($trackerId, $itemId);
+				$item = $this->utilities->getItem($trackerId, $itemId);
+				$item['itemTitle'] = $this->utilities->getTitle($definition, $item);
+
+				return $item;
 			} else {
 				throw new Services_Exception(tr('Item could not be created.'), 400);
 			}
