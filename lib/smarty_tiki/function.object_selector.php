@@ -30,6 +30,10 @@ function smarty_function_object_selector( $params, $smarty )
 	static $uniqid = 0;
 
 	$arguments = [
+		'simpleid' => null,
+		'simplename' => null,
+		'simplevalue' => null,
+		'simpleclass' => 'hidden',
 		'name' => null,
 		'class' => null,
 		'id' => null,
@@ -39,7 +43,7 @@ function smarty_function_object_selector( $params, $smarty )
 	];
 
 	// Handle reserved parameters
-	foreach (array('name', 'class', 'id', 'value', 'filter') as $var) {
+	foreach (array('name', 'class', 'id', 'value', 'filter', 'simplename', 'simpleid', 'simplevalue', 'simpleclass') as $var) {
 		if (isset($params["_$var"])) {
 			$arguments[$var] = $params["_$var"];
 		}
@@ -49,6 +53,9 @@ function smarty_function_object_selector( $params, $smarty )
 	if (empty($arguments['id'])) {
 		$arguments['id'] = 'object_selector_' . ++$uniqid;
 	}
+	if (empty($arguments['simpleid'])) {
+		$arguments['simpleid'] = 'object_selector_' . ++$uniqid;
+	}
 
 	if ($arguments['filter']) {
 		$arguments['filter'] = array_merge($arguments['filter'], $params);
@@ -56,12 +63,19 @@ function smarty_function_object_selector( $params, $smarty )
 		$arguments['filter'] = $params;
 	}
 
-	$arguments['filter'] = json_encode($arguments['filter']);
+	if ($arguments['simplevalue'] && ! $arguments['value'] && isset($arguments['filter']['type'])) {
+		$arguments['value'] = "{$arguments['filter']['type']}:{$arguments['simplevalue']}";
+		$arguments['simpleclass'] = null;
+		$arguments['class'] .= ' hidden';
+	}
 
 	if ($arguments['value']) {
 		list($type, $object) = explode(':', $arguments['value'], 2);
 		$arguments['title'] = TikiLib::lib('object')->get_title($type, $object);
+		$arguments['simplevalue'] = $object;
 	}
+
+	$arguments['filter'] = json_encode($arguments['filter']);
 
 	$smarty->assign(
 		'object_selector',

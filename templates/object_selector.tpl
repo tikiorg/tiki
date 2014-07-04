@@ -1,11 +1,18 @@
 <div class="object-selector">
 <input
 	type="text"
+	id="{$object_selector.simpleid|escape}"
+	{if $object_selector.simpleclass}class="{$object_selector.simpleclass|escape}"{/if}
+	{if $object_selector.simplename}name="{$object_selector.simplename|escape}"{/if}
+	{if $object_selector.simplevalue}value="{$object_selector.simplevalue|escape}"{/if}
+>
+<input
+	type="text"
 	id="{$object_selector.id|escape}"
 	{if $object_selector.name}name="{$object_selector.name|escape}"{/if}
 	{if $object_selector.class}class="{$object_selector.class|escape}"{/if}
 	{if $object_selector.value}value="{$object_selector.value|escape}"{/if}
-	{if $object_selector.title}data-title="{$object_selector.title|escape}"{/if}
+	{if $object_selector.title}data-label="{$object_selector.title|escape}"{/if}
 	data-filters="{$object_selector.filter|escape}"
 	data-threshold="{$prefs.maxRecords|escape}"
 >

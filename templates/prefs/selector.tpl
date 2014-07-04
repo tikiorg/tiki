@@ -1,7 +1,7 @@
 <div class="form-group adminoptionbox preference clearfix {$p.tagstring|escape}{if isset($smarty.request.highlight) and $smarty.request.highlight eq $p.preference} highlight{/if}">
 	<label class="control-label col-sm-4" for="{$p.id|escape}">{$p.name|escape}</label>
     <div class="col-sm-8">
-		{object_selector _name=$p.preference _id=$p.id _value=$p.selector_value type=$p.selector_type}
+		{object_selector _simplename=$p.preference _simpleid=$p.id _simplevalue=$p.value type=$p.selector_type}
 	{if $p.shorthint}
 		<div class="help-block">{$p.shorthint|simplewiki}</div>
 	{/if}

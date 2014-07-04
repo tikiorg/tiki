@@ -239,9 +239,6 @@ class PreferencesLib
 
 				$info['type'] = 'selector';
 				$info['selector_type'] = $type;
-				if (! empty($info['value'])) {
-					$info['selector_value'] = "$type:{$info['value']}";
-				}
 			}
 		}
 
@@ -623,7 +620,7 @@ class PreferencesLib
 	{
 		$name = $info['preference'];
 		if (! empty($data[$name])) {
-			list($type, $value) = explode(':', $data[$name]);
+			$value = $data[$name];
 
 			if ( isset($info['filter']) && $filter = TikiFilter::get($info['filter']) ) {
 				return $filter->filter($value);
