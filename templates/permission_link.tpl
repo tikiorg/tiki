@@ -7,7 +7,7 @@
 		{/if}
 	</a>
 {elseif $permission_link.mode eq 'button'}
-	<a class="{if $permission_link.active}btn btn-success{else}btn btn-default{/if}" href="{$permission_link.url|escape}">
+	<a class="{if $permission_link.active and $permission_link.type ne 'file gallery'}btn btn-success{else}btn btn-default{/if}" href="{$permission_link.url|escape}">
 		{$permission_link.label|escape}
 		{if $permission_link.count}
 			<span class="badge">{$permission_link.count|escape}</span>
