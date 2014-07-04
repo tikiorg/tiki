@@ -100,7 +100,6 @@ function prefs_jquery_list($partial = false)
 			'description' => tra('Styled replacement for dropdown select menus and multiple select inputs.'),
 			'type' => 'flag',
 			'default' => 'n',
-			'tags' => array('experimental'),
 			'dependencies' => array(
 				'feature_jquery_ui',
 			),
@@ -111,6 +110,7 @@ function prefs_jquery_list($partial = false)
 			'type' => 'flag',
 			'default' => 'n',
 			'warning' => tra('Experimental. This plugin is deprecated in favor of "Chosen".'),
+			'tags' => array('experimental'),
 			'dependencies' => array(
 				'feature_jquery_ui',
 			),
