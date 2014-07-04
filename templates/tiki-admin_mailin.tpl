@@ -47,14 +47,14 @@
       <td>{if $account.leave_email eq 'y'}{glyph name="ok"}{/if}</td>
 
       <td class="action">
-        <a class="btn btn-xs btn-default" data-toggle="modal" data-target="#bootstrap-modal" href="{service controller=mailin action=replace_account accountId=$account.accountId modal=1}">{glyph name=edit} {tr}Edit{/tr}</a>
-        <a class="btn btn-xs btn-danger" data-toggle="modal" data-target="#bootstrap-modal" href="{service controller=mailin action=remove_account accountId=$account.accountId modal=1}" >{glyph name=remove} <span class="sr-only">{tr}Remove{/tr}</span></a>
+        <a class="btn btn-xs btn-default" href="{bootstrap_modal controller=mailin action=replace_account accountId=$account.accountId}">{glyph name=edit} {tr}Edit{/tr}</a>
+        <a class="btn btn-xs btn-danger" href="{bootstrap_modal controller=mailin action=remove_account accountId=$account.accountId}" >{glyph name=remove} <span class="sr-only">{tr}Remove{/tr}</span></a>
       </td>
     </tr>
   {/foreach}
 </table>
 {button _icon="img/icons/large/messages.gif" _text="{tr}Admin Mail-in Routes{/tr}" href="tiki-admin_mailin_routes.php" _menu_text="y"}
-<a data-toggle="modal" data-target="#bootstrap-modal" href="{service controller=mailin action=replace_account modal=1}" class="btn btn-default">{glyph name=plus} {tr}Add Account{/tr}</a>
+<a href="{bootstrap_modal controller=mailin action=replace_account}" class="btn btn-default">{glyph name=plus} {tr}Add Account{/tr}</a>
 {if $tikifeedback}
 	{section name=n loop=$tikifeedback}<div class="alert {if $tikifeedback[n].num > 0} alert-warning{/if}">{$tikifeedback[n].mes}</div>{/section}
 {/if}

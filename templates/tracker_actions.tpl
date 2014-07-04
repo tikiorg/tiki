@@ -3,7 +3,7 @@
 <div class="btn-group">
 
 {if $tiki_p_admin_trackers eq 'y' and !empty($trackerId)}
-	<a class="btn btn-default" href="{service controller=tracker action=replace trackerId=$trackerId modal=1}" data-toggle="modal" data-target="#bootstrap-modal">{glyph name=cog} {tr}Properties{/tr}</a>
+	<a class="btn btn-default" href="{bootstrap_modal controller=tracker action=replace trackerId=$trackerId}">{glyph name=cog} {tr}Properties{/tr}</a>
 	<a class="btn btn-default" href="tiki-admin_tracker_fields.php?trackerId={$trackerId|escape}">{glyph name="list-alt"} {tr}Fields{/tr}</a>
 {/if}
 

@@ -3,7 +3,7 @@
 
 <div class="t_navbar btn-group form-group">
 	{button href="tiki-admin_menus.php" class="btn btn-default" _text="<span class=\"glyphicon glyphicon-list\"></span> {tr}List menus{/tr}"}
-	<a class="btn btn-default" href="{service controller=menu action=manage menuId={$menuId} modal=true}" data-toggle="modal" data-target="#bootstrap-modal">
+	<a class="btn btn-default" href="{bootstrap_modal controller=menu action=manage menuId=$menuId}">
 		{glyph name="edit"} {tr}Edit This Menu{/tr}
 	</a>
 	{if $prefs.feature_tabs neq 'y'}

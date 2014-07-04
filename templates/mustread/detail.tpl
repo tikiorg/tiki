@@ -26,7 +26,7 @@
 							<li><a href="{service controller=mustread action=list id=$item.itemId notification=unopen}#contentmustread_detail-notification">{$counts.unopen|escape}</a> {tr}Unopened{/tr}</li>
 						</ol>
 
-						<a href="{service controller=mustread action=circulate modal=1 id=$item.itemId}" class="btn btn-default" data-toggle="modal" data-target="#bootstrap-modal">{tr}Circulate{/tr}</a>
+						<a href="{bootstrap_modal controller=mustread action=circulate id=$item.itemId}" class="btn btn-default">{tr}Circulate{/tr}</a>
 					</div>
 					<div class="col-md-8">
 						{if $resultset}

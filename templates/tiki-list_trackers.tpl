@@ -8,10 +8,10 @@
 {block name="navigation"}
 	{if $tiki_p_admin_trackers eq 'y'}
 		<div class="navbar-btn">
-			<a class="btn btn-default" href="{service controller=tracker action=replace modal=true}" data-toggle="modal" data-target="#bootstrap-modal">
+			<a class="btn btn-default" href="{bootstrap_modal controller=tracker action=replace}">
 				{glyph name="plus"} {tr}Create{/tr}
 			</a>
-			<a class="btn btn-default" href="{service controller=tracker action=duplicate modal=true}" data-toggle="modal" data-target="#bootstrap-modal">
+			<a class="btn btn-default" href="{bootstrap_modal controller=tracker action=duplicate}">
 				{glyph name="flash"} {tr}Duplicate{/tr}
 			</a>
 			<div class="btn-group">
@@ -21,12 +21,12 @@
 				</button>
 				<ul class="dropdown-menu">
 					<li>
-						<a href="{service controller=tracker action=import modal=1}" data-toggle="modal" data-target="#bootstrap-modal">
+						<a href="{bootstrap_modal controller=tracker action=import}">
 							{tr}Import Structure{/tr}
 						</a>
 					</li>
 					<li>
-						<a href="{service controller=tracker action=import_profile modal=1}" data-toggle="modal" data-target="#bootstrap-modal">
+						<a href="{bootstrap_modal controller=tracker action=import_profile}">
 							{tr}Import From Profile/YAML{/tr}
 						</a>
 					</li>

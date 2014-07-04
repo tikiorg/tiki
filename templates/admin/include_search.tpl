@@ -20,7 +20,7 @@
         <div class="form-group col-lg-12 clearfix">
 			{if $prefs.feature_search eq 'y'}
 				<a href="tiki-searchindex.php" class="btn btn-default btn-sm">{glyph name="search"} {tr}Search{/tr}</a>
-				<a href="{service controller=search action=rebuild modal=1}" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#bootstrap-modal">{tr}Rebuild Index{/tr}</a>
+				<a href="{bootstrap_modal controller=search action=rebuild}" class="btn btn-primary btn-sm">{tr}Rebuild Index{/tr}</a>
 			{/if}
             <div class="pull-right">
                 <input type="submit" class="btn btn-primary btn-sm" value="{tr}Apply{/tr}">

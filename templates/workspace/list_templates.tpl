@@ -6,10 +6,10 @@
 
 {block name="navigation"}
 	<div class="navbar">
-		<a class="btn btn-default" href="{service controller=workspace action=add_template modal=true}" data-toggle="modal" data-target="#bootstrap-modal">
+		<a class="btn btn-default" href="{bootstrap_modal controller=workspace action=add_template}">
 			{glyph name="plus"} {tr}Create Workspace Template{/tr}
 		</a>
-		<a class="btn btn-default" href="{service controller=workspace action=create modal=true}" data-toggle="modal" data-target="#bootstrap-modal">
+		<a class="btn btn-default" href="{bootstrap_modal controller=workspace action=create}">
 			{glyph name="plus"} {tr}Create Workspace{/tr}
 		</a>
 	</div>

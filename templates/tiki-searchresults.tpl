@@ -29,7 +29,7 @@
 				    <label class="searchboolean control-label" for="boolean">
 					    {tr}Advanced search:{/tr} <input type="checkbox" name="boolean" id="boolean" {if $boolean eq 'y'} checked="checked"{/if}>
 				    </label>
-					<a href="{service controller=search action=help modal=1}" data-toggle="modal" data-target="#bootstrap-modal">{tr}Search Help{/tr} {icon _id=help}</a>
+					<a href="{bootstrap_modal controller=search action=help}">{tr}Search Help{/tr} {icon _id=help}</a>
                 </div>
 				{if $prefs.feature_search_show_last_modification eq 'y'}
                     <div class="form-group">

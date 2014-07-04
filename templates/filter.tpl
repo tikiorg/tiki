@@ -121,7 +121,7 @@
 				});
 			{/jq}
 		{/if}
-		<a href="{service controller=search action=help modal=1}" data-toggle="modal" data-target="#bootstrap-modal">{tr}Search Help{/tr} {icon _id=help}</a>
+		<a href="{bootstrap_modal controller=search action=help}">{tr}Search Help{/tr} {icon _id=help}</a>
 	</div>
 </form>
 {jq}
