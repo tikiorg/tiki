@@ -183,8 +183,34 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 		return $data;
 	}
 
+	function useSelector()
+	{
+		global $prefs;
+		if ($this->getOption('selectMultipleValues')) {
+			return false;
+		}
+
+		if ($prefs['feature_search'] != 'y') {
+			return false;
+		}
+
+		if ('crossSelect' == $this->getOption('preSelectFieldMethod')) {
+			return false;
+		}
+
+		return true;
+	}
+
 	function renderInput($context = array())
 	{
+		if ($this->useSelector()) {
+			$value = $this->getValue();
+			return $this->renderTemplate('trackerinput/itemlink_selector.tpl', $context, [
+				'status' => implode(' OR ', str_split($this->getOption('status', 'opc'), 1)),
+				'selector_value' => $value ? "trackeritem:$value" : null,
+			]);
+		}
+
 		$data = array(
 			'list' => $this->getItemList(),
 		);
