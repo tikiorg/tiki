@@ -14,7 +14,7 @@
 		function match_pass() {
 			submit_counter += 1;
 			var ret_msg = document.getElementById('validate');
-			var pass0 = document.getElementById('oldpass') ? document.getElementById('oldpass').value : "";
+			var pass0 = document.getElementById('oldpass') ? document.getElementById('oldpass').value : "dummy";
 			var pass1 = document.getElementById('pass1').value;
 			var pass2 = document.getElementById('pass2').value;
 			if (submit_counter > 10) {
