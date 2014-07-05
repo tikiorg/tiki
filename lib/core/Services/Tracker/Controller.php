@@ -885,7 +885,9 @@ class Services_Tracker_Controller
 			throw new Services_Exception_MissingValue('itemId');
 		}
 
-		$itemInfo = TikiLib::lib('trk')->get_tracker_item($itemId);
+		$trklib = TikiLib::lib('trk');
+
+		$itemInfo = $trklib->get_tracker_item($itemId);
 		if (! $itemInfo || $itemInfo['trackerId'] != $trackerId) {
 			throw new Services_Exception_NotFound;
 		}
@@ -895,7 +897,11 @@ class Services_Tracker_Controller
 			throw new Services_Exception_Denied;
 		}
 
+		$uncascaded = $trklib->findUncascadedDeletes($itemId, $trackerId);
+
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+			$tx = TikiDb::get()->begin();
 
 			foreach ($definition->getFields() as $field) {
 				$itemData = $itemObject->getData();
@@ -905,14 +911,18 @@ class Services_Tracker_Controller
 				}
 			}
 
+			$trklib->replaceItemReferences($input->replacement->int() ?: '', $uncascaded['itemIds'], $uncascaded['fieldIds']);
+
 			$this->utilities->removeItem($itemId);
-			TikiLib::lib('unifiedsearch')->processUpdateQueue();
+
+			$tx->commit();
 		}
 
 		return array(
 			'title' => tr('Remove'),
 			'trackerId' => $trackerId,
 			'itemId' => $itemId,
+			'affectedCount' => count($uncascaded['itemIds']),
 		);
 	}
 

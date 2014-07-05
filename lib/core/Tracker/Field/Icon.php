@@ -130,7 +130,7 @@ class Tracker_Field_Icon extends Tracker_Field_Abstract
 	{
 		$definition = Tracker_Definition::get($args['trackerId']);
 
-		if ($fieldId = $definition->getIconField()) {
+		if ($definition && $fieldId = $definition->getIconField()) {
 			$value = isset($args['values'][$fieldId]) ? $args['values'][$fieldId] : null;
 
 			if (! empty($value)) {
