@@ -79,6 +79,9 @@ if ($isvalid) {
 			}
 			$smarty->assign('new_user_validation', 'y');
 			$smarty->assign('userlogin', $_REQUEST['user']);
+			if ($prefs['login_is_email'] === 'y') {
+				$smarty->assign('email', $_REQUEST['user']);
+			}
 			$smarty->assign('mid', 'tiki-change_password.tpl');
 			$smarty->display("tiki.tpl");
 			die;
