@@ -2,8 +2,8 @@
 {jq notonready=true}
 {literal}
 		function regCapsLock(e){
-			kc = e.keyCode?e.keyCode:e.which;
-			sk = e.shiftKey?e.shiftKey:((kc == 16)?true:false);
+			var kc = e.keyCode?e.keyCode:e.which;
+			var sk = e.shiftKey?e.shiftKey:((kc == 16)?true:false);
 			if(((kc >= 65 && kc <= 90) && !sk)||((kc >= 97 && kc <= 122) && sk))
 				document.getElementById('divRegCapson').style.visibility = 'visible';
 			else
@@ -13,10 +13,10 @@
 		var submit_counter = 0;
 		function match_pass() {
 			submit_counter += 1;
-			ret_msg = document.getElementById('validate');
-			pass0 = document.getElementById('oldpass').value;
-			pass1 = document.getElementById('pass1').value;
-			pass2 = document.getElementById('pass2').value;
+			var ret_msg = document.getElementById('validate');
+			var pass0 = document.getElementById('oldpass') ? document.getElementById('oldpass').value : "dummy";
+			var pass1 = document.getElementById('pass1').value;
+			var pass2 = document.getElementById('pass2').value;
 			if (submit_counter > 10) {
 				ret_msg.innerHTML = "<img src='img/icons/exclamation.png' style='vertical-align:middle' alt='Overflow'> {tr}Too many tries{/tr}";
 				return false;
