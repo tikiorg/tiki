@@ -68,12 +68,7 @@ if (isset($_REQUEST["rename"]) || isset($_REQUEST["confirm"])) {
 	if ($result) {
 		global $perspectivelib; require_once 'lib/perspectivelib.php';
 		$perspectivelib->replace_preference('wsHomepage', $page, $newName);
-		if ($prefs['feature_sefurl'] == 'y') {
-			include_once('tiki-sefurl.php');
-			header('location: '. urlencode(filter_out_sefurl("tiki-index.php?page=$newName", 'wiki')));
-		} else {
-			header('location: tiki-index.php?page=' . urlencode($newName));
-		}
+		$access->redirect($wikilib->sefurl($newName));
 	}
 }
 ask_ticket('rename-page');

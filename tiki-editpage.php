@@ -277,13 +277,13 @@ if (isset($_REQUEST['cancel_edit'])) {
 	$tikilib->semaphore_unset($page, $_SESSION[$editLockPageId]);
 	if (!empty($_REQUEST['returnto'])) {
 		if (isURL($_REQUEST['returnto'])) {
-			$url = "location:".$_REQUEST['returnto'];
+			$url = $_REQUEST['returnto'];
 		} else {
 			// came from wikiplugin_include.php edit button
-			$url = "location:".$wikilib->sefurl($_REQUEST['returnto']);
+			$url = $wikilib->sefurl($_REQUEST['returnto']);
 		}
 	} else {
-		$url = "location:".$wikilib->sefurl($page);
+		$url = $wikilib->sefurl($page);
 		if (!empty($_REQUEST['page_ref_id'])) {
 			$url .= (strpos($url, '?') === false ? '?' : '&') . 'page_ref_id='.$_REQUEST['page_ref_id'];
 		}
@@ -294,8 +294,7 @@ if (isset($_REQUEST['cancel_edit'])) {
 	}
 
 	if ($dieInsteadOfForwardingWithHeader) die ("-- tiki-editpage: Dying before first call to header(), so we can see traces. Forwarding to: \$url='$url'");
-	header($url);
-	die;
+	$access->redirect($url);
 }
 if (isset($_REQUEST['minor'])) {
 	$_REQUEST['isminor'] = 'on';
@@ -531,8 +530,7 @@ if (isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_na
 			}
 		}
 		if ($dieInsteadOfForwardingWithHeader) die ("-- tiki-editpage: Dying before second call to header(), so we can see traces. Forwarding to: '$url'");
-		header("location: $url");
-		die;
+		$access->redirect($url);
 	}
 }
 
@@ -1367,8 +1365,7 @@ if (
 	}
 
 	if ($dieInsteadOfForwardingWithHeader) die ("-- tiki-editpage: Dying before third call to header(), so we can see traces. Forwarding to: '$url'");
-	header("location: $url");
-	die;
+	$access->redirect($url);
 } //save
 $smarty->assign('pageAlias', $pageAlias);
 if ($prefs['feature_wiki_templates'] === 'y' && $tiki_p_use_content_templates === 'y') {

@@ -25,6 +25,8 @@ if ( !isset($_REQUEST['page']) ) {
 
 $pages = array();
 
+$_REQUEST['page'] = $wikilib->get_page_by_slug($_REQUEST['page']);
+
 $requested = $tikilib->get_page_info($_REQUEST['page']);
 $page_id = $requested['page_id'];
 $pages[] = $requested;
@@ -94,7 +96,7 @@ foreach ( array_reverse($pages) as $id => $info ) {
 	if ( $tiki_p_view == 'y' ) {
 		$renderer->runSetups();
 
-		$contents[] = $smarty->fetch('tiki-show_content.tpl');
+		$contents[] = $smarty->fetch('extends:layouts/internal/layout_view.tpl|tiki-show_page.tpl');
 
 		if ( $id === count($pages) - 1 )
 			$renderer->restoreAll();

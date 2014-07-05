@@ -60,6 +60,7 @@ class TikiInit
 		$path = TIKI_PATH . '/db/config';
 		$container = new ContainerBuilder;
 		$container->addCompilerPass(new \Tiki\MailIn\Provider\CompilerPass);
+		$container->addCompilerPass(new \Tiki\Wiki\SlugManager\CompilerPass);
 
 		$container->setParameter('kernel.root_dir', TIKI_PATH);
 		$loader = new XmlFileLoader($container, new FileLocator($path));

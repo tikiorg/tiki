@@ -1648,6 +1648,7 @@ DROP TABLE IF EXISTS `tiki_pages`;
 CREATE TABLE `tiki_pages` (
   `page_id` int(14) NOT NULL auto_increment,
   `pageName` varchar(160) NOT NULL default '',
+  `pageSlug` varchar(160) NULL,
   `hits` int(8) default NULL,
   `data` mediumtext,
   `description` varchar(200) default NULL,
@@ -1676,6 +1677,7 @@ CREATE TABLE `tiki_pages` (
   `keywords` TEXT,
   PRIMARY KEY (`page_id`),
   UNIQUE KEY `pageName` (`pageName`),
+  UNIQUE KEY `pageSlug` (`pageSlug`),
   KEY `data` (`data`(255)),
   KEY `pageRank` (`pageRank`),
   KEY `lastModif`(`lastModif`)

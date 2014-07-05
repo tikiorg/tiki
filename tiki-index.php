@@ -221,12 +221,7 @@ if ( isset($_REQUEST['fullscreen']) ) {
 }
 $smarty->assign('fullscreen', $fullscreen);
 
-if ( function_exists('utf8_encode') ) {
-	$pagename_utf8 = utf8_encode($page);
-	if ( $page != $pagename_utf8 && ! $tikilib->page_exists($page) && $tikilib->page_exists($pagename_utf8) ) {
-		$page = $_REQUEST['page'] = $pagename_utf8;
-	}
-}
+$page = $_REQUEST['page'] = $wikilib->get_page_by_slug($page);
 
 if (!$info || isset($_REQUEST['date']) || isset($_REQUEST['version'])) {
 	if ($prefs['feature_wiki_use_date'] == 'y' && isset($_REQUEST['date'])) {

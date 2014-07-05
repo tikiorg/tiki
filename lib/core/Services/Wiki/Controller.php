@@ -49,5 +49,35 @@ class Services_Wiki_Controller
 		$data = $wikilib->get_parse($page, $canBeRefreshed);
 		return array('data' => $data);
 	}
+
+	function action_regenerate_slugs($input)
+	{
+		global $prefs;
+		Services_Exception_Denied::checkGlobal('admin');
+
+		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+			$pages = TikiDb::get()->table('tiki_pages');
+
+			$initial = TikiLib::lib('slugmanager');
+			$tracker = new Tiki\Wiki\SlugManager\InMemoryTracker;
+			$manager = clone $initial;
+			$manager->setValidationCallback($tracker);
+
+			$list = $pages->fetchColumn('pageName', []);
+			$pages->updateMultiple(['pageSlug' => null], []);
+
+			foreach ($list as $page) {
+				$slug = $manager->generate($prefs['wiki_url_scheme'], $page);
+				$tracker->add($page);
+				$pages->update(['pageSlug' => $slug], ['pageName' => $page]);
+			}
+
+			TikiLib::lib('access')->redirect('tiki-admin.php?page=wiki');
+		}
+
+		return array(
+			'title' => tr('Regenerate Wiki URLs'),
+		);
+	}
 }
 

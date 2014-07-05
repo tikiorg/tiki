@@ -98,6 +98,7 @@
 		<service id="tiki.lib.service" class="ServiceLib">
 			<file>%kernel.root_dir%/lib/servicelib.php</file>
 		</service>
+		<service id="tiki.lib.slugmanager" class="Tiki\Wiki\SlugManager"/>
 		<service id="tiki.lib.sheet" class="SheetLib">
 			<file>%kernel.root_dir%/lib/sheet/sheetlib.php</file>
 		</service>
@@ -119,6 +120,13 @@
 		</service>
 		<service id="tiki.lib.wiki" class="WikiLib">
 			<file>%kernel.root_dir%/lib/wiki/wikilib.php</file>
+		</service>
+
+		<service id="tiki.wiki.slug.underscore" class="Tiki\Wiki\SlugManager\UnderscoreGenerator">
+			<tag name="tiki.wiki.slug.generator"/>
+		</service>
+		<service id="tiki.wiki.slug.urlencode" class="Tiki\Wiki\SlugManager\UrlencodeGenerator">
+			<tag name="tiki.wiki.slug.generator"/>
 		</service>
 	</services>
 </container>

@@ -64,6 +64,28 @@ class WikiLib extends TikiLib
 		return $ret;
 	}
 
+	function get_page_by_slug($slug)
+	{
+		$pages = TikiDb::get()->table('tiki_pages');
+		$found = $pages->fetchOne('pageName', ['pageSlug' => $slug]);
+
+		if ($found) {
+			return $found;
+		}
+
+		if ( function_exists('utf8_encode') ) {
+			$slug_utf8 = utf8_encode($slug);
+			if ($slug != $slug_utf8) {
+				$found = $pages->fetchOne('pageName', ['pageSlug' => $slug_utf8]);
+				if ($found) {
+					return $found;
+				}
+			}
+		}
+
+		return $slug;
+	}
+
 	public function get_creator($name)
 	{
 		return $this->getOne('select `creator` from `tiki_pages` where `pageName`=?', array($name));
@@ -230,11 +252,12 @@ class WikiLib extends TikiLib
 
 		// 1st rename the page in tiki_pages, using a tmpname inbetween for
 		// rename pages like ThisTestpage to ThisTestPage
-		$query = 'update `tiki_pages` set `pageName`=? where `pageName`=?';
+		$query = 'update `tiki_pages` set `pageName`=?, `pageSlug`=NULL where `pageName`=?';
 		$this->query($query, array( $tmpName, $oldName ));
 
-		$query = 'update `tiki_pages` set `pageName`=? where `pageName`=?';
-		$this->query($query, array( $newName, $tmpName ));
+		$slug = TikiLib::lib('slugmanager')->generate($prefs['wiki_url_scheme'], $newName);
+		$query = 'update `tiki_pages` set `pageName`=?, `pageSlug`=? where `pageName`=?';
+		$this->query($query, array( $newName, $slug, $tmpName ));
 
 		// correct pageName in tiki_history, using a tmpname inbetween for
 		// rename pages like ThisTestpage to ThisTestPage
@@ -1182,7 +1205,9 @@ class WikiLib extends TikiLib
 		 	}
 		 }
 
-		$href = "$script_name?page=" . urlencode($page);
+		$pages = TikiDb::get()->table('tiki_pages');
+		$page = $pages->fetchOne('pageSlug', ['pageName' => $page]) ?: $page;
+		$href = "$script_name?page=" . $page;
 
 		if (isset($prefs['feature_wiki_use_date_links']) && $prefs['feature_wiki_use_date_links'] == 'y') {
 			if (isset($_REQUEST['date'])) {

@@ -61,6 +61,18 @@ function prefs_wiki_list($partial = false)
 			),
 			'default' => 'complete',
 		),
+		'wiki_url_scheme' => array(
+			'name' => tr('Wiki URL Scheme'),
+			'description' => tr('Alter the SEFURL pattern for page names.'),
+			'hint' => tr('Use the action to regenerate your URLs after changing this setting.'),
+			'type' => 'list',
+			'default' => 'urlencode',
+			'options' => TikiLib::lib('slugmanager')->getOptions(),
+			'view' => TikiLib::lib('service')->getUrl([
+				'controller' => 'wiki',
+				'action' => 'regenerate_slugs',
+			]),
+		),
 		'wiki_show_version' => array(
 			'name' => tra('Display page version'),
 			'description' => tra('Display the page version information when viewing the page.'),
