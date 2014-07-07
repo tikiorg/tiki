@@ -24,7 +24,7 @@
 	{/if}
 	<input type="hidden" name="{$field.ins_id}_old" value="{$field.value|escape}">
 {else}
-	<select name="{$field.ins_id|escape}" class="form-control{if $field.type eq 'D'} group_{$field.ins_id|escape}"{/if}>
+	<select name="{$field.ins_id|escape}" class="form-control{if $field.type eq 'D'} group_{$field.ins_id|escape}{/if}">
 		{assign var=otherValue value=$field.value}
 		{if $field.isMandatory ne 'y' || empty($field.value)}
 			<option value="">&nbsp;</option>
