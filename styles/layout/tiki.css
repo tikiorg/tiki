@@ -1960,6 +1960,16 @@ a.categpath {
   margin-left: 10px;
   margin-right: 10px;
 }
+#categorizator .checkbox {
+  display: inline;
+  padding-left: 10px;
+}
+#categorizator .checkbox input[type="checkbox"] {
+  margin-left: 0;
+}
+ul.tree {
+  padding-left: 3px;
+}
 .searchresults {
   list-style: none;
   padding: 0;
@@ -2821,13 +2831,5 @@ input.tablesorter-filter {
 .tablesorter input.dateTo {
   border: none;
   background-color: #f7f7f7;
-}
-.popover{
-  max-width: 600px;
-  height: auto;
-}
-.popover-title{
-  background-color: transparent;
-  border-bottom: none;
 }
 /* End of file */
