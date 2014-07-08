@@ -30,7 +30,12 @@ $info = $userprefslib->get_user_avatar_img($_REQUEST["user"]);
 $type = $info["avatarFileType"];
 $content = $info["avatarData"];
 if (empty($content)) {
-	$content = file_get_contents('img/noavatar.png');
+	if($prefs['user_default_picture_id']){
+		header('Location: tiki-download_file.php?fileId=' . $prefs['user_default_picture_id'] . '&amp;display=y');
+	die;
+	} else {
+		$content = file_get_contents('img/noavatar.png');
+	}
 }
 header("Content-type: $type");
 echo $content;

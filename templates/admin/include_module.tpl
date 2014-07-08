@@ -29,7 +29,21 @@
 
 		<div class="adminoptionbox">
 			<fieldset>
-				<legend>{tr}Module zone visibility{/tr}</legend>	
+				<legend>{tr}Module zone visibility{/tr}</legend>
+				{if !$smarty.get.Zone_options}
+						{remarksbox type="tip" title="{tr}Hint{/tr}"}
+							Module zone visibility options may not be supported anymore from Tiki 13+, but you can still access them in case you are upgrading from an earlier version
+						<a href="tiki-admin.php?page=look&Zone_options=y#contentadmin_look-2">Click here for module visibility options</a>
+						{/remarksbox}
+				{else}
+						{preference name=module_zones_top}
+						{preference name=module_zones_topbar}
+						{preference name=module_zones_pagetop}
+						{preference name=feature_left_column}
+						{preference name=feature_right_column}
+						{preference name=module_zones_pagebottom}
+						{preference name=module_zones_bottom}
+				{/if}
 				{preference name=module_file}
 				{preference name=module_zone_available_extra}	
 			</fieldset>
