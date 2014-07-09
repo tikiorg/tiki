@@ -77,6 +77,9 @@
 		<service id="tiki.lib.object" class="ObjectLib">
 			<file>%kernel.root_dir%/lib/objectlib.php</file>
 		</service>
+		<service id="tiki.lib.objectselector" class="Tiki\Object\Selector">
+			<argument type="service" id="tiki.lib.object"/>
+		</service>
 		<service id="tiki.lib.quantify" class="QuantifyLib">
 			<file>%kernel.root_dir%/lib/wiki/quantifylib.php</file>
 		</service>

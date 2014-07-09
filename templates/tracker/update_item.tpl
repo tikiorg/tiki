@@ -4,6 +4,10 @@
 	{title}{$title|escape}{/title}
 {/block}
 
+{block name="navigation"}
+	{include file='tracker_actions.tpl'}
+{/block}
+
 {block name="content"}
 <form method="post" action="{service controller=tracker action=update_item}" id="updateItemForm">
 	{trackerfields trackerId=$trackerId fields=$fields status=$status}
