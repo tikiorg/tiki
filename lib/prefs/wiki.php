@@ -68,7 +68,7 @@ function prefs_wiki_list($partial = false)
 			'type' => 'list',
 			'default' => 'urlencode',
 			'options' => TikiLib::lib('slugmanager')->getOptions(),
-			'view' => TikiLib::lib('service')->getUrl([
+			'view' => $partial ? '' : TikiLib::lib('service')->getUrl([
 				'controller' => 'wiki',
 				'action' => 'regenerate_slugs',
 			]),
