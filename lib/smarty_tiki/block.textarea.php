@@ -124,7 +124,7 @@ JS
 			$remrepeat
 		)."\n";
 		if ($prefs['javascript_enabled'] === 'y') {
-			$html = str_replace('<div class="clearfix rbox tip">', '<div class="clearfix rbox tip" style="display:none;">', $html);	// quickfix to stop this box appearing before doc.ready
+			$html = str_replace('<div class="alert alert-warning alert-dismissable">', '<div class="alert alert-warning alert-dismissable" style="display:none;">', $html);	// quickfix to stop this box appearing before doc.ready
 		}
 	}
 
@@ -338,7 +338,7 @@ function editTimerTick() {
 
 	if ( edittimeout && seconds <= 300 ) {
 		if ( ! editTimeoutTipIsDisplayed ) {
-			edittimeout.parents('.rbox:first').fadeIn();
+			edittimeout.parents('.alert:first').fadeIn();
 			editTimeoutTipIsDisplayed = true;
 		}
 		if ( seconds > 0 && seconds % 60 == 0 ) {
@@ -364,7 +364,7 @@ function editTimerTick() {
 
 \$('document').ready( function() {
 	editTimeoutIntervalId = setInterval(editTimerTick, 1000);
-	\$('#edittimeout').parents('.rbox:first').hide();
+	\$('#edittimeout').parents('.alert:first').hide();
 } );
 
 // end edit timeout warnings

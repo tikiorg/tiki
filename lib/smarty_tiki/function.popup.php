@@ -32,79 +32,69 @@
  */
 function smarty_function_popup($params, $smarty)
 {
-	$options = array();
-	if ($params['sticky']) {
-		$trigger = 'click';
-	} else {
-		$trigger = 'hover';
-	}
-	$body = '';
-	$title = '';
+	$options = array(
+		'data-toggle' => 'popover',
+		'data-container' => 'body',
+		'data-trigger' => 'hover',
+		'data-content' => '',
+	);
 
 	foreach ($params as $key => $value) {
 		switch ($key) {
 			case 'text':
-				$body = $value;
+				$options['data-content'] = $value;
 				break;
 			case 'trigger':
 				switch ($value) {
 					case 'onclick':
 					case 'onClick':
-						$trigger = 'click';
+						$options['data-trigger'] = 'click';
 						break;
 					default:
 						break;
 				}
 				break;
 			case 'caption':
-				$title = $value;
+				$options['title'] = $value;
 				break;
 			case 'width':
 			case 'height':
 				$options[$key] = $value;
 				break;
 			case 'sticky':
-				$options[$key] = !empty($value);
-				$options['mouseOutClose'] = false;
+				//$options['data-trigger'] = 'focus'; // doesn't seem to work
 				break;
 			case 'fullhtml':
-				$options['escapeTitle'] = true;
-				$options['cluetipClass'] = 'fullhtml';
+				$options['data-html'] = true;
 				break;
 			case 'background':
-				$options['showTitle'] = false;
-				$options['cluetipClass'] = 'fullhtml';
 				if (!empty($params['width'])) {
-					$body = "&lt;div style='background-image:url(" . $value . ");background-repeat:no-repeat;width:" . $params["width"] . "px;height:300px;'&gt;" . $body . "&lt;/div&gt;";
-					unset($params['width']);
-					unset($options['width']);
+					if (!isset($params["height"])) {
+						$params["height"] = 300;
+					}
+					$options['data-content'] = "<div style='background-image:url(" . $value . ");background-repeat:no-repeat;width:" . $params["width"] . "px;height:" . $params["height"] . "px;'>" . $options['data-content'] . "</div>";
 				} else {
-					$body = "&lt;div style='background-image:url(" . $value . ");width:100%;height:100%;'&gt;" . $body . "&lt;/div&gt;";
+					$options['data-content'] = "<div style='background-image:url(" . $value . ");width:100%;height:100%;'>" . $options['data-content'] . "</div>";
 				}
+				$options['data-html'] = true;
 				break;
 		}
 	}
 
-    if (empty($title) && empty($body)) {
+    if (empty($options['title']) && empty($options['data-content'])) {
 		trigger_error("popover: attribute 'text' or 'caption' required");
         return false;
 	}
 
-	$body = preg_replace(array('/\\\\r\n/','/\\\\n/','/\\\\r/', '/\\t/'), '', $body);
-	$body = str_replace('\&#039;', '&#039;', $body);	// unescape previous js escapes
-	$body = str_replace('\&quot;', '&quot;', $body);
-	$body = str_replace('&lt;\/', '&lt;/', $body);
-	$retval = ' data-toggle="popover" data-container="body" class="tips" ';
-	if (isset($trigger) && $trigger !== 'click') {
-		$retval = ' data-trigger="hover" ';
-	} else {
-		$retval = ' data-trigger="click" ';
-	}
-	if ($title) {
-		$retval .= ' title="' . $title . '"';
-	}
-	if ($body) {
-		$retval .= ' data-content="' . $body . '" ';
+	$options['data-content'] = preg_replace(array('/\\\\r\n/','/\\\\n/','/\\\\r/', '/\\t/'), '', $options['data-content']);
+	$options['data-content'] = str_replace('\&#039;', '&#039;', $options['data-content']);	// unescape previous js escapes
+	$options['data-content'] = str_replace('\&quot;', '&quot;', $options['data-content']);
+	$options['data-content'] = str_replace('&lt;\/', '&lt;/', $options['data-content']);
+
+	$retval = '';
+
+	foreach ($options as $k => $v) {
+		$retval .= $k . '=' . json_encode($v, JSON_UNESCAPED_SLASHES) . ' ';
 	}
 
 	return $retval;

@@ -98,13 +98,13 @@
 				</select>
 				{jq}
 $("#viewSwitcher").change(function() {
-				var loc = location.href;
-				if (loc.indexOf("view=") > -1) {
-					loc = loc.replace(/view=([^&])+/, "view=" + $(this).find(':selected').val());
-				} else {
-					loc += loc.indexOf("?") > -1 ? "&" : "?";
-					loc += "view=" + $(this).find(':selected').val();
-				}
+	var loc = location.href.replace(location.hash, "");
+	if (loc.indexOf("view=") > -1) {
+		loc = loc.replace(/view=([^&])+/, "view=" + $(this).find(':selected').val());
+	} else {
+		loc += loc.indexOf("?") > -1 ? "&" : "?";
+		loc += "view=" + $(this).find(':selected').val();
+	}
 	location.replace(loc);
 });
 				{/jq}
