@@ -83,9 +83,7 @@ $field.hide();
 
 var handleFiles = function (files) {
 	$fileinput.clearError();
-	var uploadUrl = $.service('file', 'upload', {
-		XDEBUG_PROFILE: 1
-	});
+	var uploadUrl = $.service('file', 'upload');
 	$.each(files, function (k, file) {
 		var reader = new FileReader();
 		var li = $('<li/>').appendTo($files);
