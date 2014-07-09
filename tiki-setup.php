@@ -169,7 +169,7 @@ if ($prefs['useGroupHome'] == 'y') {
 }
 
 // change $prefs['tikiIndex'] if feature_sefurl is enabled (e.g. tiki-index.php?page=HomePage becomes HomePage)
-if ($prefs['feature_sefurl'] == 'y') {
+if ($prefs['feature_sefurl'] == 'y' && ! defined('TIKI_CONSOLE')) {
 	//TODO: need a better way to know which is the type of the tikiIndex URL (wiki page, blog, file gallery etc)
 	//TODO: implement support for types other than wiki page and blog
 	if ($prefs['tikiIndex'] == 'tiki-index.php' && $prefs['wikiHomePage']) {
