@@ -225,23 +225,22 @@
 			<div class="form-group">
 				<label for="groupstracker" class="control-label col-md-3">{tr}Group Information Tracker{/tr}</label>
 				<div class="col-md-9">
-					<select name="groupstracker" id="groupstracker">
-						<option value="0">{tr}choose a group tracker ...{/tr}</option>
+					<select name="groupstracker" id="groupstracker" class="form-control">
+						<option value="0">{tr}Choose a group tracker ...{/tr}</option>
 						{foreach key=tid item=tit from=$trackers}
 							<option value="{$tid}"{if $tid eq $grouptrackerid} {assign var="ggr" value="$tit"}selected="selected"{/if}>{$tit|escape}</option>
 						{/foreach}
 					</select>
 					{if $grouptrackerid}
 						<div>
-						<select name="groupfield">
-							<option value="0">{tr}choose a field ...{/tr}</option>
-							{section name=ix loop=$groupFields}
-								<option value="{$groupFields[ix].fieldId}"{if $groupFields[ix].fieldId eq $groupfieldid} selected="selected"{/if}>{$groupFields[ix].name|escape}</option>
-							{/section}
-						</select>
+							<select name="groupfield" class="form-control">
+								<option value="0">{tr}choose a field ...{/tr}</option>
+								{section name=ix loop=$groupFields}
+									<option value="{$groupFields[ix].fieldId}"{if $groupFields[ix].fieldId eq $groupfieldid} selected="selected"{/if}>{$groupFields[ix].name|escape}</option>
+								{/section}
+							</select>
 						</div>
 					{/if}
-
 					{if $grouptrackerid}
 						{button href="tiki-admin_tracker_fields.php?trackerId=$grouptrackerid" _text="{tr}Admin{/tr} $ggr"}
 					{else}
@@ -250,56 +249,56 @@
 				</div>
 			</div>
 		{/if}
-		{if $prefs.groupTracker eq 'y'}
+		{if $prefs.userTracker eq 'y'}
 			<div class="form-group">
 				<label for="userstracker" class="control-label col-md-3">{tr}Users Information Tracker{/tr}</label>
 				<div class="col-md-9">
-					<select name="userstracker" id="userstracker">
-					<option value="0">{tr}choose a users tracker ...{/tr}</option>
-					{foreach key=tid item=tit from=$trackers}
-						<option value="{$tid}"{if $tid eq $userstrackerid} {assign var="ugr" value="$tit"}selected="selected"{/if}>{$tit|escape}</option>
-					{/foreach}
-				</select>
-				{if $userstrackerid or $prefs.javascript_enabled eq 'y'}
-					<div>
-						<select name="usersfield"{if empty($userstrackerid) and $prefs.javascript_enabled eq 'y' and $prefs.jquery_ui_chosen neq 'y'} style="display: none;"{/if}>
-							<option value="0">{tr}choose a field ...{/tr}</option>
-							{section name=ix loop=$usersFields}
-								<option value="{$usersFields[ix].fieldId}"{if $usersFields[ix].fieldId eq $usersfieldid} selected="selected"{/if}>{$usersFields[ix].fieldId} - {$usersFields[ix].name|escape}</option>
-							{/section}
-						</select>
-					</div>
-{jq}
-$("#userstracker").change(function () {
-	$.getJSON($.service('tracker', 'list_fields'), {trackerId: $(this).val()}, function (data) {
-		if (data && data.fields) {
-			var $usersfield = $('select[name=usersfield]');
-			$usersfield.empty().append('<option value="0">{tr}choose a field ...{/tr}</option>');
-			var sel = '';
-			$(data.fields).each(function () {
-				if (this.type === 'u' && this.options_array[0] == 1) {
-					sel = ' selected="selected"';
-				} else {
-					sel = '';
-				}
-				$usersfield.append('<option value="' + this.fieldId + '"' + sel + '>' + this.fieldId + ' - ' + this.name + '</option>');
-			});
-			if (jqueryTiki.chosen) {
-				$usersfield.trigger("chosen:updated");
-			} else {
-				$usersfield.show();
-			}
-		}
-	});
-});
-{/jq}
-				{/if}
-
-				{if $userstrackerid}
-					{button href="tiki-admin_tracker_fields.php?trackerId=$userstrackerid" _text="{tr}Admin{/tr} $ugr"}
-				{else}
-					{button href="tiki-list_trackers.php" _text="{tr}Admin{/tr} $ugr"}
-				{/if}
+					<select name="userstracker" id="userstracker" class="form-control">
+						<option value="0">{tr}choose a users tracker ...{/tr}</option>
+						{foreach key=tid item=tit from=$trackers}
+							<option value="{$tid}"{if $tid eq $userstrackerid} {assign var="ugr" value="$tit"}selected="selected"{/if}>{$tit|escape}</option>
+						{/foreach}
+					</select>
+					{if $userstrackerid or $prefs.javascript_enabled eq 'y'}
+						<div>
+							<select name="usersfield"{if empty($userstrackerid) and $prefs.javascript_enabled eq 'y' and $prefs.jquery_ui_chosen neq 'y'} style="display: none;"{/if} class="form-control">
+								<option value="0">{tr}Choose a field ...{/tr}</option>
+								{section name=ix loop=$usersFields}
+									<option value="{$usersFields[ix].fieldId}"{if $usersFields[ix].fieldId eq $usersfieldid} selected="selected"{/if}>{$usersFields[ix].fieldId} - {$usersFields[ix].name|escape}</option>
+								{/section}
+							</select>
+						</div>
+						{jq}
+							$("#userstracker").change(function () {
+								$.getJSON($.service('tracker', 'list_fields'), {trackerId: $(this).val()}, function (data) {
+									if (data && data.fields) {
+										var $usersfield = $('select[name=usersfield]');
+										$usersfield.empty().append('<option value="0">{tr}choose a field ...{/tr}</option>');
+										var sel = '';
+										$(data.fields).each(function () {
+											if (this.type === 'u' && this.options_array[0] == 1) {
+												sel = ' selected="selected"';
+											} else {
+												sel = '';
+											}
+											$usersfield.append('<option value="' + this.fieldId + '"' + sel + '>' + this.fieldId + ' - ' + this.name + '</option>');
+										});
+										if (jqueryTiki.chosen) {
+											$usersfield.trigger("chosen:updated");
+										} else {
+											$usersfield.show();
+										}
+									}
+								});
+							});
+						{/jq}
+					{/if}
+					{if $userstrackerid}
+						{button href="tiki-admin_tracker_fields.php?trackerId=$userstrackerid" _text="{tr}Admin{/tr} $ugr"}
+					{else}
+						{button href="tiki-list_trackers.php" _text="{tr}Admin{/tr} $ugr"}
+					{/if}
+				</div>
 			</div>
 			<div class="form-group">
 				<label for="registrationUserFieldIds" class="control-label col-md-3">{tr}Registration Fields{/tr}</label>
