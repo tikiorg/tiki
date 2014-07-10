@@ -44,8 +44,10 @@ a {
 	color: #a31a1a
 }
 
-.button a,
-.button a:visited,
+.btn,
+.btn-default,
+.btn-default:visited,
+.btn:visited,
 button,
 input[type="reset"],
 input[type="submit"],
@@ -55,7 +57,8 @@ input[type="submit"],
 	color: #555
 }
 
-.button a:hover,
+.btn:hover,
+.btn-default:hover,
 button:hover,
 input[type="reset"]:hover,
 input[type="submit"]:hover,
@@ -68,9 +71,6 @@ input[type="submit"]:hover,
 
 /* layout */
 
-.tabcontent {
-     text-align: left;
-}
 .box-menupage > div {
   padding: .5em .3em;
 }
