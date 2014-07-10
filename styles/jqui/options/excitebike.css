@@ -2,6 +2,7 @@
 	Jqui theme (jqui.css), Excite Bike theme option (excitebike.css)
 	for Tikiwiki CMS/Groupware.
 	Visit http://themes.tiki.org for more information.
+	(This file was edited directly, not produced by the Less pre-compiler; there's no excitebike.less, yet.)
 */
 
 html {
@@ -11,7 +12,7 @@ html {
 body   {
 	font-family: Segoe UI, Helvetica, Arial, sans-serif;
 	color: #222;
-	font-size: 12px;
+/*	font-size: 12px; */
 }
 
 a,
@@ -23,34 +24,29 @@ a:hover {
 	text-decoration: underline;
 }
 
-.button a:link,
-.button a:visited,
+.btn {
+	font-weight: bold;
+}
+
+.btn-default,
 button,
 input[type="reset"],
 input[type="submit"],
 .button input {
 	border: 1px solid #2293f7;
-	font-weight: bold;
-	color: #fff;
+	color: #fff !important;
 	background: url(../../../vendor/jquery/jquery-ui-themes/themes/excite-bike/images/ui-bg_diagonals-thick_26_2293f7_40x40.png) repeat scroll 50% 50%;
-	border-radius: 4px;
-	-moz-border-radius: 4px;
-	-webkit-border-radius: 4px;
 }
 
-.button a:hover,
-.button a:hover,
+
+.btn-default:hover,
 button:hover,
 input[type="reset"]:hover,
 input[type="submit"]:hover,
 .button input:hover {
 	border: 1px solid #1484e6;
-	font-weight: bold;
-	color: #D1E7FA;
+	color: #D1E7FA !important;
 	background: url(../../../vendor/jquery/jquery-ui-themes/themes/excite-bike/images/ui-bg_diagonals-thick_22_1484e6_40x40.png) repeat-x 50% 50%;
-	border-radius: 4px;
-	-moz-border-radius: 4px;
-	-webkit-border-radius: 4px
 }
 
 input[type="text"],
@@ -65,7 +61,10 @@ body.cke_show_borders {
 #siteheader {
 	background: #fff;
 }
-#tiki-top {
+.panel-heading,
+.navbar-default .navbar-collapse,
+.navbar-default .navbar-form/*,
+#tiki-top*/ {
 	border: 1px solid #E69700;
 	font-weight: bold;
 	color: #fff;
@@ -73,8 +72,33 @@ body.cke_show_borders {
 	background: #E69700 url(../../../vendor/jquery/jquery-ui-themes/themes/excite-bike/images/ui-bg_diagonals-thick_20_e69700_40x40.png) repeat 50% 50%;
 }
 
-#tiki-top a {
+.navbar {
+	background: transparnt:
+}
+
+.navbar-default .navbar-nav > li > a { 
+color: #fff;
+background: transparent;
+}
+
+.navbar-default .navbar-nav > .open > a,
+.navbar-default .navbar-nav > .open > a:hover,
+.navbar-default .navbar-nav > .open > a:focus { 
 	color: #fff;
+	background: transparent;
+}
+
+.dropdown-menu > li > a:hover,
+.dropdown-menu > li > a:focus { 
+	background-color: #E69700;
+	color: #fff;
+	text-decoration: none;
+}
+
+.navbar-default .navbar-nav > .active > a,
+.navbar-default .navbar-nav > .active > a:hover,
+.navbar-default .navbar-nav > .active > a:focus {
+	background-color: #E69700;	
 }
 
 .footerbgtrap {
@@ -187,7 +211,7 @@ h3.box-title {
 	font-weight:bold;
 	text-align: center;
 }
-
+/*
 .box-data a,
 .box-data a:visited,
 .wikitext a,
@@ -195,7 +219,8 @@ h3.box-title {
 .normal a.link,
 .normal a {
 	color: #e69700;
-}
+}*/
+
 
 .rbox-title,
 .rbox-data {
