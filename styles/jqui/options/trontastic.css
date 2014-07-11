@@ -56,7 +56,7 @@ input[type="submit"],
 	color: #9FDA58;
 }
 
-.btn {
+.btn-default {
 	background-color: #696969;
 	background-image: -o-linear-gradient(top, #696969, #1B1613)	
 }	
