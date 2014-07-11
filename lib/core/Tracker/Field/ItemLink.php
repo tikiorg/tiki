@@ -335,16 +335,20 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 		$indexRemote = array_filter($this->getOption('indexRemote'));
 
 		if (count($indexRemote) && is_numeric($item)) {
-			$utilities = new Services_Tracker_Utilities;
+			$trklib = TikiLib::lib('trk');
 			$trackerId = $this->getOption('trackerId');
-			$itemData = $utilities->getItem($trackerId, $item);
+			$item = $trklib->get_tracker_item($item);
 
 			$definition = Tracker_Definition::get($trackerId);
+			$factory = $definition->getFieldFactory();
 			foreach ($indexRemote as $fieldId) {
 				$field = $definition->getField($fieldId);
-				$permName = $field['permName'];
+				$handler = $factory->getHandler($field, $item);
 
-				$out["{$baseKey}_{$permName}"] = $typeFactory->sortable($itemData['fields'][$permName]);
+				foreach ($handler->getDocumentPart($typeFactory) as $key => $field) {
+					$key = $baseKey . substr($key, strlen('tracker_field'));
+					$out[$key] = $field;
+				}
 			}
 		}
 
@@ -361,11 +365,15 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 
 		if (count($indexRemote)) {
 			if ($definition = Tracker_Definition::get($trackerId)) {
+				$factory = $definition->getFieldFactory();
+
 				foreach ($indexRemote as $fieldId) {
 					$field = $definition->getField($fieldId);
-					$permName = $field['permName'];
+					$handler = $factory->getHandler($field);
 
-					$fields[] = "{$baseKey}_{$permName}";
+					foreach ($handler->getProvidedFields() as $key) {
+						$fields[] = $baseKey . substr($key, strlen('tracker_field'));
+					}
 				}
 			}
 		}
@@ -375,7 +383,27 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 
 	function getGlobalFields()
 	{
-		return array();
+		$baseKey = $this->getBaseKey();
+		$fields = array("{$baseKey}_text" => true);
+
+		$trackerId = $this->getOption('trackerId');
+		$indexRemote = array_filter($this->getOption('indexRemote'));
+
+		if (count($indexRemote)) {
+			if ($definition = Tracker_Definition::get($trackerId)) {
+				$factory = $definition->getFieldFactory();
+
+				foreach ($indexRemote as $fieldId) {
+					$field = $definition->getField($fieldId);
+					$handler = $factory->getHandler($field);
+
+					foreach ($handler->getGlobalFields() as $key => $flag) {
+						$fields[$baseKey . substr($key, strlen('tracker_field'))] = $flag;
+					}
+				}
+			}
+		}
+
 	}
 
 	function getItemLabel($itemId, $context = array('list_mode' => ''))
