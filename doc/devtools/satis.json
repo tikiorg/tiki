@@ -142,7 +142,7 @@
 			"type": "package",
 			"package": {
 				"name": "ckeditor/ckeditor",
-				"version": "4.4.2-full",
+				"version": "4.4.2",
 				"dist": {
 					"url": "https://github.com/ckeditor/ckeditor-releases/archive/full/4.4.2.zip",
 					"type": "zip"
