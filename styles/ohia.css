@@ -5765,7 +5765,6 @@ body.navbar-padding {
 .container {
   border: 1px solid #4c4c4c;
   margin-bottom: 5px;
-  margin-top: 18px;
 }
 .navbar-collapse {
   background: #030511;
@@ -5773,10 +5772,17 @@ body.navbar-padding {
 #top_modules {
   background-image: url('ohia/header.png');
 }
-.container {
-  border: 1px solid #4c4c4c;
-  margin-bottom: 5px;
-  margin-top: 18px;
+#top_modules a,
+#top_modules a:visited {
+  color: #f4f4f4;
+}
+.box-quickadmin .cssmenu_horiz ul li {
+  background-color: #4c4c4c;
+}
+#col2,
+#col3 {
+  padding-right: 0;
+  padding-left: 0;
 }
 .navbar-collapse {
   background: #030511;
@@ -5791,6 +5797,23 @@ body.navbar-padding {
 .nav-tabs > li > a {
   border: 1px solid #555555;
   border-size: 1px 1px 0 1px;
+}
+.footerbgtrap {
+  background-image: url('ohia/header.png');
+  color: #F4F4F4;
+  font-size: 0.9em;
+  min-height: 90px;
+}
+.footerbgtrap a,
+.footerbgtrap a:visited {
+  color: #f4f4f4;
+}
+.popover {
+  background-color: #222222;
+}
+.popover-title {
+  background-color: #696969;
+  border-bottom: 1px solid #EBEBEB;
 }
 /* black */
 /* white */
