@@ -1027,7 +1027,7 @@
 		"adodb/adodb": "5.18",
 		"aFarkas/html5shiv": "*",
 		"bombayworks/zendframework1": "1.12.3",
-		"ckeditor/ckeditor": "<=4.4.2",
+		"ckeditor/ckeditor": "*",
 		"ckeditor/ckeditor/skins/kama": "*",
 		"ckeditor/ckeditor/plugins/divarea": "*",
 		"codemirror/codemirror": "*",
