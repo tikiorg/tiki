@@ -379,6 +379,7 @@ a.flip:hover,
 a.toolbar {
   padding: 4px 2px;
   display: inline-block;
+  border: none;
 }
 .toolbar-list {
   padding: 0 0 0 .5em;
@@ -2622,7 +2623,7 @@ body.navbar-padding {
 .popover {
   max-width: inherit;
 }
-@media (max-width: 992px) {
+@media (min-width: 992px) {
   .col-md-8 .table-responsive,
   .col-md-9 .table-responsive,
   .col-md-3 .table-responsive {

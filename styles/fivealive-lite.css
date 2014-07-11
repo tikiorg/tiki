@@ -5708,7 +5708,10 @@ body.navbar-padding {
 .dropdown-menu {
   padding: 0;
 }
-@media (max-width: 992px) {
+.popover {
+  max-width: inherit;
+}
+@media (min-width: 992px) {
   .col-md-8 .table-responsive,
   .col-md-9 .table-responsive,
   .col-md-3 .table-responsive {

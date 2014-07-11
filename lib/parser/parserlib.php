@@ -738,6 +738,10 @@ if ( \$('#$id') ) {
 
 		$fingerprint = $this->plugin_fingerprint($name, $meta, $data, $args);
 
+		if ($fingerprint === '') {		// only args or body were being validated and they're empty or safe
+			return true;
+		}
+
 		$val = $this->plugin_fingerprint_check($fingerprint, $dont_modify);
 		if ( strpos($val, 'accept') === 0 )
 			return true;
@@ -888,6 +892,10 @@ if ( \$('#$id') ) {
 		else
 			$validateBody = '';
 
+		if ($validate === 'body' && empty($validateBody)) {
+			return '';
+		}
+
 		if ( $validate == 'all' || $validate == 'arguments' ) {
 			$validateArgs = $args;
 
@@ -904,6 +912,9 @@ if ( \$('#$id') ) {
 			ksort($validateArgs);
 
 			if (empty($validateArgs)) {
+				if ($validate === 'arguments') {
+					return '';
+				}
 				$validateArgs = array( '' => '' );	// maintain compatibility with pre-Tiki 7 fingerprints
 			}
 		} else

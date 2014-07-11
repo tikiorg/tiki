@@ -1,11 +1,13 @@
 /* $Id$
-	Jqui theme (jqui.css), Element theme option (element.css)
+	Jqui theme (jqui.css), Flat theme option (flat.css)
 	for Tiki Wiki CMS/Groupware.
 	Thanks to garkpit for the random name.
 	Visit http://themes.tiki.org for more information.
+	(This file was edited directly, not produced by the Less pre-compiler.)
 */
 
-
+.btn,
+.btn-default,
 .button a,
 .button a:visited,
 button,
@@ -15,6 +17,8 @@ input[type="submit"],
 	background-image: none;
 }
 
+.btn:hover,
+.btn-default:hover,
 .button a:hover,
 button:hover,
 input[type="reset"]:hover,
@@ -28,38 +32,16 @@ input[type="submit"]:hover,
 	background-image: none;
 }
 
-#tiki-top {
+#tiki-top,
+.panel-heading,
+.navbar-default .navbar-collapse,
+.navbar-default .navbar-form {
 	background-image: none;
 }
 
+.panel-default > .panel-heading,
 h3.box-title,
 .cbox-title {
-	background-image: none;
-}
-.rbox-title,
-.rbox-data {
-	background-image: none;
-}
-
-.errors .rbox-title,
-.errors .rbox-data {
-	background-image: none;
-}
-
-.warning .rbox-title,
-.warning .rbox-data {
-	background-image: none;
-}
-
-.tabs {
-	background-image: none;
-}
-
-.tabmark {
-	background-image: none;
-}
-
-.tabactive {
 	background-image: none;
 }
 
