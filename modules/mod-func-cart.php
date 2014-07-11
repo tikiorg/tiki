@@ -91,7 +91,6 @@ function module_cart($mod_reference, & $module_params)
 	}
 
 	if (!empty($module_params['ajax']) && $module_params['ajax'] === 'y') {
-		TikiLib::lib('header')->add_jsfile('lib/payment/cartlib.js');
 		$smarty->assign('json_data', ' data-params=\'' . json_encode(array_filter($module_params)) . '\'');
 	} else {
 		$smarty->assign('json_data', '');

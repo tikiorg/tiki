@@ -181,8 +181,6 @@ function wikiplugin_addtocart( $data, $params )
 	$headerlib = TikiLib::lib('header');
 	$cartlib = TikiLib::lib('cart');
 
-	$headerlib->add_jsfile('lib/payment/cartlib.js');
-
 	if ( ! session_id() ) {
 		session_start();
 	}
