@@ -16,7 +16,7 @@ class Search_ContentSource_CategorySource implements Search_ContentSource_Interf
 
 	function getDocuments()
 	{
-		return $this->db->table('tiki_trackers')->fetchColumn('trackerId', array());
+		return $this->db->table('tiki_categories')->fetchColumn('categId', array());
 	}
 
 	function getDocument($objectId, Search_Type_Factory_Interface $typeFactory)

@@ -36,10 +36,15 @@ function smarty_function_object_selector_multi( $params, $smarty )
 		'value' => null,
 		'filter' => [],
 		'title' => null,
+		'simplename' => null,
+		'simpleid' => null,
+		'simpleclass' => null,
+		'simplevalue' => null,
+		'separator' => null,
 	];
 
 	// Handle reserved parameters
-	foreach (array('name', 'class', 'id', 'value', 'filter') as $var) {
+	foreach (array('name', 'class', 'id', 'value', 'filter', 'simpleid', 'simplevalue', 'simplename', 'simpleclass', 'separator') as $var) {
 		if (isset($params["_$var"])) {
 			$arguments[$var] = $params["_$var"];
 		}
@@ -47,7 +52,10 @@ function smarty_function_object_selector_multi( $params, $smarty )
 	}
 
 	if (empty($arguments['id'])) {
-		$arguments['id'] = 'object_selector_' . ++$uniqid;
+		$arguments['id'] = 'object_selector_multi_' . ++$uniqid;
+	}
+	if (empty($arguments['simpleid'])) {
+		$arguments['simpleid'] = 'object_selector_multi_' . ++$uniqid;
 	}
 
 	if ($arguments['filter']) {
@@ -57,7 +65,22 @@ function smarty_function_object_selector_multi( $params, $smarty )
 	}
 
 	$selector = TikiLib::lib('objectselector');
-	$arguments['current_selection'] = $selector->readMultiple($arguments['value']);
+
+	if ($arguments['simplevalue'] && ! empty($arguments['filter']['type']) && $arguments['separator']) {
+		$arguments['current_selection'] = $selector->readMultipleSimple($arguments['filter']['type'], $arguments['simplevalue'], $arguments['separator']);
+	} else {
+		$arguments['current_selection'] = $selector->readMultiple($arguments['value']);
+	}
+
+	if ($arguments['simplename']) {
+		$arguments['class'] .= 'hidden';
+	} else {
+		$arguments['simpleclass'] .= 'hidden';
+	}
+
+	$arguments['current_selection_simple'] = array_map(function ($item) {
+		return $item['id'];
+	}, $arguments['current_selection']);
 
 	$arguments['filter'] = json_encode($arguments['filter']);
 

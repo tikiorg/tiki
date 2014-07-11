@@ -228,17 +228,22 @@ class PreferencesLib
 		/**
 		 * If the unified index is enabled, replace simple object selection preferences with object selectors
 		 */
-		if ($info['type'] == 'text' && ! empty($info['profile_reference']) && empty($info['separator']) && $prefs['feature_search'] == 'y') {
+		if ($info['type'] == 'text' && ! empty($info['profile_reference']) && $prefs['feature_search'] == 'y') {
 			$filters = [
 				'tracker' => 'tracker',
 				'category' => 'category',
 				'wiki_page' => 'wiki page',
 			];
+
 			if (isset($filters[$info['profile_reference']])) {
 				$type = $filters[$info['profile_reference']];
-
-				$info['type'] = 'selector';
 				$info['selector_type'] = $type;
+
+				if (empty($info['separator'])) {
+					$info['type'] = 'selector';
+				} else {
+					$info['type'] = 'multiselector';
+				}
 			}
 		}
 
@@ -627,6 +632,23 @@ class PreferencesLib
 			} else {
 				return $value;
 			}
+		}
+	}
+
+	private function _getMultiselectorValue( $info, $data )
+	{
+		$name = $info['preference'];
+
+		if (isset($data[$name])) {
+			$value = explode($info['separator'], $data[$name]);
+		} else {
+			$value = array();
+		}
+
+		if (isset($info['filter']) && $filter = TikiFilter::get($info['filter'])) {
+			return array_map(array( $filter, 'filter' ), $value);
+		} else {
+			return $value;
 		}
 	}
 

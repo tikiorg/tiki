@@ -1,13 +1,14 @@
 <div class="object-selector-multi">
-<!--
-<input
-	type="text"
-	id="{$object_selector_multi.simpleid|escape}"
-	{if $object_selector_multi.simpleclass}class="{$object_selector_multi.simpleclass|escape}"{/if}
-	{if $object_selector_multi.simplename}name="{$object_selector_multi.simplename|escape}"{/if}
-	{if $object_selector_multi.simplevalue}value="{$object_selector_multi.simplevalue|escape}"{/if}
->
--->
+{if $object_selector_multi.separator}
+	<input
+		data-separator="{$object_selector_multi.separator|escape}"
+		type="text"
+		id="{$object_selector_multi.simpleid|escape}"
+		{if $object_selector_multi.simpleclass}class="{$object_selector_multi.simpleclass|escape}"{/if}
+		{if $object_selector_multi.simplename}name="{$object_selector_multi.simplename|escape}"{/if}
+		value="{$object_selector_multi.separator|implode:$object_selector_multi.current_selection_simple|escape}"
+	>
+{/if}
 <textarea
 	id="{$object_selector_multi.id|escape}"
 	{if $object_selector_multi.name}name="{$object_selector_multi.name|escape}"{/if}

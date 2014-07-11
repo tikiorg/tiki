@@ -75,6 +75,34 @@ class ObjectSelectorTest extends \PHPUnit_Framework_TestCase
 		$this->assertEquals('trackeritem:12', (string) $object);
 	}
 
+	function testReadMultipleSimpleOnEmpty()
+	{
+		$this->assertEquals([], $this->selector->readMultipleSimple('trackeritem', '', ','));
+	}
+
+	function testReadMultipleSimpleFromString()
+	{
+		$this->assertEquals([
+			$this->selector->read('trackeritem:14'),
+			$this->selector->read('trackeritem:12'),
+		], $this->selector->readMultipleSimple('trackeritem', '14:12', ':'));
+	}
+
+	function testReadMultipleSimpleEliminatesDuplicates()
+	{
+		$this->assertEquals([
+			$this->selector->read('trackeritem:14'),
+		], $this->selector->readMultipleSimple('trackeritem', '14,14', ','));
+	}
+
+	function testReadMultipleSimpleHandlesArrays()
+	{
+		$this->assertEquals([
+			$this->selector->read('trackeritem:14'),
+			$this->selector->read('trackeritem:12'),
+		], $this->selector->readMultipleSimple('trackeritem', ['14', '12'], ':'));
+	}
+
 	function get_title($type, $id)
 	{
 		return 'Foobar';

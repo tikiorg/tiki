@@ -40,6 +40,23 @@ class Selector
 		return array_values(array_filter($raw));
 	}
 
+	function readMultipleSimple($type, $input, $separator)
+	{
+		if (is_string($input)) {
+			$parts = explode($separator, $input);
+		} else {
+			$parts = (array) $input;
+		}
+
+		$parts = array_map('trim', $parts);
+		$parts = array_filter($parts);
+		$parts = array_unique($parts);
+
+		return array_map(function ($object) use ($type) {
+			return new SelectorItem($this, $type, $object);
+		}, array_values($parts));
+	}
+
 	function getTitle($type, $object)
 	{
 		return $this->lib->get_title($type, $object);
