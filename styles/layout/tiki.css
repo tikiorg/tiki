@@ -379,6 +379,7 @@ a.flip:hover,
 a.toolbar {
   padding: 4px 2px;
   display: inline-block;
+  border: none;
 }
 .toolbar-list {
   padding: 0 0 0 .5em;
