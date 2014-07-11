@@ -182,6 +182,10 @@ class Search_Query implements Search_Query_Interface
 
 	private function addPart($query, $type, $field)
 	{
+		if (is_string($field)) {
+			$field = explode(',', $field);
+		}
+
 		$parts = array();
 		foreach ((array) $field as $f) {
 			$part = $this->parse($query);
