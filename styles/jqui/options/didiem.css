@@ -1,4 +1,11 @@
 /*  didiem.css - the didiem theme option file for the jQui themes of Tiki Wiki CMS Groupware. */
+.navbar-fixed-top,
+.navbar-fixed-bottom {
+  left: 0;
+  position: fixed !important;
+  right: 0;
+  z-index: 1030;
+}
 a {
   color: #8bbb47;
 }

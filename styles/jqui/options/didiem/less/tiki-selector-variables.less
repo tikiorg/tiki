@@ -8,7 +8,7 @@
 @header_container_header-background:        transparent; // url('@{imagePath}siteheader.png') 0 0 no-repeat;
 @sitetitle-background:                      none;
 @sitesubtitle-background:                   none;
-@secondary_site_menu_navbar_background;     none;
+@secondary_site_menu_navbar_background:     none;
 @middle_outer_background:                   url('@{imagePath}topbar.jpg')repeat-x;
 @button-background-gradient:                linear-gradient(to bottom, #a1bb87 0%, #8fa872 50%, #a1bb87 100%);
 @button-hover-background-gradient:          linear-gradient(to bottom, #8fa872 50%, #8fa872 50%, #a1bb87 100%);
@@ -28,3 +28,10 @@
 @h1-padding-left:                           19px;
 @h2-background:                             url('@{imagePath}h_bullet.jpg') no-repeat 0 50%;
 @h2-padding-left:                           19px;
+
+.navbar-fixed-top, .navbar-fixed-bottom {
+  left: 0;
+  position: fixed !important;
+  right: 0;
+  z-index: 1030;
+}
