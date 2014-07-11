@@ -141,11 +141,14 @@
 		{
 			"type": "package",
 			"package": {
-				"name": "ckeditor/ckeditor",
+				"name": "ckeditor_full_for_tiki/ckeditor",
 				"version": "4.4.2",
 				"dist": {
 					"url": "https://github.com/ckeditor/ckeditor-releases/archive/full/4.4.2.zip",
 					"type": "zip"
+				},
+				"replace": {
+					"ckeditor/ckeditor": ">=4.4.2"
 				}
 			}
 		},
