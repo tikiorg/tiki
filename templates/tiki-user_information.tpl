@@ -180,7 +180,6 @@
 {/tab}{/if}
 
 {if $prefs.feature_display_my_to_others eq 'y' and $infoPublic eq "y"}{tab name="{tr}User Contribution{/tr}"}
-<div>
 	<div class="panel panel-default"><div class="panel-body">
 		{if ($user_pages|@count > 0) or ($user_galleries|@count > 0) or ($user_blogs|@count > 0) or ($user_blog_posts|@count > 0) or ($user_articles|@count > 0) or ($user_forum_comments|@count > 0) or ($user_forum_topics|@count > 0) or ($user_items|@count > 0)}
 			<h2 class="text-center">{tr}User{/tr} {$userinfo.login|userlink}</h2>
