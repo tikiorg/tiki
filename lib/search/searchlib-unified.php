@@ -404,6 +404,7 @@ class UnifiedSearchLib
 		}
 
 		$types['user'] = tra('user');
+		$types['group'] = tra('group');
 
 		return $types;
 	}
@@ -551,6 +552,10 @@ class UnifiedSearchLib
 
 		if (isset($types['user'])) {
 			$aggregator->addContentSource('user', new Search_ContentSource_UserSource($prefs['user_in_search_result']));
+		}
+
+		if (isset($types['group'])) {
+			$aggregator->addContentSource('group', new Search_ContentSource_GroupSource);
 		}
 
 		if ($prefs['activity_custom_events'] == 'y' || $prefs['activity_basic_events'] == 'y' || $prefs['monitor_enabled'] == 'y') {

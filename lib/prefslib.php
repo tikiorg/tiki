@@ -230,8 +230,9 @@ class PreferencesLib
 		 */
 		if ($info['type'] == 'text' && ! empty($info['profile_reference']) && $prefs['feature_search'] == 'y') {
 			$filters = [
-				'tracker' => 'tracker',
 				'category' => 'category',
+				'group' => 'group',
+				'tracker' => 'tracker',
 				'wiki_page' => 'wiki page',
 			];
 
