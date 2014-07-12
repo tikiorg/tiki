@@ -1,4 +1,4 @@
-/*  newtheme.css - the new theme style sheet for Tiki Wiki CMS Groupware. */
+/*  snow.css - the Snow theme style sheet for Tiki Wiki CMS Groupware. */
 /*! normalize.css v3.0.0 | MIT License | git.io/normalize */
 html {
   font-family: sans-serif;
@@ -5707,7 +5707,10 @@ body.navbar-padding {
 .dropdown-menu {
   padding: 0;
 }
-@media (max-width: 992px) {
+.popover {
+  max-width: inherit;
+}
+@media (min-width: 992px) {
   .col-md-8 .table-responsive,
   .col-md-9 .table-responsive,
   .col-md-3 .table-responsive {
@@ -5793,13 +5796,17 @@ header.container {
 }
 .navbar-default {
   background: #d7e5f3 url('snow/pagetitle-bg.jpg') repeat-x;
-  height: 35px;
+  min-height: 35px;
+  margin-bottom: 5px;
 }
 .navbar-default .navbar-nav > .active > a,
 .navbar-default .navbar-nav > .active > a:hover,
 .navbar-default .navbar-nav > .active > a:focus {
   background: #d7e5f3 url('snow/pagetitle-bg.jpg') repeat-x;
   color: #555555;
+}
+.dropdown-menu > li > form {
+  background: url('snow/flakesptn2.jpg');
 }
 .dropdown-menu > li > a {
   background: url('snow/flakesptn2.jpg');
@@ -5822,26 +5829,21 @@ header.container {
 .input-group-addon:hover {
   background: url('snow/pagetitle-bg.jpg') 0 100%;
 }
+/*
 .table-striped > tbody > tr:nth-child(2n+1) > td,
-.table-striped > tbody > tr:nth-child(2n+1) > th {
-  background: transparent url('snow/flakesptn3.jpg');
-}
+.table-striped > tbody > tr:nth-child(2n+1) > th {background: transparent url('@{imagePath}flakesptn3.jpg') }
+
 .table-striped > tbody > tr.success:nth-child(2n+1) > td,
-.table-striped > tbody > tr.success:nth-child(2n+1) > th {
-  background: #dff0d8;
-}
+.table-striped > tbody > tr.success:nth-child(2n+1) > th {background: @state-success-bg; }
+
 .table-striped > tbody > tr.info:nth-child(2n+1) > td,
-.table-striped > tbody > tr.info:nth-child(2n+1) > th {
-  background: #d9edf7;
-}
+.table-striped > tbody > tr.info:nth-child(2n+1) > th {background: @state-info-bg; }
+
 .table-striped > tbody > tr.warning:nth-child(2n+1) > td,
-.table-striped > tbody > tr.warning:nth-child(2n+1) > th {
-  background: #fcf8e3;
-}
+.table-striped > tbody > tr.warning:nth-child(2n+1) > th {background: @state-warning-bg; }
+
 .table-striped > tbody > tr.danger:nth-child(2n+1) > td,
-.table-striped > tbody > tr.danger:nth-child(2n+1) > th {
-  background: #f2dede;
-}
+.table-striped > tbody > tr.danger:nth-child(2n+1) > th {background: @state-danger-bg; }*/
 /* black */
 /* white */
 /* automatically choose the correct arrow/text color */
