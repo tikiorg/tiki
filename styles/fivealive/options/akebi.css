@@ -517,6 +517,10 @@ hr {
   background: #0f91a2 url('akebi/siteheader.png') no-repeat -700px -200px;
   border-bottom: none;
 }
+#col2 .panel-title,
+#col3 .panel-title {
+  color: #00303c;
+}
 .header_outer {
   /* whole width div containing the header strip */
   background: url('akebi/siteheadertile.jpg') 0 0 no-repeat;

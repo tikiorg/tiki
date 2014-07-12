@@ -517,6 +517,10 @@ hr {
   background: #e1d518 url('kiwi/siteheader.png') no-repeat -1000px -200px;
   border-bottom: none;
 }
+#col2 .panel-title,
+#col3 .panel-title {
+  color: #638637;
+}
 .header_outer {
   /* whole width div containing the header strip */
   background: url('kiwi/siteheadertile.png') 0 0 no-repeat;

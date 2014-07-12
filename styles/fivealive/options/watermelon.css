@@ -517,6 +517,10 @@ hr {
   background: #c31e3b url('watermelon/siteheader.png') no-repeat -1000px -200px;
   border-bottom: none;
 }
+#col2 .panel-title,
+#col3 .panel-title {
+  color: #661527;
+}
 .header_outer {
   /* whole width div containing the header strip */
   background: url('watermelon/siteheadertile.png') 0 0 no-repeat;
