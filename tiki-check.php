@@ -14,10 +14,20 @@ tiki-check.php is designed to run in 2 modes
 2) Stand-alone mode. Used to check a server pre-Tiki installation, by copying (only) tiki-check.php onto the server and pointing your browser to it.
 tiki-check.php should not crash but rather avoid running tests which lead to tiki-check crashes.
 */
+
+// TODO : Create sane 3rd mode for Monitoring Software like Nagios, Icinga, Shinken
+// * needs authentication, if not standalone
+isset($_REQUEST['nagios']) ? $nagios = true : $nagios = false;
+file_exists('tiki-check.php.lock') ? $locked = true : $locked = false;
+$font = 'lib/captcha/DejaVuSansMono.ttf';
+
 if (file_exists('./db/local.php') && file_exists('./templates/tiki-check.tpl')) {
 	$standalone = false;
 	require_once ('tiki-setup.php');
-	$access->check_permission('tiki_p_admin');
+	// TODO : Proper authentication
+	if (!$nagios) {
+		$access->check_permission('tiki_p_admin');
+	}
 } else {
 	$standalone = true;
 	$render = "";
@@ -176,7 +186,7 @@ if ($s) {
 
 // Now connect to the DB and make all our connectivity methods work the same
 $connection = false;
-if ( $standalone ) {
+if ( $standalone && !$locked ) {
 	if ( empty($_POST['dbhost']) && !($php_properties['DB Driver']['setting'] == 'Not available') ) {
 			$render .= <<<DBC
 <h2>Database credentials</h2>
@@ -185,7 +195,7 @@ Couldn't connect to database, please provide valid credentials.
 	<p><label for="dbhost">Database host</label>: <input type="text" id="dbhost" name="dbhost" value="localhost" /></p>
 	<p><label for="dbuser">Database username</label>: <input type="text" id="dbuser" name="dbuser" /></p>
 	<p><label for="dbpass">Database password</label>: <input type="password" id="dbpass" name="dbpass" /></p>
-	<p><input type="submit" value=" Connect " /></p>
+	<p><input type="submit" class="btn btn-default btn-sm" value=" Connect " /></p>
 </form>
 DBC;
 	} else {
@@ -282,6 +292,12 @@ if ( PHP_OS == 'Linux' && function_exists('exec') ) {
 		$server_information['Release'] = array(
 			'value' => str_replace('Description:', '', $output[0])
 		);
+		# Check for FreeType fails without a font, i.e. standalone mode
+		# Using a URL as font source doesn't work on all PHP installs
+		# So let's try to gracefully fall back to some locally installed font at least on Linux
+		if (!file_exists($font)) {
+			$font = exec('find /usr/share/fonts/ -type f -name "*.ttf" | head -n 1', $output);
+		}
 	} else {
 		$server_information['Release'] = array(
 			'value' => tra('N/A')
@@ -338,7 +354,7 @@ if (version_compare(PHP_VERSION, '5.1.0', '<')) {
 	);
 } elseif (version_compare(PHP_VERSION, '5.2.0', '<')) {
 	$php_properties['PHP version'] = array(
-		'fitness' => tra('ugly'),
+		'fitness' => tra('bad'),
 		'setting' => phpversion(),
 		'message' => 'You have a quite old version of PHP. You can run Tiki 6.x LTS but not later versions.'
 	);
@@ -346,7 +362,13 @@ if (version_compare(PHP_VERSION, '5.1.0', '<')) {
 	$php_properties['PHP version'] = array(
 		'fitness' => tra('ugly'),
 		'setting' => phpversion(),
-		'message' => 'You have a somewhat old version of PHP. You can run Tiki 6.x LTS or 9.x LTS but not later versions.'
+		'message' => 'You have an old version of PHP. You can run Tiki 6.x LTS or 9.x LTS but not later versions.'
+	);
+} elseif (version_compare(PHP_VERSION, '5.5.0', '<')) {
+	$php_properties['PHP version'] = array(
+		'fitness' => tra('ugly'),
+		'setting' => phpversion(),
+		'message' => 'You have a somewhat old version of PHP. You can run Tiki 6.x LTS, 9.x LTS or 12.x LTS but not later versions.'
 	);
 } else {
 	$php_properties['PHP version'] = array(
@@ -391,6 +413,12 @@ if ( function_exists('apc_sma_info') && ini_get('apc.enabled') ) {
 		'setting' => 'xCache',
 		'message' => tra('You are using xCache as your ByteCode Cache which increases performance, if correctly configured. See Admin->Performance in your Tiki for more details.')
 	);
+} elseif ( function_exists('opcache_get_configuration') && ( ini_get('opcache.enable') == 1 || ini_get('opcache.enable') == '1') ) {
+	$php_properties['ByteCode Cache'] = array(
+		'fitness' => tra('good'),
+		'setting' => 'OPcache',
+		'message' => tra('You are using OPcache as your ByteCode Cache which increases performance, if correctly configured. See Admin->Performance in your Tiki for more details.')
+	);
 } elseif ( function_exists('wincache_ocache_fileinfo') && ( ini_get('wincache.ocenabled') == '1') ) {
 	$sapi_type = php_sapi_name();
 	if ($sapi_type == 'cgi-fcgi') {
@@ -417,7 +445,7 @@ if ( function_exists('apc_sma_info') && ini_get('apc.enabled') ) {
 		$php_properties['ByteCode Cache'] = array(
 			'fitness' => tra('info'),
 			'setting' => 'N/A',
-			'message' => tra('You are using neither APC nor xCache as your ByteCode Cache which would increase performance, if correctly configured. See Admin->Performance in your Tiki for more details.')
+			'message' => tra('You are using neither APC, nor xCache, nor OPcache as your ByteCode Cache which would increase performance, if correctly configured. See Admin->Performance in your Tiki for more details.')
 		);
 	}
 }
@@ -723,7 +751,7 @@ if ( $s && function_exists('gd_info') ) {
 		$im = @imagecreate(110, 20);
 	}
 	if (function_exists('imageftbbox')) {
-		$ft = @imageftbbox(12, 0, './lib/captcha/DejaVuSansMono.ttf', 'test');
+		$ft = @imageftbbox(12, 0, $font, 'test');
 	}
 	if ($im && $ft) {
 		$php_properties['gd'] = array(
@@ -927,6 +955,22 @@ if (is_file('.svn/wc.db')) {
 			'message' => tra('This extension is used to interpret SVN information for TortoiseSVN 1.7 or higher.')
 			);
 	}
+}
+
+$s = extension_loaded('mcrypt');
+$msg = tra('Enable safe, encrypted storage of data, e.g. passwords.');
+if ($s) {
+	$php_properties['mcrypt'] = array(
+		'fitness' => tra('good'),
+		'setting' => 'Loaded',
+		'message' => $msg
+	);
+} else {
+	$php_properties['mcrypt'] = array(
+		'fitness' => tra('ugly'),
+		'setting' => 'Not available',
+		'message' => $msg
+	);
 }
 
 // Check for existence of eval()
@@ -1526,57 +1570,59 @@ if (!$standalone) {
 	$smarty->assign_by_ref('dirsWritable', $dirsWritable);
 }
 
-if ($standalone) {
+if ($standalone && !$nagios) {
 	$render .= '<style type="text/css">td, th { border: 1px solid #000000; vertical-align: baseline;}</style>';
 //	$render .= '<h1>Tiki Server Compatibility</h1>';
-	$render .= '<h2>MySQL or MariaBD Database Properties</h2>';
-	renderTable($mysql_properties);
-	$render .= '<h2>Test sending e-mails</h2>';
-	if (isset($_REQUEST['email_test_to'])) {
-		$email_test_headers = 'From: noreply@tiki.org' . "\n";	// needs a valid sender
-		$email_test_headers .= 'Reply-to: '. $_POST['email_test_to'] . "\n";
-		$email_test_headers .= "Content-type: text/plain; charset=utf-8\n";
-		$email_test_headers .= 'X-Mailer: Tiki-Check - PHP/' . phpversion() . "\n";
-		$email_test_subject = tra('Test mail from Tiki Server Compatibility Test');
-		$email_test_body = tra("Congratulations!\n\nYour server can send emails.\n\n");
-		$email_test_body .= "\t".tra('Server:').' '.(empty($_SERVER['SERVER_NAME']) ? $_SERVER['SERVER_ADDR'] : $_SERVER['SERVER_NAME']) . "\n";
-		$email_test_body .= "\t".tra('Sent:').' '.date(DATE_RFC822) . "\n";
+	if (!$locked) {
+		$render .= '<h2>MySQL or MariaBD Database Properties</h2>';
+		renderTable($mysql_properties);
+		$render .= '<h2>Test sending e-mails</h2>';
+		if (isset($_REQUEST['email_test_to'])) {
+			$email_test_headers = 'From: noreply@tiki.org' . "\n";	// needs a valid sender
+			$email_test_headers .= 'Reply-to: '. $_POST['email_test_to'] . "\n";
+			$email_test_headers .= "Content-type: text/plain; charset=utf-8\n";
+			$email_test_headers .= 'X-Mailer: Tiki-Check - PHP/' . phpversion() . "\n";
+			$email_test_subject = tra('Test mail from Tiki Server Compatibility Test');
+			$email_test_body = tra("Congratulations!\n\nYour server can send emails.\n\n");
+			$email_test_body .= "\t".tra('Server:').' '.(empty($_SERVER['SERVER_NAME']) ? $_SERVER['SERVER_ADDR'] : $_SERVER['SERVER_NAME']) . "\n";
+			$email_test_body .= "\t".tra('Sent:').' '.date(DATE_RFC822) . "\n";
 
-		$sentmail = mail($_POST['email_test_to'], $email_test_subject, $email_test_body, $email_test_headers);
-		if ($sentmail) {
-			$mail['Sending mail'] = array(
-				'setting' => 'Accepted',
-				'fitness' => tra('good'),
-				'message' => tra('We were able to send an e-mail. This only means that a mail server accepted the mail for delivery. We don\'t know, if that server really delivers the mail. Please check the inbox of '.$_POST['email_test_to'].' to see, if the delivery really works.')
-			);
+			$sentmail = mail($_POST['email_test_to'], $email_test_subject, $email_test_body, $email_test_headers);
+			if ($sentmail) {
+				$mail['Sending mail'] = array(
+					'setting' => 'Accepted',
+					'fitness' => tra('good'),
+					'message' => tra('We were able to send an e-mail. This only means that a mail server accepted the mail for delivery. We don\'t know, if that server really delivers the mail. Please check the inbox of '.$_POST['email_test_to'].' to see, if the delivery really works.')
+				);
+			} else {
+				$mail['Sending mail'] = array(
+					'setting' => 'Not accepted',
+					'fitness' => tra('bad'),
+					'message' => tra('We were not able to send an e-mail. It may be that there is no mail server installed on this machine or that it is badly configured. If you absolutely can\'t get the local mail server to work, you can setup a regular mail account and set SMTP settings in tiki-admin.php.')
+				);
+			}
+			renderTable($mail);
 		} else {
-			$mail['Sending mail'] = array(
-				'setting' => 'Not accepted',
-				'fitness' => tra('bad'),
-				'message' => tra('We were not able to send an e-mail. It may be that there is no mail server installed on this machine or that it is badly configured. If you absolutely can\'t get the local mail server to work, you can setup a regular mail account and set SMTP settings in tiki-admin.php.')
-			);
+			$render .= '<form method="post" action="'.$_SERVER['REQUEST_URI'].'">';
+			$render .= '<p><label for="e-mail">e-mail address to send test mail to</label>: <input type="text" id="email_test_to" name="email_test_to" /></p>';
+			$render .= '<p><input type="submit" class="btn btn-default btn-sm" value=" Send e-mail " /></p>';
+			$render .= '<p><input type="hidden" id="dbhost" name="dbhost" value="';
+					if (isset($_POST['dbhost'])) {
+						$render .= $_POST['dbhost'];
+					};
+				$render .= '" /></p>';
+				$render .= '<p><input type="hidden" id="dbuser" name="dbuser" value="';
+					if (isset($_POST['dbuser'])) {
+						$render .= $_POST['dbuser'];
+					};
+				$render .= '"/></p>';
+				$render .= '<p><input type="hidden" id="dbpass" name="dbpass" value="';
+					if (isset($_POST['dbpass'])) {
+						$render .= $_POST['dbpass'];
+					};
+				$render .= '"/></p>';
+			$render .= '</form>';
 		}
-		renderTable($mail);
-	} else {
-		$render .= '<form method="post" action="'.$_SERVER['REQUEST_URI'].'">';
-		$render .= '<p><label for="e-mail">e-mail address to send test mail to</label>: <input type="text" id="email_test_to" name="email_test_to" /></p>';
-		$render .= '<p><input type="submit" value=" Send e-mail " /></p>';
-		$render .= '<p><input type="hidden" id="dbhost" name="dbhost" value="';
-				if (isset($_POST['dbhost'])) {
-					$render .= $_POST['dbhost'];
-				};
-			$render .= '" /></p>';
-			$render .= '<p><input type="hidden" id="dbuser" name="dbuser" value="';
-				if (isset($_POST['dbuser'])) {
-					$render .= $_POST['dbuser'];
-				};
-			$render .= '"/></p>';
-			$render .= '<p><input type="hidden" id="dbpass" name="dbpass" value="';
-				if (isset($_POST['dbpass'])) {
-					$render .= $_POST['dbpass'];
-				};
-			$render .= '"/></p>';
-		$render .= '</form>';
 	}
 
 	$render .= '<h2>Server Information</h2>';
@@ -1624,6 +1670,56 @@ if ($standalone) {
 		$render .= '<a href="'.$_SERVER['SCRIPT_NAME'].'?'.$_SERVER['QUERY_STRING'].'&phpinfo=y">Append phpinfo();</a>';
 	}
 	createPage('Tiki Server Compatibility', $render);
+} elseif ($nagios) {
+//  0	OK
+//  1	WARNING
+//  2	CRITICAL
+//  3	UNKNOWN
+	$monitoring_info = array( 'state' => 0,
+			 'message' => '');
+
+	function update_overall_status($check_group, $check_group_name) {
+		global $monitoring_info;
+		$state = 0;
+
+		foreach ($check_group as $property => $values) {
+			switch($values['fitness']) {
+				case 'ugly':
+				case 'risky':
+					$state = max($state, 1);
+					$message .= "$property"."->ugly, ";
+					break;
+				case 'bad':
+					$state = max($state, 2);
+					$message .= "$property"."->BAD, ";
+					break;
+				case 'info':
+				case 'good':
+				case 'safe':
+					break;
+			}
+		}
+		$monitoring_info['state'] = max($monitoring_info['state'], $state);
+		if ($state != 0) {
+			$monitoring_info['message'] .= $check_group_name.": ".trim($message, ' ,')." -- ";
+		}
+	}
+
+	// Might not be set, i.e. in standalone mode
+	if ($mysql_properties) {
+		update_overall_status($mysql_properties, "MySQL");
+	}
+	update_overall_status($server_properties, "Server");
+	if ($apache_properties) {
+		update_overall_status($apache_properties, "Apache");
+	}
+	if ($iis_properties) {
+		update_overall_status($iis_properties, "IIS");
+	}
+	update_overall_status($php_properties, "PHP");
+	update_overall_status($security, "PHP Security");
+	$return = json_encode($monitoring_info);
+	echo $return;
 } else {
 	$smarty->assign_by_ref('server_information', $server_information);
 	$smarty->assign_by_ref('server_properties', $server_properties);
@@ -1673,6 +1769,7 @@ function createPage($title, $content)
 		<title>$title</title>
 		<style type="text/css">
 			table { border-collapse: collapse;}
+			#middle { padding-top: 20px; }
 			.button {
 				border-radius: 3px 3px 3px 3px;
 				font-size: 12.05px;
