@@ -11,22 +11,16 @@
 }
 
 @media(min-width: 992px) {
-  #col1.col-md-6 > .module {
-    max-width: 50%;
-  }
+  #col1.col-md-8 > .alert,
   #col1.col-md-8 > .module,
+  #col1.col-md-9 > .alert,
   #col1.col-md-9 > .module,
-  #col1.col-md-8 .wikitext > .module,
-  #col1.col-md-9 .wikitext > .module {
-    max-width: 50%;
-  }
-  #col1.col-md-12 > .module,
-  #col1.col-md-12 > fieldset > .module {
-    max-width: 33.33333%;
-  }
   #col1.col-md-12 > .alert,
-  #col1.col-md-12 > .module {
-    width: 33.333333%;
+  #col1.col-md-12 > .module,
+  #col1.col-md-8 > .module,
+  #col1.col-md-9 > fieldset > .module,
+  #col1.col-md-12 > fieldset > .module {
+    max-width: 992px * .58 ;
     margin-left: auto;
     margin-right: auto;
   }

@@ -657,6 +657,10 @@ if ($tiki_p_admin == 'y') {
 	$headerlib->add_jsfile('lib/jquery_tiki/tiki-admin.js');
 }
 
+if ($prefs['wikiplugin_addtocart'] == 'y') {
+	$headerlib->add_jsfile('lib/payment/cartlib.js');
+}
+
 //////////////////////////////////////////////////////////////////////////
 // ******************************************************************** //
 // ** IMPORTANT NOTE:                                                ** //

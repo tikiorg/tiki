@@ -517,6 +517,10 @@ hr {
   background: #3b284a url('grape/siteheader.png') no-repeat -1000px -200px;
   border-bottom: none;
 }
+#col2 .panel-title,
+#col3 .panel-title {
+  color: #e4afd3;
+}
 .header_outer {
   /* whole width div containing the header strip */
   background: url('grape/siteheadertile.png') 0 0 no-repeat;

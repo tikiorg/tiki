@@ -45,7 +45,6 @@
             <ul>
                 <li>{tr}Starting in Tiki11, <b>console.php</b> script exists to help you administer your Tiki or <em>MultiTiki</em> instance via the command line{/tr}.
                     <a href="http://doc.tiki.org/Console" target="tikihelp" class="tikihelp" title="{tr}Console (console.php script):{/tr}
-                    {tr}All the other command line scripts from before Tiki11 (ex.: php installer/shell.php) will continue to work in Tiki12, but may not work anymore since Tiki13 so you will need to switch to use console.php script instead{/tr}.
                     <br/><br/>
                     {tr}Example: Database update{/tr}
                     <pre>php console.php database:update</pre>

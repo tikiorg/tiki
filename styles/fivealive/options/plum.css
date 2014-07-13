@@ -517,6 +517,10 @@ hr {
   background: #49006c url('plum/siteheader.jpg') no-repeat -1000px -200px;
   border-bottom: none;
 }
+#col2 .panel-title,
+#col3 .panel-title {
+  color: #dc95fe;
+}
 .header_outer {
   /* whole width div containing the header strip */
   background: url('plum/siteheadertile.png') 0 0 no-repeat;
