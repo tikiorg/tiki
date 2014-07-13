@@ -72,7 +72,7 @@
 			<div class="adminoptionboxchild" id="feature_user_encryption_childcontainer">
 				{if isset($no_mcrypt)}
 					{remarksbox type="warning" title="{tr}Mcrypt is not loaded{/tr}"}
-					{tr}User Encryption requires the PHP expension Mcrypt for encryption.
+					{tr}User Encryption requires the PHP extension Mcrypt for encryption.
 						You should activate Mcrypt before activating User Encryption{/tr}</a>.
 					{/remarksbox}
 				{else}
