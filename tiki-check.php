@@ -958,7 +958,7 @@ if (is_file('.svn/wc.db')) {
 }
 
 $s = extension_loaded('mcrypt');
-$msg = tra('Enable safe, encrypted storage of data, e.g. passwords.');
+$msg = tra('Enable safe, encrypted storage of data, e.g. passwords. Required for the User Encryption feature and improves encryption in other features, when available.');
 if ($s) {
 	$php_properties['mcrypt'] = array(
 		'fitness' => tra('good'),
