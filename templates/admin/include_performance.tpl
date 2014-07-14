@@ -54,7 +54,7 @@
 		
 		{tab name="{tr}Bytecode Cache{/tr}"}
 			{if $opcode_cache}
-				<p>{tr _0=$opcode_cache}Using <strong>%0</strong>.These stats affect all PHP applications running on the server.{/tr}</p>
+				<p>{tr _0=$opcode_cache}Using <strong>%0</strong>. These stats affect all PHP applications running on the server.{/tr}</p>
 
 				{if $opcode_stats.warning_xcache_blocked}
 					<p>{tr}Configuration setting <em>xcache.admin.enable_auth</em> prevents from accessing statistics. This will also prevent the cache from being cleared when clearing template cache.{/tr}</p>
@@ -87,11 +87,11 @@
 				{/if}
 
 				{if $opcode_stats.warning_starve}
-					<p>{tr}Little memory available. Thrashing likely to occur.{/tr} {tr}The values to increase are apc.shm_size (for APC) or xcache.size (for XCache).{/tr}</p>
+					<p>{tr}Little memory available. Thrashing likely to occur.{/tr} {tr}The values to increase are apc.shm_size (for APC), xcache.size (for XCache) or opcache.memory_consumption (for OPcache).{/tr}</p>
 				{/if}
 
 				{if $opcode_stats.warning_low}
-					<p>{tr _0=$opcode_cache}Small amount of memory allocated to %0. Verify the configuration.{/tr} {tr}The values to increase are apc.shm_size (for APC) or xcache.size (for XCache).{/tr}</p>
+					<p>{tr _0=$opcode_cache}Small amount of memory allocated to %0. Verify the configuration.{/tr} {tr}The values to increase are apc.shm_size (for APC), xcache.size (for XCache) or opcache.memory_consumption (for OPcache).{/tr}</p>
 				{/if}
 
 				{if $opcode_stats.warning_check}
@@ -106,7 +106,7 @@
 					<p>{tr}Clear all APC caches:{/tr} {self_link apc_clear=true}{tr}Clear Caches{/tr}{/self_link}</p>
 				{/if}
 			{else}
-				{tr}Bytecode cache is not used. Using a bytecode cache (APC, XCache, WinCache) is highly recommended for production environments.{/tr}
+				{tr}Bytecode cache is not used. Using a bytecode cache (OPcache, APC, XCache, WinCache) is highly recommended for production environments.{/tr}
 			{/if}
 		{/tab}
 		
