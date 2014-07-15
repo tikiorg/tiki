@@ -116,7 +116,7 @@ window.CKEDITOR.config.toolbar = ' .$cktools.';
 		global $tikiroot, $prefs;
 		$headerlib = TikiLib::lib('header');
 
-		$headerlib->add_js('window.CKEDITOR.config.extraPlugins = "";');
+		$headerlib->add_js('window.CKEDITOR.config.extraPlugins = "' . $prefs['wysiwyg_extra_plugins'] . '";');
         if ($notallreadyloaded) {
 			$headerlib->add_js_config('window.CKEDITOR_BASEPATH = "'. $tikiroot . 'vendor/ckeditor/ckeditor/";')
 				//// for js debugging - copy _source from ckeditor distribution to libs/ckeditor to use
