@@ -2474,6 +2474,10 @@ form.simple textarea.export {
   background: #ffffff;
   color: #333333;
 }
+body > .ui-front {
+  /* bs .modal has z-index: 1050, need body specified so as to override jquery-ui.css */
+  z-index: 2000;
+}
 .olControlNavToolbar {
   top: 345px !important;
 }

@@ -28,9 +28,6 @@
 .full_screen_body { 
 	overflow: hidden; 
 }
-.ui-front {
-    z-index: 2000;
-}
 
 .ui-widget-overlay.ui-front {
     z-index: auto;
