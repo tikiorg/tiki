@@ -60,7 +60,7 @@
 		{tab name="{tr}Bytecode Cache{/tr}"}
             <h2>{tr}Bytecode Cache{/tr}</h2>
 			{if $opcode_cache}
-				<p>{tr _0=$opcode_cache}Using <strong>%0</strong>.These stats affect all PHP applications running on the server.{/tr}</p>
+				<p>{tr _0=$opcode_cache}Using <strong>%0</strong>. These stats affect all PHP applications running on the server.{/tr}</p>
 
 				{if $opcode_stats.warning_xcache_blocked}
 					<p>{tr}Configuration setting <em>xcache.admin.enable_auth</em> prevents from accessing statistics. This will also prevent the cache from being cleared when clearing template cache.{/tr}</p>

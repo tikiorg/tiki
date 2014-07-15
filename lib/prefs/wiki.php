@@ -304,7 +304,7 @@ function prefs_wiki_list($partial = false)
 			'name' => tra('Wiki rating options'),
 			'description' => tra('List of options available for the rating of wiki comments.'),
 			'type' => 'text',
-			'default' => "0,5,4,3,2,1",
+			'default' => "0,1,2,3,4,5",
 		),
 		'wiki_uses_slides' => array(
 			'name' => tra('Add a slideshow button on wiki pages'),
@@ -679,7 +679,7 @@ function prefs_wiki_list($partial = false)
 			'name' => tra('Wiki rating options'),
 			'description' => tra('List of options available for the rating of wiki pages.'),
 			'type' => 'text',
-			'default' => "0,5,4,3,2,1",
+			'default' => "0,1,2,3,4,5",
 		),
 		'wiki_pagealias_tokens' => array(
 			'name' => tra('Semantic link types to use as page alias markers'),
