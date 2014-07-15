@@ -13345,7 +13345,7 @@ $lang = array(
 "Subscribe to the <a href=\"http://tiki.org/Newsletter\" title=\"Subscribe\" target=\"_blank\">Tiki newsletter</a> or <a href=\"http://info.tiki.org/tiki-articles_rss.php\" title=\"RSS\" target=\"_blank\">RSS feed</a> to learn about new releases, security updates, and community news" => "Subscriu-te al <a href=\"http://tiki.org/Butlletí\" title=\"Subscribe\" target=\"_blank\">Butlletí de Tiki</a> o <a href=\"http://info.tiki.org/tiki-articles_rss.php\" title =\"RSS\" target =\"_blank\">Font RSS</a> per aprendre sobre les noves versions, actualitzacions de seguretat, i la comunitat de notícies",
 "You can now access the site normally. Report back any issues that you might find (if any) to the Tiki forums or bug tracker" => "Ja pots accedir ara al lloc amb normalitat. Informa de qualsevol incidència o problemes que detectis (si és el cas) als fòrums comunitaris de tiki.org o al formulari de registre d'errors a dev.tiki.org",
 "Are you sure you want to attempt to fix the encoding of your entire database" => "Segur que vols intentar solucionar la codificació de la teva base de dades sencera",
-"Upgrading and running into encoding issues" => "Actualitant i trobant-te amb incidències de codificació",
+"Upgrading and running into encoding issues" => "Actualitzant i trobant-te amb incidències de codificació",
 "We can try to fix it, but <strong>make sure you have backups, and can restore them</strong>" => "Podem intentar solucionar-ho, però <strong>assegura't que tens còpies de seguretat, i que pots restaurar-les</strong>",
 "Previous table encoding" => "Codificació anterior de les taules",
 "Please select" => "Si us plau, selecciona una",
