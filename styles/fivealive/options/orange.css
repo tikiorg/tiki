@@ -514,12 +514,12 @@ hr {
 #col2 .panel-heading,
 #col3 .panel-heading,
 #bottom_modules .panel-heading {
-  background: #e77d4f url('orange/siteheader.png') no-repeat -1000px -200px;
+  background: #ffc862;
   border-bottom: none;
 }
 #col2 .panel-title,
 #col3 .panel-title {
-  color: #ffc862;
+  color: #e77d4f;
 }
 .header_outer {
   /* whole width div containing the header strip */
