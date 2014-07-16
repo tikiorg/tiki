@@ -8,32 +8,6 @@
 	        <legend>{tr}Profiles:{/tr}</legend>
 	        <div class="row">
                 <div class="col-md-6">
-                    <h4>{tr}Mobile{/tr}</h4>
-                    (<a href="tiki-admin.php?profile=Mobile&show_details_for=Mobile&categories%5B%5D={$tikiMajorVersion}.x&repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2" target="_blank">{tr}apply profile now{/tr}</a>)
-                    <br/>
-                    {tr}This profile allows to switch the site layout, text and icons to users with smartphones and tablets{/tr}
-                    <br/><a href="https://doc.tiki.org/Mobile" target="tikihelp" class="tikihelp" title="{tr}Mobile{/tr}:
-           	        {tr}More details{/tr}:
-        	        <ul>
-		                <li>{tr}Automatic switch when a mobile device is detected{/tr}</li>
-	                    <li>{tr}Manual switch allowed with provided side module{/tr}</li>
-	                    <li>{tr}Enhanced mobile mode since Tiki 12{/tr}</li>
-	                </ul>
-           	        {tr}Click to read more{/tr}">
-                    <img src="img/icons/help.png" alt="" width="16" height="16" class="icon" />
-                    </a>
-                    <div class="row">
-                        <div class="col-md-8 col-md-offset-2">
-                            <a href="http://doc.tiki.org/display942" class="thumbnail internal" rel="box" title="{tr}Click to expand{/tr}">
-                                <img src="img/profiles/profile_thumb_mobile.png" alt="Click to expand" class="regImage pluginImg" title="{tr}Click to expand{/tr}" />
-                            </a>
-                            <div class="mini text-center">
-                                <div class="thumbcaption text-center">{tr}Click to expand{/tr}</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
                     <h4>{tr}Slideshow demo{/tr}</h4>
                     (<a href="tiki-admin.php?profile=Slideshow_demo&show_details_for=Slideshow_demo&categories%5B%5D={$tikiMajorVersion}.x&repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2" target="_blank">{tr}apply profile now{/tr}</a>)
                     <br/>
