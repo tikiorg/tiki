@@ -2225,6 +2225,11 @@ class UsersLib extends TikiLib
 
 		$this->query('update `users_users` set `default_group`=? where `default_group`=?', array('Registered', $group));
 
+		TikiLib::events()->trigger('tiki.group.delete', [
+			'type' => 'group',
+			'object' => $group,
+		]);
+
 		$cachelib = TikiLib::lib('cache');
 		$cachelib->invalidate('grouplist');
 		$cachelib->invalidate('group_theme_' . $group);
@@ -6397,44 +6402,41 @@ class UsersLib extends TikiLib
 		$tikilib = TikiLib::lib('tiki');
 		$group = trim($group);
 
-		if ( $this->group_exists($group) )
+		if ($this->group_exists($group)) {
 			return false;
+		}
 
-		$query = 'insert into `users_groups`' .
-						' (`groupName`, `groupDesc`, `groupHome`,`groupDefCat`,`groupTheme`,' .
-						' `usersTrackerId`,`groupTrackerId`, `registrationUsersFieldIds`,' .
-						' `userChoice`, `usersFieldId`, `groupFieldId`,`isExternal`, `expireAfter`,' .
-						' `emailPattern`, `anniversary`, `prorateInterval`)' .
-						' values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)';
+		$data = [
+			'groupName' => $group,
+			'groupDesc' => $desc,
+			'groupHome' => $home,
+			'groupDefCat' => $defcat,
+			'groupTheme' => $theme,
+			'usersTrackerId' => (int) $utracker,
+			'groupTrackerId' => (int) $gtracker,
+			'registrationUsersFieldIds' => $rufields,
+			'userChoice' => $userChoice,
+			'usersFieldId' => (int) $ufield,
+			'groupFieldId' => (int) $gfield,
+			'isExternal' => $isexternal,
+			'expireAfter' => $expireAfter,
+			'emailPattern' => $emailPattern,
+			'anniversary' => $anniversary,
+			'prorateInterval' => $prorateInterval,
+		];
 
-		$this->query(
-			$query,
-			array(
-				$group,
-				$desc,
-				$home,
-				$defcat,
-				$theme,
-				(int)$utracker,
-				(int)$gtracker,
-				$rufields,
-				$userChoice,
-				(int)$ufield,
-				(int)$gfield,
-				$isexternal,
-				$expireAfter,
-				$emailPattern,
-				$anniversary,
-				$prorateInterval
-			)
-		);
+		$id = $this->table('users_groups')->insert($data);
+
+		TikiLib::events()->trigger('tiki.group.create', [
+			'type' => 'group',
+			'object' => $group,
+		]);
 
 		$cachelib = TikiLib::lib('cache');
 		$cachelib->invalidate('grouplist');
 		$cachelib->invalidate('groupIdlist');
 
-		$query = "select `id` from `users_groups` where `groupName`=?";
-		return $this->getOne($query, array($group));
+		return $id;
 	}
 
 	function change_group($olgroup, $group, $desc, $home, $utracker = 0,
@@ -6468,35 +6470,28 @@ class UsersLib extends TikiLib
 
 		$cachelib = TikiLib::lib('cache');
 
-		$query = 'update `users_groups`' .
-						' set `groupName`=?, `groupDesc`=?, `groupHome`=?, `groupDefCat`=?,' .
-						' `groupTheme`=?, `usersTrackerId`=?, `groupTrackerId`=?, `usersFieldId`=?,' .
-						' `groupFieldId`=? , `registrationUsersFieldIds`=?, `userChoice`=?, `isExternal`=?,' .
-						' `expireAfter`=?, `emailPattern`=?, `anniversary`=?, `prorateInterval`=?' .
-						' where `groupName`=?';
+		$tx = TikiDb::get()->begin();
 
-		$result = $this->query(
-			$query,
-			array(
-				$group,
-				$desc,
-				$home,
-				$defcat,
-				$theme,
-				(int)$utracker,
-				(int)$gtracker,
-				(int)$ufield,
-				(int)$gfield,
-				$rufields,
-				$userChoice,
-				$isexternal,
-				$expireAfter,
-				$emailPattern,
-				$anniversary,
-				$prorateInterval,
-				$olgroup
-			)
-		);
+		$data = [
+			'groupName' => $group,
+			'groupDesc' => $desc,
+			'groupHome' => $home,
+			'groupDefCat' => $defcat,
+			'groupTheme' => $theme,
+			'usersTrackerId' => (int) $utracker,
+			'groupTrackerId' => (int) $gtracker,
+			'registrationUsersFieldIds' => $rufields,
+			'userChoice' => $userChoice,
+			'usersFieldId' => (int) $ufield,
+			'groupFieldId' => (int) $gfield,
+			'isExternal' => $isexternal,
+			'expireAfter' => $expireAfter,
+			'emailPattern' => $emailPattern,
+			'anniversary' => $anniversary,
+			'prorateInterval' => $prorateInterval,
+		];
+
+		$this->table('users_groups')->update($data, ['groupName' => $olgroup]);
 
 		if ( $olgroup != $group ) {
 			$query = array();
@@ -6507,8 +6502,9 @@ class UsersLib extends TikiLib
 			$query[] = 'update `tiki_group_inclusion` set `includeGroup`=? where `includeGroup`=?';
 			$query[] = 'update `tiki_newsletter_groups` set `groupName`=? where `groupName`=?';
 
-			foreach ( $query as $q )
+			foreach ( $query as $q ) {
 				$this->query($q, array($group, $olgroup));
+			}
 
 			// must unserialize before replacing the groups
 			$query = 'select `name`, `groups` from `tiki_modules` where `groups` like ?';
@@ -6553,8 +6549,20 @@ class UsersLib extends TikiLib
 
 			$cachelib->invalidate('grouplist');
 			$cachelib->invalidate('group_theme_' . $group);
+
+			TikiLib::events()->trigger('tiki.group.delete', [
+				'type' => 'group',
+				'object' => $olgroup,
+			]);
 		}
 		$cachelib->invalidate('group_theme_' . $olgroup);
+
+		TikiLib::events()->trigger('tiki.group.update', [
+			'type' => 'group',
+			'object' => $group,
+		]);
+
+		$tx->commit();
 
 		return true;
 	}

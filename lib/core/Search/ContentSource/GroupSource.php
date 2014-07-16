@@ -23,6 +23,10 @@ class Search_ContentSource_GroupSource implements Search_ContentSource_Interface
 	{
 		$row = $this->db->table('users_groups')->fetchRow(['groupDesc'], array('groupName' => $objectId));
 
+		if (! $row) {
+			return false;
+		}
+
 		$data = array(
 			'title' => $typeFactory->sortable($objectId),
 			'description' => $typeFactory->plaintext($row['groupDesc']),

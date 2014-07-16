@@ -203,6 +203,11 @@ function tiki_setup_events()
 	$events->bind('tiki.forumpost.update', 'tiki.forumpost.save');
 	$events->bind('tiki.forumpost.save', 'tiki.save');
 
+	$events->bind('tiki.group.update', 'tiki.group.save');
+	$events->bind('tiki.group.create', 'tiki.group.save');
+	$events->bind('tiki.group.delete', 'tiki.save');
+	$events->bind('tiki.group.save', 'tiki.save');
+
 	$events->bind('tiki.comment.post', 'tiki.comment.save');
 	$events->bind('tiki.comment.reply', 'tiki.comment.save');
 	$events->bind('tiki.comment.update', 'tiki.comment.save');
