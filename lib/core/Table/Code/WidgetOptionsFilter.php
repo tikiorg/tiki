@@ -49,7 +49,7 @@ class Table_Code_WidgetOptionsFilter extends Table_Code_WidgetOptions
 							$o = '';
 							if (array_key_exists('options', $info)) {
 								foreach ($info['options'] as $key => $val) {
-									$label = is_numeric($key) ? $val : $key;
+									$label =  addcslashes(is_numeric($key) ? $val : $key,"'/");
 									$o[] = parent::$ajax ? '\'' . $label . '\' : function() {}' :
 										'\'' . $label . '\' : function(e, n, f, i) { return /' . $val . '/.test(e);}';
 								}
