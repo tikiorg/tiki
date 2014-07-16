@@ -60,7 +60,7 @@ foreach ( $matches as $match ) {
 
 		$match->replaceWithPlugin($plugin, $params, $content);
 
-		if ($prefs['wysiwyg_htmltowiki'] == 'y') {
+		if ($prefs['wysiwyg_htmltowiki'] == 'y' && $plugin === 'wysiwyg') {
 			$parsed = TikiLib::lib('edit')->parseToWiki($matches->getText());
 		} else {
 			$parsed = $matches->getText();
