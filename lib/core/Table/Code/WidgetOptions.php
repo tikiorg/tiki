@@ -66,7 +66,7 @@ class Table_Code_WidgetOptions extends Table_Code_Manager
 							if (array_key_exists('options', $info)) {
 								foreach ($info['options'] as $key => $val) {
 									$label = is_numeric($key) ? $val : $key;
-									$o[] = '\'' . $label . '\' : function(e, n, f, i) { return /' . $val . '/.test(e);}';
+									$o[] = '\'' . addcslashes($label,"'/") . '\' : function(e, n, f, i) { return /' . addcslashes($val,"'/") . '/.test(e);}';
 								}
 								$options = $this->iterate($o, '{', $this->nt4 . '}', $this->nt5, '', ',');
 								$ffunc[] = $col . ' : ' . $options;
