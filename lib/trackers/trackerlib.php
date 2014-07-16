@@ -2636,6 +2636,11 @@ class TrackerLib extends TikiLib
 					'name' => $data['name'],
 				)
 			);
+
+			TikiLib::events()->trigger(
+				$logOption == 'add_field' ? 'tiki.trackerfield.create' : 'tiki.trackerfield.update',
+				['type' => 'trackerfield', 'object' => $fieldId]
+			);
 		}
 
 		$this->clear_tracker_cache($trackerId);
@@ -2817,6 +2822,11 @@ class TrackerLib extends TikiLib
 				'operation' => 'remove_field',
 				'fieldId' => $fieldId,
 			)
+		);
+
+		TikiLib::events()->trigger(
+			'tiki.trackerfield.delete',
+			['type' => 'trackerfield', 'object' => $fieldId]
 		);
 
 		return true;

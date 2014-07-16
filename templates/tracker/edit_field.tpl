@@ -51,6 +51,12 @@
 								</option>
 							{/foreach}
 						</select>
+					{elseif $def.selector_type}
+						{if $def.separator}
+							{object_selector_multi type=$def.selector_type _separator=$def.separator _simplename="option~`$param`" _sumplevalue=$options[$param]}
+						{else}
+							{object_selector type=$def.selector_type _simplename="option~`$param`" _simplevalue=$options[$param]}
+						{/if}
 					{elseif $def.separator}
 						<input type="text" name="option~{$param|escape}" value="{$options[$param]|implode:$def.separator|escape}" class="form-control">
 					{elseif $def.count eq '*'}
@@ -61,10 +67,12 @@
 						<input type="text" name="option~{$param|escape}" value="{$options[$param]|escape}" class="form-control">
 					{/if}
 					<div class="help-block">{$def.description|escape}</div>
-					{if $def.count eq '*'}
-						<div class="help-block">{tr}Separate multiple with commas.{/tr}</div>
-					{elseif $def.separator}
-						<div class="help-block">{tr}Separate multiple with &quot;{$def.separator}&quot;{/tr}</div>
+					{if ! $def.selector_type}
+						{if $def.count eq '*'}
+							<div class="help-block">{tr}Separate multiple with commas.{/tr}</div>
+						{elseif $def.separator}
+							<div class="help-block">{tr}Separate multiple with &quot;{$def.separator}&quot;{/tr}</div>
+						{/if}
 					{/if}
 				</div>
 			{/foreach}

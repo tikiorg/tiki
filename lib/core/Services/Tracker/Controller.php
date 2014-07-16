@@ -187,6 +187,8 @@ class Services_Tracker_Controller
 		$hasList = false;
 		$hasLink = false;
 
+		$tx = TikiDb::get()->begin();
+
 		$fields = array();
 		foreach ($input->field as $key => $value) {
 			$fieldId = (int) $key;
@@ -218,6 +220,7 @@ class Services_Tracker_Controller
 		}
 
 		$errorreport->send_headers();
+		$tx->commit();
 
 		return array(
 			'fields' => $fields,
@@ -301,6 +304,15 @@ class Services_Tracker_Controller
 			);
 		}
 
+		array_walk($typeInfo['params'], function (& $param) {
+			if (isset($param['profile_reference'])) {
+				$lib = TikiLib::lib('object');
+				$param['selector_type'] = $lib->getSelectorType($param['profile_reference']);
+			} else {
+				$param['selector_type'] = null;
+			}
+		});
+
 		return array(
 			'title' => tr('Edit %0', $field['name']),
 			'field' => $field,
@@ -344,9 +356,11 @@ class Services_Tracker_Controller
 
 		if ($input->confirm->int()) {
 			$trklib = TikiLib::lib('trk');
+			$tx = TikiDb::get()->begin();
 			foreach ($fields as $fieldId) {
 				$trklib->remove_tracker_field($fieldId, $trackerId);
 			}
+			$tx->commit();
 
 			return array(
 				'status' => 'DONE',

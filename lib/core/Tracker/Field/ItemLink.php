@@ -55,7 +55,7 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 					),
 					'displayFieldsList' => array(
 						'name' => tr('Multiple Fields'),
-						'description' => tr('Display the values from multiple fields instead of a single one, separated by |'),
+						'description' => tr('Display the values from multiple fields instead of a single one.'),
 						'separator' => '|',
 						'filter' => 'int',
 						'legacy_index' => 3,

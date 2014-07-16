@@ -208,6 +208,25 @@ class ObjectLib extends TikiLib
 		);
 	}
 
+	function getSelectorType($type)
+	{
+		$supported = [
+			'category' => 'category',
+			'group' => 'group',
+			'tracker' => 'tracker',
+			'tracker_field' => 'trackerfield',
+			'trackerfield' => 'trackerfield',
+			'wiki_page' => 'wiki page',
+			'wiki page' => 'wiki page',
+		];
+
+		if (isset($supported[$type])) {
+			return $supported[$type];
+		} else {
+			return false;
+		}
+	}
+
 	function insert_object($type, $itemId, $description = '', $name = '', $href = '')
 	{
 		if (! $itemId) {
