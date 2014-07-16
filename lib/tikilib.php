@@ -6062,6 +6062,7 @@ class TikiLib extends TikiDb_Bridge
 
 	/**
 	 * @param $data
+	 * @param string $outputType
 	 * @param string $is_html
 	 * @param string $highlight
 	 * @param int $length
@@ -6069,14 +6070,31 @@ class TikiLib extends TikiDb_Bridge
 	 * @param string $end
 	 * @return string
 	 */
-	function get_snippet($data, $is_html='n', $highlight='', $length=240, $start='', $end='')
+	function get_snippet($data, $outputType = '', $is_html='n', $highlight='', $length=240, $start='', $end='')
 	{
 		global $prefs;
 		if ($prefs['search_parsed_snippet'] == 'y') {
+
 			$data = preg_replace('/{(:?make)?toc[^}]*}/', '', $data);
-			$_REQUEST['redirectpage'] = 'y'; //do not interpret redirect
-			$data = $this->parse_data($data, array('is_html' => $is_html, 'stripplugins' => true, 'parsetoc' => true));
+			//standard wiki parse
+			if ($outputType == '') {
+				$_REQUEST['redirectpage'] = 'y'; //do not interpret redirect
+				$data = $this->parse_data($data, array('is_html' => $is_html, 'stripplugins' => true, 'parsetoc' => true));
+			}
+
+			//wikiLingo parse
+			else if (strtolower($outputType) == 'wikilingo' && $prefs['feature_wikilingo'] == 'y') {
+				$_REQUEST['redirectpage'] = 'y'; //do not interpret redirect
+				if ($this->wikiLingo == null) {
+					$this->wikiLingo = new WikiLingo\Parser();
+					require_once('lib/wikiLingo_tiki/WikiLingoEvents.php');
+					(new WikiLingoEvents($this->wikiLingo, false));
+				}
+				$data = $this->wikiLingo->parse($data);
+			}
 		}
+
+
 		$data = strip_tags($data);
 		if ($length > 0) {
 			if (function_exists('mb_substr'))

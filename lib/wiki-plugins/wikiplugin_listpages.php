@@ -352,7 +352,7 @@ function wikiplugin_listpages($data, $params)
 	} else {
 		if (!empty($start) || !empty($end) || $length > 0) {
 			foreach ($listpages['data'] as $i=>$page) {
-				$listpages['data'][$i]['snippet'] = $tikilib->get_snippet($page['data'], $page['is_html'], '', $length, $start, $end);
+				$listpages['data'][$i]['snippet'] = $tikilib->get_snippet($page['data'], $page['outputType'], $page['is_html'], '', $length, $start, $end);
 			}
 		}
 		$ret = $smarty->fetch('tiki-listpages_content.tpl');

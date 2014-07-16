@@ -16,11 +16,11 @@ class WikiLingoEvents
 	public static $toc = null;
 	public static $argumentParser;
 
-	public function __construct(WikiLingo\Parser &$wikiLingoParser)
+	public function __construct(WikiLingo\Parser &$wikiLingoParser, $bindFLP = true)
 	{
         global $prefs, $page, $headerlib;
 
-        if ($page == null) {
+        if ($page == null && $bindFLP) {
             throw new \Exception("Page undefined");
         }
 
@@ -47,14 +47,16 @@ class WikiLingoEvents
 			}
 		}));
 
-        //FutureLink-Protocol Events
-        FLP\Events::bind(new FLP\Event\MetadataLookup(function($linkType, &$metadata) use ($page, $headerlib) {
-            $metadataLookup = new WikiMetadataLookup($page);
+		if ($bindFLP) {
+		    //FutureLink-Protocol Events
+		    FLP\Events::bind(new FLP\Event\MetadataLookup(function($linkType, &$metadata) use ($page, $headerlib) {
+		        $metadataLookup = new WikiMetadataLookup($page);
 
-            $metadataTemp = $metadataLookup->getPartial();
-            $metadataTemp->href = TikiLib::tikiUrl('tiki-index.php') . '?page=' . $page;
-            $metadataTemp->text = $metadata->text;
-            $metadata = $metadataTemp;
-        }));
+		        $metadataTemp = $metadataLookup->getPartial();
+		        $metadataTemp->href = TikiLib::tikiUrl('tiki-index.php') . '?page=' . $page;
+		        $metadataTemp->text = $metadata->text;
+		        $metadata = $metadataTemp;
+		    }));
+		}
 	}
 }

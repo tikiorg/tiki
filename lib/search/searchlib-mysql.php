@@ -100,7 +100,13 @@ class SearchLib extends TikiLib
 		}
 
 		$sqlFields = sprintf(
-			'SELECT DISTINCT %s AS name, ' . (isset($h['parsed']) ? '%s' : 'LEFT(%s, 240) AS data') . ', %s AS hits, %s AS lastModif, %s AS pageName',
+			'SELECT DISTINCT
+				%s AS name,
+				' . (isset($h['parsed']) ? '%s' : 'LEFT(%s, 240) AS data') . ',
+				%s AS hits,
+				%s AS lastModif,
+				%s AS pageName'
+				. ($h['objectType'] == 'wiki page' ? ',outputType ' : ''),
 			$h['name'],
 			$h['data'],
 			$h['hits'],
@@ -167,6 +173,9 @@ class SearchLib extends TikiLib
 		if (!empty($h['parentJoin']))
 			$sqlJoin .= ' '.$h['parentJoin'];
 
+		if ($h['objectType'] == 'wiki page') {
+			$sqlJoin .= ' left join `tiki_output` on `tiki_output`.`entityId` = p.`pageName` ';
+		}
 
 		$sqlWhere = ' WHERE ';
 		$sqlWhere .= (isset($h['filter']))? $h['filter'] : '1';
@@ -261,14 +270,18 @@ class SearchLib extends TikiLib
 			$r = array(
 				'name' => $res['name'],
 				'pageName' => $res["pageName"],
-				'data' => $tikilib->get_snippet($res['data'], isset($res['is_html'])? $res['is_html']:'n'),
+				'data' => $tikilib->get_snippet($res['data'], $res['outputType'], isset($res['is_html'])? $res['is_html']:'n'),
 				'hits' => $res["hits"],
 				'lastModif' => $res["lastModif"],
 				'href' => $href,
 				'relevance' => round($res["relevance"], 3),
 				'type' => $type,
-				'location' => $type,
+				'location' => $type
 			);
+
+			if ($h['objectType'] == 'wiki page') {
+				$r['outputType'] = $res['outputType'];
+			}
 
 			if (!empty($h['parent'])) {
 				$r['parentName'] = $res['parentName'];
