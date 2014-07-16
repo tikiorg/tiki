@@ -394,6 +394,7 @@
 		{/if}
 		<br><br>
 	{/if}
+	</form>
 {/tab}
 
 
@@ -439,8 +440,8 @@
 			</select>
 		</label>
 		<input type="submit" class="btn btn-default btn-sm" name="unassign_members" value="{tr}OK{/tr}">
-		</form>
 		{/if}
+		</form>
 
 		{pagination_links cant=$membersCount step=$prefs.maxRecords offset=$membersOffset offset_arg='membersOffset'}{/pagination_links}
 

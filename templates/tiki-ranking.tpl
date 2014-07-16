@@ -24,6 +24,7 @@
 
 {section name=ix loop=$rankings}
     <div class="table-responsive">
+    <div>
 	<table class="table normal">
 		<tr>
 			<th>{tr}Rank{/tr}</th>
@@ -44,5 +45,6 @@
 			{norecords _colspan=3}
 		{/section}
 	</table>
+    </div>
     </div>
 {/section}

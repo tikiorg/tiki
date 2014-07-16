@@ -17,6 +17,7 @@
 {/if}
 
 <div class="table-responsive">
+<div>
 <table class="table normal">
 	<tr>
 		<th>
@@ -64,6 +65,7 @@
 		{norecords _colspan=5}
 	{/section}
 </table>
+</div>
 </div>
 
 {pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}

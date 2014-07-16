@@ -514,12 +514,12 @@ hr {
 #col2 .panel-heading,
 #col3 .panel-heading,
 #bottom_modules .panel-heading {
-  background: #eb0a82 url('raspberry/siteheader.png') no-repeat -1000px -200px;
+  background: #f5399c;
   border-bottom: none;
 }
 #col2 .panel-title,
 #col3 .panel-title {
-  color: #59112a;
+  color: #3f1020;
 }
 .header_outer {
   /* whole width div containing the header strip */
