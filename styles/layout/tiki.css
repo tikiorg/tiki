@@ -2606,14 +2606,14 @@ body.navbar-padding {
 .popover {
   max-width: inherit;
 }
-@media (min-width: 992px) {
+@media (min-width: 768px) {
   .col-md-8 .table-responsive,
   .col-md-9 .table-responsive,
   .col-md-3 .table-responsive {
     width: 100%;
     margin-bottom: 15px;
     overflow-y: hidden;
-    overflow-x: scroll;
+    overflow-x: auto;
     -ms-overflow-style: -ms-autohiding-scrollbar;
     border: 1px solid #dddddd;
     -webkit-overflow-scrolling: touch;
