@@ -16,9 +16,9 @@
 		
 			{if $cur_field.type eq 'h'} 
 				</dl>
-				<h3>{$cur_field.name|escape}</h3>
+				<h3>{$cur_field.name|tra|escape}</h3>
 				{if $cur_field.description}
-					<p>{$cur_field.description|escape}</p>
+					<p>{$cur_field.description|tra|escape}</p>
 				{/if}
 				<dl class="dl-horizontal">
 			{* Make adjustments for line breaks *}
@@ -27,10 +27,10 @@
 				($cur_field.type eq 'n' and $cur_field.options_array[0] eq '0') or
 				($cur_field.type eq 'b' and $cur_field.options_array[0] eq '0')
 			} 
-				<dt>{$cur_field.name|escape}</dt>
+				<dt>{$cur_field.name|tra|escape}</dt>
 				<dd>{trackeroutput field=$cur_field item=$item_info showlinks=n list_mode=n}</dd>
 			{else}
-				<dt>{$cur_field.name|escape}</dt>
+				<dt>{$cur_field.name|tra|escape}</dt>
 				<dd>{trackeroutput field=$cur_field item=$item_info showlinks=n list_mode=n}</dd>
 			{/if}
 		{/if}
