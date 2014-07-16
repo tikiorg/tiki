@@ -23,7 +23,7 @@ class Search_Formatter_ValueFormatter_Snippet extends Search_Formatter_ValueForm
 
 	function render($name, $value, array $entry)
 	{
-		$snippet = TikiLib::lib('tiki')->get_snippet($value, 'n', '', $this->length + 1);
+		$snippet = TikiLib::lib('tiki')->get_snippet($value, '', 'n', '', $this->length + 1);
 
 		if (function_exists('mb_strlen')) {
 			if (mb_strlen($snippet) > $this->length) {

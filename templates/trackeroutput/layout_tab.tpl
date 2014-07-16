@@ -13,7 +13,7 @@
 					{/if}
 				{/if}
 				{foreach from=$sect.fields item=field}
-					<dt>{$field.name|escape}</dt>
+					<dt>{$field.name|tra|escape}</dt>
 					<dd>{trackeroutput field=$field item=$item_info showlinks=n list_mode=n}</dd>
 				{/foreach}
 			</dl>

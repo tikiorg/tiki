@@ -9,7 +9,7 @@
 {foreach from=$fields item=field}
 	<div class="form-group">
 		<label for="trackerinput_{$field.fieldId|escape}" class="control-label">
-			{$field.name|escape}
+			{$field.name|tra|escape}
 			{if $field.isMandatory eq 'y'}
 				<span class="mandatory_star">*</span>
 			{/if}
@@ -17,7 +17,7 @@
 		<div id="trackerinput_{$field.fieldId|escape}">
 			{trackerinput field=$field}
 			<div class="description help-block">
-				{$field.description|escape}
+				{$field.description|tra|escape}
 			</div>
 		</div>
 	</div>
