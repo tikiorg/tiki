@@ -101,7 +101,7 @@ class Tracker_Definition
 		$trackerId = $this->trackerInfo['trackerId'];
 
 		if ($trackerId) {
-			$fields = $trklib->list_tracker_fields($trackerId, 0, -1, 'position_asc', '', true);
+			$fields = $trklib->list_tracker_fields($trackerId, 0, -1, 'position_asc', '', false /* Translation must be done from the views to avoid translating the sources on edit. */);
 		
 			return $this->fields = $fields['data'];
 		} else {

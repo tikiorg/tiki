@@ -111,7 +111,7 @@
 							{foreach from=$listfields key=ix item=field_value}
 								{if $field_value.isTblVisible eq 'y' and ( $field_value.type ne 'x' and $field_value.type ne 'h') and ($field_value.type ne 'p' or $field_value.options_array[0] ne 'password')}
 									<th class="auto">
-										{self_link _sort_arg='sort_mode' _sort_field='f_'|cat:$field_value.fieldId}{$field_value.name|truncate:255:"..."|escape|default:"&nbsp;"}{/self_link}
+										{self_link _sort_arg='sort_mode' _sort_field='f_'|cat:$field_value.fieldId}{$field_value.name|tra|truncate:255:"..."|escape|default:"&nbsp;"}{/self_link}
 									</th>
 								{/if}
 							{/foreach}
@@ -248,9 +248,9 @@
 					<tr>
 						<td>
 							{if $field_value.isMandatory eq 'y'}
-								{$field_value.name}<em class='mandatory_star'>*</em>
+								{$field_value.name|tra}<em class='mandatory_star'>*</em>
 							{else}
-								{$field_value.name}
+								{$field_value.name|tra}
 							{/if}
 						</td>
 						<td>

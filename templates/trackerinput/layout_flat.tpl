@@ -1,6 +1,6 @@
 {foreach from=$fields item=field}
 	<label for="trackerinput_{$field.fieldId|escape}">
-		{$field.name|escape}
+		{$field.name|tra|escape}
 		{if $field.isMandatory eq 'y'}
 			<span class="mandatory_star">*</span>
 		{/if}

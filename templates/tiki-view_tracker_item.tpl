@@ -93,12 +93,12 @@
 								($cur_field.type eq 'b' and $cur_field.options_array[0] eq '0')
 							} 
 								<td colspan="2">
-									<span class="formlabel">{$cur_field.name|escape}</span><br/>
+									<span class="formlabel">{$cur_field.name|tra|escape}</span><br/>
 									<span class="formcontent">{trackeroutput field=$cur_field item=$item_info showlinks=n list_mode=n inTable=y}</span>
 								</td>
 							{else}
 								<td class="formlabel" >
-									{$cur_field.name|escape}
+									{$cur_field.name|tra|escape}
 								</td>
 								<td class="formcontent">
 									{trackeroutput field=$cur_field item=$item_info showlinks=n list_mode=n inTable=y}
@@ -236,7 +236,7 @@
 						{foreach from=$ins_fields key=ix item=cur_field}
 							<tr>
 								<td>
-									{$cur_field.name}
+									{$cur_field.name|tra}
 									{if $cur_field.isMandatory eq 'y'}
 										<em class='mandatory_star'>*</em>
 									{/if}
@@ -320,7 +320,7 @@
 					{/section}
 					<table class="formcolor">
 						<tr>
-							<td>{$cur_field.name}</td>
+							<td>{$cur_field.name|tra}</td>
 							<td><input type="submit" class="btn btn-default" name="trck_act" value="{$cur_field.options_array[0]|escape}" ></td>
 						<tr>
 					</table>
