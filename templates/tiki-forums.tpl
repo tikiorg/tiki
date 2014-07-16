@@ -48,7 +48,7 @@
 		{/if}
 {/if}
 <div class="table-responsive">
-<div class="table">
+<div>
 <table class="table normal">
 	<tr>
 		{assign var=numbercol value=1}

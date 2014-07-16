@@ -29,7 +29,7 @@
 	<input type="hidden" name="maxRecords" value="{$maxRecords|escape}">
 	{assign var=numbercol value=1}
     <div class="table-responsive">
-    <div class="table">
+    <div>
 	<table class="table normal">
 		<tr>
 			<th class="auto">

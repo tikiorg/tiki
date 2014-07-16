@@ -50,7 +50,7 @@
 		{/if}
 	{/if}
 	<div class="table-responsive">
-    <div class="table">
+    <div>
 	<table class="table table-condensed table-hover">
 		<tr>
 			<th>{self_link _sort_arg='sort_mode' _sort_field='trackerId'}{tr}Id{/tr}{/self_link}</th>

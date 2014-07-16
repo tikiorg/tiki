@@ -3,7 +3,7 @@
 	{assign var='sort_arg' value='sort_mode'}
 {/if}
 <div class="table-responsive">
-<div class="table">
+<div>
 <table class="table">
 	<tr>
 		{if $gal_info.show_checked ne 'n' and ($tiki_p_admin_file_galleries eq 'y' or $tiki_p_upload_files eq 'y')}
