@@ -103,6 +103,7 @@
 				{* ------- list headings --- *}
 				<form name="checkform" method="post" action="{$smarty.server.PHP_SELF}">
                     <div class="table-responsive">
+				<div class="table">
 					<table class="table normal">
 						<tr>
 							{if $tracker_info.showStatus eq 'y' or ($tracker_info.showStatusAdminOnly eq 'y' and $tiki_p_admin_trackers eq 'y')}
@@ -205,6 +206,7 @@
 							{assign var=itemoff value=$itemoff+1}
 						{/section}
 					</table>
+				</div>
                     </div>
 					
 					{if $tiki_p_admin_trackers eq 'y'}
