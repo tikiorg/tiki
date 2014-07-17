@@ -174,6 +174,7 @@ function wikiplugin_customsearch($data, $params)
 	$definitionKey = md5($data);
 	$matches = WikiParser_PluginMatcher::match($data);
 	$query = new Search_Query;
+	$query->filterIdentifier('y', 'searchable');
 	$builder = new Search_Query_WikiBuilder($query);
 	$builder->apply($matches);
 

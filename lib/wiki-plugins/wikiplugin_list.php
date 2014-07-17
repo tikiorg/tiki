@@ -27,6 +27,7 @@ function wikiplugin_list($data, $params)
 	$unifiedsearchlib = TikiLib::lib('unifiedsearch');
 
 	$query = new Search_Query;
+	$query->filterIdentifier('y', 'searchable');
 	$unifiedsearchlib->initQuery($query);
 
 	$matches = WikiParser_PluginMatcher::match($data);
