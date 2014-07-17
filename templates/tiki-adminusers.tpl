@@ -41,6 +41,7 @@
 		<br>
 		{if $discardlist != ''}
             <div class="table-responsive">
+		<div class="table">
 			<table class="table normal">
 				<tr>
 					<th>{tr}Username{/tr}</th>
@@ -53,6 +54,7 @@
 					</tr>
 				{/section}
 			</table>
+		</div>
             </div>
 		{/if}
 
