@@ -6,8 +6,12 @@
 
 {block name="content"}
 {if $threadId}
-	<p>{tr}Your comment was posted.{/tr}</p>
-	<p>{object_link type=$type objectId=$objectId}</p>
+    {if $prefs.feature_comments_moderation eq 'y'}
+       <p>{tr}Your message has been queued for approval and will be posted after a moderator approves it.{/tr}</p>
+    {else}
+        <p>{tr}Your comment was posted.{/tr}</p>
+    {/if}
+	<p>{tr}Go back to:{/tr} {object_link type=$type objectId=$objectId}</p>
 {else}
 	<form method="post" action="{service controller=comment action=post}" role="form">
 		<div class="panel panel-default">

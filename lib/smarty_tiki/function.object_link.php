@@ -13,7 +13,7 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 
 function smarty_function_object_link( $params, $smarty )
 {
-	if ( ! isset( $params['type'], $params['id'] ) && ! isset( $params['identifier'] ) ) {
+	if ( ! isset( $params['type'], $params['id'] ) &&  ! isset( $params['type'], $params['objectId'] ) && ! isset( $params['identifier'] ) ) {
 		return tra('No object information provided.');
 	}
 
@@ -23,6 +23,11 @@ function smarty_function_object_link( $params, $smarty )
 	} else {
 		list($type, $object) = explode(':', $params['identifier'], 2);
 	}
+
+    if ( isset( $params['objectId'] ) && ! isset( $params['id'] ) ) {
+        $type = $params['type'];
+        $object = $params['objectId'];
+    }
 
 	$title = isset( $params['title'] ) ? $params['title'] : null;
 	$url = isset( $params['url'] ) ? $params['url'] : null;
