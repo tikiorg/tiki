@@ -41,10 +41,11 @@ function smarty_function_object_selector_multi( $params, $smarty )
 		'simpleclass' => null,
 		'simplevalue' => null,
 		'separator' => null,
+		'threshold' => null,
 	];
 
 	// Handle reserved parameters
-	foreach (array('name', 'class', 'id', 'value', 'filter', 'simpleid', 'simplevalue', 'simplename', 'simpleclass', 'separator') as $var) {
+	foreach (array('name', 'class', 'id', 'value', 'filter', 'simpleid', 'simplevalue', 'simplename', 'simpleclass', 'separator', 'threshold') as $var) {
 		if (isset($params["_$var"])) {
 			$arguments[$var] = $params["_$var"];
 		}
@@ -73,9 +74,9 @@ function smarty_function_object_selector_multi( $params, $smarty )
 	}
 
 	if ($arguments['simplename']) {
-		$arguments['class'] .= 'hidden';
+		$arguments['class'] .= ' hidden';
 	} else {
-		$arguments['simpleclass'] .= 'hidden';
+		$arguments['simpleclass'] .= ' hidden';
 	}
 
 	$arguments['current_selection_simple'] = array_map(function ($item) {

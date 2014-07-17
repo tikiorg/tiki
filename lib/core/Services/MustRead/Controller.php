@@ -127,34 +127,6 @@ class Services_MustRead_Controller
 		];
 	}
 
-	function action_list_members($input)
-	{
-		$group = $input->group->groupname();
-
-		$users = $this->getUsers($input->id->int(), 'sent');
-
-		$lib = TikiLib::lib('unifiedsearch');
-		$query = $lib->buildQuery([
-			'object_type' => 'user',
-		]);
-		$query->filterMultivalue($group, 'user_groups');
-		$query->filterRelation(new Search_Expr_Not($users->getSubQuery('relations')->getExpr()));
-		$query->setRange(0, 500);
-
-		$current = (array) $input->current->username();
-		foreach ($current as $user) {
-			$query->filterContent("NOT \"$user\"", 'object_id');
-		}
-
-		$result = $query->search($lib->getIndex());
-
-		return [
-			'title' => tr('List Members'),
-			'group' => $group,
-			'resultset' => $result,
-		];
-	}
-
 	function action_circulate($input)
 	{
 		$item = $this->getItem($input->id->int());
@@ -240,7 +212,8 @@ class Services_MustRead_Controller
 			throw new Services_Exception_Denied(tr('Cannot circulate'));
 		}
 
-		$users = array_filter((array) $input->user->username());
+		$input->replaceFilter('user', 'username');
+		$users = $input->asArray('user', ';');
 
 		$add = [];
 		$skip = [];

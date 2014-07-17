@@ -15,7 +15,7 @@
 	{if $object_selector_multi.class}class="{$object_selector_multi.class|escape}"{/if}
 	{if $object_selector_multi.title}data-label="{$object_selector_multi.title|escape}"{/if}
 	data-filters="{$object_selector_multi.filter|escape}"
-	data-threshold="{$prefs.maxRecords|escape}"
+	data-threshold="{$object_selector_multi.threshold|default:$prefs.maxRecords|escape}"
 >{"\n"|implode:$object_selector_multi.current_selection}</textarea>
 	<div class="basic-selector hidden">
 		<select class="form-control" multiple>
@@ -38,7 +38,7 @@
 			</div>
 		</div>
 		<div class="panel-body">
-			<p>{tr}Too many options to display, filter your results to obtain more options.{/tr}</p>
+			<p class="too-many">{tr}Too many options to display, filter your results to obtain more options.{/tr}</p>
 			<div class="results">
 				{foreach $object_selector_multi.current_selection as $object}
 					<div class="checkbox">

@@ -62,6 +62,7 @@ class Search_ContentSource_UserSource implements Search_ContentSource_Interface
 			'geo_located' => $typeFactory->identifier(empty($loc) ? 'n' : 'y'),
 			'geo_location' => $typeFactory->identifier($loc),
 			'searchable' => $typeFactory->identifier($this->userIsIndexed($detail) ? 'y' : 'n'),
+			'groups' => $typeFactory->multivalue($detail['groups']),
 			'_extra_groups' => array('Registered'), // Add all registered to allowed groups
 		);
 

@@ -20,8 +20,7 @@
 		</div>
 		<div class="form-group">
 			<label for="group" class="control-label">{tr}Group{/tr}</label>
-			<input type="text" id="group" name="group" value="" class="form-control">
-			{autocomplete element='#group' type='groupname'}
+			{object_selector _simplename=group type=group _simpleclass="group-field"}
 		</div>
 		<div class="form-group">
 			<button class="select-members btn btn-default" data-id="{$item.itemId|escape}">{tr}Select Members{/tr}</button>
@@ -33,9 +32,7 @@
 			<strong class="groupname"></strong>
 			{tr}<span class="add-count">0</span> have been added. <span class="skip-count">0</span> were skipped.{/tr}
 		</div>
-		<ul class="user-list list-unstyled">
-			<li class="empty">{tr}No members to select from.{/tr}</li>
-		</ul>
+		{object_selector_multi _simplename=user type=user _threshold=-1 _class="user-selector" _separator=";"}
 		<div class="form-group">
 			<button class="btn btn-primary">{tr}Add selected members{/tr}</button>
 			<input id="selection-action" name="required_action" type="hidden" value="required">

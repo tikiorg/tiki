@@ -387,7 +387,7 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 		$fields = array("{$baseKey}_text" => true);
 
 		$trackerId = $this->getOption('trackerId');
-		$indexRemote = array_filter($this->getOption('indexRemote'));
+		$indexRemote = array_filter($this->getOption('indexRemote') ?: []);
 
 		if (count($indexRemote)) {
 			if ($definition = Tracker_Definition::get($trackerId)) {
@@ -404,6 +404,7 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 			}
 		}
 
+		return $fields;
 	}
 
 	function getItemLabel($itemId, $context = array('list_mode' => ''))

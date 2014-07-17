@@ -869,6 +869,10 @@ class UnifiedSearchLib
 			$query->filterLanguage($q);
 		}
 
+		if (isset($filter['groups'])) {
+			$query->filterMultivalue($filter['groups'], 'groups');
+		}
+
 		unset($filter['type']);
 		unset($filter['categories']);
 		unset($filter['deep']);
@@ -877,6 +881,7 @@ class UnifiedSearchLib
 		unset($filter['language']);
 		unset($filter['language_unspecified']);
 		unset($filter['autocomplete']);
+		unset($filter['groups']);
 
 		foreach ($filter as $key => $value) {
 			if ($value) {

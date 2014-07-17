@@ -64,7 +64,6 @@ class Services_Search_Controller
 			$query = $lib->buildQuery($input->filter->none());
 			$query->setOrder('title_asc');
 			$query->setRange($input->offset->int(), $input->maxRecords->int() ?: $prefs['maxRecords']);
-
 			$result = $query->search($lib->getIndex());
 
 			$result->exchangeArray(array_map(function ($item) {
