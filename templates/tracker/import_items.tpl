@@ -21,8 +21,9 @@
 	{remarksbox type="note" title="{tr}Note{/tr}"}
 		<ul>
 			<li>{tr}The order of the fields does not matter, but you need to add a header with the field names{/tr}</li>
-			<li>{tr}Add " -- " to the end of the fields in the header that you would like to import!{/tr}</li>
+			<li>{tr}Add " -- " (with the spaces before and after) to the end of the fields in the header that you would like to import!{/tr}</li>
 			<li>{tr}Auto-incremented itemid fields shall be included with no matter what values{/tr}</li>
+			<li>{tr}If you are having problems, try a different line ending for your csv file that matches the server operating system{/tr}</li>
 		</ul>
 	{/remarksbox}
 	<div class="form-group">
