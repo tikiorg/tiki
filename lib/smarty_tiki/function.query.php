@@ -139,13 +139,13 @@ function smarty_function_query($params, $smarty)
 		}
 
 		// If specified, use _script argument to determine the php script to link to
-		// ... else, use REQUEST_URI server var to get the path (incl. dirname)
+		// ... else, use PHP_SELF server var
 		if ( isset($params['_script']) && $params['_script'] != '' ) {
 			$php_self = $params['_script'];
 
-			// If _script does not already specify the directory and if there is one in REQUEST_URI server var, use it
-			if ( $php_self != 'javascript:void(0)' && strpos($php_self, '/') === false && $_SERVER["REQUEST_URI"][0] == '/' && stripos($params['_script'], 'mailto:') !== 0) {
-				$php_self = str_replace('\\', '/', dirname($_SERVER["REQUEST_URI"])) . '/' . $php_self;
+			// If _script does not already specifies the directory and if there is one in PHP_SELF server var, use it
+			if ( $php_self != 'javascript:void(0)' && strpos($php_self, '/') === false && $_SERVER['PHP_SELF'][0] == '/' && stripos($params['_script'], 'mailto:') !== 0) {
+				$php_self = str_replace('\\', '/', dirname($_SERVER['PHP_SELF'])) . '/' . $php_self;
 			}
 
 		} elseif ( empty($params['_anchor']) || ! empty($ret) ) {
