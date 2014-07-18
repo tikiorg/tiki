@@ -43,6 +43,7 @@ function smarty_function_object_selector( $params, $smarty )
 		'threshold' => null,
 		'parent' => null,
 		'parentkey' => null,
+		'format' => null,
 	];
 
 	// Handle reserved parameters

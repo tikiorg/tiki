@@ -66,11 +66,20 @@ class Services_Search_Controller
 			$query->setRange($input->offset->int(), $input->maxRecords->int() ?: $prefs['maxRecords']);
 			$result = $query->search($lib->getIndex());
 
-			$result->exchangeArray(array_map(function ($item) {
+			$format = $input->format->text() ?: '{title}';
+
+			$result->exchangeArray(array_map(function ($item) use ($format) {
 				return [
 					'object_type' => $item['object_type'],
 					'object_id' => $item['object_id'],
-					'title' => $item['title'],
+					'title' => preg_replace_callback('/\{(\w+)\}/', function ($matches) use ($item) {
+						$key = $matches[1];
+						if (isset($item[$key])) {
+							return $item[$key];
+						} else {
+							return tr('empty');
+						}
+					}, $format),
 				];
 			}, $result->getArrayCopy()));
 

@@ -29,10 +29,16 @@ class Search_ContentSource_TrackerFieldSource implements Search_ContentSource_In
 			return false;
 		}
 
+		$trackername = tr('unknown');
+		if ($definition = Tracker_Definition::get($field['trackerId'])) {
+			$trackername = $definition->getConfiguration('name');
+		}
+
 		$data = array(
 			'title' => $typeFactory->sortable($field['name']),
 			'description' => $typeFactory->plaintext($field['description']),
 			'tracker_id' => $typeFactory->identifier($field['trackerId']),
+			'tracker_name' => $typeFactory->sortable($trackername),
 
 			'searchable' => $typeFactory->identifier('n'),
 
@@ -48,6 +54,7 @@ class Search_ContentSource_TrackerFieldSource implements Search_ContentSource_In
 			'title',
 			'description',
 			'tracker_id',
+			'tracker_name',
 
 			'searchable',
 

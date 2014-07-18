@@ -7,6 +7,7 @@
 
 function prefs_watershed_list()
 {
+	$fieldFormat = '{title} ({tracker_name})';
 	return array(
 		'watershed_log_errors' => array(
 			'name' => tra('Log errors to Tiki log'),
@@ -31,6 +32,7 @@ function prefs_watershed_list()
 			'filter' => 'digits',
 			'default' => '',
 			'profile_reference' => 'tracker_field',
+			'format' => $fieldFormat,
 		),
 		'watershed_channel_fieldId' => array(
 			'name' => tra('Field ID of ChannelCode'),
@@ -40,6 +42,7 @@ function prefs_watershed_list()
 			'filter' => 'digits',
 			'default' => '',
 			'profile_reference' => 'tracker_field',
+			'format' => $fieldFormat,
 		),
 		'watershed_archive_trackerId' => array(
 			'name' => tra('Tracker ID of Archive tracker'),
@@ -58,6 +61,7 @@ function prefs_watershed_list()
 			'filter' => 'digits',
 			'default' => '',
 			'profile_reference' => 'tracker_field',
+			'format' => $fieldFormat,
 		),
 		'watershed_archive_brand_fieldId' => array(
 			'name' => tra('Field ID of BrandId for Archive'),
@@ -67,6 +71,7 @@ function prefs_watershed_list()
 			'filter' => 'digits',
 			'default' => '',
 			'profile_reference' => 'tracker_field',
+			'format' => $fieldFormat,
 		),
 		'watershed_archive_channel_fieldId' => array(
 			'name' => tra('Field ID of ChannelCode for Archive'),
@@ -76,6 +81,7 @@ function prefs_watershed_list()
 			'filter' => 'digits',
 			'default' => '',
 			'profile_reference' => 'tracker_field',
+			'format' => $fieldFormat,
 		),
 		'watershed_archive_rtmpurl_fieldId' => array(
 			'name' => tra('Field ID of rtmpURL for Archive (url field type)'),
@@ -85,6 +91,7 @@ function prefs_watershed_list()
 			'filter' => 'digits',
 			'default' => '',
 			'profile_reference' => 'tracker_field',
+			'format' => $fieldFormat,
 		),
 		'watershed_archive_flvurl_fieldId' => array(
 			'name' => tra('Field ID of flvURL for Archive (url field type)'),
@@ -94,6 +101,7 @@ function prefs_watershed_list()
 			'filter' => 'digits',
 			'default' => '',
 			'profile_reference' => 'tracker_field',
+			'format' => $fieldFormat,
 		),
 		'watershed_archive_date_fieldId' => array(
 			'name' => tra('Field ID of Date string for Archive'),
@@ -103,6 +111,7 @@ function prefs_watershed_list()
 			'filter' => 'digits',
 			'default' => '',
 			'profile_reference' => 'tracker_field',
+			'format' => $fieldFormat,
 		),
 		'watershed_archive_duration_fieldId' => array(
 			'name' => tra('Field ID of Duration for Archive'),
@@ -112,6 +121,7 @@ function prefs_watershed_list()
 			'filter' => 'digits',
 			'default' => '',
 			'profile_reference' => 'tracker_field',
+			'format' => $fieldFormat,
 		),
 		'watershed_archive_filesize_fieldId' => array(
 			'name' => tra('Field ID of Filesize for Archive'),
@@ -121,6 +131,7 @@ function prefs_watershed_list()
 			'filter' => 'digits',
 			'default' => '',
 			'profile_reference' => 'tracker_field',
+			'format' => $fieldFormat,
 		),
 		'watershed_archive_title_fieldId' => array(
 			'name' => tra('Field ID of Title for Archive'),
@@ -130,6 +141,7 @@ function prefs_watershed_list()
 			'filter' => 'digits',
 			'default' => '',
 			'profile_reference' => 'tracker_field',
+			'format' => $fieldFormat,
 		),
 		'watershed_archive_desc_fieldId' => array(
 			'name' => tra('Field ID of Description for Archive (textarea field type)'),
@@ -139,6 +151,7 @@ function prefs_watershed_list()
 			'filter' => 'digits',
 			'default' => '',
 			'profile_reference' => 'tracker_field',
+			'format' => $fieldFormat,
 		),
 		'watershed_archive_tags_fieldId' => array(
 			'name' => tra('Field ID of Tags for Archive (tags field type)'),
@@ -148,6 +161,7 @@ function prefs_watershed_list()
 			'filter' => 'digits',
 			'default' => '',
 			'profile_reference' => 'tracker_field',
+			'format' => $fieldFormat,
 		),
 		'watershed_fme_key' => array(
 			'name' => tra('Flash Media Encoder shared secret'),

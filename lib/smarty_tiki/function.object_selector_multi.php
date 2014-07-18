@@ -44,6 +44,7 @@ function smarty_function_object_selector_multi( $params, $smarty )
 		'threshold' => null,
 		'parent' => null,
 		'parentkey' => null,
+		'format' => null,
 	];
 
 	// Handle reserved parameters
