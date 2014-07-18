@@ -41,10 +41,12 @@ function smarty_function_object_selector( $params, $smarty )
 		'filter' => [],
 		'title' => null,
 		'threshold' => null,
+		'parent' => null,
+		'parentkey' => null,
 	];
 
 	// Handle reserved parameters
-	foreach (array('name', 'class', 'id', 'value', 'filter', 'simplename', 'simpleid', 'simplevalue', 'simpleclass', 'threshold') as $var) {
+	foreach (array_keys($arguments) as $var) {
 		if (isset($params["_$var"])) {
 			$arguments[$var] = $params["_$var"];
 		}

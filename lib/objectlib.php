@@ -442,6 +442,10 @@ class ObjectLib extends TikiLib
 				$info = TikiLib::lib('trk')->get_tracker($object);
 				return array('title' => $info['name']);
 
+			case 'trackerfield':
+				$info = TikiLib::lib('trk')->get_tracker_field($object);
+				return array('title' => $info['name']);
+
 			case 'goal':
 				return TikiLib::lib('goal')->fetchGoal($object);
 		}

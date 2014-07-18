@@ -42,6 +42,8 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 						'filter' => 'int',
 						'legacy_index' => 1,
 						'profile_reference' => 'tracker_field',
+						'parent' => 'trackerId',
+						'parentkey' => 'tracker_id',
 					),
 					'linkToItem' => array(
 						'name' => tr('Display'),
@@ -60,6 +62,8 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 						'filter' => 'int',
 						'legacy_index' => 3,
 						'profile_reference' => 'tracker_field',
+						'parent' => 'trackerId',
+						'parentkey' => 'tracker_id',
 					),
 					'status' => array(
 						'name' => tr('Status Filter'),
@@ -147,6 +151,8 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 						'filter' => 'int',
 						'legacy_index' => 13,
 						'profile_reference' => 'tracker_field',
+						'parent' => 'trackerId',
+						'parentkey' => 'tracker_id',
 					),
 					'cascade' => array(
 						'name' => tr('Cascade actions'),

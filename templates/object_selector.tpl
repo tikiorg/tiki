@@ -13,6 +13,8 @@
 	{if $object_selector.class}class="{$object_selector.class|escape}"{/if}
 	{if $object_selector.value}value="{$object_selector.value|escape}"{/if}
 	{if $object_selector.title}data-label="{$object_selector.title|escape}"{/if}
+	{if $object_selector.parent}data-parent="{$object_selector.parent|escape}"{/if}
+	{if $object_selector.parentkey}data-parentkey="{$object_selector.parentkey|escape}"{/if}
 	data-filters="{$object_selector.filter|escape}"
 	data-threshold="{$object_selector.threshold|default:$prefs.tiki_object_selector_threshold|escape}"
 >
@@ -35,7 +37,7 @@
 		</div>
 		<div class="panel-body">
 			<div class="results">
-				<p>{tr}Too many options to display, filter your results.{/tr}</p>
+				<p class="too-many">{tr}Too many options to display, filter your results.{/tr}</p>
 			</div>
 			<p class="no-results hidden">
 				{tr}No matching results.{/tr}

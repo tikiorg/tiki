@@ -14,6 +14,8 @@
 	{if $object_selector_multi.name}name="{$object_selector_multi.name|escape}"{/if}
 	{if $object_selector_multi.class}class="{$object_selector_multi.class|escape}"{/if}
 	{if $object_selector_multi.title}data-label="{$object_selector_multi.title|escape}"{/if}
+	{if $object_selector_multi.parent}data-parent="{$object_selector_multi.parent|escape}"{/if}
+	{if $object_selector_multi.parentkey}data-parentkey="{$object_selector_multi.parentkey|escape}"{/if}
 	data-filters="{$object_selector_multi.filter|escape}"
 	data-threshold="{$object_selector_multi.threshold|default:$prefs.tiki_object_selector_threshold|escape}"
 >{"\n"|implode:$object_selector_multi.current_selection}</textarea>

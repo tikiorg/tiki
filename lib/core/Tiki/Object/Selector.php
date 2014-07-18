@@ -30,7 +30,7 @@ class Selector
 
 	function readMultiple($input)
 	{
-		if (is_string($input)) {
+		if (! is_array($input)) {
 			$input = explode("\n", $input);
 		}
 
