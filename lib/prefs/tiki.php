@@ -145,5 +145,13 @@ function prefs_tiki_list()
 			'type' => 'flag',
 			'default' => 'n',
 		),
+		'tiki_object_selector_threshold' => array(
+			'name' => tr('Object selector threshold'),
+			'description' => tr('Amount of records after which the object selectors will request searching instead of selecting from a list.'),
+			'type' => 'text',
+			'size' => 6,
+			'default' => 250,
+			'filter' => 'int',
+		),
 	);
 }

@@ -15,7 +15,7 @@
 	{if $object_selector_multi.class}class="{$object_selector_multi.class|escape}"{/if}
 	{if $object_selector_multi.title}data-label="{$object_selector_multi.title|escape}"{/if}
 	data-filters="{$object_selector_multi.filter|escape}"
-	data-threshold="{$object_selector_multi.threshold|default:$prefs.maxRecords|escape}"
+	data-threshold="{$object_selector_multi.threshold|default:$prefs.tiki_object_selector_threshold|escape}"
 >{"\n"|implode:$object_selector_multi.current_selection}</textarea>
 	<div class="basic-selector hidden">
 		<select class="form-control" multiple>

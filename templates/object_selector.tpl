@@ -14,7 +14,7 @@
 	{if $object_selector.value}value="{$object_selector.value|escape}"{/if}
 	{if $object_selector.title}data-label="{$object_selector.title|escape}"{/if}
 	data-filters="{$object_selector.filter|escape}"
-	data-threshold="{$object_selector.threshold|default:$prefs.maxRecords|escape}"
+	data-threshold="{$object_selector.threshold|default:$prefs.tiki_object_selector_threshold|escape}"
 >
 	<div class="basic-selector hidden">
 		<select class="form-control">
