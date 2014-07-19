@@ -78,6 +78,7 @@
 {/if}
 <form method="get" action="tiki-admin_notifications.php">
     <div class="table-responsive">
+    <div class="notifications-table">
 	<table class="table normal">
 		<tr>
 			<th>
@@ -128,6 +129,7 @@
          {norecords _colspan=6}
 		{/section}
 	</table>
+    </div>
     </div>
 	{if $channels}
 		<br>

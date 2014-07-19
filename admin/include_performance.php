@@ -29,14 +29,9 @@ $smarty->assign('opcode_stats', $opcode_stats);
 
 $txtUsed = tr('Used');
 $txtAvailable = tr('Available');
-if ($opcode_cache == 'WinCache') {
-	// Somehow WinCache seems to flip the representations
-	$txtAvailable = tr('Used');
-	$txtUsed = tr('Available');
-}
 $smarty->assign(
 	'memory_graph',
-	$tikilib->httpScheme() . '://chart.apis.google.com/chart?' . http_build_query(
+	$tikilib->httpScheme() . '://chart.googleapis.com/chart?' . http_build_query(
 		array(
 			'cht' => 'p3',
 			'chs' => '250x100',
@@ -51,14 +46,9 @@ $smarty->assign(
 
 $txtHit = tr('Hit');
 $txtMiss = tr('Miss');
-if ($opcode_cache == 'WinCache') {
-	// Somehow WinCache seems to flip the representations
-	$txtHit = tr('Miss');
-	$txtMiss = tr('Hit');
-}
 $smarty->assign(
 	'hits_graph',
-	$tikilib->httpScheme() . '://chart.apis.google.com/chart?' . http_build_query(
+	$tikilib->httpScheme() . '://chart.googleapis.com/chart?' . http_build_query(
 		array(
 			'cht' => 'p3',
 			'chs' => '250x100',

@@ -1,3 +1,4 @@
+{* $Id$ *}
 {title help="Menus" admpage="general&amp;cookietab=3"}{tr}Menus{/tr}{/title}
 
 {if $tiki_p_admin eq 'y'}
@@ -10,6 +11,7 @@
 {/if}
 {include file='find.tpl'}
 <div class="table-responsive">
+<div class="menu-table">
 	<table class="table table-hover">
 		<tr>
 			<th>{self_link _sort_arg='sort_mode' _sort_field='menuId'}{tr}ID{/tr}{/self_link}</th>
@@ -62,5 +64,6 @@
 			{norecords _colspan=5}
 		{/section}
 	</table>
+</div>
 </div>
 {pagination_links cant=$cant step=$maxRecords offset=$offset}{/pagination_links}

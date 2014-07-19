@@ -1,3 +1,4 @@
+{* $Id$ *}
 {title help="Security+Admin" admpage="security"}{tr}Security Admin{/tr}{/title}
 
 {remarksbox type="tip" title="{tr}Tip{/tr}"}
@@ -7,6 +8,7 @@
 
 <h2>{tr}Tiki settings{/tr}</h2>
 <div class="table-responsive">
+<div class="secsetting-table">
 <table class="table normal">
 	<tr>
 		<th>{tr}Tiki variable{/tr}</th>
@@ -39,6 +41,7 @@
 	{/if}
 </table>
 </div>
+</div>
 {tr}About WikiPlugins and security: Make sure to only grant the "tiki_p_plugin_approve" permission to trusted editors.{/tr} {tr}You can deactivate risky plugins at (<a href="tiki-admin.php?page=textarea">tiki-admin.php?page=textarea</a>).{/tr} {tr}You can approve plugin use at <a href="tiki-plugins.php">tiki-plugins.php</a>.{/tr}
 
 <br>
@@ -46,13 +49,16 @@
 <div>
 	<a href="tiki-admin_security.php?check_files">{tr}Check all tiki files{/tr}</a>
 	<br>
+{remarksbox type="tip" title="{tr}Info{/tr}"}
 	{tr}Note, that this can take a very long time. You should check your max_execution_time setting in php.ini.{/tr}
+{/remarksbox}     
 	<br>
 	<br>
 </div>
 {if $filecheck}
 
     <div class="table-responsive">
+    <div class="secfile-table">
 	<table class="table normal">
 		<tr>
 			<th colspan="2">{tr}File checks{/tr}</th>
@@ -69,6 +75,7 @@
 		{/foreach}
 	</table>
     </div>
+    </div>
 {/if}
 
 <a href="tiki-admin_security.php?check_file_permissions">{tr}Check file permissions{/tr}</a>
@@ -84,6 +91,7 @@
 
 {if $permcheck}
     <div class="table-responsive">
+    <div class="secperm-table">
 	<table class="table normal">
 		<tr>
 			<th rowspan="2">{tr}Filename{/tr}</th>
@@ -231,6 +239,7 @@
 			</tr>
 		{/foreach}
 	</table>
+    </div>
     </div>
 
 	{remarksbox type="tip" title="{tr}Info{/tr}"}

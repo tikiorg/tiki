@@ -149,6 +149,7 @@
 	<form class="form-horizontal" name="checkform" method="post" action="{$smarty.server.PHP_SELF|escape}">
 		<div id="{$ts_tableid}-div" {if $tsOn}style="visibility:hidden;"{/if}>
 			<div class="table-responsive">
+            <div class="user-table">
 				<table id="{$ts_tableid}" class="table normal table-striped table-hover">
 					{* Note: for any changes in the logic determining which columns are shown, corresponding changes will
 					need to be made in the getTableSettings function at /lib/core/Table/Settings/Adminusers.php *}
@@ -282,6 +283,7 @@
 					</tbody>
 				</table>
 			</div>
+            </div>
 			{if $users}
 				<div class="form-group" id="submit_mult">
 					<label>{tr}Perform action with checked{/tr}</label>
