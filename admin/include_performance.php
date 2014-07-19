@@ -36,7 +36,8 @@ if ($opcode_cache == 'WinCache') {
 }
 $smarty->assign(
 	'memory_graph',
-	$tikilib->httpScheme() . '://chart.apis.google.com/chart?' . http_build_query(
+	// Only http supported
+	'http://chart.apis.google.com/chart?' . http_build_query(
 		array(
 			'cht' => 'p3',
 			'chs' => '250x100',
@@ -58,7 +59,8 @@ if ($opcode_cache == 'WinCache') {
 }
 $smarty->assign(
 	'hits_graph',
-	$tikilib->httpScheme() . '://chart.apis.google.com/chart?' . http_build_query(
+	// Only http supported
+	'http://chart.apis.google.com/chart?' . http_build_query(
 		array(
 			'cht' => 'p3',
 			'chs' => '250x100',
