@@ -25,7 +25,7 @@
 		<select class="form-control">
 			<option value="" class="protected">{tr}Empty{/tr}</option>
 			{if $object_selector.current_selection}
-				<option value="{$object_selector.current_selection|escape}">{$object_selector.current_selection.title|escape}</option>
+				<option value="{$object_selector.current_selection|escape}" selected="selected">{$object_selector.current_selection.title|escape}</option>
 			{/if}
 		</select>
 	</div>
