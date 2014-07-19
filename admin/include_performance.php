@@ -29,11 +29,6 @@ $smarty->assign('opcode_stats', $opcode_stats);
 
 $txtUsed = tr('Used');
 $txtAvailable = tr('Available');
-if ($opcode_cache == 'WinCache') {
-	// Somehow WinCache seems to flip the representations
-	$txtAvailable = tr('Used');
-	$txtUsed = tr('Available');
-}
 $smarty->assign(
 	'memory_graph',
 	// Only http supported
@@ -52,11 +47,6 @@ $smarty->assign(
 
 $txtHit = tr('Hit');
 $txtMiss = tr('Miss');
-if ($opcode_cache == 'WinCache') {
-	// Somehow WinCache seems to flip the representations
-	$txtHit = tr('Miss');
-	$txtMiss = tr('Hit');
-}
 $smarty->assign(
 	'hits_graph',
 	// Only http supported
