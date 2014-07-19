@@ -58,7 +58,6 @@
 						</div>
 					</td>
 				</tr>
-				{include file='categorize.tpl'}
 				<tr>
 					<td>{tr}Publish Date:{/tr}</td>
 					<td>
@@ -68,7 +67,7 @@
 				</tr>
 				<tr>
 					<td>
-						<label id="voteConsiderationSpan">{tr}Votes older than these days are not considered{/tr}</label>
+						<label id="voteConsiderationSpan">{tr}Votes older than this number of days are not considered{/tr}</label>
 					</td>
 					<td>
 						<input type="text" id="voteConsiderationSpan" name="voteConsiderationSpan" size="5" value="{$info.voteConsiderationSpan|escape}">
@@ -76,6 +75,9 @@
 						<i>{tr}0 for no limit{/tr}</i>
 					</td>
 				</tr>
+                <tr><td colspan="2">
+				{include file='categorize.tpl'}
+                </td></tr>
 				<tr>
 					<td>&nbsp;</td>
 					<td><input type="submit" class="btn btn-default btn-sm" name="save" value="{tr}Save{/tr}"></td>
@@ -90,6 +92,7 @@
 			{include file='find.tpl'}
 		{/if}
         <div class="table-responsive">
+        <div class="poll-table">
 		<table class="table normal">
 			{assign var=numbercol value=8}
 			<tr>
@@ -147,6 +150,7 @@
 	         {norecords _colspan=$numbercol}
 			{/section}
 		</table>
+        </div>
         </div>
 		{pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}
 	{/tab}
