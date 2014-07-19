@@ -1,3 +1,4 @@
+{* $Id$ *}
 {title help="Theme+Control"}{tr}Theme Control Center: Categories{/tr}{/title}
 
 {remarksbox type="notice" title="{tr}Notice{/tr}"}
@@ -18,13 +19,10 @@
 <form action="tiki-theme_control.php" method="post">
 	<table class="formcolor">
 		<tr>
-			<td>{tr}Category{/tr}</td>
-			<td>{tr}Theme{/tr}</td>
-			<td>{tr}Option{/tr}</td>
-			<td>&nbsp;</td>
-		</tr>
-		<tr>
-			<td>
+			<td colspan="3">{tr}Category{/tr}</td>
+        </tr>
+        <tr>
+        	<td colspan="3">
 				<select name="categId">
 					{foreach $categories as $catix}
 						<option value="{$catix.categId|escape}" {if $categId eq $catix.categId}selected="selected"{/if}>
@@ -33,6 +31,13 @@
 					{/foreach}
 				</select>
 			</td>
+        </tr>
+        <tr>
+			<td>{tr}Theme{/tr}</td>
+			<td>{tr}Option{/tr}</td>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
 			<td>
 				<select name="theme" onchange="this.form.submit();">
 					{section name=ix loop=$styles}
@@ -61,6 +66,7 @@
 
 <form action="tiki-theme_control.php" method="post">
     <div class="table-responsive">
+    <div class="themecat-table">
 	<table class="table normal">
 		<tr>
 			<th><input type="submit" class="btn btn-default btn-sm" name="delete" value="{tr}Del{/tr}"></th>
@@ -86,6 +92,7 @@
 			</tr>
 		{/section}
 	</table>
+    </div>
     </div>
 </form>
 {pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}

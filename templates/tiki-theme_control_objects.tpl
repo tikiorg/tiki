@@ -1,3 +1,4 @@
+{* $Id$ *}
 {title help="Theme+Control"}{tr}Theme Control Center: Objects{/tr}{/title}
 
 {remarksbox type="notice" title="{tr}Notice{/tr}"}
@@ -24,19 +25,23 @@
 <!--<input type="submit" class="btn btn-default btn-sm" name="settype" value="{tr}Set{/tr}">-->
 	<table class="formcolor">
 		<tr>
-			<td>{tr}Object{/tr}</td>
-			<td>{tr}Theme{/tr}</td>
-			<td>{tr}Option{/tr}</td>
-			<td>&nbsp;</td>
-		</tr>
+			<td colspan="3">{tr}Object{/tr}</td>
+        </tr>
 		<tr>
-			<td>
+			<td colspan="3">
 				<select name="objdata">
 					{section name=ix loop=$objects}
 						<option value="{$objects[ix].objId|escape}|{$objects[ix].objName}" {if $a_object eq $objects[ix].objId|cat:'|'|cat:$objects[ix].objName}selected="selected"{/if}>{$objects[ix].objName}</option>
 					{/section}
 				</select>
-			</td>
+			</td> 
+        </tr>
+        <tr>           
+			<td>{tr}Theme{/tr}</td>
+			<td>{tr}Option{/tr}</td>
+			<td>&nbsp;</td>
+		</tr>
+        <tr>
 			<td>
 				<select name="theme" onchange="this.form.submit();">
 					{section name=ix loop=$styles}
@@ -66,6 +71,7 @@
 <form action="tiki-theme_control_objects.php" method="post">
 	<input type="hidden" name="type" value="{$type|escape}">
     <div class="table-responsive">
+    <div class="themeobj-table">
 	<table class="table normal">
 		<tr>
 			<th><input type="submit" class="btn btn-default btn-sm" name="delete" value="{tr}Del{/tr}"></th>
@@ -96,6 +102,7 @@
 			</tr>
 		{/section}
 	</table>
+    </div>
     </div>
 </form>
 
