@@ -101,6 +101,7 @@
 				</div>
 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 					<ul class="nav navbar-nav navbar-left">
+						{* {modulelist zone=topbar layout=social} *}
 						{if $user}
 							<li>{notification_link}</li>
 							<li class="dropdown">
@@ -122,7 +123,6 @@
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown">{tr}Account{/tr} <b class="caret"></b></a>
 								<ul class="dropdown-menu">
 									{* TODO : Add more links here *}
-									<li class="divider"></li>
                                     <li><a href="tiki-user_preferences.php">{tr}Preferences{/tr}</a></li>
 									<li><a href="{if $prefs.feature_sefurl eq 'y'}logout{else}tiki-logout.php{/if}">{tr}Log out{/tr}</a></li>
 								</ul>
