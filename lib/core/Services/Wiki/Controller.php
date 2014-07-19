@@ -22,6 +22,9 @@ class Services_Wiki_Controller
 			$structlib->reorder_structure($data);
 			$params = json_decode($input->params->text());
 
+			$_GET = array();		// self_link and query objects used by get_toc adds all this request data to the action links
+			$_POST = array();
+
 			$html = $structlib->get_toc(
 				$params->page_ref_id,
 				$params->order,
