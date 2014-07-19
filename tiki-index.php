@@ -271,6 +271,18 @@ if (empty($info) && !($user && $prefs['feature_wiki_userpage'] == 'y' && strcase
 			$isprefixed = true;
 		}
 	}
+
+	$referencedPages = $wikilib->get_pages_by_alias($page);
+	$likepages = $wikilib->get_like_pages($page);
+
+	if ($prefs['feature_wiki_pagealias'] == 'y' && count($referencedPages) == 1) {
+		$newPage = $referencedPages[0];
+		$isprefixed = true;
+	} else if ($prefs['feature_wiki_1like_redirection'] == 'y' && count($likepages) == 1) {
+		$newPage = $likepages[0];
+		$isprefixed = true;
+	}
+
 	if (!$isprefixed && !empty($prefs['url_anonymous_page_not_found']) && empty($user)) {
 		$access->redirect($prefs['url_anonymous_page_not_found']);
 	}
@@ -291,15 +303,6 @@ if (empty($info) && !($user && $prefs['feature_wiki_userpage'] == 'y' && strcase
 		$isUserPage = true;
 	} else {
 		$isUserPage = false;
-	}
-
-	$referencedPages = $wikilib->get_pages_by_alias($page);
-	$likepages = $wikilib->get_like_pages($page);
-
-	if ($prefs['feature_wiki_pagealias'] == 'y' && count($referencedPages) == 1) {
-		$newPage = $referencedPages[0];
-	} else if ($prefs['feature_wiki_1like_redirection'] == 'y' && count($likepages) == 1) {
-		$newPage = $likepages[0];
 	}
 
 	/* if we have exactly one match, redirect to it */
