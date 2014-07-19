@@ -31,8 +31,7 @@ $txtUsed = tr('Used');
 $txtAvailable = tr('Available');
 $smarty->assign(
 	'memory_graph',
-	// Only http supported
-	'http://chart.apis.google.com/chart?' . http_build_query(
+	$tikilib->httpScheme() . '://chart.googleapis.com/chart?' . http_build_query(
 		array(
 			'cht' => 'p3',
 			'chs' => '250x100',
@@ -49,8 +48,7 @@ $txtHit = tr('Hit');
 $txtMiss = tr('Miss');
 $smarty->assign(
 	'hits_graph',
-	// Only http supported
-	'http://chart.apis.google.com/chart?' . http_build_query(
+	$tikilib->httpScheme() . '://chart.googleapis.com/chart?' . http_build_query(
 		array(
 			'cht' => 'p3',
 			'chs' => '250x100',
