@@ -96,12 +96,14 @@ if ($("#assignstructure").prop("checked")) {
 		</div>
 		<h3>{tr}Permissions{/tr}</h3>
 
-		<div>
+		<div class="table-responsive">
+        <div class="permission_table">
 		{treetable _data=$perms _checkbox=$permGroups _checkboxTitles=$groupNames
 				_checkboxColumnIndex=$permGroupCols _valueColumnIndex="permName"
 				_columns="\"label\"=\"{tr}Permission{/tr}\"" _groupColumn='type' _openall='y'
 				_showSelected='y' _columnsContainHtml='y'}
 		</div>
+        </div>
 
 		{if ($perms|@count) eq '0'}{remarksbox type="warning" title="{tr}Warning{/tr}"}{tr}You must select at least one feature{/tr}.{/remarksbox}{/if}
 
