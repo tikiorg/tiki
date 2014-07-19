@@ -5,18 +5,13 @@
 {tabset}
 {tab name="{tr}List{/tr}"}
     <h2>{tr}List{/tr}</h2>
-{if $tiki_p_edit_sheet eq 'y'}
-	<div class="t_navbar">
-		{button href="tiki-sheets.php?edit_mode=1&amp;sheetId=0" class="btn btn-default" _text="{tr}Create New Sheet{/tr}"}
-	</div>
-{/if}
 <h2>{tr}Spreadsheet{/tr}</h2>
 {if $sheets or $find ne ''}
   {include file='find.tpl'}
 {/if}
 
 <div class="table-responsive">
-<div>
+<div class="sheet-table">
 <table class="table normal">
 	<tr>
 		<th>{self_link _sort_arg='sort_mode' _sort_field='title'}{tr}Title{/tr}{/self_link}</th>
@@ -67,7 +62,6 @@
 						<input type="checkbox" name="parseValues"{if $parseValues eq 'y'} checked="checked"{/if}>
 					</td>
 				</tr>
-				{include file='categorize.tpl'}
 				{if $tiki_p_admin_sheet eq "y"}
 				<tr>
 					<td>{tr}Creator:{/tr}</td><td>
@@ -89,6 +83,9 @@
 						<em>{tr}Makes this sheet a "child" sheet of a multi-sheet set{/tr}</em>
 					</td>
 				</tr>
+                <tr><td colspan="2">
+				{include file='categorize.tpl'}
+                </td></tr>                
 				<tr><td>&nbsp;</td><td><input type="submit" class="btn btn-default btn-sm" value="{tr}Save{/tr}" name="edit"></td></tr>
 			</table>
 		</form>
