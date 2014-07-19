@@ -1,9 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
+        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "This file is @generated automatically"
     ],
-    "hash": "ab66e95b40de682a121b90dcfc351123",
+    "hash": "ba3b8a4b88dc7c03482ff2fa74695f1b",
     "packages": [
         {
             "name": "aFarkas/html5shiv",
@@ -86,34 +87,64 @@
         },
         {
             "name": "ckeditor/ckeditor",
-            "version": "4.2.3",
+            "version": "4.3.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ckeditor/ckeditor-releases.git",
+                "reference": "b39eebd5f865fe33e34e33db9a33512655e6e656"
+            },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/ckeditor-ckeditor-4.2.3.zip",
-                "reference": "4.2.3",
-                "shasum": "626c6720e02614f718ebae3761d17e51dbae6741"
+                "url": "https://composer.tiki.org/dist/ckeditor-ckeditor-b39eebd5f865fe33e34e33db9a33512655e6e656-zip-9e41c9.zip",
+                "reference": "4.3.4",
+                "shasum": "813b8283177f450010613288d9a40571e3921318"
             },
-            "type": "library"
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-2.0+",
+                "LGPL-2.1+",
+                "MPL-1.1+"
+            ],
+            "authors": [
+                {
+                    "name": "CKSource - Frederico Knabben",
+                    "homepage": "http://cksource.com"
+                }
+            ],
+            "description": "JavaScript WYSIWYG web text editor.",
+            "homepage": "http://ckeditor.com",
+            "keywords": [
+                "CKEditor",
+                "editor",
+                "fckeditor",
+                "html",
+                "javascript",
+                "richtext",
+                "text",
+                "wysiwyg"
+            ],
+            "time": "2014-03-25 14:33:54"
         },
         {
             "name": "ckeditor/ckeditor/plugins/divarea",
-            "version": "4.2.3",
+            "version": "4.3.4",
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/ckeditor-ckeditor-plugins-divarea-4.2.3.zip",
-                "reference": "4.2.3",
-                "shasum": "cbd1a971e4bf85c5d3e4e859d79b87cbb13521d0"
+                "url": "https://composer.tiki.org/dist/ckeditor-ckeditor-plugins-divarea-4.3.4.zip",
+                "reference": "4.3.4",
+                "shasum": "ac1a869b2903ff1f5e43b4e44c912b218d2b975e"
             },
             "type": "library"
         },
         {
             "name": "ckeditor/ckeditor/skins/kama",
-            "version": "4.2.3",
+            "version": "4.3.4",
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/ckeditor-ckeditor-skins-kama-4.2.3.zip",
-                "reference": "4.2.3",
-                "shasum": "aebec58a06ff6ac2d45511a66bf451ffaa184988"
+                "url": "https://composer.tiki.org/dist/ckeditor-ckeditor-skins-kama-4.3.4.zip",
+                "reference": "4.3.4",
+                "shasum": "5b92ea821d1e48c50d4a891873a34c30fea0f5cd"
             },
             "type": "library"
         },
