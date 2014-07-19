@@ -107,7 +107,7 @@ function wikiplugin_convene($data, $params)
 	foreach ($data['dates'] as $stamp => $date) {
 		foreach ($date as $vote) {
 			if (empty($votes[$stamp])) $votes[$stamp] = 0;
-			$votes[$stamp] += $vote;
+			$votes[$stamp] += (int)$vote;
 		}
 	}
 	//end votes summed together
