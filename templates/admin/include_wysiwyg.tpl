@@ -35,6 +35,7 @@
 		{preference name=wysiwyg_inline_editing}
 		{preference name=wysiwyg_toolbar_skin}
 		{preference name="wysiwyg_fonts"}
+		{preference name="wysiwyg_extra_plugins"}
 
 	</fieldset>
 	<fieldset>

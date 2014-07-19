@@ -93,5 +93,13 @@ function prefs_wysiwyg_list()
 			'tags' => array('experimental'),
 			'warning' => tra('experimental'),
 		),
+		'wysiwyg_extra_plugins' => array(
+			'name' => tra('Extra Plugins'),
+			'hint' => tra('List of plugin names (separated by,)'),
+			'description' => tra('As of Tiki 13 ckeditor uses the "standard" package which has some plugins disabled by default that were available in the "full" package.<br>See http://ckeditor.com/presets for a comparison of which plugins are enabled as standard.'),
+			'type' => 'textarea',
+			'size' => '1',
+			'default' => 'bidi,colorbutton,find,font,justify,pagebreak,showblocks,smiley',
+		),
 	);
 }
