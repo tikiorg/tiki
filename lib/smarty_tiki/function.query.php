@@ -192,7 +192,9 @@ function smarty_function_query($params, $smarty)
 			}
 		}
 
-		$php_self = "/" . ltrim($php_self, "/");
+		if (strpos($php_self, '/') === 0) {
+			$php_self = "/" . ltrim($php_self, "/");
+		}
 		switch ( $params['_type'] ) {
 			case 'absolute_uri':
 				$ret = $base_host.$php_self.( $ret == '' ? '' : '?'.$ret );
