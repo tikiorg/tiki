@@ -73,11 +73,8 @@ function smarty_function_object_selector( $params, $smarty )
 		$arguments['class'] .= ' hidden';
 	}
 
-	if ($arguments['value']) {
-		list($type, $object) = explode(':', $arguments['value'], 2);
-		$arguments['title'] = TikiLib::lib('object')->get_title($type, $object);
-		$arguments['simplevalue'] = $object;
-	}
+	$selector = TikiLib::lib('objectselector');
+	$arguments['current_selection'] = $selector->read($arguments['value']);
 
 	$arguments['filter'] = json_encode($arguments['filter']);
 
