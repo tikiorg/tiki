@@ -205,6 +205,14 @@ function prefs_wiki_list($partial = false)
 			'default' => 'y',
 			'tags' => array('basic'),
 		),
+		'wiki_plugindiv_approvable' => array(
+			'name' => tra('DIV plugin accepts unsafe parameters such as "style"'),
+			'description' => tra('If set, more parameters are available but modifying them will require approval. If unset, DIV plugin is safe and never requires approval.'),
+			'hint' => tra('If changed, you need to clear caches.'),
+			'type' => 'flag',
+			'default' => 'n',
+			'tags' => array('advanced'),
+		),
 		'wiki_dynvar_style' => array(
 			'name' => tra('Dynamic variables'),
 			'description' => tra('Global snippets of text that can be included in wiki pages and edited in place.'),

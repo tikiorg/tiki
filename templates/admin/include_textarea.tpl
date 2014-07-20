@@ -40,7 +40,7 @@
 				{preference name=feature_wiki_argvariable}
 				{preference name=wiki_dynvar_style}
 				{preference name=wiki_dynvar_multilingual}
-                {preference name=feature_wikilingo}
+				{preference name=feature_wikilingo}
 			</fieldset>
 
 			<fieldset class="table featurelist">
@@ -97,6 +97,7 @@
 				{preference name=feature_use_quoteplugin}
 				{preference name=feature_use_three_colon_centertag}
 				{preference name=feature_simplebox_delim}
+				{preference name=wiki_plugindiv_approvable}
 			</fieldset>
 
 			<fieldset>

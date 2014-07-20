@@ -7,7 +7,9 @@
 
 function wikiplugin_div_info()
 {
-	return array(
+	global $prefs;
+
+	$info = array(
 		'name' => tra('Div'),
 		'documentation' => 'PluginDiv',
 		'description' => tra('Define and format sections of a page or text'),
@@ -73,7 +75,7 @@ function wikiplugin_div_info()
 				'name' => tra('Float Position'),
 				'description' => tra(
 					'Set the alignment for the entire element. For elements with a width of less than 100%, other elements will wrap around it
-					unless the clear parameter is appropriately set.)'
+					unless the clear parameter is appropriately set.'
 				),
 				'filter' => 'alpha',
 				'safe' => true,
@@ -125,22 +127,37 @@ function wikiplugin_div_info()
 				'default' => '',
 			),
 			'style' => array(
-                                'required' => false,
-                                'name' => tra('Style attribute'),
-                                'description' => tra('Enter CSS styling tags for the div type used.'),
-                                'filter' => 'text',
+				// Note that this is ignored unless preference wiki_plugindiv_approvable is set in Admin → Admin home → Editing and Plugins → Miscellaneous
+				'required' => false,
+				'name' => tra('Style attribute'),
+				'description' => tra('Enter CSS styling tags for the div type used.'),
+				'filter' => 'text',
 				'advanced' => true,
-                                'default' => '',
-                        ),
+				'default' => '',
+			),
 
 		),
 	);
+
+	if ($prefs['wiki_plugindiv_approvable'] != 'y') {
+		unset($info['validate']);
+		// If any other unsafe parameters are created, unset them here
+		unset($info['params']['style']);
+	}
+
+  return $info;
+
 }
 
 function wikiplugin_div($data, $params)
 {
+	global $prefs;
 
 	extract($params, EXTR_SKIP);
+	if ($prefs['wiki_plugindiv_approvable'] != 'y') {
+		// If any other unsafe parameters are created, unset them here
+		$style = '';
+	}
 	$possibletypes = array('div','span','pre','b','i','tt','p','blockquote');
 	$t    = (isset($type) and in_array($type, $possibletypes)) ? "$type"  : "div";
 	$c    = (isset($class)) ? " class='$class'"  : "";
