@@ -155,7 +155,7 @@ class Services_Comment_Controller
 
 				$feedback = array();
 
-				if (! $this->canModerate($type, $objectId)) {
+				if ($prefs['feature_comments_moderation'] === 'y' && ! $this->canModerate($type, $objectId)) {
 					$feedback[] = tr('Your message has been queued for approval and will be posted after a moderator approves it.');
 				}
 
