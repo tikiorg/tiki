@@ -73,7 +73,7 @@
                     <span class="glyphicon glyphicon-search"></span>
                 </button>
 			{*	{icon _id="magnifier" class="search_mod_magnifier icon"}*}
-				{if $prefs.mobile_mode neq "y"}<div class="search_mod_buttons box" style="display:none; position: absolute; right: 24px; top: 24px; padding: 0 1em; z-index: 2; white-space: nowrap;">{/if} {* mobile *}
+				{if $prefs.mobile_mode neq "y"}<div class="btn-group search_mod_buttons box" style="display:none; position: absolute; right: 24px; top: 24px; padding: 0 1em; z-index: 2; white-space: nowrap;">{/if} {* mobile *}
 			{/if}
 			{if $smod_params.show_search_button eq 'y'}
 					<input type = "submit" class="btn btn-default tips{if $smod_params.default_button eq 'search'} button_default{/if}"
