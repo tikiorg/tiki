@@ -5,7 +5,7 @@
 {if $smod_params.tiki_search neq 'none'}
     <form id="search-module-form{$search_mod_usage_counter}" method="get" action="{$smod_params.search_action}"{if $smod_params.use_autocomplete eq 'y'} onsubmit="return submitSearch{$search_mod_usage_counter}()"{/if}>
     	<div style="position: relative">
-            <div class="form-group">
+            <div class="form-group col-sm-10">
     			<input class="form-control" id="search_mod_input_{$search_mod_usage_counter}" name="{if $smod_params.search_action eq 'tiki-searchindex.php'}filter~content{else}find{/if}" {if !empty($smod_params.input_size)}size="{$smod_params.input_size}" style="width: auto"{/if} type="text" accesskey="s" value="{$smod_params.input_value|escape}" />
             </div>
 		 	{if $smod_params.show_object_filter eq 'y'}
@@ -69,8 +69,11 @@
 				{/if}
 			{/if}
 			{if $smod_params.compact eq "y"}
-				{icon _id="magnifier" class="search_mod_magnifier icon"}
-				{if $prefs.mobile_mode neq "y"}<div class="search_mod_buttons box" style="display:none; position: absolute; left: 0; padding: 0 1em; z-index: 2; white-space: nowrap;">{/if} {* mobile *}
+                <button type="submit" class="btn btn-default search_mod_magnifier" id="magnifier">
+                    <span class="glyphicon glyphicon-search"></span>
+                </button>
+			{*	{icon _id="magnifier" class="search_mod_magnifier icon"}*}
+				{if $prefs.mobile_mode neq "y"}<div class="search_mod_buttons box" style="display:none; position: absolute; right: 24px; top: 24px; padding: 0 1em; z-index: 2; white-space: nowrap;">{/if} {* mobile *}
 			{/if}
 			{if $smod_params.show_search_button eq 'y'}
 					<input type = "submit" class="btn btn-default tips{if $smod_params.default_button eq 'search'} button_default{/if}"
