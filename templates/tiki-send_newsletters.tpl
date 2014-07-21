@@ -185,13 +185,15 @@
 	{tab name="{tr}Edit{/tr}"}
 	{* --- tab with editor --- *}
 		<h2>{tr}Prepare a newsletter to be sent{/tr}</h2>
-		<form action="tiki-send_newsletters.php" method="post" id='editpageform' enctype='multipart/form-data'>
+		<form class="form-horizontal" action="tiki-send_newsletters.php" method="post" id='editpageform' enctype='multipart/form-data'>
 			<input type="hidden" name="editionId" value="{$info.editionId}">
+            <div class="form-group">
+            <div class="col-sm-12">            
 			<table class="formcolor" id="newstable">
 				<tr>
 					<td><label for="subject">{tr}Subject:{/tr}</label></td>
 					<td>
-						<input type="text" maxlength="250" size="80" id="subject" name="subject" value="{$info.subject|escape}">
+						<input type="text" maxlength="250" id="subject" name="subject" value="{$info.subject|escape}">
 					</td>
 				</tr>
 				<tr>
@@ -316,6 +318,8 @@
 					<td>&nbsp;<input type="submit" name="save" value="{tr}Send Newsletter{/tr}" class="wikiaction tips btn btn-default" title="{tr}Send Newsletters{/tr}|{tr}Save any changes and send to all subscribers.{/tr}" onclick="needToConfirm=false"></td>
 				</tr>
 			</table>
+            </div>
+            </div>
 		</form>
 	{/tab}
 	

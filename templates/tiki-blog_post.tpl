@@ -65,8 +65,8 @@
 		</div>
 	</div>
     <div class="form-group">
-        <label class="col-sm-2 control-label" for="blogedit">{tr}Body{/tr}</label>
-        <div class="col-sm-10">
+        <label class="col-sm-12" for="blogedit">{tr}Body{/tr}</label>
+        <div class="col-sm-12">
 		    {textarea id='blogedit' class="form-control wikiedit" name="data"}{if isset($data)}{$data}{/if}{/textarea}
 		</div>
 	</div>

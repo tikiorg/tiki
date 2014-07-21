@@ -189,10 +189,16 @@ function smarty_function_query($params, $smarty)
 				$php_self = str_replace('route.php', $inclusion, $php_self);
 			} else if (basename($php_self) === 'tiki-ajax_services.php' && !empty($_SERVER['HTTP_REFERER'])) {
 				$php_self = str_replace('tiki-ajax_services.php', basename($_SERVER['HTTP_REFERER']), $php_self);
+				$pos = strpos($php_self, '?');
+				if ($pos !== false) {
+					$php_self = substr($php_self, 0, $pos);
+				}
 			}
 		}
 
-		$php_self = "/" . ltrim($php_self, "/");
+		if (strpos($php_self, '/') === 0) {
+			$php_self = "/" . ltrim($php_self, "/");
+		}
 		switch ( $params['_type'] ) {
 			case 'absolute_uri':
 				$ret = $base_host.$php_self.( $ret == '' ? '' : '?'.$ret );

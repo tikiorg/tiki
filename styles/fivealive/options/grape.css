@@ -511,22 +511,22 @@ hr {
 #bottom_modules .panel {
   border: none;
 }
-#col2 .panel-heading,
-#col3 .panel-heading,
+#col2 .panel-default > .panel-heading,
+#col3 .panel-default > .panel-heading,
 #bottom_modules .panel-heading {
-  background: #df8ebf;
-  border-bottom: none;
+  background: #ffffff;
+  border-width: 0 0 1px 0;
+  border-style: solid;
+  border-color: #bc2f84;
 }
 #col2 .panel-title,
 #col3 .panel-title {
-  color: #672150;
+  color: #bc2f84;
 }
 .header_outer {
-  /* whole width div containing the header strip */
   background: url('grape/siteheadertile.png') 0 0 no-repeat;
 }
 .header_container > .header {
-  /* inner <header> element that gets .fixedwidth class applied */
   background: url('grape/siteheader.png') 0 0 no-repeat;
 }
 header.header .module.secondary_site_menu {

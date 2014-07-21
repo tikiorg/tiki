@@ -96,8 +96,8 @@
 	</div>
 
     <div class="form-group type-cond for-static">
-	    <label class="col-sm-3 control-label" for="editwiki">{tr}Template{/tr}</label>
-        <div class="col-sm-9">
+	    <label class="col-sm-12" for="editwiki">{tr}Template{/tr}</label>
+        <div class="col-sm-12">
 		    {if $prefs.feature_wysiwyg eq 'y' and $info.section_wiki_html eq 'y'}
 			    {$use_wysiwyg='y'}
 			    <input type="hidden" name="allowhtml" value="on">
