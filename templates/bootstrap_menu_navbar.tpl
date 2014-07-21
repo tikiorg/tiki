@@ -8,12 +8,12 @@
 				</a>
 				<ul class="dropdown-menu">
 					{foreach from=$item.children item=sub}
-						<li{if $sub.selected} class="active"{/if}><a href="{$sub.url|escape}">{tr}{$sub.name|escape}{/tr}</a></li>
+						<li{if $sub.selected} class="active"{/if}><a href="{$sub.sefurl|escape}">{tr}{$sub.name|escape}{/tr}</a></li>
 					{/foreach}
 				</ul>
 			</li>
 		{else}
-			<li{if $item.selected} class="active"{/if}><a href="{$item.url|escape}">{tr}{$item.name|escape}{/tr}</a></li>
+			<li{if $item.selected} class="active"{/if}><a href="{$item.sefurl|escape}">{tr}{$item.name|escape}{/tr}</a></li>
 		{/if}
 	{/foreach}
 </ul>
