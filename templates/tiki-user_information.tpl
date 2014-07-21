@@ -247,6 +247,7 @@
 					</div>
 				</div>
 			{/section}
+		</div>
 			{/if}
 			{if $user_articles|@count > 0}
 				<h3>{tr}Articles{/tr}</h3>
@@ -308,7 +309,7 @@
 					{/section}
 				</div>
 			{/if}
-		</div>
+
 	</div></div>
 	{/tab}{/if}
 
