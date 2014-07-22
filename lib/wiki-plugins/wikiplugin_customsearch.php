@@ -420,6 +420,9 @@ function cs_design_input($id, $fieldname, $fieldid, $arguments, $default, &$scri
 	$element = $document->createElement('input');
 	cs_design_setbasic($element, $fieldid, $fieldname, $arguments);
 
+	if (!empty($default)) {
+		$arguments['default'] = $default;
+	}
 	$script .= "
 (function (id, config, fieldname) {
 	var field = $('#' + id);
