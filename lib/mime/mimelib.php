@@ -65,17 +65,18 @@ class MimeLib
 	{
 		global $prefs;
 
-		if ($type === 'application/zip') {
-			$extension = $this->get_extension($filename);
-
-			if (in_array($extension, array("xlsx", "xltx", "potx", "ppsx", "pptx", "sldx", "docx", "dotx", "xlam", "xlsb"))) {
-				return $this->from_file_extension($filename);
-			}
+		if ($type === 'application/zip' || $type === 'application/octet-stream') {
+			return $this->from_file_extension($filename);
 		} else if ($type === 'text/html' && $this->get_extension($filename) == 'svg') {
 			$type = 'image/svg+xml';
 		} else if ($type === 'text/html' && $prefs['vimeo_upload'] === 'y' && is_numeric($filename)) {
 			if (strpos($content, 'vimeo.com') !== false) {
 				$type = 'video/vimeo';
+			}
+		} else {
+			$extension = $this->get_extension($filename);
+			if (in_array($extension, array("xlsx", "xltx", "potx", "ppsx", "pptx", "sldx", "docx", "dotx", "xlam", "xlsb"))) {
+				return $this->from_file_extension($filename);
 			}
 		}
 
