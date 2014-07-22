@@ -16,7 +16,7 @@
 			{/if}
 			{$info.name|escape}
 			<label>
-				{icon _id=cross}
+				{icon _id=cross alt="{tr}Remove{/tr}"}
 			</label>
 		</li>
 	{/foreach}
@@ -132,7 +132,7 @@ var handleFiles = function (files) {
 						} else {
 							li.prepend($('<img height="16" width="16" title="'+ data.type +'" alt="'+ data.type +'" src="img/icons/mime/default.png">'));
 						}
-						li.append($('<label>{{icon _id=cross}}</label>'));
+						li.append($('<label>{{icon _id=cross alt="{tr}Remove{/tr}"}}</label>'));
 						li.find('img.icon').click(function () {
 							$field.input_csv('delete', ',', fileId);
 							$(this).closest('li').remove();
@@ -274,7 +274,7 @@ $url.keypress(function (e) {
 				} else {
 					li.prepend($('<img height="16" width="16" title="'+ data.type +'" alt="'+ data.type +'" src="img/icons/mime/default.png">'));
 				}
-				li.append($('<label>{{icon _id=cross}}</label>'));
+				li.append($('<label>{{icon _id=cross alt="{tr}Remove{/tr}"}}</label>'));
 				li.find('img.icon').click(function () {
 					$field.input_csv('delete', ',', fileId);
 					$this.closest('li').remove();
@@ -314,7 +314,7 @@ $search.keypress(function (e) {
 					var li = $('<li/>');
 					li.text(item.text());
 					li.prepend($('<img src="tiki-download_file.php?fileId=' + data.object_id + '&display&height=24" height="24">'));
-					li.append($('<label>{{icon _id=cross}}</label>'));
+					li.append($('<label>{{icon _id=cross alt="{tr}Remove{/tr}"}}</label>'));
 					li.find('img.icon').click(function () {
 						$field.input_csv('delete', ',', data.object_id);
 						$(this).closest('li').remove();
@@ -368,7 +368,7 @@ window.handleFinderFile = function (file, elfinder) {
 			$field.input_csv('add', ',', fileId);
 
 			li.prepend($('<img src="tiki-download_file.php?fileId=' + fileId + '&display&height=24" height="24">'));
-			li.append($('<label>{{icon _id=cross}}</label>'));
+			li.append($('<label>{{icon _id=cross alt="{tr}Remove{/tr}"}}</label>'));
 			li.find('img.icon').click(function () {
 				$field.input_csv('delete', ',', fileId);
 				$(this).closest('li').remove();
@@ -401,7 +401,7 @@ handleVimeoFile = function (link, data) {
 	$field.input_csv('add', ',', fileId);
 
 	li.prepend($('<img src="img/icons/vimeo.png" height="16">'));
-	li.append($('<label>{{icon _id=cross}}</label>'));
+	li.append($('<label>{{icon _id=cross alt="{tr}Remove{/tr}"}}</label>'));
 	li.find('img.icon').click(function () {
 		$field.input_csv('delete', ',', fileId);
 		$(this).closest('li').remove();

@@ -61,6 +61,7 @@
 		{foreach from=$module_zone_list key=zone_initial item=zone_info}
 			{tab name=$zone_info.name|capitalize}
 				<div id="{$zone_info.id}_modules" class="table-responsive">
+                <div>
 					<table class="table normal" id="assigned_zone_{$zone_initial}">
 						<tr>
 							<th>{tr}Name{/tr}</th>
@@ -96,6 +97,7 @@
 						{/foreach}
 					</table>
 				</div>
+                </div>
 			{/tab}
 		{/foreach}
 		{/tabset}
@@ -147,6 +149,7 @@
 	{/if}
 	<h2>{tr}Custom Modules{/tr}</h2>
     <div class="table-responsive">
+    <div>
 	<table class="table normal">
 		<tr>
 			<th>{tr}Name{/tr}</th>
@@ -168,6 +171,7 @@
          {norecords _colspan=3}
 		{/section}
 	</table>
+    </div>
     </div>
 	<br>
 	{if $um_name eq ''}

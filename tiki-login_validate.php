@@ -45,6 +45,7 @@ if (isset($_REQUEST["user"])) {
 
 // disallow robots to index page:
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
+$userAutoLoggedIn = FALSE;
 if ($isvalid) {
 	$wasAdminValidation = false;
 	$info = $userlib->get_user_info($_REQUEST['user']);
@@ -87,6 +88,7 @@ if ($isvalid) {
 			die;
 		} else {
 			$user = $_REQUEST['user'];
+			$userAutoLoggedIn = TRUE;
 			$_SESSION["$user_cookie_site"] = $user;
 			TikiLib::lib('menu')->empty_menu_cache();
 		}
@@ -99,8 +101,13 @@ if ($isvalid) {
 	if (!empty($prefs['url_after_validation']) && !$wasAdminValidation) {
 		$target = $prefs['url_after_validation'];
 		$access->redirect($target);
-	} else {
+	} elseif ($userAutoLoggedIn == TRUE) {
 		$access->redirect($prefs['tikiIndex'], tra("Account validated successfully."));
+	} else {
+		$smarty->assign('msg', tra("Account validated successfully."));
+		$smarty->assign('mid', 'tiki-information.tpl');
+		$smarty->display("tiki.tpl");
+		die;
 	}
 } else {
 	if ($error == PASSWORD_INCORRECT) $error = tra("Invalid username or password");

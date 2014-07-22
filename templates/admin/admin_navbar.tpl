@@ -164,7 +164,7 @@
 				{/foreach}
 			</div>
 			<div class="panel-footer text-center">
-				<input class="btn btn-primary" type="submit" value="{tr}Apply{/tr}">
+				<input class="btn btn-primary" type="submit" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}">
 			</div>
 			<input type="hidden" name="lm_criteria" value="{$lm_criteria|escape}">
 		</form>

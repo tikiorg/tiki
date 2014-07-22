@@ -605,14 +605,12 @@ function wikiplugin_img( $data, $params )
 		} elseif (!empty($dbinfo['path'])) {
 			$imageObj = new Image($basepath . $dbinfo['path'], true);
 			$filename = $dbinfo['filename'];
-		} else {
-			$imageObj = new Image($src, true);
-			$filename = $src;
 		}
+		// NOTE image sizing should only happen with local images, otherwise will break if remote server can't be reached
 
 		//if we need metadata
 		$xmpview = !empty($imgdata['metadata']) ? true : false;
-		if ($imgdata['desc'] == 'idesc' || $imgdata['desc'] == 'ititle' || $xmpview) {
+		if (is_object($imageObj) && ($imgdata['desc'] == 'idesc' || $imgdata['desc'] == 'ititle' || $xmpview)) {
 			$dbinfoparam = isset($dbinfo) ? $dbinfo : false;
 			$metadata = getMetadataArray($imageObj, $dbinfoparam);
 			if ($imgdata['desc'] == 'idesc') {
@@ -625,7 +623,7 @@ function wikiplugin_img( $data, $params )
 
 		$fwidth = '';
 		$fheight = '';
-		if (isset(TikiLib::lib('parser')->option['indexing']) && TikiLib::lib('parser')->option['indexing']) {
+		if (!is_object($imageObj) || isset(TikiLib::lib('parser')->option['indexing']) && TikiLib::lib('parser')->option['indexing']) {
 			$fwidth = 1;
 			$fheight = 1;
 		} else {

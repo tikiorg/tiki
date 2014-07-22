@@ -52,7 +52,7 @@
 			</label>
 		</div>
 		<div class="submit col-md-offset-3">
-			<input type="submit" class="btn btn-primary" value="{tr}Apply{/tr}">
+			<input type="submit" class="btn btn-primary" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}">
 		</div>
 	</form>
 	{jq}
