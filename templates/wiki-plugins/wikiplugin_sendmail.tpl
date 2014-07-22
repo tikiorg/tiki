@@ -22,7 +22,7 @@ $("input[name='sendmailload']").click(function() {
 $("input[name='sendall']").click(function(){
 	if($("textarea[name='bodycontent']").val()) {
 		var mailform = $(this).closest('form');
-		mailform.modal("Your email is being send");
+		mailform.modal("Your email is being sent");
 	    var postData = mailform.serializeArray();
 	    var formURL = mailform.attr('action');
 	    $.ajax({
