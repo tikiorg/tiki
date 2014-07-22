@@ -544,7 +544,7 @@ class Services_Tracker_Controller
 
 			$itemObject = Tracker_Item::fromId($id);
 
-			foreach ($trklib->get_child_items($itemId) as $info) {
+			foreach (TikiLib::lib('trk')->get_child_items($itemId) as $info) {
 				$childItem = Tracker_Item::fromId($info['itemId']);
 
 				if ($childItem->canView()) {
@@ -1104,7 +1104,7 @@ class Services_Tracker_Controller
 				'name' => $name,
 			);
 		} else {
-			$trackers = $this->action_list_trackers();
+			$trackers = $this->action_list_trackers($input);
 			return array(
 				'title' => tr('Duplicate Tracker'),
 				'trackers' => $trackers["data"],
@@ -1240,6 +1240,7 @@ class Services_Tracker_Controller
 
 				$writeCsv($header);
 
+				/** @noinspection PhpParamsInspection */
 				$items = $trklib->list_items($trackerId, $recordsOffset, $recordsMax, 'itemId_asc', $fields);
 
 				$smarty = TikiLib::lib('smarty');
