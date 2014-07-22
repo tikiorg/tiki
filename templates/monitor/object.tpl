@@ -62,7 +62,7 @@
 		</div>
 
 		<div class="submit">
-			<input type="submit" class="btn btn-primary" value="{tr}Apply{/tr}">
+			<input type="submit" class="btn btn-primary" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}">
 		</div>
 	</form>
 {/block}

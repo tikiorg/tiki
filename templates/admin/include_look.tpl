@@ -1,11 +1,10 @@
 {* $Id$ *}
-<form action="tiki-admin.php?page=look" id="look" name="look" class="form-horizontal labelColumns" onreset="return(confirm('{tr}Cancel Edit{/tr}'))" class="admin" method="post">
+<form action="tiki-admin.php?page=look" id="look" name="look" class="form-horizontal labelColumns" class="admin" method="post">
 	<div class="row">
 		<div class="form-group col-lg-12">
 			<div class="pull-right">
-				<input type="reset" class="btn btn-link btn-sm" name="looksetupreset" title="{tr}Reset Changes{/tr}" value="{tr}Reset{/tr}" />
-				<input type="submit" class="btn btn-primary btn-sm" name="looksetup" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}" />
-			</div>
+                <input type="submit" class="btn btn-primary btn-sm" name="looksetup" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}" />
+		    </div>
 		</div>
 	</div>
 	{tabset name="admin_look"}
@@ -360,9 +359,8 @@
 	<div class="row">
 		<div class="form-group col-lg-12">
 			<div class="text-center">
-				<input type="reset" class="btn btn-link btn-sm" name="looksetupreset" title="{tr}Reset Changes{/tr}" value="{tr}Reset{/tr}" />
 				<input type="submit" class="btn btn-primary btn-sm" name="looksetup" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}" />
-			</div>
+            </div>
 		</div>
 	</div>
 </form>
