@@ -12,6 +12,8 @@ $section_class="tiki_wiki_page print";
 require_once ('tiki-setup.php');
 $wikilib = TikiLib::lib('wiki');
 
+$auto_query_args = array('page');
+
 $access->check_feature(array('feature_wiki', 'feature_wiki_print'));
 
 // Create the HomePage if it doesn't exist
