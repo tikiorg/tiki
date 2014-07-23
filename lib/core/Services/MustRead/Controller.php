@@ -23,24 +23,8 @@ class Services_MustRead_Controller
 			$selection = $this->getItem($input->id->int());
 		}
 
-		$owner = Search_Query_Relation::token('tiki.mustread.owns.invert', 'user', $user);
-		$complete = Search_Query_Relation::token('tiki.mustread.complete.invert', 'user', $user);
-
 		$lib = TikiLib::lib('unifiedsearch');
-		$query = $lib->buildQuery([
-			'tracker_id' => $prefs['mustread_tracker'],
-		]);
-		$query->filterRelation("NOT $complete");
-
-		$sub = $query->getSubQuery('relations');
-
-		$sub->filterRelation($owner);
-
-		foreach ($this->getAvailableActions() as $key => $label) {
-			$token = Search_Query_Relation::token("tiki.mustread.$key.invert", 'user', $user);
-			$sub->filterRelation($token);
-		}
-
+		$query = $this->getListQuery();
 		$result = $query->search($lib->getIndex());
 
 		foreach ($result as & $row) {
@@ -251,6 +235,64 @@ class Services_MustRead_Controller
 		];
 	}
 
+	function action_object($input)
+	{
+		global $prefs;
+
+		$definition = Tracker_Definition::get($prefs['mustread_tracker']);
+
+		if (! $definition) {
+			throw new Services_Exception_NotFound(tr('Misconfigured feature'));
+		}
+
+		$field = $definition->getFieldFromPermName($input->field->word());
+		if (! $field) {
+			throw new Services_Exception_NotFound(tr('Target field not found.'));
+		}
+
+		$type = $input->type->text();
+		$object = $input->object->text();
+
+		$objectlib = TikiLib::lib('object');
+		$servicelib = TikiLib::lib('service');
+		if (! $type || ! $object || ! $title = $objectlib->get_title($type, $object)) {
+			throw new Services_Exception_NotFound(tr('Object not found.'));
+		}
+
+		$list = [];
+
+		if ($field['type'] == 'REL') {
+			$searchlib = TikiLib::lib('unifiedsearch');
+			$query = $this->getListQuery();
+			$main = '"' . Search_Query_Relation::token($field['options_map']['relation'], $type, $object) . '"';
+			$invert = '"' . Search_Query_Relation::token($field['options_map']['relation'] . '.invert', $type, $object) . '"';
+
+			if ($field['options_map']['invert']) {
+				$query->filterRelation("$main OR $invert");
+			} else {
+				$query->filterRelation($main);
+			}
+
+			$list = $query->search($searchlib->getIndex());
+		}
+
+
+		return [
+			'title' => tr('Must Read for %0', $title),
+			'type' => $type,
+			'object' => $object,
+			'fields' => [
+				$field['permName'] => "$type:$object",
+			],
+			'current' => $list,
+			'nexturl' => $servicelib->getUrl([
+				'controller' => 'mustread',
+				'action' => 'list',
+				'id' => '{itemId}',
+			]),
+		];
+	}
+
 	private function requestAction($item, $user, $action)
 	{
 		$relationlib = TikiLib::lib('relation');
@@ -324,6 +366,31 @@ class Services_MustRead_Controller
 
 		$reason = $this->findReason($itemId);
 		return $reason === 'owner' || $reason === 'circulation';
+	}
+
+	private function getListQuery()
+	{
+		global $user, $prefs;
+		$owner = Search_Query_Relation::token('tiki.mustread.owns.invert', 'user', $user);
+		$complete = Search_Query_Relation::token('tiki.mustread.complete.invert', 'user', $user);
+
+		$lib = TikiLib::lib('unifiedsearch');
+		$query = $lib->buildQuery([
+			'type' => 'trackeritem',
+			'tracker_id' => $prefs['mustread_tracker'],
+		]);
+		$query->filterRelation("NOT $complete");
+
+		$sub = $query->getSubQuery('relations');
+
+		$sub->filterRelation($owner);
+
+		foreach ($this->getAvailableActions() as $key => $label) {
+			$token = Search_Query_Relation::token("tiki.mustread.$key.invert", 'user', $user);
+			$sub->filterRelation($token);
+		}
+
+		return $query;
 	}
 
 	private function getUsers($itemId, $list)

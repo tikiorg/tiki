@@ -367,7 +367,7 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 		$fields = array($baseKey, "{$baseKey}_text");
 
 		$trackerId = $this->getOption('trackerId');
-		$indexRemote = array_filter($this->getOption('indexRemote'));
+		$indexRemote = array_filter((array) $this->getOption('indexRemote'));
 
 		if (count($indexRemote)) {
 			if ($definition = Tracker_Definition::get($trackerId)) {
