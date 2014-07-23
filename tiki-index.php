@@ -688,6 +688,22 @@ TikiLib::events()->trigger(
 	)
 );
 
+if ( $prefs['feature_forums'] && $prefs['feature_wiki_discuss'] == 'y' && $prefs['wiki_discuss_visibility'] == 'above' ) {
+	include_once ('lib/comments/commentslib.php');
+	$commentslib = new Comments($dbTiki);
+	$comments_data = tra('Use this thread to discuss the page:') . " [tiki-index.php?page=".rawurlencode($page)."|$page]";
+	$threadId = $commentslib->check_for_topic($page, $comments_data);
+	$comments_coms = $commentslib->get_forum_topics($prefs['wiki_forum_id'],0,-1);
+	$discuss_replies_cant = 0;
+	foreach( $comments_coms as $topic ) {
+		if ( $topic['threadId'] == $threadId ) {
+			$discuss_replies_cant = $topic['replies'];
+			break;
+		}
+	}
+	$smarty->assign('discuss_replies_cant', $discuss_replies_cant);
+}
+
 $smarty->assign('info', $info);
 $smarty->assign('mid', 'tiki-show_page.tpl');
 

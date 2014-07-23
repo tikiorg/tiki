@@ -621,6 +621,16 @@ function prefs_wiki_list($partial = false)
 			'filter' => 'digits',
 			'default' => '1',
 		),
+		'wiki_discuss_visibility' => array(
+			'name' => tra('Visibility of discussion'),
+			'description' => tra('Just a button among others (default), or special section'),
+			'type' => 'list',
+			'options' => array(
+				'button' => tra('In the buttons row (default)'),
+				'above' => tra('Special section above buttons bar'),
+			),
+			'default' => 'button',
+		),
 		'wiki_forum_id' => array(
 			'name' => tra('Forum for discussion'),
 			'type' => 'list',

@@ -257,6 +257,7 @@
 		<div class="adminoptionboxchild" id="feature_wiki_discuss_childcontainer">
 			{preference name=wiki_forum_id}
 			{permission_link mode=button permType=forums}
+			{preference name=wiki_discuss_visibility}
 		</div>
 
 		{preference name=feature_source}

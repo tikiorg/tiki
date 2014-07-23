@@ -37,7 +37,7 @@
 			<li>{button _keepall='y' href="tiki-export_wiki_pages.php" page=$page _class="btn-link" _text="{tr}Export{/tr}"}</li>
 		{/if}
 
-		{if $prefs.feature_wiki_discuss eq 'y' && $show_page eq 'y' && $tiki_p_forum_post eq 'y'}
+		{if $prefs.feature_wiki_discuss eq 'y' && $show_page eq 'y' && $tiki_p_forum_post eq 'y' && ( empty($prefs.wiki_discuss_visibility) || $prefs.wiki_discuss_visibility eq 'button')}
 			{capture assign=wiki_discussion_string}
 				{include file='wiki-discussion.tpl'} [tiki-index.php?page={$page|escape:url}|{$page}]
 			{/capture}
@@ -169,12 +169,16 @@
 		{/if}
 	{/capture}
 
+	{if $prefs.feature_wiki_discuss eq 'y' && $show_page eq 'y' && $tiki_p_forum_post eq 'y' && $prefs.wiki_discuss_visibility eq 'above' }
+			{include file='discussinforum.tpl'}
+	{/if}
+
 	{if $page_bar|trim neq ''}
-        <div class="form-group" id="page-bar">
-		<div class="btn-bar">
-			{$page_bar}
+		<div class="form-group" id="page-bar">
+			<div class="btn-bar">
+				{$page_bar}
+			</div>
 		</div>
-        </div>
 	{/if}
 
 	{strip}
