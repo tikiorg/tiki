@@ -41,7 +41,7 @@
 			</div>
 		</div>
 		<div class="panel-body">
-			<p class="too-many">{tr}Too many options to display, filter your results to obtain more options.{/tr}</p>
+			<p class="too-many">{tr}Search and select what you are looking for from the options that appear..{/tr}</p>
 			<div class="results">
 				{foreach $object_selector_multi.current_selection as $object}
 					<div class="checkbox">

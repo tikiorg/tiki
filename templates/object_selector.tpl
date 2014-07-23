@@ -23,7 +23,7 @@
 >
 	<div class="basic-selector hidden">
 		<select class="form-control">
-			<option value="" class="protected">{tr}Empty{/tr}</option>
+			<option value="" class="protected">&mdash;</option>
 			{if $object_selector.current_selection}
 				<option value="{$object_selector.current_selection|escape}" selected="selected">{$object_selector.current_selection.title|escape}</option>
 			{/if}
@@ -44,11 +44,11 @@
 		</div>
 		<div class="panel-body">
 			<div class="results">
-				<p class="too-many">{tr}Too many options to display, filter your results.{/tr}</p>
+				<p class="too-many">{tr}Search and select what you are looking for from the options that appear.{/tr}</p>
 				<div class="radio">
 					<label>
 						<input type="radio" checked="checked" value="" name="{$object_selector.id|escape}_sel" class="protected">
-						{tr}Empty{/tr}
+						&mdash;	
 					</label>
 				</div>
 				{if $object_selector.current_selection}
