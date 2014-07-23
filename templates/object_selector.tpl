@@ -36,7 +36,7 @@
 				<span class="input-group-addon">
 					<span class="glyphicon glyphicon-search"></span>
 				</span>
-				<input type="text" placeholder="{tr}Title...{/tr}" value="" class="filter form-control" autocomplete="off">
+				<input type="text" placeholder="{$object_selector.placeholder|escape}..." value="" class="filter form-control" autocomplete="off">
 				<div class="input-group-btn">
 					<button class="btn btn-default search">{tr}Find{/tr}</button>
 				</div>
@@ -47,7 +47,7 @@
 				<p class="too-many">{tr}Search and select what you are looking for from the options that appear.{/tr}</p>
 				<div class="radio">
 					<label>
-						<input type="radio" checked="checked" value="" name="{$object_selector.id|escape}_sel" class="protected">
+						<input type="radio" {if ! $object_selector.current_selection} checked="checked" {/if} value="" name="{$object_selector.id|escape}_sel" class="protected">
 						&mdash;	
 					</label>
 				</div>

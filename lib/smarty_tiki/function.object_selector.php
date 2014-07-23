@@ -44,6 +44,7 @@ function smarty_function_object_selector( $params, $smarty )
 		'parent' => null,
 		'parentkey' => null,
 		'format' => null,
+		'placeholder' => tr('Title'),
 	];
 
 	// Handle reserved parameters
