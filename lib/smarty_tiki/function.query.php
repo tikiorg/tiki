@@ -140,6 +140,8 @@ function smarty_function_query($params, $smarty)
 
 		// If specified, use _script argument to determine the php script to link to
 		// ... else, use PHP_SELF server var
+		$php_self = '';
+
 		if ( isset($params['_script']) && $params['_script'] != '' ) {
 			$php_self = $params['_script'];
 
