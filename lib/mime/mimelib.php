@@ -65,7 +65,7 @@ class MimeLib
 	{
 		global $prefs;
 
-		if ($type === 'application/zip' || $type === 'application/octet-stream') {
+		if ($type === 'application/zip' || $type === 'application/octet-stream' || $type === 'application/vnd.ms-office') {
 			return $this->from_file_extension($filename);
 		} else if ($type === 'text/html' && $this->get_extension($filename) == 'svg') {
 			$type = 'image/svg+xml';

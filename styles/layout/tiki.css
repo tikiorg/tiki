@@ -181,6 +181,15 @@ div #metadata div.tabs {
 #captchaImg {
   border: 1px solid #dddddd;
 }
+/* fix for lists with empty dl items, e.g. tracker items
+ * thanks hayksaakian on https://github.com/twbs/bootstrap/issues/4062
+ * to be removed when we update to bs 3.2
+ */
+.dl-horizontal > dd:after {
+  display: table;
+  content: "";
+  clear: both;
+}
 #top_modules,
 #topbar_modules,
 #pagebottom_modules {

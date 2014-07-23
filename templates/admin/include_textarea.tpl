@@ -158,7 +158,7 @@
 			<fieldset class="table" id="plugins">
 				<legend>{tr}Plugins{/tr}</legend>
 				<fieldset class="table donthide">
-					{listfilter selectors='#plugins fieldset.admin' exclude=".donthide"}
+					{listfilter selectors='#plugins > fieldset' exclude=".donthide"}
 				</fieldset>
 				{foreach from=$plugins key=plugin item=info}
 					<fieldset class="table">

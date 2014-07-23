@@ -74,7 +74,7 @@
 							var pStep = document.createElement('p');
 							pStep.style.fontWeight = 'bold';
 							if( data.installable ) {
-								pStep.innerHTML = "Step 3: Click on Apply Now to apply Profile";
+								pStep.innerHTML = "Click on Apply Now to apply Profile";
 							} else if ( data.already ) {
 								pStep.innerHTML = "A version of this profile is already applied.";
 							}
@@ -246,6 +246,7 @@
 			<form method="get" action="tiki-admin.php">	
 				<h4>{tr}Find Profiles{/tr} <small>{tr}Search by name, types and repository{/tr}</small></h4>
 				<div class="table-responsive">
+					<div>
 					<table class="table normal">
 						<tr>
 							<td class="col-lg-6">
@@ -327,11 +328,13 @@
 					</tr>
 				</table>
 				</div>
+				</div>
 			</form>
 			<a name="step2"></a>
 			{if isset($result) && $result|@count != '0'}
-				<h4>{tr}Select and apply profile <small>Click on a Configuration Profile Name below to review it and to be able to apply it on your site</small>{/tr}</h4>
+				<h4>{tr}Select and apply profile <small>Click on a Configuration Profile Name below to review it and apply it on your site</small>{/tr}</h4>
 				<div class="table-responsive">
+				<div>
 				<table class="table normal">
 					<tr>
 						<th>{tr}Profile Name{/tr}</th>
@@ -357,6 +360,7 @@
 					<tr><td colspan="3" class="odd">{tr}None{/tr}</td></tr>
 					{/if}
 				</table>
+				</div>
 				{if $show_details_for_profile_num != ""}
 					{jq}showDetails('profile-{{$show_details_for_profile_num}}', '{{$show_details_for_domain}}', '{{$show_details_for_fullname}}');{/jq}
 				{/if}
