@@ -285,11 +285,7 @@ class Services_MustRead_Controller
 				$field['permName'] => "$type:$object",
 			],
 			'current' => $list,
-			'nexturl' => $servicelib->getUrl([
-				'controller' => 'mustread',
-				'action' => 'list',
-				'id' => '{itemId}',
-			]),
+			'canAdd' => Tracker_Item::newItem($prefs['mustread_tracker'])->canModify(),
 		];
 	}
 

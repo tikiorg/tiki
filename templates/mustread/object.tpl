@@ -13,5 +13,7 @@
 			{/foreach}
 		</ul>
 	{/if}
-	<a class="btn btn-default add-mustread-item" href="{service controller=tracker action=insert_item trackerId=$prefs.mustread_tracker forced=$fields}">{glyph name=plus} {tr}Add Item{/tr}</a>
+	{if $canAdd}
+		<a class="btn btn-default add-mustread-item" href="{service controller=tracker action=insert_item trackerId=$prefs.mustread_tracker forced=$fields}">{glyph name=plus} {tr}Add Item{/tr}</a>
+	{/if}
 {/block}
