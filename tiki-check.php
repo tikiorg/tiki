@@ -1023,6 +1023,22 @@ if ( $s ) {
 		);
 }
 
+// Xdebug
+$has_xdebug = function_exists('xdebug_get_code_coverage') && is_array(xdebug_get_code_coverage());
+if ($has_xdebug) {
+    $php_properties['Xdebug'] = array(
+        'fitness' => tra('info'),
+		'setting' => 'Loaded',
+        'message' => tra('Xdebug can be very handy for a development server, but it might be better to disable it when on a production server.')
+    );
+} else {
+    $php_properties['Xdebug'] = array(
+		'fitness' => tra('info'),
+        'setting' => 'Not Available',
+        'message' => tra('Xdebug can be very handy for a development server, but it might be better to disable it when on a production server.')
+    );
+}
+
 // Get MySQL properties and check them
 $mysql_properties = false;
 $mysql_variables = false;
