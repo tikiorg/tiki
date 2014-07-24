@@ -34,7 +34,7 @@
 				<span class="input-group-addon">
 					<span class="glyphicon glyphicon-search"></span>
 				</span>
-				<input type="text" placeholder="{$object_selector.placeholder|escape}..." value="" class="filter form-control" autocomplete="off">
+				<input type="text" placeholder="{$object_selector_multi.placeholder|escape}..." value="" class="filter form-control" autocomplete="off">
 				<div class="input-group-btn">
 					<button class="btn btn-default search">{tr}Find{/tr}</button>
 				</div>

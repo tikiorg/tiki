@@ -196,8 +196,9 @@ class Services_MustRead_Controller
 			throw new Services_Exception_Denied(tr('Cannot circulate'));
 		}
 
-		$input->replaceFilter('user', 'username');
-		$users = $input->asArray('user', ';');
+		$input->replaceFilter('users', 'username');
+		$users = $input->asArray('users', ';');
+		$users = array_filter($users);
 
 		$add = [];
 		$skip = [];
