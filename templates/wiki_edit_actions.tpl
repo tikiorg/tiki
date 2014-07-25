@@ -5,24 +5,24 @@
     {if $prefs.feature_wikilingo eq "y"}
         {if $wysiwyg eq 'y'}
             {jq}
+                var wikiParserChoice = ('#wiki-parser-choice'),
+                    $doc = $(document);
+
                 $('input[name=preview]').click(function(){
-                    $(document).trigger('previewWikiLingo', [true, $('#editwiki-ui').html(), $('#editpageform'), $('#autosave_preview').slideDown('slow')]);
+                    if (wikiParserChoice.val() == 'wikiLingo') {
+                        $doc.trigger('previewWikiLingo', [false, $('#editwiki').trigger('sync').val(), $('#editpageform'), $('#autosave_preview').slideDown('slow')]);
+                    } else {
+                        $doc.trigger('previewWikiLingo', [true, $('#editwiki-ui').html(), $('#editpageform'), $('#autosave_preview').slideDown('slow')]);
+                    }
                     return false;
                 });
+
                 $('input.btn-primary').click(function() {
-                    $(document).trigger('saveWikiLingo', [true, $('#editwiki-ui').html(), $('#editpageform')]);
-                    return false;
-                });
-            {/jq}
-        {else}
-            {jq}
-                {*the call to trigger sync is for ensuring we get the most up to date value form the editor, which could be using codemirror*}
-                $('input[name=preview]').click(function(){
-                    $(document).trigger('previewWikiLingo', [false, $('#editwiki').trigger('sync').val(), $('#editpageform'), $('#autosave_preview').slideDown('slow')]);
-                    return false;
-                });
-                $('input.btn-primary').click(function() {
-                    $(document).trigger('saveWikiLingo', [false, $('#editwiki').trigger('sync').val(), $('#editpageform')]);
+                    if (wikiParserChoice.val() == 'wikiLingo') {
+                        $doc.trigger('saveWikiLingo', [false, $('#editwiki').trigger('sync').val(), $('#editpageform')]);
+                    } else {
+                        $doc.trigger('saveWikiLingo', [true, $('#editwiki-ui').html(), $('#editpageform')]);
+                    }
                     return false;
                 });
             {/jq}
