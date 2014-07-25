@@ -114,6 +114,11 @@ function smarty_function_jscalendar($params, $smarty)
 	if ( $display_tz == '' ) {
 		$display_tz = 'UTC';
 	}
+	if (strpos($display_tz, 'Etc/GMT+') !== false) {
+		$display_tz = str_replace('Etc/GMT+', 'GMT-', $display_tz);
+	} else if (strpos($display_tz, 'Etc/GMT-') !== false) {
+		$display_tz = str_replace('Etc/GMT-', 'GMT+', $display_tz);
+	}
 
 	// TODO use a parsed version of $prefs['short_date_format']
 	// Note: JS timestamp is in milliseconds - php is seconds
