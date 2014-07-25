@@ -106,7 +106,7 @@ class TikiDate
 	{
 		$tz = array();
 		$now = new DateTime('now', new DateTimeZone('GMT'));
-		$tz_list = DateTimeZone::listIdentifiers();
+		$tz_list = DateTimeZone::listIdentifiers(DateTimeZone::ALL_WITH_BC);
 		ksort($tz_list);
 
 		foreach ($tz_list as $tz_id) {
@@ -156,6 +156,14 @@ class TikiDate
 				$return .= $w;
 			}
 		}
+
+		// replace POSIX GMT relative tz with ISO signs
+		if (strpos($return, 'GMT+') !== false) {
+			$return = str_replace('GMT+', 'GMT-', $return);
+		} else if (strpos($return, 'GMT-') !== false) {
+			$return = str_replace('GMT-', 'GMT+', $return);
+		}
+
 		return $return;
 	}
 
@@ -230,7 +238,7 @@ class TikiDate
     function setTZbyID($tz_id)
 	{
         global $prefs;
-        if (isset($prefs['timezone_offset']) && !empty($prefs['timezone_offset'])) {
+        if (!self::TimezoneIsValidId($tz_id) && isset($prefs['timezone_offset']) && !empty($prefs['timezone_offset'])) {
             $tz_id = timezone_name_from_abbr($tz_id, $prefs['timezone_offset'] * 3600);
         }
 		$dtz = null;
@@ -370,7 +378,7 @@ class TikiDate
 		static $ids = null;
 
 		if (! $ids) {
-			$ids = DateTimeZone::listIdentifiers();
+			$ids = DateTimeZone::listIdentifiers(DateTimeZone::ALL_WITH_BC);
 		}
 
 		return $ids;

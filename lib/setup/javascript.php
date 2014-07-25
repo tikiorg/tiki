@@ -112,9 +112,11 @@ if (m) {
 // Etc/GMT+ is equivalent to GMT-
 if (m.substring(0,4) == "GMT+") {
 	m = "Etc/GMT-" + m.substring(4);
+	setCookie("local_tz", m);
 }
 if (m.substring(0,4) == "GMT-") {
 	m = "Etc/GMT+" + m.substring(4);
+	setCookie("local_tz", m);
 }
 if (inArray(m, allTimeZoneCodes)) {
 	setCookie("local_tz", m);
