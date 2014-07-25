@@ -64,6 +64,13 @@ class MimeLib
     private function handle_physical_exceptions($type, $filename, $content = '')
 	{
 		global $prefs;
+		
+/* 12.x only patch to allow for application/vnd.ms-office being shown as application/msword for php < 5.5 */
+		if (version_compare(PHP_VERSION, '5.5.0', '<')) {
+			if ($type === 'application/msword') {
+			return $this->from_file_extension($filename);
+			}
+		}		
 
 		if ($type === 'application/zip' || $type === 'application/octet-stream' || $type === 'application/vnd.ms-office') {
 			return $this->from_file_extension($filename);
