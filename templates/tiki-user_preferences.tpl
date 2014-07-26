@@ -74,7 +74,7 @@
                 {*{if isset($user_prefs.country) && $user_prefs.country != "None" && $user_prefs.country != "Other"}*}
                     {*{$userinfo.login|countryflag}*}
                 {*{/if}*}
-                <select name="country" class="form-control">
+                <select name="country" id="country" class="form-control">
                     <option value="Other" {if $user_prefs.country eq "Other"}selected="selected"{/if}>
                         {tr}Other{/tr}
                     </option>
@@ -102,8 +102,8 @@
                                 {$prefs.feature_wiki_userpage_prefix}{$userinfo.login|escape}
                             </a>
                             (<a class="link" href="tiki-editpage.php?page={$prefs.feature_wiki_userpage_prefix}{$userinfo.login}">
-                            {tr}Edit{/tr}
-                        </a>)
+                                {tr}Edit{/tr}
+                            </a>)
                         {else}
                             {$prefs.feature_wiki_userpage_prefix}{$userinfo.login|escape}
                             (<a class="link" href="tiki-editpage.php?page={$prefs.feature_wiki_userpage_prefix}{$userinfo.login}">
@@ -137,14 +137,14 @@
             {* Custom fields *}
             {section name=ir loop=$customfields}
                 {if $customfields[ir].show}
-                    <td>{$customfields[ir].label}:</td>
+                    <label>{$customfields[ir].label}:
                     <input type="{$customfields[ir].type}" name="{$customfields[ir].prefName}"
-                           value="{$customfields[ir].value}" size="{$customfields[ir].size}">
+                           value="{$customfields[ir].value}" size="{$customfields[ir].size}"></label>
                 {/if}
             {/section}
             <div class="form-group">
                 <label class="control-label" for="user_information">{tr}User Information{/tr}</label>
-                <select class="form-control" name="user_information">
+                <select class="form-control" id="user_information" name="user_information">
                     <option value='private' {if $user_prefs.user_information eq 'private'}selected="selected"{/if}>
                         {tr}Private{/tr}
                     </option>
@@ -168,7 +168,7 @@
         <div class="form-group">
             <label class="control-label" for="email_isPublic">{tr}Is email public? (uses scrambling to prevent spam){/tr}</label>
             {if $userinfo.email}
-                <select name="email_isPublic" class="form-control">
+                <select id="email_isPublic" name="email_isPublic" class="form-control">
                     {section name=ix loop=$scramblingMethods}
                         <option value="{$scramblingMethods[ix]|escape}" {if $user_prefs.email_isPublic eq $scramblingMethods[ix]}selected="selected"{/if}>
                             {$scramblingEmails[ix]}
@@ -181,7 +181,7 @@
         </div>
         <div class="form-group">
             <label class="control-label" for="mailCharset">{tr}Does your mail reader need a special charset?{/tr}</label>
-            <select name="mailCharset" class="form-control">
+            <select id="mailCharset" name="mailCharset" class="form-control">
                 {section name=ix loop=$mailCharsets}
                     <option value="{$mailCharsets[ix]|escape}" {if $user_prefs.mailCharset eq $mailCharsets[ix]}selected="selected"{/if}>
                         {$mailCharsets[ix]}
@@ -192,8 +192,8 @@
         {if $prefs.change_theme eq 'y' && empty($group_style)}
         <div class="form-group">
             <label class="control-label" for="myStyle">Theme</label>
-            <select name="mystyle" class="form-control">
-                <option value="" style="font-style:italic;border-bottom:1px dashed #666;">
+            <select id="myStyle" name="myStyle" class="form-control">
+                <option value="" {*style="font-style:italic;border-bottom:1px dashed #666;"*}>
                     {tr}Site default{/tr}
                 </option>
                 {section name=ix loop=$styles}
@@ -212,7 +212,7 @@
         {if $prefs.change_language eq 'y'}
         <div class="form-group">
             <label class="control-label" for="language">{tr}Preferred Language{/tr}</label>
-            <select name="language" class="form-control">
+            <select id="language" name="language" class="form-control">
                 {section name=ix loop=$languages}
                     <option value="{$languages[ix].value|escape}" {if $user_prefs.language eq $languages[ix].value}selected="selected"{/if}>
                         {$languages[ix].name}
@@ -231,11 +231,11 @@
                 <a href="javascript:void(0)" onclick="document.getElementById('read-lang-div').style.display='block';this.style.display='none';">
                     {tr}Can you read more languages?{/tr}
                 </a>
-                <br/>&nbsp;
+                <br/>
                 <div id="read-lang-div" style="display: none" class="form-group">
             {/if}
             <label class="control-label" for="language">{tr}Other languages you can read (select from the dropdown to add to the field below){/tr}</label>
-            <select class="form-control" name="_blank" onchange="document.getElementById('read-language-input').value+=' '+this.options[this.selectedIndex].value+' '">
+            <select class="form-control" id="language" name="_blank" onchange="document.getElementById('read-language-input').value+=' '+this.options[this.selectedIndex].value+' '">
                 <option value="">{tr}Select language...{/tr}</option>
                 {section name=ix loop=$languages}
                     <option value="{$languages[ix].value|escape}">
@@ -243,13 +243,13 @@
                     </option>
                 {/section}
             </select>
-            </br>
-            <input class="form-control" id="read-language-input" type="text" name="read_language" value="{$user_prefs.read_language}">
+
+            <label for="read-language-input"><input class="form-control" id="read-language-input" type="text" name="read_language" value="{$user_prefs.read_language}"></label>
             </div>
         {/if}
         <div class="form-group">
             <label class="control-label" for="userbreadCrumb">{tr}Number of visited pages to remember{/tr}</label>
-            <select name="userbreadCrumb" class="form-control">
+            <select id="userbreadCrumb" name="userbreadCrumb" class="form-control">
                 <option value="1" {if $user_prefs.userbreadCrumb eq 1}selected="selected"{/if}>1</option>
                 <option value="2" {if $user_prefs.userbreadCrumb eq 2}selected="selected"{/if}>2</option>
                 <option value="3" {if $user_prefs.userbreadCrumb eq 3}selected="selected"{/if}>3</option>
@@ -304,11 +304,11 @@
 		{/if}
 
 		{if $prefs.feature_messages eq 'y' and $tiki_p_messages eq 'y'}
-			<br>
+
             <h4>{tr}User Messages{/tr}</h4>
             <div class="form-group">
                 <label class="input-control" for="mess_maxRecords">{tr}Messages per page{/tr}</label>
-                <select name="mess_maxRecords" class="form-control">
+                <select id="mess_maxRecords" name="mess_maxRecords" class="form-control">
                     <option value="2" {if $user_prefs.mess_maxRecords eq 2}selected="selected"{/if}>2</option>
                     <option value="5" {if $user_prefs.mess_maxRecords eq 5}selected="selected"{/if}>5</option>
                     <option value="10" {if empty($user_prefs.mess_maxRecords) or $user_prefs.mess_maxRecords eq 10}selected="selected"{/if}>10</option>
@@ -331,8 +331,8 @@
                 </label>
             </div>
             <div class="form-group">
-                <label class="input-control">{tr}Send me an email for messages with priority equal or greater than:{/tr}</label>
-                <select class="form-control" name="minPrio">
+                <label class="input-control" for="minPrio">{tr}Send me an email for messages with priority equal or greater than:{/tr}</label>
+                <select class="form-control" id="minPrio" name="minPrio">
                     <option value="1" {if $user_prefs.minPrio eq 1}selected="selected"{/if}>1 -{tr}Lowest{/tr}-</option>
                     <option value="2" {if $user_prefs.minPrio eq 2}selected="selected"{/if}>2 -{tr}Low{/tr}-</option>
                     <option value="3" {if $user_prefs.minPrio eq 3}selected="selected"{/if}>3 -{tr}Normal{/tr}-</option>
@@ -342,8 +342,8 @@
                 </select>
             </div>
             <div class="form-group">
-                <label class="input-control">{tr}Auto-archive read messages after x days{/tr}</label>
-                <select name="mess_archiveAfter" class="form-control">
+                <label class="input-control" for="mess_archiveAfter" >{tr}Auto-archive read messages after x days{/tr}</label>
+                <select id="mess_archiveAfter" name="mess_archiveAfter" class="form-control">
                     <option value="0" {if $user_prefs.mess_archiveAfter eq 0}selected="selected"{/if}>{tr}never{/tr}</option>
                     <option value="1" {if $user_prefs.mess_archiveAfter eq 1}selected="selected"{/if}>1</option>
                     <option value="2" {if $user_prefs.mess_archiveAfter eq 2}selected="selected"{/if}>2</option>
@@ -359,11 +359,11 @@
 		{/if}
 
 		{if $prefs.feature_tasks eq 'y' and $tiki_p_tasks eq 'y'}
-			<br>
-            <h4>{tr}User Tasks{/tr}</th>
+
+            <h4>{tr}User Tasks{/tr}</h4>
             <div class="form-group">
                 <label class="input-control" for="tasks_maxRecords">{tr}Tasks per page{/tr}</label>
-                <select class="form-control" name="tasks_maxRecords">
+                <select class="form-control" id="tasks_maxRecords" name="tasks_maxRecords">
                     <option value="2" {if $user_prefs.tasks_maxRecords eq 2}selected="selected"{/if}>2</option>
                     <option value="5" {if $user_prefs.tasks_maxRecords eq 5}selected="selected"{/if}>5</option>
                     <option value="10" {if $user_prefs.tasks_maxRecords eq 10}selected="selected"{/if}>10</option>
@@ -374,7 +374,7 @@
                 </select>
             </div>
 		{/if}
-		<br>
+
         <h4>{tr}My Tiki{/tr}</h4>
 
 		{if $prefs.feature_wiki eq 'y'}
@@ -449,7 +449,7 @@
 		{if $prefs.feature_userlevels eq 'y'}
             <div class="form-group">
                 <label class="control-label" for="mylevel">{tr}My level{/tr}</label>
-                <select class="form-control" name="mylevel">
+                <select class="form-control" name="mylevel" id="mylevel">
                     {foreach key=levn item=lev from=$prefs.userlevels}
                         <option value="{$levn}"{if $user_prefs.mylevel eq $levn} selected="selected"{/if}>{$lev}</option>
                     {/foreach}
@@ -539,7 +539,7 @@
 
                 </div>
 				<div class="form-group">
-						<input type="submit" class="btn btn-default btn-sm" name="deleteaccount" value="{if !empty($userwatch)}{tr}Delete the account:{/tr} {$userwatch|escape}{else}{tr}Delete my account{/tr}{/if}">
+					<input type="submit" class="btn btn-default btn-sm" name="deleteaccount" value="{if !empty($userwatch)}{tr}Delete the account:{/tr} {$userwatch|escape}{else}{tr}Delete my account{/tr}{/if}">
                 </div>
             </div>
 		</form>
