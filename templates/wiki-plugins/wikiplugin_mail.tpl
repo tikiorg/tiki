@@ -31,10 +31,12 @@
 {else}
 <form method="post">
 <table>
-	{if $params.showuserdd eq 'y' or $params.showrealnamedd eq 'y'}
+	{if $params.showuserdd eq 'y' or $params.showrealnamedd eq 'y' or $params.showuser eq 'y'}
 	<tr>
 	<td>
+		{if $params.showuserdd eq 'y' or $params.showrealnamedd eq 'y'}
 		<label for="mail_user_dd{$ipluginmail}">{tr}Send to users:{/tr}</label>
+		{/if}
 	</td>
 	<td>
 		{if $params.showuserdd eq 'y'}
@@ -53,12 +55,16 @@
 					{/foreach}
     		</select>
 		{/if}
-		{remarksbox type='tip'  title="{tr}Tip{/tr}"}{tr}Use Ctrl+Click to select multiple options{/tr}{/remarksbox}
+		{if $params.showuserdd eq 'y' or $params.showrealnamedd eq 'y'}
+			{remarksbox type='tip'  title="{tr}Tip{/tr}"}{tr}Use Ctrl+Click to select multiple options{/tr}{/remarksbox}
+		{/if}
 	</td>
 	</tr>
 	<tr>
 	<td>
-		<label for="mail_user{$ipluginmail}">{tr}Send to:{/tr}</label>
+		{if $params.showuser eq 'y'}
+			<label for="mail_user{$ipluginmail}">{tr}Send to:{/tr}</label>
+		{/if}
 	</td>
 	<td>
 		{if $params.showuser eq 'y'}
