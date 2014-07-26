@@ -355,6 +355,7 @@
                     <option value="50" {if $user_prefs.mess_archiveAfter eq 50}selected="selected"{/if}>50</option>
                     <option value="60" {if $user_prefs.mess_archiveAfter eq 60}selected="selected"{/if}>60</option>
                 </select>
+            </div>
 		{/if}
 
 		{if $prefs.feature_tasks eq 'y' and $tiki_p_tasks eq 'y'}
