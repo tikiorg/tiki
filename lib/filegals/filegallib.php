@@ -576,13 +576,15 @@ class FileGalLib extends TikiLib
 		if ($prefs['fgal_keep_fileId'] == 'y') {
 			// create archive by inserting the old file with a new fileId and archivId field set to original fileId
 			$res = $filesTable->fetchFullRow(array('fileId' => $id));
-			$res['archiveId'] = $id;
-			$res['user'] = $creator;
-			$res['lockedby'] = NULL;
-			unset($res['fileId']);
+			if ($res) {
+				$res['archiveId'] = $id;
+				$res['user'] = $creator;
+				$res['lockedby'] = NULL;
+				unset($res['fileId']);
 
-			$oldFileId = $filesTable->insert($res);
-			$this->updateReference($id, $oldFileId);
+				$oldFileId = $filesTable->insert($res);
+				$this->updateReference($id, $oldFileId);
+			}
 		}
 
 		// Insert or update and index (for search) the new file
