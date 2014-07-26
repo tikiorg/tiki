@@ -490,6 +490,7 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 				$this->getOption('trackerId'),
 				$displayFieldsList,
 				$this->getOption('status', 'opc'),
+                ' ',
 				true
 			);
 		} else {
