@@ -156,6 +156,9 @@ function wikiplugin_mail($data, $params)
 		$smarty->assign('mail_subject', $_REQUEST['mail_subject']);
 		$smarty->assign('mail_mess', $_REQUEST['mail_mess']);
 	}
+
+	// Convert the array of mail_user into a string of emails separated by comma, and expose the values to the smarty tpl
+	$smarty->assign('mail_user', isset($_REQUEST['mail_user'])? implode(", ", $_REQUEST['mail_user']):'');
 	
 	$smarty->assign_by_ref('params', $params);
 	return '~np~'.$smarty->fetch('wiki-plugins/wikiplugin_mail.tpl').'~/np~';
