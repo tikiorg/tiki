@@ -35,7 +35,7 @@
             &nbsp;
         </td>
         <td style="width:48%">
-            <b>{tr}Custom Contact Form{/tr}</b> (<a href="tiki-admin.php?profile=Custom_Contact_Form&show_details_for=Custom_Contact_Form&categories%5B%5D={$tikiMajorVersion}.x&repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2" target="_blank">{tr}apply profile now{/tr}</a>)
+            <b>{tr}Custom Contact Form{/tr}</b> (<a href="tiki-admin.php?profile=Custom_Contact_Form_12x&show_details_for=Custom_Contact_Form_12x&categories%5B%5D={$tikiMajorVersion}.x&repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2" target="_blank">{tr}apply profile now{/tr}</a>)
             <br>
             {tr}This profile eases the task to create a custom contact form adapted to the specific case of that site.{/tr}
             <br/><a href="https://doc.tiki.org/Trackers"  target="tikihelp" class="tikihelp" title="{tr}Custom Contact Form{/tr}:
