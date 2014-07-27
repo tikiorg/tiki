@@ -5801,7 +5801,9 @@ h3.panel-title {
   color: black;
   font: 90% "Arial", "Helvetica", sans-serif;
   font-weight: bold;
-  /*  height: 18px;  margin: 0px 0px 7px 1em;  padding: 0px;*/
+  /*  height: 18px;
+  margin: 0px 0px 7px 1em;
+  padding: 0px;*/
   text-transform: uppercase;
 }
 #col2 .panel-default,
@@ -5819,7 +5821,7 @@ h3.panel-title {
 /* automatically choose the correct arrow/text color */
 .tsFilterInput {
   border: none;
-  background-color: #f7f7f7;
+  background-color: #ececec;
 }
 .tablesorter {
   /* style header */
@@ -5838,7 +5840,7 @@ h3.panel-title {
 }
 input.tablesorter-filter {
   border: none;
-  background-color: #f7f7f7;
+  background-color: #ececec;
 }
 .tablesorter input.dateFrom,
 .tablesorter input.dateTo {

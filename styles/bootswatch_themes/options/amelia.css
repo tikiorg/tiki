@@ -5952,7 +5952,7 @@ a.thumbnail.active {
 /* automatically choose the correct arrow/text color */
 .tsFilterInput {
   border: none;
-  background-color: #f7f7f7;
+  background-color: #13aaa8;
 }
 .tablesorter {
   /* style header */
@@ -5971,10 +5971,10 @@ a.thumbnail.active {
 }
 input.tablesorter-filter {
   border: none;
-  background-color: #f7f7f7;
+  background-color: #13aaa8;
 }
 .tablesorter input.dateFrom,
 .tablesorter input.dateTo {
   border: none;
-  background-color: #f7f7f7;
+  background-color: #13aaa8;
 }

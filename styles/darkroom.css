@@ -5852,7 +5852,7 @@ input {
 /* automatically choose the correct arrow/text color */
 .tsFilterInput {
   border: none;
-  background-color: #363636;
+  background-color: #303030;
 }
 .tablesorter {
   /* style header */
@@ -5871,7 +5871,7 @@ input {
 }
 input.tablesorter-filter {
   border: none;
-  background-color: #363636;
+  background-color: #303030;
 }
 .tablesorter input.dateFrom,
 .tablesorter input.dateTo {

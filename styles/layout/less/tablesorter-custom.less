@@ -4,11 +4,14 @@
 
 @ts-theme                 : tablesorter;
 
-.ts-bg() when not (@table-bg = transparent) and (iscolor(@table-bg)) {
-  @ts-bg: @table-bg;
+.ts-bg() when not (@input-bg = transparent) and (iscolor(@input-bg)) {
+  @ts-bg: @input-bg;
 }
 .ts-bg() when not (@body-bg = transparent) and (iscolor(@body-bg)) {
   @ts-bg: @body-bg;
+}
+.ts-bg() when not (@table-bg = transparent) and (iscolor(@table-bg)) {
+  @ts-bg: @table-bg;
 }
 .ts-bg() when ((default())) {
   @ts-bg: #fff;
@@ -46,15 +49,16 @@
 .sortDesc (@a) when (lightness(@a) < 50%) {
   background-image: @sortDescWhite;
 }
-.filter-bg() when (lightness(@input-bg) >= 50%) {
-  background-color: darken(spin(@input-bg, -5), 3%);;
+.filter-bg (@a) when (lightness(@a) >= 50%) {
+  background-color: darken(spin(@a, -5), 3%);;
 }
-.filter-bg() when (lightness(@input-bg) < 50%) {
-  background-color: lighten(spin(@input-bg, -5), 5%);;
+.filter-bg (@a) when (lightness(@a) < 50%) {
+  background-color: lighten(spin(@a, -5), 5%);;
 }
 .tsFilterInput {
   border: none;
-  .filter-bg;
+  .ts-bg();
+  .filter-bg(@ts-bg);
 }
 
 .@{ts-theme} {

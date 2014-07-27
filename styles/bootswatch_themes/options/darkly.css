@@ -6063,7 +6063,7 @@ textarea:focus {
 /* automatically choose the correct arrow/text color */
 .tsFilterInput {
   border: none;
-  background-color: #f7f7f7;
+  background-color: #2f2f2f;
 }
 .tablesorter {
   /* style header */
@@ -6082,10 +6082,10 @@ textarea:focus {
 }
 input.tablesorter-filter {
   border: none;
-  background-color: #f7f7f7;
+  background-color: #2f2f2f;
 }
 .tablesorter input.dateFrom,
 .tablesorter input.dateTo {
   border: none;
-  background-color: #f7f7f7;
+  background-color: #2f2f2f;
 }
