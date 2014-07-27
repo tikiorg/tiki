@@ -50,12 +50,8 @@
   }
 
   /* table processing indicator - indeterminate spinner */
-  &-processing {
-    background-image: @processingIcon;
-    background-position: center center;
-    background-repeat: no-repeat;
-    position: absolute;
-    z-index: 1000;
+  table&-processing tbody tr td {
+	opacity: .25;
   }
 
   /* filter widget */

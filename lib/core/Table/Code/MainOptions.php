@@ -30,6 +30,8 @@ class Table_Code_MainOptions extends Table_Code_Manager
 	{
 		$mo = array();
 
+		$mo[] = 'showProcessing: true';
+
 		/***  onRenderHeader option - change html elements before table renders. Repeated for each column. ***/
 		$orh = array();
 		/* First handle column-specific code since the array index is used for the column number */
