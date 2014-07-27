@@ -36,12 +36,8 @@ class Table_Code_WidgetOptionsPager extends Table_Code_WidgetOptions
 			//pager selectors
 			$ps[] = 'container : \'div.' . parent::$s['pager']['controls']['id'] . '\'';
 			$p[] = $this->iterate($ps, $pre . 'selectors: {', $this->nt3 . '}', $this->nt4, '');
-			if (!parent::$ajax) {
-				$p[] = $pre . 'output: \'{startRow} \' + tr(\'to\') + \' {endRow} \' + tr(\'of\')
-					+ \' {filteredRows} \' + \'(\' + tr(\'filtered from\') + \' {totalRows}\' + \')\'';
-			} else {
-				$p[] = $pre . 'output: \'{start} {parens}\'';
-			}
+			$p[] = $pre . 'output: \'{startRow} \' + tr(\'to\') + \' {endRow} \' + tr(\'of\')
+				+ \' {filteredRows} \' + \'(\' + tr(\'filtered from\') + \' {totalRows}\' + \')\'';
 		}
 
 		//ajax settings
@@ -52,31 +48,14 @@ class Table_Code_WidgetOptionsPager extends Table_Code_WidgetOptions
 
 			//ajax processing - this part grabs the html, usually from the smarty template file
 			$ap = array(
-				//set variables. parse data into array. data is the html that smarty returns for the entire page
-				//returning object r allows custom variables to be available elsewhere in tablesorter under
-				//table.config.pager.ajaxData
-				//variables tablesorter uses: rows, total and headers; all others are custom
-				'var parsedpage = $.parseHTML(data), r = {}, p = table.config.pager;',
+				//parse HTML string from entire page
+				'var parsedpage = $.parseHTML(data), r = {};',
 				//extract table body rows from html returned by smarty template file
 				'r.rows = $(parsedpage).find(\'' . parent::$tid . ' tbody tr\');',
+				//tablesorter needs total rows returned
 				'r.total = \'' . parent::$s['total'] . '\';',
-				'if (r.rows.length > 0) {',
-					//fetch number of filtered rows and offset embedded in HTML with hidden input fields added to tpl file
-				'	r.filtered = parseInt($(parsedpage).find(\'#' . parent::$s['ajax']['servercount']['id'] . '\').val());',
-				'	r.offset = parseInt($(parsedpage).find(\'#' . parent::$s['ajax']['serveroffset']['id'] . '\').val());',
-					//set pager text
-				'	r.fp = Math.ceil( r.filtered / p.size );',
-				'	r.end = r.offset + $(r.rows).length;',
-				'	if (r.filtered == 0) {r.start = tr(\'No records found\')}',
-				'	if (r.filtered == 1) {r.start = tr(\'1 of 1\')}',
-				'	if (r.filtered > 1) {r.start = (r.offset + 1) + \' \' + tr(\'to\') + \' \'
-						+ r.end + \' \' + tr(\'of\') + \' \' + r.filtered}',
-				'	r.parens = r.filtered < r.total ? \' \' + \'(\' + tr(\'filtered from\') + \' \' + r.total + \') \' : \' \';',
-				'} else {',
-				'	r.start = tr(\'No records found\');',
-				'	r.parens = \'\';',
-				'	$(p.$size.selector).addClass(\'disabled\');',
-				'}',
+				//extract number of filtered rows for use in row count display
+				'r.filteredRows = parseInt($(parsedpage).find(\'#' . parent::$s['ajax']['servercount']['id'] . '\').val());',
 				'r.headers = null;',
 				//return object
 				'return r;'
@@ -145,12 +124,12 @@ class Table_Code_WidgetOptionsPager extends Table_Code_WidgetOptions
 					'if (typeof p.ajaxData === \'undefined\') {',
 					'	filtered = 0;',
 					'} else {',
-					'	filtered = typeof p.ajaxData.filtered === \'undefined\' ? 0 : p.ajaxData.filtered;',
+					'	filtered = typeof p.ajaxData.filteredRows === \'undefined\' ? 0 : p.ajaxData.filteredRows;',
 					'	total = typeof p.ajaxData.total === \'undefined\' ? 0 : p.ajaxData.total;',
 					'}',
 					'offset = ((p.page * size) >= filtered) ? \'\' : \''
-						. parent::$s['ajax']['offset'] . '\' + \'=\' + (p.page * size);',
-					'return url + \'&tsAjax=y&\' + offset + \'&numrows=\' + size;'
+						. '&' . parent::$s['ajax']['offset'] . '\' + \'=\' + (p.page * size);',
+					'return url + \'&tsAjax=y\' + offset + \'&numrows=\' + size;'
 				);
 			}
 			if (count($ca) > 0) {

@@ -53,7 +53,7 @@ class Table_Code_Other extends Table_Code_Manager
 			//external dropdowns
 			if (is_array($f['external'])) {
 				foreach($f['external'] as $key => $info) {
-					$xopt[] = ' value="">' . tra('Select a value');
+					$xopt[] = ' value="">';
 					foreach($info['options'] as $label => $val) {
 						$xopt[] = ' value="' . $val . '">' . $label;
 					}
@@ -159,80 +159,6 @@ class Table_Code_Other extends Table_Code_Manager
 			$allhtmlafter = $this->iterate($htmlafter, '', '', '', '', '');
 			array_unshift($jq, '$(\'' . parent::$tid . '\').before(\'' . $allhtmlbefore . '\'' . $this->nt
 				. ').after(\'' . $allhtmlafter . '\'' . $this->nt . ');');
-		}
-		if (parent::$ajax) {
-			$bind = array(
-				//dim rows while processing when using ajax
-				'	if ($.inArray(e.type, [\'filterStart\', \'sortStart\', \'pageMoved\']) > -1) {',
-				'		if (e.type === \'filterStart\') {',
-							//need this test since filter seems to start when table intializes with no ending ajaxComplete
-				'			if (typeof this.config.pager.ajaxData !== \'undefined\') {',
-				'				$(\'' . parent::$tid . ' tbody tr td\').css(\'opacity\', 0.25);',
-								//note when filter is in place - used for setting offset when simplified ajax url is used
-				'				this.config.pager.ajaxData.filter = true;',
-				'			}',
-				'		} else {',
-				'			$(\'' . parent::$tid . ' tbody tr td\').css(\'opacity\', 0.25);',
-				'		}',
-				'	}',
-			);
-			$jq[] = $this->iterate(
-				$bind,
-				'$(\'' . parent::$tid . '\').bind(\'filterStart sortStart pageMoved\', function(e){',
-				$this->nt2 . '});',
-				$this->nt3,
-				'',
-				''
-			);
-			//un-dim rows after ajax processing and make sure odd/even row formatting is applied
-			$bind = array(
-				'	$(\'' . parent::$tid . ' tbody tr td\').css(\'opacity\', 1);',
-			);
-			$jq[] = $this->iterate(
-				$bind,
-				'$(document).bind(\'ajaxComplete\', function(e){',
-				$this->nt . '});',
-				$this->nt2,
-				'',
-				''
-			);
-			//change pages dropdown when filtering to show only filtered pages
-			$bind = array(
-				'var ret = c.pager.ajaxData;',
-				//divide by 2 because to handle both top and bottom page dropdowns
-				'var opts = $(c.pager.$goto.selector + \' option\').length / 2;',
-				'if (ret.filtered > 0) {',
-				'	if (ret.fp != opts && opts != 0) {',
-				'		$(c.pager.$goto.selector).empty();',
-				'		for (var i = 1; i <= ret.fp; i++) {',
-				'			$(c.pager.$goto.selector).append($(\'<option>\', {',
-				'				text: i',
-				'			}));',
-				'		}',
-				'	}',
-				'	var page = ret.offset == 0 ? 0 : Math.ceil(ret.offset / c.pager.size);',
-				'	$(c.pager.$goto.selector + \' option\')[page].selected = true;',
-				'	if (ret.end == ret.filtered) {',
-				'		$(c.pager.$container.selector + \' button.next\').addClass(\'disabled\');',
-				'		$(c.pager.$container.selector + \' button.last\').addClass(\'disabled\');',
-				'	}',
-				'	if (page != c.pager.page) {',
-				'		$(\'' . parent::$tid . '\').trigger(\'pageSet\', page);',
-				'	}',
-				'} else {',
-				'	$(c.pager.$goto.selector).empty();',
-				'	$(c.pager.$container.selector + \' button.next\').addClass(\'disabled\');',
-				'	$(c.pager.$container.selector + \' button.last\').addClass(\'disabled\');',
-				'}',
-			);
-			$jq[] = $this->iterate(
-				$bind,
-				'$(\'' . parent::$tid . '\').bind(\'pagerComplete\', function(e, c){',
-				$this->nt . '});',
-				$this->nt2,
-				'',
-				''
-			);
 		}
 		if (count($jq) > 0) {
 			$code = $this->iterate($jq, '', '', $this->nt, '', '');
