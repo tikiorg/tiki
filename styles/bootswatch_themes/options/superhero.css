@@ -6030,7 +6030,7 @@ label,
 /* automatically choose the correct arrow/text color */
 .tsFilterInput {
   border: none;
-  background-color: #f7f7f7;
+  background-color: #344f61;
 }
 .tablesorter {
   /* style header */
@@ -6049,10 +6049,10 @@ label,
 }
 input.tablesorter-filter {
   border: none;
-  background-color: #f7f7f7;
+  background-color: #344f61;
 }
 .tablesorter input.dateFrom,
 .tablesorter input.dateTo {
   border: none;
-  background-color: #f7f7f7;
+  background-color: #344f61;
 }
