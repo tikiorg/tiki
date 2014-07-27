@@ -227,8 +227,6 @@
 								{if $prefs.mobile_mode eq "y"}<div class="actions" data-role="controlgroup" data-type="horizontal">{/if} {* mobile *}
 								<a class="link" {if $prefs.mobile_mode eq "y"}data-role="button" data-inline="true" {/if}href="tiki-assignuser.php?assign_user={$users[user].user|escape:url}" title="{tr}Assign to group{/tr}">{capture assign=alt}{tr _0=$username}Assign %0 to groups{/tr}{/capture}{*FIXME*}{icon _id='group_key' alt=$alt}</a> {* mobile *}
 								
-								<a class="link" {if $prefs.mobile_mode eq "y"}data-role="button" data-inline="true" {/if}href="tiki-user_preferences.php?userId={$users[user].userId}" title="{tr _0=$username}Change user preferences: %0{/tr}">{capture assign=alt}{tr _0=$username}Change user preferences: %0{/tr}{/capture}{icon _id='wrench' alt=$alt}</a> {* mobile *}
-								
 								<a class="link" {if $prefs.mobile_mode eq "y"}data-role="button" data-inline="true" {/if}href="{query _type='relative' user=$users[user].userId}" title="{tr _0=$username}Edit Account Settings: %0{/tr}">{capture assign=alt}{tr _0=$username}Edit Account Settings: %0{/tr}{/capture}{*FIXME*}{icon _id='page_edit' alt=$alt}</a> {* mobile *}
 								
 								{if $prefs.feature_userPreferences eq 'y' || $user eq 'admin'}
