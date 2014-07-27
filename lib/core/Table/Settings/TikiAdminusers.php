@@ -59,6 +59,7 @@ class Table_Settings_TikiAdminusers extends Table_Settings_Abstract
 				'filter' => array(
 					'type' => false,
 				),
+				'resizable' => false,
 			),
 			1 => array(					//user
 				'sort' => array(
