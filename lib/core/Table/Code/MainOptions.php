@@ -33,39 +33,39 @@ class Table_Code_MainOptions extends Table_Code_Manager
 		/***  onRenderHeader option - change html elements before table renders. Repeated for each column. ***/
 		$orh = array();
 		/* First handle column-specific code since the array index is used for the column number */
-		//row grouping and sorter settings
-		if (parent::$sorts && parent::$sortcol) {
-			foreach (parent::$s['columns'] as $col => $info) {
-				$info = $info['sort'];
+		foreach (parent::$s['columns'] as $col => $info) {
+			//turn off column resizing per settings
+			if (isset($info['resizable']) && $info['resizable'] === false) {
+				$allcols[$col]['addClass'][] = 'resizable-false';
+			}
+			//row grouping and sorter settings
+			if (parent::$sorts && parent::$sortcol) {
 				//row grouping setting
 				if (parent::$group) {
-					if (!empty($info['group'])) {
-						$allcols[$col]['addClass'][] = 'group-' . $info['group'];
+					if (!empty($info['sort']['group'])) {
+						$allcols[$col]['addClass'][] = 'group-' . $info['sort']['group'];
 					} else {
 						$allcols[$col]['addClass'][] = 'group-false';
 					}
 				}
-				if (!empty($info['group']) && parent::$group !== false) {
-					$allcols[$col]['addClass'][] = 'group-' . $info['group'];
+				if (!empty($info['sort']['group']) && parent::$group !== false) {
+					$allcols[$col]['addClass'][] = 'group-' . $info['sort']['group'];
 				}
-				if (isset($info['type']) && $info['type'] !== true) {
+				if (isset($info['sort']['type']) && $info['sort']['type'] !== true) {
 					//add class for sort data type or for no sort
-					$sclass = $info['type'] === false ? 'false' : $info['type'];
+					$sclass = $info['sort']['type'] === false ? 'false' : $info['sort']['type'];
 					$allcols[$col]['addClass'][] = 'sorter-' . $sclass;
 				}
 			}
-		}
-		//filters
-		if (parent::$filters && parent::$filtercol) {
-			foreach (parent::$s['columns'] as $col => $info) {
-				$info = $info['filter'];
+			//filters
+			if (parent::$filters && parent::$filtercol) {
 				//set filter to false for no filter
-				if (isset($info['type']) && $info['type'] === false) {
+				if (isset($info['filter']['type']) && $info['filter']['type'] === false) {
 					$allcols[$col]['addClass'][] = 'filter-false';
 				} else {
 					//add placeholders
-					if (isset($info['placeholder'])) {
-						$allcols[$col]['data']['placeholder'] = $info['placeholder'];
+					if (isset($info['filter']['placeholder'])) {
+						$allcols[$col]['data']['placeholder'] = $info['filter']['placeholder'];
 					}
 				}
 			}
