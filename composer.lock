@@ -337,12 +337,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FutureLink-Protocol/php.git",
-                "reference": "da9b50048a454929dd0c2bcf4551c81d83d92de2"
+                "reference": "6b5d7332bf592ef28c61f399beb383ae3481dc1e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FutureLink-Protocol/php/zipball/da9b50048a454929dd0c2bcf4551c81d83d92de2",
-                "reference": "da9b50048a454929dd0c2bcf4551c81d83d92de2",
+                "url": "https://api.github.com/repos/FutureLink-Protocol/php/zipball/6b5d7332bf592ef28c61f399beb383ae3481dc1e",
+                "reference": "6b5d7332bf592ef28c61f399beb383ae3481dc1e",
                 "shasum": ""
             },
             "require": {
@@ -371,7 +371,7 @@
                     "name": "Robert Plummer",
                     "email": "rplummer@visop-dev.com",
                     "homepage": "http://visop-dev.com",
-                    "role": "Lead Developer"
+                    "role": "Assistant Developer"
                 },
                 {
                     "name": "Luke Gerhardt",
@@ -382,7 +382,7 @@
             ],
             "description": "FutureLink-Protocol implementation in PHP",
             "homepage": "https://github.com/FutureLink-Protocol",
-            "time": "2014-05-02 21:11:50"
+            "time": "2014-06-24 17:15:33"
         },
         {
             "name": "gabordemooij/redbean",
@@ -942,12 +942,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/jakiestfu/Medium.js.git",
-                "reference": "0b190e7e67080c052f80e4200401f2727b522e9d"
+                "reference": "c8e1ebf9d09a2e82c5c0561dc1351b4deb503d68"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jakiestfu/Medium.js/zipball/0b190e7e67080c052f80e4200401f2727b522e9d",
-                "reference": "0b190e7e67080c052f80e4200401f2727b522e9d",
+                "url": "https://api.github.com/repos/jakiestfu/Medium.js/zipball/c8e1ebf9d09a2e82c5c0561dc1351b4deb503d68",
+                "reference": "c8e1ebf9d09a2e82c5c0561dc1351b4deb503d68",
                 "shasum": ""
             },
             "require": {
@@ -973,7 +973,7 @@
                     "role": "Lead Developer"
                 }
             ],
-            "time": "2014-06-17 18:30:22"
+            "time": "2014-07-26 13:17:18"
         },
         {
             "name": "phenx/php-font-lib",
@@ -1430,17 +1430,17 @@
         },
         {
             "name": "symfony/filesystem",
-            "version": "v2.5.0",
+            "version": "v2.5.2",
             "target-dir": "Symfony/Component/Filesystem",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Filesystem.git",
-                "reference": "98e831eac836a0a5911626ce82684155f21d0e4d"
+                "reference": "c1309b0ee195ad264a4314435bdaecdfacb8ae9c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Filesystem/zipball/98e831eac836a0a5911626ce82684155f21d0e4d",
-                "reference": "98e831eac836a0a5911626ce82684155f21d0e4d",
+                "url": "https://api.github.com/repos/symfony/Filesystem/zipball/c1309b0ee195ad264a4314435bdaecdfacb8ae9c",
+                "reference": "c1309b0ee195ad264a4314435bdaecdfacb8ae9c",
                 "shasum": ""
             },
             "require": {
@@ -1475,21 +1475,21 @@
             ],
             "description": "Symfony Filesystem Component",
             "homepage": "http://symfony.com",
-            "time": "2014-04-16 10:36:21"
+            "time": "2014-07-09 09:05:48"
         },
         {
             "name": "symfony/process",
-            "version": "v2.5.0",
+            "version": "v2.5.2",
             "target-dir": "Symfony/Component/Process",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Process.git",
-                "reference": "5d7d78e23894544740219e006320678cfa4cd45b"
+                "reference": "5e53efbf61a7fbf73c79e3e08feea50f64c20bfa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Process/zipball/5d7d78e23894544740219e006320678cfa4cd45b",
-                "reference": "5d7d78e23894544740219e006320678cfa4cd45b",
+                "url": "https://api.github.com/repos/symfony/Process/zipball/5e53efbf61a7fbf73c79e3e08feea50f64c20bfa",
+                "reference": "5e53efbf61a7fbf73c79e3e08feea50f64c20bfa",
                 "shasum": ""
             },
             "require": {
@@ -1524,7 +1524,7 @@
             ],
             "description": "Symfony Process Component",
             "homepage": "http://symfony.com",
-            "time": "2014-05-23 09:02:52"
+            "time": "2014-07-09 09:05:48"
         },
         {
             "name": "tijsverkoyen/css-to-inline-styles",
@@ -1646,12 +1646,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/wikiLingo/wikiLingo.git",
-                "reference": "fbf8dbc859fe8d701198b4ad39ab051e817e3532"
+                "reference": "9c53e06116215eb59380902b6b53727be33da2da"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wikiLingo/wikiLingo/zipball/fbf8dbc859fe8d701198b4ad39ab051e817e3532",
-                "reference": "fbf8dbc859fe8d701198b4ad39ab051e817e3532",
+                "url": "https://api.github.com/repos/wikiLingo/wikiLingo/zipball/9c53e06116215eb59380902b6b53727be33da2da",
+                "reference": "9c53e06116215eb59380902b6b53727be33da2da",
                 "shasum": ""
             },
             "require": {
@@ -1690,7 +1690,7 @@
                     "role": "Lead Developer"
                 }
             ],
-            "time": "2014-06-13 18:16:11"
+            "time": "2014-07-24 21:18:35"
         },
         {
             "name": "zetacomponents/base",
@@ -1820,12 +1820,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/BafS/Testify.php.git",
-                "reference": "e6b26500c9c4d3a362b4930246a78cddb45fa61a"
+                "reference": "63e4d023a1a2527d8a80b911030558b5d71b0116"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/BafS/Testify.php/zipball/e6b26500c9c4d3a362b4930246a78cddb45fa61a",
-                "reference": "e6b26500c9c4d3a362b4930246a78cddb45fa61a",
+                "url": "https://api.github.com/repos/BafS/Testify.php/zipball/63e4d023a1a2527d8a80b911030558b5d71b0116",
+                "reference": "63e4d023a1a2527d8a80b911030558b5d71b0116",
                 "shasum": ""
             },
             "require": {
@@ -1833,8 +1833,8 @@
             },
             "type": "library",
             "autoload": {
-                "psr-0": {
-                    "Testify": "lib/"
+                "psr-4": {
+                    "Testify\\": "lib/Testify/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -1847,7 +1847,7 @@
                 "testing",
                 "unit"
             ],
-            "time": "2014-06-18 23:15:44"
+            "time": "2014-07-15 21:22:12"
         },
         {
             "name": "mikey179/vfsStream",
@@ -1950,6 +1950,7 @@
         "wikilingo/codemirror": 20,
         "bafs/testify": 20
     },
+    "prefer-stable": false,
     "platform": [],
     "platform-dev": []
 }
