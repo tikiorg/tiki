@@ -29,7 +29,8 @@ function smarty_function_user_registration($params, $smarty)
 
 // NOTE that this is not a standard access check, it checks for the opposite of that, i.e. whether logged in already
 	if (!empty($user)) {
-		TikiLib::lib('access')->redirect($prefs['tikiIndex'], tr('You are already logged in'));
+		TikiLib::lib('access')->redirect($prefs['tikiIndex'], tr('You are logged in'));
+		// note that this message might appear also when the user logs in for first time so it has to generic for either case
 		return;
 	}
 	$smarty->assign('showmsg', 'n');

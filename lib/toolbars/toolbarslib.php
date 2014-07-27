@@ -756,6 +756,10 @@ class ToolbarBlock extends ToolbarInline // Will change in the future
             $isFutureLinkProtocol = true;
         }
 
+        $label = null;
+        $wysiwyg = null;
+        $syntax = null;
+
 		switch( $tagName ) {
 		case 'center':
 			$label = tra('Align Center');
@@ -1962,7 +1966,7 @@ class ToolbarsList
 		global $toolbarPickerIndex;
 		$toolbarPickerIndex = -1;
 		$list = new self;
-		$list->wysiwyg = isset($params['_wysiwyg']) && $params['_wysiwyg'] === 'y';
+		$list->wysiwyg = (isset($params['_wysiwyg']) && $params['_wysiwyg'] === 'y');
 		$list->is_html = !empty($params['_is_html']);
 
 		$string = preg_replace('/\s+/', '', $string);

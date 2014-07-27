@@ -511,7 +511,7 @@ class WikiLib extends TikiLib
 			} else {
 				$jsFile1 = $headerlib->getJsfiles();
 				$js1 = $headerlib->getJs();
-                $info['outputType'] = $tikilib->getOne ("SELECT `outputType` FROM `tiki_output` WHERE `entityId` = ? AND `objectType` = ? AND `version` = ?", array($info['page'], 'wikiPage', $info['version']));
+                $info['outputType'] = $tikilib->getOne ("SELECT `outputType` FROM `tiki_output` WHERE `entityId` = ? AND `objectType` = ? AND `version` = ?", array($info['pageName'], 'wikiPage', $info['version']));
                 $content = (new WikiLibOutput($info, $info['data'],$parse_options))->parsedValue;
 
 				// get any JS added to headerlib during parse_data and add to the bottom of the data to cache
@@ -1852,7 +1852,9 @@ class WikiLibOutput
         $this->originalValue = $originalValue;
         $this->options = $options;
 
-        if($prefslib->getPreference('feature_wikilingo')['value'] === 'y'
+        $feature_wikilingo = $prefslib->getPreference('feature_wikilingo')['value'];
+
+        if($feature_wikilingo === 'y'
             && isset($info['outputType']) && $info['outputType'] == 'wikiLingo') {
 
             if (self::$init) {
