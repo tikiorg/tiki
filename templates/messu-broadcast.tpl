@@ -70,7 +70,7 @@
         </div>
         <div class="form-group">
             <div class="col-sm-10 col-sm-push-2">
-                <input type="submit" class="btn btn-default" name="preview" value="{tr}Send{/tr}">
+                <input type="submit" class="btn btn-primary" name="preview" value="{tr}Send{/tr}">
             </div>
         </div>
 	</form>

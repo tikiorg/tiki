@@ -109,7 +109,7 @@ function subavt() {
 <label for="userfile1">{if $prefs.user_store_file_gallery_picture neq 'y'}{tr}File (only .gif, .jpg and .png images approximately 45px × 45px){/tr}{else}{tr}File (only .gif, .jpg and .png images){/tr}{/if}:</label>
 <input type="hidden" name="MAX_FILE_SIZE" value="10000000">
 <input id="userfile1" name="userfile1" type="file">
-<input type="submit" class="btn btn-default btn-sm" name="upload" value="{tr}Upload{/tr}">
+<input type="submit" class="btn btn-primary btn-sm" name="upload" value="{tr}Upload{/tr}">
 </fieldset>
 </form>
 </div>

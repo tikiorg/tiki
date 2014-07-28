@@ -48,7 +48,7 @@
 				{include file='antibot.tpl' td_style="form"}
 			{/if}
         <div class="form-group text-center">
-			<input type="submit" class="btn btn-default btn-sm" name="send" value="{tr}Send{/tr}">
+			<input type="submit" class="btn btn-primary btn-sm" name="send" value="{tr}Send{/tr}">
 		</div>
 	</form>
 {/if}

@@ -3,7 +3,7 @@
 	{include file='tiki-mytiki_bar.tpl'}
 
 <div class="t_navbar">
-	{button href="tiki-notepad_write.php" class="btn btn-default" _text="{tr}Write a note{/tr}"}
+	{button href="tiki-notepad_write.php" _class="btn btn-primary" _text="{tr}Write a note{/tr}"}
 </div>
 
 <div style="text-align:center;">
@@ -85,7 +85,7 @@
 			<td>
 				<input type="hidden" name="MAX_FILE_SIZE" value="10000000000000">
 				<input size="16" name="userfile1" type="file">
-				<input type="submit" class="btn btn-default btn-sm" name="upload" value="{tr}Upload{/tr}">
+				<input type="submit" class="btn btn-primary btn-sm" name="upload" value="{tr}Upload{/tr}">
 			</td>
 		</tr>
 	</table>

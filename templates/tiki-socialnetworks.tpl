@@ -76,7 +76,7 @@
 {/if}
 </tr>
 <tr>
-<td colspan="2" class="input_submit_container"><input type="submit" class="btn btn-default btn-sm" name="accounts" value="{tr}Save changes{/tr}"></td>
+<td colspan="2" class="input_submit_container"><input type="submit" class="btn btn-primary btn-sm" name="accounts" value="{tr}Save changes{/tr}"></td>
 </tr>
 </table>
 </form>

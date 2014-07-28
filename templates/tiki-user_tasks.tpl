@@ -3,8 +3,8 @@
 {include file='tiki-mytiki_bar.tpl'}
 
 <div class="t_navbar">
-	{button href="tiki-user_tasks.php?show_form=y" class="btn btn-default" _text="{tr}New task{/tr}"}
-	{button href="tiki-user_tasks.php" class="btn btn-default" _text="{tr}Task list{/tr}"}
+	{button href="tiki-user_tasks.php?show_form=y" _class="btn btn-primary" _text="{tr}New task{/tr}"}
+	{button href="tiki-user_tasks.php" _class="btn btn-default" _text="{tr}Task list{/tr}"}
 
 	{if $task_admin}
 		{if $admin_mode}
@@ -17,7 +17,7 @@
 	{button href="#" _onclick="javascript:flip('edithelpzone'); return false;" _text="{tr}Task help{/tr}"}
 
 	{if (not $show_form)} 
-		{button href="tiki-user_tasks.php?emty_trash=Empty trash" _text="{tr}Empty Trash{/tr}"}
+		{button href="tiki-user_tasks.php?emty_trash=Empty trash" _class="btn btn-warning" _text="{tr}Empty Trash{/tr}"}
 	{/if}
 </div>
 
