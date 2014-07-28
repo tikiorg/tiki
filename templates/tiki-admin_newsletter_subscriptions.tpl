@@ -259,7 +259,7 @@
 		<tr>
 			<td>&nbsp;</td>
 			<td colspan="2">
-				<input type="submit" class="btn btn-default btn-sm" name="add" value="{tr}Add{/tr}">
+				<input type="submit" class="btn btn-primary btn-sm" name="add" value="{tr}Add{/tr}">
 			</td>
 		</tr>
 	</table>
@@ -291,7 +291,7 @@
 			<tr>
 				<td>&nbsp;</td>
 				<td colspan="2">
-					<input type="submit" class="btn btn-default btn-sm" name="addbatch" value="{tr}Add{/tr}">
+					<input type="submit" class="btn btn-primary btn-sm" name="addbatch" value="{tr}Add{/tr}">
 				</td>
 			</tr> 	 
 		</table> 	 
@@ -321,7 +321,7 @@
 			<tr>
 				<td width="30%">&nbsp;</td>
 				<td colspan="2">
-					<input type="submit" class="btn btn-default btn-sm" name="importPage" value="{tr}Add{/tr}" width="30">
+					<input type="submit" class="btn btn-primary btn-sm" name="importPage" value="{tr}Add{/tr}" width="30">
 				</td>
 			</tr>
 		</table>
@@ -353,7 +353,7 @@
 		</tr>
 		<tr>
 			<td>&nbsp;</td>
-			<td colspan="2"><input type="submit" class="btn btn-default btn-sm" name="addgroup" value="{tr}Add{/tr}"></td>
+			<td colspan="2"><input type="submit" class="btn btn-primary btn-sm" name="addgroup" value="{tr}Add{/tr}"></td>
 		</tr>
 	</table>
 </form>
@@ -379,7 +379,7 @@
 		<tr>
 			<td>&nbsp;</td>
 			<td colspan="2">
-				<input type="submit" class="btn btn-default btn-sm" name="addincluded" value="{tr}Add{/tr}">
+				<input type="submit" class="btn btn-primary btn-sm" name="addincluded" value="{tr}Add{/tr}">
 			</td>
 		</tr>
 	</table>
@@ -417,7 +417,7 @@
 		<tr>
 			<td width="30%">&nbsp;</td>
 			<td colspan="2">
-				<input type="submit" class="btn btn-default btn-sm" name="addPage" value="{tr}Add{/tr}" width="30">
+				<input type="submit" class="btn btn-primary btn-sm" name="addPage" value="{tr}Add{/tr}" width="30">
 			</td>
 		</tr>
 	</table>
@@ -433,7 +433,7 @@
 		<tr>
 			<td width="30%">&nbsp;</td>
 			<td colspan="2">
-				<input type="submit" class="btn btn-default btn-sm" name="export" value="{tr}Export{/tr}">
+				<input type="submit" class="btn btn-primary btn-sm" name="export" value="{tr}Export{/tr}">
 			</td>
 		</tr>
 	</table>
