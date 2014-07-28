@@ -114,7 +114,7 @@
 			<div class="well">
 				<div class="checkbox">
 					<label>
-						<input type="checkbox" name="ispublished" {if $ispublished eq 'y'}checked="checked"{/if}>
+						<input type="checkbox" name="ispublished" {if $ispublished eq 'y' || !$articleId}checked="checked"{/if}>
 						<strong>{tr}Published{/tr}</strong>
 					</label>
 				</div>
