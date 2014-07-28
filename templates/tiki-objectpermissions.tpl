@@ -3,7 +3,7 @@
 {title help="Permission"}{if $objectType eq 'global'}{tr}Assign global permissions{/tr}{else}{tr}Assign permissions to {/tr}{$objectType}: {$objectName}{/if}{/title}
 
 <div class="t_navbar form-group">
-	{if !empty($referer)}{button href="$referer" class="btn btn-default" _text="{tr}Back{/tr}"}{/if}
+	{if !empty($referer)}{button href="$referer" _class="btn btn-warning" _text="{tr}Back{/tr}"}{/if}
 	{if $tiki_p_admin eq 'y'} {* only full admins can manage groups, not tiki_p_admin_users *}
 		{button href="tiki-admingroups.php" class="btn btn-default" _text="{tr}Admin Groups{/tr}"}
 	{/if}
@@ -65,7 +65,7 @@
 		<input type="hidden" name="show_disabled_features" value="{$show_disabled_features}">
 		
 		<div class="input_submit_container" style="text-align: center">
-			<input type="submit" class="btn btn-default btn-sm" name="assign" value="{tr}Assign{/tr}">
+			<input type="submit" class="btn btn-primary btn-sm" name="assign" value="{tr}Assign{/tr}">
 			{if $permissions_displayed eq 'direct' and $objectType neq 'global'}
 				<input type="submit" class="btn btn-warning btn-sm" name="remove" value="{if $objectType eq 'category'}{tr}Delete category permissions{/tr}{else}{tr}Delete object permissions{/tr}{/if}" class="tips" title="{tr}Reset Perms{/tr}|{if $objectType neq 'category'}{tr}This will remove all the settings here and permissions will be reset to inherit any category permissions that are set, or the global sitewide permissions.{/tr}{else}{tr}This will remove all the settings here and permissions will be reset to inherit the global sitewide permissions.{/tr}{/if}">
 			{/if}
@@ -108,7 +108,7 @@ if ($("#assignstructure").prop("checked")) {
 		{if ($perms|@count) eq '0'}{remarksbox type="warning" title="{tr}Warning{/tr}"}{tr}You must select at least one feature{/tr}.{/remarksbox}{/if}
 
 		<div class="input_submit_container" style="text-align: center">
-			<input type="submit" class="btn btn-default btn-sm" name="assign" value="{tr}Assign{/tr}">
+			<input type="submit" class="btn btn-primary btn-sm" name="assign" value="{tr}Assign{/tr}">
 			{if $permissions_displayed eq 'direct' and $objectType neq 'global'}
 				<input type="submit" class="btn btn-default btn-sm" name="remove" value="{if $objectType eq 'category'}{tr}Delete category permissions{/tr}{else}{tr}Delete object permissions{/tr}{/if}" class="tips" title="{tr}Reset Perms{/tr}|{tr}This will remove all the settings here and permissions will be reset to inherit the global sitewide permissions.{/tr}">
 			{/if}
@@ -243,7 +243,7 @@ if ($("#assignstructure").prop("checked")) {
 		<input type="hidden" name="permType" value="{$permType|escape}">
 		<input type="hidden" name="show_disabled_features" value="{$show_disabled_features}">
 		<div class="input_submit_container" style="text-align: center">
-			<input type="submit" class="btn btn-default btn-sm" name="assign" value="{tr}Assign{/tr}">
+			<input type="submit" class="btn btn-primary btn-sm" name="assign" value="{tr}Assign{/tr}">
 		</div>
 		
 		{if empty($filegals_manager)}
