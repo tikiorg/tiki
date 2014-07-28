@@ -10,7 +10,7 @@
 			<div class="row"> {* 100% width, padding: 0 -15px *}
                 <div class="form-group col-lg-12 clearfix"> {* bottom margin: 20px; padding: 0 15px; clear float *}
                     <div class="pull-right"> {* float: right; *}
-        				<input type="submit" class="btn btn-default" value="{tr}Save{/tr}" name="edit">
+        				<input type="submit" class="btn btn-primary" value="{tr}Save{/tr}" name="edit">
 	        			&nbsp;
 			        	<input type="checkbox" name="viewitem" checked="checked"> {tr}View inserted gallery{/tr}
                     </div>
@@ -269,7 +269,7 @@ $('#fgal_template').change( function() {
 			{/tabset}
             <div class="form-group">
                 <div class="pull-right">
-    			    <input type="submit" class="btn btn-default" value="{tr}Save{/tr}" name="edit">
+    			    <input type="submit" class="btn btn-primary" value="{tr}Save{/tr}" name="edit">
                 </div>
             </div>
 		</form>
