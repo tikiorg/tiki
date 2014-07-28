@@ -10,9 +10,9 @@
     {assign var=thisforum_info value=$forum_info.forumId}
 	{if ($tiki_p_forum_post_topic eq 'y' and ($prefs.feature_wiki_discuss ne 'y' or $prefs.$forumId ne $prefs.wiki_forum_id)) or $tiki_p_admin_forum eq 'y'}
 	    {if !isset($comments_threadId) or $comments_threadId eq 0}
-		    {button href="tiki-view_forum.php?openpost=1&amp;forumId=$thisforum_info&amp;comments_threadId=0&amp;comments_threshold=$comments_threshold&amp;comments_offset=$comments_offset&amp;thread_sort_mode=$thread_sort_mode&amp;comments_per_page=$comments_per_page" _onclick="$('#forumpost').show();return false;" _text="{tr}New Topic{/tr}"}
+		    {button _class="btn btn-primary" href="tiki-view_forum.php?openpost=1&amp;forumId=$thisforum_info&amp;comments_threadId=0&amp;comments_threshold=$comments_threshold&amp;comments_offset=$comments_offset&amp;thread_sort_mode=$thread_sort_mode&amp;comments_per_page=$comments_per_page" _onclick="$('#forumpost').show();return false;" _text="{tr}New Topic{/tr}"}
 		{else}
-			{button href="tiki-view_forum.php?openpost=1&amp;forumId=$thisforum_info&amp;comments_threadId=0&amp;comments_threshold=$comments_threshold&amp;comments_offset=$comments_offset&amp;thread_sort_mode=$thread_sort_mode&amp;comments_per_page=$comments_per_page" _onclick="$('#forumpost').show();return false;" _text="{tr}New Topic{/tr}"}
+			{button _class="btn btn-primary" href="tiki-view_forum.php?openpost=1&amp;forumId=$thisforum_info&amp;comments_threadId=0&amp;comments_threshold=$comments_threshold&amp;comments_offset=$comments_offset&amp;thread_sort_mode=$thread_sort_mode&amp;comments_per_page=$comments_per_page" _onclick="$('#forumpost').show();return false;" _text="{tr}New Topic{/tr}"}
 		{/if}
 	{/if}
 	{if $tiki_p_admin_forum eq 'y' or !isset($all_forums) or $all_forums|@count > 1}
@@ -342,7 +342,7 @@
 						{if empty($user)}
 							{tr}Enter your name:{/tr}&nbsp;<input type="text" maxlength="50" id="anonymous_name" name="anonymous_name">
 						{/if}
-						<input type="submit" class="btn btn-default btn-sm" name="comments_postComment" value="{tr}Post{/tr}" {if empty($user)}onclick="setCookie('anonymous_name',document.getElementById('anonymous_name').value);needToConfirm=false;"{/if}>
+						<input type="submit" class="btn btn-primary btn-sm" name="comments_postComment" value="{tr}Post{/tr}" {if empty($user)}onclick="setCookie('anonymous_name',document.getElementById('anonymous_name').value);needToConfirm=false;"{/if}>
 						<input type="submit" class="btn btn-default btn-sm" name="comments_previewComment" value="{tr}Preview{/tr}" {if empty($user)}onclick="setCookie('anonymous_name',document.getElementById('anonymous_name').value);needToConfirm=false;"{/if}>
 						<input type="submit" class="btn btn-default btn-sm" name="comments_postCancel" value="{tr}Cancel{/tr}" {if $comment_preview neq 'y'}onclick="hide('forumpost');window.location='#header';return false;"{/if}>
                     </div>
