@@ -318,11 +318,11 @@
                 </div>
             </div>
             <div class="form-group">
-                <input type="submit" class="btn btn-default col-sm-offset-4" name="save" value="{tr}Save{/tr}">
+                <input type="submit" class="btn btn-primary col-sm-offset-4" name="save" value="{tr}Save{/tr}">
             </div>
 
 			{if $calendarId ne 0}{$name|escape} : {/if}
-			{tr}Delete events older than:{/tr} <input type="text" name="days" value="0"> {tr}days{/tr} <input type="submit" class="btn btn-default btn-sm" name="clean" value="{tr}Delete{/tr}">
+			{tr}Delete events older than:{/tr} <input type="text" name="days" value="0"> {tr}days{/tr} <input type="submit" class="btn btn-warning btn-sm" name="clean" value="{tr}Delete{/tr}">
 		</form>
 	{/tab}
 {/tabset}
