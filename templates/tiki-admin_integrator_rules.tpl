@@ -66,7 +66,7 @@
   </tr><tr>
     <td>&nbsp;</td>
     <td>
-      <input type="submit" class="btn btn-default btn-sm" name="save" value="{tr}Save{/tr}">&nbsp;&nbsp;
+      <input type="submit" class="btn btn-primary btn-sm" name="save" value="{tr}Save{/tr}">&nbsp;&nbsp;
       <input type="checkbox" name="enabled" {if $enabled eq 'y'}checked="checked"{/if} title="{tr}Check to enable this rule{/tr}">&nbsp;
       {tr}Enabled{/tr}
     </td>

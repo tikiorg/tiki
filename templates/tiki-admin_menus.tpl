@@ -3,7 +3,7 @@
 
 {if $tiki_p_admin eq 'y'}
 	<div class="navbar">
-		<a class="btn btn-default" href="{service controller=menu action=manage modal=true}" data-toggle="modal" data-target="#bootstrap-modal">
+		<a class="btn btn-primary" href="{service controller=menu action=manage modal=true}" data-toggle="modal" data-target="#bootstrap-modal">
 			{glyph name="plus"} {tr}Create Menu{/tr}
 		</a>
 		{button href="tiki-admin_modules.php" _text="{glyph name="cog"} {tr}Admin Modules{/tr}"}

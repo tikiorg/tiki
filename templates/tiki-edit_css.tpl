@@ -10,7 +10,7 @@
 	{tr}Style Sheet{/tr} : 
 {if $action eq "edit"}
 	<input type="text" name="editstyle" value="{$editstyle}">
-	<input type="submit" class="btn btn-default btn-sm" name="save" value="{tr}Save{/tr}">
+	<input type="submit" class="btn btn-primary btn-sm" name="save" value="{tr}Save{/tr}">
 	<input type="submit" class="btn btn-default btn-sm" name="save2" value="{tr}Save{/tr} &amp; {tr}Display{/tr}">
 	{button  href="tiki-edit_css.php?editstyle=$editstyle" _text="{tr}Cancel{/tr}"}
 	{if $tikidomain}

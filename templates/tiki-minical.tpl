@@ -229,7 +229,7 @@
 		<tr>
 			<td>&nbsp;</td>
 			<td>
-				<input type="submit" class="btn btn-default btn-sm" name="save" value="{tr}Save{/tr}">
+				<input type="submit" class="btn btn-primary btn-sm" name="save" value="{tr}Save{/tr}">
 				{if $eventId}
 					<input type="submit" class="btn btn-warning btn-sm" name="remove2" value="{tr}Delete{/tr}">
 				{/if}
