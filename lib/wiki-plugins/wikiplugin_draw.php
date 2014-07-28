@@ -157,7 +157,7 @@ EOF;
 		if ($globalperms->view_file_gallery != 'y') return "";
 
 		$label = tra('Edit SVG Image');
-		$ret = '<div type="image/svg+xml" class="svgImage pluginImg' . $fileInfo['fileId'] . '" style="' .
+		$ret = '<div type="image/svg+xml" class="svgImage pluginImg table-responsive' . $fileInfo['fileId'] . '" style="' .
 			(isset($height) ? "height: $height;" : "" ).
 			(isset($width) ? "width: $width;" : "" )
 		. '">' . $fileInfo['data'] . '</div>';
