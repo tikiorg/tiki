@@ -66,7 +66,7 @@
 {/if}
 
 <h2>{tr}Structure Layout{/tr}</h2>
-{button _text="{tr}Save{/tr}" _style="display:none;" _class="save_structure" _ajax="n" _auto_args="save_structure,page_ref_id"}
+{button _text="{tr}Save{/tr}" _style="display:none;" _class="save_structure" _type="primary" _ajax="n" _auto_args="save_structure,page_ref_id"}
 {self_link page_ref_id=$structure_id}
 	{if $structure_id eq $page_ref_id}<strong>{/if}
 	<big>{tr}Top{/tr}</big>
@@ -82,7 +82,7 @@
 <div class="structure-container">
 	{$nodelist}
 </div>
-{button _text="{tr}Save{/tr}" _style="display:none;" _class="save_structure" _ajax="n" _auto_args="save_structure,page_ref_id"}
+{button _text="{tr}Save{/tr}" _style="display:none;" _class="save_structure" _type="primary" _ajax="n" _auto_args="save_structure,page_ref_id"}
 
 {if $editable == 'y'}
 	<form action="tiki-edit_structure.php" method="post">
