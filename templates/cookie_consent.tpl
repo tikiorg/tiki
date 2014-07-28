@@ -26,11 +26,12 @@
 </div>
 {jq}
 $("#cookie_consent_button").click(function(){
-	if ($("input[name=cookie_consent_checkbox]:checked").length || $("input[name=cookie_consent_checkbox]").val()) {
+	if ($("input[name=cookie_consent_checkbox]:checked").length || $("input[name=cookie_consent_checkbox]:hidden").val()) {
 		var exp = new Date();
 		exp.setTime(exp.getTime()+(24*60*60*1000*{{$prefs.cookie_consent_expires}}));
 		jqueryTiki.no_cookie = false;
 		setCookie("{{$prefs.cookie_consent_name}}", "y", "", exp);
+		$(document).trigger("cookies.consent.agree");
 	}
 	$container = $("#cookie_consent_div").parents(".ui-dialog");
 	if ($container.length) {
@@ -44,6 +45,6 @@ $("#cookie_consent_button").click(function(){
 {if $prefs.cookie_consent_mode eq 'banner'}{jq}
 	setTimeout(function () {$("#cookie_consent_div").slideDown("slow");}, 500);
 {/jq}{elseif $prefs.cookie_consent_mode eq 'dialog'}{jq}
-	setTimeout(function () {$("#cookie_consent_div").dialog();}, 500);
+	setTimeout(function () {$("#cookie_consent_div").dialog({modal:true});}, 500);
 {/jq}{/if}
 {/strip}
