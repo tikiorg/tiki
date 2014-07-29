@@ -1266,13 +1266,11 @@ body.tiki_wiki #comments {
 .diffadded {
   background: #ccffcc;
   color: #000;
-  max-width: 553px;
 }
 .diffdeleted {
   background: #ffcccc;
   color: #000;
   text-decoration: line-through;
-  max-width: 553px;
 }
 .diffinldel {
   background: #ffcccc;
