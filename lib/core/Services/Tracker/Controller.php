@@ -702,6 +702,9 @@ class Services_Tracker_Controller
 
 			if ($itemId) {
 				TikiLib::lib('unifiedsearch')->processUpdateQueue();
+				if ($input->waitforindex->int()) {
+					TikiLib::events()->trigger('tiki.process.redirect');
+				}
 
 				if ($next = $input->next->url()) {
 					$access = TikiLib::lib('access');
@@ -793,6 +796,9 @@ class Services_Tracker_Controller
 			}
 
 			TikiLib::lib('unifiedsearch')->processUpdateQueue();
+			if ($input->waitforindex->int()) {
+				TikiLib::events()->trigger('tiki.process.redirect');
+			}
 		}
 
 		return array(
@@ -879,6 +885,9 @@ class Services_Tracker_Controller
 				)
 			);
 			TikiLib::lib('unifiedsearch')->processUpdateQueue();
+			if ($input->waitforindex->int()) {
+				TikiLib::events()->trigger('tiki.process.redirect');
+			}
 		}
 
 		return array(
