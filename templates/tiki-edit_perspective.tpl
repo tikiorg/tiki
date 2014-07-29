@@ -55,7 +55,7 @@
 					{/foreach}
 				</fieldset>
 				<p>
-					<input type="submit" class="btn btn-default btn-sm" name="save" value="{tr}Save{/tr}">
+					<input type="submit" class="btn btn-primary btn-sm" name="save" value="{tr}Save{/tr}">
 				</p>
 			</form>
 			<form method="post" id="searchform" action="tiki-edit_perspective.php">

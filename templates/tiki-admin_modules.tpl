@@ -13,7 +13,7 @@
 	{else}
 		{button show_hidden_modules="" class="btn btn-default" _text="{tr}Hide hidden modules{/tr}"}
 	{/if}
-	{button href="./" class="btn btn-default" _text="{tr}Exit Modules{/tr}"}
+	{button href="./" _class="btn btn-warning" _text="{tr}Exit Modules{/tr}"}
 	{button _text="{tr}Save{/tr}" _type="primary" class="btn btn-default" _id="save_modules" _ajax="n"}
 </div>
 
@@ -364,7 +364,7 @@
 					<a name="editcreate"></a>
 					{textarea name='um_data' id='um_data' _class=form-color _toolbars='y' _previewConfirmExit='n' _wysiwyg="n"}{$um_data}{/textarea}
 					<br>
-					<input type="submit" class="btn btn-default btn-sm" name="um_update" value="{if empty($um_name)}{tr}Create{/tr}{else}{tr}Save{/tr}{/if}" onclick="needToConfirm=false">
+					<input type="submit" class="btn btn-primary btn-sm" name="um_update" value="{if empty($um_name)}{tr}Create{/tr}{else}{tr}Save{/tr}{/if}" onclick="needToConfirm=false">
 				</td>
 			</tr>
 		</table>

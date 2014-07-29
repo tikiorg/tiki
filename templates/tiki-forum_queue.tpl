@@ -87,7 +87,7 @@
 <tr>
 	<td>&nbsp;</td>
 	<td>
-		<input type="submit" class="btn btn-default btn-sm" name="save" value="{tr}Save{/tr}">
+		<input type="submit" class="btn btn-primary btn-sm" name="save" value="{tr}Save{/tr}">
 		<input type="submit" class="btn btn-default btn-sm" name="saveapp" value="{tr}Save and Approve{/tr}">
 		<input type="submit" class="btn btn-warning btn-sm" name="remove" value="{tr}Remove{/tr}">
 		<input type="submit" class="btn btn-default btn-sm" name="topicize" value="{tr}convert to topic{/tr}">

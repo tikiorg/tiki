@@ -73,7 +73,7 @@
 			<input type="hidden" name="template" value="{$template|escape}">
 			{if $prefs.feature_edit_templates eq 'y' and $tiki_p_edit_templates eq 'y'}
 				{if $style_local eq 'n'}
-					<input type="submit" class="btn btn-default btn-sm" name="save" value="{tr}Save{/tr}">
+					<input type="submit" class="btn btn-primary btn-sm" name="save" value="{tr}Save{/tr}">
 				{/if}
 				<input type="submit" class="btn btn-default btn-sm" name="saveTheme" value="{tr}Save Only in the Theme:{/tr} {$prefs.style|replace:'.css':''}">
 				{if $style_local eq 'y'}

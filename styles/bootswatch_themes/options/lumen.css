@@ -5840,6 +5840,9 @@ body.navbar-padding {
     border-bottom: 0;
   }
 }
+header.page-header::before {
+  content: none;
+}
 .navbar {
   border-width: 0 1px 4px 1px;
 }

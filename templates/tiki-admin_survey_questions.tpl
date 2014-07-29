@@ -125,7 +125,7 @@ $("select[name=type]").change(function () {
 				</tr>
 				<tr>
 					<td>&nbsp;</td>
-					<td><input type="submit" class="btn btn-default btn-sm" name="save" value="{tr}Save{/tr}"></td>
+					<td><input type="submit" class="btn btn-primary btn-sm" name="save" value="{tr}Save{/tr}"></td>
 				</tr>
 			</table>
 		</form>

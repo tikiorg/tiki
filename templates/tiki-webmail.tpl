@@ -287,7 +287,7 @@
 							<tr>
 								<td>&nbsp;</td>
 								<td colspan="3">
-									<input type="submit" class="btn btn-default btn-sm" name="new_acc" value="{if $accountId eq ''}{tr}Add{/tr}{else}{tr}Update{/tr}{/if}">
+									<input type="submit" class="btn btn-primary btn-sm" name="new_acc" value="{if $accountId eq ''}{tr}Add{/tr}{else}{tr}Update{/tr}{/if}">
 									<input type="submit" class="btn btn-default btn-sm" name="cancel_acc" value="{tr}Cancel{/tr}">
 								</td>
 							</tr>
@@ -547,7 +547,7 @@
 				<input type="hidden" name="attach1type" value="{$attach1type|escape}">
 				<input type="hidden" name="attach2type" value="{$attach2type|escape}">
 				<input type="hidden" name="attach3type" value="{$attach3type|escape}">
-				<input type="submit" class="btn btn-default btn-sm" name="send" value="{tr}Send{/tr}">
+				<input type="submit" class="btn btn-primary btn-sm" name="send" value="{tr}Send{/tr}">
 				<table class="formcolor">
 					<tr>
 						<td>
@@ -588,7 +588,7 @@
 							{if $attach3}
 								({$attach3})
 							{/if}
-							<input type="submit" class="btn btn-default btn-sm" name="attach" value="{tr}Add{/tr}">
+							<input type="submit" class="btn btn-primary btn-sm" name="attach" value="{tr}Add{/tr}">
 						</td>
 					</tr>
 					<tr>

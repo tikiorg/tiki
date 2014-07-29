@@ -44,7 +44,7 @@
         </div>
         <div class="form-group">
             <div class="col-sm-10 col-sm-push-2">
-                <input type="submit" class="btn btn-default btn-sm" name="duplicate" value="{tr}Duplicate{/tr}">
+                <input type="submit" class="btn btn-primary btn-sm" name="duplicate" value="{tr}Duplicate{/tr}">
             </div>
         </div>
     </form>

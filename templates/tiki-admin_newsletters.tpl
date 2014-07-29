@@ -2,9 +2,9 @@
 {title help="Newsletters"}{tr}Admin newsletters{/tr}{/title}
 
 <div class="t_navbar btn-group form-group">
-	{button href="tiki-admin_newsletters.php?cookietab=2" class="btn btn-default" _text="{tr}Create Newsletter{/tr}"}
-	{button href="tiki-newsletters.php" class="btn btn-default" _text="{tr}List Newsletters{/tr}"}
-	{button href="tiki-send_newsletters.php" class="btn btn-default" _text="{tr}Send Newsletters{/tr}"}
+	{button href="tiki-admin_newsletters.php?cookietab=2" _class="btn btn-default" _text="{tr}Create Newsletter{/tr}"}
+	{button href="tiki-newsletters.php" _class="btn btn-default" _text="{tr}List Newsletters{/tr}"}
+	{button href="tiki-send_newsletters.php" _class="btn btn-default" _text="{tr}Send Newsletters{/tr}"}
 </div>
 
 {tabset}
@@ -151,7 +151,7 @@
 		<tr>
 			<td>&nbsp;</td>
 			<td>
-				<input type="submit" class="btn btn-default btn-sm" name="save" value="{tr}Save{/tr}">
+				<input type="submit" class="btn btn-primary btn-sm" name="save" value="{tr}Save{/tr}">
 			</td>
 		</tr>
 	</table>

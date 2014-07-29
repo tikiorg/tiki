@@ -375,7 +375,7 @@
 						</div>
                     <div class="form-group">
                         <div class="col-sm-10 col-sm-push-2">
-                            <input type="submit" class="btn btn-default" name="send" value="{tr}Send{/tr}">
+                            <input type="submit" class="btn btn-primary" name="send" value="{tr}Send{/tr}">
 						    <input type="checkbox" name="replytome" id="replytome">
 						    <label for="replytome">
 						        {tr}Reply-to my email{/tr}

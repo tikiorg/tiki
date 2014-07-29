@@ -34,7 +34,7 @@
   <tr>
     <td >&nbsp;</td>
     <td >
-      <input type="submit" class="btn btn-default btn-sm" name="save" value="{tr}Save{/tr}">
+      <input type="submit" class="btn btn-primary btn-sm" name="save" value="{tr}Save{/tr}">
       {* set your changes and save 'em *}
     </td>
   </tr>

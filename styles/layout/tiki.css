@@ -1258,7 +1258,7 @@ body.tiki_wiki #comments {
 }
 .diff td {
   border: 1px solid #696969;
-  white-space: normal;
+  white-space: normal !important;
 }
 .diff div {
   border-top: 1px solid #696969;
@@ -1266,13 +1266,11 @@ body.tiki_wiki #comments {
 .diffadded {
   background: #ccffcc;
   color: #000;
-  max-width: 553px;
 }
 .diffdeleted {
   background: #ffcccc;
   color: #000;
   text-decoration: line-through;
-  max-width: 553px;
 }
 .diffinldel {
   background: #ffcccc;
@@ -1280,6 +1278,7 @@ body.tiki_wiki #comments {
 }
 .diffbody {
   background: #f2f4f5;
+  color: #2a2a2a;
 }
 .diffchar {
   color: red;

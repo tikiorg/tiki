@@ -158,7 +158,7 @@
                 <p class="form-control-static">{$userinfo.lastLogin|tiki_long_datetime}</p>
             </div>
 
-            <input type="submit" class="btn btn-default" name="new_prefs" value="Save changes">
+            <input type="submit" class="btn btn-primary" name="new_prefs" value="Save changes">
 	{/tab}
 	{tab name="{tr}Preferences{/tr}"}
         <h2>{tr}Preferences{/tr}</h2>
@@ -462,7 +462,7 @@
     {button _text='{tr}Reset{/tr}' _onclick="if (confirm('{tr}This will reset the visibility of all the tips, notices and warning remarks boxes you have closed.{/tr}')) {ldelim}deleteCookie('rbox');{rdelim}return false;"}
 </div>
 
-        <div><input type="submit" class="btn btn-default" name="new_prefs" value="{tr}Save changes{/tr}"></div>
+        <div><input type="submit" class="btn btn-primary" name="new_prefs" value="{tr}Save changes{/tr}"></div>
 
 		</form>
 	{/tab}
@@ -520,7 +520,7 @@
 				{/if}
 
 				<div class="text-center">
-					<input type="submit" class="btn btn-default btn-sm" name="chgadmin" value="{tr}Save changes{/tr}">
+					<input type="submit" class="btn btn-primary btn-sm" name="chgadmin" value="{tr}Save changes{/tr}">
 				</div>
 		</form>
 	{/tab}
@@ -539,7 +539,7 @@
 
                 </div>
 				<div class="form-group">
-					<input type="submit" class="btn btn-default btn-sm" name="deleteaccount" value="{if !empty($userwatch)}{tr}Delete the account:{/tr} {$userwatch|escape}{else}{tr}Delete my account{/tr}{/if}">
+					<input type="submit" class="btn btn-danger btn-sm" name="deleteaccount" value="{if !empty($userwatch)}{tr}Delete the account:{/tr} {$userwatch|escape}{else}{tr}Delete my account{/tr}{/if}">
                 </div>
             </div>
 		</form>

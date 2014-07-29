@@ -5839,6 +5839,9 @@ body.navbar-padding {
     border-bottom: 0;
   }
 }
+header.page-header::before {
+  content: none;
+}
 .navbar-inverse .badge {
   background-color: #fff;
   color: #d9230f;

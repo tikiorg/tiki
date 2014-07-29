@@ -47,7 +47,7 @@
 				<input type="checkbox" name="always_email" value="1"{if $report_preferences.always_email eq 1 OR $report_preferences eq false} checked="checked"{/if}> {tr}Send me an email also if nothing happened{/tr}
 			</div>
 			
-			<p><input type="submit" name="submit" class="btn btn-default" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}"></p>
+			<p><input type="submit" name="submit" class="btn btn-primary" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}"></p>
 		</form>
 	{/tab}
 	{/if}
@@ -96,7 +96,7 @@
 	</tr>
 	{/if}
 	<tr><td>&nbsp;</td>
-	<td><input type="submit" class="btn btn-default btn-sm" name="add" value="{tr}Add{/tr}"></td>
+	<td><input type="submit" class="btn btn-primary btn-sm" name="add" value="{tr}Add{/tr}"></td>
 	</tr>
 	</table>
 	</form>
@@ -218,7 +218,7 @@
         {/if}
 		<p><input type="checkbox" name="user_comment_watch_editor" value="true" {if $user_comment_watch_editor eq 'y'}checked{/if}> {tr}Comment{/tr}</p>
 
-		<p><input type="submit" class="btn btn-default btn-sm" name="submit" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}"></p>
+		<p><input type="submit" class="btn btn-primary btn-sm" name="submit" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}"></p>
 	</form>
 {/tab}
 {/tabset}
