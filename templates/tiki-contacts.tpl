@@ -9,7 +9,7 @@
 		{/if}
 	</div>
 	<div style="float:left;margin:5px;">
-		{button href="#" _onclick="flip('editform');return false;" _class="btn btn-primary" _text="{tr}Create/edit contacts{/tr}"}
+		{button href="#" _onclick="flip('editform');return false;" _class="btn btn-default" _text="{tr}Create/edit contacts{/tr}"}
 		{button href="tiki-user_contacts_prefs.php" _class="btn btn-default" _text="{tr}Preferences{/tr}"}
 	</div>
 </div>

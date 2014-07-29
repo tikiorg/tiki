@@ -3,7 +3,7 @@
 	{include file='tiki-mytiki_bar.tpl'}
 
 <div class="t_navbar">
-	{button href="tiki-notepad_write.php" _class="btn btn-primary" _text="{tr}Write a note{/tr}"}
+	{button href="tiki-notepad_write.php" _class="btn btn-default" _text="{tr}Write a note{/tr}"}
 </div>
 
 <div style="text-align:center;">
