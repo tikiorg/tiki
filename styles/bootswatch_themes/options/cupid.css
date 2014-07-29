@@ -1,5 +1,5 @@
 @import url("//fonts.googleapis.com/css?family=Bitter:400,700");
-@import url("//fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,400italic");
+@import url("http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,400italic");
 .page-header {
   border-bottom: none;
   margin: auto;
@@ -66,6 +66,9 @@ body.navbar-padding {
   .table-responsive > .table-bordered > tfoot > tr:last-child > td {
     border-bottom: 0;
   }
+}
+header.page-header::before {
+  content: none;
 }
 /*!
  * Bootswatch v3.1.1

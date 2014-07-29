@@ -5833,6 +5833,9 @@ body.navbar-padding {
     border-bottom: 0;
   }
 }
+header.page-header::before {
+  content: none;
+}
 .navbar {
   -webkit-box-shadow: none;
   box-shadow: none;

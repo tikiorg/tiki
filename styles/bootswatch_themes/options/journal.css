@@ -5840,6 +5840,9 @@ body.navbar-padding {
     border-bottom: 0;
   }
 }
+header.page-header::before {
+  content: none;
+}
 .navbar {
   font-size: 18px;
   font-family: "News Cycle", "Arial Narrow Bold", sans-serif;

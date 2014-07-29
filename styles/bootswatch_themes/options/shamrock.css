@@ -66,6 +66,9 @@ body.navbar-padding {
     border-bottom: 0;
   }
 }
+header.page-header::before {
+  content: none;
+}
 /*!
  * Bootswatch v3.1.1
  * Homepage: http://bootswatch.com

@@ -1,4 +1,6 @@
-/* bshost.css - Not for distribution. Enables an external Bootstrap theme to be used as-is with Tiki. */
-@import url("layout/tiki.css");
-@import url(../vendor/twitter/bootstrap/dist/css/bootstrap.css);
+/* bootswatch_themes.css - Provided to organize Bootswatch themes in Tiki Wiki CMS Groupware.
+	A theme option file - a Bootswatch theme - must be selected for use with this file.  */
 
+header.page-header::before { 
+	content:"Warning: This theme file requires a theme option. Please select one.";
+}

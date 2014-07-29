@@ -5839,6 +5839,9 @@ body.navbar-padding {
     border-bottom: 0;
   }
 }
+header.page-header::before {
+  content: none;
+}
 .navbar {
   background-image: -webkit-linear-gradient(#484e55, #3a3f44 60%, #313539);
   background-image: linear-gradient(#484e55, #3a3f44 60%, #313539);
