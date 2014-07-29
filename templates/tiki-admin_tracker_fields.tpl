@@ -9,7 +9,7 @@
 	{assign var='title' value="{tr}Admin Tracker:{/tr} "|cat:$tracker_info.name|escape}
 	<div class="navbar">
 		<div class="btn-group">
-			<a href="{service controller=tracker action=add_field trackerId=$trackerId}" class="btn btn-primary add-field">{glyph name="plus"} {tr}Add Field{/tr}</a>
+			<a href="{service controller=tracker action=add_field trackerId=$trackerId}" class="btn btn-default add-field">{glyph name="plus"} {tr}Add Field{/tr}</a>
 			<a href="{service controller=tracker action=import_fields trackerId=$trackerId modal=1}" class="btn btn-default" data-toggle="modal" data-target="#bootstrap-modal">{glyph name="import"} {tr}Import Fields{/tr}</a>
 		</div>
 		{include file="tracker_actions.tpl"}
