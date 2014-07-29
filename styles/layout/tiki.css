@@ -1258,7 +1258,7 @@ body.tiki_wiki #comments {
 }
 .diff td {
   border: 1px solid #696969;
-  white-space: normal;
+  white-space: normal !important;
 }
 .diff div {
   border-top: 1px solid #696969;
