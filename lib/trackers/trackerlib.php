@@ -731,7 +731,6 @@ class TrackerLib extends TikiLib
 			if ($myfield=$definition->getField($field)) {
 				$is_date=($myfield['type']=='f');
 				$is_trackerlink=($myfield['type']=='r');
-				$tmp="";
 				$tmp=$this->get_all_items($trackerId, $field, $status, false);//deliberatly do not check perm on categs on items
 				$options = $myfield['options_map'];
 				foreach ($tmp as $key => $value) {
@@ -739,8 +738,9 @@ class TrackerLib extends TikiLib
 						$value=$this->date_format("%e/%m/%y", $value);
 					}
 					if ($is_trackerlink && $options['displayFieldsList']) {
-						// If $options[3] is empty, concat_item_from_fieldslist returns nothing
-						$value=$this->concat_item_from_fieldslist($options['trackerId'], $value, $options['displayFieldsList'], $strip_tags);
+						$item = $this->get_tracker_item($key);
+						$itemId = $item[$field];
+						$value=$this->concat_item_from_fieldslist($options['trackerId'], $itemId, $options['displayFieldsList'], $status, $separator, '', $strip_tags);
 					}
 					if (!empty($res[$key])) {
 						$res[$key].=$separator.$value;

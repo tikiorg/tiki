@@ -102,7 +102,6 @@
 
 .calnavigation {
 	border-width: 0;
-	padding: 4px;
 	text-align: center;
 	font-size: 1.1em;
 	font-weight: bold;
@@ -112,8 +111,7 @@
 }
 
 .calnavigation a {
-	padding: 0 10px 4px 10px;
-	line-height: 11px;
+	padding: 0 4px 4px 4px;
 }
 
 .calnavigation a.prev {
