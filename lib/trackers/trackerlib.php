@@ -737,7 +737,7 @@ class TrackerLib extends TikiLib
 					if ($is_date) {
 						$value=$this->date_format("%e/%m/%y", $value);
 					}
-					if ($is_trackerlink && $options['displayFieldsList']) {
+					if ($is_trackerlink && $options['displayFieldsList'] && !empty($options['displayFieldsList'][0])) {
 						$item = $this->get_tracker_item($key);
 						$itemId = $item[$field];
 						$value=$this->concat_item_from_fieldslist($options['trackerId'], $itemId, $options['displayFieldsList'], $status, $separator, '', $strip_tags);
