@@ -740,7 +740,7 @@ class TrackerLib extends TikiLib
 					if ($is_trackerlink && $options['displayFieldsList']) {
 						$item = $this->get_tracker_item($key);
 						$itemId = $item[$field];
-						$value=$this->concat_item_from_fieldslist($options['trackerId'], $itemId, $options['displayFieldsList'], $strip_tags);
+						$value=$this->concat_item_from_fieldslist($options['trackerId'], $itemId, $options['displayFieldsList'], $status, $separator, '', $strip_tags);
 					}
 					if (!empty($res[$key])) {
 						$res[$key].=$separator.$value;
