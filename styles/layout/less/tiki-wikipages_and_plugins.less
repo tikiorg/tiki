@@ -834,6 +834,12 @@ body.tiki_wiki #comments {
   white-space: normal !important;
 }
 
+// Override Bootstrap's .table-responsive .table's white-space: nowrap rule.
+.table-responsive > .table > tbody > tr > td.text-left {
+  white-space: normal;
+}
+
+
 .diff div {
   border-top: 1px solid #696969;
 }

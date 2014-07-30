@@ -1260,6 +1260,9 @@ body.tiki_wiki #comments {
   border: 1px solid #696969;
   white-space: normal !important;
 }
+.table-responsive > .table > tbody > tr > td.text-left {
+  white-space: normal;
+}
 .diff div {
   border-top: 1px solid #696969;
 }
