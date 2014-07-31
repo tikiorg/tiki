@@ -72,6 +72,37 @@ class TikiDate
 				'%Z' => 'T'
 	);
 
+	public static $deprecated_tz = array(
+		'CST6CDT',
+		'Cuba',
+		'Egypt',
+		'Eire',
+		'EST5EDT',
+		'Factory',
+		'GB-Eire',
+		'GMT0',
+		'Greenwich',
+		'Hongkong',
+		'Iceland',
+		'Iran',
+		'Israel',
+		'Jamaica',
+		'Japan',
+		'Kwajalein',
+		'Libya',
+		'MST7MDT',
+		'Navajo',
+		'NZ-CHAT',
+		'Poland',
+		'Portugal',
+		'PST8PDT',
+		'Singapore',
+		'Turkey',
+		'Universal',
+		'W-SU',
+		'Zulu'
+	);
+
 	/**
 	 * Default constructor
 	 */
@@ -110,6 +141,9 @@ class TikiDate
 		ksort($tz_list);
 
 		foreach ($tz_list as $tz_id) {
+			if (in_array($tz_id, TikiDate::$deprecated_tz)) {
+				continue; // Workaround PHP5.5 no more this timezone https://bugs.php.net/bug.php?id=66985
+			}
 			$tmp_now = new DateTime('now', new DateTimeZone($tz_id));
 			$tmp = $tmp_now->getOffset() - 3600*$tmp_now->format('I');
 			$tz[$tz_id]['offset'] = $tmp * 1000;
@@ -378,7 +412,13 @@ class TikiDate
 		static $ids = null;
 
 		if (! $ids) {
-			$ids = DateTimeZone::listIdentifiers(DateTimeZone::ALL_WITH_BC);
+			$t_ids = DateTimeZone::listIdentifiers(DateTimeZone::ALL_WITH_BC);
+			foreach ($t_ids as $id) {
+				if (in_array($id, TikiDate::$deprecated_tz)) {
+					continue; // Workaround PHP5.5 no more this timezone https://bugs.php.net/bug.php?id=66985
+				}
+				$ids[] = $id;
+			}
 		}
 
 		return $ids;
