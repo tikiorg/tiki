@@ -57,6 +57,9 @@ class Pop3 implements SourceInterface
 			yield $message;
 		}
 
+		// Due to an issue in Zend_Mail_Storage, deletion must be done in reverse order
+		$toDelete = array_reverse($toDelete);
+
 		foreach ($toDelete as $i) {
 			$pop->removeMessage($i);
 		}
