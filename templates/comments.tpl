@@ -259,7 +259,7 @@
                             {tr}Attach file{/tr}
                         </label>
                         <div class="col-sm-10">
-                            <input type="hidden" name="MAX_FILE_SIZE" value="{$forum_info.att_max_size|escape}"><input id="userfile1" name="userfile1" type="file">{tr}Maximum size:{/tr} {$forum_info.att_max_size|kbsize}
+                            <input type="hidden" name="MAX_FILE_SIZE" value="{$forum_info.att_max_size|escape}"><input class="form-control" id="userfile1" name="userfile1" type="file">{tr}Maximum size:{/tr} {$forum_info.att_max_size|kbsize}
                         </div>
                     </div>
                 {/if}

@@ -85,11 +85,8 @@
 
 {include file='comments.tpl'}
 
-<table id="forumjumpto" style="clear:both;" ><tr>
-
-	<td style="text-align:left;">
-		<form id='time_control' method="get" action="tiki-view_forum_thread.php">
-
+    <div class="form-group">
+		<form class="form-horizontal" role="form" id='time_control' method="get" action="tiki-view_forum_thread.php">
 			<input type="hidden" name="comments_offset" value="{$comments_offset|escape}">
 			<input type="hidden" name="comments_threadId" value="{$comments_threadId|escape}">
 			<input type="hidden" name="comments_parentId" value="{$comments_parentId|escape}">
@@ -101,31 +98,34 @@
 			<input type="hidden" name="topics_threshold" value="{$smarty.request.topics_threshold|escape}">    
 			<input type="hidden" name="forumId" value="{$forumId|escape}">
 
-			<small>{tr}Show posts:{/tr}</small>
-			<select name="time_control" onchange="javascript:document.getElementById('time_control').submit();">
-				<option value="" {if empty($smarty.request.time_control)}selected="selected"{/if}>{tr}All posts{/tr}</option>
-				<option value="3600" {if isset($smarty.request.time_control) and $smarty.request.time_control eq 3600}selected="selected"{/if}>{tr}Last hour{/tr}</option>
-				<option value="86400" {if isset($smarty.request.time_control) and $smarty.request.time_control eq 86400}selected="selected"{/if}>{tr}Last 24 hours{/tr}</option>
-				<option value="172800" {if isset($smarty.request.time_control) and $smarty.request.time_control eq 172800}selected="selected"{/if}>{tr}Last 48 hours{/tr}</option>
-			</select>
+            <label class="col-sm-2 control-label" for="userfile1">{tr}Show posts:{/tr}</label>
+            <div class="col-sm-3">
+			    <select class="form-control" name="time_control" onchange="javascript:document.getElementById('time_control').submit();">
+			    	<option value="" {if empty($smarty.request.time_control)}selected="selected"{/if}>{tr}All posts{/tr}</option>
+				    <option value="3600" {if isset($smarty.request.time_control) and $smarty.request.time_control eq 3600}selected="selected"{/if}>{tr}Last hour{/tr}</option>
+				    <option value="86400" {if isset($smarty.request.time_control) and $smarty.request.time_control eq 86400}selected="selected"{/if}>{tr}Last 24 hours{/tr}</option>
+				    <option value="172800" {if isset($smarty.request.time_control) and $smarty.request.time_control eq 172800}selected="selected"{/if}>{tr}Last 48 hours{/tr}</option>
+			    </select>
+            </div>
 		</form>
-	</td>
+	</div>
 
-	<td style="text-align:right;">
-		{if $prefs.feature_forum_quickjump eq 'y' && $all_forums|@count > 1}
-		<form id='quick' method="get" action="tiki-view_forum.php">
-			<small>{tr}Jump to forum:{/tr}</small>
-			<select name="forumId" onchange="javascript:document.getElementById('quick').submit();">
-				{section name=ix loop=$all_forums}
-				<option value="{$all_forums[ix].forumId|escape}" {if $all_forums[ix].forumId eq $forumId}selected="selected"{/if}>{$all_forums[ix].name}</option>
-				{/section}
-			</select>
+    <div class="form-group pull-right">
+        {if $prefs.feature_forum_quickjump eq 'y' && $all_forums|@count > 1}
+		<form class="form-horizontal" role="form" id='quick' method="get" action="tiki-view_forum.php">
+			<label class="col-sm-6 control-label" for="forumId">{tr}Jump to forum:{/tr}</label>
+            <div class="col-sm-6">
+    			<select id="forumId" class="form-control" name="forumId" onchange="javascript:document.getElementById('quick').submit();">
+	    			{section name=ix loop=$all_forums}
+		    	    	<option value="{$all_forums[ix].forumId|escape}" {if $all_forums[ix].forumId eq $forumId}selected="selected"{/if}>{$all_forums[ix].name}</option>
+			    	{/section}
+			    </select>
+            </div>
 		</form>
 		{else}
 		&nbsp;
 		{/if}
-		</td>
-</tr></table>
+</div>
 
 {if isset($view_atts) and $view_atts eq 'y'}
 <h2 id="attachments">{tr}Attachments{/tr}</h2>
