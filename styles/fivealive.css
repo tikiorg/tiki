@@ -5788,13 +5788,24 @@ body.navbar-padding {
   /* inner <header> element that gets .fixedwidth class applied */
   background: url('fivealive/options/blueberry/siteheader.jpg') 0 0 no-repeat;
 }
-header.header .module.secondary_site_menu {
+header.header .secondary_site_menu .navbar-default {
   background: none;
+  float: right;
+}
+header.header .secondary_site_menu .navbar-default .navbar-nav > li > a {
+  padding-bottom: 4px;
+  padding-top: 4px;
 }
 .page-header {
   margin-top: 0;
   margin-bottom: 0;
   border-bottom: none;
+}
+.box-quickadmin .cssmenu_horiz ul li {
+  background: #0e567a;
+}
+#topbar_modules .box-search {
+  margin-top: 8px;
 }
 .form-control,
 select,
