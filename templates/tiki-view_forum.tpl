@@ -364,12 +364,13 @@
 {/if}
 
 {if $prefs.feature_forum_content_search eq 'y' and $prefs.feature_search eq 'y'}
-	<div class="text-center">
-		<form id="search-form" class="forms" method="get" action="tiki-search{if $prefs.feature_forum_local_tiki_search eq 'y'}index{else}results{/if}.php">
-				<input name="highlight" size="30" type="text">
-				<input type="hidden" name="where" value="forums">
-				<input type="hidden" name="forumId" value="{$forum_info.forumId}">
-				<input type="submit" class="wikiaction btn btn-default" name="search" value="{tr}Find{/tr}">
+	<div class="text-center form-group">
+		<form id="search-form" class="form-inline" role="form" method="get" action="tiki-search{if $prefs.feature_forum_local_tiki_search eq 'y'}index{else}results{/if}.php">
+            <label class="sr-only" for="findinforums">{tr}Find{/tr}</label>
+            <input name="highlight" id="findinforums" type="text" class="form-control">
+			<input type="hidden" name="where" value="forums">
+			<input type="hidden" name="forumId" value="{$forum_info.forumId}">
+			<input type="submit" class="wikiaction btn btn-default" name="search" value="{tr}Find{/tr}">
 		</form>
 	</div>
 {/if}
