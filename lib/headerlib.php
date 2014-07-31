@@ -710,17 +710,23 @@ class HeaderLib
 		global $tikiroot;
 
 		preg_match_all('/@import\s+url\("([^;]*)"\);/', $minified, $parts);
-		$imports = array_unique($parts[0]);
+		$top = [];
 
 		$pre = '';
-		foreach ( $parts[1] as $f ) {
-			$pre .= $this->minify_css($f);
+		foreach ( $parts[1] as $k => $f ) {
+			if (substr($f, 0, 2) == '//' || substr($f, 0, 7) == 'http://' || substr($f, 0, 8) == 'https://') {
+				$top[] = $parts[0][$k];
+				unset($parts[0][$k]); // Exclude import removal, external file
+			} else {
+				$pre .= $this->minify_css($f);
+			}
 		}
 
+		$imports = array_unique($parts[0]);
 		$minified = $pre . $minified;
 		$minified = str_replace($imports, '', $minified);
 
-		return $minified;
+		return implode("\n", $top) . "\n" . $minified;
 	}
 
 	public function minify_css( $file )

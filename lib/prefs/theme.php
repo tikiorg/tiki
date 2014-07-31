@@ -28,6 +28,7 @@ function prefs_theme_list()
 			'default' => 'default',
 			'options' => $themes,
             'help' => 'Tiki13#Themes',
+			'tags' => array('basic'),
 		),
 		'theme_custom' => array(
 			'name' => tr('Custom theme URL'),
@@ -35,6 +36,7 @@ function prefs_theme_list()
 			'type' => 'text',
 			'filter' => 'url',
 			'default' => '',
+			'tags' => array('basic'),
 		),
 	);
 }

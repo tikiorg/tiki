@@ -5770,10 +5770,27 @@ header.container {
   background: url('feb12/header.jpg') repeat-x bottom;
 }
 .navbar-default .navbar-collapse,
-.navbar-default .navbar-form {
+.navbar-default .navbar-form,
+#topbar_modules {
   background: url('feb12/header.jpg') repeat-x;
   color: #F5F5F5;
   border: none;
+}
+#topbar_modules .box-search .form-group {
+  margin-bottom: 0;
+}
+#topbar_modules .box-search .form-group input[type="text"] {
+  margin-top: 5px;
+  height: 28px;
+}
+#topbar_modules .box-search .btn {
+  font-size: 10px;
+  margin-top: 4px;
+}
+#topbar_modules .navbar-default .navbar-nav > .active > a,
+#topbar_modules .navbar-default .navbar-nav > .active > a:hover,
+#topbar_modules .navbar-default .navbar-nav > .active > a:focus {
+  background: url('feb12/page.jpg') repeat-x;
 }
 .navbar {
   margin-bottom: 0;
@@ -5840,7 +5857,7 @@ input.tablesorter-filter {
 .tablesorter input.dateFrom,
 .tablesorter input.dateTo {
   border: none;
-  background-color: #f7f7f7;
+  background-color: #dbf0f2;
 }
 .clearfix:before,
 .clearfix:after,

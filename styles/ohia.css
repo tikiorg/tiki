@@ -5759,12 +5759,24 @@ body.navbar-padding {
     border-bottom: 0;
   }
 }
+button,
+input,
+optgroup,
+select,
+textarea {
+  background: #242424;
+  color: #cfcfcf;
+}
 #top_modules {
   background-image: url('ohia/header.png');
 }
 .container {
   border: 1px solid #4c4c4c;
   margin-bottom: 5px;
+}
+header.container,
+.middle_outer > .container {
+  margin-bottom: 0;
 }
 .navbar-collapse {
   background: #030511;
@@ -5778,6 +5790,12 @@ body.navbar-padding {
 }
 .box-quickadmin .cssmenu_horiz ul li {
   background-color: #4c4c4c;
+}
+.middle_outer > .container {
+  border-top: none;
+}
+#topbar_modules .box-search {
+  margin-top: 8px;
 }
 #col2,
 #col3 {
