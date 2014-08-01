@@ -5774,6 +5774,13 @@ textarea {
   border: 1px solid #4c4c4c;
   margin-bottom: 5px;
 }
+.layout_social .navbar-inverse,
+.layout_social .navbar-inverse .navbar-collapse,
+.layout_social .navbar-inverse .navbar-form,
+.layout_social .navbar-inverse .container {
+  background: #5e0000;
+  border-color: transparent;
+}
 header.container,
 .middle_outer > .container {
   margin-bottom: 0;
