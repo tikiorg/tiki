@@ -5769,6 +5769,10 @@ header.container {
 .page-header {
   background: url('feb12/header.jpg') repeat-x bottom;
 }
+.layout_social .navbar-inverse,
+.layout_social .navbar-inverse .navbar-collapse,
+.layout_social .navbar-inverse .navbar-form,
+.layout_social .navbar-inverse .container,
 .navbar-default .navbar-collapse,
 .navbar-default .navbar-form,
 #topbar_modules {
