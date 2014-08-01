@@ -5770,6 +5770,24 @@ body {
 header.container {
   margin-top: 20px;
 }
+.layout_social .navbar-inverse,
+.layout_social .navbar-inverse .navbar-collapse,
+.layout_social .navbar-inverse .navbar-form,
+.layout_social .navbar-inverse .container {
+  background: url('snow/flakesptn2.jpg');
+  border: none;
+}
+.layout_social .navbar-inverse {
+  border-bottom: 1px solid #6c7b8c;
+}
+.navbar-inverse .navbar-brand,
+.navbar-inverse a,
+.navbar-inverse .navbar-nav > li > a {
+  color: #1C1329;
+}
+body.layout_social > .container {
+  padding-top: 20px;
+}
 .panel {
   background: url('snow/flakesptn2.jpg');
 }
