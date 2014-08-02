@@ -114,6 +114,54 @@ class Search_Elastic_Connection
 		$this->rawIndex($index, $type, $id, $data);
 	}
 
+	function assignAlias($alias, $targetIndex)
+	{
+		$this->flush();
+
+		$active = [];
+		$toRemove = [];
+		$current = $this->rawApi('/_aliases');
+		foreach ($current as $indexName => $info) {
+			if (array_key_exists($alias, $info->aliases)) {
+				$active[] = $indexName;
+				$toRemove[] = $indexName;
+			} elseif (0 === strpos($indexName, $alias . '_') && $indexName != $targetIndex) {
+				$toRemove[] = $indexName;
+			}
+		}
+		$actions = [
+			['add' => ['index' => $targetIndex, 'alias' => $alias]],
+		];
+
+		foreach ($active as $index) {
+			$actions[] = ['remove' => ['index' => $index, 'alias' => $alias]];
+		}
+
+		$this->post('/_aliases', json_encode([
+			'actions' => $actions,
+		]));
+
+		// Make sure the new index is fully active, then clean-up
+		$this->refresh($alias);
+
+		foreach ($toRemove as $old) {
+			$this->deleteIndex($old);
+		}
+	}
+
+	function isRebuilding($aliasName)
+	{
+		$current = $this->rawApi('/_aliases');
+		foreach ($current as $indexName => $info) {
+			if (0 === strpos($indexName, $aliasName . '_') && 0 === count((array) $info->aliases)) {
+				// Matching name, no alias, means currently rebuilding
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	private function rawIndex($index, $type, $id, $data)
 	{
 		$this->dirty[$index] = true;

@@ -129,6 +129,10 @@ class UnifiedSearchLib
 			$old = $this->getIndex('data-old');
 
 			return $new->exists() || $old->exists();
+		} elseif ($prefs['unified_engine'] == 'elastic') {
+			$name = $this->getIndexLocation('data');
+			$connection = $this->getElasticConnection();
+			return $connection->isRebuilding($name);
 		}
 
 		return false;
@@ -179,7 +183,8 @@ class UnifiedSearchLib
 			break;
 		case 'elastic':
 			$connection = $this->getElasticConnection();
-			$indexName = $prefs['unified_elastic_index_prefix'] . uniqid();
+			$aliasName = $prefs['unified_elastic_index_prefix'] . 'main';
+			$indexName = $aliasName . '_' . uniqid();
 			$index = new Search_Elastic_Index($connection, $indexName);
 
 			TikiLib::events()->bind(
@@ -265,10 +270,9 @@ class UnifiedSearchLib
 			$oldIndex = new Search_Lucene_Index($swapName);
 			break;
 		case 'elastic':
-			// Obtain the old index and destroy it after permanently replacing it.
-			$oldIndex = $this->getIndex();
-
+			$oldIndex = null; // assignAlias will handle the clean-up
 			$tikilib->set_preference('unified_elastic_index_current', $indexName);
+			$connection->assignAlias($aliasName, $indexName);
 
 			break;
 		case 'mysql':
@@ -316,7 +320,7 @@ class UnifiedSearchLib
 				'preference' => $prefs['tmpDir'] . '/unified-preference-index-' . $prefs['language'],
 			),
 			'elastic' => array(
-				'data' => $prefs['unified_elastic_index_current'],
+				'data' => $prefs['unified_elastic_index_prefix'] . 'main',
 				'preference' => $prefs['unified_elastic_index_prefix'] . 'pref_' . $prefs['language'],
 			),
 			'mysql' => array(
