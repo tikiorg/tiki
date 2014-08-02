@@ -182,9 +182,9 @@
 				}
 			}
 		},
- 		{
- 			"type": "package",
- 			"package": {
+		{
+			"type": "package",
+			"package": {
 				"name": "codemirror/codemirror",
 				"version": "3.19.0",
 				"dist": {
@@ -204,9 +204,9 @@
 				}
 			}
 		},
- 		{
- 			"type": "package",
- 			"package": {
+		{
+			"type": "package",
+			"package": {
 				"name": "dompdf/dompdf",
 				"version": "0.6.1",
 				"dist": {
@@ -867,6 +867,17 @@
 		{
 			"type": "package",
 			"package": {
+				"name": "jquery/plugins/tablesorter",
+				"version": "2.17.6",
+				"dist": {
+					"url": "https://github.com/Mottie/tablesorter/archive/v2.17.6.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
 				"name": "jquery/plugins/treetable",
 				"version": "3.0.1",
 				"dist": {
@@ -974,7 +985,7 @@
 				}
 			}
 		},
- 		{
+		{
 			"type": "package",
 			"package": {
 				"name": "player/mp3",
