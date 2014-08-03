@@ -971,9 +971,9 @@
 			"type": "package",
 			"package": {
 				"name": "jquery/jquery-s5",
-				"version": "dev-master",
+				"version": "1.0.1",
 				"dist": {
-					"url": "https://github.com/robertleeplummerjr/jQuery.s5/archive/master.zip",
+					"url": "https://github.com/robertleeplummerjr/jQuery.s5/archive/1.0.1.zip",
 					"type": "zip"
 				}
 			}
@@ -994,7 +994,7 @@
 		"jcapture-applet/jcapture-applet": "dev-master",
 		"jquery/jquery": "*",
 		"jquery/jquery-min": "*",
-		"jquery/jquery-s5": "dev-master",
+		"jquery/jquery-s5": "1.0.1",
 		"jquery/jquery-sheet": "3.1",
 		"jquery/jquery-ui": "*",
 		"jquery/jquery-mobile": "*",
