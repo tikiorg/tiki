@@ -16,21 +16,21 @@
 <form action="tiki-admin.php?page=search" method="post">
 	<input type="hidden" name="searchprefs" />
 
-    <div class="row">
-        <div class="form-group col-lg-12 clearfix">
+	<div class="row">
+		<div class="form-group col-lg-12 clearfix">
 			{if $prefs.feature_search eq 'y'}
 				<a href="tiki-searchindex.php" class="btn btn-default btn-sm">{glyph name="search"} {tr}Search{/tr}</a>
 				<a href="{bootstrap_modal controller=search action=rebuild}" class="btn btn-primary btn-sm">{tr}Rebuild Index{/tr}</a>
 			{/if}
-            <div class="pull-right">
-                <input type="submit" class="btn btn-primary btn-sm" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}">
-            </div>
-        </div>
-    </div>
+			<div class="pull-right">
+				<input type="submit" class="btn btn-primary btn-sm" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}">
+			</div>
+		</div>
+	</div>
 	{tabset name=admin_search}
 		{tab name="{tr}General Settings{/tr}"}
-            <h2>{tr}General Settings{/tr}</h2>
-		
+			<h2>{tr}General Settings{/tr}</h2>
+
 			<fieldset>
 				<legend>
 					{tr}Advanced Search{/tr}
@@ -50,7 +50,7 @@
 
 					{preference name="allocate_memory_unified_rebuild"}
 					{preference name="allocate_time_unified_rebuild"}
-					
+
 					{preference name="unified_engine"}
 
 					{remarksbox type=tip title="{tr}About Unified Search Engines{/tr}"}
@@ -132,7 +132,7 @@
 					{preference name=feature_search_show_forbidden_cat}
 				</div>
 			</fieldset>
-		
+
 			<fieldset>
 				<legend>{tr}Features{/tr}</legend>
 				{preference name=search_autocomplete}
@@ -152,10 +152,10 @@
 		{/tab}
 
 		{tab name="{tr}Search Results{/tr}"}
-            <h2>{tr}Search Results{/tr}</h2>
+			<h2>{tr}Search Results{/tr}</h2>
 			{preference name=search_use_facets}
 			{preference name=category_custom_facets}
-			
+
 			<fieldset>
 				<legend>{tr}Select the items to display on the search results page:{/tr}</legend>
 				{preference name=search_default_interface_language}
@@ -177,22 +177,22 @@
 		{/tab}
 
 		{tab name="{tr}Stored Search{/tr}"}
-            <h2>{tr}Stored Search{/tr}</h2>
+			<h2>{tr}Stored Search{/tr}</h2>
 			{preference name=storedsearch_enabled}
 		{/tab}
 
 		{tab name="{tr}Tools{/tr}"}
-            <h2>{tr}Tools{/tr}</h2>
+			<h2>{tr}Tools{/tr}</h2>
 			<a href="tiki-report_string_in_db.php">{tr}Report all occurences of a string in any table{/tr}</a><br>
 		{/tab}
 
 	{/tabset}
-    <br>{* I cheated. *}
-    <div class="row">
-        <div class="form-group col-lg-12 clearfix">
-            <div class="text-center">
-                <input type="submit" class="btn btn-primary btn-sm" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}">
-            </div>
-        </div>
-    </div>
+	<br>{* I cheated. *}
+	<div class="row">
+		<div class="form-group col-lg-12 clearfix">
+			<div class="text-center">
+				<input type="submit" class="btn btn-primary btn-sm" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}">
+			</div>
+		</div>
+	</div>
 </form>
