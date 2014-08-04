@@ -605,6 +605,9 @@ function wikiplugin_img( $data, $params )
 		} elseif (!empty($dbinfo['path'])) {
 			$imageObj = new Image($basepath . $dbinfo['path'], true);
 			$filename = $dbinfo['filename'];
+		} elseif (strpos($src, '//') === false) {
+			$imageObj = new Image($src, true);
+			$filename = $src;
 		}
 		// NOTE image sizing should only happen with local images, otherwise will break if remote server can't be reached
 
