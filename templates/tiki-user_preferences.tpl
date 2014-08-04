@@ -46,10 +46,11 @@
             <div class="form-group">
                 <label class="control-label">{tr}Avatar{/tr}</label>
                 <div class="col-md-12" style="margin-bottom:10px">
+					{$avatar}
                     {if $prefs.user_use_gravatar eq 'y'}
                         <a class="link" href="http://www.gravatar.com" target="_blank">{tr}Pick user Avatar{/tr}</a>
                     {else}
-                        <a class="link" target="_blank" href="tiki-pick_avatar.php{if $userwatch ne $user}?view_user={$userwatch}{/if}" class="link">{tr}Pick user Avatar{/tr}</a>
+                        <a class="link" target="_blank" href="tiki-pick_avatar.php{if $userwatch ne $user}?view_user={$userwatch}{/if}">{tr}Pick user Avatar{/tr}</a>
                     {/if}
                 </div>
             </div>
@@ -67,7 +68,7 @@
                         <input type="radio" name="gender" value="Hidden" {if $user_prefs.gender eq 'Hidden'}checked="checked"{/if}> {tr}Hidden{/tr}
                     </label>
                 </div>
-            </div><table class="formcolor">
+            </div>
             {/if}
             <div class="form-group">
                 <label class="control-label" for="country">{tr}Country{/tr}</label>
@@ -78,20 +79,20 @@
                     <option value="Other" {if $user_prefs.country eq "Other"}selected="selected"{/if}>
                         {tr}Other{/tr}
                     </option>
-                    {foreach from=$flags item=flag key=fval}
+                    {foreach from=$flags item=flag key=fval}{strip}
                         {if $fval ne "Other"}
                             <option value="{$fval|escape}" {if $user_prefs.country eq $fval}selected="selected"{/if}>
                                 {$flag|stringfix}
                             </option>
                         {/if}
-                    {/foreach}
+					{/strip}{/foreach}
                 </select>
             </div>
             <div class="form-group">
                 <label class="control-label" for="location">{tr}Location{/tr}</label>
                 <div class="map-container" style="height: 250px;" data-geo-center="{defaultmapcenter}" data-target-field="location">
                 </div>
-                <input type="hidden" name="location" value="{$location|escape}">
+                <input type="hidden" name="location" id="location" value="{$location|escape}">
             </div>
             {if $prefs.feature_wiki eq 'y' and $prefs.feature_wiki_userpage eq 'y'}
                 <div class="form-group">
@@ -159,6 +160,7 @@
             </div>
 
             <input type="submit" class="btn btn-primary" name="new_prefs" value="Save changes">
+		</form>
 	{/tab}
 	{tab name="{tr}Preferences{/tr}"}
         <h2>{tr}Preferences{/tr}</h2>
@@ -234,8 +236,8 @@
                 <br/>
                 <div id="read-lang-div" style="display: none" class="form-group">
             {/if}
-            <label class="control-label" for="language">{tr}Other languages you can read (select from the dropdown to add to the field below){/tr}</label>
-            <select class="form-control" id="language" name="_blank" onchange="document.getElementById('read-language-input').value+=' '+this.options[this.selectedIndex].value+' '">
+            <label class="control-label" for="read-language">{tr}Other languages you can read (select from the dropdown to add to the field below){/tr}</label>
+            <select class="form-control" id="read-language" name="_blank" onchange="document.getElementById('read-language-input').value+=' '+this.options[this.selectedIndex].value+' '">
                 <option value="">{tr}Select language...{/tr}</option>
                 {section name=ix loop=$languages}
                     <option value="{$languages[ix].value|escape}">
