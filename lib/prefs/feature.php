@@ -434,7 +434,7 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_share' => array(
 			'name' => tra('Share'),
-			'description' => tra('Add a "Share" link in all pages to send it via e-mail, Twitter, Facebook, message or forums'),
+			'description' => tra('Add a "Share" link in all pages to send it via email, Twitter, Facebook, message or forums'),
 			'warning' => tra('be careful when allowing to anonymous to activate the antibot feature.'),
 			'help' => 'Share',
 			'type' => 'flag',
