@@ -45,7 +45,7 @@ if ($prefs['wikiplugin_regex'] == 'y') {
 	$tikisettings['wikiplugin_regex'] = array(
 		'risk' => tra('unsafe') ,
 		'setting' => tra('Enabled') ,
-		'message' => tra('The "Regex Wikiplugin" is activated. It can be used by wiki editors to create any html via regex replacement.')
+		'message' => tra('The "Regex Wikiplugin" is activated. It can be used by wiki editors to create any HTML via regex replacement.')
 	);
 }
 if ($prefs['wikiplugin_lsdir'] == 'y') {
