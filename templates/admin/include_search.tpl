@@ -159,8 +159,8 @@ $("#log-rebuild").click(function(){
 					<p>{tr}Last line of log file (web):{/tr} {$lastLogItemWeb|escape}<br />
 					{tr}Last line of log file (console):{/tr} {$lastLogItemConsole|escape}</p>
 					{/remarksbox}
+					<h5>{tr}Queue size:{/tr} {$queue_count}</h5>
 					{if $queue_count > 0}
-						<h5>{tr}Queue size:{/tr} {$queue_count}</h5>
 						{tr}Process:{/tr}
 						<ul>
 							{if $queue_count > 10}
