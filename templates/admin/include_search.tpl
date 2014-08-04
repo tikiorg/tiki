@@ -29,8 +29,8 @@
 			</p>
 			<p>{tr}Log file is saved as temp/Search_Indexer.log{/tr}</p>
 
+			<h5>{tr}Queue size:{/tr} {$queue_count}</h5>
 			{if $queue_count > 0}
-				<h5>{tr}Queue size:{/tr} {$queue_count}</h5>
 				{foreach [10, 20, 50, 100] as $count}
 					{if $queue_count > $count}
 						<a class="btn btn-default" href="tiki-admin.php?page=search&amp;process={$count|escape}">{tr _0=$count}Process %0{/tr}</a>
@@ -88,7 +88,7 @@
     </div>
 	{tabset name=admin_search}
 		{tab name="{tr}General Settings{/tr}"}
-            <h2>{tr}General Settings{/tr}</h2>
+			<h2>{tr}General Settings{/tr}</h2>
 		
 			<fieldset>
 				<legend>
@@ -211,7 +211,7 @@
 		{/tab}
 
 		{tab name="{tr}Search Results{/tr}"}
-            <h2>{tr}Search Results{/tr}</h2>
+			<h2>{tr}Search Results{/tr}</h2>
 			{preference name=search_use_facets}
 			{preference name=category_custom_facets}
 			
@@ -236,12 +236,12 @@
 		{/tab}
 
 		{tab name="{tr}Stored Search{/tr}"}
-            <h2>{tr}Stored Search{/tr}</h2>
+			<h2>{tr}Stored Search{/tr}</h2>
 			{preference name=storedsearch_enabled}
 		{/tab}
 
 		{tab name="{tr}Tools{/tr}"}
-            <h2>{tr}Tools{/tr}</h2>
+			<h2>{tr}Tools{/tr}</h2>
 			<a href="tiki-report_string_in_db.php">{tr}Report all occurences of a string in any table{/tr}</a><br>
 		{/tab}
 
