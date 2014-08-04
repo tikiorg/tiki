@@ -238,8 +238,8 @@ hr {
   color: #f9f9f9;
 }
 .navbar-inverse {
-  background-color: #222222;
-  border-color: #080808;
+  background-color: #a53723;
+  border-color: #7b291a;
 }
 .navbar-inverse .navbar-brand {
   color: #999999;
@@ -264,7 +264,7 @@ hr {
 .navbar-inverse .navbar-nav > .active > a:hover,
 .navbar-inverse .navbar-nav > .active > a:focus {
   color: #ffffff;
-  background-color: #080808;
+  background-color: #7b291a;
 }
 .navbar-inverse .navbar-nav > .disabled > a,
 .navbar-inverse .navbar-nav > .disabled > a:hover,
@@ -284,7 +284,7 @@ hr {
 }
 .navbar-inverse .navbar-collapse,
 .navbar-inverse .navbar-form {
-  border-color: #101010;
+  border-color: #882d1d;
 }
 .dropdown-menu {
   background-color: #c44a23;
