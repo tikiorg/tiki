@@ -5840,7 +5840,8 @@ body.navbar-padding {
     border-bottom: 0;
   }
 }
-header.page-header::before {
+header.page-header::before,
+.layout_social > .container:before {
   content: none;
 }
 .navbar-brand {
