@@ -407,14 +407,6 @@ function prefs_feature_list($partial = false)
 			'default' => 'n',
 			'tags' => array('experimental'),
 		),
-		'feature_gmap' => array(
-			'name' => tra('Google Maps'),
-			'description' => tra('Interactive use of Google Maps'),
-			'help' => 'GMap',
-			'type' => 'flag',
-			'default' => 'n',
-			'admin' => 'gmap',
-		),
 		'feature_live_support' => array(
 			'name' => tra('Live support system'),
 			'description' => tra('One-on-one chatting with customer'),
