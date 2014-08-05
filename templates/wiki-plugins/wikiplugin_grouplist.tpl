@@ -1,5 +1,6 @@
 {* $Id$ *}
 {if empty($groups)}
+	&mdash;
 {else}
 	<ul>
 	{foreach from=$groups item=group}
