@@ -5765,6 +5765,9 @@ body {
 .container {
   background: #0C0C0C;
 }
+body.layout_social > .container {
+  padding-top: 20px;
+}
 #col1 {
   background: #3F3F3F;
   border-left: 10px solid #0c0c0c;
@@ -5876,7 +5879,7 @@ input.tablesorter-filter {
 .tablesorter input.dateFrom,
 .tablesorter input.dateTo {
   border: none;
-  background-color: #363636;
+  background-color: #303030;
 }
 .clearfix:before,
 .clearfix:after,

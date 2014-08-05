@@ -5799,6 +5799,15 @@ body.navbar-padding {
     background: transparent;
   }
 }
+.layout_social .navbar-inverse .navbar-nav > li > a,
+.layout_social .navbar-inverse .navbar-brand {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+.layout_social .navbar-inverse .navbar-form {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
 .postbody-title {
   border: 1px solid transparent;
   font-weight: 500;

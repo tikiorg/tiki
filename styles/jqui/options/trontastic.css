@@ -36,6 +36,7 @@ a:hover {
 	color: #B8EC79;
 }
 
+.nav-tabs > li > a,
 .nav-pills > li.active > a,
 .pagination > li > a,
 .pagination > li > span,
@@ -49,11 +50,18 @@ input[type="reset"],
 input[type="submit"],
 .button input,
 .calbuttonBox a {
-	background-color: #696969;
-	background-image: -o-linear-gradient(top, #696969, #1B1613);
-	border: 1px solid #9FDA58;
+	border: 1px solid #9fda58;
 	box-shadow: 0px 0px 2px rgba(159, 218, 88, 0.506) inset;
-	color: #9FDA58;
+	color: #9fda58;
+    background: #696969;
+    background: -moz-linear-gradient(top,  #696969 0%, #1b1613 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#696969), color-stop(100%,#1b1613));
+    background: -webkit-linear-gradient(top,  #696969 0%,#1b1613 100%);
+    background: -o-linear-gradient(top,  #696969 0%,#1b1613 100%);
+    background: -ms-linear-gradient(top,  #696969 0%,#1b1613 100%);
+    background: linear-gradient(to bottom,  #696969 0%,#1b1613 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#696969', endColorstr='#1b1613',GradientType=0 );
+
 }
 
 .btn-default {
@@ -63,9 +71,6 @@ input[type="submit"],
 
 	
 .nav-tabs > li > a {
-	background-color: #696969;
-	background-image: -o-linear-gradient(top, #696969, #1B1613);
-	border: 1px solid #9FDA58;
 	border-bottom: none;
 }
 
@@ -114,13 +119,19 @@ input[type="reset"]:hover,
 input[type="submit"]:hover,
 .button input:hover,
 .calbuttonBox:hover {
-	background-image: -o-linear-gradient(top, #1B1613, #696969);
-	background-image: linear-gradient(top, #1b1613 0%, #696969 100%);
-	color: #9FDA58;
+	color: #9fda58;
+    background: #1b1613;
+    background: -moz-linear-gradient(top,  #1b1613 0%, #696969 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#1b1613), color-stop(100%,#696969));
+    background: -webkit-linear-gradient(top,  #1b1613 0%,#696969 100%);
+    background: -o-linear-gradient(top,  #1b1613 0%,#696969 100%);
+    background: -ms-linear-gradient(top,  #1b1613 0%,#696969 100%);
+    background: linear-gradient(to bottom,  #1b1613 0%,#696969 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1b1613', endColorstr='#696969',GradientType=0 );
 }
 
 .dropdown-menu > li > a {
-	color: #9FDA58;
+	color: #9fda58;
 }
 
 .pagination > .active > a,
@@ -260,7 +271,6 @@ body.cke_show_borders {
 }
 
 #col1,
-/* .wikitext, */
 .panel,
 .panel-default,
 .list-group-item {
@@ -426,6 +436,8 @@ table.normal tr:nth-child(2n),
 	color: #fff;
 }
 
+.adminoptionbox fieldset.table legend {padding-top: 28px;}
+
 #tiki-top .cssmenu_horiz li {
 	background:#9fda58 url(../../../vendor/jquery/jquery-ui-themes/themes/trontastic/images/ui-bg_gloss-wave_85_9fda58_500x100.png) 50% 50% repeat-x;
 	margin-right: 5px;
@@ -439,7 +451,6 @@ table.normal tr:nth-child(2n),
 }
 
 .postbody-title {
-/* border: 1px solid #aaaaaa; */
 	background:#9fda58 url(../../../vendor/jquery/jquery-ui-themes/themes/trontastic/images/ui-bg_gloss-wave_85_9fda58_500x100.png) 50% 50% repeat-x;
 	color: #222;
 }

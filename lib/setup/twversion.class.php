@@ -73,7 +73,8 @@ class TWVersion
 				20=>'Herbig Haro',	// 9.x
 				21=>'Sun',			// 10.x
 				22=>'Vega',			// 11.x
-				23=>'Altair'		// 12.x
+				23=>'Altair',		// 12.x
+				24=>'Fomalhaut'		// 13.x
 		);
 	}
 
@@ -208,6 +209,7 @@ class TWVersion
 				'12.1beta',
 				'12.1',
 				'13.0beta',
+				'13.0',
 			);
 	}
 

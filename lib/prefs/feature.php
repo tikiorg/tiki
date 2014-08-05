@@ -407,14 +407,6 @@ function prefs_feature_list($partial = false)
 			'default' => 'n',
 			'tags' => array('experimental'),
 		),
-		'feature_gmap' => array(
-			'name' => tra('Google Maps'),
-			'description' => tra('Interactive use of Google Maps'),
-			'help' => 'GMap',
-			'type' => 'flag',
-			'default' => 'n',
-			'admin' => 'gmap',
-		),
 		'feature_live_support' => array(
 			'name' => tra('Live support system'),
 			'description' => tra('One-on-one chatting with customer'),
@@ -434,7 +426,7 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_share' => array(
 			'name' => tra('Share'),
-			'description' => tra('Add a "Share" link in all pages to send it via e-mail, Twitter, Facebook, message or forums'),
+			'description' => tra('Add a "Share" link in all pages to send it via email, Twitter, Facebook, message or forums'),
 			'warning' => tra('be careful when allowing to anonymous to activate the antibot feature.'),
 			'help' => 'Share',
 			'type' => 'flag',

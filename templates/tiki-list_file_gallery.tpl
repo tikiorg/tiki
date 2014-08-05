@@ -73,7 +73,7 @@
 		{/if}
 		{if $edit_mode neq 'y' and $dup_mode neq 'y'}
 			{if $prefs.javascript_enabled eq 'y'}
-				<select style="float:right;margin-top:0;" id="viewSwitcher">
+				<div style="float:right;margin-top:0;width: 120px;"><select id="viewSwitcher" class="form-control">
 					<option value="list"{if $view eq 'list'} selected="selected"{/if}>
 						{tr}List Gallery{/tr}
 					</option>
@@ -95,7 +95,7 @@
 							{tr}Finder View{/tr}
 						</option>
 					{/if}
-				</select>
+				</select></div>
 				{jq}
 $("#viewSwitcher").change(function() {
 	var loc = location.href.replace(location.hash, "");
