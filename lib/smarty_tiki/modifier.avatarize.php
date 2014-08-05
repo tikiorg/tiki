@@ -19,34 +19,12 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
  * Purpose:  capitalize words in the string
  * -------------------------------------------------------------
  */
-function smarty_modifier_avatarize($user, $float = '', $default = '')
+function smarty_modifier_avatarize($user, $float = '')
 {
-	global $prefs;
-	if (! $user) {
-		return;
-	}
-
 	$avatar = TikiLib::lib('tiki')->get_user_avatar($user, $float);
-
-	if (! $avatar && $default) {
-		$smarty = TikiLib::lib('smarty');
-		$smarty->loadPlugin('smarty_function_icon');
-		$name = TikiLib::lib('user')->clean_user($user);
-		$avatar = smarty_function_icon(['_id' => $default, 'title' => $name], $smarty);
-	}
-
-	if(! $avatar && $prefs['user_default_picture_id']) {
-		$path = 'dl' . $prefs['user_default_picture_id'];
-		$avatar = "<img src='" . $path . "' height='45px' width='45px'>";
-	}
-	elseif(! $avatar) {
-		$path = 'img/noavatar.png';
-		$avatar = "<img src='" . $path . "' height='45px' width='45px'>";
-	}
-
 	if ( $avatar != '') {
 		$avatar = TikiLib::lib('user')->build_userinfo_tag($user, $avatar);
 	}
-	return $avatar;
+	return $avatar;	
 }
 
