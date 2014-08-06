@@ -10796,7 +10796,7 @@ $lang = array(
 "Passcode to register" => "Code d'enregistrement",
 "Not your password" => "Pas votre mot de passe",
 "To request a passcode, {if \$prefs.feature_contact eq 'y'}<a href=\"tiki-contact.php\">{/if}\n\t\t\t\tcontact the system administrator{if \$prefs.feature_contact eq 'y'}</a>{/if}" => "Pour demander un code d'enregistrement, {if \$prefs.feature_contact eq 'y'}<a href=\"tiki-contact.php\">{/if}\t\t\t\tcontacter l'administrateur du système{if \$prefs.feature_contact eq 'y'}</a>{/if}",
-// "The passcode (to block robots from registration) is" => "The passcode (to block robots from registration) is",
+"The passcode (to block robots from registration) is" => "Le code d'enregistrement à saisir ici est",
 // "{\$rbox_params.type}" => "{\$rbox_params.type}",
 // "{\$result.object_type|escape}" => "{\$result.object_type|escape}",
 "Last modification" => "Dernière modification",
