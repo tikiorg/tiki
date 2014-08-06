@@ -261,7 +261,9 @@ if ($isvalid) {
 		if (($prefs['feature_best_language'] == 'y')&&($prefs['feature_sefurl'] == 'y')) {
 			// If the URL contains the 'main' home page, remove the page name and let Tiki choose the correct home page upon reload
 			$homePageUrl = urlencode($prefs['wikiHomePage']);
-			if (strpos($url, $homePageUrl) !== false) {
+			if (strpos($url, 'page='. $homePageUrl) !== false) {
+				$url = str_replace('page='. $homePageUrl, '', $url);
+			} else if (strpos($url, $homePageUrl) !== false) {
 				$url = str_replace($homePageUrl, '', $url);
 			}
 		}
