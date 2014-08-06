@@ -208,5 +208,25 @@ class Tracker_Field_UserSelector extends Tracker_Field_Abstract implements Track
 			$baseKey => $typeFactory->identifier($this->getValue()),
 		);
 	}
+
+	/**
+	 * called from action_clone_item - sets to current user if autoassign == 1 or 2 (Creator or Modifier)
+	 */
+	function handleClone()
+	{
+		global $user;
+
+		$value =  $this->getValue('');
+		$autoassign = (int) $this->getOption('autoassign');
+
+		if ($autoassign === 1 || $autoassign === 2) {
+			$value = $user;
+		}
+
+		return array(
+			'value' => $value,
+		);
+
+	}
 }
 
