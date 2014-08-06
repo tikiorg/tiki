@@ -57,7 +57,7 @@
 	{/if}
 	<div class="alert alert-warning" id="divRegCapson" style="display: none;">{icon _id=error style="vertical-align:middle"} {tr}CapsLock is on.{/tr}</div>
 	{if $allowRegister eq 'y'}
-		<div>
+		<div class="row">
 		{if $userTrackerData}
 			{$userTrackerData}
 		{else}
@@ -70,7 +70,8 @@
 					</div>
 			</form>
 		{/if}
-
+		</div>
+		<div class="row">
 		{remarksbox type="note"  title="{tr}Note{/tr}"}
 			{if $prefs.feature_wiki_protect_email eq 'y'}
 				{assign var=sender_email value=$prefs.sender_email|default:"this domain"|escape:'hexentity'}
