@@ -16,7 +16,8 @@ class Search_Query implements Search_Query_Interface
 	private $identifierFields = null;
 
 	private $subQueries = array();
-	private $facets = array();
+	private $facets = [];
+	private $foreignQueries = [];
 
 	function __construct($query = null)
 	{
@@ -337,5 +338,15 @@ class Search_Query implements Search_Query_Interface
 	function getFacets()
 	{
 		return $this->facets;
+	}
+
+	function includeForeign($indexName, Search_Query $query)
+	{
+		$this->foreignQueries[$indexName] = $query->getExpr();
+	}
+
+	function getForeignQueries()
+	{
+		return $this->foreignQueries;
 	}
 }

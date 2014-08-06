@@ -146,15 +146,29 @@ class Search_Elastic_Index implements Search_Index_Interface, Search_Index_Query
 
 	function find(Search_Query_Interface $query, $resultStart, $resultCount)
 	{
-		$builder = new Search_Elastic_QueryBuilder;
-		$builder->setDocumentReader($this->createDocumentReader());
-		$queryPart = $builder->build($query->getExpr());
-
 		$builder = new Search_Elastic_OrderBuilder;
 		$orderPart = $builder->build($query->getSortOrder());
 
 		$builder = new Search_Elastic_FacetBuilder;
 		$facetPart = $builder->build($query->getFacets());
+
+		$builder = new Search_Elastic_QueryBuilder;
+		$builder->setDocumentReader($this->createDocumentReader());
+		$queryPart = $builder->build($query->getExpr());
+
+		$indices = [$this->index];
+
+		$foreign = array_map([$builder, 'build'], $query->getForeignQueries());
+		foreach ($foreign as $indexName => $foreignQuery) {
+			$indices[] = $indexName;
+			$queryPart = ['query' => [
+				'indices' => [
+					'index' => $indexName,
+					'query' => $foreignQuery['query'],
+					'no_match_query' => $queryPart['query'],
+				],
+			]];
+		}
 
 		$fullQuery = array_merge(
 			$queryPart,
@@ -173,11 +187,13 @@ class Search_Elastic_Index implements Search_Index_Interface, Search_Index_Query
 			)
 		);
 
-		$result = $this->connection->search($this->index, $fullQuery, $resultStart, $resultCount);
+		$result = $this->connection->search($indices, $fullQuery, $resultStart, $resultCount);
 		$hits = $result->hits;
 
+		$indicesMap = array_combine($indices, $indices);
+
 		$entries = array_map(
-			function ($entry) {
+			function ($entry) use (& $indicesMap) {
 				$data = (array) $entry->_source;
 
 				if (isset($entry->highlight->contents)) {
@@ -186,6 +202,25 @@ class Search_Elastic_Index implements Search_Index_Interface, Search_Index_Query
 					$data['_highlight'] = '';
 				}
 				$data['score'] = round($entry->_score, 2);
+
+				$index = $entry->_index;
+
+				// Make sure we reduce the returned index to something matching what we requested
+				// if what was requested is an alias.
+				// Note: This only supports aliases where the name is a prefix.
+				if (isset($indicesMap[$index])) {
+					$index = $indicesMap[$index];
+				} else {
+					foreach ($indicesMap as $candidate) {
+						if (0 === strpos($index, $candidate . '_')) {
+							$indicesMap[$index] = $candidate;
+							$index = $candidate;
+							break;
+						}
+					}
+				}
+
+				$data['_index'] = $index;
 				return $data;
 			}, $hits->hits
 		);

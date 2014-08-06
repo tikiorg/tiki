@@ -77,10 +77,14 @@ class Search_Elastic_Connection
 
 	function search($index, array $query, $resultStart, $resultCount)
 	{
-		if (! empty($this->dirty[$index])) {
-			$this->refresh($index);
+		$indices = (array) $index;
+		foreach ($indices as $index) {
+			if (! empty($this->dirty[$index])) {
+				$this->refresh($index);
+			}
 		}
 
+		$index = implode(',', $indices);
 		return $this->get("/$index/_search", json_encode($query));
 	}
 
