@@ -49,6 +49,11 @@ function module_categories_info()
 				'description' => 'y|n .'.tra('If y, category links to a page named as the category'),
 				'filter' => 'alpha',
 			),
+			'hideEmpty' => array(
+				'name' => tra('Hide Empty'),
+				'description' => 'y|n .'.tra('If y, only categories with child objects will be shown.'),
+				'filter' => 'alpha',
+			),
 		),
 	);
 }
@@ -117,6 +122,18 @@ function module_categories($mod_reference, &$module_params)
 	$tree_nodes = array();
 	include_once('tiki-sefurl.php');
 	foreach ($categories as $cat) {
+		if (!empty($module_params['hideEmpty']) && $module_params['hideEmpty'] === 'y' && $cat['objects'] == 0) {
+			$has_children = false;
+			foreach ($cat['children'] as $child) {
+				if ($categories[$child]['objects'] != 0) {
+					$has_children = true;
+					break;
+				}
+			}
+			if (!$has_children) {
+				continue;
+			}
+		}
 		if (isset($module_params['selflink']) && $module_params['selflink'] == 'y') {
 			$url = filter_out_sefurl('tiki-index.php?page=' . urlencode($cat['name']));
 		} else {
