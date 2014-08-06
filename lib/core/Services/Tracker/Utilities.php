@@ -75,7 +75,7 @@ class Services_Tracker_Utilities
 		}
 
 		$errorreportlib = TikiLib::lib('errorreport');
-		if ($errors['err_mandatory'] > 0) {
+		if (count($errors['err_mandatory']) > 0) {
 			$names = array();
 			foreach ($errors['err_mandatory'] as $f) {
 				$names[] = $f['name'];

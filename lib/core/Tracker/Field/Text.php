@@ -304,5 +304,23 @@ class Tracker_Field_Text extends Tracker_Field_Abstract implements Tracker_Field
 	{
 		return 'sortable';
 	}
+
+	function isValid()
+	{
+		$value = $this->getValue();
+
+		$validation = $this->getConfiguration('validation');
+		$param = $this->getConfiguration('validationParam');
+		$message = $this->getConfiguration('validationMessage');
+
+		if (! $validation) {
+			return true;
+		}
+
+		$validators = TikiLib::lib('validators');
+		$validators->setInput($value);
+		$ret = $validators->validateInput($validation, $param);
+		return $ret;
+	}
 }
 
