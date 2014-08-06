@@ -602,6 +602,7 @@ class UnifiedSearchLib
 
 		$aggregator->addGlobalSource(new Search_GlobalSource_TitleInitialSource);
 		$aggregator->addGlobalSource(new Search_GlobalSource_SearchableSource);
+		$aggregator->addGlobalSource(new Search_GlobalSource_UrlSource);
 	}
 
     /**
