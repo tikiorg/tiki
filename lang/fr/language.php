@@ -11113,7 +11113,7 @@ $lang = array(
 "Passcode to register" => "Code d'enregistrement",
 "Not your password" => "Pas votre mot de passe",
 "To request a passcode, {if \$prefs.feature_contact eq 'y'}<a href=\"tiki-contact.php\">{/if}\n\t\t\t\tcontact the system administrator{if \$prefs.feature_contact eq 'y'}</a>{/if}" => "Pour demander un code d'enregistrement, {if \$prefs.feature_contact eq 'y'}<a href=\"tiki-contact.php\">{/if}\t\t\t\tcontacter l'administrateur du système{if \$prefs.feature_contact eq 'y'}</a>{/if}",
-// "The passcode (to block robots from registration) is" => "The passcode (to block robots from registration) is",
+"The passcode (to block robots from registration) is" => "Le code d'enregistrement à saisir ici est",
 "The documents are returned sorted on relevance depending on order, proximity, frequency of terms. " => "Les documents sont retournés sur la pertinence triés en fonction de l'ordre, la proximité, la fréquence des termes. ",
 "Default search behavior" => "Comportement par défaut de la recherche",
 "By default, all search terms are <em>optional</em>" => "Par défaut, tous les termes de recherche sont <em>optionnels</em>",
