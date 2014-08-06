@@ -158,6 +158,13 @@ class Search_ResultSet extends ArrayObject implements JsonSerializable
 		$this->exchangeArray($out);
 	}
 
+	function applyTransform(callable $transform)
+	{
+		foreach ($this as & $entry) {
+			$entry = $transform($entry);
+		}
+	}
+
 	function jsonSerialize()
 	{
 		return [
