@@ -702,10 +702,8 @@ class Services_Tracker_Controller
 
 			if ($itemId) {
 				TikiLib::lib('unifiedsearch')->processUpdateQueue();
-				if ($input->waitforindex->int()) {
-					TikiLib::events()->trigger('tiki.process.redirect');
-				}
-
+				TikiLib::events()->trigger('tiki.process.redirect'); // wait for indexing to complete before loading of next request to ensure updated info shown
+			
 				if ($next = $input->next->url()) {
 					$access = TikiLib::lib('access');
 					$access->redirect($next, tr('Item created'));
@@ -796,9 +794,7 @@ class Services_Tracker_Controller
 			}
 
 			TikiLib::lib('unifiedsearch')->processUpdateQueue();
-			if ($input->waitforindex->int()) {
-				TikiLib::events()->trigger('tiki.process.redirect');
-			}
+			TikiLib::events()->trigger('tiki.process.redirect'); // wait for indexing to complete before loading of next request to ensure updated info shown
 		}
 
 		return array(
@@ -885,9 +881,7 @@ class Services_Tracker_Controller
 				)
 			);
 			TikiLib::lib('unifiedsearch')->processUpdateQueue();
-			if ($input->waitforindex->int()) {
-				TikiLib::events()->trigger('tiki.process.redirect');
-			}
+			TikiLib::events()->trigger('tiki.process.redirect'); // wait for indexing to complete before loading of next request to ensure updated info shown
 		}
 
 		return array(
@@ -941,6 +935,8 @@ class Services_Tracker_Controller
 			$this->utilities->removeItem($itemId);
 
 			$tx->commit();
+
+			TikiLib::events()->trigger('tiki.process.redirect'); // wait for indexing to complete before loading of next request to ensure updated info shown
 		}
 
 		return array(
