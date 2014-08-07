@@ -44,8 +44,9 @@ function module_last_validated_faq_questions_info()
  */
 function module_last_validated_faq_questions($mod_reference, $module_params)
 {
-	global $tikilib, $smarty;
-	global $faqlib; include_once('lib/faqs/faqlib.php');
+	$tikilib = TikiLib::lib('tiki');
+	$smarty = TikiLib::lib('smarty');
+	$faqlib = TikiLib::lib('faq');
 	$def = array('faqId'=>0, 'truncate'=>20);
 	$module_params = array_merge($def, $module_params);
 	$ranking = $faqlib->list_faq_questions($module_params['faqId'], 0, $mod_reference['rows'], 'created_desc', '');

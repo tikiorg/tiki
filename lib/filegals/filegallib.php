@@ -1763,7 +1763,8 @@ class FileGalLib extends TikiLib
 	// If $galleryIdentifier is not given, default to the "default" / normal / "File Galleries" file galleries.
 	function getTreeHTML($galleryIdentifier = NULL)
 	{
-		global $prefs, $smarty;
+		global $prefs;
+		$smarty = TikiLib::lib('smarty');
 		require_once ('lib/tree/BrowseTreeMaker.php');
 		$galleryIdentifier = is_null($galleryIdentifier) ? $prefs['fgal_root_id'] : $galleryIdentifier;
 		$subGalleries = $this->getSubGalleries($galleryIdentifier);
@@ -3419,7 +3420,7 @@ class FileGalLib extends TikiLib
 							$cat_name = empty($params['name'][$key]) ? $name : $params['name'][$key];
 							$cat_href = $aux['dllink'];
 							if ($prefs['feature_groupalert'] == 'y' && isset($params['listtoalert'])) {
-								global $groupalertlib; include_once ('lib/groupalert/groupalertlib.php');
+								$groupalertlib = TikiLib::lib('groupalert');
 								$groupalertlib->Notify($params['listtoalert'], "tiki-download_file.php?fileId=" . $fileId);
 							}
 							include_once ('categorize.php');

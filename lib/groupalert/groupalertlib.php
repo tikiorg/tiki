@@ -90,5 +90,3 @@ class groupAlertLib extends TikiLib
 		}
 	}
 }
-global $groupalertlib;
-$groupalertlib = new groupAlertLib;

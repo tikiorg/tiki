@@ -10,7 +10,7 @@
 
 $section = 'faqs';
 require_once ('tiki-setup.php');
-include_once ('lib/faqs/faqlib.php');
+$faqlib = TikiLib::lib('faq');
 if ($prefs['feature_categories'] == 'y') {
 	$categlib = TikiLib::lib('categ');
 }

@@ -77,12 +77,6 @@ class TikiLib extends TikiDb_Bridge
 			case 'captcha':
 				global $captchalib; require_once 'lib/captcha/captchalib.php';
 				return self::$libraries[$name] = $captchalib;
-			case 'groupalert':
-				global $groupalertlib; require_once ('lib/groupalert/groupalertlib.php');
-				return self::$libraries[$name] = $groupalertlib;
-			case 'validators':
-				global $validatorslib; include_once('lib/validatorslib.php');
-				return self::$libraries[$name] = $validatorslib;
 			case 'searchstats':
 				global $searchstatslib; include_once('lib/search/searchstatslib.php');
 				return self::$libraries[$name] = $searchstatslib;
@@ -111,9 +105,6 @@ class TikiLib extends TikiDb_Bridge
 			case 'usermodules':
 				global $usermoduleslib; require_once 'lib/usermodules/usermoduleslib.php';
 				return self::$libraries[$name] = $usermoduleslib;
-			case 'faq':
-				global $faqlib; require_once 'lib/faqs/faqlib.php';
-				return self::$libraries[$name] = $faqlib;
 			case 'quiz':
 				global $quizlib; require_once 'lib/quizzes/quizlib.php';
 				return self::$libraries[$name] = $quizlib;

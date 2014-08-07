@@ -146,5 +146,3 @@ class Validators
 	}
 }
 
-global $validatorslib;
-$validatorslib = new Validators;

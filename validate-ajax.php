@@ -28,8 +28,7 @@ if (empty($_REQUEST["message"])) {
 	$_REQUEST["message"] = '';
 }
 
-global $validatorslib;
-include_once('lib/validatorslib.php');
+$validatorslib = TikiLib::lib('validators');
 
 if (!in_array($_REQUEST['validator'], $validatorslib->available)) {
 	echo '{}';

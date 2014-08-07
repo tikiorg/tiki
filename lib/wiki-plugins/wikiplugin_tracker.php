@@ -1206,15 +1206,14 @@ function wikiplugin_tracker($data, $params)
 			$smarty->assign('trackerEditFormId', $iTRACKER);
 
 		if (!empty($params['_ajax_form_ins_id'])) {
-			global $headerlib;									// when called via AJAX take a copy of the JS so far to allow collection
+			$headerlib = TikiLib::lib('header');
 			$old_js['js'] = $headerlib->js;						// of tracker form JS into a function to initialise it when the dialog is created
 			$old_js['jq_onready'] = $headerlib->jq_onready;
 			$headerlib->clear_js();								// so store existing js for later and clear
 		}
 
 			if ($prefs['feature_jquery'] == 'y' && $prefs['feature_jquery_validation'] == 'y') {
-				global $validatorslib;
-				include_once('lib/validatorslib.php');
+				$validatorslib = TikiLib::lib('validators');
 				$customvalidation = '';
 				$customvalidation_m = '';
 				if ($registration == 'y') {
