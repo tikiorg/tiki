@@ -99,8 +99,7 @@ class TikiAccessLib extends TikiLib
 		$perms = Perms::get();
 
 		if ( $perms->admin && isset($_REQUEST['check_feature']) && isset($_REQUEST['lm_preference']) ) {
-			global $prefslib; require_once 'lib/prefslib.php';
-
+			$prefslib = TikiLib::lib('prefs');
 			$prefslib->applyChanges((array) $_REQUEST['lm_preference'], $_REQUEST);
 		}
 
@@ -309,7 +308,8 @@ class TikiAccessLib extends TikiLib
      */
     function check_ticket()
 	{
-		global $smarty, $prefs, $user;
+		global $prefs, $user;
+		$smarty = TikiLib::lib('smarty');
 
 		if ($prefs['feature_ticketlib2'] == 'y') {
 			if (empty($user) || (isset($_REQUEST['ticket']) && isset($_SESSION['ticket']) && $_SESSION['ticket'] == $_REQUEST['ticket'])) {

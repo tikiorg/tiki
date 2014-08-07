@@ -245,7 +245,7 @@ class PerspectiveLib
 	{
 		$this->perspectivePreferences->deleteMultiple(array('perspectiveId' => $perspectiveId));
 
-		global $prefslib; require_once 'lib/prefslib.php';
+		$prefslib = TikiLib::lib('prefs');
 		foreach ( $preferences as $pref => $value ) {
 			$value = $prefslib->formatPreference($pref, array($pref => $value));
 			$this->set_preference($perspectiveId, $pref, $value);
@@ -338,5 +338,3 @@ class PerspectiveLib
 	}
 }
 
-global $perspectivelib;
-$perspectivelib = new PerspectiveLib;

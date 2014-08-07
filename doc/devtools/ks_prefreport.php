@@ -18,7 +18,7 @@
 $ourFileName = "dump/prefreport.txt";
 
 require_once 'tiki-setup.php';
-require_once 'lib/prefslib.php';
+$prefslib = TikiLib::lib('prefs');
 
 $defaultValues = get_default_prefs();
 
@@ -186,7 +186,7 @@ function index_data($data, $field)
  */
 function collect_locations(& $data)
 {
-	global $prefslib; require_once 'lib/prefslib.php';
+	$prefslib = TikiLib::lib('prefs');
 
 	foreach ($data as & $row) {
 		$pages = $prefslib->getPreferenceLocations($row['preference']);

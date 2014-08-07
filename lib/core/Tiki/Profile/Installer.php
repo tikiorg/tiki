@@ -431,7 +431,8 @@ class Tiki_Profile_Installer
 
 	private function applyPreferences($profile, $preferences, $leaveUnknown = false)
 	{
-		global $tikilib, $prefs;
+		global $prefs;
+		$tikilib = TikiLib::lib('tiki');
 
 		$profile->replaceReferences($preferences, $this->userData, $leaveUnknown);
 		$leftovers = array();
@@ -443,7 +444,7 @@ class Tiki_Profile_Installer
 			}
 
 			if ($this->allowedGlobalPreferences === false || in_array($pref, $this->allowedGlobalPreferences)) {
-				global $prefslib; include_once('lib/prefslib.php');
+				$prefslib = TikiLib::lib('prefs');
 				$pinfo = $prefslib->getPreference($pref);
 				if (!empty($pinfo['separator']) && !is_array($value)) {
 					$value = explode($pinfo['separator'], $value);

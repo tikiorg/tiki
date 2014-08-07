@@ -47,7 +47,6 @@ function wikiplugin_cclite( $data, $params )
 	$userlib = TikiLib::lib('user');
 	$smarty = TikiLib::lib('smarty');
 	$headerlib = TikiLib::lib('header');
-	//global $paymentlib; require_once 'lib/payment/paymentlib.php';
 	global $cclitelib;  require_once 'lib/payment/cclitelib.php';
 	
 	if (empty($user)) {

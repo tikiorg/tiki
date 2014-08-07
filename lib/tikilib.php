@@ -89,18 +89,12 @@ class TikiLib extends TikiDb_Bridge
 			case 'errorreport':
 				require_once 'lib/errorreportlib.php';
 				return self::$libraries[$name] = new ErrorReportLib;
-			case 'prefs':
-				global $prefslib; include_once('lib/prefslib.php');
-				return self::$libraries[$name] = $prefslib;
 			case 'stats':
 				global $statslib; require_once('lib/stats/statslib.php');
 				return self::$libraries[$name] = $statslib;
 			case 'access':
 				global $access; require_once 'lib/tikiaccesslib.php';
 				return self::$libraries[$name] = $access;
-			case 'perspective':
-				global $perspectivelib; require_once('lib/perspectivelib.php');
-				return self::$libraries[$name] = $perspectivelib;
 			case 'parser':
 				require_once('lib/parser/parserlib.php');
 				return self::$libraries[$name] = new ParserLib;
@@ -148,9 +142,6 @@ class TikiLib extends TikiDb_Bridge
 			case 'login':
 				require_once 'lib/loginlib.php';
 				return self::$libraries[$name] = new LoginLib;
-			case 'activity':
-				require_once 'lib/activity/activitylib.php';
-				return self::$libraries[$name] = new ActivityLib;
 			case 'vimeo':
 				require_once 'lib/filegals/vimeolib.php';
 				return self::$libraries[$name] = new VimeoLib;
@@ -178,9 +169,6 @@ class TikiLib extends TikiDb_Bridge
 			case 'crypt':
 				global $cryptlib; require_once 'lib/crypt/cryptlib.php';
 				return self::$libraries[$name] = new CryptLib();
-			case 'payment':
-				global $paymentlib; require_once 'lib/payment/paymentlib.php';
-				return self::$libraries[$name] = $paymentlib;
 			case 'credits':
 				global $creditslib; require_once 'lib/credits/creditslib.php';
 				return self::$libraries[$name] = $creditslib;

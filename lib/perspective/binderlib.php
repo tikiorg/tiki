@@ -14,7 +14,7 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 }
 
 
-require_once('lib/perspectivelib.php');
+$perspectivelib = TikiLib::lib('perspective');
 $categlib = TikiLib::lib('categ');
 
 class AreasLib extends CategLib
@@ -30,7 +30,8 @@ class AreasLib extends CategLib
 
 	function HandleObjectCategories($objectCategoryIds)
 	{
-		global $prefs, $perspectivelib, $_SESSION;
+		global $prefs;
+		$perspectivelib = TikiLib::lib('perspective');
 
 		$current_object = current_object();
 

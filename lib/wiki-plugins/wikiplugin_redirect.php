@@ -45,7 +45,8 @@ function wikiplugin_redirect_info()
 
 function wikiplugin_redirect($data, $params)
 {
-	global $tikilib, $just_saved;
+	global $just_saved;
+	$tikilib = TikiLib::lib('tiki');
 	extract($params, EXTR_SKIP);
 	$areturn = '';
 
@@ -80,8 +81,9 @@ function wikiplugin_redirect($data, $params)
 	} else {
 
 		if (isset($perspective)) {
-			global $access, $perspectivelib, $base_host;
-			require_once 'lib/perspectivelib.php';
+			global $base_host;
+			$access = TikiLib::lib('access');
+			$perspectivelib = TikiLib::lib('perspective');
 			$access->check_feature('feature_perspective');
 
 			if ($_SESSION['current_perspective'] !== $perspective) {

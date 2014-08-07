@@ -29,8 +29,9 @@ function module_perspective_info()
  */
 function module_perspective($mod_reference, $module_params)
 {
-	global $perspectivelib; require_once 'lib/perspectivelib.php';
-	global $smarty, $prefs;
+	$perspectivelib = TikiLib::lib('perspective');
+	$smarty = TikiLib::lib('smarty');
+	global $prefs;
 	
 	$perspectives = $perspectivelib->list_perspectives();
 	$smarty->assign('perspectives', $perspectives);

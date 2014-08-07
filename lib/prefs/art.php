@@ -11,7 +11,7 @@ function prefs_art_list()
 		'publishDate_desc' => tra('Newest first'),
 	);
 
-	global $prefslib;
+	$prefslib = TikiLib::lib('prefs');
 	$advanced_columns = $prefslib->getExtraSortColumns();
 
 	foreach ( $advanced_columns as $key => $label ) {

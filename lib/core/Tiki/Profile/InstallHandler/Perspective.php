@@ -36,8 +36,7 @@ class Tiki_Profile_InstallHandler_Perspective extends Tiki_Profile_InstallHandle
 
 	function _install()
 	{
-		global $perspectivelib;
-		require_once 'lib/perspectivelib.php';
+		$perspectivelib = TikiLib::lib('perspective');
 
 		$data = $this->getData();
 

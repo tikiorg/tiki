@@ -413,7 +413,7 @@ class CartLib
 			}
 		}
 		// set refunding in the event of cancellation
-		global $paymentlib; require_once 'lib/payment/paymentlib.php';
+		$paymentlib = TikiLib::lib('payment');
 		$paymentlib->register_behavior($invoice, 'cancel', 'cart_gift_certificate_refund', array( $this->gift_certificate_id, $this->gift_certificate_mode, $this->gift_certificate_amount, $this->gift_certificate_discount));
 	}
 
@@ -791,8 +791,9 @@ class CartLib
 
 	function request_payment()
 	{
-		global $prefs, $user, $tikilib;
-		global $paymentlib; require_once 'lib/payment/paymentlib.php';
+		global $prefs, $user;
+		$tikilib = TikiLib::lib('tiki');
+		$paymentlib = TikiLib::lib('payment');
 
 //		if (!$user && $prefs['payment_cart_anonymous'] != 'y') {
 //			$access = TikiLib::lib('access');

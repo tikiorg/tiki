@@ -27,7 +27,7 @@ $auto_query_args = array( 'offset', 'id', 'cookietab' );
 $section='admin';
 
 require_once('tiki-setup.php');
-require_once('lib/perspectivelib.php');
+$perspectivelib = TikiLib::lib('perspective');
 
 $access->check_feature(array('feature_perspective', 'feature_jquery_ui'));
 
@@ -49,7 +49,7 @@ if ( isset( $_REQUEST['action'] ) && $_REQUEST['action'] == 'remove' && $selecte
 
 // Edit perspective
 if ( isset( $_REQUEST['name'] ) && $selectedId && $objectperms->perspective_edit ) {
-	global $prefslib; require_once 'lib/prefslib.php';
+	$prefslib = TikiLib::lib('prefs');
 	$perspectivelib->replace_perspective($selectedId, $_REQUEST['name']);
 
 	$preferences = $_REQUEST['lm_preference'];
@@ -82,7 +82,7 @@ if ( $selectedId ) {
 	$smarty->assign('perspective_info', $info);
 
 	if ( isset( $_REQUEST['criteria'] ) ) {
-		global $prefslib; require_once 'lib/prefslib.php';
+		$prefslib = TikiLib::lib('prefs');
 		require_once 'lib/smarty_tiki/function.preference.php';
 
 		$criteria = $_REQUEST['criteria'];

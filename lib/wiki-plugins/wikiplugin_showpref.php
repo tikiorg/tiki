@@ -17,17 +17,18 @@ function wikiplugin_showpref_info()
 		'params' => array(
 			'pref' => array(
 				'required' => true,
-                                'name' => tra('Preference Name'),
-                                'description' => tra('Name of preference to be displayed.'),
-			),	
+				'name' => tra('Preference Name'),
+				'description' => tra('Name of preference to be displayed.'),
+			),
 		),
 	);
 }
 
 function wikiplugin_showpref($data, $params)
 {
-	global $prefs, $tikilib, $prefslib;
-                $tikilib->get_user_preference($user, 'pref_filters', 'basic');
+	global $prefs;
+	$tikilib = TikiLib::lib('tiki');
+	$tikilib->get_user_preference($user, 'pref_filters', 'basic');
 	// Security public prefs only, you would not want all prefs to be displayed via wiki syntax
 	
 	$name=$params['pref'];
@@ -38,14 +39,14 @@ function wikiplugin_showpref($data, $params)
 		}
 
 	$inc_file = "lib/prefs/{$file}.php";
-		if (file_exists($inc_file)) {
-			require_once $inc_file;
-			$function = "prefs_{$file}_list";
-			if ( function_exists($function) ) {
-				$preffile = $function($partial);
-			} else {
-				$preffile = array();
-			}
+	if (file_exists($inc_file)) {
+		require_once $inc_file;
+		$function = "prefs_{$file}_list";
+		if ( function_exists($function) ) {
+			$preffile = $function($partial);
+		} else {
+			$preffile = array();
+		}
 	}
 
 	if (empty($preffile[$name]['public'])) {

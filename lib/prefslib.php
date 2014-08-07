@@ -331,7 +331,8 @@ class PreferencesLib
 
 	function applyChanges( $handled, $data, $limitation = null )
 	{
-		global $tikilib, $user_overrider_prefs;
+		global $user_overrider_prefs;
+		$tikilib = TikiLib::lib('tiki');
 
 		if ( is_array($limitation) ) {
 			$handled = array_intersect($handled, $limitation);
@@ -756,8 +757,7 @@ class PreferencesLib
 	// NOTE: tikilib contains a similar method called getModifiedPreferences
 	function getModifiedPrefsForExport( $added = false )
 	{
-		global $tikilib;
-
+		$tikilib = TikiLib::lib('tiki');
 
 		$prefs = $tikilib->getModifiedPreferences();
 
@@ -946,5 +946,3 @@ class PreferencesLib
 	}
 }
 
-global $prefslib;
-$prefslib = new PreferencesLib();

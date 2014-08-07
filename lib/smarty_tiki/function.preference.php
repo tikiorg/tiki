@@ -7,7 +7,8 @@
 
 function smarty_function_preference( $params, $smarty )
 {
-	global $prefslib, $prefs, $user_overrider_prefs; require_once 'lib/prefslib.php';
+	global $prefs, $user_overrider_prefs;
+	$prefslib = TikiLib::lib('prefs');
 	if ( ! isset( $params['name'] ) ) {
 		return 'Preference name not specified.';
 	}

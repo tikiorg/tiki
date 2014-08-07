@@ -401,5 +401,3 @@ class PaymentLib extends TikiDb_Bridge
 	}
 }
 
-global $paymentlib; $paymentlib = new PaymentLib;
-

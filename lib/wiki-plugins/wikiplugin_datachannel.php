@@ -124,7 +124,9 @@ function wikiplugin_datachannel_info()
 function wikiplugin_datachannel( $data, $params )
 {
 	static $execution = 0;
-	global $prefs, $smarty, $headerlib;
+	global $prefs;
+	$smarty = TikiLib::lib('smarty');
+	$headerlib = TikiLib::lib('header');
 	$executionId = 'datachannel-exec-' . ++$execution;
 
 	if (isset($params['price']) && $params['price'] == 0) {
@@ -241,7 +243,7 @@ function wikiplugin_datachannel( $data, $params )
 			}
 			
 			if (!empty($params['price'])) {
-				global $paymentlib; require_once 'lib/payment/paymentlib.php';
+				$paymentlib = TikiLib::lib('payment');
 				$desc = empty($params['paymentlabel'])? tr('Datachannel:', $prefs['site_language']) . ' ' . $params['channel'] : $params['paymentlabel'];
 				$posts = array();
 				foreach ($input as $key => $post) {

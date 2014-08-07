@@ -254,7 +254,7 @@ T-456|Foobar|1|120.50
 
 	function testWithItemsRegistersPayment()
 	{
-		global $paymentlib; require_once 'lib/payment/paymentlib.php';
+		$paymentlib = TikiLib::lib('payment');
 
 		$this->obj->add_product(
 			'123',
@@ -281,7 +281,7 @@ T-456|Foobar|1|120.50
 
 	function testRegisteredBehaviorsOnItems()
 	{
-		global $paymentlib; require_once 'lib/payment/paymentlib.php';
+		$paymentlib = TikiLib::lib('payment');
 
 		$this->obj->add_product(
 			'123',

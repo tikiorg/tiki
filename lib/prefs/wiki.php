@@ -21,7 +21,7 @@ function prefs_wiki_list($partial = false)
 		}
 	}
 
-	global $prefslib;
+	$prefslib = TikiLib::lib('prefs');
 	$advanced_columns = $prefslib->getExtraSortColumns();
 
 	$wiki_sort_columns = array_merge(

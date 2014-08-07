@@ -66,7 +66,7 @@ if (isset($_REQUEST["rename"]) || isset($_REQUEST["confirm"])) {
 	}
 
 	if ($result) {
-		global $perspectivelib; require_once 'lib/perspectivelib.php';
+		$perspectivelib = TikiLib::lib('perspective');
 		$perspectivelib->replace_preference('wsHomepage', $page, $newName);
 		$access->redirect($wikilib->sefurl($newName));
 	}

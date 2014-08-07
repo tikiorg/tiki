@@ -8,6 +8,9 @@
 
 	-->
 	<services>
+		<service id="tiki.lib.activity" class="ActivityLib">
+			<file>%kernel.root_dir%/lib/activity/activitylib.php</file>
+		</service>
 		<service id="tiki.lib.admin" class="AdminLib">
 			<file>%kernel.root_dir%/lib/admin/adminlib.php</file>
 		</service>
@@ -119,6 +122,15 @@
 		</service>
 		<service id="tiki.lib.pagecontent" class="PageContentLib">
 			<file>%kernel.root_dir%/lib/rss/pagecontentlib.php</file>
+		</service>
+		<service id="tiki.lib.payment" class="PaymentLib">
+			<file>%kernel.root_dir%/lib/payment/paymentlib.php</file>
+		</service>
+		<service id="tiki.lib.perspective" class="PerspectiveLib">
+			<file>%kernel.root_dir%/lib/perspectivelib.php</file>
+		</service>
+		<service id="tiki.lib.prefs" class="PreferencesLib">
+			<file>%kernel.root_dir%/lib/prefslib.php</file>
 		</service>
 		<service id="tiki.lib.quantify" class="QuantifyLib">
 			<file>%kernel.root_dir%/lib/wiki/quantifylib.php</file>
