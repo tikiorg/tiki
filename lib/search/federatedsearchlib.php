@@ -21,6 +21,7 @@ class FederatedSearchLib
 
 		foreach ($tikis as $tiki) {
 			$sub = $this->addExternalTiki($query, $tiki['indexname'], $this->extractBaseUrl($tiki['extwiki']), json_decode($tiki['groups']) ?: []);
+			$sub->filterContent('y', 'searchable');
 			$sub->filterContent($content, ['title', 'contents']);
 		}
 	}
