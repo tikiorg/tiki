@@ -68,7 +68,7 @@ class UnifiedSearchLib
 				// make sure internal permission cache does not refer to the pre-update situation.
 				Perms::getInstance()->clear();
 
-				$index = $this->getIndex();
+				$index = $this->getIndex('data-write');
 				$index = new Search_Index_TypeAnalysisDecorator($index);
 				$indexer = $this->buildIndexer($index);
 				$indexer->update($toProcess);
@@ -131,7 +131,7 @@ class UnifiedSearchLib
 			return $new->exists() || $old->exists();
 		} elseif ($prefs['unified_engine'] == 'elastic') {
 			$name = $this->getIndexLocation('data');
-			$connection = $this->getElasticConnection();
+			$connection = $this->getElasticConnection(true);
 			return $connection->isRebuilding($name);
 		}
 
@@ -182,7 +182,7 @@ class UnifiedSearchLib
 			);
 			break;
 		case 'elastic':
-			$connection = $this->getElasticConnection();
+			$connection = $this->getElasticConnection(true);
 			$aliasName = $prefs['unified_elastic_index_prefix'] . 'main';
 			$indexName = $aliasName . '_' . uniqid();
 			$index = new Search_Elastic_Index($connection, $indexName);
@@ -277,7 +277,7 @@ class UnifiedSearchLib
 			break;
 		case 'mysql':
 			// Obtain the old index and destroy it after permanently replacing it.
-			$oldIndex = $this->getIndex();
+			$oldIndex = $this->getIndex('data');
 
 			$tikilib->set_preference('unified_mysql_index_current', $indexName);
 
@@ -612,6 +612,12 @@ class UnifiedSearchLib
 	{
 		global $prefs, $tiki_p_admin;
 
+		$writeMode = false;
+		if ($indexType == 'data-write') {
+			$indexType = 'data';
+			$writeMode = true;
+		}
+
 		switch ($prefs['unified_engine']) {
 		case 'lucene':
 			Zend_Search_Lucene::setTermsPerQueryLimit($prefs['unified_lucene_terms_limit']);
@@ -627,7 +633,7 @@ class UnifiedSearchLib
 				break;
 			}
 
-			$connection = $this->getElasticConnection();
+			$connection = $this->getElasticConnection($writeMode);
 			$index = new Search_Elastic_Index($connection, $index);
 			return $index;
 		case 'mysql':
@@ -661,7 +667,7 @@ class UnifiedSearchLib
 			$info = array();
 
 			try {
-				$connection = $this->getElasticConnection();
+				$connection = $this->getElasticConnection(true);
 				$root = $connection->rawApi('');
 				$info[tr('Client Node')] = $root->name;
 				$info[tr('ElasticSearch Version')] = $root->version->number;
@@ -709,19 +715,26 @@ class UnifiedSearchLib
 		}
 	}
 
-	private function getElasticConnection()
+	private function getElasticConnection($useMasterOnly)
 	{
-		static $connection;
+		global $prefs;
+		static $connections = [];
 
-		if ($connection) {
-			return $connection;
+		$target = $prefs['unified_elastic_url'];
+
+		if (! $useMasterOnly && $prefs['federated_elastic_url']) {
+			$target = $prefs['federated_elastic_url'];
 		}
 
-		global $prefs;
-		$connection = new Search_Elastic_Connection($prefs['unified_elastic_url']);
+		if ($connections[$target]) {
+			return $connections[$target];
+		}
+
+		$connection = new Search_Elastic_Connection($target);
 		$connection->startBulk();
 		$connection->persistDirty(TikiLib::events());
 
+		$connections[$target] = $connection;
 		return $connection;
 	}
 

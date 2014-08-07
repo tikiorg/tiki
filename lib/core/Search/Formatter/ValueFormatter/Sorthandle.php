@@ -9,6 +9,7 @@ class Search_Formatter_ValueFormatter_Sorthandle extends Search_Formatter_ValueF
 {
 	function __construct()
 	{
+		TikiLib::lib('smarty')->loadPlugin('smarty_modifier_escape');
 	}
 
 	function render($name, $value, array $entry)

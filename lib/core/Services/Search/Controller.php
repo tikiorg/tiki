@@ -68,7 +68,7 @@ class Services_Search_Controller
 
 			$format = $input->format->text() ?: '{title}';
 
-			$result->exchangeArray(array_map(function ($item) use ($format) {
+			$result->applyTransform(function ($item) use ($format) {
 				return [
 					'object_type' => $item['object_type'],
 					'object_id' => $item['object_id'],
@@ -81,7 +81,7 @@ class Services_Search_Controller
 						}
 					}, $format),
 				];
-			}, $result->getArrayCopy()));
+			});
 
 			return [
 				'title' => tr('Lookup Result'),

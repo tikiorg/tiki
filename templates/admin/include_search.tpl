@@ -184,6 +184,7 @@
 		{tab name="{tr}Federated Search{/tr}"}
 			<h2>{tr}Federated Search{/tr}</h2>
 			{preference name=federated_enabled}
+			{preference name=federated_elastic_url}
 
 			<h3>{tr}Configuration{/tr}</h3>
 			<ul>

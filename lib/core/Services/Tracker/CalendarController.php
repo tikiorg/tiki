@@ -18,7 +18,6 @@ class Services_Tracker_CalendarController
 
 		$unifiedsearchlib = TikiLib::lib('unifiedsearch');
 		$index = $unifiedsearchlib->getIndex();
-		$dataSource = $unifiedsearchlib->getDataSource();
 
 		$start = 'tracker_field_' . $input->beginField->word();
 		$end = 'tracker_field_' . $input->endField->word();
@@ -41,8 +40,6 @@ class Services_Tracker_CalendarController
 		}
 
 		$result = $query->search($index);
-
-		$result = $dataSource->getInformation($result, array('title', $start, $end));
 
 		$response = array();
 

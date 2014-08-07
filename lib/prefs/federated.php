@@ -16,5 +16,13 @@ function prefs_federated_list()
 			'hint' => tr('ElasticSearch is required'),
 			'dependencies' => ['feature_search'],
 		],
+		'federated_elastic_url' => array(
+			'name' => tra('ElasticSearch Tribe Node URL'),
+			'description' => tra('URL of the tribe client node accessing multiple clusters.'),
+			'type' => 'text',
+			'filter' => 'url',
+			'default' => '',
+			'size' => 40,
+		),
 	];
 }

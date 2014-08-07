@@ -118,7 +118,7 @@ $smarty->assign('engine_info', $unifiedsearchlib->getEngineInfo());
 if ($tiki_p_admin == 'y' && isset($_REQUEST['optimize']) && $_REQUEST['optimize'] == 'now') {
 	@ini_set('max_execution_time', 0);
 	@ini_set('memory_limit', -1);
-	$stat = $unifiedsearchlib->getIndex()->optimize();
+	$stat = $unifiedsearchlib->getIndex('data-write')->optimize();
 }
 
 if ($tiki_p_admin == 'y' && !empty($_REQUEST['refresh_index_all_now']) && $_REQUEST['refresh_index_all_now'] == 'y') {
