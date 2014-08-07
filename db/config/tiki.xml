@@ -17,6 +17,12 @@
 		<service id="tiki.lib.attribute" class="AttributeLib">
 			<file>%kernel.root_dir%/lib/attributes/attributelib.php</file>
 		</service>
+		<service id="tiki.lib.banner" class="BannerLib">
+			<file>%kernel.root_dir%/lib/banners/bannerlib.php</file>
+		</service>
+		<service id="tiki.lib.bigbluebutton" class="BigBlueButtonLib">
+			<file>%kernel.root_dir%/lib/bigbluebutton.php</file>
+		</service>
 		<service id="tiki.lib.blog" class="BlogLib">
 			<file>%kernel.root_dir%/lib/blogs/bloglib.php</file>
 		</service>
@@ -35,8 +41,17 @@
 		<service id="tiki.lib.contribution" class="ContributionLib">
 			<file>%kernel.root_dir%/lib/contribution/contributionlib.php</file>
 		</service>
+		<service id="tiki.lib.cart" class="CartLib">
+			<file>%kernel.root_dir%/lib/payment/cartlib.php</file>
+		</service>
 		<service id="tiki.lib.css" class="cssLib">
 			<file>%kernel.root_dir%/lib/csslib.php</file>
+		</service>
+		<service id="tiki.lib.dcs" class="DCSLib">
+			<file>%kernel.root_dir%/lib/dcs/dcslib.php</file>
+		</service>
+		<service id="tiki.lib.edit" class="EditLib">
+			<file>%kernel.root_dir%/lib/wiki/editlib.php</file>
 		</service>
 		<service id="tiki.lib.federatedsearch" class="FederatedSearchLib">
 			<file>%kernel.root_dir%/lib/search/federatedsearchlib.php</file>
@@ -50,6 +65,18 @@
 		</service>
 		<service id="tiki.lib.freetag" class="FreetagLib">
 			<file>%kernel.root_dir%/lib/freetag/freetaglib.php</file>
+		</service>
+		<service id="tiki.lib.geo" class="GeoLib">
+			<file>%kernel.root_dir%/lib/geo/geolib.php</file>
+		</service>
+		<service id="tiki.lib.goal" class="GoalLib">
+			<file>%kernel.root_dir%/lib/goal/goallib.php</file>
+		</service>
+		<service id="tiki.lib.goalevent" class="GoalEventLib">
+			<file>%kernel.root_dir%/lib/goal/goaleventlib.php</file>
+		</service>
+		<service id="tiki.lib.goalreward" class="GoalRewardLib">
+			<file>%kernel.root_dir%/lib/goalrewardlib.php</file>
 		</service>
 		<service id="tiki.lib.hist" class="HistLib">
 			<file>%kernel.root_dir%/lib/wiki/histlib.php</file>
@@ -78,14 +105,23 @@
 		<service id="tiki.lib.notification" class="NotificationLib">
 			<file>%kernel.root_dir%/lib/notifications/notificationlib.php</file>
 		</service>
+		<service id="tiki.lib.oauth" class="OAuthLib">
+			<file>%kernel.root_dir%/lib/oauthlib.php</file>
+		</service>
 		<service id="tiki.lib.object" class="ObjectLib">
 			<file>%kernel.root_dir%/lib/objectlib.php</file>
 		</service>
 		<service id="tiki.lib.objectselector" class="Tiki\Object\Selector">
 			<argument type="service" id="tiki.lib.object"/>
 		</service>
+		<service id="tiki.lib.pagecontent" class="PageContentLib">
+			<file>%kernel.root_dir%/lib/rss/pagecontentlib.php</file>
+		</service>
 		<service id="tiki.lib.quantify" class="QuantifyLib">
 			<file>%kernel.root_dir%/lib/wiki/quantifylib.php</file>
+		</service>
+		<service id="tiki.lib.queue" class="QueueLib">
+			<file>%kernel.root_dir%/lib/queuelib.php</file>
 		</service>
 		<service id="tiki.lib.rating" class="RatingLib">
 			<file>%kernel.root_dir%/lib/rating/ratinglib.php</file>
@@ -95,6 +131,9 @@
 		</service>
 		<service id="tiki.lib.relation" class="RelationLib">
 			<file>%kernel.root_dir%/lib/attributes/relationlib.php</file>
+		</service>
+		<service id="tiki.lib.rss" class="RSSLib">
+			<file>%kernel.root_dir%/lib/rss/rsslib.php</file>
 		</service>
 		<service id="tiki.lib.score" class="ScoreLib">
 			<file>%kernel.root_dir%/lib/score/scorelib.php</file>
@@ -108,6 +147,9 @@
 		<service id="tiki.lib.slugmanager" class="Tiki\Wiki\SlugManager"/>
 		<service id="tiki.lib.sheet" class="SheetLib">
 			<file>%kernel.root_dir%/lib/sheet/sheetlib.php</file>
+		</service>
+		<service id="tiki.lib.storedsearch" class="StoredSearchLib">
+			<file>%kernel.root_dir%/lib/search/storedsearchlib.php</file>
 		</service>
 		<service id="tiki.lib.struct" class="StructLib">
 			<file>%kernel.root_dir%/lib/structures/structlib.php</file>
@@ -131,7 +173,9 @@
 		<service id="tiki.lib.wiki" class="WikiLib">
 			<file>%kernel.root_dir%/lib/wiki/wikilib.php</file>
 		</service>
-
+		<service id="tiki.lib.zotero" class="ZoteroLib">
+			<file>%kernel.root_dir%/lib/zoterolib.php</file>
+		</service>
 		<service id="tiki.wiki.slug.underscore" class="Tiki\Wiki\SlugManager\UnderscoreGenerator">
 			<tag name="tiki.wiki.slug.generator"/>
 		</service>

@@ -893,5 +893,3 @@ class RSSLib extends TikiDb_Bridge
 		return $writer;
 	}
 }
-global $rsslib;
-$rsslib = new RSSLib;

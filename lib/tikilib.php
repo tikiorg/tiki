@@ -71,21 +71,9 @@ class TikiLib extends TikiDb_Bridge
 			case 'header':
 				global $headerlib; require_once 'lib/headerlib.php';
 				return self::$libraries[$name] = $headerlib;
-			case 'zotero':
-				require_once 'lib/zoterolib.php';
-				return self::$libraries[$name] = new ZoteroLib;
-			case 'oauth':
-				require_once 'lib/oauthlib.php';
-				return self::$libraries[$name] = new OAuthLib;
-			case 'geo':
-				global $geolib; require_once 'lib/geo/geolib.php';
-				return self::$libraries[$name] = $geolib;
 			case 'poll':
 				global $polllib; require_once 'lib/polls/polllib.php';
 				return self::$libraries[$name] = $polllib;
-			case 'queue':
-				require_once 'lib/queuelib.php';
-				return self::$libraries[$name] = new QueueLib;
 			case 'captcha':
 				global $captchalib; require_once 'lib/captcha/captchalib.php';
 				return self::$libraries[$name] = $captchalib;
@@ -95,15 +83,6 @@ class TikiLib extends TikiDb_Bridge
 			case 'validators':
 				global $validatorslib; include_once('lib/validatorslib.php');
 				return self::$libraries[$name] = $validatorslib;
-			case 'rss':
-				global $rsslib; include_once('lib/rss/rsslib.php');
-				return self::$libraries[$name] = $rsslib;
-			case 'pagecontent':
-				global $rsslib; include_once('lib/rss/pagecontentlib.php');
-				return self::$libraries[$name] = new PageContentLib;
-			case 'storedsearch':
-				include_once('lib/search/storedsearchlib.php');
-				return self::$libraries[$name] = new StoredSearchLib;
 			case 'searchstats':
 				global $searchstatslib; include_once('lib/search/searchstatslib.php');
 				return self::$libraries[$name] = $searchstatslib;
@@ -132,12 +111,6 @@ class TikiLib extends TikiDb_Bridge
 				return self::$libraries[$name] = new Tiki_Connect_Client();
 			case 'connect_server':
 				return self::$libraries[$name] = new Tiki_Connect_Server();
-			case 'bigbluebutton':
-				global $bigbluebuttonlib; require_once 'lib/bigbluebuttonlib.php';
-				return self::$libraries[$name] = $bigbluebuttonlib;
-			case 'edit':
-				global $editlib; require_once 'lib/wiki/editlib.php';
-				return self::$libraries[$name] = $editlib;
 			case 'scorm':
 				require_once 'lib/filegals/scormlib.php';
 				return self::$libraries[$name] = new ScormLib;
@@ -166,12 +139,6 @@ class TikiLib extends TikiDb_Bridge
 			case 'tcontrol':
 				global $tcontrollib; require_once 'lib/themecontrol/tcontrol.php';
 				return self::$libraries[$name] = $tcontrollib;
-			case 'dcs':
-				global $dcslib; require_once 'lib/dcs/dcslib.php';
-				return self::$libraries[$name] = $dcslib;
-			case 'banner':
-				global $bannerlib; require_once 'lib/banners/bannerlib.php';
-				return self::$libraries[$name] = $bannerlib;
 			case 'kalturauser':
 				require_once 'lib/videogals/kalturalib.php';
 				return self::$libraries[$name] = new KalturaLib(KalturaLib::SESSION_USER);
@@ -217,18 +184,6 @@ class TikiLib extends TikiDb_Bridge
 			case 'payment':
 				global $paymentlib; require_once 'lib/payment/paymentlib.php';
 				return self::$libraries[$name] = $paymentlib;
-			case 'cart':
-				require_once 'lib/payment/cartlib.php';
-				return self::$libraries[$name] = new CartLib();
-			case 'goal':
-				require_once 'lib/goal/goallib.php';
-				return self::$libraries[$name] = new GoalLib();
-			case 'goalevent':
-				require_once 'lib/goal/eventlib.php';
-				return self::$libraries[$name] = new GoalEventLib();
-			case 'goalreward':
-				require_once 'lib/goal/rewardlib.php';
-				return self::$libraries[$name] = new GoalRewardLib();
 			case 'credits':
 				global $creditslib; require_once 'lib/credits/creditslib.php';
 				return self::$libraries[$name] = $creditslib;

@@ -472,6 +472,3 @@ class BigBlueButtonLib
 	}
 }
 
-global $bigbluebuttonlib;
-$bigbluebuttonlib = new BigBlueButtonLib;
-

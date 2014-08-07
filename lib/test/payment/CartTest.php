@@ -5,7 +5,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-require_once 'lib/payment/cartlib.php';
+TikiLib::lib('cart');
 
 class Payment_CartTest extends TikiTestCase
 {

@@ -113,8 +113,8 @@ function wikiplugin_rss_info()
 
 function wikiplugin_rss($data,$params)
 {
-	global $smarty;
-	global $rsslib; require_once 'lib/rss/rsslib.php';
+	$smarty = TikiLib::lib('smarty');
+	$rsslib = TikiLib::lib('rss');
 
 	$params = array_merge(
 		array(

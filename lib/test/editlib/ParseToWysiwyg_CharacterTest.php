@@ -22,9 +22,9 @@ class EditLib_ParseToWysiwyg_CharacterTest extends TikiTestCase
 		
 	function setUp()
 	{
+		TikiLib::lib('edit');
 		$_SERVER['HTTP_HOST'] = ''; // editlib expects that HTTP_HOST is defined
 
-		require_once 'lib/wiki/editlib.php';
 		$this->el = new EditLib();
 		chdir($this->dir);
 		chdir('../../'); // the tiki installation directory

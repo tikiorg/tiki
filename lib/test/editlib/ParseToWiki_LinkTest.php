@@ -10,8 +10,6 @@
  *
  */
 
-require_once 'lib/wiki/editlib.php';
-
 class EditLib_ParseToWiki_LinkTest extends TikiTestCase
 {
 	private $dir = '';  // the unmodifed directory
@@ -27,7 +25,7 @@ class EditLib_ParseToWiki_LinkTest extends TikiTestCase
 
 	function setUp()
 	{
-		require_once 'lib/wiki/editlib.php';
+		TikiLib::lib('edit');
 		$this->el = new EditLib();
 		chdir($this->dir);
 		chdir('../../'); // the tiki installation directory

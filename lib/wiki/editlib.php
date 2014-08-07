@@ -1264,6 +1264,3 @@ class EditLib
 	}
 }
 
-
-global $editlib;
-$editlib = new EditLib;

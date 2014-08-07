@@ -10,7 +10,7 @@
 
 require_once ('tiki-setup.php');
 require_once ('lib/shoutbox/shoutboxlib.php');
-require_once ('lib/rss/rsslib.php');
+$rsslib = TikiLib::lib('rss');
 
 $access->check_feature('feature_shoutbox');
 
