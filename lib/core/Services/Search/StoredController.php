@@ -188,7 +188,6 @@ class Services_Search_StoredController
 		$plugin->setFields($fields);
 
 		$formatter = new Search_Formatter($plugin);
-		$formatter->setDataSource($dataSource);
 
 		$wiki = $formatter->format($resultset);
 		$tikilib = TikiLib::lib('tiki');

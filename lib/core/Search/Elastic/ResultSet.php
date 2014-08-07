@@ -9,7 +9,9 @@ class Search_Elastic_ResultSet extends Search_ResultSet
 {
 	function highlight($content)
 	{
-		return strip_tags($content['_highlight'], '<em>');
+		if (isset($content['_highlight'])) {
+			return strip_tags($content['_highlight'], '<em>');
+		}
 	}
 }
 

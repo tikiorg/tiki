@@ -127,7 +127,6 @@ if (count($filter)) {
 			$plugin->setFields($fields);
 
 			$formatter = new Search_Formatter($plugin);
-			$formatter->setDataSource($dataSource);
 
 			$wiki = $formatter->format($results);
 			$html = $tikilib->parse_data(
@@ -203,7 +202,9 @@ function tiki_searchindex_get_results($filter, $offset, $maxRecords)
 	}
 
 	try {
-		return $query->search($unifiedsearchlib->getIndex());
+		$resultset = $query->search($unifiedsearchlib->getIndex());
+
+		return $resultset;
 	} catch (Search_Elastic_TransportException $e) {
 		TikiLib::lib('errorreport')->report('Search functionality currently unavailable.');
 	} catch (Exception $e) {

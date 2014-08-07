@@ -18,6 +18,7 @@ class Search_Query implements Search_Query_Interface
 	private $subQueries = array();
 	private $facets = [];
 	private $foreignQueries = [];
+	private $transformations = [];
 
 	function __construct($query = null)
 	{
@@ -247,7 +248,16 @@ class Search_Query implements Search_Query_Interface
 	function search(Search_Index_Interface $index)
 	{
 		$this->finalize();
-		return $index->find($this, $this->start, $this->count);
+		$resultset = $index->find($this, $this->start, $this->count);
+		foreach ($this->transformations as $transform) {
+			$resultset->applyTransform($transform);
+		}
+		return $resultset;
+	}
+
+	function applyTransform(callable $transform)
+	{
+		$this->transformations[] = $transform;
 	}
 
 	function store($name, $index)
@@ -265,6 +275,10 @@ class Search_Query implements Search_Query_Interface
 	{
 		if ($this->weightCalculator) {
 			$this->expr->walk(array($this->weightCalculator, 'calculate'));
+
+			foreach ($this->foreignQueries as $expr) {
+				$expr->walk(array($this->weightCalculator, 'calculate'));
+			}
 		}
 
 		if ($this->identifierFields) {
@@ -276,6 +290,16 @@ class Search_Query implements Search_Query_Interface
 					}
 				}
 			);
+
+			foreach ($this->foreignQueries as $expr) {
+				$expr->walk(
+					function (Search_Expr_Interface $expr) use ($fields) {
+						if (method_exists($expr, 'getField') && in_array($expr->getField(), $fields)) {
+							$expr->setType('identifier');
+						}
+					}
+				);
+			}
 		}
 	}
 

@@ -118,6 +118,9 @@ class StoredSearchLib
 		} else {
 			$query = new Search_Query;
 		}
+
+		$unifiedsearchlib = TikiLib::lib('unifiedsearch');
+		$unifiedsearchlib->initQueryPresentation($query);
 		
 		return array(
 			'query' => $query,

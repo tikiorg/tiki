@@ -9,17 +9,11 @@ class Search_Formatter
 {
 	private $plugin;
 	private $subFormatters = array();
-	private $dataSource;
 	private $alternateOutput;
 
 	function __construct(Search_Formatter_Plugin_Interface $plugin)
 	{
 		$this->plugin = $plugin;
-	}
-
-	function setDataSource(Search_Formatter_DataSource_Interface $dataSource)
-	{
-		$this->dataSource = $dataSource;
 	}
 
 	function setAlternateOutput($output)
@@ -54,22 +48,26 @@ class Search_Formatter
 			$fields = array_merge($fields, array_keys($subDefault[$key]));
 		}
 
-		if ($this->dataSource) {
-			$list = $this->dataSource->getInformation($list, $fields);
-		}
-
-		if (in_array('highlight', $fields)) {
-			foreach ($list as & $entry) {
-				$entry['highlight'] = $list->highlight($entry);
-			}
-		}
-
 		$data = array();
 
-		foreach ($list as $row) {
+		$enableHighlight = in_array('highlight', $fields);
+		foreach ($list as $pre) {
+			foreach ($fields as $f) {
+				if (isset($pre[$f])) {
+					$pre[$f]; // Dynamic loading if applicable
+				}
+			}
+
+			$row = $defaultValues;
 			// Clear blank values so the defaults prevail
-			$row = array_filter($row, array($this, 'is_empty_string'));
-			$row = array_merge($defaultValues, $row);
+			foreach ($pre as $k => $value) {
+				if ($value !== '') {
+					$row[$k] = $value;
+				}
+			}
+			if ($enableHighlight) {
+				$row['highlight'] = $list->highlight($row);
+			}
 
 			$subEntries = array();
 			foreach ($this->subFormatters as $key => $plugin) {
@@ -83,11 +81,6 @@ class Search_Formatter
 		}
 
 		return $list->replaceEntries($data);
-	}
-
-	private function is_empty_string($v)
-	{
-		return $v !== '';
 	}
 
 	private function render($plugin, $resultSet, $target)

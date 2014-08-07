@@ -60,7 +60,6 @@ class Services_ActivityStream_Controller
 				'contributors' => true,
 			));
 			$formatter = new Search_Formatter($plugin);
-			$formatter->setDataSource($this->lib->getDataSource());
 			$out = $formatter->format($result);
 		} catch (SmartyException $e) {
 			throw new Services_Exception_NotAvailable($e->getMessage());

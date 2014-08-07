@@ -57,7 +57,6 @@ function wikiplugin_list($data, $params)
 	$builder->apply($matches);
 
 	$formatter = $builder->getFormatter();
-	$formatter->setDataSource($unifiedsearchlib->getDataSource());
 	$out = $formatter->format($result);
 
 	return $out;

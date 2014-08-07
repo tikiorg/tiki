@@ -21,27 +21,32 @@ class Search_Formatter_DataSource_Declarative implements Search_Formatter_DataSo
 		$this->globalSources[] = $globalSource;
 	}
 
-	function getInformation(Search_ResultSet $list, array $fields)
+	function getData($entry, $requestedField)
 	{
-		foreach ($list as & $entry) {
-			$type = $entry['object_type'];
-			$object = $entry['object_id'];
-			$hash = isset($entry['hash']) ? $entry['hash'] : null;
-			$missingFields = $this->handlePrefilter($fields, $entry);
-			
-			$entry = array_merge($entry, $this->obtainFromContentSource($type, $object, $hash, $missingFields));
+		$type = $entry['object_type'];
+		$object = $entry['object_id'];
+		$hash = isset($entry['hash']) ? $entry['hash'] : null;
+		$missingFields = $this->handlePrefilter([$requestedField], $entry);
 
-			$initial = $entry;
+		$primaryFields = $this->obtainFromContentSource($type, $object, $hash, $missingFields);
+
+		if (! empty($primaryFields)) {
+			return $primaryFields;
+		} else {
+			// Do not use array merge as the entry may be an object
+			foreach ($primaryFields as $key => $value) {
+				$entry[$key] = $value;
+			}
+
 			foreach ($this->globalSources as $globalSource) {
-				$local = $this->obtainFromGlobalSource($globalSource, $type, $object, $missingFields, $initial);
-
-				if (false !== $local) {
-					$entry = array_merge($entry, $local);
+				$local = $this->obtainFromGlobalSource($globalSource, $type, $object, $missingFields, $entry);
+				if (! empty($local)) {
+					return $local;
 				}
 			}
 		}
 
-		return $list;
+		return [];
 	}
 
 	private function obtainFromContentSource($type, $object, $hash, & $missingFields)

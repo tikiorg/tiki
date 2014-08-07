@@ -5,26 +5,25 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-class Search_Elastic_Transform_UrlPrefix extends ArrayObject
+class Search_Elastic_Transform_UrlPrefix
 {
 	private $prefixMap = null;
 
-	function __construct(array $inner, array $prefixMap)
+	function __construct(array $prefixMap)
 	{
-		parent::__construct($inner);
 		$this->prefixMap = $prefixMap;
 	}
 
-	function offsetGet($name)
+	function __invoke($entry)
 	{
-		if ($name == 'url' && isset($this['url'], $this['_index'])) {
-			$index = parent::offsetGet('_index');
+		if (isset($entry['url'], $entry['_index'])) {
+			$index = $entry['_index'];
 			if (isset($this->prefixMap[$index])) {
-				return $this->prefixMap[$index] . parent::offsetGet('url');
+				$entry['url'] = $this->prefixMap[$index] . $entry['url'];
 			}
 		}
 
-		return parent::offsetGet($name);
+		return $entry;
 	}
 }
 

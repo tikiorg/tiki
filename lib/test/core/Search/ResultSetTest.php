@@ -13,11 +13,9 @@ class Search_ResultSetTest extends PHPUnit_Framework_TestCase
 			['object_type' => 'wiki page', 'object_id' => 'Page A', 'url' => 'Page_A', '_index' => 'tiki_main'],
 			['object_type' => 'wiki page', 'object_id' => 'Page B', 'url' => 'Page_B', '_index' => 'foreign_main'],
 		]);
-		$resultset->applyTransform(function ($entry) {
-			return new Search_Elastic_Transform_UrlPrefix($entry, [
-				'foreign_main' => 'http://example.com/',
-			]);
-		});
+		$resultset->applyTransform(new Search_Elastic_Transform_UrlPrefix([
+			'foreign_main' => 'http://example.com/',
+		]));
 
 		$this->assertEquals($resultset[0]['url'], 'Page_A');
 		$this->assertEquals($resultset[1]['url'], 'http://example.com/Page_B');

@@ -201,25 +201,27 @@ OUT;
 
 	function testSpecifyDataSource()
 	{
-		$searchResult = array(
+		$searchResult = Search_ResultSet::create(array(
 			array('object_type' => 'wiki page', 'object_id' => 'HomePage'),
 			array('object_type' => 'wiki page', 'object_id' => 'SomePage'),
-		);
+		));
 		$withData = array(
 			array('object_type' => 'wiki page', 'object_id' => 'HomePage', 'description' => 'ABC'),
 			array('object_type' => 'wiki page', 'object_id' => 'SomePage', 'description' => 'DEF'),
 		);
 
 		$source = $this->getMock('Search_Formatter_DataSource_Interface');
-		$source->expects($this->once())
-			->method('getInformation')
-			->with($this->equalTo(Search_ResultSet::create($searchResult)), $this->equalTo(array('object_id', 'description')))
-			->will($this->returnValue(Search_ResultSet::create($withData)));
+		$source->expects($this->any())
+			->method('getData')
+			->will($this->returnCallback(function ($entry, $field) use (& $withData) {
+				$this->assertEquals('description', $field);
+				return array_shift($withData);
+			}));
 
 		$plugin = new Search_Formatter_Plugin_WikiTemplate("* {display name=object_id} ({display name=description})\n");
 
 		$formatter = new Search_Formatter($plugin);
-		$formatter->setDataSource($source);
+		$searchResult->applyTransform(new Search_Formatter_Transform_DynamicLoader($source));
 
 		$output = $formatter->format($searchResult);
 

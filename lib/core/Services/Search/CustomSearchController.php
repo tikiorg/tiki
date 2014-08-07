@@ -159,7 +159,6 @@ class Services_Search_CustomSearchController
 		$index = $unifiedsearchlib->getIndex();
 		$resultSet = $query->search($index);
 
-		$formatter->setDataSource($unifiedsearchlib->getDataSource());
 		$results = $formatter->format($resultSet);
 
 		$results = TikiLib::lib('tiki')->parse_data($results, array('is_html' => true, 'skipvalidation' => true));

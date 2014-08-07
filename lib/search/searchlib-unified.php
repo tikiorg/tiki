@@ -802,6 +802,7 @@ class UnifiedSearchLib
 	{
 		$this->initQueryBase($query);
 		$this->initQueryPermissions($query);
+		$this->initQueryPresentation($query);
 	}
 
 	function initQueryBase($query, $applyJail = true)
@@ -822,6 +823,11 @@ class UnifiedSearchLib
 		if (! Perms::get()->admin) {
 			$query->filterPermissions(Perms::get()->getGroups());
 		}
+	}
+
+	function initQueryPresentation($query)
+	{
+		$query->applyTransform(new Search_Formatter_Transform_DynamicLoader($this->getDataSource('formatting')));
 	}
 
     /**
