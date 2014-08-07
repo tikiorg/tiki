@@ -158,7 +158,10 @@ class Search_Elastic_Index implements Search_Index_Interface, Search_Index_Query
 
 		$indices = [$this->index];
 
-		$foreign = array_map([$builder, 'build'], $query->getForeignQueries());
+		$foreign = array_map(function ($query) use ($builder) {
+			return $builder->build($query->getExpr());
+		}, $query->getForeignQueries());
+
 		foreach ($foreign as $indexName => $foreignQuery) {
 			$indices[] = $indexName;
 			$queryPart = ['query' => [

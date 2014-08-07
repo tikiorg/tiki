@@ -249,9 +249,28 @@ class Search_Query implements Search_Query_Interface
 	{
 		$this->finalize();
 		$resultset = $index->find($this, $this->start, $this->count);
-		foreach ($this->transformations as $transform) {
-			$resultset->applyTransform($transform);
+		$resultset->applyTransform(function ($entry) {
+			if (! isset($entry['_index']) || ! isset($this->foreignQueries[$entry['_index']])) {
+				foreach ($this->transformations as $trans) {
+					$entry = $trans($entry);
+				}
+			}
+
+			return $entry;
+		});
+
+		foreach ($this->foreignQueries as $indexName => $query) {
+			$resultset->applyTransform(function ($entry) use ($query, $indexName) {
+				if (isset($entry['_index']) && $entry['_index'] == $indexName) {
+					foreach ($query->transformations as $trans) {
+						$entry = $trans($entry);
+					}
+				}
+
+				return $entry;
+			});
 		}
+
 		return $resultset;
 	}
 
@@ -276,8 +295,8 @@ class Search_Query implements Search_Query_Interface
 		if ($this->weightCalculator) {
 			$this->expr->walk(array($this->weightCalculator, 'calculate'));
 
-			foreach ($this->foreignQueries as $expr) {
-				$expr->walk(array($this->weightCalculator, 'calculate'));
+			foreach ($this->foreignQueries as $query) {
+				$query->expr->walk(array($this->weightCalculator, 'calculate'));
 			}
 		}
 
@@ -291,8 +310,8 @@ class Search_Query implements Search_Query_Interface
 				}
 			);
 
-			foreach ($this->foreignQueries as $expr) {
-				$expr->walk(
+			foreach ($this->foreignQueries as $query) {
+				$query->expr->walk(
 					function (Search_Expr_Interface $expr) use ($fields) {
 						if (method_exists($expr, 'getField') && in_array($expr->getField(), $fields)) {
 							$expr->setType('identifier');
@@ -366,7 +385,7 @@ class Search_Query implements Search_Query_Interface
 
 	function includeForeign($indexName, Search_Query $query)
 	{
-		$this->foreignQueries[$indexName] = $query->getExpr();
+		$this->foreignQueries[$indexName] = $query;
 	}
 
 	function getForeignQueries()

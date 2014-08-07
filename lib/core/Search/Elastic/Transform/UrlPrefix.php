@@ -7,20 +7,18 @@
 
 class Search_Elastic_Transform_UrlPrefix
 {
-	private $prefixMap = null;
+	private $prefix;
 
-	function __construct(array $prefixMap)
+	function __construct($prefix)
 	{
-		$this->prefixMap = $prefixMap;
+		$this->prefix = $prefix;
 	}
 
 	function __invoke($entry)
 	{
-		if (isset($entry['url'], $entry['_index'])) {
-			$index = $entry['_index'];
-			if (isset($this->prefixMap[$index])) {
-				$entry['url'] = $this->prefixMap[$index] . $entry['url'];
-			}
+		if (isset($entry['url'])) {
+			$entry['url'] = $this->prefix . $entry['url'];
+			$entry['_external'] = true;
 		}
 
 		return $entry;

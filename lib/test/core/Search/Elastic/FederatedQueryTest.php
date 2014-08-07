@@ -21,6 +21,7 @@ class Search_Elastic_FederatedQueryTest extends PHPUnit_Framework_TestCase
 			'object_type' => $factory->identifier('wiki page'),
 			'object_id' => $factory->identifier('PageA'),
 			'contents' => $factory->plaintext('Hello World A'),
+			'url' => $factory->identifier('PageA'),
 		));
 
 		$this->indexB = new Search_Elastic_Index($connection, 'test_index_b_foo');
@@ -30,6 +31,7 @@ class Search_Elastic_FederatedQueryTest extends PHPUnit_Framework_TestCase
 			'object_type' => $factory->identifier('wiki page'),
 			'object_id' => $factory->identifier('PageB'),
 			'contents' => $factory->plaintext('Hello World B'),
+			'url' => $factory->identifier('PageB'),
 		));
 
 		$this->indexC = new Search_Elastic_Index($connection, 'test_index_c');
@@ -39,6 +41,7 @@ class Search_Elastic_FederatedQueryTest extends PHPUnit_Framework_TestCase
 			'object_type' => $factory->identifier('wiki page'),
 			'object_id' => $factory->identifier('PageB'),
 			'contents' => $factory->plaintext('Hello World C'),
+			'url' => $factory->identifier('PageC'),
 		));
 
 		$connection->refresh('*');
@@ -82,6 +85,22 @@ class Search_Elastic_FederatedQueryTest extends PHPUnit_Framework_TestCase
 		$first = $result[0];
 		// Note : test_index_b is an alias to test_index_b_...
 		$this->assertEquals('test_index_b', $first['_index']);
+	}
+
+	function testTransformsApplyPerIndex()
+	{
+		$query = new Search_Query('Hello');
+		$query->applyTransform(new Search_Elastic_Transform_UrlPrefix('http://foo.example.com/'));
+		$sub = new Search_Query('Hello');
+		$sub->applyTransform(new Search_Elastic_Transform_UrlPrefix('http://bar.example.com/'));
+
+		$query->includeForeign('test_index_c', $sub);
+		$result = $query->search($this->indexA);
+
+		$urls = [$result[0]['url'], $result[1]['url']];
+
+		$this->assertContains('http://foo.example.com/PageA', $urls);
+		$this->assertContains('http://bar.example.com/PageC', $urls);
 	}
 }
 
