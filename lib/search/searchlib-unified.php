@@ -943,5 +943,3 @@ class UnifiedSearchLib
 	}
 }
 
-global $unifiedsearchlib;
-$unifiedsearchlib = new UnifiedSearchLib;

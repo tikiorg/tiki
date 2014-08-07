@@ -27,7 +27,7 @@ function refresh_index($object_type, $object_id = null, $process = true)
 		$unified_type = refresh_index_convert_type($object_type);
 
 		try {
-			global $unifiedsearchlib; require_once 'lib/search/searchlib-unified.php';
+			$unifiedsearchlib = TikiLib::lib('unifiedsearch');
 			$unifiedsearchlib->invalidateObject($unified_type, $object_id);
 
 			if ($process) {

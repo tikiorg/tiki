@@ -181,6 +181,16 @@
 			{preference name=storedsearch_enabled}
 		{/tab}
 
+		{tab name="{tr}Federated Search{/tr}"}
+			<h2>{tr}Federated Search{/tr}</h2>
+			{preference name=federated_enabled}
+
+			<h3>{tr}Configuration{/tr}</h3>
+			<ul>
+				<li><a href="tiki-admin_external_wikis.php">{tr}External Wiki{/tr}</a></li>
+			</ul>
+		{/tab}
+
 		{tab name="{tr}Tools{/tr}"}
 			<h2>{tr}Tools{/tr}</h2>
 			<a href="tiki-report_string_in_db.php">{tr}Report all occurences of a string in any table{/tr}</a><br>

@@ -146,16 +146,12 @@ class AdminLib extends TikiLib
 
 		$query = "select * from `tiki_extwiki` $mid order by ".$this->convertSortMode($sort_mode);
 		$query_cant = "select count(*) from `tiki_extwiki` $mid";
-		$result = $this->query($query, $bindvars, $maxRecords, $offset);
+		$result = $this->fetchAll($query, $bindvars, $maxRecords, $offset);
 		$cant = $this->getOne($query_cant, $bindvars);
 		$ret = array();
 
-		while ($res = $result->fetchRow()) {
-			$ret[] = $res;
-		}
-
 		$retval = array();
-		$retval["data"] = $ret;
+		$retval["data"] = $result;
 		$retval["cant"] = $cant;
 		return $retval;
 	}
@@ -166,19 +162,18 @@ class AdminLib extends TikiLib
      * @param $name
      * @return bool
      */
-    function replace_extwiki($extwikiId, $extwiki, $name)
+    function replace_extwiki($extwikiId, $extwiki, $name, $indexName = '', $groups = [])
 	{
-		// Check the name
-		if ($extwikiId) {
-			$query = "update `tiki_extwiki` set `extwiki`=?,`name`=? where `extwikiId`=?";
-			$result = $this->query($query, array($extwiki, $name, $extwikiId));
-		} else {
-			$query = "delete from `tiki_extwiki` where `name`=?";
-			$result = $this->query($query, array($name));
-			$query = "insert into `tiki_extwiki`(`name`,`extwiki`)
-                		values(?,?)";
-			$result = $this->query($query, array($name, $extwiki));
-		}
+		$table = $this->table('tiki_extwiki');
+		$data = [
+			'name' => $name,
+			'extwiki' => $extwiki,
+			'indexname' => $indexName,
+			'groups' => json_encode(array_values($groups)),
+		];
+		$withId = $data;
+		$withId['extwikiId'] = $extwikiId;
+		$table->insertOrUpdate($withId, $data);
 
 		return true;
 	}
@@ -202,15 +197,13 @@ class AdminLib extends TikiLib
      */
     function get_extwiki($extwikiId)
 	{
-		$query = "select * from `tiki_extwiki` where `extwikiId`=?";
-
-		$result = $this->query($query, array($extwikiId));
-
-		if (!$result->numRows())
-			return false;
-
-		$res = $result->fetchRow();
-		return $res;
+		$table = $this->table('tiki_extwiki');
+		$row = $table->fetchFullRow(['extwikiId' => $extwikiId]);
+		
+		if (! empty($row['groups'])) {
+			$row['groups'] = json_decode($row['groups']);
+		}
+		return $row;
 	}
 
 	function remove_unused_pictures()

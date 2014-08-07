@@ -25,9 +25,9 @@ $inputConfiguration = array(
 
 $section = 'search';
 require_once ('tiki-setup.php');
-require_once 'lib/search/searchlib-unified.php';
 $access->check_feature('feature_search');
 $access->check_permission('tiki_p_search');
+
 //get_strings tra("Searchindex")
 //ini_set('display_errors', true);
 //error_reporting(E_ALL);
@@ -52,12 +52,15 @@ if (count($filter)) {
 		$fetchFields = array_merge(array('title', 'modification_date', 'url'), $jitRequest->asArray('fields', ','));;
 
 		$results = tiki_searchindex_get_results($filter, $offset, $maxRecords);
-		$dataSource = $unifiedsearchlib->getDataSource('formatting');
-		$results = $dataSource->getInformation($results, $fetchFields);
 
 		$smarty->loadPlugin('smarty_function_object_link');
 		$smarty->loadPlugin('smarty_modifier_sefurl');
 		foreach ($results as &$res) {
+			foreach ($fetchFields as $f) {
+				if (isset($res[$f])) {
+					$res[$f]; // Dynamic load if applicable
+				}
+			}
 			$res['link'] = smarty_function_object_link(
 				array(
 					'type' => $res['object_type'],
@@ -66,10 +69,6 @@ if (count($filter)) {
 				),
 				$smarty
 			);
-			if (empty($res['url'])) {
-				$appendTitle = $res['object_type'] === 'article' || $res['object_type'] === 'blog' || $res['object_type'] === 'bogpost';
-				$res['url'] = smarty_modifier_sefurl($res['object_id'], $res['object_type'], '', '', $appendTitle ? 'y' : 'n', $res['title']);
-			}
 			$res = array_filter(
 				$res,
 				function ($v) {
@@ -107,7 +106,6 @@ if (count($filter)) {
 					return $facet->getName();
 				}, $results->getFacets()
 			);
-			$dataSource = $unifiedsearchlib->getDataSource('formatting');
 
 			$plugin = new Search_Formatter_Plugin_SmartyTemplate(realpath('templates/searchresults-plain.tpl'));
 			$plugin->setData(
@@ -202,6 +200,11 @@ function tiki_searchindex_get_results($filter, $offset, $maxRecords)
 	}
 
 	try {
+		if ($prefs['federated_enabled'] == 'y' && ! empty($filter['content'])) {
+			$fed = TikiLib::lib('federatedsearch');
+			$fed->augmentSimpleQuery($query, $filter['content']);
+		}
+
 		$resultset = $query->search($unifiedsearchlib->getIndex());
 
 		return $resultset;

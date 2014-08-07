@@ -43,6 +43,8 @@
 		{/if}
 
 		{if !empty($result.parent_object_id)} {tr}in{/tr} {object_link type=$result.parent_object_type id=$result.parent_object_id}{/if}
+
+		{if $result._external}<span class="label label-info">{tr}External{/tr}</span>{/if}
 		</strong>
 
 		<blockquote>
