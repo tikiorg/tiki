@@ -29,6 +29,12 @@
 		<service id="tiki.lib.cache" class="CacheLib">
 			<file>%kernel.root_dir%/lib/cache/cachelib.php</file>
 		</service>
+		<service id="tiki.lib.calendar" class="CalendarLib">
+			<file>%kernel.root_dir%/lib/calendar/calendarlib.php</file>
+		</service>
+		<service id="tiki.lib.cart" class="CartLib">
+			<file>%kernel.root_dir%/lib/payment/cartlib.php</file>
+		</service>
 		<service id="tiki.lib.categ" class="CategLib">
 			<file>%kernel.root_dir%/lib/categories/categlib.php</file>
 		</service>
@@ -40,9 +46,6 @@
 		</service>
 		<service id="tiki.lib.contribution" class="ContributionLib">
 			<file>%kernel.root_dir%/lib/contribution/contributionlib.php</file>
-		</service>
-		<service id="tiki.lib.cart" class="CartLib">
-			<file>%kernel.root_dir%/lib/payment/cartlib.php</file>
 		</service>
 		<service id="tiki.lib.css" class="cssLib">
 			<file>%kernel.root_dir%/lib/csslib.php</file>
@@ -154,6 +157,9 @@
 		<service id="tiki.lib.struct" class="StructLib">
 			<file>%kernel.root_dir%/lib/structures/structlib.php</file>
 		</service>
+		<service id="tiki.lib.tikicalendar" class="TikiCalendarLib">
+			<file>%kernel.root_dir%/lib/calendar/tikicalendarlib.php</file>
+		</service>
 		<service id="tiki.lib.tikidate" class="TikiDate"/>
 		<service id="tiki.lib.todo" class="TodoLib">
 			<file>%kernel.root_dir%/lib/todolib.php</file>
@@ -176,6 +182,7 @@
 		<service id="tiki.lib.zotero" class="ZoteroLib">
 			<file>%kernel.root_dir%/lib/zoterolib.php</file>
 		</service>
+
 		<service id="tiki.wiki.slug.underscore" class="Tiki\Wiki\SlugManager\UnderscoreGenerator">
 			<tag name="tiki.wiki.slug.generator"/>
 		</service>

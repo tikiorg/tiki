@@ -1448,4 +1448,3 @@ class CalendarLib extends TikiLib
 		}
 	}
 }
-$calendarlib = new CalendarLib;

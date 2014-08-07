@@ -10,7 +10,7 @@
 
 $section = 'calendar';
 require_once ('tiki-setup.php');
-require_once ('lib/calendar/calendarlib.php');
+$calendarlib = TikiLib::lib('calendar');
 
 $access->check_feature('feature_calendar');
 $access->check_permission('tiki_p_admin_calendar');

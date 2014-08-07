@@ -449,7 +449,8 @@ class StatsLib extends TikiLib
 	 */
 	public function period2dates($when)
 	{
-		global $tikilib, $prefs;
+		global $prefs;
+		$tikilib = TikiLib::lib('tiki');
 		$now = $tikilib->now;
 		$sec = TikiLib::date_format("%s", $now);
 		$min = TikiLib::date_format("%i", $now);
@@ -472,7 +473,7 @@ class StatsLib extends TikiLib
 
 			case 'week':
 				$iweek = TikiLib::date_format("%w", $now);// 0 for Sunday...
-				global $calendarlib; include_once('lib/calendar/calendarlib.php');
+				$calendarlib = TikiLib::lib('calendar');
 				$firstDayofWeek = $calendarlib->firstDayofWeek();
 				$iweek -= $firstDayofWeek;
 				if ($iweek < 0) {
@@ -597,5 +598,4 @@ class StatsLib extends TikiLib
 		return $ret;
 	}
 }
-global $dbTiki;
 $statslib = new StatsLib;

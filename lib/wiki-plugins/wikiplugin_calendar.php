@@ -69,10 +69,12 @@ function wikiplugin_calendar_info()
 
 function wikiplugin_calendar($data, $params)
 {
-	global $smarty, $tikilib, $prefs, $tiki_p_admin, $tiki_p_view_calendar;
-	global $dbTiki, $dc, $user, $calendarlib;
+	global $prefs, $tiki_p_admin, $tiki_p_view_calendar;
+	global $dc, $user;
 
-	require_once("lib/calendar/calendarlib.php");
+	$smarty = TikiLib::lib('smarty');
+	$tikilib = TikiLib::lib('tiki');
+	$calendarlib = TikiLib::lib('calendar');
 
 	if ( empty($params['calIds']) ) {
 		$params['calIds'] = array(1);
@@ -99,7 +101,7 @@ function wikiplugin_calendar($data, $params)
 		'ord' => null,
 	);
 
-	global $modlib; require_once 'lib/modules/modlib.php';
+	$modlib = TikiLib::lib('mod');
 	$out = '';
 	if ($params['viewlist'] == 'table' || $params['viewlist'] == 'both') {
 		$out .= $modlib->execute_module($module_reference);

@@ -46,8 +46,8 @@ function module_last_modif_events_info()
  */
 function module_last_modif_events($mod_reference, $module_params)
 {
-	global $smarty;
-	global $calendarlib; include_once ('lib/calendar/calendarlib.php');
+	$smarty = TikiLib::lib('smarty');
+	$calendarlib = TikiLib::lib('calendar');
 	
 	$events = $calendarlib->last_modif_events($mod_reference["rows"], isset($module_params["calendarId"]) ? $module_params["calendarId"] : 0);
 	

@@ -17,7 +17,7 @@ class Tiki_Profile_InstallHandler_Calendar extends Tiki_Profile_InstallHandler
 		$this->replaceReferences($data);
 
 		if (!empty($data['name'])) {
-			global $calendarlib; include_once('lib/calendar/calendarlib.php');
+			$calendarlib = TikiLib::lib('calendar');
 			$data['calendarId'] = $calendarlib->get_calendarId_from_name($data['name']);
 		}
 
@@ -54,7 +54,7 @@ class Tiki_Profile_InstallHandler_Calendar extends Tiki_Profile_InstallHandler
 	function _install()
 	{
 		if ($this->canInstall()) {
-			global $calendarlib; if (!$calendarlib) require_once 'lib/calendar/calendarlib.php';
+			$calendarlib = TikiLib::lib('calendar');
 			
 			$calendar = $this->getData();
 			

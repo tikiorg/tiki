@@ -11,7 +11,7 @@
 $section = 'calendar';
 require_once ('tiki-setup.php');
 
-include_once ('lib/calendar/calendarlib.php');
+$calendarlib = TikiLib::lib('calendar');
 $categlib = TikiLib::lib('categ');
 include_once ('lib/newsletters/nllib.php');
 

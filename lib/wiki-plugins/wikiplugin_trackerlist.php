@@ -1556,7 +1556,7 @@ function wikiplugin_trackerlist($data, $params)
 			}
 		}
 		if (!empty($calendarfielddate)) {
-			global $calendarlib; include_once('lib/calendar/calendarlib.php');
+			$calendarlib = TikiLib::lib('calendar');
 			$focusDate = empty($_REQUEST['todate'])? $tikilib->now: $_REQUEST['todate'];
 			$focus = $calendarlib->infoDate($focusDate);
 			if (!empty($calendardelta)) {
@@ -1795,7 +1795,7 @@ function wikiplugin_trackerlist($data, $params)
 				$smarty->assign('sticky_popup', $calendarstickypopup);
 				$smarty->assign('calendar_popup', $calendarpopup);
 				$smarty->assign('showpopup', 'n');
-				global $headerlib; include_once('lib/headerlib.php');
+				$headerlib = TikiLib::lib('header');
 				$headerlib->add_cssfile('css/calendar.css', 20);
 				return $smarty->fetch('modules/mod-calendar_new.tpl');
 			}

@@ -35,11 +35,13 @@ function module_action_calendar_info()
  */
 function module_action_calendar($mod_reference, &$module_params)
 {
-	global $prefs, $tiki_p_view_tiki_calendar, $tikilib, $smarty;
+	global $prefs, $tiki_p_view_tiki_calendar;
 	$smarty->assign('show_calendar_module', 'n');
+	$tikilib = TikiLib::lib('tiki');
+	$smarty = TikiLib::lib('smarty');
 	if ($tiki_p_view_tiki_calendar == 'y') {
 		$smarty->assign('show_calendar_module', 'y');	
-		global $tikicalendarlib; include_once('lib/calendar/tikicalendarlib.php');
+		$tikicalendarlib = TikiLib::lib('tikicalendar');
 //		Note: calendar css file now loaded in tiki-modules.php
 //		global $headerlib; $headerlib->add_cssfile('css/calendar.css', 20);
 		global $calendarViewMode;

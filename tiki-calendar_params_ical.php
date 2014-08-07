@@ -14,7 +14,7 @@ require_once ('tiki-setup.php');
 $access->check_feature('feature_calendar');
 $access->check_permission('tiki_p_view_events');
 
-include_once ('lib/calendar/calendarlib.php');
+$calendarlib = TikiLib::lib('calendar');
 $categlib = TikiLib::lib('categ');
 include_once ('lib/newsletters/nllib.php');
 

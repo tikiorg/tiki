@@ -13,11 +13,11 @@ require_once ('tiki-setup.php');
 
 $access->check_feature('feature_calendar');
 
-include_once ('lib/calendar/calendarlib.php');
+$calendarlib = TikiLib::lib('calendar');
 include_once ('lib/newsletters/nllib.php');
 include_once ('lib/calendar/calrecurrence.php');
 if ($prefs['feature_groupalert'] == 'y') {
-	include_once ('lib/groupalert/groupalertlib.php');
+	$groupalertlib = TikiLib::lib('groupalert');
 }
 $auto_query_args = array('calitemId', 'viewcalitemId');
 

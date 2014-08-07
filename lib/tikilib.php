@@ -101,9 +101,6 @@ class TikiLib extends TikiDb_Bridge
 			case 'perspective':
 				global $perspectivelib; require_once('lib/perspectivelib.php');
 				return self::$libraries[$name] = $perspectivelib;
-			case 'calendar':
-				global $calendarlib; require_once('lib/calendar/calendarlib.php');
-				return self::$libraries[$name] = $calendarlib;
 			case 'parser':
 				require_once('lib/parser/parserlib.php');
 				return self::$libraries[$name] = new ParserLib;

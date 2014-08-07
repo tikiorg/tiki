@@ -93,8 +93,9 @@ function module_upcoming_events_info()
  */
 function module_upcoming_events($mod_reference, $module_params)
 {
-	global $calendarlib, $user, $globalperms, $smarty;
-	include_once ('lib/calendar/calendarlib.php');
+	global $user, $globalperms;
+	$smarty = TikiLib::lib('smarty');
+	$calendarlib = TikiLib::lib('calendar');
 
 	$rawcals = $calendarlib->list_calendars();
 	$calIds = array();
