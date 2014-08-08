@@ -61,6 +61,7 @@ class TikiInit
 		$container = new ContainerBuilder;
 		$container->addCompilerPass(new \Tiki\MailIn\Provider\CompilerPass);
 		$container->addCompilerPass(new \Tiki\Wiki\SlugManager\CompilerPass);
+		$container->addCompilerPass(new \Search\Federated\CompilerPass);
 
 		$container->setParameter('kernel.root_dir', TIKI_PATH);
 		$loader = new XmlFileLoader($container, new FileLocator($path));

@@ -8,36 +8,49 @@
 class FederatedSearchLib
 {
 	private $unified;
+	private $indices = [];
+	private $loaded = false;
 
 	function __construct($unifiedsearch)
 	{
 		$this->unified = $unifiedsearch;
 	}
 
+	function addIndex($indexName, Search\Federated\IndexInterface $index)
+	{
+		$this->indices[$indexName] = $index;
+	}
+
 	function augmentSimpleQuery(Search_Query $query, $content)
 	{
-		$table = TikiDb::get()->table('tiki_extwiki');
-		$tikis = $table->fetchAll($table->all(), ['indexname' => $table->not('')]);
+		$this->load();
 
-		foreach ($tikis as $tiki) {
-			$sub = $this->addExternalTiki($query, $tiki['indexname'], $this->extractBaseUrl($tiki['extwiki']), json_decode($tiki['groups']) ?: []);
-			$sub->filterContent('y', 'searchable');
-			$sub->filterContent($content, ['title', 'contents']);
+		foreach ($this->indices as $indexName => $index) {
+			$sub = $this->addForIndex($query, $indexName, $index);
+			$index->applyContentConditions($sub, $content);
 		}
 	}
 
-	private function addExternalTiki($query, $indexName, $baseUrl, array $applyAs)
+	private function load()
+	{
+		if (! $this->loaded) {
+			$this->loaded = true;
+
+			$table = TikiDb::get()->table('tiki_extwiki');
+			$tikis = $table->fetchAll($table->all(), ['indexname' => $table->not('')]);
+
+			foreach ($tikis as $tiki) {
+				$this->addIndex($tiki['indexname'], new Search\Federated\TikiIndex($this->extractBaseUrl($tiki['extwiki']), json_decode($tiki['groups']) ?: []));
+			}
+		}
+	}
+
+	private function addForIndex($query, $indexName, $index)
 	{
 		$sub = new Search_Query;
-		$this->unified->initQueryBase($sub, false);
-
-		if (empty($applyAs)) {
-			$this->unified->initQueryPermissions($sub);
-		} else {
-			$sub->filterPermissions($applyAs);
+		foreach ($index->getTransformations() as $trans) {
+			$sub->applyTransform($trans);
 		}
-
-		$sub->applyTransform(new Search_Elastic_Transform_UrlPrefix($baseUrl));
 
 		$query->includeForeign($indexName, $sub);
 

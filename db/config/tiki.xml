@@ -244,5 +244,24 @@
 		<service id="tiki.wiki.slug.urlencode" class="Tiki\Wiki\SlugManager\UrlencodeGenerator">
 			<tag name="tiki.wiki.slug.generator"/>
 		</service>
+
+		<!-- Example statically binded Tiki index
+		<service id="yoursite.index.xyz" class="Search\Federated\TikiIndex">
+			<tag name="tiki.federatedsearch.index" index="tikixyz_main"/>
+			<argument type="string">http://example.com/</argument>
+			<argument type="collection">
+				<argument>Anonymous</argument>
+				<argument>Registered</argument>
+			</argument>
+		</service>
+		-->
+
+		<!-- Example statically binded ManifoldCF index
+		<service id="yoursite.index.xyz" class="Search\Federated\ManifoldCfIndex">
+			<tag name="tiki.federatedsearch.index" index="manifold"/>
+			<argument type="string">generic</argument>
+			<argument type="string">http://example.com/</argument>
+		</service>
+		-->
 	</services>
 </container>

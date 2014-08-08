@@ -185,6 +185,9 @@ class Search_Elastic_Index implements Search_Index_Interface, Search_Index_Query
 						'contents' => array(
 							"number_of_fragments" => 5,
 						),
+						'file' => array(
+							"number_of_fragments" => 5,
+						),
 					),
 				),
 			)
@@ -201,6 +204,8 @@ class Search_Elastic_Index implements Search_Index_Interface, Search_Index_Query
 
 				if (isset($entry->highlight->contents)) {
 					$data['_highlight'] = implode('...', $entry->highlight->contents);
+				} elseif (isset($entry->highlight->file)) {
+					$data['_highlight'] = implode('...', $entry->highlight->file);
 				} else {
 					$data['_highlight'] = '';
 				}

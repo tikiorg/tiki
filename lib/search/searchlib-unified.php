@@ -726,7 +726,7 @@ class UnifiedSearchLib
 			$target = $prefs['federated_elastic_url'];
 		}
 
-		if ($connections[$target]) {
+		if (! empty($connections[$target])) {
 			return $connections[$target];
 		}
 

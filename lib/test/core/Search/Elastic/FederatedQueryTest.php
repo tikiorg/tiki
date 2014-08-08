@@ -41,7 +41,7 @@ class Search_Elastic_FederatedQueryTest extends PHPUnit_Framework_TestCase
 			'object_type' => $factory->identifier('wiki page'),
 			'object_id' => $factory->identifier('PageB'),
 			'contents' => $factory->plaintext('Hello World C'),
-			'url' => $factory->identifier('PageC'),
+			'url' => $factory->identifier('/PageC'),
 		));
 
 		$connection->refresh('*');
@@ -90,9 +90,9 @@ class Search_Elastic_FederatedQueryTest extends PHPUnit_Framework_TestCase
 	function testTransformsApplyPerIndex()
 	{
 		$query = new Search_Query('Hello');
-		$query->applyTransform(new Search_Elastic_Transform_UrlPrefix('http://foo.example.com/'));
+		$query->applyTransform(new Search\Federated\UrlPrefixTransform('http://foo.example.com'));
 		$sub = new Search_Query('Hello');
-		$sub->applyTransform(new Search_Elastic_Transform_UrlPrefix('http://bar.example.com/'));
+		$sub->applyTransform(new Search\Federated\UrlPrefixTransform('http://bar.example.com/'));
 
 		$query->includeForeign('test_index_c', $sub);
 		$result = $query->search($this->indexA);

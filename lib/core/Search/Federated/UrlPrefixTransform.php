@@ -5,19 +5,21 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-class Search_Elastic_Transform_UrlPrefix
+namespace Search\Federated;
+
+class UrlPrefixTransform
 {
 	private $prefix;
 
 	function __construct($prefix)
 	{
-		$this->prefix = $prefix;
+		$this->prefix = rtrim($prefix, '/');
 	}
 
 	function __invoke($entry)
 	{
 		if (isset($entry['url'])) {
-			$entry['url'] = $this->prefix . $entry['url'];
+			$entry['url'] = $this->prefix . '/' . ltrim($entry['url'], '/');
 			$entry['_external'] = true;
 		}
 
