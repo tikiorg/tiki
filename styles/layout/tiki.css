@@ -604,6 +604,9 @@ td.numeric {
 #page-bar > span {
   float: left;
 }
+.wikiactions > .btn-group {
+  display: inline-block;
+}
 .wikiplugin-split {
   border: none;
   clear: both;
