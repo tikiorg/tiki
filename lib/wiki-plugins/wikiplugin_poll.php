@@ -69,7 +69,7 @@ function wikiplugin_poll($data, $params)
 	if (!isset($pollId)) {
 	    return WikiParser_PluginOutput::argumentError(array('pollId'));
 	}
-	global $polllib;include_once ('lib/polls/polllib.php');
+	$polllib = TikiLib::lib('poll');
 
 
     $poll_info = $polllib->get_poll($pollId);

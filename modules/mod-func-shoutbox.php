@@ -76,7 +76,9 @@ function module_shoutbox_info()
  */
 function doProcessShout($inFormValues)
 {
-	global $shoutboxlib, $user, $smarty, $prefs, $captchalib;
+	global $shoutboxlib, $user, $prefs;
+	$captchalib = TikiLib::lib('captcha');
+	$smarty = TikiLib::lib('smarty');
 //	$smarty->assign('tweet',$inFormValues['tweet']);
 	if (array_key_exists('shout_msg', $inFormValues) && strlen($inFormValues['shout_msg']) > 2) {
 		if (empty($user) && $prefs['feature_antibot'] == 'y' && (!$captchalib->validate())) {

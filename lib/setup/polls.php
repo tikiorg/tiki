@@ -15,7 +15,7 @@ if ( isset($_REQUEST['pollVote']) && !empty($_REQUEST['polls_pollId']) ) {
 		$ok = false;
 		$smarty->assign('msg_poll', tra('You must choose an option'));
 	} elseif ( $tiki_p_vote_poll == 'y' && ($prefs['feature_poll_anonymous'] == 'y' || $user || $prefs['feature_antibot'] == 'y')) {
-		global $captchalib; require_once('lib/captcha/captchalib.php');
+		$captchalib = TikiLib::lib('captcha');
 		if (empty($user) && empty($_COOKIE)) {
 			$ok = false;
 			$smarty->assign('msg_poll', tra('For you to vote, cookies must be allowed'));
@@ -25,7 +25,7 @@ if ( isset($_REQUEST['pollVote']) && !empty($_REQUEST['polls_pollId']) ) {
 			$smarty->assign('msg_poll', $captchalib->getErrors());
 			$smarty->assign_by_ref('polls_optionId', $_REQUEST['polls_optionId']);
 		} else {
-			global $polllib; include_once('lib/polls/polllib_shared.php');
+			$polllib = TikiLib::lib('poll');
 			$poll = $polllib->get_poll($_REQUEST['polls_pollId']);
 			if ( empty($poll) || $poll['active'] == 'x' ) {
 				$ok = false;

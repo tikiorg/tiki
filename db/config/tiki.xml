@@ -35,6 +35,9 @@
 		<service id="tiki.lib.calendar" class="CalendarLib">
 			<file>%kernel.root_dir%/lib/calendar/calendarlib.php</file>
 		</service>
+		<service id="tiki.lib.captcha" class="Captcha">
+			<file>%kernel.root_dir%/lib/captcha/captchalib.php</file>
+		</service>
 		<service id="tiki.lib.cart" class="CartLib">
 			<file>%kernel.root_dir%/lib/payment/cartlib.php</file>
 		</service>
@@ -99,6 +102,9 @@
 		<service id="tiki.lib.ldap" class="LdapLib">
 			<file>%kernel.root_dir%/lib/ldap/ldaplib.php</file>
 		</service>
+		<service id="tiki.lib.login" class="LoginLib">
+			<file>%kernel.root_dir%/lib/loginlib.php</file>
+		</service>
 		<service id="tiki.lib.logs" class="LogsLib">
 			<file>%kernel.root_dir%/lib/logs/logslib.php</file>
 		</service>
@@ -110,6 +116,12 @@
 		</service>
 		<service id="tiki.lib.menu" class="MenuLib">
 			<file>%kernel.root_dir%/lib/menubuilder/menulib.php</file>
+		</service>
+		<service id="tiki.lib.monitor" class="MonitorLib">
+			<file>%kernel.root_dir%/lib/user/monitorlib.php</file>
+		</service>
+		<service id="tiki.lib.monitormail" class="MonitorMailLib">
+			<file>%kernel.root_dir%/lib/user/monitormaillib.php</file>
 		</service>
 		<service id="tiki.lib.multilingual" class="MultilingualLib">
 			<file>%kernel.root_dir%/lib/multilingual/multilinguallib.php</file>
@@ -129,11 +141,17 @@
 		<service id="tiki.lib.pagecontent" class="PageContentLib">
 			<file>%kernel.root_dir%/lib/rss/pagecontentlib.php</file>
 		</service>
+		<service id="tiki.lib.parser" class="ParserLib">
+			<file>%kernel.root_dir%/lib/parser/parserlib.php</file>
+		</service>
 		<service id="tiki.lib.payment" class="PaymentLib">
 			<file>%kernel.root_dir%/lib/payment/paymentlib.php</file>
 		</service>
 		<service id="tiki.lib.perspective" class="PerspectiveLib">
 			<file>%kernel.root_dir%/lib/perspectivelib.php</file>
+		</service>
+		<service id="tiki.lib.poll" class="PollLib">
+			<file>%kernel.root_dir%/lib/polls/polllib.php</file>
 		</service>
 		<service id="tiki.lib.prefs" class="PreferencesLib">
 			<file>%kernel.root_dir%/lib/prefslib.php</file>
@@ -143,6 +161,9 @@
 		</service>
 		<service id="tiki.lib.queue" class="QueueLib">
 			<file>%kernel.root_dir%/lib/queuelib.php</file>
+		</service>
+		<service id="tiki.lib.quiz" class="QuizLib">
+			<file>%kernel.root_dir%/lib/quizzes/quizlib.php</file>
 		</service>
 		<service id="tiki.lib.rating" class="RatingLib">
 			<file>%kernel.root_dir%/lib/rating/ratinglib.php</file>
@@ -159,6 +180,9 @@
 		<service id="tiki.lib.score" class="ScoreLib">
 			<file>%kernel.root_dir%/lib/score/scorelib.php</file>
 		</service>
+		<service id="tiki.lib.searchstats" class="SearchStatsLib">
+			<file>%kernel.root_dir%/lib/search/searchstatslib.php</file>
+		</service>
 		<service id="tiki.lib.semantic" class="SemanticLib">
 			<file>%kernel.root_dir%/lib/wiki/semanticlib.php</file>
 		</service>
@@ -166,8 +190,14 @@
 			<file>%kernel.root_dir%/lib/servicelib.php</file>
 		</service>
 		<service id="tiki.lib.slugmanager" class="Tiki\Wiki\SlugManager"/>
+		<service id="tiki.lib.social" class="SocialLib">
+			<file>%kernel.root_dir%/lib/user/sociallib.php</file>
+		</service>
 		<service id="tiki.lib.sheet" class="SheetLib">
 			<file>%kernel.root_dir%/lib/sheet/sheetlib.php</file>
+		</service>
+		<service id="tiki.lib.stats" class="StatsLib">
+			<file>%kernel.root_dir%/lib/stats/statslib.php</file>
 		</service>
 		<service id="tiki.lib.storedsearch" class="StoredSearchLib">
 			<file>%kernel.root_dir%/lib/search/storedsearchlib.php</file>
@@ -196,6 +226,10 @@
 		</service>
 		<service id="tiki.lib.validators" class="Validators">
 			<file>%kernel.root_dir%/lib/validatorslib.php</file>
+		</service>
+		<service id="tiki.lib.vimeo" class="VimeoLib">
+			<file>%kernel.root_dir%/lib/filegals/vimeolib.php</file>
+			<argument type="service" id="tiki.lib.oauth"/>
 		</service>
 		<service id="tiki.lib.wiki" class="WikiLib">
 			<file>%kernel.root_dir%/lib/wiki/wikilib.php</file>

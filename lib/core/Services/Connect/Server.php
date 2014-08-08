@@ -141,7 +141,7 @@ class Services_Connect_Server
 	
 	private function getCaptcha()
 	{
-		require_once('lib/captcha/captchalib.php');
+		$captchalib = TikiLib::lib('captcha');
 		$caplib = new Captcha('dumb');
 		$caplib->captcha->setKeepSession(true)->setUseNumbers(false)->setWordlen(5);
 		return $caplib;

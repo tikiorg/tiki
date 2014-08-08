@@ -71,27 +71,12 @@ class TikiLib extends TikiDb_Bridge
 			case 'header':
 				global $headerlib; require_once 'lib/headerlib.php';
 				return self::$libraries[$name] = $headerlib;
-			case 'poll':
-				global $polllib; require_once 'lib/polls/polllib.php';
-				return self::$libraries[$name] = $polllib;
-			case 'captcha':
-				global $captchalib; require_once 'lib/captcha/captchalib.php';
-				return self::$libraries[$name] = $captchalib;
-			case 'searchstats':
-				global $searchstatslib; include_once('lib/search/searchstatslib.php');
-				return self::$libraries[$name] = $searchstatslib;
 			case 'errorreport':
 				require_once 'lib/errorreportlib.php';
 				return self::$libraries[$name] = new ErrorReportLib;
-			case 'stats':
-				global $statslib; require_once('lib/stats/statslib.php');
-				return self::$libraries[$name] = $statslib;
 			case 'access':
 				global $access; require_once 'lib/tikiaccesslib.php';
 				return self::$libraries[$name] = $access;
-			case 'parser':
-				require_once('lib/parser/parserlib.php');
-				return self::$libraries[$name] = new ParserLib;
 			case 'connect':
 				return self::$libraries[$name] = new Tiki_Connect_Client();
 			case 'connect_server':
@@ -105,9 +90,6 @@ class TikiLib extends TikiDb_Bridge
 			case 'usermodules':
 				global $usermoduleslib; require_once 'lib/usermodules/usermoduleslib.php';
 				return self::$libraries[$name] = $usermoduleslib;
-			case 'quiz':
-				global $quizlib; require_once 'lib/quizzes/quizlib.php';
-				return self::$libraries[$name] = $quizlib;
 			case 'areas':
 				global $areaslib; require_once 'lib/perspective/binderlib.php';
 				return self::$libraries[$name] = $areaslib;
@@ -130,15 +112,6 @@ class TikiLib extends TikiDb_Bridge
 			case 'registration':
 				global $registrationlib; require_once 'lib/registration/registrationlib.php';
 				return self::$libraries[$name] = $registrationlib;
-			case 'login':
-				require_once 'lib/loginlib.php';
-				return self::$libraries[$name] = new LoginLib;
-			case 'vimeo':
-				require_once 'lib/filegals/vimeolib.php';
-				return self::$libraries[$name] = new VimeoLib;
-			case 'social':
-				require_once 'lib/user/sociallib.php';
-				return self::$libraries[$name] = new SocialLib;
 			case 'autosave':
 				require_once 'lib/ajax/autosave.php';
 				return self::$libraries[$name] = new AutoSaveLib();
@@ -151,12 +124,6 @@ class TikiLib extends TikiDb_Bridge
             case 'wlte':
                 require_once 'lib/wikiLingo_tiki/WikiLingoTikiEvents.php';
                 return self::$libraries[$name] = new WikiLingoTikiEvents();
-			case 'monitor':
-				require_once 'lib/user/monitorlib.php';
-				return self::$libraries[$name] = new MonitorLib();
-			case 'monitormail':
-				require_once 'lib/user/monitormaillib.php';
-				return self::$libraries[$name] = new MonitorMailLib();
 			case 'crypt':
 				global $cryptlib; require_once 'lib/crypt/cryptlib.php';
 				return self::$libraries[$name] = new CryptLib();

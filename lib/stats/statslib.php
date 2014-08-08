@@ -216,7 +216,7 @@ class StatsLib extends TikiLib
      */
     public function site_stats()
 	{
-		global $tikilib;
+		$tikilib = TikiLib::lib('tiki');
 		$stats = array();
 		$rows = $this->getOne("select count(*) from `tiki_pageviews`", array());
 
@@ -598,4 +598,3 @@ class StatsLib extends TikiLib
 		return $ret;
 	}
 }
-$statslib = new StatsLib;

@@ -9,11 +9,7 @@
 // $Id$
 
 require_once ('tiki-setup.php');
-require_once ('lib/tikilib.php'); // httpScheme()
-include_once ('lib/polls/polllib.php');
-if (!isset($polllib)) {
-	$polllib = new PollLib;
-}
+$polllib = TikiLib::lib('poll');
 $access->check_feature('feature_polls');
 $access->check_permission('tiki_p_admin_polls');
 

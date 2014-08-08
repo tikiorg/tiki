@@ -10,7 +10,7 @@
 
 require_once ('tiki-setup.php');
 include_once ('lib/htmlpages/htmlpageslib.php');
-include_once ('lib/stats/statslib.php');
+$statslib = TikiLib::lib('stats');
 $access->check_feature('feature_html_pages');
 $access->check_permission('tiki_p_view_html_pages');
 if (!isset($_REQUEST["pageName"])) {

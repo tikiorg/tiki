@@ -1063,8 +1063,6 @@ class QuizLib extends TikiLib
 		return "quiz_uploads/";
 	}
 }
-$quizlib = new QuizLib;
-
 
 // Find the next non-blank or return -1
 /**
@@ -1105,7 +1103,7 @@ function NextBlank($text)
  */
 function quizlib_error_exit($s)
 {
-	global $smarty;
+	$smarty = TikiLib::lib('smarty');
 	$smarty->assign('msg', $s);
 
 	$smarty->display("error.tpl");

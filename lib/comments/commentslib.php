@@ -3209,8 +3209,11 @@ class Comments extends TikiLib
      */
     function post_in_forum($forum_info, &$params, &$feedbacks, &$errors)
 	{
-		global $smarty, $tiki_p_admin_forum, $tiki_p_forum_post_topic, $tikilib;
-		global  $tiki_p_forum_post, $prefs, $user, $tiki_p_forum_autoapp, $captchalib;
+		global $tiki_p_admin_forum, $tiki_p_forum_post_topic;
+		global $tiki_p_forum_post, $prefs, $user, $tiki_p_forum_autoapp;
+		$captchalib = TikiLib::lib('captcha');
+		$smarty = TikiLib::lib('smarty');
+		$tikilib = TikiLib::lib('tiki');
 
 		if (!empty($params['comments_grandParentId'])) {
 			$parent_id = $params['comments_grandParentId'];

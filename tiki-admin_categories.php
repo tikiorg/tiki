@@ -398,7 +398,7 @@ if ($prefs['feature_search'] !== 'y' || $prefs['unified_add_to_categ_search'] !=
 	}
 
 	if ( $prefs['feature_polls'] == 'y' ) {
-		include_once ('lib/polls/polllib.php');
+		$polllib = TikiLib::lib('poll');
 		$polls = $polllib->list_polls($offset, $maxRecords, 'title_asc', $find_objects);
 	}
 

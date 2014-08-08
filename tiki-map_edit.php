@@ -9,7 +9,7 @@
 // $Id$
 
 require_once ('tiki-setup.php');
-include_once ('lib/stats/statslib.php');
+$statslib = TikiLib::lib('stats');
 include_once ('lib/map/maplib.php');
 if (!isset($prefs['feature_maps']) or $prefs['feature_maps'] != 'y') {
 	$smarty->assign('msg', tra("Feature disabled"));

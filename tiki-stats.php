@@ -9,7 +9,7 @@
 // $Id$
 
 require_once ('tiki-setup.php');
-include_once ('lib/stats/statslib.php');
+$statslib = TikiLib::lib('stats');
 
 $access->check_feature('feature_stats');
 $access->check_permission('tiki_p_view_stats');

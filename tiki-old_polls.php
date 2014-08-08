@@ -9,10 +9,7 @@
 // $Id$
 
 require_once ('tiki-setup.php');
-include_once ('lib/polls/polllib.php');
-if (!isset($polllib)) {
-	$polllib = new PollLib;
-}
+$polllib = TikiLib::lib('poll');
 $access->check_feature('feature_polls');
 $access->check_permission('tiki_p_view_poll_results');
 // This script can receive the threshold

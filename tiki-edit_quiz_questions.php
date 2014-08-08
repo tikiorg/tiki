@@ -9,7 +9,7 @@
 // $Id$
 
 require_once('tiki-setup.php');
-include_once('lib/quizzes/quizlib.php');
+$quizlib = TikiLib::lib('quiz');
 
 $auto_query_args = array('quizId', 'questionId', 'sort_mode', 'offset', 'find');
 $access->check_feature('feature_quizzes');

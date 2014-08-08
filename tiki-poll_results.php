@@ -12,8 +12,7 @@ $section = 'poll';
 require_once ('tiki-setup.php');
 $access->check_feature('feature_polls');
 $access->check_permission('tiki_p_view_poll_results');
-global $pollib;
-include_once ('lib/polls/polllib.php');
+$polllib = TikiLib::lib('poll');
 $auto_query_args = array('offset', 'pollId', 'maxRecords', 'scoresort_desc', 'scoresort_asc', 'sort_mode', 'list', 'vote_from_date', 'vote_to_date', 'which_date', 'from_Day', 'from_Month', 'from_Year', 'to_Day', 'to_Month', 'to_Year');
 $smarty->assign('auto_args', implode(',', $auto_query_args));
 if (!empty($_REQUEST['maxRecords'])) {

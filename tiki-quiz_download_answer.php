@@ -9,7 +9,7 @@ require_once ('tiki-setup.php');
 
 $access->check_feature('feature_quizzes');
 
-require_once ('lib/quizzes/quizlib.php');
+$quizlib = TikiLib::lib('quiz');
 if (isset($_REQUEST['answerUploadId'])) {
 	$quizlib->download_answer($_REQUEST['answerUploadId']);
 }

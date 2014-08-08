@@ -31,8 +31,8 @@ function module_top_objects_info()
  */
 function module_top_objects($mod_reference, $module_params)
 {
-	global $smarty;
-	global $statslib; include_once ('lib/stats/statslib.php');
+	$smarty = TikiLib::lib('smarty');
+	$statslib = TikiLib::lib('stats');
 	
 	$best_objects_stats = $statslib->best_overall_object_stats($mod_reference["rows"]);
 	

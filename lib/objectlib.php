@@ -124,7 +124,7 @@ class ObjectLib extends TikiLib
 						break;
 
 					case 'poll':
-						global $polllib; require_once('lib/polls/polllib_shared.php');
+						$polllib = TikiLib::lib('poll');
 						$info = $polllib->get_poll($itemId);
 
 						$description = $info['title'];

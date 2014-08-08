@@ -7,7 +7,8 @@
 
 function validator_captcha($input, $parameter = '', $message = '')
 {
-	global $prefs, $captchalib;
+	global $prefs;
+	$captchalib = TikiLib::lib('captcha');
 	$_REQUEST['captcha'] = array('input' => $input, 'id' => $parameter);
 	if (!$captchalib->validate()) {
 		// the following needed to keep session active for ajax checking 

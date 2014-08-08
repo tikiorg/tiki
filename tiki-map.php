@@ -17,7 +17,7 @@ require_once ('tiki-setup.php');
  */
 function setDisplayMenu($name)
 {
-	global $smarty;
+	$smarty = TikiLib::lib('smarty');
 	if ( getCookie($name, 'menu', isset($_COOKIE['menu']) ? null : 'o') == 'o' ) {
 		$smarty->assign('mnu_'.$name, 'display:block;');
 		$smarty->assign('icn_'.$name, 'o');
@@ -52,7 +52,7 @@ setDisplayMenu('shtmenu');
 setDisplayMenu('prjmenu');
 // end from lib/setup/menus.php
 
-include_once ('lib/stats/statslib.php');
+$statslib = TikiLib::lib('stats');
 include_once ('lib/map/map_query.php');
 if (!function_exists('ms_newMapObj')) {
 	$msg = tra("You must first setup MapServer");
@@ -105,7 +105,7 @@ if (!is_file($map_path . $mapfile) || preg_match("/(\/\.)/", $map_path . $mapfil
  */
 function userErrorHandler($errno, $errmsg, $filename, $linenum, $vars)
 {
-	global $smarty;
+	$smarty = TikiLib::lib('smarty');
 	global $style_base;
 	global $map_path;
 	global $mapfile;

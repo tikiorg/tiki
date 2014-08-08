@@ -171,8 +171,8 @@ function wikiplugin_stat_info()
 
 function wikiplugin_stat($data, $params) 
 {
-	global $smarty;
-	global $statslib; include_once('lib/stats/statslib.php');
+	$smarty = TikiLib::lib('smarty');
+	$statslib = TikiLib::lib('stats');
 	$stat = array();
 	foreach ($params as $when=>$whats) {
 		if ($when == 'type' || $when == 'parentId') {

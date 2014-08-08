@@ -1534,7 +1534,7 @@ FILL;
 				) {
 				// in_tracker session var checking is for tiki-register.php
 				$smarty->assign('antibot_table', empty($wiki) && empty($tpl)?'n': 'y');
-				include_once('lib/captcha/captchalib.php');
+				$captchalib = TikiLib::lib('captcha');
 				$smarty->assign('captchalib', $captchalib);
 				$back .= $smarty->fetch('antibot.tpl');
 			}

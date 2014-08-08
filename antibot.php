@@ -13,7 +13,7 @@ if (!$prefs['feature_antibot'] == 'y') {
 	die;
 }
 
-require_once('lib/captcha/captchalib.php');
+$captchalib = TikiLib::lib('captcha');
 
 $captchalib->generate();
 $captcha = array('captchaId' => $captchalib->getId(), 'captchaImgPath' => $captchalib->getPath());

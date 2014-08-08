@@ -70,4 +70,3 @@ class SearchStatsLib extends TikiLib
 		return $retval;
 	}
 }
-global $searchstatslib; $searchstatslib = new SearchStatsLib;

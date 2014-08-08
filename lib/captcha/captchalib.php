@@ -230,6 +230,4 @@ Recaptcha.create("' . $this->captcha->getPubKey() . '",
 	}
 }
 
-global $captchalib;
-$captchalib = new Captcha;
 

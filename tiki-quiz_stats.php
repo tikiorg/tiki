@@ -7,7 +7,7 @@
 
 $section = 'quizzes';
 require_once ('tiki-setup.php');
-include_once ('lib/quizzes/quizlib.php');
+$quizlib = TikiLib::lib('quiz');
 
 $auto_query_args = array('sort_mode', 'offset', 'find');
 

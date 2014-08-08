@@ -6,7 +6,7 @@
 // $Id$
 
 require_once ('tiki-setup.php');
-include_once ('lib/search/searchstatslib.php');
+$searchstatslib = TikiLib::lib('searchstats');
 //get_strings tra('Search Stats')
 
 $access->check_feature('feature_search_stats');
