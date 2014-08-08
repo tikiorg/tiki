@@ -1101,7 +1101,7 @@
 		"rangy/rangy": "1.2.3",
 		"simile_timeline/simile_timeline": "2.3.0",
 		"smarty/smarty": ">=3.1.14",
-		"svg-edit/svg-edit": "2.6",
+		"svg-edit/svg-edit": ">=2.6",
 		"symfony/console": ">=2.4.1",
 		"symfony/dependency-injection": "2.4.3",
 		"symfony/config": "2.4.3",
