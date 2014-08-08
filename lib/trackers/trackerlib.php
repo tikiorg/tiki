@@ -2120,7 +2120,7 @@ class TrackerLib extends TikiLib
 						if (empty($val)) {
 							$mandatory_fields[] = $f;
 						}
-					} elseif (!isset($f['value']) or strlen($f['value']) == 0) {
+					} elseif (!isset($f['value']) || !is_array($f['value']) && strlen($f['value']) == 0 || is_array($f['value']) && empty($f['value'])) {
 						$mandatory_fields[] = $f;
 					}
 				}
