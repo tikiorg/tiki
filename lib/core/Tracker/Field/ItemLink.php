@@ -447,40 +447,58 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 		return array();
 	}
 
-	function getItemLabel($itemId, $context = array('list_mode' => ''))
+	function getItemLabel($itemIds, $context = array('list_mode' => ''))
 	{
+		$items = explode(',', $itemIds);
+
 		$trklib = TikiLib::lib('trk');
-		$item = $trklib->get_tracker_item($itemId);
 
-		if (! $item) {
-			return '';
-		}
+		$fulllabel = '';
 
-		$trackerId = (int) $this->getOption('trackerId');
-		$status = $this->getOption('status', 'opc');
+		foreach ($items as $itemId) {
 
-		$parts = array();
+			if (!empty($fulllabel)) {
+				$fulllabel .= ', ';
+			}
 
-		if ($fields = $this->getDisplayFieldsListArray()) {
-			foreach ($fields as $fieldId) {
+			$item = $trklib->get_tracker_item($itemId);
+
+			if (! $item) {
+				return '';
+			}
+
+			$trackerId = (int) $this->getOption('trackerId');
+			$status = $this->getOption('status', 'opc');
+
+			$parts = array();
+
+			if ($fields = $this->getDisplayFieldsListArray()) {
+				foreach ($fields as $fieldId) {
+					if (isset($item[$fieldId])) {
+						$parts[] = $fieldId;
+					}
+				}
+			} else {
+				$fieldId = $this->getOption('fieldId');
+	
 				if (isset($item[$fieldId])) {
 					$parts[] = $fieldId;
 				}
 			}
-		} else {
-			$fieldId = $this->getOption('fieldId');
 
-			if (isset($item[$fieldId])) {
-				$parts[] = $fieldId;
+
+			if (count($parts)) {
+				$label = $trklib->concat_item_from_fieldslist($trackerId, $itemId, $parts, $status, ' ', $context['list_mode'], $this->getOption('linkToItem'));
+			} else {
+				$label = TikiLib::lib('object')->get_title('trackeritem', $itemId);
+			}
+
+			if ($label) {
+				$fulllabel .= $label;
 			}
 		}
 
-
-		if (count($parts)) {
-			return $trklib->concat_item_from_fieldslist($trackerId, $itemId, $parts, $status, ' ', $context['list_mode'], $this->getOption('linkToItem'));
-		} else {
-			return TikiLib::lib('object')->get_title('trackeritem', $itemId);
-		}
+		return $fulllabel;
 	}
 
 	private function getItemList()
