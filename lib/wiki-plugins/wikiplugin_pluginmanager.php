@@ -237,8 +237,7 @@ class WikiPluginPluginManager extends PluginsLib
 					$infoPlugin['params'] = array_merge($body, $infoPlugin['params']);
 				}
 				foreach ($infoPlugin['params'] as $paramname => $paraminfo) {
-					$class = ($rowCounter%2) ? 'odd' : 'even';
-					$rows .= "\n\t" . '<tr class="' . $class . '">' . $cellbegin;
+					$rows .= "\n\t" . '<tr>' . $cellbegin;
 					//Parameters column
 					if (isset($paraminfo['required']) && $paraminfo['required'] == true) {
 						$rows .= '<b><em>' . $paramname . '</em></b>';
@@ -296,7 +295,7 @@ class WikiPluginPluginManager extends PluginsLib
  			   		$rowCounter++;
 				}
 			} else {
-				$rows .= "\n\t" . '<tr class="odd">' . $cellbegin . '<em>' . tra('no parameters') . '</em></td>';
+				$rows .= "\n\t" . '<tr>' . $cellbegin . '<em>' . tra('no parameters') . '</em></td>';
 			}
 			$header .= "\n\t" . '</tr>';
 			if (!empty($infoPlugin['prefs'])) {
@@ -305,7 +304,7 @@ class WikiPluginPluginManager extends PluginsLib
 				$pluginprefs = '';
 			}
 			$sOutput = $title . '<em>' . tr('Required parameters are in%0 %1bold%2', '</em>', '<b>', '</b>') . '<br />' . 
-						$pluginprefs . '<table class="table-bordered">' . $header . $rows . '</table>' . "\n";
+						$pluginprefs . '<table class="table table-striped table-hover normal">' . $header . $rows . '</table>' . "\n";
 			return $sOutput;
 		}
 	}
