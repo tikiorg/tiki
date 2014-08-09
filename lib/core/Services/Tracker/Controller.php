@@ -681,7 +681,7 @@ class Services_Tracker_Controller
 		global $prefs;
 		if ($prefs['feature_jquery_validation'] === 'y') {
 			$validationjs = TikiLib::lib('validators')->generateTrackerValidateJS($definition->getFields());
-			TikiLib::lib('header')->add_jq_onready('$("#insertItemForm").validate({' . $validationjs .', ignore: ".ignore"});');
+			TikiLib::lib('header')->add_jq_onready('$("#insertItemForm").validate({' . $validationjs . $this->get_validation_options());
 		}
 
 		$itemId = 0;
@@ -776,7 +776,7 @@ class Services_Tracker_Controller
 		global $prefs;
 		if ($prefs['feature_jquery_validation'] === 'y') {
 			$validationjs = TikiLib::lib('validators')->generateTrackerValidateJS($definition->getFields());
-			TikiLib::lib('header')->add_jq_onready('$("#updateItemForm").validate({' . $validationjs .', ignore: ".ignore"});');
+			TikiLib::lib('header')->add_jq_onready('$("#updateItemForm").validate({' . $validationjs . $this->get_validation_options());
 		}
 
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -1684,5 +1684,28 @@ class Services_Tracker_Controller
 			'title' => tr('Help'),
 		];
 	}
+
+	function get_validation_options()
+	{
+		return ',
+		errorClass: "label label-warning",
+		errorPlacement: function(error,element) {
+			if ($(element).parents(".input-group").length > 0) {
+				error.insertAfter($(element).parents(".input-group").first());
+			} else if ($(element).parents(".has-error").length > 0) {
+				error.appendTo($(element).parents(".has-error").first());
+			} else {
+				error.insertAfter(element);
+			}
+		},
+		highlight: function(element) {
+			$(element).parents("div, p").first().addClass("has-error");
+		},
+		unhighlight: function(element) {
+			$(element).parents("div, p").first().removeClass("has-error");
+		},
+		ignore: ".ignore"
+		});';
+	}	
 }
 

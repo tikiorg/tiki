@@ -2,30 +2,22 @@
 {if isset($validationjs)}{jq}
 $("#editItemForm{{$trackerEditFormId}}").validate({
 	{{$validationjs}},
+	errorClass: "label label-warning",
+	errorPlacement: function(error, element) {
+		if ($(element).parents('.input-group').length > 0) {
+			error.insertAfter($(element).parents('.input-group').first());
+		} else if ($(element).parents('.has-error').length > 0) {
+			error.appendTo($(element).parents('.has-error').first());
+		} else {
+			error.insertAfter(element);
+		}
+	},
 	highlight: function(element) {
-		$(element).parent('div, p').addClass('has-error');
+		$(element).parents('div, p').first().addClass('has-error');	
 	},
 	unhighlight: function(element) {
-		$(element).parent('div, p').removeClass('has-error');
+		$(element).parents('div, p').first().removeClass('has-error');
 	},
-	showErrors: function(errorMap, errorList) {
-		this.defaultShowErrors();
-		$.each(this.successList, function(index, value) {
-			return $(value).popover("hide");
-		});
-		return $.each(errorList, function(index, value) {
-			var _popover;
-			_popover = $(value.element).popover({
-				trigger: "manual",
-				placement: "top",
-				content: value.message,
-				template: "<div class=\"popover\"><div class=\"arrow\"></div><div class=\"popover-inner\"><div class=\"popover-content\"><p></p></div></div></div>"
-		});
-		_popover.data("bs.popover").options.content = value.message;
-		return $(value.element).popover("show");
-		});
-	},
-	
 	ignore: '.ignore',
 	submitHandler: function(){
 		if( typeof nosubmitItemForm{{$trackerEditFormId}} !== "undefined" && nosubmitItemForm{{$trackerEditFormId}} == true ) {
