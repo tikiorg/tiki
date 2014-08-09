@@ -115,6 +115,20 @@ class Tracker_Item
 			return $this->perms->remove_tracker_items;
 		}
 	}
+	public function getSpecialPermissionUsers($itemId, $operation)
+	{
+		$users = array();
+
+		if ($this->definition->getConfiguration('writerCan' . $operation, 'n') == 'y') {
+			$users[] = $this->owner;
+		}
+
+		if ($this->definition->getConfiguration('writerGroupCan' . $operation, 'n') == 'y' && $this->ownerGroup && in_array($this->ownerGroup, $this->perms->getGroups())) {
+			$users = array_unique(array_merge($users, TikiLib::lib('user')->get_group_users($this->ownerGroup)));
+		}
+
+		return $users;
+	}
 
 	private function canFromSpecialPermissions($operation)
 	{

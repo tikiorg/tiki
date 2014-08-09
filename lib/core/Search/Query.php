@@ -103,6 +103,8 @@ class Search_Query implements Search_Query_Interface
 
 	function filterPermissions(array $groups)
 	{
+		global $user;
+
 		$tokens = array();
 		foreach ($groups as $group) {
 			$tokens[] = new Search_Expr_Token($group);
@@ -110,7 +112,9 @@ class Search_Query implements Search_Query_Interface
 
 		$or = new Search_Expr_Or($tokens);
 
-		$this->addPart($or, 'multivalue', 'allowed_groups');
+		$sub = $this->getSubQuery('permissions');
+		$sub->filterMultivalue($or, 'allowed_groups');
+		$sub->filterMultivalue($user, 'allowed_users');
 	}
 
 	/**
