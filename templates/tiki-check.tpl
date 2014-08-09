@@ -3,6 +3,7 @@
 
 <h2>{tr}MySQL or MariaDB Database Properties{/tr}</h2>
 <div class="table-responsive">
+<div>
 <table class="table normal">
 	<tr>
 		<th>{tr}Property{/tr}</th>
@@ -36,10 +37,12 @@
 	{/foreach}
 </table>
 </div>
+</div>
 
 <h2>{tr}MySQL crashed Tables{/tr}</h2>
 {remarksbox type="note" title="{tr}Be careful{/tr}"}{tr}The following list is just a very quick look at SHOW TABLE STATUS that tells you, if tables have been marked as crashed. If you are experiencing database problems you should still run CHECK TABLE or myisamchk to make sure{/tr}.{/remarksbox}
 <div class="table-responsive">
+<div>
 <table class="table normal">
 	<tr>
 		<th>{tr}Table{/tr}</th>
@@ -56,12 +59,14 @@
 	{/foreach}
 </table>
 </div>
+</div>
 
 <h2>{tr}Test sending e-mails{/tr}</h2>
 {tr}To test if your installation is capable of sending emails please visit the <a href="tiki-install.php">Tiki Installer</a>{/tr}.
 
 <h2>{tr}Server Information{/tr}</h2>
 <div class="table-responsive">
+<div>
 <table class="table normal">
 	<tr>
 		<th>{tr}Property{/tr}</th>
@@ -78,9 +83,11 @@
 	{/foreach}
 </table>
 </div>
+</div>
 
 <h2>{tr}Server Properties{/tr}</h2>
 <div class="table-responsive">
+<div>
 <table class="table normal">
 	<tr>
 		<th>{tr}Property{/tr}</th>
@@ -114,11 +121,13 @@
 	{/foreach}
 </table>
 </div>
+</div>
 
 <h2>{tr}Special directories{/tr}</h2>
 {tr}To backup these directories go to <a href="tiki-admin_system.php">Admin->Tiki Cache/SysAdmin</a>{/tr}.
 {if count($dirs)}
     <div class="table-responsive">
+    <div>
 	<table class="table normal">
 		<tr>
 			<th>{tr}Directory{/tr}</th>
@@ -147,12 +156,14 @@
 		{/foreach}
 	</table>
     </div>
+    </div>
 {/if}
 
 
 <h2>{tr}Apache properties{/tr}</h2>
 {if $apache_properties}
     <div class="table-responsive">
+    <div>
 	<table class="table normal">
 		<tr>
 			<th>{tr}Property{/tr}</th>
@@ -186,6 +197,7 @@
 		{/foreach}
 	</table>
     </div>
+    </div>
 {else}
 	{$no_apache_properties}
 {/if}
@@ -193,6 +205,7 @@
 <h2>{tr}IIS properties{/tr}</h2>
 {if $iis_properties}
     <div class="table-responsive">
+    <div>
 	<table class="table normal">
 		<tr>
 			<th>{tr}Property{/tr}</th>
@@ -226,12 +239,14 @@
 		{/foreach}
 	</table>
     </div>
+    </div>
 {else}
 	{$no_iis_properties}
 {/if}
 
 <h2>{tr}PHP scripting language properties{/tr}</h2>
 <div class="table-responsive">
+<div>
 <table class="table normal">
 	<tr>
 		<th>{tr}Property{/tr}</th>
@@ -265,10 +280,12 @@
 	{/foreach}
 </table>
 </div>
+</div>
 
 <h2>{tr}PHP Security properties{/tr}</h2>
 {tr}To check the file integrity of your Tiki installation, go to <a href="tiki-admin_security.php">Admin->Security</a>{/tr}.
 <div class="table-responsive">
+<div>
 <table class="table normal">
 	<tr>
 		<th>{tr}Property{/tr}</th>
@@ -302,9 +319,11 @@
 	{/foreach}
 </table>
 </div>
+</div>
 
 <h2>{tr}MySQL Variable Information{/tr}</h2>
 <div class="table-responsive">
+<div>
 <table class="table normal">
 	<tr>
 		<th>{tr}Property{/tr}</th>
@@ -320,6 +339,7 @@
 		{norecords _colspan=2}
 	{/foreach}
 </table>
+</div>
 </div>
 
 <h2>{tr}PHP Info{/tr}</h2>
