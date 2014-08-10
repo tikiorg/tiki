@@ -70,4 +70,9 @@ body.navbar-padding {
   .table-responsive > .table-bordered > tfoot > tr:last-child > td {
     border-bottom: 0;
   }
- }
+}
+
+// Fix in BS 3.2 when modal is closed the remaining modals (custom in Tiki) lose scrolling
+.modal.in {
+  overflow-y: auto;
+}
