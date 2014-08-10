@@ -464,7 +464,7 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 			$item = $trklib->get_tracker_item($itemId);
 
 			if (! $item) {
-				return '';
+				continue;
 			}
 
 			$trackerId = (int) $this->getOption('trackerId');
