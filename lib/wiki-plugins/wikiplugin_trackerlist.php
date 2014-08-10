@@ -393,14 +393,14 @@ function wikiplugin_trackerlist_info()
 			 ),
 			 'ldelim' => array(
 				 'required' => false,
-				 'name' => tra('Left Deliminator'),
+				 'name' => tra('Left Delimiter'),
 				 'description' => tra('Smarty left delimiter for Latex generation'),
 				 'advanced' => true,
 				 'default' => '',
 			 ),
 			 'rdelim' => array(
 				 'required' => false,
-				 'name' => tra('Right Deliminator'),
+				 'name' => tra('Right Delimiter'),
 				 'description' => tra('Smarty right delimiter for Latex generation'),
 				 'advanced' => true,
 				 'default' => '',
