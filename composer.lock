@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "daa2ec0691d56c2ef6525639a7e74a64",
+    "hash": "e5e1a0ac1d54c7021f2fcfd23ecc2f19",
     "packages": [
         {
             "name": "adodb/adodb",
@@ -990,12 +990,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/jakiestfu/Medium.js.git",
-                "reference": "c8e1ebf9d09a2e82c5c0561dc1351b4deb503d68"
+                "reference": "092ac5fbefbe0d8a42c77d5c462d299d780ea0ae"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jakiestfu/Medium.js/zipball/c8e1ebf9d09a2e82c5c0561dc1351b4deb503d68",
-                "reference": "c8e1ebf9d09a2e82c5c0561dc1351b4deb503d68",
+                "url": "https://api.github.com/repos/jakiestfu/Medium.js/zipball/092ac5fbefbe0d8a42c77d5c462d299d780ea0ae",
+                "reference": "092ac5fbefbe0d8a42c77d5c462d299d780ea0ae",
                 "shasum": ""
             },
             "require": {
@@ -1021,7 +1021,7 @@
                     "role": "Lead Developer"
                 }
             ],
-            "time": "2014-07-26 13:17:18"
+            "time": "2014-08-07 19:53:16"
         },
         {
             "name": "phenx/php-font-lib",
@@ -1303,12 +1303,12 @@
         },
         {
             "name": "svg-edit/svg-edit",
-            "version": "2.6",
+            "version": "2.7.1",
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/svg-edit-svg-edit-2.6.zip",
-                "reference": "2.6",
-                "shasum": "5c62748fdcc7cd4115e7bd59be12ba589d47d9ee"
+                "url": "https://composer.tiki.org/dist/svg-edit-svg-edit-2.7.1.zip",
+                "reference": "2.7.1",
+                "shasum": "853ea5d7db21cf04bac4694e12709dee981a400d"
             },
             "type": "library"
         },
@@ -1478,7 +1478,7 @@
         },
         {
             "name": "symfony/filesystem",
-            "version": "v2.5.2",
+            "version": "v2.5.3",
             "target-dir": "Symfony/Component/Filesystem",
             "source": {
                 "type": "git",
@@ -1511,14 +1511,12 @@
             ],
             "authors": [
                 {
-                    "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com",
-                    "homepage": "http://fabien.potencier.org",
-                    "role": "Lead Developer"
-                },
-                {
                     "name": "Symfony Community",
                     "homepage": "http://symfony.com/contributors"
+                },
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
                 }
             ],
             "description": "Symfony Filesystem Component",
@@ -1527,17 +1525,17 @@
         },
         {
             "name": "symfony/process",
-            "version": "v2.5.2",
+            "version": "v2.5.3",
             "target-dir": "Symfony/Component/Process",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Process.git",
-                "reference": "5e53efbf61a7fbf73c79e3e08feea50f64c20bfa"
+                "reference": "e0997d2a9a1a763484b34b989900b61322a9b056"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Process/zipball/5e53efbf61a7fbf73c79e3e08feea50f64c20bfa",
-                "reference": "5e53efbf61a7fbf73c79e3e08feea50f64c20bfa",
+                "url": "https://api.github.com/repos/symfony/Process/zipball/e0997d2a9a1a763484b34b989900b61322a9b056",
+                "reference": "e0997d2a9a1a763484b34b989900b61322a9b056",
                 "shasum": ""
             },
             "require": {
@@ -1560,19 +1558,17 @@
             ],
             "authors": [
                 {
-                    "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com",
-                    "homepage": "http://fabien.potencier.org",
-                    "role": "Lead Developer"
-                },
-                {
                     "name": "Symfony Community",
                     "homepage": "http://symfony.com/contributors"
+                },
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
                 }
             ],
             "description": "Symfony Process Component",
             "homepage": "http://symfony.com",
-            "time": "2014-07-09 09:05:48"
+            "time": "2014-08-05 09:00:40"
         },
         {
             "name": "tijsverkoyen/css-to-inline-styles",
@@ -1996,7 +1992,9 @@
             "time": "2014-03-17 04:51:51"
         }
     ],
-    "aliases": [],
+    "aliases": [
+
+    ],
     "minimum-stability": "stable",
     "stability-flags": {
         "jcapture-applet/jcapture-applet": 20,
@@ -2008,6 +2006,10 @@
         "bafs/testify": 20
     },
     "prefer-stable": false,
-    "platform": [],
-    "platform-dev": []
+    "platform": [
+
+    ],
+    "platform-dev": [
+
+    ]
 }
