@@ -22,6 +22,8 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
  * - toLevel : displays to this level only
  * - drilldown ??
  * - bootstrap : navbar|basic (equates to horiz or vert in old menus)
+ * - setSelected=y|n (default=y) processes all menu items to show currently selected item, also sets open states, sectionLevel, toLevel etc
+ * 								so menu_cookie, sectionLevel and toLevel will be ignored if this is set to n
  */
 function smarty_function_menu($params, $smarty)
 {
@@ -162,7 +164,9 @@ function get_menu_with_selections($params)
 	if (strpos($_SERVER['SCRIPT_NAME'], 'tiki-register') === false) {
 		$cachelib->cacheItem($cacheName, serialize(array($menu_info, $channels)), $cacheType);
 	}
-	$channels = $menulib->setSelected($channels, isset($sectionLevel)?$sectionLevel:'', isset($toLevel)?$toLevel: '', $params);
+	if (!isset($setSelected) || $setSelected !== 'n') {
+		$channels = $menulib->setSelected($channels, isset($sectionLevel) ? $sectionLevel : '', isset($toLevel) ? $toLevel : '', $params);
+	}
 
 	foreach ($channels['data'] as & $item) {
 		if (!empty($menu_info['parse']) && $menu_info['parse'] === 'y') {

@@ -133,7 +133,7 @@ abstract class Tiki_Connect_Abstract
 	{
 
 		if (is_array($data) || is_object($data)) {
-			$data = serialize($data);
+			$data = json_encode( $data );
 		}
 		$insertId = $this->connectTable->insert(
 			array(

@@ -91,6 +91,11 @@ function module_menu_info()
 				'description' => tra('Show namespace prefix in page names').' ( y / n )',	// Do not translate y/n	
 				'default' => 'y'
 			),
+			'setSelected' => array(
+				'name' => tra('Set Selected'),
+				'description' => tra('Process all menu items to show currently selected item and other dynamic states. Useful when disabled on very large menus where performance becomes an issue.').' ( y / n )',
+				'default' => 'y'
+			),
 		)
 	);
 }
