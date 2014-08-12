@@ -138,6 +138,18 @@ class FileGalLib extends TikiLib
 		);
 
 		if ( $idGallery = $this->table('tiki_file_galleries')->fetchOne('galleryId', $conditions) ) {
+			// upgrades from very old tikis may have multiple user filegals per user, so merge them into one here
+			unset($conditions['name']);
+			$conditions['galleryId'] = $this->table('tiki_file_galleries')->not($idGallery);
+			$rows = $this->table('tiki_file_galleries')->fetchAll(array('galleryId'), $conditions);
+			foreach ($rows as $row) {
+				$this->table('tiki_files')->updateMultiple(
+					array('galleryId' => $idGallery), 			// set gallery to the proper one (name eq userId)
+					array('galleryId' => $row['galleryId']) 	// where gallery is this one
+				);
+				$this->remove_file_gallery($row['galleryId']);
+			}
+
 			return $idGallery;
 		}
 
