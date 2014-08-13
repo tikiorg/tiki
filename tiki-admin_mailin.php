@@ -9,10 +9,11 @@
 // $Id$
 
 require_once ('tiki-setup.php');
-include_once ('lib/mailin/mailinlib.php');
 //check if feature is on
 $access->check_feature('feature_mailin');
 $access->check_permission(array('tiki_p_admin_mailin'));
+
+$mailinlib = TikiLib::lib('mailin');
 
 // List
 $accounts = $mailinlib->list_mailin_accounts(0, -1, 'account_asc', '');

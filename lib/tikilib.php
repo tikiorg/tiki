@@ -93,15 +93,9 @@ class TikiLib extends TikiDb_Bridge
 			case 'wysiwyg':
 				require_once 'lib/ckeditor_tiki/wysiwyglib.php';
 				return self::$libraries[$name] = new WYSIWYGLib();
-			case 'wizard':
-				require_once 'lib/wizard/wizardlib.php';
-				return self::$libraries[$name] = new WizardLib();
             case 'wlte':
                 require_once 'lib/wikiLingo_tiki/WikiLingoTikiEvents.php';
                 return self::$libraries[$name] = new WikiLingoTikiEvents();
-			case 'mailin':
-				global $mailinlib; require_once 'lib/mailin/mailinlib.php';
-				return self::$libraries[$name] = $mailinlib;
 			case 'usermailin':
 				global $usermailinlib; require_once 'lib/mailin/usermailinlib.php';
 				return self::$libraries[$name] = $usermailinlib;

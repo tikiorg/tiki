@@ -120,6 +120,9 @@
 		<service id="tiki.lib.logsqry" class="LogsQueryLib">
 			<file>%kernel.root_dir%/lib/logs/logsquerylib.php</file>
 		</service>
+		<service id="tiki.lib.mailin" class="MailinLib">
+			<file>%kernel.root_dir%/lib/mailin/mailinlib.php</file>
+		</service>
 		<service id="tiki.lib.memcache" class="Memcachelib">
 			<file>%kernel.root_dir%/lib/cache/memcachelib.php</file>
 		</service>
@@ -263,6 +266,9 @@
 		</service>
 		<service id="tiki.lib.wiki" class="WikiLib">
 			<file>%kernel.root_dir%/lib/wiki/wikilib.php</file>
+		</service>
+		<service id="tiki.lib.wizard" class="WizardLib">
+			<file>%kernel.root_dir%/lib/wizard/wizardlib.php</file>
 		</service>
 		<service id="tiki.lib.zotero" class="ZoteroLib">
 			<file>%kernel.root_dir%/lib/zoterolib.php</file>

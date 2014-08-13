@@ -135,7 +135,7 @@ if ($prefs['https_login'] != 'required') {
 
 // Check if any of the mail-in accounts uses "Allow anonymous access"
 if ($prefs['feature_mailin'] == 'y') {
-	require_once('lib/mailin/mailinlib.php');
+	$mailinlib = TikiLib::lib('mailin');
 	$accs = $mailinlib->list_active_mailin_accounts(0, -1, 'account_desc', '');
 	
 	// Check anonymous access
