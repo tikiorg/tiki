@@ -81,37 +81,12 @@ class TikiLib extends TikiDb_Bridge
 				return self::$libraries[$name] = new Tiki_Connect_Client();
 			case 'connect_server':
 				return self::$libraries[$name] = new Tiki_Connect_Server();
-			case 'scorm':
-				require_once 'lib/filegals/scormlib.php';
-				return self::$libraries[$name] = new ScormLib;
-			case 'mod':
-				global $modlib; require_once 'lib/modules/modlib.php';
-				return self::$libraries[$name] = $modlib;
-			case 'usermodules':
-				global $usermoduleslib; require_once 'lib/usermodules/usermoduleslib.php';
-				return self::$libraries[$name] = $usermoduleslib;
-			case 'areas':
-				global $areaslib; require_once 'lib/perspective/binderlib.php';
-				return self::$libraries[$name] = $areaslib;
-			case 'mime':
-				require_once 'lib/mime/mimelib.php';
-				$mimelib = new MimeLib;
-				return self::$libraries[$name] = $mimelib;
-			case 'references':
-				global $referenceslib; require_once 'lib/references/referenceslib.php';
-				return self::$libraries[$name] = $referenceslib;
-			case 'tcontrol':
-				global $tcontrollib; require_once 'lib/themecontrol/tcontrol.php';
-				return self::$libraries[$name] = $tcontrollib;
 			case 'kalturauser':
 				require_once 'lib/videogals/kalturalib.php';
 				return self::$libraries[$name] = new KalturaLib(KalturaLib::SESSION_USER);
 			case 'kalturaadmin':
 				require_once 'lib/videogals/kalturalib.php';
 				return self::$libraries[$name] = new KalturaLib(KalturaLib::SESSION_ADMIN);
-			case 'registration':
-				global $registrationlib; require_once 'lib/registration/registrationlib.php';
-				return self::$libraries[$name] = $registrationlib;
 			case 'autosave':
 				require_once 'lib/ajax/autosave.php';
 				return self::$libraries[$name] = new AutoSaveLib();
@@ -124,12 +99,6 @@ class TikiLib extends TikiDb_Bridge
             case 'wlte':
                 require_once 'lib/wikiLingo_tiki/WikiLingoTikiEvents.php';
                 return self::$libraries[$name] = new WikiLingoTikiEvents();
-			case 'crypt':
-				global $cryptlib; require_once 'lib/crypt/cryptlib.php';
-				return self::$libraries[$name] = new CryptLib();
-			case 'credits':
-				global $creditslib; require_once 'lib/credits/creditslib.php';
-				return self::$libraries[$name] = $creditslib;
 			case 'mailin':
 				global $mailinlib; require_once 'lib/mailin/mailinlib.php';
 				return self::$libraries[$name] = $mailinlib;

@@ -306,7 +306,7 @@ function wikiplugin_module($data, $params)
 			$module_reference['module_style'] = $module_style;
 		}
 
-		global $modlib; require_once 'lib/modules/modlib.php';
+		$modlib = TikiLib::lib('mod');
 		$out = $modlib->execute_module($module_reference);
 	}
 

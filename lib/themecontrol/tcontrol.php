@@ -348,4 +348,3 @@ class ThemeControlLib extends TikiLib
 		}
 	}
 }
-$tcontrollib = new ThemeControlLib;

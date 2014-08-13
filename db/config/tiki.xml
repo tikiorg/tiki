@@ -14,6 +14,9 @@
 		<service id="tiki.lib.admin" class="AdminLib">
 			<file>%kernel.root_dir%/lib/admin/adminlib.php</file>
 		</service>
+		<service id="tiki.lib.areas" class="AreasLib">
+			<file>%kernel.root_dir%/lib/perspective/binderlib.php</file>
+		</service>
 		<service id="tiki.lib.art" class="ArtLib">
 			<file>%kernel.root_dir%/lib/articles/artlib.php</file>
 		</service>
@@ -52,6 +55,12 @@
 		</service>
 		<service id="tiki.lib.contribution" class="ContributionLib">
 			<file>%kernel.root_dir%/lib/contribution/contributionlib.php</file>
+		</service>
+		<service id="tiki.lib.credits" class="CreditsLib">
+			<file>%kernel.root_dir%/lib/credits/creditslib.php</file>
+		</service>
+		<service id="tiki.lib.crypt" class="CryptLib">
+			<file>%kernel.root_dir%/lib/crypt/cryptlib.php</file>
 		</service>
 		<service id="tiki.lib.css" class="cssLib">
 			<file>%kernel.root_dir%/lib/csslib.php</file>
@@ -117,6 +126,12 @@
 		<service id="tiki.lib.menu" class="MenuLib">
 			<file>%kernel.root_dir%/lib/menubuilder/menulib.php</file>
 		</service>
+		<service id="tiki.lib.mime" class="MimeLib">
+			<file>%kernel.root_dir%/lib/mime/mimelib.php</file>
+		</service>
+		<service id="tiki.lib.mod" class="ModLib">
+			<file>%kernel.root_dir%/lib/modules/modlib.php</file>
+		</service>
 		<service id="tiki.lib.monitor" class="MonitorLib">
 			<file>%kernel.root_dir%/lib/user/monitorlib.php</file>
 		</service>
@@ -171,6 +186,12 @@
 		<service id="tiki.lib.ratingconfig" class="RatingConfigLib">
 			<file>%kernel.root_dir%/lib/rating/configlib.php</file>
 		</service>
+		<service id="tiki.lib.references" class="ReferencesLib">
+			<file>%kernel.root_dir%/lib/references/referenceslib.php</file>
+		</service>
+		<service id="tiki.lib.registration" class="RegistrationLib">
+			<file>%kernel.root_dir%/lib/registration/registrationlib.php</file>
+		</service>
 		<service id="tiki.lib.relation" class="RelationLib">
 			<file>%kernel.root_dir%/lib/attributes/relationlib.php</file>
 		</service>
@@ -179,6 +200,9 @@
 		</service>
 		<service id="tiki.lib.score" class="ScoreLib">
 			<file>%kernel.root_dir%/lib/score/scorelib.php</file>
+		</service>
+		<service id="tiki.lib.scorm" class="ScormLib">
+			<file>%kernel.root_dir%/lib/filegals/scormlib.php</file>
 		</service>
 		<service id="tiki.lib.searchstats" class="SearchStatsLib">
 			<file>%kernel.root_dir%/lib/search/searchstatslib.php</file>
@@ -205,6 +229,9 @@
 		<service id="tiki.lib.struct" class="StructLib">
 			<file>%kernel.root_dir%/lib/structures/structlib.php</file>
 		</service>
+		<service id="tiki.lib.tcontrol" class="ThemeControlLib">
+			<file>%kernel.root_dir%/lib/themecontrol/tcontrol.php</file>
+		</service>
 		<service id="tiki.lib.tikicalendar" class="TikiCalendarLib">
 			<file>%kernel.root_dir%/lib/calendar/tikicalendarlib.php</file>
 		</service>
@@ -220,6 +247,9 @@
 		</service>
 		<service id="tiki.lib.user" class="UsersLib">
 			<file>%kernel.root_dir%/lib/userslib.php</file>
+		</service>
+		<service id="tiki.lib.usermodules" class="UserModulesLib">
+			<file>%kernel.root_dir%/lib/usermodules/usermoduleslib.php</file>
 		</service>
 		<service id="tiki.lib.userprefs" class="UserPrefsLib">
 			<file>%kernel.root_dir%/lib/userprefs/userprefslib.php</file>

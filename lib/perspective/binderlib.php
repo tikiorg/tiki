@@ -13,10 +13,6 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 	exit;
 }
 
-
-$perspectivelib = TikiLib::lib('perspective');
-$categlib = TikiLib::lib('categ');
-
 class AreasLib extends CategLib
 {
 	private $areas;
@@ -173,8 +169,6 @@ class AreasLib extends CategLib
 		}
 	}
 } // class end
-$areaslib = new AreasLib();
-global $areaslib;
 
 /*-----------------------------------------------
 +++ Description of Perspective Binder / Areas +++ 

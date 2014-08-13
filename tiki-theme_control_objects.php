@@ -9,7 +9,7 @@
 // $Id$
 
 require_once ('tiki-setup.php');
-include_once ('lib/themecontrol/tcontrol.php');
+$tcontrollib = TikiLib::lib('tcontrol');
 $categlib = TikiLib::lib('categ');
 $filegallib = TikiLib::lib('filegal');
 include_once ('lib/htmlpages/htmlpageslib.php');

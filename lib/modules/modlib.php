@@ -1525,5 +1525,3 @@ function zone_is_empty($zoneName)
 	return true;
 }
 
-global $modlib;
-$modlib = new ModLib;

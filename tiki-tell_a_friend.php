@@ -58,7 +58,7 @@ if (isset($_REQUEST['send'])) {
 		$emails[] = $email;
 	}
 	foreach ($emails as $email) {
-		include_once ('lib/registration/registrationlib.php');
+		$registrationlib = TikiLib::lib('registration');
 		if (function_exists('validate_email')) {
 			$ok = validate_email($email, $prefs['validateEmail']);
 		} else {

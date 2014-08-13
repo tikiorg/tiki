@@ -434,4 +434,3 @@ class CryptLib extends TikiLib
 		return $cleartext;
 	}
 }
-$cryptlib = new CryptLib();

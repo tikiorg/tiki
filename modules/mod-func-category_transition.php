@@ -31,7 +31,8 @@ function module_category_transition_info()
  */
 function module_category_transition($mod_reference, $module_params)
 {
-	global $smarty, $modlib;
+	$smarty = TikiLib::lib('smarty');
+	$modlib = TikiLib::lib('mod');
 
 	if ($object = current_object()) {
 		$cat_type = $object['type'];

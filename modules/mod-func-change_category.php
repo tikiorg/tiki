@@ -83,7 +83,10 @@ function module_change_category_info()
  */
 function module_change_category($mod_reference, $module_params)
 {
-	global $prefs, $tikilib, $smarty, $modlib;
+	global $prefs;
+	$smarty = TikiLib::lib('tiki');
+	$smarty = TikiLib::lib('smarty');
+	$modlib = TikiLib::lib('mod');
 
 	$smarty->assign('showmodule', false);
 

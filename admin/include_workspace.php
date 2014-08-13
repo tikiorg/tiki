@@ -17,8 +17,7 @@ if (isset($_REQUEST["workspace"])) {
 ask_ticket('admin-inc-workspace');
 
 if ($prefs['feature_areas'] === 'y') {
-	global $areaslib;
-	require_once('lib/perspective/binderlib.php');
+	$areaslib = TikiLib::lib('areas');
 
 	// updating table tiki_areas
 	if (isset($_REQUEST['update_areas'])) {

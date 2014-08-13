@@ -15,7 +15,7 @@ if ($prefs['feature_theme_control'] == 'y') {
 	// defined: $cat_type and cat_objid
 	// search for theme for $cat_type
 	// then search for theme for md5($cat_type.cat_objid)
-	include_once ('lib/themecontrol/tcontrol.php');
+	$tcontrollib = TikiLib::lib('tcontrol');
 	$categlib = TikiLib::lib('categ');
 	global $tc_theme, $tc_theme_option;
 	

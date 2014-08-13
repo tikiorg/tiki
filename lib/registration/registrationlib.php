@@ -484,7 +484,8 @@ class RegistrationLib extends TikiLib
 	 */
 	public function register_new_user($registration, $from_intertiki=false)
 	{
-		global $prefs, $tikilib;
+		global $prefs;
+		$tikilib = TikiLib::lib('tiki');
 
 		if ($prefs['login_is_email'] == 'y' && isset($registration['name'])) {
 			$registration['email'] = $registration['name'];
@@ -767,5 +768,3 @@ class RegistrationError
 		$this->msg = $msg;
 	}
 }
-global $registrationlib;
-$registrationlib = new RegistrationLib();

@@ -224,7 +224,7 @@ if ($prefs['feature_freetags'] == 'y') {
 	require_once ('lib/setup/freetags.php');
 }
 if ($prefs['feature_areas'] == 'y' && $prefs['feature_categories'] == 'y') {
-	global $areaslib; require_once('lib/perspective/binderlib.php');
+	$areaslib = TikiLib::lib('areas');
 	require_once ('lib/setup/categories.php');
 	$areaslib->HandleObjectCategories($objectCategoryIdsNoJail);
 } elseif ($prefs['feature_categories'] == 'y') {

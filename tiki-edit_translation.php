@@ -121,7 +121,7 @@ $smarty->display("tiki.tpl");
 
 function execute_module_translation() 
 { 
-	global $smarty;
+	$smarty = TikiLib::lib('smarty');
 	$module_reference = array(
 		'name' => 'translation',
 		'params' => '',
@@ -130,7 +130,7 @@ function execute_module_translation()
 		'moduleId' => 0
 	);
 
-	global $modlib; require_once 'lib/modules/modlib.php';	
+	$modlib = TikiLib::lib('mod');
 
 	$out = $modlib->execute_module($module_reference);
 	$smarty->assign('content_of_update_translation_section', $out);
@@ -158,7 +158,7 @@ function smarty_assign_default_target_lang($src_lang, $targ_lang_requested, $exi
 
 function smarty_assign_translation_name()
 {
-    global $smarty;
+    $smarty = TikiLib::lib('smarty');
 
     $translation_name = '';
     if (isset($_REQUEST['translation_name']))
