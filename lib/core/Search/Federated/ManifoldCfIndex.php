@@ -41,5 +41,10 @@ class ManifoldCfIndex implements IndexInterface
 	{
 		$query->filterContent($content, ['file']);
 	}
+
+	function getType()
+	{
+		return $this->type;
+	}
 }
 

@@ -189,6 +189,7 @@
 			<h3>{tr}Configuration{/tr}</h3>
 			<ul>
 				<li><a href="tiki-admin_external_wikis.php">{tr}External Wiki{/tr}</a></li>
+				<li><a href="{bootstrap_modal controller=search_manifold action=check}">{tr}ManifoldCF Configuration Checker{/tr}</a></li>
 			</ul>
 		{/tab}
 

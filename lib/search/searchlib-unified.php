@@ -715,6 +715,19 @@ class UnifiedSearchLib
 		}
 	}
 
+	public function getElasticIndexInfo($indexName)
+	{
+		$connection = $this->getElasticConnection(false);
+
+		try {
+			$mapping = $connection->rawApi("/$indexName/_mapping");
+
+			return $mapping;
+		} catch (Search_Elastic_Exception $e) {
+			return false;
+		}
+	}
+
 	private function getElasticConnection($useMasterOnly)
 	{
 		global $prefs;

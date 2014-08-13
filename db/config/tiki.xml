@@ -246,7 +246,7 @@
 		</service>
 
 		<!-- Example statically binded Tiki index
-		<service id="yoursite.index.xyz" class="Search\Federated\TikiIndex">
+		<service class="Search\Federated\TikiIndex">
 			<tag name="tiki.federatedsearch.index" index="tikixyz_main"/>
 			<argument type="string">http://example.com/</argument>
 			<argument type="collection">
@@ -257,7 +257,7 @@
 		-->
 
 		<!-- Example statically binded ManifoldCF index
-		<service id="yoursite.index.xyz" class="Search\Federated\ManifoldCfIndex">
+		<service class="Search\Federated\ManifoldCfIndex">
 			<tag name="tiki.federatedsearch.index" index="manifold"/>
 			<argument type="string">generic</argument>
 			<argument type="string">http://example.com/</argument>

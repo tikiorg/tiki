@@ -344,7 +344,12 @@ class Search_Elastic_Connection
 		} elseif (isset($content->exists) && $content->exists === false) {
 			throw new Search_Elastic_NotFoundException($content->_type, $content->_id);
 		} elseif (isset($content->error)) {
-			throw new Search_Elastic_Exception($content->error, $content->status);
+			$message = $content->error;
+			if (preg_match('/^MapperParsingException\[No handler for type \[(?P<type>.*)\].*\[(?P<field>.*)\]\]$/', $message, $parts)) {
+				throw new Search_Elastic_MappingException($parts['type'], $parts['field']);
+			} else {
+				throw new Search_Elastic_Exception($message, $content->status);
+			}
 		} else {
 			return $content;
 		}

@@ -21,11 +21,18 @@ class FederatedSearchLib
 		$this->indices[$indexName] = $index;
 	}
 
-	function augmentSimpleQuery(Search_Query $query, $content)
+	public function getIndices()
 	{
 		$this->load();
 
-		foreach ($this->indices as $indexName => $index) {
+		return $this->indices;
+	}
+
+	function augmentSimpleQuery(Search_Query $query, $content)
+	{
+		$indices = $this->getIndices();
+
+		foreach ($indices as $indexName => $index) {
 			$sub = $this->addForIndex($query, $indexName, $index);
 			$index->applyContentConditions($sub, $content);
 		}
@@ -61,6 +68,12 @@ class FederatedSearchLib
 	{
 		$slash = strrpos($url, '/');
 		return substr($url, 0, $slash + 1);
+	}
+
+	public function createIndex($location, $index, $type, array $mapping)
+	{
+		$connection = new Search_Elastic_Connection($location);
+		$connection->mapping($index, $type, $mapping);
 	}
 }
 

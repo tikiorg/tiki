@@ -11,7 +11,7 @@ class Services_Search_StoredController
 	{
 		Services_Exception_Disabled::check('feature_search');
 		Services_Exception_Disabled::check('storedsearch_enabled');
-		Services_Exception_Denied::checkAuth('feature_search');
+		Services_Exception_Denied::checkAuth();
 	}
 
 	function action_select($input)
