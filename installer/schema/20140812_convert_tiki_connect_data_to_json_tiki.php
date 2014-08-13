@@ -10,7 +10,7 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
   exit;
 }
 
-function upgrade_20140812_convert_tiki_connect_data_to_json($installer)
+function upgrade_20140812_convert_tiki_connect_data_to_json_tiki($installer)
 {
 	$tiki_connect = TikiDb::get()->table('tiki_connect');
 
