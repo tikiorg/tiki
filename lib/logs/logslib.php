@@ -1040,6 +1040,19 @@ class LogsLib extends TikiLib
 		}
 	}
 
+	function get_user_registration_action($user)
+	{
+		$actions =  $this->list_actions('register', 'system', '', 0, -1, 'lastModif_desc', 'created account', 0, 0, '', true);
+		$n_actions = count($actions['data']);
+		for ($al = 0; $al <= $n_actions-1; $al++) { // $al = action listed, from the list of actions found matching these previous criteria
+			$string = $actions['data'][$al]['action'];
+			if (strpos($string, $user)) {
+				return $actions['data'][$al];
+			}
+		}
+		return '';
+	}
+	
 	function delete_params($actionId, $name='')
 	{
 		$bindvars = array($actionId);

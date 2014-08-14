@@ -271,8 +271,15 @@
 										<select class="submit_mult" name="submit_mult">
 											<option value="" selected="selected">-</option>
 											<option value="remove_users" >{tr}Remove{/tr}</option>
+											{if $prefs.feature_banning == 'y'}
+												<option value="ban_ips">{tr}Ban IPs{/tr}</option>
+												<option value="remove_users_and_ban">{tr}Remove users and Ban IPs{/tr}</option>
+											{/if}
 											{if $prefs.feature_wiki_userpage == 'y'}
 												<option value="remove_users_with_page">{tr}Remove users and their userpages{/tr}</option>
+												{if $prefs.feature_banning == 'y'}
+													<option value="remove_users_with_page_and_ban">{tr}Remove users, their userpages and Ban IPs{/tr}</option>
+												{/if}
 											{/if}
 											<option value="assign_groups" >{tr}Change group assignments{/tr}</option>
 											<option value="set_default_groups">{tr}Set default groups{/tr}</option>
@@ -368,7 +375,7 @@
 				$('div#emc').show();
 				$('.emc').prop('disabled', false).trigger("chosen:updated");
 			}
-		} else if ($.inArray(this.value, ['remove_users', 'remove_users_with_page']) > -1) {
+		} else if ($.inArray(this.value, ['ban_ips', 'remove_users', 'remove_users_and_ban', 'remove_users_with_page', 'remove_users_with_page_and_ban']) > -1) {
 			$('button.submit_mult').show();
 		}
 	});

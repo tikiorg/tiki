@@ -139,6 +139,24 @@ if (!empty($_REQUEST['mass_ban_ip_actionlog'])) {
 	$smarty->assign_by_ref('ban_comments_list', $ban_comments_list);
 }
 
+// Handle case when coming from tiki-adminusers with a list of IPs to ban
+if (!empty($_REQUEST['mass_ban_ip_users'])) {
+	check_ticket('admin-banning');
+	include_once ('lib/logs/logslib.php');
+	$actionslib = new LogsLib;
+	$smarty->assign('mass_ban_ip', $_REQUEST['mass_ban_ip_users']);
+	$info['mode'] = 'mass_ban_ip';
+	$info['title'] = tr('Multiple IP Banning');
+	$info['message'] = tr('Access from your localization was forbidden due to excessive spamming.');
+	$info['date_to'] = $tikilib->now + 365 * 24 * 3600;
+	$banUsers_list = explode('|', $_REQUEST['mass_ban_ip_users']);
+	foreach ($banUsers_list as $banUser) {
+		$ban_actions=$actionslib->get_user_registration_action($banUser);
+		$ban_comments_list[$ban_actions['ip']][$banUser]['userName'] = $banUser;
+	}
+	$smarty->assign_by_ref('ban_comments_list', $ban_comments_list);
+}
+
 $smarty->assign('banId', $_REQUEST['banId']);
 $smarty->assign_by_ref('info', $info);
 

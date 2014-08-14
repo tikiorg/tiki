@@ -413,7 +413,8 @@ if (isset($_REQUEST['batch']) && is_uploaded_file($_FILES['csvlist']['tmp_name']
 	}
 //handle "perform action with checked" options
 } elseif (!empty($_REQUEST['submit_mult']) && !empty($_REQUEST['checked'])) {
-	if ($_REQUEST['submit_mult'] == 'remove_users' || $_REQUEST['submit_mult'] == 'remove_users_with_page') {
+	if ($_REQUEST['submit_mult'] == 'remove_users' || $_REQUEST['submit_mult'] == 'remove_users_with_page'
+			|| $_REQUEST['submit_mult'] == 'remove_users_and_ban' || $_REQUEST['submit_mult'] == 'remove_users_with_page_and_ban' ) {
 		$access->check_authenticity(tra('Are you sure you want to delete these users?'));
 
 		foreach ($_REQUEST['checked'] as $deleteuser) {
@@ -421,7 +422,7 @@ if (isset($_REQUEST['batch']) && is_uploaded_file($_FILES['csvlist']['tmp_name']
 				$userlib->remove_user($deleteuser);
 				$logslib->add_log('adminusers', sprintf(tra('Deleted account %s'), $deleteuser), $user);
 
-				if ($_REQUEST['submit_mult'] == 'remove_users_with_page')
+				if ($_REQUEST['submit_mult'] == 'remove_users_with_page'  || $_REQUEST['submit_mult'] == 'remove_users_with_page_and_ban' )
 					$tikilib->remove_all_versions($prefs['feature_wiki_userpage_prefix'] . $deleteuser);
 
 				$tikifeedback[] = array(
@@ -431,6 +432,16 @@ if (isset($_REQUEST['batch']) && is_uploaded_file($_FILES['csvlist']['tmp_name']
 			}
 		}
 	}
+
+	$checked = is_array($_REQUEST['checked']) ? $_REQUEST['checked'] : array($_REQUEST['checked']);
+	// Ban IP adresses of multiple spammers
+	if ($_REQUEST['submit_mult'] == 'ban_ips' || $_REQUEST['submit_mult'] == 'remove_users_and_ban' 
+		|| $_REQUEST['submit_mult'] == 'remove_users_with_page_and_ban' ) {
+			ask_ticket('admin-banning');
+			$mass_ban_ip = implode('|', $checked);
+			header('Location: tiki-admin_banning.php?mass_ban_ip_users=' . $mass_ban_ip);
+			exit;
+	}	
 } elseif (!empty($_REQUEST['group_management']) && $_REQUEST['group_management'] == 'add') {
 	$access->check_authenticity(tra('Are you sure you want to add this user to these groups?'));
 
