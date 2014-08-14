@@ -19,9 +19,11 @@
 				</label>
 				<div id="trackerinput_{$field.fieldId|escape}">
 					{trackerinput field=$field}
-					<div class="description help-block">
-						{$field.description|tra|escape}
-					</div>
+					{if $field.type ne 'S'} 
+						<div class="description help-block">
+							{$field.description|tra|escape}
+						</div>
+					{/if}
 				</div>
 			</div>
 			{/foreach}
