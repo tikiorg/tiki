@@ -69,6 +69,10 @@ class Tracker_Item
 			return true;
 		}
 
+		if ($this->canSeeOwn()) {
+			return true;
+		}
+
 		$permName = $this->getViewPermission();
 
 		return $this->perms->$permName;
@@ -129,6 +133,16 @@ class Tracker_Item
 
 		if ($this->definition->getConfiguration('writerGroupCan' . $operation, 'n') == 'y' && $this->ownerGroup && in_array($this->ownerGroup, $this->perms->getGroups())) {
 			return true;
+		}
+
+		return false;
+	}
+
+	private function canSeeOwn()
+	{
+		global $user;
+		if ($this->definition->getConfiguration('userCanSeeOwn') == 'y') {
+			return $user === $this->owner;
 		}
 
 		return false;
