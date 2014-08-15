@@ -12,7 +12,7 @@
 		{/if}
 		
 		<div class="container">
-            <div id="middle">
+            <div class="middle" id="middle">
 
 			    <div class="row">
 				    {if zone_is_empty('left') and zone_is_empty('right')}
