@@ -251,6 +251,8 @@ class PaymentLib extends TikiDb_Bridge
 
 	function enter_payment( $invoice, $amount, $type, array $data )
 	{
+		$tx = TikiDb::get()->begin();
+
 		global $user;
 		$userlib = TikiLib::lib('user');
 		if ( $info = $this->get_payment($invoice) ) {
@@ -281,6 +283,8 @@ class PaymentLib extends TikiDb_Bridge
 				array( $amount, $invoice )
 			);
 		}
+
+		$tx->commit();
 	}
 
 	function enter_authorization( $invoice, $type, $validForDays, array $data )
