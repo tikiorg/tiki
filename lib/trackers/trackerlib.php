@@ -805,9 +805,7 @@ class TrackerLib extends TikiLib
 			$ret = $this->fetchAll($query, $bindvars);
 			$cachelib->cacheItem($cache, serialize($ret));
 		}
-		if ($needToCheckCategPerms) {
-			$ret = $this->perm_filter_items($ret);
-		}
+
 		$definition = Tracker_Definition::get($trackerId);
 		if (!$definition) {
 			// could be a deleted field referred to by a list type field
@@ -945,7 +943,7 @@ class TrackerLib extends TikiLib
 	 * listfields = array(fieldId=>array('type'=>, 'name'=>...), ...)
 	 * allfields is only for performance issue - check if one field is a category
 	 */
-	public function list_items($trackerId, $offset=0, $maxRecords=-1, $sort_mode ='' , $listfields='', $filterfield = '', $filtervalue = '', $status = '', $initial = '', $exactvalue = '', $filter='', $allfields=null, $skip_status_perm_check = false, $skip_category_perm_check = false)
+	public function list_items($trackerId, $offset=0, $maxRecords=-1, $sort_mode ='' , $listfields='', $filterfield = '', $filtervalue = '', $status = '', $initial = '', $exactvalue = '', $filter='', $allfields=null, $skip_status_perm_check = false, $skip_permission_check = false)
 	{
 		//echo '<pre>FILTERFIELD:'; print_r($filterfield); echo '<br />FILTERVALUE:';print_r($filtervalue); echo '<br />EXACTVALUE:'; print_r($exactvalue); echo '<br />STATUS:'; print_r($status); echo '<br />FILTER:'; print_r($filter); /*echo '<br />LISTFIELDS'; print_r($listfields);*/ echo '</pre>';
 		global $prefs;
@@ -1225,13 +1223,11 @@ class TrackerLib extends TikiLib
 			$cat_tables = '';
 		}
 
-		$needToCheckCategPerms = $skip_category_perm_check ? false : $this->need_to_check_categ_perms($allfields);
-		if ( $needToCheckCategPerms) {
-			$categlib = TikiLib::lib('categ');
-			if ( $jail = $categlib->get_jail() ) {
-				$categlib->getSqlJoin($jail, 'trackeritem', 'tti.`itemId`', $join, $mid, $bindvars);
-			}
+		$categlib = TikiLib::lib('categ');
+		if ( $jail = $categlib->get_jail() ) {
+			$categlib->getSqlJoin($jail, 'trackeritem', 'tti.`itemId`', $join, $mid, $bindvars);
 		}
+
 		$base_tables = '('
 			.' `tiki_tracker_items` tti'
 			.' INNER JOIN `tiki_tracker_item_fields` ttif ON tti.`itemId` = ttif.`itemId`'
@@ -1277,9 +1273,6 @@ class TrackerLib extends TikiLib
 		$cant = $this->getOne($query_cant, $bindvars);
 		$type = '';
 		$ret = array();
-		if ($needToCheckCategPerms) {
-			$ret1 = $this->perm_filter_items($ret1);
-		}
 
 		foreach ($ret1 as $res) {
 			$mem = TikiLib::lib('tiki')->get_memory_avail();
@@ -1293,6 +1286,15 @@ class TrackerLib extends TikiLib
 			if ($listfields !== null) {
 				$res['field_values'] = $this->get_item_fields($trackerId, $res['itemId'], $listfields, $res['itemUser']);
 			}
+
+			if (! $skip_permission_check) {
+				$itemObject = Tracker_item::fromInfo($res);
+				if (! $itemObject->canView()) {
+					$cant--;
+					continue;
+				}
+			}
+
 			if (!empty($asort_mode)) {
 				foreach ($res['field_values'] as $i => $field) {
 					if ($field['fieldId'] == $asort_mode ) {
@@ -1318,6 +1320,7 @@ class TrackerLib extends TikiLib
 					}
 				}
 				if ($filterout) {
+					$cant--;
 					continue;
 				}
 			}
@@ -1335,25 +1338,6 @@ class TrackerLib extends TikiLib
 		$retval['data'] = array_values($ret);
 		$retval['cant'] = $cant;
 		return $retval;
-	}
-
-	/**
-	 * Filter items according to Tracker_Item::canView
-	 *
-	 * @param array $items		list of item arrays
-	 * @return array			filtered array
-	 */
-	public function perm_filter_items(array $items)
-	{
-		$ret = array();
-
-		foreach ($items as $item) {
-			$itemObject = Tracker_Item::fromInfo($item);
-			if ($itemObject->canView()) {
-				$ret[] = $item;
-			}
-		}
-		return $ret;
 	}
 
 	/* listfields fieldId=>ooptions */
