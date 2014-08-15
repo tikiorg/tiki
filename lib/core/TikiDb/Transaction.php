@@ -21,7 +21,12 @@ class TikiDb_Transaction
 
 	function commit()
 	{
-		TikiLib::lib('unifiedsearch')->endBatch($this->token);
+		$done = TikiLib::lib('unifiedsearch')->endBatch($this->token);
+
+		if ($done) {
+			$events = TikiLib::events();
+			$events->trigger('tiki.commit.after');
+		}
 	}
 }
 

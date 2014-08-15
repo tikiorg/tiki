@@ -34,7 +34,10 @@ class UnifiedSearchLib
 		if ($token && $this->batchToken === $token) {
 			$this->batchToken = null;
 			$this->processUpdateQueue($count);
+			return true;
 		}
+
+		return false;
 	}
 
     /**
