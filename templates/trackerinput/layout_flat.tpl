@@ -16,10 +16,12 @@
 		</label>
 		<div id="trackerinput_{$field.fieldId|escape}">
 			{trackerinput field=$field}
-			{if $field.type ne 'S'} 
-				<div class="description help-block">
-					{$field.description|tra|escape}
-				</div>
+			{if !empty($field.description) && $field.type ne 'S'}
+				{if $field.descriptionIsParsed eq 'y'}
+					<div class="description help-block">{wiki}{$field.description}{/wiki}</div>
+				{else}
+					<div class="description help-block">{$field.description|tra|escape}</div>
+				{/if}
 			{/if}
 		</div>
 	</div>
