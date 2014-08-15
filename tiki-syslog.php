@@ -20,7 +20,7 @@ if (isset($_REQUEST["clean"])) {
 }
 
 if (!isset($_REQUEST["sort_mode"])) {
-	$sort_mode = 'lastModif_desc';
+	$sort_mode = 'actionid_desc';
 } else {
 	$sort_mode = $_REQUEST["sort_mode"];
 }
