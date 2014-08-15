@@ -44,7 +44,7 @@
 <td class="text">{$list[ix].object|escape}</td>
 <td class="date"><span title="{$list[ix].lastModif|tiki_long_datetime}">{$list[ix].lastModif|tiki_short_datetime}</span></td>
 <td class="username">{$list[ix].user|userlink}</td>
-<td class="text" title="{$list[ix].action|escape:'html'}">{$list[ix].action|truncate:60|escape:'html'}</td>
+<td class="text"><textarea class="form-control" readonly="readonly">{$list[ix].action|escape:'html'}</textarea></td>
 <td class="text">{$list[ix].ip|escape:"html"}</td>
 <td class="text"><span title="{$list[ix].client|escape:'html'}">{$list[ix].client|truncate:30:"..."|escape:'html'}</span></td>
 </tr>
