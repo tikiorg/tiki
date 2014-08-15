@@ -307,6 +307,8 @@ class Tracker_Field_Text extends Tracker_Field_Abstract implements Tracker_Field
 
 	function isValid()
 	{
+		global $prefs;
+
 		$value = $this->getValue();
 
 		$validation = $this->getConfiguration('validation');
@@ -315,6 +317,12 @@ class Tracker_Field_Text extends Tracker_Field_Abstract implements Tracker_Field
 
 		if (! $validation) {
 			return true;
+		}
+
+		if ($prefs['feature_jquery_validation'] === 'y' && $validation === 'regex' &&
+				(strpos($param, '\\') !== false || strpos($param, '\"') !== false)) {	// work around for legacy patterns pre r52254
+
+			$param = stripslashes($param);
 		}
 
 		$validators = TikiLib::lib('validators');
