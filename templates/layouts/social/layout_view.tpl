@@ -12,6 +12,7 @@
 		{/if}
 		
 		<div class="container">
+            <div id="middle">
 
 			<div class="row">
 				{if zone_is_empty('left') and zone_is_empty('right')}
@@ -68,12 +69,16 @@
 					</div>
 				{/if}
 			</div>
-
+            </div>
+            <footer id="footer">
+                <div class="footerbgtrap">
 			<div class="row">
-				<div class="col-md-12 well">
+				<div class="col-md-12">
 					{modulelist zone=bottom}
 				</div>
 			</div>
+                </div>
+            </footer>
 		</div>
 
 		<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
