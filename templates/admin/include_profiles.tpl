@@ -275,19 +275,19 @@
 								</div>
 								<input type="hidden" name="page" value="profiles"/>
 									{jq}
-										if ($("#profile-0").length > 0) {
-											$(".quickmode_notes").hide();
-											$(window).scrollTop($("a[name=step2]").offset().top);
-										} else {
-											$(".quickmode_notes").show();
-										}
-										$("#repository, #categories").change(function(){
-											if ($(this).val()) {
-												$(".quickmode_notes").hide(400);
-											} else {
-												$(".quickmode_notes").show(400);
-											}
-										});
+if ($("#profile-0").length > 0) {
+	$(".quickmode_notes").hide();
+	$(window).scrollTop($("a[name=step2]").offset().top);
+} else {
+	$(".quickmode_notes").show();
+}
+$("#repository, #categories").change(function(){
+	if ($(this).val()) {
+		$(".quickmode_notes").hide(400);
+	} else {
+		$(".quickmode_notes").show(400);
+	}
+});
 									{/jq}
 								</div>
 							<div class="form-group text-center">
