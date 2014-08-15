@@ -202,7 +202,7 @@
 			</div>
 			<div class="form-group">
 				<label for="showPopup">{tr}List detail pop-up{/tr}</label>
-				<input type="text" name="showPopup" value="{$info.showPopup|escape}">
+				<input class="form-control" type="text" name="showPopup" value="{$info.showPopup|escape}">
 				<div class="help-block">
 					{tr}Comma-separated list of field IDs{/tr}
 				</div>
