@@ -489,7 +489,7 @@ class TikiLdapLib
 	}
 
 	/**
-	 * Return the value of the attribue past in param
+	 * Return the value of the attribute past in param
 	 * @param string $name The name of the attribute
 	 * @return mixed
 	 * @throw Exception
