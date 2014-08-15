@@ -98,7 +98,7 @@ class Validators
 						}
 						$validationjs .= 'parameter: "trackerId=' .$field_value['trackerId'].'&fieldId=' .$field_value['fieldId'] . '&itemId=' . $current_id . '", ';
 					} else {
-						$validationjs .= 'parameter: "' .$field_value['validationParam'].'", ';
+						$validationjs .= 'parameter: "' .addslashes($field_value['validationParam']).'", ';
 					}
 					$validationjs .= 'message: "' .tra($field_value['validationMessage']).'", ';
 					$validationjs .= 'input: function() { ';

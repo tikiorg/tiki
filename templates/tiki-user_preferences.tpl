@@ -164,9 +164,9 @@
 	{/tab}
 	{tab name="{tr}Preferences{/tr}"}
         <h2>{tr}Preferences{/tr}</h2>
-
 		<h3>{tr}General settings{/tr}</h3>
-
+		<form role="form" action="tiki-user_preferences.php" method="post">
+            <input type="hidden" name="view_user" value="{$userwatch|escape}">
         <div class="form-group">
             <label class="control-label" for="email_isPublic">{tr}Is email public? (uses scrambling to prevent spam){/tr}</label>
             {if $userinfo.email}
@@ -422,7 +422,7 @@
 		{if $prefs.feature_forums eq 'y' and $tiki_p_forum_read eq 'y'}
             <div class="checkbox">
                 <label>
-                    {tr}My forum topics{/tr}<<input type="checkbox" name="mytiki_forum_topics" {if $user_prefs.mytiki_forum_topics eq 'y'}checked="checked"{/if}>
+                    {tr}My forum topics{/tr}<input type="checkbox" name="mytiki_forum_topics" {if $user_prefs.mytiki_forum_topics eq 'y'}checked="checked"{/if}>
                 </label>
             </div>
             <div class="checkbox">
