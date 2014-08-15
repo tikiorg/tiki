@@ -18,6 +18,7 @@ if ( isset($_SESSION['try_style']) ) {
 
 // Always include default bootstrap JS
 $headerlib->add_jsfile('vendor/twitter/bootstrap/dist/js/bootstrap.js');
+$headerlib->add_jsfile('lib/jquery_tiki/tiki-bootstrapmodalfix.js');
 
 $prefs['jquery_ui_chosen_css'] = 'y';
 
