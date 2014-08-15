@@ -15,9 +15,13 @@
 				</label>
 				<div id="trackerinput_{$field.fieldId|escape}">
 					{trackerinput field=$field}
-					<div class="description">
-						{$field.description|escape}
-					</div>
+					{if !empty($field.description) && $field.type ne 'S'}
+						{if $field.descriptionIsParsed eq 'y'}
+							<div class="description">{wiki}{$field.description}{/wiki}</div>
+						{else}
+							<div class="description">{$field.description|escape}</div>
+						{/if}
+					{/if}
 				</div>
 			{/foreach}
 		</div>
