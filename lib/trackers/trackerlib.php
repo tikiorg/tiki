@@ -1288,7 +1288,7 @@ class TrackerLib extends TikiLib
 			}
 
 			if (! $skip_permission_check) {
-				$itemObject = Tracker_item::fromInfo($res);
+				$itemObject = Tracker_Item::fromInfo($res);
 				if (! $itemObject->canView()) {
 					$cant--;
 					continue;
