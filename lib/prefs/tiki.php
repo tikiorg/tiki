@@ -26,7 +26,7 @@ function prefs_tiki_list()
 		'tiki_release_cycle' => array(
 			'name' => tr('Upgrade cycle'),
 			'type' => 'list',
-			'default' => 'regular',
+			'default' => 'longterm',
 			'dependencies' => array(
 				'feature_version_checks',
 			),
