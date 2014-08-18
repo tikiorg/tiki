@@ -400,7 +400,14 @@ customsearch.init();
 		$out .= '<div id="customsearch_' . $id . '_results"></div>';
 	}
 
-	return $out;
+	if (!empty($params['wiki'])) {
+		return $out;
+	} else {
+		// If using smarty tpl should assume it's all HTML
+		$out = str_replace('~np~', '', $out);
+		$out = str_replace('~/np~', '', $out);
+		return '~np~' . $out . '~/np~';
+	}	
 }
 
 function cs_design_setbasic($element, $fieldid, $fieldname, $arguments)
