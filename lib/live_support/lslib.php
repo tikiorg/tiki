@@ -175,7 +175,7 @@ class Lslib extends TikiLib
 		);
 	}
 
-	function get_event($reqId, $event, $senderId)
+	function get_support_event($reqId, $event, $senderId)
 	{
 		return $this->getOne(
 			'select `data` from `tiki_live_support_events` where `senderId`<>? and `reqId`=? and `seqId`=?',
