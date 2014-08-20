@@ -94,10 +94,10 @@
 			<file>%kernel.root_dir%/lib/goal/goallib.php</file>
 		</service>
 		<service id="tiki.lib.goalevent" class="GoalEventLib">
-			<file>%kernel.root_dir%/lib/goal/goaleventlib.php</file>
+			<file>%kernel.root_dir%/lib/goal/eventlib.php</file>
 		</service>
 		<service id="tiki.lib.goalreward" class="GoalRewardLib">
-			<file>%kernel.root_dir%/lib/goalrewardlib.php</file>
+			<file>%kernel.root_dir%/lib/goal/rewardlib.php</file>
 		</service>
 		<service id="tiki.lib.groupalert" class="GroupAlertLib">
 			<file>%kernel.root_dir%/lib/groupalert/groupalertlib.php</file>
