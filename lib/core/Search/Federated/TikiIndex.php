@@ -30,6 +30,18 @@ class TikiIndex implements IndexInterface
 		$query->filterContent('y', 'searchable');
 		$query->filterContent($content, ['title', 'contents']);
 
+		$this->applyRaw($query);
+	}
+
+	function applySimilarConditions(\Search_Query $query, $type, $object)
+	{
+		$query->filterSimilar($type, $object);
+
+		$this->applyRaw($query);
+	}
+
+	private function applyRaw($query)
+	{
 		$unified = \TikiLib::lib('unifiedsearch');
 		$unified->initQueryBase($query, false);
 

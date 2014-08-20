@@ -138,7 +138,7 @@ class Search_Elastic_QueryBuilder
 			$content = $this->getDocumentContent($type, $object);
 			return array(
 				'more_like_this' => array(
-					'fields' => array('contents'),
+					'fields' => array($node->getField()),
 					'like_text' => $content,
 					'boost' => $node->getWeight(),
 				),

@@ -26,8 +26,9 @@ class Search_Expr_MoreLikeThis implements Search_Expr_Interface
 		return 'plaintext';
 	}
 
-	function setField($field = 'global')
+	function setField($field = 'contents')
 	{
+		$this->field = $field;
 	}
 
 	function setWeight($weight)

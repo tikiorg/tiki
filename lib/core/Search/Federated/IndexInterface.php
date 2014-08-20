@@ -12,5 +12,7 @@ interface IndexInterface
 	function getTransformations();
 
 	function applyContentConditions(\Search_Query $query, $content);
+
+	function applySimilarConditions(\Search_Query $query, $type, $object);
 }
 

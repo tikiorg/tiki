@@ -44,7 +44,9 @@ function module_search_morelikethis_info()
  */
 function module_search_morelikethis($mod_reference, $module_params)
 {
-	global $smarty;
+	global $prefs;
+
+	$smarty = TikiLib::lib('smarty');
 
 	$textfilters = array();
 	$typefilters = array();
@@ -75,6 +77,11 @@ function module_search_morelikethis($mod_reference, $module_params)
 		}
 		if (!empty($typefilters)) {
 			$query->filterType($typefilters);
+		}
+
+		if ($prefs['federated_enabled'] == 'y') {
+			$fed = TikiLib::lib('federatedsearch');
+			$fed->augmentSimilarQuery($query, $object['type'], $object['object']);
 		}
 
 		try {

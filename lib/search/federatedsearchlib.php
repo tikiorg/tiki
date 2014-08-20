@@ -38,6 +38,16 @@ class FederatedSearchLib
 		}
 	}
 
+	function augmentSimilarQuery(Search_Query $query, $type, $object)
+	{
+		$indices = $this->getIndices();
+
+		foreach ($indices as $indexName => $index) {
+			$sub = $this->addForIndex($query, $indexName, $index);
+			$index->applySimilarConditions($sub, $type, $object);
+		}
+	}
+
 	private function load()
 	{
 		if (! $this->loaded) {

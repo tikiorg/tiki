@@ -42,6 +42,11 @@ class ManifoldCfIndex implements IndexInterface
 		$query->filterContent($content, ['file']);
 	}
 
+	function applySimilarConditions(\Search_Query $query, $type, $object)
+	{
+		$query->filterSimilar($type, $object, 'file');
+	}
+
 	function getType()
 	{
 		return $this->type;

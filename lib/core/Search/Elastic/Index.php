@@ -255,7 +255,16 @@ class Search_Elastic_Index implements Search_Index_Interface, Search_Index_Query
 		$connection = $this->connection;
 		$index = $this->index;
 		return function ($type, $object) use ($connection, $index) {
-			return (array) $connection->document($index, $type, $object);
+			static $previous, $content;
+
+			$now = "$index~$type~$object";
+			if ($previous === $now) {
+				return $content;
+			}
+
+			$previous = $now;
+			$content = (array) $connection->document($index, $type, $object);
+			return $content;
 		};
 	}
 
