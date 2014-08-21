@@ -5,7 +5,7 @@
     {if $prefs.feature_wikilingo eq "y"}
         {if $wysiwyg eq 'y'}
             {jq}
-                var wikiParserChoice = ('#wiki-parser-choice'),
+                var wikiParserChoice = $('#wiki-parser-choice'),
                     $doc = $(document);
 
                 $('input[name=preview]').click(function(){

@@ -75,7 +75,7 @@ if (isset($_REQUEST['get_last_event'])) {
 }
 if (isset($_REQUEST['get_event'])) {
 	header("Content-type: text/plain");
-	echo $lslib->get_event($_REQUEST['get_event'], $_REQUEST['last'], $_REQUEST['senderId']);
+	echo $lslib->get_support_event($_REQUEST['get_event'], $_REQUEST['last'], $_REQUEST['senderId']);
 }
 // A client closes its window
 if (isset($_REQUEST['client_close'])) {

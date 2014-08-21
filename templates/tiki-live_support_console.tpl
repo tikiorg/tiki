@@ -71,7 +71,7 @@
 	<h3>{tr}No support requests{/tr}</h3>
 	{/if}
     <script type='text/javascript'>
-        var last_req={$last};
+        var last_support_req={$last};
     	console_poll();
     </script>
 

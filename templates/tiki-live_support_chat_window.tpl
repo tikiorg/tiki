@@ -92,7 +92,7 @@
   	{/literal}
   	<script type='text/javascript'>
         /* Activate polling of requests */
-        var last_event=0;
+        var last_support_event=0;
         event_poll();
     </script>
   </body>

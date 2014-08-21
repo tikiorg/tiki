@@ -90,6 +90,8 @@ class TikiDate
 		'Japan',
 		'Kwajalein',
 		'Libya',
+		'localtime',	// because PHP Fatal error was observed in Apache2 logfile
+				// not mentioned here: https://bugs.php.net/bug.php?id=66985
 		'MST7MDT',
 		'Navajo',
 		'NZ-CHAT',
