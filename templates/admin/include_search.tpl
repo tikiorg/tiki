@@ -154,6 +154,7 @@
 		{tab name="{tr}Search Results{/tr}"}
 			<h2>{tr}Search Results{/tr}</h2>
 			{preference name=search_use_facets}
+			{preference name=search_facet_default_amount}
 			{preference name=category_custom_facets}
 
 			<fieldset>

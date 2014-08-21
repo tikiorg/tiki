@@ -638,6 +638,7 @@ class UnifiedSearchLib
 
 			$connection = $this->getElasticConnection($writeMode);
 			$index = new Search_Elastic_Index($connection, $index);
+			$index->setFacetCount($prefs['search_facet_default_amount']);
 			return $index;
 		case 'mysql':
 			$index = $this->getIndexLocation($indexType);
