@@ -5760,6 +5760,23 @@ body.navbar-padding {
     border-bottom: 0;
   }
 }
+body > .container {
+  border: 1px solid #aaa;
+  border-size: 0 1px;
+  background: #fff;
+}
+.header_container > .container {
+  border: solid #aaa;
+  border-width: 1px 1px 0 1px;
+}
+.middle_outer > .container {
+  border: solid #aaa;
+  border-width: 0 1px;
+}
+.footer_liner > .container {
+  border: solid #aaa;
+  border-width: 0 1px 1px 1px;
+}
 #top_modules,
 #topbar_modules,
 #pagebottom_modules {
@@ -5767,14 +5784,8 @@ body.navbar-padding {
   margin-right: -10px;
 }
 header.container {
-  border: 1px solid #aaa;
-  border-bottom: none;
   margin-top: 20px;
-}
-.middle {
-  background: #fff;
-  border: 1px solid #aaa;
-  border-size: 0 1px;
+  background: #e9ecef;
 }
 .middle > .row {
   margin-top: 5px;
@@ -5782,6 +5793,7 @@ header.container {
 }
 #col1 {
   background: #f3f6f9;
+  padding-top: 10px;
   border: 1px solid #8cacbb;
   margin-bottom: 10px;
 }
