@@ -154,7 +154,7 @@
 							{/if}
 						{/if}
 					</ul>
-					{if $prefs.feature_search eq 'y'}
+					{if $prefs.feature_search_show_search_box eq 'y'}
 						<form class="navbar-form navbar-right" role="search" action="tiki-searchindex.php">
 							<div class="input-group">
 								<input name="filter~content" type="search" class="form-control" placeholder="{tr}Search{/tr}">
