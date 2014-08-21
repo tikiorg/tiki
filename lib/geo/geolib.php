@@ -144,6 +144,7 @@ class GeoLib
 			'label' => $first->formatted_address,
 			'lat' => $first->geometry->location->lat,
 			'lon' => $first->geometry->location->lng,
+			'address_components' => $first->address_components,
 		);
 	}
 
