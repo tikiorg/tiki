@@ -137,6 +137,7 @@
 							{/if}
 						{/if}
 					</ul>
+					{*
 					{if $prefs.feature_search_show_search_box eq 'y'}
 						<form class="navbar-form navbar-right" role="search" action="tiki-searchindex.php">
 							<div class="input-group">
@@ -147,6 +148,7 @@
 							</div>
 						</form>
 					{/if}
+					*}
 				</div>
 			</div>
 
