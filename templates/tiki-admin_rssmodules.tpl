@@ -5,6 +5,7 @@
 	<a class="rbox-link" href="tiki-admin.php?page=rss">{tr}Click Here{/tr}</a>.
 	<hr/>
 	{tr}To use feeds in a text area (Wiki page, etc), a <a class="rbox-link" href="tiki-admin_modules.php">module</a> or a template, use {literal}{rss id=x}{/literal}, where x is the ID of the feed.{/tr}
+	{tr}To use them to generate articles, use the <a href="https://doc.tiki.org/Article+generator" target="_blank">Article generator <img src="img/icons/newspaper_go.png"></a> for that specific feed{/tr}.
 {/remarksbox}
 
 {if $preview eq 'y'}
@@ -140,8 +141,16 @@
 	{if $articleConfig}
 		{tab name="{tr}Article Generator{/tr}"}
 			<h2>{tr _0='"'|cat:$articleConfig.feed_name|cat:'"'|escape}Article Generator for %0{/tr}</h2>
-			<p>{tr}The article generator will create a new article for every item read in the RSS feed.{/tr}</p>
-
+		        {remarksbox type="tip" title="{tr}Tips{/tr}"}
+					{tr}Once you have defined the settings below, each new item in this rss feed will generate a new article{/tr}.
+					<a target="tikihelp" href="https://doc.tiki.org/Article+generator" class="tikihelp" style="float:none" title="{tr}Article Generator:{/tr}
+						{tr}After the point when you defined these settings, new rss items in the feed will become articles each time the feed is refreshed. But only new ones.{/tr}">
+						<img src="img/icons/help.png" alt="" width="16" height="16" class="icon" />
+					</a>
+			        <hr>
+			        {tr}You can enable "Show source" for the <a href="tiki-article_types.php" target="_blank">article type</a> (hidden by default), to allow users to read the full content{/tr}.
+		        {/remarksbox}
+		        
 			<form method="post" action="">
 				<p>
 					<input id="article_active" type="checkbox" name="enable" value="1"{if $articleConfig.active} checked="checked"{/if}>

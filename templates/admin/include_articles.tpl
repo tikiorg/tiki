@@ -1,7 +1,9 @@
 {* $Id$ *}
 
-{remarksbox type="tip" title="{tr}Tip{/tr}"}
+{remarksbox type="tip" title="{tr}Tips{/tr}"}
 	{tr}Look under "Articles" on the application menu for links to{/tr} "<a class="rbox-link" href="tiki-admin_topics.php">{tr}Admin topics{/tr}</a>" {tr}and{/tr} "<a class="rbox-link" href="tiki-article_types.php">{tr}Admin types{/tr}</a>".
+	<hr>
+	{tr}Look under "<a href="tiki-admin_rssmodules.php" target="_blank">External Feeds</a>" on the application menu if you are searching for the <a href="https://doc.tiki.org/Article+generator" target="_blank">"Article Generator" on RSS feeds</a>{/tr}.
 {/remarksbox}
 
 {if !empty($msgs)}
