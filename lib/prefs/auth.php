@@ -351,7 +351,7 @@ function prefs_auth_list()
 			'name' => tra('Admin user'),
             'description' => tra(''),
 			'type' => 'text',
-			'size' => 55,
+			'size' => 50,
 			'autocomplete' => 'off',
 			'perspective' => false,
 			'default' => '',
