@@ -95,6 +95,9 @@
 		{/tab}
 
 		{tab name="{tr}Spam protection{/tr}"}
+			{remarksbox type="tip" title="{tr}Tip{/tr}"}
+				{tr}You can additionally protect from spam enabling the "<a href="http://doc.tiki.org/Forum+Admin#Forum_moderation" target="_blank">moderation queue on forums</a>", or through <strong>banning</strong> multiple ip's from the "<a href="tiki-admin_actionlog.php" target="_blank">Action log</a>", from "<a href="tiki-adminusers.php" target="_blank">Users registration</a>", or from the "<a href="tiki-list_comments.php" target="_blank">Comments moderation queue</a>" itself{/tr}.
+			{/remarksbox}
 			<fieldset>
 			<legend>{tr}Captcha{/tr}</legend>
 			{preference name=feature_antibot}
@@ -114,6 +117,7 @@
 			{preference name=feature_wiki_ext_rel_nofollow}
 			{preference name=feature_banning}
 			
+			{preference name=feature_comments_moderation}
 			{preference name=comments_akismet_filter}
 				<div class="adminoptionboxchild" id="comments_akismet_filter_childcontainer">
 					{preference name=comments_akismet_apikey}
