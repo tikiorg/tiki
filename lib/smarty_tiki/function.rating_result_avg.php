@@ -37,17 +37,14 @@ function smarty_function_rating_result_avg( $params, $smarty )
 	//Why $vote_collect yields a different value than $vote_avg?
 	//$vote_collect = $ratinglib->collect($params['type'], $params['id'], 'avg', array_filter($votings));
 
-
-
     if (isset($options[0]) && $options[0] = "0") {
         unset($options[0]);
     }
 
-
     if ($vote_avg != 0){
-        return "<span class='score'>" . $vote_avg . " / " . count($options) . "</span>";
+        return "<span class='score'>" . $vote_avg . " / " . max($options) . "</span>";
     }
     else{
-        return "<span class='score'>" . "-" . " / " . count($options) . "</span>";
+        return "<span class='score'>" . "-" . " / " . max($options) . "</span>";
     }
 }
