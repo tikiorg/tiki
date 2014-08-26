@@ -28,6 +28,18 @@ function smarty_function_favorite($params, $smarty)
 	$url = smarty_modifier_escape($url);
 	$e_user = smarty_modifier_escape($user);
 
-	return '<a class="btn btn-default favorite-toggle" href="' . $url . '" data-key="favorite_' . $e_user . '">' . tr('Favorite') . '</a>';
+	if (isset($params['label'])){
+		$label = $params['label'];
+	}else{
+		$label = tr('Favorite');
+	}
+
+	if (isset($params['button_classes'])){
+		$button_classes= $params['button_classes'];
+	}else{
+		$button_classes = "btn btn-default";
+	}
+
+	return '<a class="'. $button_classes .' favorite-toggle" href="' . $url . '" data-key="favorite_' . $e_user . '"> ' . $label . '</a>';
 }
 
