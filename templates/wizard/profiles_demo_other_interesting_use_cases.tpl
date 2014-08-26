@@ -1,4 +1,4 @@
-{* $Id: profiles_demo_other_interesting_use_cases.tpl 51568 2014-06-02 09:41:09Z chibaguy $ *}
+{* $Id$ *}
 
 <div class="media">
     <img class="pull-left" src="img/icons/large/wizard_profiles48x48.png" alt="{tr}Configuration Profiles Wizard{/tr}" title="{tr}Configuration Profiles Wizard{/tr}" />

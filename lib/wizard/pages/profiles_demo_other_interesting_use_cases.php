@@ -3,7 +3,7 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: profiles_demo_interesting_use_cases.php 51026 2014-04-27 17:18:07Z xavidp $
+// $Id$
 
 require_once('lib/wizard/wizard.php');
 
