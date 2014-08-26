@@ -1,5 +1,9 @@
 {* $Id$ *}
 
+{remarksbox type="tip" title="{tr}Tip{/tr}"}
+	{tr}Look under "<a href="tiki-admin_rssmodules.php" target="_blank">External Feeds</a>" on the application menu if you are searching for the <a href="https://doc.tiki.org/Article+generator" target="_blank">"Article Generator" on RSS feeds</a>{/tr}.
+{/remarksbox}
+
 {if !empty($msgs)}
 	<div class="alert alert-warning">
 	{foreach from=$msgs item=msg}
