@@ -41,12 +41,10 @@ function smarty_function_rating_result_avg( $params, $smarty )
         unset($options[0]);
     }
 
-
     if ($vote_avg != 0){
-        return "<span class='score'>" . $vote_avg . " / " . count($options) . "</span>";
+        return "<span class='score'>" . $vote_avg . " / " . max($options) . "</span>";
     }
     else{
-        return "<span class='score'>" . "-" . " / " . count($options) . "</span>";
+        return "<span class='score'>" . "-" . " / " . max($options) . "</span>";
     }
-
 }
