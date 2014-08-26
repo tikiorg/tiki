@@ -166,7 +166,7 @@ function wikiplugin_youtube($data, $params)
 	}
 
 
-	$iframe = ('<iframe src="'.$params['movie'].'" frameborder="0" width="'.$params['width'].'" height="'.$params['height'].'"></iframe>');
+	$iframe = ('<iframe src="'.$params['movie'].'" frameborder="0" width="'.$params['width'].'" height="'.$params['height'].'" allowfullscreen="'.$params['allowFullScreen'].'"></iframe>');
 
 	return '~np~' . $iframe . '~/np~';
 }
