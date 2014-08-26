@@ -61,6 +61,9 @@ if ($useDefaultPrefs) {
     require_once('lib/wizard/pages/profiles_demo_interesting_use_cases.php');
     $pages[] = new ProfilesWizardDemoInterestingUseCases();
 
+    require_once('lib/wizard/pages/profiles_demo_other_interesting_use_cases.php');
+    $pages[] = new ProfilesWizardDemoOtherInterestingUseCases();
+
     require_once('lib/wizard/pages/profiles_demo_more_advanced_confs.php');
     $pages[] = new ProfilesWizardDemoMoreAdvancedConfs();
 
