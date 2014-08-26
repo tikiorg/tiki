@@ -1,4 +1,4 @@
-{* $Id: profiles_demo_interesting_use_cases.tpl 51496 2014-05-27 10:26:09Z xavidp $ *}
+{* $Id$ *}
 
 <div class="adminWizardIconleft"><img src="img/icons/large/wizard_profiles48x48.png" alt="{tr}Configuration Profiles Wizard{/tr}" title="{tr}Configuration Profiles Wizard{/tr}" /></div>
 {tr}Each of these profiles create a working instance of some features, such as wiki structures, forums, trackers and wiki pages, customized for specific purposes{/tr}. <br><br>
