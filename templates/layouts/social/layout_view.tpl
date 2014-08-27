@@ -106,10 +106,9 @@
 					</div>
 
 					<div style="display:inline">
+						<ul class="nav navbar-nav navbar-right">
 						{if $user}
-							<ul class="nav navbar-nav navbar-right">
 								<li><a href="{if $prefs.feature_sefurl eq 'y'}logout{else}tiki-logout.php{/if}">{tr}Log out{/tr}</a></li>
-							</ul>
 						{else}
 							<!--<li><a href="{if $prefs.feature_sefurl eq 'y'}login{else}tiki-login_scr.php{/if}">{tr}Log in{/tr}</a></li>-->
 							<li class="dropdown">
