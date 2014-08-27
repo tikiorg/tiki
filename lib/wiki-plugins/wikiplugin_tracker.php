@@ -1472,7 +1472,7 @@ function wikiplugin_tracker($data, $params)
 
 					if ($f['type'] != 'S' && empty($tpl) && empty($wiki)) {
 						if ($showfieldsdesc == 'y') {
-							$back .= '<div class="trackerplugindesc">';
+							$back .= '<div class="form-group tracker-help-block"><div class="col-md-3 control-label sr-only">Label</div><div class="col-md-9 trackerplugindesc help-block">';
 
 							if ($f['descriptionIsParsed'] == 'y') {
 								$back .= $tikilib->parse_data($f['description']);
@@ -1480,7 +1480,7 @@ function wikiplugin_tracker($data, $params)
 								$back .= tra($f['description']);
 							}
 
-							$back .= '</div>';
+							$back .= '</div></div>';
 						}
 					}
 				}
