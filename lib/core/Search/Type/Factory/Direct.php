@@ -32,6 +32,11 @@ class Search_Type_Factory_Direct implements Search_Type_Factory_Interface
 		return new Search_Type_Whole((float) $value);
 	}
 
+	function reallynumeric($value)
+	{
+		return new Search_Type_Whole((float) $value); // same as numeric by default unless engine supports numeric internally
+	}
+
 	function multivalue($values)
 	{
 		return new Search_Type_Whole((array) $values);

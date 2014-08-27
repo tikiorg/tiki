@@ -32,6 +32,11 @@ class Search_Elastic_TypeFactory implements Search_Type_Factory_Interface
 		return new Search_Type_Whole((float) $value);
 	}
 
+	function reallynumeric($value)
+	{
+		return new Search_Type_Numeric($value);
+	}
+
 	function multivalue($values)
 	{
 		return new Search_Type_MultivaluePlain(array_values((array) $values));

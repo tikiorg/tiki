@@ -67,7 +67,23 @@ class Search_Elastic_Index implements Search_Index_Interface, Search_Index_Query
 
 		$mapping = array_map(
 			function ($entry) {
-				if ($entry instanceof Search_Type_Whole || $entry instanceof Search_Type_MultivaluePlain) {
+				if ($entry instanceof Search_Type_Numeric) {
+					return array(
+						"type" => "numeric",
+						"fields" => array(
+							"sort" => array(
+								"type" => "float",
+								"null_value" => 0.0,
+								"ignore_malformed" => true,
+							),
+							"nsort" => array(
+								"type" => "float",
+								"null_value" => 0.0,
+								"ignore_malformed" => true,
+							),
+						),
+					);
+				} elseif ($entry instanceof Search_Type_Whole || $entry instanceof Search_Type_MultivaluePlain) {
 					return array(
 						"type" => "string",
 						"index" => "not_analyzed",

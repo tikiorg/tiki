@@ -106,7 +106,7 @@ class Tracker_Field_Numeric extends Tracker_Field_Abstract implements Tracker_Fi
 		$baseKey = $this->getBaseKey();
 
 		$out = array(
-			$baseKey => $typeFactory->numeric($item),
+			$baseKey => $typeFactory->reallynumeric($item),
 		);
 		return $out;
 	}
