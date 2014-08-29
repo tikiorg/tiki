@@ -6,6 +6,22 @@
 		</div>
 	</div>
 </div>
+{if $module_pref_errors}
+	<div class="container modules">
+		{remarksbox type="warning" title="{tr}Module errors{/tr}"}
+			{tr}The following modules could not be loaded{/tr}
+			<form method="post" action="tiki-admin.php">
+				{foreach from=$module_pref_errors key=index item=pref_error}
+					<p>{$pref_error.mod_name}:</p>
+					{preference name=$pref_error.pref_name}
+				{/foreach}
+				<div class="submit">
+					<input type="submit" class="btn btn-default" value="{tr}Change{/tr}"/>
+				</div>
+			</form>
+		{/remarksbox}
+	</div>
+{/if}
 {if (! isset($display) or $display eq '')}
 	{if count($phpErrors)}
 		{if ($prefs.error_reporting_adminonly eq 'y' and $tiki_p_admin eq 'y') or $prefs.error_reporting_adminonly eq 'n'}
