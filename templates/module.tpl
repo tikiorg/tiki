@@ -50,7 +50,11 @@
 			<div id="mod-{$smarty.capture.name}" class="">
 {/if}
 {$module_content}
-{$module_error}
+{if $module_error}
+	{remarksbox type="warning" title="{tr}Error{/tr}"}
+		{$module_error}
+	{/remarksbox}
+{/if}
 {if $module_nobox neq 'y'}
 		</div>
 		{if $user and $prefs.user_assigned_modules == 'y' and $prefs.feature_modulecontrols eq 'y'}
