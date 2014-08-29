@@ -136,29 +136,31 @@
 			</div>
 		{/tab}
 
-		{tab name="{tr}Shadow layer{/tr}"}
-			<h2>{tr}Shadow layer{/tr}</h2>
-			{preference name=feature_layoutshadows}
-			<div class="adminoptionboxchild" id="feature_layoutshadows_childcontainer">
-				{preference name=main_shadow_start}
-				{preference name=main_shadow_end}
+		{if $prefs.site_layout eq 'classic'}
+			{tab name="{tr}Shadow layer{/tr}"}
+				<h2>{tr}Shadow layer{/tr}</h2>
+				{preference name=feature_layoutshadows}
+				<div class="adminoptionboxchild" id="feature_layoutshadows_childcontainer">
+					{preference name=main_shadow_start}
+					{preference name=main_shadow_end}
 
-				{preference name=header_shadow_start}
-				{preference name=header_shadow_end}
+					{preference name=header_shadow_start}
+					{preference name=header_shadow_end}
 
-				{preference name=middle_shadow_start}
-				{preference name=middle_shadow_end}
+					{preference name=middle_shadow_start}
+					{preference name=middle_shadow_end}
 
-				{preference name=center_shadow_start}
-				{preference name=center_shadow_end}
+					{preference name=center_shadow_start}
+					{preference name=center_shadow_end}
 
-				{preference name=footer_shadow_start}
-				{preference name=footer_shadow_end}
+					{preference name=footer_shadow_start}
+					{preference name=footer_shadow_end}
 
-				{preference name=box_shadow_start}
-				{preference name=box_shadow_end}
-			</div>
-		{/tab}
+					{preference name=box_shadow_start}
+					{preference name=box_shadow_end}
+				</div>
+			{/tab}
+		{/if}
 
 		{tab name="{tr}Pagination{/tr}"}
 			<h2>{tr}Pagination{/tr}</h2>
