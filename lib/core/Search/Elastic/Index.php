@@ -69,7 +69,7 @@ class Search_Elastic_Index implements Search_Index_Interface, Search_Index_Query
 			function ($entry) {
 				if ($entry instanceof Search_Type_Numeric) {
 					return array(
-						"type" => "numeric",
+						"type" => "float",
 						"fields" => array(
 							"sort" => array(
 								"type" => "float",
