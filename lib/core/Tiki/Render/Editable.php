@@ -45,6 +45,7 @@ class Tiki_Render_Editable
 	function __toString()
 	{
 		global $prefs;
+		TikiLib::lib('smarty')->loadPlugin('smarty_modifier_escape');
 
 		if ($prefs['ajax_inline_edit'] != 'y') {
 			return $this->inner === null ? '' : $this->inner;
