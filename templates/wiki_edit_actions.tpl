@@ -3,30 +3,28 @@
 	<input type="hidden" name="no_bl" value="y">
 	<input type="submit" class="wikiaction btn btn-default" title="{tr}Preview your changes.{/tr}" name="preview" value="{tr}Preview{/tr}" onclick="needToConfirm=false;">
     {if $prefs.feature_wikilingo eq "y"}
-        {if $wysiwyg eq 'y'}
-            {jq}
-                var wikiParserChoice = $('#wiki-parser-choice'),
-                    $doc = $(document);
+        {jq}
+            var wikiParserChoice = $('#wiki-parser-choice'),
+                $doc = $(document);
 
-                $('input[name=preview]').click(function(){
-                    if (wikiParserChoice.val() == 'wikiLingo') {
-                        $doc.trigger('previewWikiLingo', [false, $('#editwiki').trigger('sync').val(), $('#editpageform'), $('#autosave_preview').slideDown('slow')]);
-                    } else {
-                        $doc.trigger('previewWikiLingo', [true, $('#editwiki-ui').html(), $('#editpageform'), $('#autosave_preview').slideDown('slow')]);
-                    }
-                    return false;
-                });
+            $('input[name=preview]').click(function(){
+                if (wikiParserChoice.val() == 'wikiLingo') {
+                    $doc.trigger('previewWikiLingo', [false, $('#editwiki').trigger('sync').val(), $('#editpageform'), $('#autosave_preview').slideDown('slow')]);
+                } else {
+                    $doc.trigger('previewWikiLingo', [true, $('#editwiki-ui').html(), $('#editpageform'), $('#autosave_preview').slideDown('slow')]);
+                }
+                return false;
+            });
 
-                $('input.btn-primary').click(function() {
-                    if (wikiParserChoice.val() == 'wikiLingo') {
-                        $doc.trigger('saveWikiLingo', [false, $('#editwiki').trigger('sync').val(), $('#editpageform')]);
-                    } else {
-                        $doc.trigger('saveWikiLingo', [true, $('#editwiki-ui').html(), $('#editpageform')]);
-                    }
-                    return false;
-                });
-            {/jq}
-        {/if}
+            $('input.btn-primary').click(function() {
+                if (wikiParserChoice.val() == 'wikiLingo') {
+                    $doc.trigger('saveWikiLingo', [false, $('#editwiki').trigger('sync').val(), $('#editpageform')]);
+                } else {
+                    $doc.trigger('saveWikiLingo', [true, $('#editwiki-ui').html(), $('#editpageform')]);
+                }
+                return false;
+            });
+        {/jq}
     {else}
     {if $prefs.ajax_autosave eq "y"}
 {jq} $("input[name=preview]").click(function(){
