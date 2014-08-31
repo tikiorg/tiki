@@ -69,18 +69,18 @@
 	<tr>
 
 			{if isset($checkbox) && $checkbox}<th>{$checkbox.title}</th>{/if}
-			{if ($showstatus ne 'n') and ($tracker_info.showStatus eq 'y' or ($tracker_info.showStatusAdminOnly eq 'y' and $tiki_p_admin_trackers eq 'y'))}
+			{if ($showstatus ne 'n') and ($tracker_info.showStatus eq 'y' or ($tracker_info.showStatusAdminOnly eq 'y' and $perms.tiki_p_admin_trackers eq 'y'))}
 		<th class="auto" style="width:20px;">&nbsp;</th>
 			{/if}
 			{if $showitemrank eq 'y'}<th>{tr}Rank{/tr}</th>{/if}
 			{foreach key=jx item=ix from=$fields}
-				{if $ix.isPublic eq 'y' and ($ix.isHidden eq 'n' or $ix.isHidden eq 'c' or $ix.isHidden eq 'p' or $tiki_p_admin_trackers eq 'y')
+				{if $ix.isPublic eq 'y' and ($ix.isHidden eq 'n' or $ix.isHidden eq 'c' or $ix.isHidden eq 'p' or $perms.tiki_p_admin_trackers eq 'y')
 					and $ix.type ne 'x' and $ix.type ne 'h' and in_array($ix.fieldId, $listfields) and ($ix.type ne 'p' or $ix.options_array[0] ne 'password')
-					and (empty($ix.visibleBy) or in_array($default_group, $ix.visibleBy) or $tiki_p_admin_trackers eq 'y')}
+					and (empty($ix.visibleBy) or in_array($default_group, $ix.visibleBy) or $perms.tiki_p_admin_trackers eq 'y')}
 					{if $ix.type eq 'l'}
 		<th class="auto field{$ix.fieldId}">{$ix.name|default:"&nbsp;"}</th>
 					{elseif $ix.type eq 's' and $ix.name eq "Rating"}
-						{if $tiki_p_admin_trackers eq 'y' or $perms.tiki_p_tracker_view_ratings eq 'y'}
+						{if $perms.tiki_p_admin_trackers eq 'y' or $perms.tiki_p_tracker_view_ratings eq 'y'}
 		<th class="auto field{$ix.fieldId}">
 							{self_link _sort_arg='tr_sort_mode'|cat:$iTRACKERLIST _sort_field='f_'|cat:$ix.fieldId}{$ix.name|default:"&nbsp;"}{/self_link}</th>
 						{/if}
@@ -97,13 +97,13 @@
 			{if $showlastmodif eq 'y'}
 		<th>{self_link _sort_arg='tr_sort_mode'|cat:$iTRACKERLIST _sort_field='lastModif' session_filters='y'}{tr}LastModif{/tr}{/self_link}</th>
 			{/if}
-			{if $tracker_info.useComments eq 'y' and ($tracker_info.showComments eq 'y' || $tracker_info.showLastComment eq 'y') and $tiki_p_tracker_view_comments ne 'n'}
+			{if $tracker_info.useComments eq 'y' and ($tracker_info.showComments eq 'y' || $tracker_info.showLastComment eq 'y') and $perms.tiki_p_tracker_view_comments ne 'n'}
 		<th{if $tracker_info.showLastComment ne 'y'} style="width:5%"{/if}>{tr}Coms{/tr}</th>
 			{/if}
 			{if $tracker_info.useAttachments eq 'y' and  $tracker_info.showAttachments eq 'y'}
 		<th style="width:5%">{tr}atts{/tr}</th>
 			{/if}
-			{if ($showdelete eq 'y' || $showpenditem eq 'y' || $showopenitem eq 'y' || $showcloseitem eq 'y') && ($tiki_p_admin_trackers eq 'y' or $perms.tiki_p_remove_tracker_items eq 'y' or $perms.tiki_p_remove_tracker_items_pending eq 'y' or $perms.tiki_p_remove_tracker_items_closed eq 'y')}
+			{if ($showdelete eq 'y' || $showpenditem eq 'y' || $showopenitem eq 'y' || $showcloseitem eq 'y') && ($perms.tiki_p_admin_trackers eq 'y' or $perms.tiki_p_remove_tracker_items eq 'y' or $perms.tiki_p_remove_tracker_items_pending eq 'y' or $perms.tiki_p_remove_tracker_items_closed eq 'y')}
 		<th>{tr}Action{/tr}</th>
 			{/if}
 
@@ -120,12 +120,12 @@ the section loop so that the vars are not replaced by nested pretty tracker exec
 		{assign var=itemoff value=0}
 		<tr class='compute'>
 			{if $checkbox}<td></td>{/if}
-			{if ($showstatus ne 'n') and ($tracker_info.showStatus eq 'y' or ($tracker_info.showStatusAdminOnly eq 'y' and $tiki_p_admin_trackers eq 'y'))}<td></td>{/if}
+			{if ($showstatus ne 'n') and ($tracker_info.showStatus eq 'y' or ($tracker_info.showStatusAdminOnly eq 'y' and $perms.tiki_p_admin_trackers eq 'y'))}<td></td>{/if}
 			{if $showitemrank eq 'y'}<td></td>{/if}
 			{foreach key=jx item=ix from=$fields}
-				{if $ix.isPublic eq 'y' and ($ix.isHidden eq 'n' or $ix.isHidden eq 'c' or $ix.isHidden eq 'p' or $tiki_p_admin_trackers eq 'y') and $ix.type ne 'x' and $ix.type ne 'h'
+				{if $ix.isPublic eq 'y' and ($ix.isHidden eq 'n' or $ix.isHidden eq 'c' or $ix.isHidden eq 'p' or $perms.tiki_p_admin_trackers eq 'y') and $ix.type ne 'x' and $ix.type ne 'h'
 					and in_array($ix.fieldId, $listfields) and ($ix.type ne 'p' or $ix.options_array[0] ne 'password') and (empty($ix.visibleBy) or in_array($default_group, $ix.visibleBy)
-					or $tiki_p_admin_trackers eq 'y')}
+					or $perms.tiki_p_admin_trackers eq 'y')}
 					{if isset($computedFields[$ix.fieldId])}
 						<td class="numeric" style="padding-right:2px">
 						{foreach from=$computedFields[$ix.fieldId] item=computedField name=computedField}
@@ -140,7 +140,7 @@ the section loop so that the vars are not replaced by nested pretty tracker exec
 			{/foreach}
 			{if $showcreated eq 'y'}<td></td>{/if}
 			{if $showlastmodif eq 'y'}<td></td>{/if}
-			{if $tracker_info.useComments eq 'y' and $tracker_info.showComments eq 'y' and $tiki_p_tracker_view_comments ne 'n'}<td></td>{/if}
+			{if $tracker_info.useComments eq 'y' and $tracker_info.showComments eq 'y' and $perms.tiki_p_tracker_view_comments ne 'n'}<td></td>{/if}
 			{if $tracker_info.useAttachments eq 'y' and $tracker_info.showAttachments eq 'y'}<td></td>{/if}
 		</tr>
 		{/if}
@@ -177,7 +177,7 @@ the section loop so that the vars are not replaced by nested pretty tracker exec
 		{pagination_links cant=$count_item step=$max offset=${$offset_arg} offset_arg=$offset_arg}
 		{/pagination_links}
 	{/if}
-	{if $export eq 'y' && ($tiki_p_admin_trackers eq 'y' || $perms.tiki_p_export_tracker eq 'y')}
+	{if $export eq 'y' && ($perms.tiki_p_admin_trackers eq 'y' || $perms.tiki_p_export_tracker eq 'y')}
 		{button href=$exportUrl _text="{tr}Export{/tr}" _class='exportButton'}
 		{jq}
 $('.exportButton a').click(function() {
@@ -232,7 +232,7 @@ $('.exportButton a').click(function() {
 			{if $checkbox}
 		<td><input type="{$checkbox.type}" name="{$checkbox.name}[]" value="{if $checkbox.ix > -1}{$items[user].field_values[$checkbox.ix].value|escape}{else}{$items[user].itemId}{/if}"></td>
 			{/if}
-			{if ($showstatus ne 'n') and ($tracker_info.showStatus eq 'y' or ($tracker_info.showStatusAdminOnly eq 'y' and $tiki_p_admin_trackers eq 'y'))}
+			{if ($showstatus ne 'n') and ($tracker_info.showStatus eq 'y' or ($tracker_info.showStatusAdminOnly eq 'y' and $perms.tiki_p_admin_trackers eq 'y'))}
 		<td class="auto" style="width:20px;">
 				{assign var=ustatus value=$items[user].status|default:"c"}
 				{html_image file=$status_types.$ustatus.image title=$status_types.$ustatus.label alt=$status_types.$ustatus.label}
@@ -246,12 +246,12 @@ $('.exportButton a').click(function() {
 			{if !isset($list_mode)}{assign var=list_mode value="y"}{/if}
 			{foreach from=$items[user].field_values item=field}
 				{if $field.isPublic eq 'y' and ($field.isHidden eq 'n' or $field.isHidden eq 'c'
-					or $field.isHidden eq 'p' or $tiki_p_admin_trackers eq 'y') and $field.type ne 'x' and $field.type ne 'h'
+					or $field.isHidden eq 'p' or $perms.tiki_p_admin_trackers eq 'y') and $field.type ne 'x' and $field.type ne 'h'
 					and in_array($field.fieldId, $listfields) and ($field.type ne 'p' or $field.options_array[0] ne 'password')
-					and (empty($field.visibleBy) or in_array($default_group, $field.visibleBy) or $tiki_p_admin_trackers eq 'y')}
+					and (empty($field.visibleBy) or in_array($default_group, $field.visibleBy) or $perms.tiki_p_admin_trackers eq 'y')}
 		<td class={if $field.type eq 'n' or $field.type eq 'q' or $field.type eq 'b'}"numeric"{else}"auto"{/if}
 					{if $field.type eq 'b'} style="padding-right:5px"{/if}>
-					{if $field.isHidden eq 'c' and $fieldr and $tiki_p_admin_trackers ne 'y'}
+					{if $field.isHidden eq 'c' and $fieldr and $perms.tiki_p_admin_trackers ne 'y'}
 					{elseif isset($perms)}
 						{trackeroutput item=$items[user] field=$field list_mode=$list_mode showlinks=$showlinks showpopup=$showpopup url=$url editable=in_array($field.fieldId, $editableFields)
 								tiki_p_view_trackers=$perms.tiki_p_view_trackers tiki_p_modify_tracker_items=$perms.tiki_p_modify_tracker_items tiki_p_modify_tracker_items_pending=$perms.tiki_p_modify_tracker_items_pending
@@ -270,7 +270,7 @@ $('.exportButton a').click(function() {
 			{if $showlastmodif eq 'y'}
 		<td>{if $tracker_info.showLastModifFormat}{$items[user].lastModif|tiki_date_format:$tracker_info.showLastModifFormat}{else}{$items[user].lastModif|tiki_short_datetime}{/if}</td>
 			{/if}
-			{if $tracker_info.useComments eq 'y' and ($tracker_info.showComments eq 'y' or $tracker_info.showLastComment eq 'y') and $tiki_p_tracker_view_comments ne 'n'}
+			{if $tracker_info.useComments eq 'y' and ($tracker_info.showComments eq 'y' or $tracker_info.showLastComment eq 'y') and $perms.tiki_p_tracker_view_comments ne 'n'}
 		<td style="text-align:center;">{if $tracker_info.showComments eq 'y'}{$items[user].comments}{/if}{if $tracker_info.showComments eq 'y' and $tracker_info.showLastComment eq 'y'}<br>{/if}{if $tracker_info.showLastComment eq 'y' and !empty($items[user].lastComment)}{$items[user].lastComment.userName|escape}-{$items[user].lastComment.commentDate|tiki_short_date}{/if}</td>
 	
 			{/if}
@@ -278,18 +278,18 @@ $('.exportButton a').click(function() {
 		<td style="text-align:center;"><a href="tiki-view_tracker_item.php?trackerId={$listTrackerId}&amp;itemId={$items[user].itemId}&amp;show=att"
 link="{tr}List Attachments{/tr}"><img src="img/icons/folderin.gif" alt="{tr}List Attachments{/tr}"></a>{$items[user].attachments}</td>
 			{/if}
-			{if ($showdelete eq 'y' || $showpenditem eq 'y' || $showopenitem eq 'y' || $showcloseitem eq 'y') && ($tiki_p_admin_trackers eq 'y' or $perms.tiki_p_remove_tracker_items eq 'y' or $perms.tiki_p_remove_tracker_items_pending eq 'y' or $perms.tiki_p_remove_tracker_items_closed eq 'y')}
+			{if ($showdelete eq 'y' || $showpenditem eq 'y' || $showopenitem eq 'y' || $showcloseitem eq 'y') && ($perms.tiki_p_admin_trackers eq 'y' or $perms.tiki_p_remove_tracker_items eq 'y' or $perms.tiki_p_remove_tracker_items_pending eq 'y' or $perms.tiki_p_remove_tracker_items_closed eq 'y')}
 		<td>
-				{if $showdelete eq 'y' && ($tiki_p_admin_trackers eq 'y' or ($perms.tiki_p_remove_tracker_items eq 'y' and $items[user].status ne 'p' and $items[user].status ne 'c') or ($perms.tiki_p_remove_tracker_items_pending eq 'y' and $items[user].status eq 'p') or ($perms.tiki_p_remove_tracker_items_closed eq 'y' and $items[user].status eq 'c'))}
+				{if $showdelete eq 'y' && ($perms.tiki_p_admin_trackers eq 'y' or ($perms.tiki_p_remove_tracker_items eq 'y' and $items[user].status ne 'p' and $items[user].status ne 'c') or ($perms.tiki_p_remove_tracker_items_pending eq 'y' and $items[user].status eq 'p') or ($perms.tiki_p_remove_tracker_items_closed eq 'y' and $items[user].status eq 'c'))}
 					{self_link delete=$items[user].itemId}{icon _id=cross alt="{tr}Remove{/tr}"}{/self_link}
 				{/if}
-				{if $showcloseitem eq 'y' && $items[user].status neq 'c' && ($tiki_p_admin_trackers eq 'y' or ($perms.tiki_p_modify_tracker_items eq 'y' and $items[user].status ne 'p' and $items[user].status ne 'c') or ($perms.tiki_p_modify_tracker_items_pending eq 'y' and $items[user].status eq 'p') or ($perms.tiki_p_modify_tracker_items_closed eq 'y' and $items[user].status eq 'c'))}
+				{if $showcloseitem eq 'y' && $items[user].status neq 'c' && ($perms.tiki_p_admin_trackers eq 'y' or ($perms.tiki_p_modify_tracker_items eq 'y' and $items[user].status ne 'p' and $items[user].status ne 'c') or ($perms.tiki_p_modify_tracker_items_pending eq 'y' and $items[user].status eq 'p') or ($perms.tiki_p_modify_tracker_items_closed eq 'y' and $items[user].status eq 'c'))}
 					{self_link closeitem=$items[user].itemId}{tr}Close item{/tr}{/self_link}
 				{/if}
-				{if $showopenitem eq 'y' && $items[user].status neq 'o' && ($tiki_p_admin_trackers eq 'y' or ($perms.tiki_p_modify_tracker_items eq 'y' and $items[user].status ne 'p' and $items[user].status ne 'c') or ($perms.tiki_p_modify_tracker_items_pending eq 'y' and $items[user].status eq 'p') or ($perms.tiki_p_modify_tracker_items_closed eq 'y' and $items[user].status eq 'c'))}
+				{if $showopenitem eq 'y' && $items[user].status neq 'o' && ($perms.tiki_p_admin_trackers eq 'y' or ($perms.tiki_p_modify_tracker_items eq 'y' and $items[user].status ne 'p' and $items[user].status ne 'c') or ($perms.tiki_p_modify_tracker_items_pending eq 'y' and $items[user].status eq 'p') or ($perms.tiki_p_modify_tracker_items_closed eq 'y' and $items[user].status eq 'c'))}
 					{self_link openitem=$items[user].itemId}{tr}Open item{/tr}{/self_link}
 				{/if}
-				{if $showpenditem eq 'y' && $items[user].status neq 'p' && ($tiki_p_admin_trackers eq 'y' or ($perms.tiki_p_modify_tracker_items eq 'y' and $items[user].status ne 'p' and $items[user].status ne 'c') or ($perms.tiki_p_modify_tracker_items_pending eq 'y' and $items[user].status eq 'p') or ($perms.tiki_p_modify_tracker_items_closed eq 'y' and $items[user].status eq 'c'))}
+				{if $showpenditem eq 'y' && $items[user].status neq 'p' && ($perms.tiki_p_admin_trackers eq 'y' or ($perms.tiki_p_modify_tracker_items eq 'y' and $items[user].status ne 'p' and $items[user].status ne 'c') or ($perms.tiki_p_modify_tracker_items_pending eq 'y' and $items[user].status eq 'p') or ($perms.tiki_p_modify_tracker_items_closed eq 'y' and $items[user].status eq 'c'))}
 					{self_link penditem=$items[user].itemId}{tr}Pend item{/tr}{/self_link}
 				{/if}
 		</td>
