@@ -527,7 +527,7 @@ hr {
   background: url('grape/siteheadertile.png') 0 0 no-repeat;
 }
 .header_container > .header {
-  background: url('grape/siteheader.png') 0 0 no-repeat;
+  background: url('grape/siteheader.png') -248px 0 no-repeat;
 }
 header.header .module.secondary_site_menu {
   background: none;

@@ -527,7 +527,7 @@ hr {
   background: url('raspberry/siteheadertile.png') 0 0 no-repeat;
 }
 .header_container > .header {
-  background: url('raspberry/siteheader.png') 0 0 no-repeat;
+  background: url('raspberry/siteheader.png') -248px 0 no-repeat;
 }
 header.header .module.secondary_site_menu {
   background: none;
