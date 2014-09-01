@@ -130,6 +130,8 @@ class Messu extends TikiLib
 			$email = $userlib->get_user_email($user);
 			if ($userlib->user_exists($from)) {
 				$from_email = $userlib->get_user_email($from);		// $from_email required for TikiMail constructor
+			} elseif ($from == 'tiki-contact.php') {
+				$from_email = $prefs['sender_email'];
 			} else {
 				return false;										// non-existent users can't send messages (etc)
 			}
