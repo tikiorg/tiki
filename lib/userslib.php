@@ -6696,7 +6696,7 @@ class UsersLib extends TikiLib
 				$smarty->assign('msg', tra("The registration mail can't be sent. Contact the administrator"));
 				return false;
 			}
-		} elseif ($prefs['validateRegistration'] == 'y' && empty($pass)) {
+		} elseif ($prefs['validateRegistration'] == 'y' && empty($pass) && $mailTemplate != 'user_creation_validation_mail') {
 			if (!empty($chosenGroup)) {
 				$smarty->assign_by_ref('chosenGroup', $chosenGroup);
 				if ($prefs['userTracker'] == 'y') {
@@ -6781,7 +6781,7 @@ class UsersLib extends TikiLib
 					$smarty->assign('msg', tra('The administrator has not yet validated your account. Please wait.'));
 				}
 			}
-		} elseif ($prefs['validateUsers'] == 'y' || !empty($pass)) {
+		} elseif ($prefs['validateUsers'] == 'y' || !empty($pass) || $mailTemplate == 'user_creation_validation_mail') {
 			if ( $mailTemplate == '' ) {
 				$mailTemplate = 'user_validation_mail';
 			}
