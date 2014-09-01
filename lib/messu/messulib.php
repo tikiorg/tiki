@@ -132,7 +132,7 @@ class Messu extends TikiLib
 				$_SERVER['SERVER_NAME'] = $_SERVER['HTTP_HOST'];
 			}
 			$email = $userlib->get_user_email($user);
-			if (empty($GLOBALS['user']) && $userlib->user_exists($from)) {
+			if ($userlib->user_exists($from)) {
 				$from_email = $userlib->get_user_email($from);		// $from_email required for TikiMail constructor
 			} elseif ($from == 'tiki-contact.php') {
 				$from_email = $prefs['sender_email'];
