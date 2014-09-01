@@ -70,7 +70,7 @@ if (isset($_REQUEST['send'])) {
 			'',
 			$_REQUEST['subject'],
 			$body,
-			$_REQUEST['priority']
+			$priority
 		);
 		$contact_name = $userlib->get_user_preference($prefs['contact_user'], 'realName');
 		if ($contact_name == '') $contact_name = $prefs['contact_user'];
