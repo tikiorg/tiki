@@ -183,7 +183,7 @@ class Services_Search_CustomSearchController
 
 	private function cs_dataappend_content(Search_Query $query, $config, $value)
 	{
-		if ($value) {
+		if ($value > '') {
 			if (isset($config['_textrange'])) {
 				$this->cs_handle_textrange($config['_textrange'], $query, $config, $value);
 			} elseif (isset($config['_daterange'])) {
