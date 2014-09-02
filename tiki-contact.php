@@ -34,14 +34,15 @@ if (isset($_REQUEST['send'])) {
 	if (isset($_REQUEST['priority'])) {
 		$priority = $_REQUEST['priority'];
 	}
-	if (!$user && isset($_REQUEST['from'])) {
-		$from =  $_REQUEST['from'];
+	if (!$user && validate_email($_REQUEST['from'])) {
+		$from =  'tiki-contact.php';
+		$body .= tra('From') . " " . $_REQUEST['from'] . ":\n";
 	}
 	if (isset($_REQUEST['subject'])) {
 		$subject =  $_REQUEST['subject'];
 	}
 	if (isset($_REQUEST['body'])) {
-		$body =  $_REQUEST['body'];
+		$body .=  $_REQUEST['body'];
 	}
 }
 
@@ -62,7 +63,7 @@ if (isset($_REQUEST['send'])) {
 		$smarty->assign('errorMessage', $message);
 	} else {
 		$access->check_ticket();
-		$body = tr("%0 sent you a message:", $from) . "\n" . $_REQUEST['body'];
+		$body = tr("%0 sent you a message:", $from) . "\n" . $body;
 		$messulib->post_message(
 			$prefs['contact_user'],
 			$from,
@@ -70,7 +71,7 @@ if (isset($_REQUEST['send'])) {
 			'',
 			$_REQUEST['subject'],
 			$body,
-			$_REQUEST['priority']
+			$priority
 		);
 		$contact_name = $userlib->get_user_preference($prefs['contact_user'], 'realName');
 		if ($contact_name == '') $contact_name = $prefs['contact_user'];
