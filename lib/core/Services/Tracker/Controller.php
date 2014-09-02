@@ -912,31 +912,37 @@ class Services_Tracker_Controller
 
 	function action_clear($input)
 	{
-		$trackerId = $input->trackerId->int();
-		$confirm = $input->confirm->int();
 
-		$perms = Perms::get('tracker', $trackerId);
-		if (! $perms->admin_trackers) {
-			throw new Services_Exception_Denied(tr('Reserved to tracker administrators'));
-		}
+		return TikiLib::lib('tiki')->allocate_extra(
+			'tracker_clear_items',
+			function () use ($input) {
+				$trackerId = $input->trackerId->int();
+				$confirm = $input->confirm->int();
 
-		$definition = Tracker_Definition::get($trackerId);
+				$perms = Perms::get('tracker', $trackerId);
+				if (! $perms->admin_trackers) {
+					throw new Services_Exception_Denied(tr('Reserved to tracker administrators'));
+				}
 
-		if (! $definition) {
-			throw new Services_Exception_NotFound;
-		}
+				$definition = Tracker_Definition::get($trackerId);
 
-		if ($confirm) {
-			$this->utilities->clearTracker($trackerId);
+				if (! $definition) {
+					throw new Services_Exception_NotFound;
+				}
 
-			return array(
-				'trackerId' => 0,
-			);
-		}
+				if ($confirm) {
+					$this->utilities->clearTracker($trackerId);
 
-		return array(
-			'trackerId' => $trackerId,
-			'name' => $definition->getConfiguration('name'),
+					return array(
+						'trackerId' => 0,
+					);
+				}
+
+				return array(
+					'trackerId' => $trackerId,
+					'name' => $definition->getConfiguration('name'),
+				);
+			}
 		);
 	}
 

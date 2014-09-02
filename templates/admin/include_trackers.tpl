@@ -24,6 +24,7 @@
 		</div>
 		{preference name=allocate_memory_tracker_export_items}
 		{preference name=allocate_time_tracker_export_items}
+		{preference name=allocate_time_tracker_clear_items}
 
 		{preference name=ajax_inline_edit}
 		<div class="adminoptionboxchild" id="ajax_inline_edit_childcontainer">

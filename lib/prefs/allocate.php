@@ -10,6 +10,7 @@ function prefs_allocate_list()
 	$prefs = array(
 		'unified_rebuild' => array('label' => tr('search index rebuild'), 'memory' => true, 'time' => true),
 		'tracker_export_items' => array('label' => tr('tracker item export'), 'memory' => true, 'time' => true),
+		'tracker_clear_items' => array('label' => tr('tracker clear'), 'memory' => false, 'time' => true),
 	);
 
 	$out = array();
