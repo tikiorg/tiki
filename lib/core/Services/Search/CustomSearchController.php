@@ -125,7 +125,7 @@ class Services_Search_CustomSearchController
 			}
 
 			foreach ($this->textranges as $info) {
-				if (count($info['values']) >= 2) {
+				if (count($info['values']) == 2) {
 					$from = array_shift($info['values']);
 					$to = array_shift($info['values']);
 					$info['query']->filterTextRange($from, $to, $info['config']['_field']);
@@ -133,7 +133,7 @@ class Services_Search_CustomSearchController
 			}
 
 			foreach ($this->dateranges as $info) {
-				if (count($info['values']) >= 2) {
+				if (count($info['values']) == 2) {
 					$from = array_shift($info['values']);
 					$to = array_shift($info['values']);
 					$info['query']->filterRange($from, $to, $info['config']['_field']);
@@ -192,7 +192,10 @@ class Services_Search_CustomSearchController
 
 	private function cs_dataappend_content(Search_Query $query, $config, $value)
 	{
-		if ($value) {
+		if ( ( isset($config['_textrange']) || isset($config['_daterange']) ) && ( isset($config['_emptyfrom']) || isset($config['_emptyto']) )  && $value <= '') {
+			$value = isset($config['_emptyfrom']) ? $config['_emptyfrom'] : $config['_emptyto'];
+		}
+		if ($value > '') {
 			if (isset($config['_textrange'])) {
 				$this->cs_handle_textrange($config['_textrange'], $query, $config, $value);
 			} elseif (isset($config['_daterange'])) {
@@ -237,7 +240,25 @@ class Services_Search_CustomSearchController
 			);
 		}
 
-		$this->textranges[$rangeName]['values'][] = $value;
+		if (isset($config['_emptyother']) && isset($config['_emptyfrom'])) {
+			// is "from" value
+			if (count($this->textranges[$rangeName]['values']) == 0) {
+				$this->textranges[$rangeName]['values'][] = $config['_emptyother'];
+			} elseif (count($this->textranges[$rangeName]['values']) == 2) {
+				array_shift($this->textranges[$rangeName]['values']);
+			}
+			array_unshift($this->textranges[$rangeName]['values'], $value);
+		} elseif (isset($config['_emptyother']) && isset($config['_emptyto'])) {
+			// is "to" value
+			if (count($this->textranges[$rangeName]['values']) == 0) {
+				$this->textranges[$rangeName]['values'][] = $config['_emptyother'];
+			} elseif (count($this->textranges[$rangeName]['values']) == 2) {
+				array_pop($this->textranges[$rangeName]['values']);
+			}
+			$this->textranges[$rangeName]['values'][] = $value;
+		} else {
+			$this->textranges[$rangeName]['values'][] = $value;
+		}
 	}
 
 	private function cs_handle_daterange($rangeName, Search_Query $query, $config, $value)
@@ -250,7 +271,25 @@ class Services_Search_CustomSearchController
 			);
 		}
 
-		$this->dateranges[$rangeName]['values'][] = $value;
+		if (isset($config['_emptyother']) && isset($config['_emptyfrom'])) {
+			// is "from" value
+			if (count($this->dateranges[$rangeName]['values']) == 0) {
+				$this->dateranges[$rangeName]['values'][] = $config['_emptyother'];
+			} elseif (count($this->dateranges[$rangeName]['values']) == 2) {
+				array_shift($this->dateranges[$rangeName]['values']);
+			}
+			array_unshift($this->dateranges[$rangeName]['values'], $value);
+		} elseif (isset($config['_emptyother']) && isset($config['_emptyto'])) {
+			// is "to" value
+			if (count($this->dateranges[$rangeName]['values']) == 0) {
+				$this->dateranges[$rangeName]['values'][] = $config['_emptyother'];
+			} elseif (count($this->dateranges[$rangeName]['values']) == 2) {
+				array_pop($this->dateranges[$rangeName]['values']);
+			}
+			$this->dateranges[$rangeName]['values'][] = $value;
+		} else {
+			$this->dateranges[$rangeName]['values'][] = $value;
+		}
 	}
 
 	private function cs_dataappend_categories(Search_Query $query, $config, $value)
