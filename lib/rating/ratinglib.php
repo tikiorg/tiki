@@ -509,7 +509,7 @@ class RatingLib extends TikiDb_Bridge
 		$configurations = $this->get_initialized_configurations();
 		$runner = $this->get_runner();
 
-		$list = $ratingconfiglib->get_expired_object_list($max);
+		$list = TikiLib::lib('ratingconfig')->get_expired_object_list($max);
 
 		foreach ( $list as $object ) {
 			$this->internal_refresh_rating($object['type'], $object['object'], $runner, $configurations);
