@@ -30,7 +30,7 @@ function module_zone_info()
 			'zoneclass' => array(
 				'required' => false,
 				'name' => tr('CSS Class'),
-				'description' => tr('Example for a Bootstrap "social" navbar:') . ' "navbar navbar-default navbar-inverse navbar-fixed-top"',
+				'description' => tr('Example for a Bootstrap "social" navbar:') . ' "navbar navbar-inverse navbar-fixed-top"',
 				'filter' => 'text',
 				'default' => '',
 			),
