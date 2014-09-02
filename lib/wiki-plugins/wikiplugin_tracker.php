@@ -1524,7 +1524,7 @@ FILL;
 				}
 			}
 			include_once('lib/smarty_tiki/function.trackerheader.php');
-			$back .= smarty_function_trackerheader(array('level'=>-1, 'title'=>'', 'inTable' =>(empty($tpl) && empty($wiki))?'wikiplugin_tracker':'' ), $smarty);
+			$back .= smarty_function_trackerheader(array('level'=>-1, 'title'=>'', 'inTable' => '' ), $smarty);
 
 
 			$smarty->assign('showmandatory', $showmandatory);
@@ -1539,11 +1539,7 @@ FILL;
 				$smarty->assign('captchalib', $captchalib);
 				$back .= $smarty->fetch('antibot.tpl');
 			}
-			if (empty($tpl) && empty($wiki)) {
-			$back.= "</table>";
-			} else {
-				$back .= '</div>';
-			}
+			$back .= '</div>';
 
 			if ($params['formtag'] == 'y') {
 				$back .= '<div class="input_submit_container text-center btn-bar">';
@@ -1612,7 +1608,7 @@ function wikiplugin_tracker_render_input($f, $item, $dynamicSave)
 		$handler = TikiLib::lib("trk")->get_field_handler($f, $item);
 	}
 
-	$input = $handler->renderInput(array('inTable' => 'y', 'pluginTracker' => 'y'));
+	$input = $handler->renderInput(array('inTable' => 'n', 'pluginTracker' => 'y'));
 
 	if ($dynamicSave && $item['itemId']) {
 		$servicelib = TikiLib::lib('service');
@@ -1640,6 +1636,6 @@ function wikiplugin_tracker_render_value($f, $item)
 	$trklib = TikiLib::lib('trk');
 
 	$handler = $trklib->get_field_handler($f, $item);
-	return $handler->renderOutput(array('inTable' => 'y'));
+	return $handler->renderOutput(array('inTable' => 'n'));
 }
 
