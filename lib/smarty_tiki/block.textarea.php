@@ -168,7 +168,7 @@ JS
 		$wysiwyglib = TikiLib::lib('wysiwyg');
 
         // set up wikiLingo wysiwyg
-        if ($prefs['feature_wikilingo'] != 'y') {
+        if ($prefs['feature_wikilingo'] != 'y' || $params['useWikiLingo'] != true) {
             if (!isset($params['name'])) {
                 $params['name'] = 'edit';
             }

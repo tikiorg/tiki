@@ -198,7 +198,7 @@
 								{tr}Reproduce the changes highlighted on the left using the editor below{/tr}.
 							</div>
 						{/if}
-						{textarea codemirror='true' syntax='tiki'}{$pagedata}{/textarea}
+						{textarea codemirror='true' syntax='tiki' useWikiLingo=$useWikiLingo}{$pagedata}{/textarea}
 						{if $prefs.wiki_freetags_edit_position eq 'edit'}
 								{if $prefs.feature_freetags eq 'y' and $tiki_p_freetags_tag eq 'y'}
 									<fieldset>
@@ -700,7 +700,7 @@ $("input[name=allowhtml]").change(function() {
 		{if $prefs.wiki_actions_bar neq 'top'}
 			<div class="form-group">
 				<div class="text-center">
-					{include file='wiki_edit_actions.tpl' wysiwyg=$wysiwyg}
+					{include file='wiki_edit_actions.tpl' wysiwyg=$wysiwyg page_info=$page_info}
 				</div>
 		{/if}
 	</div>
