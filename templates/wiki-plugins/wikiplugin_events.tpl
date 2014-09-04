@@ -1,6 +1,6 @@
 {* $Id$ *}
 <div class="table-responsive">
-<table class="table normal">
+<table class="table normal table-condensed table-bordered">
 <tr><th colspan="2">{tr}Upcoming Events{/tr}</th></tr>
 
 {foreach from=$events item=event}
@@ -16,7 +16,7 @@
 				{$smarty.capture.start}{if $smarty.capture.start ne $smarty.capture.end}<br>{$smarty.capture.end}{/if}
 			{/if}
 		</td>
-		<td width="100%">
+		<td style=white-space:normal;">
 			<a class="linkmodule" href="tiki-calendar_edit_item.php?viewcalitemId={$event.calitemId}">{$event.name|escape}</a>
 			{if $desc}<br>{$event.parsed}{/if}
 		</td>
