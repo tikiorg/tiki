@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "e5e1a0ac1d54c7021f2fcfd23ecc2f19",
+    "hash": "9bac0f19de42e6f65477ca17c6f61bd0",
     "packages": [
         {
             "name": "adodb/adodb",
@@ -990,12 +990,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/jakiestfu/Medium.js.git",
-                "reference": "092ac5fbefbe0d8a42c77d5c462d299d780ea0ae"
+                "reference": "925a8995e552121daa94716535225f3b1dc3c840"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jakiestfu/Medium.js/zipball/092ac5fbefbe0d8a42c77d5c462d299d780ea0ae",
-                "reference": "092ac5fbefbe0d8a42c77d5c462d299d780ea0ae",
+                "url": "https://api.github.com/repos/jakiestfu/Medium.js/zipball/925a8995e552121daa94716535225f3b1dc3c840",
+                "reference": "925a8995e552121daa94716535225f3b1dc3c840",
                 "shasum": ""
             },
             "require": {
@@ -1021,7 +1021,7 @@
                     "role": "Lead Developer"
                 }
             ],
-            "time": "2014-08-07 19:53:16"
+            "time": "2014-08-31 16:41:56"
         },
         {
             "name": "phenx/php-font-lib",
@@ -1478,17 +1478,17 @@
         },
         {
             "name": "symfony/filesystem",
-            "version": "v2.5.3",
+            "version": "v2.5.4",
             "target-dir": "Symfony/Component/Filesystem",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Filesystem.git",
-                "reference": "c1309b0ee195ad264a4314435bdaecdfacb8ae9c"
+                "reference": "a765efd199e02ff4001c115c318e219030be9364"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Filesystem/zipball/c1309b0ee195ad264a4314435bdaecdfacb8ae9c",
-                "reference": "c1309b0ee195ad264a4314435bdaecdfacb8ae9c",
+                "url": "https://api.github.com/repos/symfony/Filesystem/zipball/a765efd199e02ff4001c115c318e219030be9364",
+                "reference": "a765efd199e02ff4001c115c318e219030be9364",
                 "shasum": ""
             },
             "require": {
@@ -1521,21 +1521,21 @@
             ],
             "description": "Symfony Filesystem Component",
             "homepage": "http://symfony.com",
-            "time": "2014-07-09 09:05:48"
+            "time": "2014-09-03 09:00:14"
         },
         {
             "name": "symfony/process",
-            "version": "v2.5.3",
+            "version": "v2.5.4",
             "target-dir": "Symfony/Component/Process",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Process.git",
-                "reference": "e0997d2a9a1a763484b34b989900b61322a9b056"
+                "reference": "136cf0bdaacea81f779583376d47dd8aef4fc6ba"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Process/zipball/e0997d2a9a1a763484b34b989900b61322a9b056",
-                "reference": "e0997d2a9a1a763484b34b989900b61322a9b056",
+                "url": "https://api.github.com/repos/symfony/Process/zipball/136cf0bdaacea81f779583376d47dd8aef4fc6ba",
+                "reference": "136cf0bdaacea81f779583376d47dd8aef4fc6ba",
                 "shasum": ""
             },
             "require": {
@@ -1568,7 +1568,7 @@
             ],
             "description": "Symfony Process Component",
             "homepage": "http://symfony.com",
-            "time": "2014-08-05 09:00:40"
+            "time": "2014-08-31 03:22:04"
         },
         {
             "name": "tijsverkoyen/css-to-inline-styles",
@@ -1699,12 +1699,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/wikiLingo/wikiLingo.git",
-                "reference": "9c53e06116215eb59380902b6b53727be33da2da"
+                "reference": "0ae7970ba47b40a2c9f36007eff4fae025563dbe"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wikiLingo/wikiLingo/zipball/9c53e06116215eb59380902b6b53727be33da2da",
-                "reference": "9c53e06116215eb59380902b6b53727be33da2da",
+                "url": "https://api.github.com/repos/wikiLingo/wikiLingo/zipball/0ae7970ba47b40a2c9f36007eff4fae025563dbe",
+                "reference": "0ae7970ba47b40a2c9f36007eff4fae025563dbe",
                 "shasum": ""
             },
             "require": {
@@ -1743,7 +1743,7 @@
                     "role": "Lead Developer"
                 }
             ],
-            "time": "2014-07-24 21:18:35"
+            "time": "2014-08-27 22:59:18"
         },
         {
             "name": "zetacomponents/base",
@@ -1934,16 +1934,16 @@
         },
         {
             "name": "oyejorge/less.php",
-            "version": "v1.7.0.1",
+            "version": "v1.7.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/oyejorge/less.php.git",
-                "reference": "958476be9e47a13db0579397f0164af1776bdbee"
+                "reference": "82372b389386ae1edab55495eae4b400cca3c86c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/oyejorge/less.php/zipball/958476be9e47a13db0579397f0164af1776bdbee",
-                "reference": "958476be9e47a13db0579397f0164af1776bdbee",
+                "url": "https://api.github.com/repos/oyejorge/less.php/zipball/82372b389386ae1edab55495eae4b400cca3c86c",
+                "reference": "82372b389386ae1edab55495eae4b400cca3c86c",
                 "shasum": ""
             },
             "require": {
@@ -1989,12 +1989,10 @@
                 "php",
                 "stylesheet"
             ],
-            "time": "2014-03-17 04:51:51"
+            "time": "2014-06-05 16:09:50"
         }
     ],
-    "aliases": [
-
-    ],
+    "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
         "jcapture-applet/jcapture-applet": 20,
@@ -2006,10 +2004,6 @@
         "bafs/testify": 20
     },
     "prefer-stable": false,
-    "platform": [
-
-    ],
-    "platform-dev": [
-
-    ]
+    "platform": [],
+    "platform-dev": []
 }
