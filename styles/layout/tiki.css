@@ -68,7 +68,7 @@ input:-webkit-autofill {
   display: none;
   z-index: 9999;
   position: absolute;
-  background: transparent url(../../img/overlay-light.png);
+  background: transparent url(../img/overlay-light.png);
 }
 #ajaxLoading {
   display: none;
@@ -81,7 +81,7 @@ input:-webkit-autofill {
   font-size: 2em;
   font-weight: bold;
   color: #333;
-  background: transparent url(../../img/loading-light.gif) no-repeat 50% 50%;
+  background: transparent url(../img/loading-light.gif) no-repeat 50% 50%;
 }
 #cookie_consent_div {
   padding: 15px;
@@ -129,7 +129,7 @@ body.fullscreen {
   color: #a94442;
 }
 .openid_url {
-  background: #ffffff url(../../img/icons/login-OpenID-bg.gif) 1px 1px no-repeat;
+  background: #ffffff url(../img/icons/login-OpenID-bg.gif) 1px 1px no-repeat;
 }
 .bannertext {
   font-size: .95em;
@@ -385,7 +385,7 @@ a.flip:hover,
 .helptool-admin {
   padding-left: 8px;
   margin-left: 8px;
-  border-left: medium double #999999;
+  border-left: medium double #777777;
 }
 a.toolbar,
 a.toolbar:hover {
@@ -397,7 +397,7 @@ a.toolbar:hover {
 .toolbar-list {
   padding: 0 0 0 .5em;
   line-height: 20px;
-  border-left: medium double #999999;
+  border-left: medium double #777777;
 }
 .toolbars-picker {
   position: absolute;
@@ -428,7 +428,7 @@ a.toolbar:hover {
 }
 .toolbars-picker a:hover {
   border: 1px solid #a94442;
-  background: #999999;
+  background: #777777;
   color: #333333;
 }
 .toolbars-picker-reset {
@@ -784,7 +784,7 @@ table.wikiplugin_tracker td {
 }
 .structuremenu .menuSection .option,
 .structuremenu .menuSection .optionline {
-  background: transparent url(../../img/icons/h_trenner.gif) center left no-repeat;
+  background: transparent url(../img/icons/h_trenner.gif) center left no-repeat;
   padding-left: 21px;
 }
 .cke_editable:hover {
@@ -881,14 +881,14 @@ body.wikitext {
   color: #000;
 }
 .editable-inline {
-  background: transparent url(../../img/icons/database_lightning.png) no-repeat top right;
+  background: transparent url(../img/icons/database_lightning.png) no-repeat top right;
   padding-right: 20px;
 }
 .editable-inline.loaded {
   background: transparent;
 }
 .editable-inline.failure {
-  background: transparent url(../../img/icons/lock_gray.png) no-repeat top right;
+  background: transparent url(../img/icons/lock_gray.png) no-repeat top right;
 }
 .editable-inline.modified {
   border: solid 2px #ff6600;
@@ -1035,7 +1035,7 @@ body.wikitext {
 }
 #autosave_preview_grippy {
   background-color: #ccc;
-  background-image: url("../../img/icons/shading.png");
+  background-image: url("../img/icons/shading.png");
   z-index: 3;
 }
 a.tiki_anchor:before {
@@ -1129,13 +1129,13 @@ body.tiki_wiki #comments {
 }
 .wpfade-hidden {
   background-repeat: no-repeat;
-  background-image: url(../../img/toggle-expand-dark.png);
+  background-image: url(../img/toggle-expand-dark.png);
   margin-left: -19px;
   padding-left: 19px;
 }
 .wpfade-shown {
   background-repeat: no-repeat;
-  background-image: url(../../img/toggle-collapse-dark.png);
+  background-image: url(../img/toggle-collapse-dark.png);
   margin-left: -19px;
   padding-left: 19px;
 }
@@ -1171,7 +1171,7 @@ body.tiki_wiki #comments {
   margin-left: -3px;
 }
 .quoteheader {
-  background: url('../../img/icons/quoteleft.gif') no-repeat;
+  background: url('../img/icons/quoteleft.gif') no-repeat;
   padding-left: 50px;
   height: 35px;
 }
@@ -1229,7 +1229,7 @@ body.tiki_wiki #comments {
   overflow: hidden;
   position: absolute;
   z-index: 1;
-  background-image: url(../../img/icons/text_signature.png);
+  background-image: url(../img/icons/text_signature.png);
   background-repeat: no-repeat;
   padding: 0.3em;
   vertical-align: bottom;
@@ -1500,7 +1500,7 @@ body.tiki_forums .normal {
 }
 .sub_comment_area {
   clear: both;
-  background: url("../../img/edge.gif") no-repeat top left;
+  background: url("../img/edge.gif") no-repeat top left;
 }
 .forum_actions .actions {
   clear: both;
@@ -1614,7 +1614,7 @@ dl.note-list {
   border-left: 3px double #8a6d3b;
 }
 .post-approved-r .content * {
-  background: url(../../img/icons/dots.gif);
+  background: url(../img/icons/dots.gif);
 }
 .subcomment {
   margin-left: 10px;
@@ -1715,10 +1715,10 @@ table.treetable .checkBoxHeader {
   white-space: nowrap;
 }
 table.treetable tr.collapsed span.indenter a {
-  background-image: url(../../img/toggle-expand-dark.png);
+  background-image: url(../img/toggle-expand-dark.png);
 }
 table.treetable tr.expanded span.indenter a {
-  background-image: url(../../img/toggle-collapse-dark.png);
+  background-image: url(../img/toggle-collapse-dark.png);
 }
 table.treetable.objectperms td.added {
   background-color: #dff0d8;
@@ -1857,15 +1857,18 @@ table.treetable.objectperms td.removed {
 .trackerHeaderOpen {
   background-repeat: no-repeat;
   background-position: right;
-  background-image: url(../../img/icons/resultset_down.png);
+  background-image: url(../img/icons/resultset_down.png);
 }
 .trackerHeaderClose {
   background-repeat: no-repeat;
   background-position: right;
-  background-image: url(../../img/icons/resultset_next.png);
+  background-image: url(../img/icons/resultset_next.png);
 }
 .file-drop {
   min-height: 100px;
+}
+.tracker-help-block {
+  margin-top: -15px;
 }
 .catlists .catitems {
   display: inline-block;
@@ -1976,7 +1979,7 @@ ul.tree {
   border: 1px solid #dddddd;
 }
 .jSBarTopParent .jSBarController {
-  height: 0px ! important;
+  height: 0px !important;
 }
 .plugin-sample {
   padding: 5px;
@@ -2009,6 +2012,9 @@ label.aclabel {
 }
 .calhighlight {
   background: #ddf4ef;
+}
+a.fc-event:hover {
+  color: white;
 }
 #intertrans-indicator {
   position: fixed;
@@ -2429,7 +2435,7 @@ img.pref_dependency {
   margin: 0 1em;
 }
 form.simple label.error {
-  background: url('../../img/icons/error.png') no-repeat 0 4px;
+  background: url('../img/icons/error.png') no-repeat 0 4px;
   color: #a94442;
   padding: 4px 0 0 20px;
   margin-left: 0.5em;
@@ -2544,7 +2550,7 @@ body > .ui-front {
   padding-right: 1em !important;
 }
 .ui-selectmenu-menu ul li a {
-  margin-left: -0.5em;
+  margin-left: -.5em;
   padding-right: 0 !important;
   white-space: normal !important;
 }
@@ -2663,6 +2669,9 @@ body.navbar-padding {
   .table-responsive > .table-bordered > tfoot > tr:last-child > td {
     border-bottom: 0;
   }
+}
+.modal.in {
+  overflow-y: auto;
 }
 /* becomes height using padding (so it's divided by 2) */
 /* url(icons/loading.gif); */
