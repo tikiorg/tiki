@@ -1,5 +1,11 @@
 @import url("../jquery-ui/options/akebi/jquery-ui.min.css");
 /*  akebi.css - the Kiwi theme option file for the FiveAlive and FiveAlive-lite themes of Tiki Wiki CMS Groupware. */
+.navbar-nav > li.dropdown {
+  border-bottom: 1px solid #18a3bb;
+}
+.secondary_site_menu .navbar-nav li.dropdown {
+  border-bottom: none;
+}
 a {
   color: #0b8a98;
 }

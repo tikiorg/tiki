@@ -1,5 +1,8 @@
 @import url("../jquery-ui/options/plum/jquery-ui.min.css");
 /*  plum.css - the plum theme option file for the FiveAlive and FiveAlive-lite themes of Tiki Wiki CMS Groupware. */
+.navbar-nav > li.dropdown {
+  border-bottom: 1px solid #7001a7;
+}
 a {
   color: #7a04b5;
 }

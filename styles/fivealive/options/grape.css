@@ -1,5 +1,8 @@
 @import url("../jquery-ui/options/grape/jquery-ui.min.css");
 /*  grape.css - the grape theme option file for the FiveAlive and FiveAlive-lite themes of Tiki Wiki CMS Groupware. */
+.navbar-nav > li.dropdown {
+  border-bottom: 1px solid #a82a76;
+}
 a {
   color: #8e286a;
 }
