@@ -4889,6 +4889,11 @@ class TrackerLib extends TikiLib
 			}
 
 			if (! empty($params['editable'])) {
+				if ($params['editable'] === true) {
+					// Some callers pass true/false instead of an actual mode, default to block
+					$params['editable'] = 'block';
+				}
+
 				if ($params['editable'] == 'direct') {
 					$r = $handler->renderInput($context);
 					$params['editable'] = 'block';
