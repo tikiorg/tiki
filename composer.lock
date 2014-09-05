@@ -371,7 +371,7 @@
                     "name": "Robert Plummer",
                     "email": "rplummer@visop-dev.com",
                     "homepage": "http://visop-dev.com",
-                    "role": "Assistant Developer"
+                    "role": "Lead Developer"
                 },
                 {
                     "name": "Luke Gerhardt",
@@ -990,12 +990,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/jakiestfu/Medium.js.git",
-                "reference": "925a8995e552121daa94716535225f3b1dc3c840"
+                "reference": "5f3c702da058073a1c6ba995336616d8797b1f61"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jakiestfu/Medium.js/zipball/925a8995e552121daa94716535225f3b1dc3c840",
-                "reference": "925a8995e552121daa94716535225f3b1dc3c840",
+                "url": "https://api.github.com/repos/jakiestfu/Medium.js/zipball/5f3c702da058073a1c6ba995336616d8797b1f61",
+                "reference": "5f3c702da058073a1c6ba995336616d8797b1f61",
                 "shasum": ""
             },
             "require": {
@@ -1021,7 +1021,7 @@
                     "role": "Lead Developer"
                 }
             ],
-            "time": "2014-08-31 16:41:56"
+            "time": "2014-09-04 15:05:45"
         },
         {
             "name": "phenx/php-font-lib",
@@ -1258,12 +1258,6 @@
                 "type": "svn",
                 "url": "http://smarty-php.googlecode.com/svn",
                 "reference": "/tags/v3.1.18/@4839"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://composer.tiki.org/dist/smarty-smarty-v3.1.18-17a6e2.zip",
-                "reference": "v3.1.18",
-                "shasum": "ae2d06617491f5adf39f14559feb29aa4c2e960d"
             },
             "require": {
                 "php": ">=5.2"
@@ -1866,8 +1860,135 @@
             "time": "2009-11-09 05:34:07"
         }
     ],
-    "packages-dev": null,
-    "aliases": [],
+    "packages-dev": [
+        {
+            "name": "bafs/testify",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/BafS/Testify.php.git",
+                "reference": "63e4d023a1a2527d8a80b911030558b5d71b0116"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/BafS/Testify.php/zipball/63e4d023a1a2527d8a80b911030558b5d71b0116",
+                "reference": "63e4d023a1a2527d8a80b911030558b5d71b0116",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Testify\\": "lib/Testify/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL"
+            ],
+            "description": "Testify makes writing unit tests fun again. It has an elegant syntax and keeps things simple",
+            "keywords": [
+                "framework",
+                "testing",
+                "unit"
+            ],
+            "time": "2014-07-15 21:22:12"
+        },
+        {
+            "name": "mikey179/vfsStream",
+            "version": "v1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mikey179/vfsStream",
+                "reference": "v1.1.0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/mikey179/vfsStream/zipball/v1.1.0",
+                "reference": "v1.1.0",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "org\\bovigo\\vfs": "src/main/php"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD"
+            ],
+            "homepage": "http://vfs.bovigo.org/",
+            "time": "2012-08-25 05:49:29"
+        },
+        {
+            "name": "oyejorge/less.php",
+            "version": "v1.7.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/oyejorge/less.php.git",
+                "reference": "82372b389386ae1edab55495eae4b400cca3c86c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/oyejorge/less.php/zipball/82372b389386ae1edab55495eae4b400cca3c86c",
+                "reference": "82372b389386ae1edab55495eae4b400cca3c86c",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.2"
+            },
+            "bin": [
+                "bin/lessc"
+            ],
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Less": "lib/"
+                },
+                "classmap": [
+                    "lessc.inc.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Matt Agar",
+                    "homepage": "https://github.com/agar"
+                },
+                {
+                    "name": "Martin Jantošovič",
+                    "homepage": "https://github.com/Mordred"
+                },
+                {
+                    "name": "Josh Schmidt",
+                    "homepage": "https://github.com/oyejorge"
+                }
+            ],
+            "description": "PHP port of the Javascript version of LESS http://lesscss.org",
+            "homepage": "http://lessphp.gpeasy.com",
+            "keywords": [
+                "css",
+                "less",
+                "less.js",
+                "lesscss",
+                "php",
+                "stylesheet"
+            ],
+            "time": "2014-06-05 16:09:50"
+        }
+    ],
+    "aliases": [
+
+    ],
     "minimum-stability": "stable",
     "stability-flags": {
         "jcapture-applet/jcapture-applet": 20,
@@ -1879,6 +2000,10 @@
         "bafs/testify": 20
     },
     "prefer-stable": false,
-    "platform": [],
-    "platform-dev": []
+    "platform": [
+
+    ],
+    "platform-dev": [
+
+    ]
 }
