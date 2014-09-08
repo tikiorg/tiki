@@ -325,34 +325,35 @@ include_once ('lib/tree/BrowseTreeMaker.php');
 $treeMaker = new BrowseTreeMaker('categ');
 $smarty->assign('tree', $treeMaker->make_tree(0, $treeNodes));
 
+if (!isset($_REQUEST["sort_mode"])) {
+	$sort_mode = 'name_asc';
+} else {
+	$sort_mode = $_REQUEST["sort_mode"];
+}
+$smarty->assign('sort_mode', $sort_mode);
+if (!isset($_REQUEST["offset"])) {
+	$offset = 0;
+} else {
+	$offset = $_REQUEST["offset"];
+}
+$smarty->assign('offset', $offset);
+if (isset($_REQUEST["find"])) {
+	$find = $_REQUEST["find"];
+} else {
+	$find = '';
+}
+$smarty->assign('find', $find);
+if (isset($_REQUEST["find_objects"])) {
+	$find_objects = $_REQUEST["find_objects"];
+} else {
+	$find_objects = '';
+}
+
 // ---------------------------------------------------
 if ($prefs['feature_search'] !== 'y' || $prefs['unified_add_to_categ_search'] !== 'y') {	// no unified search
 
 	@ini_set('max_execution_time', 0);	// as pagination is broken and almost every object gets fully loaded on this page
 	@ini_set('memory_limit', -1);		// at least try and avoid WSoD on large sites (TODO better still - see r30064)
-
-	if (!isset($_REQUEST["sort_mode"])) {
-		$sort_mode = 'name_asc';
-	} else {
-		$sort_mode = $_REQUEST["sort_mode"];
-	}
-	if (!isset($_REQUEST["offset"])) {
-		$offset = 0;
-	} else {
-		$offset = $_REQUEST["offset"];
-	}
-	$smarty->assign('offset', $offset);
-	if (isset($_REQUEST["find"])) {
-		$find = $_REQUEST["find"];
-	} else {
-		$find = '';
-	}
-	$smarty->assign('find', $find);
-	if (isset($_REQUEST["find_objects"])) {
-		$find_objects = $_REQUEST["find_objects"];
-	} else {
-		$find_objects = '';
-	}
 
 	/**
 	 * @param $max
@@ -473,6 +474,7 @@ if ($prefs['feature_search'] !== 'y' || $prefs['unified_add_to_categ_search'] !=
 
 	$objects = $categlib->list_category_objects($_REQUEST["parentId"], $offset, $prefs['maxRecords'], $sort_mode, '', $find, false);
 	$smarty->assign('objects', $objects['data']);
+	$smarty->assign('cant_objects', $objects['cant']);
 	$objectlib = TikiLib::lib('object');
 	$supportedTypes = array_intersect(  TikiLib::lib('unifiedsearch')->getSupportedTypes(), $objectlib::get_supported_types());
 	$smarty->assign('types', $supportedTypes);
