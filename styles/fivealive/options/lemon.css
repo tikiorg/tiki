@@ -1,5 +1,8 @@
 @import url("../jquery-ui/options/lemon/jquery-ui.min.css");
 /*  lemon.css - the lemon theme option file for the FiveAlive and FiveAlive-lite themes of Tiki Wiki CMS Groupware. */
+.navbar-nav > li.dropdown {
+  border-bottom: 1px solid #ffc506;
+}
 a {
   color: #c75a28;
 }

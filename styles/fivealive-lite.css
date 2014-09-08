@@ -5824,6 +5824,12 @@ body.navbar-padding {
 .navbar-nav .open .dropdown-menu {
   background: #1376a8;
 }
+.navbar-nav > li.dropdown {
+  border-bottom: 1px solid #1174a5;
+}
+#top_modules .secondary_site_menu .navbar-nav li.dropdown {
+  border-bottom: none;
+}
 .secondary_site_menu .navbar-default .navbar-nav > li > a:hover,
 .secondary_site_menu .navbar-default .navbar-nav > li > a:focus,
 .secondary_site_menu .navbar-nav .open .dropdown-menu li,
