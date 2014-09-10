@@ -82,8 +82,7 @@ function smarty_function_debugger($params, $smarty)
 
 		$js = '';
 		if ($prefs['feature_jquery_ui'] == 'y') {
-			global $headerlib;
-			require_once('lib/headerlib.php');
+			$headerlib = TikiLib::lib('header');
 			$headerlib->add_jq_onready(
 				"
 \$('#debugconsole').draggable({

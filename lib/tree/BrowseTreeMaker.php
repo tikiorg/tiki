@@ -22,7 +22,8 @@ class BrowseTreeMaker extends TreeMaker
 	/// Generate HTML code for tree. Need to redefine to add javascript cookies block
 	function make_tree($rootid, $ar)
 	{
-		global $headerlib, $prefs;
+		global $prefs;
+		$headerlib = TikiLib::lib('header');
 
 		if ($prefs['mobile_feature'] === 'y' && $prefs['mobile_mode'] === 'y') {
 			$r = '<ul class="tree root" data-role="listview" data-inset="true">'."\n";

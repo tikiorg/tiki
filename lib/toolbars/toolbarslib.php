@@ -406,7 +406,7 @@ abstract class Toolbar
 
 	function getIconHtml() // {{{
 	{
-		global $headerlib;
+		$headerlib = TikiLib::lib('header');
 		return '<img src="' . htmlentities($headerlib->convert_cdn($this->icon), ENT_QUOTES, 'UTF-8') . '" alt="' . htmlentities($this->getLabel(), ENT_QUOTES, 'UTF-8') . '" title="' . htmlentities($this->getLabel(), ENT_QUOTES, 'UTF-8') . '" class="icon"/>';
 	} // }}}
 
@@ -594,7 +594,8 @@ class ToolbarCkOnly extends Toolbar
 
 	function getWysiwygToken($areaId) {
 		if ($this->wysiwyg === 'Image') {	// cke's own image tool
-			global $headerlib,  $smarty, $prefs;
+			global $prefs;
+			$headerlib = TikiLib::lib('header');
 			// can't do upload the cke way yet
 			$url = 'tiki-list_file_gallery.php?galleryId='.$prefs['home_file_gallery'].'&filegals_manager=fgal_picker';
 			$headerlib->add_js('if (typeof window.CKEDITOR !== "undefined") {window.CKEDITOR.config.filebrowserBrowseUrl = "'.$url.'"}', 5);
@@ -631,7 +632,8 @@ class ToolbarCkOnly extends Toolbar
 
 	function getIconHtml() // {{{ for admin page
 	{
-		global $headerlib, $prefs;
+		global $prefs;
+		$headerlib = TikiLib::lib('header');
 
 		if ((!empty($this->icon) && $this->icon !== 'img/icons/shading.png') || in_array($this->label, array('Autosave'))) {
 			return parent::getIconHtml();
@@ -924,7 +926,8 @@ class ToolbarPicker extends Toolbar
 
 	public static function fromName( $tagName ) // {{{
 	{
-		global $headerlib, $section, $prefs;
+		global $section, $prefs;
+		$headerlib = TikiLib::lib('header');
 
         $isWikiLingo = false;
         if ($prefs['feature_wikilingo'] === 'y') {
@@ -959,7 +962,6 @@ class ToolbarPicker extends Toolbar
             $tool_prefs[] = 'feature_smileys';
 
             $list = array();
-            global $headerlib;
             foreach ( $rawList as $smiley ) {
                 $tra = htmlentities(tra($smiley), ENT_QUOTES, 'UTF-8');
                 $list["(:$smiley:)"] = '<img src="' . $headerlib->convert_cdn('img/smiles/icon_' .$smiley . '.gif') . '" alt="' . $tra . '" title="' . $tra . '" width="15" height="15" />';
@@ -1107,7 +1109,8 @@ class ToolbarPicker extends Toolbar
 
 	function getWikiHtml( $areaId ) // {{{
 	{
-		global $headerlib, $prefs;
+		global $prefs;
+		$headerlib = TikiLib::lib('header');
 		$headerlib->add_js("if (! window.pickerData) { window.pickerData = {}; } window.pickerData['$this->name'] = " . str_replace('\/', '/', json_encode($this->list)) . ";");
 
 		return $this->getSelfLink(
@@ -1307,7 +1310,7 @@ class ToolbarDialog extends Toolbar
 
 	function getWikiHtml( $areaId ) // {{{
 	{
-		global $headerlib;
+		$headerlib = TikiLib::lib('header');
 		$headerlib->add_js("if (! window.dialogData) { window.dialogData = {}; } window.dialogData[$this->index] = " . json_encode($this->list) . ";", 1 + $this->index);
 
 		return $this->getSelfLink(
@@ -2077,7 +2080,9 @@ class ToolbarsList
 
 	function getWikiHtml( $areaId, $comments='' ) // {{{
 	{
-		global $tiki_p_admin, $tiki_p_admin_toolbars, $smarty, $section, $prefs, $headerlib;
+		global $tiki_p_admin, $tiki_p_admin_toolbars, $section, $prefs;
+		$headerlib = TikiLib::lib('header');
+		$smarty = TikiLib::lib('smarty');
 		$html = '';
 
 		$c = 0;

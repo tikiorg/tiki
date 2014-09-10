@@ -32,7 +32,8 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 function smarty_block_textarea($params, $content, $smarty, $repeat)
 {
     static $included=false;
-	global $prefs, $headerlib, $smarty, $is_html, $tiki_p_admin;
+	global $prefs, $is_html, $tiki_p_admin;
+	$headerlib = TikiLib::lib('header');
 
 	if ( $repeat ) {
 		return;

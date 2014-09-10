@@ -70,7 +70,7 @@ if ($prefs['use_load_threshold'] == 'y') {
 	require_once ('lib/setup/load_threshold.php');
 }
 require_once ('lib/setup/sections.php');
-require_once ('lib/headerlib.php');
+$headerlib = TikiLib::lib('header');
 
 $domain_map = array();
 if ( isset($_SERVER['HTTP_HOST']) ) {

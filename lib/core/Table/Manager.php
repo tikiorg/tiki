@@ -53,7 +53,7 @@ class Table_Manager
 	private function addToHeader()
 	{
 		if (!empty(Table_Code_Manager::$code)) {
-			global $headerlib;
+			$headerlib = TikiLib::lib('header');
 			$headerlib->add_jq_onready(Table_Code_Manager::$code);
 			//need to empty static $code in case there are multiple tables on a page
 			Table_Code_Manager::$code = '';

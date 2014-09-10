@@ -9,13 +9,15 @@ class Services_Report_Controller
 {
 	function setUp()
 	{
-		global $prefs;
-		
 	}
 
 	function action_edit($input)
 	{
-		global $tikilib, $access, $headerlib, $reportFullscreen, $index, $values;
+		global $reportFullscreen, $index, $values;
+		$headerlib = TikiLib::lib('header');
+		$tikilib = TikiLib::lib('tiki');
+		$access = TikiLib::lib('access');
+
 		$reportFullscreen = true;
 		$index = $input->index->int();
 		$values = $input->values->string();
@@ -33,7 +35,7 @@ class Services_Report_Controller
 		echo Report_Builder::load($input->type->string())
 			->setValuesFromRequest($input->value->array())
 			->outputSheet();
-		die;
+		exit;
 	}
 
 	function action_exportcsv($input)
@@ -41,7 +43,7 @@ class Services_Report_Controller
 		echo Report_Builder::load($input->type->string())
 			->setValuesFromRequest(json_decode(urldecode($input->value->string())))
 			->outputCSV(true);
-		die;
+		exit;
 	}
 
 	function action_wikidata($input)
@@ -49,7 +51,7 @@ class Services_Report_Controller
 		echo Report_Builder::load($input->type->string())
 			->setValuesFromRequest($input->value->string())
 			->outputWikiData();
-		die;
+		exit;
 	}
 }
 

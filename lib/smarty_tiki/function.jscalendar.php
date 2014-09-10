@@ -13,7 +13,9 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 
 function smarty_function_jscalendar($params, $smarty)
 {
-	global $headerlib, $prefs, $tikilib;
+	global $prefs;
+	$headerlib = TikiLib::lib('header');
+	$tikilib = TikiLib::lib('tiki');
 
 	$uiCalendarInstance = uniqid();
 

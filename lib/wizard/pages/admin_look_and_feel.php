@@ -91,7 +91,9 @@ class AdminWizardLookAndFeel extends Wizard
 
 	function setupThumbnailScript($styles)
 	{
-		global	$prefs, $tikilib, $headerlib;
+		global	$prefs;
+		$headerlib = TikiLib::lib('header');
+		$tikilib = TikiLib::lib('tiki');
 		
 		if ($prefs['feature_jquery'] == 'y') {
 			// hash of themes and their options and their thumbnail images

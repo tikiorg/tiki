@@ -27,7 +27,8 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
  */
 function smarty_function_menu($params, $smarty)
 {
-	global $headerlib, $prefs;
+	global $prefs;
+	$headerlib = TikiLib::lib('header');
 
 	$default = array('css' => 'y');
 	if (isset($params['params'])) {

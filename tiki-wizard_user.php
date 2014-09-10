@@ -18,7 +18,7 @@ if ($prefs['feature_wizard_user'] != 'y') {
 }
 $access->check_user($user);
 
-require_once('lib/headerlib.php');
+$headerlib = TikiLib::lib('header');
 $headerlib->add_cssfile('css/wizards.css');
 
 // Hide the display of the preference dependencies in the wizard

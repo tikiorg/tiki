@@ -36,7 +36,7 @@ class WikiEvents {
 	}
 
 	public function direct() {
-        global $headerlib;
+        $headerlib = TikiLib::lib('header');
 		//redirect start
 		if (isset($_GET['phrase'])) {
 			$phrase = (!empty($_GET['phrase']) ? $_GET['phrase'] : '');
@@ -91,14 +91,15 @@ JS
 
 	public function getParsed()
 	{
-		global $smarty;
+		$smarty = TikiLib::lib('smarty');
 		return $smarty->getTemplateVars('parsed')
 			?: $smarty->getTemplateVars('previewd')
 				?: '';
 	}
 
 	public function load() {
-		global $smarty, $headerlib;
+		$smarty = TikiLib::lib('smarty');
+		$headerlib = TikiLib::lib('header');
 		//standard page
 		$parsed = $smarty->getTemplateVars('parsed');
 		if (!empty($parsed)) {

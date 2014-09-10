@@ -163,7 +163,7 @@ function wikiplugin_mediaplayer($data, $params)
 		$params = array_merge($defaults, $params);
 	}
 	if (!empty($params['src'])) {
-		global $headerlib; include_once('lib/headerlib.php');
+		$headerlib = TikiLib::lib('header');
 		$js = "\n var media_$id = $('#$id').media( {";
 		foreach ($params as $param => $value) {
 			if ($param == 'src') {

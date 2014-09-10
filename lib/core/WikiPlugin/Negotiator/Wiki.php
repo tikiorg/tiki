@@ -572,7 +572,8 @@ class WikiPlugin_Negotiator_Wiki
 
 	function button($wrapInNp = true)
 	{
-		global $headerlib, $smarty;
+		$headerlib = TikiLib::lib('header');
+		$smarty = TikiLib::lib('smarty');
 
 		if (
 			$this->isEditable() &&

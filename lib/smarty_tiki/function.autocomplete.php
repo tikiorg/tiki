@@ -20,7 +20,8 @@
  */
 function smarty_function_autocomplete($params, $smarty)
 {
-	global $prefs, $headerlib;
+	global $prefs;
+	$headerlib = TikiLib::lib('header');
 
 	if ($prefs['javascript_enabled'] !== 'y' or $prefs['feature_jquery_autocomplete'] !== 'y') return '';
 

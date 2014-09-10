@@ -20,7 +20,7 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 function smarty_function_trackerheader($params, $smarty)
 {
 	global $prefs;
-	global $headerlib; include_once('lib/headerlib.php');
+	$headerlib = TikiLib::lib('header');
 	$output = $js = '';
 	static $trackerheaderStack = array();
 	static $iTrackerHeader = 0;

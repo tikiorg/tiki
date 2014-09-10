@@ -22,7 +22,11 @@ class Services_Draw_Controller
 
 	function action_edit($input)
 	{
-		global $tikilib, $access, $headerlib, $drawFullscreen;
+		global $drawFullscreen;
+		$headerlib = TikiLib::lib('header');
+		$tikilib = TikiLib::lib('tiki');
+		$access = TikiLib::lib('access');
+
 		$drawFullscreen = true;
 		
 		$_REQUEST['fileId'] = $input->fileId->int();

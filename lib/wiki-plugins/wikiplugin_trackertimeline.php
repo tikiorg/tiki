@@ -272,7 +272,7 @@ function wikiplugin_trackertimeline( $data, $params )
 
 	} else {	// SIMILE Timeline Widget setup
 
-		global $headerlib;
+		$headerlib = TikiLib::lib('header');
 
 		// static js moved to lib
 		$headerlib->add_jsfile('lib/simile_tiki/tiki-timeline.js');

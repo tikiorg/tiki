@@ -373,7 +373,7 @@ class SheetLib extends TikiLib
 
 	function setup_jquery_sheet()
 	{
-		global $headerlib;
+		$headerlib = TikiLib::lib('header');
 		if (!$this->setup_jQuery_sheet_files) {
 			$headerlib
                 //core

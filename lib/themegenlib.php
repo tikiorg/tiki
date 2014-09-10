@@ -166,7 +166,10 @@ class ThemeGenLib
 
 	public function setupEditor()
 	{
-		global $headerlib, $smarty, $prefs, $tikilib;
+		global $prefs;
+		$headerlib = TikiLib::lib('header');
+		$smarty = TikiLib::lib('smarty');
+		$tikilib = TikiLib::lib('tiki');
 
 		if ($this->currentTheme->initDone ||	// filter out unnecessay setups
 				strpos($_SERVER['SCRIPT_NAME'], 'tiki-download_file.php') !== false ||
@@ -309,7 +312,7 @@ class ThemeGenLib
      */
     public function processCSSFile($file, $swaps)
 	{
-		global $headerlib;
+		$headerlib = TikiLib::lib('header');
 
 		$css = $headerlib->minify_css($file);
 
@@ -356,7 +359,7 @@ class ThemeGenLib
      */
     public function saveNewTheme($name)
 	{
-		global $headerlib;
+		$headerlib = TikiLib::lib('header');
 
 		$headerlib->remove_themegen_files();
 
@@ -373,7 +376,7 @@ class ThemeGenLib
      */
     public function updateCurrentTheme($css_file, $swaps)
 	{
-		global $headerlib;
+		$headerlib = TikiLib::lib('header');
 
 		$headerlib->remove_themegen_files();
 

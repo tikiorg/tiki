@@ -68,9 +68,6 @@ class TikiLib extends TikiDb_Bridge
 			case 'smarty':
 				global $smarty;
 				return self::$libraries[$name] = $smarty;
-			case 'header':
-				global $headerlib; require_once 'lib/headerlib.php';
-				return self::$libraries[$name] = $headerlib;
 			case 'access':
 				global $access; require_once 'lib/tikiaccesslib.php';
 				return self::$libraries[$name] = $access;

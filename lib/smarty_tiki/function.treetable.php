@@ -70,7 +70,8 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 
 function smarty_function_treetable($params, $smarty)
 {
-	global $headerlib, $tree_table_id, $prefs;
+	global $tree_table_id, $prefs;
+	$headerlib = TikiLib::lib('header');
 
 	extract($params);
 

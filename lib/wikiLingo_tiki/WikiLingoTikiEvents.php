@@ -27,7 +27,7 @@ class WikiLingoTikiEvents
 
     public function wikilingo_flp_view($args)
     {
-        global $headerlib;
+        $headerlib = TikiLib::lib('header');
         $page = $args['object'];
         $version = $args['version'];
         $body = $args['data'];

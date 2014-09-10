@@ -1143,7 +1143,7 @@ if ( isset($_POST['general_settings']) && $_POST['general_settings'] == 'y' ) {
 }
 
 
-include_once "lib/headerlib.php";
+$headerlib = TikiLib::lib('header');
 $headerlib->add_js("var tiki_cookie_jar=new Array();");
 $headerlib->add_cssfile('vendor/twitter/bootstrap/dist/css/bootstrap.css');
 $headerlib->add_jsfile('lib/tiki-js.js');

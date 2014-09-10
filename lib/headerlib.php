@@ -33,6 +33,9 @@ class HeaderLib
 
 	function __construct()
 	{
+		$smarty = TikiLib::lib('smarty');
+		$smarty->assign('headerlib', $this);
+
 		$this->title = '';
 		$this->jsfiles = array();
 		$this->js = array();
@@ -898,6 +901,3 @@ class HeaderLib
 	}
 }
 
-global $headerlib; $headerlib = new HeaderLib;
-global $smarty;
-$smarty->assign('headerlib', $headerlib);

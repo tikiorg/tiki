@@ -38,7 +38,10 @@ function wikiplugin_report_info()
 
 function wikiplugin_report( $data, $params )
 {
-	global $tikilib,$headerlib,$prefs,$page,$tiki_p_edit;
+	global $prefs, $page, $tiki_p_edit;
+	$headerlib = TikiLib::lib('header');
+	$tikilib = TikiLib::lib('tiki');
+
 	static $reportI = 0;
 	++$reportI;
 

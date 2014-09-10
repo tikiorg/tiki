@@ -39,7 +39,11 @@ function wikiplugin_pagetabs_info()
 
 function wikiplugin_pagetabs($data, $params)
 {
-	global $tikilib, $smarty, $headerlib, $user;
+	global $user;
+	$headerlib = TikiLib::lib('header');
+	$tikilib = TikiLib::lib('tiki');
+	$smarty = TikiLib::lib('smarty');
+
 	static $pagetabsindex = 0;
 	++$pagetabsindex;
 	extract($params, EXTR_SKIP);

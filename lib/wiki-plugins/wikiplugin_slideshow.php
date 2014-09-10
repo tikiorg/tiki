@@ -185,7 +185,7 @@ function wikiplugin_slideshow($data, $params)
 		$notesHtml .= '<span class="s5-note">'.$note.'</span>';
 	}
 
-	global $headerlib;
+	$headerlib = TikiLib::lib('header');
 
 	$headerlib->add_js(
 		"window.slideshowSettings = {

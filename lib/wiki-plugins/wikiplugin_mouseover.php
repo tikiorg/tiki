@@ -248,7 +248,7 @@ function wikiplugin_mouseover( $data, $params )
 
 	$url = htmlentities($url, ENT_QUOTES, 'UTF-8');
 
-	global $headerlib;
+	$headerlib = TikiLib::lib('header');
 
 	if ($closeDelay && $sticky) {
 		$closeDelayStr = "setTimeout(function() {hideJQ('#$id', '$effect', '$speed')}, ".($closeDelay * 1000).");";

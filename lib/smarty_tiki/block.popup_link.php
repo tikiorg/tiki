@@ -20,7 +20,8 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 
 function smarty_block_popup_link($params, $content, $smarty, &$repeat)
 {
-	global $headerlib, $prefs;
+	global $prefs;
+	$headerlib = TikiLib::lib('header');
 
 	if ( $repeat ) return;
 

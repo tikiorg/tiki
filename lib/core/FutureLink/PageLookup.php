@@ -28,7 +28,8 @@ class FutureLink_PageLookup extends Feed_Abstract
 	static function wikiView($args)
 	{
 		return;
-		global $tikilib, $headerlib;
+		$headerlib = TikiLib::lib('header');
+		$tikilib = TikiLib::lib('tiki');
 
 		 static $FutureLink_PageLookup = 0;
 		++$FutureLink_PageLookup;

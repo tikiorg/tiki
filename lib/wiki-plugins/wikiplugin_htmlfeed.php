@@ -25,7 +25,10 @@ function wikiplugin_htmlfeed_info()
 
 function wikiplugin_htmlfeed($data, $params)
 {
-    global $tikilib, $headerlib, $feedItem, $caching, $page;
+    global $feedItem, $caching, $page;
+	$headerlib = TikiLib::lib('header');
+	$tikilib = TikiLib::lib('tiki');
+
     static $feedhtmlFeedI = 0;
 	++$feedhtmlFeedI;
 	

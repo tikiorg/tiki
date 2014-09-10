@@ -10,7 +10,7 @@
 
 require 'tiki-setup.php';
 
-require_once('lib/headerlib.php');
+$headerlib = TikiLib::lib('header');
 $headerlib->add_cssfile('css/admin.css');
 $headerlib->add_cssfile('css/wizards.css');
 

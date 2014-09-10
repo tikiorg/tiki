@@ -42,8 +42,6 @@ function module_action_calendar($mod_reference, &$module_params)
 	if ($tiki_p_view_tiki_calendar == 'y') {
 		$smarty->assign('show_calendar_module', 'y');	
 		$tikicalendarlib = TikiLib::lib('tikicalendar');
-//		Note: calendar css file now loaded in tiki-modules.php
-//		global $headerlib; $headerlib->add_cssfile('css/calendar.css', 20);
 		global $calendarViewMode;
 	
 		$calendarViewMode['casedefault'] = 'month';
