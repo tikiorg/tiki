@@ -71,34 +71,9 @@ class TikiLib extends TikiDb_Bridge
 			case 'header':
 				global $headerlib; require_once 'lib/headerlib.php';
 				return self::$libraries[$name] = $headerlib;
-			case 'errorreport':
-				require_once 'lib/errorreportlib.php';
-				return self::$libraries[$name] = new ErrorReportLib;
 			case 'access':
 				global $access; require_once 'lib/tikiaccesslib.php';
 				return self::$libraries[$name] = $access;
-			case 'connect':
-				return self::$libraries[$name] = new Tiki_Connect_Client();
-			case 'connect_server':
-				return self::$libraries[$name] = new Tiki_Connect_Server();
-			case 'kalturauser':
-				require_once 'lib/videogals/kalturalib.php';
-				return self::$libraries[$name] = new KalturaLib(KalturaLib::SESSION_USER);
-			case 'kalturaadmin':
-				require_once 'lib/videogals/kalturalib.php';
-				return self::$libraries[$name] = new KalturaLib(KalturaLib::SESSION_ADMIN);
-			case 'autosave':
-				require_once 'lib/ajax/autosave.php';
-				return self::$libraries[$name] = new AutoSaveLib();
-			case 'wysiwyg':
-				require_once 'lib/ckeditor_tiki/wysiwyglib.php';
-				return self::$libraries[$name] = new WYSIWYGLib();
-            case 'wlte':
-                require_once 'lib/wikiLingo_tiki/WikiLingoTikiEvents.php';
-                return self::$libraries[$name] = new WikiLingoTikiEvents();
-			case 'usermailin':
-				global $usermailinlib; require_once 'lib/mailin/usermailinlib.php';
-				return self::$libraries[$name] = $usermailinlib;
 		}
 
 		unlink('temp/cache/container.php'); // Remove the container cache to help transition

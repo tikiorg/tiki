@@ -14,6 +14,9 @@
 		<service id="tiki.lib.admin" class="AdminLib">
 			<file>%kernel.root_dir%/lib/admin/adminlib.php</file>
 		</service>
+		<service id="tiki.lib.autosave" class="AutoSaveLib">
+			<file>%kernel.root_dir%/lib/ajax/autosave.php</file>
+		</service>
 		<service id="tiki.lib.areas" class="AreasLib">
 			<file>%kernel.root_dir%/lib/perspective/binderlib.php</file>
 		</service>
@@ -50,6 +53,8 @@
 		<service id="tiki.lib.comments" class="Comments">
 			<file>%kernel.root_dir%/lib/comments/commentslib.php</file>
 		</service>
+		<service id="tiki.lib.connect" class="Tiki_Connect_Client" />
+		<service id="tiki.lib.connect_server" class="Tiki_Connect_Server" />
 		<service id="tiki.lib.contact" class="ContactLib">
 			<file>%kernel.root_dir%/lib/webmail/contactlib.php</file>
 		</service>
@@ -70,6 +75,9 @@
 		</service>
 		<service id="tiki.lib.edit" class="EditLib">
 			<file>%kernel.root_dir%/lib/wiki/editlib.php</file>
+		</service>
+		<service id="tiki.lib.errorreport" class="ErrorReportLib">
+			<file>%kernel.root_dir%/lib/errorreportlib.php</file>
 		</service>
 		<service id="tiki.lib.faq" class="FaqLib">
 			<file>%kernel.root_dir%/lib/faqs/faqlib.php</file>
@@ -107,6 +115,14 @@
 		</service>
 		<service id="tiki.lib.imagegal" class="ImageGalsLib">
 			<file>%kernel.root_dir%/lib/imagegals/imagegallib.php</file>
+		</service>
+		<service id="tiki.lib.kalturaadmin" class="KalturaLib">
+			<file>%kernel.root_dir%/lib/videogals/kalturalib.php</file>
+			<argument type="string">2</argument> <!-- KalturaLib::SESSION_ADMIN -->
+		</service>
+		<service id="tiki.lib.kalturauser" class="KalturaLib">
+			<file>%kernel.root_dir%/lib/videogals/kalturalib.php</file>
+			<argument type="string">0</argument> <!-- KalturaLib::SESSION_USER -->
 		</service>
 		<service id="tiki.lib.ldap" class="LdapLib">
 			<file>%kernel.root_dir%/lib/ldap/ldaplib.php</file>
@@ -251,6 +267,9 @@
 		<service id="tiki.lib.user" class="UsersLib">
 			<file>%kernel.root_dir%/lib/userslib.php</file>
 		</service>
+		<service id="tiki.lib.usermailin" class="UserMailinLib">
+			<file>%kernel.root_dir%/lib/mailin/usermailinlib.php</file>
+		</service>
 		<service id="tiki.lib.usermodules" class="UserModulesLib">
 			<file>%kernel.root_dir%/lib/usermodules/usermoduleslib.php</file>
 		</service>
@@ -269,6 +288,12 @@
 		</service>
 		<service id="tiki.lib.wizard" class="WizardLib">
 			<file>%kernel.root_dir%/lib/wizard/wizardlib.php</file>
+		</service>
+		<service id="tiki.lib.wlte" class="WikiLingoTikiEvents">
+			<file>%kernel.root_dir%/lib/wikiLingo_tiki/WikiLingoTikiEvents.php</file>
+		</service>
+		<service id="tiki.lib.wysiwyg" class="WYSIWYGLib">
+			<file>%kernel.root_dir%/lib/ckeditor_tiki/wysiwyglib.php</file>
 		</service>
 		<service id="tiki.lib.zotero" class="ZoteroLib">
 			<file>%kernel.root_dir%/lib/zoterolib.php</file>

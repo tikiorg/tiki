@@ -27,7 +27,6 @@ class Services_AutoSave_Controller
 		$res = '';
 
 		if ($this->checkReferrer($referer)) {
-			include_once 'lib/ajax/autosave.php';
 			$res = TikiLib::lib('autosave')->get_autosave($input->editor_id->text(), $referer);
 		}
 
@@ -49,7 +48,6 @@ class Services_AutoSave_Controller
 		$res = '';
 
 		if ($this->checkReferrer($referer)) {
-			include_once 'lib/ajax/autosave.php';
 			$data = $input->data->none();
 			$res = TikiLib::lib('autosave')->auto_save($input->editor_id->text(), $data, $referer);
 		}
@@ -71,7 +69,6 @@ class Services_AutoSave_Controller
 		$referer = $input->referer->text();
 
 		if ($this->checkReferrer($referer)) {
-			include_once 'lib/ajax/autosave.php';
 			TikiLib::lib('autosave')->remove_save($input->editor_id->text(), $referer);
 		}
 
