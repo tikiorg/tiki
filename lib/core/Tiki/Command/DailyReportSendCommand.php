@@ -26,7 +26,7 @@ class DailyReportSendCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-      global $access;
+      $access = TikiLib::lib('access');
 
       $access->check_feature('feature_daily_report_watches');
 

@@ -255,7 +255,7 @@ function wikiplugin_paypal($data, $params)
 
 	// check required params
 	if (empty($params['business'])) {
-		global $access;
+		$access = TikiLib::lib('access');
 		$access->check_feature('payment_paypal_business');
 	}
 

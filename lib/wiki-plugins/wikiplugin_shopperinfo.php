@@ -45,16 +45,16 @@ function wikiplugin_shopperinfo_info()
 
 function wikiplugin_shopperinfo( $data, $params )
 {
-	global $smarty, $user, $access;
+	global $user;
+	$smarty = TikiLib::lib('smarty');
 	if ($user && $params['showifloggedin'] != 'y' || empty($params['values'])) {
 		return '';
 	}
 	if ( $_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['shopperinfo'])) {
-		global $access;
-
 		foreach ($params['values'] as $v) {
 			// Check all filled in
 			if (empty($_POST[$v])) {
+				$access = TikiLib::lib('access');
 				$access->redirect($_SERVER['REQUEST_URI'], tr('Please fill in all fields')); 
 				die;
 			}

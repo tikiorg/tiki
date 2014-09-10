@@ -126,7 +126,7 @@ class Captcha
 	 */
 	function render()
 	{
-		global $access;
+		$access = TikiLib::lib('access');
 		if ($access->is_xml_http_request()) {
 			$params = json_encode($this->captcha->getService()->getOptions());
 			$id = 1;

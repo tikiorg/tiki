@@ -1,6 +1,6 @@
 <?php
 
-global $access;
+$access = TikiLib::lib('access');
 $access->check_script($_SERVER["SCRIPT_NAME"], basename(__FILE__));
 
 

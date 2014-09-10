@@ -46,7 +46,7 @@ class EditLib
 			$error_msg .= "\n<p>\n";
 			$error_msg .= tra("If you want to create the page, you must first edit each the pages above, and remove the alias link it may contain. This link should look something like this");
 			$error_msg .= ": <b>(alias($page))</b>";
-			require_once('lib/tikiaccesslib.php');
+
 			$access->display_error(page, $error_title, "", true, $error_msg);
 		}
 	}

@@ -58,16 +58,17 @@ function wikiplugin_trackerpasscode_info()
 
 function wikiplugin_trackerpasscode( $data, $params )
 {
-	global $smarty, $user, $access;
+	global $user;
+	$smarty = TikiLib::lib('smarty');
+
 	if (empty($params['key']) || empty($params['trackerId']) || empty($params['itemId']) || empty($params['fieldId'])) {
 		return '';
 	}
 	$key = $params['key'];
 	if ( $_SERVER['REQUEST_METHOD'] == 'POST' && !empty($_POST['trackerpasscode'])) {
-		global $access;
-
 		// Check all filled in
 		if (empty($_POST['trackerpasscode'])) {
+			$access = TikiLib::lib('access');
 			$access->redirect($_SERVER['REQUEST_URI'], tr('Please fill in all fields')); 
 			die;
 		}

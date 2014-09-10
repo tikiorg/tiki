@@ -91,7 +91,7 @@ $wikilib = TikiLib::lib('wiki');
 $userlib = TikiLib::lib('user');
 $headerlib = TikiLib::lib('header');
 require_once 'lib/init/tra.php';
-require_once 'lib/tikiaccesslib.php';
+$access = TikiLib::lib('access');
 
 $_SESSION = array(
 		'u_info' => array(

@@ -253,7 +253,10 @@ function wikiplugin_addtocart( $data, $params )
 
 			$addedOk = $cartlib->add_to_cart($params, $jitPost);
 
-			global $access, $tikilib, $tikiroot, $prefs;
+			global $tikiroot, $prefs;
+			$access = TikiLib::lib('access');
+			$tikilib = TikiLib::lib('tiki');
+
 			if ($addedOk && $params['autocheckout'] == 'y' && empty($previous_cart_content)) {
 				$invoice = $cartlib->request_payment();
 				if ( $invoice ) {

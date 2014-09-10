@@ -8,6 +8,9 @@
 
 	-->
 	<services>
+		<service id="tiki.lib.access" class="TikiAccessLib">
+			<file>%kernel.root_dir%/lib/tikiaccesslib.php</file>
+		</service>
 		<service id="tiki.lib.activity" class="ActivityLib">
 			<file>%kernel.root_dir%/lib/activity/activitylib.php</file>
 		</service>

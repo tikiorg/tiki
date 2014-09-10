@@ -129,7 +129,8 @@ function wikiplugin_mediaplayer_info()
 }
 function wikiplugin_mediaplayer($data, $params)
 {
-	global $prefs, $access;
+	global $prefs;
+	$access = TikiLib::lib('access');
 	static $iMEDIAPLAYER = 0;
 	$id = 'mediaplayer'.++$iMEDIAPLAYER;
 

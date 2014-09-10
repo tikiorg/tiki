@@ -3165,7 +3165,7 @@ class FileGalLib extends TikiLib
 				$smarty->assign('confirm_detail', $smarty->fetch('file_backlinks.tpl')); ///FIXME
 			}
 
-			global $access;
+			$access = TikiLib::lib('access');
 			$confirmationText = ( empty( $info['name'] ) ? '' : htmlspecialchars($info['name']) . ' - ') . htmlspecialchars($info['filename']);
 			if ( $params['draft'] ) {
 				$access->check_authenticity(tra('Remove file draft: ') . $confirmationText);

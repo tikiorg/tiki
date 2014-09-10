@@ -101,6 +101,7 @@ for ($index = 0, $count_arrayTrackerId = count($arrayTrackerId); $index < $count
 		}
 	}
 }
-global $access; include_once 'lib/tikiaccesslib.php';
+
+$access = TikiLib::lib('access');
 $access->output_serialized($json_return);
 

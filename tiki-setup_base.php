@@ -219,8 +219,7 @@ if (isset($prefs['feature_fullscreen']) && $prefs['feature_fullscreen'] == 'y') 
 // Retrieve all preferences
 require_once ('lib/setup/prefs.php');
 
-require_once ('lib/tikiaccesslib.php');
-$access = new TikiAccessLib;
+$access = TikiLib::lib('access');
 
 require_once ('lib/setup/absolute_urls.php');
 // Smarty needs session since 2.6.25

@@ -749,7 +749,6 @@ class CartLib
 				if ($currentQuantity == 0) {
 					unset( $_SESSION['cart'][ $code ] );
 				}
-				global $access;
 
 				$this->handle_error(tra('There is not enough inventory left for your request'));
 			}
@@ -794,11 +793,6 @@ class CartLib
 		global $prefs, $user;
 		$tikilib = TikiLib::lib('tiki');
 		$paymentlib = TikiLib::lib('payment');
-
-//		if (!$user && $prefs['payment_cart_anonymous'] != 'y') {
-//			$access = TikiLib::lib('access');
-//			$access->redirect( $_SERVER['REQUEST_URI'], tra('Anonymous shopping feature is not enabled. Please log in to shop.') );
-//		}
 
 		$total = $this->get_total();
 
@@ -1432,7 +1426,4 @@ class CartLib
 		}
 	}
 }
-
-global $cartlib;
-$cartlib = new CartLib;
 

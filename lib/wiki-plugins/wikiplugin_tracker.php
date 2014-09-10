@@ -999,7 +999,6 @@ function wikiplugin_tracker($data, $params)
 					}
 					if (empty($url)) {
 						if (!empty($_REQUEST['ajax_add'])) {	// called by tracker ItemLink fields when adding new list items
-							global $access;
 							while ( ob_get_level() ) {
 								ob_end_clean();
 							}
@@ -1010,6 +1009,7 @@ function wikiplugin_tracker($data, $params)
 							}
 							// Need to add newly created itemId for item link selector
 							$ins_fields['itemId'] = $rid;
+							$access = TikiLib::lib('access');
 							$access->output_serialized($ins_fields);
 							ob_end_flush();
 							die;

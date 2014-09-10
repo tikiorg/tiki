@@ -68,9 +68,6 @@ class TikiLib extends TikiDb_Bridge
 			case 'smarty':
 				global $smarty;
 				return self::$libraries[$name] = $smarty;
-			case 'access':
-				global $access; require_once 'lib/tikiaccesslib.php';
-				return self::$libraries[$name] = $access;
 		}
 
 		unlink('temp/cache/container.php'); // Remove the container cache to help transition

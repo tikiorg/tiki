@@ -97,9 +97,11 @@ function doProcessShout($inFormValues)
  */
 function module_shoutbox($mod_reference, $module_params)
 {
-	global $tikilib; require_once ('lib/tikilib.php');
 	global $shoutboxlib, $prefs, $user, $tiki_p_view_shoutbox;
-	global $tiki_p_admin_shoutbox, $tiki_p_post_shoutbox, $base_url, $smarty, $access;
+	global $tiki_p_admin_shoutbox, $tiki_p_post_shoutbox, $base_url;
+	$access = TikiLib::lib('access');
+	$smarty = TikiLib::lib('smarty');
+	$tikilib = TikiLib::lib('tiki');
 
 	include_once ('lib/shoutbox/shoutboxlib.php');
 
