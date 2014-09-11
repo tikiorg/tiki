@@ -931,7 +931,8 @@ class Services_Tracker_Controller
 				}
 
 				if ($confirm) {
-					$this->utilities->clearTracker($trackerId);
+					$utilities = new Services_Tracker_Utilities;
+					$utilities->clearTracker($trackerId);
 
 					return array(
 						'trackerId' => 0,
