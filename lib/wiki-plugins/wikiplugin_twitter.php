@@ -17,42 +17,52 @@ function wikiplugin_twitter_info()
 		'params' => array(
 			'tweet' => array(
 				'required' => true,
-				'name' => tra('Account Name'),
-				'description' => tra('Name of the twitter account'),
+				'name' => tra('Twitter Path'),
+				'description' => tra('Depends on the type of timeline (Users, Collections, Favorites or Lists). For an User, it is the Account Name (like twitterdev), for Favorites it is like (twitterdev/favorites), for lists it is like twitterdev/lists/listname, etc. '),
 				'filter' => 'text',
+				'default' => ''
+			),
+			'widgetId' => array(
+				'required' => true,
+				'name' => tra('Widget Id'),
+				'description' => tra('Numeric identifier of the widget'),
+				'filter' => 'digits',
 				'default' => ''
 			),
 			'shellbg' => array(
 				'required' => false,
-				'name' => tra('Shell Background Color'),
-				'description' => tra('Background color for the overall widget, i.e., header, footer and outside border. Default is red (color code #15a2b)'),
-				'accepted' => tra('Valid HTML color codes (with beginning #) or names.'),
+				'name' => tra('Transparent Shell Background'),
+				'description' => tra('Background color for the overall widget, i.e., header, footer and outside border. Default is theme default'),
 				'filter' => 'text',
-				'default' => '#f15a2b'
+				'options' => array(
+					array('text' => tra('theme default'), 'value' => ''),
+					array('text' => tra('transparent'), 'value' => 'transparent'),
+				),
 			),
-			'shellcolor' => array(
+			'theme' => array(
 				'required' => false,
-				'name' => tra('Shell Text Color'),
-				'description' => tra('Text color for the widget header and footer. Default is white (color code #ffffff)'),
-				'accepted' => tra('Valid HTML color codes (with beginning #) or names.'),
-				'filter' => 'text',
-				'default' => '#ffffff'
+				'name' => tra(''),
+				'description' => tra('Embedded timelines are available in light and dark themes for customization. The light theme is for pages that use a light colored background, while the dark theme is for pages that use a dark colored background. Default is light'),
+				'filter' => 'alpha',
+				'options' => array(
+					array('text' => tra('light'), 'value' => 'light'),
+					array('text' => tra('dark'), 'value' => 'dark'),
+				),
+				'default' => 'light'
 			),
 			'tweetbg' => array(
 				'required' => false,
-				'name' => tra('Tweet Background Color'),
-				'description' => tra('Background color for individual tweets. Default is white.'),
+				'name' => tra('Border color'),
+				'description' => tra('Change the border color used by the widget. Default is theme default.'),
 				'accepted' => tra('Valid HTML color codes (with beginning #) or names.'),
-				'filter' => 'text',
-				'default' => 'white'
+				'filter' => 'text'
 			),
 			'tweetcolor' => array(
 				'required' => false,
-				'name' => tra('Tweet Text Color'),
-				'description' => tra('Text color for individual tweets. Default is black.'),
+				'name' => tra('Link color'),
+				'description' => tra('Text color for individual tweets. Default is theme default.'),
 				'accepted' => tra('Valid HTML color codes (with beginning #) or names.'),
-				'filter' => 'text',
-				'default' => 'black'
+				'filter' => 'text'
 			),
 			'height' => array(
 				'required' => false,
@@ -75,38 +85,52 @@ function wikiplugin_twitter_info()
 
 function wikiplugin_twitter($data, $params)
 {
-	$default = array('shellbg' => '#f15a2b', 'shellcolor' => '#ffffff', 'tweetbg' => 'white', 'tweetcolor' => 'black', 'width' => 'auto', 'height' => 300);
+	$default = array('shellbg' => '', 'shellcolor' => '', 'tweetbg' => '', 'tweetcolor' => '', 'width' => 'auto', 'height' => 300);
 	$params = array_merge($default, $params);
 	extract($params, EXTR_SKIP);
-	$html = "<script src=\"http://widgets.twimg.com/j/2/widget.js\"></script>
+
+	// Variables sanitizing
+	$tweetlimit = (int)$tweetlimit;
+	$tweetbg = preg_replace('/[^#0-9a-zA-Z]/','',$tweetbg);
+	$tweetcolor = preg_replace('/[^#0-9a-zA-Z]/','',$tweetcolor);
+	$tweet = preg_replace('/[^#0-9a-zA-Z%\/=]/','',$tweet);
+	$widgetId = preg_replace('/[^0-9]/','',$widgetId);
+	if ( $theme != 'dark' ) { $theme = 'light'; }
+	if ( $shellbg != 'transparent' ) { $shellbg = ''; }
+	if ( $width != 'auto' ) { $width = preg_replace('/[^0-9]/','',$width); }
+	$height = (int)$height;
+
+	// Inspiration: http://stackoverflow.com/questions/14303710/how-to-customize-twitter-widget-style
+	// and https://dev.twitter.com/web/embedded-timelines
+	// Note: the $widgetId is more important than the $tweet in defining what is displayed
+	$html = "<a class=\"twitter-timeline\"  href=\"https://twitter.com/$tweet\" data-widget-id=\"$widgetId\"
+data-chrome=' " . (empty($shellbg)?"":"transparent") . "' 
+" . (empty($tweetlimit)?'':" data-tweet-limit='$tweetlimit'\n") . 
+(empty($tweetcolor)?"":" data-link-color='$tweetcolor'\n") .
+(empty($tweetbg)?"":" data-border-color='$tweetbg'\n") .
+"data-theme='$theme' 
+height='$height'
+width='$width'
+" . 
+"data-show-replies='false'
+data-aria-polite='polite'>Tweets from @$tweet</a>
 <script>
-new TWTR.Widget({
-  version: 2,
-  type: 'profile',
-  rpp: 5,
-  interval: 6000,
-  width: '$width',
-  height: '$height',
-  theme: {
-    shell: {
-      background: '$shellbg',
-      color: '$shellcolor'
-    },
-    tweets: {
-      background: '$tweetbg',
-      color: '$tweetcolor',
-    }
-  },
-  features: {
-    scrollbar: false,
-    loop: false,
-    live: false,
-    hashtags: true,
-    timestamp: true,
-    avatars: false,
-    behavior: 'all'
-  }
-}).render().setUser('$tweet').start();
+!function(d,s,id){
+	var js,fjs=d.getElementsByTagName(s)[0];
+
+	if(!d.getElementById(id)){
+		js=d.createElement(s);
+		js.id=id;
+		js.src=\"http://platform.twitter.com/widgets.js\";
+		fjs.parentNode.insertBefore(js,fjs);
+	}
+
+}(document,'script','twitter-wjs');
 </script>";
+
+	//debug return '~np~'.nl2br(htmlspecialchars($html)).'~/np~';
+	//debug return '~np~'.$html.nl2br(htmlspecialchars($html)).'~/np~';
+
 	return '~np~'.$html.'~/np~';
+
 }
