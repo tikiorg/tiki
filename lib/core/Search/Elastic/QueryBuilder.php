@@ -127,7 +127,7 @@ class Search_Elastic_QueryBuilder
 						"from" => $this->getTerm($node->getToken('from')),
 						"to" => $this->getTerm($node->getToken('to')),
 						"boost" => $node->getWeight(),
-						"include_upper" => true, // inclusive
+						"include_upper" => false,
 					),
 				),
 			);
