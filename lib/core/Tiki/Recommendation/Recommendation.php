@@ -17,4 +17,14 @@ class Recommendation
 		$this->type = $type;
 		$this->object = $object;
 	}
+
+	function getType()
+	{
+		return $this->type;
+	}
+
+	function getId()
+	{
+		return $this->object;
+	}
 }

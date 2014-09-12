@@ -15,4 +15,9 @@ class UserInput
 	{
 		$this->user = $username;
 	}
+
+	function getUser()
+	{
+		return $this->user;
+	}
 }

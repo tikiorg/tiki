@@ -38,7 +38,7 @@
 		<service id="tiki.controller.payment" class="Services_Payment_Controller"/>
 		<service id="tiki.controller.rating" class="Services_Rating_Controller"/>
 		<service id="tiki.controller.report" class="Services_Report_Controller"/>
-		<service id="tiki.controller.tracker_calendar" class="Services_Tracker_CalendarController"/>
+		<service id="tiki.controller.recommendation_dev" class="Services_Recommendation_DevelopmentController"/>
 		<service id="tiki.controller.search" class="Services_Search_Controller"/>
 		<service id="tiki.controller.search_customsearch" class="Services_Search_CustomSearchController"/>
 		<service id="tiki.controller.search_manifold" class="Services_Search_ManifoldController"/>
@@ -47,6 +47,7 @@
 		<service id="tiki.controller.social" class="Services_User_SocialController"/>
 		<service id="tiki.controller.suite" class="Services_Suite_Controller"/>
 		<service id="tiki.controller.tracker" class="Services_Tracker_Controller"/>
+		<service id="tiki.controller.tracker_calendar" class="Services_Tracker_CalendarController"/>
 		<service id="tiki.controller.tracker_sync" class="Services_Tracker_SyncController"/>
 		<service id="tiki.controller.tracker_todo" class="Services_Tracker_TodoController"/>
 		<service id="tiki.controller.translation" class="Services_Language_TranslationController"/>

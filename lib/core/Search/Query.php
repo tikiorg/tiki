@@ -183,10 +183,34 @@ class Search_Query implements Search_Query_Interface
 						)
 					)
 				),
-				new Search_Expr_MoreLikeThis($type, $object),
+				$mlt = new Search_Expr_MoreLikeThis($type, $object),
 			)
 		);
-		$part->setField($field);
+		$mlt->setField($field);
+		$this->expr->addPart($part);
+	}
+
+	function filterSimilarToThese($objects, $content, $field = 'contents')
+	{
+		$excluded = [];
+		foreach ($objects as $object) {
+			$excluded[] = new Search_Expr_And(
+				array(
+					new Search_Expr_Token($object['object_type'], 'identifier', 'object_type'),
+					new Search_Expr_Token($object['object_id'], 'identifier', 'object_id'),
+				)
+			);
+		}
+
+		$mlt = new Search_Expr_MoreLikeThis($content);
+		$mlt->setField($field);
+
+		$part = new Search_Expr_And(
+			array(
+				$mlt,
+				new Search_Expr_Not(new Search_Expr_Or($excluded)),
+			)
+		);
 		$this->expr->addPart($part);
 	}
 

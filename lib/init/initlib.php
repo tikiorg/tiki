@@ -60,6 +60,7 @@ class TikiInit
 		$path = TIKI_PATH . '/db/config';
 		$container = new ContainerBuilder;
 		$container->addCompilerPass(new \Tiki\MailIn\Provider\CompilerPass);
+		$container->addCompilerPass(new \Tiki\Recommendation\Engine\CompilerPass);
 		$container->addCompilerPass(new \Tiki\Wiki\SlugManager\CompilerPass);
 		$container->addCompilerPass(new \Search\Federated\CompilerPass);
 

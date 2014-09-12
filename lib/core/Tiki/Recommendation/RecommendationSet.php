@@ -7,7 +7,7 @@
 
 namespace Tiki\Recommendation;
 
-class RecommendationSet implements \Countable
+class RecommendationSet implements \Countable, \Iterator
 {
 	private $engine;
 	private $recommendations = [];
@@ -22,8 +22,38 @@ class RecommendationSet implements \Countable
 		$this->recommendations[] = $recommendation;
 	}
 
+	function getEngine()
+	{
+		return $this->engine;
+	}
+
 	function count()
 	{
 		return count($this->recommendations);
+	}
+
+	function current()
+	{
+		return current($this->recommendations);
+	}
+
+	function next()
+	{
+		next($this->recommendations);
+	}
+
+	function key()
+	{
+		return key($this->recommendations);
+	}
+
+	function valid()
+	{
+		return current($this->recommendations) !== false;
+	}
+
+	function rewind()
+	{
+		reset($this->recommendations);
 	}
 }

@@ -135,10 +135,10 @@ class Search_Elastic_QueryBuilder
 			$type = $node->getObjectType();
 			$object = $node->getObjectId();
 
-			$content = $this->getDocumentContent($type, $object);
+			$content = $node->getContent() ?: $this->getDocumentContent($type, $object);
 			return array(
 				'more_like_this' => array(
-					'fields' => array($node->getField()),
+					'fields' => array($node->getField() ?: 'contents'),
 					'like_text' => $content,
 					'boost' => $node->getWeight(),
 				),
@@ -150,9 +150,12 @@ class Search_Elastic_QueryBuilder
 
 	private function flatten($list, $type)
 	{
+		// Only merge when alone, should queries contain the 'minimum_number_should_match' attribute
+		$limit = ($type == 'should') ? 2 : 1;
+
 		$out = array();
 		foreach ($list as $entry) {
-			if (isset($entry['bool'][$type])) {
+			if (isset($entry['bool'][$type]) && count($entry['bool']) === $limit) {
 				$out = array_merge($out, $entry['bool'][$type]);
 			} else {
 				$out[] = $entry;

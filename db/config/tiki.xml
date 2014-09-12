@@ -314,6 +314,21 @@
 			<tag name="tiki.wiki.slug.generator"/>
 		</service>
 
+		<service id="tiki.recommendation.content.set" class="Tiki\Recommendation\EngineSet" />
+
+		<!-- Example recommendation engines
+
+		<service class="My\Custom\Engine123">
+			<tag name="tiki.recommendation.engine" set="content" engine="engine123" weight="10" />
+		</service>
+
+		<service class="Tiki\Recommendation\Engine\UserFavorite">
+			<tag name="tiki.recommendation.engine" set="content" engine="user_favorite" weight="10" />
+			<argument type="service" id="tiki.lib.unifiedsearch"/>
+		</service>
+
+		-->
+
 		<!-- Example statically binded Tiki index
 		<service class="Search\Federated\TikiIndex">
 			<tag name="tiki.federatedsearch.index" index="tikixyz_main"/>
