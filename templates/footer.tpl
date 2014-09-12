@@ -49,13 +49,13 @@
 {if $prefs.site_google_analytics_account}
 	{wikiplugin _name=googleanalytics account=$prefs.site_google_analytics_account}{/wikiplugin}
 {/if}
-{if $prefs.feature_endbody_code}
-	{eval var=$prefs.feature_endbody_code}
-{/if}
 {interactivetranslation}
 <!-- Put JS at the end -->
 {if $headerlib}
 	{$headerlib->output_js_config()}
 	{$headerlib->output_js_files()}
 	{$headerlib->output_js()}
+{/if}
+{if $prefs.feature_endbody_code}
+    {eval var=$prefs.feature_endbody_code}
 {/if}
