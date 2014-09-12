@@ -1,0 +1,918 @@
+// $Id$
+// /***** Wiki *****/
+
+#pageid {
+  float: left;
+  clear: both;
+}
+
+.split {
+  clear: both;
+}
+
+#page-bar > span {
+  float: left;
+}
+
+.wikiactions > .btn-group {
+  display: inline-block;
+}
+
+// /* Wiki plugins */
+.wikiplugin-split {
+  border: none;
+  clear: both;
+}
+
+.wikiplugin-split .codelisting {
+  width: 95%;
+}
+
+// /* wikiplugin_convene */
+
+.conveneHeaderRow td {
+  text-align: center;
+}
+
+.conveneVotes td,
+.conveneFooterRow td,
+.conveneHeaderRow td {
+  vertical-align: middle;
+}
+
+.convene-ok {
+  background-color: #D1F3D1 !important;
+  background-image: none !important;
+  text-align: center;
+}
+
+.convene-no {
+  background-color: #FFCCCA !important;
+  background-image: none !important;
+  text-align: center;
+}
+
+.convene-unconfirmed {
+  text-align: center;
+}
+
+.conveneFooter, .conveneHeader {
+  text-align: center;
+}
+
+// /* wikiplugin_footnotearea */
+.footnotearea {
+  margin-top: 2em;
+  font-size: 0.9em;
+}
+
+// /* Versions plugin */
+#tiki-center .versionav {
+  padding: 0;
+  border: 0;
+  margin-bottom: -1px;
+}
+
+.versionav .button {
+  margin-bottom: 0;
+}
+
+#tiki-center .versioncontent {
+  padding: 1em;
+}
+
+// /* wikiplugin tracker */
+table.wikiplugin_tracker td {
+  vertical-align: top;
+  padding-bottom:1.2em;
+}
+
+// /* wikiplugin edit */
+.wikiplugin_edit textarea {
+  width: 99%;
+  height: 150px;
+}
+
+.editplugin {
+  vertical-align: bottom;
+}
+
+// /* mouseover plugin */
+.plugin-mouseover {
+  position: absolute;
+  z-index: 500;
+  display:none;
+  padding: .4em;
+  background: #F5F5F5;
+  border: 1px solid #bbb;
+}
+
+// /* fancytable (sortable) plugin */
+.fancysort .header {
+  cursor: pointer;
+}
+
+// /* timesheet plugin */
+#jtrack-holder {
+  width: auto !important;
+}
+
+.jtrack-item {
+  height:auto !important;
+}
+
+#col1  #jtrack-content,
+#col1 #jtrack-form-create,
+#col1 #jtrack-form-list,
+#col1  #jtrack-form-update,
+#col1  #jtrack-form-remove,
+#col1  #jtrack-form-remove-all {
+  height: 450px;
+}
+
+#timeSheetSaved,
+#timesheetSpreadsheet  {
+  height: 500px !important;
+}
+#timeSheetTabs {
+  height: 600px !important;
+}
+
+#right_modules #jtrack-bar,
+#left_modules #jtrack-bar,
+#right_modules .jtrack-item,
+#left_modules .jtrack-item {
+  font-size: 76%;
+}
+
+#right_modules .jtrack-form,
+#left_modules .jtrack-form {
+  height: 245px !important;
+}
+
+// /** Wiki tocs **/
+.tocnav {
+  margin-bottom: 4px;
+  clear: both;
+}
+
+// /* wikiplugin_tracker */
+.mandatory_note {
+  font-style: italic;
+  color: red;
+  margin-top: 10px;
+}
+
+.popup-backlinks {
+  display: none;
+  width: 100px;
+}
+
+// /* wikiplugin_tracker */
+.trackerCategoryName {white-space: nowrap;}
+
+// /* page contribution by author / wikiplugin_author */
+.author0 {
+  color: black;
+}
+
+.author1 {
+  color: blue;
+}
+
+.author2 {
+  color: red;
+}
+
+.author3 {
+  color: green;
+}
+
+.author4 {
+  color: maroon;
+}
+
+.author5 {
+  color: yellow;
+  background: gray;
+}
+
+.author6 {
+  color: aqua;
+  background: gray;
+}
+
+.author7 {
+  color: fuchsia;
+  background: gray;
+}
+
+.author8 {
+  color: teal;
+}
+
+.author9 {
+  color: purple;
+}
+
+.author10 {
+  color: white;
+  background: navy;
+}
+
+.author11 {
+  color: olive;
+}
+
+.author12 {
+  color: gray;
+}
+
+.author13 {
+  color: navy;
+}
+
+.author14 {
+  color: silver;
+  background: blue;
+}
+
+.author15 {
+  color: lime;
+  background: gray;
+}
+
+.structuremenu .menuSection {
+  margin-left: 6px;
+  border-left: 1px dotted gray;
+}
+
+.structuremenu .menuSection .option,
+.structuremenu .menuSection .optionline {
+  background: transparent url(../../img/icons/h_trenner.gif) center left no-repeat;
+  padding-left: 21px;
+}
+
+// /* Inline CkEditor */
+.cke_editable:hover {
+  outline: #ccc dotted 1px;
+}
+
+.tiki_plugin {
+  display: inline-block;
+  background-color: transparent; // /* was #f8f8f8; */
+  border: 1px solid #eee;
+}
+
+.tiki_plugin .plugin_icon {
+  float: left;
+  position: absolute;
+  opacity: .7;
+}
+
+.unsavedChangesInEditor {
+  border: 1px solid;
+  border-color: Red;
+}
+
+div.tiki_plugin {width: 100%;}
+
+// /* Auto TOC */
+div#outerToc {
+  position:fixed;
+  top:0px;
+  left: 75%;
+  background:#E0E0E0;
+  display:none;
+  border-radius:0px 0px 5px 5px;
+  z-index:5;
+  padding:5px;
+  margin: 0 5px 5px;
+  max-height:95%;
+}
+
+div#outerToc * {
+  color: #000;
+}
+
+div#innerToc{
+  overflow-y: auto;
+}
+
+div#outerToc-static {
+  border: 1px solid;
+  padding: 5px;
+  margin: 5px;
+}
+
+div#outerToc-static ul {
+  list-style-position: inside;
+  list-style-type: none;
+  padding-left: 1em;
+}
+
+.plugin-form-float {
+  position: fixed;
+  left: 5%;
+  right: 365px;
+  top: 5%;
+  max-height: 90%;
+  overflow: auto;
+  z-index: 1000;
+  background: white;
+  color: black;
+  padding: 10px;
+  border: solid 2px black;
+}
+
+.icon_edit_section {
+  float: right;
+}
+.icon_edit_section img.icon {
+  margin-top: -1px !important;
+}
+
+// /* tiki-wiki_topline.tpl Backlinks button */
+.backlinks_button {
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  background: none;
+  width: 20px;
+}
+
+.backlinks_button .cssmenu_horiz ul li {
+  border: 1px solid #999;
+  border-radius: 3px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+}
+
+.backlinks_button li.tabmark {
+  background: none;
+  border: 0;
+  top: 0;
+  padding: 0;
+}
+
+.backlinks_button .clearfix:after {
+  display: inline-block;
+}
+
+// /* CKeditor contrast */
+body.wikitext {
+  background: #fff;
+  color: #000;
+}
+
+.editable-inline {
+  background: transparent url(../../img/icons/database_lightning.png) no-repeat top right;
+  padding-right: 20px;
+}
+
+.editable-inline.loaded {
+  background: transparent;
+}
+
+.editable-inline.failure {
+  background: transparent url(../../img/icons/lock_gray.png) no-repeat top right;
+}
+
+.editable-inline.modified {
+  border: solid 2px #ff6600;
+}
+
+.editable-inline.unsaved {
+  border: solid 2px red;
+}
+
+// /* for autocomplete menus to appear infront of ckeditor 3.6 dialogs this needs to be !important sadly */
+.ui-menu {
+  z-index: 10100 !important;
+}
+
+// /* Structure selection popup on wiki pages */
+.structure_select {
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  background: none;
+  height: 16px;
+  width: 18px;
+}
+
+.structure_select .cssmenu_horiz ul li {
+  border: 1px solid #999;
+  border-radius: 3px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+}
+
+.structure_select li.tabmark {
+  background: none;
+  border: 0;
+  top: 0;
+  padding: 0;
+}
+
+.structure_select .clearfix:after {
+  display: inline-block;
+}
+
+.structure_select .selected {
+  font-weight: bold;
+  font-style: italic;
+}
+
+.admintoclevel {
+  margin: .2em;
+  padding: .4em 0 .4em .2em;
+}
+
+.admintoclevel .admintoclevel {
+  margin-right: 0;
+  border-right: 0 none;
+}
+
+.admintoclevel .actions {
+  float: right;
+  padding-right: .3em;
+}
+
+.admintoclevel .actions a {
+  padding-right: .2em;
+}
+
+.admintoclevel .actions input {
+  margin-right: 2em;
+  font-style: italic;
+  opacity: 0.5;
+  border: solid 1px #ddd;
+  width: 15em;
+}
+
+#page_list_container {
+  list-style: none;
+  max-height: 20em;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 0;
+}
+
+#page_list_container li {
+  list-style: none;
+  margin: .2em;
+  padding: .2em;
+}
+
+// /* Fullscreen textareas */
+.TextArea-fullscreen {
+  display: block;
+  width: 100%;
+  height: 100%;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0px solid #BBBBBB;
+  opacity: 1;
+  top: 0 !important;
+  left: 0 !important;
+  position: fixed !important;
+  background-color: gray;
+  z-index: 100 !important;
+}
+
+.TextArea-fullscreen #editwiki_toolbar {
+  width: 100% !important;
+}
+.TextArea-fullscreen .ui-wrapper {
+  width: auto !important;
+  height: 100% !important;
+}
+// .TextArea-fullscreen textarea {
+//   width: inherit ! important;
+// }
+
+.TextArea-fullscreen .ui-wrapper #editwiki {
+  position: absolute !important;
+  width: 100% !important;
+}
+
+.TextArea-fullscreen .actions,
+.CodeMirror-fullscreen .actions {
+  bottom: 0 !important;
+  left: 50%;
+  margin-left: -50%;
+  position: absolute;
+  text-align: center;
+  width: 100%;
+  z-index: 101 !important;
+  background-color: #fff;
+  padding: .4em 0 .2em;
+  border-top: #aaa 1px solid;
+}
+
+.TextArea-fullscreen .actions input,
+.CodeMirror-fullscreen .actions input {
+  /*margin: 1px !important;*/
+}
+
+.TextArea-fullscreen .cm-remove, .CodeMirror-fullscreen .cm-remove {
+  display: none; // /* do not display until functionality in fullscreen fixed */
+  right: 22px;
+  float: none !important;
+}
+
+// /* translation mode */
+.translation_message {
+  overflow-x: hidden;
+  padding: .5em;
+  white-space: nowrap;
+}
+
+.translation_message h2 {
+  margin: .2em 0;
+  font-size: 1.6em;
+}
+
+#diff_outer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  opacity: 1;
+}
+
+#diff_history {
+  overflow-x: hidden;
+  overflow-y: auto;
+  padding: 0 .1em;
+}
+// /* end fullscreen etc */
+
+// /* Autosave Preview handle */
+#autosave_preview {
+  background-color: #FFFFFF;
+  color: #000000;
+  z-index: 110; // /* ensure the preview is not partly covered even by #diff_outer in fullscreen side-by-side translation mode */
+}
+
+#autosave_preview_grippy {
+  background-color: #ccc;
+  background-image: url("../../img/icons/shading.png");
+  z-index: 3;
+}
+
+// /** Hidden anchors/links shown on mouseover of header  **/
+a.tiki_anchor:before {
+  content: "¶";
+}
+a.tiki_anchor {
+  display: none;
+  font-size: 85%;
+  font-weight: lighter;
+  margin-left: 0.7em;
+  text-decoration: none;
+  line-height: 100%;
+}
+
+h1:hover a.tiki_anchor,
+h2:hover a.tiki_anchor,
+h3:hover a.tiki_anchor,
+h4:hover a.tiki_anchor,
+h5:hover a.tiki_anchor,
+h6:hover a.tiki_anchor {
+  color: #BBBBBB;
+  display: inline;
+}
+
+h1 a.tiki_anchor:hover,
+h2 a.tiki_anchor:hover,
+h3 a.tiki_anchor:hover,
+h4 a.tiki_anchor:hover,
+h5 a.tiki_anchor:hover,
+h6 a.tiki_anchor:hover {
+  color: #3333CC;
+}
+
+// /* Namespace styling */
+.wiki .namespace {
+  margin: 1px;
+  padding: 1px;
+  border-radius: 5px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  background: #eee;
+  max-width: 30px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: inline-block;
+  vertical-align: bottom;
+}
+
+.wiki .namespace.first {
+  max-width: 130px;
+}
+
+.wiki .namespace.last {
+  max-width: 130px;
+}
+
+// /* New Help section */
+#tikihelp {
+//  /*position: absolute;*/ /*to avoid white spacing in Internet Explorer below footer*/
+  height: 100%;
+}
+
+.help_fullscreen_icon {
+  margin-right: 8px;
+}
+
+.help_close_icon {
+  margin-right: 20px;
+}
+
+.site_report a {
+  border-left: 1px solid #696969;
+  border-right: 1px solid #696969;
+  padding: 0 5px;
+  font-size: smaller;
+}
+
+// /* default look for editplugin icon links */
+.plugin-desc {
+  padding: 5px;
+}
+
+.wikitext .plugin_gauge,
+.wikitext .plugin_gauge-bar {
+  border: none;
+}
+
+///* To do: additional font family and bg color. */
+.inline_syntax {
+  font-family: "Lucida Console";
+  color: #a52a2a;
+}
+
+// /***** Wiki *****/
+#cachedpage {
+  float: right;
+  font-size: small;
+}
+
+body.tiki_wiki #comments {
+  padding: 1em;
+}
+
+// /* wikiplugin_code */
+.codelisting {
+  overflow: auto;
+  max-width: 990px;
+}
+
+.codelisting .CodeMirror-vscrollbar {
+  display: none !important; /* we do not need to display vertical scrollbars in code listings - workaround for the "wrongly computed height with scrollbar" bug in CodeMirror */
+}
+
+// /* wikiplugin_fade */
+.wpfade-hidden {
+  background-repeat: no-repeat;
+  background-image: url(../../img/toggle-expand-dark.png);
+  margin-left: -19px;
+  padding-left: 19px;
+}
+
+.wpfade-shown {
+  background-repeat: no-repeat;
+  background-image: url(../../img/toggle-collapse-dark.png);
+  margin-left: -19px;
+  padding-left: 19px;
+}
+
+.wpfade-span-plain {
+  cursor:pointer;
+}
+
+.wpfade-span-icon {
+  cursor:pointer;
+  margin-left:19px;
+}
+
+.wpfade-div-icon {
+  display: none;
+  margin-left:19px;
+}
+
+// /* wikiplugin_fancylist */
+.wikitext .fancylist {
+  margin: .5em 0;
+  padding: 0;
+}
+
+.wikitext .fancylist li {
+  font: italic 2em Verdana, Geneva, Arial, Helvetica, sans-serif;
+  line-height: 27px;
+  list-style-position: inside;
+  margin-left: 10px;
+  padding: 6px 0 7px 15px;
+}
+
+.wikitext .fancylist li p {
+  display: inline;
+  font-size: 50%;
+  font-style: normal;
+  margin-left: 12px;
+}
+
+[class].wikitext .fancylist li p {
+  margin-left: -3px;
+}
+
+// /* wikiplugin quote */
+.quoteheader {
+  background : url('../../img/icons/quoteleft.gif') no-repeat;
+  padding-left:50px;
+  height:35px;
+}
+
+.quotebody {
+  margin-left:35px;
+  padding-left:10px;
+  font-style: italic;
+  border-left: 2px solid #D3D3D3;
+}
+
+// /* wikiplugin remarksbox */
+.wikitext .rbox-data ul {
+  list-style-type: disc;
+  margin-left: 15px;
+  padding-left: 15px;
+}
+
+// /* wikiplugin tracker */
+.mandatory_star {
+  font-weight: bold;
+  color: red;
+}
+
+.trackerplugindesc {
+  color: #BEBCBC;
+  font-style: italic;
+}
+
+.charCount {
+  color: #BEBCBC;
+  font-style: italic;
+}
+
+// /* img plugin */
+.imgbox {
+  border: 1px solid #a9a9a9;
+  background-color: #f9f9f9;
+  padding: 5px;
+}
+
+.thumbcaption {
+  font-size: 90%;
+  padding: 2px;
+}
+
+// /* wikiplugin_carousel v3 */
+.ic_button {
+  float: left;
+  margin: 0 2px 0  0;
+  border: 2px solid #eee;
+  width: 20px;
+  height: 20px;
+}
+
+.ic_active {
+  border: 2px solid #800;
+}
+
+.ic_caption {
+  background:#808080;
+  opacity:0.75;
+  width:100%;
+  color:black;
+  padding: 5px 10px 5px 10px;
+}
+
+// /* wikiplugin_sign */
+.wp-sign {
+  display: none;
+  overflow: hidden;
+  position: absolute;
+  z-index: 1;
+  background-image: url(../../img/icons/text_signature.png);
+  background-repeat: no-repeat;
+  padding: 0.3em;
+  vertical-align: bottom;
+  -webkit-box-shadow:  1px 1px 2px 2px rgba(200, 200, 200, .5);
+  box-shadow:  1px 1px 2px 2px rgba(200, 200, 200, .5);
+  border-radius: 2px;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+}
+
+.wp-cookie-consent-required {
+  color: #c00;
+}
+
+// /* TOC */
+.toc {
+  padding-left: 2em;
+  border-top: 1px dotted #a9a9a9;
+  border-bottom: 1px dotted #a9a9a9;
+  margin-bottom: 4px;
+}
+
+.toc * {
+  list-style: none;
+  border: none;
+}
+
+// /* Wiki diff styles */
+.diff td {
+  border: 1px solid #696969;
+  white-space: normal !important;
+}
+
+// Override Bootstrap's .table-responsive .table's white-space: nowrap rule.
+.table-responsive > .table > tbody > tr > td.text-left {
+  white-space: normal;
+}
+
+
+.diff div {
+  border-top: 1px solid #696969;
+}
+
+.diffadded {
+  background: #ccffcc;
+  color: #000;
+}
+
+.diffdeleted {
+  background: #ffcccc;
+  color: #000;
+  text-decoration: line-through;
+}
+
+.diffinldel {
+  background: #ffcccc;
+  text-decoration: line-through;
+}
+
+.diffbody {
+  background: #f2f4f5;
+  color: #2a2a2a;
+}
+
+.diffchar {
+  color: red;
+}
+
+.diffadded .diffchar {
+  color: blue;
+}
+
+.morcego_embedded {
+  border: 1px solid;
+  text-align: center;
+}
+
+.highlight_word_0 {
+  color: #ffff66;
+  background: #666;
+}
+
+.highlight_word_1 {
+  color: #ff9999;
+  background: #666;
+}
+
+.highlight_word_2 {
+  color: #a0ffff;
+  background: #666;
+}
+
+.highlight_word_3 {
+  color: #ff66ff;
+  background: #666;
+}
+
+.highlight_word_4 {
+  color: #99ff99;
+  background: #666;
+}
+
+.ui-tabs .ui-tabs-nav li a {
+  padding: 0.3em 0.8em 0.1em;
+}
+/* Structures drill-down menu */
+div.drillshow {
+  border: 1px solid;
+  padding: 3px;
+  border-color: lightgrey;
+}

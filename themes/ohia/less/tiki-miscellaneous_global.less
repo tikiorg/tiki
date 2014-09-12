@@ -1,0 +1,251 @@
+// $Id$
+//****** Misc. Global Classes (layout and style) ****/
+// highlight on interface text to draw attention;
+// also highlight on "button" links, e.g. if there are some comments it
+// highlights the "button" link in #page-bar under the content of the wiki pages
+
+.searchresults blockquote em,
+.highlight,
+.button.highlight a,
+.button a.highlight {
+  background: #FC0;
+  color: #000;
+}
+
+.button a.highlight:hover {
+  background: #dfb300;
+}
+
+// Since button background is actually applied to the link within the button, apply button highlight to same bg area as normal button state .
+.button.highlight {
+  background: inherit;
+}
+
+// Highlight effect is just visual distinction, so no need for block element.
+span.highlight {
+  padding: 0 .3em;
+}
+
+// Border and background should "shrinkwrap" to text size.
+div.highlight {
+  display: inline-block;
+}
+
+.rating .highlight {
+  padding: inherit;
+}
+
+.ratingResultAvg {
+  font-weight: bold;
+}
+
+.articletitle span.ratingResultAvg {
+  font-weight: normal;
+}
+
+.rbox > div.highlight {
+  display: block;
+  font-weight: bold;
+}
+
+// Input fields auto-fill/
+// Webkit-based browser specific (Google Chrome, Chromium, etc.)
+input:-webkit-autofill {
+  background-color: #FAFFBD !important; /* needs important because Chrome has it already important */
+  background-image: none !important;
+  color: #000 !important; /* the Google guys forgot the number-one rule... when they specify background they should specify forgeround color too ;) */
+}
+
+// Put together all the one-liners which should not display
+#attzone,
+#bottom_modules .box-rsslist br,
+#comzone,
+#edithelpzone,
+#forumpost,
+#polledit,
+#pollzone,
+#rules-copy-panel,
+#tiki-clean a.editplugin,
+.collapsed ul,
+.comment.archived,
+.convene-no img,
+.s5-slide a.editplugin,
+.tabs br,
+.wiki-edithelp,
+.wpfade-div-plain {
+  display: none;
+}
+
+#attzoneopen,
+#comzoneopen,
+#pollopen,
+.all .comment.archived {
+  display: block;
+}
+
+// Ajax, jquery. etc.
+// Ajax Loading Overlay
+#ajaxLoadingBG {
+  display: none;
+  z-index: 9999;
+  position: absolute;
+  background: transparent url(../../img/overlay-light.png);
+}
+#ajaxLoading {
+  display: none;
+  z-index: 10000;
+  position: absolute;
+  text-align: center;
+  vertical-align: top;
+  height: 80px;
+  width: 220px;
+  font-size: 2em;
+  font-weight: bold;
+  color: #333;
+  background: transparent url(../../img/loading-light.gif) no-repeat 50% 50%;
+}
+
+// cookie consent style
+#cookie_consent_div {
+  padding: @alert-padding;
+  margin: 1em;
+  border: 1px solid @alert-info-border;
+  color: @alert-info-text;
+  background-color: @alert-info-bg;
+}
+
+#cookie_consent_div.banner {
+  position: fixed;
+  padding: @alert-padding;
+  margin: 0;
+  border: 1px solid @alert-info-border;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 100;
+}
+
+#cookie_consent_div .description {
+  font-style: normal;
+  font-size: 1.1em;
+  font-weight: bold;
+}
+
+// print mode only - to make sure print templates will use and print on seamless white bg color
+html#print {
+  background: #fff;
+  color: #000;
+}
+
+body.db_error {
+  background: none;
+}
+
+body.fullscreen {
+  text-align: left;
+  background: #fff;
+}
+
+// #genPass .button a,
+// #genPass .button a:visited,
+// #genPass .button a:hover {
+//  padding: 1px 4px !important;
+//}
+
+// button.ui-button, button.ui-button:hover {
+//  padding: 0;
+// }
+
+
+#show-errors-button {
+  z-index: 1024;
+}
+
+#errors {
+  z-index: 1023;
+}
+
+// Misc. Global Classes (layout and style)
+
+#edithelpzone code {
+  font-size: 1.2em;
+}
+
+.attention {
+  color: @alert-danger-text;
+}
+
+.openid_url {
+  background: #fff url(../../img/icons/login-OpenID-bg.gif) 1px 1px no-repeat;
+}
+
+.bannertext {
+  font-size: .95em;
+  text-decoration: none;
+}
+
+#debugconsole {
+  background: #333;
+  color: #fff;
+  padding: 5px;
+  border: 2px solid #aaa;
+  font-size: 1em;
+  position: absolute;
+  top: 0;
+  left: 20px;
+  width: 60%;
+  height: auto;
+  z-index: 1000;
+}
+
+#debugconsole form {
+  color: #dd6;
+}
+
+#debugconsole a {
+  color: #ddd;
+}
+
+.cachedStatus,
+.mini {
+  font-size: .9em;
+}
+/* Icons */
+a.icon,
+img.icon {
+  border: 0;
+  background: transparent;
+}
+
+div #metadata fieldset.tabcontent, div #metadata div.tabs {
+  background-color: transparent;
+}
+
+.magnify {
+  float: right;
+  padding-top: 2px;
+}
+
+// Modal submit buttons need to be hidden to avoid blink
+.modal-body div.submit {
+  display: none;
+}
+
+// ColorBox
+#cboxTitle {
+  background-color: #fff;
+}
+
+#captchaImg {
+  border: 1px solid @panel-default-border;
+}
+
+/* fix for lists with empty dl items, e.g. tracker items
+ * thanks hayksaakian on https://github.com/twbs/bootstrap/issues/4062
+ * to be removed when we update to bs 3.2
+ */
+.dl-horizontal > dd:after {
+  display: table;
+  content: "";
+  clear: both;
+}
