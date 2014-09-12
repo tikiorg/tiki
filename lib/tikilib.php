@@ -75,31 +75,19 @@ class TikiLib extends TikiDb_Bridge
 	}
 
 	/**
-	 * @return Event_Manager
+	 * @return Tiki_Event_Manager
 	 */
 	public static function events()
 	{
-		static $eventManager = null;
-
-		if (! $eventManager) {
-			$eventManager = new Tiki_Event_Manager;
-		}
-
-		return $eventManager;
+		return self::lib('events');
 	}
 
 	/**
-	 * @return Event_Manager
+	 * @return Tiki_Profile_SymbolLoader
 	 */
 	public static function symbols()
 	{
-		static $symbols = null;
-
-		if (! $symbols) {
-			$symbols = new Tiki_Profile_SymbolLoader();
-		}
-
-		return $symbols;
+		return self::lib('symbols');
 	}
 
 	/**

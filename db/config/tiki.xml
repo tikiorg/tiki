@@ -82,6 +82,7 @@
 		<service id="tiki.lib.errorreport" class="ErrorReportLib">
 			<file>%kernel.root_dir%/lib/errorreportlib.php</file>
 		</service>
+		<service id="tiki.lib.events" class="Tiki_Event_Manager" />
 		<service id="tiki.lib.faq" class="FaqLib">
 			<file>%kernel.root_dir%/lib/faqs/faqlib.php</file>
 		</service>
@@ -254,6 +255,7 @@
 		<service id="tiki.lib.struct" class="StructLib">
 			<file>%kernel.root_dir%/lib/structures/structlib.php</file>
 		</service>
+		<service id="tiki.lib.symbols" class="Tiki_Profile_SymbolLoader" />
 		<service id="tiki.lib.tcontrol" class="ThemeControlLib">
 			<file>%kernel.root_dir%/lib/themecontrol/tcontrol.php</file>
 		</service>
