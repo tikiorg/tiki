@@ -96,6 +96,23 @@ class Tracker_Field_Email extends Tracker_Field_Abstract implements Tracker_Fiel
 		);
 	}
 	
+	public function renderOutput($context = array())
+	{
+		$opt = $this->getOption('link');
+		$value = $this->getValue();
+
+		if ($opt == 0 || $context['list_mode'] == 'csv' || empty($value)) {
+			return $value;
+		} else {
+			if ($opt == 1) {
+				$ar = explode('@', $value);
+				return TikiLib::lib('tiki')->protect_email($ar[0], $ar[1]);
+			} else {	// link == 2
+				return "<a href=\"mailto:$value\">$value</a>";
+			}
+		}
+	}
+
 	function renderInput($context = array())
 	{
 		return $this->renderTemplate("trackerinput/{$this->type}.tpl", $context);
