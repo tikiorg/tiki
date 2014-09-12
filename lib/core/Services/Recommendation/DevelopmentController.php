@@ -3,7 +3,7 @@
 //
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: BatchProcessor.php 52504 2014-09-12 17:08:17Z lphuberdeau $
+// $Id$
 
 use Tiki\Recommendation as R;
 
