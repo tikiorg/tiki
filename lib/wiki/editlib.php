@@ -700,6 +700,7 @@ class EditLib
 
 	function savePartialTranslation()
 	{
+		$tikilib = TikiLib::lib('tiki');
 		$multilinguallib = TikiLib::lib('multilingual');
 
 		$sourceInfo = $tikilib->get_page_info($this->sourcePageName);
