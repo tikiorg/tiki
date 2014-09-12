@@ -265,6 +265,24 @@ if ($isvalid) {
 				$url = str_replace('page='. $homePageUrl, '', $url);
 			} else if (strpos($url, $homePageUrl) !== false) {
 				$url = str_replace($homePageUrl, '', $url);
+				// Strip away the page name from the URL
+				$parts = parse_url($url);
+				$url = '';
+				if (!empty($parts['scheme'])) {
+					$url = $parts['scheme'].'://';
+				}
+				if (!empty($parts['host'])) {
+					$url .= $parts['host'];
+				}
+				if (!empty($parts['path'])) {
+					$pathParts = explode('/', $parts['path']);
+					$cnt = count($pathParts);
+					if ($cnt > 0) {
+						$pathParts[$cnt-1] = null;	// Drop the page name
+					}
+					$newPath .= implode('/', $pathParts);
+					$url .= $newPath;
+				}
 			}
 		}
 
