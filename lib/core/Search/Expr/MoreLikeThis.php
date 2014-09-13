@@ -8,6 +8,7 @@
 class Search_Expr_MoreLikeThis implements Search_Expr_Interface
 {
 	private $type;
+	private $object;
 	private $field;
 	private $weight;
 	private $content;

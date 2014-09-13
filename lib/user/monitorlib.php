@@ -487,6 +487,7 @@ class MonitorLib
 		case 'user':
 			return [
 				'tiki.mustread.required' => ['global' => false, 'local' => true, 'label' => tr('Action Required')],
+				'tiki.recommendation.incoming' => ['global' => false, 'local' => true, 'label' => tr('Recommendation Received')],
 			];
 		default:
 			return [];

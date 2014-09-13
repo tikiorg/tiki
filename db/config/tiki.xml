@@ -212,6 +212,10 @@
 		<service id="tiki.lib.ratingconfig" class="RatingConfigLib">
 			<file>%kernel.root_dir%/lib/rating/configlib.php</file>
 		</service>
+		<service id="tiki.lib.recommendationcontentbatch" class="Tiki\Recommendation\BatchProcessor">
+			<argument type="service" id="tiki.recommendation.activity.store" />
+			<argument type="service" id="tiki.recommendation.content.set" />
+		</service>
 		<service id="tiki.lib.references" class="ReferencesLib">
 			<file>%kernel.root_dir%/lib/references/referenceslib.php</file>
 		</service>
@@ -315,6 +319,10 @@
 		</service>
 
 		<service id="tiki.recommendation.content.set" class="Tiki\Recommendation\EngineSet" />
+		<service id="tiki.recommendation.activity.store" class="Tiki\Recommendation\Store\ActivityStore">
+			<argument type="service" id="tiki.lib.unifiedsearch" />
+			<argument type="service" id="tiki.lib.events" />
+		</service>
 
 		<!-- Example recommendation engines
 

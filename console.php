@@ -93,6 +93,7 @@ if ($isInstalled && ! $installer->requiresUpdate()) {
 	$console->add(new Tiki\Command\ProfileForgetCommand);
 	$console->add(new Tiki\Command\ProfileInstallCommand);
 	$console->add(new Tiki\Command\ProfileExport\Init);
+	$console->add(new Tiki\Command\RecommendationBatchCommand);
 	$console->add(new Tiki\Command\RefreshRssCommand);
 } else {
 	$console->add(new Tiki\Command\UnavailableCommand('daily-report:send'));
@@ -106,6 +107,7 @@ if ($isInstalled && ! $installer->requiresUpdate()) {
 	$console->add(new Tiki\Command\UnavailableCommand('profile:forget'));
 	$console->add(new Tiki\Command\UnavailableCommand('profile:apply'));
 	$console->add(new Tiki\Command\UnavailableCommand('profile:export:init'));
+	$console->add(new Tiki\Command\UnavailableCommand('recommendation:batch'));
 	$console->add(new Tiki\Command\UnavailableCommand('rss:refresh'));
 }
 
