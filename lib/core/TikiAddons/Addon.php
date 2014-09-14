@@ -23,7 +23,17 @@ class TikiAddons_Addon
 		$this->checkDependencies();
 		if ($this->configuration->smarty) {
 			$this->smarty = new Smarty;
-			$this->smarty->addTemplateDir(TIKI_PATH . "/addons/" . $this->getVendor() . "_" . $this->getShortName() . "/templates/");
+			$this->smarty->setCompileDir(TIKI_PATH . '/templates_c');
+			$this->smarty->setTemplateDir(TIKI_PATH . "/addons/" . $this->getVendor() . "_" . $this->getShortName() . "/templates/");
+			$this->smarty->setPluginsDir(
+				array(
+					TIKI_PATH . '/' . TIKI_SMARTY_DIR,    // the directory order must be like this to overload a plugin
+					SMARTY_DIR . 'plugins',
+				)
+			);
+			$secpol = new Tiki_Security_Policy($this->smarty);
+			$secpol->secure_dir[] = dirname(TIKI_PATH . "/addons/" . $this->getVendor() . "_" . $this->getShortName() . "/templates/");
+			$this->smarty->enableSecurity($secpol);
 			$this->smarty->assign('prefs', $GLOBALS['prefs']);
 		}
 	}
