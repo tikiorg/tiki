@@ -97,6 +97,15 @@ function init_language( $lg )
 			}
 		}
 
+		$files = glob("addons/*/lang/$lg/addon.php");
+		if (is_array($files)) {
+			global $lang_addon;
+			foreach ($files as $file) {
+				require($file);
+				$lang = array_merge($lang, $lang_addon);
+			}
+		}
+
 		if ( isset( $prefs['lang_use_db'] ) && $prefs['lang_use_db'] == 'y' ) {
 
 			$tikilib = TikiLib::lib('tiki');
