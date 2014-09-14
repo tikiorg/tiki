@@ -14,6 +14,9 @@ class TikiAddons_Addon
 
 	function __construct($folder)
 	{
+		if (strpos($folder, '/') !== false && strpos($folder, '_') === false) {
+			$folder = str_replace('/', '_', $folder);
+		}
 		$prefname = 'ta_' . $folder . '_on';
 			if (!isset($GLOBALS['prefs'][$prefname]) || $GLOBALS['prefs'][$prefname] != 'y') {
 			throw new Exception(tra('Addon is not activated: ') . $folder);
