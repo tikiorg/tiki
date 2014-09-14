@@ -487,6 +487,9 @@ class Smarty_Tiki extends Smarty
 			$this->addTemplatedir($this->main_template_dir.'/'.$tikidomain.'/');
 		}
 		$this->addTemplateDir($this->main_template_dir.'/styles/'.$style_base.'/');
+		foreach (TikiAddons::getPaths() as $path) {
+			$this->addTemplateDir($path . '/templates/');
+		}
 		$this->addTemplateDir($this->main_template_dir.'/layouts/'.$prefs['site_layout'].'/');
 		$this->addTemplateDir($this->main_template_dir.'/layouts/');
 		$this->addTemplateDir($this->main_template_dir);

@@ -643,6 +643,9 @@ if (isset($_REQUEST['page'])) {
 		include_once ("admin/include_$adminPage.php");
 		$url = 'tiki-admin.php' . '?page=' . $adminPage;
 	}
+	if (substr($adminPage, 0, 3) == 'ta_') {
+		$smarty->assign('addonadmin', 'y');
+	}
 	if (isset($icons[$adminPage])) {
 		$icon = $icons[$adminPage];
 

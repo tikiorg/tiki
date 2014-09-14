@@ -216,6 +216,10 @@ if (isset($_SERVER["REQUEST_URI"])) {
 if (isset($prefs['feature_fullscreen']) && $prefs['feature_fullscreen'] == 'y') {
 	require_once ('lib/setup/fullscreen.php');
 }
+
+// Retrieve Tiki addons
+TikiAddons::refresh();
+
 // Retrieve all preferences
 require_once ('lib/setup/prefs.php');
 

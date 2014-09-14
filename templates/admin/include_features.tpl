@@ -237,7 +237,11 @@
 				</fieldset>
 			</div>
 {/tab}
-
+{tab name="{tr}Addons{/tr}" key=addons}
+	{foreach $addonprefs as $addon}
+		{preference name="{$addon|escape}"}
+	{/foreach}
+{/tab}
 {/tabset}
 
     <div class="row">

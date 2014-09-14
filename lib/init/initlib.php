@@ -77,6 +77,14 @@ class TikiInit
 			// Do nothing, absence of custom.xml file is expected
 		}
 
+		foreach ( glob( TIKI_PATH . '/addons/*/lib/libs.xml' ) as $file ) {
+			try {
+				$loader->load($file);
+			} catch (InvalidArgumentException $e) {
+				// Do nothing, absence of libs.xml file is expected
+			}
+		}
+
 		$container->compile();
 
 		$dumper = new PhpDumper($container);

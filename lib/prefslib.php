@@ -409,7 +409,11 @@ class PreferencesLib
 	private function loadData( $name )
 	{
 		if (in_array($name, $this->system_modified)) return null;
-		if ( false !== $pos = strpos($name, '_') ) {
+		if ( substr($name, 0, 3) == 'ta_' ) {
+			$midpos = strpos($name, '_', 3);
+			$pos = strpos($name, '_', $midpos + 1);
+			$file = substr($name, 0, $pos);
+		} elseif ( false !== $pos = strpos($name, '_') ) {
 			$file = substr($name, 0, $pos);
 		} else {
 			$file = 'global';
@@ -439,6 +443,11 @@ class PreferencesLib
 	private function realLoad($file, $partial)
 	{
 		$inc_file = __DIR__ . "/prefs/{$file}.php";
+		if (substr($file, 0, 3) == "ta_") {
+			$paths = TikiAddons::getPaths();
+			$package = str_replace('_', '/', substr($file, 3));
+			$inc_file = $paths[$package] .  "/prefs/{$file}.php";
+		}
 		if (file_exists($inc_file)) {
 			require_once $inc_file;
 			$function = "prefs_{$file}_list";
@@ -809,6 +818,13 @@ class PreferencesLib
 				continue;
 			$files[] = substr(basename($file), 0, -4);
 		}
+		foreach (TikiAddons::getPaths() as $path) {
+			foreach ( glob( $path . '/prefs/*.php') as $file ) {
+				if (basename($file) === "index.php")
+					continue;
+				$files[] = substr(basename($file), 0, -4);
+			}
+		}
 		return $files;
 	}
 
@@ -943,6 +959,18 @@ class PreferencesLib
 		}
 
 		return false;
+	}
+
+	public function getAddonPrefs()
+	{
+		global $prefs;
+		$ret = array();
+		foreach (array_keys($prefs) as $prefName) {
+			if (substr($prefName, 0, 3) == 'ta_' && substr($prefName, -3) == '_on') {
+				$ret[] = $prefName;
+			}
+		}
+		return $ret;
 	}
 }
 
