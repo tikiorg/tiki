@@ -51,6 +51,7 @@ class AddonRemoveCommand extends Command
 
 		$uninstallInfo = json_decode(file_get_contents(TIKI_PATH . '/addons/' . $folder . '/uninstall.json'));
 		$removeItems = $uninstallInfo->remove;
+		$willRemove = false;
 		foreach ($removeItems as $remove) {
 			if (empty($remove->profile)) {
 				$profile = '';
@@ -59,19 +60,30 @@ class AddonRemoveCommand extends Command
 			}
 			$objectId = $addon_utilities->getObjectId($folder, $remove->type, $remove->ref, $profile);
 			$objectType = $remove->type;
-			if ($confirm) {
-				$addon_utilities->removeObject($folder, $remove->type, $remove->ref, $profile);
-				$output->writeln("$objectType '$objectId' has been deleted.");
-			} else {
-				$output->writeln("<info>$objectType '$objectId' will be deleted.</info>");
+			if ($objectId) {
+				if ($confirm) {
+					$addon_utilities->removeObject($folder, $remove->type, $remove->ref, $profile);
+					$output->writeln("$objectType '$objectId' has been deleted.");
+				} else {
+					$output->writeln("<info>$objectType '$objectId' will be deleted.</info>");
+				}
+				$willRemove = true;
 			}
 		}
-		if (!$confirm) {
-			$output->writeln("<error>There will be NO undo. Use the confirm option to proceed with removal.</error>");
+
+		$installedProfiles = $addon_utilities->getInstalledProfiles($folder);
+
+		if (!$confirm && ($willRemove || !empty($installedProfiles))) {
+			$output->writeln("<error>There will be NO undo, and all data in the above objects will be deleted.</error>");
+			$output->writeln("<info>Use the --confirm option to proceed with removal.</info>");
+		} elseif (!$willRemove) {
+			$output->writeln("<info>It looks like the objects for this addon have been removed already.</info>");
+		}
+		if (empty($installedProfiles)) {
+			$output->writeln("<info>It looks like the profiles for this addon have been removed from addon registry already.</info>");
 		}
 
 		if ($confirm) {
-			$installedProfiles = $addon_utilities->getInstalledProfiles($folder);
 			foreach (array_keys($installedProfiles) as $profileName) {
 				$profile = \Tiki_Profile::fromNames($repository, $profileName);
 
@@ -95,7 +107,7 @@ class AddonRemoveCommand extends Command
 				} else {
 					$output->writeln("<info>Profile $profileName was not installed or did not create any objects.</info>");
 				}
-				$addon_utilities->forgetProfile($folder, $addons[$package]->version, $profileName);
+				$addon_utilities->forgetProfileAllVersions($folder, $profileName);
 				$output->writeln("Profile $profileName forgotten from addon registry.");
 			}
 		}

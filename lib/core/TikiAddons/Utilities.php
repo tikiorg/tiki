@@ -106,6 +106,15 @@ class TikiAddons_Utilities extends TikiDb_Bridge
 		return $ret;
 	}
 
+	function forgetProfileAllVersions($folder, $profile) {
+		if (strpos($folder, '/') !== false && strpos($folder, '_') === false) {
+			$package = $folder;
+		} else {
+			$package = str_replace('_', '/', $folder);
+		}
+		$this->table('tiki_addon_profiles')->delete(array('addon' => $package, 'profile' => $profile));
+	}
+
 	function forgetProfile($folder, $version, $profile) {
 		if (strpos($folder, '/') !== false && strpos($folder, '_') === false) {
 			$package = $folder;
@@ -128,8 +137,9 @@ class TikiAddons_Utilities extends TikiDb_Bridge
 	function removeObject($folder, $type, $ref, $profile = '') {
 		// TODO add other types
 		if ($type == 'wiki_page' || $type == 'wiki' || $type == 'wiki page' || $type == 'wikipage') {
-			$pageName = $this->getObjectId($folder, $type, $ref, $profile);
-			TikiLib::lib('tiki')->remove_all_versions($pageName);
+			if ($pageName = $this->getObjectId($folder, $type, $ref, $profile)) {
+				TikiLib::lib('tiki')->remove_all_versions($pageName);
+			}
 		}
 	}
 
