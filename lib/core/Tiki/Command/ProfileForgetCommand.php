@@ -56,7 +56,7 @@ class ProfileForgetCommand extends Command
 			$transaction->commit();
 			$output->writeln('Profile forgotten.');
 		} else {
-			$output->writeln('<info>Profile was not installed.</info>');
+			$output->writeln('<info>Profile was not installed or did not create any objects.</info>');
 		}
 	}
 }
