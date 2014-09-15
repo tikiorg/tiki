@@ -10,7 +10,7 @@ function wikiplugin_twitter_info()
 	return array(
 		'name' => tra('Twitter'),
 		'documentation' => 'PluginTwitter',
-		'description' => tra('Display the activity for a twitter account'),
+		'description' => tra('Twitter Timeline. Display the activity for a twitter account'),
 		'prefs' => array('wikiplugin_twitter'),
 		'body' => '',
 		'icon' => 'img/icons/twitter.png',
@@ -29,19 +29,9 @@ function wikiplugin_twitter_info()
 				'filter' => 'digits',
 				'default' => ''
 			),
-			'shellbg' => array(
-				'required' => false,
-				'name' => tra('Transparent Shell Background'),
-				'description' => tra('Background color for the overall widget, i.e., header, footer and outside border. Default is theme default'),
-				'filter' => 'text',
-				'options' => array(
-					array('text' => tra('theme default'), 'value' => ''),
-					array('text' => tra('transparent'), 'value' => 'transparent'),
-				),
-			),
 			'theme' => array(
 				'required' => false,
-				'name' => tra(''),
+				'name' => tra('Theme'),
 				'description' => tra('Embedded timelines are available in light and dark themes for customization. The light theme is for pages that use a light colored background, while the dark theme is for pages that use a dark colored background. Default is light'),
 				'filter' => 'alpha',
 				'options' => array(
@@ -50,17 +40,17 @@ function wikiplugin_twitter_info()
 				),
 				'default' => 'light'
 			),
-			'tweetbg' => array(
-				'required' => false,
-				'name' => tra('Border color'),
-				'description' => tra('Change the border color used by the widget. Default is theme default.'),
-				'accepted' => tra('Valid HTML color codes (with beginning #) or names.'),
-				'filter' => 'text'
-			),
 			'tweetcolor' => array(
 				'required' => false,
 				'name' => tra('Link color'),
 				'description' => tra('Text color for individual tweets. Default is theme default.'),
+				'accepted' => tra('Valid HTML color codes (with beginning #) or names.'),
+				'filter' => 'text'
+			),
+			'tweetbg' => array(
+				'required' => false,
+				'name' => tra('Border color'),
+				'description' => tra('Change the border color used by the widget. Default is theme default.'),
 				'accepted' => tra('Valid HTML color codes (with beginning #) or names.'),
 				'filter' => 'text'
 			),
@@ -79,6 +69,61 @@ function wikiplugin_twitter_info()
 				'filter' => 'text',
 				'default' => 'auto'
 			),
+			'noheader' => array(
+				'required' => false,
+				'advanced' => true,
+				'name' => tra('Layout Option: No Header'),
+				'description' => tra('Default is with Header'),
+				'filter' => 'text',
+				'options' => array(
+					array('text' => tra('Header'), 'value' => ''),
+					array('text' => tra('No Header'), 'value' => 'y'),
+				),
+			),
+			'nofooter' => array(
+				'required' => false,
+				'advanced' => true,
+				'name' => tra('Layout Option: No Footer'),
+				'description' => tra('Default is with Footer'),
+				'filter' => 'text',
+				'options' => array(
+					array('text' => tra('Footer'), 'value' => ''),
+					array('text' => tra('No Footer'), 'value' => 'y'),
+				),
+			),
+			'noborders' => array(
+				'required' => false,
+				'advanced' => true,
+				'name' => tra('Layout Option: No Borders'),
+				'description' => tra('Default is with Borders'),
+				'filter' => 'text',
+				'options' => array(
+					array('text' => tra('Borders'), 'value' => ''),
+					array('text' => tra('No Borders'), 'value' => 'y'),
+				),
+			),
+			'noscrollbar' => array(
+				'required' => false,
+				'advanced' => true,
+				'name' => tra('Layout Option: No Scrollbar'),
+				'description' => tra('Default is with Scrollbar'),
+				'filter' => 'text',
+				'options' => array(
+					array('text' => tra('Scrollbar'), 'value' => ''),
+					array('text' => tra('No Scrollbar'), 'value' => 'y'),
+				),
+			),
+			'shellbg' => array(
+				'required' => false,
+				'advanced' => true,
+				'name' => tra('Layout Option: Transparent Background'),
+				'description' => tra('Transparent Shell Background. Default is theme default'),
+				'filter' => 'text',
+				'options' => array(
+					array('text' => tra('Theme default'), 'value' => ''),
+					array('text' => tra('Transparent'), 'value' => 'transparent'),
+				),
+			),
 		),
 	);
 }
@@ -96,7 +141,15 @@ function wikiplugin_twitter($data, $params)
 	$tweet = preg_replace('/[^#0-9a-zA-Z%\/=]/','',$tweet);
 	$widgetId = preg_replace('/[^0-9]/','',$widgetId);
 	if ( $theme != 'dark' ) { $theme = 'light'; }
-	if ( $shellbg != 'transparent' ) { $shellbg = ''; }
+	$datachrome = array();
+	if ( $noheader == 'y' ) { $datachrome[] = 'noheader'; }
+	if ( $nofooter == 'y' ) { $datachrome[] = 'nofooter'; }
+	if ( $noborders == 'y' ) { $datachrome[] = 'noborders'; }
+	if ( $noscrollbar == 'y' ) { $datachrome[] = 'noscrollbar'; }
+	if ( $shellbg == 'transparent' ) { $datachrome[] = 'transparent' ; }
+	if ( count($datachrome) > 0 ) {
+		$datachromehtml = "data-chrome=' " . implode(' ',$datachrome) . "' ";
+	}
 	if ( $width != 'auto' ) { $width = preg_replace('/[^0-9]/','',$width); }
 	$height = (int)$height;
 
@@ -104,7 +157,7 @@ function wikiplugin_twitter($data, $params)
 	// and https://dev.twitter.com/web/embedded-timelines
 	// Note: the $widgetId is more important than the $tweet in defining what is displayed
 	$html = "<a class=\"twitter-timeline\"  href=\"https://twitter.com/$tweet\" data-widget-id=\"$widgetId\"
-data-chrome=' " . (empty($shellbg)?"":"transparent") . "' 
+$datachromehtml 
 " . (empty($tweetlimit)?'':" data-tweet-limit='$tweetlimit'\n") . 
 (empty($tweetcolor)?"":" data-link-color='$tweetcolor'\n") .
 (empty($tweetbg)?"":" data-border-color='$tweetbg'\n") .
