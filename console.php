@@ -84,6 +84,7 @@ if ($isInstalled) {
 if ($isInstalled && ! $installer->requiresUpdate()) {
 	$console->add(new Tiki\Command\AddonInstallCommand);
 	$console->add(new Tiki\Command\AddonRemoveCommand);
+	$console->add(new Tiki\Command\AddonUpgradeCommand);
 	$console->add(new Tiki\Command\DailyReportSendCommand);
 	$console->add(new Tiki\Command\GoalCheckCommand);
 	$console->add(new Tiki\Command\IndexRebuildCommand);
@@ -100,6 +101,7 @@ if ($isInstalled && ! $installer->requiresUpdate()) {
 } else {
 	$console->add(new Tiki\Command\UnavailableCommand('addon:install'));
 	$console->add(new Tiki\Command\UnavailableCommand('addon:remove'));
+	$console->add(new Tiki\Command\UnavailableCommand('addon:upgrade'));
 	$console->add(new Tiki\Command\UnavailableCommand('daily-report:send'));
 	$console->add(new Tiki\Command\UnavailableCommand('goal:check'));
 	$console->add(new Tiki\Command\UnavailableCommand('index:rebuild'));

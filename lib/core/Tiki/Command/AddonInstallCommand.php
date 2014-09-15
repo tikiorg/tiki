@@ -58,13 +58,18 @@ class AddonInstallCommand extends Command
 
 		if (empty(glob(TIKI_PATH . '/addons/' . $folder . '/profiles/*.yml'))) {
 			$output->writeln("<error>No profiles found.</error>");
+			return false;
 		}
 
-		foreach (glob(TIKI_PATH . '/addons/' . $folder . '/profiles/*.yml') as $file) {
-			if (!$ignoredepends) {
-				$addon_utilities->checkDependencies($folder);
-			}
+		if (!$ignoredepends) {
+			$addon_utilities->checkDependencies($folder);
+		}
 
+		$addons = \TikiAddons::getInstalled();
+		$tikilib = \TikiLib::lib('tiki');
+		$installer = new \Tiki_Profile_Installer;
+
+		foreach (glob(TIKI_PATH . '/addons/' . $folder . '/profiles/*.yml') as $file) {
 			$profileName = str_replace('.yml', '', basename($file));
 			$profile = \Tiki_Profile::fromNames($repository, $profileName);
 
@@ -73,12 +78,7 @@ class AddonInstallCommand extends Command
 				continue;
 			}
 
-			$tikilib = \TikiLib::lib('tiki');
-
-			$installer = new \Tiki_Profile_Installer;
 			$isInstalled = $installer->isInstalled($profile);
-
-			$addons = \TikiAddons::getInstalled();
 
 			if ($isInstalled && $reapply) {
 				$installer->forget($profile);

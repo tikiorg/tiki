@@ -83,6 +83,9 @@ class AddonRemoveCommand extends Command
 			$output->writeln("<info>It looks like the profiles for this addon have been removed from addon registry already.</info>");
 		}
 
+		$tikilib = \TikiLib::lib('tiki');
+		$installer = new \Tiki_Profile_Installer;
+
 		if ($confirm) {
 			foreach (array_keys($installedProfiles) as $profileName) {
 				$profile = \Tiki_Profile::fromNames($repository, $profileName);
@@ -92,12 +95,7 @@ class AddonRemoveCommand extends Command
 					continue;
 				}
 
-				$tikilib = \TikiLib::lib('tiki');
-
-				$installer = new \Tiki_Profile_Installer;
 				$isInstalled = $installer->isInstalled($profile);
-
-				$addons = \TikiAddons::getInstalled();
 
 				if ($isInstalled) {
 					$transaction = $tikilib->begin();

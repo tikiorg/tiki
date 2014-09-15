@@ -158,4 +158,19 @@ class TikiAddons_Utilities extends TikiDb_Bridge
 			return $this->table('tiki_profile_symbols')->fetchOne('value', array('domain' => $domain, 'type' => $type, 'object' => $ref, 'profile' => $profile));
 		}
 	}
+
+	function getLastVersionInstalled($folder) {
+		if (strpos($folder, '/') !== false && strpos($folder, '_') === false) {
+			$package = $folder;
+		} else {
+			$package = str_replace('_', '/', $folder);
+		}
+		$versions = array();
+		$result = $this->table('tiki_addon_profiles')->fetchAll(array('version'), array('addon' => $package));
+		foreach ($result as $res) {
+			$versions[] = $res['version'];
+		}
+		natsort($versions);
+		return array_pop($versions);
+	}
 }
