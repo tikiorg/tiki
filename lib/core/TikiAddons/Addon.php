@@ -11,6 +11,7 @@ class TikiAddons_Addon
 	private $libraries = array();
 	private $configuration = null;
 	public $smarty = null;
+	private $utilities;
 
 	function __construct($folder)
 	{
@@ -23,11 +24,13 @@ class TikiAddons_Addon
 		}
 		$file = TIKI_PATH . "/addons/$folder/tikiaddon.json";
 		$this->configuration = json_decode(file_get_contents($file));
-		$this->checkDependencies();
+		$this->utilities = new TikiAddons_Utilities;
+		$this->utilities->checkDependencies($this->getFolder());
+		$this->utilities->checkProfilesInstalled($this->getFolder(), $this->getVersion());
 		if ($this->configuration->smarty) {
 			$this->smarty = new Smarty;
 			$this->smarty->setCompileDir(TIKI_PATH . '/templates_c');
-			$this->smarty->setTemplateDir(TIKI_PATH . "/addons/" . $this->getVendor() . "_" . $this->getShortName() . "/templates/");
+			$this->smarty->setTemplateDir(TIKI_PATH . "/addons/" . $this->getFolder() . "/templates/");
 			$this->smarty->setPluginsDir(
 				array(
 					TIKI_PATH . '/' . TIKI_SMARTY_DIR,    // the directory order must be like this to overload a plugin
@@ -35,7 +38,7 @@ class TikiAddons_Addon
 				)
 			);
 			$secpol = new Tiki_Security_Policy($this->smarty);
-			$secpol->secure_dir[] = dirname(TIKI_PATH . "/addons/" . $this->getVendor() . "_" . $this->getShortName() . "/templates/");
+			$secpol->secure_dir[] = dirname(TIKI_PATH . "/addons/" . $this->getFolder() . "/templates/");
 			$this->smarty->enableSecurity($secpol);
 			$this->smarty->assign('prefs', $GLOBALS['prefs']);
 		}
@@ -61,6 +64,11 @@ class TikiAddons_Addon
 		return $this->configuration->url;
 	}
 
+	function getFolder()
+	{
+		return str_replace('/', '_', $this->configuration->package);
+	}
+
 	function getVendor()
 	{
 		$parts = explode('/', $this->getPackage());
@@ -81,11 +89,6 @@ class TikiAddons_Addon
 		}
 	}
 
-	function getSemanticVersion($version)
-	{
-		return explode('.', $version);
-	}
-
 	function lib($name)
 	{
 		if (isset($this->libraries[$name])) {
@@ -101,47 +104,5 @@ class TikiAddons_Addon
 
 		unlink(TIKI_PATH . '/temp/cache/container.php'); // Remove the container cache to help transition
 		throw new Exception(tr("%0 library not found. It may be a typo or caused by a recent update.", $name));
-	}
-
-	private function checkDependencies() {
-		$installed = array();
-		$versions = array();
-		foreach (Tikiaddons::getInstalled() as $conf) {
-			$versions[$conf->package] = $conf->version;
-			$installed[] = $conf->package;
-		}
-		foreach ($this->getDepends() as $depend) {
-			if (!in_array($depend->package, $installed)) {
-				throw new Exception($this->getPackage() . tra(' cannot load because it is missing the following dependency: ') . $depend->package);
-			}
-			if (!$this->checkVersionMatch($versions[$depend->package], $depend->version)) {
-				throw new Exception($this->getPackage() . tra(' cannot load because it is missing a required version of a dependency: ') . $depend->package . ' versiom ' . $depend->version);
-			}
-		}
-		return true;
-	}
-
-	function checkVersionMatch($version, $pattern) {
-		$semanticVersion = $this->getSemanticVersion($version);
-		$semanticPattern = $this->getSemanticVersion($pattern);
-		foreach ($semanticPattern as $k => $v) {
-			if (!isset($semanticVersion[$k])) {
-				$semanticVersion[$k] = 0;
-			}
-			if (strpos($v, '-') !== false) {
-				if ((int) $semanticVersion[$k] > (int) str_replace('-', '', $v)) {
-					return false;
-				}
-			} elseif (strpos($v, '+') !== false) {
-				if ((int) $semanticVersion[$k] < (int) str_replace('+', '', $v)) {
-					return false;
-				}
-			} elseif ($v != '*') {
-				if ((int) $semanticVersion[$k] !== (int) $v) {
-					return false;
-				}
-			}
-		}
-		return true;
 	}
 }

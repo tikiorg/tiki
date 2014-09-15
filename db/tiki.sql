@@ -3827,3 +3827,13 @@ CREATE TABLE `tiki_goal_events` (
 	`user` VARCHAR(200) NOT NULL,
 	`groups` BLOB NOT NULL
 ) ENGINE=MyISAM;
+
+DROP TABLE IF EXISTS `tiki_addon_profiles`;
+CREATE TABLE `tiki_addon_profiles` (
+  `addon` VARCHAR(100),
+  `version` VARCHAR(100),
+  `profile` VARCHAR(100),
+  `install_date` TIMESTAMP,
+  PRIMARY KEY (`addon`,`version`,`profile`)
+) ENGINE=MyISAM;
+
