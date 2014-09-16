@@ -40,12 +40,17 @@ function module_menu_info()
 			'bootstrap' => array(
 				'name' => tra('Use Bootstrap menus'),
 				'description' => tra('').' ( y / n )',
-				'default' => 'y'
+				'default' => 'y',
 			),
 			'navbar_toggle' => array(
 				'name' => tra('Show Navbar Toggle Button'),
 				'description' => tra('Used in Bootstrap navbar menus when viewport is too narrow for menu items').' ( y / n )',
-				'default' => 'y'
+				'default' => 'y',
+			),
+			'navbar_class' => array(
+				'name' => tra('CSS class for the menu nav element'),
+				'description' => tra(''),
+				'default' => 'navbar navbar-default',
 			),
 			'css' => array(
 				'name' => tra('CSS/Superfish'),
