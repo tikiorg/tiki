@@ -955,6 +955,10 @@ class Comments extends TikiLib
 			$forumLanguage = ''
 	)
 	{
+		if (!$forumId && empty($att_store_dir)) {
+			// Set new default location for forum attachments (only affect new forums for backward compatibility))
+			$att_store_dir = 'files/forums/';
+		}
 
 		$data = array(
 			'name' => $name,
