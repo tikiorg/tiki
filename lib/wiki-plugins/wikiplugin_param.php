@@ -35,7 +35,13 @@ function wikiplugin_param_info()
 					array('text' => tra('POST'), 'value' => 'post'),
 					array('text' => tra('COOKIE'), 'value' => 'cookie'),
 				),
-			)
+			),
+			'value' => array(
+				'required' => false,
+				'name' => tra('Value'),
+				'description' => tra('Value to test for. If empty then just tests if the named params are set and not "empty".'),
+				'filter' => 'text',
+			),
 		)
 	);
 }
@@ -70,7 +76,12 @@ function wikiplugin_param($data, $params)
 				$value = isset($_REQUEST[$name]) ? $_REQUEST[$name] : null;
 				break;
 		}
-		if (empty($value)) {	// multiple "names" work as AND
+		if (isset($params['value'])) {
+			if ($value !== $params['value']) {
+				$test = false;
+				break;
+			}
+		} else if (empty($value)) {	// multiple "names" work as AND
 			$test = false;
 			break;
 		}
