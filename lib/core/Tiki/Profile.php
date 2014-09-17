@@ -673,17 +673,23 @@ class Tiki_Profile
 				if ( strpos($key, 'tiki_p_') !== 0 )
 					unset($permissions[$key]);
 
+			if (TikiLib::lib('user')->group_exists($groupName)) {
+				$groupInfo = TikiLib::lib('user')->get_group_info($groupName);
+			} else {
+				$groupInfo = array();
+			}
+
 			$defaultInfo = array(
-				'description' => '',
-				'home' => '',
-				'user_tracker' => 0,
-				'user_tracker_field' => 0,
-				'group_tracker' => 0,
-				'group_tracker_field' => 0,
-				'user_signup' => 'n',
-				'default_category' => 0,
-				'theme' => '',
-				'registration_fields' => array(),
+				'description' => !empty($groupInfo['groupDesc']) ? $groupInfo['groupDesc'] : '',
+				'home' => !empty($groupInfo['groupHome']) ? $groupInfo['groupHome'] : '',
+				'user_tracker' => !empty($groupInfo['usersTrackerId']) ? $groupInfo['usersTrackerId'] : 0,
+				'user_tracker_field' => !empty($groupInfo['usersFieldId']) ? $groupInfo['usersFieldId'] : 0,
+				'group_tracker' => !empty($groupInfo['groupTrackerId']) ? $groupInfo['groupTrackerId'] : 0,
+				'group_tracker_field' => !empty($groupInfo['groupFieldId']) ? $groupInfo['groupFieldId'] :0,
+				'user_signup' => !empty($groupInfo['userChoice']) ? $groupInfo['userChoice'] : 'n',
+				'default_category' => !empty($groupInfo['groupDefCat']) ? $groupInfo['groupDefCat'] : 0,
+				'theme' => !empty($groupInfo['groupTheme']) ? $groupInfo['groupTheme'] : '',
+				'registration_fields' => !empty($groupInfo['registrationUsersFieldIds']) ? explode(':', $groupInfo['registrationUsersFieldIds']) : array(),
 				'include' => array(),
 				'autojoin' => 'n',
 			);
