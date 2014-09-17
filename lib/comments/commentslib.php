@@ -3601,7 +3601,7 @@ class Comments extends TikiLib
      * @param $threadId
      * @return mixed
      */
-    private function find_root($threadId)
+    function find_root($threadId)
 	{
 		$parent = $this->table('tiki_comments')->fetchOne('parentId', array('threadId' => $threadId));
 
