@@ -269,6 +269,8 @@ ALTER TABLE `tiki_user_mailin_struct` ENGINE=InnoDB;
 ALTER TABLE `tiki_activity_stream` ENGINE=InnoDB;
 ALTER TABLE `tiki_activity_stream_mapping` ENGINE=InnoDB;
 ALTER TABLE `tiki_activity_stream_rules` ENGINE=InnoDB;
+ALTER TABLE `tiki_user_monitors` ENGINE=InnoDB;
+ALTER TABLE `tiki_output` ENGINE=InnoDB;
 ALTER TABLE `tiki_goals` ENGINE=InnoDB;
 ALTER TABLE `tiki_goal_events` ENGINE=InnoDB;
 
