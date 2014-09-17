@@ -58,7 +58,7 @@ class AddonRemoveCommand extends Command
 			} else {
 				$profile = $remove->profile;
 			}
-			$objectId = $addon_utilities->getObjectId($folder, $remove->type, $remove->ref, $profile);
+			$objectId = $addon_utilities->getObjectId($folder, $remove->ref, $profile);
 			$objectType = $remove->type;
 			if ($objectId) {
 				if ($confirm) {

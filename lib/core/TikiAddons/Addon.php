@@ -41,6 +41,7 @@ class TikiAddons_Addon
 			$secpol->secure_dir[] = dirname(TIKI_PATH . "/addons/" . $this->getFolder() . "/templates/");
 			$this->smarty->enableSecurity($secpol);
 			$this->smarty->assign('prefs', $GLOBALS['prefs']);
+			$this->smarty->assign('tikiaddon_package', $this->configuration->package);
 		}
 	}
 
