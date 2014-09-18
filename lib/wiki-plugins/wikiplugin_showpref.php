@@ -26,19 +26,27 @@ function wikiplugin_showpref_info()
 
 function wikiplugin_showpref($data, $params)
 {
-	global $user, $prefs;
+	global $prefs;
 	$tikilib = TikiLib::lib('tiki');
-	$tikilib->get_user_preference($user, 'pref_filters', 'basic');
-	// Security public prefs only, you would not want all prefs to be displayed via wiki syntax
-	
-	$name=$params['pref'];
-	if ( false !== $pos = strpos($name, '_') ) {
-			$file = substr($name, 0, $pos);
-		} else {
-			$file = 'global';
-		}
+
+	$name = $params['pref'];
+	if ( substr($name, 0, 3) == 'ta_' ) {
+		$midpos = strpos($name, '_', 3);
+		$pos = strpos($name, '_', $midpos + 1);
+		$file = substr($name, 0, $pos);
+        } elseif ( false !== $pos = strpos($name, '_') ) {
+		$file = substr($name, 0, $pos);
+	} else {
+		$file = 'global';
+	}
 
 	$inc_file = "lib/prefs/{$file}.php";
+	if (substr($file, 0, 3) == "ta_") {
+		$paths = TikiAddons::getPaths();
+		$package = str_replace('_', '/', substr($file, 3));
+		$inc_file = $paths[$package] .  "/prefs/{$file}.php";
+	}
+	
 	if (file_exists($inc_file)) {
 		require_once $inc_file;
 		$function = "prefs_{$file}_list";
@@ -49,10 +57,11 @@ function wikiplugin_showpref($data, $params)
 		}
 	}
 
-	if (empty($preffile[$name]['public'])) {
-		return '';
+	// Security public prefs only, you would not want all prefs to be displayed via wiki syntax
+
+	if (isset($preffile[$name]['public']) && $preffile[$name]['public']) {
+		return $tikilib->get_preference($name);	
 	} else  {
-		return $tikilib->get_preference($name);
+		return '';
 	}	
-	return '';
 }
