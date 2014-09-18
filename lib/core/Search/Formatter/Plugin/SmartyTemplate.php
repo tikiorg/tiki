@@ -70,6 +70,7 @@ class Search_Formatter_Plugin_SmartyTemplate implements Search_Formatter_Plugin_
 			$smarty->assign($key, $value);
 		}
 
+		$smarty->assign('prefs', $GLOBALS['prefs']);
 		$smarty->assign('results', $entries);
 		$smarty->assign(
 			'facets',
