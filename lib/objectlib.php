@@ -212,6 +212,7 @@ class ObjectLib extends TikiLib
 	{
 		$supported = [
 			'category' => 'category',
+			'forum' => 'forum',
 			'group' => 'group',
 			'tracker' => 'tracker',
 			'tracker_field' => 'trackerfield',

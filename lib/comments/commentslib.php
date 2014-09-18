@@ -1023,10 +1023,21 @@ class Comments extends TikiLib
 
 		if ($forumId) {
 			$forums->update($data, array('forumId' => (int) $forumId));
+			$event = 'tiki.forum.update';
 		} else {
 			$data['created'] = $this->now;
 			$forumId = $forums->insert($data);
+			$event = 'tiki.forum.create';
 		}
+
+		TikiLib::events()->trigger($event, [
+			'type' => 'forum',
+			'object' => $forumId,
+			'user' => $GLOBALS['user'],
+			'title' => $name,
+			'description' => $description,
+			'forum_section' => $section,
+		]);
 
 		return $forumId;
 	}
@@ -1051,9 +1062,21 @@ class Comments extends TikiLib
      */
     function remove_forum($forumId)
 	{
+		$forum = $this->get_forum($forumId);
+
 		$this->table('tiki_forums')->delete(array('forumId' => $forumId));
 		$this->remove_object("forum", $forumId);
 		$this->table('tiki_forum_attachments')->delete(array('forumId' => $forumId));
+
+		TikiLib::events()->trigger('tiki.forum.delete', [
+			'type' => 'forum',
+			'object' => $forumId,
+			'user' => $GLOBALS['user'],
+			'title' => $forum['name'],
+			'description' => $forum['description'],
+			'forum_section' => $forum['section'],
+		]);
+
 		return true;
 	}
 
