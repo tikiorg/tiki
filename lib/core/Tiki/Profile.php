@@ -7,8 +7,8 @@
 
 class Tiki_Profile
 {
-	const SHORT_PATTERN = '/^\$((([\w\.-]+):)?((\w+):))?(\w+)$/';
-	const LONG_PATTERN = '/\$profileobject:((([\w\.-]+):)?((\w+):))?(\w+)\$/';
+	const SHORT_PATTERN = '/^\$((([\w\.\/-]+):)?((\w+):))?(\w+)$/';
+	const LONG_PATTERN = '/\$profileobject:((([\w\.\/-]+):)?((\w+):))?(\w+)\$/';
 	const INFO_REQUEST = '/\$profilerequest:([^\$\|]+)(\|(\w+))?\$([^\$]*)\$/';
 	const PREFERENCE_PATTERN = '/\$preference:(\w+)\$/';
 
@@ -455,7 +455,7 @@ class Tiki_Profile
 				$array[] = $this->convertReference($row);
 		}
 
-		$array = array_unique($array);
+		$array = array_unique($array, SORT_REGULAR);
 
 		return $array;
 	} // }}}
@@ -509,7 +509,9 @@ class Tiki_Profile
 
 		if ( $recursive ) {
 			foreach ( $profiles as $profile ) {
-				$profiles = array_merge($profiles, $profile->getRequiredProfiles(true, $profiles));
+				if (is_object($profile)) {
+					$profiles = array_merge($profiles, $profile->getRequiredProfiles(true, $profiles));
+				}
 			}
 		}
 
@@ -673,17 +675,22 @@ class Tiki_Profile
 				if ( strpos($key, 'tiki_p_') !== 0 )
 					unset($permissions[$key]);
 
+			if (TikiLib::lib('user')->group_exists($groupName)) {
+				$groupInfo = TikiLib::lib('user')->get_group_info($groupName);
+			} else {
+				$groupInfo = array();
+			}
 			$defaultInfo = array(
-				'description' => '',
-				'home' => '',
-				'user_tracker' => 0,
-				'user_tracker_field' => 0,
-				'group_tracker' => 0,
-				'group_tracker_field' => 0,
-				'user_signup' => 'n',
-				'default_category' => 0,
-				'theme' => '',
-				'registration_fields' => array(),
+				'description' => !empty($groupInfo['groupDesc']) ? $groupInfo['groupDesc'] : '',
+				'home' => !empty($groupInfo['groupHome']) ? $groupInfo['groupHome'] : '',
+				'user_tracker' => !empty($groupInfo['usersTrackerId']) ? $groupInfo['usersTrackerId'] : 0,
+				'user_tracker_field' => !empty($groupInfo['usersFieldId']) ? $groupInfo['usersFieldId'] : 0,
+				'group_tracker' => !empty($groupInfo['groupTrackerId']) ? $groupInfo['groupTrackerId'] : 0,
+				'group_tracker_field' => !empty($groupInfo['groupFieldId']) ? $groupInfo['groupFieldId'] :0,
+				'user_signup' => !empty($groupInfo['userChoice']) ? $groupInfo['userChoice'] : 'n',
+				'default_category' => !empty($groupInfo['groupDefCat']) ? $groupInfo['groupDefCat'] : 0,
+				'theme' => !empty($groupInfo['groupTheme']) ? $groupInfo['groupTheme'] : '',
+				'registration_fields' => !empty($groupInfo['registrationUsersFieldIds']) ? explode(':', $groupInfo['registrationUsersFieldIds']) : array(),
 				'include' => array(),
 				'autojoin' => 'n',
 			);
