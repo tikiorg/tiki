@@ -5,9 +5,11 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-namespace Tiki\Recommendation;
+namespace Tiki\Recommendation\Debug;
 
-class Recommendation implements EngineOutput
+use Tiki\Recommendation\EngineOutput;
+
+class SourceDocument implements EngineOutput
 {
 	private $type;
 	private $object;
@@ -20,23 +22,9 @@ class Recommendation implements EngineOutput
 		$this->title = $title;
 	}
 
-	function getType()
-	{
-		return $this->type;
-	}
-
-	function getId()
-	{
-		return $this->object;
-	}
-
-	function getTitle()
-	{
-		return $this->title;
-	}
-
 	function __toString()
 	{
-		return tr('Recommendation: %0:%1 (%2)', $this->type, $this->object, $this->title ?: tr('Unknown'));
+		return tr('Source: %0:%1 (%2)', $this->type, $this->object, $this->title ?: tr('Unknown'));
 	}
 }
+

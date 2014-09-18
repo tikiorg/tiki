@@ -24,7 +24,7 @@ class BatchProcessor
 			list($set, $engine, $input) = $entry;
 
 			foreach ($engine->generate($input) as $rec) {
-				if (! $this->store->isReceived($input, $rec)) {
+				if ($rec instanceof Recommendation && ! $this->store->isReceived($input, $rec)) {
 					$set->add($rec);
 				}
 			}

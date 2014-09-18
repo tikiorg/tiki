@@ -103,6 +103,23 @@ class BatchTest extends \PHPUnit_Framework_TestCase implements Store\StoreInterf
 		$this->assertEquals([new U('b'), $expectB], $this->storeCalls[1]);
 	}
 
+	function testBatchIgnoresDebugInformation()
+	{
+		$engineSet = new EngineSet;
+		$engineSet->register('test-a', new Engine\FakeEngine([
+			new Debug\SourceDocument('wiki page', 'Content A'),
+			['type' => 'wiki page', 'object' => 'Content B'],
+		]));
+
+		$batch = new BatchProcessor($this, $engineSet);
+		$batch->process([new U('a')]);
+
+		$expect = new RecommendationSet('test-a');
+		$expect->add(new Recommendation('wiki page', 'Content B'));
+
+		$this->assertEquals([new U('a'), $expect], $this->storeCalls[0]);
+	}
+
 	// StoreInterface
 
 	function isReceived($input, Recommendation $recommendation)

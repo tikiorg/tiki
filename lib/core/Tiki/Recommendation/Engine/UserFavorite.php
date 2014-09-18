@@ -7,6 +7,7 @@
 
 namespace Tiki\Recommendation\Engine;
 use Tiki\Recommendation\Recommendation;
+use Tiki\Recommendation\Debug\SourceDocument;
 
 class UserFavorite implements EngineInterface
 {
@@ -35,7 +36,8 @@ class UserFavorite implements EngineInterface
 		$result = $query->search($this->lib->getIndex());
 		$content = '';
 		foreach ($result as $row) {
-			$content .= ' ' . $row['contents'];
+			yield new SourceDocument($row['object_type'], $row['object_id'], $row['title']);
+			$content .= ' ' . substr($row['contents'], 0, 10000);
 		}
 
 		$query = $this->lib->buildQuery([]);
@@ -45,7 +47,7 @@ class UserFavorite implements EngineInterface
 		$result = $query->search($this->lib->getIndex());
 
 		foreach ($result as $row) {
-			yield new Recommendation($row['object_type'], $row['object_id']);
+			yield new Recommendation($row['object_type'], $row['object_id'], $row['title']);
 		}
 	}
 }

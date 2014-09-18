@@ -11,20 +11,35 @@ class RecommendationSet implements \Countable, \Iterator
 {
 	private $engine;
 	private $recommendations = [];
+	private $debug = [];
 
 	function __construct($engineName)
 	{
 		$this->engine = $engineName;
 	}
 
-	function add(Recommendation $recommendation)
+	function add(EngineOutput $recommendation)
 	{
-		$this->recommendations[] = $recommendation;
+		if ($recommendation instanceof Recommendation) {
+			$this->recommendations[] = $recommendation;
+		} else {
+			$this->addDebug($recommendation);
+		}
+	}
+
+	function addDebug($info)
+	{
+		$this->debug[] = $info;
 	}
 
 	function getEngine()
 	{
 		return $this->engine;
+	}
+
+	function getDebug()
+	{
+		return new \ArrayIterator($this->debug);
 	}
 
 	function count()

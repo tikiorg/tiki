@@ -20,7 +20,11 @@ class FakeEngine implements EngineInterface
 	function generate($input)
 	{
 		foreach ($this->list as $entry) {
-			yield new Recommendation($entry['type'], $entry['object']);
+			if (is_array($entry)) {
+				yield new Recommendation($entry['type'], $entry['object']);
+			} else {
+				yield $entry;
+			}
 		}
 	}
 }
