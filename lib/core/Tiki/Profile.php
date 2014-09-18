@@ -455,7 +455,7 @@ class Tiki_Profile
 				$array[] = $this->convertReference($row);
 		}
 
-		$array = array_unique($array);
+		$array = array_unique($array, SORT_REGULAR);
 
 		return $array;
 	} // }}}
