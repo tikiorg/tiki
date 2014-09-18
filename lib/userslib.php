@@ -339,7 +339,10 @@ class UsersLib extends TikiLib
 	function validate_user($user, $pass, $challenge = '', $response = '', $validate_phase=false)
 	{
 		global $prefs;
-
+		
+		$user=str_replace(chr(0),'',$user);
+		$pass=str_replace(chr(0),'',$pass);
+		
 		if ($user != 'admin' && $prefs['feature_intertiki'] == 'y' && !empty($prefs['feature_intertiki_mymaster'])) {
 			// slave intertiki sites should never check passwords locally, just for admin
 			return false;
