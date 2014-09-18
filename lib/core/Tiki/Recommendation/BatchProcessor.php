@@ -18,8 +18,10 @@ class BatchProcessor
 		$this->engines = $engines;
 	}
 
-	function process($inputs)
+	function process()
 	{
+		$inputs = $this->store->getInputs();
+
 		foreach ($this->combined($inputs) as $entry) {
 			list($set, $engine, $input) = $entry;
 
@@ -33,6 +35,8 @@ class BatchProcessor
 				$this->store->store($input, $set);
 			}
 		}
+
+		$this->store->terminate();
 	}
 
 	private function combined($inputs)

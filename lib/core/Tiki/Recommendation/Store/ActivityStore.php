@@ -14,12 +14,41 @@ use Tiki\Recommendation\RecommendationSet;
 class ActivityStore implements StoreInterface
 {
 	private $unified;
+	private $relation;
 	private $events;
 
-	function __construct($unifiedsearch, \Tiki_Event_Manager $events)
+	private $tx;
+
+	function __construct($unifiedsearch, $relation, \Tiki_Event_Manager $events)
 	{
 		$this->unified = $unifiedsearch;
+		$this->relation = $relation;
 		$this->events = $events;
+	}
+
+	function __destruct()
+	{
+		$this->terminate();
+	}
+
+	function getInputs()
+	{
+		$db = \TikiDb::get();
+
+		$this->tx = $db->begin();
+
+		$result = $db->fetchAll('SELECT login FROM users_users u INNER JOIN tiki_user_monitors m ON u.userId = m.userId WHERE m.event = ?', ['tiki.recommendation.incoming']);
+		foreach ($result as $row) {
+			yield new Input\UserInput($row['login']);
+		}
+	}
+
+	function terminate()
+	{
+		if ($this->tx) {
+			$this->tx->commit();
+			$this->tx = null;
+		}
 	}
 
 	function isReceived($input, Recommendation $rec)
@@ -46,6 +75,12 @@ class ActivityStore implements StoreInterface
 	{
 		if ($input instanceof Input\UserInput) {
 			foreach ($recommendations as $rec) {
+				$this->relation->add_relation('tiki.recommendation.obtained', 'user', $input->getUser(), $rec->getType(), $rec->getId());
+				$this->events->trigger('tiki.save', [
+					'type' => $rec->getType(),
+					'object' => $rec->getId(),
+				]);
+
 				$this->events->trigger('tiki.recommendation.incoming', [
 					'type' => 'user',
 					'object' => $input->getUser(),

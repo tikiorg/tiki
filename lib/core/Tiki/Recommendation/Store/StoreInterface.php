@@ -15,4 +15,8 @@ interface StoreInterface
 	function isReceived($input, Recommendation $recommendation);
 
 	function store($input, RecommendationSet $recommendation);
+
+	function getInputs();
+
+	function terminate();
 }

@@ -10,6 +10,7 @@ use Tiki\Recommendation\Input\UserInput as U;
 
 class BatchTest extends \PHPUnit_Framework_TestCase implements Store\StoreInterface
 {
+	private $inputs = false;
 	private $storeCalls = [];
 	private $checkCallback;
 
@@ -24,8 +25,9 @@ class BatchTest extends \PHPUnit_Framework_TestCase implements Store\StoreInterf
 	{
 		$engineSet = new EngineSet;
 
+		$this->inputs = [new U('a'), new U('B')];
 		$batch = new BatchProcessor($this, $engineSet);
-		$batch->process([new U('a'), new U('B')]);
+		$batch->process();
 
 		$this->assertCount(0, $this->storeCalls);
 	}
@@ -38,8 +40,9 @@ class BatchTest extends \PHPUnit_Framework_TestCase implements Store\StoreInterf
 			['type' => 'wiki page', 'object' => 'Content B'],
 		]));
 
+		$this->inputs = [];
 		$batch = new BatchProcessor($this, $engineSet);
-		$batch->process([]);
+		$batch->process();
 
 		$this->assertCount(0, $this->storeCalls);
 	}
@@ -50,8 +53,9 @@ class BatchTest extends \PHPUnit_Framework_TestCase implements Store\StoreInterf
 		$engineSet->register('test-a', new Engine\FakeEngine([
 		]));
 
+		$this->inputs = [new U('a'), new U('B')];
 		$batch = new BatchProcessor($this, $engineSet);
-		$batch->process([new U('a'), new U('B')]);
+		$batch->process();
 
 		$this->assertCount(0, $this->storeCalls);
 	}
@@ -64,8 +68,9 @@ class BatchTest extends \PHPUnit_Framework_TestCase implements Store\StoreInterf
 			['type' => 'wiki page', 'object' => 'Content B'],
 		]));
 
+		$this->inputs = [new U('a')];
 		$batch = new BatchProcessor($this, $engineSet);
-		$batch->process([new U('a')]);
+		$batch->process();
 
 		$expect = new RecommendationSet('test-a');
 		$expect->add(new Recommendation('wiki page', 'Content A'));
@@ -89,8 +94,9 @@ class BatchTest extends \PHPUnit_Framework_TestCase implements Store\StoreInterf
 			['type' => 'wiki page', 'object' => 'Content B'],
 		]));
 
+		$this->inputs = [new U('a'), new U('b')];
 		$batch = new BatchProcessor($this, $engineSet);
-		$batch->process([new U('a'), new U('b')]);
+		$batch->process();
 
 		$expectA = new RecommendationSet('test-a');
 		$expectA->add(new Recommendation('wiki page', 'Content B'));
@@ -111,8 +117,9 @@ class BatchTest extends \PHPUnit_Framework_TestCase implements Store\StoreInterf
 			['type' => 'wiki page', 'object' => 'Content B'],
 		]));
 
+		$this->inputs = [new U('a')];
 		$batch = new BatchProcessor($this, $engineSet);
-		$batch->process([new U('a')]);
+		$batch->process();
 
 		$expect = new RecommendationSet('test-a');
 		$expect->add(new Recommendation('wiki page', 'Content B'));
@@ -131,5 +138,16 @@ class BatchTest extends \PHPUnit_Framework_TestCase implements Store\StoreInterf
 	function store($input, RecommendationSet $recommendation)
 	{
 		$this->storeCalls[] = func_get_args();
+	}
+
+	function getInputs()
+	{
+		$this->assertTrue(is_array($this->inputs));
+		return $this->inputs;
+	}
+
+	function terminate()
+	{
+		$this->inputs = false;
 	}
 }

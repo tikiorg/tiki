@@ -23,6 +23,9 @@ class UserFavorite implements EngineInterface
 		assert($input instanceof \Tiki\Recommendation\Input\UserInput);
 
 		$user = $input->getUser();
+		$userfavorite = (string) new \Search_Query_Relation('tiki.user.favorite.invert', 'user', $user);
+		$previously = (string) new \Search_Query_Relation('tiki.recommendation.obtained.invert', 'user', $user);
+
 		$context = new \Perms_Context($user);
 
 		$query = $this->lib->buildQuery(['searchable' => 'y']);
@@ -30,7 +33,6 @@ class UserFavorite implements EngineInterface
 
 		$query->setRange(0, 10);
 
-		$userfavorite = (string) new \Search_Query_Relation('tiki.user.favorite.invert', 'user', $user);
 		$query->filterRelation("\"$userfavorite\"");
 
 		$result = $query->search($this->lib->getIndex());
@@ -44,6 +46,7 @@ class UserFavorite implements EngineInterface
 		// Also more complete as all favorites are excluded, not only those sampled
 		$query = $this->lib->buildQuery([]);
 		$query->filterRelation("NOT \"$userfavorite\"");
+		$query->filterRelation("NOT \"$previously\"");
 		$query->filterSimilarToThese([], $content);
 		$query->filterIdentifier('y', 'searchable');
 		$query->setRange(0, 5);

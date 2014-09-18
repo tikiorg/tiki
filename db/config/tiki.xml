@@ -321,6 +321,7 @@
 		<service id="tiki.recommendation.content.set" class="Tiki\Recommendation\EngineSet" />
 		<service id="tiki.recommendation.activity.store" class="Tiki\Recommendation\Store\ActivityStore">
 			<argument type="service" id="tiki.lib.unifiedsearch" />
+			<argument type="service" id="tiki.lib.relation" />
 			<argument type="service" id="tiki.lib.events" />
 		</service>
 
