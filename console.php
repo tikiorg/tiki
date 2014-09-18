@@ -71,11 +71,13 @@ if ($isInstalled) {
 
 if ($isInstalled) {
 	$console->add(new Tiki\Command\CacheClearCommand);
+	$console->add(new Tiki\Command\LessCompileCommand);
 	$console->add(new Tiki\Command\BackupDBCommand);
 	$console->add(new Tiki\Command\BackupFilesCommand);
 	$console->add(new Tiki\Command\ProfileBaselineCommand);
 } else {
 	$console->add(new Tiki\Command\UnavailableCommand('cache:clear'));
+	$console->add(new Tiki\Command\UnavailableCommand('less:compile'));
 	$console->add(new Tiki\Command\UnavailableCommand('database:backup'));
 	$console->add(new Tiki\Command\UnavailableCommand('backup:files'));
 	$console->add(new Tiki\Command\UnavailableCommand('profile:baseline'));
