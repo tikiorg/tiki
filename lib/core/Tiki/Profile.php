@@ -509,7 +509,9 @@ class Tiki_Profile
 
 		if ( $recursive ) {
 			foreach ( $profiles as $profile ) {
-				$profiles = array_merge($profiles, $profile->getRequiredProfiles(true, $profiles));
+				if (is_object($profile)) {
+					$profiles = array_merge($profiles, $profile->getRequiredProfiles(true, $profiles));
+				}
 			}
 		}
 
