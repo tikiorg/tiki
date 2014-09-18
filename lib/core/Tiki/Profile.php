@@ -7,8 +7,8 @@
 
 class Tiki_Profile
 {
-	const SHORT_PATTERN = '/^\$((([\w\.-]+):)?((\w+):))?(\w+)$/';
-	const LONG_PATTERN = '/\$profileobject:((([\w\.-]+):)?((\w+):))?(\w+)\$/';
+	const SHORT_PATTERN = '/^\$((([\w\.\/-]+):)?((\w+):))?(\w+)$/';
+	const LONG_PATTERN = '/\$profileobject:((([\w\.\/-]+):)?((\w+):))?(\w+)\$/';
 	const INFO_REQUEST = '/\$profilerequest:([^\$\|]+)(\|(\w+))?\$([^\$]*)\$/';
 	const PREFERENCE_PATTERN = '/\$preference:(\w+)\$/';
 
