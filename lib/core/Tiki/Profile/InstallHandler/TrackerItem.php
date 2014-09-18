@@ -69,6 +69,7 @@ class Tiki_Profile_InstallHandler_TrackerItem extends Tiki_Profile_InstallHandle
 		$data = $this->getData();
 		$converters = $this->getConverters();
 		$this->replaceReferences($data);
+		$this->convertMode($data);
 
 		foreach ( $data as $key => &$value )
 			if ( isset( $converters[$key] ) )
