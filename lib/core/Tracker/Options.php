@@ -51,7 +51,7 @@ class Tracker_Options
 		return $options;
 	}
 
-	public function fromArray(array $rawData, array $typeInfo)
+	public static function fromArray(array $rawData, array $typeInfo)
 	{
 		$options = new Tracker_Options;
 		$options->info = $typeInfo;
