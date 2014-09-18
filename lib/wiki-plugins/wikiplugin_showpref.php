@@ -26,7 +26,7 @@ function wikiplugin_showpref_info()
 
 function wikiplugin_showpref($data, $params)
 {
-	global $prefs;
+	global $user, $prefs;
 	$tikilib = TikiLib::lib('tiki');
 	$tikilib->get_user_preference($user, 'pref_filters', 'basic');
 	// Security public prefs only, you would not want all prefs to be displayed via wiki syntax
@@ -43,7 +43,7 @@ function wikiplugin_showpref($data, $params)
 		require_once $inc_file;
 		$function = "prefs_{$file}_list";
 		if ( function_exists($function) ) {
-			$preffile = $function($partial);
+			$preffile = $function();
 		} else {
 			$preffile = array();
 		}
