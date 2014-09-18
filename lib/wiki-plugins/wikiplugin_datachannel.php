@@ -278,6 +278,9 @@ function wikiplugin_datachannel( $data, $params )
 				if (!empty($params['debug']) && $params['debug'] === 'y') {
 					$installer->setDebug();
 				}
+
+				$installer->disablePrefixDependencies();
+
 				$params['emptyCache'] = isset($params['emptyCache']) ? $params['emptyCache'] : 'all';
 				$success = $installer->install($profile, $params['emptyCache']) && $success;
 
