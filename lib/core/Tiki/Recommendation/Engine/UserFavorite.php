@@ -30,8 +30,8 @@ class UserFavorite implements EngineInterface
 
 		$query->setRange(0, 10);
 
-		$token = (string) new \Search_Query_Relation('tiki.user.favorite.invert', 'user', $user);
-		$query->filterRelation("\"$token\"");
+		$userfavorite = (string) new \Search_Query_Relation('tiki.user.favorite.invert', 'user', $user);
+		$query->filterRelation("\"$userfavorite\"");
 
 		$result = $query->search($this->lib->getIndex());
 		$content = '';
@@ -40,8 +40,11 @@ class UserFavorite implements EngineInterface
 			$content .= ' ' . substr($row['contents'], 0, 10000);
 		}
 
+		// No need to get more like these to exclude document as it can be done more efficiently using a relation
+		// Also more complete as all favorites are excluded, not only those sampled
 		$query = $this->lib->buildQuery([]);
-		$query->filterSimilarToThese($result, $content);
+		$query->filterRelation("NOT \"$userfavorite\"");
+		$query->filterSimilarToThese([], $content);
 		$query->filterIdentifier('y', 'searchable');
 		$query->setRange(0, 5);
 		$result = $query->search($this->lib->getIndex());
