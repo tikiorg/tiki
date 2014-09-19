@@ -404,7 +404,7 @@ $icons = array(
 		'disabled' => $prefs['feature_file_galleries'] != 'y',
 		'description' => tr('Defaults and configuration for file galleries'),
 		'help' => 'File+Gallery',
-		'icon_class' => 'fa fa-floppy-save',
+		'icon_class' => 'fa fa-floppy-saved',
 	),
 	"blogs" => array(
 		'position' => '0px -315px;',
