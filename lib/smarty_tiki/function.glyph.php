@@ -17,7 +17,7 @@ function smarty_function_glyph($params)
 		else
 			$title = $params['title'];
 	}
-	$cssclass = "glyphicon glyphicon-{$params['name']}";
+	$cssclass = "fa fa-{$params['name']}";
 	if (! empty($params['class']))
 		$cssclass .= " " . $params['class'];
 	if ($has_title)

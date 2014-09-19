@@ -66,7 +66,7 @@
 					{include file="register-form.tpl"}
 					{if $merged_prefs.feature_antibot eq 'y'}{include file='antibot.tpl' td_style='formcolor'}{/if}
 					<div class="form-group text-center">
-						<button class="btn btn-primary registerSubmit submit" name="register" type="submit">{tr}Register{/tr} <!--span class="glyphicon glyphicon-ok"></span--></button>
+						<button class="btn btn-primary registerSubmit submit" name="register" type="submit">{tr}Register{/tr} <!--i class="fa fa-check"></i--></button>
 					</div>
 			</form>
 		{/if}

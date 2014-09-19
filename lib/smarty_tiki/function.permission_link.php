@@ -20,7 +20,7 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
  *                       title, the name of the object
  *
  * Almost mandatory: mode, display style of the button
- *                      glyph: simple glyphicon
+ *                      glyph: simple fa (Font Awesome)
  *                      icon: classic tiki icon
  *                      link: plain text link (label)
  *                      text: glyph + label

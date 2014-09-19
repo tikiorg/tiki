@@ -352,7 +352,7 @@
 
         <div class="alert alert-info alert-dismissable col-sm-10 col-sm-push-2" id="commentshelp">
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-			<h4><span class="glyphicon glyphicon-info-sign"></span> {tr}Editing posts:{/tr}</h4>
+			<h4><i class="fa fa-info-circle"></i> {tr}Editing posts:{/tr}</h4>
             <span class="help-block">
                 {tr}Use{/tr} [http://example.org] {tr}or{/tr} [http://example.org|description] {tr}for links{/tr}<br>
 	    		{tr}HTML tags are not allowed inside posts{/tr}

@@ -32,7 +32,7 @@
 		<div class="panel-heading">
 			<div class="input-group">
 				<span class="input-group-addon">
-					<span class="glyphicon glyphicon-search"></span>
+					<i class="fa fa-search"></i>
 				</span>
 				<input type="text" placeholder="{$object_selector_multi.placeholder|escape}..." value="" class="filter form-control" autocomplete="off">
 				<div class="input-group-btn">

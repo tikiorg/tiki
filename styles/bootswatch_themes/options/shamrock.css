@@ -66,6 +66,9 @@ body.navbar-padding {
     border-bottom: 0;
   }
 }
+.modal.in {
+  overflow-y: auto;
+}
 header.page-header::before,
 .layout_social > .container:before {
   content: none;
@@ -2536,8 +2539,8 @@ input[type="button"].btn-block {
 }
 @font-face {
   font-family: 'Glyphicons Halflings';
-  src: url('../../../vendor/twitter/bootstrap/fonts//glyphicons-halflings-regular.eot');
-  src: url('../../../vendor/twitter/bootstrap/fonts//glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('../../../vendor/twitter/bootstrap/fonts//glyphicons-halflings-regular.woff') format('woff'), url('../../../vendor/twitter/bootstrap/fonts//glyphicons-halflings-regular.ttf') format('truetype'), url('../../../vendor/twitter/bootstrap/fonts//glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
+  src: url('../../../vendor/fortawesome/font-awesome/fonts//glyphicons-halflings-regular.eot');
+  src: url('../../../vendor/fortawesome/font-awesome/fonts//glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('../../../vendor/fortawesome/font-awesome/fonts//glyphicons-halflings-regular.woff') format('woff'), url('../../../vendor/fortawesome/font-awesome/fonts//glyphicons-halflings-regular.ttf') format('truetype'), url('../../../vendor/fortawesome/font-awesome/fonts//glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
 }
 .glyphicon {
   position: relative;
