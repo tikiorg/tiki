@@ -614,6 +614,12 @@ if ($prefs['feature_user_watches'] == 'y' and $tiki_p_watch_trackers == 'y') {
 		}
 	}
 }
+
+if ($tracker_info['useComments'] == 'y') {
+	$comCount = $trklib->get_item_nb_comments($_REQUEST["itemId"]);
+	$smarty->assign("comCount", $comCount);
+}
+
 if ($tracker_info["useAttachments"] == 'y') {
 	if (isset($_REQUEST["removeattach"])) {
 		$_REQUEST["show"] = "att";
