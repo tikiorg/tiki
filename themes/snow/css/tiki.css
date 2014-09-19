@@ -886,7 +886,7 @@ body {
   font-size: 14px;
   line-height: 1.42857143;
   color: #333333;
-  background-color: url('snow/flakesptn2.jpg');
+  background-color: url('../images/flakesptn2.jpg');
 }
 input,
 button,
@@ -932,7 +932,7 @@ img {
 .img-thumbnail {
   padding: 4px;
   line-height: 1.42857143;
-  background-color: url('snow/flakesptn2.jpg');
+  background-color: url('../images/flakesptn2.jpg');
   border: 1px solid #dddddd;
   border-radius: 4px;
   -webkit-transition: all 0.2s ease-in-out;
@@ -2080,7 +2080,7 @@ th {
   border-top: 2px solid #dddddd;
 }
 .table .table {
-  background-color: url('snow/flakesptn2.jpg');
+  background-color: url('../images/flakesptn2.jpg');
 }
 .table-condensed > thead > tr > th,
 .table-condensed > tbody > tr > th,
@@ -3123,7 +3123,7 @@ tbody.collapse.in {
   list-style: none;
   font-size: 14px;
   text-align: left;
-  background-color: url('snow/flakesptn2.jpg');
+  background-color: url('../images/flakesptn2.jpg');
   border: 1px solid #cccccc;
   border: 1px solid #6a6a6a;
   border-radius: 4px;
@@ -3154,7 +3154,7 @@ tbody.collapse.in {
 .dropdown-menu > li > a:focus {
   text-decoration: none;
   color: #262626;
-  background-color: url('snow/flakesptn3.jpg') transparent;
+  background-color: url('../images/flakesptn3.jpg') transparent;
 }
 .dropdown-menu > .active > a,
 .dropdown-menu > .active > a:hover,
@@ -3575,7 +3575,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .nav > li > a:hover,
 .nav > li > a:focus {
   text-decoration: none;
-  background-color: url('snow/flakesptn3.jpg');
+  background-color: url('../images/flakesptn3.jpg');
 }
 .nav > li.disabled > a {
   color: #999999;
@@ -3590,7 +3590,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .nav .open > a,
 .nav .open > a:hover,
 .nav .open > a:focus {
-  background-color: url('snow/flakesptn3.jpg');
+  background-color: url('../images/flakesptn3.jpg');
   border-color: #402b5d;
 }
 .nav .nav-divider {
@@ -3622,7 +3622,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .nav-tabs > li.active > a:hover,
 .nav-tabs > li.active > a:focus {
   color: #555555;
-  background-color: url('snow/flakesptn2.jpg');
+  background-color: url('../images/flakesptn2.jpg');
   border: 1px solid #dddddd;
   border-bottom-color: transparent;
   cursor: default;
@@ -3668,7 +3668,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   .nav-tabs.nav-justified > .active > a,
   .nav-tabs.nav-justified > .active > a:hover,
   .nav-tabs.nav-justified > .active > a:focus {
-    border-bottom-color: url('snow/flakesptn2.jpg');
+    border-bottom-color: url('../images/flakesptn2.jpg');
   }
 }
 .nav-pills > li {
@@ -3736,7 +3736,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   .nav-tabs-justified > .active > a,
   .nav-tabs-justified > .active > a:hover,
   .nav-tabs-justified > .active > a:focus {
-    border-bottom-color: url('snow/flakesptn2.jpg');
+    border-bottom-color: url('../images/flakesptn2.jpg');
   }
 }
 .tab-content > .tab-pane {
@@ -4092,7 +4092,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .navbar-default .navbar-nav > li > a:hover,
 .navbar-default .navbar-nav > li > a:focus {
   color: #6c7b8c;
-  background-color: url('snow/flakesptn3.jpg');
+  background-color: url('../images/flakesptn3.jpg');
 }
 .navbar-default .navbar-nav > .active > a,
 .navbar-default .navbar-nav > .active > a:hover,
@@ -4133,7 +4133,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover,
   .navbar-default .navbar-nav .open .dropdown-menu > li > a:focus {
     color: #6c7b8c;
-    background-color: url('snow/flakesptn3.jpg');
+    background-color: url('../images/flakesptn3.jpg');
   }
   .navbar-default .navbar-nav .open .dropdown-menu > .active > a,
   .navbar-default .navbar-nav .open .dropdown-menu > .active > a:hover,
@@ -4567,7 +4567,7 @@ a.list-group-item.active > .badge,
   padding: 4px;
   margin-bottom: 20px;
   line-height: 1.42857143;
-  background-color: url('snow/flakesptn2.jpg');
+  background-color: url('../images/flakesptn2.jpg');
   border: 1px solid #dddddd;
   border-radius: 4px;
   -webkit-transition: all 0.2s ease-in-out;
@@ -6149,11 +6149,11 @@ body.navbar-padding {
   overflow-y: auto;
 }
 body {
-  background: url('snow/flakesptn2.jpg');
+  background: url('../images/flakesptn2.jpg');
   background-attachment: fixed;
 }
 .container {
-  background: #b1c1db url('snow/flakesptn.jpg');
+  background: #b1c1db url('../images/flakesptn.jpg');
   border: 1px solid #6C7B8C;
 }
 header.container {
@@ -6163,7 +6163,7 @@ header.container {
 .layout_social .navbar-inverse .navbar-collapse,
 .layout_social .navbar-inverse .navbar-form,
 .layout_social .navbar-inverse .container {
-  background: url('snow/flakesptn2.jpg');
+  background: url('../images/flakesptn2.jpg');
   border: none;
 }
 .layout_social .navbar-inverse {
@@ -6178,7 +6178,7 @@ body.layout_social > .container {
   padding-top: 20px;
 }
 .panel {
-  background: url('snow/flakesptn2.jpg');
+  background: url('../images/flakesptn2.jpg');
 }
 .panel-heading,
 .panel-footer {
@@ -6186,55 +6186,55 @@ body.layout_social > .container {
 }
 #col2 .panel-heading,
 #col3 .panel-heading {
-  background: url('snow/boxtop.jpg') no-repeat transparent;
+  background: url('../images/boxtop.jpg') no-repeat transparent;
   background-size: 100%;
   border-bottom: medium none currentColor;
 }
 #col2 .panel-footer,
 #col3 .panel-footer {
-  background: url('snow/boxbtm.jpg') no-repeat transparent 0 100%;
+  background: url('../images/boxbtm.jpg') no-repeat transparent 0 100%;
   background-size: 100%;
   border-top: none;
 }
 #col2 .panel,
 #col3 .panel {
-  background: url('snow/boxmid.jpg') repeat-y transparent;
+  background: url('../images/boxmid.jpg') repeat-y transparent;
   background-size: 100%;
 }
 .navbar-default {
-  background: #d7e5f3 url('snow/pagetitle-bg.jpg') repeat-x;
+  background: #d7e5f3 url('../images/pagetitle-bg.jpg') repeat-x;
   min-height: 35px;
   margin-bottom: 5px;
 }
 .navbar-default .navbar-nav > .active > a,
 .navbar-default .navbar-nav > .active > a:hover,
 .navbar-default .navbar-nav > .active > a:focus {
-  background: #d7e5f3 url('snow/pagetitle-bg.jpg') repeat-x;
+  background: #d7e5f3 url('../images/pagetitle-bg.jpg') repeat-x;
   color: #555555;
 }
 .dropdown-menu > li > form {
-  background: url('snow/flakesptn2.jpg');
+  background: url('../images/flakesptn2.jpg');
 }
 .dropdown-menu > li > a {
-  background: url('snow/flakesptn2.jpg');
+  background: url('../images/flakesptn2.jpg');
 }
 .dropdown-menu > li > a:hover {
-  background: url('snow/flakesptn3.jpg');
+  background: url('../images/flakesptn3.jpg');
 }
 .nav > li > a:hover {
-  background: url('snow/flakesptn3.jpg');
+  background: url('../images/flakesptn3.jpg');
 }
 .btn,
 .btn-default,
 .nav-tabs > li > a,
 .input-group-addon {
-  background: url('snow/pagetitle-bg.jpg');
+  background: url('../images/pagetitle-bg.jpg');
 }
 .btn:hover,
 .btn-default:hover,
 .nav-tabs > li > a:hover,
 .input-group-addon:hover {
-  background: url('snow/pagetitle-bg.jpg') 0 100%;
+  background: url('../images/pagetitle-bg.jpg') 0 100%;
 }
 /*.table-striped > tbody > tr:nth-child(2n+1) > td,.table-striped > tbody > tr:nth-child(2n+1) > th {background: transparent url('@{imagePath}flakesptn3.jpg') }.table-striped > tbody > tr.success:nth-child(2n+1) > td,.table-striped > tbody > tr.success:nth-child(2n+1) > th {background: @state-success-bg; }.table-striped > tbody > tr.info:nth-child(2n+1) > td,.table-striped > tbody > tr.info:nth-child(2n+1) > th {background: @state-info-bg; }.table-striped > tbody > tr.warning:nth-child(2n+1) > td,.table-striped > tbody > tr.warning:nth-child(2n+1) > th {background: @state-warning-bg; }.table-striped > tbody > tr.danger:nth-child(2n+1) > td,.table-striped > tbody > tr.danger:nth-child(2n+1) > th {background: @state-danger-bg; }*/
 /* black */

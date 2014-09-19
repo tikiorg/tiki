@@ -6157,7 +6157,7 @@ textarea {
   color: #cfcfcf;
 }
 #top_modules {
-  background-image: url('ohia/header.png');
+  background-image: url('../images/header.png');
 }
 .container {
   border: 1px solid #4c4c4c;
@@ -6178,7 +6178,7 @@ header.container,
   background: #030511;
 }
 #top_modules {
-  background-image: url('ohia/header.png');
+  background-image: url('../images/header.png');
 }
 #top_modules a,
 #top_modules a:visited {
@@ -6213,7 +6213,7 @@ header.container,
   border-size: 1px 1px 0 1px;
 }
 .footerbgtrap {
-  background-image: url('ohia/header.png');
+  background-image: url('../images/header.png');
   color: #F4F4F4;
   font-size: 0.9em;
   min-height: 90px;
