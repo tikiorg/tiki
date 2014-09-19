@@ -32,7 +32,7 @@ if ($prefs['feature_fixed_width'] === 'y') {
 
 // Always use tiki.css.
 // Add it first, so that it can be overriden in the custom themes
-$headerlib->add_cssfile("styles/layout/tiki.css");
+$headerlib->add_cssfile("themes/base_files/tiki_base.css");
 
 if (empty($prefs['theme_active']) || $prefs['theme_active'] == 'default') {
 	$headerlib->add_cssfile('vendor/twitter/bootstrap/dist/css/bootstrap.min.css');
