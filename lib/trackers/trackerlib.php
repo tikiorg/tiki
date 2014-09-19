@@ -1855,7 +1855,7 @@ class TrackerLib extends TikiLib
 								$data[$i] = preg_replace('/\%\%\%/', "\r\n", $data[$i]);
 								break;
 							case 'c':
-								if (strtolower($data[$i]) == 'yes' || strtolower($data[$i]) == 'on' || $data[$i] == 1) {
+								if (strtolower($data[$i]) == 'yes' || strtolower($data[$i]) == 'on' || $data[$i] == 1 || strtolower($data[$i]) == 'y') {
 									$data[$i] = 'y';
 								} else {
 									$data[$i] = 'n';
