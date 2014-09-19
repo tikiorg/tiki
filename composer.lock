@@ -1,8 +1,7 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
-        "This file is @generated automatically"
+        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
     "hash": "9bac0f19de42e6f65477ca17c6f61bd0",
     "packages": [
@@ -371,7 +370,7 @@
                     "name": "Robert Plummer",
                     "email": "rplummer@visop-dev.com",
                     "homepage": "http://visop-dev.com",
-                    "role": "Lead Developer"
+                    "role": "Assistant Developer"
                 },
                 {
                     "name": "Luke Gerhardt",
@@ -990,12 +989,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/jakiestfu/Medium.js.git",
-                "reference": "5f3c702da058073a1c6ba995336616d8797b1f61"
+                "reference": "b8c31490f361636d8e64dc0939f0f9e6c10e99a1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jakiestfu/Medium.js/zipball/5f3c702da058073a1c6ba995336616d8797b1f61",
-                "reference": "5f3c702da058073a1c6ba995336616d8797b1f61",
+                "url": "https://api.github.com/repos/jakiestfu/Medium.js/zipball/b8c31490f361636d8e64dc0939f0f9e6c10e99a1",
+                "reference": "b8c31490f361636d8e64dc0939f0f9e6c10e99a1",
                 "shasum": ""
             },
             "require": {
@@ -1021,7 +1020,7 @@
                     "role": "Lead Developer"
                 }
             ],
-            "time": "2014-09-04 15:05:45"
+            "time": "2014-09-11 16:16:03"
         },
         {
             "name": "phenx/php-font-lib",
@@ -1258,6 +1257,12 @@
                 "type": "svn",
                 "url": "http://smarty-php.googlecode.com/svn",
                 "reference": "/tags/v3.1.18/@4839"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://composer.tiki.org/dist/smarty-smarty-v3.1.18-17a6e2.zip",
+                "reference": "v3.1.18",
+                "shasum": "ae2d06617491f5adf39f14559feb29aa4c2e960d"
             },
             "require": {
                 "php": ">=5.2"
@@ -1693,12 +1698,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/wikiLingo/wikiLingo.git",
-                "reference": "0ae7970ba47b40a2c9f36007eff4fae025563dbe"
+                "reference": "87eee6b7462210ccfa634f849e054558eda3fa93"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wikiLingo/wikiLingo/zipball/0ae7970ba47b40a2c9f36007eff4fae025563dbe",
-                "reference": "0ae7970ba47b40a2c9f36007eff4fae025563dbe",
+                "url": "https://api.github.com/repos/wikiLingo/wikiLingo/zipball/87eee6b7462210ccfa634f849e054558eda3fa93",
+                "reference": "87eee6b7462210ccfa634f849e054558eda3fa93",
                 "shasum": ""
             },
             "require": {
@@ -1737,7 +1742,7 @@
                     "role": "Lead Developer"
                 }
             ],
-            "time": "2014-08-27 22:59:18"
+            "time": "2014-09-05 23:25:24"
         },
         {
             "name": "zetacomponents/base",
@@ -1999,7 +2004,6 @@
         "wikilingo/codemirror": 20,
         "bafs/testify": 20
     },
-    "prefer-stable": false,
     "platform": [
 
     ],
