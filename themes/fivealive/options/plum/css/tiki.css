@@ -1,4 +1,4 @@
-@import "../../../css/tiki.css";
+@import "../css/tiki.css";
 @import url("../jquery-ui/options/plum/jquery-ui.min.css");
 /*  The plum theme option file for the FiveAlive and FiveAlive-lite themes of Tiki Wiki CMS Groupware. */
 .navbar-nav > li.dropdown {
