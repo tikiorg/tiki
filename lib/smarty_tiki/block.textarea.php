@@ -100,9 +100,6 @@ JS
 		global $section;
 		$params['section'] = $section ? $section: 'wiki page';
 	}
-	if ( ! isset($params['style']) && ! isset($params['cols']) ) {
-		$params['style'] = 'auto'; // changed from 99% to allow CSS to control width (class=form-control).
-	}
 	$html = '';
     if (!$included) $html .= '<input type="hidden" name="mode_wysiwyg" value="" /><input type="hidden" name="mode_normal" value="" />';
 
