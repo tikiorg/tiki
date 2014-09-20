@@ -29,10 +29,12 @@ if (jqueryTiki.no_cookie) {
 	});
 }
 {/jq}
-{if !isset($tpl_module_title)}{assign var=tpl_module_title value="{tr}Log in{/tr}"}{/if}{* Left for performance, since tiki-login_scr.php includes this template directly. *}
-{if !isset($module_params)}{assign var=module_params value=' '}{/if}
-{if isset($nobox)}{$module_params.nobox = $nobox}{/if}
-{if isset($style)}{$module_params.style = $style}{/if}
+{if !isset($tpl_module_title)}{* Left for performance, since tiki-login_scr.php includes this template directly. *}
+	{assign var=tpl_module_title value="{tr}Log in{/tr}"}
+	{if !isset($module_params)}{assign var=module_params value=' '}{/if}
+	{if isset($nobox)}{$module_params.nobox = $nobox}{/if}
+	{if isset($style)}{$module_params.style = $style}{/if}
+{/if}
 {tikimodule error=$module_params.error title=$tpl_module_title name="login_box" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle style=$module_params.style}
 	{if $mode eq "header"}<div class="siteloginbar{if $user} logged-in{/if}">{/if}
 	{if $user}
@@ -119,11 +121,12 @@ if (jqueryTiki.no_cookie) {
 					    <span class="caret"></span>
                 </button>
 				<div class="siteloginbar_poppedup {*panel panel-body*} dropdown-menu pull-right">
-						{capture assign="close_tags"}</div></div></div></div>{$close_tags}{/capture}
+					{capture assign="close_tags"}</div></div>{$close_tags}{/capture}
 		{/if}
 		<form name="loginbox" class="form" id="loginbox-{$module_logo_instance}" action="{$login_module.login_url|escape}"
 				method="post" {if $prefs.feature_challenge eq 'y'}onsubmit="doChallengeResponse()"{/if}
 				{if $prefs.desactive_login_autocomplete eq 'y'} autocomplete="off"{/if}> 
+			{capture assign="close_tags"}</form>{$close_tags}{/capture}
 		{if $prefs.feature_challenge eq 'y'}
 			<script type='text/javascript' src="lib/md5.js"></script>
 			{jq notonready=true}
@@ -265,7 +268,6 @@ function doChallengeResponse() {
 				<div style="text-align: center"><a href="tiki-socialnetworks.php?request_facebook=true"><img src="http://developers.facebook.com/images/devsite/login-button.png"></a></div>
 			{/if}
 		{$close_tags}
-	</form>
 			{if $prefs.auth_method eq 'openid' and !$user and (!isset($registration) || $registration neq 'y')}
 				<form method="get" action="tiki-login_openid.php">
 					<fieldset>

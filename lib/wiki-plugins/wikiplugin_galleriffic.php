@@ -174,7 +174,7 @@ $jq = <<<JQ
         enableKeyboardNavigation:  false, // Specifies whether keyboard navigation is enabled
         autoStart:                 $autoStart, // Specifies whether the slideshow should be playing or paused when the page first loads
         syncTransitions:           false, // Specifies whether the out and in transitions occur simultaneously or distinctly
-        defaultTransitionDuration: 1000, // If using the default transitions, specifies the duration of the transitions
+        defaultTransitionDuration: 1000   // If using the default transitions, specifies the duration of the transitions
     });
 \$('div.gcontent').css({'width' : '$imgWidth'});
 \$('div.loader').css({'width' : '$imgWidth', 'height' : '$imgHeight'});

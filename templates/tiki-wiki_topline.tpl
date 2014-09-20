@@ -76,7 +76,7 @@
 				<a class="btn btn-default" title="{tr}3d browser{/tr}" href="javascript:wiki3d_open('{$page|escape}',{$prefs.wiki_3d_width}, {$prefs.wiki_3d_height})">{icon _id='wiki3d' alt="{tr}3d browser{/tr}"}</a>
 			{/if}
 			{if $cached_page eq 'y'}
-				<a class="btn btn-default" title="{tr}Refresh{/tr}" href="tiki-index.php?page={$page|escape:"url"}&amp;refresh=1">{glyph name='refresh'  title="{tr}Refresh{/tr}"}</a>
+				<a class="btn btn-default" title="{tr}Refresh{/tr}" href="{$page|sefurl:'wiki':'with_next'}refresh=1">{glyph name='refresh'  title="{tr}Refresh{/tr}"}</a>
 			{/if}
 			{if $prefs.feature_wiki_print eq 'y'}
 				<a class="btn btn-default" title="{tr}Print{/tr}" href="tiki-print.php?{query _keepall='y'}">{glyph name='print'  title="{tr}Print{/tr}"}</a>

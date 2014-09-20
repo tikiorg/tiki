@@ -606,7 +606,7 @@ class HeaderLib
 		// the one below should work afaics but just doesn't! :(
 		// preg_match_all('/<script.*type=[\'"]?text\/javascript[\'"]?.*>(\s*<\!--\/\/--><\!\[CDATA\[\/\/><\!--)?\s*?(.*)(\s*\/\/--><\!\]\]>\s*)?<\/script>/imsU', $html, $js);
 
-		return $js_script;
+		return array_filter($js_script);
 	}
 
 	function removeJsFromHTML( $html )

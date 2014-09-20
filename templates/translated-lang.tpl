@@ -8,24 +8,22 @@
 	{* ..than on hover first show the list of translations including the current language highlighted *}
 	{if empty($trads[0].lang)}
 		<ul class="dropdown-menu dropdown-menu-right" role="menu">
-			<li>
-				<li role="presentation" class="dropdown-header">
-					{tr}No language assigned.{/tr}
+			<li role="presentation" class="dropdown-header">
+				{tr}No language assigned.{/tr}
+			</li>
+			{if $object_type eq 'wiki page' and ($tiki_p_edit eq 'y' or (!$user and $prefs.wiki_encourage_contribution eq 'y')) and !$lock}
+				<li role="presentation">
+					<a role="menuitem" tabindex="-1" href="tiki-edit_translation.php?page={$page|escape}">
+						{tr}Set page language{/tr}
+					</a>
 				</li>
-                {if $object_type eq 'wiki page' and ($tiki_p_edit eq 'y' or (!$user and $prefs.wiki_encourage_contribution eq 'y')) and !$lock}
-					<li role="presentation">
-						<a role="menuitem" tabindex="-1" href="tiki-edit_translation.php?page={$page|escape}">
-							{tr}Set page language{/tr}
-						</a>
-					</li>
-                {elseif $object_type eq 'article' and $tiki_p_edit_article eq 'y'}
-                    <li role="presentation">
-						<a role="menuitem" tabindex="-1" href="tiki-edit_article.php?articleId={$articleId|escape}">
-							{tr}Set article language{/tr}
-						</a>
-					</li>
-				{/if}
-            </li>
+			{elseif $object_type eq 'article' and $tiki_p_edit_article eq 'y'}
+				<li role="presentation">
+					<a role="menuitem" tabindex="-1" href="tiki-edit_article.php?articleId={$articleId|escape}">
+						{tr}Set article language{/tr}
+					</a>
+				</li>
+			{/if}
         </ul>
 	{else}
 		<ul class="dropdown-menu dropdown-menu-right" role="menu">
