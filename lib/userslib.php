@@ -2799,6 +2799,10 @@ class UsersLib extends TikiLib
 
 	function get_permission_names_for($type)
 	{
+		// Compatibility hack without which no article results are returned by mysql full-text searches (basic search)
+		if ( $type == "cms" ) {
+			$type = "articles";
+		}
 		$raw = $this->get_permissions(0, -1, 'permName_asc', '', $type);
 		$out = array();
 
