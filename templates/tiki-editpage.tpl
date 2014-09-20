@@ -278,7 +278,7 @@
 								    <label for="templateId" class="col-sm-2 control-label">{tr}Apply template{/tr}</label>
                                     <div class="col-sm-10 form-inline">
                                         <div class="col-sm-4">
-									    <select class="form-control" id="templateId" "name="templateId" onchange="javascript:document.getElementById('editpageform').submit();" onclick="needToConfirm = false;">
+									    <select class="form-control" id="templateId" name="templateId" onchange="javascript:document.getElementById('editpageform').submit();" onclick="needToConfirm = false;">
 										    <option value="0">{tr}none{/tr}</option>
 										    {section name=ix loop=$templates}
 										    <option value="{$templates[ix].templateId|escape}" {if $templateId eq $templates[ix].templateId}selected="selected"{/if}>{tr}{$templates[ix].name|escape}{/tr}</option>
