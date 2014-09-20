@@ -235,7 +235,7 @@ function smarty_block_pagination_links($params, $url, $smarty, &$repeat)
 			return $link;
 		};
 
-		if ( $prefs['direct_pagination'] == 'y' && $nb_pages > 1) {
+		if ( ($prefs['direct_pagination'] == 'y' || $prefs['nextprev_pagination'] === 'y') && $nb_pages > 1) {
 			$html .= '<ul class="pagination">';
 
 			if ( $prefs['nextprev_pagination'] != 'n' ) {
