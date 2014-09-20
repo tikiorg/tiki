@@ -431,6 +431,7 @@ $icons = array(
 		'disabled' => $prefs['feature_articles'] != 'y',
 		'description' => tr('Settings and features for articles'),
 		'help' => 'Articles',
+        'icon_class' => 'fa fa-newspaper-o',
 	),
 	"forums" => array(
 		'icon' => 'img/icons/large/stock_index.png',
