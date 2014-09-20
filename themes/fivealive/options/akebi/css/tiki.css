@@ -1,5 +1,6 @@
+@import "../../../css/tiki.css";
 @import url("../jquery-ui/options/akebi/jquery-ui.min.css");
-/*  akebi.css - the Kiwi theme option file for the FiveAlive and FiveAlive-lite themes of Tiki Wiki CMS Groupware. */
+/*  The Akebi theme option file for the FiveAlive and FiveAlive-lite themes of Tiki Wiki CMS Groupware. */
 .navbar-nav > li.dropdown {
   border-bottom: 1px solid #18a3bb;
 }
@@ -22,14 +23,14 @@ a:focus {
 .btn-default:focus,
 .btn-default:active,
 .btn-default.active,
-.open .dropdown-toggle.btn-default {
+.open > .dropdown-toggle.btn-default {
   color: #ffffff;
-  background-color: #138397;
+  background-color: #127c8e;
   border-color: #44c7db;
 }
 .btn-default:active,
 .btn-default.active,
-.open .dropdown-toggle.btn-default {
+.open > .dropdown-toggle.btn-default {
   background-image: none;
 }
 .btn-default.disabled,
@@ -63,14 +64,14 @@ fieldset[disabled] .btn-default.active {
 .btn-primary:focus,
 .btn-primary:active,
 .btn-primary.active,
-.open .dropdown-toggle.btn-primary {
+.open > .dropdown-toggle.btn-primary {
   color: #ffffff;
-  background-color: #138397;
+  background-color: #127c8e;
   border-color: #44c7db;
 }
 .btn-primary:active,
 .btn-primary.active,
-.open .dropdown-toggle.btn-primary {
+.open > .dropdown-toggle.btn-primary {
   background-image: none;
 }
 .btn-primary.disabled,
@@ -387,10 +388,14 @@ hr {
   background-color: #0b8a98;
   border-color: #dddddd;
 }
-.panel-default > .panel-heading + .panel-collapse .panel-body {
+.panel-default > .panel-heading + .panel-collapse > .panel-body {
   border-top-color: #dddddd;
 }
-.panel-default > .panel-footer + .panel-collapse .panel-body {
+.panel-default > .panel-heading .badge {
+  color: #0b8a98;
+  background-color: #ffffff;
+}
+.panel-default > .panel-footer + .panel-collapse > .panel-body {
   border-bottom-color: #dddddd;
 }
 .panel-primary {
@@ -401,10 +406,14 @@ hr {
   background-color: #0b8a98;
   border-color: #0b8a98;
 }
-.panel-primary > .panel-heading + .panel-collapse .panel-body {
+.panel-primary > .panel-heading + .panel-collapse > .panel-body {
   border-top-color: #0b8a98;
 }
-.panel-primary > .panel-footer + .panel-collapse .panel-body {
+.panel-primary > .panel-heading .badge {
+  color: #0b8a98;
+  background-color: #ffffff;
+}
+.panel-primary > .panel-footer + .panel-collapse > .panel-body {
   border-bottom-color: #0b8a98;
 }
 .panel-success {
@@ -415,10 +424,14 @@ hr {
   background-color: #dff0d8;
   border-color: #d6e9c6;
 }
-.panel-success > .panel-heading + .panel-collapse .panel-body {
+.panel-success > .panel-heading + .panel-collapse > .panel-body {
   border-top-color: #d6e9c6;
 }
-.panel-success > .panel-footer + .panel-collapse .panel-body {
+.panel-success > .panel-heading .badge {
+  color: #dff0d8;
+  background-color: #3c763d;
+}
+.panel-success > .panel-footer + .panel-collapse > .panel-body {
   border-bottom-color: #d6e9c6;
 }
 .panel-info {
@@ -429,10 +442,14 @@ hr {
   background-color: #d9edf7;
   border-color: #bce8f1;
 }
-.panel-info > .panel-heading + .panel-collapse .panel-body {
+.panel-info > .panel-heading + .panel-collapse > .panel-body {
   border-top-color: #bce8f1;
 }
-.panel-info > .panel-footer + .panel-collapse .panel-body {
+.panel-info > .panel-heading .badge {
+  color: #d9edf7;
+  background-color: #31708f;
+}
+.panel-info > .panel-footer + .panel-collapse > .panel-body {
   border-bottom-color: #bce8f1;
 }
 .panel-warning {
@@ -443,10 +460,14 @@ hr {
   background-color: #fcf8e3;
   border-color: #faebcc;
 }
-.panel-warning > .panel-heading + .panel-collapse .panel-body {
+.panel-warning > .panel-heading + .panel-collapse > .panel-body {
   border-top-color: #faebcc;
 }
-.panel-warning > .panel-footer + .panel-collapse .panel-body {
+.panel-warning > .panel-heading .badge {
+  color: #fcf8e3;
+  background-color: #8a6d3b;
+}
+.panel-warning > .panel-footer + .panel-collapse > .panel-body {
   border-bottom-color: #faebcc;
 }
 .panel-danger {
@@ -457,10 +478,14 @@ hr {
   background-color: #f2dede;
   border-color: #ebccd1;
 }
-.panel-danger > .panel-heading + .panel-collapse .panel-body {
+.panel-danger > .panel-heading + .panel-collapse > .panel-body {
   border-top-color: #ebccd1;
 }
-.panel-danger > .panel-footer + .panel-collapse .panel-body {
+.panel-danger > .panel-heading .badge {
+  color: #f2dede;
+  background-color: #a94442;
+}
+.panel-danger > .panel-footer + .panel-collapse > .panel-body {
   border-bottom-color: #ebccd1;
 }
 .label {
@@ -530,10 +555,10 @@ hr {
   color: #19a5be;
 }
 .header_outer {
-  background: url('akebi/siteheadertile.jpg') 0 0 no-repeat;
+  background: url('../images/siteheadertile.jpg') 0 0 no-repeat;
 }
 .header_container > .header {
-  background: url('akebi/siteheader.png') -248px 0 no-repeat;
+  background: url('../images/siteheader.png') -248px 0 no-repeat;
 }
 header.header .module.secondary_site_menu {
   background: none;
@@ -589,7 +614,7 @@ textarea,
   background: #1cb9d5;
 }
 .postbody-title {
-  background: url('akebi/siteheader.png') no-repeat -480px -200px;
+  background: url('../images/siteheader.png') no-repeat -480px -200px;
 }
 .secondary_site_menu .navbar {
   margin-bottom: 0;
