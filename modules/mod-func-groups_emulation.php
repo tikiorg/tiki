@@ -20,7 +20,16 @@ function module_groups_emulation_info()
 		'name' => tra('Groups Emulation'),
 		'description' => tra('Enables temporarily changing one\'s group memberships to see how users in fewer groups experience the site.'),
 		'prefs' => array(),
-		'params' => array(),
+		'params' => array(
+			'showallgroups' => array(
+				'name' => tra('Show All Groups'),
+				'description' => tra('If set to "n", the list is not shown.') . ' ' . tra('Default:') . ' "y"'
+			),
+			'showyourgroups' => array(
+				'name' => tra('Show Your Groups'),
+				'description' => tra('If set to "n", the list is not shown.') . ' ' . tra('Default:') . ' "y"'
+			),
+		),
 		'common_params' => array('rows')
 		
 	);
@@ -59,5 +68,7 @@ function module_groups_emulation($mod_reference, $module_params)
 	}
 	$smarty->assign_by_ref('userGroups', $userGroups);
 	$smarty->assign_by_ref('chooseGroups', $chooseGroups);
+	$smarty->assign('showallgroups', isset($module_params['showallgroups']) ? $module_params['showallgroups'] : 'y');
+	$smarty->assign('showyourgroups', isset($module_params['showyourgroups']) ? $module_params['showyourgroups'] : 'y');
 	$smarty->assign('tpl_module_title', tra("Emulate Groups"));
 }
