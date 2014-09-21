@@ -960,7 +960,21 @@ function wikiplugin_tracker($data, $params)
 							} else {
 							$mail->setText($mail_data);
 							}
-							$mail->send($ueo);
+							try {
+								$mail->send($ueo);
+								$title = 'mail';
+							} catch (Zend_Mail_Exception $e) {
+								$title = 'mail error';
+							}
+							if ($title == 'mail error' || $prefs['log_mail'] == 'y') {
+								// Log the email error at the tiki syslog
+								$logslib = TikiLib::lib('logs');
+								$logslib->add_log('mail error', 'plugin tracker email error / '.$emailOptions[1][$ieo].' / item'.$rid);
+							} elseif ($title == 'mail' || $prefs['log_mail'] == 'y') {
+								// Log the email at the tiki syslog
+								$logslib = TikiLib::lib('logs');
+								$logslib->add_log('mail', 'plugin tracker email sent / '.$emailOptions[1][$ieo].' / item'.$rid);
+							}
 							if (isset($tplSubject[$itpl+1])) {
 								++$itpl;
 							}
