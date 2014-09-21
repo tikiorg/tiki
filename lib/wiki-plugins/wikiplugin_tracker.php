@@ -120,7 +120,7 @@ function wikiplugin_tracker_info()
 			'emailformat' => array(
 				'required' => false,
 				'name' => tra('Email format'),
-				'description' => tra('Text or HTML setting'),
+				'description' => tra('Choose between values text or html, depending on the syntax in the template file that you will use'),
 				'default' => 'text',
 			),
 			'url' => array(
