@@ -18,12 +18,12 @@ function module_zone_info()
 {
 	return array(
 		'name' => tr('Module Zone'),
-		'description' => tr('Can contain other modules so can be used as a Bootstrap navbar object for example.'),
+		'description' => tr('Can contain other modules so can be used as a Bootstrap navbar object, for example.'),
 		'params' => array(
 			'name' => array(
 				'required' => true,
 				'name' => tr('Zone Name'),
-				'description' => tr('Must be unique, the zone becomes an "extra module zone" and will apear in the admin modules panel.'),
+				'description' => tr('Must be unique; the zone becomes an "extra module zone" and will appear in the admin modules panel.'),
 				'filter' => 'text',
 				'default' => '',
 			),
