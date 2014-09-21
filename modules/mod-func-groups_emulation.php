@@ -23,11 +23,25 @@ function module_groups_emulation_info()
 		'params' => array(
 			'showallgroups' => array(
 				'name' => tra('Show All Groups'),
-				'description' => tra('If set to "n", the list is not shown.') . ' ' . tra('Default:') . ' "y"'
+				'description' => tra('Show All Groups') . '. ' . tra('If set to "n", the list is not shown.'),
+				'filter' => 'alpha',
+				'default' => 'y',
+				'since' => '12.3',
+				'options' => array(
+					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => tra('No'), 'value' => 'n')
+				),
 			),
 			'showyourgroups' => array(
 				'name' => tra('Show Your Groups'),
-				'description' => tra('If set to "n", the list is not shown.') . ' ' . tra('Default:') . ' "y"'
+				'description' => tra('Show Your Groups') . '. ' . tra('If set to "n", the list is not shown.'),
+				'filter' => 'alpha',
+				'default' => 'y',
+				'since' => '12.3',
+				'options' => array(
+					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => tra('No'), 'value' => 'n')
+				),
 			),
 		),
 		'common_params' => array('rows')
