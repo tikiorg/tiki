@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "9bac0f19de42e6f65477ca17c6f61bd0",
+    "hash": "70460597da75651c1e16d539bec7aa5a",
     "packages": [
         {
             "name": "adodb/adodb",
@@ -871,12 +871,12 @@
         },
         {
             "name": "jquery/plugins/tablesorter",
-            "version": "2.17.5",
+            "version": "2.17.8",
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/jquery-plugins-tablesorter-2.17.5.zip",
-                "reference": "2.17.5",
-                "shasum": "49c508d5cd410b4b6b46780e4be917838cfe508c"
+                "url": "https://composer.tiki.org/dist/jquery-plugins-tablesorter-2.17.8.zip",
+                "reference": "2.17.8",
+                "shasum": "08bca097a4dd557814199f9cb2da02cb6331c7e8"
             },
             "type": "library"
         },
@@ -990,12 +990,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/jakiestfu/Medium.js.git",
-                "reference": "5f3c702da058073a1c6ba995336616d8797b1f61"
+                "reference": "a3b8f14a7bf1ac58fafc9df406953d2b38edd8af"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jakiestfu/Medium.js/zipball/5f3c702da058073a1c6ba995336616d8797b1f61",
-                "reference": "5f3c702da058073a1c6ba995336616d8797b1f61",
+                "url": "https://api.github.com/repos/jakiestfu/Medium.js/zipball/a3b8f14a7bf1ac58fafc9df406953d2b38edd8af",
+                "reference": "a3b8f14a7bf1ac58fafc9df406953d2b38edd8af",
                 "shasum": ""
             },
             "require": {
@@ -1021,7 +1021,7 @@
                     "role": "Lead Developer"
                 }
             ],
-            "time": "2014-09-04 15:05:45"
+            "time": "2014-09-19 15:42:43"
         },
         {
             "name": "phenx/php-font-lib",
@@ -1258,6 +1258,12 @@
                 "type": "svn",
                 "url": "http://smarty-php.googlecode.com/svn",
                 "reference": "/tags/v3.1.18/@4839"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://composer.tiki.org/dist/smarty-smarty-v3.1.18-17a6e2.zip",
+                "reference": "v3.1.18",
+                "shasum": "ae2d06617491f5adf39f14559feb29aa4c2e960d"
             },
             "require": {
                 "php": ">=5.2"
@@ -1693,12 +1699,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/wikiLingo/wikiLingo.git",
-                "reference": "0ae7970ba47b40a2c9f36007eff4fae025563dbe"
+                "reference": "3c8990c039738417299c025559334d118101757b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wikiLingo/wikiLingo/zipball/0ae7970ba47b40a2c9f36007eff4fae025563dbe",
-                "reference": "0ae7970ba47b40a2c9f36007eff4fae025563dbe",
+                "url": "https://api.github.com/repos/wikiLingo/wikiLingo/zipball/3c8990c039738417299c025559334d118101757b",
+                "reference": "3c8990c039738417299c025559334d118101757b",
                 "shasum": ""
             },
             "require": {
@@ -1737,7 +1743,7 @@
                     "role": "Lead Developer"
                 }
             ],
-            "time": "2014-08-27 22:59:18"
+            "time": "2014-09-20 19:31:50"
         },
         {
             "name": "zetacomponents/base",
@@ -1986,9 +1992,7 @@
             "time": "2014-06-05 16:09:50"
         }
     ],
-    "aliases": [
-
-    ],
+    "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
         "jcapture-applet/jcapture-applet": 20,
@@ -2000,10 +2004,6 @@
         "bafs/testify": 20
     },
     "prefer-stable": false,
-    "platform": [
-
-    ],
-    "platform-dev": [
-
-    ]
+    "platform": [],
+    "platform-dev": []
 }
