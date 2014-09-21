@@ -966,7 +966,7 @@ function wikiplugin_tracker($data, $params)
 							} catch (Zend_Mail_Exception $e) {
 								$title = 'mail error';
 							}
-							if ($title == 'mail error' && $prefs['log_mail'] == 'y') {
+							if ($title == 'mail error') {
 								// Log the email error at the tiki syslog
 								$logslib = TikiLib::lib('logs');
 								$logslib->add_log('mail error', 'plugin tracker email error / '.$emailOptions[1][$ieo].' / item'.$rid);
