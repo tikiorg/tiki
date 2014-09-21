@@ -6169,7 +6169,7 @@ body.navbar-padding {
 }
 .header_outer {
   /* whole width div containing the header strip */
-  background: url('../images/options/blueberry/headertile.png') 0 0 no-repeat;
+  background: url('../images/headertile.png') 0 0 no-repeat;
 }
 .header_container {
   /* 2nd whole width div for background image tricks */
@@ -6177,7 +6177,7 @@ body.navbar-padding {
 }
 .header_container > .header {
   /* inner <header> element that gets .fixedwidth class applied */
-  background: url('../images/options/blueberry/siteheader.jpg') 0 0 no-repeat;
+  background: url('../images/siteheader.jpg') 0 0 no-repeat;
 }
 header.header .secondary_site_menu .navbar-default {
   background: none;

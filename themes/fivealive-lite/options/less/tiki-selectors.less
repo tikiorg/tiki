@@ -1,0 +1,143 @@
+// $Id$
+// This file is for additional LESS rules beyond what are in variables.less.
+// Image path example:
+
+// body {
+//	background-image: url('@{imagePath}bg.jpg');
+// }
+//
+// If Glyphicons should be rendered in a color other than the Bootstrap default or the theme default, uncomment and specify the color.
+// .glyphicon {color: @gray-lighter;}
+
+#col2 .panel,
+#col3 .panel,
+#bottom_modules .panel {
+//  background: url('@{imagePath}options/plum/siteheader.jpg') -1000px -200px no-repeat #1C0029;
+  border: @side-column-border; // none;
+}
+
+#col2 .panel-default > .panel-heading,
+#col3 .panel-default > .panel-heading,
+#bottom_modules .panel-heading {
+  background: @side-column-panel-heading-background; // #e1d518 url('@{imagePath}siteheader.png') no-repeat -1000px -200px;
+  border-width: @side-column-panel-heading-border-width;
+  border-style: solid;
+  border-color: @side-column-panel-heading-border-color;
+}
+
+#col2 .panel-title,
+#col3 .panel-title {
+  color: @side-column-panel-title-color;
+}
+
+// Header graphics
+.header_outer {		// whole width div containing the header strip
+  background: @header_outer-background; // url('@{imagePath}siteheadertile.png') 0 0 no-repeat;
+}
+
+.header_container > .header {	// inner <header> element that gets .fixedwidth class applied
+  background: @header_container_header-background; // url('@{imagePath}siteheader.png') -248px 0 no-repeat;
+}
+
+header.header .module.secondary_site_menu {
+  background: none;
+}
+
+.page-header {
+  margin-top: 0;
+  margin-bottom: 0;
+  border-bottom: none;
+}
+
+.form-control,
+select,
+input[type="text"],
+input[type="password"],
+input[type="file"],
+input[type="email"],
+input[type="file"],
+input[type="search"],
+input[type="number"],
+input#login-pass,
+textarea,
+.adminoptionbox option {
+  background-color: @form-control-background; //#f8f9d4;
+  border-color: @form-control-border-colors; // #F5FB86 #FBFBEE #FBFBEE #F5FB86;
+}
+
+.navbar-collapse {border: none;}
+
+#footer {
+  background: black;
+  color: @footer-color; // #696969;
+  padding: 1px 0 2px 0;
+  width: 100%;
+}
+
+.footer_liner {
+  border-top: 1px solid @footer-border-color; //#ebdc14;
+  border-bottom: 1px solid @footer-border-color; // #ebdc14;
+}
+
+.footer_liner {
+  h3.panel-title {
+    color: #fff;
+    border-bottom: 1px dotted @footer-border-color; } //#ebdc14;
+  legend,
+  a,
+  a:visited {
+    color: @footer-link-color;} // #a9a9a9;
+}
+
+// @navbar-default-link-background: #bfbd23;
+.navbar-nav .open .dropdown-menu,
+.navbar-nav .open .dropdown-menu li,
+.navbar-default .navbar-nav > li > a {
+  background: @navbar-default-navbar-nav-li-a-background; // #cdbe23;
+}
+
+.navbar-default .navbar-nav > li > a:hover {
+  background: lighten(@navbar-default-navbar-nav-li-a-background, 5%);
+}
+
+.postbody-title {
+  background: @postbody-title-background; //url('@{imagePath}siteheader.png') no-repeat -480px -200px;
+}
+
+.secondary_site_menu .navbar {margin-bottom: 0;}
+.secondary_site_menu .navbar-nav {float: right;}
+
+.secondary_site_menu .navbar-default .navbar-nav > li > a, // sets link color
+.secondary_site_menu .navbar-default .navbar-nav > li > a:hover,
+.secondary_site_menu .navbar-default .navbar-nav > li > a:focus,
+.secondary_site_menu .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover //,
+//.secondary_site_menu .navbar-nav .open .dropdown-menu,
+//.secondary_site_menu .navbar-nav .open .dropdown-menu li
+{
+  background: transparent;
+  color: @brand-primary-of-option;
+}
+
+.secondary_site_menu .navbar-default .navbar-nav li ul li a {
+  background: @navbar-default-navbar-nav-li-a-background;
+  color: #fff;
+}
+
+.secondary_site_menu .navbar-default .navbar-nav li ul li a:hover,
+.secondary_site_menu .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover {
+  background: darken(@navbar-default-navbar-nav-li-a-background, 6%);
+  color: #fff;
+}
+
+.siteloginbar_popup .dropdown-menu > li > a {color: #fff;}
+
+// This comes last to enable site title color of theme options under FiveAlive-lite to have priority over the default set by FiveAlive.
+header.header {
+  .sitetitle,
+  .sitesubtitle {
+    color: @brand-primary;
+    text-shadow: none;}
+  //  a,
+  //  a:visited {color: @brand-primary;
+  //  }
+}
