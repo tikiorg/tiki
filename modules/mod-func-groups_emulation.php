@@ -26,7 +26,7 @@ function module_groups_emulation_info()
 				'description' => tra('Show All Groups') . '. ' . tra('If set to "n", the list is not shown.'),
 				'filter' => 'alpha',
 				'default' => 'y',
-				'since' => '12.3',
+				'since' => '13.1',
 				'options' => array(
 					array('text' => tra('Yes'), 'value' => 'y'), 
 					array('text' => tra('No'), 'value' => 'n')
@@ -37,7 +37,7 @@ function module_groups_emulation_info()
 				'description' => tra('Show Your Groups') . '. ' . tra('If set to "n", the list is not shown.'),
 				'filter' => 'alpha',
 				'default' => 'y',
-				'since' => '12.3',
+				'since' => '13.1',
 				'options' => array(
 					array('text' => tra('Yes'), 'value' => 'y'), 
 					array('text' => tra('No'), 'value' => 'n')
