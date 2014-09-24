@@ -1,0 +1,10 @@
+---
+objects:
+  -
+    type: wiki_page
+    ref: page_about 
+    data:
+      mode: create
+      name: About Tiki Addons 
+      content: wikicontent:page_about
+      description:
