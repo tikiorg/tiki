@@ -1,6 +1,6 @@
 {strip}
 {tikimodule error=$module_params.error title=$tpl_module_title name="groups_emulation" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
-	{if isset($allGroups)}
+	{if isset($allGroups) && $showallgroups eq 'y'}
 		<fieldset>
 			<legend>{tr}All Groups{/tr}</legend>
 			<ul >
@@ -11,6 +11,7 @@
 		</fieldset>
 	{/if}
 
+	{if $showyourgroups eq 'y'}
 	<fieldset>
 		<legend>{tr}Your Groups{/tr}</legend>
 		<ul >
@@ -23,7 +24,8 @@
 		{/foreach}
 		</ul >
 	</fieldset>
-
+	{/if}
+	
 	{if $groups_are_emulated eq 'y'}
 		<fieldset>
 			<legend>{tr}Emulated Groups{/tr}</legend>
