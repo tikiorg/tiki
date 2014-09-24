@@ -156,10 +156,12 @@ class RatingLib extends TikiDb_Bridge
 			return false;
 		}
 
-        $this->query(
-            'DELETE FROM `tiki_user_votings` WHERE `user` = ? AND `id` = ?',
-            array($user, $token)
-        );
+		if (!empty($user)) {
+			$this->query(
+				'DELETE FROM `tiki_user_votings` WHERE `user` = ? AND `id` = ?',
+				array($user, $token)
+			);
+		}
 
 		$this->query(
 			'INSERT INTO `tiki_user_votings` ( `user`, `ip`, `id`, `optionId`, `time` ) VALUES( ?, ?, ?, ?, ? )',
