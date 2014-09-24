@@ -2626,9 +2626,7 @@ class UsersLib extends TikiLib
 			$url = "tiki-user_information.php?userId=$id";
 			$url = filter_out_sefurl($url);
 			$extra = '';
-			if ($prefs['feature_community_mouseover'] == 'y' && $this->get_user_preference($auser, 'show_mouseover_user_info', 'y') === 'y' ||
-						$prefs['feature_friends'] == 'y') {
-
+			if ($prefs['feature_community_mouseover'] == 'y' && ($this->get_user_preference($auser, 'show_mouseover_user_info', 'y') == 'y' || $prefs['feature_friends'] == 'y')) {
 				$rel = TikiLib::lib('service')->getUrl(array(
 					'controller' => 'user',
 					'action' => 'info',
