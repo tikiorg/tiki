@@ -178,6 +178,15 @@ class Search_ContentSource_TrackerItemSource implements Search_ContentSource_Int
 		}
 
 		$source = new Search_FacetProvider;
+		$source->addFacets([
+			Search_Query_Facet_Term::fromField('tracker_id')
+				->setLabel(tr('Tracker'))
+				->setRenderCallback(function ($id) {
+					$lib = TikiLib::lib('object');
+					return $lib->get_title('tracker', $id);
+				})
+		]);
+
 		foreach ($handlers as $handler) {
 			$source->addProvider($handler);
 		}
