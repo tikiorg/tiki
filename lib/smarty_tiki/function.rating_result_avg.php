@@ -37,7 +37,7 @@ function smarty_function_rating_result_avg( $params, $smarty )
 	//Why $vote_collect yields a different value than $vote_avg?
 	//$vote_collect = $ratinglib->collect($params['type'], $params['id'], 'avg', array_filter($votings));
 
-    if (isset($options[0]) && $options[0] = "0") {
+    if (isset($options[0]) && $options[0] == "0") {
         unset($options[0]);
     }
 
