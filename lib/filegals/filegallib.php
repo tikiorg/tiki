@@ -2176,7 +2176,7 @@ class FileGalLib extends TikiLib
 			$result = $files->fetchColumn('fileId', array('path' => $files->not('')));
 			$msg = tra('Number of files transferred to the database:');
 		} else {
-			$result = $files->fetchColumn('fileId', array('path' => ''));
+			$result = $files->fetchColumn('fileId', array('path' => '', 'filetype' => $files->not('image/svg+xml')));
 			$msg = tra('Number of files transferred to the file system:');
 		}
 
