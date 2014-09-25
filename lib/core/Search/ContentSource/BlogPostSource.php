@@ -37,6 +37,7 @@ class Search_ContentSource_BlogPostSource implements Search_ContentSource_Interf
 			'language' => $typeFactory->identifier('unknown'),
 			'modification_date' => $typeFactory->timestamp($post['created']),
 			'contributors' => $typeFactory->multivalue(array($post['user'])),
+			'contributors_array' => $typeFactory->plaintext(json_encode(array($post['user']))),
 
 			'blog_id' => $typeFactory->identifier($post['blogId']),
 			'blog_excerpt' => $typeFactory->wikitext($post['excerpt']),
@@ -58,6 +59,7 @@ class Search_ContentSource_BlogPostSource implements Search_ContentSource_Interf
 			'language',
 			'modification_date',
 			'contributors',
+			'contributors_array',
 
 			'blog_id',
 			'blog_excerpt',

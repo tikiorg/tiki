@@ -53,6 +53,7 @@ class Search_ContentSource_SheetSource implements Search_ContentSource_Interface
 			'description' => $typeFactory->sortable($info['description']),
 			'modification_date' => $typeFactory->timestamp($lastModif),
 			'contributors' => $typeFactory->multivalue($contributors),
+			'contributors_array' => $typeFactory->plaintext(json_encode($contributors)),
 
 			'sheet_content' => $typeFactory->plaintext($text),
 
@@ -69,6 +70,7 @@ class Search_ContentSource_SheetSource implements Search_ContentSource_Interface
 			'description',
 			'modification_date',
 			'contributors',
+			'contributors_array',
 
 			'sheet_content',
 

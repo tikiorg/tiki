@@ -18,7 +18,7 @@ class Search_GlobalSource_FileAttachmentSource implements Search_GlobalSource_In
 
 	function getProvidedFields()
 	{
-		return array('attachment_contents', 'attachments');
+		return array('attachment_contents', 'attachments', 'attachments_array');
 	}
 
 	function getGlobalFields()
@@ -48,6 +48,7 @@ class Search_GlobalSource_FileAttachmentSource implements Search_GlobalSource_In
 
 		return array(
 			'attachments' => $typeFactory->multivalue($files),
+			'attachments_array' => $typeFactory->plaintext(json_encode($files)),
 			'attachment_contents' => $typeFactory->plaintext(implode(' ', $textual)),
 		);
 	}
