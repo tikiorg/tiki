@@ -34,6 +34,13 @@ if ($prefs['feature_fixed_width'] === 'y') {
 // Add it first, so that it can be overriden in the custom themes
 $headerlib->add_cssfile("themes/base_files/css/tiki.css");
 
+// Then add Addon custom css first, so it can be overridden by themes
+foreach (TikiAddons::getPaths() as $path) {
+	foreach (glob('addons/' . basename($path) . '/css/*.css') as $filename) {
+		$headerlib->add_cssfile($filename);
+	}
+}
+
 if (empty($prefs['theme_active']) || $prefs['theme_active'] == 'default') {
 	$headerlib->add_cssfile('vendor/twitter/bootstrap/dist/css/bootstrap.min.css');
 } elseif ($prefs['theme_active'] == 'custom') {
