@@ -33,13 +33,13 @@ function wikiplugin_votings_info()
 }
 function wikiplugin_votings($data, $params)
 {
-	global $smarty, $user;
+	global $user;
 	if (!isset($params['objectkey'])) {
 		return '';
 	} else {
 		$key = $params['objectkey'];
 	}
-
+	$smarty = TikiLib::lib('smarty');
 	$votings = TikiDb::get()->table('tiki_user_votings');
 
 	$data = $votings->fetchRow(array('count' => $votings->count(), 'total' => $votings->sum('optionId')), array('id' => $key));

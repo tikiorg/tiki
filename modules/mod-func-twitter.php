@@ -49,8 +49,11 @@ function module_twitter_info()
  */
 function module_twitter( $mod_reference, $module_params )
 {
-	global $tikilib, $smarty, $prefs;
+	global $prefs;
 	global $socialnetworkslib; require_once ('lib/socialnetworkslib.php');
+	$smarty = TikiLib::lib('smarty');
+	$tikilib = TikiLib::lib('tiki');
+
 	if ( !empty($module_params['user']) ) {
 		$user = $module_params['user'];
 
@@ -77,6 +80,5 @@ function module_twitter( $mod_reference, $module_params )
 	}
 
 	$timeline=array_splice($timeline, 0, $mod_reference['rows']?$mod_reference['rows']:10);
-
 	$smarty->assign('timeline', $timeline);
 }

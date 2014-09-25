@@ -65,9 +65,6 @@ class TikiLib extends TikiDb_Bridge
 			case 'tiki':
 				global $tikilib;
 				return self::$libraries[$name] = $tikilib;
-			case 'smarty':
-				global $smarty;
-				return self::$libraries[$name] = $smarty;
 		}
 
 		unlink('temp/cache/container.php'); // Remove the container cache to help transition
@@ -4834,11 +4831,11 @@ class TikiLib extends TikiDb_Bridge
 	private function plugin_pending_notification($plugin_name, $body, $arguments, $context)
 	{
 		require_once('lib/webmail/tikimaillib.php');
-		global $prefs, $base_url, $smarty;
-
+		global $prefs, $base_url;
 		$mail = new TikiMail(null, $prefs['sender_email']);
 		$mail->setSubject(tr("Plugin %0 pending approval", $plugin_name));
 
+		$smarty = TikiLib::lib('smarty');
 		$smarty->assign('plugin_name', $plugin_name);
 		$smarty->assign('type', $context['type']);
 		$smarty->assign('objectId', $context['object']);
@@ -6664,7 +6661,7 @@ JS;
 	}
 
 	function check_alias($edit, $page) {
-		global $smarty;
+		$smarty = TikiLib::lib('smarty');
 		foreach ($this->get_pages($edit, true) as $pointedPage => $types) {
 			if($types[0] == 'alias'){
 				$alias = $this->table('tiki_object_relations')->fetchColumn('source_itemId', array('target_itemId' => $pointedPage));

@@ -30,8 +30,9 @@ function module_switch_theme_info()
  */
 function module_switch_theme($mod_reference, &$module_params)
 {
-	global $prefs, $tikilib, $smarty, $tc_theme, $tc_theme_option;
-
+	global $prefs, $tc_theme, $tc_theme_option;
+	$smarty = TikiLib::lib('smarty');
+	$tikilib = TikiLib::lib('tiki');
 	if ($prefs['theme_active'] !== 'legacy') {
 		$module_params['error'] = tr('Switching themes requires the "Theme selection" setting to be: %0',
 				'<em>' . tr('Bootstrap themes in the "styles" directory') . '</em>');

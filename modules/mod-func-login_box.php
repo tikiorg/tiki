@@ -56,8 +56,8 @@ function module_login_box_info()
  */
 function module_login_box($mod_reference, &$module_params)
 {
-	global $smarty, $prefs, $base_url_https;
-
+	global $prefs, $base_url_https;
+	$smarty = TikiLib::lib('smarty');
 	static $module_logo_instance = 0;
 
 	$module_logo_instance++;

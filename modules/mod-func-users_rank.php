@@ -31,8 +31,8 @@ function module_users_rank_info()
  */
 function module_users_rank($mod_reference, $module_params)
 {
-	global $tikilib, $smarty;
-	
+	$smarty = TikiLib::lib('smarty');
+	$tikilib = TikiLib::lib('tiki');
 	$users_rank = $tikilib->rank_users($mod_reference["rows"]);
 	$smarty->assign('users_rank', $users_rank);
 }

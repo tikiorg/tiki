@@ -12,8 +12,8 @@
 
 function smarty_function_html_body_attributes($params, $smarty)
 {
-	global $section, $prefs, $page, $smarty, $tiki_p_edit, $section_class, $user;
-	
+	global $section, $prefs, $page, $tiki_p_edit, $section_class, $user;
+	$smarty = TikiLib::lib('smarty');
 	$back = '';
 	$onload = '';
 	$class = isset($params['class']) ? $params['class'] : '';

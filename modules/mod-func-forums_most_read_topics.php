@@ -31,7 +31,7 @@ function module_forums_most_read_topics_info()
  */
 function module_forums_most_read_topics($mod_reference, $module_params)
 {
-	global $smarty;
+	$smarty = TikiLib::lib('smarty');
 	global $ranklib; include_once ('lib/rankings/ranklib.php');
 	
 	if (isset($module_params['forumId'])) {

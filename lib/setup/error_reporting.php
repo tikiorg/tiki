@@ -6,12 +6,12 @@
 // $Id$
 
 //this script may only be included - so its better to die if called directly.
-global $prefs, $smarty, $tiki_p_admin;
+global $prefs, $tiki_p_admin;
 if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) != FALSE) {
 	header('location: index.php');
 	exit;
 }
-
+$smarty = TikiLib::lib('smarty');
 if ( $prefs['error_reporting_adminonly'] == 'y' and $tiki_p_admin != 'y' ) {
 	$errorReportingLevel = 0;
 } elseif ($prefs['error_reporting_level'] == 2047) {

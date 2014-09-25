@@ -124,8 +124,8 @@ class TikiDb_LegacyErrorHandler implements TikiDb_ErrorHandler
      */
     function handle( TikiDb $db, $query, $values, $result ) // {{{
 	{
-		global $smarty, $prefs;
-
+		global $prefs;
+		$smarty = TikiLib::lib('smarty');
 		$msg = $db->getErrorMessage();
 		$q=$query;
 		if (is_array($values)) {

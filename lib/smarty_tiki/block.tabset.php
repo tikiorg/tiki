@@ -35,7 +35,6 @@ function smarty_block_tabset($params, $content, $smarty, &$repeat)
 {
 	global $prefs, $smarty_tabset_name, $smarty_tabset, $smarty_tabset_i_tab, $cookietab, $tabset_index;
 	$headerlib = TikiLib::lib('header');
-
 	if ($smarty->getTemplateVars('print_page') == 'y' || $prefs['layout_tabs_optional'] === 'n') {
 		$params['toggle'] = 'n';
 	}

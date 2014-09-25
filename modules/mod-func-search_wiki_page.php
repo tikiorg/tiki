@@ -36,7 +36,7 @@ function module_search_wiki_page_info()
  */
 function module_search_wiki_page($mod_reference, $module_params)
 {
-	global $smarty;
+	$smarty = TikiLib::lib('smarty');
 	$request = $smarty->getTemplateVars('exact_match');
 	if (isset($request)) {
 		$smarty->assign('exact', $request);

@@ -74,8 +74,8 @@ function module_breadcrumbs_info()
  */
 function module_breadcrumbs($mod_reference, $module_params)
 {
-	global $prefs, $smarty, $crumbs;
-
+	global $prefs, $crumbs;
+	$smarty = TikiLib::lib('smarty');
 	if (!isset($module_params['label'])) {
 		if ($prefs['feature_siteloclabel'] === 'y') {
 			$module_params['label'] = 'Location : ';

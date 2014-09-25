@@ -36,9 +36,10 @@ function module_messages_unread_messages_info()
  */
 function module_messages_unread_messages($mod_reference, $module_params)
 {
-	global $user, $tikilib, $smarty;
+	global $user;
 	$globalperms = Perms::get();
-
+	$smarty = TikiLib::lib('smarty');
+	$tikilib = TikiLib::lib('tiki');
 	if ($user && $globalperms->messages) {
 		$modUnread = $tikilib->user_unread_messages($user);
 		if ($modUnread > 0 || !isset($module_params['showempty']) || $module_params['showempty'] == 'y') {

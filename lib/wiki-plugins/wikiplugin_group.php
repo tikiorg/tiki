@@ -59,7 +59,8 @@ function wikiplugin_group_info()
 function wikiplugin_group($data, $params)
 {
 	// TODO : Re-implement friend filter
-	global $user, $tikilib, $smarty, $groupPluginReturnAll;
+	global $user, $groupPluginReturnAll;
+	$tikilib = TikiLib::lib('tiki');
 	$dataelse = '';
 	if (strrpos($data, '{ELSE}')) {
 		$dataelse = substr($data, strrpos($data, '{ELSE}')+6);
@@ -108,7 +109,7 @@ function wikiplugin_group($data, $params)
 	}
 
 	$userGroups = $tikilib->get_user_groups($user);
-
+	$smarty = TikiLib::lib('smarty');
 	if (count($userGroups) > 1) { //take away the anonymous as everybody who is registered is anonymous
 		foreach ($userGroups as $key=>$grp) {
 			if ($grp == 'Anonymous') {

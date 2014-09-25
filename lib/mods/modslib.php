@@ -1173,7 +1173,7 @@ class ModsLib
 		if (is_array($info->configuration) and count($info->configuration)) {
 			$conf = $info->readconf($path);
 			if ($conf === false) {
-				global $smarty;
+				$smarty = TikiLib::lib('smarty');
 				$conf=array('_SERVER' => $_SERVER);
 				if (is_array($info->configuration_help) and count($info->configuration_help)) {
 					$smarty->assign('help', implode("<br />\n", $info->configuration_help));

@@ -78,7 +78,7 @@ function wikiplugin_remarksbox_info()
 
 function wikiplugin_remarksbox($data, $params)
 {
-	global $smarty;
+	$smarty = TikiLib::lib('smarty');
 	require_once('lib/smarty_tiki/block.remarksbox.php');
 	
 	// there probably is a better way @todo this

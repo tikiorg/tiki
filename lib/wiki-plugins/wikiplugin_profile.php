@@ -73,7 +73,7 @@ function wikiplugin_profile( $data, $params )
 			return '__' . $e->getMessage() . '__';
 		}
 
-		global $smarty;
+		$smarty = TikiLib::lib('smarty');
 		$smarty->assign('profile_is_installed', $installer->isInstalled($profile));
 		$smarty->assign('profile_key', "{$params['domain']}/{$params['name']}");
 		return '~np~' . $smarty->fetch('wiki-plugins/wikiplugin_profile.tpl') . '~/np~';

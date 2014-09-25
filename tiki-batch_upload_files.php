@@ -63,8 +63,8 @@ function getDirContent($sub)
 	global $disallowed_types;
 	global $a_file;
 	global $a_path;
-	global $filedir, $smarty;
-
+	global $filedir;
+	$smarty = TikiLib::lib('smarty');
 	$tmp = rtrim($filedir . '/' . $sub, '/');
 
 	if (false === $allfile = scandir($tmp)) {
@@ -96,7 +96,7 @@ function buildFileList()
 
 	global $a_file;
 	global $a_path;
-	global $filedir, $smarty;
+	global $filedir;
 	global $filestring;
 	getDirContent('');
 	$totfile = count($a_file); // total file number
@@ -125,6 +125,7 @@ function buildFileList()
 		$filestring[$x][2] = $tmp;
 		$totalsize+= $filesize;
 	}
+	$smarty = TikiLib::lib('smarty');
 	$smarty->assign('totfile', $totfile);
 	$smarty->assign('totalsize', $totalsize);
 	$smarty->assign('filestring', $filestring);

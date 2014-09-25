@@ -40,8 +40,8 @@ function module_who_is_there_info()
  */
 function module_who_is_there($mod_reference, $module_params)
 {
-	global $tikilib, $smarty;
-
+	$tikilib = TikiLib::lib('tiki');
+	$smarty = TikiLib::lib('smarty');
 	$count = !isset($module_params['content']) || $module_params['content'] != 'list';
 	$list = !isset($module_params['content']) || $module_params['content'] != 'count';
 	$smarty->assign('count', $count);

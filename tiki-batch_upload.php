@@ -43,10 +43,11 @@ $allowed_types = array(
  */
 function getDirContent($sub)
 {
+	$smarty = TikiLib::lib('smarty');
 	global $allowed_types;
 	global $a_img;
 	global $a_path;
-	global $imgdir, $smarty;
+	global $imgdir;
 	$allimg = array();
 	$tmp = $imgdir;
 	if ($sub <> "") $tmp.= '/' . $sub;
@@ -80,7 +81,7 @@ function buildImageList()
 {
 	global $a_img;
 	global $a_path;
-	global $imgdir, $smarty;
+	global $imgdir;
 	global $imgstring;
 	getDirContent('');
 	$totimg = count($a_img); // total image number
@@ -108,6 +109,7 @@ function buildImageList()
 		$imgstring[$x][4] = $tmp;
 		$totalsize+= $filesize;
 	}
+	$smarty = TikiLib::lib('smarty');
 	$smarty->assign('totimg', $totimg);
 	$smarty->assign('totalsize', $totalsize);
 	$smarty->assign('imgstring', $imgstring);

@@ -23,7 +23,7 @@ class Search_Formatter_ValueFormatter_Reference extends Search_Formatter_ValueFo
 
 	function render($name, $value, array $entry)
 	{
-		global $smarty;
+		$smarty = TikiLib::lib('smarty');
 		$smarty->loadPlugin('smarty_function_object_link');
 
 		foreach ((array) $value as $id) {

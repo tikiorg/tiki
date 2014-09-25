@@ -24,8 +24,8 @@ class UpgradeWizardSendFeedback extends Wizard
 	
 	function onSetupPage ($homepageUrl) 
 	{
-		global	$smarty, $prefs;
-
+		global $prefs;
+		$smarty = TikiLib::lib('smarty');
 		// Run the parent first
 		parent::onSetupPage($homepageUrl);
 		

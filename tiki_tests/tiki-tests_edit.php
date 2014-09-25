@@ -46,8 +46,8 @@ function get_from_dom($element)
  */
 function get_url($url, $use_tidy = TRUE)
 {
-	global $smarty, $cookies;
-
+	global $cookies;
+	$smarty = TikiLib::lib('smarty');
 	$result = array();
 	$get = get_from_dom($url->getElementsByTagName('get')->item(0));
 	$post = get_from_dom($url->getElementsByTagName('post')->item(0));

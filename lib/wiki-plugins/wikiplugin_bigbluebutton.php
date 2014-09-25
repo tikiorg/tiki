@@ -76,10 +76,10 @@ function wikiplugin_bigbluebutton_info()
 function wikiplugin_bigbluebutton( $data, $params )
 {
 	try {
-		global $smarty, $prefs, $user;
+		global $prefs, $user;
 		$bigbluebuttonlib = TikiLib::lib('bigbluebutton');
 		$meeting = $params['name']; // Meeting is more descriptive than name, but parameter name was already decided.
-
+		$smarty = TikiLib::lib('smarty');
 		$smarty->assign('bbb_meeting', $meeting);
 		$smarty->assign('bbb_image', parse_url($prefs['bigbluebutton_server_location'], PHP_URL_SCHEME) . '://' . parse_url($prefs['bigbluebutton_server_location'], PHP_URL_HOST) . '/images/bbb_logo.png');
 

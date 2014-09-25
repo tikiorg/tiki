@@ -222,7 +222,7 @@ function wikiplugin_memberlist( $data, $params )
 		}
 	}
 
-	global $smarty;
+	$smarty = TikiLib::lib('smarty');
 	$smarty->assign('execution_key', $exec_key);
 	$smarty->assign('can_apply', $canApply);
 	$smarty->assign('defaultGroup', $params['defaultGroup']);

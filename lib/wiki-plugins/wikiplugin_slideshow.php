@@ -148,9 +148,10 @@ function wikiplugin_slideshow_info()
 
 function wikiplugin_slideshow($data, $params)
 {
-	global $dbTiki, $tiki_p_admin, $prefs, $user, $page, $tikilib, $smarty;
+	global $tiki_p_admin, $prefs, $user, $page;
 	extract($params, EXTR_SKIP);
-
+	$smarty = TikiLib::lib('smarty');
+	$tikilib = TikiLib::lib('tiki');
 	$theme = (isset($theme) ? $theme : 'default');
 	$themeName = '';
 

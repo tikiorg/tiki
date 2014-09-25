@@ -42,7 +42,7 @@ function module_facebook_info()
  */
 function module_facebook( $mod_reference, $module_params )
 {
-	global $tikilib, $smarty, $prefs;
+	global $prefs;
 	global $socialnetworkslib; require_once ('lib/socialnetworkslib.php');
 	if ( !empty($module_params['user']) ) {
 		$user = $module_params['user'];
@@ -62,7 +62,7 @@ function module_facebook( $mod_reference, $module_params )
 	}
 
 	$timeline=array_splice($timeline, 0, $module_params['max']?$module_params['max']:10);
-
+	$smarty = TikiLib::lib('smarty');
 	$smarty->assign('timeline', $timeline);
 
 }

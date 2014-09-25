@@ -28,8 +28,7 @@ class AdminWizardCategory extends Wizard
 
 	function onSetupPage ($homepageUrl) 
 	{
-		global	$smarty, $prefs;
-
+		global $prefs;
 		// Run the parent first
 		parent::onSetupPage($homepageUrl);
 		

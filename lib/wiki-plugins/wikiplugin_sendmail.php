@@ -59,9 +59,10 @@ function wikiplugin_sendmail_info()
 
 function wikiplugin_sendmail($data, $params)
 {
-	global $smarty, $userlib, $relationlib, $user;
+	global $user;
 	$relationlib = TikiLib::lib('relation');
-
+	$smarty = TikiLib::lib('smarty');
+	$userlib = TikiLib::lib('user');
 	if (empty($params['mailto']) || ($params['mailto'] == 'group' && empty($params['groupname'])) || ($params['mailto'] == 'eventparticipants' && empty($params['event_details']))) {
 		return false;
 	}

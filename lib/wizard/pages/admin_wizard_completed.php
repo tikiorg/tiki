@@ -23,8 +23,6 @@ class AdminWizardCompleted extends Wizard
 	
 	public function onSetupPage ($homepageUrl) 
 	{
-		global	$smarty;
-
 		// Run the parent first
 		parent::onSetupPage($homepageUrl);
 		

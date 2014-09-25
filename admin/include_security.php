@@ -15,7 +15,7 @@ if (isset($_REQUEST["security"])) {
 }
 
 if (!extension_loaded('mcrypt')) {
-	global $smarty;
+	$smarty = TikiLib::lib('smarty');
 	$smarty->assign('no_mcrypt', 'y');
 }
 

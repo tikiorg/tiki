@@ -50,8 +50,8 @@ function module_last_modif_pages_info()
  */
 function module_last_modif_pages($mod_reference, $module_params)
 {
-	global $tikilib, $smarty;
-
+	$tikilib = TikiLib::lib('tiki');
+	$smarty = TikiLib::lib('smarty');
 	$ranking = $tikilib->list_pages(0, $mod_reference['rows'], 'lastModif_desc', '', '', true, false, false, false, '', false, 'y');
 
 	$smarty->assign('modLastModif', $ranking["data"]);

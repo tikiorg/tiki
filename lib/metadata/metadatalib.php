@@ -282,7 +282,7 @@ class FileMetadata
 	 */
 	function dialogTabs($metadata, $id, $id_link, $filename)
 	{
-		global $smarty;
+		$smarty = TikiLib::lib('smarty');
 		$smarty->assign('id', $id);
 		$smarty->assign('id_link', $id_link);
 		$smarty->assign('filename', $filename);
@@ -302,7 +302,7 @@ class FileMetadata
 
 	function pageTabs($metadata)
 	{
-		global $smarty;
+		$smarty = TikiLib::lib('smarty');
 		if (is_array($metadata) && count($metadata) > 0) {
 			$metarray = $metadata;
 		} elseif (!empty($metadata)) {

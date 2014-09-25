@@ -41,7 +41,7 @@ function module_trackerhelp_info()
  */
 function module_trackerhelp($mod_reference, &$module_params)
 {
-	global $smarty;
+	$smarty = TikiLib::lib('smarty');
 	$default = array('height' => 4, 'cols' => 23);
 	$module_params = array_merge($default, $module_params);
 	if (!empty($_REQUEST['trackerhelp'])) {

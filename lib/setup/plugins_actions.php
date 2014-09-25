@@ -35,7 +35,7 @@ foreach ( $plugins_actions as $plugin_type => $v ) {
 				@include_once('lib/smarty_tiki/function.' . $plugin_name . '.php');
 				$func = 's_f_' . $plugin_name . '_actionshandler';
 				if ( ! function_exists($func) || ! call_user_func($func, $params) ) {
-					global $smarty;
+					$smarty = TikiLib::lib('smarty');
 					$smarty->assign('msg', sprintf(tra('Handling actions of plugin "%s" failed.'), $plugin_name));
 					$smarty->display('error.tpl');
 					die;

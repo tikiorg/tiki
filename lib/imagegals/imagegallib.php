@@ -1058,7 +1058,7 @@ class ImageGalsLib extends TikiLib
 	 */
 	function notify($imageId, $galleryId, $name, $filename, $description, $galleryName, $action, $user)
 	{
-		global $prefs, $smarty, $tikilib;
+		global $prefs;
 		if ($prefs['feature_user_watches'] == 'y') {
 			$event = 'image_gallery_changed';
 			$nots = $this->get_event_watches($event, $galleryId);
@@ -1068,6 +1068,7 @@ class ImageGalsLib extends TikiLib
 				$reportsManager->addToCache($nots, array("event"=>$event, "imageId"=>$imageId, "imageName"=>$name, "fileName"=>$filename, "galleryId"=>$galleryId, "galleryName"=>$galleryName, "action"=>$action, "user"=>$user));
 			}
 
+			$smarty = TikiLib::lib('smarty');
 			include_once('lib/notifications/notificationemaillib.php');
 			$smarty->assign_by_ref('galleryId', $galleryId);
 			$smarty->assign_by_ref('galleryName', $galleryName);

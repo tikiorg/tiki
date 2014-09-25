@@ -92,7 +92,7 @@ function translationsToThisPageAreInProgress($page_id)
 
 function execute_module_translation()
 {
-	global $smarty;
+	$smarty = TikiLib::lib('smarty');
 // will show the language of the available translations. Chnage to 'n' to show the page name
 	$params['show_language'] = 'y';
 // flag to indicate that the module is appearing within the notification area of the edit page

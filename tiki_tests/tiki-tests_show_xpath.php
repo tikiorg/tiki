@@ -46,9 +46,10 @@ function get_from_dom($element)
  */
 function enlight_xpath($url, $xpath)
 {
-	global $smarty, $cookies,$base_url;
+	global $cookies, $base_url;
 	static $purifier;
 	static $loaded = false;
+	$smarty = TikiLib::lib('smarty');
 
 	$result = array();
 	$data = $url->getElementsByTagName('data')->item(0)->textContent;

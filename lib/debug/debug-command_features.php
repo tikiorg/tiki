@@ -50,7 +50,7 @@ class DbgFeatures extends DebuggerCommand
 		$p = explode(' ', trim($params));
 		$mask = count($p) > 0 ? str_replace('$', '', trim($p[0])) : '';
 		// Get list of all vars
-		global $smarty;
+		$smarty = TikiLib::lib('smarty');
 		$tpl_vars = $smarty->getTemplateVars();
 		// convert to vector of names, filter permissions only, and sort
 		$perms = array();

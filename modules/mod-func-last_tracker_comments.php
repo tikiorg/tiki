@@ -44,8 +44,8 @@ function module_last_tracker_comments_info()
  */
 function module_last_tracker_comments($mod_reference, $module_params)
 {
-	global $prefs, $smarty;
-	
+	global $prefs;
+	$smarty = TikiLib::lib('smarty');
 	$trackerId = isset($module_params["trackerId"]) ? $module_params["trackerId"] : 0;
 	
 	$itemId = isset($module_params["itemId"]) ? $module_params["itemId"] : 0;

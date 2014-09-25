@@ -1327,11 +1327,11 @@ class NlLib extends TikiLib
 	// browser: true if on the browser
 	public function send($nl_info, $info, $browser=true, &$sent, &$errors, &$logFileName)
 	{
-		global $prefs, $smarty, $section;
+		global $prefs, $section;
 		$headerlib = TikiLib::lib('header');
 		$tikilib = TikiLib::lib('tiki');
 		$userlib = TikiLib::lib('user');
-
+		$smarty = TikiLib::lib('smarty');
 		$users = $this->get_all_subscribers($nl_info['nlId'], $nl_info['unsubMsg'] == 'y');
 
 		if (empty($info['editionId'])) {

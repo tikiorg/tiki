@@ -13,8 +13,8 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 
 function smarty_modifier_tiki_short_time($string)
 {
-	global $prefs, $smarty;
-
+	global $prefs;
+	$smarty = TikiLib::lib('smarty');
 	$smarty->loadPlugin('smarty_modifier_tiki_date_format');
 	return smarty_modifier_tiki_date_format($string, $prefs['short_time_format']);
 }

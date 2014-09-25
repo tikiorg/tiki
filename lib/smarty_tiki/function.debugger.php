@@ -19,8 +19,6 @@ function smarty_function_debugger($params, $smarty)
 
 		require_once ('lib/debug/debugger.php');
 
-		//global $smarty;
-
 		// Get current URL
 		$smarty->assign('console_father', $_SERVER["REQUEST_URI"]);
 

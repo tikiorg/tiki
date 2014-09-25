@@ -44,9 +44,9 @@ function wikiplugin_button_info()
 
 function wikiplugin_button($data, $params)
 {
-	global $tikilib,$smarty;
 	$parserlib = TikiLib::lib('parser');
-	
+	$smarty = TikiLib::lib('smarty');
+	$tikilib = TikiLib::lib('tiki');
 	if (empty($params['href'])) {
 		return tra('Incorrect param');
 	}

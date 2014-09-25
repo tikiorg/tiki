@@ -192,9 +192,9 @@ class HeaderLib
 
 	function output_headers()
 	{
-		global $style_ie6_css, $style_ie7_css, $style_ie8_css, $style_ie9_css, $smarty;
-
-    $smarty->loadPlugin('smarty_modifier_escape');
+		global $style_ie6_css, $style_ie7_css, $style_ie8_css, $style_ie9_css;
+		$smarty = TikiLib::lib('smarty');
+		$smarty->loadPlugin('smarty_modifier_escape');
 
 		ksort($this->cssfiles);
 		ksort($this->css);
@@ -265,12 +265,12 @@ class HeaderLib
 
 	function output_js_files()
 	{
-		global $prefs, $smarty;
-
+		global $prefs;
 		if ($prefs['javascript_enabled'] == 'n') {
 			return;
 		}
 
+		$smarty = TikiLib::lib('smarty');
 		$smarty->loadPlugin('smarty_modifier_escape');
 		ksort($this->jsfiles);
 
@@ -537,7 +537,7 @@ class HeaderLib
 	 */
 	function getJsfiles()
 	{
-		global $smarty;
+		$smarty = TikiLib::lib('smarty');
 		$smarty->loadPlugin('smarty_modifier_escape');
 
 		ksort($this->jsfiles);
@@ -639,7 +639,8 @@ class HeaderLib
 
 	private function output_css_files_list( $files, $media = '' )
 	{
-		global $prefs, $smarty;
+		global $prefs;
+		$smarty = TikiLib::lib('smarty');
 		$smarty->loadPlugin('smarty_modifier_escape');
 
 		$back = '';

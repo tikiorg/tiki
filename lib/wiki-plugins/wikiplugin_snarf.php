@@ -123,14 +123,15 @@ function wikiplugin_snarf_info()
 
 function wikiplugin_snarf($data, $params)
 {
-    global $tikilib, $prefs, $smarty;
+    global $prefs;
 	static $url=''; static $snarf; static $isFresh = true;
 	static $iSnarf = 0;
 	++$iSnarf;
 	if (empty($params['url'])) {
 		return '';
 	}
-	
+	$smarty = TikiLib::lib('smarty');
+	$tikilib = TikiLib::lib('tiki');
 	if (!empty($params['ajax'])) {
 		$params['iSnarf'] = $iSnarf;
 		$params['href'] = '';
@@ -190,7 +191,6 @@ function wikiplugin_snarf($data, $params)
 	$ret = wikiplugin_code($snarf, $code_defaults);
 
 	if (!$isFresh && empty($params['link'])) {
-		global $smarty;
 		include_once('lib/smarty_tiki/block.self_link.php');
 		$icon = '<div style="text-align:right">'.smarty_block_self_link(array('_icon' => 'arrow_refresh', 'snarf_refresh'=>$params['url']), '', $smarty).'</div>';
 		$ret = $icon.$ret;

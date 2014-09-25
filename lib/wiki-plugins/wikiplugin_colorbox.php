@@ -129,10 +129,12 @@ function wikiplugin_colorbox_info()
 }
 function wikiplugin_colorbox($data, $params)
 {
-	global $tikilib, $smarty, $user, $prefs;
+	global $user, $prefs;
 	static $iColorbox = 0;
 	$default = array('showfilename' => 'n', 'showtitle'=>'n', 'thumb'=>'y', 'showallthumbs'=>'n', 'parsedescriptions'=>'n');
 	$params = array_merge($default, $params);
+	$smarty = TikiLib::lib('smarty');
+	$tikilib = TikiLib::lib('tiki');
 
 	if (!empty($params['fgalId'])) {
 		if ($prefs['feature_file_galleries'] != 'y') {

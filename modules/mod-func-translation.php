@@ -54,15 +54,16 @@ function filter_languages_from_pivot($langInfo)
  */
 function module_translation($mod_reference, $module_params)
 {
-	global $pivotLanguage, $tikilib, $smarty, $prefs, $page, $_REQUEST;
+	global $pivotLanguage, $prefs, $page;
+	$smarty = TikiLib::lib('smarty');
+	$tikilib = TikiLib::lib('tiki');
 
-
-//are we arriving from the edit page?
-		if (isset($module_params['from_edit_page']) && $module_params['from_edit_page'] == 'y') {
-			$smarty->assign('from_edit_page', 'y');
-		} else {
-			$smarty->assign('from_edit_page', 'n');
-		}
+	//are we arriving from the edit page?
+	if (isset($module_params['from_edit_page']) && $module_params['from_edit_page'] == 'y') {
+		$smarty->assign('from_edit_page', 'y');
+	} else {
+		$smarty->assign('from_edit_page', 'n');
+	}
 
 	if ((!$page or $page == '') and isset($_REQUEST['page'])) {
 		$page = $_REQUEST['page'];

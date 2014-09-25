@@ -963,8 +963,8 @@ class CategLib extends ObjectLib
    	// $cats: The OIDs of the categories of the object.
 	function get_categorypath($cats)
    	{
-		global $smarty, $prefs;
-
+		global $prefs;
+		$smarty = TikiLib::lib('smarty');
 		if (!isset($prefs['categorypath_excluded'])) {
 			return false;
 		}

@@ -164,13 +164,13 @@ class BanLib extends TikiLib
      */
     function importCSV($fname, $import_as_new)
 	{
-		global $smarty;
-
 		$fields = false;
 		if ($fhandle = fopen($fname, 'r')) {
 			$fields = fgetcsv($fhandle, 1000);
 		}
 		if ($fields === false) {
+			$smarty = TikiLib::lib('smarty');
+
 			$smarty->assign('msg', tra("The file is not a CSV file or has not a correct syntax"));
 			$smarty->display("error.tpl");
 			die;

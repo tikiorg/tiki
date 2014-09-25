@@ -42,8 +42,8 @@ function module_directory_top_sites_info()
  */
 function module_directory_top_sites($mod_reference, $module_params)
 {
-	global $tikilib, $smarty;
-	
+	$tikilib = TikiLib::lib('tiki');
+	$smarty = TikiLib::lib('smarty');
 	$ranking = $tikilib->dir_list_all_valid_sites2(0, $mod_reference["rows"], 'hits_desc', '');
 
 	$smarty->assign('desc', isset($module_params['desc']) ? $module_params['desc'] : 'n');	

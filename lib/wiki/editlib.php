@@ -111,14 +111,13 @@ class EditLib
 
 	function prepareTranslationData()
 	{
-		global $_REQUEST, $tikilib, $smarty;
 		$this->setTranslationSourceAndTargetPageNames();
 		$this->setTranslationSourceAndTargetVersions();
 	}
 
 	private function setTranslationSourceAndTargetPageNames()
 	{
-		global $_REQUEST, $smarty;
+		$smarty = TikiLib::lib('smarty');
 
 		if (!$this->isTranslationMode()) {
 			return;
@@ -1163,7 +1162,7 @@ class EditLib
 
 	function parse_html(&$inHtml)
 	{
-		global $smarty;
+		$smarty = TikiLib::lib('smarty');
 
 		include ('lib/htmlparser/htmlparser.inc');
 

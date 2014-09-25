@@ -23,9 +23,9 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
  */
 function smarty_function_var_dump($params, $smarty)
 {
-	global $debugger, $smarty;
+	global $debugger;
 	require_once('lib/debug/debugger.php');
-	//
+	$smarty = TikiLib::lib('smarty');
 	$v = $params['var'];
 	if (!empty($v)) {
 		$tmp = $smarty->getTemplateVars();

@@ -122,9 +122,8 @@ class Smarty_Tiki extends Smarty
 
 	/**
 	 * needs a proper description
-	 * @param string $tikidomain
 	 */
-	function Smarty_Tiki($tikidomain = '')
+	function __construct()
 	{
 		parent::__construct();
 		global $prefs, $style_base;
@@ -153,6 +152,27 @@ class Smarty_Tiki extends Smarty
 		}
 		if (!empty($prefs['smarty_cache_perms'])) {
 			$this->_file_perms = (int) $prefs['smarty_cache_perms'];
+		}
+
+		$this->loadFilter('pre', 'tr');
+		$this->loadFilter('pre', 'jq');
+
+		include_once('lib/smarty_tiki/resource.tplwiki.php');
+		$this->registerResource('tplwiki', array('smarty_resource_tplwiki_source', 'smarty_resource_tplwiki_timestamp', 'smarty_resource_tplwiki_secure', 'smarty_resource_tplwiki_trusted'));
+
+		include_once('lib/smarty_tiki/resource.wiki.php');
+		$this->registerResource('wiki', array('smarty_resource_wiki_source', 'smarty_resource_wiki_timestamp', 'smarty_resource_wiki_secure', 'smarty_resource_wiki_trusted'));
+
+		global $prefs;
+		// Assign the prefs array in smarty, by reference
+		$this->assignByRef('prefs', $prefs);
+
+		if ( !empty($prefs['log_tpl']) && $prefs['log_tpl'] === 'y' ) {
+			$this->loadFilter('pre', 'log_tpl');
+		}
+		if ( !empty($prefs['feature_sefurl_filter']) && $prefs['feature_sefurl_filter'] === 'y' ) {
+		  require_once ('tiki-sefurl.php');
+		  $this->registerFilter('output', 'filter_out_sefurl');
 		}
 	}
 
@@ -494,29 +514,4 @@ class Smarty_Tiki extends Smarty
 		$this->addTemplateDir($this->main_template_dir.'/layouts/');
 		$this->addTemplateDir($this->main_template_dir);
 	}
-}
-
-if (!isset($tikidomain)) {
-	$tikidomain = '';
-}
-$smarty = new Smarty_Tiki($tikidomain);
-$smarty->loadFilter('pre', 'tr');
-$smarty->loadFilter('pre', 'jq');
-
-include_once('lib/smarty_tiki/resource.tplwiki.php');
-$smarty->registerResource('tplwiki', array('smarty_resource_tplwiki_source', 'smarty_resource_tplwiki_timestamp', 'smarty_resource_tplwiki_secure', 'smarty_resource_tplwiki_trusted'));
-
-include_once('lib/smarty_tiki/resource.wiki.php');
-$smarty->registerResource('wiki', array('smarty_resource_wiki_source', 'smarty_resource_wiki_timestamp', 'smarty_resource_wiki_secure', 'smarty_resource_wiki_trusted'));
-
-global $prefs;
-// Assign the prefs array in smarty, by reference
-$smarty->assignByRef('prefs', $prefs);
-
-if ( !empty($prefs['log_tpl']) && $prefs['log_tpl'] === 'y' ) {
-	$smarty->loadFilter('pre', 'log_tpl');
-}
-if ( !empty($prefs['feature_sefurl_filter']) && $prefs['feature_sefurl_filter'] === 'y' ) {
-  require_once ('tiki-sefurl.php');
-  $smarty->registerFilter('output', 'filter_out_sefurl');
 }

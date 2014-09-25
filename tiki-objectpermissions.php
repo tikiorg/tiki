@@ -734,7 +734,8 @@ function perms_get_restrictions()
  */
 function get_displayed_permissions()
 {
-	global $objectFactory, $smarty;
+	global $objectFactory;
+	$smarty = TikiLib::lib('smarty');
 
 	$currentObject = $objectFactory->get($_REQUEST['objectType'], $_REQUEST['objectId']);
 	$displayedPermissions = $currentObject->getDirectPermissions();

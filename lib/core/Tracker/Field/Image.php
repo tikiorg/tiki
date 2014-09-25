@@ -93,8 +93,8 @@ class Tracker_field_Image extends Tracker_Field_File
 
 	function getFieldData(array $requestData = array())
 	{
-		global $prefs, $smarty;
-
+		global $prefs;
+		$smarty = TikiLib::lib('smarty');
 		$ins_id = $this->getInsertId();
 
 		if (!empty($prefs['fgal_match_regex']) && !empty($_FILES[$ins_id]['name'])) {

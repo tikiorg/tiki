@@ -144,7 +144,7 @@ class DbgCmd_Watch extends DebuggerCommand
 			);
 
 		//
-		global $smarty;
+		$smarty = TikiLib::lib('smarty');
 		$smarty->assign_by_ref('watchlist', $result);
 		return $smarty->fetch("debug/tiki-debug_watch_tab.tpl");
 	}
@@ -152,7 +152,7 @@ class DbgCmd_Watch extends DebuggerCommand
 	///
 	function value_of_smarty_var($v)
 	{
-		global $smarty;
+		$smarty = TikiLib::lib('smarty');
 
 		$result = '';
 

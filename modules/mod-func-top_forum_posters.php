@@ -31,7 +31,7 @@ function module_top_forum_posters_info()
  */
 function module_top_forum_posters($mod_reference, $module_params)
 {
-	global $smarty;
+	$smarty = TikiLib::lib('smarty');
 	global $ranklib; include_once ('lib/rankings/ranklib.php');
 	$posters = $ranklib->forums_top_posters($mod_reference["rows"]);
 	

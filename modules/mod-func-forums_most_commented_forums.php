@@ -31,7 +31,7 @@ function module_forums_most_commented_forums_info()
  */
 function module_forums_most_commented_forums($mod_reference, $module_params)
 {
-	global $smarty;
+	$smarty = TikiLib::lib('smarty');
 	global $ranklib; include_once ('lib/rankings/ranklib.php');
 	
 	$ranking = $ranklib->forums_ranking_most_commented_forum($mod_reference["rows"]);

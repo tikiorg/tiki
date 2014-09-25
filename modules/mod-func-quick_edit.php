@@ -70,8 +70,8 @@ function module_quick_edit_info()
  */
 function module_quick_edit($mod_reference, $module_params)
 {
-	global $smarty, $prefs;
-
+	global $prefs;
+	$smarty = TikiLib::lib('smarty');
 	$smarty->assign('tpl_module_title', tra('Quick Edit a Wiki Page'));
 
 

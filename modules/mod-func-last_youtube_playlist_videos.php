@@ -110,10 +110,10 @@ function module_last_youtube_playlist_videos_info()
  */
 function module_last_youtube_playlist_videos($mod_reference, $module_params)
 {
-	global $smarty, $prefs; 
+	global $prefs; 
 	$tikilib = TikiLib::lib('tiki');
 	$data = array();
-	
+	$smarty = TikiLib::lib('smarty');
 	if (!empty($module_params['id'])) {
 		$id = $module_params['id'];
 		// Catch common error on param values and convert into the right ones

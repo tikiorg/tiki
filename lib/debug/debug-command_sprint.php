@@ -43,7 +43,7 @@ class DbgSPrint extends DebuggerCommand
 	/// Execute command with given set of arguments.
 	function execute($params)
 	{
-		global $smarty;
+		$smarty = TikiLib::lib('smarty');
 
 		$this->set_result_type(TEXT_RESULT);
 		$result = '';

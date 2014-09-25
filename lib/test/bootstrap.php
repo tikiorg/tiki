@@ -83,7 +83,7 @@ if (!$installer->tableExists('tiki_preferences')) {
 
 $pwd = getcwd();
 chdir(dirname(__FILE__) . '/../..');
-global $smarty;
+$smarty = TikiLib::lib('smarty');
 require_once 'lib/init/smarty.php';
 $smarty->addPluginsDir('../smarty_tiki/');
 $cachelib = TikiLib::lib('cache');

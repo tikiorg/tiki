@@ -49,7 +49,7 @@ class DbgSList extends DebuggerCommand
 		$p = explode(' ', trim($params));
 		$mask = count($p) > 0 ? str_replace('$', '', trim($p[0])) : '';
 		// Get list of vars
-		global $smarty;
+		$smarty = TikiLib::lib('smarty');
 		$tpl_vars = $smarty->getTemplateVars();
 		// convert to vector of names and sort
 		$vars = array();

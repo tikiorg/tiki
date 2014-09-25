@@ -82,7 +82,7 @@ function wikiplugin_survey($data, $params)
 
 	$survey_info = $srvlib->get_survey($params['id']);
 
-	global $smarty;
+	$smarty = TikiLib::lib('smarty');
 	$smarty->assign('surveyId', $params['id']);
 	$smarty->assign('survey_info', $survey_info);
 	$smarty->assign('questions', $questions['data']);

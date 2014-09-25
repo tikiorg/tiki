@@ -362,7 +362,7 @@ if ($prefs['feature_search'] !== 'y' || $prefs['unified_add_to_categ_search'] !=
 	 */
 	function admin_categ_assign( &$max, $data_key, $data = null )
 	{
-		global $smarty;
+		$smarty = TikiLib::lib('smarty');
 
 		if ( is_null($data) ) {
 			$data = array( 'data' => array(), 'cant' => 0 );

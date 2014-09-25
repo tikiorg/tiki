@@ -23,8 +23,8 @@ class ProfilesWizardDemoMoreAdvancedConfs extends Wizard
 	
 	function onSetupPage ($homepageUrl) 
 	{
-		global	$smarty, $prefs, $TWV;
-
+		global $prefs, $TWV;
+		$smarty = TikiLib::lib('smarty');
 		// Run the parent first
 		parent::onSetupPage($homepageUrl);
 

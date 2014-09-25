@@ -22,7 +22,7 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 
 function smarty_modifier_iconify($string, $filetype = null)
 {
-	global $smarty;
+	$smarty = TikiLib::lib('smarty');
 
 	$smarty->loadPlugin('smarty_function_icon');
 	$icon = '';

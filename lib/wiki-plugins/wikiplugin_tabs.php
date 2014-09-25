@@ -55,7 +55,7 @@ function wikiplugin_tabs_info()
 
 function wikiplugin_tabs($data, $params)
 {
-	global $tikilib, $smarty;
+	$tikilib = TikiLib::lib('tiki');
 	if (!empty($params['name'])) {
 		$tabsetname = $params['name'];
 	} else {
@@ -84,7 +84,7 @@ function wikiplugin_tabs($data, $params)
 		$data = $tikilib->parse_data($data, array('suppress_icons' => true, 'inside_pretty' => $inside_pretty));
 		$tabData = explode('/////', $data);
 	}
-	
+	$smarty = TikiLib::lib('smarty');
 	$smarty->assign('tabsetname', $tabsetname);
 	$smarty->assign_by_ref('tabs', $tabs);
 	$smarty->assign('toggle', $toggle);

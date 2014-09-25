@@ -206,7 +206,7 @@ function smarty_block_pagination_links($params, $url, $smarty, &$repeat)
 
 	if ( $params['cant'] > 0 ) {
 		$make_prevnext_link = function ($url, $content, $params, $class = 'prevnext', $linkoffset) {
-			global $smarty;
+			$smarty = TikiLib::lib('smarty');
 
 			$link = '<a class="'.$class.'" ';
 			$url = TikiLib::tikiUrlOpt($url);

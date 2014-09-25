@@ -204,8 +204,7 @@ class FreetagLib extends ObjectLib
 
 																		)
 	{
-
-		global $tiki_p_admin, $user, $smarty, $prefs;
+		global $tiki_p_admin, $user, $prefs;
 		$objectIds = explode(':',$objectId);
 		if (!isset($tagArray) || !is_array($tagArray)) {
 			return false;

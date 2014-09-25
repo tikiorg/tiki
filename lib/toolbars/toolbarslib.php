@@ -412,8 +412,8 @@ abstract class Toolbar
 
 	function getSelfLink( $click, $title, $class )
 	{ // {{{
-		global $smarty, $prefs;
-
+		global $prefs;
+		$smarty = TikiLib::lib('smarty');
 		$params = array();
 		$params['_onclick'] = $click . (substr($click, strlen($click)-1) != ';' ? ';' : '') . 'return false;';
 		$params['_class'] = 'toolbar btn btn-xs btn-link' . (!empty($class) ? ' '.$class : '');
@@ -1538,7 +1538,7 @@ class ToolbarFileGalleryFile extends ToolbarFileGallery
 
 	function getSyntax( $areaId )
 	{
-		global $smarty;
+		$smarty = TikiLib::lib('smarty');
 		$smarty->loadPlugin('smarty_function_filegal_manager_url');
 		return 'openFgalsWindow(\''.htmlentities(smarty_function_filegal_manager_url(array('area_id'=>$areaId), $smarty)).'&insertion_syntax=file\', true);';
 	}

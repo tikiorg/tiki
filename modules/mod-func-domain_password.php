@@ -48,7 +48,9 @@ function module_domain_password_info()
  */
 function module_domain_password($mod_reference, $module_params)
 {
-	global $prefs, $tikilib, $smarty, $user;
+	global $prefs, $user;
+	$smarty = TikiLib::lib('smarty');
+	$tikilib = TikiLib::lib('tiki');
 
 	// Allow for multiple modules on one page
 	$moduleNr = $mod_reference['moduleId'];

@@ -162,11 +162,11 @@ if ( isset($_REQUEST['cancel']) ) {
  */
 function fetch_payment_list($type)
 {
-	global $globalperms, $user, $prefs, $smarty;
+	global $globalperms, $user, $prefs;
+	$smarty = TikiLib::lib('smarty');
 	$paymentlib = TikiLib::lib('payment');
 	$offsetKey = 'offset_' . $type;
 	$method = 'get_' . $type;
-
 	$offset = isset($_REQUEST[$offsetKey]) ? intval($_REQUEST[$offsetKey]) : 0;
 	$max = intval($prefs['maxRecords']);
 

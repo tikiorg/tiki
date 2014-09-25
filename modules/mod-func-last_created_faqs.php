@@ -32,7 +32,7 @@ function module_last_created_faqs_info()
  */
 function module_last_created_faqs($mod_reference, $module_params)
 {
-	global $smarty;
+	$smarty = TikiLib::lib('smarty');
 	
 	$faqlib = TikiLib::lib('faq');
 	$ranking = $faqlib->list_faqs(0, $mod_reference["rows"], 'created_desc', '');

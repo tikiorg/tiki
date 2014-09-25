@@ -361,9 +361,9 @@ function display_progress_percentage($alreadyDone, $toDo, $message)
  */
 function check_smarty_syntax(&$error_msg)
 {
-	global $tikidomain, $prefs, $smarty;
+	global $tikidomain, $prefs;
 	$tikidomain = '';
-
+	$smarty = TikiLib::lib('smarty');
 	// Initialize $prefs with some variables needed by the tra() function and smarty autosave plugin
 	$prefs = array(
 		'lang_use_db' => 'n',
@@ -391,9 +391,9 @@ function check_smarty_syntax(&$error_msg)
  */
 function check_smarty_syntax2(&$error_msg)
 {
-	global $tikidomain, $prefs, $smarty;
+	global $tikidomain, $prefs;
 	$tikidomain = '';
-
+	$smarty = TikiLib::lib('smarty');
 	// Initialize $prefs with some variables needed by the tra() function and smarty autosave plugin
 	$prefs = array(
 		'lang_use_db' => 'n',

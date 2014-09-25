@@ -32,9 +32,11 @@ function module_user_tasks_info()
  */
 function module_user_tasks($mod_reference, $module_params)
 {
-	global $user, $tasklib, $tikilib, $smarty, $tiki_p_tasks;
-	include_once('lib/tasks/tasklib.php');
-	
+	global $user, $tiki_p_tasks;
+	global $tasklib; include_once('lib/tasks/tasklib.php');
+	$smarty = TikiLib::lib('smarty');
+	$tikilib = TikiLib::lib('tiki');
+
 	if ($user && isset($tiki_p_tasks) && $tiki_p_tasks == 'y') {
 		if (isset($_REQUEST["modTasksDel"])) {
 			foreach (array_keys($_REQUEST["modTasks"]) as $task) {

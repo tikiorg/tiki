@@ -621,8 +621,9 @@ class CalendarLib extends TikiLib
      */
     function watch($calitemId, $data)
 	{
-		global $tikilib, $smarty, $prefs, $user;
-
+		global $prefs, $user;
+		$smarty = TikiLib::lib('smarty');
+		$tikilib = TikiLib::lib('tiki');
 		$nots = $tikilib->get_event_watches('calendar_changed', $data['calendarId']);
 
 		if ($prefs['calendar_watch_editor'] != "y" || $prefs['user_calendar_watch_editor'] != "y") {
@@ -1257,13 +1258,16 @@ class CalendarLib extends TikiLib
 	 */
 	function getCalendar($calIds, &$viewstart, &$viewend, $group_by = '', $item_name = 'events', $listmode = false)
 	{
-		global $user, $prefs, $smarty;
+		global $user, $prefs;
 
 		// Global vars used by tiki-calendar_setup.php (this has to be changed)
-		global $tikilib, $calendarViewMode, $request_day, $request_month;
+		global $calendarViewMode, $request_day, $request_month;
 		global $request_year, $dayend, $myurl;
 		global $weekdays, $daysnames, $daysnames_abr;
 		include('tiki-calendar_setup.php');
+
+		$smarty = TikiLib::lib('smarty');
+		$tikilib = TikiLib::lib('tiki');
 
 		//FIXME : maxrecords = 50
 		$listtikievents = $this->list_items_by_day($calIds, $user, $viewstart, $viewend, 0, 50);

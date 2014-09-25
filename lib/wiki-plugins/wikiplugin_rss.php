@@ -113,7 +113,6 @@ function wikiplugin_rss_info()
 
 function wikiplugin_rss($data,$params)
 {
-	$smarty = TikiLib::lib('smarty');
 	$rsslib = TikiLib::lib('rss');
 
 	$params = array_merge(
@@ -156,7 +155,7 @@ function wikiplugin_rss($data,$params)
 		}
 	}
 
-	global $smarty;
+	$smarty = TikiLib::lib('smarty');
 	$smarty->assign('rsstitle', $title);
 	$smarty->assign('items', $items);
 	$smarty->assign('showdate', $params['date'] > 0);

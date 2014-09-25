@@ -44,11 +44,11 @@ class Perms_Context
 
 	function activate($globalize = false)
 	{
-		global $user, $smarty, $globalperms;
+		global $user, $globalperms;
 		$perms = Perms::getInstance();
 		$this->previousUser = $user;
 		$this->previousGroupList = $perms->getGroups();
-
+		$smarty = TikiLib::lib('smarty');
 		$user = $this->user;
 		$perms->setGroups($this->groupList);
 

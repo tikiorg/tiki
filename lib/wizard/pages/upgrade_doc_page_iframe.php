@@ -24,8 +24,6 @@ class UpgradeWizardDocPageIframe extends Wizard
 	
 	function onSetupPage ($homepageUrl) 
 	{
-		global	$smarty, $prefs;
-
 		// Run the parent first
 		parent::onSetupPage($homepageUrl);
 		

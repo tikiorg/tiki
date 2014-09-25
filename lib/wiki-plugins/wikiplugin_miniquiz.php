@@ -37,11 +37,12 @@ function shuf(&$ar)
 
 function wikiplugin_miniquiz($data, $params)
 {
-	global $tikilib, $user, $group, $prefs, $smarty;
+	global $user, $group, $prefs;
 	$trklib = TikiLib::lib('trk');
+	$tikilib = TikiLib::lib('tiki');
 	extract($params, EXTR_SKIP);
-
 	if ($prefs['feature_trackers'] != 'y' || !isset($trackerId) || !($tracker = $trklib->get_tracker($trackerId))) {
+		$smarty = TikiLib::lib('smarty');
 		return $smarty->fetch("wiki-plugins/error_tracker.tpl");
 	}
 

@@ -143,7 +143,7 @@ function displayRegisatrationForms($data, $messages) // {{{
  */
 function displaySelectionList($data, $messages) // {{{
 {
-	global $smarty;
+	$smarty = TikiLib::lib('smarty');
 	// Display
 	$smarty->assign('mid', 'tiki-openid_select.tpl');
 	$smarty->display('tiki.tpl');
@@ -154,7 +154,7 @@ function displaySelectionList($data, $messages) // {{{
  */
 function displayError($message)
 { // {{{
-	global $smarty;
+	$smarty = TikiLib::lib('smarty');
 	$smarty->assign('msg', tra("Failure:") . " " . $message);
 	$smarty->assign('errortype', 'login');
 	$smarty->display("error.tpl");
@@ -272,7 +272,7 @@ function runAuth()
 } // }}}
 function runFinish()
 { // {{{
-	global $smarty;
+	$smarty = TikiLib::lib('smarty');
 	$consumer = getConsumer();
 	// Complete the authentication process using the server's
 	// response.

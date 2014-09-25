@@ -60,7 +60,7 @@ abstract class Tracker_Field_Abstract implements Tracker_Field_Interface, Tracke
 				} elseif (strpos($context['url'], 'itemId') !== false) {
 					$context['url'] = preg_replace('/([&|\?])itemId=?[^&]*/', '\\1itemId=' . $itemId, $context['url']);
 				} elseif (isset($context['reloff']) && strpos($context['url'], 'offset') !== false) {
-					global $smarty;
+					$smarty = TikiLib::lib('smarty');
 					$context['url'] = preg_replace('/([&|\?])tr_offset=?[^&]*/', '\\1tr_offset' . $smarty->tpl_vars['iTRACKERLIST']
 						. '=' . $context['reloff'], $context['url']);
 				}

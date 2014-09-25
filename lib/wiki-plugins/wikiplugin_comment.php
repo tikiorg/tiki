@@ -53,8 +53,8 @@ function wikiplugin_comment_info()
 
 function wikiplugin_comment($data, $params)
 {
-	global $smarty, $page;
-
+	global $page;
+	$smarty = TikiLib::lib('smarty');
 	$params = array_merge(
 		array(
 			"objectId"=> $page,

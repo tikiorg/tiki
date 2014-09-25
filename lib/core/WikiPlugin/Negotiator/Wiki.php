@@ -638,7 +638,7 @@ class WikiPlugin_Negotiator_Wiki
 
 	function blockFromExecution($status = '')
 	{
-		global $smarty;
+		$smarty = TikiLib::lib('smarty');
 		$smarty->assign('plugin_fingerprint', $status);
 		$smarty->assign('plugin_name', $this->name);
 		$smarty->assign('plugin_index', 0);

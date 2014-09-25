@@ -19,7 +19,7 @@ class UserWizardDummy1 extends Wizard
 
 	function onSetupPage ($homepageUrl) 
 	{
-		global	$smarty;
+		$smarty = TikiLib::lib('smarty');
 
 		// Run the parent first
 		parent::onSetupPage($homepageUrl);

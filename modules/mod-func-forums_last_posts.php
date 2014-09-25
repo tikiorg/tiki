@@ -54,7 +54,7 @@ function module_forums_last_posts_info()
  */
 function module_forums_last_posts($mod_reference, $module_params)
 {
-	global $smarty;
+	$smarty = TikiLib::lib('smarty');
 	global $ranklib; include_once ('lib/rankings/ranklib.php');
 	$default = array('forumId'=>'', 'topics' => false);
 	$module_params = array_merge($default, $module_params);

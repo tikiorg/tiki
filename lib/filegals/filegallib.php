@@ -1941,7 +1941,8 @@ class FileGalLib extends TikiLib
 	// check a size in K can be added to a gallery return false if problem
 	function checkQuota($size, $galleryId, &$error)
 	{
-		global $prefs, $smarty;
+		global $prefs;
+		$smarty = TikiLib::lib('smarty');
 		$error = '';
 		if (!empty($prefs['fgal_quota'])) {
 			$use = $this->getUsedSize();
@@ -2396,7 +2397,9 @@ class FileGalLib extends TikiLib
 	}
 	function deleteOldFiles()
 	{
-		global $prefs, $smarty;
+		global $prefs;
+		$smarty = TikiLib::lib('smarty');
+
 		include_once('lib/webmail/tikimaillib.php');
 		$query = 'select * from `tiki_files` where `deleteAfter` < ? - `lastModif` and `deleteAfter` is not NULL and `deleteAfter` != \'\' order by galleryId asc';
 		$files = $this->fetchAll($query, array($this->now));

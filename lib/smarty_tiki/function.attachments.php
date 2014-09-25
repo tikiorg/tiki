@@ -49,7 +49,7 @@ function s_f_attachments_actionshandler( $params )
 				if ( isset($objectperms) && ( $objectperms->wiki_admin_attachments || $objectperms->wiki_attach_files ) ) {
 					/* check_ticket('index'); */
 
-					global $smarty;
+					$smarty = TikiLib::lib('smarty');
 					$smarty->loadPlugin('smarty_function_query');
 
 					$galleryId = $filegallib->get_attachment_gallery($params['page'], 'wiki page', true);
@@ -88,9 +88,9 @@ function smarty_function_attachments($params, $template)
 {
 	if ( ! is_array($params) || ! isset($params['_id']) || ! isset($params['_type']) ) return tra('Missing _id or _type params');
 
-	global $smarty, $prefs, $page;
+	global $prefs, $page;
 	$filegallib = TikiLib::lib('filegal');
-
+	$smarty = TikiLib::lib('smarty');
 	/*** For the moment, only wiki attachments are handled through file galleries ***/
 	if ( $prefs['feature_wiki_attachments'] != 'y' ) return;
 

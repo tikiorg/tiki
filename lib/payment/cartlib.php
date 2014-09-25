@@ -931,7 +931,7 @@ class CartLib
 
 			if ( !empty($_SESSION['shopperinfo']['email']) ) {
 				require_once('lib/webmail/tikimaillib.php');
-				global $smarty;
+				$smarty = TikiLib::lib('smarty');
 				$smarty->assign('shopperurl', $shopperurl);
 				$smarty->assign('email_template_ids', $email_template_ids);
 				$mail_subject = $smarty->fetch('mail/cart_order_received_anon_subject.tpl');

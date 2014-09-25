@@ -247,7 +247,7 @@ class SocialNetworksLib extends LogsLib
 						$this->set_user_preference($user, 'socialnetworks_user_firstlogin', 'y');
 					}
 				} else {
-					global $smarty;
+					$smarty = TikiLib::lib('smarty');
 					$smarty->assign('errortype', 'login');
 					$smarty->assign('msg', tra('You need to link your local account to Facebook before you can login using it'));
 					$smarty->display('error.tpl');

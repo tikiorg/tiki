@@ -28,9 +28,11 @@ function module_since_last_visit_info()
  */
 function module_since_last_visit($mod_reference, $params = null)
 {
-	global $user, $tikilib, $smarty;
-	$nvi_info = $tikilib->get_news_from_last_visit($user);
+	global $user;
+	$smarty = TikiLib::lib('smarty');
+	$tikilib = TikiLib::lib('tiki');
 
+	$nvi_info = $tikilib->get_news_from_last_visit($user);
 	$smarty->assign('nvi_info', $nvi_info);
 	$smarty->assign('tpl_module_title', tra('Since your last visit'));
 }

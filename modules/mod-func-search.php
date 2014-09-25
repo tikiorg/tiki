@@ -127,7 +127,8 @@ function module_search_info()
  */
 function module_search($mod_reference, $smod_params) 	// modifies $smod_params so uses & reference
 {
-	global $smarty, $prefs;
+	$smarty = TikiLib::lib('smarty');
+	global $prefs;
 	static $search_mod_usage_counter = 0;
 	$smarty->assign('search_mod_usage_counter', ++$search_mod_usage_counter);
 

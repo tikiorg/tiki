@@ -22,7 +22,7 @@ class DbgCmd_DebugMessages extends DebuggerCommand
 	/// Function to create interface part of command: return ["button name"] = <html code>
 	function draw_interface()
 	{
-		global $smarty;
+		$smarty = TikiLib::lib('smarty');
 
 		global $debugger;
 		$smarty->assign_by_ref('messages', $debugger->dmsgs);

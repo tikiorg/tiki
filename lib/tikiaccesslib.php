@@ -130,7 +130,7 @@ class TikiAccessLib extends TikiLib
 		}
 
 		if ( !$allowed ) {
-			global $smarty;
+			$smarty = TikiLib::lib('smarty');
 
 			if ( $perms->admin ) {
 				$smarty->assign('required_preferences', $features);
@@ -404,8 +404,9 @@ class TikiAccessLib extends TikiLib
 			$smarty->assign('errortitle', $detail['errortitle']);
 			$smarty->assign('msg', $detail['message']);
 			$smarty->assign('errortype', $detail['code']);
-			if ( isset( $detail['page'] ) )
+			if ( isset( $detail['page'] ) ) {
 				$smarty->assign('page', $page);
+			}
 			$smarty->display("error.tpl");
 		}
 		die;

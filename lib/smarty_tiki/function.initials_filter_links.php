@@ -23,7 +23,7 @@ function smarty_function_initials_filter_links($params, $smarty)
 	if ( ! isset($params['_class']) ) $params['_class'] = 'prevnext';
 
 	// Include smarty functions used below
-	global $smarty;
+	$smarty = TikiLib::lib('smarty');
 	$smarty->loadPlugin('smarty_block_ajax_href');
 	$smarty->loadPlugin('smarty_function_query');
 

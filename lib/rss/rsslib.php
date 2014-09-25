@@ -657,7 +657,7 @@ class RSSLib extends TikiDb_Bridge
 				if (count($nots)) {
 					$title = $this->modules->fetchOne('name', array('rssId' => $rssId));
 					include_once('lib/notifications/notificationemaillib.php');
-					global $smarty;
+					$smarty = TikiLib::lib('smarty');
 					$smarty->assign('mail_site', $_SERVER['SERVER_NAME']);
 					$smarty->assign('rssId', $rssId);
 					$smarty->assign('title', $title);

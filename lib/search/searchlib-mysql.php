@@ -724,7 +724,7 @@ class SearchLib extends TikiLib
 			'objectKey' => '`blogId`',
 		);
 		$res = $this->_find($search_blogs, $words, $offset, $maxRecords, $fulltext, $filter, $boolean, tra('Blog'), $searchDate, $categId);
-		global $user, $smarty;
+		global $user;
 		include_once('tiki-sefurl.php');
 		foreach ($res['data'] as $i=>$r) {
 			$res['data'][$i]['href'] = filter_out_sefurl($r['href'], 'blog', $r['pageName']);
@@ -781,7 +781,7 @@ class SearchLib extends TikiLib
 		);
 
 		$ret = array('cant'=>$res['cant'], 'data'=>array());
-		global $user, $smarty;
+		global $user;
 		include_once('tiki-sefurl.php');
 
 		foreach ($res['data'] as $r) {
@@ -885,7 +885,6 @@ class SearchLib extends TikiLib
 		$itemFinal = array();
 
 		foreach ($ret['data'] as $i=>$res) {
-			global $smarty;
 			include_once('tiki-sefurl.php');
 			$res['href'] = filter_out_sefurl($res['href'], 'trackeritem', $res['name']);
 			if (($j = array_search($res['name'], $itemFinal)) === false) {

@@ -24,8 +24,8 @@ class UpgradeWizardUI extends Wizard
 	
 	function onSetupPage ($homepageUrl) 
 	{
-		global	$smarty, $prefs;
-
+		global $prefs;
+		$smarty = TikiLib::lib('smarty');
 		// Run the parent first
 		parent::onSetupPage($homepageUrl);
 		
@@ -58,7 +58,7 @@ class UpgradeWizardUI extends Wizard
 
 	function onContinue ($homepageUrl) 
 	{
-        global $tikilib;
+        $tikilib = TikiLib::lib('tiki');
 
 		// Run the parent first
 		parent::onContinue($homepageUrl);

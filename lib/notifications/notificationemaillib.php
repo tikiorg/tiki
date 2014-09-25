@@ -380,7 +380,9 @@ function sendWikiEmailNotification(
  */
 function sendEmailNotification($watches, $dummy, $subjectTpl, $subjectParam, $txtTpl, $from='')
 {
-	global $smarty, $tikilib;
+	$smarty = TikiLib::lib('smarty');
+	$tikilib = TikiLib::lib('tiki');
+
 	include_once('lib/webmail/tikimaillib.php');
 	$sent = 0;
 	$smarty->assign('mail_date', $tikilib->now);
@@ -389,74 +391,75 @@ function sendEmailNotification($watches, $dummy, $subjectTpl, $subjectParam, $tx
 	$smarty->assign('mail_machine', $tikilib->httpPrefix(true) . $foo["path"]);
 	$parts = explode('/', $foo['path']);
 
-	if (count($parts) > 1)
+	if (count($parts) > 1) {
 		unset ($parts[count($parts) - 1]);
+	}
 
 	$smarty->assign('mail_machine_raw', $tikilib->httpPrefix(true). implode('/', $parts));
 	// TODO: mail_machine_site may be required for some sef url with rewrite to sub-directory. To refine. (nkoth)
 	$smarty->assign('mail_machine_site', $tikilib->httpPrefix(true));
-		if ($dummy == 'group_lead_mail') {
-			foreach ($watches as $key=>$value) {
-				trim($subjectParam['gname']);
-				$adurl = "-Admin+-+".urlencode($subjectParam['gname'])."-";
-				$smarty->assign('mail_group', $subjectParam['gname']);
-				$smarty->assign('mail_user', $subjectParam['user']);
-				$smarty->assign('mail_real', $tikilib->get_user_preference($subjectParam['user'], 'realName', ''));
-				$pageLang = isset($subjectParam[$key]['lang']) ? $subjectParam[$key]['lang'] : '';
-				$userid = "user" . $userlib->get_user_id($value);
-				$smarty->assign('mail_remuser', $tikilib->get_user_preference($value, 'realName', ''));
-				$smarty->assign('mail_userid', $userid);
-				$smarty->assign('mail_site', $_SERVER['SERVER_NAME']);
-				$smarty->assign('admin_url', $adurl);
-				$foo = parse_url($_SERVER["REQUEST_URI"]);
-				$machine = $tikilib->httpPrefix(true) . dirname($foo["path"]);
-				if (substr($machine, -1) == '/' ) {
-					$machine = substr($machine, 0, -1);
-				}
-				$smarty->assign('mail_machine', $machine);
-				$mail = new TikiMail(null, $from);
-				if ($key) {
-					$mail->setUser($key);
-				}
-				if ($subjectTpl) {
-					$mail_data = $smarty->fetchLang($pageLang, "mail/".$subjectTpl);
-					if ($subjectParam) {
-						$mail_data = sprintf($mail_data, $subjectParam);
-					}
-					$mail_data = preg_replace('/%[sd]/', '', $mail_data);// partial cleaning if param not supply and %s in text
-					$mail->setSubject($mail_data);
-				} else {
-					$mail->setSubject($subjectParam);
-				}
-				$mail->setHtml($smarty->fetchLang($pageLang, "mail/".$txtTpl));
-				if ($mail->send(array($userlib->get_user_email($key)))) {
-					$sent++;
-				}
+	if ($dummy == 'group_lead_mail') {
+		foreach ($watches as $key=>$value) {
+			trim($subjectParam['gname']);
+			$adurl = "-Admin+-+".urlencode($subjectParam['gname'])."-";
+			$smarty->assign('mail_group', $subjectParam['gname']);
+			$smarty->assign('mail_user', $subjectParam['user']);
+			$smarty->assign('mail_real', $tikilib->get_user_preference($subjectParam['user'], 'realName', ''));
+			$pageLang = isset($subjectParam[$key]['lang']) ? $subjectParam[$key]['lang'] : '';
+			$userid = "user" . $userlib->get_user_id($value);
+			$smarty->assign('mail_remuser', $tikilib->get_user_preference($value, 'realName', ''));
+			$smarty->assign('mail_userid', $userid);
+			$smarty->assign('mail_site', $_SERVER['SERVER_NAME']);
+			$smarty->assign('admin_url', $adurl);
+			$foo = parse_url($_SERVER["REQUEST_URI"]);
+			$machine = $tikilib->httpPrefix(true) . dirname($foo["path"]);
+			if (substr($machine, -1) == '/' ) {
+				$machine = substr($machine, 0, -1);
 			}
-		} else {
-			foreach ($watches as $watch) {
-				$mail = new TikiMail(null, $from);
-
-				$smarty->assign('watchId', $watch['watchId']);
-				if ($watch['user']) {
-					$mail->setUser($watch['user']);
+			$smarty->assign('mail_machine', $machine);
+			$mail = new TikiMail(null, $from);
+			if ($key) {
+				$mail->setUser($key);
+			}
+			if ($subjectTpl) {
+				$mail_data = $smarty->fetchLang($pageLang, "mail/".$subjectTpl);
+				if ($subjectParam) {
+					$mail_data = sprintf($mail_data, $subjectParam);
 				}
-				if ($subjectTpl) {
-					$mail_data = $smarty->fetchLang($watch['language'], "mail/".$subjectTpl);
-					if ($subjectParam) {
-						$mail_data = sprintf($mail_data, $subjectParam);
-					}
-					$mail_data = preg_replace('/%[sd]/', '', $mail_data);// partial cleaning if param not supply and %s in text
-					$mail->setSubject($mail_data);
-				} else {
-					$mail->setSubject($subjectParam);
-				}
-				$mail->setText($smarty->fetchLang($watch['language'], "mail/".$txtTpl));
-				if ($mail->send(array($watch['email']))) {
-					$sent++;
-				}
+				$mail_data = preg_replace('/%[sd]/', '', $mail_data);// partial cleaning if param not supply and %s in text
+				$mail->setSubject($mail_data);
+			} else {
+				$mail->setSubject($subjectParam);
+			}
+			$mail->setHtml($smarty->fetchLang($pageLang, "mail/".$txtTpl));
+			if ($mail->send(array($userlib->get_user_email($key)))) {
+				$sent++;
 			}
 		}
+	} else {
+		foreach ($watches as $watch) {
+			$mail = new TikiMail(null, $from);
+
+			$smarty->assign('watchId', $watch['watchId']);
+			if ($watch['user']) {
+				$mail->setUser($watch['user']);
+			}
+			if ($subjectTpl) {
+				$mail_data = $smarty->fetchLang($watch['language'], "mail/".$subjectTpl);
+				if ($subjectParam) {
+					$mail_data = sprintf($mail_data, $subjectParam);
+				}
+				$mail_data = preg_replace('/%[sd]/', '', $mail_data);// partial cleaning if param not supply and %s in text
+				$mail->setSubject($mail_data);
+			} else {
+				$mail->setSubject($subjectParam);
+			}
+			$mail->setText($smarty->fetchLang($watch['language'], "mail/".$txtTpl));
+			if ($mail->send(array($watch['email']))) {
+				$sent++;
+			}
+		}
+	}
 	return $sent;
 }
 
@@ -467,7 +470,7 @@ function activeErrorEmailNotivation()
 
 function sendErrorEmailNotification($errno, $errstr, $errfile='?', $errline= '?')
 {
-	global $tikilib;
+	$tikilib = TikiLib::lib('tiki');
 	if (($errno & error_reporting()) == 0) /* ignore error */
 		return;
 
@@ -742,8 +745,9 @@ function sendStructureEmailNotification($params)
  */
 function sendCommentNotification($type, $id, $title, $content, $commentId=null)
 {
-	global $user, $tikilib, $smarty, $prefs;
-
+	global $user, $prefs;
+	$smarty = TikiLib::lib('smarty');
+	$tikilib = TikiLib::lib('tiki');
 	if ($type == 'wiki') {
 		$events = 'wiki_comment_changes';
 	} elseif ($type == 'article') {

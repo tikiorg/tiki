@@ -33,7 +33,7 @@ class Search_Formatter_AppendPagination implements Search_Formatter_Plugin_Inter
 
 	function renderEntries(Search_ResultSet $entries)
 	{
-		global $smarty;
+		$smarty = TikiLib::lib('smarty');
 		$smarty->loadPlugin('smarty_block_pagination_links');
 		$arguments = $this->arguments;
 		$arguments['resultset'] = $entries;

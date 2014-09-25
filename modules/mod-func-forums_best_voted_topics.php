@@ -31,7 +31,7 @@ function module_forums_best_voted_topics_info()
  */
 function module_forums_best_voted_topics($mod_reference, $module_params)
 {
-	global $smarty;
+	$smarty = TikiLib::lib('smarty');
 	global $ranklib; include_once ('lib/rankings/ranklib.php');
 	
 	$ranking = $ranklib->forums_ranking_top_topics($mod_reference["rows"]);

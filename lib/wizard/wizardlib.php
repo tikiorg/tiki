@@ -102,8 +102,8 @@ class WizardLib extends TikiLib
 	*/
 	public function showPages($pages, $adminWizard=false)
 	{
-		global	$smarty, $base_url;
-		
+		global $base_url;
+		$smarty = TikiLib::lib('smarty');
 		try {
 			if (!isset($_REQUEST['url'])) {
 				// User the base url as the return URL

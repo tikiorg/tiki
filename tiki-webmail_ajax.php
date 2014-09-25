@@ -146,8 +146,8 @@ if (!empty($_REQUEST['action'])) {
  */
 function refreshWebmail($destDiv = 'mod-webmail_inbox', $inStart = 0, $inReload = false)
 {
-	global $user, $smarty, $prefs, $module_params;
-
+	global $user, $prefs, $module_params;
+	$smarty = TikiLib::lib('smarty');
 	if (isset($_SESSION['webmailinbox'][$destDiv]['module_params'])) {
 		$module_params = $_SESSION['webmailinbox'][$destDiv]['module_params'];
 	} else {

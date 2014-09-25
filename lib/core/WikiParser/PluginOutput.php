@@ -53,7 +53,7 @@ class WikiParser_PluginOutput
 
 	public static function error( $label, $message )
 	{
-		global $smarty;
+		$smarty = TikiLib::lib('smarty');
 		$smarty->loadPlugin('smarty_block_remarksbox');
 		$repeat = false;
 
@@ -76,7 +76,7 @@ class WikiParser_PluginOutput
 		$content = tr('Plugin <strong>%0</strong> cannot be executed.', $name);
 
 		if ( Perms::get()->admin ) {
-			global $smarty;
+			$smarty = TikiLib::lib('smarty');
 			$smarty->loadPlugin('smarty_function_preference');
 			$smarty->loadPlugin('smarty_modifier_escape');
 			$content .= '<form method="post" action="tiki-admin.php">';

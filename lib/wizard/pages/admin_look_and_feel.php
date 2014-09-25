@@ -23,8 +23,9 @@ class AdminWizardLookAndFeel extends Wizard
 	
 	function onSetupPage ($homepageUrl) 
 	{
-		global	$smarty, $prefs, $tikilib;
-
+		global $prefs;
+		$smarty = TikiLib::lib('smarty');
+		$tikilib = TikiLib::lib('tiki');
 		// Run the parent first
 		parent::onSetupPage($homepageUrl);
 
@@ -78,7 +79,7 @@ class AdminWizardLookAndFeel extends Wizard
 	 */
 	function get_thumbnail_file($stl, $opt = '') // find thumbnail if there is one
 	{
-		global $tikilib;
+		$tikilib = TikiLib::lib('tiki');
 		if (!empty($opt) && $opt != tr('None')) {
 			$filename = preg_replace('/\.css$/i', '.png', $opt); // change .css to .png
 
