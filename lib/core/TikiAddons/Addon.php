@@ -28,18 +28,7 @@ class TikiAddons_Addon
 		$this->utilities->checkDependencies($this->getFolder());
 		$this->utilities->checkProfilesInstalled($this->getFolder(), $this->getVersion());
 		if ($this->configuration->smarty) {
-			$this->smarty = new Smarty;
-			$this->smarty->setCompileDir(TIKI_PATH . '/templates_c');
-			$this->smarty->setTemplateDir(TIKI_PATH . "/addons/" . $this->getFolder() . "/templates/");
-			$this->smarty->setPluginsDir(
-				array(
-					TIKI_PATH . '/' . TIKI_SMARTY_DIR,    // the directory order must be like this to overload a plugin
-					SMARTY_DIR . 'plugins',
-				)
-			);
-			$secpol = new Tiki_Security_Policy($this->smarty);
-			$secpol->secure_dir[] = dirname(TIKI_PATH . "/addons/" . $this->getFolder() . "/templates/");
-			$this->smarty->enableSecurity($secpol);
+			$this->smarty = new Smarty_Tiki;
 			$this->smarty->assign('prefs', $GLOBALS['prefs']);
 			$this->smarty->assign('tikiaddon_package', $this->configuration->package);
 		}

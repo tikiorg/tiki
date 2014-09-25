@@ -380,6 +380,9 @@ function sendWikiEmailNotification(
  */
 function sendEmailNotification($watches, $dummy, $subjectTpl, $subjectParam, $txtTpl, $from='')
 {
+
+	global $prefs;
+
 	$smarty = TikiLib::lib('smarty');
 	$tikilib = TikiLib::lib('tiki');
 
@@ -398,19 +401,31 @@ function sendEmailNotification($watches, $dummy, $subjectTpl, $subjectParam, $tx
 	$smarty->assign('mail_machine_raw', $tikilib->httpPrefix(true). implode('/', $parts));
 	// TODO: mail_machine_site may be required for some sef url with rewrite to sub-directory. To refine. (nkoth)
 	$smarty->assign('mail_machine_site', $tikilib->httpPrefix(true));
-	if ($dummy == 'group_lead_mail') {
-		foreach ($watches as $key=>$value) {
-			trim($subjectParam['gname']);
-			$adurl = "-Admin+-+".urlencode($subjectParam['gname'])."-";
-			$smarty->assign('mail_group', $subjectParam['gname']);
+	if ($dummy == 'group_lead_mail' || $dummy == 'add_rem_mail') {
+		$api = new TikiAddons_Api_Group;
+		$subjectParam['gname'] = trim($subjectParam['gname']);
+		$smarty->assign('mail_appdata', $subjectParam['app_data']);
+		$smarty->assign('mail_group', $api->getOrganicGroupName($subjectParam['gname']));
+		$url = '';
+		if ($dummy == 'group_lead_mail') {
+			$url = $api->getGroupManagementPage($subjectParam['gname']) . "?itemId=" . $api->getItemIdFromToken($subjectParam['gname']);
 			$smarty->assign('mail_user', $subjectParam['user']);
-			$smarty->assign('mail_real', $tikilib->get_user_preference($subjectParam['user'], 'realName', ''));
-			$pageLang = isset($subjectParam[$key]['lang']) ? $subjectParam[$key]['lang'] : '';
-			$userid = "user" . $userlib->get_user_id($value);
+			$smarty->assign('mail_real', $tikilib->get_user_preference($subjectParam['user'] , 'realName', ''));
+		} elseif ($dummy == 'add_rem_mail') {
+			$url = $api->getGroupHomePage($subjectParam['gname']) . "?itemId=" . $api->getItemIdFromToken($subjectParam['gname']);
+		}
+		foreach ($watches as $key=>$value) {
+			$lang = $tikilib->get_user_preference($key, "language", $prefs['site_language']);
+			if ($dummy != 'group_lead_mail') {
+				// group_lead_mail already sets this
+				$smarty->assign('mail_user', $key);
+				$smarty->assign('mail_real', $tikilib->get_user_preference($key , 'realName', ''));
+			}
 			$smarty->assign('mail_remuser', $tikilib->get_user_preference($value, 'realName', ''));
+			$userid = "user" . TikiLib::lib('user')->get_user_id($value);
 			$smarty->assign('mail_userid', $userid);
 			$smarty->assign('mail_site', $_SERVER['SERVER_NAME']);
-			$smarty->assign('admin_url', $adurl);
+			$smarty->assign('mail_url', $url);
 			$foo = parse_url($_SERVER["REQUEST_URI"]);
 			$machine = $tikilib->httpPrefix(true) . dirname($foo["path"]);
 			if (substr($machine, -1) == '/' ) {
@@ -422,7 +437,7 @@ function sendEmailNotification($watches, $dummy, $subjectTpl, $subjectParam, $tx
 				$mail->setUser($key);
 			}
 			if ($subjectTpl) {
-				$mail_data = $smarty->fetchLang($pageLang, "mail/".$subjectTpl);
+				$mail_data = $smarty->fetchLang($lang, "mail/".$subjectTpl);
 				if ($subjectParam) {
 					$mail_data = sprintf($mail_data, $subjectParam);
 				}
@@ -431,8 +446,8 @@ function sendEmailNotification($watches, $dummy, $subjectTpl, $subjectParam, $tx
 			} else {
 				$mail->setSubject($subjectParam);
 			}
-			$mail->setHtml($smarty->fetchLang($pageLang, "mail/".$txtTpl));
-			if ($mail->send(array($userlib->get_user_email($key)))) {
+			$mail->setHtml($smarty->fetchLang($lang, "mail/".$txtTpl));
+			if ($mail->send(array(TikiLib::lib('user')->get_user_email($key)))) {
 				$sent++;
 			}
 		}

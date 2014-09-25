@@ -92,6 +92,20 @@ class TikiAddons_Utilities extends TikiDb_Bridge
 		return explode('.', $version);
 	}
 
+	function isInstalled($folder) {
+		$installed = array_keys(Tikiaddons::getInstalled());
+		if (strpos($folder, '/') !== false && strpos($folder, '_') === false) {
+			$package = $folder;
+		} else {
+			$package = str_replace('_', '/', $folder);
+		}
+		if (in_array($package, $installed)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
 	function getInstalledProfiles($folder) {
 		if (strpos($folder, '/') !== false && strpos($folder, '_') === false) {
 			$package = $folder;
@@ -144,6 +158,21 @@ class TikiAddons_Utilities extends TikiDb_Bridge
 		if ($type == 'tracker' || $type == 'trk') {
 			if ($trackerId = $this->getObjectId($folder, $ref, $profile)) {
 				TikiLib::lib('trk')->remove_tracker($trackerId);
+			}
+		}
+		if ($type == 'category' || $type == 'cat') {
+			if ($catId = $this->getObjectId($folder, $ref, $profile)) {
+				TikiLib::lib('categ')->remove_category($catId);
+			}
+		}
+		if ($type == 'file_gallery' || $type == 'file gallery' || $type == 'filegal' || $type == 'fgal' || $type == 'filegallery') {
+			if ($galId = $this->getObjectId($folder, $ref, $profile)) {
+				TikiLib::lib('filegal')->remove_file_gallery($galId);
+			}
+		}
+		if ($type == 'activity' || $type == 'activitystream' || $type == 'activity_stream' || $type == 'activityrule' || $type == 'activity_rule') {
+			if ($ruleId = $this->getObjectId($folder, $ref, $profile)) {
+				TikiLib::lib('activity')->deleteRule($ruleId);
 			}
 		}
 	}

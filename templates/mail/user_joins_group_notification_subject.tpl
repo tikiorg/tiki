@@ -1,1 +1,1 @@
-{tr}User joined group{/tr} {$mail_group}
+{tr}User joined{/tr} {$mail_group}

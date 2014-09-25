@@ -70,8 +70,8 @@ function wikiplugin_mail_info()
 			),
 			'showuser' => array(
 				'required' => false,
-				'name' => tra('User Autocomplete'),
-				'description' => tra('Show an autocomplete box on user name'),
+				'name' => tra('User email entry'),
+				'description' => tra('Show a box for user to enter emails'),
 				'filter' => 'alpha',
 				'default' => 'y',
 				'options' => array(
@@ -91,7 +91,57 @@ function wikiplugin_mail_info()
 					array('text' => tra('Yes'), 'value' => 'y'), 
 					array('text' => tra('No'), 'value' => 'n')
 				)
-			)
+			),
+			'popup' => array(
+				'required' => false,
+				'name' => tra('Show in popup'),
+				'description' => tra('Show in popup instead of inline.'),
+				'filter' => 'alpha',
+				'default' => 'n',
+				'options' => array(
+					array('text' => '', 'value' => ''),
+					array('text' => tra('Yes'), 'value' => 'y'),
+					array('text' => tra('No'), 'value' => 'n')
+				)
+			),
+			'label_name' => array(
+				'required' => false,
+				'name' => tra('Button Text'),
+				'description' => tra('Text to show on the button to send emails (default: Send mail)'),
+				'filter' => 'text',
+				'default' => tra('Send mail'),
+			),
+			'mail_subject' => array(
+				'required' => true,
+				'name' => tra('Preset Email subject'),
+				'description' => tra('Present Email subject content'),
+				'filter' => 'text',
+				'default' => '',
+			),
+			'bypass_preview' => array(
+				'required' => false,
+				'name' => tra('Bypass Preview'),
+				'description' => tra('Send emails without first previewing'),
+				'filter' => 'alpha',
+				'default' => 'n',
+				'options' => array(
+					array('text' => '', 'value' => ''),
+					array('text' => tra('Yes'), 'value' => 'y'),
+					array('text' => tra('No'), 'value' => 'n')
+				)
+			),
+			'debug' => array(
+				'required' => false,
+				'name' => tra('Debug mode (admins only)'),
+				'description' => tra('Show list of emails that are sent (admins only)'),
+				'filter' => 'alpha',
+				'default' => 'n',
+				'options' => array(
+					array('text' => '', 'value' => ''),
+					array('text' => tra('Yes'), 'value' => 'y'),
+					array('text' => tra('No'), 'value' => 'n')
+				)
+			),
 		)
 	);
 }
@@ -104,12 +154,17 @@ function wikiplugin_mail($data, $params)
 	$tikilib = TikiLib::lib('tiki');
 	static $ipluginmail=0;
 	$smarty->assign_by_ref('ipluginmail', $ipluginmail);
-	$default = array('showuser' => 'y', 'showuserdd' => 'n', 'showrealnamedd' => 'n', 'showgroupdd' => 'n', 'group' => array(), 'recurse' => 'y', 'recurseuser' => 0);
+	$default = array('showuser' => 'y', 'showuserdd' => 'n', 'showrealnamedd' => 'n', 'showgroupdd' => 'n', 'group' => array(), 'recurse' => 'y', 'recurseuser' => 0,
+		'popup' => 'n', 'label_name' => tra('Send mail'), 'mail_subject' => '', 'bypass_preview' => 'n', 'debug' => 'n');
 	$params = array_merge($default, $params);
 	$default = array('mail_subject' =>'', 'mail_mess' => '', 'mail_user_dd' => '', 'mail_group_dd' => array());
 	$_REQUEST = array_merge($default, $_REQUEST);
 	$mail_error = false;
 	$preview = false;
+	$smarty->assign('mail_popup', $params['popup']);
+	$smarty->assign('mail_label_name', $params['label_name']);
+	$smarty->assign('mail_subject', $params['mail_subject']);
+	$smarty->assign('bypass_preview', $params['bypass_preview']);
 	if ($params['showrealnamedd'] == 'y') {
 		$users = $tikilib->list_users(0, -1, 'pref:realName_asc', '', true);
 		$smarty->assign('names', $users['data']);
@@ -131,25 +186,36 @@ function wikiplugin_mail($data, $params)
 	}
 	if (isset($_REQUEST["mail_preview$ipluginmail"])) {
 		$to = wikiplugin_mail_to(array_merge($_REQUEST, $params));
-		$_SESSION['to'] = $to;
+		$_SESSION['wikiplugin_mail_to'] = $to;
 		$preview = true;
 		$smarty->assign('preview', $preview);
 		$smarty->assign('nbTo', count($to));
 	}
 	if (isset($_REQUEST["mail_send$ipluginmail"])) { // send something
-		$to = $_SESSION['to'];
+		if ($params['bypass_preview'] == 'y') {
+			$to = wikiplugin_mail_to(array_merge($_REQUEST, $params));
+		} else {
+			$to = $_SESSION['wikiplugin_mail_to'];
+		}
 		if (!empty($to)) {
 			include_once ('lib/webmail/tikimaillib.php');
 			$mail = new TikiMail(null, $userlib->get_user_email($user));
 			$mail->setSubject($_REQUEST['mail_subject']);
 			$mail->setText($_REQUEST['mail_mess']);
-			if ($mail->send($to)) {
-				$smarty->assign_by_ref('sents', $to);
+			$myself = array($userlib->get_user_email($GLOBALS['user']));
+			$mail->setBcc(array_diff($to, $myself));
+			if ($mail->send($myself)) {
+				$smarty->assign('nbSentTo', count($to));
+				if ($userlib->user_has_permission($user, 'tiki_p_admin') && $params['debug'] == 'y') {
+					$smarty->assign('sents', $to);
+				} else {
+					$smarty->assign('sents', array());
+				}
 			} else {
 				$mail_error = true;
 			}
 		}
-		unset($_SESSION['to']);
+		unset($_SESSION['wikiplugin_mail_to']);
 	}
 	$smarty->assign_by_ref('mail_error', $mail_error);
 	if ($preview || $mail_error) {
@@ -171,10 +237,10 @@ function wikiplugin_mail_to($params)
 	$userlib = TikiLib::lib('user');
 	$to = array();
 	if (!empty($params['mail_user_dd'])) {
-		$to = array_merge($to, $params['mail_user_dd']);
+		$to = array_merge($to, $_REQUEST['mail_user_dd']);
 	}
-	if (!empty($params['mail_group_dd'])) {
-		foreach ($params['mail_group_dd'] as $mgp) {
+	if (!empty($_REQUEST['mail_group_dd'])) {
+		foreach ($_REQUEST['mail_group_dd'] as $mgp) {
 			foreach ($mgp as $mgroup) {
 				if (!empty($mgroup)) {
 					$to = array_merge($to, $userlib->get_recur_group_users($mgroup, $params['recurseuser'], 'userId'));
@@ -182,6 +248,7 @@ function wikiplugin_mail_to($params)
 			}
 		}
 	}
+	$to[] = $userlib->get_user_id($GLOBALS['user']);
 	$to = array_unique($to);
 	if (!empty($to)) {
 		$to = $userlib->get_userId_what($to);

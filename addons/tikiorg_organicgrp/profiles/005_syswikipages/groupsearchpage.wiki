@@ -1,0 +1,12 @@
+~tc~This page is system generated. Do not edit manually~/tc~
+{addon package="tikiorg/organicgrp" view="groupnavloader" from="home"}
+!{trackeritemfield trackerId="$profileobject:004_og_tracker:trk_og$" itemId="{{organicgroup}}" fieldId="$profileobject:004_og_tracker:trk_og_title$" test="0"}
+{CUSTOMSEARCH(tpl="tikiorg-searchingroupui.tpl" id="gsc" searchfadediv="customSearchResults" autosearchdelay="1500" recalllastsearch="0")}
+  {filter type="forum post, files"}
+  {filter categories="{{cat}}"}
+  {sort mode="modification_date_desc"}
+  {output template="addons/tikiorg_organicgrp/templates/tikiorg-searchingroup.tpl"}
+  {FORMAT(name="tags")}{display name=freetags format="reference" type="freetag" default=""}{FORMAT}
+{CUSTOMSEARCH}
+
+

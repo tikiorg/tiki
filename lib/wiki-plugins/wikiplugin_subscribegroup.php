@@ -99,6 +99,13 @@ function wikiplugin_subscribegroup_info()
 				'filter' => 'alpha',
 				'default' => 'y',
 			),
+			'allowLeaveNonUserChoice' => array(
+				'required' => false,
+				'name' => tra('Allows leaving a non-userChoice group'),
+				'description' => tra('Always allow leaving non-userChoice group even if userChoice for group is set to n'),
+				'filter' => 'alpha',
+				'default' => 'n',
+			),
 		),
 	);
 }
@@ -132,12 +139,19 @@ function wikiplugin_subscribegroup($data, $params)
 	if (!($info = $userlib->get_group_info($group)) || $info['groupName'] != $group) { // must have the right case
 		return tra('Incorrect param');
 	}
-	if ($info['userChoice'] != 'y') {
-		return tra('Permission denied');
+	if (!isset($params['allowLeaveNonUserChoice']) || $params['allowLeaveNonUserChoice'] != 'y') {
+		if ($info['userChoice'] != 'y') {
+			return tra('Permission denied');
+		}
 	}
 
 	$groups = $userlib->get_user_groups_inclusion($user);
 	$current_defgroup = $userlib->get_user_default_group($user);
+
+	if (!$groups[$group] && $params['allowLeaveNonUserChoice'] == 'y') {
+		// Deny anyway if user is not in group even if allowLeaveNonUserChoice is y
+		return tra('Permission denied');
+	}
 
 	if (!empty($_REQUEST['subscribeGroup']) && !empty($_REQUEST['iSubscribeGroup']) && $_REQUEST['iSubscribeGroup'] == $iSubscribeGroup && $_REQUEST['group'] == $group) {
 		if (isset($defgroup) || isset($defgroup_action) || isset($undefgroup) || isset($undefgroup_action)) {

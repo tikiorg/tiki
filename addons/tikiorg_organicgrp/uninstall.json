@@ -1,0 +1,24 @@
+{
+	"remove": [
+		{"type":"tracker", "ref":"trk_og", "profile":"004_og_tracker"},
+		{"type":"file_gallery", "ref":"fg_groupgalleries", "profile":"003_groupfilegallery"},
+		{"type":"wiki_page", "ref":"wiki_creategroup", "profile":"005_syswikipages"},
+		{"type":"wiki_page", "ref":"wiki_joingroups", "profile":"005_syswikipages"},
+		{"type":"wiki_page", "ref":"wiki_mygroups", "profile":"005_syswikipages"},
+		{"type":"wiki_page", "ref":"wiki_grouphomepage", "profile":"005_syswikipages"},
+		{"type":"wiki_page", "ref":"wiki_groupsearchpage", "profile":"005_syswikipages"},
+		{"type":"wiki_page", "ref":"wiki_groupmembers", "profile":"005_syswikipages"},
+		{"type":"wiki_page", "ref":"wiki_managegrp", "profile":"005_syswikipages"},
+		{"type":"category", "ref":"cat_tikiorg_organicgrp", "profile":"002_og_categories"},
+		{"type":"activity", "ref":"act_groupjoin", "profile":"007_groupcoreactivities"},
+		{"type":"activity", "ref":"act_groupjoin_rec", "profile":"007_groupcoreactivities"},
+		{"type":"activity", "ref":"act_groupleave", "profile":"007_groupcoreactivities"},
+		{"type":"activity", "ref":"act_groupleave_rec", "profile":"007_groupcoreactivities"},
+		{"type":"activity", "ref":"act_forumpost", "profile":"007_groupcoreactivities"},
+		{"type":"activity", "ref":"act_forumpost_rec", "profile":"007_groupcoreactivities"},
+		{"type":"activity", "ref":"act_forumreply", "profile":"007_groupcoreactivities"},
+		{"type":"activity", "ref":"act_forumreply_rec", "profile":"007_groupcoreactivities"},
+		{"type":"activity", "ref":"act_wikiupdate", "profile":"007_groupcoreactivities"},
+		{"type":"activity", "ref":"act_wikiupdate_rec", "profile":"007_groupcoreactivities"}
+	]
+}

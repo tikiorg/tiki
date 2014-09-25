@@ -432,6 +432,11 @@ class TrackerLib extends TikiLib
 		return $value;
 	}
 
+	public function get_item_status($itemId) {
+		$status = $this->items()->fetchOne('status', array('itemId' => (int) $itemId));
+		return $status;
+	}
+
 	/*shared*/
 	public function list_tracker_items($trackerId, $offset, $maxRecords, $sort_mode, $fields, $status = '', $initial = '')
 	{

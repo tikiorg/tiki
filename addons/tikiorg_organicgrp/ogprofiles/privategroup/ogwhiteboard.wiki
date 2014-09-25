@@ -1,0 +1,2 @@
+{addon package="tikiorg/organicgrp" view="groupnavloader" from="whiteboard"}
+~tc~ Do not edit above this line to preserve the Group menu ~/tc~

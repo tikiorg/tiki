@@ -1,0 +1,126 @@
+---
+objects:
+  -
+    type: wiki_page
+    ref: wiki_creategroup
+    data:
+      mode: create_or_update
+      name: tikiorg_organicgrp_creategroup
+      hide_title: y
+      content: wikicontent:creategroup
+      description:
+  -
+    type: wiki_page
+    ref: wiki_joingroups
+    data:
+      mode: create_or_update
+      name: tikiorg_organicgrp_joingroups
+      hide_title: y
+      content: wikicontent:joingroups
+      description:
+  -
+    type: wiki_page
+    ref: wiki_mygroups
+    data:
+      mode: create_or_update
+      name: tikiorg_organicgrp_mygroups
+      hide_title: y
+      content: wikicontent:mygroups
+      description:
+  -
+    type: wiki_page
+    ref: wiki_grouphomepage
+    data:
+      mode: create_or_update
+      name: tikiorg_organicgrp_grouphomepage
+      hide_title: y
+      content: wikicontent:grouphomepage
+      description:
+  -
+    type: wiki_page
+    ref: wiki_groupsearchpage
+    data:
+      mode: create_or_update
+      name: tikiorg_organicgrp_groupsearchpage
+      hide_title: y
+      content: wikicontent:groupsearchpage
+      description:
+  -
+    type: wiki_page
+    ref: wiki_groupmembers
+    data:
+      mode: create_or_update
+      name: tikiorg_organicgrp_groupmembers
+      hide_title: y
+      content: wikicontent:groupmembers
+      description:
+  -
+    type: wiki_page
+    ref: wiki_managegrp
+    data:
+      mode: create_or_update
+      name: tikiorg_organicgrp_managegrp
+      hide_title: y
+      content: wikicontent:managegrp
+      description:
+permissions:
+  Admins:
+    objects:
+      -
+        type: wiki_page
+        id: $profileobject:wiki_creategroup$
+        allow: [ admin_wiki ]
+      -
+        type: wiki_page
+        id: $profileobject:wiki_joingroups$
+        allow: [ admin_wiki ]
+      -
+        type: wiki_page
+        id: $profileobject:wiki_mygroups$
+        allow: [ admin_wiki ]
+      -
+        type: wiki_page
+        id: $profileobject:wiki_grouphomepage$
+        allow: [ admin_wiki ]
+      -
+        type: wiki_page
+        id: $profileobject:wiki_groupsearchpage$
+        allow: [ admin_wiki ]
+      -
+        type: wiki_page
+        id: $profileobject:wiki_groupmembers$
+        allow: [ admin_wiki ]
+      -
+        type: wiki_page
+        id: $profileobject:wiki_managegrp$
+        allow: [ admin_wiki ]
+  Registered:
+    objects:
+      -
+        type: wiki_page
+        id: $profileobject:wiki_creategroup$
+        allow: [ view ]
+      -
+        type: wiki_page
+        id: $profileobject:wiki_joingroups$
+        allow: [ view ]
+      -
+        type: wiki_page
+        id: $profileobject:wiki_mygroups$
+        allow: [ view ]
+      -
+        type: wiki_page
+        id: $profileobject:wiki_grouphomepage$
+        allow: [ view ]
+      -
+        type: wiki_page
+        id: $profileobject:wiki_groupsearchpage$
+        allow: [ view ]
+      -
+        type: wiki_page
+        id: $profileobject:wiki_groupmembers$
+        allow: [ view ]
+      -
+        type: wiki_page
+        id: $profileobject:wiki_managegrp$
+        allow: [ view ]

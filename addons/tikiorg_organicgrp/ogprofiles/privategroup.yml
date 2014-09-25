@@ -1,0 +1,118 @@
+---
+objects:
+ -
+  type: tracker_item
+  ref: trkitem_og
+  data:
+   tracker: $profileobject:addons/tikiorg_organicgrp/profiles:004_og_tracker:trk_og$
+   status: p
+   values:
+    - [ $profileobject:addons/tikiorg_organicgrp/profiles:004_og_tracker:trk_og_title$, $profilerequest:groupname$Sample$ ]
+    - [ $profileobject:addons/tikiorg_organicgrp/profiles:004_og_tracker:trk_og_description$, $profilerequest:groupdescription$A description for this group has not yet been written.$ ]
+    - [ $profileobject:addons/tikiorg_organicgrp/profiles:004_og_tracker:trk_og_creator$, $profilerequest:creator$Sample$]
+    - [ $profileobject:addons/tikiorg_organicgrp/profiles:004_og_tracker:trk_og_lang$, en ]
+ -
+  type: file_gallery
+  ref: fg_og
+  data:
+   name: tikiorg_organicgrp_$profileobject:trkitem_og$
+   owner: $profilerequest:creator$Sample$
+   flags: [ public ]
+   parent: $profileobject:addons/tikiorg_organicgrp/profiles:003_groupfilegallery:fg_groupgalleries$
+ -
+  type: forum
+  ref: forum_og
+  data:
+   name: tikiorg_organicgrp_$profileobject:trkitem_og$
+   forum_language: en
+   moderator_group: tikiorg_organicgrp_managers_$profileobject:trkitem_og$
+   attachments: allowed
+   attachments_store: dir
+   attachments_store_dir: files/forums/
+   attachments_max_size: 62914560
+   enable: [ ui_avatar ]
+ -
+  type: wiki_page
+  ref: wiki_whiteboard
+  data:
+    name: tikiorg_organicgrp_$profileobject:trkitem_og$:_:whiteboard_$profileobject:trkitem_og$
+    hide_title: y
+    content: wikicontent:ogwhiteboard
+ -
+  type: category
+  ref: cat_og
+  data:
+   name: tikiorg_organicgrp_$profileobject:trkitem_og$
+   parent: $profileobject:addons/tikiorg_organicgrp/profiles:002_og_categories:cat_private_grp$
+   items:
+    - [ file gallery, $profileobject:fg_og$ ]
+    - [ wiki_page, $profileobject:wiki_whiteboard$ ]
+    - [ forum, $profileobject:forum_og$ ]
+ -
+  type: tracker_item
+  data:
+   mode: update
+   itemId: $profileobject:trkitem_og$
+   tracker: $profileobject:addons/tikiorg_organicgrp/profiles:004_og_tracker:trk_og$
+   status: p
+   values:
+    - [ $profileobject:addons/tikiorg_organicgrp/profiles:004_og_tracker:trk_og_title$, $profilerequest:groupname$Sample$ ]
+    - [ $profileobject:addons/tikiorg_organicgrp/profiles:004_og_tracker:trk_og_description$, $profilerequest:groupdescription$A description for this group has not yet been written.$ ]
+    - [ $profileobject:addons/tikiorg_organicgrp/profiles:004_og_tracker:trk_og_creator$, $profilerequest:creator$Sample$]
+    - [ $profileobject:addons/tikiorg_organicgrp/profiles:004_og_tracker:trk_og_lang$, en ]
+    - [ $profileobject:addons/tikiorg_organicgrp/profiles:004_og_tracker:trk_og_file_gallery_ID$, $profileobject:fg_og$ ]
+    - [ $profileobject:addons/tikiorg_organicgrp/profiles:004_og_tracker:trk_og_forum_ID$, $profileobject:forum_og$ ]
+    - [ $profileobject:addons/tikiorg_organicgrp/profiles:004_og_tracker:trk_og_categoryID$, $profileobject:cat_og$ ]
+
+mappings:
+ Member: tikiorg_organicgrp_$profileobject:trkitem_og$
+ Leader: tikiorg_organicgrp_managers_$profileobject:trkitem_og$
+ Pending: tikiorg_organicgrp_pending_$profileobject:trkitem_og$
+permissions:
+ Registered:
+  objects:
+   -
+    type: category
+    id: $profileobject:cat_og$  
+    deny: [ create_tracker_items, modify_tracker_items, modify_tracker_items_pending, modify_tracker_items_closed, view_trackers, view_trackers_pending, view_trackers_closed, forum_read, forum_post, download_files, upload_files, post_comments, read_comments ]
+ Pending:
+  user_signup: 'y'
+ Member:
+  autojoin: y
+  objects:
+   -
+    type: category
+    id: $profileobject:cat_og$
+    allow: [ view_category, add_object, remove_object, submit_article, read_article, autoapprove_submission, read_comments, vote_comments, post_comments, wiki_view_history, wiki_view_comments, use_as_template, view, rename, edit, create_tracker_items, view_trackers, attach_trackers, tracker_view_attachments, comment_tracker_items, tracker_view_comments, tracker_view_ratings, tracker_vote_ratings, tracker_revote_ratings, watch_trackers, search, modify_object_categories, view_freetags, freetags_tag, unassign_freetags, list_file_galleries, edit_gallery_file, download_files, view_file_gallery, view_fgal_explorer, view_fgal_path, upload_files, forum_read, forum_edit_own_posts, forum_post_topic, forum_post, forums_report, forum_vote, forum_attach, view_trackers_closed, view_trackers_pending ]
+   -
+    type: group
+    id: tikiorg_organicgrp_$profileobject:trkitem_og$
+    allow: [ group_view, group_view_members ]
+   -
+    type: group
+    id: tikiorg_organicgrp_managers_$profileobject:trkitem_og$
+    allow: [ group_view, group_view_members ]
+   -
+    type: wiki_page
+    id: $profileobject:wiki_whiteboard$
+    allow: [ view, edit ]
+ Leader:
+  include: [ tikiorg_organicgrp_$profileobject:trkitem_og$ ]
+  autojoin: y
+  objects:
+   -
+    type: category
+    id: $profileobject:cat_og$
+    allow: [ edit_comments, remove_comments, remove_files, remove, modify_tracker_items, modify_tracker_items_pending, modify_tracker_items_closed ]
+   -
+    type: group
+    id: tikiorg_organicgrp_$profileobject:trkitem_og$
+    allow: [ group_view, group_view_members, group_add_member, group_remove_member ]
+   -
+    type: group
+    id: tikiorg_organicgrp_managers_$profileobject:trkitem_og$
+    allow: [ group_view, group_view_members, group_add_member, group_remove_member ]
+   -
+    type: group
+    id: tikiorg_organicgrp_pending_$profileobject:trkitem_og$
+    allow: [ group_view, group_view_members, group_add_member, group_remove_member ]

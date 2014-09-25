@@ -223,6 +223,8 @@ function tiki_setup_events()
 	$events->bind('tiki.comment.update', 'tiki.comment.save');
 	$events->bind('tiki.comment.save', 'tiki.save');
 
+	$events->bind('tiki.user.groupjoin', 'tiki.user.update');
+	$events->bind('tiki.user.groupleave', 'tiki.user.update');
 	$events->bind('tiki.user.update', 'tiki.user.save');
 	$events->bind('tiki.user.create', 'tiki.user.save');
 

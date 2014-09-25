@@ -2002,22 +2002,33 @@ class UsersLib extends TikiLib
 		}
 
 		if ($prefs['feature_community_send_mail_leave'] == 'y') {
-			$group_base = trim(str_replace(array_map('trim', explode(",", $prefs['feature_community_Strings_to_ignore'])), '', $group));
-			if (!empty($prefs['feature_community_String_to_append'])) {
-				$grouplead = $group_base . " " . $prefs['feature_community_String_to_append'];
-				$groupleaders = $this->get_users_created_group($grouplead);
+			$api = new TikiAddons_Api_Group;
+			if ($api->isOrganicGroup($group)) {
+				$groupleaders = $api->getOrganicGroupLeaders($group);
+				$groupleaders = array_combine($groupleaders, $groupleaders);
 				unset($groupleaders[$user]);
 				if (isset($groupleaders[$_SESSION['u_info']['login']])) {
 					unset($groupleaders[$_SESSION['u_info']['login']]);
 				}
 				if (!empty($groupleaders)) {
-				$par_data['gname'] = $group_base;
-				$par_data['user'] = $user;
-				require_once ("lib/notifications/notificationemaillib.php");
+					$par_data['gname'] = $group;
+					$par_data['user'] = $user;
+					require_once ("lib/notifications/notificationemaillib.php");
 					sendEmailNotification($groupleaders, 'group_lead_mail', 'user_left_group_notification_to_leads_subject.tpl', $par_data, 'user_left_group_notification_to_leads.tpl');
 				}
 			}
 		}
+
+		$api = new TikiAddons_Api_Group;
+		TikiLib::events()->trigger('tiki.user.groupleave', array(
+			'type' => 'user',
+			'object' => $user,
+			'group' => $group,
+			'addongroup' => $api->getOrganicGroupName($group),
+			'is_organic' => ($api->isOrganicGroup($group) ? 1 : 0),
+			'is_private' => ($api->organicGroupIsPrivate($group) ? 1 : 0),
+			'addongroupid' => $api->getItemIdFromToken($group),
+		));
 
 		$_SESSION['u_info']['group'] = 'Registered';
 	}
@@ -5946,18 +5957,18 @@ class UsersLib extends TikiLib
 		$this->update_anniversary_expiry();
 
 		if ($prefs['feature_community_send_mail_join'] == 'y') {
-			$group_base = trim(str_replace(array_map('trim', explode(",", $prefs['feature_community_Strings_to_ignore'])), '', $group));
-			if (!empty($prefs['feature_community_String_to_append'])) {
-				$grouplead = $group_base . " " . trim($prefs['feature_community_String_to_append']);
-				$groupleaders = $this->get_users_created_group($grouplead);
+			$api = new TikiAddons_Api_Group;
+			if ($api->isOrganicGroup($group)) {
+				$groupleaders = $api->getOrganicGroupLeaders($group);
+				$groupleaders = array_combine($groupleaders, $groupleaders);
 				unset($groupleaders[$user]);
 				if (isset($groupleaders[$_SESSION['u_info']['login']])) {
 					unset($groupleaders[$_SESSION['u_info']['login']]);
 				}
 				if (!empty($groupleaders)) {
-					$par_data['gname'] = $group_base;
+					$par_data['gname'] = $group;
 					$par_data['user'] = $user;
-					if (strpos($group, ' (Needs Approval)')) {
+					if (strpos($group, 'pending')) {
 						$mail_temp = 'user_joins_group_notification_to_leads_need_app.tpl';
 					} else {
 						$mail_temp = 'user_joins_group_notification_to_leads.tpl';
@@ -5983,6 +5994,16 @@ class UsersLib extends TikiLib
 				$smarty->assign('mail_group', $group);
 				sendEmailNotification($watches, null, 'user_joins_group_notification_subject.tpl', null, 'user_joins_group_notification.tpl');
 			}
+			$api = new TikiAddons_Api_Group;
+			TikiLib::events()->trigger('tiki.user.groupjoin', array(
+				'type' => 'user',
+				'object' => $user,
+				'group' => $group,
+				'addongroup' => $api->getOrganicGroupName($group),
+				'is_organic' => ($api->isOrganicGroup($group) ? 1 : 0),
+				'is_private' => ($api->organicGroupIsPrivate($group) ? 1 : 0),
+				'addongroupid' => $api->getItemIdFromToken($group),
+			));
 		}
 
 		return $group_ret;

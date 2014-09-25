@@ -1,6 +1,6 @@
 {* $Id$ *}
-
-{title help="forums" admpage="forums"}{$forum_info.name}{/title}
+{$forum_info.name|addonnavbar}
+{title help="forums" admpage="forums"}{$forum_info.name|addongroupname}{/title}
 
 {if $forum_info.show_description eq 'y'}
 	<div class="description help-block">{wiki}{$forum_info.description}{/wiki}</div>
@@ -81,7 +81,7 @@
 <div class="breadcrumb">
 	<a class="link" href="tiki-forums.php">{tr}Forums{/tr}</a>
 	{$prefs.site_crumb_seper}
-	<a class="link" href="tiki-view_forum.php?forumId={$forumId}">{$forum_info.name|escape}</a>
+	<a class="link" href="tiki-view_forum.php?forumId={$forumId}">{$forum_info.name|addongroupname|escape}</a>
 </div>
 
 {if !empty($errors)}

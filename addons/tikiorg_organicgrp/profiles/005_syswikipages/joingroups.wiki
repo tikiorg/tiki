@@ -1,0 +1,14 @@
+~tc~This page is system generated. Do not edit manually~/tc~
+!Join {showpref pref=ta_tikiorg_organicgrp_pterm}
+{DIV(class="btn-group")}
+  <a href="tikiorg_organicgrp_mygroups"><button type="button" class="btn btn-default">{showpref pref=ta_tikiorg_organicgrp_pterm} I'm In</button></a><a href="tikiorg_organicgrp_creategroup"><button type="button" class="btn btn-default">Create {showpref pref=ta_tikiorg_organicgrp_sterm}</button></a>
+{DIV}
+{CUSTOMSEARCH(tpl="tikiorg-groupsearchui.tpl" id="grp" searchonload="1" requireinput="0" autosearchdelay="0" recalllastsearch="0")}
+  {list max="999"}
+  {sort mode="title_asc"}
+  {filter type="trackeritem"}
+  {filter field="tracker_id" exact="$profileobject:004_og_tracker:trk_og$"}
+  {output template="addons/tikiorg_organicgrp/templates/tikiorg-groupsearchlist.tpl"}
+  {FORMAT(name="og_descrip")}{display name=tracker_field_og_description default="" format=snippet length=200 suffix="..."}{FORMAT}
+{CUSTOMSEARCH}
+

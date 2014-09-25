@@ -4212,6 +4212,7 @@ class TikiLib extends TikiDb_Bridge
 			array(
 				'type' => 'wiki page',
 				'object' => $name,
+				'namespace' => $wikilib->get_namespace($name),
 				'user' => $GLOBALS['user'],
 				'page_id' => $page_id,
 				'version' => 1,
@@ -4719,6 +4720,7 @@ class TikiLib extends TikiDb_Bridge
 			array(
 				'type' => 'wiki page',
 				'object' => $pageName,
+				'namespace' => $wikilib->get_namespace($pageName), 
 				'reply_action' => 'comment',
 				'user' => $GLOBALS['user'],
 				'page_id' => $info['page_id'],

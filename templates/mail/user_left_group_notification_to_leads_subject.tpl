@@ -1,1 +1,1 @@
-{$mail_real} ({$mail_user}) {tr}user left group{/tr} - {$mail_group}
+{$mail_real} ({$mail_user}) {tr}user left{/tr} - {$mail_group}

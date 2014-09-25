@@ -231,6 +231,16 @@ class Search_Query_WikiBuilder
 			);
 		}
 
+		if (in_array('addongroups', $types)) {
+			$api = new TikiAddons_Api_Group;
+			$cats = $api->getOrganicGroupCatsForUser($targetUser);
+			if (empty($cats)) {
+				$subquery->filterCategory('impossible');
+			} else {
+				$subquery->filterCategory(implode(' ', $cats));
+			}
+		}
+
 		if (in_array('follow', $types)) {
 			$subquery->filterMultivalue($targetUser, 'user_followers');
 		}
