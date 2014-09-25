@@ -53,6 +53,7 @@ class Search_ContentSource_ForumPostSource implements Search_ContentSource_Inter
 
 		$lastModification = $comment['commentDate'];
 		$content = $comment['data'];
+		$snippet = TikiLib::lib('tiki')->get_snippet($content);
 		$author = array($comment['userName']);
 
 		$thread = $commentslib->get_comments($comment['objectType'] . ':' . $comment['object'], $objectId, 0, 0);
@@ -77,6 +78,7 @@ class Search_ContentSource_ForumPostSource implements Search_ContentSource_Inter
 
 			'forum_id' => $typeFactory->identifier($comment['object']),
 			'post_content' => $typeFactory->wikitext($content),
+			'post_snippet' => $typeFactory->plaintext($snippet),
 			'parent_thread_id' => $typeFactory->identifier($comment['parentId']),
 
 			'parent_object_type' => $typeFactory->identifier($comment['objectType']),
@@ -98,6 +100,7 @@ class Search_ContentSource_ForumPostSource implements Search_ContentSource_Inter
 			'contributors',
 
 			'post_content',
+			'post_snippet',
 			'forum_id',
 			'parent_thread_id',
 
