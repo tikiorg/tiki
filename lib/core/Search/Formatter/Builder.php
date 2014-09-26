@@ -99,6 +99,8 @@ class Search_Formatter_Builder
 				$arguments['template'] = dirname(__FILE__) . '/../../../../templates/search/list/table.tpl';
 			} elseif ($arguments['template'] == 'medialist') {
 				$arguments['template'] = dirname(__FILE__) . '/../../../../templates/search/list/medialist.tpl';
+			} elseif ($arguments['template'] == 'carousel') {
+				$arguments['template'] = dirname(__FILE__) . '/../../../../templates/search/list/carousel.tpl';
 			} elseif (!file_exists($arguments['template'])) {
 				TikiLib::lib('errorreport')->report(tr('Missing template "%0"', $arguments['template']));
 				return '';
