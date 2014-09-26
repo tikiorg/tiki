@@ -306,6 +306,20 @@ class Search_Query implements Search_Query_Interface
 		return $resultset;
 	}
 
+	function scroll($index)
+	{
+		$this->finalize();
+		$res = $index->scroll($this);
+
+		foreach ($res as $row) {
+			foreach ($this->transformations as $trans) {
+				$row = $trans($row);
+			}
+
+			yield $row;
+		}
+	}
+
 	function applyTransform(callable $transform)
 	{
 		$this->transformations[] = $transform;

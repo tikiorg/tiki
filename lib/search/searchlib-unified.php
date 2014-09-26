@@ -778,6 +778,7 @@ class UnifiedSearchLib
 								if (! empty($entry[$field])) {
 									return preg_match('/token[a-z]{20,}/', $entry[$field]);
 								}
+								return true;
 							}
 						);
 					}

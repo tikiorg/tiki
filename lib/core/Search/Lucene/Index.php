@@ -159,6 +159,16 @@ class Search_Lucene_Index implements Search_Index_Interface
 		return $resultSet;
 	}
 
+	function scroll(Search_Query_Interface $query)
+	{
+		$expr = $query->getExpr();
+		$data = $this->internalFind($expr, $query->getSortOrder());
+		$resultCount = count($data['result']);
+		$resultSet = new Search_ResultSet($data['result'], $resultCount, 0, $resultCount);
+
+		return $resultSet;
+	}
+
 	function setCache($cache)
 	{
 		$this->cache = $cache;
@@ -247,7 +257,9 @@ class Search_Lucene_Index implements Search_Index_Interface
 	{
 		$data = array();
 		foreach ($document->getFieldNames() as $field) {
-			$data[$field] = $document->$field;
+			if (! $document->getField($field)->isTokenized) {
+				$data[$field] = $document->$field;
+			}
 		}
 
 		return $data;

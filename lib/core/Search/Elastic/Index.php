@@ -262,6 +262,48 @@ class Search_Elastic_Index implements Search_Index_Interface, Search_Index_Query
 		return $resultSet;
 	}
 
+	function scroll(Search_Query_Interface $query)
+	{
+		$builder = new Search_Elastic_OrderBuilder;
+		$orderPart = $builder->build($query->getSortOrder());
+
+		$builder = new Search_Elastic_QueryBuilder;
+		$builder->setDocumentReader($this->createDocumentReader());
+		$queryPart = $builder->build($query->getExpr());
+
+		$indices = [$this->index];
+
+		$fullQuery = array_merge(
+			$queryPart,
+			$orderPart,
+			array(
+				"size" => 100,
+				"highlight" => array(
+					"fields" => array(
+						'contents' => array(
+							"number_of_fragments" => 5,
+						),
+						'file' => array(
+							"number_of_fragments" => 5,
+						),
+					),
+				),
+			)
+		);
+
+		$args = ['scroll' => '5m'];
+		$result = $this->connection->search($indices, $fullQuery, $args);
+		$scrollId = $result->_scroll_id;
+
+		do {
+			foreach ($result->hits->hits as $entry) {
+				yield (array) $entry->_source;
+			}
+
+			$result = $this->connection->scroll($scrollId, $args);
+		} while(count($result->hits->hits) > 0);
+	}
+
 	function getTypeFactory()
 	{
 		return new Search_Elastic_TypeFactory;

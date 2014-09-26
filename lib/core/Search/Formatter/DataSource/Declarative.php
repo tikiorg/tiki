@@ -89,6 +89,11 @@ class Search_Formatter_DataSource_Declarative implements Search_Formatter_DataSo
 		}
 
 		if ($this->sourceProvidesValue($globalSource, $missingFields)) {
+			// The field may exist, but contain mangled data
+			foreach ($globalSource->getProvidedFields() as $field) {
+				unset($data[$field]);
+			}
+
 			$data = $globalSource->getData($type, $object, new Search_Type_Factory_Direct, $data);
 
 			return $this->getRaw($data, $missingFields);

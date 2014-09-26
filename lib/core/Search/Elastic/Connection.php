@@ -74,7 +74,7 @@ class Search_Elastic_Connection
 		}
 	}
 
-	function search($index, array $query, $resultStart, $resultCount)
+	function search($index, array $query, array $args = [])
 	{
 		$indices = (array) $index;
 		foreach ($indices as $index) {
@@ -84,7 +84,12 @@ class Search_Elastic_Connection
 		}
 
 		$index = implode(',', $indices);
-		return $this->get("/$index/_search", json_encode($query));
+		return $this->get("/$index/_search?" . http_build_query($args, '', '&'), json_encode($query));
+	}
+
+	function scroll($scrollId, array $args = [])
+	{
+		return $this->post('/_search/scroll?' . http_build_query($args, '', '&'), $scrollId);
 	}
 
 	function storeQuery($index, $name, $query)

@@ -695,8 +695,12 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 		$schema->addNew('lookup')
 			->setField($this->getConfiguration('permName'))
 			->setLabel($this->getConfiguration('name'))
-			->setRenderTransform(function ($value) {
-				return $this->getItemLabel($value);
+			->setRenderTransform(function ($value, $extra) {
+				if (isset($extra['text'])) {
+					return $extra['text'];
+				} else {
+					return $this->getItemLabel($value);
+				}
 			})
 			;
 

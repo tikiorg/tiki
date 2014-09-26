@@ -125,6 +125,21 @@ class Search_MySql_Index implements Search_Index_Interface
 		}
 	}
 
+	function scroll(Search_Query_Interface $query)
+	{
+		$perPage = 100;
+		$hasMore = true;
+
+		for ($from = 0; $hasMore; $from += $perPage) {
+			$result = $this->find($query, $from, $perPage);
+			foreach ($result as $row) {
+				yield $row;
+			}
+			
+			$hasMore = $result->hasMore();
+		}
+	}
+
 	private function getOrderClause($query, $useScore)
 	{
 		$order = $query->getSortOrder();

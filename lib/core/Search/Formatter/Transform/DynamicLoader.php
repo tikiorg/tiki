@@ -46,15 +46,13 @@ class Search_Formatter_Transform_DynamicLoaderWrapper extends ArrayObject
 			return;
 		}
 
-		if (! parent::offsetExists($name)) {
-			$this->loaded[$name] = true;
-			$data = $this->source->getData($this->getArrayCopy(), $name);
+		$this->loaded[$name] = true;
+		$data = $this->source->getData($this->getArrayCopy(), $name);
 
-			foreach ($data as $key => $name) {
-				$this[$key] = $name;
-			}
+		foreach ($data as $key => $name) {
+			$this[$key] = $name;
 		}
-	}
+}
 }
 
 
