@@ -25,7 +25,7 @@
 						<li>{if $install_step eq '7'}<strong>{elseif $tikidb_is20}<a href="#" onclick="$('#install_step7').submit();return false;" title="{tr}Enter Your Tiki{/tr}">{/if}{tr}Enter Your Tiki{/tr}{if $install_step eq '7'}</strong>{elseif $tikidb_is20}</a>{/if}</li>
 					</ol>
 					<form method="post" action="tiki-install.php" id="install_step0">
-						<input type="hidden" name="reset" value="y">
+						<input type="hidden" name="install_step" value="0">
 						{if $multi}<input type="hidden" name="multi" value="{$multi}">{/if}
 						{if $lang}<input type="hidden" name="lang" value="{$lang}">{/if}
 					</form>
