@@ -11,7 +11,7 @@
  * Letter key: ~r~
  *
  */
-class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_Field_Synchronizable
+class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_Field_Synchronizable, Tracker_Field_Exportable
 {
 	const CASCADE_NONE = 0;
 	const CASCADE_CATEG = 1;
@@ -676,5 +676,31 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 		}
 	}
 
+	function getTabularSchema()
+	{
+		$schema = new Tracker\Tabular\Schema($this->getTrackerDefinition());
+		$permName = $this->getConfiguration('permName');
+
+		$schema->addNew('id')
+			->setField($this->getConfiguration('permName'))
+			->setLabel($this->getConfiguration('name'))
+			->setRenderTransform(function ($value) {
+				return $value;
+			})
+			->setParseIntoTransform(function (& $info, $value) use ($permName) {
+				$info['fields'][$permName] = $value;
+			})
+			;
+
+		$schema->addNew('lookup')
+			->setField($this->getConfiguration('permName'))
+			->setLabel($this->getConfiguration('name'))
+			->setRenderTransform(function ($value) {
+				return $this->getItemLabel($value);
+			})
+			;
+
+		return $schema;
+	}
 }
 

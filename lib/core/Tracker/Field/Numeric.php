@@ -11,7 +11,7 @@
  * Letter key: ~n~
  *
  */
-class Tracker_Field_Numeric extends Tracker_Field_Abstract implements Tracker_Field_Synchronizable
+class Tracker_Field_Numeric extends Tracker_Field_Abstract implements Tracker_Field_Synchronizable, Tracker_Field_Exportable
 {
 	public static function getTypes()
 	{
@@ -124,6 +124,39 @@ class Tracker_Field_Numeric extends Tracker_Field_Abstract implements Tracker_Fi
 	function importRemoteField(array $info, array $syncInfo)
 	{
 		return $info;
+	}
+
+	function getTabularSchema()
+	{
+		$schema = new Tracker\Tabular\Schema($this->getTrackerDefinition());
+
+		$permName = $this->getConfiguration('permName');
+		$schema->addNew('default')
+			->setField($this->getConfiguration('permName'))
+			->setLabel($this->getConfiguration('name'))
+			->setRenderTransform(function ($value) {
+				return $value;
+			})
+			->setParseIntoTransform(function (& $info, $value) use ($permName) {
+				$info['fields'][$permName] = $value;
+			})
+			;
+
+		$prepend = $this->getOption('prepend');
+		$append = $this->getOption('append');
+		$schema->addNew('formatted')
+			->setField($this->getConfiguration('permName'))
+			->setLabel($this->getConfiguration('name'))
+			->setRenderTransform(function ($value) use ($prepend, $append) {
+				return $prepend . $value . $append;
+			})
+			->setParseIntoTransform(function (& $info, $value) use ($permName, $prepend, $append) {
+				$value = substr($value, strlen($prepend), -strlen($append));
+				$info['fields'][$permName] = $value;
+			})
+			;
+
+		return $schema;
 	}
 }
 

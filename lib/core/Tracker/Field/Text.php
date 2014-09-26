@@ -11,7 +11,7 @@
  * Letter key: ~t~
  *
  */
-class Tracker_Field_Text extends Tracker_Field_Abstract implements Tracker_Field_Synchronizable
+class Tracker_Field_Text extends Tracker_Field_Abstract implements Tracker_Field_Synchronizable, Tracker_Field_Exportable
 {
 	public static function getTypes()
 	{
@@ -321,6 +321,27 @@ class Tracker_Field_Text extends Tracker_Field_Abstract implements Tracker_Field
 		$validators->setInput($value);
 		$ret = $validators->validateInput($validation, $param);
 		return $ret;
+	}
+
+	function getTabularSchema()
+	{
+		$schema = new Tracker\Tabular\Schema($this->getTrackerDefinition());
+
+		if ('y' !== $this->getConfiguration('isMultilingual', 'n')) {
+			$permName = $this->getConfiguration('permName');
+			$schema->addNew('default')
+				->setField($permName)
+				->setLabel($this->getConfiguration('name'))
+				->setRenderTransform(function ($value) {
+					return $value;
+				})
+				->setParseIntoTransform(function (& $info, $value) use ($permName) {
+					$info['fields'][$permName] = $value;
+				})
+				;
+		}
+
+		return $schema;
 	}
 }
 
