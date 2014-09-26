@@ -63,6 +63,8 @@ class Captcha
 				)
 			);
 
+			$this->captcha->setOption('ssl', true);
+
 			$this->type = 'recaptcha';
 
 			$this->recaptchaCustomTranslations();
