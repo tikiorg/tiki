@@ -68,7 +68,7 @@
 			<a href="#" onclick="window.exportPdf(this);"  title="{tr}Export to PDF{/tr}">
 				<img alt="{tr}Export to PDF{/tr}" src="vendor/jquery/jquery-s5/images/page_go.png"></a>
 		{/if}
-		<a href="tiki-index.php?page={$page}" title="{tr}Exit{/tr}">
+		<a href="{$page|sefurl}" title="{tr}Exit{/tr}">
 			<img src="img/icons/cross.png" alt="{tr}Exit{/tr}"></a>
 		<select class="tiki-slideshow-theme">
 			<option value="">{tr}Change Theme{/tr}</option>
@@ -129,7 +129,7 @@
 			<a href="#" onclick="window.exportPdf(this);" title="{tr}Export to PDF{/tr}">
 				<img alt="{tr}Export to PDF{/tr}" src="vendor/jquery/jquery-s5/images/page_go.png"></a>
 		{/if}
-		<a href="tiki-index.php?page={$page}" title="{tr}Exit{/tr}">
+		<a href="{$page|sefurl}" title="{tr}Exit{/tr}">
 			<img src="img/icons/cross.png" alt="{tr}Exit{/tr}"></a>
 		<select class="tiki-slideshow-theme">
 			<option value="">{tr}Change Theme{/tr}</option>

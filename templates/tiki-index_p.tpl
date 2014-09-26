@@ -108,10 +108,5 @@
   </div>
 </div>
 {include file='footer.tpl'}
-{if $headerlib}
-	{$headerlib->output_js_config()}
-	{$headerlib->output_js_files()}
-	{$headerlib->output_js()}
-{/if}
 	</body>
 </html>
