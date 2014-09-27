@@ -138,7 +138,8 @@ class Table_Code_Other extends Table_Code_Manager
 				//note when filter is in place - used for setting offset when simplified ajax url is used
 				'				this.config.pager.ajaxData.filter = true;',
 				'			}',
-				'		} else {',
+						//make sure clicking checkboxes doesn't trigger dimming
+				'		} else if (event.srcElement.type !== \'checkbox\') {',
 				'			$(\'' . parent::$tid . ' tbody tr td\').css(\'opacity\', 0.25);',
 				'		}',
 				'	}',
