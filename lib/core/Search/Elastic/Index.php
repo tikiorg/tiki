@@ -210,7 +210,7 @@ class Search_Elastic_Index implements Search_Index_Interface, Search_Index_Query
 			)
 		);
 
-		$result = $this->connection->search($indices, $fullQuery, $resultStart, $resultCount);
+		$result = $this->connection->search($indices, $fullQuery);
 		$hits = $result->hits;
 
 		$indicesMap = array_combine($indices, $indices);
