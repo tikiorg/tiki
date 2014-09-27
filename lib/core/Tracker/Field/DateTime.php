@@ -11,7 +11,7 @@
  * Letter key: ~f~
  *
  */
-class Tracker_Field_DateTime extends Tracker_Field_Abstract implements Tracker_Field_Synchronizable
+class Tracker_Field_DateTime extends Tracker_Field_Abstract implements Tracker_Field_Synchronizable, Tracker_Field_Exportable
 {
 	public static function getTypes()
 	{
@@ -151,6 +151,26 @@ class Tracker_Field_DateTime extends Tracker_Field_Abstract implements Tracker_F
 		return array(
 			$baseKey => $typeFactory->timestamp($this->getValue()),
 		);
+	}
+
+	function getTabularSchema()
+	{
+		$permName = $this->getConfiguration('permName');
+		$type = $this->getOption('datetime');
+
+		$schema = new Tracker\Tabular\Schema($this->getTrackerDefinition());
+
+		$label = $this->getConfiguration('name');
+		$helper = new Tracker\Tabular\Schema\DateHelper($label);
+		$helper->setupUnix($schema->addNew($permName, 'unix'));
+
+		if ($type == 'd') {
+			$helper->setupFormat('Y-m-d', $schema->addNew($permName, 'yyyy-mm-dd'));
+		} else {
+			$helper->setupFormat('Y-m-d H:i:s', $schema->addNew($permName, 'yyyy-mm-dd hh:mm:ss'));
+		}
+
+		return $schema;
 	}
 
 }

@@ -30,7 +30,7 @@ class Schema
 		} elseif ($partial = $this->getSystemSchema($permName)) {
 			$this->schemas[$permName] = $partial;
 		} else {
-			$partial = $this->getFieldSchema($permName);
+			$partial = $this->getFieldSchema($permName, $mode);
 			$this->schemas[$permName] = $partial;
 		}
 
@@ -89,7 +89,7 @@ class Schema
 		$handler = $factory->getHandler($field);
 
 		if (! $handler instanceof \Tracker_Field_Exportable) {
-			throw new Exception\ModeNotSupported($mode);
+			throw new Exception\ModeNotSupported($permName, 'any mode');
 		}
 
 		return $handler->getTabularSchema();
