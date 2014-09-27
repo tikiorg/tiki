@@ -131,8 +131,7 @@ class Tracker_Field_Numeric extends Tracker_Field_Abstract implements Tracker_Fi
 		$schema = new Tracker\Tabular\Schema($this->getTrackerDefinition());
 
 		$permName = $this->getConfiguration('permName');
-		$schema->addNew('default')
-			->setField($this->getConfiguration('permName'))
+		$schema->addNew($permName, 'default')
 			->setLabel($this->getConfiguration('name'))
 			->setRenderTransform(function ($value) {
 				return $value;
@@ -144,8 +143,7 @@ class Tracker_Field_Numeric extends Tracker_Field_Abstract implements Tracker_Fi
 
 		$prepend = $this->getOption('prepend');
 		$append = $this->getOption('append');
-		$schema->addNew('formatted')
-			->setField($this->getConfiguration('permName'))
+		$schema->addNew($permName, 'formatted')
 			->setLabel($this->getConfiguration('name'))
 			->setRenderTransform(function ($value) use ($prepend, $append) {
 				return $prepend . $value . $append;

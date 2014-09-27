@@ -11,6 +11,7 @@ class Schema
 {
 	private $columns = [];
 	private $primaryKey;
+	private $schemas = [];
 
 	function __construct(\Tracker_Definition $definition)
 	{
@@ -22,22 +23,17 @@ class Schema
 		return $this->definition;
 	}
 
-	function addColumn($permName, $label, $mode)
+	function addColumn($permName, $mode)
 	{
-		$field = $this->definition->getFieldFromPermName($permName);
-		$factory = $this->definition->getFieldFactory();
-
-		if (! $field) {
-			throw new Exception\FieldNotFound($permName);
+		if (isset($this->schemas[$permName])) {
+			$partial = $this->schemas[$permName];
+		} elseif ($partial = $this->getSystemSchema($permName)) {
+			$this->schemas[$permName] = $partial;
+		} else {
+			$partial = $this->getFieldSchema($permName);
+			$this->schemas[$permName] = $partial;
 		}
 
-		$handler = $factory->getHandler($field);
-
-		if (! $handler instanceof \Tracker_Field_Exportable) {
-			throw new Exception\ModeNotSupported($mode);
-		}
-
-		$partial = $handler->getTabularSchema();
 		$this->columns[] = $partial->lookupMode($permName, $mode);
 	}
 
@@ -69,9 +65,9 @@ class Schema
 		throw new Exception\ModeNotSupported($permName, $mode);
 	}
 
-	function addNew($mode)
+	function addNew($permName, $mode)
 	{
-		$column = new Schema\Column($mode);
+		$column = new Schema\Column($permName, $mode);
 		$this->columns[] = $column;
 		return $column;
 	}
@@ -79,5 +75,67 @@ class Schema
 	function getColumns()
 	{
 		return $this->columns;
+	}
+
+	private function getFieldSchema($permName)
+	{
+		$field = $this->definition->getFieldFromPermName($permName);
+		$factory = $this->definition->getFieldFactory();
+
+		if (! $field) {
+			throw new Exception\FieldNotFound($permName);
+		}
+
+		$handler = $factory->getHandler($field);
+
+		if (! $handler instanceof \Tracker_Field_Exportable) {
+			throw new Exception\ModeNotSupported($mode);
+		}
+
+		return $handler->getTabularSchema();
+	}
+
+	private function getSystemSchema($name)
+	{
+		switch ($name) {
+		case 'itemId':
+			$schema = new self($this->definition);
+			$schema->addNew($name, 'id')
+				->setLabel(tr('Item ID'))
+				->setRenderTransform(function ($value, $extra) {
+					return $extra['itemId'];
+				})
+				->setParseIntoTransform(function (& $info, $value) {
+					$info['itemId'] = (int) $value;
+				})
+				;
+			return $schema;
+		case 'status':
+			$types = \TikiLib::lib('trk')->status_types();
+			$invert = array_flip(array_map(function ($s) {
+				return $s['name'];
+			}, $types));
+
+			$schema = new self($this->definition);
+			$schema->addNew($name, 'system')
+				->setLabel(tr('Status'))
+				->setRenderTransform(function ($value, $extra) {
+					return $extra['status'];
+				})
+				->setParseIntoTransform(function (& $info, $value) {
+					$info['status'] = $value;
+				})
+				;
+			$schema->addNew($name, 'name')
+				->setLabel(tr('Status'))
+				->setRenderTransform(function ($value, $extra) use ($types) {
+					return $types[$extra['status']]['name'];
+				})
+				->setParseIntoTransform(function (& $info, $value) use ($invert) {
+					$info['status'] = $invert[$value];
+				})
+				;
+			return $schema;
+		}
 	}
 }

@@ -681,8 +681,7 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 		$schema = new Tracker\Tabular\Schema($this->getTrackerDefinition());
 		$permName = $this->getConfiguration('permName');
 
-		$schema->addNew('id')
-			->setField($this->getConfiguration('permName'))
+		$schema->addNew($permName, 'id')
 			->setLabel($this->getConfiguration('name'))
 			->setRenderTransform(function ($value) {
 				return $value;
@@ -692,8 +691,7 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 			})
 			;
 
-		$schema->addNew('lookup')
-			->setField($this->getConfiguration('permName'))
+		$schema->addNew($permName, 'lookup')
 			->setLabel($this->getConfiguration('name'))
 			->setRenderTransform(function ($value, $extra) {
 				if (isset($extra['text'])) {

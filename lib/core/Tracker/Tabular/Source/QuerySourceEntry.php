@@ -21,7 +21,10 @@ class QuerySourceEntry
 		$field = $column->getField();
 		$key = 'tracker_field_' . $field;
 		$textKey = 'tracker_field_' . $field . '_text';
-		$extra = [];
+		$extra = [
+			'itemId' => $this->data['object_id'],
+			'status' => $this->data['tracker_status'],
+		];
 
 		$value = $this->data[$key];
 		if (isset($this->data[$textKey])) {

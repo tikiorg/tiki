@@ -329,8 +329,7 @@ class Tracker_Field_Text extends Tracker_Field_Abstract implements Tracker_Field
 
 		if ('y' !== $this->getConfiguration('isMultilingual', 'n')) {
 			$permName = $this->getConfiguration('permName');
-			$schema->addNew('default')
-				->setField($permName)
+			$schema->addNew($permName, 'default')
 				->setLabel($this->getConfiguration('name'))
 				->setRenderTransform(function ($value) {
 					return $value;

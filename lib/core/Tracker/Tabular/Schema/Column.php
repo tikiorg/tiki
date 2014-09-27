@@ -15,17 +15,12 @@ class Column
 	private $renderTransform;
 	private $parseIntoTransform;
 
-	function __construct($mode)
+	function __construct($permName, $mode)
 	{
+		$this->permName = $permName;
 		$this->mode = $mode;
 		$this->parseIntoTransform = function (& $info, $value) {
 		};
-	}
-
-	function setField($field)
-	{
-		$this->permName = $field;
-		return $this;
 	}
 
 	function setLabel($label)
