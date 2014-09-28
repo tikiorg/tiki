@@ -139,7 +139,7 @@ class Table_Code_Other extends Table_Code_Manager
 				'				this.config.pager.ajaxData.filter = true;',
 				'			}',
 						//make sure clicking checkboxes doesn't trigger dimming
-				'		} else if (event.srcElement.type !== \'checkbox\') {',
+				'		} else if (typeof event === "undefined" || event.srcElement.type !== \'checkbox\') {',
 				'			$(\'' . parent::$tid . ' tbody tr td\').css(\'opacity\', 0.25);',
 				'		}',
 				'	}',
