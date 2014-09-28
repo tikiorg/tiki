@@ -129,20 +129,8 @@ class Table_Code_Other extends Table_Code_Manager
 		if (parent::$ajax) {
 			//bind to ajax event to show processing
 			$bind = array(
-				//dim rows while processing when using ajax
-				'	if ($.inArray(e.type, [\'filterStart\', \'sortStart\', \'pageMoved\']) > -1) {',
-				'		if (e.type === \'filterStart\') {',
-				//need this test since filter seems to start when table intializes with no ending ajaxComplete
-				'			if (typeof this.config.pager.ajaxData !== \'undefined\') {',
-				'				$(\'' . parent::$tid . ' tbody tr td\').css(\'opacity\', 0.25);',
-				//note when filter is in place - used for setting offset when simplified ajax url is used
-				'				this.config.pager.ajaxData.filter = true;',
-				'			}',
-						//make sure clicking checkboxes doesn't trigger dimming
-				'		} else if (typeof event === "undefined" || event.srcElement.type !== \'checkbox\') {',
-				'			$(\'' . parent::$tid . ' tbody tr td\').css(\'opacity\', 0.25);',
-				'		}',
-				'	}',
+					//note processing type for later use in applying processing formatting
+				'	$(\'' . parent::$tid . '\').data(\'tsEventType\', e.type);',
 			);
 			$jq[] = $this->iterate(
 				$bind,
@@ -152,7 +140,7 @@ class Table_Code_Other extends Table_Code_Manager
 				'',
 				''
 			);
-			//un-dim rows after ajax processing and make sure odd/even row formatting is applied
+			//un-dim rows after ajax processing
 			$bind = array(
 				'	$(\'' . parent::$tid . ' tbody tr td\').css(\'opacity\', 1);',
 			);
