@@ -1457,8 +1457,8 @@ $fcts = array(
 		),
 		array (
 			'function' => 'parse_ini_file',
-			'risky' => tra('It is probably an urban myth that this is dangerous. Tiki team will reconsider this check, but be warned.'),
-			'safe' => tra('It is probably an urban myth that this is dangerous. Tiki team will reconsider this check, but be warned.'),
+			'risky' => tra('It is probably an urban myth that this is dangerous. Tiki team will reconsider this check, but be warned.').' '.tra('It is required for the <a href="http://doc.tiki.org/System+Configuration" target="_blank">System Configuration</a> feature.'),
+			'safe' => tra('It is probably an urban myth that this is dangerous. Tiki team will reconsider this check, but be warned.').' '.tra('It is required for the <a href="http://doc.tiki.org/System+Configuration" target="_blank">System Configuration</a> feature.'),
 		),
 		array (
 			'function' => 'show_source',
