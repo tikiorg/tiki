@@ -936,6 +936,21 @@ if ($s) {
 	);
 }
 
+$s = extension_loaded('json');
+if ($s) {
+	$php_properties['json'] = array(
+		'fitness' => tra('good'),
+		'setting' => 'Loaded',
+		'message' => tra('This extension is required for many features in Tiki.')
+	);
+} else {
+	$php_properties['json'] = array(
+		'fitness' => tra('bad'),
+		'setting' => 'Not available',
+		'message' => tra('This extension is required for many features in Tiki.')
+	);
+}
+
 /*
 *	If TortoiseSVN 1.7 is used, it uses an sqlite database to store the SVN info. sqlite3 extention needed to read svn info.
 */
@@ -1457,8 +1472,8 @@ $fcts = array(
 		),
 		array (
 			'function' => 'parse_ini_file',
-			'risky' => tra('It is probably an urban myth that this is dangerous. Tiki team will reconsider this check, but be warned.'),
-			'safe' => tra('It is probably an urban myth that this is dangerous. Tiki team will reconsider this check, but be warned.'),
+			'risky' => tra('It is probably an urban myth that this is dangerous. Tiki team will reconsider this check, but be warned.').' '.tra('It is required for the <a href="http://doc.tiki.org/System+Configuration" target="_blank">System Configuration</a> feature.'),
+			'safe' => tra('It is probably an urban myth that this is dangerous. Tiki team will reconsider this check, but be warned.').' '.tra('It is required for the <a href="http://doc.tiki.org/System+Configuration" target="_blank">System Configuration</a> feature.'),
 		),
 		array (
 			'function' => 'show_source',
