@@ -109,6 +109,9 @@ class CleanVendors
 		$fs->remove($vendors . 'adodb/adodb/drivers/adodb-informix.inc.php');
 		$fs->remove($vendors . 'adodb/adodb/perf/perf-informix.inc.php');
 		$fs->remove($vendors . 'adodb/adodb/datadict/datadict-informix.inc.php');
+
+		// html5shiv uses a component installer that doesn't seem to be optional, so delete the spare copy we end up with.
+		$fs->remove($vendors . '../components');
 	}
 
 	private static function addIndexFile($path)
