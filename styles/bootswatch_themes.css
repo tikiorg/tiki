@@ -1,7 +1,0 @@
-/* bootswatch_themes.css - Provided to organize Bootswatch themes in Tiki Wiki CMS Groupware.
-	A theme option file - a Bootswatch theme - must be selected for use with this file.  */
-
-header.page-header::before,
-.layout_social > .container:before { 
-	content:"Warning: This theme file requires a theme option. Please select one.";
-}
