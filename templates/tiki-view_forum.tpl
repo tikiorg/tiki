@@ -1,6 +1,6 @@
 {* $Id$ *}
 
-{title help="forums" admpage="forums"}{$forum_info.name}{/title}
+{title help="forums" admpage="forums" url=$forum_info.forumId|sefurl:'forum'}{$forum_info.name}{/title}
 
 {if $forum_info.show_description eq 'y'}
 	<div class="description help-block">{wiki}{$forum_info.description}{/wiki}</div>
