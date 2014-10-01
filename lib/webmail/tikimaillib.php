@@ -101,7 +101,11 @@ class TikiMail
 
 	function setHeader($name, $value)
 	{
-		$this->mail->addHeader($name, $value);
+		if ($name === 'Message-ID') {
+			$this->mail->setMessageId($value);
+		} else {
+			$this->mail->addHeader($name, $value);
+		}
 	}
 
 	function send($recipients, $type = 'mail')
