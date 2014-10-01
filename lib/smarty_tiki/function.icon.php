@@ -86,7 +86,50 @@ function smarty_function_icon($params, $smarty)
 			$default_width = $default_height = ( strpos($params['_id'], '48x48') !== false ) ? 48 : 32;
 		}
 	}
-
+	//ICONSET START, work-in-progress, more information: dev.tiki.org/icons
+	if (!empty($params['name'])){ 
+		//load iconset from preference setting
+		include('themes/iconsets/' . $prefs['theme_iconset'] . '.php');
+		//if icon is defined in the iconset, use it
+		if (isset($iconset) and array_key_exists($params['name'], $iconset)) {
+			$cssclass = $iconset[$params['name']]['class'];
+			$tag = $iconset['_settings']['icon_tag'];
+			
+			//manage legacy image icons (eg: png, gif, etc)
+			if ($tag == 'img') {
+				$image_path = $iconset['_settings']['icon_path_image'];
+				$image_file_name = $iconset[$params['name']]['image_file_name'];
+				$src = $image_path . "/" . $image_file_name;
+				$alt = $params['name'];
+				$class = "icon icon-" . $params['name'];
+			}
+		}
+		else { //if icon is not defined in the iconset or preference is not set, than load the default iconset and use its icons
+			include('themes/iconsets/default.php');
+			if (array_key_exists($params['name'], $iconset)) {
+				$cssclass = $iconset[$params['name']]['class'];		
+				$tag = $iconset['_settings']['icon_tag'];
+			}	
+			else { //if icon is not defined in default iconset, than display warning-sign glyphicon from bootstrap. Helps to detect missing icon definitions
+				$cssclass = 'glyphicon glyphicon-warning-sign';
+				$tag = 'span';
+			}
+		}
+		
+		//assemble icon, later enhance for svg
+		if ($tag == 'img') { //for images
+			$html = "<span class=\"$class\"><img src=\"$src\" alt=\"$alt\"></span>";
+		}
+		else { //for font-icons
+			$html = "<$tag class=\"icon icon-$type $cssclass\" $src";
+			$html .= "></$tag>";
+		}
+		
+		//return icon
+		return $html;
+		
+	} //ICONSET END 
+	
 	// Handle _ids that contains the real filename and path
 	if ( strpos($params['_id'], '/') !== false || strpos($params['_id'], '.') !== false ) {
 		if ( ($icons_basedir = dirname($params['_id'])) == '')

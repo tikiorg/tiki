@@ -18,7 +18,16 @@ function prefs_theme_list()
 		$theme = basename($css);
 		$themes[$theme] = tr($theme);
 	}
-
+	
+	//get list of iconsets
+	$iconsets = array();
+	foreach (scandir('themes/iconsets') as $iconset_file) {
+		if ($iconset_file[0] != '.' && $iconset_file != 'index.php') {
+			include('themes/iconsets/'. $iconset_file);
+			$iconsets[substr($iconset_file,0,-4)] = $iconset['_settings']['iconset_name'];
+		}
+	}
+	
 	// TODO : Include pre-defined themes
 	return array(
 		'theme_active' => array(
@@ -38,6 +47,14 @@ function prefs_theme_list()
 			'default' => '',
 			'tags' => array('basic'),
 		),
+		'theme_iconset' => array(
+			'name' => tr('Iconset'),
+			'description' => tr('Iconset used by the site.'),
+			'type' => 'list',
+			'options' => $iconsets,
+			'default' => 'default',
+			'help' => 'Icons',
+			'tags' => array('basic'),
+		),
 	);
 }
-
