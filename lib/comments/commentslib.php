@@ -445,28 +445,32 @@ class Comments extends TikiLib
 					array('object' => $forumId, 'objectType' => 'forum', 'parentId' => 0, 'title' => $title)
 				);
 			}
+
 			if (!$parentId) {
-				/*
-						This doesn't make any sense to me... why would we say an inbound email is a'thread to discuss a page'?
-						I've updated this to just make a new thread w/ the original email info by seting $parentId = 0
+				global $prefs;
+				// create a thread to discuss a wiki page if the feature is on AND the page exists
+				if ($prefs['feature_wiki_discuss'] === 'y' && TikiLib::lib('tiki')->page_exists($title)) {
 
-				// No thread already; create it.
+					// No thread already; create it.
+					$temp_msid = '';
 
-				$temp_msid = '';
+					$parentId = $this->post_new_comment(
+						'forum:' . $forumId,
+						0,
+						$userName,
+						$title,
+						sprintf(tra("Use this thread to discuss the %s page."), "(($title))"),
+						$temp_msid,
+						$in_reply_to
+					);
 
-				$parentId = $this->post_new_comment(
-				'forum:' . $forumId, 0,
-				$userName, $title,
-				sprintf(tra("Use this thread to discuss the %s page."), "[tiki-index.php?page=$title|$title]"),
-				$temp_msid, $in_reply_to
-				);
+					$this->register_forum_post($forumId, 0);
 
-				$this->register_forum_post($forumId,0);
-
-				// First post is in reply to this one
-				$in_reply_to = $temp_msid;
-				 */
-				$parentId = 0;
+					// First post is in reply to this one
+					$in_reply_to = $temp_msid;
+				} else {
+					$parentId = 0;
+				}
 			}
 
 			// post
