@@ -1,6 +1,6 @@
 {* $Id$ *}
 {$forum_info.name|addonnavbar}
-{title help="forums" admpage="forums"}{$forum_info.name|addongroupname}{/title}
+{title help="forums" admpage="forums" url=$forum_info.forumId|sefurl:'forum'}{$forum_info.name|addongroupname}{/title}
 
 {if $forum_info.show_description eq 'y'}
 	<div class="description help-block">{wiki}{$forum_info.description}{/wiki}</div>
