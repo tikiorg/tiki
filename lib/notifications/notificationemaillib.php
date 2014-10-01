@@ -37,7 +37,11 @@ function sendForumEmailNotification(
 	// Per-forum From address overrides global default.
 	if ( $forum_info['outbound_from'] ) {
 		$author = $userlib->clean_user($author);
-		$my_sender = '"' . "$author" . '" <' . $forum_info['outbound_from'] . '>';
+		if ($author) {
+			$my_sender = '"' . "$author" . '" <' . $forum_info['outbound_from'] . '>';
+		} else {
+			$my_sender = $forum_info['outbound_from'];
+		}
 	} else {
 		$my_sender = $prefs['sender_email'];
 	}
