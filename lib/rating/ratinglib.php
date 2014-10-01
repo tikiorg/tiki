@@ -235,7 +235,7 @@ class RatingLib extends TikiDb_Bridge
             return $parsedPref;
         }
 
-		$result = $tikilib->get_preference($pref, range(1, 5), $expectedArray);
+		$result = $tikilib->get_preference($pref, range(1, 5), ($expectedArray && is_array($value)));
 
         if ($expectedArray == true && !is_array($result)) {
             $result = explode(',', $value);

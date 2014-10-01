@@ -79,9 +79,9 @@
 	</div>
 </div>
 <div class="breadcrumb">
-	<a class="link" href="tiki-forums.php">{tr}Forums{/tr}</a>
+	<a class="link" href="{if $prefs.feature_sefurl eq 'y'}forums{else}tiki-forums.php{/if}">{tr}Forums{/tr}</a>
 	{$prefs.site_crumb_seper}
-	<a class="link" href="tiki-view_forum.php?forumId={$forumId}">{$forum_info.name|addongroupname|escape}</a>
+	<a class="link" href="{$forumId|sefurl:'forum'}">{$forum_info.name|addongroupname|escape}</a>
 </div>
 
 {if !empty($errors)}

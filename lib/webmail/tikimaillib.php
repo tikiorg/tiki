@@ -55,10 +55,10 @@ class TikiMail
 	{
 	}
 
-	function setFrom($email)
+	function setFrom($email, $name = null)
 	{
 		$this->mail->clearFrom();		// Zend mail throws an exception if from is set twice, Tiki does that quite a bit
-		$this->mail->setFrom($email);
+		$this->mail->setFrom($email, $name);
 	}
 
 	function setReplyTo($email, $name = null)
@@ -101,7 +101,11 @@ class TikiMail
 
 	function setHeader($name, $value)
 	{
-		$this->mail->addHeader($name, $value);
+		if ($name === 'Message-ID') {
+			$this->mail->setMessageId(trim($value, "<>"));
+		} else {
+			$this->mail->addHeader($name, $value);
+		}
 	}
 
 	function send($recipients, $type = 'mail')
