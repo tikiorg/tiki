@@ -37,11 +37,7 @@ function sendForumEmailNotification(
 	// Per-forum From address overrides global default.
 	if ( $forum_info['outbound_from'] ) {
 		$author = $userlib->clean_user($author);
-		if ($author) {
-			$my_sender = '"' . "$author" . '" <' . $forum_info['outbound_from'] . '>';
-		} else {
-			$my_sender = $forum_info['outbound_from'];
-		}
+		$my_sender = $forum_info['outbound_from'];
 	} else {
 		$my_sender = $prefs['sender_email'];
 	}
@@ -72,8 +68,8 @@ function sendForumEmailNotification(
 		$smarty->assign('author', $author);
 		$mail_data = $smarty->fetch("mail/forum_outbound.tpl");
 		$mail->setText($mail_data);
-		$mail->setReplyTo($my_sender);
-		$mail->setFrom($my_sender);
+		$mail->setReplyTo($my_sender, $author);
+		$mail->setFrom($my_sender, $author);
 		$mail->setSubject($topicName);
 
 		if ($inReplyTo) {
