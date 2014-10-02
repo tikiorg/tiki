@@ -1,0 +1,32 @@
+.cssmenu_horiz li,
+.cssmenu_vert li {
+  line-height: @line-height-computed;
+}*
+
+.cssmenu_horiz li ul,
+.cssmenu_vert li ul {
+  background: @dropdown-bg;
+  border: 1px solid @dropdown-border;
+  padding: @nav-link-padding;
+//  padding: 5px 0;
+//  margin: 2px 0 0; // override default ul
+//  font-size: @font-size-base;
+  background-color: @dropdown-bg;
+  border: 1px solid @dropdown-fallback-border; // IE8 fallback
+  border: 1px solid @dropdown-border;
+  border-radius: @border-radius-base;
+// .box-shadow(0 6px 12px rgba(0,0,0,.175));
+  background-clip: padding-box;
+}
+// Hover/Focus state
+.cssmenu_horiz > li > a,
+.cssmenu_vert > li > a,
+.cssmenu_horiz ul > li > a,
+.cssmenu_vert ul > li > a {
+  &:hover,
+  &:focus {
+    text-decoration: none;
+    color: @dropdown-link-hover-color;
+    background-color: @dropdown-link-hover-bg;
+  }
+}
