@@ -6236,7 +6236,53 @@ body.layout_social > .container {
 .input-group-addon:hover {
   background: url('../images/pagetitle-bg.jpg') 0 100%;
 }
-/*.table-striped > tbody > tr:nth-child(2n+1) > td,.table-striped > tbody > tr:nth-child(2n+1) > th {background: transparent url('@{imagePath}flakesptn3.jpg') }.table-striped > tbody > tr.success:nth-child(2n+1) > td,.table-striped > tbody > tr.success:nth-child(2n+1) > th {background: @state-success-bg; }.table-striped > tbody > tr.info:nth-child(2n+1) > td,.table-striped > tbody > tr.info:nth-child(2n+1) > th {background: @state-info-bg; }.table-striped > tbody > tr.warning:nth-child(2n+1) > td,.table-striped > tbody > tr.warning:nth-child(2n+1) > th {background: @state-warning-bg; }.table-striped > tbody > tr.danger:nth-child(2n+1) > td,.table-striped > tbody > tr.danger:nth-child(2n+1) > th {background: @state-danger-bg; }*/
+/*
+.table-striped > tbody > tr:nth-child(2n+1) > td,
+.table-striped > tbody > tr:nth-child(2n+1) > th {background: transparent url('@{imagePath}flakesptn3.jpg') }
+
+.table-striped > tbody > tr.success:nth-child(2n+1) > td,
+.table-striped > tbody > tr.success:nth-child(2n+1) > th {background: @state-success-bg; }
+
+.table-striped > tbody > tr.info:nth-child(2n+1) > td,
+.table-striped > tbody > tr.info:nth-child(2n+1) > th {background: @state-info-bg; }
+
+.table-striped > tbody > tr.warning:nth-child(2n+1) > td,
+.table-striped > tbody > tr.warning:nth-child(2n+1) > th {background: @state-warning-bg; }
+
+.table-striped > tbody > tr.danger:nth-child(2n+1) > td,
+.table-striped > tbody > tr.danger:nth-child(2n+1) > th {background: @state-danger-bg; }*/
+.cssmenu_horiz li ul,
+.cssmenu_vert li ul {
+  padding: 5px 0;
+  margin: 2px 0 0;
+  background: url('../images/flakesptn2.jpg');
+  border: 1px solid #cccccc;
+  border: 1px solid #6a6a6a;
+  border-radius: 4px;
+  -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+  background-clip: padding-box;
+}
+.cssmenu_horiz li ul > li > a,
+.cssmenu_vert li ul > li > a {
+  padding: 3px 20px;
+  font-weight: normal;
+  line-height: 1.42857143;
+  color: #333333;
+  background: url('../images/flakesptn2.jpg');
+}
+.cssmenu_horiz > li > a:hover,
+.cssmenu_vert > li > a:hover,
+.cssmenu_horiz ul > li > a:hover,
+.cssmenu_vert ul > li > a:hover,
+.cssmenu_horiz > li > a:focus,
+.cssmenu_vert > li > a:focus,
+.cssmenu_horiz ul > li > a:focus,
+.cssmenu_vert ul > li > a:focus {
+  text-decoration: none;
+  color: #262626;
+  background: url('../images/flakesptn3.jpg');
+}
 /* black */
 /* white */
 /* automatically choose the correct arrow/text color */

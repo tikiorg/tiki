@@ -2579,6 +2579,32 @@ body > .ui-front {
   bottom: 3px;
   text-align: right;
 }
+.cssmenu_horiz li,
+.cssmenu_vert li {
+  line-height: 20px;
+}
+* .cssmenu_horiz li ul,
+.cssmenu_vert li ul {
+  background: #ffffff;
+  padding: 10px 15px;
+  background-color: #ffffff;
+  border: 1px solid #cccccc;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 4px;
+  background-clip: padding-box;
+}
+.cssmenu_horiz > li > a:hover,
+.cssmenu_vert > li > a:hover,
+.cssmenu_horiz ul > li > a:hover,
+.cssmenu_vert ul > li > a:hover,
+.cssmenu_horiz > li > a:focus,
+.cssmenu_vert > li > a:focus,
+.cssmenu_horiz ul > li > a:focus,
+.cssmenu_vert ul > li > a:focus {
+  text-decoration: none;
+  color: #262626;
+  background-color: #f5f5f5;
+}
 .s5-slide * {
   line-height: 1.3em;
 }
