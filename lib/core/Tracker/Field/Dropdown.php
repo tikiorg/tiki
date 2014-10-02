@@ -11,7 +11,7 @@
  * Letter key: ~d~ ~D~
  *
  */
-class Tracker_Field_Dropdown extends Tracker_Field_Abstract implements Tracker_Field_Synchronizable, Search_FacetProvider_Interface
+class Tracker_Field_Dropdown extends Tracker_Field_Abstract implements Tracker_Field_Synchronizable, Search_FacetProvider_Interface, Tracker_Field_Exportable
 {
 	public static function getTypes()
 	{
@@ -254,6 +254,44 @@ class Tracker_Field_Dropdown extends Tracker_Field_Abstract implements Tracker_F
 				->setLabel($this->getConfiguration('name'))
 				->setRenderMap($this->getPossibilities())
 		);
+	}
+
+	function getTabularSchema()
+	{
+		$schema = new Tracker\Tabular\Schema($this->getTrackerDefinition());
+
+		$permName = $this->getConfiguration('permName');
+		$name = $this->getConfiguration('name');
+
+		$possibilities = $this->getPossibilities();
+		$invert = array_flip($possibilities);
+
+		$schema->addNew($permName, 'code')
+			->setLabel($name)
+			->setRenderTransform(function ($value) {
+				return $value;
+			})
+			->setParseIntoTransform(function (& $info, $value) use ($permName) {
+				$info['fields'][$permName] = $value;
+			})
+			;
+
+		$schema->addNew($permName, 'text')
+			->setLabel($name)
+			->addQuerySource('text', "tracker_field_{$permName}_text")
+			->setRenderTransform(function ($value, $extra) use ($possibilities) {
+				if (isset($possibilities[$value])) {
+					return $possibilities[$value];
+				}
+			})
+			->setParseIntoTransform(function (& $info, $value) use ($permName, $invert) {
+				if (isset($invert[$value])) {
+					$info['fields'][$permName] = $value;
+				}
+			})
+			;
+
+		return $schema;
 	}
 }
 
