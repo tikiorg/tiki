@@ -685,6 +685,7 @@ $_SESSION["install-logged-$multi"] = 'y';
 
 // Init smarty
 global $tikidomain;
+$smarty = TikiLib::lib('smarty');
 $smarty->assign('mid', 'tiki-install.tpl');
 $smarty->assign('virt', isset($virt) ? $virt : null);
 $smarty->assign('multi', isset($multi) ? $multi : null);
