@@ -102,6 +102,7 @@ class Schema
 			$schema = new self($this->definition);
 			$schema->addNew($name, 'id')
 				->setLabel(tr('Item ID'))
+				->addQuerySource('itemId', 'object_id')
 				->setRenderTransform(function ($value, $extra) {
 					return $extra['itemId'];
 				})
@@ -119,6 +120,7 @@ class Schema
 			$schema = new self($this->definition);
 			$schema->addNew($name, 'system')
 				->setLabel(tr('Status'))
+				->addQuerySource('status', 'tracker_status')
 				->setRenderTransform(function ($value, $extra) {
 					return $extra['status'];
 				})
@@ -128,6 +130,7 @@ class Schema
 				;
 			$schema->addNew($name, 'name')
 				->setLabel(tr('Status'))
+				->addQuerySource('status', 'tracker_status')
 				->setRenderTransform(function ($value, $extra) use ($types) {
 					return $types[$extra['status']]['name'];
 				})

@@ -20,6 +20,7 @@ class CsvWriter
 
 	function sendHeaders()
 	{
+		header('Content-Type: text/csv; charset=utf8');
 	}
 
 	function write(\Tracker\Tabular\Source\SourceInterface $source)

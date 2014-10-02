@@ -14,6 +14,7 @@ class Column
 	private $mode;
 	private $renderTransform;
 	private $parseIntoTransform;
+	private $querySources = [];
 
 	function __construct($permName, $mode)
 	{
@@ -65,6 +66,17 @@ class Column
 	{
 		$c = $this->parseIntoTransform;
 		$c($info, $value);
+	}
+
+	function addQuerySource($name, $field)
+	{
+		$this->querySources[$name] = $field;
+		return $this;
+	}
+
+	function getQuerySources()
+	{
+		return $this->querySources;
 	}
 }
 

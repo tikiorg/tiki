@@ -20,15 +20,14 @@ class QuerySourceEntry
 	{
 		$field = $column->getField();
 		$key = 'tracker_field_' . $field;
-		$textKey = 'tracker_field_' . $field . '_text';
-		$extra = [
-			'itemId' => $this->data['object_id'],
-			'status' => $this->data['tracker_status'],
-		];
 
 		$value = $this->data[$key];
-		if (isset($this->data[$textKey])) {
-			$extra['text'] = $this->data[$textKey];
+
+		$extra = [];
+		foreach ($column->getQuerySources() as $target => $field) {
+			if (isset($this->data[$field])) {
+				$extra[$target] = $this->data[$field];
+			}
 		}
 
 		return $column->render($value, $extra);
