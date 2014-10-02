@@ -5843,6 +5843,37 @@ header.page-header::before,
 .layout_social > .container:before {
   content: none;
 }
+.cssmenu_horiz li ul,
+.cssmenu_vert li ul {
+  padding: 5px 0;
+  margin: 2px 0 0;
+  background-color: #3a3f44;
+  border: 1px solid #272b30;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 4px;
+  -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+  background-clip: padding-box;
+}
+.cssmenu_horiz li ul > li > a,
+.cssmenu_vert li ul > li > a {
+  padding: 3px 20px;
+  font-weight: normal;
+  line-height: 1.42857143;
+  color: #c8c8c8;
+}
+.cssmenu_horiz > li > a:hover,
+.cssmenu_vert > li > a:hover,
+.cssmenu_horiz ul > li > a:hover,
+.cssmenu_vert ul > li > a:hover,
+.cssmenu_horiz > li > a:focus,
+.cssmenu_vert > li > a:focus,
+.cssmenu_horiz ul > li > a:focus,
+.cssmenu_vert ul > li > a:focus {
+  text-decoration: none;
+  color: #ffffff;
+  background-color: #272b30;
+}
 .navbar {
   background-image: -webkit-linear-gradient(#484e55, #3a3f44 60%, #313539);
   background-image: linear-gradient(#484e55, #3a3f44 60%, #313539);
