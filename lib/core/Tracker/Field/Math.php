@@ -11,7 +11,7 @@
  * Letter key: ~GF~
  *
  */
-class Tracker_Field_Math extends Tracker_Field_Abstract implements Tracker_Field_Synchronizable, Tracker_Field_Indexable
+class Tracker_Field_Math extends Tracker_Field_Abstract implements Tracker_Field_Synchronizable, Tracker_Field_Indexable, Tracker_Field_Exportable
 {
 	private static $runner;
 
@@ -130,6 +130,21 @@ class Tracker_Field_Math extends Tracker_Field_Abstract implements Tracker_Field
 		} catch (Math_Formula_Exception $e) {
 			return $e->getMessage();
 		}
+	}
+
+	function getTabularSchema()
+	{
+		$schema = new Tracker\Tabular\Schema($this->getTrackerDefinition());
+
+		$permName = $this->getConfiguration('permName');
+		$schema->addNew($permName, 'default')
+			->setLabel($this->getConfiguration('name'))
+			->setRenderTransform(function ($value) {
+				return $value;
+			})
+			;
+
+		return $schema;
 	}
 
 	private function getFormulaRunner()
