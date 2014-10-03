@@ -4,7 +4,6 @@
 	{if $module_params.bootstrap neq 'n'}
 		{if $module_params.type eq 'horiz'}
 			<nav class="{if !empty($module_params.navbar_class)}{$module_params.navbar_class}{else}navbar navbar-default{/if}" role="navigation">
-				{* <div class="container"> *}
 				{if $module_params.navbar_toggle neq 'n'}
 		            <div class="navbar-header">
 		                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#mod-menu{$module_position}{$module_ord} .navbar-collapse">
@@ -14,11 +13,14 @@
 		                    <span class="icon-bar"></span>
 		                </button>
 		            </div>
+					<div class="collapse navbar-collapse">
+						{menu params=$module_params bootstrap=navbar}
+					</div>
+				{else}
+					<div>
+						{menu params=$module_params bootstrap=navbar}
+					</div>
 				{/if}
-				<div class="collapse navbar-collapse">
-					{menu params=$module_params bootstrap=navbar}
-				</div>
-		        {* </div> *}
 			</nav>
 		{else}
 			{menu params=$module_params bootstrap=basic}
