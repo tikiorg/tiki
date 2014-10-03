@@ -64,7 +64,7 @@ if (!empty($thumbfile)) {
 	$smarty->assign('thumbfile', $thumbfile);
 }
 
-if ($prefs['feature_jquery'] == 'y') {
+if ($prefs['feature_jquery'] == 'y' && $prefs['theme_active'] === 'legacy') {
 	// hash of themes and their options and their thumbnail images
 	$js = 'var style_options = {';
 	foreach ($styles as $s) {
