@@ -116,7 +116,7 @@ class CleanVendors
 
 	private static function addIndexFile($path)
 	{
-		if (! file_exists($path) || ! is_writable($path)) {
+		if (file_exists($path) || !is_writable($path)) {
 			return;
 		}
 
