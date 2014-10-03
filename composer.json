@@ -127,19 +127,15 @@
 			"Tiki\\Composer\\ThemeInstaller::setup"
 		],
 		"post-install-cmd": [
+			"Tiki\\Composer\\BootstrapCompiler::build",
 			"Tiki\\Composer\\CleanVendors::clean"
-		],
-		"post-install-cmd": [
-			"Tiki\\Composer\\BootstrapCompiler::build"
 		],
 		"pre-update-cmd": [
 			"Tiki\\Composer\\ThemeInstaller::setup"
 		],
 		"post-update-cmd": [
+			"Tiki\\Composer\\BootstrapCompiler::build",
 			"Tiki\\Composer\\CleanVendors::clean"
-		],
-		"post-update-cmd": [
-			"Tiki\\Composer\\BootstrapCompiler::build"
 		]
 	},
 	"repositories": [
