@@ -133,6 +133,8 @@
 					{preference name=registerPasscode}
 					{preference name=showRegisterPasscode}
 				</div>
+
+			{preference name=registerKey}
 		{/tab}
 	
 		{tab name="{tr}Search results{/tr}"}
