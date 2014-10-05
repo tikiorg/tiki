@@ -81,7 +81,10 @@
  * instances allow to reconfigure the accessors depending on the
  * environment in which they are used. For example, the accessors are
  * configured with the global groups by default. However, they can be
- * replaced to evaluate the permissions for a different user.
+ * replaced to evaluate the permissions for a different user
+ * by creating a new Perms_Context object before accessing the perms,
+ * e.g.
+ * 		$permissionContext = new Perms_Context($aUserName);
  *
  * Each ResolverFactory will generate a hash from the context which
  * represents a unique key to the matching resolver it would provide.
