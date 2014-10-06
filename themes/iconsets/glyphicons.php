@@ -19,13 +19,31 @@ $iconset = array(
 		'iconset_description' => tr('Glyphicon focused iconset, see http://getbootstrap.com/components/'),
 		'icon_tag' => 'span',
 	),
+    'comments' => array(
+        'class' => 'glyphicon glyphicon-comment',
+    ),
+    'edit' => array(
+        'class' => 'glyphicon glyphicon-edit',
+    ),
 	'file-archive' => array( 
 		'class' => 'glyphicon glyphicon-floppy-save',
 	),
-	'trash' => array( 
-		'class' => 'glyphicon glyphicon-trash',
-	),
+    'post' => array(
+        'class' => 'glyphicon glyphicon-pencil',
+    ),
     'print' => array(
         'class' => 'glyphicon glyphicon-print',
+    ),
+    'rss' => array(
+        'class' => 'glyphicon glyphicon-rss',
+    ),
+    'stop-watching' => array(
+        'class' => 'glyphicon glyphicon-close',
+    ),
+    'trash' => array(
+        'class' => 'glyphicon glyphicon-trash',
+    ),
+    'watch' => array(
+        'class' => 'glyphicon glyphicon-eye-open',
     ),
 );

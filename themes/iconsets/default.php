@@ -36,9 +36,15 @@ $iconset = array(
 	'add' => array( 
 		'class' => 'fa fa-plus',
 	),
+    'comments' => array(
+        'class' => 'fa fa-comments-o',
+    ),
 	'delete' => array( 
 		'class' => 'fa fa-remove',
 	),
+    'edit' => array(
+        'class' => 'fa fa-edit',
+    ),
 	'export' => array( 
 		'class' => 'fa fa-download',
 	),
@@ -51,6 +57,9 @@ $iconset = array(
 	'list' => array( 
 		'class' => 'fa fa-list',
 	),
+    'post' => array(
+        'class' => 'fa fa-pencil-square-o',
+    ),
 	'print' => array(
 		'class' => 'fa fa-print',
 	),
@@ -63,7 +72,13 @@ $iconset = array(
 	'search' => array( 
 		'class' => 'fa fa-search',
 	),
-	'trash' => array( 
+    'stop-watching' => array(
+        'class' => 'fa fa-eye-slash',
+    ),
+	'trash' => array(
 		'class' => 'fa fa-trash-o',
 	),
+    'watch' => array(
+        'class' => 'fa fa-eye-o',
+    ),
 );

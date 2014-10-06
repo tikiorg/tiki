@@ -9,24 +9,24 @@
 	<div class="pull-right btn-group blogactions" >
 			{if $tiki_p_blog_post eq "y"}
 				{if ($user and $creator eq $user) or $tiki_p_blog_admin eq "y" or $public eq "y"}
-					<a class="btn btn-default btn-small bloglink" href="tiki-blog_post.php?blogId={$blogId}">{icon _id='pencil_add' alt="{tr}Post{/tr}"}</a>
+					<a class="btn btn-default btn-small bloglink" href="tiki-blog_post.php?blogId={$blogId}" alt="{tr}Post{/tr}">{icon name=post}</a>
 				{/if}
 			{/if}
 			{if $prefs.feed_blog eq "y"}
-				<a class="btn btn-default btn-small bloglink" href="tiki-blog_rss.php?blogId={$blogId}">{icon _id='feed' alt="{tr}RSS feed{/tr}"}</a>
+				<a class="btn btn-default btn-small bloglink" href="tiki-blog_rss.php?blogId={$blogId}" alt="{tr}RSS feed{/tr}">{icon name=rss}</a>
 			{/if}
 			{if ($user and $creator eq $user) or $tiki_p_blog_admin eq "y"}
-				<a class="btn btn-default btn-small bloglink" href="tiki-edit_blog.php?blogId={$blogId}">{icon _id='page_edit' alt="{tr}Edit Blog{/tr}"}</a>
+				<a class="btn btn-default btn-small bloglink" href="tiki-edit_blog.php?blogId={$blogId}" alt="{tr}Edit Blog{/tr}">{icon name=edit}</a>
 				{if $allow_comments eq 'y'}
-					<a class='btn btn-default btn-small bloglink' href='tiki-list_comments.php?types_section=blogs&amp;blogId={$blogId}'>{icon _id='comments' alt="{tr}List all comments{/tr}" title="{tr}List all comments{/tr}"}</a>
+					<a class='btn btn-default btn-small bloglink' href='tiki-list_comments.php?types_section=blogs&amp;blogId={$blogId}' alt="{tr}List all comments{/tr}" title="{tr}List all comments{/tr}">{icon name=comments}</a>
 				{/if}
 			{/if}
 
 			{if $user and $prefs.feature_user_watches eq 'y'}
 				{if $user_watching_blog eq 'n'}
-					<a href="tiki-view_blog.php?blogId={$blogId}&amp;watch_event=blog_post&amp;watch_object={$blogId}&amp;watch_action=add" class="btn btn-default btn-small">{icon _id='eye' alt="{tr}Monitor this Blog{/tr}"}</a>
+					<a href="tiki-view_blog.php?blogId={$blogId}&amp;watch_event=blog_post&amp;watch_object={$blogId}&amp;watch_action=add" class="btn btn-default btn-small" alt="{tr}Monitor this Blog{/tr}">{icon name=watch}</a>
 				{else}
-					<a href="tiki-view_blog.php?blogId={$blogId}&amp;watch_event=blog_post&amp;watch_object={$blogId}&amp;watch_action=remove" class="btn btn-default btn-small">{icon _id='no_eye' alt="{tr}Stop Monitoring this Blog{/tr}"}</a>
+					<a href="tiki-view_blog.php?blogId={$blogId}&amp;watch_event=blog_post&amp;watch_object={$blogId}&amp;watch_action=remove" class="btn btn-default btn-small" alt="{tr}Stop Monitoring this Blog{/tr}">{icon name=stop_watching}</a>
 				{/if}
 			{/if}
 			{if $prefs.feature_group_watches eq 'y' and ( $tiki_p_admin_users eq 'y' or $tiki_p_admin eq 'y' )}

@@ -20,10 +20,28 @@ $iconset = array(
 		'icon_path_image' => 'img/icons',
 		'icon_tag' => 'img',
 	),
-	'trash' => array( 
-		'image_file_name' => 'bin.png',
-	),
+    'comments' => array(
+        'image_file_name' => 'comments.png',
+    ),
+    'edit' => array(
+        'image_file_name' => 'page_edit.png',
+    ),
+    'post' => array(
+        'image_file_name' => 'pencil_add.png',
+    ),
     'print' => array(
         'image_file_name' => 'printer.png',
+    ),
+    'rss' => array(
+        'image_file_name' => 'feed.png',
+    ),
+    'stop-watching' => array(
+        'image_file_name' => 'no-eye.png',
+    ),
+    'trash' => array(
+        'image_file_name' => 'bin.png',
+    ),
+    'watch' => array(
+        'image_file_name' => 'eye.png',
     ),
 );

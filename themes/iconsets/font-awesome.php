@@ -19,13 +19,31 @@ $iconset = array(
 		'iconset_description' => tr('Font-awesome focused iconset, see http://fortawesome.github.io/Font-Awesome/icons/'),
 		'icon_tag' => 'i', 
 	),
+    'comments' => array(
+        'class' => 'fa fa-comments-o',
+    ),
+    'edit' => array(
+        'class' => 'fa fa-edit',
+    ),
 	'file-archive' => array( 
 		'class' => 'fa fa-file-archive-o',
 	),
-	'trash' => array( 
-		'class' => 'fa fa-trash-o',
-	),
+    'post' => array(
+        'class' => 'fa fa-pencil-square-o',
+    ),
     'print' => array(
         'class' => 'fa fa-print',
+    ),
+    'rss' => array(
+        'class' => 'fa fa-rss-square',
+    ),
+    'stop-watching' => array(
+        'class' => 'fa fa-eye-slash',
+    ),
+    'trash' => array(
+        'class' => 'fa fa-trash-o',
+    ),
+    'watch' => array(
+        'class' => 'fa fa-eye-o',
     ),
 );
