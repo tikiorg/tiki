@@ -58,7 +58,7 @@ $iconset = array(
 		'class' => 'fa fa-list',
 	),
     'post' => array(
-        'class' => 'fa fa-pencil-square-o',
+        'class' => 'fa fa-pencil',
     ),
 	'print' => array(
 		'class' => 'fa fa-print',

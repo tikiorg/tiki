@@ -29,7 +29,7 @@ $iconset = array(
 		'class' => 'fa fa-file-archive-o',
 	),
     'post' => array(
-        'class' => 'fa fa-pencil-square-o',
+        'class' => 'fa fa-pencil',
     ),
     'print' => array(
         'class' => 'fa fa-print',
