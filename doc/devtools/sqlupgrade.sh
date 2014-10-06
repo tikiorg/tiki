@@ -22,8 +22,12 @@ MYSQL='/usr/bin/mysql'
 PHP='/usr/bin/php'
 
 if [ ! -x $PHP ]; then
-	echo "You need PHP command line interpreter."
-	exit 1
+	# It seems "which" tends to behave in unpredictable and "user-friendly" ways, so use type
+	PHP=$(type -P php)
+	if [ ! -x $PHP ]; then
+		echo "You need PHP command line interpreter."
+		exit 1
+	fi
 fi
 
 if [ ! -d 'db' ]; then
