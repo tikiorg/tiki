@@ -19,6 +19,8 @@
 				</div>
 				<div class="col-md-9 col-md-pull-3 adminoptionbox">
 					{preference name=theme_active}
+                </div>
+            </div>
 
 					<div class="adminoptionbox theme_active_childcontainer custom">
 						{preference name=theme_custom}
@@ -38,8 +40,6 @@
 					{if $prefs.javascript_enabled eq 'n' or $prefs.feature_jquery eq 'n'}
 						<input type="submit" class="btn btn-default btn-sm" name="changestyle" value="{tr}Go{/tr}" />
 					{/if}
-				</div>
-			</div>
 			<div class="adminoptionbox">
 				{if $prefs.feature_jquery_ui eq 'y'}
 					{preference name=feature_jquery_ui_theme}
