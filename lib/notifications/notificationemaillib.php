@@ -386,6 +386,7 @@ function sendEmailNotification($watches, $dummy, $subjectTpl, $subjectParam, $tx
 	$smarty = TikiLib::lib('smarty');
 	$tikilib = TikiLib::lib('tiki');
 
+	$userlib = TikiLib::lib('user');
 	include_once('lib/webmail/tikimaillib.php');
 	$sent = 0;
 	$smarty->assign('mail_date', $tikilib->now);
