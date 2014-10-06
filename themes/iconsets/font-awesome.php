@@ -25,4 +25,7 @@ $iconset = array(
 	'trash' => array( 
 		'class' => 'fa fa-trash-o',
 	),
+    'print' => array(
+        'class' => 'fa fa-print',
+    ),
 );
