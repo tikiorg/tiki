@@ -574,14 +574,14 @@
 					</td>
 				{elseif $forum_info.topics_list_lastpost_avatar eq 'y' and $prefs.feature_userPreferences eq 'y'}
 					<td class="text">
-						<img src="tiki-show_user_avatar.php?user={$comments_coms[ix].lastPostData.userName|escape:"url"}$amp;always" title="{$comments_coms[ix].lastPostData.userName|username}">
+						{$comments_coms[ix].lastPostData.userName|avatarize}
 					</td>
 				{/if}
 				{if $forum_info.topics_list_author eq 'y'}
 					<td class="text">
 						{if $forum_info.topics_list_author_avatar eq 'y' and $prefs.feature_userPreferences eq 'y'}
 							<div style="float:left;padding-right:2px">
-								<img src="tiki-show_user_avatar.php?user={$comments_coms[ix].userName|escape:"url"}" title="{$comments_coms[ix].userName|username}">
+								{$comments_coms[ix].userName|avatarize}
 							</div>
 						{/if}
 						<div style="float:left">
@@ -589,7 +589,7 @@
 						</div>
 				{elseif $forum_info.topics_list_author_avatar eq 'y' and $prefs.feature_userPreferences eq 'y'}
 					<td class="text">
-						<img src="tiki-show_user_avatar.php?user={$comments_coms[ix].userName|escape:"url"}" title="{$comments_coms[ix].userName|username}">
+						{$comments_coms[ix].userName|avatarize}
 					</td>
 				{/if}
 				
