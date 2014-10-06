@@ -82,8 +82,9 @@
 						</label>
 					</div>
 					<div class="checkbox">
-						<label for="blogs-post-use-excerpt">{tr}Use post excerpt{/tr}
+						<label for="blogs-post-use-excerpt">
 							<input type="checkbox" name="use_excerpt" id="blogs-post-use-excerpt" {if $use_excerpt eq 'y'}checked='checked'{/if}>
+                            {tr}Use post excerpt{/tr}
 						</label>
 					</div>
 				</div>
