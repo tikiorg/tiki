@@ -1,6 +1,6 @@
 {* $Id$ *}
 
-{title help="forums" admpage="forums"}{$forum_info.name}{/title}
+{title help="forums" admpage="forums" url=$forum_info.forumId|sefurl:'forum'}{$forum_info.name}{/title}
 
 {if $forum_info.show_description eq 'y'}
 	<div class="description">{wiki}{$forum_info.description}{/wiki}</div>
@@ -86,10 +86,11 @@
 		</tr>
 	</table>
 </div>
-
-<a class="link" href="tiki-forums.php">{tr}Forums{/tr}</a> {$prefs.site_crumb_seper} <a class="link" href="tiki-view_forum.php?forumId={$forumId}">{$forum_info.name|escape}</a>
-
-<br>
+<div class="breadcrumb">
+	<a class="link" href="{if $prefs.feature_sefurl eq 'y'}forums{else}tiki-forums.php{/if}">{tr}Forums{/tr}</a>
+	{$prefs.site_crumb_seper}
+	<a class="link" href="{$forumId|sefurl:'forum'}">{$forum_info.name|escape}</a>
+</div>
 
 {if !empty($errors)}
 	{remarksbox type="warning" title="{tr}Errors{/tr}"}

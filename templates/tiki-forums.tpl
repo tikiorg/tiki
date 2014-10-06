@@ -93,7 +93,7 @@
 				<span style="float:left">
 					{if (isset($channels[user].individual) and $channels[user].individual eq 'n')
 						or ($tiki_p_admin eq 'y') or ($channels[user].individual_tiki_p_forum_read eq 'y')}
-						<a class="forumname" href="tiki-view_forum.php?forumId={$channels[user].forumId}">{$channels[user].name|escape}</a>
+						<a class="forumname" href="{$channels[user].forumId|sefurl:'forum'}">{$channels[user].name|escape}</a>
 					{else}
 						{$channels[user].name|escape}
 					{/if}
@@ -134,7 +134,7 @@
 
 			<td class="action">
 				{if $prefs.mobile_mode eq 'y'}<div class="navbar" data-role="controlgroup" data-type="horizontal">{/if} {* mobile *}
-					<a {if $prefs.mobile_mode eq 'y'} data-role="button"{/if} class="admlink" title="{tr}View{/tr}" href="tiki-view_forum.php?forumId={$channels[user].forumId}">{icon _id='table' alt="{tr}View{/tr}"}</a> {* mobile *}
+					<a {if $prefs.mobile_mode eq 'y'} data-role="button"{/if} class="admlink" title="{tr}View{/tr}" href="{$channels[user].forumId|sefurl:'forum'}">{icon _id='table' alt="{tr}View{/tr}"}</a> {* mobile *}
 					{if ($tiki_p_admin eq 'y') or (($channels[user].individual eq 'n') and ($tiki_p_admin_forum eq 'y')) or ($channels[user].individual_tiki_p_admin_forum eq 'y')}
 						<a {if $prefs.mobile_mode eq 'y'} data-role="button"{/if} class="admlink" title="{tr}Configure Forum{/tr}" href="tiki-admin_forums.php?forumId={$channels[user].forumId}&amp;cookietab=2">{icon _id='page_edit'}</a> {* mobile *}
 					{/if}

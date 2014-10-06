@@ -1,6 +1,6 @@
 {* $Id$ *}
 
-{title help="Forums" admpage="forums"}{tr}Admin Forums{/tr}{/title}
+{title help="Forums" admpage="forums" url='tiki-admin_forums.php'}{tr}Admin Forums{/tr}{/title}
 
 <div class="navbar">
 	{if $tiki_p_admin_forum eq 'y' && $forumId > 0 or (isset($dup_mode) and $dup_mode eq 'y')}
@@ -62,7 +62,7 @@
 					<input type="checkbox" name="checked[]" value="{$channels[user].forumId|escape}" {if isset($smarty.request.checked) and $smarty.request.checked and in_array($channels[user].forumId,$smarty.request.checked)}checked="checked"{/if}>
 				</td>
 				<td>
-					<a class="link" href="tiki-view_forum.php?forumId={$channels[user].forumId}" title="{tr}View{/tr}">{$channels[user].name|escape}</a>
+					<a class="link" href="{$channels[user].forumId|sefurl:'forum'}" title="{tr}View{/tr}">{$channels[user].name|escape}</a>
 				</td>
 				<td class="integer">{$channels[user].threads}</td>
 				<td class="integer">{$channels[user].comments}</td>
@@ -71,7 +71,7 @@
 				<td class="integer">{$channels[user].posts_per_day|string_format:"%.2f"}</td>
 				<td class="integer">{$channels[user].hits}</td>
 				<td class="action">
-					<a class="link" href="tiki-view_forum.php?forumId={$channels[user].forumId}" title="{tr}View{/tr}">{icon _id='table' alt="{tr}View{/tr}"}</a>
+					<a class="link" href="{$channels[user].forumId|sefurl:'forum'}" title="{tr}View{/tr}">{icon _id='table' alt="{tr}View{/tr}"}</a>
 
 {if isset($tiki_p_forum_lock) and $tiki_p_forum_lock eq 'y'}
 	{if $channels[user].is_locked eq 'y'}

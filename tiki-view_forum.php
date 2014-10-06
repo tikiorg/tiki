@@ -90,7 +90,7 @@ if (isset($_REQUEST['report']) && $tiki_p_forums_report == 'y') {
 
 if ($tiki_p_admin_forum == 'y') {
 	if (isset($_REQUEST['remove_attachment'])) {
-		$access->check_authenticity();
+		$access->check_authenticity(tra('Are you sure you want to remove that attachment?'));
 		$commentslib->remove_thread_attachment($_REQUEST['remove_attachment']);
 	}
 
@@ -159,7 +159,7 @@ if ($tiki_p_admin_forum == 'y') {
 	}
 
 	if (isset($_REQUEST['delsel_x']) && isset($_REQUEST['forumtopic']) && is_array($_REQUEST['forumtopic'])) {
-		$access->check_authenticity();
+		$access->check_authenticity(tra('Are you sure you want to remove these post?'));
 		foreach ($_REQUEST['forumtopic'] as $topicId) {
 			if (is_numeric($topicId)) {
 				$commentslib->remove_comment($topicId);
@@ -266,7 +266,7 @@ if (isset($_REQUEST['comments_remove']) && isset($_REQUEST['comments_threadId'])
 	if ($tiki_p_admin_forum == 'y'
 			|| ($commentslib->user_can_edit_post($user, $_REQUEST['comments_threadId']) && $tiki_p_forum_post_topic == 'y')
 	) {
-		$access->check_authenticity();
+		$access->check_authenticity(tra('Are you sure you want to remove that post?'));
 		$comments_show = 'y';
 		$commentslib->remove_comment($_REQUEST['comments_threadId']);
 		$commentslib->register_remove_post($_REQUEST['forumId'], 0);
@@ -277,6 +277,7 @@ if (isset($_REQUEST['comments_remove']) && isset($_REQUEST['comments_threadId'])
 		die;
 	}
 	unset($_REQUEST['comments_threadId']);
+	$smarty->assign('comments_threadId', 0);
 }
 
 if ($_REQUEST['comments_threadId'] > 0) {
