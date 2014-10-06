@@ -295,9 +295,10 @@ class Comments extends TikiLib
 
 	function process_inbound_mail($forumId)
 	{
+		global $prefs;
 		require_once ("lib/webmail/net_pop3.php");
-
 		require_once ("lib/mail/mimelib.php");
+
 		$info = $this->get_forum($forumId);
 
 		// for any reason my sybase test machine adds a space to
@@ -382,22 +383,42 @@ class Comments extends TikiLib
 
 			$mimelib = new mime();
 			$output = $mimelib->decode($full);
+			$body = '';
 
 			if ($output['type'] == 'multipart/report') {			// mimelib doesn't seem to parse error reports properly
 				$pop3->deleteMsg($i);								// and we almost certainly don't want them in the forum
 				continue;											// so do what exactly? log them somewhere? TODO
-			} elseif (isset($output["text"][0])) {
-				$body = $output["text"][0];
-			} elseif (isset($output['parts'][0]["text"][0])) {
-				$body = $output['parts'][0]["text"][0];
-			} elseif (isset($output['parts'][0]['html'][0])) {// some html message does not have a text part
-				$body = $this->htmldecode(strip_tags(preg_replace('/\n\r/', '', $output['parts'][0]['html'][0])));
-			} elseif (isset($output['parts'][0]['parts'][0]['text'][0])) {
-				$body = $output['parts'][0]['parts'][0]['text'][0];
-			} elseif (isset($output['body'])) {
-				$body = $output['body'];
-			} else {
-				$body = "";
+			}
+
+			if ($prefs['feature_wysiwyg'] === 'y') {
+				if (isset($output['parts'][1]['html'][0])) {
+					$body = $output['parts'][1]['html'][0];
+				} else if (isset($output['parts'][0]['html'][0])) {
+					$body = $output['parts'][0]['html'][0];
+				}
+				if ($body) {
+					// Clean the string using HTML Purifier first
+					require_once('lib/htmlpurifier_tiki/HTMLPurifier.tiki.php');
+					$body = HTMLPurifier($body);
+
+					if ($prefs['wysiwyg_htmltowiki'] === 'y') {
+						$body = TikiLib::lib('edit')->parseToWiki($body);
+					}
+				}
+			}
+
+			if (! $body) {
+				if (isset($output["text"][0])) {
+					$body = $output["text"][0];
+				} elseif (isset($output['parts'][0]["text"][0])) {
+					$body = $output['parts'][0]["text"][0];
+				} elseif (isset($output['parts'][0]['html'][0])) {// some html message does not have a text part
+					$body = $this->htmldecode(strip_tags(preg_replace('/\n\r/', '', $output['parts'][0]['html'][0])));
+				} elseif (isset($output['parts'][0]['parts'][0]['text'][0])) {
+					$body = $output['parts'][0]['parts'][0]['text'][0];
+				} elseif (isset($output['body'])) {
+					$body = $output['body'];
+				}
 			}
 
 			// Remove 're:' and [forum]. -rlpowell
@@ -447,7 +468,6 @@ class Comments extends TikiLib
 			}
 
 			if (!$parentId) {
-				global $prefs;
 				// create a thread to discuss a wiki page if the feature is on AND the page exists
 				if ($prefs['feature_wiki_discuss'] === 'y' && TikiLib::lib('tiki')->page_exists($title)) {
 
