@@ -295,7 +295,7 @@ class Comments extends TikiLib
 
 	function process_inbound_mail($forumId)
 	{
-		global $prefs;
+		global $prefs, $user;
 		require_once ("lib/webmail/net_pop3.php");
 		require_once ("lib/mail/mimelib.php");
 
@@ -378,6 +378,27 @@ class Comments extends TikiLib
 			}
 
 			$email = $mail[1];
+			// Determine user from email
+			$userName = $this->table('users_users')->fetchOne('login', array('email' => $email));
+
+			//use anonomus name feature if we don't have a real name
+			if (!$userName) {
+				$anonName = $original_email;
+			}
+			// Check permissions
+			if ($prefs['forum_inbound_mail_ignores_perms'] === 'y') {
+			 	// store currently logged in user to restore later as setting the Perms_Context overwrites the global $user
+				$currentUser = $user;
+				// N.B. Perms_Context needs to be assigned to a variable or it gets destructed immediately and does nothing
+				/** @noinspection PhpUnusedLocalVariableInspection */
+				$permissionContext = new Perms_Context($userName ? $userName : '');
+				$forumperms = Perms::get(array('type' => 'forum', 'object' => $forumId));
+
+				if (!$forumperms->forum_post) {
+					// premission refused - TODO move this message to the moderated queue if there is one
+					continue;
+				}
+			}
 
 			$full = $pop3->getMsg($i);
 
@@ -387,7 +408,7 @@ class Comments extends TikiLib
 
 			if ($output['type'] == 'multipart/report') {			// mimelib doesn't seem to parse error reports properly
 				$pop3->deleteMsg($i);								// and we almost certainly don't want them in the forum
-				continue;											// so do what exactly? log them somewhere? TODO
+				continue;											// TODO also move it to the moderated queue
 			}
 
 			if ($prefs['feature_wysiwyg'] === 'y') {
@@ -442,12 +463,6 @@ class Comments extends TikiLib
 			} else {
 				$in_reply_to = '';
 			}
-			// Determine user from email
-			$userName = $this->table('users_users')->fetchOne('login', array('email' => $email));
-
-			//use anonomus name feature if we don't have a real name
-			if (!$userName) $anonName = $original_email;
-			//Todo: check permissions
 
 			// Determine if the thread already exists first by looking for a mail this is a reply to.
 			if (!empty($in_reply_to)) {
@@ -557,6 +572,8 @@ class Comments extends TikiLib
 			$pop3->deleteMsg($i);
 		}
 		$pop3->disconnect();
+
+		new Perms_Context($currentUser);	// restore current user's perms
 	}
 
 	/* queue management */
