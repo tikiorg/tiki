@@ -36,6 +36,7 @@
 				{preference name=forum_comments_no_title_prefix}
 				{preference name=forum_reply_forcetitle}
 				{preference name=feature_forums_allow_thread_titles}
+				{preference name=forum_inbound_mail_ignores_perms}
 				{preference name=forum_match_regex}
 			</fieldset>
 
