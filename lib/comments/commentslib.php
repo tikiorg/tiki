@@ -386,7 +386,7 @@ class Comments extends TikiLib
 				$anonName = $original_email;
 			}
 			// Check permissions
-			if ($prefs['forum_inbound_mail_ignores_perms'] === 'y') {
+			if ($prefs['forum_inbound_mail_ignores_perms'] !== 'y') {
 			 	// store currently logged in user to restore later as setting the Perms_Context overwrites the global $user
 				$currentUser = $user;
 				// N.B. Perms_Context needs to be assigned to a variable or it gets destructed immediately and does nothing
@@ -411,11 +411,13 @@ class Comments extends TikiLib
 				continue;											// TODO also move it to the moderated queue
 			}
 
-			if ($prefs['feature_wysiwyg'] === 'y') {
+			if ($prefs['feature_wysiwyg'] === 'y' && $prefs['forum_inbound_mail_parse_html'] === 'y') {
 				if (isset($output['parts'][1]['html'][0])) {
 					$body = $output['parts'][1]['html'][0];
 				} else if (isset($output['parts'][0]['html'][0])) {
 					$body = $output['parts'][0]['html'][0];
+				} else if ($output['type'] == 'text/html' && isset($output['body'])) {
+					$body = $output['body'];
 				}
 				if ($body) {
 					// Clean the string using HTML Purifier first
@@ -438,7 +440,11 @@ class Comments extends TikiLib
 				} elseif (isset($output['parts'][0]['parts'][0]['text'][0])) {
 					$body = $output['parts'][0]['parts'][0]['text'][0];
 				} elseif (isset($output['body'])) {
-					$body = $output['body'];
+					if ($output['type'] == 'text/html') {
+						$body = $this->htmldecode(strip_tags(preg_replace('/\n\r/', '', $output['body'])));
+					} else {
+						$body = $output['body'];
+					}
 				}
 			}
 
@@ -573,7 +579,9 @@ class Comments extends TikiLib
 		}
 		$pop3->disconnect();
 
-		new Perms_Context($currentUser);	// restore current user's perms
+		if (!empty($currentUser)) {
+			new Perms_Context($currentUser);    // restore current user's perms
+		}
 	}
 
 	/* queue management */
