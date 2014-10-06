@@ -25,4 +25,7 @@ $iconset = array(
 	'trash' => array( 
 		'class' => 'glyphicon glyphicon-trash',
 	),
+    'print' => array(
+        'class' => 'glyphicon glyphicon-print',
+    ),
 );

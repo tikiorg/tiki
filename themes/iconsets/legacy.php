@@ -23,4 +23,7 @@ $iconset = array(
 	'trash' => array( 
 		'image_file_name' => 'bin.png',
 	),
+    'print' => array(
+        'image_file_name' => 'printer.png',
+    ),
 );

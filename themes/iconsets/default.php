@@ -51,8 +51,8 @@ $iconset = array(
 	'list' => array( 
 		'class' => 'fa fa-list',
 	),
-	'print' => array( 
-		'class' => 'fa fa-file-archive-o',
+	'print' => array(
+		'class' => 'fa fa-print',
 	),
 	'remove' => array( 
 		'class' => 'fa fa-remove',
