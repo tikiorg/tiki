@@ -375,6 +375,7 @@ function sendWikiEmailNotification(
 function sendEmailNotification($watches, $dummy, $subjectTpl, $subjectParam, $txtTpl, $from='')
 {
 	global $smarty, $tikilib;
+	$userlib = TikiLib::lib('user');
 	include_once('lib/webmail/tikimaillib.php');
 	$sent = 0;
 	$smarty->assign('mail_date', $tikilib->now);
