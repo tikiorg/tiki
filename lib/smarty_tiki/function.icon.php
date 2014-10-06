@@ -94,6 +94,7 @@ function smarty_function_icon($params, $smarty)
 		if (isset($iconset) and array_key_exists($params['name'], $iconset)) {
 			$cssclass = $iconset[$params['name']]['class'];
 			$tag = $iconset['_settings']['icon_tag'];
+			$name = $params['name']; //used below as css class to be able style the same icons (eg: all save icons) the same way throughout Tiki 
 			
 			//manage legacy image icons (eg: png, gif, etc)
 			if ($tag == 'img') {
@@ -101,7 +102,7 @@ function smarty_function_icon($params, $smarty)
 				$image_file_name = $iconset[$params['name']]['image_file_name'];
 				$src = $image_path . "/" . $image_file_name;
 				$alt = $params['name'];
-				$class = "icon icon-" . $params['name'];
+				$class = "icon icon-" . $name;
 			}
 		}
 		else { //if icon is not defined in the iconset or preference is not set, than load the default iconset and use its icons
@@ -121,7 +122,7 @@ function smarty_function_icon($params, $smarty)
 			$html = "<span class=\"$class\"><img src=\"$src\" alt=\"$alt\"></span>";
 		}
 		else { //for font-icons
-			$html = "<$tag class=\"icon icon-$type $cssclass\" $src";
+			$html = "<$tag class=\"icon icon-$name $cssclass\" $src";
 			$html .= "></$tag>";
 		}
 		
