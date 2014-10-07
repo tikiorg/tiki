@@ -5,13 +5,6 @@
 		genPass(passcodeId);
 		return false
 	});
-
-	$("input[name=useRegisterPasscode]").change(function () {
-		if (!$(this).is(':checked')){
-			document.LogForm.registerPasscode.value='';
-		}
-		return false
-	});
 {/jq}
 
 <div class="navbar">
