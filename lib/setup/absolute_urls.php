@@ -8,6 +8,15 @@
 //this script may only be included - so its better to die if called directly.
 $access->check_script($_SERVER['SCRIPT_NAME'], basename(__FILE__));
 
+// Check if behind a Frontend-Proxy/Load-Balancer which rewrites ports
+if (isset($prefs['feature_port_rewriting']) && $prefs['feature_port_rewriting'] == y && isset($_SERVER['HTTP_X_FORWARDED_PROTO'])) {
+	if ($_SERVER['HTTP_X_FORWARDED_PROTO'] == "http") {
+		$_SERVER['SERVER_PORT'] = 80;
+	} else if($_SERVER['HTTP_X_FORWARDED_PROTO'] == "https") {
+		$_SERVER['SERVER_PORT'] = 443;
+	}
+}
+
 // check if the current port is not 80 or 443
 if (isset($_SERVER['SERVER_PORT'])) {
 	if (($_SERVER['SERVER_PORT'] != 80) && ($_SERVER['SERVER_PORT'] != 443)) {

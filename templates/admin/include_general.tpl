@@ -134,6 +134,7 @@
 
 				{preference name=http_skip_frameset}
 				{preference name=feature_loadbalancer}
+				{preference name=feature_port_rewriting}
 			</fieldset>
 
 			<fieldset>
