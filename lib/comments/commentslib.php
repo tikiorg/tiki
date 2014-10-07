@@ -379,23 +379,23 @@ class Comments extends TikiLib
 			$email = $mail[1];
 
 			$full = $pop3->getMsg($i);
-			$message = $pop3->getBody($i);
 
 			$mimelib = new mime();
 			$output = $mimelib->decode($full);
-			//unset ($parts);
-			//$this->parse_output($output, $parts, 0);
 
-			if (isset($output["text"][0])) {
+			if ($output['type'] == 'multipart/report') {			// mimelib doesn't seem to parse error reports properly
+				$pop3->deleteMsg($i);								// and we almost certainly don't want them in the forum
+				continue;											// so do what exactly? log them somewhere? TODO
+			} elseif (isset($output["text"][0])) {
 				$body = $output["text"][0];
 			} elseif (isset($output['parts'][0]["text"][0])) {
 				$body = $output['parts'][0]["text"][0];
-			} elseif (isset($output['body'])) {
-				$body = $output['body'];
 			} elseif (isset($output['parts'][0]['html'][0])) {// some html message does not have a text part
 				$body = $this->htmldecode(strip_tags(preg_replace('/\n\r/', '', $output['parts'][0]['html'][0])));
 			} elseif (isset($output['parts'][0]['parts'][0]['text'][0])) {
 				$body = $output['parts'][0]['parts'][0]['text'][0];
+			} elseif (isset($output['body'])) {
+				$body = $output['body'];
 			} else {
 				$body = "";
 			}
@@ -413,7 +413,7 @@ class Comments extends TikiLib
 				)
 			);
 
-			//Todo: check permissions
+			// trim off < and > from message-id
 			$message_id = substr($output['header']["message-id"], 1, strlen($output['header']["message-id"])-2);
 
 			if (isset($output['header']["in-reply-to"])) {
@@ -426,35 +426,51 @@ class Comments extends TikiLib
 
 			//use anonomus name feature if we don't have a real name
 			if (!$userName) $anonName = $original_email;
+			//Todo: check permissions
 
-			// Determine if the thread already exists.
-			$parentId = $this->table('tiki_comments')->fetchOne(
-				'threadId',
-				array('object' => $forumId, 'objectType' => 'forum', 'parentId' => 0, 'title' => $title)
-			);
+			// Determine if the thread already exists first by looking for a mail this is a reply to.
+			if (!empty($in_reply_to)) {
+				$parentId = $this->table('tiki_comments')->fetchOne(
+					'threadId',
+					array('object' => $forumId, 'objectType' => 'forum', 'message_id' => $in_reply_to)
+				);
+			} else {
+				$parentId = 0;
+			}
+
+			// if not, check if there's a topic with exactly this title
+			if (!$parentId) {
+				$parentId = $this->table('tiki_comments')->fetchOne(
+					'threadId',
+					array('object' => $forumId, 'objectType' => 'forum', 'parentId' => 0, 'title' => $title)
+				);
+			}
 
 			if (!$parentId) {
-				/*
-						This doesn't make any sense to me... why would we say an inbound email is a'thread to discuss a page'?
-						I've updated this to just make a new thread w/ the original email info by seting $parentId = 0
+				global $prefs;
+				// create a thread to discuss a wiki page if the feature is on AND the page exists
+				if ($prefs['feature_wiki_discuss'] === 'y' && TikiLib::lib('tiki')->page_exists($title)) {
 
-				// No thread already; create it.
+					// No thread already; create it.
+					$temp_msid = '';
 
-				$temp_msid = '';
+					$parentId = $this->post_new_comment(
+						'forum:' . $forumId,
+						0,
+						$userName,
+						$title,
+						sprintf(tra("Use this thread to discuss the %s page."), "(($title))"),
+						$temp_msid,
+						$in_reply_to
+					);
 
-				$parentId = $this->post_new_comment(
-				'forum:' . $forumId, 0,
-				$userName, $title,
-				sprintf(tra("Use this thread to discuss the %s page."), "[tiki-index.php?page=$title|$title]"),
-				$temp_msid, $in_reply_to
-				);
+					$this->register_forum_post($forumId, 0);
 
-				$this->register_forum_post($forumId,0);
-
-				// First post is in reply to this one
-				$in_reply_to = $temp_msid;
-				 */
-				$parentId = 0;
+					// First post is in reply to this one
+					$in_reply_to = $temp_msid;
+				} else {
+					$parentId = 0;
+				}
 			}
 
 			// post
