@@ -2670,14 +2670,21 @@ function prefs_feature_list($partial = false)
 			'type' => 'text',
 			'default' => 'tiki-register.php',
 		),
-        'feature_loadbalancer' => array(
-            'name' => tra('Load Balancer'),
-            'description' => tra('Enable this only if the server is behind a load balancer (or reverse proxy), this allow tiki to log the IP of the user, instead of the IP of the proxy server'),
-            'type' => 'flag',
+		'feature_loadbalancer' => array(
+			'name' => tra('Load Balancer'),
+				'description' => tra('Enable this only if the server is behind a load balancer (or reverse proxy), this allow tiki to log the IP of the user, instead of the IP of the proxy server'),
+			'type' => 'flag',
 			'default' => 'n',
 			'tags' => array('experimental'),
-        ),
-        'feature_accounting' => array(
+		),
+		'feature_port_rewriting' => array(
+			'name' => tra('Tiki is behind a Frontend-Proxy/Load-Balancer which rewrites ports'),
+				'description' => tra('Enable this only if the server is behind some Frontend-Proxy/Load-Balancer (or reverse proxy) which rewrites ports. This allows Tiki to use the HTTP_X_FORWARDED_PROTO parameter set by the proxy in order to provide correct links.'),
+			'type' => 'flag',
+			'default' => 'n',
+			'tags' => array('experimental'),
+		),
+		'feature_accounting' => array(
 			'name' => tra('Accounting'),
 			'description' => tra('Double-entry accounting system'),
 			'help' => 'Accounting',
