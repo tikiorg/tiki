@@ -153,5 +153,14 @@ function prefs_forum_list()
 			'default' => 'n',
 			'dependencies' => array('feature_categories'),
 		),
+		'forum_inbound_mail_parse_html' => array(
+			'name' => tr('Parse HTML in inbound email posts'),
+			'description' => tr('Attempt to keep the formatting of HTML "rich text" emails if using WYSIWYG.'),
+			'type' => 'flag',
+			'default' => 'n',
+			'tags' => array('experimental'),
+			'warning' => tra('Experimental') . ' ' . tra('Has problems with some HTML emails, especially with table based layouts.'),
+			'dependencies' => array('feature_wysiwyg'),
+		),
 	);
 }
