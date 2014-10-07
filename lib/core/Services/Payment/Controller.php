@@ -22,6 +22,20 @@ class Services_Payment_Controller
 		return $cartlib->add_to_cart($params, $input);
 	}
 
+	function action_addalltocart($input)
+	{
+		$cartlib = TikiLib::lib('cart');
+
+		$items = $input->items->asArray();
+		$ret = array();
+
+		foreach ($items as $item) {
+			$ret[] = $cartlib->add_to_cart($item['params'], new jitFilter($item));
+		}
+
+		return $ret;
+	}
+
 	function action_capture($input)
 	{
 		$perms = Perms::get();
