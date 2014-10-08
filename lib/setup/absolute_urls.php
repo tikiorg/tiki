@@ -9,7 +9,7 @@
 $access->check_script($_SERVER['SCRIPT_NAME'], basename(__FILE__));
 
 // Check if behind a Frontend-Proxy/Load-Balancer which rewrites ports
-if (isset($prefs['feature_port_rewriting']) && $prefs['feature_port_rewriting'] == y && isset($_SERVER['HTTP_X_FORWARDED_PROTO'])) {
+if (isset($prefs['feature_port_rewriting']) && $prefs['feature_port_rewriting'] == 'y' && isset($_SERVER['HTTP_X_FORWARDED_PROTO'])) {
 	if ($_SERVER['HTTP_X_FORWARDED_PROTO'] == "http") {
 		$_SERVER['SERVER_PORT'] = 80;
 	} else if($_SERVER['HTTP_X_FORWARDED_PROTO'] == "https") {
