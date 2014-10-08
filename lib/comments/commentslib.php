@@ -390,7 +390,7 @@ class Comments extends TikiLib
 				continue;											// so do what exactly? log them somewhere? TODO
 			}
 
-			if ($prefs['feature_wysiwyg'] === 'y' && $prefs['forum_inbound_mail_parse_html'] === 'y') {
+			if ($prefs['feature_forum_parse'] === 'y' && $prefs['forum_inbound_mail_parse_html'] === 'y') {
 				if (isset($output['parts'][1]['html'][0])) {
 					$body = $output['parts'][1]['html'][0];
 				} else if (isset($output['parts'][0]['html'][0])) {
@@ -402,10 +402,7 @@ class Comments extends TikiLib
 					// Clean the string using HTML Purifier first
 					require_once('lib/htmlpurifier_tiki/HTMLPurifier.tiki.php');
 					$body = HTMLPurifier($body);
-
-					if ($prefs['wysiwyg_htmltowiki'] === 'y') {
-						$body = TikiLib::lib('edit')->parseToWiki($body);
-					}
+					$body = TikiLib::lib('edit')->parseToWiki($body);
 				}
 			}
 
