@@ -49,6 +49,13 @@
 				{/remarksbox}
 			{/if}
 		{/if}
+
+		{preference name=feature_canonical_url}
+		<div id="feature_canonical_url_childcontainer">
+			{preference name=feature_canonical_domain}
+			<em>{tr}For example, if the field is left blank, the canonical URL domain is:{/tr}</em> {$base_url_canonical_default}
+		</div>
+
 	</fieldset>		
 	
 	<fieldset class="admin">
@@ -74,7 +81,6 @@
 		{preference name=feature_sefurl_title_article}
 		{preference name=feature_sefurl_title_blog}
 		{preference name=feature_sefurl_tracker_prefixalias}
-		{preference name=feature_canonical_url}
 	</fieldset>
 	<div class="heading input_submit_container" style="text-align: center;padding:1em;">
 		<input type="submit" class="btn btn-default" name="save" value="{tr}Change preferences{/tr}" />
