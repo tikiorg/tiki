@@ -92,7 +92,7 @@ $style_ie8_css = $tikilib->get_style_path($prefs['style'], $prefs['style_option'
 $style_ie9_css = $tikilib->get_style_path($prefs['style'], $prefs['style_option'], 'ie9.css');
 
 // include optional "custom" cascading stylesheet if there
-$custom_css = $tikilib->get_style_path($prefs['style'], $prefs['style_option'], 'custom.css');;
+$custom_css = "themes/{$prefs['theme_active']}/css/custom.css";
 if ( !empty($custom_css)) {
 	$headerlib->add_cssfile($custom_css, 53);
 }
