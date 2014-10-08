@@ -9,24 +9,33 @@ class Services_Tracker_Utilities
 {
 	function insertItem($definition, $item)
 	{
-		$newItem = $this->replaceItem($definition, 0, $item['status'], $item['fields']);
+		$newItem = $this->replaceItem($definition, 0, $item['status'], $item['fields'], [
+			'validate' => true,
+			'skip_categories' => false,
+		]);
 
 		return $newItem;
 	}
 
 	function updateItem($definition, $item)
 	{
-		return $this->replaceItem($definition, $item['itemId'], $item['status'], $item['fields']);
+		return $this->replaceItem($definition, $item['itemId'], $item['status'], $item['fields'], [
+			'validate' => true,
+			'skip_categories' => false,
+		]);
 	}
 
 	function resaveItem($itemId)
 	{
 		$tracker = TikiLib::lib('trk')->get_item_info($itemId);
 		$definition = Tracker_Definition::get($tracker['trackerId']);
-		$this->replaceItem($definition, $itemId, null, array(), false);
+		$this->replaceItem($definition, $itemId, null, array(), [
+			'validate' => false,
+			'skip_categories' => true,
+		]);
 	}
 
-	private function replaceItem($definition, $itemId, $status, $fieldMap, $validate = true)
+	private function replaceItem($definition, $itemId, $status, $fieldMap, array $options)
 	{
 		$trackerId = $definition->getConfiguration('trackerId');
 		$fields = array();
@@ -66,10 +75,16 @@ class Services_Tracker_Utilities
 		$categorizedFields = $definition->getCategorizedFields();
 		$errors = $trklib->check_field_values(array('data' => $fields), $categorizedFields, $trackerId, $itemId ? $itemId : '');
 
+		if ($options['skip_categories']) {
+			foreach ($categorizedFields as $fieldId) {
+				unset($fields[$fieldId]);
+			}
+		}
+
 		if (count($errors['err_mandatory']) == 0 && count($errors['err_value']) == 0) {
 			$newItem = $trklib->replace_item($trackerId, $itemId, array('data' => $fields), $status, 0, true);
 			return $newItem;
-		} elseif (! $validate) {
+		} elseif (! $options['validate']) {
 			$newItem = $trklib->replace_item($trackerId, $itemId, array('data' => $fields), $status, 0, true);
 			return $newItem;
 		}
