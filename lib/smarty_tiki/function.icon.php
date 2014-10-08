@@ -88,30 +88,31 @@ function smarty_function_icon($params, $smarty)
 	}
 	//ICONSET START, work-in-progress, more information: dev.tiki.org/icons
 	if (!empty($params['name'])){ 
-		//load iconset from preference setting
-		include('themes/iconsets/' . $prefs['theme_iconset'] . '.php');
+		$name = $params['name'];
+		
+		//load $iconset from preference setting TODO: enhance this to consider iconsets in self-contained themes (eg: themes/jqui/iconsets/)
+		include('themes/base_files/iconsets/' . $prefs['theme_iconset'] . '.php');
+		
 		//if icon is defined in the iconset, use it
-		if (isset($iconset) and array_key_exists($params['name'], $iconset)) {
-			$cssclass = $iconset[$params['name']]['class'];
+		if (isset($iconset) and array_key_exists($name, $iconset)) {
+			$cssclass = $iconset[$name]['class'];
 			$tag = $iconset['_settings']['icon_tag'];
-			$name = $params['name']; //used below as css class to be able style the same icons (eg: all save icons) the same way throughout Tiki 
 			
 			//manage legacy image icons (eg: png, gif, etc)
 			if ($tag == 'img') {
 				$image_path = $iconset['_settings']['icon_path_image'];
-				$image_file_name = $iconset[$params['name']]['image_file_name'];
+				$image_file_name = $iconset[$name]['image_file_name'];
 				$src = $image_path . "/" . $image_file_name;
-				$alt = $params['name'];
-				$class = "icon icon-" . $name;
+				$alt = $name;
 			}
 		}
 		else { //if icon is not defined in the iconset or preference is not set, than load the default iconset and use its icons
-			include('themes/iconsets/default.php');
-			if (array_key_exists($params['name'], $iconset)) {
-				$cssclass = $iconset[$params['name']]['class'];		
+			include('themes/base_files/iconsets/default.php');
+			if (array_key_exists($name, $iconset)) {
+				$cssclass = $iconset[$name]['class'];
 				$tag = $iconset['_settings']['icon_tag'];
 			}	
-			else { //if icon is not defined in default iconset, than display warning-sign glyphicon from bootstrap. Helps to detect missing icon definitions
+			else { //if icon is not defined in default iconset, than display bootstrap glyphicon warning-sign. Helps to detect missing icon definitions, typos
 				$cssclass = 'glyphicon glyphicon-warning-sign';
 				$tag = 'span';
 			}
@@ -119,11 +120,10 @@ function smarty_function_icon($params, $smarty)
 		
 		//assemble icon, later enhance for svg
 		if ($tag == 'img') { //for images
-			$html = "<span class=\"$class\"><img src=\"$src\" alt=\"$alt\"></span>";
+			$html = "<span class=\"icon icon-$name $cssclass\"><img src=\"$src\" alt=\"$alt\"></span>";
 		}
 		else { //for font-icons
-			$html = "<$tag class=\"icon icon-$name $cssclass\" $src";
-			$html .= "></$tag>";
+			$html = "<$tag class=\"icon icon-$name $cssclass\"></$tag>";
 		}
 		
 		//return icon

@@ -19,11 +19,11 @@ function prefs_theme_list()
 		$themes[$theme] = tr($theme);
 	}
 	
-	//get list of iconsets
+	//get list of base iconsets
 	$iconsets = array();
-	foreach (scandir('themes/iconsets') as $iconset_file) {
+	foreach (scandir('themes/base_files/iconsets') as $iconset_file) {
 		if ($iconset_file[0] != '.' && $iconset_file != 'index.php') {
-			include('themes/iconsets/'. $iconset_file);
+			include('themes/base_files/iconsets/'. $iconset_file);
 			$iconsets[substr($iconset_file,0,-4)] = $iconset['_settings']['iconset_name'];
 		}
 	}
