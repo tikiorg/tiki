@@ -1485,10 +1485,12 @@ class TrackerLib extends TikiLib
 		}
 
 		$final = array();
+		$suppliedFields = array();
 
 		foreach ($ins_fields["data"] as $i => $array) {
 			// Old values were prefilled at the begining of the function and only replaced at the end of the iteration
 			$fieldId = $array['fieldId'];
+			$suppliedFields[] = $fieldId;
 			$old_value = isset($fil[$fieldId]) ? $fil[$fieldId] : null;
 
 			$handler = $this->get_field_handler($array, array_merge($item_info, $fil));
@@ -1619,6 +1621,7 @@ class TrackerLib extends TikiLib
 				'user' => $GLOBALS['user'],
 				'version' => $version,
 				'trackerId' => $trackerId,
+				'supplied' => $suppliedFields,
 				'values' => $fil,
 				'old_values' => $old_values,
 				'values_by_permname' => $values_by_permname,
@@ -4762,7 +4765,14 @@ class TrackerLib extends TikiLib
 		$tosync = false;
 		$managed_fields = array();
 
-		foreach ($definition->getCategorizedFields() as $fieldId) {
+		$categorizedFields = $definition->getCategorizedFields();
+
+		if (isset($args['supplied'])) {
+			// Exclude fields that were not part of the request
+			$categorizedFields = array_intersect($categorizedFields, $args['supplied']);
+		}
+
+		foreach ($categorizedFields as $fieldId) {
 			if (isset($args['values'][$fieldId])) {
 				$ins_categs = array_merge($ins_categs, array_filter(explode(',', $args['values'][$fieldId])));
 				$managed_fields[] = $fieldId;
