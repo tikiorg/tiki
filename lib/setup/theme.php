@@ -93,7 +93,7 @@ $style_ie9_css = $tikilib->get_style_path($prefs['style'], $prefs['style_option'
 
 // include optional "custom" cascading stylesheet if there
 $custom_css = "themes/{$prefs['theme_active']}/css/custom.css";
-if ( !empty($custom_css)) {
+if ( is_readable($custom_css)) {
 	$headerlib->add_cssfile($custom_css, 53);
 }
 $smarty->initializePaths();
