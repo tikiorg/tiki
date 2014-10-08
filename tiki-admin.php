@@ -598,7 +598,7 @@ $icons = array(
 		'icon' => 'img/icons/large/goto.png',
 		'position' => '0px -715px;',
 		'title' => tr('Search engine friendly url'),
-		'disabled' => $prefs['feature_sefurl'] != 'y',
+		'disabled' => $prefs['feature_sefurl'] != 'y' && $prefs['feature_canonical_url'] != 'y',
 		'description' => tr('Search Engine Friendly URLs'),
 		'help' => 'Rewrite+Rules',
 		'icon_class' => 'fa fa-compress'

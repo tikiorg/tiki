@@ -1305,6 +1305,15 @@ function prefs_feature_list($partial = false)
 			'perspective' => false,
 			'default' =>'y',
 		),
+		'feature_canonical_domain' => array(
+			'name' => tra('Canonical URL domain'),
+			'description' => tra("If this is a testing site with duplicate content, you may want to put the real site domain here so search engines don't index the testing site. In complex perspective setups using multiple domains, you may want more control on which canonical domain is advertised."),
+			'type' => 'text',
+			'dependencies' => array('feature_canonical_url'),
+			'tags' => array('experimental'),
+			'warning' => tra('experimental'),
+			'default' =>'',
+		),
 		'feature_modulecontrols' => array(
 			'name' => tra('Show module controls'),
             'description' => tra('enable controls in modules'),
