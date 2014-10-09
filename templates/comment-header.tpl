@@ -50,7 +50,7 @@
 			{self_link watch_event='forum_post_thread' watch_object=$comments_parentId watch_action='remove' _class="btn btn-default btn-small" _icon='no_eye' _alt="{tr}Stop Monitoring this Topic{/tr}" _title="{tr}Stop Monitoring this Topic{/tr}"}{/self_link}
 		{/if}
 		{if $prefs.feature_group_watches eq 'y' and ( $tiki_p_admin_users eq 'y' or $tiki_p_admin eq 'y' )}
-			<a class="btn btn-default btn-small" href="tiki-object_watches.php?objectId={$comments_parentId|escape:"url"}&amp;watch_event=forum_post_thread&amp;objectType=forum&amp;objectName={$comment.title|escape:"url"}&amp;objectHref={'tiki-view_forum_thread.php?comments_parentId='|cat:$comments_parentId|cat:'&forumId='|cat:$forumId|escape:"url"}" class="icon">{icon _id='eye_group' alt="{tr}Group Monitor{/tr}"}</a>
+			<a class="btn btn-default btn-small" href="tiki-object_watches.php?objectId={$comments_parentId|escape:"url"}&amp;watch_event=forum_post_thread&amp;objectType=forum&amp;objectName={$comment.title|escape:"url"}&amp;objectHref={'tiki-view_forum_thread.php?comments_parentId='|cat:$comments_parentId|cat:'&forumId='|cat:$forumId|escape:"url"}" class="icon" title="{tr}Group Monitor{/tr}">{icon name="group-watch"}</a>
 		{/if}
 		{/if}
 		<br>
