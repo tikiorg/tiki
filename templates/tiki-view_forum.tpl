@@ -59,9 +59,8 @@
 		{/if}
 	{/if}
 
-    {if $prefs.feature_group_watches eq 'y' and ( $tiki_p_admin_users eq 'y' or $tiki_p_admin eq 'y' )}
 	{if $prefs.feature_group_watches eq 'y' and ( $tiki_p_admin_users eq 'y' or $tiki_p_admin eq 'y' )}
-		<a href="tiki-object_watches.php?objectId={$forumId|escape:"url"}&amp;watch_event=forum_post_topic_and_thread&amp;objectType=forum&amp;objectName={$forum_info.name|escape:"url"}&amp;objectHref={'tiki-view_forum.php?forumId='|cat:$forumId|escape:"url"}" class="icon"  title="{tr}Group Monitor Topics and Threads of this Forum{/tr}">{icon name="group-watch"}</a>
+		<a href="tiki-object_watches.php?objectId={$forumId|escape:"url"}&amp;watch_event=forum_post_topic_and_thread&amp;objectType=forum&amp;objectName={$forum_info.name|escape:"url"}&amp;objectHref={'tiki-view_forum.php?forumId='|cat:$forumId|escape:"url"}" class="btn btn-default"  title="{tr}Group Monitor Topics and Threads of this Forum{/tr}">{icon name="group-watch"}</a>
 	{/if}
 
 	<div class="categbar" align="right" >
