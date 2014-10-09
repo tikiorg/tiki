@@ -39,20 +39,32 @@ $iconset = array(
     'comments' => array(
         'class' => 'fa fa-comments-o',
     ),
-	'delete' => array( 
-		'class' => 'fa fa-remove',
-	),
+    'delete' => array(
+        'class' => 'fa fa-times',
+    ),
     'edit' => array(
         'class' => 'fa fa-edit',
     ),
 	'export' => array( 
-		'class' => 'fa fa-download',
+		'class' => 'fa fa-upload',
 	),
 	'file-archive' => array( 
 		'class' => 'fa fa-file-archive-o',
 	),
+	'group' => array( 
+		'class' => 'fa fa-group',
+	),
+	'group-watch' => array( 
+		'class' => 'fa fa-group',
+	),
+	'help' => array( 
+		'class' => 'fa fa-question',
+	),
+	'history' => array( 
+		'class' => 'fa fa-history',
+	),
 	'import' => array( 
-		'class' => 'fa fa-upload',
+		'class' => 'fa fa-download',
 	),
 	'list' => array( 
 		'class' => 'fa fa-list',
@@ -67,18 +79,27 @@ $iconset = array(
 		'class' => 'fa fa-remove',
 	),
 	'rss' => array( 
-		'class' => 'fa fa-rss-square',
+		'class' => 'fa fa-rss',
 	),
 	'search' => array( 
 		'class' => 'fa fa-search',
 	),
+	'settings' => array( 
+		'class' => 'fa fa-wrench',
+	),
     'stop-watching' => array(
         'class' => 'fa fa-eye-slash',
     ),
+	'trackers' => array(
+		'class' => 'fa fa-database',
+	),
+	'trackerfields' => array(
+		'class' => 'fa fa-th-list',
+	),
 	'trash' => array(
 		'class' => 'fa fa-trash-o',
 	),
     'watch' => array(
-        'class' => 'fa fa-eye-o',
+        'class' => 'fa fa-eye',
     ),
 );

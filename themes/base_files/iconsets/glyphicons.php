@@ -22,11 +22,26 @@ $iconset = array(
     'comments' => array(
         'class' => 'glyphicon glyphicon-comment',
     ),
+    'delete' => array(
+        'class' => 'glyphicon glyphicon-remove',
+    ),
     'edit' => array(
         'class' => 'glyphicon glyphicon-edit',
     ),
+	'export' => array( 
+		'class' => 'glyphicon glyphicon-export',
+	),
 	'file-archive' => array( 
 		'class' => 'glyphicon glyphicon-floppy-save',
+	),
+	'help' => array( 
+		'class' => 'glyphicon glyphicon-question-sign',
+	),
+	'history' => array( 
+		'class' => 'glyphicon glyphicon-time',
+	),
+	'import' => array( 
+		'class' => 'glyphicon glyphicon-import',
 	),
     'post' => array(
         'class' => 'glyphicon glyphicon-pencil',
@@ -35,7 +50,10 @@ $iconset = array(
         'class' => 'glyphicon glyphicon-print',
     ),
     'rss' => array(
-        'class' => 'glyphicon glyphicon-rss',
+        'class' => 'glyphicon glyphicon-bullhorn',
+    ),
+	'settings' => array(
+        'class' => 'glyphicon glyphicon-cog',
     ),
     'stop-watching' => array(
         'class' => 'glyphicon glyphicon-close',

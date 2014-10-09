@@ -22,11 +22,32 @@ $iconset = array(
     'comments' => array(
         'class' => 'fa fa-comments-o',
     ),
+    'delete' => array(
+        'class' => 'fa fa-times',
+    ),
     'edit' => array(
         'class' => 'fa fa-edit',
     ),
+	'export' => array( 
+		'class' => 'fa fa-upload',
+	),
 	'file-archive' => array( 
 		'class' => 'fa fa-file-archive-o',
+	),
+	'group' => array( 
+		'class' => 'fa fa-group',
+	),
+	'group-watch' => array( 
+		'class' => 'fa fa-group',
+	),
+	'help' => array( 
+		'class' => 'fa fa-question',
+	),
+	'history' => array( 
+		'class' => 'fa fa-history',
+	),
+	'import' => array( 
+		'class' => 'fa fa-download',
 	),
     'post' => array(
         'class' => 'fa fa-pencil',
@@ -35,8 +56,11 @@ $iconset = array(
         'class' => 'fa fa-print',
     ),
     'rss' => array(
-        'class' => 'fa fa-rss-square',
+        'class' => 'fa fa-rss',
     ),
+	'settings' => array( 
+		'class' => 'fa fa-wrench',
+	),
     'stop-watching' => array(
         'class' => 'fa fa-eye-slash',
     ),
@@ -44,6 +68,6 @@ $iconset = array(
         'class' => 'fa fa-trash-o',
     ),
     'watch' => array(
-        'class' => 'fa fa-eye-o',
+        'class' => 'fa fa-eye',
     ),
 );

@@ -23,9 +23,36 @@ $iconset = array(
     'comments' => array(
         'image_file_name' => 'comments.png',
     ),
+    'delete' => array(
+        'image_file_name' => 'cross.png',
+    ),
     'edit' => array(
         'image_file_name' => 'page_edit.png',
     ),
+	'export' => array( 
+		'image_file_name' => 'disk.png',
+	),
+	'file-archive' => array( 
+		'image_file_name' => 'folder.png',
+	),
+	'history' => array( 
+		'image_file_name' => 'database.png',
+	),
+	'history' => array( 
+		'image_file_name' => 'database.png',
+	),
+	'group' => array( 
+		'image_file_name' => 'group.png',
+	),
+	'group-watch' => array( 
+		'image_file_name' => 'eye_group.png',
+	),
+	'help' => array( 
+		'image_file_name' => 'help.png',
+	),
+	'import' => array( 
+		'image_file_name' => 'upload.png',
+	),
     'post' => array(
         'image_file_name' => 'pencil_add.png',
     ),
@@ -34,6 +61,9 @@ $iconset = array(
     ),
     'rss' => array(
         'image_file_name' => 'feed.png',
+    ),
+	'settings' => array(
+        'image_file_name' => 'wrench.png',
     ),
     'stop-watching' => array(
         'image_file_name' => 'no-eye.png',

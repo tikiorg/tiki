@@ -1,23 +1,29 @@
 {* $Id$ *}
-{title url="tiki-view_tracker.php?trackerId=$trackerId" adm="trackers"}{tr}Tracker:{/tr} {$tracker_info.name}{/title}
-
+{title url="tiki-view_tracker.php?trackerId=$trackerId" adm="trackers"}{$tracker_info.name}{/title}
+{if !empty($tracker_info.description)}
+	{if $tracker_info.descriptionIsParsed eq 'y'}
+		<div class="description help-block">{wiki}{$tracker_info.description}{/wiki}</div>
+	{else}
+		<div class="description help-block">{$tracker_info.description|escape|nl2br}</div>
+	{/if}
+{/if}
 <div class="t_navbar">
 	 {if $prefs.feature_group_watches eq 'y' and ( $tiki_p_admin_users eq 'y' or $tiki_p_admin eq 'y' )}
-	 	 <a class="btn btn-default" href="tiki-object_watches.php?objectId={$trackerId|escape:"url"}&amp;watch_event=tracker_modified&amp;objectType=tracker&amp;objectName={$tracker_info.name|escape:"url"}&amp;objectHref={'tiki-view_tracker.php?trackerId='|cat:$trackerId|escape:"url"}" class="icon">{icon _id='eye_group' alt="{tr}Group Monitor{/tr}" align='right' hspace="1"}</a>
+	 	 <a class="btn btn-default" href="tiki-object_watches.php?objectId={$trackerId|escape:"url"}&amp;watch_event=tracker_modified&amp;objectType=tracker&amp;objectName={$tracker_info.name|escape:"url"}&amp;objectHref={'tiki-view_tracker.php?trackerId='|cat:$trackerId|escape:"url"}" title="{tr}Group Watch{/tr}">{icon name="group-watch"}</a>
 	{/if}
 	{if $prefs.feature_user_watches eq 'y' and $tiki_p_watch_trackers eq 'y' and $user}
 		{if $user_watching_tracker ne 'y'}
-			<a class="btn btn-default" href="tiki-view_tracker.php?trackerId={$trackerId}&amp;watch=add" title="{tr}Monitor{/tr}">{icon _id='eye' align="right" hspace="1" alt="{tr}Monitor{/tr}"}</a>
+			<a class="btn btn-default" href="tiki-view_tracker.php?trackerId={$trackerId}&amp;watch=add" title="{tr}Watch{/tr}">{icon name="watch"}</a>
 		{else}
-			<a class="btn btn-default" href="tiki-view_tracker.php?trackerId={$trackerId}&amp;watch=stop" title="{tr}Stop Monitor{/tr}">{icon _id='no_eye' align="right" hspace="1" alt="{tr}Stop Monitor{/tr}"}</a>
+			<a class="btn btn-default" href="tiki-view_tracker.php?trackerId={$trackerId}&amp;watch=stop" title="{tr}Stop Watching{/tr}">{icon name="stop-watching"}</a>
 		{/if}
 	{/if}
 
 	{if $prefs.feed_tracker eq "y"}
-		<a class="btn btn-default" href="tiki-tracker_rss.php?trackerId={$trackerId}">{icon _id='feed' align="right" hspace="1" alt="{tr}RSS feed{/tr}"}</a>
+		<a class="btn btn-default" href="tiki-tracker_rss.php?trackerId={$trackerId}" title="{tr}RSS{/tr}">{icon name="rss"}</a>
 	{/if}
 	{if $tiki_p_admin_trackers eq "y"}
-		<a class="btn btn-default" title="{tr}Import{/tr}" class="import dialog" href="{service controller=tracker action=import_items trackerId=$trackerId}">{icon _id='upload' align="right" alt="{tr}Import{/tr}"}</a>
+		<a class="btn btn-default" title="{tr}Import{/tr}" class="import dialog" href="{service controller=tracker action=import_items trackerId=$trackerId}">{icon name="import"}</a>
 		{jq}
 			$('.import.dialog').click(function () {
 				var link = this;
@@ -34,7 +40,7 @@
 		{/jq}
 	{/if}
 	{if $tiki_p_export_tracker eq "y"}
-		<a class="btn btn-default" title="{tr}Export{/tr}" class="export dialog" href="{service controller=tracker action=export trackerId=$trackerId}">{icon _id='disk' align="right" alt="{tr}Export{/tr}"}</a>
+		<a class="btn btn-default" title="{tr}Export{/tr}" class="export dialog" href="{service controller=tracker action=export trackerId=$trackerId}">{icon name="export"}</a>
 		{jq}
 			$('.export.dialog').click(function () {
 				var link = this;
@@ -53,7 +59,7 @@
 
 	{if $tiki_p_create_tracker_items eq 'y' && $prefs.tracker_legacy_insert neq 'y'}
 		<a class="btn btn-default" href="{bootstrap_modal controller=tracker action=insert_item trackerId=$trackerId}">
-			{glyph name=plus}
+			{icon name="add"}
 			{tr}Create Item{/tr}
 		</a>
 	{/if}
@@ -71,14 +77,6 @@
 		{/if}
 	{/if}
 </div>
-
-{if !empty($tracker_info.description)}
-	{if $tracker_info.descriptionIsParsed eq 'y'}
-		<div class="description help-block">{wiki}{$tracker_info.description}{/wiki}</div>
-	{else}
-		<div class="description help-block">{$tracker_info.description|escape|nl2br}</div>
-	{/if}
-{/if}
 
 {if !empty($mail_msg)}
 	<div class="wikitext">{$mail_msg}</div>
@@ -129,7 +127,7 @@
 								$sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}">{tr}Created{/tr}</a></th>
 							{/if}
 							{if $tracker_info.showLastModif eq 'y'}
-								<th><a href="tiki-view_tracker.php?status={$status}&amp;{if $initial}initial={$initial}&amp;{/if}find={$find}&amp;trackerId={$trackerId}{if $offset}&amp;offset={$offset}{/if}&amp;sort_mode={if $sort_mode eq 'lastModif_desc'}lastModif_asc{else}lastModif_desc{/if}">{tr}lastModif{/tr}</a></th>
+								<th><a href="tiki-view_tracker.php?status={$status}&amp;{if $initial}initial={$initial}&amp;{/if}find={$find}&amp;trackerId={$trackerId}{if $offset}&amp;offset={$offset}{/if}&amp;sort_mode={if $sort_mode eq 'lastModif_desc'}lastModif_asc{else}lastModif_desc{/if}">{tr}Last Modified{/tr}</a></th>
 							{/if}
 							{if $tracker_info.useComments eq 'y' and ($tracker_info.showComments eq 'y' || $tracker_info.showLastComment eq 'y') and $tiki_p_tracker_view_comments ne 'n'}
 								<th{if $tracker_info.showLastComment ne 'y'} style="width:5%"{/if}>{tr}Coms{/tr}</th>
@@ -192,13 +190,13 @@
 									<td class="action">
 
 										{if $prefs.tracker_legacy_insert neq 'y'}
-											<a href="{bootstrap_modal controller=tracker action=update_item trackerId=$trackerId itemId=$items[user].itemId}">{icon _id='pencil' alt="{tr}Edit{/tr}"}</a>
+											<a class="btn btn-default btn-sm" href="{bootstrap_modal controller=tracker action=update_item trackerId=$trackerId itemId=$items[user].itemId}" title="{tr}Edit{/tr}">{icon name="edit"}</a>
 										{else}
 											<a class="link" href="tiki-view_tracker_item.php?itemId={$items[user].itemId}&amp;show=mod" title="{tr}View/Edit{/tr}">{icon _id='pencil' alt="{tr}View/Edit{/tr}"}</a>
 										{/if}
-										<a class="link" href="{bootstrap_modal controller=tracker action=remove_item trackerId=$trackerId itemId=$items[user].itemId}" title="{tr}Delete{/tr}">{icon _id='cross' alt="{tr}Delete{/tr}"}</a>
+										<a class="btn btn-default btn-sm" href="{bootstrap_modal controller=tracker action=remove_item trackerId=$trackerId itemId=$items[user].itemId}" title="{tr}Delete{/tr}">{icon name="delete"}</a>
 										{if $tiki_p_admin_trackers eq 'y'}
-											<a class="link" href="tiki-tracker_view_history.php?itemId={$items[user].itemId}" title="{tr}History{/tr}">{icon _id='database' alt="{tr}History{/tr}"}</a>
+											<a class="btn btn-default btn-sm" href="tiki-tracker_view_history.php?itemId={$items[user].itemId}" title="{tr}History{/tr}">{icon name="history"}</a>
 										{/if}
 									</td>
 								{/if}
