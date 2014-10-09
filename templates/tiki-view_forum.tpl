@@ -53,17 +53,15 @@
 
 	{if $user and $prefs.feature_user_watches eq 'y'}
 		{if $user_watching_forum_topic_and_thread eq 'n'}
-			<a class="btn btn-default pull-right" href="tiki-view_forum.php?forumId={$forumId}&amp;watch_event=forum_post_topic_and_thread&amp;watch_object={$forumId}&amp;watch_action=add" title="{tr}Monitor Topics and Threads of this Forum{/tr}">{icon _id='eye_magnifier' alt="{tr}Monitor Topics and Threads of this Forum{/tr}"}</a>
+			<a class="btn btn-default pull-right" href="tiki-view_forum.php?forumId={$forumId}&amp;watch_event=forum_post_topic_and_thread&amp;watch_object={$forumId}&amp;watch_action=add" title="{tr}Monitor Topics and Threads of this Forum{/tr}" title="{tr}Monitor Topics and Threads of this Forum{/tr}>{icon name="watch"}</a>
 		{else}
-			<a class="btn btn-default pull-right" href="tiki-view_forum.php?forumId={$forumId}&amp;watch_event=forum_post_topic_and_thread&amp;watch_object={$forumId}&amp;watch_action=remove" title="{tr}Stop Monitoring Topics and Threads of this Forum{/tr}">{icon _id='no_eye' alt="{tr}Stop Monitoring Topics and Threads of this Forum{/tr}"}</a>
+			<a class="btn btn-default pull-right" href="tiki-view_forum.php?forumId={$forumId}&amp;watch_event=forum_post_topic_and_thread&amp;watch_object={$forumId}&amp;watch_action=remove" title="{tr}Stop Monitoring Topics and Threads of this Forum{/tr}" title="{tr}Stop Monitoring Topics and Threads of this Forum{/tr}">{icon name="stop-watching"}</a>
 		{/if}
 	{/if}
 
     {if $prefs.feature_group_watches eq 'y' and ( $tiki_p_admin_users eq 'y' or $tiki_p_admin eq 'y' )}
-		<a href="tiki-object_watches.php?objectId={$forumId|escape:"url"}&amp;watch_event=forum_post_topic&amp;objectType=forum&amp;objectName={$forum_info.name|escape:"url"}&amp;objectHref={'tiki-view_forum.php?forumId='|cat:$forumId|escape:"url"}" class="icon">{icon _id='eye_group' alt="{tr}Group Monitor Topics of this Forum{/tr}"}</a>
-	{/if}
 	{if $prefs.feature_group_watches eq 'y' and ( $tiki_p_admin_users eq 'y' or $tiki_p_admin eq 'y' )}
-		<a href="tiki-object_watches.php?objectId={$forumId|escape:"url"}&amp;watch_event=forum_post_topic_and_thread&amp;objectType=forum&amp;objectName={$forum_info.name|escape:"url"}&amp;objectHref={'tiki-view_forum.php?forumId='|cat:$forumId|escape:"url"}" class="icon">{icon _id='eye_group' alt="{tr}Group Monitor Topics and Threads of this Forum{/tr}"}</a>
+		<a href="tiki-object_watches.php?objectId={$forumId|escape:"url"}&amp;watch_event=forum_post_topic_and_thread&amp;objectType=forum&amp;objectName={$forum_info.name|escape:"url"}&amp;objectHref={'tiki-view_forum.php?forumId='|cat:$forumId|escape:"url"}" class="icon"  title="{tr}Group Monitor Topics and Threads of this Forum{/tr}">{icon name="group-watch"}</a>
 	{/if}
 
 	<div class="categbar" align="right" >
