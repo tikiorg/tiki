@@ -59,7 +59,7 @@ function prefs_smarty_list()
 			),
 		),
 		'smarty_compilation' => array(
-			'name' => tra('Smarty Compilation'),
+			'name' => tra('Smarty compilation'),
 			'description' => tra('Indicates when the template cache should be refreshed.'),
 			'type' => 'list',
 			'options' => array(
