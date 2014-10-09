@@ -56,6 +56,10 @@ class TrackerWriter
 	private function getItemIdLookup()
 	{
 		$pk = $this->schema->getPrimaryKey();
+		if (! $pk) {
+			throw new \Exception(tr('Primary Key not defined'));
+		}
+
 		$pkField = $pk->getField();
 
 		if ($pkField == 'itemId') {
