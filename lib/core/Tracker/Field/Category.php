@@ -11,7 +11,7 @@
  * Letter key: ~e~
  *
  */
-class Tracker_Field_Category extends Tracker_Field_Abstract implements Tracker_Field_Synchronizable
+class Tracker_Field_Category extends Tracker_Field_Abstract implements Tracker_Field_Synchronizable, Tracker_Field_Exportable
 {
 	public static function getTypes()
 	{
@@ -102,7 +102,7 @@ class Tracker_Field_Category extends Tracker_Field_Abstract implements Tracker_F
 			$selected = array();
 		} elseif ($this->getItemId() && !isset($requestData[$key])) {
 			// only show existing category of not receiving request, otherwise might be uncategorization in progress
-			$selected = $this->getCategories();
+			$selected = $this->getCategories($this->getItemId());
 		} else {
 			$selected = TikiLib::lib('categ')->get_default_categories();
 		}
@@ -252,9 +252,9 @@ class Tracker_Field_Category extends Tracker_Field_Abstract implements Tracker_F
 		return $cache[$fieldId];
 	}
 
-	private function getCategories()
+	private function getCategories($itemId)
 	{
-		return TikiLib::lib('categ')->get_object_categories('trackeritem', $this->getItemId());
+		return TikiLib::lib('categ')->get_object_categories('trackeritem', $itemId);
 	}
 
 	public function importRemote($value)
@@ -301,6 +301,79 @@ class Tracker_Field_Category extends Tracker_Field_Abstract implements Tracker_F
 		}
 
 		return implode(',', $parts);
+	}
+
+	function getTabularSchema()
+	{
+		$schema = new Tracker\Tabular\Schema($this->getTrackerDefinition());
+
+		$permName = $this->getConfiguration('permName');
+		$name = $this->getConfiguration('name');
+		$type = $this->getOption('inputtype');
+
+		$sourceCategories = $this->getApplicableCategories();
+		$applicable = $this->getIds($sourceCategories);
+		$invert = array_flip(array_map(function ($item) {
+			return $item['name'];
+		}, $sourceCategories));
+
+		$matching = function ($extra) use ($applicable) {
+			if (isset($extra['categories'])) {
+				// Directly from search results
+				return array_intersect($extra['categories'], $applicable);
+			} elseif (isset($extra['itemId'])) {
+				// Not loaded, fetch list
+				$categories = $this->getCategories($extra['itemId']);
+				return array_intersect($categories, $applicable);
+			} else {
+				return [];
+			}
+		};
+
+		if ($type == 'd' || $type == 'radio') {
+
+			// Works for single selection only
+			$schema->addNew($permName, 'id')
+				->setLabel($name)
+				->addQuerySource('categories', 'categories')
+				->setRenderTransform(function ($value, $extra) use ($matching) {
+					$categories = $matching($extra);
+					if (count($categories) > 1) {
+						return '#invalid';
+					} else {
+						return reset($categories);
+					}
+				})
+				->setParseIntoTransform(function (& $info, $value) use ($permName) {
+					if ($value != '#invalid') {
+						$info['fields'][$permName] = $value;
+					}
+				})
+				;
+
+			$schema->addNew($permName, 'name')
+				->setLabel($name)
+				->addQuerySource('categories', 'categories')
+				->setRenderTransform(function ($value, $extra) use ($matching, $sourceCategories) {
+					$categories = $matching($extra);
+					if (count($categories) > 1) {
+						return '#invalid';
+					} else {
+						$first = reset($categories);
+						if (isset($sourceCategories[$first])) {
+							return $sourceCategories[$first]['name'];
+						}
+					}
+				})
+				->setParseIntoTransform(function (& $info, $value) use ($permName, $invert) {
+					if (isset($invert[$value])) {
+						$info['fields'][$permName] = $invert[$value];
+					}
+				})
+				;
+		}
+
+		return $schema;
 	}
 }
 
