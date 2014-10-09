@@ -227,25 +227,25 @@ class HeaderLib
 
 		// Handle theme's special CSS file for IE6 hacks
 		$back .= "<!--[if lt IE 7]>\n"
-				.'<link rel="stylesheet" href="' . $this->convert_cdn('css/ie6.css') . '" type="text/css" />'."\n";
+				.'<link rel="stylesheet" href="' . $this->convert_cdn('themes/base_files/feature_css/ie6.css') . '" type="text/css" />'."\n";
 		if ( $style_ie6_css != '' ) {
 			$back .= '<link rel="stylesheet" href="'.smarty_modifier_escape($this->convert_cdn($style_ie6_css)).'" type="text/css" />'."\n";
 		}
 		$back .= "<![endif]-->\n";
 		$back .= "<!--[if IE 7]>\n"
-				.'<link rel="stylesheet" href="css/ie7.css" type="text/css" />'."\n";
+				.'<link rel="stylesheet" href="themes/base_files/feature_css/ie7.css" type="text/css" />'."\n";
 		if ( $style_ie7_css != '' ) {
 			$back .= '<link rel="stylesheet" href="'.smarty_modifier_escape($this->convert_cdn($style_ie7_css)).'" type="text/css" />'."\n";
 		}
 		$back .= "<![endif]-->\n";
 		$back .= "<!--[if IE 8]>\n"
-				.'<link rel="stylesheet" href="css/ie8.css" type="text/css" />'."\n";
+				.'<link rel="stylesheet" href="themes/base_files/feature_css/ie8.css" type="text/css" />'."\n";
 		if ( $style_ie8_css != '' ) {
 			$back .= '<link rel="stylesheet" href="'.smarty_modifier_escape($this->convert_cdn($style_ie8_css)).'" type="text/css" />'."\n";
 		}
 		$back .= "<![endif]-->\n";
 		$back .= "<!--[if IE 9]>\n"
-				.'<link rel="stylesheet" href="css/ie9.css" type="text/css" />'."\n";
+				.'<link rel="stylesheet" href="themes/base_files/feature_css/ie9.css" type="text/css" />'."\n";
 		if ( $style_ie9_css != '' ) {
 			$back .= '<link rel="stylesheet" href="'.smarty_modifier_escape($this->convert_cdn($style_ie9_css)).'" type="text/css" />'."\n";
 		}
