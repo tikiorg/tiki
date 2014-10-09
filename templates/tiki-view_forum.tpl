@@ -53,7 +53,7 @@
 
 	{if $user and $prefs.feature_user_watches eq 'y'}
 		{if $user_watching_forum_topic_and_thread eq 'n'}
-			<a class="btn btn-default pull-right" href="tiki-view_forum.php?forumId={$forumId}&amp;watch_event=forum_post_topic_and_thread&amp;watch_object={$forumId}&amp;watch_action=add" title="{tr}Monitor Topics and Threads of this Forum{/tr}" title="{tr}Monitor Topics and Threads of this Forum{/tr}>{icon name="watch"}</a>
+			<a class="btn btn-default pull-right" href="tiki-view_forum.php?forumId={$forumId}&amp;watch_event=forum_post_topic_and_thread&amp;watch_object={$forumId}&amp;watch_action=add" title="{tr}Monitor Topics and Threads of this Forum{/tr}" title="{tr}Monitor Topics and Threads of this Forum{/tr}">{icon name="watch"}</a>
 		{else}
 			<a class="btn btn-default pull-right" href="tiki-view_forum.php?forumId={$forumId}&amp;watch_event=forum_post_topic_and_thread&amp;watch_object={$forumId}&amp;watch_action=remove" title="{tr}Stop Monitoring Topics and Threads of this Forum{/tr}" title="{tr}Stop Monitoring Topics and Threads of this Forum{/tr}">{icon name="stop-watching"}</a>
 		{/if}
