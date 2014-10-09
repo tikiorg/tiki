@@ -44,7 +44,7 @@ if ( isset($section) and isset($sections[$section])) {
 	}
 
 	$smarty->assign('freetags', $tags);
-	$headerlib->add_cssfile('css/freetags.css');
+	$headerlib->add_cssfile('themes/base_files/feature_css/freetags.css');
 
 	if ( $tiki_p_freetags_tag == 'y' && $prefs['freetags_multilingual'] == 'y' ) {
 		$ft_lang = null;
