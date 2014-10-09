@@ -11,7 +11,7 @@
  * Letter key: ~q~
  *
  */
-class Tracker_Field_AutoIncrement extends Tracker_Field_Abstract
+class Tracker_Field_AutoIncrement extends Tracker_Field_Abstract implements Tracker_Field_Exportable
 {
 	public static function getTypes()
 	{
@@ -64,6 +64,16 @@ class Tracker_Field_AutoIncrement extends Tracker_Field_Abstract
 		$ins_id = $this->getInsertId();
 		$value = isset($requestData[$ins_id]) ? $requestData[$ins_id] : $this->getValue();
 
+		return array('value' => $value);
+	}
+	
+	function renderInput($context = array())
+	{
+		return $this->renderTemplate('trackerinput/autoincrement.tpl', $context);
+	}
+
+	protected function renderInnerOutput($context)
+	{
 		$append = $this->getOption('prepend');
 		if (!empty($append)) {
 			$value = "<span class='formunit'>$append</span>" . $value;
@@ -73,13 +83,8 @@ class Tracker_Field_AutoIncrement extends Tracker_Field_Abstract
 		if (!empty($prepend)) {
 			$value .= "<span class='formunit'>$prepend</span>";
 		}
-			
-		return array('value' => $value);
-	}
-	
-	function renderInput($context = array())
-	{
-		return $this->renderTemplate('trackerinput/autoincrement.tpl', $context);
+
+		return $value;
 	}
 
 	function handleSave($value, $oldValue)
@@ -99,6 +104,30 @@ class Tracker_Field_AutoIncrement extends Tracker_Field_Abstract
 		return array(
 			'value' => $value,
 		);
+	}
+
+	function getTabularSchema()
+	{
+		$schema = new Tracker\Tabular\Schema($this->getTrackerDefinition());
+
+		$permName = $this->getConfiguration('permName');
+		$prepend = $this->getOption('prepend');
+		$append = $this->getOption('append');
+
+		$schema->addNew($permName, 'default')
+			->setLabel($this->getConfiguration('name'))
+			->setRenderTransform(function ($value) {
+				return $value;
+			})
+			;
+		$schema->addNew($permName, 'formatted')
+			->setLabel($this->getConfiguration('name'))
+			->setRenderTransform(function ($value) use ($prepend, $append) {
+				return $prepend . $value . $append;
+			})
+			;
+
+		return $schema;
 	}
 }
 
