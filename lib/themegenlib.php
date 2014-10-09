@@ -180,7 +180,7 @@ class ThemeGenLib
 
 		// tiki themegen include
 		$headerlib->add_jsfile('lib/jquery_tiki/tiki-themegenerator.js');
-		$headerlib->add_cssfile('css/admin.css');
+		$headerlib->add_cssfile('themes/base_files/feature_css/admin.css');
 
 		// set up colorpicker
 		$headerlib->add_cssfile('vendor/jquery/plugins/colorpicker/css/colorpicker.css');

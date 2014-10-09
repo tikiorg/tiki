@@ -165,5 +165,5 @@ if (isMySQLFulltextSearchSupported()) {
 	$smarty->assign('no_fulltext_support', true);
 }
 
-$headerlib->add_cssfile('css/admin.css');
+$headerlib->add_cssfile('themes/base_files/feature_css/admin.css');
 ask_ticket('admin-inc-search');

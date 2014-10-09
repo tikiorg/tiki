@@ -97,7 +97,7 @@ if ( $selectedId ) {
 	}
 }
 
-$headerlib->add_cssfile('css/admin.css');		// to display the prefs properly
+$headerlib->add_cssfile('themes/base_files/feature_css/admin.css');		// to display the prefs properly
 
 $headtitle = tra('Perspectives');
 $description = tra('Edit Perspectives');

@@ -662,7 +662,7 @@ if (isset($_REQUEST['page'])) {
 	$smarty->assign('headtitle', breadcrumb_buildHeadTitle($crumbs));
 	$smarty->assign('description', $crumbs[0]->description);
 }
-$headerlib->add_cssfile('css/admin.css');
+$headerlib->add_cssfile('themes/base_files/feature_css/admin.css');
 if (isset($admintitle) && isset($description)) {
 	$crumbs[] = new Breadcrumb($admintitle, $description, $url, $helpUrl, $helpDescription);
 	$smarty->assign_by_ref('admintitle', $admintitle);

@@ -13,5 +13,5 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 if (isset($_REQUEST["pollprefs"])) {
 	check_ticket('admin-inc-polls');
 }
-$headerlib->add_cssfile('css/admin.css');
+$headerlib->add_cssfile('themes/base_files/feature_css/admin.css');
 ask_ticket('admin-inc-polls');

@@ -486,7 +486,7 @@ $headerlib->add_css(
 	' }'
 );
 
-$headerlib->add_cssfile('css/admin.css');
+$headerlib->add_cssfile('themes/base_files/feature_css/admin.css');
 $headerlib->add_jsfile('lib/modules/tiki-admin_modules.js');
 
 $sameurl_elements = array('offset', 'sort_mode', 'where', 'find');

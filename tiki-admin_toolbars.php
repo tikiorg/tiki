@@ -251,7 +251,7 @@ sort($display_c);
 sort($display_p);
 sort($display_w);
 
-$headerlib->add_cssfile('css/admin.css');
+$headerlib->add_cssfile('themes/base_files/feature_css/admin.css');
 
 if (count($_REQUEST) == 0) {
 	$smarty->assign('autoreload', 'on');
