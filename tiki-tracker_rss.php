@@ -172,6 +172,7 @@ if ($output["data"] == "EMPTY") {
 		} elseif (isset($aux_subject)) {
 			$data[$titleId] .= (empty($data[$titleId])?'': ' - ') . $aux_subject;
 		}
+		$data[$titleId] = strip_tags($data[$titleId]);
 		$data["id"] = $_REQUEST["$id"];
 		$data["field_values"] = null;
 		$data['sefurl'] = smarty_modifier_sefurl($data['itemId'], 'trackeritem');
