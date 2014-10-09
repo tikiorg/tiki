@@ -29,6 +29,9 @@ $iconset = array(
     'edit' => array(
         'image_file_name' => 'page_edit.png',
     ),
+	'error' => array( 
+		'image_file_name' => 'exclamation.png',
+	),
 	'export' => array( 
 		'image_file_name' => 'disk.png',
 	),
@@ -53,6 +56,9 @@ $iconset = array(
 	'import' => array( 
 		'image_file_name' => 'upload.png',
 	),
+	'info' => array( 
+		'image_file_name' => 'information.png',
+	),
     'permission' => array(
         'image_file_name' => 'key.png',
     ),
@@ -71,8 +77,14 @@ $iconset = array(
     'stop-watching' => array(
         'image_file_name' => 'no-eye.png',
     ),
+	'success' => array(
+        'image_file_name' => 'accept.png',
+    ),
     'trash' => array(
         'image_file_name' => 'bin.png',
+    ),
+    'warning' => array(
+        'image_file_name' => 'sticky.png',
     ),
     'watch' => array(
         'image_file_name' => 'eye.png',

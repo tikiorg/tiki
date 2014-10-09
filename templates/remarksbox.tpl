@@ -6,7 +6,7 @@
 		<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
 	{/if}
 	<h4>
-		{glyph name=$remarksbox_icon}
+		{icon name="$remarksbox_icon"}
 		&nbsp;
 		{$remarksbox_title|escape}
 	</h4>

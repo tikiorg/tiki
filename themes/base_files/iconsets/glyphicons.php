@@ -28,6 +28,9 @@ $iconset = array(
     'edit' => array(
         'class' => 'glyphicon glyphicon-edit',
     ),
+	'error' => array( 
+		'class' => 'glyphicon glyphicon-fire',
+	),
 	'export' => array( 
 		'class' => 'glyphicon glyphicon-export',
 	),
@@ -43,9 +46,12 @@ $iconset = array(
 	'import' => array( 
 		'class' => 'glyphicon glyphicon-import',
 	),
-//    'permission' => array(
-//        'class' => 'glyphicon glyphicon-key',
-//    ),
+	'info' => array( 
+		'class' => 'glyphicon glyphicon-info-sign',
+	),
+	'permission' => array(
+		'class' => 'glyphicon glyphicon-key',
+	),
     'post' => array(
         'class' => 'glyphicon glyphicon-pencil',
     ),
@@ -61,8 +67,14 @@ $iconset = array(
     'stop-watching' => array(
         'class' => 'glyphicon glyphicon-close',
     ),
+	'success' => array(
+        'class' => 'glyphicon glyphicon-ok',
+    ),
     'trash' => array(
         'class' => 'glyphicon glyphicon-trash',
+    ),
+	'warning' => array(
+        'class' => 'glyphicon glyphicon-warning-sign',
     ),
     'watch' => array(
         'class' => 'glyphicon glyphicon-eye-open',

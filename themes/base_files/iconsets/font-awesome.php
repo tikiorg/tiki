@@ -28,6 +28,9 @@ $iconset = array(
     'edit' => array(
         'class' => 'fa fa-edit',
     ),
+	'error' => array(
+        'class' => 'fa fa-exclamation-circle',
+    ),
 	'export' => array( 
 		'class' => 'fa fa-upload',
 	),
@@ -49,6 +52,9 @@ $iconset = array(
 	'import' => array( 
 		'class' => 'fa fa-download',
 	),
+	'info' => array( 
+		'class' => 'fa fa-info-circle',
+	),
     'permission' => array(
         'class' => 'fa fa-key',
     ),
@@ -67,8 +73,14 @@ $iconset = array(
     'stop-watching' => array(
         'class' => 'fa fa-eye-slash',
     ),
+	'success' => array(
+        'class' => 'fa fa-check-circle',
+    ),
     'trash' => array(
         'class' => 'fa fa-trash-o',
+    ),
+	'warning' => array(
+        'class' => 'fa fa-exclamation-triangle',
     ),
     'watch' => array(
         'class' => 'fa fa-eye',
