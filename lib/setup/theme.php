@@ -30,9 +30,9 @@ if ($prefs['feature_fixed_width'] === 'y') {
     );
 }
 
-// Always use tiki.css.
+// Always use tiki_base.css.
 // Add it first, so that it can be overriden in the custom themes
-$headerlib->add_cssfile("themes/base_files/css/tiki.css");
+$headerlib->add_cssfile("themes/base_files/css/tiki_base.css");
 
 // Then add Addon custom css first, so it can be overridden by themes
 foreach (TikiAddons::getPaths() as $path) {
@@ -79,7 +79,7 @@ if (empty($prefs['theme_active']) || $prefs['theme_active'] == 'default') {
 	}
 	// End legacy
 } else {
-	$headerlib->add_cssfile("themes/{$prefs['theme_active']}/css/tiki.css");
+	$headerlib->add_cssfile("themes/{$prefs['theme_active']}/css/tiki_base.css");
 	$prefs['jquery_ui_chosen_css'] = 'n';
 }
 //Add font-awesome
