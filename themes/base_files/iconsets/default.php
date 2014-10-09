@@ -69,6 +69,9 @@ $iconset = array(
 	'list' => array( 
 		'class' => 'fa fa-list',
 	),
+    'permission' => array(
+        'class' => 'fa fa-key',
+    ),
     'post' => array(
         'class' => 'fa fa-pencil',
     ),

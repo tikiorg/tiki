@@ -53,6 +53,9 @@ $iconset = array(
 	'import' => array( 
 		'image_file_name' => 'upload.png',
 	),
+    'permission' => array(
+        'image_file_name' => 'key.png',
+    ),
     'post' => array(
         'image_file_name' => 'pencil_add.png',
     ),

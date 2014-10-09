@@ -49,6 +49,9 @@ $iconset = array(
 	'import' => array( 
 		'class' => 'fa fa-download',
 	),
+    'permission' => array(
+        'class' => 'fa fa-key',
+    ),
     'post' => array(
         'class' => 'fa fa-pencil',
     ),

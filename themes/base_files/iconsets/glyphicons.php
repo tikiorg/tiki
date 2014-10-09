@@ -43,6 +43,9 @@ $iconset = array(
 	'import' => array( 
 		'class' => 'glyphicon glyphicon-import',
 	),
+//    'permission' => array(
+//        'class' => 'glyphicon glyphicon-key',
+//    ),
     'post' => array(
         'class' => 'glyphicon glyphicon-pencil',
     ),
