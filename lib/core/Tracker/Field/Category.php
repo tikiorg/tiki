@@ -179,6 +179,17 @@ class Tracker_Field_Category extends Tracker_Field_Abstract implements Tracker_F
 
 	public function handleSave($value, $oldValue)
 	{
+		if (is_array($value) && isset($value['incremental'])) {
+			// List of updates coming from import (see addCheckboxColumn)
+			$list = $value['incremental'];
+			$value = $this->getCategories($this->getItemId());
+
+			$value = array_diff($value, $list['-']);
+			$value = array_merge($value, $list['+']);
+			$value = array_unique($value);
+			$value = implode(',', $value);
+		}
+
 		return array(
 			'value' => $value,
 		);
@@ -318,16 +329,25 @@ class Tracker_Field_Category extends Tracker_Field_Abstract implements Tracker_F
 		}, $sourceCategories));
 
 		$matching = function ($extra) use ($applicable) {
+			static $lastId, $categories;
+
+			if ($lastId == $extra['itemId']) {
+				return $categories;
+			}
+
 			if (isset($extra['categories'])) {
 				// Directly from search results
-				return array_intersect($extra['categories'], $applicable);
+				$categories = array_intersect($extra['categories'], $applicable);
 			} elseif (isset($extra['itemId'])) {
 				// Not loaded, fetch list
 				$categories = $this->getCategories($extra['itemId']);
-				return array_intersect($categories, $applicable);
+				$categories = array_intersect($categories, $applicable);
 			} else {
-				return [];
+				$categories = [];
 			}
+
+			$lastId = $extra['itemId'];
+			return $categories;
 		};
 
 		if ($type == 'd' || $type == 'radio') {
@@ -335,6 +355,7 @@ class Tracker_Field_Category extends Tracker_Field_Abstract implements Tracker_F
 			// Works for single selection only
 			$schema->addNew($permName, 'id')
 				->setLabel($name)
+				->addQuerySource('itemId', 'object_id')
 				->addQuerySource('categories', 'categories')
 				->setRenderTransform(function ($value, $extra) use ($matching) {
 					$categories = $matching($extra);
@@ -353,6 +374,7 @@ class Tracker_Field_Category extends Tracker_Field_Abstract implements Tracker_F
 
 			$schema->addNew($permName, 'name')
 				->setLabel($name)
+				->addQuerySource('itemId', 'object_id')
 				->addQuerySource('categories', 'categories')
 				->setRenderTransform(function ($value, $extra) use ($matching, $sourceCategories) {
 					$categories = $matching($extra);
@@ -376,6 +398,7 @@ class Tracker_Field_Category extends Tracker_Field_Abstract implements Tracker_F
 			// Handle multi-selection fields
 			$schema->addNew($permName, 'multi-id')
 				->setLabel($name)
+				->addQuerySource('itemId', 'object_id')
 				->addQuerySource('categories', 'categories')
 				->setRenderTransform(function ($value, $extra) use ($matching) {
 					$categories = $matching($extra);
@@ -390,6 +413,7 @@ class Tracker_Field_Category extends Tracker_Field_Abstract implements Tracker_F
 
 			$schema->addNew($permName, 'multi-name')
 				->setLabel($name)
+				->addQuerySource('itemId', 'object_id')
 				->addQuerySource('categories', 'categories')
 				->setRenderTransform(function ($value, $extra) use ($matching, $sourceCategories) {
 					$categories = $matching($extra);
@@ -415,7 +439,48 @@ class Tracker_Field_Category extends Tracker_Field_Abstract implements Tracker_F
 				;
 		}
 
+		foreach ($sourceCategories as $cat) {
+			$this->addCheckboxColumn($schema, $matching, $permName, $cat['categId'], $cat['name']);
+		}
+
 		return $schema;
+	}
+
+	private function addCheckboxColumn($schema, $matching, $permName, $categId, $categName)
+	{
+		$schema->addNew($permName, 'check-' . $categId)
+			->setLabel($categName)
+			->addQuerySource('itemId', 'object_id')
+			->addQuerySource('categories', 'categories')
+			->setRenderTransform(function ($value, $extra) use ($matching, $categId) {
+				$categories = $matching($extra);
+
+				return in_array($categId, $categories) ? 'X' : '';
+			})
+			->setParseIntoTransform(function (& $info, $value) use ($permName, $categId) {
+				if (isset($info['fields'][$permName]) && ! isset($info['fields'][$permName]['incremental'])) {
+					// Looks like an other field took this over
+					// Do nothing
+					return;
+				}
+
+				// Queue updates to be handled by handleSave as we do not know
+				// which item we are operating on at this stage
+				if (! isset($info['fields'][$permName])) {
+					$info['fields'][$permName]['incremental'] = [
+						'+' => [],
+						'-' => [],
+					];
+				}
+
+				$value = trim($value);
+				if ($value == 'X' || $value == 'x') {
+					$info['fields'][$permName]['incremental']['+'][] = $categId;
+				} else {
+					$info['fields'][$permName]['incremental']['-'][] = $categId;
+				}
+			});
+			;
 	}
 }
 
