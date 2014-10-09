@@ -1877,7 +1877,7 @@ function prefs_feature_list($partial = false)
 			'default' => 'n',
 		),
 		'feature_site_report_email' => array(
-			'name' => tra('Webmaster Email'),
+			'name' => tra('Webmaster email'),
             'description' => tra(''),
 			'hint' => tra('Leave blank to use the default sender email'),
 			'type' => 'text',
@@ -1942,8 +1942,8 @@ function prefs_feature_list($partial = false)
 			'default' => 'y',				// include UI lib for more effects
 		),
 		'feature_jquery_ui_theme' => array(
-			'name' => tra('jQuery UI Theme'),
-            'description' => tra('jQuery UI Theme. Used in spreadsheet, for example.'),
+			'name' => tra('jQuery UI theme'),
+            'description' => tra('jQuery UI theme. Used in spreadsheet, for example.'),
 			'help' => 'JQuery#UI',
 			'type' => 'list',
 			'options' => array(

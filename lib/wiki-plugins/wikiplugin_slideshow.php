@@ -21,7 +21,7 @@ function wikiplugin_slideshow_info()
 				'name' => tra('Theme'),
 				'description' => tra('The theme you want to use for the slideshow, default will be what you choose from the admin panel under Look and Feel for jQuery UI'),
 				'filter' => 'text',
-				'default' => tra('Tiki jQuery UI Theme'),
+				'default' => tra('Tiki jQuery UI theme'),
 				'since' => '7.0',
 				'options' => array(
 					array('text' => tra('None') . ' (' . tra('styled by current theme') . ')', 'value' => 'none'),

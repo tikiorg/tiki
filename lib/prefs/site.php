@@ -125,7 +125,7 @@ function prefs_site_list()
 			),
 		),
 		'site_layout' => array(
-			'name' => tr('Site Layout'),
+			'name' => tr('Site layout'),
 			'description' => tr('Changes the overall site layout templates'),
 			'type' => 'list',
 			'default' => 'classic',
