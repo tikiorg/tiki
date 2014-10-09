@@ -98,25 +98,25 @@
 <td class="action">
 	{if ($user and $listpages[changes].user eq $user) or ($tiki_p_blog_admin eq 'y')}
 		{if ($tiki_p_admin eq 'y') or ($listpages[changes].individual eq 'n') or ($listpages[changes].individual_tiki_p_blog_create_blog eq 'y' )}
-			<a class="icon" href="tiki-edit_blog.php?blogId={$listpages[changes].blogId}">{icon _id='page_edit'}</a>
+			<a class="icon" href="tiki-edit_blog.php?blogId={$listpages[changes].blogId}" title="{tr}Edit{/tr}">{icon name="edit"}</a>
 		{/if}
 	{/if}
 	{if $tiki_p_blog_post eq 'y'}
 		{if ($tiki_p_admin eq 'y') or ($listpages[changes].individual eq 'n') or ($listpages[changes].individual_tiki_p_blog_post eq 'y' )}
 			{if ($user and $listpages[changes].user eq $user) or ($tiki_p_blog_admin eq 'y') or ($listpages[changes].public eq 'y')}
-				<a class="icon" href="tiki-blog_post.php?blogId={$listpages[changes].blogId}">{icon _id='pencil_add' alt="{tr}Post{/tr}"}</a>
+				<a class="icon" href="tiki-blog_post.php?blogId={$listpages[changes].blogId}" title="{tr}Post{/tr}">{icon name="post"}</a>
 			{/if}
 		{/if}
 	{/if}
 	{if $tiki_p_blog_admin eq 'y' and $listpages[changes].allow_comments eq 'y'}
-		<a class='icon' href='tiki-list_comments.php?types_section=blogs&amp;blogId={$listpages[changes].blogId}'>{icon _id='comments' alt="{tr}List all comments{/tr}" title="{tr}List all comments{/tr}"}</a>
+		<a class='icon' href='tiki-list_comments.php?types_section=blogs&amp;blogId={$listpages[changes].blogId}' title="{tr}List all comments{/tr}">{icon name="comments"}</a>
 	{/if}
 	{if $tiki_p_admin eq 'y' || $tiki_p_assign_perm_blog eq 'y'}
 		{permission_link mode=icon type="blog" permType="blogs" id=$listpages[changes].blogId title=$listpages[changes].title}
 	{/if}
         {if ($user and $listpages[changes].user eq $user) or ($tiki_p_blog_admin eq 'y')}
                 {if ($tiki_p_admin eq 'y') or ($listpages[changes].individual eq 'n') or ($listpages[changes].individual_tiki_p_blog_create_blog eq 'y' )}
-                        &nbsp;&nbsp;<a class="icon" href="tiki-list_blogs.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$listpages[changes].blogId}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
+                        &nbsp;&nbsp;<a class="icon" href="tiki-list_blogs.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$listpages[changes].blogId}" alt="{tr}Remove{/tr}">{icon name="delete"}</a>
                 {/if}
         {/if}
 	
