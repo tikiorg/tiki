@@ -34,7 +34,7 @@
 		<div class="panel-heading">
 			<div class="input-group">
 				<span class="input-group-addon">
-					{icon name=search}
+					{icon name="search"}
 				</span>
 				<input type="text" placeholder="{$object_selector.placeholder|escape}..." value="" class="filter form-control" autocomplete="off">
 				<div class="input-group-btn">
