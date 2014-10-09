@@ -48,8 +48,8 @@ function prefs_theme_list()
 			'tags' => array('basic'),
 		),
 		'theme_iconset' => array(
-			'name' => tr('Iconset'),
-			'description' => tr('Iconset used by the site.'),
+			'name' => tr('Icon set'),
+			'description' => tr('Icon set used by the site.'),
 			'type' => 'list',
 			'options' => $iconsets,
 			'default' => 'default',

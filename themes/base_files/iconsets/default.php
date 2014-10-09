@@ -14,7 +14,7 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
 }
 
 $iconset = array(
-	'_settings' => array( //Iconset settings
+	'_settings' => array( //Icon set settings
 		'iconset_name' => tr('Default'), //mandatory, this will be displayed as Iconset option in the Look&Feel admin UI
 		'iconset_description' => tr('The default system iconset'), //this will be displayed as Iconset description in the Look&Feel admin UI
 		'icon_path_svg' => '', //TODO The default path for svgs in the iconset so that you dont need to specify for each icon. You can override this for each icon using the path_svg option
