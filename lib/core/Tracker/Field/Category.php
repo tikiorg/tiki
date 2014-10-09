@@ -371,6 +371,48 @@ class Tracker_Field_Category extends Tracker_Field_Abstract implements Tracker_F
 					}
 				})
 				;
+		} else {
+
+			// Handle multi-selection fields
+			$schema->addNew($permName, 'multi-id')
+				->setLabel($name)
+				->addQuerySource('categories', 'categories')
+				->setRenderTransform(function ($value, $extra) use ($matching) {
+					$categories = $matching($extra);
+					return implode(';', $categories);
+				})
+				->setParseIntoTransform(function (& $info, $value) use ($permName) {
+					$values = explode(';', $value);
+					$values = array_map('trim', $values);
+					$info['fields'][$permName] = implode(',', array_filter($values));
+				})
+				;
+
+			$schema->addNew($permName, 'multi-name')
+				->setLabel($name)
+				->addQuerySource('categories', 'categories')
+				->setRenderTransform(function ($value, $extra) use ($matching, $sourceCategories) {
+					$categories = $matching($extra);
+					$categories = array_map(function ($cat) use ($sourceCategories) {
+						if (isset($sourceCategories[$cat])) {
+							return $sourceCategories[$cat]['name'];
+						}
+					}, $categories);
+					
+					return implode('; ', array_filter($categories));
+				})
+				->setParseIntoTransform(function (& $info, $value) use ($permName, $invert) {
+					$values = explode(';', $value);
+					$values = array_map('trim', $values);
+					$values = array_map(function ($name) use ($invert) {
+						if (isset($invert[$name])) {
+							return $invert[$name];
+						}
+					}, $values);
+
+					$info['fields'][$permName] = implode(',', array_filter($values));
+				})
+				;
 		}
 
 		return $schema;
