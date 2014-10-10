@@ -403,7 +403,8 @@ class Comments extends TikiLib
 					require_once('lib/htmlpurifier_tiki/HTMLPurifier.tiki.php');
 					$body = HTMLPurifier($body);
 					$body = TikiLib::lib('edit')->parseToWiki($body);
-					$body = str_replace("\n\n", "\n", $body);	// for some reason emails seem to get line feeds doubled up
+					$body = str_replace("\n\n", "\n", $body);	// for some reason emails seem to get line feeds quadrupled
+					$body = str_replace("\n\n", "\n", $body);	// so do this twice
 				}
 			}
 
@@ -531,8 +532,12 @@ class Comments extends TikiLib
 								}
 								$this->add_thread_attachment($forum_info, $threadid, $errors, $part_name, $part['type'], strlen($part['body']), 1, '', '', $part['body']);
 							} elseif ($part['disposition'] == 'inline') {
-								foreach ($part['parts'] as $p) {
-									$this->add_thread_attachment($forum_info, $threadid, $errors, '-', $p['type'], strlen($p['body']), 1, '', '', $p['body']);
+								if (!empty($part['parts'])) {
+									foreach ($part['parts'] as $p) {
+										$this->add_thread_attachment($forum_info, $threadid, $errors, '-', $p['type'], strlen($p['body']), 1, '', '', $p['body']);
+									}
+								} else if (!empty($part['body'])) {
+									$this->add_thread_attachment($forum_info, $threadid, $errors, '-', $part['type'], strlen($part['body']), 1, '', '', $part['body']);
 								}
 							}
 						}
