@@ -35,7 +35,10 @@ class Schema
 			$this->schemas[$permName] = $partial;
 		}
 
-		$this->columns[] = $partial->lookupMode($permName, $mode);
+		$column = $partial->lookupMode($permName, $mode);
+		$this->columns[] = $column;
+
+		return $column;
 	}
 
 	function setPrimaryKey($field)
@@ -81,6 +84,13 @@ class Schema
 	function getColumns()
 	{
 		return $this->columns;
+	}
+
+	function validate()
+	{
+		foreach ($this->columns as $column) {
+			$column->validateAgainst($this);
+		}
 	}
 
 	function validateAgainstHeaders(array $headers)

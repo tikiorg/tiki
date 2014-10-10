@@ -10,6 +10,7 @@ namespace Tracker\Tabular\Schema;
 class DateHelper
 {
 	private $label;
+	private $prior = [];
 
 	function __construct($label)
 	{
@@ -63,6 +64,14 @@ class DateHelper
 			->setRenderTransform($render)
 			->setParseIntoTransform($parseInto)
 			;
+
+		// Only one date field can control the value, add all previously added modes
+		// as incompatibilities
+		foreach ($this->prior as $mode) {
+			$column->addIncompatibility($column->getField(), $mode);
+		}
+
+		$this->prior[] = $column->getMode();
 	}
 
 	private function convertToUnix($value)

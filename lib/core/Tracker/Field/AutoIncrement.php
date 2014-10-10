@@ -122,6 +122,7 @@ class Tracker_Field_AutoIncrement extends Tracker_Field_Abstract implements Trac
 			;
 		$schema->addNew($permName, 'formatted')
 			->setLabel($this->getConfiguration('name'))
+			->addIncompatibility($permName, 'default')
 			->setRenderTransform(function ($value) use ($prepend, $append) {
 				return $prepend . $value . $append;
 			})

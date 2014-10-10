@@ -19,6 +19,7 @@ class Column
 	private $renderTransform;
 	private $parseIntoTransform;
 	private $querySources = [];
+	private $incompatibilities = [];
 
 	function __construct($permName, $mode)
 	{
@@ -31,6 +32,12 @@ class Column
 	function setLabel($label)
 	{
 		$this->label = $label;
+		return $this;
+	}
+
+	function addIncompatibility($field, $mode)
+	{
+		$this->incompatibilities[] = [$field, $mode];
 		return $this;
 	}
 
@@ -108,6 +115,30 @@ class Column
 	function getQuerySources()
 	{
 		return $this->querySources;
+	}
+
+	function validateAgainst(\Tracker\Tabular\Schema $schema)
+	{
+		if ($this->isPrimary && $this->isReadOnly) {
+			throw new \Exception(tr('Primary Key fields cannot be read-only.'));
+		}
+
+		foreach ($schema->getColumns() as $column) {
+			foreach ($this->incompatibilities as $entry) {
+				list($field, $mode) = $entry;
+
+				if ($column->is($field, $mode)) {
+					// Skip incompatibility if either field is read-only
+					if ($this->isReadOnly() || $column->isReadOnly()) {
+						continue;
+					}
+
+					throw new \Exception(tr('Column "%0" cannot co-exist with "%1".',
+						$column->getEncodedHeader(),
+						$this->getEncodedHeader()));
+				}
+			}
+		}
 	}
 }
 

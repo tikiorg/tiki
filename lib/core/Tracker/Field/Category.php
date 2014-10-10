@@ -374,6 +374,7 @@ class Tracker_Field_Category extends Tracker_Field_Abstract implements Tracker_F
 
 			$schema->addNew($permName, 'name')
 				->setLabel($name)
+				->addIncompatibility($permName, 'id')
 				->addQuerySource('itemId', 'object_id')
 				->addQuerySource('categories', 'categories')
 				->setRenderTransform(function ($value, $extra) use ($matching, $sourceCategories) {
@@ -413,6 +414,7 @@ class Tracker_Field_Category extends Tracker_Field_Abstract implements Tracker_F
 
 			$schema->addNew($permName, 'multi-name')
 				->setLabel($name)
+				->addIncompatibility($permName, 'multi-id')
 				->addQuerySource('itemId', 'object_id')
 				->addQuerySource('categories', 'categories')
 				->setRenderTransform(function ($value, $extra) use ($matching, $sourceCategories) {
@@ -450,6 +452,10 @@ class Tracker_Field_Category extends Tracker_Field_Abstract implements Tracker_F
 	{
 		$schema->addNew($permName, 'check-' . $categId)
 			->setLabel($categName)
+			->addIncompatibility($permName, 'id')
+			->addIncompatibility($permName, 'name')
+			->addIncompatibility($permName, 'multi-id')
+			->addIncompatibility($permName, 'multi-name')
 			->addQuerySource('itemId', 'object_id')
 			->addQuerySource('categories', 'categories')
 			->setRenderTransform(function ($value, $extra) use ($matching, $categId) {

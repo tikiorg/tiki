@@ -145,6 +145,7 @@ class Tracker_Field_Numeric extends Tracker_Field_Abstract implements Tracker_Fi
 		$append = $this->getOption('append');
 		$schema->addNew($permName, 'formatted')
 			->setLabel($this->getConfiguration('name'))
+			->addIncompatibility($permName, 'default')
 			->setRenderTransform(function ($value) use ($prepend, $append) {
 				return $prepend . $value . $append;
 			})

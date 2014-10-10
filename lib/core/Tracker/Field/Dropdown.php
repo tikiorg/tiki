@@ -278,6 +278,7 @@ class Tracker_Field_Dropdown extends Tracker_Field_Abstract implements Tracker_F
 
 		$schema->addNew($permName, 'text')
 			->setLabel($name)
+			->addIncompatibility($permName, 'code')
 			->addQuerySource('text', "tracker_field_{$permName}_text")
 			->setRenderTransform(function ($value, $extra) use ($possibilities) {
 				if (isset($possibilities[$value])) {

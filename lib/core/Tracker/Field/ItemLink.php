@@ -693,6 +693,7 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 
 		$schema->addNew($permName, 'lookup')
 			->setLabel($this->getConfiguration('name'))
+			->setReadOnly(true)
 			->addQuerySource('text', "tracker_field_{$permName}_text")
 			->setRenderTransform(function ($value, $extra) {
 				if (isset($extra['text'])) {

@@ -119,6 +119,7 @@ class Tracker_Field_Checkbox extends Tracker_Field_Abstract implements Tracker_F
 			;
 		$schema->addNew($permName, 'X')
 			->setLabel($name)
+			->addIncompatibility($permName, 'y/n')
 			->setRenderTransform(function ($value) {
 				return ('y' === $value) ? 'X' : '';
 			})
