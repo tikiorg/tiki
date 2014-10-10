@@ -9,6 +9,7 @@ namespace Tracker\Tabular;
 
 class Schema
 {
+	private $definition;
 	private $columns = [];
 	private $primaryKey;
 	private $schemas = [];
@@ -39,9 +40,14 @@ class Schema
 
 	function setPrimaryKey($field)
 	{
+		if ($this->primaryKey) {
+			throw new \Exception(tr('Primary key already defined.'));
+		}
+
 		foreach ($this->columns as $column) {
 			if ($column->getField() == $field) {
 				$this->primaryKey = $column;
+				$column->setPrimaryKey(true);
 				return;
 			}
 		}

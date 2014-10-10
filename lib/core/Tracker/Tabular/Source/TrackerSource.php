@@ -9,12 +9,14 @@ namespace Tracker\Tabular\Source;
 
 class TrackerSource implements SourceInterface
 {
+	private $schema;
 	private $trackerId;
 
 	function __construct(\Tracker\Tabular\Schema $schema)
 	{
 		$def = $schema->getDefinition();
 		$this->trackerId = $def->getConfiguration('trackerId');
+		$this->schema = $schema;
 	}
 
 	function getEntries()
@@ -27,6 +29,11 @@ class TrackerSource implements SourceInterface
 		foreach ($ids as $id) {
 			yield new TrackerSourceEntry($id);
 		}
+	}
+
+	function getSchema()
+	{
+		return $this->schema;
 	}
 }
 

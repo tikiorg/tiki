@@ -9,26 +9,21 @@ namespace Tracker\Tabular\Writer;
 
 class TrackerWriter
 {
-	private $schema;
-
-	function __construct(\Tracker\Tabular\Schema $schema)
-	{
-		$this->schema = $schema;
-	}
-
 	function sendHeaders()
 	{
 	}
 
 	function write(\Tracker\Tabular\Source\SourceInterface $source)
 	{
-		$definition = $this->schema->getDefinition();
-		$columns = $this->schema->getColumns();
+		$schema = $source->getSchema();
+
+		$definition = $schema->getDefinition();
+		$columns = $schema->getColumns();
 		$utilities = new \Services_Tracker_Utilities;
 
 		$tx = \TikiDb::get()->begin();
 
-		$lookup = $this->getItemIdLookup();
+		$lookup = $this->getItemIdLookup($schema);
 
 		foreach ($source->getEntries() as $entry) {
 			$info = [
@@ -53,9 +48,9 @@ class TrackerWriter
 		$tx->commit();
 	}
 
-	private function getItemIdLookup()
+	private function getItemIdLookup($schema)
 	{
-		$pk = $this->schema->getPrimaryKey();
+		$pk = $schema->getPrimaryKey();
 		if (! $pk) {
 			throw new \Exception(tr('Primary Key not defined'));
 		}
@@ -68,7 +63,7 @@ class TrackerWriter
 			};
 		} else {
 			$table = \TikiDb::get()->table('tiki_tracker_item_fields');
-			$definition = $this->schema->getDefinition();
+			$definition = $schema->getDefinition();
 			$f = $definition->getFieldFromPermName($pkField);
 			$fieldId = $f['fieldId'];
 

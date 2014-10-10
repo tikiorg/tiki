@@ -37,5 +37,10 @@ class CsvSource implements SourceInterface
 			yield new CsvSourceEntry($data);
 		}
 	}
+
+	function getSchema()
+	{
+		return $this->schema;
+	}
 }
 

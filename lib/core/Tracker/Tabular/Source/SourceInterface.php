@@ -13,5 +13,7 @@ interface SourceInterface
 	 * Provides an iterable result
 	 */
 	function getEntries();
+
+	function getSchema();
 }
 

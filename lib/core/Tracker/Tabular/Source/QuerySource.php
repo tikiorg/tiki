@@ -9,6 +9,7 @@ namespace Tracker\Tabular\Source;
 
 class QuerySource implements SourceInterface
 {
+	private $schema;
 	private $trackerId;
 	private $query;
 
@@ -17,6 +18,7 @@ class QuerySource implements SourceInterface
 		$def = $schema->getDefinition();
 		$this->trackerId = $def->getConfiguration('trackerId');
 		$this->query = $query;
+		$this->schema = $schema;
 	}
 
 	function getEntries()
@@ -28,6 +30,11 @@ class QuerySource implements SourceInterface
 		foreach ($result as $row) {
 			yield new QuerySourceEntry($row);
 		}
+	}
+
+	function getSchema()
+	{
+		return $this->schema;
 	}
 }
 

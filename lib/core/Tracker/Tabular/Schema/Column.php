@@ -12,6 +12,7 @@ class Column
 	private $permName;
 	private $label;
 	private $mode;
+	private $isPrimary = false;
 	private $renderTransform;
 	private $parseIntoTransform;
 	private $querySources = [];
@@ -42,6 +43,11 @@ class Column
 		return $this;
 	}
 
+	function setPrimaryKey($pk)
+	{
+		$this->isPrimary = (bool) $pk;
+	}
+
 	function getField()
 	{
 		return $this->permName;
@@ -54,7 +60,8 @@ class Column
 
 	function getEncodedHeader()
 	{
-		return "{$this->label} [{$this->permName}:{$this->mode}]";
+		$pk = $this->isPrimary ? '*' : '';
+		return "{$this->label} [$pk{$this->permName}:{$this->mode}]";
 	}
 
 	function render($value)

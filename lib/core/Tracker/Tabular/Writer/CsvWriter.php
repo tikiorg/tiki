@@ -9,12 +9,10 @@ namespace Tracker\Tabular\Writer;
 
 class CsvWriter
 {
-	private $schema;
 	private $file;
 
-	function __construct(\Tracker\Tabular\Schema $schema, $outputFile)
+	function __construct($outputFile)
 	{
-		$this->schema = $schema;
 		$this->file = new \SplFileObject($outputFile, 'w');
 	}
 
@@ -25,7 +23,9 @@ class CsvWriter
 
 	function write(\Tracker\Tabular\Source\SourceInterface $source)
 	{
-		$columns = $this->schema->getColumns();
+		$schema = $source->getSchema();
+
+		$columns = $schema->getColumns();
 		$headers = [];
 		foreach ($columns as $column) {
 			$headers[] = $column->getEncodedHeader();

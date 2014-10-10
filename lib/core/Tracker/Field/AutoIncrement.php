@@ -72,7 +72,7 @@ class Tracker_Field_AutoIncrement extends Tracker_Field_Abstract implements Trac
 		return $this->renderTemplate('trackerinput/autoincrement.tpl', $context);
 	}
 
-	protected function renderInnerOutput($context)
+	protected function renderInnerOutput($context = array())
 	{
 		$append = $this->getOption('prepend');
 		if (!empty($append)) {
