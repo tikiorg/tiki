@@ -160,7 +160,7 @@ if ($tiki_p_admin_forum == 'y') {
 		}
 	}
 	if (isset($_REQUEST['remove_attachment'])) {
-		$access->check_authenticity();
+		$access->check_authenticity(tra('Are you sure you want to remove that attachment?'));
 		$commentslib->remove_thread_attachment($_REQUEST['remove_attachment']);
 	}
 	if (isset($_REQUEST['movesel'])) {

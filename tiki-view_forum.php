@@ -266,7 +266,7 @@ if (isset($_REQUEST['comments_remove']) && isset($_REQUEST['comments_threadId'])
 	if ($tiki_p_admin_forum == 'y'
 			|| ($commentslib->user_can_edit_post($user, $_REQUEST['comments_threadId']) && $tiki_p_forum_post_topic == 'y')
 	) {
-		$access->check_authenticity(tra('Are you sure you want to remove that post?'));
+		$access->check_authenticity(tra('Are you sure you want to remove that topic?'));
 		$comments_show = 'y';
 		$commentslib->remove_comment($_REQUEST['comments_threadId']);
 		$commentslib->register_remove_post($_REQUEST['forumId'], 0);
