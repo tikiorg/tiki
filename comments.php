@@ -218,7 +218,7 @@ global $tiki_p_admin_comments;
 
 if ($tiki_p_admin_forum == 'y') {
 	if (isset($_REQUEST["comments_remove"]) && isset($_REQUEST["comments_threadId"])) {
-		$access->check_authenticity();
+		$access->check_authenticity(tra('Are you sure you want to remove that post?'));
 		$comments_show = 'y';
 		$commentslib->remove_comment($_REQUEST["comments_threadId"]);
 		$_REQUEST["comments_threadId"] = 0;
