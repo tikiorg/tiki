@@ -83,6 +83,28 @@ class Schema
 		return $this->columns;
 	}
 
+	function validateAgainstHeaders(array $headers)
+	{
+		foreach ($this->columns as $column) {
+			$header = array_shift($headers);
+
+			if (! $header) {
+				throw new \Exception(tr('Not enough columns, expecting "%0".', $column->getEncodedHeader()));
+			}
+
+			if (preg_match(Schema\Column::HEADER_PATTERN, $header, $parts)) {
+				list($full, $pk, $field, $mode) = $parts;
+				if (! $column->is($field, $mode)) {
+					throw new \Exception(tr('Header "%0" found where "%1" was expected', $header, $column->getEncodedHeader()));
+				}
+			} else {
+				if (! $column->isReadOnly()) {
+					throw new \Exception(tr('Header "%0" found where ignored column was expected.', $header, $column->getEncodedHeader()));
+				}
+			}
+		}
+	}
+
 	private function getFieldSchema($permName)
 	{
 		$field = $this->definition->getFieldFromPermName($permName);

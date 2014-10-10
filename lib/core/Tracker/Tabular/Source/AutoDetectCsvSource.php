@@ -7,6 +7,8 @@
 
 namespace Tracker\Tabular\Source;
 
+use Tracker\Tabular\Schema;
+
 class AutoDetectCsvSource implements SourceInterface
 {
 	private $source;
@@ -16,10 +18,10 @@ class AutoDetectCsvSource implements SourceInterface
 		$file = new \SplFileObject($fileName, 'r');
 		$headers = $file->fgetcsv();
 
-		$schema = new \Tracker\Tabular\Schema($definition);
+		$schema = new Schema($definition);
 		
 		foreach ($headers as $header) {
-			if (preg_match('/\[(\*?)(\w+):([^\]]+)\]$/', $header, $parts)) {
+			if (preg_match(Schema\Column::HEADER_PATTERN, $header, $parts)) {
 				list($full, $pk, $field, $mode) = $parts;
 				$schema->addColumn($field, $mode);
 
@@ -28,7 +30,8 @@ class AutoDetectCsvSource implements SourceInterface
 				}
 			} else {
 				// Column without definition, add fake entry to skip column
-				$schema->addNew('ignore', 'ignore');
+				$schema->addNew('ignore', 'ignore')
+					->setReadOnly(true);
 			}
 		}
 

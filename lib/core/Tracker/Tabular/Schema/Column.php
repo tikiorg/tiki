@@ -9,10 +9,13 @@ namespace Tracker\Tabular\Schema;
 
 class Column
 {
+	const HEADER_PATTERN = '/\[(\*?)(\w+):([^\]]+)\]$/';
+
 	private $permName;
 	private $label;
 	private $mode;
 	private $isPrimary = false;
+	private $isReadOnly = false;
 	private $renderTransform;
 	private $parseIntoTransform;
 	private $querySources = [];
@@ -46,6 +49,23 @@ class Column
 	function setPrimaryKey($pk)
 	{
 		$this->isPrimary = (bool) $pk;
+		return $this;
+	}
+
+	function setReadOnly($readOnly)
+	{
+		$this->isReadOnly = (bool) $readOnly;
+		return $this;
+	}
+
+	function is($field, $mode)
+	{
+		return $field == $this->permName && $mode == $this->mode;
+	}
+
+	function isReadOnly()
+	{
+		return $this->isReadOnly;
 	}
 
 	function getField()
@@ -60,8 +80,12 @@ class Column
 
 	function getEncodedHeader()
 	{
-		$pk = $this->isPrimary ? '*' : '';
-		return "{$this->label} [$pk{$this->permName}:{$this->mode}]";
+		if ($this->isReadOnly) {
+			return $this->label;
+		} else {
+			$pk = $this->isPrimary ? '*' : '';
+			return "{$this->label} [$pk{$this->permName}:{$this->mode}]";
+		}
 	}
 
 	function render($value)

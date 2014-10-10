@@ -22,6 +22,8 @@ class CsvSource implements SourceInterface
 	{
 		$headers = $this->file->fgetcsv();
 
+		$this->schema->validateAgainstHeaders($headers);
+
 		while (! $this->file->eof()) {
 			$row = $this->file->fgetcsv();
 
