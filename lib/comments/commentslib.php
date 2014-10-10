@@ -424,6 +424,7 @@ class Comments extends TikiLib
 					require_once('lib/htmlpurifier_tiki/HTMLPurifier.tiki.php');
 					$body = HTMLPurifier($body);
 					$body = TikiLib::lib('edit')->parseToWiki($body);
+					$body = str_replace("\n\n", "\n", $body);	// for some reason emails seem to get line feeds doubled up
 				}
 			}
 
