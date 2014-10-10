@@ -158,7 +158,7 @@ abstract class TikiDb
 		} elseif ($mode === self::ERR_DIRECT && $this->errorHandler) {
 			$this->errorHandler->handle($this, $query, $values, $result);
 		} elseif ($mode === self::ERR_EXCEPTION || ! $this->errorHandler) {
-			throw TikiDb_Exception::classify($this->errorMessage);
+			TikiDb_Exception::classify($this->errorMessage);
 		}
 	} // }}}
 
