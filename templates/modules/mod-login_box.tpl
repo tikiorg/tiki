@@ -166,7 +166,8 @@ if (jqueryTiki.tooltips) {
 		{/if}
 		<form name="loginbox" id="loginbox-{$module_logo_instance}" action="{$login_module.login_url|escape}"
 				method="post" {if $prefs.feature_challenge eq 'y'}onsubmit="doChallengeResponse()"{/if}
-				{if $prefs.desactive_login_autocomplete eq 'y'} autocomplete="off"{/if}> 
+				{if $prefs.desactive_login_autocomplete eq 'y'} autocomplete="off"{/if}>
+		{capture assign="close_tags"}</form>{$close_tags}{/capture}
 		{if $prefs.feature_challenge eq 'y'}
 			<script type='text/javascript' src="lib/md5.js"></script>
 			{jq notonready=true}
@@ -252,7 +253,7 @@ function doChallengeResponse() {
 					{/if}
 					</label>
 					<input type="checkbox" name="rme" id="login-remember-module_{$module_logo_instance}" value="on" />
-					{capture assign="close_tags"}</div>{$close_tags}{/capture}
+				</div>
 			{/if}
 		{/if}
 		<div style="text-align: center">
@@ -268,7 +269,7 @@ function doChallengeResponse() {
 						{if $mode eq 'header' && $module_params.show_forgot eq 'y' && $prefs.forgotPass eq 'y'}
 							&nbsp;|&nbsp;
 						{/if}
-					<li class="register"><a href="tiki-register.php{if !empty($prefs.registerKey)}?key={$prefs.registerKey|escape:'url'}{/if}" title="{tr}Click here to register{/tr}"{if !empty($prefs.registerKey)} rel="nofollow"{/if}>{tr}Register{/tr}</a></li></ul></div>
+					<li class="register"><a href="tiki-register.php{if !empty($prefs.registerKey)}?key={$prefs.registerKey|escape:'url'}{/if}" title="{tr}Click here to register{/tr}"{if !empty($prefs.registerKey)} rel="nofollow"{/if}>{tr}Register{/tr}</a></li>
 				{/if}
 				{/strip}
 			</div>
@@ -302,6 +303,7 @@ function doChallengeResponse() {
 				{/foreach}
 			</select>
 		{/if}
+		{$close_tags}
 			{if $prefs.socialnetworks_facebook_login eq 'y' and $mode neq "header" and empty($user)}
 				<div style="text-align: center"><a href="tiki-socialnetworks.php?request_facebook=true"><img src="http://developers.facebook.com/images/devsite/login-button.png"></a></div>
 			{/if}
@@ -315,8 +317,6 @@ function doChallengeResponse() {
 					</fieldset>
 				</form>
 			{/if}
-		{$close_tags}
-	</form>
 {/if}
 {if $mode eq "header"}</div>{/if}
 {/tikimodule}
