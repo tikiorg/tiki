@@ -246,6 +246,63 @@ class mime
 		}
 	}
 
+
+
+	/**
+	 * @param $decodedMail array	output from \mime::decode
+	 * @param $type string			text or html
+	 * @return string
+	 */
+	function getPartBody($decodedMail, $type)
+	{
+		$body = '';
+
+		if (!empty($decodedMail['parts'])) {
+			foreach ($decodedMail['parts'] as $part) {
+				if (isset($part['parts'])) {
+					return $this->getPartBody($part, $type);
+				}
+				if (empty($body) && isset($part[$type])) {
+					$body = $part[$type];
+					break;
+				}
+			}
+		} else if (isset($decodedMail[$type])) {
+			$body = $decodedMail[$type];
+		} else if ($type === 'text' && isset($decodedMail['body'])) {
+			$body = $decodedMail['body'];
+		}
+		if (is_array($body)) {
+			$body = reset($body);
+		}
+		return $body;
+	}
+
+
+	/** replace MS "smart quotes" with dumb ones
+	 * @param $body string
+	 * @return string
+	 */
+	public function cleanQuotes($body)
+	{
+		$quotes = array(        // thanks to http://stackoverflow.com/a/1262210/2459703
+			"\xC2\xAB" => '"', // « (U+00AB) in UTF-8
+			"\xC2\xBB" => '"', // » (U+00BB) in UTF-8
+			"\xE2\x80\x98" => "'", // ‘ (U+2018) in UTF-8
+			"\xE2\x80\x99" => "'", // ’ (U+2019) in UTF-8
+			"\xE2\x80\x9A" => "'", // ‚ (U+201A) in UTF-8
+			"\xE2\x80\x9B" => "'", // ‛ (U+201B) in UTF-8
+			"\xE2\x80\x9C" => '"', // “ (U+201C) in UTF-8
+			"\xE2\x80\x9D" => '"', // ” (U+201D) in UTF-8
+			"\xE2\x80\x9E" => '"', // „ (U+201E) in UTF-8
+			"\xE2\x80\x9F" => '"', // ‟ (U+201F) in UTF-8
+			"\xE2\x80\xB9" => "'", // ‹ (U+2039) in UTF-8
+			"\xE2\x80\xBA" => "'", // › (U+203A) in UTF-8
+		);
+		$body = strtr($body, $quotes);
+		return $body;
+	}
+
     /**
      * @param $output
      * @return array
