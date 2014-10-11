@@ -329,7 +329,7 @@ class Comments extends TikiLib
 			$aux = $pop3->getParsedHeaders($i);
 
 			// If the mail came from Tiki, we don't need to add it again
-			if ( $aux['X-Tiki'] == 'yes' ) {
+			if ( isset($aux['X-Tiki']) && $aux['X-Tiki'] == 'yes' ) {
 				$pop3->deleteMsg($i);
 				continue;
 			}
@@ -390,18 +390,20 @@ class Comments extends TikiLib
 				continue;											// so do what exactly? log them somewhere? TODO
 			}
 
+			require_once('lib/htmlpurifier_tiki/HTMLPurifier.tiki.php');
+
 			if ($prefs['feature_forum_parse'] === 'y' && $prefs['forum_inbound_mail_parse_html'] === 'y') {
-				if (isset($output['parts'][1]['html'][0])) {
-					$body = $output['parts'][1]['html'][0];
-				} else if (isset($output['parts'][0]['html'][0])) {
-					$body = $output['parts'][0]['html'][0];
-				} else if ($output['type'] == 'text/html' && isset($output['body'])) {
-					$body = $output['body'];
-				}
+				$body = $mimelib->getPartBody($output, 'html');
+
 				if ($body) {
 					// Clean the string using HTML Purifier first
-					require_once('lib/htmlpurifier_tiki/HTMLPurifier.tiki.php');
 					$body = HTMLPurifier($body);
+
+					// html emails require some speciaal handling
+					$body = preg_replace('/--(.*)--/', '~np~--$1--~/np~', $body);	// disable strikethough syntax
+					$body = $mimelib->cleanQuotes($body);
+
+
 					$body = TikiLib::lib('edit')->parseToWiki($body);
 					$body = str_replace("\n\n", "\n", $body);	// for some reason emails seem to get line feeds quadrupled
 					$body = str_replace("\n\n", "\n", $body);	// so do this twice
@@ -409,21 +411,20 @@ class Comments extends TikiLib
 			}
 
 			if (! $body) {
-				if (isset($output["text"][0])) {
-					$body = $output["text"][0];
-				} elseif (isset($output['parts'][0]["text"][0])) {
-					$body = $output['parts'][0]["text"][0];
-				} elseif (isset($output['parts'][0]['html'][0])) {// some html message does not have a text part
-					$body = $this->htmldecode(strip_tags(preg_replace('/\n\r/', '', $output['parts'][0]['html'][0])));
-				} elseif (isset($output['parts'][0]['parts'][0]['text'][0])) {
-					$body = $output['parts'][0]['parts'][0]['text'][0];
-				} elseif (isset($output['body'])) {
-					if ($output['type'] == 'text/html') {
-						$body = $this->htmldecode(strip_tags(preg_replace('/\n\r/', '', $output['body'])));
-					} else {
-						$body = $output['body'];
-					}
+				$body = $mimelib->getPartBody($output, 'text');
+
+				if (empty($body)) {	// no text part so look for html
+					$body = $mimelib->getPartBody($output, 'html');
+					$body = HTMLPurifier($body);
+					$body = $this->htmldecode(strip_tags($body));
+					$body = str_replace("\n\n", "\n", $body);	// and again
+					$body = str_replace("\n\n", "\n", $body);
 				}
+
+				if ($prefs['feature_forum_parse'] === 'y') {
+					$body = preg_replace('/--(.*)--/', '~np~--$1--~/np~', $body);    // disable strikethough if...
+				}
+				$body = $mimelib->cleanQuotes($body);
 			}
 
 			// Remove 're:' and [forum]. -rlpowell
@@ -438,6 +439,7 @@ class Comments extends TikiLib
 					)
 				)
 			);
+			$title = $mimelib->cleanQuotes($title);
 
 			// trim off < and > from message-id
 			$message_id = substr($output['header']["message-id"], 1, strlen($output['header']["message-id"])-2);
