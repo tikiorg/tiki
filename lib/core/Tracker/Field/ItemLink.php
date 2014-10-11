@@ -680,29 +680,60 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 	{
 		$schema = new Tracker\Tabular\Schema($this->getTrackerDefinition());
 		$permName = $this->getConfiguration('permName');
+		$name = $this->getConfiguration('name');
 
-		$schema->addNew($permName, 'id')
-			->setLabel($this->getConfiguration('name'))
-			->setRenderTransform(function ($value) {
-				return $value;
-			})
-			->setParseIntoTransform(function (& $info, $value) use ($permName) {
-				$info['fields'][$permName] = $value;
-			})
-			;
+		if (! $this->getOption('selectMultipleValues')) {
+			// Cannot handle multiple values when exporting
 
-		$schema->addNew($permName, 'lookup')
-			->setLabel($this->getConfiguration('name'))
-			->setReadOnly(true)
-			->addQuerySource('text', "tracker_field_{$permName}_text")
-			->setRenderTransform(function ($value, $extra) {
-				if (isset($extra['text'])) {
-					return $extra['text'];
-				} else {
-					return $this->getItemLabel($value);
-				}
-			})
-			;
+			$schema->addNew($permName, 'id')
+				->setLabel($name)
+				->setRenderTransform(function ($value) {
+					return $value;
+				})
+				->setParseIntoTransform(function (& $info, $value) use ($permName) {
+					$info['fields'][$permName] = $value;
+				})
+				;
+
+			$fullLookup = new Tracker\Tabular\Schema\CachedLookupHelper;
+			$fullLookup->setLookup(function ($value) {
+				return $this->getItemLabel($value);
+			});
+			$schema->addNew($permName, 'lookup')
+				->setLabel($name)
+				->setReadOnly(true)
+				->addQuerySource('text', "tracker_field_{$permName}_text")
+				->setRenderTransform(function ($value, $extra) use ($fullLookup) {
+					if (isset($extra['text'])) {
+						return $extra['text'];
+					} else {
+						return $fullLookup->get($value);
+					}
+				})
+				;
+
+			if ($fieldId = $this->getOption('fieldId')) {
+				$simpleField = Tracker\Tabular\Schema\CachedLookupHelper::fieldLookup($fieldId);
+				$invertField = Tracker\Tabular\Schema\CachedLookupHelper::fieldInvert($fieldId);
+				$schema->addNew($permName, 'lookup-simple')
+					->setLabel($name)
+					->addIncompatibility($permName, 'id')
+					->addQuerySource('text', "tracker_field_{$permName}_text")
+					->setRenderTransform(function ($value, $extra) use ($simpleField) {
+						if (isset($extra['text'])) {
+							return $extra['text'];
+						} else {
+							return $simpleField->get($value);
+						}
+					})
+					->setParseIntoTransform(function (& $info, $value) use ($permName, $invertField) {
+						if ($id = $invertField->get($value)) {
+							$info['fields'][$permName] = $id;
+						}
+					})
+					;
+			}
+		}
 
 		return $schema;
 	}
