@@ -349,11 +349,6 @@ a.flip:hover {
 	padding: .8em;
 }
 
-/* give every div in #tiki-center some padding */
-#tiki-center div {
-	padding: 3px 2px;
-}
-
 #tiki-center .halffloat div,
 #tiki-center .thirdfloat div,
 #tiki-center .quarterfloat div {
