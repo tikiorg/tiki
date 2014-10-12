@@ -42,7 +42,7 @@
 										<br/><br/>
 										{tr}Click to read more{/tr}
 									">
-										<img src="img/icons/help.png" alt="" width="16" height="16" class="icon" />
+										{icon name="help"}
 									</a>
 								</label>
 								{$headerlib->add_jsfile("lib/jquery_tiki/tiki-connect.js")}
