@@ -51,7 +51,8 @@ button,
 input[type="reset"],
 input[type="submit"],
 .button input,
-.calbuttonBox a {
+.calbuttonBox a,
+a.icon {
 	border: 1px solid #9fda58;
 	box-shadow: 0px 0px 2px rgba(159, 218, 88, 0.506) inset;
 	color: #9fda58;
