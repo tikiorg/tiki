@@ -317,10 +317,6 @@ if ( $prefs['rating_advanced'] == 'y' && $prefs['rating_recalculation'] == 'rand
 
 $headerlib->add_jsfile('lib/tiki-js.js');
 
-if ( $prefs['feature_cssmenus'] == 'y' ) {
-	$headerlib->add_cssfile('themes/base_files/feature_css/cssmenus.css');
-}
-
 // using jquery-migrate-1.2.1.js plugin for tiki 11, still required in tiki 12 LTS to support some 3rd party plugins
 
 if ( isset($prefs['javascript_cdn']) && $prefs['javascript_cdn'] == 'google' ) {
@@ -426,7 +422,6 @@ if ($prefs['mobile_feature'] === 'y' && $prefs['mobile_mode'] === 'y') {
 		$headerlib->add_cssfile("vendor/jquery/jquery-mobile/jquery.mobile-$headerlib->jquerymobile_version$cssmin.css");
 	}
 
-	$headerlib->drop_cssfile('themes/base_files/feature_css/cssmenus.css');
 
 } else {	// js includes that don't work or aren't needed in mobile mode
 
