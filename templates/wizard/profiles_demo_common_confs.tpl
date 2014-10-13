@@ -20,7 +20,7 @@
                         <li>{tr}The chance to easily customize it with the power of Trackers{/tr}</li>
                     </ul>
         	        {tr}Click to read more{/tr}">
-                    <img src="img/icons/help.png" alt="" width="16" height="16" class="icon" />
+                        {icon name="help"}
                     </a>
                     <div class="row">
                         <div class="col-md-8 col-md-offset-2">
@@ -46,7 +46,7 @@
                         <li>{tr}You decide where and when to display the link to the contact us form in your Tiki menus and pages{/tr}</li>
                     </ul>
                     {tr}Click to read more{/tr}">
-                    <img src="img/icons/help.png" alt="" width="16" height="16" class="icon" />
+                        {icon name="help"}
                     </a>
                     <div class="row">
                         <div class="col-md-8 col-md-offset-2">
@@ -76,7 +76,7 @@
 	                    <li>{tr}Easily manage the options in the second tracker without editing the dropdown in the first tracker{/tr} </li>
 	                </ul>
         	        {tr}Click to read more{/tr}">
-                    <img src="img/icons/help.png" alt="" width="16" height="16" class="icon" />
+                        {icon name="help"}
                     </a>
                     <div class="row">
                         <div class="col-md-8 col-md-offset-2">
@@ -103,7 +103,7 @@
 	                    <li>{tr}Sorting can be server-side or client-side based {/tr}</li>
 	                </ul>
         	        {tr}Click to read more{/tr}">
-                        <img src="img/icons/help.png" alt="" width="16" height="16" class="icon" />
+                        {icon name="help"}
                     </a>
                     <div class="row">
                         <div class="col-md-8 col-md-offset-2">
