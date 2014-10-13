@@ -64,6 +64,9 @@ $iconset = array(
 	'settings' => array(
         'class' => 'glyphicon glyphicon-cog',
     ),
+    'share' => array(
+        'class' => 'glyphicon glyphicon-share',
+    ),
     'stop-watching' => array(
         'class' => 'glyphicon glyphicon-close',
     ),

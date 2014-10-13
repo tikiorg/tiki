@@ -74,6 +74,9 @@ $iconset = array(
 	'settings' => array(
         'image_file_name' => 'wrench.png',
     ),
+    'share' => array(
+        'image_file_name' => 'sharethis.png',
+    ),
     'stop-watching' => array(
         'image_file_name' => 'no-eye.png',
     ),

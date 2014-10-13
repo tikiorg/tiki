@@ -96,6 +96,9 @@ $iconset = array(
 	'settings' => array( 
 		'class' => 'fa fa-wrench',
 	),
+    'share' => array(
+        'class' => 'fa fa-share',
+    ),
     'stop-watching' => array(
         'class' => 'fa fa-eye-slash',
     ),
