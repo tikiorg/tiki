@@ -102,6 +102,9 @@ $iconset = array(
 	'success' => array(
         'class' => 'fa fa-check-circle',
     ),
+    'tag' => array(
+        'class' => 'fa fa-tag',
+    ),
 	'trackers' => array(
 		'class' => 'fa fa-database',
 	),

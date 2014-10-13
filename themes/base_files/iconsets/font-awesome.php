@@ -76,6 +76,9 @@ $iconset = array(
 	'success' => array(
         'class' => 'fa fa-check-circle',
     ),
+    'tag' => array(
+        'class' => 'fa fa-tag',
+    ),
     'trash' => array(
         'class' => 'fa fa-trash-o',
     ),

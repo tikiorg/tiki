@@ -70,6 +70,9 @@ $iconset = array(
 	'success' => array(
         'class' => 'glyphicon glyphicon-ok',
     ),
+    'tag' => array(
+        'class' => 'glyphicon glyphicon-tag',
+    ),
     'trash' => array(
         'class' => 'glyphicon glyphicon-trash',
     ),

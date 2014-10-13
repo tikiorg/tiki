@@ -80,6 +80,9 @@ $iconset = array(
 	'success' => array(
         'image_file_name' => 'accept.png',
     ),
+    'tag' => array(
+        'image_file_name' => 'tag-blue.png',
+    ),
     'trash' => array(
         'image_file_name' => 'bin.png',
     ),
