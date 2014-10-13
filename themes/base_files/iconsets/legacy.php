@@ -95,4 +95,7 @@ $iconset = array(
     'watch' => array(
         'image_file_name' => 'eye.png',
     ),
+    'watch-group' => array(
+        'image_file_name' => 'eye.png',
+    ),
 );

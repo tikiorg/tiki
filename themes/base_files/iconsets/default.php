@@ -126,4 +126,7 @@ $iconset = array(
     'watch' => array(
         'class' => 'fa fa-eye',
     ),
+    'watch-group' => array(
+        'class' => 'fa fa-eye',
+    ),
 );
