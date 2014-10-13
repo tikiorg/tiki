@@ -28,10 +28,13 @@ $iconset = array(
     'edit' => array(
         'class' => 'glyphicon glyphicon-edit',
     ),
+    'envelope' => array(
+        'class' => 'glyphicon glyphicon-envelope',
+    ),
 	'error' => array( 
 		'class' => 'glyphicon glyphicon-fire',
 	),
-	'export' => array( 
+	'export' => array(
 		'class' => 'glyphicon glyphicon-export',
 	),
 	'file-archive' => array( 

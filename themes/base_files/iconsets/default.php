@@ -45,6 +45,9 @@ $iconset = array(
     'edit' => array(
         'class' => 'fa fa-edit',
     ),
+    'envelope' => array(
+        'class' => 'fa fa-envelope-o',
+    ),
 	'error' => array(
         'class' => 'fa fa-exclamation-circle',
     ),

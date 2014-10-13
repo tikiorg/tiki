@@ -29,6 +29,9 @@ $iconset = array(
     'edit' => array(
         'image_file_name' => 'page_edit.png',
     ),
+    'envelope' => array(
+        'image_file_name' => 'email.png',
+    ),
 	'error' => array( 
 		'image_file_name' => 'exclamation.png',
 	),
@@ -38,13 +41,7 @@ $iconset = array(
 	'file-archive' => array( 
 		'image_file_name' => 'folder.png',
 	),
-	'history' => array( 
-		'image_file_name' => 'database.png',
-	),
-	'history' => array( 
-		'image_file_name' => 'database.png',
-	),
-	'group' => array( 
+	'group' => array(
 		'image_file_name' => 'group.png',
 	),
 	'group-watch' => array( 
@@ -53,6 +50,9 @@ $iconset = array(
 	'help' => array( 
 		'image_file_name' => 'help.png',
 	),
+    'history' => array(
+        'image_file_name' => 'database.png',
+    ),
 	'import' => array( 
 		'image_file_name' => 'upload.png',
 	),
