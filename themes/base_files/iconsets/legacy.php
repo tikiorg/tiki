@@ -68,6 +68,9 @@ $iconset = array(
     'print' => array(
         'image_file_name' => 'printer.png',
     ),
+    'refresh' => array(
+        'image_file_name' => 'arrow_refresh.png',
+    ),
     'rss' => array(
         'image_file_name' => 'feed.png',
     ),

@@ -87,10 +87,13 @@ $iconset = array(
 	'print' => array(
 		'class' => 'fa fa-print',
 	),
-	'remove' => array( 
-		'class' => 'fa fa-remove',
+	'refresh' => array(
+		'class' => 'fa fa-refresh',
 	),
-	'rss' => array( 
+    'remove' => array(
+        'class' => 'fa fa-times',
+    ),
+	'rss' => array(
 		'class' => 'fa fa-rss',
 	),
 	'search' => array( 

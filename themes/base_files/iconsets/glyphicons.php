@@ -61,6 +61,12 @@ $iconset = array(
     'print' => array(
         'class' => 'glyphicon glyphicon-print',
     ),
+    'refresh' => array(
+        'class' => 'glyphicon glyphicon-refresh',
+    ),
+    'remove' => array(
+        'class' => 'glyphicon glyphicon-remove',
+    ),
     'rss' => array(
         'class' => 'glyphicon glyphicon-bullhorn',
     ),

@@ -64,6 +64,12 @@ $iconset = array(
     'print' => array(
         'class' => 'fa fa-print',
     ),
+    'refresh' => array(
+        'class' => 'fa fa-refresh',
+    ),
+    'remove' => array(
+        'class' => 'fa fa-times',
+    ),
     'rss' => array(
         'class' => 'fa fa-rss',
     ),
