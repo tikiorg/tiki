@@ -29,7 +29,7 @@
 			{/if}
 			{if $prefs.flaggedrev_approval neq 'y' or ! $revision_approval or $lastVersion eq $revision_displayed}
 				{if $editable and ($tiki_p_edit eq 'y' or $page|lower eq 'sandbox') and $beingEdited ne 'y' and $machine_translate_to_lang eq ''}
-					<a class="btn btn-default" title="{tr}Edit this page{/tr}" {ajax_href template="tiki-editpage.tpl"}tiki-editpage.php?page={$page|escape:"url"}{if !empty($page_ref_id) and $needsStaging neq 'y'}&amp;page_ref_id={$page_ref_id}{/if}{/ajax_href}>{glyph name='edit'  title="{tr}Edit this page{/tr}"}</a>
+					<a class="btn btn-default" title="{tr}Edit this page{/tr}" {ajax_href template="tiki-editpage.tpl"}tiki-editpage.php?page={$page|escape:"url"}{if !empty($page_ref_id) and $needsStaging neq 'y'}&amp;page_ref_id={$page_ref_id}{/if}{/ajax_href}>{icon name="edit"}</a>
 					{if $prefs.wiki_edit_icons_toggle eq 'y' and ($prefs.wiki_edit_plugin eq 'y' or $prefs.wiki_edit_section eq 'y')}
 						{jq}
 							$("#wiki_plugin_edit_view").click( function () {
@@ -68,25 +68,25 @@
 							});
 							if (getCookie("wysiwyg_inline_edit", "preview")) { $("#wysiwyg_inline_edit").click(); }
 						{/jq}
-						<a class="btn btn-default" title="{tr}Inline Edit{/tr}" href="#" id="wysiwyg_inline_edit">{glyph name='edit' title="{tr}Inline Edit{/tr}"}</a>
+						<a class="btn btn-default" title="{tr}Inline Edit{/tr}" href="#" id="wysiwyg_inline_edit">{icon name='edit'}</a>
 					{/if}
 				{/if}
 			{/if}
 			{if $prefs.feature_morcego eq 'y' && $prefs.wiki_feature_3d eq 'y'}
-				<a class="btn btn-default" title="{tr}3d browser{/tr}" href="javascript:wiki3d_open('{$page|escape}',{$prefs.wiki_3d_width}, {$prefs.wiki_3d_height})">{icon _id='wiki3d' alt="{tr}3d browser{/tr}"}</a>
+				<a class="btn btn-default" title="{tr}3d browser{/tr}" href="javascript:wiki3d_open('{$page|escape}',{$prefs.wiki_3d_width}, {$prefs.wiki_3d_height})">{icon name="wiki3d"}</a>
 			{/if}
 			{if $cached_page eq 'y'}
-				<a class="btn btn-default" title="{tr}Refresh{/tr}" href="{$page|sefurl:'wiki':'with_next'}refresh=1">{glyph name='refresh'  title="{tr}Refresh{/tr}"}</a>
+				<a class="btn btn-default" title="{tr}Refresh{/tr}" href="{$page|sefurl:'wiki':'with_next'}refresh=1">{icon name="refresh"  title="{tr}Refresh{/tr}"}</a>
 			{/if}
 			{if $prefs.feature_wiki_print eq 'y'}
-				<a class="btn btn-default" title="{tr}Print{/tr}" href="tiki-print.php?{query _keepall='y'}">{glyph name='print'  title="{tr}Print{/tr}"}</a>
+				<a class="btn btn-default" title="{tr}Print{/tr}" href="tiki-print.php?{query _keepall='y'}">{icon name="print"}</a>
 			{/if}
 	
 			{if $prefs.feature_share eq 'y' && $tiki_p_share eq 'y'}
-				<a class="btn btn-default" title="{tr}Share this page{/tr}" href="tiki-share.php?url={$smarty.server.REQUEST_URI|escape:'url'}{icon name="share"}</a>
+				<a class="btn btn-default" title="{tr}Share this page{/tr}" href="tiki-share.php?url={$smarty.server.REQUEST_URI|escape:'url'}">{icon name="share"}</a>
 			{/if}
 			{if $prefs.feature_tell_a_friend eq 'y' && $tiki_p_tell_a_friend eq 'y'}
-				<a class="btn btn-default" title="{tr}Send a link{/tr}" href="tiki-tell_a_friend.php?url={$smarty.server.REQUEST_URI|escape:'url'}">{glyph name='enveloppe' alt="{tr}Send a link{/tr}"}</a>
+				<a class="btn btn-default" title="{tr}Send a link{/tr}" href="tiki-tell_a_friend.php?url={$smarty.server.REQUEST_URI|escape:'url'}">{icon name="envelope"}</a>
 			{/if}
 			{if !empty($user) and $prefs.feature_notepad eq 'y' and $tiki_p_notepad eq 'y'}
 				<a class="btn btn-default" title="{tr}Save to notepad{/tr}" href="tiki-index.php?page={$page|escape:"url"}&amp;savenotepad=1{if !empty($page_ref_id)}&amp;page_ref_id={$page_ref_id}{/if}">{glyph name='bookmark' alt="{tr}Save to notepad{/tr}"}</a>
