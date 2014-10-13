@@ -83,7 +83,7 @@
 			{/if}
 	
 			{if $prefs.feature_share eq 'y' && $tiki_p_share eq 'y'}
-				<a class="btn btn-default" title="{tr}Share this page{/tr}" href="tiki-share.php?url={$smarty.server.REQUEST_URI|escape:'url'}>{icon name="share"}</a>
+				<a class="btn btn-default" title="{tr}Share this page{/tr}" href="tiki-share.php?url={$smarty.server.REQUEST_URI|escape:'url'}{icon name="share"}</a>
 			{/if}
 			{if $prefs.feature_tell_a_friend eq 'y' && $tiki_p_tell_a_friend eq 'y'}
 				<a class="btn btn-default" title="{tr}Send a link{/tr}" href="tiki-tell_a_friend.php?url={$smarty.server.REQUEST_URI|escape:'url'}">{glyph name='enveloppe' alt="{tr}Send a link{/tr}"}</a>
