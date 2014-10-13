@@ -19,7 +19,7 @@
 	                    <li>{tr}Uses the TogetherJS Mozilla widget{/tr}</li>
 	                </ul>
            	        {tr}Click to read more{/tr}">
-                    <img src="img/icons/help.png" alt="" width="16" height="16" class="icon" />
+                    {icon name="help"}
                     </a>
                     <div class="row">
                         <div class="col-md-8 col-md-offset-2">
@@ -45,7 +45,7 @@
                         <li>{tr}It will be shown for each user of that group until manually closed.{/tr}</li>
                     </ul>
                     {tr}Click to read more{/tr}">
-                    <img src="img/icons/help.png" alt="" width="16" height="16" class="icon" />
+                    {icon name="help"}
                     </a>
                     <div class="row">
                         <div class="col-md-8 col-md-offset-2">

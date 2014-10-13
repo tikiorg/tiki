@@ -21,7 +21,7 @@
                         <li>{tr}Allows slide notes in a separate window for dual monitor setups, slide numbers in footer, timer, style with background images, navigation bar with all slides listed to jump to{/tr}</li>
                     </ul>
         	        {tr}Click to read more{/tr}">
-                    <img src="img/icons/help.png" alt="" width="16" height="16" class="icon" />
+                    {icon name="help"}
                     </a>
                     <div class="row">
                         <div class="col-md-8 col-md-offset-2">

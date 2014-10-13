@@ -9,7 +9,7 @@
 		        {tr}They are initially intended for testing environments, so that, after you have played with the feature, you don't have to deal with removing the created objects, nor with restoring the potentially changed settings in your site{/tr}.
 		        <br/><br/>
 		        {tr}Once you know what they do, you can also apply them in your production site, in order to have working templates of the underlying features, that you can further adapt to your site later on{/tr}.">
-		        <img src="img/icons/help.png" alt="" width="16" height="16" class="icon" />
+		        {icon name="help"}
 	        </a>
 	        {tr}They are not to be initially applied in production environments since they cannot be easily reverted and changes and new objects in your site are created for real{/tr}
         {/remarksbox}
@@ -29,7 +29,7 @@
 	                    <li>{tr}Uses PluginTrackerList to display inserted items{/tr}</li>
 	                </ul>
            	        {tr}Click to read more{/tr}">
-                    <img src="img/icons/help.png" alt="" width="16" height="16" class="icon" />
+                    {icon name="help"}
                     </a>
                     <div class="row">
                         <div class="col-md-8 col-md-offset-2">
@@ -56,11 +56,11 @@
         	            <li>{tr}Both trackers are linked, so that project names can be chosen when entering items to the timesheet tracker{/tr}</li>
 	                </ul>
            	        {tr}Click to read more{/tr}">
-                    <img src="img/icons/help.png" alt="" width="16" height="16" class="icon" />
+                    {icon name="help"}
                     </a>
                     <a href="https://doc.tiki.org/PluginTimesheet" target="tikihelp" class="tikihelp" title="{tr}Plugin Timesheet{/tr}:
 	                <em>{tr}See also{/tr} {tr}Plugin Timesheet in doc.tiki.org{/tr}</em>">
-                    <img src="img/icons/help.png" alt="" width="16" height="16" class="icon" />
+                    {icon name="help"}
                     </a>
                     <div class="row">
                         <div class="col-md-8 col-md-offset-2">
@@ -89,7 +89,7 @@
         	        <li>{tr}Several display modes, useful for Project & Resource Management{/tr}</li>
 	            </ul>
            	    {tr}Click to read more{/tr}">
-                <img src="img/icons/help.png" alt="" width="16" height="16" class="icon" />
+                {icon name="help"}
                 </a>
                 <div class="row">
                     <div class="col-md-8 col-md-offset-2">
@@ -116,7 +116,7 @@
         	        <li>{tr}Other candidates can be voted beyond the proposed{/tr}</li>
 	            </ul>
            	    {tr}Click to read more{/tr}">
-                <img src="img/icons/help.png" alt="" width="16" height="16" class="icon" />
+                {icon name="help"}
                 </a>
                 <div class="row">
                     <div class="col-md-8 col-md-offset-2">

@@ -20,7 +20,7 @@
 	                        <li>{tr}Forums{/tr}</li>
 	                        <li>{tr}Blogs{/tr}</li>
 	                    </ul>">
-		                <img src="img/icons/help.png" alt="" width="16" height="16" class="icon" />
+		                {icon name="help"}
 	                </a>
                    </p>
                     <div class="row">
@@ -47,7 +47,7 @@
 	                        <li>{tr}File Repository & Management{/tr}</li>
 	                        <li>{tr}Collaborative Wiki{/tr} </li>
    	                    </ul>">
-		                <img src="img/icons/help.png" alt="" width="16" height="16" class="icon" />
+		                {icon name="help"}
 	                </a>
                     </p>
                     <div class="row">
@@ -76,7 +76,7 @@
 	                        <li>{tr}RSS Integration{/tr}</li>
 	                        <li>{tr}Video Log{/tr}</li>
 	                    </ul>">
-		                <img src="img/icons/help.png" alt="" width="16" height="16" class="icon" />
+		                {icon name="help"}
 	                </a>
                     </p>
                     <div class="row">
@@ -103,7 +103,7 @@
 	                        <li>{tr}File Gallery (great for Media Kit){/tr}</li>
 	                        <li>{tr}Contact Form{/tr} </li>
 	                    </ul>">
-		                <img src="img/icons/help.png" alt="" width="16" height="16" class="icon" />
+		                {icon name="help"}
 	                </a>
                     </p>
                     <div class="row">

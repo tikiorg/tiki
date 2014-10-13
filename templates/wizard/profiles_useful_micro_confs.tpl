@@ -20,7 +20,7 @@
                         <li>{tr}use plugins to manage conditional display of sections{/tr}</li>
         	        </ul>
         	        {tr}Click to read more{/tr}">
-                    <img src="img/icons/help.png" alt="" width="16" height="16" class="icon" />
+                    {icon name="help"}
                     </a>
                     <div class="row">
                         <div class="col-md-8 col-md-offset-2">
@@ -47,7 +47,7 @@
                         <li>{tr}you can tweak the module and file gallery defaults as needed for your needs{/tr}</li>
         	        </ul>
         	        {tr}Click to read more{/tr}">
-                    <img src="img/icons/help.png" alt="" width="16" height="16" class="icon" />
+                    {icon name="help"}
                     </a>
                     <div class="row">
                         <div class="col-md-8 col-md-offset-2">
@@ -75,7 +75,7 @@
                         <li>{tr}Show pages in user's preferred language{/tr}, {tr}Detect browser language{/tr}</li>
         	        </ul>
         	        {tr}Click to read more{/tr}">
-                    <img src="img/icons/help.png" alt="" width="16" height="16" class="icon" />
+                    {icon name="help"}
                     </a>
                     <div class="row">
                         <div class="col-md-8 col-md-offset-2">
@@ -105,7 +105,7 @@
                         <li>{tr}South America{/tr}</li>
                     </ul>
         	        {tr}Click to read more{/tr}">
-                    <img src="img/icons/help.png" alt="" width="16" height="16" class="icon" />
+                    {icon name="help"}
                     </a>
                     <div class="row">
                         <div class="col-md-8 col-md-offset-2">

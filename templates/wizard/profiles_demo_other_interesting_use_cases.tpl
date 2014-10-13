@@ -9,7 +9,7 @@
 		        {tr}They are initially intended for testing environments, so that, after you have played with the feature, you don't have to deal with removing the created objects, nor with restoring the potentially changed settings in your site{/tr}.
 		        <br/><br/>
 		        {tr}Once you know what they do, you can also apply them in your production site, in order to have working templates of the underlying features, that you can further adapt to your site later on{/tr}.">
-		        <img src="img/icons/help.png" alt="" width="16" height="16" class="icon" />
+		        {icon name="help"}
 	        </a>
 	        {tr}They are not to be initially applied in production environments since they cannot be easily reverted and changes and new objects in your site are created for real{/tr}
         {/remarksbox}
@@ -30,7 +30,7 @@
 	                    <li>{tr}Permissions or Monitoring can be applied in bulk to the whole structure or substructures{/tr}</li>
 	                </ul>
            	        {tr}Click to read more{/tr}">
-                    <img src="img/icons/help.png" alt="" width="16" height="16" class="icon" />
+                    {icon name="help"}
                     </a>
                     <div class="row">
                         <div class="col-md-8 col-md-offset-2">
@@ -57,7 +57,7 @@
 	                    <li>{tr}Profile instructions are translated to several languages. Therefore, some settings related to internationalization of wiki pages are enabled by the profile{/tr}</li>
 	                </ul>
            	        {tr}Click to read more{/tr}">
-                    <img src="img/icons/help.png" alt="" width="16" height="16" class="icon" />
+                    {icon name="help"}
                     </a>
                     <div class="row">
                         <div class="col-md-8 col-md-offset-2">
@@ -86,7 +86,7 @@
 	                    <li>{tr}best display if using just one column (right, for instance){/tr}</li>
 	            </ul>
            	    {tr}Click to read more{/tr}">
-                <img src="img/icons/help.png" alt="" width="16" height="16" class="icon" />
+                {icon name="help"}
                 </a>
                 <div class="row">
                     <div class="col-md-8 col-md-offset-2">
