@@ -2,42 +2,8 @@
 {if $tiki_p_view_shoutbox eq 'y'}
   {tikimodule title=$tpl_module_title name="shoutbox" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
     {if $tiki_p_post_shoutbox eq 'y'}
-      {if 0 and $prefs.feature_ajax eq 'y'}{literal}
-<script type="text/javascript">
-<!--//--><![CDATA[//><!--
-	function submitShout() {	// AJAX_TODO
-//		var fm = xajax.$('shout_form');
-//		if ((verifyForm(fm) && xajax.$('shout_msg').value.length > 2) || 
-//				xajax.$('shout_remove').value || xajax.$('shout_edit').value) {
-//			xajax.$('shout_send').disabled=true;
-//			xajax.$('shout_send').value="{/literal}{$waittext}{literal}";
-//			xajax.config.requestURI = "tiki-shoutbox.php";
-//			xajax_processShout(xajax.getFormValues(fm), "{/literal}mod-shoutbox{$module_position}{$module_ord}{literal}");
-//			return false;
-//		} else {
-//			return true;
-//		}
-	}
-	function removeShout(inId) {		// AJAX_TODO
-//		if (confirm("{/literal}{tr}Are you sure you want to delete this shout?{/tr}{literal}")) {
-//			xajax.$('shout_remove').value = inId;
-//			return submitShout();
-//		} else {
-//			return true;
-//		}
-	}
-	function editShout(inId) {
-//		xajax.$('shout_edit').value = inId;
-//		return submitShout();
-	}
-//--><!]]>
-</script>
-      {/literal}{/if}
       {js_maxlength textarea=shout_msg maxlength=255}
-      {if 1 || $prefs.feature_ajax neq 'y'}<form action="{$shout_ownurl}" method="post" onsubmit="return verifyForm(this);" id="shout_form">{else}
-      <form action="javascript:void(null);" onsubmit="return submitShout();" id="shout_form" name="shout_form">
-      <input type="hidden" id="shout_remove" name="shout_remove" value="0" />
-      <input type="hidden" id="shout_edit" name="shout_edit" value="0" />{/if}
+      <form action="#" method="post" onsubmit="return verifyForm(this);" id="shout_form">
 	  {if !empty($shout_error)}<div class="highlight">{$shout_error}</div>{/if}
       <div align="center">
         <textarea rows="3" cols="16" class="tshoutbox" id="shout_msg" name="shout_msg"></textarea>

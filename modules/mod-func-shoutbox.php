@@ -102,31 +102,7 @@ function module_shoutbox($mod_reference, $module_params)
 	include_once ('lib/shoutbox/shoutboxlib.php');
 
 	if ($tiki_p_view_shoutbox == 'y') {
-		if (true || $prefs['feature_ajax'] !== 'y') {
-			$setup_parsed_uri = parse_url($_SERVER['REQUEST_URI']);
 
-			if (isset($setup_parsed_uri['query'])) {
-				TikiLib::parse_str($setup_parsed_uri['query'], $sht_query);
-			} else {
-				$sht_query = array();
-			}
-
-			$shout_father = $setup_parsed_uri['path'];
-
-			if (isset($sht_query) && count($sht_query) > 0) {
-				$sht = array();
-				foreach ($sht_query as $sht_name => $sht_val) {
-					$sht[] = $sht_name . '=' . $sht_val;
-				}
-				$shout_father.= '?'.implode('&amp;', $sht) . '&amp;';
-			} else {
-				$shout_father.= '?';
-			}
-		} else {	// $prefs['feature_ajax'] == 'y'			// AJAX_TODO
-			$shout_father = 'tiki-shoutbox.php?';
-		}
-
-		$smarty->assign('shout_ownurl', $shout_father);
 		if (isset($_REQUEST['shout_remove'])) {
 			$info = $shoutboxlib->get_shoutbox($_REQUEST['shout_remove']);
 			if ($tiki_p_admin_shoutbox == 'y' || $info['user'] == $user) {
