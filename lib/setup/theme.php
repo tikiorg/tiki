@@ -86,8 +86,6 @@ if (empty($prefs['theme_active']) || $prefs['theme_active'] == 'default') {
 $headerlib->add_cssfile('vendor/fortawesome/font-awesome/css/font-awesome.min.css');
 
 // Allow to have a IE specific CSS files for the theme's specific hacks
-$style_ie6_css = $tikilib->get_style_path($prefs['style'], $prefs['style_option'], 'ie6.css');
-$style_ie7_css = $tikilib->get_style_path($prefs['style'], $prefs['style_option'], 'ie7.css');
 $style_ie8_css = $tikilib->get_style_path($prefs['style'], $prefs['style_option'], 'ie8.css');
 $style_ie9_css = $tikilib->get_style_path($prefs['style'], $prefs['style_option'], 'ie9.css');
 
