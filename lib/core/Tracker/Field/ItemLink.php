@@ -11,7 +11,7 @@
  * Letter key: ~r~
  *
  */
-class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_Field_Synchronizable
+class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_Field_Synchronizable, Search_FacetProvider_Interface
 {
 	const CASCADE_NONE = 0;
 	const CASCADE_CATEG = 1;
@@ -711,6 +711,22 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 		} else {
 			return array();
 		}
+	}
+
+	/***
+	 * Generate facets for search results
+	 *
+	 * @return array
+	 */
+	function getFacets()
+	{
+		$baseKey = $this->getBaseKey();
+
+		return array(
+			Search_Query_Facet_Term::fromField($baseKey)
+				->setLabel($this->getConfiguration('name'))
+				->setRenderCallback(array($this, 'getItemLabel')),
+		);
 	}
 
 }
