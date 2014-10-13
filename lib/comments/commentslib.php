@@ -417,13 +417,13 @@ class Comments extends TikiLib
 				$body = $mimelib->getPartBody($output, 'html');
 
 				if ($body) {
+					// on some systems HTMLPurifier fails with smart quotes in the html
+					$body = $mimelib->cleanQuotes($body);
 					// Clean the string using HTML Purifier first
 					$body = HTMLPurifier($body);
 
 					// html emails require some speciaal handling
 					$body = preg_replace('/--(.*)--/', '~np~--$1--~/np~', $body);	// disable strikethough syntax
-					$body = $mimelib->cleanQuotes($body);
-
 
 					$body = TikiLib::lib('edit')->parseToWiki($body);
 					$body = str_replace("\n\n", "\n", $body);	// for some reason emails seem to get line feeds quadrupled
