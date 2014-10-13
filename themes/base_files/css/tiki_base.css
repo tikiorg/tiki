@@ -2145,12 +2145,6 @@ ul.all_languages > li {
   font-size: 0.8em;
   margin-left: 10px;
 }
-a.freetag,
-a.freetag:hover {
-  background: none;
-  border: 0;
-  margin: auto;
-}
 a.freetag_1 {
   text-decoration: none;
   font-size: .8em;
@@ -2664,10 +2658,15 @@ body > .ui-front {
 .cssmenu_vert ul li {
   background: #ffffff;
 }
+.cssmenu_horiz ul ul li,
+.cssmenu_vert ul ul li {
+  background: #ffffff;
+}
 .cssmenu_horiz li:hover,
 .cssmenu_horiz li.sfHover,
 .cssmenu_vert li:hover,
 .cssmenu_vert li.sfHover {
+  background: #f5f5f5;
   /* only transition out, not in */
   -webkit-transition: none;
   transition: none;
