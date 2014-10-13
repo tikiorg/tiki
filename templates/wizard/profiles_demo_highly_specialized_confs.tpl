@@ -9,7 +9,7 @@
 		        {tr}They are initially intended for testing environments, so that, after you have played with the feature, you don't have to deal with removing the created objects, nor with restoring the potentially changed settings in your site{/tr}.
 		        <br/><br/>
 		        {tr}Once you know what they do, you can also apply them in your production site, in order to have working templates of the underlying features, that you can further adapt to your site later on{/tr}.">
-                <img src="img/icons/help.png" alt="" width="16" height="16" class="icon" />
+                {icon name="help"}
             </a>
             {tr}These configuration profiles <strong>require extra software</strong> to be installed in your server to function as expected{/tr}.
             {tr}See details in the instructions page shown in your site once each profile is applied{/tr}.
@@ -33,7 +33,7 @@
                         <li>{tr}It is used in production at http://cartograf.recitus.qc.ca (in French){/tr}</li>
                     </ul>
                     {tr}Click to read more{/tr}">
-                    <img src="img/icons/help.png" alt="" width="16" height="16" class="icon" />
+                    {icon name="help"}
                     </a>
                     <div class="row">
                         <div class="col-md-8 col-md-offset-2">
@@ -60,13 +60,13 @@
                         <li>{tr}Many other examples of nice charts and reports that you can produce with this system{/tr}</li>
                     </ul>
                     {tr}Click to read more{/tr}">
-                    <img src="img/icons/help.png" alt="" width="16" height="16" class="icon" />
+                    {icon name="help"}
                     </a>
                     <a href="http://r.tiki.org" target="tikihelp" class="tikihelp" title="{tr}r.tiki.org site{/tr}:
         	        <em>{tr}See also{/tr} {tr}r.tiki.org live site{/tr}</em>
         	        <br/><br/>
                     {tr}Click to read more{/tr}">
-                    <img src="img/icons/help.png" alt="" width="16" height="16" class="icon" />
+                    {icon name="help"}
                     </a>
                     <div class="row">
                         <div class="col-md-8 col-md-offset-2">
@@ -95,13 +95,13 @@
                         <li>{tr}Example input files and default values provided as a happy path to produce your first Heatmaps{/tr}</li>
                     </ul>
         	        {tr}Click to read more{/tr}">
-                    <img src="img/icons/help.png" alt="" width="16" height="16" class="icon" />
+                    {icon name="help"}
                     </a>
                     <a href="https://doc.tiki.org/PluginR" target="tikihelp" class="tikihelp" title="{tr}Plugin R{/tr}:
         	        <em>{tr}See also{/tr} {tr}Plugin R in doc.tiki.org{/tr}</em>
         	        <br/><br/>
                     {tr}Click to read more{/tr}">
-                    <img src="img/icons/help.png" alt="" width="16" height="16" class="icon" />
+                    {icon name="help"}
                     </a>
                     <div class="row">
                         <div class="col-md-8 col-md-offset-2">
