@@ -12,12 +12,12 @@
 		<a href="http://doc.tiki.org/Wizards" target="tikihelp" class="tikihelp" style="float:right" title="{tr}Help icon:{/tr}
 			{tr}You will get more information about the features and preferences whenever this icon is available and you pass your mouse over it{/tr}. 
 			<br/><br/>{tr}Moreover, if you click on it, you'll be directed in a new window to the corresponding documentation page for further information on that feature or topic{/tr}.">
-			<img src="img/icons/help.png" alt="" width="16" height="16" class="icon" />
+			{icon name="help"}
 		</a>
         <a target="tikihelp" class="tikihelp" style="float:right" title="{tr}Information icon:{/tr}
         {tr}You will get more information about the features and preferences whenever this icon is available and you pass your mouse over it{/tr}.
         ">
-            <img src="img/icons/information.png" alt="" width="16" height="16" class="icon" />
+            {icon name="information"}
         </a>
 		{tr}Example: {/tr}
 		{/remarksbox}
@@ -32,7 +32,7 @@
              <p>{tr}If you are new to Tiki administration, we recommend that you start with this approach{/tr}.</p>
 
              <p>{tr}If the profile you selected does not quite meet your needs, you will still have the option of customizing it further with one of the approaches below{/tr}">
-					<img src="img/icons/help.png" alt="" width="16" height="16" class="icon" />
+                    {icon name="help"}
 				</a></p>
 
                 <input  type="submit" class="btn btn-primary" name="use-default-prefs" value="{tr}Start Configuration Profiles Wizard (Macros){/tr}" />
@@ -45,7 +45,7 @@
                 {tr}This will guide you through the most common preference settings in order to customize your site{/tr}.
 				<a href="http://doc.tiki.org/Admin+Wizard" target="tikihelp" class="tikihelp" title="{tr}Admin Wizard:{/tr}
                 {tr}Use this wizard if none of the <b>Configuration Profiles</b> look like a good starting point, or if you need to customize your site further{/tr}">
-					<img src="img/icons/help.png" alt="" width="16" height="16" class="icon" />
+                    {icon name="help"}
 				</a></p>
                 <input type="submit" class="btn btn-primary" name="continue" value="{tr}Start Admin Wizard{/tr}" />
         </div>
@@ -60,7 +60,7 @@
 
             <p>{tr}Some of these settings are also available through the Admin Wizard, and all of them are available through Admin Panels{/tr}.
                 {tr}But this wizard will let you learn about them as well as enable/disable them easily according to your needs and interests for your site{/tr}.">
-					<img src="img/icons/help.png" alt="" width="16" height="16" class="icon" />
+                    {icon name="help"}
 				</a></p>
 
                 <input type="submit" class="btn btn-primary" name="use-upgrade-wizard" value="{tr}Start Upgrade Wizard{/tr}" />
