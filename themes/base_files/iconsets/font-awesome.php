@@ -25,24 +25,27 @@ $iconset = array(
 	'add' => array( 
 		'class' => 'fa fa-plus',
 	),
-    'comments' => array(
-        'class' => 'fa fa-comments-o',
-    ),
-    'delete' => array(
-        'class' => 'fa fa-times',
-    ),
-    'edit' => array(
-        'class' => 'fa fa-edit',
-    ),
+	'comments' => array(
+		'class' => 'fa fa-comments-o',
+	),
+	'create' => array( 
+		'class' => 'fa fa-plus',
+	),
+	'delete' => array(
+		'class' => 'fa fa-times',
+	),
+	'edit' => array(
+		'class' => 'fa fa-edit',
+	),
 	'error' => array(
-        'class' => 'fa fa-exclamation-circle',
-    ),
+		'class' => 'fa fa-exclamation-circle',
+	),
 	'export' => array( 
 		'class' => 'fa fa-upload',
 	),
-    'external-link' => array(
-        'class' => 'fa fa-external-link',
-    ),
+	'external-link' => array(
+		'class' => 'fa fa-external-link',
+	),
 	'file-archive' => array( 
 		'class' => 'fa fa-file-archive-o',
 	),
@@ -64,49 +67,49 @@ $iconset = array(
 	'info' => array( 
 		'class' => 'fa fa-info-circle',
 	),
-    'permission' => array(
-        'class' => 'fa fa-key',
-    ),
-    'post' => array(
-        'class' => 'fa fa-pencil',
-    ),
-    'print' => array(
-        'class' => 'fa fa-print',
-    ),
-    'refresh' => array(
-        'class' => 'fa fa-refresh',
-    ),
-    'remove' => array(
-        'class' => 'fa fa-times',
-    ),
-    'rss' => array(
-        'class' => 'fa fa-rss',
-    ),
+	'permission' => array(
+		'class' => 'fa fa-key',
+	),
+	'post' => array(
+		'class' => 'fa fa-pencil',
+	),
+	'print' => array(
+		'class' => 'fa fa-print',
+	),
+	'refresh' => array(
+		'class' => 'fa fa-refresh',
+	),
+	'remove' => array(
+		'class' => 'fa fa-times',
+	),
+	'rss' => array(
+		'class' => 'fa fa-rss',
+	),
 	'settings' => array( 
 		'class' => 'fa fa-wrench',
 	),
-    'stop-watching' => array(
-        'class' => 'fa fa-eye-slash',
-    ),
+	'stop-watching' => array(
+		'class' => 'fa fa-eye-slash',
+	),
 	'success' => array(
-        'class' => 'fa fa-check-circle',
-    ),
-    'tag' => array(
-        'class' => 'fa fa-tag',
-    ),
-    'trash' => array(
-        'class' => 'fa fa-trash-o',
-    ),
+		'class' => 'fa fa-check-circle',
+	),
+	'tag' => array(
+		'class' => 'fa fa-tag',
+	),
+	'trash' => array(
+		'class' => 'fa fa-trash-o',
+	),
 	'view' => array(
-        'class' => 'fa fa-search-plus',
-    ),
+		'class' => 'fa fa-search-plus',
+	),
 	'warning' => array(
-        'class' => 'fa fa-exclamation-triangle',
-    ),
-    'watch' => array(
-        'class' => 'fa fa-eye',
-    ),
-    'watch-group' => array(
-        'class' => 'fa fa-eye',
-    ),
+		'class' => 'fa fa-exclamation-triangle',
+	),
+	'watch' => array(
+		'class' => 'fa fa-eye',
+	),
+	'watch-group' => array(
+		'class' => 'fa fa-eye',
+	),
 );

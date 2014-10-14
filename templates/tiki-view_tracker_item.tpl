@@ -19,7 +19,7 @@
 				{/if}
 			{/if}
 			{if $prefs.feature_group_watches eq 'y' and ( $tiki_p_admin_users eq 'y' or $tiki_p_admin eq 'y' )}
-				<a class="btn btn-default" href="tiki-object_watches.php?objectId={$itemId|escape:"url"}&amp;watch_event=tracker_item_modified&amp;objectType=tracker+{$trackerId}&amp;objectName={$tracker_info.name|escape:"url"}&amp;objectHref={'tiki-view_tracker_item.php?trackerId='|cat:$trackerId|cat:'&itemId='|cat:$itemId|escape:"url"}" title="{tr}Group Monitor{/tr}">{icon name="group-watch"}</a>
+				<a class="btn btn-default" href="tiki-object_watches.php?objectId={$itemId|escape:"url"}&amp;watch_event=tracker_item_modified&amp;objectType=tracker+{$trackerId}&amp;objectName={$tracker_info.name|escape:"url"}&amp;objectHref={'tiki-view_tracker_item.php?trackerId='|cat:$trackerId|cat:'&itemId='|cat:$itemId|escape:"url"}" title="{tr}Group Monitor{/tr}">{icon name="watch-group"}</a>
 			{/if}
 		</div>
 		{if $canModify && $prefs.tracker_legacy_insert neq 'y'}

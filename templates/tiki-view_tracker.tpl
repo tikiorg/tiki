@@ -9,7 +9,7 @@
 {/if}
 <div class="t_navbar">
 	 {if $prefs.feature_group_watches eq 'y' and ( $tiki_p_admin_users eq 'y' or $tiki_p_admin eq 'y' )}
-	 	 <a class="btn btn-default" href="tiki-object_watches.php?objectId={$trackerId|escape:"url"}&amp;watch_event=tracker_modified&amp;objectType=tracker&amp;objectName={$tracker_info.name|escape:"url"}&amp;objectHref={'tiki-view_tracker.php?trackerId='|cat:$trackerId|escape:"url"}" title="{tr}Group Watch{/tr}">{icon name="group-watch"}</a>
+	 	 <a class="btn btn-default" href="tiki-object_watches.php?objectId={$trackerId|escape:"url"}&amp;watch_event=tracker_modified&amp;objectType=tracker&amp;objectName={$tracker_info.name|escape:"url"}&amp;objectHref={'tiki-view_tracker.php?trackerId='|cat:$trackerId|escape:"url"}" title="{tr}Group Watch{/tr}">{icon name="watch-group"}</a>
 	{/if}
 	{if $prefs.feature_user_watches eq 'y' and $tiki_p_watch_trackers eq 'y' and $user}
 		{if $user_watching_tracker ne 'y'}
@@ -59,7 +59,7 @@
 
 	{if $tiki_p_create_tracker_items eq 'y' && $prefs.tracker_legacy_insert neq 'y'}
 		<a class="btn btn-default" href="{bootstrap_modal controller=tracker action=insert_item trackerId=$trackerId}">
-			{icon name="add"}
+			{icon name="create"}
 			{tr}Create Item{/tr}
 		</a>
 	{/if}

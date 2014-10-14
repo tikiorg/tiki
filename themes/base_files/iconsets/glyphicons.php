@@ -20,29 +20,35 @@ $iconset = array(
 		'icon_tag' => 'span',
 	),
 	'actions' => array(
-        'class' => 'glyphicon glyphicon-play-circle',
-    ),
-    'comments' => array(
-        'class' => 'glyphicon glyphicon-comment',
-    ),
-    'delete' => array(
-        'class' => 'glyphicon glyphicon-remove',
-    ),
-    'edit' => array(
-        'class' => 'glyphicon glyphicon-edit',
-    ),
-    'envelope' => array(
-        'class' => 'glyphicon glyphicon-envelope',
-    ),
+		'class' => 'glyphicon glyphicon-play-circle',
+	),
+	'add' => array(
+		'class' => 'glyphicon glyphicon-plus',
+	),
+	'comments' => array(
+		'class' => 'glyphicon glyphicon-comment',
+	),
+	'create' => array(
+		'class' => 'glyphicon glyphicon-plus',
+	),
+	'delete' => array(
+		'class' => 'glyphicon glyphicon-remove',
+	),
+	'edit' => array(
+		'class' => 'glyphicon glyphicon-edit',
+	),
+	'envelope' => array(
+		'class' => 'glyphicon glyphicon-envelope',
+	),
 	'error' => array( 
 		'class' => 'glyphicon glyphicon-fire',
 	),
 	'export' => array(
 		'class' => 'glyphicon glyphicon-export',
 	),
-    'external-link' => array(
-        'class' => 'fa fa-external-link',
-    ),
+	'external-link' => array(
+		'class' => 'fa fa-external-link',
+	),
 	'file-archive' => array( 
 		'class' => 'glyphicon glyphicon-floppy-save',
 	),
@@ -61,46 +67,46 @@ $iconset = array(
 	'permission' => array(
 		'class' => 'glyphicon glyphicon-key',
 	),
-    'post' => array(
-        'class' => 'glyphicon glyphicon-pencil',
-    ),
-    'print' => array(
-        'class' => 'glyphicon glyphicon-print',
-    ),
-    'refresh' => array(
-        'class' => 'glyphicon glyphicon-refresh',
-    ),
-    'remove' => array(
-        'class' => 'glyphicon glyphicon-remove',
-    ),
-    'rss' => array(
-        'class' => 'glyphicon glyphicon-bullhorn',
-    ),
+	'post' => array(
+		'class' => 'glyphicon glyphicon-pencil',
+	),
+	'print' => array(
+		'class' => 'glyphicon glyphicon-print',
+	),
+	'refresh' => array(
+		'class' => 'glyphicon glyphicon-refresh',
+	),
+	'remove' => array(
+		'class' => 'glyphicon glyphicon-remove',
+	),
+	'rss' => array(
+		'class' => 'glyphicon glyphicon-bullhorn',
+	),
 	'settings' => array(
-        'class' => 'glyphicon glyphicon-cog',
-    ),
-    'share' => array(
-        'class' => 'glyphicon glyphicon-share',
-    ),
-    'stop-watching' => array(
-        'class' => 'glyphicon glyphicon-close',
-    ),
+		'class' => 'glyphicon glyphicon-cog',
+	),
+	'share' => array(
+		'class' => 'glyphicon glyphicon-share',
+	),
+	'stop-watching' => array(
+		'class' => 'glyphicon glyphicon-close',
+	),
 	'success' => array(
-        'class' => 'glyphicon glyphicon-ok',
-    ),
-    'tag' => array(
-        'class' => 'glyphicon glyphicon-tag',
-    ),
-    'trash' => array(
-        'class' => 'glyphicon glyphicon-trash',
-    ),
+		'class' => 'glyphicon glyphicon-ok',
+	),
+	'tag' => array(
+		'class' => 'glyphicon glyphicon-tag',
+	),
+	'trash' => array(
+		'class' => 'glyphicon glyphicon-trash',
+	),
 	'view' => array(
-        'class' => 'glyphicon glyphicon-zoom-in',
-    ),
+		'class' => 'glyphicon glyphicon-zoom-in',
+	),
 	'warning' => array(
-        'class' => 'glyphicon glyphicon-warning-sign',
-    ),
-    'watch' => array(
-        'class' => 'glyphicon glyphicon-eye-open',
-    ),
+		'class' => 'glyphicon glyphicon-warning-sign',
+	),
+	'watch' => array(
+		'class' => 'glyphicon glyphicon-eye-open',
+	),
 );

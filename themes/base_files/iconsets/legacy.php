@@ -20,21 +20,21 @@ $iconset = array(
 		'icon_path_image' => 'img/icons',
 		'icon_tag' => 'img',
 	),
-    'actions' => array(
-        'image_file_name' => 'application_form.png',
-    ),
-    'comments' => array(
-        'image_file_name' => 'comments.png',
-    ),
-    'delete' => array(
-        'image_file_name' => 'cross.png',
-    ),
-    'edit' => array(
-        'image_file_name' => 'page_edit.png',
-    ),
-    'envelope' => array(
-        'image_file_name' => 'email.png',
-    ),
+	'actions' => array(
+		'image_file_name' => 'application_form.png',
+	),
+	'comments' => array(
+		'image_file_name' => 'comments.png',
+	),
+	'delete' => array(
+		'image_file_name' => 'cross.png',
+	),
+	'edit' => array(
+		'image_file_name' => 'page_edit.png',
+	),
+	'envelope' => array(
+		'image_file_name' => 'email.png',
+	),
 	'error' => array( 
 		'image_file_name' => 'exclamation.png',
 	),
@@ -53,58 +53,58 @@ $iconset = array(
 	'help' => array( 
 		'image_file_name' => 'help.png',
 	),
-    'history' => array(
-        'image_file_name' => 'database.png',
-    ),
+	'history' => array(
+		'image_file_name' => 'database.png',
+	),
 	'import' => array( 
 		'image_file_name' => 'upload.png',
 	),
 	'info' => array( 
 		'image_file_name' => 'information.png',
 	),
-    'permission' => array(
-        'image_file_name' => 'key.png',
-    ),
-    'post' => array(
-        'image_file_name' => 'pencil_add.png',
-    ),
-    'print' => array(
-        'image_file_name' => 'printer.png',
-    ),
-    'refresh' => array(
-        'image_file_name' => 'arrow_refresh.png',
-    ),
-    'rss' => array(
-        'image_file_name' => 'feed.png',
-    ),
+	'permission' => array(
+		'image_file_name' => 'key.png',
+	),
+	'post' => array(
+		'image_file_name' => 'pencil_add.png',
+	),
+	'print' => array(
+		'image_file_name' => 'printer.png',
+	),
+	'refresh' => array(
+		'image_file_name' => 'arrow_refresh.png',
+	),
+	'rss' => array(
+		'image_file_name' => 'feed.png',
+	),
 	'settings' => array(
-        'image_file_name' => 'wrench.png',
-    ),
-    'share' => array(
-        'image_file_name' => 'sharethis.png',
-    ),
-    'stop-watching' => array(
-        'image_file_name' => 'no-eye.png',
-    ),
+		'image_file_name' => 'wrench.png',
+	),
+	'share' => array(
+		'image_file_name' => 'sharethis.png',
+	),
+	'stop-watching' => array(
+		'image_file_name' => 'no-eye.png',
+	),
 	'success' => array(
-        'image_file_name' => 'accept.png',
-    ),
-    'tag' => array(
-        'image_file_name' => 'tag_blue.png',
-    ),
-    'trash' => array(
-        'image_file_name' => 'bin.png',
-    ),
+		'image_file_name' => 'accept.png',
+	),
+	'tag' => array(
+		'image_file_name' => 'tag_blue.png',
+	),
+	'trash' => array(
+		'image_file_name' => 'bin.png',
+	),
 	'view' => array(
-        'image_file_name' => 'shape_square.png',
-    ),
-    'warning' => array(
-        'image_file_name' => 'sticky.png',
-    ),
-    'watch' => array(
-        'image_file_name' => 'eye.png',
-    ),
-    'watch-group' => array(
-        'image_file_name' => 'eye.png',
-    ),
+		'image_file_name' => 'shape_square.png',
+	),
+	'warning' => array(
+		'image_file_name' => 'sticky.png',
+	),
+	'watch' => array(
+		'image_file_name' => 'eye.png',
+	),
+	'watch-group' => array(
+		'image_file_name' => 'eye.png',
+	),
 );

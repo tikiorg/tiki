@@ -38,34 +38,43 @@ $iconset = array(
 	'add' => array( 
 		'class' => 'fa fa-plus',
 	),
-    'comments' => array(
-        'class' => 'fa fa-comments-o',
-    ),
-    'delete' => array(
-        'class' => 'fa fa-times',
-    ),
-    'edit' => array(
-        'class' => 'fa fa-edit',
-    ),
-    'envelope' => array(
-        'class' => 'fa fa-envelope-o',
-    ),
+	'clone' => array(
+		'class' => 'fa fa-clipboard',
+	),
+	'comments' => array(
+		'class' => 'fa fa-comments-o',
+	),
+	'copy' => array(
+		'class' => 'fa fa-copy',
+	),
+	'create' => array(
+		'class' => 'fa fa-plus',
+	),
+	'delete' => array(
+		'class' => 'fa fa-times',
+	),
+	'edit' => array(
+		'class' => 'fa fa-edit',
+	),
+	'envelope' => array(
+		'class' => 'fa fa-envelope-o',
+	),
 	'error' => array(
-        'class' => 'fa fa-exclamation-circle',
-    ),
+		'class' => 'fa fa-exclamation-circle',
+	),
+	'events' => array(
+		'class' => 'fa fa-clock-o',
+	),	
 	'export' => array( 
 		'class' => 'fa fa-upload',
 	),
-    'external-link' => array(
-        'class' => 'fa fa-external-link',
-    ),
+	'external-link' => array(
+		'class' => 'fa fa-external-link',
+	),
 	'file-archive' => array( 
 		'class' => 'fa fa-file-archive-o',
 	),
 	'group' => array( 
-		'class' => 'fa fa-group',
-	),
-	'group-watch' => array( 
 		'class' => 'fa fa-group',
 	),
 	'help' => array( 
@@ -83,21 +92,24 @@ $iconset = array(
 	'list' => array( 
 		'class' => 'fa fa-list',
 	),
-    'permission' => array(
-        'class' => 'fa fa-key',
-    ),
-    'post' => array(
-        'class' => 'fa fa-pencil',
-    ),
+	'menu' => array(
+		'class' => 'fa fa-bars',
+	),
+	'permission' => array(
+		'class' => 'fa fa-key',
+	),
+	'post' => array(
+		'class' => 'fa fa-pencil',
+	),
 	'print' => array(
 		'class' => 'fa fa-print',
 	),
 	'refresh' => array(
 		'class' => 'fa fa-refresh',
 	),
-    'remove' => array(
-        'class' => 'fa fa-times',
-    ),
+	'remove' => array(
+		'class' => 'fa fa-times',
+	),
 	'rss' => array(
 		'class' => 'fa fa-rss',
 	),
@@ -107,18 +119,18 @@ $iconset = array(
 	'settings' => array( 
 		'class' => 'fa fa-wrench',
 	),
-    'share' => array(
-        'class' => 'fa fa-share',
-    ),
-    'stop-watching' => array(
-        'class' => 'fa fa-eye-slash',
-    ),
+	'share' => array(
+		'class' => 'fa fa-share',
+	),
+	'stop-watching' => array(
+		'class' => 'fa fa-eye-slash',
+	),
 	'success' => array(
-        'class' => 'fa fa-check-circle',
-    ),
-    'tag' => array(
-        'class' => 'fa fa-tag',
-    ),
+		'class' => 'fa fa-check-circle',
+	),
+	'tag' => array(
+		'class' => 'fa fa-tag',
+	),
 	'trackers' => array(
 		'class' => 'fa fa-database',
 	),
@@ -129,15 +141,15 @@ $iconset = array(
 		'class' => 'fa fa-trash-o',
 	),
 	'view' => array(
-        'class' => 'fa fa-search-plus',
-    ),	
+		'class' => 'fa fa-search-plus',
+	),
 	'warning' => array(
-        'class' => 'fa fa-exclamation-triangle',
-    ),
-    'watch' => array(
-        'class' => 'fa fa-eye',
-    ),
-    'watch-group' => array(
-        'class' => 'fa fa-eye',
-    ),
+		'class' => 'fa fa-exclamation-triangle',
+	),
+	'watch' => array(
+		'class' => 'fa fa-eye',
+	),
+	'watch-group' => array(
+		'class' => 'fa fa-group',
+	),
 );
