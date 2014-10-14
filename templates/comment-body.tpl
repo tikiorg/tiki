@@ -38,7 +38,7 @@
 			</span>
 			{/if}
 
-			{if isset($comment.userName)}
+			{if isset($comment.userName) and not empty($comment.user_exists)}
 			<span class="icons">
 			<span class="actions">
 			{if $prefs.feature_messages eq 'y' and $tiki_p_messages eq 'y'}   
