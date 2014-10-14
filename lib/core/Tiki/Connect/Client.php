@@ -165,8 +165,8 @@ class Tiki_Connect_Client extends Tiki_Connect_Abstract
 	function getVote($pref)
 	{
 		$votes = $this->getVotes();
-		if (isset($votes[$pref])) {
-			return $votes[$pref];
+		if (isset($votes->$pref)) {
+			return $votes->$pref;
 		} else {
 			return array();
 		}
@@ -203,7 +203,7 @@ class Tiki_Connect_Client extends Tiki_Connect_Abstract
 	{
 
 		if (is_array($votes) || is_object($votes)) {
-			$votes = serialize($votes);
+			$votes = json_encode($votes);
 		}
 
 		$count = $this->connectTable->fetchCount(

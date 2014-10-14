@@ -40,10 +40,10 @@ class Services_Connect_Client
 		$pref = $input->pref->text();
 
 		$votes = $this->connectlib->getVotes(true);
-		if (!isset( $votes[$pref] )) {
-			$votes[$pref] = array();
+		if (!isset( $votes->$pref )) {
+			$votes->$pref = array();
 		}
-		$arr = $votes[$pref];
+		$arr = $votes->$pref;
 
 		if (substr($vote, 0, 2) === 'un') {
 			$vote  = substr($vote, 2);
@@ -52,8 +52,8 @@ class Services_Connect_Client
 			$arr[] = $vote;
 			$vote = 'un' . $vote;	// send back the opposite vote to update the icon
 		}
-		if ($votes[$pref] != $arr) {
-			$votes[$pref] = $arr;
+		if ($votes->$pref != $arr) {
+			$votes->$pref = $arr;
 			$this->connectlib->saveVotesForGuid($prefs['connect_guid'], $votes);
 		}
 
