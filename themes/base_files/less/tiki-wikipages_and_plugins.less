@@ -1,5 +1,17 @@
 // $Id$
 // /***** Wiki *****/
+@imagePathToImg: ~"../../img/";
+@imagePath: ~"../../img/icons/";
+
+
+// form.simple label.error {
+//  background: url('@{imagePath}error.png') no-repeat 0 4px;
+//  color: @state-danger-text;
+//  padding: 4px 0 0 20px;
+//  margin-left: 0.5em;
+// }
+
+
 
 #pageid {
   float: left;
@@ -18,16 +30,6 @@
   display: inline-block;
 }
 
-// /* Wiki plugins */
-.wikiplugin-split {
-  border: none;
-  clear: both;
-}
-
-.wikiplugin-split .codelisting {
-  width: 95%;
-}
-
 // /* wikiplugin_convene */
 
 .conveneHeaderRow td {
@@ -41,13 +43,15 @@
 }
 
 .convene-ok {
-  background-color: #D1F3D1 !important;
-  background-image: none !important;
+  color: @state-success-text;
+  background-color: @state-success-bg;
+  background-image: none;
   text-align: center;
 }
 
 .convene-no {
-  background-color: #FFCCCA !important;
+  color: @state-danger-text;
+  background-color: @state-danger-bg;
   background-image: none !important;
   text-align: center;
 }
@@ -103,8 +107,8 @@ table.wikiplugin_tracker td {
   z-index: 500;
   display:none;
   padding: .4em;
-  background: #F5F5F5;
-  border: 1px solid #bbb;
+  background: @popover-bg;
+  border: 1px solid @popover-border-color;
 }
 
 // /* fancytable (sortable) plugin */
@@ -159,7 +163,7 @@ table.wikiplugin_tracker td {
 // /* wikiplugin_tracker */
 .mandatory_note {
   font-style: italic;
-  color: red;
+  color: @state-danger-text;
   margin-top: 10px;
 }
 
@@ -173,95 +177,89 @@ table.wikiplugin_tracker td {
 
 // /* page contribution by author / wikiplugin_author */
 .author0 {
-  color: black;
+  color: @panel-success-text;
 }
 
 .author1 {
-  color: blue;
+  color: @panel-info-text;
 }
 
 .author2 {
-  color: red;
+  color: @panel-warning-text;
 }
 
 .author3 {
-  color: green;
+  color: @panel-danger-text;
 }
 
 .author4 {
-  color: maroon;
+  color: spin(@panel-success-text, 30);
 }
 
 .author5 {
-  color: yellow;
-  background: gray;
+  color: spin(@panel-info-text, 30);
 }
 
 .author6 {
-  color: aqua;
-  background: gray;
+  color: spin(@panel-warning-text, 30);
 }
 
 .author7 {
-  color: fuchsia;
-  background: gray;
+  color: spin(@panel-danger-text, 30);
 }
 
 .author8 {
-  color: teal;
+  color: spin(@panel-success-text, 30);
 }
 
 .author9 {
-  color: purple;
+  color: spin(@panel-info-text, 30);
 }
 
 .author10 {
-  color: white;
-  background: navy;
+  color: spin(@panel-warning-text, 30);
 }
 
 .author11 {
-  color: olive;
+  color: lighten(@panel-danger-text, 30);
 }
 
 .author12 {
-  color: gray;
+  color: spin(@panel-success-text, 30);
 }
 
 .author13 {
-  color: navy;
+  color: spin(@panel-info-text, 30);
 }
 
 .author14 {
-  color: silver;
-  background: blue;
+  color: spin(@panel-warning-text, 30);
 }
 
 .author15 {
-  color: lime;
-  background: gray;
+  color: lighten(@panel-danger-text, 30);
 }
 
 .structuremenu .menuSection {
   margin-left: 6px;
-  border-left: 1px dotted gray;
+  border-left: 1px dotted @gray;
 }
 
 .structuremenu .menuSection .option,
 .structuremenu .menuSection .optionline {
-  background: transparent url(../../img/icons/h_trenner.gif) center left no-repeat;
+  background: transparent url('@{imagePath}h_trenner.gif') center left no-repeat;
   padding-left: 21px;
 }
 
 // /* Inline CkEditor */
 .cke_editable:hover {
-  outline: #ccc dotted 1px;
+  outline: @gray dotted 1px;
 }
 
 .tiki_plugin {
   display: inline-block;
   background-color: transparent; // /* was #f8f8f8; */
-  border: 1px solid #eee;
+  border: 1px solid @gray-light;
 }
 
 .tiki_plugin .plugin_icon {
@@ -279,20 +277,20 @@ div.tiki_plugin {width: 100%;}
 
 // /* Auto TOC */
 div#outerToc {
-  position:fixed;
-  top:0px;
+  position: fixed;
+  top: 0;
   left: 75%;
-  background:#E0E0E0;
-  display:none;
-  border-radius:0px 0px 5px 5px;
-  z-index:5;
-  padding:5px;
+  background: @gray-lighter;
+  display: none;
+  border-radius: 0 0 5px 5px;
+  z-index: 5;
+  padding: 5px;
   margin: 0 5px 5px;
-  max-height:95%;
+  max-height: 95%;
 }
 
 div#outerToc * {
-  color: #000;
+  color: @text-color;
 }
 
 div#innerToc{
@@ -319,10 +317,10 @@ div#outerToc-static ul {
   max-height: 90%;
   overflow: auto;
   z-index: 1000;
-  background: white;
-  color: black;
+  background: @body-bg;
+  color: @text-color;
   padding: 10px;
-  border: solid 2px black;
+  border: solid 2px @text-color;
 }
 
 .icon_edit_section {
@@ -342,7 +340,7 @@ div#outerToc-static ul {
 }
 
 .backlinks_button .cssmenu_horiz ul li {
-  border: 1px solid #999;
+  border: 1px solid @gray-lighter;
   border-radius: 3px;
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
@@ -361,12 +359,12 @@ div#outerToc-static ul {
 
 // /* CKeditor contrast */
 body.wikitext {
-  background: #fff;
-  color: #000;
+  background: @body-bg;
+  color: @text-color;
 }
 
 .editable-inline {
-  background: transparent url(../../img/icons/database_lightning.png) no-repeat top right;
+  background: transparent url('@{imagePath}database_lightning.png') no-repeat top right;
   padding-right: 20px;
 }
 
@@ -375,15 +373,15 @@ body.wikitext {
 }
 
 .editable-inline.failure {
-  background: transparent url(../../img/icons/lock_gray.png) no-repeat top right;
+  background: transparent url('@{imagePath}lock_gray.png') no-repeat top right;
 }
 
 .editable-inline.modified {
-  border: solid 2px #ff6600;
+  border: solid 2px @btn-danger-border;
 }
 
 .editable-inline.unsaved {
-  border: solid 2px red;
+  border: solid 2px @btn-danger-border;
 }
 
 // /* for autocomplete menus to appear infront of ckeditor 3.6 dialogs this needs to be !important sadly */
@@ -402,7 +400,7 @@ body.wikitext {
 }
 
 .structure_select .cssmenu_horiz ul li {
-  border: 1px solid #999;
+  border: 1px solid @gray;
   border-radius: 3px;
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
@@ -447,7 +445,7 @@ body.wikitext {
   margin-right: 2em;
   font-style: italic;
   opacity: 0.5;
-  border: solid 1px #ddd;
+  border: solid 1px @gray;
   width: 15em;
 }
 
@@ -472,12 +470,11 @@ body.wikitext {
   height: 100%;
   margin: 0 !important;
   padding: 0 !important;
-  border: 0px solid #BBBBBB;
   opacity: 1;
   top: 0 !important;
   left: 0 !important;
   position: fixed !important;
-  background-color: gray;
+  background-color: @gray;
   z-index: 100 !important;
 }
 
@@ -506,9 +503,9 @@ body.wikitext {
   text-align: center;
   width: 100%;
   z-index: 101 !important;
-  background-color: #fff;
+  background-color: @body-bg;
   padding: .4em 0 .2em;
-  border-top: #aaa 1px solid;
+  border-top: @gray-lighter 1px solid;
 }
 
 .TextArea-fullscreen .actions input,
@@ -550,14 +547,14 @@ body.wikitext {
 
 // /* Autosave Preview handle */
 #autosave_preview {
-  background-color: #FFFFFF;
-  color: #000000;
+  background-color: @body-bg;
+  color: @text-color;
   z-index: 110; // /* ensure the preview is not partly covered even by #diff_outer in fullscreen side-by-side translation mode */
 }
 
 #autosave_preview_grippy {
-  background-color: #ccc;
-  background-image: url("../../img/icons/shading.png");
+  background-color: @gray-lighter;
+  background-image: url('@{imagePath}shading.png');
   z-index: 3;
 }
 
@@ -580,7 +577,7 @@ h3:hover a.tiki_anchor,
 h4:hover a.tiki_anchor,
 h5:hover a.tiki_anchor,
 h6:hover a.tiki_anchor {
-  color: #BBBBBB;
+  color: @gray-lighter;
   display: inline;
 }
 
@@ -590,7 +587,7 @@ h3 a.tiki_anchor:hover,
 h4 a.tiki_anchor:hover,
 h5 a.tiki_anchor:hover,
 h6 a.tiki_anchor:hover {
-  color: #3333CC;
+  color: @gray;
 }
 
 // /* Namespace styling */
@@ -600,7 +597,7 @@ h6 a.tiki_anchor:hover {
   border-radius: 5px;
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
-  background: #eee;
+  background: @gray-lighter;
   max-width: 30px;
   white-space: nowrap;
   overflow: hidden;
@@ -632,8 +629,8 @@ h6 a.tiki_anchor:hover {
 }
 
 .site_report a {
-  border-left: 1px solid #696969;
-  border-right: 1px solid #696969;
+  border-left: 1px solid @gray;
+  border-right: 1px solid @gray;
   padding: 0 5px;
   font-size: smaller;
 }
@@ -651,7 +648,7 @@ h6 a.tiki_anchor:hover {
 ///* To do: additional font family and bg color. */
 .inline_syntax {
   font-family: "Lucida Console";
-  color: #a52a2a;
+  color: @alert-warning-text;
 }
 
 // /***** Wiki *****/
@@ -677,14 +674,14 @@ body.tiki_wiki #comments {
 // /* wikiplugin_fade */
 .wpfade-hidden {
   background-repeat: no-repeat;
-  background-image: url(../../img/toggle-expand-dark.png);
+  background-image: url('@{imagePathToImg}toggle-expand-dark.png');
   margin-left: -19px;
   padding-left: 19px;
 }
 
 .wpfade-shown {
   background-repeat: no-repeat;
-  background-image: url(../../img/toggle-collapse-dark.png);
+  background-image: url('@{imagePathToImg}toggle-collapse-dark.png');
   margin-left: -19px;
   padding-left: 19px;
 }
@@ -695,12 +692,12 @@ body.tiki_wiki #comments {
 
 .wpfade-span-icon {
   cursor:pointer;
-  margin-left:19px;
+  margin-left: 19px;
 }
 
 .wpfade-div-icon {
   display: none;
-  margin-left:19px;
+  margin-left: 19px;
 }
 
 // /* wikiplugin_fancylist */
@@ -730,16 +727,16 @@ body.tiki_wiki #comments {
 
 // /* wikiplugin quote */
 .quoteheader {
-  background : url('../../img/icons/quoteleft.gif') no-repeat;
-  padding-left:50px;
-  height:35px;
+  background: url('@{imagePath}quoteleft.gif') no-repeat;
+  padding-left: 50px;
+  height: 35px;
 }
 
 .quotebody {
-  margin-left:35px;
-  padding-left:10px;
+  margin-left: 35px;
+  padding-left: 10px;
   font-style: italic;
-  border-left: 2px solid #D3D3D3;
+  border-left: 2px solid @gray-light;
 }
 
 // /* wikiplugin remarksbox */
@@ -752,23 +749,23 @@ body.tiki_wiki #comments {
 // /* wikiplugin tracker */
 .mandatory_star {
   font-weight: bold;
-  color: red;
+  color: @alert-danger-border;
 }
 
 .trackerplugindesc {
-  color: #BEBCBC;
+  color: @gray-dark;
   font-style: italic;
 }
 
 .charCount {
-  color: #BEBCBC;
+  color: @gray-dark;
   font-style: italic;
 }
 
 // /* img plugin */
 .imgbox {
-  border: 1px solid #a9a9a9;
-  background-color: #f9f9f9;
+  border: 1px solid @popover-border-color;
+  background-color: @popover-bg;
   padding: 5px;
 }
 
@@ -781,21 +778,21 @@ body.tiki_wiki #comments {
 .ic_button {
   float: left;
   margin: 0 2px 0  0;
-  border: 2px solid #eee;
+  border: 2px solid @pagination-border;
   width: 20px;
   height: 20px;
 }
 
 .ic_active {
-  border: 2px solid #800;
+  border: 2px solid @pagination-active-border;
 }
 
 .ic_caption {
-  background:#808080;
-  opacity:0.75;
-  width:100%;
-  color:black;
-  padding: 5px 10px 5px 10px;
+  background: @navbar-inverse-bg;
+  opacity: 0.75;
+  width: 100%;
+  color: @navbar-inverse-color;
+  padding: 5px 10px;
 }
 
 // /* wikiplugin_sign */
@@ -804,7 +801,7 @@ body.tiki_wiki #comments {
   overflow: hidden;
   position: absolute;
   z-index: 1;
-  background-image: url(../../img/icons/text_signature.png);
+  background-image: url('@{imagePath}text_signature.png');
   background-repeat: no-repeat;
   padding: 0.3em;
   vertical-align: bottom;
@@ -816,14 +813,14 @@ body.tiki_wiki #comments {
 }
 
 .wp-cookie-consent-required {
-  color: #c00;
+  color: @alert-danger-text;
 }
 
 // /* TOC */
 .toc {
   padding-left: 2em;
-  border-top: 1px dotted #a9a9a9;
-  border-bottom: 1px dotted #a9a9a9;
+  border-top: 1px dotted @gray-light;
+  border-bottom: 1px dotted @gray-light;
   margin-bottom: 4px;
 }
 
@@ -834,7 +831,7 @@ body.tiki_wiki #comments {
 
 // /* Wiki diff styles */
 .diff td {
-  border: 1px solid #696969;
+  border: 1px solid @gray-dark;
   white-space: normal !important;
 }
 
@@ -849,32 +846,32 @@ body.tiki_wiki #comments {
 }
 
 .diffadded {
-  background: #ccffcc;
-  color: #000;
+  background: @state-success-bg;
+  color: @state-success-text;
 }
 
 .diffdeleted {
-  background: #ffcccc;
-  color: #000;
+  background: @state-danger-bg;
+  color: @state-danger-text;
   text-decoration: line-through;
 }
 
 .diffinldel {
-  background: #ffcccc;
+  background: @state-warning-bg;
   text-decoration: line-through;
 }
 
 .diffbody {
-  background: #f2f4f5;
-  color: #2a2a2a;
+  background: @gray-lighter;
+  color: @gray-darker;
 }
 
 .diffchar {
-  color: red;
+  color: lighten(@state-danger-text, 10%);
 }
 
 .diffadded .diffchar {
-  color: blue;
+  color: lighten(@state-success-text, 10%);
 }
 
 .morcego_embedded {
@@ -883,28 +880,28 @@ body.tiki_wiki #comments {
 }
 
 .highlight_word_0 {
-  color: #ffff66;
-  background: #666;
+  color: @panel-success-text;
+  background: @panel-success-heading-bg;
 }
 
 .highlight_word_1 {
-  color: #ff9999;
-  background: #666;
+  color: @panel-info-text;
+  background: @panel-info-heading-bg;
 }
 
 .highlight_word_2 {
-  color: #a0ffff;
-  background: #666;
+  color: @panel-warning-text;
+  background: @panel-warning-heading-bg;
 }
 
 .highlight_word_3 {
-  color: #ff66ff;
-  background: #666;
+  color: @panel-danger-text;
+  background: @panel-danger-heading-bg;
 }
 
 .highlight_word_4 {
-  color: #99ff99;
-  background: #666;
+  color: spin(panel-danger-text, 20);
+  background: spin(@panel-danger-heading-bg, 20);
 }
 
 .ui-tabs .ui-tabs-nav li a {

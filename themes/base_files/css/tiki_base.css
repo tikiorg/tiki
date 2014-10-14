@@ -616,13 +616,6 @@ td.numeric {
 .wikiactions > .btn-group {
   display: inline-block;
 }
-.wikiplugin-split {
-  border: none;
-  clear: both;
-}
-.wikiplugin-split .codelisting {
-  width: 95%;
-}
 .conveneHeaderRow td {
   text-align: center;
 }
@@ -632,12 +625,14 @@ td.numeric {
   vertical-align: middle;
 }
 .convene-ok {
-  background-color: #D1F3D1 !important;
-  background-image: none !important;
+  color: #3c763d;
+  background-color: #dff0d8;
+  background-image: none;
   text-align: center;
 }
 .convene-no {
-  background-color: #FFCCCA !important;
+  color: #a94442;
+  background-color: #f2dede;
   background-image: none !important;
   text-align: center;
 }
@@ -679,8 +674,8 @@ table.wikiplugin_tracker td {
   z-index: 500;
   display: none;
   padding: .4em;
-  background: #F5F5F5;
-  border: 1px solid #bbb;
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.2);
 }
 .fancysort .header {
   cursor: pointer;
@@ -722,7 +717,7 @@ table.wikiplugin_tracker td {
 }
 .mandatory_note {
   font-style: italic;
-  color: red;
+  color: #a94442;
   margin-top: 10px;
 }
 .popup-backlinks {
@@ -733,75 +728,69 @@ table.wikiplugin_tracker td {
   white-space: nowrap;
 }
 .author0 {
-  color: black;
+  color: #3c763d;
 }
 .author1 {
-  color: blue;
+  color: #31708f;
 }
 .author2 {
-  color: red;
+  color: #8a6d3b;
 }
 .author3 {
-  color: green;
+  color: #a94442;
 }
 .author4 {
-  color: maroon;
+  color: #3c765a;
 }
 .author5 {
-  color: yellow;
-  background: gray;
+  color: #31418f;
 }
 .author6 {
-  color: aqua;
-  background: gray;
+  color: #7f8a3b;
 }
 .author7 {
-  color: fuchsia;
-  background: gray;
+  color: #a97842;
 }
 .author8 {
-  color: teal;
+  color: #3c765a;
 }
 .author9 {
-  color: purple;
+  color: #31418f;
 }
 .author10 {
-  color: white;
-  background: navy;
+  color: #7f8a3b;
 }
 .author11 {
-  color: olive;
+  color: #dda8a7;
 }
 .author12 {
-  color: gray;
+  color: #3c765a;
 }
 .author13 {
-  color: navy;
+  color: #31418f;
 }
 .author14 {
-  color: silver;
-  background: blue;
+  color: #7f8a3b;
 }
 .author15 {
-  color: lime;
-  background: gray;
+  color: #dda8a7;
 }
 .structuremenu .menuSection {
   margin-left: 6px;
-  border-left: 1px dotted gray;
+  border-left: 1px dotted #555555;
 }
 .structuremenu .menuSection .option,
 .structuremenu .menuSection .optionline {
-  background: transparent url(../../img/icons/h_trenner.gif) center left no-repeat;
+  background: transparent url('../../img/icons/h_trenner.gif') center left no-repeat;
   padding-left: 21px;
 }
 .cke_editable:hover {
-  outline: #ccc dotted 1px;
+  outline: #555555 dotted 1px;
 }
 .tiki_plugin {
   display: inline-block;
   background-color: transparent;
-  border: 1px solid #eee;
+  border: 1px solid #777777;
 }
 .tiki_plugin .plugin_icon {
   float: left;
@@ -851,10 +840,10 @@ div#outerToc-static ul {
   max-height: 90%;
   overflow: auto;
   z-index: 1000;
-  background: white;
-  color: black;
+  background: #ffffff;
+  color: #333333;
   padding: 10px;
-  border: solid 2px black;
+  border: solid 2px #333333;
 }
 .icon_edit_section {
   float: right;
@@ -870,7 +859,7 @@ div#outerToc-static ul {
   width: 20px;
 }
 .backlinks_button .cssmenu_horiz ul li {
-  border: 1px solid #999;
+  border: 1px solid ;
   border-radius: 3px;
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
@@ -889,14 +878,14 @@ body.wikitext {
   color: #000;
 }
 .editable-inline {
-  background: transparent url(../../img/icons/database_lightning.png) no-repeat top right;
+  background: transparent url('../../img/icons/database_lightning.png') no-repeat top right;
   padding-right: 20px;
 }
 .editable-inline.loaded {
   background: transparent;
 }
 .editable-inline.failure {
-  background: transparent url(../../img/icons/lock_gray.png) no-repeat top right;
+  background: transparent url('../../img/icons/lock_gray.png') no-repeat top right;
 }
 .editable-inline.modified {
   border: solid 2px #ff6600;
@@ -1043,7 +1032,7 @@ body.wikitext {
 }
 #autosave_preview_grippy {
   background-color: #ccc;
-  background-image: url("../../img/icons/shading.png");
+  background-image: url('../../img/icons/shading.png');
   z-index: 3;
 }
 a.tiki_anchor:before {
@@ -1137,13 +1126,13 @@ body.tiki_wiki #comments {
 }
 .wpfade-hidden {
   background-repeat: no-repeat;
-  background-image: url(../../img/toggle-expand-dark.png);
+  background-image: url('../../img/toggle-expand-dark.png');
   margin-left: -19px;
   padding-left: 19px;
 }
 .wpfade-shown {
   background-repeat: no-repeat;
-  background-image: url(../../img/toggle-collapse-dark.png);
+  background-image: url('../../img/toggle-collapse-dark.png');
   margin-left: -19px;
   padding-left: 19px;
 }
@@ -1237,7 +1226,7 @@ body.tiki_wiki #comments {
   overflow: hidden;
   position: absolute;
   z-index: 1;
-  background-image: url(../../img/icons/text_signature.png);
+  background-image: url('../../img/icons/text_signature.png');
   background-repeat: no-repeat;
   padding: 0.3em;
   vertical-align: bottom;
