@@ -6236,21 +6236,7 @@ body.layout_social > .container {
 .input-group-addon:hover {
   background: url('../images/pagetitle-bg.jpg') 0 100%;
 }
-/*
-.table-striped > tbody > tr:nth-child(2n+1) > td,
-.table-striped > tbody > tr:nth-child(2n+1) > th {background: transparent url('@{imagePath}flakesptn3.jpg') }
-
-.table-striped > tbody > tr.success:nth-child(2n+1) > td,
-.table-striped > tbody > tr.success:nth-child(2n+1) > th {background: @state-success-bg; }
-
-.table-striped > tbody > tr.info:nth-child(2n+1) > td,
-.table-striped > tbody > tr.info:nth-child(2n+1) > th {background: @state-info-bg; }
-
-.table-striped > tbody > tr.warning:nth-child(2n+1) > td,
-.table-striped > tbody > tr.warning:nth-child(2n+1) > th {background: @state-warning-bg; }
-
-.table-striped > tbody > tr.danger:nth-child(2n+1) > td,
-.table-striped > tbody > tr.danger:nth-child(2n+1) > th {background: @state-danger-bg; }*/
+/*.table-striped > tbody > tr:nth-child(2n+1) > td,.table-striped > tbody > tr:nth-child(2n+1) > th {background: transparent url('@{imagePath}flakesptn3.jpg') }.table-striped > tbody > tr.success:nth-child(2n+1) > td,.table-striped > tbody > tr.success:nth-child(2n+1) > th {background: @state-success-bg; }.table-striped > tbody > tr.info:nth-child(2n+1) > td,.table-striped > tbody > tr.info:nth-child(2n+1) > th {background: @state-info-bg; }.table-striped > tbody > tr.warning:nth-child(2n+1) > td,.table-striped > tbody > tr.warning:nth-child(2n+1) > th {background: @state-warning-bg; }.table-striped > tbody > tr.danger:nth-child(2n+1) > td,.table-striped > tbody > tr.danger:nth-child(2n+1) > th {background: @state-danger-bg; }*/
 .cssmenu_horiz li ul,
 .cssmenu_vert li ul {
   padding: 5px 0;

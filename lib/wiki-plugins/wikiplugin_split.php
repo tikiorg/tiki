@@ -163,7 +163,7 @@ function wikiplugin_split($data, $params, $pos)
 		$percent = true;	
 	}
 	if (!isset($edit)) $edit = 'n';
-	$result = "<div class='table-responsive'><table border='0' cellpadding='0' cellspacing='0' class='wikiplugin-split".($percent ? " normalnoborder" : "").( !empty($customclass) ? " $customclass" : "")."'>";
+	$result = "<div class='table-responsive'><div><table class='table".($percent ? " normalnoborder" : "").( !empty($customclass) ? " $customclass" : "")."'>";
 
 	// Attention: Dont forget to remove leading empty line in section ...
 	//            it should remain from previous '---' line...
@@ -241,7 +241,7 @@ function wikiplugin_split($data, $params, $pos)
 		$result .= '</tr>';
 	}
 	// Close HTML table (no \n at end!)
-	$result .= "</table></div>";
+	$result .= "</table></div></div>";
 
 	return wikiplugin_split_rollback($result, $hashes);
 }

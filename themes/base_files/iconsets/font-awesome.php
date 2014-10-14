@@ -34,6 +34,9 @@ $iconset = array(
 	'export' => array( 
 		'class' => 'fa fa-upload',
 	),
+    'external-link' => array(
+        'class' => 'fa fa-external-link',
+    ),
 	'file-archive' => array( 
 		'class' => 'fa fa-file-archive-o',
 	),

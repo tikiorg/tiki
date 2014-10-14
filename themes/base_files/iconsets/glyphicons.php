@@ -37,6 +37,9 @@ $iconset = array(
 	'export' => array(
 		'class' => 'glyphicon glyphicon-export',
 	),
+    'external-link' => array(
+        'class' => 'fa fa-external-link',
+    ),
 	'file-archive' => array( 
 		'class' => 'glyphicon glyphicon-floppy-save',
 	),
