@@ -144,8 +144,6 @@ function smarty_function_treetable($params, $smarty)
 			$tree_table_id++;
 		}
 		$id = 'treetable_'. $tree_table_id;
-	} else {
-		$id;
 	}
 	// TODO - check this? add key/val pairs?
 	if (empty($_columns)) {
@@ -309,6 +307,8 @@ $("#'.$id.'_showSelected").click( function () {
 						$treeParentId = preg_replace('/\s+/', '_', $parts[$i]);
 						$tt_parent_id = $id . '_' . $treeParentId;
 						break;
+					} else {
+						$tt_parent_id = '';
 					}
 				}
 
