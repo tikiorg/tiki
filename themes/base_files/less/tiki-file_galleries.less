@@ -1,4 +1,7 @@
 // $Id$
+
+@imagePath: ~"../../img/";
+
 //***** File Galleries *****/
 .fgallisting table td {
   padding-left: 2px;
@@ -49,11 +52,11 @@ table.treetable .checkBoxHeader {
 }
 
 table.treetable tr.collapsed span.indenter a {
-  background-image: url(../../img/toggle-expand-dark.png);
+  background-image: url('@{imagePath}toggle-expand-dark.png');
 }
 
 table.treetable tr.expanded span.indenter a {
-  background-image: url(../../img/toggle-collapse-dark.png);
+  background-image: url('@{imagePath}toggle-collapse-dark.png');
 }
 
 table.treetable.objectperms td.added {
@@ -132,9 +135,9 @@ table.treetable.objectperms td.removed {
 .progressBarInProgress,
 .progressBarComplete,
 .progressBarError {
-  width: 0%;
+  width: 0;
   height: 20px;
-  background-color: blue;
+  background-color: @state-info-text;
   margin-top: 2px;
   color: white;
   text-align: center;
@@ -143,13 +146,13 @@ table.treetable.objectperms td.removed {
 
 .progressBarComplete {
   width: 100%;
-  background-color: green;
+  background-color: @state-success-text;
   visibility: hidden;
 }
 
 .progressBarError {
   width: 100%;
-  background-color: red;
+  background-color: @state-warning-text;
   visibility: hidden;
 }
 
@@ -168,8 +171,8 @@ table.treetable.objectperms td.removed {
 .progressContainer {
   margin: 5px;
   padding: 4px;
-  border: solid 1px #E8E8E8;
-  background-color: #F7F7F7;
+  border: solid 1px @modal-content-border-color;
+  background-color: @modal-content-bg;
   overflow: hidden;
 }
 

@@ -4,6 +4,8 @@
 // also highlight on "button" links, e.g. if there are some comments it
 // highlights the "button" link in #page-bar under the content of the wiki pages
 
+@imagePath: ~"../../img/";
+
 .searchresults blockquote em,
 .highlight,
 .button.highlight a,
@@ -89,7 +91,7 @@ input:-webkit-autofill {
   display: none;
   z-index: 9999;
   position: absolute;
-  background: transparent url(../../img/overlay-light.png);
+  background: transparent url('@{imagePath}overlay-light.png');
 }
 #ajaxLoading {
   display: none;
@@ -102,7 +104,7 @@ input:-webkit-autofill {
   font-size: 2em;
   font-weight: bold;
   color: #333;
-  background: transparent url(../../img/loading-light.gif) no-repeat 50% 50%;
+  background: transparent url('@{imagePath}loading-light.gif') no-repeat 50% 50%;
 }
 
 // cookie consent style
@@ -176,7 +178,7 @@ body.fullscreen {
 }
 
 .openid_url {
-  background: #fff url(../../img/icons/login-OpenID-bg.gif) 1px 1px no-repeat;
+  background: #fff url('@{imagePath}icons/login-OpenID-bg.gif') 1px 1px no-repeat;
 }
 
 .bannertext {
