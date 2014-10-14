@@ -180,9 +180,9 @@ abstract class Tiki_Connect_Abstract
 		}
 
 		if (!empty($res[0])) {
-			return unserialize($res[0]['data']);
+			return json_decode($res[0]['data']);
 		} else {
-			return array();
+			return new stdClass();
 		}
 	}
 

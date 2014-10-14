@@ -424,6 +424,7 @@ class Comments extends TikiLib
 
 					// html emails require some speciaal handling
 					$body = preg_replace('/--(.*)--/', '~np~--$1--~/np~', $body);	// disable strikethough syntax
+					$body = preg_replace('/\{(.*)\}/', '~np~{$1}~/np~', $body);	// disable plugin type things
 
 					$body = TikiLib::lib('edit')->parseToWiki($body);
 					$body = str_replace("\n\n", "\n", $body);	// for some reason emails seem to get line feeds quadrupled
@@ -444,6 +445,7 @@ class Comments extends TikiLib
 
 				if ($prefs['feature_forum_parse'] === 'y') {
 					$body = preg_replace('/--(.*)--/', '~np~--$1--~/np~', $body);    // disable strikethough if...
+					$body = preg_replace('/\{(.*)\}/', '~np~\{$1\}~/np~', $body);	// disable plugin type things
 				}
 				$body = $mimelib->cleanQuotes($body);
 			}
@@ -1614,6 +1616,7 @@ class Comments extends TikiLib
 		if ($res['userName']) {
 			$res['user_online'] = $this->is_user_online($res['userName'])? 'y' : 'n';
 		}
+		$res['user_exists'] = TikiLib::lib('user')->user_exists($res['userName']);
 		if ($prefs['feature_contribution'] == 'y') {
 			$contributionlib = TikiLib::lib('contribution');
 			$res['contributions'] = $contributionlib->get_assigned_contributions($res['threadId'], 'comment');
