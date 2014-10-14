@@ -19,6 +19,12 @@ $iconset = array(
 		'iconset_description' => tr('Font-awesome focused iconset, see http://fortawesome.github.io/Font-Awesome/icons/'),
 		'icon_tag' => 'i', 
 	),
+	'actions' => array( 
+		'class' => 'fa fa-play-circle',
+	),
+	'add' => array( 
+		'class' => 'fa fa-plus',
+	),
     'comments' => array(
         'class' => 'fa fa-comments-o',
     ),
@@ -47,7 +53,7 @@ $iconset = array(
 		'class' => 'fa fa-group',
 	),
 	'help' => array( 
-		'class' => 'fa fa-question',
+		'class' => 'fa fa-question-circle',
 	),
 	'history' => array( 
 		'class' => 'fa fa-history',
@@ -90,6 +96,9 @@ $iconset = array(
     ),
     'trash' => array(
         'class' => 'fa fa-trash-o',
+    ),
+	'view' => array(
+        'class' => 'fa fa-search-plus',
     ),
 	'warning' => array(
         'class' => 'fa fa-exclamation-triangle',

@@ -1,16 +1,16 @@
 {if $p.helpurl}
-	<a href="{$p.helpurl|escape}" target="tikihelp" class="tikihelp bottom" title="{$p.name|escape}: {$p.description|escape} {if $p.separator && $p.type neq 'multiselector'}{tr}Separator is {/tr}<b>{$p.separator|simplewiki}</b>{/if}">
-		{icon _id=help alt=''}
+	<a href="{$p.helpurl|escape}" target="tikihelp" class="tikihelp" title="{$p.name|escape}: {$p.description|escape} {if $p.separator && $p.type neq 'multiselector'}{tr}Separator is {/tr}<b>{$p.separator|simplewiki}</b>{/if}">
+		{icon name="help"}
 	</a>
 {elseif $p.description}
-	<span class="tikihelp bottom" title="{$p.name|escape}: {$p.description|escape} {if $p.separator && $p.type neq 'multiselector'}{tr}Separator is {/tr}<b>{$p.separator|simplewiki}</b>{/if}">
-		{icon _id=information alt=''}
-	</span>
+	<a class="tikihelp" title="{$p.name|escape}: {$p.description|escape} {if $p.separator && $p.type neq 'multiselector'}{tr}Separator is {/tr}<b>{$p.separator|simplewiki}</b>{/if}">
+		{icon name="info"}
+	</a>
 {/if}
 
 {if $p.warning}
-	<a href="#" target="tikihelp" class="tikihelp bottom" title="{tr}Warning:{/tr} {$p.warning|escape}">
-		{icon _id=error alt=''}
+	<a href="#" target="tikihelp" class="tikihelp text-warning" title="{tr}Warning:{/tr} {$p.warning|escape}">
+		{icon name="warning"}
 	</a>
 {/if}
 
@@ -19,9 +19,8 @@
 {/if}
 
 {if !empty($p.popup_html)}
-	<a class="icon tips" title="{tr}Actions{/tr}" href="#" style="padding:0; margin:0; border:0"
-			 {popup trigger="onClick" sticky=1 mouseoff=1 fullhtml=1 center="true" text=$p.popup_html|escape:"javascript"|escape:"html"}>
-		{icon _id='application_form' alt="{tr}Actions{/tr}"}
+	<a class="tips" title="{tr}Actions{/tr}" href="#" style="padding:0; margin:0; border:0" {popup trigger="onClick" sticky=1 mouseoff=1 fullhtml=1 center="true" text=$p.popup_html|escape:"javascript"|escape:"html"}>
+		{icon name="actions"}
 	</a>
 {/if}
 {if !empty($p.voting_html)}

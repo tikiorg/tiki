@@ -19,6 +19,9 @@ $iconset = array(
 		'iconset_description' => tr('Glyphicon focused iconset, see http://getbootstrap.com/components/'),
 		'icon_tag' => 'span',
 	),
+	'actions' => array(
+        'class' => 'glyphicon glyphicon-play-circle',
+    ),
     'comments' => array(
         'class' => 'glyphicon glyphicon-comment',
     ),
@@ -90,6 +93,9 @@ $iconset = array(
     ),
     'trash' => array(
         'class' => 'glyphicon glyphicon-trash',
+    ),
+	'view' => array(
+        'class' => 'glyphicon glyphicon-zoom-in',
     ),
 	'warning' => array(
         'class' => 'glyphicon glyphicon-warning-sign',

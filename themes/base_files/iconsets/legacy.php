@@ -20,6 +20,9 @@ $iconset = array(
 		'icon_path_image' => 'img/icons',
 		'icon_tag' => 'img',
 	),
+    'actions' => array(
+        'image_file_name' => 'application_form.png',
+    ),
     'comments' => array(
         'image_file_name' => 'comments.png',
     ),
@@ -91,6 +94,9 @@ $iconset = array(
     ),
     'trash' => array(
         'image_file_name' => 'bin.png',
+    ),
+	'view' => array(
+        'image_file_name' => 'shape_square.png',
     ),
     'warning' => array(
         'image_file_name' => 'sticky.png',
