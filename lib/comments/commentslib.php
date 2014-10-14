@@ -424,6 +424,7 @@ class Comments extends TikiLib
 
 					// html emails require some speciaal handling
 					$body = preg_replace('/--(.*)--/', '~np~--$1--~/np~', $body);	// disable strikethough syntax
+					$body = preg_replace('/\{(.*)\}/', '~np~{$1}~/np~', $body);	// disable plugin type things
 
 					$body = TikiLib::lib('edit')->parseToWiki($body);
 					$body = str_replace("\n\n", "\n", $body);	// for some reason emails seem to get line feeds quadrupled
@@ -444,6 +445,7 @@ class Comments extends TikiLib
 
 				if ($prefs['feature_forum_parse'] === 'y') {
 					$body = preg_replace('/--(.*)--/', '~np~--$1--~/np~', $body);    // disable strikethough if...
+					$body = preg_replace('/\{(.*)\}/', '~np~\{$1\}~/np~', $body);	// disable plugin type things
 				}
 				$body = $mimelib->cleanQuotes($body);
 			}
