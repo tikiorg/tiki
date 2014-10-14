@@ -179,7 +179,7 @@ $('select[name=type]').change(function () {
 }).change();
 {/jq}
 					<div class="alert alert-danger">
-						{glyph name="warning-sign"} {tr}Changing the field type may cause irretrievable data loss - use with caution!{/tr}
+						{icon name="warning"} {tr}Changing the field type may cause irretrievable data loss - use with caution!{/tr}
 					</div>
 				</div>
 			{/if}

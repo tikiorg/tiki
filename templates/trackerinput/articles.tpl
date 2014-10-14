@@ -11,7 +11,7 @@
 		<h5>{tr}New Article{/tr}</h5>
 		<div class="form-inline">
 			<input class="form-control" type="url" name="{$field.ins_id|escape}_add" placeholder="{tr}Article URL{/tr}" size="50">
-			<button name="{$field.ins_id|escape}_add" class="add-more btn btn-default" data-topic="{$field.options_map.topicId|escape}" data-type="{$field.options_map.type|escape}">{glyph name=plus} {tr}Add Article{/tr}</button>
+			<button name="{$field.ins_id|escape}_add" class="add-more btn btn-default" data-topic="{$field.options_map.topicId|escape}" data-type="{$field.options_map.type|escape}">{icon name="add"} {tr}Add Article{/tr}</button>
 		</div>
 	{/if}
 </div>
