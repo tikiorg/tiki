@@ -740,40 +740,40 @@ table.wikiplugin_tracker td {
   color: #a94442;
 }
 .author4 {
-  color: #3c765a;
+  color: #3c766d;
 }
 .author5 {
-  color: #31418f;
+  color: #60318f;
 }
 .author6 {
-  color: #7f8a3b;
+  color: #658a3b;
 }
 .author7 {
-  color: #a97842;
+  color: #a99a42;
 }
 .author8 {
-  color: #3c765a;
+  color: #3c4e76;
 }
 .author9 {
-  color: #31418f;
+  color: #8f318f;
 }
 .author10 {
-  color: #7f8a3b;
+  color: #3b8a53;
 }
 .author11 {
-  color: #dda8a7;
+  color: #62a942;
 }
 .author12 {
-  color: #3c765a;
+  color: #6d3c76;
 }
 .author13 {
-  color: #31418f;
+  color: #8f3151;
 }
 .author14 {
-  color: #7f8a3b;
+  color: #3b728a;
 }
 .author15 {
-  color: #dda8a7;
+  color: #42a989;
 }
 .structuremenu .menuSection {
   margin-left: 6px;
@@ -2243,31 +2243,31 @@ fieldset.dropzone {
   padding-left: 2px;
 }
 .prio1 {
-  background: #f7f9ca;
+  background: #f2dede;
 }
 .prio2 {
-  background: #f7f9ea;
+  background: #fcf8e3;
 }
 .prio3 {
-  background: #f7f9fa;
+  background: #dff0d8;
 }
 .prio4 {
-  background: #f7f9fd;
+  background: #d9edf7;
 }
 .prio5 {
-  background: #f7f9ff;
+  background: #f5f5f5;
 }
 .messureadflag {
-  background: #a9a9a9;
+  background: #555555;
   padding-left: 5px;
 }
 .messureadhead {
-  background: #dcdcdc;
+  background: #777777;
   margin-top: 2px;
 }
 .messureadbody {
   margin-top: 5px;
-  background: #dcdcdc;
+  background: #eeeeee;
 }
 .readlink {
   font-size: .95em;
@@ -2283,32 +2283,32 @@ fieldset.dropzone {
   font-size: .8em;
 }
 .webmail_list .odd {
-  background: #eee;
+  background: #f9f9f9;
 }
 .webmail_list .button {
-  background: #fff;
-  border: 1px solid #666;
+  background: #ffffff;
+  border: 1px solid #428bca;
   padding: 0 2px;
 }
 .webmail_list .webmail_read {
-  background: #aaa;
+  background: #d9edf7;
 }
 .webmail_list .webmail_replied {
-  background: #888;
+  background: #dff0d8;
 }
 .webmail_list .webmail_taken {
-  border: #900;
-  color: #900;
+  border: #faebcc;
+  color: #8a6d3b;
 }
 .webmail_message {
-  background: #fff;
+  background: #ffffff;
 }
 .webmail_mono {
   font-size: 1.1em;
   font-family: "Courier New", Courier, monospace;
 }
 .webmail_message_headers {
-  background: #fff;
+  background: #ffffff;
   width: 100%;
   padding: 0 5em .5em 0;
 }
