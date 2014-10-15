@@ -799,7 +799,7 @@ table.wikiplugin_tracker td {
 }
 .unsavedChangesInEditor {
   border: 1px solid;
-  border-color: Red;
+  border-color: #faebcc;
 }
 div.tiki_plugin {
   width: 100%;
@@ -1256,7 +1256,7 @@ body.tiki_wiki #comments {
   white-space: normal;
 }
 .diff div {
-  border-top: 1px solid #696969;
+  border-top: 1px solid #777777;
 }
 .diffadded {
   background: #dff0d8;
@@ -1310,9 +1310,8 @@ body.tiki_wiki #comments {
 }
 /* Structures drill-down menu */
 div.drillshow {
-  border: 1px solid;
   padding: 3px;
-  border-color: lightgrey;
+  border: 1px solid #777777;
 }
 .article {
   margin-bottom: 40px;
@@ -2625,8 +2624,6 @@ body > .ui-front {
 .cssmenu_vert a {
   padding: .75em 1em;
   text-decoration: none;
-  zoom: 1;
-  /* IE7 */
 }
 .cssmenu_horiz a,
 .cssmenu_vert a {
