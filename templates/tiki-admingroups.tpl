@@ -80,8 +80,8 @@
 
 				<td class="text">{tr}{$users[user].userChoice}{/tr}</td>
 				<td class="action">
+					<a class="btn btn-default btn-sm" href="tiki-admingroups.php?group={$users[user].groupName|escape:"url"}&amp;cookietab=2{if $prefs.feature_tabs ne 'y'}#tab2{/if}" title="{tr}Edit{/tr}">{icon name="edit"} <span class="sr-only">{tr}Edit{/tr}</span></a>
 					{permission_link mode=button_compact group=$users[user].groupName count=$users[user].permcant}
-					<a class="link" href="tiki-admingroups.php?group={$users[user].groupName|escape:"url"}&amp;cookietab=2{if $prefs.feature_tabs ne 'y'}#tab2{/if}" title="{tr}Edit{/tr}">{glyph name='edit'} <span class="sr-only">{tr}Edit{/tr}</span></a>
 					{if $users[user].groupName ne 'Anonymous' and $users[user].groupName ne 'Registered' and $users[user].groupName ne 'Admins'}
 						<a class="link text-danger" href="tiki-admingroups.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;action=delete&amp;group={$users[user].groupName|escape:"url"}" title="{tr}Delete{/tr}">{glyph name='remove'} <span class="sr-only">{tr}Remove{/tr}"}</span></a>
 					{/if}
@@ -422,10 +422,10 @@
 					<td class="date">{$member.created|tiki_short_datetime}</td>
 					<td class="date">{if !empty($member.expire)}{$member.expire|tiki_short_datetime}{/if}</td>
 					<td class="action">
+						<a href="tiki-adminusers.php?user={$member.userId|escape:"url"}&amp;cookietab=2{if $prefs.feature_tabs ne 'y'}#tab2{/if}" class="btn btn-default btn-sm" title="{tr}Edit{/tr}">{icon name="edit"}</a>
 						{if $groupname neq 'Registered'}
-						<a href="tiki-adminusers.php?user={$member.login|escape:"url"}&amp;action=removegroup&amp;group={$groupname|escape:url}" class="link" title="{tr}Remove from Group{/tr}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
+							<a href="tiki-adminusers.php?user={$member.login|escape:"url"}&amp;action=removegroup&amp;group={$groupname|escape:url}" class="btn btn-default btn-sm" title="{tr}Remove from Group{/tr}">{icon name="remove"}</a>
 						{/if}
-						<a href="tiki-adminusers.php?user={$member.userId|escape:"url"}&amp;cookietab=2{if $prefs.feature_tabs ne 'y'}#tab2{/if}" class="link" title="{tr}Edit{/tr}">{icon _id='page_edit'}</a>
 					</td>
 					</tr>
 				{/foreach}
@@ -461,7 +461,7 @@
 					<td class="username">{$member|userlink}</td>
 					<td class="action">
 						{self_link user=$member|escape:"url" action=unbanuser group=$groupname|escape:url _title="{tr}Unban user{/tr}"}
-							{icon _id='cross_admin' alt="{tr}Unban user{/tr}"}
+							{icon name="remove"}
 						{/self_link}
 					</td>
 					</tr>
