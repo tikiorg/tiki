@@ -6,6 +6,8 @@
 	(This file was edited directly, not produced by the Less pre-compiler; there's no element.less, yet.)
 */
 
+@import url(../../../css/tiki.css);
+
 #col2 a, #col2 a:visited, #col3 a, #col3 a:visited {
 	color: #000;
 }

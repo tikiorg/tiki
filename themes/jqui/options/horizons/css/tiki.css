@@ -4,6 +4,8 @@
 	Visit http://themes.tiki.org for more information.
 */
 
+@import url(../../../css/tiki.css);
+
 #col2 a, #col2 a:visited, #col3 a, #col3 a:visited {
 	color: #000;
 }

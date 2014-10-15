@@ -4,6 +4,8 @@
 	Visit http://themes.tiki.org for more information
 */
 
+@import url(../../../css/tiki.css);
+
 /* initially created in theme generator */
 
 #col2 a, #col2 a:visited, #col3 a, #col3 a:visited {
@@ -84,7 +86,7 @@ li.cs_advanced {
 /* menus */
 
 .sf-sub-indicator {
-    background: url(rising/arrows-ea2e11.png) no-repeat -10px -100px;
+    background: url(../images/arrows-ea2e11.png) -10px -100px;
 }
 
 /* mobile definitions needs to go in header_custom_css
