@@ -33,7 +33,7 @@
 					</td>
 					<td>
 						{permission name=admin}
-							<a title="{tr}Edit{/tr}" class="btn btn-default btn-sm service-dialog reload" href="{service controller=workspace action=edit_template id=$template.templateId}">{glyph name="edit"}</a>
+							<a title="{tr}Edit{/tr}" class="btn btn-default btn-sm service-dialog reload" href="{service controller=workspace action=edit_template id=$template.templateId}">{icon name="edit"}</a>
 							<span class="btn btn-default btn-sm">
 								{permission_link mode=icon type=workspace id=$template.templateId title=$template.name}
 							</span>
