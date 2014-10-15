@@ -19,7 +19,7 @@ class LessCompileCommand  extends Command
 	{
 		$this
 			->setName('less:compile')
-			->setDescription('Compile less theme files into CSS')
+			->setDescription('Compile LESS theme files into CSS')
 			->addArgument(
 				'location',
 				InputArgument::OPTIONAL,
@@ -30,7 +30,7 @@ class LessCompileCommand  extends Command
 				'all',
 				null,
 				InputOption::VALUE_NONE,
-				'Build all less files'
+				'Build all less files, including all built-in "Tiki" themes'
 			);
 	}
 
@@ -52,7 +52,7 @@ class LessCompileCommand  extends Command
 						continue;
 					}
 					$dirname = $fileInfo->getFilename();
-                    if (in_array($dirname, $excluded)) {
+                    if (in_array($dirname, $excluded) && ! $all) {
                         continue;
                     }
                     $less_file = "themes/$dirname/less/tiki.less";
