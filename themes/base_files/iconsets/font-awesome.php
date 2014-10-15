@@ -20,96 +20,96 @@ $iconset = array(
 		'icon_tag' => 'i', 
 	),
 	'actions' => array( 
-		'class' => 'fa fa-play-circle',
+		'class' => 'fa fa-play-circle fa-fw',
 	),
 	'add' => array( 
-		'class' => 'fa fa-plus',
+		'class' => 'fa fa-plus fa-fw',
 	),
 	'comments' => array(
-		'class' => 'fa fa-comments-o',
+		'class' => 'fa fa-comments-o fa-fw',
 	),
 	'create' => array( 
-		'class' => 'fa fa-plus',
+		'class' => 'fa fa-plus fa-fw',
 	),
 	'delete' => array(
-		'class' => 'fa fa-times',
+		'class' => 'fa fa-times fa-fw',
 	),
 	'edit' => array(
-		'class' => 'fa fa-edit',
+		'class' => 'fa fa-edit fa-fw',
 	),
 	'error' => array(
-		'class' => 'fa fa-exclamation-circle',
+		'class' => 'fa fa-exclamation-circle fa-fw',
 	),
 	'export' => array( 
-		'class' => 'fa fa-upload',
+		'class' => 'fa fa-upload fa-fw',
 	),
 	'external-link' => array(
-		'class' => 'fa fa-external-link',
+		'class' => 'fa fa-external-link fa-fw',
 	),
 	'file-archive' => array( 
-		'class' => 'fa fa-file-archive-o',
+		'class' => 'fa fa-file-archive-o fa-fw',
 	),
 	'group' => array( 
-		'class' => 'fa fa-group',
+		'class' => 'fa fa-group fa-fw',
 	),
 	'group-watch' => array( 
-		'class' => 'fa fa-group',
+		'class' => 'fa fa-group fa-fw',
 	),
 	'help' => array( 
-		'class' => 'fa fa-question-circle',
+		'class' => 'fa fa-question-circle fa-fw',
 	),
 	'history' => array( 
-		'class' => 'fa fa-history',
+		'class' => 'fa fa-history fa-fw',
 	),
 	'import' => array( 
-		'class' => 'fa fa-download',
+		'class' => 'fa fa-download fa-fw',
 	),
 	'info' => array( 
-		'class' => 'fa fa-info-circle',
+		'class' => 'fa fa-info-circle fa-fw',
 	),
 	'permission' => array(
-		'class' => 'fa fa-key',
+		'class' => 'fa fa-key fa-fw',
 	),
 	'post' => array(
-		'class' => 'fa fa-pencil',
+		'class' => 'fa fa-pencil fa-fw',
 	),
 	'print' => array(
-		'class' => 'fa fa-print',
+		'class' => 'fa fa-print fa-fw',
 	),
 	'refresh' => array(
-		'class' => 'fa fa-refresh',
+		'class' => 'fa fa-refresh fa-fw',
 	),
 	'remove' => array(
-		'class' => 'fa fa-times',
+		'class' => 'fa fa-times fa-fw',
 	),
 	'rss' => array(
-		'class' => 'fa fa-rss',
+		'class' => 'fa fa-rss fa-fw',
 	),
 	'settings' => array( 
-		'class' => 'fa fa-wrench',
+		'class' => 'fa fa-wrench fa-fw',
 	),
 	'stop-watching' => array(
-		'class' => 'fa fa-eye-slash',
+		'class' => 'fa fa-eye-slash fa-fw',
 	),
 	'success' => array(
-		'class' => 'fa fa-check-circle',
+		'class' => 'fa fa-check-circle fa-fw',
 	),
 	'tag' => array(
-		'class' => 'fa fa-tag',
+		'class' => 'fa fa-tag fa-fw',
 	),
 	'trash' => array(
-		'class' => 'fa fa-trash-o',
+		'class' => 'fa fa-trash-o fa-fw',
 	),
 	'view' => array(
-		'class' => 'fa fa-search-plus',
+		'class' => 'fa fa-search-plus fa-fw',
 	),
 	'warning' => array(
-		'class' => 'fa fa-exclamation-triangle',
+		'class' => 'fa fa-exclamation-triangle fa-fw',
 	),
 	'watch' => array(
-		'class' => 'fa fa-eye',
+		'class' => 'fa fa-eye fa-fw',
 	),
 	'watch-group' => array(
-		'class' => 'fa fa-eye',
+		'class' => 'fa fa-eye fa-fw',
 	),
 );
