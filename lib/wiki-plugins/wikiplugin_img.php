@@ -865,7 +865,7 @@ function wikiplugin_img( $data, $params )
 			$repldata = preg_replace('/width="'.$fwidth.'" height="'.$fheight.'"/', $svgAttributes, $repldata);
 		}
 		$replimg = '<div type="image/svg+xml" ';
-		$imgdata['class'] .= ' svgImage pluginImg' . $imgdata['fileId'];
+		$imgdata['class'] .= ' table-responsive svgImage pluginImg' . $imgdata['fileId'];
 		$imgdata['class'] = trim($imgdata['class']);
 	} else {
 		$tagName = 'img';
