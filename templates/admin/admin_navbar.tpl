@@ -91,7 +91,12 @@
 						{/jq}
 					</li>
 					<li class="divider"></li>
-					<li>	
+					<li>
+						<a href="tiki-admin.php?prefrebuild">
+							{tr}Rebuild Admin Index{/tr}
+						</a>
+					</li>
+					<li>
 						<a href="tiki-admin.php">
 							{tr}Admin Home{/tr}
 						</a>
