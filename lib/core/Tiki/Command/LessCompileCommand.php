@@ -31,16 +31,25 @@ class LessCompileCommand  extends Command
 				null,
 				InputOption::VALUE_NONE,
 				'Build all less files, including all built-in "Tiki" themes'
-			);
+			)
+			->addOption(
+				'only',
+				null,
+				InputOption::VALUE_OPTIONAL,
+				'Only compile named theme or themes, separated by commas'
+			)
+		;
 	}
 
 	protected function execute(InputInterface $input, OutputInterface $output)
 	{
 		$all = $input->getOption('all');
+		$only = explode(',', $input->getOption('only'));
 		$type = $input->getArgument('location');
 
 		$cachelib = \TikiLib::lib('cache');
         $excluded = array("cyborg", "fivealive-lite", "lumen", "simplex", "thenews", "amelia", "darkly", "flatly", "ohia", "slate", "tikinewt", "cerulean", "darkroom", "readable", "snow", "united", "cosmo", "feb12", "journal", "spacelab", "yeti", "cupid", "fivealive", "jqui", "shamrock", "superhero");
+		$excluded = array_diff($excluded, $only);
 
 		switch ($type)
 		{
