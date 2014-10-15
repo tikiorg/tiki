@@ -5707,9 +5707,6 @@ body.navbar-padding {
 .dropdown-menu {
   padding: 0;
 }
-.popover {
-  max-width: inherit;
-}
 @media (min-width: 768px) {
   .col-md-8 .table-responsive,
   .col-md-9 .table-responsive,
@@ -5851,7 +5848,9 @@ textarea,
 .footer_liner a:visited {
   color: #a9a9a9;
 }
-/*header.header .sitetitles {  font-family: Paneuropa, "Bitstream Vera Sans", Arial, Helvetica, sans-serif;}*/
+/*header.header .sitetitles {
+  font-family: Paneuropa, "Bitstream Vera Sans", Arial, Helvetica, sans-serif;
+}*/
 header.header .sitetitles {
   font-family: Paneuropa, "Bitstream Vera Sans", Arial, Helvetica, sans-serif;
 }

@@ -5707,9 +5707,6 @@ body.navbar-padding {
 .dropdown-menu {
   padding: 0;
 }
-.popover {
-  max-width: inherit;
-}
 @media (min-width: 768px) {
   .col-md-8 .table-responsive,
   .col-md-9 .table-responsive,
@@ -5805,7 +5802,9 @@ h3.panel-title {
   color: black;
   font: 90% "Arial", "Helvetica", sans-serif;
   font-weight: bold;
-  /*  height: 18px;  margin: 0px 0px 7px 1em;  padding: 0px;*/
+  /*  height: 18px;
+  margin: 0px 0px 7px 1em;
+  padding: 0px;*/
   text-transform: uppercase;
 }
 #col2 .panel-default,
