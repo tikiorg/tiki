@@ -7,10 +7,10 @@
 {block name="navigation"}
 	<div class="navbar">
 		<a class="btn btn-default" href="{bootstrap_modal controller=workspace action=add_template}">
-			{glyph name="plus"} {tr}Create Workspace Template{/tr}
+			{icon name="create"} {tr}Create Workspace Template{/tr}
 		</a>
 		<a class="btn btn-default" href="{bootstrap_modal controller=workspace action=create}">
-			{glyph name="plus"} {tr}Create Workspace{/tr}
+			{icon name="create"} {tr}Create Workspace{/tr}
 		</a>
 	</div>
 {/block}

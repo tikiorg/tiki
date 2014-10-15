@@ -7,7 +7,7 @@
 {block name="navigation"}
 	<div class="navbar">
 		<a class="btn btn-default" href="{service controller=workspace action=list_templates}" title="{tr}List{/tr}">
-			{glyph name="list"} {tr}Workspace Templates{/tr}
+			{icon name="list"} {tr}Workspace Templates{/tr}
 		</a>
 	</div>
 {/block}

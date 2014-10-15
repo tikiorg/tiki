@@ -4,7 +4,7 @@
 		<div class="form-group col-lg-12">
 			{if $prefs.workspace_ui eq "y"}
 				<a class="btn btn-default btn-sm" href="{service controller=workspace action=list_templates}" title="{tr}List{/tr}">
-					{glyph name="list"} {tr}Workspace Templates{/tr}
+					{icon name="list"} {tr}Workspace Templates{/tr}
 				</a>
 			{/if}
 			<div class="pull-right">
