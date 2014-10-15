@@ -87,7 +87,7 @@ function smarty_function_icon($params, $smarty)
 		}
 	}
 	//ICONSET START, work-in-progress, more information: dev.tiki.org/icons
-	if (!empty($params['name'])){ 
+	if (!empty($params['name']) and empty($params['_tag'])){ 
 		$name = $params['name'];
 		
 		//load $iconset from preference setting TODO: enhance this to consider iconsets in self-contained themes (eg: themes/jqui/iconsets/)
