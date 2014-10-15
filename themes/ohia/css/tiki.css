@@ -6105,7 +6105,7 @@ body.navbar-padding {
     overflow-y: hidden;
     overflow-x: auto;
     -ms-overflow-style: -ms-autohiding-scrollbar;
-    border: 1px solid #dddddd;
+    border: 1px solid #333333;
     -webkit-overflow-scrolling: touch;
   }
   .table-responsive > .table {

@@ -5,11 +5,11 @@
 .highlight,
 .button.highlight a,
 .button a.highlight {
-  background: #FC0;
-  color: #000;
+  background: #f2dede;
+  color: #a94442;
 }
 .button a.highlight:hover {
-  background: #dfb300;
+  background: #dca7a7;
 }
 .button.highlight {
   background: inherit;
@@ -34,10 +34,10 @@ div.highlight {
   font-weight: bold;
 }
 input:-webkit-autofill {
-  background-color: #FAFFBD !important;
+  background-color: #ffffff !important;
   /* needs important because Chrome has it already important */
   background-image: none !important;
-  color: #000 !important;
+  color: #555555 !important;
   /* the Google guys forgot the number-one rule... when they specify background they should specify forgeround color too ;) */
 }
 #attzone,
@@ -80,7 +80,7 @@ input:-webkit-autofill {
   width: 220px;
   font-size: 2em;
   font-weight: bold;
-  color: #333;
+  color: #eeeeee;
   background: transparent url('../../img/icons/loading-light.gif') no-repeat 50% 50%;
 }
 #cookie_consent_div {
@@ -136,10 +136,10 @@ body.fullscreen {
   text-decoration: none;
 }
 #debugconsole {
-  background: #333;
-  color: #fff;
+  background: #222222;
+  color: #777777;
   padding: 5px;
-  border: 2px solid #aaa;
+  border: 2px solid #080808;
   font-size: 1em;
   position: absolute;
   top: 0;
@@ -149,10 +149,10 @@ body.fullscreen {
   z-index: 1000;
 }
 #debugconsole form {
-  color: #dd6;
+  color: #080808;
 }
 #debugconsole a {
-  color: #ddd;
+  color: #ffffff;
 }
 .cachedStatus,
 .mini {
@@ -176,7 +176,7 @@ div #metadata div.tabs {
   display: none;
 }
 #cboxTitle {
-  background-color: #fff;
+  background-color: #ffffff;
 }
 #captchaImg {
   border: 1px solid #dddddd;

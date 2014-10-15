@@ -10,12 +10,12 @@
 .highlight,
 .button.highlight a,
 .button a.highlight {
-  background: #FC0;
-  color: #000;
+  background: @state-danger-bg;
+  color: @state-danger-text;
 }
 
 .button a.highlight:hover {
-  background: #dfb300;
+  background: darken(@state-danger-bg, 15%);
 }
 
 // Since button background is actually applied to the link within the button, apply button highlight to same bg area as normal button state .
@@ -53,9 +53,9 @@ div.highlight {
 // Input fields auto-fill/
 // Webkit-based browser specific (Google Chrome, Chromium, etc.)
 input:-webkit-autofill {
-  background-color: #FAFFBD !important; /* needs important because Chrome has it already important */
+  background-color: @input-bg !important; /* needs important because Chrome has it already important */
   background-image: none !important;
-  color: #000 !important; /* the Google guys forgot the number-one rule... when they specify background they should specify forgeround color too ;) */
+  color: @input-color !important; /* the Google guys forgot the number-one rule... when they specify background they should specify forgeround color too ;) */
 }
 
 // Put together all the one-liners which should not display
@@ -103,7 +103,7 @@ input:-webkit-autofill {
   width: 220px;
   font-size: 2em;
   font-weight: bold;
-  color: #333;
+  color: @gray-lighter;
   background: transparent url('@{imagePath}loading-light.gif') no-repeat 50% 50%;
 }
 
@@ -187,10 +187,10 @@ body.fullscreen {
 }
 
 #debugconsole {
-  background: #333;
-  color: #fff;
+  background: @navbar-inverse-bg;
+  color: @navbar-inverse-link-color;
   padding: 5px;
-  border: 2px solid #aaa;
+  border: 2px solid @navbar-inverse-border;
   font-size: 1em;
   position: absolute;
   top: 0;
@@ -201,11 +201,11 @@ body.fullscreen {
 }
 
 #debugconsole form {
-  color: #dd6;
+  color: @navbar-inverse-link-active-bg;
 }
 
 #debugconsole a {
-  color: #ddd;
+  color: @navbar-inverse-link-active-color;
 }
 
 .cachedStatus,
@@ -235,7 +235,7 @@ div #metadata fieldset.tabcontent, div #metadata div.tabs {
 
 // ColorBox
 #cboxTitle {
-  background-color: #fff;
+  background-color: @body-bg;
 }
 
 #captchaImg {
