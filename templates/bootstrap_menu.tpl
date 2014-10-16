@@ -9,7 +9,7 @@
 				<ul id="menu_option{$item.optionId|escape}" class="nav collapse">
 					{foreach from=$item.children item=sub}
 						<li{if !empty($sub.selected)} class="active"{/if}>
-							<a href="{$sub.sefurl|escape}">{glyph name="minus"} {tr}{$sub.name|escape}{/tr}</a>
+							<a href="{$sub.sefurl|escape}">{icon name="menuitem"} {tr}{$sub.name|escape}{/tr}</a>
 						</li>
 					{/foreach}
 				</ul>

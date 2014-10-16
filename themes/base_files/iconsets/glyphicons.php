@@ -64,6 +64,12 @@ $iconset = array(
 	'info' => array( 
 		'class' => 'glyphicon glyphicon-info-sign',
 	),
+	'menuitem' => array( 
+		'class' => 'glyphicon glyphicon-minus',
+	),
+	'notification' => array( 
+		'class' => 'glyphicon glyphicon-bell',
+	),
 	'permission' => array(
 		'class' => 'glyphicon glyphicon-key',
 	),

@@ -142,7 +142,7 @@
 							<div class="input-group">
 								<input name="filter~content" type="search" class="form-control" placeholder="{tr}Search{/tr}">
 								<span class="input-group-btn">
-									<button type="submit" class="btn btn-default">{glyph name=search}</button>
+									<button type="submit" class="btn btn-default">{icon name="search"}</button>
 								</span>
 							</div>
 						</form>

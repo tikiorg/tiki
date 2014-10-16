@@ -15,7 +15,7 @@
 			</div>
 		{foreachelse}
 			<div class="alert alert-success">
-				{tr}Nothing left!{/tr}
+				{tr}No unread notifications{/tr}
 			</div>
 		{/foreach}
 		<div class="submit">

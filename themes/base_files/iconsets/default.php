@@ -38,9 +38,6 @@ $iconset = array(
 	'add' => array( 
 		'class' => 'fa fa-plus fa-fw',
 	),
-	'bell' => array(
-		'class' => 'fa fa-bell-o fa-fw',
-	),
 	'clone' => array(
 		'class' => 'fa fa-clipboard fa-fw',
 	),
@@ -97,6 +94,12 @@ $iconset = array(
 	),
 	'menu' => array(
 		'class' => 'fa fa-bars fa-fw',
+	),
+	'menuitem' => array(
+		'class' => 'fa fa-minus fa-fw',
+	),
+	'notification' => array(
+		'class' => 'fa fa-bell-o fa-fw',
 	),
 	'permission' => array(
 		'class' => 'fa fa-key fa-fw',

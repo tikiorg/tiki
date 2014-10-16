@@ -1,5 +1,5 @@
 <a id="notification-link" href="{bootstrap_modal controller=monitor action=unread quantity=6}">
-	{glyph name=bell}
+	{icon name="notification"}
 </a>
 {if $prefs.monitor_count_refresh_interval}
 	{jq}

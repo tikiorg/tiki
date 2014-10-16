@@ -67,6 +67,15 @@ $iconset = array(
 	'info' => array( 
 		'class' => 'fa fa-info-circle fa-fw',
 	),
+	'menu' => array(
+		'class' => 'fa fa-bars fa-fw',
+	),
+	'menuitem' => array(
+		'class' => 'fa fa-minus fa-fw',
+	),
+	'notification' => array(
+		'class' => 'fa fa-bell-o fa-fw',
+	),
 	'permission' => array(
 		'class' => 'fa fa-key fa-fw',
 	),

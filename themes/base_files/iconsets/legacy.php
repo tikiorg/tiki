@@ -62,6 +62,9 @@ $iconset = array(
 	'info' => array( 
 		'image_file_name' => 'information.png',
 	),
+	'menuitem' => array(
+		'image_file_name' => 'omo.png',
+	),
 	'permission' => array(
 		'image_file_name' => 'key.png',
 	),
