@@ -207,13 +207,14 @@ function wikiplugin_addtocart( $data, $params )
 
 	$smarty->assign('params', $params);
 
-	if (!isset($cartuserlist)) {
-		$cartuserlist = $userlib->get_users_light();
-	}
-	$smarty->assign('cartuserlist', $cartuserlist);
-
 	if ($params['onbehalf'] == 'y' && $globalperms->payment_admin) {
 		$smarty->assign('onbehalf', 'y');
+
+		// Do not load the user list unless it is needed, this light function is not as light as one would expect
+		if (!isset($cartuserlist)) {
+			$cartuserlist = $userlib->get_users_light();
+		}
+		$smarty->assign('cartuserlist', $cartuserlist);
 	}
 
 	if (!empty($params['exchangeorderitemid']) && !empty($params['exchangetoproductid'])) {
