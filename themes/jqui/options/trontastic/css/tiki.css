@@ -4,7 +4,8 @@
 	Visit http://themes.tiki.org for more information.
 	(This file was edited directly, not produced by the Less pre-compiler; there's no trontastic.less, yet.)
 */
-@import url(../css/tiki.css);
+@import url(../../../css/tiki.css);
+
 
 
 html {
