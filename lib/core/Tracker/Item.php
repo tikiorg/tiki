@@ -142,7 +142,7 @@ class Tracker_Item
 	{
 		global $user;
 		if ($this->definition->getConfiguration('userCanSeeOwn') == 'y') {
-			return $user === $this->owner;
+			return !empty($user) && $user === $this->owner;
 		}
 
 		return false;
