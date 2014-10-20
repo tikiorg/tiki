@@ -155,7 +155,19 @@ class Search_Query_WikiBuilder
 			TikiLib::lib('errorreport')->report(tr('Missing objectype or qualifier for relation filter.'));
 		}
 
-		$token = (string) new Search_Query_Relation($arguments['qualifier'], $arguments['objecttype'], $value);
+		/* custom mani for OR operation in relation filter */
+		$qualifiers = explode(' OR ', $arguments['qualifier']);
+		if(count($qualifiers) > 1) {
+			$token = '';
+			foreach ($qualifiers as $key => $qualifier) {
+				$token .= (string) new Search_Query_Relation($qualifier, $arguments['objecttype'], $value);
+				if(count($qualifiers) != ($key + 1)) {
+					$token .= " OR ";
+				}
+			}
+		} else {
+			$token = (string) new Search_Query_Relation($arguments['qualifier'], $arguments['objecttype'], $value);
+		}
 		$query->filterRelation($token);
 	}
 
