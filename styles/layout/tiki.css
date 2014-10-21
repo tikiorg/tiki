@@ -488,6 +488,9 @@ h3.panel-title {
   margin-bottom: 0;
 }
 .panel-body {
+  overflow: visible;
+}
+.panel-collapse .panel-body {
   overflow: auto;
 }
 .box-months_links ul {
