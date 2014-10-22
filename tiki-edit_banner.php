@@ -345,8 +345,8 @@ if (isset($_REQUEST["save"]) || isset($_REQUEST["create_zone"])) {
 
 $zones = $bannerlib->banner_get_zones();
 $smarty->assign_by_ref('zones', $zones);
-$clients = $userlib->get_users(0, -1, 'login_asc', '');
-$smarty->assign_by_ref('clients', $clients["data"]);
+$clients = $userlib->get_users_names(0, -1, 'login_asc', '');
+$smarty->assign_by_ref('clients', $clients);
 
 ask_ticket('edit-banner');
 
