@@ -18,11 +18,7 @@
 			<tr>
 				<td>{tr}Client:{/tr}</td>
 				<td>
-					<select name="client">
-						{section name=ix loop=$clients}
-							<option value="{$clients[ix]|escape}" {if $client eq $clients[ix]}selected="selected"{/if}>{$clients[ix]|escape}</option>
-						{/section}
-					</select>
+					{user_selector user=$client name='client'}
 				</td>
 			</tr>
 			<tr>
