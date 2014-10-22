@@ -20,7 +20,7 @@
 				<td>
 					<select name="client">
 						{section name=ix loop=$clients}
-							<option value="{$clients[ix].user|escape}" {if $client eq $clients[ix].user}selected="selected"{/if}>{$clients[ix].user|escape}</option>
+							<option value="{$clients[ix]|escape}" {if $client eq $clients[ix]}selected="selected"{/if}>{$clients[ix]|escape}</option>
 						{/section}
 					</select>
 				</td>
