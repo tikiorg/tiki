@@ -267,6 +267,10 @@ if ( !empty($prefs['feature_canonical_domain']) ) {
 } else {
 	$base_url_canonical = $base_url_canonical_default;
 }
+// Since it's easier to be error-resistant than train users, ensure base_url_canonical ends with '/'
+if ( substr($base_url_canonical,-1) != '/' ) {
+	$base_url_canonical .= '/';
+}
 
 $smarty->assign_by_ref('phpErrors', $phpErrors);
 $smarty->assign_by_ref('num_queries', $num_queries);
