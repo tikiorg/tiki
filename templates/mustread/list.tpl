@@ -42,7 +42,7 @@
 			<tr>
 				<td colspan="3">
 					{if $canAdd}
-						<a class="btn btn-default add-mustread-item" href="{service controller=tracker action=insert_item trackerId=$prefs.mustread_tracker modal=1}">{glyph name=plus} {tr}Add Item{/tr}</a>
+						<a class="btn btn-default add-mustread-item" href="{service controller=tracker action=insert_item trackerId=$prefs.mustread_tracker modal=1}">{icon name="add"} {tr}Add Item{/tr}</a>
 					{/if}
 					&nbsp;
 				</td>

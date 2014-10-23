@@ -64,6 +64,9 @@ $iconset = array(
 	'info' => array( 
 		'class' => 'glyphicon glyphicon-info-sign',
 	),
+	'link' => array( 
+		'class' => 'glyphicon glyphicon-link',
+	),
 	'menuitem' => array( 
 		'class' => 'glyphicon glyphicon-minus',
 	),

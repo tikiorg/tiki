@@ -101,6 +101,9 @@ $iconset = array(
 	'list' => array( 
 		'class' => 'fa fa-list fa-fw',
 	),
+	'link' => array( 
+		'class' => 'fa fa-link fa-fw',
+	),
 	'menu' => array(
 		'class' => 'fa fa-bars fa-fw',
 	),

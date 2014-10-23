@@ -19,23 +19,23 @@
 				<td>{$row.type|escape}</td>
 				<td>
 					{if $row.indexExists}
-						{glyph name=ok}
+						{icon name="ok"}
 					{else}
 						<a href="{service controller=search_manifold action=create_index index=$row.name type=$row.type}">{tr}Create{/tr}</a>
 					{/if}
 				</td>
 				<td>
 					{if $row.typeExists}
-						{glyph name=ok}
+						{icon name="ok"}
 					{elseif $row.indexExists}
 						<a href="{service controller=search_manifold action=create_index index=$row.name type=$row.type}">{tr}Create{/tr}</a>
 					{/if}
 				</td>
 				<td>
 					{if $row.valid}
-						{glyph name=ok}
+						{icon name="ok"}
 					{elseif $row.typeExists}
-						<a href="{service controller=search_manifold action=create_index index=$row.name type=$row.type}" class="text-danger" title="{tr}May not work or corrupt data{/tr}">{glyph name="warning-sign"} {tr}Alter{/tr}</a>
+						<a href="{service controller=search_manifold action=create_index index=$row.name type=$row.type}" class="text-danger" title="{tr}May not work or corrupt data{/tr}">{icon name="warning"} {tr}Alter{/tr}</a>
 					{/if}
 				</td>
 			</tr>

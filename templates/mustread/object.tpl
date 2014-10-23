@@ -14,6 +14,6 @@
 		</ul>
 	{/if}
 	{if $canAdd}
-		<a class="btn btn-default add-mustread-item" href="{service controller=tracker action=insert_item trackerId=$prefs.mustread_tracker forced=$fields}">{glyph name=plus} {tr}Add Item{/tr}</a>
+		<a class="btn btn-default add-mustread-item" href="{service controller=tracker action=insert_item trackerId=$prefs.mustread_tracker forced=$fields}">{icon name="add"} {tr}Add Item{/tr}</a>
 	{/if}
 {/block}

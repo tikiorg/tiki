@@ -34,9 +34,9 @@
 						</ul>
 					</td>
 					<td>
-						<a href="{service controller=goal action=edit goalId=$goal.goalId}">{glyph name=edit} {tr}Modify{/tr}</a>
+						<a href="{service controller=goal action=edit goalId=$goal.goalId}">{icon name="edit"} {tr}Modify{/tr}</a>
 						{permission_link mode=text type=goal id=$goal.goalId title=$goal.name}
-						<a class="text-danger" href="{bootstrap_modal controller=goal action=delete goalId=$goal.goalId}">{glyph name=remove} {tr}Delete{/tr}</a>
+						<a class="text-danger" href="{bootstrap_modal controller=goal action=delete goalId=$goal.goalId}">{icon name="delete"} {tr}Delete{/tr}</a>
 					</td>
 				</tr>
 			{foreachelse}

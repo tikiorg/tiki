@@ -11,7 +11,7 @@
 						{$activityframe.activity.modification_date|tiki_short_datetime}
 					</span>
 					<div>
-						{glyph name=link}
+						{icon name="link"}
 						{object_link type=$activityframe.activity.type id=$activityframe.activity.object backuptitle=$object.activity.title}
 					</div>
 				{/if}

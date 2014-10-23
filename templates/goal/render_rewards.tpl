@@ -12,7 +12,7 @@
 					{if $reward.hidden}
 						<span class="label label-info">{tr}Hidden{/tr}</span>
 					{/if}
-					<a class="delete pull-right text-danger" href="#" data-element="{$key|escape}">{glyph name=remove} {tr}Delete{/tr}</a>
+					<a class="delete pull-right text-danger" href="#" data-element="{$key|escape}">{icon name="delete"} {tr}Delete{/tr}</a>
 				</td>
 			</tr>
 		{foreachelse}
@@ -21,6 +21,6 @@
 			</tr>
 		{/foreach}
 	</table>
-	<button class="btn btn-default add pull-right">{glyph name=plus} {tr}Add Reward{/tr}</button>
+	<button class="btn btn-default add pull-right">{icon name="add"} {tr}Add Reward{/tr}</button>
 	<input type="hidden" name="rewards" value="{$rewards|json_encode|escape}">
 {/block}

@@ -32,6 +32,12 @@ $iconset = array(
 	'comments' => array(
 		'image_file_name' => 'comments.png',
 	),
+	'copy' => array(
+		'image_file_name' => 'ico_copy.gif',
+	),
+	'create' => array(
+		'image_file_name' => 'add.png',
+	),
 	'delete' => array(
 		'image_file_name' => 'cross.png',
 	),
@@ -67,6 +73,12 @@ $iconset = array(
 	),
 	'info' => array( 
 		'image_file_name' => 'information.png',
+	),
+	'link' => array( 
+		'image_file_name' => 'link.png',
+	),
+	'list' => array( 
+		'image_file_name' => 'application_view_list.png',
 	),
 	'menuitem' => array(
 		'image_file_name' => 'omo.png',
