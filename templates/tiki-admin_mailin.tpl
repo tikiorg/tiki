@@ -42,19 +42,19 @@
         {if $account.anonymous eq 'y'}<span class="label label-info">{tr}Anonymous{/tr}</span>{/if}
         {if $account.admin eq 'y'}<span class="label label-warning">{tr}Administrator{/tr}</span>{/if}
       </td>
-      <td>{if $account.attachments eq 'y'}{glyph name="ok"}{/if}</td>
-      <td>{if $account.save_html eq 'y'}{glyph name="ok"}{/if}</td>
-      <td>{if $account.leave_email eq 'y'}{glyph name="ok"}{/if}</td>
+      <td>{if $account.attachments eq 'y'}{icon name="ok"}{/if}</td>
+      <td>{if $account.save_html eq 'y'}{icon name="ok"}{/if}</td>
+      <td>{if $account.leave_email eq 'y'}{icon name="ok"}{/if}</td>
 
       <td class="action">
-        <a class="btn btn-xs btn-default" href="{bootstrap_modal controller=mailin action=replace_account accountId=$account.accountId}">{glyph name=edit} {tr}Edit{/tr}</a>
-        <a class="btn btn-xs btn-danger" href="{bootstrap_modal controller=mailin action=remove_account accountId=$account.accountId}" >{glyph name=remove} <span class="sr-only">{tr}Remove{/tr}</span></a>
+        <a class="btn btn-default btn-sm" href="{bootstrap_modal controller=mailin action=replace_account accountId=$account.accountId}" title="{tr}Edit{/tr}">{icon name="edit"}  <span class="sr-only">{tr}Edit{/tr}</span></a>
+        <a class="btn btn-default btn-sm" href="{bootstrap_modal controller=mailin action=remove_account accountId=$account.accountId}" title="{tr}Remove{/tr}">{icon name="remove"} <span class="sr-only">{tr}Remove{/tr}</span></a>
       </td>
     </tr>
   {/foreach}
 </table>
 {button _icon="img/icons/large/messages.gif" _text="{tr}Admin Mail-in Routes{/tr}" href="tiki-admin_mailin_routes.php" _menu_text="y"}
-<a href="{bootstrap_modal controller=mailin action=replace_account}" class="btn btn-default">{glyph name=plus} {tr}Add Account{/tr}</a>
+<a href="{bootstrap_modal controller=mailin action=replace_account}" class="btn btn-default">{icon name="add"} {tr}Add Account{/tr}</a>
 {if $tikifeedback}
 	{section name=n loop=$tikifeedback}<div class="alert {if $tikifeedback[n].num > 0} alert-warning{/if}">{$tikifeedback[n].mes}</div>{/section}
 {/if}

@@ -110,6 +110,9 @@ $iconset = array(
 	'notification' => array(
 		'class' => 'fa fa-bell-o fa-fw',
 	),
+	'ok' => array(
+		'class' => 'fa fa-check fa-fw',
+	),
 	'permission' => array(
 		'class' => 'fa fa-key fa-fw',
 	),

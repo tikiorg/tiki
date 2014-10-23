@@ -55,7 +55,7 @@
 		<div class="input-group">
 		  <input type="text" name="zipPath" value="{$zipPath|escape}" class="form-control" placeholder="{tr}Full Path to the Zip File{/tr}">
 		  <span class="input-group-btn">
-			<button type="submit" class="btn btn-primary" name="zip">{icon name="file-archive"} {tr}Generate zip{/tr}</button>
+			<button type="submit" class="btn btn-primary" name="zip" title="{tr}ZIP{/tr}">{icon name="file-archive"} {tr}Generate zip{/tr}</button>
 		  </span>
 		</div>	
 		{if $zipPath}

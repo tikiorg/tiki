@@ -286,7 +286,7 @@
 									    </select>
                                         </div>
 									    {if $tiki_p_edit_content_templates eq 'y'}
-									        <a href="tiki-admin_content_templates.php" class="btn btn-default" onclick="needToConfirm = true;">{glyph name="cog"} {tr}Admin Content Templates{/tr}</a>
+									        <a href="tiki-admin_content_templates.php" class="btn btn-default" onclick="needToConfirm = true;">{icon name="administer"} {tr}Admin Content Templates{/tr}</a>
 									    {/if}
                                     </div>
                                 </div>
@@ -478,7 +478,7 @@ $("input[name=allowhtml]").change(function() {
 											{/if}
 
 											{if $tiki_p_edit_structures eq 'y'}
-												<a href="tiki-admin_structures.php" class="btn btn-default">{glyph name="cog"} {tr}Manage structures{/tr}</a>
+												<a href="tiki-admin_structures.php" class="btn btn-default">{icon name="administer"} {tr}Manage structures{/tr}</a>
 											{/if}
 										</div>
                                     </div>
@@ -678,7 +678,7 @@ $("input[name=allowhtml]").change(function() {
                                 <div class="form-group">
                                     <label for="" class="col-sm-2 control-label">{tr}Wiki preferences{/tr}</label>
                                     <div class="col-sm-10">
-								        <a href="tiki-admin.php?page=wiki" class="btn btn-default">{glyph name="cog"} {tr}Admin Wiki Preferences{/tr}</a>
+								        <a href="tiki-admin.php?page=wiki" class="btn btn-default">{icon name="administer"} {tr}Admin Wiki Preferences{/tr}</a>
                                     </div>
                                 </div>
 							{/if}

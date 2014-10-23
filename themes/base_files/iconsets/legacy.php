@@ -23,6 +23,12 @@ $iconset = array(
 	'actions' => array(
 		'image_file_name' => 'application_form.png',
 	),
+	'add' => array(
+		'image_file_name' => 'add.png',
+	),
+	'administer' => array(
+		'image_file_name' => 'wrench.png',
+	),
 	'comments' => array(
 		'image_file_name' => 'comments.png',
 	),
@@ -65,6 +71,9 @@ $iconset = array(
 	'menuitem' => array(
 		'image_file_name' => 'omo.png',
 	),
+	'ok' => array(
+		'image_file_name' => 'accept.png',
+	),
 	'permission' => array(
 		'image_file_name' => 'key.png',
 	),
@@ -76,6 +85,9 @@ $iconset = array(
 	),
 	'refresh' => array(
 		'image_file_name' => 'arrow_refresh.png',
+	),
+	'remove' => array(
+		'image_file_name' => 'cross.png',
 	),
 	'rss' => array(
 		'image_file_name' => 'feed.png',

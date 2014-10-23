@@ -83,7 +83,7 @@
 					<a class="btn btn-default btn-sm" href="tiki-admingroups.php?group={$users[user].groupName|escape:"url"}&amp;cookietab=2{if $prefs.feature_tabs ne 'y'}#tab2{/if}" title="{tr}Edit{/tr}">{icon name="edit"} <span class="sr-only">{tr}Edit{/tr}</span></a>
 					{permission_link mode=button_compact group=$users[user].groupName count=$users[user].permcant}
 					{if $users[user].groupName ne 'Anonymous' and $users[user].groupName ne 'Registered' and $users[user].groupName ne 'Admins'}
-						<a class="link text-danger" href="tiki-admingroups.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;action=delete&amp;group={$users[user].groupName|escape:"url"}" title="{tr}Delete{/tr}">{glyph name='remove'} <span class="sr-only">{tr}Remove{/tr}"}</span></a>
+						<a class="link text-danger" href="tiki-admingroups.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;action=delete&amp;group={$users[user].groupName|escape:"url"}" title="{tr}Delete{/tr}">{icon name="remove"} <span class="sr-only">{tr}Remove{/tr}"}</span></a>
 					{/if}
 				</td>
 			</tr>
