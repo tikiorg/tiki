@@ -21,7 +21,7 @@
 		<div class="submit">
 			{if $result|count > 0}
 				<a class="btn btn-default clearall custom-handling" href="{service controller=monitor action=clearall timestamp=$timestamp}">
-					{glyph name="sort-by-attributes"}
+					{icon name="check"}
 					{tr}Mark all as read{/tr}
 				</a>
 			{/if}

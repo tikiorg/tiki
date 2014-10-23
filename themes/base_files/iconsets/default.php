@@ -41,6 +41,9 @@ $iconset = array(
 	'administer' => array( 
 		'class' => 'fa fa-cog fa-fw',
 	),
+	'check' => array(
+		'class' => 'fa fa-check-square-o fa-fw',
+	),
 	'clone' => array(
 		'class' => 'fa fa-clipboard fa-fw',
 	),
@@ -110,8 +113,14 @@ $iconset = array(
 	'menuitem' => array(
 		'class' => 'fa fa-minus fa-fw',
 	),
+	'notepad' => array(
+		'class' => 'fa fa-file-text-o fa-fw',
+	),
 	'notification' => array(
 		'class' => 'fa fa-bell-o fa-fw',
+	),
+	'off' => array(
+		'class' => 'fa fa-power-off fa-fw',
 	),
 	'ok' => array(
 		'class' => 'fa fa-check fa-fw',

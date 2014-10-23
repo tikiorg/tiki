@@ -1,6 +1,6 @@
 {if $permission_link.mode eq 'text'}
 	<a class="{if $permission_link.active}text-success{else}text-warning{/if}" href="{$permission_link.url|escape}">
-		{glyph name="lock"}
+		{icon name="permission"}
 		{$permission_link.label|escape}
 		{if $permission_link.count}
 			<span class="badge">{$permission_link.count|escape}</span>
@@ -43,7 +43,7 @@
 	{/strip}
 {else}
 	<a class="{if $permission_link.active}text-success{else}text-warning{/if}" href="{$permission_link.url|escape}" title="{$permission_link.label|escape}">
-		{glyph name="lock"}
+		{icon name="permission"}
 		<span class="sr-only">{$permission_link.label|escape}</span>
 		{if $permission_link.count}
 			<span class="badge">{$permission_link.count|escape}</span>

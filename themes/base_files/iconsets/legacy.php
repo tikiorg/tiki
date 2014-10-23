@@ -29,6 +29,9 @@ $iconset = array(
 	'administer' => array(
 		'image_file_name' => 'wrench.png',
 	),
+	'check' => array(
+		'image_file_name' => 'select.gif',
+	),
 	'comments' => array(
 		'image_file_name' => 'comments.png',
 	),
@@ -83,6 +86,12 @@ $iconset = array(
 	'menuitem' => array(
 		'image_file_name' => 'omo.png',
 	),
+	'notepad' => array(
+		'image_file_name' => 'disk.png',
+	),
+	'notification' => array(
+		'image_file_name' => 'announce.png',
+	),
 	'ok' => array(
 		'image_file_name' => 'accept.png',
 	),
@@ -132,6 +141,6 @@ $iconset = array(
 		'image_file_name' => 'eye.png',
 	),
 	'watch-group' => array(
-		'image_file_name' => 'eye.png',
+		'image_file_name' => 'eye_group.png',
 	),
 );

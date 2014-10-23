@@ -25,6 +25,9 @@ $iconset = array(
 	'add' => array(
 		'class' => 'glyphicon glyphicon-plus',
 	),
+	'check' => array(
+		'class' => 'glyphicon glyphicon-ok-circle',
+	),
 	'comments' => array(
 		'class' => 'glyphicon glyphicon-comment',
 	),
@@ -72,6 +75,12 @@ $iconset = array(
 	),
 	'notification' => array( 
 		'class' => 'glyphicon glyphicon-bell',
+	),
+	'ok' => array( 
+		'class' => 'glyphicon glyphicon-ok',
+	),
+	'off' => array( 
+		'class' => 'glyphicon glyphicon-off',
 	),
 	'permission' => array(
 		'class' => 'glyphicon glyphicon-key',

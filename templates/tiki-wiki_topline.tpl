@@ -89,7 +89,7 @@
 				<a class="btn btn-default" title="{tr}Send a link{/tr}" href="tiki-tell_a_friend.php?url={$smarty.server.REQUEST_URI|escape:'url'}">{icon name="envelope"}</a>
 			{/if}
 			{if !empty($user) and $prefs.feature_notepad eq 'y' and $tiki_p_notepad eq 'y'}
-				<a class="btn btn-default" title="{tr}Save to notepad{/tr}" href="tiki-index.php?page={$page|escape:"url"}&amp;savenotepad=1{if !empty($page_ref_id)}&amp;page_ref_id={$page_ref_id}{/if}">{glyph name='bookmark' alt="{tr}Save to notepad{/tr}"}</a>
+				<a class="btn btn-default" title="{tr}Save to notepad{/tr}" href="tiki-index.php?page={$page|escape:"url"}&amp;savenotepad=1{if !empty($page_ref_id)}&amp;page_ref_id={$page_ref_id}{/if}">{icon name="notepad"}</a>
 			{/if}
 			{monitor_link type="wiki page" object=$page}
 			{if !empty($user) and $prefs.feature_user_watches eq 'y'}
