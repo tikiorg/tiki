@@ -36,11 +36,11 @@
     <div class="row">
         <div class="form-group col-lg-12 clearfix">
 			<a role="button" class="btn btn-default btn-sm" href="tiki-listpages.php" title="{tr}List{/tr}">
-				{glyph name="list"} {tr}Wiki Pages{/tr}
+				{icon name="list"} {tr}Wiki Pages{/tr}
 			</a>
 			{if $prefs.feature_wiki_structure eq "y" and $tiki_p_view eq "y"}
 				<a role="button" class="btn btn-default btn-sm" href="tiki-admin_structures.php" title="{tr}List{/tr}">
-					{glyph name="wrench"} {tr}Wiki Structures{/tr}
+					{icon name="admin"} {tr}Wiki Structures{/tr}
 				</a>
 			{/if}
             <div class="pull-right">

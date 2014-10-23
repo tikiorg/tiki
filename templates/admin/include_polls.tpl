@@ -3,12 +3,12 @@
         <div class="form-group col-lg-12 clearfix">
 			{if $prefs.feature_polls eq "y" and $tiki_p_admin_polls eq "y"}
 				<a role="button" class="btn btn-default btn-sm" href="tiki-admin_polls.php" title="{tr}List{/tr}">
-					{glyph name="list"} {tr}Polls{/tr}
+					{icon name="list"} {tr}Polls{/tr}
 				</a>
 			{/if}
 			{if $prefs.feature_surveys eq "y" and $tiki_p_admin_surveys eq "y"}
 				<a role="button" class="btn btn-default btn-sm" href="tiki-admin_surveys.php" title="{tr}List{/tr}">
-					{glyph name="list"} {tr}Surveys{/tr}
+					{icon name="list"} {tr}Surveys{/tr}
 				</a>
 			{/if}
 			<div class="pull-right">

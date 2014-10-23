@@ -10,13 +10,13 @@
     <div class="row">
         <div class="form-group col-lg-12 clearfix">
 			<a role="button" class="btn btn-default btn-sm" href="tiki-browse_categories.php" title="{tr}List{/tr}">
-				{glyph name="list"} {tr}Browse Categories{/tr}
+				{icon name="list"} {tr}Browse Categories{/tr}
 			</a>
 			<a role="button" class="btn btn-default btn-sm" href="tiki-admin_categories.php" title="{tr}Administration{/tr}">
-				{glyph name="wrench"} {tr}Administer Categories{/tr}
+				{icon name="administer"} {tr}Administer Categories{/tr}
 			</a>
 			<a role="button" class="btn btn-default btn-sm" href="tiki-edit_categories.php" title="{tr}Organize Objects{/tr}">
-				{glyph name="sort"} {tr}Organize Objects{/tr}
+				{icon name="sort"} {tr}Organize Objects{/tr}
 			</a>
 			<div class="pull-right">
                 <input type="submit" class="btn btn-primary btn-sm" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}">

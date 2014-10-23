@@ -9,7 +9,7 @@
 		<ul class="nav navbar-nav">
 			<li class="dropdown">	
 				<a href="#" class="navbar-brand dropdown-toggle" data-toggle="dropdown" title="{tr}Settings{/tr}">
-					{glyph name="cog"} <span class="caret"></span>
+					{icon name="filter"} <span class="caret"></span>
 				</a>
 				<ul class="dropdown-menu" role="menu">
 					<li>
@@ -117,7 +117,7 @@
 						<input type="hidden" name="filters">
 						<input type="text" name="lm_criteria" value="{$lm_criteria|escape}" class="form-control" placeholder="{tr}Search preferences{/tr}...">
 					</div>
-					<button type="submit" class="btn btn-default" {if $indexNeedsRebuilding} class="tips" title="{tr}Configuration search{/tr}|{tr}Note: The search index needs rebuilding, this will take a few minutes.{/tr}"{/if}>{glyph name=search}</button>
+					<button type="submit" class="btn btn-default" {if $indexNeedsRebuilding} class="tips" title="{tr}Configuration search{/tr}|{tr}Note: The search index needs rebuilding, this will take a few minutes.{/tr}"{/if}>{icon name="search"}</button>
 				</form>
 			</li>
 		</ul>

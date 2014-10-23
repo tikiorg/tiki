@@ -38,6 +38,9 @@ $iconset = array(
 	'add' => array( 
 		'class' => 'fa fa-plus fa-fw',
 	),
+	'administer' => array( 
+		'class' => 'fa fa-cog fa-fw',
+	),
 	'clone' => array(
 		'class' => 'fa fa-clipboard fa-fw',
 	),
@@ -74,6 +77,9 @@ $iconset = array(
 	'file-archive' => array( 
 		'class' => 'fa fa-file-archive-o fa-fw',
 	),
+	'filter' => array( 
+		'class' => 'fa fa-filter fa-fw',
+	),
 	'group' => array( 
 		'class' => 'fa fa-group fa-fw',
 	),
@@ -85,6 +91,9 @@ $iconset = array(
 	),
 	'import' => array( 
 		'class' => 'fa fa-download fa-fw',
+	),
+	'inbox' => array( 
+		'class' => 'fa fa-inbox fa-fw',
 	),
 	'info' => array( 
 		'class' => 'fa fa-info-circle fa-fw',
@@ -127,6 +136,9 @@ $iconset = array(
 	),
 	'share' => array(
 		'class' => 'fa fa-share fa-fw',
+	),
+	'sort' => array(
+		'class' => 'fa fa-sort fa-fw',
 	),
 	'stop-watching' => array(
 		'class' => 'fa fa-eye-slash fa-fw',

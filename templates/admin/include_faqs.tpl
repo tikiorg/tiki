@@ -2,7 +2,7 @@
     <div class="row">
         <div class="form-group col-lg-12 clearfix">
 			<a role="button" class="btn btn-default btn-sm" href="tiki-list_faqs.php" title="{tr}List{/tr}">
-				{glyph name="list"} {tr}FAQs{/tr}
+				{icon name="list"} {tr}FAQs{/tr}
 			</a>
             <div class="pull-right">
                 <input type="submit" class="btn btn-primary btn-sm" name="faqcomprefs" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}" />

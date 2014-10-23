@@ -4,7 +4,7 @@
     <div class="row">
         <div class="form-group col-lg-12 clearfix">
 			<a role="button" class="btn btn-default btn-sm" href="tiki-list_blogs.php" title="{tr}List{/tr}">
-				{glyph name="list"} {tr}Blogs{/tr}
+				{icon name="list"} {tr}Blogs{/tr}
 			</a>
             <div class="pull-right">
                 <input type="submit" class="btn btn-primary btn-sm" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}">

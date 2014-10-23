@@ -16,13 +16,13 @@
     <div class="row">
         <div class="form-group col-lg-12 clearfix">
 			<a role="button" class="btn btn-default btn-sm" href="tiki-list_articles.php" title="{tr}List{/tr}">
-				{glyph name="list"} {tr}Articles{/tr}
+				{icon name="list"} {tr}Articles{/tr}
 			</a>
 			<a role="button" class="btn btn-default btn-sm" href="tiki-article_types.php" title="{tr}List{/tr}">
-				{glyph name="wrench"} {tr}Article Types{/tr}
+				{icon name="list"} {tr}Article Types{/tr}
 			</a>
 			<a role="button" class="btn btn-default btn-sm" href="tiki-admin_topics.php" title="{tr}List{/tr}">
-				{glyph name="wrench"} {tr}Article Topics{/tr}
+				{icon name="list"} {tr}Article Topics{/tr}
 			</a>
             <div class="pull-right">
                 <input type="submit" class="btn btn-primary btn-sm" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}">

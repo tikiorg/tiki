@@ -7,7 +7,7 @@
 	<div class="row">
         <div class="form-group col-lg-12 clearfix">
 			<a role="button" class="btn btn-default btn-sm" href="tiki-admin_toolbars.php" title="{tr}Admin Toolbars{/tr}">
-				{glyph name="cog"} {tr}Toolbars{/tr}
+				{icon name="admin"} {tr}Toolbars{/tr}
 			</a>
 			<div class="pull-right">
                 <input type="submit" class="btn btn-primary btn-sm" name="wysiwygfeatures" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}" />
