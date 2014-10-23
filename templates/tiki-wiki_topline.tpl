@@ -25,7 +25,7 @@
 <div class="clearfix">
 	<div class="wikiactions icons btn-group pull-right">
 			{if $pdf_export eq 'y'}
-				<a class="btn btn-default" href="tiki-print.php?{query display="pdf" page=$page}" title="{tr}PDF{/tr}">{glyph name='print' alt="{tr}PDF{/tr}"}</a>
+				<a class="btn btn-default" href="tiki-print.php?{query display="pdf" page=$page}" title="{tr}PDF{/tr}">{icon name="print"}</a>
 			{/if}
 			{if $prefs.flaggedrev_approval neq 'y' or ! $revision_approval or $lastVersion eq $revision_displayed}
 				{if $editable and ($tiki_p_edit eq 'y' or $page|lower eq 'sandbox') and $beingEdited ne 'y' and $machine_translate_to_lang eq ''}

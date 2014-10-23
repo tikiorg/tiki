@@ -21,7 +21,7 @@
             <input type="hidden" name="cat_categorize" value="on">
 	        <div class="clearfix">
 	            {if $tiki_p_admin_categories eq 'y'}
-    	            <div class="pull-right"><a class="btn btn-default btn-sm" href="tiki-admin_categories.php">{glyph name="wrench"} {tr}Admin Categories{/tr}</a></div>
+    	            <div class="pull-right"><a class="btn btn-default btn-sm" href="tiki-admin_categories.php">{icon name="administer"} {tr}Admin Categories{/tr}</a></div>
 	            {/if}
 	
             	{select_all checkbox_names='cat_categories[]' label="{tr}Select/deselect all categories{/tr}"}
@@ -30,7 +30,7 @@
 	    {else}
 	        <div class="clearfix">
  	            {if $tiki_p_admin_categories eq 'y'}
-                    <div class="pull-right"><a class="btn btn-default btn-sm" href="tiki-admin_categories.php">{glyph name="wrench"} {tr}Admin Categories{/tr}</a></div>
+                    <div class="pull-right"><a class="btn btn-default btn-sm" href="tiki-admin_categories.php">{icon name="administer"} {tr}Admin Categories{/tr}</a></div>
             </div> {* end .clear *}
  	    {/if}
         {tr}No categories defined{/tr}

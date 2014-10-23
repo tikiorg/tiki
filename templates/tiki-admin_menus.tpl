@@ -3,10 +3,10 @@
 
 {if $tiki_p_admin eq 'y'}
 	<div class="navbar">
-		<a class="btn btn-primary" href="{bootstrap_modal controller=menu action=manage}">
-			{glyph name="plus"} {tr}Create Menu{/tr}
+		<a class="btn btn-default" href="{bootstrap_modal controller=menu action=manage}">
+			{icon name="create"} {tr}Create Menu{/tr}
 		</a>
-		{button href="tiki-admin_modules.php" _text="{glyph name="cog"} {tr}Admin Modules{/tr}"}
+		{button href="tiki-admin_modules.php" _text="{icon name="administer"} {tr}Admin Modules{/tr}"}
 	</div>
 {/if}
 {include file='find.tpl'}
@@ -39,14 +39,14 @@
 					{if $channels[user].menuId neq 42}
 						{if $tiki_p_edit_menu eq 'y'}
 							<a class="btn btn-default btn-sm" href="{bootstrap_modal controller=menu action=manage menuId=$channels[user].menuId}" title="{tr}Edit Menu{/tr}">
-								{glyph name="edit"}
+								{icon name="edit"}
 							</a>
 						{/if}
 						{if $tiki_p_edit_menu_option eq 'y'}
-							<a class="btn btn-default btn-sm" href="tiki-admin_menu_options.php?menuId={$channels[user].menuId}" title="{tr}Menu Options{/tr}">{glyph name="list"}</a>
+							<a class="btn btn-default btn-sm" href="tiki-admin_menu_options.php?menuId={$channels[user].menuId}" title="{tr}Menu Options{/tr}">{icon name="list"}</a>
 						{/if}
 						{if $tiki_p_edit_menu eq 'y'}
-							{self_link remove=$channels[user].menuId _title="{tr}Delete{/tr}" _class="btn btn-default btn-sm"}{glyph name="remove"}{/self_link}
+							{self_link remove=$channels[user].menuId _title="{tr}Delete{/tr}" _class="btn btn-default btn-sm"}{icon name="remove"}{/self_link}
 						{/if}
 					{else}
 						{if $tiki_p_admin eq 'y'}
@@ -55,7 +55,7 @@
 					{/if}
 					{if $tiki_p_edit_menu eq 'y'}
 						<a class="btn btn-default btn-sm" href="{bootstrap_modal controller=menu action=clone menuId=$channels[user].menuId}" title="{tr}Clone Menu{/tr}">
-							{glyph name="flash"}
+							{icon name="copy"}
 						</a>
 					{/if}
 				</td>

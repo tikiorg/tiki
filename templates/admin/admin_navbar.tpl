@@ -181,6 +181,6 @@
 	{/jq}
 {elseif $lm_criteria}
 	{remarksbox type="note" title="{tr}No results{/tr}" icon="magnifier"}
-		{tr}No preferences were found for your search query with your current choice of Preference Filters (<span class="glyphicon glyphicon-cog"></span>).{/tr}{if $prefs.unified_engine eq 'lucene'}{tr} Not what you expected? Try {/tr}<a class="alert-link" href="tiki-admin.php?prefrebuild">{tr}rebuild{/tr}</a> {tr}the preferences search index.{/tr}{/if}
+		{tr}No preferences were found for your search query with your current choice of Preference Filters ({icon name="filter"}).{/tr}{if $prefs.unified_engine eq 'lucene'}{tr} Not what you expected? Try {/tr}<a class="alert-link" href="tiki-admin.php?prefrebuild">{tr}rebuild{/tr}</a> {tr}the preferences search index.{/tr}{/if}
 	{/remarksbox}
 {/if}
