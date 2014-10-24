@@ -81,6 +81,18 @@ class Schema
 		return $column;
 	}
 
+	function addStatic($value)     
+	{     
+		$column = new Schema\Column('ignore', uniqid());    
+		$column->setReadOnly(true);    
+		$column->setRenderTransform(function () use ($value) {     
+			return $value;    
+		});    
+
+		$this->columns[] = $column;    
+		return $column;    
+	}     
+
 	function getColumns()
 	{
 		return $this->columns;
