@@ -483,7 +483,7 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 		}
 	}
 
-	private function getItemList()
+	function getItemList()
 	{
 		if ($displayFieldsList = $this->getDisplayFieldsListArray()) {
 			$list = TikiLib::lib('trk')->concat_all_items_from_fieldslist(
