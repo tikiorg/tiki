@@ -21,7 +21,11 @@ class QuerySourceEntry
 		$field = $column->getField();
 		$key = 'tracker_field_' . $field;
 
-		$value = $this->data[$key];
+		if (isset($this->data[$key])) {
+			$value = $this->data[$key];
+		} else {
+			$value = null;
+		}
 
 		$extra = [];
 		foreach ($column->getQuerySources() as $target => $field) {
