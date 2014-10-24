@@ -261,6 +261,10 @@ class ObjectLib extends TikiLib
 	// Each entry uses the item id as key and the object id as key. Items with no object id are ignored.
 	function get_object_ids($type, $itemIds)
 	{
+		if (empty($itemIds)) {
+			return array();
+		}
+
 		$query = 'select `objectId`, `itemId` from `tiki_objects` where `type`=? and `itemId` IN (' .
 						implode(',', array_fill(0, count($itemIds), '?')) . ')';
 

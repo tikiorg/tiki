@@ -206,6 +206,8 @@ $fieldFactory = $trackerDefinition->getFieldFactory();
 
 $itemObject = Tracker_Item::newItem($_REQUEST['trackerId']);
 
+$ins_fields = array('data' => array());
+
 foreach ($xfields['data'] as $i => $current_field) {
 	$current_field_ins = null;
 
