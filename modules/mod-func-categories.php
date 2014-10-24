@@ -126,7 +126,7 @@ function module_categories($mod_reference, &$module_params)
 		if (!empty($module_params['hideEmpty']) && $module_params['hideEmpty'] === 'y' && $cat['objects'] == 0) {
 			$has_children = false;
 			foreach ($cat['children'] as $child) {
-				if ($categories[$child]['objects'] != 0) {
+				if (!empty($categories[$child]['objects'])) {
 					$has_children = true;
 					break;
 				}
