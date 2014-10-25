@@ -106,11 +106,12 @@ class Search_Formatter_Builder
 				return '';
 			}
 			$abuilder = new Search_Formatter_ArrayBuilder;
-			$templateData = $abuilder->getData($output->getBody());
+			$outputData = $abuilder->getData($output->getBody());
+			$templateData = $templateData = file_get_contents($arguments['template']); 
 
 			$plugin = new Search_Formatter_Plugin_SmartyTemplate($arguments['template']);
-			$plugin->setData($templateData);
-			$plugin->setFields($this->findFields($templateData));
+			$plugin->setData($outputData);
+			$plugin->setFields($this->findFields($outputData, $templateData));
 		} elseif (isset($arguments['wiki']) && TikiLib::lib('tiki')->page_exists($arguments['wiki'])) {	
 			$wikitpl = "tplwiki:" . $arguments['wiki'];
 			$wikicontent = TikiLib::lib('smarty')->fetch($wikitpl);
@@ -127,17 +128,22 @@ class Search_Formatter_Builder
 		$this->formatterPlugin = $plugin;
 	}
 
-	private function findFields($data)
+	private function findFields($outputData, $templateData)
 	{
-		$data = TikiLib::array_flat($data);
+		$outputData = TikiLib::array_flat($outputData);
 
-		// Heuristic based: only lowecase letters, digits and underscore
+		// Heuristic based: only lowercase letters, digits and underscore
 		$fields = array();
-		foreach ($data as $candidate) {
+		foreach ($outputData as $candidate) {
 			if (preg_match("/^[a-z0-9_]+$/", $candidate) || substr($candidate, 0, strlen('tracker_field_')) === 'tracker_field_') {
 				$fields[] = $candidate;
 			}
 		}
+
+		preg_match_all('/\$(result|row|res)\.([a-z0-9_]+)[\|\}\w]+/', $templateData, $matches);
+		$fields = array_merge($fields, $matches[2]);	
+
+		$fields = array_flip(array_unique($fields));
 
 		return $fields;
 	}
