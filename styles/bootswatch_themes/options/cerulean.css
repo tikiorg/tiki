@@ -1,4 +1,4 @@
-/*! normalize.css v3.0.0 | MIT License | git.io/normalize */
+/* ! normalize.css v3.0.0 | MIT License | git.io/normalize */
 html {
   font-family: sans-serif;
   -ms-text-size-adjust: 100%;
@@ -5787,7 +5787,7 @@ body.navbar-padding {
 .dropdown-menu {
   padding: 0;
 }
-@media (min-width: 768px) {
+@media (max-width: 767px) {
   .col-md-8 .table-responsive,
   .col-md-9 .table-responsive,
   .col-md-3 .table-responsive {
@@ -5798,6 +5798,7 @@ body.navbar-padding {
     -ms-overflow-style: -ms-autohiding-scrollbar;
     border: 1px solid #dddddd;
     -webkit-overflow-scrolling: touch;
+    box-shadow: -5rem 0 9rem -9rem rgba(0, 0, 0, 0.75) inset;
   }
   .table-responsive > .table {
     margin-bottom: 0;

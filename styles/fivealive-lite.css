@@ -5708,7 +5708,7 @@ body.navbar-padding {
 .dropdown-menu {
   padding: 0;
 }
-@media (min-width: 768px) {
+@media (max-width: 767px) {
   .col-md-8 .table-responsive,
   .col-md-9 .table-responsive,
   .col-md-3 .table-responsive {
@@ -5719,6 +5719,7 @@ body.navbar-padding {
     -ms-overflow-style: -ms-autohiding-scrollbar;
     border: 1px solid #dddddd;
     -webkit-overflow-scrolling: touch;
+    box-shadow: -5rem 0 9rem -9rem rgba(0, 0, 0, 0.75) inset;
   }
   .table-responsive > .table {
     margin-bottom: 0;
@@ -5835,6 +5836,37 @@ body.navbar-padding {
 .secondary_site_menu .navbar-default .navbar-nav li a {
   background: transparent;
   color: #333333;
+}
+.cssmenu_horiz li ul,
+.cssmenu_vert li ul {
+  padding: 5px 0;
+  margin: 2px 0 0;
+  background-color: #1376a8;
+  border: 1px solid #cccccc;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 4px;
+  -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+  background-clip: padding-box;
+}
+.cssmenu_horiz li ul > li > a,
+.cssmenu_vert li ul > li > a {
+  padding: 3px 20px;
+  font-weight: normal;
+  line-height: 1.42857143;
+  color: #eeeeee;
+}
+.cssmenu_horiz > li > a:hover,
+.cssmenu_vert > li > a:hover,
+.cssmenu_horiz ul > li > a:hover,
+.cssmenu_vert ul > li > a:hover,
+.cssmenu_horiz > li > a:focus,
+.cssmenu_vert > li > a:focus,
+.cssmenu_horiz ul > li > a:focus,
+.cssmenu_vert ul > li > a:focus {
+  text-decoration: none;
+  color: #ffffff;
+  background-color: #0e567a;
 }
 /* black */
 /* white */

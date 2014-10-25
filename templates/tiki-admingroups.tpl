@@ -32,7 +32,7 @@
 	{/if}
 
 	<form name="checkform" method="post" action="{$smarty.server.PHP_SELF}">
-    <div class="table-responsive"><div class="table">
+    <div class="table-responsive">
 	<table class="table normal">
 		<tr>
 			<th style="width: 20px;">{select_all checkbox_names='checked[]'}</th>
@@ -89,7 +89,7 @@
 			</tr>
 		{/section}
 	</table>
-    </div></div>
+    </div>
 	<p align="left"> {*on the left to have it close to the checkboxes*}
 		<label>{tr}Perform action with checked:{/tr}
 			<select name="submit_mult">

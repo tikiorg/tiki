@@ -65,9 +65,8 @@
 {include file='find.tpl'}
 
 <form action="tiki-theme_control.php" method="post">
-    <div class="table-responsive">
-    <div class="themecat-table">
-	<table class="table normal">
+    <div class="table-responsive themecat-table">
+    	<table class="table normal">
 		<tr>
 			<th><input type="submit" class="btn btn-default btn-sm" name="delete" value="{tr}Del{/tr}"></th>
 			<th>
@@ -92,7 +91,6 @@
 			</tr>
 		{/section}
 	</table>
-    </div>
     </div>
 </form>
 {pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}

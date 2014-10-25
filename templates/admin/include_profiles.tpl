@@ -246,7 +246,6 @@
 			<form method="get" action="tiki-admin.php">	
 				<h4>{tr}Find Profiles{/tr} <small>{tr}Search by name, types and repository{/tr}</small></h4>
 				<div class="table-responsive">
-					<div>
 					<table class="table normal">
 						<tr>
 							<td class="col-lg-6">
@@ -328,13 +327,11 @@ $("#repository, #categories").change(function(){
 					</tr>
 				</table>
 				</div>
-				</div>
 			</form>
 			<a name="step2"></a>
 			{if isset($result) && $result|@count != '0'}
 				<h4>{tr}Select and apply profile <small>Click on a Configuration Profile Name below to review it and apply it on your site</small>{/tr}</h4>
 				<div class="table-responsive">
-				<div>
 				<table class="table normal">
 					<tr>
 						<th>{tr}Profile Name{/tr}</th>
@@ -360,7 +357,6 @@ $("#repository, #categories").change(function(){
 					<tr><td colspan="3" class="odd">{tr}None{/tr}</td></tr>
 					{/if}
 				</table>
-				</div>
 				{if $show_details_for_profile_num != ""}
 					{jq}showDetails('profile-{{$show_details_for_profile_num}}', '{{$show_details_for_domain}}', '{{$show_details_for_fullname}}');{/jq}
 				{/if}

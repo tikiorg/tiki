@@ -29,8 +29,7 @@
 	<input type="hidden" name="maxRecords" value="{$maxRecords|escape}">
 	{assign var=numbercol value=1}
     <div class="table-responsive">
-    <div>
-	<table class="table normal">
+    <table class="table normal">
 		<tr>
 			<th class="auto">
 				{if $listpages}
@@ -209,7 +208,6 @@
 			</td>
 		</tr>
 	</table>
-    </div>
     </div>
 
 	{pagination_links cant=$cant step=$maxRecords offset=$offset}{/pagination_links}

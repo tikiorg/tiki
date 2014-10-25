@@ -70,9 +70,8 @@
 
 <form action="tiki-theme_control_objects.php" method="post">
 	<input type="hidden" name="type" value="{$type|escape}">
-    <div class="table-responsive">
-    <div class="themeobj-table">
-	<table class="table normal">
+    <div class="table-responsive themeobj-table">
+    <table class="table normal">
 		<tr>
 			<th><input type="submit" class="btn btn-default btn-sm" name="delete" value="{tr}Del{/tr}"></th>
 			<th>
@@ -102,7 +101,6 @@
 			</tr>
 		{/section}
 	</table>
-    </div>
     </div>
 </form>
 

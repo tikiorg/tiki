@@ -16,8 +16,7 @@
         </div>
         <div class="panel-body">
             <div class="table-responsive">
-            <div>
-          <table class="table normal">
+            <table class="table normal">
             <tr>
               <th>
                 <a href="tiki-my_tiki.php?sort_mode={if $sort_mode eq 'pageName_desc'}pageName_asc{else}pageName_desc{/if}">{tr}Page{/tr}</a>
@@ -54,7 +53,6 @@
             {/section}
           </table>
           </div>
-          </div>
 		  <div style="text-align:right;">{tr}Records:{/tr} {$user_pages|@count}</div>
         </div>
       </div>
@@ -69,7 +67,6 @@
         </div>
         <div class="panel-body">
           <div class="table-responsive">
-          <div>
           <table class="table normal">
             <tr>
               <th>{tr}Gallery{/tr}</th>
@@ -90,7 +87,6 @@
             {/section}
           </table>
           </div>
-          </div>
 		  <div style="text-align:right;">{tr}Records:{/tr} {$user_galleries|@count}</div>
         </div>
       </div>
@@ -105,7 +101,6 @@
         </div>
         <div class="panel-body">
           <div class="table-responsive">
-          <div>
           <table class="table normal">
             <tr>
               <th>{tr}Article{/tr}</th>
@@ -126,7 +121,6 @@
             {/section}
           </table>
           </div>
-          </div>
 		  <div style="text-align:right;">{tr}Records:{/tr} {$user_articles|@count}</div>
         </div>
       </div>
@@ -141,7 +135,6 @@
         </div>
         <div class="panel-body">
           <div class="table-responsive">
-          <div>
           <table class="table normal">
             <tr>
               <th>{tr}Item{/tr}</th>
@@ -160,7 +153,6 @@
             {/section}
           </table>
           </div>
-          </div>
 		  <div style="text-align:right;">
 		  	   {tr}Records:{/tr} {$user_items|@count}
 			   {if !empty($nb_item_comments)}<br>{tr}Comments:{/tr} {$nb_item_comments}{/if}
@@ -176,7 +168,6 @@
         <div class="panel-heading">{tr}Unread Messages{/tr}</div>
         <div class="panel-body">
           <div class="table-responsive">
-          <div>
           <table class="table normal">
             <tr>
               <th>{tr}Subject{/tr}</th>
@@ -199,7 +190,6 @@
             {/section}
           </table>
           </div>
-          </div>
 		  <div style="text-align:right;">{tr}Records:{/tr} {$msgs|@count}</div>
         </div>
       </div>
@@ -214,7 +204,6 @@
         </div>
         <div class="panel-body">
           <div class="table-responsive">
-          <div>
           <table class="table normal">
             <tr>
               <th>{tr}Tasks{/tr}</th>
@@ -228,7 +217,6 @@
               </tr>
             {/section}
           </table>
-          </div>
           </div>
 		  <div style="text-align:right;">{tr}Records:{/tr} {$tasks|@count}</div>
         </div>
@@ -244,7 +232,6 @@
         </div>
         <div class="panel-body">
           <div class="table-responsive">
-          <div>
           <table class="table normal">
             <tr>
               <th>{tr}Forum topics{/tr}</th>              
@@ -263,7 +250,6 @@
             {/section}
           </table>
           </div>
-          </div>
 		  <div style="text-align:right;">{tr}Records:{/tr} {$user_forum_topics|@count}</div>
         </div>
       </div>
@@ -278,7 +264,6 @@
         </div>
         <div class="panel-body">
           <div class="table-responsive">
-          <div>
           <table class="table normal">
             <tr>
               <th>{tr}Forum replies{/tr}</th>              
@@ -297,7 +282,6 @@
             {/section}
           </table>
           </div>
-          </div>
 		  <div style="text-align:right;">{tr}Records:{/tr} {$user_forum_replies|@count}</div>
         </div>
       </div>
@@ -312,7 +296,6 @@
         </div>
         <div class="panel-body">
           <div class="table-responsive">
-          <div>
           <table class="table normal">
             <tr>
               <th>{tr}Blogs{/tr}</th>
@@ -333,7 +316,6 @@
             {/section}
           </table>
           </div>
-          </div>
 		  <div style="text-align:right;">{tr}Records:{/tr} {$user_blogs|@count}</div>
         </div>
       </div>
@@ -343,7 +325,6 @@
         </div>
         <div class="panel-body">
           <div class="table-responsive">
-          <div>
           <table class="table normal">
             <tr>
               <th>{tr}Blog Posts{/tr}</th>
@@ -363,7 +344,6 @@
               </tr>
             {/section}
           </table>
-          </div>
           </div>
 		  <div style="text-align:right;">{tr}Records:{/tr} {$user_blog_posts|@count}</div>
         </div>

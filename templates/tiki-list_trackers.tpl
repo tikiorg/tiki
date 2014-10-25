@@ -50,8 +50,7 @@
 		{/if}
 	{/if}
 	<div class="table-responsive">
-    <div>
-	<table class="table table-condensed table-hover">
+    <table class="table table-condensed table-hover">
 		<tr>
 			<th>{self_link _sort_arg='sort_mode' _sort_field='trackerId'}{tr}Id{/tr}{/self_link}</th>
 			<th>{self_link _sort_arg='sort_mode' _sort_field='name'}{tr}Name{/tr}{/self_link}</th>
@@ -125,7 +124,6 @@
 			{/if}
 		{/foreach}
 	</table>
-    </div>
     </div>
 	{pagination_links cant=$cant step=$maxRecords offset=$offset}{/pagination_links}
 

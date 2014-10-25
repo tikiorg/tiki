@@ -22,7 +22,7 @@
 </div> {* div.wikitopline *}
 
 {if !isset($versioned) and $print_page ne 'y' and (!isset($hide_page_header) or !$hide_page_header)}
-<div class="clearfix">
+<div class="wikiactions_wrapper clearfix">
 	<div class="wikiactions icons btn-group pull-right">
 			{if $pdf_export eq 'y'}
 				<a class="btn btn-default" href="tiki-print.php?{query display="pdf" page=$page}" title="{tr}PDF{/tr}">{icon _id='page_white_acrobat' alt="{tr}PDF{/tr}"}</a>
