@@ -20,9 +20,7 @@ class Search_GlobalSource_SocialSource implements Search_GlobalSource_Interface
 	{
 		return array(
 			'user_groups',
-			'user_groups_array',
 			'user_followers',
-			'user_followers_array',
 		);
 	}
 
@@ -48,9 +46,7 @@ class Search_GlobalSource_SocialSource implements Search_GlobalSource_Interface
 
 		return array(
 			'user_groups' => $typeFactory->multivalue(array_keys($groups)),
-			'user_groups_array' => $typeFactory->plaintext(json_encode(array_keys($groups))),
 			'user_followers' => $typeFactory->multivalue(array_unique($followers)),
-			'user_followers_array' => $typeFactory->plaintext(json_encode(array_unique($followers))),
 		);
 	}
 

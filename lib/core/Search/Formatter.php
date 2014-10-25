@@ -63,13 +63,6 @@ class Search_Formatter
 			foreach ($pre as $k => $value) {
 				if ($value !== '') {
 					$row[$k] = $value;
-					// Also rewrite json array vars to real arrays
-					if (substr($k, -6) == '_array') {
-						$decoded = json_decode($value);
-						if (json_last_error() == JSON_ERROR_NONE) {
-							$row[$k] = $decoded; 
-						}
-					}
 				}
 			}
 			if ($enableHighlight) {

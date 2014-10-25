@@ -25,7 +25,7 @@ class Search_GlobalSource_FreeTagSource implements Search_GlobalSource_Interface
 
 	function getProvidedFields()
 	{
-		return array('freetags', 'freetags_array', 'freetags_text');
+		return array('freetags', 'freetags_text');
 	}
 
 	function getGlobalFields()
@@ -53,7 +53,6 @@ class Search_GlobalSource_FreeTagSource implements Search_GlobalSource_Interface
 
 		return array(
 			'freetags' => $typeFactory->multivalue($ids),
-			'freetags_array' => $typeFactory->plaintext(json_encode($ids)),
 			'freetags_text' => $typeFactory->plaintext(implode(' ', $textual)),
 		);
 	}

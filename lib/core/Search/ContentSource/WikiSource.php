@@ -54,7 +54,6 @@ class Search_ContentSource_WikiSource implements Search_ContentSource_Interface
 			'modification_date' => $typeFactory->timestamp($info['lastModif']),
 			'description' => $typeFactory->plaintext($info['description']),
 			'contributors' => $typeFactory->multivalue($contributors),
-			'contributors_array' => $typeFactory->plaintext(json_encode($contributors)),
 
 			'wiki_content' => $typeFactory->wikitext($info['data']),
 
@@ -120,7 +119,6 @@ class Search_ContentSource_WikiSource implements Search_ContentSource_Interface
 			'modification_date',
 			'description',
 			'contributors',
-			'contributors_array',
 
 			'wiki_content',
 			'wiki_approval_state',

@@ -45,7 +45,6 @@ class Search_ContentSource_CommentSource implements Search_ContentSource_Interfa
 			'language' => $typeFactory->identifier('unknown'),
 			'modification_date' => $typeFactory->timestamp($comment['commentDate']),
 			'contributors' => $typeFactory->multivalue(array($comment['userName'])),
-			'contributors_array' => $typeFactory->plaintext(json_encode(array($comment['userName']))),
 
 			'comment_content' => $typeFactory->wikitext($comment['data']),
 			'parent_thread_id' => $typeFactory->identifier($comment['parentId']),
@@ -69,7 +68,6 @@ class Search_ContentSource_CommentSource implements Search_ContentSource_Interfa
 			'language',
 			'modification_date',
 			'contributors',
-			'contributors_array',
 			'url',
 
 			'comment_content',

@@ -75,7 +75,6 @@ class Search_ContentSource_ForumPostSource implements Search_ContentSource_Inter
 			'language' => $typeFactory->identifier($forum_language),
 			'modification_date' => $typeFactory->timestamp($lastModification),
 			'contributors' => $typeFactory->multivalue(array_unique($author)),
-			'contributors_array' => $typeFactory->plaintext(json_encode(array_unique($author))), 
 
 			'forum_id' => $typeFactory->identifier($comment['object']),
 			'post_content' => $typeFactory->wikitext($content),
@@ -86,7 +85,6 @@ class Search_ContentSource_ForumPostSource implements Search_ContentSource_Inter
 			'parent_object_id' => $typeFactory->identifier($comment['object']),
 			'parent_view_permission' => $typeFactory->identifier('tiki_p_forum_read'),
 			'parent_contributors' => $typeFactory->multivalue(array_unique($root_author)),
-			'parent_contributors_array' => $typeFactory->plaintext(json_encode(array_unique($root_author))),
 			'root_thread_id' => $typeFactory->identifier($root_thread_id),
 		);
 
@@ -100,7 +98,6 @@ class Search_ContentSource_ForumPostSource implements Search_ContentSource_Inter
 			'language',
 			'modification_date',
 			'contributors',
-			'contributors_array',
 
 			'post_content',
 			'post_snippet',
@@ -113,7 +110,6 @@ class Search_ContentSource_ForumPostSource implements Search_ContentSource_Inter
 
 			'root_thread_id',
 			'parent_contributors',
-			'parent_contributors_array',
 		);
 	}
 

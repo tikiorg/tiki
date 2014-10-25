@@ -53,7 +53,7 @@ class Search_GlobalSource_CategorySource implements Search_GlobalSource_Interfac
 
 	function getProvidedFields()
 	{
-		$list = array('categories', 'deep_categories', 'categories_array', 'deep_categories_array');
+		$list = array('categories', 'deep_categories');
 		foreach ($this->categlib->getCustomFacets() as $categId) {
 			$list[] = "categories_under_{$categId}";
 			$list[] = "deep_categories_under_{$categId}";
@@ -93,9 +93,7 @@ class Search_GlobalSource_CategorySource implements Search_GlobalSource_Interfac
 
 		$out = array(
 			'categories' => $typeFactory->multivalue($categories),
-			'categories_array' => $typeFactory->plaintext(json_encode($categories)),
 			'deep_categories' => $typeFactory->multivalue($deepcategories),
-			'deep_categories_array' => $typeFactory->plaintext(json_encode($deepcategories)),
 		);
 
 		foreach ($this->categlib->getCustomFacets() as $rootId) {

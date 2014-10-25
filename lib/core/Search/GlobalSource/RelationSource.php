@@ -18,9 +18,7 @@ class Search_GlobalSource_RelationSource implements Search_GlobalSource_Interfac
 	{
 		return array(
 			'relations',
-			'relations_array',
 			'relation_types',
-			'relation_types_array',
 		);
 	}
 
@@ -54,9 +52,7 @@ class Search_GlobalSource_RelationSource implements Search_GlobalSource_Interfac
 
 		return array(
 			'relations' => $typeFactory->multivalue($relations),
-			'relations_array' => $typeFactory->plaintext(json_encode($relations)),
 			'relation_types' => $typeFactory->multivalue(array_unique($types)),
-			'relation_types_array' => $typeFactory->plaintext(json_encode(array_unique($types))),
 		);
 	}
 }

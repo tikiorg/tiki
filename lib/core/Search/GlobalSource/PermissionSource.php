@@ -16,7 +16,7 @@ class Search_GlobalSource_PermissionSource implements Search_GlobalSource_Interf
 
 	function getProvidedFields()
 	{
-		return array('allowed_groups', 'allowed_users', 'allowed_groups_array', 'allowed_users_array');
+		return array('allowed_groups', 'allowed_users');
 	}
 
 	function getGlobalFields()
@@ -35,7 +35,6 @@ class Search_GlobalSource_PermissionSource implements Search_GlobalSource_Interf
 
 		if (isset($data['allowed_groups'])) {
 			return array('allowed_users' => $typeFactory->multivalue(array_unique($allowed_users)));
-			return array('allowed_users_array' => $typeFactory->plaintext(json_encode(array_unique($allowed_users))));
 		}
 
 		$groups = array();
@@ -83,9 +82,7 @@ class Search_GlobalSource_PermissionSource implements Search_GlobalSource_Interf
 
 		return array(
 			'allowed_groups' => $typeFactory->multivalue(array_unique($groups)),
-			'allowed_groups_array' => $typeFactory->plaintext(json_encode(array_unique($groups))),
 			'allowed_users' => $typeFactory->multivalue(array_unique($allowed_users)),
-			'allowed_users_array' => $typeFactory->plaintext(json_encode(array_unique($allowed_users))),
 		);
 	}
 

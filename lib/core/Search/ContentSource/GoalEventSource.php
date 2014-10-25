@@ -32,13 +32,11 @@ class Search_ContentSource_GoalEventSource implements Search_ContentSource_Inter
 			if ($event['targetType'] && $event['targetObject']) {
 				$target = "{$event['targetType']}:{$event['targetObject']}";
 			}
-			$goal_groups = array_values(json_decode($event['groups'], true));
 			return [
 				'modification_date' => $typeFactory->timestamp($event['eventDate']),
 				'event_type' => $typeFactory->identifier($event['eventType']),
 				'user' => $typeFactory->identifier($event['user']),
-				'goal_groups' => $typeFactory->multivalue($goal_groups),
-				'goal_groups_array' => $typeFactory->plaintext(json_encode($goal_groups)),
+				'goal_groups' => $typeFactory->multivalue(json_decode($event['groups'], true)),
 				'target' => $typeFactory->identifier($target),
 			];
 		} else {
@@ -48,7 +46,7 @@ class Search_ContentSource_GoalEventSource implements Search_ContentSource_Inter
 
 	function getProvidedFields()
 	{
-		return ['event_type', 'modification_date', 'user', 'goal_groups', 'goal_groups_array', 'target'];
+		return ['event_type', 'modification_date', 'user', 'goal_groups', 'target'];
 	}
 
 	function getGlobalFields()

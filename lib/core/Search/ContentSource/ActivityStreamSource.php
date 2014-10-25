@@ -68,15 +68,12 @@ class Search_ContentSource_ActivityStreamSource implements Search_ContentSource_
 
 		$list = $this->sociallib->getLikes('activity', $objectId);
 		$document['like_list'] = $typeFactory->multivalue($list);
-		$document['like_list_array'] = $typeFactory->plaintext(json_encode($list));
 
 		if ($prefs['monitor_individual_clear'] == 'y') {
 			$clearList = $this->getClearList($objectId);
 			$document['clear_list'] = $typeFactory->multivalue($clearList);
-			$document['clear_list_array'] = $typeFactory->plaintext(json_encode($clearList));
 		} else {
 			$document['clear_list'] = $typeFactory->multivalue([]);
-			$document['clear_list_array'] = $typeFactory->plaintext('[]');
 		}
 
 		return $document;
@@ -85,7 +82,7 @@ class Search_ContentSource_ActivityStreamSource implements Search_ContentSource_
 	function getProvidedFields()
 	{
 		$mapping = $this->lib->getMapping();
-		return array_merge(['event_type', 'modification_date', 'like_list', 'like_list_array', 'clear_list', 'clear_list_array'], array_keys($mapping));
+		return array_merge(['event_type', 'modification_date', 'like_list', 'clear_list'], array_keys($mapping));
 	}
 
 	function getGlobalFields()

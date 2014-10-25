@@ -63,7 +63,6 @@ class Search_ContentSource_UserSource implements Search_ContentSource_Interface
 			'geo_location' => $typeFactory->identifier($loc),
 			'searchable' => $typeFactory->identifier($this->userIsIndexed($detail) ? 'y' : 'n'),
 			'groups' => $typeFactory->multivalue($detail['groups']),
-			'groups_array' => $typeFactory->plaintext(json_encode($detail['groups'])),
 			'_extra_groups' => array('Registered'), // Add all registered to allowed groups
 		);
 
@@ -100,8 +99,6 @@ class Search_ContentSource_UserSource implements Search_ContentSource_Interface
 			'user_country',
 
 			'searchable',
-			'groups',
-			'groups_array',
 		);
 
 		foreach ($this->getAllIndexableHandlers() as $baseKey => $handler) {
