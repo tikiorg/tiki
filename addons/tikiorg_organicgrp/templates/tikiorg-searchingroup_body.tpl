@@ -19,13 +19,13 @@
 			<div class="srListItem">
 				{if $result.object_type eq 'forum post'}
 					<div class="postAvatar csIdentifier">
-						{$result.contributors_array[0]|avatarize}
+						{$result.contributors[0]|avatarize}
 					</div>
 					<div class="csContent forum_post">
 						<div class="addfav myNetwork"><div>{wikiplugin _name="favorite" objectType="{$result.object_type}" objectId="`$result.object_id`"}{/wikiplugin}</div></div>
 						<div class="forum_title"><a href="./tiki-view_forum_thread.php?comments_parentId={$result.object_id}" class="title">{$result.title}</a></div>
 						<div class="forum_post"><span>{$result.postsnippet}</span> <a href="./tiki-view_forum_thread.php?comments_parentId={$result.object_id|escape}" class="">read more</a></div>
-						<div class="forum_date">Started by {$result.contributors_array|userlink} {$result.modification_date|tiki_short_datetime:on}</div>
+						<div class="forum_date">Started by {$result.contributors|userlink} {$result.modification_date|tiki_short_datetime:on}</div>
 					</div>
 				{else}
 					{$result.object_type} - {$result.title}
