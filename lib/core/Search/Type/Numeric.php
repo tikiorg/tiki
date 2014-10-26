@@ -7,8 +7,6 @@
 
 class Search_Type_Numeric implements Search_Type_Interface
 {
-	// NOTE that this corresponds with the "reallynumeric" type, not the "numeric" type which is a string representation of numeric
-
 	private $value;
 
 	function __construct($value)

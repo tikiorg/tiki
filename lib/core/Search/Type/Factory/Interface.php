@@ -17,8 +17,6 @@ interface Search_Type_Factory_Interface
 	function identifier($value);
 	// not tokenized - indexed - stored in database
 	function numeric($value);
-	// not tokenized - indexed - stored in database (store as numeric where supported e.g. elasticsearch)
-	function reallynumeric($value);
 	// tokenized - indexed - unstored in database
 	function multivalue($values);
 	// tokenized - indexed - stored in database

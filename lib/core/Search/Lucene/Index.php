@@ -302,6 +302,7 @@ class Search_Lucene_Index implements Search_Index_Interface
 			'Search_Type_WikiText' => 'UnStored',
 			'Search_Type_PlainText' => 'UnStored',
 			'Search_Type_Whole' => 'Keyword',
+			'Search_Type_Numeric' => 'Keyword',
 			'Search_Type_Timestamp' => 'Keyword',
 			'Search_Type_MultivalueText' => 'UnStored',
 			'Search_Type_ShortText' => 'Text',
@@ -418,6 +419,7 @@ class Search_Lucene_Index implements Search_Index_Interface
 			$parts = explode(' ', $value->getValue());
 			return new Zend_Search_Lucene_Search_Query_Term(new Zend_Search_Lucene_Index_Term($parts[0], $field), true);
 		case 'Search_Type_Whole':
+		case 'Search_Type_Numeric':
 			$parts = explode(' ', $value->getValue());
 			return new Zend_Search_Lucene_Search_Query_Phrase($parts, array_keys($parts), $field);
 		}
