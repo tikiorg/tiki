@@ -24,7 +24,7 @@ function prefs_theme_list()
 	foreach (scandir('themes/base_files/iconsets') as $iconset_file) {
 		if ($iconset_file[0] != '.' && $iconset_file != 'index.php') {
 			include('themes/base_files/iconsets/'. $iconset_file);
-			$iconsets[substr($iconset_file,0,-4)] = $iconset['_settings']['iconset_name'];
+			$iconsets[substr($iconset_file,0,-4)] = $settings['iconset_name'];
 		}
 	}
 	

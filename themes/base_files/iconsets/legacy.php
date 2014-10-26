@@ -13,134 +13,276 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
 	exit;
 }
 
-$iconset = array(
-	'_settings' => array(
-		'iconset_name' => tr('Legacy'),
-		'iconset_description' => tr('Legacy (pre Tiki14) icons, mainly using famfamfam images'),
-		'icon_path_image' => 'img/icons',
-		'icon_tag' => 'img',
-	),
+$settings = array(
+	'iconset_name' => tr('Legacy'),
+	'iconset_description' => tr('Legacy (pre Tiki14) icons, mainly using famfamfam images'),
+	'icon_tag' => 'img',
+);
+
+$icons = array(
 	'actions' => array(
-		'image_file_name' => 'application_form.png',
+		'image_src' => 'img/icons/application_form.png',
 	),
 	'add' => array(
-		'image_file_name' => 'add.png',
+		'image_src' => 'img/icons/large/icon-configuration.png',
+	),
+	'admin_ads' => array( 
+		'image_src' => 'img/icons/large/ads.png',
+	),
+	'admin_articles' => array( 
+		'image_src' => 'img/icons/large/stock_bold.png',
+	),
+	'admin_blogs' => array( 
+		'image_src' => 'img/icons/large/blogs.png',
+	),
+	'admin_calendar' => array( 
+		'image_src' => 'img/icons/large/date.png',
+	),
+	'admin_category' => array( 
+		'image_src' => 'img/icons/large/categories.png',
+	),
+	'admin_comments' => array( 
+		'image_src' => 'img/icons/large/comments.png',
+	),
+	'admin_community' => array( 
+		'image_src' => 'img/icons/large/users.png',
+	),
+	'admin_connect' => array( 
+		'image_src' => 'img/icons/large/gnome-globe.png',
+	),
+	'admin_copyright' => array( 
+		'image_src' => 'img/icons/large/copyright.png',
+	),
+	'admin_directory' => array( 
+		'image_src' => 'img/icons/large/gnome-fs-server.pngg',
+	),
+	'admin_faqs' => array( 
+		'image_src' => 'img/icons/large/stock_dialog_question.png',
+	),
+	'admin_features' => array( 
+		'image_src' => 'img/icons/large/boot.png',
+	),
+	'admin_fgal' => array( 
+		'image_src' => 'img/icons/large/file-manager.png',
+	),
+	'admin_forums' => array( 
+		'image_src' => 'img/icons/large/stock_index.png',
+	),
+	'admin_freetags' => array( 
+		'image_src' => 'img/icons/large/vcard.png',
+	),
+	'admin_gal' => array( 
+		'image_src' => 'img/icons/large/stock_select-color.png',
+	),
+	'admin_general' => array(
+		'image_src' => 'img/icons/large/icon-configuration.png',
+		'position' => '0px -15px;',
+	),
+	'admin_i18n' => array( 
+		'image_src' => 'img/icons/large/i18n.png',
+	),
+	'admin_intertiki' => array( 
+		'image_src' => 'img/icons/large/intertiki.png',
+	),
+	'admin_login' => array( 
+		'image_src' => 'img/icons/large/stock_quit.png',
+	),
+	'admin_look' => array( 
+		'image_src' => 'img/icons/large/gnome-settings-background.png',
+	),
+	'admin_maps' => array( 
+		'image_src' => 'img/icons/large/maps.png',
+	),
+	'admin_messages' => array( 
+		'image_src' => 'img/icons/large/messages.png',
+	),
+	'admin_metatags' => array( 
+		'image_src' => 'img/icons/large/metatags.png',
+	),
+	'admin_module' => array( 
+		'image_src' => 'img/icons/large/display-capplet.png',
+	),
+	'admin_payment' => array( 
+		'image_src' => 'img/icons/large/payment.png',
+	),
+	'admin_performance' => array( 
+		'image_src' => 'img/icons/large/performance.png',
+	),
+	'admin_polls' => array( 
+		'image_src' => 'img/icons/large/stock_missing-image.png',
+	),
+	'admin_profiles' => array( 
+		'image_src' => 'img/icons/large/profiles.png',
+	),
+	'admin_rating' => array( 
+		'image_src' => 'img/icons/large/rating.png',
+	),
+	'admin_rss' => array( 
+		'image_src' => 'img/icons/large/feed-icon.png',
+	),
+	'admin_score' => array( 
+		'image_src' => 'img/icons/large/stock_about.png',
+	),
+	'admin_search' => array( 
+		'image_src' => 'img/icons/large/xfce4-appfinder.png',
+	),
+	'admin_semantic' => array( 
+		'image_src' => 'img/icons/large/semantic.png',
+	),
+	'admin_security' => array( 
+		'image_src' => 'img/icons/large/gnome-lockscreen.png',
+	),
+	'admin_sefurl' => array( 
+		'image_src' => 'img/icons/large/goto.png',
+	),
+	'admin_share' => array( 
+		'image_src' => 'img/icons/large/stock_contact.png',
+	),
+	'admin_socialnetworks' => array( 
+		'image_src' => 'img/icons/large/socialnetworks.png',
+	),
+	'admin_textarea' => array( 
+		'image_src' => 'img/icons/large/editing.png',
+	),
+	'admin_trackers' => array( 
+		'image_src' => 'img/icons/large/gnome-settings-font.png',
+	),
+	'admin_userfiles' => array( 
+		'image_src' => 'img/icons/large/userfiles.png',
+	),
+	'admin_video' => array( 
+		'image_src' => 'img/icons/large/gnome-camera-video-32.png',
+	),
+	'admin_webmail' => array( 
+		'image_src' => 'img/icons/large/evolution.png',
+	),
+	'admin_webservices' => array( 
+		'image_src' => 'img/icons/large/webservices.png',
+	),
+	'admin_wiki' => array( 
+		'image_src' => 'img/icons/large/wikipages.png',
+	),
+	'admin_workspace' => array( 
+		'image_src' => 'img/icons/large/areas.png',
+	),
+	'admin_wysiwyg' => array( 
+		'image_src' => 'img/icons/large/wysiwyg.png',
 	),
 	'administer' => array(
-		'image_file_name' => 'wrench.png',
+		'image_src' => 'img/icons/wrench.png',
 	),
 	'check' => array(
-		'image_file_name' => 'select.gif',
+		'image_src' => 'img/icons/select.gif',
 	),
 	'comments' => array(
-		'image_file_name' => 'comments.png',
+		'image_src' => 'img/icons/comments.png',
 	),
 	'copy' => array(
-		'image_file_name' => 'ico_copy.gif',
+		'image_src' => 'img/icons/ico_copy.gif',
 	),
 	'create' => array(
-		'image_file_name' => 'add.png',
+		'image_src' => 'img/icons/add.png',
 	),
 	'delete' => array(
-		'image_file_name' => 'cross.png',
+		'image_src' => 'img/icons/cross.png',
 	),
 	'edit' => array(
-		'image_file_name' => 'page_edit.png',
+		'image_src' => 'img/icons/page_edit.png',
 	),
 	'envelope' => array(
-		'image_file_name' => 'email.png',
+		'image_src' => 'img/icons/email.png',
 	),
 	'error' => array( 
-		'image_file_name' => 'exclamation.png',
+		'image_src' => 'img/icons/exclamation.png',
 	),
 	'export' => array( 
-		'image_file_name' => 'disk.png',
+		'image_src' => 'img/icons/disk.png',
 	),
 	'file-archive' => array( 
-		'image_file_name' => 'folder.png',
+		'image_src' => 'img/icons/folder.png',
 	),
 	'group' => array(
-		'image_file_name' => 'group.png',
+		'image_src' => 'img/icons/group.png',
 	),
 	'group-watch' => array( 
-		'image_file_name' => 'eye_group.png',
+		'image_src' => 'img/icons/eye_group.png',
 	),
 	'help' => array( 
-		'image_file_name' => 'help.png',
+		'image_src' => 'img/icons/help.png',
 	),
 	'history' => array(
-		'image_file_name' => 'database.png',
+		'image_src' => 'img/icons/database.png',
 	),
 	'import' => array( 
-		'image_file_name' => 'upload.png',
+		'image_src' => 'img/icons/upload.png',
 	),
 	'info' => array( 
-		'image_file_name' => 'information.png',
+		'image_src' => 'img/icons/information.png',
 	),
 	'link' => array( 
-		'image_file_name' => 'link.png',
+		'image_src' => 'img/icons/link.png',
 	),
 	'list' => array( 
-		'image_file_name' => 'application_view_list.png',
+		'image_src' => 'img/icons/application_view_list.png',
 	),
 	'menuitem' => array(
-		'image_file_name' => 'omo.png',
+		'image_src' => 'img/icons/omo.png',
 	),
 	'notepad' => array(
-		'image_file_name' => 'disk.png',
+		'image_src' => 'img/icons/disk.png',
 	),
 	'notification' => array(
-		'image_file_name' => 'announce.png',
+		'image_src' => 'img/icons/announce.png',
 	),
 	'ok' => array(
-		'image_file_name' => 'accept.png',
+		'image_src' => 'img/icons/accept.png',
 	),
 	'permission' => array(
-		'image_file_name' => 'key.png',
+		'image_src' => 'img/icons/key.png',
 	),
 	'post' => array(
-		'image_file_name' => 'pencil_add.png',
+		'image_src' => 'img/icons/pencil_add.png',
 	),
 	'print' => array(
-		'image_file_name' => 'printer.png',
+		'image_src' => 'img/icons/printer.png',
 	),
 	'refresh' => array(
-		'image_file_name' => 'arrow_refresh.png',
+		'image_src' => 'img/icons/arrow_refresh.png',
 	),
 	'remove' => array(
-		'image_file_name' => 'cross.png',
+		'image_src' => 'img/icons/cross.png',
 	),
 	'rss' => array(
-		'image_file_name' => 'feed.png',
+		'image_src' => 'img/icons/feed.png',
 	),
 	'settings' => array(
-		'image_file_name' => 'wrench.png',
+		'image_src' => 'img/icons/wrench.png',
 	),
 	'share' => array(
-		'image_file_name' => 'sharethis.png',
+		'image_src' => 'img/icons/sharethis.png',
 	),
 	'stop-watching' => array(
-		'image_file_name' => 'no-eye.png',
+		'image_src' => 'img/icons/no-eye.png',
 	),
 	'success' => array(
-		'image_file_name' => 'accept.png',
+		'image_src' => 'img/icons/accept.png',
 	),
 	'tag' => array(
-		'image_file_name' => 'tag_blue.png',
+		'image_src' => 'img/icons/tag_blue.png',
 	),
 	'trash' => array(
-		'image_file_name' => 'bin.png',
+		'image_src' => 'img/icons/bin.png',
 	),
 	'view' => array(
-		'image_file_name' => 'shape_square.png',
+		'image_src' => 'img/icons/shape_square.png',
 	),
 	'warning' => array(
-		'image_file_name' => 'sticky.png',
+		'image_src' => 'img/icons/sticky.png',
 	),
 	'watch' => array(
-		'image_file_name' => 'eye.png',
+		'image_src' => 'img/icons/eye.png',
 	),
 	'watch-group' => array(
-		'image_file_name' => 'eye_group.png',
+		'image_src' => 'img/icons/eye_group.png',
 	),
 );

@@ -13,30 +13,163 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
 	exit;
 }
 
-$iconset = array(
-	'_settings' => array( //Icon set settings
-		'iconset_name' => tr('Default'), //mandatory, this will be displayed as Icon set option in the Look&Feel admin UI
-		'iconset_description' => tr('The default system icon set'), //this will be displayed as Icon set description in the Look&Feel admin UI
-		'icon_path_svg' => '', //TODO The default path for svgs in the icon set so that you don't need to specify for each icon. You can override this for each icon using the path_svg option
-		'icon_path_font' => '', //TODO The default path for font icons in the icon set so that you don't need to specify for each icon. You can override this for each icon using the path_font option
-		'icon_path_image' => '' , //The default path for images in the icon set so that you don't need to specify for each icon. You can override this for each icon using the image_path option
-		'icon_tag' => 'span', //The default html tag for the icons in the icon set. TODO: You can override this for each icon using the tag option
-		'icon_type' => 'font', //TODO The default file type for the icons in the icon set. Possible values: svg, font, png, jpeg. You can override this for each icon using the type option. Type sequence: 1)svg 2)font 3)image, so icon function will first use what is in the path_svg, than path_font, than path_png
-	),
+$settings = array( //Settings for the icon set
+	'iconset_name' => tr('Default (Font-awesome)'), //Mandatory, will be displayed as Icon set option in the Look&Feel admin UI
+	'iconset_description' => tr('The default system icon set usind Font-awesome fonts'), //TODO display as Icon set description in the Look&Feel admin UI
+	'icon_tag' => 'span', //The default html tag for the icons in the icon set. TODO: Override for each icon using the tag option
+);
+
+$icons = array( //Icons of the icon set
 	'save' => array( //This is the definition of an icon in the icon set. For this one icon all options are explained. The key must be unique, it is the "name" parameter at the icon function, so eg: {icon name="save"} will find 'save' in the array and apply the specified configuration
-		'class' => 'fa fa-save fa-fw', //this is the class used for a glyphicon or a font-awesome icon  
-		'alt' => tr('Save'),  //alternate text for an image, if the image cannot be displayed (http://www.w3schools.com/tags/att_img_alt.asp)
-		'svg_path' => '', //TODO Specify the URL for an svg definition. Optional, if not defined, the default defined at _settings is used.
-		'font_path' => '', //TODO Specify the URL for font icon. Optional, if not defined, the default defined at _settings is used.
-		'image_path' => '', //TODO Specify the URL of an image. Optional, if not defined, the default defined at _settings is used.
-		'image_file_name' => '', //Specify the name of an image file, eg: 'disk.png' 
-		'tag' => 'span', //TODO specify an html tag
+		'class' => 'fa fa-save fa-fw', //Class used for a font icon (font-awesome, glyphicon, etc)
+		'image_src' => '', //For images: specify the path inside your Tiki installation including the file name, eg: '/img/icons/disk.png'
 	),
 	'actions' => array( 
 		'class' => 'fa fa-play-circle fa-fw',
 	),
 	'add' => array( 
 		'class' => 'fa fa-plus fa-fw',
+	),
+	'admin_ads' => array( 
+		'class' => 'fa fa-film fa-fw',
+	),
+	'admin_articles' => array( 
+		'class' => 'fa fa-font fa-fw',
+	),
+	'admin_blogs' => array( 
+		'class' => 'fa fa-bold fa-fw',
+	),
+	'admin_calendar' => array( 
+		'class' => 'fa fa-calendar fa-fw',
+	),
+	'admin_category' => array( 
+		'class' => 'fa fa-sitemap fa-fw',
+	),
+	'admin_comments' => array( 
+		'class' => 'fa fa-comment fa-fw',
+	),
+	'admin_community' => array( 
+		'class' => 'fa fa-group fa-fw',
+	),
+	'admin_connect' => array( 
+		'class' => 'fa fa-link fa-fw',
+	),
+	'admin_copyright' => array( 
+		'class' => 'fa fa-legal fa-fw',
+	),
+	'admin_directory' => array( 
+		'class' => 'fa fa-folder-o fa-fw',
+	),
+	'admin_faqs' => array( 
+		'class' => 'fa fa-question fa-fw',
+	),
+	'admin_features' => array( 
+		'class' => 'fa fa-power-off fa-fw',
+	),
+	'admin_fgal' => array( 
+		'class' => 'fa fa-folder-open fa-fw',
+	),
+	'admin_forums' => array( 
+		'class' => 'fa fa-comments fa-fw',
+	),
+	'admin_freetags' => array( 
+		'class' => 'fa fa-tags fa-fw',
+	),
+	'admin_gal' => array( 
+		'class' => 'fa fa-image fa-fw',
+	),
+	'admin_general' => array( 
+		'class' => 'fa fa-cog fa-fw',
+	),
+	'admin_i18n' => array( 
+		'class' => 'fa fa-globe fa-fw',
+	),
+	'admin_intertiki' => array( 
+		'class' => 'fa fa-exchange fa-fw',
+	),
+	'admin_login' => array( 
+		'class' => 'fa fa-sign-in fa-fw',
+	),
+	'admin_look' => array( 
+		'class' => 'fa fa-image fa-fw',
+	),
+	'admin_maps' => array( 
+		'class' => 'fa fa-map-marker fa-fw',
+	),
+	'admin_messages' => array( 
+		'class' => 'fa fa-envelope-o fa-fw',
+	),
+	'admin_metatags' => array( 
+		'class' => 'fa fa-tag fa-fw',
+	),
+	'admin_module' => array( 
+		'class' => 'fa fa-cogs fa-fw',
+	),
+	'admin_payment' => array( 
+		'class' => 'fa fa-credit-card fa-fw',
+	),
+	'admin_performance' => array( 
+		'class' => 'fa fa-tachometer fa-fw',
+	),
+	'admin_polls' => array( 
+		'class' => 'fa fa-tasks fa-fw',
+	),
+	'admin_profiles' => array( 
+		'class' => 'fa fa-cubes fa-fw',
+	),
+	'admin_rating' => array( 
+		'class' => 'fa fa-check-square fa-fw',
+	),
+	'admin_rss' => array( 
+		'class' => 'fa fa-rss fa-fw',
+	),
+	'admin_score' => array( 
+		'class' => 'fa fa-trophy fa-fw',
+	),
+	'admin_search' => array( 
+		'class' => 'fa fa-search fa-fw',
+	),
+	'admin_semantic' => array( 
+		'class' => 'fa fa-arrows-h fa-fw',
+	),
+	'admin_security' => array( 
+		'class' => 'fa fa-lock fa-fw',
+	),
+	'admin_sefurl' => array( 
+		'class' => 'fa fa-search-plus fa-fw',
+	),
+	'admin_share' => array( 
+		'class' => 'fa fa-share-alt fa-fw',
+	),
+	'admin_socialnetworks' => array( 
+		'class' => 'fa fa-tumns-up fa-fw',
+	),
+	'admin_textarea' => array( 
+		'class' => 'fa fa-edit fa-fw',
+	),
+	'admin_trackers' => array( 
+		'class' => 'fa fa-database fa-fw',
+	),
+	'admin_userfiles' => array( 
+		'class' => 'fa fa-cog fa-fw',
+	),
+	'admin_video' => array( 
+		'class' => 'fa fa-video fa-fw',
+	),
+	'admin_webmail' => array( 
+		'class' => 'fa fa-inbox fa-fw',
+	),
+	'admin_webservices' => array( 
+		'class' => 'fa fa-cog fa-fw',
+	),
+	'admin_wiki' => array( 
+		'class' => 'fa fa-file-text-o fa-fw',
+	),
+	'admin_workspace' => array( 
+		'class' => 'fa fa-desktop fa-fw',
+	),
+	'admin_wysiwyg' => array( 
+		'class' => 'fa fa-align-center fa-fw',
 	),
 	'administer' => array( 
 		'class' => 'fa fa-cog fa-fw',

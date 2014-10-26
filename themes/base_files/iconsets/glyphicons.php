@@ -13,12 +13,13 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
 	exit;
 }
 
-$iconset = array(
-	'_settings' => array(
-		'iconset_name' => tr('Glyphicons'),
-		'iconset_description' => tr('Glyphicon focused iconset, see http://getbootstrap.com/components/'),
-		'icon_tag' => 'span',
-	),
+$settings = array(
+	'iconset_name' => tr('Glyphicons'),
+	'iconset_description' => tr('Glyphicon focused iconset, see http://getbootstrap.com/components/'),
+	'icon_tag' => 'span',
+);
+
+$icons = array(
 	'actions' => array(
 		'class' => 'glyphicon glyphicon-play-circle',
 	),

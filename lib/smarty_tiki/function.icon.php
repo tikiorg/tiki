@@ -90,27 +90,25 @@ function smarty_function_icon($params, $smarty)
 	if (!empty($params['name']) and empty($params['_tag'])){ 
 		$name = $params['name'];
 		
-		//load $iconset from preference setting TODO: enhance this to consider iconsets in self-contained themes (eg: themes/jqui/iconsets/)
+		//load $iconset from preference setting TODO: 1)first check if the file exist, if not, load the default 2)enhance this to consider iconsets in self-contained themes (eg: themes/jqui/iconsets/)
 		include('themes/base_files/iconsets/' . $prefs['theme_iconset'] . '.php');
 		
 		//if icon is defined in the iconset, use it
-		if (isset($iconset) and array_key_exists($name, $iconset)) {
-			$cssclass = $iconset[$name]['class'];
-			$tag = $iconset['_settings']['icon_tag'];
+		if (isset($icons) and array_key_exists($name, $icons)) {
+			$cssclass = $icons[$name]['class'];
+			$tag = $settings['icon_tag'];
 			
 			//manage legacy image icons (eg: png, gif, etc)
 			if ($tag == 'img') {
-				$image_path = $iconset['_settings']['icon_path_image'];
-				$image_file_name = $iconset[$name]['image_file_name'];
-				$src = $image_path . "/" . $image_file_name;
+				$src = $icons[$name]['image_src'];
 				$alt = $name;
 			}
 		}
 		else { //if icon is not defined in the iconset or preference is not set, than load the default iconset and use its icons
 			include('themes/base_files/iconsets/default.php');
-			if (array_key_exists($name, $iconset)) {
-				$cssclass = $iconset[$name]['class'];
-				$tag = $iconset['_settings']['icon_tag'];
+			if (array_key_exists($name, $icons)) {
+				$cssclass = $icons[$name]['class'];
+				$tag = $settings['icon_tag'];
 			}	
 			else { //if icon is not defined in default iconset, than display bootstrap glyphicon warning-sign. Helps to detect missing icon definitions, typos
 				$cssclass = 'glyphicon glyphicon-warning-sign';
