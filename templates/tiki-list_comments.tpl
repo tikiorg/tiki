@@ -11,8 +11,7 @@
 {/if}
 
 {assign var=numbercol value=2}
-<div class="table-responsive">
-<div class="comment-table">
+<div class="table-responsive comment-table">
 <table class="table normal">
 	<tr>
 		{if $comments}
@@ -132,7 +131,6 @@
 		{norecords _colspan=$numbercol}
 	{/section}
 </table>
-</div>
 </div>
 
 {if $comments}

@@ -144,7 +144,6 @@
 <div class="catobj">
 	{if $cant_pages > 0}
     <div class="table-responsive">
-    <div>
 		<table class="table normal">
 			<tr>
 				<th>
@@ -185,7 +184,6 @@
 			{/section}
 		</table>
         </div>
-		</div>
 	{/if}
 </div>
 

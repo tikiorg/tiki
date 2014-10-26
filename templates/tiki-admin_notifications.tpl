@@ -77,9 +77,8 @@
   {include file='find.tpl' find_show_num_rows='y'}
 {/if}
 <form method="get" action="tiki-admin_notifications.php">
-    <div class="table-responsive">
-    <div class="notifications-table">
-	<table class="table normal">
+    <div class="table-responsive notifications-table">
+    <table class="table normal">
 		<tr>
 			<th>
 				{if $channels}
@@ -129,7 +128,6 @@
          {norecords _colspan=6}
 		{/section}
 	</table>
-    </div>
     </div>
 	{if $channels}
 		<br>

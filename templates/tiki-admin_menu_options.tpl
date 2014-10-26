@@ -29,8 +29,7 @@
 					<input type="hidden" name="menuId" value="{$menuId}">
 					<input type="hidden" name="offset" value="{$offset}">
                     <div class="table-responsive">
-                    <div>
-					<table class="table normal">
+                    <table class="table normal">
 						{assign var=numbercol value=0}
 						<tr>
 							<th>
@@ -96,7 +95,6 @@
 						{/section}
 					</table>
                     </div>
-                    </div>
 
 					{if $channels}
 						<div align="left">
@@ -119,7 +117,6 @@
 {/if}
 {tab name=$editname}
 <div class="table-responsive">
-<div>
 	<table class="table normal">
 		<tr>
 			<td valign="top" class="odd">
@@ -383,7 +380,6 @@
 			</td>
 		</tr>
 	</table>
-</div>
 </div>
 
 {/tab}

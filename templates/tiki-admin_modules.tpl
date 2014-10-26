@@ -149,8 +149,7 @@
 	{/if}
 	<h2>{tr}Custom Modules{/tr}</h2>
     <div class="table-responsive">
-    <div>
-	<table class="table normal">
+    <table class="table normal">
 		<tr>
 			<th>{tr}Name{/tr}</th>
 			<th>{tr}Title{/tr}</th>
@@ -171,7 +170,6 @@
          {norecords _colspan=3}
 		{/section}
 	</table>
-    </div>
     </div>
 	<br>
 	{if $um_name eq ''}

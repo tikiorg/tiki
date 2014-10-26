@@ -17,7 +17,6 @@
 	{query _type='form_input'}
 {/if}
 <div class="table-responsive">
-<div>
 <table class="table normal">
 	<tr>
 		{if $posts and  $tiki_p_blog_admin eq 'y'}
@@ -65,7 +64,6 @@
 		{norecords _colspan=7}
 	{/section}
 </table>
-</div>
 </div>
 
 {if $posts and  $tiki_p_blog_admin eq 'y'}

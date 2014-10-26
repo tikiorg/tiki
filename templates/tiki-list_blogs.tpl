@@ -13,7 +13,6 @@
 {/if}
 
 <div class="table-responsive">
-<div>
 <table class="table table-striped normal">
 {assign var=numbercol value=0}
 <tr>
@@ -126,7 +125,6 @@
 	{norecords _colspan=$numbercol}
 {/section}
 </table>
-</div>
 </div>
 
 {pagination_links cant=$cant step=$maxRecords offset=$offset}{/pagination_links}

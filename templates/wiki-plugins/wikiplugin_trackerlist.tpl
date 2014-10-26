@@ -59,7 +59,7 @@
 		<div id="wptrackerlist{$listTrackerId}-{$iTRACKERLIST}-div" {if $tsOn}style="visibility:hidden"{/if}>
 			<input type="hidden" {if $tsOn}id="{$ts_offsetid|escape}" {/if}name="offset" value="{$tr_offset{$iTRACKERLIST}}">
 			<input type="hidden" {if $tsOn}id="{$ts_countid|escape}" {/if}name="count" value="{$count_item}">
-			<div class="table-responsive"><div class="table">
+			<div class="table-responsive">
 			<table class="table table-striped table-hover normal wikiplugin_trackerlist" id="wptrackerlist{$listTrackerId}-{$iTRACKERLIST}"
 	{if isset($displaysheet) && $displaysheet eq 'true'}title="{$tracker_info.name}" readonly="true"{/if}
 	{if isset($tableassheet) && $tableassheet eq 'true'}title="{tr}Tracker - {/tr}{$tracker_info.name}" readonly="true"{/if}
@@ -148,7 +148,7 @@ the section loop so that the vars are not replaced by nested pretty tracker exec
 		{/if}
 </tbody>
 </table>
-</div></div>
+</div>
 
 </div> {* end: div id="trackerlist_{$iTRACKERLIST}" *}
 {if isset($displaysheet) && $displaysheet eq 'true'}

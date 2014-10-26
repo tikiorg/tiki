@@ -6096,7 +6096,7 @@ body.navbar-padding {
 .popover {
   max-width: inherit;
 }
-@media (min-width: 768px) {
+@media (max-width: 767px) {
   .col-md-8 .table-responsive,
   .col-md-9 .table-responsive,
   .col-md-3 .table-responsive {
@@ -6107,6 +6107,7 @@ body.navbar-padding {
     -ms-overflow-style: -ms-autohiding-scrollbar;
     border: 1px solid #dddddd;
     -webkit-overflow-scrolling: touch;
+    box-shadow: -5rem 0 9rem -9rem rgba(0, 0, 0, 0.75) inset;
   }
   .table-responsive > .table {
     margin-bottom: 0;
@@ -6236,7 +6237,21 @@ body.layout_social > .container {
 .input-group-addon:hover {
   background: url('../images/pagetitle-bg.jpg') 0 100%;
 }
-/*.table-striped > tbody > tr:nth-child(2n+1) > td,.table-striped > tbody > tr:nth-child(2n+1) > th {background: transparent url('@{imagePath}flakesptn3.jpg') }.table-striped > tbody > tr.success:nth-child(2n+1) > td,.table-striped > tbody > tr.success:nth-child(2n+1) > th {background: @state-success-bg; }.table-striped > tbody > tr.info:nth-child(2n+1) > td,.table-striped > tbody > tr.info:nth-child(2n+1) > th {background: @state-info-bg; }.table-striped > tbody > tr.warning:nth-child(2n+1) > td,.table-striped > tbody > tr.warning:nth-child(2n+1) > th {background: @state-warning-bg; }.table-striped > tbody > tr.danger:nth-child(2n+1) > td,.table-striped > tbody > tr.danger:nth-child(2n+1) > th {background: @state-danger-bg; }*/
+/*
+.table-striped > tbody > tr:nth-child(2n+1) > td,
+.table-striped > tbody > tr:nth-child(2n+1) > th {background: transparent url('@{imagePath}flakesptn3.jpg') }
+
+.table-striped > tbody > tr.success:nth-child(2n+1) > td,
+.table-striped > tbody > tr.success:nth-child(2n+1) > th {background: @state-success-bg; }
+
+.table-striped > tbody > tr.info:nth-child(2n+1) > td,
+.table-striped > tbody > tr.info:nth-child(2n+1) > th {background: @state-info-bg; }
+
+.table-striped > tbody > tr.warning:nth-child(2n+1) > td,
+.table-striped > tbody > tr.warning:nth-child(2n+1) > th {background: @state-warning-bg; }
+
+.table-striped > tbody > tr.danger:nth-child(2n+1) > td,
+.table-striped > tbody > tr.danger:nth-child(2n+1) > th {background: @state-danger-bg; }*/
 .cssmenu_horiz li ul,
 .cssmenu_vert li ul {
   padding: 5px 0;

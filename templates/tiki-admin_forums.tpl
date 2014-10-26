@@ -31,7 +31,6 @@
 
 <form action="#">
     <div class="table-responsive">
-    <div>
 	<table class="table normal">
 		{assign var=numbercol value=8}
 		<tr>
@@ -100,7 +99,6 @@
 		{/section}
 	</table>
     </div>
-	</div>
 
 	{if $channels}
 		<div class="text-left">

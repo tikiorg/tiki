@@ -13,8 +13,7 @@
 {include file='find.tpl'}
 
 <div class="table-responsive">
-<div>
-	<table class="table normal">
+    <table class="table normal">
 		<tr>
 			<th>
 				<a href="tiki-survey_stats.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">
@@ -61,7 +60,6 @@
 			{norecords _colspan=4}
 		{/section}
 	</table>
-</div>
 </div>
 
 {pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}

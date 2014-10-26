@@ -91,9 +91,8 @@
 		{if $channels or ($find ne '')}
 			{include file='find.tpl'}
 		{/if}
-        <div class="table-responsive">
-        <div class="poll-table">
-		<table class="table normal">
+        <div class="table-responsive poll-table">
+        <table class="table normal">
 			{assign var=numbercol value=8}
 			<tr>
 				<th>{self_link _sort_arg='sort_mode' _sort_field='pollId' title="{tr}ID{/tr}"}{tr}ID{/tr}{/self_link}</th>
@@ -150,7 +149,6 @@
 	         {norecords _colspan=$numbercol}
 			{/section}
 		</table>
-        </div>
         </div>
 		{pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}
 	{/tab}
