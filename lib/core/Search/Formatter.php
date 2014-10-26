@@ -58,10 +58,10 @@ class Search_Formatter
 				}
 			}
 
-			$row = $defaultValues;
+			$row = array_filter($defaultValues, 'strlen');
 			// Clear blank values so the defaults prevail
 			foreach ($pre as $k => $value) {
-				if ($value !== '') {
+				if ($value !== '' && $value !== null) {
 					$row[$k] = $value;
 				}
 			}
