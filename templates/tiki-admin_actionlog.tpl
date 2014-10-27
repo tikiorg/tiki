@@ -606,7 +606,7 @@
 
 		{if $prefs.feature_contribution eq 'y' && isset($groupContributions) && $groupContributions|@count >= 1}
 			<div class="table-responsive">
-            <table>
+            <table class="table">
 				<caption>
 					{if $selectedUsers}
 						{tr}Volume per the users' group and per contribution{/tr}
@@ -636,7 +636,7 @@
 
 		{if $prefs.feature_contribution eq 'y' && isset($userContributions) && $userContributions|@count >= 1}
 			<div class="table-responsive">
-            <table>
+            <table class="table">
 				<caption>{tr}Volume per user and per contribution{/tr}</caption>
 				<tr>
 					<th>{tr}User{/tr}</th>
@@ -660,7 +660,7 @@
 
 		{if $prefs.feature_contribution eq 'y' && isset($contributionStat)}
 			<div class="table-responsive">
-            <table>
+            <table class="table">
 				<caption>{if $selectedUsers}{tr}Volume per users' contribution and time{/tr}{else}{tr}Volume per contribution and time{/tr}{/if}</caption>
 				<tr>
 					<th>{tr}Contribution{/tr}</th>
