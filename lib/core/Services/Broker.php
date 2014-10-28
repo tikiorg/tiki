@@ -38,6 +38,8 @@ class Services_Broker
 			if ($access->is_serializable_request()) {
 				echo $access->output_serialized($output);
 			} else {
+				if (headers_sent()) die ('TOO LATE!');
+				TikiLib::events()->trigger('tiki.process.render');
 				echo $this->render($controller, $action, $output, $request);
 			}
 		} catch (Services_Exception_FieldError $e) {

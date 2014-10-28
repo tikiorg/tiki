@@ -390,6 +390,9 @@ class Smarty_Tiki extends Smarty
 		}
 
 		$this->refreshLanguage();
+
+		TikiLib::events()->trigger('tiki.process.render', []);
+
 		if ( !empty($prefs['feature_htmlpurifier_output']) and $prefs['feature_htmlpurifier_output'] == 'y' ) {
 			return $purifier->purify(parent::display($resource_name, $cache_id, $compile_id));
 		} else {

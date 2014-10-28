@@ -171,6 +171,25 @@ function tiki_setup_events()
 		$events->bind('tiki.user.create', ['Services_MustRead_Controller', 'handleUserCreation']);
 	}
 
+	// If the parameter is supplied by the web server, Tiki will expose the username as a response header
+	if (! empty($_SERVER['TIKI_HEADER_REPORT_USER'])) {
+		$events->bind('tiki.process.render', function () {
+			global $user;
+			if ($user) {
+				header('X-Remote-User: ' . $user);
+			}
+		});
+	}
+
+	// If the parameter is supplied by the web server, Tiki will expose the object type and id as a response header
+	if (! empty($_SERVER['TIKI_HEADER_REPORT_OBJECT'])) {
+		$events->bind('tiki.process.render', function () {
+			if (function_exists('current_object') && $object = current_object()) {
+				header("X-Current-Object: {$object['type']}:{$object['object']}");
+			}
+		});
+	}
+
 	// Chain events
 	$events->bind('tiki.wiki.update', 'tiki.wiki.save');
 	$events->bind('tiki.wiki.create', 'tiki.wiki.save');
