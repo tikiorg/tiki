@@ -9,14 +9,14 @@
 	{if $tiki_p_admin_trackers eq 'y'}
 		<div class="form-group">{* Class provides 15px bottom margin. *}
 			<a class="btn btn-default" href="{bootstrap_modal controller=tracker action=replace}">
-				{glyph name="plus"} {tr}Create{/tr}
+				{icon name="create"} {tr}Create{/tr}
 			</a>
 			<a class="btn btn-default" href="{bootstrap_modal controller=tracker action=duplicate}">
-				{glyph name="flash"} {tr}Duplicate{/tr}
+				{icon name="copy"} {tr}Duplicate{/tr}
 			</a>
 			<div class="btn-group">
 				<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-					{glyph name="import"} {tr}Import{/tr}
+					{icon name="import"} {tr}Import{/tr}
 					<span class="caret"></span>
 				</button>
 				<ul class="dropdown-menu">
@@ -34,7 +34,7 @@
 			</div>
 			{if $prefs.tracker_remote_sync eq 'y'}
 				<a class="btn btn-default" href="{service controller=tracker_sync action=clone_remote}">
-				{glyph name="download-alt"} {tr}Clone remote{/tr}
+				{icon name="clone"} {tr}Clone remote{/tr}
 				</a>
 			{/if}
 		</div>
