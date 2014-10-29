@@ -1478,7 +1478,7 @@ function wikiplugin_tracker($data, $params)
 						if (!$isTextOnSameRow) {
 							$back.= "<br/>";
 						} else {
-							$back.= '<div class="col-md-9 tracker_input_value">'; // '</td><td class="tracker_input_value">';
+							$back.= '<div class="col-md-9 tracker_input_value tracker_field' . $f['fieldId'] . '">'; // '</td><td class="tracker_input_value">';
 						}
 
 						$back .= wikiplugin_tracker_render_input($f, $item, $dynamicSave)."</div></div>"; // chibaguy added /divs

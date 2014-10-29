@@ -101,7 +101,7 @@ if ($("#assignstructure").prop("checked")) {
 		{treetable _data=$perms _checkbox=$permGroups _checkboxTitles=$groupNames
 				_checkboxColumnIndex=$permGroupCols _valueColumnIndex="permName"
 				_columns="\"label\"=\"{tr}Permission{/tr}\"" _groupColumn='type' _openall='y'
-				_showSelected='y' _columnsContainHtml='y'}
+				_showSelected='y' _columnsContainHtml='y' class='table table-striped objectperms'}
 		</div>
         </div>
 

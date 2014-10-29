@@ -191,6 +191,9 @@ function wikiplugin_trackerfilter($data, $params)
 						return true;
 					});'
 	);
+	if ($prefs['jquery_ui_chosen'] === 'y') {
+		$headerlib->add_css('.trackerfilter form .table-responsive { overflow-y: auto; }');
+	}
 
 	if (!empty($_REQUEST['tracker_filters']) && count($_REQUEST['tracker_filters']) > 0) {
 		foreach ($_REQUEST['tracker_filters'] as $tf_vals) {
@@ -692,17 +695,25 @@ function wikiplugin_trackerFilter_get_filters($trackerId=0, $listfields='', &$fo
     			break;
 			case 'r':
 				$opts = array();
-				$list = $trklib->list_tracker_field_values($trackerId, $fieldId);
-				$list1 = $trklib->get_all_items($trackerId, $fieldId);
-				foreach ($list1 as $id => $option) {
-					$opt['id'] = $opt['name'] = $option;
-					if (!empty($_REQUEST['f_'.$fieldId]) && ((!is_array($_REQUEST['f_'.$fieldId]) && urldecode($_REQUEST['f_'.$fieldId]) == $option) || (is_array($_REQUEST['f_'.$fieldId]) && in_array($option, $_REQUEST['f_'.$fieldId])))) {
-						$opt['selected'] = 'y';
-						$selected = true;
-					} else {
-						$opt['selected'] = 'n';
+				$handler = $trklib->get_field_handler($field);
+				if ($handler) {
+					$list1 = $handler->getItemList();
+					foreach ($list1 as $id => $option) {
+						$opt['id'] = $id;
+						$opt['name'] = $option;
+						if (!empty($_REQUEST['f_'.$fieldId]) &&
+								((!is_array($_REQUEST['f_'.$fieldId]) &&
+										urldecode($_REQUEST['f_'.$fieldId]) == $id) ||
+									(is_array($_REQUEST['f_'.$fieldId]) &&
+										in_array($id, $_REQUEST['f_'.$fieldId]))
+								)) {
+							$opt['selected'] = 'y';
+							$selected = true;
+						} else {
+							$opt['selected'] = 'n';
+						}
+						$opts[] = $opt;
 					}
-					$opts[] = $opt;
 				}
     			break;
 
