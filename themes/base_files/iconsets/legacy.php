@@ -261,6 +261,15 @@ $icons = array(
 	'share' => array(
 		'image_src' => 'img/icons/sharethis.png',
 	),
+	'sort' => array(
+		'image_src' => 'img/icons/resultset.png',
+	),
+	'sort-down' => array(
+		'image_src' => 'img/icons/resultset_down.png',
+	),
+	'sort-up' => array(
+		'image_src' => 'img/icons/resultset_up.png',
+	),
 	'stop-watching' => array(
 		'image_src' => 'img/icons/no-eye.png',
 	),

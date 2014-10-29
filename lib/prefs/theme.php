@@ -48,7 +48,7 @@ function prefs_theme_list()
 			'tags' => array('basic'),
 		),
 		'theme_iconset' => array(
-			'name' => tr('Icon set'),
+			'name' => tr('Icons'),
 			'description' => tr('Icon set used by the site.'),
 			'type' => 'list',
 			'options' => $iconsets,

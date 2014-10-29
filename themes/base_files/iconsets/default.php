@@ -142,7 +142,7 @@ $icons = array( //Icons of the icon set
 		'class' => 'fa fa-share-alt fa-fw',
 	),
 	'admin_socialnetworks' => array( 
-		'class' => 'fa fa-tumns-up fa-fw',
+		'class' => 'fa fa-thumbs-up fa-fw',
 	),
 	'admin_textarea' => array( 
 		'class' => 'fa fa-edit fa-fw',
@@ -287,6 +287,12 @@ $icons = array( //Icons of the icon set
 	),
 	'sort' => array(
 		'class' => 'fa fa-sort fa-fw',
+	),
+	'sort-down' => array(
+		'class' => 'fa fa-sort-desc fa-fw',
+	),
+	'sort-up' => array(
+		'class' => 'fa fa-sort-asc fa-fw',
 	),
 	'stop-watching' => array(
 		'class' => 'fa fa-eye-slash fa-fw',

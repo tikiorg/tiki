@@ -403,7 +403,7 @@ class ParserLib extends TikiDb_Bridge
 	{
 		global $tikilib, $tiki_p_edit, $prefs, $pluginskiplist;
 		$smarty = TikiLib::lib('smarty');
-		$smarty->loadPlugin('smarty_function_glyph');
+		$smarty->loadPlugin('smarty_function_icon');
 
 		if ( ! is_array($pluginskiplist) )
 			$pluginskiplist = array();
@@ -2743,13 +2743,12 @@ if ( \$('#$id') ) {
 							if ($prefs['mobile_mode']== 'y') {
 								$button = '<div class="icon_edit_section"' . $iconDisplayStyle . '><a data-role="button" data-inline="true" href="tiki-editpage.php?';
 							} else {
-								$button = '<div class="icon_edit_section"' . $iconDisplayStyle . '><a href="tiki-editpage.php?';
+								$button = '<div class="icon_edit_section"' . $iconDisplayStyle . '><a title="' . tra('Edit Section') . '" href="tiki-editpage.php?';
 							}
 							if (!empty($this->option['page'])) {
 								$button .= 'page='.urlencode($this->option['page']).'&amp;';
 							}
-							$button .= 'hdr='.$nb_hdrs.'">' . smarty_function_glyph(array('name' => 'edit', 'title' => tra('Edit Section'))).'</a></div>';
-							//$button .= 'hdr='.$nb_hdrs.'">'.smarty_function_icon(array('_id'=>'page_edit_section', 'alt'=>tra('Edit Section')), $smarty).'</a></div>';
+							$button .= 'hdr='.$nb_hdrs.'">' . smarty_function_icon(array('name' => 'edit')).'</a></div>';
 						} else {
 							$button = '';
 						}
@@ -3054,12 +3053,12 @@ if ( \$('#$id') ) {
 			if ($prefs['mobile_mode']== 'y') {
 				$button = '<div class="icon_edit_section"><a data-role="button" data-inline="true" href="tiki-editpage.php?';
 			} else {
-				$button = '<div class="icon_edit_section"><a href="tiki-editpage.php?';
+				$button = '<div class="icon_edit_section"><a title="' . tra('Edit Section') . '" href="tiki-editpage.php?';
 			}
 			if (!empty($this->option['page'])) {
 				$button .= 'page='.urlencode($this->option['page']).'&amp;';
 			}
-			$button .= 'hdr=0">'.smarty_function_glyph(array('name' => 'edit','_id'=>'page_edit_section', 'title'=>tra('Edit Section')), $smarty).'</a></div>';
+			$button .= 'hdr=0">'.smarty_function_icon(array('name' => 'edit'), $smarty).'</a></div>';
 			$data = $button.$data;
 		}
 	}

@@ -107,6 +107,12 @@ $icons = array(
 	'share' => array(
 		'class' => 'glyphicon glyphicon-share',
 	),
+	'sort-up' => array(
+		'class' => 'glyphicon glyphicon-chevron-up',
+	),
+	'sort-down' => array(
+		'class' => 'glyphicon glyphicon-chevron-down',
+	),
 	'stop-watching' => array(
 		'class' => 'glyphicon glyphicon-close',
 	),
