@@ -27,12 +27,18 @@ a.admbox:active {
 	color: #fff;
 }
 
-a.admbox span {
+a.admbox .icon {
+	font-size:30px;
+	margin-top:10px;
+	margin-bottom:10px;
+}
+a.admbox span.title {
 	position: absolute;
-	bottom: 0;
+	top: 50px;
 	left: 0;
+	text-align: center;
 	width: 100%;
-	margin-bottom: .1em;
+	margin: .1em;
 }
 
 a.admbox.off {
@@ -49,12 +55,6 @@ a.admbox.off:active {
 
 a.admbox.off img {
 	border: none;
-	margin-top: 0px;
-	width: 100px;
-	height: 100px;
-	position: absolute;
-	top: 0;
-	left: 0;
 	background-image: url('../img/overlay-disabled_item.png');
 }
 /* Look & feel thumbnail */

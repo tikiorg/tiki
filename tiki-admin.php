@@ -240,7 +240,6 @@ $icons = array(
 		'title' => tr('General'),
 		'description' => tr('Global site configuration, date formats, admin password etc.'),
 		'help' => 'General+Admin',
-		'icon_class' => 'fa fa-wrench',
 	),
 	"features" => array(
 		'position' => '-100px -15px;',
@@ -248,7 +247,6 @@ $icons = array(
 		'title' => tr('Features'),
 		'description' => tr('Switches for major features'),
 		'help' => 'Features+Admin',
-		'icon_class' => 'fa fa-power-off',
 	),
 	"login" => array(
 		'position' => '-200px -15px;',
@@ -256,7 +254,6 @@ $icons = array(
 		'title' => tr('Log in'),
 		'description' => tr('User registration, remember me cookie settings and authentication methods'),
 		'help' => 'Login+Config',
-		'icon_class' => 'fa fa-sign-in'
 	),
 	"community" => array(
 		'position' => '-300px -15px;',
@@ -264,7 +261,6 @@ $icons = array(
 		'title' => tr('Community'),
 		'description' => tr('User specific features and settings'),
 		'help' => 'Community',
-		'icon_class' => 'fa fa-users',
 	),
 	"profiles" => array(
 		'position' => '-400px -15px;',
@@ -272,7 +268,6 @@ $icons = array(
 		'title' => tr('Profiles'),
 		'description' => tr('Repository configuration, browse and apply profiles'),
 		'help' => 'Profiles',
-		'icon_class' => 'fa fa-user',
 	),
 	"look" => array(
 		'position' => '-500px -15px;',
@@ -280,7 +275,6 @@ $icons = array(
 		'title' => tr('Look & Feel'),
 		'description' => tr('Theme selection, layout settings and UI effect controls'),
 		'help' => 'Look+and+Feel',
-		'icon_class' => 'fa fa-image',
 	),
 	"textarea" => array(
 		'position' => '-100px -115px;',
@@ -288,7 +282,6 @@ $icons = array(
 		'title' => tr('Editing and Plugins'),
 		'description' => tr('Text editing settings applicable to many areas. Plugin activation and plugin alias management'),
 		'help' => 'Text+area',
-		'icon_class' => 'fa fa-edit',
 	),
 	"module" => array(
 		'position' => '-200px -115px;',
@@ -296,7 +289,6 @@ $icons = array(
 		'title' => tr('Module'),
 		'description' => tr('Module appearance settings'),
 		'help' => 'Module',
-		'icon_class' => 'fa fa-th',
 	),
 	"metatags" => array(
 		'position' => '-300px -115px;',
@@ -304,7 +296,6 @@ $icons = array(
 		'title' => tr('Meta Tags'),
 		'description' => tr('Information to include in the header of each page'),
 		'help' => 'Meta+Tags',
-		'icon_class' => 'fa fa-tag',
 	),
 	"i18n" => array(
 		'position' => '0px -115px;',
@@ -312,7 +303,6 @@ $icons = array(
 		'title' => tr('i18n'),
 		'description' => tr('Internationalization and localization - multilingual features'),
 		'help' => 'i18n',
-		'icon_class' => 'fa fa-flag',
 	),
 	"maps" => array(
 		'icon' => 'img/icons/large/maps.png',
@@ -321,7 +311,6 @@ $icons = array(
 		'description' => tr('Settings and features for maps'),
 		'help' => 'Maps',
 		'disabled' => false,
-		'icon_class' => 'fa fa-map-marker',
 	),
 	"performance" => array(
 		'position' => '-400px -115px;',
@@ -329,7 +318,6 @@ $icons = array(
 		'title' => tr('Performance'),
 		'description' => tr('Server performance settings'),
 		'help' => 'Performance',
-		'icon_class' => 'fa fa-dashboard',
 	),
 	"security" => array(
 		'position' => '-500px -115px;',
@@ -337,7 +325,6 @@ $icons = array(
 		'title' => tr('Security'),
 		'description' => tr('Site security settings'),
 		'help' => 'Security',
-		'icon_class' => 'fa fa-lock',
 	),
 	"comments" => array(
 		'position' => '0px -215px;',
@@ -345,7 +332,6 @@ $icons = array(
 		'title' => tr('Comments'),
 		'description' => tr('Comments settings'),
 		'help' => 'Comments',
-		'icon_class' => 'fa fa-comment',
 	),
 	"rss" => array(
 		'position' => '-100px -215px;',
@@ -353,7 +339,6 @@ $icons = array(
 		'title' => tr('Feeds'),
 		'help' => 'Feeds User',
 		'description' => tr('Outgoing RSS feed setup'),
-		'icon_class' => 'fa fa-tasks',
 	),
 	"connect" => array(
 		'position' => '-200px -215px;',
@@ -361,7 +346,6 @@ $icons = array(
 		'title' => tr('Connect'),
 		'help' => 'Connect',
 		'description' => tr('Tiki Connect - join in!'),
-		'icon_class' => 'fa fa-link',
 	),
 	"rating" => array(
 		'position' => '-300px -215px;',
@@ -376,7 +360,6 @@ $icons = array(
 						$prefs['article_user_rating'] !== 'y' &&
 						$prefs['rating_results_detailed'] !== 'y' &&
 						$prefs['rating_smileys'] !== 'y',
-		'icon_class' => 'fa fa-thumbs-up',
 	),
 	"search" => array(
 		'icon' => 'img/icons/large/xfce4-appfinder.png',
@@ -386,7 +369,6 @@ $icons = array(
 		'help' => 'Search',
 		'disabled' => $prefs['feature_search'] !== 'y' &&
 							$prefs['feature_search_fulltext'] !== 'y',
-		'icon_class' => 'fa fa-search',
 	),
 	"wiki" => array(
 		'position' => '-400px -215px;',
@@ -395,7 +377,6 @@ $icons = array(
 		'disabled' => $prefs['feature_wiki'] != 'y',
 		'description' => tr('Wiki page settings and features'),
 		'help' => 'Wiki+Config',
-		'icon_class' => 'fa fa-file',
 	),
 	"fgal" => array(
 		'position' => '-500px -215px;',
@@ -404,7 +385,6 @@ $icons = array(
 		'disabled' => $prefs['feature_file_galleries'] != 'y',
 		'description' => tr('Defaults and configuration for file galleries'),
 		'help' => 'File+Gallery',
-		'icon_class' => 'fa fa-floppy-saved',
 	),
 	"blogs" => array(
 		'position' => '0px -315px;',
@@ -413,7 +393,6 @@ $icons = array(
 		'disabled' => $prefs['feature_blogs'] != 'y',
 		'description' => tr('Settings for blogs'),
 		'help' => 'Blog',
-		'icon_class' => 'fa fa-align-justify',
 	),
 	"gal" => array(
 		'position' => '-100px -315px;',
@@ -422,7 +401,6 @@ $icons = array(
 		'disabled' => $prefs['feature_galleries'] != 'y',
 		'description' => tr('Defaults and configuration for image galleries (will be phased out in favour of file galleries)'),
 		'help' => 'Image+Gallery',
-		'icon_class' => 'fa fa-image',
 	),
 	"articles" => array(
 		'position' => '-200px -315px;',
@@ -431,7 +409,6 @@ $icons = array(
 		'disabled' => $prefs['feature_articles'] != 'y',
 		'description' => tr('Settings and features for articles'),
 		'help' => 'Articles',
-        'icon_class' => 'fa fa-newspaper-o',
 	),
 	"forums" => array(
 		'icon' => 'img/icons/large/stock_index.png',
@@ -440,7 +417,6 @@ $icons = array(
 		'disabled' => $prefs['feature_forums'] != 'y',
 		'description' => tr('Settings and features for forums'),
 		'help' => 'Forum',
-		'icon_class' => 'fa fa-comments'
 	),
 	"trackers" => array(
 		'icon' => 'img/icons/large/gnome-settings-font.png',
@@ -449,7 +425,6 @@ $icons = array(
 		'disabled' => $prefs['feature_trackers'] != 'y',
 		'description' => tr('Settings and features for trackers'),
 		'help' => 'Trackers',
-		'icon_class' => 'fa fa-check-square-o'
 	),
 	"polls" => array(
 		'icon' => 'img/icons/large/stock_missing-image.png',
@@ -466,7 +441,6 @@ $icons = array(
 		'disabled' => $prefs['feature_calendar'] != 'y',
 		'description' => tr('Settings and features for calendars'),
 		'help' => 'Calendar',
-		'icon_class' => 'fa fa-calendar',
 	),
 	"category" => array(
 		'icon' => 'img/icons/large/categories.png',
@@ -475,7 +449,6 @@ $icons = array(
 		'disabled' => $prefs['feature_categories'] != 'y',
 		'description' => tr('Settings and features for categories'),
 		'help' => 'Category',
-		'icon_class' => 'fa fa-database'
 	),
 	"workspace" => array(
 		'icon' => 'img/icons/large/areas.png',
@@ -508,7 +481,6 @@ $icons = array(
 		'disabled' => $prefs['feature_faqs'] != 'y',
 		'description' => tr('Settings and features for FAQs'),
 		'help' => 'FAQ',
-		'icon_class' => 'fa fa-question-circle',
 	),
 	"directory" => array(
 		'icon' => 'img/icons/large/gnome-fs-server.png',
@@ -517,7 +489,6 @@ $icons = array(
 		'disabled' => $prefs['feature_directory'] != 'y',
 		'description' => tr('Settings and features for directory of links'),
 		'help' => 'Directory',
-		'icon_class' => 'fa fa-folder-open',
 	),
 	"copyright" => array(
 		'icon' => 'img/icons/large/copyright.png',
@@ -526,7 +497,6 @@ $icons = array(
 		'disabled' => $prefs['feature_copyright'] != 'y',
 		'description' => tr('Site-wide copyright information'),
 		'help' => 'Copyright',
-		'icon_class' => 'fa fa-copyright',
 	),
 	"messages" => array(
 		'icon' => 'img/icons/large/messages.png',
@@ -535,7 +505,6 @@ $icons = array(
 		'disabled' => $prefs['feature_messages'] != 'y',
 		'description' => tr('Message settings'),
 		'help' => 'Inter-User+Messages',
-		'icon_class' => '',
 	),
 	"userfiles" => array(
 		'icon' => 'img/icons/large/userfiles.png',
@@ -560,7 +529,6 @@ $icons = array(
 		'disabled' => $prefs['feature_wysiwyg'] != 'y',
 		'description' => tr('Options for WYSIWYG editor'),
 		'help' => 'Wysiwyg',
-		'icon_class' => 'fa fa-file-code-o'
 	),
 	"ads" => array(
 		'icon' => 'img/icons/large/ads.png',
@@ -601,7 +569,6 @@ $icons = array(
 		'disabled' => $prefs['feature_sefurl'] != 'y' && $prefs['feature_canonical_url'] != 'y',
 		'description' => tr('Search Engine Friendly URLs'),
 		'help' => 'Rewrite+Rules',
-		'icon_class' => 'fa fa-compress'
 	),
 	"video" => array(
 		'icon' => 'img/icons/large/gnome-camera-video-32.png',
@@ -610,7 +577,6 @@ $icons = array(
 		'disabled' => $prefs['feature_kaltura'] != 'y' && $prefs['feature_watershed'] != 'y',
 		'description' => tr('Video integration configuration'),
 		'help' => 'Kaltura+Config',
-		'icon_class' => 'fa fa-film',
 	),
 	"payment" => array(
 		'icon' => 'img/icons/large/payment.png',
@@ -634,7 +600,6 @@ $icons = array(
 		'disabled' => $prefs['feature_share'] != 'y',
 		'description' => tr('Configure share feature'),
 		'help' => 'share',
-		'icon_class' => 'fa fa-share',
 	),
 );
 

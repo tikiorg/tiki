@@ -76,7 +76,7 @@ $icons = array( //Icons of the icon set
 		'class' => 'fa fa-tags fa-fw',
 	),
 	'admin_gal' => array( 
-		'class' => 'fa fa-image fa-fw',
+		'class' => 'fa fa-file-image-o fa-fw',
 	),
 	'admin_general' => array( 
 		'class' => 'fa fa-cog fa-fw',
@@ -154,7 +154,7 @@ $icons = array( //Icons of the icon set
 		'class' => 'fa fa-cog fa-fw',
 	),
 	'admin_video' => array( 
-		'class' => 'fa fa-video fa-fw',
+		'class' => 'fa fa-video-camera fa-fw',
 	),
 	'admin_webmail' => array( 
 		'class' => 'fa fa-inbox fa-fw',

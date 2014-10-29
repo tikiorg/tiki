@@ -11,18 +11,16 @@
 	{tr}See <strong>more options</strong> after you enable more <em>Preference Filters</em> above ({icon name="filter"}){/tr}.
 {/remarksbox}
 
-<div class="clearfix cbox-data" style="padding-left: 10px;">
+<div class="clearfix">
 	{foreach from=$icons key=page item=info}
-		{if $info.position}
 			{if $info.disabled}
 				{assign var=class value="admbox off advanced"}
 			{else}
 				{assign var=class value="admbox basic"}
 			{/if}
-			{self_link page=$page _class=$class _style="background-image: url('img/icons/sprite/admin.fullpanel.png'); background-position: `$info.position`" _title=$info.title}
-				<img src="img/trans.png" alt="{$info.title|escape}" title="{$info.title|escape}{if $info.disabled} ({tr}Disabled{/tr}){/if}">
-				<span>{$info.title|escape}</span>
-			{/self_link}
-		{/if}
+				<a href="tiki-admin.php?page={$page}" alt="{$info.title}" class="{$class} tips" title="{$info.title|escape}{if $info.disabled} ({tr}Disabled{/tr}){/if}|{$info.description}">
+					{icon name="admin_$page"}
+					<span class="title">{$info.title|escape}</span>
+				</a>
 	{/foreach}
 </div>

@@ -54,7 +54,7 @@ $icons = array(
 		'image_src' => 'img/icons/large/copyright.png',
 	),
 	'admin_directory' => array( 
-		'image_src' => 'img/icons/large/gnome-fs-server.pngg',
+		'image_src' => 'img/icons/large/gnome-fs-server.png',
 	),
 	'admin_faqs' => array( 
 		'image_src' => 'img/icons/large/stock_dialog_question.png',
