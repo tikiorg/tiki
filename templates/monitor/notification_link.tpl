@@ -1,4 +1,4 @@
-<a id="notification-link" href="{bootstrap_modal controller=monitor action=unread quantity=6}">
+<a id="notification-link" href="{bootstrap_modal controller=monitor action=unread quantity=6}" title="{tr}Notifications{/tr}">
 	{icon name="notification"}
 </a>
 {if $prefs.monitor_count_refresh_interval}
