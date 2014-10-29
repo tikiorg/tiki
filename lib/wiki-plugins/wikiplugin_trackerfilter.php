@@ -191,6 +191,9 @@ function wikiplugin_trackerfilter($data, $params)
 						return true;
 					});'
 	);
+	if ($prefs['jquery_ui_chosen'] === 'y') {
+		$headerlib->add_css('.trackerfilter form .table-responsive { overflow-y: auto; }');
+	}
 
 	if (!empty($_REQUEST['tracker_filters']) && count($_REQUEST['tracker_filters']) > 0) {
 		foreach ($_REQUEST['tracker_filters'] as $tf_vals) {
