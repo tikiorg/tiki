@@ -221,7 +221,7 @@
         <div class="form-group">
             <label class="col-sm-4 control-label" for="useMail"><input type="checkbox" name="useMail" id="useMail" {if $useMail eq 'y'}checked="checked"{/if}> {tr}Send this forums posts to this email{/tr} </label>
             <div class="col-sm-8">
-				<input type="text" class="form-control" name="useMail" id="useMail" value="{$mail|escape}">
+				<input type="text" class="form-control" name="mail" value="{$mail|escape}">
             </div>
 		</div>
         <div class="form-group">
