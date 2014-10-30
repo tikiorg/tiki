@@ -207,9 +207,6 @@ $icons = array( //Icons of the icon set
 	'export' => array( 
 		'class' => 'fa fa-upload fa-fw',
 	),
-	'external-link' => array(
-		'class' => 'fa fa-external-link fa-fw',
-	),
 	'file-archive' => array( 
 		'class' => 'fa fa-file-archive-o fa-fw',
 	),
@@ -239,6 +236,9 @@ $icons = array( //Icons of the icon set
 	),
 	'link' => array( 
 		'class' => 'fa fa-link fa-fw',
+	),
+	'link-external' => array(
+		'class' => 'fa fa-external-link fa-fw',
 	),
 	'menu' => array(
 		'class' => 'fa fa-bars fa-fw',

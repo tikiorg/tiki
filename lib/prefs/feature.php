@@ -1151,7 +1151,7 @@ function prefs_feature_list($partial = false)
 		'feature_wiki_ext_icon' => array(
 			'name' => tra('External link icon'),
 			'type' => 'flag',
-			'description' => tra('External links will be identifed with an icon. Use the ../img/icons/external_link.gif image to customize the icon.'),
+			'description' => tra('External links will be identified with an icon. To customize the icon change the "link-external" icon in the icon set.'),
 			'default' => 'y',
 			'tags' => array('basic'),
 		),

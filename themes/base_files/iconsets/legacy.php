@@ -222,6 +222,9 @@ $icons = array(
 	'link' => array( 
 		'image_src' => 'img/icons/link.png',
 	),
+	'link-external' => array( 
+		'image_src' => 'img/icons/external_link.gif',
+	),
 	'list' => array( 
 		'image_src' => 'img/icons/application_view_list.png',
 	),
