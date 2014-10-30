@@ -2768,28 +2768,28 @@ h4.ui-accordion-header {
 div.form-group label.error {
   font-weight: normal !important;
 }
-.page-header {
+.tiki .page-header {
   border-bottom: none;
   margin: auto;
   padding-bottom: 0;
 }
-.row.page-header {
+.tiki .row.page-header {
   margin-left: -15px;
   margin-right: -15px;
 }
-body.navbar-padding {
+body.tiki.navbar-padding {
   padding-top: 70px;
 }
-.dropdown-menu {
+.tiki.dropdown-menu {
   padding: 0;
 }
-.popover {
+.tiki .popover {
   max-width: inherit;
 }
 @media (min-width: 992px) {
-  .col-md-8 .table-responsive,
-  .col-md-9 .table-responsive,
-  .col-md-3 .table-responsive {
+  .tiki .col-md-8 .table-responsive,
+  .tiki .col-md-9 .table-responsive,
+  .tiki .col-md-3 .table-responsive {
     width: 100%;
     margin-bottom: 15px;
     overflow-y: hidden;
@@ -2799,15 +2799,15 @@ body.navbar-padding {
     -webkit-overflow-scrolling: touch;
     box-shadow: -5rem 0 9rem -9rem rgba(0, 0, 0, 0.75) inset;
   }
-  .table-responsive > .table {
+  .tiki .table-responsive > .table {
     margin-bottom: 0;
   }
-  .table-responsive > .table > thead > tr > th,
-  .table-responsive > .table > tbody > tr > th,
-  .table-responsive > .table > tfoot > tr > th,
-  .table-responsive > .table > thead > tr > td,
-  .table-responsive > .table > tbody > tr > td,
-  .table-responsive > .table > tfoot > tr > td {
+  .tiki .table-responsive > .table > thead > tr > th,
+  .tiki .table-responsive > .table > tbody > tr > th,
+  .tiki .table-responsive > .table > tfoot > tr > th,
+  .tiki .table-responsive > .table > thead > tr > td,
+  .tiki .table-responsive > .table > tbody > tr > td,
+  .tiki .table-responsive > .table > tfoot > tr > td {
     white-space: normal;
   }
 }
