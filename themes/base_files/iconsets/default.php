@@ -174,6 +174,9 @@ $icons = array( //Icons of the icon set
 	'administer' => array( 
 		'class' => 'fa fa-cog fa-fw',
 	),
+	'backlink' => array(
+		'class' => 'fa fa-reply fa-fw',
+	),
 	'check' => array(
 		'class' => 'fa fa-check-square-o fa-fw',
 	),

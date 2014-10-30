@@ -171,6 +171,9 @@ $icons = array(
 	'administer' => array(
 		'image_src' => 'img/icons/wrench.png',
 	),
+	'backlink' => array(
+		'image_src' => 'img/icons/arrow_turn_left.png',
+	),
 	'check' => array(
 		'image_src' => 'img/icons/select.gif',
 	),
