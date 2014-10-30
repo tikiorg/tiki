@@ -99,7 +99,7 @@ $icons = array(
 		'class' => 'glyphicon glyphicon-bullhorn',
 	),
 	'settings' => array(
-		'class' => 'glyphicon glyphicon-cog',
+		'class' => 'glyphicon glyphicon-wrench',
 	),
 	'share' => array(
 		'class' => 'glyphicon glyphicon-share',

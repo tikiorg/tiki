@@ -2971,4 +2971,7 @@ input.tablesorter-filter {
   border: none;
   background-color: #f7f7f7;
 }
+h1.pagetitle a {
+	padding:0px;
+}
 /* End of file */
