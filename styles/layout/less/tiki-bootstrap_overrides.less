@@ -1,27 +1,27 @@
 // $Id$
 // Override specific default Bootstrap styles
-.page-header {
+.tiki .page-header {
   border-bottom: none;
   margin: auto;
   padding-bottom: 0;
 }
 
-.row.page-header {
+.tiki .row.page-header {
   margin-left: -15px;
   margin-right: -15px;
 }
 
-body.navbar-padding {
+body.tiki.navbar-padding {
   padding-top: 70px;
 }
 
-.dropdown-menu {padding: 0}
+.tiki.dropdown-menu {padding: 0}
 
 
 @media (min-width: @screen-md-min) {
-  .col-md-8 .table-responsive,
-  .col-md-9 .table-responsive,
-  .col-md-3 .table-responsive {
+  .tiki .col-md-8 .table-responsive,
+  .tiki .col-md-9 .table-responsive,
+  .tiki .col-md-3 .table-responsive {
     width: 100%;
     margin-bottom: 15px;
     overflow-y: hidden;
@@ -31,7 +31,7 @@ body.navbar-padding {
     -webkit-overflow-scrolling: touch;
     box-shadow: -5rem 0 9rem -9rem rgba(0, 0, 0, 0.75) inset;
   }
-  .table-responsive > .table {
+  .tiki .table-responsive > .table {
     margin-bottom: 0;
     // Ensure the content doesn't wrap
     > thead,
