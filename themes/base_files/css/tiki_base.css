@@ -68,7 +68,7 @@ input:-webkit-autofill {
   display: none;
   z-index: 9999;
   position: absolute;
-  background: transparent url('../../../img/overlay-light.png');
+  background: transparent url('../../img/icons/overlay-light.png');
 }
 #ajaxLoading {
   display: none;
@@ -81,7 +81,7 @@ input:-webkit-autofill {
   font-size: 2em;
   font-weight: bold;
   color: #eeeeee;
-  background: transparent url('../../../img/loading-light.gif') no-repeat 50% 50%;
+  background: transparent url('../../img/icons/loading-light.gif') no-repeat 50% 50%;
 }
 #cookie_consent_div {
   padding: 15px;
@@ -1108,6 +1108,10 @@ h6 a.tiki_anchor:hover {
   font-family: "Lucida Console";
   color: #8a6d3b;
 }
+h1.pagetitle a {
+  padding-left: 0;
+  padding-right: 0;
+}
 #cachedpage {
   float: right;
   font-size: small;
@@ -1125,13 +1129,13 @@ body.tiki_wiki #comments {
 }
 .wpfade-hidden {
   background-repeat: no-repeat;
-  background-image: url('../../../img/toggle-expand-dark.png');
+  background-image: url('../../img/toggle-expand-dark.png');
   margin-left: -19px;
   padding-left: 19px;
 }
 .wpfade-shown {
   background-repeat: no-repeat;
-  background-image: url('../../../img/toggle-collapse-dark.png');
+  background-image: url('../../img/toggle-collapse-dark.png');
   margin-left: -19px;
   padding-left: 19px;
 }
@@ -1710,10 +1714,10 @@ table.treetable .checkBoxHeader {
   white-space: nowrap;
 }
 table.treetable tr.collapsed span.indenter a {
-  background-image: url('../../../img/toggle-expand-dark.png');
+  background-image: url('../../img/icons/toggle-expand-dark.png');
 }
 table.treetable tr.expanded span.indenter a {
-  background-image: url('../../../img/toggle-collapse-dark.png');
+  background-image: url('../../img/icons/toggle-collapse-dark.png');
 }
 table.treetable.objectperms td.added {
   background-color: #dff0d8;
@@ -2970,9 +2974,5 @@ input.tablesorter-filter {
 .tablesorter input.dateTo {
   border: none;
   background-color: #f7f7f7;
-}
-h1.pagetitle a {
-	padding-left: 0px;
-	padding-right: 0px;
 }
 /* End of file */
