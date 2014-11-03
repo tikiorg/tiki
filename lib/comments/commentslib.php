@@ -450,6 +450,10 @@ class Comments extends TikiLib
 				$body = $mimelib->cleanQuotes($body);
 			}
 
+			if (!empty($info['outbound_mails_reply_link']) && $info['outbound_mails_reply_link'] === 'y') {
+				$body = preg_replace('/^.*?Reply Link\: \<[^\>]*\>.*\r?\n/m', '', $body);		// remove previous reply links to reduce clutter and confusion
+			}
+
 			// Remove 're:' and [forum]. -rlpowell
 			$title = trim(
 				preg_replace(
@@ -566,7 +570,15 @@ class Comments extends TikiLib
 
 			// Deal with mail notifications.
 			if (array_key_exists('outbound_mails_reply_link', $info) && $info['outbound_mails_for_inbound_mails'] == 'y') {
-				//phpinfo();
+
+				// optionally strip wiki markup from the outgoing mail
+				if ($prefs['forum_strip_wiki_syntax_outgoing'] === 'y') {
+					$body = strip_tags(TikiLib::lib('parser')->parse_data($body, array(
+						'noparseplugins' => true,
+						'absolute_links' => true,
+					)));
+				}
+
 				include_once('lib/notifications/notificationemaillib.php');
 				sendForumEmailNotification(
 					'forum_post_thread',
