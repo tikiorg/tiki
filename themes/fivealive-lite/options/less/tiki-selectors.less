@@ -1,13 +1,20 @@
 // $Id$
 // This file is for additional LESS rules beyond what are in variables.less.
 // Image path example:
-
 // body {
 //	background-image: url('@{imagePath}bg.jpg');
 // }
 //
 // If Glyphicons should be rendered in a color other than the Bootstrap default or the theme default, uncomment and specify the color.
 // .glyphicon {color: @gray-lighter;}
+@imagePath:  ~"../images/";
+.middle_outer {
+  background: url('@{imagePath}siteheadertile.png') repeat-x 0 -376px;
+  border-top: 2px solid #fff;
+}
+
+.topbar .navbar-nav > li > a,
+.topbar .navbar > li > a {padding-top: 4px; padding-bottom: 5px; line-height: 1;}
 
 #col2 .panel,
 #col3 .panel,
@@ -33,10 +40,11 @@
 // Header graphics
 .header_outer {		// whole width div containing the header strip
   background: @header_outer-background; // url('@{imagePath}siteheadertile.png') 0 0 no-repeat;
+  border-bottom: 5px solid #000;
 }
 
 .header_container > .header {	// inner <header> element that gets .fixedwidth class applied
-  background: @header_container_header-background; // url('@{imagePath}siteheader.png') -248px 0 no-repeat;
+  background: none; // @header_container_header-background; // url('@{imagePath}siteheader.png') -248px 0 no-repeat;
 }
 
 header.header .module.secondary_site_menu {
@@ -48,6 +56,8 @@ header.header .module.secondary_site_menu {
   margin-bottom: 0;
   border-bottom: none;
 }
+
+.sitelogo img {max-height: 34px; width: auto; margin-bottom: 1em;}
 
 .form-control,
 select,
@@ -87,6 +97,11 @@ textarea,
   a,
   a:visited {
     color: @footer-link-color;} // #a9a9a9;
+}
+
+.tiki .navbar-nav > li > a {
+  padding-bottom: 5px;
+  padding-top: 5px;
 }
 
 // @navbar-default-link-background: #bfbd23;
