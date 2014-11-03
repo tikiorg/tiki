@@ -426,6 +426,12 @@ class Comments extends TikiLib
 					$body = preg_replace('/--(.*)--/', '~np~--$1--~/np~', $body);	// disable strikethough syntax
 					$body = preg_replace('/\{(.*)\}/', '~np~{$1}~/np~', $body);	// disable plugin type things
 
+					// special handling for MS links which contain underline tags in the label which wiki doesn't like
+					$body = preg_replace(
+						'/(\<a .*\>)\<font .*\>\<u\>(.*)\<\/u\>\<\/font\>\<\/a\>/',
+						'$1$2</a>',
+						$body);
+
 					$body = TikiLib::lib('edit')->parseToWiki($body);
 					$body = str_replace("\n\n", "\n", $body);	// for some reason emails seem to get line feeds quadrupled
 					$body = str_replace("\n\n", "\n", $body);	// so do this twice
