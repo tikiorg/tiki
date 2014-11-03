@@ -25,6 +25,9 @@
 				<input type="hidden" name="forumprefs" />
 				{preference name=feature_forum_rankings}
 				{preference name=feature_forum_parse}
+				<div class="adminoptionboxchild" id="feature_forum_parse_childcontainer">
+					{preference name=forum_strip_wiki_syntax_outgoing}
+				</div>
 				{preference name=feature_forum_topics_archiving}
 				{preference name=feature_forum_quickjump}
 				{preference name=feature_forum_replyempty}

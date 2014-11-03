@@ -162,5 +162,12 @@ function prefs_forum_list()
 			'warning' => tra('Experimental') . ' ' . tra('Has problems with some HTML emails, especially with table based layouts.'),
 			'dependencies' => array('feature_wysiwyg'),
 		),
+		'forum_strip_wiki_syntax_outgoing' => array(
+			'name' => tr('Strip wiki markup from outgoing forum emails'),
+			'description' => tr('Converts outgoing emails from forum posts into plain text.'),
+			'type' => 'flag',
+			'default' => 'n',
+			'dependencies' => array('feature_forum_parse'),
+		),
 	);
 }
