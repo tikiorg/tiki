@@ -59,6 +59,15 @@ function sendForumEmailNotification(
 		} else {
 			$reply_link = '';
 		}
+
+		// optionally strip wiki markup from the outgoing mail
+		if ($prefs['feature_forum_parse'] === 'y' && $prefs['forum_strip_wiki_syntax_outgoing'] === 'y') {
+			$data = strip_tags(TikiLib::lib('parser')->parse_data($data, array(
+				'noparseplugins' => true,
+				'absolute_links' => true,
+			)));
+		}
+
 		$smarty->assign('title', $title);
 		$smarty->assign('data', $data);
 		$smarty->assign('reply_link', $reply_link);
