@@ -450,6 +450,10 @@ class Comments extends TikiLib
 				$body = $mimelib->cleanQuotes($body);
 			}
 
+			if (!empty($info['outbound_mails_reply_link']) && $info['outbound_mails_reply_link'] === 'y') {
+				$body = preg_replace('/^.*?Reply Link\: \<[^\>]*\>.*\r?\n/m', '', $body);		// remove previous reply links to reduce clutter and confusion
+			}
+
 			// Remove 're:' and [forum]. -rlpowell
 			$title = trim(
 				preg_replace(
