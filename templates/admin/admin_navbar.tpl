@@ -8,7 +8,7 @@
 		</button>
 		<ul class="nav navbar-nav">
 			<li class="dropdown">	
-				<a href="#" class="navbar dropdown-toggle" data-toggle="dropdown" title="{tr}Settings{/tr}">
+				<a href="#" class="dropdown-toggle" data-toggle="dropdown" title="{tr}Settings{/tr}">
 					{icon name="filter"} <span class="caret"></span>
 				</a>
 				<ul class="dropdown-menu" role="menu">
