@@ -30,6 +30,11 @@
 				{preference name=feature_forum_rankings}
 				{preference name=feature_forum_parse}
 				<div class="adminoptionboxchild" id="feature_forum_parse_childcontainer">
+					{if $prefs.feature_wysiwyg eq 'y' and $prefs.wysiwyg_default eq 'y' and $prefs.wysiwyg_htmltowiki neq 'y'}
+						{remarksbox type="warning" title="{tr}Note{/tr}"}
+							{tr}WYSIWYG is enabled but needs to be in "wiki syntax" mode to work correctly in forums{/tr}
+						{/remarksbox}
+					{/if}
 					{preference name=forum_strip_wiki_syntax_outgoing}
 				</div>
 				{preference name=feature_forum_topics_archiving}
