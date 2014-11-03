@@ -571,14 +571,6 @@ class Comments extends TikiLib
 			// Deal with mail notifications.
 			if (array_key_exists('outbound_mails_reply_link', $info) && $info['outbound_mails_for_inbound_mails'] == 'y') {
 
-				// optionally strip wiki markup from the outgoing mail
-				if ($prefs['forum_strip_wiki_syntax_outgoing'] === 'y') {
-					$body = strip_tags(TikiLib::lib('parser')->parse_data($body, array(
-						'noparseplugins' => true,
-						'absolute_links' => true,
-					)));
-				}
-
 				include_once('lib/notifications/notificationemaillib.php');
 				sendForumEmailNotification(
 					'forum_post_thread',

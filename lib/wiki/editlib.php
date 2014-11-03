@@ -877,6 +877,8 @@ class EditLib
 					$add = str_replace('&nbsp;', ' ', $add);
 					TikiLib::lib('parser')->plugins_replace($add, $noparsed, true);
 					$src .= $add;
+				} else {
+					$src .= str_replace(array("\n", "\r"), '', $c[$i]["data"]);	// keep the spaces
 				}
 			} elseif ($c[$i]["type"] == "comment") {
 				$src .= preg_replace('/<!--/', "\n~hc~", preg_replace('/-->/', "~/hc~\n", $c[$i]["data"]));
