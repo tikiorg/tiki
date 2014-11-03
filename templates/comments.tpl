@@ -242,7 +242,7 @@
                 <div class="form-group">
 				    <label class="col-sm-2 control-label" for="editpost2">{tr}Reply{/tr}</label>
                     <div class="col-sm-10">
-                        {textarea codemirror='true' syntax='tiki' id="editpost2" class="form-control" name="comments_data" comments="y"}{if ($prefs.feature_forum_replyempty ne 'y') || $edit_reply > 0 || $comment_preview eq 'y' || !empty($errors)}{$comment_data}{/if}{/textarea}
+                        {textarea codemirror='true' syntax='tiki' id="editpost2" class="form-control" name="comments_data"}{if ($prefs.feature_forum_replyempty ne 'y') || $edit_reply > 0 || $comment_preview eq 'y' || !empty($errors)}{$comment_data}{/if}{/textarea}
 
 						{if $user and $prefs.feature_user_watches eq 'y'}
     						<div id="watch_thread_on_reply">
