@@ -1,4 +1,4 @@
-<article class="article">
+<article class="article media">
 	{if $show_topline eq 'y' and $topline}
 		<div class="articletopline">{$topline|escape}</div>
 	{/if}
