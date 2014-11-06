@@ -14,5 +14,5 @@
 {/block}
 
 {block name="content"}
-	{trackerfields mode=view trackerId=$trackerId fields=$fields}
+	{trackerfields mode=view trackerId=$trackerId fields=$fields itemId=$itemId}
 {/block}

@@ -101,8 +101,9 @@
 			<div class="form-group">
 				<label for="sectionFormat">{tr}Section format{/tr}</label>
 				<select name="sectionFormat" class="form-control">
-					<option value="flat"{if $info.sectionFormat eq 'flat'} selected="selected"{/if}>{tr}Title{/tr}</option>
-					<option value="tab"{if $info.sectionFormat eq 'tab'} selected="selected"{/if}>{tr}Tabs{/tr}</option>
+					{foreach $sectionModes as $mode => $label}
+						<option value="{$mode|escape}"{if $info.sectionFormat eq $mode} selected="selected"{/if}>{$label|escape}</option>
+					{/foreach}
 				</select>
 				<div class="help-block">
 					{tr}Determines how headers will be rendered when using header fields as form section dividers.{/tr}

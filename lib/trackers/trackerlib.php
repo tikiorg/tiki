@@ -38,6 +38,45 @@ class TrackerLib extends TikiLib
 {
 
 	public $trackerinfo_cache;
+	private $layouts = [];
+
+	function __construct()
+	{
+		$this->registerSectionMode('flat', 'view', 'trackeroutput/layout_flat.tpl', tr('Flat'));
+		$this->registerSectionMode('flat', 'edit', 'trackerinput/layout_flat.tpl', tr('Flat'));
+		$this->registerSectionMode('tab', 'view', 'trackeroutput/layout_tab.tpl', tr('Tabs'));
+		$this->registerSectionMode('tab', 'edit', 'trackerinput/layout_tab.tpl', tr('Tabs'));
+	}
+
+	function registerSectionMode($layout, $mode, $template, $label)
+	{
+		$this->layouts[$layout][$mode] = [
+			'template' => $template,
+			'label' => $label,
+		];
+	}
+
+	function getSectionModeTemplate($layout, $mode)
+	{
+		if (isset($this->layouts[$layout][$mode])) {
+			return $this->layouts[$layout][$mode]['template'];
+		} else {
+			throw new Exception(tr('No template available for %0 - %1', $layout, $mode));
+		}
+	}
+
+	function getGlobalSectionModes()
+	{
+		$out = [];
+		foreach ($this->layouts as $layout => $modes) {
+			if (count($modes) == 2) {
+				$first = reset($modes);
+				$out[$layout] = $first['label'];
+			}
+		}
+
+		return $out;
+	}
 
 	private function attachments()
 	{
@@ -4879,6 +4918,10 @@ class TrackerLib extends TikiLib
 
 		if (isset($field['value'])) {
 			$item[$field['fieldId']] = $field['value'];
+		}
+
+		if (isset($params['itemId'])) {
+			$item['itemId'] = $params['itemId'];
 		}
 
 		$handler = $this->get_field_handler($field, $item);

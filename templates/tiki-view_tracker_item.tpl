@@ -77,7 +77,7 @@
 				{/jq}
 			{/if}
 
-			{trackerfields mode=view trackerId=$trackerId fields=$fields}
+			{trackerfields mode=view trackerId=$trackerId fields=$fields itemId=$itemId}
 		{else}
 			{if $canModify}
 				{include file='tracker_pretty_item.tpl' item=$item_info fields=$ins_fields wiki=$tracker_info.viewItemPretty}

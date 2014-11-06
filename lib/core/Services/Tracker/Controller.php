@@ -1119,6 +1119,7 @@ class Services_Tracker_Controller
 		}
 
 		include_once ("categorize_list.php");
+		$trklib = TikiLib::lib('trk');
 		$groupalertlib = TikiLib::lib('groupalert');
 		$groupforAlert = $groupalertlib->GetGroup('tracker', 'trackerId');
 		return array(
@@ -1136,6 +1137,7 @@ class Services_Tracker_Controller
 			'groupList' => $this->getGroupList(),
 			'groupforAlert' => $groupforAlert,
 			'showeachuser' => $groupalertlib->GetShowEachUser('tracker', 'trackerId', $groupforAlert),
+			'sectionModes' => $trklib->getGlobalSectionModes(),
 		);
 	}
 
