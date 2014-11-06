@@ -328,6 +328,10 @@
 			<argument type="service" id="tiki.lib.events" />
 		</service>
 
+		<!--
+			 Below are sample configurations you can include in a custom.xml file with the same structure as this one.
+		-->
+
 		<!-- Example recommendation engines
 
 		<service class="My\Custom\Engine123">
@@ -357,6 +361,20 @@
 			<tag name="tiki.federatedsearch.index" index="manifold"/>
 			<argument type="string">generic</argument>
 			<argument type="string">http://example.com/</argument>
+		</service>
+		-->
+
+		<!-- Example Tracker Section Format registration
+			 Registered templates will register for both view and edit,
+			 unless:
+			 	mode="view" or mode="edit" is specified in the tag portion.
+
+		<service class="stdclass">
+			<tag name="tiki.tracker.sectionformat"
+				layout="custom"
+				template="my-templates/tracker_format_custom.tpl"
+				label="My Custom Template"
+				/>
 		</service>
 		-->
 	</services>

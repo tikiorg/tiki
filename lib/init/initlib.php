@@ -63,6 +63,7 @@ class TikiInit
 		$container->addCompilerPass(new \Tiki\Recommendation\Engine\CompilerPass);
 		$container->addCompilerPass(new \Tiki\Wiki\SlugManager\CompilerPass);
 		$container->addCompilerPass(new \Search\Federated\CompilerPass);
+		$container->addCompilerPass(new \Tracker\CompilerPass);
 
 		$container->setParameter('kernel.root_dir', TIKI_PATH);
 		$loader = new XmlFileLoader($container, new FileLocator($path));
