@@ -1,17 +1,18 @@
 {* $Id$ *}
-<table border="0" cellpadding="0" cellspacing="0" class="caltable table">
-  <tr valign="middle" style="height:36px">
-<td width="1%" class="heading weeks"></td>
+<div class="table-responsive">
+<table class="caltable table">
+  <tr>
+<td style="width: 1%:" class="heading weeks"></td>
 {section name=dn loop=$daysnames}
 		{if in_array($smarty.section.dn.index,$viewdays)}
-    	<td id="top_{$smarty.section.dn.index}" class="heading" width="14%">{$daysnames[dn]}</td>
+    	<td id="top_{$smarty.section.dn.index}" class="heading" style="width:14%;">{$daysnames[dn]}</td>
 		{/if}
 {/section}
   </tr>
 
 {section name=w loop=$cell}
   <tr id="row_{$smarty.section.w.index}" style="height:80px">
-  <td width="1%" class="heading weeks"><a {if $prefs.mobile_mode eq "y"}data-role="button" data-inline="true" {/if}href="{$myurl}?viewmode=week&amp;todate={$cell[w][0].day}" title="{tr}View this Week{/tr}">{$weekNumbers[w]}</a></td> {* mobile *}
+  <td /*width="1%"*/ class="heading weeks"><a {if $prefs.mobile_mode eq "y"}data-role="button" data-inline="true" {/if}href="{$myurl}?viewmode=week&amp;todate={$cell[w][0].day}" title="{tr}View this Week{/tr}">{$weekNumbers[w]}</a></td> {* mobile *}
   {section name=d loop=$weekdays}
 	{if in_array($smarty.section.d.index,$viewdays)}
 		{if $cell[w][d].focus}
@@ -20,8 +21,8 @@
 			{cycle values="notoddoreven" print=false advance=false}
 		{/if}
 	<td id="row_{$smarty.section.w.index}_{$smarty.section.d.index}" class="{if $cell[w][d].day eq $today}calhighlight calborder{/if} {cycle}" style="padding:0px">
-	  <table cellpadding="0" cellspacing="0" style="width:100%;border:none">
-		<tr valign="top">
+	  <table style="width:100%; border:none">
+		<tr>
 		  <td class="focus {if $cell[w][d].day eq $today}calhighlight{/if}" style="width:50%;text-align:left">
 {* test display_field_order and use %d/%m or %m/%d on each day 'cell' *}
 		{if ($prefs.display_field_order eq 'DMY') || ($prefs.display_field_order eq 'DYM') || ($prefs.display_field_order eq 'YDM')}
@@ -45,13 +46,13 @@
 {if $cell[w][d].focus}
 {section name=item loop=$cell[w][d].items}
 {if $smarty.section.item.first}
-	  <table border="0" cellpadding="0" cellspacing="0" style="width:100%;border:none">
+	  <table style="width:100%;">
 {/if}
 	{assign var=over value=$cell[w][d].items[item].over}
 	{assign var=calendarId value=$cell[w][d].items[item].calendarId}
-		<tr valign="top">
+		<tr>
 {if is_array($cell[w][d].items[item])}
-			<td class="Cal{$cell[w][d].items[item].type} calId{$cell[w][d].items[item].calendarId} viewcalitemId_{$cell[w][d].items[item].calitemId} tips" style="padding:0px;height:14px;background-color:#{$infocals.$calendarId.custombgcolor};border-color:#{$infocals.$calendarId.customfgcolor};opacity:{if $cell[w][d].items[item].status eq '0'}0.8{else}1{/if};filter:Alpha(opacity={if $cell[w][d].items[item].status eq '0'}80{else}100{/if});text-align:left;border-width:1px {if $cell[w][d].items[item].endTimeStamp <= ($cell[w][d].day + 86400)}1{else}0{/if}px 1px {if $cell[w][d].items[item].startTimeStamp >= $cell[w][d].day}1{else}0{/if}px;cursor:pointer"
+			<td class="Cal{$cell[w][d].items[item].type} calId{$cell[w][d].items[item].calendarId} viewcalitemId_{$cell[w][d].items[item].calitemId} tips" style="padding:0;height:14px;background-color:#{$infocals.$calendarId.custombgcolor};border-color:#{$infocals.$calendarId.customfgcolor};opacity:{if $cell[w][d].items[item].status eq '0'}0.8{else}1{/if};filter:Alpha(opacity={if $cell[w][d].items[item].status eq '0'}80{else}100{/if});text-align:left;border-width:1px {if $cell[w][d].items[item].endTimeStamp <= ($cell[w][d].day + 86400)}1{else}0{/if}px 1px {if $cell[w][d].items[item].startTimeStamp >= $cell[w][d].day}1{else}0{/if}px;cursor:pointer"
 			{if $prefs.calendar_sticky_popup eq 'y'}
 				{popup caption="{tr}Event{/tr}" vauto=true hauto=true sticky=true fullhtml="1" trigger="onClick" text=$over|escape:"javascript"|escape:"html"}
 			{else}
@@ -78,7 +79,7 @@
 			{/if}
 		  </td>
 {else}
-		 <td style="padding:0px;height:14px;border-style:solid;border-color: white; border-width:1px;width:100%;font-size:10px">&nbsp;</td>
+		 <td style="padding: 0; height: 14px; border: solid white 1px; width: 100%; font-size: 10px">&nbsp;</td>
 {/if}
 		</tr>
 {if $smarty.section.item.last}
@@ -92,3 +93,4 @@
   </tr>
 {/section}
 </table>
+</div>
