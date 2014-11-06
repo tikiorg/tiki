@@ -1,5 +1,5 @@
 {* $Id$ *}
-<div class="navbar">
+<div class="t_navbar">
 	{if $tiki_p_edit_article eq 'y' or $tiki_p_admin eq 'y' or $tiki_p_admin_cms eq 'y'}
 		{button href="tiki-edit_article.php" _text="{tr}New Article{/tr}"}
 	{/if}
