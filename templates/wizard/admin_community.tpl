@@ -3,7 +3,7 @@
 <img class="pull-right" src="img/icons/large/users48x48.png" alt="{tr}Set up your User & Community features{/tr}">
 {tr}Configure general user & community features and settings related to sharing and social networks{/tr}.
 <div class="media">
-    <img class="pull-left" src="img/icons/large/wizard_admin48x48.png" alt="{tr}Admin Wizard{/tr}" title="{tr}Admin Wizard{/tr}" />
+    <img class="pull-left" src="img/icons/large/wizard_admin48x48.png" alt="{tr}Configuration Wizard{/tr}" title="{tr}Configuration Wizard{/tr}" />
     <div class="media-body">
         <fieldset>
 	        <legend>{tr}User Features{/tr}</legend>

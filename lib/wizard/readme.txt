@@ -1,7 +1,7 @@
 Tiki Wizard Readme.txt
 ==========================
 
-Currently the Admin Wizard is defined.
+Currently the Setup Wizards are defined.
 See tiki-wizard_admin.php
 
 The wizard pages are placed in the pages sub directory. For Admin Wizard pages, start the filename with admin_

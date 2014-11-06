@@ -2,7 +2,7 @@
 
 <img class="pull-right" src="img/icons/large/categories48x48.png" alt="{tr}Set up Categories{/tr}" />
 <div class="media">
-    <img class="pull-left" src="img/icons/large/wizard_admin48x48.png" alt="{tr}Admin Wizard{/tr}" title="{tr}Admin Wizard{/tr}" />
+    <img class="pull-left" src="img/icons/large/wizard_admin48x48.png" alt="{tr}Configuration Wizard{/tr}" title="{tr}Configuration Wizard{/tr}" />
     <div class="media-body">
         {tr}Global content category system. Items of different types (wiki pages, articles, tracker items, etc) can be added to one or more categories. Permissions set for a category will apply to all items in that category, allowing access to be restricted to certain groups, users, etc{/tr}.
         <fieldset>
@@ -15,7 +15,7 @@
             {if $prefs['flaggedrev_approval'] eq 'y' && empty($prefs['flaggedrev_approval_categories'])}
                 {remarksbox type="info" title="{tr}Info{/tr}"}
                     {tr}You have the feature '<strong>Revision Approval</strong>' enabled, but you haven't defined yet which content categories require revision approval for their wiki pages{/tr}.
-                    {tr}Once you have <a href="tiki-admin_categories.php" target="_blank">some categories defined</a>, go back to the Admin Wizard step '<strong>Set up Wiki environment</strong>' and define them there{/tr}.
+                    {tr}Once you have <a href="tiki-admin_categories.php" target="_blank">some categories defined</a>, go back to the Configuration Wizard step '<strong>Set up Wiki environment</strong>' and define them there{/tr}.
                 {/remarksbox}
             {/if}
             <br>

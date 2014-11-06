@@ -18,7 +18,7 @@ $access->check_permission('tiki_p_batch_upload_image_dir');
 if (!isset($prefs['gal_batch_dir']) or !is_dir($prefs['gal_batch_dir'])) {
 	$msg = tra("Incorrect directory chosen for batch upload of images.") . "<br />";
 	if ($tiki_p_admin == 'y') {
-		$msg.= tra("Please setup that dir on ") . '<a href="tiki-admin.php?page=gal">' . tra('Image Galleries Admin Panel') . '</a>.';
+		$msg.= tra("Please setup that dir on ") . '<a href="tiki-admin.php?page=gal">' . tra('Image Galleries Configuration Panel') . '</a>.';
 	} else {
 		$msg.= tra("Please contact the website administrator.");
 	}

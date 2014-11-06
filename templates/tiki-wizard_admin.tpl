@@ -2,7 +2,7 @@
 {extends "layout_plain.tpl"}
 
 {block name="title"}
-	{* {title}{tr}Admin Wizard{/tr}{/title} *}
+	{* {title}{tr}Configuration Wizard{/tr}{/title} *}
 {/block}
 
 {block name="content"}
@@ -12,7 +12,7 @@
 	<div class="row">
 		{if !empty($wizard_toc)}
 			<div class="col-sm-4">
-				<span class="adminWizardTOCTitle">{if $useDefaultPrefs}{tr}Profiles Wizard{/tr}{elseif $useUpgradeWizard}{tr}Upgrade Wizard{/tr}{else}{tr}Admin Wizard{/tr}{/if} - {tr}steps{/tr}:</span>
+				<span class="adminWizardTOCTitle">{if $useDefaultPrefs}{tr}Profiles Wizard{/tr}{elseif $useUpgradeWizard}{tr}Upgrade Wizard{/tr}{else}{tr}Configuration Wizard{/tr}{/if} - {tr}steps{/tr}:</span>
 				<ol>
 					{$wizard_toc}
 				</ol>

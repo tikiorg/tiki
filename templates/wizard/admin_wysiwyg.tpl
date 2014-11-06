@@ -3,7 +3,7 @@
 {tr}You can choose to use by default the 'Compatible' Wiki mode (content is saved in wiki syntax), or the HTML mode{/tr}.
 <img class="pull-right" src="img/icons/large/wysiwyg48x48.png" alt="{tr}Set up the Wysiwyg environment{/tr}" />
 <div class="media">
-    <img class="pull-left" src="img/icons/large/wizard_admin48x48.png" alt="{tr}Admin Wizard{/tr}" title="{tr}Admin Wizard{/tr}" />
+    <img class="pull-left" src="img/icons/large/wizard_admin48x48.png" alt="{tr}Configuration Wizard{/tr}" title="{tr}Configuration Wizard{/tr}" />
     <div class="media">
         <fieldset>
 	        <legend>{tr}Wiki editor setup{/tr}</legend>

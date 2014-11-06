@@ -1,7 +1,7 @@
 {* $Id$ *}
 <img class="pull-right" src="img/icons/large/wikipages48x48.png" alt="{tr}Set up the Wiki environment{/tr}" />{tr}Set up the Wiki environment{/tr}
 <div class="media">
-    <img class="pull-left" src="img/icons/large/wizard_admin48x48.png" alt="{tr}Admin Wizard{/tr}" title="{tr}Admin Wizard{/tr}" />
+    <img class="pull-left" src="img/icons/large/wizard_admin48x48.png" alt="{tr}Configuration Wizard{/tr}" title="{tr}Configuration Wizard{/tr}" />
     <div class="media-content">
         <fieldset>
 	    <legend>{tr}Wiki environment{/tr}</legend>
@@ -25,7 +25,7 @@
                 {remarksbox type="info" title="{tr}Info{/tr}"}
                 {tr}Once you have the feature '<strong>Categories</strong>' enabled, you will need to define some content categories, and indicate which ones require revision approval for their wiki pages{/tr}.
                 <br><br/>
-                {tr}You will be able to set the category ids here when you come back with Categories enabled, or at the corresponding <a href="tiki-admin.php?page=wiki&cookietab=3" target="_blank">Admin Panel</a> with the '<em>Advanced</em>' features shown in the Preference Filters{/tr}.
+                {tr}You will be able to set the category ids here when you come back with Categories enabled, or at the corresponding <a href="tiki-admin.php?page=wiki&cookietab=3" target="_blank">Configuration Panel</a> with the '<em>Advanced</em>' features shown in the Preference Filters{/tr}.
                 {/remarksbox}
             {/if}
         </div>

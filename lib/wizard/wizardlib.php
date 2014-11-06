@@ -42,7 +42,7 @@ class WizardLib extends TikiLib
 		$activeLoginWizard = $this->get_preference('wizard_admin_hide_on_login') !== 'y';
 		if ($force || ($isAdmin && $activeLoginWizard)) {
 
-			// User is an admin. Show Admin Wizard
+			// User is an admin. Show Setup Wizards
 			$this->startAdminWizard($homePageUrl,0);
 			
 		} else {

@@ -14,7 +14,7 @@ class AdminWizardCompleted extends Wizard
 {
     function pageTitle ()
     {
-        return tra('Admin Wizard Completed!');
+        return tra('Configuration Wizard Completed!');
     }
     function isEditable ()
 	{

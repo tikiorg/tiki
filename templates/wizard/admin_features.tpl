@@ -3,7 +3,7 @@
 {tr}Set up the main Tiki features. The wiki and file gallery features are always enabled.{/tr}
 <img class="pull-right" src="img/icons/large/boot48x48.png" alt="{tr}Main features setup{/tr}" />
 <div class="media">
-    <img class="pull-left" src="img/icons/large/wizard_admin48x48.png" alt="{tr}Admin Wizard{/tr}" title="{tr}Admin Wizard{/tr}" />
+    <img class="pull-left" src="img/icons/large/wizard_admin48x48.png" alt="{tr}Configuration Wizard{/tr}" title="{tr}Configuration Wizard{/tr}" />
     <div class="media-body">
         <fieldset>
             <legend>{tr}Main Tiki features{/tr}</legend>

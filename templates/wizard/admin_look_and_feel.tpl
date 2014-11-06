@@ -2,7 +2,7 @@
 {tr}Configure the Tiki theme and other look & feel preferences{/tr}.
 <img class="pull-right" src="img/icons/large/gnome-settings-background48x48.png" alt="{tr}Set up Look & Feel{/tr}" />
 <div class="media">
-    <img class="pull-left" img src="img/icons/large/wizard_admin48x48.png" alt="{tr}Admin Wizard{/tr}" title="{tr}Admin Wizard{/tr}" />
+    <img class="pull-left" img src="img/icons/large/wizard_admin48x48.png" alt="{tr}Configuration Wizard{/tr}" title="{tr}Configuration Wizard{/tr}" />
     <div class="media-body">
         <fieldset>
             <legend>{tr}Look & Feel options{/tr}</legend>
