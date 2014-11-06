@@ -98,7 +98,7 @@
 					</li>
 					<li>
 						<a href="tiki-admin.php">
-							{tr}Admin Home{/tr}
+							{tr}Configuration Panels{/tr}
 						</a>
 					</li>
 				</ul>

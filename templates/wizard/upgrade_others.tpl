@@ -69,7 +69,7 @@
                     {tr}When Tiki has many notification emails to send upon new changes in your site (e.g. a new calendar event), the site may seem unresponsive for some seconds until the whole mail delivery is finished{/tr}.
                     {tr}The more users or groups subscribed to receive notification emails for changes in that object, the longer that unresponsive time just after the user has clicked the submit button{/tr}.
                     <br/><br/>
-                    {tr}You can prevent that unresponsive time by means of setting Tiki to store notification emails in an email queue (see <strong>Admin home > General > General Preferences > Mail > Mail Sender > STMP</strong>, and <strong>Mail Delivery > Queue</strong>), and request the server to process the email sending based on a cron job{/tr}.
+                    {tr}You can prevent that unresponsive time by means of setting Tiki to store notification emails in an email queue (see <strong>Configuration > Configuration Panels > General > General Preferences > Mail > Mail Sender > STMP</strong>, and <strong>Mail Delivery > Queue</strong>), and request the server to process the email sending based on a cron job{/tr}.
                     <br/><br/>
                     {tr}Example: Send the Mail Queue{/tr}
                     <pre>php console.php mail-queue:send</pre>

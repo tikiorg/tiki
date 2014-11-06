@@ -75,7 +75,7 @@ Next you can configure Tiki to suit your needs:
 
 * Use a profile to populate your database.
 * Choose which features you want enabled
-  - go to tiki-admin.php by clicking on the "Admin" or "Admin Home" link
+  - go to tiki-admin.php by clicking on the "Configuration Panels" link
   on the left side of your screen 
 * (Optionally) create groups of users that share permissions
 * Assign appropriate permissions 

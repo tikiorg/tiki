@@ -127,7 +127,7 @@ function wikiplugin_div_info()
 				'default' => '',
 			),
 			'style' => array(
-				// Note that this is ignored unless preference wiki_plugindiv_approvable is set in Admin → Admin home → Editing and Plugins → Miscellaneous
+				// Note that this is ignored unless preference wiki_plugindiv_approvable is set in Configuration → Configuration Panels → Editing and Plugins → Miscellaneous
 				'required' => false,
 				'name' => tra('Style attribute'),
 				'description' => tra('Enter CSS styling tags for the div type used.'),

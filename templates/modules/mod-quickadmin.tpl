@@ -23,7 +23,7 @@
 				</li>
 			</ul>
 			{icon _id=wizard16x16 title="{tr}Wizards{/tr}" href="tiki-wizard_admin.php?stepNr=0&amp;url=index.php"}
-			{icon _id=house title="{tr}Admin home{/tr}" href="tiki-admin.php"} 
+			{icon _id=house title="{tr}Configuration Panels{/tr}" href="tiki-admin.php"}
 			{icon _id=wrench title="{tr}Modify the look &amp; feel (logo, theme, etc.){/tr}" href="tiki-admin.php?page=look&amp;cookietab=2"} 
 			{icon _id=user title="{tr}Users{/tr}" href="tiki-adminusers.php"}
 			{icon _id=group title="{tr}Groups{/tr}" href="tiki-admingroups.php"}			

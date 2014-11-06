@@ -23,7 +23,7 @@
 				</li>
 			</ul>
 *}{* recent prefs removed from mobile since they take way too much space *}
-			<a data-role="button" href="tiki-admin.php" title="{tr}Admin home{/tr}">{icon _id=house alt="{tr}Admin home{/tr}"}</a> 
+			<a data-role="button" href="tiki-admin.php" title="{tr}Configuration Panels{/tr}">{icon _id=house alt="{tr}Configuration Panels{/tr}"}</a>
 			<a data-role="button" href="tiki-admin.php?page=look&amp;cookietab=2" title="{tr}Modify the look &amp; feel (logo, theme, etc.){/tr}">{icon _id=wrench alt="{tr}Modify the look &amp; feel (logo, theme, etc.){/tr}"} </a> 
 			<a data-role="button" href="tiki-adminusers.php" title="{tr}Users{/tr}">{icon _id=user alt="{tr}Users{/tr}"}</a> 
 			<a data-role="button" href="tiki-admingroups.php" title="{tr}Groups{/tr}">{icon _id=group alt="{tr}Groups{/tr}"}</a> 			

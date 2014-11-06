@@ -363,7 +363,7 @@
 							<input class="emc form-control" type="text" disabled="disabled" name="wikiTpl">
 							<div class="help-block">{tr}Template wiki page:
 									The wiki page must have a page description, which is used as the subject of the email.
-									Enable the page descriptions feature at Admin Home &gt; Wiki.{/tr}
+									Enable the page descriptions feature at Configuration Panels &gt; Wiki.{/tr}
 							</div>
 						</div>
 					</div>
