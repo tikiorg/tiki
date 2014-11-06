@@ -38,42 +38,54 @@ class TrackerLib extends TikiLib
 {
 
 	public $trackerinfo_cache;
-	private $layouts = [];
+	private $sectionFormats = [];
 
 	function __construct()
 	{
-		$this->registerSectionMode('flat', 'view', 'trackeroutput/layout_flat.tpl', tr('Flat'));
-		$this->registerSectionMode('flat', 'edit', 'trackerinput/layout_flat.tpl', tr('Flat'));
-		$this->registerSectionMode('tab', 'view', 'trackeroutput/layout_tab.tpl', tr('Tabs'));
-		$this->registerSectionMode('tab', 'edit', 'trackerinput/layout_tab.tpl', tr('Tabs'));
+		$this->registerSectionFormat('flat', 'view', 'trackeroutput/layout_flat.tpl', tr('Flat'));
+		$this->registerSectionFormat('flat', 'edit', 'trackerinput/layout_flat.tpl', tr('Flat'));
+		$this->registerSectionFormat('tab', 'view', 'trackeroutput/layout_tab.tpl', tr('Tabs'));
+		$this->registerSectionFormat('tab', 'edit', 'trackerinput/layout_tab.tpl', tr('Tabs'));
 	}
 
-	function registerSectionMode($layout, $mode, $template, $label)
+	function registerSectionFormat($layout, $mode, $template, $label)
 	{
-		$this->layouts[$layout][$mode] = [
-			'template' => $template,
-			'label' => $label,
-		];
+		if ($template) {
+			$this->sectionFormats[$layout][$mode] = [
+				'template' => $template,
+				'label' => $label,
+			];
+		}
 	}
 
-	function getSectionModeTemplate($layout, $mode)
+	function unregisterSectionFormat($layout)
 	{
-		if (isset($this->layouts[$layout][$mode])) {
-			return $this->layouts[$layout][$mode]['template'];
+		unset($this->sectionFormats[$layout]);
+	}
+
+	function getSectionFormatTemplate($layout, $mode)
+	{
+		if (isset($this->sectionFormats[$layout][$mode])) {
+			return $this->sectionFormats[$layout][$mode]['template'];
+		} elseif ($layout == 'config') {
+			// Special handling for config, fallback to default flat
+			return $this->getSectionFormatTemplate('flat', $mode);
 		} else {
 			throw new Exception(tr('No template available for %0 - %1', $layout, $mode));
 		}
 	}
 
-	function getGlobalSectionModes()
+	function getGlobalSectionFormats()
 	{
 		$out = [];
-		foreach ($this->layouts as $layout => $modes) {
+		foreach ($this->sectionFormats as $layout => $modes) {
 			if (count($modes) == 2) {
 				$first = reset($modes);
 				$out[$layout] = $first['label'];
 			}
 		}
+
+		$out['config'] = tr('Configured');
 
 		return $out;
 	}

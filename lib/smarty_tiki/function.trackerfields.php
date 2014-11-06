@@ -34,7 +34,8 @@ function smarty_function_trackerfields($params, $smarty)
 		$sectionFormat = $params['format'];
 	}
 
-	$smarty->assign('tracker_info', $definition->getInformation());
+	$trackerInfo = $definition->getInformation();
+	$smarty->assign('tracker_info', $trackerInfo);
 	$smarty->assign('status_types', TikiLib::lib('trk')->status_types());
 
 	$title = tr('General');
@@ -88,13 +89,24 @@ function smarty_function_trackerfields($params, $smarty)
 	} else {
 		$auto['default'] = $auto['input'];
 	}
+	
+	// Compatibility attempt with the legacy $f_X format.
+	foreach ($fields as $field) {
+		$id = $field['fieldId'];
+		$permName = $field['permName'];
+		$smarty->assign('f_' . $id, $auto['default'][$permName]);
+	}
 
 	$smarty->assign('sections', array_values($out));
 	$smarty->assign('fields', $params['fields']);
 	$smarty->assign('auto', $auto);
 
 	$trklib = TikiLib::lib('trk');
-	$template = $trklib->getSectionModeTemplate($sectionFormat, $params['mode']);
+	$trklib->registerSectionFormat('config', 'edit', $trackerInfo['editItemPretty'], tr('Configured'));
+	$trklib->registerSectionFormat('config', 'view', $trackerInfo['viewItemPretty'], tr('Configured'));
+	$template = $trklib->getSectionFormatTemplate($sectionFormat, $params['mode']);
+
+	$trklib->unregisterSectionFormat('config');
 
 	return $smarty->fetch($template);
 }

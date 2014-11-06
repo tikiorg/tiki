@@ -1140,7 +1140,7 @@ class Services_Tracker_Controller
 			'groupList' => $this->getGroupList(),
 			'groupforAlert' => $groupforAlert,
 			'showeachuser' => $groupalertlib->GetShowEachUser('tracker', 'trackerId', $groupforAlert),
-			'sectionModes' => $trklib->getGlobalSectionModes(),
+			'sectionFormats' => $trklib->getGlobalSectionFormats(),
 		);
 	}
 

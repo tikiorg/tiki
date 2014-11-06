@@ -54,37 +54,29 @@
 
 	{tab name="{tr}View{/tr}"}
 		{* --- tab with view ------------------------------------------------------------------------- *}
-		{if empty($tracker_info.viewItemPretty)}
-			<h2>{$tracker_info.name|escape}</h2>
-			{if $tracker_is_multilingual}
-				<div class="translations">
-					<a href="{service controller=translation action=manage type=trackeritem source=$itemId}">{tr}Translations{/tr}</a>
-				</div>
-				{jq}
-					$('.translations a').click(function () {
-						var link = this;
-						$(this).serviceDialog({
-							title: $(link).text(),
-							data: {
-								controller: 'translation',
-								action: 'manage',
-								type: 'trackeritem',
-								source: "{{$itemId|escape}}"
-							}
-						});
-						return false;
+		<h2>{$tracker_info.name|escape}</h2>
+		{if $tracker_is_multilingual}
+			<div class="translations">
+				<a href="{service controller=translation action=manage type=trackeritem source=$itemId}">{tr}Translations{/tr}</a>
+			</div>
+			{jq}
+				$('.translations a').click(function () {
+					var link = this;
+					$(this).serviceDialog({
+						title: $(link).text(),
+						data: {
+							controller: 'translation',
+							action: 'manage',
+							type: 'trackeritem',
+							source: "{{$itemId|escape}}"
+						}
 					});
-				{/jq}
-			{/if}
-
-			{trackerfields mode=view trackerId=$trackerId fields=$fields itemId=$itemId}
-		{else}
-			{if $canModify}
-				{include file='tracker_pretty_item.tpl' item=$item_info fields=$ins_fields wiki=$tracker_info.viewItemPretty}
-			{elseif $canView}
-				{include file='tracker_pretty_item.tpl' item=$item_info fields=$fields wiki=$tracker_info.viewItemPretty}
-			{/if}
+					return false;
+				});
+			{/jq}
 		{/if}
+
+		{trackerfields mode=view trackerId=$trackerId fields=$fields itemId=$itemId}
 
 		{* -------------------------------------------------- section with comments --- *}
 		{if $tracker_info.useComments eq 'y' and ($tiki_p_tracker_view_comments ne 'n' or $tiki_p_comment_tracker_items ne 'n') and $prefs.tracker_show_comments_below eq 'y'}
