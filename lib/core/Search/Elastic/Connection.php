@@ -130,7 +130,7 @@ class Search_Elastic_Connection
 		$toRemove = [];
 		$current = $this->rawApi('/_aliases');
 		foreach ($current as $indexName => $info) {
-			if (array_key_exists($alias, $info->aliases)) {
+			if (isset($info->aliases->$alias)) {
 				$active[] = $indexName;
 				$toRemove[] = $indexName;
 			} elseif (0 === strpos($indexName, $alias . '_') && $indexName != $targetIndex) {
