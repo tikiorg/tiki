@@ -35,6 +35,7 @@ class Services_Tracker_Controller
 
 		return [
 			'title' => TikiLib::lib('object')->get_title('trackeritem', $item->getId()),
+			'format' => $input->format->word(),
 			'itemId' => $item->getId(),
 			'trackerId' => $defintion->getConfiguration('trackerId'),
 			'fields' => $fields,
@@ -728,6 +729,7 @@ class Services_Tracker_Controller
 			'trackerLogo' => $definition->getConfiguration('logo'),
 			'modal' => $input->modal->int(),
 			'status' => $itemObject->getDisplayedStatus(),
+			'format' => $input->format->word(),
 		);
 	}
 
@@ -803,6 +805,7 @@ class Services_Tracker_Controller
 			'itemId' => $itemId,
 			'fields' => $processedFields,
 			'status' => $itemObject->getDisplayedStatus(),
+			'format' => $input->format->word(),
 		);
 	}
 

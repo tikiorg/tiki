@@ -29,6 +29,11 @@ function smarty_function_trackerfields($params, $smarty)
 	$smarty->loadPlugin('smarty_function_trackerinput');
 
 	$sectionFormat = $definition->getConfiguration('sectionFormat', 'flat');
+
+	if (! empty($params['format'])) {
+		$sectionFormat = $params['format'];
+	}
+
 	$smarty->assign('tracker_info', $definition->getInformation());
 	$smarty->assign('status_types', TikiLib::lib('trk')->status_types());
 

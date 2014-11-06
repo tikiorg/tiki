@@ -16,8 +16,8 @@
 				<img src="{$trackerLogo|escape}" class="pull-left img-responsive img-rounded" alt="{$trackerName|escape}" height="64px" width="64px">
 			</div>
 		{/if}
-		<form method="post" action="{service controller=tracker action=insert_item}" id="insertItemForm{$trackerId|escape}" {if ! $trackerId}display="hidden"{/if}>
-			{trackerfields trackerId=$trackerId fields=$fields status=$status}
+		<form method="post" action="{service controller=tracker action=insert_item format=$format}" id="insertItemForm{$trackerId|escape}" {if ! $trackerId}display="hidden"{/if}>
+			{trackerfields trackerId=$trackerId fields=$fields status=$status format=$format}
 			{if ! $modal}
 				<div class="checkbox">
 					<label>
