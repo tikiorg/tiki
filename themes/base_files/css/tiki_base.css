@@ -2380,9 +2380,6 @@ img.pref_dependency {
 .adminanchors * {
   font-size: 2rem;
 }
-.adminanchors a.icon {
-  margin: 0 1% 10px 0;
-}
 .meta-col1 {
   text-align: right;
   font-weight: bold;
