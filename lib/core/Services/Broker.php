@@ -45,7 +45,7 @@ class Services_Broker
 		} catch (Services_Exception_FieldError $e) {
 			$access->display_error(NULL, $e->getMessage(), $e->getCode());
 		} catch (Exception $e) {
-			if ($request->modal->int()) {
+			if ($request->modal->int() && $access->is_xml_http_request()) {
 				// Special handling for modal dialog requests
 				// Do not send an error code as bootstrap will just blank out
 				// Render the error as a modal
