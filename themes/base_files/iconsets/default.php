@@ -177,6 +177,12 @@ $icons = array( //Icons of the icon set
 	'backlink' => array(
 		'class' => 'fa fa-reply fa-fw',
 	),
+	'bug' => array(
+		'class' => 'fa fa-bug fa-fw',
+	),
+	'cache' => array(
+		'class' => 'fa fa-trash-o fa-fw',
+	),
 	'check' => array(
 		'class' => 'fa fa-check-square-o fa-fw',
 	),
@@ -231,6 +237,9 @@ $icons = array( //Icons of the icon set
 	'inbox' => array( 
 		'class' => 'fa fa-inbox fa-fw',
 	),
+	'index' => array( 
+		'class' => 'fa fa-spinner fa-fw',
+	),
 	'info' => array( 
 		'class' => 'fa fa-info-circle fa-fw',
 	),
@@ -243,11 +252,17 @@ $icons = array( //Icons of the icon set
 	'link-external' => array(
 		'class' => 'fa fa-external-link fa-fw',
 	),
+	'log' => array(
+		'class' => 'fa fa-history fa-fw',
+	),
 	'menu' => array(
 		'class' => 'fa fa-bars fa-fw',
 	),
 	'menuitem' => array(
 		'class' => 'fa fa-minus fa-fw',
+	),
+	'module' => array(
+		'class' => 'fa fa-cogs fa-fw',
 	),
 	'notepad' => array(
 		'class' => 'fa fa-file-text-o fa-fw',
@@ -259,16 +274,25 @@ $icons = array( //Icons of the icon set
 		'class' => 'fa fa-power-off fa-fw',
 	),
 	'ok' => array(
-		'class' => 'fa fa-check fa-fw',
+		'class' => 'fa fa-check-circle fa-fw',
 	),
 	'permission' => array(
 		'class' => 'fa fa-key fa-fw',
+	),
+	'permission-active' => array(
+		'class' => 'fa fa-key fa-fw',
+	),
+	'plugin' => array(
+		'class' => 'fa fa-puzzle-piece fa-fw',
 	),
 	'post' => array(
 		'class' => 'fa fa-pencil fa-fw',
 	),
 	'print' => array(
 		'class' => 'fa fa-print fa-fw',
+	),
+	'redo' => array(
+		'class' => 'fa fa-share fa-fw',
 	),
 	'refresh' => array(
 		'class' => 'fa fa-refresh fa-fw',
@@ -306,6 +330,9 @@ $icons = array( //Icons of the icon set
 	'tag' => array(
 		'class' => 'fa fa-tag fa-fw',
 	),
+	'theme' => array(
+		'class' => 'fa fa-image fa-fw',
+	),
 	'trackers' => array(
 		'class' => 'fa fa-database fa-fw',
 	),
@@ -314,6 +341,12 @@ $icons = array( //Icons of the icon set
 	),
 	'trash' => array(
 		'class' => 'fa fa-trash-o fa-fw',
+	),
+	'undo' => array(
+		'class' => 'fa fa-reply fa-fw',
+	),
+	'user' => array(
+		'class' => 'fa fa-user fa-fw',
 	),
 	'view' => array(
 		'class' => 'fa fa-search-plus fa-fw',
@@ -326,5 +359,8 @@ $icons = array( //Icons of the icon set
 	),
 	'watch-group' => array(
 		'class' => 'fa fa-group fa-fw',
+	),
+	'wizard' => array(
+		'class' => 'fa fa-magic fa-fw',
 	),
 );

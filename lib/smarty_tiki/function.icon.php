@@ -90,41 +90,65 @@ function smarty_function_icon($params, $smarty)
 	if (!empty($params['name']) and empty($params['_tag'])){ 
 		$name = $params['name'];
 		
-		//load $iconset from preference setting TODO: 1)first check if the file exist, if not, load the default 2)enhance this to consider iconsets in self-contained themes (eg: themes/jqui/iconsets/)
-		include('themes/base_files/iconsets/' . $prefs['theme_iconset'] . '.php');
+		include('themes/base_files/iconsets/' . $prefs['theme_iconset'] . '.php'); //load icon set info from preference setting TODO: 1)first check if the file exist, if not, load the default 2)enhance this to consider iconsets in self-contained themes (eg: themes/jqui/iconsets/)
 		
-		//if icon is defined in the iconset, use it
-		if (isset($icons) and array_key_exists($name, $icons)) {
-			$cssclass = $icons[$name]['class'];
+		if (isset($icons) and array_key_exists($name, $icons)) { //if icon is defined in the iconset, use it
+			$icon_class = $icons[$name]['class'];
 			$tag = $settings['icon_tag'];
 			
-			//manage legacy image icons (eg: png, gif, etc)
-			if ($tag == 'img') {
+			if ($tag == 'img') { //manage legacy image icons (eg: png, gif, etc)
 				$src = $icons[$name]['image_src'];
-				$alt = $name;
+				$alt = $name;  //use icon name as alternate text
 			}
 		}
 		else { //if icon is not defined in the iconset or preference is not set, than load the default iconset and use its icons
 			include('themes/base_files/iconsets/default.php');
 			if (array_key_exists($name, $icons)) {
-				$cssclass = $icons[$name]['class'];
+				$icon_class = $icons[$name]['class'];
 				$tag = $settings['icon_tag'];
 			}	
 			else { //if icon is not defined in default iconset, than display bootstrap glyphicon warning-sign. Helps to detect missing icon definitions, typos
-				$cssclass = 'glyphicon glyphicon-warning-sign';
+				$icon_class = 'glyphicon glyphicon-warning-sign';
 				$tag = 'span';
 			}
 		}
 		
 		//assemble icon, later enhance for svg
 		if ($tag == 'img') { //for images
-			$html = "<span class=\"icon icon-$name $cssclass\"><img src=\"$src\" alt=\"$alt\"></span>";
+			$html = "<span class=\"icon icon-$name $icon_class\"><img src=\"$src\" alt=\"$alt\"></span>";
 		}
 		else { //for font-icons
-			$html = "<$tag class=\"icon icon-$name $cssclass\"></$tag>";
+			$html = "<$tag class=\"icon icon-$name $icon_class\"></$tag>";
 		}
 		
-		//return icon
+		if (!empty($params['href']) or !empty($params['title'])) { //generate a link for the icon if href or title (for tips) parameter is not empty. This will produce a link element (<a>) around the icon. If you want a button element (<button>), use the {button} smarty_tiki function
+			//collect params
+			if (!empty($params['title'])) { //use href if set
+				$a_href = $params['href']; 
+			}
+			else {
+				$a_href = '#';
+			}
+			if (!empty($params['title'])) { //add title if set
+				$a_title = $params['title'];
+			}
+			else {
+				$a_title = '';
+			}
+			if (isset($params['class'])) { //use classes instead of the default bootstrap
+				$a_class = $params['class'];
+			}
+			else {
+				$a_class = 'btn btn-default btn-sm';
+			}
+			//assemble link
+			$html = "<a href='$a_href' title='$a_title' class='$a_class'>$html</a>";
+		}
+		else {//if href or title is not set, display the assembled icon as it is
+			$html = $html;
+		}
+		
+		//return the icon
 		return $html;
 		
 	} //ICONSET END 

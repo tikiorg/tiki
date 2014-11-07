@@ -122,6 +122,9 @@ $icons = array(
 	'trash' => array(
 		'class' => 'glyphicon glyphicon-trash',
 	),
+	'user' => array(
+		'class' => 'glyphicon glyphicon-user',
+	),
 	'view' => array(
 		'class' => 'glyphicon glyphicon-zoom-in',
 	),

@@ -174,6 +174,12 @@ $icons = array(
 	'backlink' => array(
 		'image_src' => 'img/icons/arrow_turn_left.png',
 	),
+	'bug' => array(
+		'image_src' => 'img/icons/bug.png',
+	),
+	'cache' => array(
+		'image_src' => 'img/icons/database_refresh.png',
+	),
 	'check' => array(
 		'image_src' => 'img/icons/select.gif',
 	),
@@ -219,6 +225,9 @@ $icons = array(
 	'import' => array( 
 		'image_src' => 'img/icons/upload.png',
 	),
+	'index' => array( 
+		'image_src' => 'img/icons/table_refresh.png',
+	),
 	'info' => array( 
 		'image_src' => 'img/icons/information.png',
 	),
@@ -231,8 +240,14 @@ $icons = array(
 	'list' => array( 
 		'image_src' => 'img/icons/application_view_list.png',
 	),
+	'menu' => array(
+		'image_src' => 'img/icons/application_side_tree.png',
+	),
 	'menuitem' => array(
 		'image_src' => 'img/icons/omo.png',
+	),
+	'module' => array(
+		'image_src' => 'img/icons/module.png',
 	),
 	'notepad' => array(
 		'image_src' => 'img/icons/disk.png',
@@ -246,11 +261,20 @@ $icons = array(
 	'permission' => array(
 		'image_src' => 'img/icons/key.png',
 	),
+	'permission-active' => array(
+		'image_src' => 'img/icons/key_active.png',
+	),
+	'plugin' => array(
+		'image_src' => 'img/icons/plugin.png',
+	),
 	'post' => array(
 		'image_src' => 'img/icons/pencil_add.png',
 	),
 	'print' => array(
 		'image_src' => 'img/icons/printer.png',
+	),
+	'redo' => array(
+		'image_src' => 'img/icons/arrow_redo.png',
 	),
 	'refresh' => array(
 		'image_src' => 'img/icons/arrow_refresh.png',
@@ -285,8 +309,17 @@ $icons = array(
 	'tag' => array(
 		'image_src' => 'img/icons/tag_blue.png',
 	),
+	'theme' => array(
+		'image_src' => 'img/icons/palette.png',
+	),
 	'trash' => array(
 		'image_src' => 'img/icons/bin.png',
+	),
+	'undo' => array(
+		'image_src' => 'img/icons/arrow_undo.png',
+	),
+	'user' => array(
+		'image_src' => 'img/icons/user.png',
 	),
 	'view' => array(
 		'image_src' => 'img/icons/shape_square.png',
@@ -299,5 +332,8 @@ $icons = array(
 	),
 	'watch-group' => array(
 		'image_src' => 'img/icons/eye_group.png',
+	),
+	'wizard' => array(
+		'image_src' => 'img/icons/wizard16x16.png',
 	),
 );
