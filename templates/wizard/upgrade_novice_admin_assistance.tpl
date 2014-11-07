@@ -8,9 +8,9 @@
         <fieldset>
             <legend>{tr}Basic Information about Wizards{/tr}</legend>
             <p>
-            {tr}Starting in Tiki12, some wizards were added to Tiki in order to help in the initial setup based on configuration templates like "Macros" (<b>Profiles Wizard</b>), as well as further site configuration (<b>Admin Wizard</b>), fine tunning the new features and preferences when upgrading (<b>Upgrade Wizard</b>), and to help you as site admin to collect more information from your users if you need it (<b>Users Wizard</b>){/tr}.
+            {tr}Starting in Tiki12, some wizards were added to Tiki in order to help in the initial setup based on configuration templates like "Macros" (<b>Profiles Wizard</b>), as well as further site configuration (<b>Configuration Wizard</b>), fine tunning the new features and preferences when upgrading (<b>Upgrade Wizard</b>), and to help you as site admin to collect more information from your users if you need it (<b>Users Wizard</b>){/tr}.
             <a href="http://doc.tiki.org/Wizards" target="tikihelp" class="tikihelp" title="{tr}Wizards:{/tr}
-                {tr}Wizards oriented to help the site admin (Profiles, Admin and Upgrade wizards) come always enabled{/tr}.
+                {tr}Wizards oriented to help the site admin (Profiles, Configuration and Upgrade wizards) come always enabled{/tr}.
                 <br/><br/>
                 {tr}The User Wizard comes disabled by default, and you have the option to enable it and configure it for your site{/tr}.
 	    	    ">
