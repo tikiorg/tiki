@@ -1,4 +1,4 @@
-<div class="files-field uninitialized {if $data.replaceFile}replace{/if}" data-galleryid="{$field.galleryId|escape}" data-firstfile="{$field.firstfile|escape}" data-filter="{$field.filter|escape}">
+<div class="files-field uninitialized {if $data.replaceFile}replace{/if}" data-galleryid="{$field.galleryId|escape}" data-firstfile="{$field.firstfile|escape}" data-filter="{$field.filter|escape}" data-limit="{$field.limit|escape}">
 {if $field.limit}
 	{remarksbox _type=info title="{tr}Attached files limitation{/tr}"}
 		{tr _0=$field.limit}The amount of files that can be attached is limited to <strong>%0</strong>. The latest files will be preserved.{/tr}
@@ -29,11 +29,7 @@
 			{wikiplugin _name='vimeo' fromFieldId=$field.fieldId|escape fromItemId=$item.itemId|escape galleryId=$field.galleryId|escape}{/wikiplugin}
 		</fieldset>
 	{else}
-		<fieldset id="{$field.ins_id|escape}-drop" class="file-drop">
-			<legend>{tr}Upload files{/tr}</legend>
-			<p style="display:none;">{tr}Drop files from your desktop here or browse for them{/tr}</p>
-			<input class="ignore" type="file" name="{$field.ins_id|escape}[]" accept="{$field.filter|escape}" multiple="multiple">
-		</fieldset>
+		<a href="{service controller=file action=uploader galleryId=$galleryId limit=$limit|default:100}" class="btn btn-default upload-files">{tr}Upload Files{/tr}</a>
 	{/if}
 {/if}
 {if $prefs.fgal_tracker_existing_search eq 'y'}
@@ -71,118 +67,41 @@
 {jq}
 $('.files-field.uninitialized').removeClass('uninitialized').each(function () {
 var $self = $(this);
-var $drop = $('.file-drop', this);
 var $files = $('.current-list', this);
 var $field = $('.input', this);
 var $search = $('.search', this);
 var $url = $('.url', this);
-var $fileinput = $drop.find('input');
 var replaceFile = $(this).is('.replace');
 
 $field.hide();
 
-var handleFiles = function (files) {
-	$fileinput.clearError();
-	var uploadUrl = $.service('file', 'upload');
-	$.each(files, function (k, file) {
-		var reader = new FileReader();
-		var li = $('<li/>').appendTo($files);
+$self.find('.btn.upload-files').clickModal({
+	success: function (data) {
+		$.each(data.files, function (k, file) {
+			var li = $('<li>').appendTo($files);
+			li.text(file.name);
 
-		li.text(file.name + ' (...)');
+			$field.input_csv('add', ',', file.fileId);
 
-		$(window).queue('process-upload', function () {
-			reader.onloadend = function (e) {
-				var xhr, provider, sendData, data;
+			li.prepend($.fileTypeIcon(file.fileId, file));
+			li.append($('<label>{{icon _id=cross alt="{tr}Remove{/tr}"}}</label>'));
+			li.find('img.icon').click(function () {
+				$field.input_csv('delete', ',', file.fileId);
+				$(this).closest('li').remove();
+			});
+						
+			if (replaceFile && $self.data('firstfile') > 0) {	
+				li.prev('li').remove();
+			}
 
-				xhr = jQuery.ajaxSettings.xhr();
-				if (xhr.upload) {
-					xhr.upload.addEventListener('progress', function (e) {
-						if (e.lengthComputable) {
-							li.text(file.name + ' (' + Math.round(e.loaded / e.total * 100) + '%)');
-						}
-					}, false);
-				}
-				provider = function () {
-					return xhr;
-				};
-
-				sendData = {
-					type: 'POST',
-					url: uploadUrl,
-					xhr: provider,
-					dataType: 'json',
-					success: function (data) {
-						var fileId = data.fileId;
-						li.text(data.name);
-
-						$field.input_csv('add', ',', fileId);
-
-						if(data.type.substring(0,6) == 'image/') {
-							li.prepend($('<img src="tiki-download_file.php?fileId=' + fileId + '&display&height=24" height="24">'));
-						} else if(data.type == 'application/pdf') {
-							li.prepend($('<img height="16" width="16" title="application/pdf" alt="application/pdf" src="img/icons/mime/pdf.png">'));
-						} else if(data.type.indexOf("sheet") != -1) {
-							li.prepend($('<img height="16" width="16" title="'+ data.type +'" alt="'+ data.type +'" src="img/icons/mime/xls.png">'));
-						} else if(data.type.indexOf("zip") != -1) {
-							li.prepend($('<img height="16" width="16" title="'+ data.type +'" alt="'+ data.type +'" src="img/icons/mime/zip.png">'));
-						} else if (data.type.substring(0,6) == 'video/') {
-							li.prepend($('<img height="16" width="16" title="'+ data.type +'" alt="'+ data.type +'" src="img/icons/mime/flv.png">'));
-						} else if (data.type.indexOf("word") != -1) {
-							li.prepend($('<img height="16" width="16" title="'+ data.type +'" alt="'+ data.type +'" src="img/icons/mime/doc.png">'));
-						} else {
-							li.prepend($('<img height="16" width="16" title="'+ data.type +'" alt="'+ data.type +'" src="img/icons/mime/default.png">'));
-						}
-						li.append($('<label>{{icon _id=cross alt="{tr}Remove{/tr}"}}</label>'));
-						li.find('img.icon').click(function () {
-							$field.input_csv('delete', ',', fileId);
-							$(this).closest('li').remove();
-						});
-									
-						if (replaceFile && $self.data('firstfile') > 0) {	
-							li.prev('li').remove();
-						}
-
-						if (! $self.data('firstfile')) {
-							$self.data('firstfile', fileId);
-						}
-					},
-					error: function (jqxhr) {
-						$fileinput.showError(jqxhr);
-						li.remove();
-					},
-					complete: function () {
-						$(window).dequeue('process-upload');
-					}
-				};
-
-				if (window.FormData) {
-					sendData.processData = false;
-					sendData.contentType = false;
-					sendData.cache = false;
-
-					sendData.data = new FormData;
-					sendData.data.append('fileId', replaceFile ? $self.data('firstfile') : null);
-					sendData.data.append('galleryId', $self.data('galleryid'));
-					sendData.data.append('data', file);
-				} else {
-					data = e.target.result;
-					sendData.data = {
-						name: file.name,
-						size: file.size,
-						type: file.type,
-						data: data.substr(data.indexOf('base64') + 7),
-						fileId: replaceFile ? $self.data('firstfile') : null,
-						galleryId: $self.data('galleryid') 
-					};
-				}
-
-				$.ajax(sendData);
-			};
-			reader.readAsDataURL(file);
+			if (! $self.data('firstfile')) {
+				$self.data('firstfile', file.fileId);
+			}
 		});
-	});
-	$(window).dequeue('process-upload');
-};
+
+		$.closeModal({});
+	}
+});
 
 $files.find('input').hide();
 $files.find('img.icon').click(function () {
@@ -190,53 +109,6 @@ $files.find('img.icon').click(function () {
 	$field.input_csv('delete', ',', fileId);
 	$(this).closest('li').remove();
 });
-
-if (typeof FileReader !== 'undefined') {
-	$drop.find('> p').show();
-	$drop.bind('dragenter', function (e) {
-		e.preventDefault();
-		e.stopPropagation();
-		$drop.addClass('highlight');
-		return false;
-	});
-	$drop.bind('dragexit', function (e) {
-		e.preventDefault();
-		e.stopPropagation();
-		$drop.removeClass('highlight');
-		return false;
-	});
-	$drop.bind('dragover', function (e) {
-		e.preventDefault();
-		e.stopPropagation();
-		return false;
-	});
-	$drop.bind('drop', function (e) {
-		e.preventDefault();
-		e.stopPropagation();
-		$drop.removeClass('highlight');
-
-		var dataTransfer = e.dataTransfer;
-		if (! dataTransfer) {
-			dataTransfer = e.originalEvent.dataTransfer;
-		}
-
-		if (dataTransfer && dataTransfer.files) {
-			handleFiles(dataTransfer.files);
-		}
-		return false;
-	});
-	$fileinput.change(function () {
-		var $clone;
-		if (this.files) {
-			handleFiles(this.files);
-			$fileinput.val('');
-			$clone = $fileinput.clone(true);
-			$fileinput.replaceWith($clone);
-
-			$fileinput = $clone;
-		}
-	});
-}
 
 $url.keypress(function (e) {
 	if (e.which === 13) {
@@ -259,21 +131,7 @@ $url.keypress(function (e) {
 
 				$field.input_csv('add', ',', fileId);
 
-				if(data.type.substring(0,6) == 'image/') {
-					li.prepend($('<img src="tiki-download_file.php?fileId=' + fileId + '&display&height=24" height="24">'));
-				} else if(data.type == 'application/pdf') {
-					li.prepend($('<img height="16" width="16" title="application/pdf" alt="application/pdf" src="img/icons/mime/pdf.png">'));
-				} else if(data.type.indexOf("sheet") != -1) {
-					li.prepend($('<img height="16" width="16" title="'+ data.type +'" alt="'+ data.type +'" src="img/icons/mime/xls.png">'));
-				} else if(data.type.indexOf("zip") != -1) {
-					li.prepend($('<img height="16" width="16" title="'+ data.type +'" alt="'+ data.type +'" src="img/icons/mime/zip.png">'));
-				} else if (data.type.substring(0,6) == 'video/') {
-					li.prepend($('<img height="16" width="16" title="'+ data.type +'" alt="'+ data.type +'" src="img/icons/mime/flv.png">'));
-				} else if (data.type.indexOf("word") != -1) {
-					li.prepend($('<img height="16" width="16" title="'+ data.type +'" alt="'+ data.type +'" src="img/icons/mime/doc.png">'));
-				} else {
-					li.prepend($('<img height="16" width="16" title="'+ data.type +'" alt="'+ data.type +'" src="img/icons/mime/default.png">'));
-				}
+				li.prepend($.fileTypeIcon(fileId, data));
 				li.append($('<label>{{icon _id=cross alt="{tr}Remove{/tr}"}}</label>'));
 				li.find('img.icon').click(function () {
 					$field.input_csv('delete', ',', fileId);

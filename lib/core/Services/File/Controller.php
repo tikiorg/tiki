@@ -21,6 +21,20 @@ class Services_File_Controller
 		$this->utilities = new Services_File_Utilities;
 	}
 
+	function action_uploader($input)
+	{
+		$gal_info = $this->checkTargetGallery($input);
+
+		return array(
+			'title' => tr('File Upload'),
+			'galleryId' => $gal_info['galleryId'],
+			'limit' => abs($input->limit->int()),
+			'files' => array_map(function ($fileId) {
+				return TikiDb::get()->table('tiki_files')->fetchRow(['fileId', 'name' => 'filename', 'type' => 'filetype'], ['fileId' => $fileId]);
+			}, array_filter((array) $input->file->int())),
+		);
+	}
+
 	function action_upload($input)
 	{
 		$gal_info = $this->checkTargetGallery($input);

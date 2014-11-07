@@ -564,6 +564,10 @@ if ( ! empty( $prefs['header_custom_js'] ) ) {
 	$headerlib->add_js($prefs['header_custom_js']);
 }
 
+if ($prefs['feature_file_galleries'] == 'y') {
+	$headerlib->add_jsfile('lib/jquery_tiki/files.js');
+}
+
 if ($prefs['feature_trackers'] == 'y') {
 	$headerlib->add_jsfile('lib/jquery_tiki/tiki-trackers.js');
 

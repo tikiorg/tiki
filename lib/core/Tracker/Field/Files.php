@@ -142,28 +142,8 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 			$value = $requestData[$ins_id];
 			$fileIds = explode(',', $value);
 
-			// Add manually uploaded files (non-HTML5 browsers only)
-			if (isset($_FILES[$ins_id]['name']) && is_array($_FILES[$ins_id]['name'])) {
-				foreach (array_keys($_FILES[$ins_id]['name']) as $index) {
-					$fileIds[] = $this->handleUpload(
-						$galleryId,
-						array(
-							'name' => $_FILES[$ins_id]['name'][$index],
-							'type' => $_FILES[$ins_id]['type'][$index],
-							'size' => $_FILES[$ins_id]['size'][$index],
-							'tmp_name' => $_FILES[$ins_id]['tmp_name'][$index],
-						)
-					);
-				}
-			}
-
 			// Remove missed uploads
 			$fileIds = array_filter($fileIds);
-
-			// Keep only the last files if a limit is applied
-			if ($count) {
-				$fileIds = array_slice($fileIds, -$count);
-			}
 
 			// Obtain the info for display and filter by type if specified
 			$fileInfo = $this->getFileInfo($fileIds);
@@ -175,7 +155,15 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 					$fileId = 0;
 				}
 			}
-			$value = implode(',', array_filter($fileIds));
+
+			// Keep only the last files if a limit is applied
+			if ($count) {
+				$fileIds = array_filter($fileIds);
+				$fileIds = array_slice($fileIds, -$count);
+				$value = implode(',', $fileIds);
+			} else {
+				$value = implode(',', array_filter($fileIds));
+			}
 		} else {
 			$value = $this->getValue();
 
@@ -208,7 +196,6 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 			$perms = TikiLib::lib('tiki')->get_local_perms($user, $galleryId, 'file gallery', $galinfo, false);		//get_perm_object($galleryId, 'file gallery', $galinfo);
 			$canUpload = $perms['tiki_p_upload_files'] === 'y';
 		}
-
 
 		return array(
 			'galleryId' => $galleryId,
