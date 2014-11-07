@@ -1,4 +1,4 @@
-{* $Id: upgrade_new_in_14.tpl 51581 2014-06-05 14:26:44Z lphuberdeau $ *}
+{* $Id$ *}
 
 <div class="media">
     <img class="pull-left" src="img/icons/large/wizard_upgrade48x48.png" alt="{tr}Upgrade Wizard{/tr}" title="{tr}Upgrade Wizard{/tr}"/>
