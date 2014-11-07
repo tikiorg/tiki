@@ -137,7 +137,7 @@ body.fullscreen {
 }
 #debugconsole {
   background: #222222;
-  color: #777777;
+  color: #9d9d9d;
   padding: 5px;
   border: 2px solid #080808;
   font-size: 1em;
@@ -1221,7 +1221,7 @@ body.tiki_wiki #comments {
   background: #222222;
   opacity: 0.75;
   width: 100%;
-  color: #777777;
+  color: #9d9d9d;
   padding: 5px 10px;
 }
 .wp-sign {
