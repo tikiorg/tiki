@@ -6095,17 +6095,7 @@ button.close {
 .btn {
   border-radius: 8px;
 }
-.navbar-default .navbar-nav > li > a {
-  background: url('../images/options/blueberry/siteheader.jpg') -260px -200px no-repeat transparent;
-  border-radius: 4px;
-  margin-right: 1em;
-}
-.navbar-default .navbar-nav > li > a {
-  border-radius: 6px;
-  background: #1377a9;
-}
 .navbar-default .navbar-nav > li > a:hover {
-  border-radius: 6px;
   background: #10628b;
 }
 .navbar-nav .open .dropdown-menu li {
@@ -6130,9 +6120,6 @@ button.close {
   font-weight: 500;
   border-radius: 3px;
   background: url('../images/options/blueberry/siteheader.jpg') no-repeat -260px -200px;
-}
-.navbar-default .navbar-nav > li > a.dropdown-toggle {
-  border-radius: 6px 6px 0 0;
 }
 .dropdown-menu label,
 .dropdown-menu strong {
