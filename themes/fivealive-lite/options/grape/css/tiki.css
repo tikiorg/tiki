@@ -6137,6 +6137,9 @@ button.close {
   background: transparent;
   color: #8e286a;
 }
+.topbar .navbar {
+  min-height: 20px;
+}
 /* black */
 /* white */
 /* automatically choose the correct arrow/text color */
@@ -6794,7 +6797,7 @@ hr {
 .topbar .navbar-nav > li > a,
 .topbar .navbar > li > a {
   padding-top: 4px;
-  padding-bottom: 5px;
+  padding-bottom: 4px;
   line-height: 1;
 }
 #col2 .panel,
@@ -6870,10 +6873,6 @@ textarea,
 .footer_liner a,
 .footer_liner a:visited {
   color: #a52873;
-}
-.tiki .navbar-nav > li > a {
-  padding-bottom: 5px;
-  padding-top: 5px;
 }
 .navbar-nav .open .dropdown-menu,
 .navbar-nav .open .dropdown-menu li,

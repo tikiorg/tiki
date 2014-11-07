@@ -6136,6 +6136,9 @@ button.close {
   background: transparent;
   color: #333333;
 }
+.topbar .navbar {
+  min-height: 20px;
+}
 /* black */
 /* white */
 /* automatically choose the correct arrow/text color */
