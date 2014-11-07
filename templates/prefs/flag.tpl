@@ -13,6 +13,6 @@
 		{if $p.hint}
 			<div class="help-block">{$p.hint|simplewiki}</div>
 		{/if}
-	</div>
 	{include file="prefs/shared-dependencies.tpl"}
+	</div>
 </div>
