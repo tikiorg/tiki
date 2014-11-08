@@ -33,17 +33,13 @@
 	{/if}
 {/if}
 {if $prefs.fgal_tracker_existing_search eq 'y'}
-	<fieldset>
-		<legend>{tr}Existing files{/tr}</legend>
-		<input type="text" class="search" placeholder="{tr}Search query{/tr}">
-		{if $prefs.fgal_elfinder_feature eq 'y'}
-			{button href='tiki-list_file_gallery.php' _text="{tr}Browse files{/tr}"
-				_onclick="return openElFinderDialog(this, {ldelim}defaultGalleryId:{if !isset($field.options_array[8]) or $field.options_array[8] eq ''}{if empty($field.options_array[0])}0{else}{$field.options_array[0]|escape}{/if}{else}{$field.options_array[8]|escape}{/if},deepGallerySearch:{if empty($field.options_array[6])}0{else}{$field.options_array[6]|escape}{/if},getFileCallback:function(file,elfinder){ldelim}window.handleFinderFile(file,elfinder){rdelim},eventOrigin:this{rdelim});"
-				title="{tr}Browse files{/tr}"}
-		{/if}
-		<ol class="results tracker-item-files">
-		</ol>
-	</fieldset>
+	{if $prefs.fgal_elfinder_feature eq 'y'}
+		{button href='tiki-list_file_gallery.php' _text="{tr}Browse files{/tr}"
+			_onclick="return openElFinderDialog(this, {ldelim}defaultGalleryId:{if !isset($field.options_array[8]) or $field.options_array[8] eq ''}{if empty($field.options_array[0])}0{else}{$field.options_array[0]|escape}{/if}{else}{$field.options_array[8]|escape}{/if},deepGallerySearch:{if empty($field.options_array[6])}0{else}{$field.options_array[6]|escape}{/if},getFileCallback:function(file,elfinder){ldelim}window.handleFinderFile(file,elfinder){rdelim},eventOrigin:this{rdelim});"
+			title="{tr}Browse files{/tr}"}
+	{else}
+		<a href="{service controller=file action=browse galleryId=$galleryId limit=$limit|default:100}" class="btn btn-default browse-files">{tr}Browse Files{/tr}</a>
+	{/if}
 {/if}
 {if $prefs.fgal_upload_from_source eq 'y' and $field.canUpload}
 	<fieldset>
@@ -68,46 +64,81 @@
 $('.files-field.uninitialized').removeClass('uninitialized').each(function () {
 var $self = $(this);
 var $files = $('.current-list', this);
+var $warning = $('.alert', this);
 var $field = $('.input', this);
-var $search = $('.search', this);
 var $url = $('.url', this);
 var replaceFile = $(this).is('.replace');
 
+function toggleWarning() {
+	var limit = $self.data('limit');
+	if (limit) {
+		if ($files.children().length > limit) {
+			$warning.show();
+			$files.children().css('text-decoration', 'line-through');
+			$files.children().slice(-5).css('text-decoration', '');
+		} else {
+			$files.children().css('text-decoration', '');
+			$warning.hide();
+		}
+	}
+}
+
+function addFile(fileId, type, name) {
+	var li = $('<li>').appendTo($files);
+	li.text(name);
+
+	$field.input_csv('add', ',', fileId);
+
+	li.prepend($.fileTypeIcon(fileId, { type: type, name: name }));
+	li.append($('<label>{{icon _id=cross alt="{tr}Remove{/tr}"}}</label>'));
+	li.find('img.icon').click(function () {
+		$field.input_csv('delete', ',', fileId);
+		$(this).closest('li').remove();
+		toggleWarning();
+	});
+				
+	if (replaceFile && $self.data('firstfile') > 0) {	
+		li.prev('li').remove();
+	}
+
+	if (! $self.data('firstfile')) {
+		$self.data('firstfile', fileId);
+	}
+
+	toggleWarning();
+}
+
 $field.hide();
+toggleWarning();
 
 $self.find('.btn.upload-files').clickModal({
 	success: function (data) {
 		$.each(data.files, function (k, file) {
-			var li = $('<li>').appendTo($files);
-			li.text(file.name);
-
-			$field.input_csv('add', ',', file.fileId);
-
-			li.prepend($.fileTypeIcon(file.fileId, file));
-			li.append($('<label>{{icon _id=cross alt="{tr}Remove{/tr}"}}</label>'));
-			li.find('img.icon').click(function () {
-				$field.input_csv('delete', ',', file.fileId);
-				$(this).closest('li').remove();
-			});
-						
-			if (replaceFile && $self.data('firstfile') > 0) {	
-				li.prev('li').remove();
-			}
-
-			if (! $self.data('firstfile')) {
-				$self.data('firstfile', file.fileId);
-			}
+			addFile(file.fileId, file.type, file.name);
 		});
 
 		$.closeModal({});
 	}
 });
 
+$self.find('.btn.browse-files').clickModal({
+	size: 'modal-lg',
+	success: function (data) {
+		$.each(data.files, function (k, file) {
+			addFile(file.fileId, file.type, file.name);
+		});
+
+		$.closeModal({});
+	}
+});
+
+// Delete for previously existing files
 $files.find('input').hide();
 $files.find('img.icon').click(function () {
 	var fileId = $(this).closest('li').data('file-id');
 	$field.input_csv('delete', ',', fileId);
 	$(this).closest('li').remove();
+	toggleWarning();
 });
 
 $url.keypress(function (e) {
@@ -126,18 +157,7 @@ $url.keypress(function (e) {
 				reference: $this.next('.reference').val()
 			},
 			success: function (data) {
-				var fileId = data.fileId, li = $('<li/>');
-				li.text(data.name);
-
-				$field.input_csv('add', ',', fileId);
-
-				li.prepend($.fileTypeIcon(fileId, data));
-				li.append($('<label>{{icon _id=cross alt="{tr}Remove{/tr}"}}</label>'));
-				li.find('img.icon').click(function () {
-					$field.input_csv('delete', ',', fileId);
-					$this.closest('li').remove();
-				});
-				$files.append(li);
+				addFile(data.fileId, data.type, data.name);
 				$this.val('');
 			},
 			error: function (jqxhr) {
@@ -152,46 +172,6 @@ $url.keypress(function (e) {
 	}
 });
 
-$search.keypress(function (e) {
-	if (e.which === 13) {
-		var results = $(this).parent().find('.results');
-		$search.attr('disabled', true);
-		results.empty();
-
-		$.getJSON('tiki-searchindex.php', {
-			"filter~type": "file",
-			"filter~content": $(this).val(),
-			"filter~filetype": $self.data('filter'),
-			"filter~gallery_id": $self.data('galleryid')
-		}, function (data) {
-			$search.removeAttr('disabled').clearError();
-			$.each(data.result, function () {
-				var item = $('<li/>').append(this.link), icon = $('<label>{{icon _id=add}}</label>'), data = this;
-				item.append(icon);
-				icon.click(function () {
-					var li = $('<li/>');
-					li.text(item.text());
-					li.prepend($('<img src="tiki-download_file.php?fileId=' + data.object_id + '&display&height=24" height="24">'));
-					li.append($('<label>{{icon _id=cross alt="{tr}Remove{/tr}"}}</label>'));
-					li.find('img.icon').click(function () {
-						$field.input_csv('delete', ',', data.object_id);
-						$(this).closest('li').remove();
-					});
-
-					$files.append(li);
-					$field.input_csv('add', ',', data.object_id);
-				});
-
-				results.append(item);
-			});
-
-			if (results.is(':empty')) {
-				$search.showError(tr('No results'));
-			}
-		});
-		return false;
-	}
-});
 window.handleFinderFile = function (file, elfinder) {
 	var hash = "";
 	if (typeof file === "string") {
@@ -212,8 +192,6 @@ window.handleFinderFile = function (file, elfinder) {
 			hash: hash
 		},
 		success: function (data) {
-			var fileId = data.fileId, li = $('<li/>');
-
 			var eventOrigin = $("body").data("eventOrigin");
 			if (eventOrigin) {
 				var $ff = $(eventOrigin).parents(".files-field");
@@ -221,18 +199,7 @@ window.handleFinderFile = function (file, elfinder) {
 				$files = $(".current-list", $ff);
 			}
 
-			li.text(data.name);
-
-			$field.input_csv('add', ',', fileId);
-
-			li.prepend($('<img src="tiki-download_file.php?fileId=' + fileId + '&display&height=24" height="24">'));
-			li.append($('<label>{{icon _id=cross alt="{tr}Remove{/tr}"}}</label>'));
-			li.find('img.icon').click(function () {
-				$field.input_csv('delete', ',', fileId);
-				$(this).closest('li').remove();
-			});
-
-			$files.append(li);
+			addFile(data.fileId, data.type, data.name);
 		},
 		error: function (jqxhr) {
 		},
@@ -245,8 +212,6 @@ window.handleFinderFile = function (file, elfinder) {
 	});
 };
 handleVimeoFile = function (link, data) {
-	var fileId = data.fileId, li = $('<li/>');
-
 	var eventOrigin = link;
 	if (eventOrigin) {
 		var $ff = $(eventOrigin).parents(".files-field");
@@ -254,18 +219,7 @@ handleVimeoFile = function (link, data) {
 		$files = $(".current-list", $ff);
 	}
 
-	li.text(data.file);
-
-	$field.input_csv('add', ',', fileId);
-
-	li.prepend($('<img src="img/icons/vimeo.png" height="16">'));
-	li.append($('<label>{{icon _id=cross alt="{tr}Remove{/tr}"}}</label>'));
-	li.find('img.icon').click(function () {
-		$field.input_csv('delete', ',', fileId);
-		$(this).closest('li').remove();
-	});
-
-	$files.append(li);
+	addFile(data.fileId, data.type, data.name);
 };
 });
 {/jq}
