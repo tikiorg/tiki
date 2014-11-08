@@ -280,7 +280,7 @@ function smarty_block_pagination_links($params, $url, $smarty, &$repeat)
 			}
 
 			if ( $prefs['nextprev_pagination'] != 'n' ) {
-				if ($next_offset_val >= $params['cant'] - 1) {
+				if ($params['offset'] + $params['step'] >= $params['cant']) {
 					$html .= '<li class="disabled"><span>&raquo;</span></li>';
 				} else {
 					$html .= '<li>' . $make_prevnext_link($url . $next_offset, '&raquo;', $params, 'prevnext next', $next_offset_val) . '</li>';
