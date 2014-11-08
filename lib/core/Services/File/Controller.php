@@ -92,6 +92,7 @@ class Services_File_Controller
 			'galleryId' => $gal_info['galleryId'],
 			'limit' => $input->limit->int(),
 			'files' => $this->getFilesInfo((array) $input->file->int()),
+			'typeFilter' => $input->type->text(),
 		];
 	}
 
@@ -104,6 +105,15 @@ class Services_File_Controller
 			'type' => 'file',
 			'gallery_id' => $gal_info['galleryId'],
 		]);
+
+		if ($search = $input->search->text()) {
+			$query->filterContent($search);
+		}
+
+		if ($typeFilter = $input->type->text()) {
+			$query->filterContent($typeFilter, 'filetype');
+		}
+
 		$query->setRange($input->offset->int());
 		$query->setOrder('title_asc');
 		$result = $query->search($lib->getIndex());
@@ -113,6 +123,8 @@ class Services_File_Controller
 			'galleryId' => $gal_info['galleryId'],
 			'results' => $result,
 			'plain' => $input->plain->int(),
+			'search' => $search,
+			'typeFilter' => $typeFilter,
 		];
 	}
 

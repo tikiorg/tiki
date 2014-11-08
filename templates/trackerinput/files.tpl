@@ -38,7 +38,7 @@
 			_onclick="return openElFinderDialog(this, {ldelim}defaultGalleryId:{if !isset($field.options_array[8]) or $field.options_array[8] eq ''}{if empty($field.options_array[0])}0{else}{$field.options_array[0]|escape}{/if}{else}{$field.options_array[8]|escape}{/if},deepGallerySearch:{if empty($field.options_array[6])}0{else}{$field.options_array[6]|escape}{/if},getFileCallback:function(file,elfinder){ldelim}window.handleFinderFile(file,elfinder){rdelim},eventOrigin:this{rdelim});"
 			title="{tr}Browse files{/tr}"}
 	{else}
-		<a href="{service controller=file action=browse galleryId=$galleryId limit=$limit|default:100}" class="btn btn-default browse-files">{tr}Browse Files{/tr}</a>
+		<a href="{service controller=file action=browse galleryId=$galleryId limit=$limit|default:100 type=$field.filter}" class="btn btn-default browse-files">{tr}Browse Files{/tr}</a>
 	{/if}
 {/if}
 {if $prefs.fgal_upload_from_source eq 'y' and $field.canUpload}

@@ -21,7 +21,11 @@
 					</div>
 				</div>
 			</li>
+		{foreachelse}
+			<li>
+				{tr}No files found.{/tr}
+			</li>
 		{/foreach}
 	</ul>
-	{pagination_links resultset=$results}{service controller=file action=list_gallery galleryId=$galleryId plain=1}{/pagination_links}
+	{pagination_links resultset=$results}{service controller=file action=list_gallery galleryId=$galleryId plain=1 search=$search type=$typeFilter}{/pagination_links}
 {/block}
