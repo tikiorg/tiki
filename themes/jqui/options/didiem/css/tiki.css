@@ -1,4 +1,4 @@
-/*  didiem/tiki.css - the didiem theme option file for the jQui themes of Tiki Wiki CMS Groupware. */
+/*  didiem.css - the didiem theme option file for the jQui themes of Tiki Wiki CMS Groupware. */
 /*  jqui/css/tiki.css - the Jqui theme style sheet for Tiki Wiki CMS Groupware. */
 /*! normalize.css v3.0.2 | MIT License | git.io/normalize */
 html {
@@ -257,8 +257,8 @@ th {
 }
 @font-face {
   font-family: 'Glyphicons Halflings';
-  src: url('../vendor/twitter/bootstrap/fonts/fontawesome-webfont.eot');
-  src: url('../vendor/twitter/bootstrap/fonts/fontawesome-webfont.eot?#iefix') format('embedded-opentype'), url('../vendor/twitter/bootstrap/fonts/fontawesome-webfont.woff') format('woff'), url('../vendor/twitter/bootstrap/fonts/fontawesome-webfont.ttf') format('truetype'), url('../vendor/twitter/bootstrap/fonts/fontawesome-webfont.svg#fontawesome-webfont') format('svg');
+  src: url('../../../vendor/fortawesome/font-awesome/fonts/fontawesome-webfont.eot');
+  src: url('../../../vendor/fortawesome/font-awesome/fonts/fontawesome-webfont.eot?#iefix') format('embedded-opentype'), url('../../../vendor/fortawesome/font-awesome/fonts/fontawesome-webfont.woff') format('woff'), url('../../../vendor/fortawesome/font-awesome/fonts/fontawesome-webfont.ttf') format('truetype'), url('../../../vendor/fortawesome/font-awesome/fonts/fontawesome-webfont.svg#fontawesome-webfont') format('svg');
 }
 .glyphicon {
   position: relative;
@@ -909,7 +909,7 @@ a {
 a:hover,
 a:focus {
   color: #8bbb47;
-  text-decoration: underline;
+  text-decoration: none;
 }
 a:focus {
   outline: thin dotted;
@@ -5477,7 +5477,7 @@ button.close {
   right: 0;
   bottom: 0;
   left: 0;
-  z-index: 1050;
+  z-index: 1040;
   -webkit-overflow-scrolling: touch;
   outline: 0;
 }
@@ -5547,10 +5547,10 @@ button.close {
 }
 .modal-body {
   position: relative;
-  padding: 20px;
+  padding: 15px;
 }
 .modal-footer {
-  padding: 20px;
+  padding: 15px;
   text-align: right;
   border-top: 1px solid #e5e5e5;
 }
@@ -5591,7 +5591,7 @@ button.close {
 }
 .tooltip {
   position: absolute;
-  z-index: 1030;
+  z-index: 1070;
   display: block;
   visibility: visible;
   font-size: 12px;
@@ -5691,7 +5691,7 @@ button.close {
   position: absolute;
   top: 0;
   left: 0;
-  z-index: 1010;
+  z-index: 1060;
   display: none;
   max-width: 276px;
   padding: 1px;
