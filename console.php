@@ -45,7 +45,7 @@ $console = new Tiki\Command\Application;
 
 $console->add(new Tiki\Command\ConfigureCommand);
 if (is_file($local_php) || TikiInit::getEnvironmentCredentials()) {
-	require 'db/tiki-db.php';
+	require_once 'db/tiki-db.php';
 	$console->add(new Tiki\Command\InstallCommand);
 	$console->add(new Tiki\Command\UpdateCommand);
 } else {

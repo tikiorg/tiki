@@ -292,7 +292,9 @@ class FileGalLib extends TikiLib
 		}
 
 		$gal_info = $this->get_file_gallery_info((int)$galleryId);
-		$this->transformImage($path, $data, $size, $gal_info, $type, $metadata);
+		if (0 === strpos($type, 'image/')) {
+			$this->transformImage($path, $data, $size, $gal_info, $type, $metadata);
+		}
 
 		$smarty = TikiLib::lib('smarty');
 		$filesTable = $this->table('tiki_files');
@@ -1106,7 +1108,9 @@ class FileGalLib extends TikiLib
 			return false;
 		}
 
-		$this->transformImage($path, $data, $size, $gal_info, $type, $metadata);
+		if (0 === strpos($type, 'image/')) {
+			$this->transformImage($path, $data, $size, $gal_info, $type, $metadata);
+		}
 
 		$filesTable = $this->table('tiki_files');
 		$fileDraftsTable = $this->table('tiki_file_drafts');
