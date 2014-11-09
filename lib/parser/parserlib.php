@@ -2748,7 +2748,7 @@ if ( \$('#$id') ) {
 							if (!empty($this->option['page'])) {
 								$button .= 'page='.urlencode($this->option['page']).'&amp;';
 							}
-							$button .= 'hdr='.$nb_hdrs.'">' . smarty_function_icon(array('name' => 'edit')).'</a></div>';
+							$button .= 'hdr='.$nb_hdrs.'">' . smarty_function_icon(array('name' => 'edit'), $smarty).'</a></div>';
 						} else {
 							$button = '';
 						}
