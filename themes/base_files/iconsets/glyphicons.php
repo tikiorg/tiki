@@ -62,7 +62,7 @@ $icons = array(
 	'import' => array( 
 		'class' => 'glyphicon glyphicon-import',
 	),
-	'info' => array( 
+	'information' => array( 
 		'class' => 'glyphicon glyphicon-info-sign',
 	),
 	'link' => array( 

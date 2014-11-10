@@ -70,7 +70,7 @@ function smarty_block_remarksbox($params, $content, $smarty, &$repeat)
 		break;
 	default:
 		$class = 'alert-info';
-		$icon = 'info';
+		$icon = 'information';
 		break;
 	}
 	

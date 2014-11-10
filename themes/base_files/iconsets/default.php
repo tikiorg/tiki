@@ -240,7 +240,7 @@ $icons = array( //Icons of the icon set
 	'index' => array( 
 		'class' => 'fa fa-spinner fa-fw',
 	),
-	'info' => array( 
+	'information' => array( 
 		'class' => 'fa fa-info-circle fa-fw',
 	),
 	'list' => array( 

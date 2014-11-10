@@ -228,7 +228,7 @@ $icons = array(
 	'index' => array( 
 		'image_src' => 'img/icons/table_refresh.png',
 	),
-	'info' => array( 
+	'information' => array( 
 		'image_src' => 'img/icons/information.png',
 	),
 	'link' => array( 

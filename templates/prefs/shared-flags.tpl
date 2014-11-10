@@ -4,7 +4,7 @@
 	</a>
 {elseif $p.description}
 	<a class="tikihelp" title="{$p.name|escape}: {$p.description|escape} {if $p.separator && $p.type neq 'multiselector'}{tr}Separator is {/tr}<b>{$p.separator|simplewiki}</b>{/if}">
-		{icon name="info"}
+		{icon name="information"}
 	</a>
 {/if}
 
