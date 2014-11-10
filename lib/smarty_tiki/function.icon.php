@@ -93,8 +93,12 @@ function smarty_function_icon($params, $smarty)
 		include('themes/base_files/iconsets/' . $prefs['theme_iconset'] . '.php'); //load icon set info from preference setting TODO: 1)first check if the file exist, if not, load the default 2)enhance this to consider iconsets in self-contained themes (eg: themes/jqui/iconsets/)
 		
 		if (isset($icons) and array_key_exists($name, $icons)) { //if icon is defined in the iconset, use it
-			$icon_class = $icons[$name]['class'];
 			$tag = $settings['icon_tag'];
+			$icon_class = '';
+			
+			if (isset($icons[$name]['class'])) { //use class defined for the icon if set
+				$icon_class = $icons[$name]['class'];
+			}
 			
 			if ($tag == 'img') { //manage legacy image icons (eg: png, gif, etc)
 				$src = $icons[$name]['image_src'];
@@ -121,28 +125,50 @@ function smarty_function_icon($params, $smarty)
 			$html = "<$tag class=\"icon icon-$name $icon_class\"></$tag>";
 		}
 		
-		if (!empty($params['href']) or !empty($params['title'])) { //generate a link for the icon if href or title (for tips) parameter is not empty. This will produce a link element (<a>) around the icon. If you want a button element (<button>), use the {button} smarty_tiki function
-			//collect params
-			if (!empty($params['title'])) { //use href if set
-				$a_href = $params['href']; 
-			}
-			else {
-				$a_href = '#';
-			}
-			if (!empty($params['title'])) { //add title if set
+		if (isset($params['href']) or isset($params['title'])) { //generate a link for the icon if href or title (for tips) parameter is set. This will produce a link element (<a>) around the icon. If you want a button element (<button>), use the {button} smarty_tiki function
+			//collect link components
+			$a_title = '';
+			if (!empty($params['title'])) { //add title if not empty
 				$a_title = $params['title'];
 			}
 			else {
-				$a_title = '';
+				empty($a_title);
 			}
-			if (isset($params['class'])) { //use classes instead of the default bootstrap
+
+			$a_class = '';
+			if (isset($params['class'])) { //if set, use these classes instead of the default bootstrap
 				$a_class = $params['class'];
 			}
 			else {
-				$a_class = 'btn btn-default btn-sm';
+				$a_class = 'btn btn-default btn-sm'; //the default classes to be used
 			}
-			//assemble link
-			$html = "<a href='$a_href' title='$a_title' class='$a_class'>$html</a>";
+
+			$a_href = '';
+			if (!empty($params['href'])) { //use href if not empty
+				$a_href = 'href="' . $params['href'] . '"';
+			}
+			else {
+				empty($a_href); //if not set than don't generate this attribute 
+			}
+	
+			$a_datatoggle = '';
+			if (isset($params['data-toggle'])) { //add data-toggle if set
+				$a_datatoggle = 'data-toggle="' . $params['data-toggle'] . '"';
+			}
+			else {
+				empty($a_datatoggle); //if not set than don't generate this attribute 
+			}
+					
+			$a_onclick = '';
+			if (isset($params['onclick'])) { //add onclick if set
+				$a_onclick = 'onclick="' . $params['onclick'] . '"';
+			}
+			else {
+				empty($a_onclick); //if not set than don't generate this attribute 
+			}
+
+			//assemble the link from the components
+			$html = "<a class='$a_class' title='$a_title' $a_href $a_datatoggle $a_onclick>$html</a>";
 		}
 		else {//if href or title is not set, display the assembled icon as it is
 			$html = $html;

@@ -240,6 +240,9 @@ $icons = array(
 	'list' => array( 
 		'image_src' => 'img/icons/application_view_list.png',
 	),
+	'log' => array( 
+		'image_src' => 'img/icons/book.png',
+	),
 	'menu' => array(
 		'image_src' => 'img/icons/application_side_tree.png',
 	),
@@ -285,6 +288,9 @@ $icons = array(
 	'rss' => array(
 		'image_src' => 'img/icons/feed.png',
 	),
+	'screencapture' => array(
+		'image_src' => 'img/icons/camera.png',
+	),
 	'settings' => array(
 		'image_src' => 'img/icons/wrench.png',
 	),
@@ -310,7 +316,13 @@ $icons = array(
 		'image_src' => 'img/icons/tag_blue.png',
 	),
 	'theme' => array(
+		'image_src' => 'img/icons/image.png',
+	),
+	'themegenerator' => array(
 		'image_src' => 'img/icons/palette.png',
+	),
+	'translate' => array(
+		'image_src' => 'img/icons/world_edit.png',
 	),
 	'trash' => array(
 		'image_src' => 'img/icons/bin.png',

@@ -29,12 +29,8 @@
 	</a>
 {elseif $permission_link.mode eq 'icon'}
 	{strip}
-	<a class="link" href="{$permission_link.url|escape}">
-		{if $permission_link.active}
-			{icon _id=key_active title=$permission_link.label}
-		{else}
-			{icon _id=key title=$permission_link.label}
-		{/if}
+	<a class="link btn {if $permission_link.active}btn-warning {else} btn-default{/if} btn-sm" href="{$permission_link.url|escape}" title="{$permission_link.label}">
+		{icon name="permission"}
 		<span class="sr-only">{$permission_link.label|escape}</span>
 		{if $permission_link.count}
 			<span class="badge">{$permission_link.count|escape}</span>

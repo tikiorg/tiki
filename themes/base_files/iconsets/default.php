@@ -55,7 +55,7 @@ $icons = array( //Icons of the icon set
 		'class' => 'fa fa-link fa-fw',
 	),
 	'admin_copyright' => array( 
-		'class' => 'fa fa-legal fa-fw',
+		'class' => 'fa fa-copyright fa-fw',
 	),
 	'admin_directory' => array( 
 		'class' => 'fa fa-folder-o fa-fw',
@@ -276,6 +276,9 @@ $icons = array( //Icons of the icon set
 	'ok' => array(
 		'class' => 'fa fa-check-circle fa-fw',
 	),
+	'pdf' => array(
+		'class' => 'fa fa-file-pdf-o fa-fw',
+	),
 	'permission' => array(
 		'class' => 'fa fa-key fa-fw',
 	),
@@ -302,6 +305,9 @@ $icons = array( //Icons of the icon set
 	),
 	'rss' => array(
 		'class' => 'fa fa-rss fa-fw',
+	),
+	'screencapture' => array( 
+		'class' => 'fa fa-camera fa-fw',
 	),
 	'search' => array( 
 		'class' => 'fa fa-search fa-fw',
@@ -333,11 +339,17 @@ $icons = array( //Icons of the icon set
 	'theme' => array(
 		'class' => 'fa fa-image fa-fw',
 	),
+	'themegenerator' => array(
+		'class' => 'fa fa-paint-brush fa-fw',
+	),
 	'trackers' => array(
 		'class' => 'fa fa-database fa-fw',
 	),
 	'trackerfields' => array(
 		'class' => 'fa fa-th-list fa-fw',
+	),
+	'translate' => array(
+		'class' => 'fa fa-flag fa-fw',
 	),
 	'trash' => array(
 		'class' => 'fa fa-trash-o fa-fw',

@@ -81,7 +81,7 @@ $icons = array(
 		'class' => 'glyphicon glyphicon-off',
 	),
 	'permission' => array(
-		'class' => 'glyphicon glyphicon-key',
+		'class' => 'glyphicon glyphicon-lock',
 	),
 	'post' => array(
 		'class' => 'glyphicon glyphicon-pencil',
@@ -97,6 +97,9 @@ $icons = array(
 	),
 	'rss' => array(
 		'class' => 'glyphicon glyphicon-bullhorn',
+	),
+	'screencapture' => array(
+		'class' => 'glyphicon glyphicon-camera',
 	),
 	'settings' => array(
 		'class' => 'glyphicon glyphicon-wrench',
