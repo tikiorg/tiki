@@ -6233,6 +6233,12 @@ button.close {
   background: url('../images/middletopbg.png') repeat-x;
   border-top: 2px solid #fff;
 }
+.topbar .navbar,
+.topbar .navbar-default .navbar-collapse,
+.topbar .navbar-default .navbar-form {
+  border: none;
+  background: transparent;
+}
 .topbar .navbar-nav > li > a,
 .topbar .navbar > li > a {
   padding-top: 4px;
