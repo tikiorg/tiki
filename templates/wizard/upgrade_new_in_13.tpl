@@ -14,6 +14,7 @@
 	    ">
         <img src="img/icons/help.png" alt="" width="16" height="16" class="icon" />
         </a>
+        <br/><br/>
         <fieldset class="table clearfix featurelist">
             <legend>{tr}New Themes{/tr} & {tr}Site layouts (based on 'Bootstrap'){/tr}</legend>
             {preference name=theme_active}

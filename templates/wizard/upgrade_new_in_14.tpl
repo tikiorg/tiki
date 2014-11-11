@@ -14,19 +14,7 @@
 	    ">
         <img src="img/icons/help.png" alt="" width="16" height="16" class="icon" />
         </a>
-        <fieldset class="table clearfix featurelist">
-            <legend>{tr}Federated Search{/tr}</legend>
-            {tr}It allows to integrate results from other sources into the main search results{/tr}
-            <a href="http://doc.tiki.org/Federated+Search" target="tikihelp" class="tikihelp" title="{tr}Federated Search:{/tr}
-                    {tr}The feature uses Elasticsearch's ability to query across multiple indices{/tr}.
-                    <br/><br/>
-                    {tr}Click to read more{/tr}
-	    	        ">
-                <img src="img/icons/help.png" alt="" width="16" height="16" class="icon" />
-            </a>
-            {preference name=federated_enabled}
-            {preference name=federated_elastic_url}
-        </fieldset>
+        <br/><br/>
         <fieldset class="table clearfix featurelist">
             <legend>{tr}New modules{/tr}</legend>
             {tr}A new module called <strong>Module zone</strong> was added{/tr}
@@ -55,8 +43,15 @@
             {/foreach}
         </fieldset>
          <fieldset class="table clearfix featurelist">
-            <legend>{tr}Must Reads{/tr}</legend>
-            <p><i>To be continued... In the meantime, see <a href="http://doc.tiki.org/Must+Reads">http://doc.tiki.org/Must+Reads</a></i></p>
+            <legend>{tr}Other features{/tr}</legend>
+				{preference name=mustread_enabled}
+				<div class="adminoptionboxchild" id="mustread_enabled_childcontainer">
+					{preference name=mustread_tracker}
+				</div>
+	            {preference name=federated_enabled}
+				<div class="adminoptionboxchild" id="federated_enabled_childcontainer">
+					{preference name=federated_elastic_url}
+				</div>
         </fieldset>
     </div>
 </div>
