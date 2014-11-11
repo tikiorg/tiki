@@ -11,7 +11,7 @@ function prefs_mustread_list()
 		'mustread_enabled' => array(
 			'name' => tr('Must Read'),
 			'description' => tr('Allow to assign mandatory readings and track progress.'),
-			'help' => 'Must+Reads+Feature',
+			'help' => 'Must+Reads',
 			'type' => 'flag',
 			'default' => 'n',
 			'dependencies' => ['feature_search', 'feature_trackers'],
