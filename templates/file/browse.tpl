@@ -39,6 +39,9 @@
 					{tr}Click to remove{/tr}
 				</div>
 				<div class="submit">
+					{if $canUpload}
+						<a class="btn btn-default upload-files custom-handling" href="{service controller=file action=uploader galleryId=$galleryId limit=$limit}">{tr}Upload Files{/tr}</a>
+					{/if}
 					<input type="submit" class="btn btn-primary" value="{tr}Select{/tr}">
 				</div>
 			</form>

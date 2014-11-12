@@ -85,26 +85,31 @@ class Services_File_Controller
 
 	function action_browse($input)
 	{
-		$gal_info = $this->checkTargetGallery($input);
+		try {
+			$gal_info = $this->checkTargetGallery($input);
+		} catch (Services_Exception $e) {
+			$gal_info = null;
+		}
 		$input->replaceFilter('file', 'int');
 
 		return [
 			'title' => tr('Browse'),
-			'galleryId' => $gal_info['galleryId'],
+			'galleryId' => $input->galleryId->int(),
 			'limit' => $input->limit->int(),
 			'files' => $this->getFilesInfo($input->asArray('file', ',')),
 			'typeFilter' => $input->type->text(),
+			'canUpload' => (bool) $gal_info,
 		];
 	}
 
 	function action_list_gallery($input)
 	{
-		$gal_info = $this->checkTargetGallery($input);
+		$galleryId = $input->galleryId->int();
 
 		$lib = TikiLib::lib('unifiedsearch');
 		$query = $lib->buildQuery([
 			'type' => 'file',
-			'gallery_id' => $gal_info['galleryId'],
+			'gallery_id' => $galleryId,
 		]);
 
 		if ($search = $input->search->text()) {
@@ -121,7 +126,7 @@ class Services_File_Controller
 
 		return [
 			'title' => tr('Gallery List'),
-			'galleryId' => $gal_info['galleryId'],
+			'galleryId' => $galleryId,
 			'results' => $result,
 			'plain' => $input->plain->int(),
 			'search' => $search,
