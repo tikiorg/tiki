@@ -261,11 +261,11 @@ $icons = array(
 	'ok' => array(
 		'image_src' => 'img/icons/accept.png',
 	),
+	'pdf' => array(
+		'image_src' => 'img/icons/page_white_acrobat.png',
+	),
 	'permission' => array(
 		'image_src' => 'img/icons/key.png',
-	),
-	'permission-active' => array(
-		'image_src' => 'img/icons/key_active.png',
 	),
 	'plugin' => array(
 		'image_src' => 'img/icons/plugin.png',

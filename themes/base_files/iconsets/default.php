@@ -282,9 +282,6 @@ $icons = array( //Icons of the icon set
 	'permission' => array(
 		'class' => 'fa fa-key fa-fw',
 	),
-	'permission-active' => array(
-		'class' => 'fa fa-key fa-fw',
-	),
 	'plugin' => array(
 		'class' => 'fa fa-puzzle-piece fa-fw',
 	),
