@@ -437,6 +437,18 @@ class Comments extends TikiLib
 
 			if (!empty($info['outbound_mails_reply_link']) && $info['outbound_mails_reply_link'] === 'y') {
 				$body = preg_replace('/^.*?Reply Link\: \<[^\>]*\>.*\r?\n/m', '', $body);		// remove previous reply links to reduce clutter and confusion
+
+				// remove "empty" lines at the end
+				$lines = preg_split("/(\r\n|\n|\r)/", $body);
+				$body = '';
+				$len = count($lines) - 1;
+				$found = false;
+				for ($line = $len; $line > 0; $line-- ) {
+					if ($found || ! preg_match('/^\s*\>*\s*[\-]*\s*$/', $lines[$line])) {
+						$body = "{$lines[$line]}\r\n$body";
+						$found = true;
+					}
+				}
 			}
 
 			// Remove 're:' and [forum]. -rlpowell
