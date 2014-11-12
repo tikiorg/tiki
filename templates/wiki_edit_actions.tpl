@@ -63,7 +63,7 @@ return false;
 		{/if}
 	{/if}
 	{if $page|lower ne 'sandbox'}
-	<input type="submit" class="wikiaction btn btn-link" title="{tr}Cancel the edit, you will lose your changes.{/tr}" name="cancel_edit" value="{tr}Cancel Edit{/tr}" onclick="needToConfirm=false;">
+	<input type="submit" class="wikiaction btn btn-default" title="{tr}Cancel the edit, you will lose your changes.{/tr}" name="cancel_edit" value="{tr}Cancel Edit{/tr}" onclick="needToConfirm=false;">
 	{/if}
 {/if}
 </div>
