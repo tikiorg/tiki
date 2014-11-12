@@ -1,5 +1,5 @@
 @import url("//fonts.googleapis.com/css?family=Lato");
-/*  The lemon theme option file for the FiveAlive and FiveAlive-lite themes of Tiki Wiki CMS Groupware. */
+/*  The lemon theme option file for the FiveAlive theme of Tiki Wiki CMS Groupware. */
 /*  The FiveAlive theme style sheet for Tiki Wiki CMS Groupware. */
 /*! normalize.css v3.0.2 | MIT License | git.io/normalize */
 html {
@@ -258,8 +258,8 @@ th {
 }
 @font-face {
   font-family: 'Glyphicons Halflings';
-  src: url('../vendor/twitter/bootstrap/fonts/glyphicons-halflings-regular.eot');
-  src: url('../vendor/twitter/bootstrap/fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('../vendor/twitter/bootstrap/fonts/glyphicons-halflings-regular.woff') format('woff'), url('../vendor/twitter/bootstrap/fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('../vendor/twitter/bootstrap/fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
+  src: url('../../../../../vendor/twitter/bootstrap/fonts/glyphicons-halflings-regular.eot');
+  src: url('../../../../../vendor/twitter/bootstrap/fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('../../../../../vendor/twitter/bootstrap/fonts/glyphicons-halflings-regular.woff') format('woff'), url('../../../../../vendor/twitter/bootstrap/fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('../../../../../vendor/twitter/bootstrap/fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
 }
 .glyphicon {
   position: relative;
