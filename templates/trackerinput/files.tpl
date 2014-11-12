@@ -121,9 +121,20 @@ $self.find('.btn.upload-files').clickModal({
 	}
 });
 
+$self.find('.btn.browse-files').on('click', function () {
+	if (! $(this).data('initial-href')) {
+		$(this).data('initial-href', $(this).attr('href'));
+	}
+
+	// Before the dialog handler triggers, replace the href with one including current files
+	$(this).attr('href', $(this).data('initial-href') + '&file=' + $field.val());
+});
 $self.find('.btn.browse-files').clickModal({
 	size: 'modal-lg',
 	success: function (data) {
+		$files.empty();
+		$field.val('');
+
 		$.each(data.files, function (k, file) {
 			addFile(file.fileId, file.type, file.name);
 		});

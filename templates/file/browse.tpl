@@ -25,6 +25,15 @@
 			<form method="post" action="{service controller=file action=browse galleryId=$galleryId}" data-gallery-id="{$galleryId|escape}" data-limit="{$limit|escape}">
 				<h4>{tr}Current Selection{/tr}</h4>
 				<ul class="nav nav-pills nav-stacked">
+					{foreach $files as $file}
+						<li>
+							<a href="{$file.fileId|sefurl:'file'}" data-type="file" data-object="{$file.fileId|escape}">
+								{$file.name|iconify:$file.type}
+								{$file.label|escape}
+							</a>
+							<input type="hidden" name="file[]" value="{$file.fileId|escape}"/>
+						</li>
+					{/foreach}
 				</ul>
 				<div class="help-block">
 					{tr}Click to remove{/tr}
@@ -35,4 +44,7 @@
 			</form>
 		</div>
 	</div>
+	{jq}
+		$('.file-browser').trigger('selection-update');
+	{/jq}
 {/block}

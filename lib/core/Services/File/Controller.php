@@ -86,12 +86,13 @@ class Services_File_Controller
 	function action_browse($input)
 	{
 		$gal_info = $this->checkTargetGallery($input);
+		$input->replaceFilter('file', 'int');
 
 		return [
 			'title' => tr('Browse'),
 			'galleryId' => $gal_info['galleryId'],
 			'limit' => $input->limit->int(),
-			'files' => $this->getFilesInfo((array) $input->file->int()),
+			'files' => $this->getFilesInfo($input->asArray('file', ',')),
 			'typeFilter' => $input->type->text(),
 		];
 	}
@@ -240,7 +241,7 @@ class Services_File_Controller
 	private function getFilesInfo($files)
 	{
 		return array_map(function ($fileId) {
-			return TikiDb::get()->table('tiki_files')->fetchRow(['fileId', 'name' => 'filename', 'type' => 'filetype'], ['fileId' => $fileId]);
+			return TikiDb::get()->table('tiki_files')->fetchRow(['fileId', 'name' => 'filename', 'label' => 'name', 'type' => 'filetype'], ['fileId' => $fileId]);
 		}, array_filter($files));
 	}
 }
