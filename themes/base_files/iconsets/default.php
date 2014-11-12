@@ -183,6 +183,9 @@ $icons = array( //Icons of the icon set
 	'cache' => array(
 		'class' => 'fa fa-trash-o fa-fw',
 	),
+	'change' => array(
+		'class' => 'fa fa-edit fa-fw',
+	),
 	'check' => array(
 		'class' => 'fa fa-check-square-o fa-fw',
 	),
@@ -201,8 +204,14 @@ $icons = array( //Icons of the icon set
 	'delete' => array(
 		'class' => 'fa fa-times fa-fw',
 	),
+	'disable' => array(
+		'class' => 'fa fa-minus-square fa-fw',
+	),
 	'edit' => array(
 		'class' => 'fa fa-edit fa-fw',
+	),
+	'enable' => array(
+		'class' => 'fa fa-check-square fa-fw',
 	),
 	'envelope' => array(
 		'class' => 'fa fa-envelope-o fa-fw',
@@ -292,7 +301,7 @@ $icons = array( //Icons of the icon set
 		'class' => 'fa fa-print fa-fw',
 	),
 	'redo' => array(
-		'class' => 'fa fa-share fa-fw',
+		'class' => 'fa fa-repeat fa-fw',
 	),
 	'refresh' => array(
 		'class' => 'fa fa-refresh fa-fw',
@@ -328,7 +337,7 @@ $icons = array( //Icons of the icon set
 		'class' => 'fa fa-eye-slash fa-fw',
 	),
 	'success' => array(
-		'class' => 'fa fa-check-circle fa-fw',
+		'class' => 'fa fa-check fa-fw',
 	),
 	'tag' => array(
 		'class' => 'fa fa-tag fa-fw',
@@ -352,7 +361,7 @@ $icons = array( //Icons of the icon set
 		'class' => 'fa fa-trash-o fa-fw',
 	),
 	'undo' => array(
-		'class' => 'fa fa-reply fa-fw',
+		'class' => 'fa fa-undo fa-fw',
 	),
 	'user' => array(
 		'class' => 'fa fa-user fa-fw',

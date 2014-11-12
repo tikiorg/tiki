@@ -128,26 +128,23 @@
 </nav>
 
 {if $tikifeedback}
-	{remarksbox type="note" title="{tr}Note{/tr}"}
-		{tr}The following list of changes has been applied:{/tr}
-		<ul>
+	{remarksbox type="feedback" title="{tr}The following list of changes has been applied{/tr}"}
+		<ul class="list-unstyled">
 		{section name=n loop=$tikifeedback}
 			<li>
-				<p>
 			{if $tikifeedback[n].st eq 0}
-				{icon _id=delete alt="{tr}Disabled{/tr}" style="vertical-align: middle"}
+				{icon name="disable"}
 			{elseif $tikifeedback[n].st eq 1}
-				{icon _id=accept alt="{tr}Enabled{/tr}" style="vertical-align: middle"}
+				{icon name="enable"}
 			{elseif $tikifeedback[n].st eq 2}
-				{icon _id=accept alt="{tr}Changed{/tr}" style="vertical-align: middle"}
+				{icon name="change"}
 			{elseif $tikifeedback[n].st eq 4}
-				{icon _id=arrow_undo alt="{tr}Reset{/tr}" style="vertical-align: middle"}
+				{icon name="undo"}
 			{else}
-				{icon _id=information alt="{tr}Information{/tr}" style="vertical-align: middle"}
+				{icon name="information"}
 			{/if}
-					{if $tikifeedback[n].st ne 3}{tr}Preference{/tr} {/if}<strong>{tr}{$tikifeedback[n].mes|stringfix}{/tr}</strong><br>
-					{if $tikifeedback[n].st ne 3}(<em>{tr}Preference name:{/tr}</em> {$tikifeedback[n].name}){/if}
-				</p>
+				{if $tikifeedback[n].st ne 3}{tr}Preference{/tr} {/if}<strong>{tr}{$tikifeedback[n].mes|stringfix}{/tr}</strong>
+				{if $tikifeedback[n].st ne 3}(<small>{tr}Preference name:{/tr} {$tikifeedback[n].name})</small>{/if}
 			</li>
 		{/section}
 		</ul>

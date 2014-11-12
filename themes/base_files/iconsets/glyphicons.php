@@ -38,8 +38,14 @@ $icons = array(
 	'delete' => array(
 		'class' => 'glyphicon glyphicon-remove',
 	),
+	'disable' => array(
+		'class' => 'glyphicon glyphicon-minus-sign',
+	),
 	'edit' => array(
 		'class' => 'glyphicon glyphicon-edit',
+	),
+	'enable' => array(
+		'class' => 'glyphicon glyphicon-ok-sign',
 	),
 	'envelope' => array(
 		'class' => 'glyphicon glyphicon-envelope',
@@ -75,7 +81,7 @@ $icons = array(
 		'class' => 'glyphicon glyphicon-bell',
 	),
 	'ok' => array( 
-		'class' => 'glyphicon glyphicon-ok',
+		'class' => 'glyphicon glyphicon-ok-sign',
 	),
 	'off' => array( 
 		'class' => 'glyphicon glyphicon-off',

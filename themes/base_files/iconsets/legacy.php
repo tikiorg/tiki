@@ -180,6 +180,9 @@ $icons = array(
 	'cache' => array(
 		'image_src' => 'img/icons/database_refresh.png',
 	),
+	'change' => array(
+		'image_src' => 'img/icons/pencil.png',
+	),
 	'check' => array(
 		'image_src' => 'img/icons/select.gif',
 	),
@@ -195,8 +198,14 @@ $icons = array(
 	'delete' => array(
 		'image_src' => 'img/icons/cross.png',
 	),
+	'disable' => array(
+		'image_src' => 'img/icons/delete.png',
+	),
 	'edit' => array(
 		'image_src' => 'img/icons/page_edit.png',
+	),
+	'enable' => array(
+		'image_src' => 'img/icons/accept.png',
 	),
 	'envelope' => array(
 		'image_src' => 'img/icons/email.png',
@@ -310,7 +319,7 @@ $icons = array(
 		'image_src' => 'img/icons/no-eye.png',
 	),
 	'success' => array(
-		'image_src' => 'img/icons/accept.png',
+		'image_src' => 'img/icons/tick.png',
 	),
 	'tag' => array(
 		'image_src' => 'img/icons/tag_blue.png',
