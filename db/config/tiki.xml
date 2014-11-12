@@ -33,7 +33,7 @@
 			<file>%kernel.root_dir%/lib/banners/bannerlib.php</file>
 		</service>
 		<service id="tiki.lib.bigbluebutton" class="BigBlueButtonLib">
-			<file>%kernel.root_dir%/lib/bigbluebutton.php</file>
+			<file>%kernel.root_dir%/lib/bigbluebuttonlib.php</file>
 		</service>
 		<service id="tiki.lib.blog" class="BlogLib">
 			<file>%kernel.root_dir%/lib/blogs/bloglib.php</file>
