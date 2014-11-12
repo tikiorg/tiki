@@ -8,8 +8,12 @@
 	<ul class="media-list">
 		{foreach from=$results item=row}
 			<li class="media">
-				<div class="media-object pull-left">
-					{$row.filename|iconify:$row.filetype}
+				<div class="media-object media-left">
+					{if $row.filetype|truncate:6:'' eq 'image/'}
+						<img src="{$row.object_id|sefurl:'thumbnail'}"/>
+					{else}
+						{$row.filename|iconify:$row.filetype}
+					{/if}
 				</div>
 				<div class="media-body">
 					<h4 class="media-heading">{object_link type=$row.object_type id=$row.object_id}</h4>
@@ -18,6 +22,9 @@
 					</div>
 					<div>
 						{$row.description|escape}
+					</div>
+					<div class="small">
+						{tr _0=$row.modification_date|tiki_short_datetime}Last modification: %0{/tr}
 					</div>
 				</div>
 			</li>

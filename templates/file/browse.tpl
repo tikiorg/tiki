@@ -28,7 +28,7 @@
 					{foreach $files as $file}
 						<li>
 							<a href="{$file.fileId|sefurl:'file'}" data-type="file" data-object="{$file.fileId|escape}">
-								{$file.name|iconify:$file.type}
+								{$file.name|iconify:$file.type:$file.fileId}
 								{$file.label|escape}
 							</a>
 							<input type="hidden" name="file[]" value="{$file.fileId|escape}"/>
