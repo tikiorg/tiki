@@ -551,8 +551,10 @@ class Comments extends TikiLib
 					foreach ($output['parts'] as $part) {
 						if (array_key_exists('disposition', $part)) {
 							if ($part['disposition'] == 'attachment') {
-								if (strlen($part['d_parameters']['filename']) > 0) {
+								if (!empty($part['d_parameters']['filename'])) {
 									$part_name = $part['d_parameters']['filename'];
+								} else if (preg_match('/filename=([^;]*)/', $part['d_parameters']['atend'], $mm)) {		// not sure what this is but it seems to have the filename in it
+									$part_name = $mm[1];
 								} else {
 									$part_name = "Unnamed File";
 								}
