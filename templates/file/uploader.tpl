@@ -11,7 +11,7 @@
 				<span class="sr-only"><span class="count">0</span>% Complete</span>
 			</div>
 		</div>
-		<input type="file" name="file[]" {if $limit gt 0}multiple{/if} />
+		<input type="file" name="file[]" {if $limit gt 0}multiple{/if} {if $typeFilter}accept="{$typeFilter|escape}"{/if} />
 		<p class="drop-message text-center">
 			{tr}Or drop files here from your file manager.{/tr}
 		</p>

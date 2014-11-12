@@ -29,6 +29,7 @@ class Services_File_Controller
 			'title' => tr('File Upload'),
 			'galleryId' => $gal_info['galleryId'],
 			'limit' => abs($input->limit->int()),
+			'typeFilter' => $input->type->text(),
 			'files' => $this->getFilesInfo((array) $input->file->int()),
 		);
 	}

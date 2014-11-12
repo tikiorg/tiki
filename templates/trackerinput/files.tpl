@@ -29,7 +29,7 @@
 			{wikiplugin _name='vimeo' fromFieldId=$field.fieldId|escape fromItemId=$item.itemId|escape galleryId=$field.galleryId|escape}{/wikiplugin}
 		</fieldset>
 	{else}
-		<a href="{service controller=file action=uploader galleryId=$galleryId limit=$limit|default:100}" class="btn btn-default upload-files">{tr}Upload Files{/tr}</a>
+		<a href="{service controller=file action=uploader galleryId=$galleryId limit=$limit|default:100 type=$field.filter}" class="btn btn-default upload-files">{tr}Upload Files{/tr}</a>
 	{/if}
 {/if}
 {if $prefs.fgal_tracker_existing_search eq 'y'}
