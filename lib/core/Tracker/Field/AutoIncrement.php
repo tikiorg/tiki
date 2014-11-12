@@ -74,6 +74,7 @@ class Tracker_Field_AutoIncrement extends Tracker_Field_Abstract implements Trac
 
 	protected function renderInnerOutput($context = array())
 	{
+		$value = $this->getValue();
 		$append = $this->getOption('prepend');
 		if (!empty($append)) {
 			$value = "<span class='formunit'>$append</span>" . $value;
