@@ -4346,7 +4346,15 @@ class TrackerLib extends TikiLib
 			}
 			include_once('lib/webmail/tikimaillib.php');
 			if ( $simpleEmail == "n" ) {
-				$desc = $this->get_isMain_value($trackerId, $itemId);
+				$mail_main_value_fieldId = $this->get_main_field($trackerId);
+				$mail_main_value_field = $tracker_definition->getField($mail_main_value_fieldId);
+				if ($mail_main_value_field['type'] == 'r') {
+					// Item Link is special case as field value is not the displayed text. There might be other such field types.
+					$handler = $this->get_field_handler($mail_main_value_field);
+					$desc = $handler->getItemLabel($this->get_item_value($trackerId, $itemId, $mail_main_value_fieldId));
+				} else {
+					$desc = $this->get_item_value($trackerId, $itemId, $mail_main_value_fieldId);
+				}
 				if ($tracker_info['doNotShowEmptyField'] === 'y') {
 					// remove empty fields if tracker says so
 					$the_data = preg_replace('/\[-\[.*?\]-\] -\[\(.*?\)\]-:\n\n----------\n/', '', $the_data);
