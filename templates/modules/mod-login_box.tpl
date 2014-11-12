@@ -116,11 +116,10 @@ if (jqueryTiki.no_cookie) {
 		{if $mode eq "popup"}
 			<div class="siteloginbar_popup dropdown btn-group pull-right">
                 <button type="button" class="btn btn-link dropdown-toggle" data-toggle="dropdown">
-				    <a href="tiki-login.php"></a>
-					    {tr}Log in{/tr}
-					    <span class="caret"></span>
+                    {tr}Log in{/tr}
+					<span class="caret"></span>
                 </button>
-				<div class="siteloginbar_poppedup {*panel panel-body*} dropdown-menu pull-right">
+				<div class="siteloginbar_poppedup dropdown-menu pull-right modal-sm"><div class="panel-body">
 					{capture assign="close_tags"}</div></div>{$close_tags}{/capture}
 		{/if}
 		<form name="loginbox" class="form" id="loginbox-{$module_logo_instance}" action="{$login_module.login_url|escape}"
@@ -224,7 +223,7 @@ function doChallengeResponse() {
 			<div {if $mode eq 'header'}class="text-right" style="display:inline;"{/if}>
 				{strip}
 				{if $module_params.show_forgot eq 'y' && $prefs.forgotPass eq 'y'}
-					<div class="navbar-default"><ul {if $mode eq 'popup'}class="navbar-nav"{/if}><li class="pass"><a {*class="linkmodule"*} href="tiki-remind_password.php" title="{tr}Click here if you've forgotten your password{/tr}">{tr}I forgot my password{/tr}</a></li>
+					<div><ul {if $mode eq 'popup'}class="list-unstyled"{/if}><li class="pass"><a href="tiki-remind_password.php" title="{tr}Click here if you've forgotten your password{/tr}">{tr}I forgot my password{/tr}</a></li>
 				{/if}
 				{if $module_params.show_register eq 'y' && $prefs.allowRegister eq 'y'}
 						{if $mode eq 'header' && $module_params.show_forgot eq 'y' && $prefs.forgotPass eq 'y'}
