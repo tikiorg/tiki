@@ -22,7 +22,7 @@
 			</div>
 		</div>
 		<div class="col-md-3 selection hidden">
-			<form method="post" action="{service controller=file action=browse galleryId=$galleryId}" data-gallery-id="{$galleryId|escape}" data-limit="{$limit|escape}">
+			<form method="post" action="{service controller=file action=browse galleryId=$galleryId}" data-gallery-id="{$galleryId|escape}" data-limit="{$limit|escape}" data-limit-reached-message="{tr}Too many files selected. De-select some files before adding more.{/tr}">
 				<h4>{tr}Current Selection{/tr}</h4>
 				<ul class="nav nav-pills nav-stacked">
 					{foreach $files as $file}
