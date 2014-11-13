@@ -92,15 +92,23 @@ class Services_File_Controller
 			$gal_info = null;
 		}
 		$input->replaceFilter('file', 'int');
+		$type = $input->type->text();
 
 		return [
 			'title' => tr('Browse'),
 			'galleryId' => $input->galleryId->int(),
 			'limit' => $input->limit->int(),
 			'files' => $this->getFilesInfo($input->asArray('file', ',')),
-			'typeFilter' => $input->type->text(),
+			'typeFilter' => $type,
 			'canUpload' => (bool) $gal_info,
+			'list_view' => (substr($type, 0, 6) == 'image/') ? 'thumbnail_gallery' : 'list_gallery',
 		];
+	}
+
+	function action_thumbnail_gallery($input)
+	{
+		// Same as list gallery, different template
+		return $this->action_list_gallery($input);
 	}
 
 	function action_list_gallery($input)

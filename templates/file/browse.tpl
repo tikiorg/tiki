@@ -7,7 +7,7 @@
 {block name="content"}
 	<div class="row file-browser">
 		<div class="col-md-9">
-			<form class="form-inline no-ajax" method="get" action="{service controller=file action=list_gallery plain=1}">
+			<form class="form-inline no-ajax" method="get" action="{service controller=file action=$list_view plain=1}">
 				<div class="form-group">
 					<label class="sr-only" for="search-field">{tr}Search{/tr}</label>
 					<input class="form-control" name="search" type="search" id="search-field" placeholder="{tr}Search...{/tr}"/>
@@ -18,7 +18,7 @@
 			</form>
 			<h4>{tr}Select files{/tr}</h4>
 			<div class="gallery-list">
-				{service_inline controller=file action=list_gallery galleryId=$galleryId plain=1 type=$typeFilter}
+				{service_inline controller=file action=$list_view galleryId=$galleryId plain=1 type=$typeFilter}
 			</div>
 		</div>
 		<div class="col-md-3 selection hidden">
