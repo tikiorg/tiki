@@ -91,6 +91,7 @@ if (isset($_REQUEST["save"])) {
 	if (empty($_REQUEST['threadOrdering'])) $_REQUEST['threadOrdering'] = '';
 	if (empty($_REQUEST['threadStyle'])) $_REQUEST['threadStyle'] = '';
 	if (empty($_REQUEST['commentsPerPage'])) $_REQUEST['commentsPerPage'] = '';
+	if (empty($_REQUEST['image'])) $_REQUEST['image'] = '';
 	if ($_REQUEST["section"] == '__new__') $_REQUEST["section"] = $_REQUEST["new_section"];
 	// Check for last character being a / or a \
 	if (substr($_REQUEST["att_store_dir"], -1) != "\\" && substr($_REQUEST["att_store_dir"], -1) != "/" && $_REQUEST["att_store_dir"] != "") {
@@ -99,6 +100,7 @@ if (isset($_REQUEST["save"])) {
 
 	$_REQUEST['forumLanguage'] = htmlspecialchars(isset($_REQUEST["forumLanguage"]) ? $_REQUEST["forumLanguage"] : '');
 
+	$tx = TikiDb::get()->begin();
 	$fid = $commentslib->replace_forum(
 		$_REQUEST["forumId"], $_REQUEST["name"], $_REQUEST["description"],
 		$controlFlood, $_REQUEST["floodInterval"], $_REQUEST["moderator"],
@@ -121,6 +123,10 @@ if (isset($_REQUEST["save"])) {
 		$_REQUEST['att_list_nb'], $_REQUEST['topics_list_lastpost_title'],
 		$_REQUEST['topics_list_lastpost_avatar'], $_REQUEST['topics_list_author_avatar'], $_REQUEST['forumLanguage']
 	);
+
+	$attributelib = TikiLib::lib('attribute');
+	$attributelib->set_attribute('forum', $fid, 'tiki.object.image', (int) $_REQUEST['image']);
+
 	$cat_type = 'forum';
 	$cat_objid = $fid;
 	$cat_desc = substr($_REQUEST["description"], 0, 200);
@@ -128,6 +134,9 @@ if (isset($_REQUEST["save"])) {
 	$cat_href = "tiki-view_forum.php?forumId=" . $cat_objid;
 	include_once ("categorize.php");
 	$_REQUEST["forumId"] = $fid;
+
+	$tx->commit();
+
 	$cookietab = 1;
 }
 if (!empty($_REQUEST['duplicate']) && !empty($_REQUEST['name']) && !empty($_REQUEST['forumId'])) {
@@ -148,6 +157,10 @@ if (!empty($_REQUEST['duplicate']) && !empty($_REQUEST['name']) && !empty($_REQU
 }
 if ($_REQUEST["forumId"]) {
 	$info = $commentslib->get_forum($_REQUEST["forumId"]);
+
+	$attributelib = TikiLib::lib('attribute');
+	$attributes = $attributelib->get_attributes('forum', $_REQUEST['forumId']);
+	$info['image'] = isset($attributes['tiki.object.image']) ? $attributes['tiki.object.image'] : '';
 } else {
 	$info = array();
 	$info["name"] = '';
@@ -206,12 +219,16 @@ if ($_REQUEST["forumId"]) {
 	$info["forum_last_n"] = 0;
 	$info["is_flat"] = 'n';
 	$info["forumLanguage"] = '';
+	$info['image'] = '';
 }
 $smarty->assign('forumId', $_REQUEST["forumId"]);
 foreach ($info as $key => $value) {
-	if ($key == "section") // conflict with section management
-	$smarty->assign("forumSection", $value);
-	else $smarty->assign($key, $value);
+	if ($key == "section") {
+		// conflict with section management
+		$smarty->assign("forumSection", $value);
+	} else {
+		$smarty->assign($key, $value);
+	}
 }
 if (!isset($_REQUEST["sort_mode"])) {
 	$sort_mode = 'name_asc';

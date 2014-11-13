@@ -118,7 +118,7 @@ class Services_File_Controller
 		$lib = TikiLib::lib('unifiedsearch');
 		$query = $lib->buildQuery([
 			'type' => 'file',
-			'gallery_id' => $galleryId,
+			'gallery_id' => (string) $galleryId,
 		]);
 
 		if ($search = $input->search->text()) {

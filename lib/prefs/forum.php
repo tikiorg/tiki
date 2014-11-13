@@ -8,6 +8,14 @@
 function prefs_forum_list()
 {
 	return array(
+		'forum_image_file_gallery' => array(
+			'name' => tr('Forum image file gallery'),
+			'description' => tr('File gallery used to store images for forums'),
+			'type' => 'text',
+			'default' => 0,
+			'profile_reference' => 'file_gallery',
+			'dependencies' => ['feature_file_galleries'],
+		),
 		'forum_comments_no_title_prefix' => array(
 			'name' => tra("Do not prefix messages titles by 'Re: '"),
             'description' => tra(''),

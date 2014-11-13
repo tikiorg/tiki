@@ -18,10 +18,10 @@
 			<fieldset class="table">
 				<legend>{tr}Activate the feature{/tr}</legend>
 				{preference name=feature_forums visible="always"}
+				{preference name=home_forum}
+				{preference name=forum_image_file_gallery}
 			</fieldset>
 			
-			{preference name=home_forum}
-
 			<fieldset>
 				<legend>
 					{tr}Features{/tr}{help url="Forum"}

@@ -174,6 +174,17 @@
                 </div>
             </div>
         {/if}
+		{if $prefs.feature_file_galleries eq 'y' && $prefs.forum_image_file_gallery}
+			<div class="form-group">
+				<label class="col-sm-4 control-label" for="image">{tr}Image{/tr}</label>
+				<div class="col-sm-8">
+					{file_selector name="image" value=$image type="image/*" galleryId=$prefs.forum_image_file_gallery}
+					<div class="help-block">
+						{tr}Image symbolizing the forum.{/tr}
+					</div>
+				</div>
+			</div>
+		{/if}
         <div class="form-group">
             <label class="col-sm-4 control-label" for="is_flat">{tr}Only allow replies to the first message (flat forum){/tr}</label>
             <div class="col-sm-8 checkbox">

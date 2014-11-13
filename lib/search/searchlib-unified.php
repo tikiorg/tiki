@@ -524,6 +524,7 @@ class UnifiedSearchLib
 		if (isset ($types['file'])) {
 			$fileSource = new Search_ContentSource_FileSource;
 			$aggregator->addContentSource('file', $fileSource);
+			$aggregator->addContentSource('file gallery', new Search_ContentSource_FileGallerySource);
 			$aggregator->addGlobalSource(new Search_GlobalSource_FileAttachmentSource($fileSource));
 		}
 

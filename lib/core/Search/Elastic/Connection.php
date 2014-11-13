@@ -161,7 +161,8 @@ class Search_Elastic_Connection
 	{
 		$current = $this->rawApi('/_aliases');
 		foreach ($current as $indexName => $info) {
-			if (0 === strpos($indexName, $aliasName . '_') && 0 === count((array) $info->aliases)) {
+			$hasAlias = isset($info->aliases) && count((array) $info->aliases) > 0;
+			if (0 === strpos($indexName, $aliasName . '_') && ! $hasAlias) {
 				// Matching name, no alias, means currently rebuilding
 				return true;
 			}

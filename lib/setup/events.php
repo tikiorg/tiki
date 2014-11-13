@@ -222,6 +222,11 @@ function tiki_setup_events()
 	$events->bind('tiki.file.delete', 'tiki.file.save');
 	$events->bind('tiki.file.save', 'tiki.save');
 
+	$events->bind('tiki.filegallery.update', 'tiki.filegallery.save');
+	$events->bind('tiki.filegallery.create', 'tiki.filegallery.save');
+	$events->bind('tiki.filegallery.delete', 'tiki.filegallery.save');
+	$events->bind('tiki.filegallery.save', 'tiki.save');
+
 	$events->bind('tiki.forum.update', 'tiki.forum.save');
 	$events->bind('tiki.forum.create', 'tiki.forum.save');
 	$events->bind('tiki.forum.delete', 'tiki.forum.save');

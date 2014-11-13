@@ -8,17 +8,19 @@
 class Search_GlobalSource_FileAttachmentSource implements Search_GlobalSource_Interface
 {
 	private $relationlib;
+	private $attributelib;
 	private $fileSource;
 
 	function __construct(Search_ContentSource_Interface $source)
 	{
 		$this->relationlib = TikiLib::lib('relation');
+		$this->attributelib = TikiLib::lib('attribute');
 		$this->fileSource = $source;
 	}
 
 	function getProvidedFields()
 	{
-		return array('attachment_contents', 'attachments');
+		return array('attachment_contents', 'attachments', 'primary_image');
 	}
 
 	function getGlobalFields()
@@ -31,6 +33,7 @@ class Search_GlobalSource_FileAttachmentSource implements Search_GlobalSource_In
 	function getData($objectType, $objectId, Search_Type_Factory_Interface $typeFactory, array $data = array())
 	{
 		$relations = $this->relationlib->get_relations_from($objectType, $objectId, 'tiki.file.attach');
+		$attributes = $this->attributelib->get_attributes($objectType, $objectId);
 
 		$textual = array();
 		$files = array();
@@ -49,6 +52,7 @@ class Search_GlobalSource_FileAttachmentSource implements Search_GlobalSource_In
 		return array(
 			'attachments' => $typeFactory->multivalue($files),
 			'attachment_contents' => $typeFactory->plaintext(implode(' ', $textual)),
+			'primary_image' => $typeFactory->identifier(isset($attributes['tiki.object.image']) ? $attributes['tiki.object.image'] : ''),
 		);
 	}
 }

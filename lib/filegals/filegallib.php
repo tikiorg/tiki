@@ -275,6 +275,7 @@ class FileGalLib extends TikiLib
 				'object' => $fileId,
 				'galleryId' => $fileInfo['galleryId'],
 				'filetype' => $fileInfo['filetype'],
+				'user' => $GLOBALS['user'],
 			)
 		);
 
@@ -714,6 +715,12 @@ class FileGalLib extends TikiLib
 			foreach ( $filesInfo as $fileInfo ) $this->remove_file($fileInfo, '', true);
 		}
 
+		TikiLib::events()->trigger('tiki.filegallery.delete', [
+			'type' => 'file gallery',
+			'object' => $galleryId,
+			'user' => $GLOBALS['user'],
+		]);
+
 		// If $recurse, also recursively remove children galleries
 		if ( $recurse ) {
 			$galleries = $fileGalleries->fetchColumn(
@@ -835,6 +842,7 @@ class FileGalLib extends TikiLib
 				array('name' => $fgal_info['name'],	'description' => $fgal_info['description']),
 				array('type' => 'file gallery', 'itemId' => $galleryId)
 			);
+			$finalEvent = 'tiki.filegallery.update';
 		} else {
 			unset($fgal_info['galleryId']);
 			$fgal_info['created'] = $this->now;
@@ -846,13 +854,17 @@ class FileGalLib extends TikiLib
 				global $user;
 			    $this->score_event($user, 'fgallery_new');
 			}
+			$finalEvent = 'tiki.filegallery.create';
 		}
-
-		require_once('lib/search/refresh-functions.php');
-		refresh_index('file_galleries', $galleryId);
 
 		$cachelib = TikiLib::lib('cache');
 		$cachelib->empty_type_cache($this->get_all_galleries_cache_type());
+
+		TikiLib::events()->trigger($finalEvent, [
+			'type' => 'file gallery',
+			'object' => $galleryId,
+			'user' => $GLOBALS['user'],
+		]);
 
 		// event_handler($action,$object_type,$object_id,$options);
 		return $galleryId;
@@ -1214,7 +1226,8 @@ class FileGalLib extends TikiLib
 					'object' => $id,
 					'galleryId' => $gal_info['galleryId'],
 					'initialFileId' => $initialFileId,
-					'filetype' => $type
+					'filetype' => $type,
+					'user' => $GLOBALS['user'],
 				)
 			);
 
