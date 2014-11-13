@@ -340,7 +340,7 @@
 				{/if}
 
 				{if $listpages[changes].perms.tiki_p_assign_perm_wiki_page eq 'y'}
-					{permission_link mode=icon type="wiki page" permType=wiki id=$listpages[changes].pageName title=$listpages[changes].pageName}
+					{permission_link {*mode=icon*} type="wiki page" permType=wiki id=$listpages[changes].pageName title=$listpages[changes].pageName}
 				{/if}
 
 				{if $listpages[changes].perms.tiki_p_remove eq 'y'}
