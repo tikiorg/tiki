@@ -343,7 +343,7 @@ $icons = array(
 		'image_src' => 'img/icons/user.png',
 	),
 	'view' => array(
-		'image_src' => 'img/icons/shape_square.png',
+		'image_src' => 'img/icons/magnifier.png',
 	),
 	'warning' => array(
 		'image_src' => 'img/icons/sticky.png',

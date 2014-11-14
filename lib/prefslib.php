@@ -169,24 +169,24 @@ class PreferencesLib
 			$info['popup_html'] = '<ul class="list-unstyled">';
 
 			if (!empty($info['admin'])) {
-				$icon = smarty_function_icon(array( '_id' => 'wrench', 'title' => tra('Admin')), $smarty);
-				$info['popup_html'] .= '<li><a class="icon" href="'.$info['admin'].'">' . $icon . ' ' . tra('Admin') .'</a></li>';
+				$icon = smarty_function_icon(array( 'name' => 'settings'), $smarty);
+				$info['popup_html'] .= '<li><a class="icon" href="'.$info['admin'].'">' . $icon . ' ' . tra('Settings') .'</a></li>';
 			}
 			if (!empty($info['permission'])) {
-				$icon = smarty_function_icon(array( '_id' => 'key', 'title' => tra('Permissions')), $smarty);
+				$icon = smarty_function_icon(array( 'name' => 'permission'), $smarty);
 				$info['popup_html'] .= '<li><a class="icon" href="'.$info['permission'].'">' . $icon . ' ' . tra('Permissions').'</a></li>';
 			}
 			if (!empty($info['view'])) {
-				$icon = smarty_function_icon(array( '_id' => 'magnifier', 'title' => tra('View')), $smarty);
+				$icon = smarty_function_icon(array( 'name' => 'view'), $smarty);
 				$info['popup_html'] .= '<li><a class="icon" href="'.$info['view'].'">' . $icon . ' ' . tra('View').'</a></li>';
 			}
 			if (!empty($info['module'])) {
-				$icon = smarty_function_icon(array( '_id' => 'module', 'title' => tra('Module')), $smarty);
-				$info['popup_html'] .= '<li><a class="icon" href="'.$info['module'].'">' . $icon . ' ' . tra('Module').'</a></li>';
+				$icon = smarty_function_icon(array( 'name' => 'module'), $smarty);
+				$info['popup_html'] .= '<li><a class="icon" href="'.$info['module'].'">' . $icon . ' ' . tra('Modules').'</a></li>';
 			}
 			if (!empty($info['plugin'])) {
-				$icon = smarty_function_icon(array( '_id' => 'plugin', 'title' => tra('Plugin')), $smarty);
-				$info['popup_html'] .= '<li><a class="icon" href="'.$info['plugin'].'">' . $icon . ' ' . tra('Plugin').'</a></li>';
+				$icon = smarty_function_icon(array( 'name' => 'plugin'), $smarty);
+				$info['popup_html'] .= '<li><a class="icon" href="'.$info['plugin'].'">' . $icon . ' ' . tra('Plugins').'</a></li>';
 			}
 			$info['popup_html'] .= '</ul>';
 		}
