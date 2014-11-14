@@ -15,7 +15,11 @@
 {/if}
 
 {if $p.modified and $p.available}
-	<input class="pref-reset system" type="checkbox" name="lm_reset[]" value="{$p.preference|escape}" style="display:none" data-preference-default="{if is_array($p.default)}{$p.default|implode:$p.separator|escape}{else}{$p.default|escape}{/if}">
+	<span class="pref-reset-wrapper">
+		<input class="pref-reset system" type="checkbox" name="lm_reset[]" value="{$p.preference|escape}" style="display:none" data-preference-default="{if is_array($p.default)}{$p.default|implode:$p.separator|escape}{else}{$p.default|escape}{/if}">
+		<a href="#" class="pref-reset-undo tips" title="{tr}Reset{/tr}|{tr}Reset to default value{/tr}">{icon name="undo"}</a>
+		<a href="#" class="pref-reset-redo tips" title="{tr}Restore{/tr}|{tr}Restore current value{/tr}" style="display:none">{icon name="redo"}</a>
+	</span>
 {/if}
 
 {if !empty($p.popup_html)}
