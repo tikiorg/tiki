@@ -213,7 +213,7 @@ if ($isPre) {
 
 	if (! $options['no-packaging'] && important_step("Build packages files (based on the '$tag' tag)")) {
 		build_packages($packageVersion, $tag);
-		echo color("\nUpload the files on SourceForge.\nInstructions can be found here: https://sourceforge.net/apps/trac/sourceforge/wiki/Release%20files%20for%20download\n\n", 'cyan');
+		echo color("\nUpload the files on SourceForge.\nInstructions can be found here: http://sourceforge.net/p/forge/documentation/Files/\n\n", 'cyan');
 	} else {
 		echo color("This was the last step.\n", 'cyan');
 	}
