@@ -496,8 +496,5 @@ function feature_home_pages($partial = false)
 		$tikiIndex['tiki-view_forum.php?forumId=' . $prefs['home_forum']] = tra('Forum:') . $home_forum_name;
 	}
 	
-	// Custom home
-	$tikiIndex['tiki-custom_home.php'] = tra('Custom home');
-
 	return $tikiIndex;
 }

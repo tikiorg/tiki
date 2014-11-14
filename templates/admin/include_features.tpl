@@ -83,7 +83,6 @@
 				{preference name=feature_copyright}
 				{preference name=feature_mailin}				
 					
-				{preference name=feature_custom_home}
 				{preference name=feature_faqs}
 				{preference name=feature_galleries}
 				{preference name=feature_html_pages}	

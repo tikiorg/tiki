@@ -776,15 +776,6 @@ function prefs_feature_list($partial = false)
 			'type' => 'flag',
 			'default' => 'n',
 		),
-		'feature_custom_home' => array(
-			'name' => tra('Custom Home'),
-			'description' => tra('Custom Home'),
-			'help' => 'Custom+Home',
-			'type' => 'flag',
-			'default' => 'n',
-			'view' => 'tiki-custom_home.php',
-			'tags' => array('advanced'),
-		),
 		'feature_mytiki' => array(
 			'name' => tra("Display 'MyTiki' in the application menu"),
 			'description' => tra("Display 'MyTiki' in the application menu"),

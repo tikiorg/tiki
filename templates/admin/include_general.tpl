@@ -256,7 +256,6 @@
 				{preference name=home_forum}
 				{preference name=home_file_gallery}
 				{preference name=home_gallery}
-				{preference name=feature_custom_home}
 
 			</fieldset>
 
