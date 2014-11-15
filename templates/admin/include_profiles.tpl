@@ -478,7 +478,7 @@ $("#repository, #categories").change(function(){
 					<tr>
 						<td>{$entry.short}</td>
 						<td><img id="profile-status-{$k}" alt="{tr}Status{/tr}" src="img/icons/status_{$entry.status}.gif"></td>
-						<td><span id="profile-date-{$k}">{$entry.formatted}</span> <a href="javascript:refreshCache({$k})" title="{tr}Refresh{/tr}">{icon name="refresh"}></a></td>
+						<td><span id="profile-date-{$k}">{$entry.formatted}</span> <a href="javascript:refreshCache({$k})" title="{tr}Refresh{/tr}">{icon name="refresh"}</a></td>
 					</tr>
 				{/foreach}
 			</table>
