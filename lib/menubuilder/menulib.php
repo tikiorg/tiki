@@ -616,6 +616,7 @@ class MenuLib extends TikiLib
 		$ret = array();
 		foreach ($result as $res) {
 			$res['canonic'] = $res['url'];
+			$resourceGroups = array_filter(explode(',', $res['groupname'] ?: ''));
 			if (!$do_not_parse && isset($menu['parse']) && $menu['parse'] === 'y') {
 				$res['name'] = $wikilib->parse_data($res['name'], array('is_html' => ($prefs['menus_item_names_raw'] === 'y')));
 			}
@@ -674,17 +675,11 @@ class MenuLib extends TikiLib
 							}
 						}
 					}
-					$usergroups = $this->get_user_groups($user);
-					if (isset($res['groupname']) and $res['groupname']) {
-						if ( is_array($res['groupname']) ) {
-							$sections = $res['groupname'];
-						} else {
-							$sections = array($res['groupname']);
-						}
-						foreach ($sections as $sec) {
-							if ($sec and !in_array($sec, $usergroups)) {
-								$display = false;
-							}
+					$userGroups = $this->get_user_groups($user);
+					if (count($resourceGroups) > 0) {
+						$intersect = array_intersect($resourceGroups, $userGroups);
+						if (count($intersect) < 1) {
+							$display = false;
 						}
 					}
 				}
