@@ -94,5 +94,85 @@ $custom_css = "themes/{$prefs['theme_active']}/css/custom.css";
 if ( is_readable($custom_css)) {
 	$headerlib->add_cssfile($custom_css, 53);
 }
+
+// prepare $iconset variable to be used for generating icons
+$iconset = array();
+if (!empty($prefs['theme_active']) and file_exists("themes/{$prefs['theme_active']}/icons/custom.php")) { //first lets see if there is a custom.php in the  theme's /icons folder (eg: themes/fivealive-lite/icons/custom.php) and load icons from it
+	include("themes/{$prefs['theme_active']}/icons/custom.php");
+	if (!empty($settings) and !empty($icons)) { //make sure the iconset file is constructed as expected
+		foreach ($icons as &$icon) { //apply settings for each icon
+			if (!empty($icon['tag'])) {
+				$icon['tag'] = $icon['tag'];
+			}
+			else {
+				$icon['tag'] = $settings['icon_tag'];
+			}
+		}
+		unset($icon);
+		$iconset = $icons;
+	}
+}
+if (!empty($prefs['theme_iconset']) and ($prefs['theme_iconset'] == 'theme_specific_iconset') and file_exists("themes/{$prefs['theme_active']}/icons/iconset.php")) { //"theme_specific_icons" setting for the "theme_iconset" preference means that the icons defined for the given theme should be used (eg: themes/fivealive-lite/icons/iconset.php)
+	include("themes/{$prefs['theme_active']}/icons/iconset.php");
+	if (!empty($settings) and !empty($icons)) { //make sure the iconset file is constructed as expected
+		foreach ($icons as &$icon) { //apply settings for each icon
+				if (!empty($icon['tag'])) {
+					$icon['tag'] = $icon['tag'];
+				}
+				else {
+					$icon['tag'] = $settings['icon_tag'];
+				}
+		}
+		unset($icon);
+		$iconset = $iconset + $icons; //add new icons to the icon set while preserving existing icons in the array
+	
+		if (!empty($settings['iconset_source']) and file_exists($settings['source_iconset'])) { //load source icon set if it is defined in the settings
+			include($settings['iconset_source']);
+			if (!empty($settings) and !empty($icons)) { //make sure the iconset file is constructed as expected
+				foreach ($icons as &$icon) { //apply settings for each icon
+					if (!empty($icon['tag'])) {
+						$icon['tag'] = $icon['tag'];
+					}
+					else {
+						$icon['tag'] = $settings['icon_tag'];
+					}
+				}
+				unset($icon);
+				$iconset = $iconset + $icons; //add new icons to the icon set while preserving existing icons in the array
+			}
+		}
+	}
+}
+else { //if the "theme_iconset" preference is set to one of the base icon sets available in themes/base_files/iconsets/ than load icons from it
+	if(file_exists("themes/base_files/iconsets/{$prefs['theme_iconset']}.php")) {
+		include("themes/base_files/iconsets/{$prefs['theme_iconset']}.php"); //load icon set info from preference setting
+		if (!empty($settings) and !empty($icons)) { //make sure the iconset file is constructed as expected
+			foreach ($icons as &$icon) { //apply settings for each icon
+				if (!empty($icon['tag'])) {
+					$icon['tag'] = $icon['tag'];
+				}
+				else {
+					$icon['tag'] = $settings['icon_tag'];
+				}
+			}
+			unset($icon);
+			$iconset = $iconset + $icons; //add new icons to the icon set while preserving existing icons in the array
+		}
+	}
+}
+include("themes/base_files/iconsets/default.php"); //as a last resort add all missing icons from the default icon set
+foreach ($icons as &$icon) { //apply settings for each icon
+	if (!empty($icon['tag'])) {
+		$icon['tag'] = $icon['tag'];
+	}
+	else {
+		$icon['tag'] = $settings['icon_tag'];
+	}
+}
+unset($icon);
+$iconset = $iconset + $icons; //add new icons to the icon set while preserving existing icons in the array
+
+$smarty->assign_by_ref('iconset', $iconset);
+
 $smarty->initializePaths();
 

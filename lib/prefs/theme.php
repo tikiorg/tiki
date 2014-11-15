@@ -20,13 +20,13 @@ function prefs_theme_list()
 	}
 	
 	//get list of base iconsets
-	$iconsets = array();
 	foreach (scandir('themes/base_files/iconsets') as $iconset_file) {
 		if ($iconset_file[0] != '.' && $iconset_file != 'index.php') {
 			include('themes/base_files/iconsets/'. $iconset_file);
 			$iconsets[substr($iconset_file,0,-4)] = $settings['iconset_name'];
 		}
 	}
+	$iconsets['theme_specific_iconset'] = tr('Icons of the selected theme');
 	
 	// TODO : Include pre-defined themes
 	return array(
@@ -36,7 +36,7 @@ function prefs_theme_list()
 			'type' => 'list',
 			'default' => 'default',
 			'options' => $themes,
-            'help' => 'Tiki13#Themes',
+			'help' => 'Tiki13#Themes',
 			'tags' => array('basic'),
 		),
 		'theme_custom' => array(

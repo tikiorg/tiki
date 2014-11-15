@@ -32,7 +32,7 @@ function smarty_function_icon($params, $smarty)
 		$params = array();
 	}
 
-	global $prefs, $tc_theme, $tc_theme_option, $url_path, $base_url, $tikipath;
+	global $prefs, $tc_theme, $tc_theme_option, $url_path, $base_url, $tikipath, $iconset;
 	$tikilib = TikiLib::lib('tiki');
 	$cachelib = TikiLib::lib('cache');
 
@@ -86,37 +86,28 @@ function smarty_function_icon($params, $smarty)
 			$default_width = $default_height = ( strpos($params['_id'], '48x48') !== false ) ? 48 : 32;
 		}
 	}
-	//ICONSET START, work-in-progress, more information: dev.tiki.org/icons
+	//ICONSET START, work-in-progress, more information: dev.tiki.org/icons. $iconset array is prepared by lib/setup/theme.php
 	if (!empty($params['name']) and empty($params['_tag'])){ 
 		$name = $params['name'];
 		
-		include('themes/base_files/iconsets/' . $prefs['theme_iconset'] . '.php'); //load icon set info from preference setting TODO: 1)first check if the file exist, if not, load the default 2)enhance this to consider iconsets in self-contained themes (eg: themes/jqui/iconsets/)
-		
-		if (isset($icons) and array_key_exists($name, $icons)) { //if icon is defined in the iconset, use it
-			$tag = $settings['icon_tag'];
+		if (array_key_exists($name, $iconset)) { //if icon is defined in $iconset, use it
+			$tag = $iconset[$name]['tag'];
 			$icon_class = '';
 			
-			if (isset($icons[$name]['class'])) { //use class defined for the icon if set
-				$icon_class = $icons[$name]['class'];
+			if (isset($iconset[$name]['class'])) { //use class defined for the icon if set
+				$icon_class = $iconset[$name]['class'];
 			}
 			
 			if ($tag == 'img') { //manage legacy image icons (eg: png, gif, etc)
-				$src = $icons[$name]['image_src'];
+				$src = $iconset[$name]['image_src'];
 				$alt = $name;  //use icon name as alternate text
 			}
 		}
-		else { //if icon is not defined in the iconset or preference is not set, than load the default iconset and use its icons
-			include('themes/base_files/iconsets/default.php');
-			if (array_key_exists($name, $icons)) {
-				$icon_class = $icons[$name]['class'];
-				$tag = $settings['icon_tag'];
-			}	
-			else { //if icon is not defined in default iconset, than display bootstrap glyphicon warning-sign. Helps to detect missing icon definitions, typos
+		else { //if icon is not defined in not found in $iconset, than display bootstrap glyphicon warning-sign. Helps to detect missing icon definitions, typos
 				$icon_class = 'glyphicon glyphicon-warning-sign';
 				$tag = 'span';
-			}
 		}
-		
+			
 		//assemble icon, later enhance for svg
 		if ($tag == 'img') { //for images
 			$html = "<span class=\"icon icon-$name $icon_class\"><img src=\"$src\" alt=\"$alt\"></span>";

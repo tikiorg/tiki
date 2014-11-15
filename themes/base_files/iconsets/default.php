@@ -4,8 +4,7 @@
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-//The default icon set associates icon names to icon fonts. It is used as the fallback for all other icon sets.
-
+//This the default icon set, it associates icon names to icon fonts. It is used as fallback for all other icon sets.
 
 // This script may only be included - so its better to die if called directly.
 if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
@@ -23,6 +22,7 @@ $icons = array( //Icons of the icon set
 	'save' => array( //This is the definition of an icon in the icon set. For this one icon all options are explained. The key must be unique, it is the "name" parameter at the icon function, so eg: {icon name="save"} will find 'save' in the array and apply the specified configuration
 		'class' => 'fa fa-save fa-fw', //Class used for a font icon (font-awesome, glyphicon, etc)
 		'image_src' => '', //For images: specify the path inside your Tiki installation including the file name, eg: '/img/icons/disk.png'
+		'tag' => '', //The html tag for the icon. Overrides the $settings "icon_tag" value (see above)
 	),
 	'actions' => array( 
 		'class' => 'fa fa-play-circle fa-fw',
