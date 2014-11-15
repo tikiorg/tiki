@@ -89,15 +89,6 @@
 	</div>
 </div>
 {/tab}
-
-{tab name="{tr}Babelfish links{/tr}"}
-{*------------------------------- Babelfish ----------------------------- *}
-    <h2>{tr}Babelfish links{/tr}</h2>
-
-{preference name=feature_babelfish}
-{preference name=feature_babelfish_logo}
-
-{/tab}
 {tab name="{tr}Customized String Translation{/tr}"}
 {*----------------------------------- Custom translation --------------------*}
     <h2>{tr}Customized String Translation{/tr}</h2>

@@ -1042,21 +1042,6 @@ function prefs_feature_list($partial = false)
 			'default' => 'n',
 			'tags' => array('basic'),
 		),
-		'feature_babelfish' => array(
-			'name' => tra('Yahoo! Babel Fish Translation URLs'),
-			'description' => tra('Show clickable URLs to translate the page to another language using Babel Fish website.'),
-			'type' => 'flag',
-			'hint' => tra('You need to assign somewhere on the page via a module'),
-			'default' => 'n',
-			'tags' => array('experimental'),
-		),
-		'feature_babelfish_logo' => array(
-			'name' => tra('Yahoo! Babel Fish Translation icons'),
-			'description' => tra('Show clickable icons to translate the page to another language using Babel Fish website.'),
-			'hint' => tra('You need to assign somewhere on the page via a module'),
-			'type' => 'flag',
-			'default' => 'n',
-		),
 		'feature_smileys' => array(
 			'name' => tra('Smileys'),
 			'description' => tra('Also known as emoticons'),
