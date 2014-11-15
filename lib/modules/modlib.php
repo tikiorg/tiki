@@ -33,11 +33,11 @@ class ModLib extends TikiLib
 
 	public $cssfiles  = array(
 		'calendar_new'	=> array (
-			'csspath'	=> 'css/calendar.css',
+			'csspath'	=> 'themes/base_files/feature_css/calendar.css',
 			'rank'		=> 20,
 		),
 		'action_calendar'	=> array (
-			'csspath'	=> 'css/calendar.css',
+			'csspath'	=> 'themes/base_files/feature_css/calendar.css',
 			'rank'		=> 20,
 		),
 	);
