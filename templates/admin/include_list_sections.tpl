@@ -12,7 +12,7 @@
 {/remarksbox}
 
 <div class="clearfix">
-	{foreach from=$icons key=page item=info}
+	{foreach from=$admin_icons key=page item=info}
 			{if $info.disabled}
 				{assign var=class value="admbox off advanced"}
 			{else}
