@@ -253,7 +253,7 @@ $("input[name=ins_' . $this->getOption('fieldIdHere') . '], select[name=ins_' . 
 		$list = array();
 		$trklib = TikiLib::lib('trk');
 		foreach ($items as $itemId) {
-			if ($displayFields) {
+			if ($displayFields && $displayFields[0]) {
 				$list[$itemId] = $trklib->concat_item_from_fieldslist($trackerId, $itemId, $displayFields, $status, ' ', $context['list_mode'], $this->getOption('linkToItems'));
 			} else {
 				$list[$itemId] = $trklib->get_isMain_value($trackerId, $itemId);
