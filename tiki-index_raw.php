@@ -51,7 +51,7 @@ if ($prefs['flaggedrev_approval'] == 'y' && isset($_REQUEST['latest']) && $objec
 	$pageRenderer->forceLatest();
 }
 
-$access->check_permission('tiki_p_view');
+$access->check_permission('tiki_p_view', '', 'wiki page', $page);
 
 // BreadCrumbNavigation here
 // Remember to reverse the array when posting the array
