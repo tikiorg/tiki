@@ -22,10 +22,10 @@ $login = '<form name="loginbox" action="tiki-login.php?page=tikiIndex" method="p
 
 $back = '<p><a href="javascript:history.back()">Go back</a></p>';
 
-if (file_exists('templates/styles/site_closed_local.html')) {
-	$html = file_get_contents('templates/styles/site_closed_local.html');
+if (file_exists('themes/base_files/other/site_closed_local.html')) {
+	$html = file_get_contents('themes/base_files/other/site_closed_local.html');
 } else {
-	$html = file_get_contents('templates/styles/site_closed.html');
+	$html = file_get_contents('themes/base_files/other/site_closed.html');
 }
 
 $html = str_replace('{error}', $error, $html);
