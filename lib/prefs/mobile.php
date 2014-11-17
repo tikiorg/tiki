@@ -22,9 +22,9 @@ function prefs_mobile_list()
 
 		'mobile_feature' => array(
 			'name' => tra('Mobile Access'),
-			'description' => tra('New mobile feature since Tiki 7'),
+			'description' => tra('Mobile feature pre Tiki 13'),
 			'help' => 'Mobile',
-			'warning' => tra('Experimental. This feature is under development.'),
+			'warning' => tra('Deprecated. This feature is no longer under development following the switch to bootstrap.'),
 			'type' => 'flag',
 			'dependencies' => array(
 				'feature_perspective',
@@ -33,7 +33,6 @@ function prefs_mobile_list()
 		),
 		'mobile_perspectives' => array(
 			'name' => tra('Mobile Perspectives'),
-			'description' => tra('New mobile feature since Tiki 7'),
 			'help' => 'Mobile',
 			'type' => 'text',
 			'separator' => ',',
