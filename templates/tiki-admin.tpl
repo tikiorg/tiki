@@ -27,20 +27,6 @@
 	{/if}
 	{*{tr}{$description}{/tr}*}
 </div>
-{* Determines which page to include using "page" GET parameter. Default : list-sections
-Add a value in first check when you create a new admin page. *}
-{if in_array($adminpage, array("features", "general", "login", "wiki",
-"gal", "fgal", "articles", "polls", "search", "blogs", "forums", "faqs",
-"trackers", "webmail", "comments", "rss", "directory", "userfiles", "maps",
-"metatags", "performance", "security", "wikiatt", "score", "community", "messages",
-"calendar", "intertiki", "video", "freetags", 
-"i18n", "wysiwyg", "copyright", "category", "module", "look", "textarea",
- "ads", "profiles", "semantic", "plugins", "webservices",
-'sefurl', 'connect', 'metrics', 'payment', 'rating', 'socialnetworks', 'share', "workspace")) or isset($addonadmin) and $addonadmin == 'y'}
-	{assign var="include" value=$smarty.get.page}
-{else}
-	{assign var="include" value="list_sections"}
-{/if}
 
 {if $upgrade_messages|count}
 	{if $upgrade_messages|count eq 1}
@@ -54,12 +40,5 @@ Add a value in first check when you create a new admin page. *}
 		{/foreach}
 	{/remarksbox}
 {/if}
-
-{* seems to be unused? jonnyb: tiki5 
-if $pagetop_msg}
-	{remarksbox type="note" title="{tr}Note{/tr}"}
-		{$pagetop_msg}
-	{/remarksbox}
-{/if*}
 
 {include file="admin/include_$include.tpl"}

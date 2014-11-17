@@ -522,9 +522,6 @@ if (isset($_REQUEST['page'])) {
 		include_once ("admin/include_$adminPage.php");
 		$url = 'tiki-admin.php' . '?page=' . $adminPage;
 	}
-	if (substr($adminPage, 0, 3) == 'ta_') {
-		$smarty->assign('addonadmin', 'y');
-	}
 	if (isset($admin_icons[$adminPage])) {
 		$admin_icon = $admin_icons[$adminPage];
 
@@ -534,7 +531,10 @@ if (isset($_REQUEST['page'])) {
 	}
 	$helpDescription = tr("Help on %0 Config", $admintitle);
 
+	$smarty->assign('include', $adminPage);
+
 } else {
+	$smarty->assign('include', 'list_sections');
 	$smarty->assign('admintitle', 'Configuration Panels');
 	$smarty->assign('description', 'Home Page for Administrators');
 	$smarty->assign('headtitle', breadcrumb_buildHeadTitle($crumbs));
