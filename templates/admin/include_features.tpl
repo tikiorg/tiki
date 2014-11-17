@@ -181,15 +181,6 @@
 
 					<div class="adminoptionboxchild" id="mobile_feature_childcontainer">
 						{preference name=mobile_perspectives}
-						<fieldset>
-							<legend>{tr}Mobile Themes{/tr}</legend>
-						{preference name=mobile_theme_header}
-						{preference name=mobile_theme_content}
-						{preference name=mobile_theme_footer}
-						{preference name=mobile_theme_modules}
-						{preference name=mobile_theme_menus}
-						{preference name=mobile_use_latest_lib}
-						</fieldset>
 					</div>
 			</fieldset>
 

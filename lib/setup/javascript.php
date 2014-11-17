@@ -172,22 +172,6 @@ jqueryTiki.useInlineComment = '.($prefs['feature_inline_comments'] === 'y' ? 'tr
 jqueryTiki.helpurl = "' . ($prefs['feature_help'] === 'y' ? $prefs['helpurl'] : '') . '";
 ';	// NB replace "normal" speeds with int to workaround issue with jQuery 1.4.2
 
-	if ($prefs['mobile_feature'] === 'y' && $prefs['mobile_mode'] === 'y') {
-		$js .= '
-// overrides for prefs for jq in mobile mode
-jqueryTiki.ui = false;
-jqueryTiki.ui_theme = "";
-jqueryTiki.tooltips = false;
-jqueryTiki.autocomplete = false;
-jqueryTiki.superfish = false;
-jqueryTiki.colorbox = false;
-jqueryTiki.tablesorter = false;
-';
-		if ($prefs['feature_ajax'] !== 'y') {
-			$headerlib->add_js_config('var mobile_ajaxEnabled = false;');
-		}
-	}
-
 	if ($prefs['feature_calendar'] === 'y') {
 		$calendarlib = TikiLib::lib('calendar');
 		$firstDayofWeek = $calendarlib->firstDayofWeek();

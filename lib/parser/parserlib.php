@@ -547,11 +547,7 @@ if ( \$('#$id') ) {
 					}
 				}
 
-				if ($prefs['mobile_mode']== 'y') {
-				$ret .= '~np~<a data-role="button" data-inline="true" id="' .$id. '" href="javascript:void(1)" class="editplugin"'.$iconDisplayStyle.'>'.smarty_function_icon(array('_id'=>'wiki_plugin_edit', 'alt'=>tra('Edit Plugin').':'.$plugin_name), $smarty)."</a>~/np~";
-				} else {
 				$ret .= '~np~<a id="' .$id. '" href="javascript:void(1)" class="editplugin"'.$iconDisplayStyle.'>'.smarty_function_icon(array('_id'=>'wiki_plugin_edit', 'alt'=>tra('Edit Plugin').':'.$plugin_name), $smarty)."</a>~/np~";
-				}
 			}
 
 			// End plugin handling
@@ -2740,11 +2736,7 @@ if ( \$('#$id') ) {
 							} else {
 								$iconDisplayStyle = '';
 							}
-							if ($prefs['mobile_mode']== 'y') {
-								$button = '<div class="icon_edit_section"' . $iconDisplayStyle . '><a data-role="button" data-inline="true" href="tiki-editpage.php?';
-							} else {
-								$button = '<div class="icon_edit_section"' . $iconDisplayStyle . '><a title="' . tra('Edit Section') . '" href="tiki-editpage.php?';
-							}
+							$button = '<div class="icon_edit_section"' . $iconDisplayStyle . '><a title="' . tra('Edit Section') . '" href="tiki-editpage.php?';
 							if (!empty($this->option['page'])) {
 								$button .= 'page='.urlencode($this->option['page']).'&amp;';
 							}
@@ -3050,11 +3042,7 @@ if ( \$('#$id') ) {
 
 			$smarty = TikiLib::lib('smarty');
 			include_once('lib/smarty_tiki/function.icon.php');
-			if ($prefs['mobile_mode']== 'y') {
-				$button = '<div class="icon_edit_section"><a data-role="button" data-inline="true" href="tiki-editpage.php?';
-			} else {
-				$button = '<div class="icon_edit_section"><a title="' . tra('Edit Section') . '" href="tiki-editpage.php?';
-			}
+			$button = '<div class="icon_edit_section"><a title="' . tra('Edit Section') . '" href="tiki-editpage.php?';
 			if (!empty($this->option['page'])) {
 				$button .= 'page='.urlencode($this->option['page']).'&amp;';
 			}

@@ -7,22 +7,12 @@
 
 function prefs_mobile_list()
 {
-	global $jquerymobile_version;
-
-	$mobile_themes = array(
-		'' => tra('Default'),
-		'a' => 'A',
-		'b' => 'B',
-		'c' => 'C',
-		'd' => 'D',
-		'e' => 'E',
-	);
 
 	return array(
 
 		'mobile_feature' => array(
 			'name' => tra('Mobile Access'),
-			'description' => tra('Mobile feature pre Tiki 13'),
+			'description' => tra('Mobile feature pre Tiki 13, as of Tiki 14 all it does it to allow you to automatically switch perspective according to the mobile_perspectives perefence.'),
 			'help' => 'Mobile',
 			'warning' => tra('Deprecated. This feature is no longer under development following the switch to bootstrap.'),
 			'type' => 'flag',
@@ -42,76 +32,6 @@ function prefs_mobile_list()
 			),
 			'default' => array(),
 			'profile_reference' => 'perspective',
-		),
-		'mobile_theme_header' => array(
-			'name' => tra('Header Theme'),
-            'description' => tra(''),
-			'hint' => tra('jQuery Mobile Theme'),
-			'help' => "http://jquerymobile.com/demos/$jquerymobile_version/#docs/api/themes.html",
-			'type' => 'list',
-			'options' => $mobile_themes,
-			'dependencies' => array(
-				'mobile_feature',
-			),
-			'default' => '',
-		),
-		'mobile_theme_content' => array(
-			'name' => tra('Content Theme'),
-            'description' => tra(''),
-			'hint' => tra('jQuery Mobile Theme'),
-			'help' => "http://jquerymobile.com/demos/$jquerymobile_version/#docs/api/themes.html",
-			'type' => 'list',
-			'options' => $mobile_themes,
-			'dependencies' => array(
-				'mobile_feature',
-			),
-			'default' => '',
-		),
-		'mobile_theme_footer' => array(
-			'name' => tra('Footer Theme'),
-            'description' => tra(''),
-			'hint' => tra('jQuery Mobile Theme'),
-			'help' => "http://jquerymobile.com/demos/$jquerymobile_version/#docs/api/themes.html",
-			'type' => 'list',
-			'options' => $mobile_themes,
-			'dependencies' => array(
-				'mobile_feature',
-			),
-			'default' => '',
-		),
-		'mobile_theme_modules' => array(
-			'name' => tra('Modules Theme'),
-            'description' => tra(''),
-			'hint' => tra('jQuery Mobile Theme'),
-			'help' => "http://jquerymobile.com/demos/$jquerymobile_version/#docs/api/themes.html",
-			'type' => 'list',
-			'options' => $mobile_themes,
-			'dependencies' => array(
-				'mobile_feature',
-			),
-			'default' => '',
-		),
-		'mobile_theme_menus' => array(
-			'name' => tra('Menus Theme'),
-			'description' => tra('jQuery Mobile Theme'),
-			'help' => "http://jquerymobile.com/demos/$jquerymobile_version/#docs/api/themes.html",
-			'type' => 'list',
-			'options' => $mobile_themes,
-			'dependencies' => array(
-				'mobile_feature',
-			),
-			'default' => '',
-		),
-		'mobile_use_latest_lib' => array(
-			'name' => tra('Use Latest Library'),
-			'description' => tra('Use latest version of the jquery.mobile'),
-			'help' => 'Mobile',
-			'warning' => tra('Uses latest build from jquery.com CDN.'),
-			'type' => 'flag',
-			'dependencies' => array(
-				'mobile_feature',
-			),
-			'default' => 'n',
 		),
 	);
 }

@@ -425,11 +425,7 @@ abstract class Toolbar
 			$params['_menu_text'] = 'y';
 			$params['_menu_icon'] = 'y';
 		}
-		if ($prefs['mobile_mode'] !== 'y') {
-			return smarty_block_self_link($params, $content, $smarty);
-		} else {
-			return str_replace('<a ', '<a data-role="button" ', smarty_block_self_link($params, $content, $smarty));
-		}
+		return smarty_block_self_link($params, $content, $smarty);
 	} // }}}
 
 	protected function setupCKEditorTool($js, $name, $label = '', $icon = '')
@@ -934,10 +930,6 @@ class ToolbarPicker extends Toolbar
             $isWikiLingo = true;
         }
 
-		if ($prefs['mobile_mode'] === 'y') {
-			return '';
-		}
-
 		$tool_prefs = array();
 		$styleType = '';
 
@@ -1137,10 +1129,6 @@ class ToolbarDialog extends Toolbar
 	public static function fromName( $tagName ) // {{{
 	{
 		global $prefs;
-
-		if ($prefs['mobile_mode'] === 'y') {
-			return '';
-		}
 
 		$tool_prefs = array();
 
@@ -2115,11 +2103,7 @@ class ToolbarsList
 
 					if ( !empty($groupHtml) ) {
 						$param = empty($lineBit) ? '' : ' class="toolbar-list"';
-						if ($prefs['mobile_mode'] !== 'y') {
-							$lineBit .= "<span$param>$groupHtml</span>";
-						} else {
-							$lineBit .= "<span$param data-role='controlgroup' data-type='horizontal'>$groupHtml</span>";
-						}
+						$lineBit .= "<span$param>$groupHtml</span>";
 					}
 					if ($bitx == 1) {
 						if (!empty($right)) {

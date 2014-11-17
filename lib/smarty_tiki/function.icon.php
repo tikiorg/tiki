@@ -53,9 +53,6 @@ function smarty_function_icon($params, $smarty)
 	}
 
 	$serialized_params = serialize(array_merge($params, array($current_style, $current_style_option, isset($_SERVER['HTTPS']))));
-	if ($prefs['mobile_feature'] === 'y') {
-		$serialized_params .=  $prefs['mobile_mode'];
-	}
 	$cache_key = TikiLib::contextualizeKey('icons_' . '_' . md5($serialized_params), 'language', 'external');
 	if ( $cached = $cachelib->getCached($cache_key) ) {
 		return $cached;
@@ -295,19 +292,12 @@ function smarty_function_icon($params, $smarty)
 
 		switch ( $tag ) {
 			case 'input_image':
-				if ($prefs['mobile_feature'] !== 'y' || $prefs['mobile_mode'] !== 'y') {
-					$html = '<input type="image"'.$html.' />';
-				} else {
-					$html = '<span data-role="button" data-inline="true"><input type="image"'.$html.' /></span>';
-				}
+				$html = '<input type="image"'.$html.' />';
 				break;
 			case 'img':
 			default:
 				try {
 					$html = smarty_function_html_image($params, $smarty);
-					if ($prefs['mobile_feature'] === 'y' && $prefs['mobile_mode'] === 'y' && (!empty($params['link']) ||!empty($params['href']))) {
-						$html = str_replace('<a ', '<a  data-role="button" data-inline="true"', $html);
-					}
 				} catch (Exception $e) {
 					$html = '<span class="icon error" title="' . tra('Error:') . ' ' . $e->getMessage() . '">?</span>';
 				}

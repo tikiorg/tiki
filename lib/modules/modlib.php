@@ -775,9 +775,6 @@ class ModLib extends TikiLib
 
 		$cachelib = TikiLib::lib('cache');
 		$cacheKey = 'module.' . $moduleName . $prefs['language'];
-		if ($prefs['mobile_feature'] === 'y') {
-			$cacheKey .=  $prefs['mobile_mode'];
-		}
 		$info = $cachelib->getSerialized($cacheKey, 'module');
 
 		if ($info) {

@@ -56,10 +56,7 @@ if ( !isset($_REQUEST['mobile_mode']) || $_REQUEST['mobile_mode'] === 'y' ) {
 				$prefs['feature_inline_comments'] = 'n';
 				$prefs['feature_jquery_tablesorter'] = 'n';
 
-				$prefs['site_layout'] = 'mobile';
-
 				$headerlib = TikiLib::lib('header');
-				$headerlib->add_js('function sfHover() {alert("not working?");}', 100);	// try and override the css menu func
 
 				if ($prefs['feature_shadowbox'] === 'y') {
 					$headerlib
@@ -67,11 +64,6 @@ if ( !isset($_REQUEST['mobile_mode']) || $_REQUEST['mobile_mode'] === 'y' ) {
 						->add_jsfile('vendor/jquery/photoswipe/code.photoswipe.jquery-3.0.5.min.js', 'external')
 						->add_cssfile('vendor/jquery/photoswipe/photoswipe.css');
 				}
-
-				// a few requirements
-				$prefs['feature_html_head_base_tag'] = 'y';
-				$prefs['site_style'] = 'mobile.css'; // set in perspectives but seems to need a nudge here
-				$prefs['style'] = $prefs['site_style'];
 
 				global $base_url;
 				$perspectivelib = TikiLib::lib('perspective');
@@ -105,4 +97,6 @@ if ( !isset($_REQUEST['mobile_mode']) || $_REQUEST['mobile_mode'] === 'y' ) {
 	$prefs['mobile_mode'] = 'n';
 }
 
-setCookieSection('mobile_mode', $prefs['mobile_mode']);
+if ($prefs['mobile_mode'] === 'y') {
+	setCookieSection('mobile_mode', $prefs['mobile_mode']);
+}

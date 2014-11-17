@@ -118,26 +118,14 @@ function smarty_block_tabset($params, $content, $smarty, &$repeat)
 		$ret .= '<div class="clearfix tabs" data-name="' . $smarty_tabset_name . '">' . $notabs;
 
 		$count = 1;
-		if ($prefs['mobile_feature'] === 'y' && $prefs['mobile_mode'] === 'y') {
 
-			$ret .= '<div class="container' . $content_class . '" data-role="navbar"><ul>';
-			foreach ($smarty_tabset[$tabset_index]['tabs'] as $value) {
-				$ret .= '<li>'.
-					'<a href="#" class="tabmark tab'.$count.' '.($count == $cookietab ? 'ui-btn-active' : '').'"' .
-					' onclick="tikitabs('.$count.',this); return false;">'.$value.'</a></li>';
-				++$count;
-			}
-			$ret .= '</ul></div>';
-
-		} else {	// notmal non-mobile rendering
-
-			$ret .= '<ul class="nav nav-tabs">';
-			foreach ($smarty_tabset[$tabset_index]['tabs'] as $value) {
-				$ret .= '<li class="'. $value['active'] .'"><a href="#' . $value['id'] . '" data-toggle="tab">'.$value['label'].'</a></li>';
-				++$count;
-			}
-			$ret .= '</ul>';
+		$ret .= '<ul class="nav nav-tabs">';
+		foreach ($smarty_tabset[$tabset_index]['tabs'] as $value) {
+			$ret .= '<li class="'. $value['active'] .'"><a href="#' . $value['id'] . '" data-toggle="tab">'.$value['label'].'</a></li>';
+			++$count;
 		}
+		$ret .= '</ul>';
+
 		$ret .= "</div>";
 		if ($tabset_index === 1) {
             // override cookie with query cookietab

@@ -246,11 +246,6 @@ function add_watch_icons($descendants, $usercatwatches, $requestid, $categid, $d
 		$tip_add_desc = tra('Watch this category and its descendants');
 		$tip_group = tra('Group watches for this category');
 	}
-	if ($prefs['mobile_mode']== 'y') {
-		$mobile_class_button = ' data-role="button" data-inline="true" ';
-	} else {
-		$mobile_class_button = ' ';
-	}
 	$eye_rem_desc = '&nbsp;&nbsp;<a' .$mobile_class_button . 'href="tiki-browse_categories.php?' .
 									'parentId=' . $requestid . '&amp;watch_event=category_changed&amp;watch_object=' . $categid .
 									'&amp;deep=' . $deep . '&amp;watch_action=remove_desc" class="catname">' .

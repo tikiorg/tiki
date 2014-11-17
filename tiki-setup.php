@@ -408,134 +408,114 @@ if ( $prefs['feature_jquery_carousel'] == 'y' ) {
 	$headerlib->add_jsfile('vendor/jquery/plugins/infinitecarousel/jquery.infinitecarousel3.js');
 }
 
-if ($prefs['mobile_feature'] === 'y' && $prefs['mobile_mode'] === 'y') {
+$headerlib->add_jsfile('lib/swfobject/swfobject.js');
 
-	$headerlib->add_jsfile('lib/jquery_tiki/tiki-jquery.mobile.js');
+if ( $prefs['feature_ajax'] === 'y' ) {
+	if ( $prefs['ajax_autosave'] === 'y' ) {
+		$headerlib->add_jsfile('lib/ajax/autosave.js');
+	}
+}
 
-	$jsmin = $prefs['tiki_minify_javascript'] === 'y' ? '.min' : '';
-	$cssmin = $prefs['tiki_minify_css'] === 'y' ? '.min' : '';
-	if ($prefs['mobile_use_latest_lib'] === 'y') {
-		$headerlib->add_jsfile("//code.jquery.com/mobile/latest/jquery.mobile$jsmin.js");
-		$headerlib->add_cssfile("//code.jquery.com/mobile/latest/jquery.mobile$cssmin.css");
+if ( $prefs['feature_jquery_ui'] == 'y' ) {
+	if ( isset($prefs['javascript_cdn']) && $prefs['javascript_cdn'] == 'google' ) {
+		$headerlib->add_jsfile_dependancy("$url_scheme://ajax.googleapis.com/ajax/libs/jqueryui/$headerlib->jqueryui_version/jquery-ui.min.js");
+	} else if ( isset($prefs['javascript_cdn']) && $prefs['javascript_cdn'] == 'jquery' ) {
+		$headerlib->add_jsfile_dependancy("//code.jquery.com/ui/$headerlib->jqueryui_version/jquery-ui.min.js");
 	} else {
-		// TODO add jQuery CDN when 1.1 is available there
-		$headerlib->add_jsfile("vendor/jquery/jquery-mobile/jquery.mobile-$headerlib->jquerymobile_version$jsmin.js");
-		$headerlib->add_cssfile("vendor/jquery/jquery-mobile/jquery.mobile-$headerlib->jquerymobile_version$cssmin.css");
-	}
-
-
-} else {	// js includes that don't work or aren't needed in mobile mode
-
-	$headerlib->add_jsfile('lib/swfobject/swfobject.js');
-
-	if ( $prefs['feature_ajax'] === 'y' ) {
-		if ( $prefs['ajax_autosave'] === 'y' ) {
-			$headerlib->add_jsfile('lib/ajax/autosave.js');
-		}
-	}
-
-	if ( $prefs['feature_jquery_ui'] == 'y' ) {
-		if ( isset($prefs['javascript_cdn']) && $prefs['javascript_cdn'] == 'google' ) {
-			$headerlib->add_jsfile_dependancy("$url_scheme://ajax.googleapis.com/ajax/libs/jqueryui/$headerlib->jqueryui_version/jquery-ui.min.js");
-		} else if ( isset($prefs['javascript_cdn']) && $prefs['javascript_cdn'] == 'jquery' ) {
-			$headerlib->add_jsfile_dependancy("//code.jquery.com/ui/$headerlib->jqueryui_version/jquery-ui.min.js");
-		} else {
-			if ( $prefs['tiki_minify_javascript'] === 'y' ) {
-				$headerlib->add_jsfile_dependancy("vendor/jquery/jquery-ui/js/jquery-ui-$headerlib->jqueryui_version.min.js");
-			} else {
-				$headerlib->add_jsfile_dependancy("vendor/jquery/jquery-ui/js/jquery-ui-$headerlib->jqueryui_version.js");
-			}
-		}
-
-		if ( $prefs['feature_jquery_ui_theme'] !== 'none' ) {
-			if ( isset($prefs['javascript_cdn']) && $prefs['javascript_cdn'] == 'jquery' ) {
-				$headerlib->add_cssfile("//code.jquery.com/ui/$headerlib->jqueryui_version/themes/{$prefs['feature_jquery_ui_theme']}/jquery-ui.css");
-			} else {
-				$headerlib->add_cssfile('vendor/jquery/jquery-ui-themes/themes/' . $prefs['feature_jquery_ui_theme'] . '/jquery-ui.css');
-			}
-		}
-
-		if ( $prefs['feature_jquery_autocomplete'] == 'y' ) {
-			$headerlib->add_css(
-				'.ui-autocomplete-loading { background: white url("img/spinner.gif") right center no-repeat; }'
-			);
-		}
-		if ( $prefs['jquery_ui_chosen'] == 'y' ) {
-			$headerlib->add_jsfile('vendor/jquery/plugins/chosen/chosen.jquery.js');
-
-			// Note: This pref is set manually in lib/setup/theme.php
-			if ($prefs['jquery_ui_chosen_css'] == 'y') {
-				$headerlib->add_cssfile('vendor/jquery/plugins/chosen/chosen.css');
-				$headerlib->add_css(
-					'.chosen-container .chosen-drop, .chosen-results li { z-index: 10000; color: #444 }
-	.chosen-container-multi .chosen-choices li.search-field input[type="text"] { height: inherit; }'
-				);
-			}
-		}
-		if ( $prefs['jquery_ui_selectmenu'] == 'y' ) {
-			$headerlib->add_jsfile('vendor/jquery/jquery-ui-selectmenu/ui/jquery.ui.selectmenu.js');
-			$headerlib->add_cssfile('vendor/jquery/jquery-ui-selectmenu/themes/base/jquery.ui.selectmenu.css');
-			// deprecated feature
-			$headerlib->add_css(
-				'.ui-selectmenu-menu ul li a, .ui-selectmenu-status { white-space: nowrap; }
-				.ui-selectmenu { height: 1.8em; padding-right: 16px; }
-				.ui-selectmenu-menu ul { padding-right: 16px; }
-				.ui-selectmenu-menu li a,.ui-selectmenu-status { line-height: 1.0em; padding: .4em 1em; }
-				.ui-selectmenu-status { line-height: .8em; margin-right: 16px; }'
-			);
-		}
-		$headerlib->add_jsfile('vendor/jquery/jquery-timepicker-addon/dist/jquery-ui-timepicker-addon.js');
-		$headerlib->add_cssfile('vendor/jquery/jquery-timepicker-addon/dist/jquery-ui-timepicker-addon.css');
-	}
-
-	if ( $prefs['feature_jquery_superfish'] == 'y' ) {
-		$headerlib->add_jsfile('vendor/jquery/plugins/superfish/dist/js/superfish.js');
-		$headerlib->add_jsfile('vendor/jquery/plugins/superfish/dist/js/supersubs.js');
-	}
-	if ( $prefs['feature_jquery_tooltips'] === 'y' || $prefs['feature_jquery_superfish'] === 'y' ) {
-		$headerlib->add_jsfile('vendor/jquery/plugins/superfish/dist/js/hoverIntent.js');
-	}
-	if ( $prefs['feature_jquery_reflection'] == 'y' ) {
-		$headerlib->add_jsfile('vendor/jquery/plugins/reflection-jquery/js/reflection.js');
-	}
-	if ( $prefs['feature_jquery_media'] == 'y' ) {
-		$headerlib->add_jsfile('vendor/jquery/plugins/media/jquery.media.js');
-	}
-	if ( $prefs['feature_jquery_tablesorter'] == 'y' ) {
 		if ( $prefs['tiki_minify_javascript'] === 'y' ) {
-			//tablesorter has bad syntax in the non-min file, however the min file seems to work fine when double minned :)
-			$headerlib->add_jsfile('vendor/jquery/plugins/tablesorter/js/jquery.tablesorter.min.js');
-			$headerlib->add_jsfile('vendor/jquery/plugins/tablesorter/js/jquery.tablesorter.widgets.min.js');
-			$headerlib->add_jsfile('vendor/jquery/plugins/tablesorter/js/jquery.tablesorter.widgets-filter-formatter.min.js');
-			$headerlib->add_jsfile('vendor/jquery/plugins/tablesorter/addons/pager/jquery.tablesorter.pager.min.js');
+			$headerlib->add_jsfile_dependancy("vendor/jquery/jquery-ui/js/jquery-ui-$headerlib->jqueryui_version.min.js");
 		} else {
-			$headerlib->add_jsfile('vendor/jquery/plugins/tablesorter/js/jquery.tablesorter.js');
-			$headerlib->add_jsfile('vendor/jquery/plugins/tablesorter/addons/pager/jquery.tablesorter.pager.js');
-			$headerlib->add_jsfile('vendor/jquery/plugins/tablesorter/js/jquery.tablesorter.widgets.js');
-			$headerlib->add_jsfile('vendor/jquery/plugins/tablesorter/js/jquery.tablesorter.widgets-filter-formatter.js');
+			$headerlib->add_jsfile_dependancy("vendor/jquery/jquery-ui/js/jquery-ui-$headerlib->jqueryui_version.js");
 		}
-		$headerlib->add_jsfile('vendor/jquery/plugins/tablesorter/js/widgets/widget-grouping.js');
-		$headerlib->add_jsfile('vendor/jquery/plugins/tablesorter/js/widgets/widget-pager.js');
-		$headerlib->add_jsfile('vendor/jquery/plugins/tablesorter/js/parsers/parser-input-select.js');
-	}
-	if ( $prefs['feature_shadowbox'] == 'y' ) {
-		$headerlib->add_jsfile('vendor/jquery/plugins/colorbox/jquery.colorbox.js');
-		$headerlib->add_cssfile('vendor/jquery/plugins/colorbox/' . $prefs['jquery_colorbox_theme'] . '/colorbox.css');
 	}
 
-	if ( $prefs['wikiplugin_flash'] == 'y' ) {
-		$headerlib->add_jsfile('lib/swfobject/swfobject.js');
+	if ( $prefs['feature_jquery_ui_theme'] !== 'none' ) {
+		if ( isset($prefs['javascript_cdn']) && $prefs['javascript_cdn'] == 'jquery' ) {
+			$headerlib->add_cssfile("//code.jquery.com/ui/$headerlib->jqueryui_version/themes/{$prefs['feature_jquery_ui_theme']}/jquery-ui.css");
+		} else {
+			$headerlib->add_cssfile('vendor/jquery/jquery-ui-themes/themes/' . $prefs['feature_jquery_ui_theme'] . '/jquery-ui.css');
+		}
 	}
 
-	// include and setup themegen editor if already open
-	if (! empty($tiki_p_admin) && $tiki_p_admin === 'y' && !empty($prefs['themegenerator_feature']) && $prefs['themegenerator_feature'] === 'y' && !empty($_COOKIE['themegen']) &&
-			(strpos($_SERVER['SCRIPT_NAME'], 'tiki-admin.php') === false || strpos($_SERVER['QUERY_STRING'], 'page=look') === false)) {
-		include_once 'lib/themegenlib.php';
-		$themegenlib->setupEditor();
+	if ( $prefs['feature_jquery_autocomplete'] == 'y' ) {
+		$headerlib->add_css(
+			'.ui-autocomplete-loading { background: white url("img/spinner.gif") right center no-repeat; }'
+		);
 	}
-} // end not in $prefs['mobile_mode']
+	if ( $prefs['jquery_ui_chosen'] == 'y' ) {
+		$headerlib->add_jsfile('vendor/jquery/plugins/chosen/chosen.jquery.js');
 
-// libs for both mobile and normal
+		// Note: This pref is set manually in lib/setup/theme.php
+		if ($prefs['jquery_ui_chosen_css'] == 'y') {
+			$headerlib->add_cssfile('vendor/jquery/plugins/chosen/chosen.css');
+			$headerlib->add_css(
+				'.chosen-container .chosen-drop, .chosen-results li { z-index: 10000; color: #444 }
+.chosen-container-multi .chosen-choices li.search-field input[type="text"] { height: inherit; }'
+			);
+		}
+	}
+	if ( $prefs['jquery_ui_selectmenu'] == 'y' ) {
+		$headerlib->add_jsfile('vendor/jquery/jquery-ui-selectmenu/ui/jquery.ui.selectmenu.js');
+		$headerlib->add_cssfile('vendor/jquery/jquery-ui-selectmenu/themes/base/jquery.ui.selectmenu.css');
+		// deprecated feature
+		$headerlib->add_css(
+			'.ui-selectmenu-menu ul li a, .ui-selectmenu-status { white-space: nowrap; }
+			.ui-selectmenu { height: 1.8em; padding-right: 16px; }
+			.ui-selectmenu-menu ul { padding-right: 16px; }
+			.ui-selectmenu-menu li a,.ui-selectmenu-status { line-height: 1.0em; padding: .4em 1em; }
+			.ui-selectmenu-status { line-height: .8em; margin-right: 16px; }'
+		);
+	}
+	$headerlib->add_jsfile('vendor/jquery/jquery-timepicker-addon/dist/jquery-ui-timepicker-addon.js');
+	$headerlib->add_cssfile('vendor/jquery/jquery-timepicker-addon/dist/jquery-ui-timepicker-addon.css');
+}
+
+if ( $prefs['feature_jquery_superfish'] == 'y' ) {
+	$headerlib->add_jsfile('vendor/jquery/plugins/superfish/dist/js/superfish.js');
+	$headerlib->add_jsfile('vendor/jquery/plugins/superfish/dist/js/supersubs.js');
+}
+if ( $prefs['feature_jquery_tooltips'] === 'y' || $prefs['feature_jquery_superfish'] === 'y' ) {
+	$headerlib->add_jsfile('vendor/jquery/plugins/superfish/dist/js/hoverIntent.js');
+}
+if ( $prefs['feature_jquery_reflection'] == 'y' ) {
+	$headerlib->add_jsfile('vendor/jquery/plugins/reflection-jquery/js/reflection.js');
+}
+if ( $prefs['feature_jquery_media'] == 'y' ) {
+	$headerlib->add_jsfile('vendor/jquery/plugins/media/jquery.media.js');
+}
+if ( $prefs['feature_jquery_tablesorter'] == 'y' ) {
+	if ( $prefs['tiki_minify_javascript'] === 'y' ) {
+		//tablesorter has bad syntax in the non-min file, however the min file seems to work fine when double minned :)
+		$headerlib->add_jsfile('vendor/jquery/plugins/tablesorter/js/jquery.tablesorter.min.js');
+		$headerlib->add_jsfile('vendor/jquery/plugins/tablesorter/js/jquery.tablesorter.widgets.min.js');
+		$headerlib->add_jsfile('vendor/jquery/plugins/tablesorter/js/jquery.tablesorter.widgets-filter-formatter.min.js');
+		$headerlib->add_jsfile('vendor/jquery/plugins/tablesorter/addons/pager/jquery.tablesorter.pager.min.js');
+	} else {
+		$headerlib->add_jsfile('vendor/jquery/plugins/tablesorter/js/jquery.tablesorter.js');
+		$headerlib->add_jsfile('vendor/jquery/plugins/tablesorter/addons/pager/jquery.tablesorter.pager.js');
+		$headerlib->add_jsfile('vendor/jquery/plugins/tablesorter/js/jquery.tablesorter.widgets.js');
+		$headerlib->add_jsfile('vendor/jquery/plugins/tablesorter/js/jquery.tablesorter.widgets-filter-formatter.js');
+	}
+	$headerlib->add_jsfile('vendor/jquery/plugins/tablesorter/js/widgets/widget-grouping.js');
+	$headerlib->add_jsfile('vendor/jquery/plugins/tablesorter/js/widgets/widget-pager.js');
+	$headerlib->add_jsfile('vendor/jquery/plugins/tablesorter/js/parsers/parser-input-select.js');
+}
+if ( $prefs['feature_shadowbox'] == 'y' ) {
+	$headerlib->add_jsfile('vendor/jquery/plugins/colorbox/jquery.colorbox.js');
+	$headerlib->add_cssfile('vendor/jquery/plugins/colorbox/' . $prefs['jquery_colorbox_theme'] . '/colorbox.css');
+}
+
+if ( $prefs['wikiplugin_flash'] == 'y' ) {
+	$headerlib->add_jsfile('lib/swfobject/swfobject.js');
+}
+
+// include and setup themegen editor if already open
+if (! empty($tiki_p_admin) && $tiki_p_admin === 'y' && !empty($prefs['themegenerator_feature']) && $prefs['themegenerator_feature'] === 'y' && !empty($_COOKIE['themegen']) &&
+		(strpos($_SERVER['SCRIPT_NAME'], 'tiki-admin.php') === false || strpos($_SERVER['QUERY_STRING'], 'page=look') === false)) {
+	include_once 'lib/themegenlib.php';
+	$themegenlib->setupEditor();
+}
+
 if ( $prefs['feature_jquery_validation'] == 'y' ) {
 	$headerlib->add_jsfile('vendor/jquery/plugins/jquery-validation/dist/jquery.validate.js');
 	$headerlib->add_jsfile('lib/validators/validator_required_in_group.js');

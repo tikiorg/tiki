@@ -63,31 +63,22 @@ function smarty_block_title($params, $content, $template, &$repeat)
 
 	if ($template->getTemplateVars('print_page') != 'y') {
 		if ( $prefs['feature_help'] == 'y' && $prefs['helpurl'] != '' && $params['help'] != '' ) {
-			if ($prefs['mobile_mode']== 'y') {
-				$html .= '<a data-role="button" data-inline="true" href="' ;
-			} else {
-				$html .= '<a href="' ;
-			}
+			$html .= '<a href="' ;
+
 			$html .= $prefs['helpurl'] . rawurlencode($params['help']) . '" class="tips btn btn-link" title="' . htmlspecialchars($content) . '|' . tra('Help page') . '" target="tikihelp">'
 			. smarty_function_icon(array('name' => 'help'), $template)
 			. "</a>\n";
 		}
 
 		if ($prefs['feature_edit_templates'] == 'y' && $tiki_p_edit_templates == 'y' && ($tpl = $template->getTemplateVars('mid'))) {
-			if ($prefs['mobile_mode']== 'y') {
-				$html .= '<a data-role="button" data-inline="true" href="tiki-edit_templates.php?template=' ;
-			} else {
-				$html .= '<a href="tiki-edit_templates.php?template=' ;
-			}
+			$html .= '<a href="tiki-edit_templates.php?template=' ;
+
 			$html .= $tpl . '" class="tips btn btn-link" title="' . tra('View or edit tpl') . '|' . htmlspecialchars($content) . '">'
 			. smarty_function_icon(array('name' => 'edit'), $template)
 			. "</a>\n";
 		} elseif ($prefs['feature_view_tpl'] == 'y' &&  $tiki_p_view_templates == 'y' && ($tpl = $template->getTemplateVars('mid'))) {
-			if ($prefs['mobile_mode']== 'y') {
-				$html .= '<a data-role="button" data-inline="true" href="tiki-edit_templates.php?template=' ;
-			} else {
-				$html .= '<a href="tiki-edit_templates.php?template=' ;
-			}
+			$html .= '<a href="tiki-edit_templates.php?template=' ;
+
 			$html .= $tpl . '" class="tips btn btn-link" title="' . tra('View tpl') . '|' . htmlspecialchars($content) . '">'
 			. smarty_function_icon(array('name' => 'view'), $template)
 			. "</a>\n";
@@ -95,11 +86,8 @@ function smarty_block_title($params, $content, $template, &$repeat)
 		}
 
 		if ( $tiki_p_admin == 'y' && $params['admpage'] != '' ) {
-			if ($prefs['mobile_mode']== 'y') {
-				$html .= '<a data-role="button" data-inline="true" class="tips" href="tiki-admin.php?page=' ;
-			} else {
-				$html .= '<a class="tips btn btn-link" href="tiki-admin.php?page=' ;
-			}
+			$html .= '<a class="tips btn btn-link" href="tiki-admin.php?page=' ;
+
 			$html .= $params['admpage'] . '" title="' . tra('Admin page') . '|' . htmlspecialchars($content) . '">'
 			. smarty_function_icon(array('name' => 'settings'), $template)
 			. "</a>\n";
