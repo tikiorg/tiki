@@ -33,7 +33,7 @@ if ($_REQUEST["type"] == 'barvert' || $_REQUEST["type"] == 'barhoriz') {
 	$graph->setParam('grid-independant-major-guide', false);
 
 } elseif ($_REQUEST["type"] == 'multiline') {
-// multiline not working as yet	so shouldn'y get here
+	// multiline not working as yet	so shouldn't get here
 	$renderer = new GD_GRenderer($_REQUEST["width"], $_REQUEST["height"]);
 	$graph = new MultilineGraphic;
 	$graph->setTitle(tra($_REQUEST["title"]));

@@ -121,13 +121,11 @@ function wikiplugin_gdgraph($data, $params)
 		return "<span class='error'>gdgraph plugin: ERROR: there must be at least one XY data pair</span>";
 	}
 
-	// Set height dynamically if required, somewhat arbitrarily FIXME
+	// Set height dynamically if required
 	if (empty($params['height'])) {
 		if ($params['type'] === 'barhoriz') {
 			$params['height'] = count($xy) * 15 + 100;
-		} else if ($params['type'] === 'barvert') {
-			$params['height'] = count($xy) * 30 + 100;
-		} else if (! is_numeric($params['height'])) {
+		} else {
 			$params['height'] = 300;		// better than nothing?
 		}
 	}
