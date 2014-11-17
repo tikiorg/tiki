@@ -128,7 +128,7 @@ function prefs_site_list()
 			'name' => tr('Site layout'),
 			'description' => tr('Changes the overall site layout templates'),
 			'type' => 'list',
-			'default' => 'classic',
+			'default' => 'basic',
 			'tags' => array('advanced'),
 			'options' => $available_layouts,
 		),  
