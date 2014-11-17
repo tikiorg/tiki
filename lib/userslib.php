@@ -6352,7 +6352,8 @@ class UsersLib extends TikiLib
 
 	function get_cookie_check()
 	{
-		return md5(session_id() . uniqid(mt_rand(), true));
+		// generate random string but remove fullstops as they are used as the delimiter
+		return str_replace('.', chr(rand(48, 126)), TikiLib::lib('tiki')->generate_unique_sequence(32));
 	}
 
 	function get_user_by_cookie($cookie)
