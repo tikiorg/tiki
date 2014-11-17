@@ -13,7 +13,13 @@ $section = 'admin';
 require_once ('tiki-setup.php');
 $adminlib = TikiLib::lib('admin');
 
-$tikifeedback = array();
+if (! empty($_SESSION['tikifeedback'])) {
+	$tikifeedback = $_SESSION['tikifeedback'];
+	$_SESSION['tikifeedback'] = array();
+} else {
+	$tikifeedback = array();
+	$_SESSION['tikifeedback'] = array();
+}
 $auto_query_args = array('page');
 
 $access->check_permission('tiki_p_admin');
@@ -30,11 +36,9 @@ $logslib = TikiLib::lib('logs');
  */
 function add_feedback( $name, $message, $st, $num = null )
 {
-	global $tikifeedback;
-
 	TikiLib::lib('prefs')->addRecent($name);
 
-	$tikifeedback[] = array(
+	$_SESSION['tikifeedback'][] = array(
 		'num' => $num,
 		'mes' => $message,
 		'st' => $st,
@@ -204,6 +208,9 @@ if ( isset( $_REQUEST['lm_preference'] ) ) {
 				$tikilib->saveEditorToolbars($toolbars, 'global', $t_action);
 			}
 		}
+	}
+	if (!empty($changes)) {
+		$access->redirect($_SERVER['REQUEST_URI'], '', 200);
 	}
 }
 

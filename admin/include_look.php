@@ -167,27 +167,3 @@ if ($prefs['themegenerator_feature'] === 'y') {
 	$themegenlib->setupEditor();
 
 }
-
-if (isset($_REQUEST['looksetup'])) {
-	for ($i = 0, $count_feedback = count($tikifeedback); $i < $count_feedback; $i++) {
-		if (substr($tikifeedback[$i]['name'], 0, 5) == 'style' ||			// if style or style_option
-				$tikifeedback[$i]['name'] === 'themegenerator_theme' ||		// or themegen theme changed
-				$tikifeedback[$i]['name'] === 'feature_jquery_ui_theme'	   // or jquery-ui theme
-			) {
-			// If the theme has changed, reload the page to use the new theme
-			$reload = true;
-		}
-	}
-}
-
-if ($reload) {
-	$location = 'location: tiki-admin.php?page=look';
-	if ($prefs['feature_tabs'] === 'y') {
-		$t = getCookie('admin_look', 'tabs');
-		if ($t > 1) {
-			$location.= "&cookietab=$t";
-		}
-	}
-	header($location);
-	exit;
-}
