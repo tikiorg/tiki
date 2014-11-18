@@ -647,6 +647,19 @@ function cs_design_select($id, $fieldname, $fieldid, $arguments, $default, &$scr
 	} else {
 		$options = array();
 	}
+	// get the options for an ItemLink field - needs _trackerId and _field set in the {select} plugin
+	if (empty($options) && empty($labels) && isset($arguments['_field']) &&
+			strpos($arguments['_field'], 'tracker_field_') === 0 && !empty($arguments['_trackerId']))
+	{
+		$definition = Tracker_Definition::get($arguments['_trackerId']);
+		$field = $definition->getFieldFromPermName(str_replace('tracker_field_', '', $arguments['_field']));
+		if ($field['type'] === 'r') {
+			$handler = TikiLib::lib('trk')->get_field_handler($field);
+			$labels = $handler->getItemList();
+			$options = array_keys($labels);
+			$labels = array_values($labels);
+		}
+	}
 	if (isset($arguments['_mandatory']) && $arguments['_mandatory'] == 'y') {
 		$mandatory = true;
 	} else {
