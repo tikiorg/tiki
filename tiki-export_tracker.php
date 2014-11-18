@@ -215,35 +215,53 @@ if (isset($tracker_info['defaultOrderDir'])) {
 }
 $heading = 'y';
 $smarty->assign_by_ref('heading', $heading);
-while (($items = $trklib->list_items($_REQUEST['trackerId'], $offset, $maxRecords, $sort_mode, $listfields, $filterFields, $values, $_REQUEST['status'], $_REQUEST['initial'], $exactValues)) && !empty($items['data'])) {
-	// still need to filter the fields that are view only by the admin and the item creator
-	if ($tracker_info['useRatings'] == 'y')
-		foreach ($items['data'] as $f=>$v) {
-			$items['data'][$f]['my_rate'] = $tikilib->get_user_vote("tracker.".$_REQUEST['trackerId'].'.'.$items['data'][$f]['itemId'], $user);
+if (empty($_REQUEST['itemId'])) {
+	while (($items = $trklib->list_items($_REQUEST['trackerId'], $offset, $maxRecords, $sort_mode, $listfields, $filterFields, $values, $_REQUEST['status'], $_REQUEST['initial'], $exactValues)) && !empty($items['data'])) {
+		// still need to filter the fields that are view only by the admin and the item creator
+		if ($tracker_info['useRatings'] == 'y')
+			foreach ($items['data'] as $f => $v) {
+				$items['data'][$f]['my_rate'] = $tikilib->get_user_vote("tracker." . $_REQUEST['trackerId'] . '.' . $items['data'][$f]['itemId'], $user);
+			}
+		$smarty->assign_by_ref('items', $items["data"]);
+
+		$data = $smarty->fetch('tiki-export_tracker_item.tpl');
+		$data = preg_replace("/^\n/", "", $data);
+		if (empty($_REQUEST['encoding']) || $_REQUEST['encoding'] == 'ISO-8859-1') {
+			$data = utf8_decode($data);
 		}
-	$smarty->assign_by_ref('items', $items["data"]);
+
+		$offset += $maxRecords;
+		$heading = 'n';
+		if (!empty($fp)) {
+			fwrite($fp, $data);
+		} else {
+			echo $data;
+		}
+		if ($tracker_info['useAttachments'] == 'y' && !empty($_REQUEST['zip'])) {
+			foreach ($items['data'] as $v) {
+				if (!$trklib->export_attachment($v['itemId'], $archive)) {
+					$smarty->assign('msg', tra('Problem zip'));
+					$smarty->display('error.tpl');
+					die;
+				}
+			}
+		}
+	}
+} else {
+	$items = array();
+	$items[] = $trklib->get_tracker_item($_REQUEST['itemId']);
+	$items[0]['field_values'] = $trklib->get_item_fields($_REQUEST['trackerId'], $_REQUEST['itemId'], $listfields);
+	$smarty->assign_by_ref('items',$items);
 
 	$data = $smarty->fetch('tiki-export_tracker_item.tpl');
 	$data = preg_replace("/^\n/", "", $data);
 	if (empty($_REQUEST['encoding']) || $_REQUEST['encoding'] == 'ISO-8859-1') {
 		$data = utf8_decode($data);
 	}
-
-	$offset += $maxRecords;
-	$heading = 'n';
 	if (!empty($fp)) {
 		fwrite($fp, $data);
 	} else {
 		echo $data;
-	}
-	if ($tracker_info['useAttachments'] == 'y' && !empty($_REQUEST['zip'])) {
-		foreach ($items['data'] as $v) {
-			if (!$trklib->export_attachment($v['itemId'], $archive)) {
-				$smarty->assign('msg', tra('Problem zip'));
-				$smarty->display('error.tpl');
-				die;
-			}
-		}
 	}
 }
 if (!empty($fp)) {
