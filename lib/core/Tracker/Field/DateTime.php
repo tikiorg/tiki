@@ -110,8 +110,9 @@ class Tracker_Field_DateTime extends Tracker_Field_Abstract implements Tracker_F
 			}
 
 			$current = $tikilib->get_short_date($tikilib->now);
+			global $prefs;
 
-			if ($date == $current) {
+			if ($date == $current && $prefs['tiki_same_day_time_only'] == 'y' ) {
 				return $tikilib->get_short_time($value);
 			} else {
 				return $tikilib->get_short_datetime($value, false);
