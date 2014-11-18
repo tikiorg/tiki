@@ -326,6 +326,10 @@ function wikiplugin_trackerfilter($data, $params)
 		$smarty->assign('export_created', $export_created == 'y' ? 'on' : '');
 		$smarty->assign('export_modif', $export_modif == 'y' ? 'on' : '');
 		$smarty->assign('export_charset', $export_charset);
+		if (!empty($_REQUEST['itemId']) && (empty($ignoreRequestItemId) || $ignoreRequestItemId != 'y') ) {
+			$smarty->assign('export_itemId', $_REQUEST['itemId']);
+		}
+		
 
 		if (empty($params['filters'])) {
 			if (!empty($filterfield)) { 	// convert param filters to export params

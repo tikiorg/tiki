@@ -19,6 +19,7 @@ function tf_export_submit(fm) {
 		{/jq}
 		<form action="tiki-export_tracker.php" method="post" onsubmit="tf_export_submit(this);">
 			{query _type='form_input' listfields=$export_fields showItemId=$export_itemid showStatus=$export_status showCreated=$export_created showLastModif=$export_modif encoding=$export_charset}
+            {if not empty($export_itemId)}<input type="hidden" name="itemId" value="{$export_itemId}">{/if}
 			{foreach from=$f_fields item=f_v key=f_k}
 				<input type="hidden" name="{$f_k}" value="{$f_v}">
 			{/foreach}
