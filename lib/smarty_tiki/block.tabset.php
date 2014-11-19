@@ -44,13 +44,7 @@ function smarty_block_tabset($params, $content, $smarty, &$repeat)
 			$smarty_tabset = array();
 		}
 		$tabset_index = count($smarty_tabset) + 1;
-		if ( ! empty($params['name']) ) {
-			$smarty_tabset_name = $params['name'];	// names have to be unique
-		} else {
-			$short_name = str_replace(array('tiki-', '.php'), '', basename($_SERVER['SCRIPT_NAME']));
-			$smarty_tabset_name = '_' . $short_name . $tabset_index;
-		}
-		$smarty_tabset_name = TikiLib::remove_non_word_characters_and_accents($smarty_tabset_name);
+		$smarty_tabset_name = getTabsetName($params, $tabset_index);
 		$smarty_tabset[$tabset_index] = array( 'name' => $smarty_tabset_name, 'tabs' => array());
 		if (!isset($smarty_tabset_i_tab)) {
 			$smarty_tabset_i_tab = 1;
@@ -59,11 +53,6 @@ function smarty_block_tabset($params, $content, $smarty, &$repeat)
 		if (!isset($cookietab) || $tabset_index > 1) {
 			$cookietab = getCookie($smarty_tabset_name, 'tabs', 1);
 		}
-		if (!isset($_REQUEST['cookietab']) && $tabset_index > 1){
-			$cookietab="1";
-			setCookieSection($smarty_tabset_name, $cookietab, 'tabs');
-		}
-		
 		// work out cookie value if there
 		if ( isset($_REQUEST['cookietab']) && $tabset_index) {	// overrides cookie if added to request as in tiki-admin.php?page=look&cookietab=6
 			$cookietab = empty($_REQUEST['cookietab']) ? 1 : $_REQUEST['cookietab'];
@@ -115,6 +104,7 @@ function smarty_block_tabset($params, $content, $smarty, &$repeat)
 			return $ret.$notabs.$content;
 		}
 
+		$smarty_tabset_name = getTabsetName($params, $tabset_index);
 		$ret .= '<div class="clearfix tabs" data-name="' . $smarty_tabset_name . '">' . $notabs;
 
 		$count = 1;
@@ -127,17 +117,25 @@ function smarty_block_tabset($params, $content, $smarty, &$repeat)
 		$ret .= '</ul>';
 
 		$ret .= "</div>";
-		if ($tabset_index === 1) {
-            // override cookie with query cookietab
-            $headerlib->add_jq_onready(
-            'var ctab = location.search.match(/cookietab=(\d+)/);
-            if (ctab) {
-                setCookie("'.$smarty_tabset_name.'", ctab[1],"tabs");
-            }'
-            );
-		}
 		$tabset_index--;
 
 		return $ret . '<div class="tab-content">' . $content . '</div>';
 	}
+}
+
+/**
+ * @param $params
+ * @param $tabset_index
+ * @return array
+ */
+function getTabsetName($params, $tabset_index)
+{
+	if (!empty($params['name'])) {
+		$smarty_tabset_name = $params['name'];    // names have to be unique
+	} else {
+		$short_name = str_replace(array('tiki-', '.php'), '', basename($_SERVER['SCRIPT_NAME']));
+		$smarty_tabset_name = '_' . $short_name . $tabset_index;
+	}
+	$smarty_tabset_name = TikiLib::remove_non_word_characters_and_accents($smarty_tabset_name);
+	return $smarty_tabset_name;
 }
