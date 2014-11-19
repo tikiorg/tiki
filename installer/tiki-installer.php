@@ -223,7 +223,6 @@ function create_dirs($domain='')
 		'temp/cache',
 		'templates_c',
 		'templates',
-		'styles',
 		'whelp');
 
 	$ret = "";
