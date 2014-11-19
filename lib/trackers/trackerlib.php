@@ -1242,6 +1242,8 @@ class TrackerLib extends TikiLib
 				} elseif ( $fv > '' ) {
 					if (!is_array($fv)) {
 						$value = array($fv);
+					} else {
+						$value = $fv;
 					}
 					$mid .= ' AND(';
 					$cpt = 0;
