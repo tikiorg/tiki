@@ -20,6 +20,7 @@ function wikiplugin_objectlink_info()
 				'required' => true,
 				'name' => tr('Type'),
 				'description' => tr('The object type'),
+				'accepted' => 'wiki, user, external, relation_source, relation_target, freetag, trackeritem',
 				'type' => 'text',
 			),
 			'id' => array(
