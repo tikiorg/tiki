@@ -5954,7 +5954,7 @@ class UsersLib extends TikiLib
 				$this->categorize_user_tracker_item($user, $group);
 			}
 		}
-		$this->update_anniversary_expiry();
+		$this->update_group_expiries();
 
 		if ($prefs['feature_community_send_mail_join'] == 'y') {
 			$api = new TikiAddons_Api_Group;
@@ -7312,6 +7312,25 @@ class UsersLib extends TikiLib
 		}
 	}
 
+	function update_group_expiries()
+	{
+		$query = 'SELECT uu.* FROM `users_usergroups` uu' .
+			' LEFT JOIN `users_groups` ug ON (uu.`groupName`= ug.`groupName`)' .
+			' WHERE ( uu.`created` IS NOT NULL AND uu.`expire` is NULL )' .
+			' AND (ug.`anniversary` > ? OR ug.`expireAfter` > ?)';
+
+		$result = $this->query($query, ['', 0]);
+
+		$query = 'UPDATE `users_usergroups` SET `expire` = ? WHERE `groupName`=? AND `userId`=?';
+
+		while ($res = $result->fetchRow()) {
+			$uinfo = $this->get_userid_info($res['userId']);
+			$extend_until_info = $this->get_extend_until_info($uinfo['login'], $res['groupName']);
+			$this->query($query, array($extend_until_info['timestamp'], $res['groupName'], $res['userId']));
+		}
+	}
+
+
 	function extend_membership($user, $group, $periods = 1, $date = null )
 	{
 		$tikilib = TikiLib::lib('tiki');
@@ -7342,106 +7361,142 @@ class UsersLib extends TikiLib
 
 	function get_extend_until_info($user, $group, $periods = 1)
 	{
-		// Calculations here should always be 1 am system time otherwise prone to user manipulation or daylight savings problems
-		global $prefs;
-
-		$tz = $prefs['server_timezone'];
-		if ( ! TikiDate::TimezoneIsValidId($tz) ) {
-			$tz = 'UTC';
-		}
-
-		$timezone = new DateTimeZone($tz);
+		//use these functions to get current expiry dates for existing members - they are calculated in some cases
+		//so just grabbing the "expire" field from the users_usergroups table doesn't always work
 		$userInfo = $this->get_user_info($user);
+		$usergroupdates = $this->get_user_groups_date($userInfo['userId']);
+
 		$info = $this->get_group_info($group);
- 		$ratio_prorated_first_period = 1;
-
-		if (empty($info['prorateInterval'])) {
-			$prorateInterval = 'day';
-		} else {
-			$prorateInterval = $info['prorateInterval'];
+		//set the start date as now for new memberships and as expiry of current membership for existing members
+		if (array_key_exists($group, $usergroupdates)) {
+			if (!empty($usergroupdates[$group]['expire'])) {
+				$date = $usergroupdates[$group]['expire'];
+			} elseif ($info['expireAfter'] > 0) {
+				$date = $usergroupdates[$group]['created'];
+			}
 		}
-
-		$date = $this->getOne(
-			'SELECT `expire` FROM `users_usergroups` where `userId` = ? AND `groupName` = ?',
-			array($userInfo['userId'], $group)
-		);
-
-		if (!$date) {
+		if (!isset($date) || !$date) {
 			$date = $this->now;
+			//this is a new membership
+			$new = true;
 		}
+		//convert start date to object
+		$rawstartutc = new DateTimeImmutable('@' . $date);
+		global $prefs;
+		$tz = TikiDate::TimezoneIsValidId($prefs['server_timezone']) ? $prefs['server_timezone'] : 'UTC';
+		$timezone = new DateTimeZone($tz);
+		$startlocal = $rawstartutc->setTimezone($timezone);
 
+		//anniversary memberships
 		if (!empty($info['anniversary'])) {
-			$date_year = date('Y', $date);
-			$date_month = date('m', $date);
-			$date_day = date('d', $date);
-			$effective_date = new DateTime("{$date_year}-{$date_month}-{$date_day} 01:00:00", $timezone);
-			$ratio_prorated_first_period = 1;
+			//set time to 1 second after midnight so that all times are set to same times for interval calculations
+			$startlocal = $startlocal->setTime(0, 0, 1);
+			// annual anniversaries
 			if (strlen($info['anniversary']) == 4) {
-				// annual anniversaries
 				$ann_month = substr($info['anniversary'], 0, 2);
 				$ann_day = substr($info['anniversary'], 2, 2);
-				// start off with this year's anniversary date
-				$extend_until = new DateTime("{$date_year}-{$ann_month}-{$ann_day} 01:00:00", $timezone);
-				while ($effective_date->format('U') >= $extend_until->format('U')) {
-					// already passed the anniversary this month, extend to next year's anniversary
-					$extend_until->modify('+1 year');
+				$startyear = $startlocal->format('Y');
+				//increment the year if past the annual anniversary
+				if ($startlocal->format('m') > $ann_month || ($startlocal->format('m') == $ann_month
+						&& $startlocal->format('d') >= $ann_day))
+				{
+					$startyear++;
 				}
-				// store last past anniversary for prorating
-				$prev_ann = clone $extend_until;
-				$prev_ann->modify('-1 year');
-				if ($prorateInterval == 'year') {
-					$payable_from = clone $prev_ann;
-				} elseif ($prorateInterval == 'month') {
-					$payable_from = clone $extend_until;
-					while ($payable_from->format('U') > $effective_date->format('U')) {
-						$payable_from->modify('-1 month');
-					}
-				} elseif ($prorateInterval == 'day') {
-					$payable_from = clone $effective_date;
-				}
-				$extend_until_first_period = clone $extend_until;
-				// add extra full periods
-				if ($periods > 1) {
-					$p = $periods - 1;
-					$extend_until->modify("+$p year");
-				}
-			} elseif (strlen($info['anniversary']) == 2) {
+				//first extension is always to next anniversary
+				$next_ann = $startlocal->setDate($startyear, $ann_month, $ann_day);
+				//extend past next anniversary if more than one period
+				$extendto = $next_ann->modify('+' . $periods - 1 . ' years');
+				//previous anniversary for proration
+				$prev_ann = $next_ann->modify('-1 years');
 				// monthly anniversaries
+				//using modify('+1 month') can result in "skipping" months so fix the day of the previous/next month
+			} elseif (strlen($info['anniversary']) == 2) {
 				$ann_day = $info['anniversary'];
-				// start off with this month's anniversary date
-				$extend_until = new DateTime("{$date_year}-{$date_month}-{$ann_day} 01:00:00", $timezone);
-				while ($effective_date->format('U') >= $extend_until->format('U')) {
-					// already passed the anniversary this month, extend to next month's anniversary
-					$extend_until->modify('+1 month');
+				$lastday = date('d', strtotime('last day of ' . $startlocal->format('Y') . '-'
+					. $startlocal->format('m')));
+				$mod_ann_day = $ann_day > $lastday ? $lastday : $ann_day;
+				if ($startlocal->format('d') < $mod_ann_day) {
+					$mod = $mod_ann_day - $startlocal->format('d');
+					$next_ann = $startlocal->modify('+' . $mod . ' days');
+					$prev_mo_lastday = $startlocal->modify('last day of last month');
+					if ($ann_day >= $prev_mo_lastday->format('d'))
+					{
+						$prev_ann = $prev_mo_lastday;
+					} else {
+						$prev_ann = $startlocal->setDate($prev_mo_lastday->format('Y'), $prev_mo_lastday->format('m'),
+							$mod_ann_day);
+					}
+				} else {
+					//check if last day of month
+					$next_mo_lastday = $startlocal->modify('last day of next month');
+					if ($mod_ann_day >= $next_mo_lastday->format('d'))
+					{
+						$next_ann = $next_mo_lastday;
+					} else {
+						$next_ann = $startlocal->setDate($next_mo_lastday->format('Y'), $next_mo_lastday->format('m'),
+							$mod_ann_day);
+					}
+					$mod = $startlocal->format('d') - $mod_ann_day;
+					$prev_ann = $startlocal->modify('-' . $mod . ' days');
 				}
-				// store last past anniversary for prorating
-				$prev_ann = clone $extend_until;
-				$prev_ann->modify('-1 month');
-				if ($prorateInterval == 'month' || $prorateInterval == 'year') {
-					$payable_from = clone $prev_ann;
-				} elseif ($prorateInterval == 'day') {
-					$payable_from = clone $effective_date;
+				if ($periods - 1 > 0) {
+					$yrsplus = floor(($periods - 1) / 12);
+					$yr = $next_ann->format('Y') + $yrsplus;
+					$moplus = ($periods - 1) - ($yrsplus * 12);
+					if ($moplus + $next_ann->format('m') < 12) {
+						$mo = $moplus + $next_ann->format('m');
+					} else {
+						$yr++;
+						$mo = $moplus + $next_ann->format('m') - 12;
+					}
+					if ($ann_day >= date('d', strtotime('last day of ' . $yr . '-' . $mo))) {
+						$d = date('d', strtotime('last day of ' . $yr . '-' . $mo));
+					} else {
+						$d = $ann_day;
+					}
+					$extendto = $next_ann->setDate($yr, $mo, $d);
+				} else {
+					$extendto = $next_ann;
 				}
-				$extend_until_first_period = clone $extend_until;
-				// add extra full periods
-				if ($periods > 1) {
-					$p = $periods - 1;
-					$extend_until->modify("+$p month");
-				}
-			} elseif (strlen($info['anniversary']) == 3) {
-				// Case not handled, and variables used below is not set
-				// Not sure what to do here?
 			}
-			$timestamp = null;
-			if ($extend_until != null && $payable_from != null && $prev_ann != null) {
-				$ratio_prorated_first_period = ($extend_until_first_period->format('U') - $payable_from->format('U')) / ($extend_until_first_period->format('U') - $prev_ann->format('U'));
-				$timestamp = $extend_until->format('U');
+			//calculate interval of membership term
+			$interval = $startlocal->diff($extendto);
+			//set prorate interval
+			$prorateInterval = in_array($info['prorateInterval'], ['year', 'month', 'day']) ? $info['prorateInterval']
+				: 'day';
+			//prorate
+			if ($prorateInterval == 'year' && strlen($info['anniversary']) == 4) {
+				$ratio = $interval->y;
+				$ratio += $interval->m > 0 || $interval->d > 0 ? 1 : 0;
+			} elseif ($prorateInterval == 'month'
+				|| ($prorateInterval == 'year' && strlen($info['anniversary']) == 2))
+			{
+				$round = $interval->d > 0 ? 1 : 0;
+				$ratio = (($interval->y * 12) + $interval->m + $round);
+				if (strlen($info['anniversary']) == 4) {
+					$ratio = $ratio / 12;
+				}
+			} elseif ($prorateInterval == 'day') {
+				$ann_interval = $prev_ann->diff($next_ann);
+				$stub_interval = $startlocal->diff($next_ann);
+				$ratio = ($stub_interval->days / $ann_interval->days) + ($periods - 1);
 			}
+			$remainder = $ratio > 1 ? $ratio - floor($ratio) : $ratio;
+		//memberships based on number of days
 		} else {
-			$timestamp = $date + $periods * $info['expireAfter'] * 24 * 3600;
+			$remainder = 1;
+			$ratio = 1;
+			$extendto = $startlocal->modify('+' . $info['expireAfter'] * $periods . ' days');
+			$interval = $startlocal->diff($extendto);
 		}
+		$timestamp = $extendto != null ? $extendto->format('U') : null;
 
-		return array('timestamp' => $timestamp, 'ratio_prorated_first_period' => $ratio_prorated_first_period);
+		return array(
+			'timestamp' => $timestamp,
+			'ratio_prorated_first_period' => $remainder,
+			'ratio' => $ratio,
+			'interval' => $interval,
+			'new' => $new);
 	}
 
 	function get_users_created_group($group, $user=null, $with_expire=false)
@@ -7640,14 +7695,6 @@ class UsersLib extends TikiLib
 		while ($res = $result->fetchRow()) {
 			$g = $res['groupName'];
 			$ret[$g]['created'] = $res['created'];
-			$ret[$g]['defaultExpire'] = false;
-			if (empty($res['expire'])) {
-				$re = $this->get_group_info($g);
-				if ($re['expireAfter'] > 0) {
-					$res['expire'] = $res['created'] + ($re['expireAfter'] * 24*60*60);
-					$ret[$g]['defaultExpire'] = true;
-				}
-			}
 			$ret[$g]['expire'] = $res['expire'];
 		}
 		return $ret;
