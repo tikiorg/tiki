@@ -120,7 +120,7 @@ if (jqueryTiki.no_cookie) {
 					<span class="caret"></span>
                 </button>
 				<div class="siteloginbar_poppedup dropdown-menu pull-right modal-sm"><div class="panel-body">
-					{capture assign="close_tags"}</div></div>{$close_tags}{/capture}
+					{capture assign="close_tags"}</div></div></div>{$close_tags}{/capture}
 		{/if}
 		<form name="loginbox" class="form" id="loginbox-{$module_logo_instance}" action="{$login_module.login_url|escape}"
 				method="post" {if $prefs.feature_challenge eq 'y'}onsubmit="doChallengeResponse()"{/if}
