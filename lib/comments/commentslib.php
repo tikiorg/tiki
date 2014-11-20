@@ -428,7 +428,7 @@ class Comments extends TikiLib
 
 					// special handling for MS links which contain underline tags in the label which wiki doesn't like
 					$body = preg_replace(
-						'/(\<a .*\>)\<font .*\>\<u\>(.*)\<\/u\>\<\/font\>\<\/a\>/',
+						'/(\<a .*\>)\<font .*\>\<u\>(.*)\<\/u\>\<\/font\>\<\/a\>/Umis',
 						'$1$2</a>',
 						$body);
 
