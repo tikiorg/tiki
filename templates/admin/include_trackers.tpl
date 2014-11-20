@@ -24,6 +24,7 @@
 		{preference name=user_selector_realnames_tracker}
 		{preference name=feature_reports}
 		{preference name="tracker_remote_sync"}
+		{preference name="tracker_tabular_enabled"}
 		{preference name="tracker_refresh_itemlink_detail"}
 		{preference name="tracker_clone_item"}
 		{preference name="wikiplugin_insert"}

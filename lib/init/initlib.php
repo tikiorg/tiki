@@ -54,6 +54,11 @@ class TikiInit
 		if (is_readable($cache)) {
 			require_once $cache;
 			$container = new TikiCachedContainer;
+
+			if (TikiDb::get()) {
+				$container->set('tiki.lib.db', TikiDb::get());
+			}
+
 			return $container;
 		}
 
@@ -84,6 +89,10 @@ class TikiInit
 			} catch (InvalidArgumentException $e) {
 				// Do nothing, absence of libs.xml file is expected
 			}
+		}
+
+		if (TikiDb::get()) {
+			$container->set('tiki.lib.db', TikiDb::get());
 		}
 
 		$container->compile();

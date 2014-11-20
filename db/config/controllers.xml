@@ -46,6 +46,7 @@
 		<service id="tiki.controller.showtikiorg" class="Services_ShowTikiOrg_Controller"/>
 		<service id="tiki.controller.social" class="Services_User_SocialController"/>
 		<service id="tiki.controller.suite" class="Services_Suite_Controller"/>
+		<service id="tiki.controller.tabular" class="Services_Tracker_TabularController"/>
 		<service id="tiki.controller.tracker" class="Services_Tracker_Controller"/>
 		<service id="tiki.controller.tracker_calendar" class="Services_Tracker_CalendarController"/>
 		<service id="tiki.controller.tracker_sync" class="Services_Tracker_SyncController"/>

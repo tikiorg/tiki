@@ -87,5 +87,13 @@ function prefs_tracker_list()
  			'default' => '',
  			'profile_reference' => 'tracker',
  		),
+		'tracker_tabular_enabled' => array(
+			'name' => tr('Tracker Tabular'),
+			'description' => tr('Allows to manage import/export tracker profiles and manage custom list formats.'),
+			'type' => 'flag',
+			'default' => 'n',
+			'dependencies' => ['feature_trackers'],
+			'tags' => ['advanced', 'experimental'],
+		),
 	);
 }

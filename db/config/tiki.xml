@@ -8,6 +8,9 @@
 
 	-->
 	<services>
+		<!-- Proxy that will be replaced at runtime -->
+		<service id="tiki.lib.db" class="stdclass"/>
+
 		<service id="tiki.lib.access" class="TikiAccessLib">
 			<file>%kernel.root_dir%/lib/tikiaccesslib.php</file>
 		</service>
@@ -263,6 +266,9 @@
 			<file>%kernel.root_dir%/lib/structures/structlib.php</file>
 		</service>
 		<service id="tiki.lib.symbols" class="Tiki_Profile_SymbolLoader" />
+		<service id="tiki.lib.tabular" class="Tracker\Tabular\Manager">
+			<argument type="service" id="tiki.lib.db"/>
+		</service>
 		<service id="tiki.lib.tcontrol" class="ThemeControlLib">
 			<file>%kernel.root_dir%/lib/themecontrol/tcontrol.php</file>
 		</service>
