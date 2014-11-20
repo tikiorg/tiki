@@ -8,7 +8,7 @@
 // plugin that uses lib/graph-engine/ to produce simple graphs on screen
 // Usage
 // {GDGRAPH(various parameters)}
-//  x y data
+//  x,y data
 // {GDGRAPH}
 
 
@@ -20,7 +20,7 @@ function wikiplugin_gdgraph_info()
 		'description' => tra('Creates a simple graph from supplied data'),
 		'tags' => array('basic'),
 		'prefs' => array('wikiplugin_gdgraph'),
-		'body' => tra('x y data to be graphed ie space separated'),
+		'body' => tra('x,y data to be graphed ie comma separated'),
 		'icon' => 'img/icons/chart_curve.png',
 		'format' => 'html',
 		'params' => array(
@@ -103,7 +103,7 @@ function wikiplugin_gdgraph($data, $params)
 	// strip tags
 	$data = strip_tags($data);
 
-	// split into xy array using a space as the split parameter with x-data as even number indices and y-data odd indices
+	// split into xy array using a comma as the split parameter with x-data as even number indices and y-data odd indices
 	$data = explode("\n", $data);
 	// remove empties
 	$data = array_filter($data);
@@ -121,7 +121,7 @@ function wikiplugin_gdgraph($data, $params)
 		return "<span class='error'>gdgraph plugin: ERROR: there must be at least one XY data pair</span>";
 	}
 
-	// Set height dynamically if required
+	// Set height dynamically for barhoriz if not set as a parameter or default to 300
 	if (empty($params['height'])) {
 		if ($params['type'] === 'barhoriz') {
 			$params['height'] = count($xy) * 15 + 100;
@@ -131,16 +131,23 @@ function wikiplugin_gdgraph($data, $params)
 	}
 
 // -------------------------------------------------------
-// Construct separate XY data strings from the array data to suit the graph-engine libraries.
+// Construct separate XY data strings from the array data to suit the graph-engine libraries - and check that at least one y value is non-zero.
 // The XY data strings should each contain the same number
 // of data elements.
-
+	$ynonzero = false;
 	$xydata = array('xdata' => array(), 'ydata' => array());
 	for ($i = 0; $i < count($xy); $i++) {
 		$xydata['xdata'][] = $xy[$i][0];
 		$xydata['ydata'][] = floatval($xy[$i][1]);
+		if (floatval($xy[$i][1]) !== 0.0 ) {
+			$ynonzero = true;
+		}
 	}
-
+// if all y-values are zero don't bother doing the graph
+	if (!$ynonzero) {
+		return "<span class='error'>All ".count($xy)." y-values are zero: so no graph drawn</span>";
+	}
+	
 	$imgparams = array(
 		'type' => $params['type'],
 		'title' => $params['title'],
