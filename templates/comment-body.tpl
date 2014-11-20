@@ -41,10 +41,10 @@
 			{if isset($comment.userName) and not empty($comment.user_exists)}
 			<span class="icons">
 			<span class="actions">
-			{if $prefs.feature_messages eq 'y' and $tiki_p_messages eq 'y'}   
+			{if $prefs.feature_messages eq 'y' and $tiki_p_messages eq 'y'}
 				<a class="admlink" href="messu-compose.php?to={$comment.userName}&amp;subject={tr}Re:{/tr}%20{$comment.title|escape:"htmlall"}">{icon _id='user_go' alt="{tr}private message{/tr}"}</a>
 			{/if}
-			{if $forum_info.ui_email eq 'y' and strlen($comment.user_email) > 0 and $display eq ''}  
+			{if $forum_info.ui_email eq 'y' and strlen($comment.user_email) > 0 and $display eq ''}
 				<a href="mailto:{$comment.user_email|escape:'hex'}">{icon _id='email' alt="{tr}Send eMail to User{/tr}"}</a>
 			{/if}
 			</span>
@@ -53,7 +53,7 @@
 				{if $comment.user_online eq 'y'}
 				{icon _id='user_red' alt="{tr}user online{/tr}"}
 				{elseif $comment.user_online eq 'n'}
-			  	{icon _id='user_gray' alt="{tr}user offline{/tr}"}
+					{icon _id='user_gray' alt="{tr}user offline{/tr}"}
 				{/if}
 			{/if}
 			{if $forum_info.ui_flag eq 'y' and $comment.userName|countryflag}

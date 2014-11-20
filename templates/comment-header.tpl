@@ -33,15 +33,15 @@
 			{/if}
 		>{icon _id='cross' alt="{tr}Delete{/tr}"}</a>
 		{/if}
-					
+
 		{if $tiki_p_forums_report eq 'y'}
 			{self_link report=$comment.threadId _icon='delete' _class="btn btn-default btn-small" _alt="{tr}Report this post{/tr}" _title="{tr}Report this post{/tr}"}{/self_link}
 		{/if}
-					
+
 		{if $user and $prefs.feature_notepad eq 'y' and $tiki_p_notepad eq 'y' and $forumId}
 			{self_link savenotepad=$comment.threadId _icon='disk' _class="btn btn-default btn-small" _alt="{tr}Save to notepad{/tr}" _title="{tr}Save to notepad{/tr}"}{/self_link}
 		{/if}
-	
+
 		{if $user and $prefs.feature_user_watches eq 'y' and $display eq ''}
 		{if $first eq 'y'}
 		{if $user_watching_topic eq 'n'}
@@ -82,6 +82,6 @@
 	{/if}
 
 	{if $thread_style eq 'commentStyle_headers'}
-		{include file='comment-footer.tpl'  comment=$comments_coms[rep]}
+		{include file='comment-footer.tpl' comment=$comments_coms[rep]}
 	{/if}
 </header>

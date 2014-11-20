@@ -1,7 +1,6 @@
 {* $Id$ *}
 {* include file for module edit form - to be called by ajax *}
 
-			
 <div class="module_selector">
 	<label for="assign_name"><strong>{tr}Module Name{/tr}</strong></label>
 	<select id="assign_name" name="assign_name">
@@ -129,11 +128,11 @@
 					</div>
 				</div>
 			{/if}
-                <div class="form-group clearfix">
-                    <div class="pull-right">
-			            <input type="submit" class="btn btn-default btn-sm" name="preview" value="{tr}Preview{/tr}" onclick="needToConfirm=false;">
-			            <input type="submit" class="btn btn-default btn-sm" name="assign" value="{tr}Assign{/tr}" onclick="needToConfirm=false;">
-		            </div>
-                </div>
+		<div class="form-group clearfix">
+			<div class="pull-right">
+				<input type="submit" class="btn btn-default btn-sm" name="preview" value="{tr}Preview{/tr}" onclick="needToConfirm=false;">
+				<input type="submit" class="btn btn-default btn-sm" name="assign" value="{tr}Assign{/tr}" onclick="needToConfirm=false;">
+			</div>
+		</div>
 	{/if}
 </div>

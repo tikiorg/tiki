@@ -33,44 +33,44 @@ jQuery(document).ready(function(){
 		dataString += '&ref_location='+encodeURIComponent(jQuery('#e_ref_location').val());
 
 		jQuery.ajax({
-		  url: ajaxURL+'references.php',
-		  type: 'POST',
-		  data: dataString,
-		  dataType: 'json',
-		  beforeSend: function( xhr ) {
-			jQuery('#e_status').html('{tr}Saving...{/tr}');
-		  },
-		  success: function( data ) {
-			if('success'==data['result']){
-				jQuery('#ref_list').find('li').css('font-weight','normal');
-				var ref_id = jQuery('#e_ref_id').val();
-				var ref_biblio_code = jQuery('#e_ref_biblio_code').val();
-				var ref_author = jQuery('#e_ref_author').val();
-				var ref_title = jQuery('#e_ref_title').val();
-				var ref_year = jQuery('#e_ref_year').val();
-				var ref_part = jQuery('#e_ref_part').val();
-				var ref_uri = jQuery('#e_ref_uri').val();
-				var ref_code = jQuery('#e_ref_code').val();
-				var ref_style = jQuery('#e_ref_style').val();
-				var ref_template = jQuery('#e_ref_template').val();
-				var ref_publisher = jQuery('#e_ref_publisher').val();
-				var ref_location = jQuery('#e_ref_location').val();
+			url: ajaxURL+'references.php',
+			type: 'POST',
+			data: dataString,
+			dataType: 'json',
+			beforeSend: function( xhr ) {
+				jQuery('#e_status').html('{tr}Saving...{/tr}');
+			},
+			success: function( data ) {
+				if('success'==data['result']){
+					jQuery('#ref_list').find('li').css('font-weight','normal');
+					var ref_id = jQuery('#e_ref_id').val();
+					var ref_biblio_code = jQuery('#e_ref_biblio_code').val();
+					var ref_author = jQuery('#e_ref_author').val();
+					var ref_title = jQuery('#e_ref_title').val();
+					var ref_year = jQuery('#e_ref_year').val();
+					var ref_part = jQuery('#e_ref_part').val();
+					var ref_uri = jQuery('#e_ref_uri').val();
+					var ref_code = jQuery('#e_ref_code').val();
+					var ref_style = jQuery('#e_ref_style').val();
+					var ref_template = jQuery('#e_ref_template').val();
+					var ref_publisher = jQuery('#e_ref_publisher').val();
+					var ref_location = jQuery('#e_ref_location').val();
 
-				jQuery('#ref_list').find('li#'+ref_id).remove();
-				var htm = '<li id="'+ref_id+'" style="border-bottom: 1px dotted #161C17;font-weight:bold;">';
-				htm += ref_biblio_code + '&nbsp;&nbsp;';
-				htm += '<a class="edit_ref" onclick="edit_ref('+ref_id+',\''+ref_biblio_code+'\', \''+ref_author+'\', \''+ref_title+'\', \''+ref_year+'\', \''+ref_part+'\', \''+ref_uri+'\', \''+ref_code+'\', \''+ref_style+'\', \''+ref_template+'\', \''+ref_publisher+'\', \''+ref_location+'\')" href="javascript:;" title="Edit" alt="Edit">' + '<img width="16" height="16" class="icon" title="Edit" alt="Edit" src="img/icons/pencil.png"></a>';
-				htm += '<a onclick="delete_ref('+ref_id+')" title="Delete"><img width="16" height="16" class="icon" title="Remove" alt="Remove" src="img/icons/cross.png"></a>';
-				if(data['is_library'] < 1 && use_references == '1' && edit_references == '1'){
-					htm += '<a class="add_lib_btn" onclick="add_lib('+ref_id+',\''+ref_biblio_code+'\', \''+ref_author+'\', \''+ref_title+'\', \''+ref_year+'\', \''+ref_part+'\', \''+ref_uri+'\', \''+ref_code+'\', \''+ref_style+'\', \''+ref_template+'\', \''+ref_publisher+'\', \''+ref_location+'\')" href="javascript:;" title="Add to library" alt="Add to library">' + '<img width="16" height="16" class="icon" title="Add to library" alt="Add to library" src="img/icons/world_add.png"></a>';
+					jQuery('#ref_list').find('li#'+ref_id).remove();
+					var htm = '<li id="'+ref_id+'" style="border-bottom: 1px dotted #161C17;font-weight:bold;">';
+					htm += ref_biblio_code + '&nbsp;&nbsp;';
+					htm += '<a class="edit_ref" onclick="edit_ref('+ref_id+',\''+ref_biblio_code+'\', \''+ref_author+'\', \''+ref_title+'\', \''+ref_year+'\', \''+ref_part+'\', \''+ref_uri+'\', \''+ref_code+'\', \''+ref_style+'\', \''+ref_template+'\', \''+ref_publisher+'\', \''+ref_location+'\')" href="javascript:;" title="Edit" alt="Edit">' + '<img width="16" height="16" class="icon" title="Edit" alt="Edit" src="img/icons/pencil.png"></a>';
+					htm += '<a onclick="delete_ref('+ref_id+')" title="Delete"><img width="16" height="16" class="icon" title="Remove" alt="Remove" src="img/icons/cross.png"></a>';
+					if(data['is_library'] < 1 && use_references == '1' && edit_references == '1'){
+						htm += '<a class="add_lib_btn" onclick="add_lib('+ref_id+',\''+ref_biblio_code+'\', \''+ref_author+'\', \''+ref_title+'\', \''+ref_year+'\', \''+ref_part+'\', \''+ref_uri+'\', \''+ref_code+'\', \''+ref_style+'\', \''+ref_template+'\', \''+ref_publisher+'\', \''+ref_location+'\')" href="javascript:;" title="Add to library" alt="Add to library">' + '<img width="16" height="16" class="icon" title="Add to library" alt="Add to library" src="img/icons/world_add.png"></a>';
+					}
+					htm += '</li>';
+					jQuery('#e_status').html(data['message']);
+					jQuery('#ref_list').find('ul').append(htm);
+				}else if('failure'==data['result']){
+					jQuery('#e_status').html(data['message']);
 				}
-				htm += '</li>';
-				jQuery('#e_status').html(data['message']);
-				jQuery('#ref_list').find('ul').append(htm);
-			}else if('failure'==data['result']){
-				jQuery('#e_status').html(data['message']);
 			}
-		  }
 		});
 	});
 
@@ -104,48 +104,48 @@ jQuery(document).ready(function(){
 		dataString += '&ref_location='+encodeURIComponent(ref_location);
 
 		jQuery.ajax({
-		  url: ajaxURL+'references.php',
-		  type: 'GET',
-		  data: dataString,
-		  dataType: 'json',
-		  beforeSend: function( xhr ) {
-			jQuery('#a_status').html('Saving...');
-		  },
-		  success: function( data ) {
-			if('success'==data['result']){
-				jQuery('#e_ref_id').val('');
-				jQuery('#e_ref_biblio_code').val('');
-				jQuery('#e_ref_author').val('');
-				jQuery('#e_ref_title').val('');
-				jQuery('#e_ref_year').val('');
-				jQuery('#e_ref_part').val('');
-				jQuery('#e_ref_uri').val('');
-				jQuery('#e_ref_code').val('');
-				jQuery('#e_ref_style').val('');
-				jQuery('#e_ref_template').val('');
-				jQuery('#e_ref_publisher').val('');
-				jQuery('#e_ref_location').val('');
-				jQuery('#a_status').html('{tr}Bibliography saved.{/tr}');
+			url: ajaxURL+'references.php',
+			type: 'GET',
+			data: dataString,
+			dataType: 'json',
+			beforeSend: function( xhr ) {
+				jQuery('#a_status').html('Saving...');
+			},
+			success: function( data ) {
+				if('success'==data['result']){
+					jQuery('#e_ref_id').val('');
+					jQuery('#e_ref_biblio_code').val('');
+					jQuery('#e_ref_author').val('');
+					jQuery('#e_ref_title').val('');
+					jQuery('#e_ref_year').val('');
+					jQuery('#e_ref_part').val('');
+					jQuery('#e_ref_uri').val('');
+					jQuery('#e_ref_code').val('');
+					jQuery('#e_ref_style').val('');
+					jQuery('#e_ref_template').val('');
+					jQuery('#e_ref_publisher').val('');
+					jQuery('#e_ref_location').val('');
+					jQuery('#a_status').html('{tr}Bibliography saved.{/tr}');
 
-				jQuery('#ref_list').show();
+					jQuery('#ref_list').show();
 
-				var ref_id = data["id"];
-				var htm = '<li id="'+ref_id+'" style="border-bottom: 1px dotted #161C17;">';
-				htm += ref_biblio_code + '&nbsp;&nbsp;';
-				htm += '<a class="edit_ref" onclick="edit_ref('+ref_id+',\''+ref_biblio_code+'\', \''+ref_author+'\', \''+ref_title+'\', \''+ref_year+'\', \''+ref_part+'\', \''+ref_uri+'\', \''+ref_code+'\', \''+ref_style+'\', \''+ref_template+'\', \''+ref_publisher+'\', \''+ref_location+'\')" href="javascript:;" title="Edit" alt="Edit">' + '<img width="16" height="16" class="icon" title="Edit" alt="Edit" src="img/icons/pencil.png"></a>';
-				htm += '<a onclick="delete_ref('+ref_id+')" title="Delete"><img width="16" height="16" class="icon" title="Remove" alt="Remove" src="img/icons/cross.png"></a>';
-				if(data['is_library'] < 1 && use_references == '1' && edit_references == '1'){
-					htm += '<a class="add_lib_btn" onclick="add_lib('+ref_id+',\''+ref_biblio_code+'\', \''+ref_author+'\', \''+ref_title+'\', \''+ref_year+'\', \''+ref_part+'\', \''+ref_uri+'\', \''+ref_code+'\', \''+ref_style+'\', \''+ref_template+'\', \''+ref_publisher+'\', \''+ref_location+'\')" href="javascript:;" title="Add to library" alt="Add to library">' + '<img width="16" height="16" class="icon" title="Add to library" alt="Add to library" src="img/icons/world_add.png"></a>';
+					var ref_id = data["id"];
+					var htm = '<li id="'+ref_id+'" style="border-bottom: 1px dotted #161C17;">';
+					htm += ref_biblio_code + '&nbsp;&nbsp;';
+					htm += '<a class="edit_ref" onclick="edit_ref('+ref_id+',\''+ref_biblio_code+'\', \''+ref_author+'\', \''+ref_title+'\', \''+ref_year+'\', \''+ref_part+'\', \''+ref_uri+'\', \''+ref_code+'\', \''+ref_style+'\', \''+ref_template+'\', \''+ref_publisher+'\', \''+ref_location+'\')" href="javascript:;" title="Edit" alt="Edit">' + '<img width="16" height="16" class="icon" title="Edit" alt="Edit" src="img/icons/pencil.png"></a>';
+					htm += '<a onclick="delete_ref('+ref_id+')" title="Delete"><img width="16" height="16" class="icon" title="Remove" alt="Remove" src="img/icons/cross.png"></a>';
+					if(data['is_library'] < 1 && use_references == '1' && edit_references == '1'){
+						htm += '<a class="add_lib_btn" onclick="add_lib('+ref_id+',\''+ref_biblio_code+'\', \''+ref_author+'\', \''+ref_title+'\', \''+ref_year+'\', \''+ref_part+'\', \''+ref_uri+'\', \''+ref_code+'\', \''+ref_style+'\', \''+ref_template+'\', \''+ref_publisher+'\', \''+ref_location+'\')" href="javascript:;" title="Add to library" alt="Add to library">' + '<img width="16" height="16" class="icon" title="Add to library" alt="Add to library" src="img/icons/world_add.png"></a>';
+					}
+					htm += '</li>';
+					jQuery('#ref_list').find('ul').append(htm);
+				}else{
+					jQuery('#a_status').html(data['result']);
 				}
-				htm += '</li>';
-				jQuery('#ref_list').find('ul').append(htm);
-			}else{
-				jQuery('#a_status').html(data['result']);
+				if('failure'==data['result'] && data["id"] == '-1'){
+					jQuery('#a_status').html('This biblio code already exists.');
+				}
 			}
-			if('failure'==data['result'] && data["id"] == '-1'){
-				jQuery('#a_status').html('This biblio code already exists.');
-			}
-		  }
 		});
 	});
 
@@ -167,42 +167,42 @@ jQuery(document).ready(function(){
 		dataString += '&ref_id='+encodeURIComponent(ref_id);
 
 		jQuery.ajax({
-		  url: ajaxURL+'references.php',
-		  type: 'GET',
-		  data: dataString,
-		  dataType: 'json',
-		  beforeSend: function( xhr ) {
-			jQuery('#u_lib_status').html('{tr}Adding...{/tr}');
-		  },
-		  success: function( data ) {
-			if('success'==data['result']){
-				jQuery('#u_lib_status').html(data['message']);
+			url: ajaxURL+'references.php',
+			type: 'GET',
+			data: dataString,
+			dataType: 'json',
+			beforeSend: function( xhr ) {
+				jQuery('#u_lib_status').html('{tr}Adding...{/tr}');
+			},
+			success: function( data ) {
+				if('success'==data['result']){
+					jQuery('#u_lib_status').html(data['message']);
 
-				var ref_id = data['id'];
-				var ref_biblio_code = escape(data['ref_biblio_code']);
-				var ref_author = escape(data['ref_author']);
-				var ref_title = escape(data['ref_title']);
-				var ref_year = escape(data['ref_year']);
-				var ref_part = escape(data['ref_part']);
-				var ref_uri = escape(data['ref_uri']);
-				var ref_code = escape(data['ref_code']);
-				var ref_style = escape(data['ref_style']);
-				var ref_template = escape(data['ref_template']);
-				var ref_publisher = escape(data['ref_publisher']);
-				var ref_location = escape(data['ref_location']);
+					var ref_id = data['id'];
+					var ref_biblio_code = escape(data['ref_biblio_code']);
+					var ref_author = escape(data['ref_author']);
+					var ref_title = escape(data['ref_title']);
+					var ref_year = escape(data['ref_year']);
+					var ref_part = escape(data['ref_part']);
+					var ref_uri = escape(data['ref_uri']);
+					var ref_code = escape(data['ref_code']);
+					var ref_style = escape(data['ref_style']);
+					var ref_template = escape(data['ref_template']);
+					var ref_publisher = escape(data['ref_publisher']);
+					var ref_location = escape(data['ref_location']);
 
-				var htm = '<li id="'+ref_id+'" style="border-bottom: 1px dotted #161C17;">';
-				htm += ref_biblio_code + '&nbsp;&nbsp;';
-				htm += '<a class="edit_ref" onclick="edit_ref('+ref_id+',\''+ref_biblio_code+'\', \''+ref_author+'\', \''+ref_title+'\', \''+ref_year+'\', \''+ref_part+'\', \''+ref_uri+'\', \''+ref_code+'\', \''+ref_style+'\', \''+ref_template+'\', \''+ref_publisher+'\', \''+ref_location+'\')" href="javascript:;" title="Edit" alt="Edit">' + '<img width="16" height="16" class="icon" title="Edit" alt="Edit" src="img/icons/pencil.png"></a>';
-				htm += '<a onclick="delete_ref('+ref_id+')" title="Delete"><img width="16" height="16" class="icon" title="Remove" alt="Remove" src="img/icons/cross.png"></a>';
-				htm += '</li>';
-				jQuery('#ref_list').find('ul').append(htm);
-			}else if('failure'==data['result']){
-				jQuery('#u_lib_status').html(data['message']);
-			}else{
-				jQuery('#u_lib_status').html(data['message']);
+					var htm = '<li id="'+ref_id+'" style="border-bottom: 1px dotted #161C17;">';
+					htm += ref_biblio_code + '&nbsp;&nbsp;';
+					htm += '<a class="edit_ref" onclick="edit_ref('+ref_id+',\''+ref_biblio_code+'\', \''+ref_author+'\', \''+ref_title+'\', \''+ref_year+'\', \''+ref_part+'\', \''+ref_uri+'\', \''+ref_code+'\', \''+ref_style+'\', \''+ref_template+'\', \''+ref_publisher+'\', \''+ref_location+'\')" href="javascript:;" title="Edit" alt="Edit">' + '<img width="16" height="16" class="icon" title="Edit" alt="Edit" src="img/icons/pencil.png"></a>';
+					htm += '<a onclick="delete_ref('+ref_id+')" title="Delete"><img width="16" height="16" class="icon" title="Remove" alt="Remove" src="img/icons/cross.png"></a>';
+					htm += '</li>';
+					jQuery('#ref_list').find('ul').append(htm);
+				}else if('failure'==data['result']){
+					jQuery('#u_lib_status').html(data['message']);
+				}else{
+					jQuery('#u_lib_status').html(data['message']);
+				}
 			}
-		  }
 		});
 	});
 });
@@ -254,24 +254,24 @@ function add_lib(ref_id, biblio_code, ref_author, ref_title, ref_year, ref_part,
 	dataString += '&ref_location='+encodeURIComponent(ref_location);
 
 	jQuery.ajax({
-	  url: ajaxURL+'references.php',
-	  type: 'GET',
-	  data: dataString,
-	  dataType: 'json',
-	  beforeSend: function( xhr ) {
-		jQuery('#'+ref_id).css('background-color', 'yellow');
-	  },
-	  success: function( data ) {
-		if('success'==data['result']){
-			alert(data['message']);
-			jQuery('#'+ref_id).find('a.add_lib_btn').remove();
-			jQuery('#'+ref_id).css('background-color', '');
-			jQuery('#lib_ref').append('<option value="'+data['id']+'">'+biblio_code+'</option>')
-		}else if('failure'==data['result']){
-			alert(data['message']);
-			jQuery('#'+ref_id).css('background-color', '');
+		url: ajaxURL+'references.php',
+		type: 'GET',
+		data: dataString,
+		dataType: 'json',
+		beforeSend: function( xhr ) {
+			jQuery('#'+ref_id).css('background-color', 'yellow');
+		},
+		success: function( data ) {
+			if('success'==data['result']){
+				alert(data['message']);
+				jQuery('#'+ref_id).find('a.add_lib_btn').remove();
+				jQuery('#'+ref_id).css('background-color', '');
+				jQuery('#lib_ref').append('<option value="'+data['id']+'">'+biblio_code+'</option>')
+			}else if('failure'==data['result']){
+				alert(data['message']);
+				jQuery('#'+ref_id).css('background-color', '');
+			}
 		}
-	  }
 	});
 }
 
@@ -306,28 +306,28 @@ function delete_ref(ref_id){
 		dataString += '&ref_id='+encodeURIComponent(ref_id);
 
 		jQuery.ajax({
-		  url: ajaxURL+'references.php',
-		  type: 'POST',
-		  data: dataString,
-		  beforeSend: function( xhr ) {
-			//jQuery('#e_status').html('Saving...');
-		  },
-		  success: function( data ) {
-			jQuery('#'+ref_id).remove();
-			jQuery('#ref_edit_block').hide();
-		  }
+			url: ajaxURL+'references.php',
+			type: 'POST',
+			data: dataString,
+			beforeSend: function( xhr ) {
+				//jQuery('#e_status').html('Saving...');
+			},
+			success: function( data ) {
+				jQuery('#'+ref_id).remove();
+				jQuery('#ref_edit_block').hide();
+			}
 		});
 	}
 	return false;
 }
 </script>
 
-    <div class="form-group">
-        <div class="col-sm-12">
-            <a href="javascript:;" id="add_ref" class="btn btn-link" onclick="add_ref()">{tr}Add Reference{/tr}</a>
-        </div>    
-    </div>
-    <div class="form-group">
+		<div class="form-group">
+				<div class="col-sm-12">
+						<a href="javascript:;" id="add_ref" class="btn btn-link" onclick="add_ref()">{tr}Add Reference{/tr}</a>
+				</div>
+		</div>
+		<div class="form-group">
 		<div id="ref_list" style="display:{$display}">
 			{tr}References Available{/tr}:
 			<ul style="list-style-type:none; padding-left: 0;">
@@ -370,96 +370,96 @@ function delete_ref(ref_id){
 			<div>
 				<input type="hidden" name="e_ref_id" id="e_ref_id" value="">
 				<input type="hidden" name="page" value="{$page|escape}">
-		        <div class="form-group">
-                    <label class="col-sm-2 control-label" for="e_ref_biblio_code">{tr}Biblio Code{/tr}:</label>
+				<div class="form-group">
+					<label class="col-sm-2 control-label" for="e_ref_biblio_code">{tr}Biblio Code{/tr}:</label>
 					<div class="col-sm-10">
-                        <input type="text" class="form-control wikiedit" name="e_ref_biblio_code" id="e_ref_biblio_code" maxlength="50" value="">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-2 control-label" for="e_ref_author">{tr}Author{/tr}:</label>
-                    <div class="col-sm-10">
-						<input type="text"  class="form-control wikiedit" name="e_ref_author" id="e_ref_author" value="">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-2 control-label" for="e_ref_title">{tr}Title{/tr}:</label>
-                    <div class="col-sm-10">
-						<input type="text"  class="form-control wikiedit" name="e_ref_title" id="e_ref_title" value="">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-2 control-label" for="e_ref_year">{tr}Year{/tr}:</label>
-                    <div class="col-sm-10">
-						<input type="text"  class="form-control wikiedit" name="e_ref_year" id="e_ref_year" value="">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-2 control-label" for="e_ref_part">{tr}Part{/tr}:</label>
-                    <div class="col-sm-10">
-					<input type="text"  class="form-control wikiedit" name="e_ref_part" id="e_ref_part" value="">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-2 control-label" for="e_ref_uri">{tr}URI{/tr}:</label>
-                    <div class="col-sm-10">
-					    <input type="text"  class="form-control wikiedit" name="e_ref_uri" id="e_ref_uri" value="">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-2 control-label" for="e_ref_biblio_code">{tr}Code{/tr}:</label>
-                    <div class="col-sm-10">
-					    <input type="text"  class="form-control wikiedit" name="e_ref_code" id="e_ref_code" value="">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-2 control-label" for="e_ref_publisher">{tr}Publisher{/tr}:</label>
-                    <div class="col-sm-10">
-					    <input type="text"  class="form-control wikiedit" name="e_ref_publisher" id="e_ref_publisher" value="">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-2 control-label" for="e_ref_location">{tr}Location{/tr}:</label>
-                    <div class="col-sm-10">
-					<input type="text"  class="form-control wikiedit" name="e_ref_location" id="e_ref_location" value="">
-                    </div>
-                </div>
-                <div class="form-group">
-                   <label class="col-sm-2 control-label" for="e_ref_style">{tr}Style{/tr}:</label>
-                    <div class="col-sm-10">
-					    <input type="text" class="form-control wikiedit" name="e_ref_style" id="e_ref_style" value="">
-                        <span class="help-block">{tr}Enter the CSS class name to be added in the 'li' tag for listing this reference.{/tr}</span>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-2 control-label" for="e_ref_template">{tr}Template{/tr}:</label>
-                    <div class="col-sm-10">
-							<input type="text" class="form-control wikiedit" name="e_ref_template" id="e_ref_template" value="">
-							<span class="help-block">
-								{tr}Enter template format in which you want to display the reference details in the bibliography listing. For example{/tr}: ~title~ (~year~) ~author~
-							</span>
-                            <span class="help-block">
-								{tr}All the codes must be in lower case letters separated with spaces.{/tr}
-							</span>
-                    </div>
-                </div>
-                <div class="form-group">
-							<div id="e_btns">
-								<input class="wikiaction btn btn-default" type="submit" value="Save" id="e_submit" name="e_submit">
-								<input class="wikiaction btn btn-warning" type="reset" value="Cancel" id="e_cancel" name="e_cancel">
-								<span id="e_status" style="margin: 0 0 0 10px;"></span>
-							</div>
-							<div id="a_btns">
-								<input class="wikiaction btn btn-default" type="submit" value="{tr}Add{/tr}" id="a_submit" name="a_submit">
-								<input class="wikiaction btn btn-warning" type="reset" value="{tr}Cancel{/tr}" id="a_cancel" name="a_cancel">
-								<span id="a_status" style="margin: 0 0 0 10px;"></span>
-							</div>
-                </div>
+						<input type="text" class="form-control wikiedit" name="e_ref_biblio_code" id="e_ref_biblio_code" maxlength="50" value="">
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label" for="e_ref_author">{tr}Author{/tr}:</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control wikiedit" name="e_ref_author" id="e_ref_author" value="">
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label" for="e_ref_title">{tr}Title{/tr}:</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control wikiedit" name="e_ref_title" id="e_ref_title" value="">
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label" for="e_ref_year">{tr}Year{/tr}:</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control wikiedit" name="e_ref_year" id="e_ref_year" value="">
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label" for="e_ref_part">{tr}Part{/tr}:</label>
+					<div class="col-sm-10">
+					<input type="text" class="form-control wikiedit" name="e_ref_part" id="e_ref_part" value="">
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label" for="e_ref_uri">{tr}URI{/tr}:</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control wikiedit" name="e_ref_uri" id="e_ref_uri" value="">
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label" for="e_ref_biblio_code">{tr}Code{/tr}:</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control wikiedit" name="e_ref_code" id="e_ref_code" value="">
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label" for="e_ref_publisher">{tr}Publisher{/tr}:</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control wikiedit" name="e_ref_publisher" id="e_ref_publisher" value="">
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label" for="e_ref_location">{tr}Location{/tr}:</label>
+					<div class="col-sm-10">
+					<input type="text" class="form-control wikiedit" name="e_ref_location" id="e_ref_location" value="">
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label" for="e_ref_style">{tr}Style{/tr}:</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control wikiedit" name="e_ref_style" id="e_ref_style" value="">
+						<span class="help-block">{tr}Enter the CSS class name to be added in the 'li' tag for listing this reference.{/tr}</span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label" for="e_ref_template">{tr}Template{/tr}:</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control wikiedit" name="e_ref_template" id="e_ref_template" value="">
+						<span class="help-block">
+							{tr}Enter template format in which you want to display the reference details in the bibliography listing. For example{/tr}: ~title~ (~year~) ~author~
+						</span>
+						<span class="help-block">
+							{tr}All the codes must be in lower case letters separated with spaces.{/tr}
+						</span>
+					</div>
+				</div>
+				<div class="form-group">
+					<div id="e_btns">
+						<input class="wikiaction btn btn-default" type="submit" value="Save" id="e_submit" name="e_submit">
+						<input class="wikiaction btn btn-warning" type="reset" value="Cancel" id="e_cancel" name="e_cancel">
+						<span id="e_status" style="margin: 0 0 0 10px;"></span>
+					</div>
+					<div id="a_btns">
+						<input class="wikiaction btn btn-default" type="submit" value="{tr}Add{/tr}" id="a_submit" name="a_submit">
+						<input class="wikiaction btn btn-warning" type="reset" value="{tr}Cancel{/tr}" id="a_cancel" name="a_cancel">
+						<span id="a_status" style="margin: 0 0 0 10px;"></span>
+					</div>
+				</div>
 			</div>
 		</div>
-    </div>
+	</div>
 
 
 {else}
-{tr}Please save the page before creating the bibliography.{/tr}
+	{tr}Please save the page before creating the bibliography.{/tr}
 {/if}

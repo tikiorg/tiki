@@ -6,49 +6,49 @@
 		<input type="hidden" name="trackerId" value="{$trackerId|escape}">
 		<input type="hidden" name="itemId" value="{$itemId|escape}">
 		<input type="hidden" name="attId" value="{$attId|escape}">
-        <div class="form-group">
-            <label for="" class="col-sm-2 control-label">
+		<div class="form-group">
+			<label for="" class="col-sm-2 control-label">
 				{tr}Upload file{/tr}
-            </label>
-            <div class="col-sm-10">
-                {if $attach_file}{tr}Edit:{/tr} {/if}<input type="hidden" name="MAX_FILE_SIZE" value="1000000000"><input name="userfile1" type="file">{if $attach_file}<br>{$attach_file|escape}{/if}
+			</label>
+			<div class="col-sm-10">
+				{if $attach_file}{tr}Edit:{/tr} {/if}<input type="hidden" name="MAX_FILE_SIZE" value="1000000000"><input name="userfile1" type="file">{if $attach_file}<br>{$attach_file|escape}{/if}
 			</div>
-        </div>
-        <div class="form-group">
-            <label for="" class="col-sm-2 control-label">
-                {tr}Comment{/tr}
-            </label>
-            <div class="col-sm-10">
+		</div>
+		<div class="form-group">
+			<label for="" class="col-sm-2 control-label">
+				{tr}Comment{/tr}
+			</label>
+			<div class="col-sm-10">
 				<input type="text" name="attach_comment" maxlength="250" value="{$attach_comment|escape}">
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="" class="col-sm-2 control-label">
-                {tr}Version{/tr}
-            </label>
-            <div class="col-sm-10">
-                <input type="text" name="attach_version" size="5" maxlength="10" value="{$attach_version|escape}">
 			</div>
-        </div>
-        <div class="form-group">
-            <label for="" class="col-sm-2 control-label">
-                {tr}Description{/tr}
-            </label>
-            <div class="col-sm-10">
-                <textarea name="attach_longdesc" style="width:100%;" rows="10" >{$attach_longdesc|escape}</textarea>
+		</div>
+		<div class="form-group">
+			<label for="" class="col-sm-2 control-label">
+				{tr}Version{/tr}
+			</label>
+			<div class="col-sm-10">
+				<input type="text" name="attach_version" size="5" maxlength="10" value="{$attach_version|escape}">
 			</div>
-        </div>
-        <div class="form-group">
-            <div class="col-sm-10 col-sm-push-2">
-                <input type="submit" class="btn btn-default btn-sm" name="attach" value={if $attach_file}"{tr}Edit{/tr}"{else}"{tr}Attach{/tr}"{/if}>
+		</div>
+		<div class="form-group">
+			<label for="" class="col-sm-2 control-label">
+				{tr}Description{/tr}
+			</label>
+			<div class="col-sm-10">
+				<textarea name="attach_longdesc" style="width:100%;" rows="10" >{$attach_longdesc|escape}</textarea>
 			</div>
-        </div>
+		</div>
+		<div class="form-group">
+			<div class="col-sm-10 col-sm-push-2">
+				<input type="submit" class="btn btn-default btn-sm" name="attach" value={if $attach_file}"{tr}Edit{/tr}"{else}"{tr}Attach{/tr}"{/if}>
+			</div>
+		</div>
 	</form>
 {/if}
 
 <h2>{tr}Attachments{/tr}</h2>
 <div class="table-responsive">
-    <table class="table normal">
+	<table class="table normal">
 	<tr>
 		{assign var='nbcols' value=2}
 		<th class="auto">&nbsp;</th>
@@ -69,7 +69,7 @@
 			</a>
 		{/if}
 		<a class="tablename" href="tiki-download_item_attachment.php?attId={$atts[ix].attId}" title="{tr}Download{/tr}">
-		   	{icon _id='disk' alt="{tr}Download{/tr}"}
+			{icon _id='disk' alt="{tr}Download{/tr}"}
 		</a>
 		</td>
 		{foreach key=k item=x from=$attfields}
@@ -99,6 +99,6 @@
 		<td colspan="{$nbcols}" class="formcontent">{tr}No attachments for this item{/tr}</td>
 	</tr>
 	{/section}
-    </table>
+	</table>
 </div>
-    {/strip}
+	{/strip}

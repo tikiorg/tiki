@@ -14,9 +14,9 @@
 			{section name=i loop=$comments_request_data}
 				<input type="hidden" name="{$comments_request_data[i].name|escape}" value="{$comments_request_data[i].value|escape}">
 			{/section}
-			<input type="hidden" name="comments_parentId" value="{$comments_parentId|escape}">    
-			<input type="hidden" name="comments_grandParentId" value="{$comments_grandParentId|escape}">    
-			<input type="hidden" name="comments_reply_threadId" value="{$comments_reply_threadId|escape}">    
+			<input type="hidden" name="comments_parentId" value="{$comments_parentId|escape}">
+			<input type="hidden" name="comments_grandParentId" value="{$comments_grandParentId|escape}">
+			<input type="hidden" name="comments_reply_threadId" value="{$comments_reply_threadId|escape}">
 			<input type="hidden" name="comments_objectId" value="{$comments_objectId|escape}">
 			<input type="hidden" name="comments_offset" value="0">
 			{if $smarty.request.topics_offset}<input type="hidden" name="topics_offset" value="{$smarty.request.topics_offset|escape}">{/if}
@@ -75,7 +75,7 @@
 									<option value="30" {if $comments_per_page eq 30}selected="selected"{/if}>30</option>
 									<option value="999999" {if $comments_per_page eq 999999}selected="selected"{/if}>{tr}All{/tr}</option>
 								</select>
-								
+
 								{if $forum_info.is_flat neq 'y'}
 									<label for="comments-style">{tr}Style:{/tr}</label>
 									<select name="thread_style" id="comments-style">
@@ -200,8 +200,8 @@
 			{/if}
 
 			<form class="form-horizontal" role="form" enctype="multipart/form-data" method="post" action="{$comments_complete_father}#comments" id='editpostform'>
-				<input type="hidden" name="comments_reply_threadId" value="{$comments_reply_threadId|escape}">    
-				<input type="hidden" name="comments_grandParentId" value="{$comments_grandParentId|escape}">    
+				<input type="hidden" name="comments_reply_threadId" value="{$comments_reply_threadId|escape}">
+				<input type="hidden" name="comments_grandParentId" value="{$comments_grandParentId|escape}">
 				<input type="hidden" name="comments_parentId" value="{$comments_parentId|escape}">
 				<input type="hidden" name="comments_offset" value="{$comments_offset|escape}">
 				<input type="hidden" name="comments_threadId" value="{$comments_threadId|escape}">
@@ -215,59 +215,59 @@
 					<input type="hidden" name="{$comments_request_data[i].name|escape}" value="{$comments_request_data[i].value|escape}">
 				{/section}
 
-                {if !$user}
-                    <div class="form-group">
+				{if !$user}
+					<div class="form-group">
 						<label class="col-sm-2 control-label" for="anonymous_name">{tr}Name{/tr}</label>
-                        <div class="col-sm-10">
-                            <input type="text" maxlength="50" size="30" id="anonymous_name" name="anonymous_name"  value="{$comment_preview_data.name|escape}">
-                        </div>
-				    </div>
-                    <div class="form-group">
+						<div class="col-sm-10">
+							<input type="text" maxlength="50" size="30" id="anonymous_name" name="anonymous_name" value="{$comment_preview_data.name|escape}">
+						</div>
+					</div>
+					<div class="form-group">
 						<label class="col-sm-2 control-label" for="anonymous_email">{tr}If you would like to be notified when someone replies to this topic<br>please tell us your e-mail address{/tr}</label>
-                        <div class="col-sm-10">
+						<div class="col-sm-10">
 								<input type="text" size="30" id="anonymous_email" name="anonymous_email" value="{$comment_preview_data.email|escape}">
-                        </div>
-                    </div>
+						</div>
+					</div>
 				{/if}
 
 				{if $prefs.forum_reply_notitle neq 'y'}
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label" for="comments-title">{tr}Title{/tr} <span class="text-danger">*</span> </label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" name="comments_title" id="comments-title" value="{$comment_title|escape}">
-                        </div>
-                    </div>
-                {/if}
+					<div class="form-group">
+						<label class="col-sm-2 control-label" for="comments-title">{tr}Title{/tr} <span class="text-danger">*</span> </label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" name="comments_title" id="comments-title" value="{$comment_title|escape}">
+						</div>
+					</div>
+				{/if}
 
-                <div class="form-group">
-				    <label class="col-sm-2 control-label" for="editpost2">{tr}Reply{/tr}</label>
-                    <div class="col-sm-10">
+				<div class="form-group">
+					<label class="col-sm-2 control-label" for="editpost2">{tr}Reply{/tr}</label>
+					<div class="col-sm-10">
 						{if $prefs.feature_wysiwyg eq 'y' and $prefs.wysiwyg_htmltowiki eq 'y' and $prefs.feature_forum_parse eq 'y'}
 							{$forum_wysiwyg = 'y'}
 						{else}
 							{$forum_wysiwyg = 'n'}
 						{/if}
-                        {textarea codemirror='true' syntax='tiki' id="editpost2" class="form-control" name="comments_data" _wysiwyg=$forum_wysiwyg}{if ($prefs.feature_forum_replyempty ne 'y') || $edit_reply > 0 || $comment_preview eq 'y' || !empty($errors)}{$comment_data}{/if}{/textarea}
+						{textarea codemirror='true' syntax='tiki' id="editpost2" class="form-control" name="comments_data" _wysiwyg=$forum_wysiwyg}{if ($prefs.feature_forum_replyempty ne 'y') || $edit_reply > 0 || $comment_preview eq 'y' || !empty($errors)}{$comment_data}{/if}{/textarea}
 
 						{if $user and $prefs.feature_user_watches eq 'y'}
-    						<div id="watch_thread_on_reply">
+							<div id="watch_thread_on_reply">
 								<input id="watch_thread" type="checkbox" name="watch" value="y"{if $user_watching_topic eq 'y' or $smarty.request.watch eq 'y'} checked="checked"{/if}> <label for="watch_thread">{tr}Send me an email when someone replies{/tr}</label>
 							</div>
 						{/if}
-                    </div>
-                </div>
+					</div>
+				</div>
 
-                {if ($forum_info.att eq 'att_all') or ($forum_info.att eq 'att_admin' and ($tiki_p_admin_forum eq 'y'  or $forum_info.moderator == $user)) or ($forum_info.att eq 'att_perm' and $tiki_p_forum_attach eq 'y')}
-	    			{assign var='can_attach_file' value='y'}
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label" for="userfile1">
-                            {tr}Attach file{/tr}
-                        </label>
-                        <div class="col-sm-10">
-                            <input type="hidden" name="MAX_FILE_SIZE" value="{$forum_info.att_max_size|escape}"><input class="form-control" id="userfile1" name="userfile1" type="file">{tr}Maximum size:{/tr} {$forum_info.att_max_size|kbsize}
-                        </div>
-                    </div>
-                {/if}
+				{if ($forum_info.att eq 'att_all') or ($forum_info.att eq 'att_admin' and ($tiki_p_admin_forum eq 'y' or $forum_info.moderator == $user)) or ($forum_info.att eq 'att_perm' and $tiki_p_forum_attach eq 'y')}
+					{assign var='can_attach_file' value='y'}
+					<div class="form-group">
+						<label class="col-sm-2 control-label" for="userfile1">
+							{tr}Attach file{/tr}
+						</label>
+						<div class="col-sm-10">
+							<input type="hidden" name="MAX_FILE_SIZE" value="{$forum_info.att_max_size|escape}"><input class="form-control" id="userfile1" name="userfile1" type="file">{tr}Maximum size:{/tr} {$forum_info.att_max_size|kbsize}
+						</div>
+					</div>
+				{/if}
 
 				{if $prefs.feature_contribution eq 'y'}
 					{include file='contribution.tpl' in_comment="y"}
@@ -278,18 +278,18 @@
 					{include file='antibot.tpl' td_style="formcolor"}
 				{/if}
 
-                <div class="form-group">
+				<div class="form-group">
 					{if isset($parent_coms) and $parent_coms}
-                        <label class="col-sm-2 control-label" for="comments_postComment">
-					        {tr}Reply to parent post{/tr}
-                        </label>
-                    {else}
-                        <label class="col-sm-2 control-label" for="comments_postComment">
-                            {tr}Post new reply{/tr}
-                        </label>
+						<label class="col-sm-2 control-label" for="comments_postComment">
+							{tr}Reply to parent post{/tr}
+						</label>
+					{else}
+						<label class="col-sm-2 control-label" for="comments_postComment">
+							{tr}Post new reply{/tr}
+						</label>
 					{/if}
-                    <div class="col-sm-10">
-					    <input type="submit" class="btn btn-default btn-sm" id="comments_postComment" name="comments_postComment" value="{tr}Post{/tr}" onclick="needToConfirm=false;">
+					<div class="col-sm-10">
+						<input type="submit" class="btn btn-default btn-sm" id="comments_postComment" name="comments_postComment" value="{tr}Post{/tr}" onclick="needToConfirm=false;">
 						{if !empty($user) && $prefs.feature_comments_post_as_anonymous eq 'y'}
 							<input type="submit" class="btn btn-default btn-sm" name="comments_postComment_anonymous" value="{tr}Post as Anonymous{/tr}" onclick="needToConfirm=false;">
 						{/if}
@@ -303,8 +303,8 @@
 							"
 							{/strip}{else} onclick="needToConfirm=false;"{/if}>
 							<input type="submit" class="btn btn-default btn-sm" name="comments_cancelComment" value="{tr}Cancel{/tr}" onclick="hide('{$postclass}'); return false">
-			    	</div>
-                </div>
+					</div>
+				</div>
 			</form>
 
 			{assign var=tips_title value="{tr}Posting replies{/tr}"}
@@ -325,15 +325,15 @@ $('#editpostform').submit( function() {
 {/jq}
 {/if}
 {jq}
-    var $forum = $("#editpostform");
-    $forum.submit(function() {
-        // prevent double submission
-        if (!$forum.data("sub")) {
-            $forum.tikiModal('Save in Progress...');
-            $forum.data("sub", true);
-            $forum.submit();
-        }
-    });
+	var $forum = $("#editpostform");
+	$forum.submit(function() {
+		// prevent double submission
+		if (!$forum.data("sub")) {
+			$forum.tikiModal('Save in Progress...');
+			$forum.data("sub", true);
+			$forum.submit();
+		}
+	});
 {/jq}
 {* End of Post dialog *}
 

@@ -57,7 +57,7 @@
 										{assign var=propkey value="show_$propname"}
 									{/if}
 									{if isset($files[changes].$propname)}
-                    					{if $propname == 'share' && isset($files[changes].share.data)}
+										{if $propname == 'share' && isset($files[changes].share.data)}
 											{$email = []}
 											{foreach item=tmp_prop key=tmp_propname from=$files[changes].share.data}
 												{$email[]=$tmp_prop.email}
@@ -98,7 +98,7 @@
 									{/if}
 								{/foreach}
 							</table>
-					  </div>
+						</div>
 					</div>
 				{/strip}
 			{/capture}
@@ -122,12 +122,12 @@
 								href="{$prefs.fgal_podcast_dir}{$files[changes].path}"
 							{else}
 								href="{if $prefs.javascript_enabled eq 'y' && $files[changes].type|truncate:5:'':true eq 'image'}
-									      {$files[changes].id|sefurl:preview}
-										{elseif $files[changes].type neq 'application/x-shockwave-flash'}
-											{$files[changes].id|sefurl:file}
-										{else}
-											{$files[changes].id|sefurl:display}
-										{/if}"
+												{$files[changes].id|sefurl:preview}
+											{elseif $files[changes].type neq 'application/x-shockwave-flash'}
+												{$files[changes].id|sefurl:file}
+											{else}
+												{$files[changes].id|sefurl:display}
+											{/if}"
 							{/if}
 						{/if}
 					{/if}
@@ -198,7 +198,7 @@
 												<img src="{$files[changes].id|sefurl:thumbnail}" alt="" style="max-height:{$thumbnailcontener_size}px">
 											{/if}
 										{else}
-											<object data="{$files[changes].id|sefurl:thumbnail}" alt=""  style="width:{$thumbnail_size}px;height:{$thumbnailcontener_size}px;" type="{$key_type}"></object>
+											<object data="{$files[changes].id|sefurl:thumbnail}" alt="" style="width:{$thumbnail_size}px;height:{$thumbnailcontener_size}px;" type="{$key_type}"></object>
 										{/if}
 									</a>
 								{/if}
