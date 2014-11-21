@@ -65,7 +65,7 @@
 						</td>
 					</tr>
 				{sectionelse}
-				 {norecords _colspan=6}
+					{norecords _colspan=6}
 				{/section}
 			</table>
 
@@ -82,7 +82,7 @@
 	{tab name=$feedEditLabel}
 		<h2>{$feedEditLabel}
 		{if $rssId > 0}
-			 {$name|escape}</h2>
+			{$name|escape}</h2>
 			{button href="tiki-admin_rssmodules.php" cookietab="2" _keepall="y" _text="{tr}Create new external feed{/tr}"}
 		{else}
 			</h2>
@@ -144,18 +144,19 @@
 			</div>
 		</form>
 	{/tab}
+
 	{if $articleConfig}
 		{tab name="{tr}Article Generator{/tr}"}
 			<h2>{tr _0='"'|cat:$articleConfig.feed_name|cat:'"'|escape}Article Generator for %0{/tr}</h2>
-		        {remarksbox type="tip" title="{tr}Tips{/tr}"}
+			{remarksbox type="tip" title="{tr}Tips{/tr}"}
 					{tr}Once you have defined the settings below, each new item in this rss feed will generate a new article{/tr}.
 					<a target="tikihelp" href="https://doc.tiki.org/Article+generator" class="tikihelp" style="float:none" title="{tr}Article Generator:{/tr}
 						{tr}From the point when you defined the settings onwards, new items in the feed become articles each time the feed is refreshed. But only new ones.{/tr}">
 						<img src="img/icons/help.png" alt="" width="16" height="16" class="icon" />
 					</a>
-			        <hr>
-			        {tr}You can enable <strong>Show source</strong> for the <a href="tiki-article_types.php" target="_blank">article type</a> (hidden by default), to allow users to read the full content{/tr}.
-		        {/remarksbox}
+					<hr>
+					{tr}You can enable <strong>Show source</strong> for the <a href="tiki-article_types.php" target="_blank">article type</a> (hidden by default), to allow users to read the full content{/tr}.
+			{/remarksbox}
 
 			<form method="post" action="">
 				<p>
@@ -163,10 +164,10 @@
 					<label for="article_active">{tr}Enable{/tr}</label>
 				</p>
 				{if $prefs.feature_submissions eq 'y'}
-				<p>
-					<input id="article_submission" type="checkbox" name="submission" value="1"{if $articleConfig.submission} checked="checked"{/if}>
-					<label for="article_submission">{tr}Use Article Submission System{/tr}</label>
-				</p>
+					<p>
+						<input id="article_submission" type="checkbox" name="submission" value="1"{if $articleConfig.submission} checked="checked"{/if}>
+						<label for="article_submission">{tr}Use Article Submission System{/tr}</label>
+					</p>
 				{/if}
 				<p>
 					<label for="article_expiry">{tr}Expiration{/tr}</label>
@@ -204,56 +205,57 @@
 				</p>
 				<h3>{tr}Custom Settings for Source Categories{/tr}</h3>
 				{if !$sourcecats}
-				<p>{tr}No source categories detected for this feed{/tr}</p>
+					<p>{tr}No source categories detected for this feed{/tr}</p>
 				{/if}
 				<table>
-				<tr>
-				<th>{tr}Source Category{/tr}
-				<th>{tr}Type{/tr}</th>
-				<th>{tr}Topic{/tr}</th>
-				<th>{tr}Rating{/tr}</th>
-				<th>{tr}Priority (10 is highest){/tr}</th>
-				</tr>
-				{foreach $sourcecats as $sourcecat => $settings}
-				<tr>
-				<td>
-					{$sourcecat|escape}
-				</td>
-				<td>
-					<select name="custom_atype[{$sourcecat|escape}]">
-						<option value="">{tr}Default{/tr}</option>
-						{foreach from=$types item=t}
-						<option value="{$t.type|escape}"{if $t.type eq $article_custom_info[$sourcecat].atype} selected="selected"{/if}>{$t.type|escape}</option>
-						{/foreach}
-					</select>
-				</td>
-				<td>
-					<select name="custom_topic[{$sourcecat|escape}]">
-						<option value="">{tr}Default{/tr}</option>
-						<option value="0" {if $article_custom_info[$sourcecat].topic === "0"} selected="selected"{/if}>{tr}None{/tr}</option>
-						{foreach from=$topics item=t}
-						<option value="{$t.topicId|escape}"{if $t.topicId eq $article_custom_info[$sourcecat].topic} selected="selected"{/if}>{$t.name|escape}</option>
-						{/foreach}
-					</select>
-				</td>
-				<td>
-					<select name="custom_rating[{$sourcecat|escape}]">
-						<option value="">{tr}Default{/tr}</option>
-						{foreach from=$ratingOptions item=v}
-						<option value="{$v|escape}"{if $v === $article_custom_info[$sourcecat].rating} selected="selected"{/if}>{$v|escape}</option>			
-						{/foreach}
-					</select>
-				</td>
-				<td>
-                                        <select name="custom_priority[{$sourcecat|escape}]">
-                                                {foreach from=$ratingOptions item=v}
-                                                <option value="{$v|escape}"{if $v === $article_custom_info[$sourcecat].priority} selected="selected"{/if}>{$v|escape}</option>
-                                                {/foreach}
-                                        </select>
-				</td>
-				</tr>
-				{/foreach}
+					<tr>
+						<th>{tr}Source Category{/tr}
+						<th>{tr}Type{/tr}</th>
+						<th>{tr}Topic{/tr}</th>
+						<th>{tr}Rating{/tr}</th>
+						<th>{tr}Priority (10 is highest){/tr}</th>
+					</tr>
+					{foreach $sourcecats as $sourcecat => $settings}
+						<tr>
+							<td>
+								{$sourcecat|escape}
+							</td>
+							<td>
+								<select name="custom_atype[{$sourcecat|escape}]">
+									<option value="">{tr}Default{/tr}</option>
+									{foreach from=$types item=t}
+										<option value="{$t.type|escape}"{if $t.type eq $article_custom_info[$sourcecat].atype} selected="selected"{/if}>{$t.type|escape}</option>
+									{/foreach}
+								</select>
+							</td>
+							<td>
+								<select name="custom_topic[{$sourcecat|escape}]">
+									<option value="">{tr}Default{/tr}</option>
+									<option value="0" {if $article_custom_info[$sourcecat].topic === "0"} selected="selected"{/if}>{tr}None{/tr}</option>
+									{foreach from=$topics item=t}
+										<option value="{$t.topicId|escape}"{if $t.topicId eq $article_custom_info[$sourcecat].topic} selected="selected"{/if}>{$t.name|escape}</option>
+									{/foreach}
+								</select>
+							</td>
+							<td>
+								<select name="custom_rating[{$sourcecat|escape}]">
+									<option value="">{tr}Default{/tr}</option>
+									{foreach from=$ratingOptions item=v}
+										<option value="{$v|escape}"{if $v === $article_custom_info[$sourcecat].rating} selected="selected"{/if}>{$v|escape}</option>
+									{/foreach}
+								</select>
+							</td>
+							<td>
+								<select name="custom_priority[{$sourcecat|escape}]">
+									{foreach from=$ratingOptions item=v}
+										<option value="{$v|escape}"{if $v === $article_custom_info[$sourcecat].priority} selected="selected"{/if}>{$v|escape}</option>
+									{/foreach}
+								</select>
+							</td>
+						</tr>
+					{/foreach}
 				</table>
+
 				<h3>{tr}Categorize Created Articles{/tr}</h3>
 				<p>
 					{include file='categorize.tpl'}

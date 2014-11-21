@@ -10,10 +10,10 @@
 	<div class="alert alert-info alert-dismissable">{section name=ix loop=$tikifeedback}{icon _id=delete alt="{tr}Alert{/tr}" style="vertical-align:middle"} {$tikifeedback[ix].mes}.{/section}</div>
 {/if}
 <form action="tiki-admin_notifications.php" method="post">
-     <input type="hidden" name="find" value="{$find|escape}">
-     <input type="hidden" name="sort_mode" value="{$sort_mode|escape}">
-     {if $offset}<input type="hidden" name="offset" value="{$offset|escape}">{/if}
-	 {if $numrows ne $prefs.maxRecords and $numrows}<input type="hidden" name="numrows" value="{$numrows|escape}">{/if}
+	<input type="hidden" name="find" value="{$find|escape}">
+	<input type="hidden" name="sort_mode" value="{$sort_mode|escape}">
+	{if $offset}<input type="hidden" name="offset" value="{$offset|escape}">{/if}
+	{if $numrows ne $prefs.maxRecords and $numrows}<input type="hidden" name="numrows" value="{$numrows|escape}">{/if}
 	<table class="formcolor">
 		<tr>
 			<td><label for="event">{tr}Event:{/tr}</label></td>
@@ -24,7 +24,7 @@
 					{/foreach}
 				</select>
 			</td>
-		</tr> 
+		</tr>
 		<tr>
 			<td><label for="destination">{tr}Destination:{/tr}</label></td>
 			<td>
@@ -55,7 +55,7 @@
 			</td>
 		</tr>
 		<tr id="emailrow" style="display:none">
-			<td><label for="femail">{tr}Email:{/tr}</label></td>        
+			<td><label for="femail">{tr}Email:{/tr}</label></td>
 			<td>
 				<input type="text" id='femail' name="email">
 			</td>
@@ -64,7 +64,7 @@
 			<td>
 				<div class="help-block">{tr}Note that a user is not notified for his own action{/tr}.</div>
 			</td>
-		</tr> 
+		</tr>
 		<tr>
 			<td>&nbsp;</td>
 			<td><input type="submit" class="btn btn-default btn-sm" name="add" value="{tr}Add{/tr}"></td>
@@ -77,8 +77,8 @@
   {include file='find.tpl' find_show_num_rows='y'}
 {/if}
 <form method="get" action="tiki-admin_notifications.php">
-    <div class="table-responsive notifications-table">
-    <table class="table normal">
+	<div class="table-responsive notifications-table">
+	<table class="table normal">
 		<tr>
 			<th>
 				{if $channels}
@@ -125,10 +125,10 @@
 				</td>
 			</tr>
 		{sectionelse}
-         {norecords _colspan=6}
+			{norecords _colspan=6}
 		{/section}
 	</table>
-    </div>
+	</div>
 	{if $channels}
 		<br>
 		{tr}Perform action with checked:{/tr}
@@ -140,7 +140,7 @@
 
 {if !empty($trackers)}
 	<h2>{tr}Trackers Outbound Emails{/tr}</h2>
-    <div class="table-responsive">
+	<div class="table-responsive">
 	<table class="table normal">
 		{section name=ix loop=$trackers}
 			<tr>
@@ -148,12 +148,12 @@
 			</tr>
 		{/section}
 	</table>
-    </div>
+	</div>
 {/if}
 
 {if !empty($forums)}
 	<h2>{tr}Forums Outbound Emails{/tr}</h2>
-    <div class="table-responsive">
+	<div class="table-responsive">
 	<table class="table normal">
 		{section name=ix loop=$forums}
 			<tr>
@@ -161,6 +161,6 @@
 			</tr>
 		{/section}
 	</table>
-    </div>
+	</div>
 {/if}
 
