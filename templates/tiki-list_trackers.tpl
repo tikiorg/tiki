@@ -30,6 +30,13 @@
 							{tr}Import From Profile/YAML{/tr}
 						</a>
 					</li>
+					{if $prefs.tracker_tabular_enabled eq 'y' && $tiki_p_admin_trackers eq 'y'}
+						<li>
+							<a href="{service controller=tabular action=manage}">
+								{tr}Manage Tabular Formats{/tr}
+							</a>
+						</li>
+					{/if}
 				</ul>
 			</div>
 			{if $prefs.tracker_remote_sync eq 'y'}
