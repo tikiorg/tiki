@@ -20,7 +20,7 @@
 				{assign var=nbCols value=1}
 			{/if}
 			<th style="width:1%">&nbsp;
-				
+
 			</th>
 		{/if}
 
@@ -60,7 +60,7 @@
 				{assign var=propval value=$item.name}
 				{assign var=link_title value=''}
 				{assign var=td_args value=''}
-	
+
 				{if $gal_info.$key_name eq 'i' or $propname eq 'type' or ( $propname eq 'lockedby'
 					and $gal_info.$key_name eq 'a')}
 					{if isset($item.icon)}
@@ -197,7 +197,7 @@
 							{elseif $propname eq 'backlinks' and isset($files[changes].nbBacklinks)}
 								{assign var=propval value=$files[changes].nbBacklinks}
 							{elseif $propname eq 'description'}
-							   {assign var=propval value=$propval|nl2br}
+								{assign var=propval value=$propval|nl2br}
 							{/if}
 
 							{if isset($gal_info.$propkey) and $propval neq '' and ( $gal_info.$propkey eq 'a'
@@ -222,7 +222,7 @@
 			{else}
 				{assign var=over_infos value=''}
 			{/if}
-			
+
 			{assign var=nb_over_share value=0}
 			{capture name=over_share}
 				{strip}
@@ -234,14 +234,14 @@
 					{/if}
 				{/strip}
 			{/capture}
-			
+
 			{if $nb_over_share gt 0}
-			    {assign var=over_share value=$smarty.capture.over_share}
+				{assign var=over_share value=$smarty.capture.over_share}
 			{else}
-			    {assign var=over_share value=''}
+				{assign var=over_share value=''}
 			{/if}
-			
-			
+
+
 		<tr>
 
 			{if $gal_info.show_checked ne 'n' and ($tiki_p_admin_file_galleries eq 'y' or $tiki_p_upload_files eq 'y')}
@@ -299,10 +299,10 @@
 							{if $files[changes].isgal eq 1}
 								href="tiki-list_file_gallery.php?galleryId={$files[changes].id}{if !empty($filegals_manager)}&amp;filegals_manager={$filegals_manager|escape}{/if}{if !empty($insertion_syntax)}&amp;insertion_syntax={$insertion_syntax|escape}{/if}"
 							{else}
-		
+
 								{if !empty($filegals_manager)}
 									href="#" onclick="window.opener.insertAt('{$filegals_manager}','{$files[changes].wiki_syntax|escape}');checkClose();return false;" title="{tr}Click here to use the file{/tr}"
-		
+
 								{elseif (isset($files[changes].p_download_files) and $files[changes].p_download_files eq 'y')
 	 							or (!isset($files[changes].p_download_files) and $files[changes].perms.tiki_p_download_files eq 'y')}
 									{if $gal_info.type eq 'podcast' or $gal_info.type eq 'vidcast'}
@@ -311,18 +311,18 @@
 										href="{$files[changes].id|sefurl:file}" title="{tr}Download{/tr}"
 									{/if}
 								{/if}
-	
+
 								{if $smarty.capture.over_preview neq ''
 								    and (((isset($files[changes].p_download_files)
 								           and $files[changes].p_download_files eq 'y')
-									  or (!isset($files[changes].p_download_files)
-									      and $files[changes].perms.tiki_p_download_files eq 'y')))}
+								    or (!isset($files[changes].p_download_files)
+								        and $files[changes].perms.tiki_p_download_files eq 'y')))}
 									{literal} {/literal}{popup fullhtml="1" text=$smarty.capture.over_preview|escape:"javascript"|escape:"html"}
 								{/if}
 							{/if}
 						{/strip}
 					{/capture}
-	
+
 					{* Format property values *}
 					{if $propname eq 'id' or $propname eq 'name'}
 						{if $propname eq 'name' and $propval eq '' and $gal_info.show_name eq 'n'}
@@ -415,7 +415,7 @@
 							{if $link neq ''}<a class='fgalname fileLink' fileId='{$files[changes].id}' type='{$files[changes].type}' {$link}>{/if}{$files[changes].filename|escape}{if $link neq ''}</a>{/if}
 						</td>
 					{/if}
-	
+
 					{if !empty($other_columns_selected) and $propname eq $other_columns_selected}
 						{assign var=other_columns_selected_val value=$propval}
 					{else}

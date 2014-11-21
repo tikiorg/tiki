@@ -10,7 +10,7 @@
 		{elseif $sent eq '1'}
 			{icon _id=accept alt="{tr}OK{/tr}" style="vertical-align:middle;"}
 		{else}
-		 	 {icon _id=exclamation style="vertical-align:middle" alt="{tr}Error{/tr}"}
+			{icon _id=exclamation style="vertical-align:middle" alt="{tr}Error{/tr}"}
 		{/if}
 		{$message}
 		{if $preview eq '1'}
@@ -29,9 +29,9 @@
 
 {if $sent ne '1' and $preview ne '1'}
 	<form class="form-horizontal" role="form" action="messu-broadcast.php" method="post">
-        <div class="form-group">
-            <label class="col-sm-2 control-label" for="broadcast-group">{tr}Group{/tr}</label>
-            <div class="col-sm-10">
+		<div class="form-group">
+			<label class="col-sm-2 control-label" for="broadcast-group">{tr}Group{/tr}</label>
+			<div class="col-sm-10">
 				<select name="groupbr" id="broadcast-group" class="form-control">
 					<option value=""{if $groupbr eq ''} selected="selected"{/if} />
 					{if $tiki_p_broadcast_all eq 'y'}
@@ -41,12 +41,12 @@
 						<option value="{$groupName|escape}"{if $groupbr eq $groupName} selected="selected"{/if}>{$groupName|escape}</option>
 					{/foreach}
 				</select>
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="col-sm-2 control-label" for="broadcast-priority">{tr}Priority{/tr}</label>
-            <div class="col-sm-10">
-		    	<select name="priority" id="broadcast-priority" class="form-control">
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label" for="broadcast-priority">{tr}Priority{/tr}</label>
+			<div class="col-sm-10">
+				<select name="priority" id="broadcast-priority" class="form-control">
 					<option value="1" {if $priority eq 1}selected="selected"{/if}>1 -{tr}Lowest{/tr}-</option>
 					<option value="2" {if $priority eq 2}selected="selected"{/if}>2 -{tr}Low{/tr}-</option>
 					<option value="3" {if $priority eq 3}selected="selected"{/if}>3 -{tr}Normal{/tr}-</option>
@@ -54,24 +54,24 @@
 					<option value="5" {if $priority eq 5}selected="selected"{/if}>5 -{tr}Very High{/tr}-</option>
 				</select>
 				<input type="hidden" name="replyto_hash" value="{$replyto_hash}">
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="col-sm-2 control-label" for="broadcast-subject">{tr}Subject{/tr}</label>
-            <div class="col-sm-10">
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label" for="broadcast-subject">{tr}Subject{/tr}</label>
+			<div class="col-sm-10">
 				<input type="text" name="subject" class="form-control" id="broadcast-subject" value="{$subject|escape}" maxlength="255">
 			</div>
-        </div>
-        <div class="form-group">
-            <label class="col-sm-2 control-label" for="broadcast-body">{tr}Body{/tr}</label>
-            <div class="col-sm-10">
-			    <textarea class="form-control" rows="20" id="broadcast-body" name="body">{$body|escape}</textarea>
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-sm-10 col-sm-push-2">
-                <input type="submit" class="btn btn-primary" name="preview" value="{tr}Send{/tr}">
-            </div>
-        </div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label" for="broadcast-body">{tr}Body{/tr}</label>
+			<div class="col-sm-10">
+				<textarea class="form-control" rows="20" id="broadcast-body" name="body">{$body|escape}</textarea>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="col-sm-10 col-sm-push-2">
+				<input type="submit" class="btn btn-primary" name="preview" value="{tr}Send{/tr}">
+			</div>
+		</div>
 	</form>
 {/if}

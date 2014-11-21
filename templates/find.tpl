@@ -13,21 +13,21 @@
 	* find_show_languages   : If value = 'y' adds lang dropdown with languages value dropdown
 	* find_lang             : lang dropdown selected value
 	* find_show_categories  : If value = 'y' adds categories dropdown with categories array values
-	* find_show_categories_multi  : If value = 'y' adds categories dropdown with categories array values with multi selector
+	* find_show_categories_multi : If value = 'y' adds categories dropdown with categories array values with multi selector
 	* find_categId          : categories selected value
 	* find_show_num_rows    : If value = 'y' adds maxRecords field. Value: maxRecords
 	* find_show_date_range  : If value = 'y' adds date range to filter within
-	* find_show_orphans		: If value = 'y' adds a checkbox orphan
-	* find_show_sub			: If value = 'y' add a checkbox in all the tree
+	* find_show_orphans     : If value = 'y' adds a checkbox orphan
+	* find_show_sub         : If value = 'y' add a checkbox in all the tree
 	* filters               : array( filter_field1 => array( option1_value => option1_text, ... ), filter_field2 => ... )
 	* filter_names          : array( filter_field1 => filter_field1_name, ... )
 	* filter_values         : array( filter_fieldX => filter_fieldX_selected_value, ... )
-	* autocomplete			: name of the variable you want for autocomplete of the input field (only for <input type="text" ... >
-	* find_other 			: If value != '', show an input box label with find_other
-	* find_in 				: popup to explain on what is the find
+	* autocomplete          : name of the variable you want for autocomplete of the input field (only for <input type="text" ... >
+	* find_other            : If value != '', show an input box label with find_other
+	* find_in               : popup to explain on what is the find
 	*
 	* Usage examples : {include file='find.tpl'}
-	*                  {include file='find.tpl' find_show_languages='y' find_show_categories='y' find_show_num_rows='y'} 
+	*                  {include file='find.tpl' find_show_languages='y' find_show_categories='y' find_show_num_rows='y'}
 *}
 
 <div class="find container-fluid">
@@ -44,7 +44,7 @@
 					{jq}$("#find").tiki("autocomplete", "{{$autocomplete}}"){/jq}
 				{/if}
 				{if $prefs.javascript_enabled eq 'y' and (isset($exact_match) or isset($types) or isset($types_tag) or isset($find_topics) or isset($find_show_languages) or isset($find_lang) or isset($find_show_categories) or isset($find_show_categories_multi) or isset($find_categId) or isset($find_show_num_rows) or isset($find_show_date_range) or isset($find_show_orphans) or isset($find_show_sub) or isset($find_show_other))}
-					<div class="input-group-btn btn btn-default btn-sm find-parameters-btn">				
+					<div class="input-group-btn btn btn-default btn-sm find-parameters-btn">
 						<span class="caret"></span>
 					</div>
 				{/if}
@@ -52,7 +52,7 @@
 					<button type="submit" class="btn btn-default" name="search">{tr}Find{/tr}</button>
 				</div>
 			</div>
-			{if !empty($find) or !empty($find_type) or !empty($find_topic) or !empty($find_lang) or !empty($find_langOrphan) or !empty($find_categId) or !empty($find_orphans) or !empty($find_other_val) or $maxRecords ne $prefs.maxRecords}{*  $find_date_from & $find_date_to get set usually *}
+			{if !empty($find) or !empty($find_type) or !empty($find_topic) or !empty($find_lang) or !empty($find_langOrphan) or !empty($find_categId) or !empty($find_orphans) or !empty($find_other_val) or $maxRecords ne $prefs.maxRecords}{* $find_date_from & $find_date_to get set usually *}
 				<div class="find-clear-filter text-center">
 					<a href="{$smarty.server.PHP_SELF}?{query find='' type='' types='' topic='' lang='' langOrphan='' exact_match='' categId='' maxRecords=$prefs.maxRecords find_from_Month='' find_from_Day='' find_from_Year='' find_to_Month='' find_to_Day='' find_to_Year=''}" title="{tr}Clear Filter{/tr}" class="btn btn-link btn-sm">{tr}Clear Filter{/tr}</a>
 				</div>
@@ -143,7 +143,7 @@
 					<label class="text-right col-sm-4">
 						{tr}Date To{/tr}
 					</label>
-					<div class="col-sm-8">						
+					<div class="col-sm-8">
 						{html_select_date time=$find_date_to prefix="find_to_" month_format="%m"}
 					</div>
 				</div>
@@ -229,20 +229,20 @@
 			{if !empty($show_find_orphans) and $show_find_orphans eq 'y'}
 				<div class="form-group find-orphans">
 					<label class="find_orphans control-label col-sm-4" for="find_orphans">
-					   {tr}Orphans{/tr}
+						{tr}Orphans{/tr}
 					</label>
 					<div class="col-sm-8">
-					   <input type="checkbox" name="find_orphans" id="find_orphans" {if isset($find_orphans) and $find_orphans eq 'y'}checked="checked"{/if}>
+						<input type="checkbox" name="find_orphans" id="find_orphans" {if isset($find_orphans) and $find_orphans eq 'y'}checked="checked"{/if}>
 					</div>
 				</div>
 			{/if}
 			{if !empty($find_other)}
 				<div class="form-group find-other">
 					<label class="find_other control-label col-sm-4" for="find_other">
-					   {tr}{$find_other}{/tr}
+						{tr}{$find_other}{/tr}
 					</label>
 					<div class="col-sm-4">
-					   <input type="text" name="find_other" id="find_other" value="{if !empty($find_other_val)}{$find_other_val|escape}{/if}" class="form-control input-sm">
+						<input type="text" name="find_other" id="find_other" value="{if !empty($find_other_val)}{$find_other_val|escape}{/if}" class="form-control input-sm">
 					</div>
 				</div>
 			{/if}

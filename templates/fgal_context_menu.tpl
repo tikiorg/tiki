@@ -87,7 +87,7 @@
 			{/if}
 		{/if}
 
-		{if (isset($files[$changes].p_download_files) and  $files[$changes].p_download_files eq 'y')
+		{if (isset($files[$changes].p_download_files) and $files[$changes].p_download_files eq 'y')
 			or (!isset($files[$changes].p_download_files) and $files[$changes].perms.tiki_p_download_files eq 'y')}
 			{if $gal_info.type eq 'podcast' or $gal_info.type eq 'vidcast'}
 				<a href="{$download_path}{$files[$changes].path}">
@@ -191,7 +191,7 @@
 							{tr}Unlock{/tr}
 						{/self_link}
 					{else}
-						{if (isset($files[$changes].p_download_files) and  $files[$changes].p_download_files eq 'y')
+						{if (isset($files[$changes].p_download_files) and $files[$changes].p_download_files eq 'y')
 							or (!isset($files[$changes].p_download_files) and $files[$changes].perms.tiki_p_download_files eq 'y')}
 							{if $prefs.javascript_enabled eq 'y'}
 								{* with javascript, the main page will be reloaded to lock the file and change it's lockedby informations *}

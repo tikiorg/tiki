@@ -21,7 +21,7 @@ close();
 		{redirect url=$prefs.permission_denied_url}
 	{else}
 
-		{if ($errortype eq 401 || $errortype eq 403) && empty($user) and  $prefs.permission_denied_login_box eq 'y'} {* permission denied *}
+		{if ($errortype eq 401 || $errortype eq 403) && empty($user) and $prefs.permission_denied_login_box eq 'y'} {* permission denied *}
 			{assign var='errortitle' value="{tr}Please log in{/tr}"}
 		{else}
 			{assign var='errortitle' value="{tr}Error{/tr}"}
@@ -44,10 +44,10 @@ close();
 						{/section}
 					</ul>
 				{else}
-		 			{remarksbox}
+					{remarksbox}
 						{tr}There are no wiki pages similar to '{$page|escape}'{/tr}
 					{/remarksbox}
-		 		{/if}
+				{/if}
 			{/if}
 
 			{if ($prefs.feature_search eq 'y' or $prefs.feature_search_fulltext eq 'y') && $tiki_p_search eq 'y'}

@@ -69,5 +69,5 @@
 	{$headerlib->output_js()}
 {/if}
 {if $prefs.feature_endbody_code}
-    {eval var=$prefs.feature_endbody_code}
+	{eval var=$prefs.feature_endbody_code}
 {/if}

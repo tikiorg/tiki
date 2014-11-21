@@ -3,11 +3,11 @@
 	<div class="form-group">
 		<label class="col-sm-2 control-label">{tr}Content{/tr}</label>
 		<div class="col-sm-4">
-		    <input type="search" name="filter~content" class="form-control" value="{$filter_content|escape}">
+			<input type="search" name="filter~content" class="form-control" value="{$filter_content|escape}">
 		</div>
-    </div>
+	</div>
 	{if $prefs.search_show_sort_order eq 'y'}
-        <div class="form-group">
+		<div class="form-group">
 			<label class="col-sm-2 control-label">{tr}Sort By{/tr}</label>
 			<div class="col-sm-3">
 				<select name="sort_mode" class="sort_mode form-control">
@@ -22,7 +22,7 @@
 			{else}
 				{icon _id='arrow_down' width='16' height='16' class='icon sort_invert' title="{tr}Sort direction{/tr}" href='#'}
 			{/if}
-        </div>
+		</div>
 	{else}
 		<input type="hidden" name="sort_mode" value="{$sort_mode}">
 		{/if}
@@ -102,7 +102,7 @@
 				<input type="hidden" name="filter~language_unspecified" value="1">
 			{/if}
 		{/if}
-	
+
 	<div class="text-center">
 		<input type="submit" class="btn btn-primary" value="{tr}Search{/tr}">
 		{if $prefs.storedsearch_enabled eq 'y' and $user}
@@ -221,7 +221,7 @@
 		}
 {{/if}}
 
-		$sort_mode.change(function () {		// update direction arrow
+		$sort_mode.change(function () {	// update direction arrow
 			if ($(this).val().search(/desc$/) > -1) {
 				$invert.attr("src", $invert.attr("src").replace("down", "up"));
 			} else {
