@@ -104,7 +104,8 @@ class Services_Tracker_TabularController
 				'field' => $column->getField(),
 				'mode' => $column->getMode(),
 				'label' => $column->getLabel(),
-				'readOnly' => $column->isReadOnly(),
+				'isReadOnly' => $column->isReadOnly(),
+				'isPrimary' => $column->isPrimaryKey(),
 			];
 		}
 

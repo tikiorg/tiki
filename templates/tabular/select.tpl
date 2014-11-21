@@ -10,7 +10,7 @@
 			<label class="control-label">{tr}Modes{/tr}</label>
 			<select name="mode" class="form-control">
 				{foreach $schema->getColumns() as $column}
-					<option value="{$column->getMode()|escape}">{$column->getLabel()|escape} ({$column->getMode()|escape})</option>
+					<option value="{$column->getMode()|escape}">{$column->getLabel()|escape} ({$column->getMode()|escape}{if $column->isReadOnly()}, {tr}Read-Only{/tr}{/if})</option>
 				{/foreach}
 			</select>
 		</div>

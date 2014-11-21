@@ -75,6 +75,11 @@ class Column
 		return $field == $this->permName && $mode == $this->mode;
 	}
 
+	function isPrimaryKey()
+	{
+		return $this->isPrimary;
+	}
+
 	function isReadOnly()
 	{
 		return $this->isReadOnly;

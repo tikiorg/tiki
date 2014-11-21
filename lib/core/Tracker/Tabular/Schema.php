@@ -27,7 +27,19 @@ class Schema
 	function loadFormatDescriptor($descriptor)
 	{
 		foreach ($descriptor as $column) {
-			$this->addColumn($column['field'], $column['mode']);
+			$col = $this->addColumn($column['field'], $column['mode']);
+
+			if (! $col->isReadOnly() && ! empty($column['isReadOnly'])) {
+				$col->setReadOnly(true);
+			}
+
+			if ($column['label']) {
+				$col->setLabel($column['label']);
+			}
+
+			if (! empty($column['isPrimary'])) {
+				$this->setPrimaryKey($col);
+			}
 		}
 	}
 
@@ -35,8 +47,11 @@ class Schema
 	{
 		return array_map(function ($column) {
 			return [
+				'label' => $column->getLabel(),
 				'field' => $column->getField(),
 				'mode' => $column->getMode(),
+				'isPrimary' => $column->isPrimaryKey(),
+				'isReadOnly' => $column->isReadOnly(),
 			];
 		}, $this->columns);
 	}
@@ -63,7 +78,7 @@ class Schema
 		}
 
 		foreach ($this->columns as $column) {
-			if ($column->getField() == $field) {
+			if ($field === $column || $column->getField() == $field) {
 				$this->primaryKey = $column;
 				$column->setPrimaryKey(true);
 				return;
