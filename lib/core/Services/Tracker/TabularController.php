@@ -20,7 +20,23 @@ class Services_Tracker_TabularController
 
 		return [
 			'title' => tr('Tabular Formats'),
-			'list' => $lib->get_list(),
+			'list' => $lib->getList(),
+		];
+	}
+
+	function action_delete($input)
+	{
+		Services_Exception_Denied::checkGlobal('tiki_p_admin_trackers');
+		$tabularId = $input->tabularId->int();
+
+		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+			$lib = TikiLib::lib('tabular');
+			$lib->remove($tabularId);
+		}
+
+		return [
+			'title' => tr('Remove Format'),
+			'tabularId' => $tabularId,
 		];
 	}
 
@@ -50,7 +66,7 @@ class Services_Tracker_TabularController
 	function action_edit($input)
 	{
 		$lib = TikiLib::lib('tabular');
-		$info = $lib->get_info($input->tabularId->int());
+		$info = $lib->getInfo($input->tabularId->int());
 
 		Services_Exception_Denied::checkObject('tiki_p_admin_trackers', 'tracker', $trackerId);
 
@@ -120,7 +136,7 @@ class Services_Tracker_TabularController
 	function action_export_full_csv($input)
 	{
 		$lib = TikiLib::lib('tabular');
-		$info = $lib->get_info($input->tabularId->int());
+		$info = $lib->getInfo($input->tabularId->int());
 
 		Services_Exception_Denied::checkObject('tiki_p_admin_trackers', 'tracker', $trackerId);
 
@@ -137,7 +153,7 @@ class Services_Tracker_TabularController
 	function action_import_csv($input)
 	{
 		$lib = TikiLib::lib('tabular');
-		$info = $lib->get_info($input->tabularId->int());
+		$info = $lib->getInfo($input->tabularId->int());
 
 		Services_Exception_Denied::checkObject('tiki_p_admin_trackers', 'tracker', $trackerId);
 

@@ -16,12 +16,12 @@ class Manager
 		$this->table = $db->table('tiki_tabular_formats');
 	}
 
-	function get_list()
+	function getList()
 	{
 		return $this->table->fetchAll(['tabularId', 'name', 'trackerId'], [], -1, -1, 'name_asc');
 	}
 
-	function get_info($tabularId)
+	function getInfo($tabularId)
 	{
 		$info = $this->table->fetchFullRow(['tabularId' => $tabularId]);
 
@@ -44,6 +44,11 @@ class Manager
 			'name' => $name,
 			'format_descriptor' => json_encode($fields),
 		], ['tabularId' => $tabularId]);
+	}
+
+	function remove($tabularId)
+	{
+		return $this->table->delete(['tabularId' => $tabularId]);
 	}
 }
 
