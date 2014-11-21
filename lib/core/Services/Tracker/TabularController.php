@@ -55,14 +55,13 @@ class Services_Tracker_TabularController
 		Services_Exception_Denied::checkObject('tiki_p_admin_trackers', 'tracker', $trackerId);
 
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-			$text = $input->fields->text();
-			$text = explode("\n", $text);
-			$values = array_filter($text);
+			$info['format_descriptor'] = json_decode($input->fields->none(), true);
+			$schema = $this->getSchema($info);
 
-			$lib->update($info['tabularId'], $input->name->text(), array_map(function ($item) {
-				list($field, $mode) = explode(':', trim($item));
-				return ['field' => $field, 'mode' => $mode];
-			}, $values));
+			// FIXME : Blocks save and back does not restore changes, ajax validation required
+			// $schema->validate();
+
+			$lib->update($info['tabularId'], $input->name->text(), $schema->getFormatDescriptor());
 
 			return [
 				'FORWARD' => [
@@ -72,18 +71,48 @@ class Services_Tracker_TabularController
 			];
 		}
 
-		$info = $lib->get_info($input->tabularId->int());
-
-		$fields = [];
-		foreach ($info['format_descriptor'] as $item) {
-			$fields[] = $item['field'] . ':' . $item['mode'];
-		}
+		$schema = $this->getSchema($info);
 
 		return [
 			'title' => tr('Edit Format: %0', $info['name']),
 			'tabularId' => $info['tabularId'],
+			'trackerId' => $info['trackerId'],
 			'name' => $info['name'],
-			'fields' => implode("\n", $fields),
+			'schema' => $schema,
+		];
+	}
+
+	function action_select($input)
+	{
+		$permName = $input->permName->word();
+		$trackerId = $input->trackerId->int();
+
+		$tracker = \Tracker_Definition::get($trackerId);
+
+		if (! $tracker) {
+			throw new Services_Exception_NotFound;
+		}
+
+		Services_Exception_Denied::checkObject('tiki_p_admin_trackers', 'tracker', $trackerId);
+
+		$schema = new \Tracker\Tabular\Schema($tracker);
+		$local = $schema->getFieldSchema($permName);
+
+		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+			$column = $schema->addColumn($permName, $input->mode->text());
+			return [
+				'field' => $column->getField(),
+				'mode' => $column->getMode(),
+				'label' => $column->getLabel(),
+				'readOnly' => $column->isReadOnly(),
+			];
+		}
+
+		return [
+			'title' => tr('Fields in %0', $tracker->getConfiguration('name')),
+			'trackerId' => $trackerId,
+			'permName' => $permName,
+			'schema' => $local,
 		];
 	}
 
@@ -94,13 +123,7 @@ class Services_Tracker_TabularController
 
 		Services_Exception_Denied::checkObject('tiki_p_admin_trackers', 'tracker', $trackerId);
 
-		$tracker = \Tracker_Definition::get($info['trackerId']);
-		$schema = new \Tracker\Tabular\Schema($tracker);
-
-		foreach ($info['format_descriptor'] as $column) {
-			$schema->addColumn($column['field'], $column['mode']);
-		}
-
+		$schema = $this->getSchema($info);
 		$schema->validate();
 
 		$source = new \Tracker\Tabular\Source\TrackerSource($schema);
@@ -108,5 +131,19 @@ class Services_Tracker_TabularController
 		$writer->sendHeaders();
 		$writer->write($source);
 		exit;
+	}
+
+	private function getSchema(array $info)
+	{
+		$tracker = \Tracker_Definition::get($info['trackerId']);
+
+		if (! $tracker) {
+			throw new Services_Exception_NotFound;
+		}
+
+		$schema = new \Tracker\Tabular\Schema($tracker);
+		$schema->loadFormatDescriptor($info['format_descriptor']);
+
+		return $schema;
 	}
 }

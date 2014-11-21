@@ -29,6 +29,11 @@ class Column
 		};
 	}
 
+	function getLabel()
+	{
+		return $this->label;
+	}
+
 	function setLabel($label)
 	{
 		$this->label = $label;

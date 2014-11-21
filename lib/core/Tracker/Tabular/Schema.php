@@ -24,12 +24,27 @@ class Schema
 		return $this->definition;
 	}
 
+	function loadFormatDescriptor($descriptor)
+	{
+		foreach ($descriptor as $column) {
+			$this->addColumn($column['field'], $column['mode']);
+		}
+	}
+
+	function getFormatDescriptor()
+	{
+		return array_map(function ($column) {
+			return [
+				'field' => $column->getField(),
+				'mode' => $column->getMode(),
+			];
+		}, $this->columns);
+	}
+
 	function addColumn($permName, $mode)
 	{
 		if (isset($this->schemas[$permName])) {
 			$partial = $this->schemas[$permName];
-		} elseif ($partial = $this->getSystemSchema($permName)) {
-			$this->schemas[$permName] = $partial;
 		} else {
 			$partial = $this->getFieldSchema($permName, $mode);
 			$this->schemas[$permName] = $partial;
@@ -127,8 +142,23 @@ class Schema
 		}
 	}
 
-	private function getFieldSchema($permName)
+	function getAvailableFields()
 	{
+		$fields = ['itemId' => tr('Item ID'), 'status' => tr('Status')];
+
+		foreach ($this->definition->getFields() as $f) {
+			$fields[$f['permName']] = $f['name'];
+		}
+
+		return $fields;
+	}
+
+	function getFieldSchema($permName)
+	{
+		if ($partial = $this->getSystemSchema($permName)) {
+			return $partial;
+		}
+
 		$field = $this->definition->getFieldFromPermName($permName);
 		$factory = $this->definition->getFieldFactory();
 
