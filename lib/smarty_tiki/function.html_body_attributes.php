@@ -35,7 +35,7 @@ function smarty_function_html_body_attributes($params, $smarty)
 	}
 
     if ($prefs['site_layout']) {
-        $class .= 'layout_' . $prefs['site_layout'];
+        $class .= ' layout_' . $prefs['site_layout'];
     }
 	
 	if (!empty($_REQUEST['filegals_manager'])) {
@@ -44,7 +44,7 @@ function smarty_function_html_body_attributes($params, $smarty)
 		
 	if (isset($_SESSION['fullscreen']) && $_SESSION['fullscreen'] == 'y') {
 		$class .= empty($class) ? ' ' : '';
-		$class .= 'fullscreen';
+		$class .= ' fullscreen';
 	}
 
 	if (isset($prefs['layout_add_body_group_class']) && $prefs['layout_add_body_group_class'] === 'y') {
