@@ -11,7 +11,7 @@
       <option value="collaborative"{if $wiki_authors_style eq 'collaborative'} selected="selected"{/if}>{tr}Collaborative style{/tr}</option>
       <option value="lastmodif"{if $wiki_authors_style eq 'lastmodif'} selected="selected"{/if}>{tr}Page last modified on{/tr}</option>
       <option value="none"{if $wiki_authors_style eq 'none'} selected="selected"{/if}>{tr}None{/tr} ({tr}Disabled{/tr})</option>
-    </select> 
+    </select>
   </td>
 </tr>
 
@@ -28,7 +28,7 @@
       <option value="collaborative"{if $wiki_authors_style eq 'collaborative'} selected="selected"{/if}>{tr}Collaborative style{/tr}</option>
       <option value="lastmodif"{if $wiki_authors_style eq 'lastmodif'} selected="selected"{/if}>{tr}Page last modified on{/tr}</option>
       <option value="none"{if $wiki_authors_style eq 'none'} selected="selected"{/if}>{tr}no (disabled){/tr}</option>
-    </select> 
+    </select>
 	</div>
 </div>
 {/if}

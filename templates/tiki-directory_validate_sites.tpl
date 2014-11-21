@@ -56,4 +56,4 @@ var CHECKBOX_LIST = [{{section name=user loop=$items}'sites[{$items[user].siteId
   <input type="submit" class="btn btn-default btn-sm" name="validate" value="{tr}Validate{/tr}">
   {/if}
 </form>
-{pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links} 
+{pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}

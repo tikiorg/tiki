@@ -10,7 +10,7 @@
 
 {foreach from=$grid_content item=thisGrid}
 	<div class="tiki_sheet"
-		{if !empty($tiki_sheet_div_style)} 
+		{if !empty($tiki_sheet_div_style)}
 			style="{$tiki_sheet_div_style}"
 		{/if}>{$thisGrid}</div>
 {/foreach}
@@ -20,11 +20,11 @@
 	{if $page}
 		{button href="tiki-index.php" page="$page" class="btn btn-default" _text="{tr}Back to Page{/tr}"}
 	{/if}
-	
+
 	{if $tiki_p_view_sheet eq 'y' || $tiki_p_admin eq 'y'}
 		{button href="tiki-sheets.php" class="btn btn-default" _text="{tr}List Spreadsheets{/tr}"}
 	{/if}
-	
+
 	{if $objectperms->edit_sheet}
 		{if $editconflict eq 'y'}
 			{assign var="uWarning" value="&lt;br /&gt;{tr}Already being edited by{/tr} $semUser"}
@@ -33,23 +33,23 @@
 		{/if}
 
 		{jq notonready=true}var editSheetButtonLabel2="{tr}Cancel{/tr}";{/jq}
-		
+
 		{if $prefs.feature_contribution eq 'y'}
 			{include file='contribution.tpl'}
 		{/if}
 	{/if}
-	
+
 	<span id="saveState">
 		{if $objectperms->edit_sheet}
 			{button _id="save_button" _text="{tr}Save{/tr}" _htmlelement="role_main" _template="tiki-view_sheets.tpl" sheetId="$sheetId" _class="" _title="{tr}Tiki Sheet{/tr} | {tr}Save current spreadsheet{/tr}" _onclick="\$.sheet.saveSheet(\$.sheet.view);return false;"}
 			{button _id="cancel_button" _text="{tr}Cancel{/tr}" _htmlelement="role_main" _template="tiki-view_sheets.tpl" sheetId="$sheetId" _class="" _title="{tr}Tiki Sheet{/tr} | {tr}Cancel editing current spreadsheet{/tr}"}
 		{/if}
 	</span>
-	
+
 	<span id="editState">
 		{if $sheetId}
 			{button _id="edit_button" _text="{tr}Edit{/tr}" _htmlelement="role_main" _template="tiki-view_sheets.tpl" parse="edit" _auto_args="*"  _class=""}
-			
+
 			{if $parseValues eq 'y'}
 				{if $parse eq 'y'}
 					{button parse="n" _text="{tr}No parse{/tr}"  _htmlelement="role_main" _template="tiki-view_sheets.tpl" sheetId="$sheetId" _auto_args="*"}
@@ -57,19 +57,19 @@
 					{button parse="y" _text="{tr}Parse{/tr}"  _htmlelement="role_main" _template="tiki-view_sheets.tpl" sheetId="$sheetId" _auto_args="*"}
 				{/if}
 			{/if}
-		
+
 			{if $objectperms->view_sheet_history}
 				{button href="tiki-history_sheets.php?sheetId=$sheetId" _text="{tr}History{/tr}"}
 			{/if}
-		
+
 			{if  $objectperms->view_sheet}
 				{button href="tiki-export_sheet.php?sheetId=$sheetId" _text="{tr}Export{/tr}"}
 			{/if}
-		
+
 			{if  $objectperms->edit_sheet}
 				{button href="tiki-import_sheet.php?sheetId=$sheetId" _text="{tr}Import{/tr}"}
 			{/if}
-		
+
 			{if $chart_enabled eq 'y'}
 				{button href="tiki-graph_sheet.php?sheetId=$sheetId" _text="{tr}Graph{/tr}"}
 			{/if}

@@ -1,7 +1,7 @@
 <div class="tocnav">
 	<div class="clearfix">
 		<div style="float: left; width: 100px">
-  
+
     {if $home_info}{if $home_info.page_alias}{assign var=icon_title value=$home_info.page_alias}{else}{assign var=icon_title value=$home_info.pageName}{/if}
     	{self_link page=$home_info.pageName structure=$home_info.pageName page_ref_id=$home_info.page_ref_id}{icon _id='house' alt="{tr}TOC{/tr}" title=$icon_title}{/self_link}
     {/if}
@@ -32,10 +32,10 @@
 			{autocomplete element='#structure_add_page' type='pagename'}
 			{* Cannot add peers to head of structure *}
 			{if $page_info and !$parent_info}
-				<input type="hidden" name="add_child" value="checked"> 
+				<input type="hidden" name="add_child" value="checked">
 			{else}
 				<input type="checkbox" name="add_child"> {tr}Child{/tr}
-			{/if}      
+			{/if}
 			<input type="submit" class="btn btn-default btn-sm" name="insert_into_struct" value="{tr}Add Page{/tr}">
 		</div>
 	</form>

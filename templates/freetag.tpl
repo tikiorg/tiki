@@ -11,7 +11,7 @@
 				<input type="text" id="tagBox" class="form-control" name="freetag_string" value="{$taglist|escape}">
 				{foreach from=$tag_suggestion item=t}
 					{capture name=tagurl}{if (strstr($t, ' '))}"{$t}"{else}{$t}{/if}{/capture}
-					<a href="javascript:addTag('{$smarty.capture.tagurl|escape:'javascript'|escape}');" onclick="javascript:needToConfirm=false">{$t|escape}</a> 
+					<a href="javascript:addTag('{$smarty.capture.tagurl|escape:'javascript'|escape}');" onclick="javascript:needToConfirm=false">{$t|escape}</a>
 				{/foreach}
 				{if $prefs.feature_help eq 'y'}
 					<div class="help-block">

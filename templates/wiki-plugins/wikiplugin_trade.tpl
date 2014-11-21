@@ -14,7 +14,7 @@
 			<input type="submit" class="btn btn-default btn-sm" value="{$wp_trade_action}">
 		{else}
 			{remarksbox type="info" title="{tr}Login{/tr}"}
-				{tr}Please login first{/tr} 
+				{tr}Please login first{/tr}
 				{button _script="tiki-login_scr.php" _text="{tr}Click here{/tr}"}
 			{/remarksbox}
 		{/if}

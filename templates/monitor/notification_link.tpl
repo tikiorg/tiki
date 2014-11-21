@@ -35,7 +35,7 @@
 					count: data.count
 				});
 			});
-		}, {{$prefs.monitor_count_refresh_interval}}); 
+		}, {{$prefs.monitor_count_refresh_interval}});
 	}).trigger('reload.monitor.tiki');
 	{/jq}
 {/if}

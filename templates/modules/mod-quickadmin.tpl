@@ -17,9 +17,9 @@
 			</div>
 			{icon name="wizard" title="{tr}Wizards{/tr}" href="tiki-wizard_admin.php?stepNr=0&amp;url=index.php"}
 			{icon name="administer" title="{tr}Configuration Panels{/tr}" href="tiki-admin.php"}
-			{icon name="theme" title="{tr}Themes{/tr}" href="tiki-admin.php?page=look"} 
+			{icon name="theme" title="{tr}Themes{/tr}" href="tiki-admin.php?page=look"}
 			{icon name="user" title="{tr}Users{/tr}" href="tiki-adminusers.php"}
-			{icon name="group" title="{tr}Groups{/tr}" href="tiki-admingroups.php"}			
+			{icon name="group" title="{tr}Groups{/tr}" href="tiki-admingroups.php"}
 			{permission_link mode=icon label="{tr}Permissions{/tr}"}
 			{icon name="menu" title="{tr}Menus{/tr}" href="tiki-admin_menus.php"}
 			{if $prefs.lang_use_db eq "y"}

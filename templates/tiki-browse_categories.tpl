@@ -133,7 +133,7 @@
 		{/foreach}
 			{$eyes_curr}
 	</div>
-     
+
 	{if $parentId ne '0'}
 		<div>
 			<a class="catname" href="tiki-browse_categories.php?parentId={$father|escape:"url"}&amp;deep={$deep|escape:"url"}&amp;type={$type|escape:"url"}" title="{tr}Upper level{/tr}">..</a>

@@ -51,7 +51,7 @@
 				{preference name=feature_directory}
 				{preference name=feature_quizzes}
 				{preference name=feature_shoutbox}
-				{preference name=feature_minichat}				
+				{preference name=feature_minichat}
 				{preference name=feature_live_support}
 				{preference name=feature_tell_a_friend}
 				{preference name=feature_share}
@@ -59,7 +59,7 @@
 				{preference name=feature_time_sheet}
 				{preference name=feature_invoice}
 				{preference name=feature_accounting}
-				{preference name=payment_feature}				
+				{preference name=payment_feature}
 				{preference name=feature_draw}
 				<div class="adminoptionboxchild" id="feature_draw_childcontainer">
 					{preference name=feature_draw_hide_buttons}
@@ -81,12 +81,12 @@
 				{preference name=feature_comm}
 				{preference name=feature_contribution}
 				{preference name=feature_copyright}
-				{preference name=feature_mailin}				
-					
+				{preference name=feature_mailin}
+
 				{preference name=feature_faqs}
 				{preference name=feature_galleries}
-				{preference name=feature_html_pages}	
-				
+				{preference name=feature_html_pages}
+
 				{preference name=feature_htmlfeed}
 				{preference name=feature_futurelinkprotocol}
 
@@ -100,14 +100,14 @@
 
 		<fieldset>
 			<legend>{tr}Interaction with online services or other software{/tr}</legend>
-			<div class="admin clearfix featurelist">		
+			<div class="admin clearfix featurelist">
 				{preference name=connect_feature}
 				{preference name=feature_maps}
 				{preference name=feature_socialnetworks}
-				
-				{preference name=feature_watershed}				
-				{preference name=feature_kaltura}				
-			
+
+				{preference name=feature_watershed}
+				{preference name=feature_kaltura}
+
 				{preference name=zotero_enabled}
 				<div class="adminoptionboxchild" id="zotero_enabled_childcontainer">
 					{if $prefs.zotero_client_key and $prefs.zotero_client_secret and $prefs.zotero_group_id}
@@ -118,11 +118,11 @@
 					{preference name=zotero_group_id}
 					{preference name=zotero_style}
 				</div>
-		
+
 			</div>
 		</fieldset>
-		
-		
+
+
 		<fieldset>
 			<legend>{tr}Watches{/tr}</legend>
 
@@ -135,16 +135,16 @@
 				</div>
 				{preference name=feature_user_watches_translations}
 				{preference name=feature_user_watches_languages}
-				{preference name=feature_groupalert}				
+				{preference name=feature_groupalert}
 			</div>
-		</fieldset>		
-		
+		</fieldset>
+
 {/tab}
-			
+
 {tab name="{tr}Interface{/tr}" key=interface}
     <h2>{tr}Interface{/tr}</h2>
 			<fieldset class="table clearfix featurelist">
-				<legend> {tr}Ajax{/tr} </legend>	
+				<legend> {tr}Ajax{/tr} </legend>
 				{preference name=feature_ajax}
 				<div class="adminoptionboxchild half_width" id="feature_ajax_childcontainer">
 					{preference name=ajax_autosave}
@@ -196,7 +196,7 @@
 				{preference name=disableJavascript}
 				{preference name=smarty_compilation}
 				{preference name=feature_webservices}
-				{preference name=feature_dummy}				
+				{preference name=feature_dummy}
 			</div>
 
 			<div class="admin clearfix featurelist">

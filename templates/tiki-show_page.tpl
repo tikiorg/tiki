@@ -1,7 +1,7 @@
 {* $Id$ *}
 {extends 'layout_view.tpl'}
 
-{* Separate the content display from the display of the whole page. 
+{* Separate the content display from the display of the whole page.
 Used to support printing, which use the tiki-show_content.tpl directly.
 Note: The show content block must be defined at root level to use the include. AB *}
 {block name=title}
@@ -72,7 +72,7 @@ Note: The show content block must be defined at root level to use the include. A
 								{$translation_alert[i][j].page|escape}
 							</a>
 							({$translation_alert[i][j].lang})
-							{if $editable and ($tiki_p_edit eq 'y' or $page|lower eq 'sandbox') and $beingEdited ne 'y'} 
+							{if $editable and ($tiki_p_edit eq 'y' or $page|lower eq 'sandbox') and $beingEdited ne 'y'}
 								<a href="tiki-editpage.php?page={$page|escape:'url'}&amp;source_page={$translation_alert[i][j].page|escape:'url'}&amp;oldver={$translation_alert[i][j].last_update|escape:'url'}&amp;newver={$translation_alert[i][j].current_version|escape:'url'}&amp;diff_style=htmldiff" title="{tr}update from it{/tr}">
 									{icon _id=arrow_refresh alt="{tr}update from it{/tr}" style="vertical-align:middle"}
 								</a>
@@ -119,7 +119,7 @@ Note: The show content block must be defined at root level to use the include. A
 			{tr}This text was automatically translated by Google Translate from the following page: {/tr}<a href="tiki-index.php?page={$page}">{$page}</a>
 		{/remarksbox}
 	{/if}
-	
+
 	<div id="page-data" class="clearfix">
 		{if isset($pageLang) and ($pageLang eq 'ar' or $pageLang eq 'he')}
 			<div style="direction:RTL; unicode-bidi:embed; text-align: right; {if $pageLang eq 'ar'}font-size: large;{/if}">

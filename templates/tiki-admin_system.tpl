@@ -57,7 +57,7 @@
 		  <span class="input-group-btn">
 			<button type="submit" class="btn btn-primary" name="zip" title="{tr}ZIP{/tr}">{icon name="file-archive"} {tr}Generate zip{/tr}</button>
 		  </span>
-		</div>	
+		</div>
 		{if $zipPath}
 			<div class="alert alert-warning">{tr _0=$zipPath}A zip has been written to %0{/tr}</div>
 		{/if}

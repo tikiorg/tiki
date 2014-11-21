@@ -12,12 +12,12 @@
 	<fieldset class="table">
 		<legend>{tr}Activate the feature{/tr}</legend>
 		{preference name=feature_faqs visible="always"}
-	</fieldset>	
+	</fieldset>
 
 	<fieldset class="table">
 		<legend>{tr}Settings{/tr}</legend>
 		{preference name=faq_prefix}
-		
+
 		{preference name=feature_faq_comments}
 		<div class="adminoptionboxchild" id="feature_faq_comments_childcontainer">
 			{preference name=faq_comments_per_page}

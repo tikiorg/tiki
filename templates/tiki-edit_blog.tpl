@@ -6,7 +6,7 @@
 
 <div class="t_navbar btn-group form-group">
 	{button href="tiki-list_blogs.php" class="btn btn-default" _text="{tr}List Blogs{/tr}"}
-	 
+
   {if $blogId > 0}
 		{assign var=thisblogId value=$blogId|sefurl:blog}
 		{button href=$thisblogId class="btn btn-default" _text="{tr}View Blog{/tr}"}

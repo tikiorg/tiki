@@ -6,7 +6,7 @@
 		{assign var=tpl_module_title value="{tr}Videos on YouTube{/tr}"}
 	{/if}
 {/if}
-{tikimodule error="{if isset($module_params.error)}{$module_params.error}{/if}" title="$tpl_module_title" name="youtube" 
+{tikimodule error="{if isset($module_params.error)}{$module_params.error}{/if}" title="$tpl_module_title" name="youtube"
 			flip="{if isset($module_params.flip)}{$module_params.flip}{/if}"
 			decorations="{if isset($module_params.decorations)}{$module_params.decorations}{/if}"
 			nobox="{if isset($module_params.nobox)}{$module_params.nobox}{/if}"

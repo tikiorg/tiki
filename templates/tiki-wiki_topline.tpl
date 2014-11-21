@@ -5,13 +5,13 @@
 				{if $prefs.wiki_page_name_above eq 'y' and $print_page ne 'y'}
 				    <a href="tiki-index.php?page={$page|escape:"url"}" class="titletop" title="{tr}refresh{/tr}">{$page|escape}</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{* The hard-coded spaces help selecting the page name for inclusion in a wiki link *}
 				{/if}
-				
+
 				{if $prefs.feature_wiki_pageid eq 'y' and $print_page ne 'y'}
 					<small><a class="link" href="tiki-index.php?page_id={$page_id}">{tr}page id:{/tr} {$page_id}</a></small>
 				{/if}
-				
+
 				{breadcrumbs type="desc" loc="page" crumbs=$crumbs}
-				
+
 				{if $cached_page eq 'y'}<span class="cachedStatus">({tr}Cached{/tr})</span>{/if}
 				{if $is_categorized eq 'y' and $prefs.feature_categories eq 'y' and $prefs.feature_categorypath eq 'y' and $tiki_p_view_category eq 'y'}
 					{$display_catpath}
@@ -81,7 +81,7 @@
 			{if $prefs.feature_wiki_print eq 'y'}
 				<a class="btn btn-default" title="{tr}Print{/tr}" href="tiki-print.php?{query _keepall='y'}">{icon name="print"}</a>
 			{/if}
-	
+
 			{if $prefs.feature_share eq 'y' && $tiki_p_share eq 'y'}
 				<a class="btn btn-default" title="{tr}Share this page{/tr}" href="tiki-share.php?url={$smarty.server.REQUEST_URI|escape:'url'}">{icon name="share"}</a>
 			{/if}
@@ -108,7 +108,7 @@
 			{/if}
 			{if $prefs.feature_group_watches eq 'y' and ( $tiki_p_admin_users eq 'y' or $tiki_p_admin eq 'y' )}
 				<a class="btn btn-default" href="tiki-object_watches.php?objectId={$page|escape:"url"}&amp;watch_event=wiki_page_changed&amp;objectType=wiki+page&amp;objectName={$page|escape:"url"}&amp;objectHref={'tiki-index.php?page='|cat:$page|escape:"url"}" class="icon" title="{tr}Group Monitor{/tr}">{icon name="watch-group"}</a>
-	
+
 				{if $structure eq 'y'}
 					<a class="btn btn-default" href="tiki-object_watches.php?objectId={$page_info.page_ref_id|escape:"url"}&amp;watch_event=structure_changed&amp;objectType=structure&amp;objectName={$page|escape:"url"}&amp;objectHref={'tiki-index.php?page_ref_id='|cat:$page_ref_id|escape:"url"}" class="icon">{icon _id=eye_group_arrow_down alt="{tr}Group Monitor on Structure{/tr}"}</a>
 				{/if}
@@ -121,7 +121,7 @@
 				{include file='translated-lang.tpl' object_type='wiki page'}
 				<!--/span -->
 			{/if}
-			
+
 			{if $prefs.feature_backlinks eq 'y' and $backlinks and $tiki_p_view_backlink eq 'y'}
 				<div class="btn-group backlinks">
 					<a class="btn btn-default dropdown-toggle" data-toggle="dropdown" title="{tr}Backlinks{/tr}">
@@ -141,13 +141,13 @@
 			{if $structure eq 'y' or ( $structure eq 'n' and count($showstructs) neq 0 )}
 				<div class="btn-group structures">
 					<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-						{icon _id=chart_organisation title="{tr}Structures{/tr}" class="icon"}							
+						{icon _id=chart_organisation title="{tr}Structures{/tr}" class="icon"}
 					</button>
 					<ul class="structure_poppedup dropdown-menu" role="menu">
 						<li role="presentation">
 							{section name=struct loop=$showstructs}
 								<a href="tiki-index.php?page={$page}&structure={$showstructs[struct].pageName|escape}" {if $showstructs[struct].pageName eq $structure_path[0].pageName} title="Current structure: {$showstructs[struct].pageName|escape}" class="selected" {else} title="Show structure: {$showstructs[struct].pageName|escape}"{/if}>
-									{if $showstructs[struct].page_alias}														
+									{if $showstructs[struct].page_alias}
 										{$showstructs[struct].page_alias}
 									{else}
 										{$showstructs[struct].pageName}
@@ -161,7 +161,7 @@
 										{tr}Hide structure{/tr}
 									</a>
 								</li>
-							{/if}	
+							{/if}
 						</li>
 					</ul>
 				</div>

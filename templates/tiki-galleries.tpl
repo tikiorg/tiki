@@ -122,13 +122,13 @@
 						<tr>
 							<td>{tr}Available scales:{/tr}</td>
 							<td>
-								{tr}Global default{/tr} {$prefs.scaleSizeGalleries}x{$prefs.scaleSizeGalleries} ({tr}Bounding box{/tr}) 
+								{tr}Global default{/tr} {$prefs.scaleSizeGalleries}x{$prefs.scaleSizeGalleries} ({tr}Bounding box{/tr})
 								<input type="radio" name="defaultscale" value="{$prefs.scaleSizeGalleries}" {if $defaultscale==$prefs.scaleSizeGalleries}checked="checked"{/if}>
 								{tr}default scale{/tr}<br>
 								{section  name=scales loop=$scaleinfo}
 									{if $scaleinfo[scales].scale ne $prefs.scaleSizeGalleries}
 										{tr}Remove:{/tr}<input type="checkbox" name="removescale_{$scaleinfo[scales].scale|escape}">
-										{$scaleinfo[scales].scale}x{$scaleinfo[scales].scale} ({tr}Bounding box{/tr}) 
+										{$scaleinfo[scales].scale}x{$scaleinfo[scales].scale} ({tr}Bounding box{/tr})
 										<input type="radio" name="defaultscale" value="{$scaleinfo[scales].scale}" {if $defaultscale==$scaleinfo[scales].scale}checked="checked"{/if}>
 										{tr}default scale{/tr}<br>
 									{/if}

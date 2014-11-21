@@ -50,7 +50,7 @@
 				<tr>
 					<td><strong>{tr}Last login{/tr}</strong></td>
 					<td>{$lastSeen|tiki_short_datetime}</td>
-				</tr>	
+				</tr>
 				{if $shared_groups}
 				<tr>
 					<td><strong>{tr}Shared groups{/tr}</strong></td>

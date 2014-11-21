@@ -275,7 +275,7 @@ $('.exportButton a').click(function() {
 			{/if}
 			{if $tracker_info.useComments eq 'y' and ($tracker_info.showComments eq 'y' or $tracker_info.showLastComment eq 'y') and $perms.tiki_p_tracker_view_comments ne 'n'}
 		<td style="text-align:center;">{if $tracker_info.showComments eq 'y'}{$items[user].comments}{/if}{if $tracker_info.showComments eq 'y' and $tracker_info.showLastComment eq 'y'}<br>{/if}{if $tracker_info.showLastComment eq 'y' and !empty($items[user].lastComment)}{$items[user].lastComment.userName|escape}-{$items[user].lastComment.commentDate|tiki_short_date}{/if}</td>
-	
+
 			{/if}
 			{if $tracker_info.useAttachments eq 'y' and $tracker_info.showAttachments eq 'y'}
 		<td style="text-align:center;"><a href="tiki-view_tracker_item.php?trackerId={$listTrackerId}&amp;itemId={$items[user].itemId}&amp;show=att"

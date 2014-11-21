@@ -23,7 +23,7 @@
 				{elseif $item.fitness eq 'ugly'}
 					{icon _id=error alt="" style="vertical-align:middle"}
 				{elseif $item.fitness eq 'info'}
-					{icon _id=information alt="" style="vertical-align:middle"}					
+					{icon _id=information alt="" style="vertical-align:middle"}
 				{elseif $item.fitness eq 'unknown'}
 					{icon _id=no_information alt="" style="vertical-align:middle"}
 				{/if}
@@ -101,7 +101,7 @@
 				{elseif $item.fitness eq 'ugly'}
 					{icon _id=error alt="" style="vertical-align:middle"}
 				{elseif $item.fitness eq 'info'}
-					{icon _id=information alt="" style="vertical-align:middle"}							
+					{icon _id=information alt="" style="vertical-align:middle"}
 				{elseif $item.fitness eq 'unknown'}
 					{icon _id=no_information alt="" style="vertical-align:middle"}
 				{/if}
@@ -173,7 +173,7 @@
 					{elseif $item.fitness eq 'ugly'}
 						{icon _id=error alt="" style="vertical-align:middle"}
 					{elseif $item.fitness eq 'info'}
-						{icon _id=information alt="" style="vertical-align:middle"}								
+						{icon _id=information alt="" style="vertical-align:middle"}
 					{elseif $item.fitness eq 'unknown'}
 						{icon _id=no_information alt="" style="vertical-align:middle"}
 					{/if}
@@ -213,7 +213,7 @@
 					{elseif $item.fitness eq 'ugly'}
 						{icon _id=error alt="" style="vertical-align:middle"}
 					{elseif $item.fitness eq 'info'}
-						{icon _id=information alt="" style="vertical-align:middle"}								
+						{icon _id=information alt="" style="vertical-align:middle"}
 					{elseif $item.fitness eq 'unknown'}
 						{icon _id=no_information alt="" style="vertical-align:middle"}
 					{/if}
@@ -252,7 +252,7 @@
 				{elseif $item.fitness eq 'ugly'}
 					{icon _id=error alt="" style="vertical-align:middle"}
 				{elseif $item.fitness eq 'info'}
-					{icon _id=information alt="" style="vertical-align:middle"}							
+					{icon _id=information alt="" style="vertical-align:middle"}
 				{elseif $item.fitness eq 'unknown'}
 					{icon _id=no_information alt="" style="vertical-align:middle"}
 				{/if}
@@ -289,7 +289,7 @@
 				{elseif $item.fitness eq 'ugly'}
 					{icon _id=error alt="" style="vertical-align:middle"}
 				{elseif $item.fitness eq 'info'}
-					{icon _id=information alt="" style="vertical-align:middle"}							
+					{icon _id=information alt="" style="vertical-align:middle"}
 				{elseif $item.fitness eq 'unknown'}
 					{icon _id=no_information alt="" style="vertical-align:middle"}
 				{/if}

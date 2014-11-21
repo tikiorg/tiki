@@ -1,7 +1,7 @@
 
 <div align="center">
 	{include file='find.tpl'}
-	
+
 	<table class="table normal">
 		<tr>
 			<th>

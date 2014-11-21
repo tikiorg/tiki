@@ -5,7 +5,7 @@
 		width: 90px ! important;
 		display: inline-block;
 	}
-	
+
 	.joinedReport {
 		padding-left: 4em;
 	}
@@ -24,14 +24,14 @@
 		<div class="reportOptionLabel">{tr}Report Type{/tr}</div>
 		<select id="reportType">
 			<option value="">{tr}Select Report Type{/tr}</option>
-			
+
 			{foreach from=$definitions item=definition}
 				<option value="{$definition}">{$definition}</option>
 			{/foreach}
 		</select>
-		
+
 		<form id="reportEditor" class="no-ajax" data-index="{$index}">
-		
+
 		</form>
 	</div>
 </div>
@@ -43,8 +43,8 @@
 		{button _text="{tr}Export As CSV{/tr}" _id="reportExportCSV"}
 	</div>
 	<pre id="reportWikiDataOutput"></pre>
-	
+
 	<div id="reportSheetPreview"></div>
 {else}
-	
+
 {/if}

@@ -57,7 +57,7 @@
 	{else}
 		<a class="icon" href="tiki-map_edit.php?watch_event=map_changed&amp;watch_object={$files[user]}&amp;watch_action=remove" title="{tr}Stop monitoring this map{/tr}">{icon name="stop-watching"}</a>
 	{/if}
-{/if}	
+{/if}
 </td>
 <td class="even">
 {$mapstats[user]}

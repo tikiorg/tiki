@@ -132,7 +132,7 @@
 					</form>
 				</div>
 			</div><!-- End of install-step1 -->
-	
+
 			{elseif $install_step eq '2'}
 			<div class="install-step2">
 				<h1>{tr}Review the System Requirements{/tr}</h1>
@@ -155,9 +155,9 @@
 						{/remarksbox}
 					{else}
 						{remarksbox type=confirm title="{tr}Success{/tr}" close="n"}
-							<img src="img/icons/accept.png" alt="{tr}Success{/tr}" style="vertical-align:middle"> {tr}Tiki has detected your PHP memory_limit at:{/tr}<strong>{$php_memory_limit|kbsize:true:0}</strong>. 
+							<img src="img/icons/accept.png" alt="{tr}Success{/tr}" style="vertical-align:middle"> {tr}Tiki has detected your PHP memory_limit at:{/tr}<strong>{$php_memory_limit|kbsize:true:0}</strong>.
 						{/remarksbox}
-					{/if}			
+					{/if}
 				<h2>{tr}Mail{/tr}</h2><a name="mail"> </a>
 				<p>{tr}Tiki uses the PHP <strong>mail</strong> function to send email notifications and messages.{/tr}</p>
 				{if $mail_test_performed ne 'y'}

@@ -73,17 +73,17 @@
 					<input style="width:95%;" type="text" name="subject" value="{$subject|escape|default:"{tr}Have a look at this page{/tr}"}">
 				</td>
 			</tr>
-	
+
 			<tr>
 				<td>
 					{tr}Your message{/tr}
 				</td>
-	
+
 				<td>
 					<textarea name="comment" style="width:95%;" rows="10" id='comment'>{$comment|escape|@default:"{tr}I found an interesting page that I thought you would like.{/tr}"}</textarea>
 				</td>
 			</tr>
-	
+
 			<tr>
 				<td rowspan="2">
 					<img src="img/icons/large/evolution48x48.png" alt="{tr}email{/tr}">
@@ -158,7 +158,7 @@
 					<td>
 						{if $twitter}
 							<input type="radio" name="do_tweet" value="1" checked="checked" {if $prefs.disableJavascript!='y'}onclick="toggleBlock('twittertable')" {/if}>
-							{tr}Yes{/tr} 	
+							{tr}Yes{/tr}
 							<input type="radio" name="do_tweet" value="0" {if $prefs.disableJavascript!='y'}onclick="toggleBlock('twittertable')" {/if}>
 							{tr}No{/tr}
 						{else}
@@ -185,7 +185,7 @@
 					</td>
 				</tr>
 			{/if}
-	
+
 			{if $facebookRegistered}
 				<tr>
 					<td rowspan="2">
@@ -234,14 +234,14 @@
 					</td>
 				</tr>
 			{/if}
-			
+
 			{if $prefs.share_token_notification eq 'y'}
 				<tr>
 					<td>{tr}Subscribe notification{/tr}</td>
 					<td><input type="checkbox" value="y" name="share_token_notification" {if $share_token_notification eq 'y'}checked="checked" {/if}></td>
 				</tr>
 			{/if}
-			
+
 			{if $prefs.share_can_choose_how_much_time_access eq 'y' && $prefs.auth_token_access eq 'y'}
 				<tr>
 					<td>{tr}How much time recipients can access to this page{/tr}</td>
@@ -259,7 +259,7 @@
 					</td>
 				</tr>
 			{/if}
-			
+
 			{if $prefs.feature_messages eq 'y' && $report != 'y'}
 				<tr>
 					<td rowspan="2">

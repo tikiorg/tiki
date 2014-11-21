@@ -7,13 +7,13 @@
 <form name="path" method="post" action="tiki-directory_admin_sites.php">
   <select name="parent" onchange="javascript:path.submit();">
     <option value="0" {if $parent eq 0}selected="selected"{/if}>{tr}All{/tr}</option>
-    
+
 		{section name=ix loop=$categs}
-			
+
     <option value="{$categs[ix].categId|escape}" {if $parent eq $categs[ix].categId}selected="selected"{/if}>{$categs[ix].path|escape}</option>
-    
+
 		{/section}
-	
+
   </select>
   <input type="submit" class="btn btn-default btn-sm" name="go" value="{tr}Go{/tr}">
 </form>
@@ -38,13 +38,13 @@
     <tr>
       <td>{tr}Directory Categories:{/tr}</td>
       <td><select name="siteCats[]" multiple="multiple" size="4">
-          
+
 			    {section name=ix loop=$categs}
-			      
+
           <option value="{$categs[ix].categId|escape}" {if $categs[ix].belongs eq 'y'}selected="selected"{/if}>{$categs[ix].path|escape}</option>
-          
+
 					{/section}
-				
+
         </select>
         {if $categs|@count ge '2'}
         {remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Use Ctrl+Click to select multiple options{/tr}{/remarksbox}
@@ -54,13 +54,13 @@
     <tr>
       <td>{tr}Country:{/tr}</td>
       <td><select name="country">
-          
+
 						{section name=ux loop=$countries}
-							
+
           <option value="{$countries[ux]|escape}" {if $info.country eq $countries[ux]}selected="selected"{/if}>{$countries[ux]}</option>
-          
+
 						{/section}
-					
+
         </select>
       </td>
     </tr>
@@ -127,4 +127,4 @@
   <input type="submit" class="btn btn-default btn-sm" name="groupdel" value=" {tr}Delete{/tr} ">
   {/if}
 </form>
-{pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links} 
+{pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}

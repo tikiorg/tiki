@@ -61,10 +61,10 @@
 						   </select>
 					</label>
 				{/if}
-				
+
 				{if $prefs.feature_categories eq 'y' and !empty($categories) and $tiki_p_view_category eq 'y' and $prefs.search_show_category_filter eq 'y'}
 					<div id="category_singleselect_find" style="display: {if $findSelectedCategoriesNumber > 1}none{else}block{/if};">
-						<label class="findcateg"> 
+						<label class="findcateg">
 							<select name="categId">
 								<option value='' {if $find_categId eq ''}selected="selected"{/if}>{tr}any category{/tr}</option>
 								{foreach $categories as $catix}
@@ -77,7 +77,7 @@
 						{if $prefs.javascript_enabled eq 'y'}<a href="#" onclick="show('category_multiselect_find');hide('category_singleselect_find');">{tr}Multiple select{/tr}</a>{/if}
 					</div>
 					<div id="category_multiselect_find" style="display: {if $findSelectedCategoriesNumber > 1}block{else}none{/if};">
-				  		<div class="multiselect"> 
+				  		<div class="multiselect">
 				  			{if count($categories) gt 0}
 								{$cat_tree}
 								<div class="clearfix">
@@ -97,9 +97,9 @@
 						</div> {* end #multiselect *}
 					</div> {* end #category_multiselect_find *}
 				{/if}
-				
+
 			{/if}
-			
+
 			{if $prefs.feature_search_show_object_filter eq 'y'}
 				{if $searchStyle eq "menu"}
 					<span class='searchMenu'>
@@ -152,7 +152,7 @@
 				{/if}
 			{elseif !empty($where)}
 				<input type="hidden" name="where" value="{$where|escape}">
-				{if $forumId}<input type="hidden" name="forumId" value="{$forumId|escape}">{/if}	
+				{if $forumId}<input type="hidden" name="forumId" value="{$forumId|escape}">{/if}
 			{/if}
 			<label class="findsubmit">
 				<input type="submit" class="btn btn-default" name="search" value="{tr}Go{/tr}">
@@ -167,7 +167,7 @@
 
 {if $searchStyle ne 'menu' and ! $searchNoResults}
 	<div class="nohighlight simplebox" style="width:300px">
-		 {tr}Found{/tr} "{$words|escape}" {tr}in{/tr} 
+		 {tr}Found{/tr} "{$words|escape}" {tr}in{/tr}
 			{if $where_forum}
 				"{tr}{$where|escape}:{/tr}" {$where_forum|escape}
 			{else}

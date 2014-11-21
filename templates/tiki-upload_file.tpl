@@ -116,7 +116,7 @@
 <div>
 
 {capture name=upload_file assign=upload_str}
-	
+
 	<div class="fgal_file">
 		<div class="fgal_file_c1">
 			{if $simpleMode neq 'y'}
@@ -308,7 +308,7 @@
 				{else}
 					<input type="hidden" id="hit_limit" name="hit_limit[]" value="{$hit_limit|default:-1}">
 				{/if}
-	
+
 				{* We want comments only on updated files *}
 				{if $prefs.javascript_enabled neq 'y' && $editFileId}
 					<div class="form-group">
@@ -333,7 +333,7 @@
 
 <div id="form">
 <form method="post"
-	action='tiki-upload_file.php' 
+	action='tiki-upload_file.php'
 	enctype='multipart/form-data'
 	class="form-horizontal"
 	id="file_0"
@@ -423,7 +423,7 @@
 	{/if}
 	{if $prefs.fgal_upload_progressbar eq 'ajax_flash'}
 		{jq notonready=true}
-	
+
 			var swfu;
 
 			function initSWFU() {
@@ -448,7 +448,7 @@
 						cancelButtonId : "btnCancel"
 					},
 					debug: false,
-			
+
 					// Button Settings
 					button_placeholder_id : "spanButtonPlaceholder",
 					button_width: 200,
@@ -456,7 +456,7 @@
 					button_window_mode: SWFUpload.WINDOW_MODE.TRANSPARENT,
 					button_cursor: SWFUpload.CURSOR.HAND,
 					button_action: SWFUpload.BUTTON_ACTION.SELECT_FILE,
-		
+
 					// The event handler functions are defined in handlers.js
 					swfupload_loaded_handler : swfUploadLoadedFlash,
 					file_queued_handler : fileQueuedFlash,
@@ -469,13 +469,13 @@
 					upload_success_handler : uploadSuccessFlash,
 					upload_complete_handler : uploadComplete,
 					queue_complete_handler : queueComplete,	// Queue plugin event
-					
+
 					// SWFObject settings
 					swfupload_pre_load_handler : swfUploadPreLoad,
 					swfupload_load_failed_handler : swfUploadLoadFailed
 				});
 			}
-	
+
 			function swfUploadLoadedFlash() {
 				initSWFU();
 
@@ -488,18 +488,18 @@
 				});
 				$('#btnBrowse').show();
 			}
-	
+
 			function fileDialogStartFlash() {
 				initSWFU();
 				$('#btnUpload').attr('disabled', 'disabled');
 				swfu.cancelQueue();
 			}
-	
+
 			function fileQueuedFlash(file) {
 				fileQueued.call(this, file);
 				$('#btnUpload').removeAttr('disabled');
 			}
-	
+
 			function uploadErrorFlash(file, errorCode, message) {
 				uploadError.call(this, file, errorCode, message);
 				if ( errorCode && errorCode == SWFUpload.UPLOAD_ERROR.FILE_CANCELLED ) {
@@ -507,28 +507,28 @@
 					$('#btnUpload').attr('disabled', 'disabled').show();
 				}
 			}
-	
+
 			function uploadSuccessFlash(file, serverData) {
 				$('#upload_progress_ajax_0').html(serverData);
 				uploadSuccess.call(this, file, serverData);
 				$('#form').hide();
 			}
-	
+
 			function verifUploadFlash(){
 				initSWFU();
 
 				// get all post values
 				var $postValue = $($('#file_0').serializeArray());
-				var post = {"PHPSESSID" : "{{$PHPSESSID}}"};			
-	
+				var post = {"PHPSESSID" : "{{$PHPSESSID}}"};
+
 				$postValue.each(function (iElement, oElement){
 					post[oElement.name] = oElement.value;
 				});
 				swfu.setPostParams(post);
-				
+
 				// Start upload
 				swfu.startUpload();
-	
+
 				$('#btnUpload').hide();
 				$('#btnCancel').show();
 			}
@@ -537,9 +537,9 @@
 		{/jq}
 	{else}
 		{jq notonready=true}
-			$('#file_0').ajaxForm({target: '#progress_0', forceSync: true});	
+			$('#file_0').ajaxForm({target: '#progress_0', forceSync: true});
 			var nb_upload = 1;
-	
+
 			function add_upload_file() {
 				var clone = $('#form form').eq(0).clone().resetForm().attr('id', 'file_' + nb_upload).ajaxForm({target: '#progress_' + nb_upload, forceSync: true});
 				clone.insertAfter($('#form form').eq(-1));

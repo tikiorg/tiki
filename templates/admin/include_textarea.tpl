@@ -17,13 +17,13 @@
             <h2>{tr}General Settings{/tr}</h2>
 			<fieldset>
 				<legend>{tr}Features{/tr}{help url="Text+Area"}</legend>
-				{preference name=feature_fullscreen}				
+				{preference name=feature_fullscreen}
 				{preference name=feature_filegals_manager}
 				{preference name=feature_dynamic_content}
 				{preference name=feature_wiki_replace}
 				{preference name=feature_syntax_highlighter}
 				{preference name=feature_syntax_highlighter_theme}
-				{preference name=feature_wysiwyg}				
+				{preference name=feature_wysiwyg}
 				{preference name=ajax_autosave}
 			</fieldset>
 
@@ -83,8 +83,8 @@
 				{preference name=wikiplugin_toc}
 				{preference name=wikiplugin_versions}
 				{preference name=wikiplugin_showpref}
-			</fieldset>			
-			
+			</fieldset>
+
 			<fieldset>
 				<legend>{tr}Miscellaneous{/tr}</legend>
 				{preference name=feature_purifier}
@@ -124,7 +124,7 @@
 		{tab name="{tr}Plugins{/tr}"}
             <h2>{tr}Plugins{/tr}</h2>
 			{remarksbox type="note" title="{tr}About plugins{/tr}"}{tr}Tiki plugins add functionality to wiki pages, articles, blogs, and so on. You can enable and disable them below.{/tr}
-			{tr}You can approve plugin use at <a href="tiki-plugins.php">tiki-plugins.php</a>.{/tr}		
+			{tr}You can approve plugin use at <a href="tiki-plugins.php">tiki-plugins.php</a>.{/tr}
 			{tr}The edit-plugin icon is an easy way for users to edit the parameters of each plugin in wiki pages. It can be disabled for individual plugins below.{/tr}
 			{/remarksbox}
 			{if !isset($disabled)}
@@ -138,7 +138,7 @@
 						<ul>
 						{foreach from=$disabled item=plugin}
 							<li>{$plugin|lower|escape}</li>
-						{/foreach} 
+						{/foreach}
 						</ul>
 					{/if}
 				{/remarksbox}
@@ -154,7 +154,7 @@
 				{preference name=wiki_edit_plugin}
 				{preference name=wiki_edit_icons_toggle}
 			</fieldset>
-			
+
 			<fieldset class="table" id="plugins">
 				<legend>{tr}Plugins{/tr}</legend>
 				<fieldset class="table donthide">
@@ -168,7 +168,7 @@
 						</div>
 						{if in_array( $pref, $info.prefs)}
 							{assign var=pref value="wikiplugin_$plugin"}
-							{assign var=pref_inline value="wikiplugininline_$plugin"}	
+							{assign var=pref_inline value="wikiplugininline_$plugin"}
 							{preference name=$pref label="{tr}Enable{/tr}"}
 							{preference name=$pref_inline label="{tr}Disable edit plugin icon (make plugin inline){/tr}"}
 						{/if}
@@ -271,7 +271,7 @@ if (window.location.href.indexOf('plugin_alias_new=true') > -1) {
 		{/if}
 		<fieldset id="pluginalias_general">
 			<legend>{tr}General Information{/tr}{icon _id="omodule"}</legend>
-		
+
 			<div class="adminoptionbox">
 				<div class="adminoptionlabel">
 					<label for="plugin_alias">{tr}Plugin Name:{/tr}</label>
@@ -368,7 +368,7 @@ $('#pluginalias_simple_new').hide();
 		<fieldset id="pluginalias_doc">
 			<legend>{tr}Plugin Parameter Documentation{/tr}{icon _id="omodule"} {icon _id="add" id="pluginalias_doc_add"}</legend>
 			{jq}$('#pluginalias_doc_add').click(function() { $('#pluginalias_doc_new').toggle(); return false; });{/jq}
-			
+
       {if !empty($plugin_admin.description.params)}
 			{foreach from=$plugin_admin.description.params key=token item=detail}
 				<div class="clearfix admingroup adminoptionbox{if $token eq '__NEW__'} hidefirst" id="pluginalias_doc_new{/if}">
@@ -414,7 +414,7 @@ $('#pluginalias_simple_new').hide();
 					<fieldset class="stayopen">
 						<legend>{tr}Parameters{/tr}{icon _id="omodule"}{icon _id="add" id="pluginalias_body_add"}</legend>
 						{jq}$('#pluginalias_body_add').click(function() { $('#pluginalias_body_new').toggle("fast"); return false; });{/jq}
-						
+
             {if !empty($plugin_admin.body.params)}
 						{foreach from=$plugin_admin.body.params key=token item=detail}
 							<div class="clearfix admingroup adminoptionbox{if $token eq '__NEW__'} hidefirst" id="pluginalias_body_new{/if}">

@@ -15,10 +15,10 @@
 		<td>
 			{tr _0=$invoice.$invoiceNumber}Invoice %0{/tr}
 			<br>
-			{tr _0=$invoice.$dateIssued}Date Issued %0{/tr} 
+			{tr _0=$invoice.$dateIssued}Date Issued %0{/tr}
 			<br>
 			<br>
-			{tr}Status{/tr} 
+			{tr}Status{/tr}
 		</td>
 		<td>
 			{if $setting.Logo neq ''}<img src='{$setting.Logo}'><br>{/if}

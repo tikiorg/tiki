@@ -27,7 +27,7 @@
 	<br>
 {/if}
 <label>
-	<input type="radio" name="which_date" value="between"{if $which_date eq 'between'} checked="checked"{/if}>{tr}Vote range displayed:{/tr} 
+	<input type="radio" name="which_date" value="between"{if $which_date eq 'between'} checked="checked"{/if}>{tr}Vote range displayed:{/tr}
 </label>
 <label>
 	{tr}Start:{/tr} {html_select_date prefix="from_" time="$vote_from_date" start_year="$start_year"}
@@ -50,7 +50,7 @@
 	<label>
 		<input type="radio" name="which_date" value="all"{if $which_date eq 'all' or $which_date eq ''} checked="checked"{/if}>
 		{tr}All votes{/tr}
-	</label>		
+	</label>
 {/if}
 <br>
 <input type="submit" class="btn btn-default btn-sm" name="search" value="{tr}Find{/tr}">

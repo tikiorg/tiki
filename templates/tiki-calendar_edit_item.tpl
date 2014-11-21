@@ -505,7 +505,7 @@
                             </td>
                             <td rowspan="2" class="html_select_time">
                                 <span id="starttime"{$hidden_if_all_day}>
-                                    {html_select_time prefix="start_" display_seconds=false time=$calitem.start minute_interval=$prefs.calendar_timespan 
+                                    {html_select_time prefix="start_" display_seconds=false time=$calitem.start minute_interval=$prefs.calendar_timespan
                                     hour_minmax=$hour_minmax use_24_hours=$use_24hr_clock}
                                 </span>
                             </td>
@@ -518,7 +518,7 @@
                             </td>
                             <td style="border:0;padding-top:2px;vertical-align:middle;" rowspan="2">
                                 <label for="alldayid">
-                                    <input type="checkbox" id="alldayid" name="allday" 
+                                    <input type="checkbox" id="alldayid" name="allday"
                                     onclick="toggleSpan('starttimehourplus');
                                     toggleSpan('starttimehourminus');
                                     toggleSpan('starttime');
@@ -535,9 +535,9 @@
                                     toggleSpan('duratione');
                                     toggleSpan('durminplus');
                                     toggleSpan('durminminus');"
-                                    value="true" 
+                                    value="true"
                                     {if $calitem.allday}
-                                        checked="checked" 
+                                        checked="checked"
                                     {/if}
                                     >
                                     {tr}All day{/tr}
@@ -615,7 +615,7 @@
                                 </td>
                                 <td rowspan="2" style="border:0;vertical-align:middle" class="html_select_time">
                                     <span id="endtime"{$hidden_if_all_day}>
-                                        {html_select_time prefix="end_" display_seconds=false time=$calitem.end minute_interval=$prefs.calendar_timespan 
+                                        {html_select_time prefix="end_" display_seconds=false time=$calitem.end minute_interval=$prefs.calendar_timespan
                                         hour_minmax=$hour_minmax use_24_hours=$use_24hr_clock}
                                     </span>
                                 </td>
@@ -845,7 +845,7 @@
                                 </option>
                             {/foreach}
                         </select>
-                        {tr}or new{/tr} 
+                        {tr}or new{/tr}
                     {/if}
                     <input type="text" name="save[newcat]" value="">
                 {else}
@@ -873,7 +873,7 @@
                                 </option>
                             {/foreach}
                         </select>
-                        {tr}or new{/tr} 
+                        {tr}or new{/tr}
                     {/if}
                     <input type="text" name="save[newloc]" value="">
                 {else}
@@ -990,7 +990,7 @@
                         {else}
                             {assign var='in_particip' value='n'}
                             {foreach item=ppl from=$calitem.participants}
-                                {$ppl.name|userlink} 
+                                {$ppl.name|userlink}
                                 {if $listroles[$ppl.role]}
                                     ({$listroles[$ppl.role]})
                                 {/if}

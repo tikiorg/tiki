@@ -13,7 +13,7 @@ $("#editItemForm{{$trackerEditFormId}}").validate({
 		}
 	},
 	highlight: function(element) {
-		$(element).parents('div, p').first().addClass('has-error');	
+		$(element).parents('div, p').first().addClass('has-error');
 	},
 	unhighlight: function(element) {
 		$(element).parents('div, p').first().removeClass('has-error');

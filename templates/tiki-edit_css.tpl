@@ -7,7 +7,7 @@
 </div>
 
 <form method="post" action="tiki-edit_css.php">
-	{tr}Style Sheet{/tr} : 
+	{tr}Style Sheet{/tr} :
 {if $action eq "edit"}
 	<input type="text" name="editstyle" value="{$editstyle}">
 	<input type="submit" class="btn btn-primary btn-sm" name="save" value="{tr}Save{/tr}">

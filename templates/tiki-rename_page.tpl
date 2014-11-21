@@ -19,10 +19,10 @@
 			<input type="hidden" name="badname" value="{$newname|escape}">
 			<input type="submit" class="btn btn-default btn-sm" name="confirm" value="{tr}Use this name anyway{/tr}">
 		{/if}
-	{elseif isset($msg)}		
+	{elseif isset($msg)}
 		{remarksbox type=errors}
 			{$msg}
-		{/remarksbox}		
+		{/remarksbox}
 	{/if}
     <div class="form-group">
 		<div class="col-sm-10">

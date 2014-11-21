@@ -110,7 +110,7 @@
 		</tr>
 
 		{section name=changes loop=$listpages}
-	
+
 			{if isset($mapview) and $mapview}
 				<div class="listarticlesmap" style="display:none;">{object_link type="article" id="`$listpages[changes].articleId|escape`"}</div>
 			{/if}

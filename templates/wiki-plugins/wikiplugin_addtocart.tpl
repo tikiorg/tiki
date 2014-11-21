@@ -11,7 +11,7 @@
 		</select>
 		<br>
 	{/if}
-	
+
 	{if $params.giftcertificate eq 'y' or $hideamountfield eq 'y'}
 		<table>
 			{if $params.giftcertificate == 'y'}

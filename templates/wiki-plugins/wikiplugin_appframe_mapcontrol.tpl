@@ -15,7 +15,7 @@ $('#appframe .map-container').bind('initialized', function () {
 			strokeDashstyle: "solid"
 		}
 		;
-	
+
 	{{if $mapcontrol.function}}
 		func = function () {
 			{{$mapcontrol.function}};

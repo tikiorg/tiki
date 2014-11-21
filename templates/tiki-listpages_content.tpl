@@ -215,7 +215,7 @@
 			{/foreach}
 		{/if}
 
-		{if $prefs.wiki_list_hits eq 'y'}	
+		{if $prefs.wiki_list_hits eq 'y'}
 			<td class="integer">
 				{$listpages[changes].hits}
 			</td>
@@ -372,7 +372,7 @@
 		<label for="submit_mult">{tr}Perform action with checked:{/tr}</label>
 		<select name="submit_mult" class="form-control" id="submit_mult" onchange="this.form.submit();">
 			<option value="" selected="selected">...</option>
-			{if $tiki_p_remove eq 'y'} 
+			{if $tiki_p_remove eq 'y'}
 				<option value="remove_pages" >{tr}Remove{/tr}</option>
 			{/if}
 
@@ -396,7 +396,7 @@
 			{/if}
 
 			{* add here e.g. <option value="categorize" >{tr}categorize{/tr}</option> *}
-		</select>                
+		</select>
 	</p>
 	<script type='text/javascript'>
 		<!--

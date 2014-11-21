@@ -86,7 +86,7 @@
 				var id = '#comment-container-below';
 				$(id).comment_load($(id).data('target'));
 			{/jq}
-		
+
 		{/if}
 
 	{/tab}
@@ -119,7 +119,7 @@
 		<div class="nohighlight">
 			{include file="tracker_validator.tpl"}
 
-			{if  $tiki_p_admin_trackers eq 'y' and !empty($trackers)}	
+			{if  $tiki_p_admin_trackers eq 'y' and !empty($trackers)}
 				<form>
 					<input type="hidden" name="itemId" value="{$itemId}">
 					<select name="moveto">
@@ -245,7 +245,7 @@
 					</td>
 				</tr>
 			</table>
-		
+
 			{* ------------------- *}
 		</form>
 

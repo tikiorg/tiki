@@ -93,7 +93,7 @@
 				</table>
                 </div>
 			{/if}
-			
+
 			{if $tiki_p_use_group_webmail eq 'y'}
 				{if count($pubAccounts) != 0}
 					<h2>{tr}Group email accounts{/tr}</h2>
@@ -254,7 +254,7 @@
 									<input type="text" name="msgs" size="4" value="{$info.msgs|escape}">
 								</td>
 							</tr>
-		
+
 							{if ($tiki_p_admin_group_webmail eq 'y' and $tiki_p_admin_personal_webmail eq 'y') or $tiki_p_admin eq 'y'}
 								<tr>
 									<td>{tr}Group (shared mail inbox) or private{/tr}</td>
@@ -277,7 +277,7 @@
 							{if $tiki_p_admin_group_webmail eq 'y'}
 								{include file='categorize.tpl'}
 							{/if}
-		
+
 							<tr>
 								<td>{tr}Auto-refresh page time{/tr}</td>
 								<td colspan="3">

@@ -54,7 +54,7 @@
 				{/if}
 			{* Show the list of available translations *}
 				{section name=i loop=$trads}
-				{* For wiki pages *}		
+				{* For wiki pages *}
 					{if $object_type eq 'wiki page' and $trads[i] neq $trads[0]}
 						<li role="presentation">
 							<a role="menuitem" tabindex="-1" href="tiki-index.php?page={$trads[i].objName|escape}&no_bl=y" title="{$trads[i].langName|escape} ({$trads[i].lang|escape}): {$trads[i].objName}" class="linkmodule {$trads[i].class}">
@@ -121,7 +121,7 @@
 				{if !empty($smarty.capture.default)}{* Only display the header if there's content *}
 					<li role="presentation" class="divider"></li>
 					{$smarty.capture.default}
-				{/if}				
+				{/if}
 			</li>
 		</ul>
 	{/if}

@@ -13,8 +13,8 @@
 	<fieldset class="table">
 		<legend>{tr}Activate the feature{/tr}</legend>
 		{preference name=feature_share visible="always"}
-	</fieldset>		
-	
+	</fieldset>
+
 			<fieldset class="table">
 				<legend>{tr}Site-wide features{/tr}</legend>
 

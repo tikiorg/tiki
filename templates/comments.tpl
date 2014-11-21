@@ -153,7 +153,7 @@
 					{/if}
 				</div>
 			{/if}
-		</div> 
+		</div>
 	{/if}
 {/if} {* end read comment *}
 {if $section eq 'forums'}<a name="comments"></a>{/if}

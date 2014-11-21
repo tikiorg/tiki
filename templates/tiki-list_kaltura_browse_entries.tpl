@@ -27,11 +27,11 @@
 			<param name="wmode" value="opaque">
 		</object>
 		<div class="navi kaltura">
-			<a class="prev"></a> 
-			<div class="scrollable"> 
-				<div class="items"> 
-					{foreach from=$klist key=key item=item}					
-						<a href="#" onclick="loadMedia('{$item->id}'); return false"><img class="athumb" src="{$item->thumbnailUrl}" alt="{$item->description}" height="80" width="120"></a>					
+			<a class="prev"></a>
+			<div class="scrollable">
+				<div class="items">
+					{foreach from=$klist key=key item=item}
+						<a href="#" onclick="loadMedia('{$item->id}'); return false"><img class="athumb" src="{$item->thumbnailUrl}" alt="{$item->description}" height="80" width="120"></a>
 					{/foreach}
 				</div>
 			</div>

@@ -19,7 +19,7 @@
 		</div>
 	</div>
 </div>
-			
+
 {if $prefs.feature_bidi eq 'y'}
 </div>
 {/if}

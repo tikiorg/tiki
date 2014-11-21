@@ -29,7 +29,7 @@
 {/if}
 
 {if $findwhat!=""}
-	{tr}Found{/tr} "<b>{$findwhat|escape}</b>" {tr}in{/tr} {$cant_records|escape} {tr}LastChanges{/tr} 
+	{tr}Found{/tr} "<b>{$findwhat|escape}</b>" {tr}in{/tr} {$cant_records|escape} {tr}LastChanges{/tr}
 {/if}
 <div class="table-responsive">
 <table class="table normal">
@@ -51,7 +51,7 @@
 			<td class="text">
 				<a href="{$lastchanges[changes].pageName|sefurl}" class="tablename" title="{$lastchanges[changes].pageName|escape}">
 					{$lastchanges[changes].pageName|truncate:$prefs.wiki_list_name_len:"...":true|escape}
-				</a> 
+				</a>
 			</td>
 			<td class="text">{tr}{$lastchanges[changes].action|escape}{/tr}</td>
 			<td class="username">{$lastchanges[changes].user|userlink}</td>
@@ -60,7 +60,7 @@
 			{/if}
 			<td class="text">{$lastchanges[changes].comment|escape}</td>
 			<td class="action">
-				{if $tiki_p_wiki_view_history eq 'y'} 
+				{if $tiki_p_wiki_view_history eq 'y'}
 					{if not $lastchanges[changes].current}
 						<a class="link" href='tiki-pagehistory.php?page={$lastchanges[changes].pageName|escape:"url"}'>{icon _id='page_white_stack' alt="{tr}History{/tr}"}</a>{tr}v{/tr}{$lastchanges[changes].version}
 	&nbsp;<a class="link" href='tiki-pagehistory.php?page={$lastchanges[changes].pageName|escape:"url"}&amp;preview={$lastchanges[changes].version|escape:"url"}' title="{tr}View{/tr}">v</a>&nbsp;

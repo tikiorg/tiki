@@ -1,7 +1,7 @@
-{* $Id$ 
+{* $Id$
  *
  * MOD-SINCE_LAST_VISIT_NEW
- * Template for the module mod-since_last_visit_new. 
+ * Template for the module mod-since_last_visit_new.
  *}
 {if $user}
 	{tikimodule error=$module_params.error title=$tpl_module_title name="since_last_visit_new" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
@@ -80,10 +80,10 @@
 					<div class="separator"><a class="separator" href="javascript:flip('{$cname}');">{$slvn_item.count}&nbsp;{$slvn_item.label}</a></div>
 				{/if}
 				{assign var=showcname value="show_"|cat:$cname}
-	
+
 	        	{if $pos eq 'trackers' or $pos eq 'utrackers'}
 					<div id="{$cname}" style="display:{if !isset($cookie.$showcname) or $cookie.$showcname eq 'y'}{$default_folding}{else}{$opposite_folding}{/if};">
-	
+
 	        			{****** Parse out the trackers *****}
 					 	{foreach key=tp item=tracker from=$slvn_item.tid}
 					 		{assign var=tcname value=$tracker.cname}
@@ -110,7 +110,7 @@
 						{if $nonums != 'y'}<ol>{else}<ul>{/if}
 						{section name=ix loop=$slvn_item.list}
 							<li>
-								<a  class="linkmodule" 
+								<a  class="linkmodule"
 									href="{$slvn_item.list[ix].href|escape}"
 									title="{$slvn_item.list[ix].title|escape}">
 									{if $slvn_item.list[ix].label == ''}-{else}{$slvn_item.list[ix].label|escape}{/if}

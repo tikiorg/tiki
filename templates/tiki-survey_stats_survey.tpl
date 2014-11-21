@@ -14,14 +14,14 @@
 
 <div>
 <form method="post" action="tiki-survey_stats_survey.php">
-{tr}Select a user's responses{/tr} {tr}to be marked as{/tr} {icon _id="user" alt="{tr}User voted{/tr}"} 
+{tr}Select a user's responses{/tr} {tr}to be marked as{/tr} {icon _id="user" alt="{tr}User voted{/tr}"}
 	<select name="uservoted">
 		<option value="" {if empty($uservoted)}selected="selected"{/if}></option>
 		{foreach from=$usersthatvoted item=usr}
 		<option value="{$usr|escape}" {if $uservoted == $usr}selected="selected"{/if}>{$usr|username}</option>
 		{/foreach}
 	</select>
-	<input type="hidden" name="surveyId" value="{$surveyId|escape}" /> 
+	<input type="hidden" name="surveyId" value="{$surveyId|escape}" />
 	<input type="submit" class="btn btn-default btn-sm" name="selectuservoted" value="{tr}Select User{/tr}" />
 </form>
 </div>

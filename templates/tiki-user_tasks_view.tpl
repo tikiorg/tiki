@@ -3,7 +3,7 @@
 
 <h2>{$info.title|escape}</h2>&nbsp;
 
-{if ($info.user eq $user) or ($info.creator eq $user) or ($admin_mode)} 
+{if ($info.user eq $user) or ($info.creator eq $user) or ($admin_mode)}
 	<a href="tiki-user_tasks.php?taskId={$taskId}&amp;tiki_view_mode=edit" class="tablink">
 		{icon _id='page_edit'}
 	</a>&nbsp;
@@ -63,13 +63,13 @@
 						</td>
 						<td >
 							{if $info.status eq ''}
-								 {tr}Waiting / Not Started{/tr} 
+								 {tr}Waiting / Not Started{/tr}
 							{/if}
 							{if $info.status eq 'o'}
-								 {tr}Open / In Process{/tr} 
+								 {tr}Open / In Process{/tr}
 							{/if}
 							{if $info.status eq 'c'}
-								 {tr}completed (100%){/tr} 
+								 {tr}completed (100%){/tr}
 							{/if}
 							&nbsp;&nbsp;
 							<b>{$info.completed|tiki_short_date}&nbsp;--&nbsp;{$info.completed|tiki_short_time}</b>
@@ -104,8 +104,8 @@
 			</td>
 		</tr>
 	</table>
-	
-	{tr}Created by:{/tr} {$info.creator|userlink} {tr}for:{/tr} {$info.user|userlink}. 
+
+	{tr}Created by:{/tr} {$info.creator|userlink} {tr}for:{/tr} {$info.user|userlink}.
 	{if ($info.task_version > 0 ) and ($info.creator ne $info.user)}
 		{tr}Last modified by:{/tr} {$info.lasteditor|escape|userlink} on {$info.changes|tiki_short_date}&nbsp;--&nbsp;{$info.changes|tiki_short_time}
 	{/if}

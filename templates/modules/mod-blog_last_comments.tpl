@@ -11,10 +11,10 @@
 				{/if}
 				{$comments[ix].anonymous_name}
 				{if !empty($comments[ix].website)}
-					</a> 
+					</a>
 				{/if}
 			{else}
-				{$comments[ix].userName|userlink} 
+				{$comments[ix].userName|userlink}
 			{/if}
 			{tr}on{/tr} <a class="linkmodule" href="tiki-view_blog_post.php?postId={$comments[ix].postId}&amp;comzone=show#threadId{$comments[ix].threadId}" title="{tr}Published on{/tr} {$comments[ix].commentData|tiki_short_date}">{$comments[ix].title|escape}{if $comments[ix].priv eq 'y'} ({tr}private{/tr}){/if}</a>
 		{else}
@@ -28,10 +28,10 @@
 				{/if}
 				{$comments[ix].anonymous_name}
 				{if !empty($comments[ix].website)}
-					</a> 
+					</a>
 				{/if}
 			{else}
-				{$comments[ix].userName|userlink} 
+				{$comments[ix].userName|userlink}
 			{/if}
 			{if $module_params.nodate neq 'y'}
 				<small class="date">{$comments[ix].commentDate|tiki_short_datetime}</small>

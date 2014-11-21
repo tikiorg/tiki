@@ -1,7 +1,7 @@
 {* $Id$ *}
 
 <table style="width:100%">
-<tr> 
+<tr>
 	<td colspan="3" style="text-align:left; width:270px">
 		<div style="float:left; width:20px"><img src="img/icons/wizard16x16.png" alt="{tr}Tiki User Wizard{/tr}" /></div>
 		<input type="submit" class="btn btn-warning btn-sm" name="close" value="{tr}Close{/tr}" />

@@ -112,7 +112,7 @@ function minichat_selectchannel(chan) {
       minichat_selectedchan=c;
     }
     c=c.prv;
-  }  
+  }
 
   document.getElementById('minichat').scrollTop=99999;
 }
@@ -144,12 +144,12 @@ function minichat_removechannel(chan) {
       if (minichat_lastchan==c) minichat_lastchan=c.prv;
 	  if (c.prv) c.prv.nxt=c.nxt;
       if (c.nxt) c.nxt.prv=c.prv;
-      
+
       var d=document.getElementById('minichatdiv_'+c.id);
-      document.getElementById('minichat').removeChild(d);      
+      document.getElementById('minichat').removeChild(d);
 
       d=document.getElementById('minichata_'+c.id);
-      document.getElementById('minichatchans').removeChild(d);      
+      document.getElementById('minichatchans').removeChild(d);
 
 	  break;
     }

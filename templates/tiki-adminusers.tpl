@@ -240,11 +240,11 @@
 								</td>
 
 								<td class="action">
-									
+
 									<a class="link" href="tiki-assignuser.php?assign_user={$users[user].user|escape:url}" title="{tr}Assign to group{/tr}">{capture assign=alt}{tr _0=$username}Assign %0 to groups{/tr}{/capture}{*FIXME*}{icon _id='group_key' alt=$alt}</a>
-															
+
 									<a class="link" href="{query _type='relative' user=$users[user].userId}" title="{tr _0=$username}Edit Account Settings: %0{/tr}">{capture assign=alt}{tr _0=$username}Edit Account Settings: %0{/tr}{/capture}{*FIXME*}{icon _id='page_edit' alt=$alt}</a>
-									
+
 									{if $prefs.feature_userPreferences eq 'y' || $user eq 'admin'}
 										<a class="link" href="tiki-user_preferences.php?userId={$users[user].userId}" title="{tr _0=$username}Change user preferences: %0{/tr}">{capture assign=alt}{tr _0=$username}Change user preferences: %0{/tr}{/capture}{icon _id='wrench' alt=$alt}</a>
 									{/if}
@@ -485,7 +485,7 @@
 				No need to specify user password or to ask him to change it, if :
 				--> Tiki is using the Tiki + PEAR Auth systems
 				--> AND Tiki won't create the user in the Tiki auth system
-				--> AND Tiki won't create the user in the ldap 
+				--> AND Tiki won't create the user in the ldap
 			*}
 			{if $prefs.auth_method eq 'ldap' and ( $prefs.ldap_create_user_tiki eq 'n' or $prefs.ldap_skip_admin eq 'y' ) and $prefs.ldap_create_user_ldap eq 'n' and $userinfo.login neq 'admin' and $auth_ldap_permit_tiki_users eq 'n'}
 				<div class="form-group">
@@ -629,7 +629,7 @@
 
 			{if $prefs.userTracker eq 'y'}
 				{if $userstrackerid and $usersitemid}
-					{tr}User tracker item : {$usersitemid}{/tr} 
+					{tr}User tracker item : {$usersitemid}{/tr}
 					{button href="tiki-view_tracker_item.php?trackerId=$userstrackerid&amp;itemId=$usersitemid&amp;show=mod" _text="{tr}Edit Item{/tr}"}
 				{/if}
 			{/if}

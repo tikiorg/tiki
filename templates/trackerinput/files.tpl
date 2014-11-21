@@ -96,8 +96,8 @@ function addFile(fileId, type, name) {
 		$(this).closest('li').remove();
 		toggleWarning();
 	});
-				
-	if (replaceFile && $self.data('firstfile') > 0) {	
+
+	if (replaceFile && $self.data('firstfile') > 0) {
 		li.prev('li').remove();
 	}
 

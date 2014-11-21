@@ -33,7 +33,7 @@
 </table>
 </form>
 <br>
-<br><br>   
+<br><br>
 	<!--this table is a duplicate of the one in tiki-browse_image.tpl-->
     <div class="table-responsive">
 	<table class="table normal noslideshow">

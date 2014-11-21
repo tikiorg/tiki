@@ -6,7 +6,7 @@
 		<span class="warn">{icon _id=exclamation alt="{tr}Error{/tr}" style="vertical-align:middle;align:left;"}
 	{else}
 		{icon _id=accept alt="{tr}OK{/tr}" style="vertical-align:middle;align:left;"}
-	{/if} 
+	{/if}
 	{if $prefs.login_is_email ne 'y'}
 		{$msg|escape:'html'|@default:"{tr}Enter your username or email.{/tr}"}
 	{else}

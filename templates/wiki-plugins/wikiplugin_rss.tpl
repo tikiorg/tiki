@@ -18,7 +18,7 @@
                     {elseif $item.publication_date and $showdate}
 				&nbsp;&nbsp;&nbsp;(<span class="rssdate">{$item.publication_date|tiki_short_date}</span>)
                     {/if}
-			
+
                     {if $item.description && $showdesc}
 				<div class="rssdescription">
 					{$item.description|escape}

@@ -17,7 +17,7 @@
 <form action="tiki-contacts.php" method="post" id="editform" name='editform_contact' style="clear:both;margin:5px;display:{if $contactId}block{else}none{/if};">
 	<input type="hidden" name="locSection" value="contacts">
 	<input type="hidden" name="contactId" value="{$contactId|escape}">
-	
+
 	<table class="formcolor">
 		<tbody id='tbody_editcontact'>
 			<tr>
@@ -100,16 +100,16 @@
 				</th>
 			{/if}
 		{/foreach}
-		
+
 		{if $view eq 'list'}
 			{assign var=numbercol value=$numbercol+1}
 			<th>{tr}Groups{/tr}</th>
 		{/if}
-		
+
 		{assign var=numbercol value=$numbercol+1}
 		<th>{tr}Action{/tr}</th>
 	</tr>
-	
+
 
 	{foreach key=k item=channels from=$all}
 		{if count($channels)}
@@ -159,7 +159,7 @@
 							{/if}
 						</td>
 					{/if}
-					
+
 					<td class="action">
 						{if $channels[user].user eq $user}
 							<a href="tiki-contacts.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;contactId={$channels[user].contactId}" title="{tr}Edit{/tr}">
@@ -239,7 +239,7 @@
 		tr.appendChild(td);
 
 		var tbody=document.getElementById('tbody_editcontact');
-		tbody.insertBefore(tr, document.getElementById('tr_exts'));	
+		tbody.insertBefore(tr, document.getElementById('tr_exts'));
 	}
 
 	function ext_select() {

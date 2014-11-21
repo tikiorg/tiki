@@ -46,7 +46,7 @@
 	{if $scaleinfo.nextscale}
 	  <a href="{$url_base}{$imageId}&amp;scalesize={$scaleinfo.nextscale}" class="gallink">{html_image file='img/icons/zoom+.gif' border='none' alt="{tr}Bigger{/tr}" title="{tr}Bigger{/tr}"}</a>
 	{/if}
-	    
+
 {* --- popup launch --- *}
 	{if !$popup}
 	  <a {jspopup height="$winy" width="$winx" href="$url_base$imageId&amp;popup=1&amp;scalesize=$defaultscale"} class="gallink">
@@ -64,7 +64,7 @@
 
 {* --- last image --- *}
 	<a href="{$url_base}{$lastId}{$same_scale}"
-		class="gallink"{if $imageId eq $lastId} style="display: none;"{/if}>{icon _id='resultset_last' alt="{tr}Last Image{/tr}"}</a>    
+		class="gallink"{if $imageId eq $lastId} style="display: none;"{/if}>{icon _id='resultset_last' alt="{tr}Last Image{/tr}"}</a>
   </div>
 
 {***** when sliding buttons *****}
@@ -89,11 +89,11 @@
 </a>
 {/if}
 </div>
-  
+
 {if !$popup}
   {$smarty.capture.buttons}
 {/if}
-  
+
 {if $popup eq ""}
 	<br><br>
     <div class="table-responsive">
@@ -192,7 +192,7 @@
 		</tr>
 	</table>
     </div>
-{/if}  
+{/if}
 
 </div> {* id="{$rootid}browse_image" *}
 

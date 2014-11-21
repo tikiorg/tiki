@@ -36,7 +36,7 @@
 	{remarksbox type="note" title="{tr}Notice{/tr}" icon="lock"}
 		{tr}The newsletter was sent to {$sent} email addresses{/tr}
 	{/remarksbox}
-	
+
 	{if $errors}
 		{remarksbox type='warning' title="{tr}Errors{/tr}" icon='error'}
 		<table class="formcolor">
@@ -104,7 +104,7 @@
 				{/foreach}
 			</table>
 		</div>
-	{/if}	
+	{/if}
 	<h2>{tr}Preview{/tr}</h2>
 	<h3>{tr}Subject{/tr}</h3>
 	<div class="cbox wikitext">{$subject|escape}</div>
@@ -117,7 +117,7 @@
 		{if $info.datatxt}<div class="cbox wikitext" >{$info.datatxt|escape|nl2br}</div>{/if}
 		{if $txt}<div class="cbox wikitext">{$txt|escape|nl2br}</div>{/if}
 	{/if}
-	
+
 	<h3>{tr}Files{/tr}</h3>
 	<div class="cbox wikitext">
 		{if $info.files|@count gt 0}
@@ -134,7 +134,7 @@
 	</div>
 
 
-	
+
 	</div>
 
 	<div id="sendingArea" style="display:none">
@@ -188,7 +188,7 @@
 		<form class="form-horizontal" action="tiki-send_newsletters.php" method="post" id='editpageform' enctype='multipart/form-data'>
 			<input type="hidden" name="editionId" value="{$info.editionId}">
             <div class="form-group">
-            <div class="col-sm-12">            
+            <div class="col-sm-12">
 			<table class="formcolor" id="newstable">
 				<tr>
 					<td><label for="subject">{tr}Subject:{/tr}</label></td>
@@ -226,7 +226,7 @@
 						</td>
 					</tr>
 				{/if}
-			
+
 				{if $tpls}
 					<tr>
 						<td><label for="usedTpl">{tr}Apply template{/tr}</label></td>
@@ -273,13 +273,13 @@
 						<br>{tr}If autoclipping is enabled, you can also enter "~~~articleclip~~~" which will be replaced with the latest	clip when sending.{/tr}
 						{if !empty($articleClip)}
 						{remarksbox type="warning" title="{tr}Notice{/tr}"}
-							{tr}Be careful not to paste articles that must not be seen by the recipients{/tr} 
+							{tr}Be careful not to paste articles that must not be seen by the recipients{/tr}
 						{/remarksbox}
 						{/if}
 						<textarea id='articlecliptxt' name="articleClip" rows="20" cols="80" readonly="readonly">{$articleClip}</textarea>
 					</td>
-				</tr>				
-				
+				</tr>
+
 				<tr>
 					<td>
 						{tr}Attached Files{/tr} :
@@ -322,7 +322,7 @@
             </div>
 		</form>
 	{/tab}
-	
+
 	{assign var=name value="{tr _0=$cant_drafts}Drafts (%0){/tr}"}
 	{tab name=$name}
 	{* --- tab with drafts --- *}

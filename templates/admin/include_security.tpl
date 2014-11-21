@@ -49,7 +49,7 @@
 			{/if}
 			</div>
 			{preference name=smarty_security}
-			<div class="adminoptionboxchild" id="smarty_security_childcontainer">	
+			<div class="adminoptionboxchild" id="smarty_security_childcontainer">
 				{preference name=smarty_security_functions}
 				{preference name=smarty_security_modifiers}
 				{preference name=smarty_security_dirs}
@@ -57,10 +57,10 @@
 			{preference name=feature_purifier}
 			{preference name=feature_htmlpurifier_output}
 			{preference name=menus_item_names_raw_teaser}
-			<div class="adminoptionboxchild" id="menus_item_names_raw_teaser_childcontainer">	
+			<div class="adminoptionboxchild" id="menus_item_names_raw_teaser_childcontainer">
 				{preference name=menus_item_names_raw}
 			</div>
-			
+
 			{preference name=session_protected}
 			{preference name=login_http_basic}
 
@@ -120,7 +120,7 @@
 			{preference name=feature_wiki_protect_email}
 			{preference name=feature_wiki_ext_rel_nofollow}
 			{preference name=feature_banning}
-			
+
 			{preference name=feature_comments_moderation}
 			{preference name=comments_akismet_filter}
 				<div class="adminoptionboxchild" id="comments_akismet_filter_childcontainer">
@@ -136,7 +136,7 @@
 
 			{preference name=registerKey}
 		{/tab}
-	
+
 		{tab name="{tr}Search results{/tr}"}
             <h2>{tr}Search results{/tr}</h2>
 				{preference name=feature_search_show_forbidden_cat}
@@ -183,11 +183,11 @@
 					{preference name=openpgp_gpg_path}
 					{preference name=openpgp_gpg_signer_passphrase_store}
 					<div class="adminoptionboxchild openpgp_gpg_signer_passphrase_store_childcontainer preferences">
-						{preference name=openpgp_gpg_signer_passphrase}	
+						{preference name=openpgp_gpg_signer_passphrase}
 						<br><em>{tr}If you use preferences option for the signer passphrase, clear the file option just for security{/tr}</em>
 					</div>
 					<div class="adminoptionboxchild openpgp_gpg_signer_passphrase_store_childcontainer file">
-						{preference name=openpgp_gpg_signer_passfile}	
+						{preference name=openpgp_gpg_signer_passfile}
 						<br><em>{tr}If you use file for the signer passphrase, clear the preferences option just for security{/tr}</em>
 					</div>
 					{remarksbox type="tip" title="{tr}Note{/tr}"}
@@ -197,8 +197,8 @@
 			</fieldset>
 
 		{/tab}
-				
-{/tabset}	
+
+{/tabset}
 	<div class="row">
         <div class="form-group col-lg-12 clearfix">
 			<div class="text-center">

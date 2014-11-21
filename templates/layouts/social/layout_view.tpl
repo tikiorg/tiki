@@ -9,7 +9,7 @@
 		{if $prefs.feature_ajax eq 'y'}
 			{include file='tiki-ajax_header.tpl'}
 		{/if}
-		
+
 		<div class="container">
 
 			<div class="row">
@@ -95,7 +95,7 @@
 					{/if}
 					<a class="navbar-brand" href="./">
 						{if $prefs.sitelogo_icon}
-							<img src="{$prefs.sitelogo_icon}" style="max-height: 75%;" /> 
+							<img src="{$prefs.sitelogo_icon}" style="max-height: 75%;" />
 						{/if}
 						{$prefs.sitetitle|escape}</a>
 				</div> {* navbar-header *}

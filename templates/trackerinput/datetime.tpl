@@ -34,7 +34,7 @@
 	{/if}
 {/if}
 {if $field.options_array[0] eq 'dt'}
-	{tr}at{/tr} 
+	{tr}at{/tr}
 {/if}
 {if $field.options_array[0] ne 'd'}
 	{if (isset($field.options_array[3]) and ($field.options_array[3] eq 'blank' or $field.options_array[3] eq 'empty'))or (isset($inExportForm) and $inExportForm eq 'y')}

@@ -62,7 +62,7 @@
 		{jq notonready=true}
 				function addTag(tag) {
 					if (tag.search(/ /) >= 0) tag = '"'+tag+'"';
-					document.getElementById('tagBox').value = document.getElementById('tagBox').value + ' ' + tag;	
+					document.getElementById('tagBox').value = document.getElementById('tagBox').value + ' ' + tag;
 				}
 				function clearTags() {
 					document.getElementById('tagBox').value = '';
@@ -72,7 +72,7 @@
 		<div class="freetaglist table spacer-bottom-15px">
 			{foreach from=$most_popular_tags item=popular_tag}
 				{capture name=tagurl}{if (strstr($popular_tag.tag, ' '))}"{$popular_tag.tag}"{else}{$popular_tag.tag}{/if}{/capture}
-				<a class="freetag_{$popular_tag.size}{if $tag eq $popular_tag.tag|escape} selectedtag{/if}" href="tiki-browse_freetags.php?tag={$smarty.capture.tagurl|escape:'url'}" onclick="javascript:addTag('{$popular_tag.tag|escape:'javascript'}');return false;" ondblclick="location.href=this.href;"{if $popular_tag.color} style="color:{$popular_tag.color}"{/if}>{$popular_tag.tag|escape}</a> 
+				<a class="freetag_{$popular_tag.size}{if $tag eq $popular_tag.tag|escape} selectedtag{/if}" href="tiki-browse_freetags.php?tag={$smarty.capture.tagurl|escape:'url'}" onclick="javascript:addTag('{$popular_tag.tag|escape:'javascript'}');return false;" ondblclick="location.href=this.href;"{if $popular_tag.color} style="color:{$popular_tag.color}"{/if}>{$popular_tag.tag|escape}</a>
 			{/foreach}
 		</div>
 
@@ -94,7 +94,7 @@
 		</div>
 	{/if}
 
-	{assign var=cpt value=0} 
+	{assign var=cpt value=0}
 	{capture name="browse"}
 		{tr}Browse in:{/tr}
 
@@ -109,7 +109,7 @@
 		{else}
 			{assign var=thisbroaden value=''}
 		{/if}
-	
+
 		{button _text="{tr}All{/tr}" _class=$thisclass href="tiki-browse_freetags.php?tag=$tagString$thisbroaden&amp;type="}
 
 		{foreach item=objectType from=$objects_with_freetags}
@@ -121,13 +121,13 @@
 					{else}
 						{assign var=thisclass value=''}
 					{/if}
-				
+
 					{if $broaden eq ''}
 						{assign var=thisbroaden value="&amp;broaden=$broaden"}
 					{else}
 						{assign var=thisbroaden value=''}
 					{/if}
-				
+
 					{assign var=thistype value=$objectType|escape:'url'}
 					{capture name="fl"}{tr}{$feature_label}{/tr}{/capture}
 					{button _text=$smarty.capture.fl _class=$thisclass href="tiki-browse_freetags.php?tag=$tagString$thisbroaden&amp;type=$thistype&amp;sort_mode=$sort_mode"}
@@ -141,13 +141,13 @@
 					{else}
 						{assign var=feature_label value=$objectType|ucwords}
 					{/if}
-				
+
 					{if $type eq $objectType}
 						{assign var=thisclass value='highlight'}
 					{else}
 						{assign var=thisclass value=''}
 					{/if}
-				
+
 					{if $broaden eq ''}
 						{assign var=thisbroaden value="&amp;broaden=$broaden"}
 					{else}

@@ -10,7 +10,7 @@
 				<h2>{$title|escape}</h2>
 				<span class="titleb">{tr}Author:{/tr} {$authorName|escape} {$publishDate|tiki_short_datetime:'Published At:'} ({$reads} {tr}Reads{/tr})</span>
 			</header>
-	
+
 			<div class="articleheading">
 {if $useImage eq 'y'}
 	{if $hasImage eq 'y'}
@@ -29,7 +29,7 @@
 				({$size} {tr}bytes{/tr})
 			</div>
 {/if}
-	
+
 			<div class="articlebody">
 {if $tiki_p_read_article eq 'y'}
 				{$parsed_body}

@@ -36,7 +36,7 @@
 				{/foreach}
 			</select>
 		</div>
-		
+
 		<div class="submit">
 			<input class="btn btn-primary" type="submit" value="{tr}Create Article{/tr}">
 		</div>

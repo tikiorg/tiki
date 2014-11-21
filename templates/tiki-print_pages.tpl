@@ -71,7 +71,7 @@
       {/section}
 {if $pages|@count eq $printpages|@count}
 <option value="" disabled="">{tr}All pages selected{/tr}</option>
-{/if} 
+{/if}
     </select>
 		</td>
 		<td style="vertical-align:middle" width="20%">
@@ -84,7 +84,7 @@
 			<p><input type="submit" class="btn btn-default btn-sm" name="clearpages" title="{tr}Clear{/tr}" value="{tr}Clear{/tr}"></p>
 {/if}
 			</div>
-			
+
 		</td>
 		<td width="40%">
 			<h2>{tr}Selected Pages:{/tr}</h2>
@@ -97,7 +97,7 @@
 		</select>
 		</td>
 	</tr>
-</table>	
+</table>
 </form>
 {if $printpages}
 <div style="float:right;margin-right:20%;">
@@ -135,7 +135,7 @@
     <p class="center-block"><input type="submit" class="btn btn-default btn-sm" name="addstructurepages" value="{tr}Add Pages from Structures{/tr}"></p>
 		</td>
 		<td width="20%"></td>
-		<td width="40%"></td>		
+		<td width="40%"></td>
 	</tr>
   </tbody>
 </table>

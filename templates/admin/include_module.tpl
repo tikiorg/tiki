@@ -45,10 +45,10 @@
 						{preference name=module_zones_bottom}
 				{/if}
 				{preference name=module_file}
-				{preference name=module_zone_available_extra}	
+				{preference name=module_zone_available_extra}
 			</fieldset>
 		</div>
-				
+
 		{remarksbox type="tip" title="{tr}Hint{/tr}"}
 			{tr}If you lose your login module, use tiki-login_scr.php to be able to login!{/tr}
 		{/remarksbox}

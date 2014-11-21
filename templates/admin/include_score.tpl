@@ -13,7 +13,7 @@
 <fieldset class="table">
 	<legend>{tr}Expire score older than certain days{/tr}</legend>
 	{preference name=feature_score_expday visible="always"}
-</fieldset>	
+</fieldset>
 
 <fieldset class="table">
 <legend>{tr}Settings{/tr}</legend>

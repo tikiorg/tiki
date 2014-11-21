@@ -42,7 +42,7 @@
 <a href="tiki-pick_avatar.php?showall=n&amp;avatar={$avatars[im]|escape:"url"}&amp;uselib=use"><img src="{$avatars[im]}" alt=''></a>
 {/section}
 </div>
-{else} 
+{else}
 
 {jq}
 var avatars = new Array();
@@ -58,7 +58,7 @@ function addavt() {
   if(pepe > avatars.length-1) {
     pepe =0;
   }
-  document.getElementById('avtimg').src=avatars[pepe]; 
+  document.getElementById('avtimg').src=avatars[pepe];
   document.getElementById('avatar').value=avatars[pepe];
 }
 
@@ -67,7 +67,7 @@ function subavt() {
   if(pepe < 0 ) {
     pepe=avatars.length-1
   }
-  document.getElementById('avtimg').src=avatars[pepe]; 
+  document.getElementById('avtimg').src=avatars[pepe];
   document.getElementById('avatar').value=avatars[pepe];
 }
 {/jq}

@@ -1,6 +1,6 @@
 {if (!empty($smarty.request.diff_style) or !empty($diff_style)) and $old and $new or $diffdata}
 	{if !isset($translation_mode) or $translation_mode ne 'y'}
-		<h2>{tr}Comparing version {$old.version} with version {$new.version}{/tr}</h2>		
+		<h2>{tr}Comparing version {$old.version} with version {$new.version}{/tr}</h2>
 	{/if}
 <div class="table-responsive">
 	<table class="table normal diff">
@@ -97,7 +97,7 @@
 				</td>
 			</tr>
 		{/if}
-		
+
 		{if $diff_style neq 'unidiff' && $diff_style neq 'sideview'}
 			{if $diffdata}{$diffdata}{else}<tr><td colspan="4">{tr}Versions are identical{/tr}</td></tr>{/if}
 		{/if}

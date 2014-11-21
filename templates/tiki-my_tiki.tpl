@@ -234,18 +234,18 @@
           <div class="table-responsive">
           <table class="table normal">
             <tr>
-              <th>{tr}Forum topics{/tr}</th>              
-              <th>{tr}Date of post{/tr}</th>              
+              <th>{tr}Forum topics{/tr}</th>
+              <th>{tr}Date of post{/tr}</th>
             </tr>
 
             {section name=ix loop=$user_forum_topics}
               <tr>
                 <td class="text">
                   <a class="link" title="{tr}View{/tr}" href="tiki-view_forum_thread.php?comments_parentId={$user_forum_topics[ix].threadId}&amp;forumId={$user_forum_topics[ix].object}">{$user_forum_topics[ix].title}</a>
-                </td>                
+                </td>
                 <td class="date">
                   {$user_forum_topics[ix].commentDate|tiki_short_datetime}
-                </td>  
+                </td>
               </tr>
             {/section}
           </table>
@@ -255,7 +255,7 @@
       </div>
     </div>
   {/if}
-  
+
     {if $prefs.feature_forums eq 'y' && $mytiki_forum_replies eq 'y'}
     <div id="content9" class="content">
       <div class="panel panel-default">
@@ -266,8 +266,8 @@
           <div class="table-responsive">
           <table class="table normal">
             <tr>
-              <th>{tr}Forum replies{/tr}</th>              
-              <th>{tr}Date of post{/tr}</th>              
+              <th>{tr}Forum replies{/tr}</th>
+              <th>{tr}Date of post{/tr}</th>
             </tr>
 
             {section name=ix loop=$user_forum_replies}
@@ -277,7 +277,7 @@
                 </td>
                 <td class="date">
                   {$user_forum_replies[ix].commentDate|tiki_short_datetime}
-                </td>                  
+                </td>
               </tr>
             {/section}
           </table>
@@ -287,7 +287,7 @@
       </div>
     </div>
   {/if}
-  
+
   {if $prefs.feature_blogs eq 'y' && $mytiki_blogs eq 'y'}
     <div id="content6" class="content">
       <div class="panel panel-default">

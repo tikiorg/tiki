@@ -11,8 +11,8 @@
 			{if $maxdesc ge '1'}{$modLastdirSites[ix].description|truncate:$maxdesc:"...":"true"}
 			{else}{$modLastdirSites[ix].description|escape}
 			{/if}
-		{/if}	
-			
+		{/if}
+
 		</li>
 	{/section}
 {/modules_list}

@@ -34,9 +34,9 @@
 						<option value="{$objects[ix].objId|escape}|{$objects[ix].objName}" {if $a_object eq $objects[ix].objId|cat:'|'|cat:$objects[ix].objName}selected="selected"{/if}>{$objects[ix].objName}</option>
 					{/section}
 				</select>
-			</td> 
+			</td>
         </tr>
-        <tr>           
+        <tr>
 			<td>{tr}Theme{/tr}</td>
 			<td>{tr}Option{/tr}</td>
 			<td>&nbsp;</td>
@@ -62,7 +62,7 @@
 			</td>
 		</tr>
 	</table>
-</form> 
+</form>
 
 <h2>{tr}Assigned objects{/tr}</h2>
 
@@ -104,4 +104,4 @@
     </div>
 </form>
 
-{pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links} 
+{pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}

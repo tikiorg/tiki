@@ -23,7 +23,7 @@
 
 	{if $use_ratings eq 'y'}
 		<div class="articleheading">
-			{tr}Rating:{/tr} 
+			{tr}Rating:{/tr}
 			{repeat count=$rating}
 				{icon _id='star' alt="{tr}star{/tr}"}
 			{/repeat}
@@ -59,7 +59,7 @@
 			{/if}
 			{if $useImage eq 'y' and $hasImage eq 'y'}
 				{* display article image *}{$style=''}
-				<img 
+				<img
 					 {*{if $big_image}class="cboxElement"{elseif $isfloat eq 'y'}{$style="margin-right:4px;float:left;"}{else}*}class="articleimage"{*{/if}*}
 					 alt="{$smarty.capture.imgTitle}"
 					 src="article_image.php?image_type={if isset($preview) and $imageIsChanged eq 'y'}preview&amp;id={$previewId}{elseif isset($preview) and $subId}submission&amp;id={$subId}{else}article&amp;id={$articleId}{/if}"
@@ -67,7 +67,7 @@
 					 {if $image_y > 0}{$style=$style|cat:"max-height:"|cat:$image_y|cat:"px;"}{/if} style="{$style}">
 			{elseif $topicId}
 					{if $topics[$topicId].image_size > 0}
-						<img 
+						<img
 							 {if $big_image}class="cboxElement"{*{elseif $isfloat eq 'y'}style="margin-right:4px;float:left;"*}{else}class="articleimage"{/if}
 							 alt="{tr}{$topicName}{/tr}"
 							 src="article_image.php?image_type=topic&amp;id={$topicId}">
@@ -140,7 +140,7 @@
 	{if isset($related_articles)}
 		<div class="related_articles">
 			<h4>{tr}Related content:{/tr}</h4>
-			<ul>	
+			<ul>
 				{foreach from=$related_articles item=related}
 					<li>{self_link articleId=$related.articleId}{$related.name}{/self_link}</li>
 				{/foreach}

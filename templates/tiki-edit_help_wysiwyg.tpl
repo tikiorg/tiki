@@ -1,17 +1,17 @@
 {* $Id$ *}
-{* \brief Show wysiwyg help 
+{* \brief Show wysiwyg help
  * included by tiki-show_help.tpl via smarty_block_add_help() *}
 
 <h3>{tr}Wysiwyg Help{/tr}</h3>
 <div class="help_section">
-{if $prefs.feature_help eq 'y'} 
+{if $prefs.feature_help eq 'y'}
 <p>{tr}For more information, please see{/tr}
 	<a href="{$prefs.helpurl}Wysiwyg+Editor" target="tikihelp" class="tikihelp" title="{tr}Wysiwyg Editor:{/tr} {tr}More help on wysiwyg editing{/tr}">
 		{tr}Wysiwyg Editor{/tr} {icon _id='help' style="vertical-align:middle"}
 	</a>
 </p>
 {/if}
- 
+
 <hr>
 <p>
 	{icon _id="star"} {tr}The WYSIWYG editor in Tiki is <a href="http://ckeditor.com">CKEditor</a>{/tr}</p>

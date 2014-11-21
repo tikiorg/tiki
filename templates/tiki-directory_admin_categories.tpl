@@ -8,11 +8,11 @@
 <form name="path" method="post" action="tiki-directory_admin_categories.php">
   <select name="parent" onchange="javascript:path.submit();">
     <option value="0">{tr}Top{/tr}</option>
-    
+
 {section name=ix loop=$categs}
 
     <option value="{$categs[ix].categId|escape}" {if $parent eq $categs[ix].categId}selected="selected"{/if}>{$categs[ix].path|escape}</option>
-    
+
 {/section}
 
   </select>
@@ -69,13 +69,13 @@
       <td>{tr}Editor group:{/tr}</td>
       <td><select name="editorGroup">
           <option value="">{tr}None{/tr}</option>
-          
+
         {section name=ux loop=$groups}
-        
+
           <option value="{$groups[ux]|escape}" {if $editorGroup eq $groups[ux]}selected="selected"{/if}>{$groups[ux]}</option>
-          
+
         {/section}
-      
+
         </select>
       </td>
     </tr>
@@ -117,4 +117,4 @@
   {/section}
 </table>
 </div>
-{pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links} 
+{pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}

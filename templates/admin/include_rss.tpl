@@ -128,7 +128,7 @@
 				{preference name=feed_forums_showAuthor}
 				{preference name=feed_forums_homepage}
 			</div>
-			
+
 			{preference name=feed_forum}
 			<div class="adminoptionboxchild" id="feed_forum_childcontainer">
 				<a href="tiki-forums.php" title="{tr}Feed for individual forums{/tr}"> {icon _id=feed}</a>
@@ -159,7 +159,7 @@
 				{preference name=feed_calendar_showAuthor}
 				{preference name=feed_calendar_homepage}
 			</div>
-			
+
 			{preference name=feed_directories}
 			<div class="adminoptionboxchild" id="feed_directories_childcontainer">
 				<a href="tiki-directories_rss.php" title="{tr}Feed for directories{/tr}"> {icon _id=feed}</a>

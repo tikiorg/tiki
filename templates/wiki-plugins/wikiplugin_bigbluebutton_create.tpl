@@ -1,4 +1,4 @@
-{tr}Meeting ID:{/tr} {$bbb_meeting|escape} 
+{tr}Meeting ID:{/tr} {$bbb_meeting|escape}
 {permission type=bigbluebutton object=$bbb_meeting name=tiki_p_assign_perm_bigbluebutton}
 	{permission_link mode=button type=bigbluebutton id=$bbb_meeting title=$bbb_meeting}
 {/permission}

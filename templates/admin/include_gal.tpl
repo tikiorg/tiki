@@ -274,8 +274,8 @@
 			<tr>
 				<td colspan="2" class="input_submit_container"><input type="submit" class="btn btn-default btn-sm" name="imagegallistprefs" value="{tr}Change configuration{/tr}" /></td>
 			</tr>
-		</table>	
-	</form>	
+		</table>
+	</form>
 </fieldset>
 
 <fieldset class="table">

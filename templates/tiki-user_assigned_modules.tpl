@@ -46,7 +46,7 @@
 									</a>
 								{/if}
 								{if $modules_l[ix].name ne 'application_menu' and $modules_l[ix].name ne 'login_box' and $modules_l[ix].type ne 'P'}
-									<a class="link" href="tiki-user_assigned_modules.php?unassign={$modules_l[ix].moduleId}">{icon _id='cross' alt="{tr}Unassign{/tr}"}</a> 
+									<a class="link" href="tiki-user_assigned_modules.php?unassign={$modules_l[ix].moduleId}">{icon _id='cross' alt="{tr}Unassign{/tr}"}</a>
 								{/if}
 							</td>
 						</tr>
@@ -77,7 +77,7 @@
 									</a>
 								{/if}
 								{if $modules_r[ix].name ne 'application_menu' and $modules_r[ix].name ne 'login_box' and $modules_r[ix].type ne 'P'}
-									<a class="link" href="tiki-user_assigned_modules.php?unassign={$modules_r[ix].moduleId}">{icon _id='cross' alt="{tr}Unassign{/tr}"}</a> 
+									<a class="link" href="tiki-user_assigned_modules.php?unassign={$modules_r[ix].moduleId}">{icon _id='cross' alt="{tr}Unassign{/tr}"}</a>
 								{/if}
 							</td>
 						</tr>

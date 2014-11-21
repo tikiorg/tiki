@@ -63,13 +63,13 @@
 							</div>
 						{/if}
 					</div>
-				
+
 				</div>
 				<div class="wikitext" style="border: solid 1px #ccc; margin: 1em auto; padding: 1em; text-align: left; width: 90%;">
 					<p>Things to check:</p>
 					<ol class="fancylist">
 						<li><p>Is your database up and running?</p></li>
-						<li><p>Is your database corrupt? Please see <a target="_blank" href="http://doc.tiki.org/Repair+Database">how to repair your database</a></p></li>					
+						<li><p>Is your database corrupt? Please see <a target="_blank" href="http://doc.tiki.org/Repair+Database">how to repair your database</a></p></li>
 						<li><p>Are your database credentials accurate? (username, database name, etc in db/local.php)</p></li>
 						{if $where neq 'connection'}
 							<li><p>Did you complete the <a href="tiki-install.php">Tiki Installer?</a></p></li>
@@ -91,7 +91,7 @@
 					<p>Things to check:</p>
 					<ol class="fancylist">
 						<li><p>Did you complete the <a href="tiki-install.php">Tiki Installer?</a></p></li>
-						<li><p>Is your database corrupt? Please see <a target="_blank" href="http://doc.tiki.org/Repair+Database">how to repair your database</a></p></li>					
+						<li><p>Is your database corrupt? Please see <a target="_blank" href="http://doc.tiki.org/Repair+Database">how to repair your database</a></p></li>
 						<li><p>Are your database credentials accurate? (username, database name, etc in db/local.php)</p></li>
 					</ol>
 				</div>

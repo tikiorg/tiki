@@ -91,7 +91,7 @@
 {if $prefs.blog_list_visits eq 'y'}
 	<td class="integer">&nbsp;{$listpages[changes].hits}&nbsp;</td>
 {/if}
-{if $prefs.blog_list_activity eq 'y'}	
+{if $prefs.blog_list_activity eq 'y'}
 	<td class="integer">&nbsp;{$listpages[changes].activity}&nbsp;</td>
 {/if}
 <td class="action">
@@ -118,7 +118,7 @@
                         &nbsp;&nbsp;<a class="icon" href="tiki-list_blogs.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$listpages[changes].blogId}" title="{tr}Remove{/tr}">{icon name="delete"}</a>
                 {/if}
         {/if}
-	
+
 </td>
 </tr>
 {sectionelse}

@@ -13,7 +13,7 @@
 	{/if}
 	{if $p.detail}
 		<br/>{$p.detail|simplewiki}
-	{/if}		
+	{/if}
 	{if $p.hint}
 		<br/><em>{$p.hint|simplewiki}</em>
 	{/if}

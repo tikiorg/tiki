@@ -41,7 +41,7 @@
 				</div>
 				</td>
 			</tr>
-		</table>							
+		</table>
 	</fieldset>
 
 	<fieldset>
@@ -52,7 +52,7 @@
 		{preference name=article_user_rating}
 		<div class="adminoptionboxchild" id="article_user_rating_childcontainer">
 			{preference name=article_user_rating_options}
-		</div> 
+		</div>
 				<ul>
 					<li>{tr}You also need to set:{/tr} "{tr}Admin Types{/tr} > <strong>{tr}Comment can rate article{/tr}</strong>"</li>
 				</ul>
@@ -67,7 +67,7 @@
 				</div>
 				</td>
 			</tr>
-		</table>							
+		</table>
 	</fieldset>
 
 	<fieldset>
@@ -93,17 +93,17 @@
 				</div>
 				</td>
 			</tr>
-		</table>					
+		</table>
 	</fieldset>
 
 	<fieldset>
 		<legend>{tr}Forums{/tr}</legend>
 		<table>
 			<tr>
-				<td style="width:49%">{tr}You need to:{/tr} 
+				<td style="width:49%">{tr}You need to:{/tr}
 				<ul>
 					<li>{tr}Create or Edit a forum and enable:{/tr} "<strong>{tr}Posts can be rated{/tr}</strong>"</li>
-					<li>{tr}While editing the forum, choose whether to show the "User information display > <strong>Topic Rating</strong>" by each user{/tr}</li>					
+					<li>{tr}While editing the forum, choose whether to show the "User information display > <strong>Topic Rating</strong>" by each user{/tr}</li>
 					<li>{tr}Set the rating options at{/tr} "{tr}Configuration Panels{/tr}" > {tr}Ratings{/tr}" > "{tr}Comments{/tr}" > "{tr}Simple wiki comment ratings{/tr}" > "<strong>{tr}Wiki rating options:{/tr}</strong>" ({tr}see above{/tr})</li>
 				</ul>
 				</td>
@@ -117,7 +117,7 @@
 				</div>
 				</td>
 			</tr>
-		</table>					
+		</table>
 	</fieldset>
 
 	<fieldset>
@@ -156,7 +156,7 @@
 		<legend>{tr}Advanced{/tr}</legend>
 		{preference name=rating_advanced}
 	</fieldset>
-	
+
 	<div class="row">
         <div class="form-group col-lg-12 clearfix">
             <div class="text-center">

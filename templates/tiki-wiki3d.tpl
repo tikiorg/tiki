@@ -11,12 +11,12 @@
       <param name="navigationDepth" value="{$prefs.wiki_3d_navigation_depth}">
       <param name="feedAnimationInterval" value="{$prefs.wiki_3d_feed_animation_interval}">
       <param name="controlWindowName" value="tiki">
-      
+
       <param name="showArcaLogo" value="false">
       <param name="showMorcegoLogo" value="false">
 
       <param name="loadPageOnCenter" value="{$prefs.wiki_3d_autoload|default:"true"}">
-      
+
       <param name="cameraDistance" value="{$prefs.wiki_3d_camera_distance|default:"200"}">
       <param name="adjustCameraPosition" value="{$prefs.wiki_3d_adjust_camera|default:"true"}">
 

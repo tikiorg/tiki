@@ -1,5 +1,5 @@
 {* $Id$ *}
-{jq}		
+{jq}
 	$("#genPass span").click(function () {
 		var passcodeId = $("input[name=registerPasscode]").attr('id');
 		genPass(passcodeId);
@@ -33,7 +33,7 @@
             <h2>{tr}General Preferences{/tr}</h2>
 			{preference name=auth_method}
 			{preference name=feature_intertiki}
-			
+
 			<fieldset>
 				<legend>{tr}Registration{/tr} &amp; {tr}Log in{/tr}</legend>
 				{preference name=allowRegister}
@@ -86,7 +86,7 @@
 				{preference name=feature_userWizardDifferentUsersFieldIds}
 					<div class="adminoptionboxchild" id="feature_userWizardDifferentUsersFieldIds_childcontainer">
 							{preference name=feature_userWizardUsersFieldIds}
-					</div>				
+					</div>
 				{preference name=user_register_prettytracker}
 					<div class="adminoptionboxchild" id="user_register_prettytracker_childcontainer">
 					{preference name=user_register_prettytracker_tpl}
@@ -129,7 +129,7 @@
 				<div class="adminoptionboxchild rememberme_childcontainer all always">
 					{preference name=remembertime}
 				</div>
-	
+
 				<fieldset>
 					<legend>{tr}Cookies{/tr}</legend>
 					{preference name=cookie_name}
@@ -151,7 +151,7 @@
 				</fieldset>
 				{preference name=feature_banning}
 			</fieldset>
-	
+
 			<fieldset>
 				<legend>{tr}Username{/tr}</legend>
 				{preference name=login_is_email mode=invert}
@@ -163,7 +163,7 @@
 				</div>
 				{preference name=username_pattern}
 			</fieldset>
-	
+
 			<fieldset>
 				<legend>{tr}Password{/tr}</legend>
 				{if $prefs.feature_clear_passwords eq 'y'} {* deprecated *}
@@ -172,7 +172,7 @@
 						{remarksbox type='warning' title='Security risk'}{tr}Store passwords in plain text is activated. You should never set this unless you know what you are doing.{/tr}{/remarksbox}
 					</div>
 				{/if}
-	
+
 				{preference name=forgotPass}
 				{preference name=feature_crypt_passwords}
 				{preference name=change_password}
@@ -197,7 +197,7 @@
 						<div>{icon _id=information} {tr}You must change the Authentication Method to LDAP for these changes to take effect{/tr}.</div>
 					</div>
 				{/if}
-					
+
 				{preference name=ldap_create_user_tiki}
 				{preference name=ldap_create_user_ldap}
 				{preference name=ldap_skip_admin}
@@ -297,7 +297,7 @@
 			<input type="hidden" name="auth_pam" />
 			<fieldset>
 				<legend>{tr}PAM{/tr} {help url="AuthPAM" desc="{tr}PAM{/tr}"}</legend>
-	
+
 				{if $prefs.auth_method ne 'pam'}
 					<div class="alert alert-warning">
 						<div>
@@ -305,7 +305,7 @@
 						</div>
 					</div>
 				{/if}
-					
+
 				{preference name=pam_create_user_tiki}
 				{preference name=pam_skip_admin}
 				{preference name=pam_service}

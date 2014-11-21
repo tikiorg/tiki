@@ -37,7 +37,7 @@
         </div>
     </div>
 	{tabset name="fgal_admin"}
-	
+
 		{tab name="{tr}General Settings{/tr}"}
             <h2>{tr}General Settings{/tr}</h2>
 
@@ -45,7 +45,7 @@
 				<legend>{tr}Activate the feature{/tr}</legend>
 				{preference name=feature_file_galleries visible="always"}
 			</fieldset>
-			
+
 			{preference name=home_file_gallery}
 			{preference name='fgal_use_db'}
 			<div class="adminoptionboxchild fgal_use_db_childcontainer n">
@@ -92,7 +92,7 @@
 				{preference name='feature_use_fgal_for_user_files'}
 				{preference name='feature_use_fgal_for_wiki_attachments'}
 				{preference name='feature_file_galleries_save_draft'}
-				{preference name='feature_file_galleries_templates'}				
+				{preference name='feature_file_galleries_templates'}
 				{preference name='fgal_upload_progressbar'}
 				{preference name='fgal_tracker_existing_search'}
 
@@ -171,7 +171,7 @@
 							<input type="radio" id="fgal_sortdirection2" name="fgal_sortdirection" value="asc" {if $fgal_sortdirection == 'asc'}checked="checked"{/if} />
 							<label for="fgal_sortdirection2">{tr}Ascending{/tr}</label>
 						</div>
-					</div>	
+					</div>
 				</div>
 			</div>
 			{preference name='fgal_quota_show'}

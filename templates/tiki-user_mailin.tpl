@@ -28,7 +28,7 @@ function confirm_delete()
 <br>
 {/if}
 <p>
-Configure how your mailed-in wiki pages are to be linked / organized. 
+Configure how your mailed-in wiki pages are to be linked / organized.
 </p>
 {tabset name="user_mailin"}
 {tab name="{tr}Structure Routing{/tr}"}
@@ -51,7 +51,7 @@ Configure how your mailed-in wiki pages are to be linked / organized.
 		<tr>
 		<td><input type="text" name="mailinSubjPatt{$smarty.foreach.mstruct.iteration}" size="25" value="{$ustruct.subj_pattern}" onchange="structSelChanged({$smarty.foreach.mstruct.iteration});"/></td>
 		<td><input type="text" name="mailinBodyPatt{$smarty.foreach.mstruct.iteration}" size="25" value="{$ustruct.body_pattern}" onchange="structSelChanged({$smarty.foreach.mstruct.iteration});"/></td>
-		<td>		
+		<td>
 			<select name="mailinStruct{$smarty.foreach.mstruct.iteration}" onchange="structSelChanged({$smarty.foreach.mstruct.iteration});">
 			{foreach from=$structs item=struct}
 				<option value="{$struct.structure_id}" {if $struct.structure_id eq $ustruct.structure_id}selected='selected'"{/if}">{$struct.pageName}</option>

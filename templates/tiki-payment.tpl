@@ -12,10 +12,10 @@
 				<p>{tr}Overdue{/tr}</p>
 				{include file='tiki-payment-list.tpl' payments=$overdue cancel=1}
 			{/if}
-	
+
 			<p>{tr}Outstanding{/tr}</p>
 			{include file='tiki-payment-list.tpl' payments=$outstanding cancel=1}
-	
+
 			{if $authorized.data}
 			<p>{tr}Authorized{/tr}</p>
 			{include file='tiki-payment-list.tpl' payments=$authorized cancel=1}
@@ -61,7 +61,7 @@
 					<input type="text" id="payable" class="text-right" name="payable" value="{$prefs.payment_default_delay|escape}">
 					{tr}days{/tr}
 				</fieldset>
-				
+
 				<p><input type="submit" class="btn btn-default btn-sm" name="request" value="{tr}Request{/tr}"></p>
 			</form>
 		{/tab}

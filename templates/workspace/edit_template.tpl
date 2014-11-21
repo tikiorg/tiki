@@ -93,7 +93,7 @@
 				<a class="add-page" href="">{tr}Add page{/tr}</a>
 			</li>
 		</ul>
-		
+
 		<div class="submit text-center">
 			<input type="submit" class="btn btn-primary" value="{tr}Save{/tr}"/>
 		</div>

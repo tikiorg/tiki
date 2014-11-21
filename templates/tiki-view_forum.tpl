@@ -209,7 +209,7 @@
 					    </div>
 					</div>
 				{/if}
-			
+
 				{if $prefs.feature_contribution eq 'y'}
 					{include file='contribution.tpl'}
 				{/if}
@@ -307,7 +307,7 @@
 				{if $prefs.feature_antibot eq 'y'}
 					{include file='antibot.tpl' tr_style="formcolor"}
 				{/if}
- 
+
 				{if $prefs.feature_freetags eq 'y' and $tiki_p_freetags_tag eq 'y'}
 					{include file='freetag.tpl'}
 				{/if}
@@ -384,7 +384,7 @@
 			<tr>
 				<th colspan='18'>{tr}Moderator Actions{/tr}</th>
 			</tr>
-			<tr class="odd">	
+			<tr class="odd">
 				<td class="action" colspan="3">
 					{if $all_forums|@count > 1}
 						<input type="image" name="movesel" src="img/icons/task_submitted.png" alt="{tr}Move{/tr}" title="{tr}Move Selected Topics{/tr}">
@@ -482,7 +482,7 @@
 			{/if}
 			<th>{tr}Actions{/tr}</th>
 		</tr>
-		
+
 
 		{section name=ix loop=$comments_coms}
 			{if $userinfo && $comments_coms[ix].lastPost > $userinfo.lastLogin}
@@ -495,7 +495,7 @@
 					<td class="checkbox-cell">
 						<input type="checkbox" name="forumtopic[]" value="{$comments_coms[ix].threadId|escape}" {if isset($smarty.request.forumtopic) and in_array($comments_coms[ix].threadId,$smarty.request.forumtopic)}checked="checked"{/if}>
 					</td>
-				{/if}	
+				{/if}
 				<td class="icon">
 					{if $newtopic neq ''}
 						{assign var=nticon value=$newtopic}
@@ -589,7 +589,7 @@
 						{$comments_coms[ix].userName|avatarize}
 					</td>
 				{/if}
-				
+
 				{if $forum_info.att_list_nb eq 'y'}
 					<td style="text-align:center;">
 						{if !empty($comments_coms[ix].nb_attachments)}<a href="tiki-view_forum_thread.php?comments_parentId={$comments_coms[ix].threadId}&amp;view_atts=y#attachments" title="{tr}Attachments{/tr}">{/if}
@@ -597,7 +597,7 @@
 						{if !empty($comments_coms[ix].nb_attachments)}</a>{/if}
 					</td>
 				{/if}
-				
+
 				{if $prefs.feature_multilingual eq 'y'}
 					<td>
 						{$forum_info.forumLanguage}
@@ -607,7 +607,7 @@
 				{if $prefs.forum_category_selector_in_list eq 'y'}
 					<td>{categoryselector type="forum post" object=$comments_coms[ix].threadId categories=$prefs.forum_available_categories}</td>
 				{/if}
-				
+
 				<td class="text" nowrap="nowrap">
 					{if (isset($comments_coms[ix].attachments) and count($comments_coms[ix].attachments))
 						or $tiki_p_admin_forum eq 'y'}
@@ -673,7 +673,7 @@
         <div class="panel-heading filter-panel-heading">
             <h4 class="panel-title">
                 <a data-toggle="collapse" href="#filterCollapse" class="collapsed">
-                    Filter Posts 
+                    Filter Posts
                 </a>
             </h4>
         </div>

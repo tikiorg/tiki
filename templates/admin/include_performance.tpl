@@ -55,7 +55,7 @@
 				</div>
 			</fieldset>
 		{/tab}
-		
+
 		{tab name="{tr}Bytecode Cache{/tr}"}
             <h2>{tr}Bytecode Cache{/tr}</h2>
 			{if $opcode_cache}
@@ -114,7 +114,7 @@
 				{tr}Bytecode cache is not used. Using a bytecode cache (OPcache, APC, XCache, WinCache) is highly recommended for production environments.{/tr}
 			{/if}
 		{/tab}
-		
+
 		{tab name="{tr}Wiki{/tr}"}
             <h2>{tr}Wiki{/tr}</h2>
 			{preference name=wiki_cache}
@@ -129,7 +129,7 @@
 				{preference name=log_sql_perf_min}
 			</div>
 		{/tab}
-		
+
 		{tab name="{tr}Memcache{/tr}"}
             <h2>{tr}Memcache{/tr}</h2>
 			{preference name=memcache_enabled}
@@ -178,16 +178,16 @@
 				{preference name=newsletter_batch_size}
 			</div>
 		{/tab}
-		
+
 		{tab name="{tr}Time and memory limits{/tr}"}
             <h2>{tr}Time and memory limits{/tr}</h2>
 				{preference name=allocate_memory_tracker_export_items}
 				{preference name=allocate_time_tracker_export_items}
 				{preference name=allocate_time_tracker_clear_items}
 				{preference name="allocate_memory_unified_rebuild"}
-				{preference name="allocate_time_unified_rebuild"}				
-		{/tab}		
-		
+				{preference name="allocate_time_unified_rebuild"}
+		{/tab}
+
 {/tabset}
 	<div class="row">
         <div class="form-group col-lg-12 clearfix">

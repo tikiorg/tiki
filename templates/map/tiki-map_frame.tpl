@@ -11,13 +11,13 @@
    <input type="hidden" name="mapfile" value="{$mapfile}">
 		<table border="0" cellpadding="0" cellspacing="0" >
 		  <tr><td align="center">
-		      	<input type="image" id="map" src="{$image_url}" 
-			{if $xsize != ""}width="{$xsize}"{/if} 
-			{if $ysize != ""}height="{$ysize}"{/if} 
-		  alt="{tr}click on the map to zoom or pan, do not drag{/tr}" 
+		      	<input type="image" id="map" src="{$image_url}"
+			{if $xsize != ""}width="{$xsize}"{/if}
+			{if $ysize != ""}height="{$ysize}"{/if}
+		  alt="{tr}click on the map to zoom or pan, do not drag{/tr}"
 		  title="{tr}click on the map to zoom or pan, do not drag{/tr}">
 		  </td></tr>
-		  <tr><td align="center">	
+		  <tr><td align="center">
 			{if $zoom eq -2}
 			<img id="imgzoom2" src="img/icons/zoom-2.gif" onclick="zoomin(0)" alt="-x2" title="{tr}Zoom out x2{/tr}" border="1">
 			{else}
@@ -55,5 +55,5 @@
 			{/if}
 			{/section}
 		</td></tr>
-		</table>	  
+		</table>
 </form>

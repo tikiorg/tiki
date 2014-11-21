@@ -13,8 +13,8 @@
 		{if !($tracker_info.doNotShowEmptyField eq 'y' and empty($cur_field.value) and empty($cur_field.cat) and empty($cur_field.links) and
 				$cur_field.type ne 's' and $cur_field.type ne 'STARS' and $cur_field.type ne 'h' and $cur_field.type ne 'l' and $cur_field.type ne 'W') and
 				!($cur_field.options_array[0] eq 'password' and $cur_field.type eq 'p')}
-		
-			{if $cur_field.type eq 'h'} 
+
+			{if $cur_field.type eq 'h'}
 				</dl>
 				<h3>{$cur_field.name|tra|escape}</h3>
 				{if $cur_field.description}
@@ -26,7 +26,7 @@
 				($cur_field.type eq 'a' and $cur_field.options_array[8] eq '0') or
 				($cur_field.type eq 'n' and $cur_field.options_array[0] eq '0') or
 				($cur_field.type eq 'b' and $cur_field.options_array[0] eq '0')
-			} 
+			}
 				<dt>{$cur_field.name|tra|escape}</dt>
 				<dd>{trackeroutput field=$cur_field item=$item_info showlinks=n list_mode=n}</dd>
 			{else}

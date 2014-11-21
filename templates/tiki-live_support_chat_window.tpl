@@ -2,7 +2,7 @@
 
 <html>
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"> 
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <link rel="StyleSheet"  href="styles/{$prefs.style}" type="text/css">
     <title>Live support:{$role} window</title>
     {literal}
@@ -78,7 +78,7 @@
 				<td  style="text-align:center;" valign="top">
 					<b>{tr}Operator:{/tr}</b><br>
 					{$req_info.operator|avatarize}<br>
-					<b>{$req_info.operator}</b>				
+					<b>{$req_info.operator}</b>
 				</td>
 			</tr>
 		</table>
@@ -96,4 +96,4 @@
         event_poll();
     </script>
   </body>
-</html>  
+</html>

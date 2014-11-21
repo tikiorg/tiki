@@ -7,11 +7,11 @@
 {* Display the path adding manually the top category id=0 *}
 <form name="path" method="post" action="tiki-directory_admin_related.php">
   <select name="parent" onchange="javascript:path.submit();">
-    
+
 {section name=ix loop=$all_categs}
 
     <option value="{$all_categs[ix].categId|escape}" {if $parent eq $all_categs[ix].categId}selected="selected"{/if}>{$all_categs[ix].path}</option>
-    
+
 {/section}
 
   </select>
@@ -25,13 +25,13 @@
     <tr>
       <td>{tr}Directory Category:{/tr}</td>
       <td><select name="categId">
-          
+
     {section name=ix loop=$categs}
-      
+
           <option value="{$categs[ix].categId|escape}">{$categs[ix].path}</option>
-          
+
     {/section}
-    
+
         </select>
       </td>
     </tr>
@@ -74,4 +74,4 @@
     {/section}
   </table>
 </form>
-{pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links} 
+{pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}

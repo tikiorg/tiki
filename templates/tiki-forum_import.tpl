@@ -8,7 +8,7 @@
 </div>
 {*
  * If this is a new import, start by selecting the import method and we'll
- * go from there. 
+ * go from there.
  *}
 {if $step eq 'new'}
 {* This part of the tool is not ready yet, so let's hide it for now...
@@ -22,7 +22,7 @@
 	<table class="formcolor">
 		<tr><td>{tr}Forum Type:{/tr}</td><td>
 		<select name="forum">
-		
+
 
 		{section name=ftype loop=$fi_types}
 		<option value="{$fi_types[ftype]}">{$fi_types[ftype]}</option>
@@ -91,7 +91,7 @@ End hiding of unfinished section... *}
 	<table class="formcolor">
 		<tr><td>{tr}Forum Type:{/tr}</td><td>
 		<select name="ftype">
-		
+
 		{* List all forums that are supported. *}
 
 		{section name=ftype loop=$fi_types}

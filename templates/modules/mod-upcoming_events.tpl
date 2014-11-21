@@ -17,7 +17,7 @@
 				{if $modUpcomingEvents[ix].allday}
 					<abbr class="dtstart" title="{$modUpcomingEvents[ix].start|isodate}">{$modUpcomingEvents[ix].start|tiki_short_date}</abbr>
 				{else}
-					<abbr class="dtstart" title="{$modUpcomingEvents[ix].start|isodate}">{$modUpcomingEvents[ix].start|tiki_date_format:$date_format}</abbr>	
+					<abbr class="dtstart" title="{$modUpcomingEvents[ix].start|isodate}">{$modUpcomingEvents[ix].start|tiki_date_format:$date_format}</abbr>
 					{if $showEnd eq 'y'}
 						-
 						<abbr class="dtend" title="{$modUpcomingEvents[ix].end|isodate}">{if $module_params.date_format}{$modUpcomingEvents[ix].end|tiki_date_format:$date_format}{elseif $modUpcomingEvents[ix].start|tiki_short_date ne $modUpcomingEvents[ix].end|tiki_short_date}{$modUpcomingEvents[ix].end|tiki_short_datetime}{else}{$modUpcomingEvents[ix].end|tiki_short_time}{/if}</abbr>

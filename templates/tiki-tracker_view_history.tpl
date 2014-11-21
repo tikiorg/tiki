@@ -31,7 +31,7 @@
 	<th>{tr}Field{/tr}</th>
 	<th>{tr}Old{/tr}</th>
 	<th>{tr}New{/tr}</th>
-</tr> 
+</tr>
 
 {foreach from=$history item=hist}
 	{if $hist.value neq $hist.new}

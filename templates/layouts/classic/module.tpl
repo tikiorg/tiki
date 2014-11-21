@@ -57,7 +57,7 @@
 {if $module_nobox neq 'y'}
 		</div>
 		{if $user and $prefs.user_assigned_modules == 'y' and $prefs.feature_modulecontrols eq 'y'}
-		<div class="panel-footer">		
+		<div class="panel-footer">
 			<span class="modcontrols">
 				<a title="{tr}Move module up{/tr}" href="{$current_location|escape}{$mpchar|escape}mc_up={$module_name}">
 					{icon _id="resultset_up" alt="{tr}Up{/tr}"}
@@ -72,7 +72,7 @@
 					{icon _id="cross" alt="{tr}Unassign{/tr}"}
 				 </a>
 			</span>
-		</div> 
+		</div>
 		{/if}
 	</div>
 	{if $prefs.feature_layoutshadows eq 'y'}{$prefs.box_shadow_end}</div>{/if}

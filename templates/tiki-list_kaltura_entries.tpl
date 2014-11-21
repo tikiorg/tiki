@@ -15,7 +15,7 @@
 </div>
 
 {if $view ne "browse"}
-<form action='tiki-list_kaltura_entries.php?list={if $entryType eq "mix"}mix{else}media{/if}' method="post"{if $entryType ne "mix"} id="videoAction"{/if}>	
+<form action='tiki-list_kaltura_entries.php?list={if $entryType eq "mix"}mix{else}media{/if}' method="post"{if $entryType ne "mix"} id="videoAction"{/if}>
 	{capture assign=btnlink_list}{if $entryType eq "mix"}media{else}mix{/if}{/capture}
 	{if $prefs.kaltura_legacyremix == 'y' || $entryType eq "mix"}
 	{capture assign=btnlink_text}{if $entryType eq "mix"}{tr}Browse Media{/tr}{else}{tr}Browse Remixes{/tr}{/if}{/capture}
@@ -29,7 +29,7 @@
 {else}
 	{include file="tiki-list_kaltura_browse_entries.tpl"}
 {/if}
-	
+
 {if $entryType ne "mix"}
 	{jq}
 $("#videoAction").submit(function () {

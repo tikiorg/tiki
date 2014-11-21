@@ -18,7 +18,7 @@
 
 {if $preview}
 	<h2>{tr}Preview{/tr}</h2>
-	
+
 	{include file='article.tpl'}
 {/if}
 
@@ -95,7 +95,7 @@
 								{remarksbox type=tip title="{tr}Translations{/tr}"}
 									<ul>
 										<li>
-										{section loop=$translations name=t}						
+										{section loop=$translations name=t}
 											{if $articleId != $translations[t].objId}
 												{$translations[t].lang|escape}: <a href="tiki-edit_article.php?articleId={$translations[t].objId|escape}">{$translations[t].objName|escape}</a><br>
 												{/if}
@@ -230,7 +230,7 @@
 				<div class="form-group">
 					<label for="image_x" class="control-label col-sm-2">{tr}Width{/tr}</label>
 					<div class="col-sm-10">
-						<input type="text" class="form-control" name="image_x"{if $image_x > 0} value="{$image_x|escape}"{/if}> 
+						<input type="text" class="form-control" name="image_x"{if $image_x > 0} value="{$image_x|escape}"{/if}>
 						<div class="help-block">{tr}pixels{/tr}</div>
 					</div>
 				</div>
@@ -248,7 +248,7 @@
 				<div class="form-group">
 					<label for="list_image_x" class="control-label col-sm-2">{tr}Width{/tr}</label>
 					<div class="col-sm-10">
-						<input type="text" class="form-control" name="list_image_x"{if $list_image_x > 0} value="{$list_image_x|escape}"{/if}> 
+						<input type="text" class="form-control" name="list_image_x"{if $list_image_x > 0} value="{$list_image_x|escape}"{/if}>
 						<div class="help-block">{tr}pixels{/tr}</div>
 					</div>
 				</div>
@@ -333,16 +333,16 @@
 				</div>
 			{/if}
 
-		
+
 			{if $prefs.feature_cms_emails eq 'y'}
 				<div class="form-group">
 					<label for="emails">{tr}Emails to be notified (separated with commas){/tr}</label>
 					<div>
 						<input type="text" name="emails" value="{$emails|escape}" size="60" class="form-control">
 						{if !empty($userEmail) and $userEmail ne $prefs.sender_email}
-							{tr}From:{/tr} 
+							{tr}From:{/tr}
 							<label>
-								<input type="radio" name="from" value="{$userEmail|escape}"{if empty($from) or $from eq $userEmail} checked="checked"{/if}> 
+								<input type="radio" name="from" value="{$userEmail|escape}"{if empty($from) or $from eq $userEmail} checked="checked"{/if}>
 								{$userEmail|escape}
 							</label>
 							<label>

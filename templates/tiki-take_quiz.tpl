@@ -13,13 +13,13 @@ var itid;
 function settimeleft() {
   document.getElementById('timeleft').value -= 1;
   if(document.getElementById('timeleft').value<1) {
-    window.clearInterval(itid); 
+    window.clearInterval(itid);
     document.aform.submit();
   }
   document.getElementById('minleft').value = Math.floor(document.getElementById('timeleft').value/60);
-  document.getElementById('secleft').value = document.getElementById('timeleft').value%60; 
+  document.getElementById('secleft').value = document.getElementById('timeleft').value%60;
 }
-itid = window.setInterval('settimeleft();',1000); 
+itid = window.setInterval('settimeleft();',1000);
 settimeleft(itid);
 {/jq}
 {/if}
@@ -35,14 +35,14 @@ settimeleft(itid);
   {section name=jx loop=$questions[ix].options}
   <input type="radio" value="{$questions[ix].options[jx].optionId|escape}" name="question_{$questions[ix].questionId}">{$questions[ix].options[jx].optionText|escape}<br>
   {/section}
-</div>  
+</div>
 {if $questions[ix].type eq "f"}
 <br>
 <div class="quizupload">
 Supporting Documentation: <input name="question_upload_{$questions[ix].questionId}" type="file">
 </div>
 {/if}
-</div>  
+</div>
 {/section}
 <input type="submit" class="btn btn-default btn-sm" value="{tr}Send Answers{/tr}" name="ans">
 {/if}

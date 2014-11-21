@@ -10,7 +10,7 @@
 		{remarksbox type="tip" title="{tr}Tip{/tr}"}
 		{tr}Mouse over the icons to know more about the features and preferences that are new for you{/tr}.
 		<a href="http://doc.tiki.org/Wizards" target="tikihelp" class="tikihelp" style="float:right" title="{tr}Help icon:{/tr}
-			{tr}You will get more information about the features and preferences whenever this icon is available and you pass your mouse over it{/tr}. 
+			{tr}You will get more information about the features and preferences whenever this icon is available and you pass your mouse over it{/tr}.
 			<br/><br/>{tr}Moreover, if you click on it, you'll be directed in a new window to the corresponding documentation page for further information on that feature or topic{/tr}.">
 			{icon name="help"}
 		</a>
@@ -26,7 +26,7 @@
         <img class="pull-left" src="img/icons/large/wizard_profiles48x48.png" alt="{tr}Configuration Profiles Wizard{/tr}" title="{tr}Configuration Profiles Wizard{/tr}" />
         <div class="media-body">
             <p>{tr}You may start by applying some of our configuration templates through the <b>Configuration Profiles Wizard</b>{/tr}. {tr}They are like the <b>Macros</b> from many computer languages{/tr}.
-				<a href="http://doc.tiki.org/Profiles+Wizard" target="tikihelp" class="tikihelp" title="{tr}Configuration Profiles:{/tr} 
+				<a href="http://doc.tiki.org/Profiles+Wizard" target="tikihelp" class="tikihelp" title="{tr}Configuration Profiles:{/tr}
                 {tr}Each of these provides a shrink-wrapped solution that meets most of the needs of a particular kind of community or site (Personal Blog space, Company Intranet, ...) or that extends basic setup with extra features configured for you{/tr}.</p>
 
              <p>{tr}If you are new to Tiki administration, we recommend that you start with this approach{/tr}.</p>
@@ -55,7 +55,7 @@
         <div class="media-body">
             <p>{tr}Or you may use the <b>Upgrade Wizard</b>{/tr}.
                 {tr}This will guide you through the most common new settings and informations in order to upgrade your site{/tr}.
-				<a href="http://doc.tiki.org/Upgrade+Wizard" target="tikihelp" class="tikihelp" title="{tr}Upgrade Wizard:{/tr} 
+				<a href="http://doc.tiki.org/Upgrade+Wizard" target="tikihelp" class="tikihelp" title="{tr}Upgrade Wizard:{/tr}
                 {tr}Use this wizard if you are upgrading from previous versions of Tiki, specially if you come from the previous Long Term Support (LTS) version.{/tr}</p>
 
             <p>{tr}Some of these settings are also available through the Configuration Wizard, and all of them are available through Configuration Panels{/tr}.

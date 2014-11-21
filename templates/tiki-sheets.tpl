@@ -43,7 +43,7 @@
 		{else}
 			<h2>{tr}Configure this sheet:{/tr} {$title|escape}</h2>
 		{/if}
-		
+
 		{if $individual eq 'y'}
 			{permission_link mode=link type=sheet id=$sheetId title=$name label="{tr}There are individual permissions set for this sheet{/tr}"}
 		{/if}
@@ -83,11 +83,11 @@
 				</tr>
                 <tr><td colspan="2">
 				{include file='categorize.tpl'}
-                </td></tr>                
+                </td></tr>
 				<tr><td>&nbsp;</td><td><input type="submit" class="btn btn-default btn-sm" value="{tr}Save{/tr}" name="edit"></td></tr>
 			</table>
 		</form>
-		
+
 	{if $sheetId > 0}
 		<div class="wikitext">
 			{tr}You can access the sheet using the following URL:{/tr} <a class="gallink" href="{$url}?sheetId={$sheetId}">{$url}?sheetId={$sheetId}</a>

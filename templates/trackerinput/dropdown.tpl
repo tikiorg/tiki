@@ -34,7 +34,7 @@
 			<option value="">&nbsp;</option>
 		{/if}
 		{foreach from=$field.possibilities key=value item=label}
-			<option value="{$value|escape}" 
+			<option value="{$value|escape}"
 			{if (isset($field.value) && $field.value ne '') && ($field.value eq $value)}selected="selected"{/if}>
 				{$label|tr_if|escape}
 			</option>

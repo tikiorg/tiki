@@ -4,7 +4,7 @@
 {remarksbox type="note" title="{tr}Note{/tr}"}
 {tr}This feature currently searches and replaces within wiki pages only{/tr}
 {/remarksbox}
- 
+
 <div class="panel panel-default"><div class="panel-body">
     <form action="tiki-search_replace.php" method="post">
 {tr}Search:{/tr} <input type="text" size="30" name="searchtext" value="{$searchtext|escape}">
@@ -57,7 +57,7 @@
 					{$results[search].afterSnippet[snippet]}
 				</td>
 				<td>
-					{if $results[search].searchreplace[snippet] != '0:0:0'}<input type="checkbox" name="checked[]" value="{$results[search].searchreplace[snippet]}">{/if} 
+					{if $results[search].searchreplace[snippet] != '0:0:0'}<input type="checkbox" name="checked[]" value="{$results[search].searchreplace[snippet]}">{/if}
 				</td>
 			</tr>
 			{/section}
@@ -68,7 +68,7 @@
 	{/section}
 	</table>
     </div>
-	<input type="hidden" name="searchtext" value="{$searchtext}"> 
+	<input type="hidden" name="searchtext" value="{$searchtext}">
 	<input type="hidden" name="replacetext" value="{$replacetext}">
 	<input type="hidden" name="maxRecords" value="{$maxRecords}">
 	<input type="hidden" name="casesensitive" value="{$casesensitive}">

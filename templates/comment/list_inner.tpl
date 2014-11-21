@@ -71,7 +71,7 @@
 						{/if}
 
 					</div><!-- End of comment-footer -->
-				</div><!-- End of comment-item -->					
+				</div><!-- End of comment-item -->
 				{if $comment.replies_info.numReplies gt 0}
 					{include file='comment/list_inner.tpl' comments=$comment.replies_info.replies cant=$comment.replies_info.numReplies parentId=$comment.threadId}
 				{/if}

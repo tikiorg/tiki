@@ -1,7 +1,7 @@
 {* $Id$ *}
 
 <div class="userWizardIconleft"><img src="img/icons/large/wizard_user48x48.png" alt="{tr}User Wizard{/tr}" /></div>
-{tr}Use "watches" to monitor wiki pages or other objects.{/tr} {tr}Watch new items by clicking the {icon _id=eye} button on specific pages.{/tr}<br/> 
+{tr}Use "watches" to monitor wiki pages or other objects.{/tr} {tr}Watch new items by clicking the {icon _id=eye} button on specific pages.{/tr}<br/>
 {tr}Use reports to summarise notifications about objects you are watching{/tr}.<br/><br/>
 
 <div class="userWizardContent">
@@ -14,7 +14,7 @@
 		{if isset($remove_user_watch_error) && $remove_user_watch_error}
 			{remarksbox type="error" title="{tr}Error{/tr}"}{tr}You are not allowed to remove this notification !{/tr}{/remarksbox}
 		{/if}
-		
+
 			<p><input type="checkbox" name="use_daily_reports" value="true" {if $report_preferences != false}checked{/if}> {tr}Use reports{/tr}</p>
 			<p>
 			{tr}Interval in which you want to get the reports{/tr}
@@ -26,7 +26,7 @@
 					<option value="monthly" {if $report_preferences.interval eq "monthly"}selected{/if}>{tr}Monthly{/tr}</option>
 			</select>
 			</p>
-			
+
 			<div style="float:left; margin-right: 50px;">
 			    <input type="radio" name="view" value="short"{if $report_preferences.view eq "short"} checked="checked"{/if}> {tr}Short report{/tr}<br>
 		    	<input type="radio" name="view" value="detailed"{if $report_preferences.view eq "detailed" OR $report_preferences eq false} checked="checked"{/if} /> {tr}Detailed report{/tr}<br>
@@ -38,7 +38,7 @@
 			<div>
 				<input type="checkbox" name="always_email" value="1"{if $report_preferences.always_email eq 1 OR $report_preferences eq false} checked="checked"{/if}> {tr}Send me an email also if nothing happened{/tr}
 			</div>
-			
+
 		</table>
 {else}
 	{tr}The feature daily reports of user watches is disabled in this site{/tr}.<br/>

@@ -17,7 +17,7 @@
 	{if $tiki_p_edit_sheet eq 'y' || $tiki_p_admin_sheet eq 'y' || $tiki_p_admin eq 'y'}
 		{button href="tiki-view_sheets.php?sheetId=$sheetId&amp;readdate=$read_date&amp;parse=edit" class="btn btn-default" _text="{tr}Edit{/tr}"}
 	{/if}
-	
+
 	{if $tiki_p_view_sheet_history eq 'y' || $tiki_p_admin_sheet eq 'y' || $tiki_p_admin eq 'y'}
 		{button href="tiki-history_sheets.php?sheetId=$sheetId" class="btn btn-default" _text="{tr}History{/tr}"}
 	{/if}

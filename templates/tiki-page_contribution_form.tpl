@@ -10,7 +10,7 @@
 	<fieldset>
 		<legend>{tr}Options{/tr}</legend>
 		  <label><input type="checkbox" name="showstatistics" value="1"{if $showstatistics==1} checked="checked"{/if} title="{tr}Show statistics{/tr}"> {tr}Show statistics{/tr}</label><br>
-		  <label><input type="checkbox" name="showpage" value="1"{if $showpage==1} checked="checked"{/if} title="{tr}Visualize page changes{/tr}"> {tr}Visualize page changes{/tr}</label><br>		  
+		  <label><input type="checkbox" name="showpage" value="1"{if $showpage==1} checked="checked"{/if} title="{tr}Visualize page changes{/tr}"> {tr}Visualize page changes{/tr}</label><br>
 		  <label><input type="checkbox" name="showpopups" value="1" {if $showpopups==1} checked="checked"{/if} title="{tr}Visualize page changes{/tr}"> {tr}Show popups{/tr}</label><br>
 		  {if $prefs.feature_source eq 'y' and $tiki_p_wiki_view_source eq 'y'}<label><input type="checkbox" name="escape" value="1" {if $escape==1} checked="checked"{/if} title="{tr}Escape HTML / Wiki syntax in page changes{/tr}"> {tr}Escape HTML / Wiki syntax in page changes{/tr}</label><br>{/if}
 	</fieldset>

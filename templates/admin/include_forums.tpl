@@ -14,14 +14,14 @@
 	{tabset name="admin_forums"}
 		{tab name="{tr}General Settings{/tr}"}
             <h2>{tr}General Settings{/tr}</h2>
-		
+
 			<fieldset class="table">
 				<legend>{tr}Activate the feature{/tr}</legend>
 				{preference name=feature_forums visible="always"}
 				{preference name=home_forum}
 				{preference name=forum_image_file_gallery}
 			</fieldset>
-			
+
 			<fieldset>
 				<legend>
 					{tr}Features{/tr}{help url="Forum"}

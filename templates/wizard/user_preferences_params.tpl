@@ -146,7 +146,7 @@
 		<legend>{tr}User Messages{/tr}</legend>
 		<div class="userWizardIconright"><img src="img/icons/mail.gif" alt="{tr}User Messages{/tr}" /></div>
 			<table class="formcolor">
-	
+
 				{if $prefs.allowmsg_is_optional eq 'y'}
 					<tr>
 						<td>{tr}Allow messages from other users{/tr}</td>
@@ -176,7 +176,7 @@
 		<legend>{tr}User Tasks{/tr}</legend>
 			<div class="userWizardIconright"><img src="img/icons/tasks.gif" alt="{tr}User Tasks{/tr}" /></div>
 			<table class="formcolor">
-	
+
 				<tr>
 					<td>{tr}Tasks per page{/tr}</td>
 					<td>

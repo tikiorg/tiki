@@ -45,7 +45,7 @@ function tf_export_submit(fm) {
 		{if !isset($line) || $line ne 'y'}</td><td class="tracker_filter_input tracker_field{$filter.fieldId}">{elseif $indrop ne 'y' or ($filter.format ne 'd' and  $filter.format ne 'm')}:{/if}
 {*------drop-down, multiple *}
 		{if $filter.format eq 'd' or  $filter.format eq 'm'}
-			<select id="f_{$filter.fieldId}" name="f_{$filter.fieldId}{if $filter.format eq "m"}[]{/if}" {if $filter.format eq "m"} size="5" multiple="multiple"{/if}> 
+			<select id="f_{$filter.fieldId}" name="f_{$filter.fieldId}{if $filter.format eq "m"}[]{/if}" {if $filter.format eq "m"} size="5" multiple="multiple"{/if}>
 			{if $indrop eq 'y'}<option value="">--{$filter.name|tr_if}--</option>{/if}
 			<option value="">{tr}Any{/tr}</option>
 			{$last = ''}
@@ -69,7 +69,7 @@ function tf_export_submit(fm) {
 				{/if}
 			{/if}
 			{trackerinput field=$filter.field inForm="y"}
-{*------text *} 
+{*------text *}
 		{elseif $filter.format eq 't' or $filter.format eq 'T' or $filter.format eq 'i'}
 			{if $filter.format eq 'i'}
 				{capture name=i_f}f_{$filter.fieldId}{/capture}

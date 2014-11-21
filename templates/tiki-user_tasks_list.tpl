@@ -41,7 +41,7 @@
 			<tr>
 				<td class="prio{$tasklist[task_i].priority}">
 					<input {if $tasklist[task_i].disabled} disabled = "disabled" {/if}  type="checkbox" name="task[{$tasklist[task_i].taskId}]">
-					{if $tasklist[task_i].deleted} 
+					{if $tasklist[task_i].deleted}
 						{if $tasklist[task_i].creator ne $user}
 							{icon _id='cross'}
 						{else}
@@ -53,14 +53,14 @@
 					{else}
 						{if ($tasklist[task_i].user eq $user)}
 							{*received task*}
-							{icon _id='task_received' title="{tr}Task received{/tr}" alt="{tr}Task received{/tr}"} 
+							{icon _id='task_received' title="{tr}Task received{/tr}" alt="{tr}Task received{/tr}"}
 							{if (($tasklist[task_i].accepted_creator eq 'n') or ($tasklist[task_i].accepted_user eq 'n'))}
 								{icon _id='delete' title="{tr}Rejected by a user{/tr}" alt="{tr}Rejected by a user{/tr}"}
 							{else}
 								{if ($tasklist[task_i].accepted_user eq '')}
 									{icon _id='hourglass' title="{tr}Waiting for me{/tr}" alt="{tr}Waiting for me{/tr}"}
 								{else}
-									{if ($tasklist[task_i].accepted_creator eq 'y')} 
+									{if ($tasklist[task_i].accepted_creator eq 'y')}
 										{icon _id='accept' title="{tr}Accepted by task user and creator{/tr}" alt="{tr}Accepted by task user and creator{/tr}"}
 									{else}
 										{icon _id='user_comment' title="{tr}Waiting for other user{/tr}" alt="{tr}Waiting for other user{/tr}"}
@@ -69,7 +69,7 @@
 							{/if}
 						{elseif ($tasklist[task_i].creator eq $user)}
 							{*submitted task*}
-							{icon _id='task_submitted' title="{tr}Task sent{/tr}" alt="{tr}Task sent{/tr}"} 
+							{icon _id='task_submitted' title="{tr}Task sent{/tr}" alt="{tr}Task sent{/tr}"}
 							{if (($tasklist[task_i].accepted_creator eq 'n') or ($tasklist[task_i].accepted_user eq 'n'))}
 								<img src="{$img_not_accepted}" height="{$img_not_accepted_height}" width="{$img_not_accepted_width}" title="{tr}Not Accepted by One User{/tr}" alt="{tr}Not Accepted User{/tr}">
 							{else}
@@ -89,7 +89,7 @@
 							{/if}
 						{else}
 							{*shared task*}
-							{icon _id='group' title="{tr}Task shared by a group{/tr}" alt="{tr}Task shared by a group{/tr}"} 
+							{icon _id='group' title="{tr}Task shared by a group{/tr}" alt="{tr}Task shared by a group{/tr}"}
 						{/if}
 					{/if}
 				</td>
@@ -111,11 +111,11 @@
 				</td>
 				<td style="text-align:right;{if $tasklist[task_i].status eq 'c'}text-decoration:line-through;{/if}" class="prio{$tasklist[task_i].priority}">
 					<select {if $tasklist[task_i].disabled} disabled = "disabled" {/if}  name="task_perc[{$tasklist[task_i].taskId}]">
-						<option value="w" {if $tasklist[task_i].percentage_null} selected = "selected"  {/if}>{tr}Waiting{/tr}</option>	
+						<option value="w" {if $tasklist[task_i].percentage_null} selected = "selected"  {/if}>{tr}Waiting{/tr}</option>
 						{section name=zz loop=$percs}
 							<option value="{$percs[zz]|escape}" {if $tasklist[task_i].percentage eq $percs[zz] and !$tasklist[task_i].percentage_null} selected = "selected" {/if} >
 								{$percs[zz]}%
-							</option>	
+							</option>
 						{/section}
 					</select>
 				</td>

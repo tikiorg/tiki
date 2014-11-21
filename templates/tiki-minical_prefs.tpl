@@ -67,7 +67,7 @@
 			<td>
 				<input type="submit" class="btn btn-primary btn-sm" name="save" value="{tr}Save{/tr}">
 			</td>
-		</tr>	
+		</tr>
 	</table>
 </form>
 <a name="import"></a>

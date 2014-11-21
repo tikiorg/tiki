@@ -85,18 +85,18 @@
 {include file='tracker_error.tpl'}
 
 {tabset name='tabs_view_tracker' skipsingle=1}
-	
+
 	{if $tiki_p_view_trackers eq 'y' or (($tracker_info.writerCanModify eq 'y' or $tracker_info.userCanSeeOwn eq 'y' or $tracker_info.writerGroupCanModify eq 'y') and $user)}
 		{tab name="{tr}Tracker Items{/tr}"}
             <h2>{tr}Items{/tr} <span class="badge" style="vertical-align: middle">{$item_count}</span></h2>
 			{* -------------------------------------------------- tab with list --- *}
-			
+
 			{if (($tracker_info.showStatus eq 'y' and $tracker_info.showStatusAdminOnly ne 'y') or $tiki_p_admin_trackers eq 'y') or $show_filters eq 'y'}
 				{include file='tracker_filter.tpl'}
 			{/if}
-			
+
 			{if (isset($cant_pages) && $cant_pages > 1) or $initial}{initials_filter_links}{/if}
-					
+
 			{if $items|@count ge '1'}
 				{* ------- list headings --- *}
 				<form name="checkform" method="post" action="{$smarty.server.PHP_SELF}">
@@ -106,13 +106,13 @@
 							{if $tracker_info.showStatus eq 'y' or ($tracker_info.showStatusAdminOnly eq 'y' and $tiki_p_admin_trackers eq 'y')}
 								<th class="auto" style="width:20px;"></th>
 							{/if}
-							
+
 							{if $tiki_p_admin_trackers eq 'y'}
 								<th width="15">
 									{select_all checkbox_names='action[]'}
 								</th>
 							{/if}
-							
+
 							{foreach from=$listfields key=ix item=field_value}
 								{if $field_value.isTblVisible eq 'y' and ( $field_value.type ne 'x' and $field_value.type ne 'h') and ($field_value.type ne 'p' or $field_value.options_array[0] ne 'password')}
 									<th class="auto">
@@ -120,7 +120,7 @@
 									</th>
 								{/if}
 							{/foreach}
-							
+
 							{if $tracker_info.showCreated eq 'y'}
 								<th><a href="tiki-view_tracker.php?{if $status}status={$status}&amp;{/if}{if $initial}initial={$initial}&amp;{/if}{if $find}find={$find}&amp;{/if}trackerId={$trackerId}{if $offset}&amp;offset={$offset}{/if}&amp;sort_mode={if
 								$sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}">{tr}Created{/tr}</a></th>
@@ -139,7 +139,7 @@
 								<th style="width:20px">{tr}Action{/tr}</th>
 							{/if}
 						</tr>
-						
+
 						{* ------- Items loop --- *}
 						{assign var=itemoff value=0}
 
@@ -156,7 +156,7 @@
 								  		<input type="checkbox" name="action[]" value='{$items[user].itemId}' style="border:1px;font-size:80%;">
 									</td>
 								{/if}
-								
+
 								{* ------- list values --- *}
 								{$ajaxedit = $prefs.ajax_inline_edit_trackerlist eq 'y' and
 										($tiki_p_modify_tracker_items eq 'y' and $items[user].status ne 'p' and $items[user].status ne 'c') or
@@ -170,7 +170,7 @@
 										</td>
 									{/if}
 								{/foreach}
-								
+
 								{if $tracker_info.showCreated eq 'y'}
 									<td class="date">{if $tracker_info.showCreatedFormat}{$items[user].created|tiki_date_format:$tracker_info.showCreatedFormat}{else}{$items[user].created|tiki_short_datetime}{/if}</td>
 								{/if}
@@ -228,7 +228,7 @@
 			{/if}
 		{/tab}
 	{/if}
-	
+
 	{if $tiki_p_create_tracker_items eq 'y' && $prefs.tracker_legacy_insert eq 'y'}
 		{* --------------------------------------------------------------------------------- tab with edit --- *}
 		{tab name="{tr}Insert New Item{/tr}"}
@@ -244,10 +244,10 @@
 			{/if}
 			<form enctype="multipart/form-data" action="tiki-view_tracker.php" id="newItemForm" method="post">
 			<input type="hidden" name="trackerId" value="{$trackerId|escape}">
-			
+
 			{remarksbox type="note"}<strong class='mandatory_note'>{tr}Fields marked with an * are mandatory.{/tr}</strong>{/remarksbox}
 			<div class="form-horizontal">
-			
+
 			{if $tracker_info.showStatus eq 'y' and ($tracker_info.showStatusAdminOnly ne 'y' or $tiki_p_admin_trackers eq 'y')}
 				<div class="form-group">
 					<label class="col-sm-3 control-label">{tr}Status{/tr}</label>
@@ -274,12 +274,12 @@
 				</div>
 				{/if}
 			{/foreach}
-			
+
 			{* -------------------- antibot code -------------------- *}
 			{if $prefs.feature_antibot eq 'y' && $user eq ''}
 				{include file='antibot.tpl' tr_style="formcolor" showmandatory=y}
 			{/if}
-			
+
 			{if !isset($groupforalert) || $groupforalert ne ''}
                 <div class="form-group">
 				{if $showeachuser eq 'y'}
@@ -313,7 +313,7 @@
 			</form>
 		{/tab}
 	{/if}
-	
+
 	{if $tracker_sync}
 		{tab name="{tr}Synchronization{/tr}"}
             <h2>{tr}Synchronization{/tr}</h2>

@@ -225,7 +225,7 @@
 								<br>
 								{tr}FlashPlugin min version:{/tr} <input type="text" name="movieVersion" value="{$movie.version|escape}">({tr}ex:{/tr}9.0.0)
 								<br>
-								Note: To be managed with tiki , your flash banner link should be: <a class="link" href="banner_click.php?id={$bannerId}&amp;url={$url}">banner_click.php?id={$bannerId}&amp;url={$url}</a> 
+								Note: To be managed with tiki , your flash banner link should be: <a class="link" href="banner_click.php?id={$bannerId}&amp;url={$url}">banner_click.php?id={$bannerId}&amp;url={$url}</a>
 							</td>
 						</tr>
 					</table>

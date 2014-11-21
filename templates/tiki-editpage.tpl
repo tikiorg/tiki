@@ -23,7 +23,7 @@
 {if isset($wikiHeaderTpl)}
 	{$wikiHeaderTpl}
 {/if}
-	
+
 {if $prefs.ajax_autosave eq "y"}
     <div class="pull-right">
         {self_link _icon="magnifier" _class="previewBtn" _ajax="n"}{tr}Preview your changes.{/tr}{/self_link}
@@ -58,7 +58,7 @@
         });{/jq}
     {/if}
 {/if}
-   
+
 {if isset($data.draft)}
 	{tr}Draft written on{/tr} {$data.draft.lastModif|tiki_long_time}<br/>
 	{if $data.draft.lastModif < $data.lastModif}
@@ -153,19 +153,19 @@
 	{if isset($diff_style)}
 		<select name="diff_style" class="wikiaction"title="{tr}Edit wiki page{/tr}|{tr}Select the style used to display differences to be translated.{/tr}">
 			<option value="htmldiff"{if isset($diff_style) && $diff_style eq "htmldiff"} selected="selected"{/if}>{tr}html{/tr}</option>
-			<option value="inlinediff"{if isset($diff_style) && $diff_style eq "inlinediff"} selected="selected"{/if} >{tr}text{/tr}</option>			  
-			<option value="inlinediff-full"{if isset($diff_style) && $diff_style eq "inlinediff-full"} selected="selected"{/if} >{tr}text full{/tr}</option>			  
+			<option value="inlinediff"{if isset($diff_style) && $diff_style eq "inlinediff"} selected="selected"{/if} >{tr}text{/tr}</option>
+			<option value="inlinediff-full"{if isset($diff_style) && $diff_style eq "inlinediff-full"} selected="selected"{/if} >{tr}text full{/tr}</option>
 		</select>
 		<input type="submit" class="wikiaction tips btn btn-default" title="{tr}Edit wiki page{/tr}|{tr}Change the style used to display differences to be translated.{/tr}" name="preview" value="{tr}Change diff styles{/tr}" onclick="needToConfirm=false;">
 	{/if}
-	
+
 	{if $page_ref_id}<input type="hidden" name="page_ref_id" value="{$page_ref_id}">{/if}
 	{if isset($hdr)}<input type="hidden" name="hdr" value="{$hdr}">{/if}
 	{if isset($cell)}<input type="hidden" name="cell" value="{$cell}">{/if}
 	{if isset($pos)}<input type="hidden" name="pos" value="{$pos}">{/if}
 	{if $current_page_id}<input type="hidden" name="current_page_id" value="{$current_page_id}">{/if}
 	{if $add_child}<input type="hidden" name="add_child" value="true">{/if}
-	
+
 	{if $preview or $prefs.wiki_actions_bar eq 'top' or $prefs.wiki_actions_bar eq 'both'}
 		<div class='top_actions'>
 			{include file='wiki_edit_actions.tpl' wysiwyg=$wysiwyg}
@@ -186,7 +186,7 @@
 							<input type="submit" class="btn btn-default btn-sm" name="rename" value="{tr}Rename{/tr}">
 						</p>
 				{else}
-					<input type="hidden" name="page" value="{$page|escape}"> 
+					<input type="hidden" name="page" value="{$page|escape}">
 					{* the above hidden field is needed for auto-save to work *}
 				{/if}
 				{tabset name='tabs_editpage' cookietab=1}
@@ -237,7 +237,7 @@
 									<a href="javascript:addImgForm()" onclick="needToConfirm = false;">{tr}Add another image{/tr}</a>
 								</fieldset>
 							{/if}
-				
+
 						{/if}
 					{/tab}
 					{if $prefs.feature_categories eq 'y' and $tiki_p_modify_object_categories eq 'y' and count($categories) gt 0}
@@ -251,7 +251,7 @@
 									<input type="hidden" name="cat_categories[]" value="{$categIds[o]}">
 								{/section}
 								<input type="hidden" name="cat_categorize" value="on">
-								
+
 								{if $prefs.feature_wiki_categorize_structure eq 'y'}
 									{tr}Categories will be inherited from the structure top page{/tr}
 								{/if}
@@ -318,7 +318,7 @@
 								</div>
                                 </div>
 							{/if}
-				
+
 							{if $prefs.feature_wiki_allowhtml eq 'y' and $tiki_p_use_HTML eq 'y' and ($wysiwyg neq 'y' or $prefs.wysiwyg_htmltowiki eq 'y')}
 								<div class="form-group">
 									<label class="col-sm-2 control-label" for="allowhtml">{tr}Allow HTML{/tr}</label>
@@ -350,7 +350,7 @@ $("input[name=allowhtml]").change(function() {
                                     </div>
 								</div>
 							{/if}
-							
+
 							{if $prefs.feature_wiki_import_page eq 'y'}
 								<div class="form-group">
 									<label for="userfile1" class="col-sm-2 control-label">{tr}Import page{/tr}</label>
@@ -398,7 +398,7 @@ $("input[name=allowhtml]").change(function() {
                                             </div>
                                         </div>
 								{/if}
-	
+
 							{/if}
 							{* merged tool and property tabs for tiki 6 *}
 							{if $page|lower neq 'sandbox'}
@@ -629,7 +629,7 @@ $("input[name=allowhtml]").change(function() {
 													</select>
 												</li>
 											{/if}
-		
+
 											{if $prefs.wiki_page_hide_title eq 'y' && ($prefs.wiki_page_name_above eq 'y' or $prefs.feature_page_title eq 'y')}
 												<li>{tr}Show page title{/tr}
 													<select name="page_hide_title">
@@ -696,7 +696,7 @@ $("input[name=allowhtml]").change(function() {
 				{include file='antibot.tpl' tr_style="formcolor"}
 			{/if}
 		{/if}{* sandbox *}
-		
+
 		{if $prefs.wiki_actions_bar neq 'top'}
 			<div class="form-group">
 				<div class="text-center">

@@ -48,7 +48,7 @@
 			{if $prefs.feature_file_galleries eq "y"}
 				<li><a href="tiki-list_file_gallery.php">{tr}Files{/tr}</a></li>
 			{/if}
-			{if $prefs.feature_faqs eq "y" and $tiki_p_view_faqs eq "y"} 
+			{if $prefs.feature_faqs eq "y" and $tiki_p_view_faqs eq "y"}
 				<li><a href="tiki-list_faqs.php">{tr}FAQs{/tr}</a></li>
 			{/if}
 			{if $prefs.feature_forums eq "y"}
@@ -133,7 +133,7 @@
 			{/if}
 			{if $prefs.feature_theme_control eq "y" and $tiki_p_admin eq "y"}
 				<li><a href="tiki-theme_control.php">{tr}Theme Control{/tr}</a></li>
-			{/if}	
+			{/if}
 			{if $tiki_p_admin_toolbars eq "y"}
 				<li><a href="tiki-admin_toolbars.php">{tr}Toolbars{/tr}</a></li>
 			{/if}
@@ -148,7 +148,7 @@
 				<li><a href="tiki-plugins.php">{tr}Plugin Approval{/tr}</a></li>
 			{/if}
 			<li class="divider"></li>
-			<li><a href="tiki-mods.php">{tr}Mods{/tr}</a></li>	
+			<li><a href="tiki-mods.php">{tr}Mods{/tr}</a></li>
 		</ul>
 	</li>
 	<li class="dropdown">

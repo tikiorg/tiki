@@ -124,7 +124,7 @@ if (jqueryTiki.no_cookie) {
 		{/if}
 		<form name="loginbox" class="form" id="loginbox-{$module_logo_instance}" action="{$login_module.login_url|escape}"
 				method="post" {if $prefs.feature_challenge eq 'y'}onsubmit="doChallengeResponse()"{/if}
-				{if $prefs.desactive_login_autocomplete eq 'y'} autocomplete="off"{/if}> 
+				{if $prefs.desactive_login_autocomplete eq 'y'} autocomplete="off"{/if}>
 			{capture assign="close_tags"}</form>{$close_tags}{/capture}
 		{if $prefs.feature_challenge eq 'y'}
 			<script type='text/javascript' src="lib/md5.js"></script>
@@ -133,7 +133,7 @@ function doChallengeResponse() {
 	hashstr = document.loginbox.user.value +
 				document.loginbox.pass.value +
 				document.loginbox.email.value;
-	str = document.loginbox.user.value + 
+	str = document.loginbox.user.value +
 			MD5(hashstr) + document.loginbox.challenge.value;
 	document.loginbox.response.value = MD5(str);
 	document.loginbox.pass.value='';
@@ -253,7 +253,7 @@ function doChallengeResponse() {
 		{if $prefs.feature_show_stay_in_ssl_mode neq 'y' || $show_stay_in_ssl_mode neq 'y'}
 			<input type="hidden" name="stay_in_ssl_mode" value="{$stay_in_ssl_mode|escape}" />
 		{/if}
-		
+
 		{if isset($use_intertiki_auth) and $use_intertiki_auth eq 'y'}
 			<select name='intertiki'>
 				<option value="">{tr}local account{/tr}</option>

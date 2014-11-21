@@ -40,7 +40,7 @@
 		</tr>
 		<tr>
 			<td>&nbsp;
-				
+
 			</td>
 			<td>
 				<input type="submit" class="btn btn-primary btn-sm" name="save" value="{tr}Save{/tr}">

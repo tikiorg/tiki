@@ -10,7 +10,7 @@
             </div>
         </div>
     </div>
-	
+
 	{if $prefs.payment_feature neq "y"}
 		<fieldset class="table">
 			<legend>{tr}Activate the feature{/tr}</legend>
@@ -191,7 +191,7 @@
 				{preference name=shipping_custom_provider}
 		{/tab}
 	{/tabset}
-	
+
 	<div class="row">
         <div class="form-group col-lg-12 clearfix">
 			<div class="text-center">

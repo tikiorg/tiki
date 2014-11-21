@@ -63,7 +63,7 @@
 		<input type="hidden" name="objectId" value="{$objectId|escape}">
 		<input type="hidden" name="permType" value="{$permType|escape}">
 		<input type="hidden" name="show_disabled_features" value="{$show_disabled_features}">
-		
+
 		<div class="input_submit_container" style="text-align: center">
 			<input type="submit" class="btn btn-primary btn-sm" name="assign" value="{tr}Assign{/tr}">
 			{if $permissions_displayed eq 'direct' and $objectType neq 'global'}
@@ -72,7 +72,7 @@
 			<input type="submit" class="btn btn-default btn-sm" name="copy" value="{tr}Copy{/tr}" class="tips" title="{tr}Permissions Clipboard{/tr}|{tr}Copy the permissions set here{/tr}">
 			{if !empty($perms_clipboard_source)}<input type="submit" class="btn btn-default btn-sm" name="paste" value="{tr}Paste{/tr}" class="tips" title="{tr}Permissions Clipboard{/tr}|{tr}Paste copied permissions from {/tr}<em>{$perms_clipboard_source}</em>" />{/if}
 		</div>
-		
+
 		{if $objectType eq 'category'}
 			<p>
 				<input type="checkbox" id="propagate_category" name="propagate_category" value="1">
@@ -83,7 +83,7 @@ if ($("#propagate_category").prop("checked")) {
 	return confirm("{tr}Are you sure you want to affect all child categories?\nThere is no undo.{/tr}");
 } }); {/jq}
 		{/if}
-		
+
 		{if ($objectType eq 'wiki' or $objectType eq 'wiki page') and !empty($inStructure)}
 			<input name="assignstructure" id="assignstructure" type="checkbox">
 			<label for="assignstructure">{tr}Assign or remove permissions on all pages of the sub-structure{/tr}</label>
@@ -92,7 +92,7 @@ if ($("#assignstructure").prop("checked")) {
 	return confirm("{tr}Are you sure you want to affect all pages in this sub-structure?\nThere is no undo.{/tr}");
 } }); {/jq}
 		{/if}
-		
+
 		</div>
 		<h3>{tr}Permissions{/tr}</h3>
 
@@ -114,9 +114,9 @@ if ($("#assignstructure").prop("checked")) {
 			{/if}
 		</div>
 	</form>
-	
+
 	{/tab}
-	
+
 	{if !empty($permissions_added) or !empty($permissions_removed)}
 		{tab name="{tr}View Differences{/tr}"}
 			{if !empty($permissions_added)}
@@ -151,21 +151,21 @@ if ($("#assignstructure").prop("checked")) {
 			{/if}
 
 			<h2>{tr}Groups{/tr}</h2>
-			
+
 			<div>
 			{treetable _data=$groups _checkbox="group_filter" _checkboxTitles="{tr}Select all{/tr}"
 					_checkboxColumnIndex="in_group_filter" _valueColumnIndex="id"
 					_columns='"groupName"="{tr}Group name{/tr}","groupDesc"="{tr}Description{/tr}"'
 					_sortColumn='parents' _collapseMaxSections=20 _sortColumnDelimiter=',' _selectAllHiddenToo='y'}
 			</div>
-			
+
 			<div class="input_submit_container" style="text-align: center">
 				<input type="submit" class="btn btn-default btn-sm" name="group_select" value="{tr}Select{/tr}">
 			</div>
 		</div>
 		</form>
 	{/tab}
-	
+
 	{tab name="{tr}Select features{/tr}"}
 		<form method="post" action="{$smarty.server.PHP_SELF}?{query}">
 		<div>
@@ -180,18 +180,18 @@ if ($("#assignstructure").prop("checked")) {
 			<input type="checkbox" name="show_disabled_features" id="show_disabled_features2" {if isset($show_disabled_features) and $show_disabled_features eq 'y'}checked="checked"{/if} onchange="this.form.submit();">
 
 			<h2>{tr}Features{/tr}</h2>
-			
+
 			<div>
 			{treetable _data=$features _checkbox="feature_filter" _checkboxTitles="{tr}Select all{/tr}" _checkboxColumnIndex="in_feature_filter" _valueColumnIndex="featureName" _columns='"featureName"="{tr}Feature name{/tr}"' _sortColumn="featureName" _sortColumnDelimiter='*' _collapseMaxSections=20 _listFilter='n'}
 			</div>
-			
+
 			<div class="input_submit_container" style="text-align: center">
 				<input type="submit" class="btn btn-default btn-sm" name="feature_select" value="{tr}Select{/tr}">
 			</div>
 		</div>
 		</form>
 	{/tab}
-	
+
 	{* Quickperms *}
 
 	{if $prefs.feature_quick_object_perms eq 'y'}
@@ -218,7 +218,7 @@ if ($("#assignstructure").prop("checked")) {
 			{/foreach}
 				<th class="tips" title="{tr}A couple of userdefined permissions are currently assigned (See tab Assign Permissions){/tr}">Advanced</th>
 			</tr>
-			
+
 			{section name=grp loop=$groups}
 			<tr>
 				<td>
@@ -235,7 +235,7 @@ if ($("#assignstructure").prop("checked")) {
 			</tr>
 			{/section}
 		</table>
-	
+
 		<input type="hidden" name="referer" value="{$referer|escape}">
 		<input type="hidden" name="objectName" value="{$objectName|escape}">
 		<input type="hidden" name="objectType" value="{$objectType|escape}">
@@ -245,7 +245,7 @@ if ($("#assignstructure").prop("checked")) {
 		<div class="input_submit_container" style="text-align: center">
 			<input type="submit" class="btn btn-primary btn-sm" name="assign" value="{tr}Assign{/tr}">
 		</div>
-		
+
 		{if empty($filegals_manager)}
 			{remarksbox type="note" icon="bricks" title="{tr}Experimental{/tr}"}
 				{tr}<em>Quick permissions</em> should be considered as an experimental feature.{/tr}<br/>

@@ -2,7 +2,7 @@
 {jq}
 $('#scormpreview{{$id}}').colorbox({
     href: "{{$iframeurl}}",
-    iframe: true, 
+    iframe: true,
     width: {{$iframewidth}},
     height: {{$iframeheight}},
     scrolling: {{$iframescrolling}}

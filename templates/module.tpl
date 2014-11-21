@@ -59,7 +59,7 @@
 {if $module_nobox neq 'y'}
 		</div>{* close div id="mod-{$smarty.capture.name}" *}
 		{if $user and $prefs.user_assigned_modules == 'y' and $prefs.feature_modulecontrols eq 'y'}
-		<div class="panel-footer">		
+		<div class="panel-footer">
 			<span class="modcontrols">
 				<a title="{tr}Move module up{/tr}" href="{$current_location|escape}{$mpchar|escape}mc_up={$module_name}">
 					{icon _id="resultset_up" alt="{tr}Up{/tr}"}
@@ -74,7 +74,7 @@
 					{icon _id="cross" alt="{tr}Unassign{/tr}"}
 				 </a>
 			</span>
-		</div> 
+		</div>
 		{/if}
 	</div>{* close div id="module_{$moduleId}" *}
 {else}{* $module_nobox eq 'y' *}

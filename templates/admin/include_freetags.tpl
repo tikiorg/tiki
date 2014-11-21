@@ -13,18 +13,18 @@
 	{tabset name="admin_freetags"}
 		{tab name="{tr}General Settings{/tr}"}
             <h2>{tr}General Settings{/tr}</h2>
-		
+
 	<fieldset class="table">
 		<legend>{tr}Activate the feature{/tr}</legend>
 		{preference name=feature_freetags visible="always"}
-	</fieldset>			
-	
+	</fieldset>
+
 	<fieldset class="table">
 		<legend>{tr}Plugins{/tr}</legend>
 		{preference name=wikiplugin_freetagged}
-		{preference name=wikiplugin_addfreetag}		
+		{preference name=wikiplugin_addfreetag}
 	</fieldset>
-		
+
 			<fieldset>
 				<legend>{tr}Tags{/tr}{help url="Tags"}</legend>
 				<input type="hidden" name="freetagsfeatures" />
@@ -59,7 +59,7 @@
 				{preference name=morelikethis_algorithm}
 				{preference name=morelikethis_basic_mincommon}
 			</fieldset>
-	
+
 			<fieldset class="admin">
 				<legend>{tr}Freetag search page{/tr}</legend>
 				{preference name=freetags_sort_mode}

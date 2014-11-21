@@ -25,7 +25,7 @@
 			{tr}Filter:{/tr}<input type="text" name="find" value="{$find|escape}"><input type="submit" class="btn btn-default btn-sm" name="filter" value="{tr}Filter{/tr}"><br>
 		</div>
 	</div>
-	
+
 	<br>
 	<br>
 
@@ -76,7 +76,7 @@
 			</div>
 		{/if}
 	{/if}
-	
+
 	<br>
 	<br>
 

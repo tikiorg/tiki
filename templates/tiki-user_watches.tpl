@@ -19,11 +19,11 @@
 		{else}
 			{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Use reports to summarise notifications about objects you are watching.{/tr}{/remarksbox}
 		{/if}
-		
+
 		<form action="tiki-user_reports.php" method="post">
 			<input type="hidden" name="report_preferences" value="true">
 			<p><input type="checkbox" name="use_daily_reports" value="true" {if $report_preferences != false}checked{/if}> {tr}Use reports{/tr}</p>
-		
+
 			<p>
 			{tr}Interval in which you want to get the reports{/tr}
 			<select name="interval">
@@ -34,7 +34,7 @@
 					<option value="monthly" {if $report_preferences.interval eq "monthly"}selected{/if}>{tr}Monthly{/tr}</option>
 			</select>
 			</p>
-			
+
 			<div style="float:left; margin-right: 50px;">
 			    <input type="radio" name="view" value="short"{if $report_preferences.view eq "short"} checked="checked"{/if}> {tr}Short report{/tr}<br>
 		    	<input type="radio" name="view" value="detailed"{if $report_preferences.view eq "detailed" OR $report_preferences eq false} checked="checked"{/if} /> {tr}Detailed report{/tr}<br>
@@ -46,7 +46,7 @@
 			<div>
 				<input type="checkbox" name="always_email" value="1"{if $report_preferences.always_email eq 1 OR $report_preferences eq false} checked="checked"{/if}> {tr}Send me an email also if nothing happened{/tr}
 			</div>
-			
+
 			<p><input type="submit" name="submit" class="btn btn-primary" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}"></p>
 		</form>
 	{/tab}
@@ -103,14 +103,14 @@
 	{jq}
 		$('#type_selector').change( function() {
 			var type = $(this).val();
-	
+
 			$('#lang_list').hide();
 			$('#categ_list').hide();
-	
+
 			if( type == 'wiki_page_in_lang_created' ) {
 				$('#lang_list').show();
 			}
-	
+
 			if( type == 'category_changed_in_lang' ) {
 				$('#lang_list').show();
 				$('#categ_list').show();
@@ -195,7 +195,7 @@
 {tab name="{tr}Notification Preferences{/tr}"}
     <h2>{tr}Notification Preferences{/tr}</h2>
 	{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Use this form to control notifications about objects you are watching.{/tr}{/remarksbox}
-	
+
 	<form action="tiki-user_notifications.php" method="post">
 		<input type="hidden" name="notification_preferences" value="true">
 		<p>{tr}Send notification when I am the editor:{/tr}</p>

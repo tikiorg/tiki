@@ -14,11 +14,11 @@
 		{assign var=currency value=$field.options_array[5]}
 	{/if}
 	{if empty($field.options_array[6])}
-		{assign var=part1a value='%(!#10n'}	
+		{assign var=part1a value='%(!#10n'}
 		{assign var=part1b value='%(#10n'}
 	{else}
-		{assign var=part1a value='%(!#10'}	
-		{assign var=part1b value='%(#10'}	
+		{assign var=part1a value='%(!#10'}
+		{assign var=part1b value='%(#10'}
 	{/if}
 	{if (isset($context.reloff) and $context.reloff gt 0) and ($field.options_array[7] ne 1)}
 		{assign var=format value=$part1a|cat:$field.options_array[6]}
@@ -32,4 +32,4 @@
 	{/if}
 {/if}
 {/strip}
-	
+

@@ -1,6 +1,6 @@
 {* $ID:$ *}
 <form method="post" action="tiki-admin.php?page=webservices" class="form-horizontal">
-	
+
 	<div class="row">
         <div class="form-group col-lg-12 clearfix">
             <div class="pull-right">
@@ -8,11 +8,11 @@
             </div>
         </div>
     </div>
-	
+
 	<fieldset>
 		<legend>{tr}Activate the feature{/tr}</legend>
 		{preference name=feature_webservices visible="always"}
-	</fieldset>		
+	</fieldset>
 
 	<div class="t_navbar form-group">
 		{foreach from=$webservices item=name}
@@ -145,7 +145,7 @@
         </div>
 		{/if}
 	{/if}
-	
+
 	<div class="row">
         <div class="form-group col-lg-12 clearfix">
             <div class="text-center">

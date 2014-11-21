@@ -1,4 +1,4 @@
-<a href="mailto:{$email_token}">{$email_token}</a> {tr}has consulted your{/tr} 
+<a href="mailto:{$email_token}">{$email_token}</a> {tr}has consulted your{/tr}
 
 {if $filegallery eq 'y'}
 	{tr}file{/tr} : {$filename}

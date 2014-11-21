@@ -52,23 +52,23 @@
 	<tr>
 		{assign var=numbercol value=1}
 		<th>{self_link _sort_arg='sort_mode' _sort_field='name'}{tr}Name{/tr}{/self_link}</th>
-		 
+
 		{if $prefs.forum_list_topics eq 'y'}
 			{assign var=numbercol value=$numbercol+1}
 			<th>{self_link _sort_arg='sort_mode' _sort_field='threads'}{tr}Topics{/tr}{/self_link}</th>
-		{/if}	
+		{/if}
 
 		{if $prefs.forum_list_posts eq 'y'}
 			{assign var=numbercol value=$numbercol+1}
 			<th>{self_link _sort_arg='sort_mode' _sort_field='comments'}{tr}Posts{/tr}{/self_link}</th>
-		{/if}	
+		{/if}
 
 		{if $prefs.forum_list_ppd eq 'y'}
 			{assign var=numbercol value=$numbercol+1}
 			<th>{tr}PPD{/tr}</th>
-		{/if}	
+		{/if}
 
-		{if $prefs.forum_list_lastpost eq 'y'}	
+		{if $prefs.forum_list_lastpost eq 'y'}
 			{assign var=numbercol value=$numbercol+1}
 			<th>{self_link _sort_arg='sort_mode' _sort_field='lastPost'}{tr}Last Post{/tr}{/self_link}</th>
 		{/if}
@@ -76,8 +76,8 @@
 		{if $prefs.forum_list_visits eq 'y'}
 			{assign var=numbercol value=$numbercol+1}
 			<th>{self_link _sort_arg='sort_mode' _sort_field='hits'}{tr}Visits{/tr}{/self_link}</th>
-		{/if}	
-		
+		{/if}
+
 		{assign var=numbercol value=$numbercol+1}
 		<th>{tr}Actions{/tr}</th>
 	</tr>
@@ -88,7 +88,7 @@
 		{assign var=section value=$channels[user].section}
 		{if $section ne $section_old}
 			{assign var=section_old value=$section}
-			{if ($tiki_p_admin eq 'y' or $tiki_p_admin_forum eq 'y')} 
+			{if ($tiki_p_admin eq 'y' or $tiki_p_admin_forum eq 'y')}
 				<tr>
 					<td class="third" colspan="7">{$section|escape}</td>
 				</tr>
@@ -130,7 +130,7 @@
 			{if $prefs.forum_list_ppd eq 'y'}
 				<td class="integer">{$channels[user].posts_per_day|string_format:"%.2f"}</td>
 			{/if}
-			{if $prefs.forum_list_lastpost eq 'y'}	
+			{if $prefs.forum_list_lastpost eq 'y'}
 				<td class="text">
 					{if isset($channels[user].lastPost)}
 						{$channels[user].lastPost|tiki_short_datetime}<br>
@@ -141,7 +141,7 @@
 			{/if}
 			{if $prefs.forum_list_visits eq 'y'}
 				<td class="integer">{$channels[user].hits}</td>
-			{/if}	
+			{/if}
 
 			<td class="action">
 				{if $prefs.mobile_mode eq 'y'}<div class="navbar" data-role="controlgroup" data-type="horizontal">{/if} {* mobile *}

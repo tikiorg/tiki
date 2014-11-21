@@ -7,7 +7,7 @@
 	<span style="display: none;">
 		<textarea id="fileData">{$data}</textarea>
 	</span>
-	
+
 	<input type="hidden" id="fileId" value="{$fileId}">
 	<input type="hidden" id="galleryId" value="{$galleryId}">
 	<input type="hidden" id="fileName" value="{$name}">
@@ -15,7 +15,7 @@
 	<input type="hidden" id="fileHeight" value="{$height}">
 	<input type="hidden" id="archive" value="{$archive}">
 	<input type="hidden" name="action" value="replace">
-	
+
 	<div id="drawEditor">
 		<div id="drawMenu">
 			{if $drawFullscreen neq 'true'}
@@ -29,6 +29,6 @@
 			{/if}
 		</div>
 	</div>
-	
+
 	<div id="map">{$map}</div>
 </form>

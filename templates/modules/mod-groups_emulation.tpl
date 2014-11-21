@@ -25,7 +25,7 @@
 		</ul >
 	</fieldset>
 	{/if}
-	
+
 	{if $groups_are_emulated eq 'y'}
 		<fieldset>
 			<legend>{tr}Emulated Groups{/tr}</legend>

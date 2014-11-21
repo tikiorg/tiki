@@ -46,12 +46,12 @@
 	</fieldset>
 	<fieldset>
 		<legend class="heading">{icon _id="bricks"} <span>{tr}Related features{/tr}</span></legend>
-		
+
 		{preference name=feature_wiki_paragraph_formatting}
 		<div class="adminoptionboxchild" id="feature_wiki_paragraph_formatting_childcontainer">
 			{preference name=feature_wiki_paragraph_formatting_add_br}
 		</div>
-		
+
 		<p class="description">
 			{preference name=feature_ajax}
 			<div class="adminoptionboxchild" id="feature_ajax_childcontainer">

@@ -23,7 +23,7 @@
 
 {elseif $command_result.action eq 'list'}
 
-  {* Show help for all available commands. There is any time at 
+  {* Show help for all available commands. There is any time at
      least one command present: 'help' -- its appended by debugger itself
    *}
   <table border="0">

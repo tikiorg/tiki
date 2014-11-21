@@ -92,11 +92,11 @@
 			{else}
 				{button _text="{tr}View My Items{/tr}" href="tiki-timesheet.php"}
 			{/if}
-			
+
 			{assign var=timeSheetI value=1}
 			{assign var=amountOfTimeSpent value="Amount of time spent"}
 			{assign var=doneBy value="Done by"}
-			
+
 			<div id="timeSheetSaved">
 				<table title="{tr}Saved (Committed){/tr}">
 					<tr>

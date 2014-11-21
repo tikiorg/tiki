@@ -59,7 +59,7 @@
 			{section name=i loop=$watching_categories}
 				<a class="btn btn-default btn-small" href="tiki-browse_categories.php?parentId={$watching_categories[i].categId}">{$watching_categories[i].name|escape}</a>&nbsp;
 			{/section}
-		{/if}	
+		{/if}
 		{/if}
 	</div>
 	{/if}

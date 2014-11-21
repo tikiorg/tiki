@@ -49,7 +49,7 @@
 			{if ($tiki_p_tracker_vote_ratings eq 'y' && (!isset($field.my_rate) || $field.my_rate === false)) ||
 				($tiki_p_tracker_revote_ratings eq 'y' && isset($field.my_rate) && $field.my_rate !== false)}
 				</a>
-			{/if}	
+			{/if}
 			{assign var='previousvote' value=$field.rating_options[i]}
 		{/section}
 		</span>

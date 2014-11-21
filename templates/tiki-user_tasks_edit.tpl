@@ -44,7 +44,7 @@
 <table class="formcolor">
 <colgroup><col width="25%" span="4"></colgroup>
   <tr>
-  	{if ($saved)} 
+  	{if ($saved)}
 	<td colspan="4" class="highlight"><div align="center"><h3>{tr}Task saved{/tr}</h3></div></td>
 	{else}
   	<td colspan="4">
@@ -52,9 +52,9 @@
 		<h3>
 		{if ($info.taskId > 0)}
 			{if (($info.creator eq $user) or ($info.user eq $user) or $admin_mode) and ($info.task_version eq $info.last_version)}
-				{tr}Edit Task{/tr} 
+				{tr}Edit Task{/tr}
 			{else}
-				{tr}View Task{/tr} 
+				{tr}View Task{/tr}
 			{/if}
 		{else}
 			{tr}Open a new task{/tr}
@@ -65,25 +65,25 @@
   {/if}
   </tr>
   <tr>
-	<td>{tr}Created by{/tr}</td> 
+	<td>{tr}Created by{/tr}</td>
 	<td colspan="2">
 		<b>{$info.creator|escape}</b>
 		&nbsp;&nbsp; <b>{$info.created|tiki_short_date}&nbsp;--&nbsp;{$info.created|tiki_short_time}</b>
-		&nbsp;&nbsp; 
-		{if ($info.task_version > 0)} 
+		&nbsp;&nbsp;
+		{if ($info.task_version > 0)}
 			<a class="link" href="tiki-user_tasks.php?taskId={$taskId}&amp;show_history={$info.task_version-1}">
 				{icon _id='resultset_previous' align="middle"}
 			</a>
   		{/if}
 		{tr}Version:{/tr} <b>{$info.task_version+1}</b>
-		{if $info.task_version < $info.last_version} 
+		{if $info.task_version < $info.last_version}
 			<a class="link" href="tiki-user_tasks.php?taskId={$taskId}&amp;show_history={$info.task_version+1}">
 				{icon _id='resultset_next' align="middle"}
 			</a>
   		{/if}
-		
-		&nbsp;&nbsp; 
-		
+
+		&nbsp;&nbsp;
+
 		<a class="link" href="tiki-user_tasks.php?taskId={$taskId}&amp;show_history={$info.last_version}">
 			{tr}Last Version:{/tr} {$info.last_version+1}
 		</a>
@@ -95,9 +95,9 @@
 	</td>
 	</tr>
   <tr>
-  	<td>{tr}Task user{/tr}</td> 
+  	<td>{tr}Task user{/tr}</td>
   		<td colspan="3">
-			{if ($receive_users)} 
+			{if ($receive_users)}
 				<select name="task_user" {if ($info.taskId > 0 and !$admin_mode)} disabled="disabled">
 					 <option value="{$info.user}">
 						{$info.user}
@@ -106,8 +106,8 @@
 				<input type="hidden" name="task_user" value="{$info.user}">
 			{else}
 				>
-				{section name=user_i loop=$receive_users} 
-					<option value="{$receive_users[user_i].login|escape}" 
+				{section name=user_i loop=$receive_users}
+					<option value="{$receive_users[user_i].login|escape}"
 						{if ( $receive_users[user_i].login eq $info.user)} selected="selected" {/if}>
 							{$receive_users[user_i].login|escape}
 					</option>
@@ -117,11 +117,11 @@
 			{else}
 			<input type="text" name="task_user" value="{$info.user|escape}">
 			{/if}
-			{if (($info.user ne $info.creator) or ($taskId eq 0))} 
+			{if (($info.user ne $info.creator) or ($taskId eq 0))}
 				&nbsp;
-				<input {if $info.creator ne $user} disabled="disabled" {/if} 
+				<input {if $info.creator ne $user} disabled="disabled" {/if}
 				{if $info.rights_by_creator eq 'y'} checked="checked" {/if}  name="rights_by_creator" type="checkbox">
-				&nbsp;{tr}Only the creator can delete this task{/tr} 
+				&nbsp;{tr}Only the creator can delete this task{/tr}
 			 {/if}
 		</td>
     </tr>
@@ -167,8 +167,8 @@
 		&nbsp;&nbsp;
 		<b>{$info.completed|tiki_short_date}&nbsp;--&nbsp;{$info.completed|tiki_short_time}</b>
 		</td>
-	</tr>  
-	
+	</tr>
+
 	<tr>
 		<td>{tr}Priority{/tr}</td>
 		<td colspan="3">
@@ -183,13 +183,13 @@
 	</tr>
 	<tr>
 		<td>{tr}Percentage completed{/tr}</td>
-		<td colspan="3">  
+		<td colspan="3">
 			 <select name="percentage">
-					<option value="w" {if $info.percentage_null} selected = "selected"  {/if}>{tr}Waiting{/tr}</option>	
+					<option value="w" {if $info.percentage_null} selected = "selected"  {/if}>{tr}Waiting{/tr}</option>
 				{section name=zz loop=$percs}
-					<option value="{$percs[zz]|escape}" {if $info.percentage eq $percs[zz] and !$info.percentage_null} selected = "selected" {/if} > 
-						{$percs[zz]}% 
-					</option>	
+					<option value="{$percs[zz]|escape}" {if $info.percentage eq $percs[zz] and !$info.percentage_null} selected = "selected" {/if} >
+						{$percs[zz]}%
+					</option>
 				{/section}
       		</select>
 		</td>
@@ -198,15 +198,15 @@
 		<td colspan="3">
 		<select name="public_for_group">
 			<option></option>
-		{section name=groups_i loop=$receive_groups} 
-			<option value="{$receive_groups[groups_i].groupName|escape}" 
+		{section name=groups_i loop=$receive_groups}
+			<option value="{$receive_groups[groups_i].groupName|escape}"
 				{if ( $receive_groups[groups_i].groupName eq $info.public_for_group)} selected="selected" {/if}>
 					{$receive_groups[groups_i].groupName|escape}
 			</option>
 		{/section}
 		</select>
 		</td>
-	</tr> 
+	</tr>
 	{if (($info.taskId > 0) and ($info.user ne $info.creator))}
 	<tr><td>{tr}Accepted by User{/tr}</td>
 		<td>
@@ -220,8 +220,8 @@
 			{else} {if $info.accepted_creator eq 'n'} {tr}No / Rejected{/tr}
 			{else} {tr}Waiting{/tr}{/if}{/if}
 		</td>
-	</tr> 
-	{/if} 
+	</tr>
+	{/if}
 	{if ($info.user ne $info.creator and ($info.task_version eq $info.last_version))}
 	<tr>
 		<td>{tr}Info{/tr}</td>
@@ -231,7 +231,7 @@
 			<input checked="checked" type="checkbox" name="task_send_changes_message">{tr}Send message with changes{/tr}
 		</td>
 	</tr>
-	{/if} 
+	{/if}
 	{if $info.task_version > 0}
 	<tr>
 		<td>{tr}Modified by{/tr}</td>
@@ -239,13 +239,13 @@
 			<b>{$info.lasteditor}</b>
 			&nbsp;&nbsp;<b>{$info.changes|tiki_short_date}&nbsp;--&nbsp;{$info.changes|tiki_short_time}</b>
 		</td>
-	</tr>  
+	</tr>
 	{/if}
-	
+
 	{if $info.deleted}
 	<tr><td>{tr}Marked as deleted{/tr}</td>
 		<td colspan="3"><b>{$info.deleted|tiki_short_date}&nbsp;--&nbsp;{$info.deleted|tiki_short_time}</b></td>
-	</tr> 
+	</tr>
 	{/if}
 	<tr>
 	{if (($info.creator eq $user) or ($info.user eq $user) or $admin_mode) and ($info.task_version eq $info.last_version)}

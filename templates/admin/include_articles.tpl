@@ -7,7 +7,7 @@
 {if !empty($msgs)}
 	<div class="alert alert-warning">
 	{foreach from=$msgs item=msg}
-	{$msg}			 
+	{$msg}
 	{/foreach}
 	</div>
 {/if}
@@ -45,7 +45,7 @@
 				{preference name=wikiplugin_articles}
 				{preference name=wikiplugin_article}
 			</fieldset>
-			
+
 			{preference name=art_home_title}
 			{preference name=maxArticles}
 
@@ -77,7 +77,7 @@
 
 				{preference name=geo_locate_article}
 				{preference name=feature_sefurl_title_article}
-				
+
 				{preference name=article_related_articles}
 
 				{preference name=tracker_article_tracker}
@@ -87,7 +87,7 @@
 
 				<input type="hidden" name="articlesfeatures" />
 			</fieldset>
-			
+
 			<fieldset>
 				<legend>
 					{tr}Article properties{/tr}
@@ -122,7 +122,7 @@
 				<div class="adminoptionbox">
 					<div class="adminoptionlabel">
 						<label for="csvlist">{tr}Batch upload (CSV file):{/tr}</label>
-						<input type="file" name="csvlist" id="csvlist" /> 
+						<input type="file" name="csvlist" id="csvlist" />
 						<br>
 						<em>{tr}File format: title,authorName,heading,body,lang,user{/tr}....</em>
 						<div align="center">
@@ -138,7 +138,7 @@
 			<fieldset>
 				<legend>{tr}List Articles{/tr}</legend>
 				<div class="adminoptionbox">
-					{tr}Select which items to display when listing articles:{/tr} 	  
+					{tr}Select which items to display when listing articles:{/tr}
 					<a class="rbox-link" href="tiki-list_articles.php">tiki-list_articles.php</a>
 				</div>
 				<input type="hidden" name="artlist" />
@@ -163,7 +163,7 @@
 				{preference name=art_list_reads}
 				{preference name=art_list_size}
 				{preference name=art_list_img}
-				
+
 				{preference name=gmap_article_list}
 			</fieldset>
 			<fieldset>

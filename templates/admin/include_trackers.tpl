@@ -1,7 +1,7 @@
 <form action="tiki-admin.php?page=trackers" method="post">
 
     <div class="row">
-        <div class="form-group col-lg-12 clearfix">            
+        <div class="form-group col-lg-12 clearfix">
 			<a role="button" class="btn btn-default btn-sm" href="tiki-list_trackers.php" title="{tr}List{/tr}">
 				{icon name="list"} {tr}Trackers{/tr}
 			</a>
@@ -107,11 +107,11 @@
 			{preference name=$name}
 		{/foreach}
 	</fieldset>
-	
+
 	{/tab}
 {/tabset}
 	<div class="row">
-        <div class="form-group col-lg-12 clearfix">            
+        <div class="form-group col-lg-12 clearfix">
 			<div class="text-center">
                 <input type="submit" class="btn btn-primary btn-sm" name="trkset" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}">
             </div>
@@ -162,7 +162,7 @@
           </th>
           <th>{tr}Switch storage{/tr}</th>
         </tr>
-        
+
         {section name=x loop=$attachements}
         <tr class={cycle}>
           <td class="id"><a href="tiki-download_item_attachment.php?attId={$attachements[x].attId}" title="{tr}Download{/tr}">{$attachements[x].attId}</a></td>
@@ -183,7 +183,7 @@
         {/section}
       </table>
       </div>
-      
+
 		{pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}
     </div>
 {if $attachements}

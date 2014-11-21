@@ -34,8 +34,8 @@ if($("#antibotcode").parents('form').data("validator")) {
 				},
 				input: function() {
 					return $jq("#antibotcode").val();
-				} 
-			} 
+				}
+			}
 		}
 	});
 } else {
@@ -53,8 +53,8 @@ if($("#antibotcode").parents('form').data("validator")) {
 						},
 						input: function() {
 							return $jq("#antibotcode").val();
-						} 
-					} 
+						}
+					}
 				}
 			}
 		},

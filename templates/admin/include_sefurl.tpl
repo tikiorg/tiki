@@ -12,7 +12,7 @@
             </div>
         </div>
     </div>
-	
+
 	<fieldset class="table">
 		<legend>{tr}Activate the feature{/tr}</legend>
 		{preference name=feature_sefurl visible="always"}
@@ -60,10 +60,10 @@
 			<em>{tr}For example, if the field is left blank, the canonical URL domain is:{/tr}</em> {$base_url_canonical_default}
 		</div>
 
-	</fieldset>		
-	
+	</fieldset>
+
 	<fieldset class="table">
-		
+
 		<legend>{tr}Settings{/tr}</legend>
 		{preference name=feature_sefurl_filter}
 
@@ -87,7 +87,7 @@
 		{preference name=feature_sefurl_tracker_prefixalias}
 	</fieldset>
     <br>{* I cheated. *}
-    
+
 	<div class="row">
         <div class="form-group col-lg-12 clearfix">
             <div class="text-center">

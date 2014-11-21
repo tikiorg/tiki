@@ -30,13 +30,13 @@
 
 <div class="adminoptionbox">
 	{preference name=feature_multilingual visible="always"}
-<div class="adminoptionboxchild" id="feature_multilingual_childcontainer">	
+<div class="adminoptionboxchild" id="feature_multilingual_childcontainer">
 
 	{preference name=feature_detect_language}
 	{preference name=feature_best_language}
 	{preference name=change_language}
 	{preference name=restrict_language}
-	
+
 	<div class="adminoptionboxchild" id="restrict_language_childcontainer">
 		{preference name=available_languages}
 		{preference name=language_inclusion_threshold}
@@ -50,11 +50,11 @@
 	{preference name=feature_translation_incomplete_notice}
 	{preference name=feature_multilingual_one_page}
 	{preference name=quantify_changes}
-	
+
 	{preference name=wiki_edit_minor}
-	
+
 	{preference name=feature_user_watches_translations}
-	
+
 	{preference name=feature_multilingual_structures}
 	{preference name=freetags_multilingual}
 	{preference name=category_i18n_sync}
@@ -64,13 +64,13 @@
 	{preference name=wiki_dynvar_multilingual}
 	{preference name=wikiplugin_tr}
 	{preference name=wikiplugin_lang}
-	{preference name=wikiplugin_translated}	
+	{preference name=wikiplugin_translated}
 </div>
 
 {preference name=lang_use_db}
 
 {preference name=record_untranslated}
-	
+
 {preference name=feature_machine_translation}
 <div class="adminoptionboxchild" id="feature_machine_translation_childcontainer">
 	{preference name=lang_machine_translate_implementation}

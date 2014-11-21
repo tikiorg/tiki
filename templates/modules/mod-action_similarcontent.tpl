@@ -3,7 +3,7 @@
 {section name=ix loop=$similarContent}
 <div class="{cycle} freetagitemlist" >
 {$similarContent[ix].type} : <a href="{$similarContent[ix].href}">{$similarContent[ix].name|escape}</a>
-</div>				
+</div>
 {/section}
 
 {/tikimodule}

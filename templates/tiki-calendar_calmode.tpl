@@ -28,11 +28,11 @@
 		{if ($prefs.display_field_order eq 'DMY') || ($prefs.display_field_order eq 'DYM') || ($prefs.display_field_order eq 'YDM')}
 			<a {if $prefs.mobile_mode eq "y"}data-role="button" data-inline="true" data-mini="true" data-theme="b" {/if}href="{$myurl}?focus={$cell[w][d].day}" title="{tr}Change Focus{/tr}" style="font-size:11px">{$cell[w][d].day|tiki_date_format:"%d/%m"}</a> {* mobile *}
 		{else} <a {if $prefs.mobile_mode eq "y"}data-role="button" data-inline="true" data-mini="true" data-theme="b" {/if}href="{$myurl}?focus={$cell[w][d].day}" title="{tr}Change Focus{/tr}" style="font-size:11px">{$cell[w][d].day|tiki_date_format:"%m/%d"}</a> {* mobile *}
-		{/if}			
+		{/if}
 		  </td>
 		  {if $myurl neq "tiki-action_calendar.php"}
 		  <td class="focus {if $cell[w][d].day eq $today}calhighlight{/if}" style="width:50%;text-align:right">
-{* add additional check to NOT show add event icon if no calendar displayed *} 
+{* add additional check to NOT show add event icon if no calendar displayed *}
 			{if $prefs.mobile_mode eq "y"}<div class="navbar" data-role="controlgroup" data-type="horizontal">{/if} {* mobile *}
 				{if $tiki_p_add_events eq 'y' and count($listcals) > 0 and $displayedcals|@count > 0}
 				<a {if $prefs.mobile_mode eq "y"}data-role="button" data-mini="true" {/if}href="tiki-calendar_edit_item.php?todate={$cell[w][d].day}{if $displayedcals|@count eq 1}&amp;calendarId={$displayedcals[0]}{/if}" title="{tr}Add Event{/tr}" class="addevent">{icon _id='calendar_add' alt="{tr}+{/tr}" title="{tr}Add Event{/tr}"}</a> {* mobile *}

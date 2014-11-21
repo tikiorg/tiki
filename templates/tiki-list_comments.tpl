@@ -21,7 +21,7 @@
 			</th>
 		{/if}
 		<th></th>
-	
+
 		{foreach key=headerKey item=headerName from=$headers}
 			<th>
 				{assign var=numbercol value=$numbercol+1}
@@ -43,7 +43,7 @@
 		{/if}
 		<th></th>
 	</tr>
-	
+
 
 	{section name=ix loop=$comments}{assign var=id value=$comments[ix].threadId}
 		{capture name=over_actions}

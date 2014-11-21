@@ -194,7 +194,7 @@
 					{preference name=print_pdf_webservice_url}
 				</div>
 			</fieldset>
-			
+
 			<fieldset>
 				<legend>{tr}Terms and Conditions{/tr}</legend>
 

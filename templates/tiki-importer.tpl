@@ -19,7 +19,7 @@
     {remarksbox type="note" title="{tr}Note:{/tr}"}
 	{tr}Depending on the size of the file from the source software, the import process may take a while to complete. This might be a problem according to your PHP and web server settings. This script tries to change the relevant settings but there are some settings that the script cannot change. So, if you are having problems with the script, please try to increase the value of the following PHP settings: max_input_time, max_execution_time (this setting is limited by the web server setting, if you are running Apache also change its Timeout setting), post_max_size, upload_max_filesize, memory_limit. It is recommended that you run this script on a server where you can change the values of those settings (if needed).{/tr}
     {/remarksbox}
-       
+
     <br>
     <label for="importerClassName">{tr}Select the software to import from:{/tr}</label>
     <form method="post" name="chooseSoftware" action="tiki-importer.php">
@@ -57,7 +57,7 @@
     </form>
 {elseif !empty($importFeedback)}
     <h4>{tr}Congratulations! You have successful imported your data to Tiki.{/tr}</h4>
-    
+
     {if isset($importFeedback.importedPages)}
     	<p>
 	    	{if isset($importFeedback.totalPages)}
@@ -72,11 +72,11 @@
 	{if isset($importFeedback.importedPosts)}
        	<p>{tr _0=$importFeedback.importedPosts}%0 posts imported.{/tr}</p>
 	{/if}
-	
+
 	{if isset($importFeedback.importedTags)}
        	<p>{tr _0=$importFeedback.importedTags}%0 tags imported.{/tr}</p>
 	{/if}
-	
+
 	{if isset($importFeedback.importedCategories)}
        	<p>{tr _0=$importFeedback.importedCategories}%0 categories imported.{/tr}</p>
 	{/if}
@@ -84,12 +84,12 @@
     {if !empty($importErrors)}
         <br>
         <p><b>{tr}Errors:{/tr}</b></p>
-        <textarea rows="15" cols="100" codemirror="false">{$importErrors}</textarea> 
+        <textarea rows="15" cols="100" codemirror="false">{$importErrors}</textarea>
     {/if}
     <br><br>
     <p><b>{tr}Importer log:{/tr}</b></p>
     <textarea rows="15" cols="100" codemirror="false">{$importLog}</textarea>
-    
+
     {if isset($wordpressUrls)}
     	<br><br>
     	<p><b>{tr}Suggested .htaccess rules:{/tr}</b></p>

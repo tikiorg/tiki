@@ -42,7 +42,7 @@
 			{/if}
 		{/if}
 	</div>
-	
+
 	{if $use_find eq 'y'}
 		<div class="blogtools">
 			{include file='find.tpl'}

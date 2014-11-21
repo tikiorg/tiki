@@ -23,13 +23,13 @@
 	{section name=author loop=$contributors}
 		{if !$smarty.section.author.last}
 			,
-		{else} 
+		{else}
 			{tr}and{/tr}
 		{/if}
 		{$contributors[author]|userlink}
 	{/section}.
 	<br>
-	{tr _0=$lastModif|tiki_long_datetime _1=$lastUser|userlink}Page last modified on %0 by %1{/tr}. 
+	{tr _0=$lastModif|tiki_long_datetime _1=$lastUser|userlink}Page last modified on %0 by %1{/tr}.
 	{if $prefs.wiki_show_version eq 'y'}
 		({tr}Version{/tr} {$lastVersion})
 	{/if}
@@ -43,7 +43,7 @@
 	{tr}Page last modified on{/tr} {$lastModif|tiki_long_datetime}
 {else}
 	{tr _0=$creator|userlink}Created by %0{/tr}.
-	{tr _0=$lastModif|tiki_long_datetime _1=$lastUser|userlink}Last Modification: %0 by %1{/tr}. 
+	{tr _0=$lastModif|tiki_long_datetime _1=$lastUser|userlink}Last Modification: %0 by %1{/tr}.
 	{if $prefs.wiki_show_version eq 'y'}
 		({tr}Version{/tr} {$lastVersion})
 	{/if}

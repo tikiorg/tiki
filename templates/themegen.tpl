@@ -71,7 +71,7 @@
 											<option value="inset"{if $tg_item.new eq 'inset'} selected="selected"{/if}">inset</option>
 											<option value="outset"{if $tg_item.new eq 'outset'} selected="selected"{/if}">outset</option>
 										</select>
-												
+
 									{else}{* "fontfamily", "text" etc *}
 										 <div class="tgLabel tgWide">
 											{$tg_item.old|truncate:999}

@@ -4,9 +4,9 @@
 {modules_list list=$modLastModif nonums=$nonums}
 	{section name=ix loop=$modLastModif}
 		<li>
-			<a class="linkmodule" 
+			<a class="linkmodule"
 			{if $absurl eq 'y'}
-				href="{$base_url}tiki-index.php?page={$modLastModif[ix].pageName|escape:"url"}" 
+				href="{$base_url}tiki-index.php?page={$modLastModif[ix].pageName|escape:"url"}"
 			{else}
 				href="{$modLastModif[ix].pageName|sefurl}"
 			{/if}
@@ -40,7 +40,7 @@
 				{else}
 					{$modLastModif[ix].pageName|escape}
 				{/if}
-				
+
 			{/if}
 			</a>
 		</li>

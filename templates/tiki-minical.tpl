@@ -35,7 +35,7 @@
 					</tr>
 				{sectionelse}
 					{norecords}
-				{/section}	
+				{/section}
 			</table>
 		</td>
 		<td width="180">

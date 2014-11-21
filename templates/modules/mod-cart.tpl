@@ -8,8 +8,8 @@
 				<th style="width:5em;">{tr}Unit cost{/tr}</th>
 				<th{if $module_params.showItemButtons eq 'n'} style="width:2em;"{/if}>{tr}Qty{/tr}</th>
 			</tr>
-	
-			{foreach from=$cart_content item=item} 
+
+			{foreach from=$cart_content item=item}
 					<tr>
 						<td>
 							{if $item.href}

@@ -12,7 +12,7 @@
 		{tr}Edit{/tr}
 	{else}
 		{tr}Create{/tr}
-	{/if} 
+	{/if}
 	{tr}content{/tr}
 </h2>
 
@@ -33,7 +33,7 @@
 				</select>
 			</td>
 		</tr>
-		
+
 		<tr class="type-cond for-page">
 			<td>{tr}Page Name:{/tr}</td>
 			<td>
@@ -51,7 +51,7 @@
 		<tr>
 			<td>{tr}Publishing date:{/tr}</td>
 			<td>
-				{html_select_date time=$publishDate end_year="+1" field_order=$prefs.display_field_order} 
+				{html_select_date time=$publishDate end_year="+1" field_order=$prefs.display_field_order}
 				{tr}at{/tr} {html_select_time time=$publishDate display_seconds=false use_24_hours=$use_24hr_clock}</td>
 		</tr>
 		<tr>

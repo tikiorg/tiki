@@ -30,7 +30,7 @@
 				{if !isset($user_watching_file_gallery) or $user_watching_file_gallery eq 'n'}
 					<a {if $prefs.mobile_mode eq 'y'} data-role="button"{/if} href="{query _type='relative' galleryName=$name watch_event='file_gallery_changed' watch_object=$galleryId watch_action='add'}" title="{tr}Monitor this gallery{/tr}">{icon _id=eye align='right' hspace="1" alt="{tr}Monitor this gallery{/tr}"}</a> {* mobile *}
 				{else}
-	
+
 					<a {if $prefs.mobile_mode eq 'y'} data-role="button"{/if} href="{query _type='relative' galleryName=$name watch_event='file_gallery_changed' watch_object=$galleryId watch_action='remove'}" title="{tr}Stop monitoring this gallery{/tr}">{icon _id=no_eye align='right' hspace="1" alt="{tr}Stop monitoring this gallery{/tr}"}</a> {* mobile *}
 				{/if}
 			{/if}
@@ -243,10 +243,10 @@ $("#viewSwitcher").change(function() {
 				<b>{$smarty.capture.use} %</b> {tr}space use on{/tr} <b>{$gal_info.quota} Mo</b>
 				<br>
 			{/if}
-			
+
 			{if $prefs.fgal_quota_show neq 'text_only'}
 				{quotabar length='100' value=$smarty.capture.use}
-			{/if}			
+			{/if}
 		</div>
 	{/if}
 	{if $prefs.fgal_elfinder_feature eq 'y' and $view eq 'finder'}

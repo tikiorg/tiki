@@ -47,11 +47,11 @@
 		{remarksbox type="warning" title="{tr}Important!{/tr}" highlight="y"}
 		<ul>
 			<li>
-				{tr}You should only modify default header.tpl and other important files via a text code editor, through console, 
+				{tr}You should only modify default header.tpl and other important files via a text code editor, through console,
 					or SSH, or FTP edit commands--and only if you know what you are doing! ;-){/tr}
 			</li>
 			<li>
-				{tr}Extensive customizations can be made safely through the <a href="tiki-admin.php?page=look" class="tips" 
+				{tr}Extensive customizations can be made safely through the <a href="tiki-admin.php?page=look" class="tips"
 					title="Look & Feel">Look & Feel</a> admin panel custom code or general layout areas.{/tr}
 			</li>
 			<li>
@@ -78,7 +78,7 @@
 				<input type="submit" class="btn btn-default btn-sm" name="saveTheme" value="{tr}Save Only in the Theme:{/tr} {$prefs.style|replace:'.css':''}">
 				{if $style_local eq 'y'}
 					<a href="tiki-edit_templates.php?template={$template|escape}&amp;delete=y">
-						<img src="img/icons/cross.png" alt="{tr}Delete the copy in the theme:{/tr} {$prefs.style|replace:'.css':''}" 
+						<img src="img/icons/cross.png" alt="{tr}Delete the copy in the theme:{/tr} {$prefs.style|replace:'.css':''}"
 							title="{tr}Delete the copy in the theme:{/tr} {$prefs.style|replace:'.css':''}">
 					</a>
 				{/if}

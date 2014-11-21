@@ -19,7 +19,7 @@
 {tabset name="admin_community"}
 		{tab name="{tr}User features{/tr}"}
             <h2>{tr}User features{/tr}</h2>
-	
+
 			<div class="admin featurelist">
 				{preference name=feature_score}
 				{preference name=feature_mytiki}
@@ -57,7 +57,7 @@
 				<div class="adminoptionboxchild" id="feature_userfiles_childcontainer">
 					{preference name=feature_use_fgal_for_user_files}
 				</div>
-				{preference name=feature_webmail}				
+				{preference name=feature_webmail}
 				{preference name=feature_userlevels}
 				{preference name=feature_groupalert}
 				{preference name=change_theme}
@@ -110,7 +110,7 @@
 				{preference name=activity_custom_events}
 
 				<div class="adminoptionboxchild" id="activity_custom_events_childcontainer">
-					
+
 					{$headerlib->add_dracula()}
 					{$headerlib->add_jsfile('lib/jquery_tiki/activity.js', 'external')}
 					<div id="graph-canvas" class="graph-canvas" data-graph-nodes="{$event_graph.nodes|@json_encode|escape}" data-graph-edges="{$event_graph.edges|@json_encode|escape}"></div>
@@ -141,7 +141,7 @@
 				{preference name=goal_group_blacklist}
 			</fieldset>
 		{/tab}
-		
+
 		{tab name="{tr}Plugins{/tr}"}
             <h2>{tr}Plugins{/tr}</h2>
 			{preference name=wikiplugin_author}
@@ -152,20 +152,20 @@
 			{preference name=wikiplugin_invite}
 			{preference name=wikiplugin_mail}
 			{preference name=wikiplugin_map}
-			{preference name=wikiplugin_memberlist}				
+			{preference name=wikiplugin_memberlist}
 			{preference name=wikiplugin_memberpayment}
 			{preference name=wikiplugin_perm}
 			{preference name=wikiplugin_proposal}
 			{preference name=wikiplugin_realnamelist}
 			{preference name=wikiplugin_subscribegroup}
-			{preference name=wikiplugin_subscribegroups}			
-			{preference name=wikiplugin_topfriends}		
+			{preference name=wikiplugin_subscribegroups}
+			{preference name=wikiplugin_topfriends}
 			{preference name=wikiplugin_usercount}
 			{preference name=wikiplugin_userlink}
 			{preference name=wikiplugin_userlist}
 			{preference name=wikiplugin_userpref}
 		{/tab}
-		
+
 
 		{tab name="{tr}General Settings{/tr}"}
             <h2>{tr}General Settings{/tr}</h2>
@@ -179,11 +179,11 @@
 			{preference name=user_who_viewed_my_stuff}
 			{preference name=user_who_viewed_my_stuff_days}
 			{preference name=user_who_viewed_my_stuff_show_others}
-			
+
 			{preference name=user_store_file_gallery_picture}
 			{preference name=user_picture_gallery_id}
 			{preference name=user_default_picture_id}
-			
+
 			<input type="hidden" name="userfeatures" />
 			<fieldset>
 				<legend>{tr}Community{/tr}{help url="Community"}</legend>
@@ -200,7 +200,7 @@
 					{preference name=feature_community_mouseover_distance}
 				</div>
 			</fieldset>
-		
+
 			{* ************ Users Default Preferences *}
 			<fieldset>
 				<legend>

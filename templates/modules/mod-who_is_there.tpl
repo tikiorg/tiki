@@ -16,7 +16,7 @@
 {/foreach}
 {else}
 <div>
-{$logged_users} 
+{$logged_users}
 {if $logged_users>1}
 {tr}online users{/tr}
 {elseif $logged_users>0}

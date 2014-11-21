@@ -10,7 +10,7 @@
 
 {if $mail_action eq 'delete'}{tr}The page {$mail_page} was deleted but used to be here:{/tr}
 {else}{tr}You can view the page by following this link:{/tr}
-{/if} 
+{/if}
 {$mail_machine_raw}/tiki-index.php?page={$mail_page|escape:"url"}
 
 {if $mail_action eq 'edit'}{tr}You can view a diff back to the previous version by following this link:{/tr} {* Using the full diff syntax so the links are still valid, even after a new version has been made.  -rlpowell *}

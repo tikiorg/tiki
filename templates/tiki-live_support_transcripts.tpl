@@ -10,7 +10,7 @@
 <tr>
 	<td>{tr}Find{/tr}</td>
 	<td>{tr}Username{/tr}</td>
-	<td>{tr}operator{/tr}</td>	
+	<td>{tr}operator{/tr}</td>
 	<td>&nbsp;</td>
 </tr>
 
@@ -74,7 +74,7 @@
 	<td class="odd">
 		{$events[ix].data}
 	</td>
-</tr>	
+</tr>
 {/section}
 </table>
 </div>

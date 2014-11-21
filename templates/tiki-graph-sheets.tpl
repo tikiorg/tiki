@@ -84,7 +84,7 @@ function renderWikiPlugin()
 function _renVal( dest, control )
 {
 	var val = document.chartParam[control].value;
-	
+
 	if( val.indexOf( "," ) != -1 )
 		return dest + '=>"' + val + '"';
 	else

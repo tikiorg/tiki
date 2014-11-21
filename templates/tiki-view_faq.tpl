@@ -4,7 +4,7 @@
 <div class="t_navbar btn-group form-group">
 	{self_link print='y'}{icon _id='printer' align='right' hspace='1' alt="{tr}Print{/tr}"}{/self_link}
 	{button href="tiki-list_faqs.php" class="btn btn-default" _text="{tr}List FAQs{/tr}"}
-	
+
 	{if $tiki_p_admin_faqs eq 'y'}
 		{button href="tiki-list_faqs.php?faqId=$faqId" class="btn btn-default" _text="{tr}Edit this FAQ{/tr}"}
 	{/if}

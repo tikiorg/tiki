@@ -10,7 +10,7 @@
 
 	{if $p.detail}
         <div class="help-block">{$p.detail|simplewiki}</div>
-	{/if}	
+	{/if}
 
 	{if $p.hint}
         <div class="help-block">{$p.hint|simplewiki}</div>

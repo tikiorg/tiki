@@ -6,7 +6,7 @@
 {if $field.options_array[2] neq 'y'}
 	<div class="{$field.ins_id|escape}">
 		{foreach from=$field.tag_suggestion item=t}
-			<a class="suggest" href="{$t|sefurl:'freetag'}" data-freetag="{$t|escape}">{$t|escape}</a>&nbsp; &nbsp; 
+			<a class="suggest" href="{$t|sefurl:'freetag'}" data-freetag="{$t|escape}">{$t|escape}</a>&nbsp; &nbsp;
 		{/foreach}
 	</div>
 	{jq notonready=true}

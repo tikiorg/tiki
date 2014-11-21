@@ -51,7 +51,7 @@
 			</td>
 		</tr>
 	</table>
-</form> 
+</form>
 
 <h2>{tr}Assigned sections{/tr}</h2>
 <form action="tiki-theme_control_sections.php" method="post">
@@ -83,4 +83,4 @@
 	</table>
     </div>
 </form>
-<br> <br> <br> 
+<br> <br> <br>

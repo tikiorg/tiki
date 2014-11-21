@@ -12,7 +12,7 @@
 {else}
 <div class="showsnapshot{$field.fieldId}_{$item.itemId}" style="display: none;">
 {remarksbox type="error" title="Show.tiki.org snapshot creation is in progress" close="n"}
-<p>Show.tiki.org snapshot creation is in progress... Please monitor <a class="snapshoturl{$field.fieldId}_{$item.itemId}" href="http://{$field.snapshoturl|escape}" target="_blank">http://{$field.snapshoturl|escape}</a> for progress. <strong>Note that if you get a popup asking for a username/password, please just enter "show" and "show".</strong></p> 
+<p>Show.tiki.org snapshot creation is in progress... Please monitor <a class="snapshoturl{$field.fieldId}_{$item.itemId}" href="http://{$field.snapshoturl|escape}" target="_blank">http://{$field.snapshoturl|escape}</a> for progress. <strong>Note that if you get a popup asking for a username/password, please just enter "show" and "show".</strong></p>
 {/remarksbox}
 </div>
 <div class="showresetok{$field.fieldId}_{$item.itemId}" style="display: none;">
@@ -52,7 +52,7 @@
 </div>
 <div class="shownone{$field.fieldId}_{$item.itemId}" {if $field.status neq 'NONE'}style="display: none;"{/if}>
 {remarksbox type="info" title="About show.tiki.org" close="n"}
-<p>To help developers solve the bug, we kindly request that you demonstrate your bug on a show.tiki.org instance. To start, simply select a version and click on "Create show.tiki.org instance". Once the instance is ready (in a minute or two), as indicated in the status window below, you can then access that instance, login (the initial admin username/password is "admin") and configure the Tiki to demonstrate your bug. Priority will be given to bugs that have been demonstrated on show.tiki.org.</p> 
+<p>To help developers solve the bug, we kindly request that you demonstrate your bug on a show.tiki.org instance. To start, simply select a version and click on "Create show.tiki.org instance". Once the instance is ready (in a minute or two), as indicated in the status window below, you can then access that instance, login (the initial admin username/password is "admin") and configure the Tiki to demonstrate your bug. Priority will be given to bugs that have been demonstrated on show.tiki.org.</p>
 {/remarksbox}
 Version: <select name="svntag">
 <option selected="selected">trunk</option>
@@ -112,7 +112,7 @@ function showtikiorg_process{{$field.fieldId}}_{{$item.itemId}}(action) {
 				$('.showmaint{{$field.fieldId}}_{{$item.itemId}}').hide();
 				$('.showfail{{$field.fieldId}}_{{$item.itemId}}').hide();
 				$('.showsnapshot{{$field.fieldId}}_{{$item.itemId}}').hide();
-				$('.showdestroy{{$field.fieldId}}_{{$item.itemId}}').hide();	
+				$('.showdestroy{{$field.fieldId}}_{{$item.itemId}}').hide();
 				$.tikiModal();
 			} else if (data.status == 'MAINT') {
 				$('.showmaint{{$field.fieldId}}_{{$item.itemId}}').show();

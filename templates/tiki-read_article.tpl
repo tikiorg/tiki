@@ -5,7 +5,7 @@
 	{/if}
 	{if $prefs.feature_submissions == 'y' && $tiki_p_edit_submission == "y" && $tiki_p_edit_article neq 'y' && $tiki_p_admin neq 'y' && $tiki_p_admin_cms neq 'y'}
 		{button href="tiki-edit_submission.php" _text="{tr}New Submission{/tr}"}
-	{/if}		
+	{/if}
 	{if $tiki_p_read_article eq 'y' or $tiki_p_articles_read_heading eq 'y' or $tiki_p_admin eq 'y' or $tiki_p_admin_cms eq 'y'}
 	{button href="tiki-view_articles.php" _text="{tr}View Articles{/tr}"}
 	{/if}
@@ -29,7 +29,7 @@
 
 {include file='article.tpl'}
 
-{if $prefs.feature_article_comments == 'y' && 
+{if $prefs.feature_article_comments == 'y' &&
 		($tiki_p_read_comments == 'y' || $tiki_p_post_comments == 'y' || $tiki_p_edit_comments == 'y')}
 
 	<div id="comment-container" data-target="{service controller=comment action=list type=article objectId=$articleId}"></div>

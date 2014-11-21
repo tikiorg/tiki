@@ -15,17 +15,17 @@
 	{tabset name="admin_blogs"}
 		{tab name="{tr}General Settings{/tr}"}
             <h2>{tr}General Settings{/tr}</h2>
-		
+
 			<fieldset class="table">
 				<legend>{tr}Activate the feature{/tr}</legend>
 				{preference name=feature_blogs visible="always"}
 			</fieldset>
-			
+
 			<fieldset class="table">
 				<legend>{tr}Plugins{/tr}</legend>
 				{preference name=wikiplugin_bloglist}
 			</fieldset>
-		
+
 			{preference name=home_blog}
 			<fieldset>
 				<legend>
@@ -41,7 +41,7 @@
 				{/if}
 
 				{preference name=geo_locate_blogpost}
-				{preference name=feature_sefurl_title_blog}				
+				{preference name=feature_sefurl_title_blog}
 			</fieldset>
 
 			<fieldset>
@@ -63,7 +63,7 @@
 			</fieldset>
 
 		{/tab}
-	
+
 		{tab name="{tr}Blogs Listings{/tr}"}
             <h2>{tr}Blogs Listings{/tr}</h2>
 			<input type="hidden" name="bloglistconf" />

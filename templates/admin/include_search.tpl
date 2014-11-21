@@ -125,7 +125,7 @@
 					{tr}Basic Search{/tr} {help url="Search"}
 				</legend>
 				{preference name=feature_search_fulltext}
-				<div class="adminoptionboxchild" id="feature_search_fulltext_childcontainer">				
+				<div class="adminoptionboxchild" id="feature_search_fulltext_childcontainer">
 					{preference name=feature_referer_highlight}
 
 					{preference name=feature_search_show_forbidden_obj}

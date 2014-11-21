@@ -24,24 +24,24 @@
 		<li>{tr}objects that include the term <strong>wiki</strong>{/tr}</li>
 		<li>{tr}objects that include the term <strong>forum</strong>{/tr}</li>
 	</ul>
-	
+
 	<h4>{tr}Requiring terms{/tr}</h4>
 	<p>
 		{tr}Add a plus sign ( + ) before a term to indicate that the term <em>must</em> appear in results.{/tr}&nbsp;
 		{tr}Example: <strong>+wiki forum</strong> will find objects containing at least <strong>wiki</strong>. Objects with both terms and many occurences of the terms will appear first.{/tr}
 	</p>
-	
+
 	<h4 id="excluding">{tr}Excluding terms{/tr}</h4>
 	<p>{tr}Add a minus sign ( - ) before a term to indicate that the term <em>must not</em> appear in the results.{/tr}&nbsp;
 	{tr}To reduce a term's value without completely excluding it, <a href="#reducing" title="Reducing a term's value">use a tilde</a>.{/tr}&nbsp;
 	{tr}Example: <strong>-wiki forum</strong> will find objects that do not contain <strong>wiki</strong> but contain <strong>forum</strong>{/tr}
 	</p>
-	
+
 	<h4>{tr}Grouping terms{/tr}</h4>
 	<p>{tr}Use parenthesis ( ) to group terms into subexpressions.{/tr}&nbsp;
 	{tr}Example: <strong>+wiki +(forum blog)</strong> will find objects that contain <strong>wiki</strong> and <strong>forum</strong> or that contain <strong>wiki</strong> and <strong>blog</strong> in any order.{/tr}</p>
-	
-	
+
+
 	<h4>{tr}Finding phrases{/tr}</h4>
 	<p>{tr}Use double quotes ( " " ) around a phrase to find terms in the exact order, exactly as typed.{/tr}&nbsp;
 	{tr}Example: <strong>"Alex Bell"</strong> will not find <strong>Bell Alex</strong> or <strong>Alex G. Bell</strong>. {/tr}</p>
@@ -53,9 +53,9 @@
 	<ul>
 		<li>{tr}objects that include the term <strong>run</strong>{/tr}</li>
 		<li>{tr}objects that include the term <strong>runner</strong>{/tr}</li>
-		<li>{tr}objects that include the term <strong>running</strong>{/tr}</li>		
+		<li>{tr}objects that include the term <strong>running</strong>{/tr}</li>
 	</ul>
-	
+
 	<h4 id="reducing">{tr}Reducing a term's value{/tr}</h4>
 	<p>
 		{tr}Add a tilde ( ~ ) before a term to reduce its value indicate to the ranking of the results.{/tr}&nbsp;

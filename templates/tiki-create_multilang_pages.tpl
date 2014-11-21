@@ -11,7 +11,7 @@
 				{/foreach}
 			</ul>
 		{/if}
-		
+
 		{if count($pages_not_created) > 0}
 			<b>{tr}Following pages were not created{/tr} ({tr}page already exists{/tr}):</b>
 			<p>
@@ -20,7 +20,7 @@
    					<li>{$lang}: {$page_links[$page_name]}</li>
 				{/foreach}
 			</ul>
-		{/if}	
+		{/if}
 	{/remarksbox}
 {/if}
 
@@ -40,13 +40,13 @@
 				<td><input type="text" name="page_name_{$lang_id}"></td>
 			</tr>
 		{/foreach}
-			
+
 	</table>
-	
+
 	<P></P>
-	
+
 	<b>{tr}Other languages{/tr}</b>
-	
+
 	<table>
 		<tr>
 		{foreach from=$other_languages key=index item=lang_id}
@@ -55,11 +55,11 @@
 				<td><input type="text" name="page_name_{$lang_id}"></td>
 			</tr>
 		{/foreach}
-			
-	</table>	
-	
+
+	</table>
+
 	<P></P>
-	
+
 	<input type="submit" class="btn btn-default btn-sm" id="create_multilang_pages_submit_button" value="{tr}Create pages{/tr}">
 
 </form>

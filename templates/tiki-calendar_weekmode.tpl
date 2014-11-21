@@ -46,7 +46,7 @@
 				{section name=weekday loop=$weekdays}
 					{if isset($smarty.section.weekday.index) and in_array($smarty.section.weekday.index,$viewdays)}
 						<td id="row_{$h[0]}_{$smarty.section.weekday.index}" class="calWeek">&nbsp;
-							
+
 						</td>
 					{/if}
 				{/section}

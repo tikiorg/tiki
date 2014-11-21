@@ -12,9 +12,9 @@
 	<fieldset class="table">
 		<legend>{tr}Activate the feature{/tr}</legend>
 		{preference name=feature_webmail visible="always"}
-	</fieldset>		
+	</fieldset>
 
-	
+
 	<fieldset class="table">
 		<legend>{tr}Settings{/tr}</legend>
 		{preference name=webmail_view_html}

@@ -18,7 +18,7 @@
 				{/if}
 				{if $symbol}
 					{tr}Symbol{/tr}:{$symbol.object} ({tr}Profile Name{/tr}:{$symbol.profile}, {tr}Profile Source{/tr}:{$symbol.domain})
-				{/if}	
+				{/if}
 			</p>
 		</div>
 		<div class="form-group">

@@ -1,10 +1,10 @@
 {* $Id$ *}
-{* \brief Show wiki syntax help 
+{* \brief Show wiki syntax help
  * included by tiki-show_help.tpl via smarty_block_add_help()
  * TODO: Add links to add samples to edit form *}
 
 <h3>{tr}Wiki Syntax{/tr}</h3>
-{if $prefs.feature_help eq 'y'} 
+{if $prefs.feature_help eq 'y'}
 	{remarksbox type="info" title="{tr}More information{/tr}"}
 		<a href="{$prefs.helpurl}Wiki+Page+Editor" target="tikihelp" class="tikihelp alert-link" title="{tr}Wiki Page Editor:{/tr} {tr}More help on editing wiki pages{/tr}">
 			{tr}Wiki Page Editor{/tr}
@@ -22,7 +22,7 @@
 	{if (!isset($wysiwyg) or $wysiwyg ne 'y') or (isset($wysiwyg) and $wysiwyg eq 'y' and $prefs.wysiwyg_wiki_parsed eq 'y')}
 		<tr>
 			<td>
-				<img src='img/icons/text_bold.png' alt=''> <strong>{tr}Bold text{/tr}</strong> &nbsp;&nbsp;&nbsp; __{tr}text{/tr}__ 
+				<img src='img/icons/text_bold.png' alt=''> <strong>{tr}Bold text{/tr}</strong> &nbsp;&nbsp;&nbsp; __{tr}text{/tr}__
 			</td>
 		</tr>
 		<tr>
@@ -57,7 +57,7 @@
 		</tr>
 		<tr>
 			<td>
-				<strong>{tr}Autonumbered Headings{/tr}</strong> <br/> !#, !!#, !+#, !-# ... 
+				<strong>{tr}Autonumbered Headings{/tr}</strong> <br/> !#, !!#, !+#, !-# ...
 			</td>
 		</tr>
 	{/if}{* wysiwyg *}
@@ -69,7 +69,7 @@
 	{if (!isset($wysiwyg) or $wysiwyg ne 'y') or (isset($wysiwyg) and $wysiwyg eq 'y' and $prefs.wysiwyg_wiki_parsed eq 'y')}
 		<tr>
 			<td>
-				<img src='img/icons/page.png' alt=''> <strong>{tr}Horizontal rule{/tr}</strong> &nbsp;&nbsp;&nbsp; -<em></em>-<em></em>-<em></em>- 
+				<img src='img/icons/page.png' alt=''> <strong>{tr}Horizontal rule{/tr}</strong> &nbsp;&nbsp;&nbsp; -<em></em>-<em></em>-<em></em>-
 			</td>
 		</tr>
 		<tr>
@@ -133,12 +133,12 @@
 		{/if}
 		<tr>
 			<td>
-				<img src='img/icons/text_padding_top.png' alt=''> <strong>{tr}Title bar{/tr}</strong> &nbsp;&nbsp;&nbsp; -={tr}Title{/tr}=- 
+				<img src='img/icons/text_padding_top.png' alt=''> <strong>{tr}Title bar{/tr}</strong> &nbsp;&nbsp;&nbsp; -={tr}Title{/tr}=-
 			</td>
 		</tr>
 		<tr>
 			<td>
-				<strong>{tr}Monospace font{/tr}</strong> &nbsp;&nbsp;&nbsp; -+{tr}Code sample{/tr}+- 
+				<strong>{tr}Monospace font{/tr}</strong> &nbsp;&nbsp;&nbsp; -+{tr}Code sample{/tr}+-
 			</td>
 		</tr>
 	{/if}{* wysiwyg *}

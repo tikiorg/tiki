@@ -5,7 +5,7 @@
 
 	{foreach from=$p.options key=value item=label name=loop}
 		<div class="adminoptionlabel">
-			 <input id="{$p.id|cat:'_'|cat:$smarty.foreach.loop.index|escape}" type="radio" name="{$p.preference|escape}" 
+			 <input id="{$p.id|cat:'_'|cat:$smarty.foreach.loop.index|escape}" type="radio" name="{$p.preference|escape}"
 			 	value="{$value}"{if $p.value eq $value} checked="checked"{/if} {$p.params}
 				data-tiki-admin-child-block="#{$p.preference|escape}_childcontainer_{$smarty.foreach.loop.index|escape}"
 				>

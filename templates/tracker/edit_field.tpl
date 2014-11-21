@@ -38,7 +38,7 @@
 					</label>
 				</div>
 			{/if}
-			
+
 			{foreach from=$info.params key=param item=def}
 				<div class="form-group">
 					<label for="option~{$param|escape}" class="control-label">{$def.name|escape}</label>

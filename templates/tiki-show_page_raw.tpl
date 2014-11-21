@@ -12,7 +12,7 @@
       {/if}
     {/if}
     {$contributors[author]}
-    {/section}.<br>                                         
+    {/section}.<br>
     {tr}Page last modified on{/tr} {$lastModif|tiki_long_datetime}.
   </footer>
   {elseif isset($prefs.wiki_authors_style) &&  $prefs.wiki_authors_style eq 'collaborative'}
@@ -37,19 +37,19 @@
   {if (!$prefs.page_bar_position or $prefs.page_bar_position eq 'bottom' or $prefs.page_bar_position eq 'both') and $machine_translate_to_lang == ''}
 	  {include file='tiki-page_bar.tpl'}
   {/if}
-  
+
   {if $is_slideshow eq 'y'}
   	<div id="tiki_slideshow_buttons" style="display: none;">
 		<a href="#" onclick="$.s5.first(); return false;" title="{tr}First Slide{/tr}">
-			<img src="vendor/jquery/jquery-s5/images/resultset_first.png" alt="{tr}First Slide{/tr}"></a> 
+			<img src="vendor/jquery/jquery-s5/images/resultset_first.png" alt="{tr}First Slide{/tr}"></a>
 		<a href="#" onclick="$.s5.prev(); return false;" title="{tr}Previous Slide{/tr}">
 			<img src="vendor/jquery/jquery-s5/images/resultset_previous.png" alt="{tr}Previous Slide{/tr}"></a>
 		<a href="#" onclick="$.s5.goLI('prev'); return false;" title="{tr}Previous Point{/tr}">
 			<img src="img/icons/resultset_up.png" alt="{tr}Previous Point{/tr}"></a>
 		<a href="#" onclick="$.s5.goLI('next'); return false;" title="{tr}Next Point{/tr}">
-			<img src="img/icons/resultset_down.png" alt="{tr}Next Point{/tr}"></a> 
+			<img src="img/icons/resultset_down.png" alt="{tr}Next Point{/tr}"></a>
 		<a href="#" onclick="$.s5.next(); return false;" title="{tr}Next Slide{/tr}">
-			<img src="vendor/jquery/jquery-s5/images/resultset_next.png" alt="{tr}Next Slide{/tr}"></a> 
+			<img src="vendor/jquery/jquery-s5/images/resultset_next.png" alt="{tr}Next Slide{/tr}"></a>
 		<a href="#" onclick="$.s5.last(); return false;" title="{tr}Last Slide{/tr}">
 			<img src="vendor/jquery/jquery-s5/images/resultset_last.png" alt="{tr}Last Slide{/tr}"></a>
 		<a href="#" onclick="$.s5.listSlideTitles(this); return false;" title="{tr}Jump To Slide{/tr}">
@@ -102,15 +102,15 @@
 	</div>
 	<div id="tiki_slideshowNote_buttons" style="display: none;">
 		<a href="#" onclick="window.opener.$.s5.first(); return false;" title="{tr}First Slide{/tr}">
-			<img src="vendor/jquery/jquery-s5/images/resultset_first.png" alt="{tr}First Slide{/tr}"></a> 
+			<img src="vendor/jquery/jquery-s5/images/resultset_first.png" alt="{tr}First Slide{/tr}"></a>
 		<a href="#" onclick="window.opener.$.s5.prev(); return false;" title="{tr}Previous Slide{/tr}">
 			<img src="vendor/jquery/jquery-s5/images/resultset_previous.png" alt="{tr}Previous Slide{/tr}"></a>
 		<a href="#" onclick="window.opener.$.s5.goLI('prev'); return false;" title="{tr}Previous Point{/tr}">
 			<img src="img/icons/resultset_up.png" alt="{tr}Previous Point{/tr}"></a>
 		<a href="#" onclick="window.opener.$.s5.goLI('next'); return false;" title="{tr}Next Point{/tr}">
-			<img src="img/icons/resultset_down.png" alt="{tr}Next Point{/tr}"></a> 
+			<img src="img/icons/resultset_down.png" alt="{tr}Next Point{/tr}"></a>
 		<a href="#" onclick="window.opener.$.s5.next(); return false;" title="{tr}Next Slide{/tr}">
-			<img src="vendor/jquery/jquery-s5/images/resultset_next.png" alt="{tr}Next Slide{/tr}"></a> 
+			<img src="vendor/jquery/jquery-s5/images/resultset_next.png" alt="{tr}Next Slide{/tr}"></a>
 		<a href="#" onclick="window.opener.$.s5.last(); return false;" title="{tr}Last Slide{/tr}">
 			<img src="vendor/jquery/jquery-s5/images/resultset_last.png" alt="{tr}Last Slide{/tr}"></a>
 		<a href="#" onclick="window.opener.$.s5.listSlideTitles(this); return false;" title="{tr}Jump To Slide{/tr}">

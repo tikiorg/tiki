@@ -27,7 +27,7 @@
 	<fieldset class="table">
 		<legend>{tr}Activate the feature{/tr}</legend>
 		{preference name=feature_categories visible="always"}
-	</fieldset>	
+	</fieldset>
 
 	<fieldset class="table">
 		<legend>{tr}Plugins{/tr}</legend>
@@ -35,13 +35,13 @@
 		{preference name=wikiplugin_catpath}
 		{preference name=wikiplugin_catorphans}
 	</fieldset>
-	
+
 	<fieldset>
-	
+
 		<legend>
 			{tr}Features{/tr}{help url="Category"}
 		</legend>
-		
+
 		{preference name=feature_categorypath}
 		<div class="adminoptionboxchild" id="feature_categorypath_childcontainer">
 			{preference name=categorypath_excluded}

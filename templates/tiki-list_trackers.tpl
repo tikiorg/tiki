@@ -105,11 +105,11 @@
 							<a href="tiki-view_tracker.php?trackerId={$tracker.trackerId}&amp;watch=add" title="{tr}Monitor{/tr}">{icon _id='eye' alt="{tr}Monitor{/tr}"}</a>
 						{/if}
 					{/if}
-				
+
 					{if $prefs.feed_tracker eq "y"}
 						<a href="tiki-tracker_rss.php?trackerId={$tracker.trackerId}">{icon _id='feed' alt="{tr}Feed{/tr}"}</a>
 					{/if}
-					
+
 					{if $tracker.permissions->admin_trackers}
 						<a title="{tr}Fields{/tr}" class="link" href="tiki-admin_tracker_fields.php?trackerId={$tracker.trackerId}">{icon _id='table' alt="{tr}Fields{/tr}"}</a>
 						<a title="{tr}Edit{/tr}" class="edit" data-toggle="modal" data-target="#bootstrap-modal" href="{service controller=tracker action=replace trackerId=$tracker.trackerId modal=true}">{icon _id='pencil' alt="{tr}Edit{/tr}"}</a>

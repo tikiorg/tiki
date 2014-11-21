@@ -14,6 +14,6 @@
 	{/remarksbox}
 
 	{$yaml}
-	
+
 {/if}
 {/block}

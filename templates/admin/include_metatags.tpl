@@ -37,7 +37,7 @@
 	{tab name="{tr}Robots{/tr}"}
         <h2>{tr}Robots{/tr}</h2>
 		{* Need to show site_metatag_robots as real metatags are overridden at runtime *}
-				
+
 		{preference name=metatag_robots}
 		{preference name=metatag_revisitafter}
 	{/tab}

@@ -94,4 +94,4 @@
 			</table>
 		</form>
 	{/if}
-{/if} 
+{/if}

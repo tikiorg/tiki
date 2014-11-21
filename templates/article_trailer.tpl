@@ -6,7 +6,7 @@
 			{/if}
 		</span>
 		<div class="actions pull-right">
-		{if $prefs.feature_multilingual eq 'y' and $lang and $prefs.show_available_translations eq 'y'}	
+		{if $prefs.feature_multilingual eq 'y' and $lang and $prefs.show_available_translations eq 'y'}
 			{include file='translated-lang.tpl' object_type='article'}
 		{/if}
 		{if $prefs.user_favorites eq 'y'}

@@ -89,11 +89,11 @@ document.getElementById("translation_name").focus();
 function validate_translation_request() {
    var success = true;
    var language_of_translation = $("#language_list").val();
-  
+
    if (language_of_translation == "unspecified") {
 {/literal}
       var message = {tr}"You forgot to specify the language of the translation. Please choose a language in the picklist."{/tr};
-{literal}   
+{literal}
       alert(message);
       success = false;
    } else {
@@ -104,7 +104,7 @@ function validate_translation_request() {
 	  if( matching_options.length > 0 ) {
           var message = {tr}"The page already exists. It was selected in the list below."{/tr};
           alert( message );
-	  	
+
           success = false;
 	  }
    }

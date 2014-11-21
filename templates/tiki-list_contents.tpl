@@ -2,9 +2,9 @@
 
 {remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}To use content blocks in a text area (Wiki page, etc), a <a class="rbox-link" href="tiki-admin_modules.php">module</a> or a template, use {literal}{content id=x}{/literal}, where x is the ID of the content block.{/tr} {tr}You can also use {literal}{content label=x}{/literal}, where x is the label of the content block.{/tr}{/remarksbox}
 {tabset}
-	{tab name="{tr}Available content blocks{/tr}"}	
+	{tab name="{tr}Available content blocks{/tr}"}
 		<h2>{tr}Available content blocks{/tr}</h2>
-		
+
 		{if $listpages or $find neq ''}
 		  {include file='find.tpl'}
 		{/if}
@@ -56,7 +56,7 @@
 		  {tr}Create content block{/tr}
 		{/if}
 		</h2>
-	
+
 		{if $contentId ne ''}
 			<div class="t_navbar">{button href="tiki-list_contents.php" class="btn btn-default" _text="{tr}Create New Block{/tr}"}</div>
 		{/if}

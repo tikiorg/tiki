@@ -28,7 +28,7 @@
 						{if $Client.City && $Client.Province && $Client.$PostalCode}{$Client.City} {$Client.Province}, {$Client.$PostalCode}<br>{/if}
 						{if $Client.Website}<a href='{$Client.Website}'>{$Client.Website}</a><br>{/if}
 						{tr}Tax Status:{/tr} {if $Client.$TaxStatus eq 'y'}{tr}Taxable{/tr}{else}Not Taxable{/if}<br>
-						
+
 						{button href="tiki-invoice_edit_client_contact.php?contact=$contactId" _text="{tr}View{/tr}"}
 						{button href="tiki-invoice_edit_client_contact.php?contact=$contactId" _text="{tr}Edit{/tr}"}
 						{button href="tiki-invoice_edit_client_contact.php?contact=$contactId" _text="{tr}Delete{/tr}"}
@@ -39,7 +39,7 @@
 							{if $contactId}
 								{$Client.$ContactTitles[$k]} {$Client.$ContactFirstNames[$k]} {$Client.$ContactLastNames[$k]}<br>
 								{$Client.$ContactEmails[$k]}
-								
+
 								<br>
 								{button href="tiki-invoice_edit_client_contact.php?contact=$contactId" _text="{tr}View{/tr}"}
 								{button href="tiki-invoice_edit_client_contact.php?contact=$contactId" _text="{tr}Edit{/tr}"}

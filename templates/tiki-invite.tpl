@@ -25,7 +25,7 @@
   {foreach from=$smarty.request.invitegroups item=g}
    <input type='hidden' name='invitegroups[]' value='{$g|escape}'>
   {/foreach}
-  
+
 
   <input type='submit' name='confirm' value="{tr}Ok{/tr}">
   <input type='submit' name='back' value="{tr}Go back{/tr}">
@@ -39,7 +39,7 @@
  <form method='POST' action='tiki-invite.php'>
   <br>
   <div style='text-align: right'>
-   Load a previous invitation settings : 
+   Load a previous invitation settings :
    <select name='loadprevious' onchange='this.form.submit()'>
     <option value=''>-</option>
     {foreach from=$previous item=prev}
@@ -90,7 +90,7 @@ You are here because you have just clicked on the link from my invitation email.
   </select></div>
 {else}
 <input type='hidden' name='invitegroups' value=''>
-{/if} 
+{/if}
   <br>
   <div>Redirect to this wiki page after invitation acceptance (let it blank if unwanted) : <input type='text' name='wikipageafter' value='{$smarty.request.wikipageafter|escape}'></div>
   <br>

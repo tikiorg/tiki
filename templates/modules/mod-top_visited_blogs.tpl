@@ -17,7 +17,7 @@
 					{tr}(Read More){/tr}
 				</a>
 			</div>
-		{else}	
+		{else}
 			<a class="linkmodule" href="{$modTopVisitedBlogs[ix].blogId|sefurl:blog}">
 				{$modTopVisitedBlogs[ix].title|escape}
 			</a>

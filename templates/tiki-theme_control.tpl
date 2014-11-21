@@ -58,7 +58,7 @@
 			</td>
 		</tr>
 	</table>
-</form> 
+</form>
 
 <h2>{tr}Assigned categories{/tr}</h2>
 

@@ -31,7 +31,7 @@
 <tr>
   <td>{tr}Max Impressions:{/tr}</td>
   <td>{$maxImpressions}</td>
-</tr>    
+</tr>
 <tr>
   <td>{tr}Impressions:{/tr}</td>
   <td>{$impressions}</td>
@@ -39,7 +39,7 @@
 <tr>
   <td>{tr}Max Clicks:{/tr}</td>
   <td>{$maxClicks}</td>
-</tr>    
+</tr>
 
 <tr>
   <td>{tr}Clicks:{/tr}</td>

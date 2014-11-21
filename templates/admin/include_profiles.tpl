@@ -9,7 +9,7 @@
 
 			if( status.src == pending )
 				return;
-			
+
 			status.src = pending;
 
 			var req = getHttpRequest( 'POST', baseURI + '&refresh=' + escape(entry), true );
@@ -27,7 +27,7 @@
 		} // }}}
 
 		function showDetails( id, domain, profile ) { // {{{
-			
+
 			var nid = id + "-sub";
 			var infoId = id + "-info";
 			var prev = document.getElementById( id );
@@ -49,10 +49,10 @@
 				prev.getElementsByTagName("td")[0].appendChild( infoOb );
 			}
 			infoOb.innerHTML = " {/literal}{tr}Loading profile{/tr}{literal}...";
-			
+
 			var req = getHttpRequest( 'POST', baseURI + '&getinfo&pd=' + escape(domain) + '&pp=' + escape(profile), true );
 			req.onreadystatechange = function (aEvt) {
-				
+
 				if (infoOb) {
 					infoOb.innerHTML = " ";
 
@@ -68,9 +68,9 @@
 
 						row.appendChild( cell );
 						cell.colSpan = 3;
-						
+
 						if( data.installable || data.already ) {
-						
+
 							var pStep = document.createElement('p');
 							pStep.style.fontWeight = 'bold';
 							if( data.installable ) {
@@ -78,9 +78,9 @@
 							} else if ( data.already ) {
 								pStep.innerHTML = "A version of this profile is already applied.";
 							}
-							
+
 							var form = document.createElement( 'form' );
-							var p = document.createElement('p');				
+							var p = document.createElement('p');
 							var submit = document.createElement('input');
 							var pd = document.createElement('input');
 							var pp = document.createElement('input');
@@ -124,8 +124,8 @@
 								submit.name = 'forget';
 								submit.value = 'Forget and Re-apply';
 								form.setAttribute ( "onsubmit", 'return confirm(\"{/literal}{tr}Are you sure you want to re-apply the profile{/tr}{literal} ' + profile + '?\");' );
-							}					
-							
+							}
+
 							p.appendChild(submit);
 							pd.type = 'hidden';
 							pd.name = 'pd';
@@ -195,7 +195,7 @@
 
 					}
 				} else {		// readyState not 4 (complete)
-					
+
 					switch (req.readyState) {
 						case 1: {
 							infoOb.innerHTML = " {/literal}{tr}Loading profile{/tr}{literal}...";
@@ -210,7 +210,7 @@
 							break;
 						}
 					}
-					
+
 				}
 			}
 			req.send('');
@@ -243,7 +243,7 @@
 					{tr}Some of your Profiles Repositories are not connecting. This may prevent you from applying certain profiles{/tr}
 				{/remarksbox}
 			{/if}
-			<form method="get" action="tiki-admin.php">	
+			<form method="get" action="tiki-admin.php">
 				<h4>{tr}Find Profiles{/tr} <small>{tr}Search by name, types and repository{/tr}</small></h4>
 				<div class="table-responsive">
 					<table class="table normal">
@@ -252,7 +252,7 @@
 								<div class="form-group">
 									<label class="control-label" for="profile">{tr}Profile name{/tr} </label>
 									<input type="text" class="form-control" name="profile" placeholder="{tr}Find{/tr}..." id="profile" value="{if isset($profile)}{$profile|escape}{/if}" /></div>
-								</div>	
+								</div>
 								{if isset($category_list) and count($category_list) gt 0}
 									<div class="form-group">
 										<label class="control-label" for="categories">{tr}Profile Types{/tr}</label>
@@ -298,25 +298,25 @@ $("#repository, #categories").change(function(){
 								{assign var=profilesFilterUrlStart value='tiki-admin.php?profile=&categories%5B%5D='}
 								{assign var=profilesFilterUrlMid value='.x&categories%5B%5D='}
 								{assign var=profilesFilterUrlEnd value='&repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2'}
-								
+
 								<p>
 									{assign var=profilesFilterUrlFeaturedProfiles value='Featured+profiles'}
 									<a href="{$profilesFilterUrlStart}{$tikiMajorVersion}{$profilesFilterUrlMid}{$profilesFilterUrlFeaturedProfiles}{$profilesFilterUrlEnd}" class="alert-link">{tr}Featured Site Profiles{/tr}</a>
 									<br>{tr}Featured Site Profiles is a list of applications that are maintained by the Tiki community and are a great way to get started.{/tr}
 								</p>
-								
+
 								<p>
 									{assign var=profilesFilterUrlFullProfiles value='Full+profile+(out+of+the+box+%26+ready+to+go)'}
 									<a href="{$profilesFilterUrlStart}{$tikiMajorVersion}{$profilesFilterUrlMid}{$profilesFilterUrlFullProfiles}{$profilesFilterUrlEnd}" class="alert-link">{tr}Full Profiles{/tr}</a>
-									<br>{tr}Full Profiles are full featured out of the box solutions.{/tr} 
+									<br>{tr}Full Profiles are full featured out of the box solutions.{/tr}
 								</p>
-	
+
 								<p>
 									{assign var=profilesFilterUrlMiniProfiles value='Mini-profile+(can+be+included+in+other)'}
 									<a href="{$profilesFilterUrlStart}{$tikiMajorVersion}{$profilesFilterUrlMid}{$profilesFilterUrlMiniProfiles}{$profilesFilterUrlEnd}" class="alert-link">{tr}Mini Profiles{/tr}</a>
-									<br>{tr}Mini Profiles will configure specific features and are a great way to add more functionality to an existing configuration.{/tr} 
+									<br>{tr}Mini Profiles will configure specific features and are a great way to add more functionality to an existing configuration.{/tr}
 								</p>
-	
+
 								<p>
 									{assign var=profilesFilterUrlLearningProfiles value='Learning+profile+(just+to+show+off+feature)'}
 									<a href="{$profilesFilterUrlStart}{$tikiMajorVersion}{$profilesFilterUrlMid}{$profilesFilterUrlLearningProfiles}{$profilesFilterUrlEnd}" class="alert-link">{tr}Learning Profiles{/tr}</a>

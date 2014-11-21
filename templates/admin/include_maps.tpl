@@ -55,7 +55,7 @@
 
 	<fieldset class="table">
 		<legend>{tr}MapServer settings{/tr}</legend>
-		
+
 		{preference name=feature_maps}
 		<div class="adminoptionboxchild" id="feature_maps_childcontainer">
 			{if $map_error neq ''}

@@ -10,8 +10,8 @@
 
 {if $mail_contributions}{tr}Contribution:{/tr} {$mail_contributions}{/if}
 {else}
-{if $mail_author}"{$mail_author|username}"{else}{tr}An anonymous user{/tr}{/if} {tr}has posted a reply to a thread you're watching. 
-You can view the thread and reply at the following URL:{/tr} 
+{if $mail_author}"{$mail_author|username}"{else}{tr}An anonymous user{/tr}{/if} {tr}has posted a reply to a thread you're watching.
+You can view the thread and reply at the following URL:{/tr}
 
 {$mail_machine}/tiki-view_forum_thread.php?forumId={$forumId}&comments_parentId={$topicId}{if $threadId}#threadId{$threadId}{/if}
 {/if}

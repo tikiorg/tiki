@@ -48,7 +48,7 @@
 				<div class="radio">
 					<label>
 						<input type="radio" {if ! $object_selector.current_selection} checked="checked" {/if} value="" name="{$object_selector.id|escape}_sel" class="protected">
-						&mdash;	
+						&mdash;
 					</label>
 				</div>
 				{if $object_selector.current_selection}

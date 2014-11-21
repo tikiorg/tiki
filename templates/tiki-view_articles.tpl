@@ -13,11 +13,11 @@
 		{/if}
 		{if $prefs.feature_submissions == 'y' && $tiki_p_edit_submission == "y" && $tiki_p_edit_article neq 'y' && $tiki_p_admin neq 'y' && $tiki_p_admin_cms neq 'y'}
 			{button href="tiki-edit_submission.php" class="btn btn-default" _text="{tr}New Submission{/tr}"}
-		{/if}		
+		{/if}
 		{if $tiki_p_read_article eq 'y' or $tiki_p_articles_read_heading eq 'y' or $tiki_p_admin eq 'y' or $tiki_p_admin_cms eq 'y'}
 		{button href="tiki-list_articles.php" class="btn btn-default" _text="{tr}List Articles{/tr}"}
 		{/if}
-	
+
 		{if $prefs.feature_submissions == 'y' && ($tiki_p_approve_submission == "y" || $tiki_p_remove_submission == "y" || $tiki_p_edit_submission == "y")}
 			{button href="tiki-list_submissions.php" class="btn btn-default" _text="{tr}View Submissions{/tr}"}
 		{/if}
@@ -58,7 +58,7 @@
 				<a class="freetag" href="tiki-browse_freetags.php?tag={$smarty.capture.tagurl|escape:'url'}">{$taginfo.tag}</a>
 				{/foreach}
 			</div>
-		{/if} 
+		{/if}
 		<article class="article media{if !empty($container_class)} {$container_class}{/if} article{$smarty.section.ix.index}">
 			{if ($listpages[ix].show_avatar eq 'y')}
 				<div class="avatar">
@@ -72,7 +72,7 @@
 				{if ($listpages[ix].show_author eq 'y')
 				 or ($listpages[ix].show_pubdate eq 'y')
 				 or ($listpages[ix].show_expdate eq 'y')
-				 or ($listpages[ix].show_reads eq 'y')}	
+				 or ($listpages[ix].show_reads eq 'y')}
 					<span class="titleb">
 						{if $listpages[ix].show_author eq 'y'}
 							{if $listpages[ix].authorName}
@@ -106,11 +106,11 @@
 					<div class="articleheading">
 					{rating_result id=$listpages[ix].articleId type=article}
 					</div>
-				{/if}				
+				{/if}
 			</header>
 			{if $listpages[ix].use_ratings eq 'y'}
 				<div class="articleheading">
-					{tr}Rating:{/tr} 
+					{tr}Rating:{/tr}
 					{repeat count=$listpages[ix].rating}
 						{icon _id='star' alt="{tr}star{/tr}"}
 					{/repeat}

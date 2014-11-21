@@ -54,7 +54,7 @@
         {if $categs[numloop].childrenType ne 'd'} <a class="dirsublink" href="tiki-directory_browse.php?parent={$categs[numloop].subcats[ix].categId}">{$categs[numloop].subcats[ix].name}</a> {else}
         {$categs[numloop].subcats[ix].name}
         {/if}
-        {if $categs[numloop].subcats[ix].showCount eq 'y'} 	        
+        {if $categs[numloop].subcats[ix].showCount eq 'y'}
         ({$categs[numloop].subcats[ix].sites})
         {/if}
         {/section} </td>
@@ -99,9 +99,9 @@
   </form>
   </div>
   {section name=ix loop=$items}
-  <div class="dirsite"> {if $prefs.directory_country_flag eq 'y'} <img alt="flag" src="img/flags/{$items[ix].country}.gif"> {/if} <a class="dirsitelink" href="tiki-directory_redirect.php?siteId={$items[ix].siteId}" {if $prefs.directory_open_links eq 'n'}target='_blank'{/if}>{$items[ix].name|escape}</a> {if $tiki_p_admin_directory_sites eq 'y'} 
+  <div class="dirsite"> {if $prefs.directory_country_flag eq 'y'} <img alt="flag" src="img/flags/{$items[ix].country}.gif"> {/if} <a class="dirsitelink" href="tiki-directory_redirect.php?siteId={$items[ix].siteId}" {if $prefs.directory_open_links eq 'n'}target='_blank'{/if}>{$items[ix].name|escape}</a> {if $tiki_p_admin_directory_sites eq 'y'}
     [<a class="dirsitelink" href="tiki-directory_admin_sites.php?parent={$parent}&amp;siteId={$items[ix].siteId}">{tr}Edit{/tr}</a>]
-    {/if} 
+    {/if}
     {if $prefs.cachepages eq 'y'}
     (<a  class="dirsitelink" href="tiki-view_cache.php?url={$items[ix].url}" target="_blank">{tr}Cache{/tr}</a>)
     {/if}
@@ -126,4 +126,4 @@
   {/section} </div>
 {/if}
 
-{include file='tiki-directory_footer.tpl'} 
+{include file='tiki-directory_footer.tpl'}

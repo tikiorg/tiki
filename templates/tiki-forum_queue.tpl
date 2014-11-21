@@ -67,10 +67,10 @@
       <option value="icon_frown.gif" {if $msg_info.topic_smiley eq 'icon_frown.gif'}selected="selected"{/if}>{tr}frown{/tr}</option>
       <option value="icon_exclaim.gif" {if $msg_info.topic_smiley eq 'icon_exclaim.gif'}selected="selected"{/if}>{tr}exclaim{/tr}</option>
       <option value="icon_idea.gif" {if $msg_info.topic_smiley eq 'icon_idea.gif'}selected="selected"{/if}>{tr}idea{/tr}</option>
-      <option value="icon_mad.gif" {if $msg_info.topic_smiley eq 'icon_mad.gif'}selected="selected"{/if}>{tr}mad{/tr}</option>      
-      <option value="icon_neutral.gif" {if $msg_info.topic_smiley eq 'icon_neutral.gif'}selected="selected"{/if}>{tr}neutral{/tr}</option>      
-      <option value="icon_question.gif" {if $msg_info.topic_smiley eq 'icon_question.gif'}selected="selected"{/if}>{tr}question{/tr}</option>      
-      <option value="icon_sad.gif" {if $msg_info.topic_smiley eq 'icon_sad.gif'}selected="selected"{/if}>{tr}sad{/tr}</option>      
+      <option value="icon_mad.gif" {if $msg_info.topic_smiley eq 'icon_mad.gif'}selected="selected"{/if}>{tr}mad{/tr}</option>
+      <option value="icon_neutral.gif" {if $msg_info.topic_smiley eq 'icon_neutral.gif'}selected="selected"{/if}>{tr}neutral{/tr}</option>
+      <option value="icon_question.gif" {if $msg_info.topic_smiley eq 'icon_question.gif'}selected="selected"{/if}>{tr}question{/tr}</option>
+      <option value="icon_sad.gif" {if $msg_info.topic_smiley eq 'icon_sad.gif'}selected="selected"{/if}>{tr}sad{/tr}</option>
       <option value="icon_smile.gif" {if $msg_info.topic_smiley eq 'icon_smile.gif'}selected="selected"{/if}>{tr}happy{/tr}</option>
       <option value="icon_wink.gif" {if $msg_info.topic_smiley eq 'icon_wink.gif'}selected="selected"{/if}>{tr}wink{/tr}</option>
       </select>
@@ -113,7 +113,7 @@
 	<input type="submit" class="btn btn-default btn-sm" name="filter" value="{tr}Filter{/tr}">
 </td>
 </tr>
-</table>	
+</table>
 </form>
 {/if}
 {*END OF FILTERING FORM *}
@@ -138,7 +138,7 @@
 	<td class="checkbox-cell">
 	  <input type="checkbox" name="msg[{$items[ix].qId}]">
 	</td>
-  
+
 	<td class="text">
 		{if $items[ix].parentId > 0}
 			[{tr}Topic:{/tr} {$items[ix].topic_title|escape}]
@@ -163,7 +163,7 @@
 				<a class="link" href="tiki-download_forum_attachment.php?attId={$items[ix].attachments[iz].attId}">
 				<img src="img/icons/attachment.gif" width="10" height= "13" alt="{tr}Attachment{/tr}">
 				{$items[ix].attachments[iz].filename} ({$items[ix].attachments[iz].filesize|kbsize})</a>
-				<a class="link" href="tiki-forum_queue.php?forumId={$forumId}&amp;find={$find}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove_attachment={$items[ix].attachments[iz].attId}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>				
+				<a class="link" href="tiki-forum_queue.php?forumId={$forumId}&amp;find={$find}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove_attachment={$items[ix].attachments[iz].attId}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
 				<br>
 			{/section}
   		  {/if}
@@ -176,7 +176,7 @@
 </div>
 {if $items}
 <br>
-{tr}Perform action with checked:{/tr} 
+{tr}Perform action with checked:{/tr}
 		<input type="submit" class="btn btn-default btn-sm" name="rej" value="{tr}Reject{/tr}">
 		<input type="submit" class="btn btn-default btn-sm" name="app" value="{tr}Approve{/tr}">
 {/if}

@@ -21,7 +21,7 @@
 		{tr}Since this Tiki site is in slave mode and imports groups, the master groups will be automatically reimported at each login{/tr}
 	{/remarksbox}
 {/if}
-  
+
 <h2>{tr}User Information{/tr}</h2>
 <table class="formcolor">
 	<tr><td>{tr}Login:{/tr}</td><td>{$user_info.login|escape}</td></tr>

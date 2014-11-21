@@ -51,7 +51,7 @@ Set the names of the table headings to reflect the names of the db
       <a class="link" href="tiki-quiz_result_stats.php?quizId={$quizId}&amp;resultId={$channels[user].resultId}&amp;userResultId={$channels[user].userResultId}">{icon _id='application_form_magnify' alt="{tr}Results{/tr}" title="{tr}Results{/tr}"}</a>
       {if $channels[user].hasDetails eq 'y'}({tr}Details{/tr}){/if}
     {/if}
-    
+
     {if $tiki_p_admin_quizzes eq 'y'}
       <a class="link" href="tiki-quiz_stats_quiz.php?quizId={$quizId}&amp;remove={$channels[user].userResultId}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
     {/if}
@@ -84,7 +84,7 @@ Set the names of the table headings to reflect the names of the db
 *}
 
 <tr>
-	
+
 	<th>{tr}Option{/tr}</th>
         <th>{tr}Votes{/tr}</th>
    	<th>{tr}Average{/tr}</th>

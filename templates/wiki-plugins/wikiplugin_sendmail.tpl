@@ -15,7 +15,7 @@
 </div>
 {jq}
 $("input[name='sendmailload']").click(function() {
-	$.colorbox({overlayClose: false, width:"620px", inline:true, href:"#sendmail"}); 
+	$.colorbox({overlayClose: false, width:"620px", inline:true, href:"#sendmail"});
 	return false;
 });
 
@@ -31,9 +31,9 @@ $("input[name='sendall']").click(function(){
 	        data : postData,
 	        success:function(data, textStatus, jqXHR) {
 	        	mailform.modal('');
-	        	$.colorbox.close();	
+	        	$.colorbox.close();
 	        }
-	    });	
+	    });
 	}
 	return false;
 });

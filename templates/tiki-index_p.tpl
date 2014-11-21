@@ -12,7 +12,7 @@
     <tr>
       <td id="centercolumn"><div id="tiki-center">
 
-      
+
       {if $prefs.feature_page_title eq 'y'}<h1><a  href="tiki-index_p.php?page={$page|escape:"url"}" class="pagetitle">{$page}</a>
 {if $lock}
 {capture assign=title}{tr _0=$page_user}Locked by %0{/tr}{/capture}{*FIXME*}
@@ -51,12 +51,12 @@
 	<tr>
 		<td width='33%'>
 			{if $struct.prev_page}
-				<a class="tocnavlink" href="tiki-index_p.php?page={$struct.prev_page}&amp;structID={$key}">&lt;&lt; 
+				<a class="tocnavlink" href="tiki-index_p.php?page={$struct.prev_page}&amp;structID={$key}">&lt;&lt;
 					{if $struct.prev_page_alias}
 						{$struct.prev_page_alias}
 					{else}
 						{$struct.prev_page}
-					{/if} 
+					{/if}
 				</a>
 
 			{else}
@@ -65,7 +65,7 @@
 		</td>
 		<td align='center' width='33%'>
 {*			<a class="tocnavlink" href="tiki-index_p.php?page=">{$key}</a> *}
-			{$key} 
+			{$key}
 		</td>
 		<td align='right' width='33%'>
 			{if $struct.next_page}
@@ -74,7 +74,7 @@
 						{$struct.next_page_alias}
 					{else}
 						{$struct.next_page}
-					{/if} 
+					{/if}
 					&gt;&gt;
 				</a>
 			{else}
@@ -99,10 +99,10 @@
 {if $smarty.capture.editdate_section neq ''}
   <footer class="help-block editdate">{tr}Last modification date:{/tr} {$lastModif|tiki_long_datetime} {tr}by{/tr} <a class="link" href="tiki-user_information.php?view_user={$lastUser}">{$lastUser}</a></footer>
 {/if}
-      
+
       </div>
       </td>
-      
+
     </tr>
     </table>
   </div>

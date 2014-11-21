@@ -43,7 +43,7 @@
             </div>
 
 			{pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}
-		
+
 		<table>
 			<tr>
 				<td>

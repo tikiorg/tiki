@@ -25,7 +25,7 @@
 									document.getElementById('admin-server-options').style.display = 'none';
 									document.getElementById('admin-slavemode-options').style.display = 'block';
 								}
-							}	
+							}
 							{/literal}
 						{/jq}
 
@@ -38,7 +38,7 @@
 						<div id="admin-slavemode-options" style="display: {if $prefs.feature_intertiki_mymaster eq ''}none{else}block{/if}">
 							<input type="checkbox" name="feature_intertiki_import_preferences" {if $prefs.feature_intertiki_import_preferences eq 'y'}checked="checked"{/if}/>
 							{tr}Import user preferences{/tr}<br>
-	
+
 							<input type="checkbox" name="feature_intertiki_import_groups" {if $prefs.feature_intertiki_import_groups eq 'y'}checked="checked"{/if}/>
 							{tr}Import user groups{/tr}
 							<br>

@@ -9,7 +9,7 @@
 {/block}
 
 {block name="content"}
-	<form class="form" method="post" action="{service controller=tracker action=select_tracker}" id="selectTrackerForm" role="form">	
+	<form class="form" method="post" action="{service controller=tracker action=select_tracker}" id="selectTrackerForm" role="form">
 		<div class="form-group">
 			<label class="control-label" for="trackerId">
 				{tr}Tracker{/tr}

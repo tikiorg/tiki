@@ -19,7 +19,7 @@
 	<input type="submit" class="btn btn-default btn-sm" name="filter" value="{tr}Filter{/tr}">
 </td>
 </tr>
-</table>	
+</table>
 </form>
 {/if}
 {*END OF FILTERING FORM *}

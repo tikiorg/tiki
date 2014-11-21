@@ -2,7 +2,7 @@
 
 <div class="wikitext">
   <h2>
-    Configure 
+    Configure
     <br>
     {$type} <i>{$package}</i>
   </h2>

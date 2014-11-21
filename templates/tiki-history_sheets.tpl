@@ -54,7 +54,7 @@
 				</div>
 			{/tab}
 		{/if}
-	
+
 		{tab name="{tr}Date Selection{/tr}"}
             <h2>{tr}Date Selection{/tr}</h2>
 			<table style="width: 100%;">

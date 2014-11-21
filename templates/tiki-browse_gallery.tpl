@@ -11,19 +11,19 @@
 			{button href="tiki-galleries.php?edit_mode=1&amp;galleryId=$galleryId" class="btn btn-default" _text="{tr}Edit Gallery{/tr}"}
 			{button href="tiki-browse_gallery.php?galleryId=$galleryId&amp;rebuild=$galleryId" class="btn btn-default" _text="{tr}Rebuild Thumbnails{/tr}"}
 		{/if}
-		
+
 		{if $tiki_p_upload_images eq 'y'}
 			{if $tiki_p_admin_galleries eq 'y' or ($user and $user eq $owner) or $public eq 'y'}
 				{button href="tiki-upload_image.php?galleryId=$galleryId" class="btn btn-default" _text="{tr}Upload Image{/tr}"}
 			{/if}
 		{/if}
-		
+
 		{if $prefs.feature_gal_batch eq "y" and $tiki_p_batch_upload_image_dir eq 'y'}
 			{if $tiki_p_admin_galleries eq 'y' or ($user and $user eq $owner) or $public eq 'y'}
 				{button href="tiki-batch_upload.php?galleryId=$galleryId" class="btn btn-default" _text="{tr}Directory Batch{/tr}"}
 			{/if}
 		{/if}
-		
+
 		{if $tiki_p_assign_perm_image_gallery eq 'y'}
 			{assign var=thisname value=$name|escape:"url"}
 			{permission_link mode=button type="image gallery" permType="image galleries" id=$galleryId title=$thisname}
@@ -38,7 +38,7 @@
 	{if $prefs.feed_image_gallery eq 'y'}
 		{button href="tiki-image_gallery_rss.php?galleryId=$galleryId" class="btn btn-default" _text="{tr}RSS{/tr}"}
 	{/if}
-	
+
 	{if $prefs.feature_group_watches eq 'y' and ( $tiki_p_admin_users eq 'y' or $tiki_p_admin eq 'y' )}
 		<a href="tiki-object_watches.php?objectId={$galleryId|escape:"url"}&amp;watch_event=image_gallery_changed&amp;objectType=image+gallery&amp;objectName={$name|escape:"url"}&amp;objectHref={'tiki-browse_gallery.php?galleryId='|cat:$galleryId|escape:"url"}" class="icon btn btn-default">{icon _id='eye_group' alt="{tr}Group Monitor{/tr}" align='right' hspace="1"}</a>
 	{/if}
@@ -58,7 +58,7 @@
             {section name=i loop=$watching_categories}
 			    <a href="tiki-browse_categories.php?parentId={$watching_categories[i].categId}">{$watching_categories[i].name|escape}</a>&nbsp;
             {/section}
-        {/if}			
+        {/if}
     {/if}
 </div>
 
@@ -90,7 +90,7 @@
           <a href="{$item.galleryId|sefurl:gallery}"><img alt="{tr}subgallery{/tr} {$item.name}" class="athumb" src="show_image.php?id={$item.imageId}&amp;thumb=1"></a>
 	  <br>
 	  <small class="caption">
-		{tr}Subgallery:{/tr} 
+		{tr}Subgallery:{/tr}
 			{if $showname=='y' || $showfilename=='y'}{$item.name}<br>{/if}
 			{if $showimageid=='y'}{tr}ID:{/tr} {$item.galleryId}<br>{/if}
 			{if $showcategories=='y'}

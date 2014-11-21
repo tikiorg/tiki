@@ -27,7 +27,7 @@
 		document.getElementById('scblink').style.display = 'none';
 	}
 {/jq}
-		
+
 {button _onclick="javascript:show_cleartra_checkboxes()" id="scblink" _text="{tr}Show checkboxes to clear language information on tags{/tr}"}
 
 <div class="resultspagelinks">

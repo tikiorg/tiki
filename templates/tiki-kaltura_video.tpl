@@ -31,7 +31,7 @@
 			<param name="movie" value="{$prefs.kaltura_kServiceUrl}index.php/kwidget/wid/_{$prefs.kaltura_partnerId}/uiconf_id/{$kaltura_kdpId}/entry_id/{$videoInfo->id}">
 			<param name="flashVars" value="entry_id={$videoInfo->id}&ks={$kalturaSession}">
 			<param name="wmode" value="opaque">
-			</object>			
+			</object>
 			</td>
 		</tr>
 		</table>
@@ -108,8 +108,8 @@
 		</div>
 		</div>
 	{/capture}
-	
-	<div>	
+
+	<div>
 	{if $kmode eq 'edit'}
 	<div id="form">
 	<form  action='tiki-kaltura_video.php' enctype='multipart/form-data' method='post' style='margin:0px; padding:0px'>
@@ -143,7 +143,7 @@ var kaeCallbacksObj = {
 	// hideous hack courtesy of the OVC Hack Day.
 	publishHandler: function () { setTimeout( function() {SaveClick();}, 10000) },
 	closeHandler: closeEditorHandler
-}; 
+};
 {/jq}
 
 

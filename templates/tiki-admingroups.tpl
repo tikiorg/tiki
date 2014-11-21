@@ -42,7 +42,7 @@
 
 			{if $prefs.useGroupHome eq 'y'}
 			<th>{self_link _sort_arg='sort_mode' _sort_field='groupHome'}{tr}Homepage{/tr}{/self_link}</th>
-			{/if}			
+			{/if}
 
 			<th>{self_link _sort_arg='sort_mode' _sort_field='userChoice'}{tr}User Choice{/tr}{/self_link}</th>
 			<th>{tr}Actions{/tr}</th>
@@ -198,7 +198,7 @@
 				<div class="col-md-9">
 					<select name="defcat" id="groups_defcat">
 						<option value="" {if ($groupdefcat eq "") or ($groupdefcat eq 0)} selected="selected"{/if}>{tr}none{/tr}</option>
-						{foreach $categories as $id=>$category} 
+						{foreach $categories as $id=>$category}
 							<option value="{$id|escape}" {if $id eq $groupdefcat}selected="selected"{/if}>{$category.categpath|escape}</option>
 						{/foreach}
 					</select>
@@ -367,7 +367,7 @@
 			</div>
 		</div>
 
-			
+
 		<div class="submit form-group">
 			<div class="col-md-9 col-md-offset-3">
 				{if $group ne ''}

@@ -136,7 +136,7 @@
 									{if $action eq 'edit_tran_sw' && $only_db_translations eq 'y' && $tiki_p_admin eq 'y'}
 										<input type="submit" class="btn btn-default btn-sm" name="delete_all" value="{tr}Delete all{/tr}" onclick="return confirm('{tr}Are you sure you want to delete all translations from database?{/tr}')">
 									{/if}
-								{/if}								
+								{/if}
 							</td>
 						</tr>
 					</table>

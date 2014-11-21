@@ -24,11 +24,11 @@
 {/if}
 <div class="breadcrumb">
 	<a class="link" href="tiki-forums.php">{tr}Forums{/tr}</a>
-	{$prefs.site_crumb_seper} 
+	{$prefs.site_crumb_seper}
 	<a class="link" href="tiki-view_forum.php?forumId={$forumId}">{$forum_info.name|addongroupname|escape}</a>{if isset($thread_info.topic.threadId) and $thread_info.topic.threadId}
-	{$prefs.site_crumb_seper} 
+	{$prefs.site_crumb_seper}
 	<a class="link" href="tiki-view_forum_thread.php?comments_parentId={$thread_info.topic.threadId}{if $smarty.request.topics_offset}&amp;topics_offset={$smarty.request.topics_offset}{/if}{$topics_sort_mode_param}{$topics_threshold_param}{$topics_find_param}">{$thread_info.topic.title}</a>{/if}
-	{$prefs.site_crumb_seper} 
+	{$prefs.site_crumb_seper}
 	{$thread_info.title|escape}
 </div>
 <div style="text-align: right; margin-bottom: 15px;">
@@ -54,7 +54,7 @@
 			<a {if $prefs.mobile_mode eq 'y'} data-role="button"{/if} href="{$smarty.server.PHP_SELF}?{query archive="y"}" title="{tr}Archive{/tr}">{icon _id='package' alt="{tr}Archive{/tr}"}</a> {* mobile *}
 				{/if}
 			{/if}
-	
+
 			{if isset($tiki_p_forum_lock) and $tiki_p_forum_lock eq 'y'}
 				{if $thread_info.locked eq 'y'}
 					<a {if $prefs.mobile_mode eq 'y'} data-role="button"{/if} href="{query _type='relative' lock='n'}" title="{tr}Unlock{/tr}">{icon _id=lock_break alt="{tr}Unlock{/tr}"}</a>  {* mobile *}
@@ -94,8 +94,8 @@
 			<input type="hidden" name="thread_sort_mode" value="{$thread_sort_mode|escape}">
 			<input type="hidden" name="topics_offset" value="{$smarty.request.topics_offset|escape}">
 			<input type="hidden" name="topics_find" value="{$smarty.request.topics_find|escape}">
-			<input type="hidden" name="topics_sort_mode" value="{$smarty.request.topics_sort_mode|escape}">    
-			<input type="hidden" name="topics_threshold" value="{$smarty.request.topics_threshold|escape}">    
+			<input type="hidden" name="topics_sort_mode" value="{$smarty.request.topics_sort_mode|escape}">
+			<input type="hidden" name="topics_threshold" value="{$smarty.request.topics_threshold|escape}">
 			<input type="hidden" name="forumId" value="{$forumId|escape}">
 
             <label class="col-sm-2 control-label" for="userfile1">{tr}Show posts:{/tr}</label>
@@ -147,7 +147,7 @@
 		<td class="date">{$att.created|tiki_short_datetime}</td>
 		<td class="action"><a href="tiki-download_forum_attachment.php?attId={$att.attId}" title="{tr}Download{/tr}">{icon _id='disk' alt="{tr}Download{/tr}"}</a></td>
 	</tr>
-	{/foreach} 
+	{/foreach}
 </table>
 </div>
 {pagination_links cant=$atts.cant offset=$atts.offset offset_arg='fa_offset' step=$atts.maxRecords _anchor='attachments'}{/pagination_links}

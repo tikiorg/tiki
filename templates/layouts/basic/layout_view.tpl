@@ -10,7 +10,7 @@
 		{if $prefs.feature_ajax eq 'y'}
 			{include file='tiki-ajax_header.tpl'}
 		{/if}
-		
+
 		<div class="container">
             <div class="row page-header">
 				<div class="col-md-12">

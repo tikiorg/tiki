@@ -12,7 +12,7 @@
 		<p>{tr}Plugins can be individually previewed, approved, or rejected from the particular location that contains the plugin.{/tr} {tr}For security, you should review each plugin to ensure it is safe to approve.{/tr}</p>
 	<form method="post" action="#">
 
-		
+
 		{listfilter selectors='#plugins_list tr.odd,#plugins_list tr.even'}
         <div class="table-responsive">
 		<table class="table normal" id="plugins_list">
@@ -40,7 +40,7 @@
 					<a href="tiki-plugins.php?clearone={$plugin.fingerprint}">{icon _id='delete' alt="{tr}Clear{/tr}"}</a>
 {if $plugin.last_objectType eq 'wiki page'}
 {tr _0=$plugin.last_objectId|sefurl:'wiki page' _1=$plugin.last_objectId|escape _2=$plugin.fingerprint}<a href="%0#%2" title="View this page.">{icon _id='page'}</a>{/tr}
-{/if}	
+{/if}
 				</td>
 			</tr>
 {/foreach}
@@ -58,7 +58,7 @@
 {remarksbox type="warning" title="{tr}Warning{/tr}"}
 {tr}Using <strong>Approve</strong> or <strong>Approve All</strong> will approve and activate the pending plugins.{/tr} {tr}Use this feature <strong>only</strong> if you have verified that all the pending plugins are safe.{/tr}
 {/remarksbox}
-		
+
 	<script type='text/javascript'>
 		<!--
 		// Fake js to allow the use of the <noscript> tag (so non-js-users can still submit)

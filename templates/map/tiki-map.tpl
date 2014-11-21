@@ -17,23 +17,23 @@
 	     <td align="center" valign="middle">
         <div class="table-responsive">
 		<table class="table normal">
-		  <tr><td align="center"> 
+		  <tr><td align="center">
 		  <div id="mapWindow" style="z-index:50;overflow:hidden;
-		  	{if $xsize != ""}width:{$xsize}px;{/if} 
+		  	{if $xsize != ""}width:{$xsize}px;{/if}
 				{if $ysize != ""}height:{$ysize}px;{/if}
-			">	
-					  <div id="zoomselect" style="position:absolute; left:0px; top:0px; width: 0px; height: 0px; 
+			">
+					  <div id="zoomselect" style="position:absolute; left:0px; top:0px; width: 0px; height: 0px;
 							border: blue solid 2px; z-index:30; visibility:hidden;overflow:hidden;">
 			      </div>
 		      {*	<input type="image" id="map" src="{$image_url}"  *}
 		        <img id="map" src="{$image_url}"
-						{if $xsize != ""}width="{$xsize}"{/if} 
+						{if $xsize != ""}width="{$xsize}"{/if}
 						{if $ysize != ""}height="{$ysize}"{/if}
-					alt="{tr}click on the map to zoom or pan, do not drag{/tr}" 
+					alt="{tr}click on the map to zoom or pan, do not drag{/tr}"
 					  title="{tr}click on the map to zoom or pan, do not drag{/tr}"
-					  style="z-index:20;position:relative"> 
-			</div>		  
-		  <script type="text/javascript">	
+					  style="z-index:20;position:relative">
+			</div>
+		  <script type="text/javascript">
 		    var minx={$minx};
 		    var miny={$miny};
 		    var maxx={$maxx};
@@ -58,7 +58,7 @@
 		    {/if}
 		    {/section}
 				xAddEventListener(xGetElementById('map'),'mousemove',map_mousemove,false);
-				xAddEventListener(xGetElementById('map'),'mousedown',map_mousedown,false);			
+				xAddEventListener(xGetElementById('map'),'mousedown',map_mousedown,false);
 				xAddEventListener(xGetElementById('map'),'mouseup',map_mouseup,false);
 				xAddEventListener(xGetElementById('map'),'mouseout',map_mouseup,false);
 				xAddEventListener(xGetElementById('map'),'click',map_mouseclick,false);
@@ -69,7 +69,7 @@
 				{/literal}
 				xEnableDrag(xGetElementById('map'));
 			</script>
-			
+
 			<div id="queryWindow" style="position:absolute; top:0px; left:0px; visibility:hidden; z-Index:100">
 				<div id="outerBox" style="position:absolute; top:0px; left:0px;
 					height:200px; width:275px; overflow:hidden; border-top:4px solid #ffffff;
@@ -102,7 +102,7 @@
 				  </script>
 				</div>
 			</div>
-				
+
 		  </td></tr>
 		  <tr><td align="center">
 		 	<img id="scale" src="{$image_scale_url}" alt="{tr}Scale{/tr}" title="{tr}Scale{/tr}">
@@ -110,7 +110,7 @@
 		 	<input type="text" id="xx"><input type="text" id="yy">
 			</div>
 		  </td></tr>
-		  <tr><td align="center">	
+		  <tr><td align="center">
 			{if $zoom eq -2}
 			<img id="imgzoom2" src="img/icons/zoom-2.gif" onclick="zoomin(0)" alt="-x2" title="{tr}Zoom out{/tr}" border="1">
 			{else}
@@ -149,11 +149,11 @@
 			<input name="Redraw" value="{tr}Redraw{/tr}" type="Submit" class="btn btn-default"><br>
 			<small>{tr}select zoom/pan/query and image size{/tr}</small>
 		</td></tr>
-			<tr><td align="center"> 
+			<tr><td align="center">
 			{if $map_view eq ""}
-                  		{*if view is empty do not display empty list*} 
+                  		{*if view is empty do not display empty list*}
 			{else}
-			<select name="view" size="1"> 
+			<select name="view" size="1">
 			<option selected value="#">Select Location and Go!
 				{html_options values=$view_name name=$view output=$view_name}
 			</select>
@@ -161,12 +161,12 @@
 			{/if}
 			 <input type="image" name="maponly" value="yes" src="img/icons/image.png" alt="{tr}View the Map Only{/tr}" title="{tr}View the Map Only{/tr}">
 			{if $tiki_p_map_edit eq 'y'}
-				&nbsp; 
+				&nbsp;
 				<a class="link" href="tiki-map_edit.php?mapfile={$mapfile}&amp;mode=editing">
 				<img src="img/icons/wrench.png" alt="{tr}Edit{/tr}" title="{tr}Edit{/tr}" width="16" height="16"></a>
 			{/if}
 			&nbsp;
-			<a href="tiki-map.php?mapfile={$mapfile}" ><small>{tr}Reset Map{/tr}</small></a><br> 
+			<a href="tiki-map.php?mapfile={$mapfile}" ><small>{tr}Reset Map{/tr}</small></a><br>
 			<small>{tr}Click on the map or click redraw{/tr}</small>
 			<input id="minx" type="hidden" name="minx" value="{$minx}">
 			<input id="miny" type="hidden" name="miny" value="{$miny}">
@@ -176,11 +176,11 @@
 			<a href="tiki-index.php?page={$prefs.map_help}"><small>{tr}Help{/tr}</small></a>&nbsp;
 			<a href="tiki-index.php?page={$prefs.map_comments}"><small>{tr}Comments{/tr}</small></a><br>
 		</td></tr>
-	<tr><td><div id="resultBox">{$map_querymsg}</div></td></tr>	
+	<tr><td><div id="resultBox">{$map_querymsg}</div></td></tr>
 		</table>
         </div>
 		<footer class="editdate">{tr}Last modification date:{/tr} {$lastModif|tiki_long_datetime} {tr}by{/tr} <a class="link" href="tiki-user_information.php?view_user={$lastUser}">{$lastUser}</a> ({$ip})-{tr}Hits:{/tr}{$mapstats}({$mapstats7days})</footer>
-	     
+
 	     </td>
 		<td valign="top">
 		<table class="table normal">
@@ -223,10 +223,10 @@
 					{if $prefs.feature_menusfolderstyle eq 'y'}
 					<a class="separator" href="javascript:icntoggle('submenu{$unique_layer_group[j]}');"><img src="img/icons/fo.gif" name="layermenuicn" alt="">&nbsp;</a>
 					{else}
-					
+
 					&nbsp;&nbsp;<a class="separator" href="javascript:toggle('submenu{$unique_layer_group[j]}');">[+/-]</a>
 					{/if}
-					{tr}{$my_layers[j]->group}{/tr}		
+					{tr}{$my_layers[j]->group}{/tr}
 				</div>
 				<div id='submenu{$unique_layer_group[j]}' style="{$mnu_submenu}">
                     <div class="table-responsive">
@@ -235,7 +235,7 @@
 					{if $my_layers[i]->group neq ""}
 					{if $my_layers[i]->group == $my_layers[j]->group}
 					<tr>
-					
+
 						{if $smarty.section.i.index % 2}
 						<td class="odd">
 						{else}
@@ -345,7 +345,7 @@
 				{/if}
 				</td>
 			</tr>
-			{/if}	
+			{/if}
 			{/section}
 			</table>
             </div>
@@ -354,6 +354,6 @@
 		</tr>
 	</table>
 	</td></tr>
-	</table>		  
+	</table>
   </form>
 </div>

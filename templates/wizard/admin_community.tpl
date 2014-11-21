@@ -19,8 +19,8 @@
                 </div>
             </div>
 			<br>
-		<em>{tr}Add a <b>User and Registration tracker</b>{/tr} 
-		<a href="http://doc.tiki.org/User+Tracker" target="tikihelp" class="tikihelp" title="{tr}User and Registration tracker: You can use trackers to collect additional information for users during registration or even later once they are registered users.{/tr} 
+		<em>{tr}Add a <b>User and Registration tracker</b>{/tr}
+		<a href="http://doc.tiki.org/User+Tracker" target="tikihelp" class="tikihelp" title="{tr}User and Registration tracker: You can use trackers to collect additional information for users during registration or even later once they are registered users.{/tr}
 		{tr}Some uses of this type of tracker could be{/tr}
 		<ul>
 		<li>{tr}To collect user information (such as mailing address or phone number){/tr}</li>
@@ -40,7 +40,7 @@
         <div class="col-lg-6">
 			{preference name=users_prefs_allowMsgs}
 			{preference name=feature_community_mouseover}
-			<div class="adminoptionboxchild" id="feature_community_mouseover_childcontainer">				
+			<div class="adminoptionboxchild" id="feature_community_mouseover_childcontainer">
 				{preference name=feature_community_mouseover_name}
 				{preference name=feature_community_mouseover_gender}
 				{preference name=feature_community_mouseover_picture}
@@ -52,7 +52,7 @@
 			</div>
 			{preference name=users_prefs_show_mouseover_user_info}
 			{preference name=feature_contact}
-			<div class="adminoptionboxchild" id="feature_contact_childcontainer">				
+			<div class="adminoptionboxchild" id="feature_contact_childcontainer">
 				{preference name=contact_anon}
 				{preference name=contact_priority_onoff}
 			</div>
@@ -63,7 +63,7 @@
 			{preference name=users_prefs_mailCharset}
 			<div class="adminoptionbox preference clearfix all"></div>
 			{preference name=user_show_realnames}
-			<div class="adminoptionboxchild" id="user_show_realnames_childcontainer">				
+			<div class="adminoptionboxchild" id="user_show_realnames_childcontainer">
 				{preference name=user_selector_realnames_messu}
 				{preference name=user_selector_realnames_tracker}
 			</div>

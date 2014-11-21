@@ -51,7 +51,7 @@
 			</div>
 		</div>
 	</form>
-	
+
 	{jq}
 		var trackerId = {{$trackerId|escape}};
 		$('.save-fields').submit(function () {
