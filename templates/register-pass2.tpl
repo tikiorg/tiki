@@ -9,13 +9,13 @@
 			{if $trackerEditFormId}&nbsp;<strong class='mandatory_star'>*</strong>&nbsp;{/if}
 			<div class="col-md-4 col-sm-6">
 				<input class="form-control" id='pass2' type="password" name="passAgain" onkeypress="regCapsLock(event)" value="{if !empty($smarty.post.passAgain)}{$smarty.post.passAgain}{/if}"
-					   onkeyup="{if $prefs.feature_jquery_validation neq 'y' && !$userTrackerData}checkPasswordsMatch('#pass2', '#pass1', '#mypassword2_text');{/if}">
+					onkeyup="{if $prefs.feature_jquery_validation neq 'y' && !$userTrackerData}checkPasswordsMatch('#pass2', '#pass1', '#mypassword2_text');{/if}">
 				<div style="float:right;margin-left:5px;">
 					<div id="mypassword2_text"></div>
 				</div>
 				{if $prefs.feature_jquery_validation neq 'y' && !$userTrackerData}<span id="checkpass"></span>{/if}
 			</div>
-		{if $prefs.generate_password eq 'y'}
+			{if $prefs.generate_password eq 'y'}
 				{*if !$reg_in_module}<td>&nbsp;</td>{/if*}
 				<div class="col-md-4 col-sm-3 text-center{*if $reg_in_module} inmodule{/if*}">
 					<input id='genepass' name="genepass" type="text" tabindex="0" style="display: none">
@@ -27,7 +27,7 @@
 						{/if}
 					</span>
 				</div>
-		{/if}
+			{/if}
 		</div>
 	{/if}
 {/if}

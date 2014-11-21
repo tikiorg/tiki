@@ -2,7 +2,7 @@
 
 {if $keywords_updated}
 	<div class="alert alert-warning">
-		{if $keywords_updated == 'y'}{tr}Keywords have been updated{/tr} 
+		{if $keywords_updated == 'y'}{tr}Keywords have been updated{/tr}
 		{else}{tr}Updating keywords has failed. Page probably doesn't exist.{/tr}{/if}
 		{if $keywords_updated_on} ({$keywords_updated_on|escape}){/if}
 	</div>
@@ -39,28 +39,28 @@
 {/if}
 
 {if $existing_keywords}
-<div class="table-responsive">
-	<table class="table normal">
-		<tbody>	
-			<tr>
-				<th>{tr}Page{/tr}</th>
-				<th>{tr}Keywords{/tr}</th>
-				<th>{tr}Actions{/tr}</th>	
-			</tr>	
-
-			{section name=i loop=$existing_keywords}
+	<div class="table-responsive">
+		<table class="table normal">
+			<tbody>
 				<tr>
-					<td class="text"><a href="{$existing_keywords[i].page|sefurl}">{$existing_keywords[i].page|escape}</a></td>
-					<td class="text">{$existing_keywords[i].keywords|escape}</td>
-					<td class="action">
-						<a class="link" href="tiki-admin_keywords.php?page={$existing_keywords[i].page|escape:"url"}">{icon _id=page_edit}</a>
-						<a class="link" href="tiki-admin_keywords.php?page={$existing_keywords[i].page|escape:"url"}&amp;remove_keywords=1">{icon _id=cross}</a>
-					</td>	
+					<th>{tr}Page{/tr}</th>
+					<th>{tr}Keywords{/tr}</th>
+					<th>{tr}Actions{/tr}</th>
 				</tr>
-			{/section}
-		</tbody>
-	</table>
-    </div>
+
+				{section name=i loop=$existing_keywords}
+					<tr>
+						<td class="text"><a href="{$existing_keywords[i].page|sefurl}">{$existing_keywords[i].page|escape}</a></td>
+						<td class="text">{$existing_keywords[i].keywords|escape}</td>
+						<td class="action">
+							<a class="link" href="tiki-admin_keywords.php?page={$existing_keywords[i].page|escape:"url"}">{icon _id=page_edit}</a>
+							<a class="link" href="tiki-admin_keywords.php?page={$existing_keywords[i].page|escape:"url"}&amp;remove_keywords=1">{icon _id=cross}</a>
+						</td>
+					</tr>
+				{/section}
+			</tbody>
+		</table>
+	</div>
 {else}
 	<h2>{tr}No pages found{/tr}</h2>
 {/if}

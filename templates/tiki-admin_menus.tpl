@@ -11,7 +11,7 @@
 {/if}
 {include file='find.tpl'}
 <div class="table-responsive">
-    <table class="table table-hover">
+	<table class="table table-hover">
 		<tr>
 			<th>{self_link _sort_arg='sort_mode' _sort_field='menuId'}{tr}ID{/tr}{/self_link}</th>
 			<th>{self_link _sort_arg='sort_mode' _sort_field='name'}{tr}Name{/tr}{/self_link}</th>

@@ -144,7 +144,7 @@
 </h2>
 
 <div class="rbox" name="tip">
-	<div class="rbox-title" name="tip">{tr}Hints{/tr}</div>  
+	<div class="rbox-title" name="tip">{tr}Hints{/tr}</div>
 	<div class="rbox-data" name="tip">
 		<ul>
 			<li>{tr}For list-based metrics, include the "LIMIT #" in your query.{/tr}</li>

@@ -27,37 +27,37 @@
 	</div>
 	<div id="debit">
 		<table id="tbl_debit">
-		<tr><th colspan="3">{tr}Debit{/tr}</th></tr>
-		<tr><th>{tr}Text{/tr}</th><th>{tr}Account{/tr}</th><th>{tr}Amount{/tr}</th></tr>
-		{foreach from=$entry.debit item=d}{cycle values="odd,even" assign="style"}
- 		<tr class="{$style}">
-			<td>{$d.itemText}</td>
-			<td>{$d.itemAccountId}</td>
-			<td>
-				{if $book.bookCurrencyPos==-1}{$book.bookCurrency}{/if}
-				{$d.itemAmount|number_format:$book.bookDecimals:$book.bookDecPoint:$book.bookThousand}
-				{if $book.bookCurrencyPos==1}{$book.bookCurrency}{/if}
-			</td>
-		</tr>
-		{/foreach}
+			<tr><th colspan="3">{tr}Debit{/tr}</th></tr>
+			<tr><th>{tr}Text{/tr}</th><th>{tr}Account{/tr}</th><th>{tr}Amount{/tr}</th></tr>
+			{foreach from=$entry.debit item=d}{cycle values="odd,even" assign="style"}
+				<tr class="{$style}">
+					<td>{$d.itemText}</td>
+					<td>{$d.itemAccountId}</td>
+					<td>
+						{if $book.bookCurrencyPos==-1}{$book.bookCurrency}{/if}
+						{$d.itemAmount|number_format:$book.bookDecimals:$book.bookDecPoint:$book.bookThousand}
+						{if $book.bookCurrencyPos==1}{$book.bookCurrency}{/if}
+					</td>
+				</tr>
+			{/foreach}
 		</table>
 	</div>
 	<div id="credit">
 		<table id="tbl_credit">
-		<tr><th colspan="3">{tr}Credit{/tr}</th></tr>
-		<tr><th>{tr}Text{/tr}</th><th>{tr}Account{/tr}</th><th>{tr}Amount{/tr}</th></tr>
-		{foreach from=$entry.credit item=c}{cycle values="odd,even" assign="style"}
-		<tr>
-			<td>{$c.itemText}</td>
-	   		<td>{$c.itemAccountId}</td>
-			<td>
-				{if $book.bookCurrencyPos==-1}{$book.bookCurrency}{/if}
-				{$c.itemAmount|number_format:$book.bookDecimals:$book.bookDecPoint:$book.bookThousand}
-				{if $book.bookCurrencyPos==1}{$book.bookCurrency}{/if}
-			</td>
-	 	</tr>
-		{/foreach}
-        </table>
+			<tr><th colspan="3">{tr}Credit{/tr}</th></tr>
+			<tr><th>{tr}Text{/tr}</th><th>{tr}Account{/tr}</th><th>{tr}Amount{/tr}</th></tr>
+			{foreach from=$entry.credit item=c}{cycle values="odd,even" assign="style"}
+				<tr>
+					<td>{$c.itemText}</td>
+					<td>{$c.itemAccountId}</td>
+					<td>
+						{if $book.bookCurrencyPos==-1}{$book.bookCurrency}{/if}
+						{$c.itemAmount|number_format:$book.bookDecimals:$book.bookDecPoint:$book.bookThousand}
+						{if $book.bookCurrencyPos==1}{$book.bookCurrency}{/if}
+					</td>
+				</tr>
+			{/foreach}
+		</table>
 	</div>
 </div>
 {button href="tiki-accounting.php?bookId=$bookId" _text="{tr}Back to book page{/tr}"}

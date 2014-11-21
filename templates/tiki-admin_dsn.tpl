@@ -7,15 +7,15 @@
 <h2>{tr}Create/edit DSN{/tr}</h2>
 <form action="tiki-admin_dsn.php" method="post" class="form-horizontal" role="form">
 	<input type="hidden" name="dsnId" value="{$dsnId|escape}">
-    <div class="form-group">
-        <label class="col-sm-3 control-label" for="name">{tr}Name{/tr}</label>
-        <div class="col-sm-9">
+	<div class="form-group">
+		<label class="col-sm-3 control-label" for="name">{tr}Name{/tr}</label>
+		<div class="col-sm-9">
 			<input type="text" maxlength="255" name="name" id="name" class="form-control" value="{$info.name|escape}">
 		</div>
 	</div>
-    <div class="form-group">
-        <label class="col-sm-3 control-label" for="dsn">{tr}DSN{/tr}</label>
-        <div class="col-sm-9">
+	<div class="form-group">
+		<label class="col-sm-3 control-label" for="dsn">{tr}DSN{/tr}</label>
+		<div class="col-sm-9">
 			<input type="text" maxlength="255" class="form-control" name="dsn" id="dsn" value="{$info.dsn|escape}">
 		</div>
 	</div>
@@ -26,38 +26,38 @@
 
 <h2>{tr}DSN{/tr}</h2>
 <div class="table-responsive">
-<table class="table normal">
-	<tr>
-		<th>
-			<a href="tiki-admin_dsn.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}Name{/tr}</a>
-		</th>
-		<th>
-			<a href="tiki-admin_dsn.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'dsn_desc'}dsn_asc{else}dsn_desc{/if}">{tr}DSN{/tr}</a>
-		</th>
-		<th>{tr}Action{/tr}</th>
-	</tr>
-
-	<tr>
-		<td class="text">{tr}Local (Tiki database){/tr}</td>
-		<td class="text">{tr}See db/local.php{/tr}</td>
-		<td class="action">
-			&nbsp;&nbsp;
-			{permission_link mode=icon type=dsn id=local title=local}
-		</td>
-	</tr>
-	{section name=user loop=$channels}
+	<table class="table normal">
 		<tr>
-			<td class="text">{$channels[user].name}</td>
-			<td class="text">{$channels[user].dsn}</td>
+			<th>
+				<a href="tiki-admin_dsn.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}Name{/tr}</a>
+			</th>
+			<th>
+				<a href="tiki-admin_dsn.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'dsn_desc'}dsn_asc{else}dsn_desc{/if}">{tr}DSN{/tr}</a>
+			</th>
+			<th>{tr}Action{/tr}</th>
+		</tr>
+
+		<tr>
+			<td class="text">{tr}Local (Tiki database){/tr}</td>
+			<td class="text">{tr}See db/local.php{/tr}</td>
 			<td class="action">
 				&nbsp;&nbsp;
-				<a title="{tr}Edit{/tr}" class="link" href="tiki-admin_dsn.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;dsnId={$channels[user].dsnId}">{icon _id='page_edit'}</a> &nbsp;
-				<a title="{tr}Delete{/tr}" class="link" href="tiki-admin_dsn.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].dsnId}">{icon _id='cross' alt="{tr}Delete{/tr}"}</a>
-				{permission_link mode=icon type=dsn id=$channels[user].name title=$channels[user].name}
+				{permission_link mode=icon type=dsn id=local title=local}
 			</td>
 		</tr>
-	{/section}
-</table>
+		{section name=user loop=$channels}
+			<tr>
+				<td class="text">{$channels[user].name}</td>
+				<td class="text">{$channels[user].dsn}</td>
+				<td class="action">
+					&nbsp;&nbsp;
+					<a title="{tr}Edit{/tr}" class="link" href="tiki-admin_dsn.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;dsnId={$channels[user].dsnId}">{icon _id='page_edit'}</a> &nbsp;
+					<a title="{tr}Delete{/tr}" class="link" href="tiki-admin_dsn.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].dsnId}">{icon _id='cross' alt="{tr}Delete{/tr}"}</a>
+					{permission_link mode=icon type=dsn id=$channels[user].name title=$channels[user].name}
+				</td>
+			</tr>
+		{/section}
+	</table>
 </div>
 
 {pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}
@@ -66,48 +66,48 @@
 <form id="source-form" method="post" action="{service controller=auth_source}" class="form-horizontal" role="form">
 	<fieldset>
 		<legend>{tr}Identification{/tr}</legend>
-        <div class="form-group">
-		    <label class="col-sm-3 control-label">{tr}Identifier{/tr}</label>
-            <div class="col-sm-3">
-    			<select name="existing" class="form-control">
-	    			<option value="">{tr}New{/tr}</option>
-		    	</select>
-            </div>
-            <div class="col-sm-4">
-        		<input type="text" name="identifier" class="form-control">
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="col-sm-3 control-label" for="url">{tr}URL{/tr}</label>
-            <div class="col-sm-4">
-                <input type="url" name="url" id="url" class="form-control" />
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="col-sm-3 control-label" for="method">{tr}Type{/tr}</label>
-            <div class="col-sm-4">
-    			<select name="method" id="method">
-	    			<option value="basic">{tr}HTTP Basic{/tr}</option>
-		    		<option value="post">{tr}HTTP Session / Login{/tr}</option>
-			    	<option value="get">{tr}HTTP Session / Visit{/tr}</option>
-		    	</select>
-		    </div>
-        </div>
+		<div class="form-group">
+			<label class="col-sm-3 control-label">{tr}Identifier{/tr}</label>
+			<div class="col-sm-3">
+				<select name="existing" class="form-control">
+					<option value="">{tr}New{/tr}</option>
+				</select>
+			</div>
+			<div class="col-sm-4">
+				<input type="text" name="identifier" class="form-control">
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-3 control-label" for="url">{tr}URL{/tr}</label>
+			<div class="col-sm-4">
+				<input type="url" name="url" id="url" class="form-control" />
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-3 control-label" for="method">{tr}Type{/tr}</label>
+			<div class="col-sm-4">
+				<select name="method" id="method">
+					<option value="basic">{tr}HTTP Basic{/tr}</option>
+					<option value="post">{tr}HTTP Session / Login{/tr}</option>
+					<option value="get">{tr}HTTP Session / Visit{/tr}</option>
+				</select>
+			</div>
+		</div>
 	</fieldset>
 	<fieldset class="method basic">
 		<legend>{tr}HTTP Basic{/tr}</legend>
-        <div class="form-group">
-		    <label class="col-sm-3 control-label" for="basic_username">{tr}Username{/tr}</label>
-            <div class="col-sm-9">
-                <input type="text" name="basic_username" id="basic_username" class="form-control">
-            </div>
-        </div>
-        <div class="form-group">
-		    <label class="col-sm-3 control-label" for="basic_password">{tr}Password{/tr}</label>
-            <div class="col-sm-9">
-                <input type="password" name="basic_password" id="basic_password" class="form-control">
-            </div>
-        </div>
+		<div class="form-group">
+			<label class="col-sm-3 control-label" for="basic_username">{tr}Username{/tr}</label>
+			<div class="col-sm-9">
+				<input type="text" name="basic_username" id="basic_username" class="form-control">
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-3 control-label" for="basic_password">{tr}Password{/tr}</label>
+			<div class="col-sm-9">
+				<input type="password" name="basic_password" id="basic_password" class="form-control">
+			</div>
+		</div>
 	</fieldset>
 	<fieldset class="method post">
 		<legend>{tr}HTTP Session / Login{/tr}</legend>
@@ -132,15 +132,15 @@
 		<label>{tr}URL{/tr} <input type="url" name="get_url"></label>
 	</fieldset>
 	<fieldset>
-        <div class="form-group text-center">
-    		<input type="submit" class="btn btn-primary btn-sm" name="save" value="{tr}Save{/tr}">
-	    	<input type="submit" class="btn btn-default btn-sm" name="delete" value="{tr}Delete{/tr}">
-        </div>
+		<div class="form-group text-center">
+			<input type="submit" class="btn btn-primary btn-sm" name="save" value="{tr}Save{/tr}">
+			<input type="submit" class="btn btn-default btn-sm" name="delete" value="{tr}Delete{/tr}">
+		</div>
 	</fieldset>
 </form>
 {jq}
 $('#source-form').each(function () {
-	var form = this, 
+	var form = this,
 		reload = function () {
 			$('option.added', form).remove();
 			$.getJSON($.service('auth_source', 'list'), function (entries) {
