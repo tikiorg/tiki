@@ -134,6 +134,38 @@ class Services_Tracker_TabularController
 		exit;
 	}
 
+	function action_import_csv($input)
+	{
+		$lib = TikiLib::lib('tabular');
+		$info = $lib->get_info($input->tabularId->int());
+
+		Services_Exception_Denied::checkObject('tiki_p_admin_trackers', 'tracker', $trackerId);
+
+		$schema = $this->getSchema($info);
+		$schema->validate();
+
+		if (! $schema->getPrimaryKey()) {
+			throw new Services_Exception_NotAvailable(tr('Primary Key required'));
+		}
+
+		$done = false;
+
+		if ($_SERVER['REQUEST_METHOD'] == 'POST' && is_uploaded_file($_FILES['file']['tmp_name'])) {
+			$source = new \Tracker\Tabular\Source\CsvSource($schema, $_FILES['file']['tmp_name']);
+			$writer = new \Tracker\Tabular\Writer\TrackerWriter;
+			$writer->write($source);
+
+			unlink($_FILES['file']['tmp_name']);
+			$done = true;
+		}
+
+		return [
+			'title' => tr('Import'),
+			'tabularId' => $info['tabularId'],
+			'completed' => $done,
+		];
+	}
+
 	private function getSchema(array $info)
 	{
 		$tracker = \Tracker_Definition::get($info['trackerId']);

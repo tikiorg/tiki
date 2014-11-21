@@ -287,7 +287,7 @@ class Tracker_Field_Dropdown extends Tracker_Field_Abstract implements Tracker_F
 			})
 			->setParseIntoTransform(function (& $info, $value) use ($permName, $invert) {
 				if (isset($invert[$value])) {
-					$info['fields'][$permName] = $value;
+					$info['fields'][$permName] = $invert[$value];
 				}
 			})
 			;

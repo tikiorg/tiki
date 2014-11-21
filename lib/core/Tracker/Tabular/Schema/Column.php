@@ -113,7 +113,9 @@ class Column
 	function parseInto(& $info, $value)
 	{
 		$c = $this->parseIntoTransform;
-		$c($info, $value);
+		if (! $this->isReadOnly) {
+			$c($info, $value);
+		}
 	}
 
 	function addQuerySource($name, $field)
