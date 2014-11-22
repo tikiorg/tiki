@@ -74,60 +74,60 @@
 <br>
 <h2>{tr}Mail notifications{/tr}</h2>
 {if $channels or ($find ne '')}
-  {include file='find.tpl' find_show_num_rows='y'}
+	{include file='find.tpl' find_show_num_rows='y'}
 {/if}
 <form method="get" action="tiki-admin_notifications.php">
 	<div class="table-responsive notifications-table">
-	<table class="table normal">
-		<tr>
-			<th>
-				{if $channels}
-					{select_all checkbox_names='checked[]'}
-				{/if}
-			</th>
-			<th>{self_link _sort_arg="sort_mode" _sort_field="event"}{tr}Event{/tr}{/self_link}</th>
-			<th>{self_link _sort_arg="sort_mode" _sort_field="object"}{tr}Object{/tr}{/self_link}</th>
-			<th>{self_link _sort_arg="sort_mode" _sort_field="email"}{tr}Email{/tr}{/self_link}</th>
-			<th>{self_link _sort_arg="sort_mode" _sort_field="user"}{tr}User / Group{/tr}{/self_link}</th>
-			<th>{tr}Action{/tr}</th>
-		</tr>
-
-		{section name=user loop=$channels}
+		<table class="table normal">
 			<tr>
-				<td class="checkbox-cell">
-					<input type="checkbox" name="checked[]" value="{$channels[user].watchtype}{$channels[user].watchId|escape}" {if $smarty.request.checked and in_array($channels[user].watchId,$smarty.request.checked)}checked="checked"{/if}>
-				</td>
-				<td class="text">{$channels[user].event}</td>
-				<td class="text">
-					{if $channels[user].url}
-						<a href="{$channels[user].url}" title="{$channels[user].title|escape}">{$channels[user].object|escape}</a>
-					{else}
-						{$channels[user].object|escape}
+				<th>
+					{if $channels}
+						{select_all checkbox_names='checked[]'}
 					{/if}
-					</td>
-				<td class="email">
-					{if $channels[user].watchtype eq 'user'}
-						{$channels[user].email}
-					{else}
-						<em>{tr}Multiple{/tr}</em>
-					{/if}
-				</td>
-				<td class="text">
-					{if $channels[user].watchtype eq 'group'}
-						{icon _id='group'}
-					{else}
-						{icon _id='user'}
-					{/if}
-					{$channels[user].user|escape}
-				</td>
-				<td class="action">
-					<a class="link" href="{$smarty.server.PHP_SELF}?{query removeevent=$channels[user].watchId removetype=$channels[user].watchtype}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
-				</td>
+				</th>
+				<th>{self_link _sort_arg="sort_mode" _sort_field="event"}{tr}Event{/tr}{/self_link}</th>
+				<th>{self_link _sort_arg="sort_mode" _sort_field="object"}{tr}Object{/tr}{/self_link}</th>
+				<th>{self_link _sort_arg="sort_mode" _sort_field="email"}{tr}Email{/tr}{/self_link}</th>
+				<th>{self_link _sort_arg="sort_mode" _sort_field="user"}{tr}User / Group{/tr}{/self_link}</th>
+				<th>{tr}Action{/tr}</th>
 			</tr>
-		{sectionelse}
-			{norecords _colspan=6}
-		{/section}
-	</table>
+
+			{section name=user loop=$channels}
+				<tr>
+					<td class="checkbox-cell">
+						<input type="checkbox" name="checked[]" value="{$channels[user].watchtype}{$channels[user].watchId|escape}" {if $smarty.request.checked and in_array($channels[user].watchId,$smarty.request.checked)}checked="checked"{/if}>
+					</td>
+					<td class="text">{$channels[user].event}</td>
+					<td class="text">
+						{if $channels[user].url}
+							<a href="{$channels[user].url}" title="{$channels[user].title|escape}">{$channels[user].object|escape}</a>
+						{else}
+							{$channels[user].object|escape}
+						{/if}
+						</td>
+					<td class="email">
+						{if $channels[user].watchtype eq 'user'}
+							{$channels[user].email}
+						{else}
+							<em>{tr}Multiple{/tr}</em>
+						{/if}
+					</td>
+					<td class="text">
+						{if $channels[user].watchtype eq 'group'}
+							{icon _id='group'}
+						{else}
+							{icon _id='user'}
+						{/if}
+						{$channels[user].user|escape}
+					</td>
+					<td class="action">
+						<a class="link" href="{$smarty.server.PHP_SELF}?{query removeevent=$channels[user].watchId removetype=$channels[user].watchtype}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
+					</td>
+				</tr>
+			{sectionelse}
+				{norecords _colspan=6}
+			{/section}
+		</table>
 	</div>
 	{if $channels}
 		<br>
@@ -141,26 +141,26 @@
 {if !empty($trackers)}
 	<h2>{tr}Trackers Outbound Emails{/tr}</h2>
 	<div class="table-responsive">
-	<table class="table normal">
-		{section name=ix loop=$trackers}
-			<tr>
-				<td><a href="tiki-list_trackers.php?trackerId={$trackers[ix].trackerId}">{$trackers[ix].value|escape}</a></td>
-			</tr>
-		{/section}
-	</table>
+		<table class="table normal">
+			{section name=ix loop=$trackers}
+				<tr>
+					<td><a href="tiki-list_trackers.php?trackerId={$trackers[ix].trackerId}">{$trackers[ix].value|escape}</a></td>
+				</tr>
+			{/section}
+		</table>
 	</div>
 {/if}
 
 {if !empty($forums)}
 	<h2>{tr}Forums Outbound Emails{/tr}</h2>
 	<div class="table-responsive">
-	<table class="table normal">
-		{section name=ix loop=$forums}
-			<tr>
-				<td><a href="tiki-admin_forums.php?forumId={$forums[ix].forumId}&amp;cookietab=2">{$forums[ix].outbound_address|escape}</a><br/></td>
-			</tr>
-		{/section}
-	</table>
+		<table class="table normal">
+			{section name=ix loop=$forums}
+				<tr>
+					<td><a href="tiki-admin_forums.php?forumId={$forums[ix].forumId}&amp;cookietab=2">{$forums[ix].outbound_address|escape}</a><br/></td>
+				</tr>
+			{/section}
+		</table>
 	</div>
 {/if}
 
