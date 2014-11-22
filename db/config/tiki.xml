@@ -269,6 +269,9 @@
 		<service id="tiki.lib.tabular" class="Tracker\Tabular\Manager">
 			<argument type="service" id="tiki.lib.db"/>
 		</service>
+		<service id="tiki.lib.theme" class="ThemeLib">
+			<file>%kernel.root_dir%/lib/theme/themelib.php</file>
+		</service>
 		<service id="tiki.lib.tcontrol" class="ThemeControlLib">
 			<file>%kernel.root_dir%/lib/themecontrol/tcontrol.php</file>
 		</service>

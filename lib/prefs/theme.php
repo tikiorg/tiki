@@ -7,17 +7,9 @@
 
 function prefs_theme_list()
 {
-	$themes = [
-		'default' => tr('Bootstrap default'),
-//		'legacy' => tr('Bootstrap themes in the "styles" directory'),
-		'custom' => tr('Custom bootstrap theme by specifying URL'),
-	];
-
-	foreach (glob("themes/*/css/tiki.css") as $css) {
-		$css = dirname(dirname($css));
-		$theme = basename($css);
-		$themes[$theme] = tr($theme);
-	}
+	//get list of themes
+	$themelib = TikiLib::lib('theme');
+	$themes = $themelib->list_themes();
 	
 	//get list of base iconsets
 	foreach (scandir('themes/base_files/iconsets') as $iconset_file) {
