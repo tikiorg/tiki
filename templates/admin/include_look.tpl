@@ -57,8 +57,7 @@
 
 			{preference name=change_theme}
 			<div class="adminoptionboxchild" id="change_theme_childcontainer">
-{tr}Restrict available themes{/tr}
-				{preference name=available_styles}
+				{preference name=available_themes}
 			</div>
 
 			{preference name=feature_fixed_width}

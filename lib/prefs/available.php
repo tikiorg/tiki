@@ -8,8 +8,9 @@
 function prefs_available_list($partial = false)
 {
 	global $tikilib;
+	$themelib = TikiLib::lib('theme');
 	$map = array();
-	$styles = array('' => tra('All'));
+	$themes = array('' => tra('All'));
 	
 	if (! $partial) {
 		$languages = $tikilib->list_languages(false, null, true);
@@ -17,11 +18,7 @@ function prefs_available_list($partial = false)
 			$map[ $lang['value'] ] = $lang['name'];
 		}
 
-		$all_styles = $tikilib->list_styles();
-
-		foreach ($all_styles as $style) {
-			$styles[$style] = substr($style, 0, strripos($style, '.css'));
-		}
+		$themes = array_merge($themes, $themelib->list_themes());
 	}
 
 	return array(
@@ -38,11 +35,11 @@ function prefs_available_list($partial = false)
 			'options' => $map,
 			'default' => array(),
 		),
-		'available_styles' => array(
-			'name' => tra('Available styles'),
-            'description' => tra(''),
+		'available_themes' => array(
+			'name' => tra('Available themes'),
+            'description' => tra('Restrict available themes'),
 			'type' => 'multilist',
-			'options' => $styles,
+			'options' => $themes,
 			'dependencies' => array(
 				'change_theme',
 			),
