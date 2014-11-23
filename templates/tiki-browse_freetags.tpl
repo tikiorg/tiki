@@ -36,27 +36,27 @@
 	$('#tagBox').tiki('autocomplete', 'tag', {multiple: true, multipleSeparator: " "} );
 {/jq}
 <form action="tiki-browse_freetags.php" method="get" class="freetagsearch col-md-12 form-inline form-horizontal" role="form">
-    <div class="row">
-        <label class="control-label col-sm-2" for="tabBox">{tr}Tags{/tr}</label>
-        <div class="input-group col-sm-7">
-		    <input type="text" id="tagBox" class="form-control" name="tag" value="{$tagString|escape}">
-        </div>
-        <div class="col-sm-3">
-		    {button _onclick="clearTags(); return false;" _text="{tr}Clear{/tr}"}
-	    	<input type="submit" class="btn btn-default" value="{tr}Go{/tr}">
-    	</div>
-    </div>
-    <div class="row table spacer-bottom-15px">
-        <div class="col-sm-10 col-sm-offset-2 radio">
-		    <input type="hidden" name="sort_mode" value="{$sort_mode|escape}">
-		    <input type="radio" name="broaden" class="radio" id="stopb1" value="n"{if $broaden eq 'n'} checked="checked"{/if}>
-		    <label for="stopb1">{tr}With all selected tags{/tr}</label>
-		    <input type="radio" name="broaden" class="radio" id="stopb2" value="y"{if $broaden eq 'y'} checked="checked"{/if}>
-		    <label for="stopb2">{tr}With one selected tag{/tr}</label>
-		    <input type="radio" name="broaden" class="radio" id="stopb3" value="last"{if $broaden eq 'last'} checked="checked"{/if}>
-		    <label for="stopb3">{tr}With last selected tag{/tr}</label>
-        </div>
-    </div>
+	<div class="row">
+		<label class="control-label col-sm-2" for="tabBox">{tr}Tags{/tr}</label>
+		<div class="input-group col-sm-7">
+			<input type="text" id="tagBox" class="form-control" name="tag" value="{$tagString|escape}">
+		</div>
+		<div class="col-sm-3">
+			{button _onclick="clearTags(); return false;" _text="{tr}Clear{/tr}"}
+			<input type="submit" class="btn btn-default" value="{tr}Go{/tr}">
+		</div>
+	</div>
+	<div class="row table spacer-bottom-15px">
+		<div class="col-sm-10 col-sm-offset-2 radio">
+			<input type="hidden" name="sort_mode" value="{$sort_mode|escape}">
+			<input type="radio" name="broaden" class="radio" id="stopb1" value="n"{if $broaden eq 'n'} checked="checked"{/if}>
+			<label for="stopb1">{tr}With all selected tags{/tr}</label>
+			<input type="radio" name="broaden" class="radio" id="stopb2" value="y"{if $broaden eq 'y'} checked="checked"{/if}>
+			<label for="stopb2">{tr}With one selected tag{/tr}</label>
+			<input type="radio" name="broaden" class="radio" id="stopb3" value="last"{if $broaden eq 'last'} checked="checked"{/if}>
+			<label for="stopb3">{tr}With last selected tag{/tr}</label>
+		</div>
+	</div>
 
 	{if $prefs.freetags_browse_show_cloud eq 'y'}
 		{jq notonready=true}
@@ -163,12 +163,12 @@
 		{/foreach}
 		{if !empty($blogs)}
 			<div id="blogs"{if $type ne 'blog post'} style="visibility:hidden"{/if}>
-			<select name="objectId" onchange="this.form.submit();">
-				<option value="">--{tr}All blogs{/tr}--</option>
-				{foreach item=blog from=$blogs}
-					<option value="{$blog.blogId|escape}"{if $blog.blogId eq $objectId} selected="selected"{/if}>{$blog.title|escape}</option>
-				{/foreach}
-			</select>
+				<select name="objectId" onchange="this.form.submit();">
+					<option value="">--{tr}All blogs{/tr}--</option>
+					{foreach item=blog from=$blogs}
+						<option value="{$blog.blogId|escape}"{if $blog.blogId eq $objectId} selected="selected"{/if}>{$blog.title|escape}</option>
+					{/foreach}
+				</select>
 			</div>
 		{/if}
 
@@ -178,8 +178,9 @@
 		<input type="submit" class="btn btn-default btn-sm" value="{tr}Filter{/tr}">
 	{/capture}
 
-{if $cpt > 1}
-	<div class="freetagsbrowse">{$smarty.capture.browse}</div>{/if}
+	{if $cpt > 1}
+		<div class="freetagsbrowse">{$smarty.capture.browse}</div>
+	{/if}
 
 </form>
 

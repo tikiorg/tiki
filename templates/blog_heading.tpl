@@ -7,7 +7,9 @@
 {if $blog_data.use_description eq 'y' && $description neq ""}
 	<div class="description help-block">{$description|escape}</div>
 {/if}
-{* example code to add more info to the default blog heading if desired
+
+
+{* Below is example code if you wish to add more info to the default blog heading
  * remove the line above (starting curly bracket then asterisk) and the last line to enable
 <div class="bloginfo">
 {tr}Created by{/tr} {$creator|userlink} {$created|tiki_short_datetime:on}<br>

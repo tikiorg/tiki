@@ -1,5 +1,5 @@
 {if strlen($blog_data.post_heading) > 0 and $prefs.feature_blog_heading eq 'y'}
-  {eval var=$blog_data.post_heading}
+	{eval var=$blog_data.post_heading}
 {else}
 	{include file='blog_post_heading.tpl'}
 {/if}
@@ -8,9 +8,9 @@
 <div style="float:right;">
 {if $user and $prefs['feature_blogs'] eq 'y'}
 	{if $user_watching_blog eq 'n'}
-				<a href="tiki-view_blog_post.php?postId={$postId}&amp;watch_event=blog_comment_changes&amp;watch_object={$postId}&amp;watch_action=add" class="icon btn btn-default btn-small">{icon _id='eye' alt="{tr}Monitor this Blog{/tr}"}</a>
-			{else}
-				<a href="tiki-view_blog_post.php?postId={$postId}&amp;watch_event=blog_comment_changes&amp;watch_object={$postId}&amp;watch_action=remove" class="icon btn btn-default btn-small">{icon _id='no_eye' alt="{tr}Stop Monitoring this Blog{/tr}"}</a>
+		<a href="tiki-view_blog_post.php?postId={$postId}&amp;watch_event=blog_comment_changes&amp;watch_object={$postId}&amp;watch_action=add" class="icon btn btn-default btn-small">{icon _id='eye' alt="{tr}Monitor this Blog{/tr}"}</a>
+	{else}
+		<a href="tiki-view_blog_post.php?postId={$postId}&amp;watch_event=blog_comment_changes&amp;watch_object={$postId}&amp;watch_action=remove" class="icon btn btn-default btn-small">{icon _id='no_eye' alt="{tr}Stop Monitoring this Blog{/tr}"}</a>
 	{/if}
 {/if}
 </div>

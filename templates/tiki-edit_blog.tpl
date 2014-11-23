@@ -7,7 +7,7 @@
 <div class="t_navbar btn-group form-group">
 	{button href="tiki-list_blogs.php" class="btn btn-default" _text="{tr}List Blogs{/tr}"}
 
-  {if $blogId > 0}
+	{if $blogId > 0}
 		{assign var=thisblogId value=$blogId|sefurl:blog}
 		{button href=$thisblogId class="btn btn-default" _text="{tr}View Blog{/tr}"}
 	{/if}
@@ -26,6 +26,7 @@
 <form method="post" action="tiki-edit_blog.php" id="blog-edit-form" class="form-horizontal" role="form">
 	<input type="hidden" name="blogId" value="{$blogId|escape}">
 	{tabset name='tabs_editblog'}
+
 		{tab name="{tr}General Settings{/tr}"}
 			<h2>{tr}General Settings{/tr}</h2>
 			<div class="form-group">
@@ -84,26 +85,27 @@
 					<div class="checkbox">
 						<label for="blogs-post-use-excerpt">
 							<input type="checkbox" name="use_excerpt" id="blogs-post-use-excerpt" {if $use_excerpt eq 'y'}checked='checked'{/if}>
-                            {tr}Use post excerpt{/tr}
+							{tr}Use post excerpt{/tr}
 						</label>
 					</div>
 				</div>
 			</div>
 			{include file='categorize.tpl'}
 		{/tab}
+
 		{tab name="{tr}Display Options{/tr}"}
 			<h2>{tr}Display Options{/tr}</h2>
 			<div class="form-group">
 				<label class="col-sm-5 control-label" for="blogs-number">{tr}Number of posts to show per page{/tr}</label>
 				<div class="col-sm-2">
-				  <input type="text" name="maxPosts" id="blogs-number" class="form-control" value="{$maxPosts|escape}">
+					<input type="text" name="maxPosts" id="blogs-number" class="form-control" value="{$maxPosts|escape}">
 				</div>
 			</div>
 			<div class="form-group">
 				<div class="col-sm-offset-3 col-sm-9">
 					<div class="checkbox">
 						<label for="blogs-title">{tr}Display blog title in posts list page{/tr}
-						   <input type="checkbox" name="use_title" id="blogs-title" {if $use_title eq 'y'}checked='checked'{/if}>
+							 <input type="checkbox" name="use_title" id="blogs-title" {if $use_title eq 'y'}checked='checked'{/if}>
 						</label>
 					</div>
 					<div class="checkbox">
@@ -146,7 +148,7 @@
 					</div>
 					<label class="col-sm-5 control-label" for="blogs-post-max-related">{tr}Maximum number of related posts to display{/tr}</label>
 					<div class="col-sm-2">
-						<input type="text" name="related_max" id="blogs-post-max-related" class="form-control"  value="{$related_max|escape}">
+						<input type="text" name="related_max" id="blogs-post-max-related" class="form-control" value="{$related_max|escape}">
 					</div>
 				</div>
 			</div>
@@ -170,7 +172,8 @@
 					</div>
 				</div>
 			{/if}
-      {/tab}
+		{/tab}
+
 	{/tabset}
 	{if $prefs.feature_blog_heading eq 'y' and $tiki_p_edit_templates eq 'y'}
 		<input type="submit" class="wikiaction btn btn-default" name="preview" value="{tr}Heading preview{/tr}">
