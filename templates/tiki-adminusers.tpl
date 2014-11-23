@@ -157,46 +157,23 @@
 								   {select_all checkbox_names='checked[]'}
 								{/if}
 							</th>
-							<th id="user" >{self_link _sort_arg='sort_mode' _sort_field='login'}{tr}User{/tr}{/self_link}</th>
+							<th id="user">{self_link _sort_arg='sort_mode' _sort_field='login'}{tr}User{/tr}{/self_link}</th>
 							{if $prefs.login_is_email neq 'y'}
-								<th id="email" >{self_link _sort_arg='sort_mode' _sort_field='email'}{tr}Email{/tr}{/self_link}</th>
+								<th id="email">{self_link _sort_arg='sort_mode' _sort_field='email'}{tr}Email{/tr}{/self_link}</th>
 							{/if}
 							{if $prefs.auth_method eq 'openid'}
-								<th id="openid" >{self_link _sort_arg='sort_mode' _sort_field='openID'}{tr}OpenID{/tr}{/self_link}</th>
+								<th id="openid">{self_link _sort_arg='sort_mode' _sort_field='openID'}{tr}OpenID{/tr}{/self_link}</th>
 							{/if}
-							<th id="lastlogin" >{self_link _sort_arg='sort_mode' _sort_field='currentLogin'}{tr}Last login{/tr}{/self_link}</th>
-							<th id="registered" >{self_link _sort_arg='sort_mode' _sort_field='created'}{tr}Registered{/tr}{/self_link}</th>
-							<th id="groups" >{tr}Groups{/tr}</th>
-							<th id="actions" >{tr}Actions{/tr}</th>
+							<th id="lastlogin">{self_link _sort_arg='sort_mode' _sort_field='currentLogin'}{tr}Last login{/tr}{/self_link}</th>
+							<th id="registered">{self_link _sort_arg='sort_mode' _sort_field='created'}{tr}Registered{/tr}{/self_link}</th>
+							<th id="groups">{tr}Groups{/tr}</th>
+							<th id="actions">{tr}Actions{/tr}</th>
 						</tr>
 					</thead>
 					<tbody>
 					{section name=user loop=$users}
 						{if $users[user].editable}
 							{capture assign=username}{$users[user].user|escape}{/capture}
-							<tr>
-								<th {if $prefs.mobile_mode eq "y"}style="width:40px;"{else}class="auto"{/if}>
-									{if $users}
-										{select_all checkbox_names='checked[]'}
-									{/if}
-								</th>
-								<th>{self_link _sort_arg='sort_mode' _sort_field='login'}{tr}User{/tr}{/self_link}</th>
-								{if $prefs.login_is_email neq 'y'}
-									<th>{self_link _sort_arg='sort_mode' _sort_field='email'}{tr}Email{/tr}{/self_link}</th>
-								{/if}
-								{if $prefs.auth_method eq 'openid'}
-									<th>{self_link _sort_arg='sort_mode' _sort_field='openID'}{tr}OpenID{/tr}{/self_link}</th>
-								{/if}
-								<th>{self_link _sort_arg='sort_mode' _sort_field='currentLogin'}{tr}Last login{/tr}{/self_link}</th>
-								<th>{self_link _sort_arg='sort_mode' _sort_field='created'}{tr}Registered{/tr}{/self_link}</th>
-								<th>{tr}Groups{/tr}</th>
-								<th>{tr}Actions{/tr}</th>
-							</tr>
-						</thead>
-						<tbody>
-						{section name=user loop=$users}
-							{if $users[user].editable}
-								{capture assign=username}{$users[user].user|escape}{/capture}
 								<tr>
 									<td class="checkbox-cell">
 										{if $users[user].user ne 'admin'}
