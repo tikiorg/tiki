@@ -988,6 +988,22 @@ if ($s) {
 	);
 }
 
+$s = extension_loaded('iconv');
+$msg = tra('This extension is required and used frequently in validation functions invoked within Zend Framework.');
+if ($s) {
+	$php_properties['iconv'] = array(
+		'fitness' => tra('good'),
+		'setting' => 'Loaded',
+		'message' => $msg
+	);
+} else {
+	$php_properties['iconv'] = array(
+		'fitness' => tra('bad'),
+		'setting' => 'Not available',
+		'message' => $msg
+	);
+}
+
 // Check for existence of eval()
 // eval() is a language construct and not a function
 // so function_exists() doesn't work
