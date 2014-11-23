@@ -26,8 +26,23 @@ class Table_Code_Other extends Table_Code_Manager
 	public function setCode()
 	{
 		$jq = array();
+		//column selector
+		if (parent::$s['colselect']['type'] === true) {
+			$htmlbefore[] = '<button id="' . parent::$s['colselect']['button']['id']
+				. '" type="button" class="btn btn-default btn-xs" style="margin-right:3px">'
+				. parent::$s['colselect']['button']['text'] . '</button>';
+			$jq[] = '$(\'button#' . parent::$s['colselect']['button']['id'] . '\').popover({'
+				. $this->nt2 . 'placement: \'auto right\','
+				. $this->nt2 . 'html: true,'
+				. $this->nt2 . 'content: \'<div id="' . parent::$s['colselect']['div']['id'] . '"></div>\''
+				. $this->nt . '}).on(\'shown.bs.popover\', function () {'
+				. $this->nt2 . '$.tablesorter.columnSelector.attachTo( $(\'' . parent::$tid
+				. '\'), \'#' . parent::$s['colselect']['div']['id'] . '\');'
+				. $this->nt . '});';
+		}
+
+			//reset sort button
 		$sr = '';
-		//reset sort button
 		$x = array('reset' => '', 'savereset' => '');
 		$s = parent::$s['sorts'];
 		$s = isset($s['type']) && $s['type'] !== true && array_key_exists($s['type'], $x) ? $s : false;
@@ -37,7 +52,8 @@ class Table_Code_Other extends Table_Code_Manager
 			}
 			$jq[] = '$(\'button#' . $s['reset']['id'] . '\').click(function(){$(\'' . parent::$tid
 				.'\').trigger(\'sortReset\')' . $sr . ';});';
-			$htmlbefore[] = '<button id="' . $s['reset']['id'] . '" type="button" class="btn btn-default btn-xs">'
+			$htmlbefore[] = '<button id="' . $s['reset']['id']
+				. '" type="button" class="btn btn-default btn-xs" style="margin-right:3px">'
 				. $s['reset']['text'] . '</button>';
 		}
 

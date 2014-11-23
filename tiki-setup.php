@@ -498,6 +498,7 @@ if ( $prefs['feature_jquery_tablesorter'] == 'y' ) {
 	}
 	$headerlib->add_jsfile('vendor/jquery/plugins/tablesorter/js/widgets/widget-grouping.js');
 	$headerlib->add_jsfile('vendor/jquery/plugins/tablesorter/js/widgets/widget-pager.js');
+	$headerlib->add_jsfile('vendor/jquery/plugins/tablesorter/js/widgets/widget-columnSelector.js');
 	$headerlib->add_jsfile('vendor/jquery/plugins/tablesorter/js/parsers/parser-input-select.js');
 }
 if ( $prefs['feature_shadowbox'] == 'y' ) {

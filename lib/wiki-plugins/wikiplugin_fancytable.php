@@ -96,7 +96,8 @@ function wikiplugin_fancytable($data, $params)
 				isset($tsortcolumns) ? $tsortcolumns : null,
 				isset($tsfilters) ? $tsfilters : null,
 				isset($tsfilteroptions) ? $tsfilteroptions : null,
-				isset($tspaginate) ? $tspaginate : null
+				isset($tspaginate) ? $tspaginate : null,
+				isset($tscolselect) ? $tscolselect : null
 			);
 			if (is_array($ts->settings)) {
 				Table_Factory::build('plugin', $ts->settings);

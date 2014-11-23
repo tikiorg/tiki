@@ -149,6 +149,19 @@ class Table_Plugin
 				'filter' => 'striptags',
 				'advanced' => true,
 			),
+			'tscolselect' => array(
+				'required' => false,
+				'name' => tra('Column Select'),
+				'description' => tr(
+					'Add a button for hiding and re-showing columns. Also sets priority for dropping columns when
+				 	browser is too narrow. Set each column to a number between 1 and 6 (1 is highest priority and last
+				 	to be dropped) or to %0critical%1 to never hide or drop. An example with 4 columns:',
+						'<b>', '</b>') .
+					'tscolselect="critical|4|5|6"',
+				'default' => '',
+				'filter' => 'striptags',
+				'advanced' => true,
+			),
 		);
 	}
 
@@ -167,7 +180,8 @@ class Table_Plugin
 	 * @param null   $totalrows			//only needed if ajax will be used to pull partial record sets
 	 */
 	public function setSettings ($id = null, $server = 'n', $sortable = 'n', $sortList = null, $tsortcolumns = null,
-		$tsfilters = null, $tsfilteroptions = null, $tspaginate = null, $ajaxurl = null, $totalrows = null)
+		$tsfilters = null, $tsfilteroptions = null, $tspaginate = null, $tscolselect = null, $ajaxurl = null,
+		$totalrows = null)
 	{
 		$s = array();
 
@@ -303,6 +317,17 @@ class Table_Plugin
 				$s['pager']['type'] = true;
 			} elseif ($tsp[0] === 'n' && $server === 'n') {
 				$s['pager']['type'] = false;
+			}
+		}
+
+		//tscolselect
+		if (!empty($tscolselect)) {
+			$tscs = $this->parseParam($tscolselect);
+			if (is_array($tscs)) {
+				$s['colselect']['type'] = true;
+				foreach ($tscs as $col => $priority) {
+					$s['columns'][$col]['priority'] = $priority;
+				}
 			}
 		}
 

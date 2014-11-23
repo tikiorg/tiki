@@ -71,6 +71,12 @@ class Table_Code_MainOptions extends Table_Code_Manager
 					}
 				}
 			}
+			//column select
+			if (parent::$s['colselect']['type'] === true) {
+				if (isset($info['priority'])) {
+					$allcols[$col]['attr']['data-priority'] = $info['priority'];
+				}
+			}
 		}
 		unset($col, $info);
 		//process columns
@@ -133,6 +139,10 @@ class Table_Code_MainOptions extends Table_Code_Manager
 		//pager
 		if (parent::$pager) {
 			$w[] = 'pager';
+		}
+		//column selector
+		if (parent::$s['colselect']) {
+			$w[] = 'columnSelector';
 		}
 		if (count($w) > 0) {
 			$mo[] = $this->iterate($w, 'widgets : [', ']', '\'', '\'', ',');

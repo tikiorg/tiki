@@ -228,6 +228,16 @@ abstract class Table_Settings_Abstract
 				'id' => '-offset',
 			),
 		),
+		'colselect' => array(
+			'button' => array(
+				'id' => '-colselectbtn',
+				//tra('Columns')
+				'text' => 'Columns',
+			),
+			'div' => array(
+				'id' => '-colselectdiv',
+			)
+		),
 	);
 
 	/**

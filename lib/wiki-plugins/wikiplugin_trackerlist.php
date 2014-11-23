@@ -1673,6 +1673,7 @@ function wikiplugin_trackerlist($data, $params)
 					isset($tsfilters) ? $tsfilters : null,
 					isset($tsfilteroptions) ? $tsfilteroptions : null,
 					isset($tspaginate) ? $tspaginate : null,
+					isset($tscolselect) ? $tscolselect : null,
 					$GLOBALS['requestUri'],
 					$itemcount
 				);

@@ -148,8 +148,8 @@
 		<div id="{$ts_tableid}-div" {if $tsOn}style="visibility:hidden;"{/if}>
 			<div class="table-responsive user-table">
             	<table id="{$ts_tableid}" class="table normal table-striped table-hover">
-					{* Note: for any changes in the logic determining which columns are shown, corresponding changes will
-					need to be made in the getTableSettings function at /lib/core/Table/Settings/Adminusers.php *}
+					{* Note: th element ids here need to match those at /lib/core/Table/Settings/TikiAdminusers.php
+					for tablesorter to work properly *}
 					<thead>
 						<tr>
 							<th id="checkbox" {if $prefs.mobile_mode eq "y"}style="width:40px;"{else}class="auto"{/if}>

@@ -2824,6 +2824,7 @@ body.tiki.navbar-padding {
   /* hidden filter row */
   /*no formatting on filter row when filter-false*/
   /* rows hidden by filtering (needed for child rows) */
+  /*column select*/
 }
 .tablesorter-header {
   background-repeat: no-repeat;
@@ -2897,6 +2898,12 @@ table.tablesorter-processing tbody tr td {
 }
 .tablesorter .filtered {
   display: none;
+}
+span.tablesorter-column-selector label {
+  margin: 0 5px;
+}
+span.tablesorter-column-selector input {
+  margin-right: 6px;
 }
 .tablesorter input.dateFrom,
 .tablesorter input.dateTo {

@@ -26,6 +26,9 @@ class Table_Settings_TikiAdminusers extends Table_Settings_Abstract
 		'id' => 'adminusers',
 		'selflinks' => true,
 		'usecolindex' => false,
+		'colselect' => array(
+			'type' => true,
+		),
 		'sorts' => array(
 			'type' => 'reset',
 			'group' => true,
@@ -52,7 +55,7 @@ class Table_Settings_TikiAdminusers extends Table_Settings_Abstract
 			'offset' => 'offset'
 		),
 		'columns' => array(
-			'#checkbox' => array(					//checkbox
+			'#checkbox' => array(
 				'sort' => array(
 					'type' => false,
 					'group' => 'checkbox',
@@ -61,8 +64,9 @@ class Table_Settings_TikiAdminusers extends Table_Settings_Abstract
 					'type' => false,
 				),
 				'resizable' => false,
+				'priority' => 'critical',
 			),
-			'#user' => array(					//user
+			'#user' => array(
 				'sort' => array(
 					'type' => true,
 					'dir' => 'asc',
@@ -73,8 +77,9 @@ class Table_Settings_TikiAdminusers extends Table_Settings_Abstract
 					'type' => 'text',
 					'ajax' => 'find',
 				),
+				'priority' => 'critical',
 			),
-			'#email' => array(					//email - only if $prefs.login_is_email != 'y'
+			'#email' => array(					//only if $prefs.login_is_email != 'y'
 				'sort' => array(
 					'type' => true,
 					'ajax' =>'email',
@@ -85,8 +90,9 @@ class Table_Settings_TikiAdminusers extends Table_Settings_Abstract
 					'placeholder' => 'Enter valid email...',
 					'ajax' => 'filterEmail',
 				),
+				'priority' => 1,
 			),
-			'#openid' => array(					//openid - only if $prefs.auth_method == 'openid'
+			'#openid' => array(					//only if $prefs.auth_method == 'openid'
 				'sort' => array(
 					'type' => true,
 					'ajax' => 'openid_url',
@@ -95,8 +101,9 @@ class Table_Settings_TikiAdminusers extends Table_Settings_Abstract
 				'filter' => array(
 					'type' => false,	//no filter since $userlib->get_users doesn't have it
 				),
+				'priority' => 2,
 			),
-			'#lastlogin' => array(					//last login
+			'#lastlogin' => array(
 				'sort' => array(
 					'type' => 'text',
 					'ajax' => 'currentLogin',
@@ -105,8 +112,9 @@ class Table_Settings_TikiAdminusers extends Table_Settings_Abstract
 				'filter' => array(
 					'type' => false,
 				),
+				'priority' => 4,
 			),
-			'#registered' => array(					//registered
+			'#registered' => array(
 				'sort' => array(
 					'type' => 'isoDate',
 					'ajax' => 'registrationDate',
@@ -115,8 +123,9 @@ class Table_Settings_TikiAdminusers extends Table_Settings_Abstract
 				'filter' => array(
 					'type' => false,	//no filter since $userlib->get_users doesn't have it
 				),
+				'priority' => 5,
 			),
-			'#groups' => array(					//groups
+			'#groups' => array(
 				'sort' => array(
 					'type' => false,
 				),
@@ -125,14 +134,16 @@ class Table_Settings_TikiAdminusers extends Table_Settings_Abstract
 					'type' => 'dropdown',
 					'ajax' => 'filterGroup',
 				),
+				'priority' => 3,
 			),
-			'#actions' => array(					//actions
+			'#actions' => array(
 				'sort' => array(
 					'type' => false,
 				),
 				'filter' => array(
 					'type' => false,
 				),
+				'priority' => 6,
 			),
 		),
 	);
