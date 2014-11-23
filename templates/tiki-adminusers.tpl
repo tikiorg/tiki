@@ -144,13 +144,36 @@
 			{initials_filter_links}
 		{/if}
 
-		<form class="form-horizontal" name="checkform" method="post" action="{$smarty.server.PHP_SELF|escape}">
-			<div id="{$ts_tableid}-div" {if $tsOn}style="visibility:hidden;"{/if}>
-				<div class="table-responsive user-table">
-					<table id="{$ts_tableid}" class="table normal table-striped table-hover">
-						{* Note: for any changes in the logic determining which columns are shown, corresponding changes will
-						need to be made in the getTableSettings function at /lib/core/Table/Settings/Adminusers.php *}
-						<thead>
+	<form class="form-horizontal" name="checkform" method="post" action="{$smarty.server.PHP_SELF|escape}">
+		<div id="{$ts_tableid}-div" {if $tsOn}style="visibility:hidden;"{/if}>
+			<div class="table-responsive user-table">
+            	<table id="{$ts_tableid}" class="table normal table-striped table-hover">
+					{* Note: for any changes in the logic determining which columns are shown, corresponding changes will
+					need to be made in the getTableSettings function at /lib/core/Table/Settings/Adminusers.php *}
+					<thead>
+						<tr>
+							<th id="checkbox" {if $prefs.mobile_mode eq "y"}style="width:40px;"{else}class="auto"{/if}>
+								{if $users}
+								   {select_all checkbox_names='checked[]'}
+								{/if}
+							</th>
+							<th id="user" >{self_link _sort_arg='sort_mode' _sort_field='login'}{tr}User{/tr}{/self_link}</th>
+							{if $prefs.login_is_email neq 'y'}
+								<th id="email" >{self_link _sort_arg='sort_mode' _sort_field='email'}{tr}Email{/tr}{/self_link}</th>
+							{/if}
+							{if $prefs.auth_method eq 'openid'}
+								<th id="openid" >{self_link _sort_arg='sort_mode' _sort_field='openID'}{tr}OpenID{/tr}{/self_link}</th>
+							{/if}
+							<th id="lastlogin" >{self_link _sort_arg='sort_mode' _sort_field='currentLogin'}{tr}Last login{/tr}{/self_link}</th>
+							<th id="registered" >{self_link _sort_arg='sort_mode' _sort_field='created'}{tr}Registered{/tr}{/self_link}</th>
+							<th id="groups" >{tr}Groups{/tr}</th>
+							<th id="actions" >{tr}Actions{/tr}</th>
+						</tr>
+					</thead>
+					<tbody>
+					{section name=user loop=$users}
+						{if $users[user].editable}
+							{capture assign=username}{$users[user].user|escape}{/capture}
 							<tr>
 								<th {if $prefs.mobile_mode eq "y"}style="width:40px;"{else}class="auto"{/if}>
 									{if $users}

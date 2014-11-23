@@ -263,9 +263,6 @@ abstract class Table_Settings_Abstract
 
 		//get table-specific settings
 		$ts = $this->getTableSettings();
-		if (isset($ts['columns'])) {
-			$ts['columns'] = array_values($ts['columns']);
-		}
 
 		//override generic defaults with any table-specific defaults
 		$this->s = $this->overrideSettings($this->default, $ts);
@@ -436,17 +433,19 @@ abstract class Table_Settings_Abstract
 			//TODO try array_column
 			if (isset($this->s['columns']) && is_array($this->s['columns'])) {
 				foreach ($this->s['columns'] as $col => $colinfo) {
+					$colpointer =  isset($this->s['usecolindex']) && $this->s['usecolindex'] === false
+						? substr($col,1)  : $col;
 					if (isset($colinfo['sort']['ajax'])) {
 						//tablesorter url param pattern is sort[0]=0 for ascending sort of first column
-						$this->s['ajax']['sort']['sort[' . $col . ']'] = $colinfo['sort']['ajax'];
+						$this->s['ajax']['sort']['sort-' . $colpointer] = $colinfo['sort']['ajax'];
 					}
 					if (isset($colinfo['filter']['ajax'])) {
 						//tablesorter url param pattern is filter[0]=text for filter on first column
-						$this->s['ajax']['colfilters']['filter[' . $col . ']'] = $colinfo['filter']['ajax'];
+						$this->s['ajax']['colfilters']['filter-' . $colpointer] = $colinfo['filter']['ajax'];
 					}  elseif (isset($colinfo['filter']['options'])) {
 						foreach ($colinfo['filter']['options'] as $label => $value) {
 							$label = rawurlencode($label);
-							$this->s['ajax']['colfilters']['filter[' . $col . ']'][$label] = $value;
+							$this->s['ajax']['colfilters']['filter-' . $colpointer][$label] = $value;
 						}
 					}
 				}

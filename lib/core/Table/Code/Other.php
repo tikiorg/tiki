@@ -78,6 +78,7 @@ class Table_Code_Other extends Table_Code_Manager
 							. $this->nt2 . '}';
 					}
 				}
+				unset($key, $info);
 				if ($f['type'] === 'reset' && count($reset) > 0) {
 					$jq[] = $this->iterate(
 						$reset,
@@ -122,6 +123,7 @@ class Table_Code_Other extends Table_Code_Manager
 				$sel = $p['max'] === $option ? ' selected="selected"' : '';
 				$opt[] = $sel . ' value="' . $option . '">' . $option;
 			}
+			unset($option);
 			if (isset($opt)) {
 				$pagerdiv[] = $this->iterate(
 					$opt,

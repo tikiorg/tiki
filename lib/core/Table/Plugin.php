@@ -290,7 +290,7 @@ class Table_Plugin
 			if (is_array($tsp[0]) || $tsp[0] !== 'n' || ($tsp[0] === 'n' && $server === 'y')) {
 				if (is_array($tsp[0])) {
 					$s['pager'] = $tsp[0];
-					if (is_array($s['pager']['expand'])) {
+					if (isset($s['pager']['expand']) && is_array($s['pager']['expand'])) {
 						if (isset($s['pager']['max']) && $s['pager']['max'] > 0) {
 							$s['pager']['expand'] = array_merge(array($s['pager']['max']), $s['pager']['expand']);
 						} else {

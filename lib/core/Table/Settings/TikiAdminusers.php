@@ -25,6 +25,7 @@ class Table_Settings_TikiAdminusers extends Table_Settings_Abstract
 	protected $ts = array(
 		'id' => 'adminusers',
 		'selflinks' => true,
+		'usecolindex' => false,
 		'sorts' => array(
 			'type' => 'reset',
 			'group' => true,
@@ -51,7 +52,7 @@ class Table_Settings_TikiAdminusers extends Table_Settings_Abstract
 			'offset' => 'offset'
 		),
 		'columns' => array(
-			0 => array(					//checkbox
+			'#checkbox' => array(					//checkbox
 				'sort' => array(
 					'type' => false,
 					'group' => 'checkbox',
@@ -61,7 +62,7 @@ class Table_Settings_TikiAdminusers extends Table_Settings_Abstract
 				),
 				'resizable' => false,
 			),
-			1 => array(					//user
+			'#user' => array(					//user
 				'sort' => array(
 					'type' => true,
 					'dir' => 'asc',
@@ -73,7 +74,7 @@ class Table_Settings_TikiAdminusers extends Table_Settings_Abstract
 					'ajax' => 'find',
 				),
 			),
-			2 => array(					//email - only if $prefs.login_is_email != 'y'
+			'#email' => array(					//email - only if $prefs.login_is_email != 'y'
 				'sort' => array(
 					'type' => true,
 					'ajax' =>'email',
@@ -85,7 +86,7 @@ class Table_Settings_TikiAdminusers extends Table_Settings_Abstract
 					'ajax' => 'filterEmail',
 				),
 			),
-			3 => array(					//openid - only if $prefs.auth_method == 'openid'
+			'#openid' => array(					//openid - only if $prefs.auth_method == 'openid'
 				'sort' => array(
 					'type' => true,
 					'ajax' => 'openid_url',
@@ -95,7 +96,7 @@ class Table_Settings_TikiAdminusers extends Table_Settings_Abstract
 					'type' => false,	//no filter since $userlib->get_users doesn't have it
 				),
 			),
-			4 => array(					//last login
+			'#lastlogin' => array(					//last login
 				'sort' => array(
 					'type' => 'text',
 					'ajax' => 'currentLogin',
@@ -105,7 +106,7 @@ class Table_Settings_TikiAdminusers extends Table_Settings_Abstract
 					'type' => false,
 				),
 			),
-			5 => array(					//registered
+			'#registered' => array(					//registered
 				'sort' => array(
 					'type' => 'isoDate',
 					'ajax' => 'registrationDate',
@@ -115,7 +116,7 @@ class Table_Settings_TikiAdminusers extends Table_Settings_Abstract
 					'type' => false,	//no filter since $userlib->get_users doesn't have it
 				),
 			),
-			6 => array(					//group
+			'#groups' => array(					//groups
 				'sort' => array(
 					'type' => false,
 				),
@@ -125,7 +126,7 @@ class Table_Settings_TikiAdminusers extends Table_Settings_Abstract
 					'ajax' => 'filterGroup',
 				),
 			),
-			7 => array(					//actions
+			'#actions' => array(					//actions
 				'sort' => array(
 					'type' => false,
 				),
@@ -135,27 +136,6 @@ class Table_Settings_TikiAdminusers extends Table_Settings_Abstract
 			),
 		),
 	);
-
-	/**
-	 * Manipulate table-specific settings as needed.
-	 *
-	 * @return array|null
-	 */
-	protected function getTableSettings()
-	{
-		//change columns based on prefs to be consistent with tiki-adminusers.tpl
-		global $prefs;
-		if ($prefs['login_is_email'] == 'y') {
-			unset($this->ts['columns'][2]);
-		}
-		if ($prefs['auth_method'] != 'openid') {
-			unset($this->ts['columns'][3]);
-		}
-
-		$this->ts['columns'] = array_values($this->ts['columns']);
-
-		return $this->ts;
-	}
 
 }
 

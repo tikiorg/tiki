@@ -823,7 +823,7 @@ if ($tsOn && !$tsAjax) {
 			'id' => $ts_tableid,
 			'total' => $users['cant'],
 			'columns' => array(
-				 6 => array(
+				 '#groups' => array(
 					 'filter' => array(
 						 'options' => $ts_groups
 				 	)

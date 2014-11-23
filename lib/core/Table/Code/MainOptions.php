@@ -72,10 +72,15 @@ class Table_Code_MainOptions extends Table_Code_Manager
 				}
 			}
 		}
+		unset($col, $info);
 		//process columns
 		if (count($allcols) > 0) {
 			foreach($allcols as $col => $info) {
-				$orh[$col] = 'if (index == ' . $col . '){';
+				if (parent::$usecolindex) {
+					$orh[$col] = 'if (index == ' . $col . '){';
+				} else {
+					$orh[$col] = 'if (id == \'' . substr($col,1) . '\'){';
+				}
 				$orh[$col] .= '$(this)';
 				foreach($info as $attr => $val) {
 					if ($attr == 'addClass') {
@@ -89,6 +94,7 @@ class Table_Code_MainOptions extends Table_Code_Manager
 				}
 				$orh[$col] .= ';}';
 			}
+			unset($col, $info);
 		}
 
 		/* Handle code that applies to all columns now that the array index is not important*/
@@ -102,6 +108,9 @@ class Table_Code_MainOptions extends Table_Code_Manager
 		}
 		if (count($orh) > 0) {
 			array_unshift($mo, 'headerTemplate: \'{content} {icon}\'');
+			if (parent::$usecolindex === false) {
+				array_unshift($orh, 'var id = $(this).attr(\'id\');');
+			}
 			$mo[] = $this->iterate($orh, 'onRenderHeader: function(index){', $this->nt2 . '}', $this->nt3, '', '');
 		}
 		/***  end onRenderHeader section ***/
@@ -143,16 +152,20 @@ class Table_Code_MainOptions extends Table_Code_Manager
 		//Sort list
 		if (parent::$sorts && parent::$sortcol) {
 			$sl = '';
+			$i = 0;
 			foreach (parent::$s['columns'] as $col => $info) {
 				$info = $info['sort'];
+				$colpointer =  parent::$usecolindex ? $col : $i;
 				if (!empty($info['dir'])) {
 					if ($info['dir'] === 'asc') {
-						$sl[] = $col . ',' . '0';
+						$sl[] = $colpointer . ',' . '0';
 					} elseif ($info['dir'] === 'desc') {
-						$sl[] = $col . ',' . '1';
+						$sl[] = $colpointer . ',' . '1';
 					}
 				}
+				$i++;
 			}
+			unset($col, $info);
 			if (is_array($sl)) {
 				$mo[] = $this->iterate($sl, 'sortList : [', ']', '[', ']', ',');
 			}
