@@ -33,6 +33,7 @@ if ($prefs['feature_areas'] === 'y') {
 
 	$result = $areas_table->fetchAll(array('categId', 'perspectives', 'exclusive', 'share_common', 'enabled'), $conditions);
 	$areas = array();
+	$perspectivelib = TikiLib::lib('perspective');
 	$perspectives = array();
 
 	foreach ($result as $item) {
