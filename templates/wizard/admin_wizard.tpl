@@ -58,7 +58,7 @@
 				<a href="http://doc.tiki.org/Upgrade+Wizard" target="tikihelp" class="tikihelp" title="{tr}Upgrade Wizard:{/tr}
                 {tr}Use this wizard if you are upgrading from previous versions of Tiki, specially if you come from the previous Long Term Support (LTS) version.{/tr}</p>
 
-            <p>{tr}Some of these settings are also available through the Configuration Wizard, and all of them are available through Configuration Panels{/tr}.
+            <p>{tr}Some of these settings are also available through the Configuration Wizard, and all of them are available through Control Panels{/tr}.
                 {tr}But this wizard will let you learn about them as well as enable/disable them easily according to your needs and interests for your site{/tr}.">
                     {icon name="help"}
 				</a></p>
@@ -67,11 +67,11 @@
         </div>
     </div>
     <div class="media">
-        <img class="pull-left" src="img/icons/large/admin_panel48x48.png" alt="{tr}Configuration Panels{/tr}" />
+        <img class="pull-left" src="img/icons/large/admin_panel48x48.png" alt="{tr}Control Panels{/tr}" />
         <div class="media-body">
-            <p>{tr}Use the <b>Configuration Panels</b> to manually browse through the full list of preferences{/tr}.</p>
+            <p>{tr}Use the <b>Control Panels</b> to manually browse through the full list of preferences{/tr}.</p>
 
-            {button href="tiki-admin.php" _text="{tr}Go to the Configuration Panels{/tr}"}
+            {button href="tiki-admin.php" _text="{tr}Go to the Control Panels{/tr}"}
         </div>
     </div>
 </fieldset>

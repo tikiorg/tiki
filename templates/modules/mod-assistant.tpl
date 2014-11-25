@@ -7,7 +7,7 @@
 	<p>
 		<img src="img/icons/arrow_small.png" alt="" style="border:0;margin-right:2px;vertical-align:middle" align="left">
 		<strong>{tr}To configure your Tiki{/tr}</strong>:<br>
-		{tr}Select{/tr} <a class="link" href="tiki-admin.php" title="{tr}Configuration Panels{/tr}">{tr}Configuration{/tr} &gt; {tr}Configuration Panels{/tr}</a> {tr}from the menu{/tr}.
+		{tr}Select{/tr} <a class="link" href="tiki-admin.php" title="{tr}Control Panels{/tr}">{tr}Settings{/tr} &gt; {tr}Control Panels{/tr}</a> {tr}from the menu{/tr}.
 	</p>
 	<p>
 		{tr}Read the <a class="link" href="http://doc.tiki.org/Configuration" title="Tiki Documentation" target="_blank">configuration documentation</a>{/tr}.

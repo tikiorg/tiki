@@ -550,7 +550,7 @@
 				<p>{tr}Complete these fields to configure common, general settings for your site.{/tr} {tr}The information you enter here can be changed later.{/tr}</p>
 				{remarksbox type=info title="{tr}Tip{/tr}" close="n"}
 					<span class="help-block">
-						{tr}Refer to the <a href="http://doc.tiki.org/Admin+Panels" target="_blank" class="alert-link">documentation</a> for complete information on these, and other, settings.{/tr}
+						{tr}Refer to the <a href="http://doc.tiki.org/Admin+home" target="_blank" class="alert-link">documentation</a> for complete information on these, and other, settings.{/tr}
 					</span>
 				{/remarksbox}
 				<br>

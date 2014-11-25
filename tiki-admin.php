@@ -159,9 +159,9 @@ function byref_set_value($feature, $pref = '')
 	simple_set_value($feature, $pref);
 }
 
-$crumbs[] = new Breadcrumb(tra('Configuration Panels'), tra('Sections'), 'tiki-admin.php', 'Admin+Home', tra('Help on Configuration Sections', '', true));
+$crumbs[] = new Breadcrumb(tra('Control Panels'), tra('Sections'), 'tiki-admin.php', 'Admin+Home', tra('Help on Configuration Sections', '', true));
 // Default values for AdminHome
-$admintitle = tra('Configuration Panels');
+$admintitle = tra('Control Panels');
 $helpUrl = 'Admin+Home';
 $helpDescription = $description = '';
 $url = 'tiki-admin.php';
@@ -535,7 +535,7 @@ if (isset($_REQUEST['page'])) {
 
 } else {
 	$smarty->assign('include', 'list_sections');
-	$smarty->assign('admintitle', 'Configuration Panels');
+	$smarty->assign('admintitle', 'Control Panels');
 	$smarty->assign('description', 'Home Page for Administrators');
 	$smarty->assign('headtitle', breadcrumb_buildHeadTitle($crumbs));
 	$smarty->assign('description', $crumbs[0]->description);

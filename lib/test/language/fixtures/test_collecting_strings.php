@@ -71,7 +71,7 @@ if (isset($_REQUEST['page'])) {
 	$helpDescription = "Help on $admintitle Config"; //get_strings tra("Help on $admintitle Config")
 
 } else {
-	$smarty->assign('admintitle', 'Configuration Panels');
+	$smarty->assign('admintitle', 'Control Panels');
 	$smarty->assign('description', 'Home Page for Administrators');
 	$smarty->assign('headtitle', breadcrumb_buildHeadTitle($crumbs));
 	$smarty->assign('description', $crumbs[0]->description);
