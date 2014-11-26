@@ -9,7 +9,7 @@
 				{/foreach}
 			</div>
 		</div>
-		<div class="contents" style="float: left; width: 75%;">
+		<div class="contents" style="float: left; width: 75%; max-height: 600px;">
 		</div>
 	</div>
 </div>
