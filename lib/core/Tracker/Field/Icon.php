@@ -70,6 +70,7 @@ class Tracker_Field_Icon extends Tracker_Field_Abstract
 				'filter~gallery_id' => $galleryId,
 				'filter~filetype' => 'image',
 				'maxRecords' => $this->getOption('maxIcons', 120),
+				'sort_mode' => 'title_asc',
 			),
 			'',
 			'&'
@@ -87,8 +88,13 @@ class Tracker_Field_Icon extends Tracker_Field_Abstract
 			array('label' => $info['name'], 'url' => $this->getSearchLink($galleryId)),
 		);
 
-		$children = $filegallib->table('tiki_file_galleries')
-										->fetchMap('galleryId', 'name', array('parentId' => $galleryId));
+		$children = $filegallib->table('tiki_file_galleries')->fetchMap(
+			'galleryId',
+			'name', array('parentId' => $galleryId),
+			-1,
+			-1,
+			array('name' => 'ASC')
+		);
 		foreach ($children as $galleryId => $name) {
 			$galleries[] = array(
 				'label' => $name,
