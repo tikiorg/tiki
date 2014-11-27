@@ -28,6 +28,7 @@ if ($_REQUEST["type"] == 'barvert' || $_REQUEST["type"] == 'barhoriz') {
 		$graph->setParam('grid-independant-location', 'horizontal');
 	} else {
 		$graph->setParam('grid-independant-location', 'vertical');
+		$graph->setParam('grid-horizontal-position', 'top');
 	}
 	$graph->setParam('grid-independant-major-font', 'Normal-Text');
 	$graph->setParam('grid-independant-major-guide', false);
