@@ -290,7 +290,7 @@ class Graphic // {{{1
 
 		$layout = $this->_layout();
 
-		if ( $layout['title-active'] || empty( $this->title ) ) {
+		if ( $layout['title-active'] && !empty( $this->title ) ) {
 			$top += 0.1;
 			$renderer->drawText($this->title, 0, 1, 0.04, $renderer->getStyle($layout['title-font']));
 		}
