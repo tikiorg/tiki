@@ -124,7 +124,7 @@ function wikiplugin_gdgraph($data, $params)
 	// Set height dynamically for barhoriz if not set as a parameter or default to 300
 	if (empty($params['height'])) {
 		if ($params['type'] === 'barhoriz') {
-			$params['height'] = count($xy) * 15 + 100;
+			$params['height'] = count($xy) * 25 + 18; // tested over a range of 3 to 50 x,y pairs but only works OK if title is not displayed
 		} else {
 			$params['height'] = 300;		// better than nothing?
 		}
