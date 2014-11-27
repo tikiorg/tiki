@@ -29,8 +29,8 @@ class Table_Code_Other extends Table_Code_Manager
 		//column selector
 		if (parent::$s['colselect']['type'] === true) {
 			$htmlbefore[] = '<button id="' . parent::$s['colselect']['button']['id']
-				. '" type="button" class="btn btn-default btn-xs" style="margin-right:3px">'
-				. parent::$s['colselect']['button']['text'] . '</button>';
+				. '" type="button" class="btn btn-link btn-sm" title="Show/hide columns" style="margin-right:3px">'
+				. '<span class="fa fa-columns"></span></button>';
 			$jq[] = '$(\'button#' . parent::$s['colselect']['button']['id'] . '\').popover({'
 				. $this->nt2 . 'placement: \'auto right\','
 				. $this->nt2 . 'html: true,'
@@ -53,8 +53,8 @@ class Table_Code_Other extends Table_Code_Manager
 			$jq[] = '$(\'button#' . $s['reset']['id'] . '\').click(function(){$(\'' . parent::$tid
 				.'\').trigger(\'sortReset\')' . $sr . ';});';
 			$htmlbefore[] = '<button id="' . $s['reset']['id']
-				. '" type="button" class="btn btn-default btn-xs" style="margin-right:3px">'
-				. $s['reset']['text'] . '</button>';
+				. '" type="button" class="btn btn-link btn-sm" title="Unsort" style="margin-right:3px">'
+				. '<span class="fa fa-sort"></span></button>';
 		}
 
 		//filters
@@ -62,8 +62,8 @@ class Table_Code_Other extends Table_Code_Manager
 			$f = parent::$s['filters'];
 			//reset button
 			if ($f['type'] === 'reset') {
-				$htmlbefore[] = '<button id="' . $f['reset']['id'] . '" type="button" class="btn btn-default btn-xs">'
-					. $f['reset']['text'] . '</button>';
+				$htmlbefore[] = '<button id="' . $f['reset']['id'] . '" title="Clear filters" class="btn btn-link btn-sm">'
+					. '<span class="fa fa-filter"></span></button>';
 			}
 
 			//external dropdowns
@@ -119,18 +119,18 @@ class Table_Code_Other extends Table_Code_Manager
 				'	<select class="gotoPage"></select>',
 				'</div>',
 				'<div class="btn-group">',
-				'	<button type="button" class="btn btn-default btn-sm first">',
+				'	<button type="button" class="btn btn-link btn-sm first">',
 				'		<i class="fa fa-step-backward"></i>',
 				'	</button>',
-				'	<button type="button" class="btn btn-default btn-sm prev">',
+				'	<button type="button" class="btn btn-link btn-sm prev">',
 				'		<i class="fa fa-backward"></i>',
 				'	</button>',
-				'	<button class="btn btn-default btn-sm disabled pagedisplay">',
+				'	<button class="btn btn-link btn-sm disabled pagedisplay">',
 				'	</button>',
-				'	<button type="button" class="btn btn-default btn-sm next">',
+				'	<button type="button" class="btn btn-link btn-sm next">',
 				'		<i class="fa fa-forward"></i>',
 				'	</button>',
-				'	<button type="button" class="btn btn-default btn-sm last">',
+				'	<button type="button" class="btn btn-link btn-sm last">',
 				'		<i class="fa fa-step-forward"></i>',
 				'	</button>',
 				'</div>',
