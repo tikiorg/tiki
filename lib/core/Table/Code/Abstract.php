@@ -69,8 +69,7 @@ class Table_Code_Abstract
 			self::$pager = empty($settings['pager']['type']) ? false : true;
 			global $prefs;
 			self::$ajax = $settings['ajax']['type'] === true && $prefs['feature_ajax'] === 'y';
-			self::$group = self::$sorts && !self::$ajax && isset($settings['sorts']['group'])
-			&& $settings['sorts']['group'] === true;
+			self::$group = self::$sorts && isset($settings['sorts']['group']) && $settings['sorts']['group'] === true;
 		}
 	}
 

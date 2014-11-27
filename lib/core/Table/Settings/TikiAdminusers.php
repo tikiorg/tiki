@@ -25,10 +25,6 @@ class Table_Settings_TikiAdminusers extends Table_Settings_Abstract
 	protected $ts = array(
 		'id' => 'adminusers',
 		'selflinks' => true,
-		'sorts' => array(
-			'type' => 'reset',
-			'group' => true,
-		),
 		'filters' => array(
 			'type' => 'reset',
 			'external' => array(

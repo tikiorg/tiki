@@ -32,8 +32,20 @@ class Table_Code_WidgetOptions extends Table_Code_Manager
 		if (parent::$sorts) {
 			//row grouping
 			if (parent::$group) {
+				$gc = ['$(table).find(\'.group-header\').addClass(\'info\');'];
+				$wo[] = $this->iterate(
+					$gc,
+					$this->nt3 . 'group_callback : function($cell, $rows, column, table){',
+					$this->nt3 . '}',
+					$this->nt4,
+					''
+				);
 				$wo[] = 'group_collapsible : true';
-				$wo[] = 'group_count : \' ({num})\'';
+				if (parent::$ajax) {
+					$wo[] = 'group_count : false';
+				} else {
+					$wo[] = 'group_count : \' ({num})\'';
+				}
 			}
 			//saveSort
 			if (isset(parent::$s['sorts']['type']) && strpos(parent::$s['sorts']['type'], 'save') !== false) {
@@ -41,7 +53,7 @@ class Table_Code_WidgetOptions extends Table_Code_Manager
 			}
 		}
 
-		//now incorporate options which are handled child classes
+		//now incorporate options which are handled in child classes
 		$classes = ['Filter', 'Pager'];
 		foreach ($classes as $option) {
 			$optarray = Table_Factory::build('WidgetOptions' . $option, parent::$s, 'code')->getOptionArray();

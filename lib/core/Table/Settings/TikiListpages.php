@@ -26,9 +26,7 @@ class Table_Settings_TikiListpages extends Table_Settings_Abstract
 		'id' => 'listpages',
 		'selflinks' => true,
 		'sorts' => array(
-			'type' => 'reset',
 			'multisort' => false,
-			'group' => true,
 		),
 		'filters' => array(
 			'type' => 'reset',
@@ -273,38 +271,9 @@ class Table_Settings_TikiListpages extends Table_Settings_Abstract
 		);
 		$this->ts['columns'][$sortfield[$field]]['sort']['dir'] = $dir;
 
-/*		//begin eliminating columns based on preferences to match tpl
-		if (!$perms->tiki_p_remove && $prefs['feature_wiki_multiprint'] !== 'y') {
-			unset($this->ts['columns'][0]);
-		}
-
-		$unset = array(
-			1 => 'wiki_list_id',
-			2 => 'wiki_list_name',
-			3 => 'wiki_list_hits',
-			5 => 'wiki_list_creator',
-			6 => 'wiki_list_user',
-			7 => 'wiki_list_lastver',
-			8 => 'wiki_list_status',
-			9 => 'wiki_list_versions',
-			10 => 'wiki_list_links',
-			11 => 'wiki_list_backlinks',
-			12 => 'wiki_list_size',
-			13 => 'wiki_list_language',
-			14 => 'wiki_list_categories',
-			15 => 'wiki_list_categories_path',
-			16 => 'wiki_list_rating',
-		);
-
-		foreach($unset as $key => $pref) {
-			if ($prefs[$pref] !== 'y') {
-				unset($this->ts['columns'][$key]);
-			}
-		}*/
-
-		if ($prefs['wiki_list_comment'] === 'y' && $prefs['wiki_list_lastmodif'] !== 'y') {
-			$this->ts['columns']['#lastmodif']['type'] = 'text';
-			$this->ts['columns']['#lastmodif']['group'] = 'word';
+		if ($prefs['wiki_list_comment'] === 'y') {
+			$this->ts['columns']['#lastmodif']['sort']['type'] = 'text';
+			$this->ts['columns']['#lastmodif']['sort']['group'] = 'word';
 		}
 
 		if ($prefs['feature_listorphanPages'] !== 'y') {
@@ -314,7 +283,6 @@ class Table_Settings_TikiListpages extends Table_Settings_Abstract
 			unset($this->ts['filters']['external'][0]['options']['Pages not in a structure']);
 		}
 
-//		$this->ts['columns'] = array_values($this->ts['columns']);
 
 		return $this->ts;
 	}
