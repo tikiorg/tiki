@@ -313,7 +313,7 @@ $icons = array(
 		'image_src' => 'img/icons/resultset_up.png',
 	),
 	'stop-watching' => array(
-		'image_src' => 'img/icons/no-eye.png',
+		'image_src' => 'img/icons/no_eye.png',
 	),
 	'success' => array(
 		'image_src' => 'img/icons/tick.png',

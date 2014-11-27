@@ -117,7 +117,7 @@ $icons = array(
 		'class' => 'glyphicon glyphicon-chevron-down',
 	),
 	'stop-watching' => array(
-		'class' => 'glyphicon glyphicon-close',
+		'class' => 'glyphicon glyphicon-eye-close',
 	),
 	'success' => array(
 		'class' => 'glyphicon glyphicon-ok',
