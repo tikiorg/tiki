@@ -268,7 +268,7 @@ $icons = array( //Icons of the icon set
 		'class' => 'fa fa-bars fa-fw',
 	),
 	'menuitem' => array(
-		'class' => 'fa fa-minus fa-fw',
+		'class' => 'fa fa-angle-right fa-fw',
 	),
 	'module' => array(
 		'class' => 'fa fa-cogs fa-fw',
