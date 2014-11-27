@@ -43,7 +43,8 @@ class Table_Code_WidgetOptionsPager extends Table_Code_WidgetOptions
 		//ajax settings
 		if (parent::$ajax) {
 			$p[] = $pre . 'ajaxObject: {dataType: \'html\'}';
-			$p[] = $pre . 'ajaxUrl : \'' . parent::$s['ajax']['url'] . '\'';
+			$p[] = $pre . 'ajaxUrl : \'' . parent::$s['ajax']['url']['file']
+				. parent::$s['ajax']['url']['query'] . '\'';
 			$p[] = $pre . 'savePages: false';
 
 			//ajax processing - this part grabs the html, usually from the smarty template file

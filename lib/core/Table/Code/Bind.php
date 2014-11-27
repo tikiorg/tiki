@@ -40,7 +40,7 @@ class Table_Code_Bind extends Table_Code_Manager
 
 		//workaround since the processing formatting is not being applied upon sort (reported as bug #769)
 		if (parent::$ajax) {
-			$bind = ['$(\'' . parent::$tid . ' tbody tr td\').css(\'opacity\', 0.25);',];
+			$bind = ['$(\'' . parent::$tid . ' tbody tr td\').css(\'opacity\', 0.25);'];
 			$jq[] = $this->iterate($bind, '.bind(\'sortStart\', function(e, c){', $this->nt . '})', $this->nt2, '', '');
 		}
 

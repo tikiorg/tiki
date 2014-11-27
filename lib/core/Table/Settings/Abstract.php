@@ -39,8 +39,7 @@ abstract class Table_Settings_Abstract
 		//overall filter settings for the table or external filters - individual column settings are under columns below
 		'filters' => array(
 			'type' => 'reset',						//choices: boolean true, boolean false, reset
-			'external' => false,
-/*
+/*			'external' => false,
 			'hide' => false,					//to hide filters. choices: true, false (default)
 			//for filters external to the table
 			'external' => array(
@@ -63,11 +62,9 @@ abstract class Table_Settings_Abstract
 			'max' => 25,
 			'expand' => array(50, 100, 250, 500),
 		),
-*/
 		//set whether filtering and sorting will be done server-side or client side
 		'ajax' => array(
 			'type' => false,
-/*
 			'url' => 'tiki-adminusers.php?{sort:sort}&{filter:filter}',
 			'offset' => 'offset'
 			//url sort and filter params manipulated on the server side if set to false
@@ -80,7 +77,6 @@ abstract class Table_Settings_Abstract
 			'serveroffset' => array(
 				'id' => $ts_offsetid,
 			),
-*/
 		),
 		//determine whether the code uses columns selectors (e.g., th id) or indexes. With selectors the logic
 		//for which columns are shown doesn't need to be recreated for tables with smarty templates where some
@@ -249,6 +245,12 @@ abstract class Table_Settings_Abstract
 	);
 
 	/**
+	 * Used by a second level of abstract classes extending this class to set different
+	 * defaults for plugins vs standard tables
+	 * @var null
+	 */
+	protected $default2 = null;
+	/**
 	 * Used by table classes extending this class for table-specific default settings
 	 * @var null
 	 */
@@ -278,6 +280,9 @@ abstract class Table_Settings_Abstract
 
 		//override any table settings with user settings
 		$this->ts = $this->overrideSettings($this->ts, $this->us);
+
+		//override second level of default settings
+		$this->ts = $this->overrideSettings($this->default2, $this->ts);
 
 		//get table-specific settings
 		$ts = $this->getTableSettings();
@@ -353,7 +358,7 @@ abstract class Table_Settings_Abstract
 	 * @param $default
 	 * @param $settings
 	 */
-	private function overrideSettings($default, $settings)
+	protected function overrideSettings($default, $settings)
 	{
 		if (is_array($default) && is_array($settings)) {
 			$ret = array_replace_recursive($default, $settings);

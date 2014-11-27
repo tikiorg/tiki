@@ -20,13 +20,10 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
  * @subpackage Table
  * @uses Table_Settings_Abstract
  */
-class Table_Settings_TikiAdminusers extends Table_Settings_Abstract
+class Table_Settings_TikiAdminusers extends Table_Settings_Standard
 {
 	protected $ts = array(
-		'id' => 'adminusers',
-		'selflinks' => true,
 		'filters' => array(
-			'type' => 'reset',
 			'external' => array(
 				0 => array(
 					'type' => 'dropdown',
@@ -38,13 +35,10 @@ class Table_Settings_TikiAdminusers extends Table_Settings_Abstract
 				),
 			),
 		),
-		'pager' => array(
-			'type' => true,
-		),
 		'ajax' => array(
-			'type' => true,
-			'url' => 'tiki-adminusers.php?{sort:sort}&{filter:filter}',
-			'offset' => 'offset'
+			'url' => array(
+				'file' => 'tiki-adminusers.php',
+			),
 		),
 		'columns' => array(
 			'#checkbox' => array(
@@ -139,6 +133,5 @@ class Table_Settings_TikiAdminusers extends Table_Settings_Abstract
 			),
 		),
 	);
-
 }
 

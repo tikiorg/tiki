@@ -20,7 +20,7 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
  * @subpackage Table
  * @uses Table_Settings_Abstract
  */
-class Table_Settings_TikiListpages extends Table_Settings_Abstract
+class Table_Settings_TikiListpages extends Table_Settings_Standard
 {
 	protected $ts = array(
 		'id' => 'listpages',
@@ -29,7 +29,6 @@ class Table_Settings_TikiListpages extends Table_Settings_Abstract
 			'multisort' => false,
 		),
 		'filters' => array(
-			'type' => 'reset',
 			'external' => array(
 				0 => array(
 					'type' => 'dropdown',
@@ -40,13 +39,10 @@ class Table_Settings_TikiListpages extends Table_Settings_Abstract
 				),
 			),
 		),
-		'pager' => array(
-			'type' => true,
-		),
 		'ajax' => array(
-			'type' => true,
-			'url' => 'tiki-listpages.php?{sort:sort}&{filter:filter}',
-			'offset' => 'offset',
+			'url' => array(
+				'file' => 'tiki-listpages.php',
+			),
 			'numrows' => 'maxRecords',
 		),
 		'columns' => array(
@@ -282,7 +278,6 @@ class Table_Settings_TikiListpages extends Table_Settings_Abstract
 		if ($prefs['feature_wiki_structure'] !== 'y' || $prefs['feature_listorphanStructure'] !== 'y') {
 			unset($this->ts['filters']['external'][0]['options']['Pages not in a structure']);
 		}
-
 
 		return $this->ts;
 	}

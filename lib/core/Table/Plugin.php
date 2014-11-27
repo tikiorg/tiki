@@ -333,7 +333,9 @@ class Table_Plugin
 
 		//ajaxurl
 		if (!empty($ajaxurl) && $server === 'y') {
-			$s['ajax']['url'] = $this->getAjaxurl($ajaxurl);
+			$url = $this->getAjaxurl($ajaxurl);
+			$s['ajax']['url']['file'] = $url['path'];
+			$s['ajax']['url']['query'] = $url['query'];
 			$s['ajax']['type'] = true;
 		} else {
 			$s['ajax']['type'] = false;
@@ -406,11 +408,11 @@ class Table_Plugin
 		$str = '{sort:sort}&{filter:filter}';
 		$url = parse_url($ajaxurl);
 		if (isset($url['query'])) {
-			$query = $url['query'] . '&' . $str;
+			$url['query'] = '?' .  $url['query'] . '&' . $str;
 		} else {
-			$query = $str;
+			$url['query'] = '?' . $str;
 		}
-		return $url['path'] . '?' . $query;
+		return $url;
 	}
 
 }
