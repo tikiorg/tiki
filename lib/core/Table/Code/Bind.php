@@ -35,14 +35,13 @@ class Table_Code_Bind extends Table_Code_Manager
 				. '.ts-pager-bottom\').css(\'visibility\', \'hidden\');',
 			'}',
 		];
-
 		$jq[] = $this->iterate(
-			$bind,
-			'.bind(\'pagerComplete\', function(e, c){',
-			$this->nt . '})',
-			$this->nt2,
-			'',
-			'');
+			$bind, '.bind(\'pagerComplete\', function(e, c){', $this->nt . '})', $this->nt2, '', '');
+
+		//workaround since the processing formatting is not being applied upon sort (reported as bug #769)
+		$bind = ['$(\'' . parent::$tid . ' tbody tr td\').css(\'opacity\', 0.25);',];
+
+		$jq[] = $this->iterate($bind, '.bind(\'sortStart\', function(e, c){', $this->nt . '})', $this->nt2, '', '');
 
 		if (count($jq) > 0) {
 			$code = $this->iterate($jq, '', ';', $this->nt, '', '');
