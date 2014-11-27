@@ -1,6 +1,6 @@
 {* $Id$ *}
 
-{if $cant_pages > 1 or $initial or $find}
+{if !$tsOn && ($cant_pages > 1 or $initial or $find)}
 	{initials_filter_links}
 {/if}
 
@@ -25,11 +25,14 @@
 
 {assign var='pagefound' value='n'}
 
-<div class="table-responsive">
-<table class="table normal table-striped">
+<div id="{$ts_tableid}-div" class="table-responsive" {if $tsOn}style="visibility:hidden;"{/if}>
+<table id="{$ts_tableid}" class="table normal table-striped table-hover">
+	<input type="hidden" {if $tsOn}id="{$ts_offsetid|escape}" {/if}name="offset" value="{$offset|escape}">
+	<input type="hidden" {if $tsOn}id="{$ts_countid|escape}" {/if}name="count" value="{$cant}">
+	<thead>
 	<tr>
-		{if isset($checkboxes_on) and $checkboxes_on eq 'y' && count($listpages) > 0}
-			<th>
+		{if isset($checkboxes_on) and $checkboxes_on eq 'y'}
+			<th id="checkbox">
 				{select_all checkbox_names='checked[]'}
 			</th>
 			{assign var='cntcol' value='1'}
@@ -39,14 +42,14 @@
 
 		{if $prefs.wiki_list_id eq 'y'}
 			{assign var='cntcol' value=$cntcol+1}
-			<th>
+			<th id ="pageid">
 				{self_link _sort_arg='sort_mode' _sort_field='page_id'}{tr}Id{/tr}{/self_link}
 			</th>
 		{/if}
 
 		{if $prefs.wiki_list_name eq 'y'}
 			{assign var='cntcol' value=$cntcol+1}
-			<th>
+			<th id="pagename">
 				{self_link _sort_arg='sort_mode' _sort_field='pageName'}{tr}Page{/tr}{/self_link}
 			</th>
 		{/if}
@@ -58,12 +61,12 @@
 		{/if}
 		{if $prefs.wiki_list_hits eq 'y'}
 			{assign var='cntcol' value=$cntcol+1}
-			<th>{self_link _sort_arg='sort_mode' _sort_field='hits'}{tr}Hits{/tr}{/self_link}</th>
+			<th id="hits">{self_link _sort_arg='sort_mode' _sort_field='hits'}{tr}Hits{/tr}{/self_link}</th>
 		{/if}
 
 		{if $prefs.wiki_list_lastmodif eq 'y' or $prefs.wiki_list_comment eq 'y'}
 			{assign var='cntcol' value=$cntcol+1}
-			<th>
+			<th id="lastmodif">
 				{assign var='lastmod_sortfield' value='lastModif'}
 				{assign var='lastmod_shorttitle' value="{tr}Last mod{/tr}"}
 				{if $prefs.wiki_list_lastmodif eq 'y' and $prefs.wiki_list_comment eq 'y'}
@@ -81,89 +84,91 @@
 
 		{if $prefs.wiki_list_creator eq 'y'}
 			{assign var='cntcol' value=$cntcol+1}
-			<th>
+			<th id="creator">
 				{self_link _sort_arg='sort_mode' _sort_field='creator' _title="{tr}Page creator{/tr}"}{tr}Creator{/tr}{/self_link}
 			</th>
 		{/if}
 
 		{if $prefs.wiki_list_user eq 'y'}
 			{assign var='cntcol' value=$cntcol+1}
-			<th>
+			<th id="lastauthor">
 				{self_link _sort_arg='sort_mode' _sort_field='user' _title="{tr}Last author{/tr}"}{tr}Last author{/tr}{/self_link}
 			</th>
 		{/if}
 
 		{if $prefs.wiki_list_lastver eq 'y'}
 			{assign var='cntcol' value=$cntcol+1}
-			<th>
+			<th id="version">
 				{self_link _sort_arg='sort_mode' _sort_field='version' _title="{tr}Last version{/tr}"}{tr}Last ver.{/tr}{/self_link}
 			</th>
 		{/if}
 
 		{if $prefs.wiki_list_status eq 'y'}
 			{assign var='cntcol' value=$cntcol+1}
-			<th style="text-align:center;">
+			<th id="status" style="text-align:center;">
 				{self_link _sort_arg='sort_mode' _sort_field='flag' _icon='lock_gray'}{tr}Status of the page{/tr}{/self_link}
 			</th>
 		{/if}
 
 		{if $prefs.wiki_list_versions eq 'y'}
 			{assign var='cntcol' value=$cntcol+1}
-			<th>
+			<th id="versions">
 				{self_link _sort_arg='sort_mode' _sort_field='versions' _title="{tr}Versions{/tr}"}{tr}Vers.{/tr}{/self_link}
 			</th>
 		{/if}
 
 		{if $prefs.wiki_list_links eq 'y'}
 			{assign var='cntcol' value=$cntcol+1}
-			<th>
+			<th id="links">
 				{self_link _sort_arg='sort_mode' _sort_field='links' _title="{tr}Links to other items in page{/tr}"}{tr}Links{/tr}{/self_link}
 			</th>
 		{/if}
 
 		{if $prefs.wiki_list_backlinks eq 'y'}
 			{assign var='cntcol' value=$cntcol+1}
-			<th>
+			<th id="backlinks">
 				{self_link _sort_arg='sort_mode' _sort_field='backlinks' _title="{tr}Links to this page in other pages{/tr}"}{tr}Backl.{/tr}{/self_link}
 			</th>
 		{/if}
 
 		{if $prefs.wiki_list_size eq 'y'}
 			{assign var='cntcol' value=$cntcol+1}
-			<th>
+			<th id="size">
 				{self_link _sort_arg='sort_mode' _sort_field='size' _title="{tr}Page size{/tr}"}{tr}Size{/tr}{/self_link}
 			</th>
 		{/if}
 
 		{if $prefs.wiki_list_language eq 'y'}
 			{assign var='cntcol' value=$cntcol+1}
-			<th>
+			<th id="language">
 				{self_link _sort_arg='sort_mode' _sort_field='lang' _title="{tr}Language{/tr}"}{tr}Lang.{/tr}{/self_link}
 			</th>
 		{/if}
 
 		{if $prefs.wiki_list_categories eq 'y'}
 			{assign var='cntcol' value=$cntcol+1}
-			<th>{tr}Categories{/tr}</th>
+			<th id="categories">{tr}Categories{/tr}</th>
 		{/if}
 
 		{if $prefs.wiki_list_categories_path eq 'y'}
 			{assign var='cntcol' value=$cntcol+1}
-			<th>{tr}Categories{/tr}</th>
+			<th id="catpaths">{tr}Categories{/tr}</th>
 		{/if}
 
 		{if $prefs.wiki_list_rating eq 'y'}
 			{assign var='cntcol' value=$cntcol+1}
-			<th>
+			<th id="rating">
 				{self_link _sort_arg='sort_mode' _sort_field='rating' _title="{tr}Ratings{/tr}"}{tr}Ratings{/tr}{/self_link}
 			</th>
 		{/if}
 
 		{if $show_actions eq 'y'}
 			{assign var='cntcol' value=$cntcol+1}
-			<th>{tr}Actions{/tr}</th>
+			<th id="actions">{tr}Actions{/tr}</th>
 		{/if}
 	</tr>
+	</thead>
+	<tbody>
 
 
 	{section name=changes loop=$listpages}
@@ -365,6 +370,7 @@
 			{norecords _colspan=$cntcol _text="{tr}No pages found.{/tr}"}
 		{/if}
 	{/section}
+	</tbody>
 </table>
 </div>
 {if $checkboxes_on eq 'y' && count($listpages) > 0} {* what happens to the checked items? *}
@@ -418,4 +424,6 @@
 {if $checkboxes_on eq 'y'}
 </form>
 {/if}
-{pagination_links cant=$cant step=$maxRecords offset=$offset clean=$clean}{/pagination_links}
+{if !isset($tsOn) or !$tsOn}
+	{pagination_links cant=$cant step=$maxRecords offset=$offset clean=$clean}{/pagination_links}
+{/if}

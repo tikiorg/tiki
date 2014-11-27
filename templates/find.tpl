@@ -25,13 +25,14 @@
 	* autocomplete          : name of the variable you want for autocomplete of the input field (only for <input type="text" ... >
 	* find_other            : If value != '', show an input box label with find_other
 	* find_in               : popup to explain on what is the find
-	*
+	* map_only              : to only show the pages map (used with tablesorter since other find functions aren't needed)
 	* Usage examples : {include file='find.tpl'}
 	*                  {include file='find.tpl' find_show_languages='y' find_show_categories='y' find_show_num_rows='y'}
 *}
 
 <div class="find container-fluid">
 	<form method="post" action="{$smarty.server.PHP_SELF}" class="form-horizontal" role="form">
+	{if !isset($map_only) or $map_only ne 'y'}
 		{if !empty($filegals_manager)}<input type="hidden" name="filegals_manager" value="{$filegals_manager|escape}">{/if}
 		{query _type='form_input' maxRecords='NULL' type='NULL' types='NULL' find='NULL' topic='NULL' lang='NULL' exact_match='NULL' categId='NULL' cat_categories='NULL' filegals_manager='NULL' save='NULL' offset='NULL' searchlist='NULL' searchmap='NULL'}
 		<div class="find-text form-group">
@@ -257,6 +258,7 @@
 				</div>
 			{/if}
 		</div><!-- End of find-parameters -->
+		{/if}
 		<div class="find-map form-group col-sm-12">
 			{if (isset($gmapbuttons) && $gmapbuttons) and (isset($mapview) && $mapview)}
 				<input class="btn btn-default btn-sm" type="submit" name="searchlist" value="{tr}Hide Map{/tr}">

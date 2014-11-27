@@ -81,6 +81,7 @@ class Table_Code_WidgetOptionsPager extends Table_Code_WidgetOptions
 					$sortkey = 'sortkey = \'sort-\' + sortindex';
 					$filterkey = 'filterkey = \'filter-\' + filterindex';
 				}
+				$numrows = !empty(parent::$s['ajax']['numrows']) ? parent::$s['ajax']['numrows'] : 'numrows';
 				$ca = array(
 					'var vars = {}, urlparams, oneparam, size, sort, sorts, sortindex, sortkey, filterindex, filterkey,
 					offset, filtered, colfilters, extfilters, params = [], dir, newurl, p = table.config.pager;',
@@ -129,7 +130,7 @@ class Table_Code_WidgetOptionsPager extends Table_Code_WidgetOptions
 						. parent::$s['ajax']['offset'] . '=\' + (p.page * size); ',
 					//build url, starting with no parameters
 					'newurl = url.slice(0,url.indexOf(\'?\'));',
-					'newurl = newurl + \'?numrows=\' + size + offset + \'&tsAjax=y\';',
+					'newurl = newurl + \'?' . $numrows . '=\' + size + offset + \'&tsAjax=y\';',
 					'$.each(params, function(key, value) {',
 					'	newurl = newurl + \'&\' + value;',
 					'});',

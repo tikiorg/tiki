@@ -5,10 +5,12 @@
 
 {tabset name='tabs_wikipages'}
 	{tab name="{tr}List Wiki Pages{/tr}"}
-        <h2>{tr}List Wiki Pages{/tr}</h2>
-
+	<h2>{tr}List Wiki Pages{/tr}</h2>
+	{if !$tsOn}
 		{include autocomplete='pagename' file='find.tpl' find_show_languages='y' find_show_languages_excluded='y' find_show_categories_multi='y' find_show_num_rows='y' find_in="<ul><li>{tr}Page name{/tr}</li></ul>" }
-
+	{else}
+		{include file='find.tpl' map_only='y'}
+	{/if}
 <form name="checkform" method="get" action="{$smarty.server.PHP_SELF}">
 	<input type="hidden" name="offset" value="{$offset|escape}">
 	<input type="hidden" name="sort_mode" value="{$sort_mode|escape}">
