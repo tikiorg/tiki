@@ -82,10 +82,10 @@ class Table_Code_MainOptions extends Table_Code_Manager
 		//process columns
 		if (count($allcols) > 0) {
 			foreach($allcols as $col => $info) {
-				if (parent::$usecolindex) {
-					$orh[$col] = 'if (index == ' . $col . '){';
-				} else {
+				if (parent::$usecolselector) {
 					$orh[$col] = 'if (id == \'' . substr($col,1) . '\'){';
+				} else {
+					$orh[$col] = 'if (index == ' . $col . '){';
 				}
 				$orh[$col] .= '$(this)';
 				foreach($info as $attr => $val) {
@@ -114,7 +114,7 @@ class Table_Code_MainOptions extends Table_Code_Manager
 		}
 		if (count($orh) > 0) {
 			array_unshift($mo, 'headerTemplate: \'{content} {icon}\'');
-			if (parent::$usecolindex === false) {
+			if (parent::$usecolselector) {
 				array_unshift($orh, 'var id = $(this).attr(\'id\');');
 			}
 			$mo[] = $this->iterate($orh, 'onRenderHeader: function(index){', $this->nt2 . '}', $this->nt3, '', '');
@@ -165,7 +165,7 @@ class Table_Code_MainOptions extends Table_Code_Manager
 			$i = 0;
 			foreach (parent::$s['columns'] as $col => $info) {
 				$info = $info['sort'];
-				$colpointer =  parent::$usecolindex ? $col : $i;
+				$colpointer =  parent::$usecolselector ? $i : $col;
 				if (!empty($info['dir'])) {
 					if ($info['dir'] === 'asc') {
 						$sl[] = $colpointer . ',' . '0';

@@ -16,7 +16,7 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
  *
  * Adds settings specific to PluginTrackerlist tables
  */
-class Table_Settings_PluginTrackerlist extends Table_Settings_Abstract
+class Table_Settings_PluginTrackerlist extends Table_Settings_Plugin
 {
 	protected $ts = array(
 		'selflinks' => true,

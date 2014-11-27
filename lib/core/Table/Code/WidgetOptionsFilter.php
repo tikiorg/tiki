@@ -44,7 +44,7 @@ class Table_Code_WidgetOptionsFilter extends Table_Code_WidgetOptions
 				$fform = '';
 				foreach (parent::$s['columns'] as $col => $info) {
 					$info = $info['filter'];
-					$colpointer =  parent::$usecolindex ? (int) $col : (string) '\'' . $col . '\'';
+					$colpointer =  parent::$usecolselector ? (string) '\'' . $col . '\'' : (int) $col;
 					switch($info['type']) {
 						case 'dropdown' :
 							$o = '';

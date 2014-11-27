@@ -29,7 +29,7 @@ class Table_Code_Abstract
 	protected static $sortcol;
 	protected static $filters;
 	protected static $filtercol;
-	protected static $usecolindex;
+	protected static $usecolselector;
 	protected static $group;
 	protected static $pager;
 	protected static $ajax;
@@ -65,11 +65,10 @@ class Table_Code_Abstract
 			//whether to use array index to identify columns or a selector (id, class, etc.)
 			//generally index used for plugins where columns are set by user and selectors are used with tables with
 			//smarty templates to keep from recreating tpl logic that determine which columns are shown
-			self::$usecolindex = !isset(self::$s['usecolindex']) || self::$s['usecolindex'] === true;
+			self::$usecolselector = !isset(self::$s['usecolselector']) || self::$s['usecolselector'] !== false;
 			self::$pager = empty($settings['pager']['type']) ? false : true;
 			global $prefs;
 			self::$ajax = $settings['ajax']['type'] === true && $prefs['feature_ajax'] === 'y';
-			//TODO allow for use of group headers with ajax when tablesorter bug 437 is fixed
 			self::$group = self::$sorts && !self::$ajax && isset($settings['sorts']['group'])
 			&& $settings['sorts']['group'] === true;
 		}

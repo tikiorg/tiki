@@ -82,6 +82,11 @@ abstract class Table_Settings_Abstract
 			),
 */
 		),
+
+		'usecolselector' => true,
+		'colselect' => array(
+			'type' => true,
+		),
 /*
 		//Set individual sort and filter settings for each column
 		//No need to set if overall sorts and filters settings for the table are set to false above
@@ -440,11 +445,9 @@ abstract class Table_Settings_Abstract
 	{
 		if (!empty($this->s['ajax'])) {
 			//sort and filter url parameters
-			//TODO try array_column
 			if (isset($this->s['columns']) && is_array($this->s['columns'])) {
 				foreach ($this->s['columns'] as $col => $colinfo) {
-					$colpointer =  isset($this->s['usecolindex']) && $this->s['usecolindex'] === false
-						? substr($col,1)  : $col;
+					$colpointer =  $this->s['usecolselector'] ? substr($col,1)  : $col;
 					if (isset($colinfo['sort']['ajax'])) {
 						//tablesorter url param pattern is sort[0]=0 for ascending sort of first column
 						$this->s['ajax']['sort']['sort-' . $colpointer] = $colinfo['sort']['ajax'];

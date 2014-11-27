@@ -18,4 +18,7 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
  */
 class Table_Settings_Plugin extends Table_Settings_Abstract
 {
+	protected $ts = array(
+		'usecolselector' => false,
+	);
 }
