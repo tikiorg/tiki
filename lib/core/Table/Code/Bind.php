@@ -28,10 +28,10 @@ class Table_Code_Bind extends Table_Code_Manager
 		//make pager controls at bottom of table visible when number of rows is greater than 15
 		$bind = [
 			'if (c.pager.endRow - c.pager.startRow > 15) {',
-			'	$(\'div.' . parent::$s['pager']['controls']['id']
+			'	$(\'div#' . parent::$s['pager']['controls']['id']
 				. '.ts-pager-bottom\').css(\'visibility\', \'visible\');',
 			'} else {',
-			'	$(\'div.' . parent::$s['pager']['controls']['id']
+			'	$(\'div#' . parent::$s['pager']['controls']['id']
 				. '.ts-pager-bottom\').css(\'visibility\', \'hidden\');',
 			'}',
 		];

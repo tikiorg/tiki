@@ -153,7 +153,7 @@ class Table_Code_Other extends Table_Code_Manager
 			//put all pager controls in a div
 			$pagerstring = $this->iterate(
 				$pagerdiv,
-				'<div class="' . $p['controls']['id'] . ' ts-pager ts-pager-top btn-toolbar">',
+				'<div id="' . $p['controls']['id'] . '" class="ts-pager ts-pager-top btn-toolbar">',
 				'</div>',
 				'',
 				'',
@@ -162,7 +162,7 @@ class Table_Code_Other extends Table_Code_Manager
 			$htmlbefore[] = $pagerstring;
 			$pagerstring = $this->iterate(
 				$pagerdiv,
-				'<div class="' . $p['controls']['id'] . ' ts-pager ts-pager-bottom btn-toolbar">',
+				'<div id="' . $p['controls']['id'] . '" class="ts-pager ts-pager-bottom btn-toolbar">',
 				'</div>',
 				'',
 				'',

@@ -34,7 +34,7 @@ abstract class Table_Settings_Abstract
 		'sorts' => array(
 			'type' => 'reset',				//choices: boolean true, boolean false, save, reset, savereset.
 			'group' => true,				//overall switch to allow or disallow group headings
-//			'multisort' => false,				//multisort on by default - set to false to disable
+//			'multisort' => false,			//multisort on by default - set to false to disable
 		),
 		//overall filter settings for the table or external filters - individual column settings are under columns below
 		'filters' => array(
@@ -82,7 +82,10 @@ abstract class Table_Settings_Abstract
 			),
 */
 		),
-
+		//determine whether the code uses columns selectors (e.g., th id) or indexes. With selectors the logic
+		//for which columns are shown doesn't need to be recreated for tables with smarty templates where some
+		//columns aren't shown based on logic. For plugins, indexes will generally need to be used since users set
+		// the columns
 		'usecolselector' => true,
 		'colselect' => array(
 			'type' => true,
@@ -90,7 +93,7 @@ abstract class Table_Settings_Abstract
 /*
 		//Set individual sort and filter settings for each column
 		//No need to set if overall sorts and filters settings for the table are set to false above
-		'columns' => array(				//zero-based column index, used only if column-specific settings
+		'columns' => array(				//zero-based column index or th selector, used only if column-specific settings
 			0 => array(
 				//sort settings for the 1st column
 				'sort' => array(
