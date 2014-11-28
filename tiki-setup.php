@@ -220,7 +220,7 @@ if (!empty($_SESSION['interactive_translation_mode']) && ($_SESSION['interactive
 if ($prefs['feature_freetags'] == 'y') {
 	require_once ('lib/setup/freetags.php');
 }
-if ($prefs['feature_areas'] == 'y' && $prefs['feature_categories'] == 'y') {
+if ($prefs['feature_areas'] == 'y' && $prefs['feature_categories'] == 'y' && $prefs['categories_used_in_tpl'] == 'y') {
 	require_once ('lib/setup/categories.php');
 	$areaslib = TikiLib::lib('areas');
 	$areaslib->HandleObjectCategories($objectCategoryIdsNoJail);

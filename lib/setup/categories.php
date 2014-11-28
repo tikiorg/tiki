@@ -30,7 +30,8 @@ if ($prefs['feature_categories'] == 'y' && $prefs['categories_used_in_tpl'] == '
 			$objectType = $here['objectType'];
 		}
 	}
-		$objectCategoryIds = array();
+	$objectCategoryIds = array();
+	$objectCategoryIdsNoJail = array();
 	if (!empty($objectType)) {
 		if (isset($here['itemkey']) && isset($_REQUEST[$here['itemkey']]) && isset($here['itemObjectType'])) {
 			$objectCategoryIds = $categlib->get_object_categories($objectType, $_REQUEST[$here['itemkey']]);
