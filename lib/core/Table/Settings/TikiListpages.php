@@ -18,16 +18,11 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
  *
  * @package Tiki
  * @subpackage Table
- * @uses Table_Settings_Abstract
+ * @uses Table_Settings_Standard
  */
 class Table_Settings_TikiListpages extends Table_Settings_Standard
 {
 	protected $ts = array(
-		'id' => 'listpages',
-		'selflinks' => true,
-		'sorts' => array(
-			'multisort' => false,
-		),
 		'filters' => array(
 			'external' => array(
 				0 => array(

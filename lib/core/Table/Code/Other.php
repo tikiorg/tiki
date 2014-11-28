@@ -62,12 +62,14 @@ class Table_Code_Other extends Table_Code_Manager
 			$f = parent::$s['filters'];
 			//reset button
 			if ($f['type'] === 'reset') {
-				$htmlbefore[] = '<button id="' . $f['reset']['id'] . '" title="Clear filters" class="btn btn-link btn-sm">'
+				$htmlbefore[] = '<button id="' . $f['reset']['id']
+					. '" type="button" title="Clear filters" class="btn btn-link btn-sm">'
 					. '<span class="fa fa-filter"></span></button>';
 			}
 
 			//external dropdowns
-			if (is_array($f['external'])) {
+			$options = array_column($f['external'], 'options');
+			if (count($options) > 0) {
 				foreach($f['external'] as $key => $info) {
 					$xopt[] = ' value="">';
 					foreach($info['options'] as $label => $val) {

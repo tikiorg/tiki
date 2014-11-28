@@ -31,6 +31,7 @@ class Table_Settings_Standard extends Table_Settings_Abstract
 		'ajax' => array(
 			'type' => true,
 			'offset' => 'offset',
+			'sortparam' => 'sort_mode',
 			'numrows' => 'numrows',
 			'url' => array(
 				'query' => '?{sort:sort}&{filter:filter}',

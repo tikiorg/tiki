@@ -51,7 +51,12 @@ class Table_Code_WidgetOptionsFilter extends Table_Code_WidgetOptions
 							if (array_key_exists('options', $info)) {
 								foreach ($info['options'] as $key => $val) {
 									$label =  addcslashes(is_numeric($key) ? $val : $key,"'/");
-									$o[] = '\'' . $label . '\' : function(e, n, f, i) { return /' . $val . '/.test(e);}';
+									if (parent::$ajax) {
+										$o[] = '\'' . $label . '\' : function() {}';
+									} else {
+										$o[] = '\'' . $label . '\' : function(e, n, f, i) { return /' . $val
+											. '/.test(e);}';
+									}
 								}
 								$options = $this->iterate($o, '{', $this->nt4 . '}', $this->nt5, '', ',');
 								$ffunc[] = $colpointer . ' : ' . $options;

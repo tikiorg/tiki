@@ -85,7 +85,8 @@ class Table_Code_WidgetOptionsPager extends Table_Code_WidgetOptions
 				$numrows = !empty(parent::$s['ajax']['numrows']) ? parent::$s['ajax']['numrows'] : 'numrows';
 				$ca = array(
 					'var vars = {}, urlparams, oneparam, size, sort, sorts, sortindex, sortkey, filterindex, filterkey,
-					offset, filtered, colfilters, extfilters, params = [], dir, newurl, p = table.config.pager;',
+					offset, filtered, colfilters, extfilters, params = [], dir, newurl, p = table.config.pager,
+					requiredparams;',
 					//parse out url parameters
 					'urlparams = url.slice(url.indexOf(\'?\') + 1).split(\'&\');',
 					'for(var i = 0; i < urlparams.length; i++) {',
@@ -101,9 +102,13 @@ class Table_Code_WidgetOptionsPager extends Table_Code_WidgetOptions
 					'	}',
 					'}',
 					//map of columns keys to sort and filter server side parameters
-					'sort = ' . json_encode(parent::$s['ajax']['sort']) . ';',
-					'colfilters = ' . json_encode(parent::$s['ajax']['colfilters']) . ';',
-					'extfilters = ' . json_encode(parent::$s['ajax']['extfilters']) . ';',
+					!empty(parent::$s['ajax']['sort']) ? 'sort = ' . json_encode(parent::$s['ajax']['sort']) . ';' : '',
+					!empty(parent::$s['ajax']['colfilters'])
+						? 'colfilters = ' . json_encode(parent::$s['ajax']['colfilters']) . ';' : '',
+					!empty(parent::$s['ajax']['extfilters'])
+						? 'extfilters = ' . json_encode(parent::$s['ajax']['extfilters']) . ';' : '',
+					!empty(parent::$s['ajax']['requiredparams'])
+						? 'requiredparams = ' . json_encode(parent::$s['ajax']['requiredparams']) . ';' : '',
 					//iterate through url parameters
 					'$.each(vars, function(key, value) {',
 						//handle sort parameters
@@ -120,9 +125,15 @@ class Table_Code_WidgetOptionsPager extends Table_Code_WidgetOptions
 								+ \'=\' + value);',
 					'	}',
 					'});',
-					//convert to tiki sort param sort_mode
+					//convert to tiki sort param sort parameter
 					'if (sorts) {',
-					'	params.push(\'sort_mode=\' + sorts);',
+					'	params.push(\'' . parent::$s['ajax']['sortparam'] . '=\' + sorts);',
+					'}',
+					//add any required params
+					'if (typeof requiredparams !== \'undefined\') {',
+					'	$.each(requiredparams, function(key, value) {',
+					'		params.push(key + \'=\' + value);',
+					'	});',
 					'}',
 					//offset parameter
 					'size = parseInt(p.$size.val());',
@@ -152,6 +163,7 @@ class Table_Code_WidgetOptionsPager extends Table_Code_WidgetOptions
 				);
 			}
 			if (count($ca) > 0) {
+				array_filter($ca);
 				$p[] = $this->iterate(
 					$ca,
 					$pre . 'customAjaxUrl: function(table, url) {',
