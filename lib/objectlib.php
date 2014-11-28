@@ -476,6 +476,12 @@ class ObjectLib extends TikiLib
 		$this->query($query, array($itemId, $type));
 	}
 
+	function delete_object_via_objectid($objectId)
+	{
+		$query = 'delete from `tiki_objects` where `objectId`=?';
+		$this->query($query, array((int) $objectId));
+	}
+	
 	function get_object($type, $itemId)
 	{
 		$query = 'select * from `tiki_objects` where `itemId`=? and `type`=?';
@@ -609,6 +615,23 @@ class ObjectLib extends TikiLib
 		}
 
 		return $metadata;
+	}
+	
+	function get_typeItemsInfo($type) // Returns information on all items of an object type (eg: menu, article, etc) from tiki_objects table
+	{
+		//get objects
+		$queryObjectInfo = 'select * from `tiki_objects` where `type`=?';
+		$resultObjectInfo = $this->fetchAll($queryObjectInfo, array($type));
+		
+		//get object attributes
+		foreach ($resultObjectInfo as &$tempInfo){
+			$objectAttributes = TikiLib::lib('attribute')->get_attributes($tempInfo['type'], $tempInfo['objectId']);
+			$tempInfo = array_merge($tempInfo,$objectAttributes); 
+		}
+		unset($tempInfo);
+		
+		//return information
+		return $resultObjectInfo;
 	}
 }
 

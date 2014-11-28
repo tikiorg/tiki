@@ -5,7 +5,7 @@
 {/block}
 
 {block name="content"}
-	<form action="{service controller=menu action=clone}" method="post" role="form" class="form-horizontal">
+	<form action="{service controller=menu action=clone_menu}" method="post" role="form" class="form-horizontal">
 		<div class="well well-sm">
 			<div class="form-group">
 				<label for="menus_name" class="control-label col-sm-2">
@@ -19,7 +19,7 @@
 						{/if}
 						{if $symbol}
 							{tr}Symbol{/tr}:{$symbol.object} ({tr}Profile Name{/tr}:{$symbol.profile}, {tr}Profile Source{/tr}:{$symbol.domain})
-						{/if}
+						{/if}	
 					</span>
 				</div>
 			</div>

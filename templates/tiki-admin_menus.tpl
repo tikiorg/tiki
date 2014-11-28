@@ -3,10 +3,10 @@
 
 {if $tiki_p_admin eq 'y'}
 	<div class="navbar">
-		<a class="btn btn-default" href="{bootstrap_modal controller=menu action=manage}">
+		<a class="btn btn-default" href="{bootstrap_modal controller=menu action=manage_menu}">
 			{icon name="create"} {tr}Create Menu{/tr}
 		</a>
-		{button href="tiki-admin_modules.php" _text="{icon name="administer"} {tr}Admin Modules{/tr}"}
+		{button href="tiki-admin_modules.php" _text="{icon name="administer"} {tr}Modules{/tr}"}
 	</div>
 {/if}
 {include file='find.tpl'}
@@ -37,7 +37,7 @@
 				<td class="action">
 					{if $channels[user].menuId neq 42}
 						{if $tiki_p_edit_menu eq 'y'}
-							<a class="btn btn-default btn-sm" href="{bootstrap_modal controller=menu action=manage menuId=$channels[user].menuId}" title="{tr}Edit Menu{/tr}">
+							<a class="btn btn-default btn-sm" href="{bootstrap_modal controller=menu action=manage_menu menuId=$channels[user].menuId}" title="{tr}Edit Menu{/tr}">
 								{icon name="edit"}
 							</a>
 						{/if}
@@ -53,7 +53,7 @@
 						{/if}
 					{/if}
 					{if $tiki_p_edit_menu eq 'y'}
-						<a class="btn btn-default btn-sm" href="{bootstrap_modal controller=menu action=clone menuId=$channels[user].menuId}" title="{tr}Clone Menu{/tr}">
+						<a class="btn btn-default btn-sm" href="{bootstrap_modal controller=menu action=clone_menu menuId=$channels[user].menuId}" title="{tr}Clone Menu{/tr}">
 							{icon name="copy"}
 						</a>
 					{/if}

@@ -25,12 +25,7 @@ $auto_query_args = array(
 	'preview_css',
 	'preview_type',
 );
-if (!empty($_REQUEST['import']) && !empty($_FILES['csvfile']['tmp_name'])) {
-	$menulib->import_menu_options();
-}
-if (!empty($_REQUEST['export'])) {
-	$menulib->export_menu_options();
-}
+
 $maxPos = $menulib->get_max_option($_REQUEST["menuId"]);
 $smarty->assign('menuId', $_REQUEST["menuId"]);
 $editable_menu_info = $menulib->get_menu($_REQUEST["menuId"]);

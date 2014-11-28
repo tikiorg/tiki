@@ -5,7 +5,7 @@
 {/block}
 
 {block name="content"}
-	<form action="{service controller=menu action=manage}" method="post" role="form" class="form">
+	<form action="{service controller=menu action=manage_menu}" method="post" role="form" class="form">
 		{ticket}
 		<div class="form-group">
 			<label for="menus_name" class="control-label">
@@ -18,7 +18,7 @@
 				{/if}
 				{if $symbol}
 					{tr}Symbol{/tr}:{$symbol.object} ({tr}Profile Name{/tr}:{$symbol.profile}, {tr}Profile Source{/tr}:{$symbol.domain})
-				{/if}
+				{/if}	
 			</p>
 		</div>
 		<div class="form-group">

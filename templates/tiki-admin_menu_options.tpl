@@ -1,14 +1,20 @@
 {* $Id$ *}
-{title help="Menus" url="tiki-admin_menu_options.php?menuId=$menuId" admpage="general&amp;cookietab=3"}{tr}Admin Menu:{/tr} {$editable_menu_info.name}{/title}
+{title help="Menus" url="tiki-admin_menu_options.php?menuId=$menuId" admpage="general&amp;cookietab=3"}{tr}Menu{/tr}: {$editable_menu_info.name}{/title}
 
 <div class="t_navbar btn-group form-group">
-	{button href="tiki-admin_menus.php" class="btn btn-default" _text="<span class=\"fa fa-list\"></span> {tr}List menus{/tr}"}
-	<a class="btn btn-default" href="{bootstrap_modal controller=menu action=manage menuId=$menuId}">
-		{icon name="edit"} {tr}Edit This Menu{/tr}
+	<a class="btn btn-default" href="tiki-admin_menus.php">
+		{icon name="list"} {tr}List Menus{/tr}
 	</a>
-	{if $prefs.feature_tabs neq 'y'}
-		{button href="#export" class="btn btn-default" _text="{tr}Export{/tr}"}
-		{button href="#import" class="btn btn-default" _text="{tr}Import{/tr}"}
+	{if $tiki_p_edit_menu eq 'y'}
+		<a class="btn btn-default" href="{bootstrap_modal controller=menu action=manage_menu menuId=$menuId}">
+			{icon name="edit"} {tr}Edit This Menu{/tr}
+		</a>
+		<a class="btn btn-default" href="{bootstrap_modal controller=menu action=export_menu_options menuId=$menuId}" title="{tr}Export menu options{/tr}">
+			{icon name="export"} {tr}Export{/tr}
+		</a>
+		<a class="btn btn-default no-ajax" href="{bootstrap_modal controller=menu action=import_menu_options menuId=$menuId}" title="{tr}Import menu options{/tr}">
+			{icon name="import"} {tr}Import{/tr}
+		</a>
 	{/if}
 </div>
 
@@ -18,7 +24,7 @@
 			<tr>
 				<td>
 					<a name="options"></a>
-					<h2>{tr}Menu options{/tr}</h2>
+					<h2>{tr}Menu options{/tr} <span class="badge">{$cant_pages}</span></h2>
 					{if $channels or ($find ne '')}
 						{include file='find.tpl' find_show_num_rows='y'}
 					{/if}
@@ -408,25 +414,6 @@
 					{menu id=$menuId css=$preview_css type=$preview_type}
 				</div>
 			</div>
-		</form>
-	{/tab}
-
-	{tab name="{tr}Import/export menu{/tr}"}
-		<a name="export"></a>
-		<h2>{tr}Export CSV data{/tr}</h2>
-		<form action="tiki-admin_menu_options.php" method="post">
-			<input type="hidden" name="menuId" value="{$menuId}">
-			<input type="submit" class="btn btn-default btn-sm" name="export" value="{tr}Export{/tr}">
-		</form>
-
-		<br>
-		<a name="import"></a>
-		<h2>{tr}Import CSV data{/tr}</h2>
-		{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}To add new options to the menu set the optionId field to 0. To remove an option set the remove field to 'y'.{/tr}{/remarksbox}
-		<form action="tiki-admin_menu_options.php" method="post" enctype="multipart/form-data">
-			<input type="hidden" name="menuId" value="{$menuId}">
-			{tr}File:{/tr} <input name="csvfile" type="file">
-			<input type="submit" class="btn btn-default btn-sm" name="import" value="{tr}Import{/tr}">
 		</form>
 	{/tab}
 {/tabset}
