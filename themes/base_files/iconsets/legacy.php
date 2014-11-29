@@ -23,146 +23,146 @@ $icons = array(
 	'add' => array(
 		'image_src' => 'img/icons/large/icon-configuration.png',
 	),
-	'admin_ads' => array( 
+	'admin_ads' => array(
 		'image_src' => 'img/icons/large/ads.png',
 	),
-	'admin_articles' => array( 
+	'admin_articles' => array(
 		'image_src' => 'img/icons/large/stock_bold.png',
 	),
-	'admin_blogs' => array( 
+	'admin_blogs' => array(
 		'image_src' => 'img/icons/large/blogs.png',
 	),
-	'admin_calendar' => array( 
+	'admin_calendar' => array(
 		'image_src' => 'img/icons/large/date.png',
 	),
-	'admin_category' => array( 
+	'admin_category' => array(
 		'image_src' => 'img/icons/large/categories.png',
 	),
-	'admin_comments' => array( 
+	'admin_comments' => array(
 		'image_src' => 'img/icons/large/comments.png',
 	),
-	'admin_community' => array( 
+	'admin_community' => array(
 		'image_src' => 'img/icons/large/users.png',
 	),
-	'admin_connect' => array( 
+	'admin_connect' => array(
 		'image_src' => 'img/icons/large/gnome-globe.png',
 	),
-	'admin_copyright' => array( 
+	'admin_copyright' => array(
 		'image_src' => 'img/icons/large/copyright.png',
 	),
-	'admin_directory' => array( 
+	'admin_directory' => array(
 		'image_src' => 'img/icons/large/gnome-fs-server.png',
 	),
-	'admin_faqs' => array( 
+	'admin_faqs' => array(
 		'image_src' => 'img/icons/large/stock_dialog_question.png',
 	),
-	'admin_features' => array( 
+	'admin_features' => array(
 		'image_src' => 'img/icons/large/boot.png',
 	),
-	'admin_fgal' => array( 
+	'admin_fgal' => array(
 		'image_src' => 'img/icons/large/file-manager.png',
 	),
-	'admin_forums' => array( 
+	'admin_forums' => array(
 		'image_src' => 'img/icons/large/stock_index.png',
 	),
-	'admin_freetags' => array( 
+	'admin_freetags' => array(
 		'image_src' => 'img/icons/large/vcard.png',
 	),
-	'admin_gal' => array( 
+	'admin_gal' => array(
 		'image_src' => 'img/icons/large/stock_select-color.png',
 	),
 	'admin_general' => array(
 		'image_src' => 'img/icons/large/icon-configuration.png',
 		'position' => '0px -15px;',
 	),
-	'admin_i18n' => array( 
+	'admin_i18n' => array(
 		'image_src' => 'img/icons/large/i18n.png',
 	),
-	'admin_intertiki' => array( 
+	'admin_intertiki' => array(
 		'image_src' => 'img/icons/large/intertiki.png',
 	),
-	'admin_login' => array( 
+	'admin_login' => array(
 		'image_src' => 'img/icons/large/stock_quit.png',
 	),
-	'admin_look' => array( 
+	'admin_look' => array(
 		'image_src' => 'img/icons/large/gnome-settings-background.png',
 	),
-	'admin_maps' => array( 
+	'admin_maps' => array(
 		'image_src' => 'img/icons/large/maps.png',
 	),
-	'admin_messages' => array( 
+	'admin_messages' => array(
 		'image_src' => 'img/icons/large/messages.png',
 	),
-	'admin_metatags' => array( 
+	'admin_metatags' => array(
 		'image_src' => 'img/icons/large/metatags.png',
 	),
-	'admin_module' => array( 
+	'admin_module' => array(
 		'image_src' => 'img/icons/large/display-capplet.png',
 	),
-	'admin_payment' => array( 
+	'admin_payment' => array(
 		'image_src' => 'img/icons/large/payment.png',
 	),
-	'admin_performance' => array( 
+	'admin_performance' => array(
 		'image_src' => 'img/icons/large/performance.png',
 	),
-	'admin_polls' => array( 
+	'admin_polls' => array(
 		'image_src' => 'img/icons/large/stock_missing-image.png',
 	),
-	'admin_profiles' => array( 
+	'admin_profiles' => array(
 		'image_src' => 'img/icons/large/profiles.png',
 	),
-	'admin_rating' => array( 
+	'admin_rating' => array(
 		'image_src' => 'img/icons/large/rating.png',
 	),
-	'admin_rss' => array( 
+	'admin_rss' => array(
 		'image_src' => 'img/icons/large/feed-icon.png',
 	),
-	'admin_score' => array( 
+	'admin_score' => array(
 		'image_src' => 'img/icons/large/stock_about.png',
 	),
-	'admin_search' => array( 
+	'admin_search' => array(
 		'image_src' => 'img/icons/large/xfce4-appfinder.png',
 	),
-	'admin_semantic' => array( 
+	'admin_semantic' => array(
 		'image_src' => 'img/icons/large/semantic.png',
 	),
-	'admin_security' => array( 
+	'admin_security' => array(
 		'image_src' => 'img/icons/large/gnome-lockscreen.png',
 	),
-	'admin_sefurl' => array( 
+	'admin_sefurl' => array(
 		'image_src' => 'img/icons/large/goto.png',
 	),
-	'admin_share' => array( 
+	'admin_share' => array(
 		'image_src' => 'img/icons/large/stock_contact.png',
 	),
-	'admin_socialnetworks' => array( 
+	'admin_socialnetworks' => array(
 		'image_src' => 'img/icons/large/socialnetworks.png',
 	),
-	'admin_textarea' => array( 
+	'admin_textarea' => array(
 		'image_src' => 'img/icons/large/editing.png',
 	),
-	'admin_trackers' => array( 
+	'admin_trackers' => array(
 		'image_src' => 'img/icons/large/gnome-settings-font.png',
 	),
-	'admin_userfiles' => array( 
+	'admin_userfiles' => array(
 		'image_src' => 'img/icons/large/userfiles.png',
 	),
-	'admin_video' => array( 
+	'admin_video' => array(
 		'image_src' => 'img/icons/large/gnome-camera-video-32.png',
 	),
-	'admin_webmail' => array( 
+	'admin_webmail' => array(
 		'image_src' => 'img/icons/large/evolution.png',
 	),
-	'admin_webservices' => array( 
+	'admin_webservices' => array(
 		'image_src' => 'img/icons/large/webservices.png',
 	),
-	'admin_wiki' => array( 
+	'admin_wiki' => array(
 		'image_src' => 'img/icons/large/wikipages.png',
 	),
-	'admin_workspace' => array( 
+	'admin_workspace' => array(
 		'image_src' => 'img/icons/large/areas.png',
 	),
-	'admin_wysiwyg' => array( 
+	'admin_wysiwyg' => array(
 		'image_src' => 'img/icons/large/wysiwyg.png',
 	),
 	'administer' => array(
@@ -198,6 +198,9 @@ $icons = array(
 	'disable' => array(
 		'image_src' => 'img/icons/delete.png',
 	),
+	'documentation' => array(
+		'image_src' => 'img/icons/book_open.png',
+	),
 	'edit' => array(
 		'image_src' => 'img/icons/page_edit.png',
 	),
@@ -207,46 +210,46 @@ $icons = array(
 	'envelope' => array(
 		'image_src' => 'img/icons/email.png',
 	),
-	'error' => array( 
+	'error' => array(
 		'image_src' => 'img/icons/exclamation.png',
 	),
-	'export' => array( 
+	'export' => array(
 		'image_src' => 'img/icons/disk.png',
 	),
-	'file-archive' => array( 
+	'file-archive' => array(
 		'image_src' => 'img/icons/folder.png',
 	),
 	'group' => array(
 		'image_src' => 'img/icons/group.png',
 	),
-	'group-watch' => array( 
+	'group-watch' => array(
 		'image_src' => 'img/icons/eye_group.png',
 	),
-	'help' => array( 
+	'help' => array(
 		'image_src' => 'img/icons/help.png',
 	),
 	'history' => array(
 		'image_src' => 'img/icons/database.png',
 	),
-	'import' => array( 
+	'import' => array(
 		'image_src' => 'img/icons/upload.png',
 	),
-	'index' => array( 
+	'index' => array(
 		'image_src' => 'img/icons/table_refresh.png',
 	),
-	'information' => array( 
+	'information' => array(
 		'image_src' => 'img/icons/information.png',
 	),
-	'link' => array( 
+	'link' => array(
 		'image_src' => 'img/icons/link.png',
 	),
-	'link-external' => array( 
+	'link-external' => array(
 		'image_src' => 'img/icons/external_link.gif',
 	),
-	'list' => array( 
+	'list' => array(
 		'image_src' => 'img/icons/application_view_list.png',
 	),
-	'log' => array( 
+	'log' => array(
 		'image_src' => 'img/icons/book.png',
 	),
 	'menu' => array(
@@ -257,6 +260,9 @@ $icons = array(
 	),
 	'module' => array(
 		'image_src' => 'img/icons/module.png',
+	),
+	'next' => array(
+		'image_src' => 'img/icons/arrow_right.png',
 	),
 	'notepad' => array(
 		'image_src' => 'img/icons/disk.png',
@@ -278,6 +284,9 @@ $icons = array(
 	),
 	'post' => array(
 		'image_src' => 'img/icons/pencil_add.png',
+	),
+	'previous' => array(
+		'image_src' => 'img/icons/arrow_left.png',
 	),
 	'print' => array(
 		'image_src' => 'img/icons/printer.png',

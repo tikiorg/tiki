@@ -37,7 +37,7 @@ function smarty_function_icon($params, $smarty)
 	$cachelib = TikiLib::lib('cache');
 
 	if (empty($tc_theme)) {
-		$current_style = $prefs['style'];
+		$current_style = isset($prefs['style']);
 		$current_style_option = isset($prefs['style_option']) ? $prefs['style_option'] : '';
 	} else {
 		$current_style = $tc_theme;

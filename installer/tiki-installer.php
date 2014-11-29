@@ -134,6 +134,22 @@ if (!empty($_POST['lang'])) {
 }
 include_once('lib/init/tra.php');
 
+//load default icon set file if exist
+if (file_exists("themes/base_files/iconsets/default.php")) {
+	include("themes/base_files/iconsets/default.php"); //add icons from the default icon set
+	foreach ($icons as &$icon) { //apply settings for each icon
+		if (!empty($icon['tag'])) {
+			$icon['tag'] = $icon['tag'];
+		}
+		else {
+			$icon['tag'] = $settings['icon_tag'];
+		}
+	}
+	unset($settings);
+	$iconset = $icons;
+	unset($icons);
+}
+
 /**
  * @return bool
  */
@@ -1146,6 +1162,7 @@ if ( isset($_POST['general_settings']) && $_POST['general_settings'] == 'y' ) {
 $headerlib = TikiLib::lib('header');
 $headerlib->add_js("var tiki_cookie_jar=new Array();");
 $headerlib->add_cssfile('vendor/twitter/bootstrap/dist/css/bootstrap.css');
+$headerlib->add_cssfile('vendor/fortawesome/font-awesome/css/font-awesome.min.css');
 $headerlib->add_jsfile('lib/tiki-js.js');
 $headerlib->add_jsfile_dependancy("vendor/jquery/jquery-min/jquery-$headerlib->jquery_version.min.js");
 $headerlib->add_jsfile('lib/jquery_tiki/tiki-jquery.js');

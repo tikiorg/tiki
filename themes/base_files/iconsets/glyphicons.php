@@ -38,6 +38,9 @@ $icons = array(
 	'disable' => array(
 		'class' => 'glyphicon glyphicon-minus-sign',
 	),
+	'documentation' => array(
+		'class' => 'glyphicon glyphicon-book',
+	),
 	'edit' => array(
 		'class' => 'glyphicon glyphicon-edit',
 	),
@@ -53,34 +56,37 @@ $icons = array(
 	'export' => array(
 		'class' => 'glyphicon glyphicon-export',
 	),
-	'file-archive' => array( 
+	'file-archive' => array(
 		'class' => 'glyphicon glyphicon-floppy-save',
 	),
-	'help' => array( 
+	'help' => array(
 		'class' => 'glyphicon glyphicon-question-sign',
 	),
-	'history' => array( 
+	'history' => array(
 		'class' => 'glyphicon glyphicon-time',
 	),
-	'import' => array( 
+	'import' => array(
 		'class' => 'glyphicon glyphicon-import',
 	),
-	'information' => array( 
+	'information' => array(
 		'class' => 'glyphicon glyphicon-info-sign',
 	),
-	'link' => array( 
+	'link' => array(
 		'class' => 'glyphicon glyphicon-link',
 	),
-	'menuitem' => array( 
+	'menuitem' => array(
 		'class' => 'glyphicon glyphicon-minus',
 	),
-	'notification' => array( 
+	'next' => array(
+		'class' => 'glyphicon glyphicon-arrow-right',
+	),
+	'notification' => array(
 		'class' => 'glyphicon glyphicon-bell',
 	),
-	'ok' => array( 
+	'ok' => array(
 		'class' => 'glyphicon glyphicon-ok-sign',
 	),
-	'off' => array( 
+	'off' => array(
 		'class' => 'glyphicon glyphicon-off',
 	),
 	'permission' => array(
@@ -88,6 +94,9 @@ $icons = array(
 	),
 	'post' => array(
 		'class' => 'glyphicon glyphicon-pencil',
+	),
+	'previous' => array(
+		'class' => 'glyphicon glyphicon-arrow-left',
 	),
 	'print' => array(
 		'class' => 'glyphicon glyphicon-print',

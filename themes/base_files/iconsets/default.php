@@ -24,154 +24,154 @@ $icons = array( //Icons of the icon set
 		'image_src' => '', //For images: specify the path inside your Tiki installation including the file name, eg: '/img/icons/disk.png'
 		'tag' => '', //The html tag for the icon. Overrides the $settings "icon_tag" value (see above)
 	),
-	'actions' => array( 
+	'actions' => array(
 		'class' => 'fa fa-play-circle fa-fw',
 	),
-	'add' => array( 
+	'add' => array(
 		'class' => 'fa fa-plus fa-fw',
 	),
-	'admin_ads' => array( 
+	'admin_ads' => array(
 		'class' => 'fa fa-film fa-fw',
 	),
-	'admin_articles' => array( 
+	'admin_articles' => array(
 		'class' => 'fa fa-font fa-fw',
 	),
-	'admin_blogs' => array( 
+	'admin_blogs' => array(
 		'class' => 'fa fa-bold fa-fw',
 	),
-	'admin_calendar' => array( 
+	'admin_calendar' => array(
 		'class' => 'fa fa-calendar fa-fw',
 	),
-	'admin_category' => array( 
+	'admin_category' => array(
 		'class' => 'fa fa-sitemap fa-fw',
 	),
-	'admin_comments' => array( 
+	'admin_comments' => array(
 		'class' => 'fa fa-comment fa-fw',
 	),
-	'admin_community' => array( 
+	'admin_community' => array(
 		'class' => 'fa fa-group fa-fw',
 	),
-	'admin_connect' => array( 
+	'admin_connect' => array(
 		'class' => 'fa fa-link fa-fw',
 	),
-	'admin_copyright' => array( 
+	'admin_copyright' => array(
 		'class' => 'fa fa-copyright fa-fw',
 	),
-	'admin_directory' => array( 
+	'admin_directory' => array(
 		'class' => 'fa fa-folder-o fa-fw',
 	),
-	'admin_faqs' => array( 
+	'admin_faqs' => array(
 		'class' => 'fa fa-question fa-fw',
 	),
-	'admin_features' => array( 
+	'admin_features' => array(
 		'class' => 'fa fa-power-off fa-fw',
 	),
-	'admin_fgal' => array( 
+	'admin_fgal' => array(
 		'class' => 'fa fa-folder-open fa-fw',
 	),
-	'admin_forums' => array( 
+	'admin_forums' => array(
 		'class' => 'fa fa-comments fa-fw',
 	),
-	'admin_freetags' => array( 
+	'admin_freetags' => array(
 		'class' => 'fa fa-tags fa-fw',
 	),
-	'admin_gal' => array( 
+	'admin_gal' => array(
 		'class' => 'fa fa-file-image-o fa-fw',
 	),
-	'admin_general' => array( 
+	'admin_general' => array(
 		'class' => 'fa fa-cog fa-fw',
 	),
-	'admin_i18n' => array( 
+	'admin_i18n' => array(
 		'class' => 'fa fa-globe fa-fw',
 	),
-	'admin_intertiki' => array( 
+	'admin_intertiki' => array(
 		'class' => 'fa fa-exchange fa-fw',
 	),
-	'admin_login' => array( 
+	'admin_login' => array(
 		'class' => 'fa fa-sign-in fa-fw',
 	),
-	'admin_look' => array( 
+	'admin_look' => array(
 		'class' => 'fa fa-image fa-fw',
 	),
-	'admin_maps' => array( 
+	'admin_maps' => array(
 		'class' => 'fa fa-map-marker fa-fw',
 	),
-	'admin_messages' => array( 
+	'admin_messages' => array(
 		'class' => 'fa fa-envelope-o fa-fw',
 	),
-	'admin_metatags' => array( 
+	'admin_metatags' => array(
 		'class' => 'fa fa-tag fa-fw',
 	),
-	'admin_module' => array( 
+	'admin_module' => array(
 		'class' => 'fa fa-cogs fa-fw',
 	),
-	'admin_payment' => array( 
+	'admin_payment' => array(
 		'class' => 'fa fa-credit-card fa-fw',
 	),
-	'admin_performance' => array( 
+	'admin_performance' => array(
 		'class' => 'fa fa-tachometer fa-fw',
 	),
-	'admin_polls' => array( 
+	'admin_polls' => array(
 		'class' => 'fa fa-tasks fa-fw',
 	),
-	'admin_profiles' => array( 
+	'admin_profiles' => array(
 		'class' => 'fa fa-cubes fa-fw',
 	),
-	'admin_rating' => array( 
+	'admin_rating' => array(
 		'class' => 'fa fa-check-square fa-fw',
 	),
-	'admin_rss' => array( 
+	'admin_rss' => array(
 		'class' => 'fa fa-rss fa-fw',
 	),
-	'admin_score' => array( 
+	'admin_score' => array(
 		'class' => 'fa fa-trophy fa-fw',
 	),
-	'admin_search' => array( 
+	'admin_search' => array(
 		'class' => 'fa fa-search fa-fw',
 	),
-	'admin_semantic' => array( 
+	'admin_semantic' => array(
 		'class' => 'fa fa-arrows-h fa-fw',
 	),
-	'admin_security' => array( 
+	'admin_security' => array(
 		'class' => 'fa fa-lock fa-fw',
 	),
-	'admin_sefurl' => array( 
+	'admin_sefurl' => array(
 		'class' => 'fa fa-search-plus fa-fw',
 	),
-	'admin_share' => array( 
+	'admin_share' => array(
 		'class' => 'fa fa-share-alt fa-fw',
 	),
-	'admin_socialnetworks' => array( 
+	'admin_socialnetworks' => array(
 		'class' => 'fa fa-thumbs-up fa-fw',
 	),
-	'admin_textarea' => array( 
+	'admin_textarea' => array(
 		'class' => 'fa fa-edit fa-fw',
 	),
-	'admin_trackers' => array( 
+	'admin_trackers' => array(
 		'class' => 'fa fa-database fa-fw',
 	),
-	'admin_userfiles' => array( 
+	'admin_userfiles' => array(
 		'class' => 'fa fa-cog fa-fw',
 	),
-	'admin_video' => array( 
+	'admin_video' => array(
 		'class' => 'fa fa-video-camera fa-fw',
 	),
-	'admin_webmail' => array( 
+	'admin_webmail' => array(
 		'class' => 'fa fa-inbox fa-fw',
 	),
-	'admin_webservices' => array( 
+	'admin_webservices' => array(
 		'class' => 'fa fa-cog fa-fw',
 	),
-	'admin_wiki' => array( 
+	'admin_wiki' => array(
 		'class' => 'fa fa-file-text-o fa-fw',
 	),
-	'admin_workspace' => array( 
+	'admin_workspace' => array(
 		'class' => 'fa fa-desktop fa-fw',
 	),
-	'admin_wysiwyg' => array( 
+	'admin_wysiwyg' => array(
 		'class' => 'fa fa-align-center fa-fw',
 	),
-	'administer' => array( 
+	'administer' => array(
 		'class' => 'fa fa-cog fa-fw',
 	),
 	'backlink' => array(
@@ -207,6 +207,9 @@ $icons = array( //Icons of the icon set
 	'disable' => array(
 		'class' => 'fa fa-minus-square fa-fw',
 	),
+	'documentation' => array(
+		'class' => 'fa fa-book fa-fw',
+	),
 	'edit' => array(
 		'class' => 'fa fa-edit fa-fw',
 	),
@@ -221,41 +224,41 @@ $icons = array( //Icons of the icon set
 	),
 	'events' => array(
 		'class' => 'fa fa-clock-o fa-fw',
-	),	
-	'export' => array( 
+	),
+	'export' => array(
 		'class' => 'fa fa-upload fa-fw',
 	),
-	'file-archive' => array( 
+	'file-archive' => array(
 		'class' => 'fa fa-file-archive-o fa-fw',
 	),
-	'filter' => array( 
+	'filter' => array(
 		'class' => 'fa fa-filter fa-fw',
 	),
-	'group' => array( 
+	'group' => array(
 		'class' => 'fa fa-group fa-fw',
 	),
-	'help' => array( 
+	'help' => array(
 		'class' => 'fa fa-question-circle fa-fw',
 	),
-	'history' => array( 
+	'history' => array(
 		'class' => 'fa fa-history fa-fw',
 	),
-	'import' => array( 
+	'import' => array(
 		'class' => 'fa fa-download fa-fw',
 	),
-	'inbox' => array( 
+	'inbox' => array(
 		'class' => 'fa fa-inbox fa-fw',
 	),
-	'index' => array( 
+	'index' => array(
 		'class' => 'fa fa-spinner fa-fw',
 	),
-	'information' => array( 
+	'information' => array(
 		'class' => 'fa fa-info-circle fa-fw',
 	),
-	'list' => array( 
+	'list' => array(
 		'class' => 'fa fa-list fa-fw',
 	),
-	'link' => array( 
+	'link' => array(
 		'class' => 'fa fa-link fa-fw',
 	),
 	'link-external' => array(
@@ -272,6 +275,9 @@ $icons = array( //Icons of the icon set
 	),
 	'module' => array(
 		'class' => 'fa fa-cogs fa-fw',
+	),
+	'next' => array(
+		'class' => 'fa fa-arrow-right fa-fw',
 	),
 	'notepad' => array(
 		'class' => 'fa fa-file-text-o fa-fw',
@@ -297,6 +303,9 @@ $icons = array( //Icons of the icon set
 	'post' => array(
 		'class' => 'fa fa-pencil fa-fw',
 	),
+	'previous' => array(
+		'class' => 'fa fa-arrow-left fa-fw',
+	),
 	'print' => array(
 		'class' => 'fa fa-print fa-fw',
 	),
@@ -315,10 +324,10 @@ $icons = array( //Icons of the icon set
 	'screencapture' => array( 
 		'class' => 'fa fa-camera fa-fw',
 	),
-	'search' => array( 
+	'search' => array(
 		'class' => 'fa fa-search fa-fw',
 	),
-	'settings' => array( 
+	'settings' => array(
 		'class' => 'fa fa-wrench fa-fw',
 	),
 	'share' => array(
