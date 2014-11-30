@@ -30,18 +30,16 @@
 	</fieldset>
 
 	<fieldset class="table">
-		<legend>{tr}Plugins{/tr}</legend>
+		<legend>{tr}Plugins{/tr} {help url="Plugins"}</legend>
 		{preference name=wikiplugin_category}
 		{preference name=wikiplugin_catpath}
 		{preference name=wikiplugin_catorphans}
 	</fieldset>
 
 	<fieldset>
-
 		<legend>
-			{tr}Features{/tr}{help url="Category"}
+			{tr}Features{/tr}
 		</legend>
-
 		{preference name=feature_categorypath}
 		<div class="adminoptionboxchild" id="feature_categorypath_childcontainer">
 			{preference name=categorypath_excluded}
@@ -83,14 +81,6 @@
 		{preference name=unified_add_to_categ_search}
 
 
-	</fieldset>
-
-	<fieldset>
-		<legend>
-			{tr}Plugins{/tr}{help url="Plugins"}
-		</legend>
-		{preference name=wikiplugin_category}
-		{preference name=wikiplugin_catpath}
 	</fieldset>
 
 	<fieldset>
