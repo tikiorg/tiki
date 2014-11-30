@@ -47,12 +47,14 @@ function help_doclink($params)
 
 	if ($prefs['feature_help'] == 'y' and $url) {
 		if (!isset($desc))
+			$smarty = TikiLib::lib('smarty');
+			$smarty->loadPlugin('smarty_function_icon');
 			$desc = tra('Help link');
 
-			$ret = '<a title="' . htmlentities($desc, ENT_COMPAT, 'UTF-8') . '" href="'
-						. $prefs['helpurl'] . $url . '" target="tikihelp" class="tikihelp">'
-						. '<img src="img/icons/help.png"'
-						. ' height="16" width="16" alt="' . tra('Help', '', true) . '" /></a>';
+			$ret = '<a title="' . $url . '|' . htmlentities($desc, ENT_COMPAT, 'UTF-8') . '" href="'
+						. $prefs['helpurl'] . $url . '" target="tikihelp" class="tikihelp btn btn-link">'
+						. smarty_function_icon(array('name' => 'help'), $smarty)
+						. '</a>';
 	}
 
 	return $ret;
