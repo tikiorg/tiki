@@ -113,6 +113,9 @@ $icons = array(
 	'screencapture' => array(
 		'class' => 'glyphicon glyphicon-camera',
 	),
+	'search' => array(
+		'class' => 'glyphicon glyphicon-search',
+	),
 	'settings' => array(
 		'class' => 'glyphicon glyphicon-wrench',
 	),

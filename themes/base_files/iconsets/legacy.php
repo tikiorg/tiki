@@ -306,6 +306,9 @@ $icons = array(
 	'screencapture' => array(
 		'image_src' => 'img/icons/camera.png',
 	),
+	'search' => array(
+		'image_src' => 'img/icons/magnifier.png',
+	),
 	'settings' => array(
 		'image_src' => 'img/icons/wrench.png',
 	),
