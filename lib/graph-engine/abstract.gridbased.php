@@ -652,7 +652,7 @@ class StaticGridScale extends GridScale // {{{1
 
 	function _getValue( $pos ) // {{{2
 	{
-		$index = intval($pos / $this->width);
+		$index = intval(round($pos / $this->width));
 		if ( isset( $this->labels[ $index ] ) )
 			return $this->labels[ $index ];
 		else
