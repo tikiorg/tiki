@@ -45,8 +45,8 @@
 						<td style="text-align:right">
 							{tr}Link to file from a Wiki page:{/tr}
 						</td>
-						<td class="inline_syntax">
-							[{$fileId|sefurl:file}|{$name|escape}]
+						<td>
+							<code>[{$fileId|sefurl:file}|{$name|escape}]</code>
 						</td>
 					</tr>
 					<tr>
@@ -58,8 +58,8 @@
 						<td style="text-align:right">
 							{tr}Display full size:{/tr}
 						</td>
-						<td class="inline_syntax">
-							&#x7b;img fileId="{$fileId}"}
+						<td>
+							<code>&#x7b;img fileId="{$fileId}"}</code>
 						</td>
 					</tr>
 					{if $prefs.feature_shadowbox eq 'y'}
@@ -67,8 +67,8 @@
 							<td style="text-align:right">
 								{tr}Display thumbnail that enlarges:{/tr}
 							</td>
-							<td class="inline_syntax">
-								&#x7b;img fileId="{$fileId}" thumb="y" rel="box[g]"}
+							<td>
+								<code>&#x7b;img fileId="{$fileId}" thumb="y" rel="box[g]"}</code>
 							</td>
 						</tr>
 					{/if}

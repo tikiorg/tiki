@@ -140,7 +140,7 @@
 				<td width="6px" style="border:0px">
 				</td>
 				<td style="border:0px">
-					<div class="inline_syntax">
+					<code>
 						{if $resultscale == $defaultscale}
 							{literal}{{/literal}img id={$imageId}{literal}}{/literal}
 						{elseif !$resultscale}
@@ -148,7 +148,7 @@
 						{else}
 							{literal}{{/literal}img id={$imageId}&amp;scaled&amp;scalesize={$resultscale}{literal}}{/literal}
 						{/if}
-					</div>
+					</code>
 				</td>
 			</tr>
 			<tr>
@@ -159,7 +159,7 @@
 			<tr>
 				<td width="10px" style="border:0px"> </td>
 				<td style="border:0px">
-					<div class="inline_syntax">
+					<code>
 						{if $resultscale == $defaultscale}
 							&lt;img src="{$url_show}?id={$imageId}" /&gt;
 						{elseif !$resultscale}
@@ -167,7 +167,7 @@
 						{else}
 							&lt;img src="{$url_show}?id={$imageId}&amp;scalesize={$resultscale}" /&gt;
 						{/if}
-					</div>
+					</code>
 				</td>
 			</tr>
 			<tr>
@@ -178,9 +178,7 @@
 			<tr>
 				<td width="6px" style="border:0px"> </td>
 				<td style="border:0px">
-					<div class="inline_syntax">
-						{literal}[{/literal}tiki-browse_image.php?imageId={$imageId}{literal}]{/literal}
-					</div>
+					<code>{literal}[{/literal}tiki-browse_image.php?imageId={$imageId}{literal}]{/literal}</code>
 				</td>
 			</tr>
 		</table>

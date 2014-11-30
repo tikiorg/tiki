@@ -218,9 +218,7 @@
 		<tr>
 			<td style="border:0px" width="6px"></td>
 			<td style="border:0px; font-size:x-small">
-				<span class="inline_syntax">
-					&lt;img src="{$base_url}show_image.php?galleryId={$galleryId}" /&gt;
-				</span>
+				<code>&lt;img src="{$base_url}show_image.php?galleryId={$galleryId}" /&gt;</code>
 			</td>
 		</tr>
 		<tr>
@@ -230,12 +228,14 @@
 		<tr>
 			<td width="6px" style="border:0px">
 			</td>
-			<td class="inline_syntax" style="border:0px; font-size:x-small">
-				{if $resultscale == $defaultscale or !$resultscale}
-					{literal}{{/literal}img src=show_image.php?galleryId={$galleryId} {literal}}{/literal}<br>
-				{else}
-					{literal}{{/literal}img src={$base_url}show_image.php?galleryId={$galleryId} {literal}}{/literal}<br>
-				{/if}
+			<td style="border:0px; font-size:x-small">
+				<code>
+					{if $resultscale == $defaultscale or !$resultscale}
+						{literal}{{/literal}img src=show_image.php?galleryId={$galleryId} {literal}}{/literal}<br>
+					{else}
+						{literal}{{/literal}img src={$base_url}show_image.php?galleryId={$galleryId}{literal}}{/literal}<br>
+					{/if}
+				</code>
 			</td>
 		</tr>
 	</table>

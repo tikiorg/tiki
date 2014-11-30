@@ -1113,10 +1113,6 @@ h6 a.tiki_anchor:hover {
 .wikitext .plugin_gauge-bar {
   border: none;
 }
-.inline_syntax {
-  font-family: "Lucida Console";
-  color: #a52a2a;
-}
 #cachedpage {
   float: right;
   font-size: small;

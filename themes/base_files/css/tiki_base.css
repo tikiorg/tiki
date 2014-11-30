@@ -1104,10 +1104,6 @@ h6 a.tiki_anchor:hover {
 .wikitext .plugin_gauge-bar {
   border: none;
 }
-.inline_syntax {
-  font-family: "Lucida Console";
-  color: #8a6d3b;
-}
 h1.pagetitle a {
   padding-left: 0;
   padding-right: 0;

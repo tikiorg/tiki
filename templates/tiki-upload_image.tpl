@@ -60,11 +60,7 @@
 			<a class="link" href="{$url_browse}?imageId={$imageId}">{$url_browse}?imageId={$imageId}</a>
 			<br><br>
 			{tr}You can include the image in an Wiki page using:{/tr}&nbsp;
-			<form>
-				<textarea rows="3" cols="60" style="width: 90%">
-					{literal}{{/literal}img id={$imageId}{literal}}{/literal}
-				</textarea>
-			</form>
+			<code>{literal}{{/literal}img id={$imageId}{literal}}{/literal}</code>
 		</div>
 	</div>
 {/if}

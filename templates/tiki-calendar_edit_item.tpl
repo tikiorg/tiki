@@ -1028,9 +1028,9 @@
                 3: {tr}non participant{/tr}<br>
                 <br>
                 {tr}Give participant list separated by commas. Roles have to be given in a prefix separated by a column like in:{/tr}&nbsp;
-                <span class="inline_syntax">
+                <code>
                     {tr}role:login_or_email,login_or_email{/tr}
-                </span>
+                </code>
                 <br>
                 {tr}If no role is provided, default role will be "Chair participant".{/tr}
             </div>
