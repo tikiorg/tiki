@@ -47,7 +47,7 @@
 	{/if}
 	{tabset}
 		{tab name="{tr}General{/tr}"}
-            <h2>{tr}General{/tr}</h2>
+			<h2>{tr}General{/tr}</h2>
 			<div class="form-group">
 				<label for="title">{tr}Title{/tr}</label>
 				<input type="text" name="title" value="{$arttitle|escape}" maxlength="255" class="form-control">
@@ -110,7 +110,7 @@
 			{/if}
 		{/tab}
 		{tab name="{tr}Publication{/tr}"}
-            <h2>{tr}Publication{/tr}</h2>
+			<h2>{tr}Publication{/tr}</h2>
 			<div class="well">
 				<div class="checkbox">
 					<label>
@@ -125,7 +125,7 @@
 			</div>
 			<div class="form-group {if $tiki_p_edit_article_user neq 'y'}hidden{/if}">
 				<label for="author">{tr}User (article owner){/tr}</label>
-				<input id="author" type="text" name="author" value="{$author|escape}"  class="form-control">
+				<input id="author" type="text" name="author" value="{$author|escape}" class="form-control">
 				{autocomplete element='#author' type='username'}
 			</div>
 			<div class="form-group {if $types.$type.show_pubdate neq 'y' and $types.$type.show_pre_publ eq 'y'}hidden{/if}">
@@ -154,7 +154,7 @@
 			</div>
 		{/tab}
 		{tab name="{tr}Classification{/tr}"}
-            <h2>{tr}Classification{/tr}</h2>
+			<h2>{tr}Classification{/tr}</h2>
 			<div class="form-group">
 				<label for="topicId">{tr}Topic{/tr}</label>
 				<div>
@@ -186,7 +186,7 @@
 			{include file='freetag.tpl'}
 		{/tab}
 		{tab name="{tr}Image{/tr}"}
-            <h2>{tr}Image{/tr}</h2>
+			<h2>{tr}Image{/tr}</h2>
 			<input type="hidden" name="MAX_FILE_SIZE" value="1000000">
 			<div class="form-group {if $types.$type.show_image neq 'y'}hidden{/if}">
 				<label for="userfile1">{tr}Own Image{/tr}</label>
@@ -262,7 +262,7 @@
 			</fieldset>
 		{/tab}
 		{tab name="{tr}Advanced{/tr}"}
-            <h2>{tr}Advanced{/tr}</h2>
+			<h2>{tr}Advanced{/tr}</h2>
 			{if $prefs.feature_multilingual eq 'y' and empty($translationOf)}
 				<div class="form-group">
 					<label for="translationOf">{tr}Attach existing article ID as translation{/tr}</label>
@@ -371,11 +371,11 @@
 	{/tabset}
 	<div class="article-buttons text-center">
 		<input type="submit" class="wikiaction btn btn-default" name="preview" value="{tr}Preview{/tr}" onclick="needToConfirm=false;">
-		<input type="submit" class="wikiaction btn btn-primary" name="save" value="{tr}Save{/tr}"  onclick="this.form.saving=true;needToConfirm=false;">
+		<input type="submit" class="wikiaction btn btn-primary" name="save" value="{tr}Save{/tr}" onclick="this.form.saving=true;needToConfirm=false;">
 		{if $articleId}<input type="submit" class="wikiaction tips btn btn-link" title="{tr}Cancel{/tr}|{tr}Cancel the edit, you will lose your changes.{/tr}" name="cancel_edit" value="{tr}Cancel Edit{/tr}"  onclick="needToConfirm=false;">{/if}
 	</div>
-{if $smarty.session.wysiwyg neq 'y'}
-	{jq}
+	{if $smarty.session.wysiwyg neq 'y'}
+		{jq}
 $("#editpageform").submit(function(evt) {
 	var isHtml = false;
 	if (this.saving && !$("input[name=allowhtml]:checked").length) {
@@ -391,8 +391,8 @@ $("#editpageform").submit(function(evt) {
 	}
 	return true;
 }).attr('saving', false);
-	{/jq}
-{/if}
+		{/jq}
+	{/if}
 </form>
 
 <br>

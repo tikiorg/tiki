@@ -23,25 +23,25 @@
 	The conversion process is not entirely transparent, meaning that you may notice differences between the look of a page in different modes.
 	This will improve in future updates but as the two systems have significant differences in what they can do it is unlikely to ever be totally transparent.{/tr}</p>
 <p>
-{else}
-	{tr}<strong>N.B. </strong>Using this button changes the editor between WYSIWYG and the usual wiki editor, but leaves the page source in wiki syntax.{/tr}</p>
-{/if}
+	{else}
+		{tr}<strong>N.B. </strong>Using this button changes the editor between WYSIWYG and the usual wiki editor, but leaves the page source in wiki syntax.{/tr}</p>
+	{/if}
 <p>
 	{icon _id="plugin"} {tr}Wiki plugins can be used and edited in WYSIWYG mode, double click the plugin to bring up the plugin edit popup form.<br>
 	Here is an example of the {ldelim}BOX{rdelim} plugin:{/tr}</p>
 <div style="background-color: #fff; padding: 1em;">
-<div class="tiki_plugin" plugin="box" style="position:relative; background-color: #eee; border: 1px solid #666;">
-	<div contenteditable="false">
-		<img src="img/icons/wiki_plugin_edit.png" width="16" height="16" style="float:left;position:absolute;z-index:10001">
-		<table align="center" width="80%">
-			<tr><td>
-				<div class='cbox ' style=' background:#fffff0'><div class='cbox-data' style=" background:#fffff0">
-					{tr}This is the text in the box which is justified; the box has a cream background, takes 80% of the screen width and is centred.{/tr}
-    			</div></div>
-    		</td></tr>
-    	</table>
+	<div class="tiki_plugin" plugin="box" style="position:relative; background-color: #eee; border: 1px solid #666;">
+		<div contenteditable="false">
+			<img src="img/icons/wiki_plugin_edit.png" width="16" height="16" style="float:left;position:absolute;z-index:10001">
+			<table align="center" width="80%">
+				<tr><td>
+					<div class='cbox ' style=' background:#fffff0'><div class='cbox-data' style=" background:#fffff0">
+						{tr}This is the text in the box which is justified; the box has a cream background, takes 80% of the screen width and is centred.{/tr}
+					</div></div>
+				</td></tr>
+			</table>
+		</div>
 	</div>
-</div>
 </div>
 <p style="margin-left: 2em;">
 	{icon _id="error"} {tr}<strong>Caution:</strong> There are still limitations regarding use of plugins in the WYSIWYG editor.<br>
@@ -55,7 +55,8 @@
 			<em>This new implementation is designed to work best with some site preferences set in a certain way.
 			These can all be found on the <a href="tiki-admin.php?page=wysiwyg">wysiwyg admin page</a>.
 			A profile to set these up correctly can be found on <a href="http://profiles.tiki.org/WYSIWYG_6x">profiles.tiki.org</a>
-			which can be applied using the <a href="tiki-admin.php?page=profiles">profiles admin page</a>.</em>{/tr}</p>
+			which can be applied using the <a href="tiki-admin.php?page=profiles">profiles admin page</a>.</em>{/tr}
+		</p>
 	{/if}
 
 </div>

@@ -10,7 +10,7 @@
 
 {tabset}
 	{tab name="{tr}Edit languages{/tr}"}
-        <h2>{tr}Edit languages{/tr}</h2>
+		<h2>{tr}Edit languages{/tr}</h2>
 		<form action="tiki-edit_languages.php" id="select_action" method="post">
 			{if isset($find)}
 				<input type="hidden" name="find" value="{$find}">
@@ -151,15 +151,15 @@
 	{/tab}
 
 	{tab name="{tr}Export languages{/tr}"}
-        <h2>{tr}Export languages{/tr}</h2>
+		<h2>{tr}Export languages{/tr}</h2>
 		<form action="tiki-edit_languages.php" method="post">
 			{if isset($expmsg)}
-			    {remarksbox type="note" title="{tr}Note:{/tr}"}
+					{remarksbox type="note" title="{tr}Note:{/tr}"}
 					{$expmsg}
 				{/remarksbox}
 			{/if}
 			{if (empty($db_languages))}
-			    {remarksbox type="note" title="{tr}Note:{/tr}"}
+					{remarksbox type="note" title="{tr}Note:{/tr}"}
 					{tr}No translations in the database available to export. First translate strings using interactive translation or "Edit languages" tab.{/tr}
 				{/remarksbox}
 			{else}
@@ -174,7 +174,7 @@
 						{/section}
 					</select>
 				</div>
-			    {remarksbox type="note" title="{tr}Note:{/tr}"}
+					{remarksbox type="note" title="{tr}Note:{/tr}"}
 					{tr}If you click "Download database translations", you will download a file with all the translations in the database.{/tr}
 					{if $tiki_p_admin eq 'y' and $langIsWritable}
 						{tr}If you click "Write to language.php", the translations in the database will be merged with the other translations in language.php. Note that after writing translations to language.php they are removed from the database.{/tr}
