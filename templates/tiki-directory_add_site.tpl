@@ -10,7 +10,7 @@
 {else}
 	{if $save eq 'y'}
 		<h2>{tr}Site added{/tr}</h2>
-			{icon _id=accept alt="{tr}OK{/tr}" style="vertical-align:middle" align="left"} {tr}The following site was added, but may require validation by the admin before appearing on the lists.{/tr}
+		{icon _id=accept alt="{tr}OK{/tr}" style="vertical-align:middle" align="left"} {tr}The following site was added, but may require validation by the admin before appearing on the lists.{/tr}
 		<table class="formcolor">
 			<tr>
 				<td>{tr}Name:{/tr}</td>
@@ -74,7 +74,7 @@
 						<td><label for="country">{tr}Country:{/tr}</label></td>
 						<td>
 							<select id="country" name="country">
-      	    				{section name=ux loop=$countries}
+								{section name=ux loop=$countries}
 									<option value="{$countries[ux]|escape}" {if $info.country eq $countries[ux]}selected="selected"{/if}>{tr}{$countries[ux]}{/tr}</option>
 								{/section}
 							</select>
@@ -84,10 +84,10 @@
 					<input type="hidden" name="country" value="None">
 				{/if}
 				<input name="isValid" type="hidden" value="">
-      	   {if $prefs.feature_antibot eq 'y' && $user eq ''}
+				{if $prefs.feature_antibot eq 'y' && $user eq ''}
 					{include file='antibot.tpl' td_style="formcolor"}
 				{/if}
-      	   <tr>
+				<tr>
 					<td>&nbsp;</td>
 					<td><input type="submit" class="btn btn-primary btn-sm" name="save" value="{tr}Save{/tr}"></td>
 				</tr>
