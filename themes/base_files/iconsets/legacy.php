@@ -249,6 +249,9 @@ $icons = array(
 	'list' => array(
 		'image_src' => 'img/icons/application_view_list.png',
 	),
+	'lock' => array(
+		'image_src' => 'img/icons/lock_add.png',
+	),
 	'log' => array(
 		'image_src' => 'img/icons/book.png',
 	),
@@ -260,6 +263,9 @@ $icons = array(
 	),
 	'module' => array(
 		'image_src' => 'img/icons/module.png',
+	),
+	'move' => array(
+		'image_src' => 'img/icons/task_submitted.png',
 	),
 	'next' => array(
 		'image_src' => 'img/icons/arrow_right.png',
@@ -347,6 +353,9 @@ $icons = array(
 	),
 	'undo' => array(
 		'image_src' => 'img/icons/arrow_undo.png',
+	),
+	'unlock' => array(
+		'image_src' => 'img/icons/lock_break.png',
 	),
 	'user' => array(
 		'image_src' => 'img/icons/user.png',

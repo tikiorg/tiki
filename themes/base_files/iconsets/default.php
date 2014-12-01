@@ -264,6 +264,10 @@ $icons = array( //Icons of the icon set
 	'link-external' => array(
 		'class' => 'fa fa-external-link fa-fw',
 	),
+	//same fa icon used for admin_security, but not the same in other icon sets
+	'lock' => array(
+		'class' => 'fa fa-lock fa-fw',
+	),
 	'log' => array(
 		'class' => 'fa fa-history fa-fw',
 	),
@@ -275,6 +279,9 @@ $icons = array( //Icons of the icon set
 	),
 	'module' => array(
 		'class' => 'fa fa-cogs fa-fw',
+	),
+	'move' => array(
+		'class' => 'fa fa-exchange fa-fw',
 	),
 	'next' => array(
 		'class' => 'fa fa-arrow-right fa-fw',
@@ -371,6 +378,9 @@ $icons = array( //Icons of the icon set
 	),
 	'undo' => array(
 		'class' => 'fa fa-undo fa-fw',
+	),
+	'unlock' => array(
+		'class' => 'fa fa-unlock fa-fw',
 	),
 	'user' => array(
 		'class' => 'fa fa-user fa-fw',

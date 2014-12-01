@@ -74,8 +74,14 @@ $icons = array(
 	'link' => array(
 		'class' => 'glyphicon glyphicon-link',
 	),
+	'lock' => array(
+		'class' => 'glyphicon glyphicon-lock',
+	),
 	'menuitem' => array(
 		'class' => 'glyphicon glyphicon-minus',
+	),
+	'move' => array(
+		'class' => 'glyphicon glyphicon-move',
 	),
 	'next' => array(
 		'class' => 'glyphicon glyphicon-arrow-right',
@@ -139,6 +145,10 @@ $icons = array(
 	),
 	'trash' => array(
 		'class' => 'glyphicon glyphicon-trash',
+	),
+	//use a better unlock icon when available
+	'unlock' => array(
+		'class' => 'glyphicon glyphicon-folder-open',
 	),
 	'user' => array(
 		'class' => 'glyphicon glyphicon-user',
