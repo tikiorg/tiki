@@ -118,11 +118,11 @@ $("input[name=ins_' . $this->getOption('fieldIdHere') . '], select[name=ins_' . 
             v = data[0];
             label = data[1];
           } else {
-            v = ""
+            v = "";
             label = "";
           }
           $ddl.append(
-            $("<div/>")
+            $("<div class=\"tracker_field_itemslist tracker_field" + v + "\" />")
             .text(label)
           );
         });

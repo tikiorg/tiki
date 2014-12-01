@@ -1779,6 +1779,10 @@ body.filegal_popup #tiki-center {
 	height: 15px;
 }
 
+.tracker_field_itemslist {
+	white-space: pre-wrap;
+}
+
 /* also for categorize.tpl */
 .multiselect {
 	vertical-align: middle;
