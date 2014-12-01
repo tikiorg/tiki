@@ -21,7 +21,7 @@
 			{else}
 			class="link btn btn-default btn-small" href="{$comments_complete_father}comments_threadId={$comment.threadId}&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;thread_sort_mode={$thread_sort_mode}&amp;comments_per_page={$comments_per_page}&amp;comments_parentId={$comments_parentId}&amp;thread_style={$thread_style}&amp;edit_reply=1#form"
 			{/if}
-		>{icon _id='page_edit'}</a>
+		>{icon name="edit"}</a>
 		{/if}
 
 		{if $tiki_p_admin_forum eq 'y'}
@@ -31,7 +31,7 @@
 			{else}
 			class="link btn btn-default btn-small" href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;comments_threadId={$comment.threadId}&amp;comments_remove=1&amp;comments_offset={$comments_offset}&amp;thread_sort_mode={$thread_sort_mode}&amp;comments_per_page={$comments_per_page}&amp;comments_parentId={$comments_parentId}&amp;thread_style={$thread_style}"
 			{/if}
-		>{icon _id='cross' alt="{tr}Delete{/tr}"}</a>
+		>{icon name="delete"}</a>
 		{/if}
 
 		{if $tiki_p_forums_report eq 'y'}
@@ -50,7 +50,7 @@
 			{self_link watch_event='forum_post_thread' watch_object=$comments_parentId watch_action='remove' _class="btn btn-default btn-small" _icon='no_eye' _alt="{tr}Stop Monitoring this Topic{/tr}" _title="{tr}Stop Monitoring this Topic{/tr}"}{/self_link}
 		{/if}
 		{if $prefs.feature_group_watches eq 'y' and ( $tiki_p_admin_users eq 'y' or $tiki_p_admin eq 'y' )}
-			<a class="btn btn-default btn-small" href="tiki-object_watches.php?objectId={$comments_parentId|escape:"url"}&amp;watch_event=forum_post_thread&amp;objectType=forum&amp;objectName={$comment.title|escape:"url"}&amp;objectHref={'tiki-view_forum_thread.php?comments_parentId='|cat:$comments_parentId|cat:'&forumId='|cat:$forumId|escape:"url"}" class="icon" title="{tr}Group Monitor{/tr}">{icon name="group-watch"}</a>
+			<a class="btn btn-default btn-small" href="tiki-object_watches.php?objectId={$comments_parentId|escape:"url"}&amp;watch_event=forum_post_thread&amp;objectType=forum&amp;objectName={$comment.title|escape:"url"}&amp;objectHref={'tiki-view_forum_thread.php?comments_parentId='|cat:$comments_parentId|cat:'&forumId='|cat:$forumId|escape:"url"}" class="icon" title="{tr}Group Monitor{/tr}">{icon name="watch-group"}</a>
 		{/if}
 		{/if}
 		<br>
