@@ -157,7 +157,7 @@ function wikiplugin_gdgraph($data, $params)
 	);
 
 	$ret = '<div class="wp-gdgraph">'.
-		'<img src="tiki-gdgraph.php?'. http_build_query($imgparams, '', '&amp;') . '" alt="{tr}GDgraph graph image{/tr}">'.
+		'<img src="tiki-gdgraph.php?'. http_build_query($imgparams, '', '&amp;') . '" alt="GDgraph graph image">'.
 		'</div>';
 
 	return $ret;
