@@ -27,10 +27,11 @@
 
 {if $tikifeedback}
 	{remarksbox type="feedback" title="{tr}Feedback{/tr}"}
-	{section name=n loop=$tikifeedback}
-	{tr}{$tikifeedback[n].mes|escape}{/tr}
-	<br>
-	{/section}{/remarksbox}
+		{section name=n loop=$tikifeedback}
+			{tr}{$tikifeedback[n].mes|escape}{/tr}
+			<br>
+		{/section}
+	{/remarksbox}
 {/if}
 
 {if !empty($added) or !empty($discarded) or !empty($discardlist)}
@@ -147,14 +148,14 @@
 	<form class="form-horizontal" name="checkform" method="post" action="{$smarty.server.PHP_SELF|escape}">
 		<div id="{$ts_tableid}-div" {if $tsOn}style="visibility:hidden;"{/if}>
 			<div class="table-responsive user-table">
-            	<table id="{$ts_tableid}" class="table normal table-striped table-hover">
+				<table id="{$ts_tableid}" class="table normal table-striped table-hover">
 					{* Note: th element ids here need to match those at /lib/core/Table/Settings/TikiAdminusers.php
 					for tablesorter to work properly *}
 					<thead>
 						<tr>
 							<th id="checkbox" {if $prefs.mobile_mode eq "y"}style="width:40px;"{else}class="auto"{/if}>
 								{if $users}
-								   {select_all checkbox_names='checked[]'}
+									{select_all checkbox_names='checked[]'}
 								{/if}
 							</th>
 							<th id="user">{self_link _sort_arg='sort_mode' _sort_field='login'}{tr}User{/tr}{/self_link}</th>

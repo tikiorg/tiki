@@ -1,4 +1,4 @@
-<TITLE>{tr}Quick Create Multilanguage Pages{/tr}</TITLE>
+<title>{tr}Quick Create Multilanguage Pages{/tr}</title>
 
 {if $display_creation_result == 'y'}
 	{remarksbox type="feedback"}
@@ -7,7 +7,7 @@
 			<p>
 			<ul>
 				{foreach from=$pages_created key=lang item=page_name}
-   					<li>{$lang}: {$page_links[$page_name]}</li>
+					<li>{$lang}: {$page_links[$page_name]}</li>
 				{/foreach}
 			</ul>
 		{/if}
@@ -17,7 +17,7 @@
 			<p>
 			<ul>
 				{foreach from=$pages_not_created key=lang item=page_name}
-   					<li>{$lang}: {$page_links[$page_name]}</li>
+					<li>{$lang}: {$page_links[$page_name]}</li>
 				{/foreach}
 			</ul>
 		{/if}
@@ -26,14 +26,13 @@
 
 <h2>{tr}Enter the names of a new page page in various languages.{/tr}</h2>
 
-<P></P>
+<p></p>
 
-<form  enctype="multipart/form-data" method="post" action="tiki-create_multilang_pages.php" id='create_multilang_pages_form' name='create_multilang_pages_form'>
+<form enctype="multipart/form-data" method="post" action="tiki-create_multilang_pages.php" id='create_multilang_pages_form' name='create_multilang_pages_form'>
 	<input type="hidden" name="create_pages" value="">
 	<b>{tr}Preferred languages{/tr}</b>
-	<P></P>
+	<p></p>
 	<table>
-		<tr>
 		{foreach from=$user_languages key=index item=lang_id}
 			<tr>
 				<td>{$lang_id}:</td> <td>&nbsp;</td>
@@ -43,12 +42,11 @@
 
 	</table>
 
-	<P></P>
+	<p></p>
 
 	<b>{tr}Other languages{/tr}</b>
 
 	<table>
-		<tr>
 		{foreach from=$other_languages key=index item=lang_id}
 			<tr>
 				<td>{$lang_id}:</td> <td>&nbsp;</td>
@@ -58,7 +56,7 @@
 
 	</table>
 
-	<P></P>
+	<p></p>
 
 	<input type="submit" class="btn btn-default btn-sm" id="create_multilang_pages_submit_button" value="{tr}Create pages{/tr}">
 
