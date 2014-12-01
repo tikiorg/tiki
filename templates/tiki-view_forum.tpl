@@ -60,7 +60,7 @@
 	{/if}
 
 	{if $prefs.feature_group_watches eq 'y' and ( $tiki_p_admin_users eq 'y' or $tiki_p_admin eq 'y' )}
-		<a href="tiki-object_watches.php?objectId={$forumId|escape:"url"}&amp;watch_event=forum_post_topic_and_thread&amp;objectType=forum&amp;objectName={$forum_info.name|escape:"url"}&amp;objectHref={'tiki-view_forum.php?forumId='|cat:$forumId|escape:"url"}" class="btn btn-default"  title="{tr}Group Monitor Topics and Threads of this Forum{/tr}">{icon name="group-watch"}</a>
+		<a href="tiki-object_watches.php?objectId={$forumId|escape:"url"}&amp;watch_event=forum_post_topic_and_thread&amp;objectType=forum&amp;objectName={$forum_info.name|escape:"url"}&amp;objectHref={'tiki-view_forum.php?forumId='|cat:$forumId|escape:"url"}" class="btn btn-default"  title="{tr}Group Monitor Topics and Threads of this Forum{/tr}">{icon name="watch-group"}</a>
 	{/if}
 
 	<div class="categbar" align="right" >
@@ -362,12 +362,20 @@
 
 {if $prefs.feature_forum_content_search eq 'y' and $prefs.feature_search eq 'y'}
 	<div class="text-center form-group">
-		<form id="search-form" class="form-inline" role="form" method="get" action="tiki-search{if $prefs.feature_forum_local_tiki_search eq 'y'}index{else}results{/if}.php">
-            <label class="sr-only" for="findinforums">{tr}Find{/tr}</label>
-            <input name="highlight" id="findinforums" type="text" class="form-control">
-			<input type="hidden" name="where" value="forums">
-			<input type="hidden" name="forumId" value="{$forum_info.forumId}">
-			<input type="submit" class="wikiaction btn btn-default" name="search" value="{tr}Find{/tr}">
+		<form id="search-form" class="form" role="form" method="get" action="tiki-search{if $prefs.feature_forum_local_tiki_search eq 'y'}index{else}results{/if}.php">
+			<div class="form-group">
+				<div class="input-group">
+					<span class="input-group-addon">
+						{icon name="search"}
+					</span>
+					<input name="highlight" id="findinforums" type="text" class="form-control" placeholder="{tr}Find{/tr}...">
+					<div class="input-group-btn">
+						<input type="hidden" name="where" value="forums">
+						<input type="hidden" name="forumId" value="{$forum_info.forumId}">
+						<input type="submit" class="wikiaction btn btn-default" name="search" value="{tr}Find{/tr}">
+					</div>
+				</div>
+			</div>
 		</form>
 	</div>
 {/if}
@@ -399,7 +407,7 @@
 						<a class="link" href="tiki-forums_reported.php?forumId={$forumId}">{tr}Reported Messages:{/tr}{$reported}</a>
 						<br>
 					{/if}
-					<a class="link" href="tiki-forum_queue.php?forumId={$forumId}">{tr}Queued Messages:{/tr} {$queued}</a>
+					<a class="btn btn-default btn-sm" href="tiki-forum_queue.php?forumId={$forumId}">{tr}Queued Messages{/tr} <span class="badge">{$queued}</span></a>
 				</td>
 			</tr>
 			{if isset($smarty.request.movesel_x) and $smarty.request.movesel_x}
