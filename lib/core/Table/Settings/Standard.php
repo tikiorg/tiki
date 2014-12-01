@@ -22,7 +22,7 @@ class Table_Settings_Standard extends Table_Settings_Abstract
 		'selflinks' => true,
 		'sorts' => array(
 			'type' => 'reset',
-			'group' => true,
+			'group' => false,
 			'multisort' => false,
 		),
 		'pager' => array(

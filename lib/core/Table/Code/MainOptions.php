@@ -181,6 +181,11 @@ class Table_Code_MainOptions extends Table_Code_Manager
 			}
 		}
 
+		//Sort image attribute
+		if (!empty(parent::$s['sorts']['imgattr'])) {
+			$mo[] = 'imgAttr: \'title\'';
+		}
+
 		//process main options and add to overall code
 		if (count($mo) > 0) {
 			$code = $this->iterate($mo, '', '', $this->nt2, '');
