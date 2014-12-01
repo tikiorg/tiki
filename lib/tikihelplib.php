@@ -46,7 +46,7 @@ function help_doclink($params)
 	}
 
 	if ($prefs['feature_help'] == 'y' and $url) {
-		if (!isset($desc))
+		if (!isset($desc)) {
 			$smarty = TikiLib::lib('smarty');
 			$smarty->loadPlugin('smarty_function_icon');
 			$desc = tra('Help link');
@@ -55,6 +55,7 @@ function help_doclink($params)
 						. $prefs['helpurl'] . $url . '" target="tikihelp" class="tikihelp btn btn-link">'
 						. smarty_function_icon(array('name' => 'help'), $smarty)
 						. '</a>';
+		}
 	}
 
 	return $ret;
