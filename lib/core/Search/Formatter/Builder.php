@@ -92,6 +92,7 @@ class Search_Formatter_Builder
 
 	private function handleOutput($output)
 	{
+        $smarty = TikiLib::lib('smarty');
 		$arguments = $this->parser->parse($output->getArguments());
 
 		if (isset($arguments['template'])) {
@@ -102,8 +103,12 @@ class Search_Formatter_Builder
 			} elseif ($arguments['template'] == 'carousel') {
 				$arguments['template'] = dirname(__FILE__) . '/../../../../templates/search/list/carousel.tpl';
 			} elseif (!file_exists($arguments['template'])) {
-				TikiLib::lib('errorreport')->report(tr('Missing template "%0"', $arguments['template']));
-				return '';
+                $temp = $smarty->get_filename($arguments['template']);
+                if (empty($temp)){ //if get_filename cannot find template, return error
+                    TikiLib::lib('errorreport')->report(tr('Missing template "%0"', $arguments['template']));
+                    return '';
+                }
+                $arguments['template'] = $temp;
 			}
 			$abuilder = new Search_Formatter_ArrayBuilder;
 			$outputData = $abuilder->getData($output->getBody());
@@ -114,7 +119,7 @@ class Search_Formatter_Builder
 			$plugin->setFields($this->findFields($outputData, $templateData));
 		} elseif (isset($arguments['wiki']) && TikiLib::lib('tiki')->page_exists($arguments['wiki'])) {	
 			$wikitpl = "tplwiki:" . $arguments['wiki'];
-			$wikicontent = TikiLib::lib('smarty')->fetch($wikitpl);
+			$wikicontent = $smarty->fetch($wikitpl);
 			$plugin = new Search_Formatter_Plugin_WikiTemplate($wikicontent);
 		} else {
 			$plugin = new Search_Formatter_Plugin_WikiTemplate($output->getBody());

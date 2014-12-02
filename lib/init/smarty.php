@@ -401,23 +401,23 @@ class Smarty_Tiki extends Smarty
 		}
 	}
 	/**
-	 * Returns the file name associated to the template name
+	 * Returns the file path associated to the template name
 	 * @param $template
 	 * @return string
 	 */
 	function get_filename($template)
 	{
-		global $tikidomain, $style_base;
-		if (!empty($tikidomain) && is_file($this->main_template_dir.'/'.$tikidomain.'/styles/'.$style_base.'/'.$template)) {
-    			$file = "/$tikidomain/styles/$style_base/";
-		} elseif (!empty($tikidomain) && is_file($this->main_template_dir.'/'.$tikidomain.'/'.$template)) {
-    			$file = "/$tikidomain/";
-		} elseif (is_file($this->main_template_dir.'/styles/'.$style_base.'/'.$template)) {
-			$file = "/styles/$style_base/";
-		} else {
-    			$file = '/';
-		}
-		return $this->main_template_dir.$file.$template;
+        //get the list of template directories
+        $dirs = $this->getTemplateDir();
+
+        //go through directories in search of the template
+        foreach ($dirs as $dir){
+            if (file_exists($dir."/".$template)){
+                return $dir."/".$template;
+            }
+        }
+        return "";
+
 	}
 
 	/**
