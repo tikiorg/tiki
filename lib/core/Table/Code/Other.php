@@ -25,12 +25,14 @@ class Table_Code_Other extends Table_Code_Manager
 
 	public function setCode()
 	{
+		$smarty = TikiLib::lib('smarty');
+		$smarty->loadPlugin('smarty_function_icon');
 		$jq = array();
 		//column selector
 		if (parent::$s['colselect']['type'] === true) {
 			$htmlbefore[] = '<button id="' . parent::$s['colselect']['button']['id']
-				. '" type="button" class="btn btn-link btn-sm" title="Show/hide columns" style="margin-right:3px">'
-				. '<span class="fa fa-columns"></span></button>';
+				. '" type="button" class="btn btn-link btn-sm" title="' . parent::$s['colselect']['button']['text']
+				. '" style="margin-right:3px">' . smarty_function_icon(['name' => 'columns'], $smarty) . '</button>';
 			$jq[] = '$(\'button#' . parent::$s['colselect']['button']['id'] . '\').popover({'
 				. $this->nt2 . 'placement: \'auto right\','
 				. $this->nt2 . 'html: true,'
@@ -53,8 +55,8 @@ class Table_Code_Other extends Table_Code_Manager
 			$jq[] = '$(\'button#' . $s['reset']['id'] . '\').click(function(){$(\'' . parent::$tid
 				.'\').trigger(\'sortReset\')' . $sr . ';});';
 			$htmlbefore[] = '<button id="' . $s['reset']['id']
-				. '" type="button" class="btn btn-link btn-sm" title="Unsort" style="margin-right:3px">'
-				. '<span class="fa fa-sort"></span></button>';
+				. '" type="button" class="btn btn-link btn-sm" title="' . $s['reset']['text']
+				.  '" style="margin-right:3px">' . smarty_function_icon(['name' => 'sort'], $smarty) . '</button>';
 		}
 
 		//filters
@@ -63,8 +65,8 @@ class Table_Code_Other extends Table_Code_Manager
 			//reset button
 			if ($f['type'] === 'reset') {
 				$htmlbefore[] = '<button id="' . $f['reset']['id']
-					. '" type="button" title="Clear filters" class="btn btn-link btn-sm">'
-					. '<span class="fa fa-filter"></span></button>';
+					. '" type="button" class="btn btn-link btn-sm" title="' . $f['reset']['text'] . '">'
+					. smarty_function_icon(['name' => 'filter'], $smarty) . '</button>';
 			}
 
 			//external dropdowns
@@ -121,19 +123,19 @@ class Table_Code_Other extends Table_Code_Manager
 				'	<select class="gotoPage"></select>',
 				'</div>',
 				'<div class="btn-group">',
-				'	<button type="button" class="btn btn-link btn-sm first">',
-				'		<i class="fa fa-step-backward"></i>',
+				'	<button type="button" class="btn btn-link btn-xs first">',
+				'		' . smarty_function_icon(['name' => 'backward_step'], $smarty),
 				'	</button>',
-				'	<button type="button" class="btn btn-link btn-sm prev">',
-				'		<i class="fa fa-backward"></i>',
+				'	<button type="button" class="btn btn-link btn-xs prev">',
+				'		' . smarty_function_icon(['name' => 'backward'], $smarty),
 				'	</button>',
-				'	<button class="btn btn-link btn-sm disabled pagedisplay">',
+				'	<button class="btn btn-link btn-sm pagedisplay">',
 				'	</button>',
-				'	<button type="button" class="btn btn-link btn-sm next">',
-				'		<i class="fa fa-forward"></i>',
+				'	<button type="button" class="btn btn-link btn-xs next">',
+				'		' . smarty_function_icon(['name' => 'forward'], $smarty),
 				'	</button>',
-				'	<button type="button" class="btn btn-link btn-sm last">',
-				'		<i class="fa fa-step-forward"></i>',
+				'	<button type="button" class="btn btn-link btn-xs last">',
+				'		' . smarty_function_icon(['name' => 'forward_step'], $smarty),
 				'	</button>',
 				'</div>',
 			);

@@ -177,6 +177,12 @@ $icons = array( //Icons of the icon set
 	'backlink' => array(
 		'class' => 'fa fa-reply fa-fw',
 	),
+	'backward' => array(
+		'class' => 'fa fa-backward fa-fw',
+	),
+	'backward_step' => array(
+		'class' => 'fa fa-step-backward fa-fw',
+	),
 	'bug' => array(
 		'class' => 'fa fa-bug fa-fw',
 	),
@@ -191,6 +197,9 @@ $icons = array( //Icons of the icon set
 	),
 	'clone' => array(
 		'class' => 'fa fa-clipboard fa-fw',
+	),
+	'columns' => array(
+		'class' => 'fa fa-columns fa-fw',
 	),
 	'comments' => array(
 		'class' => 'fa fa-comments-o fa-fw',
@@ -227,6 +236,12 @@ $icons = array( //Icons of the icon set
 	),
 	'export' => array(
 		'class' => 'fa fa-upload fa-fw',
+	),
+	'forward' => array(
+		'class' => 'fa fa-forward fa-fw',
+	),
+	'forward_step' => array(
+		'class' => 'fa fa-step-forward fa-fw',
 	),
 	'file-archive' => array(
 		'class' => 'fa fa-file-archive-o fa-fw',

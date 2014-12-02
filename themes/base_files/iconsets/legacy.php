@@ -171,6 +171,12 @@ $icons = array(
 	'backlink' => array(
 		'image_src' => 'img/icons/arrow_turn_left.png',
 	),
+	'backward' => array(
+		'image_src' => 'img/icons/control_rewind.png',
+	),
+	'backward_step' => array(
+		'image_src' => 'img/icons/control_start.png',
+	),
 	'bug' => array(
 		'image_src' => 'img/icons/bug.png',
 	),
@@ -182,6 +188,9 @@ $icons = array(
 	),
 	'check' => array(
 		'image_src' => 'img/icons/select.gif',
+	),
+	'columns' => array(
+		'image_src' => 'img/icons/text_columns.png',
 	),
 	'comments' => array(
 		'image_src' => 'img/icons/comments.png',
@@ -218,6 +227,15 @@ $icons = array(
 	),
 	'file-archive' => array(
 		'image_src' => 'img/icons/folder.png',
+	),
+	'filter' => array(
+		'image_src' => 'img/icons/find.png',
+	),
+	'forward' => array(
+		'image_src' => 'img/icons/control_fastforward.png',
+	),
+	'forward_step' => array(
+		'image_src' => 'img/icons/control_end.png',
 	),
 	'group' => array(
 		'image_src' => 'img/icons/group.png',

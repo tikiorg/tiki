@@ -23,8 +23,17 @@ $icons = array(
 	'add' => array(
 		'class' => 'glyphicon glyphicon-plus',
 	),
+	'backward' => array(
+		'class' => 'glyphicon glyphicon-backward',
+	),
+	'backward_step' => array(
+		'class' => 'glyphicon glyphicon-step-backward',
+	),
 	'check' => array(
 		'class' => 'glyphicon glyphicon-ok-circle',
+	),
+	'columns' => array(
+		'class' => 'glyphicon glyphicon-th-large',
 	),
 	'comments' => array(
 		'class' => 'glyphicon glyphicon-comment',
@@ -56,8 +65,17 @@ $icons = array(
 	'export' => array(
 		'class' => 'glyphicon glyphicon-export',
 	),
+	'forward' => array(
+		'class' => 'glyphicon glyphicon-forward',
+	),
+	'forward_step' => array(
+		'class' => 'glyphicon glyphicon-step-forward',
+	),
 	'file-archive' => array(
 		'class' => 'glyphicon glyphicon-floppy-save',
+	),
+	'filter' => array(
+		'class' => 'glyphicon glyphicon-filter',
 	),
 	'help' => array(
 		'class' => 'glyphicon glyphicon-question-sign',
@@ -128,11 +146,14 @@ $icons = array(
 	'share' => array(
 		'class' => 'glyphicon glyphicon-share',
 	),
+	'sort' => array(
+		'class' => 'glyphicon glyphicon-sort',
+	),
 	'sort-up' => array(
-		'class' => 'glyphicon glyphicon-chevron-up',
+		'class' => 'glyphicon glyphicon-sort-by-alphabet',
 	),
 	'sort-down' => array(
-		'class' => 'glyphicon glyphicon-chevron-down',
+		'class' => 'glyphicon glyphicon-sort-by-alphabet-alt',
 	),
 	'stop-watching' => array(
 		'class' => 'glyphicon glyphicon-eye-close',

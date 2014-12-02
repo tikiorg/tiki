@@ -235,8 +235,8 @@ abstract class Table_Settings_Abstract
 		'colselect' => array(
 			'button' => array(
 				'id' => '-colselectbtn',
-				//tra('Columns')
-				'text' => 'Columns',
+				//tra('Show/hide columns')
+				'text' => 'Show/hide columns',
 			),
 			'div' => array(
 				'id' => '-colselectdiv',
