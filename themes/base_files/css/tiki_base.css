@@ -220,7 +220,6 @@ div #metadata div.tabs {
 }
 li.archivedate {
   list-style: none outside none;
-  text-indent: -15px;
 }
 .olLayerGoogleV3.olLayerGooglePoweredBy {
   bottom: 15px !important;
@@ -2971,4 +2970,3 @@ input.tablesorter-filter {
   border: none;
   background-color: #f7f7f7;
 }
-/* End of file */

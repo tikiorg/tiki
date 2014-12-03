@@ -32,7 +32,7 @@
 					<span class="zippy " id='ml-icon-{$module_id}-{$i}' >○</span>
 				</a>
 				<a class="linkmodule" href="javascript:void();">{$year_number}</a>
-				<span class="post-count" dir="ltr">[{$year_data.cant}]</span>
+				<span class="post-count badge" dir="ltr">{$year_data.cant}</span>
 				<ul id='ml-sub-{$module_id}-{$i}' >
 					{foreach from=$year_data.monthlist key=month_name item=month_data}
 						{if $month_name == $month_expanded }
@@ -42,7 +42,7 @@
 									<span class="zippy " id='ml-icon-{$module_id}-{$i}' >▼</span>
 								</a>
 								<a class="linkmodule" href="{$month_data.link}">{$month_name}</a>
-								<span class="post-count" dir="ltr">[{$month_data.cant}]</span>
+								<span class="post-count badge" dir="ltr">{$month_data.cant}</span>
 								<ul id='ml-sub-{$module_id}-{$i}' >
 									{foreach from=$month_data.postlist key=articleId item=title}
 										<li class='archivedate collapsed' >
@@ -58,7 +58,7 @@
 									<span class="zippy " id='ml-icon-{$module_id}-{$i}'>►</span>
 								</a>
 								<a class="linkmodule" href="{$month_data.link}">{$month_name}</a>
-								<span class="post-count" dir="ltr">[{$month_data.cant}]</span>
+								<span class="post-count badge" dir="ltr">{$month_data.cant}</span>
 								<ul id='ml-sub-{$module_id}-{$i}' >
 									{foreach from=$month_data.postlist key=articleId item=title}
 										<li class='archivedate collapsed' >
@@ -78,7 +78,7 @@
 					<span class="zippy " id='ml-icon-{$module_id}-{$i}' >●</span>
 				</a>
 				<a class="linkmodule" href="{$year_data.link}">{$year_number}</a>
-				<span class="post-count" dir="ltr">[{$year_data.cant}]</span>
+				<span class="post-count badge" dir="ltr">{$year_data.cant}</span>
 			</li>
 		{/if}
 	{foreachelse}
