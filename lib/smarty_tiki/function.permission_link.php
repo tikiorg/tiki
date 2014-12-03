@@ -31,6 +31,7 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
                group, parameter to objectpermissions
 			   textFilter, parameter to objectpermissions
 			   showDisabled, parameter to objectpermissions
+			   addclass: add classes separated by spaces
  */
 function smarty_function_permission_link( $params, $smarty )
 {
@@ -83,6 +84,7 @@ function smarty_function_permission_link( $params, $smarty )
 			'label' => $params->label->text() ?: tr('Permissions'),
 			'count' => $params->count->int(),
 			'type' => $type,
+			'addclass' => $params->addclass->text(),
 		],
 	]);
 }
