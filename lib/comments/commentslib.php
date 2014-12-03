@@ -464,7 +464,7 @@ class Comments extends TikiLib
 				$body = '';
 				$len = count($lines) - 1;
 				$found = false;
-				for ($line = $len; $line > 0; $line-- ) {
+				for ($line = $len; $line >= 0; $line-- ) {
 					if ($found || ! preg_match('/^\s*\>*\s*[\-]*\s*$/', $lines[$line])) {
 						$body = "{$lines[$line]}\r\n$body";
 						$found = true;
