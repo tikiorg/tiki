@@ -23,6 +23,9 @@ $icons = array(
 	'add' => array(
 		'class' => 'glyphicon glyphicon-plus',
 	),
+	'admin_i18n' => array(
+		'class' => 'glyphicon glyphicon-globe',
+	),
 	'backward' => array(
 		'class' => 'glyphicon glyphicon-backward',
 	),

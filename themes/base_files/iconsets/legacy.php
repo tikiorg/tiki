@@ -351,6 +351,9 @@ $icons = array(
 	'stop-watching' => array(
 		'image_src' => 'img/icons/no_eye.png',
 	),
+	'structure' => array(
+		'image_src' => 'img/icons/chart_organization.png',
+	),
 	'success' => array(
 		'image_src' => 'img/icons/tick.png',
 	),

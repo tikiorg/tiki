@@ -367,6 +367,9 @@ $icons = array( //Icons of the icon set
 	'stop-watching' => array(
 		'class' => 'fa fa-eye-slash fa-fw',
 	),
+	'structure' => array(
+		'class' => 'fa fa-sitemap fa-fw',
+	),
 	'success' => array(
 		'class' => 'fa fa-check fa-fw',
 	),
