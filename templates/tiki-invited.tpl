@@ -6,7 +6,7 @@
 	{$error|escape}
 {else}
 
-	<div  class="wikitext">{$parsed}</div>
+	<div class="wikitext">{$parsed}</div>
 
 	{if $user}
 		You are currently logged as "{$user|escape}", if you want to validate this invitation on this account, click here :

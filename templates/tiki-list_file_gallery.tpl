@@ -47,9 +47,9 @@
 		{/if}
 		{if $view eq 'browse'}
 			{if $show_details eq 'y'}
-				<a {if $prefs.mobile_mode eq 'y'} data-role="button"{/if} href="{query _type='relative' show_details='n'}" title="{tr}Hide file information from list view{/tr}">{icon _id=no_information align='right' alt="{tr}Hide file information from list view{/tr}"}</a>  {* mobile *}
+				<a {if $prefs.mobile_mode eq 'y'} data-role="button"{/if} href="{query _type='relative' show_details='n'}" title="{tr}Hide file information from list view{/tr}">{icon _id=no_information align='right' alt="{tr}Hide file information from list view{/tr}"}</a> {* mobile *}
 			{else}
-				<a {if $prefs.mobile_mode eq 'y'} data-role="button"{/if} href="{query _type='relative' show_details='y'}" title="{tr}Show file information from list view{/tr}">{icon _id=information align='right' alt="{tr}Show file information from list view{/tr}"}</a>  {* mobile *}
+				<a {if $prefs.mobile_mode eq 'y'} data-role="button"{/if} href="{query _type='relative' show_details='y'}" title="{tr}Show file information from list view{/tr}">{icon _id=information align='right' alt="{tr}Show file information from list view{/tr}"}</a> {* mobile *}
 			{/if}
 		{/if}
 		{if $prefs.mobile_mode eq 'y'}</div>{/if} {* mobile *}
