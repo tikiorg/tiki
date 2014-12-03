@@ -38,3 +38,14 @@
 		</fieldset>
 	</form>
 {/if}
+{if $prefs.feature_syntax_highlighter eq 'y'}
+    {jq}
+        //Synchronize textarea and codemirror before comment is posted
+        $(".comment-form>form").submit(function(event){
+        var $textarea = event.target.find("textarea.wikiedit"); //retrieve the text area from the form that is submitted
+        if (typeof syntaxHighlighter.sync === 'function') {
+        syntaxHighlighter.sync($textarea);
+        }
+        });
+    {/jq}
+{/if}
