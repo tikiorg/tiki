@@ -52,7 +52,7 @@
 						</div>
 					{/if}
 					{capture name=rows}{if $type eq 'forum'}{$prefs.default_rows_textarea_forum}{else}{$prefs.default_rows_textarea_comment}{/if}{/capture}
-					{textarea codemirror='true' syntax='tiki' name=data comments="y" _wysiwyg="n" rows=$smarty.capture.rows class="form-control" placeholder="{tr}Post new comment{/tr}..."}{$data|escape}{/textarea}
+					{textarea codemirror='true' syntax='tiki' name="data" comments="y" _wysiwyg="n" rows=$smarty.capture.rows class="form-control wikiedit" placeholder="{tr}Post new comment{/tr}..."}{$data|escape}{/textarea}
 				</div>
 				<div class="panel-footer">
 					{if $prefs.feature_antibot eq 'y'}
