@@ -48,10 +48,10 @@
 <history>
 {foreach from=$history item=hist}
 	<version version="{$hist.version}" zip="{$hist.zip|escape}">
-		  <user><![CDATA[{$hist.user|escape:'html'}]]></user>
-		  {if $hist.description}<description><![CDATA[{$hist.description|escape:'html'}]]></description>{/if}
-		  {if $hist.comment}<comment><![CDATA[{$hist.comment|escape:'html'}]]></comment>{/if}
-		  <lastModif>{$hist.lastModif}</lastModif>
+		<user><![CDATA[{$hist.user|escape:'html'}]]></user>
+		{if $hist.description}<description><![CDATA[{$hist.description|escape:'html'}]]></description>{/if}
+		{if $hist.comment}<comment><![CDATA[{$hist.comment|escape:'html'}]]></comment>{/if}
+		<lastModif>{$hist.lastModif}</lastModif>
 	</version>
 {/foreach}
 </history>

@@ -2,13 +2,13 @@
 {title help="Spreadsheet"}{tr}Spreadsheet History:{/tr} {$title}{/title}
 
 <div>
-  {$description|escape}
+	{$description|escape}
 </div>
 <form>
 	{tabset}
 		{if not $grid_content eq ''}
 			{tab name="{tr}View{/tr}"}
-                <h2>{tr}View{/tr}</h2>
+				<h2>{tr}View{/tr}</h2>
 				<div id="tiki_sheets_container">
 					<table style="width: 100%;" id="tiki_sheet_container">
 						<tr>
@@ -56,7 +56,7 @@
 		{/if}
 
 		{tab name="{tr}Date Selection{/tr}"}
-            <h2>{tr}Date Selection{/tr}</h2>
+			<h2>{tr}Date Selection{/tr}</h2>
 			<table style="width: 100%;">
 				<tr>
 					<th>{tr}Edit Date{/tr}</th>
@@ -72,21 +72,21 @@
 						<td>
 							{$history[revision_date].prettystamp}
 						</td>
-			    		<td>
-			    			{$history[revision_date].user}
-			    		</td>
-			    		<td style="text-align: center;">
-			    			<a href="tiki-view_sheets.php?sheetId={$sheetId}&readdate={$history[revision_date].stamp}&parse=y" title="{tr}View Spreadsheet{/tr}">{tr}View{/tr}</a> |
-			    			<a href="tiki-view_sheets.php?sheetId={$sheetId}&readdate={$history[revision_date].stamp}&parse=clone" title="{tr}Clone Spreadsheet{/tr}">{tr}Clone{/tr}</a> |
-			    			<a href="tiki-view_sheets.php?sheetId={$sheetId}&readdate={$history[revision_date].stamp}&parse=rollback" title="{tr}Roll Back Spreadsheet{/tr}">{tr}Roll-Back{/tr}</a>
-			    		</td>
-			    		<td style="vertical-align: middle; text-align: center;">
-						   	<input type="radio" name="idx_0" class="compareSheet1" value="{$smarty.section.revision_date.index}" onclick="$.sheet.compareSheetClick($('input.compareSheet1'), $('input.compareSheet2'));">
-				    	</td>
-			    		<td style="vertical-align: middle; text-align: center;">
-						   	<input type="radio" name="idx_1" class="compareSheet2" value="{$smarty.section.revision_date.index}" onclick="$.sheet.compareSheetClick($('input.compareSheet1'), $('input.compareSheet2'));">
-				    	</td>
-			    	</tr>
+							<td>
+								{$history[revision_date].user}
+							</td>
+							<td style="text-align: center;">
+								<a href="tiki-view_sheets.php?sheetId={$sheetId}&readdate={$history[revision_date].stamp}&parse=y" title="{tr}View Spreadsheet{/tr}">{tr}View{/tr}</a> |
+								<a href="tiki-view_sheets.php?sheetId={$sheetId}&readdate={$history[revision_date].stamp}&parse=clone" title="{tr}Clone Spreadsheet{/tr}">{tr}Clone{/tr}</a> |
+								<a href="tiki-view_sheets.php?sheetId={$sheetId}&readdate={$history[revision_date].stamp}&parse=rollback" title="{tr}Roll Back Spreadsheet{/tr}">{tr}Roll-Back{/tr}</a>
+							</td>
+							<td style="vertical-align: middle; text-align: center;">
+								<input type="radio" name="idx_0" class="compareSheet1" value="{$smarty.section.revision_date.index}" onclick="$.sheet.compareSheetClick($('input.compareSheet1'), $('input.compareSheet2'));">
+							</td>
+							<td style="vertical-align: middle; text-align: center;">
+								<input type="radio" name="idx_1" class="compareSheet2" value="{$smarty.section.revision_date.index}" onclick="$.sheet.compareSheetClick($('input.compareSheet1'), $('input.compareSheet2'));">
+							</td>
+						</tr>
 				{/section}
 			</table>
 		{/tab}

@@ -17,9 +17,9 @@
 			<h2>{tr}Edit this gallery:{/tr} {$name}</h2>
 		{/if}
 		{if $category_needed eq 'y'}
-		  {remarksbox type='Warning' title="{tr}Warning{/tr}"}
-			  <div class="highlight"><em class='mandatory_note'>{tr}A category is mandatory{/tr}</em></div>
-		  {/remarksbox}
+			{remarksbox type='Warning' title="{tr}Warning{/tr}"}
+				<div class="highlight"><em class='mandatory_note'>{tr}A category is mandatory{/tr}</em></div>
+			{/remarksbox}
 		{/if}
 
 		<div{* style="text-align: center"*}>
@@ -30,7 +30,7 @@
 				<input type="hidden" name="galleryId" value="{$galleryId|escape}">
 				<table class="formcolor">
 					<tr><td>{tr}Name:{/tr}</td><td><input type="text" name="name" value="{$name|escape}"></td></tr>
-					<tr><td>{tr}Description:{/tr}</td><td><textarea   rows="20" cols="80" name="description" id="gal-desc">{$description|escape}</textarea></td></tr>
+					<tr><td>{tr}Description:{/tr}</td><td><textarea rows="20" cols="80" name="description" id="gal-desc">{$description|escape}</textarea></td></tr>
 					{if $tiki_p_admin_galleries eq 'y'}
 						<tr><td>{tr}Gallery is visible to non-admin users?{/tr}</td><td><input type="checkbox" name="visible" {if $visible eq 'y'}checked="checked"{/if}></td></tr>
 						{* If a user can create a gallery, but doesn't have tiki_p_admin_galleries the new gallery needs to be visible. *}
@@ -125,7 +125,7 @@
 								{tr}Global default{/tr} {$prefs.scaleSizeGalleries}x{$prefs.scaleSizeGalleries} ({tr}Bounding box{/tr})
 								<input type="radio" name="defaultscale" value="{$prefs.scaleSizeGalleries}" {if $defaultscale==$prefs.scaleSizeGalleries}checked="checked"{/if}>
 								{tr}default scale{/tr}<br>
-								{section  name=scales loop=$scaleinfo}
+								{section name=scales loop=$scaleinfo}
 									{if $scaleinfo[scales].scale ne $prefs.scaleSizeGalleries}
 										{tr}Remove:{/tr}<input type="checkbox" name="removescale_{$scaleinfo[scales].scale|escape}">
 										{$scaleinfo[scales].scale}x{$scaleinfo[scales].scale} ({tr}Bounding box{/tr})
@@ -182,7 +182,7 @@
 		</div>
 	{/if}
 
-    <div class="table-responsive">
+	<div class="table-responsive">
 	<table class="table normal">
 		<tr>
 			{if $prefs.gal_list_name eq 'y'}
@@ -280,7 +280,7 @@
 									{/if}
 								{/if}
 							{/if}
-							{if ($tiki_p_admin eq 'y') or  ($galleries[changes].perms.tiki_p_assign_perm_image_gallery eq 'y' )}
+							{if ($tiki_p_admin eq 'y') or ($galleries[changes].perms.tiki_p_assign_perm_image_gallery eq 'y' )}
 								{permission_link mode=icon type="image gallery" permType="image galleries" id=$galleries[changes].galleryId title=$galleries[changes].name}
 							{/if}
 							{if $tiki_p_admin_galleries eq 'y' or ($user and $galleries[changes].user eq $user)}
@@ -296,7 +296,7 @@
 			{norecords _colspan=9}
 		{/section}
 	</table>
-    </div>
+	</div>
 	{if $prefs.feature_maps eq 'y'}{$map_error}{/if}
 	{pagination_links cant=$cant step=$maxRecords offset=$offset}{/pagination_links}
 </div>

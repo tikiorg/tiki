@@ -56,7 +56,7 @@
 	<fieldset>
 		<p>{tr}Select language to translate to:{/tr}
 			<select name="lang" id="language_list" size="1">
-			   <option value="unspecified">{tr}Unspecified{/tr}</option>
+				<option value="unspecified">{tr}Unspecified{/tr}</option>
 				{section name=ix loop=$languages}
 				<option value="{$languages[ix].value|escape}"{if $default_target_lang eq $languages[ix].value} selected="selected"{/if}>{$languages[ix].name|escape}</option>
 				{/section}
@@ -78,40 +78,40 @@
 </form>
 {/if}
 {if !isset($articles)}
-{jq notonready=true}
-{literal}
-// Make the translation name have the focus.
-window.onload = function()
-{
-document.getElementById("translation_name").focus();
-}
+	{jq notonready=true}
+		{literal}
+		// Make the translation name have the focus.
+		window.onload = function()
+		{
+			document.getElementById("translation_name").focus();
+		}
 
-function validate_translation_request() {
-   var success = true;
-   var language_of_translation = $("#language_list").val();
+		function validate_translation_request() {
+			var success = true;
+			var language_of_translation = $("#language_list").val();
 
-   if (language_of_translation == "unspecified") {
-{/literal}
-      var message = {tr}"You forgot to specify the language of the translation. Please choose a language in the picklist."{/tr};
-{literal}
-      alert(message);
-      success = false;
-   } else {
-      var page_list = $("#existing-page-src");
-	  var page_name = $('#translation_name').val();
-      var matching_options = $('#existing-page-src option[value="' + page_name + '"]').attr( 'selected', true );
+			if (language_of_translation == "unspecified") {
+		{/literal}
+				var message = {tr}"You forgot to specify the language of the translation. Please choose a language in the picklist."{/tr};
+		{literal}
+				alert(message);
+				success = false;
+			} else {
+				var page_list = $("#existing-page-src");
+				var page_name = $('#translation_name').val();
+				var matching_options = $('#existing-page-src option[value="' + page_name + '"]').attr( 'selected', true );
 
-	  if( matching_options.length > 0 ) {
-          var message = {tr}"The page already exists. It was selected in the list below."{/tr};
-          alert( message );
+				if( matching_options.length > 0 ) {
+					var message = {tr}"The page already exists. It was selected in the list below."{/tr};
+					alert( message );
 
-          success = false;
-	  }
-   }
-   return success;
-}
-{/literal}
-{/jq}
+					success = false;
+				}
+			}
+			return success;
+		}
+		{/literal}
+	{/jq}
 {/if}
 
 <hr>
@@ -154,19 +154,20 @@ function validate_translation_request() {
 		</div>
 	</form>
 {/if}
+
 {jq}
-$('a.attach_detach_translation').click(function() {
-    var object_type = $(this).data('object_type');
-    var object_to_translate = $(this).data('object_id');
-    $(this).serviceDialog({
-        title: '{tr}Manage translations{/tr}',
-        data: {
-        controller: 'translation',
-        action: 'manage',
-        type: object_type,
-        source: object_to_translate
-        }
-    });
-    return false;
-});
+	$('a.attach_detach_translation').click(function() {
+		var object_type = $(this).data('object_type');
+		var object_to_translate = $(this).data('object_id');
+		$(this).serviceDialog({
+			title: '{tr}Manage translations{/tr}',
+			data: {
+			controller: 'translation',
+			action: 'manage',
+			type: object_type,
+			source: object_to_translate
+			}
+		});
+		return false;
+	});
 {/jq}

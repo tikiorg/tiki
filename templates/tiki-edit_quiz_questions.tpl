@@ -82,40 +82,40 @@
 {include file='find.tpl'}
 
 <div class="table-responsive">
-<table class="table normal">
-	<tr>
-		<th>
-			<a href="tiki-edit_quiz_questions.php?quizId={$quizId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'questionId_desc'}questionId_asc{else}questionId_desc{/if}">{tr}ID{/tr}</a>
-		</th>
-		<th>
-			<a href="tiki-edit_quiz_questions.php?quizId={$quizId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'position_desc'}position_asc{else}position_desc{/if}">{tr}Position{/tr}</a>
-		</th>
-		<th>
-			<a href="tiki-edit_quiz_questions.php?quizId={$quizId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'question_desc'}question_asc{else}question_desc{/if}">{tr}Question{/tr}</a>
-		</th>
-
-		<th>{tr}Options{/tr}</th>
-		<th>{tr}maxScore{/tr}</th>
-		<th>{tr}Action{/tr}</th>
-	</tr>
-
-	{section name=user loop=$channels}
+	<table class="table normal">
 		<tr>
-			<td class="id">{$channels[user].questionId}</td>
-			<td class="id">{$channels[user].position}</td>
-			<td class="text">{$channels[user].question|escape}</td>
-			<td class="integer">{$channels[user].options}</td>
-			<td class="integer">{$channels[user].maxPoints}</td>
-			<td class="action">
-				<a class="link" href="tiki-edit_quiz_questions.php?quizId={$quizId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;questionId={$channels[user].questionId}">{icon _id='page_edit' alt="{tr}Edit{/tr}"}</a>
-				<a class="link" href="tiki-edit_question_options.php?quizId={$quizId}&amp;questionId={$channels[user].questionId}">{icon _id='bricks' alt="{tr}Options{/tr}"}</a>
-				<a class="link" href="tiki-edit_quiz_questions.php?quizId={$quizId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].questionId}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
-			</td>
+			<th>
+				<a href="tiki-edit_quiz_questions.php?quizId={$quizId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'questionId_desc'}questionId_asc{else}questionId_desc{/if}">{tr}ID{/tr}</a>
+			</th>
+			<th>
+				<a href="tiki-edit_quiz_questions.php?quizId={$quizId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'position_desc'}position_asc{else}position_desc{/if}">{tr}Position{/tr}</a>
+			</th>
+			<th>
+				<a href="tiki-edit_quiz_questions.php?quizId={$quizId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'question_desc'}question_asc{else}question_desc{/if}">{tr}Question{/tr}</a>
+			</th>
+
+			<th>{tr}Options{/tr}</th>
+			<th>{tr}maxScore{/tr}</th>
+			<th>{tr}Action{/tr}</th>
 		</tr>
-	{sectionelse}
-		{norecords _colspan=6}
-	{/section}
-</table>
+
+		{section name=user loop=$channels}
+			<tr>
+				<td class="id">{$channels[user].questionId}</td>
+				<td class="id">{$channels[user].position}</td>
+				<td class="text">{$channels[user].question|escape}</td>
+				<td class="integer">{$channels[user].options}</td>
+				<td class="integer">{$channels[user].maxPoints}</td>
+				<td class="action">
+					<a class="link" href="tiki-edit_quiz_questions.php?quizId={$quizId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;questionId={$channels[user].questionId}">{icon _id='page_edit' alt="{tr}Edit{/tr}"}</a>
+					<a class="link" href="tiki-edit_question_options.php?quizId={$quizId}&amp;questionId={$channels[user].questionId}">{icon _id='bricks' alt="{tr}Options{/tr}"}</a>
+					<a class="link" href="tiki-edit_quiz_questions.php?quizId={$quizId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].questionId}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
+				</td>
+			</tr>
+		{sectionelse}
+			{norecords _colspan=6}
+		{/section}
+	</table>
 </div>
 
 {pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}

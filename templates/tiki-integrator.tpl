@@ -1,7 +1,7 @@
 {* $Id$ *}
 
 <div class="integrated-page">
-  {$data}
+	{$data}
 </div>
 
 <hr>
@@ -20,9 +20,9 @@
 	{* Show config buttons only for admins *}
 	{if $tiki_p_admin eq 'y' or $tiki_p_admin_integrator eq 'y'}
 		{assign var=thisfile value=$file|escape}
-        <div class="btn-group">
-		    {button href="tiki-admin_integrator_rules.php?repID=$thisrepID&amp;file=$thisfile" class="btn btn-default" _text="{tr}configure rules{/tr}"}
-		    {button href="tiki-admin_integrator.php?action=edit&amp;repID=$thisrepID" class="btn btn-default" _text="{tr}Edit Repository{/tr}"}
-        </div>
+		<div class="btn-group">
+			{button href="tiki-admin_integrator_rules.php?repID=$thisrepID&amp;file=$thisfile" class="btn btn-default" _text="{tr}configure rules{/tr}"}
+			{button href="tiki-admin_integrator.php?action=edit&amp;repID=$thisrepID" class="btn btn-default" _text="{tr}Edit Repository{/tr}"}
+		</div>
 	{/if}
 </div>

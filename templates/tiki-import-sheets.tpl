@@ -2,7 +2,7 @@
 {title help="Spreadsheet"}{$title}{/title}
 
 <div>
-  {$description|escape}
+	{$description|escape}
 </div>
 
 <div class="t_navbar form-group">
@@ -32,26 +32,26 @@
 </div>
 
 {if $page_mode eq 'submit'}
-{$grid_content}
+	{$grid_content}
 
 {else}
 	<form method="post" action="tiki-import_sheet.php?mode=import&sheetId={$sheetId}" enctype="multipart/form-data">
 		<h2>{tr}Import From File{/tr}</h2>
 		{tr}Format:{/tr}
 		<select name="handler">
-		{section name=key loop=$handlers}
-			<option value="{$handlers[key].class}">{$handlers[key].name} V. {$handlers[key].version}</option>
-		{/section}
+			{section name=key loop=$handlers}
+				<option value="{$handlers[key].class}">{$handlers[key].name} V. {$handlers[key].version}</option>
+			{/section}
 		</select>
 		{tr}Charset encoding:{/tr}
 		<select name="encoding">
 			<!--<option value="">{tr}Autodetect{/tr}</option>-->
-		{section name=key loop=$charsets}
-			<option value="{$charsets[key]}">{$charsets[key]}</option>
-		{/section}
+			{section name=key loop=$charsets}
+				<option value="{$charsets[key]}">{$charsets[key]}</option>
+			{/section}
 		</select>
-    <br>
-    <br>
+		<br>
+		<br>
 		<input type="file" name="file">
 		<input type="submit" class="btn btn-default btn-sm" value="{tr}Import{/tr}">
 	</form>
@@ -63,7 +63,7 @@
 	</form>
 	{if $prefs.javascript_enabled eq 'y' and $prefs.feature_jquery_autocomplete eq 'y'}
 		{jq}
-		   $("#querypage").tiki("autocomplete", "pagename");
+			$("#querypage").tiki("autocomplete", "pagename");
 		{/jq}
 	{/if}
 {/if}

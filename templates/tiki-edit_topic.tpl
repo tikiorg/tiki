@@ -16,8 +16,8 @@
 				<strong>{tr}Name{/tr}</strong>
 			</td>
 			<td>
-			  <input type="hidden" name="topicid" value="{$topic_info.topicId}">
-			  <input type="text" class="form-control" name="name" value="{$topic_info.name|escape}">
+				<input type="hidden" name="topicid" value="{$topic_info.topicId}">
+				<input type="text" class="form-control" name="name" value="{$topic_info.name|escape}">
 			</td>
 		</tr>
 		<tr>
@@ -25,8 +25,8 @@
 				<strong>{tr}Image{/tr}</strong>
 			</td>
 			<td>
-			  <input type="hidden" name="MAX_FILE_SIZE" value="1000000">
-			  <input name="userfile1" class="form-control" type="file">
+				<input type="hidden" name="MAX_FILE_SIZE" value="1000000">
+				<input name="userfile1" class="form-control" type="file">
 			</td>
 		</tr>
 		<tr>
