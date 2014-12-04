@@ -72,7 +72,7 @@
 </form>
 <a name="import"></a>
 <h2>{tr}Import CSV file{/tr}</h2>
-<form  enctype="multipart/form-data"  action="tiki-minical_prefs.php" method="post">
+<form enctype="multipart/form-data" action="tiki-minical_prefs.php" method="post">
 	<table class="formcolor">
 		<tr>
 			<td>{tr}Upload file:{/tr}</td>
@@ -84,7 +84,7 @@
 </form>
 
 <h2>{tr}Admin Topics{/tr}</h2>
-<form  enctype="multipart/form-data"  action="tiki-minical_prefs.php" method="post">
+<form enctype="multipart/form-data" action="tiki-minical_prefs.php" method="post">
 	<table class="formcolor">
 		<tr>
 			<td>{tr}Name:{/tr}</td><td><input type="text" name="name"></td>
@@ -135,6 +135,7 @@
 						</tr>
 					{/if}
 				{/section}
-		</table>
-	</div></div>
+			</table>
+		</div>
+	</div>
 {/if}

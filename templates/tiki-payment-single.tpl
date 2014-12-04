@@ -195,31 +195,31 @@
 					<legend style="font-style: italic; padding-top: 20px; margin-bottom: 5px">{tr}Pay With Tiki Credits{/tr}</legend>
 					<form action="{query _type='relative'}" method="post">
 						{tr}Pay with Tiki User Credits:{/tr}
-                        <div class="table-responsive">
-						<table class="table normal">
-							<tr>
-								<th>{tr}Credit type{/tr}</th>
-								<th>{tr}Credits left{/tr}</th>
-								<th>{tr}Amount to pay{/tr}</th>
-								<th>{tr}Pay using{/tr}</th>
-							</tr>
-							{foreach key=id item=data from=$userpaycredits}
-							<tr>
-								<td class="text">{$data.display_text|escape}</td>
-								<td class="text">{$data.remain|escape}</td>
-								<td class="integer">{$data.price|escape}</td>
-								<td class="text"><input type="radio" name="tiki_credit_type" value="{$id|escape}" {if !$data.enough}disabled="disabled"{/if} /></td>
-							</tr>
-							{/foreach}
-							<tr>
-								<td colspan="4">
-									<input type="hidden" name="invoice" value="{$payment_info.paymentRequestId|escape}">
-									<input type="hidden" name="tiki_credit_amount" value="{$payment_info.amount_remaining|escape}">
-									<input type="submit" class="btn btn-default btn-sm" name="tiki_credit_pay" value="{tr}Pay with Tiki User Credits{/tr}">
-								</td>
-							</tr>
-						</table>
-                        </div>
+						<div class="table-responsive">
+							<table class="table normal">
+								<tr>
+									<th>{tr}Credit type{/tr}</th>
+									<th>{tr}Credits left{/tr}</th>
+									<th>{tr}Amount to pay{/tr}</th>
+									<th>{tr}Pay using{/tr}</th>
+								</tr>
+								{foreach key=id item=data from=$userpaycredits}
+								<tr>
+									<td class="text">{$data.display_text|escape}</td>
+									<td class="text">{$data.remain|escape}</td>
+									<td class="integer">{$data.price|escape}</td>
+									<td class="text"><input type="radio" name="tiki_credit_type" value="{$id|escape}" {if !$data.enough}disabled="disabled"{/if} /></td>
+								</tr>
+								{/foreach}
+								<tr>
+									<td colspan="4">
+										<input type="hidden" name="invoice" value="{$payment_info.paymentRequestId|escape}">
+										<input type="hidden" name="tiki_credit_amount" value="{$payment_info.amount_remaining|escape}">
+										<input type="submit" class="btn btn-default btn-sm" name="tiki_credit_pay" value="{tr}Pay with Tiki User Credits{/tr}">
+									</td>
+								</tr>
+							</table>
+						</div>
 					</form>
 				{/if}
 			</fieldset>
@@ -265,7 +265,7 @@
 						<p>
 							<label for="payment-note" style="font-style: italic">{tr}Note{/tr}</label>
 							<textarea id="payment-note" name="note" style="width: 98%;" rows="6"></textarea>
-                        </p>
+						</p>
 						<p>
 							<input type="hidden" name="returnurl" value="{$payment_info.returnurl|escape}">
 							<input type="submit" class="btn btn-default btn-sm" value="{tr}Enter payment{/tr}">
@@ -275,5 +275,5 @@
 				</form>
 			{/permission}
 		{/if}
-    </fieldset>
+	</fieldset>
 </div>

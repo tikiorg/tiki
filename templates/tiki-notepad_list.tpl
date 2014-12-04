@@ -16,62 +16,62 @@
 {if count($channels) > 0 or $find ne ''}
 	{include file='find.tpl'}
 	<form action="tiki-notepad_list.php" method="post">
-        <div class="table-responsive">
-		<table class="table normal">
-			<tr>
-				<th style="text-align:center;">
-					<input type="submit" class="btn btn-default btn-sm" name="delete" value="{tr}x{/tr} ">
-				</th>
-				<th>
-					<a href="tiki-notepad_list.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}Name{/tr}</a>
-				</th>
-				<th>
-					<a href="tiki-notepad_list.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'parse_mode_desc'}parse_mode_asc{else}parse_mode_desc{/if}">{tr}Type{/tr}</a>
-				</th>
-				<th>
-					<a href="tiki-notepad_list.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}">{tr}Created{/tr}</a>
-				</th>
-				<th>
-					<a href="tiki-notepad_list.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'lastModif_desc'}lastModif_asc{else}lastModif_desc{/if}">{tr}Last Modified{/tr}</a>
-				</th>
-				<th style="text-align:right;">
-					<a href="tiki-notepad_list.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'size_desc'}size_asc{else}size_desc{/if}">{tr}Size{/tr}</a>
-				</th>
-				<th style="text-align:center;">{tr}Actions{/tr}</th>
-			</tr>
+		<div class="table-responsive">
+			<table class="table normal">
+				<tr>
+					<th style="text-align:center;">
+						<input type="submit" class="btn btn-default btn-sm" name="delete" value="{tr}x{/tr} ">
+					</th>
+					<th>
+						<a href="tiki-notepad_list.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}Name{/tr}</a>
+					</th>
+					<th>
+						<a href="tiki-notepad_list.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'parse_mode_desc'}parse_mode_asc{else}parse_mode_desc{/if}">{tr}Type{/tr}</a>
+					</th>
+					<th>
+						<a href="tiki-notepad_list.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}">{tr}Created{/tr}</a>
+					</th>
+					<th>
+						<a href="tiki-notepad_list.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'lastModif_desc'}lastModif_asc{else}lastModif_desc{/if}">{tr}Last Modified{/tr}</a>
+					</th>
+					<th style="text-align:right;">
+						<a href="tiki-notepad_list.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'size_desc'}size_asc{else}size_desc{/if}">{tr}Size{/tr}</a>
+					</th>
+					<th style="text-align:center;">{tr}Actions{/tr}</th>
+				</tr>
 
-			{section name=user loop=$channels}
+				{section name=user loop=$channels}
+					<tr>
+						<td class="id">
+							<input type="checkbox" name="note[{$channels[user].noteId}]">
+						</td>
+						<td class="text">
+							<a class="link" href="tiki-notepad_read.php?noteId={$channels[user].noteId}">{$channels[user].name|escape}</a>
+						</td>
+						<td class="text">{$channels[user].parse_mode}</td>
+						<td class="date">{$channels[user].created|tiki_short_datetime}</td>
+						<td class="date">{$channels[user].lastModif|tiki_short_datetime}</td>
+						<td class="integer">{$channels[user].size|kbsize}</td>
+						<td class="action">
+							<a href="tiki-notepad_get.php?noteId={$channels[user].noteId}" class="link">{icon _id='magnifier' alt="{tr}View{/tr}"}</a>
+							<a href="tiki-notepad_write.php?noteId={$channels[user].noteId}" class="link">{icon _id='page_edit'}</a>
+							<a href="tiki-notepad_get.php?noteId={$channels[user].noteId}&amp;save=1" class="link">{icon _id='disk' alt="{tr}Save{/tr}"}</a>
+							<a style="margin-left:10px;" class="link" href="tiki-notepad_read.php?noteId={$channels[user].noteId}&amp;remove=1">{icon _id='cross' alt="{tr}Delete{/tr}"}</a>
+						</td>
+					</tr>
+				{sectionelse}
+					<tr>
+						<td colspan="4">{tr}No notes yet{/tr}</td>
+					</tr>
+				{/section}
 				<tr>
-					<td class="id">
-						<input type="checkbox" name="note[{$channels[user].noteId}]">
-					</td>
-					<td class="text">
-						<a class="link" href="tiki-notepad_read.php?noteId={$channels[user].noteId}">{$channels[user].name|escape}</a>
-					</td>
-					<td class="text">{$channels[user].parse_mode}</td>
-					<td class="date">{$channels[user].created|tiki_short_datetime}</td>
-					<td class="date">{$channels[user].lastModif|tiki_short_datetime}</td>
-					<td class="integer">{$channels[user].size|kbsize}</td>
-					<td class="action">
-						<a href="tiki-notepad_get.php?noteId={$channels[user].noteId}" class="link">{icon _id='magnifier' alt="{tr}View{/tr}"}</a>
-						<a href="tiki-notepad_write.php?noteId={$channels[user].noteId}" class="link">{icon _id='page_edit'}</a>
-						<a href="tiki-notepad_get.php?noteId={$channels[user].noteId}&amp;save=1" class="link">{icon _id='disk' alt="{tr}Save{/tr}"}</a>
-						<a style="margin-left:10px;" class="link" href="tiki-notepad_read.php?noteId={$channels[user].noteId}&amp;remove=1">{icon _id='cross' alt="{tr}Delete{/tr}"}</a>
+					<td colspan="4">
+						<input type="submit" class="btn btn-default btn-sm" name="merge" value="{tr}Merge selected notes into{/tr}">
+						<input type="text" name="merge_name" size="20">
 					</td>
 				</tr>
-			{sectionelse}
-				<tr>
-					<td colspan="4">{tr}No notes yet{/tr}</td>
-				</tr>
-			{/section}
-			<tr>
-				<td colspan="4">
-					<input type="submit" class="btn btn-default btn-sm" name="merge" value="{tr}Merge selected notes into{/tr}">
-					<input type="text" name="merge_name" size="20">
-				</td>
-			</tr>
-		</table>
-        </div>
+			</table>
+		</div>
 	</form>
 
 	{pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}
