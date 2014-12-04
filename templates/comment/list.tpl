@@ -29,7 +29,7 @@
 					<a class="btn btn-primary custom-handling" href="{service controller=comment action=post type=$type objectId=$objectId}" data-target="#add-comment-zone-{$objectId|replace:' ':''}">{tr}Post new comment{/tr}</a>
 				</div>
 		</div>
-		<div id="add-comment-zone-{$objectId|replace:' ':''}">
+		<div id="add-comment-zone-{$objectId|replace:' ':''}" class="comment-form">
 		</div>
 	{/if}
 
