@@ -174,46 +174,46 @@
 	{if $channels or $find ne ''}
 		{include file='find.tpl'}
 	{/if}
-    <div class="table-responsive">
-	<table class="table normal">
-		<tr>
-			<th>
-				<a href="tiki-received_articles.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'receivedArticleId_desc'}receivedArticleId_asc{else}receivedArticleId_desc{/if}">{tr}ID{/tr}</a>
-			</th>
-			<th>
-				<a href="tiki-received_articles.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'title_desc'}title_asc{else}title_desc{/if}">{tr}Title{/tr}</a>
-			</th>
-			<th>
-				<a href="tiki-received_articles.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'receivedDate_desc'}receivedDate_asc{else}receivedDate_desc{/if}">{tr}Date{/tr}</a>
-			</th>
-			<th>
-				<a href="tiki-received_articles.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'receivedFromSite_desc'}receivedFromSite_asc{else}receivedFromSite_desc{/if}">{tr}Site{/tr}</a>
-			</th>
-			<th>
-				<a href="tiki-received_articles.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'receivedFromUser_desc'}receivedFromUser_asc{else}receivedFromUser_desc{/if}">{tr}User{/tr}</a>
-			</th>
-			<th>{tr}Action{/tr}</th>
-		</tr>
-
-		{section name=user loop=$channels}
+	<div class="table-responsive">
+		<table class="table normal">
 			<tr>
-				<td class="id">{$channels[user].receivedArticleId}</td>
-				<td class="text">{$channels[user].title|escape}
-					{if $channels[user].type eq 'Review'}(r){/if}
-				</td>
-				<td class="date">{$channels[user].receivedDate|tiki_short_datetime}</td>
-				<td class="text">{$channels[user].receivedFromSite}</td>
-				<td class="text">{$channels[user].receivedFromUser|escape}</td>
-				<td class="action">
-					<a class="link" href="tiki-received_articles.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;receivedArticleId={$channels[user].receivedArticleId}">{icon _id='page_edit'}</a>
-					&nbsp;
-					<a class="link" href="tiki-received_articles.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].receivedArticleId}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
-				</td>
+				<th>
+					<a href="tiki-received_articles.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'receivedArticleId_desc'}receivedArticleId_asc{else}receivedArticleId_desc{/if}">{tr}ID{/tr}</a>
+				</th>
+				<th>
+					<a href="tiki-received_articles.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'title_desc'}title_asc{else}title_desc{/if}">{tr}Title{/tr}</a>
+				</th>
+				<th>
+					<a href="tiki-received_articles.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'receivedDate_desc'}receivedDate_asc{else}receivedDate_desc{/if}">{tr}Date{/tr}</a>
+				</th>
+				<th>
+					<a href="tiki-received_articles.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'receivedFromSite_desc'}receivedFromSite_asc{else}receivedFromSite_desc{/if}">{tr}Site{/tr}</a>
+				</th>
+				<th>
+					<a href="tiki-received_articles.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'receivedFromUser_desc'}receivedFromUser_asc{else}receivedFromUser_desc{/if}">{tr}User{/tr}</a>
+				</th>
+				<th>{tr}Action{/tr}</th>
 			</tr>
-		{sectionelse}
-			{norecords _colspan=6}
-		{/section}
-	</table>
-    </div>
+
+			{section name=user loop=$channels}
+				<tr>
+					<td class="id">{$channels[user].receivedArticleId}</td>
+					<td class="text">{$channels[user].title|escape}
+						{if $channels[user].type eq 'Review'}(r){/if}
+					</td>
+					<td class="date">{$channels[user].receivedDate|tiki_short_datetime}</td>
+					<td class="text">{$channels[user].receivedFromSite}</td>
+					<td class="text">{$channels[user].receivedFromUser|escape}</td>
+					<td class="action">
+						<a class="link" href="tiki-received_articles.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;receivedArticleId={$channels[user].receivedArticleId}">{icon _id='page_edit'}</a>
+						&nbsp;
+						<a class="link" href="tiki-received_articles.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].receivedArticleId}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
+					</td>
+				</tr>
+			{sectionelse}
+				{norecords _colspan=6}
+			{/section}
+		</table>
+	</div>
 	{pagination_links cant=$cant step=$maxRecords offset=$offset}{/pagination_links}
 </div>
