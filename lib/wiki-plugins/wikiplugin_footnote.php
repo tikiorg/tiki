@@ -23,6 +23,13 @@ function wikiplugin_footnote_info()
 				'default' => '',
 				'filter' => 'int',
 			),
+			'class' => array(
+				'required' => false,
+				'name' => tra('Class'),
+				'description' => tra('Add class to footnotearea'),
+				'default' => '',
+				'filter' => 'text',
+			),
 		)
 	);
 }
@@ -32,20 +39,26 @@ function wikiplugin_footnote($data, $params)
 	if (! isset($GLOBALS['footnoteCount'])) {
 		$GLOBALS['footnoteCount'] = 0;
 		$GLOBALS['footnotesData'] = array();
+        $GLOBALS['footnotesClass'] = array();
 	}
 
 	if (! empty($data)) {
 		$data = trim($data);
 		if (! isset($GLOBALS['footnotesData'][$data])) {
-			$GLOBALS['footnotesData'][$data] = ++$GLOBALS['footnoteCount'];
-		}
+            $GLOBALS['footnoteCount']++;
+			$GLOBALS['footnotesData'][$GLOBALS['footnoteCount']] = $data;
+		    $GLOBALS['footnotesClass'][$GLOBALS['footnoteCount']] = $params["class"];
+        
+        }
 
-		$number = $GLOBALS['footnotesData'][$data];
+		$number = $GLOBALS['footnoteCount'];
 	} elseif (isset($params['sameas'])) {
 		$number = $params['sameas'];
 	}
-
-	$html = '{SUP()}~np~' . "<a id=\"ref_footnote$number\" href=\"#footnote$number\">$number</a>" . '~/np~{SUP}';
+    if (isset($params["class"])){
+    $class= ' class="'.$params["class"].'"';
+    }
+	$html = '{SUP()}~np~' . "<a id=\"ref_footnote$number\" href=\"#footnote$number\"$class>$number</a>" . '~/np~{SUP}';
 
 	return $html;
 }

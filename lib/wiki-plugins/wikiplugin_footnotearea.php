@@ -24,8 +24,12 @@ function wikiplugin_footnotearea($data, $params)
 	$html = '<div class="footnotearea">';
 	$html .= '<hr />';
 
-	foreach ($GLOBALS["footnotesData"] as $data => $number) {
-		$html .= '<div class="onefootnote" id="footnote' . $number . '">';
+	foreach ($GLOBALS["footnotesData"] as $number => $data) {
+        $class = "onefootnote";
+        if (isset($GLOBALS["footnotesClass"][$number])){
+            $class .= " ".$GLOBALS["footnotesClass"][$number];
+        }
+		$html .= '<div class="'.$class.'" id="footnote' . $number . '">';
 		$html .= '<a href="#ref_footnote' . $number . '">'. $number . '.</a> ';
 		$html .= '~/np~' . $data . '~np~';
 		$html .= '</div>';
