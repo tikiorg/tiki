@@ -2776,9 +2776,13 @@ body.tiki.navbar-padding {
   max-width: inherit;
 }
 @media (min-width: 992px) {
+  .tiki .col-md-3 .table-responsive,
+  .tiki .col-md-4 .table-responsive,
+  .tiki .col-md-5 .table-responsive,
+  .tiki .col-md-6 .table-responsive,
+  .tiki .col-md-7 .table-responsive,
   .tiki .col-md-8 .table-responsive,
-  .tiki .col-md-9 .table-responsive,
-  .tiki .col-md-3 .table-responsive {
+  .tiki .col-md-9 .table-responsive {
     width: 100%;
     margin-bottom: 15px;
     overflow-y: hidden;
@@ -2970,3 +2974,4 @@ input.tablesorter-filter {
   border: none;
   background-color: #f7f7f7;
 }
+/* End of file */
