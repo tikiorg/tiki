@@ -398,7 +398,11 @@ class Comments extends TikiLib
 				if ($body) {
 					// on some systems HTMLPurifier fails with smart quotes in the html
 					$body = $mimelib->cleanQuotes($body);
-					// Clean the string using HTML Purifier first
+
+					// some emails have invalid font and span tags that create incorrect purifying of lists
+					$body = preg_replace_callback('/\<(ul|ol).*\>(.*)\<\/(ul|ol)\>/Umis', array($this, 'process_inbound_mail_cleanlists'), $body);
+
+					// Clean the string using HTML Purifier next
 					$body = HTMLPurifier($body);
 
 					// html emails require some speciaal handling
@@ -596,6 +600,17 @@ class Comments extends TikiLib
 		$pop3->disconnect();
 	}
 
+	/** Removes font and span tags from lists - should be only ones outside <li> elements but this currently removes all TODO?
+	 * @param $matches array from preg_replace_callback
+	 * @return string html list definition
+	 */
+	private function process_inbound_mail_cleanlists($matches)
+	{
+		return '<' . $matches[1] . '>' .
+				preg_replace('/\<\/?(?:font|span)[^>]*\>/Umis', '', $matches[2]) .
+				'</' . $matches[3] . '>';
+	}
+	
 	/* queue management */
 	function replace_queue($qId, $forumId, $object, $parentId, $user, $title, $data, $type = 'n', $topic_smiley = '', $summary = '',
 			$topic_title = '', $in_reply_to = '', $anonymous_name='', $tags='', $email=''
