@@ -181,6 +181,10 @@ class Table_Code_MainOptions extends Table_Code_Manager
 			}
 		}
 
+		//popover
+		$p[] = $this->nt3 . '$(document).tiki_popover();';
+		$mo[] = $this->iterate($p, 'initialized: function(table){', $this->nt2 . '}', '', '', '');
+
 		//Sort image attribute
 		if (!empty(parent::$s['sorts']['imgattr'])) {
 			$mo[] = 'imgAttr: \'title\'';
