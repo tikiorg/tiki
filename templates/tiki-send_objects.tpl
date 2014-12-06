@@ -35,12 +35,14 @@
 				{tr}Send Wiki Pages{/tr}
 			</div>
 			<div class="panel-body">
-				<div class="panel panel-default"><div class="panel-body">
-					<b>{tr}Pages{/tr}</b>:
-					{section name=ix loop=$sendpages}
-						{$sendpages[ix]}&nbsp;
-					{/section}
-				</div></div>
+				<div class="panel panel-default">
+					<div class="panel-body">
+						<b>{tr}Pages{/tr}</b>:
+						{section name=ix loop=$sendpages}
+							{$sendpages[ix]}&nbsp;
+						{/section}
+					</div>
+				</div>
 				<select name="pageName">
 					{section name=ix loop=$pages}
 						<option value="{$pages[ix].pageName|escape}">{$pages[ix].pageName|escape}</option>
@@ -51,28 +53,29 @@
 			</div>
 		</div>
 
-	<br>
-	<br>
+		<br>
+		<br>
 
 		{if count($structures)}
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					{tr}Send a structure{/tr}
 				</div>
-					<div class="panel panel-default"><div class="panel-body">
+				<div class="panel panel-default">
+					<div class="panel-body">
 						<b>{tr}Structures{/tr}</b>:
 						{section name=ix loop=$sendstructures_names}
 							{$sendstructures_names[ix]}&nbsp;
 						{/section}
-					</div></div>
-					<select name="structure">
-						{foreach item=struct from=$structures}
-							<option value="{$struct.page_ref_id|escape}">{$struct.pageName|escape}{if $struct.page_alias} (alias: {$struct.page_alias}){/if}</option>
-						{/foreach}
-					</select>
-					<input type="submit" class="btn btn-default btn-sm" name="addstructure" value="{tr}Add Structure{/tr}">
-					<input type="submit" class="btn btn-default btn-sm" name="clearstructures" value="{tr}Clear{/tr}">
+					</div>
 				</div>
+				<select name="structure">
+					{foreach item=struct from=$structures}
+						<option value="{$struct.page_ref_id|escape}">{$struct.pageName|escape}{if $struct.page_alias} (alias: {$struct.page_alias}){/if}</option>
+					{/foreach}
+				</select>
+				<input type="submit" class="btn btn-default btn-sm" name="addstructure" value="{tr}Add Structure{/tr}">
+				<input type="submit" class="btn btn-default btn-sm" name="clearstructures" value="{tr}Clear{/tr}">
 			</div>
 		{/if}
 	{/if}
@@ -86,21 +89,20 @@
 				{tr}Send Articles{/tr}
 			</div>
 			<div class="panel panel-default">
-                <div class="panel-body">
-				    <b>{tr}Articles{/tr}</b>:
-				    {section name=ix loop=$sendarticles}
-				    {$sendarticles[ix]}&nbsp;
+				<div class="panel-body">
+					<b>{tr}Articles{/tr}</b>:
+					{section name=ix loop=$sendarticles}
+						{$sendarticles[ix]}&nbsp;
 					{/section}
 				</div>
-            </div>
-				<select name="articleId">
-					{section name=ix loop=$articles}
-						<option value="{$articles[ix].articleId|escape}">{$articles[ix].articleId}: {$articles[ix].title|escape}</option>
-					{/section}
-				</select>
-				<input type="submit" class="btn btn-default btn-sm" name="addarticle" value="{tr}Add Article{/tr}">
-				<input type="submit" class="btn btn-default btn-sm" name="cleararticles" value="{tr}Clear{/tr}">
 			</div>
+			<select name="articleId">
+				{section name=ix loop=$articles}
+					<option value="{$articles[ix].articleId|escape}">{$articles[ix].articleId}: {$articles[ix].title|escape}</option>
+				{/section}
+			</select>
+			<input type="submit" class="btn btn-default btn-sm" name="addarticle" value="{tr}Add Article{/tr}">
+			<input type="submit" class="btn btn-default btn-sm" name="cleararticles" value="{tr}Clear{/tr}">
 		</div>
 	{/if}
 
