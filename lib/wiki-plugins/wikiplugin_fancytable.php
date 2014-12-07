@@ -125,7 +125,7 @@ function wikiplugin_fancytable($data, $params)
 
 	//Start the table
 	$style = $sort === true ? ' style="visibility:hidden"' : '';
-	$wret = '<div id="wpfancytable' . $iFancytable . '-div"' . $style . '>' . "\r\t";
+	$wret = '<div id="wpfancytable' . $iFancytable . '-div"' . $style . ' class="ts-wrapperdiv">' . "\r\t";
 	$wret .= '<table class="table table-striped table-hover normal" id="wpfancytable' . $iFancytable . '">' . "\r\t";
 
 	//Header

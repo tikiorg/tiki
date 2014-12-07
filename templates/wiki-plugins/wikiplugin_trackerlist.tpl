@@ -56,7 +56,7 @@
 {if isset($displaysheet) && $displaysheet eq 'true'}
 <div class='trackercontainer' style='height: 250px ! important;'>
 {/if}
-		<div id="wptrackerlist{$listTrackerId}-{$iTRACKERLIST}-div" {if $tsOn}style="visibility:hidden"{/if}>
+		<div id="wptrackerlist{$listTrackerId}-{$iTRACKERLIST}-div" {if $tsOn}style="visibility:hidden"{/if} class="ts-wrapperdiv">
 			<input type="hidden" {if $tsOn}id="{$ts_offsetid|escape}" {/if}name="offset" value="{$tr_offset{$iTRACKERLIST}}">
 			<input type="hidden" {if $tsOn}id="{$ts_countid|escape}" {/if}name="count" value="{$count_item}">
 			<div class="table-responsive">

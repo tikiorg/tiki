@@ -459,7 +459,7 @@
 			</div>
 		{/if}
 	{/if}
-	<div id="{$ts_tableid}-div" class="table-responsive" {if $tsOn}style="visibility:hidden;"{/if}>
+	<div id="{$ts_tableid}-div" class="table-responsive ts-wrapperdiv" {if $tsOn}style="visibility:hidden;"{/if}>
 		<table  id="{$ts_tableid}" class="table normal table-striped table-hover">
 			<input type="hidden" {if $tsOn}id="{$ts_offsetid|escape}" {/if}name="offset" value="{$comments_offset|escape}">
 			<input type="hidden" {if $tsOn}id="{$ts_countid|escape}" {/if}name="count" value="{$comments_cant}">

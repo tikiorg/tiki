@@ -44,6 +44,10 @@
     }
   }
 
+  &-header-inner span {
+	padding-right: 10px;
+  }
+
   &-header.sorter-false {
     background-image: none;
     cursor: default;
@@ -118,26 +122,50 @@
 }
 
 /*pager*/
-div.ts-pager {
-  height: 24px;
-  float: right;
-  clear: both;
-  div.btn-group {
-	margin-top: 2px;
-	button {
-	  padding-top: 2px;
-	  height: 24px;
-	}
-	span.selectlabels {
-	  margin-top: 2px;
-	  margin-right: 5px;
+div.ts-wrapperdiv {
+  select.form-control:not(.ts-selectexclude) {
+	width: auto;
+	display: inline;
+	option {
 	  font-size: smaller;
 	}
-	select.gotopage, select.pagesize {
+  }
+  select.form-control:not(.ts-selectexclude), input.form-control {
+	  font-size: smaller;
+	  height: 22px;
+  }
+  div.ts-pager {
+	margin-bottom: 15px;
+	height: 24px;
+	float: right;
+	clear: both;
+	div.btn-group {
 	  margin-top: 2px;
-	  option {
+	  span {
+		font-size: small;
+		padding-top: 2px;
+		height: 24px;
+		:not(.pagedisplay) {
+		  cursor: pointer;
+		}
+	  }
+	  span.first {
+	  margin-left: 3px;
+	  }
+	  span.disabled {
+		opacity: .5;
+	  }
+	  label.selectlabels {
+		margin-top: 2px;
+		margin-right: 5px;
 		font-size: smaller;
 	  }
+	  select.form-control {
+		margin-top: 2px;
+	  }
+	}
+	div.btn-group.middle {
+	  padding-top: 2px;
 	}
   }
 }

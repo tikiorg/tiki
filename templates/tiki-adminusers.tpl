@@ -146,7 +146,7 @@
 		{/if}
 
 	<form class="form-horizontal" name="checkform" method="post" action="{$smarty.server.PHP_SELF|escape}">
-		<div id="{$ts_tableid}-div" {if $tsOn}style="visibility:hidden;"{/if}>
+		<div id="{$ts_tableid}-div" {if $tsOn}style="visibility:hidden;"{/if} class="ts-wrapperdiv">
 			<div class="table-responsive user-table">
 				<table id="{$ts_tableid}" class="table normal table-striped table-hover">
 					{* Note: th element ids here need to match those at /lib/core/Table/Settings/TikiAdminusers.php
@@ -291,7 +291,7 @@
 				{if $users}
 					<div class="form-group" id="submit_mult">
 						<label>{tr}Perform action with checked{/tr}</label>
-						<select class="submit_mult" name="submit_mult">
+						<select class="submit_mult form-control ts-selectexclude" name="submit_mult">
 							<option value="" selected="selected">-</option>
 							<option value="remove_users" >{tr}Remove{/tr}</option>
 							{if $prefs.feature_banning == 'y'}
@@ -392,36 +392,36 @@
 							</div>
 						</div>
 					</div>
-	{jq}
-		$('select.submit_mult').change(function() {
-			if ($.inArray(this.value, ['assign_groups', 'set_default_groups', 'emailChecked']) > -1) {
-				$('div#submit_mult').hide();
-				$('.submit_mult').prop('disabled', true).trigger("chosen:updated");
-				$('button.cancel-choice').show();
-				if (this.value == 'assign_groups') {
-					$('div#gm').show();
-					$('.gm').prop('disabled', false).trigger("chosen:updated");
-				} else if (this.value == 'set_default_groups') {
-					$('div#dg').show();
-					$('.dg').prop('disabled', false).trigger("chosen:updated");
-				} else if (this.value == 'emailChecked') {
-					$('div#emc').show();
-					$('.emc').prop('disabled', false).trigger("chosen:updated");
-				}
-			} else if ($.inArray(this.value, ['ban_ips', 'remove_users', 'remove_users_and_ban', 'remove_users_with_page', 'remove_users_with_page_and_ban']) > -1) {
-				$('button.submit_mult').show();
+{jq}
+	$('select.submit_mult').change(function() {
+		if ($.inArray(this.value, ['assign_groups', 'set_default_groups', 'emailChecked']) > -1) {
+			$('div#submit_mult').hide();
+			$('.submit_mult').prop('disabled', true).trigger("chosen:updated");
+			$('button.cancel-choice').show();
+			if (this.value == 'assign_groups') {
+				$('div#gm').show();
+				$('.gm').prop('disabled', false).trigger("chosen:updated");
+			} else if (this.value == 'set_default_groups') {
+				$('div#dg').show();
+				$('.dg').prop('disabled', false).trigger("chosen:updated");
+			} else if (this.value == 'emailChecked') {
+				$('div#emc').show();
+				$('.emc').prop('disabled', false).trigger("chosen:updated");
 			}
-		});
+		} else if ($.inArray(this.value, ['ban_ips', 'remove_users', 'remove_users_and_ban', 'remove_users_with_page', 'remove_users_with_page_and_ban']) > -1) {
+			$('button.submit_mult').show();
+		}
+	});
 
-		$('button.cancel-choice').click(function() {
-			$('div#gm, div#dg, div#emc').hide();
-			$('.gm, dg, .emc').prop('disabled', true).trigger("chosen:updated");
-			$('.submit_mult').prop('disabled', false).trigger("chosen:updated");
-			$('select.submit_mult').val('').trigger("chosen:updated");
-			$('div#submit_mult').show();
-			$('button.cancel-choice').hide();
-		});
-	{/jq}
+	$('button.cancel-choice').click(function() {
+		$('div#gm, div#dg, div#emc').hide();
+		$('.gm, dg, .emc').prop('disabled', true).trigger("chosen:updated");
+		$('.submit_mult').prop('disabled', false).trigger("chosen:updated");
+		$('select.submit_mult').val('').trigger("chosen:updated");
+		$('div#submit_mult').show();
+		$('button.cancel-choice').hide();
+	});
+{/jq}
 				{/if}
 			</div>
 			<input type="hidden" name="find" value="{$find|escape}">
@@ -537,18 +537,18 @@
 							</div>
 						</div>
 
-						{jq}
-							$("#genPass").click(function () {
-							$('#pass1, #pass2').val('');
-							$('#mypassword_text, #mypassword2_text').hide();
-							$("#genepass_div").show();
-							});
-							$("#pass1, #pass2").change(function () {
-							$('#mypassword_text, #mypassword2_text').show();
-							document.RegForm.genepass.value='';
-							$("#genepass_div").hide();
-							});
-						{/jq}
+{jq}
+	$("#genPass").click(function () {
+	$('#pass1, #pass2').val('');
+	$('#mypassword_text, #mypassword2_text').hide();
+	$("#genepass_div").show();
+	});
+	$("#pass1, #pass2").change(function () {
+	$('#mypassword_text, #mypassword2_text').show();
+	document.RegForm.genepass.value='';
+	$("#genepass_div").hide();
+	});
+{/jq}
 					{/if}
 					{if $userinfo.login neq 'admin' && $prefs.change_password neq 'n'}
 						<div class="form-group">

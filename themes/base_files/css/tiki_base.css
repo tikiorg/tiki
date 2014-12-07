@@ -2843,6 +2843,9 @@ body.tiki.navbar-padding {
   line-height: 14px;
   display: inline-block;
 }
+.tablesorter-header-inner span {
+  padding-right: 10px;
+}
 .tablesorter-header.sorter-false {
   background-image: none;
   cursor: default;
@@ -2911,30 +2914,51 @@ span.tablesorter-column-selector input {
   float: right;
 }
 /*pager*/
-div.ts-pager {
+div.ts-wrapperdiv select.form-control:not(.ts-selectexclude) {
+  width: auto;
+  display: inline;
+}
+div.ts-wrapperdiv select.form-control:not(.ts-selectexclude) option {
+  font-size: smaller;
+}
+div.ts-wrapperdiv select.form-control:not(.ts-selectexclude),
+div.ts-wrapperdiv input.form-control {
+  font-size: smaller;
+  height: 22px;
+}
+div.ts-wrapperdiv div.ts-pager {
+  margin-bottom: 15px;
   height: 24px;
   float: right;
   clear: both;
 }
-div.ts-pager div.btn-group {
+div.ts-wrapperdiv div.ts-pager div.btn-group {
   margin-top: 2px;
 }
-div.ts-pager div.btn-group button {
+div.ts-wrapperdiv div.ts-pager div.btn-group span {
+  font-size: small;
   padding-top: 2px;
   height: 24px;
 }
-div.ts-pager div.btn-group span.selectlabels {
+div.ts-wrapperdiv div.ts-pager div.btn-group span :not(.pagedisplay) {
+  cursor: pointer;
+}
+div.ts-wrapperdiv div.ts-pager div.btn-group span.first {
+  margin-left: 3px;
+}
+div.ts-wrapperdiv div.ts-pager div.btn-group span.disabled {
+  opacity: .5;
+}
+div.ts-wrapperdiv div.ts-pager div.btn-group label.selectlabels {
   margin-top: 2px;
   margin-right: 5px;
   font-size: smaller;
 }
-div.ts-pager div.btn-group select.gotopage,
-div.ts-pager div.btn-group select.pagesize {
+div.ts-wrapperdiv div.ts-pager div.btn-group select.form-control {
   margin-top: 2px;
 }
-div.ts-pager div.btn-group select.gotopage option,
-div.ts-pager div.btn-group select.pagesize option {
-  font-size: smaller;
+div.ts-wrapperdiv div.ts-pager div.btn-group.middle {
+  padding-top: 2px;
 }
 div.ts-pager-top {
   margin-top: 5px;

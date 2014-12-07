@@ -73,14 +73,14 @@ class Table_Code_Other extends Table_Code_Manager
 			$options = array_column($f['external'], 'options');
 			if (count($options) > 0) {
 				foreach($f['external'] as $key => $info) {
-					$xopt[] = ' value="">';
+					$xopt[] = ' value="" selected disabled>' . tr('Select a filter');
 					foreach($info['options'] as $label => $val) {
 						$xopt[] = ' value="' . $val . '">' . $label;
 					}
 					//create dropdown
 					$divr[] = $this->iterate(
 						$xopt,
-						'<select id="' . $f['external'][$key]['id'] . '">',
+						'<select id="' . $f['external'][$key]['id'] . '" class="form-control ts-external-select">',
 						'</select>',
 						'<option',
 						'</option>',
@@ -119,24 +119,26 @@ class Table_Code_Other extends Table_Code_Manager
 		if (parent::$pager) {
 			$pagerdiv = array(
 				'<div class="btn-group">',
-				'	<span class="selectlabels">Page</span>',
-				'	<select class="gotoPage"></select>',
+					'<div class="btn-group">',
+					'	<label for="gotoPage" class="selectlabels">Page</label>',
+					'	<select id="gotoPage" class="gotoPage form-control"></select>',
+					'</div>',
 				'</div>',
-				'<div class="btn-group">',
-				'	<button type="button" class="btn btn-link btn-xs first">',
+				'<div class="btn-group middle">',
+				'	<span class="first tips" title=":' . tr('First page') . '">',
 				'		' . smarty_function_icon(['name' => 'backward_step'], $smarty),
-				'	</button>',
-				'	<button type="button" class="btn btn-link btn-xs prev">',
+				'	</span>',
+				'	<span class="prev tips" title=":' . tr('Previous page') . '">',
 				'		' . smarty_function_icon(['name' => 'backward'], $smarty),
-				'	</button>',
-				'	<button class="btn btn-link btn-sm pagedisplay">',
-				'	</button>',
-				'	<button type="button" class="btn btn-link btn-xs next">',
+				'	</span>',
+				'	<span class="pagedisplay">',
+				'	</span>',
+				'	<span class="next tips" title=":' . tr('Next page') . '">',
 				'		' . smarty_function_icon(['name' => 'forward'], $smarty),
-				'	</button>',
-				'	<button type="button" class="btn btn-link btn-xs last">',
+				'	</span>',
+				'	<span class="last tips" title=":' . tr('First page') . '">',
 				'		' . smarty_function_icon(['name' => 'forward_step'], $smarty),
-				'	</button>',
+				'	</span>',
 				'</div>',
 			);
 			foreach ($p['expand'] as $option) {
@@ -147,7 +149,7 @@ class Table_Code_Other extends Table_Code_Manager
 			if (isset($opt)) {
 				$pagerdiv[] = $this->iterate(
 					$opt,
-					'<div class="btn-group"><span class="selectlabels">Rows</span><select class="pagesize">',
+					'<div class="btn-group"><label for="pagesize" class="selectlabels">Rows</label><select id="pagesize" class="pagesize form-control">',
 					'</select></div>',
 					'<option',
 					'</option>',

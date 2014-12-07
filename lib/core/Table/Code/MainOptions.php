@@ -106,7 +106,7 @@ class Table_Code_MainOptions extends Table_Code_Manager
 		/* Handle code that applies to all columns now that the array index is not important*/
 		//get rid of self-links
 		if (isset(parent::$s['selflinks']) && parent::$s['selflinks']) {
-			$orh[] = '$(this).find(\'a\').replaceWith($(this).find(\'a\').text());';
+			$orh[] = '$(this).find(\'a\').replaceWith(\'<span>\' + $(this).find(\'a\').text() + \'</span>\');';
 		}
 		//no sort on all columns
 		if (!parent::$sorts) {
