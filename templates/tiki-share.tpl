@@ -50,7 +50,7 @@
 {/if}
 
 {if !isset($sent) && empty($errors)}
-    <div id="ajaxmsg"></div>
+	<div id="ajaxmsg"></div>
 	<form method="post" action="tiki-share.php?url={$url|escape:url}" id="share-form">
 		<input type="hidden" name="url" value="{$url|escape:url}">
 		<input type="hidden" name="report" value="{$report}">
@@ -251,8 +251,8 @@
 						{else}
 							<select id="how_much_time_access" name="how_much_time_access">
 								{section name=share_max_access start=1 loop=$prefs.share_max_access_time+1}
-								   {html_options values=$smarty.section.share_max_access.index output=$smarty.section.share_max_access.index}
-							  {/section}
+									{html_options values=$smarty.section.share_max_access.index output=$smarty.section.share_max_access.index}
+								{/section}
 							</select>
 						{/if}
 						&nbsp;{tr}time{/tr}
@@ -389,34 +389,34 @@
 	<p><a href="javascript:window.history.go(-2);">{tr}Return to previous page{/tr}</a></p>
 {/if}
 {jq}
-    $('#share-form').submit(function(e){
-        if($('#addresses').val() !='') {
-            $(this).tikiModal("Please wait....");
-            var postData = $(this).serializeArray();
-            var formURL = 'tiki-share.php?send=share';
-            $.ajax({
-                url : formURL,
-                type: "POST",
-                data : postData,
-                success:function(data, textStatus, jqXHR) {
-                    var shrsuccess =  $($.parseHTML(data)).find("#success").html();
-                    var shrerror = $($.parseHTML(data)).find("#shareerror").html();
-                    if(shrsuccess) {
-                        $('#ajaxmsg').html("<div class='alert alert-warning'>"+shrsuccess+"</div>");
-                    } else {
-                        $('#ajaxmsg').html("<div class='alert alert-warning'>"+shrerror+"</div>");
-                    }
-                    $('#share-form').tikiModal("");
-                    $('#addresses').val('');
-                },
-                error: function(jqXHR, textStatus, errorThrown) {
-                    $('#share-form').tikiModal("");
-                }
-            });
-        } else {
-            alert("You must provide at least one recipient email address");
-        }
-        e.preventDefault();
-        return false;
-    });
+	$('#share-form').submit(function(e){
+			if($('#addresses').val() !='') {
+					$(this).tikiModal("Please wait....");
+					var postData = $(this).serializeArray();
+					var formURL = 'tiki-share.php?send=share';
+					$.ajax({
+							url : formURL,
+							type: "POST",
+							data : postData,
+							success:function(data, textStatus, jqXHR) {
+									var shrsuccess = $($.parseHTML(data)).find("#success").html();
+									var shrerror = $($.parseHTML(data)).find("#shareerror").html();
+									if(shrsuccess) {
+											$('#ajaxmsg').html("<div class='alert alert-warning'>"+shrsuccess+"</div>");
+									} else {
+											$('#ajaxmsg').html("<div class='alert alert-warning'>"+shrerror+"</div>");
+									}
+									$('#share-form').tikiModal("");
+									$('#addresses').val('');
+							},
+							error: function(jqXHR, textStatus, errorThrown) {
+									$('#share-form').tikiModal("");
+							}
+					});
+			} else {
+					alert("You must provide at least one recipient email address");
+			}
+			e.preventDefault();
+			return false;
+	});
 {/jq}

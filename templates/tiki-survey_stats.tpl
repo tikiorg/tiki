@@ -13,7 +13,7 @@
 {include file='find.tpl'}
 
 <div class="table-responsive">
-    <table class="table normal">
+	<table class="table normal">
 		<tr>
 			<th>
 				<a href="tiki-survey_stats.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">
@@ -56,7 +56,7 @@
 					</td>
 				</tr>
 			{/if}
-			{sectionelse}
+		{sectionelse}
 			{norecords _colspan=4}
 		{/section}
 	</table>

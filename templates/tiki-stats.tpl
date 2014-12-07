@@ -337,48 +337,48 @@
 <h2 id="best_objects_stats_between">{tr}Most viewed objects in period{/tr}</h2>
 	<form method="post" action="tiki-stats.php">
 		{html_select_date time=$startDate prefix="startDate_" start_year=$start_year end_year=$end_year day_value_format="%02d" field_order=$prefs.display_field_order}
-	 	&rarr; {html_select_date time=$endDate prefix="endDate_" start_year=$start_year end_year=$end_year day_value_format="%02d" field_order=$prefs.display_field_order}
+		&rarr; {html_select_date time=$endDate prefix="endDate_" start_year=$start_year end_year=$end_year day_value_format="%02d" field_order=$prefs.display_field_order}
 		<input type="submit" class="btn btn-default btn-sm" name="modify" value="{tr}Filter{/tr}">
 	</form>
-    <div class="table-responsive">
-	<table class="table table-striped normal">
-		<tr>
-			<th>{tr}Object{/tr}</th>
-			<th>{tr}Section{/tr}</th>
-			<th>{tr}Hits{/tr}</th>
-		</tr>
-		{cycle values="odd,even" print=false advance=false}
-		{section name=i loop=$best_objects_stats_between}
+	<div class="table-responsive">
+		<table class="table table-striped normal">
 			<tr>
-				<td class="text">{$best_objects_stats_between[i]->object|escape}</td>
-				<td class="text">{tr}{$best_objects_stats_between[i]->type}{/tr}</td>
-				<td class="integer">{$best_objects_stats_between[i]->hits}</td>
+				<th>{tr}Object{/tr}</th>
+				<th>{tr}Section{/tr}</th>
+				<th>{tr}Hits{/tr}</th>
 			</tr>
-		{/section}
-	</table>
-    </div>
+			{cycle values="odd,even" print=false advance=false}
+			{section name=i loop=$best_objects_stats_between}
+				<tr>
+					<td class="text">{$best_objects_stats_between[i]->object|escape}</td>
+					<td class="text">{tr}{$best_objects_stats_between[i]->type}{/tr}</td>
+					<td class="integer">{$best_objects_stats_between[i]->hits}</td>
+				</tr>
+			{/section}
+		</table>
+	</div>
 {/if}
 
 {if $best_objects_stats_lastweek}
 	<h2 id="best_objects_stats_lastweek">{tr}Most viewed objects in the last 7 days{/tr}</h2>
 
-    <div class="table-responsive">
-	<table class="table table-striped normal">
-		<tr>
-			<th>{tr}Object{/tr}</th>
-			<th>{tr}Section{/tr}</th>
-			<th>{tr}Hits{/tr}</th>
-		</tr>
-		{cycle values="odd,even" print=false advance=false}
-		{section name=i loop=$best_objects_stats_lastweek}
+	<div class="table-responsive">
+		<table class="table table-striped normal">
 			<tr>
-				<td class="text">{$best_objects_stats_lastweek[i]->object|escape}</td>
-				<td class="text">{tr}{$best_objects_stats_lastweek[i]->type}{/tr}</td>
-				<td class="integer">{$best_objects_stats_lastweek[i]->hits}</td>
+				<th>{tr}Object{/tr}</th>
+				<th>{tr}Section{/tr}</th>
+				<th>{tr}Hits{/tr}</th>
 			</tr>
-		{/section}
-	</table>
-    </div>
+			{cycle values="odd,even" print=false advance=false}
+			{section name=i loop=$best_objects_stats_lastweek}
+				<tr>
+					<td class="text">{$best_objects_stats_lastweek[i]->object|escape}</td>
+					<td class="text">{tr}{$best_objects_stats_lastweek[i]->type}{/tr}</td>
+					<td class="integer">{$best_objects_stats_lastweek[i]->hits}</td>
+				</tr>
+			{/section}
+		</table>
+	</div>
 {/if}
 
 <a name="charts" href="tiki-stats.php?chart=usage#charts" class="link">{tr}Usage chart{/tr}</a>
