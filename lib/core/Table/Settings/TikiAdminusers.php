@@ -87,7 +87,7 @@ class Table_Settings_TikiAdminusers extends Table_Settings_Standard
 				'filter' => array(
 					'type' => false,	//no filter since $userlib->get_users doesn't have it
 				),
-				'priority' => 2,
+				'priority' => 6,
 			),
 			'#lastlogin' => array(
 				'sort' => array(
