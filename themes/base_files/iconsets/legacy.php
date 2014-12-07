@@ -277,7 +277,10 @@ $icons = array(
 		'image_src' => 'img/icons/application_side_tree.png',
 	),
 	'menuitem' => array(
-		'image_src' => 'img/icons/omo.png',
+		'image_src' => 'img/icons/arrow_right.png',
+	),
+	'minus' => array(
+		'image_src' => 'img/icons/delete.png',
 	),
 	'module' => array(
 		'image_src' => 'img/icons/module.png',

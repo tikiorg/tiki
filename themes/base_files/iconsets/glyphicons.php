@@ -99,6 +99,9 @@ $icons = array(
 		'class' => 'glyphicon glyphicon-lock',
 	),
 	'menuitem' => array(
+		'class' => 'glyphicon glyphicon-chevron-right',
+	),
+	'minus' => array(
 		'class' => 'glyphicon glyphicon-minus',
 	),
 	'move' => array(

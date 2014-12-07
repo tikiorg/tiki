@@ -292,6 +292,9 @@ $icons = array( //Icons of the icon set
 	'menuitem' => array(
 		'class' => 'fa fa-angle-right fa-fw',
 	),
+	'minus' => array(
+		'class' => 'fa fa-minus fa-fw',
+	),
 	'module' => array(
 		'class' => 'fa fa-cogs fa-fw',
 	),
