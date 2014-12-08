@@ -51,6 +51,10 @@ class Search_ContentSource_ActivityStreamSource implements Search_ContentSource_
 			}
 		}
 
+		if (! isset($document['stream'])) {
+			$document['stream'] = $typeFactory->multivalue(['custom']);
+		}
+
 		if ($this->source && isset($document['type'], $document['object'])) {
 			$related = $this->source->getDocuments($info['arguments']['type'], $info['arguments']['object']);
 
