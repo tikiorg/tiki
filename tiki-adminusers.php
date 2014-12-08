@@ -768,10 +768,7 @@ if (isset($_REQUEST['user']) and $_REQUEST['user']) {
 }
 
 if ($tiki_p_admin == 'y') {
-	$alls = $userlib->get_groups();
-	foreach ($alls['data'] as $g) {
-		$all_groups[] = $g['groupName'];
-	}
+	$all_groups = $userlib->list_all_groups();
 } else {
 	foreach ($userGroups as $g => $t) {
 		$all_groups[] = $g;
