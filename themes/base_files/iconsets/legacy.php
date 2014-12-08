@@ -247,7 +247,7 @@ $icons = array(
 		'image_src' => 'img/icons/help.png',
 	),
 	'history' => array(
-		'image_src' => 'img/icons/database.png',
+		'image_src' => 'img/icons/clock.png',
 	),
 	'import' => array(
 		'image_src' => 'img/icons/upload.png',
