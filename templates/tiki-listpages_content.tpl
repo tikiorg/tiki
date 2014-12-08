@@ -336,20 +336,28 @@
 					{if $show_actions eq 'y'}
 						<td class="action">
 							{if $listpages[changes].perms.tiki_p_edit eq 'y'}
-								<a class="link" href="tiki-editpage.php?page={$listpages[changes].pageName|escape:"url"}">{icon _id='page_edit'}</a>
-								<a class="link" href="tiki-copypage.php?page={$listpages[changes].pageName|escape:"url"}&amp;version=last">{icon _id='page_copy' alt="{tr}Copy{/tr}"}</a>
+								<a class="link tips" href="tiki-editpage.php?page={$listpages[changes].pageName|escape:"url"}" title="{$listpages[changes].pageName|escape}:{tr}Edit{/tr}">
+									{icon name='edit'}
+								</a>
+								<a class="link tips" href="tiki-copypage.php?page={$listpages[changes].pageName|escape:"url"}&amp;version=last" title="{$listpages[changes].pageName|escape}:{tr}Copy{/tr}">
+									{icon name='copy'}
+								</a>
 							{/if}
 
 							{if $prefs.feature_history eq 'y' and $listpages[changes].perms.tiki_p_wiki_view_history eq 'y'}
-								<a class="link" href="tiki-pagehistory.php?page={$listpages[changes].pageName|escape:"url"}">{icon _id='page_white_stack' alt="{tr}History{/tr}"}</a>
+								<a class="link tips" href="tiki-pagehistory.php?page={$listpages[changes].pageName|escape:"url"}" title="{$listpages[changes].pageName|escape}:{tr}History{/tr}">
+									{icon name='history'}
+								</a>
 							{/if}
 
 							{if $listpages[changes].perms.tiki_p_assign_perm_wiki_page eq 'y'}
-								{permission_link {*mode=icon*} type="wiki page" permType=wiki id=$listpages[changes].pageName title=$listpages[changes].pageName}
+								{permission_link {*mode=icon*} addclass="tips" type="wiki page" permType=wiki id=$listpages[changes].pageName label="{$listpages[changes].pageName}:{tr}Permissions{/tr}"}
 							{/if}
 
 							{if $listpages[changes].perms.tiki_p_remove eq 'y'}
-								<a class="link" href="tiki-removepage.php?page={$listpages[changes].pageName|escape:"url"}&amp;version=last">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
+								<a class="link tips" href="tiki-removepage.php?page={$listpages[changes].pageName|escape:"url"}&amp;version=last" title="{$listpages[changes].pageName|escape}:{tr}Remove{/tr}">
+									{icon name='remove'}
+								</a>
 							{/if}
 						</td>
 					{/if}
