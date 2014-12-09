@@ -28,10 +28,20 @@ class Search_ContentSource_GroupSource implements Search_ContentSource_Interface
 		}
 
 		$api = new TikiAddons_Api_Group;
+		$groupName = $objectId;
+		$addongroup = false;
+		$addonpendinggroup = false;
+		$addonleadergroup = false;
+	
 		if ($ret = $api->getOrganicGroupName($objectId)) {
 			$groupName = $ret;
-		} else {
-			$groupName = $objectId; 
+			$addongroup = $api->isOrganicGroup($objectId);
+			if ($addongroup == true && $api->getOrganicGroupPendingToken($objectId) == $objectId) {
+				$addonpendinggroup = true;
+			}
+			if ($addongroup == true && $api->getOrganicGroupLeaderToken($objectId) == $objectId) {
+				$addonleadergroup = true;
+			}
 		}
 
 		$data = array(
@@ -41,6 +51,10 @@ class Search_ContentSource_GroupSource implements Search_ContentSource_Interface
 			'searchable' => $typeFactory->identifier('n'),
 
 			'view_permission' => $typeFactory->identifier('tiki_p_group_view'),
+
+			'addongroup' => $addongroup ? $typeFactory->identifier('y') : $typeFactory->identifier('n'),
+			'addonleadergroup' => $addonleadergroup ? $typeFactory->identifier('y') : $typeFactory->identifier('n'),
+			'addonpendinggroup' => $addonpendinggroup ? $typeFactory->identifier('y') : $typeFactory->identifier('n'),
 		);
 
 		return $data;
@@ -55,6 +69,10 @@ class Search_ContentSource_GroupSource implements Search_ContentSource_Interface
 			'searchable',
 
 			'view_permission',
+
+			'addongroup',
+			'addonleadergroup',
+			'addonpendinggroup',
 		);
 	}
 
