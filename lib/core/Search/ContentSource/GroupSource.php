@@ -27,8 +27,15 @@ class Search_ContentSource_GroupSource implements Search_ContentSource_Interface
 			return false;
 		}
 
+		$api = new TikiAddons_Api_Group;
+		if ($ret = $api->getOrganicGroupName($objectId)) {
+			$groupName = $ret;
+		} else {
+			$groupName = $objectId; 
+		}
+
 		$data = array(
-			'title' => $typeFactory->sortable($objectId),
+			'title' => $typeFactory->sortable($groupName),
 			'description' => $typeFactory->plaintext($row['groupDesc']),
 
 			'searchable' => $typeFactory->identifier('n'),
