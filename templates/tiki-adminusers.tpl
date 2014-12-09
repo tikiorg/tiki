@@ -146,8 +146,8 @@
 		{/if}
 
 	<form class="form-horizontal" name="checkform" method="post" action="{$smarty.server.PHP_SELF|escape}">
-		<div id="{$ts_tableid}-div" {if $tsOn}style="visibility:hidden;"{/if} class="ts-wrapperdiv">
-			<div class="table-responsive user-table">
+		<div id="{$ts_tableid}-div" {if $tsOn}style="visibility:hidden;"{/if}>
+			<div class="table-responsive user-table ts-wrapperdiv">
 				<table id="{$ts_tableid}" class="table normal table-striped table-hover">
 					{* Note: th element ids here need to match those at /lib/core/Table/Settings/TikiAdminusers.php
 					for tablesorter to work properly *}
@@ -291,7 +291,7 @@
 				{if $users}
 					<div class="form-group" id="submit_mult">
 						<label>{tr}Perform action with checked{/tr}</label>
-						<select class="submit_mult form-control ts-selectexclude" name="submit_mult">
+						<select class="submit_mult form-control" name="submit_mult">
 							<option value="" selected="selected">-</option>
 							<option value="remove_users" >{tr}Remove{/tr}</option>
 							{if $prefs.feature_banning == 'y'}

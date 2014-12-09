@@ -2914,14 +2914,14 @@ span.tablesorter-column-selector input {
   float: right;
 }
 /*pager*/
-div.ts-wrapperdiv select.form-control:not(.ts-selectexclude) {
+div.ts-wrapperdiv select.form-control {
   width: auto;
   display: inline;
 }
-div.ts-wrapperdiv select.form-control:not(.ts-selectexclude) option {
+div.ts-wrapperdiv select.form-control option {
   font-size: smaller;
 }
-div.ts-wrapperdiv select.form-control:not(.ts-selectexclude),
+div.ts-wrapperdiv select.form-control,
 div.ts-wrapperdiv input.form-control {
   font-size: smaller;
   height: 22px;
@@ -2934,6 +2934,9 @@ div.ts-wrapperdiv div.ts-pager {
 }
 div.ts-wrapperdiv div.ts-pager div.btn-group {
   margin-top: 2px;
+}
+div.ts-wrapperdiv div.ts-pager div.btn-group.middle {
+  padding-top: 2px;
 }
 div.ts-wrapperdiv div.ts-pager div.btn-group span {
   font-size: small;
@@ -2956,16 +2959,6 @@ div.ts-wrapperdiv div.ts-pager div.btn-group label.selectlabels {
 }
 div.ts-wrapperdiv div.ts-pager div.btn-group select.form-control {
   margin-top: 2px;
-}
-div.ts-wrapperdiv div.ts-pager div.btn-group.middle {
-  padding-top: 2px;
-}
-div.ts-pager-top {
-  margin-top: 5px;
-  margin-bottom: 7px;
-}
-div.ts-pager-bottom {
-  visibility: hidden;
 }
 /* black */
 /* white */

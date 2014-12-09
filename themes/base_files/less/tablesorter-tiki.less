@@ -123,14 +123,14 @@
 
 /*pager*/
 div.ts-wrapperdiv {
-  select.form-control:not(.ts-selectexclude) {
+  select.form-control {
 	width: auto;
 	display: inline;
 	option {
 	  font-size: smaller;
 	}
   }
-  select.form-control:not(.ts-selectexclude), input.form-control {
+  select.form-control, input.form-control {
 	  font-size: smaller;
 	  height: 22px;
   }
@@ -141,6 +141,9 @@ div.ts-wrapperdiv {
 	clear: both;
 	div.btn-group {
 	  margin-top: 2px;
+	  &.middle {
+		padding-top: 2px;
+	  }
 	  span {
 		font-size: small;
 		padding-top: 2px;
@@ -148,12 +151,12 @@ div.ts-wrapperdiv {
 		:not(.pagedisplay) {
 		  cursor: pointer;
 		}
-	  }
-	  span.first {
-	  margin-left: 3px;
-	  }
-	  span.disabled {
-		opacity: .5;
+		&.first {
+		  margin-left: 3px;
+		}
+		&.disabled {
+		  opacity: .5;
+		}
 	  }
 	  label.selectlabels {
 		margin-top: 2px;
@@ -164,16 +167,6 @@ div.ts-wrapperdiv {
 		margin-top: 2px;
 	  }
 	}
-	div.btn-group.middle {
-	  padding-top: 2px;
-	}
   }
 }
 
-div.ts-pager-top {
-  margin-top: 5px;
-  margin-bottom: 7px;
-}
-div.ts-pager-bottom {
-  visibility: hidden;
-}
