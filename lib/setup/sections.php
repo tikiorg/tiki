@@ -216,6 +216,14 @@ function current_object()
 		);
 	}
 
+	// Pretty tracker pages
+	if ($section == 'wiki page' && isset($_REQUEST['itemId'])) {
+		return array(
+			'type' => 'trackeritem',
+			'object' => (int) $_REQUEST['itemId'],
+		);
+	}
+
 	if ( $cat_type && $cat_objid ) {
 		return array(
 			'type' => $cat_type,
