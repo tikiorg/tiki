@@ -1190,15 +1190,26 @@ class ModLib extends TikiLib
 
     function parse($info)
     {
-        global $tikilib, $prefs;
+        global $tikilib, $prefs, $headerlib;
 
         //allow for wikiLingo parsing, will only return 'y' if turned on AND enabled for this particular module
         if (isset($info['wikiLingo']) && $info['wikiLingo'] == 'y' && $prefs['feature_wikilingo'] == 'y') {
-            //TODO: corrent the paths for scripts and output them to the header
+            //TODO: correct the paths for scripts and output them to the header
             $scripts = new WikiLingo\Utilities\Scripts();
             $parser = new WikiLingo\Parser($scripts);
             $info['data'] = $parser->parse($info['data']);
             $info['title'] = $parser->parse($info['title']);
+
+	        /* output css from wikiLingo in a literal so smarty doesn't throw up.
+	         * NOTE: this is not added to headerlib because it has already passed the opportunity to get more css
+	         */
+	        $info['data'] = '{literal}' . $scripts->renderCss() . '{/literal}' . $info['data'];
+
+	        //output js to headerlib, because js is at bottom and has not yet been output
+	        foreach ( $scripts->scriptLocations as $scriptLocation ) {
+		        $headerlib->add_jsfile($scriptLocation);
+	        }
+	        $headerlib->add_js(implode($scripts->scripts));
 
         } else if (isset($info['parse']) && $info['parse'] == 'y') {
             $info['data'] = $tikilib->parse_data($info['data'], array('is_html' => true, 'suppress_icons' => true));
