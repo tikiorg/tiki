@@ -2249,7 +2249,7 @@ if ( \$('#$id') ) {
                         }
 
 					case 'cat':
-						if ( !isset($_GET['cat']) && !empty($_REQUEST['organicgroup']) && !empty($this->option['page']) ) {
+						if ( empty($_GET['cat']) && !empty($_REQUEST['organicgroup']) && !empty($this->option['page']) ) {
 							$utilities = new TikiAddons_Utilities();
 							if ($folder = $utilities->getFolderFromObject('wiki page', $this->option['page'])) {
 								$ogname = $folder . '_' . $_REQUEST['organicgroup'];
@@ -2258,7 +2258,7 @@ if ( \$('#$id') ) {
 							} else {
 								$value = '';
 							}
-						} elseif (isset($_GET['cat'])) {
+						} elseif (!empty($_GET['cat'])) {
 							$value = $_GET['cat'];
 						} else {
 							$value = '';
