@@ -198,7 +198,7 @@ function wikiplugin_convene($data, $params)
 	$result .= "<td>".(
 		$tiki_p_edit == 'y'
 			?
-				"<div class='form-group'><div class='col-md-9'><input class='conveneAddUser$i form-control' value='" . tr("Add User") . "' /></div><div class='col-md-3'><input type='button' value='" . tr('Add User') . "' class='conveneAddUserButton$i btn btn-default' /></div></div>"
+				"<div class='form-group'><div class='col-md-8'><input class='conveneAddUser$i form-control' value='" . tr("Add User") . "' /></div><div class='col-md-4'><input type='button' value='" . tr('Add User') . "' class='conveneAddUserButton$i btn btn-default' /></div></div>"
 			: ""
 		).
 	"</td>";
