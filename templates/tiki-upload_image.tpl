@@ -18,31 +18,31 @@
 
 {if $batchRes}
 	<h2>{tr}Batch Upload Results{/tr}</h2>
-    <div class="table-responsive">
-	<table class="table normal">
-		<tr>
-			<th>{tr}Filename{/tr}</th>
-			<th>{tr}Status{/tr}</th>
-			<th>{tr}ID{/tr}</th>
-			<th>{tr}Image{/tr}</th>
-		</tr>
-
-		{section name=ix loop=$batchRes}
+	<div class="table-responsive">
+		<table class="table normal">
 			<tr>
-				<td>{$batchRes[ix].filename}</td>
-				{if $batchRes[ix].msg}
-					<td colspan="3">
-						{icon _id=exclamation alt="{tr}Errors detected{/tr}" style="vertical-align:middle"} {$batchRes[ix].msg}
-					</td>
-				{else}
-					<td>
-						{icon _id=accept alt="{tr}Upload successful!{/tr}" style="vertical-align:middle"}{tr}Upload successful!{/tr}</td><td>{$batchRes[ix].imageId}</td><td><img src="{$url_show}?id={$batchRes[ix].imageId}&amp;thumb=1" alt="{$batchRes[ix].filename}">
-					</td>
-				{/if}
+				<th>{tr}Filename{/tr}</th>
+				<th>{tr}Status{/tr}</th>
+				<th>{tr}ID{/tr}</th>
+				<th>{tr}Image{/tr}</th>
 			</tr>
-		{/section}
-	</table>
-    </div>
+
+			{section name=ix loop=$batchRes}
+				<tr>
+					<td>{$batchRes[ix].filename}</td>
+					{if $batchRes[ix].msg}
+						<td colspan="3">
+							{icon _id=exclamation alt="{tr}Errors detected{/tr}" style="vertical-align:middle"} {$batchRes[ix].msg}
+						</td>
+					{else}
+						<td>
+							{icon _id=accept alt="{tr}Upload successful!{/tr}" style="vertical-align:middle"}{tr}Upload successful!{/tr}</td><td>{$batchRes[ix].imageId}</td><td><img src="{$url_show}?id={$batchRes[ix].imageId}&amp;thumb=1" alt="{$batchRes[ix].filename}">
+						</td>
+					{/if}
+				</tr>
+			{/section}
+		</table>
+	</div>
 {/if}
 
 {if $show eq 'y'}

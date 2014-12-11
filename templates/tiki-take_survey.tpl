@@ -29,7 +29,7 @@
 						{section name=jx loop=$questions[ix].qoptions}
 							<label>
 								<input type="radio" value="{$questions[ix].qoptions[jx].optionId|escape}" name="{$questionId}"
-									   {if $answer eq $questions[ix].qoptions[jx].optionId} checked="checked"{/if}>
+									{if $answer eq $questions[ix].qoptions[jx].optionId} checked="checked"{/if}>
 								{$questions[ix].qoptions[jx].qoption}
 							</label>
 						{/section}
@@ -71,8 +71,8 @@
 								</td>
 								<td valign="top">
 									{if $showToolBars}{toolbars area_id="question_$area" comments=$commentToolBar}{/if}
-									<textarea id="{$questionId}"  name="{$questionId}" rows="{$textrows}"
-											  cols="{$textcols}">{$answer}</textarea>
+									<textarea id="{$questionId}" name="{$questionId}" rows="{$textrows}"
+										cols="{$textcols}">{$answer}</textarea>
 								</td>
 							</tr>
 						</table>
