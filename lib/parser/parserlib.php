@@ -2251,10 +2251,10 @@ if ( \$('#$id') ) {
 						if ( isset($_GET[$name]) ) {
 							$value = $_GET[$name];
 						} else {
-								
+							$value = '';
 							include_once('lib/wiki-plugins/wikiplugin_showpref.php');	
 							if ($prefs['wikiplugin_showpref'] == 'y' && $showpref = wikiplugin_showpref('', array('pref' => $name))) {
-								$value = $showpref; //TODO after mani setups the $pref for the whitelist, check the whitelist before running the plugin.
+								$value = $showpref;
 							}
 						}
 						break;
