@@ -2247,6 +2247,23 @@ if ( \$('#$id') ) {
                             $value='';
                             break;
                         }
+
+					case 'cat':
+						if ( !isset($_GET['cat']) && !empty($_REQUEST['organicgroup']) && !empty($this->option['page']) ) {
+							$utilities = new TikiAddons_Utilities();
+							if ($folder = $utilities->getFolderFromObject('wiki page', $this->option['page'])) {
+								$ogname = $folder . '_' . $_REQUEST['organicgroup'];
+								$cat = TikiLib::lib('categ')->get_category_id($ogname);
+								$value = $cat;
+							} else {
+								$value = '';
+							}
+						} elseif (isset($_GET['cat'])) {
+							$value = $_GET['cat'];
+						} else {
+							$value = '';
+						}
+						break;
 					default:
 						if ( isset($_GET[$name]) ) {
 							$value = $_GET[$name];

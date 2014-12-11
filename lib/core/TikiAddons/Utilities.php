@@ -207,4 +207,12 @@ class TikiAddons_Utilities extends TikiDb_Bridge
 		natsort($versions);
 		return array_pop($versions);
 	}
+
+	function getFolderFromObject($type, $id) {
+		$type = Tiki_Profile_Installer::convertTypeInvert($type);
+		$domain = $this->table('tiki_profile_symbols')->fetchOne('domain', array('value' => $id, 'type' => $type));	
+		$folder = str_replace('file://addons/', '', $domain);
+		$folder = str_replace('/profiles', '', $folder);
+		return $folder;
+	}
 }
