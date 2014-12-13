@@ -374,18 +374,35 @@ if (!isset($_REQUEST['reply_state']))
 else
 	$reply_state = $_REQUEST['reply_state'];
 
-$comments_coms = $commentslib->get_forum_topics(
-	$_REQUEST['forumId'],
-	$comments_offset,
-	$_REQUEST['comments_per_page'],
-	$_REQUEST['thread_sort_mode'],
-	$view_archived_topics,
-	$user_param,
-	$type_param,
-	$reply_state,
-	$forum_info
-);
+//add tablesorter sorting and filtering
+$tsOn = Table_Check::isEnabled(true);
 
+$smarty->assign('tsOn', $tsOn);
+$tsAjax = Table_Check::isAjaxCall();
+static $iid = 0;
+++$iid;
+$ts_tableid = 'viewforum' . $_REQUEST['forumId'] . '-' . $iid;
+$smarty->assign('ts_tableid', $ts_tableid);
+if ($tsOn) {
+	$ts_countid = $ts_tableid . '-count';
+	$ts_offsetid = $ts_tableid . '-offset';
+	$smarty->assign('ts_countid', $ts_countid);
+	$smarty->assign('ts_offsetid', $ts_offsetid);
+}
+
+if (!$tsOn || ($tsOn && $tsAjax)) {
+	$comments_coms = $commentslib->get_forum_topics(
+		$_REQUEST['forumId'],
+		$comments_offset,
+		$_REQUEST['comments_per_page'],
+		$_REQUEST['thread_sort_mode'],
+		$view_archived_topics,
+		$user_param,
+		$type_param,
+		$reply_state,
+		$forum_info
+	);
+}
 $comments_cant = $commentslib->count_forum_topics(
 	$_REQUEST['forumId'],
 	$comments_offset,
@@ -396,6 +413,29 @@ $comments_cant = $commentslib->count_forum_topics(
 	$type_param,
 	$reply_state
 );
+//initialize tablesorter
+if ($tsOn && !$tsAjax) {
+	//set tablesorter code
+	Table_Factory::build(
+		'TikiViewforum',
+		array(
+			'id' => $ts_tableid,
+			'total' => $comments_cant,
+			'ajax' => array(
+				'requiredparams' => array(
+					'forumId' => $_REQUEST['forumId'],
+				),
+				'servercount' => array(
+					'id' => $ts_countid,
+				),
+				'serveroffset' => array(
+					'id' => $ts_offsetid,
+				),
+			),
+		)
+	);
+}
+
 
 $last_comments = $commentslib->get_last_forum_posts($_REQUEST['forumId'], $forum_info['forum_last_n']);
 
