@@ -2925,6 +2925,8 @@ div.ts-wrapperdiv select.form-control,
 div.ts-wrapperdiv input.form-control {
   font-size: smaller;
   height: 22px;
+  padding: 0px;
+  margin-left: 0px;
 }
 div.ts-wrapperdiv div.ts-pager {
   margin-bottom: 15px;
