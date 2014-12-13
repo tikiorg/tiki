@@ -408,8 +408,6 @@ if ( $prefs['feature_jquery_carousel'] == 'y' ) {
 	$headerlib->add_jsfile('vendor/jquery/plugins/infinitecarousel/jquery.infinitecarousel3.js');
 }
 
-$headerlib->add_jsfile('lib/swfobject/swfobject.js');
-
 if ( $prefs['feature_ajax'] === 'y' ) {
 	if ( $prefs['ajax_autosave'] === 'y' ) {
 		$headerlib->add_jsfile('lib/ajax/autosave.js');
