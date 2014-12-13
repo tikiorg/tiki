@@ -36,7 +36,6 @@ class Table_Code_Other extends Table_Code_Manager
 			$jq[] = '$(\'button#' . parent::$s['colselect']['button']['id'] . '\').popover({'
 				. $this->nt2 . 'placement: \'auto right\','
 				. $this->nt2 . 'html: true,'
-				. $this->nt2 . 'trigger: \'hover\','
 				. $this->nt2 . 'content: \'<div id="' . parent::$s['colselect']['div']['id'] . '"></div>\''
 				. $this->nt . '}).on(\'shown.bs.popover\', function () {'
 				. $this->nt2 . '$.tablesorter.columnSelector.attachTo( $(\'' . parent::$tid
