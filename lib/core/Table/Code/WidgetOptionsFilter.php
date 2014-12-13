@@ -27,6 +27,8 @@ class Table_Code_WidgetOptionsFilter extends Table_Code_WidgetOptions
 	{
 		if (parent::$filters) {
 			$wof[] = 'filter_cssFilter : \'form-control\'';
+			//allows for different label versus value in dropdowns
+			$wof[] = 'filter_selectSourceSeparator : \'|\'';
 			//server side filtering
 			if (parent::$ajax) {
 				$wof[] = 'filter_serversideFiltering : true';

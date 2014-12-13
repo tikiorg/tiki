@@ -475,8 +475,15 @@ if (!empty($multiprint_pages)) {
 		if (isset($languages) && count($languages) > 0) {
 			$pagelangs = array_unique($tikilib->table('tiki_pages')->fetchColumn('lang', array()));
 			$pagelangs = array_flip($pagelangs);
-			$ts_langs = array_column($languages, 'name', 'value');
-			$ts_langs = array_intersect_key($ts_langs, $pagelangs);
+			$temp_langs = array_column($languages, 'name', 'value');
+			$temp_langs = array_intersect_key($temp_langs, $pagelangs);
+			if (count($temp_langs) > 0) {
+				foreach ($temp_langs as $short => $long) {
+					$ts_langs[$short . '|' . $long] = $long;
+				}
+			} else {
+				$ts_langs = array();
+			}
 		} else {
 			$ts_langs = array();
 		}
