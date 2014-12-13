@@ -189,13 +189,13 @@
 									<td class="action">
 
 										{if $prefs.tracker_legacy_insert neq 'y'}
-											<a class="btn btn-default btn-sm" href="{bootstrap_modal controller=tracker action=update_item trackerId=$trackerId itemId=$items[user].itemId}" title="{tr}Edit{/tr}">{icon name="edit"}</a>
+											{icon name="edit" href="{bootstrap_modal controller=tracker action=update_item trackerId=$trackerId itemId=$items[user].itemId}" title=":{tr}Edit{/tr}" class="tips"}
 										{else}
-											<a class="link" href="tiki-view_tracker_item.php?itemId={$items[user].itemId}&amp;show=mod" title="{tr}View/Edit{/tr}">{icon _id='pencil' alt="{tr}View/Edit{/tr}"}</a>
+											{icon name="post" href="tiki-view_tracker_item.php?itemId={$items[user].itemId}&amp;show=mod" title="{tr}View/Edit{/tr}" class="tips"}
 										{/if}
-										<a class="btn btn-default btn-sm" href="{bootstrap_modal controller=tracker action=remove_item trackerId=$trackerId itemId=$items[user].itemId}" title="{tr}Delete{/tr}">{icon name="delete"}</a>
+										{icon name="delete" href="{bootstrap_modal controller=tracker action=remove_item trackerId=$trackerId itemId=$items[user].itemId}" title=":{tr}Delete{/tr}" class="tips"}
 										{if $tiki_p_admin_trackers eq 'y'}
-											<a class="btn btn-default btn-sm" href="tiki-tracker_view_history.php?itemId={$items[user].itemId}" title="{tr}History{/tr}">{icon name="history"}</a>
+											{icon name="history" href="tiki-tracker_view_history.php?itemId={$items[user].itemId}" title=":{tr}History{/tr}" class="tips"}
 										{/if}
 									</td>
 								{/if}
