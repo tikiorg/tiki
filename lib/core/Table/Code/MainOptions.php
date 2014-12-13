@@ -181,7 +181,7 @@ class Table_Code_MainOptions extends Table_Code_Manager
 			}
 		}
 
-		//popover
+		//tiki popover needs to be re-applied due to late loading of tablesorter html
 		$p[] = $this->nt3 . '$(document).tiki_popover();';
 		$mo[] = $this->iterate($p, 'initialized: function(table){', $this->nt2 . '}', '', '', '');
 
