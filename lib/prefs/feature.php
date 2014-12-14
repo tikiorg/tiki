@@ -592,8 +592,9 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_ajax' => array(
 			'name' => tra('Ajax'),
-			'description' => tra('Ajax'),
+			'description' => tra('Allows for efficient retrieval and display of information from the server, thus improving the user experience. This feature is required for the interface for many features to work.'),
 			'help' => 'Ajax',
+			'warning' => tra('This feature is required for the interface for many features to work properly.'),
 			'type' => 'flag',
 			'default' => 'y',
 		),
@@ -1967,7 +1968,7 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_jquery_tablesorter' => array(
 			'name' => tra('jQuery Sortable Tables'),
-            'description' => tra('Provides an interactive way to sort and filter data in tables produced through Plugin FancyTable as well as through Plugin TrackerList'),
+			'description' => tra('Provides an interactive way to sort and filter data in tables produced with Plugin FancyTable and Plugin TrackerList, as well as other administrative tables used in Tiki.'),
 			'type' => 'flag',
 			'help' => 'JQuery#TableSorter',
 			'warning' => tra('This feature can cause problems with JS minify on some systems.'),
