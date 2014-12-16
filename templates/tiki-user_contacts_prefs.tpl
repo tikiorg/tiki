@@ -7,7 +7,7 @@
 
 {tabset name="contact_prefs"}
 	{tab name="{tr}Options{/tr}"}
-        <h2>{tr}Options{/tr}</h2>
+		<h2>{tr}Options{/tr}</h2>
 		<div class="panel panel-default">
 			<div class="panel-body">
 				<form method='post' action='tiki-user_contacts_prefs.php'>
@@ -33,48 +33,48 @@
 	{/tab}
 
 	{tab name="{tr}Manage Fields{/tr}"}
-        <h2>{tr}Manage Fields{/tr}</h2>
+		<h2>{tr}Manage Fields{/tr}</h2>
 		<div class="panel panel-default">
 			<div class="panel-body">
 				<form method='post' action='tiki-user_contacts_prefs.php'>
-                    <div class="table-responsive">
-					<table class="table normal">
-						<tr>
-							<th colspan="2">{tr}Order{/tr}</th>
-							<th>{tr}Field{/tr}</th>
-							<th>{tr}Action{/tr}</th>
-						</tr>
-
-						{foreach from=$exts item=ext key=k name=e}
+					<div class="table-responsive">
+						<table class="table normal">
 							<tr>
-								<td width="2%">
-									{if not $smarty.foreach.e.first}
-										<a href="?ext_up={$ext.fieldId}" title="{tr}Up{/tr}">{icon _id='resultset_up'}</a>
-									{/if}
-								</td>
-								<td width="2%">
-									{if not $smarty.foreach.e.last}
-										<a href="?ext_down={$ext.fieldId}" title="{tr}Down{/tr}">{icon _id='resultset_down'}</a>
-									{/if}
-								</td>
-								<td>{tr}{$ext.fieldname|escape}{/tr}</td>
-								<td class="action">
-									{if $ext.flagsPublic eq 'y'}
-										<a href="?ext_private={$ext.fieldId}" style="margin-left:20px;" title="{tr}Private{/tr}">{icon _id='user' alt="{tr}Private{/tr}"}</a>
-									{else}
-										<a href="?ext_public={$ext.fieldId}" style="margin-left:20px;" title="{tr}Public{/tr}">{icon _id='group' alt="{tr}Public{/tr}"}</a>
-									{/if}
-									{if $ext.show eq 'y'}
-										<a href="?ext_hide={$ext.fieldId}" style="margin-left:20px;" title="{tr}Hide{/tr}">{icon _id='no_eye' alt="{tr}Hide{/tr}"}</a>
-									{else}
-										<a href="?ext_show={$ext.fieldId}" style="margin-left:20px;" title="{tr}Show{/tr}">{icon _id='eye' alt="{tr}Show{/tr}"}</a>
-									{/if}
-									<a href="?ext_remove={$ext.fieldId}" style="margin-left:20px;" title="{tr}Delete{/tr}">{icon _id='cross' alt="{tr}Delete{/tr}"}</a>
-								</td>
+								<th colspan="2">{tr}Order{/tr}</th>
+								<th>{tr}Field{/tr}</th>
+								<th>{tr}Action{/tr}</th>
 							</tr>
-						{/foreach}
-					</table>
-                    </div>
+
+							{foreach from=$exts item=ext key=k name=e}
+								<tr>
+									<td width="2%">
+										{if not $smarty.foreach.e.first}
+											<a href="?ext_up={$ext.fieldId}" title="{tr}Up{/tr}">{icon _id='resultset_up'}</a>
+										{/if}
+									</td>
+									<td width="2%">
+										{if not $smarty.foreach.e.last}
+											<a href="?ext_down={$ext.fieldId}" title="{tr}Down{/tr}">{icon _id='resultset_down'}</a>
+										{/if}
+									</td>
+									<td>{tr}{$ext.fieldname|escape}{/tr}</td>
+									<td class="action">
+										{if $ext.flagsPublic eq 'y'}
+											<a href="?ext_private={$ext.fieldId}" style="margin-left:20px;" title="{tr}Private{/tr}">{icon _id='user' alt="{tr}Private{/tr}"}</a>
+										{else}
+											<a href="?ext_public={$ext.fieldId}" style="margin-left:20px;" title="{tr}Public{/tr}">{icon _id='group' alt="{tr}Public{/tr}"}</a>
+										{/if}
+										{if $ext.show eq 'y'}
+											<a href="?ext_hide={$ext.fieldId}" style="margin-left:20px;" title="{tr}Hide{/tr}">{icon _id='no_eye' alt="{tr}Hide{/tr}"}</a>
+										{else}
+											<a href="?ext_show={$ext.fieldId}" style="margin-left:20px;" title="{tr}Show{/tr}">{icon _id='eye' alt="{tr}Show{/tr}"}</a>
+										{/if}
+										<a href="?ext_remove={$ext.fieldId}" style="margin-left:20px;" title="{tr}Delete{/tr}">{icon _id='cross' alt="{tr}Delete{/tr}"}</a>
+									</td>
+								</tr>
+							{/foreach}
+						</table>
+					</div>
 					<div>{tr}Add:{/tr} <input type='text' name='ext_add' /> <input type='submit' name='add_fields' value="{tr}Add{/tr}"></div>
 				</form>
 			</div>

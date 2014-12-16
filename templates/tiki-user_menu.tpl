@@ -6,7 +6,7 @@
 	{foreach key=pos item=chdata from=$menu_channels}
 		{assign var=cname value=$menu_info.menuId|cat:'__'|cat:$chdata.position}
 		{* ----------------------------- section *}
-		{if $chdata.type ne 'o' and  $chdata.type ne '-'}
+		{if $chdata.type ne 'o' and $chdata.type ne '-'}
 
 			{if $opensec > 0}
 				{assign var=sectionType value=$chdata.type}
@@ -16,7 +16,7 @@
 				{if $opensec > $sectionType}
 					{assign var=m value=$opensec-$sectionType}
 					{section loop=$menu_channels name=close max=$m}
-						   </div>
+						</div>
 					{/section}
 					{assign var=opensec value=$sectionType}
 				{/if}

@@ -83,7 +83,7 @@
 					<tr>
 						<td>&nbsp;</td>
 						<td>
-							<input type="submit" class="btn btn-primary btn-sm" name="addfolder"  value="{tr}Add{/tr}"></td>
+							<input type="submit" class="btn btn-primary btn-sm" name="addfolder" value="{tr}Add{/tr}"></td>
 					</tr>
 				</form>
 			</table>
@@ -98,9 +98,9 @@
 				<form action="tiki-user_bookmarks.php" method="post">
 					<input type="hidden" name="editurl" value="{$editurl|escape}">
 					<input type="hidden" name="parentId" value="{$parentId|escape}">
-   				<tr>
+					<tr>
 						<td>{tr}Name:{/tr}</td>
-						<td><input type="text" size = "40"  name="urlname" value="{$urlname|escape}"></td>
+						<td><input type="text" size = "40" name="urlname" value="{$urlname|escape}"></td>
 					</tr>
 					<tr>
 						<td>{tr}URL:{/tr}</td>

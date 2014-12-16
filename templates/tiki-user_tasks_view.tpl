@@ -1,5 +1,5 @@
 {*Smarty template*}
-{* start ************ Task View  ***************}
+{* start ************ Task View ***************}
 
 <h2>{$info.title|escape}</h2>&nbsp;
 
@@ -18,6 +18,7 @@
 	</a>&nbsp;
 {/if}
 <br><br>
+
 <div class="tabcontent" style="width:99%">
 	{if ($tiki_view_mode eq 'preview')}
 		<div align="center" class="attention" style="font-weight:bold">
@@ -42,7 +43,7 @@
 			<td class="prio{$info.priority}" style="border:0;">
 				<table class="prio{$info.priority}" style="border:0;">
 					<tr>
-						<td  style="font-weight:bold;">
+						<td style="font-weight:bold;">
 							{tr}Start:{/tr}
 						</td>
 						<td>
@@ -58,18 +59,18 @@
 						</td>
 					</tr>
 					<tr>
-						<td  style="font-weight:bold;">
+						<td style="font-weight:bold;">
 							{tr}Status:{/tr}
 						</td>
 						<td >
 							{if $info.status eq ''}
-								 {tr}Waiting / Not Started{/tr}
+								{tr}Waiting / Not Started{/tr}
 							{/if}
 							{if $info.status eq 'o'}
-								 {tr}Open / In Process{/tr}
+								{tr}Open / In Process{/tr}
 							{/if}
 							{if $info.status eq 'c'}
-								 {tr}completed (100%){/tr}
+								{tr}completed (100%){/tr}
 							{/if}
 							&nbsp;&nbsp;
 							<b>{$info.completed|tiki_short_date}&nbsp;--&nbsp;{$info.completed|tiki_short_time}</b>
@@ -116,22 +117,22 @@
 	{if $info.creator ne $info.user}
 		{tr}Accepted by User:{/tr}
 			{if $info.accepted_user eq 'y'}
-				 {tr}Yes{/tr}
+				{tr}Yes{/tr}
 			{else}
 				{if $info.accepted_user eq 'n'}
-					 {tr}No / Rejected{/tr}
+					{tr}No / Rejected{/tr}
 				{else}
-					 {tr}Waiting{/tr}
+					{tr}Waiting{/tr}
 				{/if}
 			{/if}<br>
 		{tr}Accepted by Creator:{/tr}
 		{if $info.accepted_creator eq 'y'}
-			 {tr}Yes{/tr}
+			{tr}Yes{/tr}
 		{else}
 			{if $info.accepted_creator eq 'n'}
-				 {tr}No / Rejected{/tr}
+				{tr}No / Rejected{/tr}
 			{else}
-				 {tr}Waiting{/tr}
+				{tr}Waiting{/tr}
 			{/if}
 		{/if}<br>
 	{/if}

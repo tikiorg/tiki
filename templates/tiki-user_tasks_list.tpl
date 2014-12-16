@@ -40,7 +40,7 @@
 		{section name=task_i loop=$tasklist}
 			<tr>
 				<td class="prio{$tasklist[task_i].priority}">
-					<input {if $tasklist[task_i].disabled} disabled = "disabled" {/if}  type="checkbox" name="task[{$tasklist[task_i].taskId}]">
+					<input {if $tasklist[task_i].disabled} disabled = "disabled" {/if} type="checkbox" name="task[{$tasklist[task_i].taskId}]">
 					{if $tasklist[task_i].deleted}
 						{if $tasklist[task_i].creator ne $user}
 							{icon _id='cross'}
@@ -110,8 +110,8 @@
 					{$tasklist[task_i].priority}
 				</td>
 				<td style="text-align:right;{if $tasklist[task_i].status eq 'c'}text-decoration:line-through;{/if}" class="prio{$tasklist[task_i].priority}">
-					<select {if $tasklist[task_i].disabled} disabled = "disabled" {/if}  name="task_perc[{$tasklist[task_i].taskId}]">
-						<option value="w" {if $tasklist[task_i].percentage_null} selected = "selected"  {/if}>{tr}Waiting{/tr}</option>
+					<select {if $tasklist[task_i].disabled} disabled = "disabled" {/if} name="task_perc[{$tasklist[task_i].taskId}]">
+						<option value="w" {if $tasklist[task_i].percentage_null} selected = "selected" {/if}>{tr}Waiting{/tr}</option>
 						{section name=zz loop=$percs}
 							<option value="{$percs[zz]|escape}" {if $tasklist[task_i].percentage eq $percs[zz] and !$tasklist[task_i].percentage_null} selected = "selected" {/if} >
 								{$percs[zz]}%
@@ -146,18 +146,18 @@
 		<tr>
 			<td colspan="6" style="text-align:center;">
 				&nbsp;&nbsp;{tr}Show:{/tr}
-				&nbsp;<input  name="show_private" {if $show_private} checked="checked" {/if} type="checkbox">{tr}Private{/tr}
-			{if $tiki_p_tasks_receive eq 'y'}&nbsp;<input  name="show_received" {if $show_received} checked="checked" {/if} type="checkbox">{tr}Received{/tr}{/if}
-			{if $tiki_p_tasks_send eq 'y'}&nbsp;<input  name="show_submitted" {if $show_submitted} checked="checked" {/if} type="checkbox">{tr}Submitted{/tr}{/if}
-			{if $tiki_p_tasks_receive eq 'y' or $tiki_p_tasks_send eq 'y'}&nbsp;<input  name="show_shared" {if $show_shared} checked="checked" {/if} type="checkbox">{tr}Shared{/tr}{/if}
-			&nbsp;&nbsp;&nbsp;&nbsp;
-			&nbsp;<input  name="show_trash" {if $show_trash} checked="checked" {/if} type="checkbox">{tr}Trash{/tr}
-			&nbsp;<input  name="show_completed" {if $show_completed} checked="checked" {/if} type="checkbox">{tr}Completed{/tr}
-			{if ($admin_mode)}
-			&nbsp;&nbsp;
-			<a class="highlight" >
-			<input name="show_admin" {if $show_admin} checked="checked" {/if} type="checkbox" />{tr}All Shared Tasks{/tr}</a>
-			{/if}
+				&nbsp;<input name="show_private" {if $show_private} checked="checked" {/if} type="checkbox">{tr}Private{/tr}
+				{if $tiki_p_tasks_receive eq 'y'}&nbsp;<input name="show_received" {if $show_received} checked="checked" {/if} type="checkbox">{tr}Received{/tr}{/if}
+				{if $tiki_p_tasks_send eq 'y'}&nbsp;<input name="show_submitted" {if $show_submitted} checked="checked" {/if} type="checkbox">{tr}Submitted{/tr}{/if}
+				{if $tiki_p_tasks_receive eq 'y' or $tiki_p_tasks_send eq 'y'}&nbsp;<input name="show_shared" {if $show_shared} checked="checked" {/if} type="checkbox">{tr}Shared{/tr}{/if}
+				&nbsp;&nbsp;&nbsp;&nbsp;
+				&nbsp;<input name="show_trash" {if $show_trash} checked="checked" {/if} type="checkbox">{tr}Trash{/tr}
+				&nbsp;<input name="show_completed" {if $show_completed} checked="checked" {/if} type="checkbox">{tr}Completed{/tr}
+				{if ($admin_mode)}
+					&nbsp;&nbsp;
+					<a class="highlight" >
+					<input name="show_admin" {if $show_admin} checked="checked" {/if} type="checkbox" />{tr}All Shared Tasks{/tr}</a>
+				{/if}
 			</td>
 		</tr>
 		<tr>

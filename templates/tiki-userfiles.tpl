@@ -15,37 +15,37 @@
 	{/if}
 </div>
 <form action="tiki-userfiles.php" method="post">
-    <div class="table-responsive">
-	<table class="table normal">
-		<tr>
-			<th style="text-align:center;">&nbsp;</th>
-			<th><a href="tiki-userfiles.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'filename_desc'}filename_asc{else}filename_desc{/if}">{tr}Name{/tr}</a></th>
-			<th><a href="tiki-userfiles.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}">{tr}Created{/tr}</a></th>
-			<th style="text-align:right;">
-				<a href="tiki-userfiles.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'filesize_desc'}filesize_asc{else}filesize_desc{/if}">
-					{tr}Size{/tr}
-				</a>
-			</th>
-		</tr>
-
-		{section name=user loop=$channels}
+	<div class="table-responsive">
+		<table class="table normal">
 			<tr>
-				<td class="checkbox-cell">
-					<input type="checkbox" name="userfile[{$channels[user].fileId}]">
-				</td>
-				<td class="text">{$channels[user].filename|iconify}
-					<a class="link" href="tiki-download_userfile.php?fileId={$channels[user].fileId}">
-						{$channels[user].filename}
+				<th style="text-align:center;">&nbsp;</th>
+				<th><a href="tiki-userfiles.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'filename_desc'}filename_asc{else}filename_desc{/if}">{tr}Name{/tr}</a></th>
+				<th><a href="tiki-userfiles.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}">{tr}Created{/tr}</a></th>
+				<th style="text-align:right;">
+					<a href="tiki-userfiles.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'filesize_desc'}filesize_asc{else}filesize_desc{/if}">
+						{tr}Size{/tr}
 					</a>
-				</td>
-				<td class="text">{$channels[user].created|tiki_short_datetime}</td>
-				<td class="integer">{$channels[user].filesize|kbsize}</td>
+				</th>
 			</tr>
-		{sectionelse}
-			{norecords _colspan=4}
-		{/section}
-	</table>
-    </div>
+
+			{section name=user loop=$channels}
+				<tr>
+					<td class="checkbox-cell">
+						<input type="checkbox" name="userfile[{$channels[user].fileId}]">
+					</td>
+					<td class="text">{$channels[user].filename|iconify}
+						<a class="link" href="tiki-download_userfile.php?fileId={$channels[user].fileId}">
+							{$channels[user].filename}
+						</a>
+					</td>
+					<td class="text">{$channels[user].created|tiki_short_datetime}</td>
+					<td class="integer">{$channels[user].filesize|kbsize}</td>
+				</tr>
+			{sectionelse}
+				{norecords _colspan=4}
+			{/section}
+		</table>
+	</div>
 	{if $channels|@count ge '1'}
 		{tr}Perform action with checked:{/tr} <input type="submit" class="btn btn-default btn-sm" name="delete" value="{tr}Delete{/tr}">
 	{/if}
