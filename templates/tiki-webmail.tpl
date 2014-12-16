@@ -19,11 +19,10 @@
 			<td>
 				{self_link _icon='img/webmail/contact.gif' _script='tiki-contacts.php' _width='48' _height='48'}{tr}Contacts{/tr}{/self_link}
 				<br>
-				{self_link  _script='tiki-contacts.php'}{tr}Contacts{/tr}{/self_link}
+				{self_link _script='tiki-contacts.php'}{tr}Contacts{/tr}{/self_link}
 			</td>
 		{/if}
-		<td width="50%">
-		</td>
+		<td width="50%"></td>
 		<td>
 			{self_link _icon='img/webmail/settings.gif' locSection='settings' _width='48' _height='48'}{tr}Settings{/tr}{/self_link}
 			<br>
@@ -39,65 +38,12 @@
 <hr/>
 
 {if $locSection eq 'settings'}
-	{tabset  name='tabs_webmail_settings'}
+	{tabset name='tabs_webmail_settings'}
+
 		{tab name="{tr}List{/tr}"}
 			{if count($accounts) != 0}
 				<h2>{tr}Personal email accounts{/tr}</h2>
-                <div class="table-responsive">
-				<table class="table normal">
-					<tr>
-						<th>{tr}Active{/tr}</th>
-						<th>{tr}Account{/tr}</th>
-						<th>{tr}Server{/tr}</th>
-						<th>{tr}Username{/tr}</th>
-						<th>{tr}Action{/tr}</th>
-					</tr>
-
-					{section name=ix loop=$accounts}
-						{if $accounts[ix].current eq 'y' and $accounts[ix].user eq $user or $accounts[ix].accountId eq $mailCurrentAccount}{assign var=active value=true}{else}{assign var=active value=false}{/if}
-						<tr>
-							<td class="icon">
-								{if !$active}
-									{self_link _icon='star_grey' current=$accounts[ix].accountId}{tr}Activate{/tr}{/self_link}
-								{else}
-									{icon _id='star' alt="{tr}This is the active account.{/tr}"}
-								{/if}
-							</td>
-							<td class="username">
-								{if !$active}
-									{self_link current=$accounts[ix].accountId _title="{tr}Activate{/tr}"}{$accounts[ix].account}{/self_link}
-								{else}
-									{$accounts[ix].account|escape}
-								{/if}
-							</td>
-							<td class="text">
-								{if !empty($accounts[ix].imap)}{tr}IMAP:{/tr} {$accounts[ix].imap} ({$accounts[ix].port})
-								{elseif !empty($accounts[ix].mbox)}{tr}Mbox:{/tr} {$accounts[ix].mbox}
-								{elseif !empty($accounts[ix].maildir)}{tr}Maildir:{/tr} {$accounts[ix].maildir}
-								{elseif !empty($accounts[ix].pop)}{tr}POP3:{/tr} {$accounts[ix].pop} ({$accounts[ix].port}){/if}
-							</td>
-							<td class="username">
-								{$accounts[ix].username}
-							</td>
-							<td class="action">
-								{self_link _icon='page_edit' accountId=$accounts[ix].accountId}{tr}Edit{/tr}{/self_link}
-								{self_link _icon='cross' remove=$accounts[ix].accountId}{tr}Delete{/tr}{/self_link}
-								{if !$active}
-									{self_link _icon='accept' current=$accounts[ix].accountId}{tr}Activate{/tr}{/self_link}
-								{/if}
-							</td>
-						</tr>
-					{sectionelse}
-						{norecords _colspan=5}
-					{/section}
-				</table>
-                </div>
-			{/if}
-
-			{if $tiki_p_use_group_webmail eq 'y'}
-				{if count($pubAccounts) != 0}
-					<h2>{tr}Group email accounts{/tr}</h2>
-                    <div class="table-responsive">
+				<div class="table-responsive">
 					<table class="table normal">
 						<tr>
 							<th>{tr}Active{/tr}</th>
@@ -107,37 +53,37 @@
 							<th>{tr}Action{/tr}</th>
 						</tr>
 
-						{section name=ixp loop=$pubAccounts}
-							{if $pubAccounts[ixp].current eq 'y' and $pubAccounts[ixp].user eq $user or $pubAccounts[ixp].accountId eq $mailCurrentAccount}{assign var=active value=true}{else}{assign var=active value=false}{/if}
+						{section name=ix loop=$accounts}
+							{if $accounts[ix].current eq 'y' and $accounts[ix].user eq $user or $accounts[ix].accountId eq $mailCurrentAccount}{assign var=active value=true}{else}{assign var=active value=false}{/if}
 							<tr>
 								<td class="icon">
 									{if !$active}
-										{self_link _icon='star_grey' current=$pubAccounts[ixp].accountId}{tr}Activate{/tr}{/self_link}
+										{self_link _icon='star_grey' current=$accounts[ix].accountId}{tr}Activate{/tr}{/self_link}
 									{else}
 										{icon _id='star' alt="{tr}This is the active account.{/tr}"}
 									{/if}
 								</td>
 								<td class="username">
 									{if !$active}
-										{self_link current=$pubAccounts[ixp].accountId _title="{tr}Activate{/tr}"}{$pubAccounts[ixp].account}{/self_link}
+										{self_link current=$accounts[ix].accountId _title="{tr}Activate{/tr}"}{$accounts[ix].account}{/self_link}
 									{else}
-										{$pubAccounts[ixp].account|escape}
+										{$accounts[ix].account|escape}
 									{/if}
 								</td>
 								<td class="text">
-									{if !empty($pubAccounts[ixp].imap)}{tr}IMAP:{/tr} {$pubAccounts[ixp].imap} ({$pubAccounts[ixp].port})
-									{elseif !empty($pubAccounts[ixp].mbox)}{tr}Mbox:{/tr} {$pubAccounts[ixp].mbox}
-									{elseif !empty($pubAccounts[ixp].maildir)}{tr}Maildir:{/tr} {$pubAccounts[ixp].maildir}
-									{elseif !empty($pubAccounts[ixp].pop)}{tr}POP3:{/tr} {$pubAccounts[ixp].pop} ({$pubAccounts[ixp].port}){/if}
+									{if !empty($accounts[ix].imap)}{tr}IMAP:{/tr} {$accounts[ix].imap} ({$accounts[ix].port})
+									{elseif !empty($accounts[ix].mbox)}{tr}Mbox:{/tr} {$accounts[ix].mbox}
+									{elseif !empty($accounts[ix].maildir)}{tr}Maildir:{/tr} {$accounts[ix].maildir}
+									{elseif !empty($accounts[ix].pop)}{tr}POP3:{/tr} {$accounts[ix].pop} ({$accounts[ix].port}){/if}
 								</td>
-								<td class="username">{$pubAccounts[ixp].username}</td>
+								<td class="username">
+									{$accounts[ix].username}
+								</td>
 								<td class="action">
-									{if $tiki_p_admin_group_webmail eq 'y'or $tiki_p_admin eq 'y'}
-										{self_link _icon='page_edit' accountId=$pubAccounts[ixp].accountId}{tr}Edit{/tr}{/self_link}
-										{self_link _icon='cross' remove=$pubAccounts[ixp].accountId}{tr}Delete{/tr}{/self_link}
-									{/if}
+									{self_link _icon='page_edit' accountId=$accounts[ix].accountId}{tr}Edit{/tr}{/self_link}
+									{self_link _icon='cross' remove=$accounts[ix].accountId}{tr}Delete{/tr}{/self_link}
 									{if !$active}
-										{self_link _icon='accept' current=$pubAccounts[ixp].accountId}{tr}Activate{/tr}{/self_link}
+										{self_link _icon='accept' current=$accounts[ix].accountId}{tr}Activate{/tr}{/self_link}
 									{/if}
 								</td>
 							</tr>
@@ -145,13 +91,73 @@
 							{norecords _colspan=5}
 						{/section}
 					</table>
-                    </div>
+				</div>
+			{/if}
+
+			{if $tiki_p_use_group_webmail eq 'y'}
+				{if count($pubAccounts) != 0}
+					<h2>{tr}Group email accounts{/tr}</h2>
+					<div class="table-responsive">
+						<table class="table normal">
+							<tr>
+								<th>{tr}Active{/tr}</th>
+								<th>{tr}Account{/tr}</th>
+								<th>{tr}Server{/tr}</th>
+								<th>{tr}Username{/tr}</th>
+								<th>{tr}Action{/tr}</th>
+							</tr>
+
+							{section name=ixp loop=$pubAccounts}
+								{if $pubAccounts[ixp].current eq 'y' and $pubAccounts[ixp].user eq $user or $pubAccounts[ixp].accountId eq $mailCurrentAccount}{assign var=active value=true}{else}{assign var=active value=false}{/if}
+								<tr>
+									<td class="icon">
+										{if !$active}
+											{self_link _icon='star_grey' current=$pubAccounts[ixp].accountId}{tr}Activate{/tr}{/self_link}
+										{else}
+											{icon _id='star' alt="{tr}This is the active account.{/tr}"}
+										{/if}
+									</td>
+									<td class="username">
+										{if !$active}
+											{self_link current=$pubAccounts[ixp].accountId _title="{tr}Activate{/tr}"}{$pubAccounts[ixp].account}{/self_link}
+										{else}
+											{$pubAccounts[ixp].account|escape}
+										{/if}
+									</td>
+									<td class="text">
+										{if !empty($pubAccounts[ixp].imap)}
+											{tr}IMAP:{/tr} {$pubAccounts[ixp].imap} ({$pubAccounts[ixp].port})
+										{elseif !empty($pubAccounts[ixp].mbox)}
+											{tr}Mbox:{/tr} {$pubAccounts[ixp].mbox}
+										{elseif !empty($pubAccounts[ixp].maildir)}
+											{tr}Maildir:{/tr} {$pubAccounts[ixp].maildir}
+										{elseif !empty($pubAccounts[ixp].pop)}
+											{tr}POP3:{/tr} {$pubAccounts[ixp].pop} ({$pubAccounts[ixp].port})
+										{/if}
+									</td>
+									<td class="username">{$pubAccounts[ixp].username}</td>
+									<td class="action">
+										{if $tiki_p_admin_group_webmail eq 'y'or $tiki_p_admin eq 'y'}
+											{self_link _icon='page_edit' accountId=$pubAccounts[ixp].accountId}{tr}Edit{/tr}{/self_link}
+											{self_link _icon='cross' remove=$pubAccounts[ixp].accountId}{tr}Delete{/tr}{/self_link}
+										{/if}
+										{if !$active}
+											{self_link _icon='accept' current=$pubAccounts[ixp].accountId}{tr}Activate{/tr}{/self_link}
+										{/if}
+									</td>
+								</tr>
+							{sectionelse}
+								{norecords _colspan=5}
+							{/section}
+						</table>
+					</div>
 				{/if}
 			{/if}
 		{/tab}
+
 		{if $accountId eq 0}{assign var="tablab" value="{tr}Create{/tr}"}{else}{assign var="tablab" value="{tr}Edit{/tr}"}{/if}
 		{tab name=$tablab}
-            <h2>{$tablab}</h2>
+			<h2>{$tablab}</h2>
 			{if $tiki_p_admin_personal_webmail eq 'y' or $tiki_p_admin_group_webmail eq 'y' or !isset($info.user) or $user eq $info.user}
 				<div id="settingsFormDiv">
 					<form action="tiki-webmail.php" method="post" name="settings">
@@ -300,6 +306,7 @@
 				{/remarksbox}
 			{/if}
 		{/tab}
+
 	{/tabset}
 {/if}
 
@@ -350,50 +357,50 @@
 		<input type="submit" class="btn btn-default btn-sm" name="operate" value="{tr}Mark{/tr}">
 		<br>
 		<br>
-        <div class="table-responsive">
-		<table class="table normal webmail_list">
-			<tr>
-				<th>{select_all checkbox_names='msg[]'}</th>
-				<th>&nbsp;</th>
-				<th>{tr}Sender{/tr}</th>
-				<th>{tr}Subject{/tr}</th>
-				<th>{tr}Date{/tr}</th>
-				<th>{tr}Size{/tr}</th>
-			</tr>
-			{section name=ix loop=$list}
-				{if $list[ix].isRead eq 'y'}
-					{assign var=class value="webmail_read"}
-				{else}
-					{assign var=class value=""}
-				{/if}
-				<tr class="{$class}">
-					<td class="checkbox-cell">
-						<input type="checkbox" name="msg[]" value="{$list[ix].msgid}">
-						<input type="hidden" name="realmsg[{$list[ix].msgid}]" value="{$list[ix].realmsgid|escape}">
-					</td>
-					<td class="icon">
-						{if $list[ix].isFlagged eq 'y'}
-							<a href="javascript: submit_form('{$list[ix].realmsgid|escape}','n')"><img src="img/webmail/flagged.gif" alt="{tr}Flagged{/tr}"></a>
-						{else}
-							{if $prefs.webmail_quick_flags eq 'y'}
-								<a href="javascript: submit_form('{$list[ix].realmsgid|escape}','y')"><img src="img/webmail/unflagged.gif" alt="{tr}unFlagged{/tr}"></a>
-							{/if}
-						{/if}
-						{if $list[ix].isReplied eq 'y'}
-							<img src="img/webmail/replied.gif" alt="{tr}Replied{/tr}">
-						{/if}
-					</td>
-					<td class="email">{$list[ix].sender.name}</td>
-					<td class="text">
-						{self_link msgid=$list[ix].msgid locSection='read'}{$list[ix].subject}{/self_link}
-						{if $list[ix].has_attachment}<img src="img/webmail/clip.gif" alt="{tr}Clip{/tr}">{/if}
-					</td>
-					<td class="date">{$list[ix].timestamp|tiki_short_datetime}</td>
-					<td class="integer">{$list[ix].size|kbsize}</td>
+		<div class="table-responsive">
+			<table class="table normal webmail_list">
+				<tr>
+					<th>{select_all checkbox_names='msg[]'}</th>
+					<th>&nbsp;</th>
+					<th>{tr}Sender{/tr}</th>
+					<th>{tr}Subject{/tr}</th>
+					<th>{tr}Date{/tr}</th>
+					<th>{tr}Size{/tr}</th>
 				</tr>
-			{/section}
-		</table>
-        </div>
+				{section name=ix loop=$list}
+					{if $list[ix].isRead eq 'y'}
+						{assign var=class value="webmail_read"}
+					{else}
+						{assign var=class value=""}
+					{/if}
+					<tr class="{$class}">
+						<td class="checkbox-cell">
+							<input type="checkbox" name="msg[]" value="{$list[ix].msgid}">
+							<input type="hidden" name="realmsg[{$list[ix].msgid}]" value="{$list[ix].realmsgid|escape}">
+						</td>
+						<td class="icon">
+							{if $list[ix].isFlagged eq 'y'}
+								<a href="javascript: submit_form('{$list[ix].realmsgid|escape}','n')"><img src="img/webmail/flagged.gif" alt="{tr}Flagged{/tr}"></a>
+							{else}
+								{if $prefs.webmail_quick_flags eq 'y'}
+									<a href="javascript: submit_form('{$list[ix].realmsgid|escape}','y')"><img src="img/webmail/unflagged.gif" alt="{tr}unFlagged{/tr}"></a>
+								{/if}
+							{/if}
+							{if $list[ix].isReplied eq 'y'}
+								<img src="img/webmail/replied.gif" alt="{tr}Replied{/tr}">
+							{/if}
+						</td>
+						<td class="email">{$list[ix].sender.name}</td>
+						<td class="text">
+							{self_link msgid=$list[ix].msgid locSection='read'}{$list[ix].subject}{/self_link}
+							{if $list[ix].has_attachment}<img src="img/webmail/clip.gif" alt="{tr}Clip{/tr}">{/if}
+						</td>
+						<td class="date">{$list[ix].timestamp|tiki_short_datetime}</td>
+						<td class="integer">{$list[ix].size|kbsize}</td>
+					</tr>
+				{/section}
+			</table>
+		</div>
 	</form>
 {/if}
 
@@ -517,20 +524,22 @@
 			{button _flip_id=$wmid _text="{tr}Part:{/tr} "|cat:$bodies[ix].contentType _flip_default_open=$wmopen}
 		</div>
 		<div id="{$wmid}" class="{$wmclass}" {if $wmopen eq 'n'}style="display:none"{/if}>
-{$bodies[ix].body}
+			{$bodies[ix].body}
 		</div>
 	{/section}
 	<div>
 		{button _flip_id='webmail_message_source_'|cat:$msgid _text="{tr}Source:{/tr} " _flip_default_open='n'}
 	</div>
 	<div id="webmail_message_source_{$msgid}" class="webmail_message webmail_mono" style="display:none">
-{$allbodies|nl2br}
+		{$allbodies|nl2br}
 	</div>
 
 	{section name=ix loop=$attachs}
-		<div class="panel panel-default"><div class="panel-body">
-			<a class="link" href="tiki-webmail_download_attachment.php?locSection=read&amp;msgid={$msgid}&amp;getpart={$attachs[ix].part}">{$attachs[ix].name|iconify}{$attachs[ix].name}</a>
-		</div></div>
+		<div class="panel panel-default">
+			<div class="panel-body">
+				<a class="link" href="tiki-webmail_download_attachment.php?locSection=read&amp;msgid={$msgid}&amp;getpart={$attachs[ix].part}">{$attachs[ix].name|iconify}{$attachs[ix].name}</a>
+			</div>
+		</div>
 	{/section}
 {/if}
 {if $locSection eq 'compose'}
@@ -614,41 +623,41 @@
 				{tr}The following addresses are not in your address book{/tr}
 				<br><br>
 				<form action="tiki-webmail.php" method="post">
-                    <div class="table-responsive">
-					<table class="table normal">
-						<tr>
-							<th>&nbsp;</th>
-							<th>{tr}Email{/tr}</th>
-							<th>{tr}First Name{/tr}</th>
-							<th>{tr}Last Name{/tr}</th>
-							<th>{tr}Nickname{/tr}</th>
-						</tr>
-						{section name=ix loop=$not_contacts}
+					<div class="table-responsive">
+						<table class="table normal">
 							<tr>
-								<td class="checkbox-cell">
-									<input type="checkbox" name="add[{$smarty.section.ix.index}]">
-									<input type="hidden" name="addemail[{$smarty.section.ix.index}]" value="{$not_contacts[ix]|escape}">
-								</td>
-								<td class="email">{$not_contacts[ix]}</td>
-								<td class="text">
-									<input type="text" name="addFirstName[{$smarty.section.ix.index}]">
-								</td>
-								<td class="text">
-									<input type="text" name="addLastName[{$smarty.section.ix.index}]">
-								</td>
-								<td class="text">
-									<input type="text" name="addNickname[{$smarty.section.ix.index}]">
+								<th>&nbsp;</th>
+								<th>{tr}Email{/tr}</th>
+								<th>{tr}First Name{/tr}</th>
+								<th>{tr}Last Name{/tr}</th>
+								<th>{tr}Nickname{/tr}</th>
+							</tr>
+							{section name=ix loop=$not_contacts}
+								<tr>
+									<td class="checkbox-cell">
+										<input type="checkbox" name="add[{$smarty.section.ix.index}]">
+										<input type="hidden" name="addemail[{$smarty.section.ix.index}]" value="{$not_contacts[ix]|escape}">
+									</td>
+									<td class="email">{$not_contacts[ix]}</td>
+									<td class="text">
+										<input type="text" name="addFirstName[{$smarty.section.ix.index}]">
+									</td>
+									<td class="text">
+										<input type="text" name="addLastName[{$smarty.section.ix.index}]">
+									</td>
+									<td class="text">
+										<input type="text" name="addNickname[{$smarty.section.ix.index}]">
+									</td>
+								</tr>
+							{/section}
+							<tr>
+								<td>&nbsp;</td>
+								<td>
+									<input type="submit" class="btn btn-default btn-sm" name="add_contacts" value="{tr}Add Contacts{/tr}">
 								</td>
 							</tr>
-						{/section}
-						<tr>
-							<td>&nbsp;</td>
-							<td>
-								<input type="submit" class="btn btn-default btn-sm" name="add_contacts" value="{tr}Add Contacts{/tr}">
-							</td>
-						</tr>
-					</table>
-                    </div>
+						</table>
+					</div>
 				</form>
 			{/if}
 		{/if}

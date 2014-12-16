@@ -12,7 +12,8 @@
 	<div class="tiki_sheet"
 		{if !empty($tiki_sheet_div_style)}
 			style="{$tiki_sheet_div_style}"
-		{/if}>{$thisGrid}</div>
+		{/if}>{$thisGrid}
+	</div>
 {/foreach}
 <div id="feedback" style="height: 1.5em; margin-left: .2em"><span></span></div>
 
@@ -48,13 +49,13 @@
 
 	<span id="editState">
 		{if $sheetId}
-			{button _id="edit_button" _text="{tr}Edit{/tr}" _htmlelement="role_main" _template="tiki-view_sheets.tpl" parse="edit" _auto_args="*"  _class=""}
+			{button _id="edit_button" _text="{tr}Edit{/tr}" _htmlelement="role_main" _template="tiki-view_sheets.tpl" parse="edit" _auto_args="*" _class=""}
 
 			{if $parseValues eq 'y'}
 				{if $parse eq 'y'}
-					{button parse="n" _text="{tr}No parse{/tr}"  _htmlelement="role_main" _template="tiki-view_sheets.tpl" sheetId="$sheetId" _auto_args="*"}
+					{button parse="n" _text="{tr}No parse{/tr}" _htmlelement="role_main" _template="tiki-view_sheets.tpl" sheetId="$sheetId" _auto_args="*"}
 				{else}
-					{button parse="y" _text="{tr}Parse{/tr}"  _htmlelement="role_main" _template="tiki-view_sheets.tpl" sheetId="$sheetId" _auto_args="*"}
+					{button parse="y" _text="{tr}Parse{/tr}" _htmlelement="role_main" _template="tiki-view_sheets.tpl" sheetId="$sheetId" _auto_args="*"}
 				{/if}
 			{/if}
 
@@ -62,11 +63,11 @@
 				{button href="tiki-history_sheets.php?sheetId=$sheetId" _text="{tr}History{/tr}"}
 			{/if}
 
-			{if  $objectperms->view_sheet}
+			{if $objectperms->view_sheet}
 				{button href="tiki-export_sheet.php?sheetId=$sheetId" _text="{tr}Export{/tr}"}
 			{/if}
 
-			{if  $objectperms->edit_sheet}
+			{if $objectperms->edit_sheet}
 				{button href="tiki-import_sheet.php?sheetId=$sheetId" _text="{tr}Import{/tr}"}
 			{/if}
 

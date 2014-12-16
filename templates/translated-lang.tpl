@@ -24,7 +24,7 @@
 					</a>
 				</li>
 			{/if}
-        </ul>
+		</ul>
 	{else}
 		<ul class="dropdown-menu dropdown-menu-right" role="menu">
 			<li>
@@ -128,18 +128,18 @@
 </div>
 {* this section is for the related javascripts *}
 {jq}
-$('a.attach_detach_translation').click(function() {
-    var object_type = $(this).data('object_type');
-    var object_to_translate = $(this).data('object_id');
-	$(this).serviceDialog({
-		title: '{tr}Manage translations{/tr}',
-		data: {
-			controller: 'translation',
-			action: 'manage',
-			type: object_type,
-			source: object_to_translate
-		}
-    });
-    return false;
-});
+	$('a.attach_detach_translation').click(function() {
+		var object_type = $(this).data('object_type');
+		var object_to_translate = $(this).data('object_id');
+		$(this).serviceDialog({
+			title: '{tr}Manage translations{/tr}',
+			data: {
+				controller: 'translation',
+				action: 'manage',
+				type: object_type,
+				source: object_to_translate
+			}
+		});
+		return false;
+	});
 {/jq}

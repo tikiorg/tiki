@@ -6,6 +6,6 @@
 {/block}
 
 {block name=content}
-    {$mid_data}
+	{$mid_data}
 {/block}
 

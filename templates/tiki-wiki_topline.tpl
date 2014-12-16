@@ -3,7 +3,7 @@
 		{if !isset($hide_page_header) or !$hide_page_header}
 			<div class="wikiinfo" style="float: left">
 				{if $prefs.wiki_page_name_above eq 'y' and $print_page ne 'y'}
-				    <a href="tiki-index.php?page={$page|escape:"url"}" class="titletop" title="{tr}refresh{/tr}">{$page|escape}</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{* The hard-coded spaces help selecting the page name for inclusion in a wiki link *}
+					<a href="tiki-index.php?page={$page|escape:"url"}" class="titletop" title="{tr}refresh{/tr}">{$page|escape}</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{* The hard-coded spaces help selecting the page name for inclusion in a wiki link *}
 				{/if}
 
 				{if $prefs.feature_wiki_pageid eq 'y' and $print_page ne 'y'}
@@ -22,13 +22,14 @@
 </div> {* div.wikitopline *}
 
 {if !isset($versioned) and $print_page ne 'y' and (!isset($hide_page_header) or !$hide_page_header)}
-<div class="wikiactions_wrapper clearfix">
-	<div class="wikiactions icons btn-group pull-right">
+	<div class="wikiactions_wrapper clearfix">
+		<div class="wikiactions icons btn-group pull-right">
 			{if $pdf_export eq 'y'}
 				<a href="tiki-print.php?{query display="pdf" page=$page}">
 					{icon name="pdf" class="btn btn-link btn-sm tikihelp" title=":{tr}PDF{/tr}"}
 				</a>
 			{/if}
+
 			{if $prefs.flaggedrev_approval neq 'y' or ! $revision_approval or $lastVersion eq $revision_displayed}
 				{if $editable and ($tiki_p_edit eq 'y' or $page|lower eq 'sandbox') and $beingEdited ne 'y' and $machine_translate_to_lang eq ''}
 					<a {ajax_href template="tiki-editpage.tpl"}tiki-editpage.php?page={$page|escape:"url"}{if !empty($page_ref_id) and $needsStaging neq 'y'}&amp;page_ref_id={$page_ref_id}{/if}{/ajax_href}>
@@ -80,6 +81,7 @@
 					{/if}
 				{/if}
 			{/if}
+
 			{if $prefs.feature_morcego eq 'y' && $prefs.wiki_feature_3d eq 'y'}
 				<a class="btn btn-link btn-sm tikihelp" title=":{tr}3d browser{/tr}" href="javascript:wiki3d_open('{$page|escape}',{$prefs.wiki_3d_width}, {$prefs.wiki_3d_height})">{icon name="wiki3d"}</a>
 			{/if}
@@ -109,6 +111,7 @@
 					{icon name="notepad" class="btn btn-link btn-sm tikihelp" title=":{tr}Save to notepad{/tr}"}
 				</a>
 			{/if}
+
 			{monitor_link type="wiki page" object=$page}
 			{if !empty($user) and $prefs.feature_user_watches eq 'y'}
 				{if $user_watching_page eq 'n'}
@@ -132,13 +135,14 @@
 					{/if}
 				{/if}
 			{/if}
+
 			{if $prefs.feature_group_watches eq 'y' and ( $tiki_p_admin_users eq 'y' or $tiki_p_admin eq 'y' )}
 				<a href="tiki-object_watches.php?objectId={$page|escape:"url"}&amp;watch_event=wiki_page_changed&amp;objectType=wiki+page&amp;objectName={$page|escape:"url"}&amp;objectHref={'tiki-index.php?page='|cat:$page|escape:"url"}" class="icon">
 					{icon name="watch-group" class="btn btn-link btn-sm tikihelp" title=":{tr}Group monitor{/tr}"}
 				</a>
 				{if $structure eq 'y'}
 					<a href="tiki-object_watches.php?objectId={$page_info.page_ref_id|escape:"url"}&amp;watch_event=structure_changed&amp;objectType=structure&amp;objectName={$page|escape:"url"}&amp;objectHref={'tiki-index.php?page_ref_id='|cat:$page_ref_id|escape:"url"}" class="icon">
-						{icon name="watch-group"  class="btn btn-link btn-sm tikihelp" title=":{tr}Group monitor on structure{/tr}"}
+						{icon name="watch-group" class="btn btn-link btn-sm tikihelp" title=":{tr}Group monitor on structure{/tr}"}
 					</a>
 				{/if}
 			{/if}
@@ -171,7 +175,7 @@
 				<div class="btn-group structures">
 					<a class="dropdown-toggle" data-toggle="dropdown">
 						{icon name="structure" title=":{tr}Structures{/tr}" class="btn btn-link btn-sm icon tikihelp"}
-					</>
+					</a>
 					<ul class="structure_poppedup dropdown-menu" role="menu">
 						<li role="presentation">
 							{section name=struct loop=$showstructs}
@@ -195,6 +199,6 @@
 					</ul>
 				</div>
 			{/if}
-	</div> {* END of wikiactions *}
-</div>
+		</div> {* END of wikiactions *}
+	</div>
 {/if}

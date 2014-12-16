@@ -60,7 +60,7 @@
 	{/if}
 
 	{if $prefs.feature_group_watches eq 'y' and ( $tiki_p_admin_users eq 'y' or $tiki_p_admin eq 'y' )}
-		<a href="tiki-object_watches.php?objectId={$forumId|escape:"url"}&amp;watch_event=forum_post_topic_and_thread&amp;objectType=forum&amp;objectName={$forum_info.name|escape:"url"}&amp;objectHref={'tiki-view_forum.php?forumId='|cat:$forumId|escape:"url"}" class="btn btn-link"  title="{tr}Group Monitor Topics and Threads of this Forum{/tr}">{icon name="watch-group"}</a>
+		<a href="tiki-object_watches.php?objectId={$forumId|escape:"url"}&amp;watch_event=forum_post_topic_and_thread&amp;objectType=forum&amp;objectName={$forum_info.name|escape:"url"}&amp;objectHref={'tiki-view_forum.php?forumId='|cat:$forumId|escape:"url"}" class="btn btn-link" title="{tr}Group Monitor Topics and Threads of this Forum{/tr}">{icon name="watch-group"}</a>
 	{/if}
 
 	<div class="categbar" align="right" >
@@ -205,7 +205,7 @@
 						<label class="col-sm-2 control-label" for="userfile1">{tr}Attach file{/tr}</label>
 						<div class="col-sm-10">
 							<input type="hidden" name="MAX_FILE_SIZE" value="{$forum_info.att_max_size|escape}">
-							<input name="userfile1" id="userfile1"  class="form-control" type="file">{tr}Maximum size:{/tr} {$forum_info.att_max_size|kbsize}
+							<input name="userfile1" id="userfile1" class="form-control" type="file">{tr}Maximum size:{/tr} {$forum_info.att_max_size|kbsize}
 						</div>
 					</div>
 				{/if}
@@ -242,7 +242,7 @@
 										$(this).addClass('ui-state-highlight');
 								});
 
-							ratings.filter('[data-val="'  + input.val() + '"]').addClass('ui-state-highlight');
+							ratings.filter('[data-val="' + input.val() + '"]').addClass('ui-state-highlight');
 
 							var btns = {};
 							btns[tr('Ok')] = function() {
@@ -460,7 +460,7 @@
 		{/if}
 	{/if}
 	<div id="{$ts_tableid}-div" class="table-responsive ts-wrapperdiv" {if $tsOn}style="visibility:hidden;"{/if}>
-		<table  id="{$ts_tableid}" class="table normal table-striped table-hover">
+		<table id="{$ts_tableid}" class="table normal table-striped table-hover">
 			<input type="hidden" {if $tsOn}id="{$ts_offsetid|escape}" {/if}name="offset" value="{$comments_offset|escape}">
 			<input type="hidden" {if $tsOn}id="{$ts_countid|escape}" {/if}name="count" value="{$comments_cant}">
 			<thead>
@@ -667,6 +667,7 @@
 		</table>
 	</div>
 </form>
+
 {if !$tsOn}
 	{pagination_links cant=$comments_cant step=$comments_per_page offset=$comments_offset offset_arg='comments_offset'}{/pagination_links}
 {/if}
@@ -693,6 +694,7 @@
 	</div>
 	<br>
 {/if}
+
 {if !$tsOn}
 	<div class="col-md-8" styles="padding-top:15px">
 		<div class="panel panel-default" id="filter-panel">
