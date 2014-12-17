@@ -60,7 +60,6 @@
 				{if !$smarty.foreach.list.last}{$separator}{/if}
 			{/foreach}
 		{/if}
-	{/strip}{* this empty line below is necessary to make separate rows *}
+	{/strip}{* this empty line below is necessary to make separate rows - but make sure there are no empty lines after the /foreach end tag to avoid empty rows being generated after every 100th row *}
 
 {/foreach}
-
