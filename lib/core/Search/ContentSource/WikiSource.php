@@ -48,6 +48,11 @@ class Search_ContentSource_WikiSource implements Search_ContentSource_Interface
 			$contributors[] = $info['user'];
 		}
 
+		if ($info['is_html']) {
+			// is_html flag does not get to the type handler, leaving HTML visible in the text provided
+			$info['data'] = strip_tags($info['data']);
+		}
+
 		$data = array(
 			'title' => $typeFactory->sortable($info['pageName']),
 			'language' => $typeFactory->identifier(empty($info['lang']) ? 'unknown' : $info['lang']),
