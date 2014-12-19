@@ -695,6 +695,7 @@ class EditLib
 	function saveCompleteTranslation()
 	{
 		$multilinguallib = TikiLib::lib('multilingual');
+		$tikilib = TikiLib::lib('tiki');
 
 		$sourceInfo = $tikilib->get_page_info($this->sourcePageName);
 		$targetInfo = $tikilib->get_page_info($this->targetPageName);
