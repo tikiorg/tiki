@@ -101,8 +101,8 @@ function smarty_function_icon($params, $smarty)
 			}
 		}
 		else { //if icon is not defined in not found in $iconset, than display bootstrap glyphicon warning-sign. Helps to detect missing icon definitions, typos
-				$icon_class = 'glyphicon glyphicon-warning-sign';
-				$tag = 'span';
+			$icon_class = 'glyphicon glyphicon-warning-sign';
+			$tag = 'span';
 		}
 			
 		//assemble icon, later enhance for svg
@@ -113,53 +113,40 @@ function smarty_function_icon($params, $smarty)
 			$html = "<$tag class=\"icon icon-$name $icon_class\"></$tag>";
 		}
 		
-		if (isset($params['href']) or isset($params['title'])) { //generate a link for the icon if href or title (for tips) parameter is set. This will produce a link element (<a>) around the icon. If you want a button element (<button>), use the {button} smarty_tiki function
+		if (!empty($params['href']) || !empty($params['title'])) { //generate a link for the icon if href or title (for tips) parameter is set. This will produce a link element (<a>) around the icon. If you want a button element (<button>), use the {button} smarty_tiki function
 			//collect link components
-			$a_title = '';
 			if (!empty($params['title'])) { //add title if not empty
 				$a_title = $params['title'];
-			}
-			else {
-				empty($a_title);
+			} else {
+				$a_title = '';
 			}
 
-			$a_class = '';
 			if (isset($params['class'])) { //if set, use these classes instead of the default bootstrap
 				$a_class = $params['class'];
-			}
-			else {
+			} else {
 				$a_class = 'btn btn-default btn-sm'; //the default classes to be used
 			}
 
-			$a_href = '';
 			if (!empty($params['href'])) { //use href if not empty
 				$a_href = 'href="' . $params['href'] . '"';
-			}
-			else {
-				empty($a_href); //if not set than don't generate this attribute 
+			} else {
+				$a_href = '';
 			}
 	
-			$a_datatoggle = '';
 			if (isset($params['data-toggle'])) { //add data-toggle if set
 				$a_datatoggle = 'data-toggle="' . $params['data-toggle'] . '"';
-			}
-			else {
-				empty($a_datatoggle); //if not set than don't generate this attribute 
+			} else {
+				$a_datatoggle = '';
 			}
 					
-			$a_onclick = '';
 			if (isset($params['onclick'])) { //add onclick if set
 				$a_onclick = 'onclick="' . $params['onclick'] . '"';
-			}
-			else {
-				empty($a_onclick); //if not set than don't generate this attribute 
+			} else {
+				$a_onclick = '';
 			}
 
 			//assemble the link from the components
 			$html = "<a class='$a_class' title='$a_title' $a_href $a_datatoggle $a_onclick>$html</a>";
-		}
-		else {//if href or title is not set, display the assembled icon as it is
-			$html = $html;
 		}
 		
 		//return the icon
