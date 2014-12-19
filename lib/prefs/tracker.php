@@ -94,6 +94,7 @@ function prefs_tracker_list()
 			'default' => 'n',
 			'dependencies' => ['feature_trackers'],
 			'tags' => ['advanced', 'experimental'],
+            'help' => 'Tracker+Tabular',
 		),
 	);
 }

@@ -44,6 +44,7 @@
         </fieldset>
          <fieldset class="table clearfix featurelist">
             <legend>{tr}Other features{/tr}</legend>
+                {preference name=tracker_tabular_enabled}
 				{preference name=mustread_enabled}
 				<div class="adminoptionboxchild" id="mustread_enabled_childcontainer">
 					{preference name=mustread_tracker}
