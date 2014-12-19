@@ -216,6 +216,8 @@ class EditLib
 	private function parseLinkTag(&$args, &$text, &$src, &$p)
 	{
 
+		global $prefs;
+
 		$link = '';
 		$link_open = '';
 		$link_close = '';
@@ -227,6 +229,13 @@ class EditLib
 		$cl_wiki_page = false; // Wiki page
 		$cl_ext_page = false; // external Wiki page
 		$cl_external = false; // external web page
+		$cl_semantic = ''; // semantic link
+		if ($prefs['feature_semantic'] === 'y') {
+			$semantic_tokens = TikiLib::lib('semantic')->getAllTokens();
+		} else {
+			$semantic_tokens = array();
+		}
+
 		$ext_wiki_name = '';
 
 		if ( isset($args['class']) && isset($args['href']) ) {
@@ -250,6 +259,9 @@ class EditLib
 						// if the preceding class was 'ext_page', then we have the name of the external Wiki
 						if ($i > 0 && $classes[$i-1] == 'ext_page') {
 							$ext_wiki_name = $cl;
+						}
+						if (in_array($cl, $semantic_tokens)) {
+							$cl_semantic = $cl;
 						}
 				}
 			}
@@ -303,7 +315,7 @@ class EditLib
 			/*
 			 * link to wiki page -> (( ))
 			 */
-			$link_open = '((';
+			$link_open = "($cl_semantic(";
 			$link_close = '))';
 
 			// remove the html part of the target
