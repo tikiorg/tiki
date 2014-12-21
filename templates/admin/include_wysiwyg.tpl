@@ -5,15 +5,15 @@
 
 <form action="tiki-admin.php?page=wysiwyg" method="post">
 	<div class="row">
-        <div class="form-group col-lg-12 clearfix">
+		<div class="form-group col-lg-12 clearfix">
 			<a role="button" class="btn btn-default btn-sm" href="tiki-admin_toolbars.php" title="{tr}Admin Toolbars{/tr}">
 				{icon name="admin"} {tr}Toolbars{/tr}
 			</a>
 			<div class="pull-right">
-                <input type="submit" class="btn btn-primary btn-sm" name="wysiwygfeatures" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}" />
-            </div>
-        </div>
-    </div>
+				<input type="submit" class="btn btn-primary btn-sm" name="wysiwygfeatures" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}" />
+			</div>
+		</div>
+	</div>
 
 	{if $prefs.wysiwyg_htmltowiki neq 'y'}
 		{remarksbox type="warning" title="{tr}Page links{/tr}"}{tr}Note that if the SEFURL feature is on, page links created using wysiwyg might not be automatically updated when pages are renamed. This is addressed through the "Use Wiki syntax in WYSIWYG" feature.{/tr}{/remarksbox}
@@ -55,16 +55,17 @@
 		<p class="description">
 			{preference name=feature_ajax}
 			<div class="adminoptionboxchild" id="feature_ajax_childcontainer">
-			{preference name=ajax_autosave}
+				{preference name=ajax_autosave}
 			</div>
+		</p>
 	</fieldset>
 
 	<div class="row">
-        <div class="form-group col-lg-12 clearfix">
-            <div class="text-center">
-                <input type="submit" class="btn btn-primary btn-sm" name="wysiwygfeatures" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}" />
-            </div>
-        </div>
-    </div>
+		<div class="form-group col-lg-12 clearfix">
+			<div class="text-center">
+				<input type="submit" class="btn btn-primary btn-sm" name="wysiwygfeatures" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}" />
+			</div>
+		</div>
+	</div>
 </form>
 

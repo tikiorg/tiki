@@ -194,7 +194,7 @@
 						}
 
 					}
-				} else {		// readyState not 4 (complete)
+				} else { // readyState not 4 (complete)
 
 					switch (req.readyState) {
 						case 1: {
@@ -235,7 +235,9 @@
 		</ul>
 	{/remarksbox}
 {/if}
+
 {tabset name='tabs_admin-profiles'}
+
 	{tab name="{tr}Apply{/tr}"}
 		{if $prefs.javascript_enabled eq 'y'}
 			{if $openSources == 'some'}
@@ -274,19 +276,19 @@
 								</div>
 								<input type="hidden" name="page" value="profiles"/>
 									{jq}
-if ($("#profile-0").length > 0) {
-	$(".quickmode_notes").hide();
-	$(window).scrollTop($("a[name=step2]").offset().top);
-} else {
-	$(".quickmode_notes").show();
-}
-$("#repository, #categories").change(function(){
-	if ($(this).val()) {
-		$(".quickmode_notes").hide(400);
-	} else {
-		$(".quickmode_notes").show(400);
-	}
-});
+										if ($("#profile-0").length > 0) {
+											$(".quickmode_notes").hide();
+											$(window).scrollTop($("a[name=step2]").offset().top);
+										} else {
+											$(".quickmode_notes").show();
+										}
+										$("#repository, #categories").change(function(){
+											if ($(this).val()) {
+												$(".quickmode_notes").hide(400);
+											} else {
+												$(".quickmode_notes").show(400);
+											}
+										});
 									{/jq}
 								</div>
 							<div class="form-group text-center">
@@ -332,34 +334,34 @@ $("#repository, #categories").change(function(){
 			{if isset($result) && $result|@count != '0'}
 				<h4>{tr}Select and apply profile <small>Click on a Configuration Profile Name below to review it and apply it on your site</small>{/tr}</h4>
 				<div class="table-responsive">
-				<table class="table normal">
-					<tr>
-						<th>{tr}Profile Name{/tr}</th>
-						<th>{tr}Repository{/tr}</th>
-						<th>{tr}Profile type{/tr}</th>
-					</tr>
-					{foreach key=k item=profile from=$result}
-						<tr id="profile-{$k}">
-							{if $profile.name == $show_details_for}
-								{assign var="show_details_for_profile_num" value="$k"}
-								{assign var="show_details_for_fullname" value=$profile.name|escape}
-								{assign var="show_details_for_domain" value=$profile.domain|escape}
-								<td>{$profile.name|escape}: {tr}See profile info below (may take a few seconds to load){/tr}.</td>
-							{else}
-								<td><a href="javascript:showDetails( 'profile-{$k}', '{$profile.domain|escape}', '{$profile.name|escape}' )">{$profile.name|escape}</a>{if $profile.installed} <em>{tr}applied{/tr}</em>{/if}</td>
-							{/if}
-
-							<td>{$profile.domain}</td>
-							<td>{$profile.categoriesString}</td>
+					<table class="table normal">
+						<tr>
+							<th>{tr}Profile Name{/tr}</th>
+							<th>{tr}Repository{/tr}</th>
+							<th>{tr}Profile type{/tr}</th>
 						</tr>
-					{/foreach}
-					{if $result|@count eq '0'}
-					<tr><td colspan="3" class="odd">{tr}None{/tr}</td></tr>
+						{foreach key=k item=profile from=$result}
+							<tr id="profile-{$k}">
+								{if $profile.name == $show_details_for}
+									{assign var="show_details_for_profile_num" value="$k"}
+									{assign var="show_details_for_fullname" value=$profile.name|escape}
+									{assign var="show_details_for_domain" value=$profile.domain|escape}
+									<td>{$profile.name|escape}: {tr}See profile info below (may take a few seconds to load){/tr}.</td>
+								{else}
+									<td><a href="javascript:showDetails( 'profile-{$k}', '{$profile.domain|escape}', '{$profile.name|escape}' )">{$profile.name|escape}</a>{if $profile.installed} <em>{tr}applied{/tr}</em>{/if}</td>
+								{/if}
+
+								<td>{$profile.domain}</td>
+								<td>{$profile.categoriesString}</td>
+							</tr>
+						{/foreach}
+						{if $result|@count eq '0'}
+							<tr><td colspan="3" class="odd">{tr}None{/tr}</td></tr>
+						{/if}
+					</table>
+					{if $show_details_for_profile_num != ""}
+						{jq}showDetails('profile-{{$show_details_for_profile_num}}', '{{$show_details_for_domain}}', '{{$show_details_for_fullname}}');{/jq}
 					{/if}
-				</table>
-				{if $show_details_for_profile_num != ""}
-					{jq}showDetails('profile-{{$show_details_for_profile_num}}', '{{$show_details_for_domain}}', '{{$show_details_for_fullname}}');{/jq}
-				{/if}
 				</div>
 			{/if}
 		{else}
@@ -368,6 +370,7 @@ $("#repository, #categories").change(function(){
 			{/remarksbox}
 		{/if}
 	{/tab}
+
 	{tab name="{tr}Export{/tr}"}
 		<h2>{tr}Export{/tr}</h2>
 		<form action="tiki-admin.php?page=profiles" method="post" role="form">
@@ -394,12 +397,11 @@ $("#repository, #categories").change(function(){
 						<label for="select_all_prefs_to_export">{tr}Toggle Visible{/tr}</label>
 						<input type="checkbox" id="select_all_prefs_to_export" />
 						<label for="export_show_added">{tr}Show added preferences{/tr}</label>
-						<input type="checkbox" name="export_show_added" id="export_show_added"
-								{if !empty($smarty.request.export_show_added)} checked="checked"{/if} />
+						<input type="checkbox" name="export_show_added" id="export_show_added" {if !empty($smarty.request.export_show_added)} checked="checked"{/if} >
 					</div>
 					<ul id="prefs_to_export_list" class="profile_export_list"{if $export_type neq "prefs"} style=display:none;"{/if}>
 
-						{foreach from=$modified_list  key="name" item="data"}
+						{foreach from=$modified_list key="name" item="data"}
 							<li>
 								{if is_array($data.current.expanded)}
 									{assign var=current value=$data.current.expanded|implode:", "}
@@ -408,7 +410,8 @@ $("#repository, #categories").change(function(){
 									{assign var=current value=$data.current.expanded}
 								{/if}
 								<input type="checkbox" name="prefs_to_export[{$name}]" value="{$current|escape}"
-										 id="checkbox_{$name}"{if isset($prefs_to_export[$name])} checked="checked"{/if} />
+									id="checkbox_{$name}"{if isset($prefs_to_export[$name])} checked="checked"{/if}
+								>
 								<label for="checkbox_{$name}">
 									{$name} = '<strong>{$current|truncate:40:"...":true|escape}</strong>'{* FIXME: This one line per preference display format is ugly and doesn't work for multiline values *}
 									<em>
@@ -430,10 +433,10 @@ $("#repository, #categories").change(function(){
 					</ul>
 					<ul id="modules_to_export_list" class="profile_export_list"{if $export_type neq "modules"} style=display:none;"{/if}>
 
-						{foreach from=$modules_for_export  key="name" item="data"}
+						{foreach from=$modules_for_export key="name" item="data"}
 							<li>
 								<input type="checkbox" name="modules_to_export[{$name}]" value="{$data.name|escape}"
-									   id="modcheckbox_{$name}"{if isset($modules_to_export[$name])} checked="checked"{/if} />
+									id="modcheckbox_{$name}"{if isset($modules_to_export[$name])} checked="checked"{/if} />
 								<label for="modcheckbox_{$name}">
 									{$data.data.name|escape} :
 									<em>
@@ -464,6 +467,7 @@ $("#repository, #categories").change(function(){
 			</fieldset>
 		</form>
 	{/tab}
+
 	{tab name="{tr}Advanced{/tr}"}
 		<h2>{tr}Advanced{/tr}</h2>
 		<fieldset>
@@ -519,6 +523,7 @@ $("#repository, #categories").change(function(){
 			</form>
 		</fieldset>
 	{/tab}
+
 {/tabset}
 
 {jq}

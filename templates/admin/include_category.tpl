@@ -7,8 +7,8 @@
 
 <form action="tiki-admin.php?page=category" method="post">
 	<input type="hidden" name="categorysetup" />
-    <div class="row">
-        <div class="form-group col-lg-12 clearfix">
+	<div class="row">
+		<div class="form-group col-lg-12 clearfix">
 			<a role="button" class="btn btn-default btn-sm" href="tiki-browse_categories.php" title="{tr}List{/tr}">
 				{icon name="list"} {tr}Browse Categories{/tr}
 			</a>
@@ -19,10 +19,10 @@
 				{icon name="sort"} {tr}Organize Objects{/tr}
 			</a>
 			<div class="pull-right">
-                <input type="submit" class="btn btn-primary btn-sm" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}">
-            </div>
-        </div>
-    </div>
+				<input type="submit" class="btn btn-primary btn-sm" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}">
+			</div>
+		</div>
+	</div>
 
 	<fieldset class="table">
 		<legend>{tr}Activate the feature{/tr}</legend>
@@ -60,8 +60,8 @@
 		{preference name=feature_category_transition}
 		{preference name=categories_used_in_tpl}
 		<div class="adminoptionboxchild" id="categories_used_in_tpl_childcontainer">
-				{preference name=feature_areas}
-				{preference name=areas_root}
+			{preference name=feature_areas}
+			{preference name=areas_root}
 		</div>
 		{preference name=category_jail}
 		{preference name=category_defaults}
@@ -89,12 +89,12 @@
 		{preference name=category_browse_count_objects}
 	</fieldset>
 
-    <br>{* I cheated. *}
-    <div class="row">
-        <div class="form-group col-lg-12 clearfix">
+	<br>{* I cheated. *}
+	<div class="row">
+		<div class="form-group col-lg-12 clearfix">
 			<div class="text-center">
-                <input type="submit" class="btn btn-primary btn-sm" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}">
-            </div>
-        </div>
-    </div>
+				<input type="submit" class="btn btn-primary btn-sm" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}">
+			</div>
+		</div>
+	</div>
 </form>

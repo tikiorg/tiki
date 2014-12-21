@@ -1,29 +1,29 @@
 <form action="tiki-admin.php?page=freetags" method="post">
-    <div class="row">
-        <div class="form-group col-lg-12 clearfix">
-            <a role="button" class="btn btn-default btn-sm" href="tiki-browse_freetags.php" title="{tr}List{/tr}">
+	<div class="row">
+		<div class="form-group col-lg-12 clearfix">
+			<a role="button" class="btn btn-default btn-sm" href="tiki-browse_freetags.php" title="{tr}List{/tr}">
 				{icon name="list"} {tr}Tags{/tr}
 			</a>
 			<div class="pull-right">
-                <input type="submit" class="btn btn-primary btn-sm" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}">
-            </div>
-        </div>
-    </div>
+				<input type="submit" class="btn btn-primary btn-sm" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}">
+			</div>
+		</div>
+	</div>
 
 	{tabset name="admin_freetags"}
 		{tab name="{tr}General Settings{/tr}"}
-            <h2>{tr}General Settings{/tr}</h2>
+			<h2>{tr}General Settings{/tr}</h2>
 
-	<fieldset class="table">
-		<legend>{tr}Activate the feature{/tr}</legend>
-		{preference name=feature_freetags visible="always"}
-	</fieldset>
+			<fieldset class="table">
+				<legend>{tr}Activate the feature{/tr}</legend>
+				{preference name=feature_freetags visible="always"}
+			</fieldset>
 
-	<fieldset class="table">
-		<legend>{tr}Plugins{/tr}</legend>
-		{preference name=wikiplugin_freetagged}
-		{preference name=wikiplugin_addfreetag}
-	</fieldset>
+			<fieldset class="table">
+				<legend>{tr}Plugins{/tr}</legend>
+				{preference name=wikiplugin_freetagged}
+				{preference name=wikiplugin_addfreetag}
+			</fieldset>
 
 			<fieldset>
 				<legend>{tr}Tags{/tr}{help url="Tags"}</legend>
@@ -81,7 +81,7 @@
 
 		{if $prefs.feature_morcego eq 'y'}
 			{tab name="{tr}3D Tag Browser Configuration{/tr}"}
-                <h2>{tr}3D Tag Browser Configuration{/tr}</h2>
+				<h2>{tr}3D Tag Browser Configuration{/tr}</h2>
 				{preference name=freetags_feature_3d}
 				<div id=freetags_feature_3d_childcontainer>
 					<fieldset>
@@ -116,13 +116,15 @@
 				</div>
 			{/tab}
 		{/if}
+
 	{/tabset}
-    <br>{* I cheated. *}
-    <div class="row">
-        <div class="form-group col-lg-12 clearfix">
+
+	<br>{* I cheated. *}
+	<div class="row">
+		<div class="form-group col-lg-12 clearfix">
 			<div class="text-center">
-                <input type="submit" class="btn btn-primary btn-sm" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}">
-            </div>
-        </div>
-    </div>
+				<input type="submit" class="btn btn-primary btn-sm" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}">
+			</div>
+		</div>
+	</div>
 </form>

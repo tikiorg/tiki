@@ -13,14 +13,14 @@
 
 <form class="admin" id="security" name="security" action="tiki-admin.php?page=security" method="post">
 	<div class="row">
-        <div class="form-group col-lg-12 clearfix">
+		<div class="form-group col-lg-12 clearfix">
 			<div class="pull-right">
 				<input type="submit" class="btn btn-primary btn-sm" name="security" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}" />
 			</div>
-        </div>
-    </div>
+		</div>
+	</div>
 
-{tabset}
+	{tabset}
 
 		{tab name="{tr}General Security{/tr}"}
 			<h2>{tr}General Security{/tr}</h2>
@@ -33,17 +33,17 @@
 					</a>
 					</p>
 				{else}
-					<p class="mysqlsslstatus"><img src="img/icons/lock_open.png"  style="outline:pink solid thin"/> {tr}MySQL connection is not encrypted{/tr}<br>
+					<p class="mysqlsslstatus"><img src="img/icons/lock_open.png" style="outline:pink solid thin"/> {tr}MySQL connection is not encrypted{/tr}<br>
 					{tr}To activate SSL, copy the keyfiles (.pem) til db/cert folder. The filenames must end with "-key.pem", "-cert.pem", "-ca.pem"{/tr}
 					<a class="tikihelp" title="MySQL SSL" target="tikihelp" href="http://doc.tiki.org/MySQL SSL">
-                        {icon name="help"}
+						{icon name="help"}
 					</a>
 					</p>
 				{/if}
 			{else}
 				<p><img src="img/icons/lock_gray.png" style="outline:pink solid thin"/> {tr}MySQL Server does not have SSL activated{/tr}
 				<a class="tikihelp" title="MySQL SSL" target="tikihelp" href="http://doc.tiki.org/MySQL SSL">
-                    {icon name="help"}
+					{icon name="help"}
 				</a>
 				</p>
 			{/if}
@@ -87,35 +87,35 @@
 				The user can add passwords for a registered password domain.
 				{preference name=feature_password_domains}
 			</div>
-		<fieldset>
-			<legend>{tr}CSRF Security{/tr}{help url="Security"}</legend>
-			<div class="adminoptionbox">
-				{tr}Use these options to protect against cross-site request forgeries (CSRF){/tr}.
-			</div>
-			{preference name=feature_ticketlib}
-			{preference name=feature_ticketlib2}
-		</fieldset>
+			<fieldset>
+				<legend>{tr}CSRF Security{/tr}{help url="Security"}</legend>
+				<div class="adminoptionbox">
+					{tr}Use these options to protect against cross-site request forgeries (CSRF){/tr}.
+				</div>
+				{preference name=feature_ticketlib}
+				{preference name=feature_ticketlib2}
+			</fieldset>
 		{/tab}
 
 		{tab name="{tr}Spam protection{/tr}"}
-            <h2>{tr}Spam protection{/tr}</h2>
+			<h2>{tr}Spam protection{/tr}</h2>
 			{remarksbox type="tip" title="{tr}Tip{/tr}"}
 				{tr}You can additionally protect from spam enabling the "<a href="http://doc.tiki.org/Forum+Admin#Forum_moderation" target="_blank">moderation queue on forums</a>", or through <strong>banning</strong> multiple ip's from the "<a href="tiki-admin_actionlog.php" target="_blank">Action log</a>", from "<a href="tiki-adminusers.php" target="_blank">Users registration</a>", or from the "<a href="tiki-list_comments.php" target="_blank">Comments moderation queue</a>" itself{/tr}.
 			{/remarksbox}
 			<fieldset>
-			<legend>{tr}Captcha{/tr}</legend>
-			{preference name=feature_antibot}
+				<legend>{tr}Captcha{/tr}</legend>
+				{preference name=feature_antibot}
 				{preference name=captcha_wordLen}
 				{preference name=captcha_width}
 				{preference name=captcha_noise}
-			<div class="adminoptionboxchild" id="feature_antibot_childcontainer">
-				{preference name=recaptcha_enabled}
-				<div class="adminoptionboxchild" id="recaptcha_enabled_childcontainer">
-					{preference name=recaptcha_pubkey}
-					{preference name=recaptcha_privkey}
-					{preference name=recaptcha_theme}
+				<div class="adminoptionboxchild" id="feature_antibot_childcontainer">
+					{preference name=recaptcha_enabled}
+					<div class="adminoptionboxchild" id="recaptcha_enabled_childcontainer">
+						{preference name=recaptcha_pubkey}
+						{preference name=recaptcha_privkey}
+						{preference name=recaptcha_theme}
+					</div>
 				</div>
-			</div>
 			</fieldset>
 			{preference name=feature_wiki_protect_email}
 			{preference name=feature_wiki_ext_rel_nofollow}
@@ -123,54 +123,54 @@
 
 			{preference name=feature_comments_moderation}
 			{preference name=comments_akismet_filter}
-				<div class="adminoptionboxchild" id="comments_akismet_filter_childcontainer">
-					{preference name=comments_akismet_apikey}
-					{preference name=comments_akismet_check_users}
-				</div>
+			<div class="adminoptionboxchild" id="comments_akismet_filter_childcontainer">
+				{preference name=comments_akismet_apikey}
+				{preference name=comments_akismet_check_users}
+			</div>
 
 			{preference name=useRegisterPasscode}
-				<div class="adminoptionboxchild" id="useRegisterPasscode_childcontainer">
-					{preference name=registerPasscode}
-					{preference name=showRegisterPasscode}
-				</div>
+			<div class="adminoptionboxchild" id="useRegisterPasscode_childcontainer">
+				{preference name=registerPasscode}
+				{preference name=showRegisterPasscode}
+			</div>
 
 			{preference name=registerKey}
 		{/tab}
 
 		{tab name="{tr}Search results{/tr}"}
-            <h2>{tr}Search results{/tr}</h2>
-				{preference name=feature_search_show_forbidden_cat}
-				{preference name=feature_search_show_forbidden_obj}
+			<h2>{tr}Search results{/tr}</h2>
+			{preference name=feature_search_show_forbidden_cat}
+			{preference name=feature_search_show_forbidden_obj}
 		{/tab}
 
 		{tab name="{tr}Site Access{/tr}"}
-            <h2>{tr}Site Access{/tr}</h2>
-				{preference name=site_closed}
-				<div class="adminoptionboxchild" id="site_closed_childcontainer">
-					{preference name=site_closed_msg}
-				</div>
+			<h2>{tr}Site Access{/tr}</h2>
+			{preference name=site_closed}
+			<div class="adminoptionboxchild" id="site_closed_childcontainer">
+				{preference name=site_closed_msg}
+			</div>
 
-				{preference name=use_load_threshold}
-				<div class="adminoptionboxchild" id="use_load_threshold_childcontainer">
-					{preference name=load_threshold}
-					{preference name=site_busy_msg}
-				</div>
+			{preference name=use_load_threshold}
+			<div class="adminoptionboxchild" id="use_load_threshold_childcontainer">
+				{preference name=load_threshold}
+				{preference name=site_busy_msg}
+			</div>
 		{/tab}
 
 		{tab name="{tr}Tokens{/tr}"}
-            <h2>{tr}Tokens{/tr}</h2>
-				{remarksbox type="tip" title="{tr}Tip{/tr}"}
-					{tr}To manage tokens go to <a href="tiki-admin_tokens.php">Admin Tokens</a> page{/tr}
-				{/remarksbox}
-				{preference name=auth_token_access}
-				{preference name=auth_token_access_maxtimeout}
-				{preference name=auth_token_access_maxhits}
-				{preference name=auth_token_tellafriend}
-				{preference name=auth_token_share}
+			<h2>{tr}Tokens{/tr}</h2>
+			{remarksbox type="tip" title="{tr}Tip{/tr}"}
+				{tr}To manage tokens go to <a href="tiki-admin_tokens.php">Admin Tokens</a> page{/tr}
+			{/remarksbox}
+			{preference name=auth_token_access}
+			{preference name=auth_token_access_maxtimeout}
+			{preference name=auth_token_access_maxhits}
+			{preference name=auth_token_tellafriend}
+			{preference name=auth_token_share}
 		{/tab}
 
 		{tab name="{tr}OpenPGP{/tr}"}
-            <h2>{tr}OpenPGP{/tr}</h2>
+			<h2>{tr}OpenPGP{/tr}</h2>
 			<fieldset>
 				<legend>{tr}OpenPGP fuctionality for PGP/MIME encrypted email messaging{/tr}</legend>
 				{remarksbox type="tip" title="{tr}Note{/tr}"}
@@ -195,15 +195,15 @@
 					{/remarksbox}
 				</div>
 			</fieldset>
-
 		{/tab}
 
-{/tabset}
+	{/tabset}
+
 	<div class="row">
-        <div class="form-group col-lg-12 clearfix">
+		<div class="form-group col-lg-12 clearfix">
 			<div class="text-center">
 				<input type="submit" class="btn btn-primary btn-sm" name="security" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}" />
 			</div>
-        </div>
-    </div>
+		</div>
+	</div>
 </form>

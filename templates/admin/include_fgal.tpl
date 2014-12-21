@@ -26,20 +26,20 @@
 
 <form action="tiki-admin.php?page=fgal" method="post">
 
-    <div class="row">
-        <div class="form-group col-lg-12 clearfix">
+	<div class="row">
+		<div class="form-group col-lg-12 clearfix">
 			<a role="button" class="btn btn-default btn-sm" href="tiki-list_file_gallery.php" title="{tr}List{/tr}">
 				{icon name="list"} {tr}Files{/tr}
 			</a>
-            <div class="pull-right">
-                <input type="submit" class="btn btn-primary btn-sm" name="filegalhandlers" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}">
-            </div>
-        </div>
-    </div>
+			<div class="pull-right">
+				<input type="submit" class="btn btn-primary btn-sm" name="filegalhandlers" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}">
+			</div>
+		</div>
+	</div>
 	{tabset name="fgal_admin"}
 
 		{tab name="{tr}General Settings{/tr}"}
-            <h2>{tr}General Settings{/tr}</h2>
+			<h2>{tr}General Settings{/tr}</h2>
 
 			<fieldset class="table">
 				<legend>{tr}Activate the feature{/tr}</legend>
@@ -74,7 +74,7 @@
 				{preference name='feature_file_galleries_batch'}
 				<div class="adminoptionboxchild" id="feature_file_galleries_batch_childcontainer">
 					{remarksbox title="Note"}
-					{tr}You are highly recommended to use a file directory as the File Gallery storage, when using this feature{/tr}
+						{tr}You are highly recommended to use a file directory as the File Gallery storage, when using this feature{/tr}
 					{/remarksbox}
 					<br/>
 					{preference name='fgal_batch_dir'}
@@ -98,7 +98,7 @@
 
 				{preference name='fgal_fix_mime_type'}
 				<div class="adminoptionboxchild" id="fgal_fix_mime_type_childcontainer">
-				<input type="submit" class="btn btn-default btn-sm" name="updateMime" id="updateMime" value="{tr}Update mime of all non archived octet-stream files{/tr}" />
+					<input type="submit" class="btn btn-default btn-sm" name="updateMime" id="updateMime" value="{tr}Update mime of all non archived octet-stream files{/tr}" />
 				</div>
 
 				{preference name='fgal_upload_from_source'}
@@ -132,7 +132,7 @@
 		{/tab}
 
 		{tab name="{tr}Plugins{/tr}"}
-            <h2>{tr}Plugins{/tr}</h2>
+			<h2>{tr}Plugins{/tr}</h2>
 			<fieldset class="table">
 				<legend>{tr}Plugins{/tr}</legend>
 				{preference name=wikiplugin_files}
@@ -148,7 +148,7 @@
 		{/tab}
 
 		{tab name="{tr}Listings{/tr}"}
-            <h2>{tr}Listings{/tr}</h2>
+			<h2>{tr}Listings{/tr}</h2>
 			{remarksbox title="Note"}
 				{tr}Changing these settings will <em>not</em> affect existing file galleries. These changes will apply <em>only</em> to new file galleries{/tr}.
 			{/remarksbox}
@@ -197,7 +197,7 @@
 
 		{if $section eq 'admin'}
 			{tab name="{tr}Admin Listings{/tr}"}
-                <h2>{tr}Admin Listings{/tr}</h2>
+				<h2>{tr}Admin Listings{/tr}</h2>
 				<fieldset>
 					<legend>{tr}Select which items to display when admin galleries: {/tr}</legend>
 					<table class="table">
@@ -276,8 +276,9 @@
 				</div>
 			</div>
 		{/tab}
+
 		{tab name="{tr}Enhancements{/tr}"}
-            <h2>{tr}Enhancements{/tr}</h2>
+			<h2>{tr}Enhancements{/tr}</h2>
 
 			<fieldset>
 				<legend>{tr}Access{/tr}</legend>
@@ -330,12 +331,12 @@
 		{/tab}
 	{/tabset}
 
-    <br>{* I cheated. *}
-     <div class="row">
-        <div class="form-group col-lg-12 clearfix">
-            <div class="text-center">
-                <input type="submit" class="btn btn-primary btn-sm" name="filegalhandlers" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}">
-            </div>
-        </div>
-    </div>
+	<br>{* I cheated. *}
+	 <div class="row">
+		<div class="form-group col-lg-12 clearfix">
+			<div class="text-center">
+				<input type="submit" class="btn btn-primary btn-sm" name="filegalhandlers" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}">
+			</div>
+		</div>
+	</div>
 </form>

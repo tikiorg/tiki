@@ -7,18 +7,18 @@
 </div>
 
 <form action="tiki-admin.php?page=community" method="post">
-<div class="row">
-    <div class="form-group col-lg-12 clearfix">
-        <div class="pull-right">
-            <input type="submit" class="btn btn-primary btn-sm" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}">
-        </div>
-    </div>
-</div>
+	<div class="row">
+		<div class="form-group col-lg-12 clearfix">
+			<div class="pull-right">
+				<input type="submit" class="btn btn-primary btn-sm" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}">
+			</div>
+		</div>
+	</div>
 
 
-{tabset name="admin_community"}
+	{tabset name="admin_community"}
 		{tab name="{tr}User features{/tr}"}
-            <h2>{tr}User features{/tr}</h2>
+			<h2>{tr}User features{/tr}</h2>
 
 			<div class="admin featurelist">
 				{preference name=feature_score}
@@ -71,15 +71,15 @@
 				{preference name=user_favorites}
 				{preference name=feature_invite}
 				{preference name=feature_wizard_user}
-
 				{preference name=mustread_enabled}
 				<div class="adminoptionboxchild" id="mustread_enabled_childcontainer">
 					{preference name=mustread_tracker}
 				</div>
 			</div>
 		{/tab}
+
 		{tab name="{tr}Social Network{/tr}"}
-            <h2>{tr}Social Network{/tr}</h2>
+			<h2>{tr}Social Network{/tr}</h2>
 			<fieldset class="table">
 				<legend>{tr}Friendship and Followers{/tr}</legend>
 				{preference name=feature_friends}
@@ -117,19 +117,19 @@
 					<div><button href="#" id="graph-draw" class="button">{tr}Draw Event Diagram{/tr}</button></div>
 					<div><button href="{service controller=managestream action=list}" id="show-rules">{tr}Show Rules{/tr}</button></div>
 					{jq}
-					$('#graph-draw').click(function(e) {
-						$('#graph-canvas')
-							.empty()
-							.css('width', $window.width() - 50)
-							.css('height', $window.height() - 130)
-							.dialog({
-								title: "Events",
-								width: $window.width() - 20,
-								height: $window.height() - 100
-							})
-							.drawGraph();
-						return false;
-					});
+						$('#graph-draw').click(function(e) {
+							$('#graph-canvas')
+								.empty()
+								.css('width', $window.width() - 50)
+								.css('height', $window.height() - 130)
+								.dialog({
+									title: "Events",
+									width: $window.width() - 20,
+									height: $window.height() - 100
+								})
+								.drawGraph();
+							return false;
+						});
 					{/jq}
 				</div>
 			</fieldset>
@@ -143,7 +143,7 @@
 		{/tab}
 
 		{tab name="{tr}Plugins{/tr}"}
-            <h2>{tr}Plugins{/tr}</h2>
+			<h2>{tr}Plugins{/tr}</h2>
 			{preference name=wikiplugin_author}
 			{preference name=wikiplugin_avatar}
 			{preference name=wikiplugin_favorite}
@@ -168,7 +168,7 @@
 
 
 		{tab name="{tr}General Settings{/tr}"}
-            <h2>{tr}General Settings{/tr}</h2>
+			<h2>{tr}General Settings{/tr}</h2>
 			{preference name=user_show_realnames}
 			{preference name=user_in_search_result}
 			{preference name=highlight_group}
@@ -247,8 +247,9 @@
 				{preference name=users_prefs_mytiki_items}
 			</fieldset>
 		{/tab}
+
 		{tab name="{tr}BigBlueButton{/tr}"}
-            <h2>{tr}BigBlueButton{/tr}</h2>
+			<h2>{tr}BigBlueButton{/tr}</h2>
 			{preference name=bigbluebutton_feature}
 			<div class="adminoptionboxchild" id="bigbluebutton_feature_childcontainer">
 				{preference name=bigbluebutton_server_location}
@@ -257,13 +258,15 @@
 				{preference name=wikiplugin_bigbluebutton}
 			</div>
 		{/tab}
+
 	{/tabset}
-<br>{* I cheated. *}
-<div class="row">
-    <div class="form-group col-lg-12 clearfix">
-        <div class="text-center">
-            <input type="submit" class="btn btn-primary btn-sm" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}">
-        </div>
-    </div>
-</div>
+
+	<br>{* I cheated. *}
+	<div class="row">
+		<div class="form-group col-lg-12 clearfix">
+			<div class="text-center">
+				<input type="submit" class="btn btn-primary btn-sm" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}">
+			</div>
+		</div>
+	</div>
 </form>

@@ -2,12 +2,12 @@
 
 <form class="admin" id="performance" name="performance" action="tiki-admin.php?page=rating" method="post">
 	<div class="row">
-        <div class="form-group col-lg-12 clearfix">
-            <div class="pull-right">
+		<div class="form-group col-lg-12 clearfix">
+			<div class="pull-right">
 				<input type="submit" class="btn btn-primary btn-sm" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}" />
-            </div>
-        </div>
-    </div>
+			</div>
+		</div>
+	</div>
 
 	<fieldset>
 		<legend>{tr}Global configuration{/tr}</legend>
@@ -47,24 +47,25 @@
 	<fieldset>
 		<legend>{tr}Articles{/tr}</legend>
 		<table>
-		<tr>
-		<td style="width:49%">
-		{preference name=article_user_rating}
-		<div class="adminoptionboxchild" id="article_user_rating_childcontainer">
-			{preference name=article_user_rating_options}
-		</div>
-				<ul>
-					<li>{tr}You also need to set:{/tr} "{tr}Admin Types{/tr} > <strong>{tr}Comment can rate article{/tr}</strong>"</li>
-				</ul>
+			<tr>
+				<td style="width:49%">
+					{preference name=article_user_rating}
+					<div class="adminoptionboxchild" id="article_user_rating_childcontainer">
+						{preference name=article_user_rating_options}
+					</div>
+					<ul>
+						<li>{tr}You also need to set:{/tr} "{tr}Admin Types{/tr} > <strong>{tr}Comment can rate article{/tr}</strong>"</li>
+					</ul>
 				</td>
-				<td style="width:2%"><td>
-				<td style="width:49%"><div class="adminoptionboxchild" id="articles_simple_ratings_perms_childcontainer">
-				{tr}Permissions involved:{/tr}
-				<ul>
-					<li>{tr}articles{/tr} > rate_article</li>
-					<li>{tr}tiki{/tr} > ratings_view_results</li>
-				</ul>
-				</div>
+				<td style="width:2%"></td>
+				<td style="width:49%">
+					<div class="adminoptionboxchild" id="articles_simple_ratings_perms_childcontainer">
+						{tr}Permissions involved:{/tr}
+						<ul>
+							<li>{tr}articles{/tr} > rate_article</li>
+							<li>{tr}tiki{/tr} > ratings_view_results</li>
+						</ul>
+					</div>
 				</td>
 			</tr>
 		</table>
@@ -73,24 +74,25 @@
 	<fieldset>
 		<legend>{tr}Comments{/tr}</legend>
 		<table>
-		<tr>
-		<td style="width:49%">
-		{preference name=comments_vote}
-		{preference name=wiki_comments_simple_ratings}
-		<div class="adminoptionboxchild" id="wiki_comments_simple_ratings_childcontainer">
-			{preference name=wiki_comments_simple_ratings_options}
-			{tr}This preference needs to be disabled:{/tr}{preference name=wiki_comments_form_displayed_default}
-		</div>
+			<tr>
+				<td style="width:49%">
+					{preference name=comments_vote}
+					{preference name=wiki_comments_simple_ratings}
+					<div class="adminoptionboxchild" id="wiki_comments_simple_ratings_childcontainer">
+						{preference name=wiki_comments_simple_ratings_options}
+						{tr}This preference needs to be disabled:{/tr}{preference name=wiki_comments_form_displayed_default}
+					</div>
 				</td>
-				<td style="width:2%"><td>
-				<td style="width:49%"><div class="adminoptionboxchild" id="wiki_comments_simple_ratings_perms_childcontainer">
-				{tr}Permissions involved:{/tr}
-				<ul>
-					<li>{tr}comments{/tr} > vote_comments</li>
-					<li>{tr}wiki{/tr} > wiki_view_comments</li>
-					<li>{tr}tiki{/tr} > ratings_view_results</li>
-				</ul>
-				</div>
+				<td style="width:2%"></td>
+				<td style="width:49%">
+					<div class="adminoptionboxchild" id="wiki_comments_simple_ratings_perms_childcontainer">
+						{tr}Permissions involved:{/tr}
+						<ul>
+							<li>{tr}comments{/tr} > vote_comments</li>
+							<li>{tr}wiki{/tr} > wiki_view_comments</li>
+							<li>{tr}tiki{/tr} > ratings_view_results</li>
+						</ul>
+					</div>
 				</td>
 			</tr>
 		</table>
@@ -101,20 +103,21 @@
 		<table>
 			<tr>
 				<td style="width:49%">{tr}You need to:{/tr}
-				<ul>
-					<li>{tr}Create or Edit a forum and enable:{/tr} "<strong>{tr}Posts can be rated{/tr}</strong>"</li>
-					<li>{tr}While editing the forum, choose whether to show the "User information display > <strong>Topic Rating</strong>" by each user{/tr}</li>
-					<li>{tr}Set the rating options at{/tr} "{tr}Control Panels{/tr}" > {tr}Ratings{/tr}" > "{tr}Comments{/tr}" > "{tr}Simple wiki comment ratings{/tr}" > "<strong>{tr}Wiki rating options:{/tr}</strong>" ({tr}see above{/tr})</li>
-				</ul>
+					<ul>
+						<li>{tr}Create or Edit a forum and enable:{/tr} "<strong>{tr}Posts can be rated{/tr}</strong>"</li>
+						<li>{tr}While editing the forum, choose whether to show the "User information display > <strong>Topic Rating</strong>" by each user{/tr}</li>
+						<li>{tr}Set the rating options at{/tr} "{tr}Control Panels{/tr}" > {tr}Ratings{/tr}" > "{tr}Comments{/tr}" > "{tr}Simple wiki comment ratings{/tr}" > "<strong>{tr}Wiki rating options:{/tr}</strong>" ({tr}see above{/tr})</li>
+					</ul>
 				</td>
-				<td style="width:2%"><td>
-				<td style="width:49%"><div class="adminoptionboxchild" id="forums_ratings_perms_childcontainer">
-				{tr}Permissions involved:{/tr}
-				<ul>
-					<li>{tr}forums{/tr} > forum_vote</li>
-					<li>{tr}tiki{/tr} > ratings_view_results</li>
-				</ul>
-				</div>
+				<td style="width:2%"></td>
+				<td style="width:49%">
+					<div class="adminoptionboxchild" id="forums_ratings_perms_childcontainer">
+						{tr}Permissions involved:{/tr}
+						<ul>
+							<li>{tr}forums{/tr} > forum_vote</li>
+							<li>{tr}tiki{/tr} > ratings_view_results</li>
+						</ul>
+					</div>
 				</td>
 			</tr>
 		</table>
@@ -125,18 +128,20 @@
 		<table style="width:100%">
 			<tr>
 				<td style="width:49%">{tr}You need to enable the settings:{/tr}
-				<div class="adminoptionboxchild" id="rating_trackers_settings_childcontainer">{tr}Tracker Field:{/tr}
-				{preference name=trackerfield_rating}</div>
+					<div class="adminoptionboxchild" id="rating_trackers_settings_childcontainer">{tr}Tracker Field:{/tr}
+						{preference name=trackerfield_rating}
+					</div>
 				</td>
-				<td style="width:2%"><td>
-				<td style="width:49%"><div class="adminoptionboxchild" id="trackers_ratings_perms_childcontainer">
-				{tr}Permissions involved:{/tr}
-				<ul>
-					<li>{tr}trackers{/tr} > tracker_vote_ratings</li>
-					<li>{tr}trackers{/tr} > tracker_revote_ratings</li>
-					<li>{tr}trackers{/tr} > tracker_view_ratings</li>
-				</ul>
-				</div>
+				<td style="width:2%"></td>
+				<td style="width:49%">
+					<div class="adminoptionboxchild" id="trackers_ratings_perms_childcontainer">
+						{tr}Permissions involved:{/tr}
+						<ul>
+							<li>{tr}trackers{/tr} > tracker_vote_ratings</li>
+							<li>{tr}trackers{/tr} > tracker_revote_ratings</li>
+							<li>{tr}trackers{/tr} > tracker_view_ratings</li>
+						</ul>
+					</div>
 				</td>
 			</tr>
 		</table>
@@ -149,7 +154,7 @@
 			{preference name=rating_results_detailed_percent}
 		</div>
 		{preference name=rating_smileys}
-        {*{preference name=rating_options_reversed}*}
+		{*{preference name=rating_options_reversed}*}
 	</fieldset>
 
 	<fieldset>
@@ -158,13 +163,14 @@
 	</fieldset>
 
 	<div class="row">
-        <div class="form-group col-lg-12 clearfix">
-            <div class="text-center">
+		<div class="form-group col-lg-12 clearfix">
+			<div class="text-center">
 				<input type="submit" class="btn btn-primary btn-sm" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}" />
-            </div>
-        </div>
-    </div>
+			</div>
+		</div>
+	</div>
 </form>
+
 <div id="rating_advanced_childcontainer">
 	{foreach from=$configurations item=config}
 		<form class="config" method="post" action="">
@@ -197,21 +203,21 @@
 	</form>
 </div>
 {jq}
-$('form.config').submit( function( e ) {
-	return ! $(this).find('input[type=submit]').attr('disabled');
-} );
-$('form.config .error').hide();
-$('form.config textarea').change( function( e ) {
-	var text = this;
-	e.preventDefault();
-	var submit = $(this).closest('form').find('input[type=submit]').attr('disabled', true);
-	$.getJSON( window.location.href, { test: $(this).val() }, function( data ) {
-		submit.attr( 'disabled', ! data.valid );
-		if( data.valid ) {
-			$(text).closest('form').find('.error').hide();
-		} else {
-			$(text).closest('form').find('.error').show().text( data.message );
-		}
+	$('form.config').submit( function( e ) {
+		return ! $(this).find('input[type=submit]').attr('disabled');
 	} );
-} );
+	$('form.config .error').hide();
+	$('form.config textarea').change( function( e ) {
+		var text = this;
+		e.preventDefault();
+		var submit = $(this).closest('form').find('input[type=submit]').attr('disabled', true);
+		$.getJSON( window.location.href, { test: $(this).val() }, function( data ) {
+			submit.attr( 'disabled', ! data.valid );
+			if( data.valid ) {
+				$(text).closest('form').find('.error').hide();
+			} else {
+				$(text).closest('form').find('.error').show().text( data.message );
+			}
+		} );
+	} );
 {/jq}

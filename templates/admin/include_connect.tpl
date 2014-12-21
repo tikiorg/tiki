@@ -1,12 +1,13 @@
 <div>&nbsp;</div>
+
 {tabset}
+
 	{tab name="{tr}Tiki Connect{/tr}"}
-        <h2>{tr}Tiki Connect{/tr}</h2>
+		<h2>{tr}Tiki Connect{/tr}</h2>
 		<fieldset>
 			<legend><strong>{tr}Join the community!{/tr}</strong></legend>
 			<p>{tr}Tiki Wiki CMS Groupware is Free and Open Source Software (FOSS). It is a community-driven project which exists and improves thanks to the participation of people just like YOU.{/tr}</p>
-			<p>{button href="http://info.tiki.org/Join+the+community" _text="{tr}Join the Community{/tr}"}
-			</p>
+			<p>{button href="http://info.tiki.org/Join+the+community" _text="{tr}Join the Community{/tr}"}</p>
 		</fieldset>
 		<fieldset>
 			<legend><strong>{tr}Tiki news{/tr}</strong></legend>
@@ -47,18 +48,21 @@
 			</p>
 		</fieldset>
 	{/tab}
+
 	{tab name="{tr}Settings{/tr}"}
-        <h2>{tr}Settings{/tr}</h2>
+		<h2>{tr}Settings{/tr}</h2>
 		<form class="admin" id="connect" name="connect" action="tiki-admin.php?page=connect" method="post">
 			<fieldset>
 				<legend>{tr}Tiki Connect{/tr}</legend>
 				{remarksbox type="info" title="{tr}New Feature{/tr}" icon="bricks"}
 					<p><em>{tr}Please note: Experimental - work in progress{/tr}</em></p>
-                    <p>{tr}Tiki Connect is a way to let the Tiki project know how it is being used, and which parts people like or would like fixing (or explaining).{/tr}<br>
-                        {tr}Once enabled, when you click the '<strong>Send Info</strong>' button below you will be connected with <em>mother.tiki.org</em>, which is where the data will be collected.{/tr}</p>
-                    <p>{tr}You can also send feedback about Tiki by checking the 'Feedback' checkbox(once Tiki Connect is enabled, next to the 'Preference Filters' bar above).{/tr}
-                        {tr}Icons will appear next to all the preferences where you can 'like', request a 'fix' or ask 'what is this for?'{/tr}<br>
-                        {tr}Your votes are sent when you connect with mother.tiki.org (currently only by clicking the '<strong>Send Info</strong>' button){/tr}</p>
+					<p>{tr}Tiki Connect is a way to let the Tiki project know how it is being used, and which parts people like or would like fixing (or explaining).{/tr}<br>
+						{tr}Once enabled, when you click the '<strong>Send Info</strong>' button below you will be connected with <em>mother.tiki.org</em>, which is where the data will be collected.{/tr}
+					</p>
+					<p>{tr}You can also send feedback about Tiki by checking the 'Feedback' checkbox(once Tiki Connect is enabled, next to the 'Preference Filters' bar above).{/tr}
+						{tr}Icons will appear next to all the preferences where you can 'like', request a 'fix' or ask 'what is this for?'{/tr}<br>
+						{tr}Your votes are sent when you connect with mother.tiki.org (currently only by clicking the '<strong>Send Info</strong>' button){/tr}
+					</p>
 					<p>{tr}For more info{/tr} <a href="http://doc.tiki.org/Connect">{tr}click here{/tr}</a></p>
 				{/remarksbox}
 				{preference name="connect_feature"}
@@ -84,9 +88,11 @@
 						{preference name="connect_site_location"}
 						<div class="adminoptionboxchild" style="padding-left:5em;">
 							{$headerlib->add_map()}
-							<div class="adminoptionboxchild map-container" style="height:250px;width:400px;" data-geo-center="{defaultmapcenter}" data-target-field="connect_site_location"{if $prefs.connect_server_mode eq "y"}
+							<div class="adminoptionboxchild map-container" style="height:250px;width:400px;" data-geo-center="{defaultmapcenter}" 
+								data-target-field="connect_site_location"{if $prefs.connect_server_mode eq "y"}
 								data-icon-name="tiki" data-icon-src="img/tiki/tikiicon.png"
-								data-icon-size="[16,16]" data-icon-offset="[-8,-16]" data-marker-filter=".geolocated.connection"{/if}></div>
+								data-icon-size="[16,16]" data-icon-offset="[-8,-16]" data-marker-filter=".geolocated.connection"{/if}>
+							</div>
 						</div>
 					</div>
 					{preference name="connect_send_anonymous_info"}
@@ -112,6 +118,7 @@
 			</div>
 		</form>
 	{/tab}
+
 	{if $prefs.connect_server_mode eq "y"}
 		{tab name="{tr}Connections received{/tr}"}
 			<h2>{tr}Recent connections{/tr}</h2>
@@ -124,38 +131,39 @@
 				{/if}
 			</form>
 
-                <div class="table-responsive">
-                <table class="table normal">
-				<tr>
-					<th>{tr}Created{/tr}</th>
-					<th>{tr}Title{/tr}</th>
-					<th>{tr}Language{/tr}</th>
-					<th>{tr}Keywords{/tr}</th>
-				</tr>
-
-				{section name=connection loop=$connect_recent}
+			<div class="table-responsive">
+				<table class="table normal">
 					<tr>
-						<td>
-							{$connect_recent[connection].created}
-						</td>
-						<td class="text">
-							<a class="{$connect_recent[connection].class}" {$connect_recent[connection].metadata} href="{$connect_recent[connection].url}">{$connect_recent[connection].title|escape}</a>
-						</td>
-						<td>
-							{$connect_recent[connection].language}
-						</td>
-						<td>
-							{$connect_recent[connection].keywords}
-						</td>
+						<th>{tr}Created{/tr}</th>
+						<th>{tr}Title{/tr}</th>
+						<th>{tr}Language{/tr}</th>
+						<th>{tr}Keywords{/tr}</th>
 					</tr>
-				{sectionelse}
-					{norecords _colspan=4}
-				{/section}
-			</table>
-            </div>
+
+					{section name=connection loop=$connect_recent}
+						<tr>
+							<td>
+								{$connect_recent[connection].created}
+							</td>
+							<td class="text">
+								<a class="{$connect_recent[connection].class}" {$connect_recent[connection].metadata} href="{$connect_recent[connection].url}">{$connect_recent[connection].title|escape}</a>
+							</td>
+							<td>
+								{$connect_recent[connection].language}
+							</td>
+							<td>
+								{$connect_recent[connection].keywords}
+							</td>
+						</tr>
+					{sectionelse}
+						{norecords _colspan=4}
+					{/section}
+				</table>
+			</div>
 
 		{/tab}
 	{/if}
+
 	{tab name="{tr}Jitsi{/tr}"}
 		<form class="admin" id="connect" name="connect" action="tiki-admin.php?page=connect" method="post">
 			<fieldset>
@@ -178,4 +186,5 @@
 			</div>
 		</form>
 	{/tab}
+
 {/tabset}

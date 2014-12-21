@@ -1,14 +1,14 @@
 <form action="tiki-admin.php?page=calendar" method="post">
 	<div class="row">
-        <div class="form-group col-lg-12 clearfix">
+		<div class="form-group col-lg-12 clearfix">
 			<a role="button" class="btn btn-default btn-sm" href="tiki-admin_calendars.php" title="{tr}List{/tr}">
 				{icon name="list"} {tr}Calendars{/tr}
 			</a>
 			<div class="pull-right">
-                <input type="submit" class="btn btn-primary btn-sm" name="calprefs" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}" />
-            </div>
-        </div>
-    </div>
+				<input type="submit" class="btn btn-primary btn-sm" name="calprefs" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}" />
+			</div>
+		</div>
+	</div>
 	<fieldset class="table">
 		<legend>{tr}Activate the feature{/tr}</legend>
 		{preference name=feature_calendar visible="always"}
@@ -64,14 +64,14 @@
 		{preference name=calendar_addtogooglecal}
 		{preference name=calendar_fullcalendar}
 
-	<div class="adminoptionbox">
-		<div class="adminoption">
-			<input type="checkbox" id="feature_jscalendar" name="feature_jscalendar" {if $prefs.feature_jscalendar eq 'y'}checked="checked" {/if}onclick="flip('usejscalendar');" />
-		</div>
-		<div class="adminoptionlabel">
-			<label for="feature_jscalendar">JS Calendar</label>
-			{help url="Js+Calendar"}
-		</div>
+		<div class="adminoptionbox">
+			<div class="adminoption">
+				<input type="checkbox" id="feature_jscalendar" name="feature_jscalendar" {if $prefs.feature_jscalendar eq 'y'}checked="checked" {/if}onclick="flip('usejscalendar');" />
+			</div>
+			<div class="adminoptionlabel">
+				<label for="feature_jscalendar">JS Calendar</label>
+				{help url="Js+Calendar"}
+			</div>
 		</div>
 		<div id="usejscalendar" style="display:{if $prefs.feature_jscalendar eq 'y'}none{else}block{/if}">
 			{icon _id=information} {tr}Year selection is valid when the JS Calendar <strong>is not</strong> enabled{/tr}.
@@ -87,11 +87,10 @@
 		{preference name=calendar_watch_editor}
 	</fieldset>
 	<div class="row">
-        <div class="form-group col-lg-12 clearfix">
+		<div class="form-group col-lg-12 clearfix">
 			<div class="text-center">
-                <input type="submit" class="btn btn-primary btn-sm" name="calprefs" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}" />
-            </div>
-        </div>
-    </div>
+				<input type="submit" class="btn btn-primary btn-sm" name="calprefs" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}" />
+			</div>
+		</div>
+	</div>
 </form>
-

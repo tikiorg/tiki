@@ -4,16 +4,17 @@
 
 <form class="admin" id="performance" name="performance" action="tiki-admin.php?page=performance" method="post">
 	<div class="row">
-        <div class="form-group col-lg-12 clearfix">
+		<div class="form-group col-lg-12 clearfix">
 			<div class="pull-right">
-                <input type="submit" class="btn btn-primary btn-sm" name="performance" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}" />
-            </div>
-        </div>
-    </div>
-{tabset}
+				<input type="submit" class="btn btn-primary btn-sm" name="performance" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}" />
+			</div>
+		</div>
+	</div>
+
+	{tabset}
 
 		{tab name="{tr}Performance{/tr}"}
-            <h2>{tr}Performance{/tr}</h2>
+			<h2>{tr}Performance{/tr}</h2>
 			{preference name=tiki_minify_javascript}
 			<div class="adminoptionboxchild" id="tiki_minify_javascript_childcontainer">
 				{preference name=tiki_minify_late_js_files}
@@ -57,7 +58,7 @@
 		{/tab}
 
 		{tab name="{tr}Bytecode Cache{/tr}"}
-            <h2>{tr}Bytecode Cache{/tr}</h2>
+			<h2>{tr}Bytecode Cache{/tr}</h2>
 			{if $opcode_cache}
 				<p>{tr _0=$opcode_cache}Using <strong>%0</strong>. These stats affect all PHP applications running on the server.{/tr}</p>
 
@@ -67,18 +68,18 @@
 
 				<p>
 					<table style="width=520px;border: 0px;text-align:center">
-					<tr>
-					<td><img src="{$memory_graph|escape}" width="250" height="100"></td>
-					<td><img src="{$hits_graph|escape}" width="250" height="100"></td>
-					</tr>
-					<tr>
-					<td style="width=260px">
-					{tr}Memory Used{/tr}: {$opcode_stats.memory_used * 100}% - {tr}Available{/tr}: {$opcode_stats.memory_avail * 100}%
-					</td>
-					<td style="width=260px">
-					{tr}Cache Hits{/tr}: {$opcode_stats.hit_hit * 100}% - {tr}Misses{/tr}: {$opcode_stats.hit_miss * 100}%
-					</td>
-					</tr>
+						<tr>
+							<td><img src="{$memory_graph|escape}" width="250" height="100"></td>
+							<td><img src="{$hits_graph|escape}" width="250" height="100"></td>
+						</tr>
+						<tr>
+							<td style="width=260px">
+								{tr}Memory Used{/tr}: {$opcode_stats.memory_used * 100}% - {tr}Available{/tr}: {$opcode_stats.memory_avail * 100}%
+							</td>
+							<td style="width=260px">
+								{tr}Cache Hits{/tr}: {$opcode_stats.hit_hit * 100}% - {tr}Misses{/tr}: {$opcode_stats.hit_miss * 100}%
+							</td>
+						</tr>
 					</table>
 					<hr>
 				</p>
@@ -116,14 +117,14 @@
 		{/tab}
 
 		{tab name="{tr}Wiki{/tr}"}
-            <h2>{tr}Wiki{/tr}</h2>
+			<h2>{tr}Wiki{/tr}</h2>
 			{preference name=wiki_cache}
 			{preference name=feature_wiki_icache}
 			{preference name=wiki_ranking_reload_probability}
 		{/tab}
 
 		{tab name="{tr}Database{/tr}"}
-            <h2>{tr}Database{/tr}</h2>
+			<h2>{tr}Database{/tr}</h2>
 			{preference name=log_sql}
 			<div class="adminoptionboxchild" id="log_sql_childcontainer">
 				{preference name=log_sql_perf_min}
@@ -131,7 +132,7 @@
 		{/tab}
 
 		{tab name="{tr}Memcache{/tr}"}
-            <h2>{tr}Memcache{/tr}</h2>
+			<h2>{tr}Memcache{/tr}</h2>
 			{preference name=memcache_enabled}
 			<div class="adminoptionboxchild" id="memcache_enabled_childcontainer">
 				{preference name=memcache_compress}
@@ -145,13 +146,14 @@
 		{/tab}
 
 		{tab name="{tr}Plugins{/tr}"}
-            <h2>{tr}Plugins{/tr}</h2>
+			<h2>{tr}Plugins{/tr}</h2>
 			{preference name=wikiplugin_snarf_cache}
 		{/tab}
 
 		{tab name="{tr}Major slowdown{/tr}"}
-            <h2>{tr}Major slowdown{/tr}</h2>
-			{remarksbox type="note" title="{tr}Major slowdown{/tr}"}{tr}These are reported to slow down Tiki. If you have a high-volume site, you may want to deactivate them{/tr}
+			<h2>{tr}Major slowdown{/tr}</h2>
+			{remarksbox type="note" title="{tr}Major slowdown{/tr}"}
+				{tr}These are reported to slow down Tiki. If you have a high-volume site, you may want to deactivate them{/tr}
 			{/remarksbox}
 			{preference name=wikiplugin_sharethis}
 			{preference name=log_sql}
@@ -165,13 +167,13 @@
 		{/tab}
 
 		{tab name="{tr}Sessions{/tr}"}
-            <h2>{tr}Sessions{/tr}</h2>
-				{preference name=session_silent}
-				{preference name=tiki_cachecontrol_nosession}
+			<h2>{tr}Sessions{/tr}</h2>
+			{preference name=session_silent}
+			{preference name=tiki_cachecontrol_nosession}
 		{/tab}
 
 		{tab name="{tr}Newsletter{/tr}"}
-            <h2>{tr}Newsletter{/tr}</h2>
+			<h2>{tr}Newsletter{/tr}</h2>
 			{preference name=newsletter_throttle}
 			<div class="adminoptionboxchild" id="newsletter_throttle_childcontainer">
 				{preference name=newsletter_pause_length}
@@ -180,20 +182,21 @@
 		{/tab}
 
 		{tab name="{tr}Time and memory limits{/tr}"}
-            <h2>{tr}Time and memory limits{/tr}</h2>
-				{preference name=allocate_memory_tracker_export_items}
-				{preference name=allocate_time_tracker_export_items}
-				{preference name=allocate_time_tracker_clear_items}
-				{preference name="allocate_memory_unified_rebuild"}
-				{preference name="allocate_time_unified_rebuild"}
+			<h2>{tr}Time and memory limits{/tr}</h2>
+			{preference name=allocate_memory_tracker_export_items}
+			{preference name=allocate_time_tracker_export_items}
+			{preference name=allocate_time_tracker_clear_items}
+			{preference name="allocate_memory_unified_rebuild"}
+			{preference name="allocate_time_unified_rebuild"}
 		{/tab}
 
-{/tabset}
+	{/tabset}
+
 	<div class="row">
-        <div class="form-group col-lg-12 clearfix">
+		<div class="form-group col-lg-12 clearfix">
 			<div class="text-center">
-                <input type="submit" class="btn btn-primary btn-sm" name="performance" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}" />
-            </div>
-        </div>
-    </div>
+				<input type="submit" class="btn btn-primary btn-sm" name="performance" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}" />
+			</div>
+		</div>
+	</div>
 </form>

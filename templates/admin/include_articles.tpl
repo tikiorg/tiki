@@ -6,15 +6,15 @@
 
 {if !empty($msgs)}
 	<div class="alert alert-warning">
-	{foreach from=$msgs item=msg}
-	{$msg}
-	{/foreach}
+		{foreach from=$msgs item=msg}
+			{$msg}
+		{/foreach}
 	</div>
 {/if}
 
 <form method="post" action="tiki-admin.php?page=articles">
-    <div class="row">
-        <div class="form-group col-lg-12 clearfix">
+	<div class="row">
+		<div class="form-group col-lg-12 clearfix">
 			<a role="button" class="btn btn-default btn-sm" href="tiki-list_articles.php" title="{tr}List{/tr}">
 				{icon name="list"} {tr}Articles{/tr}
 			</a>
@@ -24,15 +24,15 @@
 			<a role="button" class="btn btn-default btn-sm" href="tiki-admin_topics.php" title="{tr}List{/tr}">
 				{icon name="list"} {tr}Article Topics{/tr}
 			</a>
-            <div class="pull-right">
-                <input type="submit" class="btn btn-primary btn-sm" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}">
-            </div>
-        </div>
-    </div>
+			<div class="pull-right">
+				<input type="submit" class="btn btn-primary btn-sm" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}">
+			</div>
+		</div>
+	</div>
 
 	{tabset name="admin_articles"}
 		{tab name="{tr}General Settings{/tr}"}
-            <h2>{tr}General Settings{/tr}</h2>
+			<h2>{tr}General Settings{/tr}</h2>
 			<input type="hidden" name="articlesprefs" />
 
 			<fieldset class="table">
@@ -81,9 +81,9 @@
 				{preference name=article_related_articles}
 
 				{preference name=tracker_article_tracker}
- 				<div class="adminoptionboxchild" id="tracker_article_tracker_container">
- 					{preference name=tracker_article_trackerId}
- 				</div>
+				<div class="adminoptionboxchild" id="tracker_article_tracker_container">
+					{preference name=tracker_article_trackerId}
+				</div>
 
 				<input type="hidden" name="articlesfeatures" />
 			</fieldset>
@@ -134,7 +134,7 @@
 		{/tab}
 
 		{tab name="{tr}Articles Listing{/tr}"}
-            <h2>{tr}Articles Listing{/tr}</h2>
+			<h2>{tr}Articles Listing{/tr}</h2>
 			<fieldset>
 				<legend>{tr}List Articles{/tr}</legend>
 				<div class="adminoptionbox">
@@ -172,14 +172,16 @@
 				{preference name=art_header_text_pos}
 			</fieldset>
 		{/tab}
+
 	{/tabset}
-    <br>{* I cheated. *}
-    <div class="row">
-        <div class="form-group col-lg-12 clearfix">
+
+	<br>{* I cheated. *}
+	<div class="row">
+		<div class="form-group col-lg-12 clearfix">
 			<div class="text-center">
-                <input type="submit" class="btn btn-primary btn-sm" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}">
-            </div>
-        </div>
-    </div>
+				<input type="submit" class="btn btn-primary btn-sm" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}">
+			</div>
+		</div>
+	</div>
 </form>
 

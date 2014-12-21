@@ -122,9 +122,9 @@
 			</li>
 		</ul>
 	</div>
-    {if $include != "list_sections"}
-        <div class="adminanchors panel-body clearfix"><ul class="nav navbar-nav">{include file='admin/include_anchors.tpl'}</ul></div>
-    {/if}
+	{if $include != "list_sections"}
+		<div class="adminanchors panel-body clearfix"><ul class="nav navbar-nav">{include file='admin/include_anchors.tpl'}</ul></div>
+	{/if}
 </nav>
 
 {if $tikifeedback}

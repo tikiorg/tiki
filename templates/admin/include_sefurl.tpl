@@ -5,13 +5,13 @@
 {/remarksbox}
 
 <form class="admin" method="post" action="tiki-admin.php?page=sefurl">
-    <div class="row">
-        <div class="form-group col-lg-12 clearfix">
-            <div class="pull-right">
-                <input type="submit" class="btn btn-primary btn-sm" name="save" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}">
-            </div>
-        </div>
-    </div>
+	<div class="row">
+		<div class="form-group col-lg-12 clearfix">
+			<div class="pull-right">
+				<input type="submit" class="btn btn-primary btn-sm" name="save" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}">
+			</div>
+		</div>
+	</div>
 
 	<fieldset class="table">
 		<legend>{tr}Activate the feature{/tr}</legend>
@@ -19,31 +19,31 @@
 
 		{if $httpd eq 'IIS' and !$IIS_UrlRewriteModule}
 			{remarksbox type="warning" title="{tr}Warning{/tr}"}
-			{tr}SEFURL requires the <strong>URL Rewrite module</strong> for IIS. You do not seem to have this module installed.{/tr}
-			{tr}Please see <a class="alert-link" href="http://doc.tiki.org/Windows+Server+Install">Windows Server Install</a> on tiki.org for more information.{/tr}
+				{tr}SEFURL requires the <strong>URL Rewrite module</strong> for IIS. You do not seem to have this module installed.{/tr}
+				{tr}Please see <a class="alert-link" href="http://doc.tiki.org/Windows+Server+Install">Windows Server Install</a> on tiki.org for more information.{/tr}
 			{/remarksbox}
 		{else}
 			{if $configurationFile eq 'missing'}
 				{remarksbox type="warning" title="{tr}Warning{/tr}"}
-				{tr _0=$enabledFileName}SEFURL will not work unless Tiki specific directives are deployed to the %0 file.{/tr}
-				{tr _0="<strong>$referenceFileName</strong>" _1="<strong>$enabledFileName</strong>"}To enable this file, simply copy the %0 file (located in the main directory of your Tiki installation) to %1.{/tr}
-				{tr _0=$enabledFileName}If you need to keep an existing (non Tiki) %0 file, just add Tiki directives to it.{/tr}
-				{tr}When you upgrade Tiki (e.g. from version 7 to version 8), make sure to make use of the new URL rewriting configuration file.{/tr}
+					{tr _0=$enabledFileName}SEFURL will not work unless Tiki specific directives are deployed to the %0 file.{/tr}
+					{tr _0="<strong>$referenceFileName</strong>" _1="<strong>$enabledFileName</strong>"}To enable this file, simply copy the %0 file (located in the main directory of your Tiki installation) to %1.{/tr}
+					{tr _0=$enabledFileName}If you need to keep an existing (non Tiki) %0 file, just add Tiki directives to it.{/tr}
+					{tr}When you upgrade Tiki (e.g. from version 7 to version 8), make sure to make use of the new URL rewriting configuration file.{/tr}
 				{/remarksbox}
 			{elseif $configurationFile eq 'no reference'}
 				{remarksbox type="warning" title="{tr}Warning{/tr}"}
-				{tr _0=$referenceFileName}%0 file is missing.{/tr} {tr}Unable to verify that your URL rewriting configuration is up to date.{/tr} {tr}SEFURL may not work completely or correctly if Tiki URL rewriting configuration is not current.{/tr}
+					{tr _0=$referenceFileName}%0 file is missing.{/tr} {tr}Unable to verify that your URL rewriting configuration is up to date.{/tr} {tr}SEFURL may not work completely or correctly if Tiki URL rewriting configuration is not current.{/tr}
 				{/remarksbox}
 			{elseif $configurationFile eq 'unexpected reference' or $configurationFile eq 'unexpected enabled'}
 				{remarksbox type="warning" title="{tr}Warning{/tr}"}
-				{tr _0=$enabledFileName}%0 is not in the expected format.{/tr} {tr}Unable to verify that your URL rewriting configuration is up to date.{/tr} {tr}SEFURL may not work completely or correctly if Tiki URL rewriting configuration is not current.{/tr}<br>
-				{tr _0=$enabledFileName}%0 may simply be outdated.{/tr}
-				{tr _0="<strong>$referenceFileName</strong>" _1="<strong>$enabledFileName</strong>"}To update this file, if it was not customized, copy the %0 file (located in the main directory of your Tiki installation) to %1, overwriting the latter.{/tr}
+					{tr _0=$enabledFileName}%0 is not in the expected format.{/tr} {tr}Unable to verify that your URL rewriting configuration is up to date.{/tr} {tr}SEFURL may not work completely or correctly if Tiki URL rewriting configuration is not current.{/tr}<br>
+					{tr _0=$enabledFileName}%0 may simply be outdated.{/tr}
+					{tr _0="<strong>$referenceFileName</strong>" _1="<strong>$enabledFileName</strong>"}To update this file, if it was not customized, copy the %0 file (located in the main directory of your Tiki installation) to %1, overwriting the latter.{/tr}
 				{/remarksbox}
 			{elseif $configurationFile eq 'outdated'}
 				{remarksbox type="warning" title="{tr}Warning{/tr}"}
-				{tr _0=$enabledFileName}%0 file is out of date.{/tr} {tr}SEFURL may not work completely or correctly if Tiki URL rewriting configuration is not current.{/tr}
-				{tr _0="<strong>$referenceFileName</strong>" _1="<strong>$enabledFileName</strong>"}To update this file, if it was not customized, copy the %0 file (located in the main directory of your Tiki installation) to %1, overwriting the latter.{/tr}
+					{tr _0=$enabledFileName}%0 file is out of date.{/tr} {tr}SEFURL may not work completely or correctly if Tiki URL rewriting configuration is not current.{/tr}
+					{tr _0="<strong>$referenceFileName</strong>" _1="<strong>$enabledFileName</strong>"}To update this file, if it was not customized, copy the %0 file (located in the main directory of your Tiki installation) to %1, overwriting the latter.{/tr}
 				{/remarksbox}
 			{/if}
 			{if not empty($rewritebaseSetting)}
@@ -86,13 +86,13 @@
 		{preference name=feature_sefurl_title_blog}
 		{preference name=feature_sefurl_tracker_prefixalias}
 	</fieldset>
-    <br>{* I cheated. *}
+	<br>{* I cheated. *}
 
 	<div class="row">
-        <div class="form-group col-lg-12 clearfix">
-            <div class="text-center">
-                <input type="submit" class="btn btn-primary btn-sm" name="save" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}">
-            </div>
-        </div>
-    </div>
+		<div class="form-group col-lg-12 clearfix">
+			<div class="text-center">
+				<input type="submit" class="btn btn-primary btn-sm" name="save" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}">
+			</div>
+		</div>
+	</div>
 </form>

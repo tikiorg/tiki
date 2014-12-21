@@ -1,15 +1,15 @@
 {* $Id$ *}
 <form action="tiki-admin.php?page=payment" method="post">
 	<div class="row">
-        <div class="form-group col-lg-12 clearfix">
+		<div class="form-group col-lg-12 clearfix">
 			<a role="button" class="btn btn-default btn-sm" href="tiki-payment.php" title="{tr}List{/tr}">
 				{icon name="list"} {tr}Payments{/tr}
 			</a>
 			<div class="pull-right">
-                <input type="submit" class="btn btn-primary btn-sm" name="paymentprefs" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}" />
-            </div>
-        </div>
-    </div>
+				<input type="submit" class="btn btn-primary btn-sm" name="paymentprefs" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}" />
+			</div>
+		</div>
+	</div>
 
 	{if $prefs.payment_feature neq "y"}
 		<fieldset class="table">
@@ -19,7 +19,7 @@
 	{/if}
 	{tabset}
 		{tab name="{tr}Payment{/tr}"}
-            <h2>{tr}Payment{/tr}</h2>
+			<h2>{tr}Payment{/tr}</h2>
 			{remarksbox title="{tr}Choose payment system{/tr}"}
 				{tr}You can use only one payment method: PayPal or Cclite or Tiki User Credits{/tr}<br>
 				{tr}PayPal is working at the moment. See PayPal.com{/tr}<br>
@@ -38,55 +38,55 @@
 				</fieldset>
 				{accordion}
 					{accordion_group title="{tr}PayPal{/tr}"}
-					<div class="admin payment">
-						{preference name=payment_paypal_business}
-                        {preference name=payment_paypal_password}
-                        {preference name=payment_paypal_signature}
+						<div class="admin payment">
+							{preference name=payment_paypal_business}
+							{preference name=payment_paypal_password}
+							{preference name=payment_paypal_signature}
 
-						<div class="adminoptionboxchild">
-							{preference name=payment_paypal_environment}
-							{preference name=payment_paypal_ipn}
+							<div class="adminoptionboxchild">
+								{preference name=payment_paypal_environment}
+								{preference name=payment_paypal_ipn}
+							</div>
+							{preference name=payment_invoice_prefix}
 						</div>
-						{preference name=payment_invoice_prefix}
-					</div>
 					{/accordion_group}
 					{accordion_group title="{tr}Israel Post Payment Module{/tr}"}
-					<div class="admin payment">
-						{preference name=payment_israelpost_environment}
-						{preference name=payment_israelpost_business_id}
-						{preference name=payment_israelpost_api_password}
-						{preference name=payment_israelpost_request_preauth}
-					</div>
+						<div class="admin payment">
+							{preference name=payment_israelpost_environment}
+							{preference name=payment_israelpost_business_id}
+							{preference name=payment_israelpost_api_password}
+							{preference name=payment_israelpost_request_preauth}
+						</div>
 					{/accordion_group}
 					{accordion_group title="{tr}Ccline{/tr}"}
-					<div class="admin payment">
-						{remarksbox title="{tr}Experimental{/tr}" type="warning" icon="bricks"}
-							{tr}Cclite is for creating and managing alternative or complementary trading currencies and groups{/tr}
-							{tr}Work in progress since Tiki 6{/tr}
-						{/remarksbox}
-						{preference name=payment_cclite_registries}
-						{preference name=payment_cclite_currencies}
-						<div class="adminoptionboxchild">
-							{preference name=payment_cclite_gateway}
-							{preference name=payment_cclite_merchant_user}
-							{preference name=payment_cclite_merchant_key}
-							{preference name=payment_cclite_mode}
-							{preference name=payment_cclite_hashing_algorithm}
-							{preference name=payment_cclite_notify}
+						<div class="admin payment">
+							{remarksbox title="{tr}Experimental{/tr}" type="warning" icon="bricks"}
+								{tr}Cclite is for creating and managing alternative or complementary trading currencies and groups{/tr}
+								{tr}Work in progress since Tiki 6{/tr}
+							{/remarksbox}
+							{preference name=payment_cclite_registries}
+							{preference name=payment_cclite_currencies}
+							<div class="adminoptionboxchild">
+								{preference name=payment_cclite_gateway}
+								{preference name=payment_cclite_merchant_user}
+								{preference name=payment_cclite_merchant_key}
+								{preference name=payment_cclite_mode}
+								{preference name=payment_cclite_hashing_algorithm}
+								{preference name=payment_cclite_notify}
+							</div>
 						</div>
-					</div>
 					{/accordion_group}
 					{accordion_group title="{tr}Tiki User Credits{/tr}"}
-					<div class="admin payment">
-						{preference name=payment_tikicredits_types}
-						{preference name=payment_tikicredits_xcrates}
-					</div>
+						<div class="admin payment">
+							{preference name=payment_tikicredits_types}
+							{preference name=payment_tikicredits_xcrates}
+						</div>
 					{/accordion_group}
 				{/accordion}
 			</div>
 		{/tab}
 		{tab name="{tr}Advanced Shopping Cart{/tr}"}
-            <h2>{tr}Advanced Shopping Cart{/tr}</h2>
+			<h2>{tr}Advanced Shopping Cart{/tr}</h2>
 			<fieldset>
 				<label>{tr}Cart Settings{/tr}</label>
 				{preference name=payment_cart_heading}
@@ -117,9 +117,9 @@
 			<fieldset>
 				<legend>{tr}Features{/tr}</legend>
 				{preference name=payment_cart_inventory}
-					<div class="adminoptionboxchild" id="payment_cart_inventory_childcontainer">
+				<div class="adminoptionboxchild" id="payment_cart_inventory_childcontainer">
 					{preference name=payment_cart_inventoryhold_expiry}
-					</div>
+				</div>
 				{preference name=payment_cart_bundles}
 				{preference name=payment_cart_orders}
 				<div class="adminoptionboxchild" id="payment_cart_orders_childcontainer">
@@ -154,7 +154,7 @@
 		{/tab}
 
 		{tab name="{tr}Plugins{/tr}"}
-            <h2>{tr}Plugins{/tr}</h2>
+			<h2>{tr}Plugins{/tr}</h2>
 
 			<fieldset class="table">
 				<legend>{tr}Plugins{/tr}</legend>
@@ -171,7 +171,7 @@
 		{/tab}
 
 		{tab name="{tr}Shipping{/tr}"}
-            <h2>{tr}Shipping{/tr}</h2>
+			<h2>{tr}Shipping{/tr}</h2>
 			{preference name=shipping_service}
 
 			{preference name=shipping_fedex_enable}
@@ -188,15 +188,15 @@
 				{preference name=shipping_ups_username}
 				{preference name=shipping_ups_password}
 			</div>
-				{preference name=shipping_custom_provider}
+			{preference name=shipping_custom_provider}
 		{/tab}
 	{/tabset}
 
 	<div class="row">
-        <div class="form-group col-lg-12 clearfix">
+		<div class="form-group col-lg-12 clearfix">
 			<div class="text-center">
-                <input type="submit" class="btn btn-primary btn-sm" name="paymentprefs" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}" />
-            </div>
-        </div>
-    </div>
+				<input type="submit" class="btn btn-primary btn-sm" name="paymentprefs" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}" />
+			</div>
+		</div>
+	</div>
 </form>

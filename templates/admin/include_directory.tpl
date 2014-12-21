@@ -1,17 +1,17 @@
 <form action="tiki-admin.php?page=directory" method="post">
-    <div class="row">
-        <div class="form-group col-lg-12 clearfix">
+	<div class="row">
+		<div class="form-group col-lg-12 clearfix">
 			<a role="button" class="btn btn-default btn-sm" href="tiki-directory_admin.php" title="{tr}List{/tr}">
 				{icon name="list"} {tr}Directories{/tr}
 			</a>
-            <div class="pull-right">
-                <input type="submit" class="btn btn-primary btn-sm" name="directory" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}">
-            </div>
-        </div>
-    </div>
+			<div class="pull-right">
+				<input type="submit" class="btn btn-primary btn-sm" name="directory" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}">
+			</div>
+		</div>
+	</div>
 
 
-    <fieldset class="table">
+	<fieldset class="table">
 		<legend>{tr}Activate the feature{/tr}</legend>
 		{preference name=feature_directory visible="always"}
 	</fieldset>
@@ -25,12 +25,12 @@
 		{preference name=directory_country_flag}
 		{preference name=directory_open_links}
 	</fieldset>
-    <br>{* I cheated. *}
-    <div class="row">
-        <div class="form-group col-lg-12 clearfix">
-            <div class="text-center">
-                <input type="submit" class="btn btn-primary btn-sm" name="directory" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}">
-            </div>
-        </div>
-    </div>
+	<br>{* I cheated. *}
+	<div class="row">
+		<div class="form-group col-lg-12 clearfix">
+			<div class="text-center">
+				<input type="submit" class="btn btn-primary btn-sm" name="directory" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}">
+			</div>
+		</div>
+	</div>
 </form>

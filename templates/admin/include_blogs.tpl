@@ -1,20 +1,20 @@
 {* $Id$ *}
 
 <form action="tiki-admin.php?page=blogs" method="post">
-    <div class="row">
-        <div class="form-group col-lg-12 clearfix">
+	<div class="row">
+		<div class="form-group col-lg-12 clearfix">
 			<a role="button" class="btn btn-default btn-sm" href="tiki-list_blogs.php" title="{tr}List{/tr}">
 				{icon name="list"} {tr}Blogs{/tr}
 			</a>
-            <div class="pull-right">
-                <input type="submit" class="btn btn-primary btn-sm" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}">
-            </div>
-        </div>
-    </div>
+			<div class="pull-right">
+				<input type="submit" class="btn btn-primary btn-sm" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}">
+			</div>
+		</div>
+	</div>
 
 	{tabset name="admin_blogs"}
 		{tab name="{tr}General Settings{/tr}"}
-            <h2>{tr}General Settings{/tr}</h2>
+			<h2>{tr}General Settings{/tr}</h2>
 
 			<fieldset class="table">
 				<legend>{tr}Activate the feature{/tr}</legend>
@@ -65,7 +65,7 @@
 		{/tab}
 
 		{tab name="{tr}Blogs Listings{/tr}"}
-            <h2>{tr}Blogs Listings{/tr}</h2>
+			<h2>{tr}Blogs Listings{/tr}</h2>
 			<input type="hidden" name="bloglistconf" />
 			{preference name=blog_list_order}
 
@@ -85,11 +85,12 @@
 			</fieldset>
 		{/tab}
 	{/tabset}
-    <div class="row">
-        <div class="form-group col-lg-12 clearfix">
-            <div class="text-center">
-                <input type="submit" class="btn btn-primary btn-sm" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}">
-            </div>
-        </div>
-    </div>
+
+	<div class="row">
+		<div class="form-group col-lg-12 clearfix">
+			<div class="text-center">
+				<input type="submit" class="btn btn-primary btn-sm" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}">
+			</div>
+		</div>
+	</div>
 </form>

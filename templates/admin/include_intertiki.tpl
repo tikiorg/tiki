@@ -1,7 +1,7 @@
 {* $Id$ *}
 {tabset name="admin_interwiki"}
 	{tab name="{tr}Intertiki client{/tr}"}
-        <h2>{tr}Intertiki client{/tr}</h2>
+		<h2>{tr}Intertiki client{/tr}</h2>
 		<form action="tiki-admin.php?page=intertiki" method="post" name="intertiki">
 			<table class="formcolor">
 				<tr>
@@ -120,7 +120,7 @@
 
 	{if $prefs.feature_intertiki_mymaster eq ''}
 		{tab name="{tr}Intertiki server{/tr}"}
-            <h2>{tr}Intertiki server{/tr}</h2>
+			<h2>{tr}Intertiki server{/tr}</h2>
 			<form action="tiki-admin.php?page=intertiki" method="post" name="intertiki">
 				<table class="table">
 					<tr>

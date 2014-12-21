@@ -3,8 +3,8 @@
 	<div class="row">
 		<div class="form-group col-lg-12">
 			<div class="pull-right">
-                <input type="submit" class="btn btn-primary btn-sm" name="looksetup" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}" />
-		    </div>
+				<input type="submit" class="btn btn-primary btn-sm" name="looksetup" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}" />
+			</div>
 		</div>
 	</div>
 	{tabset name="admin_look"}
@@ -13,33 +13,33 @@
 
 			<div class="row">
 				<div class="col-md-3 col-md-push-9">
-					<div  class="thumbnail">
+					<div class="thumbnail">
 						<img src="{$thumbfile}" alt="{tr}Theme Screenshot{/tr}" id="style_thumb">
 					</div>
 				</div>
 				<div class="col-md-9 col-md-pull-3 adminoptionbox">
 					{preference name=theme_active}
-                </div>
-            </div>
+				</div>
+			</div>
 
-					<div class="adminoptionbox theme_active_childcontainer custom">
-						{preference name=theme_custom}
-					</div>
+			<div class="adminoptionbox theme_active_childcontainer custom">
+				{preference name=theme_custom}
+			</div>
 
-					<div class="adminoptionbox theme_active_childcontainer legacy">
-						{preference name=style}
-						{preference name=style_option}
+			<div class="adminoptionbox theme_active_childcontainer legacy">
+				{preference name=style}
+				{preference name=style_option}
 
-						{preference name=style_admin}
-						{preference name=style_admin_option}
-					</div>
+				{preference name=style_admin}
+				{preference name=style_admin_option}
+			</div>
 
-					{preference name=site_layout}
-					{preference name=site_layout_per_object}
-					{preference name=theme_iconset}
-					{if $prefs.javascript_enabled eq 'n' or $prefs.feature_jquery eq 'n'}
-						<input type="submit" class="btn btn-default btn-sm" name="changestyle" value="{tr}Go{/tr}" />
-					{/if}
+			{preference name=site_layout}
+			{preference name=site_layout_per_object}
+			{preference name=theme_iconset}
+			{if $prefs.javascript_enabled eq 'n' or $prefs.feature_jquery eq 'n'}
+				<input type="submit" class="btn btn-default btn-sm" name="changestyle" value="{tr}Go{/tr}" />
+			{/if}
 			<div class="adminoptionbox">
 				{if $prefs.feature_jquery_ui eq 'y'}
 					{preference name=feature_jquery_ui_theme}
@@ -67,12 +67,12 @@
 
 			{preference name=useGroupTheme}
 			{preference name=feature_theme_control}
-				<div class="adminoptionboxchild" id="feature_theme_control_childcontainer">
-					{button _text="{tr}Theme Control{/tr}" href="tiki-theme_control.php"}
-					{preference name=feature_theme_control_savesession}
-					{preference name=feature_theme_control_parentcategory}
-					{preference name=feature_theme_control_autocategorize}
-				</div>
+			<div class="adminoptionboxchild" id="feature_theme_control_childcontainer">
+				{button _text="{tr}Theme Control{/tr}" href="tiki-theme_control.php"}
+				{preference name=feature_theme_control_savesession}
+				{preference name=feature_theme_control_parentcategory}
+				{preference name=feature_theme_control_autocategorize}
+			</div>
 
 		{/tab}
 
@@ -202,9 +202,9 @@
 				<legend>{tr}Other{/tr}</legend>
 				<div class="admin featurelist">
 					{preference name=feature_shadowbox}
-						<div class="adminoptionboxchild" id="feature_shadowbox_childcontainer">
-							{preference name=jquery_colorbox_theme}
-						</div>
+					<div class="adminoptionboxchild" id="feature_shadowbox_childcontainer">
+						{preference name=jquery_colorbox_theme}
+					</div>
 					{preference name=feature_jscalendar}
 					{preference name=feature_hidden_links}
 				</div>
@@ -219,22 +219,24 @@
 				<div class="adminoptionboxchild" id="themegenerator_feature_childcontainer">
 					<div class="adminoptionbox">
 						{preference name="themegenerator_theme"}
-						<div  class="adminoptionboxchild" id="themegenerator_feature_childcontainer">
+						<div class="adminoptionboxchild" id="themegenerator_feature_childcontainer">
 
 							<input type="text" name="tg_edit_theme_name" value="{$tg_edit_theme_name|default:''|escape}"{if !empty($prefs.themegenerator_theme)} style="display:none;"{/if} />
 							<input type="submit" class="btn btn-default btn-sm" name="tg_new_theme" value="{tr}New{/tr}"{if !empty($prefs.themegenerator_theme)} style="display:none;"{/if} />
 							<input type="submit" class="btn btn-default btn-sm" name="tg_delete_theme" value="{tr}Delete{/tr}"{if empty($prefs.themegenerator_theme)} style="display:none;"{/if} />
-							{jq}$("select[name=themegenerator_theme]").change(function(){
-	if ($(this)[0].selectedIndex === 0) {
-		$("input[name=tg_edit_theme_name]").keyup(function(e){
-			if (e.keyCode === 13 && $(this).val()) {
-				$("input[name=tg_new_theme]").click();
-			}
-		}).show();
-		$("input[name=tg_new_theme]").show();
-		$("input[name=tg_delete_theme]").hide();
-	}
-							}).change();{/jq}
+							{jq}
+								$("select[name=themegenerator_theme]").change(function(){
+								if ($(this)[0].selectedIndex === 0) {
+									$("input[name=tg_edit_theme_name]").keyup(function(e){
+										if (e.keyCode === 13 && $(this).val()) {
+											$("input[name=tg_new_theme]").click();
+										}
+									}).show();
+									$("input[name=tg_new_theme]").show();
+									$("input[name=tg_delete_theme]").hide();
+								}
+								}).change();
+							{/jq}
 							{if $prefs.feature_jquery_ui eq "y" and $prefs.feature_ajax eq "y" and not empty($prefs.themegenerator_theme)}
 								{* TODO make non-live themes editable & previewable *}
 								{button _text="{tr}Open editor{/tr}" _class="tgFloatDialog" href="#"}
@@ -299,7 +301,6 @@
 					</div>
 				{/if}
 			</fieldset>
-
 		{/tab}
 
 		{tab name="{tr}Miscellaneous{/tr}"}
@@ -354,14 +355,15 @@
 			{preference name=categories_used_in_tpl}
 
 			{preference name=feature_html_head_base_tag}
-
 		{/tab}
+
 	{/tabset}
+
 	<div class="row">
 		<div class="form-group col-lg-12">
 			<div class="text-center">
 				<input type="submit" class="btn btn-primary btn-sm" name="looksetup" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}" />
-            </div>
+			</div>
 		</div>
 	</div>
 </form>
