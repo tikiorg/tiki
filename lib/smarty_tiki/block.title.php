@@ -88,7 +88,7 @@ function smarty_block_title($params, $content, $template, &$repeat)
 		if ( $tiki_p_admin == 'y' && $params['admpage'] != '' ) {
 			$html .= '<a class="tips btn btn-link" href="tiki-admin.php?page=' ;
 
-			$html .= $params['admpage'] . '" title="' . tra('Admin page') . '|' . htmlspecialchars($content) . '">'
+			$html .= $params['admpage'] . '" title="' . htmlspecialchars($content) . '|' . tra('Settings') . '">'
 			. smarty_function_icon(array('name' => 'settings'), $template)
 			. "</a>\n";
 		}
