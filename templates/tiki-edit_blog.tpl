@@ -105,7 +105,7 @@
 				<div class="col-sm-offset-3 col-sm-9">
 					<div class="checkbox">
 						<label for="blogs-title">{tr}Display blog title in posts list page{/tr}
-							 <input type="checkbox" name="use_title" id="blogs-title" {if $use_title eq 'y'}checked='checked'{/if}>
+							<input type="checkbox" name="use_title" id="blogs-title" {if $use_title eq 'y'}checked='checked'{/if}>
 						</label>
 					</div>
 					<div class="checkbox">

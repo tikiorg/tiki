@@ -1,7 +1,7 @@
 {title url="tiki-edit_structure.php?page_ref_id=$page_ref_id"}{if $editable == 'y'}{tr}Modify Structure{/tr}{else}{tr}Structure{/tr}{/if}: {$structure_name}{/title}
 
 <div class="t_navbar">
-{button href="tiki-admin_structures.php" _text="{tr}Structures{/tr}"}
+	{button href="tiki-admin_structures.php" _text="{tr}Structures{/tr}"}
 </div>
 
 {if $remove eq 'y'}
@@ -103,8 +103,7 @@
 						<select name="categId">
 							<option value='' {if $find_categId eq ''}selected="selected"{/if}>{tr}any category{/tr}</option>
 							{foreach $categories as $catix}
-								<option value="{$catix.categId|escape}"
-										{if !empty($find_categId) and $find_categId eq $catix.categId}selected="selected"{/if}>{tr}{$catix.categpath}{/tr}</option>
+								<option value="{$catix.categId|escape}" {if !empty($find_categId) and $find_categId eq $catix.categId}selected="selected"{/if}>{tr}{$catix.categpath}{/tr}</option>
 							{/foreach}
 						</select>
 					{/if}
@@ -123,8 +122,8 @@
 				</table>
 			</div>
 			<input type="submit" class="btn btn-default btn-sm" name="recategorize" value="{tr}Update{/tr}">
-			&nbsp;&nbsp;{tr}Remove existing categories from ALL pages before recategorizing:{/tr} <input type="checkbox"
-																										 name="cat_override">
+			&nbsp;&nbsp;{tr}Remove existing categories from ALL pages before recategorizing:{/tr}
+			<input type="checkbox" name="cat_override" >
 		</form>
 	{/if}
 	<div id="move_dialog" style="display: none;">

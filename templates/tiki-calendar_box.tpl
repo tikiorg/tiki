@@ -84,8 +84,8 @@
 			{tr}Website:{/tr}
 		</span>
 		<a href="{$cellurl|escape:'url'}" title="{$cellurl|escape:'url'}">
-			 {$cellurl|truncate:32:'...'}
-		 </a>
+			{$cellurl|truncate:32:'...'}
+		</a>
 		<br>
 	{/if}
 	{if isset($show_calname) and $show_calname eq 'y' and $cellcalname}
