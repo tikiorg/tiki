@@ -385,6 +385,18 @@ $icons = array( //Icons of the icon set
 	'themegenerator' => array(
 		'class' => 'fa fa-paint-brush fa-fw',
 	),
+	'toggle-down' => array(
+		'class' => 'fa fa-toggle-down fa-fw',
+	),
+	'toggle-on' => array(
+		'class' => 'fa fa-toggle-on fa-fw',
+	),
+	'toggle-off' => array(
+		'class' => 'fa fa-toggle-off fa-fw',
+	),
+	'toggle-right' => array(
+		'class' => 'fa fa-toggle-right fa-fw',
+	),
 	'trackers' => array(
 		'class' => 'fa fa-database fa-fw',
 	),

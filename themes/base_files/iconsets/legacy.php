@@ -369,6 +369,12 @@ $icons = array(
 	'themegenerator' => array(
 		'image_src' => 'img/icons/palette.png',
 	),
+	'toggle-off' => array(
+		'image_src' => 'img/icons/accept.png',
+	),
+	'toggle-on' => array(
+		'image_src' => 'img/icons/delete.png',
+	),
 	'translate' => array(
 		'image_src' => 'img/icons/world_edit.png',
 	),

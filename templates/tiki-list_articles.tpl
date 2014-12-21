@@ -15,6 +15,10 @@
 	{if $prefs.feature_submissions == 'y' && ($tiki_p_approve_submission == "y" || $tiki_p_remove_submission == "y" || $tiki_p_edit_submission == "y")}
 		{button href="tiki-list_submissions.php" class="btn btn-default" _text="{tr}View Submissions{/tr}"}
 	{/if}
+	{if $tiki_p_admin eq 'y' or $tiki_p_admin_cms eq 'y'}
+		{button href="tiki-admin_topics.php" class="btn btn-default btn-sm" _text="{tr}Article Topics{/tr}"}
+		{button href="tiki-article_types.php" class="btn btn-default btn-sm" _text="{tr}Article Types{/tr}"}
+	{/if}
 </div>
 
 {if $listpages or ($find ne '') or ($types ne '') or ($topics ne '') or ($lang ne '') or ($categId ne '')}
@@ -173,17 +177,16 @@
 					<td style="text-align:center;">{$listpages[changes].ispublished}</td>
 					<td class="action">
 						{if $tiki_p_read_article eq 'y'}
-							<a href="{$listpages[changes].articleId|sefurl:article}" title="{$listpages[changes].title|escape}">{icon _id='magnifier' alt="{tr}View{/tr}"}</a>
+							{icon name="view" href="{$listpages[changes].articleId|sefurl:article}" title="{tr}View{/tr}"}
 						{/if}
 						{if $tiki_p_edit_article eq 'y' or (!empty($user) and $listpages[changes].author eq $user and $listpages[changes].creator_edit eq 'y')}
-							<a class="link" href="tiki-edit_article.php?articleId={$listpages[changes].articleId}">{icon _id='page_edit'}</a>
+							{icon name="edit" href="tiki-edit_article.php?articleId={$listpages[changes].articleId}" title="{tr}Edit{/tr}"}
 						{/if}
 						{if $tiki_p_admin_cms eq 'y' or $tiki_p_assign_perm_cms eq 'y'}
 							{permission_link mode=icon type=article permType=articles id=$listpages[changes].articleId title=$listpages[changes].title}
 						{/if}
 						{if $tiki_p_remove_article eq 'y'}
-							&nbsp;
-							{self_link remove=$listpages[changes].articleId}{icon _id='cross' alt="{tr}Remove{/tr}"}{/self_link}
+							{self_link _title="{tr}Delete{/tr}" remove=$listpages[changes].articleId}{icon name="delete"}{/self_link}
 						{/if}
 					</td>
 				</tr>
