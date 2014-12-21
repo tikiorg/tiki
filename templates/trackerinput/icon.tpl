@@ -15,49 +15,49 @@
 </div>
 
 {jq}
-$('.icon-selector-container').removeClass('icon-selector-container').each(function () {
-	var icon = $('.icon', this).button();
-	var field = $(':input', this);
-	var jqxhr;
-	var selector = $('.selector', this)
-		.dialog({
-			title: icon.attr('alt'),
-			width: 600,
-			autoOpen: false,
-			modal: true,
-			open: function () { $(document).trigger('iconsloaded'); }
-		})
-		.each(function () {
-			var contents = $('.contents', this);
-			$('.buttons', this).buttonset();
-			$('.sections a', this).css('display', 'block').click(function () {
-				contents.empty().append($('<img/>').attr('src', 'img/spinner.gif'));
-				if (jqxhr) {
-					jqxhr.abort();
-				}
-				jqxhr = $.getJSON($(this).attr('href'), function (data) {
-					jqxhr = null;
-					contents.empty();
-					$.each(data.result, function (k, v) {
-						var link = $(v.link);
-						link.attr('title', tr(v.title));
-						link.empty().append($('<img/>').attr('src', link.attr('href')));
-						link.click(function () {
-							field.val($(this).attr('href'));
-							icon.attr('src', $(this).attr('href'));
-							selector.dialog('close');
-							return false;
-						});
+	$('.icon-selector-container').removeClass('icon-selector-container').each(function () {
+		var icon = $('.icon', this).button();
+		var field = $(':input', this);
+		var jqxhr;
+		var selector = $('.selector', this)
+			.dialog({
+				title: icon.attr('alt'),
+				width: 600,
+				autoOpen: false,
+				modal: true,
+				open: function () { $(document).trigger('iconsloaded'); }
+			})
+			.each(function () {
+				var contents = $('.contents', this);
+				$('.buttons', this).buttonset();
+				$('.sections a', this).css('display', 'block').click(function () {
+					contents.empty().append($('<img/>').attr('src', 'img/spinner.gif'));
+					if (jqxhr) {
+						jqxhr.abort();
+					}
+					jqxhr = $.getJSON($(this).attr('href'), function (data) {
+						jqxhr = null;
+						contents.empty();
+						$.each(data.result, function (k, v) {
+							var link = $(v.link);
+							link.attr('title', tr(v.title));
+							link.empty().append($('<img/>').attr('src', link.attr('href')));
+							link.click(function () {
+								field.val($(this).attr('href'));
+								icon.attr('src', $(this).attr('href'));
+								selector.dialog('close');
+								return false;
+							});
 
-						link.appendTo(contents);
+							link.appendTo(contents);
+						});
 					});
+					return false;
 				});
-				return false;
+				$('.sections a:first', this).click();
 			});
-			$('.sections a:first', this).click();
+		icon.click(function () {
+			selector.dialog('open');
 		});
-	icon.click(function () {
-		selector.dialog('open');
 	});
-});
 {/jq}

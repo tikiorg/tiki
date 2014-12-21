@@ -10,24 +10,24 @@
 				</div>
 			{/if}
 			{foreach from=$sect.fields item=field}
-			<div class="form-group">
-				<label for="trackerinput_{$field.fieldId|escape}" class="control-label">
-					{$field.name|tra|escape}
-					{if $field.isMandatory eq 'y'}
-						<span class="mandatory_star">*</span>
-					{/if}
-				</label>
-				<div id="trackerinput_{$field.fieldId|escape}">
-					{trackerinput field=$field}
-					{if !empty($field.description) && $field.type ne 'S'}
-						{if $field.descriptionIsParsed eq 'y'}
-							<div class="description help-block">{wiki}{$field.description}{/wiki}</div>
-						{else}
-							<div class="description help-block">{$field.description|tra|escape}</div>
+				<div class="form-group">
+					<label for="trackerinput_{$field.fieldId|escape}" class="control-label">
+						{$field.name|tra|escape}
+						{if $field.isMandatory eq 'y'}
+							<span class="mandatory_star">*</span>
 						{/if}
-					{/if}
+					</label>
+					<div id="trackerinput_{$field.fieldId|escape}">
+						{trackerinput field=$field}
+						{if !empty($field.description) && $field.type ne 'S'}
+							{if $field.descriptionIsParsed eq 'y'}
+								<div class="description help-block">{wiki}{$field.description}{/wiki}</div>
+							{else}
+								<div class="description help-block">{$field.description|tra|escape}</div>
+							{/if}
+						{/if}
+					</div>
 				</div>
-			</div>
 			{/foreach}
 		{/tab}
 	{/foreach}

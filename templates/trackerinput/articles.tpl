@@ -16,92 +16,92 @@
 	{/if}
 </div>
 {jq}
-(function () {
-	var container = $('#{{$field.ins_id}}_container')[0];
-	var currents = [];
+	(function () {
+		var container = $('#{{$field.ins_id}}_container')[0];
+		var currents = [];
 
-	var createItem = function (id, label, highlight) {
-		if (!id) {
-			return false;
-		}
+		var createItem = function (id, label, highlight) {
+			if (!id) {
+				return false;
+			}
 
-		var item = $('<li/>');
-		item.text(label);
+			var item = $('<li/>');
+			item.text(label);
 
-		item.prepend(
-			$('<input type="hidden">')
-				.attr('name', "{{$field.ins_id|escape}}[]")
-				.val(id)
-		);
+			item.prepend(
+				$('<input type="hidden">')
+					.attr('name', "{{$field.ins_id|escape}}[]")
+					.val(id)
+			);
 
-		item.append(
-			$('{{icon _id=cross}}')
-				.css('cursor', 'pointer')
-				.click(function () {
-					$(this).closest('li').remove();
-				})
-		);
+			item.append(
+				$('{{icon _id=cross}}')
+					.css('cursor', 'pointer')
+					.click(function () {
+						$(this).closest('li').remove();
+					})
+			);
 
-		$('ul.related_items li', container).removeClass('highlight');
+			$('ul.related_items li', container).removeClass('highlight');
 
-		if (-1 === $.inArray(id, currents)) {
-			currents.push(id);
-			$('ul.related_items', container).append(item);
-		} else if (highlight) {
-			$('ul.related_items input', container)
-				.filter(function () {
-					return id === $(this).val();
-				})
-				.closest('li')
-				.addClass('highlight');
-		}
-	};
+			if (-1 === $.inArray(id, currents)) {
+				currents.push(id);
+				$('ul.related_items', container).append(item);
+			} else if (highlight) {
+				$('ul.related_items input', container)
+					.filter(function () {
+						return id === $(this).val();
+					})
+					.closest('li')
+					.addClass('highlight');
+			}
+		};
 
-	$('ul.related_items', container).empty();
-	var labels = {{$data.labels|@json_encode}};
-	$.each(labels, createItem);
+		$('ul.related_items', container).empty();
+		var labels = {{$data.labels|@json_encode}};
+		$.each(labels, createItem);
 
-	$('ul.related_items', container).sortList();
-	$('.selector', container).change(function () {
-		createItem($(this).val().substring("article:".length), $(this).data('label'), true);
 		$('ul.related_items', container).sortList();
-	});
+		$('.selector', container).change(function () {
+			createItem($(this).val().substring("article:".length), $(this).data('label'), true);
+			$('ul.related_items', container).sortList();
+		});
 
-	var urlField = $('input[type=url]', container), add = $('.add-more', container);
-	urlField.keypress(function (e) {
-		if (e.which == 13) {
+		var urlField = $('input[type=url]', container), add = $('.add-more', container);
+		urlField.keypress(function (e) {
+			if (e.which == 13) {
+				e.preventDefault();
+				add.click();
+			}
+		});
+
+		add.click(function (e) {
 			e.preventDefault();
-			add.click();
-		}
-	});
 
-	add.click(function (e) {
-		e.preventDefault();
+			var url = urlField.val(), button = this;
 
-		var url = urlField.val(), button = this;
-
-		if (url) {
-			$.ajax($.service('article', 'create_from_url'), {
-				method: 'POST',
-				dataType: 'json',
-				success: function (data) {
-					$(button).clearError();
-					if (data.id) {
-						createItem(data.id, data.articleTitle, true);
-						urlField.val('');
+			if (url) {
+				$.ajax($.service('article', 'create_from_url'), {
+					method: 'POST',
+					dataType: 'json',
+					success: function (data) {
+						$(button).clearError();
+						if (data.id) {
+							createItem(data.id, data.articleTitle, true);
+							urlField.val('');
+						}
+					},
+					error: function (jqxhr) {
+						$(button).closest('form').showError(jqxhr);
+					},
+					data: {
+						topicId: $(button).data('topic'),
+						type: $(button).data('type'),
+						errorfield: urlField.attr('name'),
+						url: url
 					}
-				},
-				error: function (jqxhr) {
-					$(button).closest('form').showError(jqxhr);
-				},
-				data: {
-					topicId: $(button).data('topic'),
-					type: $(button).data('type'),
-					errorfield: urlField.attr('name'),
-					url: url
-				}
-			});
-		}
-	});
-}());
+				});
+			}
+		});
+	}());
 {/jq}

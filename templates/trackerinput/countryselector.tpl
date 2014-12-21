@@ -8,7 +8,7 @@
 
 	{foreach key=flagicon item=flag from=$field.flags}
 		{if $flagicon ne 'None' and $flagicon ne 'Other' and ( ! isset($field.itemChoices) || $field.itemChoices|@count eq 0 || in_array($flagicon, $field.itemChoices) )}
-			 <option value="{$flagicon|escape}" {if $field.value eq $flagicon}selected="selected"{elseif $flagicon eq $field.defaultvalue}selected="selected"{/if}{if $field.options_array[0] ne '1'} style="background: url('img/flags/{$flagicon}.gif') no-repeat;padding-left:25px;padding-bottom:3px;"{/if}>{$flag|escape}</option>
-		 {/if}
+			<option value="{$flagicon|escape}" {if $field.value eq $flagicon}selected="selected"{elseif $flagicon eq $field.defaultvalue}selected="selected"{/if}{if $field.options_array[0] ne '1'} style="background: url('img/flags/{$flagicon}.gif') no-repeat;padding-left:25px;padding-bottom:3px;"{/if}>{$flag|escape}</option>
+		{/if}
 	{/foreach}
 </select>
