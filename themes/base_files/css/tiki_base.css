@@ -2934,6 +2934,10 @@ div.ts-wrapperdiv div.ts-pager {
   float: right;
   clear: both;
 }
+div.ts-wrapperdiv div.ts-pager.ts-pager-bottom {
+  visibility: hidden;
+  isibility: hidden;
+}
 div.ts-wrapperdiv div.ts-pager div.btn-group {
   margin-top: 2px;
 }
