@@ -189,6 +189,7 @@ class UnifiedSearchLib
 			$aliasName = $prefs['unified_elastic_index_prefix'] . 'main';
 			$indexName = $aliasName . '_' . uniqid();
 			$index = new Search_Elastic_Index($connection, $indexName);
+			$index->setCamelCaseEnabled($prefs['unified_elastic_camel_case'] == 'y');
 
 			TikiLib::events()->bind(
 				'tiki.process.shutdown',
@@ -640,6 +641,7 @@ class UnifiedSearchLib
 
 			$connection = $this->getElasticConnection($writeMode);
 			$index = new Search_Elastic_Index($connection, $index);
+			$index->setCamelCaseEnabled($prefs['unified_elastic_camel_case'] == 'y');
 			$index->setFacetCount($prefs['search_facet_default_amount']);
 			return $index;
 		case 'mysql':

@@ -14,10 +14,17 @@ class Search_Elastic_Index implements Search_Index_Interface, Search_Index_Query
 
 	private $providedMappings = array();
 
+	private $camelCase = false;
+
 	function __construct(Search_Elastic_Connection $connection, $index)
 	{
 		$this->connection = $connection;
 		$this->index = $index;
+	}
+
+	function setCamelCaseEnabled($enabled)
+	{
+		$this->camelCase = (bool) $enabled;
 	}
 
 	function destroy()
@@ -134,8 +141,40 @@ class Search_Elastic_Index implements Search_Index_Interface, Search_Index_Query
 		$mapping = array_filter($mapping);
 
 		if (! empty($mapping)) {
-			$this->connection->mapping($this->index, $type, $mapping);
+			$this->connection->mapping($this->index, $type, $mapping, function () {
+				return $this->getIndexDefinition();
+			});
 		}
+	}
+
+	private function getIndexDefinition()
+	{
+		return [
+			'analysis' => [
+				'tokenizer' => [
+					'camel' => [
+						"type" => "pattern",
+						"pattern" => "([^\\p{L}\\d]+)|(?<=\\D)(?=\\d)|(?<=\\d)(?=\\D)|(?<=[\\p{L}&&[^\\p{Lu}]])(?=\\p{Lu})|(?<=\\p{Lu})(?=\\p{Lu}[\\p{L}&&[^\\p{Lu}]])"
+					],
+				],
+				'analyzer' => [
+					'default' => [
+						'tokenizer' => $this->camelCase ? 'camel' : 'standard',
+						'filter' => ['standard', 'lowercase', 'asciifolding', 'tiki_stop', 'porterStem'],
+					],
+					'sortable' => [
+						'tokenizer' => 'keyword',
+						'filter' => ['lowercase'],
+					],
+				],
+				'filter' => [
+					'tiki_stop' => [
+						'type' => 'stop',
+						'stopwords' => ["a", "an", "and", "are", "as", "at", "be", "but", "by", "for", "if", "in", "into", "is", "it", "no", "not", "of", "on", "or", "s", "such", "t", "that", "the", "their", "then", "there", "these", "they", "this", "to", "was", "will", "with"],
+					],
+				],
+			],
+		];
 	}
 
 	function endUpdate()

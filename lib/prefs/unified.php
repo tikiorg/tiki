@@ -222,6 +222,14 @@ function prefs_unified_list()
 			'size' => '20',
 			'default' => '',
 		),
+		'unified_elastic_camel_case' => array(
+			'name' => tr('Tokenize CamelCase words'),
+			'description' => tr('Consider the different portions of camel case words as separate tokens, allowing to search them individually.'),
+			'warning' => tr('Conflicts with Tokenize Version Numbers.'),
+			'hint' => tr('ElasticSearch only'),
+			'type' => 'flag',
+			'default' => 'n',
+		),
 		'unified_mysql_index_current' => array(
 			'name' => tra('MySQL Full Text Search Current Index'),
 			'description' => tra('A new index is created upon rebuild and the old one is then destroyed. This setting allows you to see the currently active one.'),
