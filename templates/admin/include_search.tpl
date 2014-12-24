@@ -136,7 +136,6 @@
 					<div class="adminoptionboxchild unified_engine_childcontainer lucene">
 						{preference name="unified_lucene_highlight"}
 						{preference name=unified_parse_results}
-						{preference name="unified_lucene_default_operator"}
 
 						<fieldset>
 							<legend>{tr}Search Engine Settings{/tr}</legend>
@@ -156,6 +155,7 @@
 						{preference name="unified_elastic_index_current"}
 					</div>
 
+					{preference name="unified_lucene_default_operator"}
 					{preference name=unified_excluded_categories}
 					{preference name=unified_excluded_plugins}
 

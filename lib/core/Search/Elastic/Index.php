@@ -185,6 +185,9 @@ class Search_Elastic_Index implements Search_Index_Interface, Search_Index_Query
 
 	function find(Search_Query_Interface $query, $resultStart, $resultCount)
 	{
+		$builder = new Search_Elastic_RescoreQueryBuilder;
+		$rescorePart = $builder->build($query->getExpr());
+
 		$builder = new Search_Elastic_QueryBuilder;
 		$builder->setDocumentReader($this->createDocumentReader());
 		$queryPart = $builder->build($query->getExpr());
@@ -199,6 +202,7 @@ class Search_Elastic_Index implements Search_Index_Interface, Search_Index_Query
 			$queryPart,
 			$orderPart,
 			$facetPart,
+			$rescorePart,
 			array(
 				"from" => $resultStart,
 				"size" => $resultCount,

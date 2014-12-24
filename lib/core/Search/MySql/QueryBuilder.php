@@ -44,6 +44,10 @@ class Search_MySql_QueryBuilder
 	{
 		$exception = null;
 
+		if ($node instanceof ImplicitPhrase) {
+			$node = $node->getBasicOperator();
+		}
+
 		$fields = $this->getFields($node);
 
 		try {

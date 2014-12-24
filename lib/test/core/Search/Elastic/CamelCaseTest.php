@@ -3,7 +3,7 @@
 //
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: StemmingTest.php 52668 2014-09-29 19:06:57Z jyhem $
+// $Id$
 
 class Search_Elastic_CamelCaseTest extends PHPUnit_Framework_TestCase
 {
