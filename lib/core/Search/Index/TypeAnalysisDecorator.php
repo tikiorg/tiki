@@ -8,19 +8,21 @@
 class Search_Index_TypeAnalysisDecorator extends Search_Index_AbstractIndexDecorator
 {
 	private $identifierClass;
+	private $numericClass;
 	private $mapping = array();
 
 	function __construct(Search_Index_Interface $index)
 	{
 		parent::__construct($index);
 		$this->identifierClass = get_class($index->getTypeFactory()->identifier(1));
+		$this->numericClass = get_class($index->getTypeFactory()->numeric(1));
 	}
 
 	function addDocument(array $document)
 	{
 		$new = array_diff_key($document, $this->mapping);
 		foreach ($new as $key => $value) {
-			$this->mapping[$key] = $value instanceof $this->identifierClass;
+			$this->mapping[$key] = $value instanceof $this->identifierClass || $value instanceof $this->numericClass;
 		}
 		return $this->parent->addDocument($document);
 	}
