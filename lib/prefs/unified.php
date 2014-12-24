@@ -76,14 +76,14 @@ function prefs_unified_list()
 			'size' => 8,
 		),
 		'unified_lucene_default_operator' => array(
-			'name' => tra('Lucene Default Boolean Operator'),
+			'name' => tra('Default Boolean Operator'),
 			'description' => tra('Use OR (default) or AND as the default search operator.'),
 			'type' => 'list',
 			'filter' => 'int',
 			'default' => Zend_Search_Lucene_Search_QueryParser::B_OR,
 			'options' => array(
-				Zend_Search_Lucene_Search_QueryParser::B_OR => tra('OR'),
-				Zend_Search_Lucene_Search_QueryParser::B_AND => tra('AND'),
+				0 => tra('OR'),
+				1 => tra('AND'),
 			),
 		),
 		'unified_lucene_merge_factor' => array(

@@ -12,6 +12,7 @@ use Search_Expr_Not as NotX;
 use Search_Expr_Range as Range;
 use Search_Expr_Initial as Initial;
 use Search_Expr_MoreLikeThis as MoreLikeThis;
+use Search_Expr_ImplicitPhrase as ImplicitPhrase;
 
 class Search_Elastic_QueryBuilder
 {
@@ -41,6 +42,10 @@ class Search_Elastic_QueryBuilder
 
 	function __invoke($callback, $node, $childNodes)
 	{
+		if ($node instanceof ImplicitPhrase) {
+			$node = $node->getBasicOperator();
+		}
+
 		if ($node instanceof Token) {
 			return $this->handleToken($node);
 		} elseif (count($childNodes) === 1 && ($node instanceof AndX || $node instanceof OrX)) {

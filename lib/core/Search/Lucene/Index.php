@@ -329,6 +329,10 @@ class Search_Lucene_Index implements Search_Index_Interface
 	{
 		$term = null;
 
+		if ($node instanceof ImplicitPhrase) {
+			$node = $node->getBasicOperator();
+		}
+
 		if ($node instanceof Search_Expr_Initial) {
 			$initial = $node->getContent();
 			$node = new Search_Expr_Range($initial, substr($initial, 0, -1) . chr(ord(substr($initial, -1)) + 1), $node->getType(), $node->getField());
