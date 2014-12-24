@@ -3007,6 +3007,13 @@ class TrackerLib extends TikiLib
 			$query = "select tif.`value` from `tiki_tracker_item_fields` tif, `tiki_tracker_items` i, `tiki_tracker_fields` tf where i.`itemId`=? and i.`itemId`=tif.`itemId` and tf.`fieldId`=tif.`fieldId` and tf.`isMain`=? ";
 		$result = $this->getOne($query, array( (int) $itemId, "y"));
 
+		if (is_numeric($result) && $this->get_main_field_type($trackerId) == 'r') {
+			$definition = Tracker_Definition::get($trackerId);
+			$field = $definition->getField($this->get_main_field($trackerId));
+			$handler = $this->get_field_handler($field);
+			$result = $handler->getItemLabel($result);
+		}
+
 		if (strlen($result) && $result{0} === '{') {
 			$result = json_decode($result, true);
 			if (isset($result[$prefs['language']])) {
@@ -3017,6 +3024,11 @@ class TrackerLib extends TikiLib
 		}
 
 		return $result;
+	}
+
+	public function get_main_field_type($trackerId)
+	{
+		return $this->fields()->fetchOne('type', array('isMain' => 'y', 'trackerId' => $trackerId));
 	}
 
 	public function get_main_field($trackerId)
