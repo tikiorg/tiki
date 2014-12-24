@@ -87,7 +87,7 @@ function smarty_function_icon($params, $smarty)
 	if (!empty($params['name']) and empty($params['_tag'])){ 
 		$name = $params['name'];
 		
-		if (array_key_exists($name, $iconset)) { //if icon is defined in $iconset, use it
+		if (isset($iconset[$name])) { //if icon is defined in $iconset, use it
 			$tag = $iconset[$name]['tag'];
 			$icon_class = '';
 			
