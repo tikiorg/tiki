@@ -181,6 +181,7 @@ class UnifiedSearchLib
 			$connection = $this->getElasticConnection();
 			$indexName = $prefs['unified_elastic_index_prefix'] . uniqid();
 			$index = new Search_Elastic_Index($connection, $indexName);
+			$index->setCamelCaseEnabled($prefs['unified_elastic_camel_case'] == 'y');
 
 			TikiLib::events()->bind(
 				'tiki.process.shutdown',
@@ -617,6 +618,7 @@ class UnifiedSearchLib
 
 			$connection = $this->getElasticConnection();
 			$index = new Search_Elastic_Index($connection, $index);
+			$index->setCamelCaseEnabled($prefs['unified_elastic_camel_case'] == 'y');
 			return $index;
 		case 'mysql':
 			$index = $this->getIndexLocation($indexType);

@@ -173,7 +173,7 @@ class Search_Elastic_Connection
 		}
 	}
 
-	function mapping($index, $type, array $mapping)
+	function mapping($index, $type, array $mapping, callable $getIndex)
 	{
 		$type = $this->simplifyType($type);
 		$data = array($type => array(
@@ -181,7 +181,7 @@ class Search_Elastic_Connection
 		));
 
 		if (empty($this->indices[$index])) {
-			$this->createIndex($index);
+			$this->createIndex($index, $getIndex);
 			$this->indices[$index] = true;
 		}
 
@@ -200,32 +200,11 @@ class Search_Elastic_Connection
 		return $this->get($path);
 	}
 
-	private function createIndex($index)
+	private function createIndex($index, callable $getIndex)
 	{
 		try {
 			$this->put(
-				"/$index", json_encode(
-					array(
-						'analysis' => array(
-							'analyzer' => array(
-								'default' => array(
-									'tokenizer' => 'standard',
-									'filter' => array('standard', 'lowercase', 'asciifolding', 'tiki_stop', 'porterStem'),
-								),
-								'sortable' => array(
-									'tokenizer' => 'keyword',
-									'filter' => array('lowercase'),
-								),
-							),
-							'filter' => array(
-								'tiki_stop' => array(
-									'type' => 'stop',
-									'stopwords' => array ("a", "an", "and", "are", "as", "at", "be", "but", "by", "for", "if", "in", "into", "is", "it", "no", "not", "of", "on", "or", "s", "such", "t", "that", "the", "their", "then", "there", "these", "they", "this", "to", "was", "will", "with"),
-								),
-							),
-						),
-					)
-				)
+				"/$index", json_encode($getIndex())
 			);
 		} catch (Search_Elastic_Exception $e) {
 			// Index already exists: ignore

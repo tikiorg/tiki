@@ -167,6 +167,9 @@
 					{preference name=unified_forum_deepindexing}
 
 					{preference name=unified_tokenize_version_numbers}
+					<div class="adminoptionboxchild unified_engine_childcontainer elastic">
+						{preference name="unified_elastic_camel_case"}
+					</div>
 
 					{preference name=unified_field_weight}
 					{preference name=unified_default_content}
