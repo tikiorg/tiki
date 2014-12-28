@@ -381,60 +381,61 @@
 		</tbody>
 	</table>
 </div>
-
-{if $checkboxes_on eq 'y' && count($listpages) > 0} {* what happens to the checked items? *}
-	<p align="left"> {*on the left to have it close to the checkboxes*}
-		<label for="submit_mult">{tr}Perform action with checked:{/tr}</label>
-		<select name="submit_mult" class="form-control" id="submit_mult" onchange="this.form.submit();">
-			<option value="" selected="selected">...</option>
-			{if $tiki_p_remove eq 'y'}
-				<option value="remove_pages" >{tr}Remove{/tr}</option>
-			{/if}
-
-			{if $prefs.feature_wiki_multiprint eq 'y'}
-				<option value="print_pages" >{tr}Print{/tr}</option>
-
-					{if $prefs.print_pdf_from_url neq 'none'}
-					<option value="export_pdf" >{tr}PDF{/tr}</option>
+{if !$tsAjax}
+	{if $checkboxes_on eq 'y' && count($listpages) > 0} {* what happens to the checked items? *}
+		<p align="left"> {*on the left to have it close to the checkboxes*}
+			<label for="submit_mult">{tr}Perform action with checked:{/tr}</label>
+			<select name="submit_mult" class="form-control" id="submit_mult" onchange="this.form.submit();">
+				<option value="" selected="selected">...</option>
+				{if $tiki_p_remove eq 'y'}
+					<option value="remove_pages" >{tr}Remove{/tr}</option>
 				{/if}
-			{/if}
 
-			{if $prefs.feature_wiki_usrlock eq 'y' and ($tiki_p_lock eq 'y' or $tiki_p_admin_wiki eq 'y')}
-				<option value="lock_pages" >{tr}Lock{/tr}</option>
-				<option value="unlock_pages" >{tr}Unlock{/tr}</option>
-			{/if}
-			{if $tiki_p_admin eq 'y'}
-				<option value="zip">{tr}Xml Zip{/tr}</option>
-			{/if}
-			{if $tiki_p_admin eq 'y'}
-				<option value="title">{tr}Add page name as a header ! at the beginning of the page content{/tr}</option>
-			{/if}
+				{if $prefs.feature_wiki_multiprint eq 'y'}
+					<option value="print_pages" >{tr}Print{/tr}</option>
 
-			{* add here e.g. <option value="categorize" >{tr}categorize{/tr}</option> *}
-		</select>
-	</p>
-	<script type='text/javascript'>
-		<!--
-		// Fake js to allow the use of the <noscript> tag (so non-js-users can still submit)
-		//-->
-	</script>
-	<noscript>
-		<input type="submit" class="btn btn-default btn-sm" value="{tr}OK{/tr}">
-	</noscript>
-{/if}
+						{if $prefs.print_pdf_from_url neq 'none'}
+						<option value="export_pdf" >{tr}PDF{/tr}</option>
+					{/if}
+				{/if}
 
-{if $find and $tiki_p_edit eq 'y' and $pagefound eq 'n' and $alias_found eq 'n'}
-	{capture assign='find_htmlescaped'}{$find|escape}{/capture}
-	{capture assign='find_urlescaped'}{$find|escape:'url'}{/capture}
-	<div class="t_navbar">
-		{button _text="{tr}Create Page:{/tr} $find_htmlescaped" href="tiki-editpage.php?page=$find_urlescaped&lang=$find_lang&templateId=$template_id&template_name=$template_name&categId=$create_page_with_categId" class="btn btn-default" _title="{tr}Create{/tr}"}
-	</div>
-{/if}
+				{if $prefs.feature_wiki_usrlock eq 'y' and ($tiki_p_lock eq 'y' or $tiki_p_admin_wiki eq 'y')}
+					<option value="lock_pages" >{tr}Lock{/tr}</option>
+					<option value="unlock_pages" >{tr}Unlock{/tr}</option>
+				{/if}
+				{if $tiki_p_admin eq 'y'}
+					<option value="zip">{tr}Xml Zip{/tr}</option>
+				{/if}
+				{if $tiki_p_admin eq 'y'}
+					<option value="title">{tr}Add page name as a header ! at the beginning of the page content{/tr}</option>
+				{/if}
 
-{if $checkboxes_on eq 'y'}
-	</form>
-{/if}
+				{* add here e.g. <option value="categorize" >{tr}categorize{/tr}</option> *}
+			</select>
+		</p>
+		<script type='text/javascript'>
+			<!--
+			// Fake js to allow the use of the <noscript> tag (so non-js-users can still submit)
+			//-->
+		</script>
+		<noscript>
+			<input type="submit" class="btn btn-default btn-sm" value="{tr}OK{/tr}">
+		</noscript>
+	{/if}
 
-{if !isset($tsOn) or !$tsOn}
-	{pagination_links cant=$cant step=$maxRecords offset=$offset clean=$clean}{/pagination_links}
+	{if $find and $tiki_p_edit eq 'y' and $pagefound eq 'n' and $alias_found eq 'n'}
+		{capture assign='find_htmlescaped'}{$find|escape}{/capture}
+		{capture assign='find_urlescaped'}{$find|escape:'url'}{/capture}
+		<div class="t_navbar">
+			{button _text="{tr}Create Page:{/tr} $find_htmlescaped" href="tiki-editpage.php?page=$find_urlescaped&lang=$find_lang&templateId=$template_id&template_name=$template_name&categId=$create_page_with_categId" class="btn btn-default" _title="{tr}Create{/tr}"}
+		</div>
+	{/if}
+
+	{if $checkboxes_on eq 'y'}
+		</form>
+	{/if}
+
+	{if !isset($tsOn) or !$tsOn}
+		{pagination_links cant=$cant step=$maxRecords offset=$offset clean=$clean}{/pagination_links}
+	{/if}
 {/if}

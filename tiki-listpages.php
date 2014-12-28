@@ -193,6 +193,7 @@ if (!empty($_REQUEST['submit_mult']) && isset($_REQUEST['checked'])) {
 $tsOn = Table_Check::isEnabled(true);
 $smarty->assign('tsOn', $tsOn);
 $tsAjax = Table_Check::isAjaxCall();
+$smarty->assign('tsAjax', $tsAjax);
 static $iid = 0;
 ++$iid;
 $ts_tableid = 'listpages' . $iid;
@@ -557,8 +558,12 @@ if (!empty($multiprint_pages)) {
 		}
 	} else {
 		// Display the template
-		$smarty->assign('mid', ($listpages_orphans ? 'tiki-orphan_pages.tpl' : 'tiki-listpages.tpl'));
-		$smarty->display('tiki.tpl');
+		if ($tsAjax) {
+			$smarty->display($listpages_orphans ? 'tiki-orphan_pages.tpl' : 'tiki-listpages.tpl');
+		} else {
+			$smarty->assign('mid', ($listpages_orphans ? 'tiki-orphan_pages.tpl' : 'tiki-listpages.tpl'));
+			$smarty->display('tiki.tpl');
+		}
 	}
 }
 
