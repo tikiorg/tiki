@@ -7,14 +7,14 @@
 	{permission type=bigbluebutton object=$bbb_meeting name=tiki_p_assign_perm_bigbluebutton}
 		{permission_link mode=button type=bigbluebutton id=$bbb_meeting title=$bbb_meeting}
 	{/permission}
-    <div class="clearfix">
-    	{if ! $user}
-	    	{tr}Name:{/tr}
-		    <input type="text" name="bbb_name">
-		    <input type="submit" class="btn btn-default btn-sm" value="{tr}Join{/tr}">
-	    {else}
-		    <input type="submit" class="button btn btn-default" value="{tr}Join{/tr}">
-	    {/if}
+	<div class="clearfix">
+		{if ! $user}
+			{tr}Name:{/tr}
+			<input type="text" name="bbb_name">
+			<input type="submit" class="btn btn-default btn-sm" value="{tr}Join{/tr}">
+		{else}
+			<input type="submit" class="button btn btn-default" value="{tr}Join{/tr}">
+		{/if}
 	</div>
 	{if $bbb_attendees}
 		<div>

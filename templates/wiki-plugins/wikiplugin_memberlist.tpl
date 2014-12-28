@@ -7,7 +7,7 @@
 		{tabset}
 			{foreach from=$memberlist_groups key=groupName item=groupData}
 				{tab name="{$groupName|addongroupname|escape}"}
-                    <div class="group">
+					<div class="group">
 						{if !empty($user) and $prefs.feature_user_watches eq 'y'}
 							<div class="pull-right">
 								{if not $groupData.isWatching}
@@ -113,7 +113,7 @@
 	</div>
 </form>
 {jq}
-$('.username-input').tiki('autocomplete','username');
+	$('.username-input').tiki('autocomplete','username');
 {/jq}
 {if $Need_app|escape eq $execution_key|escape}
 	{jq}

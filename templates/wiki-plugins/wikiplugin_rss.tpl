@@ -5,37 +5,37 @@
 {/if}
 <ul class="rsslist{if $ticker} rssticker{/if}">
 	{foreach from=$items item=item}
-            {if $icon}
-            <div style="list-style:square inside url({$icon})">
-            {/if}
+		{if $icon}
+			<div style="list-style:square inside url({$icon})">
+		{/if}
 		<li class="rssitem">
-                    <a target="_blank" href="{$item.url|escape}">{$item.title|escape}</a>
+			<a target="_blank" href="{$item.url|escape}">{$item.title|escape}</a>
 
-                    {if $item.author and $showauthor and $item.publication_date and $showdate}
+			{if $item.author and $showauthor and $item.publication_date and $showdate}
 				&nbsp;&nbsp;&nbsp;({$item.author|escape}, <span class="rssdate">{$item.publication_date|tiki_short_date}</span>)
-                    {elseif $item.author and $showauthor}
+			{elseif $item.author and $showauthor}
 				&nbsp;&nbsp;&nbsp;({$item.author|escape})
-                    {elseif $item.publication_date and $showdate}
+			{elseif $item.publication_date and $showdate}
 				&nbsp;&nbsp;&nbsp;(<span class="rssdate">{$item.publication_date|tiki_short_date}</span>)
-                    {/if}
+			{/if}
 
-                    {if $item.description && $showdesc}
+			{if $item.description && $showdesc}
 				<div class="rssdescription">
 					{$item.description|escape}
 				</div>
-                    {/if}
+			{/if}
 		</li>
-            {if $icon}
-            </div>
-            {/if}
+		{if $icon}
+			</div>
+		{/if}
 	{/foreach}
 </ul>
 
 {if $ticker}
-{jq}
-function rsstick(){
-	$('ul.rssticker li:first').slideUp( function () { $(this).appendTo($('ul.rssticker')).slideDown(); });
-}
-setInterval(function(){ rsstick() }, 5000);
-{/jq}
+	{jq}
+		function rsstick(){
+			$('ul.rssticker li:first').slideUp( function () { $(this).appendTo($('ul.rssticker')).slideDown(); });
+		}
+		setInterval(function(){ rsstick() }, 5000);
+	{/jq}
 {/if}

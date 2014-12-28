@@ -1,40 +1,40 @@
 {if !empty($sents) || !empty($nbSentTo)}
-{remarksbox type='feedback' title="{tr}Message sent to{/tr}"}
-	{tr}Email sent to:{/tr}
-	<p>{$nbSentTo|escape} {tr}recipients{/tr}</p>
-	<ul>
-	{foreach from=$sents item=sent}
-		<li>{$sent|escape}</li>
-	{/foreach}
-	<ul>
-{/remarksbox}
+	{remarksbox type='feedback' title="{tr}Message sent to{/tr}"}
+		{tr}Email sent to:{/tr}
+		<p>{$nbSentTo|escape} {tr}recipients{/tr}</p>
+		<ul>
+			{foreach from=$sents item=sent}
+				<li>{$sent|escape}</li>
+			{/foreach}
+		<ul>
+	{/remarksbox}
 {/if}
 {if !empty($mail_error)}
-{remarksbox type='errors' title="{tr}Errors{/tr}"}
-	{tr}Error{/tr}
-{/remarksbox}
+	{remarksbox type='errors' title="{tr}Errors{/tr}"}
+		{tr}Error{/tr}
+	{/remarksbox}
 {/if}
 {if $preview}
 	<form method="post">
-	{tr}The message will be sent to{/tr}
-	<ul>
-		<li>{tr}Number of Recipients:{/tr} {$nbTo}</li>
-		<li>{tr}Subject:{/tr} {$mail_subject|truncate:100:"..."}</li>
-		<li>{tr}Message:{/tr}  {$mail_mess|truncate:100:"..."}</li>
-	</ul>
-	<input type="hidden" name="mail_subject" value="{$mail_subject|escape}">
-	<input type="hidden" name="mail_mess" value="{$mail_mess|escape}">
-	<input type="submit" class="btn btn-default" name="mail_send{$ipluginmail}" value="{tr}Send Mail{/tr}">
+		{tr}The message will be sent to{/tr}
+		<ul>
+			<li>{tr}Number of Recipients:{/tr} {$nbTo}</li>
+			<li>{tr}Subject:{/tr} {$mail_subject|truncate:100:"..."}</li>
+			<li>{tr}Message:{/tr} {$mail_mess|truncate:100:"..."}</li>
+		</ul>
+		<input type="hidden" name="mail_subject" value="{$mail_subject|escape}">
+		<input type="hidden" name="mail_mess" value="{$mail_mess|escape}">
+		<input type="submit" class="btn btn-default" name="mail_send{$ipluginmail}" value="{tr}Send Mail{/tr}">
 	</form>
 	<form method="post">
-	<input type="submit" class="btn btn-default" name="mail_cancel{$ipluginmail}" value="{tr}Cancel{/tr}">
+		<input type="submit" class="btn btn-default" name="mail_cancel{$ipluginmail}" value="{tr}Cancel{/tr}">
 	</form>
 {else}
-<div>
-	{if $mail_popup == 'y'}
-		<p><input name="sendmailload{{$ipluginmail}}" type="submit" class="btn btn-default" value="{$mail_label_name|escape}" /></p>
-		<div style="display: none;">
-	{/if}
+	<div>
+		{if $mail_popup == 'y'}
+			<p><input name="sendmailload{{$ipluginmail}}" type="submit" class="btn btn-default" value="{$mail_label_name|escape}" /></p>
+			<div style="display: none;">
+		{/if}
 		<div id="wikiplugin_mail" class="col-md-6 centered">
 			<form method="post">
 				{if $params.showuserdd eq 'y' or $params.showrealnamedd eq 'y'}
@@ -53,7 +53,7 @@
 						</select>
 					</div>
 					<div class="row">
-						{remarksbox type='tip'  title="{tr}Tip{/tr}"}{tr}Use Ctrl+Click to select multiple options{/tr}{/remarksbox}
+						{remarksbox type='tip' title="{tr}Tip{/tr}"}{tr}Use Ctrl+Click to select multiple options{/tr}{/remarksbox}
 					</div>
 				{/if}
 
@@ -67,7 +67,7 @@
 						</select>
 					</div>
 					<div class="row">
-						{remarksbox type='tip'  title="{tr}Tip{/tr}"}{tr}Use Ctrl+Click to select multiple options{/tr}{/remarksbox}
+						{remarksbox type='tip' title="{tr}Tip{/tr}"}{tr}Use Ctrl+Click to select multiple options{/tr}{/remarksbox}
 					</div>
 				{/if}
 
@@ -128,10 +128,10 @@
 				</div>
 			</form>
 		</div>
-	{if $mail_popup == 'y'}
-		</div>
-	{/if}
-</div>
+		{if $mail_popup == 'y'}
+			</div>
+		{/if}
+	</div>
 
 {/if}
 

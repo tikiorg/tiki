@@ -1,7 +1,7 @@
 {* $Id$ *}
 {strip}
 {if $files|count}
-	<ul  class="localfiles">
+	<ul class="localfiles">
 		{foreach item=file from=$files}
 			<li>
 				{if $isIE}
