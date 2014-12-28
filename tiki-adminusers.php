@@ -780,6 +780,7 @@ $tsOn = Table_Check::isEnabled(true);
 
 $smarty->assign('tsOn', $tsOn);
 $tsAjax = Table_Check::isAjaxCall();
+$smarty->assign('tsAjax', $tsAjax);
 static $iid = 0;
 ++$iid;
 $ts_tableid = 'adminusers' . $iid;
@@ -861,7 +862,11 @@ $smarty->assign('uses_tabs', 'y');
 // disallow robots to index page:
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 $smarty->assign('mid', 'tiki-adminusers.tpl');
-$smarty->display('tiki.tpl');
+if ($tsAjax) {
+	$smarty->display('tiki-adminusers.tpl');
+} else {
+	$smarty->display('tiki.tpl');
+}
 
 /**
  * @param $errors
