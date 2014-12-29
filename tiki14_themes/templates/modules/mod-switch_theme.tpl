@@ -1,33 +1,31 @@
 {* $Id$ *}
-{if empty($group_style)}
-	{if !isset($tpl_module_title)}
-		{capture assign=tpl_module_title}{tr}Theme{/tr}{/capture}
-	{/if}
-	{tikimodule error=$module_params.error title=$tpl_module_title name="switch_theme" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
-		<form method="get" action="tiki-switch_theme.php"{if !empty($tc_theme)} class="disabled"{/if}>
+{if !isset($tpl_module_title)}
+	{capture assign=tpl_module_title}{tr}Switch Theme{/tr} {if !empty($tc_theme) or $group_theme or (($section eq 'admin' or !$section) and $prefs.theme_admin neq '')}{icon name="information" class="tips btn btn-sm btn-link" title="{tr}Not allowed{/tr}:{tr}Displayed theme{/tr}: {$prefs.theme_active}{if !empty($prefs.theme_option_active)}/{$prefs.theme_option_active}{/if} ({if !empty($tc_theme)}{tr}Theme Control{/tr}{elseif ($section eq 'admin' or !$section) and $prefs.theme_admin neq ''}{tr}Admin Theme{/tr}{elseif $group_theme}{tr}Group Theme{/tr}{/if})"}{/if}{/capture}
+{/if}
+{tikimodule error=$module_params.error title=$tpl_module_title name="switch_theme" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
+	<form method="get" action="tiki-switch_theme.php">
+		<fieldset {if !empty($tc_theme) or $group_theme or (($section eq 'admin' or !$section) and $prefs.theme_admin neq '')}disabled{/if}>
 			<div class="form-group">
-				<select name="theme" size="1" onchange="this.form.submit();"{if !empty($tc_theme)} disabled="disabled"{/if} class="form-control">
-					<option value="" style="font-style:italic;border-bottom:1px dashed #666;">{tr}Site default{/tr}</option>
-					{section name=ix loop=$styleslist}
-						{if (count($prefs.available_styles) == 0 || empty($prefs.available_styles[0]) || in_array($styleslist[ix], $prefs.available_styles)) and $styleslist[ix] neq 'empty.css'}
-						<option value="{$styleslist[ix]|escape}" {if $style eq $styleslist[ix]}selected="selected"{/if}>{$styleslist[ix]|replace:'.css':''|truncate:15|ucwords}</option>
-						{/if}
-					{/section}
+				<select name="theme" size="1" onchange="this.form.submit();" class="form-control">
+					<option value="" class="text-muted bg-info">{tr}Site theme{/tr} ({$prefs.theme_site}{if !empty($prefs.theme_option_site)}/{$prefs.theme_option_site}{/if})</option>
+					{foreach from=$available_themes key=theme item=theme_name}
+						<option value="{$theme|escape}" {if $prefs.user_theme eq $theme}selected="selected"{/if}>{$theme_name|truncate:24|ucwords}</option>
+					{/foreach}
 				</select>
 			</div>
-			{if $style_options}
+			{if $available_theme_options}
 				<div class="form-group">
-					<select name="theme-option" onchange="this.form.submit();"{if !empty($tc_theme)} disabled="disabled"{/if} class="form-control">
+					<select name="theme-option" onchange="this.form.submit();" class="form-control">
 						<option value="">{tr}None{/tr}</option>
-						{section name=ix loop=$style_options}
-							<option value="{$style_options[ix]|escape}"{if $prefs.style_option eq $style_options[ix]} selected="selected"{/if}>{$style_options[ix]|replace:'.css':''|truncate:15|ucwords}</option>
-						{/section}
+						{foreach from=$available_theme_options item=theme_option}
+							<option value="{$theme_option|escape}"{if $prefs.user_theme_option eq $theme_option} selected="selected"{/if}>{$theme_option|truncate:24|ucwords}</option>
+						{/foreach}
 					</select>
 				</div>
 			{/if}
 			{if $prefs.themegenerator_feature eq "y"}
 				<div class="form-group">
-					<select name="theme-themegen" onchange="this.form.submit();"{if !empty($tc_theme)} disabled="disabled"{/if} class="form-control">
+					<select name="theme-themegen" onchange="this.form.submit();" class="form-control">
 						<option value="">{tr}None{/tr}</option>
 						{section name=ix loop=$themegen_list}
 							{if !empty($themegen_list[ix])}
@@ -35,11 +33,11 @@
 							{/if}
 						{/section}
 					</select>
-				</div>
+			  </div>
 			{/if}
 			<noscript>
 				<button type="submit" class="btn btn-default btn-sm">{tr}Switch{/tr}</button>
 			</noscript>
-		</form>
-	{/tikimodule}
-{/if}
+		</fieldset>
+	</form>
+{/tikimodule}

@@ -12,59 +12,63 @@
 require_once ('tiki-setup.php');
 $access->check_script($_SERVER["SCRIPT_NAME"], basename(__FILE__));
 if ($prefs['feature_theme_control'] == 'y') {
+	//we arrive here after lib/setup/theme.php has finished, so $prefs['theme_active'] and $prefs['theme_active_option'] are already set. we want to overwrite with tc settings
 	// defined: $cat_type and cat_objid
 	// search for theme for $cat_type
 	// then search for theme for md5($cat_type.cat_objid)
-	$tcontrollib = TikiLib::lib('tcontrol');
+	global $prefs, $iconset;
+	$themelib = TikiLib::lib('theme');
+	$themecontrollib = TikiLib::lib('themecontrol');
 	$categlib = TikiLib::lib('categ');
-	global $tc_theme, $tc_theme_option;
 	
-	if (isset($tc_theme)) {
-		$old_tc_theme = $tc_theme;
-		$tc_theme = '';
-	} else {
-		$old_tc_theme = '';
-	}
-	if (isset($tc_theme_option)) {
-		$old_tc_theme_option = $tc_theme_option;
-		$tc_theme_option = '';
-	} else {
-		$old_tc_theme_option = '';
-	}
-	//SECTIONS
-	if (isset($section)) {
-		$tc_theme = $tcontrollib->tc_get_theme_by_section($section);
-		list($tc_theme, $tc_theme_option) = $tcontrollib->parse_theme_option_string($tc_theme);
-	}
+	//Step 1: lets see if there is any theme control setting for the current object	
 	if (!isset($cat_type) ) $cat_type = '';
 	if (!isset($cat_objid) ) $cat_objid = '';
-	$tcontrollib->get_theme($cat_type, $cat_objid, $tc_theme, $tc_theme_option);
-	if ($cat_type == 'trackeritem' && empty($tc_theme)) {
-		$trackerId = $tcontrollib->table('tiki_tracker_items')->fetchOne('trackerId', array('itemId' => $cat_objid));
-		$tcontrollib->get_theme('tracker', $trackerId, $tc_theme, $tc_theme_option);
-	}
 	
+	list($tc_theme, $tc_theme_option) = $themecontrollib->get_tc_theme($cat_type, $cat_objid); //this function returns $tc_theme and $tc_theme_option
+	
+	if ($cat_type == 'trackeritem' && empty($tc_theme)) {
+		$trackerId = $themecontrollib->table('tiki_tracker_items')->fetchOne('trackerId', array('itemId' => $cat_objid));
+		$themecontrollib->get_tc_theme('tracker', $trackerId);
+	}
+
+	//Step 2: if at least tc_theme is not empty, than we have a setting, so continue
+	//var_dump($tc_theme);
 	if ($tc_theme) {
 		if ($prefs['feature_theme_control_savesession'] == 'y' && !empty($tc_theme_option)) {
 			$_SESSION['tc_theme'] = $tc_theme_option;
 		}
-		if ($old_tc_theme) {
-			$headerlib->drop_cssfile($tikilib->get_style_path('', '', $old_tc_theme));
-			$headerlib->drop_cssfile($tikilib->get_style_path($old_tc_theme, $old_tc_theme_option, $old_tc_theme_option));
+		//DROP css files (added by lib/setup/theme.php) that became unnecessary now that we have tc_theme
+		$themesetup_path = $themelib->get_theme_path($prefs['theme_active'], $prefs['theme_option_active'], NULL);
+		$headerlib->drop_cssfile("{$themesetup_path}css/tiki.css");
+		$headerlib->drop_cssfile("{$themesetup_path}css/custom.css");
+		
+		//ADD new css files (theme, theme_option and custom.css)
+		$tc_theme_path = $themelib->get_theme_path($tc_theme , $tc_theme_option, NULL);
+		//var_dump($tc_theme_path);
+		$headerlib->add_cssfile("{$tc_theme_path}css/tiki.css");
+		$tc_custom_css = "{$tc_theme_path}css/custom.css";
+		if (is_readable($tc_custom_css)) {
+			$headerlib->add_cssfile($tc_custom_css, 53);
 		}
-		$headerlib->drop_cssfile($tikilib->get_style_path('', '', $prefs['style']));
-		$headerlib->add_cssfile($tikilib->get_style_path('', '', $tc_theme), 51);
-
-		$headerlib->drop_cssfile($tikilib->get_style_path($prefs['style'], $prefs['style_option'], $prefs['style_option']));
-		if (!empty($tc_theme_option)) { // special handling for 'None' case
-			$headerlib->add_cssfile($tikilib->get_style_path($tc_theme, $tc_theme_option, $tc_theme_option), 52);
-		}
-		// Reset IE specific CSS
+		
+		//RESET IE specific CSS
 		global $style_ie8_css, $style_ie9_css, $style_base;
-		$style_ie8_css = $tikilib->get_style_path($tc_theme, $tc_theme_option, 'ie8.css');
-		$style_ie9_css = $tikilib->get_style_path($tc_theme, $tc_theme_option, 'ie9.css');
+		$style_ie8_css = $themelib->get_theme_path($tc_theme, $tc_theme_option, 'ie8.css');
+		$style_ie9_css = $themelib->get_theme_path($tc_theme, $tc_theme_option, 'ie9.css');
 
-		$style_base = $tikilib->get_style_base($tc_theme);
-#echo "……JML debug in tc <pre>".print_r(array('tc_theme'=>$tc_theme,'style_base'=>$style_base),1)."</pre> <br>\n";
+		//RESET $theme_path global smarty variable
+		$tc_theme_path = $themelib->get_theme_path($tc_theme, $tc_theme_option);
+		$smarty->assign_by_ref('theme_path', $tc_theme_path);
+		
+		//RESET $iconset according to the new theme
+		$iconset = $themelib->get_iconset($tc_theme, $tc_theme_option);
+		$smarty->assign_by_ref('iconset', $iconset);
+		
+		//RESET $theme_active prefs
+		$prefs['theme_active'] = $tc_theme;
+		$prefs['theme_option_active'] = $tc_theme_option;
+		
+		//TODO: load custom templates
 	}
 }

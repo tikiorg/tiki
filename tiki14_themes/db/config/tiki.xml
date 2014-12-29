@@ -272,8 +272,8 @@
 		<service id="tiki.lib.theme" class="ThemeLib">
 			<file>%kernel.root_dir%/lib/theme/themelib.php</file>
 		</service>
-		<service id="tiki.lib.tcontrol" class="ThemeControlLib">
-			<file>%kernel.root_dir%/lib/themecontrol/tcontrol.php</file>
+		<service id="tiki.lib.themecontrol" class="ThemeControlLib">
+			<file>%kernel.root_dir%/lib/theme/themecontrollib.php</file>
 		</service>
 		<service id="tiki.lib.tikicalendar" class="TikiCalendarLib">
 			<file>%kernel.root_dir%/lib/calendar/tikicalendarlib.php</file>
