@@ -196,7 +196,7 @@
 				<div class="form-group">
 					<label for="groups_defcat" class="control-label col-md-3">{tr}Default Category{/tr}</label>
 					<div class="col-md-9">
-						<select name="defcat" id="groups_defcat">
+						<select name="defcat" id="groups_defcat" class="form-control">
 							<option value="" {if ($groupdefcat eq "") or ($groupdefcat eq 0)} selected="selected"{/if}>{tr}none{/tr}</option>
 							{foreach $categories as $id=>$category}
 								<option value="{$id|escape}" {if $id eq $groupdefcat}selected="selected"{/if}>{$category.categpath|escape}</option>
@@ -212,11 +212,11 @@
 				<div class="form-group">
 					<label for="groups_theme" class="control-label col-md-3">{tr}Group Theme{/tr}</label>
 					<div class="col-md-9">
-						<select name="theme" id="groups_theme" multiple="multiple" size="4">
+						<select name="theme" id="groups_theme" class="form-control">
 							<option value="" {if $grouptheme eq ""} selected="selected"{/if}>{tr}none{/tr} ({tr}Use site default{/tr})</option>
-							{section name=ix loop=$av_themes}
-								<option value="{$av_themes[ix]|escape}" {if $grouptheme eq $av_themes[ix]}selected="selected"{/if}>{$av_themes[ix]}</option>
-							{/section}
+							{foreach from=$group_themes key=theme item=theme_name}
+								<option value="{$theme|escape}" {if $grouptheme eq $theme}selected="selected"{/if}>{$theme_name}</option>
+							{/foreach}
 						</select>
 					</div>
 				</div>
@@ -345,7 +345,7 @@
 				<div class="form-group">
 					<label for="prorateInterval" class="control-label col-md-3">{tr}Pro-Rate Membership{/tr}</label>
 					<div class="col-md-9">
-						<select name="prorateInterval">
+						<select name="prorateInterval" class="form-control">
 							<option value="day" {if $group_info.prorateInterval eq 'day'}selected="selected"{/if}>{tr}Day{/tr}</option>
 							<option value="month" {if $group_info.prorateInterval eq 'month'}selected="selected"{/if}>{tr}Month{/tr}</option>
 							<option value="year" {if $group_info.prorateInterval eq 'year'}selected="selected"{/if}>{tr}Year{/tr}</option>

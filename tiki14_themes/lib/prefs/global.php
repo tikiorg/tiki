@@ -227,8 +227,8 @@ function prefs_global_list($partial = false)
 			'tags' => array('basic'),
 		),
 		'useGroupTheme' => array(
-			'name' => tra('Each group can have its theme'),
-            'description' => tra(''),
+			'name' => tra('Group Theme'),
+            'description' => tra('Each group can have its theme'),
 			'type' => 'flag',
 			'default' => 'n',
 		),
