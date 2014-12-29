@@ -168,6 +168,9 @@ $icons = array(
 	'administer' => array(
 		'image_src' => 'img/icons/wrench.png',
 	),
+	'attach' => array(
+		'image_src' => 'img/icons/attach.png',
+	),
 	'backlink' => array(
 		'image_src' => 'img/icons/arrow_turn_left.png',
 	),
@@ -228,6 +231,12 @@ $icons = array(
 	'file-archive' => array(
 		'image_src' => 'img/icons/folder.png',
 	),
+	'file-archive' => array(
+		'image_src' => 'img/icons/folder.png',
+	),
+	'file-archive-open' => array(
+		'image_src' => 'img/icons/folder_go.png',
+	),
 	'filter' => array(
 		'image_src' => 'img/icons/find.png',
 	),
@@ -278,6 +287,9 @@ $icons = array(
 	),
 	'menuitem' => array(
 		'image_src' => 'img/icons/arrow_right.png',
+	),
+	'merge' => array(
+		'image_src' => 'img/icons/arrow_switch.png',
 	),
 	'minus' => array(
 		'image_src' => 'img/icons/delete.png',
@@ -385,7 +397,7 @@ $icons = array(
 		'image_src' => 'img/icons/arrow_undo.png',
 	),
 	'unlock' => array(
-		'image_src' => 'img/icons/lock_break.png',
+		'image_src' => 'img/icons/lock_open.png',
 	),
 	'user' => array(
 		'image_src' => 'img/icons/user.png',

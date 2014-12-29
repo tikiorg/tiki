@@ -174,6 +174,9 @@ $icons = array( //Icons of the icon set
 	'administer' => array(
 		'class' => 'fa fa-cog fa-fw',
 	),
+	'attach' => array(
+		'class' => 'fa fa-paperclip fa-fw',
+	),
 	'backlink' => array(
 		'class' => 'fa fa-reply fa-fw',
 	),
@@ -246,6 +249,12 @@ $icons = array( //Icons of the icon set
 	'file-archive' => array(
 		'class' => 'fa fa-file-archive-o fa-fw',
 	),
+	'file-archive' => array(
+		'class' => 'fa fa-folder fa-fw',
+	),
+	'file-archive-open' => array(
+		'class' => 'fa fa-folder-open fa-fw',
+	),
 	'filter' => array(
 		'class' => 'fa fa-filter fa-fw',
 	),
@@ -291,6 +300,9 @@ $icons = array( //Icons of the icon set
 	),
 	'menuitem' => array(
 		'class' => 'fa fa-angle-right fa-fw',
+	),
+	'merge' => array(
+		'class' => 'fa fa-random fa-fw',
 	),
 	'minus' => array(
 		'class' => 'fa fa-minus fa-fw',

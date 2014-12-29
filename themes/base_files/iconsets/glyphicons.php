@@ -26,6 +26,9 @@ $icons = array(
 	'admin_i18n' => array(
 		'class' => 'glyphicon glyphicon-globe',
 	),
+	'attach' => array(
+		'class' => 'glyphicon glyphicon-paperclip',
+	),
 	'backward' => array(
 		'class' => 'glyphicon glyphicon-backward',
 	),
@@ -75,7 +78,10 @@ $icons = array(
 		'class' => 'glyphicon glyphicon-step-forward',
 	),
 	'file-archive' => array(
-		'class' => 'glyphicon glyphicon-floppy-save',
+		'class' => 'glyphicon glyphicon-folder',
+	),
+	'file-archive-open' => array(
+		'class' => 'glyphicon glyphicon-folder-open',
 	),
 	'filter' => array(
 		'class' => 'glyphicon glyphicon-filter',
@@ -100,6 +106,9 @@ $icons = array(
 	),
 	'menuitem' => array(
 		'class' => 'glyphicon glyphicon-chevron-right',
+	),
+	'merge' => array(
+		'class' => 'glyphicon glyphicon-random',
 	),
 	'minus' => array(
 		'class' => 'glyphicon glyphicon-minus',
