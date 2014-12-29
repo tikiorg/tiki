@@ -11,96 +11,146 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 	exit;
 }
 
-/**
- * ThemeLib 
- * 
- * @uses TikiLib
- */
+/*
+ThemeLib 
+@uses TikiLib
+*/
+
 class ThemeLib extends TikiLib
 {
-	/** replaces legacy list_styles() function
-	 * @return array of themes in the themes directory
-	 */
-	function list_themes()
+
+	/* 
+	@return array of folder name in themes directory
+	*/
+	function get_themes($theme_base_path = '')
 	{
-		global $tikidomain;
-		$csslib = TikiLib::lib('css');
-
-		$themes = [
-		'default' => tr('Bootstrap default'),
-		'custom' => tr('Custom bootstrap theme by specifying URL'),
-		];
-
-		foreach (glob("themes/*/css/tiki.css") as $css) {
+		$themes = array();
+		foreach (glob("{$theme_base_path}themes/*/css/tiki.css") as $css) {
 			$css = dirname(dirname($css));
 			$theme = basename($css);
 			$themes[$theme] = tr($theme);
 		}
-		
-		$theme_base_path = $this->get_theme_path();	// knows about $tikidomain
-
-		if ($theme_base_path) {
-			$theme = $csslib->list_css($theme_base_path);
-		}
-
-		if ($tikidomain) {
-			$themes = array_unique(array_merge($themes, $csslib->list_css('styles')));
-		}
-		
+		unset($themes['base_files']); //make sure base_files directory is removed
+		unset($themes['templates']); //make sure templates directory is removed
 		return $themes;
 	}
 
-	/** replaces legacy list_style_options function
-	 * @param $a_style - main style (e.g. "thenews.css")
-	 * @return array of css files in the style options dir
-	 */
-	function list_theme_options($a_theme='')
+	/* replaces legacy list_styles() function
+	@return array of all themes offered by Tiki
+	*/
+	function list_themes()
 	{
-		global $prefs;
-		$csslib = TikiLib::lib('css');
-
-		if (empty($a_theme)) {
-			$a_theme = $prefs['theme_active'];
+		//prepare needed variables
+		global $tikidomain;
+		$themes = array();
+		
+		//get themes from the main themes directory
+		$themes = [
+			'default' => tr('Default Bootstrap'),
+			'custom_url' => tr('Custom theme by specifying URL'),
+		];
+		$themes = $themes + $this->get_themes(); //this way default and custom remains on the top of the array and default keeps its description
+		
+		//get multidomain themes
+		$theme_base_path = $this->get_theme_path();	// knows about $tikidomain
+		if ($theme_base_path) {
+			$multidomain_themes = $this->get_themes($theme_base_path);
 		}
+		if ($tikidomain) {
+			$themes = array_unique(array_merge($themes, $mutidomain_themes));
+		}
+		return $themes;
+	}
 
+	/*
+	@return array of all theme options
+	*/
+	function get_options()
+	{
 		$options = array();
-		$option_base_path = $this->get_theme_path($a_theme).'options/';
-
-		if (is_dir($option_base_path)) {
-			$options = $csslib->list_css($option_base_path);
+		foreach (glob("themes/*/options/*/css/tiki.css") as $css) {
+			$css = dirname(dirname($css));
+			$option = basename($css);
+			$options[$option] = tr($option);
 		}
-
-		if (count($options)) {
-			foreach ($options as &$option) {	// add .css back as above
-				$option .= '.css';
-			}
-			sort($options);
-			return $options;
-		} else {
-			return false;
-		}
+		
+		return $options;
 	}
-
-	/** replaces legacy get_style_base function
-	 * @param $stl - main style (e.g. "thenews.css")
-	 * @return string - style passed in up to - | or . char (e.g. "thenews")
-	 */
-	function get_theme_base($theme)
+	
+	/* replaces legacy list_style_options function
+	@param $theme - main theme (e.g. "fivealive")
+	@return array of options the theme's options directory (e.g. from "themes/fivealive/options/")
+	*/
+	function list_theme_options($theme)
 	{
-		$parts = preg_split('/[\-\.]/', $theme);
-		if (count($parts) > 0) {
-			return $parts[0];
-		} else {
-			return '';
+		$theme_options = array();
+		if (isset($theme) and $theme != 'custom_url') { //don't consider custom URL themes to have options
+			$option_base_path = $this->get_theme_path($theme);
+			foreach (glob("$option_base_path/options/*/css/tiki.css") as $css) {
+				$css = dirname(dirname($css));
+				$option = basename($css);
+				$theme_options[$option] = tr($option);
+			}			
 		}
+		return $theme_options;
 	}
 
-	/** replaces legacy get_style_path function
-	 * @param $theme - main theme (e.g. "fivealive-lite" - can be empty to return main themes dir)
-	 * @param $option - optional option file name (e.g. "akebi")
-	 * @param $filename - optional filename to look for (e.g. "purple.png")
-	 * @return path to dir or file if found or empty if not - e.g. "themes/mydomain.tld/fivealive-lite/options/akebi/"
-	 */
+	/* the group theme setting is stored in one column, so we need an array where all themes and all options are all available
+	@return array of all themes and all options
+	*/
+	function list_themes_and_options()
+	{
+		$themes = $this->get_themes();
+		foreach ($themes as $theme) {
+			$options = $this->list_theme_options($theme);
+			foreach ($options as $option) {
+				$theme_options[$theme . '/' . $option] = $theme . '/' . $option;
+			}
+		}
+		$themes_and_options = array_merge($themes, $theme_options); //merge the two array
+		natsort($themes_and_options); //sort the values
+		return $themes_and_options;
+	}
+	
+	/* if theme and option is concatenated into one string (eg: group themes, theme control), than extract theme and option info from the string
+	@return theme and option name
+	*/
+	function extract_theme_and_option($themeoption)
+	{
+		$items = explode("/", $themeoption);		
+		$theme = $items[0]; //theme is always there
+		if(isset($items[1])){ //check if we have option
+			$option = $items[1];
+		}
+		else {
+			$option = '';
+		}
+		return array($theme, $option);
+	}
+	
+	/* get thumbnail for theme if there is one. The thumbnail should be a png file.
+	@param $theme - theme name (e.g. fivealive)
+	@param $option - optional theme option file name
+	@return string path to thumbnail file to be used by an img element
+	*/
+	function get_thumbnail_file($theme, $option = '') 
+	{
+		if (!empty($option) && $option != tr('None')) {
+			$filename = 'images/'.$option.'.png'; // add .png
+
+		} else {
+			$filename = 'images/'.$theme.'.png'; // add .png
+			$option = '';
+		}
+		return $this->get_theme_path($theme, $option, $filename);
+	}
+
+	/* replaces legacy get_style_path function
+	@param $theme - main theme (e.g. "fivealive" - can be empty to return main themes dir)
+	@param $option - optional theme option file name (e.g. "akebi")
+	@param $filename - optional filename to look for (e.g. "purple.png")
+	@return path to dir or file if found or empty if not - e.g. "themes/mydomain.tld/fivealive/options/akebi/"
+	*/
 	function get_theme_path($theme = '', $option = '', $filename = '')
 	{
 		global $tikidomain;
@@ -113,15 +163,12 @@ class ThemeLib extends TikiLib
 
 		$theme_base = '';
 		if (!empty($theme)) {
-			$theme_base = $this->get_theme_base($theme).'/';
+			$theme_base = $theme.'/';
 		}
 
 		$option_base = '';
 		if (!empty($option)) {
-			$option_base = 'options/';
-			if ($option != $filename) {	// exception for getting option.css as it doesn't live in it's own dir
-				$option_base .= substr($option, 0, strlen($option) - 4).'/';
-			}
+			$option_base = 'options/'.$option.'/';
 		}
 
 		if (empty($filename)) {
@@ -149,7 +196,118 @@ class ThemeLib extends TikiLib
 				$path = 'themes/'.$filename;					// root themes dir?
 			}
 		}
-
 		return $path;
+	}
+	
+	/* get list of base iconsets 
+	@return $base_iconsets - an array containing all icon set names from themes/base_files/iconsets folder
+	*/
+	function list_base_iconsets()
+	{
+		foreach (scandir('themes/base_files/iconsets') as $iconset_file) {
+			if ($iconset_file[0] != '.' && $iconset_file != 'index.php') {
+				include('themes/base_files/iconsets/'. $iconset_file);
+				$base_iconsets[substr($iconset_file,0,-4)] = $settings['iconset_name'];
+			}
+		}
+		return $base_iconsets;
+	}
+		
+	/* assemble $iconset array for a theme or theme-option. The values in this array are used by lib/smarty_tiki/function.icon.php for displaying icons
+	@param $theme - main theme (e.g. "fivealive")
+	@param $option - option of a main theme (e.g. "akebi" option of the fivealive theme)
+	@return $iconset - an array containing all icon definitions
+	*/
+	function get_iconset($theme, $option = '')
+	{
+		//prepare necessary variables
+		global $prefs;
+		$iconset = array();
+		$theme_path = $this->get_theme_path($theme, $option);
+		
+		//Step1: first lets see if there is a custom.php in the theme's /icons folder (eg: themes/fivealive/icons/custom.php) and load icons from it. Always do this first as custom.php files should always be preferred.
+		if (file_exists("themes/{$theme_path}/icons/custom.php")) { 
+			include("themes/{$theme_path}/icons/custom.php");
+			if (!empty($settings) and !empty($icons)) { //make sure the iconset file is constructed as expected
+				foreach ($icons as &$icon) { //apply settings for each icon
+					if (!empty($icon['tag'])) {
+						$icon['tag'] = $icon['tag'];
+					}
+					else {
+						$icon['tag'] = $settings['icon_tag'];
+					}
+				}
+				unset($icon);
+				$iconset = $iconset + $icons; //add new icons to the icon set while preserving existing icons in the array
+			}
+		}
+	
+		//Step2: lets get all the theme specific icons if relevant (when the "theme_iconset" preference has value "theme_specific_icons", than the icons defined for the given theme should be used, e.g. from themes/fivealive/icons/iconset.php)
+		if (!empty($prefs['theme_iconset']) and ($prefs['theme_iconset'] === 'theme_specific_iconset') and file_exists("themes/{$theme_path}/icons/iconset.php")) { 
+			include("themes/{$theme_path}/icons/iconset.php");
+			if (!empty($settings) and !empty($icons)) { //make sure the iconset file is constructed as expected
+				foreach ($icons as &$icon) { //apply settings for each icon
+						if (!empty($icon['tag'])) {
+							$icon['tag'] = $icon['tag'];
+						}
+						else {
+							$icon['tag'] = $settings['icon_tag'];
+						}
+				}
+				unset($icon);
+				$iconset = $icons;
+			
+				if (!empty($settings['iconset_source']) and file_exists($settings['source_iconset'])) { //load source icon set if it is defined in the icon set settings
+					include($settings['iconset_source']);
+					if (!empty($settings) and !empty($icons)) { //make sure the icon set file is constructed as expected
+						foreach ($icons as &$icon) { //apply settings for each icon
+							if (!empty($icon['tag'])) {
+								$icon['tag'] = $icon['tag'];
+							}
+							else {
+								$icon['tag'] = $settings['icon_tag'];
+							}
+						}
+						unset($icon);
+						$iconset = $iconset + $icons; //add new icons to the icon set while preserving existing icons in the array
+					}
+				}
+			}
+		}
+		else { //if the "theme_iconset" preference is set to one of the base icon sets available in themes/base_files/iconsets/ folder, than load icons from it
+			if(file_exists("themes/base_files/iconsets/{$prefs['theme_iconset']}.php")) {
+				include("themes/base_files/iconsets/{$prefs['theme_iconset']}.php"); //load icon set info from preference setting
+				if (!empty($settings) and !empty($icons)) { //make sure the iconset file is constructed as expected
+					foreach ($icons as &$icon) { //apply settings for each icon
+						if (!empty($icon['tag'])) {
+							$icon['tag'] = $icon['tag'];
+						}
+						else {
+							$icon['tag'] = $settings['icon_tag'];
+						}
+					}
+					unset($icon);
+					$iconset = $iconset + $icons; //add new icons to the icon set while preserving existing icons in the array
+				}
+			}
+		}
+		
+		//step3: as a last resort add all missing icons from the default icon set
+		if(file_exists("themes/base_files/iconsets/default.php")) { 
+			include("themes/base_files/iconsets/default.php"); 
+			foreach ($icons as &$icon) { //apply settings for each icon
+				if (!empty($icon['tag'])) {
+					$icon['tag'] = $icon['tag'];
+				}
+				else {
+					$icon['tag'] = $settings['icon_tag'];
+				}
+			}
+			unset($icon);
+			$iconset = $iconset + $icons; //add new icons to the icon set while preserving existing icons in the array
+		}
+		unset($settings);
+		unset($icons);
+		return $iconset;
 	}
 }

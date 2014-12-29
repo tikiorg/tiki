@@ -5,37 +5,73 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function prefs_theme_list()
+function prefs_theme_list($partial = false)
 {
-	//get list of themes
+	global $prefs;
 	$themelib = TikiLib::lib('theme');
+	
+	//get list of themes and related theme options
 	$themes = $themelib->list_themes();
-	
-	//get list of base iconsets
-	foreach (scandir('themes/base_files/iconsets') as $iconset_file) {
-		if ($iconset_file[0] != '.' && $iconset_file != 'index.php') {
-			include('themes/base_files/iconsets/'. $iconset_file);
-			$iconsets[substr($iconset_file,0,-4)] = $settings['iconset_name'];
-		}
+	$theme_options = [
+		'' => tr('None'),
+	];
+	if (! $partial) {
+		$theme_options = $theme_options + $themelib->get_options();
 	}
-	$iconsets['theme_specific_iconset'] = tr('Icons of the selected theme');
 	
-	// TODO : Include pre-defined themes
+	//admin themes -> add empty option which means that site theme should be used. Also remove Custom URL.
+	$admin_themes = [
+		'' => tr('Site theme'),
+	];
+	$admin_themes = $admin_themes + $themes;
+	unset($admin_themes['custom_url']); //remove custom URL from the list
+
+	//get list of icon sets shipped by Tiki
+	$iconsets = $themelib->list_base_iconsets();
+	$iconsets['theme_specific_iconset'] = tr('Icons of the selected theme'); //add a specific option to allow theme specific icon set to be used
+	
 	return array(
-		'theme_active' => array(
-			'name' => tr('Theme selection'),
-			'description' => tr('For more information about Bootstrap, see getbootstrap.com. Themes in the styles directory are bootstrap.css variants including updated legacy Tiki themes as well as themes from Bootswatch.com (for example, select <em>Theme: <b>bootswatch_themes</b>, Theme option: <code>Amelia-bootstrap.min.</code></em>'),
+		'theme_site' => array(
+			'name' => tr('Site theme'),
+			'description' => tr('The default theme for the site. Most themes are bootstrap.css variants including updated legacy Tiki themes as well as themes from Bootswatch.com. For more information about Bootstrap, see getbootstrap.com.'),
 			'type' => 'list',
 			'default' => 'default',
 			'options' => $themes,
-			'help' => 'Tiki13#Themes',
+			'help' => 'Themes',
 			'tags' => array('basic'),
 		),
-		'theme_custom' => array(
+		'theme_option_site' => array(
+			'name' => tra('Site theme option'),
+			'type' => 'list',
+			'help' => 'Themes',
+			'description' => tra('Options for the selected theme'),
+			'options' => $theme_options,
+			'default' => '',
+			'tags' => array('basic'),
+		),		
+		'theme_custom_url' => array(
 			'name' => tr('Custom theme URL'),
 			'description' => tr('Local or external URL of the custom Bootstrap-compatible CSS file to use.'),
 			'type' => 'text',
 			'filter' => 'url',
+			'default' => '',
+			'tags' => array('basic'),
+		),
+		'theme_admin' => array(
+			'name' => tra('Admin theme'),
+			'type' => 'list',
+			'help' => 'Themes',
+			'description' => tra('Theme for the settings panels.'),
+			'options' => $admin_themes,
+			'default' => '',
+			'tags' => array('basic'),
+		),
+		'theme_option_admin' => array(
+			'name' => tra('Admin theme option'),
+			'type' => 'list',
+			'help' => 'Themes',
+			'description' => tra('Options for the selected theme'),
+			'options' => $theme_options,
 			'default' => '',
 			'tags' => array('basic'),
 		),

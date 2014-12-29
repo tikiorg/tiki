@@ -18,7 +18,8 @@ function prefs_available_list($partial = false)
 			$map[ $lang['value'] ] = $lang['name'];
 		}
 
-		$themes = array_merge($themes, $themelib->list_themes());
+		$themes = $themes + $themelib->list_themes();
+		unset($themes['custom_url']); //remove Custom URL from the list
 	}
 
 	return array(

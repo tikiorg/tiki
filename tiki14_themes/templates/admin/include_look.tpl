@@ -1,39 +1,38 @@
 {* $Id$ *}
 <form action="tiki-admin.php?page=look" id="look" name="look" class="form-horizontal labelColumns" class="admin" method="post">
-	<div class="row">
-		<div class="form-group col-lg-12">
-			<div class="pull-right">
-				<input type="submit" class="btn btn-primary btn-sm" name="looksetup" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}" />
-			</div>
-		</div>
+	<div class="form-group col-lg-12">
+		{if $prefs.feature_theme_control eq y}
+			{button _text="{tr}Theme Control{/tr}" href="tiki-theme_control.php" _class="btn-sm"}
+		{/if}
+		<div class="pull-right">
+			<input type="submit" class="btn btn-primary btn-sm" name="looksetup" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}" />
+	    </div>
 	</div>
 	{tabset name="admin_look"}
 		{tab name="{tr}Theme{/tr}"}
 			<h2>{tr}Theme{/tr}</h2>
-
 			<div class="row">
 				<div class="col-md-3 col-md-push-9">
 					<div class="thumbnail">
-						<img src="{$thumbfile}" alt="{tr}Theme Screenshot{/tr}" id="style_thumb">
+						{if $thumbfile}
+							<img src="{$thumbfile}" alt="{tr}Theme Screenshot{/tr}" id="theme_thumb">
+						{else}
+							<span>{icon name="image"}</span>
+						{/if}
 					</div>
 				</div>
 				<div class="col-md-9 col-md-pull-3 adminoptionbox">
-					{preference name=theme_active}
+					{preference name=theme_site}
+					{preference name=theme_option_site}
 				</div>
 			</div>
-
-			<div class="adminoptionbox theme_active_childcontainer custom">
-				{preference name=theme_custom}
+			<div class="adminoptionbox theme_site_childcontainer custom_url">
+				{preference name=theme_custom_url}
 			</div>
-
-			<div class="adminoptionbox theme_active_childcontainer legacy">
-				{preference name=style}
-				{preference name=style_option}
-
-				{preference name=style_admin}
-				{preference name=style_admin_option}
+			<div class="adminoptionbox">
+				{preference name=theme_admin}
+				{preference name=theme_option_admin}
 			</div>
-
 			{preference name=site_layout}
 			{preference name=site_layout_per_object}
 			{preference name=theme_iconset}

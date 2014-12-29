@@ -60,12 +60,13 @@ if ($prefs['javascript_enabled'] == 'y') {	// we have JavaScript
 			->add_js("$.lang = '" . $prefs['language'] . "';");
 	}
 
-	/** Use custom.js in styles or options dir if there **/
-	$custom_js = $tikilib->get_style_path($prefs['style'], $prefs['style_option'], 'custom.js');
+	/** Use custom.js in themes or options dir if there **/
+	$themelib = TikiLib::lib('theme');
+	$custom_js = $themelib->get_theme_path($prefs['theme_active'], isset($prefs['theme_option_active']), 'custom.js');
 	if (!empty($custom_js)) {
 		$headerlib->add_jsfile($custom_js, 50);
-	} else {															// there's no custom.js in the current style or option
-		$custom_js = $tikilib->get_style_path('', '', 'custom.js');		// so use one in the root of /styles if there
+	} else {															// there's no custom.js in the current theme or option
+		$custom_js = $themelib->get_theme_path('', '', 'custom.js');		// so use one in the root of /theme if there
 		if (!empty($custom_js)) {
 			$headerlib->add_jsfile($custom_js, 50);
 		}

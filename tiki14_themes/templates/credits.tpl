@@ -1,2 +1,2 @@
 {* $Id$ *}
-{tr}Theme:{/tr} {if $prefs.theme_active}{$prefs.theme_active|ucwords}{else}{$prefs.style|replace:'.css':''|replace:'None':''|ucwords}{if $prefs.style_option} - {$prefs.style_option|replace:'.css':''|replace:'None':''|ucwords}{/if}{/if}
+{tr}Theme:{/tr} {$prefs.theme_active|ucwords}{if $prefs.theme_option_active}/{$prefs.theme_option_active|ucwords}{/if}
