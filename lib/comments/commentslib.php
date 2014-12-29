@@ -418,6 +418,7 @@ class Comments extends TikiLib
 					$body = str_replace("<br /><br />", "<br /><br /><br />", $body);	// double linebreaks seem to work better as three?
 					$body = TikiLib::lib('edit')->parseToWiki($body);
 					$body = str_replace("\n\n", "\n", $body);							// for some reason emails seem to get line feeds quadrupled
+					$body = preg_replace('/\[\[(.*?)\]\]/', '[~np~~/np~[$1]]', $body);		// links surrounded by [square brackets] need help
 				}
 			}
 
