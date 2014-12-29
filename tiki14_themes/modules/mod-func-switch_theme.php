@@ -18,7 +18,7 @@ function module_switch_theme_info()
 {
 	return array(
 		'name' => tra('Switch Theme'),
-		'description' => tra('Enables to quickly change the theme.'),
+		'description' => tra('Enables to quickly change the theme for the user.'),
 		'prefs' => array('change_theme'),
 		'params' => array()
 	);
@@ -30,24 +30,34 @@ function module_switch_theme_info()
  */
 function module_switch_theme($mod_reference, &$module_params)
 {
-	global $prefs, $tc_theme, $tc_theme_option;
+	global $prefs, $section, $group_theme, $tc_theme, $tc_theme_option;
 	$smarty = TikiLib::lib('smarty');
-	$tikilib = TikiLib::lib('tiki');
-	if ($prefs['theme_active'] !== 'legacy') {
-		$module_params['error'] = tr('Switching themes requires the "Theme selection" setting to be: %0',
-				'<em>' . tr('Bootstrap themes in the "styles" directory') . '</em>');
-	}
-
-	$current_style = empty($tc_theme) ? $prefs['style'] : $tc_theme;
-	$current_style_option = empty($tc_theme_option) ? !empty($tc_theme) ? $prefs['style_option'] : '' : $tc_theme_option;
-
+	$themelib = TikiLib::lib('theme');
+	
+	//first lets get the current theme.
+	$current_theme = empty($tc_theme) ? $prefs['user_theme'] : $tc_theme;
+	$current_theme_option = empty($tc_theme_option) ? !empty($tc_theme) ? $prefs['user_theme_option'] : '' : $tc_theme_option;
+	
 	$smarty->assign('tc_theme', $tc_theme);
-	$smarty->assign('style', $current_style);
-	$smarty->assign('style_option', $current_style_option);
+	$smarty->assign('current_theme', $current_theme);
+	$smarty->assign('current_theme_option', $current_theme_option);
+	
+	//get the list of available themes
+	$available_themes = array();
+	if (count($prefs['available_themes'] != 0) and !empty($prefs['available_themes'][0])) { //if pref['available_themes'] is set, than use it
+		$available_themes = array_combine($prefs['available_themes'],$prefs['available_themes']);
+	}
+	else {
+		$available_themes = $themelib->list_themes(); //else load all themes
+	}
+	
+	//collect options for the currently set theme
+	$available_theme_options = $themelib->list_theme_options($prefs['user_theme']);
+	
+	$smarty->assign('available_themes', $available_themes);
+	$smarty->assign('available_theme_options', $available_theme_options) ;
 
-	$smarty->assign('styleslist', $tikilib->list_styles());
-	$smarty->assign('style_options', $tikilib->list_style_options($current_style));
-
+	//themegenerator
 	if ($prefs['themegenerator_feature'] === 'y') {
 		include_once 'lib/prefs/themegenerator.php';
 		$p = prefs_themegenerator_list();

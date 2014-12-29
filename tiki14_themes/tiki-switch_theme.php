@@ -30,15 +30,15 @@ if (isset($_REQUEST['theme'])) {
 		$theme = '';
 		$themeOption = '';
 		$themeGenerator_theme = '';
-	} elseif ($theme != $prefs['style']) { // use default theme option when changing main theme
+	} elseif ($theme != $prefs['user_theme']) { // use default theme option when changing main theme
 		$themeOption = '';
 		$themeGenerator_theme = '';
 	}
 	
-	$tikilib->set_user_preference($user, 'theme', $theme);
+	$tikilib->set_user_preference($user, 'user_theme', $theme); //save user's theme preference
 }
 if (isset($themeOption)) {
-	  $tikilib->set_user_preference($user, 'theme-option', empty($themeOption) ? 'None' : $themeOption);
+	$tikilib->set_user_preference($user, 'user_theme_option', empty($themeOption) ? 'None' : $themeOption); //save user's theme preference
 }
 
 if (isset($themeGenerator_theme) && $prefs['themegenerator_feature'] === 'y') {
