@@ -474,7 +474,7 @@ abstract class Table_Settings_Abstract
 			//external filter params
 			if (is_array($this->s['filters']['external'])) {
 				foreach($this->s['filters']['external'] as $key => $info) {
-					if (is_array($info['options'])) {
+					if (isset($info['options']) && is_array($info['options'])) {
 						foreach($info['options'] as $opt => $value) {
 							$this->s['ajax']['extfilters'][] = rawurlencode($value);
 						}
