@@ -6,7 +6,7 @@
 		{/if}
 		<div class="pull-right">
 			<input type="submit" class="btn btn-primary btn-sm" name="looksetup" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}" />
-	    </div>
+		</div>
 	</div>
 	{tabset name="admin_look"}
 		{tab name="{tr}Theme{/tr}"}
@@ -67,7 +67,6 @@
 			{preference name=useGroupTheme}
 			{preference name=feature_theme_control}
 			<div class="adminoptionboxchild" id="feature_theme_control_childcontainer">
-				{button _text="{tr}Theme Control{/tr}" href="tiki-theme_control.php"}
 				{preference name=feature_theme_control_savesession}
 				{preference name=feature_theme_control_parentcategory}
 				{preference name=feature_theme_control_autocategorize}
