@@ -1,0 +1,13 @@
+check.php:644
+functions.inc.php:644
+_htaccess:600
+.htaccess:644
+.htpasswd:600
+index.php:644
+list-of-subdirs.txt:644
+no.bin:444
+permission_granted.bin:644
+permission_granted.inc.php:644
+usecases.inc.php:644
+usecases.txt:644
+yes.bin:444

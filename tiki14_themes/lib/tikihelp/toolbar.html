@@ -1,0 +1,48 @@
+<head>
+<script src="js/toolbar.js"></script>
+<link rel="StyleSheet" href="css/toolbar.css" type="text/css" />
+</head>
+<body onLoad="updateSearch();">
+<table width="100%">
+	<tr valign="bottom">
+		<td width="80">
+		<div id="button2"  class="button">
+		<a title="Contents" class="buttonlink" href="" onclick="javascript:parent.menu.location.href='menu.html';">
+		<img src="icons/book_open.png" alt="Content" /> Contents</a></div>
+		</td>
+
+		<td width="80">
+		<div id="button3"  class="button">
+		<a title="print page" class="buttonlink" href="" onclick="parent.content.window.print();">
+		<img src="icons/printer.png" alt="Print" /> Print</a></div>
+		</td>
+
+		<td width="80">
+		<div id="button4"  class="button">
+		<a title="print page" class="buttonlink" href="" onclick="javascript:parent.menu.location.href='history.html';">
+		<img src="icons/clock.png" alt="History" /> History</a></div>
+		</td>
+
+		<td>&nbsp;
+		</td>
+		<td width="350" text-align="right">
+		  <div class="button" style="text-align:right">
+			<form method="get" onSubmit="javascript:doQuery();" /> <label>Search:
+			<input type="text" name="search" id="search" /></label>
+			<input style="background-color:#10387B;;" type="image" src='icons/wht_go.gif' />
+			</form>
+		  </div>
+		</td>
+
+		<td width="160">
+		<div id="button2"  class="button">
+		<a title="search" class="buttonlink" href="" onclick="javascript:parent.menu.location.href='results.html';">
+		<img src="icons/magnifier.png" alt="Search History" /> Search History</a></div>
+		</td>
+
+	</tr>
+</table>
+</body>
+
+
+

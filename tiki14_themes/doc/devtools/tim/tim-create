@@ -1,0 +1,209 @@
+#!/bin/bash
+
+setup()
+{
+		export LC_ALL=C
+		MY_PATH="`dirname \"$0\"`"
+		MY_PATH="`( cd \"$MY_PATH\" && pwd )`"
+		. $MY_PATH/tim-common
+}
+
+#--- onexit() -----------------------------------------------------
+#  @param $1 integer  (optional) Exit status.  If not set, use `$?'
+function onexit() {
+    local exit_status=${1:-$?}
+    if [ $exit_status != 0 ];
+    then
+	log "FAILED INSTALL"
+	echo "FAILED INSTALL" > ${INSTANCE_LOCK}
+    else
+	log "FINISHED SUCCESSFULLY"
+	rm ${INSTANCE_LOCK}
+    fi
+    echo Exiting $0 with exit status: $exit_status
+    exit $exit_status
+}
+
+trap onexit 1 2 3 15 ERR
+
+usage()
+{
+cat << EOF
+TIM-create - Tiki Instance Creator
+usage: $0 -u <user> -t <svn tag> -i <instance id>
+
+OPTIONS:
+   -h      Show this message
+   -i      id of instance
+   -u      username on Tiki.org 
+   -U      userid on Tiki.org 
+   -t      SVN Tag (Tiki version)
+   -P      Subdirectory path
+EOF
+}
+
+while getopts “hc:i:t:u:U:p:” OPTION
+do
+	case $OPTION in
+		h)
+			usage
+			exit 1
+			;;
+		i)
+			ID=$OPTARG
+			;;
+		t)
+			SVNTAG=$OPTARG
+			;;
+		u)
+			TUSER=$OPTARG
+			;;
+		U)
+			TUSERID=$OPTARG
+			;;
+		p)
+			TPATH=$OPTARG
+			;;
+		?)
+			usage
+			exit
+			;;
+	esac
+done
+
+if [[ -z $SVNTAG ]] || [[ -z $TUSER ]] || [[ -z $ID ]]
+then
+	usage
+	exit 1
+fi
+
+setup
+
+debug()
+{
+	echo "COMMAND: $COMMAND"
+	echo "SVNTAG: $SVNTAG"
+	echo "TUSER: $TUSER"
+	echo "ID: $ID"
+}
+
+create()
+{
+	# tim-create runs as a separate process and doesn't know $COMMAND
+	# we set it manually here to be shown in logs
+	COMMAND="create"
+
+	if [[ -e $INSTANCE_LOCK ]] ; then echo "FAIL: Lock file already exists. Reason: $INSTANCE_LOCK_REASON."; exit 1; fi
+	#TODO: remove stale locks
+
+	if ! mkdir $INSTANCE_DIR;
+	then
+		echo "FAIL: $INSTANCE_DIR not created"
+		echo "FAILED: mkdir - contact admin" > ${INSTANCE_LOCK}
+		exit 1
+	fi
+
+	echo "CREATE" > "${INSTANCE_LOCK}" || (echo "FAIL: Failed to create lock file ${INSTANCE_LOCK}"; exit 1)
+
+	# Can only be called here because $INSTANCE_DIR needs to exist for $INSTANCE_LOG
+	startlog
+
+	log "Starting instance creation"
+
+	# Trunk cache gets updated via cron every now and then
+	# we lock it, so we don't install from a broken tarball
+	while [[ -e $SVN_CACHE/$SVNTAG.lock ]];
+	do
+		log "Waiting for tarball lock"
+		sleep 5
+	done
+
+	log "Unpacking tarball"
+	tar -C $INSTANCE_DIR -xzf $SVN_CACHE/$SVNTAG.tar.gz
+
+	if echo $BRANCHES | grep ${SVNTAG} > /dev/null;
+	then
+		log "SVN upping because this is $SVNTAG"
+		cd $INSTANCE_DIR
+		svn up
+	fi
+
+	log "Chown-ing everything to TIM user and group"
+	chown -R $TIM_USER.$TIM_GROUP $INSTANCE_DIR
+
+	log "Running setup.sh"
+	cd $INSTANCE_DIR
+	sh setup.sh -u $TIM_USER -g $TIM_GROUP -n fix
+
+	log "Creating database"
+	mysql -e "CREATE DATABASE $DB;"
+
+	log "Setting GRANTs on database"
+	mysql -e "GRANT ALL ON $DB.* TO tiki@localhost IDENTIFIED BY 'password';"
+
+	log "Creating local.php"
+	cat > $INSTANCE_DIR/db/local.php <<EOF
+<?php
+\$db_tiki='mysql';
+\$dbversion_tiki='${SVNTAG}';
+\$host_tiki='localhost';
+\$user_tiki='tiki';
+\$pass_tiki='password';
+\$dbs_tiki='$DB';
+\$client_charset='utf8';
+// Want configurations managed at the system level or restrict some preferences? http://doc.tiki.org/System+Configuration
+//\$system_configuration_file = 'db/tiki.ini';
+//\$system_configuration_identifier = 'staging';
+EOF
+
+	chown $TIM_USER.$TIM_GROUP $INSTANCE_DIR/db/local.php
+
+	if [[ -f $INSTANCE_DIR/console.php ]]
+	then
+		log "Running 'php console.php'"
+		cd $INSTANCE_DIR
+		php console.php database:install --force
+	else
+		if [[ -f $INSTANCE_DIR/installer/shell.php ]]
+		then
+			log "Running 'php installer/shell.php'"
+			cd $INSTANCE_DIR
+			/usr/bin/php installer/shell.php install
+		else
+			log "Old Tiki - populating database via tiki.sql"
+			mysql $DB < $INSTANCE_DIR/db/tiki.sql
+		fi
+	fi
+
+	#########################################
+	# Start custom changes for show instances
+	log "Starting extra steps special to show instances. Anything done below is not part of a standard Tiki installation."
+
+	# Collect data useful to developers in infotext
+	if [[ "${TUSER}" != "user" ]]; then FRIENDLYUSERNAME="${TUSER} "; fi
+	read -r -d '' infotext <<EOT
+This Tiki instance was created on the Tiki show community website
+Creation date: `date -u +%Y-%m-%d_%H-%M-%S`
+Version: ${SVNTAG}
+Related to Wish: http://dev.tiki.org/item${ID}
+Wish was created by user ${FRIENDLYUSERNAME}http://dev.tiki.org/user${TUSERID}
+Created as http://${SUBDOMAIN}.show.tikiwiki.org/
+Installation log: http://${SUBDOMAIN}.show.tikiwiki.org/install_log.txt
+This information is also kept here: http://${SUBDOMAIN}.show.tikiwiki.org/info.txt
+
+SVN info
+`svn info`
+EOT
+
+	# Create info.txt file with data useful to developers
+	echo "Creating file http://${SUBDOMAIN}.show.tikiwiki.org/info.txt with extra info for developers"
+	INFOFILE=$INSTANCE_DIR/info.txt
+	echo "$infotext" > ${INFOFILE}
+	# Cannot inject data useful to developers as remarksbox on top of homepage because page is not created et until first login
+
+}
+
+echo "CREATION START - watch ${SUBDOMAIN}.show.tikiwiki.org "
+create
+echo "CREATION END - results in http://${SUBDOMAIN}.show.tikiwiki.org/install_log.txt (available after a delay)"
+exit 0

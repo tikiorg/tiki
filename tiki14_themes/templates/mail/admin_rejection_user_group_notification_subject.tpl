@@ -1,0 +1,1 @@
+{$mail_group} - {tr}Leader rejected your request{/tr}.

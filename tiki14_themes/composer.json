@@ -1,0 +1,203 @@
+{
+	"name": "tiki/tiki",
+	"description": "Tiki Wiki CMS Groupware",
+	"license": "LGPL-2.1",
+	"homepage": "https://tiki.org",
+	"minimum-stability": "stable",
+	"require": {
+		"twitter/bootstrap": "3.3.0",
+		"fortawesome/font-awesome": "4.2.0",
+		"adodb/adodb": "5.18",
+		"aFarkas/html5shiv": "3.7.2",
+		"bombayworks/zendframework1": "1.12.3",
+		"ckeditor/ckeditor": "4.3.4",
+		"ckeditor/ckeditor/skins/kama": "4.3.4",
+		"ckeditor/ckeditor/plugins/divarea": "4.3.4",
+		"codemirror/codemirror": "3.24",
+		"dompdf/dompdf": "0.6.1",
+		"ezyang/htmlpurifier": "4.6.0",
+		"fivefilters/php-readability": "1.0",
+		"jcapture-applet/jcapture-applet": "dev-master",
+		"jquery/jquery": "1.11.0",
+		"jquery/jquery-min": "1.11.0",
+		"jquery/jquery-s5": "dev-master",
+		"jquery/jquery-sheet": "3.1",
+		"jquery/jquery-ui": "1.10.4",
+		"jquery/jquery-ui-themes": "1.10.4",
+		"jquery/jquery-timepicker-addon": "1.4.4",
+		"jquery/jquery-ui-selectmenu": "1.3.999",
+		"jquery/jtrack": "1.0",
+		"jquery/minicart": "2.6.1",
+		"jquery/photoswipe": "3.0.5",
+		"jquery/md5": "1.1",
+		"jquery/plugins/anythingslider": "1.9.2",
+		"jquery/plugins/async": "1.0",
+		"jquery/plugins/brosho": "0.1",
+		"jquery/plugins/chosen": "1.0.0",
+		"jquery/plugins/colorbox": "1.5.8",
+		"jquery/plugins/colorpicker": "0.5",
+		"jquery/plugins/form": "3.25.0",
+		"jquery/plugins/galleriffic": "2.0.1",
+		"jquery/plugins/infinitecarousel": "3.0.3",
+		"jquery/plugins/jquery-validation": "1.11.1",
+		"jquery/plugins/jquery-json": "2.4",
+		"jquery/plugins/media": "0.98",
+		"jquery/plugins/migrate": "1.2.1",
+		"jquery/plugins/migrate-min": "1.2.1",
+		"jquery/plugins/nestedsortable": "1.3.4",
+		"jquery/plugins/pxem": "0.1",
+		"jquery/plugins/reflection-jquery": "1.1",
+		"jquery/plugins/superfish": "1.7.4",
+		"jquery/plugins/tablesorter": "2.18.3",
+		"jquery/plugins/treetable": "3.1.0",
+		"jquery/plugins/zoom": "1.7.13",
+        "md5/md5": ">=1.1.0",
+        "mediumjs/mediumjs": "dev-master",
+		"phpcas/phpcas": "1.3.2",
+		"phpseclib/phpseclib": "0.3.6",
+		"player/flv": "1.0",
+		"player/mp3": "1.0",
+		"rangy/rangy": "1.3",
+		"simile_timeline/simile_timeline": "2.3.0",
+		"smarty/smarty": "3.1.18",
+		"svg-edit/svg-edit": "2.7.1",
+		"symfony/console": "2.4.4",
+		"tijsverkoyen/css-to-inline-styles": "1.2.1",
+        "undojs/undojs": "1",
+        "wikilingo/wikilingo":"dev-master",
+		"zetacomponents/base": "1.8",
+		"zetacomponents/webdav": "1.1.3",
+		"flp/flp": "dev-master",
+		"wikilingo/codemirror": "dev-master",
+		"alvarotrigo/fullpage.js": "1",
+		"jcobb/basic-jquery-slider": "1",
+		"symfony/dependency-injection": "2.4.3",
+		"symfony/config": "2.4.3"
+	},
+	"require-dev": {
+		"oyejorge/less.php": "1.7.0.2",
+		"mikey179/vfsStream": "1.1.0",
+        "bafs/testify": "dev-master"
+	},
+	"config": {
+		"process-timeout": 5000
+	},
+	"autoload": {
+		"psr-0": {
+			"Horde": "lib/core/",
+			"TikiFilter": "lib/core/",
+			"DeclFilter": "lib/core/",
+			"JisonParser": "lib/core/",
+			"JitFilter": "lib/core/",
+			"Search": "lib/core/",
+			"Perms": "lib/core/",
+			"Math": "lib/core/",
+			"Category": "lib/core/",
+			"WikiParser": "lib/core/",
+            "WikiPlugin": "lib/core/",
+			"Multilingual": "lib/core/",
+			"Tracker": "lib/core/",
+			"Services": "lib/core/",
+            "Table": "lib/core/",
+			"Tiki": "lib/core/",
+			"TikiDb": "lib/core/",
+            "Type": "lib/core/",
+			"Report": "lib/core/",
+			"Feed": "lib/core/",
+			"FutureLink": "lib/core/"
+		},
+		"classmap": [
+			"vendor_extra/pear/",
+			"lib/tikidate.php",
+			"lib/openpgp/",
+			"lib/language/",
+			"lib/TikiWebdav/",
+			"lib/rating/formula/",
+			"lib/core/StandardAnalyzer/",
+			"vendor/smarty/smarty/distribution/libs/sysplugins/smarty_security.php",
+			"vendor/adodb/adodb/",
+			"vendor/phpcas/phpcas/",
+			"installer/",
+			"lib/test"
+		]
+	},
+	"scripts": {
+		"pre-install-cmd": [
+			"Tiki\\Composer\\ThemeInstaller::setup"
+		],
+		"post-install-cmd": [
+			"Tiki\\Composer\\BootstrapCompiler::build",
+			"Tiki\\Composer\\CleanVendors::clean"
+		],
+		"pre-update-cmd": [
+			"Tiki\\Composer\\ThemeInstaller::setup"
+		],
+		"post-update-cmd": [
+			"Tiki\\Composer\\BootstrapCompiler::build",
+			"Tiki\\Composer\\CleanVendors::clean"
+		]
+	},
+	"repositories": [
+		{ "type": "composer", "url": "https://composer.tiki.org" },
+		{
+			"type": "package",
+			"package": {
+				"name": "md5/md5",
+				"type": "component",
+				"version": "1.1.0",
+				"dist": {
+					"url": "https://github.com/blueimp/JavaScript-MD5/archive/1.1.0.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "medium.js/medium.js",
+				"type": "component",
+				"version": "1",
+				"dist": {
+					"url": "https://github.com/robertleeplummerjr/Medium.js/archive/master.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "vkbeautify/vkbeautify",
+				"type": "component",
+				"version": "1",
+				"dist": {
+					"url": "http://vkbeautify.googlecode.com/files/vkbeautify.0.99.00.beta.js",
+					"type": "file"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "alvarotrigo/fullpage.js",
+				"type": "component",
+				"version": "1",
+				"dist": {
+					"url": "https://github.com/alvarotrigo/fullPage.js/archive/master.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jcobb/basic-jquery-slider",
+				"type": "component",
+				"version": "1",
+				"dist": {
+					"url": "https://github.com/jcobb/basic-jquery-slider/archive/master.zip",
+					"type": "zip"
+				}
+			}
+		}
+	]
+}

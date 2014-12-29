@@ -1,0 +1,904 @@
+<?php
+// (c) Copyright 2002-2014 by authors of the Tiki Wiki CMS Groupware Project
+//
+// All Rights Reserved. See copyright.txt for details and a complete list of authors.
+// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+// $Id$
+
+if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
+	header("location: index.php");
+	exit;
+}
+
+class HeaderLib
+{
+	public $title;
+	public $jsfiles;
+	public $js;
+	public $jsfile_attr = array();
+	public $js_config;
+	public $jq_onready;
+	public $cssfiles;
+	public $css;
+	public $rssfeeds;
+	public $metatags;
+	public $minified;
+	public $wysiwyg_parsing;
+	public $lockMinifiedJs;
+
+	public $jquery_version = '1.11.0';
+	public $jqueryui_version = '1.10.4';
+	public $jquerymobile_version = '1.3.2';
+
+
+	function __construct()
+	{
+		$smarty = TikiLib::lib('smarty');
+		$smarty->assign('headerlib', $this);
+
+		$this->title = '';
+		$this->jsfiles = array();
+		$this->js = array();
+		$this->js_config = array();
+		$this->jq_onready = array();
+		$this->cssfiles = array();
+		$this->css = array();
+		$this->rssfeeds = array();
+		$this->metatags = array();
+		$this->minified = array();
+		$this->wysiwyg_parsing = false;
+		$this->lockMinifiedJs = false;
+	}
+
+	function convert_cdn( $file, $type = null )
+	{
+		global $prefs, $tikiroot;
+
+		$https_mode = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on';
+
+		$cdn_ssl_uri = array_filter(preg_split('/\s+/', $prefs['tiki_cdn_ssl']));
+		$cdn_uri = array_filter(preg_split('/\s+/', $prefs['tiki_cdn']));
+		if ($https_mode && !empty($cdn_ssl_uri)) {
+			$cdn_pref = &$cdn_ssl_uri;
+		} elseif (!empty($cdn_uri)) {
+			$cdn_pref = &$cdn_uri;
+		}
+
+		if ( !empty($cdn_pref) && 'http' != substr($file, 0, 4) && $type !== 'dynamic' ) {
+			$file = $cdn_pref[hexdec(hash("crc32b", $file)) % count($cdn_pref)] . $tikiroot . $file;
+		}
+
+		return $file;
+	}
+
+	function set_title($string)
+	{
+		$this->title = urlencode($string);
+	}
+
+	function add_jsfile_dependancy($file)
+	{
+		$this->add_jsfile($file, -1);
+		return $this;
+	}
+
+	function add_jsfile($file,$rank=0,$minified=false)
+	{
+		if ($this->lockMinifiedJs == true && $rank !== 'external') {
+			$rank = 'late';
+		}
+
+		if (!$this->wysiwyg_parsing && (empty($this->jsfiles[$rank]) or !in_array($file, $this->jsfiles[$rank]))) {
+			$this->jsfiles[$rank][] = $file;
+			if ($minified) {
+				$this->minified[$file] = $minified;
+			}
+		}
+		return $this;
+	}
+
+	function add_jsfile_with_attr($script, $attributes, $rank=0)
+	{
+		$this->add_jsfile($script, $rank);
+		$this->jsfile_attr[$script] = $attributes;
+		return $this;
+	}
+
+	function add_js_config($script,$rank=0)
+	{
+		if (!$this->wysiwyg_parsing && (empty($this->js_config[$rank]) or !in_array($script, $this->js_config[$rank]))) {
+			$this->js_config[$rank][] = $script;
+		}
+		return $this;
+	}
+
+	function add_js($script,$rank=0)
+	{
+		if (!$this->wysiwyg_parsing && (empty($this->js[$rank]) or !in_array($script, $this->js[$rank]))) {
+			$this->js[$rank][] = $script;
+		}
+		return $this;
+	}
+
+	/**
+	 * Adds lines or blocks of JQuery JavaScript to $(document).ready handler
+	 * @param $script = Script to execute
+	 * @param $rank   = Execution order (default=0)
+	 * @return nothing
+	 */
+	function add_jq_onready($script,$rank=0)
+	{
+		if (!$this->wysiwyg_parsing && (empty($this->jq_onready[$rank]) or !in_array($script, $this->jq_onready[$rank]))) {
+			$this->jq_onready[$rank][] = $script;
+		}
+		return $this;
+	}
+
+	function add_cssfile($file, $rank=0)
+	{
+		if (empty($this->cssfiles[$rank]) or !in_array($file, $this->cssfiles[$rank])) {
+			$this->cssfiles[$rank][] = $file;
+		}
+		return $this;
+	}
+
+	function replace_cssfile($old, $new, $rank)
+	{
+		foreach ($this->cssfiles[$rank] as $i=>$css) {
+			if ($css == $old) {
+				$this->cssfiles[$rank][$i] = $new;
+				break;
+			}
+		}
+		return $this;
+	}
+
+	function drop_cssfile($file)
+	{
+		$out = array();
+		foreach ($this->cssfiles as $rank=>$data) {
+			foreach ($data as $f) {
+				if ($f != $file) {
+					$out[$rank][] = $f;
+				}
+			}
+		}
+		$this->cssfiles = $out;
+		return $this;
+	}
+
+	function add_css($rules,$rank=0)
+	{
+		if (empty($this->css[$rank]) or !in_array($rules, $this->css[$rank])) {
+			$this->css[$rank][] = $rules;
+		}
+		return $this;
+	}
+
+	function add_rssfeed($href,$title,$rank=0)
+	{
+		if (empty($this->rssfeeds[$rank]) or !in_array($href, array_keys($this->rssfeeds[$rank]))) {
+			$this->rssfeeds[$rank][$href] = $title;
+		}
+		return $this;
+	}
+
+	function set_metatags($tag,$value,$rank=0)
+	{
+		$tag = addslashes($tag);
+		$this->metatags[$tag] = $value;
+		return $this;
+	}
+
+	function output_headers()
+	{
+		global $style_ie6_css, $style_ie7_css, $style_ie8_css, $style_ie9_css;
+		$smarty = TikiLib::lib('smarty');
+		$smarty->loadPlugin('smarty_modifier_escape');
+
+		ksort($this->cssfiles);
+		ksort($this->css);
+		ksort($this->rssfeeds);
+
+		$back = "\n";
+		if ($this->title) {
+			$back = '<title>'.smarty_modifier_escape($this->title)."</title>\n\n";
+		}
+
+		if (count($this->metatags)) {
+			foreach ($this->metatags as $n=>$m) {
+				$back.= "<meta name=\"" . smarty_modifier_escape($n) . "\" content=\"" . smarty_modifier_escape($m) . "\" />\n";
+			}
+			$back.= "\n";
+		}
+
+		$back .= $this->output_css_files();
+
+		if (count($this->css)) {
+			$back.= "<style type=\"text/css\"><!--\n";
+			foreach ($this->css as $x=>$css) {
+				$back.= "/* css $x */\n";
+				foreach ($css as $c) {
+					$back.= "$c\n";
+				}
+			}
+			$back.= "-->\n</style>\n\n";
+		}
+
+		// Handle theme's special CSS file for IE6 hacks
+		$back .= "<!--[if lt IE 7]>\n"
+				.'<link rel="stylesheet" href="' . $this->convert_cdn('themes/base_files/feature_css/ie6.css') . '" type="text/css" />'."\n";
+		if ( $style_ie6_css != '' ) {
+			$back .= '<link rel="stylesheet" href="'.smarty_modifier_escape($this->convert_cdn($style_ie6_css)).'" type="text/css" />'."\n";
+		}
+		$back .= "<![endif]-->\n";
+		$back .= "<!--[if IE 7]>\n"
+				.'<link rel="stylesheet" href="themes/base_files/feature_css/ie7.css" type="text/css" />'."\n";
+		if ( $style_ie7_css != '' ) {
+			$back .= '<link rel="stylesheet" href="'.smarty_modifier_escape($this->convert_cdn($style_ie7_css)).'" type="text/css" />'."\n";
+		}
+		$back .= "<![endif]-->\n";
+		$back .= "<!--[if IE 8]>\n"
+				.'<link rel="stylesheet" href="themes/base_files/feature_css/ie8.css" type="text/css" />'."\n";
+		if ( $style_ie8_css != '' ) {
+			$back .= '<link rel="stylesheet" href="'.smarty_modifier_escape($this->convert_cdn($style_ie8_css)).'" type="text/css" />'."\n";
+		}
+		$back .= "<![endif]-->\n";
+		$back .= "<!--[if IE 9]>\n"
+				.'<link rel="stylesheet" href="themes/base_files/feature_css/ie9.css" type="text/css" />'."\n";
+		if ( $style_ie9_css != '' ) {
+			$back .= '<link rel="stylesheet" href="'.smarty_modifier_escape($this->convert_cdn($style_ie9_css)).'" type="text/css" />'."\n";
+		}
+		$back .= "<![endif]-->\n";
+
+		if (count($this->rssfeeds)) {
+			foreach ($this->rssfeeds as $x=>$rssf) {
+				$back.= "<!-- rss $x -->\n";
+				foreach ($rssf as $rsstitle=>$rssurl) {
+					$back.= "<link rel=\"alternate\" type=\"application/rss+xml\" title=\"".smarty_modifier_escape($this->convert_cdn($rsstitle))."\" href=\"".smarty_modifier_escape($rssurl)."\" />\n";
+				}
+			}
+			$back.= "\n";
+		}
+		return $back;
+	}
+
+	function output_js_files()
+	{
+		global $prefs;
+		if ($prefs['javascript_enabled'] == 'n') {
+			return;
+		}
+
+		$smarty = TikiLib::lib('smarty');
+		$smarty->loadPlugin('smarty_modifier_escape');
+		ksort($this->jsfiles);
+
+		$back = "\n";
+
+		if (count($this->jsfiles)) {
+
+			if ( $prefs['tiki_minify_javascript'] == 'y' ) {
+
+				$jsfiles = $this->getMinifiedJs();
+
+			} else {
+				$jsfiles = $this->jsfiles;
+			}
+
+			foreach ($jsfiles as $x=>$jsf) {
+				$back.= "<!-- jsfile $x -->\n";
+				foreach ($jsf as $jf) {
+					$attrs = '';
+					if (isset($this->jsfile_attr[$jf])) {
+						foreach ($this->jsfile_attr[$jf] as $attr => $value) {
+							$attrs .= ' ' . $attr . '="' . addslashes($value) . '"';
+						}
+					}
+					$jf = $this->convert_cdn($jf, $x);
+					$back.= "<script$attrs type=\"text/javascript\" src=\"".smarty_modifier_escape($jf)."\"></script>\n";
+				}
+			}
+			$back.= "\n";
+		}
+		return $back;
+	}
+
+	public function lockMinifiedJs()
+	{
+		$this->lockMinifiedJs = true;
+		return $this;
+	}
+
+	public function getMinifiedJs()
+	{
+		global $prefs;
+
+		$dependancy = array();
+		if ( isset( $this->jsfiles[-1] ) ) {
+			$dependancy = $this->jsfiles[-1];
+			unset( $this->jsfiles[-1] );
+		}
+
+		$dynamic = array();
+		if ( isset( $this->jsfiles['dynamic'] ) ) {
+			$dynamic = $this->jsfiles['dynamic'];
+			unset( $this->jsfiles['dynamic'] );
+		}
+
+		$external = array();
+		if ( isset( $this->jsfiles['external'] ) ) {
+			$external = $this->jsfiles['external'];
+			unset( $this->jsfiles['external'] );
+		}
+
+		$late = array();
+		if ( isset( $this->jsfiles['late'] ) ) {
+			$late = $this->jsfiles['late'];
+			unset( $this->jsfiles['late'] );
+		}
+
+		$minified_files = array();
+
+		$minified_files[] = $this->minifyJSFiles($this->jsfiles, $external);
+
+		if ($prefs['tiki_minify_late_js_files'] === 'y') {
+			$minified_files[] = $this->minifyJSFiles(array($late), $external);
+		} else {
+			$external = array_merge($external, $late);
+		}
+		return array(
+			'dependancy'=> $dependancy,
+			'external' => $external,
+			'dynamic' => $dynamic,
+			$minified_files,
+		);
+	}
+
+	/**
+	 * @param $files	array of file paths
+	 * @param $external	array to put uniminifyable files into
+	 * @return string	path of minified js file
+	 */
+
+	private function minifyJSFiles($fileArrays, & $external)
+	{
+		global $tikidomainslash;
+		$hash = md5(serialize($fileArrays));
+		$file = 'temp/public/' . $tikidomainslash . "minified_$hash.js";
+
+		if (!file_exists($file)) {
+			require_once 'lib/minify/JSMin.php';
+			$minified = '/* ' . print_r($fileArrays, true) . ' */';
+			foreach ($fileArrays as $x => $files) {
+				foreach ($files as $f) {
+					$content = file_get_contents($f);
+					if (!preg_match('/min\.js$/', $f) and $this->minified[$f] !== true) {
+						set_time_limit(600);
+						try {
+							$minified .= JSMin::minify($content);
+						} catch (JSMinException $e) {
+							$minified .= "\n/* Error: Minify failed for file $f (added as 'external'. Error: {$e->getMessage()})*/\n";
+							$external[] = $f;
+						}
+					} else {
+						$minified .= "\n// skipping minification for $f \n" . $content;
+					}
+				}
+			}
+
+			file_put_contents($file, $minified);
+			chmod($file, 0644);
+		}
+		return $file;
+	}
+
+	private function getJavascript()
+	{
+		$content = '';
+
+		foreach ( $this->jsfiles as $x => $files ) {
+			foreach ( $files as $f ) {
+				$content .= file_get_contents($f);
+			}
+		}
+
+		return $content;
+	}
+
+	function output_js_config($wrap = true)
+	{
+		global $prefs;
+
+		if ($prefs['javascript_enabled'] == 'n') {
+			return;
+		}
+
+		$back = null;
+		if (count($this->js_config)) {
+			ksort($this->js_config);
+			$back = "\n<!-- js_config before loading JSfile -->\n";
+			$b = "";
+			foreach ($this->js_config as $x=>$js) {
+				$b.= "// js $x \n";
+				foreach ($js as $j) {
+					$b.= "$j\n";
+				}
+			}
+			if ( $wrap === true ) {
+   	     $back .= $this->wrap_js($b);
+			} else {
+				$back .= $b;
+			}
+		}
+
+		return $back;
+
+	}
+
+	function clear_js($clear_js_files = false)
+	{
+		$this->js = array();
+		$this->jq_onready = array();
+		if ($clear_js_files) {
+			$this->jsfiles = array();
+		}
+		return $this;
+	}
+
+	function output_js($wrap = true)
+	{	// called in tiki.tpl - JS output at end of file now (pre 5.0)
+		global $prefs;
+
+		if ($prefs['javascript_enabled'] == 'n') {
+			return;
+		}
+
+		ksort($this->js);
+		ksort($this->jq_onready);
+
+		$back = "\n";
+
+		if (count($this->js)) {
+			$b = '';
+			foreach ($this->js as $x=>$js) {
+				$b.= "// js $x \n";
+				foreach ($js as $j) {
+					$b.= "$j\n";
+				}
+			}
+			if ( $wrap === true ) {
+				$back .= $this->wrap_js($b);
+			} else {
+				$back .= $b;
+			}
+		}
+
+		if (count($this->jq_onready)) {
+			$b = '$(document).ready(function(){'."\n";
+			foreach ($this->jq_onready as $x=>$js) {
+				$b.= "// jq_onready $x \n";
+				foreach ($js as $j) {
+					$b.= "$j\n";
+				}
+			}
+			$b .= "});\n";
+			if ( $wrap === true ) {
+				$back .= $this->wrap_js($b);
+			} else {
+				$back .= $b;
+			}
+		}
+
+		return $back;
+	}
+
+	/**
+	 * Gets JavaScript and jQuery scripts as an array (for AJAX)
+	 * @return array[strings]
+	 */
+	function getJs()
+	{
+		global $prefs;
+
+		ksort($this->js);
+		ksort($this->jq_onready);
+		$out = array();
+
+		if (count($this->js)) {
+			foreach ($this->js as $x=>$js) {
+				foreach ($js as $j) {
+					$out[] = "$j\n";
+				}
+			}
+		}
+		if (count($this->jq_onready)) {
+			$b = '$(document).ready(function(){'."\n";
+			foreach ($this->jq_onready as $x=>$js) {
+				$b.= "// jq_onready $x \n";
+				foreach ($js as $j) {
+					$b.= "$j\n";
+				}
+			}
+			$b .= "}) /* end on ready */;\n";
+			$out[] = $b;
+		}
+		return $out;
+	}
+
+
+	function getJsFilesList()
+	{
+		return $this->jsfiles;
+	}
+	/**
+	 * Gets included JavaScript files (for AJAX)
+	 * @return array[strings]
+	 */
+	function getJsfiles()
+	{
+		$smarty = TikiLib::lib('smarty');
+		$smarty->loadPlugin('smarty_modifier_escape');
+
+		ksort($this->jsfiles);
+		$out = array();
+
+		if (count($this->jsfiles)) {
+			foreach ($this->jsfiles as $x=>$jsf) {
+				foreach ($jsf as $jf) {
+					$attrs = '';
+					if (isset($this->jsfile_attr[$jf])) {
+						foreach ($this->jsfile_attr[$jf] as $attr => $value) {
+							$attrs .= ' ' . $attr . '="' . addslashes($value) . '"';
+						}
+					}
+
+					$out[] = "<script$attrs type=\"text/javascript\" src=\"".smarty_modifier_escape($jf)."\"></script>\n";
+				}
+			}
+		}
+		return $out;
+	}
+
+	function wrap_js($inJs)
+	{
+		return "<script type=\"text/javascript\">\n<!--//--><![CDATA[//><!--\n".$inJs."//--><!]]>\n</script>\n";
+	}
+
+	/**
+	 * Get JavaScript tags from html source - used for AJAX responses and cached pages
+	 *
+	 * @param string $html - source to search for JavaScript
+	 * @param bool $switch_fn_definition - if set converts 'function fName ()' to 'fName = function()' for AJAX
+	 * @param bool $isFiles - if set true, get external scripts. If set to false, get inline scripts. If true, the external script tags's src attributes are returned as an array.
+	 *
+	 * @return array of JavaScript strings
+	 */
+	function getJsFromHTML( $html, $switch_fn_definition = false, $isFiles = false )
+	{
+		$jsarr = array();
+		$js_script = array();
+
+		preg_match_all('/(?:<script.*type=[\'"]?text\/javascript[\'"]?.*>\s*?)(.*)(?:\s*<\/script>)/Umis', $html, $jsarr);
+		if ($isFiles == false) {
+			if (count($jsarr) > 1 && is_array($jsarr[1]) && count($jsarr[1]) > 0) {
+				$js = preg_replace('/\s*?<\!--\/\/--><\!\[CDATA\[\/\/><\!--\s*?/Umis', '', $jsarr[1]);	// strip out CDATA XML wrapper if there
+				$js = preg_replace('/\s*?\/\/--><\!\]\]>\s*?/Umis', '', $js);
+
+				if ($switch_fn_definition) {
+					$js = preg_replace('/function (.*)\(/Umis', "$1 = function(", $js);
+				}
+
+				$js_script = array_merge($js_script, $js);
+			}
+		} else {
+			foreach ($jsarr[0] as $key=>$tag) {
+				if (empty($jsarr[1][$key])) { //if there was no content in the script, it is a src file
+					//we load the js as a xml element, then look to see if it has a "src" tag, if it does, we push it to array for end back
+					$js = simplexml_load_string($tag);
+					if (!empty($js['src']))
+						array_push($js_script, (string)$js['src']);
+				}
+			}
+		}
+		// this is very probably possible as a single regexp, maybe a preg_replace_callback
+		// but it was stopping the CDATA group being returned (and life's too short ;)
+		// the one below should work afaics but just doesn't! :(
+		// preg_match_all('/<script.*type=[\'"]?text\/javascript[\'"]?.*>(\s*<\!--\/\/--><\!\[CDATA\[\/\/><\!--)?\s*?(.*)(\s*\/\/--><\!\]\]>\s*)?<\/script>/imsU', $html, $js);
+
+		return array_filter($js_script);
+	}
+
+	function removeJsFromHTML( $html )
+	{
+		$html = preg_replace('/(?:<script.*type=[\'"]?text\/javascript[\'"]?.*>\s*?)(.*)(?:\s*<\/script>)/Umis', "", $html);
+		return $html;
+	}
+
+	public function get_all_css_content()
+	{
+		$files = $this->collect_css_files();
+		$minified = '';
+		foreach ( array_merge($files['screen'], $files['default']) as $file) {
+			$minified .= $this->minify_css($file);
+		}
+		$minified = $this->handle_css_imports($minified);
+
+		return $minified;
+	}
+
+	private function output_css_files()
+	{
+		$files = $this->collect_css_files();
+
+		$back = $this->output_css_files_list($files['default'], '');
+		$back .= $this->output_css_files_list($files['screen'], 'screen');
+		$back .= $this->output_css_files_list($files['print'], 'print');
+		return $back;
+	}
+
+	private function output_css_files_list( $files, $media = '' )
+	{
+		global $prefs;
+		$smarty = TikiLib::lib('smarty');
+		$smarty->loadPlugin('smarty_modifier_escape');
+
+		$back = '';
+
+		if ( $prefs['tiki_minify_css'] == 'y' && !empty($files)) {
+			if ( $prefs['tiki_minify_css_single_file'] == 'y' ) {
+				$files = $this->get_minified_css_single($files);
+			} else {
+				$files = $this->get_minified_css($files);
+			}
+		}
+
+		foreach ( $files as $file ) {
+			$file = $this->convert_cdn($file);
+			$back .= "<link rel=\"stylesheet\" href=\"" . smarty_modifier_escape($file) . "\" type=\"text/css\"";
+			if (!empty($media)) {
+				$back .= " media=\"" . smarty_modifier_escape($media) . "\"";
+			}
+			$back .= " />\n";
+		}
+
+		return $back;
+	}
+
+	private function get_minified_css( $files )
+	{
+		global $tikidomainslash;
+		$out = array();
+			$target = 'temp/public/'.$tikidomainslash;
+
+		foreach ( $files as $file ) {
+			$hash = md5($file);
+			$min = $target . "minified_$hash.css";
+
+			if ( ! file_exists($min) ) {
+				file_put_contents($min, $this->minify_css($file));
+				chmod($min, 0644);
+			}
+
+			$out[] = $min;
+		}
+
+		return $out;
+	}
+
+	private function get_minified_css_single( $files )
+	{
+		global $tikidomainslash;
+		$hash = md5(serialize($files));
+		$target = 'temp/public/'.$tikidomainslash;
+		$file = $target . "minified_$hash.css";
+
+		if ( ! file_exists($file)) {
+			$minified = '';
+
+			foreach ( $files as $f ) {
+				$minified .= $this->minify_css($f);
+			}
+
+			$minified = $this->handle_css_imports($minified);
+
+			file_put_contents($file, $minified);
+			chmod($file, 0644);
+		}
+
+		return array( $file );
+	}
+
+	private function handle_css_imports( $minified )
+	{
+		global $tikiroot;
+
+		preg_match_all('/@import\s+url\("([^;]*)"\);/', $minified, $parts);
+		$top = [];
+
+		$pre = '';
+		foreach ( $parts[1] as $k => $f ) {
+			if (substr($f, 0, 2) == '//' || substr($f, 0, 7) == 'http://' || substr($f, 0, 8) == 'https://') {
+				$top[] = $parts[0][$k];
+				unset($parts[0][$k]); // Exclude import removal, external file
+			} else {
+				$pre .= $this->minify_css($f);
+			}
+		}
+
+		$imports = array_unique($parts[0]);
+		$minified = $pre . $minified;
+		$minified = str_replace($imports, '', $minified);
+
+		return implode("\n", $top) . "\n" . $minified;
+	}
+
+	public function minify_css( $file )
+	{
+		global $tikipath, $tikiroot;
+		if (strpos($file, $tikiroot) === 0) {
+			$file = substr($file, strlen($tikiroot));
+		}
+
+		$currentdir = str_replace($tikipath, $tikiroot, str_replace('\\', '/', dirname(realpath($file))));
+		if ( $file[0] == '/' ) {
+			$file = $tikipath . $file;
+		}
+
+		$content = file_get_contents($file);
+
+		return Minify_CSS::minify($content, array('prependRelativePath' => $currentdir.'/', 'bubbleCssImports' => true));
+	}
+
+
+	private function collect_css_files()
+	{
+		global $tikipath, $tikidomain, $style_base;
+
+		$files = array(
+			'default' => array(),
+			'screen' => array(),
+			'print' => array(),
+		);
+
+		$pushFile = function ($section, $file) use (& $files) {
+			global $prefs;
+			$files[$section][] = $file;
+
+			if ($prefs['feature_bidi'] == 'y') {
+				$rtl = str_replace('.css', '', $file) . '-rtl.css';
+
+				if (file_exists($rtl)) {
+					$files[$section][] = $rtl;
+				}
+			}
+		};
+
+		foreach ($this->cssfiles as $x=>$cssf) {
+			foreach ($cssf as $cf) {
+				if (!empty($tikidomain) && is_file("styles/$tikidomain/$style_base/$cf")) {
+					$cf = "styles/$tikidomain/$style_base/$cf";
+				} elseif (is_file("styles/$style_base/$cf")) {
+					$cf = "styles/$style_base/$cf";
+				}
+				$cfprint = str_replace('.css', '', $cf) . '-print.css';
+				if (!file_exists($tikipath . $cfprint)) {
+					$pushFile('default', $cf);
+				} else {
+					$pushFile('screen', $cf);
+					$pushFile('print', $cfprint);
+				}
+			}
+		}
+		$files = $this->process_themegen_files($files);
+
+		return $files;
+	}
+
+	function get_css_files()
+	{
+		$files = $this->collect_css_files();
+
+		return array_merge($files['default'], $files['screen']);
+	}
+
+	private function process_themegen_files($files)
+	{
+		global $prefs, $tikidomainslash, $in_installer;
+
+		if (empty($in_installer) && isset($prefs['themegenerator_feature']) && $prefs['themegenerator_feature'] === 'y' && !empty($prefs['themegenerator_theme'])) {
+			global $themegenlib; include_once 'lib/themegenlib.php';
+
+			$data = $themegenlib->getCurrentTheme()->getData();
+			$themename = $themegenlib->getCurrentTheme()->getName();
+			if (count($data['files'])) {
+				foreach ($data['files'] as $file => $swaps) {
+					$hash = md5($file);
+					$target = 'temp/public/'.$tikidomainslash;
+					$ofile = $target . "themegen_{$themename}_$hash.css";
+
+					$i = array_search($file, $files['screen']);
+					if ($i !== false) {
+						if (!file_exists($ofile) || !empty($_SESSION['tg_preview'])) {
+							$css = $themegenlib->processCSSFile($file, $swaps);
+							file_put_contents($ofile, $css);
+							chmod($ofile, 0644);
+						}
+						$files['screen'][$i] = $ofile;
+					}
+				}
+			}
+		}
+		return $files;
+	}
+
+	function remove_themegen_files( $all = true )
+	{
+		global $tikidomainslash;
+		$target = 'temp/public/'.$tikidomainslash;
+		if ( $all ) {
+			foreach ( glob($target . 'themegen_*') as $file ) {
+				unlink($file);
+			}
+		}
+	}
+
+	function add_map()
+	{
+		global $prefs;
+
+		$tikilib = TikiLib::lib('tiki');
+		$enabled = $tikilib->get_preference('geo_tilesets', array('openstreetmap'), true);
+
+		$enalbed = $tikilib->get_preference('geo_tilesets', array('openstreetmap'));
+
+		$google = array_intersect(array('google_street', 'google_physical', 'google_satellite', 'google_hybrid'), $enabled);
+		if (count($google) > 0 || $prefs['geo_google_streetview'] == 'y') {
+			$args = array(
+				'v' => '3.3',
+				'sensor' => 'false',
+			);
+
+			if (! empty($prefs['gmap_key'])) {
+				$args['key'] = $prefs['gmap_key'];
+			}
+
+			$this->add_jsfile($tikilib->httpScheme() . '://maps.google.com/maps/api/js?' . http_build_query($args, '', '&'), 'external');
+		}
+
+		/* Needs additional testing
+		$visual = array_intersect(array('visualearth_road', 'visualearth_aerial', 'visualearth_hybrid'), $enabled);
+		if (count($visual) > 0) {
+			$this->add_jsfile('http://dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=6.1', 'external');
+		}
+		*/
+
+		$this->add_jsfile('lib/openlayers/OpenLayers.js', 'external');
+		$this->add_js(
+		    '$(".map-container:not(.done)")
+		        .addClass("done")
+		        .visible(function() {
+		            $(this).createMap();
+		    });'
+        );
+
+		return $this;
+	}
+
+	function add_dracula()
+	{
+		// Because they are only used in this file, they are marked as external so they
+		// are not included in the minify
+		$this->add_jsfile('lib/dracula/raphael-min.js', 'external');
+		$this->add_jsfile('lib/dracula/graffle.js', 'external');
+		$this->add_jsfile('lib/dracula/graph.js', 'external');
+
+		return $this;
+	}
+
+	function __toString()
+	{
+		return '';
+	}
+}
+

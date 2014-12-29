@@ -1,0 +1,55 @@
+/* $Id: flat.css 51909 2014-07-11 14:05:35Z jonnybradley $
+	Jqui theme (jqui.css), Flat theme option (flat.css)
+	for Tiki Wiki CMS/Groupware.
+	Thanks to garkpit for the random name.
+	Visit http://themes.tiki.org for more information.
+	(This file was edited directly, not produced by the Less pre-compiler.)
+*/
+
+@import url(../../../css/tiki.css);
+
+.btn,
+.btn-default,
+.button a,
+.button a:visited,
+button,
+input[type="reset"],
+input[type="submit"],
+.button input {
+	background-image: none;
+}
+
+.btn:hover,
+.btn-default:hover,
+.button a:hover,
+button:hover,
+input[type="reset"]:hover,
+input[type="submit"]:hover,
+.button input:hover {
+	background-image: none;
+}
+	
+.highlight,
+.highlight a {
+	background-image: none;
+}
+
+#tiki-top,
+.panel-heading,
+.navbar-default .navbar-collapse,
+.navbar-default .navbar-form {
+	background-image: none;
+}
+
+.panel-default > .panel-heading,
+h3.box-title,
+.cbox-title {
+	background-image: none;
+}
+
+.postbody-title {
+	background-image: none;
+}
+	
+
+/* End of File */

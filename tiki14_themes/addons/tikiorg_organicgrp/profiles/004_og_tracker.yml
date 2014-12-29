@@ -1,0 +1,142 @@
+---
+objects:
+  -
+    type: tracker
+    ref: trk_og
+    data:
+      name: Organic Groups
+      description:
+      list_default_status: opc
+      restrict_end: 0
+      section_format: flat
+      restrict_start: 0
+      allow:
+        - creator_modification
+      show:
+        - status
+  -
+    type: tracker_field
+    ref: trk_og_title
+    data:
+      name: Title
+      permname: og_title
+      tracker: $profileobject:trk_og$
+      options:
+      type: text_field
+      flags:
+        - list
+        - link
+        - searchable
+        - public
+        - mandatory
+  -
+    type: tracker_field
+    ref: trk_og_description
+    data:
+      name: Description
+      permname: og_description
+      tracker: $profileobject:trk_og$
+      options:
+      type: text_area
+      flags:
+        - list
+        - searchable
+        - public
+  -
+    type: tracker_field
+    ref: trk_og_logo_image
+    data:
+      name: Logo image
+      permname: og_logo_image
+      tracker: $profileobject:trk_og$
+      options:
+        xListSize: 30
+        yListSize: 30
+        xDetailSize: 300
+        yDetailSize: 300
+        uploadLimitScale: 1000
+      type: image
+      flags:
+        - searchable
+        - public
+  -
+    type: tracker_field
+    ref: trk_og_creator
+    data:
+      name: Creator
+      permname: og_creator
+      tracker: $profileobject:trk_og$
+      options:
+        - autoassign: 1
+      type: user
+      flags:
+        - list
+        - searchable
+        - public
+        - mandatory
+  -
+    type: tracker_field
+    ref: trk_og_file_gallery_ID
+    data:
+      name: File gallery ID
+      permname: og_file_gallery_ID
+      tracker: $profileobject:trk_og$
+      options:
+      type: text_field
+      flags:
+        - searchable
+        - public
+        - mandatory
+  -
+    type: tracker_field
+    ref: trk_og_forum_ID
+    data:
+      name: Forum ID
+      permname: og_forum_ID
+      tracker: $profileobject:trk_og$
+      options:
+      type: text_field
+      flags:
+        - searchable
+        - public
+        - mandatory
+  -
+    type: tracker_field
+    ref: trk_og_lang
+    data:
+      name: Language
+      permname: og_lang
+      tracker: $profileobject:trk_og$
+      options:
+      type: language
+      flags:
+        - searchable
+        - public
+        - mandatory
+  -
+    type: tracker_field
+    ref: trk_og_categoryID
+    data:
+      name: Category ID
+      permname: og_categoryID
+      tracker: $profileobject:trk_og$
+      options:
+      type: text_field
+      flags:
+        - searchable
+        - public
+        - mandatory
+  -
+    type: tracker_option
+    ref: trk_og_sort_default_field
+    data:
+      tracker: $profileobject:trk_og$
+      name: sort_default_field
+      value: $profileobject:trk_og_title$
+permissions:
+  Registered:
+    objects:
+      -
+        type: tracker
+        id: $profileobject:trk_og$
+        allow: [ view_trackers, view_trackers_pending ]

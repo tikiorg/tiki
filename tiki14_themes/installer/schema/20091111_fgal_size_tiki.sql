@@ -1,0 +1,1 @@
+alter table `tiki_file_galleries` add column `size` int(14) default NULL;

@@ -1,0 +1,137 @@
+---
+objects:
+  -
+    type: activity_stream_rule
+    ref: act_groupjoin
+    data:
+      event_type: tiki.user.groupjoin
+      rule_type: advanced
+      rule: |
+        (if (equals args.is_organic 1) (event-trigger tikiorg.organicgrp.groupjoin (map
+        (user args.object)
+        (type args.type)
+        (object args.object)
+        (groupname args.group)
+        (organicgroupname args.addongroup)
+        (organicgroupid args.addongroupid)
+        (private args.is_private)
+        (organic args.is_organic)
+        (aggregate (hash args.type args.object args.group))
+        (feed (str tikiorg_organicgrp))
+        )))
+      notes: User joins group
+  -
+    type: activity_stream_rule
+    ref: act_groupjoin_rec
+    data:
+      event_type: tikiorg.organicgrp.groupjoin
+      rule_type: record
+      rule: (event-record event args)
+      notes:
+  -
+    type: activity_stream_rule
+    ref: act_groupleave
+    data:
+      event_type: tiki.user.groupleave
+      rule_type: advanced
+      rule: |
+        (if (equals args.is_organic 1) (event-trigger tikiorg.organicgrp.groupleave (map
+        (user args.object)
+        (type args.type)
+        (object args.object)
+        (groupname args.group)
+        (organicgroupname args.addongroup)
+        (organicgroupid args.addongroupid)
+        (private args.is_private)
+        (organic args.is_organic)
+        (aggregate (hash args.type args.object args.group))
+        (feed (str tikiorg_organicgrp))
+        )))
+      notes: User leaves group
+  -
+    type: activity_stream_rule
+    ref: act_groupleave_rec
+    data:
+      event_type: tikiorg.organicgrp.groupleave
+      rule_type: record
+      rule: (event-record event args)
+      notes:
+  -
+    type: activity_stream_rule
+    ref: act_forumpost
+    data:
+      event_type: tiki.forumpost.create
+      rule_type: advanced
+      rule: |
+        (if (equals 1 1) (event-trigger tikiorg.organicgrp.forumpost (map
+        (user args.user)
+        (type args.type)
+        (object args.object)
+        (forum_id args.forum_id)
+        (title args.title)
+        (aggregate (hash args.type args.object))
+        (content args.content)
+        (feed (str tikiorg_organicgrps))
+        )))
+      notes: Forum post created
+  -
+    type: activity_stream_rule
+    ref: act_forumpost_rec
+    data:
+      event_type: tikiorg.organicgrp.forumpost
+      rule_type: record
+      rule: (event-record event args)
+      notes:
+  -
+    type: activity_stream_rule
+    ref: act_forumreply
+    data:
+      event_type: tiki.forumpost.reply
+      rule_type: advanced
+      rule: |
+        (if (equals 1 1) (event-trigger tikiorg.organicgrp.forumreply (map
+        (user args.user)
+        (type args.type)
+        (object args.object)
+        (forum_id args.forum_id)
+        (title args.title)
+        (topictitle args.parent_title)
+        (parent_id args.parent_id)
+        (aggregate (hash args.type args.parent_id))
+        (aggregateself (hash args.type args.object))
+        (content args.content)
+        (feed (str tikiorg_organicgrp))
+        )))
+      notes: Forum post reply
+  -
+    type: activity_stream_rule
+    ref: act_forumreply_rec
+    data:
+      event_type: tikiorg.organicgrp.forumreply
+      rule_type: record
+      rule: (event-record event args)
+      notes:
+  -
+    type: activity_stream_rule
+    ref: act_wikiupdate
+    data:
+      event_type: tiki.wiki.update
+      rule_type: advanced
+      rule: |
+        (if (equals (substring args.namespace 0 19) (str tikiorg_organicgrp_)) (event-trigger tikiorg.organicgrp.wikiupdate (map
+        (user args.user)
+        (type args.type)
+        (object args.object)
+        (namespace args.namespace)
+        (aggregate (hash args.type args.object))
+        (feed (str tikiorg_organicgrp))
+        )))
+      notes: Wiki page updated in group namespace
+  -
+    type: activity_stream_rule
+    ref: act_wikiupdate_rec
+    data:
+      event_type: tikiorg.organicgrp.wikiupdate
+      rule_type: record
+      rule: (event-record event args)
+      notes:

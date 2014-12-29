@@ -1,0 +1,174 @@
+/*** ESSENTIAL STYLES ***/
+.cssmenu_horiz,
+.cssmenu_horiz * ,
+.cssmenu_vert,
+.cssmenu_vert * {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.cssmenu_horiz li,
+.cssmenu_vert li {
+  position: relative;
+}
+.cssmenu_horiz ul {
+  position: absolute;
+  display: none;
+  top: 100%;
+  left: 0;
+  z-index: 99;
+}
+.cssmenu_horiz > li,
+.cssmenu_vert > li {
+  float: left;
+}
+.cssmenu_horiz li:hover > ul,
+.cssmenu_horiz li.sfHover > ul,
+.cssmenu_vert li:hover > ul,
+.cssmenu_vert li.sfHover > ul {
+  display: block;
+}
+
+.cssmenu_horiz a,
+.cssmenu_vert a {
+  display: block;
+  position: relative;
+}
+.cssmenu_horiz ul ul,
+.cssmenu_vert ul ul {
+  top: 0;
+  left: 100%;
+}
+
+/*** DEMO SKIN ***/
+.cssmenu_horiz,
+.cssmenu_vert {
+  float: left;
+  margin-bottom: 1em;
+}
+.cssmenu_horiz ul,
+.cssmenu_vert ul {
+  box-shadow: 2px 2px 6px rgba(0,0,0,.2);
+  min-width: 12em; /* allow long menu items to determine submenu width */
+  *width: 12em; /* no auto sub width for IE7, see white-space comment below */
+}
+.cssmenu_horiz a,
+.cssmenu_vert a  {
+//  border-left: 1px solid #fff;
+//  border-top: 1px solid #dFeEFF; /* fallback colour must use full shorthand */
+//  border-top: 1px solid rgba(255,255,255,.5);
+  padding: .75em 1em;
+  text-decoration: none;
+}
+.cssmenu_horiz a,
+.cssmenu_vert a {
+  color: @navbar-default-link-color;
+}
+.cssmenu_horiz li,
+.cssmenu_vert li {
+  background: transparent;
+  white-space: nowrap; /* no need for Supersubs plugin */
+  *white-space: normal; /* ...unless you support IE7 (let it wrap) */
+  -webkit-transition: background .2s;
+  transition: background .2s;
+}
+.cssmenu_horiz ul li,
+.cssmenu_vert ul li {
+  background: @dropdown-bg;
+}
+.cssmenu_horiz ul ul li,
+.cssmenu_vert ul ul li {
+//  background: @dropdown-bg;
+  background: @dropdown-bg;
+}
+.cssmenu_horiz li:hover,
+.cssmenu_horiz li.sfHover,
+.cssmenu_vert li:hover,
+.cssmenu_vert li.sfHover {
+  background: @dropdown-link-hover-bg;
+  /* only transition out, not in */
+  -webkit-transition: none;
+  transition: none;
+}
+/*** arrows (for all except IE7) **/
+.sf-arrows .sf-with-ul {
+  padding-right: 2.5em;
+  *padding-right: 1em; /* no CSS arrows for IE7 (lack pseudo-elements) */
+}
+/* styling for both css and generated arrows */
+.sf-arrows .sf-with-ul:after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: 1em;
+  margin-top: -3px;
+  height: 0;
+  width: 0;
+  /* order of following 3 rules important for fallbacks to work */
+  border: 5px solid transparent;
+//  border-top-color: @link-color; /* edit this to suit design (no rgba in IE8) */
+//  border-top-color: rgba(255,255,255,.5);
+}
+.sf-arrows > li > .sf-with-ul:focus:after,
+.sf-arrows > li:hover > .sf-with-ul:after,
+.sf-arrows > .sfHover > .sf-with-ul:after {
+  border-top-color: white; /* IE8 fallback colour */
+}
+/* styling for right-facing arrows */
+.sf-arrows ul .sf-with-ul:after {
+  margin-top: -5px;
+  margin-right: -3px;
+  border-color: transparent;
+  border-left-color: @link-color; /* edit this to suit design (no rgba in IE8) */
+  border-left-color: rgba(255,255,255,.5);
+}
+.sf-arrows ul li > .sf-with-ul:focus:after,
+.sf-arrows ul li:hover > .sf-with-ul:after,
+.sf-arrows ul .sfHover > .sf-with-ul:after {
+  border-left-color: @link-hover-color;
+}
+
+/* adding sf-vertical class in addition to sf-menu creates a vertical menu */
+/* eg. <ul class="sf-menu sf-vertical"> ... */
+.cssmenu_vert {
+  width: 12em;
+  /* If you want the width of the closed menu to expand to its
+  widest top-level menu item (like its "Supersubs" submenus do),
+  replace the width rule above with the following two rules. */
+  /*
+
+    min-width: 12em;
+    *width: 12em;
+    */
+}
+
+.panel-body ul.cssmenu_vert {
+  overflow: visible;
+}
+
+.cssmenu_vert ul {
+  position: absolute;
+  left:	100%;
+  top: 0;
+  z-index: 99;
+}
+.cssmenu_vert > li {
+  float: none;
+}
+.cssmenu_vert li {
+  width: 100%;
+}
+
+/*** alter arrow directions ***/
+.cssmenu_vert.sf-arrows > li > .sf-with-ul:after {
+  margin-top: -5px;
+  margin-right: -3px;
+  border-color: transparent;
+  border-left-color: @link-color; /* edit this to suit design (no rgba in IE8) */
+  border-left-color: rgba(255,255,255,.5);
+}
+.cssmenu_vert.sf-arrows li > .sf-with-ul:focus:after,
+.cssmenu_vert.sf-arrows li:hover > .sf-with-ul:after,
+.cssmenu_vert.sf-arrows .sfHover > .sf-with-ul:after {
+  border-left-color: @link-hover-color;
+}

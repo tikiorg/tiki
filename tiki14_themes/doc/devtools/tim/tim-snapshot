@@ -1,0 +1,90 @@
+#!/bin/bash
+
+setup()
+{
+		export LC_ALL=C
+		MY_PATH="`dirname \"$0\"`"
+		MY_PATH="`( cd \"$MY_PATH\" && pwd )`"
+		. $MY_PATH/tim-common
+}
+
+export LC_ALL=C
+
+usage()
+{
+cat << EOF
+TIM-snapshot - Tiki Instance Creator
+usage: $0 -u <user> -U <userid> -i <instance id>
+
+OPTIONS:
+   -h      Show this message
+   -i      id of instance
+   -u      username on Tiki.org 
+   -U      userid on Tiki.org 
+   -p      Subdirectory path
+EOF
+}
+
+while getopts “hc:i:u:U:p:” OPTION
+do
+	case $OPTION in
+		h)
+			usage
+			exit 1
+			;;
+		i)
+			ID=$OPTARG
+		;;
+		u)
+			TUSER=$OPTARG
+			;;
+		U)
+			TUSERID=$OPTARG
+			;;
+		p)
+			TPATH=$OPTARG
+			;;
+		?)
+			usage
+			exit
+			;;
+	esac
+done
+
+if [[ -z $TUSERID ]] || [[ -z $TUSER ]] || [[ -z $ID ]]
+then
+	usage
+	exit 1
+fi
+
+setup
+
+debug()
+{
+	echo "COMMAND: $COMMAND"
+	echo "SVNTAG: $SVNTAG"
+	echo "TUSER: $TUSER"
+	echo "ID: $ID"
+}
+
+snapshot()
+{
+	if [[ ! -d $INSTANCE_DIR/snapshots ]] ; then mkdir "$INSTANCE_DIR/snapshots" ; fi 
+	if [[ ! -d $INSTANCE_DIR/snapshots || ! -w $INSTANCE_DIR/snapshots ]] 
+	then
+		echo "FAIL: Can't write in snapshots dir ( $INSTANCE_DIR/snapshots )"; exit 1
+	else
+		echo "SNAPSHOTS_DIR: http://${SUBDOMAIN}.show.tikiwiki.org/snapshots"
+	fi 
+	DATE=`date -u +%Y-%m-%d_%H-%M-%S`
+	#mysqldump $DB | gzip -c - > $INSTANCE_DIR/snapshots/${SUBDOMAIN}_${DATE}.sql.gz
+	mysqldump -Qqf --skip-extended-insert $DB | gzip -c - > $INSTANCE_DIR/snapshots/${SUBDOMAIN}_${DATE}.sql.gz
+	echo "DUMPDB: http://${SUBDOMAIN}.show.tikiwiki.org/snapshots/${SUBDOMAIN}_${DATE}.sql.gz"
+	tar -czf $INSTANCE_DIR/snapshots/${SUBDOMAIN}_${DATE}.tar.gz --exclude $SUBDOMAIN/snapshots -C $WEBROOT $SUBDOMAIN
+	echo "DUMPSOURCE: http://${SUBDOMAIN}.show.tikiwiki.org/snapshots/${SUBDOMAIN}_${DATE}.tar.gz"
+}
+
+echo "SNAPSHOT START "
+snapshot
+echo "SNAPSHOT END "
+exit 0

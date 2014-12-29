@@ -1,0 +1,9 @@
+!About Tiki Addons
+Tiki Addons is a way to deploy custom "apps" or other addons to Tiki. It supports easy deployment of combinations of:
+*Profiles
+*Custom Prefs
+*Smarty Templates
+*Language Files
+*PHP Code in libs and views 
+!Example of View
+{addon package="tikiorg/helloworld" view="helloworld"}

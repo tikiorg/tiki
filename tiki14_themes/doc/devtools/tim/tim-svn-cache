@@ -1,0 +1,21 @@
+#!/bin/bash
+echo "This script is too simple, please read and adapt it before using it!"
+exit
+
+. /usr/local/etc/tim.conf
+
+for t in `svn ls https://svn.code.sf.net/p/tikiwiki/code/tags/ | grep -P "^9"`;
+do
+	t=`echo $t | sed -e 's/\///'`
+	cd $SVN_CACHE
+	svn co https://svn.code.sf.net/p/tikiwiki/code/tags/$t 2> $SVN_CACHE/$t.svn.err > $SVN_CACHE/$t.svn.log
+	has_error=`ls -s $SVN_CACHE/$t.svn.err | cut -f1 -d' '`
+	if [[ $has_error -eq 0 ]];
+	then
+		rm $SVN_CACHE/$t.svn.err
+	fi
+	cd $t
+	tar -czf $SVN_CACHE/$t.tar.gz . 
+	cd ..
+	rm -r $t
+done

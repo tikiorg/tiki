@@ -1,0 +1,55 @@
+// $Id$
+// Override specific default Bootstrap styles
+.tiki .page-header {
+  border-bottom: none;
+  margin: auto;
+  padding-bottom: 0;
+}
+
+.tiki .row.page-header {
+  margin-left: -15px;
+  margin-right: -15px;
+}
+
+body.tiki.navbar-padding {
+  padding-top: 70px;
+}
+
+.tiki.dropdown-menu {padding: 0}
+
+.tiki .popover {
+  max-width: inherit;
+}
+
+@media (min-width: @screen-md-min) {
+  .tiki .col-md-3 .table-responsive,
+  .tiki .col-md-4 .table-responsive,
+  .tiki .col-md-5 .table-responsive,
+  .tiki .col-md-6 .table-responsive,
+  .tiki .col-md-7 .table-responsive,
+  .tiki .col-md-8 .table-responsive,
+  .tiki .col-md-9 .table-responsive {
+    width: 100%;
+    margin-bottom: 15px;
+    overflow-y: hidden;
+    overflow-x: auto;
+    -ms-overflow-style: -ms-autohiding-scrollbar;
+    border: 1px solid @panel-default-border;
+    -webkit-overflow-scrolling: touch;
+    box-shadow: -5rem 0 9rem -9rem rgba(0, 0, 0, 0.75) inset;
+  }
+  .tiki .table-responsive > .table {
+    margin-bottom: 0;
+    // Ensure the content doesn't wrap
+    > thead,
+    > tbody,
+    > tfoot {
+      > tr {
+        > th,
+        > td {
+          white-space: normal;
+        }
+      }
+    }
+  }
+}

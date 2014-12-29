@@ -1,0 +1,1 @@
+{$mail_group} - {tr}Leader approved your request{/tr}.

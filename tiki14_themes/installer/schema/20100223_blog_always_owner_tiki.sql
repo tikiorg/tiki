@@ -1,0 +1,1 @@
+ALTER TABLE `tiki_blogs` ADD COLUMN `always_owner` char(1);

@@ -1,0 +1,1 @@
+{tr}Category{/tr} {$categoryName} {tr}removed{/tr}

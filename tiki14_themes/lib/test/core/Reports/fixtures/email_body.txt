@@ -1,0 +1,44 @@
+Report for Test.<br /><br />
+Last Report sent on Sunday 15 of January, 2012.<br /><br />
+<u>Changes in detail:</u><br /><br />
+<b>Wiki pages updated:</b><br />
+&nbsp;&nbsp;&nbsp;2012-03-30 13:34: <u>admin</u> edited the wikipage <a href="tiki-index.php?page=HomePage">HomePage</a> (<a href="tiki-pagehistory.php?page=HomePage&diff_style=sidediff&compare=Compare&newver=2&oldver=1">this history</a>, <a href="tiki-pagehistory.php?page=HomePage&diff_style=sidediff&compare=Compare&newver=0&oldver=1">all history</a>)<br>
+<b>Wiki pages updated:</b><br />
+&nbsp;&nbsp;&nbsp;2012-03-30 13:35: <u>admin</u> edited the wikipage <a href="tiki-index.php?page=test">test</a> (<a href="tiki-pagehistory.php?page=test&diff_style=sidediff&compare=Compare&newver=2&oldver=1">this history</a>, <a href="tiki-pagehistory.php?page=test&diff_style=sidediff&compare=Compare&newver=0&oldver=1">all history</a>)<br>
+<b>New attachments in wiki pages:</b><br />
+&nbsp;&nbsp;&nbsp;2012-03-30 13:37: <u>test</u> uploaded the file <a href="tiki-download_wiki_attachment.php?attId=1">tiki</a> onto <a href="tiki-index.php?page=test">test</a>.<br>
+&nbsp;&nbsp;&nbsp;2012-03-30 13:37: <u>test</u> uploaded the file <a href="tiki-download_wiki_attachment.php?attId=2">tiki</a> onto <a href="tiki-index.php?page=test">test</a>.<br>
+<b>Tracker items modified:</b><br />
+&nbsp;&nbsp;&nbsp;2012-03-30 13:38: <u>admin</u> added or updated tracker item id <a href='tiki-view_tracker_item.php?itemId=4'>4</a> on tracker <a href='tiki-view_tracker.php?trackerId=1'></a><br>
+<b>Comments in tracker items:</b><br />
+&nbsp;&nbsp;&nbsp;2012-03-30 13:39: <u>admin</u> added a new comment to item id <a href='tiki-view_tracker_item.php?itemId=4&cookietab=2'>4</a> on tracker <a href='tiki-view_tracker.php?trackerId=1'></a><br>
+<b>New posts in forums:</b><br />
+&nbsp;&nbsp;&nbsp;2012-03-30 13:41: <u>admin</u> created the topic <a href="tiki-view_forum_thread.php?comments_parentId=2&forumId=1">New topic</a> at forum <a href="tiki-view_forum.php?forumId=1">Discussion forum</a>.<br>
+<b>New replies in foruns topics:</b><br />
+&nbsp;&nbsp;&nbsp;2012-03-30 13:42: <u>admin</u> <a href="tiki-view_forum_thread.php?forumId=1&comments_parentId=2#threadId3">replied</a> to the topic <a href="tiki-view_forum_thread.php?comments_parentId=2&forumId=1"></a>.<br>
+<b>File galleries changed:</b><br />
+&nbsp;&nbsp;&nbsp;2012-03-30 13:49: <u>admin</u> uploaded the file <a href="tiki-download_file.php?fileId=2">tiki</a> onto <a href="tiki-list_file_gallery.php?galleryId=1">File Galleries</a>.<br>
+<b>New calendar events:</b><br />
+&nbsp;&nbsp;&nbsp;2012-03-30 13:50: <u>admin</u> added or updated event <a href='tiki-calendar_edit_item.php?viewcalitemId=1'></a><br>
+<b>Changes in categories:</b><br />
+&nbsp;&nbsp;&nbsp;2012-03-30 13:51: <u>admin</u> added the wiki page <a href="tiki-index.php?page=HomePage">HomePage</a> to the category <a href="tiki-browse_categories.php?parentId=1&deep=off">Test category</a><br>
+&nbsp;&nbsp;&nbsp;2012-03-30 13:51: <u>admin</u> added the wiki page <a href="tiki-index.php?page=My+Resume">My Resume</a> to the category <a href="tiki-browse_categories.php?parentId=1&deep=off">Test category</a><br>
+<b>Changes in categories:</b><br />
+&nbsp;&nbsp;&nbsp;2012-03-30 13:52: <u>admin</u> removed the wiki page <a href="tiki-index.php?page=My+Resume">My Resume</a> from the category <a href="tiki-browse_categories.php?parentId=1&deep=off">Test category</a>.<br>
+<b>Changes in categories:</b><br />
+&nbsp;&nbsp;&nbsp;2012-03-30 13:53: <u>admin</u> edited the category <a href="tiki-browse_categories.php?parentId=1&deep=off">Test category</a><br>
+<b>Changes in categories:</b><br />
+&nbsp;&nbsp;&nbsp;2012-03-30 13:53: <u>admin</u> created the subcategory <a href="tiki-browse_categories.php?parentId=2&deep=off">Child category</a> in <a href="tiki-browse_categories.php?parentId=1&deep=off">Test category</a>.<br>
+<b>Changes in categories:</b><br />
+&nbsp;&nbsp;&nbsp;2012-03-30 13:53: <u>admin</u> removed the subcategory <a href="tiki-browse_categories.php?parentId=2&deep=off">Child category</a> from <a href="tiki-browse_categories.php?parentId=1&deep=off">Test category</a>.<br>
+<b>New blog posts:</b><br />
+&nbsp;&nbsp;&nbsp;2012-03-30 13:58: <u>admin</u> replied to the blog <a href="tiki-view_blog.php?blogId=1">My Personal Blog</a> <a href="tiki-view_blog_post.php?postId="4></a>.<br>
+<b>New articles submited:</b><br />
+&nbsp;&nbsp;&nbsp;2012-03-30 13:59: <u>admin</u> created the article <a href="tiki-read_article.php?articleId=3">Test article</a>.<br>
+<b>Edited articles:</b><br />
+&nbsp;&nbsp;&nbsp;2012-03-30 14:00: <u>admin</u> edited the article <a href="tiki-read_article.php?articleId=3">Test article</a>.<br>
+<b>Articles deleted:</b><br />
+&nbsp;&nbsp;&nbsp;2012-03-30 14:00: <u>admin</u> removed the article <a href="tiki-read_article.php?articleId=3">Test article</a>.<br>
+<br /><br />
+
+You are receiving notification emails grouped in a periodic digest. To receive them individually when posted instead, change your preferences at <a href=tiki-user_watches.php>tiki-user_watches.php</a>

@@ -1,0 +1,12 @@
+{
+	"name": "Hello World",
+	"package": "tikiorg/helloworld",
+	"version": "0.1",
+	"url": "http://dev.tiki.org/TikiAddonHelloWorld",
+	"smarty": true,
+	"tiki": ["14"],
+	"depends": [
+	],
+	"api": {
+	}
+}
