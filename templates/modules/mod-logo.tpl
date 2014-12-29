@@ -9,7 +9,7 @@
 			{/if}
 		</div>
 		{if !empty($module_params.sitetitle) or !empty($module_params.sitesubtitle)}
-			<div class="pull-left  {$module_params.class_titles|escape}">
+			<div class="pull-left {$module_params.class_titles|escape}">
 				<h1 class="sitetitle">
 					{if !empty($module_params.sitetitle)}
 						<a href="{$module_params.link}"{if $prefs.mobile_mode eq "y"} rel="external"{/if}>

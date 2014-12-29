@@ -65,14 +65,13 @@
 	{if (isset($module_params.google) and $module_params.google neq 'n')}
 		<div class="mod-share-item google-root"><div class="g-plusone"{$gl_data_attributes}></div></div>
 		{jq notonready=true}
-{{$gl_script_addition}}
-  (function() {
-    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
-    po.src = 'https://apis.google.com/js/plusone.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
-  })();
+			{{$gl_script_addition}}
+				(function() {
+					var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+					po.src = 'https://apis.google.com/js/plusone.js';
+					var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+				})();
 		{/jq}
-
 	{/if}
 
 {/tikimodule}
