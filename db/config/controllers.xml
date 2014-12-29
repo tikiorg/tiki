@@ -22,6 +22,7 @@
 		<service id="tiki.controller.draw" class="Services_Draw_Controller"/>
 		<service id="tiki.controller.edit" class="Services_Edit_Controller"/>
 		<service id="tiki.controller.favorite" class="Services_User_FavoriteController"/>
+        <service id="tiki.controller.forum" class="Services_Forum_Controller"/>
 		<service id="tiki.controller.goal" class="Services_Goal_Controller"/>
 		<service id="tiki.controller.file_finder" class="Services_File_FinderController"/>
 		<service id="tiki.controller.file" class="Services_File_Controller"/>

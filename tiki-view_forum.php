@@ -102,50 +102,6 @@ if ($tiki_p_admin_forum == 'y') {
 		}
 	}
 
-	if (isset($_REQUEST['locksel_x'])) {
-		if (isset($_REQUEST['forumtopic'])) {
-			check_ticket('view-forum');
-			foreach (array_values($_REQUEST['forumtopic']) as $topic) {
-				$commentslib->lock_comment($topic);
-			}
-		}
-	}
-
-	if (isset($_REQUEST['unlocksel_x'])) {
-		if (isset($_REQUEST['forumtopic'])) {
-			check_ticket('view-forum');
-			foreach (array_values($_REQUEST['forumtopic']) as $topic) {
-				$commentslib->unlock_comment($topic);
-			}
-		}
-	}
-
-	if (isset($_REQUEST['movesel'])) {
-		if (isset($_REQUEST['forumtopic'])) {
-			foreach (array_values($_REQUEST['forumtopic']) as $topic) {
-				check_ticket('view-forum');
-				// To move a topic you just have to change the object
-				$obj = 'forum:' . $_REQUEST['moveto'];
-				$commentslib->set_comment_object($topic, $obj);
-				// update the stats for the source and destination forums
-				$commentslib->forum_prune($_REQUEST['forumId']);
-				$commentslib->forum_prune($_REQUEST['moveto']);
-			}
-		}
-	}
-
-	if (isset($_REQUEST['mergesel'])) {
-		if (isset($_REQUEST['forumtopic'])) {
-			foreach (array_values($_REQUEST['forumtopic']) as $topic) {
-				check_ticket('view-forum');
-				// To move a topic you just have to change the object
-				if ($topic != $_REQUEST['mergetopic']) {
-					$commentslib->set_parent($topic, $_REQUEST['mergetopic']);
-				}
-			}
-		}
-	}
-
 	if ($prefs['feature_forum_topics_archiving'] && isset($_REQUEST['archive']) && isset($_REQUEST['comments_parentId'])) {
 		check_ticket('view-forum');
 		if ($_REQUEST['archive'] == 'y') {
@@ -376,9 +332,9 @@ else
 
 //add tablesorter sorting and filtering
 $tsOn = Table_Check::isEnabled(true);
-
 $smarty->assign('tsOn', $tsOn);
 $tsAjax = Table_Check::isAjaxCall();
+$smarty->assign('tsAjax', $tsAjax);
 static $iid = 0;
 ++$iid;
 $ts_tableid = 'viewforum' . $_REQUEST['forumId'] . '-' . $iid;
@@ -390,19 +346,19 @@ if ($tsOn) {
 	$smarty->assign('ts_offsetid', $ts_offsetid);
 }
 
-if (!$tsOn || ($tsOn && $tsAjax)) {
-	$comments_coms = $commentslib->get_forum_topics(
-		$_REQUEST['forumId'],
-		$comments_offset,
-		$_REQUEST['comments_per_page'],
-		$_REQUEST['thread_sort_mode'],
-		$view_archived_topics,
-		$user_param,
-		$type_param,
-		$reply_state,
-		$forum_info
-	);
-}
+//need the info on all threads so leave this even on initial non-ajax load
+$comments_coms = $commentslib->get_forum_topics(
+	$_REQUEST['forumId'],
+	$comments_offset,
+	$_REQUEST['comments_per_page'],
+	$_REQUEST['thread_sort_mode'],
+	$view_archived_topics,
+	$user_param,
+	$type_param,
+	$reply_state,
+	$forum_info
+);
+
 $comments_cant = $commentslib->count_forum_topics(
 	$_REQUEST['forumId'],
 	$comments_offset,
@@ -443,6 +399,8 @@ $smarty->assign_by_ref('last_comments', $last_comments);
 $smarty->assign('comments_cant', $comments_cant);
 $comments_maxRecords = $_REQUEST["comments_per_page"];
 $smarty->assign_by_ref('comments_coms', $comments_coms);
+$comms = array_column($comments_coms, 'title', 'threadId');
+$smarty->assign('comments_coms_encoded', json_encode($comms));
 $cat_type = 'forum';
 $cat_objid = $_REQUEST["forumId"];
 
@@ -512,6 +470,8 @@ if ($tiki_p_admin_forum == 'y' || $prefs['feature_forum_quickjump'] == 'y') {
 		}
 	}
 	$smarty->assign('all_forums', $all_forums['data']);
+	$all_names = array_column($all_forums['data'], 'name', 'forumId');
+	$smarty->assign('all_forums_encoded', json_encode($all_names));
 }
 
 $smarty->assign('unread', 0);
@@ -550,5 +510,9 @@ if ($prefs['feature_forum_parse'] == 'y') {
 }
 
 ask_ticket('view-forum');
-$smarty->assign('mid', 'tiki-view_forum.tpl');
-$smarty->display('tiki.tpl');
+if ($tsAjax) {
+	$smarty->display('tiki-view_forum.tpl');
+} else {
+	$smarty->assign('mid', 'tiki-view_forum.tpl');
+	$smarty->display('tiki.tpl');
+}
