@@ -93,7 +93,7 @@
 							<a title="{tr _0=$tracker.name|escape}Import in %0{/tr}" data-toggle="modal" data-target="#bootstrap-modal" href="{service controller=tracker action=import_items trackerId=$tracker.trackerId modal=1}">{icon _id='upload' alt="{tr}Import{/tr}"}</a>
 							<a title="{tr _0=$tracker.name|escape}Events{/tr}" data-toggle="modal" data-target="#bootstrap-modal" href="{service controller=tracker_todo action=view trackerId=$tracker.trackerId modal=1}">{icon _id='clock' alt="{tr}Events{/tr}"}</a>
 						{/if}
-						<a title="{tr}View{/tr}" href="tiki-view_tracker.php?trackerId={$tracker.trackerId}">{icon _id='magnifier' alt="{tr}View{/tr}"}</a>
+						<a title="{tr}View{/tr}" href="tiki-view_tracker.php?trackerId={$tracker.trackerId}">{icon name='list' alt="{tr}View{/tr}"}</a>
 
 						{if $prefs.feature_group_watches eq 'y' and ( $tiki_p_admin_users eq 'y' or $tiki_p_admin eq 'y' )}
 							<a href="tiki-object_watches.php?objectId={$tracker.trackerId}&amp;watch_event=tracker_modified&amp;objectType=tracker&amp;objectName={$tracker.name|escape:"url"}&amp;objectHref={'tiki-view_tracker.php?trackerId='|cat:$tracker.trackerId|escape:"url"}" class="icon">{icon _id='eye_group' alt="{tr}Group Monitor{/tr}"}</a>
@@ -108,6 +108,10 @@
 
 						{if $prefs.feed_tracker eq "y"}
 							<a href="tiki-tracker_rss.php?trackerId={$tracker.trackerId}">{icon _id='feed' alt="{tr}Feed{/tr}"}</a>
+						{/if}
+
+						{if $prefs.feature_search eq 'y'}
+							<a href="tiki-searchindex.php?filter~tracker_id={$tracker.trackerId|escape}">{icon name=search alt="{tr}Search{/tr}"}</a>
 						{/if}
 
 						{if $tracker.permissions->admin_trackers}

@@ -16,9 +16,9 @@ class Manager
 		$this->table = $db->table('tiki_tabular_formats');
 	}
 
-	function getList()
+	function getList($conditions = [])
 	{
-		return $this->table->fetchAll(['tabularId', 'name', 'trackerId'], [], -1, -1, 'name_asc');
+		return $this->table->fetchAll(['tabularId', 'name', 'trackerId'], $conditions, -1, -1, 'name_asc');
 	}
 
 	function getInfo($tabularId)
