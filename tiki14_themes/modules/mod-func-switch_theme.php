@@ -34,6 +34,7 @@ function module_switch_theme($mod_reference, &$module_params)
 	$smarty = TikiLib::lib('smarty');
 	$themelib = TikiLib::lib('theme');
 	
+	//set prefs now if they have not been set before
 	if (!isset($prefs['user_theme'])){
 		$prefs['user_theme'] = '';
 	}
@@ -56,6 +57,7 @@ function module_switch_theme($mod_reference, &$module_params)
 	}
 	else {
 		$available_themes = $themelib->list_themes(); //else load all themes
+		unset($available_themes['custom_url']); //remove Custom URL from the list
 	}
 	
 	//collect options for the currently set theme
