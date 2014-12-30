@@ -18,7 +18,7 @@ $access->check_permission('tiki_p_admin');
 $auto_query_args = array('find', 'sort_mode', 'offset', 'theme', 'categId');
 
 //consider preference feature_theme_control_parentcategory setting when displaying list of available categories
-if (isset($prefs['feature_theme_control_parentcategory']) and $prefs['feature_theme_control_parentcategory'] != -1) {
+if ($prefs['feature_theme_control_parentcategory'] != "n" && $prefs['feature_theme_control_parentcategory'] != -1) {
 	$parentCategoryId = $prefs['feature_theme_control_parentcategory'];
 	$categoryFilter = array(
 		'type' => 'children',
@@ -30,11 +30,10 @@ else {
 		'type' => 'all',
 	);
 }
-
 $categories = $categlib->getCategories($categoryFilter, true, true, false);
 $smarty->assign('categories', $categories);
 
-//why? $smarty->assign('categId', isset($_REQUEST['categId']) ? $_REQUEST['categId'] : 0);
+$smarty->assign('categId', isset($_REQUEST['categId']) ? $_REQUEST['categId'] : 0);
 
 $themes = $themelib->list_themes_and_options();
 $smarty->assign('themes', $themes);

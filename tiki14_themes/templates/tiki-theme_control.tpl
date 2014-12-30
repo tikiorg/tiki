@@ -26,17 +26,14 @@
 	</div>
 	<input type="submit" class="btn btn-primary btn-sm" name="assign" value="{tr}Assign{/tr}">
 </form>
-
 <h2>{tr}Assigned categories{/tr}</h2>
-
 {include file='find.tpl'}
-
 <form action="tiki-theme_control.php" method="post" role="form" class="form">
-    <div class="table-responsive themecat-table">
-    	<table class="table normal">
+	<div class="table-responsive themecat-table">
+		<table class="table normal">
 			<tr>
 				<th>
-					<button type="submit" class="btn btn-warning btn-sm" name="delete" title="{tr}Delete selected{/tr}">
+					<button type="submit" class="btn btn-warning btn-sm" name="delete" title="{tr}Delete selected{/tr}" {if !$channels}disabled{/if}>
 						{icon name="delete"}
 					</button>
 				</th>
@@ -65,6 +62,6 @@
 				</tr>
 			{/section}
 		</table>
-    </div>
+	</div>
 </form>
 {pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}
