@@ -87,10 +87,10 @@
 					<td class="text-center"><a title="{tr}View{/tr}" href="tiki-view_tracker.php?trackerId={$tracker.trackerId}"><span class="badge">{$tracker.items|escape}</span></a></td>
 					<td class="action">
 						{if $tracker.permissions->export_tracker}
-							<a title="{tr _0=$tracker.name|escape}Export %0{/tr}" data-toggle="modal" data-target="#bootstrap-modal" href="{service controller=tracker action=export trackerId=$tracker.trackerId modal=1}">{icon _id='disk' alt="{tr}Export{/tr}"}</a>
+							<a title="{tr _0=$tracker.name|escape}Export %0{/tr}" data-toggle="modal" data-target="#bootstrap-modal" href="{service controller=tracker action=export trackerId=$tracker.trackerId modal=1}">{icon name=export}</a>
 						{/if}
 						{if $tracker.permissions->admin_trackers}
-							<a title="{tr _0=$tracker.name|escape}Import in %0{/tr}" data-toggle="modal" data-target="#bootstrap-modal" href="{service controller=tracker action=import_items trackerId=$tracker.trackerId modal=1}">{icon _id='upload' alt="{tr}Import{/tr}"}</a>
+							<a title="{tr _0=$tracker.name|escape}Import in %0{/tr}" data-toggle="modal" data-target="#bootstrap-modal" href="{service controller=tracker action=import_items trackerId=$tracker.trackerId modal=1}">{icon name=import}</a>
 							<a title="{tr _0=$tracker.name|escape}Events{/tr}" data-toggle="modal" data-target="#bootstrap-modal" href="{service controller=tracker_todo action=view trackerId=$tracker.trackerId modal=1}">{icon _id='clock' alt="{tr}Events{/tr}"}</a>
 						{/if}
 						<a title="{tr}View{/tr}" href="tiki-view_tracker.php?trackerId={$tracker.trackerId}">{icon name='list' alt="{tr}View{/tr}"}</a>
@@ -111,12 +111,12 @@
 						{/if}
 
 						{if $prefs.feature_search eq 'y'}
-							<a href="tiki-searchindex.php?filter~tracker_id={$tracker.trackerId|escape}">{icon name=search alt="{tr}Search{/tr}"}</a>
+							<a href="tiki-searchindex.php?filter~tracker_id={$tracker.trackerId|escape}" title="{tr}Search{/tr}">{icon name=search}</a>
 						{/if}
 
 						{if $tracker.permissions->admin_trackers}
-							<a title="{tr}Fields{/tr}" class="link" href="tiki-admin_tracker_fields.php?trackerId={$tracker.trackerId}">{icon _id='table' alt="{tr}Fields{/tr}"}</a>
-							<a title="{tr}Edit{/tr}" class="edit" data-toggle="modal" data-target="#bootstrap-modal" href="{service controller=tracker action=replace trackerId=$tracker.trackerId modal=true}">{icon _id='pencil' alt="{tr}Edit{/tr}"}</a>
+							<a title="{tr}Fields{/tr}" class="link" href="tiki-admin_tracker_fields.php?trackerId={$tracker.trackerId}">{icon name=trackerfields}</a>
+							<a title="{tr}Edit{/tr}" class="edit" data-toggle="modal" data-target="#bootstrap-modal" href="{service controller=tracker action=replace trackerId=$tracker.trackerId modal=true}">{icon name=settings}</a>
 							{permission_link mode=icon type=tracker permType=trackers id=$tracker.trackerId title=$tracker.name}
 							{if $tracker.items > 0}
 								<a title="{tr}Clear{/tr}" class="link clear confirm-prompt" href="{service controller=tracker action=clear trackerId=$tracker.trackerId}">{icon _id='bin' alt="{tr}Clear{/tr}"}</a>
