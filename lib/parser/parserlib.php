@@ -2247,7 +2247,118 @@ if ( \$('#$id') ) {
                             $value='';
                             break;
                         }
+                    case 'currentVersion':
+                        if (isset($_REQUEST['preview'])) {
+                            $value = (int)$_REQUEST["preview"];
+                            break;
+                        } elseif (isset($_REQUEST['version'])) {
+                            $value = (int)$_REQUEST["version"];
+                            break;
+                        } else {
+                            $histlib = TikiLib::lib('hist');
+                            // get_page_history arguments: page name, page contents (set to "false" to save memory), history_offset (none, therefore "0"), max. records (just one for this case);
+                            $history = $histlib->get_page_history($this->option['page'], false, 0, 1);
+                            if ($history[0]['version'] != null) {
+                                $value = $history[0]['version'];
+                                break;
+                            } else {
+                                $value = '';
+                                break;
+                            }
+                        }
+                    case 'currentVersionApprover':
+                        global $prefs, $user;
+                        $tikilib = TikiLib::lib('tiki');
 
+                        if ($prefs['flaggedrev_approval'] == 'y') {
+                            $flaggedrevisionlib = TikiLib::lib('flaggedrevision');
+
+                            if ($flaggedrevisionlib->page_requires_approval($this->option['page'])) {
+                                if ($versions_info = $flaggedrevisionlib->get_versions_with($this->option['page'], 'moderation', 'OK')) {
+                                    if (isset($_REQUEST['preview'])) {
+                                        $revision_displayed = (int)$_REQUEST["preview"];
+                                    } elseif (isset($_REQUEST['version'])) {
+                                        $revision_displayed = (int)$_REQUEST["version"];
+                                    } else {
+                                        $revision_displayed = NULL;
+                                    }
+
+                                    if ($this->content_to_render === null) {
+                                        $approval = $flaggedrevisionlib->find_approval_information($this->option['page'], $revision_displayed);
+                                    }
+                                }
+                            }
+                        }
+
+                        if ($approval['user'] != null ) {
+                            if ($prefs['user_show_realnames']== 'y') {
+                                $value = TikiLib::lib('user')->clean_user($approval['user']);
+                                break;
+                            } else {
+                                $value = $approval['user'];
+                                break;
+                            }
+                        } else {
+                            $value='';
+                            break;
+                        }
+                    case 'currentVersionApproval':
+                        global $prefs, $user;
+                        $tikilib = TikiLib::lib('tiki');
+
+                        if ($prefs['flaggedrev_approval'] == 'y') {
+                            $flaggedrevisionlib = TikiLib::lib('flaggedrevision');
+
+                            if ($flaggedrevisionlib->page_requires_approval($this->option['page'])) {
+                                if ($versions_info = $flaggedrevisionlib->get_versions_with($this->option['page'], 'moderation', 'OK')) {
+                                    if (isset($_REQUEST['preview'])) {
+                                        $revision_displayed = (int)$_REQUEST["preview"];
+                                    } elseif (isset($_REQUEST['version'])) {
+                                        $revision_displayed = (int)$_REQUEST["version"];
+                                    } else {
+                                        $revision_displayed = NULL;
+                                    }
+
+                                    if ($this->content_to_render === null) {
+                                        $approval = $flaggedrevisionlib->find_approval_information($this->option['page'], $revision_displayed);
+                                    }
+                                }
+                            }
+                        }
+
+                        if ($approval['lastModif'] != null ) {
+                            $value = $tikilib->get_short_datetime($approval['lastModif']);
+                            break;
+                        } else {
+                            $value='';
+                            break;
+                        }
+                    case 'currentVersionApproved':
+                        global $prefs, $user;
+                        $tikilib = TikiLib::lib('tiki');
+
+                        if ($prefs['flaggedrev_approval'] == 'y') {
+                            $flaggedrevisionlib = TikiLib::lib('flaggedrevision');
+
+                            if ($flaggedrevisionlib->page_requires_approval($this->option['page'])) {
+                                $versions_info = $flaggedrevisionlib->get_versions_with($this->option['page'], 'moderation', 'OK');
+                                if (isset($_REQUEST['preview'])) {
+                                    $revision_displayed = (int)$_REQUEST["preview"];
+                                } elseif (isset($_REQUEST['version'])) {
+                                    $revision_displayed = (int)$_REQUEST["version"];
+                                } else {
+                                    $revision_displayed = NULL;
+                                }
+                            }
+                        }
+
+                        if ($revision_displayed != null && $approval = $flaggedrevisionlib->find_approval_information($this->option['page'], $revision_displayed)) {
+                            $value = tr("yes");
+                            break;
+                        } else {
+                            $value= tr("no");
+                            break;
+                        }
 					case 'cat':
 						if ( empty($_GET['cat']) && !empty($_REQUEST['organicgroup']) && !empty($this->option['page']) ) {
 							$utilities = new TikiAddons_Utilities();
