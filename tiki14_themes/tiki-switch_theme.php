@@ -38,7 +38,7 @@ if (isset($_REQUEST['theme'])) {
 	$tikilib->set_user_preference($user, 'user_theme', $theme); //save user's theme preference
 }
 if (isset($themeOption)) {
-	$tikilib->set_user_preference($user, 'user_theme_option', empty($themeOption) ? 'None' : $themeOption); //save user's theme preference
+	$tikilib->set_user_preference($user, 'user_theme_option', empty($themeOption) ? '' : $themeOption); //save user's theme preference
 }
 
 if (isset($themeGenerator_theme) && $prefs['themegenerator_feature'] === 'y') {
