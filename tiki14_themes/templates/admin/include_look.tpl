@@ -48,7 +48,7 @@
 					{remarksbox type="warning" title="{tr}Admin{/tr}"}{tr}The "users can change theme" feature will override the theme displayed.{/tr}{/remarksbox}
 				{/if}
 
-				{if $prefs.site_style != $a_style}
+				{if $prefs.themegenerator_feature eq 'y' and $prefs.site_style != $a_style}
 					{remarksbox type="note" title="{tr}Note{/tr}"}{tr}Theme not saved yet - click "Apply"{/tr}{/remarksbox}
 				{/if}
 			</div>
