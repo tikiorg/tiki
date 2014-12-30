@@ -2254,6 +2254,16 @@ if ( \$('#$id') ) {
                         } elseif (isset($_REQUEST['version'])) {
                             $value = (int)$_REQUEST["version"];
                             break;
+                        } elseif ($prefs['flaggedrev_approval'] == 'y' && !isset($_REQUEST['latest'])) {
+                            $flaggedrevisionlib = TikiLib::lib('flaggedrevision');
+
+                            if ($flaggedrevisionlib->page_requires_approval($this->option['page'])) {
+                                $version_info = $flaggedrevisionlib->get_version_with($this->option['page'], 'moderation', 'OK');
+                            }
+                            if ($version_info['version'] != null ) {
+                                $value = $version_info['version'];
+                                break;
+                            }
                         } else {
                             $histlib = TikiLib::lib('hist');
                             // get_page_history arguments: page name, page contents (set to "false" to save memory), history_offset (none, therefore "0"), max. records (just one for this case);
