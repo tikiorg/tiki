@@ -34,6 +34,13 @@ function module_switch_theme($mod_reference, &$module_params)
 	$smarty = TikiLib::lib('smarty');
 	$themelib = TikiLib::lib('theme');
 	
+	if (!isset($prefs['user_theme'])){
+		$prefs['user_theme'] = '';
+	}
+	if (!isset($prefs['user_theme_option'])){
+		$prefs['user_theme_option'] = '';
+	}
+	
 	//first lets get the current theme.
 	$current_theme = empty($tc_theme) ? $prefs['user_theme'] : $tc_theme;
 	$current_theme_option = empty($tc_theme_option) ? !empty($tc_theme) ? $prefs['user_theme_option'] : '' : $tc_theme_option;
