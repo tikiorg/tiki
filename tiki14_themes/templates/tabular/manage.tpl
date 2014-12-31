@@ -23,6 +23,7 @@
 				<td>{object_title type=tracker id=$row.trackerId}</td>
 				<td>
 					<a href="{service controller=tabular action=export_full_csv tabularId=$row.tabularId}">{icon name=export}{tr}Export{/tr}</a>
+					<a href="tiki-searchindex.php?tabularId={$row.tabularId|escape}&amp;filter~tracker_id={$row.trackerId|escape}">{icon name=search}{tr}Search{/tr}</a>
 					<a href="{bootstrap_modal controller=tabular action=import_csv tabularId=$row.tabularId}">{icon name=import}{tr}Import{/tr}</a>
 					<a class="text-danger" href="{bootstrap_modal controller=tabular action=delete tabularId=$row.tabularId}">{icon name=delete}<span class="sr-only">{tr}Delete{/tr}</span></a>
 				</td>

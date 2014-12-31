@@ -608,9 +608,7 @@
 							{/if}
 
 							{if ( $tiki_p_admin_forum eq 'y' or ($comments_coms[ix].userName == $user && $tiki_p_forum_post eq 'y') ) and $forum_info.is_locked neq 'y' and $comments_coms[ix].locked neq 'y'}
-								<a href="tiki-view_forum.php?openpost=1&amp;comments_threadId={$comments_coms[ix].threadId}&amp;forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;thread_sort_mode={$thread_sort_mode}&amp;comments_per_page={$comments_per_page}" class="admlink tips" title="{$comments_coms[ix].title|escape}:{tr}Edit topic{/tr}">
-									{icon name='edit'}
-								</a>
+								<a href="tiki-view_forum.php?openpost=1&amp;comments_threadId={$comments_coms[ix].threadId}&amp;forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;thread_sort_mode={$thread_sort_mode}&amp;comments_per_page={$comments_per_page}" class="admlink tips" title="{$comments_coms[ix].title|escape}:{tr}Edit topic{/tr}">{icon name='edit'}</a>
 							{/if}
 
 							{if $prefs.feature_forum_topics_archiving eq 'y' && $tiki_p_admin_forum eq 'y'}
@@ -805,7 +803,7 @@
 						success: function (data) {
 							$.closeModal({
 								done: function () {
-									$('table#{{$ts_tableid}}').refreshTableRows('table#{{$ts_tableid}}', form);
+									$('table#{{$ts_tableid}}').refreshTableRows(form);
 									if (! data.FORWARD) {
 										return false;
 									}
@@ -832,7 +830,7 @@
 							modal: 1
 						}),
 						open: function (form) {
-							$('table#{{$ts_tableid}}').refreshTableRows('table#{{$ts_tableid}}', form);
+							$('table#{{$ts_tableid}}').refreshTableRows(form);
 							setTimeout(function () {
 								$.closeModal({});
 							}, 5000);
@@ -845,14 +843,15 @@
 			}
 		});
 
-			$.fn.refreshTableRows = function (id, form) {
+			$.fn.refreshTableRows = function (form) {
+				var id = this.selector;
 				if ($(this).hasClass('tablesorter')) {
 					$(this).trigger('update');
 				} else {
 					$.ajax({
 						url: location,
 						dataType: 'html',
-						data: $(form).serialize(),
+						data: $(form).serialize() + 'tsAjax=y',
 						success: function (data) {
 							var parsedpage = $.parseHTML(data),
 							tbody = $(parsedpage).find(id + ' tbody');

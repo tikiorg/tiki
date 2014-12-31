@@ -67,6 +67,7 @@ class Services_Tracker_TabularController
 	{
 		$lib = TikiLib::lib('tabular');
 		$info = $lib->getInfo($input->tabularId->int());
+		$trackerId = $info['trackerId'];
 
 		Services_Exception_Denied::checkObject('tiki_p_admin_trackers', 'tracker', $trackerId);
 
@@ -137,6 +138,7 @@ class Services_Tracker_TabularController
 	{
 		$lib = TikiLib::lib('tabular');
 		$info = $lib->getInfo($input->tabularId->int());
+		$trackerId = $info['trackerId'];
 
 		Services_Exception_Denied::checkObject('tiki_p_admin_trackers', 'tracker', $trackerId);
 
@@ -150,10 +152,61 @@ class Services_Tracker_TabularController
 		exit;
 	}
 
+	function action_export_search_csv($input)
+	{
+		$lib = TikiLib::lib('tabular');
+		$trackerId = $input->trackerId->int();
+		$tabularId = $input->tabularId->int();
+		$conditions = array_filter([
+			'trackerId' => $trackerId,
+			'tabularId' => $tabularId,
+		]);
+
+		$formats = $lib->getList($conditions);
+
+		if ($tabularId) {
+			$info = $lib->getInfo($tabularId);
+			$schema = $this->getSchema($info);
+			$schema->validate();
+
+			$trackerId = $info['trackerId'];
+
+			Services_Exception_Denied::checkObject('tiki_p_admin_trackers', 'tracker', $trackerId);
+
+			$search = TikiLib::lib('unifiedsearch');
+			$query = $search->buildQuery($input->filter->none() ?: []);
+
+			// Force filters
+			$query->filterType('trackeritem');
+			$query->filterContent($trackerId, 'tracker_id');
+
+			$source = new \Tracker\Tabular\Source\QuerySource($schema, $query);
+			$writer = new \Tracker\Tabular\Writer\CsvWriter('php://output');
+			$writer->sendHeaders();
+			$writer->write($source);
+			exit;
+		} elseif (count($formats) === 0) {
+			throw new Services_Exception(tr('No formats available.'));
+		} else {
+			if ($trackerId) {
+				Services_Exception_Denied::checkObject('tiki_p_admin_trackers', 'tracker', $trackerId);
+			} else {
+				Services_Exception_Denied::checkGlobal('tiki_p_admin_trackers');
+			}
+
+			return [
+				'title' => tr('Select Format'),
+				'formats' => $formats,
+				'filters' => $input->filter->none(),
+			];
+		}
+	}
+
 	function action_import_csv($input)
 	{
 		$lib = TikiLib::lib('tabular');
 		$info = $lib->getInfo($input->tabularId->int());
+		$trackerId = $info['trackerId'];
 
 		Services_Exception_Denied::checkObject('tiki_p_admin_trackers', 'tracker', $trackerId);
 

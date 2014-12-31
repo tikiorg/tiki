@@ -45,12 +45,12 @@ class Table_Check
 	}
 
 	/**
-	 * Checks to see whether the file has been accessed through a tablesorter access call
+	 * Checks to see whether the file has been accessed through a tablesorter ajax call
 	 * @return bool
 	 */
 	static public function isAjaxCall()
 	{
-		if (isset($_GET['tsAjax']) && $_GET['tsAjax'] === 'y' && self::isEnabled(true)) {
+		if (isset($_GET['tsAjax']) && $_GET['tsAjax'] === 'y') {
 			return true;
 		} else {
 			return false;

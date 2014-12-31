@@ -19,7 +19,7 @@ if (!empty($re['usersTrackerId']) && !empty($re['registrationUsersFieldIds'])) {
 		'',
 		array(
 			'trackerId' => $re['usersTrackerId'],
-			'fields' => $re['registrationUsersFieldIds'],
+			'fields' => explode(':', $re['registrationUsersFieldIds']),
 			'showdesc' => 'y',
 			'showmandatory' => 'y',
 			'embedded' => 'y',

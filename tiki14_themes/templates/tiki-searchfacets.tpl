@@ -18,6 +18,37 @@
 		</div>
 		<input type="submit" class="btn btn-primary" value="{tr}Search{/tr}"/>
 
+		{if $prefs.tracker_tabular_enabled eq 'y' && ! empty($smarty.get.tabularId)}
+			<input type="hidden" name="tabularId" value="{$smarty.get.tabularId|escape}">
+			<button class="tabular-export btn btn-default">
+				{icon name=export} {tr}Export{/tr}
+			</button>
+			{jq}
+				$(document).on('click', '.tabular-export', function (e) {
+					var href = $.service('tabular', 'export_search_csv', {
+						tabularId: "{{$smarty.get.tabularId}}"
+					});
+					e.preventDefault();
+					document.location.href = href + '&' + $(this).closest('form').serialize();
+				});
+			{/jq}
+		{elseif $prefs.tracker_tabular_enabled eq 'y' && ! empty($filter.tracker_id)}
+			<button class="tabular-export btn btn-default">
+				{icon name=export} {tr}Export{/tr}
+			</button>
+			{jq}
+				$(document).on('click', '.tabular-export', function (e) {
+					var href = $.service('tabular', 'export_search_csv', {
+						trackerId: "{{$filter.tracker_id}}"
+					});
+					e.preventDefault();
+					$.openModal({
+						remote: href + '&' + $(this).closest('form').serialize()
+					});
+				});
+			{/jq}
+		{/if}
+
 		{if $prefs.storedsearch_enabled eq 'y' and $user}
 			<input type="hidden" name="storeAs" value=""/>
 			<a href="{service controller=search_stored action=select modal=true}" id="store-query" class="btn btn-default">{tr}Save Search{/tr}</a>
