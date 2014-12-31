@@ -227,10 +227,7 @@ class ThemeLib extends TikiLib
 			include("themes/{$theme_path}/icons/custom.php");
 			if (!empty($settings) and !empty($icons)) { //make sure the iconset file is constructed as expected
 				foreach ($icons as &$icon) { //apply settings for each icon
-					if (!empty($icon['tag'])) {
-						$icon['tag'] = $icon['tag'];
-					}
-					else {
+					if (empty($icon['tag'])) {
 						$icon['tag'] = $settings['icon_tag'];
 					}
 				}
@@ -244,10 +241,7 @@ class ThemeLib extends TikiLib
 			include("themes/{$theme_path}/icons/iconset.php");
 			if (!empty($settings) and !empty($icons)) { //make sure the iconset file is constructed as expected
 				foreach ($icons as &$icon) { //apply settings for each icon
-						if (!empty($icon['tag'])) {
-							$icon['tag'] = $icon['tag'];
-						}
-						else {
+						if (empty($icon['tag'])) {
 							$icon['tag'] = $settings['icon_tag'];
 						}
 				}
@@ -258,10 +252,7 @@ class ThemeLib extends TikiLib
 					include($settings['iconset_source']);
 					if (!empty($settings) and !empty($icons)) { //make sure the icon set file is constructed as expected
 						foreach ($icons as &$icon) { //apply settings for each icon
-							if (!empty($icon['tag'])) {
-								$icon['tag'] = $icon['tag'];
-							}
-							else {
+							if (empty($icon['tag'])) {
 								$icon['tag'] = $settings['icon_tag'];
 							}
 						}
@@ -276,10 +267,7 @@ class ThemeLib extends TikiLib
 				include("themes/base_files/iconsets/{$prefs['theme_iconset']}.php"); //load icon set info from preference setting
 				if (!empty($settings) and !empty($icons)) { //make sure the iconset file is constructed as expected
 					foreach ($icons as &$icon) { //apply settings for each icon
-						if (!empty($icon['tag'])) {
-							$icon['tag'] = $icon['tag'];
-						}
-						else {
+						if (empty($icon['tag'])) {
 							$icon['tag'] = $settings['icon_tag'];
 						}
 					}
@@ -293,10 +281,7 @@ class ThemeLib extends TikiLib
 		if(file_exists("themes/base_files/iconsets/default.php")) { 
 			include("themes/base_files/iconsets/default.php"); 
 			foreach ($icons as &$icon) { //apply settings for each icon
-				if (!empty($icon['tag'])) {
-					$icon['tag'] = $icon['tag'];
-				}
-				else {
+				if (empty($icon['tag'])) {
 					$icon['tag'] = $settings['icon_tag'];
 				}
 			}
