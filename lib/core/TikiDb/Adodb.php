@@ -56,6 +56,13 @@ class TikiDb_Adodb extends TikiDb
 			$this->handleQueryError($query, $values, $result, $reporterrors);
 		}
 
+		//Windows fix, if fields have a numeric key we remove it because we are expecting a string
+		foreach ($result->fields as $key => $value) {
+			if (is_int($key)) {
+				unset($result->fields[$key]);
+			}
+		}
+
 		global $num_queries;
 		$num_queries++;
 		$this->setQuery(null);
