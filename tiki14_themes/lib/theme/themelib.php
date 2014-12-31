@@ -40,10 +40,6 @@ class ThemeLib extends TikiLib
 	*/
 	function list_themes()
 	{
-		//prepare needed variables
-		global $tikidomain;
-		$themes = array();
-		
 		//get themes from the main themes directory
 		$themes = [
 			'default' => tr('Default Bootstrap'),
@@ -54,11 +50,9 @@ class ThemeLib extends TikiLib
 		//get multidomain themes
 		$theme_base_path = $this->get_theme_path();	// knows about $tikidomain
 		if ($theme_base_path) {
-			$multidomain_themes = $this->get_themes($theme_base_path);
+			$themes = array_unique(array_merge($themes, $this->get_themes($theme_base_path)));
 		}
-		if ($tikidomain) {
-			$themes = array_unique(array_merge($themes, $mutidomain_themes));
-		}
+
 		return $themes;
 	}
 
@@ -204,8 +198,11 @@ class ThemeLib extends TikiLib
 	*/
 	function list_base_iconsets()
 	{
+		$base_iconsets = [];
+
 		foreach (scandir('themes/base_files/iconsets') as $iconset_file) {
 			if ($iconset_file[0] != '.' && $iconset_file != 'index.php') {
+				global $settings;
 				include('themes/base_files/iconsets/'. $iconset_file);
 				$base_iconsets[substr($iconset_file,0,-4)] = $settings['iconset_name'];
 			}
