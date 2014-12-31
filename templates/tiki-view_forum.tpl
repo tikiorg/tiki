@@ -805,7 +805,7 @@
 						success: function (data) {
 							$.closeModal({
 								done: function () {
-									$('table#{{$ts_tableid}}').refreshTableRows('table#{{$ts_tableid}}', form);
+									$('table#{{$ts_tableid}}').refreshTableRows(form);
 									if (! data.FORWARD) {
 										return false;
 									}
@@ -832,7 +832,7 @@
 							modal: 1
 						}),
 						open: function (form) {
-							$('table#{{$ts_tableid}}').refreshTableRows('table#{{$ts_tableid}}', form);
+							$('table#{{$ts_tableid}}').refreshTableRows(form);
 							setTimeout(function () {
 								$.closeModal({});
 							}, 5000);
@@ -845,7 +845,8 @@
 			}
 		});
 
-			$.fn.refreshTableRows = function (id, form) {
+			$.fn.refreshTableRows = function (form) {
+				var id = this.selector;
 				if ($(this).hasClass('tablesorter')) {
 					$(this).trigger('update');
 				} else {
