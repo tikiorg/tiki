@@ -853,7 +853,7 @@
 					$.ajax({
 						url: location,
 						dataType: 'html',
-						data: $(form).serialize(),
+						data: $(form).serialize() + 'tsAjax=y',
 						success: function (data) {
 							var parsedpage = $.parseHTML(data),
 							tbody = $(parsedpage).find(id + ' tbody');
