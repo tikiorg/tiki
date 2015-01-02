@@ -41,7 +41,7 @@ function module_switch_theme($mod_reference, &$module_params)
 	if (!isset($prefs['user_theme_option'])){
 		$prefs['user_theme_option'] = '';
 	}
-	
+
 	//first lets get the current theme.
 	$current_theme = empty($tc_theme) ? $prefs['user_theme'] : $tc_theme;
 	$current_theme_option = empty($tc_theme_option) ? !empty($tc_theme) ? $prefs['user_theme_option'] : '' : $tc_theme_option;
@@ -50,21 +50,9 @@ function module_switch_theme($mod_reference, &$module_params)
 	$smarty->assign('current_theme', $current_theme);
 	$smarty->assign('current_theme_option', $current_theme_option);
 	
-	//get the list of available themes
-	$available_themes = array();
-	if (count($prefs['available_themes'] != 0) and !empty($prefs['available_themes'][0])) { //if pref['available_themes'] is set, than use it
-		$available_themes = array_combine($prefs['available_themes'],$prefs['available_themes']);
-	}
-	else {
-		$available_themes = $themelib->list_themes(); //else load all themes
-		unset($available_themes['custom_url']); //remove Custom URL from the list
-	}
-	
-	//collect options for the currently set theme
-	$available_theme_options = $themelib->list_theme_options($prefs['user_theme']);
-	
-	$smarty->assign('available_themes', $available_themes);
-	$smarty->assign('available_theme_options', $available_theme_options) ;
+	//get the list of available themes and options
+	$available_themesandoptions = $themelib->get_available_themesandoptions();
+	$smarty->assign('available_themesandoptions', $available_themesandoptions);
 
 	//themegenerator
 	if ($prefs['themegenerator_feature'] === 'y') {

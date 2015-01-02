@@ -70,11 +70,11 @@ $headerlib->add_jsfile('lib/jquery_tiki/tiki-bootstrapmodalfix.js');
 $prefs['jquery_ui_chosen_css'] = 'y'; //why?
 
 if ($prefs['feature_fixed_width'] === 'y') {
-    $headerlib->add_css(
-        '@media (min-width: 1200px) { .container { min-width:' .
-        (!empty($prefs['layout_fixed_width']) ? $prefs['layout_fixed_width'] : '1170px') .
-        '; } }'
-    );
+	$headerlib->add_css(
+		'@media (min-width: 1200px) { .container { min-width:' .
+		(!empty($prefs['layout_fixed_width']) ? $prefs['layout_fixed_width'] : '1170px') .
+		'; } }'
+	);
 }
 
 //2) Always add tiki_base.css. Add it first, so that it can be overriden in the custom themes
@@ -94,13 +94,7 @@ foreach (TikiAddons::getPaths() as $path) {
 $themelib = TikiLib::lib('theme');
 $theme_path = '';
 
-if (!isset($theme_active) or $theme_active == 'default') { //use default Bootstrap if theme_active is not set or set to default
-	$theme_path = 'themes/base_files/';
-	$headerlib->add_cssfile('vendor/twitter/bootstrap/dist/css/bootstrap.min.css');
-	$theme_path = $themelib->get_theme_path($theme_active, $theme_option_active, NULL); //get options if available
-	$headerlib->add_cssfile("{$theme_path}css/tiki.css"); //add option css
-} 
-elseif ($theme_active == 'custom_url' and file_exists($prefs['theme_custom_url'])) { //custom URL, use only if file exists at the custom location
+if ($theme_active == 'custom_url' and file_exists($prefs['theme_custom_url'])) { //custom URL, use only if file exists at the custom location
 	$custom_theme = $prefs['theme_custom_url'];
 	if (preg_match('/^(http(s)?:)?\/\//', $custom_theme)) { // Use external link if url begins with http://, https://, or // (auto http/https)
 		$headerlib->add_cssfile($custom_theme, 'external');
@@ -108,10 +102,17 @@ elseif ($theme_active == 'custom_url' and file_exists($prefs['theme_custom_url']
 		$headerlib->add_cssfile($custom_theme);
 	}
 } 
-else { //theme_active is not default and not custom URL theme than get the path to theme that is to be displayed
-	$theme_path = $themelib->get_theme_path($theme_active, $theme_option_active, NULL);
+else {
+	//first load the main theme css
+	$theme_path = $themelib->get_theme_path($theme_active, NULL, NULL);
 	$headerlib->add_cssfile("{$theme_path}css/tiki.css");
-	$prefs['jquery_ui_chosen_css'] = 'n'; //why?
+	//than load the theme option css file if needed
+	if (!empty($theme_option_active)){
+		$theme_path = $themelib->get_theme_path($theme_active, $theme_option_active, NULL);
+		$headerlib->add_cssfile("{$theme_path}css/tiki.css");
+	}
+	//this is a preTiki14 setting, not sure why it is necessary
+	$prefs['jquery_ui_chosen_css'] = 'n';
 }
 
 //6) Allow to have a IE specific CSS files for the theme's specific hacks

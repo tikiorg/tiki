@@ -12,7 +12,7 @@
 require_once ('tiki-setup.php');
 $access->check_script($_SERVER["SCRIPT_NAME"], basename(__FILE__));
 if ($prefs['feature_theme_control'] == 'y') {
-	//we arrive here after lib/setup/theme.php has finished, so $prefs['theme_active'] and $prefs['theme_active_option'] are already set. we want to overwrite with tc settings
+	//we arrive here after lib/setup/theme.php has finished, so $prefs['theme_active'] and $prefs['theme_active_option'] are already set. Here we want to overwrite them according to the theme control setting
 	// defined: $cat_type and cat_objid
 	// search for theme for $cat_type
 	// then search for theme for md5($cat_type.cat_objid)
@@ -33,20 +33,26 @@ if ($prefs['feature_theme_control'] == 'y') {
 	}
 
 	//Step 2: if at least tc_theme is not empty, than we have a setting, so continue
-	//var_dump($tc_theme);
 	if ($tc_theme) {
 		if ($prefs['feature_theme_control_savesession'] == 'y' && !empty($tc_theme_option)) {
 			$_SESSION['tc_theme'] = $tc_theme_option;
 		}
-		//DROP css files (added by lib/setup/theme.php) that became unnecessary now that we have tc_theme
-		$themesetup_path = $themelib->get_theme_path($prefs['theme_active'], $prefs['theme_option_active'], NULL);
-		$headerlib->drop_cssfile("{$themesetup_path}css/tiki.css");
-		$headerlib->drop_cssfile("{$themesetup_path}css/custom.css");
+		//DROP css files (theme, theme_option and custom.css) added by lib/setup/theme.php that became unnecessary now that we have tc_theme
+		$themesetup_path = $themelib->get_theme_path($prefs['theme_active'], NULL, NULL);
+		$headerlib->drop_cssfile("{$themesetup_path}css/tiki.css"); //drop main theme css
+		if (!empty($prefs['theme_option_active'])){
+			$themesetup_path = $themelib->get_theme_path($prefs['theme_active'], $prefs['theme_option_active'], NULL);
+			$headerlib->drop_cssfile("{$themesetup_path}css/tiki.css"); //drop option css
+		}
+		$headerlib->drop_cssfile("{$themesetup_path}css/custom.css"); //drop custom css
 		
 		//ADD new css files (theme, theme_option and custom.css)
-		$tc_theme_path = $themelib->get_theme_path($tc_theme , $tc_theme_option, NULL);
-		//var_dump($tc_theme_path);
+		$tc_theme_path = $themelib->get_theme_path($tc_theme , NULL, NULL);
 		$headerlib->add_cssfile("{$tc_theme_path}css/tiki.css");
+		if (!empty($tc_theme_option)){
+			$tc_theme_path = $themelib->get_theme_path($tc_theme, $tc_theme_option, NULL);
+			$headerlib->add_cssfile("{$theme_path}css/tiki.css");
+		}
 		$tc_custom_css = "{$tc_theme_path}css/custom.css";
 		if (is_readable($tc_custom_css)) {
 			$headerlib->add_cssfile($tc_custom_css, 53);
@@ -58,7 +64,6 @@ if ($prefs['feature_theme_control'] == 'y') {
 		$style_ie9_css = $themelib->get_theme_path($tc_theme, $tc_theme_option, 'ie9.css');
 
 		//RESET $theme_path global smarty variable
-		$tc_theme_path = $themelib->get_theme_path($tc_theme, $tc_theme_option);
 		$smarty->assign_by_ref('theme_path', $tc_theme_path);
 		
 		//RESET $iconset according to the new theme
@@ -69,6 +74,6 @@ if ($prefs['feature_theme_control'] == 'y') {
 		$prefs['theme_active'] = $tc_theme;
 		$prefs['theme_option_active'] = $tc_theme_option;
 		
-		//TODO: load custom templates
+		//TODO: get custom smarty templates (smarty.php already finished before tiki-tc.php started)
 	}
 }

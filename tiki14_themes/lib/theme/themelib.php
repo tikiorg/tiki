@@ -3,7 +3,7 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: tcontrol.php 52668 2014-09-29 19:06:57Z jyhem $
+// $Id: themelib.php $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
@@ -20,7 +20,7 @@ class ThemeLib extends TikiLib
 {
 
 	/* 
-	@return array of folder name in themes directory
+	@return array of folder names in themes directory
 	*/
 	function get_themes($theme_base_path = '')
 	{
@@ -30,8 +30,8 @@ class ThemeLib extends TikiLib
 			$theme = basename($css);
 			$themes[$theme] = tr($theme);
 		}
-		unset($themes['base_files']); //make sure base_files directory is removed
-		unset($themes['templates']); //make sure templates directory is removed
+		unset($themes['base_files']); //make sure base_files directory is removed from the array
+		unset($themes['templates']); //make sure templates directory is removed from the array
 		return $themes;
 	}
 
@@ -40,7 +40,7 @@ class ThemeLib extends TikiLib
 	*/
 	function list_themes()
 	{
-		//get themes from the main themes directory
+		//set special array values and get themes from the main themes directory
 		$themes = [
 			'default' => tr('Default Bootstrap'),
 			'custom_url' => tr('Custom theme by specifying URL'),
@@ -67,7 +67,6 @@ class ThemeLib extends TikiLib
 			$option = basename($css);
 			$options[$option] = tr($option);
 		}
-		
 		return $options;
 	}
 	
@@ -94,7 +93,8 @@ class ThemeLib extends TikiLib
 	*/
 	function list_themes_and_options()
 	{
-		$themes = $this->get_themes();
+		$themes = $this->list_themes();
+		unset($themes['custom_url']); //make sure Custom URL is removed from the list as it can not have options
 		foreach ($themes as $theme) {
 			$options = $this->list_theme_options($theme);
 			foreach ($options as $option) {
@@ -291,5 +291,22 @@ class ThemeLib extends TikiLib
 		unset($settings);
 		unset($icons);
 		return $iconset;
+	}
+	
+	/* get list of available themes and options 
+	@return array of available themes and options based on $prefs['available_themes'] setting. This function does not consider if change_theme is on or off.
+	*/
+	function get_available_themesandoptions()
+	{
+		global $prefs;
+		$available_themesandoptions = array();
+		if (count($prefs['available_themes'] != 0) and !empty($prefs['available_themes'][0])) { //if pref['available_themes'] is set, than use it
+			$available_themesandoptions = array_combine($prefs['available_themes'], $prefs['available_themes']);
+		}
+		else {
+			$available_themesandoptions = $this->list_themes_and_options(); //else load all themes and options
+			unset($available_themesandoptions['custom_url']); //make sure Custom URL is removed from the list
+		}
+		return $available_themesandoptions;
 	}
 }

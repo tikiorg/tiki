@@ -191,20 +191,15 @@
 					{/section}
 				</select>
 			</div>
-			{if $prefs.change_theme eq 'y' && empty($group_style)}
+			{if $prefs.change_theme eq 'y' && empty($group_theme)}
 				<div class="form-group">
-					<label class="control-label" for="myStyle">Theme</label>
-					<select id="myStyle" name="myStyle" class="form-control">
-						<option value="" {*style="font-style:italic;border-bottom:1px dashed #666;"*}>
-							{tr}Site default{/tr}
-						</option>
-						{section name=ix loop=$styles}
-							{if count($prefs.available_styles) == 0 || empty($prefs.available_styles[0]) || in_array($styles[ix], $prefs.available_styles)}
-								<option value="{$styles[ix]|escape}" {if $user_prefs.theme eq $styles[ix]}selected="selected"{/if}>
-									{$styles[ix]}
-								</option>
-							{/if}
-						{/section}
+					<label class="control-label" for="mytheme">Theme</label>
+					<select id="mytheme" name="mytheme" class="form-control">
+						{assign var="userwatch_themeoption" value="{$userwatch_theme}{if $userwatch_themeOption}/{$userwatch_themeOption}{/if}"}
+						<option value="" class="text-muted bg-info">{tr}Site theme{/tr} ({$prefs.theme_site}{if !empty($prefs.theme_option_site)}/{$prefs.theme_option_site}{/if})</option>
+						{foreach from=$available_themesandoptions key=theme item=theme_name}
+							<option value="{$theme|escape}" {if $userwatch_themeoption eq $theme}selected="selected"{/if}>{$theme_name|ucwords}</option>
+						{/foreach}
 					</select>
 					{if $prefs.feature_editcss eq 'y' and $tiki_p_create_css eq 'y'}
 						<a href="tiki-edit_css.php" class="link" title="{tr}Edit CSS{/tr}">{tr}Edit CSS{/tr}</a>
