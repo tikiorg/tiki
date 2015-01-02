@@ -47,11 +47,11 @@ if ($prefs['feature_theme_control'] == 'y') {
 		$headerlib->drop_cssfile("{$themesetup_path}css/custom.css"); //drop custom css
 		
 		//ADD new css files (theme, theme_option and custom.css)
-		$tc_theme_path = $themelib->get_theme_path($tc_theme , NULL, NULL);
+		$tc_theme_path = $themelib->get_theme_path($tc_theme, NULL, NULL);
 		$headerlib->add_cssfile("{$tc_theme_path}css/tiki.css");
 		if (!empty($tc_theme_option)){
 			$tc_theme_path = $themelib->get_theme_path($tc_theme, $tc_theme_option, NULL);
-			$headerlib->add_cssfile("{$theme_path}css/tiki.css");
+			$headerlib->add_cssfile("{$tc_theme_path}css/tiki.css");
 		}
 		$tc_custom_css = "{$tc_theme_path}css/custom.css";
 		if (is_readable($tc_custom_css)) {
