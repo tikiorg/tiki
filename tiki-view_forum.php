@@ -110,17 +110,6 @@ if ($tiki_p_admin_forum == 'y') {
 			$commentslib->unarchive_thread($_REQUEST['comments_parentId']);
 		}
 	}
-
-	if (isset($_REQUEST['delsel_x']) && isset($_REQUEST['forumtopic']) && is_array($_REQUEST['forumtopic'])) {
-		$access->check_authenticity(tra('Are you sure you want to remove these posts?'));
-		foreach ($_REQUEST['forumtopic'] as $topicId) {
-			if (is_numeric($topicId)) {
-				$commentslib->remove_comment($topicId);
-			}
-		}
-		$commentslib->forum_prune($_REQUEST['forumId']);
-	}
-
 }
 
 $smarty->assign_by_ref('forum_info', $forum_info);

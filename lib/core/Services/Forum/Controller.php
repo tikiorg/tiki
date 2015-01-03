@@ -106,7 +106,93 @@ class Services_Forum_Controller
 	}
 
 	/**
-	 * Used by action_merge_topic and action_move_topic functions to give success feedback
+	 * Moderator action to delete one or more topics
+	 *
+	 * @param $input
+	 * @return array
+	 * @throws Exception
+	 */
+	function action_delete_topic($input)
+	{
+		$access = TikiLib::lib('access');
+		$check = $access->check_authenticity(null, false);
+		if (!empty($check['ticket'])) {
+			parse_str($input->offsetGet('form'), $form);
+			//check number of topics on first pass
+			if (count($form['forumtopic']) > 0) {
+				$items = $this->getTopicTitles($form['forumtopic']);
+				return [
+					'FORWARD' => [
+						'controller' => 'access',
+						'action' => 'confirm',
+						'title' => tra('Please confirm deletion'),
+						'confirmAction' => 'tiki-forum-delete_topic',
+						'customVerb' => tra('delete'),
+						'customObject' => tra('forum topics'),
+						'items' => $items,
+						'ticket' => $check['ticket'],
+						'extra' => ['forumId' => $form['forumId']],
+						'modal' => '1',
+					]
+				];
+			} else {
+				//oops if no topics were selected
+				return [
+					'FORWARD' => [
+						'controller' => 'utilities',
+						'action' => 'alert',
+						'type' => 'warning',
+						'title' => tra('Topic delete feedback'),
+						'heading' => tra('Oops'),
+						'msg' => tra('No topics were selected. Please select the topics you wish to delete and then click the delete button.'),
+						'modal' => '1'
+					]
+				];
+			}
+		} elseif ($check === true && count($_POST['items']) > 0) {
+			$commentslib = TikiLib::lib('comments');
+			$items = $input->asArray('items');
+			foreach ($items as $id => $name) {
+				if (is_numeric($id)) {
+					$commentslib->remove_comment($id);
+				}
+			}
+			$commentslib->forum_prune((int) $input->extra['forumId']);
+			if (count($items) == 1) {
+				$msg = tra('The following topic has been deleted:');
+			} else {
+				$msg = tra('The following topics have been deleted:');
+			}
+			return [
+				'FORWARD' => [
+					'controller' => 'utilities',
+					'action' => 'alert',
+					'type' => 'feedback',
+					'title' => tra('Topic delete feedback'),
+					'heading' => tra('Success'),
+					'items' => $items,
+					'msg' => $msg,
+					'timeoutMsg' => tra('This popup will automatically close in 5 seconds.'),
+					'modal' => '1'
+				]
+			];
+		} elseif ($check === false) {
+			return [
+				'FORWARD' => [
+					'controller' => 'utilities',
+					'action' => 'alert',
+					'type' => 'error',
+					'title' => tra('Topic delete feedback'),
+					'heading' => tra('Error'),
+					'msg' => tra('Sea Surfing (CSRF) detected. Operation blocked.'),
+					'modal' => '1'
+				]
+			];
+		}
+	}
+
+	/**
+	 * Used by action functions to give success feedback
 	 * @param $input
 	 * @return array
 	 */
@@ -118,9 +204,20 @@ class Services_Forum_Controller
 			'toName' => $input->toName->striptags(),
 			'selectedTopics' => $input->selectedTopics->striptags(),
 			'type' => $input->type->word(),
+			'modal' => '1'
 		];
 		if ($ret['type'] === 'move') {
-			$ret['forumName'] = $input->forumName->word();
+			$ret['forumName'] = $input->forumName->striptags();
+		}
+		return $ret;
+	}
+
+	private function getTopicTitles($topicIds)
+	{
+		$commentslib = TikiLib::lib('comments');
+		foreach ($topicIds as $id) {
+			$info = $commentslib->get_comment($id);
+			$ret[(int) $id] = $info['title'];
 		}
 		return $ret;
 	}
@@ -143,10 +240,8 @@ class Services_Forum_Controller
 		}
 		if ($i === 1) {
 			parse_str($input->form->none(), $form);
-			if ($type === 'move') {
-				$ret['forumId'] = $form['forumId'];
-			}
-			if (!in_array($type, ['lock', 'unlock'])) {
+			$ret['forumId'] = $form['forumId'];
+			if (!in_array($type, ['lock', 'unlock', 'delete'])) {
 				$ret['toList'] = json_decode($form[$toListLabel], true);
 			}
 			if ($type === 'move') {
@@ -155,22 +250,29 @@ class Services_Forum_Controller
 			$commentslib = TikiLib::lib('comments');
 			foreach ($form['forumtopic'] as $id) {
 				$info = $commentslib->get_comment($id);
-				$ret['selectedTopics'][$id] = $info['title'];
+				$ret['selectedTopics'][(int) $id] = $info['title'];
 			}
 			$ret['type'] = $type;
 			return $ret;
 		} else {
-			if ($type === 'move') {
+			if ($type === 'delete_topic') {
+				$index = 'items';
+			} else {
+				$index = 'forumtopic';
+			}
+			$ret['selectedTopics'] = json_decode($input->$index->striptags(), true);
+			$ret['type'] = $type;
+			if ($type === 'move' || $type === 'delete') {
 				$ret['forumId'] = $input->forumId->int();
 			}
-			$toList = json_decode($input->toList->striptags(), true);
-			if ($type === 'move') {
-				$ret['forumName'] = $toList[$ret['forumId']];
+			if ($type !== 'delete_topic') {
+				$toList = json_decode($input->toList->striptags(), true);
+				if ($type === 'move') {
+					$ret['forumName'] = $toList[$ret['forumId']];
+				}
+				$ret['toId'] = $input->toId->int();
+				$ret['toName'] = $toList[$ret['toId']];
 			}
-			$ret['selectedTopics'] = json_decode($input->forumtopic->striptags(), true);
-			$ret['toId'] = $input->toId->int();
-			$ret['toName'] = $toList[$ret['toId']];
-			$ret['type'] = $type;
 			return $ret;
 		}
 	}

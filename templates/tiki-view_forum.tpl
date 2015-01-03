@@ -410,8 +410,10 @@
 						<button name="mod_action" type="button" value="unlock_topic" class="btn btn-default btn-sm tips" title=":{tr}Unlock selected topics{/tr}">
 							{icon name="unlock"}
 						</button>
+						<button name="mod_action" type="button" value="delete_topic" class="btn btn-default btn-sm tips" title=":{tr}Delete selected topics{/tr}">
+							{icon name="remove"}
+						</button>
 					{/if}
-					<input type="image" name="delsel" src="img/icons/cross.png" alt="{tr}Delete{/tr}" title="{tr}Delete Selected Topics{/tr}">
 				</div>
 				<div style="text-align:right;width:40%;float:right" >
 					{if $reported > 0}
@@ -793,10 +795,10 @@
 	{/jq}
 	{jq}
 		$('[name="mod_action"]').click(function () {
-			var action = $(this).val(), choices = ['merge_topic', 'move_topic', 'lock_topic', 'unlock_topic'];
+			var action = $(this).val(), choices = ['merge_topic', 'move_topic', 'lock_topic', 'unlock_topic', 'delete_topic'];
 			if ($.inArray(action, choices) > -1) {
-				if ($.inArray(action, ['merge_topic', 'move_topic']) > -1) {
-					var form = $(this).closest('form').serialize();
+				if ($.inArray(action, ['merge_topic', 'move_topic', 'delete_topic']) > -1) {
+					var form = $(this).closest('form').serialize(),
 					href = $.service('forum', action, {form: form, modal: 1});
 					$(this).attr('href', href);
 					var handler = $.clickModal({

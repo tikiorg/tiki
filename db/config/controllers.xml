@@ -8,6 +8,7 @@
 
 	-->
 	<services>
+		<service id="tiki.controller.access" class="Services_Access_Controller"/>
 		<service id="tiki.controller.activitystream" class="Services_ActivityStream_Controller"/>
 		<service id="tiki.controller.article" class="Services_Article_Controller"/>
 		<service id="tiki.controller.auth_source" class="Services_AuthSource_Controller"/>
@@ -55,6 +56,7 @@
 		<service id="tiki.controller.translation" class="Services_Language_TranslationController"/>
 		<service id="tiki.controller.user" class="Services_User_Controller"/>
 		<service id="tiki.controller.user_conditions" class="Services_User_ConditionsController"/>
+		<service id="tiki.controller.utilities" class="Services_Utilities_Controller"/>
 		<service id="tiki.controller.vimeo" class="Services_File_VimeoController"/>
 		<service id="tiki.controller.wiki" class="Services_Wiki_Controller"/>
 		<service id="tiki.controller.workspace" class="Services_Workspace_Controller"/>
