@@ -832,10 +832,12 @@
 							modal: 1
 						}),
 						open: function (form) {
-							$('table#{{$ts_tableid}}').refreshTableRows(form);
-							setTimeout(function () {
-								$.closeModal({});
-							}, 5000);
+							if ($('div.modal-body div').hasClass('alert-success')) {
+								$('table#{{$ts_tableid}}').refreshTableRows(form);
+								setTimeout(function () {
+									$.closeModal({});
+								}, 5000);
+							}
 						},
 					});
 					return false;
