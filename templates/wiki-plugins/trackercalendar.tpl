@@ -45,10 +45,10 @@
 			dayNames: ["{tr}Sunday{/tr}", "{tr}Monday{/tr}", "{tr}Tuesday{/tr}", "{tr}Wednesday{/tr}", "{tr}Thursday{/tr}", "{tr}Friday{/tr}", "{tr}Saturday{/tr}"],
 			dayNamesShort: ["{tr}Sun{/tr}", "{tr}Mon{/tr}", "{tr}Tue{/tr}", "{tr}Wed{/tr}", "{tr}Thu{/tr}", "{tr}Fri{/tr}", "{tr}Sat{/tr}"],
 			buttonText: {
-				today:    "{tr}today{/tr}",
-				month:    "{tr}month{/tr}",
-				week:     "{tr}week{/tr}",
-				day:      "{tr}day{/tr}"
+				today: "{tr}today{/tr}",
+				month: "{tr}month{/tr}",
+				week: "{tr}week{/tr}",
+				day: "{tr}day{/tr}"
 			},
 			allDayText: "{tr}all-day{/tr}",
 			firstDay: data.firstDayofWeek,
