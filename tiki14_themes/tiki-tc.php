@@ -63,8 +63,9 @@ if ($prefs['feature_theme_control'] == 'y') {
 		$style_ie8_css = $themelib->get_theme_path($tc_theme, $tc_theme_option, 'ie8.css');
 		$style_ie9_css = $themelib->get_theme_path($tc_theme, $tc_theme_option, 'ie9.css');
 
-		//RESET $theme_path global smarty variable
-		$smarty->assign_by_ref('theme_path', $tc_theme_path);
+		//RESET $theme_path global variable
+		$theme_path = $tc_theme_path;
+		$smarty->assign_by_ref('theme_path', $theme_path);
 		
 		//RESET $iconset according to the new theme
 		$iconset = $themelib->get_iconset($tc_theme, $tc_theme_option);
@@ -73,7 +74,5 @@ if ($prefs['feature_theme_control'] == 'y') {
 		//RESET $theme_active prefs
 		$prefs['theme_active'] = $tc_theme;
 		$prefs['theme_option_active'] = $tc_theme_option;
-		
-		//TODO: get custom smarty templates (smarty.php already finished before tiki-tc.php started)
 	}
 }
