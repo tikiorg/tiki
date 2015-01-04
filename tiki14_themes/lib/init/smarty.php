@@ -276,6 +276,13 @@ class Smarty_Tiki extends Smarty
 			if (file_exists("$theme_path/templates/$_smarty_tpl_file")) { //first try theme specific template. $theme_path knows about tikidomain
 				$_smarty_tpl_file = "$theme_path/templates/$_smarty_tpl_file";
 			}
+			elseif (!empty($prefs['theme_option_active'])) { //next try: in case theme options try template for the main theme
+				$themelib = TikiLib::lib('theme');
+				$main_theme_path = $themelib->get_theme_path($prefs['theme_active'], NULL, NULL);
+				if(file_exists("$main_theme_path/templates/$_smarty_tpl_file")) {  
+					$_smarty_tpl_file = "$main_theme_path/templates/$_smarty_tpl_file";
+				}
+			}
 			elseif ($tikidomain and file_exists("themes/$tikidomain/themes/templates/$_smarty_tpl_file")) { //next try: template for all themes in the domain 
 				$_smarty_tpl_file = "themes/$tikidomain/themes/templates/$_smarty_tpl_file";
 			}
@@ -468,7 +475,10 @@ class Smarty_Tiki extends Smarty
 		if (empty($theme_path) && class_exists('ThemeLib')) {	// ThemeLib doesn't exist in the installer
 			$themelib = TikiLib::lib('theme');
 			if (method_exists($themelib, "get_theme_path")) {
-				$theme_path = TikiLib::lib('theme')->get_theme_path($prefs['theme_active'], $prefs['theme_option_active'] , NULL);
+				$theme_path = $themelib->get_theme_path($prefs['theme_active'], $prefs['theme_option_active'], NULL);
+				if(!empty($prefs['theme_option_active'])) {
+					$main_theme_path = $themelib->get_theme_path($prefs['theme_active'], NULL , NULL); //to have the path to the main theme for options
+				}
 			}
 		}
 
@@ -502,6 +512,9 @@ class Smarty_Tiki extends Smarty
 		//Theme templates
 		if ($theme_active) {
 			$this->addTemplateDir(TIKI_PATH . "/$theme_path/templates/"); //This dir stores templates for one theme, knows about tikidomain
+			if (!empty($theme_option_active)) {
+				$this->addTemplateDir(TIKI_PATH . "/$main_theme_path/templates/"); //Add the main theme's template dir for options
+			}
 			$this->addTemplateDir(TIKI_PATH . "/themes/templates/"); //This dir stores templates for all the themes
 		}
 		
