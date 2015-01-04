@@ -15,31 +15,31 @@
 		{/if}
 		{if $tiki_p_admin_forum eq 'y'
 			|| ( $comment.userName == $user && $tiki_p_forum_edit_own_posts eq 'y' )}
-		<a title="{tr}Edit{/tr}"
+		<a title=":{tr}Edit{/tr}"
 			{if $first eq 'y'}
-			class="admlink btn btn-default btn-small" href="tiki-view_forum.php?comments_offset={$smarty.request.topics_offset}{if isset($thread_sort_mode_param)}{$thread_sort_mode_param}{/if}&amp;comments_threshold={$smarty.request.topics_threshold}{if isset($comments_find_param)}{$comments_find_param}{/if}&amp;comments_threadId={$comment.threadId}&amp;openpost=1&amp;forumId={$forum_info.forumId}{if isset($comments_per_page_param)}{$comments_per_page_param}{/if}"
+			class="admlink btn btn-link btn-sm tips" href="tiki-view_forum.php?comments_offset={$smarty.request.topics_offset}{if isset($thread_sort_mode_param)}{$thread_sort_mode_param}{/if}&amp;comments_threshold={$smarty.request.topics_threshold}{if isset($comments_find_param)}{$comments_find_param}{/if}&amp;comments_threadId={$comment.threadId}&amp;openpost=1&amp;forumId={$forum_info.forumId}{if isset($comments_per_page_param)}{$comments_per_page_param}{/if}"
 			{else}
-			class="link btn btn-default btn-small" href="{$comments_complete_father}comments_threadId={$comment.threadId}&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;thread_sort_mode={$thread_sort_mode}&amp;comments_per_page={$comments_per_page}&amp;comments_parentId={$comments_parentId}&amp;thread_style={$thread_style}&amp;edit_reply=1#form"
+			class="link btn btn-link btn-sm tips" href="{$comments_complete_father}comments_threadId={$comment.threadId}&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;thread_sort_mode={$thread_sort_mode}&amp;comments_per_page={$comments_per_page}&amp;comments_parentId={$comments_parentId}&amp;thread_style={$thread_style}&amp;edit_reply=1#form"
 			{/if}
 		>{icon name="edit"}</a>
 		{/if}
 
 		{if $tiki_p_admin_forum eq 'y'}
-		<a title="{tr}Delete{/tr}"
+		<a title=":{tr}Delete{/tr}"
 			{if $first eq 'y'}
-			class="admlink btn btn-default btn-small" href="tiki-view_forum.php?comments_offset={$smarty.request.topics_offset}{if isset($thread_sort_mode_param)}{$thread_sort_mode_param}{/if}&amp;comments_threshold={$smarty.request.topics_threshold}{if isset($comments_find_param)}{$comments_find_param}{/if}&amp;comments_remove=1&amp;comments_threadId={$comment.threadId}&amp;forumId={$forum_info.forumId}{if isset($comments_per_page_param)}{$comments_per_page_param}{/if}"
+			class="admlink btn btn-link btn-sm tips" href="tiki-view_forum.php?comments_offset={$smarty.request.topics_offset}{if isset($thread_sort_mode_param)}{$thread_sort_mode_param}{/if}&amp;comments_threshold={$smarty.request.topics_threshold}{if isset($comments_find_param)}{$comments_find_param}{/if}&amp;comments_remove=1&amp;comments_threadId={$comment.threadId}&amp;forumId={$forum_info.forumId}{if isset($comments_per_page_param)}{$comments_per_page_param}{/if}"
 			{else}
-			class="link btn btn-default btn-small" href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;comments_threadId={$comment.threadId}&amp;comments_remove=1&amp;comments_offset={$comments_offset}&amp;thread_sort_mode={$thread_sort_mode}&amp;comments_per_page={$comments_per_page}&amp;comments_parentId={$comments_parentId}&amp;thread_style={$thread_style}"
+			class="link btn btn-link btn-sm tips" href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;comments_threadId={$comment.threadId}&amp;comments_remove=1&amp;comments_offset={$comments_offset}&amp;thread_sort_mode={$thread_sort_mode}&amp;comments_per_page={$comments_per_page}&amp;comments_parentId={$comments_parentId}&amp;thread_style={$thread_style}"
 			{/if}
 		>{icon name="delete"}</a>
 		{/if}
 
 		{if $tiki_p_forums_report eq 'y'}
-			{self_link report=$comment.threadId _icon='delete' _class="btn btn-default btn-small" _alt="{tr}Report this post{/tr}" _title="{tr}Report this post{/tr}"}{/self_link}
+			{self_link report=$comment.threadId _icon='delete' _class="btn btn-link btn-sm tips" _alt="{tr}Report this post{/tr}" _title=":{tr}Report this post{/tr}"}{/self_link}
 		{/if}
 
 		{if $user and $prefs.feature_notepad eq 'y' and $tiki_p_notepad eq 'y' and $forumId}
-			{self_link savenotepad=$comment.threadId _icon='disk' _class="btn btn-default btn-small" _alt="{tr}Save to notepad{/tr}" _title="{tr}Save to notepad{/tr}"}{/self_link}
+			{self_link savenotepad=$comment.threadId _icon='disk' _class="btn btn-link btn-sm tips" _alt="{tr}Save to notepad{/tr}" _title=":{tr}Save to notepad{/tr}"}{/self_link}
 		{/if}
 
 		{if $user and $prefs.feature_user_watches eq 'y' and $display eq ''}
