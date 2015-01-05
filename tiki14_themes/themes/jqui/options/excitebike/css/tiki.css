@@ -1,10 +1,9 @@
 /* $Id: excitebike.css 51909 2014-07-11 14:05:35Z jonnybradley $
 	Jqui theme (jqui.css), Excite Bike theme option (excitebike.css)
-	for Tikiwiki CMS/Groupware.
+	for Tiki Wiki CMS Groupware.
 	Visit http://themes.tiki.org for more information.
 	(This file was edited directly, not produced by the Less pre-compiler; there's no excitebike.less, yet.)
 */
-@import url(../../../css/tiki.css);
 
 html {
 	background: #fff;

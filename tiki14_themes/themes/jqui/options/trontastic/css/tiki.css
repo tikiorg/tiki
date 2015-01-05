@@ -1,12 +1,9 @@
 /* $Id: trontastic.css 52247 2014-08-05 17:15:54Z jonnybradley $
-	Jqui theme (jqui.css), Trontastic theme option (trontastic.css)
+	Jqui theme, Trontastic theme option.
 	for Tiki Wiki CMS Groupware.
 	Visit http://themes.tiki.org for more information.
-	(This file was edited directly, not produced by the Less pre-compiler; there's no trontastic.less, yet.)
+	(This file was edited directly, not produced by the Less pre-compiler.)
 */
-@import url(../../../css/tiki.css);
-
-
 
 html {
 	background: #1e1e1e;

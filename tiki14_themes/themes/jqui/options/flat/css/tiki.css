@@ -1,12 +1,10 @@
 /* $Id: flat.css 51909 2014-07-11 14:05:35Z jonnybradley $
 	Jqui theme (jqui.css), Flat theme option (flat.css)
-	for Tiki Wiki CMS/Groupware.
+	for Tiki Wiki CMS Groupware.
 	Thanks to garkpit for the random name.
 	Visit http://themes.tiki.org for more information.
 	(This file was edited directly, not produced by the Less pre-compiler.)
 */
-
-@import url(../../../css/tiki.css);
 
 .btn,
 .btn-default,

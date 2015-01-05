@@ -1,10 +1,9 @@
 /* $Id: horizons.css 51909 2014-07-11 14:05:35Z jonnybradley $
 	Jqui theme (jqui.css), Horizons theme option (horizons.css)
-	for Tiki Wiki CMS/Groupware.
+	for Tiki Wiki CMS Groupware.
 	Visit http://themes.tiki.org for more information.
+	(This file was edited directly, not produced by the Less pre-compiler.)
 */
-
-@import url(../../../css/tiki.css);
 
 #col2 a, #col2 a:visited, #col3 a, #col3 a:visited {
 	color: #000;
