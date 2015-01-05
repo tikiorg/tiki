@@ -13,7 +13,7 @@
 {/if}
 {$mail_machine_raw}/tiki-index.php?page={$mail_page|escape:"url"}
 
-{if $mail_action eq 'edit'}{tr}You can view a diff back to the previous version by following this link:{/tr} {* Using the full diff syntax so the links are still valid, even after a new version has been made.  -rlpowell *}
+{if $mail_action eq 'edit'}{tr}You can view a diff back to the previous version by following this link:{/tr} {* Using the full diff syntax so the links are still valid, even after a new version has been made. -rlpowell *}
 {$mail_machine_raw}/tiki-pagehistory.php?page={$mail_page|escape:"url"}&compare=1&oldver={$mail_oldver}&newver={$mail_newver}
 {elseif $mail_action eq 'attach'}{$mail_data} : {$mail_machine_raw}/tiki-download_wiki_attachment.php?attId={$mail_attId}
 {/if}

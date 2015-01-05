@@ -1,2 +1,2 @@
 <div id="tiki-clean">
-  <div  id="tiki-mid">
+	<div id="tiki-mid">
