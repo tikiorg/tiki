@@ -16,6 +16,7 @@ class TikiDb_Adodb extends TikiDb
 		}
 
 		$this->db=$db;
+		$this->db->SetFetchMode(ADODB_FETCH_ASSOC);
 	} // }}}
 
 	function __destruct() // {{{
@@ -54,13 +55,6 @@ class TikiDb_Adodb extends TikiDb
 			$this->setErrorMessage($this->db->ErrorMsg());
 
 			$this->handleQueryError($query, $values, $result, $reporterrors);
-		}
-
-		//Windows fix, if fields have a numeric key we remove it because we are expecting a string
-		foreach ($result->fields as $key => $value) {
-			if (is_int($key)) {
-				unset($result->fields[$key]);
-			}
 		}
 
 		global $num_queries;
