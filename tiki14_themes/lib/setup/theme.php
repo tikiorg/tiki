@@ -56,9 +56,9 @@ if (!empty($prefs['theme_admin']) && ($section === 'admin' || empty($section))) 
 	$prefs['themegenerator_theme'] = '';												// and disable theme generator
 }
 	
-//consider Edit CSS (tiki-edit_css) -> TODO 
-if ( isset($_SESSION['try_theme']) ) {
-	$theme_active = $_SESSION['try_theme'];
+//consider CSS Editor (tiki-edit_css.php) 
+if (!empty($_SESSION['try_theme'])) {
+	list($theme_active, $theme_option_active) = $themelib->extract_theme_and_option($_SESSION['try_theme']);
 }
 
 //START loading theme related items
@@ -119,7 +119,14 @@ else {
 $style_ie8_css = $themelib->get_theme_path($theme_active, $theme_option_active, 'ie8.css');
 $style_ie9_css = $themelib->get_theme_path($theme_active, $theme_option_active, 'ie9.css');
 
-//7) include optional "custom" cascading stylesheet if there
+//7) include optional custom.css if there. In case of theme option, first include main theme's custom.css, than the option's custom.css
+if(!empty($theme_option_active)) {
+	$main_theme_path = $themelib->get_theme_path($theme_active, NULL, NULL);
+	$main_theme_custom_css = "{$main_theme_path}css/custom.css";
+	if (is_readable($main_theme_custom_css)) {
+		$headerlib->add_cssfile($main_theme_custom_css, 53);
+	}
+}
 $custom_css = "{$theme_path}css/custom.css";
 if (is_readable($custom_css)) {
 	$headerlib->add_cssfile($custom_css, 53);

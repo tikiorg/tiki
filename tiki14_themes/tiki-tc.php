@@ -40,20 +40,28 @@ if ($prefs['feature_theme_control'] == 'y') {
 		//DROP css files (theme, theme_option and custom.css) added by lib/setup/theme.php that became unnecessary now that we have tc_theme
 		$themesetup_path = $themelib->get_theme_path($prefs['theme_active'], NULL, NULL);
 		$headerlib->drop_cssfile("{$themesetup_path}css/tiki.css"); //drop main theme css
+		$headerlib->drop_cssfile("{$themesetup_path}css/custom.css"); //drop main theme custom css
 		if (!empty($prefs['theme_option_active'])){
 			$themesetup_path = $themelib->get_theme_path($prefs['theme_active'], $prefs['theme_option_active'], NULL);
 			$headerlib->drop_cssfile("{$themesetup_path}css/tiki.css"); //drop option css
+			$headerlib->drop_cssfile("{$themesetup_path}css/custom.css"); //drop option custom css
 		}
-		$headerlib->drop_cssfile("{$themesetup_path}css/custom.css"); //drop custom css
 		
 		//ADD new css files (theme, theme_option and custom.css)
 		$tc_theme_path = $themelib->get_theme_path($tc_theme, NULL, NULL);
-		$headerlib->add_cssfile("{$tc_theme_path}css/tiki.css");
-		if (!empty($tc_theme_option)){
+		$headerlib->add_cssfile("{$tc_theme_path}css/tiki.css"); //add main theme css
+		if (!empty($tc_theme_option)){ //add theme option css
 			$tc_theme_path = $themelib->get_theme_path($tc_theme, $tc_theme_option, NULL);
 			$headerlib->add_cssfile("{$tc_theme_path}css/tiki.css");
 		}
-		$tc_custom_css = "{$tc_theme_path}css/custom.css";
+		if (!empty($tc_theme_option)){ //add main theme custom css in case of theme option
+			$tc_main_theme_path = $themelib->get_theme_path($tc_theme, NULL, NULL);
+			$tc_main_custom_css = "{$tc_main_theme_path}css/custom.css";
+			if (is_readable($tc_main_custom_css)) {
+				$headerlib->add_cssfile($tc_main_custom_css, 53);
+			}
+		}
+		$tc_custom_css = "{$tc_theme_path}css/custom.css"; //add custom css (can be a main theme or theme option)
 		if (is_readable($tc_custom_css)) {
 			$headerlib->add_cssfile($tc_custom_css, 53);
 		}
