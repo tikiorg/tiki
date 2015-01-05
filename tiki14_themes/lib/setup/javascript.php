@@ -62,11 +62,11 @@ if ($prefs['javascript_enabled'] == 'y') {	// we have JavaScript
 
 	/** Use custom.js in themes or options dir if there **/
 	$themelib = TikiLib::lib('theme');
-	$custom_js = $themelib->get_theme_path($prefs['theme_active'], isset($prefs['theme_option_active']), 'custom.js');
+	$custom_js = $themelib->get_theme_path($prefs['theme_site'], $prefs['theme_option_site'], 'custom.js');
 	if (!empty($custom_js)) {
 		$headerlib->add_jsfile($custom_js, 50);
 	} else {															// there's no custom.js in the current theme or option
-		$custom_js = $themelib->get_theme_path('', '', 'custom.js');		// so use one in the root of /theme if there
+		$custom_js = $themelib->get_theme_path('', '', 'custom.js');		// so use one in the root of /themes if there
 		if (!empty($custom_js)) {
 			$headerlib->add_jsfile($custom_js, 50);
 		}
