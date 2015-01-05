@@ -46,6 +46,22 @@ class Services_ActivityStream_ManageController
 		);
 	}
 
+	function action_deleteactivity(JitRequest $request)
+	{
+		$id = $request->activityId->int();
+
+		$removed = false;
+		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+			$this->lib->deleteActivity($id);
+			$removed = true;
+		}
+
+		return array(
+			'removed' => $removed,
+			'activityId' => $id,
+		);
+	} 
+
 	function action_sample(JitFilter $request)
 	{
 		$id = $request->ruleId->int();

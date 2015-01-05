@@ -67,6 +67,17 @@ class ActivityLib
 		);
 	}
 
+	function deleteActivity($id)
+	{
+		$info = $this->streamTable()->delete(
+			array(
+				'activityId' => $id,
+			)
+		);
+		require_once 'lib/search/refresh-functions.php';
+		refresh_index('activity', $id);
+	}
+
 	function preserveRules(array $ids)
 	{
 		$table = $this->rulesTable();
