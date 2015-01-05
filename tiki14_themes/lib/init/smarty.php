@@ -490,7 +490,12 @@ class Smarty_Tiki extends Smarty
 		if (isset($prefs['theme_active']) && ! in_array($prefs['theme_active'], ['custom_url'])) {
 			$theme_active = $prefs['theme_active'];
 		}
-
+		
+		$theme_option_active = null;
+		if(isset($prefs['theme_option_active'])) {
+			$theme_option_active = $prefs['theme_option_active'];
+		}
+		
 		if (empty($prefs['site_layout'])) {
 			$prefs['site_layout'] = 'classic';
 		}
@@ -513,6 +518,8 @@ class Smarty_Tiki extends Smarty
 		if ($theme_active) {
 			$this->addTemplateDir(TIKI_PATH . "/$theme_path/templates/"); //This dir stores templates for one theme, knows about tikidomain
 			if (!empty($theme_option_active)) {
+				$themelib = TikiLib::lib('theme');
+				$main_theme_path = $themelib->get_theme_path($prefs['theme_active'], NULL , NULL); //to have the path to the main theme for options
 				$this->addTemplateDir(TIKI_PATH . "/$main_theme_path/templates/"); //Add the main theme's template dir for options
 			}
 			$this->addTemplateDir(TIKI_PATH . "/themes/templates/"); //This dir stores templates for all the themes
