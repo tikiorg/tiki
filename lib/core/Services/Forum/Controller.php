@@ -47,11 +47,11 @@ class Services_Forum_Controller
 		$access = TikiLib::lib('access');
 		$check = $access->check_authenticity(null, false);
 		if (!empty($check['ticket'])) {
-			parse_str($input->offsetGet('form'), $form);
+			parse_str($input->offsetGet('params'), $params);
 			//check number of topics on first pass
-			if (count($form['forumtopic']) > 0) {
-				$items = $this->getTopicTitles($form['forumtopic']);
-				$toList = json_decode($form['comments_coms'], true);
+			if (count($params['forumtopic']) > 0) {
+				$items = $this->getTopicTitles($params['forumtopic']);
+				$toList = json_decode($params['comments_coms'], true);
 				return [
 					'action' => 'merge_topic',
 					'title' => tra('Merge selected topics with another topic'),
@@ -129,18 +129,19 @@ class Services_Forum_Controller
 		$access = TikiLib::lib('access');
 		$check = $access->check_authenticity(null, false);
 		if (!empty($check['ticket'])) {
-			parse_str($input->offsetGet('form'), $form);
+			parse_str($input->offsetGet('params'), $params);
 			//check number of topics on first pass
-			if (count($form['forumtopic']) > 0) {
-				$items = $this->getTopicTitles($form['forumtopic']);
-				$toList = json_decode($form['all_forums'], true);
+			if (count($params['forumtopic']) > 0) {
+				$items = $this->getTopicTitles($params['forumtopic']);
+				$toList = json_decode($params['all_forums'], true);
 				return [
 					'action' => 'move_topic',
 					'title' => tra('Move selected topics to another forum'),
 					'items' => $items,
 					'ticket' => $check['ticket'],
 					'toList' => $toList,
-					'forumName' => $toList[$form['forumId']],
+					'forumId' => $params['forumId'],
+					'forumName' => $toList[$params['forumId']],
 					'modal' => '1',
 				];
 			} else {
@@ -217,10 +218,10 @@ class Services_Forum_Controller
 		$access = TikiLib::lib('access');
 		$check = $access->check_authenticity(null, false);
 		if (!empty($check['ticket'])) {
-			parse_str($input->offsetGet('form'), $form);
+			parse_str($input->offsetGet('params'), $params);
 			//check number of topics on first pass
-			if (count($form['forumtopic']) > 0) {
-				$items = $this->getTopicTitles($form['forumtopic']);
+			if (count($params['forumtopic']) > 0) {
+				$items = $this->getTopicTitles($params['forumtopic']);
 				return [
 					'FORWARD' => [
 						'controller' => 'access',
@@ -231,7 +232,7 @@ class Services_Forum_Controller
 						'customObject' => tra('forum topics'),
 						'items' => $items,
 						'ticket' => $check['ticket'],
-						'extra' => ['forumId' => $form['forumId']],
+						'extra' => ['forumId' => $params['forumId']],
 						'modal' => '1',
 					]
 				];
@@ -257,7 +258,8 @@ class Services_Forum_Controller
 					$commentslib->remove_comment($id);
 				}
 			}
-			$commentslib->forum_prune((int) $input->extra['forumId']);
+			$extra = $input->asArray('extra');
+			$commentslib->forum_prune((int) $extra['forumId']);
 			if (count($items) == 1) {
 				$msg = tra('The following topic has been deleted:');
 			} else {
@@ -318,11 +320,11 @@ class Services_Forum_Controller
 	private function lockUnlock($input, $type)
 	{
 		$fn = $type . '_comment';
-		parse_str($input->form->none(), $form);
-		if (count($form['forumtopic']) > 0) {
+		parse_str($input->params->none(), $params);
+		if (count($params['forumtopic']) > 0) {
 			$commentslib = TikiLib::lib('comments');
 			check_ticket('view-forum');
-			$items = $this->getTopicTitles($form['forumtopic']);
+			$items = $this->getTopicTitles($params['forumtopic']);
 			foreach ($items as $id => $topic) {
 				$commentslib->$fn($id);
 			}

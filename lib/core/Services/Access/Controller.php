@@ -53,7 +53,7 @@ class Services_Access_Controller
 		global $auto_query_args;
 		$auto_query_args = ['items', 'extra'];
 		return [
-			'items' => $items = $input->asArray('items'),
+			'items' => $input->asArray('items'),
 			'confirmAction' => $input->offsetGet('confirmAction'),
 			'extra' => $input->asArray('extra'),
 			'ticket' => $input->offsetGet('ticket'),

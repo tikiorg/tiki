@@ -394,24 +394,44 @@
 			<div class="panel-body">
 				<div style="width:auto;float:left">
 					{if $comments_coms|@count > 1}
-						<button name="mod_action" type="button" value="merge_topic" class="btn btn-default btn-sm tips" title=":{tr}Merge selected topics{/tr}">
-							{icon name="merge"}
+						<button
+							type="button"
+							onclick="modalActionModal(this, {ldelim}'controller':'forum','action':'merge_topic','closest':'form'{rdelim}, 'table#{$ts_tableid}', 'refreshTableRows');"
+							class="btn btn-default btn-sm tips"
+							title=":{tr}Merge selected topics{/tr}">
+								{icon name="merge"}
 						</button>
 					{/if}
 					{if $all_forums|@count > 1 && $comments_coms|@count > 0}
-						<button name="mod_action" type="button" value="move_topic" class="btn btn-default btn-sm tips" title=":{tr}Move selected topics{/tr}">
-							{icon name="move"}
+						<button
+							type="button"
+							onclick="modalActionModal(this, {ldelim}'controller':'forum','action':'move_topic','closest':'form'{rdelim}, 'table#{$ts_tableid}', 'refreshTableRows');"
+							class="btn btn-default btn-sm tips"
+							title=":{tr}Move selected topics{/tr}">
+								{icon name="move"}
 						</button>
 					{/if}
 					{if $comments_coms|@count > 0}
-						<button name="mod_action" type="button" value="lock_topic" class="btn btn-default btn-sm tips" title=":{tr}Lock selected topics{/tr}">
-							{icon name="lock"}
+						<button
+							type="button"
+							onclick="actionModal(this, {ldelim}'controller':'forum','action':'lock_topic','closest':'form'{rdelim}, 'table#{$ts_tableid}', 'refreshTableRows');"
+							class="btn btn-default btn-sm tips"
+							title=":{tr}Lock selected topics{/tr}">
+								{icon name="lock"}
 						</button>
-						<button name="mod_action" type="button" value="unlock_topic" class="btn btn-default btn-sm tips" title=":{tr}Unlock selected topics{/tr}">
-							{icon name="unlock"}
+						<button
+							type="button"
+							onclick="actionModal(this, {ldelim}'controller':'forum','action':'unlock_topic','closest':'form'{rdelim}, 'table#{$ts_tableid}', 'refreshTableRows');"
+							class="btn btn-default btn-sm tips"
+							title=":{tr}Unlock selected topics{/tr}">
+								{icon name="unlock"}
 						</button>
-						<button name="mod_action" type="button" value="delete_topic" class="btn btn-default btn-sm tips" title=":{tr}Delete selected topics{/tr}">
-							{icon name="remove"}
+						<button
+							type="button"
+							onclick="modalActionModal(this, {ldelim}'controller':'forum','action':'delete_topic','closest':'form'{rdelim}, 'table#{$ts_tableid}', 'refreshTableRows');"
+							class="btn btn-default btn-sm tips"
+							title=":{tr}Delete selected topics{/tr}">
+								{icon name="remove"}
 						</button>
 					{/if}
 				</div>
@@ -643,9 +663,14 @@
 							{/if}
 
 							{if $tiki_p_admin_forum eq 'y'}
-								<a href="tiki-view_forum.php?comments_remove=1&amp;comments_threadId={$comments_coms[ix].threadId}&amp;forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;thread_sort_mode={$thread_sort_mode}&amp;comments_per_page={$comments_per_page}" class="admlink tips" title="{$comments_coms[ix].title|escape}:{tr}Delete topic{/tr}">
-									{icon name='remove'}
-								</a>
+								<button
+									type="button"
+									onclick="modalActionModal(this, {ldelim}'controller':'forum','action':'delete_topic','data':'params'{rdelim}, 'table#{$ts_tableid}', 'refreshTableRows');"
+									data-params="forumtopic[]={$comments_coms[ix].threadId}&amp;forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;thread_sort_mode={$thread_sort_mode}&amp;comments_per_page={$comments_per_page}"
+									class="btn btn-sm btn-link tips"
+									title="{$comments_coms[ix].title|escape}:{tr}Delete topic{/tr}">
+										{icon name='remove'}
+								</button>
 							{/if}
 						</td>
 					</tr>
@@ -809,78 +834,5 @@
 				$forum.submit();
 			}
 		});
-	{/jq}
-	{jq}
-		$('[name="mod_action"]').click(function () {
-			var action = $(this).val(), choices = ['merge_topic', 'move_topic', 'lock_topic', 'unlock_topic', 'delete_topic'];
-			if ($.inArray(action, choices) > -1) {
-				if ($.inArray(action, ['merge_topic', 'move_topic', 'delete_topic']) > -1) {
-					var form = $(this).closest('form').serialize(),
-					href = $.service('forum', action, {form: form, modal: 1});
-					$(this).attr('href', href);
-					var handler = $.clickModal({
-						success: function (data) {
-							$.closeModal({
-								done: function () {
-									$('table#{{$ts_tableid}}').refreshTableRows(form);
-									if (! data.FORWARD) {
-										return false;
-									}
-									setTimeout(function () {
-										$.openModal({
-											remote: $.service(data.FORWARD.controller, data.FORWARD.action, data.FORWARD),
-											open: function () {
-												setTimeout(function () {
-													$.closeModal({});
-												}, 5000);
-											},
-										});
-									}, 0);
-								}
-							});
-						},
-					});
-					handler.apply(this, arguments);
-				} else {
-					var form = $(this).closest('form');
-					$.openModal({
-						remote: $.service('forum', action, {
-							form: $(form).serialize(),
-							modal: 1
-						}),
-						open: function (form) {
-							if ($('div.modal-body div').hasClass('alert-success')) {
-								$('table#{{$ts_tableid}}').refreshTableRows(form);
-								setTimeout(function () {
-									$.closeModal({});
-								}, 5000);
-							}
-						},
-					});
-					return false;
-				}
-			} else {
-				return false;
-			}
-		});
-
-			$.fn.refreshTableRows = function (form) {
-				var id = this.selector;
-				if ($(this).hasClass('tablesorter')) {
-					$(this).trigger('update');
-				} else {
-					$.ajax({
-						url: location,
-						dataType: 'html',
-						data: $(form).serialize() + 'tsAjax=y',
-						success: function (data) {
-							var parsedpage = $.parseHTML(data),
-							tbody = $(parsedpage).find(id + ' tbody');
-							$(id + ' tbody').html(tbody.html());
-							$(id + ' input[type="checkbox"]').prop('checked', false);
-						}
-					});
-				}
-			};
 	{/jq}
 {/if}
