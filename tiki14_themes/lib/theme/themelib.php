@@ -145,7 +145,7 @@ class ThemeLib extends TikiLib
 	@param $filename - optional filename to look for (e.g. "purple.png")
 	@return path to dir or file if found or empty if not - e.g. "themes/mydomain.tld/fivealive/options/akebi/"
 	*/
-	function get_theme_path($theme = '', $option = '', $filename = '')
+	function get_theme_path($theme = '', $option = '', $filename = '', $subdir = '')
 	{
 		global $tikidomain;
 
@@ -165,28 +165,59 @@ class ThemeLib extends TikiLib
 			$option_base = 'options/'.$option.'/';
 		}
 
+		if (empty($subdir) && !empty($filename)) {
+			$extension = substr($filename, strrpos($filename, '.') + 1);
+			switch ($extension) {
+				case 'css':
+					$subdir = 'css/';
+					break;
+				case 'php':
+					$subdir = 'icons/';
+					break;
+				case 'png':
+				case 'gif':
+				case 'jpg':
+				case 'jpeg':
+					$subdir = 'images/';
+					break;
+				case 'less':
+					$subdir = 'less/';
+					break;
+				case 'js':
+					$subdir = 'js/';
+					break;
+				case 'tpl':
+					$subdir = 'templates/';
+					break;
+			}
+		}
+
 		if (empty($filename)) {
-			if (is_dir('themes/'.$dir_base.$theme_base.$option_base)) {
-				$path = 'themes/'.$dir_base.$theme_base.$option_base;
-			} else if (is_dir('themes/'.$dir_base.$theme_base)) {
-				$path = 'themes/'.$dir_base.$theme_base;	// try "parent" theme dir if no option one
-			} else if (is_dir('themes/'.$theme_base.$option_base)) {
-				$path = 'themes/'.$theme_base.$option_base;	// try root theme dir if no domain one
+			if (is_dir('themes/'.$dir_base.$theme_base.$option_base.$subdir)) {
+				$path = 'themes/'.$dir_base.$theme_base.$option_base.$subdir;
+			} else if (is_dir('themes/'.$dir_base.$theme_base.$subdir)) {
+				$path = 'themes/'.$dir_base.$theme_base.$subdir;	// try "parent" theme dir if no option one
+			} else if (is_dir('themes/'.$theme_base.$option_base.$subdir)) {
+				$path = 'themes/'.$theme_base.$option_base.$subdir;	// try root theme dir if no domain one
+			} else if (is_dir('themes/'.$theme_base.$subdir)) {
+				$path = 'themes/'.$theme_base.$option_base.$subdir;	// try root theme dir if no domain one
 			} else {
-				$path = 'themes/'.$theme_base;			// fall back to "parent" theme dir if no option one
+				$path = 'themes/'.$theme_base;			// fall back to "parent" theme dir with no subdir if not
 			}
 		} else {
-			if (is_file('themes/'.$dir_base.$theme_base.$option_base.$filename)) {
-				$path = 'themes/'.$dir_base.$theme_base.$option_base.$filename;
-			} else if (is_file('themes/'.$dir_base.$theme_base.$filename)) {	// try "parent" themes dir if no option one
-				$path = 'themes/'.$dir_base.$theme_base.$filename;
-			} else if (is_file('themes/'.$theme_base.$option_base.$filename)) {	// try non-tikidomain dirs if not found
-				$path = 'themes/'.$theme_base.$option_base.$filename;
-			} else if (is_file('themes/'.$theme_base.$filename)) {
-				$path = 'themes/'.$theme_base.$filename;				// fall back to "parent" themes dir if no option
-			} else if (is_file('themes/'.$dir_base.$filename)) {
-				$path = 'themes/'.$dir_base.$filename;				// tikidomain root themes dir?
-			} else if (is_file('themes/'.$dir_base.$filename)) {
+			if (is_file('themes/'.$dir_base.$theme_base.$option_base.$subdir.$filename)) {
+				$path = 'themes/'.$dir_base.$theme_base.$option_base.$subdir.$filename;
+			} else if (is_file('themes/'.$dir_base.$theme_base.$subdir.$filename)) {	// try "parent" themes dir if no option one
+				$path = 'themes/'.$dir_base.$theme_base.$subdir.$filename;
+			} else if (is_file('themes/'.$theme_base.$option_base.$subdir.$filename)) {	// try non-tikidomain dirs if not found
+				$path = 'themes/'.$theme_base.$option_base.$subdir.$filename;
+			} else if (is_file('themes/'.$theme_base.$subdir.$filename)) {
+				$path = 'themes/'.$theme_base.$subdir.$filename;				// fall back to "parent" themes dir if no option
+			} else if (is_file('themes/'.$dir_base.$subdir.$filename)) {
+				$path = 'themes/'.$dir_base.$subdir.$filename;				// tikidomain root themes dir?
+			} else if (is_file('themes/'.$subdir.$filename)) {
+				$path = 'themes/'.$subdir.$filename;					// root themes dir?
+			} else if (is_file('themes/'.$filename)) {
 				$path = 'themes/'.$filename;					// root themes dir?
 			}
 		}
