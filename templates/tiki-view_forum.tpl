@@ -665,8 +665,8 @@
 							{if $tiki_p_admin_forum eq 'y'}
 								<button
 									type="button"
-									onclick="modalActionModal(this, {ldelim}'controller':'forum','action':'delete_topic','data':'params'{rdelim}, 'table#{$ts_tableid}', 'refreshTableRows');"
-									data-params="forumtopic[]={$comments_coms[ix].threadId}&amp;forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;thread_sort_mode={$thread_sort_mode}&amp;comments_per_page={$comments_per_page}"
+									onclick="modalActionModal(this, {ldelim}'data':'service'{rdelim}, 'table#{$ts_tableid}', 'refreshTableRows');"
+									data-service="{service controller=forum action=delete_topic params="forumtopic[]={$comments_coms[ix].threadId}&amp;forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;thread_sort_mode={$thread_sort_mode}&amp;comments_per_page={$comments_per_page}"}"
 									class="btn btn-sm btn-link tips"
 									title="{$comments_coms[ix].title|escape}:{tr}Delete topic{/tr}">
 										{icon name='remove'}
