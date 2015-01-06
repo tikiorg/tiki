@@ -106,13 +106,13 @@
 						</div>
 					</div>
 				</div>
-                <div class="col-md-6">
-                    <h4>{tr}Revision Approval (ISO9001){/tr}</h4>
-                    (<a href="tiki-admin.php?profile=Revision+Approval+%28ISO9001%29&show_details_for=Revision+Approval+%28ISO9001%29&categories%5B%5D={$tikiMajorVersion}.x&repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2" target="_blank">{tr}apply profile now{/tr}</a>)
-                    <br>
-                    {tr}This profile sets up the configuration needed to facilitate the handling of document revision approval for quality certification systems (such as ISO9001){/tr}.
-                    <br/>
-                    <a href="https://doc.tiki.org/Flagged+Revisions" target="tikihelp" class="tikihelp" title="{tr}Revision Approval (ISO9001){/tr}:
+				<div class="col-md-6">
+					<h4>{tr}Revision Approval (ISO9001){/tr}</h4>
+					(<a href="tiki-admin.php?profile=Revision+Approval+%28ISO9001%29&show_details_for=Revision+Approval+%28ISO9001%29&categories%5B%5D={$tikiMajorVersion}.x&repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2" target="_blank">{tr}apply profile now{/tr}</a>)
+					<br>
+					{tr}This profile sets up the configuration needed to facilitate the handling of document revision approval for quality certification systems (such as ISO9001){/tr}.
+					<br/>
+					<a href="https://doc.tiki.org/Flagged+Revisions" target="tikihelp" class="tikihelp" title="{tr}Revision Approval (ISO9001){/tr}:
 						{tr}More details{/tr}:
 						<ul>
 							<li>{tr}Additions: 1 group, 2 users, 2 wiki pages, 3 categories{/tr}</li>
@@ -120,20 +120,20 @@
 							<li>{tr}Wiki Argument Variables are used in the 'official document'{/tr}</li>
 						</ul>
 						{tr}Click to read more{/tr}"
-                            >
-                        {icon name="help"}
-                    </a>
-                    <div class="row">
-                        <div class="col-md-8 col-md-offset-2">
-                            <a href="http://tiki.org/display615" class="thumbnail internal" rel="box" title="{tr}Click to expand{/tr}">
-                                <img src="img/profiles/profile_thumb_revision_approval_iso9001.png" alt="Click to expand" class="regImage pluginImg" title="{tr}Click to expand{/tr}" />
-                            </a>
-                            <div class="small text-center">
-                                {tr}Click to expand{/tr}
-                            </div>
-                        </div>
-                    </div>
-                </div>
+					>
+						{icon name="help"}
+					</a>
+					<div class="row">
+						<div class="col-md-8 col-md-offset-2">
+							<a href="http://tiki.org/display615" class="thumbnail internal" rel="box" title="{tr}Click to expand{/tr}">
+								<img src="img/profiles/profile_thumb_revision_approval_iso9001.png" alt="Click to expand" class="regImage pluginImg" title="{tr}Click to expand{/tr}" />
+							</a>
+							<div class="small text-center">
+								{tr}Click to expand{/tr}
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 		</fieldset>
 	</div>

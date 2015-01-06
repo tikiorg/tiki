@@ -3442,10 +3442,15 @@ $.fn.clickModal = function (options) {
 
 	return this;
 };
-$.clickModal = function (options) {
+$.clickModal = function (options, href) {
 	return function (e) {
-		var control = this, href = $(this).attr('href');
-		e.preventDefault();
+		var control = this;
+		if (!href) {
+			href = $(this).attr('href');
+		}
+		if ($.isFunction(e.preventDefault)) {
+			e.preventDefault();
+		}
 
 		$.openModal({
 			title: options.title,

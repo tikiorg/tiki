@@ -65,6 +65,31 @@
 					</a>
 				{/if}
 			{/if}
+			{if $tiki_p_admin == 'y'}
+				<a class="delete-activity" href="{service controller=managestream action=deleteactivity activityId=$activityframe.activity.object_id}" data-activity-id="{$activityframe.activity.object_id}">
+					{tr}Delete{/tr}
+				</a>
+				{jq}
+				$(document).on('click', '.activity a.delete-activity', function(e) {
+					var activity_id = $(this).data('activity-id');
+					$(this).serviceDialog({
+						title: '{tr}Delete Activity{/tr}',
+						data: {
+							controller: 'managestream',
+							action: 'deleteactivity',
+							activityId: activity_id
+						},
+						success: function (data) {
+							if (data.removed) {
+								$(this).parents('.activity').css({"visibility":"hidden"});
+								// not hide() as that might mess up spacing
+							}
+						}
+					});
+					return false;
+				});
+				{/jq}
+			{/if}
 		</div>
 	{/if}
 	{if $activityframe.comment && $activity_format eq 'extended'}

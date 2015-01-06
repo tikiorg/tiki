@@ -51,10 +51,10 @@
 		<td>
 			{if $row.stock|nonp gt 0}
 				<strong>In stock</strong>
-				<meta  itemprop="availability" content="InStock">
+				<meta itemprop="availability" content="InStock">
 			{else}
 				<em>Awaiting stock</em>
-				<meta  itemprop="availability" content="OutOfStock">
+				<meta itemprop="availability" content="OutOfStock">
 			{/if}
 		</td>
 	</tr>
@@ -64,7 +64,7 @@
 		</th>
 		<td>
 			<strong itemprop="price">{$row.price}</strong>
-			<!-- meta  itemprop="priceCurrency" content="USD" can't access prefs here sadly :(-->
+			<!-- meta itemprop="priceCurrency" content="USD" can't access prefs here sadly :(-->
 		</td>
 	</tr>
 	<tr>
@@ -74,7 +74,7 @@
 		<td>
 			{if $row.stock|nonp gt 0}
 				{include file="templates/examples/shop/add_to_cart.tpl"}
-				<meta  itemprop="acceptedPaymentMethod" content="http://purl.org/goodrelations/v1#PayPal">
+				<meta itemprop="acceptedPaymentMethod" content="http://purl.org/goodrelations/v1#PayPal">
 			{/if}
 		</td>
 	</tr>

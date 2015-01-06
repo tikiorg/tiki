@@ -50,37 +50,40 @@ function check_ticket($area)
 }
 
 // new valid functions for ticketing:
-// * @param string $area No more used
-function key_get($area = null, $confirmation_text = '', $confirmaction = '')
+// * @param string $area is not used any longer
+function key_get($area = null, $confirmation_text = '', $confirmaction = '',  $returnHtml = true)
 {
 	global $prefs;
-	$smarty = TikiLib::lib('smarty');
-	$tikilib = TikiLib::lib('tiki');
 	if ($prefs['feature_ticketlib2'] == 'y') {
 		$ticket = md5(uniqid(rand()));
 		$_SESSION['tickets'][$ticket] = time();
-		$smarty->assign('ticket', $ticket);
-		if (empty($confirmation_text)) {
-			$confirmation_text = tra('Click here to confirm your action');
-		}
+		if ($returnHtml) {
+			$smarty = TikiLib::lib('smarty');
+			$smarty->assign('ticket', $ticket);
+			if (empty($confirmation_text)) {
+				$confirmation_text = tra('Click here to confirm your action');
+			}
 
-		if (empty($confirmaction)) {
-			$confirmaction = $_SERVER['PHP_SELF'];
-		}
+			if (empty($confirmaction)) {
+				$confirmaction = $_SERVER['PHP_SELF'];
+			}
 
-		// Display the confirmation in the main tiki.tpl template
-		$smarty->assign('post', $_POST);
-		$smarty->assign('dblclickedit', 'n');
-		$smarty->assign('print_page', 'n');
-		$smarty->assign('confirmation_text', $confirmation_text);
-		$smarty->assign('confirmaction', $confirmaction);
-		$smarty->assign('mid', 'confirm.tpl');
-		$smarty->display('tiki.tpl');
-		die();
+			// Display the confirmation in the main tiki.tpl template
+			$smarty->assign('post', $_POST);
+			$smarty->assign('dblclickedit', 'n');
+			$smarty->assign('print_page', 'n');
+			$smarty->assign('confirmation_text', $confirmation_text);
+			$smarty->assign('confirmaction', $confirmaction);
+			$smarty->assign('mid', 'confirm.tpl');
+			$smarty->display('tiki.tpl');
+			die();
+		} else {
+			return ['ticket' => $ticket];
+		}
 	}
 }
-// * @param string $area No more used
-function key_check($area = null)
+// * @param string $area is not used any longer
+function key_check($area = null, $returnHtml = true)
 {
 	global $prefs;
 	if ($prefs['feature_ticketlib2'] == 'y') {
@@ -90,10 +93,13 @@ function key_check($area = null)
 				return true;
 			}
 		}
-
-		$smarty = TikiLib::lib('smarty');
-		$smarty->assign('msg', tra('Sea Surfing (CSRF) detected. Operation blocked.'));
-		$smarty->display('error.tpl');
-		exit();
+		if ($returnHtml) {
+			$smarty = TikiLib::lib('smarty');
+			$smarty->assign('msg', tra('Sea Surfing (CSRF) detected. Operation blocked.'));
+			$smarty->display('error.tpl');
+			exit();
+		} else {
+			return false;
+		}
 	}
 }

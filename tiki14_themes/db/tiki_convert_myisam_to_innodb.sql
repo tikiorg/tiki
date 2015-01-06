@@ -273,4 +273,5 @@ ALTER TABLE `tiki_user_monitors` ENGINE=InnoDB;
 ALTER TABLE `tiki_output` ENGINE=InnoDB;
 ALTER TABLE `tiki_goals` ENGINE=InnoDB;
 ALTER TABLE `tiki_goal_events` ENGINE=InnoDB;
-
+ALTER TABLE `tiki_addon_profiles` ENGINE=InnoDB;
+ALTER TABLE `tiki_tabular_formats` ENGINE=InnoDB;

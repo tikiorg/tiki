@@ -18,15 +18,15 @@
 				<label for="birth_date" class="col-sm-3 control-label">
 					{tr}Birth date{/tr}
 				</label>
-                <div class="col-sm-9">
-				    <input type="date" name="birth_date" id="birth_date" class="form-control">
-                </div>
+				<div class="col-sm-9">
+					<input type="date" name="birth_date" id="birth_date" class="form-control">
+				</div>
 			</div>
-            <div class="text-center">
-    			<input class="btn btn-default btn-primary" type="submit" name="accept" value="{tr}Validate your age and proceed to login{/tr}">
-    			<input class="btn btn-default btn-danger" type="submit" name="decline" value="{tr}Cancel login process{/tr}">
-    			<input name="origin" value="{$origin|escape}" type="hidden">
-            </div>
+			<div class="text-center">
+				<input class="btn btn-default btn-primary" type="submit" name="accept" value="{tr}Validate your age and proceed to login{/tr}">
+				<input class="btn btn-default btn-danger" type="submit" name="decline" value="{tr}Cancel login process{/tr}">
+				<input name="origin" value="{$origin|escape}" type="hidden">
+			</div>
 		</form>
 	{/if}
 {/block}

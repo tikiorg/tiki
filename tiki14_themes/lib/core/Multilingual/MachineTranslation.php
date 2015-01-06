@@ -32,7 +32,7 @@ class Multilingual_MachineTranslation
 			break;
 
 		case 'google':
-			if (! empty($prefs['lang_google_api_client_id'])) {
+			if (! empty($prefs['lang_google_api_key'])) {
 				$this->implementation = 'google';
 			}
 			break;

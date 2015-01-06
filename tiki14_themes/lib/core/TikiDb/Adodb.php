@@ -16,6 +16,7 @@ class TikiDb_Adodb extends TikiDb
 		}
 
 		$this->db=$db;
+		$this->db->SetFetchMode(ADODB_FETCH_ASSOC);
 	} // }}}
 
 	function __destruct() // {{{

@@ -140,9 +140,9 @@
 					<td class="integer">{$channels[user].hits}</td>
 				{/if}
 				<td class="action">
-					{icon name="view" title="{tr}View{/tr}" href="{$channels[user].forumId|sefurl:'forum'}"} 
+					{icon name="view" class="tips" title="{$channels[user].name|addongroupname|escape}:{tr}View forum{/tr}" href="{$channels[user].forumId|sefurl:'forum'}"}
 					{if ($tiki_p_admin eq 'y') or (($channels[user].individual eq 'n') and ($tiki_p_admin_forum eq 'y')) or ($channels[user].individual_tiki_p_admin_forum eq 'y')}
-						{icon name="edit" title="{tr}Configure Forum{/tr}" href="tiki-admin_forums.php?forumId={$channels[user].forumId}&amp;cookietab=2"}
+						{icon name="edit" class="tips" title="{$channels[user].name|addongroupname|escape}:{tr}Configure forum{/tr}" href="tiki-admin_forums.php?forumId={$channels[user].forumId}&amp;cookietab=2"}
 					{/if}
 				</td>
 			</tr>

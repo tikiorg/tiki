@@ -128,6 +128,9 @@ $icons = array(
 	'off' => array(
 		'class' => 'glyphicon glyphicon-off',
 	),
+	'pdf' => array(
+		'class' => 'glyphicon glyphicon-file',
+	),
 	'permission' => array(
 		'class' => 'glyphicon glyphicon-lock',
 	),

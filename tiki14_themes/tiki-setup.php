@@ -409,6 +409,7 @@ if ( $prefs['feature_jquery_carousel'] == 'y' ) {
 }
 
 if ( $prefs['feature_ajax'] === 'y' ) {
+	$headerlib->add_jsfile('lib/jquery_tiki/tiki-ajax_services.js');
 	if ( $prefs['ajax_autosave'] === 'y' ) {
 		$headerlib->add_jsfile('lib/ajax/autosave.js');
 	}

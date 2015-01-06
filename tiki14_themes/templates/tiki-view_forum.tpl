@@ -33,7 +33,7 @@
 		{/if}
 
 		{if $prefs.feed_forum eq 'y'}
-			<a href="tiki-forum_rss.php?forumId={$forumId}" title="{tr}RSS feed{/tr}">{icon _id="feed" alt="{tr}RSS feed{/tr}"}</a>
+			<a href="tiki-forum_rss.php?forumId={$forumId}" class="tips" title=":{tr}RSS feed{/tr}">{icon name="rss"}</a>
 		{/if}
 
 		{if !empty($tiki_p_forum_lock) and $tiki_p_forum_lock eq 'y'}
@@ -46,22 +46,22 @@
 
 		{if $user and $prefs.feature_user_watches eq 'y'}
 			{if $user_watching_forum eq 'n'}
-				<a class="btn btn-link pull-right" href="tiki-view_forum.php?forumId={$forumId}&amp;watch_event=forum_post_topic&amp;watch_object={$forumId}&amp;watch_action=add" title="{tr}Monitor Topics of this Forum{/tr}">{icon _id='eye' alt="{tr}Monitor Topics of this Forum{/tr}"}</a>
+				<a class="btn btn-sm btn-link pull-right tips" href="tiki-view_forum.php?forumId={$forumId}&amp;watch_event=forum_post_topic&amp;watch_object={$forumId}&amp;watch_action=add" title=":{tr}Monitor topics of this forum{/tr}">{icon name="watch"}</a>
 			{else}
-				<a class="btn btn-link pull-right" href="tiki-view_forum.php?forumId={$forumId}&amp;watch_event=forum_post_topic&amp;watch_object={$forumId}&amp;watch_action=remove" title="{tr}Stop Monitoring Topics of this Forum{/tr}">{icon _id='no_eye' alt="{tr}Stop Monitoring Topics of this Forum{/tr}"}</a>
+				<a class="btn btn-sm btn-link pull-right tips" href="tiki-view_forum.php?forumId={$forumId}&amp;watch_event=forum_post_topic&amp;watch_object={$forumId}&amp;watch_action=remove" title=":{tr}Stop monitoring topics of this forum{/tr}">{icon name="stop-watching"}</a>
 			{/if}
 		{/if}
 
 		{if $user and $prefs.feature_user_watches eq 'y'}
 			{if $user_watching_forum_topic_and_thread eq 'n'}
-				<a class="btn btn-link pull-right" href="tiki-view_forum.php?forumId={$forumId}&amp;watch_event=forum_post_topic_and_thread&amp;watch_object={$forumId}&amp;watch_action=add" title="{tr}Monitor Topics and Threads of this Forum{/tr}" title="{tr}Monitor Topics and Threads of this Forum{/tr}">{icon name="watch"}</a>
+				<a class="btn btn-sm btn-link pull-right tips" href="tiki-view_forum.php?forumId={$forumId}&amp;watch_event=forum_post_topic_and_thread&amp;watch_object={$forumId}&amp;watch_action=add" title=":{tr}Monitor topics and threads of this forum{/tr}">{icon name="watch"}</a>
 			{else}
-				<a class="btn btn-link pull-right" href="tiki-view_forum.php?forumId={$forumId}&amp;watch_event=forum_post_topic_and_thread&amp;watch_object={$forumId}&amp;watch_action=remove" title="{tr}Stop Monitoring Topics and Threads of this Forum{/tr}" title="{tr}Stop Monitoring Topics and Threads of this Forum{/tr}">{icon name="stop-watching"}</a>
+				<a class="btn btn-sm btn-link pull-right tips" href="tiki-view_forum.php?forumId={$forumId}&amp;watch_event=forum_post_topic_and_thread&amp;watch_object={$forumId}&amp;watch_action=remove" title=":{tr}Stop monitoring topics and threads of this forum{/tr}">{icon name="stop-watching"}</a>
 			{/if}
 		{/if}
 
 		{if $prefs.feature_group_watches eq 'y' and ( $tiki_p_admin_users eq 'y' or $tiki_p_admin eq 'y' )}
-			<a href="tiki-object_watches.php?objectId={$forumId|escape:"url"}&amp;watch_event=forum_post_topic_and_thread&amp;objectType=forum&amp;objectName={$forum_info.name|escape:"url"}&amp;objectHref={'tiki-view_forum.php?forumId='|cat:$forumId|escape:"url"}" class="btn btn-link" title="{tr}Group Monitor Topics and Threads of this Forum{/tr}">{icon name="watch-group"}</a>
+			<a href="tiki-object_watches.php?objectId={$forumId|escape:"url"}&amp;watch_event=forum_post_topic_and_thread&amp;objectType=forum&amp;objectName={$forum_info.name|escape:"url"}&amp;objectHref={'tiki-view_forum.php?forumId='|cat:$forumId|escape:"url"}" class="btn btn-link tips" title=":{tr}Group monitor topics and threads of this forum{/tr}">{icon name="watch-group"}</a>
 		{/if}
 
 		<div class="categbar" align="right" >
@@ -394,24 +394,46 @@
 			<div class="panel-body">
 				<div style="width:auto;float:left">
 					{if $comments_coms|@count > 1}
-						<button name="mod_action" type="button" value="merge_topic" class="btn btn-default btn-sm tips" title=":{tr}Merge selected topics{/tr}">
-							{icon name="merge"}
+						<button
+							type="button"
+							onclick="modalActionModal(this, {ldelim}'controller':'forum','action':'merge_topic','closest':'form'{rdelim}, 'table#{$ts_tableid}', 'refreshTableRows');"
+							class="btn btn-default btn-sm tips"
+							title=":{tr}Merge selected topics{/tr}">
+								{icon name="merge"}
 						</button>
 					{/if}
 					{if $all_forums|@count > 1 && $comments_coms|@count > 0}
-						<button name="mod_action" type="button" value="move_topic" class="btn btn-default btn-sm tips" title=":{tr}Move selected topics{/tr}">
-							{icon name="move"}
+						<button
+							type="button"
+							onclick="modalActionModal(this, {ldelim}'controller':'forum','action':'move_topic','closest':'form'{rdelim}, 'table#{$ts_tableid}', 'refreshTableRows');"
+							class="btn btn-default btn-sm tips"
+							title=":{tr}Move selected topics{/tr}">
+								{icon name="move"}
 						</button>
 					{/if}
 					{if $comments_coms|@count > 0}
-						<button name="mod_action" type="button" value="lock_topic" class="btn btn-default btn-sm tips" title=":{tr}Lock selected topics{/tr}">
-							{icon name="lock"}
+						<button
+							type="button"
+							onclick="actionModal(this, {ldelim}'controller':'forum','action':'lock_topic','closest':'form'{rdelim}, 'table#{$ts_tableid}', 'refreshTableRows');"
+							class="btn btn-default btn-sm tips"
+							title=":{tr}Lock selected topics{/tr}">
+								{icon name="lock"}
 						</button>
-						<button name="mod_action" type="button" value="unlock_topic" class="btn btn-default btn-sm tips" title=":{tr}Unlock selected topics{/tr}">
-							{icon name="unlock"}
+						<button
+							type="button"
+							onclick="actionModal(this, {ldelim}'controller':'forum','action':'unlock_topic','closest':'form'{rdelim}, 'table#{$ts_tableid}', 'refreshTableRows');"
+							class="btn btn-default btn-sm tips"
+							title=":{tr}Unlock selected topics{/tr}">
+								{icon name="unlock"}
+						</button>
+						<button
+							type="button"
+							onclick="modalActionModal(this, {ldelim}'controller':'forum','action':'delete_topic','closest':'form'{rdelim}, 'table#{$ts_tableid}', 'refreshTableRows');"
+							class="btn btn-default btn-sm tips"
+							title=":{tr}Delete selected topics{/tr}">
+								{icon name="remove"}
 						</button>
 					{/if}
-					<input type="image" name="delsel" src="img/icons/cross.png" alt="{tr}Delete{/tr}" title="{tr}Delete Selected Topics{/tr}">
 				</div>
 				<div style="text-align:right;width:40%;float:right" >
 					{if $reported > 0}
@@ -429,47 +451,64 @@
 			<input type="hidden" {if $tsOn}id="{$ts_countid|escape}" {/if}name="count" value="{$comments_cant}">
 			<thead>
 				<tr>
+					{$cntcol = 0}
 					{if $tiki_p_admin_forum eq 'y'}
 						<th id="checkbox">&nbsp;</th>
+						{$cntcol = $cntcol + 1}
 					{/if}
 					<th id="type">{self_link _sort_arg='thread_sort_mode' _sort_field='type'}{tr}Type{/tr}{/self_link}</th>
+					{$cntcol = $cntcol + 1}
 					{if $forum_info.topic_smileys eq 'y'}
 						<th id="smiley">{self_link _sort_arg='thread_sort_mode' _sort_field='smiley'}{tr}Emot{/tr}{/self_link}</th>
+						{$cntcol = $cntcol + 1}
 					{/if}
 					<th id="title">{self_link _sort_arg='thread_sort_mode' _sort_field='title'}{tr}Title{/tr}{/self_link}</th>
+					{$cntcol = $cntcol + 1}
 					{if $forum_info.topics_list_replies eq 'y'}
 						<th id="replies">{self_link _sort_arg='thread_sort_mode' _sort_field='replies'}{tr}Replies{/tr}{/self_link}</th>
+						{$cntcol = $cntcol + 1}
 					{/if}
 					{if $forum_info.topics_list_reads eq 'y'}
 						<th id="hits">{self_link _sort_arg='thread_sort_mode' _sort_field='hits'}{tr}Reads{/tr}{/self_link}</th>
+						{$cntcol = $cntcol + 1}
 					{/if}
 					{if $forum_info.vote_threads eq 'y' and ($tiki_p_ratings_view_results eq 'y' or $tiki_p_admin eq 'y')}
 						<th id="rating">{tr}Rating <br/>(avg/max){/tr}</th>
+						{$cntcol = $cntcol + 1}
 						{if $prefs.rating_results_detailed eq 'y' and $prefs.rating_results_detailed_percent neq 'y'}
 							<th id="rating2">{tr}Detailed results <br/>(counts){/tr}</th>
+							{$cntcol = $cntcol + 1}
 						{elseif $prefs.rating_results_detailed eq 'y' and $prefs.rating_results_detailed_percent eq 'y'}
 							<th id="rating3">{tr}Detailed results <br/>(counts/%){/tr}</th>
+							{$cntcol = $cntcol + 1}
 						{/if}
 					{/if}
 					{if $forum_info.topics_list_pts eq 'y'}
 						<th id="average">{self_link _sort_arg='thread_sort_mode' _sort_field='average'}{tr}pts{/tr}{/self_link}</th>
+						{$cntcol = $cntcol + 1}
 					{/if}
 					{if $forum_info.topics_list_lastpost eq 'y' or $forum_info.topics_list_lastpost_avatar eq 'y'}
 						<th id="lastpost">{self_link _sort_arg='thread_sort_mode' _sort_field='lastPost'}{tr}Last Post{/tr}{/self_link}</th>
+						{$cntcol = $cntcol + 1}
 					{/if}
 					{if $forum_info.topics_list_author eq 'y' or $forum_info.topics_list_author_avatar eq 'y'}
 						<th id="poster">{self_link _sort_arg='thread_sort_mode' _sort_field='userName'}{tr}Author{/tr}{/self_link}</th>
+						{$cntcol = $cntcol + 1}
 					{/if}
 					{if $forum_info.att_list_nb eq 'y'}
 						<th id="atts">{tr}Atts{/tr}</th>
+						{$cntcol = $cntcol + 1}
 					{/if}
 					{if $prefs.feature_multilingual eq 'y'}
 						<th id="lang">{tr}Language{/tr}</th>
+						{$cntcol = $cntcol + 1}
 					{/if}
 					{if $prefs.forum_category_selector_in_list eq 'y'}
 						<th id="category">{tr}Category{/tr}</th>
+						{$cntcol = $cntcol + 1}
 					{/if}
 					<th id="actions">{tr}Actions{/tr}</th>
+					{$cntcol = $cntcol + 1}
 				</tr>
 			</thead>
 			<tbody>
@@ -624,17 +663,22 @@
 							{/if}
 
 							{if $tiki_p_admin_forum eq 'y'}
-								<a href="tiki-view_forum.php?comments_remove=1&amp;comments_threadId={$comments_coms[ix].threadId}&amp;forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;thread_sort_mode={$thread_sort_mode}&amp;comments_per_page={$comments_per_page}" class="admlink tips" title="{$comments_coms[ix].title|escape}:{tr}Delete topic{/tr}">
-									{icon name='remove'}
-								</a>
+								<button
+									type="button"
+									onclick="modalActionModal(this, {ldelim}'data':'service'{rdelim}, 'table#{$ts_tableid}', 'refreshTableRows');"
+									data-service="{service controller=forum action=delete_topic params="forumtopic[]={$comments_coms[ix].threadId}&amp;forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;thread_sort_mode={$thread_sort_mode}&amp;comments_per_page={$comments_per_page}"}"
+									class="btn btn-sm btn-link tips"
+									title="{$comments_coms[ix].title|escape}:{tr}Delete topic{/tr}">
+										{icon name='remove'}
+								</button>
 							{/if}
 						</td>
 					</tr>
 				{sectionelse}
 					{if !$tsOn || ($tsOn && $tsAjax)}
-						{norecords _colspan=8 _text="No topics found"}
+						{norecords _colspan=$cntcol _text="No topics found"}
 					{else}
-						{norecords _colspan=8 _text="Retrieving topics..."}
+						{norecords _colspan=$cntcol _text="Retrieving topics..."}
 					{/if}
 				{/section}
 			</tbody>
@@ -790,76 +834,5 @@
 				$forum.submit();
 			}
 		});
-	{/jq}
-	{jq}
-		$('[name="mod_action"]').click(function () {
-			var action = $(this).val(), choices = ['merge_topic', 'move_topic', 'lock_topic', 'unlock_topic'];
-			if ($.inArray(action, choices) > -1) {
-				if ($.inArray(action, ['merge_topic', 'move_topic']) > -1) {
-					var form = $(this).closest('form').serialize();
-					href = $.service('forum', action, {form: form, modal: 1});
-					$(this).attr('href', href);
-					var handler = $.clickModal({
-						success: function (data) {
-							$.closeModal({
-								done: function () {
-									$('table#{{$ts_tableid}}').refreshTableRows(form);
-									if (! data.FORWARD) {
-										return false;
-									}
-									setTimeout(function () {
-										$.openModal({
-											remote: $.service(data.FORWARD.controller, data.FORWARD.action, data.FORWARD),
-											open: function () {
-												setTimeout(function () {
-													$.closeModal({});
-												}, 5000);
-											},
-										});
-									}, 0);
-								}
-							});
-						},
-					});
-					handler.apply(this, arguments);
-				} else {
-					var form = $(this).closest('form');
-					$.openModal({
-						remote: $.service('forum', action, {
-							form: $(form).serialize(),
-							modal: 1
-						}),
-						open: function (form) {
-							$('table#{{$ts_tableid}}').refreshTableRows(form);
-							setTimeout(function () {
-								$.closeModal({});
-							}, 5000);
-						},
-					});
-					return false;
-				}
-			} else {
-				return false;
-			}
-		});
-
-			$.fn.refreshTableRows = function (form) {
-				var id = this.selector;
-				if ($(this).hasClass('tablesorter')) {
-					$(this).trigger('update');
-				} else {
-					$.ajax({
-						url: location,
-						dataType: 'html',
-						data: $(form).serialize() + 'tsAjax=y',
-						success: function (data) {
-							var parsedpage = $.parseHTML(data),
-							tbody = $(parsedpage).find(id + ' tbody');
-							$(id + ' tbody').html(tbody.html());
-							$(id + ' input[type="checkbox"]').prop('checked', false);
-						}
-					});
-				}
-			};
 	{/jq}
 {/if}

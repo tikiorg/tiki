@@ -2,12 +2,15 @@
 {title help="Server Check"}{tr}Server Check{/tr}{/title}
 
 <h2>{tr}MySQL or MariaDB Database Properties{/tr}</h2>
+<form method="post" action="tiki-check.php">
+<input class="registerSubmit" type="submit" class="btn btn-default" name="acknowledge" value="{tr}Acknowledge{/tr}">
 <div class="table-responsive">
 	<table class="table normal">
 		<tr>
 			<th>{tr}Property{/tr}</th>
 			<th>{tr}Value{/tr}</th>
 			<th>{tr}Tiki Fitness{/tr}</th>
+			<th>{tr}Acknowledge{/tr}</th>
 			<th>{tr}Explanation{/tr}</th>
 		</tr>
 
@@ -29,6 +32,7 @@
 					{/if}
 					{$item.fitness}
 				</td>
+				<td class="text"><input type="checkbox" name="{$key}" {if $item.fitness eq 'good'}disabled{/if} {if $item.ack}checked{/if} /></td>
 				<td class="text">{$item.message}</td>
 			</tr>
 		{foreachelse}
@@ -86,6 +90,7 @@
 			<th>{tr}Property{/tr}</th>
 			<th>{tr}Value{/tr}</th>
 			<th>{tr}Tiki Fitness{/tr}</th>
+			<th>{tr}Acknowledge{/tr}</th>
 			<th>{tr}Explanation{/tr}</th>
 		</tr>
 
@@ -107,6 +112,7 @@
 					{/if}
 					{$item.fitness}
 				</td>
+				<td class="test"><input type="checkbox" name="{$key}" {if $item.fitness eq 'good'}disabled{/if} {if $item.ack}checked{/if} /></td>
 				<td class="text">{$item.message}</td>
 			</tr>
 		{foreachelse}
@@ -158,6 +164,7 @@
 				<th>{tr}Property{/tr}</th>
 				<th>{tr}Value{/tr}</th>
 				<th>{tr}Tiki Fitness{/tr}</th>
+				<th>{tr}Acknowledge{/tr}</th>
 				<th>{tr}Explanation{/tr}</th>
 			</tr>
 
@@ -179,6 +186,7 @@
 						{/if}
 						{$item.fitness}
 					</td>
+					<td class="test"><input type="checkbox" name="{$key}" {if $item.fitness eq 'good'}disabled{/if} {if $item.ack}checked{/if} /></td>
 					<td class="text">{$item.message}</td>
 				</tr>
 			{foreachelse}
@@ -198,6 +206,7 @@
 				<th>{tr}Property{/tr}</th>
 				<th>{tr}Value{/tr}</th>
 				<th>{tr}Tiki Fitness{/tr}</th>
+				<th>{tr}Acknowledge{/tr}</th>
 				<th>{tr}Explanation{/tr}</th>
 			</tr>
 
@@ -219,6 +228,7 @@
 						{/if}
 						{$item.fitness}
 					</td>
+					<td class="test"><input type="checkbox" name="{$key}" {if $item.fitness eq 'good'}disabled{/if} {if $item.ack}checked{/if} /></td>
 					<td class="text">{$item.message}</td>
 				</tr>
 			{foreachelse}
@@ -237,6 +247,7 @@
 			<th>{tr}Property{/tr}</th>
 			<th>{tr}Value{/tr}</th>
 			<th>{tr}Tiki Fitness{/tr}</th>
+			<th>{tr}Acknowledge{/tr}</th>
 			<th>{tr}Explanation{/tr}</th>
 		</tr>
 
@@ -258,6 +269,7 @@
 					{/if}
 					{$item.fitness}
 				</td>
+				<td class="test"><input type="checkbox" name="{$key}" {if $item.fitness eq 'good'}disabled{/if} {if $item.ack}checked{/if} /></td>
 				<td class="text">{$item.message}</td>
 			</tr>
 		{foreachelse}
@@ -274,6 +286,7 @@
 			<th>{tr}Property{/tr}</th>
 			<th>{tr}Value{/tr}</th>
 			<th>{tr}Tiki Fitness{/tr}</th>
+			<th>{tr}Acknowledge{/tr}</th>
 			<th>{tr}Explanation{/tr}</th>
 		</tr>
 
@@ -295,6 +308,7 @@
 					{/if}
 					{$item.fitness}
 				</td>
+				<td class="test"><input type="checkbox" name="{$key}" {if $item.fitness eq 'safe'}disabled{/if} {if $item.ack}checked{/if} /></td>
 				<td class="text">{$item.message}</td>
 			</tr>
 		{foreachelse}
@@ -302,6 +316,7 @@
 		{/foreach}
 	</table>
 </div>
+</form>
 
 <h2>{tr}MySQL Variable Information{/tr}</h2>
 <div class="table-responsive">
