@@ -372,26 +372,22 @@
 {/if}
 
 {jq notonready=true}
-	{
-		{if $allowTxt eq 'n'}
-			document.getElementById('txtcol1').style.display='none';
-			document.getElementById('txtcol2').style.display='none';
-		{/if}
-	}
-	{
-		{if $allowArticleClip eq 'n'}
-			document.getElementById('clipcol1').style.display='none';
-			document.getElementById('clipcol2').style.display='none';
-		{/if}
-	}
+{{if $allowTxt eq 'n'}
+document.getElementById('txtcol1').style.display='none';
+document.getElementById('txtcol2').style.display='none';
+{/if}}
+{{if $allowArticleClip eq 'n'}
+document.getElementById('clipcol1').style.display='none';
+document.getElementById('clipcol2').style.display='none';
+{/if}}
 
-	var newsletterfileid={{$info.files|@count}};
-	function add_newsletter_file() {
-		document.getElementById('newsletterfileshack').innerHTML='<div id="newsletterfileid_'+newsletterfileid+'"><a href="javascript:remove_newsletter_file('+newsletterfileid+');">[{{tr}remove{/tr}}]</a> <input type="file" name="newsletterfile['+newsletterfileid+']"></div>';
-		document.getElementById('newsletterfiles').appendChild(document.getElementById('newsletterfileid_'+newsletterfileid));
-		newsletterfileid++;
-	}
-	function remove_newsletter_file(id) {
-		document.getElementById('newsletterfiles').removeChild(document.getElementById('newsletterfileid_'+id));
-	}
+var newsletterfileid={{$info.files|@count}};
+function add_newsletter_file() {
+	document.getElementById('newsletterfileshack').innerHTML='<div id="newsletterfileid_'+newsletterfileid+'"><a href="javascript:remove_newsletter_file('+newsletterfileid+');">[{{tr}remove{/tr}}]</a> <input type="file" name="newsletterfile['+newsletterfileid+']"></div>';
+	document.getElementById('newsletterfiles').appendChild(document.getElementById('newsletterfileid_'+newsletterfileid));
+	newsletterfileid++;
+}
+function remove_newsletter_file(id) {
+	document.getElementById('newsletterfiles').removeChild(document.getElementById('newsletterfileid_'+id));
+}
 {/jq}
