@@ -18,11 +18,12 @@ $cachelib = TikiLib::lib('cache');
 if (isset($_GET['do'])) {
 	$cachelib->empty_cache($_GET['do']);
 	if ($_GET['do'] === 'all') {
-		// seems combination of clearing prefs and public now messes up the page, so reload (tiki 11)
+		// seems combination of clearing prefs and public now messes up the page, so reload
 		include_once('lib/setup/prefs.php');
 		initialize_prefs();
 		include('lib/setup/mobile.php');
 		include('lib/setup/javascript.php');
+		include('lib/setup/theme.php');
 	}
 }
 if (isset($_GET['compiletemplates'])) {
