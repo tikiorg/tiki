@@ -294,7 +294,6 @@ if (isset($_REQUEST["preview"])) {
 	$smarty->assign_by_ref('info', $info);
 	$smarty->assign('previewdata', $previewdata);
 
-	$tikilib = TikiLib::lib('tiki');
 	$themelib = TikiLib::lib('theme');
 	$news_cssfile = $themelib->get_theme_path($prefs['theme_site'], '', 'newsletter.css');
 	$news_cssfile_option = $themelib->get_theme_path($prefs['theme_site'], $prefs['theme_option_site'], 'newsletter.css');
@@ -319,6 +318,7 @@ if (isset($_REQUEST["save"])) {
 		$wikiparse = 'n';
 	}
 	$info['is_html'] = !empty($_REQUEST['is_html']);
+	$tikilib = TikiLib::lib('tiki');
 	if (!empty($_REQUEST["usedTpl"])) {
 		$smarty->assign('dataparsed', (($wikiparse == 'y') ? $tikilib->parse_data($_REQUEST["data"], array('absolute_links' => true, 'suppress_icons' => true)) : $_REQUEST['data']));
 		$smarty->assign('subject', $_REQUEST["subject"]);
