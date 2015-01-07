@@ -53,7 +53,14 @@ function module_switch_theme($mod_reference, &$module_params)
 	//get the list of available themes and options
 	$available_themesandoptions = $themelib->get_available_themesandoptions();
 	$smarty->assign('available_themesandoptions', $available_themesandoptions);
-
+	
+	//check if CSS Editor's try theme is on 
+	if (!empty($_SESSION['try_theme'])) {
+		list($css_theme, $css_theme_option) = $themelib->extract_theme_and_option($_SESSION['try_theme']);
+		$smarty->assign('css_theme', $css_theme);
+		$smarty->assign('css_theme_option', $css_theme_option);
+	}
+	
 	//themegenerator
 	if ($prefs['themegenerator_feature'] === 'y') {
 		include_once 'lib/prefs/themegenerator.php';

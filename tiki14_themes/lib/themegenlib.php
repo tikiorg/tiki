@@ -216,6 +216,7 @@ class ThemeGenLib
 		}
 
 		if (empty($css_file)) {
+			$themelib = TikiLib::lib('theme');
 			if (!empty($_REQUEST['tg_css_file'])) {
 				$css_file = $_REQUEST['tg_css_file'];
 			} else if ($data) {
@@ -230,10 +231,10 @@ class ThemeGenLib
 					}
 				}
 				if ( !$css_file_found ) {
-					$css_file = $tikilib->get_style_path() . $prefs['style'];
+					$css_file = $themelib->get_theme_path() . $prefs['theme_active'] . '/css/tiki.css';
 				}
 			} else {
-				$css_file = $tikilib->get_style_path() . $prefs['style'];
+				$css_file = $themelib->get_theme_path() . $prefs['theme_active'] . '/css/tiki.css';
 			}
 		}
 		$mincss = $headerlib->minify_css($css_file);	// clean out comments etc
@@ -285,14 +286,15 @@ class ThemeGenLib
     public function setupCSSFiles ()
 	{
 		global $tikilib, $prefs, $style_base;
-
+		$themelib = TikiLib::lib('theme');
+		
 		$css_files = array('' => tra('Select...'));
 
-		if (!empty($prefs['style_option']) && $prefs['style_option'] !== tra('None')) {
-			$css_files[$tikilib->get_style_path($prefs['style'], $prefs['style_option'], $prefs['style_option'])] = $style_base . '/' . $prefs['style_option'];
+		if (!empty($prefs['theme_option_active']) && $prefs['theme_option_active'] !== '') {
+			$css_files[$themelib->get_theme_path($prefs['theme_active'], $prefs['theme_option_active'], $prefs['theme_option_active'])] = $prefs['theme_active'] . '/' . $prefs['theme_option_active'];
 		}
 
-		$css_files[$tikilib->get_style_path('', '', $prefs['style'])] = $prefs['style'];
+		$css_files[$themelib->get_theme_path('', '', $prefs['theme_active'])] = $prefs['theme_active'];
 
 		// shame - doesn't work on @imported files, might be a way with minified on...
 		//		preg_match_all( '/@import\s+url\("([^;]*)"\);/', $css, $parts );
@@ -441,8 +443,8 @@ class ThemeGenTheme extends SerializedList
 
 		$this->data = array(
 				'files' => array(),
-				'theme' => $prefs['style'],
-				'theme-option' => '',			//$prefs['style_option'],
+				'theme' => $prefs['theme_active'],
+				'theme-option' => $prefs['theme_option_active'],
 		);
 
 		$this->initDone = false;
@@ -480,10 +482,10 @@ class ThemeGenTheme extends SerializedList
 				}
 			}
 		}
-
-		$this->data['theme'] = $prefs['style'];
-		if ( in_array($prefs['style_option'], array_keys($this->data['files']))) {
-			$this->data['theme-option'] = $prefs['style_option'];
+		
+		$this->data['theme'] = $prefs['theme_active'];
+		if ( in_array($prefs['theme_option_active'], array_keys($this->data['files']))) {
+			$this->data['theme-option'] = $prefs['theme_option_active'];
 		} else {
 			$this->data['theme-option'] = '';
 		}

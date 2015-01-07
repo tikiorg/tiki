@@ -95,19 +95,6 @@ class cssLib extends TikiLib
 		return $back;
 	}
 
-	/* nickname = fivealive or Bidi/Bidi */
-	/* write = in multidomain we always write in subdir domain but we read domain/file if exists or file */
-	function get_nickname_path($nickname, $styledir, $write=false)
-	{
-		global $tikidomain;
-		if (!strstr($nickname, '\/') && !empty($tikidomain) && (is_file("$styledir/$tikidomain/$nickname.css") || $write)) {
-			$style = "$styledir/$tikidomain/$nickname.css";
-		} else {
-			$style = "$styledir/$nickname.css";
-		}
-		return $style;
-	}
-
 	function browse_css($path)
 	{
 		if (!is_file($path)) {

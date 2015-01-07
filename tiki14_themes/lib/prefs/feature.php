@@ -1701,7 +1701,7 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_editcss' => array(
 			'name' => tra('Edit CSS'),
-            'description' => tra(''),
+			'description' => tra('Edit css files directly from the browser.'),
 			'type' => 'flag',
 			'help' => 'Edit+CSS',
 			'perspective' => false,

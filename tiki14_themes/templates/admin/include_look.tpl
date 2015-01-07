@@ -2,7 +2,13 @@
 <form action="tiki-admin.php?page=look" id="look" name="look" class="form-horizontal labelColumns" class="admin" method="post">
 	<div class="form-group col-lg-12">
 		{if $prefs.feature_theme_control eq y}
-			{button _text="{tr}Theme Control{/tr}" href="tiki-theme_control.php" _class="btn-sm"}
+			{button _text="{tr}Theme Control{/tr}" href="tiki-theme_control.php" _class="btn-sm tikihelp" }
+		{/if}
+		{if $prefs.themegenerator_feature eq "y" and !empty($prefs.themegenerator_theme)}
+			{button _text="{tr}Theme Generator{/tr}" _name="themegenerator" _class="tgFloatDialog btn-sm" href="#" _onclick="openThemeGenDialog();return false;"}
+		{/if}
+		{if $prefs.feature_editcss eq 'y' and $tiki_p_create_css eq 'y'}
+			{button _text="{tr}CSS Editor{/tr}" _class="btn-sm" href="tiki-edit_css.php"}
 		{/if}
 		<div class="pull-right">
 			<input type="submit" class="btn btn-primary btn-sm" name="looksetup" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}" />
@@ -217,11 +223,10 @@
 				<div class="adminoptionboxchild" id="themegenerator_feature_childcontainer">
 					<div class="adminoptionbox">
 						{preference name="themegenerator_theme"}
-						<div class="adminoptionboxchild" id="themegenerator_feature_childcontainer">
-
+						<div class="adminoptionboxchild pull-right" id="themegenerator_feature_childcontainer">
 							<input type="text" name="tg_edit_theme_name" value="{$tg_edit_theme_name|default:''|escape}"{if !empty($prefs.themegenerator_theme)} style="display:none;"{/if} />
-							<input type="submit" class="btn btn-default btn-sm" name="tg_new_theme" value="{tr}New{/tr}"{if !empty($prefs.themegenerator_theme)} style="display:none;"{/if} />
-							<input type="submit" class="btn btn-default btn-sm" name="tg_delete_theme" value="{tr}Delete{/tr}"{if empty($prefs.themegenerator_theme)} style="display:none;"{/if} />
+							<input type="submit" class="btn btn-primary btn-sm" name="tg_new_theme" value="{tr}New{/tr}"{if !empty($prefs.themegenerator_theme)} style="display:none;"{/if} />
+							<input type="submit" class="btn btn-warning btn-sm" name="tg_delete_theme" value="{tr}Delete{/tr}"{if empty($prefs.themegenerator_theme)} style="display:none;"{/if} />
 							{jq}
 								$("select[name=themegenerator_theme]").change(function(){
 								if ($(this)[0].selectedIndex === 0) {
@@ -235,10 +240,6 @@
 								}
 								}).change();
 							{/jq}
-							{if $prefs.feature_jquery_ui eq "y" and $prefs.feature_ajax eq "y" and not empty($prefs.themegenerator_theme)}
-								{* TODO make non-live themes editable & previewable *}
-								{button _text="{tr}Open editor{/tr}" _class="tgFloatDialog" href="#"}
-							{/if}
 						</div>
 					</div>
 					<div class="adminoptionbox">
@@ -277,14 +278,6 @@
 			<fieldset>
 				<legend>{tr}Editing{/tr}</legend>
 				{preference name=feature_editcss}
-				{if $prefs.feature_editcss eq 'y'}
-					<div class="adminoptionboxchild">
-						{if $tiki_p_create_css eq 'y'}
-							{button _text="{tr}Edit CSS{/tr}" href="tiki-edit_css.php"}
-						{/if}
-					</div>
-				{/if}
-
 				{preference name=feature_view_tpl}
 				{if $prefs.feature_view_tpl eq 'y'}
 					<div class="adminoptionboxchild">
