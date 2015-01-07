@@ -49,8 +49,8 @@
 .cssmenu_horiz ul,
 .cssmenu_vert ul {
   box-shadow: 2px 2px 6px rgba(0,0,0,.2);
-  min-width: 12em; /* allow long menu items to determine submenu width */
-  *width: 12em; /* no auto sub width for IE7, see white-space comment below */
+//  min-width: 12em; /* allow long menu items to determine submenu width */
+//  *width: 12em; /* no auto sub width for IE7, see white-space comment below */
 }
 .cssmenu_horiz a,
 .cssmenu_vert a  {
@@ -62,8 +62,9 @@
 }
 .cssmenu_horiz a,
 .cssmenu_vert a {
-  color: @navbar-default-link-color;
+//  color: @navbar-default-link-color;
 }
+
 .cssmenu_horiz li,
 .cssmenu_vert li {
   background: transparent;
@@ -77,7 +78,7 @@
 .cssmenu_vert ul li,
 .cssmenu_horiz ul ul li,
 .cssmenu_vert ul ul li {
-  background: @dropdown-bg;
+//  background: @dropdown-bg;
 }
 
 .cssmenu_horiz li:hover,
@@ -113,8 +114,8 @@
   margin-top: -5px;
   margin-right: -3px;
   border-color: transparent;
-  border-left-color: red; // @link-color; /* edit this to suit design (no rgba in IE8) */
-  border-left-color: rgba(255,255,255,.5);
+  border-left-color: @dropdown-link-color; // @link-color; /* edit this to suit design (no rgba in IE8) */
+//  border-left-color: rgba(255,255,255,.5);
 }
 .sf-arrows ul li > .sf-with-ul:focus:after,
 .sf-arrows ul li:hover > .sf-with-ul:after,

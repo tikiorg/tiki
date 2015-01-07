@@ -7,7 +7,7 @@
 
 		{if !isset($drilldownmenu) or $drilldownmenu neq 'y'}
 			{assign var="menuId" value="cssmenu{$idCssmenu}"}
-			{assign var="menuClass" value="cssmenu{if $menu_type}_{$menu_type}{/if} menu{$menu_info.menuId}"}
+			{assign var="menuClass" value="nav cssmenu{if $menu_type}_{$menu_type}{/if} menu{$menu_info.menuId}"}
 		{else}
 			{assign var="menuId" value="drilldownmenu{$idCssmenu}"}
 			{assign var="menuClass" value="drilldownmenu{if $menu_type}_{$menu_type}{/if} menu{$menu_info.menuId}"}
@@ -33,7 +33,7 @@
 						{/if}
 					{/if}
 
-					<li class="option{$chdata.optionId} menuSection menuSection{$opensec} menuLevel{$opensec}{if isset($chdata.selected) and $chdata.selected} selected{/if}{if isset($chdata.selectedAscendant) and $chdata.selectedAscendant} selectedAscendant{/if}">
+					<li class="dropdown option{$chdata.optionId} menuSection menuSection{$opensec} menuLevel{$opensec}{if isset($chdata.selected) and $chdata.selected} selected{/if}{if isset($chdata.selectedAscendant) and $chdata.selectedAscendant} selectedAscendant{/if}">
 					{if empty($chdata.block)}
 						<a{if !empty($chdata.url)} href="{if $prefs.feature_sefurl eq 'y' and $chdata.sefurl}
 									{if $prefs.menus_item_names_raw eq 'n'}
@@ -70,7 +70,7 @@
 						{/if}
 					{/if}
 					{assign var=opensec value=$opensec+1}
-					<ul>
+					<ul class="dropdown-menu">
 
 				{* ----------------------------- option *}
 				{elseif $chdata.type eq 'o'}

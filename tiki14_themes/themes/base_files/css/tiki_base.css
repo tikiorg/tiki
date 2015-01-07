@@ -2604,19 +2604,11 @@ body > .ui-front {
 .cssmenu_horiz ul,
 .cssmenu_vert ul {
   box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
-  min-width: 12em;
-  /* allow long menu items to determine submenu width */
-  *width: 12em;
-  /* no auto sub width for IE7, see white-space comment below */
 }
 .cssmenu_horiz a,
 .cssmenu_vert a {
   padding: .75em 1em;
   text-decoration: none;
-}
-.cssmenu_horiz a,
-.cssmenu_vert a {
-  color: #777777;
 }
 .cssmenu_horiz li,
 .cssmenu_vert li {
@@ -2624,12 +2616,6 @@ body > .ui-front {
   white-space: normal;
   -webkit-transition: background .2s;
   transition: background .2s;
-}
-.cssmenu_horiz ul li,
-.cssmenu_vert ul li,
-.cssmenu_horiz ul ul li,
-.cssmenu_vert ul ul li {
-  background: #ffffff;
 }
 .cssmenu_horiz li:hover,
 .cssmenu_horiz li.sfHover,
@@ -2663,8 +2649,7 @@ body > .ui-front {
   margin-top: -5px;
   margin-right: -3px;
   border-color: transparent;
-  border-left-color: red;
-  border-left-color: rgba(255, 255, 255, 0.5);
+  border-left-color: #333333;
 }
 .sf-arrows ul li > .sf-with-ul:focus:after,
 .sf-arrows ul li:hover > .sf-with-ul:after,
