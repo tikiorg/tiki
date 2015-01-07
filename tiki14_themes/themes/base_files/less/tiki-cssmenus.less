@@ -67,20 +67,19 @@
 .cssmenu_horiz li,
 .cssmenu_vert li {
   background: transparent;
-  white-space: nowrap; /* no need for Supersubs plugin */
-  *white-space: normal; /* ...unless you support IE7 (let it wrap) */
+  white-space: normal; //  white-space: nowrap; /* no need for Supersubs plugin */
+//  *white-space: normal; /* ...unless you support IE7 (let it wrap) */
   -webkit-transition: background .2s;
   transition: background .2s;
 }
+
 .cssmenu_horiz ul li,
-.cssmenu_vert ul li {
-  background: @dropdown-bg;
-}
+.cssmenu_vert ul li,
 .cssmenu_horiz ul ul li,
 .cssmenu_vert ul ul li {
-//  background: @dropdown-bg;
   background: @dropdown-bg;
 }
+
 .cssmenu_horiz li:hover,
 .cssmenu_horiz li.sfHover,
 .cssmenu_vert li:hover,
@@ -93,7 +92,6 @@
 /*** arrows (for all except IE7) **/
 .sf-arrows .sf-with-ul {
   padding-right: 2.5em;
-  *padding-right: 1em; /* no CSS arrows for IE7 (lack pseudo-elements) */
 }
 /* styling for both css and generated arrows */
 .sf-arrows .sf-with-ul:after {
@@ -106,41 +104,37 @@
   width: 0;
   /* order of following 3 rules important for fallbacks to work */
   border: 5px solid transparent;
-//  border-top-color: @link-color; /* edit this to suit design (no rgba in IE8) */
+  border-top-color: @dropdown-link-color; /* edit this to suit design (no rgba in IE8) */
 //  border-top-color: rgba(255,255,255,.5);
 }
-.sf-arrows > li > .sf-with-ul:focus:after,
-.sf-arrows > li:hover > .sf-with-ul:after,
-.sf-arrows > .sfHover > .sf-with-ul:after {
-  border-top-color: white; /* IE8 fallback colour */
-}
+
 /* styling for right-facing arrows */
 .sf-arrows ul .sf-with-ul:after {
   margin-top: -5px;
   margin-right: -3px;
   border-color: transparent;
-  border-left-color: @link-color; /* edit this to suit design (no rgba in IE8) */
+  border-left-color: red; // @link-color; /* edit this to suit design (no rgba in IE8) */
   border-left-color: rgba(255,255,255,.5);
 }
 .sf-arrows ul li > .sf-with-ul:focus:after,
 .sf-arrows ul li:hover > .sf-with-ul:after,
 .sf-arrows ul .sfHover > .sf-with-ul:after {
-  border-left-color: @link-hover-color;
+  border-left-color: @dropdown-link-hover-color;
 }
 
-/* adding sf-vertical class in addition to sf-menu creates a vertical menu */
-/* eg. <ul class="sf-menu sf-vertical"> ... */
-.cssmenu_vert {
-  width: 12em;
-  /* If you want the width of the closed menu to expand to its
-  widest top-level menu item (like its "Supersubs" submenus do),
-  replace the width rule above with the following two rules. */
-  /*
-
-    min-width: 12em;
-    *width: 12em;
-    */
-}
+// /* adding sf-vertical class in addition to sf-menu creates a vertical menu */
+// /* eg. <ul class="sf-menu sf-vertical"> ... */
+// .cssmenu_vert {
+//  width: 12em;
+//  /* If you want the width of the closed menu to expand to its
+//  widest top-level menu item (like its "Supersubs" submenus do),
+//  replace the width rule above with the following two rules. */
+//  /*
+//
+//    min-width: 12em;
+//    *width: 12em;
+//    */
+// }
 
 .panel-body ul.cssmenu_vert {
   overflow: visible;
@@ -155,20 +149,19 @@
 .cssmenu_vert > li {
   float: none;
 }
-.cssmenu_vert li {
-  width: 100%;
-}
+// .cssmenu_vert li {
+//  width: 100%;
+// }
 
 /*** alter arrow directions ***/
 .cssmenu_vert.sf-arrows > li > .sf-with-ul:after {
   margin-top: -5px;
   margin-right: -3px;
   border-color: transparent;
-  border-left-color: @link-color; /* edit this to suit design (no rgba in IE8) */
-  border-left-color: rgba(255,255,255,.5);
+  border-left-color: @dropdown-link-color;
 }
 .cssmenu_vert.sf-arrows li > .sf-with-ul:focus:after,
 .cssmenu_vert.sf-arrows li:hover > .sf-with-ul:after,
 .cssmenu_vert.sf-arrows .sfHover > .sf-with-ul:after {
-  border-left-color: @link-hover-color;
+  border-left-color: @dropdown-link-hover-color; // white;
 }
