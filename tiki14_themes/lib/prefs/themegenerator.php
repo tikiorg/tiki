@@ -15,20 +15,16 @@ function prefs_themegenerator_list($partial = false)
 		$themes = array('' => tra('New...'));
 		
 		$list = $themegenlib->getCurrentTheme()->getPrefList();
-		//var_dump($list);
 		if (count($list) > 0) {
 			$list = array_filter($list);
 			sort($list);
 			foreach ( $list as $item ) {
 				$tm = new ThemeGenTheme($item);
-				//var_dump($tm);
 				$d = $tm->getData();
-				//var_dump($d);
-				if ((empty($d['theme']) || $d['theme'] === $prefs['theme_active']) &&
-						(empty($d['theme-option']) || $d['theme-option'] === $prefs['theme_option_active'])) {
+				if ((empty($d['theme']) || $d['theme'] === $prefs['style']) &&
+						(empty($d['theme-option']) || $d['theme-option'] === $prefs['style_option'])) {
 					$themes[$item] = $item;
 				}
-				//var_dump($themes);
 			}
 		}
 	} else {
@@ -47,7 +43,7 @@ function prefs_themegenerator_list($partial = false)
 		),
 		'themegenerator_theme' => array(
 			'name' => tra('Custom Theme'),
-			'description' => tra('Basic theme customization'),
+			'description' => tra('Description needed'),
 			'type' => 'list',
 			'options' => $themes,
 			'dependencies' => 'themegenerator_feature',

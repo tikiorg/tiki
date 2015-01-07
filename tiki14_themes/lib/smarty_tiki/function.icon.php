@@ -34,7 +34,6 @@ function smarty_function_icon($params, $smarty)
 
 	global $prefs, $tc_theme, $tc_theme_option, $url_path, $base_url, $tikipath, $iconset;
 	$tikilib = TikiLib::lib('tiki');
-	$themelib = TikiLib::lib('theme');
 	$cachelib = TikiLib::lib('cache');
 
 	if (empty($tc_theme)) {
@@ -193,8 +192,8 @@ function smarty_function_icon($params, $smarty)
 			switch ( $k ) {
 				case '_id':
 					$v = $icons_basedir.$v.$icons_extension;
-					if ($themelib != NULL)
-						$v2 = $themelib->get_theme_path($prefs['theme_active'], $prefs['theme_option_active'], $v);
+					if ($tikilib != NULL)
+						$v2 = $tikilib->get_style_path($prefs['style'], $prefs['style_option'], $v);
 
 					if (!empty($v2)) {
 						$params['file'] = $v2;
