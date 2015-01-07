@@ -173,8 +173,8 @@
 			{/if}
 			{if $structure eq 'y' or ( $structure eq 'n' and count($showstructs) neq 0 )}
 				<div class="btn-group structures">
-					<a class="dropdown-toggle" data-toggle="dropdown">
-						{icon name="structure" title=":{tr}Structures{/tr}" class="btn btn-link btn-sm icon tikihelp"}
+					<a class="btn btn-link btn-sm tikihelp dropdown-toggle" data-toggle="dropdown" title=":{tr}Structures{/tr}">
+						{icon name="structure"}
 					</a>
 					<ul class="structure_poppedup dropdown-menu" role="menu">
 						<li role="presentation">
