@@ -2727,6 +2727,18 @@ body.tiki.navbar-padding {
 .tiki.dropdown-menu {
   padding: 0;
 }
+.tiki .dropdown-menu li:first-of-type {
+  margin-top: -5px;
+}
+.tiki .dropdown-menu li:first-of-type > a {
+  padding-top: 10px;
+}
+.tiki .dropdown-menu li:last-of-type {
+  margin-bottom: -5px;
+}
+.tiki .dropdown-menu li:last-of-type > a {
+  padding-bottom: 10px;
+}
 .tiki .popover {
   max-width: inherit;
 }
