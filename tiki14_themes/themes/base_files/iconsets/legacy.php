@@ -367,7 +367,7 @@ $icons = array(
 		'image_src' => 'img/icons/no_eye.png',
 	),
 	'structure' => array(
-		'image_src' => 'img/icons/chart_organization.png',
+		'image_src' => 'img/icons/chart_organisation.png',
 	),
 	'success' => array(
 		'image_src' => 'img/icons/tick.png',
