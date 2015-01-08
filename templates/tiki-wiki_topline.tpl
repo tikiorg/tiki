@@ -1,3 +1,4 @@
+{* $Id$ *}
 <div class="wikitopline clearfix" style="clear: both;">
 	<div class="content">
 		{if !isset($hide_page_header) or !$hide_page_header}
@@ -32,7 +33,7 @@
 
 			{if $prefs.flaggedrev_approval neq 'y' or ! $revision_approval or $lastVersion eq $revision_displayed}
 				{if $editable and ($tiki_p_edit eq 'y' or $page|lower eq 'sandbox') and $beingEdited ne 'y' and $machine_translate_to_lang eq ''}
-					<a class="btn btn-link btn-sm tikihelp" title=":{tr}Edit this page{/tr}" {ajax_href template="tiki-editpage.tpl"}tiki-editpage.php?page={$page|escape:"url"}{if !empty($page_ref_id) and $needsStaging neq 'y'}&amp;page_ref_id={$page_ref_id}{/if}{/ajax_href}>
+					<a class="btn btn-link btn-sm tikihelp" title=":{tr}Click to edit this page{/tr}" {ajax_href template="tiki-editpage.tpl"}tiki-editpage.php?page={$page|escape:"url"}{if !empty($page_ref_id) and $needsStaging neq 'y'}&amp;page_ref_id={$page_ref_id}{/if}{/ajax_href}>
 						{icon name="edit"}
 					</a>
 					{if $prefs.wiki_edit_icons_toggle eq 'y' and ($prefs.wiki_edit_plugin eq 'y' or $prefs.wiki_edit_section eq 'y')}
@@ -125,11 +126,11 @@
 				{/if}
 				{if $structure eq 'y' and $tiki_p_watch_structure eq 'y'}
 					{if $user_watching_structure ne 'y'}
-						<a class="btn btn-link btn-sm tikihelp" title=":{tr}Monitor the sub-structure{/tr}" href="tiki-index.php?page={$page|escape:"url"}&amp;watch_event=structure_changed&amp;watch_object={$page_info.page_ref_id}&amp;watch_action=add_desc&amp;structure={$home_info.pageName|escape:'url'}">
+						<a class="btn btn-link btn-sm tikihelp" title="{tr}Sub-structure is NOT being monitored:Click icon to START monitoring.{/tr}" href="tiki-index.php?page={$page|escape:"url"}&amp;watch_event=structure_changed&amp;watch_object={$page_info.page_ref_id}&amp;watch_action=add_desc&amp;structure={$home_info.pageName|escape:'url'}">
 							{icon name="watch"}
 						</a>
 					{else}
-						<a class="btn btn-link btn-sm tikihelp" title=":{tr}Stop Monitoring the sub-structure{/tr}" href="tiki-index.php?page={$page|escape:"url"}&amp;watch_event=structure_changed&amp;watch_object={$page_info.page_ref_id}&amp;watch_action=remove_desc&amp;structure={$home_info.pageName|escape:'url'}">
+						<a class="btn btn-link btn-sm tikihelp" title="{tr}Sub-structure IS being monitored:Click icon to STOP monitoring.{/tr}" href="tiki-index.php?page={$page|escape:"url"}&amp;watch_event=structure_changed&amp;watch_object={$page_info.page_ref_id}&amp;watch_action=remove_desc&amp;structure={$home_info.pageName|escape:'url'}">
 							{icon name="stop-watching"}
 						</a>
 					{/if}
@@ -173,13 +174,13 @@
 			{/if}
 			{if $structure eq 'y' or ( $structure eq 'n' and count($showstructs) neq 0 )}
 				<div class="btn-group structures">
-					<a class="btn btn-link btn-sm tikihelp dropdown-toggle" data-toggle="dropdown" title=":{tr}Structures{/tr}">
+					<a class="btn btn-link btn-sm tikihelp dropdown-toggle" data-toggle="dropdown" title=":{tr}Click icon to show drop down list of all Structures this page is part of{/tr}">
 						{icon name="structure"}
 					</a>
 					<ul class="structure_poppedup dropdown-menu" role="menu">
 						<li role="presentation">
 							{section name=struct loop=$showstructs}
-								<a href="tiki-index.php?page={$page}&structure={$showstructs[struct].pageName|escape}" {if $showstructs[struct].pageName eq $structure_path[0].pageName} title="Current structure: {$showstructs[struct].pageName|escape}" class="selected" {else} title="Show structure: {$showstructs[struct].pageName|escape}"{/if}>
+								<a href="tiki-index.php?page={$page}&structure={$showstructs[struct].pageName|escape}" {if $showstructs[struct].pageName eq $structure_path[0].pageName} title="Current structure: {$showstructs[struct].pageName|escape}" class="selected" {else} title="Click to move to structure: {$showstructs[struct].pageName|escape}"{/if}>
 									{if $showstructs[struct].page_alias}
 										{$showstructs[struct].page_alias}
 									{else}
@@ -190,7 +191,7 @@
 							{if $showstructs[struct].pageName neq $structure_path[0].pageName}
 								<li role="presentation" class="divider"></li>
 								<li role="presentation">
-									<a href="tiki-index.php?page={$page|escape:url}" title="{tr}Hide structure bar{/tr}">
+									<a href="tiki-index.php?page={$page|escape:url}" title="{tr}Hide structure bar and any toc{/tr}">
 										{tr}Hide structure{/tr}
 									</a>
 								</li>
