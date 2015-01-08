@@ -2617,6 +2617,12 @@ body > .ui-front {
   -webkit-transition: background .2s;
   transition: background .2s;
 }
+.cssmenu_horiz ul li,
+.cssmenu_vert ul li,
+.cssmenu_horiz ul ul li,
+.cssmenu_vert ul ul li {
+  background: #ffffff;
+}
 .cssmenu_horiz li:hover,
 .cssmenu_horiz li.sfHover,
 .cssmenu_vert li:hover,
@@ -2727,16 +2733,20 @@ body.tiki.navbar-padding {
 .tiki.dropdown-menu {
   padding: 0;
 }
-.tiki .dropdown-menu li:first-of-type {
+.tiki .dropdown-menu li:first-of-type,
+.menuSection ul li:first-of-type {
   margin-top: -5px;
 }
-.tiki .dropdown-menu li:first-of-type > a {
+.tiki .dropdown-menu li:first-of-type > a,
+.menuSection ul li:first-of-type > a {
   padding-top: 10px;
 }
-.tiki .dropdown-menu li:last-of-type {
+.tiki .dropdown-menu li:last-of-type,
+.menuSection ul li:last-of-type {
   margin-bottom: -5px;
 }
-.tiki .dropdown-menu li:last-of-type > a {
+.tiki .dropdown-menu li:last-of-type > a,
+.menuSection ul li:last-of-type > a {
   padding-bottom: 10px;
 }
 .tiki .popover {

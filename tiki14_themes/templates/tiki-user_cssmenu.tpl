@@ -70,7 +70,7 @@
 						{/if}
 					{/if}
 					{assign var=opensec value=$opensec+1}
-					<ul class="dropdown-menu">
+					<ul>
 
 				{* ----------------------------- option *}
 				{elseif $chdata.type eq 'o'}
