@@ -7,6 +7,6 @@
 
 interface Tracker_Field_Filterable
 {
-	function getAvailableFilters();
+	function getFilterCollection();
 }
 

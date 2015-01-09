@@ -7,19 +7,22 @@
 
 namespace Tracker\Filter\Control;
 
-class TextField implements Control
+class MultiSelect implements Control
 {
 	private $fieldName;
-	private $value = '';
+	private $options;
+	private $values = [];
 
-	function __construct($name)
+	function __construct($name, array $options)
 	{
 		$this->fieldName = $name;
+		$this->options = $options;
 	}
 
 	function applyInput(\JitFilter $input)
 	{
-		$this->value = $input->{$this->fieldName}->text();
+		$input->replaceFilter($this->fieldName, 'text');
+		$this->values = $input->asArray($this->fieldName);
 	}
 
 	function getId()
@@ -27,9 +30,9 @@ class TextField implements Control
 		return $this->fieldName;
 	}
 
-	function getValue()
+	function getValues()
 	{
-		return $this->value;
+		return $this->values;
 	}
 
 	function __toString()
@@ -37,8 +40,9 @@ class TextField implements Control
 		$smarty = \TikiLib::lib('smarty');
 		$smarty->assign('control', [
 			'field' => $this->fieldName,
-			'value' => $this->value,
+			'options' => $this->options,
+			'values' => array_fill_keys($this->values, true),
 		]);
-		return $smarty->fetch('filter_control/text_field.tpl');
+		return $smarty->fetch('filter_control/multi_select.tpl');
 	}
 }

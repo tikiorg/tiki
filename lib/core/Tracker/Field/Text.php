@@ -362,7 +362,7 @@ class Tracker_Field_Text extends Tracker_Field_Abstract implements Tracker_Field
 		return $schema;
 	}
 
-	function getAvailableFilters()
+	function getFilterCollection()
 	{
 		$filters = new Tracker\Filter\Collection($this->getTrackerDefinition());
 		$permName = $this->getConfiguration('permName');
@@ -373,8 +373,12 @@ class Tracker_Field_Text extends Tracker_Field_Abstract implements Tracker_Field
 				->setLabel($name)
 				->setHelp(tr('Full text search over the content of the field.'))
 				->setControl(new Tracker\Filter\Control\TextField("tf_{$permName}_ft"))
-				->setApplyCondition(function (JitFilter $input, Search_Query $query) use ($permName) {
-					$query->filterContent($input->{"tf_{$permName}_ft"}->text(), "tracker_field_$permName");
+				->setApplyCondition(function ($control, Search_Query $query) use ($permName) {
+					$value = $control->getValue();
+
+					if ($value) {
+						$query->filterContent($value, "tracker_field_$permName");
+					}
 				})
 				;
 		}

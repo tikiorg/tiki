@@ -71,10 +71,10 @@ class Filter
 		return $this;
 	}
 
-	function applyCondition(\JitFilter $input, \Search_Query $query)
+	function applyCondition(\Search_Query $query)
 	{
 		$cb = $this->applyCondition;
-		$cb($input, $query);
+		$cb($this->control, $query);
 	}
 
 	function applyInput(\JitFilter $input)

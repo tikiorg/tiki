@@ -30,10 +30,10 @@ class Collection
 		return $this->filters;
 	}
 	
-	function applyConditions(\JitFilter $input, \Search_Query $query)
+	function applyConditions(\Search_Query $query)
 	{
 		foreach ($this->filters as $filter) {
-			$filter->applyCondition($input, $query);
+			$filter->applyCondition($query);
 		}
 	}
 
@@ -100,7 +100,7 @@ class Collection
 			throw new Exception\ModeNotSupported($permName, 'any mode');
 		}
 
-		return $handler->getAvailableFilters();
+		return $handler->getFilterCollection();
 	}
 
 	private function getSystemCollection($name)

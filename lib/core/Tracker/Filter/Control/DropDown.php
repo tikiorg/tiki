@@ -7,14 +7,16 @@
 
 namespace Tracker\Filter\Control;
 
-class TextField implements Control
+class DropDown implements Control
 {
 	private $fieldName;
+	private $options;
 	private $value = '';
 
-	function __construct($name)
+	function __construct($name, array $options)
 	{
 		$this->fieldName = $name;
+		$this->options = $options;
 	}
 
 	function applyInput(\JitFilter $input)
@@ -37,8 +39,9 @@ class TextField implements Control
 		$smarty = \TikiLib::lib('smarty');
 		$smarty->assign('control', [
 			'field' => $this->fieldName,
+			'options' => $this->options,
 			'value' => $this->value,
 		]);
-		return $smarty->fetch('filter_control/text_field.tpl');
+		return $smarty->fetch('filter_control/drop_down.tpl');
 	}
 }

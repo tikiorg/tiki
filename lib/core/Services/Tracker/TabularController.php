@@ -200,6 +200,8 @@ class Services_Tracker_TabularController
 		$schema = $this->getSchema($info);
 		$collection = $schema->getFilterCollection();
 
+		$collection->applyInput($input);
+
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			$search = TikiLib::lib('unifiedsearch');
 			$query = $search->buildQuery([
@@ -207,7 +209,7 @@ class Services_Tracker_TabularController
 				'tracker_id' => $trackerId,
 			]);
 
-			$collection->applyConditions($input, $query);
+			$collection->applyConditions($query);
 
 			$source = new \Tracker\Tabular\Source\QuerySource($schema, $query);
 			$writer = new \Tracker\Tabular\Writer\CsvWriter('php://output');
@@ -216,7 +218,6 @@ class Services_Tracker_TabularController
 			exit;
 		}
 
-		$collection->applyInput($input);
 		return [
 			'title' => tr('Export'),
 			'tabularId' => $tabularId,
