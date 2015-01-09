@@ -46,16 +46,16 @@ class Collection
 
 	function loadFilterDescriptor($descriptor)
 	{
-		foreach ($descriptor as $column) {
-			$col = $this->addFilter($column['field'], $column['mode']);
+		foreach ($descriptor as $filter) {
+			$fil = $this->addFilter($filter['field'], $filter['mode']);
 
-			if ($column['label']) {
-				$col->setLabel($column['label']);
+			if ($filter['label']) {
+				$fil->setLabel($filter['label']);
 			}
 		}
 	}
 
-	private function addFilter($permName, $mode)
+	function addFilter($permName, $mode)
 	{
 		if (isset($this->collections[$permName])) {
 			$partial = $this->collections[$permName];
@@ -81,7 +81,7 @@ class Collection
 		throw new Exception\ModeNotSupported($permName, $mode);
 	}
 
-	private function getFieldCollection($permName)
+	function getFieldCollection($permName)
 	{
 		if ($partial = $this->getSystemCollection($permName)) {
 			return $partial;
@@ -115,5 +115,16 @@ class Collection
 			// TODO : Add filters
 			return $collection;
 		}
+	}
+
+	function getFilterDescriptor()
+	{
+		return array_map(function ($filter) {
+			return [
+				'label' => $filter->getLabel(),
+				'field' => $filter->getField(),
+				'mode' => $filter->getMode(),
+			];
+		}, $this->filters);
 	}
 }

@@ -68,6 +68,11 @@ class Schema
 		}, $this->columns);
 	}
 
+	function getFilterDescriptor()
+	{
+		return $this->filters->getFilterDescriptor();
+	}
+
 	function addColumn($permName, $mode)
 	{
 		if (isset($this->schemas[$permName])) {
