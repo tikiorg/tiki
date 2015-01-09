@@ -3925,13 +3925,13 @@ class TikiLib extends TikiDb_Bridge
 
 			if ($my_user == $user ) {
 				$prefs[$name] = $value;
-				if ( $name == 'user_theme' && $prefs['change_theme'] == 'y' ) {
-					$prefs['user_theme'] = $value;
+				if ( $name == 'theme' && $prefs['change_theme'] == 'y' ) {
+					$prefs['users_prefs_theme'] = $value;
 					if ( $value == '' ) {
 						$userPreferences->delete(array('user' => $my_user, 'prefName' => $name));
 					}
-				} elseif ( $name == 'user_theme_option' && $prefs['change_theme'] == 'y' ) {
-					$prefs['user_theme_option'] = $value;
+				} elseif ( $name == 'theme-option' && $prefs['change_theme'] == 'y' ) {
+					$prefs['users_prefs_theme-option'] = $value;
 					if ( $value == '' ) {
 						$userPreferences->delete(array('user' => $my_user, 'prefName' => $name));
 					}
@@ -3944,12 +3944,18 @@ class TikiLib extends TikiDb_Bridge
 			}
 
 		} else { // If $my_user is empty, we must be Anonymous updating one of our own preferences
-			if ( $name == 'user_theme' && $prefs['change_theme'] == 'y' ) {
-				$prefs['user_theme'] = $value;
-				$_SESSION['preferences']['user_theme'] = $value;
-			} elseif ( $name == 'user_theme_option' && $prefs['change_theme'] == 'y' ) {
-				$prefs['user_theme_option'] = $value;
-				$_SESSION['preferences']['user_theme_option'] = $value;
+			if ( $name == 'theme' && $prefs['change_theme'] == 'y' ) {
+				$prefs['users_prefs_theme'] = $value;
+				$_SESSION['preferences']['users_prefs_theme'] = $value;
+				if ( $value == '' ) {
+					unset($_SESSION['preferences']['users_prefs_theme']);
+				}
+			} elseif ( $name == 'theme-option' && $prefs['change_theme'] == 'y' ) {
+				$prefs['users_prefs_theme-option'] = $value;
+				$_SESSION['preferences']['users_prefs_theme-option'] = $value;
+				if ( $value == '' ) {
+					unset($_SESSION['preferences']['users_prefs_theme-option']);
+				}
 			} elseif ( $value == '' ) {
 				if ( in_array($name, $user_overrider_prefs) ) {
 					$prefs[$name] = $prefs['site_'.$name];

@@ -12,11 +12,11 @@ $access->check_script($_SERVER['SCRIPT_NAME'], basename(__FILE__));
 $theme_active = '';
 $theme_option_active = '';
 
-//consider User Theme
-if ($prefs['change_theme'] == 'y' and !empty($prefs['user_theme'])) { //If users are allowed to change theme and user theme preference is set..
-	$theme_active = $prefs['user_theme']; //..than use the user's theme preference..
-	if ( isset($prefs['user_theme_option']) and $prefs['user_theme_option'] != 'None' ) { // ...if theme-option is set, use it.
-		$theme_option_active = $prefs['user_theme_option'];
+//consider User Theme (users_prefs_theme and users_prefs_theme-option are set by lib/setup/user_prefs.php)
+if ($prefs['change_theme'] == 'y' and !empty($prefs['users_prefs_theme'])) { //If users are allowed to change theme and user theme preference is set..
+	$theme_active = $prefs['users_prefs_theme']; //..than use the user's theme preference..
+	if ( isset($prefs['users_prefs_theme-option']) and $prefs['users_prefs_theme-option'] != 'None' ) { // ...if theme-option is set, use it.
+		$theme_option_active = $prefs['users_prefs_theme-option'];
 	}
 	else {
 		$theme_option_active = '';

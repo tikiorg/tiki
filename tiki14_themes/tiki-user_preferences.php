@@ -57,6 +57,7 @@ if (isset($_REQUEST['userId']) || isset($_REQUEST['view_user'])) {
 } else {
 	$userwatch = $user;
 }
+
 // Custom fields
 $registrationlib = TikiLib::lib('registration');
 $customfields = $registrationlib->get_customfields();
@@ -74,16 +75,18 @@ $smarty->assign('show_mouseover_user_info', isset($prefs['show_mouseover_user_in
 if ($prefs['feature_userPreferences'] == 'y' && isset($_REQUEST["new_prefs"])) {
 	check_ticket('user-prefs');
 	// setting preferences
-	if ($prefs['change_theme'] == 'y' && empty($group_style)) {
+	if ($prefs['change_theme'] == 'y' && empty($group_theme)) {
 		if (isset($_REQUEST['mytheme'])) {
 			$themeandoption = $themelib->extract_theme_and_option($_REQUEST['mytheme']);
 			$theme = $themeandoption[0];
 			$themeOption = $themeandoption[1];
-			$tikilib->set_user_preference($userwatch, 'user_theme', $theme);
+			$tikilib->set_user_preference($userwatch, 'theme', $theme);
 			if (isset($themeOption)) {
-				$tikilib->set_user_preference($userwatch, 'user_theme_option', empty($themeOption) ? '' : $themeOption);
+				$tikilib->set_user_preference($userwatch, 'theme-option', empty($themeOption) ? '' : $themeOption);
 			}
-			//$access->redirect($_SERVER['REQUEST_URI'], '', 200); //seems to be needed for the theme change to be displayed without additional manual page refresh. Problem: when modifying another user's (not my user) setting it jumps to my user's preference screen instead of staying on the other user's preference screen
+			//Something is needed for the theme change to be displayed without additional manual page refresh. Problem: when modifying another user's settings (not my user's) using any of the below ways the refreshed screen will show my user's preference screen instead of staying on the edited user's preference screen
+			//header("location: tiki-user_preferences.php?view_user=$userwatch");
+			//$access->redirect($_SERVER['REQUEST_URI'], '', 200); 
 		}
 	}
 	if (isset($_REQUEST["userbreadCrumb"])) $tikilib->set_user_preference($userwatch, 'userbreadCrumb', $_REQUEST["userbreadCrumb"]);
@@ -369,8 +372,8 @@ $smarty->assign_by_ref('userinfo', $userinfo);
 $themelib = TikiLib::lib('theme');
 $available_themesandoptions = $themelib->get_available_themesandoptions();
 $smarty->assign_by_ref('available_themesandoptions', $available_themesandoptions);
-$userwatch_theme = $tikilib->get_user_preference($userwatch, 'user_theme', null);
-$userwatch_themeOption = $tikilib->get_user_preference($userwatch, 'user_theme_option', null);
+$userwatch_theme = $tikilib->get_user_preference($userwatch, 'theme', null);
+$userwatch_themeOption = $tikilib->get_user_preference($userwatch, 'theme-option', null);
 $smarty->assign_by_ref('userwatch_theme', $userwatch_theme);
 $smarty->assign_by_ref('userwatch_themeOption', $userwatch_themeOption);
 //user language

@@ -11,7 +11,7 @@
 require_once ('tiki-setup.php');
 
 $access->check_feature('change_theme');
-if (!empty($group_style)) {
+if (!empty($group_theme)) {
 	$access->display_error(NULL, 'A group theme is defined.');
 }
 
@@ -30,10 +30,10 @@ if (isset($_REQUEST['theme'])) {
 		$themeGenerator_theme = '';
 	}
 	
-	$tikilib->set_user_preference($user, 'user_theme', $theme); //save user's theme preference
+	$tikilib->set_user_preference($user, 'theme', $theme); //save user's theme preference
 
 	if (isset($themeOption)) {
-		$tikilib->set_user_preference($user, 'user_theme_option', empty($themeOption) ? '' : $themeOption); //save user's theme preference
+		$tikilib->set_user_preference($user, 'theme-option', empty($themeOption) ? '' : $themeOption); //save user's theme option preference
 	}
 }
 

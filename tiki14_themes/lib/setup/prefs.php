@@ -23,8 +23,6 @@ if (basename($_SERVER['SCRIPT_NAME']) == basename(__FILE__)) {
 global $user_overrider_prefs, $prefs;
 $user_overrider_prefs = array(
 				'language',
-				'style',
-				'style_option',
 				'userbreadCrumb',
 				'tikiIndex',
 				'wikiHomePage',
