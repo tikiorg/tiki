@@ -300,31 +300,32 @@ class Tracker_Field_Dropdown extends Tracker_Field_Abstract implements Tracker_F
 		$filters = new Tracker\Filter\Collection($this->getTrackerDefinition());
 		$permName = $this->getConfiguration('permName');
 		$name = $this->getConfiguration('name');
+		$baseKey = $this->getBaseKey();
 
 		$possibilities = $this->getPossibilities();
 
 		$filters->addNew($permName, 'dropdown')
 			->setLabel($name)
 			->setControl(new Tracker\Filter\Control\DropDown("tf_{$permName}_dd", $possibilities))
-			->setApplyCondition(function ($control, Search_Query $query) use ($permName) {
+			->setApplyCondition(function ($control, Search_Query $query) use ($baseKey) {
 				$value = $control->getValue();
 
 				if ($value) {
-					$query->filterIdentifier($value, "tracker_field_$permName");
+					$query->filterIdentifier($value, $baseKey);
 				}
 			});
 
 		$filters->addNew($permName, 'multiselect')
 			->setLabel($name)
 			->setControl(new Tracker\Filter\Control\MultiSelect("tf_{$permName}_ms", $possibilities))
-			->setApplyCondition(function ($control, Search_Query $query) use ($permName) {
+			->setApplyCondition(function ($control, Search_Query $query) use ($permName, $baseKey) {
 				$values = $control->getValues();
 
 				if (! empty($values)) {
 					$sub = $query->getSubQuery("ms_$permName");
 
 					foreach ($values as $v) {
-						$sub->filterIdentifier((string) $v, "tracker_field_$permName");
+						$sub->filterIdentifier((string) $v, $baseKey);
 					}
 				}
 			});

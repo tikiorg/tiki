@@ -25,6 +25,14 @@ class Collection
 		return $column;
 	}
 
+	function addCloned($permName, self $collection)
+	{
+		foreach ($collection->filters as $filter) {
+			$this->addNew($permName, $filter->getField() . '-' . $filter->getMode())
+				->copyProperties($filter);
+		}
+	}
+
 	function getFilters()
 	{
 		return $this->filters;

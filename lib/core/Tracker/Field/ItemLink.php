@@ -11,7 +11,7 @@
  * Letter key: ~r~
  *
  */
-class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_Field_Synchronizable, Tracker_Field_Exportable, Search_FacetProvider_Interface
+class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_Field_Synchronizable, Tracker_Field_Exportable, Search_FacetProvider_Interface, Tracker_Field_Filterable
 {
 	const CASCADE_NONE = 0;
 	const CASCADE_CATEG = 1;
@@ -752,6 +752,53 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 		}
 
 		return $schema;
+	}
+	
+	function getFilterCollection()
+	{
+		$collection = new Tracker\Filter\Collection($this->getTrackerDefinition());
+		$permName = $this->getConfiguration('permName');
+		$name = $this->getConfiguration('name');
+		$baseKey = $this->getBaseKey();
+
+		$collection->addNew($permName, 'selector')
+			->setLabel($name)
+			->setControl(new Tracker\Filter\Control\ObjectSelector("tf_{$permName}_os", [
+				'type' => 'trackeritem',
+				'tracker_status' => implode(' OR ', str_split($this->getOption('status', 'opc'), 1)),
+				'tracker_id' => $this->getOption('trackerId'),
+				'_placeholder' => tr(TikiLib::lib('object')->get_title('tracker', $this->getOption('trackerId'))),
+			]))
+			->setApplyCondition(function ($control, Search_Query $query) use ($baseKey) {
+				$value = $control->getValue();
+
+				if ($value) {
+					$query->filterIdentifier((string) $value, $baseKey);
+				}
+			})
+			;
+
+		$indexRemote = array_filter($this->getOption('indexRemote') ?: []);
+		if (count($indexRemote)) {
+			$trklib = TikiLib::lib('trk');
+			$trackerId = $this->getOption('trackerId');
+			$item = $trklib->get_tracker_item($item);
+
+			$definition = Tracker_Definition::get($trackerId);
+			$factory = $definition->getFieldFactory();
+			foreach ($indexRemote as $fieldId) {
+				$field = $definition->getField($fieldId);
+				$handler = $factory->getHandler($field, $item);
+
+				if ($handler instanceof Tracker_Field_Filterable) {
+					$handler->setBaseKeyPrefix($permName . '_');
+					$sub = $handler->getFilterCollection();
+					$collection->addCloned($permName, $sub);
+				}
+			}
+		}
+
+		return $collection;
 	}
 }
 

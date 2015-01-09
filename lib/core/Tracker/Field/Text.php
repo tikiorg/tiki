@@ -367,17 +367,18 @@ class Tracker_Field_Text extends Tracker_Field_Abstract implements Tracker_Field
 		$filters = new Tracker\Filter\Collection($this->getTrackerDefinition());
 		$permName = $this->getConfiguration('permName');
 		$name = $this->getConfiguration('name');
+		$baseKey = $this->getBaseKey();
 
 		if ('y' !== $this->getConfiguration('isMultilingual', 'n')) {
 			$filters->addNew($permName, 'fulltext')
 				->setLabel($name)
 				->setHelp(tr('Full text search over the content of the field.'))
 				->setControl(new Tracker\Filter\Control\TextField("tf_{$permName}_ft"))
-				->setApplyCondition(function ($control, Search_Query $query) use ($permName) {
+				->setApplyCondition(function ($control, Search_Query $query) use ($baseKey) {
 					$value = $control->getValue();
 
 					if ($value) {
-						$query->filterContent($value, "tracker_field_$permName");
+						$query->filterContent($value, $baseKey);
 					}
 				})
 				;

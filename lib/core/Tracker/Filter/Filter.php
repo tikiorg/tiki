@@ -81,4 +81,12 @@ class Filter
 	{
 		$this->control->applyInput($input);
 	}
+
+	function copyProperties(self $other)
+	{
+		$this->help = $other->help;
+		$this->label = $other->label;
+		$this->control = clone $other->control;
+		$this->applyCondition = $other->applyCondition;
+	}
 }

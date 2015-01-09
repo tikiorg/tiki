@@ -7,6 +7,7 @@
 
 abstract class Tracker_Field_Abstract implements Tracker_Field_Interface, Tracker_Field_Indexable
 {
+	private $baseKeyPrefix = '';
 	private $definition;
 	private $options;
 	private $itemData;
@@ -340,7 +341,12 @@ abstract class Tracker_Field_Abstract implements Tracker_Field_Interface, Tracke
 	{
 		global $prefs;
 		$indexKey = $prefs['unified_trackerfield_keys'];
-		return 'tracker_field_' . $this->getConfiguration($indexKey);
+		return 'tracker_field_' . $this->baseKeyPrefix . $this->getConfiguration($indexKey);
+	}
+
+	function setBaseKeyPrefix($prefix)
+	{
+		$this->baseKeyPrefix = $prefix;
 	}
 }
 
