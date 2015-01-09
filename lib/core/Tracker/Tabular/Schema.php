@@ -13,10 +13,12 @@ class Schema
 	private $columns = [];
 	private $primaryKey;
 	private $schemas = [];
+	private $filters;
 
 	function __construct(\Tracker_Definition $definition)
 	{
 		$this->definition = $definition;
+		$this->filters = new \Tracker\Filter\Collection($definition);
 	}
 
 	function getDefinition()
@@ -41,6 +43,16 @@ class Schema
 				$this->setPrimaryKey($col);
 			}
 		}
+	}
+
+	function loadFilterDescriptor(array $descriptor)
+	{
+		$this->filters->loadFilterDescriptor($descriptor);
+	}
+
+	function getFilterCollection()
+	{
+		return $this->filters;
 	}
 
 	function getFormatDescriptor()

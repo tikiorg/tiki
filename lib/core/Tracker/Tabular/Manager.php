@@ -26,6 +26,7 @@ class Manager
 		$info = $this->table->fetchFullRow(['tabularId' => $tabularId]);
 
 		$info['format_descriptor'] = json_decode($info['format_descriptor'], true);
+		$info['filter_descriptor'] = [];
 		return $info;
 	}
 

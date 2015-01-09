@@ -152,6 +152,50 @@ class Services_Tracker_TabularController
 		exit;
 	}
 
+	function action_export_partial_csv($input)
+	{
+		$tabularId = $input->tabularId->int();
+
+		$lib = TikiLib::lib('tabular');
+		$info = $lib->getInfo($tabularId);
+		$trackerId = $info['trackerId'];
+
+		Services_Exception_Denied::checkObject('tiki_p_admin_trackers', 'tracker', $trackerId);
+
+		$schema = $this->getSchema($info);
+		$collection = $schema->getFilterCollection();
+
+		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+			$search = TikiLib::lib('unifiedsearch');
+			$query = $search->buildQuery([
+				'type' => 'trackeritem',
+				'tracker_id' => $trackerId,
+			]);
+
+			$collection->applyConditions($input, $query);
+
+			$source = new \Tracker\Tabular\Source\QuerySource($schema, $query);
+			$writer = new \Tracker\Tabular\Writer\CsvWriter('php://output');
+			$writer->sendHeaders();
+			$writer->write($source);
+			exit;
+		}
+
+		$collection->applyInput($input);
+		return [
+			'title' => tr('Export'),
+			'tabularId' => $tabularId,
+			'filters' => array_map(function ($filter) {
+				return [
+					'id' => $filter->getControl()->getId(),
+					'label' => $filter->getLabel(),
+					'help' => $filter->getHelp(),
+					'control' => $filter->getControl(),
+				];
+			}, $collection->getFilters()),
+		];
+	}
+
 	function action_export_search_csv($input)
 	{
 		$lib = TikiLib::lib('tabular');
