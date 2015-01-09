@@ -94,7 +94,7 @@ foreach (TikiAddons::getPaths() as $path) {
 $themelib = TikiLib::lib('theme');
 $theme_path = '';
 
-if ($theme_active == 'custom_url' and file_exists($prefs['theme_custom_url'])) { //custom URL, use only if file exists at the custom location
+if ($theme_active == 'custom_url' && !empty($prefs['theme_custom_url'])) { //custom URL, use only if file exists at the custom location
 	$custom_theme = $prefs['theme_custom_url'];
 	if (preg_match('/^(http(s)?:)?\/\//', $custom_theme)) { // Use external link if url begins with http://, https://, or // (auto http/https)
 		$headerlib->add_cssfile($custom_theme, 'external');
