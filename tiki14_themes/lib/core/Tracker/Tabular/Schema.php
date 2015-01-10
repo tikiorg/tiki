@@ -13,10 +13,12 @@ class Schema
 	private $columns = [];
 	private $primaryKey;
 	private $schemas = [];
+	private $filters;
 
 	function __construct(\Tracker_Definition $definition)
 	{
 		$this->definition = $definition;
+		$this->filters = new \Tracker\Filter\Collection($definition);
 	}
 
 	function getDefinition()
@@ -43,6 +45,16 @@ class Schema
 		}
 	}
 
+	function loadFilterDescriptor(array $descriptor)
+	{
+		$this->filters->loadFilterDescriptor($descriptor);
+	}
+
+	function getFilterCollection()
+	{
+		return $this->filters;
+	}
+
 	function getFormatDescriptor()
 	{
 		return array_map(function ($column) {
@@ -54,6 +66,11 @@ class Schema
 				'isReadOnly' => $column->isReadOnly(),
 			];
 		}, $this->columns);
+	}
+
+	function getFilterDescriptor()
+	{
+		return $this->filters->getFilterDescriptor();
 	}
 
 	function addColumn($permName, $mode)

@@ -73,12 +73,13 @@ class Services_Tracker_TabularController
 
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			$info['format_descriptor'] = json_decode($input->fields->none(), true);
+			$info['filter_descriptor'] = json_decode($input->filters->none(), true);
 			$schema = $this->getSchema($info);
 
 			// FIXME : Blocks save and back does not restore changes, ajax validation required
 			// $schema->validate();
 
-			$lib->update($info['tabularId'], $input->name->text(), $schema->getFormatDescriptor());
+			$lib->update($info['tabularId'], $input->name->text(), $schema->getFormatDescriptor(), $schema->getFilterDescriptor());
 
 			return [
 				'FORWARD' => [
@@ -96,6 +97,7 @@ class Services_Tracker_TabularController
 			'trackerId' => $info['trackerId'],
 			'name' => $info['name'],
 			'schema' => $schema,
+			'filterCollection' => $schema->getFilterCollection(),
 		];
 	}
 
@@ -134,6 +136,39 @@ class Services_Tracker_TabularController
 		];
 	}
 
+	function action_select_filter($input)
+	{
+		$permName = $input->permName->word();
+		$trackerId = $input->trackerId->int();
+
+		$tracker = \Tracker_Definition::get($trackerId);
+
+		if (! $tracker) {
+			throw new Services_Exception_NotFound;
+		}
+
+		Services_Exception_Denied::checkObject('tiki_p_admin_trackers', 'tracker', $trackerId);
+
+		$schema = new \Tracker\Filter\Collection($tracker);
+		$local = $schema->getFieldCollection($permName);
+
+		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+			$column = $schema->addFilter($permName, $input->mode->text());
+			return [
+				'field' => $column->getField(),
+				'mode' => $column->getMode(),
+				'label' => $column->getLabel(),
+			];
+		}
+
+		return [
+			'title' => tr('Fields in %0', $tracker->getConfiguration('name')),
+			'trackerId' => $trackerId,
+			'permName' => $permName,
+			'collection' => $local,
+		];
+	}
+
 	function action_export_full_csv($input)
 	{
 		$lib = TikiLib::lib('tabular');
@@ -150,6 +185,51 @@ class Services_Tracker_TabularController
 		$writer->sendHeaders();
 		$writer->write($source);
 		exit;
+	}
+
+	function action_export_partial_csv($input)
+	{
+		$tabularId = $input->tabularId->int();
+
+		$lib = TikiLib::lib('tabular');
+		$info = $lib->getInfo($tabularId);
+		$trackerId = $info['trackerId'];
+
+		Services_Exception_Denied::checkObject('tiki_p_admin_trackers', 'tracker', $trackerId);
+
+		$schema = $this->getSchema($info);
+		$collection = $schema->getFilterCollection();
+
+		$collection->applyInput($input);
+
+		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+			$search = TikiLib::lib('unifiedsearch');
+			$query = $search->buildQuery([
+				'type' => 'trackeritem',
+				'tracker_id' => $trackerId,
+			]);
+
+			$collection->applyConditions($query);
+
+			$source = new \Tracker\Tabular\Source\QuerySource($schema, $query);
+			$writer = new \Tracker\Tabular\Writer\CsvWriter('php://output');
+			$writer->sendHeaders();
+			$writer->write($source);
+			exit;
+		}
+
+		return [
+			'title' => tr('Export'),
+			'tabularId' => $tabularId,
+			'filters' => array_map(function ($filter) {
+				return [
+					'id' => $filter->getControl()->getId(),
+					'label' => $filter->getLabel(),
+					'help' => $filter->getHelp(),
+					'control' => $filter->getControl(),
+				];
+			}, $collection->getFilters()),
+		];
 	}
 
 	function action_export_search_csv($input)
@@ -245,6 +325,7 @@ class Services_Tracker_TabularController
 
 		$schema = new \Tracker\Tabular\Schema($tracker);
 		$schema->loadFormatDescriptor($info['format_descriptor']);
+		$schema->loadFilterDescriptor($info['filter_descriptor']);
 
 		return $schema;
 	}

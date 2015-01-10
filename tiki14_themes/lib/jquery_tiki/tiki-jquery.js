@@ -3444,9 +3444,11 @@ $.fn.clickModal = function (options) {
 };
 $.clickModal = function (options, href) {
 	return function (e) {
-		var control = this;
-		if (!href) {
-			href = $(this).attr('href');
+		var control = this, url;
+		if (! href) {
+			url = $(this).attr('href');
+		} else {
+			url = href;
 		}
 		if ($.isFunction(e.preventDefault)) {
 			e.preventDefault();
@@ -3455,7 +3457,7 @@ $.clickModal = function (options, href) {
 		$.openModal({
 			title: options.title,
 			size: options.size,
-			remote: href,
+			remote: url,
 			open: function () {
 				if (options.open) {
 					options.open.apply(this, []);

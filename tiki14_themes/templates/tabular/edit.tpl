@@ -22,7 +22,7 @@
 		<div class="form-group">
 			<label class="control-label col-sm-3">{tr}Fields{/tr}</label>
 			<div class="col-sm-9">
-				<table class="table">
+				<table class="table fields">
 					<thead>
 						<tr>
 							<th>{tr}Field{/tr}</th>
@@ -78,6 +78,52 @@
 					<p><strong>{tr}Primary Key:{/tr}</strong> {tr}Required to import data. Can be any field as long as it is unique.{/tr}</p>
 					<p><strong>{tr}Read-only:{/tr}</strong> {tr}When importing a file, read-only fields will be skipped, preventing them from being modified, but also speeding-up the process.{/tr}</p>
 					<p>{tr}When two fields affecting the same value are included in the format, such as the ID and the text value for an Item Link field, one of the two fields must be marked as read-only to prevent a conflict.{/tr}</p>
+				</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-sm-3">{tr}Filters{/tr}</label>
+			<div class="col-sm-9">
+				<table class="table filters">
+					<thead>
+						<tr>
+							<th>{tr}Field{/tr}</th>
+							<th>{tr}Mode{/tr}</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr class="hidden">
+							<td>{icon name=sort} <input type="text" class="filter-label" value="Label" /></td>
+							<td><span class="field">Field Name</span>:<span class="mode">Mode</span></td>
+							<td class="text-right"><button class="remove">{icon name=remove}</button></td>
+						</tr>
+						{foreach $filterCollection->getFilters() as $filter}
+							<tr>
+								<td>{icon name=sort} <input type="text" class="field-label" value="{$filter->getLabel()|escape}" /></td>
+								<td><span class="field">{$filter->getField()|escape}</span>:<span class="mode">{$filter->getMode()|escape}</td>
+								<td class="text-right"><button class="remove">{icon name=remove}</button></td>
+							</tr>
+						{/foreach}
+					</tbody>
+					<tfoot>
+						<tr>
+							<td>
+								<select class="selection form-control">
+									{foreach $schema->getAvailableFields() as $permName => $label}
+										<option value="{$permName|escape}" {if $permName eq 'itemId'} selected="selected" {/if}>{$label|escape}</option>
+									{/foreach}
+								</select>
+							</td>
+							<td>
+								<a href="{service controller=tabular action=select_filter trackerId=$trackerId}" class="btn btn-default add-filter">{tr}Select Mode{/tr}</a>
+								<textarea name="filters" class="hidden">{$filterCollection->getFilterDescriptor()|json_encode}</textarea>
+							</td>
+						</tr>
+					</tfoot>
+				</table>
+				<div class="help-block">
+					<p>{tr}Filters will be available in parial export menus.{/tr}</p>
 				</div>
 			</div>
 		</div>

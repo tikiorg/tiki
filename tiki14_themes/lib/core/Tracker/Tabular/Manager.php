@@ -25,7 +25,8 @@ class Manager
 	{
 		$info = $this->table->fetchFullRow(['tabularId' => $tabularId]);
 
-		$info['format_descriptor'] = json_decode($info['format_descriptor'], true);
+		$info['format_descriptor'] = json_decode($info['format_descriptor'], true) ?: [];
+		$info['filter_descriptor'] = json_decode($info['filter_descriptor'], true) ?: [];
 		return $info;
 	}
 
@@ -35,14 +36,16 @@ class Manager
 			'name' => $name,
 			'trackerId' => $trackerId,
 			'format_descriptor' => '[]',
+			'filter_descriptor' => '[]',
 		]);
 	}
 
-	function update($tabularId, $name, array $fields)
+	function update($tabularId, $name, array $fields, array $filters)
 	{
 		return $this->table->update([
 			'name' => $name,
 			'format_descriptor' => json_encode($fields),
+			'filter_descriptor' => json_encode($filters),
 		], ['tabularId' => $tabularId]);
 	}
 

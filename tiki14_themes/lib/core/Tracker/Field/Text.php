@@ -11,7 +11,7 @@
  * Letter key: ~t~
  *
  */
-class Tracker_Field_Text extends Tracker_Field_Abstract implements Tracker_Field_Synchronizable, Tracker_Field_Exportable
+class Tracker_Field_Text extends Tracker_Field_Abstract implements Tracker_Field_Synchronizable, Tracker_Field_Exportable, Tracker_Field_Filterable
 {
 	public static function getTypes()
 	{
@@ -360,6 +360,31 @@ class Tracker_Field_Text extends Tracker_Field_Abstract implements Tracker_Field
 		}
 
 		return $schema;
+	}
+
+	function getFilterCollection()
+	{
+		$filters = new Tracker\Filter\Collection($this->getTrackerDefinition());
+		$permName = $this->getConfiguration('permName');
+		$name = $this->getConfiguration('name');
+		$baseKey = $this->getBaseKey();
+
+		if ('y' !== $this->getConfiguration('isMultilingual', 'n')) {
+			$filters->addNew($permName, 'fulltext')
+				->setLabel($name)
+				->setHelp(tr('Full text search over the content of the field.'))
+				->setControl(new Tracker\Filter\Control\TextField("tf_{$permName}_ft"))
+				->setApplyCondition(function ($control, Search_Query $query) use ($baseKey) {
+					$value = $control->getValue();
+
+					if ($value) {
+						$query->filterContent($value, $baseKey);
+					}
+				})
+				;
+		}
+
+		return $filters;
 	}
 }
 

@@ -11,7 +11,7 @@
  * Letter key: ~d~ ~D~
  *
  */
-class Tracker_Field_Dropdown extends Tracker_Field_Abstract implements Tracker_Field_Synchronizable, Search_FacetProvider_Interface, Tracker_Field_Exportable
+class Tracker_Field_Dropdown extends Tracker_Field_Abstract implements Tracker_Field_Synchronizable, Search_FacetProvider_Interface, Tracker_Field_Exportable, Tracker_Field_Filterable
 {
 	public static function getTypes()
 	{
@@ -293,6 +293,44 @@ class Tracker_Field_Dropdown extends Tracker_Field_Abstract implements Tracker_F
 			;
 
 		return $schema;
+	}
+
+	function getFilterCollection()
+	{
+		$filters = new Tracker\Filter\Collection($this->getTrackerDefinition());
+		$permName = $this->getConfiguration('permName');
+		$name = $this->getConfiguration('name');
+		$baseKey = $this->getBaseKey();
+
+		$possibilities = $this->getPossibilities();
+
+		$filters->addNew($permName, 'dropdown')
+			->setLabel($name)
+			->setControl(new Tracker\Filter\Control\DropDown("tf_{$permName}_dd", $possibilities))
+			->setApplyCondition(function ($control, Search_Query $query) use ($baseKey) {
+				$value = $control->getValue();
+
+				if ($value) {
+					$query->filterIdentifier($value, $baseKey);
+				}
+			});
+
+		$filters->addNew($permName, 'multiselect')
+			->setLabel($name)
+			->setControl(new Tracker\Filter\Control\MultiSelect("tf_{$permName}_ms", $possibilities))
+			->setApplyCondition(function ($control, Search_Query $query) use ($permName, $baseKey) {
+				$values = $control->getValues();
+
+				if (! empty($values)) {
+					$sub = $query->getSubQuery("ms_$permName");
+
+					foreach ($values as $v) {
+						$sub->filterIdentifier((string) $v, $baseKey);
+					}
+				}
+			});
+
+		return $filters;
 	}
 }
 
