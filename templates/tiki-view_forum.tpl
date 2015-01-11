@@ -348,7 +348,7 @@
 				</div>
 			</form>
 
-			<div class="alert alert-info alert-dismissable col-sm-10 col-sm-push-2" id="commentshelp">
+			<div class="alert alert-info alert-dismissable col-sm-10 col-sm-push-2" id="commentshelp" style="float:none">
 				<button type="button" class="close" data-dismiss="alert">×</button>
 				<h4><i class="fa fa-info-circle"></i> {tr}Editing posts:{/tr}</h4>
 				<span class="help-block">
