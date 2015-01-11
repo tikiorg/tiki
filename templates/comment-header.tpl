@@ -15,7 +15,7 @@
 		{/if}
 		{if $tiki_p_admin_forum eq 'y'
 			|| ( $comment.userName == $user && $tiki_p_forum_edit_own_posts eq 'y' )}
-		<a title="{$comment.title|escape}:{tr}Edit{/tr}"
+		<a title="{$comment.title|escape|replace:':':' '}:{tr}Edit{/tr}"
 			{if $first eq 'y'}
 			class="tips" href="tiki-view_forum.php?comments_offset={$smarty.request.topics_offset}{if isset($thread_sort_mode_param)}{$thread_sort_mode_param}{/if}&amp;comments_threshold={$smarty.request.topics_threshold}{if isset($comments_find_param)}{$comments_find_param}{/if}&amp;comments_threadId={$comment.threadId}&amp;openpost=1&amp;forumId={$forum_info.forumId}{if isset($comments_per_page_param)}{$comments_per_page_param}{/if}"
 			{else}
@@ -25,7 +25,7 @@
 		{/if}
 
 		{if $tiki_p_admin_forum eq 'y'}
-		<a title="{$comment.title|escape}:{tr}Delete{/tr}"
+		<a title="{$comment.title|escape|replace:':':' '}:{tr}Delete{/tr}"
 			{if $first eq 'y'}
 			class="tips" href="tiki-view_forum.php?comments_offset={$smarty.request.topics_offset}{if isset($thread_sort_mode_param)}{$thread_sort_mode_param}{/if}&amp;comments_threshold={$smarty.request.topics_threshold}{if isset($comments_find_param)}{$comments_find_param}{/if}&amp;comments_remove=1&amp;comments_threadId={$comment.threadId}&amp;forumId={$forum_info.forumId}{if isset($comments_per_page_param)}{$comments_per_page_param}{/if}"
 			{else}
@@ -35,22 +35,22 @@
 		{/if}
 
 		{if $tiki_p_forums_report eq 'y'}
-			{self_link report=$comment.threadId _icon_name='error' _class="tips" _alt="{tr}Report this post{/tr}" _title="{$comment.title|escape}:{tr}Report{/tr}"}{/self_link}
+			{self_link report=$comment.threadId _icon_name='error' _class="tips" _alt="{tr}Report this post{/tr}" _title="{$comment.title|escape|replace:':':' '}:{tr}Report{/tr}"}{/self_link}
 		{/if}
 
 		{if $user and $prefs.feature_notepad eq 'y' and $tiki_p_notepad eq 'y' and $forumId}
-			{self_link savenotepad=$comment.threadId _icon_name='floppy' _class="tips" _alt="{tr}Save to notepad{/tr}" _title="{$comment.title|escape}:{tr}Save to notepad{/tr}"}{/self_link}
+			{self_link savenotepad=$comment.threadId _icon_name='floppy' _class="tips" _alt="{tr}Save to notepad{/tr}" _title="{$comment.title|escape|replace:':':' '}:{tr}Save to notepad{/tr}"}{/self_link}
 		{/if}
 
 		{if $user and $prefs.feature_user_watches eq 'y' and $display eq ''}
 		{if $first eq 'y'}
 		{if $user_watching_topic eq 'n'}
-			{self_link watch_event='forum_post_thread' watch_object=$comments_parentId watch_action='add' _class="tips" _icon_name='watch' _title="{$comment.title|escape}:{tr}Monitor{/tr}"}{/self_link}
+			{self_link watch_event='forum_post_thread' watch_object=$comments_parentId watch_action='add' _class="tips" _icon_name='watch' _title="{$comment.title|escape|replace:':':' '}:{tr}Monitor{/tr}"}{/self_link}
 		{else}
-			{self_link watch_event='forum_post_thread' watch_object=$comments_parentId watch_action='remove' _class="tips" _icon_name='stop-watching' _title="{$comment.title|escape}:{tr}Stop monitoring{/tr}"}{/self_link}
+			{self_link watch_event='forum_post_thread' watch_object=$comments_parentId watch_action='remove' _class="tips" _icon_name='stop-watching' _title="{$comment.title|escape|replace:':':' '}:{tr}Stop monitoring{/tr}"}{/self_link}
 		{/if}
 		{if $prefs.feature_group_watches eq 'y' and ( $tiki_p_admin_users eq 'y' or $tiki_p_admin eq 'y' )}
-			<a class="tips" href="tiki-object_watches.php?objectId={$comments_parentId|escape:"url"}&amp;watch_event=forum_post_thread&amp;objectType=forum&amp;objectName={$comment.title|escape:"url"}&amp;objectHref={'tiki-view_forum_thread.php?comments_parentId='|cat:$comments_parentId|cat:'&forumId='|cat:$forumId|escape:"url"}" class="icon" title="{$comment.title|escape}:{tr}Group monitor{/tr}">{icon name="watch-group"}</a>
+			<a class="tips" href="tiki-object_watches.php?objectId={$comments_parentId|escape:"url"}&amp;watch_event=forum_post_thread&amp;objectType=forum&amp;objectName={$comment.title|escape:"url"}&amp;objectHref={'tiki-view_forum_thread.php?comments_parentId='|cat:$comments_parentId|cat:'&forumId='|cat:$forumId|escape:"url"}" class="icon" title="{$comment.title|escape|replace:':':' '}:{tr}Group monitor{/tr}">{icon name="watch-group"}</a>
 		{/if}
 		{/if}
 		<br>
@@ -65,7 +65,7 @@
 	{/if}
 
 	{if !isset($first) or $first neq 'y'}
-	<div class="checkbox">
+	<div>
 		{if $tiki_p_admin_forum eq 'y' and isset($comment.threadId) and $comment.threadId > 0}
 		<input type="checkbox" name="forumthread[]" value="{$comment.threadId|escape}" {if $smarty.request.forumthread and in_array($comment.threadId,$smarty.request.forumthread)}checked="checked"{/if}>
 		{/if}
