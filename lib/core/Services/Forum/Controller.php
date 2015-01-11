@@ -84,26 +84,8 @@ class Services_Forum_Controller
 					$commentslib->set_parent($id, $toId);
 				}
 			}
-			$toName = $toList[$toId];
-			if (count($items) == 1) {
-				$msg = tr('The following topic has been merged with the %0%1%2 topic:', '<em>', $toName, '</em>');
-			} else {
-				$msg = tr('The following topics have been merged with the %0%1%2 topic:', '<em>', $toName, '</em>');
-			}
-			return [
-				'FORWARD' => [
-					'controller' => 'utilities',
-					'action' => 'alert',
-					'type' => 'feedback',
-					'title' => tra('Topic merge feedback'),
-					'heading' => tra('Success'),
-					'items' => $items,
-					'msg' => $msg,
-					'timeoutMsg' => tra('This popup will automatically close in 5 seconds.'),
-					'modal' => '1'
-				]
-			];
-		} elseif ($check === false) {
+			return true;
+ 		} elseif ($check === false) {
 			return [
 				'FORWARD' => [
 					'controller' => 'utilities',
@@ -160,7 +142,6 @@ class Services_Forum_Controller
 			}
 		} elseif ($check === true && $_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['toId'])) {
 			$items = json_decode($input->offsetGet('items'), true);
-			$toList = json_decode($input->offsetGet('toList'), true);
 			$toId = $input->toId->int();
 			$forumId = $input->forumId->int();
 			$commentslib = TikiLib::lib('comments');
@@ -172,25 +153,7 @@ class Services_Forum_Controller
 				$commentslib->forum_prune($forumId);
 				$commentslib->forum_prune($toId);
 			}
-			$toName = $toList[$toId];
-			if (count($items) == 1) {
-				$msg = tr('The following topic has been moved to the %0%1%2 forum:', '<em>', $toName, '</em>');
-			} else {
-				$msg = tr('The following topics have been moved to the %0%1%2 forum:', '<em>', $toName, '</em>');
-			}
-			return [
-				'FORWARD' => [
-					'controller' => 'utilities',
-					'action' => 'alert',
-					'type' => 'feedback',
-					'title' => tra('Topic move feedback'),
-					'heading' => tra('Success'),
-					'items' => $items,
-					'msg' => $msg,
-					'timeoutMsg' => tra('This popup will automatically close in 5 seconds.'),
-					'modal' => '1'
-				]
-			];
+			return true;
 		} elseif ($check === false) {
 			return [
 				'FORWARD' => [
@@ -260,24 +223,7 @@ class Services_Forum_Controller
 			}
 			$extra = $input->asArray('extra');
 			$commentslib->forum_prune((int) $extra['forumId']);
-			if (count($items) == 1) {
-				$msg = tra('The following topic has been deleted:');
-			} else {
-				$msg = tra('The following topics have been deleted:');
-			}
-			return [
-				'FORWARD' => [
-					'controller' => 'utilities',
-					'action' => 'alert',
-					'type' => 'feedback',
-					'title' => tra('Topic delete feedback'),
-					'heading' => tra('Success'),
-					'items' => $items,
-					'msg' => $msg,
-					'timeoutMsg' => tra('This popup will automatically close in 5 seconds.'),
-					'modal' => '1'
-				]
-			];
+			return true;
 		} elseif ($check === false) {
 			return [
 				'FORWARD' => [
@@ -328,24 +274,7 @@ class Services_Forum_Controller
 			foreach ($items as $id => $topic) {
 				$commentslib->$fn($id);
 			}
-			if (count($items) == 1) {
-				$msg = tr('The following topic has been %0:', tra($type . 'ed'));
-			} else {
-				$msg = tr('The following topics have been %0:', tra($type . 'ed'));
-			}
-			return [
-				'FORWARD' => [
-					'controller' => 'utilities',
-					'action' => 'alert',
-					'type' => 'feedback',
-					'title' => tr('Topic %0 feedback', $type),
-					'heading' => tra('Success'),
-					'items' => $items,
-					'msg' => $msg,
-					'timeoutMsg' => tra('This popup will automatically close in 5 seconds.'),
-					'modal' => '1'
-				]
-			];
+			return true;
 		} else {
 			//oops if no topics were selected
 			return [

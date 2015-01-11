@@ -396,7 +396,7 @@
 					{if $comments_coms|@count > 1}
 						<button
 							type="button"
-							onclick="modalActionModal(this, {ldelim}'controller':'forum','action':'merge_topic','closest':'form'{rdelim}, 'table#{$ts_tableid}', 'refreshTableRows');"
+							onclick="modalActionModal(this, {ldelim}'controller':'forum','action':'merge_topic','closest':'form'{rdelim});"
 							class="btn btn-default btn-sm tips"
 							title=":{tr}Merge selected topics{/tr}">
 								{icon name="merge"}
@@ -405,7 +405,7 @@
 					{if $all_forums|@count > 1 && $comments_coms|@count > 0}
 						<button
 							type="button"
-							onclick="modalActionModal(this, {ldelim}'controller':'forum','action':'move_topic','closest':'form'{rdelim}, 'table#{$ts_tableid}', 'refreshTableRows');"
+							onclick="modalActionModal(this, {ldelim}'controller':'forum','action':'move_topic','closest':'form'{rdelim});"
 							class="btn btn-default btn-sm tips"
 							title=":{tr}Move selected topics{/tr}">
 								{icon name="move"}
@@ -428,7 +428,7 @@
 						</button>
 						<button
 							type="button"
-							onclick="modalActionModal(this, {ldelim}'controller':'forum','action':'delete_topic','closest':'form'{rdelim}, 'table#{$ts_tableid}', 'refreshTableRows');"
+							onclick="modalActionModal(this, {ldelim}'controller':'forum','action':'delete_topic','closest':'form'{rdelim});"
 							class="btn btn-default btn-sm tips"
 							title=":{tr}Delete selected topics{/tr}">
 								{icon name="remove"}
@@ -656,16 +656,13 @@
 										{icon name='file-archive-open'}
 									</a>
 								{else}
-									<a href="{$smarty.server.PHP_SELF}?{query archive="y" comments_parentId=$comments_coms[ix].threadId}" title="{$comments_coms[ix].title|escape}:{tr}Archive topic{/tr}" class="tips">
-										{icon name='file-archive'}
-									</a>
+									<a href="{$smarty.server.PHP_SELF}?{query archive="y" comments_parentId=$comments_coms[ix].threadId}" title="{$comments_coms[ix].title|escape}:{tr}Archive topic{/tr}" class="tips">{icon name='file-archive'}</a>
 								{/if}
 							{/if}
-
 							{if $tiki_p_admin_forum eq 'y'}
 								<button
 									type="button"
-									onclick="modalActionModal(this, {ldelim}'data':'service'{rdelim}, 'table#{$ts_tableid}', 'refreshTableRows');"
+									onclick="modalActionModal(this, {ldelim}'data':'service'{rdelim});"
 									data-service="{service controller=forum action=delete_topic params="forumtopic[]={$comments_coms[ix].threadId}&amp;forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;thread_sort_mode={$thread_sort_mode}&amp;comments_per_page={$comments_per_page}"}"
 									class="btn btn-sm btn-link tips"
 									title="{$comments_coms[ix].title|escape}:{tr}Delete topic{/tr}">
