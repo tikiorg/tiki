@@ -16,11 +16,7 @@
 </div>
 
 {if $post_reported eq 'y'}
-	<br>
-	<div class="simplebox highlight reported_note">
-		{icon _id=information style="vertical-align:middle;align=left"} {tr}The post has been reported and will be reviewed by a moderator.{/tr}
-	</div>
-	<br>
+	{remarksbox type=warning title="{tr}The post has been reported and will be reviewed by a moderator.{/tr}"}{/remarksbox}
 {/if}
 
 <div class="breadcrumb">
