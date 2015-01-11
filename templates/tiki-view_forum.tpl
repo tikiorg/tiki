@@ -46,22 +46,22 @@
 
 		{if $user and $prefs.feature_user_watches eq 'y'}
 			{if $user_watching_forum eq 'n'}
-				<a class="btn btn-sm btn-link pull-right tips" href="tiki-view_forum.php?forumId={$forumId}&amp;watch_event=forum_post_topic&amp;watch_object={$forumId}&amp;watch_action=add" title=":{tr}Monitor topics of this forum{/tr}">{icon name="watch"}</a>
+				<a class="pull-right tips" href="tiki-view_forum.php?forumId={$forumId}&amp;watch_event=forum_post_topic&amp;watch_object={$forumId}&amp;watch_action=add" title="{$forum_info.name|escape}:{tr}Monitor topics{/tr}">{icon name="watch"}</a>
 			{else}
-				<a class="btn btn-sm btn-link pull-right tips" href="tiki-view_forum.php?forumId={$forumId}&amp;watch_event=forum_post_topic&amp;watch_object={$forumId}&amp;watch_action=remove" title=":{tr}Stop monitoring topics of this forum{/tr}">{icon name="stop-watching"}</a>
+				<a class="pull-right tips" href="tiki-view_forum.php?forumId={$forumId}&amp;watch_event=forum_post_topic&amp;watch_object={$forumId}&amp;watch_action=remove" title="{$forum_info.name|escape}:{tr}Stop monitoring topics{/tr}">{icon name="stop-watching"}</a>
 			{/if}
 		{/if}
 
 		{if $user and $prefs.feature_user_watches eq 'y'}
 			{if $user_watching_forum_topic_and_thread eq 'n'}
-				<a class="btn btn-sm btn-link pull-right tips" href="tiki-view_forum.php?forumId={$forumId}&amp;watch_event=forum_post_topic_and_thread&amp;watch_object={$forumId}&amp;watch_action=add" title=":{tr}Monitor topics and threads of this forum{/tr}">{icon name="watch"}</a>
+				<a class="pull-right tips" href="tiki-view_forum.php?forumId={$forumId}&amp;watch_event=forum_post_topic_and_thread&amp;watch_object={$forumId}&amp;watch_action=add" title="{$forum_info.name|escape}:{tr}Monitor topics and threads{/tr}">{icon name="watch"}</a>
 			{else}
-				<a class="btn btn-sm btn-link pull-right tips" href="tiki-view_forum.php?forumId={$forumId}&amp;watch_event=forum_post_topic_and_thread&amp;watch_object={$forumId}&amp;watch_action=remove" title=":{tr}Stop monitoring topics and threads of this forum{/tr}">{icon name="stop-watching"}</a>
+				<a class="pull-right tips" href="tiki-view_forum.php?forumId={$forumId}&amp;watch_event=forum_post_topic_and_thread&amp;watch_object={$forumId}&amp;watch_action=remove" title="{$forum_info.name|escape}:{tr}Stop monitoring topics and threads{/tr}">{icon name="stop-watching"}</a>
 			{/if}
 		{/if}
 
 		{if $prefs.feature_group_watches eq 'y' and ( $tiki_p_admin_users eq 'y' or $tiki_p_admin eq 'y' )}
-			<a href="tiki-object_watches.php?objectId={$forumId|escape:"url"}&amp;watch_event=forum_post_topic_and_thread&amp;objectType=forum&amp;objectName={$forum_info.name|escape:"url"}&amp;objectHref={'tiki-view_forum.php?forumId='|cat:$forumId|escape:"url"}" class="btn btn-link tips" title=":{tr}Group monitor topics and threads of this forum{/tr}">{icon name="watch-group"}</a>
+			<a href="tiki-object_watches.php?objectId={$forumId|escape:"url"}&amp;watch_event=forum_post_topic_and_thread&amp;objectType=forum&amp;objectName={$forum_info.name|escape:"url"}&amp;objectHref={'tiki-view_forum.php?forumId='|cat:$forumId|escape:"url"}" class="pull-right tips" title="{$forum_info.name|escape}:{tr}Group monitor topics and threads{/tr}">{icon name="watch-group"}</a>
 		{/if}
 
 		<div class="categbar" align="right" >
@@ -69,7 +69,7 @@
 				{if isset($category_watched) and $category_watched eq 'y'}
 					{tr}Watched by categories:{/tr}
 					{section name=i loop=$watching_categories}
-						<a class="btn btn-link btn-sm" href="tiki-browse_categories.php?parentId={$watching_categories[i].categId}">{$watching_categories[i].name|escape}</a>
+						<a href="tiki-browse_categories.php?parentId={$watching_categories[i].categId}">{$watching_categories[i].name|escape}</a>
 						&nbsp;
 					{/section}
 				{/if}

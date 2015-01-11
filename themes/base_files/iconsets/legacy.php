@@ -231,14 +231,14 @@ $icons = array(
 	'file-archive' => array(
 		'image_src' => 'img/icons/folder.png',
 	),
-	'file-archive' => array(
-		'image_src' => 'img/icons/folder.png',
-	),
 	'file-archive-open' => array(
 		'image_src' => 'img/icons/folder_go.png',
 	),
 	'filter' => array(
 		'image_src' => 'img/icons/find.png',
+	),
+	'floppy' => array(
+		'image_src' => 'img/icons/disk.png',
 	),
 	'forward' => array(
 		'image_src' => 'img/icons/control_fastforward.png',
