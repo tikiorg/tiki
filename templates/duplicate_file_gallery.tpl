@@ -16,9 +16,7 @@
 					<label for="description">{tr}Description:{/tr}</label>
 				</td>
 				<td>
-					<textarea id="description" name="description" rows="4" cols="40">
-						{if isset($description)}{$description|escape}{/if}
-					</textarea>
+					<textarea id="description" name="description" rows="4" cols="40">{if isset($description)}{$description|escape}{/if}</textarea>
 				</td>
 			</tr>
 			<tr>
