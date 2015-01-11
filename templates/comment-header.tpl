@@ -25,13 +25,17 @@
 		{/if}
 
 		{if $tiki_p_admin_forum eq 'y'}
-		<a title="{$comment.title|escape|replace:':':' '}:{tr}Delete{/tr}"
-			{if $first eq 'y'}
-			class="tips" href="tiki-view_forum.php?comments_offset={$smarty.request.topics_offset}{if isset($thread_sort_mode_param)}{$thread_sort_mode_param}{/if}&amp;comments_threshold={$smarty.request.topics_threshold}{if isset($comments_find_param)}{$comments_find_param}{/if}&amp;comments_remove=1&amp;comments_threadId={$comment.threadId}&amp;forumId={$forum_info.forumId}{if isset($comments_per_page_param)}{$comments_per_page_param}{/if}"
-			{else}
-			class="tips" href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;comments_threadId={$comment.threadId}&amp;comments_remove=1&amp;comments_offset={$comments_offset}&amp;thread_sort_mode={$thread_sort_mode}&amp;comments_per_page={$comments_per_page}&amp;comments_parentId={$comments_parentId}&amp;thread_style={$thread_style}"
-			{/if}
-		>{icon name="delete"}</a>
+			<span
+				{if $first eq 'y'}
+					data-service="{service controller=forum action=delete_topic params="comments_offset={$smarty.request.topics_offset}{if isset($thread_sort_mode_param)}{$thread_sort_mode_param}{/if}&comments_threshold={$smarty.request.topics_threshold}{if isset($comments_find_param)}{$comments_find_param}{/if}&forumtopic[]={$comment.threadId}&forumId={$forum_info.forumId}{if isset($comments_per_page_param)}{$comments_per_page_param}{/if}"}"
+				{else}
+					data-service="{service controller=forum action=delete_topic params="forumId={$forum_info.forumId}&comments_threshold={$comments_threshold}&forumtopic[]={$comment.threadId}&comments_offset={$comments_offset}&thread_sort_mode={$thread_sort_mode}&comments_per_page={$comments_per_page}&comments_parentId={$comments_parentId}&thread_style={$thread_style}"}"
+				{/if}
+				onclick="modalActionModal(this, {ldelim}'data':'service'{rdelim});"
+				class="btn-link tips"
+				title="{$comments_coms[ix].title|escape}:{tr}Delete post{/tr}">
+					{icon name='remove'}
+			</span>
 		{/if}
 
 		{if $tiki_p_forums_report eq 'y'}

@@ -150,15 +150,6 @@ if ($threads[0]['threadId'] != $_REQUEST['comments_parentId']) {
 }
 
 if ($tiki_p_admin_forum == 'y') {
-	if (isset($_REQUEST['delsel'])) {
-		if (isset($_REQUEST['forumthread'])) {
-			check_ticket('view-forum');
-			foreach (array_values($_REQUEST['forumthread']) as $thread) {
-				$commentslib->remove_comment($thread);
-				$commentslib->register_remove_post($_REQUEST['forumId'], $_REQUEST['comments_parentId']);
-			}
-		}
-	}
 	if (isset($_REQUEST['remove_attachment'])) {
 		$access->check_authenticity(tra('Are you sure you want to remove that attachment?'));
 		$commentslib->remove_thread_attachment($_REQUEST['remove_attachment']);

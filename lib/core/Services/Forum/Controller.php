@@ -216,6 +216,11 @@ class Services_Forum_Controller
 			//check number of topics on first pass
 			if (count($params['forumtopic']) > 0) {
 				$items = $this->getTopicTitles($params['forumtopic']);
+				if (isset($params['comments_parentId'])) {
+					$object = count($items) > 1 ? 'posts' : 'post';
+				} else {
+					$object = count($items) > 1 ? 'topics' : 'topic';
+				}
 				return [
 					'FORWARD' => [
 						'controller' => 'access',
@@ -223,7 +228,7 @@ class Services_Forum_Controller
 						'title' => tra('Please confirm deletion'),
 						'confirmAction' => 'tiki-forum-delete_topic',
 						'customVerb' => tra('delete'),
-						'customObject' => tra('forum topics'),
+						'customObject' => tr('forum %0', $object),
 						'items' => $items,
 						'ticket' => $check['ticket'],
 						'extra' => ['forumId' => $params['forumId']],

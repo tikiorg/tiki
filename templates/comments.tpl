@@ -47,10 +47,13 @@
 									{icon name="merge"}
 							</button>
 						{/if}
-
-						<span class="action">
-							<input type="submit" class="btn btn-default btn-sm" name="delsel" value="{tr}Delete Selected{/tr}">
-						</span>
+						<button
+								type="button"
+								onclick="modalActionModal(this, {ldelim}'controller':'forum','action':'delete_topic','closest':'form'{rdelim});"
+								class="btn btn-default btn-sm tips"
+								title=":{tr}Delete selected posts{/tr}">
+							{icon name="remove"}
+						</button>
 					</div>
 				</div>
 			{/if}
