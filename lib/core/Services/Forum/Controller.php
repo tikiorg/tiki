@@ -52,12 +52,18 @@ class Services_Forum_Controller
 			if (count($params['forumtopic']) > 0) {
 				$items = $this->getTopicTitles($params['forumtopic']);
 				$toList = json_decode($params['comments_coms'], true);
+				$object = count($items) > 1 ? 'topics' : 'topic';
+				if (isset($params['comments_parentId'])) {
+					unset($toList[$params['comments_parentId']]);
+					$object = count($items) > 1 ? 'posts' : 'post';
+				}
 				return [
 					'action' => 'merge_topic',
-					'title' => tra('Merge selected topics with another topic'),
+					'title' => tr('Merge selected %0 with another topic', $object),
 					'items' => $items,
 					'ticket' => $check['ticket'],
 					'toList' => $toList,
+					'object' => $object,
 					'modal' => '1',
 				];
 			} else {

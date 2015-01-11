@@ -297,6 +297,8 @@ if ($tiki_p_admin_forum == 'y' || $prefs['feature_forum_quickjump'] == 'y') {
 if ($tiki_p_admin_forum == 'y') {
 	$topics = $commentslib->get_forum_topics($_REQUEST['forumId'], 0, 200, 'commentDate_desc');
 	$smarty->assign_by_ref('topics', $topics);
+	$comms = array_column($topics, 'title', 'threadId');
+	$smarty->assign('topics_encoded', json_encode($comms));
 }
 $smarty->assign('unread', 0);
 if ($user && $prefs['feature_messages'] == 'y' && $tiki_p_messages == 'y') {
