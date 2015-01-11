@@ -163,14 +163,6 @@ if ($tiki_p_admin_forum == 'y') {
 		$access->check_authenticity(tra('Are you sure you want to remove that attachment?'));
 		$commentslib->remove_thread_attachment($_REQUEST['remove_attachment']);
 	}
-	if (isset($_REQUEST['movesel'])) {
-		if (isset($_REQUEST['forumthread'])) {
-			check_ticket('view-forum');
-			foreach (array_values($_REQUEST['forumthread']) as $thread) {
-				$commentslib->set_parent($thread, $_REQUEST['moveto']);
-			}
-		}
-	}
 	if ($prefs['feature_forum_topics_archiving'] == 'y' && isset($_REQUEST['archive']) && isset($_REQUEST['comments_parentId'])) {
 		check_ticket('view-forum');
 		if ($_REQUEST['archive'] == 'y') {
