@@ -387,7 +387,7 @@
 	<input type="hidden" name="all_forums" value="{$all_forums_encoded|escape}">
 	<input type="hidden" name="comments_coms" value="{$comments_coms_encoded|escape}">
 	{if $tiki_p_admin_forum eq 'y'}
-		<div class="panel panel-default">
+		<div class="panel panel-primary">
 			<div class="panel-heading">
 				{tr}Moderator actions on selected topics{/tr}
 			</div>
