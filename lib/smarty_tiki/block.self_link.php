@@ -106,11 +106,15 @@ function smarty_block_self_link($params, $content, $smarty, &$repeat = false)
 				}
 			}
 
-			if ( isset($params['_icon']) ) {
+			if ( isset($params['_icon']) || isset($params['_icon_name'])) {
 				if ( ! isset($params['_title']) && $content != '' ) $params['_title'] = $content;
 				$smarty->loadPlugin('smarty_function_icon');
-
-				$icon_params = array('_id' => $params['_icon'], '_type' => $default_icon_type);
+				if (isset($params['_icon'])) {
+					$icon_params['_id'] = $params['_icon'];
+				} else {
+					$icon_params['name'] = $params['_icon_name'];
+				}
+				$icon_params['_type'] = $default_icon_type;
 				if ( isset($params['_alt']) ) {
 					$icon_params['alt'] = $params['_alt'];
 				} elseif ( isset($params['_title']) ) {
