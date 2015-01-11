@@ -163,7 +163,7 @@
 				{section name=ix loop=$objects}
 					<tr>
 						<td class="text">
-							<a href={if empty($objects[ix].sefurl)}"{$objects[ix].href}"{else}"{$objects[ix].sefurl}"{/if} class="catname">{$objects[ix].name|escape|default:'&nbsp;'}</a>
+							<a class="catname" href="{if empty($objects[ix].sefurl)}{$objects[ix].href}{else}{$objects[ix].sefurl}{/if}">{$objects[ix].name|escape|default:'&nbsp;'}</a>
 							{if $objects[ix].type ne 'blog post'}<div class="subcomment">{$objects[ix].description|escape|nl2br}</div>{/if}
 						</td>
 						<td class="text">
