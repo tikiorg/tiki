@@ -347,15 +347,9 @@
 					</div>
 				</div>
 			</form>
-
-			<div class="alert alert-info alert-dismissable col-sm-10 col-sm-push-2" id="commentshelp" style="float:none">
-				<button type="button" class="close" data-dismiss="alert">×</button>
-				<h4><i class="fa fa-info-circle"></i> {tr}Editing posts:{/tr}</h4>
-				<span class="help-block">
-					{tr}Use{/tr} [http://example.org] {tr}or{/tr} [http://example.org|description] {tr}for links{/tr}<br>
-					{tr}HTML tags are not allowed inside posts{/tr}
-				</span>
-			</div>
+			{remarksbox title="{tr}Editing posts{/tr}"}
+				{tr}Use wiki syntax when editing the content of posts - HTML is not allowed. Please click on the following link for documentation on wiki syntax:{/tr} {wiki}[http://doc.tiki.org/Wiki+Syntax]{/wiki}
+			{/remarksbox}
 		</div> <!-- end forumpost -->
 	{/if}
 	{if $prefs.feature_forum_content_search eq 'y' and $prefs.feature_search eq 'y'}
