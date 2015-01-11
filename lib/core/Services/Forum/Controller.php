@@ -57,6 +57,31 @@ class Services_Forum_Controller
 					unset($toList[$params['comments_parentId']]);
 					$object = count($items) > 1 ? 'posts' : 'post';
 				}
+				$diff = array_diff_key($toList, $items);
+				if (count($diff) > 0) {
+					[
+						'action' => 'merge_topic',
+						'title' => tr('Merge selected %0 with another topic', $object),
+						'items' => $items,
+						'ticket' => $check['ticket'],
+						'toList' => $toList,
+						'object' => $object,
+						'modal' => '1',
+					];
+				} else {
+					//oops if all topics were selected
+					return [
+						'FORWARD' => [
+							'controller' => 'utilities',
+							'action' => 'alert',
+							'type' => 'warning',
+							'title' => tra('Topic merge feedback'),
+							'heading' => tra('Oops'),
+							'msg' => tra('All topics or posts were selected, leaving none to merge with. Please make your selection again.'),
+							'modal' => '1'
+						]
+					];
+				}
 				return [
 					'action' => 'merge_topic',
 					'title' => tr('Merge selected %0 with another topic', $object),
