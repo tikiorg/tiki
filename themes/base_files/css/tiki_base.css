@@ -164,6 +164,9 @@ img.icon {
   border: 0;
   background: transparent;
 }
+span.btn-link {
+  cursor: pointer;
+}
 div #metadata fieldset.tabcontent,
 div #metadata div.tabs {
   background-color: transparent;

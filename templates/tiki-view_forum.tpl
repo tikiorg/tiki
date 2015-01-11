@@ -660,14 +660,13 @@
 								{/if}
 							{/if}
 							{if $tiki_p_admin_forum eq 'y'}
-								<button
-									type="button"
+								<span
 									onclick="modalActionModal(this, {ldelim}'data':'service'{rdelim});"
 									data-service="{service controller=forum action=delete_topic params="forumtopic[]={$comments_coms[ix].threadId}&amp;forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;thread_sort_mode={$thread_sort_mode}&amp;comments_per_page={$comments_per_page}"}"
-									class="btn btn-sm btn-link tips"
+									class="btn-link tips"
 									title="{$comments_coms[ix].title|escape}:{tr}Delete topic{/tr}">
 										{icon name='remove'}
-								</button>
+								</span>
 							{/if}
 						</td>
 					</tr>
