@@ -11,9 +11,7 @@
 		<div class="form-group">
 			<label for="description" class="col-sm-2 control-label">{tr}Description{/tr}</label>
 			<div class="col-sm-10">
-				<textarea id="description" name="description" rows="4" cols="40">
-					{if isset($description)}{$description|escape}{/if}
-				</textarea>
+				<textarea id="description" name="description" rows="4" cols="40">{if isset($description)}{$description|escape}{/if}</textarea>
 			</div>
 		</div>
 		<div class="form-group">
