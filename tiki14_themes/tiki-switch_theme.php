@@ -15,30 +15,19 @@ if (!empty($group_theme)) {
 	$access->display_error(NULL, 'A group theme is defined.');
 }
 
-if (isset($_REQUEST['theme-themegen'])) {
-	$themeGenerator_theme = $_REQUEST['theme-themegen'];
-}
-
 if (isset($_REQUEST['theme'])) {
-	$themeandoption = $themelib->extract_theme_and_option($_REQUEST['theme']);
-	$theme = $themeandoption[0];
-	$themeOption = $themeandoption[1];
 
-	if (empty($theme)) {
-		$theme = '';
-		$themeOption = '';
-		$themeGenerator_theme = '';
+	if (empty($_REQUEST['theme'])) {
+		$_REQUEST['theme_option'] = '';
 	}
 	
-	$tikilib->set_user_preference($user, 'theme', $theme); //save user's theme preference
+	$tikilib->set_user_preference($user, 'theme', $_REQUEST['theme']); //save user's theme preference
+	$tikilib->set_user_preference($user, 'theme_option', $_REQUEST['theme_option']);
 
-	if (isset($themeOption)) {
-		$tikilib->set_user_preference($user, 'theme-option', empty($themeOption) ? '' : $themeOption); //save user's theme option preference
-	}
 }
 
-if (isset($themeGenerator_theme) && $prefs['themegenerator_feature'] === 'y') {
-	$tikilib->set_user_preference($user, 'themegenerator_theme', $themeGenerator_theme);
+if (isset($_REQUEST['theme-themegen']) && $prefs['themegenerator_feature'] === 'y') {
+	$tikilib->set_user_preference($user, 'themegenerator_theme', $_REQUEST['theme-themegen']);
 }
 
 if (isset($_SERVER['HTTP_REFERER'])) {

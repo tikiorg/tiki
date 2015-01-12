@@ -9,28 +9,10 @@
 $access->check_script($_SERVER['SCRIPT_NAME'], basename(__FILE__));
 
 //Initialize variables for the actual theme and theme option to be displayed
-$theme_active = '';
-$theme_option_active = '';
+$theme_active = $prefs['theme'];
+$theme_option_active = $prefs['theme_option'];
 
-//consider User Theme (users_prefs_theme and users_prefs_theme-option are set by lib/setup/user_prefs.php)
-if ($prefs['change_theme'] == 'y' and !empty($prefs['users_prefs_theme'])) { //If users are allowed to change theme and user theme preference is set..
-	$theme_active = $prefs['users_prefs_theme']; //..than use the user's theme preference..
-	if ( isset($prefs['users_prefs_theme-option']) and $prefs['users_prefs_theme-option'] != 'None' ) { // ...if theme-option is set, use it.
-		$theme_option_active = $prefs['users_prefs_theme-option'];
-	}
-	else {
-		$theme_option_active = '';
-	}
-}
-else { //if users are allowed to change theme, but they don't have a preference, than the use the site theme
-	$theme_active = $prefs['theme_site'];
-	if (isset($prefs['theme_option_site']) and $prefs['theme_option_site'] != 'None') { // ...if theme option is set, use it
-		$theme_option_active = $prefs['theme_option_site'];
-	}
-	else {
-		$theme_option_active = '';
-	}
-}
+// User theme previously set up in lib/setup/user_prefs.php
 
 //consider Group Theme
 if ($prefs['useGroupTheme'] == 'y') {
@@ -138,8 +120,8 @@ $smarty->assign_by_ref('iconset', $iconset);
 
 //9) set global variable and prefs so that they can be accessed elsewhere
 $smarty->assign_by_ref('theme_path', $theme_path);
-$prefs['theme_active'] = $theme_active;
-$prefs['theme_option_active'] = $theme_option_active;
+$prefs['theme'] = $theme_active;
+$prefs['theme_option'] = $theme_option_active;
 
 //Note: if Theme Control is active, than tiki-tc.php can modify the active theme
 

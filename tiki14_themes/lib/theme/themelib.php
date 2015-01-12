@@ -241,7 +241,7 @@ class ThemeLib extends TikiLib
 		return $base_iconsets;
 	}
 		
-	/* assemble $iconset array for a theme or theme-option. The values in this array are used by lib/smarty_tiki/function.icon.php for displaying icons
+	/* assemble $iconset array for a theme or theme_option. The values in this array are used by lib/smarty_tiki/function.icon.php for displaying icons
 	@param $theme - main theme (e.g. "fivealive")
 	@param $option - option of a main theme (e.g. "akebi" option of the fivealive theme)
 	@return $iconset - an array containing all icon definitions

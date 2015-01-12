@@ -30,7 +30,7 @@ function correct_array(&$arr, $id, $name)
 $access->check_feature('feature_theme_control');
 $access->check_permission('tiki_p_admin');
 
-$auto_query_args = array('find', 'sort_mode', 'offset', 'theme', 'theme-option', 'type', 'objdata');
+$auto_query_args = array('find', 'sort_mode', 'offset', 'theme', 'theme_option', 'type', 'objdata');
 $smarty->assign('a_object', isset($_REQUEST['objdata']) ? $_REQUEST['objdata'] : '');
 
 $themes = $themelib->list_themes_and_options();

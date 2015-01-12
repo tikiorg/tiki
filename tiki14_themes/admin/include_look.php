@@ -14,22 +14,22 @@ global $prefs;
 $themelib = TikiLib::lib('theme');
 
 //handle case when changing the themes in the Look and Feel settings panel
-$a_theme = $prefs['theme_site'];
+$a_theme = $prefs['theme'];
 if (isset($_REQUEST['looksetup'])) {
 	ask_ticket('admin-inc-look');
-	if (isset($_REQUEST['theme_site'])) {
+	if (isset($_REQUEST['theme'])) {
 		check_ticket('admin-inc-general');
 
-		if (!isset($_REQUEST['theme_option_site']) || $_REQUEST['theme_option_site'] = '') {
+		if (!isset($_REQUEST['theme_option']) || $_REQUEST['theme_option'] = '') {
 			// theme has no options
-			$_REQUEST['theme_option_site'] = '';
+			$_REQUEST['theme_option'] = '';
 		}
 		check_ticket('admin-inc-general');
 	}
 } else {
 	// just changed theme menu, so refill options
-	if (isset($_REQUEST['theme_site']) && $_REQUEST['theme_site'] != '') {
-		$a_theme = $_REQUEST['theme_site'];
+	if (isset($_REQUEST['theme']) && $_REQUEST['theme'] != '') {
+		$a_theme = $_REQUEST['theme'];
 	}
 }
 
@@ -39,9 +39,9 @@ $theme_options = $themelib->list_theme_options($a_theme);
 $smarty->assign('theme_options', $theme_options);
 
 // get thumbnail if there is one
-$thumbfile = $themelib->get_thumbnail_file($prefs['theme_site'], $prefs['theme_option_site']);
+$thumbfile = $themelib->get_thumbnail_file($prefs['theme'], $prefs['theme_option']);
 if (empty($thumbfile)) {
-	$thumbfile = $themelib->get_thumbnail_file($prefs['theme_site']);
+	$thumbfile = $themelib->get_thumbnail_file($prefs['theme']);
 }
 if (empty($thumbfile)) {
 	$thumbfile = 'img/trans.png';
@@ -117,8 +117,8 @@ $js
 		});
 	};
 
-	setupThemeSelects(\$('select[name=theme_site]'), \$('select[name=theme_option_site]'), true);
-	setupThemeSelects(\$('select[name=theme_admin]'), \$('select[name=theme_option_admin]'));
+	setupThemeSelects(\$('.tab-content select[name=theme]'), \$('.tab-content select[name=theme_option]'), true);
+	setupThemeSelects(\$('.tab-content select[name=theme_admin]'), \$('.tab-content select[name=theme_option_admin]'));
 });
 JS
 	);

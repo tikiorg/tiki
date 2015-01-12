@@ -276,9 +276,9 @@ class Smarty_Tiki extends Smarty
 			if (file_exists("$theme_path/templates/$_smarty_tpl_file")) { //first try theme specific template. $theme_path knows about tikidomain
 				$_smarty_tpl_file = "$theme_path/templates/$_smarty_tpl_file";
 			}
-			elseif (!empty($prefs['theme_option_active'])) { //next try: in case theme options try template for the main theme
+			elseif (!empty($prefs['theme_option'])) { //next try: in case theme options try template for the main theme
 				$themelib = TikiLib::lib('theme');
-				$main_theme_path = $themelib->get_theme_path($prefs['theme_active'], NULL, NULL);
+				$main_theme_path = $themelib->get_theme_path($prefs['theme'], NULL, NULL);
 				if(file_exists("$main_theme_path/templates/$_smarty_tpl_file")) {  
 					$_smarty_tpl_file = "$main_theme_path/templates/$_smarty_tpl_file";
 				}
@@ -331,7 +331,7 @@ class Smarty_Tiki extends Smarty
 	{
 		global $prefs, $lang, $theme_path, $tikidomain;
 
-		if (isset($prefs['theme_active']) && isset($theme_path)) {
+		if (isset($prefs['theme']) && isset($theme_path)) {
 			if ($tikidomain and file_exists("templates/$tikidomain/$_smarty_tpl_file")) {
 				$_smarty_tpl_file = "$tikidomain/$_smarty_tpl_file";
 			} elseif (file_exists("$theme_path/templates/$_smarty_tpl_file")) {
@@ -475,9 +475,9 @@ class Smarty_Tiki extends Smarty
 		if (empty($theme_path) && class_exists('ThemeLib')) {	// ThemeLib doesn't exist in the installer
 			$themelib = TikiLib::lib('theme');
 			if (method_exists($themelib, "get_theme_path")) {
-				$theme_path = $themelib->get_theme_path($prefs['theme_active'], $prefs['theme_option_active'], NULL);
-				if(!empty($prefs['theme_option_active'])) {
-					$main_theme_path = $themelib->get_theme_path($prefs['theme_active'], NULL , NULL); //to have the path to the main theme for options
+				$theme_path = $themelib->get_theme_path($prefs['theme'], $prefs['theme_option'], NULL);
+				if(!empty($prefs['theme_option'])) {
+					$main_theme_path = $themelib->get_theme_path($prefs['theme'], NULL , NULL); //to have the path to the main theme for options
 				}
 			}
 		}
@@ -487,13 +487,13 @@ class Smarty_Tiki extends Smarty
 		}
 
 		$theme_active = null;
-		if (isset($prefs['theme_active']) && ! in_array($prefs['theme_active'], ['custom_url'])) {
-			$theme_active = $prefs['theme_active'];
+		if (isset($prefs['theme']) && ! in_array($prefs['theme'], ['custom_url'])) {
+			$theme_active = $prefs['theme'];
 		}
 		
 		$theme_option_active = null;
-		if(isset($prefs['theme_option_active'])) {
-			$theme_option_active = $prefs['theme_option_active'];
+		if(isset($prefs['theme_option'])) {
+			$theme_option_active = $prefs['theme_option'];
 		}
 		
 		if (empty($prefs['site_layout'])) {
@@ -519,7 +519,7 @@ class Smarty_Tiki extends Smarty
 			$this->addTemplateDir(TIKI_PATH . "/$theme_path/templates/"); //This dir stores templates for one theme, knows about tikidomain
 			if (!empty($theme_option_active)) {
 				$themelib = TikiLib::lib('theme');
-				$main_theme_path = $themelib->get_theme_path($prefs['theme_active'], NULL , NULL); //to have the path to the main theme for options
+				$main_theme_path = $themelib->get_theme_path($prefs['theme'], NULL , NULL); //to have the path to the main theme for options
 				$this->addTemplateDir(TIKI_PATH . "/$main_theme_path/templates/"); //Add the main theme's template dir for options
 			}
 			$this->addTemplateDir(TIKI_PATH . "/themes/templates/"); //This dir stores templates for all the themes

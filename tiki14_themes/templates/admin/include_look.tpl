@@ -28,8 +28,8 @@
 					</div>
 				</div>
 				<div class="col-md-9 col-md-pull-3 adminoptionbox">
-					{preference name=theme_site}
-					{preference name=theme_option_site}
+					{preference name=theme}
+					{preference name=theme_option}
 				</div>
 			</div>
 			<div class="adminoptionbox theme_site_childcontainer custom_url">

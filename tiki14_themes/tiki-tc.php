@@ -12,7 +12,7 @@
 require_once ('tiki-setup.php');
 $access->check_script($_SERVER["SCRIPT_NAME"], basename(__FILE__));
 if ($prefs['feature_theme_control'] == 'y' && empty($_SESSION['try_theme'])) {
-	//we arrive here after lib/setup/theme.php has finished, so $prefs['theme_active'] and $prefs['theme_active_option'] are already set. Here we want to overwrite them according to the theme control setting
+	//we arrive here after lib/setup/theme.php has finished, so $prefs['theme'] and $prefs['theme_active_option'] are already set. Here we want to overwrite them according to the theme control setting
 	// defined: $cat_type and cat_objid
 	// search for theme for $cat_type
 	// then search for theme for md5($cat_type.cat_objid)
@@ -38,11 +38,11 @@ if ($prefs['feature_theme_control'] == 'y' && empty($_SESSION['try_theme'])) {
 			$_SESSION['tc_theme'] = $tc_theme_option;
 		}
 		//DROP css files (theme, theme_option and custom.css) added by lib/setup/theme.php that became unnecessary now that we have tc_theme
-		$themesetup_path = $themelib->get_theme_path($prefs['theme_active'], NULL, NULL);
+		$themesetup_path = $themelib->get_theme_path($prefs['theme'], NULL, NULL);
 		$headerlib->drop_cssfile("{$themesetup_path}css/tiki.css"); //drop main theme css
 		$headerlib->drop_cssfile("{$themesetup_path}css/custom.css"); //drop main theme custom css
-		if (!empty($prefs['theme_option_active'])){
-			$themesetup_path = $themelib->get_theme_path($prefs['theme_active'], $prefs['theme_option_active'], NULL);
+		if (!empty($prefs['theme_option'])){
+			$themesetup_path = $themelib->get_theme_path($prefs['theme'], $prefs['theme_option'], NULL);
 			$headerlib->drop_cssfile("{$themesetup_path}css/tiki.css"); //drop option css
 			$headerlib->drop_cssfile("{$themesetup_path}css/custom.css"); //drop option custom css
 		}
@@ -79,8 +79,8 @@ if ($prefs['feature_theme_control'] == 'y' && empty($_SESSION['try_theme'])) {
 		$iconset = $themelib->get_iconset($tc_theme, $tc_theme_option);
 		$smarty->assign_by_ref('iconset', $iconset);
 		
-		//RESET $theme_active prefs
-		$prefs['theme_active'] = $tc_theme;
-		$prefs['theme_option_active'] = $tc_theme_option;
+		//RESET theme prefs
+		$prefs['theme'] = $tc_theme;
+		$prefs['theme_option'] = $tc_theme_option;
 	}
 }

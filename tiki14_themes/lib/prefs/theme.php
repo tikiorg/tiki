@@ -31,7 +31,7 @@ function prefs_theme_list($partial = false)
 	$iconsets['theme_specific_iconset'] = tr('Icons of the selected theme'); //add a specific option to allow theme specific icon set to be used
 	
 	return array(
-		'theme_site' => array(
+		'theme' => array(
 			'name' => tr('Site theme'),
 			'description' => tr('The default theme for the site. Most themes are bootstrap.css variants including updated legacy Tiki themes as well as themes from Bootswatch.com. For more information about Bootstrap, see getbootstrap.com.'),
 			'type' => 'list',
@@ -40,7 +40,7 @@ function prefs_theme_list($partial = false)
 			'help' => 'Themes',
 			'tags' => array('basic'),
 		),
-		'theme_option_site' => array(
+		'theme_option' => array(
 			'name' => tra('Site theme option'),
 			'type' => 'list',
 			'help' => 'Themes',
