@@ -276,6 +276,73 @@ class Services_Forum_Controller
 	}
 
 	/**
+	 * Moderator action to delete a forum post attachment
+	 *
+	 * @param $input
+	 * @return array
+	 * @throws Exception
+	 */
+	function action_delete_attachment($input)
+	{
+		$access = TikiLib::lib('access');
+		$check = $access->check_authenticity(null, false);
+		if (!empty($check['ticket'])) {
+			parse_str($input->offsetGet('params'), $params);
+			//check number of topics on first pass
+			if (!empty($params['remove_attachment'])) {
+				$items[$params['remove_attachment']] = $params['filename'];
+				return [
+					'FORWARD' => [
+						'controller' => 'access',
+						'action' => 'confirm',
+						'title' => tra('Please confirm deletion'),
+						'confirmAction' => 'tiki-forum-delete_attachment',
+						'customVerb' => tra('delete'),
+						'customObject' => tra('attachment'),
+						'items' => $items,
+						'ticket' => $check['ticket'],
+						'modal' => '1',
+					]
+				];
+			} else {
+				//oops if no attachments were selected
+				return [
+					'FORWARD' => [
+						'controller' => 'utilities',
+						'action' => 'alert',
+						'type' => 'warning',
+						'title' => tra('Attachment delete feedback'),
+						'heading' => tra('Oops'),
+						'msg' => tra('No attachments were selected. Please select an attachment to delete.'),
+						'modal' => '1'
+					]
+				];
+			}
+		} elseif ($check === true && count($_POST['items']) > 0) {
+			$commentslib = TikiLib::lib('comments');
+			$items = $input->asArray('items');
+			foreach ($items as $id => $name) {
+				if (is_numeric($id)) {
+					$commentslib->remove_thread_attachment($id);
+				}
+			}
+			return true;
+		} elseif ($check === false) {
+			return [
+				'FORWARD' => [
+					'controller' => 'utilities',
+					'action' => 'alert',
+					'type' => 'error',
+					'title' => tra('Attachment delete feedback'),
+					'heading' => tra('Error'),
+					'msg' => tra('Sea Surfing (CSRF) detected. Operation blocked.'),
+					'modal' => '1'
+				]
+			];
+		}
+	}
+
+	/**
 	 * Utility to get topic names
 	 *
 	 * @param $topicIds

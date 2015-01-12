@@ -150,10 +150,6 @@ if ($threads[0]['threadId'] != $_REQUEST['comments_parentId']) {
 }
 
 if ($tiki_p_admin_forum == 'y') {
-	if (isset($_REQUEST['remove_attachment'])) {
-		$access->check_authenticity(tra('Are you sure you want to remove that attachment?'));
-		$commentslib->remove_thread_attachment($_REQUEST['remove_attachment']);
-	}
 	if ($prefs['feature_forum_topics_archiving'] == 'y' && isset($_REQUEST['archive']) && isset($_REQUEST['comments_parentId'])) {
 		check_ticket('view-forum');
 		if ($_REQUEST['archive'] == 'y') {

@@ -82,14 +82,17 @@
 	{icon name='attach' alt="{tr}Attachment{/tr}"}
 	{$comment.attachments[ix].filename} ({$comment.attachments[ix].filesize|kbsize})</a>
 	{if $tiki_p_admin_forum eq 'y'}
-	<a class="tips"
-		{if $first eq 'y'}
-		href="tiki-view_forum_thread.php?topics_offset={$smarty.request.topics_offset}{$topics_sort_mode_param}{$topics_find_param}{$topics_threshold_param}&amp;comments_offset={$smarty.request.topics_offset}{$thread_sort_mode_param}&amp;comments_threshold={$smarty.request.topics_threshold}{$comments_find_param}&amp;forumId={$forum_info.forumId}{$comments_per_page_param}&amp;comments_parentId={$comments_parentId}&amp;remove_attachment={$comment.attachments[ix].attId}"
-		{else}
-		href="tiki-view_forum_thread.php?topics_offset={$smarty.request.topics_offset}&amp;topics_sort_mode={$smarty.request.topics_sort_mode}&amp;topics_find={$smarty.request.topics_find}&amp;topics_threshold={$smarty.request.topics_threshold}&amp;comments_offset={$smarty.request.topics_offset}&amp;thread_sort_mode={$thread_sort_mode}&amp;comments_threshold={$smarty.request.topics_threshold}&amp;comments_find={$smarty.request.topics_find}&amp;forumId={$forum_info.forumId}&amp;comments_per_page={$comments_per_page}&amp;comments_parentId={$comments_parentId}&amp;remove_attachment={$comment.attachments[ix].attId}"
-		{/if}
-		title=":{tr}Remove attachment{/tr}"
-	>{icon name='remove' alt="{tr}Remove attachment{/tr}"}</a>
+		<span
+			{if $first eq 'y'}
+				data-service="{service controller=forum action=delete_attachment params="topics_offset={$smarty.request.topics_offset}{$topics_sort_mode_param}{$topics_find_param}{$topics_threshold_param}&comments_offset={$smarty.request.topics_offset}{$thread_sort_mode_param}&comments_threshold={$smarty.request.topics_threshold}{$comments_find_param}&forumId={$forum_info.forumId}{$comments_per_page_param}&comments_parentId={$comments_parentId}&remove_attachment={$comment.attachments[ix].attId}&filename={$comment.attachments[ix].filename}"}"
+			{else}
+				data-service="{service controller=forum action=delete_attachment params="topics_offset={$smarty.request.topics_offset}&topics_sort_mode={$smarty.request.topics_sort_mode}&topics_find={$smarty.request.topics_find}&topics_threshold={$smarty.request.topics_threshold}&comments_offset={$smarty.request.topics_offset}&thread_sort_mode={$thread_sort_mode}&comments_threshold={$smarty.request.topics_threshold}&comments_find={$smarty.request.topics_find}&forumId={$forum_info.forumId}&comments_per_page={$comments_per_page}&comments_parentId={$comments_parentId}&remove_attachment={$comment.attachments[ix].attId}&filename={$comment.attachments[ix].filename}"}"
+			{/if}
+			onclick="modalActionModal(this, {ldelim}'data':'service'{rdelim});"
+			class="btn-link tips"
+			title=":{tr}Remove attachment{/tr}">
+				{icon name='remove' alt="{tr}Remove attachment{/tr}"}
+		</span>
 	{/if}
 	<br>
 	{/section}
