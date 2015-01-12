@@ -19,6 +19,7 @@
 			<input type="hidden" name="comments_reply_threadId" value="{$comments_reply_threadId|escape}">
 			<input type="hidden" name="comments_objectId" value="{$comments_objectId|escape}">
 			<input type="hidden" name="comments_offset" value="0">
+			<input type="hidden" name="comments_coms" value="{$topics_encoded|escape}">
 			{if $smarty.request.topics_offset}<input type="hidden" name="topics_offset" value="{$smarty.request.topics_offset|escape}">{/if}
 			{if $smarty.request.topics_find}<input type="hidden" name="topics_find" value="{$smarty.request.topics_find|escape}">{/if}
 			{if $smarty.request.topics_sort_mode}<input type="hidden" name="topics_sort_mode" value="{$smarty.request.topics_sort_mode|escape}">{/if}
@@ -26,34 +27,33 @@
 			{if $forumId}<input type="hidden" name="forumId" value="{$forumId|escape}">{/if}
 
 			{if $tiki_p_admin_forum eq 'y'}
-				<div class="forum_actions form-group">
-					<div class="headers">
-						<span class="title">{tr}Moderator actions{/tr}</span>
-						<span class="infos">
+				<div class="panel panel-primary form-group">
+					<div class="panel-heading">
+						{tr}Moderator actions{/tr}
+					</div>
+					<div class="panel-body form-inline">
+						<span class="infos pull-right">
 							{if $reported > 0}
 								<a class="link" href="tiki-forums_reported.php?forumId={$forumId}">{tr}reported:{/tr}{$reported}</a> |
 							{/if}
 							<a class="link" href="tiki-forum_queue.php?forumId={$forumId}">{tr}queued:{/tr}{$queued}</a>
 						</span>
-					</div>
-					<div class="actions form-inline">
 						{if $topics|@count > 1}
-							<span class="action">
-								{tr}Move to topic:{/tr}
-								<select name="moveto" class="form-control">
-									{section name=ix loop=$topics}
-										{if $topics[ix].threadId ne $comments_parentId}
-											<option value="{$topics[ix].threadId|escape}">{$topics[ix].title|truncate:100|escape}</option>
-										{/if}
-									{/section}
-								</select>
-								<input type="submit" class="btn btn-default btn-sm" name="movesel" value="{tr}Move{/tr}">
-							</span>
+							<button
+								type="button"
+								onclick="modalActionModal(this, {ldelim}'controller':'forum','action':'merge_topic','closest':'form'{rdelim});"
+								class="btn btn-default btn-sm tips"
+								title=":{tr}Merge selected topics{/tr}">
+									{icon name="merge"}
+							</button>
 						{/if}
-
-						<span class="action">
-							<input type="submit" class="btn btn-default btn-sm" name="delsel" value="{tr}Delete Selected{/tr}">
-						</span>
+						<button
+								type="button"
+								onclick="modalActionModal(this, {ldelim}'controller':'forum','action':'delete_topic','closest':'form'{rdelim});"
+								class="btn btn-default btn-sm tips"
+								title=":{tr}Delete selected posts{/tr}">
+							{icon name="remove"}
+						</button>
 					</div>
 				</div>
 			{/if}

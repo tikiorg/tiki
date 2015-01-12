@@ -1,13 +1,13 @@
 /** $Id$
  *
  * To facilitate use of ajax services, allowing for update of page information without refreshing and
- * providing modal popup feedback
+ * providing modal popup feedback (e.g., a warning notice that no items were selected)
  */
 
 /**
  * For use as an onclick function. First service specified should return a modal form.
  * After the form is submitted, a jquery function may be specified to update the page.
- * At the end, a success modal pops up and then automatically closes after 5 seconds.
+ * 	or a modal pops up (e.g.,
  *
  * @param element           object  Element with the onclick (this)
  * @param firstSvc          object  Service parameters (controller and action), optional additional parameters (params),
@@ -24,20 +24,17 @@ function modalActionModal(element, firstSvc, secondSelector, secondFn) {
 			success: function (data) {
 				$.closeModal({
 					done: function () {
-						$(secondSelector)[secondFn](settings.params);
-						if (!data.FORWARD) {
+						if (!data.FORWARD && secondSelector && secondFn) {
+							$(secondSelector)[secondFn](settings.params);
+							return false;
+						} else if (data.FORWARD){
+							$.openModal({
+								remote: $.service(data.FORWARD.controller, data.FORWARD.action, data.FORWARD)
+							});
+						} else {
+							location.reload(true);
 							return false;
 						}
-						setTimeout(function () {
-							$.openModal({
-								remote: $.service(data.FORWARD.controller, data.FORWARD.action, data.FORWARD),
-								open: function () {
-									setTimeout(function () {
-										$.closeModal({});
-									}, 5000);
-								}
-							});
-						}, 0);
 					}
 				});
 			}
@@ -49,7 +46,10 @@ function modalActionModal(element, firstSvc, secondSelector, secondFn) {
 }
 
 /**
- * Similar to above function but used when only a server action is needed followed by a feedback modal popup
+ * For use as an onclick function when these steps are desired:
+ * 	- First, a server action is performed (no form beforehand)
+ * 	- Then, optionally EITHER a server update action is performed or a modal pops up
+ * 		(e.g., a warning notice that no items were selected)
  *
  * @param element
  * @param firstSvc
@@ -60,17 +60,26 @@ function modalActionModal(element, firstSvc, secondSelector, secondFn) {
 function actionModal(element, firstSvc, secondSelector, secondFn) {
 	var settings, params;
 	settings = getHrefAndParams(element, firstSvc);
-	$.openModal({
-		remote: settings.href,
-		open: function () {
-			if ($('div.modal-body div').hasClass('alert-success')) {
-				$(secondSelector)[secondFn](settings.params);
-				setTimeout(function () {
-					$.closeModal({});
-				}, 5000);
+	if (settings) {
+		$.ajax({
+			dataType: 'json',
+			url: settings.href,
+			success: function (data) {
+				if (!data.FORWARD && secondSelector && secondFn) {
+					$(secondSelector)[secondFn](settings.params);
+					return false;
+				} else if (data.FORWARD){
+					$.openModal({
+						remote: $.service(data.FORWARD.controller, data.FORWARD.action, data.FORWARD)
+					});
+				} else {
+					return false;
+				}
 			}
-		}
-	});
+		});
+	} else {
+		return false;
+	}
 }
 
 /**
@@ -85,7 +94,7 @@ $.fn.refreshTableRows = function (params) {
 		$.ajax({
 			url: location,
 			dataType: 'html',
-			data: $(params).serialize() + 'tsAjax=y',
+			data: params + 'tsAjax=y',
 			success: function (data) {
 				var parsedpage = $.parseHTML(data),
 					tbody = $(parsedpage).find(id + ' tbody');
@@ -123,7 +132,7 @@ function getHrefAndParams(element, settings) {
 					}
 				});
 			}
-			href = $.service(settings.controller, settings.action, {params: params, modal: 1});
+			href = $.service(settings.controller, settings.action, {params: params});
 		//in case the service is fully defined in a custom data element (e.g., using the smarty service function
 		} else if (typeof settings.data !== 'undefined') {
 			href = $(element).data(settings.data);

@@ -8,9 +8,9 @@
 			<div class="form-group">
 				<label for="mergefrom" class="control-label">
 					{if $items|count > 1}
-						{tr}Merge these topics:{/tr}
+						{tr _0=$object}Merge these %0:{/tr}
 					{else}
-						{tr}Merge this topic:{/tr}
+						{tr _0=$object}Merge this %0:{/tr}
 					{/if}
 				</label><br>
 				<div id="mergefrom">

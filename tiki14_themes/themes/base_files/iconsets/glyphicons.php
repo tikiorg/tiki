@@ -66,7 +66,7 @@ $icons = array(
 		'class' => 'glyphicon glyphicon-envelope',
 	),
 	'error' => array( 
-		'class' => 'glyphicon glyphicon-fire',
+		'class' => 'glyphicon glyphicon-exclamation-sign',
 	),
 	'export' => array(
 		'class' => 'glyphicon glyphicon-export',
@@ -85,6 +85,9 @@ $icons = array(
 	),
 	'filter' => array(
 		'class' => 'glyphicon glyphicon-filter',
+	),
+	'floppy' => array(
+		'class' => 'glyphicon glyphicon-floppy-save',
 	),
 	'help' => array(
 		'class' => 'glyphicon glyphicon-question-sign',

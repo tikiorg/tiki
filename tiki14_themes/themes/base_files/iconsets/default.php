@@ -247,9 +247,6 @@ $icons = array( //Icons of the icon set
 		'class' => 'fa fa-step-forward fa-fw',
 	),
 	'file-archive' => array(
-		'class' => 'fa fa-file-archive-o fa-fw',
-	),
-	'file-archive' => array(
 		'class' => 'fa fa-folder fa-fw',
 	),
 	'file-archive-open' => array(
@@ -257,6 +254,9 @@ $icons = array( //Icons of the icon set
 	),
 	'filter' => array(
 		'class' => 'fa fa-filter fa-fw',
+	),
+	'floppy' => array(
+		'class' => 'fa fa-floppy-o fa-fw',
 	),
 	'group' => array(
 		'class' => 'fa fa-group fa-fw',

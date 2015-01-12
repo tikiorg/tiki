@@ -403,35 +403,71 @@ class Services_Comment_Controller
 
 	private function canView($type, $objectId)
 	{
+		// Note: $perms provides a magic method __get as an accessor for attributes.
+		// I.e. $perms->wiki_view_comments or $perms->tracker_view_comments are returend by that accessor method
+		// and do not exist as a property.
+		// Wether they are true or false depends on the assigned permissions stored in $perms->resolver
+		// for the respective groups.
+		 
 		$perms = $this->getApplicablePermissions($type, $objectId);
 
-		if (! ($perms->read_comments || $perms->post_comments || $perms->edit_comments)) {
-			return false;
-		}
-
 		switch ($type) {
-		case 'wiki page':
-			return $perms->wiki_view_comments;
+			case 'wiki page':
+				return $perms->wiki_view_comments;
+				break;
+			
+			// canPost() requires also view access frontend/template wise. 
+			// So we return also true if post ($perms->comment_tracker_items) is enabled. 
+			case 'trackeritem':
+				return ($perms->tracker_view_comments || $perms->comment_tracker_items);
+				break;
+				
+			
+			// @TODO which $types do use / or should use these permissions?
+			// taken from the prevoius developer: seems that view should be automatically assigned if edit / post is granted.
+			default:
+				if (! ($perms->read_comments || $perms->post_comments || $perms->edit_comments)) {
+					return false;
+				}
+				break;
 		}
 
 		return true;
 	}
 
+	
 	public function canPost($type, $objectId)
 	{
 		global $prefs;
+		
+		// see comment about $perms in canView().
 
 		$perms = $this->getApplicablePermissions($type, $objectId);
-		if (! $perms->post_comments) {
-			return false;
-		}
 
 		if ($prefs['feature_comments_locking'] == 'y' &&  TikiLib::lib('comments')->is_object_locked("$type:$objectId")) {
 			return false;
 		}
+		
+		switch ($type) {
+					
+			// requires also view access from the front/template part
+			// so we add $perms->comment_tracker_items also to canView()
+			case 'trackeritem':
+				return $perms->comment_tracker_items;
+				break;
+		
+			// @TODO which $types do use / or should use these permissions?
+			default:
+				if (! ($perms->post_comments)) {
+					return false;
+				}
+				break;
+		}
+		
 
 		return true;
 	}
+	
 
 	public function isEnabled($type, $objectId)
 	{

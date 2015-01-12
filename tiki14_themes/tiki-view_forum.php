@@ -86,11 +86,12 @@ if (isset($_REQUEST['report']) && $tiki_p_forums_report == 'y') {
 }
 
 if ($tiki_p_admin_forum == 'y') {
+	//not sure where this is used on tiki-view_forum.php
 	if (isset($_REQUEST['remove_attachment'])) {
 		$access->check_authenticity(tra('Are you sure you want to remove that attachment?'));
 		$commentslib->remove_thread_attachment($_REQUEST['remove_attachment']);
 	}
-
+	//not sure where this is used on tiki-view_forum.php
 	if (isset($_REQUEST['lock']) && isset($_REQUEST['forumId'])) {
 		check_ticket('view-forum');
 		if ($_REQUEST['lock'] == 'y') {
@@ -99,15 +100,6 @@ if ($tiki_p_admin_forum == 'y') {
 		} elseif ($_REQUEST['lock'] == 'n') {
 			$commentslib->unlock_object_thread('forum:' . ((int)$_REQUEST['forumId']));
 			$forum_info['is_locked'] = 'n';
-		}
-	}
-
-	if ($prefs['feature_forum_topics_archiving'] && isset($_REQUEST['archive']) && isset($_REQUEST['comments_parentId'])) {
-		check_ticket('view-forum');
-		if ($_REQUEST['archive'] == 'y') {
-			$commentslib->archive_thread($_REQUEST['comments_parentId']);
-		} elseif ($_REQUEST['archive'] == 'n') {
-			$commentslib->unarchive_thread($_REQUEST['comments_parentId']);
 		}
 	}
 }

@@ -46,22 +46,22 @@
 
 		{if $user and $prefs.feature_user_watches eq 'y'}
 			{if $user_watching_forum eq 'n'}
-				<a class="btn btn-sm btn-link pull-right tips" href="tiki-view_forum.php?forumId={$forumId}&amp;watch_event=forum_post_topic&amp;watch_object={$forumId}&amp;watch_action=add" title=":{tr}Monitor topics of this forum{/tr}">{icon name="watch"}</a>
+				<a class="pull-right tips" href="tiki-view_forum.php?forumId={$forumId}&amp;watch_event=forum_post_topic&amp;watch_object={$forumId}&amp;watch_action=add" title="{$forum_info.name|escape}:{tr}Monitor topics{/tr}">{icon name="watch"}</a>
 			{else}
-				<a class="btn btn-sm btn-link pull-right tips" href="tiki-view_forum.php?forumId={$forumId}&amp;watch_event=forum_post_topic&amp;watch_object={$forumId}&amp;watch_action=remove" title=":{tr}Stop monitoring topics of this forum{/tr}">{icon name="stop-watching"}</a>
+				<a class="pull-right tips" href="tiki-view_forum.php?forumId={$forumId}&amp;watch_event=forum_post_topic&amp;watch_object={$forumId}&amp;watch_action=remove" title="{$forum_info.name|escape}:{tr}Stop monitoring topics{/tr}">{icon name="stop-watching"}</a>
 			{/if}
 		{/if}
 
 		{if $user and $prefs.feature_user_watches eq 'y'}
 			{if $user_watching_forum_topic_and_thread eq 'n'}
-				<a class="btn btn-sm btn-link pull-right tips" href="tiki-view_forum.php?forumId={$forumId}&amp;watch_event=forum_post_topic_and_thread&amp;watch_object={$forumId}&amp;watch_action=add" title=":{tr}Monitor topics and threads of this forum{/tr}">{icon name="watch"}</a>
+				<a class="pull-right tips" href="tiki-view_forum.php?forumId={$forumId}&amp;watch_event=forum_post_topic_and_thread&amp;watch_object={$forumId}&amp;watch_action=add" title="{$forum_info.name|escape}:{tr}Monitor topics and threads{/tr}">{icon name="watch"}</a>
 			{else}
-				<a class="btn btn-sm btn-link pull-right tips" href="tiki-view_forum.php?forumId={$forumId}&amp;watch_event=forum_post_topic_and_thread&amp;watch_object={$forumId}&amp;watch_action=remove" title=":{tr}Stop monitoring topics and threads of this forum{/tr}">{icon name="stop-watching"}</a>
+				<a class="pull-right tips" href="tiki-view_forum.php?forumId={$forumId}&amp;watch_event=forum_post_topic_and_thread&amp;watch_object={$forumId}&amp;watch_action=remove" title="{$forum_info.name|escape}:{tr}Stop monitoring topics and threads{/tr}">{icon name="stop-watching"}</a>
 			{/if}
 		{/if}
 
 		{if $prefs.feature_group_watches eq 'y' and ( $tiki_p_admin_users eq 'y' or $tiki_p_admin eq 'y' )}
-			<a href="tiki-object_watches.php?objectId={$forumId|escape:"url"}&amp;watch_event=forum_post_topic_and_thread&amp;objectType=forum&amp;objectName={$forum_info.name|escape:"url"}&amp;objectHref={'tiki-view_forum.php?forumId='|cat:$forumId|escape:"url"}" class="btn btn-link tips" title=":{tr}Group monitor topics and threads of this forum{/tr}">{icon name="watch-group"}</a>
+			<a href="tiki-object_watches.php?objectId={$forumId|escape:"url"}&amp;watch_event=forum_post_topic_and_thread&amp;objectType=forum&amp;objectName={$forum_info.name|escape:"url"}&amp;objectHref={'tiki-view_forum.php?forumId='|cat:$forumId|escape:"url"}" class="pull-right tips" title="{$forum_info.name|escape}:{tr}Group monitor topics and threads{/tr}">{icon name="watch-group"}</a>
 		{/if}
 
 		<div class="categbar" align="right" >
@@ -69,7 +69,7 @@
 				{if isset($category_watched) and $category_watched eq 'y'}
 					{tr}Watched by categories:{/tr}
 					{section name=i loop=$watching_categories}
-						<a class="btn btn-link btn-sm" href="tiki-browse_categories.php?parentId={$watching_categories[i].categId}">{$watching_categories[i].name|escape}</a>
+						<a href="tiki-browse_categories.php?parentId={$watching_categories[i].categId}">{$watching_categories[i].name|escape}</a>
 						&nbsp;
 					{/section}
 				{/if}
@@ -347,15 +347,9 @@
 					</div>
 				</div>
 			</form>
-
-			<div class="alert alert-info alert-dismissable col-sm-10 col-sm-push-2" id="commentshelp">
-				<button type="button" class="close" data-dismiss="alert">×</button>
-				<h4><i class="fa fa-info-circle"></i> {tr}Editing posts:{/tr}</h4>
-				<span class="help-block">
-					{tr}Use{/tr} [http://example.org] {tr}or{/tr} [http://example.org|description] {tr}for links{/tr}<br>
-					{tr}HTML tags are not allowed inside posts{/tr}
-				</span>
-			</div>
+			{remarksbox title="{tr}Editing posts{/tr}"}
+				{tr}Use wiki syntax when editing the content of posts - HTML is not allowed. Please click on the following link for documentation on wiki syntax:{/tr} {wiki}[http://doc.tiki.org/Wiki+Syntax]{/wiki}
+			{/remarksbox}
 		</div> <!-- end forumpost -->
 	{/if}
 	{if $prefs.feature_forum_content_search eq 'y' and $prefs.feature_search eq 'y'}
@@ -387,7 +381,7 @@
 	<input type="hidden" name="all_forums" value="{$all_forums_encoded|escape}">
 	<input type="hidden" name="comments_coms" value="{$comments_coms_encoded|escape}">
 	{if $tiki_p_admin_forum eq 'y'}
-		<div class="panel panel-default">
+		<div class="panel panel-primary">
 			<div class="panel-heading">
 				{tr}Moderator actions on selected topics{/tr}
 			</div>
@@ -396,7 +390,7 @@
 					{if $comments_coms|@count > 1}
 						<button
 							type="button"
-							onclick="modalActionModal(this, {ldelim}'controller':'forum','action':'merge_topic','closest':'form'{rdelim}, 'table#{$ts_tableid}', 'refreshTableRows');"
+							onclick="modalActionModal(this, {ldelim}'controller':'forum','action':'merge_topic','closest':'form'{rdelim});"
 							class="btn btn-default btn-sm tips"
 							title=":{tr}Merge selected topics{/tr}">
 								{icon name="merge"}
@@ -405,7 +399,7 @@
 					{if $all_forums|@count > 1 && $comments_coms|@count > 0}
 						<button
 							type="button"
-							onclick="modalActionModal(this, {ldelim}'controller':'forum','action':'move_topic','closest':'form'{rdelim}, 'table#{$ts_tableid}', 'refreshTableRows');"
+							onclick="modalActionModal(this, {ldelim}'controller':'forum','action':'move_topic','closest':'form'{rdelim});"
 							class="btn btn-default btn-sm tips"
 							title=":{tr}Move selected topics{/tr}">
 								{icon name="move"}
@@ -428,7 +422,7 @@
 						</button>
 						<button
 							type="button"
-							onclick="modalActionModal(this, {ldelim}'controller':'forum','action':'delete_topic','closest':'form'{rdelim}, 'table#{$ts_tableid}', 'refreshTableRows');"
+							onclick="modalActionModal(this, {ldelim}'controller':'forum','action':'delete_topic','closest':'form'{rdelim});"
 							class="btn btn-default btn-sm tips"
 							title=":{tr}Delete selected topics{/tr}">
 								{icon name="remove"}
@@ -652,25 +646,29 @@
 
 							{if $prefs.feature_forum_topics_archiving eq 'y' && $tiki_p_admin_forum eq 'y'}
 								{if $comments_coms[ix].archived eq 'y'}
-									<a href="{$smarty.server.PHP_SELF}?{query archive="n" comments_parentId=$comments_coms[ix].threadId}" title="{$comments_coms[ix].title|escape}:{tr}Unarchive topic{/tr}" class="tips">
-										{icon name='file-archive-open'}
-									</a>
+									<span
+										onclick="actionModal(this, {ldelim}'controller':'forum','action':'unarchive_topic','params':{ldelim}'comments_parentId':'{$comments_coms[ix].threadId}'{rdelim}{rdelim}, 'table#{$ts_tableid}', 'refreshTableRows');"
+										class="btn-link tips"
+										title="{$comments_coms[ix].title|escape}:{tr}Unarchive topic{/tr}">
+											{icon name='file-archive-open'}
+									</span>
 								{else}
-									<a href="{$smarty.server.PHP_SELF}?{query archive="y" comments_parentId=$comments_coms[ix].threadId}" title="{$comments_coms[ix].title|escape}:{tr}Archive topic{/tr}" class="tips">
-										{icon name='file-archive'}
-									</a>
+									<span
+										onclick="actionModal(this, {ldelim}'controller':'forum','action':'archive_topic','params':{ldelim}'comments_parentId':'{$comments_coms[ix].threadId}'{rdelim}{rdelim}, 'table#{$ts_tableid}', 'refreshTableRows');"
+										class="btn-link tips"
+										title="{$comments_coms[ix].title|escape}:{tr}Archive topic{/tr}">
+											{icon name='file-archive'}
+									</span>
 								{/if}
 							{/if}
-
 							{if $tiki_p_admin_forum eq 'y'}
-								<button
-									type="button"
-									onclick="modalActionModal(this, {ldelim}'data':'service'{rdelim}, 'table#{$ts_tableid}', 'refreshTableRows');"
-									data-service="{service controller=forum action=delete_topic params="forumtopic[]={$comments_coms[ix].threadId}&amp;forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;thread_sort_mode={$thread_sort_mode}&amp;comments_per_page={$comments_per_page}"}"
-									class="btn btn-sm btn-link tips"
+								<span
+									onclick="modalActionModal(this, {ldelim}'data':'service'{rdelim});"
+									data-service="{service controller=forum action=delete_topic params="forumtopic[]={$comments_coms[ix].threadId}&forumId={$forum_info.forumId}&comments_threshold={$comments_threshold}&comments_offset={$comments_offset}&thread_sort_mode={$thread_sort_mode}&comments_per_page={$comments_per_page}"}"
+									class="btn-link tips"
 									title="{$comments_coms[ix].title|escape}:{tr}Delete topic{/tr}">
 										{icon name='remove'}
-								</button>
+								</span>
 							{/if}
 						</td>
 					</tr>

@@ -150,27 +150,6 @@ if ($threads[0]['threadId'] != $_REQUEST['comments_parentId']) {
 }
 
 if ($tiki_p_admin_forum == 'y') {
-	if (isset($_REQUEST['delsel'])) {
-		if (isset($_REQUEST['forumthread'])) {
-			check_ticket('view-forum');
-			foreach (array_values($_REQUEST['forumthread']) as $thread) {
-				$commentslib->remove_comment($thread);
-				$commentslib->register_remove_post($_REQUEST['forumId'], $_REQUEST['comments_parentId']);
-			}
-		}
-	}
-	if (isset($_REQUEST['remove_attachment'])) {
-		$access->check_authenticity(tra('Are you sure you want to remove that attachment?'));
-		$commentslib->remove_thread_attachment($_REQUEST['remove_attachment']);
-	}
-	if (isset($_REQUEST['movesel'])) {
-		if (isset($_REQUEST['forumthread'])) {
-			check_ticket('view-forum');
-			foreach (array_values($_REQUEST['forumthread']) as $thread) {
-				$commentslib->set_parent($thread, $_REQUEST['moveto']);
-			}
-		}
-	}
 	if ($prefs['feature_forum_topics_archiving'] == 'y' && isset($_REQUEST['archive']) && isset($_REQUEST['comments_parentId'])) {
 		check_ticket('view-forum');
 		if ($_REQUEST['archive'] == 'y') {
@@ -297,6 +276,8 @@ if ($tiki_p_admin_forum == 'y' || $prefs['feature_forum_quickjump'] == 'y') {
 if ($tiki_p_admin_forum == 'y') {
 	$topics = $commentslib->get_forum_topics($_REQUEST['forumId'], 0, 200, 'commentDate_desc');
 	$smarty->assign_by_ref('topics', $topics);
+	$comms = array_column($topics, 'title', 'threadId');
+	$smarty->assign('topics_encoded', json_encode($comms));
 }
 $smarty->assign('unread', 0);
 if ($user && $prefs['feature_messages'] == 'y' && $tiki_p_messages == 'y') {
