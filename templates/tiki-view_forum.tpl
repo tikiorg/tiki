@@ -646,11 +646,19 @@
 
 							{if $prefs.feature_forum_topics_archiving eq 'y' && $tiki_p_admin_forum eq 'y'}
 								{if $comments_coms[ix].archived eq 'y'}
-									<a href="{$smarty.server.PHP_SELF}?{query archive="n" comments_parentId=$comments_coms[ix].threadId}" title="{$comments_coms[ix].title|escape}:{tr}Unarchive topic{/tr}" class="tips">
-										{icon name='file-archive-open'}
-									</a>
+									<span
+										onclick="actionModal(this, {ldelim}'controller':'forum','action':'unarchive_topic','params':{ldelim}'comments_parentId':'{$comments_coms[ix].threadId}'{rdelim}{rdelim}, 'table#{$ts_tableid}', 'refreshTableRows');"
+										class="btn-link tips"
+										title="{$comments_coms[ix].title|escape}:{tr}Unarchive topic{/tr}">
+											{icon name='file-archive-open'}
+									</span>
 								{else}
-									<a href="{$smarty.server.PHP_SELF}?{query archive="y" comments_parentId=$comments_coms[ix].threadId}" title="{$comments_coms[ix].title|escape}:{tr}Archive topic{/tr}" class="tips">{icon name='file-archive'}</a>
+									<span
+										onclick="actionModal(this, {ldelim}'controller':'forum','action':'archive_topic','params':{ldelim}'comments_parentId':'{$comments_coms[ix].threadId}'{rdelim}{rdelim}, 'table#{$ts_tableid}', 'refreshTableRows');"
+										class="btn-link tips"
+										title="{$comments_coms[ix].title|escape}:{tr}Archive topic{/tr}">
+											{icon name='file-archive'}
+									</span>
 								{/if}
 							{/if}
 							{if $tiki_p_admin_forum eq 'y'}

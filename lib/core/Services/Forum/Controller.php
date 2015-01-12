@@ -37,7 +37,7 @@ class Services_Forum_Controller
 	}
 
 	/**
-	 * Moderator action to merge selected forum topics with another topic
+	 * Moderator action to merge selected forum topics or posts with another topic
 	 * @param $input
 	 * @return array
 	 * @throws Exception
@@ -343,6 +343,26 @@ class Services_Forum_Controller
 	}
 
 	/**
+	 * Moderator action that archives a forum thread
+	 * @param $input
+	 * @return array
+	 */
+	function action_archive_topic($input)
+	{
+		return $this->archiveUnarchive($input, 'archive');
+	}
+
+	/**
+	 * Moderator action that archives a forum thread
+	 * @param $input
+	 * @return array
+	 */
+	function action_unarchive_topic($input)
+	{
+		return $this->archiveUnarchive($input, 'unarchive');
+	}
+
+	/**
 	 * Utility to get topic names
 	 *
 	 * @param $topicIds
@@ -395,5 +415,37 @@ class Services_Forum_Controller
 		}
 	}
 
+	/**
+	 * Utility used by action_archive_topic and action_unarchive_topic since the code for both is similar
+	 * @param $input
+	 * @param $type
+	 * @return array
+	 * @throws Exception
+	 */
+	private function archiveUnarchive($input, $type)
+	{
+		$fn = $type . '_thread';
+		$params = $input->asArray('params');
+		if (!empty($params['comments_parentId'])) {
+			$commentslib = TikiLib::lib('comments');
+			check_ticket('view-forum');
+			$commentslib->$fn($params['comments_parentId']);
+			return true;
+		} else {
+			//oops if no topics were selected
+			return [
+				'FORWARD' => [
+					'controller' => 'utilities',
+					'action' => 'alert',
+					'type' => 'warning',
+					'title' => tr('Topic %0 feedback', tra($type)),
+					'heading' => tra('Oops'),
+					'msg' => tr('No topics were selected. Please select the topics you wish to %0 before clicking the %1 button.',
+						tra($type), tra($type)),
+					'modal' => '1'
+				]
+			];
+		}
+	}
 }
 
