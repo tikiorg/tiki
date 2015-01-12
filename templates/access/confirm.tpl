@@ -3,7 +3,7 @@
 	{title}{$title|escape}{/title}
 {/block}
 {block name="content"}
-	<div style="display:block;margin-left:auto; margin-right:auto"></div>
+	<div>
 		<h5>{$customMsg}</h5>
 		<ul>
 			{foreach from=$items item=name}
@@ -13,7 +13,7 @@
 	</div>
 	<form id='confirm' action="{$confirmAction}" method="post">
 		<fieldset>
-			{* only the items and extra parameters will be returned with the below query function*}
+			{* the below query function returns the $items and $extra variables *}
 			{query _type='form_input'}
 			<input type="hidden" name="ticket" value="{$ticket}">
 			<input type="hidden" name="daconfirm" value="y">
