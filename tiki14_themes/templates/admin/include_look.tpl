@@ -32,7 +32,7 @@
 					{preference name=theme_option}
 				</div>
 			</div>
-			<div class="adminoptionbox theme_site_childcontainer custom_url">
+			<div class="adminoptionbox theme_childcontainer custom_url">
 				{preference name=theme_custom_url}
 			</div>
 			<div class="adminoptionbox">
