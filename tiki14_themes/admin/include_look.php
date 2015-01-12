@@ -39,9 +39,9 @@ $theme_options = $themelib->list_theme_options($a_theme);
 $smarty->assign('theme_options', $theme_options);
 
 // get thumbnail if there is one
-$thumbfile = $themelib->get_thumbnail_file($prefs['theme'], $prefs['theme_option']);
+$thumbfile = $themelib->get_thumbnail_file($prefs['site_theme'], $prefs['site_theme_option']);
 if (empty($thumbfile)) {
-	$thumbfile = $themelib->get_thumbnail_file($prefs['theme']);
+	$thumbfile = $themelib->get_thumbnail_file($prefs['site_theme']);
 }
 if (empty($thumbfile)) {
 	$thumbfile = 'img/trans.png';

@@ -130,10 +130,10 @@ class ThemeLib extends TikiLib
 	function get_thumbnail_file($theme, $option = '') 
 	{
 		if (!empty($option) && $option != tr('None')) {
-			$filename = 'images/'.$option.'.png'; // add .png
+			$filename = $option.'.png'; // add .png
 
 		} else {
-			$filename = 'images/'.$theme.'.png'; // add .png
+			$filename = $theme.'.png'; // add .png
 			$option = '';
 		}
 		return $this->get_theme_path($theme, $option, $filename);
