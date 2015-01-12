@@ -22,7 +22,7 @@ function prefs_themegenerator_list($partial = false)
 				$tm = new ThemeGenTheme($item);
 				$d = $tm->getData();
 				if ((empty($d['theme']) || $d['theme'] === $prefs['style']) &&
-						(empty($d['theme-option']) || $d['theme-option'] === $prefs['style_option'])) {
+						(empty($d['theme_option']) || $d['theme_option'] === $prefs['style_option'])) {
 					$themes[$item] = $item;
 				}
 			}

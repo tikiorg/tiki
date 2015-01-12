@@ -295,8 +295,8 @@ if (isset($_REQUEST["preview"])) {
 	$smarty->assign('previewdata', $previewdata);
 
 	$themelib = TikiLib::lib('theme');
-	$news_cssfile = $themelib->get_theme_path($prefs['theme_site'], '', 'newsletter.css');
-	$news_cssfile_option = $themelib->get_theme_path($prefs['theme_site'], $prefs['theme_option_site'], 'newsletter.css');
+	$news_cssfile = $themelib->get_theme_path($prefs['theme'], '', 'newsletter.css');
+	$news_cssfile_option = $themelib->get_theme_path($prefs['theme'], $prefs['theme_option'], 'newsletter.css');
 
 	TikiLib::lib('header')->add_cssfile($news_cssfile)->add_cssfile($news_cssfile_option);
 }

@@ -34,23 +34,15 @@ function module_switch_theme($mod_reference, &$module_params)
 	$smarty = TikiLib::lib('smarty');
 	$themelib = TikiLib::lib('theme');
 	
-	//first lets get the current theme.
-	$current_theme = empty($tc_theme) ? isset($prefs['users_prefs_theme']) : $tc_theme;
-	$current_theme_option = empty($tc_theme_option) ? !empty($tc_theme) ? isset($prefs['users_prefs_theme-option']) : '' : $tc_theme_option;
-	
-	$smarty->assign('tc_theme', $tc_theme);
-	$smarty->assign('current_theme', $current_theme);
-	$smarty->assign('current_theme_option', $current_theme_option);
-	
 	//get the list of available themes and options
-	$available_themesandoptions = $themelib->get_available_themesandoptions();
-	$smarty->assign('available_themesandoptions', $available_themesandoptions);
-	
+	$smarty->assign('available_themes', $themelib->list_themes());
+	$smarty->assign('available_options', $themelib->list_theme_options($prefs['theme']));
+
 	//check if CSS Editor's try theme is on 
 	if (!empty($_SESSION['try_theme'])) {
 		list($css_theme, $css_theme_option) = $themelib->extract_theme_and_option($_SESSION['try_theme']);
-		$smarty->assign('css_theme', $css_theme);
-		$smarty->assign('css_theme_option', $css_theme_option);
+	} else {
+		$css_theme = '';
 	}
 	
 	//themegenerator
@@ -61,6 +53,31 @@ function module_switch_theme($mod_reference, &$module_params)
 			$smarty->assign('themegen_list', array_keys($p['themegenerator_theme']['options']));
 			$smarty->assign('themegenerator_theme', $prefs['themegenerator_theme']);
 		}
+	}
+
+	if (!empty($tc_theme) ||
+		!empty($group_theme) ||
+		(($section === 'admin' || empty($section)) && !empty($prefs['theme_admin'])) ||
+		!empty($css_theme))
+	{
+		$info_title = tra('Not allowed here') . ':' .
+			tra('Displayed theme') . ': ' . $prefs['theme'] . (!empty($prefs['theme_option']) ? '/' . $prefs['theme_option'] : '');
+
+		if (!empty($css_theme)) {
+			$info_title .= ' (' . tra('CSS Editor') . ')';
+		} else if (!empty($tc_theme)) {
+			$info_title .= ' (' . tra('Theme Control') . ')';
+		} else if (($section === 'admin' || empty($section)) && !empty($prefs['theme_admin'])) {
+			$info_title .= ' (' . tra('Admin Theme') . ')';
+		} else if ($group_theme) {
+			$info_title .= ' (' . tra('Group Theme') . ')';
+		}
+
+		$smarty->assign('switchtheme_enabled', false);
+		$smarty->assign('info_title', $info_title);
+	} else {
+		$smarty->assign('switchtheme_enabled', true);
+		$smarty->assign('info_title', '');
 	}
 
 	$smarty->clear_assign('tpl_module_title'); // TPL sets dynamic default title

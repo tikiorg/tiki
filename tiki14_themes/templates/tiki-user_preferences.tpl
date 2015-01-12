@@ -196,7 +196,7 @@
 					<label class="control-label" for="mytheme">Theme</label>
 					<select id="mytheme" name="mytheme" class="form-control">
 						{assign var="userwatch_themeoption" value="{$userwatch_theme}{if $userwatch_themeOption}/{$userwatch_themeOption}{/if}"}
-						<option value="" class="text-muted bg-info">{tr}Site theme{/tr} ({$prefs.theme_site}{if !empty($prefs.theme_option_site)}/{$prefs.theme_option_site}{/if})</option>
+						<option value="" class="text-muted bg-info">{tr}Site theme{/tr} ({$prefs.theme}{if !empty($prefs.theme_option)}/{$prefs.theme_option}{/if})</option>
 						{foreach from=$available_themesandoptions key=theme item=theme_name}
 							<option value="{$theme|escape}" {if $userwatch_themeoption eq $theme}selected="selected"{/if}>{$theme_name|ucwords}</option>
 						{/foreach}

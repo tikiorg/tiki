@@ -35,22 +35,15 @@ if ( $user ) {
 	// Get all user prefs in one query
 	$tikilib->get_user_preferences($user);
 	
+	// Check pref for user theme
+	if ( $prefs['change_theme'] !== 'y') {
+		unset($user_preferences[$user]['theme']);
+		unset($user_preferences[$user]['theme_option']);
+	}
+
 	// Prefs overriding
 	$prefs = array_merge($prefs, $user_preferences[$user]);
 
-	// Set distinct, meaningful pref names for user theme
-	if ( $prefs['change_theme'] == 'y') {
-		if ( !empty($prefs['theme']) ) {
-			$prefs['users_prefs_theme'] = $prefs['theme'];
-			if ( isset($prefs['theme-option']) ) {
-				$prefs['users_prefs_theme-option'] = $prefs['theme-option'];
-			}
-		}
-	}
-	//unset original user prefs ('theme' and 'theme-option') because they do not provide useful information as there are various different theme settings (group, theme control, admin, user). $prefs['theme_active'] and $prefs['theme_option_active'] set by lib/setup/theme.php will contain the actual theme/option that is displayed.
-	unset($prefs['theme']); 
-	unset($prefs['theme-option']);
-	
 	// Set the userPage name for this user since other scripts use this value.
 	$userPage = $prefs['feature_wiki_userpage_prefix'].$user;
 	$exist = $tikilib->page_exists($userPage);

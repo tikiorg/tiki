@@ -82,7 +82,7 @@ if ($prefs['feature_userPreferences'] == 'y' && isset($_REQUEST["new_prefs"])) {
 			$themeOption = $themeandoption[1];
 			$tikilib->set_user_preference($userwatch, 'theme', $theme);
 			if (isset($themeOption)) {
-				$tikilib->set_user_preference($userwatch, 'theme-option', empty($themeOption) ? '' : $themeOption);
+				$tikilib->set_user_preference($userwatch, 'theme_option', empty($themeOption) ? '' : $themeOption);
 			}
 			//Something is needed for the theme change to be displayed without additional manual page refresh. Problem: when modifying another user's settings (not my user's) using any of the below ways the refreshed screen will show my user's preference screen instead of staying on the edited user's preference screen
 			//header("location: tiki-user_preferences.php?view_user=$userwatch");
@@ -373,7 +373,7 @@ $themelib = TikiLib::lib('theme');
 $available_themesandoptions = $themelib->get_available_themesandoptions();
 $smarty->assign_by_ref('available_themesandoptions', $available_themesandoptions);
 $userwatch_theme = $tikilib->get_user_preference($userwatch, 'theme', null);
-$userwatch_themeOption = $tikilib->get_user_preference($userwatch, 'theme-option', null);
+$userwatch_themeOption = $tikilib->get_user_preference($userwatch, 'theme_option', null);
 $smarty->assign_by_ref('userwatch_theme', $userwatch_theme);
 $smarty->assign_by_ref('userwatch_themeOption', $userwatch_themeOption);
 //user language

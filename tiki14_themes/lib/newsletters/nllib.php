@@ -1256,8 +1256,8 @@ class NlLib extends TikiLib
 			if (stristr($html, '<base') === false) {
 				if (stristr($html, '<head') === false) {
 					$themelib = TikiLib::lib('theme');
-					$news_cssfile = $themelib->get_theme_path($prefs['theme_active'], '', 'newsletter.css');
-					$news_cssfile_option = $themelib->get_theme_path($prefs['theme_active'], $prefs['theme_option_active'], 'newsletter.css');
+					$news_cssfile = $themelib->get_theme_path($prefs['theme'], '', 'newsletter.css');
+					$news_cssfile_option = $themelib->get_theme_path($prefs['theme'], $prefs['theme_option'], 'newsletter.css');
 					$news_css = '';
 					if (!empty($news_cssfile)) {
 						$news_css .= $headerlib->minify_css($news_cssfile);

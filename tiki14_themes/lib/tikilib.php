@@ -3930,7 +3930,7 @@ class TikiLib extends TikiDb_Bridge
 					if ( $value == '' ) {
 						$userPreferences->delete(array('user' => $my_user, 'prefName' => $name));
 					}
-				} elseif ( $name == 'theme-option' && $prefs['change_theme'] == 'y' ) {
+				} elseif ( $name == 'theme_option' && $prefs['change_theme'] == 'y' ) {
 					$prefs['users_prefs_theme-option'] = $value;
 					if ( $value == '' ) {
 						$userPreferences->delete(array('user' => $my_user, 'prefName' => $name));
@@ -3950,7 +3950,7 @@ class TikiLib extends TikiDb_Bridge
 				if ( $value == '' ) {
 					unset($_SESSION['preferences']['users_prefs_theme']);
 				}
-			} elseif ( $name == 'theme-option' && $prefs['change_theme'] == 'y' ) {
+			} elseif ( $name == 'theme_option' && $prefs['change_theme'] == 'y' ) {
 				$prefs['users_prefs_theme-option'] = $value;
 				$_SESSION['preferences']['users_prefs_theme-option'] = $value;
 				if ( $value == '' ) {

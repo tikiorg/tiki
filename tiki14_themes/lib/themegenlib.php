@@ -442,7 +442,7 @@ class ThemeGenTheme extends SerializedList
 		$this->data = array(
 				'files' => array(),
 				'theme' => $prefs['style'],
-				'theme-option' => '',			//$prefs['style_option'],
+				'theme_option' => '',			//$prefs['style_option'],
 		);
 
 		$this->initDone = false;
@@ -483,9 +483,9 @@ class ThemeGenTheme extends SerializedList
 
 		$this->data['theme'] = $prefs['style'];
 		if ( in_array($prefs['style_option'], array_keys($this->data['files']))) {
-			$this->data['theme-option'] = $prefs['style_option'];
+			$this->data['theme_option'] = $prefs['style_option'];
 		} else {
-			$this->data['theme-option'] = '';
+			$this->data['theme_option'] = '';
 		}
 	}
 
