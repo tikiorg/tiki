@@ -35,7 +35,9 @@ function module_switch_theme($mod_reference, &$module_params)
 	$themelib = TikiLib::lib('theme');
 	
 	//get the list of available themes and options
-	$smarty->assign('available_themes', $themelib->list_themes());
+	$themes = $themelib->list_themes();
+	unset($themes['custom_url']);
+	$smarty->assign('available_themes', $themes);
 	$smarty->assign('available_options', $themelib->list_theme_options($prefs['theme']));
 
 	//check if CSS Editor's try theme is on 
