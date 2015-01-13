@@ -23,7 +23,8 @@
  *   _class : CSS class to use for the A tag
  *   _template : (see smarty query function 'template' param)
  *   _htmlelement : (see smarty query function 'htmlelement' param)
- *   _icon : name of the icon to use (e.g. 'page_edit', 'cross', ...)
+ *   _icon : file name of the icon to use (e.g. 'page_edit', 'cross', ...) - only works with legacy icons
+ *   _icon_name : name of the icon to use in order to use iconsets
  *   _icon_class : CSS class to use for the icon's IMG tag
  *   _menu_text : (see smarty icon function)
  *   _menu_icon : (see smarty icon function)
