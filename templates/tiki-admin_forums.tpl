@@ -73,13 +73,13 @@
 							<td class="integer">{$channels[user].posts_per_day|string_format:"%.2f"}</td>
 							<td class="integer">{$channels[user].hits}</td>
 							<td class="action">
-								<a class="link" href="{$channels[user].forumId|sefurl:'forum'}" title="{tr}View{/tr}">{icon _id='table' alt="{tr}View{/tr}"}</a>
+								<a class="tips" href="{$channels[user].forumId|sefurl:'forum'}" title="{$channels[user].name|escape}:{tr}View{/tr}">{icon name='view' alt="{tr}View{/tr}"}</a>
 
 								{if isset($tiki_p_forum_lock) and $tiki_p_forum_lock eq 'y'}
 									{if $channels[user].is_locked eq 'y'}
-										{self_link _icon='lock_break' _alt="{tr}Unlock{/tr}" lock='n' forumId=$channels[user].forumId}{/self_link}
+										{self_link _icon_name='unlock' _class="tips" _alt="{tr}Unlock{/tr}" lock='n' forumId=$channels[user].forumId}{/self_link}
 									{else}
-										{self_link _icon='lock_add' _alt="{tr}Lock{/tr}" lock='y' forumId=$channels[user].forumId}{/self_link}
+										{self_link _icon_name='lock' _class="tips" _alt="{tr}Lock{/tr}" lock='y' forumId=$channels[user].forumId}{/self_link}
 									{/if}
 								{/if}
 
@@ -88,9 +88,9 @@
 									and ($tiki_p_admin_forum eq 'y'))
 									or ($channels[user].individual_tiki_p_admin_forum eq 'y')
 								}
-									{self_link _icon='page_edit' cookietab='2' _anchor='anchor2' forumId=$channels[user].forumId}{tr}Edit{/tr}{/self_link}
-									{permission_link mode=icon type=forum permType=forums id=$channels[user].forumId title=$channels[user].name}
-									{self_link _icon='cross' remove=$channels[user].forumId}{tr}Delete{/tr}{/self_link}
+									{self_link _icon_name='edit' _class="tips" cookietab='2' _anchor='anchor2' forumId=$channels[user].forumId}{$channels[user].name|escape}:{tr}Edit{/tr}{/self_link}
+									{permission_link mode=glyph addclass="tips" type=forum permType=forums id=$channels[user].forumId title=$channels[user].name label="{$channels[user].name|escape}:{tr}Permissions{/tr}"}
+									{self_link _icon_name='remove' _class="tips" remove=$channels[user].forumId}{$channels[user].name|escape}:{tr}Delete{/tr}{/self_link}
 								{/if}
 							</td>
 						</tr>
