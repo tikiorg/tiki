@@ -83,14 +83,20 @@ if ($theme_active == 'custom_url' && !empty($prefs['theme_custom_url'])) { //cus
 	} else {
 		$headerlib->add_cssfile($custom_theme);
 	}
-} 
+}
 else {
 	//first load the main theme css
 	$theme_path = $themelib->get_theme_path($theme_active, NULL, NULL);
-	$headerlib->add_cssfile("{$theme_path}css/tiki.css");
-	//than load the theme option css file if needed
-	if (!empty($theme_option_active)){
-		$theme_path = $themelib->get_theme_path($theme_active, $theme_option_active, NULL);
+	if ($theme_path) {
+		$headerlib->add_cssfile("{$theme_path}css/tiki.css");
+		//than load the theme option css file if needed
+		if (!empty($theme_option_active)) {
+			$theme_path = $themelib->get_theme_path($theme_active, $theme_option_active, NULL);
+			$headerlib->add_cssfile("{$theme_path}css/tiki.css");
+		}
+	} else {
+		$theme_active = 'default';
+		$theme_option_active = '';
 		$headerlib->add_cssfile("{$theme_path}css/tiki.css");
 	}
 	//this is a preTiki14 setting, not sure why it is necessary
