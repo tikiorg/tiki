@@ -196,13 +196,13 @@ class ThemeLib extends TikiLib
 			if (is_dir('themes/'.$dir_base.$theme_base.$option_base.$subdir)) {
 				$path = 'themes/'.$dir_base.$theme_base.$option_base.$subdir;
 			} else if (is_dir('themes/'.$dir_base.$theme_base.$subdir)) {
-				$path = 'themes/'.$dir_base.$theme_base.$subdir;	// try "parent" theme dir if no option one
+				$path = 'themes/'.$dir_base.$theme_base.$subdir;				// try "parent" theme dir if no option one
 			} else if (is_dir('themes/'.$theme_base.$option_base.$subdir)) {
-				$path = 'themes/'.$theme_base.$option_base.$subdir;	// try root theme dir if no domain one
+				$path = 'themes/'.$theme_base.$option_base.$subdir;				// try non-tikidomain theme dirs if no domain one
 			} else if (is_dir('themes/'.$theme_base.$subdir)) {
-				$path = 'themes/'.$theme_base.$option_base.$subdir;	// try root theme dir if no domain one
-			} else {
-				$path = 'themes/'.$theme_base;			// fall back to "parent" theme dir with no subdir if not
+				$path = 'themes/'.$theme_base.$subdir;							// try root theme dir if no domain one
+			} else if (is_dir('themes/'.$theme_base)) {
+				$path = 'themes/'.$theme_base;									// fall back to "parent" theme dir with no subdir if not
 			}
 		} else {
 			if (is_file('themes/'.$dir_base.$theme_base.$option_base.$subdir.$filename)) {
@@ -212,13 +212,13 @@ class ThemeLib extends TikiLib
 			} else if (is_file('themes/'.$theme_base.$option_base.$subdir.$filename)) {	// try non-tikidomain dirs if not found
 				$path = 'themes/'.$theme_base.$option_base.$subdir.$filename;
 			} else if (is_file('themes/'.$theme_base.$subdir.$filename)) {
-				$path = 'themes/'.$theme_base.$subdir.$filename;				// fall back to "parent" themes dir if no option
+				$path = 'themes/'.$theme_base.$subdir.$filename;						// fall back to "parent" themes dir if no option
 			} else if (is_file('themes/'.$dir_base.$subdir.$filename)) {
-				$path = 'themes/'.$dir_base.$subdir.$filename;				// tikidomain root themes dir?
+				$path = 'themes/'.$dir_base.$subdir.$filename;							// tikidomain root themes dir?
 			} else if (is_file('themes/'.$subdir.$filename)) {
-				$path = 'themes/'.$subdir.$filename;					// root themes dir?
+				$path = 'themes/'.$subdir.$filename;									// root themes subdir?
 			} else if (is_file('themes/'.$filename)) {
-				$path = 'themes/'.$filename;					// root themes dir?
+				$path = 'themes/'.$filename;											// root themes dir?
 			}
 		}
 		return $path;

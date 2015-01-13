@@ -86,17 +86,18 @@ if ($theme_active == 'custom_url' && !empty($prefs['theme_custom_url'])) { //cus
 }
 else {
 	//first load the main theme css
-	$theme_path = $themelib->get_theme_path($theme_active, NULL, NULL);
+	$theme_path = $themelib->get_theme_path($theme_active);
 	if ($theme_path) {
 		$headerlib->add_cssfile("{$theme_path}css/tiki.css");
 		//than load the theme option css file if needed
 		if (!empty($theme_option_active)) {
-			$theme_path = $themelib->get_theme_path($theme_active, $theme_option_active, NULL);
+			$theme_path = $themelib->get_theme_path($theme_active, $theme_option_active);
 			$headerlib->add_cssfile("{$theme_path}css/tiki.css");
 		}
 	} else {
 		$theme_active = 'default';
 		$theme_option_active = '';
+		$theme_path = $themelib->get_theme_path($theme_active);
 		$headerlib->add_cssfile("{$theme_path}css/tiki.css");
 	}
 	//this is a preTiki14 setting, not sure why it is necessary
@@ -109,7 +110,7 @@ $style_ie9_css = $themelib->get_theme_path($theme_active, $theme_option_active, 
 
 //7) include optional custom.css if there. In case of theme option, first include main theme's custom.css, than the option's custom.css
 if(!empty($theme_option_active)) {
-	$main_theme_path = $themelib->get_theme_path($theme_active, NULL, NULL);
+	$main_theme_path = $themelib->get_theme_path($theme_active);
 	$main_theme_custom_css = "{$main_theme_path}css/custom.css";
 	if (is_readable($main_theme_custom_css)) {
 		$headerlib->add_cssfile($main_theme_custom_css, 53);
