@@ -27,6 +27,7 @@ class Table_Settings_TikiViewforum extends Table_Settings_Standard
 			'imgattr' => 'title',
 		),
 		'ajax' => array(
+			'offset' => 'comments_offset',
 			'sortparam' => 'thread_sort_mode',
 			'numrows' => 'comments_per_page',
 			'url' => array(
