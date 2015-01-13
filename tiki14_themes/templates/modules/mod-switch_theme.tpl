@@ -10,7 +10,7 @@
 	<form method="get" action="tiki-switch_theme.php">
 		<fieldset {if not $switchtheme_enabled}disabled{/if}>
 			<div class="form-group">
-				<select name="theme" size="1" onchange="this.form.submit();" class="form-control">
+				<select name="theme" onchange="this.form.submit();" class="form-control">
 					<option value="" class="text-muted bg-info">{tr}Site theme{/tr} ({$prefs.theme_site}{if !empty($prefs.theme_option_site)}/{$prefs.theme_option_site}{/if})</option>
 					{foreach from=$available_themes key=value item=label}
 						<option value="{$value|escape}" {if $prefs.theme eq $value}selected="selected"{/if}>{$label|ucwords}</option>
@@ -19,13 +19,15 @@
 			</div>
 			{if count($available_options)}
 				<div class="form-group">
-					<select name="theme_option" size="1" onchange="this.form.submit();" class="form-control">
+					<select name="theme_option" onchange="this.form.submit();" class="form-control">
 						<option value="" class="text-muted bg-info">{tr}None{/tr}</option>
 						{foreach from=$available_options key=value item=label}
 							<option value="{$value|escape}" {if $prefs.theme_option eq $value}selected="selected"{/if}>{$label|ucwords}</option>
 						{/foreach}
 					</select>
 				</div>
+			{else}
+				<input type="hidden" name="theme_option" value="">
 			{/if}
 			{if $prefs.themegenerator_feature eq "y"}
 				<div class="form-group">

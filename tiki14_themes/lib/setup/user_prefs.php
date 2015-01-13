@@ -39,6 +39,10 @@ if ( $user ) {
 	if ( $prefs['change_theme'] !== 'y') {
 		unset($user_preferences[$user]['theme']);
 		unset($user_preferences[$user]['theme_option']);
+	} else {
+		if (!empty($user_preferences[$user]['theme']) && empty($user_preferences[$user]['theme_option'])) {
+			$prefs['theme_option'] = '';
+		}
 	}
 
 	// Prefs overriding
