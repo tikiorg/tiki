@@ -134,6 +134,8 @@ class RelationLib extends TikiDb_Bridge
 				return 0;
 			}
 
+			TikiLib::lib('tiki')->refresh_index($src_type, $src_object);
+			TikiLib::lib('tiki')->refresh_index($target_type, $target_object);
 			return $id;
 		} else {
 			return 0;
