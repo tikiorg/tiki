@@ -49,8 +49,6 @@ if (!empty($_SESSION['try_theme'])) {
 $headerlib->add_jsfile('vendor/twitter/bootstrap/dist/js/bootstrap.js');
 $headerlib->add_jsfile('lib/jquery_tiki/tiki-bootstrapmodalfix.js');
 
-$prefs['jquery_ui_chosen_css'] = 'y'; //why?
-
 if ($prefs['feature_fixed_width'] === 'y') {
 	$headerlib->add_css(
 		'@media (min-width: 1200px) { .container { min-width:' .
@@ -100,8 +98,6 @@ else {
 		$theme_path = $themelib->get_theme_path($theme_active);
 		$headerlib->add_cssfile("{$theme_path}css/tiki.css");
 	}
-	//this is a preTiki14 setting, not sure why it is necessary
-	$prefs['jquery_ui_chosen_css'] = 'n';
 }
 
 //6) Allow to have a IE specific CSS files for the theme's specific hacks
