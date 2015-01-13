@@ -453,18 +453,6 @@ if ( $prefs['feature_jquery_ui'] == 'y' ) {
 			);
 		}
 	}
-	if ( $prefs['jquery_ui_selectmenu'] == 'y' ) {
-		$headerlib->add_jsfile('vendor/jquery/jquery-ui-selectmenu/ui/jquery.ui.selectmenu.js');
-		$headerlib->add_cssfile('vendor/jquery/jquery-ui-selectmenu/themes/base/jquery.ui.selectmenu.css');
-		// deprecated feature
-		$headerlib->add_css(
-			'.ui-selectmenu-menu ul li a, .ui-selectmenu-status { white-space: nowrap; }
-			.ui-selectmenu { height: 1.8em; padding-right: 16px; }
-			.ui-selectmenu-menu ul { padding-right: 16px; }
-			.ui-selectmenu-menu li a,.ui-selectmenu-status { line-height: 1.0em; padding: .4em 1em; }
-			.ui-selectmenu-status { line-height: .8em; margin-right: 16px; }'
-		);
-	}
 	$headerlib->add_jsfile('vendor/jquery/jquery-timepicker-addon/dist/jquery-ui-timepicker-addon.js');
 	$headerlib->add_cssfile('vendor/jquery/jquery-timepicker-addon/dist/jquery-ui-timepicker-addon.css');
 }

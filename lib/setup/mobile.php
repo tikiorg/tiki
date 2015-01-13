@@ -45,7 +45,6 @@ if ( !isset($_REQUEST['mobile_mode']) || $_REQUEST['mobile_mode'] === 'y' ) {
 				$prefs['change_theme'] = 'n';
 				$prefs['feature_syntax_highlighter'] = 'n';
 				$prefs['jquery_ui_chosen'] = 'n';
-				$prefs['jquery_ui_selectmenu'] = 'n';
 				$prefs['fgal_show_explorer'] = 'n';
 				$prefs['feature_fixed_width'] = 'n';
 				$prefs['fgal_elfinder_feature'] = 'n';

@@ -251,9 +251,6 @@
 			if (opts[o].value.search(tofind) === 0) {
 				opts[o].value = "{{$sort_mode}}";
 				$sort_mode.prop("selectedIndex", o);
-				if (typeof $sort_mode.selectmenu == "function") {
-					$sort_mode.selectmenu();	// seems to need a prod
-				}
 				break;
 			}
 		}
