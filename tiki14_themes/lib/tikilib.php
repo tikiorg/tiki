@@ -3945,16 +3945,16 @@ class TikiLib extends TikiDb_Bridge
 
 		} else { // If $my_user is empty, we must be Anonymous updating one of our own preferences
 			if ( $name == 'theme' && $prefs['change_theme'] == 'y' ) {
-				$prefs['users_prefs_theme'] = $value;
-				$_SESSION['preferences']['users_prefs_theme'] = $value;
+				$prefs['theme'] = $value;
+				$_SESSION['preferences']['theme'] = $value;
 				if ( $value == '' ) {
-					unset($_SESSION['preferences']['users_prefs_theme']);
+					unset($_SESSION['preferences']['theme']);
 				}
 			} elseif ( $name == 'theme_option' && $prefs['change_theme'] == 'y' ) {
-				$prefs['users_prefs_theme-option'] = $value;
-				$_SESSION['preferences']['users_prefs_theme-option'] = $value;
+				$prefs['theme_option'] = $value;
+				$_SESSION['preferences']['theme_option'] = $value;
 				if ( $value == '' ) {
-					unset($_SESSION['preferences']['users_prefs_theme-option']);
+					unset($_SESSION['preferences']['theme_option']);
 				}
 			} elseif ( $value == '' ) {
 				if ( in_array($name, $user_overrider_prefs) ) {
