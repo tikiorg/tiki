@@ -11,7 +11,7 @@
 		<fieldset {if not $switchtheme_enabled}disabled{/if}>
 			<div class="form-group">
 				<select name="theme" onchange="this.form.submit();" class="form-control">
-					<option value="" class="text-muted bg-info">{tr}Site theme{/tr} ({$prefs.theme_site}{if !empty($prefs.theme_option_site)}/{$prefs.theme_option_site}{/if})</option>
+					<option value="" class="text-muted bg-info">{tr}Site theme{/tr} ({$prefs.site_theme}{if !empty($prefs.site_theme_option)}/{$prefs.site_theme_option}{/if})</option>
 					{foreach from=$available_themes key=value item=label}
 						<option value="{$value|escape}" {if $prefs.theme eq $value}selected="selected"{/if}>{$label|ucwords}</option>
 					{/foreach}
