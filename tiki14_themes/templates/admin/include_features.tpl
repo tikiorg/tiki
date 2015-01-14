@@ -169,10 +169,6 @@
 						{preference name=feature_jquery_carousel}
 						{preference name=feature_jquery_tablesorter}
 						{preference name=jquery_ui_chosen}
-						{preference name=jquery_ui_selectmenu}
-						<div class="adminoptionboxchild" id="jquery_ui_selectmenu_childcontainer">
-							{preference name=jquery_ui_selectmenu_all}
-						</div>
 					</fieldset>
 				</div>
 			</fieldset>

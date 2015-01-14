@@ -530,37 +530,6 @@ $(function() { // JQuery's DOM is ready event - before onload
 		$.applyChosen();
 	}
 
-	$.fn.applySelectMenus = function () {
-		if (jqueryTiki.selectmenu) {
-			var $smenus, hidden = [];
-
-			if (jqueryTiki.selectmenuAll) {
-				// make all selects into ui selectmenus depending on $prefs['jquery_ui_selectmenu_all']
-				$smenus = $("select:not([multiple])");
-			} else {
-				// or just selectmenu class
-				$smenus = $("select.selectmenu:not([multiple])");
-			}
-			if ($smenus.length) {
-				$smenus.each(function () {
-					$.merge(hidden, $(this).parents(":hidden:last"));
-				});
-				hidden = $.unique($(hidden));
-				hidden.show();
-				$smenus.tiki("selectmenu");
-				hidden.hide();
-			}
-		}
-	};
-
-	$.applySelectMenus = function() {
-		return $('body').applySelectMenus();
-	};
-
-	if (jqueryTiki.selectmenu) {
-		$.applySelectMenus();
-	}
-
 	$( function() {
 		$("#keepOpenCbx").click(function() {
 			if (this.checked) {
@@ -1240,18 +1209,6 @@ $.fn.tiki = function(func, type, options) {
 						$hiddenElement.remove();
 					}
 					$(this).chosen(opts2);
-				});
-			}
-			break;
-		case "selectmenu":
-			if (jqueryTiki.selectmenu) {
-				opts = {
-						style: 'dropdown',
-						wrapperElement: "<span />"
-					};
-				$.extend(opts, options);
-		 		return this.each(function() {
-					$(this).selectmenu(opts);
 				});
 			}
 			break;

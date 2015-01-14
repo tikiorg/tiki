@@ -104,28 +104,6 @@ function prefs_jquery_list($partial = false)
 				'feature_jquery_ui',
 			),
 		),
-		'jquery_ui_selectmenu' => array(
-			'name' => tra('jQuery-ui Select Menu'),
-			'description' => tra('Styled replacement for dropdown select menus.'),
-			'type' => 'flag',
-			'default' => 'n',
-			'warning' => tra('Experimental. This plugin is deprecated in favor of "Chosen".'),
-			'tags' => array('experimental'),
-			'dependencies' => array(
-				'feature_jquery_ui',
-			),
-		),
-		'jquery_ui_selectmenu_all' => array(
-			'name' => tra('Use Select Menu on all select elements'),
-			'description' => tra('Applies jQuery-ui Select Menu to every select menu.'),
-			'type' => 'flag',
-			'default' => 'n',
-			'tags' => array('experimental'),
-			'warning' => tra('Experimental. This feature is under development.'),
-			'dependencies' => array(
-				'jquery_ui_selectmenu',
-			),
-		),
 		'jquery_colorbox_theme' => array(
 			'name' => tra('CSS to use in Colorbox (a.k.a. "Shadowbox")'),
             'description' => tra(''),

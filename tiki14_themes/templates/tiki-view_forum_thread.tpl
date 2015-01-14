@@ -128,7 +128,7 @@
 {if isset($view_atts) and $view_atts eq 'y'}
 	<h2 id="attachments">{tr}Attachments{/tr}</h2>
 	<div class="table-responsive">
-		<table class="table normal">
+		<table class="table normal table-striped table-hover">
 			<tr>
 				<th>{tr}Type{/tr}</th>
 				<th>{tr}Filename{/tr}</th>

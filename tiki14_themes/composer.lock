@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "760cd81091e6d0a106c0eb1cf07dc026",
+    "hash": "1a3443eed872dfcefddfd25ea3397f10",
     "packages": [
         {
             "name": "adodb/adodb",
@@ -371,7 +371,7 @@
                     "name": "Robert Plummer",
                     "email": "rplummer@visop-dev.com",
                     "homepage": "http://visop-dev.com",
-                    "role": "Lead Developer"
+                    "role": "Assistant Developer"
                 },
                 {
                     "name": "Luke Gerhardt",
@@ -591,17 +591,6 @@
                 "url": "https://composer.tiki.org/dist/jquery-jquery-ui-1.10.4.zip",
                 "reference": "1.10.4",
                 "shasum": "5d6d8ffe7592657356f206f3f56a53ff32964230"
-            },
-            "type": "library"
-        },
-        {
-            "name": "jquery/jquery-ui-selectmenu",
-            "version": "1.3.999",
-            "dist": {
-                "type": "zip",
-                "url": "https://composer.tiki.org/dist/jquery-jquery-ui-selectmenu-1.3.999.zip",
-                "reference": "1.3.999",
-                "shasum": "b4f24effc891eaabbfc90e5824913640b22a29c4"
             },
             "type": "library"
         },
@@ -893,16 +882,16 @@
         },
         {
             "name": "kriswallsmith/assetic",
-            "version": "v1.2.0",
+            "version": "v1.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kriswallsmith/assetic.git",
-                "reference": "df991c124a2212371443b586a1be767500036dee"
+                "reference": "b20efe38845d20458702f97f3ff625d80805897b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kriswallsmith/assetic/zipball/df991c124a2212371443b586a1be767500036dee",
-                "reference": "df991c124a2212371443b586a1be767500036dee",
+                "url": "https://api.github.com/repos/kriswallsmith/assetic/zipball/b20efe38845d20458702f97f3ff625d80805897b",
+                "reference": "b20efe38845d20458702f97f3ff625d80805897b",
                 "shasum": ""
             },
             "require": {
@@ -963,7 +952,7 @@
                 "compression",
                 "minification"
             ],
-            "time": "2014-10-14 14:45:32"
+            "time": "2014-12-12 05:04:05"
         },
         {
             "name": "md5/md5",
@@ -982,12 +971,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/jakiestfu/Medium.js.git",
-                "reference": "c860226f4b0384b09834f5faa29a373a5f402783"
+                "reference": "ce7b67fc0b272ddc012abaf59c980cc79e4ebea5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jakiestfu/Medium.js/zipball/c860226f4b0384b09834f5faa29a373a5f402783",
-                "reference": "c860226f4b0384b09834f5faa29a373a5f402783",
+                "url": "https://api.github.com/repos/jakiestfu/Medium.js/zipball/ce7b67fc0b272ddc012abaf59c980cc79e4ebea5",
+                "reference": "ce7b67fc0b272ddc012abaf59c980cc79e4ebea5",
                 "shasum": ""
             },
             "require": {
@@ -1013,7 +1002,7 @@
                     "role": "Lead Developer"
                 }
             ],
-            "time": "2014-09-24 14:01:36"
+            "time": "2014-11-28 02:01:34"
         },
         {
             "name": "phenx/php-font-lib",
@@ -1251,12 +1240,6 @@
                 "url": "http://smarty-php.googlecode.com/svn",
                 "reference": "/tags/v3.1.18/@4839"
             },
-            "dist": {
-                "type": "zip",
-                "url": "https://composer.tiki.org/dist/smarty-smarty-v3.1.18-17a6e2.zip",
-                "reference": "v3.1.18",
-                "shasum": "ae2d06617491f5adf39f14559feb29aa4c2e960d"
-            },
             "require": {
                 "php": ">=5.2"
             },
@@ -1470,17 +1453,17 @@
         },
         {
             "name": "symfony/filesystem",
-            "version": "v2.5.7",
+            "version": "v2.6.3",
             "target-dir": "Symfony/Component/Filesystem",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Filesystem.git",
-                "reference": "3c3e382bd869b3ec10008a3d9ef455b1cc2868db"
+                "reference": "a1f566d1f92e142fa1593f4555d6d89e3044a9b7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Filesystem/zipball/3c3e382bd869b3ec10008a3d9ef455b1cc2868db",
-                "reference": "3c3e382bd869b3ec10008a3d9ef455b1cc2868db",
+                "url": "https://api.github.com/repos/symfony/Filesystem/zipball/a1f566d1f92e142fa1593f4555d6d89e3044a9b7",
+                "reference": "a1f566d1f92e142fa1593f4555d6d89e3044a9b7",
                 "shasum": ""
             },
             "require": {
@@ -1489,7 +1472,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.5-dev"
+                    "dev-master": "2.6-dev"
                 }
             },
             "autoload": {
@@ -1513,21 +1496,21 @@
             ],
             "description": "Symfony Filesystem Component",
             "homepage": "http://symfony.com",
-            "time": "2014-11-16 17:28:00"
+            "time": "2015-01-03 21:13:09"
         },
         {
             "name": "symfony/process",
-            "version": "v2.5.7",
+            "version": "v2.6.3",
             "target-dir": "Symfony/Component/Process",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Process.git",
-                "reference": "ffe6e27a57e31262c3204a0955076c27c54c8e7e"
+                "reference": "319794f611bd8bdefbac72beb3f05e847f8ebc92"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Process/zipball/ffe6e27a57e31262c3204a0955076c27c54c8e7e",
-                "reference": "ffe6e27a57e31262c3204a0955076c27c54c8e7e",
+                "url": "https://api.github.com/repos/symfony/Process/zipball/319794f611bd8bdefbac72beb3f05e847f8ebc92",
+                "reference": "319794f611bd8bdefbac72beb3f05e847f8ebc92",
                 "shasum": ""
             },
             "require": {
@@ -1536,7 +1519,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.5-dev"
+                    "dev-master": "2.6-dev"
                 }
             },
             "autoload": {
@@ -1560,7 +1543,7 @@
             ],
             "description": "Symfony Process Component",
             "homepage": "http://symfony.com",
-            "time": "2014-11-03 19:48:45"
+            "time": "2015-01-06 22:47:52"
         },
         {
             "name": "tijsverkoyen/css-to-inline-styles",
@@ -1691,12 +1674,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/wikiLingo/wikiLingo.git",
-                "reference": "3c8990c039738417299c025559334d118101757b"
+                "reference": "d8a23c89ce0dd7c47be7f16fb0e9a2dfce065ab1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wikiLingo/wikiLingo/zipball/3c8990c039738417299c025559334d118101757b",
-                "reference": "3c8990c039738417299c025559334d118101757b",
+                "url": "https://api.github.com/repos/wikiLingo/wikiLingo/zipball/d8a23c89ce0dd7c47be7f16fb0e9a2dfce065ab1",
+                "reference": "d8a23c89ce0dd7c47be7f16fb0e9a2dfce065ab1",
                 "shasum": ""
             },
             "require": {
@@ -1735,7 +1718,7 @@
                     "role": "Lead Developer"
                 }
             ],
-            "time": "2014-09-20 19:31:50"
+            "time": "2014-12-03 16:19:02"
         },
         {
             "name": "zetacomponents/base",
@@ -1996,6 +1979,7 @@
         "bafs/testify": 20
     },
     "prefer-stable": false,
+    "prefer-lowest": false,
     "platform": [],
     "platform-dev": []
 }

@@ -52,8 +52,6 @@ class CleanVendors
 		$fs->remove($vendors . 'jquery/jquery-timepicker-addon/Gruntfile.js');
 		$fs->remove($vendors . 'jquery/jquery-timepicker-addon/jquery-ui-timepicker-addon.json');
 		$fs->remove($vendors . 'jquery/jquery-timepicker-addon/package.json');
-		$fs->remove($vendors . 'jquery/jquery-ui-selectmenu/demos');
-		$fs->remove($vendors . 'jquery/jquery-ui-selectmenu/tests');
 		$fs->remove($vendors . 'jquery/jquery-ui/development-bundle');
 		$fs->remove($vendors . 'jquery/jquery-ui/js/jquery-1.10.2.js');
 		$fs->remove($vendors . 'jquery/photoswipe/examples');
