@@ -3949,13 +3949,11 @@ class TikiLib extends TikiDb_Bridge
 				$_SESSION['preferences']['theme'] = $value;
 				if ( $value == '' ) {
 					unset($_SESSION['preferences']['theme']);
-				}
-			} elseif ( $name == 'theme_option' && $prefs['change_theme'] == 'y' ) {
-				$prefs['theme_option'] = $value;
-				$_SESSION['preferences']['theme_option'] = $value;
-				if ( $value == '' ) {
 					unset($_SESSION['preferences']['theme_option']);
 				}
+			} elseif ( $name == 'theme_option' && $prefs['change_theme'] == 'y' && !empty($_SESSION['preferences']['theme']) ) {
+				$prefs['theme_option'] = $value;
+				$_SESSION['preferences']['theme_option'] = $value;
 			} elseif ( $value == '' ) {
 				if ( in_array($name, $user_overrider_prefs) ) {
 					$prefs[$name] = $prefs['site_'.$name];
