@@ -35,11 +35,11 @@
 	<div class="table-responsive">
 		<table class="table normal">
 			<tr>
-				<th class="auto">
-					{if $listpages}
+				{if $listpages and $tiki_p_remove_article eq 'y'}
+					<th class="auto">
 						{select_all checkbox_names='checked[]'}
-					{/if}
-				</th>
+					</th>
+				{/if}
 				{if $prefs.art_list_title eq 'y'}
 					{assign var=numbercol value=$numbercol+1}
 					<th>{self_link _sort_arg='sort_mode' _sort_field='title'}{tr}Title{/tr}{/self_link}</th>
@@ -120,9 +120,11 @@
 				{/if}
 
 				<tr>
-					<td class="checkbox-cell">
-						<input type="checkbox" name="checked[]" value="{$listpages[changes].articleId|escape}" {if $listpages[changes].checked eq 'y'}checked="checked" {/if}>
-					</td>
+					{if $tiki_p_remove_article eq 'y'}
+						<td class="checkbox-cell">
+							<input type="checkbox" name="checked[]" value="{$listpages[changes].articleId|escape}" {if $listpages[changes].checked eq 'y'}checked="checked" {/if}>
+						</td>
+					{/if}
 					{if $prefs.art_list_title eq 'y'}
 						<td class="text">
 							{if $tiki_p_read_article eq 'y'}
@@ -193,10 +195,10 @@
 			{sectionelse}
 				{norecords _colspan=$numbercol}
 			{/section}
-			<tr>
+			{if $listpages and $tiki_p_remove_article eq 'y'}
+				<tr>
 				{assign var=numbercol value=$numbercol+1}
-				<td colspan="{$numbercol}">
-					{if $listpages}
+					<td colspan="{$numbercol}">
 						<p align="left"> {*on the left to have it close to the checkboxes*}
 							{button _text="{tr}Select Duplicates{/tr}" _onclick="checkDuplicateRows(this,'td:not(:eq(2))'); return false;"}
 							<label>{tr}Perform action with checked:{/tr}
@@ -207,9 +209,9 @@
 							</label>
 							<input type="submit" class="btn btn-default btn-sm" value="{tr}OK{/tr}">
 						</p>
-					{/if}
-				</td>
-			</tr>
+					</td>
+				</tr>
+			{/if}
 		</table>
 	</div>
 
