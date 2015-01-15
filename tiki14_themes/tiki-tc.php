@@ -38,24 +38,24 @@ if ($prefs['feature_theme_control'] == 'y' && empty($_SESSION['try_theme'])) {
 			$_SESSION['tc_theme'] = $tc_theme_option;
 		}
 		//DROP css files (theme, theme_option and custom.css) added by lib/setup/theme.php that became unnecessary now that we have tc_theme
-		$themesetup_path = $themelib->get_theme_path($prefs['theme'], NULL, NULL);
-		$headerlib->drop_cssfile("{$themesetup_path}css/tiki.css"); //drop main theme css
+		$themesetup_path = $themelib->get_theme_path($prefs['theme']);
+		$headerlib->drop_cssfile("{$themesetup_path}css/{$prefs['theme']}.css"); //drop main theme css
 		$headerlib->drop_cssfile("{$themesetup_path}css/custom.css"); //drop main theme custom css
 		if (!empty($prefs['theme_option'])){
-			$themesetup_path = $themelib->get_theme_path($prefs['theme'], $prefs['theme_option'], NULL);
-			$headerlib->drop_cssfile("{$themesetup_path}css/tiki.css"); //drop option css
+			$themesetup_path = $themelib->get_theme_path($prefs['theme'], $prefs['theme_option']);
+			$headerlib->drop_cssfile("{$themesetup_path}css/{$prefs['theme_option']}.css"); //drop option css
 			$headerlib->drop_cssfile("{$themesetup_path}css/custom.css"); //drop option custom css
 		}
 		
 		//ADD new css files (theme, theme_option and custom.css)
-		$tc_theme_path = $themelib->get_theme_path($tc_theme, NULL, NULL);
-		$headerlib->add_cssfile("{$tc_theme_path}css/tiki.css"); //add main theme css
+		$tc_theme_path = $themelib->get_theme_path($tc_theme);
+		$headerlib->add_cssfile("{$tc_theme_path}css/{$tc_theme}.css"); //add main theme css
 		if (!empty($tc_theme_option)){ //add theme option css
-			$tc_theme_path = $themelib->get_theme_path($tc_theme, $tc_theme_option, NULL);
-			$headerlib->add_cssfile("{$tc_theme_path}css/tiki.css");
+			$tc_theme_path = $themelib->get_theme_path($tc_theme, $tc_theme_option);
+			$headerlib->add_cssfile("{$tc_theme_path}css/{$tc_theme_option}.css");
 		}
 		if (!empty($tc_theme_option)){ //add main theme custom css in case of theme option
-			$tc_main_theme_path = $themelib->get_theme_path($tc_theme, NULL, NULL);
+			$tc_main_theme_path = $themelib->get_theme_path($tc_theme);
 			$tc_main_custom_css = "{$tc_main_theme_path}css/custom.css";
 			if (is_readable($tc_main_custom_css)) {
 				$headerlib->add_cssfile($tc_main_custom_css, 53);

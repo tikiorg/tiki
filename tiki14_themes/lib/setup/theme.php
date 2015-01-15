@@ -84,19 +84,19 @@ if ($theme_active == 'custom_url' && !empty($prefs['theme_custom_url'])) { //cus
 }
 else {
 	//first load the main theme css
-	$theme_path = $themelib->get_theme_path($theme_active);
+	$theme_path = $themelib->get_theme_css($theme_active);
 	if ($theme_path) {
-		$headerlib->add_cssfile("{$theme_path}css/tiki.css");
+		$headerlib->add_cssfile($theme_path);
 		//than load the theme option css file if needed
 		if (!empty($theme_option_active)) {
-			$theme_path = $themelib->get_theme_path($theme_active, $theme_option_active);
-			$headerlib->add_cssfile("{$theme_path}css/tiki.css");
+			$theme_path = $themelib->get_theme_css($theme_active, $theme_option_active);
+			$headerlib->add_cssfile($theme_path);
 		}
 	} else {
 		$theme_active = 'default';
 		$theme_option_active = '';
-		$theme_path = $themelib->get_theme_path($theme_active);
-		$headerlib->add_cssfile("{$theme_path}css/tiki.css");
+		$theme_path = $themelib->get_theme_css($theme_active);
+		$headerlib->add_cssfile($theme_path);
 	}
 }
 
