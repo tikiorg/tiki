@@ -118,11 +118,9 @@ if (is_readable($custom_css)) {
 }
 
 //8) produce $iconset to be used for generating icons
-$iconset = $themelib->get_iconset($theme_active, $theme_option_active);
-$smarty->assign_by_ref('iconset', $iconset);
+$iconset = TikiLib::lib('iconset')->getIconsetForTheme($theme_active, $theme_option_active);
 
 //9) set global variable and prefs so that they can be accessed elsewhere
-$smarty->assign_by_ref('theme_path', $theme_path);
 $prefs['theme'] = $theme_active;
 $prefs['theme_option'] = $theme_option_active;
 

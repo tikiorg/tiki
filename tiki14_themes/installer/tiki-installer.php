@@ -1189,6 +1189,7 @@ jqueryTiki.effect_tabs_speed = 400;
 ';
 $headerlib->add_js($js, 100);
 
+$iconset = TikiLib::lib('iconset')->getIconsetForTheme($theme_active, $theme_option_active);
 
 $smarty->assignByRef('headerlib', $headerlib);
 

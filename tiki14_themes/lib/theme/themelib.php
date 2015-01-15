@@ -139,12 +139,14 @@ class ThemeLib extends TikiLib
 		return $this->get_theme_path($theme, $option, $filename);
 	}
 
-	/* replaces legacy get_style_path function
-	@param $theme - main theme (e.g. "fivealive" - can be empty to return main themes dir)
-	@param $option - optional theme option file name (e.g. "akebi")
-	@param $filename - optional filename to look for (e.g. "purple.png")
-	@return path to dir or file if found or empty if not - e.g. "themes/mydomain.tld/fivealive/options/akebi/"
-	*/
+	/** replaces legacy get_style_path function
+	 * @param string $theme    - main theme (e.g. "fivealive" - can be empty to return main themes dir)
+	 * @param string $option   - optional theme option file name (e.g. "akebi")
+	 * @param string $filename - optional filename to look for (e.g. "purple.png")
+	 * @param string $subdir   - optional dir to look in, e.g. 'css' etc (will guess by file extension if this not set but filename is)
+	 * @return string          - path to dir or file if found or empty if not - e.g. "themes/mydomain.tld/fivealive/options/akebi/"
+	 */
+
 	function get_theme_path($theme = '', $option = '', $filename = '', $subdir = '')
 	{
 		global $tikidomain;
@@ -230,12 +232,12 @@ class ThemeLib extends TikiLib
 	function list_base_iconsets()
 	{
 		$base_iconsets = [];
+		$iconsetlib = TikiLib::lib('iconset');
 
 		foreach (scandir('themes/base_files/iconsets') as $iconset_file) {
 			if ($iconset_file[0] != '.' && $iconset_file != 'index.php') {
-				global $settings;
-				include('themes/base_files/iconsets/'. $iconset_file);
-				$base_iconsets[substr($iconset_file,0,-4)] = $settings['iconset_name'];
+				$data = $iconsetlib->loadFile('themes/base_files/iconsets/' . $iconset_file);
+				$base_iconsets[substr($iconset_file,0,-4)] = $data['name'];
 			}
 		}
 		return $base_iconsets;

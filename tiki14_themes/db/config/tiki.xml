@@ -123,6 +123,9 @@
 		<service id="tiki.lib.hist" class="HistLib">
 			<file>%kernel.root_dir%/lib/wiki/histlib.php</file>
 		</service>
+		<service id="tiki.lib.iconset" class="IconsetLib">
+			<file>%kernel.root_dir%/lib/theme/iconsetlib.php</file>
+		</service>
 		<service id="tiki.lib.imagegal" class="ImageGalsLib">
 			<file>%kernel.root_dir%/lib/imagegals/imagegallib.php</file>
 		</service>
