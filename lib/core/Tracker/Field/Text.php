@@ -328,7 +328,27 @@ class Tracker_Field_Text extends Tracker_Field_Abstract implements Tracker_Field
 		global $prefs;
 		$schema = new Tracker\Tabular\Schema($this->getTrackerDefinition());
 		$permName = $this->getConfiguration('permName');
+		$baseKey = $this->getBaseKey();
 		$name = $this->getConfiguration('name');
+
+		$renderLink = function ($lang) {
+			return function ($value, $extra) use ($lang) {
+				$smarty = TikiLib::lib('smarty');
+				$smarty->loadPlugin('smarty_function_object_link');
+
+				if (isset($extra['text'])) {
+					$value = $extra['text'];
+				} elseif (isset($value[$lang])) {
+					$value = $lang;
+				}
+
+				return smarty_function_object_link([
+					'type' => 'trackeritem',
+					'id' => $extra['itemId'],
+					'title' => $value,
+				], $smarty);
+			};
+		};
 
 		if ('y' !== $this->getConfiguration('isMultilingual', 'n')) {
 			$schema->addNew($permName, 'default')
@@ -345,24 +365,35 @@ class Tracker_Field_Text extends Tracker_Field_Abstract implements Tracker_Field
 				->setPlainReplacement('default')
 				->addQuerySource('itemId', 'object_id')
 				->addIncompatibility($permName, 'default')
-				->setRenderTransform(function ($value, $extra) {
-					$smarty = TikiLib::lib('smarty');
-					$smarty->loadPlugin('smarty_function_object_link');
-					return smarty_function_object_link([
-						'type' => 'trackeritem',
-						'id' => $extra['itemId'],
-						'title' => $value,
-					], $smarty);
-				})
-				->setParseIntoTransform(function (& $info, $value) use ($permName) {
-					$info['fields'][$permName] = $value;
-				})
+				->setRenderTransform($renderLink(null))
 				;
 		} else {
+			$lang = $prefs['language'];
+			$schema->addNew($permName, 'current')
+				->setLabel(tr('%0 (%1)', $name, $lang))
+				->setReadOnly(true)
+				->addQuerySource('text', "{$baseKey}_{$lang}")
+				->setRenderTransform(function ($value, $extra) use ($lang) {
+					if (isset($extra['text'])) {
+						return $extra['text'];
+					} elseif (isset($value[$lang])) {
+						return $value[$lang];
+					}
+				})
+				;
+			$schema->addNew($permName, "link-current")
+				->setLabel($name)
+				->setReadOnly(true)
+				->setPlainReplacement($lang)
+				->addQuerySource('itemId', 'object_id')
+				->addQuerySource('text', "{$baseKey}_{$lang}")
+				->setRenderTransform($renderLink($lang))
+				;
+
 			foreach ($prefs['available_languages'] as $lang) {
 				$schema->addNew($permName, $lang)
 					->setLabel(tr('%0 (%1)', $name, $lang))
-					->addQuerySource('text', "tracker_field_{$permName}_{$lang}")
+					->addQuerySource('text', "{$baseKey}_{$lang}")
 					->setRenderTransform(function ($value, $extra) use ($lang) {
 						if (isset($extra['text'])) {
 							return $extra['text'];
@@ -373,6 +404,15 @@ class Tracker_Field_Text extends Tracker_Field_Abstract implements Tracker_Field
 					->setParseIntoTransform(function (& $info, $value) use ($permName, $lang) {
 						$info['fields'][$permName][$lang] = $value;
 					})
+					;
+				$schema->addNew($permName, "link-$lang")
+					->setLabel($name)
+					->setPlainReplacement($lang)
+					->addQuerySource('itemId', 'object_id')
+					->addQuerySource('text', "{$baseKey}_{$lang}")
+					->addIncompatibility($permName, 'default')
+					->addIncompatibility($permName, $lang)
+					->setRenderTransform($renderLink($lang))
 					;
 			}
 		}
