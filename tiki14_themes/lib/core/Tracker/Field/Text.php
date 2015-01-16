@@ -364,23 +364,57 @@ class Tracker_Field_Text extends Tracker_Field_Abstract implements Tracker_Field
 
 	function getFilterCollection()
 	{
+		global $prefs;
+
 		$filters = new Tracker\Filter\Collection($this->getTrackerDefinition());
 		$permName = $this->getConfiguration('permName');
 		$name = $this->getConfiguration('name');
 		$baseKey = $this->getBaseKey();
+
+		$generateFulltext = function ($field) {
+			return function ($control, Search_Query $query) use ($field) {
+				$value = $control->getValue();
+
+				if ($value) {
+					$query->filterContent($value, $field);
+				}
+			};
+		};
 
 		if ('y' !== $this->getConfiguration('isMultilingual', 'n')) {
 			$filters->addNew($permName, 'fulltext')
 				->setLabel($name)
 				->setHelp(tr('Full text search over the content of the field.'))
 				->setControl(new Tracker\Filter\Control\TextField("tf_{$permName}_ft"))
-				->setApplyCondition(function ($control, Search_Query $query) use ($baseKey) {
-					$value = $control->getValue();
+				->setApplyCondition($generateFulltext($baseKey))
+				;
+		} else {
+			$language = $prefs['language'];
+			$filters->addNew($permName, "fulltext-current")
+				->setLabel($name)
+				->setHelp(tr('Full text search in the current language.'))
+				->setControl(new Tracker\Filter\Control\TextField("tf_{$permName}_current_ft"))
+				->setApplyCondition($generateFulltext("{$baseKey}_{$language}"))
+				;
 
-					if ($value) {
-						$query->filterContent($value, $baseKey);
-					}
-				})
+			$fields = [];
+			foreach ($prefs['available_languages'] as $lang) {
+				$field = "{$baseKey}_{$lang}";
+				$fields[] = $field;
+
+				$filters->addNew($permName, "fulltext-$lang")
+					->setLabel(tr('%0 (%1)', $name, $lang))
+					->setHelp(tr('Full text search in a specific language (%0).', $lang))
+					->setControl(new Tracker\Filter\Control\TextField("tf_{$permName}_{$lang}_ft"))
+					->setApplyCondition($generateFulltext($field))
+					;
+			}
+
+			$filters->addNew($permName, "fulltext")
+				->setLabel(tr('%0 (any language)', $name))
+				->setHelp(tr('Full text search in any language.'))
+				->setControl(new Tracker\Filter\Control\TextField("tf_{$permName}_ft"))
+				->setApplyCondition($generateFulltext(implode(',', $fields)))
 				;
 		}
 

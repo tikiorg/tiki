@@ -6,6 +6,8 @@
 // $Id$
 
 namespace Tracker\Filter;
+use Search_Query;
+use TikiLib;
 
 class Collection
 {
@@ -116,11 +118,52 @@ class Collection
 		switch ($name) {
 		case 'itemId':
 			$collection = new self($this->definition);
-			// TODO : Add filters
+			$collection->addNew($name, 'lookup')
+				->setLabel(tr('Item ID'))
+				->setHelp(tr('Lookup a single item by ID.'))
+				->setControl(new Control\TextField("tf_itemId"))
+				->setApplyCondition(function ($control, Search_Query $query) {
+					$value = $control->getValue();
+
+					if ($value) {
+						$query->filterIdentifier($value, 'object_id');
+					}
+				})
+				;
 			return $collection;
 		case 'status':
+			$types = TikiLib::lib('trk')->status_types();
+			$possibilities = array_map(function ($item) {
+				return $item['label'];
+			}, $types);
+
 			$collection = new self($this->definition);
-			// TODO : Add filters
+			$collection->addNew($name, 'dropdown')
+				->setLabel(tr('Status'))
+				->setControl(new Control\DropDown("tfdd_status", $possibilities))
+				->setApplyCondition(function ($control, Search_Query $query) {
+					$value = $control->getValue();
+
+					if ($value) {
+						$query->filterIdentifier($value, 'tracker_status');
+					}
+				});
+
+			$collection->addNew($name, 'multiselect')
+				->setLabel(tr('Status'))
+				->setControl(new Control\MultiSelect("tfms_status", $possibilities))
+				->setApplyCondition(function ($control, Search_Query $query) {
+					$values = $control->getValues();
+
+					if (! empty($values)) {
+						$sub = $query->getSubQuery("tfms_status");
+
+						foreach ($values as $v) {
+							$sub->filterIdentifier((string) $v, 'tracker_status');
+						}
+					}
+				});
+
 			return $collection;
 		}
 	}
