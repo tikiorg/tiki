@@ -106,7 +106,9 @@
 					{assign var=numbercol value=$numbercol+1}
 					<th>{tr}Image{/tr}</th>
 				{/if}
-				<th>{self_link _sort_arg='sort_mode' _sort_field='ispublished'}{tr}Published{/tr}{/self_link}</th>
+				{if $prefs.art_list_ispublished eq 'y'}
+					<th>{self_link _sort_arg='sort_mode' _sort_field='ispublished'}{tr}Published{/tr}{/self_link}</th>
+				{/if}
 				{if $tiki_p_edit_article eq 'y' or $tiki_p_remove_article eq 'y' or isset($oneEditPage) or $tiki_p_read_article}
 					{assign var=numbercol value=$numbercol+1}
 					<th>{tr}Actions{/tr}</th>
@@ -176,7 +178,9 @@
 					{if $prefs.art_list_img eq 'y'}
 						<td class="text">{tr}{$listpages[changes].hasImage}{/tr}/{tr}{$listpages[changes].useImage}{/tr}</td>
 					{/if}
-					<td style="text-align:center;">{$listpages[changes].ispublished}</td>
+					{if $prefs.art_list_ispublished eq 'y'}
+						<td style="text-align:center;">{$listpages[changes].ispublished}</td>
+					{/if}
 					<td class="action">
 						{if $tiki_p_read_article eq 'y'}
 							{icon name="view" href="{$listpages[changes].articleId|sefurl:article}" title="{tr}View{/tr}"}
