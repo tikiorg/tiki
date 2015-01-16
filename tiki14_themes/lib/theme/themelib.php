@@ -267,4 +267,43 @@ class ThemeLib extends TikiLib
 		}
 		return $available_themesandoptions;
 	}
+	/* get a list of available themes 
+	@return array of available themes based on $prefs['available_themes'] setting. This function does not consider if change_theme is on or off.
+	*/
+	function get_available_themes()
+	{
+		global $prefs;
+		$available_themes = array();
+		if (count($prefs['available_themes'] != 0) and !empty($prefs['available_themes'][0])) { //if pref['available_themes'] is set, than use it
+			foreach ($prefs['available_themes'] as $available_theme){
+				$theme = $this->extract_theme_and_option($available_theme)[0];
+				$available_themes[$theme] = $theme;
+			}
+		}
+		else {
+			$available_themes = $this->list_themes(); //else load all themes and options
+			unset($available_themes['custom_url']); //make sure Custom URL is removed from the list
+		}
+		return $available_themes;
+	}
+	
+	/* get a list of available options for a theme 
+	@return array of available theme options based on $prefs['available_themes'] setting. This function does not consider if change_theme is on or off.
+	*/
+	function get_available_options($theme)
+	{
+		global $prefs;
+		$available_options = array();
+		if (count($prefs['available_themes'] != 0) and !empty($prefs['available_themes'][0])) {
+			foreach ($prefs['available_themes'] as $available_themeandoption){
+				$themeandoption = $this->extract_theme_and_option($available_themeandoption);
+				if($theme === $themeandoption[0] && !empty($themeandoption[1])){
+					$available_options[$themeandoption[1]] = $themeandoption[1];
+				}
+			}
+			return $available_options;
+		} else {
+			return $this->list_theme_options($theme);
+		}
+	}
 }

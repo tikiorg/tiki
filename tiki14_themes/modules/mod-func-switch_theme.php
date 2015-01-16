@@ -35,12 +35,10 @@ function module_switch_theme($mod_reference, &$module_params)
 	$themelib = TikiLib::lib('theme');
 	
 	//get the list of available themes and options
-	$themes = $themelib->list_themes();
-	unset($themes['custom_url']);
-	$smarty->assign('available_themes', $themes);
-	$smarty->assign('available_options', $themelib->list_theme_options($prefs['theme']));
-
-	//check if CSS Editor's try theme is on 
+	$smarty->assign('available_themes', $themelib->get_available_themes());
+	$smarty->assign('available_options', $themelib->get_available_options($prefs['theme']));
+	
+	//check if CSS Editor's try theme is on
 	if (!empty($_SESSION['try_theme'])) {
 		list($css_theme, $css_theme_option) = $themelib->extract_theme_and_option($_SESSION['try_theme']);
 	} else {
