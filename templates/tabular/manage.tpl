@@ -24,7 +24,7 @@
 				<td>
 					<a href="{service controller=tabular action=edit tabularId=$row.tabularId}">{icon name=edit}{tr}Edit{/tr}</a>
 					<a href="{service controller=tabular action=export_full_csv tabularId=$row.tabularId}">{icon name=export}{tr}Full{/tr}</a>
-					<a href="{bootstrap_modal controller=tabular action=export_partial_csv tabularId=$row.tabularId}">{icon name=export}{tr}Partial{/tr}</a>
+					<a href="{bootstrap_modal controller=tabular action=filter target=export tabularId=$row.tabularId}">{icon name=export}{tr}Partial{/tr}</a>
 					<a href="tiki-searchindex.php?tabularId={$row.tabularId|escape}&amp;filter~tracker_id={$row.trackerId|escape}">{icon name=export}{tr}Custom{/tr}</a>
 					<a href="{bootstrap_modal controller=tabular action=import_csv tabularId=$row.tabularId}">{icon name=import}{tr}Import{/tr}</a>
 					<a class="text-danger" href="{bootstrap_modal controller=tabular action=delete tabularId=$row.tabularId}">{icon name=delete}<span class="sr-only">{tr}Delete{/tr}</span></a>

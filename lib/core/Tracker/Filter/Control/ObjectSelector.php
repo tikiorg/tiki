@@ -33,6 +33,13 @@ class ObjectSelector implements Control
 		}
 	}
 
+	function getDescription()
+	{
+		if ($this->value) {
+			return \TikiLib::lib('object')->get_title($this->filters['type'], $this->value);
+		}
+	}
+
 	function getId()
 	{
 		return $this->fieldName;

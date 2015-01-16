@@ -31,6 +31,11 @@ class TextField implements Control
 		}
 	}
 
+	function getDescription()
+	{
+		return $this->value ?: null;
+	}
+
 	function getId()
 	{
 		return $this->fieldName;

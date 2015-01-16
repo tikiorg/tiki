@@ -33,6 +33,13 @@ class DropDown implements Control
 		}
 	}
 
+	function getDescription()
+	{
+		if ($this->value) {
+			return $this->options[$this->value];
+		}
+	}
+
 	function getId()
 	{
 		return $this->fieldName;

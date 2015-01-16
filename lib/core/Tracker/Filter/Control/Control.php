@@ -23,6 +23,12 @@ interface Control
 	function getQueryArguments();
 
 	/**
+	 * Provide a textual description of the filter being applied.
+	 * Return null when unapplied.
+	 */
+	function getDescription();
+
+	/**
 	 * Provide the ID of the primary field to be referenced by the label.
 	 */
 	function getId();

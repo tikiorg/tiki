@@ -4,19 +4,22 @@
 	{title}{$title|escape}{/title}
 {/block}
 
+{block name="navigation"}
+<div class="navbar">
+	<a class="btn btn-default" href="{bootstrap_modal controller=tabular action=filter tabularId=$tabularId target=list _params=$baseArguments}">{icon name=filter}{tr}Filter{/tr}</a>
+	<a class="btn btn-default" href="{bootstrap_modal controller=tabular action=filter tabularId=$tabularId target=export _params=$baseArguments}">{icon name=export}{tr}Export{/tr}</a>
+</div>
+{/block}
+
 {block name="content"}
-<form method="get" action="{service controller="tabular" action="list"}">
+<dl class="dl-horizontal">
 	{foreach $filters as $filter}
-		<div class="form-group">
-			<label class="control-label" for="{$filter.id|escape}">{$filter.label|escape}</label>
-			{$filter.control}
-		</div>
+		{if $filter.description}
+			<dt>{$filter.label|escape}</dt>
+			<dd>{$filter.description|escape}</dd>
+		{/if}
 	{/foreach}
-	<div class="submit">
-		<input type="hidden" name="tabularId" value="{$tabularId|escape}"/>
-		<input type="submit" class="btn btn-primary" value="{tr}Filter{/tr}">
-	</div>
-</form>
+</dl>
 <table class="table">
 	<tr>
 		{foreach $columns as $column}

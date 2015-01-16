@@ -219,16 +219,12 @@ class Services_Tracker_TabularController
 		}
 
 		return [
-			'title' => tr('Export'),
-			'tabularId' => $tabularId,
-			'filters' => array_map(function ($filter) {
-				return [
-					'id' => $filter->getControl()->getId(),
-					'label' => $filter->getLabel(),
-					'help' => $filter->getHelp(),
-					'control' => $filter->getControl(),
-				];
-			}, $collection->getFilters()),
+			'FORWARD' => [
+				'controller' => 'tabular',
+				'action' => 'filter',
+				'tabularId' => $tabularId,
+				'target' => 'export',
+			],
 		];
 	}
 
@@ -315,6 +311,54 @@ class Services_Tracker_TabularController
 		];
 	}
 
+	function action_filter($input)
+	{
+		$tabularId = $input->tabularId->int();
+
+		$lib = TikiLib::lib('tabular');
+		$info = $lib->getInfo($tabularId);
+		$trackerId = $info['trackerId'];
+
+		Services_Exception_Denied::checkObject('tiki_p_admin_trackers', 'tracker', $trackerId);
+
+		$schema = $this->getSchema($info);
+		$collection = $schema->getFilterCollection();
+
+		$collection->applyInput($input);
+
+		$target = $input->target->word();
+
+		if ($target == 'list') {
+			$title = tr('Filter %0', $info['name']);
+			$method = 'get';
+			$action = 'list';
+			$label = tr('Filter');
+		} elseif ($target = 'export') {
+			$title = tr('Export %0', $info['name']);
+			$method = 'post';
+			$action = 'export_partial_csv';
+			$label = tr('Export');
+		} else {
+			throw new Services_Exception_NotFound;
+		}
+
+		return [
+			'title' => $title,
+			'tabularId' => $tabularId,
+			'method' => $method,
+			'action' => $action,
+			'label' => $label,
+			'filters' => array_map(function ($filter) {
+				return [
+					'id' => $filter->getControl()->getId(),
+					'label' => $filter->getLabel(),
+					'help' => $filter->getHelp(),
+					'control' => $filter->getControl(),
+				];
+			}, $collection->getFilters()),
+		];
+	}
+
 	function action_list($input)
 	{
 		$tabularId = $input->tabularId->int();
@@ -350,10 +394,8 @@ class Services_Tracker_TabularController
 			'tabularId' => $tabularId,
 			'filters' => array_map(function ($filter) {
 				return [
-					'id' => $filter->getControl()->getId(),
 					'label' => $filter->getLabel(),
-					'help' => $filter->getHelp(),
-					'control' => $filter->getControl(),
+					'description' => $filter->getControl()->getDescription(),
 				];
 			}, $collection->getFilters()),
 			'columns' => $columns,

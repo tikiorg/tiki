@@ -30,6 +30,13 @@ class MultiSelect implements Control
 		return [$this->fieldName => $this->values];
 	}
 
+	function getDescription()
+	{
+		return implode(', ', array_map(function ($val) {
+			return $this->options[$val];
+		}, $this->values)) ?: null;
+	}
+
 	function getId()
 	{
 		return $this->fieldName;
