@@ -24,6 +24,8 @@ class CsvWriter
 	function write(\Tracker\Tabular\Source\SourceInterface $source)
 	{
 		$schema = $source->getSchema();
+		$schema = $schema->getPlainOutputSchema();
+		$schema->validate();
 
 		$columns = $schema->getColumns();
 		$headers = [];

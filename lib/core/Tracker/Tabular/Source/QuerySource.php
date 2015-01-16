@@ -11,7 +11,7 @@ class QuerySource implements SourceInterface
 {
 	private $schema;
 	private $trackerId;
-	private $query;
+	protected $query;
 
 	function __construct(\Tracker\Tabular\Schema $schema, \Search_Query $query)
 	{

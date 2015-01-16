@@ -29,6 +29,7 @@
 							<th>{tr}Mode{/tr}</th>
 							<th><abbr title="{tr}Primary Key{/tr}">{tr}PK{/tr}</abbr></th>
 							<th><abbr title="{tr}Read-Only{/tr}">{tr}RO{/tr}</abbr></th>
+							<th><abbr title="{tr}Export-Only{/tr}">{tr}EO{/tr}</abbr></th>
 							<th></th>
 						</tr>
 					</thead>
@@ -38,6 +39,7 @@
 							<td><span class="field">Field Name</span>:<span class="mode">Mode</span></td>
 							<td><input class="primary" type="radio" name="pk" /></td>
 							<td><input class="read-only" type="checkbox" /></td>
+							<td><input class="export-only" type="checkbox" /></td>
 							<td class="text-right"><button class="remove">{icon name=remove}</button></td>
 						</tr>
 						{foreach $schema->getColumns() as $column}
@@ -46,6 +48,7 @@
 								<td><span class="field">{$column->getField()|escape}</span>:<span class="mode">{$column->getMode()|escape}</td>
 								<td><input class="primary" type="radio" name="pk" {if $column->isPrimaryKey()} checked {/if} /></td>
 								<td><input class="read-only" type="checkbox" {if $column->isReadOnly()} checked {/if} /></td>
+								<td><input class="export-only" type="checkbox" {if $column->isExportOnly()} checked {/if} /></td>
 								<td class="text-right"><button class="remove">{icon name=remove}</button></td>
 							</tr>
 						{/foreach}

@@ -26,10 +26,64 @@ class Schema
 		return $this->definition;
 	}
 
+	function getHtmlOutputSchema()
+	{
+		$out = new self($this->definition);
+		$out->filters = $this->filters;
+		$out->schemas = $this->schemas;
+
+		$columns = [];
+		foreach ($this->columns as $column) {
+			if ($column->isExportOnly()) {
+				continue; // Skip column
+			} elseif ($column->getPlainReplacement()) {
+				$columns[] = $column;
+			} else {
+				$columns[] = $column->withWrappedRenderTransform('htmlspecialchars');
+			}
+		}
+		$out->columns = $columns;
+
+		return $out;
+	}
+
+	function getPlainOutputSchema()
+	{
+		$out = new self($this->definition);
+		$out->filters = $this->filters;
+		$out->schemas = $this->schemas;
+		$out->primaryKey = $this->primaryKey;
+
+		$out->columns = array_map(function ($column) {
+			if ($replacement = $column->getPlainReplacement()) {
+				$new = $this->addColumn($column->getField(), $replacement);
+				$new->setLabel($column->getLabel());
+
+				// If the replacement is read-only, leave as-is
+				if (! $new->isReadOnly()) {
+					$new->setReadOnly($column->isReadOnly());
+				}
+
+				// Convert the primary key field as needed
+				if ($column->isPrimaryKey()) {
+					$out->primaryKey = $new;
+					$new->setPrimaryKey(true);
+				}
+
+				return $new;
+			} else {
+				return $column;
+			}
+		}, $this->columns);
+
+		return $out;
+	}
+
 	function loadFormatDescriptor($descriptor)
 	{
 		foreach ($descriptor as $column) {
 			$col = $this->addColumn($column['field'], $column['mode']);
+			$col->setExportOnly(! empty($column['isExportOnly']));
 
 			if (! $col->isReadOnly() && ! empty($column['isReadOnly'])) {
 				$col->setReadOnly(true);
@@ -64,6 +118,7 @@ class Schema
 				'mode' => $column->getMode(),
 				'isPrimary' => $column->isPrimaryKey(),
 				'isReadOnly' => $column->isReadOnly(),
+				'isExportOnly' => $column->isExportOnly(),
 			];
 		}, $this->columns);
 	}

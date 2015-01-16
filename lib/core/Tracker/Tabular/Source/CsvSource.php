@@ -14,7 +14,7 @@ class CsvSource implements SourceInterface
 
 	function __construct(\Tracker\Tabular\Schema $schema, $fileName)
 	{
-		$this->schema = $schema;
+		$this->schema = $schema->getPlainOutputSchema();
 		$this->file = new \SplFileObject($fileName, 'r');
 	}
 

@@ -340,6 +340,24 @@ class Tracker_Field_Text extends Tracker_Field_Abstract implements Tracker_Field
 					$info['fields'][$permName] = $value;
 				})
 				;
+			$schema->addNew($permName, 'link')
+				->setLabel($name)
+				->setPlainReplacement('default')
+				->addQuerySource('itemId', 'object_id')
+				->addIncompatibility($permName, 'default')
+				->setRenderTransform(function ($value, $extra) {
+					$smarty = TikiLib::lib('smarty');
+					$smarty->loadPlugin('smarty_function_object_link');
+					return smarty_function_object_link([
+						'type' => 'trackeritem',
+						'id' => $extra['itemId'],
+						'title' => $value,
+					], $smarty);
+				})
+				->setParseIntoTransform(function (& $info, $value) use ($permName) {
+					$info['fields'][$permName] = $value;
+				})
+				;
 		} else {
 			foreach ($prefs['available_languages'] as $lang) {
 				$schema->addNew($permName, $lang)

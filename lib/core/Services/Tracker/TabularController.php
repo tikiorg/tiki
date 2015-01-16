@@ -315,6 +315,50 @@ class Services_Tracker_TabularController
 		];
 	}
 
+	function action_list($input)
+	{
+		$tabularId = $input->tabularId->int();
+
+		$lib = TikiLib::lib('tabular');
+		$info = $lib->getInfo($tabularId);
+		$trackerId = $info['trackerId'];
+
+		Services_Exception_Denied::checkObject('tiki_p_admin_trackers', 'tracker', $trackerId);
+
+		$schema = $this->getSchema($info);
+		$collection = $schema->getFilterCollection();
+
+		$collection->applyInput($input);
+
+		$search = TikiLib::lib('unifiedsearch');
+		$query = $search->buildQuery([
+			'type' => 'trackeritem',
+			'tracker_id' => $trackerId,
+		]);
+
+		$collection->applyConditions($query);
+
+		$source = new \Tracker\Tabular\Source\PaginatedQuerySource($schema, $query);
+		$writer = new \Tracker\Tabular\Writer\HtmlWriter();
+
+		$columns = $schema->getColumns();
+		return [
+			'title' => tr($info['name']),
+			'tabularId' => $tabularId,
+			'filters' => array_map(function ($filter) {
+				return [
+					'id' => $filter->getControl()->getId(),
+					'label' => $filter->getLabel(),
+					'help' => $filter->getHelp(),
+					'control' => $filter->getControl(),
+				];
+			}, $collection->getFilters()),
+			'columns' => $columns,
+			'data' => $writer->getData($source),
+			'resultset' => $source->getResultSet(),
+		];
+	}
+
 	private function getSchema(array $info)
 	{
 		$tracker = \Tracker_Definition::get($info['trackerId']);
