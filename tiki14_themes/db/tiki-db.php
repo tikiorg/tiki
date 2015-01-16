@@ -22,7 +22,7 @@ if (!empty($_REQUEST['lang'])) {
 include_once('lib/init/tra.php');
 
 $local_php = TikiInit::getCredentialsFile();
-global $default_api_tiki, $api_tiki, $db_tiki, $dbversion_tiki, $host_tiki, $user_tiki, $pass_tiki, $dbs_tiki, $tikidomain, $tikidomainslash;
+global $default_api_tiki, $api_tiki, $db_tiki, $dbversion_tiki, $host_tiki, $user_tiki, $pass_tiki, $dbs_tiki, $tikidomain, $tikidomainslash, $dbfail_url;
 $re = false;
 if ( file_exists($local_php) ) {
 	$re = include($local_php);
@@ -99,7 +99,11 @@ if (isset ($system_configuration_file)) {
 
 if ( $re === false ) {
 	if (! defined('TIKI_IN_INSTALLER')) {
-		header('location: tiki-install.php');
+		if(!empty($dbfail_url)) {
+			header('location: '.$dbfail_url);
+		} else {
+			header('location: tiki-install.php');
+		}
 		exit;
 	} else {
 		// we are in the installer don't redirect...
@@ -202,7 +206,11 @@ $initializer->setInitializeCallback(
 $db = $initializer->getConnection($credentials['primary']);
 
 if (! $db && ! defined('TIKI_IN_INSTALLER')) {
-	header('location: tiki-install.php');
+	if(!empty($dbfail_url)) {
+		header('location: '.$dbfail_url);
+	} else {
+		header('location: tiki-install.php');
+	}
 	exit;
 } elseif ($db) {
 	TikiDb::set($db);
