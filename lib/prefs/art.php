@@ -120,6 +120,11 @@ function prefs_art_list()
 			'type' => 'flag',
 			'default' => 'y',
 		),
+		'art_list_ispublished' => array(
+			'name' => tra('Is Published'),
+			'type' => 'flag',
+			'default' => 'y',
+		),
 		'art_trailer_pos' => array(
 			'name' => tra('Trailer position'),
 			'description' => tra('Trailer position'),
