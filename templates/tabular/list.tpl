@@ -33,5 +33,5 @@
 		</td>
 	{/foreach}
 </table>
-{pagination_links resultset=$resultset}{/pagination_links}
+{pagination_links resultset=$resultset}{service controller=tabular action=list tabularId=$tabularId _params=$baseArguments}{/pagination_links}
 {/block}

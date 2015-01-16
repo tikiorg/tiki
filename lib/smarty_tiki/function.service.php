@@ -14,6 +14,11 @@ function smarty_function_service($params, $smarty)
 		return 'missing-controller';
 	}
 
+	if (isset($params['_params'])) {
+		$params += $params['_params'];
+		unset($params['_params']);
+	}
+
 	$url = $servicelib->getUrl($params);
 	return smarty_modifier_escape($url);
 }

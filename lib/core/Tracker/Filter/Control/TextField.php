@@ -22,6 +22,15 @@ class TextField implements Control
 		$this->value = $input->{$this->fieldName}->text();
 	}
 
+	function getQueryArguments()
+	{
+		if ($this->value) {
+			return [$this->fieldName => $this->value];
+		} else {
+			return [];
+		}
+	}
+
 	function getId()
 	{
 		return $this->fieldName;

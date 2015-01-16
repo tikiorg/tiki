@@ -178,4 +178,14 @@ class Collection
 			];
 		}, $this->filters);
 	}
+
+	function getQueryArguments()
+	{
+		$parts = [];
+		foreach ($this->filters as $filter) {
+			$parts += $filter->getControl()->getQueryArguments();
+		}
+		
+		return $parts;
+	}
 }

@@ -24,6 +24,15 @@ class ObjectSelector implements Control
 		$this->value = (string) $input->{$this->fieldName}->int();
 	}
 
+	function getQueryArguments()
+	{
+		if ($this->value) {
+			return [$this->fieldName => $this->value];
+		} else {
+			return [];
+		}
+	}
+
 	function getId()
 	{
 		return $this->fieldName;

@@ -335,6 +335,7 @@ class Services_Tracker_TabularController
 			'type' => 'trackeritem',
 			'tracker_id' => $trackerId,
 		]);
+		$query->setRange($input->offset->int());
 
 		$collection->applyConditions($query);
 
@@ -342,6 +343,8 @@ class Services_Tracker_TabularController
 		$writer = new \Tracker\Tabular\Writer\HtmlWriter();
 
 		$columns = $schema->getColumns();
+		$arguments = $collection->getQueryArguments();
+
 		return [
 			'title' => tr($info['name']),
 			'tabularId' => $tabularId,
@@ -356,6 +359,7 @@ class Services_Tracker_TabularController
 			'columns' => $columns,
 			'data' => $writer->getData($source),
 			'resultset' => $source->getResultSet(),
+			'baseArguments' => $arguments,
 		];
 	}
 
