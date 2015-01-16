@@ -73,12 +73,10 @@ if ($prefs['feature_theme_control'] == 'y' && empty($_SESSION['try_theme'])) {
 
 		//RESET $theme_path global variable
 		$theme_path = $tc_theme_path;
-		$smarty->assign_by_ref('theme_path', $theme_path);
-		
+
 		//RESET $iconset according to the new theme
-		$iconset = $themelib->get_iconset($tc_theme, $tc_theme_option);
-		$smarty->assign_by_ref('iconset', $iconset);
-		
+		$iconset = TikiLib::lib('iconset')->getIconsetForTheme($tc_theme, $tc_theme_option);
+
 		//RESET theme prefs
 		$prefs['theme'] = $tc_theme;
 		$prefs['theme_option'] = $tc_theme_option;
