@@ -54,7 +54,7 @@ class Filter
 		return $this->help;
 	}
 
-	function setControl(Control\ControlInterface $control)
+	function setControl(Control\Control $control)
 	{
 		$this->control = $control;
 		return $this;
