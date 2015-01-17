@@ -233,7 +233,7 @@ class Table_Settings_TikiListpages extends Table_Settings_Standard
 				'filter' => array(
 					'type' => false,
 				),
-				'priority' => 6,
+				'priority' => 1,
 			),
 		),
 	);

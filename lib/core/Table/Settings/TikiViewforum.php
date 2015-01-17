@@ -195,7 +195,7 @@ class Table_Settings_TikiViewforum extends Table_Settings_Standard
 				'filter' => array(
 					'type' => false,
 				),
-				'priority' => 6,
+				'priority' => 1,
 			),
 			'#atts' => array(
 				'sort' => array(
