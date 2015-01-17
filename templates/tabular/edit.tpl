@@ -5,7 +5,7 @@
 {/block}
 
 {block name="navigation"}
-	<div class="form-group">
+	<div class="navbar">
 		<a class="btn btn-default" href="{service controller=tabular action=manage}">{icon name=list} {tr}Manage{/tr}</a>
 		<a class="btn btn-default" href="{service controller=tabular action=create}">{icon name=create} {tr}New{/tr}</a>
 	</div>

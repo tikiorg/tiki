@@ -446,6 +446,33 @@ class Tracker_Field_Text extends Tracker_Field_Abstract implements Tracker_Field
 				->setControl(new Tracker\Filter\Control\TextField("tf_{$permName}_ft"))
 				->setApplyCondition($generateFulltext($baseKey))
 				;
+
+			$filters->addNew($permName, 'initial')
+				->setLabel($name)
+				->setHelp(tr('Search for a value prefix.'))
+				->setControl(new Tracker\Filter\Control\TextField("tf_{$permName}_init"))
+				->setApplyCondition(function ($control, Search_Query $query) use ($baseKey) {
+					$value = $control->getValue();
+
+					if ($value) {
+						$query->filterInitial($value, $baseKey);
+					}
+				})
+				;
+			if ('y' === $this->getOption('exact', 'n')) {
+				$filters->addNew($permName, 'exact')
+					->setLabel($name)
+					->setHelp(tr('Search for a precise value.'))
+					->setControl(new Tracker\Filter\Control\TextField("tf_{$permName}_em"))
+					->setApplyCondition(function ($control, Search_Query $query) use ($baseKey) {
+						$value = $control->getValue();
+
+						if ($value) {
+							$query->filterIdentifier($value, $baseKey . '_exact');
+						}
+					})
+					;
+			}
 		} else {
 			$language = $prefs['language'];
 			$filters->addNew($permName, "fulltext-current")
