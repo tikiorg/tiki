@@ -6,7 +6,9 @@
 
 {block name="navigation"}
 	<div class="form-group">
-		<a class="btn btn-default" href="{service controller=tabular action=create}">{icon name=create} {tr}New{/tr}</a>
+		{permission name=admin_trackers}
+			<a class="btn btn-default" href="{service controller=tabular action=create}">{icon name=create} {tr}New{/tr}</a>
+		{/permission}
 	</div>
 {/block}
 
@@ -23,6 +25,7 @@
 				<td>{object_title type=tracker id=$row.trackerId}</td>
 				<td>
 					<a href="{service controller=tabular action=edit tabularId=$row.tabularId}">{icon name=edit}{tr}Edit{/tr}</a>
+					{permission_link type=tabular id=$row.tabularId title=$row.name mode=text}
 					<a href="{service controller=tabular action=export_full_csv tabularId=$row.tabularId}">{icon name=export}{tr}Full{/tr}</a>
 					<a href="{bootstrap_modal controller=tabular action=filter target=export tabularId=$row.tabularId}">{icon name=export}{tr}Partial{/tr}</a>
 					<a href="tiki-searchindex.php?tabularId={$row.tabularId|escape}&amp;filter~tracker_id={$row.trackerId|escape}">{icon name=export}{tr}Custom{/tr}</a>

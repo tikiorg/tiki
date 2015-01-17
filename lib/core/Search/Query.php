@@ -101,10 +101,8 @@ class Search_Query implements Search_Query_Interface
 		$this->addPart($query, 'identifier', 'language');
 	}
 
-	function filterPermissions(array $groups)
+	function filterPermissions(array $groups, $user = null)
 	{
-		global $user;
-
 		$tokens = array();
 		foreach ($groups as $group) {
 			$tokens[] = new Search_Expr_Token($group);

@@ -26,8 +26,9 @@ class Services_Tracker_TabularController
 
 	function action_delete($input)
 	{
-		Services_Exception_Denied::checkGlobal('tiki_p_admin_trackers');
 		$tabularId = $input->tabularId->int();
+
+		Services_Exception_Denied::checkObject('tiki_p_tabular_admin', 'tabular', $tabularId);
 
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			$lib = TikiLib::lib('tabular');
@@ -69,7 +70,7 @@ class Services_Tracker_TabularController
 		$info = $lib->getInfo($input->tabularId->int());
 		$trackerId = $info['trackerId'];
 
-		Services_Exception_Denied::checkObject('tiki_p_admin_trackers', 'tracker', $trackerId);
+		Services_Exception_Denied::checkObject('tiki_p_tabular_admin', 'tabular', $info['tabularId']);
 
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			$info['format_descriptor'] = json_decode($input->fields->none(), true);
@@ -112,7 +113,7 @@ class Services_Tracker_TabularController
 			throw new Services_Exception_NotFound;
 		}
 
-		Services_Exception_Denied::checkObject('tiki_p_admin_trackers', 'tracker', $trackerId);
+		Services_Exception_Denied::checkObject('tiki_p_view_trackers', 'tracker', $trackerId);
 
 		$schema = new \Tracker\Tabular\Schema($tracker);
 		$local = $schema->getFieldSchema($permName);
@@ -147,7 +148,7 @@ class Services_Tracker_TabularController
 			throw new Services_Exception_NotFound;
 		}
 
-		Services_Exception_Denied::checkObject('tiki_p_admin_trackers', 'tracker', $trackerId);
+		Services_Exception_Denied::checkObject('tiki_p_view_trackers', 'tracker', $trackerId);
 
 		$schema = new \Tracker\Filter\Collection($tracker);
 		$local = $schema->getFieldCollection($permName);
@@ -175,7 +176,7 @@ class Services_Tracker_TabularController
 		$info = $lib->getInfo($input->tabularId->int());
 		$trackerId = $info['trackerId'];
 
-		Services_Exception_Denied::checkObject('tiki_p_admin_trackers', 'tracker', $trackerId);
+		Services_Exception_Denied::checkObject('tiki_p_tabular_admin', 'tabular', $info['tabularId']);
 
 		$schema = $this->getSchema($info);
 		$schema->validate();
@@ -195,7 +196,7 @@ class Services_Tracker_TabularController
 		$info = $lib->getInfo($tabularId);
 		$trackerId = $info['trackerId'];
 
-		Services_Exception_Denied::checkObject('tiki_p_admin_trackers', 'tracker', $trackerId);
+		Services_Exception_Denied::checkObject('tiki_p_tabular_export', 'tabular', $tabularId);
 
 		$schema = $this->getSchema($info);
 		$collection = $schema->getFilterCollection();
@@ -247,7 +248,7 @@ class Services_Tracker_TabularController
 
 			$trackerId = $info['trackerId'];
 
-			Services_Exception_Denied::checkObject('tiki_p_admin_trackers', 'tracker', $trackerId);
+			Services_Exception_Denied::checkObject('tiki_p_tabular_export', 'tabular', $tabularId);
 
 			$search = TikiLib::lib('unifiedsearch');
 			$query = $search->buildQuery($input->filter->none() ?: []);
@@ -265,7 +266,7 @@ class Services_Tracker_TabularController
 			throw new Services_Exception(tr('No formats available.'));
 		} else {
 			if ($trackerId) {
-				Services_Exception_Denied::checkObject('tiki_p_admin_trackers', 'tracker', $trackerId);
+				Services_Exception_Denied::checkObject('tiki_p_view_trackers', 'tracker', $trackerId);
 			} else {
 				Services_Exception_Denied::checkGlobal('tiki_p_admin_trackers');
 			}
@@ -284,7 +285,7 @@ class Services_Tracker_TabularController
 		$info = $lib->getInfo($input->tabularId->int());
 		$trackerId = $info['trackerId'];
 
-		Services_Exception_Denied::checkObject('tiki_p_admin_trackers', 'tracker', $trackerId);
+		Services_Exception_Denied::checkObject('tiki_p_tabular_import', 'tabular', $info['tabularId']);
 
 		$schema = $this->getSchema($info);
 		$schema->validate();
@@ -319,7 +320,7 @@ class Services_Tracker_TabularController
 		$info = $lib->getInfo($tabularId);
 		$trackerId = $info['trackerId'];
 
-		Services_Exception_Denied::checkObject('tiki_p_admin_trackers', 'tracker', $trackerId);
+		Services_Exception_Denied::checkObject('tiki_p_tabular_list', 'tabular', $tabularId);
 
 		$schema = $this->getSchema($info);
 		$collection = $schema->getFilterCollection();
@@ -367,7 +368,7 @@ class Services_Tracker_TabularController
 		$info = $lib->getInfo($tabularId);
 		$trackerId = $info['trackerId'];
 
-		Services_Exception_Denied::checkObject('tiki_p_admin_trackers', 'tracker', $trackerId);
+		Services_Exception_Denied::checkObject('tiki_p_tabular_list', 'tabular', $tabularId);
 
 		$schema = $this->getSchema($info);
 		$collection = $schema->getFilterCollection();
