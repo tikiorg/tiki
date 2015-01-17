@@ -21,7 +21,7 @@ $icons = array(
 		'class' => 'glyphicon glyphicon-play-circle',
 	),
 	'add' => array(
-		'class' => 'glyphicon glyphicon-plus',
+		'class' => 'glyphicon glyphicon-plus-sign',
 	),
 	'admin_i18n' => array(
 		'class' => 'glyphicon glyphicon-globe',
@@ -55,6 +55,9 @@ $icons = array(
 	),
 	'documentation' => array(
 		'class' => 'glyphicon glyphicon-book',
+	),
+	'down' => array(
+		'class' => 'glyphicon glyphicon-arrow-down',
 	),
 	'edit' => array(
 		'class' => 'glyphicon glyphicon-edit',
@@ -191,6 +194,9 @@ $icons = array(
 	//use a better unlock icon when available
 	'unlock' => array(
 		'class' => 'glyphicon glyphicon-folder-open',
+	),
+	'up' => array(
+		'class' => 'glyphicon glyphicon-arrow-up',
 	),
 	'user' => array(
 		'class' => 'glyphicon glyphicon-user',

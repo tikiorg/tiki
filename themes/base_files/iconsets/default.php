@@ -28,7 +28,7 @@ $icons = array( //Icons of the icon set
 		'class' => 'fa fa-play-circle fa-fw',
 	),
 	'add' => array(
-		'class' => 'fa fa-plus fa-fw',
+		'class' => 'fa fa-plus-circle fa-fw',
 	),
 	'admin_ads' => array(
 		'class' => 'fa fa-film fa-fw',
@@ -221,6 +221,9 @@ $icons = array( //Icons of the icon set
 	),
 	'documentation' => array(
 		'class' => 'fa fa-book fa-fw',
+	),
+	'down' => array(
+		'class' => 'fa fa-sort-desc fa-fw',
 	),
 	'edit' => array(
 		'class' => 'fa fa-edit fa-fw',
@@ -426,6 +429,9 @@ $icons = array( //Icons of the icon set
 	),
 	'unlock' => array(
 		'class' => 'fa fa-unlock fa-fw',
+	),
+	'up' => array(
+		'class' => 'fa fa-sort-asc fa-fw',
 	),
 	'user' => array(
 		'class' => 'fa fa-user fa-fw',
