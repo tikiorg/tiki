@@ -338,15 +338,19 @@ class Tracker_Field_Text extends Tracker_Field_Abstract implements Tracker_Field
 
 				if (isset($extra['text'])) {
 					$value = $extra['text'];
-				} elseif (isset($value[$lang])) {
+				} elseif ($lang && isset($value[$lang])) {
 					$value = $lang;
 				}
 
-				return smarty_function_object_link([
-					'type' => 'trackeritem',
-					'id' => $extra['itemId'],
-					'title' => $value,
-				], $smarty);
+				if ($value) {
+					return smarty_function_object_link([
+						'type' => 'trackeritem',
+						'id' => $extra['itemId'],
+						'title' => $value,
+					], $smarty);
+				} else {
+					return '';
+				}
 			};
 		};
 
