@@ -8,7 +8,7 @@
 			{button _text="{tr}Theme Generator{/tr}" _name="themegenerator" _class="tgFloatDialog btn-sm" href="#" _onclick="openThemeGenDialog();return false;"}
 		{/if}
 		{if $prefs.feature_editcss eq 'y' and $tiki_p_create_css eq 'y'}
-			{button _text="{tr}CSS Editor{/tr}" _class="btn-sm" href="tiki-edit_css.php"}
+			{button _text="{tr}Edit CSS{/tr}" _class="btn-sm" href="tiki-edit_css.php"}
 		{/if}
 		<div class="pull-right">
 			<input type="submit" class="btn btn-primary btn-sm" name="looksetup" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}" />

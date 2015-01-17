@@ -64,7 +64,7 @@ function module_switch_theme($mod_reference, &$module_params)
 			tra('Displayed theme') . ': ' . $prefs['theme'] . (!empty($prefs['theme_option']) ? '/' . $prefs['theme_option'] : '');
 
 		if (!empty($css_theme)) {
-			$info_title .= ' (' . tra('CSS Editor') . ')';
+			$info_title .= ' (' . tra('Edit CSS') . ')';
 		} else if (!empty($tc_theme)) {
 			$info_title .= ' (' . tra('Theme Control') . ')';
 		} else if (($section === 'admin' || empty($section)) && !empty($prefs['theme_admin'])) {
