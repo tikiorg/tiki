@@ -11,7 +11,7 @@
  * Letter key: ~u~
  *
  */
-class Tracker_Field_UserSelector extends Tracker_Field_Abstract implements Tracker_Field_Synchronizable
+class Tracker_Field_UserSelector extends Tracker_Field_Abstract implements Tracker_Field_Synchronizable, Tracker_Field_Exportable
 {
 	public static function getTypes()
 	{
@@ -227,6 +227,90 @@ class Tracker_Field_UserSelector extends Tracker_Field_Abstract implements Track
 			'value' => $value,
 		);
 
+	}
+
+	function getTabularSchema()
+	{
+		$permName = $this->getConfiguration('permName');
+		$baseKey = $this->getBaseKey();
+		$name = $this->getConfiguration('name');
+
+		$schema = new Tracker\Tabular\Schema($this->getTrackerDefinition());
+
+		$schema->addNew($permName, 'userlink')
+			->setLabel($name)
+			->setPlainReplacement('username')
+			->setRenderTransform(function ($value) {
+				$smarty = TikiLib::lib('smarty');
+				$smarty->loadPlugin('smarty_modifier_userlink');
+
+				if ($value) {
+					return smarty_modifier_userlink($value);
+				}
+			})
+			;
+
+		$schema->addNew($permName, 'realname')
+			->setLabel($name)
+			->setReadOnly(true)
+			->setRenderTransform(function ($value) {
+				$smarty = TikiLib::lib('smarty');
+				$smarty->loadPlugin('smarty_modifier_username');
+
+				if ($value) {
+					return smarty_modifier_username($value, true, false, false);
+				}
+			})
+			;
+
+		$schema->addNew($permName, 'username-itemlink')
+			->setLabel($name)
+			->setPlainReplacement('username')
+			->addQuerySource('itemId', 'object_id')
+			->setRenderTransform(function ($value, $extra) {
+				$smarty = TikiLib::lib('smarty');
+				$smarty->loadPlugin('smarty_function_object_link');
+
+				if ($value) {
+					return smarty_function_object_link([
+						'type' => 'trackeritem',
+						'id' => $extra['itemId'],
+						'title' => $value,
+					], $smarty);
+				}
+			})
+			;
+
+		$schema->addNew($permName, 'realname-itemlink')
+			->setLabel($name)
+			->setPlainReplacement('realname')
+			->addQuerySource('itemId', 'object_id')
+			->setRenderTransform(function ($value, $extra) {
+				$smarty = TikiLib::lib('smarty');
+				$smarty->loadPlugin('smarty_function_object_link');
+				$smarty->loadPlugin('smarty_modifier_username');
+
+				if ($value) {
+					return smarty_function_object_link([
+						'type' => 'trackeritem',
+						'id' => $extra['itemId'],
+						'title' => smarty_modifier_username($value, true, false, false),
+					], $smarty);
+				}
+			})
+			;
+
+		$schema->addNew($permName, 'username')
+			->setLabel($name)
+			->setRenderTransform(function ($value) {
+				return $value;
+			})
+			->setParseIntoTransform(function (& $info, $value) use ($permName) {
+				$info['fields'][$permName] = $value;
+			})
+			;
+
+		return $schema;
 	}
 }
 
