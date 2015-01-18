@@ -43,7 +43,8 @@ class Table_Settings_TikiForums extends Table_Settings_Standard
 			),
 			'#threads' => array(
 				'sort' => array(
-					'type' => false,
+					'type' => 'digit',
+					'ajax' =>'threads',
 				),
 				'filter' => array(
 					'type' => false,
@@ -52,7 +53,8 @@ class Table_Settings_TikiForums extends Table_Settings_Standard
 			),
 			'#comments' => array(
 				'sort' => array(
-					'type' => false,
+					'type' => 'digit',
+					'ajax' =>'comments',
 				),
 				'filter' => array(
 					'type' => false,
@@ -80,7 +82,8 @@ class Table_Settings_TikiForums extends Table_Settings_Standard
 			),
 			'#hits' => array(
 				'sort' => array(
-					'type' => false,
+					'type' => 'digit',
+					'ajax' =>'hits',
 				),
 				'filter' => array(
 					'type' => false,
