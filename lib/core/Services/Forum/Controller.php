@@ -16,6 +16,14 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
  */
 class Services_Forum_Controller
 {
+	private $lib;
+
+	function setUp()
+	{
+		Services_Exception_Disabled::check('feature_forums');
+		$this->lib = TikiLib::lib('comments');
+	}
+
 	/**
 	 * Moderator action that locks a forum topic
 	 * @param $input
@@ -44,10 +52,11 @@ class Services_Forum_Controller
 	 */
 	function action_merge_topic($input)
 	{
+		parse_str($input->offsetGet('params'), $params);
+		$this->checkPerms($params['forumId']);
 		$access = TikiLib::lib('access');
 		$check = $access->check_authenticity(null, false);
 		if (!empty($check['ticket'])) {
-			parse_str($input->offsetGet('params'), $params);
 			//check number of topics on first pass
 			if (count($params['forumtopic']) > 0) {
 				$items = $this->getTopicTitles($params['forumtopic']);
@@ -107,12 +116,10 @@ class Services_Forum_Controller
 			}
 		} elseif ($check === true && $_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['toId'])) {
 			$items = json_decode($input->offsetGet('items'), true);
-			$toList = json_decode($input->offsetGet('toList'), true);
 			$toId = $input->toId->int();
-			$commentslib = TikiLib::lib('comments');
 			foreach ($items as $id => $topic) {
 				if ($id !== $toId) {
-					$commentslib->set_parent($id, $toId);
+					$this->lib->set_parent($id, $toId);
 				}
 			}
 			return true;
@@ -139,10 +146,11 @@ class Services_Forum_Controller
 	 */
 	function action_move_topic($input)
 	{
+		parse_str($input->offsetGet('params'), $params);
+		$this->checkPerms($params['forumId']);
 		$access = TikiLib::lib('access');
 		$check = $access->check_authenticity(null, false);
 		if (!empty($check['ticket'])) {
-			parse_str($input->offsetGet('params'), $params);
 			//check number of topics on first pass
 			if (count($params['forumtopic']) > 0) {
 				$items = $this->getTopicTitles($params['forumtopic']);
@@ -175,14 +183,13 @@ class Services_Forum_Controller
 			$items = json_decode($input->offsetGet('items'), true);
 			$toId = $input->toId->int();
 			$forumId = $input->forumId->int();
-			$commentslib = TikiLib::lib('comments');
 			foreach ($items as $id => $topic) {
 				// To move a topic you just have to change the object
 				$obj = 'forum:' . $toId;
-				$commentslib->set_comment_object($id, $obj);
+				$this->lib->set_comment_object($id, $obj);
 				// update the stats for the source and destination forums
-				$commentslib->forum_prune($forumId);
-				$commentslib->forum_prune($toId);
+				$this->lib->forum_prune($forumId);
+				$this->lib->forum_prune($toId);
 			}
 			return true;
 		} elseif ($check === false) {
@@ -209,10 +216,11 @@ class Services_Forum_Controller
 	 */
 	function action_delete_topic($input)
 	{
+		parse_str($input->offsetGet('params'), $params);
+		$this->checkPerms($params['forumId']);
 		$access = TikiLib::lib('access');
 		$check = $access->check_authenticity(null, false);
 		if (!empty($check['ticket'])) {
-			parse_str($input->offsetGet('params'), $params);
 			//check number of topics on first pass
 			if (count($params['forumtopic']) > 0) {
 				$items = $this->getTopicTitles($params['forumtopic']);
@@ -250,15 +258,14 @@ class Services_Forum_Controller
 				];
 			}
 		} elseif ($check === true && count($_POST['items']) > 0) {
-			$commentslib = TikiLib::lib('comments');
 			$items = $input->asArray('items');
 			foreach ($items as $id => $name) {
 				if (is_numeric($id)) {
-					$commentslib->remove_comment($id);
+					$this->lib->remove_comment($id);
 				}
 			}
 			$extra = $input->asArray('extra');
-			$commentslib->forum_prune((int) $extra['forumId']);
+			$this->lib->forum_prune((int) $extra['forumId']);
 			return true;
 		} elseif ($check === false) {
 			return [
@@ -284,10 +291,11 @@ class Services_Forum_Controller
 	 */
 	function action_delete_attachment($input)
 	{
+		parse_str($input->offsetGet('params'), $params);
+		$this->checkPerms($params['forumId']);
 		$access = TikiLib::lib('access');
 		$check = $access->check_authenticity(null, false);
 		if (!empty($check['ticket'])) {
-			parse_str($input->offsetGet('params'), $params);
 			//check number of topics on first pass
 			if (!empty($params['remove_attachment'])) {
 				$items[$params['remove_attachment']] = $params['filename'];
@@ -319,11 +327,10 @@ class Services_Forum_Controller
 				];
 			}
 		} elseif ($check === true && count($_POST['items']) > 0) {
-			$commentslib = TikiLib::lib('comments');
 			$items = $input->asArray('items');
 			foreach ($items as $id => $name) {
 				if (is_numeric($id)) {
-					$commentslib->remove_thread_attachment($id);
+					$this->lib->remove_thread_attachment($id);
 				}
 			}
 			return true;
@@ -362,6 +369,27 @@ class Services_Forum_Controller
 		return $this->archiveUnarchive($input, 'unarchive');
 	}
 
+	private function checkPerms($forumId)
+	{
+		$perms = Perms::get('forum', $forumId);
+		if (!$perms->admin_forum) {
+			$info = $this->lib->get_forum($forumId);
+			global $user;
+			if ($info['moderator'] !== $user) {
+				$userlib = TikiLib::lib('user');
+				if (!in_array($info['moderator_group'], $userlib->get_user_groups($user))) {
+					throw new Services_Exception_Denied(tr('Reserved for forum administrators and moderators'));
+				} else {
+					return true;
+				}
+			} else {
+				return true;
+			}
+		} else {
+			return true;
+		}
+	}
+
 	/**
 	 * Utility to get topic names
 	 *
@@ -371,9 +399,8 @@ class Services_Forum_Controller
 	 */
 	private function getTopicTitles($topicIds)
 	{
-		$commentslib = TikiLib::lib('comments');
 		foreach ($topicIds as $id) {
-			$info = $commentslib->get_comment($id);
+			$info = $this->lib->get_comment($id);
 			$ret[(int) $id] = $info['title'];
 		}
 		return $ret;
@@ -388,14 +415,14 @@ class Services_Forum_Controller
 	 */
 	private function lockUnlock($input, $type)
 	{
-		$fn = $type . '_comment';
 		parse_str($input->params->none(), $params);
+		$this->checkPerms($params['forumId']);
+		$fn = $type . '_comment';
 		if (count($params['forumtopic']) > 0) {
-			$commentslib = TikiLib::lib('comments');
 			check_ticket('view-forum');
 			$items = $this->getTopicTitles($params['forumtopic']);
 			foreach ($items as $id => $topic) {
-				$commentslib->$fn($id);
+				$this->lib->$fn($id);
 			}
 			return true;
 		} else {
@@ -424,12 +451,12 @@ class Services_Forum_Controller
 	 */
 	private function archiveUnarchive($input, $type)
 	{
-		$fn = $type . '_thread';
 		$params = $input->asArray('params');
+		$this->checkPerms($params['forumId']);
+		$fn = $type . '_thread';
 		if (!empty($params['comments_parentId'])) {
-			$commentslib = TikiLib::lib('comments');
 			check_ticket('view-forum');
-			$commentslib->$fn($params['comments_parentId']);
+			$this->lib->$fn($params['comments_parentId']);
 			return true;
 		} else {
 			//oops if no topics were selected
