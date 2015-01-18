@@ -166,7 +166,7 @@
 				{if $passed eq 'true'}
 					File found: {$server}.
 				{else}
-					{tr}File was not specified, or could not be found in either location.  Please put the file in either directory and Go Back.  If the file exists in both locations, the $tikiroot/{$filecheck} location will be preferred.{/tr}
+					{tr}File was not specified, or could not be found in either location. Please put the file in either directory and Go Back. If the file exists in both locations, the $tikiroot/{$filecheck} location will be preferred.{/tr}
 				{/if}
 
 				<p> </p>
@@ -244,11 +244,11 @@
 					{if $noforumsF eq 'true'}
 						<b><i>There are no forums to migrate!</i></b>
 					{elseif $noforumsT eq 'true'}
-						<b><i>There are no forums to migrate into!  Create one first.</i></b>
+						<b><i>There are no forums to migrate into! Create one first.</i></b>
 					{else}
 						<input type="submit" class="btn btn-default btn-sm" value="Import Forum">
 						<p> </p>
-						<b><i>Please note that by clicking on Import Forum, depending on the size of your SQL file, import may take several minutes.  Please be patient.</i></b>
+						<b><i>Please note that by clicking on Import Forum, depending on the size of your SQL file, import may take several minutes. Please be patient.</i></b>
 					{/if}
 				</div>
 				<br>

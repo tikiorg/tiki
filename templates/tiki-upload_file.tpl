@@ -165,7 +165,7 @@
 								<noscript>
 									<div style="background-color: #FFFF66; border-top: solid 4px #FF9966; border-bottom: solid 4px #FF9966; padding: 10px 15px;">
 										{tr}We're sorry.{/tr}<br>
-										{tr}Upload interface could not load.  You must have JavaScript enabled to enjoy Upload interface.{/tr}
+										{tr}Upload interface could not load. You must have JavaScript enabled to enjoy Upload interface.{/tr}
 									</div>
 								</noscript>
 								<div id="divLoadingContent" style="display: none;">
@@ -181,7 +181,7 @@
 								</div>
 								<div id="divAlternateContent" style="display: none;">
 									{remarksbox type="errors"}
-										{tr}We are sorry: Upload interface could not load.  You may need to install or upgrade Flash Player.{/tr}<br>
+										{tr}We are sorry: Upload interface could not load. You may need to install or upgrade Flash Player.{/tr}<br>
 										<a href="http://www.adobe.com/shockwave/download/download.cgi?P1_Prod_Version=ShockwaveFlash">{tr}Visit the Adobe Website to get the Flash Player.{/tr}</a>
 									{/remarksbox}
 								</div>
