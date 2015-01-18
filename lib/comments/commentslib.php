@@ -1272,6 +1272,8 @@ class Comments extends TikiLib
 			++$count;
 		}
 
+		$result = array_slice($result, $offset, $maxRecords);
+
 		$retval = array();
 		$retval["data"] = $result;
 		$retval["cant"] = $cant;
