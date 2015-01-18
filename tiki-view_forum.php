@@ -86,12 +86,12 @@ if (isset($_REQUEST['report']) && $tiki_p_forums_report == 'y') {
 }
 
 if ($tiki_p_admin_forum == 'y') {
-	//not sure where this is used on tiki-view_forum.php
+	//don't see where this is used on tiki-view_forum.tpl - it is used on tiki-view_forum_thread.tpl
 	if (isset($_REQUEST['remove_attachment'])) {
 		$access->check_authenticity(tra('Are you sure you want to remove that attachment?'));
 		$commentslib->remove_thread_attachment($_REQUEST['remove_attachment']);
 	}
-	//not sure where this is used on tiki-view_forum.php
+	//locking the entire forum is not fully implemented - only threads can be locked currently
 	if (isset($_REQUEST['lock']) && isset($_REQUEST['forumId'])) {
 		check_ticket('view-forum');
 		if ($_REQUEST['lock'] == 'y') {

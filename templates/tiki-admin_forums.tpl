@@ -74,7 +74,7 @@
 							<td class="integer">{$channels[user].hits}</td>
 							<td class="action">
 								<a class="tips" href="{$channels[user].forumId|sefurl:'forum'}" title="{$channels[user].name|escape}:{tr}View{/tr}">{icon name='view' alt="{tr}View{/tr}"}</a>
-
+								{* the tiki_p_forum_lock permission has not been implemented *}
 								{if isset($tiki_p_forum_lock) and $tiki_p_forum_lock eq 'y'}
 									{if $channels[user].is_locked eq 'y'}
 										{self_link _icon_name='unlock' _class="tips" _alt="{tr}Unlock{/tr}" lock='n' forumId=$channels[user].forumId}{/self_link}
