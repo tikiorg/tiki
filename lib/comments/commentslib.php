@@ -1228,18 +1228,16 @@ class Comments extends TikiLib
 		foreach ($result as &$res) {
 			$cant++; // Count the whole number of forums the user has access to
 
-			if (($maxRecords > -1 && $count >= $maxRecords) || $off++ < $offset) continue;
-
 			$forum_age = ceil(($this->now - $res["created"]) / (24 * 3600));
 
 			// Get number of topics on this forum
-			$res['threads'] = $this->count_comments_threads('forum:' . $res['forumId']);
+			$res['threads'] = (int) $this->count_comments_threads('forum:' . $res['forumId']);
 
 			// Get number of posts on this forum
-			$res['comments'] = $this->count_comments('forum:' . $res['forumId']);
+			$res['comments'] = (int) $this->count_comments('forum:' . $res['forumId']);
 
 			// Get number of users that posted at least one comment on this forum
-			$res['users'] = $comments->fetchOne(
+			$res['users'] = (int) $comments->fetchOne(
 				$comments->expr('count(distinct `userName`)'),
 				array('object' => $res['forumId'], 'objectType' => 'forum')
 			);
@@ -1270,6 +1268,21 @@ class Comments extends TikiLib
 			}
 
 			++$count;
+		}
+		$sep = strpos($sort_mode, '_');
+		$sortcol = substr($sort_mode, 0, $sep);
+		$sortdir = substr($sort_mode, $sep + 1);
+		if (in_array($sortcol, ['threads', 'comments'])) {
+			$sortarray = array_column($result, $sortcol);
+			if ($sortdir === 'asc') {
+				asort($sortarray, SORT_NUMERIC);
+			} else {
+				arsort($sortarray, SORT_NUMERIC);
+			}
+			foreach($sortarray as $key => $val) {
+				$sorted[] = $result[$key];
+			}
+			$result = $sorted;
 		}
 
 		$result = array_slice($result, $offset, $maxRecords);
