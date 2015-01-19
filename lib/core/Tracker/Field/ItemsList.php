@@ -167,6 +167,15 @@ $("input[name=ins_' . $this->getOption('fieldIdHere') . '], select[name=ins_' . 
 		}
 	}
 
+	function watchCompare($old, $new)
+	{
+		$o = '';
+		$items = $this->getItemIds();
+		$n = $this->getItemLabels($items);
+
+		return parent::watchCompare($o, $n);	// then compare as text
+	}
+
 	function getDocumentPart(Search_Type_Factory_Interface $typeFactory)
 	{
 		$baseKey = $this->getBaseKey();
