@@ -33,6 +33,7 @@ class Table_Settings_TikiForums extends Table_Settings_Standard
 			'#name' => array(
 				'sort' => array(
 					'type' => true,
+					'dir' => 'asc',
 					'ajax' =>'name',
 				),
 				'filter' => array(
