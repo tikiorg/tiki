@@ -83,24 +83,22 @@ if ($tsOn && !$tsAjax) {
 		)
 	);
 	unset($channels);
+} else {
+	$temp_max = count($channels["data"]);
+	for ($i = 0; $i < $temp_max; $i++) {
+		$forumperms = Perms::get(array( 'type' => 'forum', 'object' => $channels['data'][$i]['forumId'] ));
+		$channels["data"][$i]["individual_tiki_p_forum_read"] = $forumperms->forum_read ? 'y' : 'n';
+		$channels["data"][$i]["individual_tiki_p_forum_post"] = $forumperms->forum_post ? 'y' : 'n';
+		$channels["data"][$i]["individual_tiki_p_forum_post_topic"] = $forumperms->forum_post_topic ? 'y' : 'n';
+		$channels["data"][$i]["individual_tiki_p_forum_vote"] = $forumperms->forum_vote ? 'y' : 'n';
+		$channels["data"][$i]["individual_tiki_p_admin_forum"] = $forumperms->admin_forum ? 'y' : 'n';
+	}
+
+	$smarty->assign_by_ref('channels', $channels["data"]);
+	$smarty->assign('cant', $channels["cant"]);
+	include_once ('tiki-section_options.php');
 }
-
-$temp_max = count($channels["data"]);
-for ($i = 0; $i < $temp_max; $i++) {
-	$forumperms = Perms::get(array( 'type' => 'forum', 'object' => $channels['data'][$i]['forumId'] ));
-	$channels["data"][$i]["individual_tiki_p_forum_read"] = $forumperms->forum_read ? 'y' : 'n';
-	$channels["data"][$i]["individual_tiki_p_forum_post"] = $forumperms->forum_post ? 'y' : 'n';
-	$channels["data"][$i]["individual_tiki_p_forum_post_topic"] = $forumperms->forum_post_topic ? 'y' : 'n';
-	$channels["data"][$i]["individual_tiki_p_forum_vote"] = $forumperms->forum_vote ? 'y' : 'n';
-	$channels["data"][$i]["individual_tiki_p_admin_forum"] = $forumperms->admin_forum ? 'y' : 'n';
-}
-
-$smarty->assign_by_ref('channels', $channels["data"]);
-$smarty->assign('cant', $channels["cant"]);
-include_once ('tiki-section_options.php');
-
 ask_ticket('forums');
-
 // Display the template
 if ($tsAjax) {
 	$smarty->display('tiki-forums.tpl');
