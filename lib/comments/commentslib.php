@@ -1276,6 +1276,7 @@ class Comments extends TikiLib
 
 			++$count;
 		}
+		//handle sorts for displayed columns not in the database
 		if (substr($sort_mode, -4) === '_asc') {
 			$sortdir = 'asc';
 			$sortcol = substr($sort_mode, 0, strlen($sort_mode) - 4);
@@ -1290,8 +1291,14 @@ class Comments extends TikiLib
 			} else {
 				arsort($sortarray, SORT_NUMERIC);
 			}
-			foreach($sortarray as $key => $val) {
-				$sorted[] = $result[$key];
+			//need to sort within sections if sections are used (also works if sections aren't used)
+			$sections = array_unique(array_column($result, 'section'));
+			foreach($sections as $section) {
+				foreach($sortarray as $key => $data) {
+					if ($result[$key]['section'] === $section) {
+						$sorted[] = $result[$key];
+					}
+				}
 			}
 			$result = $sorted;
 		}

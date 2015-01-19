@@ -53,35 +53,34 @@
 		<input type="hidden" {if $tsOn}id="{$ts_countid|escape}" {/if}name="count" value="{$cant|escape}">
 		<thead>
 			<tr>
-				{assign var=numbercol value=1}
+				{$numbercol = 1}
 				<th id="name">{self_link _sort_arg='sort_mode' _sort_field='name'}{tr}Name{/tr}{/self_link}</th>
 
 				{if $prefs.forum_list_topics eq 'y'}
-					{assign var=numbercol value=$numbercol+1}
+					{$numbercol = $numbercol + 1}
 					<th id="threads">{self_link _sort_arg='sort_mode' _sort_field='threads'}{tr}Topics{/tr}{/self_link}</th>
 				{/if}
 
 				{if $prefs.forum_list_posts eq 'y'}
-					{assign var=numbercol value=$numbercol+1}
+					{$numbercol = $numbercol + 1}
 					<th id="comments">{self_link _sort_arg='sort_mode' _sort_field='comments'}{tr}Posts{/tr}{/self_link}</th>
 				{/if}
 
 				{if $prefs.forum_list_ppd eq 'y'}
-					{assign var=numbercol value=$numbercol+1}
+					{$numbercol = $numbercol + 1}
 					<th id="ppd">{tr}PPD{/tr}</th>
 				{/if}
 
 				{if $prefs.forum_list_lastpost eq 'y'}
-					{assign var=numbercol value=$numbercol+1}
+					{$numbercol = $numbercol + 1}
 					<th id="lastPost">{self_link _sort_arg='sort_mode' _sort_field='lastPost'}{tr}Last Post{/tr}{/self_link}</th>
 				{/if}
 
 				{if $prefs.forum_list_visits eq 'y'}
-					{assign var=numbercol value=$numbercol+1}
+					{$numbercol = $numbercol + 1}
 					<th id="hits">{self_link _sort_arg='sort_mode' _sort_field='hits'}{tr}Visits{/tr}{/self_link}</th>
 				{/if}
-
-				{assign var=numbercol value=$numbercol+1}
+				{$numbercol = $numbercol + 1}
 				<th id="actions">{tr}Actions{/tr}</th>
 			</tr>
 		</thead>
@@ -91,15 +90,7 @@
 				{assign var=section value=$channels[user].section}
 				{if $section ne $section_old}
 					{assign var=section_old value=$section}
-					{if ($tiki_p_admin eq 'y' or $tiki_p_admin_forum eq 'y')}
-						<tr>
-							<td class="third" colspan="7">{$section|escape}</td>
-						</tr>
-					{else}
-						<tr>
-							<td class="third" colspan="6">{$section|escape}</td>
-						</tr>
-					{/if}
+					<td class="third info" colspan="{$numbercol}">{$section|escape}</td>
 				{/if}
 
 				<tr>
