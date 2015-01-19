@@ -128,7 +128,7 @@
 					<div class="text-left form-group">
 						<br>
 						<label for="batchaction" class="col-lg-5">{tr}Perform action with checked:{/tr}</label>
-						<div class="col-lg-3 input-group">
+						<div class="col-lg-4 input-group">
 							<select name="batchaction" class="form-control" onchange="show('groups');">
 								<option value="">{tr}...{/tr}</option>
 								{if $tiki_p_admin_forum eq 'y'}
@@ -542,7 +542,7 @@
 					</fieldset>
 
 					<div class="text-center">
-						<input type="submit" class="btn btn-default" name="save" value="{tr}Save{/tr}">
+						<input type="submit" class="btn btn-primary" name="save" value="{tr}Save{/tr}">
 					</div>
 				</form>
 
