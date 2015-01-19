@@ -35,17 +35,6 @@ class Table_Settings_TikiViewforum extends Table_Settings_Standard
 			),
 		),
 		'columns' => array(
-			'#modactions' => array(
-				'sort' => array(
-					'type' => false,
-					'group' => 'false'
-				),
-				'filter' => array(
-					'type' => false,
-				),
-				'resizable' => false,
-				'priority' => 'critical',
-			),
 			'#checkbox' => array(
 				'sort' => array(
 					'type' => false,
@@ -195,7 +184,7 @@ class Table_Settings_TikiViewforum extends Table_Settings_Standard
 				'filter' => array(
 					'type' => false,
 				),
-				'priority' => 6,
+				'priority' => 1,
 			),
 			'#atts' => array(
 				'sort' => array(

@@ -36,7 +36,7 @@
 	</ul>
 	<p>
 		<strong>{tr}Note:{/tr}</strong> {tr}Links and buttons in modules, apart from the Application Menu, have been deliberately disabled on this page to make drag and drop more reliable. Click here to return <a href="./">HOME</a>{/tr}<br>
-		<strong><em>{tr}More info here{/tr}</em></strong> {icon _id="help" link="http://dev.tiki.org/Modules+Revamp"}
+		<strong><em>{tr}More info here{/tr}</em></strong> {icon name="help" link="http://dev.tiki.org/Modules+Revamp"}
 	</p>
 
 {/remarksbox}
@@ -82,14 +82,14 @@
 											<td style="font-size:smaller;">{$module.params_presentable}</td>
 											<td style="font-size:smaller;">{$module.module_groups}</td>
 											<td>
-												<a class="link" href="tiki-admin_modules.php?edit_assign={$module.moduleId}&cookietab=2#content_admin_modules1-2" title="{tr}Edit{/tr}">{icon _id='page_edit'}</a>
+												<a class="tips" href="tiki-admin_modules.php?edit_assign={$module.moduleId}&cookietab=2#content_admin_modules1-2" title="{$module.name|escape}:{tr}Edit{/tr}">{icon name='edit'}</a>
 												{if !$smarty.foreach.assigned_foreach.first}
-													<a class="link" href="tiki-admin_modules.php?modup={$module.moduleId}" title="{tr}Move Up{/tr}">{icon _id='resultset_up'}</a>
+													<a class="tips" href="tiki-admin_modules.php?modup={$module.moduleId}" title="{$module.name|escape}:{tr}Move up{/tr}">{icon name='up'}</a>
 												{/if}
 												{if !$smarty.foreach.assigned_foreach.last}
-													<a class="link" href="tiki-admin_modules.php?moddown={$module.moduleId}" title="{tr}Move Down{/tr}">{icon _id='resultset_down'}</a>
+													<a class="tips" href="tiki-admin_modules.php?moddown={$module.moduleId}" title="{$module.name|escape}:{tr}Move down{/tr}">{icon name='down'}</a>
 												{/if}
-												<a class="link" href="tiki-admin_modules.php?unassign={$module.moduleId}" title="{tr}Unassign{/tr}">{icon _id='cross' alt="{tr}x{/tr}"}</a>
+												<a class="tips" href="tiki-admin_modules.php?unassign={$module.moduleId}" title="{$module.name|escape}:{tr}Unassign{/tr}">{icon name='remove' alt="{tr}x{/tr}"}</a>
 											</td>
 										</tr>
 									{foreachelse}
@@ -158,12 +158,12 @@
 
 			{section name=user loop=$user_modules}
 				<tr>
-					<td class="text"><a class="link" href="tiki-admin_modules.php?um_edit={$user_modules[user].name|escape:'url'}&amp;cookietab=2#editcreate" title="{tr}Edit{/tr}">{$user_modules[user].name|escape}</a></td>
+					<td class="text"><a class="tips" href="tiki-admin_modules.php?um_edit={$user_modules[user].name|escape:'url'}&amp;cookietab=2#editcreate" title="{tr}Edit{/tr}">{$user_modules[user].name|escape}</a></td>
 					<td class="text">{$user_modules[user].title|escape}</td>
 					<td class="action">
-						<a class="link" href="tiki-admin_modules.php?um_edit={$user_modules[user].name|escape:'url'}&amp;cookietab=2#editcreate" title="{tr}Edit{/tr}">{icon _id='page_edit'}</a>
-						<a class="link" href="tiki-admin_modules.php?edit_assign={$user_modules[user].name|escape:'url'}&amp;cookietab=2#assign" title="{tr}Assign{/tr}">{icon _id='add' alt="{tr}Assign{/tr}"}</a>
-						<a class="link" href="tiki-admin_modules.php?um_remove={$user_modules[user].name|escape:'url'}&amp;cookietab=2" title="{tr}Delete{/tr}">{icon _id='cross' alt="{tr}Delete{/tr}"}</a>
+						<a class="tips" href="tiki-admin_modules.php?um_edit={$user_modules[user].name|escape:'url'}&amp;cookietab=2#editcreate" title="{$user_modules[user].name|escape}:{tr}Edit{/tr}">{icon name='edit'}</a>
+						<a class="tips" href="tiki-admin_modules.php?edit_assign={$user_modules[user].name|escape:'url'}&amp;cookietab=2#assign" title="{$user_modules[user].name|escape}:{tr}Assign{/tr}">{icon name='add' alt="{tr}Assign{/tr}"}</a>
+						<a class="tips" href="tiki-admin_modules.php?um_remove={$user_modules[user].name|escape:'url'}&amp;cookietab=2" title="{$user_modules[user].name|escape}:{tr}Delete{/tr}">{icon name='remove' alt="{tr}Delete{/tr}"}</a>
 					</td>
 				</tr>
 			{sectionelse}
@@ -230,10 +230,10 @@
 										</select>
 									</td>
 									<td>
-										<a class="link" href="javascript:setUserModuleFromCombo('list_polls', 'um_data');" title="{tr}Use Poll{/tr}">{icon _id='add' alt="{tr}Use{/tr}"}</a>
+										<a class="tips" href="javascript:setUserModuleFromCombo('list_polls', 'um_data');" title=":{tr}Use poll{/tr}">{icon name='add' alt="{tr}Use{/tr}"}</a>
 									</td>
 									<td>
-										<a title="{tr}Help{/tr}" {popup text="Params: id= rate=" width=100 center=true}>{icon _id='help'}</a>
+										<a title="{tr}Help{/tr}" {popup text="Params: id= rate=" width=100 center=true}>{icon name='help'}</a>
 									</td>
 								</tr>
 							{/if}
@@ -251,10 +251,10 @@
 										</select>
 									</td>
 									<td>
-										<a class="link" href="javascript:setUserModuleFromCombo('list_galleries', 'um_data');" title="{tr}Use Gallery{/tr}">{icon _id='add' alt="{tr}Use{/tr}"}</a>
+										<a class="tips" href="javascript:setUserModuleFromCombo('list_galleries', 'um_data');" title=":{tr}Use gallery{/tr}">{icon name='add' alt="{tr}Use{/tr}"}</a>
 									</td>
 									<td>
-										<a title="{tr}Help{/tr}" {popup text="Params: id= showgalleryname=1 hideimgname=1 hidelink=1" width=100 center=true}>{icon _id='help'}</a>
+										<a title="{tr}Help{/tr}" {popup text="Params: id= showgalleryname=1 hideimgname=1 hidelink=1" width=100 center=true}>{icon name='help'}</a>
 									</td>
 								</tr>
 							{/if}
@@ -271,10 +271,10 @@
 										</select>
 									</td>
 									<td>
-										<a class="link" href="javascript:setUserModuleFromCombo('list_contents', 'um_data');" title="{tr}Use Dynamic Content{/tr}">{icon _id='add' alt="{tr}Use{/tr}"}</a>
+										<a class="tips" href="javascript:setUserModuleFromCombo('list_contents', 'um_data');" title=":{tr}Use dynamic content{/tr}">{icon name='add' alt="{tr}Use{/tr}"}</a>
 									</td>
 									<td>
-										<a title="{tr}Help{/tr}" {popup text="Params: id=" width=100 center=true}>{icon _id='help'}</a>
+										<a title="{tr}Help{/tr}" {popup text="Params: id=" width=100 center=true}>{icon name='help'}</a>
 									</td>
 								</tr>
 							{/if}
@@ -291,10 +291,10 @@
 										</select>
 									</td>
 									<td>
-										<a class="link" href="javascript:setUserModuleFromCombo('list_rsss', 'um_data');" title="{tr}Use RSS Module{/tr}">{icon _id='add' alt="{tr}Use{/tr}"}</a>
+										<a class="tips" href="javascript:setUserModuleFromCombo('list_rsss', 'um_data');" title=":{tr}Use RSS module{/tr}">{icon name='add' alt="{tr}Use{/tr}"}</a>
 									</td>
 									<td>
-										<a title="{tr}Help{/tr}" {popup text="Params: id= max= skip=x,y " width=100 center=true}>{icon _id='help'}</a>
+										<a title="{tr}Help{/tr}" {popup text="Params: id= max= skip=x,y " width=100 center=true}>{icon name='help'}</a>
 									</td>
 								</tr>
 							{/if}
@@ -312,10 +312,10 @@
 										</select>
 									</td>
 									<td>
-										<a class="link" href="javascript:setUserModuleFromCombo('list_banners', 'um_data');" title="{tr}Use Banner Zone{/tr}">{icon _id='add' alt="{tr}Use{/tr}"}</a>
+										<a class="tips" href="javascript:setUserModuleFromCombo('list_banners', 'um_data');" title=":{tr}Use banner zone{/tr}">{icon name='add' alt="{tr}Use{/tr}"}</a>
 									</td>
 									<td>
-										<a title="{tr}Help{/tr}" {popup text="Params: zone= target=_blank|_self|" width=100 center=true}>{icon _id='help'}</a>
+										<a title="{tr}Help{/tr}" {popup text="Params: zone= target=_blank|_self|" width=100 center=true}>{icon name='help'}</a>
 									</td>
 								</tr>
 							{/if}
@@ -333,10 +333,10 @@
 										</select>
 									</td>
 									<td>
-										<a class="link" href="javascript:setUserModuleFromCombo('list_wikistructures', 'um_data');" title="{tr}Use Wiki Structure{/tr}">{icon _id='add' alt="{tr}Use{/tr}"}</a>
+										<a class="tips" href="javascript:setUserModuleFromCombo('list_wikistructures', 'um_data');" title=":{tr}Use wiki structure{/tr}">{icon name='add' alt="{tr}Use{/tr}"}</a>
 									</td>
 									<td>
-										<a title="{tr}Help{/tr}" {popup text="Params: id=" width=100 center=true}>{icon _id='help'}</a>
+										<a title="{tr}Help{/tr}" {popup text="Params: id=" width=100 center=true}>{icon name='help'}</a>
 									</td>
 								</tr>
 							{/if}
@@ -385,7 +385,7 @@
 							<div class="q1 tips"
 									title="{$info.name} &lt;em&gt;({$name})&lt;/em&gt;|{$info.description}
 									{if not $info.enabled}&lt;br /&gt;&lt;small&gt;&lt;em&gt;({tr}Requires{/tr} {' &amp; '|implode:$info.prefs})&lt;/em&gt;&lt;/small&gt;{/if}">
-								{icon _id="module"} <strong>{$info.name}</strong> <em>{$name}</em>
+								{icon name="module"} <strong>{$info.name}</strong> <em>{$name}</em>
 							</div>
 							<div class="description q23">
 								{$info.description}

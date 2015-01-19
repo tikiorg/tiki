@@ -41,26 +41,68 @@ if (isset($_REQUEST["find"])) {
 
 $smarty->assign('find', $find);
 
+if (isset($_REQUEST['numrows'])) {
+	$maxRecords = $_REQUEST['numrows'];
+}
+
 $smarty->assign_by_ref('sort_mode', $sort_mode);
 $channels = $commentslib->list_forums($offset, $maxRecords, $sort_mode, $find);
 Perms::bulk(array( 'type' => 'forum' ), 'object', $channels['data'], 'forumId');
 
-$temp_max = count($channels["data"]);
-for ($i = 0; $i < $temp_max; $i++) {
-	$forumperms = Perms::get(array( 'type' => 'forum', 'object' => $channels['data'][$i]['forumId'] ));
-	$channels["data"][$i]["individual_tiki_p_forum_read"] = $forumperms->forum_read ? 'y' : 'n';
-	$channels["data"][$i]["individual_tiki_p_forum_post"] = $forumperms->forum_post ? 'y' : 'n';
-	$channels["data"][$i]["individual_tiki_p_forum_post_topic"] = $forumperms->forum_post_topic ? 'y' : 'n';
-	$channels["data"][$i]["individual_tiki_p_forum_vote"] = $forumperms->forum_vote ? 'y' : 'n';
-	$channels["data"][$i]["individual_tiki_p_admin_forum"] = $forumperms->admin_forum ? 'y' : 'n';
+//add tablesorter sorting and filtering
+$tsOn = Table_Check::isEnabled(true);
+$smarty->assign('tsOn', $tsOn);
+$tsAjax = Table_Check::isAjaxCall();
+$smarty->assign('tsAjax', $tsAjax);
+static $iid = 0;
+++$iid;
+$ts_tableid = 'forums' . $iid;
+$smarty->assign('ts_tableid', $ts_tableid);
+if ($tsOn) {
+	$ts_countid = $ts_tableid . '-count';
+	$ts_offsetid = $ts_tableid . '-offset';
+	$smarty->assign('ts_countid', $ts_countid);
+	$smarty->assign('ts_offsetid', $ts_offsetid);
 }
+//initialize tablesorter
+if ($tsOn && !$tsAjax) {
+	//set tablesorter code
+	Table_Factory::build(
+		'TikiForums',
+		array(
+			'id' => $ts_tableid,
+			'total' => $channels["cant"],
+			'ajax' => array(
+				'servercount' => array(
+					'id' => $ts_countid,
+				),
+				'serveroffset' => array(
+					'id' => $ts_offsetid,
+				),
+			),
+		)
+	);
+	unset($channels);
+} else {
+	$temp_max = count($channels["data"]);
+	for ($i = 0; $i < $temp_max; $i++) {
+		$forumperms = Perms::get(array( 'type' => 'forum', 'object' => $channels['data'][$i]['forumId'] ));
+		$channels["data"][$i]["individual_tiki_p_forum_read"] = $forumperms->forum_read ? 'y' : 'n';
+		$channels["data"][$i]["individual_tiki_p_forum_post"] = $forumperms->forum_post ? 'y' : 'n';
+		$channels["data"][$i]["individual_tiki_p_forum_post_topic"] = $forumperms->forum_post_topic ? 'y' : 'n';
+		$channels["data"][$i]["individual_tiki_p_forum_vote"] = $forumperms->forum_vote ? 'y' : 'n';
+		$channels["data"][$i]["individual_tiki_p_admin_forum"] = $forumperms->admin_forum ? 'y' : 'n';
+	}
 
-$smarty->assign_by_ref('channels', $channels["data"]);
-$smarty->assign('cant', $channels["cant"]);
-include_once ('tiki-section_options.php');
-
+	$smarty->assign_by_ref('channels', $channels["data"]);
+	$smarty->assign('cant', $channels["cant"]);
+	include_once ('tiki-section_options.php');
+}
 ask_ticket('forums');
-
 // Display the template
-$smarty->assign('mid', 'tiki-forums.tpl');
-$smarty->display("tiki.tpl");
+if ($tsAjax) {
+	$smarty->display('tiki-forums.tpl');
+} else {
+	$smarty->assign('mid', 'tiki-forums.tpl');
+	$smarty->display("tiki.tpl");
+}

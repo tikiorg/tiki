@@ -51,6 +51,7 @@ function smarty_function_popup($params, $smarty)
 						$options['data-trigger'] = 'click';
 						break;
 					default:
+						$options['data-trigger'] = $value;
 						break;
 				}
 				break;

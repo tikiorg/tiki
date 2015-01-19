@@ -26,8 +26,9 @@ class Services_Tracker_TabularController
 
 	function action_delete($input)
 	{
-		Services_Exception_Denied::checkGlobal('tiki_p_admin_trackers');
 		$tabularId = $input->tabularId->int();
+
+		Services_Exception_Denied::checkObject('tiki_p_tabular_admin', 'tabular', $tabularId);
 
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			$lib = TikiLib::lib('tabular');
@@ -69,7 +70,7 @@ class Services_Tracker_TabularController
 		$info = $lib->getInfo($input->tabularId->int());
 		$trackerId = $info['trackerId'];
 
-		Services_Exception_Denied::checkObject('tiki_p_admin_trackers', 'tracker', $trackerId);
+		Services_Exception_Denied::checkObject('tiki_p_tabular_admin', 'tabular', $info['tabularId']);
 
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			$info['format_descriptor'] = json_decode($input->fields->none(), true);
@@ -112,7 +113,7 @@ class Services_Tracker_TabularController
 			throw new Services_Exception_NotFound;
 		}
 
-		Services_Exception_Denied::checkObject('tiki_p_admin_trackers', 'tracker', $trackerId);
+		Services_Exception_Denied::checkObject('tiki_p_view_trackers', 'tracker', $trackerId);
 
 		$schema = new \Tracker\Tabular\Schema($tracker);
 		$local = $schema->getFieldSchema($permName);
@@ -147,7 +148,7 @@ class Services_Tracker_TabularController
 			throw new Services_Exception_NotFound;
 		}
 
-		Services_Exception_Denied::checkObject('tiki_p_admin_trackers', 'tracker', $trackerId);
+		Services_Exception_Denied::checkObject('tiki_p_view_trackers', 'tracker', $trackerId);
 
 		$schema = new \Tracker\Filter\Collection($tracker);
 		$local = $schema->getFieldCollection($permName);
@@ -175,7 +176,7 @@ class Services_Tracker_TabularController
 		$info = $lib->getInfo($input->tabularId->int());
 		$trackerId = $info['trackerId'];
 
-		Services_Exception_Denied::checkObject('tiki_p_admin_trackers', 'tracker', $trackerId);
+		Services_Exception_Denied::checkObject('tiki_p_tabular_admin', 'tabular', $info['tabularId']);
 
 		$schema = $this->getSchema($info);
 		$schema->validate();
@@ -195,7 +196,7 @@ class Services_Tracker_TabularController
 		$info = $lib->getInfo($tabularId);
 		$trackerId = $info['trackerId'];
 
-		Services_Exception_Denied::checkObject('tiki_p_admin_trackers', 'tracker', $trackerId);
+		Services_Exception_Denied::checkObject('tiki_p_tabular_export', 'tabular', $tabularId);
 
 		$schema = $this->getSchema($info);
 		$collection = $schema->getFilterCollection();
@@ -219,16 +220,12 @@ class Services_Tracker_TabularController
 		}
 
 		return [
-			'title' => tr('Export'),
-			'tabularId' => $tabularId,
-			'filters' => array_map(function ($filter) {
-				return [
-					'id' => $filter->getControl()->getId(),
-					'label' => $filter->getLabel(),
-					'help' => $filter->getHelp(),
-					'control' => $filter->getControl(),
-				];
-			}, $collection->getFilters()),
+			'FORWARD' => [
+				'controller' => 'tabular',
+				'action' => 'filter',
+				'tabularId' => $tabularId,
+				'target' => 'export',
+			],
 		];
 	}
 
@@ -251,7 +248,7 @@ class Services_Tracker_TabularController
 
 			$trackerId = $info['trackerId'];
 
-			Services_Exception_Denied::checkObject('tiki_p_admin_trackers', 'tracker', $trackerId);
+			Services_Exception_Denied::checkObject('tiki_p_tabular_export', 'tabular', $tabularId);
 
 			$search = TikiLib::lib('unifiedsearch');
 			$query = $search->buildQuery($input->filter->none() ?: []);
@@ -269,7 +266,7 @@ class Services_Tracker_TabularController
 			throw new Services_Exception(tr('No formats available.'));
 		} else {
 			if ($trackerId) {
-				Services_Exception_Denied::checkObject('tiki_p_admin_trackers', 'tracker', $trackerId);
+				Services_Exception_Denied::checkObject('tiki_p_view_trackers', 'tracker', $trackerId);
 			} else {
 				Services_Exception_Denied::checkGlobal('tiki_p_admin_trackers');
 			}
@@ -288,7 +285,7 @@ class Services_Tracker_TabularController
 		$info = $lib->getInfo($input->tabularId->int());
 		$trackerId = $info['trackerId'];
 
-		Services_Exception_Denied::checkObject('tiki_p_admin_trackers', 'tracker', $trackerId);
+		Services_Exception_Denied::checkObject('tiki_p_tabular_import', 'tabular', $info['tabularId']);
 
 		$schema = $this->getSchema($info);
 		$schema->validate();
@@ -312,6 +309,100 @@ class Services_Tracker_TabularController
 			'title' => tr('Import'),
 			'tabularId' => $info['tabularId'],
 			'completed' => $done,
+		];
+	}
+
+	function action_filter($input)
+	{
+		$tabularId = $input->tabularId->int();
+
+		$lib = TikiLib::lib('tabular');
+		$info = $lib->getInfo($tabularId);
+		$trackerId = $info['trackerId'];
+
+		Services_Exception_Denied::checkObject('tiki_p_tabular_list', 'tabular', $tabularId);
+
+		$schema = $this->getSchema($info);
+		$collection = $schema->getFilterCollection();
+
+		$collection->applyInput($input);
+
+		$target = $input->target->word();
+
+		if ($target == 'list') {
+			$title = tr('Filter %0', $info['name']);
+			$method = 'get';
+			$action = 'list';
+			$label = tr('Filter');
+		} elseif ($target = 'export') {
+			$title = tr('Export %0', $info['name']);
+			$method = 'post';
+			$action = 'export_partial_csv';
+			$label = tr('Export');
+		} else {
+			throw new Services_Exception_NotFound;
+		}
+
+		return [
+			'title' => $title,
+			'tabularId' => $tabularId,
+			'method' => $method,
+			'action' => $action,
+			'label' => $label,
+			'filters' => array_map(function ($filter) {
+				return [
+					'id' => $filter->getControl()->getId(),
+					'label' => $filter->getLabel(),
+					'help' => $filter->getHelp(),
+					'control' => $filter->getControl(),
+				];
+			}, $collection->getFilters()),
+		];
+	}
+
+	function action_list($input)
+	{
+		$tabularId = $input->tabularId->int();
+
+		$lib = TikiLib::lib('tabular');
+		$info = $lib->getInfo($tabularId);
+		$trackerId = $info['trackerId'];
+
+		Services_Exception_Denied::checkObject('tiki_p_tabular_list', 'tabular', $tabularId);
+
+		$schema = $this->getSchema($info);
+		$collection = $schema->getFilterCollection();
+
+		$collection->applyInput($input);
+
+		$search = TikiLib::lib('unifiedsearch');
+		$query = $search->buildQuery([
+			'type' => 'trackeritem',
+			'tracker_id' => $trackerId,
+		]);
+		$query->setRange($input->offset->int());
+
+		$collection->applyConditions($query);
+
+		$source = new \Tracker\Tabular\Source\PaginatedQuerySource($schema, $query);
+		$writer = new \Tracker\Tabular\Writer\HtmlWriter();
+
+		$columns = $schema->getColumns();
+		$arguments = $collection->getQueryArguments();
+
+		return [
+			'title' => tr($info['name']),
+			'tabularId' => $tabularId,
+			'filters' => array_map(function ($filter) {
+				return [
+					'label' => $filter->getLabel(),
+					'description' => $filter->getControl()->getDescription(),
+				];
+			}, $collection->getFilters()),
+			'columns' => $columns,
+			'data' => $writer->getData($source),
+			'resultset' => $source->getResultSet(),
+			'baseArguments' => $arguments,
 		];
 	}
 

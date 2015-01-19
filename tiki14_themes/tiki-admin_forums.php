@@ -29,22 +29,12 @@ $auto_query_args = array(
 );
 
 $commentslib = TikiLib::lib('comments');
-if (isset($_REQUEST["remove"])) {
-	$access->check_authenticity();
-	$commentslib->remove_forum($_REQUEST["remove"]);
-}
 if (isset($_REQUEST['lock']) && isset($_REQUEST['forumId'])) {
 	check_ticket('view-forum');
 	if ($_REQUEST['lock'] == 'y') {
 		$commentslib->lock_object_thread('forum:' . ((int)$_REQUEST['forumId']));
 	} elseif ($_REQUEST['lock'] == 'n') {
 		$commentslib->unlock_object_thread('forum:' . ((int)$_REQUEST['forumId']));
-	}
-}
-if (isset($_REQUEST['batchaction']) && $_REQUEST['batchaction'] = 'delsel_x' && isset($_REQUEST['checked'])) {
-	check_ticket('admin-forums');
-	foreach ($_REQUEST['checked'] as $id) {
-		$commentslib->remove_forum($id);
 	}
 }
 if ($prefs['feature_multilingual'] === 'y') {
@@ -248,6 +238,9 @@ if (isset($_REQUEST["find"])) {
 }
 $smarty->assign('find', $find);
 $smarty->assign_by_ref('sort_mode', $sort_mode);
+if (isset($_REQUEST['numrows'])) {
+	$maxRecords = $_REQUEST['numrows'];
+}
 $channels = $commentslib->list_forums($offset, $maxRecords, $sort_mode, $find);
 $max = count($channels["data"]);
 for ($i = 0; $i < $max; $i++) {
@@ -262,6 +255,42 @@ for ($i = 0; $i < $max; $i++) {
 		$channels["data"][$i]["individual"] = 'n';
 	}
 }
+
+//add tablesorter sorting and filtering
+$tsOn = Table_Check::isEnabled(true);
+$smarty->assign('tsOn', $tsOn);
+$tsAjax = Table_Check::isAjaxCall();
+$smarty->assign('tsAjax', $tsAjax);
+static $iid = 0;
+++$iid;
+$ts_tableid = 'adminforums' . $iid;
+$smarty->assign('ts_tableid', $ts_tableid);
+if ($tsOn) {
+	$ts_countid = $ts_tableid . '-count';
+	$ts_offsetid = $ts_tableid . '-offset';
+	$smarty->assign('ts_countid', $ts_countid);
+	$smarty->assign('ts_offsetid', $ts_offsetid);
+}
+//initialize tablesorter
+if ($tsOn && !$tsAjax) {
+	//set tablesorter code
+	Table_Factory::build(
+		'TikiAdminForums',
+		array(
+			'id' => $ts_tableid,
+			'total' => $channels['cant'],
+			'ajax' => array(
+				'servercount' => array(
+					'id' => $ts_countid,
+				),
+				'serveroffset' => array(
+					'id' => $ts_offsetid,
+				),
+			),
+		)
+	);
+}
+
 $smarty->assign_by_ref('channels', $channels["data"]);
 $smarty->assign_by_ref('cant', $channels["cant"]);
 $cat_type = 'forum';
@@ -420,5 +449,9 @@ ask_ticket('admin-forums');
 // disallow robots to index page:
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 // Display the template
-$smarty->assign('mid', 'tiki-admin_forums.tpl');
-$smarty->display("tiki.tpl");
+if ($tsAjax) {
+	$smarty->display('tiki-admin_forums.tpl');
+} else {
+	$smarty->assign('mid', 'tiki-admin_forums.tpl');
+	$smarty->display("tiki.tpl");
+}

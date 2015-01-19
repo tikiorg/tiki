@@ -1021,6 +1021,11 @@ function wikiplugin_img( $data, $params )
 				$popup_params['sticky'] = true;
 			}
 			$smarty->loadPlugin('smarty_function_popup');
+			
+			if ($fwidth > 400 || $fheight > 400) {
+				$popup_params['trigger'] = 'focus';
+			}
+
 			$mouseover = ' ' . smarty_function_popup($popup_params, $smarty);
 		} else {
 			if (!empty($imgdata['fileId']) && $imgdata['thumb'] != 'download' && empty($urldisp)) {

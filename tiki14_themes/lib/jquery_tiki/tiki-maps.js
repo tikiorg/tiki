@@ -625,6 +625,16 @@
 								action();
 							}
 						};
+						$(img).on("error", function () {
+							console.log("Map error loading marker image " + src);
+							var index = container.markerIcons.loadingMarker.indexOf(src), action;
+							if (index > -1) {
+								container.markerIcons.loadingMarker.splice(index, 1);
+							}
+							while (action = me.actionQueue[name].pop()) {
+								action();
+							}
+						});
 						img.src = src;
 					},
 					createMarker: function (name, lonlat, callback) {
@@ -644,7 +654,7 @@
 					},
 					_createMarker: function (name, lonlat, callback) {
 						if (lonlat) {
-							var properties = $.extend(this.loadedMarker[name], {}), marker;
+							var properties = $.extend(this.loadedMarker[name] || this.loadedMarker.default, {}), marker;
 							marker = new OpenLayers.Feature.Vector(
 								new OpenLayers.Geometry.Point(lonlat.lon, lonlat.lat),
 								properties

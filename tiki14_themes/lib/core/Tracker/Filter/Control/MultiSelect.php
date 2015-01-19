@@ -25,6 +25,18 @@ class MultiSelect implements Control
 		$this->values = $input->asArray($this->fieldName);
 	}
 
+	function getQueryArguments()
+	{
+		return [$this->fieldName => $this->values];
+	}
+
+	function getDescription()
+	{
+		return implode(', ', array_map(function ($val) {
+			return $this->options[$val];
+		}, $this->values)) ?: null;
+	}
+
 	function getId()
 	{
 		return $this->fieldName;

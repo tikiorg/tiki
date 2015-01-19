@@ -24,6 +24,22 @@ class DropDown implements Control
 		$this->value = $input->{$this->fieldName}->text();
 	}
 
+	function getQueryArguments()
+	{
+		if ($this->value) {
+			return [$this->fieldName => $this->value];
+		} else {
+			return [];
+		}
+	}
+
+	function getDescription()
+	{
+		if ($this->value) {
+			return $this->options[$this->value];
+		}
+	}
+
 	function getId()
 	{
 		return $this->fieldName;

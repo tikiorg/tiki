@@ -136,9 +136,8 @@ class Services_Category_Controller
 
 		$tx->commit();
 
-		$query = new Search_Query;
+		$query = $unifiedsearchlib->buildQuery([]);
 		$query->filterCategory((string) $categId);
-		$query->filterPermissions(Perms::get()->getGroups());
 		$query->setRange(0, 1);
 		$result = $query->search($unifiedsearchlib->getIndex());
 

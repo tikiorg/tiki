@@ -6,7 +6,9 @@
 
 {block name="navigation"}
 	<div class="form-group">
-		<a class="btn btn-default" href="{service controller=tabular action=create}">{icon name=create} {tr}New{/tr}</a>
+		{permission name=admin_trackers}
+			<a class="btn btn-default" href="{service controller=tabular action=create}">{icon name=create} {tr}New{/tr}</a>
+		{/permission}
 	</div>
 {/block}
 
@@ -19,11 +21,13 @@
 		</tr>
 		{foreach $list as $row}
 			<tr>
-				<td><a href="{service controller=tabular action=edit tabularId=$row.tabularId}">{icon name=edit}{$row.name|escape}</a></td>
+				<td><a href="{service controller=tabular action=list tabularId=$row.tabularId}">{$row.name|escape}</a></td>
 				<td>{object_title type=tracker id=$row.trackerId}</td>
 				<td>
+					<a href="{service controller=tabular action=edit tabularId=$row.tabularId}">{icon name=edit}{tr}Edit{/tr}</a>
+					{permission_link type=tabular id=$row.tabularId title=$row.name mode=text}
 					<a href="{service controller=tabular action=export_full_csv tabularId=$row.tabularId}">{icon name=export}{tr}Full{/tr}</a>
-					<a href="{bootstrap_modal controller=tabular action=export_partial_csv tabularId=$row.tabularId}">{icon name=export}{tr}Partial{/tr}</a>
+					<a href="{bootstrap_modal controller=tabular action=filter target=export tabularId=$row.tabularId}">{icon name=export}{tr}Partial{/tr}</a>
 					<a href="tiki-searchindex.php?tabularId={$row.tabularId|escape}&amp;filter~tracker_id={$row.trackerId|escape}">{icon name=export}{tr}Custom{/tr}</a>
 					<a href="{bootstrap_modal controller=tabular action=import_csv tabularId=$row.tabularId}">{icon name=import}{tr}Import{/tr}</a>
 					<a class="text-danger" href="{bootstrap_modal controller=tabular action=delete tabularId=$row.tabularId}">{icon name=delete}<span class="sr-only">{tr}Delete{/tr}</span></a>

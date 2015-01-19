@@ -16,6 +16,6 @@
 		<param name = "pageName"	value = "{$page}">
 		<param name = "edid"		value = "{$edit_area}">
 		<param name = "uploadUrl"	value = "{$uploader}">
-		{tr}Applet failed to run.  No Java plug-in was found.{/tr}
+		{tr}Applet failed to run. No Java plug-in was found.{/tr}
 	</applet>
 {/block}

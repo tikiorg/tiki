@@ -24,6 +24,22 @@ class ObjectSelector implements Control
 		$this->value = (string) $input->{$this->fieldName}->int();
 	}
 
+	function getQueryArguments()
+	{
+		if ($this->value) {
+			return [$this->fieldName => $this->value];
+		} else {
+			return [];
+		}
+	}
+
+	function getDescription()
+	{
+		if ($this->value) {
+			return \TikiLib::lib('object')->get_title($this->filters['type'], $this->value);
+		}
+	}
+
 	function getId()
 	{
 		return $this->fieldName;

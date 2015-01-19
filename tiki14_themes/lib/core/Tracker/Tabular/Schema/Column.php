@@ -16,10 +16,12 @@ class Column
 	private $mode;
 	private $isPrimary = false;
 	private $isReadOnly = false;
+	private $isExportOnly = false;
 	private $renderTransform;
 	private $parseIntoTransform;
 	private $querySources = [];
 	private $incompatibilities = [];
+	private $plainReplacement = null;
 
 	function __construct($permName, $mode)
 	{
@@ -70,6 +72,18 @@ class Column
 		return $this;
 	}
 
+	function setExportOnly($exportOnly)
+	{
+		$this->isExportOnly = (bool) $exportOnly;
+		return $this;
+	}
+
+	function setPlainReplacement($replacement)
+	{
+		$this->plainReplacement = $replacement;
+		return $this;
+	}
+
 	function is($field, $mode)
 	{
 		return $field == $this->permName && $mode == $this->mode;
@@ -83,6 +97,11 @@ class Column
 	function isReadOnly()
 	{
 		return $this->isReadOnly;
+	}
+
+	function isExportOnly()
+	{
+		return $this->isExportOnly;
 	}
 
 	function getField()
@@ -103,6 +122,11 @@ class Column
 			$pk = $this->isPrimary ? '*' : '';
 			return "{$this->label} [$pk{$this->permName}:{$this->mode}]";
 		}
+	}
+
+	function getPlainReplacement()
+	{
+		return $this->plainReplacement;
 	}
 
 	function render($value)
@@ -135,7 +159,13 @@ class Column
 			throw new \Exception(tr('Primary Key fields cannot be read-only.'));
 		}
 
+		$selfCount = 0;
+
 		foreach ($schema->getColumns() as $column) {
+			if ($column->is($this->permName, $this->mode)) {
+				$selfCount++;
+			}
+
 			foreach ($this->incompatibilities as $entry) {
 				list($field, $mode) = $entry;
 
@@ -151,6 +181,30 @@ class Column
 				}
 			}
 		}
+
+		if ($selfCount > 1) {
+			throw new \Exception(tr('Column "%0:%1" found multiple times.', $this->permName, $this->mode));
+		}
+	}
+
+	function withWrappedRenderTransform(callable $callback)
+	{
+		$column = new self($this->permName, $this->mode);
+		$column->label = $this->label;
+		$column->isPrimary = $this->isPrimary;
+		$column->isReadOnly = $this->isReadOnly;
+		$column->isExportOnly = $this->isExportOnly;
+		$column->parseIntoTransform = $this->parseIntoTransform;
+		$column->querySources = $this->querySources;
+		$column->incompatibilities = $this->incompatibilities;
+		$column->plainReplacement = $this->plainReplacement;
+
+		$column->renderTransform = function () use ($callback) {
+			$value = call_user_func_array($this->renderTransform, func_get_args());
+			return $callback($value);
+		};
+
+		return $column;
 	}
 }
 

@@ -1217,7 +1217,14 @@ class Comments extends TikiLib
 			$mid = "";
 		}
 
-		$query = "select * from `tiki_forums` $join WHERE 1=1 $where $mid order by `section` asc,".$this->convertSortMode('`tiki_forums`.' . $sort_mode);
+		if (in_array($sort_mode, ['age_asc', 'age_desc', 'users_asc', 'users_desc', 'posts_per_day_asc',
+			'posts_per_day_desc']))
+		{
+			$query_sort_mode = 'name_asc';
+		} else {
+			$query_sort_mode = $sort_mode;
+		}
+		$query = "select * from `tiki_forums` $join WHERE 1=1 $where $mid order by `section` asc,".$this->convertSortMode('`tiki_forums`.' . $query_sort_mode);
 		$result = $this->fetchAll($query, $bindvars);
 		$result = Perms::filter(array('type' => 'forum'), 'object', $result, array('object' => 'forumId'), 'forum_read');
 		$count = 0;
@@ -1228,18 +1235,16 @@ class Comments extends TikiLib
 		foreach ($result as &$res) {
 			$cant++; // Count the whole number of forums the user has access to
 
-			if (($maxRecords > -1 && $count >= $maxRecords) || $off++ < $offset) continue;
-
 			$forum_age = ceil(($this->now - $res["created"]) / (24 * 3600));
 
 			// Get number of topics on this forum
-			$res['threads'] = $this->count_comments_threads('forum:' . $res['forumId']);
+			$res['threads'] = (int) $this->count_comments_threads('forum:' . $res['forumId']);
 
 			// Get number of posts on this forum
-			$res['comments'] = $this->count_comments('forum:' . $res['forumId']);
+			$res['comments'] = (int) $this->count_comments('forum:' . $res['forumId']);
 
 			// Get number of users that posted at least one comment on this forum
-			$res['users'] = $comments->fetchOne(
+			$res['users'] = (int) $comments->fetchOne(
 				$comments->expr('count(distinct `userName`)'),
 				array('object' => $res['forumId'], 'objectType' => 'forum')
 			);
@@ -1260,9 +1265,9 @@ class Comments extends TikiLib
 
 			// Generate stats based on this forum's age
 			if ($forum_age > 0) {
-				$res['age'] = $forum_age;
-				$res['posts_per_day'] = $res['comments'] / $forum_age;
-				$res['users_per_day'] = $res['users'] / $forum_age;
+				$res['age'] = (int) $forum_age;
+				$res['posts_per_day'] = (int) $res['comments'] / $forum_age;
+				$res['users_per_day'] = (int) $res['users'] / $forum_age;
 			} else {
 				$res['age'] = 0;
 				$res['posts_per_day'] = 0;
@@ -1271,6 +1276,34 @@ class Comments extends TikiLib
 
 			++$count;
 		}
+		//handle sorts for displayed columns not in the database
+		if (substr($sort_mode, -4) === '_asc') {
+			$sortdir = 'asc';
+			$sortcol = substr($sort_mode, 0, strlen($sort_mode) - 4);
+		} else {
+			$sortdir = 'desc';
+			$sortcol = substr($sort_mode, 0, strlen($sort_mode) - 5);
+		}
+		if (in_array($sortcol, ['threads', 'comments', 'age', 'posts_per_day', 'users'])) {
+			$sortarray = array_column($result, $sortcol);
+			if ($sortdir === 'asc') {
+				asort($sortarray, SORT_NUMERIC);
+			} else {
+				arsort($sortarray, SORT_NUMERIC);
+			}
+			//need to sort within sections if sections are used (also works if sections aren't used)
+			$sections = array_unique(array_column($result, 'section'));
+			foreach($sections as $section) {
+				foreach($sortarray as $key => $data) {
+					if ($result[$key]['section'] === $section) {
+						$sorted[] = $result[$key];
+					}
+				}
+			}
+			$result = $sorted;
+		}
+
+		$result = array_slice($result, $offset, $maxRecords);
 
 		$retval = array();
 		$retval["data"] = $result;
@@ -1305,22 +1338,22 @@ class Comments extends TikiLib
 		foreach ($ret as &$res) {
 			$forum_age = ceil(($this->now - $res["created"]) / (24 * 3600));
 
-			$res["age"] = $forum_age;
+			$res["age"] = (int) $forum_age;
 
 			if ($forum_age) {
-				$res["posts_per_day"] = $res["comments"] / $forum_age;
+				$res["posts_per_day"] = (int) $res["comments"] / $forum_age;
 			} else {
 				$res["posts_per_day"] = 0;
 			}
 
 			// Now select users
-			$res['users'] = $comments->fetchOne(
+			$res['users'] = (int) $comments->fetchOne(
 				$comments->expr('count(distinct `userName`)'),
 				array('object' => $res['forumId'], 'objectType' => 'forum')
 			);
 
 			if ($forum_age) {
-				$res["users_per_day"] = $res["users"] / $forum_age;
+				$res["users_per_day"] = (int) $res["users"] / $forum_age;
 			} else {
 				$res["users_per_day"] = 0;
 			}

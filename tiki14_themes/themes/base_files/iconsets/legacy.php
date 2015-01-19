@@ -213,6 +213,9 @@ function iconset_legacy()
 			'documentation' => array(
 				'image_src' => 'img/icons/book_open.png',
 			),
+			'down' => array(
+				'image_src' => 'img/icons/resultset_down.png',
+			),
 			'edit' => array(
 				'image_src' => 'img/icons/page_edit.png',
 			),
@@ -398,6 +401,9 @@ function iconset_legacy()
 			),
 			'unlock' => array(
 				'image_src' => 'img/icons/lock_open.png',
+			),
+			'up' => array(
+				'image_src' => 'img/icons/resultset_up.png',
 			),
 			'user' => array(
 				'image_src' => 'img/icons/user.png',

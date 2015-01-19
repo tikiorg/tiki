@@ -855,8 +855,10 @@ class UnifiedSearchLib
 	
 	function initQueryPermissions($query)
 	{
+		global $user;
+
 		if (! Perms::get()->admin) {
-			$query->filterPermissions(Perms::get()->getGroups());
+			$query->filterPermissions(Perms::get()->getGroups(), $user);
 		}
 	}
 

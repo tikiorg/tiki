@@ -184,6 +184,157 @@ class Tracker_Field_TextArea extends Tracker_Field_Text
 		}
 	}
 
+	function getDocumentPart(Search_Type_Factory_Interface $typeFactory)
+	{
+		$value = $this->getValue();
+		$fieldType = $this->getIndexableType();
+		$baseKey = $this->getBaseKey();
+
+		if ($this->getConfiguration('isMultilingual') == 'y') {
+			if (!empty($value)) {
+				$decoded = json_decode($value, true);
+				$value = implode("\n", $decoded);
+			} else {
+				$decoded = array();
+			}
+
+			$data = array($baseKey => $typeFactory->$fieldType($value));
+			foreach ($decoded as $lang => $content) {
+				$data["{$baseKey}_{$lang}"] = $typeFactory->$fieldType($content);
+				$data["{$baseKey}_{$lang}_raw"] = $typeFactory->identifier($content);
+			}
+
+			return $data;
+		} else {
+			$data = array(
+				$baseKey => $typeFactory->$fieldType($value),
+				"{$baseKey}_raw" => $typeFactory->identifier($value),
+			);
+
+			return $data;
+		}
+	}
+
+	function getProvidedFields()
+	{
+		global $prefs;
+		$baseKey = $this->getBaseKey();
+
+		$data = array($baseKey, "{$baseKey}_raw");
+
+		if ($this->getConfiguration('isMultilingual') == 'y') {
+			foreach ($prefs['available_languages'] as $lang) {
+				$data[] = "{$baseKey}_{$lang}";
+				$data[] = "{$baseKey}_{$lang}_raw";
+			}
+		}
+
+		return $data;
+	}
+
+	function getGlobalFields()
+	{
+		global $prefs;
+		$baseKey = $this->getBaseKey();
+
+		$data = array($baseKey => true);
+
+		if ($this->getConfiguration('isMultilingual') == 'y') {
+			foreach ($prefs['available_languages'] as $lang) {
+				$data[$baseKey . '_' . $lang] = true;
+			}
+		}
+
+		return $data;
+	}
+
+	function getTabularSchema()
+	{
+		global $prefs;
+		$schema = new Tracker\Tabular\Schema($this->getTrackerDefinition());
+		$permName = $this->getConfiguration('permName');
+		$baseKey = $this->getBaseKey();
+		$name = $this->getConfiguration('name');
+
+		$plain = function ($lang) {
+			return function ($value, $extra) use ($lang) {
+				if (isset($extra['text'])) {
+					$value = $extra['text'];
+				} elseif (isset($value[$lang])) {
+					$value = $lang;
+				}
+
+				return $value;
+			};
+		};
+
+		$render = function ($lang) use ($plain) {
+			$f = $plain($lang);
+			return function ($value, $extra) use ($f) {
+				$value = $f($value, $extra);
+
+				return $this->attemptParse($value);
+			};
+		};
+
+		if ('y' !== $this->getConfiguration('isMultilingual', 'n')) {
+			$schema->addNew($permName, "default")
+				->setLabel($name)
+				->setReadOnly(true)
+				->setPlainReplacement('default-raw')
+				->addQuerySource('text', "{$baseKey}_raw")
+				->setRenderTransform($render(null))
+				;
+			$schema->addNew($permName, 'default-raw')
+				->setLabel($name)
+				->addQuerySource('text', "{$baseKey}_raw")
+				->setRenderTransform($plain(null))
+				->setParseIntoTransform(function (& $info, $value) use ($permName) {
+					$info['fields'][$permName] = $value;
+				})
+				;
+		} else {
+			$lang = $prefs['language'];
+			$schema->addNew($permName, "current")
+				->setLabel($name)
+				->setReadOnly(true)
+				->setPlainReplacement('current-raw')
+				->addQuerySource('text', "{$baseKey}_{$lang}_raw")
+				->setRenderTransform($render($lang))
+				;
+			$schema->addNew($permName, 'current-raw')
+				->setLabel(tr('%0 (%1)', $name, $lang))
+				->setReadOnly(true)
+				->addIncompatibility($permName, 'current')
+				->addQuerySource('text', "{$baseKey}_{$lang}_raw")
+				->setRenderTransform($plain($lang))
+				;
+
+			foreach ($prefs['available_languages'] as $lang) {
+				$schema->addNew($permName, $lang)
+					->setLabel($name)
+					->setPlainReplacement("$lang-raw")
+					->addQuerySource('text', "{$baseKey}_{$lang}_raw")
+					->addIncompatibility($permName, 'current')
+					->addIncompatibility($permName, 'current-raw')
+					->setRenderTransform($render($lang))
+					;
+				$schema->addNew($permName, "$lang-raw")
+					->setLabel(tr('%0 (%1)', $name, $lang))
+					->addQuerySource('text', "{$baseKey}_{$lang}_raw")
+					->addIncompatibility($permName, 'current')
+					->addIncompatibility($permName, 'current-raw')
+					->addIncompatibility($permName, $lang)
+					->setRenderTransform($plain($lang))
+					->setParseIntoTransform(function (& $info, $value) use ($permName, $lang) {
+						$info['fields'][$permName][$lang] = $value;
+					})
+					;
+			}
+		}
+
+		return $schema;
+	}
 
 	protected function attemptParse($text)
 	{

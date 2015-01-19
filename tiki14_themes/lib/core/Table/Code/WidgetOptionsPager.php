@@ -36,8 +36,7 @@ class Table_Code_WidgetOptionsPager extends Table_Code_WidgetOptions
 			//pager selectors
 			$ps[] = 'container : \'div#' . parent::$s['pager']['controls']['id'] . '\'';
 			$p[] = $this->iterate($ps, $pre . 'selectors: {', $this->nt3 . '}', $this->nt4, '');
-			$p[] = $pre . 'output: \'{startRow} \' + tr(\'to\') + \' {endRow} \' + tr(\'of\')
-				+ \' {filteredRows} \' + \'(\' + tr(\'filtered from\') + \' {totalRows}\' + \')\'';
+			$p[] = $pre . 'output: \'{startRow} - {endRow} / {filteredRows} ({totalRows})\'';
 		}
 
 		//ajax settings

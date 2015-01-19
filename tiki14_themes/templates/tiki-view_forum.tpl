@@ -380,7 +380,7 @@
 	<input type="hidden" name="forumId" value="{$forumId|escape}">
 	<input type="hidden" name="all_forums" value="{$all_forums_encoded|escape}">
 	<input type="hidden" name="comments_coms" value="{$comments_coms_encoded|escape}">
-	{if $tiki_p_admin_forum eq 'y'}
+	{if $tiki_p_admin_forum eq 'y' && ($comments_coms|@count > 0 || $queued > 0 || $reported > 0)}
 		<div class="panel panel-primary">
 			<div class="panel-heading">
 				{tr}Moderator actions on selected topics{/tr}

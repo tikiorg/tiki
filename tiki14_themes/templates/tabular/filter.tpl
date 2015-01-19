@@ -5,7 +5,7 @@
 {/block}
 
 {block name="content"}
-<form class="no-ajax" method="post" action="{service controller="tabular" action="export_partial_csv"}">
+<form class="no-ajax" method="{$method|escape}" action="{service controller="tabular" action=$action}">
 	{foreach $filters as $filter}
 		<div class="form-group">
 			<label class="control-label" for="{$filter.id|escape}">{$filter.label|escape}</label>
@@ -14,7 +14,9 @@
 	{/foreach}
 	<div class="submit">
 		<input type="hidden" name="tabularId" value="{$tabularId|escape}"/>
-		<input type="submit" class="btn btn-primary" value="{tr}Export{/tr}">
+		<input type="hidden" name="controller" value="tabular"/>
+		<input type="hidden" name="action" value="{$action|escape}"/>
+		<input type="submit" class="btn btn-primary" value="{$label|escape}">
 	</div>
 </form>
 {/block}

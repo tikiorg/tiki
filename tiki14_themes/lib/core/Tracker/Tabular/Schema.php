@@ -26,10 +26,68 @@ class Schema
 		return $this->definition;
 	}
 
+	function getHtmlOutputSchema()
+	{
+		$out = new self($this->definition);
+		$out->filters = $this->filters;
+		$out->schemas = $this->schemas;
+
+		foreach ($this->columns as $column) {
+			$replacement = $column->getPlainReplacement();
+
+			if ($column->isExportOnly()) {
+				continue; // Skip column
+			} elseif ($replacement || $replacement === false) {
+				// Has a replacement means output is HTML
+				// No replacement at all is the same
+				$out->columns[] = $column;
+			} else {
+				$out->columns[] = $column->withWrappedRenderTransform('htmlspecialchars');
+			}
+		}
+
+		return $out;
+	}
+
+	function getPlainOutputSchema()
+	{
+		$out = new self($this->definition);
+		$out->filters = $this->filters;
+		$out->schemas = $this->schemas;
+		$out->primaryKey = $this->primaryKey;
+
+		foreach ($this->columns as $column) {
+			$replacement = $column->getPlainReplacement();
+
+			if ($replacement) {
+				$new = $this->addColumn($column->getField(), $replacement);
+				$new->setLabel($column->getLabel());
+
+				// If the replacement is read-only, leave as-is
+				if (! $new->isReadOnly()) {
+					$new->setReadOnly($column->isReadOnly());
+				}
+
+				// Convert the primary key field as needed
+				if ($column->isPrimaryKey()) {
+					$out->primaryKey = $new;
+					$new->setPrimaryKey(true);
+				}
+
+				$out->columns[] = $new;
+			} elseif ($replacement !== false) {
+				$out->columns[] = $column;
+			}
+		}
+
+		return $out;
+	}
+
 	function loadFormatDescriptor($descriptor)
 	{
 		foreach ($descriptor as $column) {
 			$col = $this->addColumn($column['field'], $column['mode']);
+			$col->setExportOnly(! empty($column['isExportOnly']));
 
 			if (! $col->isReadOnly() && ! empty($column['isReadOnly'])) {
 				$col->setReadOnly(true);
@@ -64,6 +122,7 @@ class Schema
 				'mode' => $column->getMode(),
 				'isPrimary' => $column->isPrimaryKey(),
 				'isReadOnly' => $column->isReadOnly(),
+				'isExportOnly' => $column->isExportOnly(),
 			];
 		}, $this->columns);
 	}
@@ -176,7 +235,7 @@ class Schema
 
 	function getAvailableFields()
 	{
-		$fields = ['itemId' => tr('Item ID'), 'status' => tr('Status')];
+		$fields = ['itemId' => tr('Item ID'), 'status' => tr('Status'), 'actions' => tr('Actions')];
 
 		foreach ($this->definition->getFields() as $f) {
 			$fields[$f['permName']] = $f['name'];
@@ -210,6 +269,29 @@ class Schema
 	private function getSystemSchema($name)
 	{
 		switch ($name) {
+		case 'actions':
+			$trackerId = $this->definition->getConfiguration('trackerId');
+			$schema = new self($this->definition);
+			$schema->addNew($name, 'all')
+				->setLabel(tr('Actions'))
+				->addQuerySource('itemId', 'object_id')
+				->setReadOnly(true)
+				->setPlainReplacement(false)
+				->setRenderTransform(function ($value, $extra) use ($trackerId) {
+					$smarty = \TikiLib::lib('smarty');
+					$item = \Tracker_Item::fromId($extra['itemId']);
+
+					$smarty->assign('tabular_actions', [
+						'trackerId' => $trackerId,
+						'itemId' => $extra['itemId'],
+						'canModify' => $item->canModify(),
+						'canRemove' => $item->canRemove(),
+					]);
+
+					return $smarty->fetch('tabular/item_actions.tpl');
+				})
+				;
+			return $schema;
 		case 'itemId':
 			$schema = new self($this->definition);
 			$schema->addNew($name, 'id')

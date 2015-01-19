@@ -60,7 +60,7 @@
 	<table class="formcolor">
 		<tr>
 			<td colspan="2">
-				{tr}Instructions: Type, or paste, your multiple choice questions below.  One line for the question, then start answer choices on subsequent lines.  Separate additional questions with a blank line.  Indicate correct answers by starting them with a "*" (without the quotes) character.{/tr}
+				{tr}Instructions: Type, or paste, your multiple choice questions below. One line for the question, then start answer choices on subsequent lines. Separate additional questions with a blank line. Indicate correct answers by starting them with a "*" (without the quotes) character.{/tr}
 			</td>
 		</tr>
 		<tr>

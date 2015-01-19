@@ -65,7 +65,7 @@
 			<p>
 				{tr}Add a tilde ( ~ ) before a term to reduce its value indicate to the ranking of the results.{/tr}&nbsp;
 				{tr}Objects that contain the term will appear lower than other objects (unlike the <a href="#excluding" title="Excluding terms">minus sign</a>	which will completely exclude a term).{/tr}&nbsp;
-				{tr}Example: <strong>+wiki ~forum</strong> will rate an object with only <strong>wiki</strong> higher that an object with <strong>wiki</strong> and  <strong>forum</strong>.{/tr}
+				{tr}Example: <strong>+wiki ~forum</strong> will rate an object with only <strong>wiki</strong> higher that an object with <strong>wiki</strong> and <strong>forum</strong>.{/tr}
 			</p>
 
 			<h4>{tr}Changing relevance value{/tr}</h4>
