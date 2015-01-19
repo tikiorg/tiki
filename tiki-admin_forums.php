@@ -29,22 +29,12 @@ $auto_query_args = array(
 );
 
 $commentslib = TikiLib::lib('comments');
-if (isset($_REQUEST["remove"])) {
-	$access->check_authenticity();
-	$commentslib->remove_forum($_REQUEST["remove"]);
-}
 if (isset($_REQUEST['lock']) && isset($_REQUEST['forumId'])) {
 	check_ticket('view-forum');
 	if ($_REQUEST['lock'] == 'y') {
 		$commentslib->lock_object_thread('forum:' . ((int)$_REQUEST['forumId']));
 	} elseif ($_REQUEST['lock'] == 'n') {
 		$commentslib->unlock_object_thread('forum:' . ((int)$_REQUEST['forumId']));
-	}
-}
-if (isset($_REQUEST['batchaction']) && $_REQUEST['batchaction'] = 'delsel_x' && isset($_REQUEST['checked'])) {
-	check_ticket('admin-forums');
-	foreach ($_REQUEST['checked'] as $id) {
-		$commentslib->remove_forum($id);
 	}
 }
 if ($prefs['feature_multilingual'] === 'y') {
