@@ -1,14 +1,14 @@
-/*  The raspberry theme option file for the FiveAlive-lite theme of Tiki Wiki CMS Groupware. */
+/* The raspberry theme option file for the FiveAlive-lite theme of Tiki Wiki CMS Groupware. */
 a {
   color: #b51360;
-}
+} 
 a:hover,
 a:focus {
   color: #e10c7c;
 }
 .btn-default {
   color: #ffffff;
-  background-color: #e60b7f;
+  background-color: #e60b7f; 
   border-color: #f588c1;
 }
 .btn-default:hover,
