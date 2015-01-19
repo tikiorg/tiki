@@ -1141,7 +1141,7 @@ function wikiplugin_tracker($data, $params)
 						}
 					}
 					if (!$ok) {
-						$back .= '<div class="alert alert-warning"><strong>' . tra('Incorrect fieldId:').' '.$l .'</strong>.<br> '.  tra("Please ensure you are using the correct field ID and that it is properly included in the template."). '</div>';
+						$back .= '<div class="alert alert-warning"><strong>' . tra('Incorrect fieldId:').' '.$l .'</strong>.<br> '.  tra("Please ensure you are using the correct field ID and that it is properly included in the template, if any."). '</div>';
 					}
 				}
 			} elseif (empty($fields) && empty($wiki) && empty($tpl)) {
