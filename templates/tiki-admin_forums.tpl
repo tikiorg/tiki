@@ -102,7 +102,14 @@
 									}
 										{self_link _icon_name='edit' _class="tips" cookietab='2' _anchor='anchor2' forumId=$channels[user].forumId}{$channels[user].name|escape}:{tr}Edit{/tr}{/self_link}
 										{permission_link mode=glyph addclass="tips" type=forum permType=forums id=$channels[user].forumId title=$channels[user].name label="{$channels[user].name|escape}:{tr}Permissions{/tr}"}
-										{self_link _icon_name='remove' _class="tips" remove=$channels[user].forumId}{$channels[user].name|escape}:{tr}Delete{/tr}{/self_link}
+										{* go ahead and set action to delete_forum since that is the only action available in the multi selct dropdown *}
+										<span
+											onclick="modalActionModal(this, {ldelim}'data':'service'{rdelim});"
+											data-service="{service controller=forum action=delete_forum params="checked[]={$channels[user].forumId}"}"
+											class="btn-link tips"
+											title="{$channels[user].name|escape}:{tr}Delete{/tr}">
+												{icon name='remove'}
+										</span>
 									{/if}
 								</td>
 							</tr>
@@ -121,14 +128,21 @@
 					<div class="text-left form-group">
 						<br>
 						<label for="batchaction" class="col-lg-5">{tr}Perform action with checked:{/tr}</label>
-						<div class="col-lg-3">
+						<div class="col-lg-3 input-group">
 							<select name="batchaction" class="form-control" onchange="show('groups');">
 								<option value="">{tr}...{/tr}</option>
 								{if $tiki_p_admin_forum eq 'y'}
-									<option value="delsel_x">{tr}Delete{/tr}</option>
+									<option value="delete_forum">{tr}Delete{/tr}</option>
 								{/if}
 							</select>
-							<input type="submit" class="btn btn-primary btn-sm" name="batchaction" value="{tr}OK{/tr}">
+							<span class="input-group-btn">
+							<button
+								type="button"
+								onclick="modalActionModal(this, {ldelim}'controller':'forum','action':'delete_forum','closest':'form'{rdelim});"
+								class="btn btn-primary">
+								{tr}OK{/tr}
+							</button>
+						</span>
 						</div>
 					</div>
 				{/if}

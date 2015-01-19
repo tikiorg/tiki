@@ -369,6 +369,91 @@ class Services_Forum_Controller
 		return $this->archiveUnarchive($input, 'unarchive');
 	}
 
+	/**
+	 * Action to delete one or more forums
+	 *
+	 * @param $input
+	 * @return array
+	 * @throws Exception
+	 */
+	function action_delete_forum($input)
+	{
+		parse_str($input->offsetGet('params'), $params);
+		if (isset($params['batchaction']) && $params['batchaction'] !== 'delete_forum') {
+			//oops if no action is selected
+			return [
+				'FORWARD' => [
+					'controller' => 'utilities',
+					'action' => 'alert',
+					'type' => 'warning',
+					'title' => tra('Forum delete feedback'),
+					'heading' => tra('Oops'),
+					'msg' => tra('No action was selected. Please select an action before clicking the OK button.'),
+					'modal' => '1'
+				]
+			];
+		}
+		$perms = Perms::get('forum', $params['checked']);
+		if (!$perms->admin_forum) {
+			throw new Services_Exception_Denied(tr('Reserved for forum administrators'));
+		}
+		$access = TikiLib::lib('access');
+		$check = $access->check_authenticity(null, false);
+		if (!empty($check['ticket'])) {
+			//check number of topics on first pass
+			if (count($params['checked']) > 0) {
+				$items = $this->getForumNames($params['checked']);
+				$object = count($items) > 1 ? 'forums' : 'forum';
+				return [
+					'FORWARD' => [
+						'controller' => 'access',
+						'action' => 'confirm',
+						'title' => tra('Please confirm deletion'),
+						'confirmAction' => 'tiki-forum-delete_forum',
+						'customVerb' => tra('delete'),
+						'customObject' => tr($object),
+						'items' => $items,
+						'ticket' => $check['ticket'],
+						'modal' => '1',
+					]
+				];
+			} else {
+				//oops if no topics were selected
+				return [
+					'FORWARD' => [
+						'controller' => 'utilities',
+						'action' => 'alert',
+						'type' => 'warning',
+						'title' => tra('Forum delete feedback'),
+						'heading' => tra('Oops'),
+						'msg' => tra('No forums were selected. Please select the forums you wish to delete before clicking the OK button.'),
+						'modal' => '1'
+					]
+				];
+			}
+		} elseif ($check === true && count($_POST['items']) > 0) {
+			$items = $input->asArray('items');
+			foreach ($items as $id => $name) {
+				if (is_numeric($id)) {
+					$this->lib->remove_forum($id);
+				}
+			}
+			return true;
+		} elseif ($check === false) {
+			return [
+				'FORWARD' => [
+					'controller' => 'utilities',
+					'action' => 'alert',
+					'type' => 'error',
+					'title' => tra('Topic delete feedback'),
+					'heading' => tra('Error'),
+					'msg' => tra('Sea Surfing (CSRF) detected. Operation blocked.'),
+					'modal' => '1'
+				]
+			];
+		}
+	}
+
 	private function checkPerms($forumId)
 	{
 		$perms = Perms::get('forum', $forumId);
@@ -397,7 +482,7 @@ class Services_Forum_Controller
 	 * @return mixed
 	 * @throws Exception
 	 */
-	private function getTopicTitles($topicIds)
+	private function getTopicTitles(array $topicIds)
 	{
 		foreach ($topicIds as $id) {
 			$info = $this->lib->get_comment($id);
@@ -405,6 +490,23 @@ class Services_Forum_Controller
 		}
 		return $ret;
 	}
+
+	/**
+	 * Utility to get forum names
+	 *
+	 * @param $forumIds
+	 * @return mixed
+	 * @throws Exception
+	 */
+	private function getForumNames(array $forumIds)
+	{
+		foreach ($forumIds as $id) {
+			$info = $this->lib->get_forum($id);
+			$ret[(int) $id] = $info['name'];
+		}
+		return $ret;
+	}
+
 
 	/**
 	 * Utility used by action_lock_topic and action_unlock_topic since the code for both is similar
