@@ -78,7 +78,25 @@ if ($tiki_p_admin_forum != 'y' && $user) {
 
 $access->check_permission(array('tiki_p_forum_read'), '', 'forum', $_REQUEST['forumId']);
 
-$commentslib->forum_add_hit($_REQUEST["forumId"]);
+//add tablesorter sorting and filtering
+$tsOn = Table_Check::isEnabled(true);
+$smarty->assign('tsOn', $tsOn);
+$tsAjax = Table_Check::isAjaxCall();
+$smarty->assign('tsAjax', $tsAjax);
+static $iid = 0;
+++$iid;
+$ts_tableid = 'viewforum' . $_REQUEST['forumId'] . '-' . $iid;
+$smarty->assign('ts_tableid', $ts_tableid);
+if ($tsOn) {
+	$ts_countid = $ts_tableid . '-count';
+	$ts_offsetid = $ts_tableid . '-offset';
+	$smarty->assign('ts_countid', $ts_countid);
+	$smarty->assign('ts_offsetid', $ts_offsetid);
+}
+
+if (!$tsOn || ($tsOn && $tsAjax)) {
+	$commentslib->forum_add_hit($_REQUEST["forumId"]);
+}
 
 if (isset($_REQUEST['report']) && $tiki_p_forums_report == 'y') {
 	check_ticket('view-forum');
@@ -311,22 +329,6 @@ if (!isset($_REQUEST['reply_state']))
 else
 	$reply_state = $_REQUEST['reply_state'];
 
-//add tablesorter sorting and filtering
-$tsOn = Table_Check::isEnabled(true);
-$smarty->assign('tsOn', $tsOn);
-$tsAjax = Table_Check::isAjaxCall();
-$smarty->assign('tsAjax', $tsAjax);
-static $iid = 0;
-++$iid;
-$ts_tableid = 'viewforum' . $_REQUEST['forumId'] . '-' . $iid;
-$smarty->assign('ts_tableid', $ts_tableid);
-if ($tsOn) {
-	$ts_countid = $ts_tableid . '-count';
-	$ts_offsetid = $ts_tableid . '-offset';
-	$smarty->assign('ts_countid', $ts_countid);
-	$smarty->assign('ts_offsetid', $ts_offsetid);
-}
-
 //need the info on all threads so leave this even on initial non-ajax load
 $comments_coms = $commentslib->get_forum_topics(
 	$_REQUEST['forumId'],
@@ -358,6 +360,9 @@ if ($tsOn && !$tsAjax) {
 		array(
 			'id' => $ts_tableid,
 			'total' => $comments_cant,
+			'pager' => array(
+				'max' => $_REQUEST['comments_per_page'],
+			),
 			'ajax' => array(
 				'requiredparams' => array(
 					'forumId' => $_REQUEST['forumId'],
