@@ -134,22 +134,6 @@ if (!empty($_POST['lang'])) {
 }
 include_once('lib/init/tra.php');
 
-//load default icon set file if exist
-if (file_exists("themes/base_files/iconsets/default.php")) {
-	include("themes/base_files/iconsets/default.php"); //add icons from the default icon set
-	foreach ($icons as &$icon) { //apply settings for each icon
-		if (!empty($icon['tag'])) {
-			$icon['tag'] = $icon['tag'];
-		}
-		else {
-			$icon['tag'] = $settings['icon_tag'];
-		}
-	}
-	unset($settings);
-	$iconset = $icons;
-	unset($icons);
-}
-
 /**
  * @return bool
  */
@@ -1190,6 +1174,7 @@ jqueryTiki.effect_tabs_speed = 400;
 ';
 $headerlib->add_js($js, 100);
 
+$iconset = TikiLib::lib('iconset')->getIconsetForTheme('default', '');
 
 $smarty->assignByRef('headerlib', $headerlib);
 

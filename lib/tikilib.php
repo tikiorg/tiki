@@ -3925,18 +3925,14 @@ class TikiLib extends TikiDb_Bridge
 
 			if ($my_user == $user ) {
 				$prefs[$name] = $value;
-				if ( $name == 'theme' && $prefs['change_theme'] == 'y' ) { 				// FIXME: Remove this exception
-					$prefs['style'] = $value;
+				if ( $name == 'theme' && $prefs['change_theme'] == 'y' ) {
+					$prefs['users_prefs_theme'] = $value;
 					if ( $value == '' ) {
-						$prefs['style'] = $prefs['site_style'];
 						$userPreferences->delete(array('user' => $my_user, 'prefName' => $name));
 					}
-				} elseif ( $name == 'theme-option' && $prefs['change_theme'] == 'y' ) { // FIXME: Remove this exception as well?
-					$prefs['style_option'] = $value;
+				} elseif ( $name == 'theme_option' && $prefs['change_theme'] == 'y' ) {
+					$prefs['users_prefs_theme-option'] = $value;
 					if ( $value == '' ) {
-						$prefs['style_option'] = $prefs['site_style_option'];
-					} else if ( $value == 'None' ) {
-						$prefs['style_option'] = '';
 						$userPreferences->delete(array('user' => $my_user, 'prefName' => $name));
 					}
 				} elseif ( $value == '' ) {
@@ -3948,22 +3944,16 @@ class TikiLib extends TikiDb_Bridge
 			}
 
 		} else { // If $my_user is empty, we must be Anonymous updating one of our own preferences
-			if ( $name == 'theme' && $prefs['change_theme'] == 'y' ) { 				// FIXME: Remove this exception
-				$prefs['style'] = $value;
-				$_SESSION['preferences']['style'] = $value;
+			if ( $name == 'theme' && $prefs['change_theme'] == 'y' ) {
+				$prefs['theme'] = $value;
+				$_SESSION['preferences']['theme'] = $value;
 				if ( $value == '' ) {
-					$prefs['style'] = $prefs['site_style'];
-					unset($_SESSION['preferences']['style']);
+					unset($_SESSION['preferences']['theme']);
+					unset($_SESSION['preferences']['theme_option']);
 				}
-			} elseif ( $name == 'theme-option' && $prefs['change_theme'] == 'y' ) { // FIXME: Remove this exception as well?
-				$prefs['style_option'] = $value;
-				$_SESSION['preferences']['style_option'] = $value;
-				if ( $value == '' ) {
-					$prefs['style_option'] = $prefs['site_style_option'];
-				} else if ( $value == 'None' ) {
-					$prefs['style_option'] = '';
-					unset($_SESSION['preferences']['style_option']);
-				}
+			} elseif ( $name == 'theme_option' && $prefs['change_theme'] == 'y' && !empty($_SESSION['preferences']['theme']) ) {
+				$prefs['theme_option'] = $value;
+				$_SESSION['preferences']['theme_option'] = $value;
 			} elseif ( $value == '' ) {
 				if ( in_array($name, $user_overrider_prefs) ) {
 					$prefs[$name] = $prefs['site_'.$name];

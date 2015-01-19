@@ -1,0 +1,26 @@
+/* Deliberately minimal css option file for the Flatly theme added as a demo and test for Tiki 14 */
+
+a, .btn-link {
+    color: #3c88bc;
+}
+
+.navbar-default .navbar-nav > li > a:hover,
+.navbar-default .navbar-nav > li > a:focus,
+a:hover, a:active, a:focus {
+	color: #50b3fb;
+}
+
+.btn-default {
+    background-color: #3c88bc;
+    border-color: #3c88bc;
+}
+
+.btn-default:hover {
+    background-color: #2b6288;
+    border-color: #2b6288;
+}
+
+.navbar-default,
+.navbar-inverse {
+    background-color: #2b6288;
+}

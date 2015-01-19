@@ -7,38 +7,7 @@
 
 function prefs_global_list($partial = false)
 {
-	global $tikilib, $url_host;
-
-	$all_styles = array();
-	$languages = array();
-
-	if (! $partial) {
-		$all_styles = $tikilib->list_styles();
-		$languages = $tikilib->list_languages(false, null, true);
-	}
-
-	$styles = array();
-
-	foreach ($all_styles as $style) {
-		$styles[$style] = substr($style, 0, strripos($style, '.css'));
-	}
-	
-	$map = array();
-
-	foreach ( $languages as $lang ) {
-		$map[ $lang['value'] ] = $lang['name'];
-	}
-
 	return array(
-		'style' => array(
-			'name' => tra('Theme'),
-            'description' => tra('Theme of the site, sometimes called a style, skin or CSS. See http://themes.tiki.org for more information.'),
-            'type' => 'list',
-			'help' => 'Themes',
-			'options' => $styles,
-			'default' => 'fivealive-lite.css',
-			'tags' => array('basic'),
-		),
 		'browsertitle' => array(
 			'name' => tra('Browser title'),
 			'description' => tra('Label visible in the browser\'s title bar on all pages. Also appears in search engines.'),
@@ -84,16 +53,6 @@ function prefs_global_list($partial = false)
 			),
 			'keywords' => 'group home page pages',
 			'default' => 'n',
-		),
-		'language' => array(
-			'name' => tra('Default language'),
-			'description' => tra('Site language used when no other language is specified by the user.'),
-			'filter' => 'lang',
-			'help' => 'I18n',
-			'type' => 'list',
-			'options' => $map,
-			'default' => 'en',
-			'tags' => array('basic'),
 		),
 		'cachepages' => array(
 			'name' => tra('Cache external pages'),
@@ -227,8 +186,8 @@ function prefs_global_list($partial = false)
 			'tags' => array('basic'),
 		),
 		'useGroupTheme' => array(
-			'name' => tra('Each group can have its theme'),
-            'description' => tra(''),
+			'name' => tra('Group Theme'),
+            'description' => tra('Each group can have its theme'),
 			'type' => 'flag',
 			'default' => 'n',
 		),

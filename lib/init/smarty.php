@@ -36,18 +36,10 @@ class Tiki_Security_Policy extends Smarty_Security
 		'',
 		'img/',
 		'img/icons',
-		'styles/strasa/img/icons/',
-		'styles/strasa/pics/icons/',
-		'styles/coelesce/pics/icons/',
-		'styles/darkroom/pics/icons/',
-		'styles/thenews/pics/icons/',
-		'styles/tikinewt/pics/icons/',
-		'styles/twist/pics/icons/',
 		'img/flags',
 		'img/mytiki',
 		'img/smiles',
 		'img/trackers',
-		'images/',
 		'img/icons/mime',
 		'img/icons/large',
 		'lib/ckeditor_tiki/ckeditor-icons',
@@ -222,7 +214,7 @@ class Smarty_Tiki extends Smarty
 	 */
 	public function fetch($_smarty_tpl_file = null, $_smarty_cache_id = null, $_smarty_compile_id = null, $parent = null, $_smarty_display = false, $merge_tpl_vars = true, $no_output_filter = false)
 	{
-		global $prefs, $style_base, $tikidomain, $inclusion;
+		global $prefs, $theme_path, $tikidomain, $inclusion;
 		$this->muteExpectedErrors();
 		$this->refreshLanguage();
 
@@ -280,13 +272,25 @@ class Smarty_Tiki extends Smarty
 			require_once 'tiki-modules.php';
 		}
 		
-		if (isset($style_base)) {
-			if ($tikidomain and file_exists("templates/$tikidomain/styles/$style_base/$_smarty_tpl_file")) {
-				$_smarty_tpl_file = "$tikidomain/styles/$style_base/$_smarty_tpl_file";
-			} elseif ($tikidomain and file_exists("templates/$tikidomain/$_smarty_tpl_file")) {
+		if (isset($theme_path)) {
+			if (file_exists("$theme_path/templates/$_smarty_tpl_file")) { //first try theme specific template. $theme_path knows about tikidomain
+				$_smarty_tpl_file = "$theme_path/templates/$_smarty_tpl_file";
+			}
+			elseif (!empty($prefs['theme_option'])) { //next try: in case theme options try template for the main theme
+				$themelib = TikiLib::lib('theme');
+				$main_theme_path = $themelib->get_theme_path($prefs['theme'], NULL, NULL);
+				if(file_exists("$main_theme_path/templates/$_smarty_tpl_file")) {  
+					$_smarty_tpl_file = "$main_theme_path/templates/$_smarty_tpl_file";
+				}
+			}
+			elseif ($tikidomain and file_exists("themes/$tikidomain/themes/templates/$_smarty_tpl_file")) { //next try: template for all themes in the domain 
+				$_smarty_tpl_file = "themes/$tikidomain/themes/templates/$_smarty_tpl_file";
+			}
+			elseif ($tikidomain and file_exists("templates/$tikidomain/$_smarty_tpl_file")) { //next try: tikidomain in the templates directory
 				$_smarty_tpl_file = "$tikidomain/$_smarty_tpl_file";
-			} elseif (file_exists("templates/styles/$style_base/$_smarty_tpl_file")) {
-				$_smarty_tpl_file = "styles/$style_base/$_smarty_tpl_file";
+			}
+			elseif (file_exists("themes/templates/$_smarty_tpl_file")) { //finally try: template for all themes
+				$_smarty_tpl_file = "themes/templates/$_smarty_tpl_file";
 			}
 		}
 
@@ -325,15 +329,13 @@ class Smarty_Tiki extends Smarty
 	 */
 	function fetchLang($lg, $_smarty_tpl_file, $_smarty_cache_id = null, $_smarty_compile_id = null, $_smarty_display = false)
 	{
-		global $prefs, $lang, $style_base, $tikidomain;
+		global $prefs, $lang, $theme_path, $tikidomain;
 
-		if (isset($prefs['style']) && isset($style_base)) {
-			if ($tikidomain and file_exists("templates/$tikidomain/styles/$style_base/$_smarty_tpl_file")) {
-				$_smarty_tpl_file = "$tikidomain/styles/$style_base/$_smarty_tpl_file";
-			} elseif ($tikidomain and file_exists("templates/$tikidomain/$_smarty_tpl_file")) {
+		if (isset($prefs['theme']) && isset($theme_path)) {
+			if ($tikidomain and file_exists("templates/$tikidomain/$_smarty_tpl_file")) {
 				$_smarty_tpl_file = "$tikidomain/$_smarty_tpl_file";
-			} elseif (file_exists("templates/styles/$style_base/$_smarty_tpl_file")) {
-				$_smarty_tpl_file = "styles/$style_base/$_smarty_tpl_file";
+			} elseif (file_exists("$theme_path/templates/$_smarty_tpl_file")) {
+				$_smarty_tpl_file = "$theme_path/templates/$_smarty_tpl_file";
 			}
 		}
 
@@ -463,14 +465,20 @@ class Smarty_Tiki extends Smarty
 		$this->setCompileId("$lang-$tikidomain-$layout");
 		$this->initializePaths();
 	}
-
+	
+	/*
+	Add smarty template paths from where tpl files should be loaded. This function also gets called from lib/setup/theme.php to initialize theme specific paths
+	*/
 	function initializePaths()
 	{
-		global $prefs, $style_base, $tikidomain;
-		if (empty($style_base) && class_exists('TikiLib')) {	// TikiLib doesn't exist in the installer
-			$tikilib = TikiLib::lib('tiki');
-			if (method_exists($tikilib, "get_style_base")) {
-				$style_base = TikiLib::lib('tiki')->get_style_base($prefs['style']);
+		global $prefs, $theme_path, $tikidomain;
+		if (empty($theme_path) && class_exists('ThemeLib')) {	// ThemeLib doesn't exist in the installer
+			$themelib = TikiLib::lib('theme');
+			if (method_exists($themelib, "get_theme_path")) {
+				$theme_path = $themelib->get_theme_path($prefs['theme'], $prefs['theme_option'], NULL);
+				if(!empty($prefs['theme_option'])) {
+					$main_theme_path = $themelib->get_theme_path($prefs['theme'], NULL , NULL); //to have the path to the main theme for options
+				}
 			}
 		}
 
@@ -479,10 +487,15 @@ class Smarty_Tiki extends Smarty
 		}
 
 		$theme_active = null;
-		if (isset($prefs['theme_active']) && ! in_array($prefs['theme_active'], ['custom', 'legacy', 'default'])) {
-			$theme_active = $prefs['theme_active'];
+		if (isset($prefs['theme']) && ! in_array($prefs['theme'], ['custom_url'])) {
+			$theme_active = $prefs['theme'];
 		}
-
+		
+		$theme_option_active = null;
+		if(isset($prefs['theme_option'])) {
+			$theme_option_active = $prefs['theme_option'];
+		}
+		
 		if (empty($prefs['site_layout'])) {
 			$prefs['site_layout'] = 'classic';
 		}
@@ -501,18 +514,29 @@ class Smarty_Tiki extends Smarty
 
 		$this->setTemplateDir(null);
 
+		//Theme templates
 		if ($theme_active) {
-			$this->addTemplateDir(TIKI_PATH . "/themes/$theme_active/templates/");
+			$this->addTemplateDir(TIKI_PATH . "/$theme_path/templates/"); //This dir stores templates for one theme, knows about tikidomain
+			if (!empty($theme_option_active)) {
+				$themelib = TikiLib::lib('theme');
+				$main_theme_path = $themelib->get_theme_path($prefs['theme'], NULL , NULL); //to have the path to the main theme for options
+				$this->addTemplateDir(TIKI_PATH . "/$main_theme_path/templates/"); //Add the main theme's template dir for options
+			}
+			$this->addTemplateDir(TIKI_PATH . "/themes/templates/"); //This dir stores templates for all the themes
 		}
-
-		if ( !empty($tikidomain) && $tikidomain !== '/' ) {
-			$this->addTemplateDir($this->main_template_dir.'/'.$tikidomain.'/styles/'.$style_base.'/');
-			$this->addTemplatedir($this->main_template_dir.'/'.$tikidomain.'/');
+		
+		//Tikidomain main template folder
+		if ( !empty($tikidomain) && $tikidomain !== '/' ) { 
+			$this->addTemplatedir($this->main_template_dir.'/'.$tikidomain.'/'); // for example: /templates/mydomain.ltd/
+			$this->addTemplateDir(TIKI_PATH . "/themes/$tikidomain/templates/"); //This dir is for all the themes in the tikidomain
 		}
-		$this->addTemplateDir($this->main_template_dir.'/styles/'.$style_base.'/');
+		
+		//Addon templates
 		foreach (TikiAddons::getPaths() as $path) {
 			$this->addTemplateDir($path . '/templates/');
 		}
+		
+		//Layout templates
 		$this->addTemplateDir($this->main_template_dir.'/layouts/'.$prefs['site_layout'].'/');
 		$this->addTemplateDir($this->main_template_dir.'/layouts/');
 		$this->addTemplateDir($this->main_template_dir);

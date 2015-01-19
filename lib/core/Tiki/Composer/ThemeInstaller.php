@@ -79,7 +79,7 @@ class ThemeInstaller extends LibraryInstaller implements EventSubscriberInterfac
 		$fs->ensureDirectoryExists("$base/css");
 
 		$compiler = new \lessc;
-		$compiler->compileFile("$base/less/tiki.less", "$base/css/tiki.css");
+		$compiler->compileFile("$base/less/tiki.less", "$base/css/$base.css");
 
 		// Clean-up undesired files
 		$fs->remove("$base/dist");

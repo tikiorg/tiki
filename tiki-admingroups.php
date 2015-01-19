@@ -370,8 +370,11 @@ if ($prefs['feature_categories'] == 'y') {
 if (isset($_REQUEST['group'])) {
 	$smarty->assign('indirectly_inherited_groups', indirectly_inherited_groups($inc));
 }
-$av_themes = $tikilib->list_styles();
-$smarty->assign_by_ref('av_themes', $av_themes);
+//group theme - list themes
+$themelib = TikiLib::lib('theme');
+$group_themes = $themelib->list_themes_and_options();
+$smarty->assign_by_ref('group_themes', $group_themes);
+
 $smarty->assign('memberslist', $memberslist);
 
 $bannedlist = $userlib->get_group_banned_users($_REQUEST['group']);

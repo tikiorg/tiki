@@ -18,7 +18,8 @@ function prefs_available_list($partial = false)
 			$map[ $lang['value'] ] = $lang['name'];
 		}
 
-		$themes = array_merge($themes, $themelib->list_themes());
+		$themes = $themes + $themelib->list_themes_and_options();
+		unset($themes['custom_url']); //make sure Custom URL is removed from the list
 	}
 
 	return array(
@@ -37,7 +38,7 @@ function prefs_available_list($partial = false)
 		),
 		'available_themes' => array(
 			'name' => tra('Available themes'),
-            'description' => tra('Restrict available themes'),
+			'description' => tra('Restrict available themes'),
 			'type' => 'multilist',
 			'options' => $themes,
 			'dependencies' => array(

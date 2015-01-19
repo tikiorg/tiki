@@ -8,171 +8,124 @@
 //this script may only be included - so its better to die if called directly.
 $access->check_script($_SERVER['SCRIPT_NAME'], basename(__FILE__));
 
-if ( isset($_SESSION['try_style']) ) {
-	$prefs['style'] = $_SESSION['try_style'];
-} elseif ( $prefs['change_theme'] != 'y' && !isset($_SESSION['current_perspective'])) {
-	// Use the site value instead of the user value if the user is not allowed to change the theme
-	$prefs['style'] = $prefs['site_style'];
-	$prefs['style_option'] = $prefs['site_style_option'];
+//Initialize variables for the actual theme and theme option to be displayed
+$theme_active = $prefs['theme'];
+$theme_option_active = $prefs['theme_option'];
+
+// User theme previously set up in lib/setup/user_prefs.php
+
+//consider Group Theme
+if ($prefs['useGroupTheme'] == 'y') {
+	$userlib = TikiLib::lib('user');
+	$users_group_groupTheme = $userlib->get_user_group_theme();
+	if (!empty($users_group_groupTheme)) {
+		//group theme and option is stored in one column (groupTheme) in the users_groups table, so the theme and option value needs to be separated first
+		list($group_theme, $group_theme_option) = $themelib->extract_theme_and_option($users_group_groupTheme); //for more info see list_themes_and_options() function in themelib
+
+		//set active theme
+		$theme_active = $group_theme;
+		$theme_option_active = $group_theme_option;
+		
+		//set group_theme smarty variable so that it can be used elsewhere
+		$smarty->assign_by_ref('group_theme', $users_group_groupTheme);
+	}
 }
 
-// Always include default bootstrap JS
+//consider Admin Theme
+if (!empty($prefs['theme_admin']) && ($section === 'admin' || empty($section))) {		// use admin theme if set
+	$theme_active = $prefs['theme_admin'];
+	$theme_option_active = $prefs['theme_option_admin'];								// and its option
+	$prefs['themegenerator_theme'] = '';												// and disable theme generator
+}
+	
+//consider CSS Editor (tiki-edit_css.php) 
+if (!empty($_SESSION['try_theme'])) {
+	list($theme_active, $theme_option_active) = $themelib->extract_theme_and_option($_SESSION['try_theme']);
+}
+
+//START loading theme related items
+
+//1) Always add default bootstrap JS and make some preference settings
 $headerlib->add_jsfile('vendor/twitter/bootstrap/dist/js/bootstrap.js');
 $headerlib->add_jsfile('lib/jquery_tiki/tiki-bootstrapmodalfix.js');
 
-$prefs['jquery_ui_chosen_css'] = 'y';
-
 if ($prefs['feature_fixed_width'] === 'y') {
-    $headerlib->add_css(
-        '@media (min-width: 1200px) { .container { min-width:' .
-        (!empty($prefs['layout_fixed_width']) ? $prefs['layout_fixed_width'] : '1170px') .
-        '; } }'
-    );
+	$headerlib->add_css(
+		'@media (min-width: 1200px) { .container { min-width:' .
+		(!empty($prefs['layout_fixed_width']) ? $prefs['layout_fixed_width'] : '1170px') .
+		'; } }'
+	);
 }
 
-// Always use tiki_base.css.
-// Add it first, so that it can be overriden in the custom themes
+//2) Always add tiki_base.css. Add it first, so that it can be overriden in the custom themes
 $headerlib->add_cssfile("themes/base_files/css/tiki_base.css");
 
-// Then add Addon custom css first, so it can be overridden by themes
+//3) Always add bundled font-awesome css for the default icon fonts
+$headerlib->add_cssfile('vendor/fortawesome/font-awesome/css/font-awesome.min.css');
+
+//4) Add Addon custom css first, so it can be overridden by themes
 foreach (TikiAddons::getPaths() as $path) {
 	foreach (glob('addons/' . basename($path) . '/css/*.css') as $filename) {
 		$headerlib->add_cssfile($filename);
 	}
 }
 
-if (empty($prefs['theme_active']) || $prefs['theme_active'] == 'default') {
-	$headerlib->add_cssfile('vendor/twitter/bootstrap/dist/css/bootstrap.min.css');
-} elseif ($prefs['theme_active'] == 'custom') {
-	$custom_theme = $prefs['theme_custom'];
-	// Use external link if url begins with http://, https://, or // (auto http/https)
-	if (preg_match('/^(http(s)?:)?\/\//', $custom_theme)) {
+//5) Now add the theme or theme option
+$themelib = TikiLib::lib('theme');
+$theme_path = '';
+
+if ($theme_active == 'custom_url' && !empty($prefs['theme_custom_url'])) { //custom URL, use only if file exists at the custom location
+	$custom_theme = $prefs['theme_custom_url'];
+	if (preg_match('/^(http(s)?:)?\/\//', $custom_theme)) { // Use external link if url begins with http://, https://, or // (auto http/https)
 		$headerlib->add_cssfile($custom_theme, 'external');
 	} else {
 		$headerlib->add_cssfile($custom_theme);
 	}
-} elseif ($prefs['theme_active'] == 'legacy') {
-    // use legacy styles
-	if ( $prefs['useGroupTheme'] == 'y' && $group_style = $userlib->get_user_group_theme()) {
-		$prefs['style'] = $group_style;
-		$smarty->assign_by_ref('group_style', $group_style);
-	}
-	if (empty($prefs['style']) || $tikilib->get_style_path('', '', $prefs['style']) == '') {
-		$prefs['style'] = 'fivealive-lite.css';
-	}
-
-	if (!empty($prefs['style_admin']) && ($section === 'admin' || empty($section))) {		// use admin theme if set
-		$prefs['style'] = $prefs['style_admin'];
-		$prefs['style_option'] = $prefs['style_admin_option'];								// and its option
-		$prefs['themegenerator_theme'] = '';												// and disable theme generator
-	}
-
-	$headerlib->add_cssfile($tikilib->get_style_path('', '', $prefs['style']), 51);
-	$style_base = $tikilib->get_style_base($prefs['style']);
-
-	// include optional "options" cascading stylesheet if set
-	if ( !empty($prefs['style_option'])) {
-		$style_option_css = $tikilib->get_style_path($prefs['style'], $prefs['style_option'], $prefs['style_option']);
-		if (!empty($style_option_css)) {
-			$headerlib->add_cssfile($style_option_css, 52);
-		}
-	}
-	// End legacy
-} else {
-	$headerlib->add_cssfile("themes/{$prefs['theme_active']}/css/tiki.css");
-	$prefs['jquery_ui_chosen_css'] = 'n';
 }
-//Add font-awesome
-$headerlib->add_cssfile('vendor/fortawesome/font-awesome/css/font-awesome.min.css');
+else {
+	//first load the main theme css
+	$theme_path = $themelib->get_theme_css($theme_active);
+	if ($theme_path) {
+		$headerlib->add_cssfile($theme_path);
+		//than load the theme option css file if needed
+		if (!empty($theme_option_active)) {
+			$theme_path = $themelib->get_theme_css($theme_active, $theme_option_active);
+			$headerlib->add_cssfile($theme_path);
+		}
+	} else {
+		$theme_active = 'default';
+		$theme_option_active = '';
+		$theme_path = $themelib->get_theme_css($theme_active);
+		$headerlib->add_cssfile($theme_path);
+	}
+}
 
-// Allow to have a IE specific CSS files for the theme's specific hacks
-$style_ie8_css = $tikilib->get_style_path($prefs['style'], $prefs['style_option'], 'ie8.css');
-$style_ie9_css = $tikilib->get_style_path($prefs['style'], $prefs['style_option'], 'ie9.css');
+//6) Allow to have a IE specific CSS files for the theme's specific hacks
+$style_ie8_css = $themelib->get_theme_path($theme_active, $theme_option_active, 'ie8.css');
+$style_ie9_css = $themelib->get_theme_path($theme_active, $theme_option_active, 'ie9.css');
 
-// include optional "custom" cascading stylesheet if there
-$custom_css = "themes/{$prefs['theme_active']}/css/custom.css";
-if ( is_readable($custom_css)) {
+//7) include optional custom.css if there. In case of theme option, first include main theme's custom.css, than the option's custom.css
+if(!empty($theme_option_active)) {
+	$main_theme_path = $themelib->get_theme_path($theme_active);
+	$main_theme_custom_css = "{$main_theme_path}css/custom.css";
+	if (is_readable($main_theme_custom_css)) {
+		$headerlib->add_cssfile($main_theme_custom_css, 53);
+	}
+}
+$custom_css = "{$theme_path}css/custom.css";
+if (is_readable($custom_css)) {
 	$headerlib->add_cssfile($custom_css, 53);
 }
 
-// prepare $iconset variable to be used for generating icons
-$iconset = array();
-if (!empty($prefs['theme_active']) and file_exists("themes/{$prefs['theme_active']}/icons/custom.php")) { //first lets see if there is a custom.php in the  theme's /icons folder (eg: themes/fivealive-lite/icons/custom.php) and load icons from it
-	include("themes/{$prefs['theme_active']}/icons/custom.php");
-	if (!empty($settings) and !empty($icons)) { //make sure the iconset file is constructed as expected
-		foreach ($icons as &$icon) { //apply settings for each icon
-			if (!empty($icon['tag'])) {
-				$icon['tag'] = $icon['tag'];
-			}
-			else {
-				$icon['tag'] = $settings['icon_tag'];
-			}
-		}
-		unset($icon);
-		$iconset = $icons;
-	}
-}
-if (!empty($prefs['theme_iconset']) and ($prefs['theme_iconset'] == 'theme_specific_iconset') and file_exists("themes/{$prefs['theme_active']}/icons/iconset.php")) { //"theme_specific_icons" setting for the "theme_iconset" preference means that the icons defined for the given theme should be used (eg: themes/fivealive-lite/icons/iconset.php)
-	include("themes/{$prefs['theme_active']}/icons/iconset.php");
-	if (!empty($settings) and !empty($icons)) { //make sure the iconset file is constructed as expected
-		foreach ($icons as &$icon) { //apply settings for each icon
-				if (!empty($icon['tag'])) {
-					$icon['tag'] = $icon['tag'];
-				}
-				else {
-					$icon['tag'] = $settings['icon_tag'];
-				}
-		}
-		unset($icon);
-		$iconset = $iconset + $icons; //add new icons to the icon set while preserving existing icons in the array
-	
-		if (!empty($settings['iconset_source']) and file_exists($settings['source_iconset'])) { //load source icon set if it is defined in the settings
-			include($settings['iconset_source']);
-			if (!empty($settings) and !empty($icons)) { //make sure the iconset file is constructed as expected
-				foreach ($icons as &$icon) { //apply settings for each icon
-					if (!empty($icon['tag'])) {
-						$icon['tag'] = $icon['tag'];
-					}
-					else {
-						$icon['tag'] = $settings['icon_tag'];
-					}
-				}
-				unset($icon);
-				$iconset = $iconset + $icons; //add new icons to the icon set while preserving existing icons in the array
-			}
-		}
-	}
-}
-else { //if the "theme_iconset" preference is set to one of the base icon sets available in themes/base_files/iconsets/ than load icons from it
-	if(file_exists("themes/base_files/iconsets/{$prefs['theme_iconset']}.php")) {
-		include("themes/base_files/iconsets/{$prefs['theme_iconset']}.php"); //load icon set info from preference setting
-		if (!empty($settings) and !empty($icons)) { //make sure the iconset file is constructed as expected
-			foreach ($icons as &$icon) { //apply settings for each icon
-				if (!empty($icon['tag'])) {
-					$icon['tag'] = $icon['tag'];
-				}
-				else {
-					$icon['tag'] = $settings['icon_tag'];
-				}
-			}
-			unset($icon);
-			$iconset = $iconset + $icons; //add new icons to the icon set while preserving existing icons in the array
-		}
-	}
-}
-include("themes/base_files/iconsets/default.php"); //as a last resort add all missing icons from the default icon set
-foreach ($icons as &$icon) { //apply settings for each icon
-	if (!empty($icon['tag'])) {
-		$icon['tag'] = $icon['tag'];
-	}
-	else {
-		$icon['tag'] = $settings['icon_tag'];
-	}
-}
-unset($icon);
-$iconset = $iconset + $icons; //add new icons to the icon set while preserving existing icons in the array
+//8) produce $iconset to be used for generating icons
+$iconset = TikiLib::lib('iconset')->getIconsetForTheme($theme_active, $theme_option_active);
 
-$smarty->assign_by_ref('iconset', $iconset);
+//9) set global variable and prefs so that they can be accessed elsewhere
+$prefs['theme'] = $theme_active;
+$prefs['theme_option'] = $theme_option_active;
 
+//Note: if Theme Control is active, than tiki-tc.php can modify the active theme
+
+//finish
 $smarty->initializePaths();
 

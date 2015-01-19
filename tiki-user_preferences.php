@@ -57,6 +57,7 @@ if (isset($_REQUEST['userId']) || isset($_REQUEST['view_user'])) {
 } else {
 	$userwatch = $user;
 }
+
 // Custom fields
 $registrationlib = TikiLib::lib('registration');
 $customfields = $registrationlib->get_customfields();
@@ -74,23 +75,18 @@ $smarty->assign('show_mouseover_user_info', isset($prefs['show_mouseover_user_in
 if ($prefs['feature_userPreferences'] == 'y' && isset($_REQUEST["new_prefs"])) {
 	check_ticket('user-prefs');
 	// setting preferences
-	if ($prefs['change_theme'] == 'y' && empty($group_style)) {
-		if (isset($_REQUEST["mystyle"])) {
-			if ($user == $userwatch) {
-				$t = $tikidomain ? $tikidomain . '/' : '';
-				if ($_REQUEST["mystyle"] == "") {
-					//If mystyle is empty --> user has selected "Site Default" theme
-					$sitestyle = $tikilib->getOne("select `value` from `tiki_preferences` where `name`=?", 'style');
-					$headerlib->replace_cssfile('styles/' . $t . $prefs['style'], 'styles/' . $t . $sitestyle, 51);
-				} else {
-					$headerlib->replace_cssfile('styles/' . $t . $prefs['style'], 'styles/' . $t . $_REQUEST['mystyle'], 51);
-				}
+	if ($prefs['change_theme'] == 'y' && empty($group_theme)) {
+		if (isset($_REQUEST['mytheme'])) {
+			$themeandoption = $themelib->extract_theme_and_option($_REQUEST['mytheme']);
+			$theme = $themeandoption[0];
+			$themeOption = $themeandoption[1];
+			$tikilib->set_user_preference($userwatch, 'theme', $theme);
+			if (isset($themeOption)) {
+				$tikilib->set_user_preference($userwatch, 'theme_option', empty($themeOption) ? '' : $themeOption);
 			}
-			if ($_REQUEST["mystyle"] == "") {
-				$tikilib->set_user_preference($userwatch, 'theme', "");
-			} else {
-				$tikilib->set_user_preference($userwatch, 'theme', $_REQUEST["mystyle"]);
-			}
+			//Something is needed for the theme change to be displayed without additional manual page refresh. Problem: when modifying another user's settings (not my user's) using any of the below ways the refreshed screen will show my user's preference screen instead of staying on the edited user's preference screen
+			//header("location: tiki-user_preferences.php?view_user=$userwatch");
+			//$access->redirect($_SERVER['REQUEST_URI'], '', 200); 
 		}
 	}
 	if (isset($_REQUEST["userbreadCrumb"])) $tikilib->set_user_preference($userwatch, 'userbreadCrumb', $_REQUEST["userbreadCrumb"]);
@@ -372,9 +368,15 @@ $tikilib->get_user_preference($userwatch, 'user_dbl', 'y');
 $tikilib->get_user_preference($userwatch, 'display_12hr_clock', 'n');
 $userinfo = $userlib->get_user_info($userwatch);
 $smarty->assign_by_ref('userinfo', $userinfo);
-$llist = array();
-$llist = $tikilib->list_styles();
-$smarty->assign_by_ref('styles', $llist);
+//user theme
+$themelib = TikiLib::lib('theme');
+$available_themesandoptions = $themelib->get_available_themesandoptions();
+$smarty->assign_by_ref('available_themesandoptions', $available_themesandoptions);
+$userwatch_theme = $tikilib->get_user_preference($userwatch, 'theme', null);
+$userwatch_themeOption = $tikilib->get_user_preference($userwatch, 'theme_option', null);
+$smarty->assign_by_ref('userwatch_theme', $userwatch_theme);
+$smarty->assign_by_ref('userwatch_themeOption', $userwatch_themeOption);
+//user language
 $languages = array();
 $languages = $tikilib->list_languages();
 $smarty->assign_by_ref('languages', $languages);

@@ -10,69 +10,53 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
 	header('location: index.php');
 	exit;
 }
+global $prefs;
+$themelib = TikiLib::lib('theme');
 
-$a_style = $prefs['site_style'];
+//handle case when changing the themes in the Look and Feel settings panel
+$a_theme = $prefs['theme'];
 if (isset($_REQUEST['looksetup'])) {
 	ask_ticket('admin-inc-look');
-	if (isset($_REQUEST['style'])) {
+	if (isset($_REQUEST['theme'])) {
 		check_ticket('admin-inc-general');
 
-		if (!isset($_REQUEST['style_option']) || $_REQUEST['style_option'] == tra('None')) {
-			// style has no options
-			$_REQUEST['style_option'] = '';
+		if (!isset($_REQUEST['theme_option']) || $_REQUEST['theme_option'] = '') {
+			// theme has no options
+			$_REQUEST['theme_option'] = '';
 		}
 		check_ticket('admin-inc-general');
 	}
 } else {
 	// just changed theme menu, so refill options
-	if (isset($_REQUEST['style']) && $_REQUEST['style'] != '') {
-		$a_style = $_REQUEST['style'];
+	if (isset($_REQUEST['theme']) && $_REQUEST['theme'] != '') {
+		$a_theme = $_REQUEST['theme'];
 	}
 }
-$styles = $tikilib->list_styles();
-$smarty->assign_by_ref('styles', $styles);
-$smarty->assign('a_style', $a_style);
-$smarty->assign('style_options', $tikilib->list_style_options($a_style));
 
-/**
- * @param $stl - style file name (e.g. thenews.css)
- * @param $opt - optional option file name
- * @return string path to thumbnail file
- */
-function get_thumbnail_file($stl, $opt = '') // find thumbnail if there is one
-{
-	global $tikilib;
-	if (!empty($opt) && $opt != tr('None')) {
-		$filename = preg_replace('/\.css$/i', '.png', $opt); // change .css to .png
+$themes = $themelib->list_themes();	
+$smarty->assign_by_ref('themes', $themes);
+$theme_options = $themelib->list_theme_options($a_theme);
+$smarty->assign('theme_options', $theme_options);
 
-	} else {
-		$filename = preg_replace('/\.css$/i', '.png', $stl); // change .css to .png
-		$opt = '';
-	}
-	return $tikilib->get_style_path($stl, $opt, $filename);
-}
-
-// find thumbnail if there is one
-$thumbfile = get_thumbnail_file($a_style, $prefs['site_style_option']);
+// get thumbnail if there is one
+$thumbfile = $themelib->get_thumbnail_file($prefs['site_theme'], $prefs['site_theme_option']);
 if (empty($thumbfile)) {
-	$thumbfile = get_thumbnail_file($a_style);
+	$thumbfile = $themelib->get_thumbnail_file($prefs['site_theme']);
 }
 if (empty($thumbfile)) {
 	$thumbfile = 'img/trans.png';
 }
-if (!empty($thumbfile)) {
-	$smarty->assign('thumbfile', $thumbfile);
-}
+$smarty->assign('thumbfile', $thumbfile);
 
-if ($prefs['feature_jquery'] == 'y' && $prefs['theme_active'] === 'legacy') {
-	// hash of themes and their options and their thumbnail images
-	$js = 'var style_options = {';
-	foreach ($styles as $s) {
-		$js.= "\n'$s':['" . get_thumbnail_file($s, '') . '\',{';
-		$options = $tikilib->list_style_options($s);
+// hash of themes and their options and their thumbnail images
+if ($prefs['feature_jquery'] == 'y') {
+	$js = 'var theme_options = {';
+	foreach ($themes as $theme => $value) {
+		$js.= "\n'$theme':['" . $themelib->get_thumbnail_file($theme, '') . '\',{';
+		$options = $themelib->list_theme_options($theme);
 		if ($options) {
-			foreach ($options as $o) {
-				$js.= "'$o':'" . get_thumbnail_file($s, $o) . '\',';
+			foreach ($options as $option) {
+				$js.= "'$option':'" . $themelib->get_thumbnail_file($theme, $option) . '\',';
 			}
 			$js = substr($js, 0, strlen($js) - 1) . '}';
 		} else {
@@ -83,7 +67,7 @@ if ($prefs['feature_jquery'] == 'y' && $prefs['theme_active'] === 'legacy') {
 	$js = substr($js, 0, strlen($js) - 1);
 	$js.= '};';
 	// JS to handle theme/option changes client-side
-	// the var (style_options) has to be declared in the same block for AJAX call scope
+	// the var (theme_options) has to be declared in the same block for AJAX call scope
 	$none = json_encode(tr('None'));
 	$headerlib->add_js(
 <<<JS
@@ -91,17 +75,17 @@ $js
 
 \$(document).ready( function() {
 
-	var setupStyleSelects = function (styleDropDown, optionDropDown, showPreview) {
+	var setupThemeSelects = function (themeDropDown, optionDropDown, showPreview) {
 		// pick up theme drop-down change
-		styleDropDown.change( function() {
-			var ops = style_options[styleDropDown.val()];
+		themeDropDown.change( function() {
+			var ops = theme_options[themeDropDown.val()];
 			var none = true;
 			var current = optionDropDown.val();
 			optionDropDown.empty().attr('disabled',false)
-					.append(\$('<option/>').attr('value',$none).text($none));
-			if (styleDropDown.val()) {
+					.append(\$('<option/>').attr('value','').text($none));
+			if (themeDropDown.val()) {
 				\$.each(ops[1], function(i, val) {
-					optionDropDown.append(\$('<option/>').attr('value',i).text(i.replace(/\.css\$/, '')));
+					optionDropDown.append(\$('<option/>').attr('value',i).text(i));
 					none = false;
 				});
 			}
@@ -116,31 +100,31 @@ $js
 		}).change();
 		optionDropDown.change( function() {
 			if (showPreview !== undefined) {
-				var t = styleDropDown.val();
+				var t = themeDropDown.val();
 				var o = optionDropDown.val();
-				var f = style_options[t][1][o];
+				var f = theme_options[t][1][o];
 
 				if ( ! f ) {
-					f = style_options[t][0];
+					f = theme_options[t][0];
 				}
 
 				if (f) {
-					\$('#style_thumb').fadeOut('fast').attr('src', f).fadeIn('fast').animate({'opacity': 1}, 'fast');
+					\$('#theme_thumb').fadeOut('fast').attr('src', f).fadeIn('fast').animate({'opacity': 1}, 'fast');
 				} else {
-					\$('#style_thumb').animate({'opacity': 0.3}, 'fast');
+					\$('#theme_thumb').animate({'opacity': 0.3}, 'fast');
 				}
 			}
 		});
 	};
 
-	setupStyleSelects(\$('select[name=style]'), \$('select[name=style_option]'), true);
-	setupStyleSelects(\$('select[name=style_admin]'), \$('select[name=style_admin_option]'));
+	setupThemeSelects(\$('.tab-content select[name=theme]'), \$('.tab-content select[name=theme_option]'), true);
+	setupThemeSelects(\$('.tab-content select[name=theme_admin]'), \$('.tab-content select[name=theme_option_admin]'));
 });
 JS
 	);
 }
 
-/* Theme generator for Tiki 7+ */
+//Theme generator
 $reload = false;
 if ($prefs['themegenerator_feature'] === 'y') {
 	include_once 'lib/themegenlib.php';

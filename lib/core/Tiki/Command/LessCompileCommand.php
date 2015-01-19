@@ -68,7 +68,7 @@ class LessCompileCommand  extends Command
                     if (! file_exists($less_file)) {
                         continue;
                     }
-                    $css_file = "themes/$dirname/css/tiki.css";
+                    $css_file = "themes/$dirname/css/$dirname.css";
                     if (file_exists($css_file && filemtime($css_file) >= filemtime($less_file))) {
                         continue;
                     }

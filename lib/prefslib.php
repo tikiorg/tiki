@@ -148,8 +148,6 @@ class PreferencesLib
 		if (!empty($info['admin'])) {
 			if (preg_match('/^\w+$/', $info['admin'])) {
 				$info['admin'] = 'tiki-admin.php?page=' . urlencode($info['admin']);
-			} else {
-				$info['admin'] = $info['admin'];
 			}
 		}
 
@@ -415,6 +413,8 @@ class PreferencesLib
 			$file = substr($name, 0, $pos);
 		} elseif ( false !== $pos = strpos($name, '_') ) {
 			$file = substr($name, 0, $pos);
+		} elseif ( file_exists(__DIR__ . "/prefs/{$name}.php") ) {
+			$file = $name;
 		} else {
 			$file = 'global';
 		}

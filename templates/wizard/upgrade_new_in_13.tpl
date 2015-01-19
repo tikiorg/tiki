@@ -17,11 +17,11 @@
 		<br/><br/>
 		<fieldset class="table clearfix featurelist">
 			<legend>{tr}New Themes{/tr} & {tr}Site layouts (based on 'Bootstrap'){/tr}</legend>
-			{preference name=theme_active}
-			<div class="adminoptionbox theme_active_childcontainer custom">
+			{preference name=theme}
+			<div class="adminoptionbox theme_childcontainer custom">
 				{preference name=theme_custom}
 			</div>
-			<div class="adminoptionbox theme_active_childcontainer legacy">
+			<div class="adminoptionbox theme_childcontainer legacy">
 				{preference name=style}
 				{preference name=style_option}
 				{preference name=style_admin}

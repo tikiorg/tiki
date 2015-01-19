@@ -9,28 +9,30 @@
 // $Id$
 
 require_once ('tiki-setup.php');
-$tcontrollib = TikiLib::lib('tcontrol');
+$themecontrollib = TikiLib::lib('themecontrol');
 $categlib = TikiLib::lib('categ');
+$themelib = TikiLib::lib('theme');
 
 $access->check_feature('feature_theme_control', '', 'look');
 $access->check_permission('tiki_p_admin');
 
-$auto_query_args = array('find', 'sort_mode', 'offset', 'theme', 'theme-option', 'section');
+$auto_query_args = array('find', 'sort_mode', 'offset', 'theme', 'theme_option', 'section');
 $smarty->assign('a_section', isset($_REQUEST['section']) ? $_REQUEST['section'] : '');
 
-$tcontrollib->setup_theme_menus();
+$themes = $themelib->list_themes_and_options();
+$smarty->assign('themes', $themes);
 
 if (isset($_REQUEST['assign'])) {
 	check_ticket('tc-sections');
-	$tcontrollib->tc_assign_section($_REQUEST['section'], $_REQUEST['theme'], isset($_REQUEST['theme-option']) ? $_REQUEST['theme-option'] : '');
+	$themecontrollib->tc_assign_section($_REQUEST['section'], $_REQUEST['theme']);
 }
 if (isset($_REQUEST['delete'])) {
 	check_ticket('tc-sections');
 	foreach (array_keys($_REQUEST["sec"]) as $sec) {
-		$tcontrollib->tc_remove_section($sec);
+		$themecontrollib->tc_remove_section($sec);
 	}
 }
-$channels = $tcontrollib->tc_list_sections(0, -1, 'section_asc', '');
+$channels = $themecontrollib->tc_list_sections(0, -1, 'section_asc', '');
 $smarty->assign_by_ref('channels', $channels["data"]);
 $smarty->assign('sections', $sections_enabled);
 ask_ticket('tc-sections');

@@ -83,37 +83,18 @@ function smarty_function_icon($params, $smarty)
 			$default_width = $default_height = ( strpos($params['_id'], '48x48') !== false ) ? 48 : 32;
 		}
 	}
-	//ICONSET START, work-in-progress, more information: dev.tiki.org/icons. $iconset array is prepared by lib/setup/theme.php
-	if (!empty($params['name']) and empty($params['_tag'])){ 
+	// ICONSET START, work-in-progress, more information: dev.tiki.org/icons. $iconset array is prepared by lib/setup/theme.php
+	// N.B. In some contexts such as the console $iconset may not be set up
+	if (!empty($params['name']) && empty($params['_tag']) && !empty($iconset)) {
+
 		$name = $params['name'];
+		$html = $iconset->getHtml($name);
 		
-		if (isset($iconset[$name])) { //if icon is defined in $iconset, use it
-			$tag = $iconset[$name]['tag'];
-			$icon_class = '';
-			
-			if (isset($iconset[$name]['class'])) { //use class defined for the icon if set
-				$icon_class = $iconset[$name]['class'];
-			}
-			
-			if ($tag == 'img') { //manage legacy image icons (eg: png, gif, etc)
-				$src = $iconset[$name]['image_src'];
-				$alt = $name;  //use icon name as alternate text
-			}
-		}
-		else { //if icon is not defined in not found in $iconset, than display bootstrap glyphicon warning-sign. Helps to detect missing icon definitions, typos
-			$icon_class = 'glyphicon glyphicon-warning-sign';
-			$tag = 'span';
-		}
-			
-		//assemble icon, later enhance for svg
-		if ($tag == 'img') { //for images
-			$html = "<span class=\"icon icon-$name $icon_class\"><img src=\"$src\" alt=\"$alt\"></span>";
-		}
-		else { //for font-icons
-			$html = "<$tag class=\"icon icon-$name $icon_class\"></$tag>";
-		}
-		
-		if (!empty($params['href']) || !empty($params['title'])) { //generate a link for the icon if href or title (for tips) parameter is set. This will produce a link element (<a>) around the icon. If you want a button element (<button>), use the {button} smarty_tiki function
+		if (!empty($params['href']) || !empty($params['title'])) {
+			/* Generate a link for the icon if href or title (for tips) parameter is set.
+			 * This will produce a link element (<a>) around the icon.
+			 * If you want a button element (<button>), use the {button} smarty_tiki function */
+
 			//collect link components
 			if (!empty($params['title'])) { //add title if not empty
 				$a_title = $params['title'];

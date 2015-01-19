@@ -18,7 +18,7 @@ function module_switch_theme_info()
 {
 	return array(
 		'name' => tra('Switch Theme'),
-		'description' => tra('Enables to quickly change the theme.'),
+		'description' => tra('Enables to quickly change the theme for the user.'),
 		'prefs' => array('change_theme'),
 		'params' => array()
 	);
@@ -30,24 +30,22 @@ function module_switch_theme_info()
  */
 function module_switch_theme($mod_reference, &$module_params)
 {
-	global $prefs, $tc_theme, $tc_theme_option;
+	global $prefs, $section, $group_theme, $tc_theme, $tc_theme_option;
 	$smarty = TikiLib::lib('smarty');
-	$tikilib = TikiLib::lib('tiki');
-	if ($prefs['theme_active'] !== 'legacy') {
-		$module_params['error'] = tr('Switching themes requires the "Theme selection" setting to be: %0',
-				'<em>' . tr('Bootstrap themes in the "styles" directory') . '</em>');
+	$themelib = TikiLib::lib('theme');
+	
+	//get the list of available themes and options
+	$smarty->assign('available_themes', $themelib->get_available_themes());
+	$smarty->assign('available_options', $themelib->get_available_options($prefs['theme']));
+	
+	//check if CSS Editor's try theme is on
+	if (!empty($_SESSION['try_theme'])) {
+		list($css_theme, $css_theme_option) = $themelib->extract_theme_and_option($_SESSION['try_theme']);
+	} else {
+		$css_theme = '';
 	}
-
-	$current_style = empty($tc_theme) ? $prefs['style'] : $tc_theme;
-	$current_style_option = empty($tc_theme_option) ? !empty($tc_theme) ? $prefs['style_option'] : '' : $tc_theme_option;
-
-	$smarty->assign('tc_theme', $tc_theme);
-	$smarty->assign('style', $current_style);
-	$smarty->assign('style_option', $current_style_option);
-
-	$smarty->assign('styleslist', $tikilib->list_styles());
-	$smarty->assign('style_options', $tikilib->list_style_options($current_style));
-
+	
+	//themegenerator
 	if ($prefs['themegenerator_feature'] === 'y') {
 		include_once 'lib/prefs/themegenerator.php';
 		$p = prefs_themegenerator_list();
@@ -55,6 +53,31 @@ function module_switch_theme($mod_reference, &$module_params)
 			$smarty->assign('themegen_list', array_keys($p['themegenerator_theme']['options']));
 			$smarty->assign('themegenerator_theme', $prefs['themegenerator_theme']);
 		}
+	}
+
+	if (!empty($tc_theme) ||
+		!empty($group_theme) ||
+		(($section === 'admin' || empty($section)) && !empty($prefs['theme_admin'])) ||
+		!empty($css_theme))
+	{
+		$info_title = tra('Not allowed here') . ':' .
+			tra('Displayed theme') . ': ' . $prefs['theme'] . (!empty($prefs['theme_option']) ? '/' . $prefs['theme_option'] : '');
+
+		if (!empty($css_theme)) {
+			$info_title .= ' (' . tra('Edit CSS') . ')';
+		} else if (!empty($tc_theme)) {
+			$info_title .= ' (' . tra('Theme Control') . ')';
+		} else if (($section === 'admin' || empty($section)) && !empty($prefs['theme_admin'])) {
+			$info_title .= ' (' . tra('Admin Theme') . ')';
+		} else if ($group_theme) {
+			$info_title .= ' (' . tra('Group Theme') . ')';
+		}
+
+		$smarty->assign('switchtheme_enabled', false);
+		$smarty->assign('info_title', $info_title);
+	} else {
+		$smarty->assign('switchtheme_enabled', true);
+		$smarty->assign('info_title', '');
 	}
 
 	$smarty->clear_assign('tpl_module_title'); // TPL sets dynamic default title
