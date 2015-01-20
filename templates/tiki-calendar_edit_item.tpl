@@ -44,7 +44,7 @@
 						{tr}Preview{/tr}
 					</h2>
 					{$calitem.parsedName}
-					<div class="wikitext">
+					<div class="preview">
 						{$calitem.parsed}
 					</div>
 					<h2>
@@ -371,8 +371,8 @@
 										{/if}.
 									{/if}
 								{/if}
-							</div>
-						{/if}
+							{/if}
+						</div>
 					</div>
 				</div> <!-- / .row -->
 			{/if}{* end recurrence *}
