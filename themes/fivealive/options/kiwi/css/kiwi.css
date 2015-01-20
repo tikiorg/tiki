@@ -1,4 +1,4 @@
-/* The Kiwi theme option file for the FiveAlive theme of Tiki Wiki CMS Groupware. */
+/*  The Kiwi theme option file for the FiveAlive theme of Tiki Wiki CMS Groupware. */
 .navbar-nav > li.dropdown {
   border-bottom: 1px solid #bcb923;
 }
@@ -539,23 +539,6 @@ hr {
 .label-danger[href]:hover,
 .label-danger[href]:focus {
   background-color: #c9302c;
-}
-#col2 .panel,
-#col3 .panel,
-#bottom_modules .panel {
-  border: none;
-}
-#col2 .panel-default > .panel-heading,
-#col3 .panel-default > .panel-heading,
-#bottom_modules .panel-heading {
-  background: #ffffff;
-  border-width: 0 0 1px 0;
-  border-style: solid;
-  border-color: #cdbe23;
-}
-#col2 .panel-title,
-#col3 .panel-title {
-  color: #cdbe23;
 }
 .header_outer {
   background: url('../images/siteheadertile.png') 0 0 no-repeat;
