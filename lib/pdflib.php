@@ -93,7 +93,7 @@ class PdfGenerator
 
 		// Run shell_exec command to generate out file
 		// NOTE: this requires write permissions
-		`{$this->location} $arg $filename`;
+		`"{$this->location}" $arg $filename`;
 
 		// Read the out file
 		$pdf = file_get_contents($filename);
