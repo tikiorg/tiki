@@ -43,7 +43,7 @@
 			{/foreach}
 		</fieldset>
 		<fieldset class="table clearfix featurelist">
-			<legend>{tr}Other features{/tr}</legend>
+			<legend>{tr}Other new features{/tr}</legend>
 				{preference name=tracker_tabular_enabled}
 				{preference name=mustread_enabled}
 				<div class="adminoptionboxchild" id="mustread_enabled_childcontainer">
@@ -53,6 +53,16 @@
 				<div class="adminoptionboxchild" id="federated_enabled_childcontainer">
 					{preference name=federated_elastic_url}
 				</div>
+        </fieldset>
+        <fieldset class="table clearfix featurelist">
+            <legend>{tr}Improved and extended features{/tr}</legend>
+                {preference name=feature_jquery_tablesorter}
 		</fieldset>
-	</div>
+        <i>{tr}See the full list of changes{/tr}.</i>
+        <a href="http://doc.tiki.org/Tiki14" target="tikihelp" class="tikihelp" title="{tr}Tiki14:{/tr}
+			{tr}Click to read more{/tr}
+		">
+            <img src="img/icons/help.png" alt="" width="16" height="16" class="icon" />
+        </a>
+    </div>
 </div>
