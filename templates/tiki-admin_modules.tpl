@@ -36,7 +36,7 @@
 	</ul>
 	<p>
 		<strong>{tr}Note:{/tr}</strong> {tr}Links and buttons in modules, apart from the Application Menu, have been deliberately disabled on this page to make drag and drop more reliable. Click here to return <a href="./">HOME</a>{/tr}<br>
-		<strong><em>{tr}More info here{/tr}</em></strong> {icon name="help" link="http://dev.tiki.org/Modules+Revamp"}
+		<strong><em>{tr}More info here{/tr}</em></strong> {icon name="help" href="http://dev.tiki.org/Modules+Revamp" class=""}
 	</p>
 
 {/remarksbox}
