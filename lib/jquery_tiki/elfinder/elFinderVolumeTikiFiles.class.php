@@ -234,12 +234,9 @@ class elFinderVolumeTikiFiles extends elFinderVolumeDriver
 			global $user;
 
 			if ($newdesc && $perms['tiki_p_edit_gallery_file'] === 'y') {
-				$info = array_merge($info, array(
-					'description' => $newdesc,
-					'lastModifUser' => $user,
-					'lastModif' => TikiLib::lib('tiki')->now,
-				));
 				if ($isGal) {
+					unset($info['link']);
+					$info['description'] = $newdesc;
 					$this->filegallib->replace_file_gallery($info);
 				} else {
 					$this->filegallib->update_file($id, $info['name'], $newdesc, $user, $info['comment']);
