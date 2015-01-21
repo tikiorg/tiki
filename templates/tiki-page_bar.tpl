@@ -20,7 +20,7 @@
 							{button _keepall='y' href="tiki-editpage.php" page=$page _class=$thisPageClass _text="{tr}Edit this page{/tr}"}
 						{/if}
 					{elseif $tiki_p_wiki_view_latest eq 'y'}
-						<span class="button">
+						<span class="btn btn-default button">
 							{self_link latest=1}
 								{tr}View latest version before editing{/tr}
 							{/self_link}
@@ -112,7 +112,7 @@
 						{/jq}
 						{/if}
 						
-						<span class="button btn-default">
+						<span class="btn btn-default button">
 							<a id="comment-toggle" href="{service controller=comment action=list type="wiki page" objectId=$page}#comment-container">
 								{tr}Comments{/tr}
 								{if $count_comments}
