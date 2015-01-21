@@ -21,13 +21,8 @@ class IconsetLib
 
 		// start with the default base and merge in others which will generally be less complete
 		$iconset = new Iconset($this->loadFile('themes/base_files/iconsets/default.php'));
-
-		$filename = $themelib->get_theme_path($theme, $theme_option, 'custom.php', 'icons');
-		if ($filename) {
-			$iconset1 = new Iconset($this->loadFile($filename));
-			$iconset->merge($iconset1);
-		}
-
+		
+		//override the default icons with theme specific icons or with site icon set setting
 		if ($prefs['theme_iconset'] === 'theme_specific_iconset') {
 			$filename = $themelib->get_theme_path($theme, $theme_option, 'iconset.php');
 		} else if ($prefs['theme_iconset'] !== 'default') {
@@ -35,10 +30,25 @@ class IconsetLib
 		} else {
 			return $iconset;	// just plain default set
 		}
-
 		$iconset1 = new Iconset($this->loadFile($filename));
 		$iconset->merge($iconset1);
 
+		//when a theme option is used, first override with the main theme's custom icons
+		if(!empty($theme_option)){
+			$filename = $themelib->get_theme_path($theme, '', 'custom.php', 'icons/');
+			if ($filename) {
+				$iconset1 = new Iconset($this->loadFile($filename));
+				$iconset->merge($iconset1);
+			}
+		}
+		
+		//finally override with custom icons of the displayed theme
+		$filename = $themelib->get_theme_path($theme, $theme_option, 'custom.php', 'icons/');
+		if ($filename) {
+			$iconset1 = new Iconset($this->loadFile($filename));
+			$iconset->merge($iconset1);
+		}
+		
 		return $iconset;
 	}
 
@@ -142,7 +152,7 @@ class Iconset
 
 			return $html;
 
-		} else { //if icon is not defined in not found in $iconset, than display bootstrap glyphicon warning-sign. Helps to detect missing icon definitions, typos
+		} else { //if icon is not found in $iconset, than display bootstrap glyphicon warning-sign. Helps to detect missing icon definitions, typos
 			return $this->getHtml('warning');
 		}
 
