@@ -96,26 +96,26 @@ class Tracker_Field_DateTime extends Tracker_Field_Abstract implements Tracker_F
 		$value = $this->getConfiguration('value');
 
 		if ($value) {
-			$date = $tikilib->get_short_date($value, $user);
+			$date = $tikilib->get_short_date($value);
 			if ($this->getOption('datetime') == 'd') {
 				return $date;
 			}
 			
 			if ($this->getOption('datetime') == 't') {
-				return $tikilib->get_short_time($value, $user);
+				return $tikilib->get_short_time($value);
 			}
 
 			if ($context['list_mode'] == 'csv') {
-				return $tikilib->get_short_datetime($value, $user);
+				return $tikilib->get_short_datetime($value);
 			}
 
-			$current = $tikilib->get_short_date($tikilib->now, $user);
+			$current = $tikilib->get_short_date($tikilib->now);
 			global $prefs;
 
 			if ($date == $current && $prefs['tiki_same_day_time_only'] == 'y' ) {
-				return $tikilib->get_short_time($value, $user);
+				return $tikilib->get_short_time($value);
 			} else {
-				return $tikilib->get_short_datetime($value, $user);
+				return $tikilib->get_short_datetime($value);
 			}
 		}
 	}
