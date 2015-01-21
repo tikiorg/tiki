@@ -10,16 +10,15 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
 	exit;
 }
 
-function iconset_iconset()
+function iconset_orange()
 {
 	return array(
 		'name' => tr('Theme icons'),
 		'description' => tr('Icons to be used for this theme'),
-		'source' => 'themes/base_files/iconsets/default.php', // full path to the source iconset that is to be overridden by $icons specified below.
 		'tag' => 'span', // the default html tag to sorround the icon
 		'icons' => array(
 			'information' => array(
-				'class' => 'fa fa-info fa-fw', // This is a sample icon, change it to have a customized font-aewesome icon or change/add parameters to have an image or a glyphicon. See http://dev.tiki.org/Icons for more details
+				'class' => 'fa fa-eye fa-fw', // This is a sample icon, change it to have a customized font-aewesome icon or change/add parameters to have an image or a glyphicon. See http://dev.tiki.org/Icons for more details
 			),
 		)
 	);
