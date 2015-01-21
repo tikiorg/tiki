@@ -51,7 +51,7 @@ class PdfGenerator
 			$tokenlib = AuthTokens::build($prefs);
 			$params['TOKEN'] = $tokenlib->createToken(
 				$tikiroot . $file, $params, $perms->getGroups(),
-				array('timeout' => 60,)
+				array('timeout' => 120)
 			);
 		}
 
@@ -93,7 +93,10 @@ class PdfGenerator
 
 		// Run shell_exec command to generate out file
 		// NOTE: this requires write permissions
-		`"{$this->location}" $arg $filename`;
+		$quotedFilename = '"'.$filename.'"';
+		$quotedCommand = '"'.$this->location.'"';
+		
+		`$quotedCommand -q $arg $quotedFilename`;
 
 		// Read the out file
 		$pdf = file_get_contents($filename);
