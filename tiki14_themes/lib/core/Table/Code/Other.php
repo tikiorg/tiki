@@ -136,7 +136,7 @@ class Table_Code_Other extends Table_Code_Manager
 				'	<span class="next tips" title=":' . tr('Next page') . '">',
 				'		' . smarty_function_icon(['name' => 'forward'], $smarty),
 				'	</span>',
-				'	<span class="last tips" title=":' . tr('First page') . '">',
+				'	<span class="last tips" title=":' . tr('Last page') . '">',
 				'		' . smarty_function_icon(['name' => 'forward_step'], $smarty),
 				'	</span>',
 				'</div>',

@@ -106,7 +106,7 @@ class Tracker_Field_DateTime extends Tracker_Field_Abstract implements Tracker_F
 			}
 
 			if ($context['list_mode'] == 'csv') {
-				return $tikilib->get_short_datetime($value, false);
+				return $tikilib->get_short_datetime($value);
 			}
 
 			$current = $tikilib->get_short_date($tikilib->now);
@@ -115,7 +115,7 @@ class Tracker_Field_DateTime extends Tracker_Field_Abstract implements Tracker_F
 			if ($date == $current && $prefs['tiki_same_day_time_only'] == 'y' ) {
 				return $tikilib->get_short_time($value);
 			} else {
-				return $tikilib->get_short_datetime($value, false);
+				return $tikilib->get_short_datetime($value);
 			}
 		}
 	}

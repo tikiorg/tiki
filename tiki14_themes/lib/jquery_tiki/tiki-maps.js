@@ -1082,6 +1082,10 @@
 									try {
 										features = format.read(i.geo_feature);
 									} catch (e) {
+										features = null;
+									}
+
+									if (! features) {
 										// Corrupted feature - display plain marker
 										$(container).addMapMarker({
 											coordinates: $(container).getMapCenter(),

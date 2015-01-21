@@ -44,7 +44,7 @@
 						{tr}Preview{/tr}
 					</h2>
 					{$calitem.parsedName}
-					<div class="wikitext">
+					<div class="preview">
 						{$calitem.parsed}
 					</div>
 					<h2>
@@ -74,7 +74,17 @@
 						<select name="save[calendarId]" id="calid" onchange="javascript:needToConfirm=false;document.getElementById('editcalitem').submit();" class="form-control">
 							{foreach item=it key=itid from=$listcals}
 								{if $it.tiki_p_add_events eq 'y'}
-									<option value="{$it.calendarId}" style="background-color:#{$it.custombgcolor};color:#{$it.customfgcolor};"
+									{$calstyle = ''}
+									{if not empty($it.custombgcolor)}
+										{$calstyle='background-color:#'|cat:$it.custombgcolor}
+									{/if}
+									{if not empty($it.customfgcolor)}
+										{$calstyle='color:#'|cat:$it.customfgcolor}
+									{/if}
+									{if $calstyle}
+										{$calstyle = ' style="'|cat:$calstyle|cat:'"'}
+									{/if}
+									<option value="{$it.calendarId}"{$calstyle}
 										{if isset($calitem.calendarId)}
 											{if $calitem.calendarId eq $itid}
 												selected="selected"
@@ -361,8 +371,8 @@
 										{/if}.
 									{/if}
 								{/if}
-							</div>
-						{/if}
+							{/if}
+						</div>
 					</div>
 				</div> <!-- / .row -->
 			{/if}{* end recurrence *}
