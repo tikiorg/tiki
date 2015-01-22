@@ -444,7 +444,7 @@ if ($prefs['users_prefs_display_timezone'] == 'Site'
 		if (TikiDate::TimezoneIsValidId($_COOKIE['local_tz'])) {
 			$prefs['timezone_offset'] = isset($_COOKIE['local_tzoffset']) ? $_COOKIE['local_tzoffset'] : '';
 			if (isset($_COOKIE['local_tzoffset'])) {
-				$tzname = timezone_name_from_abbr($_COOKIE['local_tz'], $_COOKIE['local_tzoffset']);
+				$tzname = timezone_name_from_abbr($_COOKIE['local_tz'], $_COOKIE['local_tzoffset'] * 60 * 60);
 				$prefs['timezone_offset'] = $_COOKIE['local_tzoffset'];
 			} else {
 				$tzname = timezone_name_from_abbr($_COOKIE['local_tz']);
