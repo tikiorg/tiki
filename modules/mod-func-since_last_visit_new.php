@@ -110,8 +110,8 @@ function module_since_last_visit_new($mod_reference, $params = null)
 	}
 
 	if ((empty($params['calendar_focus']) || $params['calendar_focus'] != 'ignore')
-			&& strpos($_SERVER['SCRIPT_NAME'], 'tiki-calendar.php')
-			&& isset($_REQUEST['todate']) && $_REQUEST['todate']
+			&& strpos($_SERVER['SCRIPT_NAME'], 'tiki-calendar.php') !== false
+			&& ! empty($_REQUEST['todate'])
 	) {
 		$last = $_REQUEST['todate'];
 		$_SESSION['slvn_last_login'] = $last;
