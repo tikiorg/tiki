@@ -299,28 +299,34 @@
 					{if !$tsAjax}
 					</div>
 					{if $users}
-						<div class="form-group" id="submit_mult">
-							<label>{tr}Perform action with checked{/tr}</label>
-							<select class="submit_mult form-control" name="submit_mult">
-								<option value="" selected="selected">-</option>
-								<option value="remove_users" >{tr}Remove{/tr}</option>
-								{if $prefs.feature_banning == 'y'}
-									<option value="ban_ips">{tr}Ban IPs{/tr}</option>
-									<option value="remove_users_and_ban">{tr}Remove users and Ban IPs{/tr}</option>
-								{/if}
-								{if $prefs.feature_wiki_userpage == 'y'}
-									<option value="remove_users_with_page">{tr}Remove users and their userpages{/tr}</option>
+						<div for="submit_multi" class="text-left form-group" id="submit_mult" class="col-lg-5">
+							<label class="col-lg-5">{tr}Perform action with checked{/tr}</label>
+							<div class="col-lg-4 input-group">
+								<select class="submit_mult form-control" name="submit_mult">
+									<option value="" selected="selected">-</option>
+									<option value="remove_users" >{tr}Remove{/tr}</option>
 									{if $prefs.feature_banning == 'y'}
-										<option value="remove_users_with_page_and_ban">{tr}Remove users, their userpages and Ban IPs{/tr}</option>
+										<option value="ban_ips">{tr}Ban IPs{/tr}</option>
+										<option value="remove_users_and_ban">{tr}Remove users and Ban IPs{/tr}</option>
 									{/if}
-								{/if}
-								<option value="assign_groups" >{tr}Change group assignments{/tr}</option>
-								<option value="set_default_groups">{tr}Set default groups{/tr}</option>
-								{if $prefs.feature_wiki == 'y'}
-									<option value="emailChecked">{tr}Send wiki page content by email{/tr}</option>
-								{/if}
-							</select>
-							<button type="submit" style="display: none" class="btn btn-default btn-sm submit_mult">{tr}OK{/tr}</button>
+									{if $prefs.feature_wiki_userpage == 'y'}
+										<option value="remove_users_with_page">{tr}Remove users and their userpages{/tr}</option>
+										{if $prefs.feature_banning == 'y'}
+											<option value="remove_users_with_page_and_ban">{tr}Remove users, their userpages and Ban IPs{/tr}</option>
+										{/if}
+									{/if}
+									<option value="assign_groups" >{tr}Change group assignments{/tr}</option>
+									<option value="set_default_groups">{tr}Set default groups{/tr}</option>
+									{if $prefs.feature_wiki == 'y'}
+										<option value="emailChecked">{tr}Send wiki page content by email{/tr}</option>
+									{/if}
+								</select>
+								<span class="input-group-btn">
+									<button type="submit" style="display:none" class="btn btn-primary submit_mult">
+										{tr}OK{/tr}
+									</button>
+								</span>
+							</div>
 						</div>
 						<div id="gm" style="display:none">
 							<h4>{tr}Change group assignments for selected users{/tr}</h4>
@@ -348,8 +354,8 @@
 							</div>
 							<div class="form-group">
 								<div class="submit col-sm-4 col-sm-offset-2">
-									<button type="submit" class="btn btn-default btn-sm gm" disabled="disabled">{tr}OK{/tr}</button>
 									<button type="button" style="display: none" class="btn btn-default cancel-choice">{tr}Cancel{/tr}</button>
+									<button type="submit" class="btn btn-primary gm" disabled="disabled">{tr}OK{/tr}</button>
 								</div>
 							</div>
 						</div>
@@ -369,8 +375,8 @@
 							</div>
 							<div class="form-group">
 								<div class="submit col-sm-4 col-sm-offset-2">
-									<button type="submit" disabled="disabled" class="btn btn-default btn-sm dg">{tr}OK{/tr}</button>
 									<button type="button" style="display: none" class="btn btn-default cancel-choice">{tr}Cancel{/tr}</button>
+									<button type="submit" disabled="disabled" class="btn btn-primary dg">{tr}OK{/tr}</button>
 									<input type="hidden" class="dg" disabled="disabled" name="set_default_groups" value="y">
 								</div>
 							</div>
@@ -396,8 +402,8 @@
 							</div>
 							<div class="form-group">
 								<div class="col-sm-10 col-sm-offset-2 submit">
-									<button type="submit" disabled="disabled" class="btn btn-default btn-sm emc">{tr}OK{/tr}</button>
 									<button type="button" style="display: none" class="btn btn-default cancel-choice">{tr}Cancel{/tr}</button>
+									<button type="submit" disabled="disabled" class="btn btn-primary emc">{tr}OK{/tr}</button>
 									<input class="emc" disabled="disabled" type="hidden" name="emailChecked" value="y">
 								</div>
 							</div>
