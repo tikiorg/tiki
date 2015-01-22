@@ -1196,8 +1196,7 @@ class WikiLib extends TikiLib
 			$href .= '&amp;';
 		}
 
-		if ($prefs['feature_sefurl'] == 'y' &&
-				strpos($page, '/') === false && strpos($page, '%2F') === false) {	// slash in sefurl page name causes error 404
+		if ($prefs['feature_sefurl'] == 'y') {
 
 			include_once('tiki-sefurl.php');
 			return filter_out_sefurl($href, 'wiki');
