@@ -13,14 +13,14 @@
 		{if $slvn_info.cant == 0}
 			<div class="separator">{tr}Nothing has changed{/tr}</div>
 		{else}
-			{if $prefs.feature_jquery_ui eq "y" and $use_jquery_ui eq "y"}
+			{if $use_jquery_ui eq "y"}
 				{assign var=fragment value=1}
-				<div id="mytabs" style="display: none;">
-					<ul>
+				<div class="tabs">
+					<ul class="nav nav-tabs">
 						{foreach key=pos item=slvn_item from=$slvn_info.items}
 							{if $slvn_item.count > 0}
 								<li style="width:{$slvn_info.li_width}%;">
-									<a href="#fragment-{$fragment}">
+									<a data-toggle="tab" href="#fragment-{$fragment}" style="padding: 0;">
 										{if $pos eq "blogs"}
 											<img src="img/icons/large/blogs.png" alt="{tr}Blogs{/tr}" title="{tr}Blogs{/tr}">
 										{elseif $pos eq "blogPosts"}
@@ -60,15 +60,17 @@
 										{/if}
 									</a>
 								</li>
-							{assign var=fragment value=$fragment+1}
-						{/if}
-					{/foreach}
-				</ul>
+								{assign var=fragment value=$fragment+1}
+							{/if}
+						{/foreach}
+					</ul>
+				</div>
 				{assign var=fragment value=1}
 			{/if}
+			<div class="tab-content">
 			{foreach key=pos item=slvn_item from=$slvn_info.items}
 				{if $slvn_item.count > 0}
-					{if $prefs.feature_jquery_ui eq "y" and $use_jquery_ui eq "y"}<div id="fragment-{$fragment}">{/if}
+					{if $use_jquery_ui eq "y"}<div id="fragment-{$fragment}" class="tab-pane{if $fragment eq 1} active{/if}">{/if}
 					{assign var=cname value=$slvn_item.cname}
 					{if $slvn_item.count eq $module_rows}
 						<div class="separator"><a class="separator" href="javascript:flip('{$cname}');">{tr}Multiple{/tr} {$slvn_item.label}, {tr}including{/tr}</a></div>
@@ -78,7 +80,7 @@
 					{assign var=showcname value="show_"|cat:$cname}
 
 					{if $pos eq 'trackers' or $pos eq 'utrackers'}
-						<div id="{$cname}" style="display:{if !isset($cookie.$showcname) or $cookie.$showcname eq 'y'}{$default_folding}{else}{$opposite_folding}{/if};">
+						<div id="{$cname}">
 
 							{****** Parse out the trackers *****}
 							{foreach key=tp item=tracker from=$slvn_item.tid}
@@ -117,14 +119,13 @@
 							{if $nonums != 'y'}</ol>{else}</ul>{/if}
 						</div>
 					{/if}
-					{if $prefs.feature_jquery_ui eq "y" and $use_jquery_ui eq "y"}
+					{if $use_jquery_ui eq "y"}
 						</div>
 						{assign var=fragment value=$fragment+1}
 					{/if}
 				{/if}
 			{/foreach}
-			{if $prefs.feature_jquery_ui eq "y" and $use_jquery_ui eq "y"}</div>{/if}
+			</div>
 		{/if}
-		{if $prefs.feature_jquery_ui eq "y" and $use_jquery_ui eq "y"}{jq} $(function() {$("#mytabs").tabs({}).show();}); {/jq}{/if}
 	{/tikimodule}
 {/if}

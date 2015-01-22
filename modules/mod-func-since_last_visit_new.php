@@ -41,8 +41,8 @@ function module_since_last_visit_new_info()
 				'description' => tra('If set to "y", fold automatically sections and show only the title (user has to click on each section in order to see the details of modifications).') . ' ' . tra('Default:') . ' "n"'
 			),
 			'use_jquery_ui' => array(
-				'name' => tra('Use jQuery presentation'),
-				'description' => tra('If set to "y", use jQuery to show the result.') . ' ' . tra('Default:') . ' "n"'
+				'name' => tra('Use tabbed presentation'),
+				'description' => tra('If set to "y", use Bootstrap tabs to show the result.') . ' ' . tra('Default:') . ' "n"'
 			),
 			'daysAtLeast' => array(
 				'name' => tra('Minimum timespan'),
