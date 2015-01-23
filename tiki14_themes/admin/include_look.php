@@ -127,7 +127,7 @@ JS
 //Theme generator
 $reload = false;
 if ($prefs['themegenerator_feature'] === 'y') {
-	include_once 'lib/themegenlib.php';
+	$themegenlib = TikiLib::lib('themegenerator');
 
 	if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		$reload = true;

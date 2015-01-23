@@ -7,10 +7,10 @@
 
 function prefs_themegenerator_list($partial = false)
 {
-	global $prefs, $themegenlib;
+	global $prefs;
 
 	if (! $partial) {
-		include_once 'lib/themegenlib.php';
+		$themegenlib = TikiLib::lib('themegenerator');
 		
 		$themes = array('' => tra('New...'));
 		
@@ -21,8 +21,8 @@ function prefs_themegenerator_list($partial = false)
 			foreach ( $list as $item ) {
 				$tm = new ThemeGenTheme($item);
 				$d = $tm->getData();
-				if ((empty($d['theme']) || $d['theme'] === $prefs['style']) &&
-						(empty($d['theme_option']) || $d['theme_option'] === $prefs['style_option'])) {
+				if ((empty($d['theme']) || $d['theme'] === $prefs['theme']) &&
+						(empty($d['theme_option']) || $d['theme_option'] === $prefs['theme_option'])) {
 					$themes[$item] = $item;
 				}
 			}
