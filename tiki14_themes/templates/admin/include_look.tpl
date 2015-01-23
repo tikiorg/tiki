@@ -260,11 +260,8 @@
 
 			<fieldset>
 				<legend>{tr}Custom Codes{/tr}</legend>
+				{button _text="{tr}CSS Assistant{/tr}" _class="btn-sm tips" _onclick="show_brosho();return false;" _ajax="n" _title="{tr}Brosho jQuery Plugin{/tr}:{tr}Assistance to edit Custom CSS{/tr}"}
 				{preference name="header_custom_css" syntax="css"}
-				<div class="adminoptionboxchild">
-					{self_link _onclick="show_brosho();return false;" _ajax="n"}{icon _id="bricks"}{tr}Experimental: CSS assistant (work in progress - click the x to remove){/tr}{/self_link}
-				</div>
-				{$headerlib->add_jsfile('lib/jquery_tiki/brosho/tiki_brosho.js')}
 
 				{preference name=feature_custom_html_head_content syntax="htmlmixed"}
 				{preference name=feature_endbody_code syntax="tiki"}
