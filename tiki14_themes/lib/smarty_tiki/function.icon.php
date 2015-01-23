@@ -37,11 +37,11 @@ function smarty_function_icon($params, $smarty)
 	$cachelib = TikiLib::lib('cache');
 
 	if (empty($tc_theme)) {
-		$current_style = isset($prefs['style']);
-		$current_style_option = isset($prefs['style_option']) ? $prefs['style_option'] : '';
+		$current_theme = $prefs['theme'];
+		$current_theme_option = isset($prefs['theme_option']) ? $prefs['theme_option'] : '';
 	} else {
-		$current_style = $tc_theme;
-		$current_style_option = !empty($tc_theme_option) ? $tc_theme_option : '';
+		$current_theme = $tc_theme;
+		$current_theme_option = !empty($tc_theme_option) ? $tc_theme_option : '';
 	}
 
 	if (isset($params['_type'])) {
@@ -52,7 +52,7 @@ function smarty_function_icon($params, $smarty)
 		}
 	}
 
-	$serialized_params = serialize(array_merge($params, array($current_style, $current_style_option, isset($_SERVER['HTTPS']))));
+	$serialized_params = serialize(array_merge($params, array($current_theme, $current_theme_option, isset($_SERVER['HTTPS']))));
 	$cache_key = TikiLib::contextualizeKey('icons_' . '_' . md5($serialized_params), 'language', 'external');
 	if ( $cached = $cachelib->getCached($cache_key) ) {
 		return $cached;
@@ -105,7 +105,7 @@ function smarty_function_icon($params, $smarty)
 			if (isset($params['class'])) { //if set, use these classes instead of the default bootstrap
 				$a_class = $params['class'];
 			} else {
-				$a_class = 'btn btn-default btn-sm'; //the default classes to be used
+				$a_class = 'btn btn-link btn-sm'; //the default classes to be used
 			}
 
 			if (!empty($params['href'])) { //use href if not empty
@@ -134,7 +134,7 @@ function smarty_function_icon($params, $smarty)
 		return $html;
 		
 	} //ICONSET END 
-	
+
 	// Handle _ids that contains the real filename and path
 	if ( strpos($params['_id'], '/') !== false || strpos($params['_id'], '.') !== false ) {
 		if ( ($icons_basedir = dirname($params['_id'])) == '')
@@ -172,10 +172,11 @@ function smarty_function_icon($params, $smarty)
 		if ( $k[0] == '_' ) {
 			switch ( $k ) {
 				case '_id':
-					$v = $icons_basedir.$v.$icons_extension;
-					if ($tikilib != NULL)
-						$v2 = $tikilib->get_style_path($prefs['style'], $prefs['style_option'], $v);
-
+					$img_file = $v.$icons_extension;
+					$v = $icons_basedir.$img_file;
+					$themelib = TikiLib::lib('theme');
+					$v2 = $themelib->get_theme_path($current_theme, $curren_theme_option, $img_file, 'icons/');
+					
 					if (!empty($v2)) {
 						$params['file'] = $v2;
 					} else {
