@@ -16,199 +16,201 @@ function iconset_glyphicons()
 		'name' => tr('Glyphicons'),
 		'description' => tr('Glyphicon focused iconset, see http://getbootstrap.com/components/'),
 		'tag' => 'span',
+		'prepend' => 'glyphicon glyphicon-',
+		'append' => '',
 		'icons' => array(
 			'actions' => array(
-				'class' => 'glyphicon glyphicon-play-circle',
+				'id' => 'play-circle',
 			),
 			'add' => array(
-				'class' => 'glyphicon glyphicon-plus-sign',
+				'id' => 'plus-sign',
 			),
 			'admin_i18n' => array(
-				'class' => 'glyphicon glyphicon-globe',
+				'id' => 'globe',
 			),
 			'attach' => array(
-				'class' => 'glyphicon glyphicon-paperclip',
+				'id' => 'paperclip',
 			),
 			'backward' => array(
-				'class' => 'glyphicon glyphicon-backward',
+				'id' => 'backward',
 			),
 			'backward_step' => array(
-				'class' => 'glyphicon glyphicon-step-backward',
+				'id' => 'step-backward',
 			),
 			'check' => array(
-				'class' => 'glyphicon glyphicon-ok-circle',
+				'id' => 'ok-circle',
 			),
 			'columns' => array(
-				'class' => 'glyphicon glyphicon-th-large',
+				'id' => 'th-large',
 			),
 			'comments' => array(
-				'class' => 'glyphicon glyphicon-comment',
+				'id' => 'comment',
 			),
 			'create' => array(
-				'class' => 'glyphicon glyphicon-plus',
+				'id' => 'plus',
 			),
 			'delete' => array(
-				'class' => 'glyphicon glyphicon-remove',
+				'id' => 'remove',
 			),
 			'disable' => array(
-				'class' => 'glyphicon glyphicon-minus-sign',
+				'id' => 'minus-sign',
 			),
 			'documentation' => array(
-				'class' => 'glyphicon glyphicon-book',
+				'id' => 'book',
 			),
 			'down' => array(
-				'class' => 'glyphicon glyphicon-arrow-down',
+				'id' => 'arrow-down',
 			),
 			'edit' => array(
-				'class' => 'glyphicon glyphicon-edit',
+				'id' => 'edit',
 			),
 			'enable' => array(
-				'class' => 'glyphicon glyphicon-ok-sign',
+				'id' => 'ok-sign',
 			),
 			'envelope' => array(
-				'class' => 'glyphicon glyphicon-envelope',
+				'id' => 'envelope',
 			),
 			'error' => array(
-				'class' => 'glyphicon glyphicon-exclamation-sign',
+				'id' => 'exclamation-sign',
 			),
 			'export' => array(
-				'class' => 'glyphicon glyphicon-export',
+				'id' => 'export',
 			),
 			'forward' => array(
-				'class' => 'glyphicon glyphicon-forward',
+				'id' => 'forward',
 			),
 			'forward_step' => array(
-				'class' => 'glyphicon glyphicon-step-forward',
+				'id' => 'step-forward',
 			),
 			'file-archive' => array(
-				'class' => 'glyphicon glyphicon-folder',
+				'id' => 'folder',
 			),
 			'file-archive-open' => array(
-				'class' => 'glyphicon glyphicon-folder-open',
+				'id' => 'folder-open',
 			),
 			'filter' => array(
-				'class' => 'glyphicon glyphicon-filter',
+				'id' => 'filter',
 			),
 			'floppy' => array(
-				'class' => 'glyphicon glyphicon-floppy-save',
+				'id' => 'floppy-save',
 			),
 			'help' => array(
-				'class' => 'glyphicon glyphicon-question-sign',
+				'id' => 'question-sign',
 			),
 			'history' => array(
-				'class' => 'glyphicon glyphicon-time',
+				'id' => 'time',
 			),
 			'import' => array(
-				'class' => 'glyphicon glyphicon-import',
+				'id' => 'import',
 			),
 			'information' => array(
-				'class' => 'glyphicon glyphicon-info-sign',
+				'id' => 'info-sign',
 			),
 			'link' => array(
-				'class' => 'glyphicon glyphicon-link',
+				'id' => 'link',
 			),
 			'lock' => array(
-				'class' => 'glyphicon glyphicon-lock',
+				'id' => 'lock',
 			),
 			'menuitem' => array(
-				'class' => 'glyphicon glyphicon-chevron-right',
+				'id' => 'chevron-right',
 			),
 			'merge' => array(
-				'class' => 'glyphicon glyphicon-random',
+				'id' => 'random',
 			),
 			'minus' => array(
-				'class' => 'glyphicon glyphicon-minus',
+				'id' => 'minus',
 			),
 			'move' => array(
-				'class' => 'glyphicon glyphicon-move',
+				'id' => 'move',
 			),
 			'next' => array(
-				'class' => 'glyphicon glyphicon-arrow-right',
+				'id' => 'arrow-right',
 			),
 			'notification' => array(
-				'class' => 'glyphicon glyphicon-bell',
+				'id' => 'bell',
 			),
 			'ok' => array(
-				'class' => 'glyphicon glyphicon-ok-sign',
+				'id' => 'ok-sign',
 			),
 			'off' => array(
-				'class' => 'glyphicon glyphicon-off',
+				'id' => 'off',
 			),
 			'pdf' => array(
-				'class' => 'glyphicon glyphicon-file',
+				'id' => 'file',
 			),
 			'permission' => array(
-				'class' => 'glyphicon glyphicon-lock',
+				'id' => 'lock',
 			),
 			'post' => array(
-				'class' => 'glyphicon glyphicon-pencil',
+				'id' => 'pencil',
 			),
 			'previous' => array(
-				'class' => 'glyphicon glyphicon-arrow-left',
+				'id' => 'arrow-left',
 			),
 			'print' => array(
-				'class' => 'glyphicon glyphicon-print',
+				'id' => 'print',
 			),
 			'refresh' => array(
-				'class' => 'glyphicon glyphicon-refresh',
+				'id' => 'refresh',
 			),
 			'remove' => array(
-				'class' => 'glyphicon glyphicon-remove',
+				'id' => 'remove',
 			),
 			'rss' => array(
-				'class' => 'glyphicon glyphicon-bullhorn',
+				'id' => 'bullhorn',
 			),
 			'screencapture' => array(
-				'class' => 'glyphicon glyphicon-camera',
+				'id' => 'camera',
 			),
 			'search' => array(
-				'class' => 'glyphicon glyphicon-search',
+				'id' => 'search',
 			),
 			'settings' => array(
-				'class' => 'glyphicon glyphicon-wrench',
+				'id' => 'wrench',
 			),
 			'share' => array(
-				'class' => 'glyphicon glyphicon-share',
+				'id' => 'share',
 			),
 			'sort' => array(
-				'class' => 'glyphicon glyphicon-sort',
+				'id' => 'sort',
 			),
 			'sort-up' => array(
-				'class' => 'glyphicon glyphicon-sort-by-alphabet',
+				'id' => 'sort-by-alphabet',
 			),
 			'sort-down' => array(
-				'class' => 'glyphicon glyphicon-sort-by-alphabet-alt',
+				'id' => 'sort-by-alphabet-alt',
 			),
 			'stop-watching' => array(
-				'class' => 'glyphicon glyphicon-eye-close',
+				'id' => 'eye-close',
 			),
 			'success' => array(
-				'class' => 'glyphicon glyphicon-ok',
+				'id' => 'ok',
 			),
 			'tag' => array(
-				'class' => 'glyphicon glyphicon-tag',
+				'id' => 'tag',
 			),
 			'trash' => array(
-				'class' => 'glyphicon glyphicon-trash',
+				'id' => 'trash',
 			),
 			//use a better unlock icon when available
 			'unlock' => array(
-				'class' => 'glyphicon glyphicon-folder-open',
+				'id' => 'folder-open',
 			),
 			'up' => array(
-				'class' => 'glyphicon glyphicon-arrow-up',
+				'id' => 'arrow-up',
 			),
 			'user' => array(
-				'class' => 'glyphicon glyphicon-user',
+				'id' => 'user',
 			),
 			'view' => array(
-				'class' => 'glyphicon glyphicon-zoom-in',
+				'id' => 'zoom-in',
 			),
 			'warning' => array(
-				'class' => 'glyphicon glyphicon-warning-sign',
+				'id' => 'warning-sign',
 			),
 			'watch' => array(
-				'class' => 'glyphicon glyphicon-eye-open',
+				'id' => 'eye-open',
 			),
 		),
 	);
