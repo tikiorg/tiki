@@ -37,13 +37,13 @@ class Services_Tracker_Controller
 			return $item->canViewField($field['fieldId']);
 		});
 
-		return [
+		return array(
 			'title' => TikiLib::lib('object')->get_title('trackeritem', $itemId),
 			'itemId' => $itemId,
 			'trackerId' => $defintion->getConfiguration('trackerId'),
 			'fields' => $fields,
 			'canModify' => $item->canModify(),
-		];
+		);
 	}
 
 	function action_add_field($input)
