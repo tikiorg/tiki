@@ -238,7 +238,7 @@ function smarty_block_pagination_links($params, $url, $smarty, &$repeat)
 		if ( ($prefs['direct_pagination'] == 'y' || $prefs['nextprev_pagination'] === 'y') && $nb_pages > 1) {
 			$html .= '<ul class="pagination">';
 
-			if ( $prefs['nextprev_pagination'] != 'n' ) {
+			if ( $prefs['nextprev_pagination'] != 'n' || $params['show_numbers'] !== 'y' ) {
 				if ($params['offset'] == 0) {
 					$html .= '<li class="disabled"><span>&laquo;</span></li>';
 				} else {
@@ -279,7 +279,7 @@ function smarty_block_pagination_links($params, $url, $smarty, &$repeat)
 				}
 			}
 
-			if ( $prefs['nextprev_pagination'] != 'n' ) {
+			if ( $prefs['nextprev_pagination'] != 'n' || $params['show_numbers'] !== 'y' ) {
 				if ($params['offset'] + $params['step'] >= $params['cant']) {
 					$html .= '<li class="disabled"><span>&raquo;</span></li>';
 				} else {
