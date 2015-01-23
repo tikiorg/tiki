@@ -537,3 +537,128 @@ hr {
 .label-danger[href]:focus {
   background-color: #c9302c;
 }
+.middle_outer {
+  background: url('../images/siteheadertile.png') repeat-x 0 -376px;
+  border-top: 2px solid #fff;
+}
+.topbar .navbar-nav > li > a,
+.topbar .navbar > li > a {
+  padding-top: 4px;
+  padding-bottom: 4px;
+  line-height: 1;
+}
+#col2 .panel,
+#col3 .panel,
+#bottom_modules .panel {
+  border: none;
+}
+#col2 .panel-default > .panel-heading,
+#col3 .panel-default > .panel-heading,
+#bottom_modules .panel-heading {
+  background: #ffffff;
+  border-width: 0 0 1px 0;
+  border-style: solid;
+  border-color: #bc2f84;
+}
+#col2 .panel-title,
+#col3 .panel-title {
+  color: #bc2f84;
+}
+.header_outer {
+  background: #8e286a;
+  border-bottom: 5px solid #000;
+}
+.header_container > .header {
+  background: none;
+}
+header.header .module.secondary_site_menu {
+  background: none;
+}
+.page-header {
+  margin-top: 0;
+  margin-bottom: 0;
+  border-bottom: none;
+}
+.sitelogo img {
+  max-height: 34px;
+  width: auto;
+  margin-bottom: 1em;
+}
+.form-control,
+select,
+input[type="text"],
+input[type="password"],
+input[type="file"],
+input[type="email"],
+input[type="file"],
+input[type="search"],
+input[type="number"],
+input#login-pass,
+textarea,
+.adminoptionbox option {
+  background-color: #f4dded;
+  border-color: #e4afd3 #faf1f8 #faf1f8 #e4afd3;
+}
+.navbar-collapse {
+  border: none;
+}
+#footer {
+  background: black;
+  color: #696969;
+  padding: 1px 0 2px 0;
+  width: 100%;
+}
+.footer_liner {
+  border-top: 1px solid #a52873;
+  border-bottom: 1px solid #a52873;
+}
+.footer_liner h3.panel-title {
+  color: #fff;
+  border-bottom: 1px dotted #a52873;
+}
+.footer_liner legend,
+.footer_liner a,
+.footer_liner a:visited {
+  color: #a52873;
+}
+.navbar-nav .open .dropdown-menu,
+.navbar-nav .open .dropdown-menu li,
+.navbar-default .navbar-nav > li > a {
+  background: #a82a76;
+}
+.navbar-default .navbar-nav > li > a:hover {
+  background: #bc2f84;
+}
+.postbody-title {
+  background: url('../images/siteheader.png') no-repeat -480px -200px;
+}
+.secondary_site_menu .navbar {
+  margin-bottom: 0;
+}
+.secondary_site_menu .navbar-nav {
+  float: right;
+}
+.secondary_site_menu .navbar-default .navbar-nav > li > a,
+.secondary_site_menu .navbar-default .navbar-nav > li > a:hover,
+.secondary_site_menu .navbar-default .navbar-nav > li > a:focus,
+.secondary_site_menu .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover {
+  background: transparent;
+  color: #8e286a;
+}
+.secondary_site_menu .navbar-default .navbar-nav li ul li a {
+  background: #a82a76;
+  color: #fff;
+}
+.secondary_site_menu .navbar-default .navbar-nav li ul li a:hover,
+.secondary_site_menu .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover {
+  background: #902465;
+  color: #fff;
+}
+.siteloginbar_popup .dropdown-menu > li > a {
+  color: #fff;
+}
+header.header .sitetitle,
+header.header .sitesubtitle {
+  color: #8e286a;
+  text-shadow: none;
+}

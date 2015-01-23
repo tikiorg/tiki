@@ -93,6 +93,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			// wrap in CODE tags if none there
 			$test_source = "{CODE(caption=>YAML)}\n$test_source\n{CODE}";
 		}
+		// desanitize the input, prefs etc will filter as required in the profile installer
+		$test_source = str_replace('<x>', '', $test_source);
 
 		$smarty->assign('test_source', $test_source);
 		$smarty->assign('profile_tester_name', $_POST['profile_tester_name']);

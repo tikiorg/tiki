@@ -1404,16 +1404,19 @@ $.fn.tiki = function(func, type, options) {
 					if ($('ul:first', this).length) {
 						var dir = $('ul:first', this).css('display') === 'block' ? 's' : 'e';
 						if ($placeholder.length) {
-							$placeholder.replaceWith('<span class="flipper ui-icon ui-icon-triangle-1-' + dir + '" style="float: left;"/>');
+							$placeholder.replaceWith('<span class="flipper ui-icon ui-icon-triangle-1-' + dir + '" style="float: left;margin-top:.2em;"/>');
 						} else {
-							$(this).prepend('<span class="flipper ui-icon ui-icon-triangle-1-' + dir + '" style="float: left;"/>');
+							$(this).prepend('<span class="flipper ui-icon ui-icon-triangle-1-' + dir + '" style="float: left;margin-top:.2em;"/>');
 						}
 					} else {
 						if ($placeholder.length) {
-							$placeholder.replaceWith('<span style="float:left;width:16px;height:16px;"/>');
+							$placeholder.replaceWith('<span style="float:left;width:16px;height:16px;margin-top:.2em;"/>');
 						} else {
-							$(this).prepend('<span style="float:left;width:16px;height:16px;"/>');
+							$(this).prepend('<span style="float:left;width:16px;height:16px;margin-top:.2em;"/>');
 						}
+					}
+					if ($('div.checkbox', this).length) {
+						$('div.checkbox', this).css("margin-left", "16px");
 					}
 				});
 

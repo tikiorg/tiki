@@ -146,10 +146,14 @@ session_name($prefs['session_cookie_name']);
 
 // Only accept PHP's session ID in URL when the request comes from the tiki server itself
 // This is used by features that need to query the server to retrieve tiki's generated html and images (e.g. pdf export)
-if (isset($_GET[session_name()]) && $tikilib->get_ip_address() == '127.0.0.1') {
+// It could be , that the server initiates his request with its own ip, so we check also if server == remote
+// Note: this is an incomplete implemenation - the session handling does not really work this way. Session data is lost and not regenerated.
+// Maybe better to use tokens: see i.e. the example in lib/pdflib.php
+if (isset($_GET[session_name()]) && (($tikilib->get_ip_address() == '127.0.0.1') || ($_SERVER["SERVER_ADDR"] == $_SERVER["REMOTE_ADDR"]))) {
 	$_COOKIE[session_name()] = $_GET[session_name()];
-	session_id($_GET[session_name()]);
+	session_id($_GET[session_name()]);		
 }
+
 
 if ($prefs['cookie_consent_feature'] === 'y' && empty($_COOKIE[$prefs['cookie_consent_name']])) {
 	$feature_no_cookie = true;
@@ -181,6 +185,7 @@ if (isset($_SERVER["REQUEST_URI"])) {
 		unset($session_params);
 
 		try {
+						
 			Zend_Session::start();
 
 			/* This portion may seem strange, but it is an extra validation against session

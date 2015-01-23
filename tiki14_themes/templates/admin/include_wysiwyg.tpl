@@ -36,8 +36,8 @@
 		{preference name=wysiwyg_wiki_parsed}
 		<div class="adminoptionboxchild" id="wysiwyg_wiki_parsed_childcontainer">
 			{preference name=wysiwyg_wiki_semi_parsed}
-			{preference name=wysiwyg_htmltowiki}
 		</div>
+		{preference name=wysiwyg_htmltowiki}
 		{preference name=wysiwyg_inline_editing}
 		{preference name=wysiwyg_toolbar_skin}
 		{preference name="wysiwyg_fonts"}

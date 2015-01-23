@@ -24,6 +24,7 @@ function prefs_print_list()
 			'description' => tra('URL to a service taking a URL as the query string and returns a PDF document.'),
 			'type' => 'text',
 			'size' => 50,
+			'dependencies' => array('auth_token_access'),
 			'default' => '',
 		),
 		'print_pdf_webkit_path' => array(
@@ -32,6 +33,7 @@ function prefs_print_list()
 			'type' => 'text',
 			'size' => 50,
 			'help' => 'wkhtmltopdf',
+			'dependencies' => array('auth_token_access'),
 			'default' => '',
 		),
 	);

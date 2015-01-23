@@ -1074,6 +1074,7 @@ class Comments extends TikiLib
 			'controlFlood' => $controlFlood,
 			'floodInterval' => (int) $floodInterval,
 			'moderator' => $moderator,
+			'hits' => 0,
 			'mail' => $mail,
 			'useMail' => $useMail,
 			'section' => $section,
