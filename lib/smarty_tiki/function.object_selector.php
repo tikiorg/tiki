@@ -27,6 +27,7 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
  */
 function smarty_function_object_selector( $params, $smarty )
 {
+	global $prefs;
 	static $uniqid = 0;
 
 	$arguments = [
@@ -53,6 +54,14 @@ function smarty_function_object_selector( $params, $smarty )
 			$arguments[$var] = $params["_$var"];
 		}
 		unset($params["_$var"]);
+	}
+
+	if ($prefs['feature_search'] !== 'y') {
+		if ($arguments['simplename'] && $arguments['simplevalue']) {
+			return "<input type='text' name='{$arguments['simplename']}' value='{$arguments['simplevalue']}'>";
+		} else {
+			return tra('Object selector requires Unified Index to be enabled.');
+		}
 	}
 
 	if (empty($arguments['id'])) {
