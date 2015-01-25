@@ -171,13 +171,13 @@ function wikiplugin_convene($data, $params)
 		$userList .= "<td>". ($tiki_p_edit == 'y' ? "<button class='conveneUpdateUser$i icon btn btn-default btn-sm'><img src='img/icons/pencil.png' class='icon' width='16' height='16' title='" . tr("Edit User/Save changes") . "' /></button><button data-user='$user' title='" . tr("Delete User") . "' class='conveneDeleteUser$i icon btn btn-default btn-sm'><img src='img/icons/delete.png' class='icon' width='16' height='16' /></button> " : "") . $user . "</td>";
 		foreach ($row as $stamp => $vote) {
 			if ($vote == 1) {
-				$class = 	"{*ui-state-default *}convene-ok text-center alert-success";
+				$class = 	"convene-ok text-center label-success";
 				$text = 	"<img src='img/icons/tick.png' alt='" . tr('Ok') . "' class='vote icon' width='16' height='16' />";
 			} elseif ($vote == -1) {
-				$class = 	"{*ui-state-default *}convene-no text-center alert-danger";
+				$class = 	"convene-no text-center label-danger";
 				$text = 	"<img src='img/icons/cross.png' alt='" . tr('Not ok') . "' class='vote icon' width='16' height='16' />";
 			} else {
-				$class = 	"{*ui-state-default *}convene-unconfirmed text-center alert-warning";
+				$class = 	"convene-unconfirmed text-center label-default";
 				$text = 	"<img src='img/icons/grey_question.png' alt='" . tr('Unconfirmed') . "' class='vote icon' width='16' height='16' />";
 			}
 
