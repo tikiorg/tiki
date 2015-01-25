@@ -24,14 +24,21 @@ class IconsetLib
 		
 		//override the default icons with theme specific icons or with site icon set setting
 		if ($prefs['theme_iconset'] === 'theme_specific_iconset') {
-			$filename = $themelib->get_theme_path($theme, $theme_option, 'iconset.php');
+			$filename = $themelib->get_theme_path($theme, '', str_replace('-', '_', $theme) . '.php');
+			if ($filename) {
+				$iconset1 = new Iconset($this->loadFile($filename));
+				$iconset->merge($iconset1);
+			}
+			$filename = $themelib->get_theme_path($theme, $theme_option, str_replace('-', '_', $theme_option) . '.php');
+			if ($filename) {
+				$iconset1 = new Iconset($this->loadFile($filename));
+				$iconset->merge($iconset1);
+			}
 		} else if ($prefs['theme_iconset'] !== 'default') {
 			$filename = "themes/base_files/iconsets/{$prefs['theme_iconset']}.php";
-		} else {
-			return $iconset;	// just plain default set
+			$iconset1 = new Iconset($this->loadFile($filename));
+			$iconset->merge($iconset1);
 		}
-		$iconset1 = new Iconset($this->loadFile($filename));
-		$iconset->merge($iconset1);
 
 		//when a theme option is used, first override with the main theme's custom icons
 		if(!empty($theme_option)){
@@ -77,8 +84,11 @@ class Iconset
 	private $name;
 	private $description;
 	private $tag;
+	private $prepend;
+	private $append;
 
 	private $icons;
+	private $defaults;
 
 	function __construct($data)
 	{
@@ -89,7 +99,10 @@ class Iconset
 			$this->description = '';
 		}
 		$this->tag = $data['tag'];
+		$this->prepend = $data['prepend'];
+		$this->append = $data['append'];
 		$this->icons = $data['icons'];
+		$this->defaults = $data['defaults'];
 
 		if (!empty($data['source'])) {
 			$source = new Iconset(TikiLib::lib('iconset')->loadFile($data['source']));
@@ -100,11 +113,19 @@ class Iconset
 	function merge(Iconset $iconset, $over = true)
 	{
 		$tag = $iconset->tag();
+		$prepend = $iconset->prepend();
+		$append = $iconset->append();
 
 		foreach ($iconset->icons() as $name => $icon) {
 			if (! isset($this->icons[$name]) || $over) {
 				if ($this->tag !== $tag) {
 					$icon['tag'] = $tag;
+				}
+				if ($this->prepend !== $prepend) {
+					$icon['prepend'] = $prepend;
+				}
+				if ($this->append !== $append) {
+					$icon['append'] = $append;
 				}
 				$this->icons[$name] = $icon;
 			}
@@ -114,6 +135,12 @@ class Iconset
 	function getIcon($name) {
 		if (isset($this->icons[$name])) {
 			return $this->icons[$name];
+		}
+
+		if (array_search($name, $this->defaults) !== false) {
+			return [
+				'id' => $name,
+			];
 		} else {
 			return null;
 		}
@@ -129,22 +156,39 @@ class Iconset
 		return $this->tag;
 	}
 
+	public function prepend()
+	{
+		return $this->prepend;
+	}
+
+	public function append()
+	{
+		return $this->append;
+	}
+
 	public function getHtml($name) {
+
+		global $prefs;
 
 		if ($icon = $this->getIcon($name)) {
 
 			$tag = isset($icon['tag']) ? $icon['tag'] : $this->tag;
+			$prepend = isset($icon['prepend']) ? $icon['prepend'] : $this->prepend;
+			$append = isset($icon['append']) ? $icon['append'] : $this->append;
 			$icon_class = '';
 
 			if ($tag == 'img') { //manage legacy image icons (eg: png, gif, etc)
-				$src = $icon['image_src'];
+				$src = TikiLib::lib('theme')->get_theme_path($prefs['theme'], $prefs['theme_option'], $icon['id'] . $append, 'icons/');
+				if (empty($src)) {
+					$src = $prepend . $icon['id'] . $append;
+				}
 				$alt = $name;  //use icon name as alternate text
 				$html = "<span class=\"icon icon-$name $icon_class\"><img src=\"$src\" alt=\"$alt\"></span>";
 			} else {
-				if (isset($icon['class'])) { //use class defined for the icon if set
-					$icon_class = $icon['class'];
+				if (isset($icon['id'])) { //use class defined for the icon if set
+					$icon_class = $prepend . $icon['id'] . $append;
 				} else {
-					TikiLib::lib('errorreporting')->report(tr('Iconset: Class not defined for icon %0', $name));
+					TikiLib::lib('errorreport')->report(tr('Iconset: Class not defined for icon %0', $name));
 				}
 
 				$html = "<$tag class=\"icon icon-$name $icon_class\"></$tag>";
@@ -155,7 +199,6 @@ class Iconset
 		} else { //if icon is not found in $iconset, than display bootstrap glyphicon warning-sign. Helps to detect missing icon definitions, typos
 			return $this->getHtml('warning');
 		}
-
 
 	}
 

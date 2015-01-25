@@ -10,8 +10,12 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
 	exit;
 }
 
-function iconset_iconset()
+function iconset_fivealive_lite()
 {
+	/* This and themes/fivealive-lite/icons/information.png are
+	 * just a demo of how to override an icon in a theme
+	 * probably should be removed before release? */
+
 	return array(
 		'name' => tr('Theme icons'),
 		'description' => tr('Icons to be used for this theme'),
@@ -19,7 +23,7 @@ function iconset_iconset()
 		'tag' => 'span', // the default html tag to sorround the icon
 		'icons' => array(
 			'information' => array(
-				'class' => 'fa fa-info fa-fw', // This is a sample icon, change it to have a customized font-aewesome icon or change/add parameters to have an image or a glyphicon. See http://dev.tiki.org/Icons for more details
+				'id' => 'info', // This is a sample icon, change it to have a customized font-aewesome icon or change/add parameters to have an image or a glyphicon. See http://dev.tiki.org/Icons for more details
 			),
 		)
 	);

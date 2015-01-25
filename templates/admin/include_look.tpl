@@ -82,13 +82,6 @@
 
 		{tab name="{tr}General Layout{/tr}"}
 			<h2>{tr}General Layout{/tr}</h2>
-
-			{remarksbox type="tip" title="{tr}Tip{/tr}"}
-				{tr}&quot;Modules&quot; are the items of content at the top &amp; bottom and in the right &amp; left columns of the site.{/tr} {tr}Select{/tr}
-				<a class="rbox-link" href="tiki-admin_modules.php">{tr}Admin &gt; Modules{/tr}</a> {tr}from the menu to create and edit modules{/tr}.
-			{/remarksbox}
-
-
 			{preference name=feature_sitelogo}
 			<div class="adminoptionboxchild" id="feature_sitelogo_childcontainer">
 				<fieldset>
@@ -112,8 +105,7 @@
 					<legend>{tr}Module zone visibility{/tr}</legend>
 					{if !$smarty.get.Zone_options}
 						{remarksbox type="tip" title="{tr}Hint{/tr}"}
-							Module zone visibility options may not be supported anymore from Tiki 13+, but you can still access them in case you are upgrading from an earlier version.
-						<a href="tiki-admin.php?page=look&Zone_options=y#contentadmin_look-2">Click here for module visibility options</a>
+							Module zone visibility options may not be supported anymore from Tiki 13+, but you can still access them in case you are upgrading from an earlier version. <a href="tiki-admin.php?page=look&Zone_options=y#contentadmin_look-2" class="alert-link">Show module visibility options</a>
 						{/remarksbox}
 					{else}
 						{preference name=module_zones_top}
@@ -260,11 +252,8 @@
 
 			<fieldset>
 				<legend>{tr}Custom Codes{/tr}</legend>
+				{button _text="{tr}CSS Assistant{/tr}" _class="btn-sm tips" _onclick="show_brosho();return false;" _ajax="n" _title="{tr}Brosho jQuery Plugin{/tr}:{tr}Assistance to edit Custom CSS{/tr}"}
 				{preference name="header_custom_css" syntax="css"}
-				<div class="adminoptionboxchild">
-					{self_link _onclick="show_brosho();return false;" _ajax="n"}{icon _id="bricks"}{tr}Experimental: CSS assistant (work in progress - click the x to remove){/tr}{/self_link}
-				</div>
-				{$headerlib->add_jsfile('lib/jquery_tiki/brosho/tiki_brosho.js')}
 
 				{preference name=feature_custom_html_head_content syntax="htmlmixed"}
 				{preference name=feature_endbody_code syntax="tiki"}
@@ -300,10 +289,6 @@
 			<div class="adminoptionboxchild" id="feature_tabs_childcontainer">
 				{preference name=layout_tabs_optional}
 			</div>
-			{preference name=layout_section}
-			{if $prefs.layout_section eq 'y'}
-				{button _text="{tr}Admin layout per section{/tr}" href="tiki-admin_layout.php"}
-			{/if}
 
 			{preference name=feature_iepngfix}
 			<div class="adminoptionboxchild" id="feature_iepngfix_childcontainer">

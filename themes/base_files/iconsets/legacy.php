@@ -16,412 +16,417 @@ function iconset_legacy()
 		'name' => tr('Legacy (pre Tiki14) icons'),
 		'description' => tr('Legacy (pre Tiki14) icons, mainly using famfamfam images'),
 		'tag' => 'img',
+		'prepend' => 'img/icons/',
+		'append' => '.png',
 		'icons' => array(
 			'actions' => array(
-				'image_src' => 'img/icons/application_form.png',
+				'id' => 'application_form',
 			),
 			'add' => array(
-				'image_src' => 'img/icons/large/icon-configuration.png',
+				'id' => 'large/icon-configuration',
 			),
 			'admin_ads' => array(
-				'image_src' => 'img/icons/large/ads.png',
+				'id' => 'large/ads',
 			),
 			'admin_articles' => array(
-				'image_src' => 'img/icons/large/stock_bold.png',
+				'id' => 'large/stock_bold',
 			),
 			'admin_blogs' => array(
-				'image_src' => 'img/icons/large/blogs.png',
+				'id' => 'large/blogs',
 			),
 			'admin_calendar' => array(
-				'image_src' => 'img/icons/large/date.png',
+				'id' => 'large/date',
 			),
 			'admin_category' => array(
-				'image_src' => 'img/icons/large/categories.png',
+				'id' => 'large/categories',
 			),
 			'admin_comments' => array(
-				'image_src' => 'img/icons/large/comments.png',
+				'id' => 'large/comments',
 			),
 			'admin_community' => array(
-				'image_src' => 'img/icons/large/users.png',
+				'id' => 'large/users',
 			),
 			'admin_connect' => array(
-				'image_src' => 'img/icons/large/gnome-globe.png',
+				'id' => 'large/gnome-globe',
 			),
 			'admin_copyright' => array(
-				'image_src' => 'img/icons/large/copyright.png',
+				'id' => 'large/copyright',
 			),
 			'admin_directory' => array(
-				'image_src' => 'img/icons/large/gnome-fs-server.png',
+				'id' => 'large/gnome-fs-server',
 			),
 			'admin_faqs' => array(
-				'image_src' => 'img/icons/large/stock_dialog_question.png',
+				'id' => 'large/stock_dialog_question',
 			),
 			'admin_features' => array(
-				'image_src' => 'img/icons/large/boot.png',
+				'id' => 'large/boot',
 			),
 			'admin_fgal' => array(
-				'image_src' => 'img/icons/large/file-manager.png',
+				'id' => 'large/file-manager',
 			),
 			'admin_forums' => array(
-				'image_src' => 'img/icons/large/stock_index.png',
+				'id' => 'large/stock_index',
 			),
 			'admin_freetags' => array(
-				'image_src' => 'img/icons/large/vcard.png',
+				'id' => 'large/vcard',
 			),
 			'admin_gal' => array(
-				'image_src' => 'img/icons/large/stock_select-color.png',
+				'id' => 'large/stock_select-color',
 			),
 			'admin_general' => array(
-				'image_src' => 'img/icons/large/icon-configuration.png',
+				'id' => 'large/icon-configuration',
 				'position' => '0px -15px;',
 			),
 			'admin_i18n' => array(
-				'image_src' => 'img/icons/large/i18n.png',
+				'id' => 'large/i18n',
 			),
 			'admin_intertiki' => array(
-				'image_src' => 'img/icons/large/intertiki.png',
+				'id' => 'large/intertiki',
 			),
 			'admin_login' => array(
-				'image_src' => 'img/icons/large/stock_quit.png',
+				'id' => 'large/stock_quit',
 			),
 			'admin_look' => array(
-				'image_src' => 'img/icons/large/gnome-settings-background.png',
+				'id' => 'large/gnome-settings-background',
 			),
 			'admin_maps' => array(
-				'image_src' => 'img/icons/large/maps.png',
+				'id' => 'large/maps',
 			),
 			'admin_messages' => array(
-				'image_src' => 'img/icons/large/messages.png',
+				'id' => 'large/messages',
 			),
 			'admin_metatags' => array(
-				'image_src' => 'img/icons/large/metatags.png',
+				'id' => 'large/metatags',
 			),
 			'admin_module' => array(
-				'image_src' => 'img/icons/large/display-capplet.png',
+				'id' => 'large/display-capplet',
 			),
 			'admin_payment' => array(
-				'image_src' => 'img/icons/large/payment.png',
+				'id' => 'large/payment',
 			),
 			'admin_performance' => array(
-				'image_src' => 'img/icons/large/performance.png',
+				'id' => 'large/performance',
 			),
 			'admin_polls' => array(
-				'image_src' => 'img/icons/large/stock_missing-image.png',
+				'id' => 'large/stock_missing-image',
 			),
 			'admin_profiles' => array(
-				'image_src' => 'img/icons/large/profiles.png',
+				'id' => 'large/profiles',
 			),
 			'admin_rating' => array(
-				'image_src' => 'img/icons/large/rating.png',
+				'id' => 'large/rating',
 			),
 			'admin_rss' => array(
-				'image_src' => 'img/icons/large/feed-icon.png',
+				'id' => 'large/feed-icon',
 			),
 			'admin_score' => array(
-				'image_src' => 'img/icons/large/stock_about.png',
+				'id' => 'large/stock_about',
 			),
 			'admin_search' => array(
-				'image_src' => 'img/icons/large/xfce4-appfinder.png',
+				'id' => 'large/xfce4-appfinder',
 			),
 			'admin_semantic' => array(
-				'image_src' => 'img/icons/large/semantic.png',
+				'id' => 'large/semantic',
 			),
 			'admin_security' => array(
-				'image_src' => 'img/icons/large/gnome-lockscreen.png',
+				'id' => 'large/gnome-lockscreen',
 			),
 			'admin_sefurl' => array(
-				'image_src' => 'img/icons/large/goto.png',
+				'id' => 'large/goto',
 			),
 			'admin_share' => array(
-				'image_src' => 'img/icons/large/stock_contact.png',
+				'id' => 'large/stock_contact',
 			),
 			'admin_socialnetworks' => array(
-				'image_src' => 'img/icons/large/socialnetworks.png',
+				'id' => 'large/socialnetworks',
 			),
 			'admin_textarea' => array(
-				'image_src' => 'img/icons/large/editing.png',
+				'id' => 'large/editing',
 			),
 			'admin_trackers' => array(
-				'image_src' => 'img/icons/large/gnome-settings-font.png',
+				'id' => 'large/gnome-settings-font',
 			),
 			'admin_userfiles' => array(
-				'image_src' => 'img/icons/large/userfiles.png',
+				'id' => 'large/userfiles',
 			),
 			'admin_video' => array(
-				'image_src' => 'img/icons/large/gnome-camera-video-32.png',
+				'id' => 'large/gnome-camera-video-32',
 			),
 			'admin_webmail' => array(
-				'image_src' => 'img/icons/large/evolution.png',
+				'id' => 'large/evolution',
 			),
 			'admin_webservices' => array(
-				'image_src' => 'img/icons/large/webservices.png',
+				'id' => 'large/webservices',
 			),
 			'admin_wiki' => array(
-				'image_src' => 'img/icons/large/wikipages.png',
+				'id' => 'large/wikipages',
 			),
 			'admin_workspace' => array(
-				'image_src' => 'img/icons/large/areas.png',
+				'id' => 'large/areas',
 			),
 			'admin_wysiwyg' => array(
-				'image_src' => 'img/icons/large/wysiwyg.png',
+				'id' => 'large/wysiwyg',
 			),
 			'administer' => array(
-				'image_src' => 'img/icons/wrench.png',
+				'id' => 'wrench',
 			),
 			'attach' => array(
-				'image_src' => 'img/icons/attach.png',
+				'id' => 'attach',
 			),
 			'backlink' => array(
-				'image_src' => 'img/icons/arrow_turn_left.png',
+				'id' => 'arrow_turn_left',
 			),
 			'backward' => array(
-				'image_src' => 'img/icons/control_rewind.png',
+				'id' => 'control_rewind',
 			),
 			'backward_step' => array(
-				'image_src' => 'img/icons/control_start.png',
+				'id' => 'control_start',
 			),
 			'bug' => array(
-				'image_src' => 'img/icons/bug.png',
+				'id' => 'bug',
 			),
 			'cache' => array(
-				'image_src' => 'img/icons/database_refresh.png',
+				'id' => 'database_refresh',
 			),
 			'change' => array(
-				'image_src' => 'img/icons/pencil.png',
+				'id' => 'pencil',
 			),
 			'check' => array(
-				'image_src' => 'img/icons/select.gif',
+				'id' => 'select',
+				'append' => '.gif'
 			),
 			'columns' => array(
-				'image_src' => 'img/icons/text_columns.png',
+				'id' => 'text_columns',
 			),
 			'comments' => array(
-				'image_src' => 'img/icons/comments.png',
+				'id' => 'comments',
 			),
 			'copy' => array(
-				'image_src' => 'img/icons/ico_copy.gif',
+				'id' => 'ico_copy',
+				'append' => '.gif'
 			),
 			'create' => array(
-				'image_src' => 'img/icons/add.png',
+				'id' => 'add',
 			),
 			'delete' => array(
-				'image_src' => 'img/icons/cross.png',
+				'id' => 'cross',
 			),
 			'disable' => array(
-				'image_src' => 'img/icons/delete.png',
+				'id' => 'delete',
 			),
 			'documentation' => array(
-				'image_src' => 'img/icons/book_open.png',
+				'id' => 'book_open',
 			),
 			'down' => array(
-				'image_src' => 'img/icons/resultset_down.png',
+				'id' => 'resultset_down',
 			),
 			'edit' => array(
-				'image_src' => 'img/icons/page_edit.png',
+				'id' => 'page_edit',
 			),
 			'enable' => array(
-				'image_src' => 'img/icons/accept.png',
+				'id' => 'accept',
 			),
 			'envelope' => array(
-				'image_src' => 'img/icons/email.png',
+				'id' => 'email',
 			),
 			'error' => array(
-				'image_src' => 'img/icons/exclamation.png',
+				'id' => 'exclamation',
 			),
 			'export' => array(
-				'image_src' => 'img/icons/disk.png',
+				'id' => 'disk',
 			),
 			'file-archive' => array(
-				'image_src' => 'img/icons/folder.png',
+				'id' => 'folder',
 			),
 			'file-archive-open' => array(
-				'image_src' => 'img/icons/folder_go.png',
+				'id' => 'folder_go',
 			),
 			'filter' => array(
-				'image_src' => 'img/icons/find.png',
+				'id' => 'find',
 			),
 			'floppy' => array(
-				'image_src' => 'img/icons/disk.png',
+				'id' => 'disk',
 			),
 			'forward' => array(
-				'image_src' => 'img/icons/control_fastforward.png',
+				'id' => 'control_fastforward',
 			),
 			'forward_step' => array(
-				'image_src' => 'img/icons/control_end.png',
+				'id' => 'control_end',
 			),
 			'group' => array(
-				'image_src' => 'img/icons/group.png',
+				'id' => 'group',
 			),
 			'group-watch' => array(
-				'image_src' => 'img/icons/eye_group.png',
+				'id' => 'eye_group',
 			),
 			'help' => array(
-				'image_src' => 'img/icons/help.png',
+				'id' => 'help',
 			),
 			'history' => array(
-				'image_src' => 'img/icons/clock.png',
+				'id' => 'clock',
 			),
 			'import' => array(
-				'image_src' => 'img/icons/upload.png',
+				'id' => 'upload',
 			),
 			'index' => array(
-				'image_src' => 'img/icons/table_refresh.png',
+				'id' => 'table_refresh',
 			),
 			'information' => array(
-				'image_src' => 'img/icons/information.png',
+				'id' => 'information',
 			),
 			'link' => array(
-				'image_src' => 'img/icons/link.png',
+				'id' => 'link',
 			),
 			'link-external' => array(
-				'image_src' => 'img/icons/external_link.gif',
+				'id' => 'external_link',
+				'append' => '.gif'
 			),
 			'list' => array(
-				'image_src' => 'img/icons/application_view_list.png',
+				'id' => 'application_view_list',
 			),
 			'lock' => array(
-				'image_src' => 'img/icons/lock_add.png',
+				'id' => 'lock_add',
 			),
 			'log' => array(
-				'image_src' => 'img/icons/book.png',
+				'id' => 'book',
 			),
 			'menu' => array(
-				'image_src' => 'img/icons/application_side_tree.png',
+				'id' => 'application_side_tree',
 			),
 			'menuitem' => array(
-				'image_src' => 'img/icons/arrow_right.png',
+				'id' => 'arrow_right',
 			),
 			'merge' => array(
-				'image_src' => 'img/icons/arrow_switch.png',
+				'id' => 'arrow_switch',
 			),
 			'minus' => array(
-				'image_src' => 'img/icons/delete.png',
+				'id' => 'delete',
 			),
 			'module' => array(
-				'image_src' => 'img/icons/module.png',
+				'id' => 'module',
 			),
 			'move' => array(
-				'image_src' => 'img/icons/task_submitted.png',
+				'id' => 'task_submitted',
 			),
 			'next' => array(
-				'image_src' => 'img/icons/arrow_right.png',
+				'id' => 'arrow_right',
 			),
 			'notepad' => array(
-				'image_src' => 'img/icons/disk.png',
+				'id' => 'disk',
 			),
 			'notification' => array(
-				'image_src' => 'img/icons/announce.png',
+				'id' => 'announce',
 			),
 			'ok' => array(
-				'image_src' => 'img/icons/accept.png',
+				'id' => 'accept',
 			),
 			'pdf' => array(
-				'image_src' => 'img/icons/page_white_acrobat.png',
+				'id' => 'page_white_acrobat',
 			),
 			'permission' => array(
-				'image_src' => 'img/icons/key.png',
+				'id' => 'key',
 			),
 			'plugin' => array(
-				'image_src' => 'img/icons/plugin.png',
+				'id' => 'plugin',
 			),
 			'post' => array(
-				'image_src' => 'img/icons/pencil_add.png',
+				'id' => 'pencil_add',
 			),
 			'previous' => array(
-				'image_src' => 'img/icons/arrow_left.png',
+				'id' => 'arrow_left',
 			),
 			'print' => array(
-				'image_src' => 'img/icons/printer.png',
+				'id' => 'printer',
 			),
 			'redo' => array(
-				'image_src' => 'img/icons/arrow_redo.png',
+				'id' => 'arrow_redo',
 			),
 			'refresh' => array(
-				'image_src' => 'img/icons/arrow_refresh.png',
+				'id' => 'arrow_refresh',
 			),
 			'remove' => array(
-				'image_src' => 'img/icons/cross.png',
+				'id' => 'cross',
 			),
 			'rss' => array(
-				'image_src' => 'img/icons/feed.png',
+				'id' => 'feed',
 			),
 			'screencapture' => array(
-				'image_src' => 'img/icons/camera.png',
+				'id' => 'camera',
 			),
 			'search' => array(
-				'image_src' => 'img/icons/magnifier.png',
+				'id' => 'magnifier',
 			),
 			'settings' => array(
-				'image_src' => 'img/icons/wrench.png',
+				'id' => 'wrench',
 			),
 			'share' => array(
-				'image_src' => 'img/icons/sharethis.png',
+				'id' => 'sharethis',
 			),
 			'sort' => array(
-				'image_src' => 'img/icons/resultset.png',
+				'id' => 'resultset',
 			),
 			'sort-down' => array(
-				'image_src' => 'img/icons/resultset_down.png',
+				'id' => 'resultset_down',
 			),
 			'sort-up' => array(
-				'image_src' => 'img/icons/resultset_up.png',
+				'id' => 'resultset_up',
 			),
 			'stop-watching' => array(
-				'image_src' => 'img/icons/no_eye.png',
+				'id' => 'no_eye',
 			),
 			'structure' => array(
-				'image_src' => 'img/icons/chart_organisation.png',
+				'id' => 'chart_organisation',
 			),
 			'success' => array(
-				'image_src' => 'img/icons/tick.png',
+				'id' => 'tick',
 			),
 			'tag' => array(
-				'image_src' => 'img/icons/tag_blue.png',
+				'id' => 'tag_blue',
 			),
 			'theme' => array(
-				'image_src' => 'img/icons/image.png',
+				'id' => 'image',
 			),
 			'themegenerator' => array(
-				'image_src' => 'img/icons/palette.png',
+				'id' => 'palette',
 			),
 			'toggle-off' => array(
-				'image_src' => 'img/icons/accept.png',
+				'id' => 'accept',
 			),
 			'toggle-on' => array(
-				'image_src' => 'img/icons/delete.png',
+				'id' => 'delete',
 			),
 			'translate' => array(
-				'image_src' => 'img/icons/world_edit.png',
+				'id' => 'world_edit',
 			),
 			'trash' => array(
-				'image_src' => 'img/icons/bin.png',
+				'id' => 'bin',
 			),
 			'undo' => array(
-				'image_src' => 'img/icons/arrow_undo.png',
+				'id' => 'arrow_undo',
 			),
 			'unlock' => array(
-				'image_src' => 'img/icons/lock_open.png',
+				'id' => 'lock_open',
 			),
 			'up' => array(
-				'image_src' => 'img/icons/resultset_up.png',
+				'id' => 'resultset_up',
 			),
 			'user' => array(
-				'image_src' => 'img/icons/user.png',
+				'id' => 'user',
 			),
 			'view' => array(
-				'image_src' => 'img/icons/magnifier.png',
+				'id' => 'magnifier',
 			),
 			'warning' => array(
-				'image_src' => 'img/icons/sticky.png',
+				'id' => 'sticky',
 			),
 			'watch' => array(
-				'image_src' => 'img/icons/eye.png',
+				'id' => 'eye',
 			),
 			'watch-group' => array(
-				'image_src' => 'img/icons/eye_group.png',
+				'id' => 'eye_group',
 			),
 			'wizard' => array(
-				'image_src' => 'img/icons/wizard16x16.png',
+				'id' => 'wizard16x16',
 			),
 		),
 	);

@@ -3,7 +3,7 @@
 //
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id$
+// $Id: themegenlib.php 53473 2015-01-12 18:33:21Z jonnybradley $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
@@ -11,10 +11,11 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
 	exit;
 }
 
-/**
- *
- */
-class ThemeGenLib
+/*
+ThemeGenLib 
+@extends ThemeLib
+*/
+class ThemeGenLib extends ThemeLib
 {
 	private $currentTheme;	// ThemeGenTheme
 	private $tg_data;
@@ -230,10 +231,10 @@ class ThemeGenLib
 					}
 				}
 				if ( !$css_file_found ) {
-					$css_file = $tikilib->get_style_path() . $prefs['style'];
+					$css_file = $this->get_theme_css($prefs['theme']);
 				}
 			} else {
-				$css_file = $tikilib->get_style_path() . $prefs['style'];
+				$css_file = $this->get_theme_css($prefs['theme']);
 			}
 		}
 		$mincss = $headerlib->minify_css($css_file);	// clean out comments etc
@@ -284,22 +285,15 @@ class ThemeGenLib
      */
     public function setupCSSFiles ()
 	{
-		global $tikilib, $prefs, $style_base;
-
+		global $prefs;
+		$themelib = TikiLib::lib('theme');
 		$css_files = array('' => tra('Select...'));
 
-		if (!empty($prefs['style_option']) && $prefs['style_option'] !== tra('None')) {
-			$css_files[$tikilib->get_style_path($prefs['style'], $prefs['style_option'], $prefs['style_option'])] = $style_base . '/' . $prefs['style_option'];
+		if (!empty($prefs['theme_option']) && $prefs['theme_option'] !== tra('None')) {
+			$css_files[$themelib->get_theme_css($prefs['theme'], $prefs['theme_option'])] = $prefs['theme_option'];
 		}
 
-		$css_files[$tikilib->get_style_path('', '', $prefs['style'])] = $prefs['style'];
-
-		// shame - doesn't work on @imported files, might be a way with minified on...
-		//		preg_match_all( '/@import\s+url\("([^;]*)"\);/', $css, $parts );
-		//		$imports = array_reverse(array_unique( $parts[1] ));
-		//		foreach ( $imports as $import) {
-		//			$css_files[$tikilib->get_style_path() . $import] = $import;
-		//		}
+		$css_files[$themelib->get_theme_css($prefs['theme'])] = $prefs['theme'];
 
 		return $css_files;
 
@@ -313,7 +307,6 @@ class ThemeGenLib
     public function processCSSFile($file, $swaps)
 	{
 		$headerlib = TikiLib::lib('header');
-
 		$css = $headerlib->minify_css($file);
 
 		foreach ($this->tg_data as $secName => &$secData) {
@@ -324,7 +317,7 @@ class ThemeGenLib
 						if (!in_array($typeName, array( 'bordercolors' ))) {
 							$css = preg_replace($reg, '$1 ' . html_entity_decode($new) . '$2', $css);
 						} else {
-							$GLOBALS['tg_old'] = $old;	// for preg_replace_callback on php < 5.3
+							$GLOBALS['tg_old'] = $old;	// for preg_replace_callback on php < 5.3file_get_contents
 							$GLOBALS['tg_new'] = html_entity_decode($new);
 							$css = preg_replace_callback($reg, array( $this, 'processCSSMultiVars'), $css);
 						}
@@ -441,8 +434,8 @@ class ThemeGenTheme extends SerializedList
 
 		$this->data = array(
 				'files' => array(),
-				'theme' => $prefs['style'],
-				'theme_option' => '',			//$prefs['style_option'],
+				'theme' => $prefs['theme'],
+				'theme_option' => '',			//$prefs['theme_option'],
 		);
 
 		$this->initDone = false;
@@ -481,9 +474,9 @@ class ThemeGenTheme extends SerializedList
 			}
 		}
 
-		$this->data['theme'] = $prefs['style'];
-		if ( in_array($prefs['style_option'], array_keys($this->data['files']))) {
-			$this->data['theme_option'] = $prefs['style_option'];
+		$this->data['theme'] = $prefs['theme'];
+		if ( in_array($prefs['theme_option'], array_keys($this->data['files']))) {
+			$this->data['theme_option'] = $prefs['theme_option'];
 		} else {
 			$this->data['theme_option'] = '';
 		}

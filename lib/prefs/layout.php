@@ -8,12 +8,6 @@
 function prefs_layout_list()
 {
 	return array(
-		'layout_section' => array(
-			'name' => tra('Layout per section'),
-            'description' => tra(''),
-			'type' => 'flag',
-			'default' => 'n',
-		),
 		'layout_fixed_width' => array(
 			'name' => tra('Layout width'),
             'description' => tra('Constrains the site display width (default: 990px).'),

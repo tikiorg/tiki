@@ -807,7 +807,7 @@ class HeaderLib
 		global $prefs, $tikidomainslash, $in_installer;
 
 		if (empty($in_installer) && isset($prefs['themegenerator_feature']) && $prefs['themegenerator_feature'] === 'y' && !empty($prefs['themegenerator_theme'])) {
-			global $themegenlib; include_once 'lib/themegenlib.php';
+			$themegenlib = TikiLib::lib('themegenerator');
 
 			$data = $themegenlib->getCurrentTheme()->getData();
 			$themename = $themegenlib->getCurrentTheme()->getName();

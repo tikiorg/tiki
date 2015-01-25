@@ -127,7 +127,8 @@ JS
 //Theme generator
 $reload = false;
 if ($prefs['themegenerator_feature'] === 'y') {
-	include_once 'lib/themegenlib.php';
+	$headerlib->add_jsfile('lib/jquery_tiki/brosho/tiki_brosho.js');
+	$themegenlib = TikiLib::lib('themegenerator');
 
 	if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		$reload = true;
