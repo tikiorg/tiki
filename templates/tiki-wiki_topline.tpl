@@ -62,22 +62,22 @@
 					{if $prefs.wysiwyg_inline_editing eq 'y' and $prefs.feature_wysiwyg eq 'y'}
 						{jq}
 							$("#wysiwyg_inline_edit").click( function () {
-								var src = $("#wysiwyg_inline_edit img").attr("src");
-								if (src.indexOf("page.png") > -1) {
+								var $icon = $("#wysiwyg_inline_edit span");
+								if (! $icon.hasClass("highlight")) {
 									if (enableWysiwygInlineEditing()) {
-										$("#wysiwyg_inline_edit img").attr("src", src.replace("page.png", "page_lightning.png"));
+										$icon.addClass("highlight");
 									}
 								} else {
 									if (disableWyiswygInlineEditing()) {
-										$("#wysiwyg_inline_edit img").attr("src", src.replace("page_lightning.png", "page.png"));
+										$icon.removeClass("highlight");
 									}
 								}
 								return false;
 							});
 							if (getCookie("wysiwyg_inline_edit", "preview")) { $("#wysiwyg_inline_edit").click(); }
 						{/jq}
-						<a href="#" id="wysiwyg_inline_edit">
-							{icon name='edit' class="btn btn-link btn-sm tikihelp" title=":{tr}Inline edit{/tr}"}
+						<a href="#" id="wysiwyg_inline_edit" class="btn btn-link btn-sm tikihelp" title=":{tr}Inline edit{/tr}">
+							{icon name='edit'}
 						</a>
 					{/if}
 				{/if}
