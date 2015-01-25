@@ -3,7 +3,7 @@
 <div class="btn-group">
 	{* For all object types: First show the world icon and on hover the language of the current object *}
 	<a class="btn-i18n dropdown-toggle" data-toggle="dropdown">
-		{icon name="admin_i18n" class="btn btn-link btn-sm tikihelp" title="{if !empty($trads[0].langName)}{tr}Current language{/tr}:{$trads[0].langName|escape} ({$trads[0].lang|escape}){else}{tr}:No translations{/tr}{/if}"}
+		{icon name="admin_i18n" class="btn btn-link tikihelp" title="{if !empty($trads[0].langName)}{tr}Current language{/tr}:{$trads[0].langName|escape} ({$trads[0].lang|escape}){else}{tr}:No translations{/tr}{/if}"}
 	</a>
 	{* ..than on hover first show the list of translations including the current language highlighted *}
 	{if empty($trads[0].lang)}

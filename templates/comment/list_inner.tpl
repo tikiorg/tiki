@@ -43,10 +43,10 @@
 					</div>
 					<div class="buttons comment-form comment-footer">
 						{if $allow_post && $comment.locked neq 'y'}
-							<a class='btn btn-link btn-sm' href="{service controller=comment action=post type=$type objectId=$objectId parentId=$comment.threadId}">{tr}Reply{/tr}</a>
+							<a class='btn btn-link' href="{service controller=comment action=post type=$type objectId=$objectId parentId=$comment.threadId}">{tr}Reply{/tr}</a>
 						{/if}
 						{if $comment.can_edit}
-							<a class='btn btn-link btn-sm' href="{service controller=comment action=edit threadId=$comment.threadId}">{tr}Edit{/tr}</a>
+							<a class='btn btn-link' href="{service controller=comment action=edit threadId=$comment.threadId}">{tr}Edit{/tr}</a>
 						{/if}
 						{if $comment.userName ne $user and $comment.approved eq 'y' and $prefs.wiki_comments_simple_ratings eq 'y' and ($tiki_p_vote_comments eq 'y' or $tiki_p_admin_comments eq 'y' )}
 							<form class="commentRatingForm" method="post">
