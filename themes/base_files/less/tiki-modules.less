@@ -250,3 +250,63 @@ div.cvsup {
 	text-align: left;
 	color: @gray-light;
 }
+
+
+.layout_social .topbar_modules,
+.layout_social_modules .topbar_modules,
+.layout_moving_headers #top_modules {
+  .sitelogo a img {
+    display: inline;
+    margin-bottom: 1em;
+    max-height: 34px;
+    width: auto;
+  }
+  h1.sitetitle {
+    display: inline-block;
+    font-size: 1.8rem;
+    line-height: 2;
+    margin-bottom: 0;
+    margin-left: 1rem;
+    color: @navbar-default-brand-color;
+  }
+  .sitesubtitle {
+    display: none;
+  }
+  #topbar_modules {
+    display: inline-block;
+  }
+  .navbar-inverse .navbar-collapse,
+  .navbar-inverse .navbar-form,
+  .navbar-inverse {
+    border-color: transparent;
+  }
+}
+
+.layout_social_modules {
+  #topbar_modules {
+    display: block;
+  }
+}
+
+.navbar-fixed-top,
+#navbar-collapse-social {
+  .navbar {
+    margin-bottom: 0;
+    min-height: 32px;
+
+  }
+}
+
+@media (min-width: @screen-sm-min) {
+  .layout_social_modules .navbar-header {
+    top-margin: -34px;
+  }
+}
+
+
+/*
+.sitelogo img {
+  margin-bottom: 1em;
+  max-height: 34px;
+  width: auto;
+}*/

@@ -11,7 +11,7 @@
 			{include file='tiki-ajax_header.tpl'}
 		{/if}
 
-		<div class="header_outer {if $prefs.site_layout eq 'moving_headers'}navbar navbar-default{/if}">
+		<div class="header_outer">
 			<div class="header_container">
 				<header class="container header page-header">
 					<div class="row">
@@ -22,15 +22,17 @@
 				</header>
 			</div>
 		</div>
-		<div class="middle_outer">
-			<div class="container clearfix middle" id="middle">
-				<div id="tiki-top" class="topbar">
-					<div class="row">
-						<div class="col-md-12">
-							{modulelist zone=topbar}
-						</div>
+		<div class="topbar_container">
+			<div class="container topbar" id="tiki-top">
+				<div class="row">
+					<div class="col-md-12">
+						{modulelist zone=topbar}
 					</div>
 				</div>
+            </div>
+        </div>
+        <div class="middle_outer">
+            <div class="container clearfix middle" id="middle">
 				<div class="row">
 					{if zone_is_empty('left') and zone_is_empty('right')}
 						{if $prefs.feature_layoutshadows eq 'y'}<div id="tiki-center-shadow">{eval var=$prefs.center_shadow_start}{/if}

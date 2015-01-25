@@ -8,10 +8,22 @@
 // If Glyphicons should be rendered in a color other than the Bootstrap default or the theme default, uncomment and specify the color.
 // .glyphicon {color: @gray-lighter;}
 @imagePath:  ~"../images/";
+
 .middle_outer {
-  background: url('@{imagePath}siteheadertile.png') repeat-x 0 -376px;
-  border-top: 2px solid #fff;
+  background: url('@{imagePath}middletopbg.png') repeat-x;
 }
+
+.topbar_container {
+//  background: url('@{imagePath}siteheadertile.png') repeat-x 0 -376px;
+  background: @topbar_container_background;
+//  border-top: 2px solid #fff;
+}
+
+.layout_h_tb_m_f_containers_3-6-3 .middle_outer {
+  background: #ffffff;
+}
+
+.topbar .navbar {margin-bottom: 0;}
 
 .topbar .navbar-nav > li > a,
 .topbar .navbar > li > a {
@@ -42,7 +54,8 @@
 }
 
 // Header graphics
-.header_outer {		// whole width div containing the header strip
+.header_outer,
+.layout_social_modules .navbar-fixed-top {		// whole width div containing the header strip
   background: @header_outer-background; // url('@{imagePath}siteheadertile.png') 0 0 no-repeat;
   border-bottom: 5px solid #000;
 }

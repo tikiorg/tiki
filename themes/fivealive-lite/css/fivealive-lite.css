@@ -6317,6 +6317,20 @@ button.close {
   background: url('../images/middletopbg.png') repeat-x;
   border-top: 2px solid #fff;
 }
+.layout_h_tb_m_f_containers_3-6-3 .middle_outer {
+  background: #ffffff;
+}
+.layout_h_tb_m_f_containers_3-6-3 .middle_outer .navbar {
+  min-height: 1;
+}
+.topbar_container {
+  background: #28aae1;
+}
+.layout_h_tb_m_f_containers_3-6-3 .navbar,
+.layout_moving_headers .navbar {
+  min-height: auto;
+  margin-bottom: 0;
+}
 .topbar .navbar,
 .topbar .navbar-default .navbar-collapse,
 .topbar .navbar-default .navbar-form {
@@ -6328,6 +6342,9 @@ button.close {
   padding-top: 4px;
   padding-bottom: 4px;
   line-height: 1;
+}
+.topbar {
+  margin-bottom: 2rem;
 }
 #col2 .panel,
 #col3 .panel,

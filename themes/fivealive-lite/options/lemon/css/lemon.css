@@ -1,4 +1,4 @@
-/*   The lemon theme option file for the FiveAlive-lite theme of Tiki Wiki CMS Groupware. */
+/*  The lemon theme option file for the FiveAlive-lite theme of Tiki Wiki CMS Groupware. */
 a {
   color: #c75a28;
 }
@@ -538,8 +538,16 @@ hr {
   background-color: #c9302c;
 }
 .middle_outer {
-  background: url('../images/siteheadertile.png') repeat-x 0 -376px;
-  border-top: 2px solid #fff;
+  background: url('../images/middletopbg.png') repeat-x;
+}
+.topbar_container {
+  background: #ffc506;
+}
+.layout_h_tb_m_f_containers_3-6-3 .middle_outer {
+  background: #ffffff;
+}
+.topbar .navbar {
+  margin-bottom: 0;
 }
 .topbar .navbar-nav > li > a,
 .topbar .navbar > li > a {
@@ -564,7 +572,8 @@ hr {
 #col3 .panel-title {
   color: #e4af00;
 }
-.header_outer {
+.header_outer,
+.layout_social_modules .navbar-fixed-top {
   background: #e4af00;
   border-bottom: 5px solid #000;
 }
