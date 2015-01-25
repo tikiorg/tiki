@@ -39,22 +39,22 @@
 					{if $prefs.wiki_edit_icons_toggle eq 'y' and ($prefs.wiki_edit_plugin eq 'y' or $prefs.wiki_edit_section eq 'y')}
 						{jq}
 							$("#wiki_plugin_edit_view").click( function () {
-								var src = $("#wiki_plugin_edit_view img").attr("src");
-								if (src.indexOf("wiki_plugin_edit_view") > -1) {
+								var $icon = $("#wiki_plugin_edit_view span");
+								if (! $icon.hasClass("highlight")) {
 									$(".editplugin, .icon_edit_section").show();
-									$("#wiki_plugin_edit_view img").attr("src", src.replace("wiki_plugin_edit_view", "wiki_plugin_edit_hide"));
+									$icon.addClass("highlight");
 									setCookieBrowser("wiki_plugin_edit_view", true);
 								} else {
 									$(".editplugin, .icon_edit_section").hide();
-									$("#wiki_plugin_edit_view img").attr("src", src.replace("wiki_plugin_edit_hide", "wiki_plugin_edit_view"));
+									$icon.removeClass("highlight");
 									deleteCookie("wiki_plugin_edit_view");
 								}
 								return false;
 							});
 							if (!getCookie("wiki_plugin_edit_view")) {$(".editplugin, .icon_edit_section").hide(); } else { $("#wiki_plugin_edit_view").click(); }
 						{/jq}
-						<a href="#" id="wiki_plugin_edit_view">
-							{icon _id='wiki_plugin_edit_view' class="btn btn-link btn-sm tikihelp" title=":{tr}View edit icons{/tr}" }
+						<a href="#" id="wiki_plugin_edit_view" class="btn btn-link btn-sm tikihelp" title=":{tr}View edit icons{/tr}">
+							{icon name='puzzle-piece'}
 						</a>
 					{/if}
 				{/if}
