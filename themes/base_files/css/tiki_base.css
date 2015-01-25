@@ -68,7 +68,7 @@ input:-webkit-autofill {
   display: none;
   z-index: 9999;
   position: absolute;
-  background: transparent url('../../img/icons/overlay-light.png');
+  background: transparent url('../../../img/overlay-light.png');
 }
 #ajaxLoading {
   display: none;
@@ -81,7 +81,7 @@ input:-webkit-autofill {
   font-size: 2em;
   font-weight: bold;
   color: #eeeeee;
-  background: transparent url('../../img/icons/loading-light.gif') no-repeat 50% 50%;
+  background: transparent url('../../../img/loading-light.gif') no-repeat 50% 50%;
 }
 #cookie_consent_div {
   padding: 15px;
