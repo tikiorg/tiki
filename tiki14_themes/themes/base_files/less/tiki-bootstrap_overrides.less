@@ -69,3 +69,55 @@ body.tiki.navbar-padding {
     }
   }
 }
+
+.layout_social,
+.layout_social_modules,
+.layout_moving_headers {
+  a.navbar-brand img {
+    display: inline;
+  }
+  .navbar-inverse a {
+  color: @navbar-inverse-link-color;
+  &:hover {
+    color: @navbar-inverse-link-hover-color;
+    text-decoration: none;
+    }
+  }
+  .navbar-inverse .sitetitle a {
+    color: @navbar-inverse-brand-color;
+    &:hover {
+    color: @navbar-inverse-brand-hover-color;
+    text-decoration: none;
+    }
+  }
+  h1.sitetitle {
+    font-size: 1.8rem;
+    margin-top: 10px;
+    margin-bottom: 0;
+  }
+  h1.sitetitle,
+  .sitesubtitle {
+    display: inline-block}
+
+  #topbar_modules {
+    display: inline-block;
+  }
+}
+
+.layout_social_modules,
+.layout_moving_headers {
+  #topbar_modules {
+    display: block;
+  }
+}
+
+.header_outer.navbar {margin-bottom: 0;}
+
+.navbar-fixed-top,
+#navbar-collapse-social {
+  .navbar {
+    margin-bottom: 0;
+    min-height: 32px;
+  }
+}
+

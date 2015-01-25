@@ -68,7 +68,7 @@ input:-webkit-autofill {
   display: none;
   z-index: 9999;
   position: absolute;
-  background: transparent url('../../img/icons/overlay-light.png');
+  background: transparent url('../../../img/overlay-light.png');
 }
 #ajaxLoading {
   display: none;
@@ -81,7 +81,7 @@ input:-webkit-autofill {
   font-size: 2em;
   font-weight: bold;
   color: #eeeeee;
-  background: transparent url('../../img/icons/loading-light.gif') no-repeat 50% 50%;
+  background: transparent url('../../../img/loading-light.gif') no-repeat 50% 50%;
 }
 #cookie_consent_div {
   padding: 15px;
@@ -163,6 +163,9 @@ a.icon,
 img.icon {
   border: 0;
   background: transparent;
+}
+.icon {
+  font-size: 1.2em;
 }
 span.btn-link {
   cursor: pointer;
@@ -385,6 +388,64 @@ div.cvsup {
   text-align: left;
   color: #777777;
 }
+.layout_social .topbar_modules .sitelogo a img,
+.layout_social_modules .topbar_modules .sitelogo a img,
+.layout_moving_headers #top_modules .sitelogo a img {
+  display: inline;
+  margin-bottom: 1em;
+  max-height: 34px;
+  width: auto;
+}
+.layout_social .topbar_modules h1.sitetitle,
+.layout_social_modules .topbar_modules h1.sitetitle,
+.layout_moving_headers #top_modules h1.sitetitle {
+  display: inline-block;
+  font-size: 1.8rem;
+  line-height: 2;
+  margin-bottom: 0;
+  margin-left: 1rem;
+  color: #777777;
+}
+.layout_social .topbar_modules .sitesubtitle,
+.layout_social_modules .topbar_modules .sitesubtitle,
+.layout_moving_headers #top_modules .sitesubtitle {
+  display: none;
+}
+.layout_social .topbar_modules #topbar_modules,
+.layout_social_modules .topbar_modules #topbar_modules,
+.layout_moving_headers #top_modules #topbar_modules {
+  display: inline-block;
+}
+.layout_social .topbar_modules .navbar-inverse .navbar-collapse,
+.layout_social_modules .topbar_modules .navbar-inverse .navbar-collapse,
+.layout_moving_headers #top_modules .navbar-inverse .navbar-collapse,
+.layout_social .topbar_modules .navbar-inverse .navbar-form,
+.layout_social_modules .topbar_modules .navbar-inverse .navbar-form,
+.layout_moving_headers #top_modules .navbar-inverse .navbar-form,
+.layout_social .topbar_modules .navbar-inverse,
+.layout_social_modules .topbar_modules .navbar-inverse,
+.layout_moving_headers #top_modules .navbar-inverse {
+  border-color: transparent;
+}
+.layout_social_modules #topbar_modules {
+  display: block;
+}
+.navbar-fixed-top .navbar,
+#navbar-collapse-social .navbar {
+  margin-bottom: 0;
+  min-height: 32px;
+}
+@media (min-width: 768px) {
+  .layout_social_modules .navbar-header {
+    top-margin: -34px;
+  }
+}
+/*
+.sitelogo img {
+  margin-bottom: 1em;
+  max-height: 34px;
+  width: auto;
+}*/
 .textarea-toolbar img.icon {
   vertical-align: middle;
   margin: 1px 3px;
@@ -2783,6 +2844,65 @@ body.tiki.navbar-padding {
   .tiki .table-responsive > .table > tfoot > tr > td {
     white-space: normal;
   }
+}
+.layout_social a.navbar-brand img,
+.layout_social_modules a.navbar-brand img,
+.layout_moving_headers a.navbar-brand img {
+  display: inline;
+}
+.layout_social .navbar-inverse a,
+.layout_social_modules .navbar-inverse a,
+.layout_moving_headers .navbar-inverse a {
+  color: #9d9d9d;
+}
+.layout_social .navbar-inverse a:hover,
+.layout_social_modules .navbar-inverse a:hover,
+.layout_moving_headers .navbar-inverse a:hover {
+  color: #ffffff;
+  text-decoration: none;
+}
+.layout_social .navbar-inverse .sitetitle a,
+.layout_social_modules .navbar-inverse .sitetitle a,
+.layout_moving_headers .navbar-inverse .sitetitle a {
+  color: #9d9d9d;
+}
+.layout_social .navbar-inverse .sitetitle a:hover,
+.layout_social_modules .navbar-inverse .sitetitle a:hover,
+.layout_moving_headers .navbar-inverse .sitetitle a:hover {
+  color: #ffffff;
+  text-decoration: none;
+}
+.layout_social h1.sitetitle,
+.layout_social_modules h1.sitetitle,
+.layout_moving_headers h1.sitetitle {
+  font-size: 1.8rem;
+  margin-top: 10px;
+  margin-bottom: 0;
+}
+.layout_social h1.sitetitle,
+.layout_social_modules h1.sitetitle,
+.layout_moving_headers h1.sitetitle,
+.layout_social .sitesubtitle,
+.layout_social_modules .sitesubtitle,
+.layout_moving_headers .sitesubtitle {
+  display: inline-block;
+}
+.layout_social #topbar_modules,
+.layout_social_modules #topbar_modules,
+.layout_moving_headers #topbar_modules {
+  display: inline-block;
+}
+.layout_social_modules #topbar_modules,
+.layout_moving_headers #topbar_modules {
+  display: block;
+}
+.header_outer.navbar {
+  margin-bottom: 0;
+}
+.navbar-fixed-top .navbar,
+#navbar-collapse-social .navbar {
+  margin-bottom: 0;
+  min-height: 32px;
 }
 /* becomes height using padding (so it's divided by 2) */
 /* url(icons/loading.gif); */

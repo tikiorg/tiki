@@ -15,6 +15,12 @@ class Perms_Resolver_Static implements Perms_Resolver
 	private $known = array();
 	private $from = '';
 
+	/*
+	 * Convert array $known into an internal structure where the permission name is the key.
+	 * I.e. $this->known['customers']['add_object'] == true
+	 * @param array $known - array[groupname] = array(perms)
+	 * @param string $from -type of object the permissons belongs to : i.e 'object', 'category'
+	 */
 	function __construct( array $known, $from = '' )
 	{
 		foreach ( $known as $group => $perms ) {
@@ -23,6 +29,13 @@ class Perms_Resolver_Static implements Perms_Resolver
 		$this->from = $from;
 	}
 
+	
+	/*
+	 * Check if a specific permission like 'add_object' exist in any of the groups
+	 * @param string $name  - permission name
+	 * @param array $groups - all groups available
+	 * @return bool $success - true if permission was found 
+	 */
 	function check( $name, array $groups )
 	{
 		foreach ( $groups as $groupName ) {
@@ -35,12 +48,23 @@ class Perms_Resolver_Static implements Perms_Resolver
 
 		return false;
 	}
+	
+	
 
+	/*
+	 * Get name of the object type the permissons to check belong to : i.e 'object', 'category'
+	 * @return $string name of object type
+	 */
 	function from()
 	{
 		return $this->from;
 	}
 
+	
+	/*
+	 * Get array of applicable groups.
+	 * @return array $ applicableGroups 
+	 */
 	function applicableGroups()
 	{
 		return array_keys($this->known);
