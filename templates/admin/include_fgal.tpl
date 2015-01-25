@@ -93,7 +93,6 @@
 				{preference name='feature_use_fgal_for_wiki_attachments'}
 				{preference name='feature_file_galleries_save_draft'}
 				{preference name='feature_file_galleries_templates'}
-				{preference name='fgal_upload_progressbar'}
 				{preference name='fgal_tracker_existing_search'}
 
 				{preference name='fgal_fix_mime_type'}

@@ -50,12 +50,7 @@
 	<div id='progress'>
 		<div id='progress_0'></div>
 	</div>
-	{if $prefs.fgal_upload_progressbar eq 'ajax_flash'}
-		<div id="upload_progress">
-			<div id="upload_progress_ajax_0" name="upload_progress_0" height="1" width="1"></div>
-		</div>
-	{/if}
-{/if}
+/if}
 
 {if isset($uploads) and count($uploads) > 0}
 	<h2>
@@ -152,44 +147,7 @@
 								{$fileInfo.filename|escape}
 							{/if}
 
-							{if $prefs.fgal_upload_progressbar eq 'ajax_flash'}
-								<div id="divSWFUploadUI">
-									<div class="fieldset flash" id="fsUploadProgress"></div>
-									<div class="flashButton">
-										<span class="button flashButtonText" id="btnBrowse" style="display:none"><a>{tr}Browse{/tr}</a></span>
-										<span id="spanButtonPlaceholder" />
-										{* Button below is used to take the required place to avoid errors div to start under the Browse button *}
-										<span class="button" style="visibility:hidden" /><a>&nbsp;</a></span>
-									</div>
-								</div>
-								<noscript>
-									<div style="background-color: #FFFF66; border-top: solid 4px #FF9966; border-bottom: solid 4px #FF9966; padding: 10px 15px;">
-										{tr}We're sorry.{/tr}<br>
-										{tr}Upload interface could not load. You must have JavaScript enabled to enjoy Upload interface.{/tr}
-									</div>
-								</noscript>
-								<div id="divLoadingContent" style="display: none;">
-									{remarksbox type="note"}
-										{tr}Upload interface is loading.{/tr} {tr}Please wait a moment...{/tr}
-									{/remarksbox}
-								</div>
-								<div id="divLongLoading" style="display: none;">
-									{remarksbox type="warning"}
-										{tr}Upload interface is taking a long time to load or the load has failed.{/tr}<br>
-										{tr}Please make sure that the Flash Plugin is enabled and that a working version of the Adobe Flash Player is installed.{/tr}
-									{/remarksbox}
-								</div>
-								<div id="divAlternateContent" style="display: none;">
-									{remarksbox type="errors"}
-										{tr}We are sorry: Upload interface could not load. You may need to install or upgrade Flash Player.{/tr}<br>
-										<a href="http://www.adobe.com/shockwave/download/download.cgi?P1_Prod_Version=ShockwaveFlash">{tr}Visit the Adobe Website to get the Flash Player.{/tr}</a>
-									{/remarksbox}
-								</div>
-								{* Table and BR are there to avoid the Browse button to overlap next cell when a file has been selected by the user *}
-								<br>
-							{else}
-								<input id="userfile" name="userfile[]" type="file" size="40">
-							{/if}
+							<input id="userfile" name="userfile[]" type="file" size="40">
 						</div>
 					</div>
 				{/if}
@@ -337,9 +295,6 @@
 			enctype='multipart/form-data'
 			class="form-horizontal"
 			id="file_0"
-			{if !$editFileId and $prefs.fgal_upload_progressbar eq 'ajax_flash'}
-				onsubmit="return verifUploadFlash()"
-			{/if}
 		>
 			<input type="hidden" name="simpleMode" value="{$simpleMode}">
 			{if !empty($filegals_manager)}
@@ -376,21 +331,12 @@
 				<div id="page_bar" class="form-group">
 					<div class="col-sm-10 col-sm-offset-2">
 						<input type="submit" class="btn btn-primary"
-							{if $prefs.fgal_upload_progressbar eq 'n'}
-								onClick="upload_files(); return false"
-							{elseif $prefs.fgal_upload_progressbar eq 'ajax_flash'}
-								onclick="return verifUploadFlash()"
-								disabled="disabled"
-							{/if}
+							onClick="upload_files(); return false"
 							id="btnUpload"
 							name="upload"
 							value="{tr}Upload File(s){/tr}"
 						>
-						{if $prefs.fgal_upload_progressbar eq 'ajax_flash'}
-							<input type="submit" id="btnCancel" class="btn btn-default" style="display:none" value="{tr}Cancel Upload{/tr}" onclick="return false">
-						{elseif $simpleMode neq 'y'}
-							<input type="submit" class="btn btn-default btn-sm" onclick="javascript:add_upload_file('multiple_upload'); return false" value="{tr}Add Another File{/tr}">
-						{/if}
+						<input type="submit" class="btn btn-default btn-sm" onclick="javascript:add_upload_file('multiple_upload'); return false" value="{tr}Add Another File{/tr}">
 					</div>
 				</div>
 			{/if}
@@ -424,147 +370,30 @@
 	{if $prefs.feature_jquery_ui eq 'y'}
 		{jq}$('.datePicker').datepicker({minDate: 0, maxDate: '+1m', dateFormat: 'dd/mm/yy'});{/jq}
 	{/if}
-	{if $prefs.fgal_upload_progressbar eq 'ajax_flash'}
-		{jq notonready=true}
+	{jq notonready=true}
+		$('#file_0').ajaxForm({target: '#progress_0', forceSync: true});
+		var nb_upload = 1;
 
-			var swfu;
+		function add_upload_file() {
+			var clone = $('#form form').eq(0).clone().resetForm().attr('id', 'file_' + nb_upload).ajaxForm({target: '#progress_' + nb_upload, forceSync: true});
+			clone.insertAfter($('#form form').eq(-1));
+			document.getElementById('progress').innerHTML += "<div id='progress_"+nb_upload+"'></div>";
+			nb_upload += 1;
+		}
 
-			function initSWFU() {
-
-				if ( typeof(swfu) == 'object' ) {
-					return true;
+		function upload_files(){
+			$("#form form").each(function(n) {
+				if ($(this).find('input[name="userfile\\[\\]"]').val() != '') {
+					$('#progress_'+n).html("<img src='img/spinner.gif'>{tr}Uploading file...{/tr}");
+					$(this).submit();
+					this.reset();
+				} else {
+					$('#progress_'+n).html("{tr}No File to Upload...{/tr} <span class='button'><a href='#' onclick='location.replace(location.href);return false;'>{tr}Retry{/tr}</a></span>");
 				}
-
-				swfu = new SWFUpload({
-					flash_url : "lib/swfupload/src/swfupload.swf",
-					upload_url: "tiki-upload_file.php?upload",
-					post_params: {
-						"PHPSESSID" : "{{$PHPSESSID}}"
-					},
-					file_post_name: "userfile[]",
-					file_size_limit : "{{$max_upload_size|kbsize:true:0:' '}}",
-					file_types : "*.*",
-					file_types_description : "All Files",
-					file_upload_limit : 1,
-					file_queue_limit : 1,
-					custom_settings : {
-						progressTarget : "fsUploadProgress",
-						cancelButtonId : "btnCancel"
-					},
-					debug: false,
-
-					// Button Settings
-					button_placeholder_id : "spanButtonPlaceholder",
-					button_width: 200,
-					button_height: 22,
-					button_window_mode: SWFUpload.WINDOW_MODE.TRANSPARENT,
-					button_cursor: SWFUpload.CURSOR.HAND,
-					button_action: SWFUpload.BUTTON_ACTION.SELECT_FILE,
-
-					// The event handler functions are defined in handlers.js
-					swfupload_loaded_handler : swfUploadLoadedFlash,
-					file_queued_handler : fileQueuedFlash,
-					file_queue_error_handler : fileQueueError,
-					file_dialog_start_handler : fileDialogStartFlash,
-					file_dialog_complete_handler : fileDialogComplete,
-					upload_start_handler : uploadStart,
-					upload_progress_handler : uploadProgress,
-					upload_error_handler : uploadErrorFlash,
-					upload_success_handler : uploadSuccessFlash,
-					upload_complete_handler : uploadComplete,
-					queue_complete_handler : queueComplete,	// Queue plugin event
-
-					// SWFObject settings
-					swfupload_pre_load_handler : swfUploadPreLoad,
-					swfupload_load_failed_handler : swfUploadLoadFailed
-				});
-			}
-
-			function swfUploadLoadedFlash() {
-				initSWFU();
-
-				clearTimeout(this.customSettings.loadingTimeout);
-				$('#divLoadingContent').hide();
-				$('#divLongLoading').hide();
-				$('#divAlternateContent').hide();
-				$('#btnCancel').bind('click', function() {
-					swfu.cancelQueue();
-				});
-				$('#btnBrowse').show();
-			}
-
-			function fileDialogStartFlash() {
-				initSWFU();
-				$('#btnUpload').attr('disabled', 'disabled');
-				swfu.cancelQueue();
-			}
-
-			function fileQueuedFlash(file) {
-				fileQueued.call(this, file);
-				$('#btnUpload').removeAttr('disabled');
-			}
-
-			function uploadErrorFlash(file, errorCode, message) {
-				uploadError.call(this, file, errorCode, message);
-				if ( errorCode && errorCode == SWFUpload.UPLOAD_ERROR.FILE_CANCELLED ) {
-					$('#btnCancel').hide();
-					$('#btnUpload').attr('disabled', 'disabled').show();
-				}
-			}
-
-			function uploadSuccessFlash(file, serverData) {
-				$('#upload_progress_ajax_0').html(serverData);
-				uploadSuccess.call(this, file, serverData);
-				$('#form').hide();
-			}
-
-			function verifUploadFlash(){
-				initSWFU();
-
-				// get all post values
-				var $postValue = $($('#file_0').serializeArray());
-				var post = {"PHPSESSID" : "{{$PHPSESSID}}"};
-
-				$postValue.each(function (iElement, oElement){
-					post[oElement.name] = oElement.value;
-				});
-				swfu.setPostParams(post);
-
-				// Start upload
-				swfu.startUpload();
-
-				$('#btnUpload').hide();
-				$('#btnCancel').show();
-			}
-
-			initSWFU();
-		{/jq}
-	{else}
-		{jq notonready=true}
-			$('#file_0').ajaxForm({target: '#progress_0', forceSync: true});
-			var nb_upload = 1;
-
-			function add_upload_file() {
-				var clone = $('#form form').eq(0).clone().resetForm().attr('id', 'file_' + nb_upload).ajaxForm({target: '#progress_' + nb_upload, forceSync: true});
-				clone.insertAfter($('#form form').eq(-1));
-				document.getElementById('progress').innerHTML += "<div id='progress_"+nb_upload+"'></div>";
-				nb_upload += 1;
-			}
-
-			function upload_files(){
-				$("#form form").each(function(n) {
-					if ($(this).find('input[name="userfile\\[\\]"]').val() != '') {
-						$('#progress_'+n).html("<img src='img/spinner.gif'>{tr}Uploading file...{/tr}");
-						$(this).submit();
-						this.reset();
-					} else {
-						$('#progress_'+n).html("{tr}No File to Upload...{/tr} <span class='button'><a href='#' onclick='location.replace(location.href);return false;'>{tr}Retry{/tr}</a></span>");
-					}
-				});
-				hide('form');
-			}
-		{/jq}
-	{/if}
+			});
+			hide('form');
+		}
+	{/jq}
 
 	{if $prefs.fgal_upload_from_source eq 'y' and $tiki_p_upload_files eq 'y'}
 		<form class="remote-upload" method="post" action="{service controller=file action=remote}">

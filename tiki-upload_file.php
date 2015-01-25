@@ -195,14 +195,6 @@ if ( empty( $fileId ) ) {
 	$smarty->assign_by_ref('galleries', $galleries["data"]);
 	$smarty->assign('treeRootId', $galleries['parentId']);
 
-	if ( $prefs['fgal_upload_progressbar'] == 'ajax_flash' ) {
-		$headerlib->add_jsfile('lib/swfupload/src/swfupload.js');
-		$headerlib->add_jsfile('lib/swfupload/js/swfupload.swfobject.js');
-		$headerlib->add_jsfile('lib/swfupload/js/swfupload.queue.js');
-		$headerlib->add_jsfile('lib/swfupload/js/fileprogress.js');
-		$headerlib->add_jsfile('lib/swfupload/js/handlers.js');
-		$smarty->assign('PHPSESSID', session_id());
-	}
 }
 
 if ( $prefs['fgal_limit_hits_per_file'] == 'y' ) {
@@ -239,3 +231,4 @@ if ( $prefs['javascript_enabled'] != 'y' or ! $isUpload ) {
 		$smarty->display("tiki.tpl");
 	}
 }
+
