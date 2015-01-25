@@ -43,7 +43,11 @@
 					{/if}
 				</a>
 				{if $nodate neq 'y'}
-					<div class="date">{$item.currentLogin|tiki_short_datetime}</div>
+					{if $item.currentLogin}
+						<div class="date">{$item.currentLogin|tiki_short_datetime}</div>
+					{else}
+						<div class="date">{tr}Never logged in{/tr}</div>
+					{/if}
 				{/if}
 				{if $showavatars eq 'y'}
 							</td>
