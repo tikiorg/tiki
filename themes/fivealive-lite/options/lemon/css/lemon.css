@@ -573,6 +573,7 @@ hr {
   color: #e4af00;
 }
 .header_outer,
+.layout_moving_headers .navbar-fixed-top,
 .layout_social_modules .navbar-fixed-top {
   background: #e4af00;
   border-bottom: 5px solid #000;
