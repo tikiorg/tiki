@@ -1654,7 +1654,7 @@ class TikiLib extends TikiDb_Bridge
 			}
 			$type = 'g';
 		} else {
-			$type = $res["avatarType"];
+			$type = $res["avatarType"] ? $res["avatarType"] : 'u';
 			$libname = $res["avatarLibName"];
 			$ret = '';
 		}
