@@ -105,7 +105,7 @@ function smarty_function_icon($params, $smarty)
 			if (isset($params['class'])) { //if set, use these classes instead of the default bootstrap
 				$a_class = $params['class'];
 			} else {
-				$a_class = 'btn btn-link btn-sm'; //the default classes to be used
+				$a_class = 'btn btn-link'; //the default classes to be used
 			}
 
 			if (!empty($params['href'])) { //use href if not empty
