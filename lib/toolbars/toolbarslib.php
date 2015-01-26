@@ -1479,7 +1479,12 @@ class ToolbarFileGallery extends Toolbar
 					getFileCallback: function(file,elfinder) {
 							window.handleFinderInsertAt(file,elfinder,\''.$areaId.'\');
 						},
-					eventOrigin:this
+					eventOrigin:this,
+					uploadCallback: function (data) {
+							if (data.data.added.length === 1 && confirm(tr(\'Do you want to use this file in your page?\'))) {
+								window.handleFinderInsertAt(data.data.added[0],window.elFinder,\''.$areaId.'\');
+							}
+						}
 				}
 			);';
 		}
