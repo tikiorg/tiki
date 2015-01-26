@@ -115,15 +115,15 @@
 	{tab name=$tabaddeditgroup_admgrp}
 		{* ----------------------- tab with form --------------------------------------- *}
 
-		{if !empty($user) and $prefs.feature_user_watches eq 'y'}
+		{if !empty($user) and $prefs.feature_user_watches eq 'y' && !empty($groupname)}
 			<div class="pull-right">
 				{if not $group_info.isWatching}
-					{self_link watch=$groupname}
-						{icon _id='eye' alt="{tr}Group is NOT being monitored. Click icon to START monitoring.{/tr}"}
+					{self_link watch=$groupname _class="tips" _title="{$groupname}:{tr}Group is NOT being monitored. Click icon to START monitoring.{/tr}"}
+						{icon name='watch' alt="{tr}Group is NOT being monitored. Click icon to START monitoring.{/tr}"}
 					{/self_link}
 				{else}
-					{self_link unwatch=$groupname}
-						{icon _id='no_eye' alt="{tr}Group IS being monitored. Click icon to STOP monitoring.{/tr}"}
+					{self_link unwatch=$groupname _class="tips" _title="{$groupname}:{tr}Group IS being monitored. Click icon to STOP monitoring.{/tr}"}
+						{icon name='stop-watching' alt="{tr}Group IS being monitored. Click icon to STOP monitoring.{/tr}"}
 					{/self_link}
 				{/if}
 			</div>
@@ -425,9 +425,17 @@
 								<td class="date">{$member.created|tiki_short_datetime}</td>
 								<td class="date">{if !empty($member.expire)}{$member.expire|tiki_short_datetime}{/if}</td>
 								<td class="action">
-									<a href="tiki-adminusers.php?user={$member.userId|escape:"url"}&amp;cookietab=2{if $prefs.feature_tabs ne 'y'}#tab2{/if}" class="btn btn-default btn-sm" title="{tr}Edit{/tr}">{icon name="edit"}</a>
+									<a href="tiki-adminusers.php?user={$member.userId|escape:"url"}&amp;cookietab=2{if $prefs.feature_tabs ne 'y'}#tab2{/if}"
+									   class="link tips"
+									   title="{$member.login}:{tr}Edit user{/tr}">
+										{icon name="edit"}
+									</a>
 									{if $groupname neq 'Registered'}
-										<a href="tiki-adminusers.php?user={$member.login|escape:"url"}&amp;action=removegroup&amp;group={$groupname|escape:url}" class="btn btn-default btn-sm" title="{tr}Remove from Group{/tr}">{icon name="remove"}</a>
+										<a href="tiki-adminusers.php?user={$member.login|escape:"url"}&amp;action=removegroup&amp;group={$groupname|escape:url}"
+										   class="link tips"
+										   title="{$member.login}:{tr}Remove from group{/tr}">
+											{icon name="remove"}
+										</a>
 									{/if}
 								</td>
 								</tr>
@@ -538,7 +546,7 @@
 				<table class="formcolor">
 					<tr>
 						<td class="auto">
-							{tr}CSV File{/tr}<a title="{tr}Help{/tr}" {popup text='user<br>user1<br>user2'}>{icon _id='help'}</a>
+							{tr}CSV File{/tr}<a title="{tr}Help{/tr}" {popup text='user<br>user1<br>user2'}>{icon name='help'}</a>
 						</td>
 						<td class="auto"><input name="csvlist" type="file"></td>
 					</tr>
