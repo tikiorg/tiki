@@ -164,7 +164,7 @@ img.icon {
   border: 0;
   background: transparent;
 }
-.icon {
+a .icon {
   font-size: 1.2em;
 }
 span.btn-link {
