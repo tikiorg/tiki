@@ -20,12 +20,12 @@
 				<div class="pull-right">
 					{if $tiki_p_admin eq 'y' or $userinfo.login eq $user}
 						{if $tiki_p_admin eq 'y'}
-							<a class="link" href="tiki-assignuser.php?assign_user={$userinfo.login|escape:"url"}" title="{tr}Assign Group{/tr}">
-								{icon _id='group_key' align="right" alt="{tr}Assign Group{/tr}"}
+							<a class="link tips" href="tiki-assignuser.php?assign_user={$userinfo.login|escape:"url"}" title=":{tr}Assign group{/tr}">
+								{icon name='group' align="right" alt="{tr}Assign Group{/tr}"}
 							</a>
 						{/if}
-						<a class="link" href="tiki-user_preferences.php?userId={$userinfo.userId}" title="{tr}Change user preferences{/tr}">
-							{icon _id='wrench' align="right" alt="{tr}Change user preferences{/tr}"}
+						<a class="link tips" href="tiki-user_preferences.php?userId={$userinfo.userId}" title=":{tr}Change user preferences{/tr}">
+							{icon name='wrench' align="right" alt="{tr}Change user preferences{/tr}"}
 						</a>
 					{/if}
 				</div>
@@ -162,8 +162,8 @@
 					<div class="clearfix">
 						<div class="pull-right">
 							{if $userinfo.login eq $user}
-								<a class="link" href="tiki-view_tracker_item.php?view=+user&cookietab=2" title="{tr}Change user information{/tr}">
-									{icon _id='wrench' align="right" alt="{tr}Change user information{/tr}"}
+								<a class="link tips" href="tiki-view_tracker_item.php?view=+user&cookietab=2" title=":{tr}Change user information{/tr}">
+									{icon name='wrench' align="right" alt="{tr}Change user information{/tr}"}
 								</a>
 							{/if}
 						</div>
