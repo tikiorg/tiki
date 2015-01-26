@@ -4,7 +4,7 @@
 
 	{if $tiki_p_admin_forum eq 'y'}
 		<div class="t_navbar form-group">
-			{button href="tiki-admin_forums.php" class="btn btn-default" _text="{tr}Admin forums{/tr}"}
+			{button href="tiki-admin_forums.php" class="btn btn-default" _text="{tr}Admin Forums{/tr}"}
 		</div>
 	{/if}
 	{if !$tsOn}
@@ -116,13 +116,13 @@
 						{/if}
 					</td>
 					{if $prefs.forum_list_topics eq 'y'}
-						<td class="integer">{$channels[user].threads}</td>
+						<td class="integer"><span class="badge">{$channels[user].threads}<span></td>
 					{/if}
 					{if $prefs.forum_list_posts eq 'y'}
-						<td class="integer">{$channels[user].comments}</td>
+						<td class="integer"><span class="badge">{$channels[user].comments}<span></td>
 					{/if}
 					{if $prefs.forum_list_ppd eq 'y'}
-						<td class="integer">{$channels[user].posts_per_day|string_format:"%.2f"}</td>
+						<td class="integer"><span class="badge">{$channels[user].posts_per_day|string_format:"%.2f"}<span></td>
 					{/if}
 					{if $prefs.forum_list_lastpost eq 'y'}
 						<td class="text">
@@ -134,7 +134,7 @@
 						</td>
 					{/if}
 					{if $prefs.forum_list_visits eq 'y'}
-						<td class="integer">{$channels[user].hits}</td>
+						<td class="integer"><span class="badge">{$channels[user].hits}<span></td>
 					{/if}
 					<td class="action">
 						{icon name="view" class="tips" title="{$channels[user].name|addongroupname|escape}:{tr}View forum{/tr}" href="{$channels[user].forumId|sefurl:'forum'}"}

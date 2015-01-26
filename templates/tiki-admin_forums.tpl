@@ -4,7 +4,7 @@
 
 	<div class="t_navbar form-group">
 		{if $tiki_p_admin_forum eq 'y' && $forumId > 0 or (isset($dup_mode) and $dup_mode eq 'y')}
-			{button class="btn btn-default" href="?" _text="{tr}Create New Forum{/tr}"}
+			{button class="btn btn-default" href="?" _text="{tr}Create Forum{/tr}"}
 		{/if}
 		{if $tiki_p_admin_forum eq 'y' && (!isset($dup_mode) or $dup_mode ne 'y')}
 			{button class="btn btn-default" href="tiki-admin_forums.php?dup_mode=y" _text="{tr}Duplicate Forum{/tr}"}
@@ -13,10 +13,10 @@
 			{button class="btn btn-default" href="tiki-view_forum.php?forumId=$forumId" _text="{tr}View this forum{/tr}"}
 		{/if}
 		{if $tiki_p_admin_forum eq 'y'}
-			{button class="btn btn-default" href="tiki-forum_import.php" _text="{tr}Import forums{/tr}"}
+			{button class="btn btn-default" href="tiki-forum_import.php" _text="{tr}Import Forums{/tr}"}
 		{/if}
 		{if $tiki_p_forum_read eq 'y'}
-			{button class="btn btn-default" href="tiki-forums.php" _text="{tr}List forums{/tr}"}
+			{button class="btn btn-default" href="tiki-forums.php" _text="{tr}List Forums{/tr}"}
 		{/if}
 	</div>
 {/if}
@@ -52,7 +52,7 @@
 								{$numbercol = $numbercol+1}
 							</th>
 							<th id="comments">
-								{self_link _sort_arg='sort_mode' _sort_field='comments'}{tr}Coms{/tr}{/self_link}
+								{self_link _sort_arg='sort_mode' _sort_field='comments'}{tr}Comments{/tr}{/self_link}
 								{$numbercol = $numbercol+1}
 							</th>
 							<th id="users">{tr}Users{/tr}</th>
@@ -78,12 +78,12 @@
 								<td>
 									<a class="link" href="{$channels[user].forumId|sefurl:'forum'}" title="{tr}View{/tr}">{$channels[user].name|escape}</a>
 								</td>
-								<td class="integer">{$channels[user].threads}</td>
-								<td class="integer">{$channels[user].comments}</td>
-								<td class="integer">{$channels[user].users}</td>
-								<td class="integer">{$channels[user].age}</td>
-								<td class="integer">{$channels[user].posts_per_day|string_format:"%.2f"}</td>
-								<td class="integer">{$channels[user].hits}</td>
+								<td class="integer"><span class="badge">{$channels[user].threads}<span></td>
+								<td class="integer"><span class="badge">{$channels[user].comments}<span></td>
+								<td class="integer"><span class="badge">{$channels[user].users}<span></td>
+								<td class="integer"><span class="badge">{$channels[user].age}<span></td>
+								<td class="integer"><span class="badge">{$channels[user].posts_per_day|string_format:"%.2f"}<span></td>
+								<td class="integer"><span class="badge">{$channels[user].hits}<span></td>
 								<td class="action">
 									<a class="tips" href="{$channels[user].forumId|sefurl:'forum'}" title="{$channels[user].name|escape}:{tr}View{/tr}">{icon name='view' alt="{tr}View{/tr}"}</a>
 									{* the tiki_p_forum_lock permission has not been implemented *}

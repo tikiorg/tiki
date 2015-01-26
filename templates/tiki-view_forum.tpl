@@ -28,10 +28,6 @@
 			{button href="tiki-forum_queue.php?forumId=$forumId" _text="{tr}Manage Message Queue{/tr}&nbsp;($queued)"}
 		{/if}
 
-		{if $reported > 0}
-			{button href="tiki-forums_reported.php?forumId=$forumId" _text="{tr}Manage Reported Messages{/tr}&nbsp;($reported)"}
-		{/if}
-
 		{if $prefs.feed_forum eq 'y'}
 			<a href="tiki-forum_rss.php?forumId={$forumId}" class="tips" title=":{tr}RSS feed{/tr}">{icon name="rss"}</a>
 		{/if}
@@ -383,10 +379,10 @@
 	{if $tiki_p_admin_forum eq 'y' && ($comments_coms|@count > 0 || $queued > 0 || $reported > 0)}
 		<div class="panel panel-primary">
 			<div class="panel-heading">
-				{tr}Moderator actions on selected topics{/tr}
+				{tr}Moderator actions{/tr}
 			</div>
 			<div class="panel-body">
-				<div style="width:auto;float:left">
+				<div class="pull-left">
 					{if $comments_coms|@count > 1}
 						<button
 							type="button"
@@ -429,10 +425,9 @@
 						</button>
 					{/if}
 				</div>
-				<div style="text-align:right;width:40%;float:right" >
+				<div class="pull-right">
 					{if $reported > 0}
-						<a class="link" href="tiki-forums_reported.php?forumId={$forumId}">{tr}Reported Messages:{/tr}{$reported}</a>
-						<br>
+						<a class="btn btn-default btn-sm" href="tiki-forums_reported.php?forumId={$forumId}">{tr}Reported Messages{/tr} <span class="badge">{$reported}<span></a>
 					{/if}
 					<a class="btn btn-default btn-sm" href="tiki-forum_queue.php?forumId={$forumId}">{tr}Queued Messages{/tr} <span class="badge">{$queued}</span></a>
 				</div>
@@ -490,7 +485,7 @@
 						{$cntcol = $cntcol + 1}
 					{/if}
 					{if $forum_info.att_list_nb eq 'y'}
-						<th id="atts">{tr}Atts{/tr}</th>
+						<th id="atts">{tr}Files{/tr}</th>
 						{$cntcol = $cntcol + 1}
 					{/if}
 					{if $prefs.feature_multilingual eq 'y'}
@@ -564,10 +559,10 @@
 							{/if}
 						</td>
 						{if $forum_info.topics_list_replies eq 'y'}
-							<td class="integer">{$comments_coms[ix].replies}</td>
+							<td class="integer"><span class="badge">{$comments_coms[ix].replies}</span></td>
 						{/if}
 						{if $forum_info.topics_list_reads eq 'y'}
-							<td class="integer">{$comments_coms[ix].hits}</td>
+							<td class="integer"><span class="badge">{$comments_coms[ix].hits}</span></td>
 						{/if}
 						{if $forum_info.vote_threads eq 'y' and ($tiki_p_ratings_view_results eq 'y' or $tiki_p_admin eq 'y')}
 							<td class="integer">{rating_result_avg type=comment id=$comments_coms[ix].threadId }&nbsp;&nbsp;&nbsp;</td>
@@ -576,7 +571,7 @@
 							{/if}
 						{/if}
 						{if $forum_info.topics_list_pts eq 'y'}
-							<td class="integer">{$comments_coms[ix].average|string_format:"%.2f"}</td>
+							<td class="integer"><span class="badge">{$comments_coms[ix].average|string_format:"%.2f"}</span></td>
 						{/if}
 						{if $forum_info.topics_list_lastpost eq 'y'}
 							<td class="text">
@@ -615,7 +610,7 @@
 						{if $forum_info.att_list_nb eq 'y'}
 							<td style="text-align:center;">
 								{if !empty($comments_coms[ix].nb_attachments)}<a href="tiki-view_forum_thread.php?comments_parentId={$comments_coms[ix].threadId}&amp;view_atts=y#attachments" title="{tr}Attachments{/tr}">{/if}
-								{$comments_coms[ix].nb_attachments}
+								<span class="badge">{$comments_coms[ix].nb_attachments}</span>
 								{if !empty($comments_coms[ix].nb_attachments)}</a>{/if}
 							</td>
 						{/if}
