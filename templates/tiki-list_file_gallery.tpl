@@ -260,7 +260,20 @@ var elfoptions = initElFinder({
 		height: 600
 	});
 
-$(".elFinderDialog").elfinder(elfoptions).elfinder('instance');
+var elFinderInstnce = $(".elFinderDialog").elfinder(elfoptions).elfinder('instance');
+elFinderInstnce.bind("open", function (data) {
+	$.getJSON($.service('file_finder', 'finder'), {
+		cmd: "tikiFileFromHash",
+		hash: data.data.cwd.hash
+	}).done(function (data) {
+		var href = '';
+		$(".t_navbar a").each(function () {
+			href = $(this).attr("href");
+			href = href.replace(/(galleryId|objectId|parentId|watch_object)=\d+/, '$1=' + data.galleryId);
+			$(this).attr("href", href);
+		});
+	});
+});
 
 window.handleFinderFile = function (file, elfinder) {
 		var hash = "";
