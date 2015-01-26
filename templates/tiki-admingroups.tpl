@@ -90,9 +90,6 @@
 					{/section}
 				</table>
 			</div>
-{*
-			<p align="left"> on the left to have it close to the checkboxes
-*}
 			<div class="form-group col-lg-10" >
 				<div class="col-lg-9 input-group">
 					<label for="submit_mult" class="col-lg"></label>
@@ -105,9 +102,6 @@
 					</span>
 				</div>
 			</div>
-{*
-			</p>
-*}
 		</form>
 		{pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}
 	{/tab}
