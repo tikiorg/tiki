@@ -80,25 +80,34 @@
 
 							<td class="text">{tr}{$users[user].userChoice}{/tr}</td>
 							<td class="action">
-								<a class="btn btn-default btn-sm" href="tiki-admingroups.php?group={$users[user].groupName|escape:"url"}&amp;cookietab=2{if $prefs.feature_tabs ne 'y'}#tab2{/if}" title="{tr}Edit{/tr}">{icon name="edit"} <span class="sr-only">{tr}Edit{/tr}</span></a>
-								{permission_link mode=button_compact group=$users[user].groupName count=$users[user].permcant}
+								<a class="link tips" href="tiki-admingroups.php?group={$users[user].groupName|escape:"url"}&amp;cookietab=2{if $prefs.feature_tabs ne 'y'}#tab2{/if}" title="{$users[user].groupName|escape}:{tr}Edit{/tr}">{icon name="edit"} <span class="sr-only">{tr}Edit{/tr}</span></a>
+								{permission_link mode=glyph addclass="tips" group=$users[user].groupName count=$users[user].permcant label="{$users[user].groupName|escape}:{tr}Permissions{/tr}"}
 								{if $users[user].groupName ne 'Anonymous' and $users[user].groupName ne 'Registered' and $users[user].groupName ne 'Admins'}
-									<a class="link text-danger" href="tiki-admingroups.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;action=delete&amp;group={$users[user].groupName|escape:"url"}" title="{tr}Delete{/tr}">{icon name="remove"} <span class="sr-only">{tr}Remove{/tr}"}</span></a>
+									<a class="link text-danger tips" href="tiki-admingroups.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;action=delete&amp;group={$users[user].groupName|escape:"url"}" title="{$users[user].groupName|escape}:{tr}Delete{/tr}">{icon name="remove"} <span class="sr-only">{tr}Remove{/tr}"}</span></a>
 								{/if}
 							</td>
 						</tr>
 					{/section}
 				</table>
 			</div>
-			<p align="left"> {*on the left to have it close to the checkboxes*}
-				<label>{tr}Perform action with checked:{/tr}
-					<select name="submit_mult">
-						<option value="" selected="selected">-</option>
-						<option value="remove_groups" >{tr}Remove{/tr}</option>
-					</select>
-				</label>
-				<input type="submit" class="btn btn-default btn-sm" value="{tr}OK{/tr}">
+{*
+			<p align="left"> on the left to have it close to the checkboxes
+*}
+			<div class="form-group col-lg-10" >
+				<div class="col-lg-9 input-group">
+					<label for="submit_mult" class="col-lg"></label>
+						<select name="submit_mult" class="form-control">
+							<option value="" selected="selected">{tr}Select action to perform with checked groups...{/tr}</option>
+							<option value="remove_groups" >{tr}Remove{/tr}</option>
+						</select>
+					<span class="input-group-btn">
+						<input type="submit" class="btn btn-primary" value="{tr}OK{/tr}">
+					</span>
+				</div>
+			</div>
+{*
 			</p>
+*}
 		</form>
 		{pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}
 	{/tab}
