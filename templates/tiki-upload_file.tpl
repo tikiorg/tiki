@@ -50,7 +50,7 @@
 	<div id='progress'>
 		<div id='progress_0'></div>
 	</div>
-/if}
+{/if}
 
 {if isset($uploads) and count($uploads) > 0}
 	<h2>
