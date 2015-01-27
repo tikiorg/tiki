@@ -21,6 +21,7 @@
 					{/if}
 				{/if}
 				{include file='blog_post_status.tpl'}
+                {include file='blog_post_navigation.tpl'}
 			</footer>
 		{else}
 			{* Show copyright information in print view *}
@@ -38,4 +39,4 @@
 		{/if}
 	{/if}
 </div> <!-- postbody -->
-{include file='blog_post_navigation.tpl'}
+{* {include file='blog_post_navigation.tpl'} *}
