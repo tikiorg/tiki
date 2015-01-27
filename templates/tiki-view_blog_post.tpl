@@ -16,7 +16,7 @@
 </div>
 
 
-<article class="blogpost post post_single">
+<article class="blogpost post post_single panel panel-default">
 	{include file='blog_wrapper.tpl' blog_post_context='view_blog_post'}
 	{include file='blog_post_related_content.tpl'}
 </article>
